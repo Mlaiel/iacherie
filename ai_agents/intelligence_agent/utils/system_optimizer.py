@@ -18,7 +18,8 @@ Expert Team Specializations:
 - System Architecture Specialist
 - Resource Optimization Engineer
 - Predictive Analytics Expert
-"""import asyncio
+"""
+import asyncio
 import logging
 import psutil
 import numpy as np
@@ -46,14 +47,16 @@ from ...database.connection import get_database_pool
 
 
 class OptimizationLevel(Enum):
-    """Levels of system optimization."""    CONSERVATIVE = "conservative"
+    """Levels of system optimization."""
+    CONSERVATIVE = "conservative"
     MODERATE = "moderate"
     AGGRESSIVE = "aggressive"
     EXPERIMENTAL = "experimental"
 
 
 class ResourceType(Enum):
-    """Types of system resources to optimize."""    CPU = "cpu"
+    """Types of system resources to optimize."""
+    CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
     NETWORK = "network"
@@ -63,7 +66,8 @@ class ResourceType(Enum):
 
 
 class OptimizationAction(Enum):
-    """Types of optimization actions."""    SCALE_UP = "scale_up"
+    """Types of optimization actions."""
+    SCALE_UP = "scale_up"
     SCALE_DOWN = "scale_down"
     LOAD_BALANCE = "load_balance"
     CACHE_OPTIMIZE = "cache_optimize"
@@ -75,7 +79,8 @@ class OptimizationAction(Enum):
 
 @dataclass
 class ResourceMetrics:
-    """System resource utilization metrics."""    resource_type: ResourceType
+    """System resource utilization metrics."""
+    resource_type: ResourceType
     current_usage: float
     average_usage: float
     peak_usage: float
@@ -88,7 +93,8 @@ class ResourceMetrics:
 
 @dataclass
 class OptimizationRule:
-    """Rule for system optimization."""    rule_id: str
+    """Rule for system optimization."""
+    rule_id: str
     name: str
     condition: str
     action: OptimizationAction
@@ -105,7 +111,8 @@ class OptimizationRule:
 
 @dataclass
 class OptimizationResult:
-    """Result of an optimization operation."""    optimization_id: str
+    """Result of an optimization operation."""
+    optimization_id: str
     rule_applied: OptimizationRule
     before_metrics: Dict[str, float]
     after_metrics: Dict[str, float]
@@ -118,7 +125,8 @@ class OptimizationResult:
 
 
 class SystemOptimizer:
-    """    Advanced system optimization engine for content creation platform.
+    """
+    Advanced system optimization engine for content creation platform.
     
     Provides intelligent optimization including:
     - Real-time performance monitoring and analysis
@@ -127,9 +135,11 @@ class SystemOptimizer:
     - Machine learning-based optimization recommendations
     - Safety-first optimization with rollback capabilities
     - Multi-tier optimization strategies
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the System Optimizer with advanced analytics."""        self.config = config or {}
+        """Initialize the System Optimizer with advanced analytics."""
+        self.config = config or {}
         self.settings = get_settings()
         self.logger = logging.getLogger(__name__)
         
@@ -172,7 +182,8 @@ class SystemOptimizer:
         self.logger.info(f"System Optimizer initialized (level: {self.optimization_level.value})")
     
     def _initialize_optimization_rules(self):
-        """Initialize optimization rules based on best practices."""        self.optimization_rules = [
+        """Initialize optimization rules based on best practices."""
+        self.optimization_rules = [
             # CPU Optimization Rules
             OptimizationRule(
                 rule_id="cpu_scale_up",
@@ -262,7 +273,8 @@ class SystemOptimizer:
         ]
     
     def _initialize_predictive_models(self):
-        """Initialize machine learning models for predictive optimization."""        # Initialize models for each resource type
+        """Initialize machine learning models for predictive optimization."""
+        # Initialize models for each resource type
         for resource_type in ResourceType:
             # Linear regression for trend prediction
             self.predictive_models[f"{resource_type.value}_trend"] = LinearRegression()
@@ -274,7 +286,8 @@ class SystemOptimizer:
             )
     
     def _start_optimization_services(self):
-        """Start background optimization services."""        # Start continuous monitoring
+        """Start background optimization services."""
+        # Start continuous monitoring
         self.active_optimizations['monitor'] = asyncio.create_task(
             self._continuous_monitoring()
         )
@@ -295,7 +308,8 @@ class SystemOptimizer:
         )
     
     async def _continuous_monitoring(self):
-        """Continuously monitor system resources and performance."""        while True:
+        """Continuously monitor system resources and performance."""
+        while True:
             try:
                 # Collect system metrics
                 system_metrics = await self._collect_system_metrics()
@@ -323,7 +337,8 @@ class SystemOptimizer:
                 await asyncio.sleep(60)
     
     async def _collect_system_metrics(self) -> Dict[str, Dict[str, float]]:
-        """Collect comprehensive system metrics."""        metrics = {}
+        """Collect comprehensive system metrics."""
+        metrics = {}
         
         # CPU metrics
         cpu_percent = psutil.cpu_percent(interval=1)
@@ -390,7 +405,8 @@ class SystemOptimizer:
         return metrics
     
     def _calculate_memory_fragmentation(self) -> float:
-        """Calculate memory fragmentation score."""        try:
+        """Calculate memory fragmentation score."""
+        try:
             # Simplified fragmentation calculation
             memory = psutil.virtual_memory()
             fragmentation = 1.0 - (memory.available / memory.total)
@@ -399,7 +415,8 @@ class SystemOptimizer:
             return 0.0
     
     async def _collect_database_metrics(self) -> Dict[str, float]:
-        """Collect database performance metrics."""        if not self.database_pool:
+        """Collect database performance metrics."""
+        if not self.database_pool:
             try:
                 self.database_pool = await get_database_pool()
             except:
@@ -418,7 +435,8 @@ class SystemOptimizer:
             return {'error': str(e), 'available': 0.0}
     
     async def _collect_cache_metrics(self) -> Dict[str, float]:
-        """Collect cache (Redis) performance metrics."""        if not self.redis_client:
+        """Collect cache (Redis) performance metrics."""
+        if not self.redis_client:
             try:
                 self.redis_client = redis.Redis(
                     host=self.settings.REDIS_HOST,
@@ -442,7 +460,8 @@ class SystemOptimizer:
             return {'error': str(e), 'available': 0.0}
     
     async def _calculate_derived_metrics(self, system_metrics: Dict[str, Dict[str, float]]) -> Dict[str, float]:
-        """Calculate derived performance metrics."""        derived = {}
+        """Calculate derived performance metrics."""
+        derived = {}
         
         # Overall system efficiency
         cpu_efficiency = system_metrics.get(ResourceType.CPU.value, {}).get('efficiency', 1.0)
@@ -466,7 +485,8 @@ class SystemOptimizer:
         return derived
     
     async def _continuous_optimization(self):
-        """Continuously analyze and apply optimizations."""        while True:
+        """Continuously analyze and apply optimizations."""
+        while True:
             try:
                 # Check if enough data is collected
                 if len(self.resource_metrics) < 5:
@@ -488,7 +508,8 @@ class SystemOptimizer:
                 await asyncio.sleep(self.optimization_interval * 2)
     
     async def _analyze_optimization_opportunities(self) -> List[OptimizationRule]:
-        """Analyze current system state for optimization opportunities."""        opportunities = []
+        """Analyze current system state for optimization opportunities."""
+        opportunities = []
         
         # Get current metrics
         current_metrics = self.current_system_state
@@ -508,7 +529,8 @@ class SystemOptimizer:
         rule: OptimizationRule,
         current_metrics: Dict[str, Dict[str, float]]
     ) -> bool:
-        """Evaluate if an optimization rule should be triggered."""        try:
+        """Evaluate if an optimization rule should be triggered."""
+        try:
             # Check cooldown period
             if rule.last_applied:
                 time_since_last = datetime.now() - rule.last_applied
@@ -536,7 +558,8 @@ class SystemOptimizer:
         condition: str,
         metrics: Dict[str, Dict[str, float]]
     ) -> bool:
-        """Evaluate a rule condition against current metrics."""        try:
+        """Evaluate a rule condition against current metrics."""
+        try:
             # Create evaluation context
             context = {}
             
@@ -569,7 +592,8 @@ class SystemOptimizer:
             return False
     
     async def _calculate_trend(self, resource_type: str) -> float:
-        """Calculate trend direction for a resource type."""        if resource_type not in self.resource_metrics:
+        """Calculate trend direction for a resource type."""
+        if resource_type not in self.resource_metrics:
             return 0.0
         
         metrics_history = list(self.resource_metrics[resource_type])
@@ -594,7 +618,8 @@ class SystemOptimizer:
         rule: OptimizationRule,
         current_metrics: Dict[str, Dict[str, float]]
     ) -> bool:
-        """Check if applying optimization rule is safe."""        if not self.safety_mode:
+        """Check if applying optimization rule is safe."""
+        if not self.safety_mode:
             return True
         
         # Check resource utilization against safety threshold
@@ -612,7 +637,8 @@ class SystemOptimizer:
         return True
     
     async def _should_apply_optimization(self, rule: OptimizationRule) -> bool:
-        """Determine if optimization should be applied based on level and risk."""        risk_tolerance = {
+        """Determine if optimization should be applied based on level and risk."""
+        risk_tolerance = {
             OptimizationLevel.CONSERVATIVE: 0.1,
             OptimizationLevel.MODERATE: 0.3,
             OptimizationLevel.AGGRESSIVE: 0.6,
@@ -622,7 +648,8 @@ class SystemOptimizer:
         return rule.risk_level <= risk_tolerance[self.optimization_level]
     
     async def _apply_optimization(self, rule: OptimizationRule) -> OptimizationResult:
-        """Apply an optimization rule and track results."""        optimization_id = f"opt_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{rule.rule_id}"
+        """Apply an optimization rule and track results."""
+        optimization_id = f"opt_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{rule.rule_id}"
         start_time = datetime.now()
         
         try:
@@ -695,7 +722,8 @@ class SystemOptimizer:
         action: OptimizationAction,
         rule: OptimizationRule
     ) -> bool:
-        """Execute specific optimization action."""        try:
+        """Execute specific optimization action."""
+        try:
             if action == OptimizationAction.SCALE_UP:
                 return await self._scale_up_resources(rule.resource_types)
             
@@ -729,7 +757,8 @@ class SystemOptimizer:
             return False
     
     async def _scale_up_resources(self, resource_types: List[ResourceType]) -> bool:
-        """Scale up system resources."""        # In a real implementation, this would interface with container orchestration
+        """Scale up system resources."""
+        # In a real implementation, this would interface with container orchestration
         self.logger.info(f"Scaling up resources: {[rt.value for rt in resource_types]}")
         
         # Simulate scaling
@@ -737,21 +766,24 @@ class SystemOptimizer:
         return True
     
     async def _scale_down_resources(self, resource_types: List[ResourceType]) -> bool:
-        """Scale down system resources."""        self.logger.info(f"Scaling down resources: {[rt.value for rt in resource_types]}")
+        """Scale down system resources."""
+        self.logger.info(f"Scaling down resources: {[rt.value for rt in resource_types]}")
         
         # Simulate scaling
         await asyncio.sleep(1)
         return True
     
     async def _rebalance_load(self) -> bool:
-        """Rebalance system load."""        self.logger.info("Rebalancing system load")
+        """Rebalance system load."""
+        self.logger.info("Rebalancing system load")
         
         # Simulate load balancing
         await asyncio.sleep(1)
         return True
     
     async def _optimize_cache(self) -> bool:
-        """Optimize cache configuration."""        if not self.redis_client:
+        """Optimize cache configuration."""
+        if not self.redis_client:
             return False
         
         try:
@@ -763,14 +795,16 @@ class SystemOptimizer:
             return False
     
     async def _tune_database(self) -> bool:
-        """Tune database performance."""        self.logger.info("Applying database performance tuning")
+        """Tune database performance."""
+        self.logger.info("Applying database performance tuning")
         
         # Simulate database tuning
         await asyncio.sleep(1)
         return True
     
     async def _cleanup_memory(self) -> bool:
-        """Cleanup system memory."""        import gc
+        """Cleanup system memory."""
+        import gc
         
         try:
             # Force garbage collection
@@ -781,14 +815,16 @@ class SystemOptimizer:
             return False
     
     async def _optimize_processes(self) -> bool:
-        """Optimize running processes."""        self.logger.info("Optimizing system processes")
+        """Optimize running processes."""
+        self.logger.info("Optimizing system processes")
         
         # Simulate process optimization
         await asyncio.sleep(1)
         return True
     
     async def _adjust_configuration(self, rule: OptimizationRule) -> bool:
-        """Adjust system configuration."""        self.logger.info(f"Adjusting configuration for rule: {rule.name}")
+        """Adjust system configuration."""
+        self.logger.info(f"Adjusting configuration for rule: {rule.name}")
         
         # Simulate configuration adjustment
         await asyncio.sleep(1)
@@ -799,7 +835,8 @@ class SystemOptimizer:
         before_metrics: Dict[str, Dict[str, float]],
         after_metrics: Dict[str, Dict[str, float]]
     ) -> Dict[str, float]:
-        """Calculate performance improvement from optimization."""        improvements = {}
+        """Calculate performance improvement from optimization."""
+        improvements = {}
         
         for resource_type in ResourceType:
             resource_key = resource_type.value
@@ -819,7 +856,8 @@ class SystemOptimizer:
         return improvements
     
     async def _predictive_analysis(self):
-        """Perform predictive analysis for proactive optimization."""        while True:
+        """Perform predictive analysis for proactive optimization."""
+        while True:
             try:
                 # Wait for sufficient data
                 await asyncio.sleep(600)  # 10 minutes
@@ -840,7 +878,8 @@ class SystemOptimizer:
                 await asyncio.sleep(1800)
     
     async def _predict_resource_trends(self) -> Dict[str, Dict[str, float]]:
-        """Predict future resource utilization trends."""        predictions = {}
+        """Predict future resource utilization trends."""
+        predictions = {}
         
         for resource_type in ResourceType:
             resource_key = resource_type.value
@@ -875,7 +914,8 @@ class SystemOptimizer:
         return predictions
     
     async def _anomaly_detection(self):
-        """Detect anomalies in system behavior."""        while True:
+        """Detect anomalies in system behavior."""
+        while True:
             try:
                 # Wait for sufficient data
                 await asyncio.sleep(300)  # 5 minutes
@@ -890,7 +930,8 @@ class SystemOptimizer:
                 await asyncio.sleep(600)
     
     async def _detect_resource_anomalies(self, resource_type: str):
-        """Detect anomalies for a specific resource type."""        if resource_type not in self.resource_metrics:
+        """Detect anomalies for a specific resource type."""
+        if resource_type not in self.resource_metrics:
             return
         
         history = list(self.resource_metrics[resource_type])
@@ -931,7 +972,8 @@ class SystemOptimizer:
             self.logger.error(f"Anomaly detection failed for {resource_type}: {str(e)}")
     
     async def get_optimization_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive optimization analytics."""        total_optimizations = len(self.optimization_history)
+        """Get comprehensive optimization analytics."""
+        total_optimizations = len(self.optimization_history)
         successful_optimizations = sum(
             1 for opt in self.optimization_history.values() if opt.success
         )

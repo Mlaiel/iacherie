@@ -11,7 +11,8 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Set, Union, Any
@@ -33,7 +34,8 @@ logger = logging.getLogger(__name__)
 
 
 class TeamRole(Enum):
-    """Professional team roles for content creation"""    TEAM_LEAD = "team_lead"
+    """Professional team roles for content creation"""
+    TEAM_LEAD = "team_lead"
     CONTENT_CREATOR = "content_creator"
     EDITOR = "editor"
     DESIGNER = "designer"
@@ -49,7 +51,8 @@ class TeamRole(Enum):
 
 
 class CollaborationStatus(Enum):
-    """Collaboration invitation and participation status"""    PENDING = "pending"
+    """Collaboration invitation and participation status"""
+    PENDING = "pending"
     ACCEPTED = "accepted"
     DECLINED = "declined"
     ACTIVE = "active"
@@ -60,7 +63,8 @@ class CollaborationStatus(Enum):
 
 @dataclass
 class TeamMember:
-    """Team member representation with professional metadata"""    user_id: str
+    """Team member representation with professional metadata"""
+    user_id: str
     username: str
     email: str
     role: TeamRole
@@ -76,7 +80,8 @@ class TeamMember:
     collaboration_rating: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert team member to dictionary representation"""        return {
+        """Convert team member to dictionary representation"""
+        return {
             "user_id": self.user_id,
             "username": self.username,
             "email": self.email,
@@ -96,7 +101,8 @@ class TeamMember:
 
 @dataclass
 class CollaborationInvite:
-    """Professional collaboration invitation"""    invite_id: str
+    """Professional collaboration invitation"""
+    invite_id: str
     project_id: str
     sender_id: str
     recipient_email: str
@@ -111,11 +117,13 @@ class CollaborationInvite:
     expires_at: datetime
     
     def is_expired(self) -> bool:
-        """Check if invitation has expired"""        return datetime.utcnow() > self.expires_at
+        """Check if invitation has expired"""
+        return datetime.utcnow() > self.expires_at
 
 
 class TeamManager:
-    """Advanced team management for collaborative content creation"""    
+    """Advanced team management for collaborative content creation"""
+    
     def __init__(self, db_session: AsyncSession, cache_manager: CacheManager):
         self.db = db_session
         self.cache = cache_manager
@@ -132,7 +140,8 @@ class TeamManager:
         required_skills: List[str],
         max_members: int = 10
     ) -> Dict[str, Any]:
-        """Create new collaborative team for content project"""        try:
+        """Create new collaborative team for content project"""
+        try:
             team_id = str(uuid.uuid4())
             
             team_data = {
@@ -177,7 +186,8 @@ class TeamManager:
         permissions: Set[str],
         added_by: str
     ) -> Dict[str, Any]:
-        """Add new member to collaborative team"""        try:
+        """Add new member to collaborative team"""
+        try:
             team_data = await self.cache.get(f"team:{team_id}")
             if not team_data:
                 raise ValidationError("Team not found")
@@ -222,7 +232,8 @@ class TeamManager:
             raise BusinessLogicError(f"Failed to add team member: {str(e)}")
     
     async def get_team_members(self, team_id: str) -> List[TeamMember]:
-        """Retrieve all team members with detailed profiles"""        try:
+        """Retrieve all team members with detailed profiles"""
+        try:
             team_data = await self.cache.get(f"team:{team_id}")
             if not team_data:
                 raise ValidationError("Team not found")
@@ -259,7 +270,8 @@ class TeamManager:
             raise BusinessLogicError(f"Failed to retrieve team members: {str(e)}")
     
     def _get_lead_permissions(self) -> List[str]:
-        """Get default permissions for team lead"""        return [
+        """Get default permissions for team lead"""
+        return [
             "team.manage",
             "members.add",
             "members.remove",
@@ -273,7 +285,8 @@ class TeamManager:
         ]
     
     async def _validate_team_lead_action(self, team_id: str, user_id: str) -> bool:
-        """Validate user has team lead permissions"""        team_data = await self.cache.get(f"team:{team_id}")
+        """Validate user has team lead permissions"""
+        team_data = await self.cache.get(f"team:{team_id}")
         if not team_data:
             return False
         
@@ -284,7 +297,8 @@ class TeamManager:
         return member_data["role"] == TeamRole.TEAM_LEAD.value
     
     async def _get_user_profile(self, user_id: str) -> Dict[str, Any]:
-        """Fetch comprehensive user profile"""        profile = await self.cache.get(f"user_profile:{user_id}")
+        """Fetch comprehensive user profile"""
+        profile = await self.cache.get(f"user_profile:{user_id}")
         if not profile:
             # Fetch from database if not cached
             profile = {
@@ -302,7 +316,8 @@ class TeamManager:
 
 
 class CollaboratorInviteService:
-    """Professional collaboration invitation management"""    
+    """Professional collaboration invitation management"""
+    
     def __init__(self, db_session: AsyncSession, cache_manager: CacheManager):
         self.db = db_session
         self.cache = cache_manager
@@ -318,7 +333,8 @@ class CollaboratorInviteService:
         compensation_details: Dict[str, Any],
         deadline: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """Send professional collaboration invitation"""        try:
+        """Send professional collaboration invitation"""
+        try:
             invite_id = str(uuid.uuid4())
             expires_at = deadline or (datetime.utcnow() + timedelta(days=7))
             
@@ -378,7 +394,8 @@ class CollaboratorInviteService:
         response: CollaborationStatus,
         message: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Respond to collaboration invitation"""        try:
+        """Respond to collaboration invitation"""
+        try:
             invite_data = await self.cache.get(f"invite:{invite_id}")
             if not invite_data:
                 raise ValidationError("Invitation not found")
@@ -416,7 +433,8 @@ class CollaboratorInviteService:
             raise BusinessLogicError(f"Failed to respond to invite: {str(e)}")
     
     def _get_role_permissions(self, role: TeamRole) -> List[str]:
-        """Get default permissions for specific role"""        permission_map = {
+        """Get default permissions for specific role"""
+        permission_map = {
             TeamRole.TEAM_LEAD: [
                 "team.manage", "members.add", "roles.assign", 
                 "content.approve", "revenue.manage"
@@ -461,7 +479,8 @@ class CollaboratorInviteService:
         return permission_map.get(role, [])
     
     async def _process_accepted_invite(self, invite_data: Dict[str, Any], user_id: str):
-        """Process accepted collaboration invitation"""        # Add user to team
+        """Process accepted collaboration invitation"""
+        # Add user to team
         team_manager = TeamManager(self.db, self.cache)
         await team_manager.add_team_member(
             invite_data["project_id"],
@@ -473,7 +492,8 @@ class CollaboratorInviteService:
 
 
 class RolePermissionManager:
-    """Advanced role-based permission management for collaborative teams"""    
+    """Advanced role-based permission management for collaborative teams"""
+    
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
     
@@ -484,7 +504,8 @@ class RolePermissionManager:
         new_role: TeamRole,
         assigned_by: str
     ) -> Dict[str, Any]:
-        """Assign new role to team member with permission validation"""        try:
+        """Assign new role to team member with permission validation"""
+        try:
             # Validate assignor permissions
             if not await self._can_assign_roles(team_id, assigned_by):
                 raise PermissionError("Insufficient permissions to assign roles")
@@ -517,7 +538,8 @@ class RolePermissionManager:
             raise BusinessLogicError(f"Failed to assign role: {str(e)}")
     
     async def _can_assign_roles(self, team_id: str, user_id: str) -> bool:
-        """Check if user can assign roles in team"""        team_data = await self.cache.get(f"team:{team_id}")
+        """Check if user can assign roles in team"""
+        team_data = await self.cache.get(f"team:{team_id}")
         if not team_data:
             return False
         
@@ -531,12 +553,14 @@ class RolePermissionManager:
         )
     
     def _get_role_permissions(self, role: TeamRole) -> List[str]:
-        """Get comprehensive permissions for role"""        # Same as in CollaboratorInviteService but with full detail
+        """Get comprehensive permissions for role"""
+        # Same as in CollaboratorInviteService but with full detail
         return CollaboratorInviteService(None, None)._get_role_permissions(role)
 
 
 class TeamWorkflowOrchestrator:
-    """Advanced workflow orchestration for collaborative teams"""    
+    """Advanced workflow orchestration for collaborative teams"""
+    
     def __init__(self, db_session: AsyncSession, cache_manager: CacheManager):
         self.db = db_session
         self.cache = cache_manager
@@ -549,7 +573,8 @@ class TeamWorkflowOrchestrator:
         dependencies: Dict[str, List[str]],
         created_by: str
     ) -> Dict[str, Any]:
-        """Create collaborative workflow for team projects"""        try:
+        """Create collaborative workflow for team projects"""
+        try:
             workflow_id = str(uuid.uuid4())
             
             workflow_data = {
@@ -583,7 +608,8 @@ class TeamWorkflowOrchestrator:
         completed_by: str,
         completion_notes: str
     ) -> Dict[str, Any]:
-        """Advance workflow to next stage with validation"""        try:
+        """Advance workflow to next stage with validation"""
+        try:
             workflow_data = await self.cache.get(f"workflow:{workflow_id}")
             if not workflow_data:
                 raise ValidationError("Workflow not found")
@@ -627,7 +653,8 @@ class TeamWorkflowOrchestrator:
 
 
 class CollaborationHub:
-    """Central hub for managing all collaborative activities"""    
+    """Central hub for managing all collaborative activities"""
+    
     def __init__(self, db_session: AsyncSession, cache_manager: CacheManager):
         self.db = db_session
         self.cache = cache_manager
@@ -640,7 +667,8 @@ class CollaborationHub:
         self, 
         user_id: str
     ) -> Dict[str, Any]:
-        """Get comprehensive collaboration dashboard for user"""        try:
+        """Get comprehensive collaboration dashboard for user"""
+        try:
             # Get user's teams
             user_teams = await self._get_user_teams(user_id)
             
@@ -667,7 +695,8 @@ class CollaborationHub:
             raise BusinessLogicError(f"Failed to generate dashboard: {str(e)}")
     
     async def _get_user_teams(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get all teams user is member of"""        try:
+        """Get all teams user is member of"""
+        try:
             # Get all team memberships for the user
             user_teams = []
             team_keys = await self.cache.keys(f"team:*:members")
@@ -692,7 +721,8 @@ class CollaborationHub:
             return []
     
     async def _get_pending_invites(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get pending collaboration invitations for user"""        try:
+        """Get pending collaboration invitations for user"""
+        try:
             # Get pending invitations from cache
             pending_invites = []
             invite_keys = await self.cache.keys(f"invite:*:pending")
@@ -720,7 +750,8 @@ class CollaborationHub:
             return []
     
     async def _get_active_projects(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get active collaborative projects for user"""        try:
+        """Get active collaborative projects for user"""
+        try:
             active_projects = []
             
             # Get all project keys
@@ -762,7 +793,8 @@ class CollaborationHub:
             return []
     
     async def _get_collaboration_metrics(self, user_id: str) -> Dict[str, Any]:
-        """Get collaboration performance metrics for user"""        try:
+        """Get collaboration performance metrics for user"""
+        try:
             # Calculate real metrics based on user's collaboration history
             total_collaborations = len(await self._get_user_teams(user_id))
             active_projects = await self._get_active_projects(user_id)
@@ -810,7 +842,8 @@ class CollaborationHub:
             }
     
     async def _get_user_role_in_team(self, user_id: str, team_id: str) -> str:
-        """Get user's role in a specific team"""        try:
+        """Get user's role in a specific team"""
+        try:
             team_roles = await self.cache.get(f"team:{team_id}:roles")
             if team_roles and user_id in team_roles:
                 return team_roles[user_id]
@@ -819,7 +852,8 @@ class CollaborationHub:
             return "member"
     
     def _determine_user_role_in_project(self, user_id: str, project_data: Dict[str, Any]) -> str:
-        """Determine user's role in a project"""        try:
+        """Determine user's role in a project"""
+        try:
             if project_data.get("created_by") == user_id:
                 return "project_manager"
             

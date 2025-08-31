@@ -323,7 +323,8 @@ __all__ = [
 
 # Module initialization validation
 def validate_module_integrity():
-    """Validate that all critical components are properly loaded."""    required_engines = [
+    """Validate that all critical components are properly loaded."""
+    required_engines = [
         "EnterprisePerformanceAnalytics",
         "EngagementAnalytics",
         "RevenueAnalytics", 

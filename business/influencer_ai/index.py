@@ -122,7 +122,8 @@ logger = logging.getLogger(__name__)
 # =============== SUITE CONFIGURATION ===============
 
 class InfluencerAISuiteConfig:
-    """Configuration complète de la suite Influencer AI"""    
+    """Configuration complète de la suite Influencer AI"""
+    
     def __init__(self):
         self.enabled = True
         self.debug_mode = False
@@ -144,7 +145,8 @@ class InfluencerAISuiteConfig:
 # =============== SUITE MANAGER ===============
 
 class InfluencerAISuite:
-    """Suite complète des services Influencer AI"""    
+    """Suite complète des services Influencer AI"""
+    
     def __init__(self, config: Optional[InfluencerAISuiteConfig] = None):
         self.config = config or InfluencerAISuiteConfig()
         self.services: Dict[str, Any] = {}
@@ -153,7 +155,8 @@ class InfluencerAISuite:
         self.logger = logging.getLogger(f"{__name__}.InfluencerAISuite")
         
     async def initialize(self) -> bool:
-        """Initialiser tous les services de la suite"""        try:
+        """Initialiser tous les services de la suite"""
+        try:
             if self.initialized:
                 self.logger.warning("Suite already initialized")
                 return True
@@ -197,7 +200,8 @@ class InfluencerAISuite:
             return False
     
     async def _initialize_ai_assistant(self) -> bool:
-        """Initialiser le service AI Assistant"""        try:
+        """Initialiser le service AI Assistant"""
+        try:
             service = create_aiassistant_service(self.config.ai_assistant_config)
             manager = AiAssistantManager(self.config.ai_assistant_config)
             
@@ -211,7 +215,8 @@ class InfluencerAISuite:
             return False
     
     async def _initialize_analytics_intelligence(self) -> bool:
-        """Initialiser le service Analytics Intelligence"""        try:
+        """Initialiser le service Analytics Intelligence"""
+        try:
             service = AnalyticsIntelligenceService(self.config.analytics_config)
             manager = AnalyticsIntelligenceManager(self.config.analytics_config)
             
@@ -225,7 +230,8 @@ class InfluencerAISuite:
             return False
     
     async def _initialize_collaboration_platform(self) -> bool:
-        """Initialiser le service Collaboration Platform"""        try:
+        """Initialiser le service Collaboration Platform"""
+        try:
             service = CollaborationPlatformService(self.config.collaboration_config)
             manager = CollaborationPlatformManager(self.config.collaboration_config)
             
@@ -239,7 +245,8 @@ class InfluencerAISuite:
             return False
     
     async def _initialize_content_optimization(self) -> bool:
-        """Initialiser le service Content Optimization"""        try:
+        """Initialiser le service Content Optimization"""
+        try:
             service = ContentOptimizationService(self.config.content_optimization_config)
             manager = ContentOptimizationManager(self.config.content_optimization_config)
             
@@ -253,7 +260,8 @@ class InfluencerAISuite:
             return False
     
     async def _initialize_creator_management(self) -> bool:
-        """Initialiser le service Creator Management"""        try:
+        """Initialiser le service Creator Management"""
+        try:
             service = CreatorManagementService(self.config.creator_management_config)
             manager = CreatorManagementManager(self.config.creator_management_config)
             
@@ -267,7 +275,8 @@ class InfluencerAISuite:
             return False
     
     async def _initialize_content_protection(self) -> bool:
-        """Initialiser le service Content Protection"""        try:
+        """Initialiser le service Content Protection"""
+        try:
             service = create_content_protection_service(self.config.content_protection_config)
             manager = create_content_protection_manager(self.config.content_protection_config)
             
@@ -281,7 +290,8 @@ class InfluencerAISuite:
             return False
     
     async def _initialize_revenue_monetization(self) -> bool:
-        """Initialiser le service Revenue Monetization"""        try:
+        """Initialiser le service Revenue Monetization"""
+        try:
             service = create_revenue_monetization_service(self.config.revenue_monetization_config)
             manager = create_revenue_monetization_manager(self.config.revenue_monetization_config)
             
@@ -295,7 +305,8 @@ class InfluencerAISuite:
             return False
     
     async def _initialize_platform_distribution(self) -> bool:
-        """Initialiser le service Platform Distribution"""        try:
+        """Initialiser le service Platform Distribution"""
+        try:
             service = create_platform_distribution_service(self.config.platform_distribution_config)
             manager = create_platform_distribution_manager(self.config.platform_distribution_config)
             
@@ -309,7 +320,8 @@ class InfluencerAISuite:
             return False
     
     async def _initialize_seo_marketing(self) -> bool:
-        """Initialiser le service SEO Marketing"""        try:
+        """Initialiser le service SEO Marketing"""
+        try:
             service = create_seo_marketing_service(self.config.seo_marketing_config)
             manager = create_seo_marketing_manager(self.config.seo_marketing_config)
             
@@ -323,7 +335,8 @@ class InfluencerAISuite:
             return False
     
     async def _start_health_monitoring(self):
-        """Démarrer la surveillance de santé des services"""        try:
+        """Démarrer la surveillance de santé des services"""
+        try:
             async def health_monitor():
                 while True:
                     await self._check_services_health()
@@ -336,7 +349,8 @@ class InfluencerAISuite:
             self.logger.error(f"Failed to start health monitoring: {str(e)}")
     
     async def _check_services_health(self):
-        """Vérifier la santé de tous les services"""        try:
+        """Vérifier la santé de tous les services"""
+        try:
             health_status = {}
             
             for service_name, service in self.services.items():
@@ -356,13 +370,16 @@ class InfluencerAISuite:
             self.logger.error(f"Health check failed: {str(e)}")
     
     def get_service(self, service_name: str) -> Optional[Any]:
-        """Obtenir un service par nom"""        return self.services.get(service_name)
+        """Obtenir un service par nom"""
+        return self.services.get(service_name)
     
     def get_manager(self, manager_name: str) -> Optional[Any]:
-        """Obtenir un gestionnaire par nom"""        return self.managers.get(manager_name)
+        """Obtenir un gestionnaire par nom"""
+        return self.managers.get(manager_name)
     
     async def shutdown(self):
-        """Arrêter proprement tous les services"""        try:
+        """Arrêter proprement tous les services"""
+        try:
             self.logger.info("Shutting down Influencer AI Suite")
             
             # Arrêter tous les services qui ont une méthode shutdown
@@ -390,59 +407,70 @@ class InfluencerAISuite:
 # =============== FACTORY FUNCTIONS ===============
 
 async def create_influencer_ai_suite(config: Optional[InfluencerAISuiteConfig] = None) -> InfluencerAISuite:
-    """Factory pour créer et initialiser la suite complète Influencer AI"""    suite = InfluencerAISuite(config)
+    """Factory pour créer et initialiser la suite complète Influencer AI"""
+    suite = InfluencerAISuite(config)
     await suite.initialize()
     return suite
 
 async def create_ai_assistant(config: Optional[AiAssistantConfig] = None) -> AiAssistantService:
-    """Factory pour créer un service AI Assistant"""    service = create_aiassistant_service(config)
+    """Factory pour créer un service AI Assistant"""
+    service = create_aiassistant_service(config)
     await service.initialize()
     return service
 
 async def create_analytics_intelligence(config: Optional[AnalyticsIntelligenceConfig] = None) -> AnalyticsIntelligenceService:
-    """Factory pour créer un service Analytics Intelligence"""    service = AnalyticsIntelligenceService(config)
+    """Factory pour créer un service Analytics Intelligence"""
+    service = AnalyticsIntelligenceService(config)
     await service.initialize()
     return service
 
 async def create_collaboration_platform(config: Optional[CollaborationPlatformConfig] = None) -> CollaborationPlatformService:
-    """Factory pour créer un service Collaboration Platform"""    service = CollaborationPlatformService(config)
+    """Factory pour créer un service Collaboration Platform"""
+    service = CollaborationPlatformService(config)
     await service.initialize()
     return service
 
 async def create_content_optimization(config: Optional[ContentOptimizationConfig] = None) -> ContentOptimizationService:
-    """Factory pour créer un service Content Optimization"""    service = ContentOptimizationService(config)
+    """Factory pour créer un service Content Optimization"""
+    service = ContentOptimizationService(config)
     await service.initialize()
     return service
 
 async def create_creator_management(config: Optional[CreatorManagementConfig] = None) -> CreatorManagementService:
-    """Factory pour créer un service Creator Management"""    service = CreatorManagementService(config)
+    """Factory pour créer un service Creator Management"""
+    service = CreatorManagementService(config)
     await service.initialize()
     return service
 
 async def create_content_protection(config: Optional[ContentProtectionConfig] = None) -> ContentProtectionService:
-    """Factory pour créer un service Content Protection"""    service = create_content_protection_service(config)
+    """Factory pour créer un service Content Protection"""
+    service = create_content_protection_service(config)
     await service.initialize()
     return service
 
 async def create_revenue_monetization(config: Optional[RevenueMonetizationConfig] = None) -> RevenueMonetizationService:
-    """Factory pour créer un service Revenue Monetization"""    service = create_revenue_monetization_service(config)
+    """Factory pour créer un service Revenue Monetization"""
+    service = create_revenue_monetization_service(config)
     await service.initialize()
     return service
 
 async def create_platform_distribution(config: Optional[PlatformDistributionConfig] = None) -> PlatformDistributionService:
-    """Factory pour créer un service Platform Distribution"""    service = create_platform_distribution_service(config)
+    """Factory pour créer un service Platform Distribution"""
+    service = create_platform_distribution_service(config)
     await service.initialize()
     return service
 
 async def create_seo_marketing(config: Optional[SEOMarketingConfig] = None) -> SEOMarketingService:
-    """Factory pour créer un service SEO Marketing"""    service = create_seo_marketing_service(config)
+    """Factory pour créer un service SEO Marketing"""
+    service = create_seo_marketing_service(config)
     await service.initialize()
     return service
 
 # =============== HEALTH CHECK UTILITIES ===============
 
 async def check_suite_health() -> Dict[str, Any]:
-    """Vérifier la santé de la suite complète"""    try:
+    """Vérifier la santé de la suite complète"""
+    try:
         # Créer une instance temporaire pour les vérifications
         suite = InfluencerAISuite()
         

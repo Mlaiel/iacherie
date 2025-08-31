@@ -25,7 +25,8 @@ DIMENSIONS QUALITÉ:
 📝 Content Quality: Readability, SEO, Grammar, Relevance
 🛡️ Security Quality: Malware Scan, Privacy Check, Copyright Compliance
 🚀 Performance Quality: Load Time, Compression Ratio, Streaming Readiness
-"""from typing import Dict, List, Any, Optional, Union, Tuple
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime, timedelta
@@ -62,7 +63,8 @@ __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 logger = logging.getLogger(__name__)
 
 class QualityDimension(Enum):
-    """Dimensions de qualité évaluées"""    TECHNICAL = "technical"
+    """Dimensions de qualité évaluées"""
+    TECHNICAL = "technical"
     AESTHETIC = "aesthetic"
     AUDIO = "audio"
     CONTENT = "content"
@@ -72,14 +74,16 @@ class QualityDimension(Enum):
     ACCESSIBILITY = "accessibility"
 
 class QualityLevel(Enum):
-    """Niveaux de qualité"""    POOR = 1
+    """Niveaux de qualité"""
+    POOR = 1
     BELOW_AVERAGE = 2
     AVERAGE = 3
     GOOD = 4
     EXCELLENT = 5
 
 class ContentType(Enum):
-    """Types de contenu supportés"""    AUDIO = "audio"
+    """Types de contenu supportés"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -87,7 +91,8 @@ class ContentType(Enum):
 
 @dataclass
 class QualityMetric:
-    """Métrique de qualité individuelle"""    name: str
+    """Métrique de qualité individuelle"""
+    name: str
     value: float
     max_value: float
     unit: str
@@ -96,7 +101,8 @@ class QualityMetric:
 
 @dataclass
 class QualityAssessment:
-    """Évaluation complète de qualité"""    content_id: str
+    """Évaluation complète de qualité"""
+    content_id: str
     content_type: ContentType
     overall_score: float
     quality_level: QualityLevel
@@ -109,13 +115,15 @@ class QualityAssessment:
 
 @dataclass
 class QualityThresholds:
-    """Seuils de qualité par type de contenu"""    content_type: ContentType
+    """Seuils de qualité par type de contenu"""
+    content_type: ContentType
     minimum_scores: Dict[QualityDimension, float]
     warning_scores: Dict[QualityDimension, float]
     target_scores: Dict[QualityDimension, float]
 
 class QualityAssuranceEngine:
-    """    Moteur avancé d'assurance qualité multi-format
+    """
+    Moteur avancé d'assurance qualité multi-format
     
     Capacités:
     - Évaluation qualité technique et esthétique
@@ -124,7 +132,8 @@ class QualityAssuranceEngine:
     - Recommandations d'amélioration IA
     - Monitoring qualité continu
     - Métriques de performance avancées
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.content_repository = ContentRepository()
@@ -141,7 +150,8 @@ class QualityAssuranceEngine:
         self.assessment_cache = {}
         
     def _initialize_ai_models(self) -> Dict[str, Any]:
-        """Initialise les modèles IA pour l'évaluation qualité"""        models = {}
+        """Initialise les modèles IA pour l'évaluation qualité"""
+        models = {}
         
         try:
             # Modèle d'évaluation de sentiment pour le contenu
@@ -170,7 +180,8 @@ class QualityAssuranceEngine:
         return models
         
     def _load_platform_thresholds(self) -> Dict[str, QualityThresholds]:
-        """Charge les seuils de qualité par plateforme"""        thresholds = {}
+        """Charge les seuils de qualité par plateforme"""
+        thresholds = {}
         
         # YouTube
         thresholds["youtube"] = {
@@ -246,7 +257,8 @@ class QualityAssuranceEngine:
     async def assess_content_quality(self, content_path: str, content_type: ContentType,
                                    target_platforms: Optional[List[str]] = None,
                                    creator_id: Optional[str] = None) -> QualityAssessment:
-        """        Évalue la qualité complète d'un contenu
+        """
+        Évalue la qualité complète d'un contenu
         
         Args:
             content_path: Chemin vers le fichier
@@ -256,7 +268,8 @@ class QualityAssuranceEngine:
             
         Returns:
             QualityAssessment: Évaluation complète
-        """        start_time = asyncio.get_event_loop().time()
+        """
+        start_time = asyncio.get_event_loop().time()
         
         try:
             content_id = hashlib.md5(content_path.encode()).hexdigest()
@@ -321,7 +334,8 @@ class QualityAssuranceEngine:
             raise
     
     async def _assess_audio_quality(self, audio_path: str, assessment: QualityAssessment):
-        """Évalue la qualité audio"""        try:
+        """Évalue la qualité audio"""
+        try:
             # Chargement de l'audio
             y, sr = librosa.load(audio_path, sr=None)
             duration = len(y) / sr
@@ -424,7 +438,8 @@ class QualityAssuranceEngine:
             assessment.dimension_scores[QualityDimension.AUDIO] = 0.5
     
     def _calculate_frequency_balance(self, low: float, mid: float, high: float, total: float) -> float:
-        """Calcule l'équilibre fréquentiel"""        if total == 0:
+        """Calcule l'équilibre fréquentiel"""
+        if total == 0:
             return 0.0
         
         # Ratios idéaux (approximatifs)
@@ -445,7 +460,8 @@ class QualityAssuranceEngine:
         return max(0.0, 1.0 - deviation * 2)
     
     async def _assess_video_quality(self, video_path: str, assessment: QualityAssessment):
-        """Évalue la qualité vidéo"""        try:
+        """Évalue la qualité vidéo"""
+        try:
             cap = cv2.VideoCapture(video_path)
             
             # Propriétés de base
@@ -571,13 +587,15 @@ class QualityAssuranceEngine:
             assessment.dimension_scores[QualityDimension.TECHNICAL] = 0.5
     
     def _normalize_brightness(self, brightness: float) -> float:
-        """Normalise la luminosité (optimal around 128)"""        # Optimal brightness is around 128 (middle gray)
+        """Normalise la luminosité (optimal around 128)"""
+        # Optimal brightness is around 128 (middle gray)
         optimal = 128
         deviation = abs(brightness - optimal) / optimal
         return max(0.0, 1.0 - deviation)
     
     async def _assess_image_quality(self, image_path: str, assessment: QualityAssessment):
-        """Évalue la qualité image"""        try:
+        """Évalue la qualité image"""
+        try:
             # Chargement de l'image
             image = Image.open(image_path)
             img_array = np.array(image)
@@ -719,14 +737,16 @@ class QualityAssuranceEngine:
             assessment.dimension_scores[QualityDimension.AESTHETIC] = 0.5
     
     def _calculate_noise_level(self, gray_image: np.ndarray) -> float:
-        """Calcule le niveau de bruit dans l'image"""        # Utilisation de la variance locale pour détecter le bruit
+        """Calcule le niveau de bruit dans l'image"""
+        # Utilisation de la variance locale pour détecter le bruit
         kernel = np.ones((3, 3), np.float32) / 9
         blurred = cv2.filter2D(gray_image.astype(np.float32), -1, kernel)
         noise = np.var(gray_image.astype(np.float32) - blurred)
         return min(1.0, noise / 1000)  # Normalisation
     
     def _analyze_composition(self, gray_image: np.ndarray) -> float:
-        """Analyse la composition de l'image (règle des tiers)"""        h, w = gray_image.shape
+        """Analyse la composition de l'image (règle des tiers)"""
+        h, w = gray_image.shape
         
         # Points d'intérêt selon la règle des tiers
         third_points = [
@@ -748,7 +768,8 @@ class QualityAssuranceEngine:
         return min(1.0, composition_score / len(third_points))
     
     async def _assess_text_quality(self, text_path: str, assessment: QualityAssessment):
-        """Évalue la qualité du texte"""        try:
+        """Évalue la qualité du texte"""
+        try:
             with open(text_path, 'r', encoding='utf-8') as f:
                 content = f.read()
             
@@ -861,7 +882,8 @@ class QualityAssuranceEngine:
             assessment.dimension_scores[QualityDimension.CONTENT] = 0.5
     
     def _count_spelling_errors(self, text: str) -> int:
-        """Compte les erreurs d'orthographe (implémentation basique)"""        # Implémentation simplifiée - dans un vrai système, on utiliserait
+        """Compte les erreurs d'orthographe (implémentation basique)"""
+        # Implémentation simplifiée - dans un vrai système, on utiliserait
         # une bibliothèque comme pyspellchecker
         words = text.split()
         errors = 0
@@ -879,7 +901,8 @@ class QualityAssuranceEngine:
         return errors
     
     def _analyze_grammar(self, text: str) -> float:
-        """Analyse grammaticale basique"""        # Implémentation simplifiée
+        """Analyse grammaticale basique"""
+        # Implémentation simplifiée
         sentences = [s.strip() for s in text.split('.') if s.strip()]
         if not sentences:
             return 0.5
@@ -909,7 +932,8 @@ class QualityAssuranceEngine:
         return grammar_score / len(sentences)
     
     def _analyze_text_structure(self, text: str) -> float:
-        """Analyse la structure du texte"""        lines = text.split('\n')
+        """Analyse la structure du texte"""
+        lines = text.split('\n')
         paragraphs = [p.strip() for p in text.split('\n\n') if p.strip()]
         
         structure_score = 0.0
@@ -935,7 +959,8 @@ class QualityAssuranceEngine:
         return min(1.0, structure_score)
     
     async def _assess_security_quality(self, content_path: str, assessment: QualityAssessment):
-        """Évalue la sécurité du contenu"""        try:
+        """Évalue la sécurité du contenu"""
+        try:
             # Détection du type de fichier
             file_type = magic.from_file(content_path, mime=True)
             
@@ -1014,7 +1039,8 @@ class QualityAssuranceEngine:
             assessment.dimension_scores[QualityDimension.SECURITY] = 0.5
     
     async def _assess_performance_quality(self, content_path: str, assessment: QualityAssessment):
-        """Évalue la performance du contenu"""        try:
+        """Évalue la performance du contenu"""
+        try:
             file_size = Path(content_path).stat().st_size
             
             # Calcul de métriques de performance
@@ -1071,7 +1097,8 @@ class QualityAssuranceEngine:
             assessment.dimension_scores[QualityDimension.PERFORMANCE] = 0.5
     
     def _calculate_compression_efficiency(self, content_path: str, content_type: ContentType) -> float:
-        """Calcule l'efficacité de compression"""        file_size = Path(content_path).stat().st_size
+        """Calcule l'efficacité de compression"""
+        file_size = Path(content_path).stat().st_size
         
         # Estimations d'efficacité basées sur la taille et le type
         if content_type == ContentType.IMAGE:
@@ -1099,12 +1126,14 @@ class QualityAssuranceEngine:
         return efficiency
     
     def _estimate_loading_time(self, file_size: int) -> float:
-        """Estime le temps de chargement"""        # Connexion moyenne : 5 Mbps
+        """Estime le temps de chargement"""
+        # Connexion moyenne : 5 Mbps
         connection_speed = 5 * 1024 * 1024 / 8  # bytes/sec
         return file_size / connection_speed
     
     def _assess_streaming_readiness(self, content_path: str, content_type: ContentType) -> float:
-        """Évalue la préparation pour le streaming"""        if content_type in [ContentType.AUDIO, ContentType.VIDEO]:
+        """Évalue la préparation pour le streaming"""
+        if content_type in [ContentType.AUDIO, ContentType.VIDEO]:
             # Vérification de l'encodage progressif
             try:
                 if content_type == ContentType.VIDEO:
@@ -1120,7 +1149,8 @@ class QualityAssuranceEngine:
     
     async def _assess_platform_compliance(self, content_path: str, assessment: QualityAssessment,
                                         target_platforms: List[str]):
-        """Évalue la conformité aux plateformes cibles"""        compliance_scores = {}
+        """Évalue la conformité aux plateformes cibles"""
+        compliance_scores = {}
         
         for platform in target_platforms:
             if platform in self.platform_thresholds:
@@ -1149,7 +1179,8 @@ class QualityAssuranceEngine:
     
     def _calculate_platform_compliance(self, assessment: QualityAssessment,
                                      thresholds: QualityThresholds) -> float:
-        """Calcule le score de conformité pour une plateforme"""        compliance_scores = []
+        """Calcule le score de conformité pour une plateforme"""
+        compliance_scores = []
         
         for dimension, min_score in thresholds.minimum_scores.items():
             actual_score = assessment.dimension_scores.get(dimension, 0.0)
@@ -1162,7 +1193,8 @@ class QualityAssuranceEngine:
     
     def _check_platform_requirements(self, content_path: str, assessment: QualityAssessment,
                                    platform: str) -> List[Dict[str, Any]]:
-        """Vérifie les exigences spécifiques d'une plateforme"""        issues = []
+        """Vérifie les exigences spécifiques d'une plateforme"""
+        issues = []
         
         if platform == "youtube" and assessment.content_type == ContentType.VIDEO:
             # Vérifications spécifiques YouTube
@@ -1195,7 +1227,8 @@ class QualityAssuranceEngine:
         return issues
     
     def _calculate_overall_score(self, assessment: QualityAssessment) -> float:
-        """Calcule le score global de qualité"""        if not assessment.dimension_scores:
+        """Calcule le score global de qualité"""
+        if not assessment.dimension_scores:
             return 0.0
         
         # Poids par dimension
@@ -1220,7 +1253,8 @@ class QualityAssuranceEngine:
         return weighted_score / total_weight if total_weight > 0 else 0.0
     
     def _determine_quality_level(self, overall_score: float) -> QualityLevel:
-        """Détermine le niveau de qualité"""        if overall_score >= 0.9:
+        """Détermine le niveau de qualité"""
+        if overall_score >= 0.9:
             return QualityLevel.EXCELLENT
         elif overall_score >= 0.75:
             return QualityLevel.GOOD
@@ -1234,7 +1268,8 @@ class QualityAssuranceEngine:
     async def _generate_quality_recommendations(self, content_path: str,
                                               assessment: QualityAssessment,
                                               target_platforms: Optional[List[str]] = None) -> List[Dict[str, Any]]:
-        """Génère des recommandations d'amélioration"""        recommendations = []
+        """Génère des recommandations d'amélioration"""
+        recommendations = []
         
         # Recommandations basées sur les scores
         for dimension, score in assessment.dimension_scores.items():
@@ -1284,7 +1319,8 @@ class QualityAssuranceEngine:
     
     def _generate_platform_recommendations(self, assessment: QualityAssessment,
                                          platform: str) -> List[Dict[str, Any]]:
-        """Génère des recommandations spécifiques à une plateforme"""        recommendations = []
+        """Génère des recommandations spécifiques à une plateforme"""
+        recommendations = []
         
         if platform == "youtube":
             recommendations.append({

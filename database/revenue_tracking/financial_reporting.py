@@ -9,7 +9,8 @@ prohibited and will result in severe legal consequences.
 
 Comprehensive financial reporting for content creators, including income statements,
 balance sheets, cash flow, profit/loss, tax, compliance, and audit reports.
-"""import logging
+"""
+import logging
 from typing import Dict, List, Any, Optional
 from decimal import Decimal
 from datetime import datetime, timedelta
@@ -19,7 +20,8 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class ReportType(Enum):
-    """Financial report types"""    INCOME_STATEMENT = "income_statement"
+    """Financial report types"""
+    INCOME_STATEMENT = "income_statement"
     BALANCE_SHEET = "balance_sheet"
     CASH_FLOW = "cash_flow"
     PROFIT_LOSS = "profit_loss"
@@ -32,7 +34,8 @@ class ReportType(Enum):
 
 @dataclass
 class FinancialReport:
-    """Financial report data structure"""    report_id: str
+    """Financial report data structure"""
+    report_id: str
     creator_id: str
     report_type: ReportType
     period_start: datetime
@@ -42,12 +45,14 @@ class FinancialReport:
     details: Dict[str, Any] = field(default_factory=dict)
 
 class FinancialReportingEngine:
-    """Comprehensive financial reporting engine"""    def __init__(self, creator_id: str):
+    """Comprehensive financial reporting engine"""
+    def __init__(self, creator_id: str):
         self.creator_id = creator_id
         self.logger = logging.getLogger(f"FinancialReportingEngine:{creator_id}")
 
     def generate_report(self, report_type: ReportType, period_start: datetime, period_end: datetime, metrics: Dict[str, Any]) -> FinancialReport:
-        """Generate a financial report"""        report = FinancialReport(
+        """Generate a financial report"""
+        report = FinancialReport(
             report_id=f"report_{self.creator_id}_{report_type.value}_{int(datetime.utcnow().timestamp())}",
             creator_id=self.creator_id,
             report_type=report_type,

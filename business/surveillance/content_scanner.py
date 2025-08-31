@@ -28,7 +28,8 @@ Content Upload → Multi-Modal Analysis → Fingerprint Generation →
 Metadata Extraction → Quality Assessment → Security Scan → 
 Compliance Check → Similarity Matching → Results Aggregation → 
 Storage & Indexing → Monitoring Activation
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import mimetypes
@@ -71,7 +72,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Enhanced content types for scanning"""    VIDEO = "video"
+    """Enhanced content types for scanning"""
+    VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
     TEXT = "text"
@@ -85,7 +87,8 @@ class ContentType(Enum):
 
 
 class ScanType(Enum):
-    """Types of content scans"""    FINGERPRINT = "fingerprint"
+    """Types of content scans"""
+    FINGERPRINT = "fingerprint"
     METADATA = "metadata"
     SIMILARITY = "similarity"
     QUALITY = "quality"
@@ -100,7 +103,8 @@ class ScanType(Enum):
 
 
 class QualityLevel(Enum):
-    """Content quality assessment levels"""    EXCEPTIONAL = "exceptional"
+    """Content quality assessment levels"""
+    EXCEPTIONAL = "exceptional"
     HIGH = "high"
     GOOD = "good"
     AVERAGE = "average"
@@ -109,7 +113,8 @@ class QualityLevel(Enum):
 
 
 class SecurityThreat(Enum):
-    """Security threat types"""    MALWARE = "malware"
+    """Security threat types"""
+    MALWARE = "malware"
     VIRUS = "virus"
     TROJAN = "trojan"
     SUSPICIOUS_CODE = "suspicious_code"
@@ -120,7 +125,8 @@ class SecurityThreat(Enum):
 
 
 class AnalysisEngine(Enum):
-    """Content analysis engines"""    INTERNAL_AI = "internal_ai"
+    """Content analysis engines"""
+    INTERNAL_AI = "internal_ai"
     OPENCV = "opencv"
     LIBROSA = "librosa"
     PIL = "pil"
@@ -132,7 +138,8 @@ class AnalysisEngine(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint structure"""    fingerprint_id: str
+    """Content fingerprint structure"""
+    fingerprint_id: str
     content_type: ContentType
     algorithm: str
     
@@ -149,12 +156,14 @@ class ContentFingerprint:
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return asdict(self)
+        """Convert to dictionary"""
+        return asdict(self)
 
 
 @dataclass
 class ContentMetadata:
-    """Content metadata structure"""    content_id: str
+    """Content metadata structure"""
+    content_id: str
     content_type: ContentType
     
     # Basic information
@@ -188,7 +197,8 @@ class ContentMetadata:
 
 @dataclass
 class ScanRequest:
-    """Content scan request"""    request_id: str
+    """Content scan request"""
+    request_id: str
     content_url: Optional[str] = None
     content_data: Optional[bytes] = None
     content_path: Optional[str] = None
@@ -213,7 +223,8 @@ class ScanRequest:
 
 @dataclass
 class ScanResult:
-    """Content scan result"""    request_id: str
+    """Content scan result"""
+    request_id: str
     content_id: str
     content_type: ContentType
     
@@ -243,13 +254,15 @@ class ScanResult:
 
 
 class BaseContentAnalyzer:
-    """Base class for content analyzers"""    
+    """Base class for content analyzers"""
+    
     def __init__(self, content_type: ContentType, engine: AnalysisEngine):
         self.content_type = content_type
         self.engine = engine
     
     async def analyze(self, content_data: bytes, metadata: ContentMetadata) -> Dict[str, Any]:
-        """Analyze content and return results"""        # Default implementation for content types without specific analysis
+        """Analyze content and return results"""
+        # Default implementation for content types without specific analysis
         logging.warning(f"Content analysis not implemented for {self.content_type}")
         return {
             "content_type": self.content_type.value,
@@ -259,7 +272,8 @@ class BaseContentAnalyzer:
         }
     
     async def extract_fingerprint(self, content_data: bytes) -> ContentFingerprint:
-        """Extract content fingerprint"""        # Default implementation providing basic fingerprint
+        """Extract content fingerprint"""
+        # Default implementation providing basic fingerprint
         import hashlib
         content_hash = hashlib.sha256(content_data).hexdigest()
         
@@ -273,16 +287,19 @@ class BaseContentAnalyzer:
         )
     
     def get_supported_formats(self) -> List[str]:
-        """Get supported file formats"""        return []
+        """Get supported file formats"""
+        return []
 
 
 class VideoAnalyzer(BaseContentAnalyzer):
-    """Video content analyzer"""    
+    """Video content analyzer"""
+    
     def __init__(self):
         super().__init__(ContentType.VIDEO, AnalysisEngine.OPENCV)
     
     async def analyze(self, content_data: bytes, metadata: ContentMetadata) -> Dict[str, Any]:
-        """Analyze video content"""        analysis_result = {
+        """Analyze video content"""
+        analysis_result = {
             "frame_count": 0,
             "fps": 0.0,
             "resolution": {"width": 0, "height": 0},
@@ -350,7 +367,8 @@ class VideoAnalyzer(BaseContentAnalyzer):
         return analysis_result
     
     async def extract_fingerprint(self, content_data: bytes) -> ContentFingerprint:
-        """Extract video fingerprint"""        # Simulate video fingerprint extraction
+        """Extract video fingerprint"""
+        # Simulate video fingerprint extraction
         content_hash = hashlib.sha256(content_data).hexdigest()
         
         # Simulate perceptual hash and feature extraction
@@ -380,16 +398,19 @@ class VideoAnalyzer(BaseContentAnalyzer):
         return fingerprint
     
     def get_supported_formats(self) -> List[str]:
-        """Get supported video formats"""        return ["mp4", "avi", "mov", "mkv", "webm", "flv", "m4v"]
+        """Get supported video formats"""
+        return ["mp4", "avi", "mov", "mkv", "webm", "flv", "m4v"]
 
 
 class AudioAnalyzer(BaseContentAnalyzer):
-    """Audio content analyzer"""    
+    """Audio content analyzer"""
+    
     def __init__(self):
         super().__init__(ContentType.AUDIO, AnalysisEngine.LIBROSA)
     
     async def analyze(self, content_data: bytes, metadata: ContentMetadata) -> Dict[str, Any]:
-        """Analyze audio content"""        analysis_result = {
+        """Analyze audio content"""
+        analysis_result = {
             "sample_rate": 44100,
             "channels": 2,
             "duration": 0.0,
@@ -450,7 +471,8 @@ class AudioAnalyzer(BaseContentAnalyzer):
         return analysis_result
     
     async def extract_fingerprint(self, content_data: bytes) -> ContentFingerprint:
-        """Extract audio fingerprint"""        # Simulate audio fingerprint extraction
+        """Extract audio fingerprint"""
+        # Simulate audio fingerprint extraction
         content_hash = hashlib.sha256(content_data).hexdigest()
         
         # Simulate spectral fingerprinting
@@ -472,16 +494,19 @@ class AudioAnalyzer(BaseContentAnalyzer):
         return fingerprint
     
     def get_supported_formats(self) -> List[str]:
-        """Get supported audio formats"""        return ["mp3", "wav", "flac", "aac", "ogg", "m4a", "wma"]
+        """Get supported audio formats"""
+        return ["mp3", "wav", "flac", "aac", "ogg", "m4a", "wma"]
 
 
 class ImageAnalyzer(BaseContentAnalyzer):
-    """Image content analyzer"""    
+    """Image content analyzer"""
+    
     def __init__(self):
         super().__init__(ContentType.IMAGE, AnalysisEngine.PIL)
     
     async def analyze(self, content_data: bytes, metadata: ContentMetadata) -> Dict[str, Any]:
-        """Analyze image content"""        analysis_result = {
+        """Analyze image content"""
+        analysis_result = {
             "dimensions": {"width": 0, "height": 0},
             "format": "unknown",
             "mode": "RGB",
@@ -557,7 +582,8 @@ class ImageAnalyzer(BaseContentAnalyzer):
         return analysis_result
     
     async def extract_fingerprint(self, content_data: bytes) -> ContentFingerprint:
-        """Extract image fingerprint"""        # Simulate image fingerprint extraction
+        """Extract image fingerprint"""
+        # Simulate image fingerprint extraction
         content_hash = hashlib.sha256(content_data).hexdigest()
         
         # Simulate perceptual hashing (pHash)
@@ -591,16 +617,19 @@ class ImageAnalyzer(BaseContentAnalyzer):
         return fingerprint
     
     def get_supported_formats(self) -> List[str]:
-        """Get supported image formats"""        return ["jpg", "jpeg", "png", "gif", "bmp", "webp", "tiff", "svg"]
+        """Get supported image formats"""
+        return ["jpg", "jpeg", "png", "gif", "bmp", "webp", "tiff", "svg"]
 
 
 class TextAnalyzer(BaseContentAnalyzer):
-    """Text content analyzer"""    
+    """Text content analyzer"""
+    
     def __init__(self):
         super().__init__(ContentType.TEXT, AnalysisEngine.SPACY)
     
     async def analyze(self, content_data: bytes, metadata: ContentMetadata) -> Dict[str, Any]:
-        """Analyze text content"""        try:
+        """Analyze text content"""
+        try:
             text_content = content_data.decode('utf-8', errors='ignore')
         except:
             text_content = str(content_data)
@@ -671,7 +700,8 @@ class TextAnalyzer(BaseContentAnalyzer):
         return analysis_result
     
     async def extract_fingerprint(self, content_data: bytes) -> ContentFingerprint:
-        """Extract text fingerprint"""        try:
+        """Extract text fingerprint"""
+        try:
             text_content = content_data.decode('utf-8', errors='ignore')
         except:
             text_content = str(content_data)
@@ -702,13 +732,16 @@ class TextAnalyzer(BaseContentAnalyzer):
         return fingerprint
     
     def get_supported_formats(self) -> List[str]:
-        """Get supported text formats"""        return ["txt", "md", "html", "xml", "json", "csv", "rtf"]
+        """Get supported text formats"""
+        return ["txt", "md", "html", "xml", "json", "csv", "rtf"]
 
 
 class ContentScanner:
-    """    Advanced content scanning and analysis system for deep content inspection,
+    """
+    Advanced content scanning and analysis system for deep content inspection,
     metadata extraction, and multi-modal content fingerprinting
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.analyzers: Dict[ContentType, BaseContentAnalyzer] = {}
@@ -718,7 +751,8 @@ class ContentScanner:
         self.initialized = False
     
     async def initialize(self) -> None:
-        """Initialize content scanner"""        try:
+        """Initialize content scanner"""
+        try:
             # Initialize content analyzers
             self.analyzers[ContentType.VIDEO] = VideoAnalyzer()
             self.analyzers[ContentType.AUDIO] = AudioAnalyzer()
@@ -743,7 +777,8 @@ class ContentScanner:
         scan_types: Optional[List[ScanType]] = None,
         **kwargs
     ) -> str:
-        """Queue content for scanning"""        request_id = f"scan_{int(datetime.now().timestamp())}_{uuid.uuid4().hex[:8]}"
+        """Queue content for scanning"""
+        request_id = f"scan_{int(datetime.now().timestamp())}_{uuid.uuid4().hex[:8]}"
         
         if not any([content_url, content_data, content_path]):
             raise ValueError("Must provide content_url, content_data, or content_path")
@@ -763,7 +798,8 @@ class ContentScanner:
         return request_id
     
     async def _process_scan_queue(self) -> None:
-        """Process scan requests from queue"""        while True:
+        """Process scan requests from queue"""
+        while True:
             try:
                 # Get scan request from queue
                 request = await self.scan_queue.get()
@@ -784,7 +820,8 @@ class ContentScanner:
                 await asyncio.sleep(1)
     
     async def _process_scan_request(self, request: ScanRequest) -> ScanResult:
-        """Process a single scan request"""        start_time = datetime.now()
+        """Process a single scan request"""
+        start_time = datetime.now()
         content_id = f"content_{uuid.uuid4().hex[:8]}"
         
         try:
@@ -860,7 +897,8 @@ class ContentScanner:
         return scan_result
     
     async def _load_content_data(self, request: ScanRequest) -> bytes:
-        """Load content data from various sources"""        if request.content_data:
+        """Load content data from various sources"""
+        if request.content_data:
             return request.content_data
         
         if request.content_path:
@@ -881,7 +919,8 @@ class ContentScanner:
         raise ValueError("No content source available")
     
     async def _detect_content_type(self, content_data: bytes, request: ScanRequest) -> ContentType:
-        """Detect content type from data or filename"""        # Check MIME type first
+        """Detect content type from data or filename"""
+        # Check MIME type first
         mime_type = self._detect_mime_type(content_data)
         
         if mime_type:
@@ -928,7 +967,8 @@ class ContentScanner:
         return ContentType.UNKNOWN
     
     def _detect_mime_type(self, content_data: bytes) -> Optional[str]:
-        """Detect MIME type from content"""        # Simplified MIME type detection based on file signatures
+        """Detect MIME type from content"""
+        # Simplified MIME type detection based on file signatures
         if content_data.startswith(b'\xff\xd8\xff'):
             return 'image/jpeg'
         elif content_data.startswith(b'\x89PNG'):
@@ -945,7 +985,8 @@ class ContentScanner:
         return None
     
     def _extract_filename(self, request: ScanRequest) -> Optional[str]:
-        """Extract filename from request"""        if request.content_path:
+        """Extract filename from request"""
+        if request.content_path:
             return os.path.basename(request.content_path)
         elif request.content_url:
             return os.path.basename(urlparse(request.content_url).path)
@@ -955,7 +996,8 @@ class ContentScanner:
         return None
     
     async def _generate_preview(self, scan_result: ScanResult, content_data: bytes) -> None:
-        """Generate preview data for content"""        content_type = scan_result.content_type
+        """Generate preview data for content"""
+        content_type = scan_result.content_type
         
         if content_type == ContentType.IMAGE:
             # For images, thumbnail is the first 1KB as base64 (simulation)
@@ -973,7 +1015,8 @@ class ContentScanner:
             scan_result.audio_preview = base64.b64encode(content_data[:2048]).decode()
     
     async def _calculate_quality_score(self, scan_result: ScanResult) -> float:
-        """Calculate overall quality score"""        base_score = 0.7  # Base quality score
+        """Calculate overall quality score"""
+        base_score = 0.7  # Base quality score
         
         if scan_result.metadata and scan_result.metadata.quality_metrics:
             metrics = scan_result.metadata.quality_metrics
@@ -991,7 +1034,8 @@ class ContentScanner:
         return max(0.0, min(1.0, base_score))
     
     async def _check_compliance(self, scan_result: ScanResult) -> List[str]:
-        """Check content for compliance issues"""        issues = []
+        """Check content for compliance issues"""
+        issues = []
         
         # Check file size limits
         if scan_result.metadata and scan_result.metadata.file_size > 100 * 1024 * 1024:  # 100MB
@@ -1015,7 +1059,8 @@ class ContentScanner:
         return issues
     
     async def _security_scan(self, content_data: bytes) -> List[str]:
-        """Perform security scan on content"""        flags = []
+        """Perform security scan on content"""
+        flags = []
         
         # Check for embedded scripts (basic check)
         if b'<script' in content_data.lower():
@@ -1036,17 +1081,20 @@ class ContentScanner:
         return flags
     
     def _appears_to_be_text(self, content_data: bytes) -> bool:
-        """Check if content appears to be text"""        try:
+        """Check if content appears to be text"""
+        try:
             content_data.decode('utf-8')
             return True
         except:
             return False
     
     async def get_scan_result(self, request_id: str) -> Optional[ScanResult]:
-        """Get scan result by request ID"""        return self.scan_results.get(request_id)
+        """Get scan result by request ID"""
+        return self.scan_results.get(request_id)
     
     async def get_scan_status(self, request_id: str) -> Dict[str, Any]:
-        """Get scan status"""        if request_id in self.scan_results:
+        """Get scan status"""
+        if request_id in self.scan_results:
             result = self.scan_results[request_id]
             return {
                 "status": "completed",
@@ -1063,7 +1111,8 @@ class ContentScanner:
         }
     
     async def list_scan_results(self, content_type: Optional[ContentType] = None) -> List[Dict[str, Any]]:
-        """List scan results with optional filtering"""        results = []
+        """List scan results with optional filtering"""
+        results = []
         
         for request_id, scan_result in self.scan_results.items():
             if content_type and scan_result.content_type != content_type:
@@ -1084,7 +1133,8 @@ class ContentScanner:
         return sorted(results, key=lambda x: x["completed_at"], reverse=True)
     
     async def get_scanner_statistics(self) -> Dict[str, Any]:
-        """Get scanner statistics"""        total_scans = len(self.scan_results)
+        """Get scanner statistics"""
+        total_scans = len(self.scan_results)
         successful_scans = len([r for r in self.scan_results.values() if r.success])
         
         # Content type distribution
@@ -1116,7 +1166,8 @@ class ContentScanner:
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on content scanner"""        return {
+        """Perform health check on content scanner"""
+        return {
             "scanner": "healthy" if self.initialized else "unhealthy",
             "analyzers": len(self.analyzers),
             "queue_size": self.scan_queue.qsize(),
@@ -1126,7 +1177,8 @@ class ContentScanner:
         }
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown content scanner"""        logger.info("Shutting down Content Scanner")
+        """Gracefully shutdown content scanner"""
+        logger.info("Shutting down Content Scanner")
         
         if self.processing_task:
             self.processing_task.cancel()

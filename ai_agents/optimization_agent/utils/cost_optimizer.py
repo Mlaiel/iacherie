@@ -29,7 +29,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import threading
@@ -88,7 +89,8 @@ from ...monitoring.cost_monitor import CostMonitor
 logger = logging.getLogger(__name__)
 
 class CostCategory(Enum):
-    """Comprehensive cost categorization for optimization"""    COMPUTE_CPU = "compute_cpu"
+    """Comprehensive cost categorization for optimization"""
+    COMPUTE_CPU = "compute_cpu"
     COMPUTE_GPU = "compute_gpu"
     COMPUTE_MEMORY = "compute_memory"
     STORAGE_SSD = "storage_ssd"
@@ -113,7 +115,8 @@ class CostCategory(Enum):
     OPERATIONS_STAFF = "operations_staff"
 
 class OptimizationStrategy(Enum):
-    """Cost optimization strategies"""    AGGRESSIVE_COST_CUTTING = "aggressive_cost_cutting"
+    """Cost optimization strategies"""
+    AGGRESSIVE_COST_CUTTING = "aggressive_cost_cutting"
     BALANCED_OPTIMIZATION = "balanced_optimization"
     PERFORMANCE_PRESERVING = "performance_preserving"
     QUALITY_FOCUSED = "quality_focused"
@@ -124,7 +127,8 @@ class OptimizationStrategy(Enum):
 
 @dataclass
 class BudgetConstraints:
-    """Advanced budget constraints and limits"""    total_monthly_budget: Decimal = field(default=Decimal('10000.00'))
+    """Advanced budget constraints and limits"""
+    total_monthly_budget: Decimal = field(default=Decimal('10000.00'))
     daily_budget_limit: Decimal = field(default=Decimal('500.00'))
     hourly_budget_limit: Decimal = field(default=Decimal('50.00'))
     
@@ -146,7 +150,8 @@ class BudgetConstraints:
     cost_per_user_target: Decimal = field(default=Decimal('5.00'))
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""        return {
+        """Convert to dictionary for serialization"""
+        return {
             'total_monthly_budget': float(self.total_monthly_budget),
             'daily_budget_limit': float(self.daily_budget_limit),
             'hourly_budget_limit': float(self.hourly_budget_limit),
@@ -161,7 +166,8 @@ class BudgetConstraints:
 
 @dataclass
 class CostAnalysis:
-    """Comprehensive cost analysis results"""    analysis_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive cost analysis results"""
+    analysis_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     timestamp: datetime = field(default_factory=datetime.utcnow)
     
     # Current cost breakdown
@@ -192,7 +198,8 @@ class CostAnalysis:
 
 @dataclass
 class CostModel:
-    """Advanced cost modeling and pricing structure"""    model_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Advanced cost modeling and pricing structure"""
+    model_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     model_name: str = ""
     
     # Pricing components
@@ -211,7 +218,8 @@ class CostModel:
     priority_cost_multiplier: Dict[str, float] = field(default_factory=dict)
     
     def calculate_cost(self, usage_metrics: Dict[str, Any]) -> Decimal:
-        """Calculate total cost based on usage metrics"""        total_cost = Decimal('0.00')
+        """Calculate total cost based on usage metrics"""
+        total_cost = Decimal('0.00')
         
         # Add fixed costs
         for cost_type, cost in self.fixed_costs.items():
@@ -233,7 +241,8 @@ class CostModel:
 
 @dataclass
 class CostReduction:
-    """Cost reduction recommendation and implementation"""    reduction_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Cost reduction recommendation and implementation"""
+    reduction_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     strategy: OptimizationStrategy = OptimizationStrategy.BALANCED_OPTIMIZATION
     
     # Reduction details
@@ -264,7 +273,8 @@ class CostReduction:
 
 @dataclass
 class CostMetrics:
-    """Real-time cost metrics and KPIs"""    timestamp: datetime = field(default_factory=datetime.utcnow)
+    """Real-time cost metrics and KPIs"""
+    timestamp: datetime = field(default_factory=datetime.utcnow)
     
     # Core metrics
     total_cost_today: Decimal = field(default=Decimal('0.00'))
@@ -290,7 +300,8 @@ class CostMetrics:
     optimization_success_rate: float = 0.0
     
     def calculate_cost_health_score(self) -> float:
-        """Calculate overall cost health score (0-100)"""        score_components = {
+        """Calculate overall cost health score (0-100)"""
+        score_components = {
             'budget_utilization': max(0, 100 - self.monthly_budget_used_percent),
             'efficiency': self.infrastructure_efficiency,
             'burn_rate_stability': min(100, max(0, 100 - abs(self.budget_variance_percent))),
@@ -304,7 +315,8 @@ class CostMetrics:
 
 @dataclass
 class PricingStrategy:
-    """Dynamic pricing strategy management"""    strategy_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Dynamic pricing strategy management"""
+    strategy_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     strategy_name: str = ""
     
     # Pricing models
@@ -325,7 +337,8 @@ class PricingStrategy:
 
 @dataclass
 class CostForecast:
-    """Advanced cost forecasting and budget planning"""    forecast_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Advanced cost forecasting and budget planning"""
+    forecast_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     forecast_period_days: int = 30
     confidence_level: float = 0.85
     
@@ -346,7 +359,8 @@ class CostForecast:
 
 @dataclass
 class ROIAnalysis:
-    """Return on Investment analysis for cost optimization initiatives"""    analysis_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Return on Investment analysis for cost optimization initiatives"""
+    analysis_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     initiative_name: str = ""
     
     # Investment details
@@ -367,7 +381,8 @@ class ROIAnalysis:
     internal_rate_of_return: float = 0.0
     
     def calculate_roi_metrics(self, discount_rate: float = 0.10):
-        """Calculate comprehensive ROI metrics"""        if self.initial_investment > 0:
+        """Calculate comprehensive ROI metrics"""
+        if self.initial_investment > 0:
             # Simple ROI
             total_benefits = self.annual_savings + self.productivity_gains + self.revenue_increase
             self.simple_roi_percent = float((total_benefits - self.initial_investment) / self.initial_investment * 100)
@@ -387,7 +402,8 @@ class ROIAnalysis:
             self.net_present_value = Decimal(str(npv)).quantize(Decimal('0.01'))
 
 class CostOptimizer(BaseAgent):
-    """    Ultra-advanced cost optimization and financial management engine.
+    """
+    Ultra-advanced cost optimization and financial management engine.
     
     Capabilities:
     - Real-time cost monitoring and analysis across all platform components
@@ -400,7 +416,8 @@ class CostOptimizer(BaseAgent):
     - Cost anomaly detection and automated alerting
     - Budget management with intelligent spending controls
     - Financial reporting and business intelligence
-    """    def __init__(self, config: Dict[str, Any] = None):
+    """
+    def __init__(self, config: Dict[str, Any] = None):
         super().__init__()
         self.config = config or {}
         
@@ -440,7 +457,8 @@ class CostOptimizer(BaseAgent):
         logger.info("CostOptimizer initialized with advanced financial capabilities")
 
     def _initialize_cost_models(self):
-        """Initialize default cost models for different services"""        
+        """Initialize default cost models for different services"""
+        
         # Compute cost model
         compute_model = CostModel(
             model_name="compute_resources",
@@ -475,7 +493,8 @@ class CostOptimizer(BaseAgent):
         self.cost_models["database"] = database_model
 
     async def start_monitoring(self):
-        """Start continuous cost monitoring"""        if self._monitoring_active:
+        """Start continuous cost monitoring"""
+        if self._monitoring_active:
             return
         
         self._monitoring_active = True
@@ -488,7 +507,8 @@ class CostOptimizer(BaseAgent):
         logger.info("Cost monitoring started")
 
     def _monitoring_loop(self):
-        """Continuous cost monitoring loop"""        while self._monitoring_active:
+        """Continuous cost monitoring loop"""
+        while self._monitoring_active:
             try:
                 # Update current metrics
                 self._update_cost_metrics()
@@ -510,7 +530,8 @@ class CostOptimizer(BaseAgent):
                 time.sleep(600)  # Wait longer on error
 
     def _update_cost_metrics(self):
-        """Update current cost metrics"""        try:
+        """Update current cost metrics"""
+        try:
             # Calculate current costs
             current_hour_cost = self._calculate_current_hour_cost()
             current_day_cost = self._calculate_current_day_cost()
@@ -543,7 +564,8 @@ class CostOptimizer(BaseAgent):
             logger.error(f"Failed to update cost metrics: {e}")
 
     def _calculate_current_hour_cost(self) -> Decimal:
-        """Calculate cost for current hour"""        # This would integrate with actual billing APIs
+        """Calculate cost for current hour"""
+        # This would integrate with actual billing APIs
         # For now, simulate based on resource usage
         base_cost = Decimal('10.00')  # Base hourly cost
         
@@ -553,21 +575,24 @@ class CostOptimizer(BaseAgent):
         return base_cost * Decimal(str(usage_multiplier))
 
     def _calculate_current_day_cost(self) -> Decimal:
-        """Calculate cost for current day"""        # Simulate daily cost calculation
+        """Calculate cost for current day"""
+        # Simulate daily cost calculation
         hourly_cost = self._calculate_current_hour_cost()
         hours_today = datetime.utcnow().hour + 1
         
         return hourly_cost * Decimal(str(hours_today))
 
     def _calculate_current_month_cost(self) -> Decimal:
-        """Calculate cost for current month"""        # Simulate monthly cost calculation
+        """Calculate cost for current month"""
+        # Simulate monthly cost calculation
         daily_cost = self._calculate_current_day_cost()
         days_this_month = datetime.utcnow().day
         
         return daily_cost * Decimal(str(days_this_month))
 
     def _check_budget_alerts(self):
-        """Check for budget threshold violations"""        monthly_usage_percent = self.current_metrics.monthly_budget_used_percent
+        """Check for budget threshold violations"""
+        monthly_usage_percent = self.current_metrics.monthly_budget_used_percent
         
         # Check warning threshold
         if monthly_usage_percent >= self.budget_constraints.warning_threshold_percent:
@@ -590,7 +615,8 @@ class CostOptimizer(BaseAgent):
                 })
 
     def _detect_cost_anomalies(self):
-        """Detect unusual cost patterns"""        if len(self.cost_history) < 24:  # Need at least 24 data points (2 hours)
+        """Detect unusual cost patterns"""
+        if len(self.cost_history) < 24:  # Need at least 24 data points (2 hours)
             return
         
         recent_costs = [float(m.cost_per_hour_current) for m in self.cost_history[-24:]]
@@ -611,7 +637,8 @@ class CostOptimizer(BaseAgent):
                 })
 
     async def _auto_optimize_costs(self):
-        """Automatically optimize costs based on current metrics"""        try:
+        """Automatically optimize costs based on current metrics"""
+        try:
             # Identify optimization opportunities
             opportunities = await self._identify_optimization_opportunities()
             
@@ -624,7 +651,8 @@ class CostOptimizer(BaseAgent):
             logger.error(f"Auto cost optimization failed: {e}")
 
     async def _identify_optimization_opportunities(self) -> List[CostReduction]:
-        """Identify cost optimization opportunities"""        opportunities = []
+        """Identify cost optimization opportunities"""
+        opportunities = []
         
         # High CPU cost opportunity
         if self.current_metrics.cost_per_hour_current > Decimal('20.00'):
@@ -646,7 +674,8 @@ class CostOptimizer(BaseAgent):
         return opportunities
 
     async def _apply_cost_optimization(self, optimization: CostReduction):
-        """Apply a specific cost optimization"""        try:
+        """Apply a specific cost optimization"""
+        try:
             logger.info(f"Applying cost optimization: {optimization.reduction_id}")
             
             # Simulate optimization implementation
@@ -674,7 +703,8 @@ class CostOptimizer(BaseAgent):
         optimization_strategy: str = "balanced",
         quality_trade_off: float = 0.1
     ) -> CostAnalysis:
-        """Optimize costs for specific operation"""        
+        """Optimize costs for specific operation"""
+        
         analysis_id = f"cost_analysis_{int(time.time())}_{user_id}"
         
         try:
@@ -710,7 +740,8 @@ class CostOptimizer(BaseAgent):
             raise CostOptimizationError(f"Failed to optimize costs: {str(e)}")
 
     async def _analyze_current_costs(self, operation_type: str, user_id: str) -> Decimal:
-        """Analyze current costs for operation"""        # Simulate cost analysis based on operation type
+        """Analyze current costs for operation"""
+        # Simulate cost analysis based on operation type
         base_costs = {
             'audio_processing': Decimal('5.00'),
             'video_processing': Decimal('15.00'),
@@ -728,7 +759,8 @@ class CostOptimizer(BaseAgent):
         budget_limit: float,
         strategy: str
     ) -> List[CostReduction]:
-        """Identify specific cost optimization opportunities"""        
+        """Identify specific cost optimization opportunities"""
+        
         optimizations = []
         
         # Strategy-based optimizations
@@ -758,7 +790,8 @@ class CostOptimizer(BaseAgent):
         return optimizations
 
     def _calculate_cost_efficiency_score(self, current_cost: Decimal, savings: Decimal) -> float:
-        """Calculate cost efficiency score"""        if current_cost > 0:
+        """Calculate cost efficiency score"""
+        if current_cost > 0:
             efficiency = (float(savings) / float(current_cost)) * 100
             return min(efficiency, 100.0)
         return 0.0
@@ -768,7 +801,8 @@ class CostOptimizer(BaseAgent):
         forecast_days: int = 30,
         confidence_level: float = 0.85
     ) -> CostForecast:
-        """Generate advanced cost forecast"""        
+        """Generate advanced cost forecast"""
+        
         forecast = CostForecast(
             forecast_period_days=forecast_days,
             confidence_level=confidence_level
@@ -811,7 +845,8 @@ class CostOptimizer(BaseAgent):
         expected_monthly_savings: float,
         implementation_months: int = 3
     ) -> ROIAnalysis:
-        """Analyze ROI for cost optimization initiative"""        
+        """Analyze ROI for cost optimization initiative"""
+        
         analysis = ROIAnalysis(
             initiative_name=initiative_name,
             initial_investment=Decimal(str(investment_amount)),
@@ -826,7 +861,8 @@ class CostOptimizer(BaseAgent):
         return analysis
 
     async def get_cost_dashboard(self, user_id: str) -> Dict[str, Any]:
-        """Get comprehensive cost dashboard data"""        return {
+        """Get comprehensive cost dashboard data"""
+        return {
             "current_metrics": {
                 "total_cost_today": float(self.current_metrics.total_cost_today),
                 "total_cost_this_month": float(self.current_metrics.total_cost_this_month),
@@ -855,7 +891,8 @@ class CostOptimizer(BaseAgent):
         }
 
     async def get_status(self) -> Dict[str, Any]:
-        """Get cost optimizer status"""        return {
+        """Get cost optimizer status"""
+        return {
             "status": "active" if self._monitoring_active else "inactive",
             "current_monthly_cost": float(self.current_metrics.total_cost_this_month),
             "budget_utilization": self.current_metrics.monthly_budget_used_percent,
@@ -864,7 +901,8 @@ class CostOptimizer(BaseAgent):
         }
 
     async def health_check(self) -> Dict[str, Any]:
-        """Comprehensive health check"""        return {
+        """Comprehensive health check"""
+        return {
             "overall_status": "ok",
             "monitoring_active": self._monitoring_active,
             "budget_status": "healthy" if self.current_metrics.monthly_budget_used_percent < 80 else "warning",
@@ -874,7 +912,8 @@ class CostOptimizer(BaseAgent):
         }
 
     async def shutdown(self):
-        """Shutdown cost optimizer"""        self._monitoring_active = False
+        """Shutdown cost optimizer"""
+        self._monitoring_active = False
         
         if self._monitoring_thread and self._monitoring_thread.is_alive():
             self._monitoring_thread.join(timeout=5)
@@ -882,7 +921,8 @@ class CostOptimizer(BaseAgent):
         logger.info("CostOptimizer shutdown complete")
 
 class OptimizationGoal(Enum):
-    """Cost optimization objectives"""    MINIMIZE_TOTAL_COST = "minimize_total_cost"
+    """Cost optimization objectives"""
+    MINIMIZE_TOTAL_COST = "minimize_total_cost"
     MAXIMIZE_PERFORMANCE_PER_DOLLAR = "maximize_performance_per_dollar"
     REDUCE_WASTE = "reduce_waste"
     IMPROVE_ROI = "improve_roi"
@@ -890,7 +930,8 @@ class OptimizationGoal(Enum):
     OPTIMIZE_RESOURCE_UTILIZATION = "optimize_resource_utilization"
 
 class CostTier(Enum):
-    """Service tier pricing models"""    FREE = "free"
+    """Service tier pricing models"""
+    FREE = "free"
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -899,7 +940,8 @@ class CostTier(Enum):
 
 @dataclass
 class CostMetrics:
-    """Comprehensive cost tracking metrics"""    timestamp: datetime = field(default_factory=datetime.now)
+    """Comprehensive cost tracking metrics"""
+    timestamp: datetime = field(default_factory=datetime.now)
     total_cost: float = 0.0
     compute_cost: float = 0.0
     storage_cost: float = 0.0
@@ -913,7 +955,8 @@ class CostMetrics:
 
 @dataclass
 class CostOptimization:
-    """Cost optimization opportunity"""    optimization_id: str
+    """Cost optimization opportunity"""
+    optimization_id: str
     category: CostCategory
     current_cost: float
     optimized_cost: float
@@ -928,7 +971,8 @@ class CostOptimization:
 
 @dataclass
 class BudgetAlert:
-    """Budget monitoring alert"""    alert_id: str
+    """Budget monitoring alert"""
+    alert_id: str
     budget_name: str
     current_spend: float
     budget_limit: float
@@ -939,7 +983,8 @@ class BudgetAlert:
     timestamp: datetime = field(default_factory=datetime.now)
 
 class CostOptimizer:
-    """    Advanced cost optimization engine with intelligent budget management.
+    """
+    Advanced cost optimization engine with intelligent budget management.
     
     Features:
     - Real-time cost monitoring and analysis
@@ -949,7 +994,8 @@ class CostOptimizer:
     - Multi-cloud cost management
     - ROI analysis and optimization
     - Predictive cost modeling
-    """    def __init__(self, config: Dict[str, Any] = None):
+    """
+    def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.cost_calculator = CostCalculator()
         self.budget_tracker = BudgetTracker()
@@ -984,7 +1030,8 @@ class CostOptimizer:
         logger.info("CostOptimizer initialized successfully")
 
     def _initialize_pricing_models(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize pricing models for different services"""        return {
+        """Initialize pricing models for different services"""
+        return {
             'compute': {
                 'cpu_hour': 0.05,  # Per CPU core per hour
                 'memory_gb_hour': 0.01,  # Per GB memory per hour
@@ -1014,7 +1061,8 @@ class CostOptimizer:
         }
 
     def _initialize_resource_costs(self) -> Dict[str, float]:
-        """Initialize current resource costs"""        return {
+        """Initialize current resource costs"""
+        return {
             'cpu_cores': 0.0,
             'memory_gb': 0.0,
             'storage_gb': 0.0,
@@ -1026,7 +1074,8 @@ class CostOptimizer:
     async def optimize_costs(self, 
                            goal: OptimizationGoal = OptimizationGoal.MINIMIZE_TOTAL_COST,
                            target_savings_percentage: float = 20.0) -> Dict[str, Any]:
-        """        Execute comprehensive cost optimization
+        """
+        Execute comprehensive cost optimization
         
         Args:
             goal: Primary optimization objective
@@ -1034,7 +1083,8 @@ class CostOptimizer:
             
         Returns:
             Cost optimization results and recommendations
-        """        try:
+        """
+        try:
             start_time = time.time()
             optimization_id = f"cost_opt_{int(start_time)}"
             
@@ -1087,7 +1137,8 @@ class CostOptimizer:
             raise CostOptimizationError(f"Optimization failed: {str(e)}")
 
     async def _get_current_cost_metrics(self) -> CostMetrics:
-        """Get comprehensive current cost metrics"""        try:
+        """Get comprehensive current cost metrics"""
+        try:
             # Collect cost data from various sources
             compute_costs = await self.cost_calculator.calculate_compute_costs()
             storage_costs = await self.cost_calculator.calculate_storage_costs()
@@ -1134,7 +1185,8 @@ class CostOptimizer:
                                                  current_costs: CostMetrics,
                                                  goal: OptimizationGoal,
                                                  target_savings: float) -> List[CostOptimization]:
-        """Identify cost optimization opportunities"""        opportunities = []
+        """Identify cost optimization opportunities"""
+        opportunities = []
         
         # Apply each optimization strategy
         for strategy_name, strategy_func in self.optimization_strategies.items():
@@ -1155,7 +1207,8 @@ class CostOptimizer:
     async def _optimize_right_sizing(self, 
                                    current_costs: CostMetrics, 
                                    goal: OptimizationGoal) -> List[CostOptimization]:
-        """Optimize resource right-sizing"""        opportunities = []
+        """Optimize resource right-sizing"""
+        opportunities = []
         
         try:
             # Analyze resource utilization
@@ -1214,7 +1267,8 @@ class CostOptimizer:
     async def _optimize_storage(self, 
                               current_costs: CostMetrics, 
                               goal: OptimizationGoal) -> List[CostOptimization]:
-        """Optimize storage costs"""        opportunities = []
+        """Optimize storage costs"""
+        opportunities = []
         
         try:
             # Storage tier optimization
@@ -1272,7 +1326,8 @@ class CostOptimizer:
             return []
 
     async def manage_budget(self, budget_name: str, budget_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Manage budget tracking and alerting"""        try:
+        """Manage budget tracking and alerting"""
+        try:
             # Create or update budget
             budget = {
                 'name': budget_name,
@@ -1320,7 +1375,8 @@ class CostOptimizer:
             raise BudgetError(f"Budget management error: {str(e)}")
 
     async def _continuous_cost_monitoring(self):
-        """Continuous cost monitoring and optimization triggers"""        while self._monitoring_active:
+        """Continuous cost monitoring and optimization triggers"""
+        while self._monitoring_active:
             try:
                 # Get current costs
                 current_costs = await self._get_current_cost_metrics()
@@ -1347,7 +1403,8 @@ class CostOptimizer:
                 await asyncio.sleep(600)  # Wait longer on error
 
 class BudgetManager:
-    """    Advanced budget management system with predictive analytics.
+    """
+    Advanced budget management system with predictive analytics.
     
     Features:
     - Multi-dimensional budget tracking
@@ -1355,7 +1412,8 @@ class BudgetManager:
     - Automated cost alerts and recommendations
     - ROI analysis and optimization
     - Cost allocation and chargeback
-    """    
+    """
+    
     def __init__(self):
         self.budgets: Dict[str, Dict[str, Any]] = {}
         self.spending_history: List[Dict[str, Any]] = []
@@ -1366,7 +1424,8 @@ class BudgetManager:
                           allocation: float,
                           time_period: str = "monthly",
                           categories: List[str] = None) -> Dict[str, Any]:
-        """Create new budget with tracking and forecasting"""        try:
+        """Create new budget with tracking and forecasting"""
+        try:
             budget = {
                 'name': budget_name,
                 'allocation': allocation,
@@ -1394,7 +1453,8 @@ class BudgetManager:
     async def forecast_spending(self, 
                               budget_name: str, 
                               forecast_days: int = 30) -> Dict[str, Any]:
-        """Forecast future spending based on historical data and trends"""        try:
+        """Forecast future spending based on historical data and trends"""
+        try:
             if budget_name not in self.budgets:
                 raise BudgetError(f"Budget {budget_name} not found")
             

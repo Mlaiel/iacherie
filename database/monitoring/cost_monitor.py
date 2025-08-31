@@ -12,7 +12,8 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute violation sera poursuivie selon les lois en vigueur.
-"""import asyncio
+"""
+import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -37,7 +38,8 @@ from ...cloud.gcp import GCPBilling
 
 
 class CostCategory(Enum):
-    """Database cost categories"""    COMPUTE = "compute"
+    """Database cost categories"""
+    COMPUTE = "compute"
     STORAGE = "storage"
     NETWORK = "network"
     BACKUP = "backup"
@@ -48,7 +50,8 @@ class CostCategory(Enum):
 
 
 class ResourceType(Enum):
-    """Database resource types"""    CPU = "cpu"
+    """Database resource types"""
+    CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
     CONNECTIONS = "connections"
@@ -57,7 +60,8 @@ class ResourceType(Enum):
 
 
 class OptimizationStrategy(Enum):
-    """Cost optimization strategies"""    RIGHTSIZING = "rightsizing"
+    """Cost optimization strategies"""
+    RIGHTSIZING = "rightsizing"
     RESERVED_INSTANCES = "reserved_instances"
     SPOT_INSTANCES = "spot_instances"
     AUTO_SCALING = "auto_scaling"
@@ -69,7 +73,8 @@ class OptimizationStrategy(Enum):
 
 @dataclass
 class CostMetric:
-    """Cost tracking metric"""    metric_id: str
+    """Cost tracking metric"""
+    metric_id: str
     timestamp: datetime
     category: CostCategory
     resource_type: ResourceType
@@ -80,7 +85,8 @@ class CostMetric:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             'metric_id': self.metric_id,
             'timestamp': self.timestamp.isoformat(),
             'category': self.category.value,
@@ -95,7 +101,8 @@ class CostMetric:
 
 @dataclass
 class OptimizationRecommendation:
-    """Cost optimization recommendation"""    recommendation_id: str
+    """Cost optimization recommendation"""
+    recommendation_id: str
     timestamp: datetime
     strategy: OptimizationStrategy
     current_cost: float
@@ -110,7 +117,8 @@ class OptimizationRecommendation:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             'recommendation_id': self.recommendation_id,
             'timestamp': self.timestamp.isoformat(),
             'strategy': self.strategy.value,
@@ -129,7 +137,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class ResourceUsage:
-    """Resource usage tracking"""    resource_id: str
+    """Resource usage tracking"""
+    resource_id: str
     timestamp: datetime
     resource_type: ResourceType
     allocated: float
@@ -142,7 +151,8 @@ class ResourceUsage:
     efficiency_score: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             'resource_id': self.resource_id,
             'timestamp': self.timestamp.isoformat(),
             'resource_type': self.resource_type.value,
@@ -158,7 +168,8 @@ class ResourceUsage:
 
 
 class DatabaseCostMonitor:
-    """Advanced database cost monitoring and optimization system"""    
+    """Advanced database cost monitoring and optimization system"""
+    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
@@ -186,7 +197,8 @@ class DatabaseCostMonitor:
         asyncio.create_task(self._load_cost_budgets())
         
     async def _load_cost_budgets(self):
-        """Load cost budgets and thresholds"""        try:
+        """Load cost budgets and thresholds"""
+        try:
             # Default budgets for different cost categories
             self.cost_budgets = {
                 'monthly_total': {
@@ -222,7 +234,8 @@ class DatabaseCostMonitor:
             self.logger.error(f"Failed to load cost budgets: {e}")
             
     async def start_monitoring(self, interval: int = 300):  # 5 minutes
-        """Start cost monitoring"""        if self._monitoring_active:
+        """Start cost monitoring"""
+        if self._monitoring_active:
             self.logger.warning("Cost monitoring already active")
             return
             
@@ -233,7 +246,8 @@ class DatabaseCostMonitor:
         self.logger.info("Database cost monitoring started")
         
     async def stop_monitoring(self):
-        """Stop cost monitoring"""        self._monitoring_active = False
+        """Stop cost monitoring"""
+        self._monitoring_active = False
         if self._monitoring_task:
             self._monitoring_task.cancel()
             try:
@@ -243,7 +257,8 @@ class DatabaseCostMonitor:
         self.logger.info("Database cost monitoring stopped")
         
     async def _monitoring_loop(self, interval: int):
-        """Main cost monitoring loop"""        while self._monitoring_active:
+        """Main cost monitoring loop"""
+        while self._monitoring_active:
             try:
                 await self._collect_cost_metrics()
                 await self._collect_resource_usage()
@@ -257,7 +272,8 @@ class DatabaseCostMonitor:
                 await asyncio.sleep(interval)
                 
     async def _collect_cost_metrics(self):
-        """Collect current cost metrics"""        try:
+        """Collect current cost metrics"""
+        try:
             # Collect database-specific costs
             db_costs = await self._get_database_costs()
             
@@ -286,10 +302,12 @@ class DatabaseCostMonitor:
             self.logger.error(f"Failed to collect cost metrics: {e}")
             
     async def _get_database_costs(self) -> Dict[str, Dict]:
-        """Get database-specific cost metrics"""        try:
+        """Get database-specific cost metrics"""
+        try:
             async with get_database_session() as session:
                 # Get database size and storage costs
-                storage_query = text("""                    SELECT 
+                storage_query = text("""
+                    SELECT 
                         schemaname,
                         tablename,
                         pg_size_pretty(pg_total_relation_size(schemaname||'.'||tablename)) as size,
@@ -310,7 +328,8 @@ class DatabaseCostMonitor:
                 monthly_storage_cost = storage_gb * storage_cost_per_gb
                 
                 # Get connection costs
-                connection_query = text("""                    SELECT count(*) as active_connections,
+                connection_query = text("""
+                    SELECT count(*) as active_connections,
                            max(extract(epoch from now() - backend_start)) as longest_connection
                     FROM pg_stat_activity
                     WHERE state = 'active'
@@ -351,7 +370,8 @@ class DatabaseCostMonitor:
             return {}
             
     async def _get_cloud_costs(self) -> Dict[str, Dict]:
-        """Get cloud infrastructure costs"""        try:
+        """Get cloud infrastructure costs"""
+        try:
             cloud_costs = {}
             
             # AWS costs
@@ -376,7 +396,8 @@ class DatabaseCostMonitor:
             return {}
             
     async def _store_cost_metric(self, metric: CostMetric):
-        """Store cost metric"""        try:
+        """Store cost metric"""
+        try:
             # Store in Redis
             await self.cache.set(
                 f"cost_metric:{metric.metric_id}",
@@ -402,7 +423,8 @@ class DatabaseCostMonitor:
             self.logger.error(f"Failed to store cost metric: {e}")
             
     async def _collect_resource_usage(self):
-        """Collect resource usage metrics"""        try:
+        """Collect resource usage metrics"""
+        try:
             # CPU usage
             cpu_usage = await self._get_cpu_usage()
             await self._store_resource_usage(cpu_usage)
@@ -423,10 +445,12 @@ class DatabaseCostMonitor:
             self.logger.error(f"Failed to collect resource usage: {e}")
             
     async def _get_cpu_usage(self) -> ResourceUsage:
-        """Get CPU usage metrics"""        try:
+        """Get CPU usage metrics"""
+        try:
             async with get_database_session() as session:
                 # Get CPU-related statistics
-                cpu_query = text("""                    SELECT 
+                cpu_query = text("""
+                    SELECT 
                         (SELECT count(*) FROM pg_stat_activity WHERE state = 'active') as active_queries,
                         (SELECT setting FROM pg_settings WHERE name = 'max_connections') as max_connections,
                         extract(epoch from now() - pg_postmaster_start_time()) as uptime_seconds
@@ -457,10 +481,12 @@ class DatabaseCostMonitor:
             return None
             
     async def _get_memory_usage(self) -> ResourceUsage:
-        """Get memory usage metrics"""        try:
+        """Get memory usage metrics"""
+        try:
             async with get_database_session() as session:
                 # Get memory statistics
-                memory_query = text("""                    SELECT 
+                memory_query = text("""
+                    SELECT 
                         setting as shared_buffers
                     FROM pg_settings 
                     WHERE name = 'shared_buffers'
@@ -501,10 +527,12 @@ class DatabaseCostMonitor:
             return None
             
     async def _get_disk_usage(self) -> ResourceUsage:
-        """Get disk usage metrics"""        try:
+        """Get disk usage metrics"""
+        try:
             async with get_database_session() as session:
                 # Get disk usage statistics
-                disk_query = text("""                    SELECT 
+                disk_query = text("""
+                    SELECT 
                         sum(pg_total_relation_size(oid)) as total_size
                     FROM pg_class
                     WHERE relkind IN ('r', 'i')
@@ -538,10 +566,12 @@ class DatabaseCostMonitor:
             return None
             
     async def _get_connection_usage(self) -> ResourceUsage:
-        """Get connection usage metrics"""        try:
+        """Get connection usage metrics"""
+        try:
             async with get_database_session() as session:
                 # Get connection statistics
-                conn_query = text("""                    SELECT 
+                conn_query = text("""
+                    SELECT 
                         count(*) as current_connections,
                         (SELECT setting FROM pg_settings WHERE name = 'max_connections') as max_connections,
                         count(*) FILTER (WHERE state = 'active') as active_connections,
@@ -574,7 +604,8 @@ class DatabaseCostMonitor:
             return None
             
     async def _store_resource_usage(self, usage: ResourceUsage):
-        """Store resource usage data"""        if not usage:
+        """Store resource usage data"""
+        if not usage:
             return
             
         try:
@@ -600,7 +631,8 @@ class DatabaseCostMonitor:
             self.logger.error(f"Failed to store resource usage: {e}")
             
     async def _analyze_cost_trends(self):
-        """Analyze cost trends and patterns"""        try:
+        """Analyze cost trends and patterns"""
+        try:
             # Get recent cost metrics
             recent_metrics = await self._get_recent_cost_metrics(hours=24)
             
@@ -629,7 +661,8 @@ class DatabaseCostMonitor:
             self.logger.error(f"Failed to analyze cost trends: {e}")
             
     def _calculate_cost_trend(self, metrics: List[Dict]) -> Dict[str, float]:
-        """Calculate cost trend for metrics"""        if len(metrics) < 2:
+        """Calculate cost trend for metrics"""
+        if len(metrics) < 2:
             return {'trend': 0.0, 'confidence': 0.0}
             
         # Sort by timestamp
@@ -663,7 +696,8 @@ class DatabaseCostMonitor:
         }
         
     async def _get_recent_cost_metrics(self, hours: int = 24) -> List[Dict]:
-        """Get recent cost metrics"""        try:
+        """Get recent cost metrics"""
+        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             cutoff_timestamp = cutoff_time.timestamp()
             
@@ -686,7 +720,8 @@ class DatabaseCostMonitor:
             return []
             
     async def _check_cost_trend_alerts(self, trends: Dict[str, Dict]):
-        """Check for cost trend alerts"""        try:
+        """Check for cost trend alerts"""
+        try:
             for category, trend_data in trends.items():
                 monthly_projection = trend_data.get('projected_monthly', 0.0)
                 
@@ -700,7 +735,8 @@ class DatabaseCostMonitor:
             self.logger.error(f"Failed to check cost trend alerts: {e}")
             
     async def _send_cost_trend_alert(self, category: str, trend_data: Dict, budget: float):
-        """Send cost trend alert"""        try:
+        """Send cost trend alert"""
+        try:
             await self.notification_manager.send_cost_alert(
                 severity='HIGH',
                 title=f'Cost Trend Alert: {category.title()}',
@@ -716,7 +752,8 @@ class DatabaseCostMonitor:
             self.logger.error(f"Failed to send cost trend alert: {e}")
             
     async def _generate_optimization_recommendations(self):
-        """Generate AI-powered optimization recommendations"""        try:
+        """Generate AI-powered optimization recommendations"""
+        try:
             # Get current resource usage
             current_usage = list(self.resource_usage.values())
             
@@ -740,7 +777,8 @@ class DatabaseCostMonitor:
             self.logger.error(f"Failed to generate optimization recommendations: {e}")
             
     async def _store_optimization_recommendation(self, recommendation: OptimizationRecommendation):
-        """Store optimization recommendation"""        try:
+        """Store optimization recommendation"""
+        try:
             await self.cache.set(
                 f"optimization_rec:{recommendation.recommendation_id}",
                 json.dumps(recommendation.to_dict()),
@@ -757,7 +795,8 @@ class DatabaseCostMonitor:
             self.logger.error(f"Failed to store optimization recommendation: {e}")
             
     async def _send_optimization_alert(self, recommendation: OptimizationRecommendation):
-        """Send optimization recommendation alert"""        try:
+        """Send optimization recommendation alert"""
+        try:
             await self.notification_manager.send_optimization_alert(
                 title='Cost Optimization Opportunity',
                 message=f"Potential savings: {recommendation.savings_potential:.2f} EUR",
@@ -767,7 +806,8 @@ class DatabaseCostMonitor:
             self.logger.error(f"Failed to send optimization alert: {e}")
             
     async def _check_budget_alerts(self):
-        """Check budget thresholds and send alerts"""        try:
+        """Check budget thresholds and send alerts"""
+        try:
             current_costs = await self._calculate_current_monthly_costs()
             
             for budget_category, budget_config in self.cost_budgets.items():
@@ -788,7 +828,8 @@ class DatabaseCostMonitor:
             self.logger.error(f"Failed to check budget alerts: {e}")
             
     async def _calculate_current_monthly_costs(self) -> Dict[str, float]:
-        """Calculate current monthly costs by category"""        try:
+        """Calculate current monthly costs by category"""
+        try:
             # Get costs for current month
             month_start = datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
             costs_by_category = defaultdict(float)
@@ -814,7 +855,8 @@ class DatabaseCostMonitor:
             return {}
             
     async def _send_budget_alert(self, category: str, current_cost: float, budget_limit: float, severity: str):
-        """Send budget alert"""        try:
+        """Send budget alert"""
+        try:
             usage_percentage = (current_cost / budget_limit) * 100
             
             await self.notification_manager.send_budget_alert(
@@ -833,7 +875,8 @@ class DatabaseCostMonitor:
             self.logger.error(f"Failed to send budget alert: {e}")
             
     async def _cleanup_old_data(self):
-        """Cleanup old cost monitoring data"""        try:
+        """Cleanup old cost monitoring data"""
+        try:
             # Remove data older than 90 days
             cutoff_time = datetime.utcnow() - timedelta(days=90)
             cutoff_timestamp = cutoff_time.timestamp()
@@ -859,7 +902,8 @@ class DatabaseCostMonitor:
             self.logger.error(f"Failed to cleanup old data: {e}")
             
     async def get_cost_summary(self, period: str = "monthly") -> Dict[str, Any]:
-        """Get comprehensive cost summary"""        try:
+        """Get comprehensive cost summary"""
+        try:
             if period == "daily":
                 hours = 24
             elif period == "weekly":
@@ -907,7 +951,8 @@ class DatabaseCostMonitor:
             return {}
             
     async def _get_budget_status(self) -> Dict[str, Dict]:
-        """Get current budget status"""        try:
+        """Get current budget status"""
+        try:
             current_costs = await self._calculate_current_monthly_costs()
             budget_status = {}
             
@@ -933,30 +978,36 @@ class DatabaseCostMonitor:
 
 
 class ResourceOptimizer:
-    """Advanced resource optimization engine"""    
+    """Advanced resource optimization engine"""
+    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
         
     async def optimize_resources(self, usage_data: List[ResourceUsage]) -> List[OptimizationRecommendation]:
-        """Generate resource optimization recommendations"""        # Implementation for resource optimization
+        """Generate resource optimization recommendations"""
+        # Implementation for resource optimization
         pass
         
     async def right_size_instances(self, current_usage: Dict[str, ResourceUsage]) -> List[Dict]:
-        """Recommend instance right-sizing"""        # Implementation for instance right-sizing
+        """Recommend instance right-sizing"""
+        # Implementation for instance right-sizing
         pass
 
 
 class CostAnalyzer:
-    """Advanced cost analysis and forecasting"""    
+    """Advanced cost analysis and forecasting"""
+    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
         
     async def forecast_costs(self, historical_data: List[CostMetric], periods: int = 12) -> List[Dict]:
-        """Forecast future costs"""        # Implementation for cost forecasting
+        """Forecast future costs"""
+        # Implementation for cost forecasting
         pass
         
     async def analyze_cost_drivers(self, cost_data: List[CostMetric]) -> Dict[str, Any]:
-        """Analyze main cost drivers"""        # Implementation for cost driver analysis
+        """Analyze main cost drivers"""
+        # Implementation for cost driver analysis
         pass

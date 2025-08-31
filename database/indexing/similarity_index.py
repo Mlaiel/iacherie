@@ -22,7 +22,8 @@ This software is proprietary and confidential.
 Unauthorized use, modification, or distribution by any individual or entity 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple, Set
@@ -41,7 +42,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SimilarityResult:
-    """Data class for similarity search results"""    content_id: str
+    """Data class for similarity search results"""
+    content_id: str
     matched_content_id: str
     similarity_score: float
     confidence_level: float
@@ -50,7 +52,8 @@ class SimilarityResult:
     detected_at: datetime
 
 class SimilarityMatchType:
-    """Types of similarity matches"""    EXACT_MATCH = "exact_match"
+    """Types of similarity matches"""
+    EXACT_MATCH = "exact_match"
     NEAR_DUPLICATE = "near_duplicate"
     SIMILAR_CONTENT = "similar_content"
     RELATED_CONTENT = "related_content"
@@ -59,7 +62,8 @@ class SimilarityMatchType:
     SEMANTIC_MATCH = "semantic_match"
 
 class SimilarityAlgorithm:
-    """Similarity computation algorithms"""    COSINE = "cosine"
+    """Similarity computation algorithms"""
+    COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     JACCARD = "jaccard"
     HAMMING = "hamming"
@@ -68,7 +72,8 @@ class SimilarityAlgorithm:
     STRUCTURAL = "structural"
 
 class SimilarityIndexManager:
-    """    Ultra-advanced similarity index manager for IA-Influencer platform
+    """
+    Ultra-advanced similarity index manager for IA-Influencer platform
     
     Provides comprehensive similarity matching capabilities:
     - Multi-modal content similarity (audio, video, image, text)
@@ -77,9 +82,11 @@ class SimilarityIndexManager:
     - Duplicate detection and clustering
     - Performance-optimized similarity search
     - Advanced similarity algorithms
-    """    
+    """
+    
     def __init__(self):
-        """Initialize similarity index manager"""        self.db_manager = PostgreSQLManager()
+        """Initialize similarity index manager"""
+        self.db_manager = PostgreSQLManager()
         self.redis_manager = RedisManager()
         self.performance_tracker = PerformanceTracker()
         self.security_manager = SimilaritySecurityManager()
@@ -162,7 +169,8 @@ class SimilarityIndexManager:
         logger.info("SimilarityIndexManager initialized")
     
     async def initialize(self) -> bool:
-        """Initialize similarity index manager"""        try:
+        """Initialize similarity index manager"""
+        try:
             # Initialize database connections
             if not await self.db_manager.initialize():
                 raise Exception("Failed to initialize PostgreSQL manager")
@@ -194,10 +202,12 @@ class SimilarityIndexManager:
             return False
     
     async def _setup_similarity_schema(self):
-        """Setup database schema for similarity management"""        conn = await self.db_manager.get_connection()
+        """Setup database schema for similarity management"""
+        conn = await self.db_manager.get_connection()
         try:
             # Similarity mappings table
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS content_similarity_mappings (
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS content_similarity_mappings (
                     mapping_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                     source_content_id VARCHAR(255) NOT NULL,
                     target_content_id VARCHAR(255) NOT NULL,
@@ -218,7 +228,8 @@ class SimilarityIndexManager:
             """)
             
             # Similarity clusters table
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS similarity_clusters (
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS similarity_clusters (
                     cluster_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                     cluster_name VARCHAR(255),
                     cluster_type VARCHAR(50) NOT NULL,
@@ -234,7 +245,8 @@ class SimilarityIndexManager:
             """)
             
             # Cluster memberships table
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS cluster_memberships (
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS cluster_memberships (
                     membership_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                     cluster_id UUID REFERENCES similarity_clusters(cluster_id) ON DELETE CASCADE,
                     content_id VARCHAR(255) NOT NULL,
@@ -247,7 +259,8 @@ class SimilarityIndexManager:
             """)
             
             # Similarity processing queue
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS similarity_processing_queue (
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS similarity_processing_queue (
                     queue_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                     content_id VARCHAR(255) NOT NULL,
                     content_type VARCHAR(50) NOT NULL,
@@ -265,7 +278,8 @@ class SimilarityIndexManager:
             """)
             
             # Similarity statistics table
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS similarity_statistics (
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS similarity_statistics (
                     stat_id SERIAL PRIMARY KEY,
                     content_type VARCHAR(50) NOT NULL,
                     algorithm_used VARCHAR(50) NOT NULL,
@@ -289,7 +303,8 @@ class SimilarityIndexManager:
             await self.db_manager.return_connection(conn)
     
     async def _create_similarity_indexes(self):
-        """Create optimized database indexes for similarity operations"""        conn = await self.db_manager.get_connection()
+        """Create optimized database indexes for similarity operations"""
+        conn = await self.db_manager.get_connection()
         try:
             indexes = [
                 # Similarity mappings indexes
@@ -347,7 +362,8 @@ class SimilarityIndexManager:
     async def compute_similarity(self, source_content_id: str, target_content_id: str,
                                source_features: np.ndarray, target_features: np.ndarray,
                                content_type: str, algorithm: str = SimilarityAlgorithm.COSINE) -> SimilarityResult:
-        """Compute similarity between two content items"""        try:
+        """Compute similarity between two content items"""
+        try:
             # Validate security permissions
             if not await self.security_manager.validate_similarity_computation(
                 source_content_id, target_content_id
@@ -419,7 +435,8 @@ class SimilarityIndexManager:
     
     async def _compute_similarity_score(self, features1: np.ndarray, features2: np.ndarray,
                                       algorithm: str) -> float:
-        """Compute similarity score using specified algorithm"""        config = self.algorithm_configs.get(algorithm, {})
+        """Compute similarity score using specified algorithm"""
+        config = self.algorithm_configs.get(algorithm, {})
         
         if algorithm == SimilarityAlgorithm.COSINE:
             # Cosine similarity
@@ -496,7 +513,8 @@ class SimilarityIndexManager:
             raise ValueError(f"Unsupported similarity algorithm: {algorithm}")
     
     def _determine_match_type(self, similarity_score: float, content_type: str) -> str:
-        """Determine match type based on similarity score and thresholds"""        thresholds = self.similarity_thresholds.get(content_type, 
+        """Determine match type based on similarity score and thresholds"""
+        thresholds = self.similarity_thresholds.get(content_type, 
                                                    self.similarity_thresholds['composite'])
         
         if similarity_score >= thresholds[SimilarityMatchType.EXACT_MATCH]:
@@ -510,7 +528,8 @@ class SimilarityIndexManager:
     
     def _calculate_confidence_level(self, similarity_score: float, features1: np.ndarray,
                                   features2: np.ndarray, algorithm: str) -> float:
-        """Calculate confidence level for similarity score"""        # Base confidence from similarity score
+        """Calculate confidence level for similarity score"""
+        # Base confidence from similarity score
         base_confidence = similarity_score
         
         # Adjust based on feature quality
@@ -534,7 +553,8 @@ class SimilarityIndexManager:
         return float(np.clip(confidence, 0.0, 1.0))
     
     async def _store_similarity_mapping(self, result: SimilarityResult):
-        """Store similarity mapping in database"""        try:
+        """Store similarity mapping in database"""
+        try:
             conn = await self.db_manager.get_connection()
             
             # Determine if this is cross-modal
@@ -542,7 +562,8 @@ class SimilarityIndexManager:
             target_type = result.metadata.get('content_type', 'unknown')
             is_cross_modal = source_type != target_type
             
-            await conn.execute("""                INSERT INTO content_similarity_mappings 
+            await conn.execute("""
+                INSERT INTO content_similarity_mappings 
                 (source_content_id, target_content_id, source_content_type, target_content_type,
                  similarity_score, match_type, algorithm_used, confidence_level, match_details,
                  is_cross_modal)
@@ -572,7 +593,8 @@ class SimilarityIndexManager:
     async def find_similar_content(self, content_id: str, content_type: str,
                                  max_results: int = 50, min_similarity: float = 0.7,
                                  include_cross_modal: bool = False) -> List[SimilarityResult]:
-        """Find similar content for a given content item"""        try:
+        """Find similar content for a given content item"""
+        try:
             conn = await self.db_manager.get_connection()
             start_time = datetime.now()
             
@@ -591,7 +613,8 @@ class SimilarityIndexManager:
             
             where_clause = " AND ".join(where_conditions)
             
-            results = await conn.fetch(f"""                SELECT csm.target_content_id, csm.target_content_type, csm.similarity_score,
+            results = await conn.fetch(f"""
+                SELECT csm.target_content_id, csm.target_content_type, csm.similarity_score,
                        csm.match_type, csm.algorithm_used, csm.confidence_level,
                        csm.match_details, csm.is_cross_modal, csm.created_at
                 FROM content_similarity_mappings csm
@@ -638,12 +661,14 @@ class SimilarityIndexManager:
             await self.db_manager.return_connection(conn)
     
     async def detect_duplicates(self, content_type: str, similarity_threshold: float = 0.95) -> List[List[str]]:
-        """Detect potential duplicate content clusters"""        try:
+        """Detect potential duplicate content clusters"""
+        try:
             conn = await self.db_manager.get_connection()
             start_time = datetime.now()
             
             # Find high-similarity pairs
-            results = await conn.fetch("""                SELECT source_content_id, target_content_id, similarity_score
+            results = await conn.fetch("""
+                SELECT source_content_id, target_content_id, similarity_score
                 FROM content_similarity_mappings
                 WHERE source_content_type = $1 
                   AND target_content_type = $1
@@ -673,7 +698,8 @@ class SimilarityIndexManager:
             await self.db_manager.return_connection(conn)
     
     def _build_duplicate_clusters(self, similarity_pairs: List[Dict]) -> List[List[str]]:
-        """Build duplicate clusters using union-find algorithm"""        # Union-Find data structure
+        """Build duplicate clusters using union-find algorithm"""
+        # Union-Find data structure
         parent = {}
         rank = {}
         
@@ -713,11 +739,13 @@ class SimilarityIndexManager:
     
     async def create_similarity_cluster(self, content_ids: List[str], cluster_type: str,
                                       content_type: str, cluster_name: Optional[str] = None) -> Optional[str]:
-        """Create a new similarity cluster"""        try:
+        """Create a new similarity cluster"""
+        try:
             conn = await self.db_manager.get_connection()
             
             # Create cluster
-            cluster_id = await conn.fetchval("""                INSERT INTO similarity_clusters 
+            cluster_id = await conn.fetchval("""
+                INSERT INTO similarity_clusters 
                 (cluster_name, cluster_type, content_type, member_count)
                 VALUES ($1, $2, $3, $4)
                 RETURNING cluster_id
@@ -730,7 +758,8 @@ class SimilarityIndexManager:
                 for content_id in content_ids
             ]
             
-            await conn.executemany("""                INSERT INTO cluster_memberships 
+            await conn.executemany("""
+                INSERT INTO cluster_memberships 
                 (cluster_id, content_id, membership_score, distance_to_centroid, is_core_member)
                 VALUES ($1, $2, $3, $4, $5)
             """, membership_data)
@@ -745,11 +774,13 @@ class SimilarityIndexManager:
             await self.db_manager.return_connection(conn)
     
     async def _load_similarity_mappings(self):
-        """Load existing similarity mappings and statistics"""        try:
+        """Load existing similarity mappings and statistics"""
+        try:
             conn = await self.db_manager.get_connection()
             
             # Load recent statistics
-            stats = await conn.fetch("""                SELECT content_type, algorithm_used, match_type, total_comparisons,
+            stats = await conn.fetch("""
+                SELECT content_type, algorithm_used, match_type, total_comparisons,
                        matches_found, false_positives, average_score, processing_time
                 FROM similarity_statistics
                 WHERE date_collected >= CURRENT_DATE - INTERVAL '7 days'
@@ -773,11 +804,13 @@ class SimilarityIndexManager:
             await self.db_manager.return_connection(conn)
     
     async def _setup_background_processing(self):
-        """Setup background processing for similarity tasks"""        # This would typically start background workers
+        """Setup background processing for similarity tasks"""
+        # This would typically start background workers
         pass
     
     async def get_similarity_statistics(self, content_type: Optional[str] = None) -> Dict[str, Any]:
-        """Get comprehensive similarity statistics"""        try:
+        """Get comprehensive similarity statistics"""
+        try:
             if content_type:
                 # Filter statistics for specific content type
                 filtered_stats = {
@@ -808,7 +841,8 @@ class SimilarityIndexManager:
             return {'error': str(e)}
     
     async def cleanup(self):
-        """Cleanup resources and save final statistics"""        try:
+        """Cleanup resources and save final statistics"""
+        try:
             # Save final statistics
             await self._save_final_statistics()
             
@@ -828,7 +862,8 @@ class SimilarityIndexManager:
             logger.error(f"Error during SimilarityIndexManager cleanup: {str(e)}")
     
     async def _save_final_statistics(self):
-        """Save final statistics to database"""        try:
+        """Save final statistics to database"""
+        try:
             conn = await self.db_manager.get_connection()
             
             for key, stats in self.similarity_stats.items():
@@ -836,7 +871,8 @@ class SimilarityIndexManager:
                 if len(parts) == 2:
                     content_type, algorithm = parts[0], parts[1]
                     
-                    await conn.execute("""                        INSERT INTO similarity_statistics 
+                    await conn.execute("""
+                        INSERT INTO similarity_statistics 
                         (content_type, algorithm_used, match_type, total_comparisons,
                          matches_found, false_positives, average_score, processing_time)
                         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)

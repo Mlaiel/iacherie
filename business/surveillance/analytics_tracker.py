@@ -26,7 +26,8 @@ Business Logic Flow:
 Surveillance Operations → Data Collection → Analytics Processing → 
 KPI Calculation → Trend Analysis → Performance Metrics → 
 Business Intelligence → Decision Support → ROI Optimization
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import numpy as np
@@ -50,7 +51,8 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Analytics metric types"""    DETECTION_RATE = "detection_rate"
+    """Analytics metric types"""
+    DETECTION_RATE = "detection_rate"
     FALSE_POSITIVE_RATE = "false_positive_rate"
     TAKEDOWN_SUCCESS_RATE = "takedown_success_rate"
     REVENUE_RECOVERED = "revenue_recovered"
@@ -61,7 +63,8 @@ class MetricType(Enum):
 
 
 class TimeRange(Enum):
-    """Time range for analytics"""    HOURLY = "hourly"
+    """Time range for analytics"""
+    HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -70,7 +73,8 @@ class TimeRange(Enum):
 
 
 class PlatformMetric(Enum):
-    """Platform-specific metrics"""    YOUTUBE = "youtube"
+    """Platform-specific metrics"""
+    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
@@ -82,7 +86,8 @@ class PlatformMetric(Enum):
 
 @dataclass
 class SurveillanceMetrics:
-    """Surveillance operation metrics"""    timestamp: datetime
+    """Surveillance operation metrics"""
+    timestamp: datetime
     user_id: str
     platform: str
     content_type: str
@@ -101,7 +106,8 @@ class SurveillanceMetrics:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""    report_id: str
+    """Comprehensive analytics report"""
+    report_id: str
     generation_timestamp: datetime
     time_range: TimeRange
     metrics_summary: Dict[str, Any]
@@ -115,7 +121,8 @@ class AnalyticsReport:
 
 @dataclass
 class PerformanceKPI:
-    """Key Performance Indicators"""    kpi_name: str
+    """Key Performance Indicators"""
+    kpi_name: str
     current_value: float
     target_value: float
     previous_period_value: float
@@ -127,18 +134,21 @@ class PerformanceKPI:
 
 
 class SurveillanceAnalytics:
-    """    Advanced Analytics Tracker for Surveillance Operations
+    """
+    Advanced Analytics Tracker for Surveillance Operations
     
     Provides comprehensive metrics, KPIs, and business intelligence
     for content protection and surveillance activities.
-    """    
+    """
+    
     def __init__(
         self,
         redis_client: Optional[redis.Redis] = None,
         database_url: Optional[str] = None,
         storage_path: Optional[Path] = None
     ):
-        """Initialize surveillance analytics tracker"""        self.redis_client = redis_client or redis.Redis(decode_responses=True)
+        """Initialize surveillance analytics tracker"""
+        self.redis_client = redis_client or redis.Redis(decode_responses=True)
         self.database_url = database_url
         self.storage_path = storage_path or Path("surveillance_analytics")
         self.storage_path.mkdir(exist_ok=True)
@@ -160,7 +170,8 @@ class SurveillanceAnalytics:
         logger.info("SurveillanceAnalytics initialized successfully")
     
     def _initialize_database(self):
-        """Initialize database connection"""        try:
+        """Initialize database connection"""
+        try:
             if self.database_url:
                 self.engine = create_engine(self.database_url)
                 self._create_analytics_tables()
@@ -169,7 +180,9 @@ class SurveillanceAnalytics:
             self.engine = None
     
     def _create_analytics_tables(self):
-        """Create analytics tables if they don't exist"""        tables_sql = """        CREATE TABLE IF NOT EXISTS surveillance_metrics (
+        """Create analytics tables if they don't exist"""
+        tables_sql = """
+        CREATE TABLE IF NOT EXISTS surveillance_metrics (
             id SERIAL PRIMARY KEY,
             timestamp TIMESTAMP DEFAULT NOW(),
             user_id VARCHAR(255) NOT NULL,
@@ -215,13 +228,15 @@ class SurveillanceAnalytics:
             visualizations JSONB,
             raw_data JSONB
         );
-        """        
+        """
+        
         if self.engine:
             with self.engine.begin() as conn:
                 conn.execute(text(tables_sql))
     
     def _setup_metrics_collection(self):
-        """Setup metrics collection infrastructure"""        # Redis keys for different metric types
+        """Setup metrics collection infrastructure"""
+        # Redis keys for different metric types
         self.redis_keys = {
             'metrics': 'surveillance:metrics',
             'kpis': 'surveillance:kpis',
@@ -248,7 +263,8 @@ class SurveillanceAnalytics:
         content_type: str,
         metrics_data: Dict[str, Any]
     ) -> str:
-        """Record surveillance operation metrics"""        try:
+        """Record surveillance operation metrics"""
+        try:
             metrics = SurveillanceMetrics(
                 timestamp=datetime.now(timezone.utc),
                 user_id=user_id,
@@ -289,7 +305,8 @@ class SurveillanceAnalytics:
             raise
     
     async def _store_metrics_redis(self, metrics_id: str, metrics: SurveillanceMetrics):
-        """Store metrics in Redis"""        try:
+        """Store metrics in Redis"""
+        try:
             metrics_data = asdict(metrics)
             metrics_data['timestamp'] = metrics.timestamp.isoformat()
             
@@ -309,11 +326,13 @@ class SurveillanceAnalytics:
             logger.error(f"Redis metrics storage failed: {e}")
     
     async def _store_metrics_database(self, metrics: SurveillanceMetrics):
-        """Store metrics in database"""        if not self.engine:
+        """Store metrics in database"""
+        if not self.engine:
             return
         
         try:
-            insert_sql = """            INSERT INTO surveillance_metrics (
+            insert_sql = """
+            INSERT INTO surveillance_metrics (
                 timestamp, user_id, platform, content_type,
                 detection_count, infringement_count, false_positive_count,
                 takedown_requests, successful_takedowns, revenue_recovered,
@@ -326,7 +345,8 @@ class SurveillanceAnalytics:
                 :processing_time, :similarity_scores, :threat_levels,
                 :geographic_distribution, :metadata
             )
-            """            
+            """
+            
             with self.engine.begin() as conn:
                 conn.execute(text(insert_sql), {
                     'timestamp': metrics.timestamp,
@@ -350,7 +370,8 @@ class SurveillanceAnalytics:
             logger.error(f"Database metrics storage failed: {e}")
     
     async def _update_kpis_from_metrics(self, metrics: SurveillanceMetrics):
-        """Update KPIs based on new metrics"""        try:
+        """Update KPIs based on new metrics"""
+        try:
             # Calculate detection rate
             total_scans = metrics.detection_count + metrics.false_positive_count
             if total_scans > 0:
@@ -379,7 +400,8 @@ class SurveillanceAnalytics:
             logger.error(f"KPI update failed: {e}")
     
     async def _update_kpi(self, kpi_name: str, current_value: float):
-        """Update specific KPI value"""        try:
+        """Update specific KPI value"""
+        try:
             # Get previous value
             previous_value = 0.0
             if kpi_name in self.kpi_cache:
@@ -431,7 +453,8 @@ class SurveillanceAnalytics:
             logger.error(f"KPI update failed for {kpi_name}: {e}")
     
     async def _store_kpi_redis(self, kpi: PerformanceKPI):
-        """Store KPI in Redis"""        try:
+        """Store KPI in Redis"""
+        try:
             kpi_data = asdict(kpi)
             kpi_data['last_updated'] = kpi.last_updated.isoformat()
             
@@ -445,11 +468,13 @@ class SurveillanceAnalytics:
             logger.error(f"Redis KPI storage failed: {e}")
     
     async def _store_kpi_database(self, kpi: PerformanceKPI):
-        """Store KPI in database"""        if not self.engine:
+        """Store KPI in database"""
+        if not self.engine:
             return
         
         try:
-            upsert_sql = """            INSERT INTO analytics_kpis (
+            upsert_sql = """
+            INSERT INTO analytics_kpis (
                 kpi_name, current_value, target_value, previous_period_value,
                 percentage_change, status, trend_direction, impact_score, last_updated
             ) VALUES (
@@ -462,7 +487,8 @@ class SurveillanceAnalytics:
                 status = EXCLUDED.status,
                 trend_direction = EXCLUDED.trend_direction,
                 last_updated = EXCLUDED.last_updated
-            """            
+            """
+            
             with self.engine.begin() as conn:
                 conn.execute(text(upsert_sql), asdict(kpi))
                 
@@ -476,7 +502,8 @@ class SurveillanceAnalytics:
         platforms: Optional[List[str]] = None,
         include_visualizations: bool = True
     ) -> AnalyticsReport:
-        """Generate comprehensive analytics report"""        try:
+        """Generate comprehensive analytics report"""
+        try:
             report_id = f"analytics_{int(datetime.now().timestamp())}"
             
             # Get metrics data
@@ -536,7 +563,8 @@ class SurveillanceAnalytics:
         user_id: Optional[str] = None,
         platforms: Optional[List[str]] = None
     ) -> List[Dict[str, Any]]:
-        """Get metrics data for specified period"""        if not self.engine:
+        """Get metrics data for specified period"""
+        if not self.engine:
             return []
         
         try:
@@ -556,9 +584,11 @@ class SurveillanceAnalytics:
                 start_time = now - timedelta(days=365)
             
             # Build query
-            query = """            SELECT * FROM surveillance_metrics 
+            query = """
+            SELECT * FROM surveillance_metrics 
             WHERE timestamp >= :start_time
-            """            
+            """
+            
             params = {'start_time': start_time}
             
             if user_id:
@@ -585,7 +615,8 @@ class SurveillanceAnalytics:
             return []
     
     async def _calculate_metrics_summary(self, metrics_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate metrics summary"""        if not metrics_data:
+        """Calculate metrics summary"""
+        if not metrics_data:
             return {}
         
         try:
@@ -615,7 +646,8 @@ class SurveillanceAnalytics:
             return {}
     
     async def _generate_platform_breakdown(self, metrics_data: List[Dict[str, Any]]) -> Dict[str, Dict[str, Any]]:
-        """Generate platform-specific breakdown"""        if not metrics_data:
+        """Generate platform-specific breakdown"""
+        if not metrics_data:
             return {}
         
         try:
@@ -643,7 +675,8 @@ class SurveillanceAnalytics:
             return {}
     
     async def _perform_trend_analysis(self, metrics_data: List[Dict[str, Any]], time_range: TimeRange) -> Dict[str, List[float]]:
-        """Perform trend analysis on metrics"""        if not metrics_data:
+        """Perform trend analysis on metrics"""
+        if not metrics_data:
             return {}
         
         try:
@@ -679,7 +712,8 @@ class SurveillanceAnalytics:
             return {}
     
     async def _calculate_performance_indicators(self, metrics_data: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Calculate performance indicators"""        if not metrics_data:
+        """Calculate performance indicators"""
+        if not metrics_data:
             return {}
         
         try:
@@ -700,7 +734,8 @@ class SurveillanceAnalytics:
             return {}
     
     def _calculate_efficiency_score(self, df: pd.DataFrame) -> float:
-        """Calculate efficiency score based on processing time and throughput"""        try:
+        """Calculate efficiency score based on processing time and throughput"""
+        try:
             avg_processing_time = df['processing_time'].mean()
             throughput = len(df) / max(1, df['processing_time'].sum())
             
@@ -713,7 +748,8 @@ class SurveillanceAnalytics:
             return 5.0
     
     def _calculate_accuracy_score(self, df: pd.DataFrame) -> float:
-        """Calculate accuracy score based on detection rates"""        try:
+        """Calculate accuracy score based on detection rates"""
+        try:
             total_detections = df['detection_count'].sum()
             total_false_positives = df['false_positive_count'].sum()
             
@@ -726,7 +762,8 @@ class SurveillanceAnalytics:
             return 5.0
     
     def _calculate_coverage_score(self, df: pd.DataFrame) -> float:
-        """Calculate coverage score based on platform and content type diversity"""        try:
+        """Calculate coverage score based on platform and content type diversity"""
+        try:
             platform_count = df['platform'].nunique()
             content_type_count = df['content_type'].nunique()
             
@@ -739,7 +776,8 @@ class SurveillanceAnalytics:
             return 5.0
     
     def _calculate_impact_score(self, df: pd.DataFrame) -> float:
-        """Calculate impact score based on revenue recovered and infringements stopped"""        try:
+        """Calculate impact score based on revenue recovered and infringements stopped"""
+        try:
             total_revenue = df['revenue_recovered'].sum()
             total_infringements = df['infringement_count'].sum()
             
@@ -752,7 +790,8 @@ class SurveillanceAnalytics:
             return 5.0
     
     def _calculate_quality_score(self, df: pd.DataFrame) -> float:
-        """Calculate overall quality score"""        try:
+        """Calculate overall quality score"""
+        try:
             success_rate = df['successful_takedowns'].sum() / max(1, df['takedown_requests'].sum())
             detection_rate = df['detection_count'].sum() / max(1, df['detection_count'].sum() + df['false_positive_count'].sum())
             
@@ -765,7 +804,8 @@ class SurveillanceAnalytics:
         metrics_summary: Dict[str, Any],
         performance_indicators: Dict[str, float]
     ) -> List[str]:
-        """Generate actionable recommendations"""        recommendations = []
+        """Generate actionable recommendations"""
+        recommendations = []
         
         try:
             # Efficiency recommendations
@@ -809,7 +849,8 @@ class SurveillanceAnalytics:
         platform_breakdown: Dict[str, Dict[str, Any]],
         trend_analysis: Dict[str, List[float]]
     ) -> Dict[str, str]:
-        """Generate visualization charts"""        visualizations = {}
+        """Generate visualization charts"""
+        visualizations = {}
         
         try:
             # Platform distribution pie chart
@@ -872,7 +913,8 @@ class SurveillanceAnalytics:
         return visualizations
     
     async def _store_report(self, report: AnalyticsReport):
-        """Store analytics report"""        try:
+        """Store analytics report"""
+        try:
             # Store in cache
             self.reports_cache[report.report_id] = report
             
@@ -890,7 +932,8 @@ class SurveillanceAnalytics:
             
             # Store in database
             if self.engine:
-                insert_sql = """                INSERT INTO analytics_reports (
+                insert_sql = """
+                INSERT INTO analytics_reports (
                     report_id, generation_timestamp, time_range,
                     metrics_summary, platform_breakdown, trend_analysis,
                     performance_indicators, recommendations, visualizations, raw_data
@@ -899,7 +942,8 @@ class SurveillanceAnalytics:
                     :metrics_summary, :platform_breakdown, :trend_analysis,
                     :performance_indicators, :recommendations, :visualizations, :raw_data
                 )
-                """                
+                """
+                
                 with self.engine.begin() as conn:
                     conn.execute(text(insert_sql), {
                         'report_id': report.report_id,
@@ -918,7 +962,8 @@ class SurveillanceAnalytics:
             logger.error(f"Failed to store report: {e}")
     
     async def get_kpi_dashboard(self) -> Dict[str, PerformanceKPI]:
-        """Get current KPI dashboard"""        try:
+        """Get current KPI dashboard"""
+        try:
             # Refresh KPIs from cache and database
             kpis = {}
             
@@ -953,7 +998,8 @@ class SurveillanceAnalytics:
             return {}
     
     async def get_real_time_metrics(self, user_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get real-time surveillance metrics"""        try:
+        """Get real-time surveillance metrics"""
+        try:
             # Get recent metrics from Redis
             pattern = f"{self.redis_keys['metrics']}:*"
             if user_id:
@@ -992,18 +1038,21 @@ class SurveillanceAnalytics:
             return {}
     
     async def cleanup_old_data(self, retention_days: Optional[int] = None):
-        """Cleanup old analytics data"""        try:
+        """Cleanup old analytics data"""
+        try:
             retention_days = retention_days or self.retention_days
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=retention_days)
             
             # Cleanup database
             if self.engine:
-                cleanup_sql = """                DELETE FROM surveillance_metrics 
+                cleanup_sql = """
+                DELETE FROM surveillance_metrics 
                 WHERE timestamp < :cutoff_date;
                 
                 DELETE FROM analytics_reports 
                 WHERE generation_timestamp < :cutoff_date;
-                """                
+                """
+                
                 with self.engine.begin() as conn:
                     conn.execute(text(cleanup_sql), {'cutoff_date': cutoff_date})
             

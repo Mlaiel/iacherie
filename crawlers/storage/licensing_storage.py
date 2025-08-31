@@ -22,7 +22,8 @@ Expertise combinée:
 - Audio/Vidéo: Traitement multimédia et analyse de contenu
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, AsyncIterator, Tuple
 from datetime import datetime, timedelta
@@ -42,7 +43,8 @@ from .interfaces import (
 logger = logging.getLogger(__name__)
 
 class LicenseStatus(Enum):
-    """License status types."""    DRAFT = "draft"
+    """License status types."""
+    DRAFT = "draft"
     ACTIVE = "active"
     PENDING = "pending"
     SUSPENDED = "suspended"
@@ -51,7 +53,8 @@ class LicenseStatus(Enum):
     TERMINATED = "terminated"
 
 class RightsType(Enum):
-    """Rights management types."""    COPYRIGHT = "copyright"
+    """Rights management types."""
+    COPYRIGHT = "copyright"
     MECHANICAL = "mechanical"
     PERFORMANCE = "performance"
     SYNCHRONIZATION = "synchronization"
@@ -64,7 +67,8 @@ class RightsType(Enum):
     MERCHANDISING = "merchandising"
 
 class RoyaltyType(Enum):
-    """Royalty distribution types."""    STREAMING = "streaming"
+    """Royalty distribution types."""
+    STREAMING = "streaming"
     DOWNLOAD = "download"
     PERFORMANCE = "performance"
     SYNCHRONIZATION = "synchronization"
@@ -74,7 +78,8 @@ class RoyaltyType(Enum):
     ADVERTISING = "advertising"
 
 class ComplianceStatus(Enum):
-    """Compliance status types."""    COMPLIANT = "compliant"
+    """Compliance status types."""
+    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PENDING_REVIEW = "pending_review"
     UNDER_INVESTIGATION = "under_investigation"
@@ -82,7 +87,8 @@ class ComplianceStatus(Enum):
     RESOLVED = "resolved"
 
 class LicenseTermType(Enum):
-    """License term types."""    PERPETUAL = "perpetual"
+    """License term types."""
+    PERPETUAL = "perpetual"
     FIXED_TERM = "fixed_term"
     RENEWABLE = "renewable"
     TRIAL = "trial"
@@ -90,7 +96,8 @@ class LicenseTermType(Enum):
 
 @dataclass
 class LicenseAgreement:
-    """License agreement data structure."""    license_id: str
+    """License agreement data structure."""
+    license_id: str
     content_id: str
     licensor_id: str
     licensee_id: str
@@ -111,7 +118,8 @@ class LicenseAgreement:
 
 @dataclass
 class RoyaltyPayment:
-    """Royalty payment tracking."""    payment_id: str
+    """Royalty payment tracking."""
+    payment_id: str
     license_id: str
     content_id: str
     payee_id: str
@@ -128,7 +136,8 @@ class RoyaltyPayment:
 
 @dataclass
 class ComplianceRecord:
-    """Compliance tracking record."""    compliance_id: str
+    """Compliance tracking record."""
+    compliance_id: str
     content_id: str
     license_id: str
     compliance_type: str
@@ -141,7 +150,8 @@ class ComplianceRecord:
 
 @dataclass
 class IntellectualProperty:
-    """Intellectual property rights record."""    ip_id: str
+    """Intellectual property rights record."""
+    ip_id: str
     content_id: str
     owner_id: str
     ip_type: str  # copyright, trademark, patent, etc.
@@ -154,7 +164,8 @@ class IntellectualProperty:
 
 @dataclass
 class LicenseUsage:
-    """License usage tracking."""    usage_id: str
+    """License usage tracking."""
+    usage_id: str
     license_id: str
     content_id: str
     platform: Platform
@@ -165,7 +176,8 @@ class LicenseUsage:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class LicensingStorageProvider(BaseStorageProvider):
-    """    Professional licensing storage provider for intellectual property management.
+    """
+    Professional licensing storage provider for intellectual property management.
     
     Features:
     - License agreement management
@@ -174,7 +186,8 @@ class LicensingStorageProvider(BaseStorageProvider):
     - IP rights registration
     - Usage tracking
     - Automated payments
-    """    def __init__(self, provider_id: str, config: Dict[str, Any]):
+    """
+    def __init__(self, provider_id: str, config: Dict[str, Any]):
         super().__init__(provider_id, config)
         self.connection_pool = None
         self.compliance_check_interval = config.get('compliance_check_interval', 3600)  # 1 hour
@@ -182,7 +195,8 @@ class LicensingStorageProvider(BaseStorageProvider):
         self.encryption_enabled = config.get('encryption_enabled', True)
 
     async def initialize(self) -> None:
-        """Initialize licensing storage provider."""        try:
+        """Initialize licensing storage provider."""
+        try:
             await self._create_connections()
             await self._create_tables()
             await self._create_indexes()
@@ -194,7 +208,8 @@ class LicensingStorageProvider(BaseStorageProvider):
             raise
 
     async def store_license_agreement(self, agreement: LicenseAgreement) -> bool:
-        """Store license agreement."""        try:
+        """Store license agreement."""
+        try:
             # Validate agreement
             await self._validate_license_agreement(agreement)
             
@@ -225,7 +240,8 @@ class LicensingStorageProvider(BaseStorageProvider):
             return False
 
     async def store_royalty_payment(self, payment: RoyaltyPayment) -> bool:
-        """Store royalty payment record."""        try:
+        """Store royalty payment record."""
+        try:
             await self._store_payment_data(payment)
             
             # Update license usage statistics
@@ -239,7 +255,8 @@ class LicensingStorageProvider(BaseStorageProvider):
             return False
 
     async def store_compliance_record(self, record: ComplianceRecord) -> bool:
-        """Store compliance record."""        try:
+        """Store compliance record."""
+        try:
             await self._store_compliance_data(record)
             
             # Handle non-compliance issues
@@ -253,7 +270,8 @@ class LicensingStorageProvider(BaseStorageProvider):
             return False
 
     async def store_intellectual_property(self, ip_record: IntellectualProperty) -> bool:
-        """Store intellectual property rights record."""        try:
+        """Store intellectual property rights record."""
+        try:
             await self._store_ip_data(ip_record)
             logger.info(f"Stored IP record: {ip_record.ip_id}")
             return True
@@ -269,7 +287,8 @@ class LicensingStorageProvider(BaseStorageProvider):
         licensee_id: Optional[str] = None,
         status: Optional[LicenseStatus] = None
     ) -> List[LicenseAgreement]:
-        """Retrieve license agreements with filters."""        try:
+        """Retrieve license agreements with filters."""
+        try:
             filters = {}
             if content_id:
                 filters['content_id'] = content_id
@@ -302,7 +321,8 @@ class LicensingStorageProvider(BaseStorageProvider):
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> List[RoyaltyPayment]:
-        """Retrieve royalty payments with filters."""        try:
+        """Retrieve royalty payments with filters."""
+        try:
             filters = {}
             if license_id:
                 filters['license_id'] = license_id
@@ -329,7 +349,8 @@ class LicensingStorageProvider(BaseStorageProvider):
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Calculate royalties for a license based on usage."""        try:
+        """Calculate royalties for a license based on usage."""
+        try:
             # Get license agreement
             agreements = await self.get_license_agreements()
             license_agreement = next((a for a in agreements if a.license_id == license_id), None)
@@ -402,7 +423,8 @@ class LicensingStorageProvider(BaseStorageProvider):
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Generate comprehensive royalty statement."""        try:
+        """Generate comprehensive royalty statement."""
+        try:
             # Calculate royalties
             royalty_calculation = await self.calculate_royalties(
                 license_id, {}, period_start, period_end
@@ -457,7 +479,8 @@ class LicensingStorageProvider(BaseStorageProvider):
             raise
 
     async def check_license_compliance(self, license_id: str) -> ComplianceRecord:
-        """Check license compliance."""        try:
+        """Check license compliance."""
+        try:
             # Get license agreement
             agreements = await self.get_license_agreements()
             license_agreement = next((a for a in agreements if a.license_id == license_id), None)
@@ -506,7 +529,8 @@ class LicensingStorageProvider(BaseStorageProvider):
             raise
 
     async def process_automated_payments(self) -> Dict[str, Any]:
-        """Process automated royalty payments."""        try:
+        """Process automated royalty payments."""
+        try:
             processing_results = {
                 'processed_count': 0,
                 'failed_count': 0,
@@ -566,7 +590,8 @@ class LicensingStorageProvider(BaseStorageProvider):
             raise
 
     async def get_health_status(self) -> HealthStatus:
-        """Get health status of licensing storage."""        try:
+        """Get health status of licensing storage."""
+        try:
             status = HealthStatus(
                 provider_id=self.provider_id,
                 is_healthy=True,
@@ -614,63 +639,78 @@ class LicensingStorageProvider(BaseStorageProvider):
 
     # Private helper methods
     async def _create_connections(self) -> None:
-        """Create database connections."""        # Implementation depends on storage backend
+        """Create database connections."""
+        # Implementation depends on storage backend
         pass
 
     async def _create_tables(self) -> None:
-        """Create licensing tables with proper schema."""        # Implementation depends on storage backend
+        """Create licensing tables with proper schema."""
+        # Implementation depends on storage backend
         pass
 
     async def _create_indexes(self) -> None:
-        """Create optimized indexes for licensing queries."""        # Implementation depends on storage backend
+        """Create optimized indexes for licensing queries."""
+        # Implementation depends on storage backend
         pass
 
     async def _setup_compliance_monitoring(self) -> None:
-        """Setup automated compliance monitoring."""        # Implementation for compliance monitoring
+        """Setup automated compliance monitoring."""
+        # Implementation for compliance monitoring
         pass
 
     async def _setup_payment_scheduling(self) -> None:
-        """Setup automated payment scheduling."""        # Implementation for payment scheduling
+        """Setup automated payment scheduling."""
+        # Implementation for payment scheduling
         pass
 
     async def _validate_license_agreement(self, agreement: LicenseAgreement) -> None:
-        """Validate license agreement data."""        # Implementation for agreement validation
+        """Validate license agreement data."""
+        # Implementation for agreement validation
         pass
 
     async def _encrypt_agreement_data(self, agreement: LicenseAgreement) -> LicenseAgreement:
-        """Encrypt sensitive agreement data."""        # Implementation for data encryption
+        """Encrypt sensitive agreement data."""
+        # Implementation for data encryption
         return agreement
 
     async def _decrypt_agreement_data(self, agreement: LicenseAgreement) -> LicenseAgreement:
-        """Decrypt agreement data."""        # Implementation for data decryption
+        """Decrypt agreement data."""
+        # Implementation for data decryption
         return agreement
 
     async def _store_agreement_data(self, agreement: LicenseAgreement) -> None:
-        """Store agreement data to database."""        # Implementation depends on storage backend
+        """Store agreement data to database."""
+        # Implementation depends on storage backend
         pass
 
     async def _store_payment_data(self, payment: RoyaltyPayment) -> None:
-        """Store payment data to database."""        # Implementation depends on storage backend
+        """Store payment data to database."""
+        # Implementation depends on storage backend
         pass
 
     async def _store_compliance_data(self, record: ComplianceRecord) -> None:
-        """Store compliance data to database."""        # Implementation depends on storage backend
+        """Store compliance data to database."""
+        # Implementation depends on storage backend
         pass
 
     async def _store_ip_data(self, ip_record: IntellectualProperty) -> None:
-        """Store IP data to database."""        # Implementation depends on storage backend
+        """Store IP data to database."""
+        # Implementation depends on storage backend
         pass
 
     async def _query_agreements(self, filters: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Query agreements from database."""        # Implementation depends on storage backend
+        """Query agreements from database."""
+        # Implementation depends on storage backend
         return []
 
     async def _query_payments(self, filters: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Query payments from database."""        # Implementation depends on storage backend
+        """Query payments from database."""
+        # Implementation depends on storage backend
         return []
 
     def _data_to_agreement(self, data: Dict[str, Any]) -> LicenseAgreement:
-        """Convert database data to LicenseAgreement."""        # Implementation depends on storage backend
+        """Convert database data to LicenseAgreement."""
+        # Implementation depends on storage backend
         return LicenseAgreement(
             license_id=data.get('license_id', ''),
             content_id=data.get('content_id', ''),
@@ -686,7 +726,8 @@ class LicensingStorageProvider(BaseStorageProvider):
         )
 
     def _data_to_payment(self, data: Dict[str, Any]) -> RoyaltyPayment:
-        """Convert database data to RoyaltyPayment."""        # Implementation depends on storage backend
+        """Convert database data to RoyaltyPayment."""
+        # Implementation depends on storage backend
         return RoyaltyPayment(
             payment_id=data.get('payment_id', ''),
             license_id=data.get('license_id', ''),
@@ -702,11 +743,13 @@ class LicensingStorageProvider(BaseStorageProvider):
         )
 
     async def _update_license_statistics(self, license_id: str, amount: Decimal) -> None:
-        """Update license usage statistics."""        # Implementation for statistics update
+        """Update license usage statistics."""
+        # Implementation for statistics update
         pass
 
     async def _handle_compliance_violation(self, record: ComplianceRecord) -> None:
-        """Handle compliance violations."""        # Implementation for compliance violation handling
+        """Handle compliance violations."""
+        # Implementation for compliance violation handling
         pass
 
     async def _get_usage_records(
@@ -715,7 +758,8 @@ class LicensingStorageProvider(BaseStorageProvider):
         start_date: datetime, 
         end_date: datetime
     ) -> List[LicenseUsage]:
-        """Get usage records for license."""        # Implementation for usage record retrieval
+        """Get usage records for license."""
+        # Implementation for usage record retrieval
         return []
 
     async def _calculate_deductions(
@@ -723,35 +767,43 @@ class LicensingStorageProvider(BaseStorageProvider):
         agreement: LicenseAgreement, 
         gross_revenue: Decimal
     ) -> Dict[str, Decimal]:
-        """Calculate deductions from gross revenue."""        # Implementation for deduction calculation
+        """Calculate deductions from gross revenue."""
+        # Implementation for deduction calculation
         return {}
 
     async def _check_usage_compliance(self, agreement: LicenseAgreement) -> List[str]:
-        """Check usage compliance for license."""        # Implementation for usage compliance check
+        """Check usage compliance for license."""
+        # Implementation for usage compliance check
         return []
 
     async def _check_payment_compliance(self, agreement: LicenseAgreement) -> List[str]:
-        """Check payment compliance for license."""        # Implementation for payment compliance check
+        """Check payment compliance for license."""
+        # Implementation for payment compliance check
         return []
 
     async def _get_due_payments(self) -> List[Dict[str, Any]]:
-        """Get payments due for processing."""        # Implementation for due payments retrieval
+        """Get payments due for processing."""
+        # Implementation for due payments retrieval
         return []
 
     async def _process_payment(self, payment_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Process individual payment."""        # Implementation for payment processing
+        """Process individual payment."""
+        # Implementation for payment processing
         return {'success': True, 'transaction_id': str(uuid.uuid4())}
 
     async def _test_connection(self) -> bool:
-        """Test database connection."""        # Implementation for connection test
+        """Test database connection."""
+        # Implementation for connection test
         return True
 
     async def _get_license_statistics(self) -> Dict[str, Any]:
-        """Get license statistics."""        # Implementation for license statistics
+        """Get license statistics."""
+        # Implementation for license statistics
         return {}
 
 class InMemoryLicensingStorage(LicensingStorageProvider):
-    """In-memory licensing storage for testing and development."""    
+    """In-memory licensing storage for testing and development."""
+    
     def __init__(self, provider_id: str, config: Dict[str, Any]):
         super().__init__(provider_id, config)
         self.agreements_store: List[LicenseAgreement] = []
@@ -761,14 +813,17 @@ class InMemoryLicensingStorage(LicensingStorageProvider):
         self.is_initialized = False
     
     async def initialize(self) -> None:
-        """Initialize in-memory storage."""        self.is_initialized = True
+        """Initialize in-memory storage."""
+        self.is_initialized = True
         logger.info(f"In-memory licensing storage {self.provider_id} initialized")
     
     async def _store_agreement_data(self, agreement: LicenseAgreement) -> None:
-        """Store agreement in memory."""        self.agreements_store.append(agreement)
+        """Store agreement in memory."""
+        self.agreements_store.append(agreement)
     
     async def _query_agreements(self, filters: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Query agreements from memory."""        # Simple implementation for testing
+        """Query agreements from memory."""
+        # Simple implementation for testing
         return [{'license_id': a.license_id, 'status': a.status.value} for a in self.agreements_store]
 
 # Licensing storage factory
@@ -777,7 +832,8 @@ def create_licensing_storage(
     provider_id: str, 
     config: Dict[str, Any]
 ) -> LicensingStorageProvider:
-    """Create licensing storage provider instance."""    if provider_type == 'memory':
+    """Create licensing storage provider instance."""
+    if provider_type == 'memory':
         return InMemoryLicensingStorage(provider_id, config)
     elif provider_type == 'postgresql':
         # Return PostgreSQL-based licensing storage

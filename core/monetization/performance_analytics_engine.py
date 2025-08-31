@@ -3,7 +3,8 @@ Advanced performance tracking, insights generation and optimization recommendati
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -20,7 +21,8 @@ from .platform_revenue_integration import PlatformType, RevenueType
 
 
 class MetricType(Enum):
-    """Types of performance metrics"""    REVENUE = "revenue"
+    """Types of performance metrics"""
+    REVENUE = "revenue"
     GROWTH = "growth"
     ENGAGEMENT = "engagement"
     EFFICIENCY = "efficiency"
@@ -30,7 +32,8 @@ class MetricType(Enum):
 
 
 class TimeGranularity(Enum):
-    """Time granularity for analytics"""    HOURLY = "hourly"
+    """Time granularity for analytics"""
+    HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -39,7 +42,8 @@ class TimeGranularity(Enum):
 
 
 class InsightType(Enum):
-    """Types of insights generated"""    OPPORTUNITY = "opportunity"
+    """Types of insights generated"""
+    OPPORTUNITY = "opportunity"
     WARNING = "warning"
     RECOMMENDATION = "recommendation"
     TREND = "trend"
@@ -49,7 +53,8 @@ class InsightType(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Individual performance metric"""    metric_type: MetricType
+    """Individual performance metric"""
+    metric_type: MetricType
     value: float
     unit: str
     timestamp: datetime
@@ -58,7 +63,8 @@ class PerformanceMetric:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             "metric_type": self.metric_type.value,
             "value": self.value,
             "unit": self.unit,
@@ -71,7 +77,8 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceInsight:
-    """Generated performance insight"""    insight_id: str
+    """Generated performance insight"""
+    insight_id: str
     insight_type: InsightType
     title: str
     description: str
@@ -83,7 +90,8 @@ class PerformanceInsight:
     generated_at: datetime = field(default_factory=datetime.now)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             "insight_id": self.insight_id,
             "insight_type": self.insight_type.value,
             "title": self.title,
@@ -99,7 +107,8 @@ class PerformanceInsight:
 
 @dataclass
 class PerformanceBenchmark:
-    """Performance benchmark data"""    metric_type: MetricType
+    """Performance benchmark data"""
+    metric_type: MetricType
     platform: str
     industry_average: float
     top_quartile: float
@@ -108,7 +117,8 @@ class PerformanceBenchmark:
     percentile_rank: float
     
     def get_performance_tier(self) -> str:
-        """Get performance tier classification"""        if self.percentile_rank >= 90:
+        """Get performance tier classification"""
+        if self.percentile_rank >= 90:
             return "EXCELLENT"
         elif self.percentile_rank >= 75:
             return "GOOD"
@@ -121,7 +131,8 @@ class PerformanceBenchmark:
 
 
 class RevenueAnalyzer:
-    """Advanced revenue analytics and insights"""    
+    """Advanced revenue analytics and insights"""
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
@@ -132,7 +143,8 @@ class RevenueAnalyzer:
         end_date: datetime,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Comprehensive revenue performance analysis"""        
+        """Comprehensive revenue performance analysis"""
+        
         try:
             # Get revenue data
             revenue_data = await self._get_revenue_data(user_id, start_date, end_date, session)
@@ -179,7 +191,8 @@ class RevenueAnalyzer:
         end_date: datetime,
         session: AsyncSession
     ) -> List[Dict[str, Any]]:
-        """Get revenue data for analysis"""        
+        """Get revenue data for analysis"""
+        
         result = await session.execute(
             select(RevenueRecord).where(
                 RevenueRecord.user_id == user_id,
@@ -207,7 +220,8 @@ class RevenueAnalyzer:
         return revenue_data
     
     async def _calculate_revenue_metrics(self, revenue_data: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Calculate key revenue metrics"""        
+        """Calculate key revenue metrics"""
+        
         if not revenue_data:
             return {}
         
@@ -246,7 +260,8 @@ class RevenueAnalyzer:
         }
     
     async def _generate_revenue_time_series(self, revenue_data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Generate time series data for revenue"""        
+        """Generate time series data for revenue"""
+        
         if not revenue_data:
             return []
         
@@ -275,7 +290,8 @@ class RevenueAnalyzer:
         return time_series
     
     async def _analyze_platform_performance(self, revenue_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze performance by platform"""        
+        """Analyze performance by platform"""
+        
         if not revenue_data:
             return {}
         
@@ -329,7 +345,8 @@ class RevenueAnalyzer:
         user_id: int,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Analyze revenue growth patterns"""        
+        """Analyze revenue growth patterns"""
+        
         if not revenue_data:
             return {}
         
@@ -378,7 +395,8 @@ class RevenueAnalyzer:
         }
     
     async def _generate_revenue_forecasts(self, revenue_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Generate revenue forecasts using simple models"""        
+        """Generate revenue forecasts using simple models"""
+        
         if not revenue_data or len(revenue_data) < 7:
             return {"error": "Insufficient data for forecasting"}
         
@@ -432,7 +450,8 @@ class RevenueAnalyzer:
         platform_analysis: Dict[str, Any],
         growth_analysis: Dict[str, Any]
     ) -> List[PerformanceInsight]:
-        """Generate actionable revenue insights"""        
+        """Generate actionable revenue insights"""
+        
         insights = []
         
         # Revenue diversification insight
@@ -537,7 +556,8 @@ class RevenueAnalyzer:
 
 
 class EngagementAnalyzer:
-    """Engagement metrics and optimization analyzer"""    
+    """Engagement metrics and optimization analyzer"""
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
@@ -548,7 +568,8 @@ class EngagementAnalyzer:
         end_date: datetime,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Analyze engagement performance across platforms"""        
+        """Analyze engagement performance across platforms"""
+        
         try:
             # Get engagement data from revenue records
             result = await session.execute(
@@ -611,7 +632,8 @@ class EngagementAnalyzer:
             return {"error": str(e)}
     
     async def _generate_engagement_insights(self, df: pd.DataFrame) -> List[Dict[str, Any]]:
-        """Generate engagement-specific insights"""        
+        """Generate engagement-specific insights"""
+        
         insights = []
         
         # Low engagement warning
@@ -640,7 +662,8 @@ class EngagementAnalyzer:
 
 
 class PerformanceAnalyticsEngine:
-    """Main performance analytics engine"""    
+    """Main performance analytics engine"""
+    
     def __init__(self):
         self.revenue_analyzer = RevenueAnalyzer()
         self.engagement_analyzer = EngagementAnalyzer()
@@ -653,7 +676,8 @@ class PerformanceAnalyticsEngine:
         end_date: datetime,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Generate comprehensive performance analytics report"""        
+        """Generate comprehensive performance analytics report"""
+        
         try:
             # Run all analyses in parallel
             revenue_analysis, engagement_analysis = await asyncio.gather(
@@ -703,7 +727,8 @@ class PerformanceAnalyticsEngine:
         revenue_analysis: Dict[str, Any],
         engagement_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate executive summary of performance"""        
+        """Generate executive summary of performance"""
+        
         summary = {
             "period_highlights": [],
             "key_metrics": {},
@@ -746,7 +771,8 @@ class PerformanceAnalyticsEngine:
         revenue_analysis: Dict[str, Any],
         engagement_analysis: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate prioritized action plan"""        
+        """Generate prioritized action plan"""
+        
         actions = []
         
         # Revenue-based actions
@@ -785,7 +811,8 @@ class PerformanceAnalyticsEngine:
         revenue_analysis: Dict[str, Any],
         engagement_analysis: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate overall performance score"""        
+        """Calculate overall performance score"""
+        
         scores = {
             "revenue_score": 0.0,
             "growth_score": 0.0,

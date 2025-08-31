@@ -32,21 +32,36 @@ or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from .manager import DatabaseConnectionManager, get_connection_manager
+"""
+
+from .manager import DatabaseConnectionManager, get_connection_manager
 from .postgresql import PostgreSQLConnectionHandler
+
 from .redis import RedisConnectionHandler  
 from .mongodb import MongoDBConnectionHandler
+
 from .elasticsearch import ElasticsearchConnectionHandler
+
 from .vector_stores import VectorStoreConnectionHandler
+
 from .object_storage import ObjectStorageConnectionHandler
+
 from .health_monitor import DatabaseHealthMonitor
+
 from .pool_manager import ConnectionPoolManager
+
 from .transaction_manager import TransactionManager
+
 from .session_manager import SessionManager
+
 from .failover import FailoverManager
+
 from .load_balancer import DatabaseLoadBalancer
+
 from .config_manager import ConnectionConfigManager
+
 from .factory import ConnectionFactory
+
 from .tenant_manager import TenantConnectionManager, TenantType, TenantConfig
 from .content_protection import ContentProtectionConnections, ContentFingerprint, ProtectionAlert
 from .monetization import MonetizationConnections, RevenueRecord, PayoutRequest, LicenseAgreement
@@ -94,13 +109,18 @@ __all__ = [
     "LicenseAgreement"
 ]
 from .config_manager import DatabaseConfigurationManager
+
 from .encryption import ConnectionEncryption
+
 from .tenant_manager import TenantConnectionManager
 
 # Connection factory and utilities
 from .factory import DatabaseConnectionFactory
+
 from .registry import ConnectionRegistry
+
 from .balancer import LoadBalancer
+
 from .metrics import ConnectionMetrics
 
 __all__ = [

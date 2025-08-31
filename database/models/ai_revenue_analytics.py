@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric
+"""
+from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID, ARRAY
@@ -36,7 +37,8 @@ Base = declarative_base()
 
 
 class PredictionModel(Enum):
-    """AI prediction model types"""    LSTM_REVENUE_FORECASTING = "lstm_revenue_forecasting"
+    """AI prediction model types"""
+    LSTM_REVENUE_FORECASTING = "lstm_revenue_forecasting"
     TRANSFORMER_TREND_ANALYSIS = "transformer_trend_analysis"
     RANDOM_FOREST_ENGAGEMENT = "random_forest_engagement"
     NEURAL_NETWORK_OPTIMIZATION = "neural_network_optimization"
@@ -47,7 +49,8 @@ class PredictionModel(Enum):
 
 
 class AnalyticsScope(Enum):
-    """Analytics time scope"""    HOURLY = "hourly"
+    """Analytics time scope"""
+    HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -58,7 +61,8 @@ class AnalyticsScope(Enum):
 
 
 class OptimizationTarget(Enum):
-    """Revenue optimization targets"""    MAXIMIZE_REVENUE = "maximize_revenue"
+    """Revenue optimization targets"""
+    MAXIMIZE_REVENUE = "maximize_revenue"
     INCREASE_ENGAGEMENT = "increase_engagement"
     EXPAND_AUDIENCE = "expand_audience"
     IMPROVE_RETENTION = "improve_retention"
@@ -69,7 +73,8 @@ class OptimizationTarget(Enum):
 
 
 class MarketTrend(Enum):
-    """Market trend classifications"""    BULLISH = "bullish"
+    """Market trend classifications"""
+    BULLISH = "bullish"
     BEARISH = "bearish"
     SIDEWAYS = "sideways"
     VOLATILE = "volatile"
@@ -80,11 +85,13 @@ class MarketTrend(Enum):
 
 
 class AIRevenueAnalytics(Base):
-    """    AI Revenue Analytics Model
+    """
+    AI Revenue Analytics Model
     
     Comprehensive AI-powered analytics for revenue prediction, optimization,
     and strategic insights for content creators and influencers.
-    """    __tablename__ = "ai_revenue_analytics"
+    """
+    __tablename__ = "ai_revenue_analytics"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -218,7 +225,8 @@ class AIRevenueAnalytics(Base):
         return f"<AIRevenueAnalytics(id={self.id}, model={self.prediction_model.value}, target={self.optimization_target.value})>"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert model to dictionary for API responses"""        return {
+        """Convert model to dictionary for API responses"""
+        return {
             "id": str(self.id),
             "user_id": str(self.user_id),
             "content_fingerprint_id": str(self.content_fingerprint_id) if self.content_fingerprint_id else None,
@@ -298,10 +306,12 @@ class AIRevenueAnalytics(Base):
 
 
 class OptimizationExperiment(Base):
-    """    Revenue Optimization Experiment Model
+    """
+    Revenue Optimization Experiment Model
     
     Tracks A/B tests and optimization experiments for revenue improvement.
-    """    __tablename__ = "optimization_experiments"
+    """
+    __tablename__ = "optimization_experiments"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -351,10 +361,12 @@ class OptimizationExperiment(Base):
 
 
 class PredictionValidation(Base):
-    """    Prediction Validation Model
+    """
+    Prediction Validation Model
     
     Validates accuracy of AI predictions against actual outcomes.
-    """    __tablename__ = "prediction_validations"
+    """
+    __tablename__ = "prediction_validations"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

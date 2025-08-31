@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -19,7 +20,8 @@ authentication, content upload, monetization, and core platform APIs.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Address critical testing gap - "Tests Manquants: Pas de tests unitaires centralisés"
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -34,7 +36,8 @@ import hashlib
 
 
 class MockAuthenticationAPI:
-    """Mock implementation of authentication API for testing"""    
+    """Mock implementation of authentication API for testing"""
+    
     def __init__(self):
         self.users = {}
         self.active_tokens = {}
@@ -42,7 +45,8 @@ class MockAuthenticationAPI:
         self.password_reset_tokens = {}
         
     async def register_user(self, user_data: Dict) -> Dict[str, Any]:
-        """Register a new user"""        required_fields = ["email", "password", "username"]
+        """Register a new user"""
+        required_fields = ["email", "password", "username"]
         for field in required_fields:
             if field not in user_data:
                 raise ValueError(f"Missing required field: {field}")
@@ -93,7 +97,8 @@ class MockAuthenticationAPI:
         }
     
     async def authenticate_user(self, credentials: Dict) -> Dict[str, Any]:
-        """Authenticate user with email/password"""        email = credentials.get("email")
+        """Authenticate user with email/password"""
+        email = credentials.get("email")
         password = credentials.get("password")
         
         if not email or not password:
@@ -152,7 +157,8 @@ class MockAuthenticationAPI:
         }
     
     async def validate_token(self, token: str) -> Dict[str, Any]:
-        """Validate access token"""        if token not in self.active_tokens:
+        """Validate access token"""
+        if token not in self.active_tokens:
             raise ValueError("Invalid or expired token")
         
         token_data = self.active_tokens[token]
@@ -166,13 +172,15 @@ class MockAuthenticationAPI:
         return token_data
     
     async def logout_user(self, token: str) -> Dict[str, Any]:
-        """Logout user by invalidating token"""        if token in self.active_tokens:
+        """Logout user by invalidating token"""
+        if token in self.active_tokens:
             del self.active_tokens[token]
         
         return {"message": "Logout successful"}
     
     async def request_password_reset(self, email: str) -> Dict[str, Any]:
-        """Request password reset"""        if email not in self.users:
+        """Request password reset"""
+        if email not in self.users:
             # Don't reveal if email exists for security
             return {"message": "If email exists, reset instructions have been sent"}
         
@@ -189,14 +197,17 @@ class MockAuthenticationAPI:
 
 
 class TestCriticalAPIEndpoints:
-    """Test suite for critical API endpoints"""    
+    """Test suite for critical API endpoints"""
+    
     @pytest.fixture
     def auth_api(self):
-        """Create authentication API fixture"""        return MockAuthenticationAPI()
+        """Create authentication API fixture"""
+        return MockAuthenticationAPI()
     
     @pytest.fixture
     def sample_user_data(self):
-        """Sample user registration data"""        return {
+        """Sample user registration data"""
+        return {
             "email": "test@example.com",
             "password": "SecurePassword123!",
             "username": "testuser",
@@ -207,7 +218,8 @@ class TestCriticalAPIEndpoints:
     # Authentication API Tests
     @pytest.mark.asyncio
     async def test_user_registration(self, auth_api, sample_user_data):
-        """Test user registration"""        result = await auth_api.register_user(sample_user_data)
+        """Test user registration"""
+        result = await auth_api.register_user(sample_user_data)
         
         # Validate registration response
         assert "user_id" in result
@@ -227,7 +239,8 @@ class TestCriticalAPIEndpoints:
     
     @pytest.mark.asyncio
     async def test_user_registration_validation(self, auth_api):
-        """Test user registration validation"""        # Test missing required fields
+        """Test user registration validation"""
+        # Test missing required fields
         invalid_data = {"email": "test@example.com"}
         with pytest.raises(ValueError, match="Missing required field"):
             await auth_api.register_user(invalid_data)
@@ -254,7 +267,8 @@ class TestCriticalAPIEndpoints:
     
     @pytest.mark.asyncio
     async def test_user_authentication(self, auth_api, sample_user_data):
-        """Test user authentication"""        # Register user first
+        """Test user authentication"""
+        # Register user first
         await auth_api.register_user(sample_user_data)
         
         # Authenticate user
@@ -284,7 +298,8 @@ class TestCriticalAPIEndpoints:
     
     @pytest.mark.asyncio
     async def test_authentication_failure(self, auth_api, sample_user_data):
-        """Test authentication failure scenarios"""        # Register user
+        """Test authentication failure scenarios"""
+        # Register user
         await auth_api.register_user(sample_user_data)
         
         # Test wrong password
@@ -307,7 +322,8 @@ class TestCriticalAPIEndpoints:
     
     @pytest.mark.asyncio
     async def test_token_validation(self, auth_api, sample_user_data):
-        """Test token validation"""        # Register and authenticate user
+        """Test token validation"""
+        # Register and authenticate user
         await auth_api.register_user(sample_user_data)
         auth_result = await auth_api.authenticate_user({
             "email": sample_user_data["email"],
@@ -333,7 +349,8 @@ class TestCriticalAPIEndpoints:
     
     @pytest.mark.asyncio
     async def test_user_logout(self, auth_api, sample_user_data):
-        """Test user logout"""        # Register and authenticate user
+        """Test user logout"""
+        # Register and authenticate user
         await auth_api.register_user(sample_user_data)
         auth_result = await auth_api.authenticate_user({
             "email": sample_user_data["email"],
@@ -358,7 +375,8 @@ class TestCriticalAPIEndpoints:
     
     @pytest.mark.asyncio
     async def test_password_reset_request(self, auth_api, sample_user_data):
-        """Test password reset request"""        # Register user
+        """Test password reset request"""
+        # Register user
         await auth_api.register_user(sample_user_data)
         
         # Request password reset
@@ -378,7 +396,8 @@ class TestCriticalAPIEndpoints:
     
     @pytest.mark.asyncio
     async def test_account_lockout(self, auth_api, sample_user_data):
-        """Test account lockout after failed attempts"""        # Register user
+        """Test account lockout after failed attempts"""
+        # Register user
         await auth_api.register_user(sample_user_data)
         
         wrong_credentials = {
@@ -396,7 +415,8 @@ class TestCriticalAPIEndpoints:
             await auth_api.authenticate_user(wrong_credentials)
     
     def test_api_initialization(self):
-        """Test API initialization"""        # Test authentication API
+        """Test API initialization"""
+        # Test authentication API
         auth_api = MockAuthenticationAPI()
         assert auth_api.users == {}
         assert auth_api.active_tokens == {}

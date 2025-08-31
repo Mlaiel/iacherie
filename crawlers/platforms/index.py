@@ -10,7 +10,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any
 from datetime import datetime, timedelta
@@ -39,7 +40,8 @@ settings = get_settings()
 
 @dataclass
 class CrawlerConfig:
-    """Configuration for platform crawler."""    platform: str
+    """Configuration for platform crawler."""
+    platform: str
     api_key: Optional[str] = None
     access_token: Optional[str] = None
     rate_limit: Optional[str] = None
@@ -52,7 +54,8 @@ class CrawlerConfig:
 
 @dataclass
 class CrawlTask:
-    """Individual crawling task configuration."""    platform: str
+    """Individual crawling task configuration."""
+    platform: str
     task_type: str  # search, profile, content, monitor
     query: str
     target_id: Optional[str] = None
@@ -63,7 +66,8 @@ class CrawlTask:
 
 @dataclass
 class CrawlResult:
-    """Unified crawl result structure."""    platform: str
+    """Unified crawl result structure."""
+    platform: str
     task_type: str
     query: str
     total_results: int
@@ -83,27 +87,32 @@ class CrawlResult:
             self.metadata = {}
 
 class PlatformCrawlerOrchestrator:
-    """    Orchestrates multiple platform crawlers for unified content discovery.
+    """
+    Orchestrates multiple platform crawlers for unified content discovery.
     Provides high-level interface for multi-platform monitoring and analysis.
-    """    
+    """
+    
     def __init__(self, 
                  configs: Dict[str, CrawlerConfig] = None,
                  proxy_manager: ProxyManager = None,
                  rate_limiter: GlobalRateLimiter = None):
-        """        Initialize platform crawler orchestrator.
+        """
+        Initialize platform crawler orchestrator.
         
         Args:
             configs: Platform-specific configurations
             proxy_manager: Shared proxy manager instance
             rate_limiter: Global rate limiter instance
-        """        self.configs = configs or {}
+        """
+        self.configs = configs or {}
         self.proxy_manager = proxy_manager or ProxyManager()
         self.rate_limiter = rate_limiter or GlobalRateLimiter()
         self.active_crawlers = {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
     async def initialize_crawler(self, platform: str, config: CrawlerConfig = None) -> Any:
-        """        Initialize crawler for specific platform.
+        """
+        Initialize crawler for specific platform.
         
         Args:
             platform: Platform name
@@ -114,7 +123,8 @@ class PlatformCrawlerOrchestrator:
             
         Raises:
             PlatformNotSupportedError: If platform is not supported
-        """        try:
+        """
+        try:
             if platform not in get_supported_platforms():
                 raise PlatformNotSupportedError(f"Platform '{platform}' is not supported")
             
@@ -149,14 +159,16 @@ class PlatformCrawlerOrchestrator:
             raise CrawlerError(f"Crawler initialization failed: {str(e)}")
     
     async def execute_single_task(self, task: CrawlTask) -> CrawlResult:
-        """        Execute single crawling task.
+        """
+        Execute single crawling task.
         
         Args:
             task: Crawling task configuration
             
         Returns:
             Crawl result with data and metadata
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         
         try:
             # Initialize crawler if needed
@@ -218,7 +230,8 @@ class PlatformCrawlerOrchestrator:
     
     async def execute_batch_tasks(self, tasks: List[CrawlTask], 
                                  concurrent_limit: int = 5) -> List[CrawlResult]:
-        """        Execute multiple crawling tasks concurrently.
+        """
+        Execute multiple crawling tasks concurrently.
         
         Args:
             tasks: List of crawling tasks
@@ -226,7 +239,8 @@ class PlatformCrawlerOrchestrator:
             
         Returns:
             List of crawl results
-        """        self.logger.info(f"Executing batch of {len(tasks)} tasks with limit {concurrent_limit}")
+        """
+        self.logger.info(f"Executing batch of {len(tasks)} tasks with limit {concurrent_limit}")
         
         semaphore = asyncio.Semaphore(concurrent_limit)
         
@@ -265,7 +279,8 @@ class PlatformCrawlerOrchestrator:
                                platforms: List[str] = None,
                                interval: int = 300,
                                duration: int = 3600) -> AsyncGenerator[List[CrawlResult], None]:
-        """        Continuous monitoring across multiple platforms.
+        """
+        Continuous monitoring across multiple platforms.
         
         Args:
             queries: Search queries to monitor
@@ -275,7 +290,8 @@ class PlatformCrawlerOrchestrator:
             
         Yields:
             List of crawl results for each monitoring cycle
-        """        if platforms is None:
+        """
+        if platforms is None:
             platforms = get_supported_platforms()
         
         self.logger.info(f"Starting monitoring: {len(queries)} queries across {len(platforms)} platforms")
@@ -312,7 +328,8 @@ class PlatformCrawlerOrchestrator:
                 await asyncio.sleep(sleep_time)
     
     async def _execute_search(self, crawler, task: CrawlTask) -> List[Dict]:
-        """Execute search task on crawler."""        if hasattr(crawler, 'search_content'):
+        """Execute search task on crawler."""
+        if hasattr(crawler, 'search_content'):
             return await crawler.search_content(
                 query=task.query,
                 limit=task.limit,
@@ -341,7 +358,8 @@ class PlatformCrawlerOrchestrator:
                 }]
     
     async def _execute_profile(self, crawler, task: CrawlTask) -> List[Dict]:
-        """Execute profile task on crawler."""        if hasattr(crawler, 'get_profile_data'):
+        """Execute profile task on crawler."""
+        if hasattr(crawler, 'get_profile_data'):
             return await crawler.get_profile_data(
                 profile_id=task.target_id or task.query
             )
@@ -368,7 +386,8 @@ class PlatformCrawlerOrchestrator:
                 }]
     
     async def _execute_content(self, crawler, task: CrawlTask) -> List[Dict]:
-        """Execute content task on crawler."""        if hasattr(crawler, 'get_content_data'):
+        """Execute content task on crawler."""
+        if hasattr(crawler, 'get_content_data'):
             return await crawler.get_content_data(
                 content_id=task.target_id or task.query,
                 content_type=task.filters.get('content_type') if task.filters else None
@@ -397,7 +416,8 @@ class PlatformCrawlerOrchestrator:
                 }]
     
     async def _execute_monitor(self, crawler, task: CrawlTask) -> List[Dict]:
-        """Execute monitoring task on crawler."""        if hasattr(crawler, 'monitor_content'):
+        """Execute monitoring task on crawler."""
+        if hasattr(crawler, 'monitor_content'):
             return await crawler.monitor_content(
                 query=task.query,
                 since=task.since,
@@ -409,7 +429,8 @@ class PlatformCrawlerOrchestrator:
             return await self._execute_search(crawler, task)
     
     def get_platform_stats(self) -> Dict[str, Any]:
-        """Get statistics about supported platforms and active crawlers."""        return {
+        """Get statistics about supported platforms and active crawlers."""
+        return {
             'total_platforms': len(get_supported_platforms()),
             'active_crawlers': len(self.active_crawlers),
             'platform_categories': {
@@ -424,7 +445,8 @@ class PlatformCrawlerOrchestrator:
         }
     
     async def cleanup(self):
-        """Cleanup resources and close active crawlers."""        self.logger.info("Cleaning up platform crawlers")
+        """Cleanup resources and close active crawlers."""
+        self.logger.info("Cleaning up platform crawlers")
         
         for platform, crawler in self.active_crawlers.items():
             try:
@@ -439,7 +461,8 @@ class PlatformCrawlerOrchestrator:
 async def search_across_platforms(query: str, 
                                  platforms: List[str] = None,
                                  limit: int = 50) -> Dict[str, CrawlResult]:
-    """    Search for content across multiple platforms.
+    """
+    Search for content across multiple platforms.
     
     Args:
         query: Search query
@@ -448,7 +471,8 @@ async def search_across_platforms(query: str,
         
     Returns:
         Dictionary mapping platform to crawl results
-    """    if platforms is None:
+    """
+    if platforms is None:
         platforms = get_platforms_by_category('social')
     
     orchestrator = PlatformCrawlerOrchestrator()
@@ -469,7 +493,8 @@ async def search_across_platforms(query: str,
 async def monitor_content_violations(content_fingerprint: str,
                                    platforms: List[str] = None,
                                    monitoring_duration: int = 3600) -> List[CrawlResult]:
-    """    Monitor platforms for potential content violations.
+    """
+    Monitor platforms for potential content violations.
     
     Args:
         content_fingerprint: Content identifier/fingerprint to monitor
@@ -478,7 +503,8 @@ async def monitor_content_violations(content_fingerprint: str,
         
     Returns:
         List of potential violation results
-    """    if platforms is None:
+    """
+    if platforms is None:
         platforms = ['youtube', 'instagram', 'tiktok', 'twitter', 'facebook']
     
     orchestrator = PlatformCrawlerOrchestrator()

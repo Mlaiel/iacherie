@@ -14,7 +14,8 @@ Point d'entrée centralisé pour toutes les fonctionnalités de validation
 - Configuration centralisée
 - Utilité pour tests et intégrations
 - Documentation des composants disponibles
-"""from typing import Dict, List, Optional, Any, Union, Tuple
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple
 import logging
 from pathlib import Path
 
@@ -147,10 +148,12 @@ from . import (
 logger = logging.getLogger(__name__)
 
 class ValidationModuleInfo:
-    """Informations sur le module de validation"""    
+    """Informations sur le module de validation"""
+    
     @staticmethod
     def get_module_info() -> Dict[str, Any]:
-        """Retourne les informations du module"""        return {
+        """Retourne les informations du module"""
+        return {
             "name": "Data Management Validation Module",
             "version": "1.0.0",
             "author": "Fahed Mlaiel",
@@ -181,7 +184,8 @@ class ValidationModuleInfo:
     
     @staticmethod
     def get_available_validators() -> List[str]:
-        """Retourne la liste des validateurs disponibles"""        return [
+        """Retourne la liste des validateurs disponibles"""
+        return [
             "ContentValidator",
             "FormatValidator", 
             "BusinessValidator",
@@ -196,7 +200,8 @@ class ValidationModuleInfo:
     
     @staticmethod
     def get_component_dependencies() -> Dict[str, List[str]]:
-        """Retourne les dépendances entre composants"""        return {
+        """Retourne les dépendances entre composants"""
+        return {
             "ValidationManager": [
                 "ContentValidator",
                 "FormatValidator",
@@ -223,7 +228,8 @@ def create_validation_suite(
     enable_metrics: bool = True,
     enable_caching: bool = True
 ) -> Dict[str, Any]:
-    """Crée une suite de validation complète configurée"""    
+    """Crée une suite de validation complète configurée"""
+    
     # Configuration par défaut si non fournie
     if config is None:
         config = ValidationConfig()
@@ -286,7 +292,8 @@ def validate_file_comprehensive(
     enable_quality_assessment: bool = True,
     enable_compliance_check: bool = True
 ) -> Dict[str, Any]:
-    """Validation complète d'un fichier avec tous les composants"""    
+    """Validation complète d'un fichier avec tous les composants"""
+    
     results = {
         "file_path": file_path,
         "creator_type": creator_type,
@@ -375,7 +382,8 @@ def validate_file_comprehensive(
     return results
 
 def _get_overall_recommendation(results: Dict[str, Any]) -> str:
-    """Génère une recommandation globale basée sur tous les résultats"""    
+    """Génère une recommandation globale basée sur tous les résultats"""
+    
     if not results["overall_valid"]:
         return "REJECTED - Does not meet validation criteria"
     
@@ -400,7 +408,8 @@ def _get_overall_recommendation(results: Dict[str, Any]) -> str:
         return "POOR - Significant improvements required"
 
 def get_validation_statistics() -> Dict[str, Any]:
-    """Retourne les statistiques de validation du module"""    try:
+    """Retourne les statistiques de validation du module"""
+    try:
         metrics = validation_metrics
         dashboard = metrics.get_real_time_dashboard()
         

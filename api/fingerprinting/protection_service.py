@@ -8,7 +8,8 @@ sans permission écrite expresse est strictement interdite et
 constituera une violation des droits d'auteur.
 
 Advanced content protection service orchestrating fingerprinting and monitoring
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timezone
 from pathlib import Path
@@ -24,11 +25,14 @@ from .database_manager import DatabaseManager
 logger = logging.getLogger(__name__)
 
 class ContentProtectionService:
-    """    Professional content protection service
+    """
+    Professional content protection service
     Orchestrates multi-format content fingerprinting, duplicate detection, and copyright protection
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize content protection service"""        self.config = config or self._get_default_config()
+        """Initialize content protection service"""
+        self.config = config or self._get_default_config()
         
         # Initialize processors
         self.audio_processor = AudioFingerprintProcessor(self.config.get('audio'))
@@ -48,7 +52,8 @@ class ContentProtectionService:
         }
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""        return {
+        """Get default configuration"""
+        return {
             'similarity_threshold': 0.85,
             'batch_size': 50,
             'max_file_size': 100 * 1024 * 1024,  # 100MB
@@ -62,7 +67,8 @@ class ContentProtectionService:
         }
     
     async def initialize(self):
-        """Initialize the content protection service"""        try:
+        """Initialize the content protection service"""
+        try:
             await self.db_manager.initialize()
             logger.info("Content protection service initialized successfully")
         except Exception as e:
@@ -70,7 +76,8 @@ class ContentProtectionService:
             raise
     
     def get_content_type(self, file_path: Path) -> Optional[str]:
-        """Determine content type from file extension"""        extension = file_path.suffix.lower()
+        """Determine content type from file extension"""
+        extension = file_path.suffix.lower()
         
         for content_type, extensions in self.supported_extensions.items():
             if extension in extensions:
@@ -91,14 +98,16 @@ class ContentProtectionService:
         return None
     
     async def process_file(self, file_path: Path) -> Dict[str, Any]:
-        """        Process a single file for content protection
+        """
+        Process a single file for content protection
         
         Args:
             file_path: Path to the file to process
             
         Returns:
             Processing result with fingerprint ID and duplicate information
-        """        try:
+        """
+        try:
             if not file_path.exists():
                 raise FileNotFoundError(f"File not found: {file_path}")
             
@@ -169,7 +178,8 @@ class ContentProtectionService:
             }
     
     async def process_text_content(self, text_content: str, identifier: str = None) -> Dict[str, Any]:
-        """        Process text content for protection (without file)
+        """
+        Process text content for protection (without file)
         
         Args:
             text_content: Raw text content
@@ -177,7 +187,8 @@ class ContentProtectionService:
             
         Returns:
             Processing result with fingerprint ID and duplicate information
-        """        try:
+        """
+        try:
             # Process text content
             fingerprint = await self.text_processor.process_text_content(text_content)
             fingerprint_id = await self.db_manager.store_text_fingerprint(fingerprint)
@@ -223,7 +234,8 @@ class ContentProtectionService:
             }
     
     async def batch_process_files(self, file_paths: List[Path], max_concurrent: int = None) -> List[Dict[str, Any]]:
-        """        Process multiple files concurrently
+        """
+        Process multiple files concurrently
         
         Args:
             file_paths: List of file paths to process
@@ -231,7 +243,8 @@ class ContentProtectionService:
             
         Returns:
             List of processing results
-        """        max_concurrent = max_concurrent or self.config.get('max_concurrent', 10)
+        """
+        max_concurrent = max_concurrent or self.config.get('max_concurrent', 10)
         
         # Create semaphore to limit concurrent processing
         semaphore = asyncio.Semaphore(max_concurrent)
@@ -259,7 +272,8 @@ class ContentProtectionService:
         return processed_results
     
     async def scan_directory(self, directory_path: Path, recursive: bool = True) -> List[Dict[str, Any]]:
-        """        Scan directory for content protection
+        """
+        Scan directory for content protection
         
         Args:
             directory_path: Directory to scan
@@ -267,7 +281,8 @@ class ContentProtectionService:
             
         Returns:
             List of processing results
-        """        try:
+        """
+        try:
             if not directory_path.exists() or not directory_path.is_dir():
                 raise ValueError(f"Invalid directory: {directory_path}")
             
@@ -307,7 +322,8 @@ class ContentProtectionService:
             }]
     
     def _determine_action(self, is_duplicate: bool) -> str:
-        """Determine action to take based on duplicate status"""        if not is_duplicate:
+        """Determine action to take based on duplicate status"""
+        if not is_duplicate:
             return 'allowed'
         
         action = self.config.get('duplicate_action', 'flag')
@@ -322,7 +338,8 @@ class ContentProtectionService:
             return 'flagged_as_duplicate'
     
     async def get_protection_status(self, fingerprint_id: int) -> Dict[str, Any]:
-        """Get protection status for a specific fingerprint"""        try:
+        """Get protection status for a specific fingerprint"""
+        try:
             fingerprint = await self.db_manager.get_fingerprint(fingerprint_id)
             if not fingerprint:
                 return {'error': 'Fingerprint not found'}
@@ -343,7 +360,8 @@ class ContentProtectionService:
             return {'error': str(e)}
     
     def _calculate_protection_level(self, match_count: int) -> str:
-        """Calculate protection level based on number of matches"""        if match_count == 0:
+        """Calculate protection level based on number of matches"""
+        if match_count == 0:
             return 'original'
         elif match_count < 5:
             return 'low_risk'
@@ -353,7 +371,8 @@ class ContentProtectionService:
             return 'high_risk'
     
     async def get_service_statistics(self) -> Dict[str, Any]:
-        """Get service statistics"""        try:
+        """Get service statistics"""
+        try:
             db_stats = await self.db_manager.get_statistics()
             
             return {
@@ -379,7 +398,8 @@ class ContentProtectionService:
             return {'error': str(e)}
     
     async def cleanup_old_data(self, days_to_keep: int = 90) -> Dict[str, Any]:
-        """Cleanup old protection data"""        try:
+        """Cleanup old protection data"""
+        try:
             deleted_count = await self.db_manager.cleanup_old_records(days_to_keep)
             
             return {
@@ -393,15 +413,18 @@ class ContentProtectionService:
             return {'error': str(e)}
     
     async def close(self):
-        """Close the content protection service"""        try:
+        """Close the content protection service"""
+        try:
             await self.db_manager.close()
             logger.info("Content protection service closed successfully")
         except Exception as e:
             logger.error(f"Error closing service: {str(e)}")
     
     async def __aenter__(self):
-        """Async context manager entry"""        await self.initialize()
+        """Async context manager entry"""
+        await self.initialize()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""        await self.close()
+        """Async context manager exit"""
+        await self.close()

@@ -4,7 +4,8 @@ Advanced hash generation utilities for fingerprinting systems
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
-"""import hashlib
+"""
+import hashlib
 import hmac
 import secrets
 import time
@@ -21,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class HashResult:
-    """Result of hash generation operation"""    algorithm: str
+    """Result of hash generation operation"""
+    algorithm: str
     hash_value: str
     salt: Optional[str]
     timestamp: float
@@ -29,15 +31,19 @@ class HashResult:
 
 
 class HashGenerator:
-    """    Professional hash generator providing multiple hash algorithms
+    """
+    Professional hash generator providing multiple hash algorithms
     for fingerprinting, verification, and cryptographic operations
-    """    
+    """
+    
     def __init__(self, default_salt_length: int = 32):
-        """        Initialize hash generator
+        """
+        Initialize hash generator
         
         Args:
             default_salt_length: Default length for generated salts
-        """        self.default_salt_length = default_salt_length
+        """
+        self.default_salt_length = default_salt_length
         self.supported_algorithms = {
             'md5': hashlib.md5,
             'sha1': hashlib.sha1,
@@ -62,7 +68,8 @@ class HashGenerator:
         use_salt: bool = True,
         custom_salt: Optional[str] = None
     ) -> HashResult:
-        """        Generate secure hash with optional salting
+        """
+        Generate secure hash with optional salting
         
         Args:
             data: Data to hash (string, bytes, or JSON-serializable object)
@@ -72,7 +79,8 @@ class HashGenerator:
         
         Returns:
             HashResult with hash value and metadata
-        """        try:
+        """
+        try:
             if algorithm not in self.supported_algorithms:
                 raise ValueError(f"Unsupported algorithm: {algorithm}")
             
@@ -120,7 +128,8 @@ class HashGenerator:
         fingerprint_data: Dict[str, Any],
         include_metadata: bool = True
     ) -> str:
-        """        Generate hash specifically for fingerprint data
+        """
+        Generate hash specifically for fingerprint data
         
         Args:
             fingerprint_data: Fingerprint data dictionary
@@ -128,7 +137,8 @@ class HashGenerator:
         
         Returns:
             Generated hash string
-        """        try:
+        """
+        try:
             # Extract relevant data for hashing
             hash_data = {}
             
@@ -168,7 +178,8 @@ class HashGenerator:
             raise
     
     def _extract_method_hash(self, method: str, data: Dict[str, Any]) -> Optional[str]:
-        """Extract primary hash from method data"""        try:
+        """Extract primary hash from method data"""
+        try:
             # Method-specific hash extraction
             hash_fields = {
                 'chromaprint': 'hash',
@@ -205,7 +216,8 @@ class HashGenerator:
         chunk_size: int = 65536,
         algorithm: str = 'sha256'
     ) -> HashResult:
-        """        Generate hash of file content
+        """
+        Generate hash of file content
         
         Args:
             file_path: Path to file
@@ -214,7 +226,8 @@ class HashGenerator:
         
         Returns:
             HashResult with file content hash
-        """        try:
+        """
+        try:
             file_path = Path(file_path)
             
             if not file_path.exists():
@@ -257,7 +270,8 @@ class HashGenerator:
         key: Union[str, bytes],
         algorithm: str = 'sha256'
     ) -> str:
-        """        Generate HMAC (Hash-based Message Authentication Code)
+        """
+        Generate HMAC (Hash-based Message Authentication Code)
         
         Args:
             data: Data to authenticate
@@ -266,7 +280,8 @@ class HashGenerator:
         
         Returns:
             HMAC hex digest
-        """        try:
+        """
+        try:
             if algorithm not in self.supported_algorithms:
                 raise ValueError(f"Unsupported algorithm: {algorithm}")
             
@@ -285,14 +300,16 @@ class HashGenerator:
             raise
     
     def generate_merkle_root(self, hashes: List[str]) -> str:
-        """        Generate Merkle tree root from list of hashes
+        """
+        Generate Merkle tree root from list of hashes
         
         Args:
             hashes: List of hash strings
         
         Returns:
             Merkle root hash
-        """        try:
+        """
+        try:
             if not hashes:
                 raise ValueError("Hash list cannot be empty")
             
@@ -331,7 +348,8 @@ class HashGenerator:
         data: Union[str, bytes],
         window_size: int = 64
     ) -> List[int]:
-        """        Generate rolling hash for similarity detection
+        """
+        Generate rolling hash for similarity detection
         
         Args:
             data: Data to hash
@@ -339,7 +357,8 @@ class HashGenerator:
         
         Returns:
             List of rolling hash values
-        """        try:
+        """
+        try:
             if isinstance(data, str):
                 data = data.encode('utf-8')
             
@@ -383,7 +402,8 @@ class HashGenerator:
         num_hashes: int = 10,
         hash_length: int = 32
     ) -> List[str]:
-        """        Generate Locality Sensitive Hash for approximate similarity
+        """
+        Generate Locality Sensitive Hash for approximate similarity
         
         Args:
             features: Feature vector
@@ -392,7 +412,8 @@ class HashGenerator:
         
         Returns:
             List of LSH hash strings
-        """        try:
+        """
+        try:
             if not features:
                 raise ValueError("Features list cannot be empty")
             
@@ -435,7 +456,8 @@ class HashGenerator:
         data: Union[str, bytes, Dict, List],
         hash_result: HashResult
     ) -> bool:
-        """        Verify data against hash result
+        """
+        Verify data against hash result
         
         Args:
             data: Original data
@@ -443,7 +465,8 @@ class HashGenerator:
         
         Returns:
             True if hash matches, False otherwise
-        """        try:
+        """
+        try:
             # Generate new hash with same parameters
             new_result = self.generate_secure_hash(
                 data,
@@ -459,7 +482,8 @@ class HashGenerator:
             return False
     
     def calculate_hash_similarity(self, hash1: str, hash2: str) -> float:
-        """        Calculate similarity between two hash strings using Hamming distance
+        """
+        Calculate similarity between two hash strings using Hamming distance
         
         Args:
             hash1: First hash string
@@ -467,7 +491,8 @@ class HashGenerator:
         
         Returns:
             Similarity score between 0 and 1
-        """        try:
+        """
+        try:
             if len(hash1) != len(hash2):
                 return 0.0
             
@@ -493,7 +518,8 @@ class HashGenerator:
         algorithm: str = 'sha256',
         use_salt: bool = False
     ) -> List[HashResult]:
-        """        Generate hashes for multiple data items in batch
+        """
+        Generate hashes for multiple data items in batch
         
         Args:
             data_list: List of data items to hash
@@ -502,7 +528,8 @@ class HashGenerator:
         
         Returns:
             List of hash results
-        """        try:
+        """
+        try:
             results = []
             
             for data in data_list:
@@ -531,7 +558,8 @@ class HashGenerator:
             raise
     
     def _prepare_data(self, data: Union[str, bytes, Dict, List]) -> bytes:
-        """Convert various data types to bytes for hashing"""        try:
+        """Convert various data types to bytes for hashing"""
+        try:
             if isinstance(data, bytes):
                 return data
             elif isinstance(data, str):
@@ -549,7 +577,8 @@ class HashGenerator:
             raise
     
     def _generate_salt(self, length: Optional[int] = None) -> str:
-        """Generate cryptographically secure random salt"""        try:
+        """Generate cryptographically secure random salt"""
+        try:
             salt_length = length or self.default_salt_length
             salt_bytes = secrets.token_bytes(salt_length)
             return base64.b64encode(salt_bytes).decode('ascii')
@@ -559,7 +588,8 @@ class HashGenerator:
             raise
     
     def export_hash_result(self, hash_result: HashResult, file_path: Union[str, Path]) -> bool:
-        """        Export hash result to JSON file
+        """
+        Export hash result to JSON file
         
         Args:
             hash_result: Hash result to export
@@ -567,7 +597,8 @@ class HashGenerator:
         
         Returns:
             True if successful, False otherwise
-        """        try:
+        """
+        try:
             export_data = {
                 'algorithm': hash_result.algorithm,
                 'hash_value': hash_result.hash_value,
@@ -588,14 +619,16 @@ class HashGenerator:
             return False
     
     def import_hash_result(self, file_path: Union[str, Path]) -> Optional[HashResult]:
-        """        Import hash result from JSON file
+        """
+        Import hash result from JSON file
         
         Args:
             file_path: Input file path
         
         Returns:
             HashResult if successful, None otherwise
-        """        try:
+        """
+        try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
             
@@ -615,7 +648,8 @@ class HashGenerator:
             return None
     
     def clear_cache(self):
-        """Clear the hash cache"""        try:
+        """Clear the hash cache"""
+        try:
             self.hash_cache.clear()
             logger.info("Hash cache cleared")
             
@@ -623,7 +657,8 @@ class HashGenerator:
             logger.error(f"Error clearing cache: {str(e)}")
     
     def get_generator_stats(self) -> Dict[str, Any]:
-        """Get generator statistics and configuration"""        try:
+        """Get generator statistics and configuration"""
+        try:
             return {
                 'generator': 'HashGenerator',
                 'version': '1.0.0',

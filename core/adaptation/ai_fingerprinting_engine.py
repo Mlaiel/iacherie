@@ -26,7 +26,8 @@ Business Logic: Content Upload → Feature Extraction → Fingerprint Generation
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
 from dataclasses import dataclass, field
@@ -64,7 +65,8 @@ from .exceptions import AdaptationError, ValidationError
 
 
 class FingerprintType(str, Enum):
-    """Comprehensive fingerprint types for all content formats"""    AUDIO_SPECTRAL = "audio_spectral"
+    """Comprehensive fingerprint types for all content formats"""
+    AUDIO_SPECTRAL = "audio_spectral"
     AUDIO_WAVEFORM = "audio_waveform"
     AUDIO_MFCC = "audio_mfcc"
     AUDIO_CHROMA = "audio_chroma"
@@ -83,7 +85,8 @@ class FingerprintType(str, Enum):
 
 
 class ContentModality(str, Enum):
-    """Content modality classification"""    AUDIO = "audio"
+    """Content modality classification"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -93,7 +96,8 @@ class ContentModality(str, Enum):
 
 
 class FingerprintAlgorithm(str, Enum):
-    """Advanced fingerprinting algorithms"""    NEURAL_HASH = "neural_hash"
+    """Advanced fingerprinting algorithms"""
+    NEURAL_HASH = "neural_hash"
     PERCEPTUAL_HASH = "perceptual_hash"
     SPECTRAL_HASH = "spectral_hash"
     SEMANTIC_HASH = "semantic_hash"
@@ -105,7 +109,8 @@ class FingerprintAlgorithm(str, Enum):
 
 
 class SimilarityMetric(str, Enum):
-    """Similarity measurement metrics"""    COSINE_SIMILARITY = "cosine_similarity"
+    """Similarity measurement metrics"""
+    COSINE_SIMILARITY = "cosine_similarity"
     EUCLIDEAN_DISTANCE = "euclidean_distance"
     HAMMING_DISTANCE = "hamming_distance"
     JACCARD_SIMILARITY = "jaccard_similarity"
@@ -116,7 +121,8 @@ class SimilarityMetric(str, Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Comprehensive content fingerprint with multi-modal features"""    fingerprint_id: str
+    """Comprehensive content fingerprint with multi-modal features"""
+    fingerprint_id: str
     content_id: str
     creator_id: str
     creator_type: str
@@ -136,7 +142,8 @@ class ContentFingerprint:
 
 @dataclass
 class FingerprintMatch:
-    """Advanced fingerprint matching result with confidence scoring"""    match_id: str
+    """Advanced fingerprint matching result with confidence scoring"""
+    match_id: str
     query_fingerprint_id: str
     matched_fingerprint_id: str
     similarity_score: float
@@ -155,7 +162,8 @@ class FingerprintMatch:
 
 @dataclass
 class FingerprintRequest:
-    """Enterprise-grade fingerprinting request"""    content_id: str
+    """Enterprise-grade fingerprinting request"""
+    content_id: str
     creator_id: str
     creator_type: str
     content_path: str
@@ -171,7 +179,8 @@ class FingerprintRequest:
 
 @dataclass
 class FingerprintResult:
-    """Comprehensive fingerprinting result with actionable insights"""    fingerprint_id: str
+    """Comprehensive fingerprinting result with actionable insights"""
+    fingerprint_id: str
     content_id: str
     creator_id: str
     creator_type: str
@@ -188,7 +197,8 @@ class FingerprintResult:
 
 
 class NeuralFingerprintExtractor(nn.Module):
-    """Advanced neural network for content fingerprint extraction"""    
+    """Advanced neural network for content fingerprint extraction"""
+    
     def __init__(self, input_size: int, hidden_size: int = 512, output_size: int = 256):
         super().__init__()
         self.encoder = nn.Sequential(
@@ -207,7 +217,8 @@ class NeuralFingerprintExtractor(nn.Module):
 
 
 class AIFingerprintingEngine:
-    """    Ultra-Advanced AI Fingerprinting Engine
+    """
+    Ultra-Advanced AI Fingerprinting Engine
     
     Revolutionary AI-powered fingerprinting system providing industrial-strength
     content identification, protection, and tracking capabilities across all
@@ -229,7 +240,8 @@ class AIFingerprintingEngine:
     - Photographers: Visual fingerprinting, EXIF data analysis, composition patterns
     - Influencers: Cross-platform identity tracking, brand consistency analysis
     - Comedians: Performance pattern analysis, timing signatures, delivery styles
-    """    
+    """
+    
     def __init__(self):
         self.settings = get_settings()
         self.logger = logging.getLogger(__name__)
@@ -261,14 +273,16 @@ class AIFingerprintingEngine:
         self,
         request: FingerprintRequest
     ) -> FingerprintResult:
-        """        Extract comprehensive fingerprints from content using AI algorithms
+        """
+        Extract comprehensive fingerprints from content using AI algorithms
         
         Args:
             request: Fingerprinting configuration and content details
             
         Returns:
             FingerprintResult: Complete fingerprinting results with quality metrics
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         fingerprint_id = f"fp_{request.content_id}_{uuid.uuid4().hex[:8]}"
         
         try:
@@ -342,7 +356,8 @@ class AIFingerprintingEngine:
             )
     
     async def _load_content(self, content_path: str, modality: ContentModality) -> Dict[str, Any]:
-        """Load and preprocess content based on modality"""        content_data = {"modality": modality, "path": content_path}
+        """Load and preprocess content based on modality"""
+        content_data = {"modality": modality, "path": content_path}
         
         if modality == ContentModality.AUDIO:
             # Load audio with librosa
@@ -399,7 +414,8 @@ class AIFingerprintingEngine:
         algorithm: FingerprintAlgorithm,
         request: FingerprintRequest
     ) -> ContentFingerprint:
-        """Extract a single fingerprint using specified algorithm"""        
+        """Extract a single fingerprint using specified algorithm"""
+        
         # Choose extraction method based on type and algorithm
         if fp_type == FingerprintType.AUDIO_SPECTRAL:
             feature_vector, hash_value = await self._extract_audio_spectral(content_data, algorithm)
@@ -439,7 +455,8 @@ class AIFingerprintingEngine:
         content_data: Dict[str, Any],
         algorithm: FingerprintAlgorithm
     ) -> Tuple[np.ndarray, str]:
-        """Extract audio spectral fingerprint"""        audio = content_data["audio"]
+        """Extract audio spectral fingerprint"""
+        audio = content_data["audio"]
         sr = content_data["sample_rate"]
         
         # Compute spectral features
@@ -464,7 +481,8 @@ class AIFingerprintingEngine:
         content_data: Dict[str, Any],
         algorithm: FingerprintAlgorithm
     ) -> Tuple[np.ndarray, str]:
-        """Extract image perceptual fingerprint"""        image = content_data["image"]
+        """Extract image perceptual fingerprint"""
+        image = content_data["image"]
         
         if algorithm == FingerprintAlgorithm.PERCEPTUAL_HASH:
             # Use imagehash library
@@ -486,7 +504,8 @@ class AIFingerprintingEngine:
         content_data: Dict[str, Any],
         algorithm: FingerprintAlgorithm
     ) -> Tuple[np.ndarray, str]:
-        """Extract text semantic fingerprint"""        text = content_data["text"]
+        """Extract text semantic fingerprint"""
+        text = content_data["text"]
         
         if algorithm == FingerprintAlgorithm.TRANSFORMER_EMBEDDINGS:
             # Use transformer embeddings (placeholder for actual implementation)
@@ -506,13 +525,15 @@ class AIFingerprintingEngine:
         content_data: Dict[str, Any],
         algorithm: FingerprintAlgorithm
     ) -> Tuple[np.ndarray, str]:
-        """Extract features using neural networks"""        # Placeholder for neural feature extraction
+        """Extract features using neural networks"""
+        # Placeholder for neural feature extraction
         features = np.random.rand(256)  # In real implementation, use actual neural networks
         hash_value = hashlib.sha256(features.tobytes()).hexdigest()
         return features, hash_value
     
     def _extract_with_neural_network(self, input_data: np.ndarray) -> np.ndarray:
-        """Extract features using the neural network"""        input_tensor = torch.FloatTensor(input_data[:2048]).unsqueeze(0).to(self.device)
+        """Extract features using the neural network"""
+        input_tensor = torch.FloatTensor(input_data[:2048]).unsqueeze(0).to(self.device)
         with torch.no_grad():
             features = self.neural_extractor(input_tensor)
         return features.cpu().numpy().flatten()
@@ -522,7 +543,8 @@ class AIFingerprintingEngine:
         feature_vector: np.ndarray,
         content_data: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate quality metrics for fingerprint"""        return {
+        """Calculate quality metrics for fingerprint"""
+        return {
             "overall": 0.9,
             "distinctiveness": 0.85,
             "robustness": 0.88,
@@ -530,21 +552,24 @@ class AIFingerprintingEngine:
         }
     
     async def _assess_fingerprint_quality(self, fingerprints: List[ContentFingerprint]) -> Dict[str, float]:
-        """Assess overall quality of extracted fingerprints"""        return {
+        """Assess overall quality of extracted fingerprints"""
+        return {
             "overall_quality": 0.9,
             "consistency": 0.85,
             "coverage": 0.92
         }
     
     async def _analyze_uniqueness(self, fingerprints: List[ContentFingerprint]) -> Dict[str, Any]:
-        """Analyze uniqueness of fingerprints"""        return {
+        """Analyze uniqueness of fingerprints"""
+        return {
             "overall_uniqueness": 0.95,
             "collision_probability": 0.001,
             "distinctiveness_score": 0.92
         }
     
     async def _find_similar_fingerprints(self, fingerprints: List[ContentFingerprint]) -> List[FingerprintMatch]:
-        """Find similar fingerprints in the database"""        # Placeholder for similarity search
+        """Find similar fingerprints in the database"""
+        # Placeholder for similarity search
         return []
     
     def _generate_protection_recommendations(
@@ -552,7 +577,8 @@ class AIFingerprintingEngine:
         fingerprints: List[ContentFingerprint],
         matches: List[FingerprintMatch]
     ) -> List[str]:
-        """Generate protection recommendations based on fingerprints"""        return [
+        """Generate protection recommendations based on fingerprints"""
+        return [
             "Enable real-time monitoring for content protection",
             "Set up automated alerts for similarity detection",
             "Consider watermarking for additional protection"
@@ -563,25 +589,29 @@ class AIFingerprintingEngine:
         fingerprint_id: str,
         fingerprints: List[ContentFingerprint]
     ) -> Dict[str, Any]:
-        """Configure monitoring for fingerprints"""        return {
+        """Configure monitoring for fingerprints"""
+        return {
             "monitoring_enabled": True,
             "alert_threshold": 0.8,
             "scan_frequency": "hourly"
         }
     
     async def _store_fingerprints(self, fingerprints: List[ContentFingerprint]):
-        """Store fingerprints in the database"""        for fp in fingerprints:
+        """Store fingerprints in the database"""
+        for fp in fingerprints:
             self.fingerprint_store[fp.fingerprint_id] = fp
     
     def _load_algorithm_configs(self) -> Dict[str, Any]:
-        """Load algorithm-specific configurations"""        return {
+        """Load algorithm-specific configurations"""
+        return {
             "neural_hash": {"hidden_size": 512, "output_size": 256},
             "perceptual_hash": {"hash_size": 16},
             "spectral_hash": {"n_fft": 2048, "hop_length": 512}
         }
     
     def _load_creator_fingerprint_profiles(self) -> Dict[str, Any]:
-        """Load creator-specific fingerprinting profiles"""        return {
+        """Load creator-specific fingerprinting profiles"""
+        return {
             "musician": {
                 "preferred_algorithms": ["spectral_hash", "neural_hash"],
                 "quality_threshold": 0.9,

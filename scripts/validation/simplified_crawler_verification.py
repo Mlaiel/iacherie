@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Simplified Crawler Functionality Verification
+"""Simplified Crawler Functionality Verification.
+
 =============================================
 
 Quick verification of crawler implementations and API connectivity.
-"""import asyncio
+"""
+import asyncio
 import json
 import sys
 import importlib.util
@@ -17,13 +19,15 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class SimpleCrawlerVerifier:
-    """Simplified crawler verification without complex dependencies."""    
+    """Simplified crawler verification without complex dependencies."""
+    
     def __init__(self, project_root: str = "."):
         self.project_root = Path(project_root)
         self.results = {}
     
     def load_crawler_class(self, file_path: Path) -> Any:
-        """Dynamically load crawler class from file."""        try:
+        """Dynamically load crawler class from file."""
+        try:
             spec = importlib.util.spec_from_file_location("crawler_module", file_path)
             if spec is None:
                 return None
@@ -45,7 +49,8 @@ class SimpleCrawlerVerifier:
             return None
     
     def analyze_crawler_source(self, file_path: Path) -> Dict[str, Any]:
-        """Analyze crawler source code for implementation quality."""        try:
+        """Analyze crawler source code for implementation quality."""
+        try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
             
@@ -111,7 +116,8 @@ class SimpleCrawlerVerifier:
             }
     
     async def test_api_connectivity(self) -> Dict[str, Any]:
-        """Test basic API endpoint connectivity."""        logger.info("Testing API connectivity...")
+        """Test basic API endpoint connectivity."""
+        logger.info("Testing API connectivity...")
         
         connectivity_results = {}
         
@@ -148,7 +154,8 @@ class SimpleCrawlerVerifier:
         return connectivity_results
     
     def find_priority_crawlers(self) -> Dict[str, List[Path]]:
-        """Find priority crawler files (Spotify, YouTube, Instagram)."""        priority_crawlers = {
+        """Find priority crawler files (Spotify, YouTube, Instagram)."""
+        priority_crawlers = {
             'spotify': [],
             'youtube': [],
             'instagram': []
@@ -177,7 +184,8 @@ class SimpleCrawlerVerifier:
         return priority_crawlers
     
     async def run_verification(self) -> Dict[str, Any]:
-        """Run complete verification process."""        logger.info("🔍 Starting Crawler Verification")
+        """Run complete verification process."""
+        logger.info("🔍 Starting Crawler Verification")
         logger.info("=" * 50)
         
         # Find priority crawlers
@@ -213,7 +221,8 @@ class SimpleCrawlerVerifier:
         return final_report
     
     def generate_summary(self, analysis_results: Dict, connectivity_results: Dict) -> Dict[str, Any]:
-        """Generate summary of verification results."""        total_crawlers = 0
+        """Generate summary of verification results."""
+        total_crawlers = 0
         real_implementations = 0
         stub_implementations = 0
         
@@ -254,7 +263,8 @@ class SimpleCrawlerVerifier:
         }
     
     def generate_recommendations(self, analysis_results: Dict, connectivity_results: Dict) -> List[str]:
-        """Generate actionable recommendations."""        recommendations = []
+        """Generate actionable recommendations."""
+        recommendations = []
         
         # Check priority crawlers
         for platform, results in analysis_results.items():
@@ -276,7 +286,8 @@ class SimpleCrawlerVerifier:
         return recommendations
 
 async def main():
-    """Main execution function."""    verifier = SimpleCrawlerVerifier()
+    """Main execution function."""
+    verifier = SimpleCrawlerVerifier()
     
     # Run verification
     results = await verifier.run_verification()

@@ -5,7 +5,8 @@ lifecycle management, intelligent retention policies, and performance optimizati
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 from datetime import datetime, timezone, timedelta
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 
 class CleanupAction(Enum):
-    """Types of cleanup actions"""    SOFT_DELETE = "soft_delete"
+    """Types of cleanup actions"""
+    SOFT_DELETE = "soft_delete"
     HARD_DELETE = "hard_delete"
     ARCHIVE = "archive"
     COMPRESS = "compress"
@@ -39,7 +41,8 @@ class CleanupAction(Enum):
 
 
 class RetentionPolicyType(Enum):
-    """Types of retention policies"""    TIME_BASED = "time_based"
+    """Types of retention policies"""
+    TIME_BASED = "time_based"
     SIZE_BASED = "size_based"
     ACCESS_BASED = "access_based"
     QUALITY_BASED = "quality_based"
@@ -48,7 +51,8 @@ class RetentionPolicyType(Enum):
 
 @dataclass
 class RetentionPolicy:
-    """Configuration for data retention"""    policy_type: RetentionPolicyType
+    """Configuration for data retention"""
+    policy_type: RetentionPolicyType
     name: str
     description: str
     
@@ -85,7 +89,8 @@ class RetentionPolicy:
 
 @dataclass
 class CleanupReport:
-    """Report of cleanup operations"""    policy_name: str
+    """Report of cleanup operations"""
+    policy_name: str
     start_time: datetime
     end_time: datetime
     
@@ -125,7 +130,8 @@ class CleanupReport:
 
 
 class FingerprintAnalyzer:
-    """Analyze fingerprint data for cleanup decisions"""    
+    """Analyze fingerprint data for cleanup decisions"""
+    
     def __init__(self, db_manager: DatabaseManager):
         self.db_manager = db_manager
         self.logger = logging.getLogger(f"{__name__}.FingerprintAnalyzer")
@@ -134,7 +140,8 @@ class FingerprintAnalyzer:
         self,
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Analyze storage usage patterns"""        try:
+        """Analyze storage usage patterns"""
+        try:
             async with self.db_manager.get_session() as session:
                 base_query = select(FingerprintStorageModel)
                 if user_id:
@@ -208,7 +215,8 @@ class FingerprintAnalyzer:
         self,
         policy: RetentionPolicy
     ) -> List[str]:
-        """Identify fingerprints that match cleanup criteria"""        try:
+        """Identify fingerprints that match cleanup criteria"""
+        try:
             async with self.db_manager.get_session() as session:
                 conditions = []
                 
@@ -283,7 +291,8 @@ class FingerprintAnalyzer:
         self,
         fingerprint_id: str
     ) -> Dict[str, Any]:
-        """Analyze quality metrics for a specific fingerprint"""        try:
+        """Analyze quality metrics for a specific fingerprint"""
+        try:
             async with self.db_manager.get_session() as session:
                 query = select(FingerprintStorageModel).where(
                     FingerprintStorageModel.fingerprint_id == fingerprint_id
@@ -359,7 +368,8 @@ class FingerprintAnalyzer:
         quality_score: float,
         quality_factors: Dict[str, float]
     ) -> List[str]:
-        """Generate recommendations based on quality analysis"""        recommendations = []
+        """Generate recommendations based on quality analysis"""
+        recommendations = []
         
         if quality_score < 40:
             recommendations.append("Consider deleting this low-quality fingerprint")
@@ -379,9 +389,11 @@ class FingerprintAnalyzer:
 
 
 class FingerprintCleanupService:
-    """    Intelligent fingerprint cleanup service with automated lifecycle management,
+    """
+    Intelligent fingerprint cleanup service with automated lifecycle management,
     retention policies, and performance optimization.
-    """    
+    """
+    
     def __init__(
         self,
         db_manager: DatabaseManager,
@@ -408,7 +420,8 @@ class FingerprintCleanupService:
         policy: RetentionPolicy,
         progress_callback: Optional[callable] = None
     ) -> CleanupReport:
-        """        Execute a cleanup policy
+        """
+        Execute a cleanup policy
         
         Args:
             policy: RetentionPolicy to execute
@@ -416,7 +429,8 @@ class FingerprintCleanupService:
             
         Returns:
             CleanupReport with execution results
-        """        start_time = datetime.now(timezone.utc)
+        """
+        start_time = datetime.now(timezone.utc)
         report = CleanupReport(
             policy_name=policy.name,
             start_time=start_time,
@@ -486,7 +500,8 @@ class FingerprintCleanupService:
         policy: RetentionPolicy,
         report: CleanupReport
     ) -> None:
-        """Process a batch of fingerprints for cleanup"""        try:
+        """Process a batch of fingerprints for cleanup"""
+        try:
             async with self.db_manager.get_session() as session:
                 for fingerprint_id in fingerprint_ids:
                     try:
@@ -527,7 +542,8 @@ class FingerprintCleanupService:
         policy: RetentionPolicy,
         session: AsyncSession
     ) -> bool:
-        """Process a single fingerprint according to policy"""        try:
+        """Process a single fingerprint according to policy"""
+        try:
             # Get fingerprint details
             query = select(FingerprintStorageModel).where(
                 FingerprintStorageModel.fingerprint_id == fingerprint_id
@@ -570,7 +586,8 @@ class FingerprintCleanupService:
         fingerprint_id: str,
         session: AsyncSession
     ) -> bool:
-        """Mark fingerprint as deleted (soft delete)"""        try:
+        """Mark fingerprint as deleted (soft delete)"""
+        try:
             # Update status to deleted
             update_query = update(FingerprintStorageModel).where(
                 FingerprintStorageModel.fingerprint_id == fingerprint_id
@@ -595,7 +612,8 @@ class FingerprintCleanupService:
         fingerprint_id: str,
         session: AsyncSession
     ) -> bool:
-        """Permanently delete fingerprint and related data"""        try:
+        """Permanently delete fingerprint and related data"""
+        try:
             # Delete matches first (foreign key constraint)
             match_delete_query = delete(FingerprintMatchModel).where(
                 or_(
@@ -628,7 +646,8 @@ class FingerprintCleanupService:
         fingerprint: FingerprintStorageModel,
         session: AsyncSession
     ) -> bool:
-        """Archive fingerprint to cold storage"""        try:
+        """Archive fingerprint to cold storage"""
+        try:
             # Update status to archived
             update_query = update(FingerprintStorageModel).where(
                 FingerprintStorageModel.fingerprint_id == fingerprint.fingerprint_id
@@ -656,7 +675,8 @@ class FingerprintCleanupService:
         fingerprint: FingerprintStorageModel,
         session: AsyncSession
     ) -> bool:
-        """Compress fingerprint vector data"""        try:
+        """Compress fingerprint vector data"""
+        try:
             # This would involve compressing the vector data
             # For now, we'll just mark it as compressed
             
@@ -686,7 +706,8 @@ class FingerprintCleanupService:
         fingerprint: FingerprintStorageModel,
         session: AsyncSession
     ) -> bool:
-        """Optimize fingerprint storage and indexes"""        try:
+        """Optimize fingerprint storage and indexes"""
+        try:
             # This could involve various optimizations:
             # - Recompute hashes if needed
             # - Update quality metrics
@@ -722,7 +743,8 @@ class FingerprintCleanupService:
         policy: RetentionPolicy,
         report: CleanupReport
     ) -> Dict[str, Any]:
-        """Generate detailed cleanup statistics"""        try:
+        """Generate detailed cleanup statistics"""
+        try:
             stats = {
                 'policy_details': asdict(policy),
                 'execution_summary': {
@@ -754,7 +776,8 @@ class FingerprintCleanupService:
             return {"error": str(e)}
     
     def _create_default_policies(self) -> List[RetentionPolicy]:
-        """Create default retention policies"""        return [
+        """Create default retention policies"""
+        return [
             # Old fingerprints cleanup
             RetentionPolicy(
                 policy_type=RetentionPolicyType.TIME_BASED,
@@ -802,7 +825,8 @@ class FingerprintCleanupService:
         self,
         user_id: Optional[str] = None
     ) -> List[Dict[str, Any]]:
-        """Get cleanup recommendations based on current data"""        try:
+        """Get cleanup recommendations based on current data"""
+        try:
             recommendations = []
             
             # Analyze storage usage
@@ -846,7 +870,8 @@ class FingerprintCleanupService:
         schedule: str,  # Cron expression
         scheduler_manager: SchedulerManager
     ) -> bool:
-        """Schedule a cleanup policy for automatic execution"""        try:
+        """Schedule a cleanup policy for automatic execution"""
+        try:
             job_id = f"cleanup_policy_{policy.name}"
             
             async def cleanup_job():
@@ -878,10 +903,12 @@ class FingerprintCleanupService:
         self,
         limit: int = 10
     ) -> List[CleanupReport]:
-        """Get recent cleanup history"""        return self.cleanup_history[-limit:] if self.cleanup_history else []
+        """Get recent cleanup history"""
+        return self.cleanup_history[-limit:] if self.cleanup_history else []
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on cleanup service"""        try:
+        """Perform health check on cleanup service"""
+        try:
             health = {
                 "status": "healthy",
                 "components": {},

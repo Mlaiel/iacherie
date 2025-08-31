@@ -6,7 +6,8 @@ and developer resources for the IA Influencer Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""from datetime import datetime
+"""
+from datetime import datetime
 from typing import Dict, Any, List
 import json
 import logging
@@ -24,7 +25,8 @@ settings = get_settings()
 router = APIRouter(prefix="/docs", tags=["Documentation"])
 
 class ApiDocumentationResponse(BaseModel):
-    """Response model for API documentation"""    title: str = Field(..., description="API documentation title")
+    """Response model for API documentation"""
+    title: str = Field(..., description="API documentation title")
     version: str = Field(..., description="API version")
     description: str = Field(..., description="API description")
     author: str = Field(..., description="API author")
@@ -36,11 +38,13 @@ class ApiDocumentationResponse(BaseModel):
 
 @router.get("/", response_model=ApiDocumentationResponse)
 async def get_api_documentation():
-    """    Get comprehensive API documentation with all modules, endpoints, and specifications.
+    """
+    Get comprehensive API documentation with all modules, endpoints, and specifications.
     
     This endpoint provides complete technical documentation for developers
     including business logic flow, security standards, and implementation guidelines.
-    """    try:
+    """
+    try:
         return ApiDocumentationResponse(
             title="IA Influencer Agent API - Enterprise Multi-Format Content Protection Platform",
             version="2.0.0",
@@ -62,7 +66,8 @@ async def get_api_documentation():
 
 @router.get("/openapi-spec", response_model=Dict[str, Any])
 async def get_openapi_specification():
-    """Get OpenAPI 3.0 specification for the entire API."""    try:
+    """Get OpenAPI 3.0 specification for the entire API."""
+    try:
         openapi_spec = {
             "openapi": "3.0.0",
             "info": {
@@ -158,7 +163,8 @@ async def get_openapi_specification():
 
 @router.get("/business-logic", response_model=Dict[str, Any])
 async def get_business_logic_documentation():
-    """Get detailed business logic flow documentation."""    try:
+    """Get detailed business logic flow documentation."""
+    try:
         business_logic_detailed = {
             "overview": "IA Influencer Agent platform follows a comprehensive 6-stage business logic flow",
             "stages": [
@@ -283,7 +289,8 @@ async def get_business_logic_documentation():
 
 @router.get("/integration-guide", response_model=Dict[str, Any])
 async def get_integration_guide():
-    """Get comprehensive integration guide for developers."""    try:
+    """Get comprehensive integration guide for developers."""
+    try:
         integration_guide = {
             "overview": "Step-by-step integration guide for IA Influencer Agent API",
             "prerequisites": [
@@ -343,9 +350,11 @@ const response = await fetch('https://api.ia-influencer-agent.com/v1/fingerprint
   headers: { 'Authorization': `Bearer ${access_token}` },
   body: formData
 });
-                    """                },
+                    """
+                },
                 "python": {
-                    "authentication": """import requests
+                    "authentication": """
+import requests
 
 response = requests.post('https://api.ia-influencer-agent.com/v1/auth/login', 
   json={
@@ -355,7 +364,8 @@ response = requests.post('https://api.ia-influencer-agent.com/v1/auth/login',
 )
 access_token = response.json()['access_token']
                     """,
-                    "upload_content": """import requests
+                    "upload_content": """
+import requests
 
 files = {'content_file': open('audio_track.mp3', 'rb')}
 data = {
@@ -371,7 +381,8 @@ response = requests.post(
   files=files,
   data=data
 )
-                    """                }
+                    """
+                }
             },
             "error_handling": {
                 "common_errors": [

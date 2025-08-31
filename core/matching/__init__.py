@@ -16,7 +16,9 @@ Team Specialties:
 - Security Engineering: Military-grade encryption and compliance
 - Performance Engineering: High-throughput distributed systems
 - Data Science: Predictive analytics and behavioral modeling
-"""from .scoring import (
+"""
+
+from .scoring import (
     MatchingScoringService,
     ScoreComponent,
     MLEnsembleScorer,

@@ -6,7 +6,8 @@ copyright infringement on YouTube Music platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
@@ -16,7 +17,8 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class CopyrightStatus(Enum):
-    """Copyright detection status"""    CLEAR = "clear"
+    """Copyright detection status"""
+    CLEAR = "clear"
     DETECTED = "detected"
     CLAIMED = "claimed"
     DISPUTED = "disputed"
@@ -24,7 +26,8 @@ class CopyrightStatus(Enum):
 
 @dataclass
 class CopyrightDetection:
-    """Copyright detection result"""    content_id: str
+    """Copyright detection result"""
+    content_id: str
     detected_content: str
     confidence_score: float
     copyright_owner: Optional[str] = None
@@ -34,7 +37,8 @@ class CopyrightDetection:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class CopyrightMonitor:
-    """    Advanced Copyright Monitoring System
+    """
+    Advanced Copyright Monitoring System
     
     Provides comprehensive copyright protection including:
     - Real-time content monitoring
@@ -42,7 +46,8 @@ class CopyrightMonitor:
     - DMCA takedown management
     - Revenue protection
     - Infringement analytics
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.monitoring_active = False
@@ -50,7 +55,8 @@ class CopyrightMonitor:
         self.detection_threshold = self.config.get('detection_threshold', 0.8)
         
     async def initialize(self):
-        """Initialize copyright monitoring system"""        self.monitoring_active = True
+        """Initialize copyright monitoring system"""
+        self.monitoring_active = True
         logger.info("Copyright monitoring system initialized")
     
     async def monitor_content(
@@ -59,7 +65,8 @@ class CopyrightMonitor:
         reference_audio: bytes,
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[CopyrightDetection]:
-        """Monitor content for copyright infringement"""        try:
+        """Monitor content for copyright infringement"""
+        try:
             # Store reference content for monitoring
             self.protected_content[content_id] = {
                 'audio_data': reference_audio,
@@ -81,7 +88,8 @@ class CopyrightMonitor:
         content_id: str,
         reference_audio: bytes
     ) -> List[CopyrightDetection]:
-        """Scan for potential copyright matches"""        # Mock implementation - in reality this would use audio fingerprinting
+        """Scan for potential copyright matches"""
+        # Mock implementation - in reality this would use audio fingerprinting
         detections = []
         
         # Simulate finding potential matches
@@ -100,7 +108,8 @@ class CopyrightMonitor:
         return detections
     
     def get_monitor_stats(self) -> Dict[str, Any]:
-        """Get copyright monitoring statistics"""        return {
+        """Get copyright monitoring statistics"""
+        return {
             'monitoring_active': self.monitoring_active,
             'protected_content_count': len(self.protected_content),
             'detection_threshold': self.detection_threshold

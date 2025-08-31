@@ -11,7 +11,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
 from dataclasses import dataclass, asdict
@@ -47,7 +48,8 @@ settings = get_settings()
 
 @dataclass
 class VimeoVideo:
-    """Vimeo video data structure"""    id: str
+    """Vimeo video data structure"""
+    id: str
     name: str
     description: Optional[str]
     uri: str
@@ -77,7 +79,8 @@ class VimeoVideo:
 
 @dataclass
 class VimeoUser:
-    """Vimeo user data structure"""    id: str
+    """Vimeo user data structure"""
+    id: str
     name: str
     link: str
     location: Optional[str]
@@ -106,7 +109,8 @@ class VimeoUser:
 
 @dataclass
 class VimeoChannel:
-    """Vimeo channel/showcase data structure"""    id: str
+    """Vimeo channel/showcase data structure"""
+    id: str
     name: str
     description: Optional[str]
     link: str
@@ -123,7 +127,8 @@ class VimeoChannel:
 
 
 class VimeoCrawlerEngine(BaseCrawlerEngine):
-    """    Professional Vimeo crawler engine for video content analysis.
+    """
+    Professional Vimeo crawler engine for video content analysis.
     
     Features:
     - Video discovery and analytics
@@ -132,9 +137,11 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
     - Content quality analysis
     - Live stream monitoring
     - Content protection tracking
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Vimeo crawler engine"""        super().__init__(platform="vimeo", config=config)
+        """Initialize Vimeo crawler engine"""
+        super().__init__(platform="vimeo", config=config)
         
         # Rate limiting
         self.rate_limiter = RateLimiter(
@@ -159,7 +166,8 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
         logger.info("Vimeo crawler engine initialized")
     
     async def initialize(self) -> None:
-        """Initialize the crawler engine"""        try:
+        """Initialize the crawler engine"""
+        try:
             await self._create_session()
             logger.info("Vimeo engine initialized successfully")
         except Exception as e:
@@ -167,7 +175,8 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Initialization failed: {e}")
     
     async def _create_session(self) -> None:
-        """Create HTTP session with proper headers"""        headers = {
+        """Create HTTP session with proper headers"""
+        headers = {
             'User-Agent': 'IA-Influencer-Agent/1.0',
             'Accept': 'application/vnd.vimeo.*+json;version=3.4',
             'Content-Type': 'application/json'
@@ -191,7 +200,8 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
         filter_type: Optional[str] = None,
         limit: int = 25
     ) -> List[VimeoVideo]:
-        """        Search for videos on Vimeo
+        """
+        Search for videos on Vimeo
         
         Args:
             query: Search query
@@ -202,7 +212,8 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of videos matching the query
-        """        try:
+        """
+        try:
             await self.rate_limiter.acquire()
             
             if not self.access_token:
@@ -251,14 +262,16 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Video search failed: {e}")
     
     async def get_video_details(self, video_id: str) -> Optional[VimeoVideo]:
-        """        Get detailed information about a video
+        """
+        Get detailed information about a video
         
         Args:
             video_id: Vimeo video ID
             
         Returns:
             Video details or None if not found
-        """        try:
+        """
+        try:
             await self.rate_limiter.acquire()
             
             if not self.access_token:
@@ -293,14 +306,16 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Video details retrieval failed: {e}")
     
     async def get_user_profile(self, user_id: str) -> Optional[VimeoUser]:
-        """        Get user profile information
+        """
+        Get user profile information
         
         Args:
             user_id: Vimeo user ID
             
         Returns:
             User profile data or None if not found
-        """        try:
+        """
+        try:
             await self.rate_limiter.acquire()
             
             if not self.access_token:
@@ -335,7 +350,8 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"User profile retrieval failed: {e}")
     
     def _parse_video_data(self, video_data: Dict[str, Any]) -> VimeoVideo:
-        """Parse video data from API response"""        try:
+        """Parse video data from API response"""
+        try:
             return VimeoVideo(
                 id=str(video_data.get('id', '')),
                 name=video_data.get('name', ''),
@@ -369,7 +385,8 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Video data parsing failed: {e}")
     
     def _parse_user_data(self, user_data: Dict[str, Any]) -> VimeoUser:
-        """Parse user data from API response"""        try:
+        """Parse user data from API response"""
+        try:
             metadata = user_data.get('metadata', {})
             connections = metadata.get('connections', {})
             
@@ -409,7 +426,8 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
         video_id: str,
         tracking_period_days: int = 30
     ) -> Dict[str, Any]:
-        """        Monitor video performance over time
+        """
+        Monitor video performance over time
         
         Args:
             video_id: Video ID to monitor
@@ -417,7 +435,8 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             Performance monitoring data
-        """        try:
+        """
+        try:
             video = await self.get_video_details(video_id)
             if not video:
                 raise ContentNotFoundError(f"Video not found: {video_id}")
@@ -445,14 +464,16 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Video performance monitoring failed: {e}")
     
     def _calculate_engagement_rate(self, video: VimeoVideo) -> float:
-        """Calculate engagement rate for a video"""        if video.play_count == 0:
+        """Calculate engagement rate for a video"""
+        if video.play_count == 0:
             return 0.0
         
         total_engagement = video.like_count + video.comment_count
         return (total_engagement / video.play_count) * 100
     
     def _calculate_quality_score(self, video: VimeoVideo) -> float:
-        """Calculate quality score based on video attributes"""        score = 0.0
+        """Calculate quality score based on video attributes"""
+        score = 0.0
         
         # Resolution quality
         if video.height >= 1080:
@@ -482,7 +503,8 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
         return min(score, 1.0)
     
     async def cleanup(self) -> None:
-        """Clean up resources"""        try:
+        """Clean up resources"""
+        try:
             if self.session:
                 await self.session.close()
             await super().cleanup()

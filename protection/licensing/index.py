@@ -12,7 +12,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This software is protected by international copyright law and trade secret law.
 Unauthorized reproduction, distribution, or reverse engineering is strictly prohibited.
 Contact: mlaiel@live.de for licensing and authorization requests.
-"""import logging
+"""
+import logging
 from typing import Dict, Any, Optional
 
 # Import main licensing system
@@ -36,32 +37,38 @@ from .streaming_platform_manager import StreamingPlatformLicenseManager
 logger = logging.getLogger(__name__)
 
 class LicensingSystemFactory:
-    """    🏭 Factory class for creating and configuring licensing system instances
+    """
+    🏭 Factory class for creating and configuring licensing system instances
     
     Provides convenient methods for initializing the licensing system
     with different configurations and use cases.
-    """    
+    """
+    
     @staticmethod
     def create_standard_system(config: Dict[str, Any]) -> LicensingSystem:
-        """        Create a standard licensing system with all components.
+        """
+        Create a standard licensing system with all components.
         
         Args:
             config: System configuration dictionary
             
         Returns:
             Configured LicensingSystem instance
-        """        return LicensingSystem(config)
+        """
+        return LicensingSystem(config)
     
     @staticmethod
     def create_music_focused_system(config: Dict[str, Any]) -> LicensingSystem:
-        """        Create a music industry focused licensing system.
+        """
+        Create a music industry focused licensing system.
         
         Args:
             config: System configuration dictionary
             
         Returns:
             LicensingSystem configured for music industry
-        """        music_config = {
+        """
+        music_config = {
             **config,
             'focus_area': 'music',
             'default_license_type': 'musical_work',
@@ -77,14 +84,16 @@ class LicensingSystemFactory:
     
     @staticmethod
     def create_international_system(config: Dict[str, Any]) -> LicensingSystem:
-        """        Create a system optimized for international licensing.
+        """
+        Create a system optimized for international licensing.
         
         Args:
             config: System configuration dictionary
             
         Returns:
             LicensingSystem configured for international operations
-        """        international_config = {
+        """
+        international_config = {
             **config,
             'multi_jurisdiction': True,
             'supported_territories': [
@@ -101,14 +110,16 @@ class LicensingSystemFactory:
     
     @staticmethod
     def create_enterprise_system(config: Dict[str, Any]) -> LicensingSystem:
-        """        Create an enterprise-grade licensing system.
+        """
+        Create an enterprise-grade licensing system.
         
         Args:
             config: System configuration dictionary
             
         Returns:
             LicensingSystem configured for enterprise use
-        """        enterprise_config = {
+        """
+        enterprise_config = {
             **config,
             'enterprise_features': True,
             'multi_tenant': True,
@@ -131,7 +142,8 @@ def quick_setup(
     blockchain_network: str = 'ethereum',
     focus_area: str = 'general'
 ) -> LicensingSystem:
-    """    Quick setup function for rapid licensing system deployment.
+    """
+    Quick setup function for rapid licensing system deployment.
     
     Args:
         database_url: Database connection string
@@ -141,7 +153,8 @@ def quick_setup(
         
     Returns:
         Configured LicensingSystem instance
-    """    base_config = {
+    """
+    base_config = {
         'database_url': database_url,
         'ai_models_path': ai_models_path or './models',
         'blockchain_network': blockchain_network,
@@ -160,11 +173,13 @@ def quick_setup(
         return LicensingSystemFactory.create_standard_system(base_config)
 
 def get_available_components() -> Dict[str, Any]:
-    """    Get information about available licensing system components.
+    """
+    Get information about available licensing system components.
     
     Returns:
         Dictionary containing component information
-    """    return {
+    """
+    return {
         'core_components': [
             'LicenseGenerator',
             'ComplianceManager', 
@@ -197,11 +212,13 @@ def get_available_components() -> Dict[str, Any]:
     }
 
 def check_system_requirements() -> Dict[str, Any]:
-    """    Check if system requirements are met for licensing system.
+    """
+    Check if system requirements are met for licensing system.
     
     Returns:
         Dictionary containing requirement check results
-    """    requirements = {
+    """
+    requirements = {
         'python_version': '3.11+',
         'required_packages': [
             'fastapi', 'sqlalchemy', 'redis', 'celery',

@@ -11,7 +11,8 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
-"""from typing import Dict, List, Optional, Any, Union, Tuple
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import logging
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 
 class Platform(Enum):
-    """Supported platforms"""    SPOTIFY = "spotify"
+    """Supported platforms"""
+    SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
@@ -43,7 +45,8 @@ class Platform(Enum):
 
 
 class PlatformIntentType(Enum):
-    """Platform-specific intent types"""    CONTENT_UPLOAD = "content_upload"
+    """Platform-specific intent types"""
+    CONTENT_UPLOAD = "content_upload"
     ANALYTICS_REVIEW = "analytics_review"
     AUDIENCE_ENGAGEMENT = "audience_engagement"
     MONETIZATION_SETUP = "monetization_setup"
@@ -61,7 +64,8 @@ class PlatformIntentType(Enum):
 
 
 class ContentType(Enum):
-    """Content types by platform"""    AUDIO_TRACK = "audio_track"
+    """Content types by platform"""
+    AUDIO_TRACK = "audio_track"
     MUSIC_VIDEO = "music_video"
     PHOTO = "photo"
     VIDEO_POST = "video_post"
@@ -80,7 +84,8 @@ class ContentType(Enum):
 
 @dataclass
 class PlatformSpecification:
-    """Platform-specific requirements and constraints"""    
+    """Platform-specific requirements and constraints"""
+    
     # Content specifications
     max_file_size: int  # in MB
     supported_formats: List[str]
@@ -107,7 +112,8 @@ class PlatformSpecification:
 
 @dataclass
 class PlatformIntentAnalysis:
-    """Platform-specific intent analysis result"""    
+    """Platform-specific intent analysis result"""
+    
     # Identified platform and intent
     platform: Platform
     intent_type: PlatformIntentType
@@ -139,7 +145,8 @@ class PlatformIntentAnalysis:
 
 
 class PlatformSpecificIntentProcessor:
-    """    Platform-specific intent recognition and analysis system
+    """
+    Platform-specific intent recognition and analysis system
     
     Provides specialized processing for platform-specific operations:
     - Platform identification from context
@@ -147,7 +154,8 @@ class PlatformSpecificIntentProcessor:
     - Content requirement analysis
     - Cross-platform optimization suggestions
     - Platform compliance checking
-    """    
+    """
+    
     def __init__(self, config: IntentRecognitionConfig):
         self.config = config
         self.platform_patterns = self._initialize_platform_patterns()
@@ -156,7 +164,8 @@ class PlatformSpecificIntentProcessor:
         self.optimization_rules = self._load_optimization_rules()
     
     def _initialize_platform_patterns(self) -> Dict[Platform, re.Pattern]:
-        """Initialize platform detection patterns"""        return {
+        """Initialize platform detection patterns"""
+        return {
             Platform.SPOTIFY: re.compile(
                 r'\b(spotify|streaming|playlist|album|track|artist)\b', re.IGNORECASE
             ),
@@ -184,7 +193,8 @@ class PlatformSpecificIntentProcessor:
         }
     
     def _initialize_platform_specifications(self) -> Dict[Platform, PlatformSpecification]:
-        """Initialize platform-specific specifications"""        return {
+        """Initialize platform-specific specifications"""
+        return {
             Platform.SPOTIFY: PlatformSpecification(
                 max_file_size=100,  # MB
                 supported_formats=["mp3", "wav", "flac", "m4a"],
@@ -253,7 +263,8 @@ class PlatformSpecificIntentProcessor:
         }
     
     def _initialize_intent_patterns(self) -> Dict[PlatformIntentType, re.Pattern]:
-        """Initialize intent type patterns"""        return {
+        """Initialize intent type patterns"""
+        return {
             PlatformIntentType.CONTENT_UPLOAD: re.compile(
                 r'\b(upload|post|publish|share|release|drop)\b', re.IGNORECASE
             ),
@@ -278,7 +289,8 @@ class PlatformSpecificIntentProcessor:
         }
     
     def _load_optimization_rules(self) -> Dict[Platform, Dict[str, Any]]:
-        """Load platform-specific optimization rules"""        return {
+        """Load platform-specific optimization rules"""
+        return {
             Platform.INSTAGRAM: {
                 "best_posting_times": [
                     {"day": "monday", "hours": [6, 10, 19]},
@@ -340,7 +352,8 @@ class PlatformSpecificIntentProcessor:
         conversation_context: Dict[str, Any],
         explicit_platform: Optional[str] = None
     ) -> PlatformIntentAnalysis:
-        """        Analyze platform-specific intent with comprehensive context
+        """
+        Analyze platform-specific intent with comprehensive context
         
         Args:
             message_text: User's message
@@ -350,7 +363,8 @@ class PlatformSpecificIntentProcessor:
             
         Returns:
             PlatformIntentAnalysis: Comprehensive platform intent analysis
-        """        try:
+        """
+        try:
             # Identify target platform
             platform = self._identify_platform(message_text, user_profile, explicit_platform)
             
@@ -421,7 +435,8 @@ class PlatformSpecificIntentProcessor:
         user_profile: Dict[str, Any],
         explicit_platform: Optional[str] = None
     ) -> Platform:
-        """Identify target platform from message and context"""        
+        """Identify target platform from message and context"""
+        
         if explicit_platform:
             try:
                 return Platform(explicit_platform.lower())
@@ -457,7 +472,8 @@ class PlatformSpecificIntentProcessor:
         message_text: str,
         platform: Platform
     ) -> PlatformIntentType:
-        """Identify the specific intent type for the platform"""        
+        """Identify the specific intent type for the platform"""
+        
         text_lower = message_text.lower()
         intent_scores = {}
         
@@ -486,7 +502,8 @@ class PlatformSpecificIntentProcessor:
         platform: Platform,
         user_profile: Dict[str, Any]
     ) -> Optional[ContentType]:
-        """Identify the content type based on message and platform"""        
+        """Identify the content type based on message and platform"""
+        
         text_lower = message_text.lower()
         
         # Content type keywords
@@ -534,7 +551,8 @@ class PlatformSpecificIntentProcessor:
         return None
     
     def _is_content_type_supported(self, platform: Platform, content_type: ContentType) -> bool:
-        """Check if content type is supported by platform"""        
+        """Check if content type is supported by platform"""
+        
         platform_content_support = {
             Platform.SPOTIFY: [ContentType.AUDIO_TRACK, ContentType.PODCAST_EPISODE],
             Platform.INSTAGRAM: [
@@ -555,7 +573,8 @@ class PlatformSpecificIntentProcessor:
         return content_type in supported_types
     
     def _analyze_platform_features(self, message_text: str, platform: Platform) -> List[str]:
-        """Analyze which platform features are mentioned or implied"""        
+        """Analyze which platform features are mentioned or implied"""
+        
         features_used = []
         text_lower = message_text.lower()
         
@@ -599,7 +618,8 @@ class PlatformSpecificIntentProcessor:
         intent_type: PlatformIntentType,
         user_profile: Dict[str, Any]
     ) -> List[str]:
-        """Generate platform-specific optimization opportunities"""        
+        """Generate platform-specific optimization opportunities"""
+        
         opportunities = []
         
         # General platform optimizations
@@ -647,7 +667,8 @@ class PlatformSpecificIntentProcessor:
         content_type: Optional[ContentType],
         user_profile: Dict[str, Any]
     ) -> List[str]:
-        """Check platform compliance requirements"""        
+        """Check platform compliance requirements"""
+        
         requirements = []
         
         # General platform requirements
@@ -688,7 +709,8 @@ class PlatformSpecificIntentProcessor:
         content_type: Optional[ContentType],
         user_profile: Dict[str, Any]
     ) -> Dict[str, List[str]]:
-        """Generate comprehensive platform recommendations"""        
+        """Generate comprehensive platform recommendations"""
+        
         tips = []
         optimizations = []
         warnings = []
@@ -744,7 +766,8 @@ class PlatformSpecificIntentProcessor:
         content_type: Optional[ContentType],
         user_profile: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze cross-platform distribution opportunities"""        
+        """Analyze cross-platform distribution opportunities"""
+        
         opportunities = []
         adaptations = {}
         
@@ -788,7 +811,8 @@ class PlatformSpecificIntentProcessor:
         content_type: Optional[ContentType],
         user_profile: Dict[str, Any]
     ) -> Dict[str, Dict[str, float]]:
-        """Predict performance metrics for platform content"""        
+        """Predict performance metrics for platform content"""
+        
         follower_count = user_profile.get("total_followers", 1000)
         engagement_rate = user_profile.get("engagement_rate", 0.03)
         
@@ -828,7 +852,8 @@ class PlatformSpecificIntentProcessor:
         }
     
     def _get_optimal_posting_times(self, platform: Platform) -> List[datetime]:
-        """Get optimal posting times for platform"""        
+        """Get optimal posting times for platform"""
+        
         optimization_rules = self.optimization_rules.get(platform, {})
         posting_times = optimization_rules.get("best_posting_times", [])
         
@@ -854,7 +879,8 @@ class PlatformSpecificIntentProcessor:
         platform: Platform,
         content_type: Optional[ContentType]
     ) -> List[str]:
-        """Generate platform-appropriate hashtag suggestions"""        
+        """Generate platform-appropriate hashtag suggestions"""
+        
         hashtags = []
         
         # Platform-specific hashtag strategies
@@ -892,7 +918,8 @@ class PlatformSpecificIntentProcessor:
         return hashtags[:15]  # Limit to reasonable number
     
     def get_platform_best_practices(self, platform: Platform) -> Dict[str, Any]:
-        """Get comprehensive best practices for platform"""        
+        """Get comprehensive best practices for platform"""
+        
         optimization_rules = self.optimization_rules.get(platform, {})
         platform_specs = self.platform_specs.get(platform)
         
@@ -911,7 +938,8 @@ class PlatformSpecificIntentProcessor:
         return best_practices
     
     def _get_engagement_tips(self, platform: Platform) -> List[str]:
-        """Get platform-specific engagement tips"""        
+        """Get platform-specific engagement tips"""
+        
         tips = {
             Platform.INSTAGRAM: [
                 "Use Instagram Stories daily",
@@ -939,7 +967,8 @@ class PlatformSpecificIntentProcessor:
         return tips.get(platform, [])
     
     def _get_monetization_requirements(self, platform: Platform) -> Dict[str, Any]:
-        """Get platform-specific monetization requirements"""        
+        """Get platform-specific monetization requirements"""
+        
         requirements = {
             Platform.INSTAGRAM: {
                 "followers": 1000,

@@ -13,7 +13,8 @@ Features:
 - Custom loss functions and optimizers
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union, Callable
 from dataclasses import dataclass
@@ -51,7 +52,8 @@ from ..storage.model_storage import ModelStorage
 
 
 class NetworkType(Enum):
-    """Neural network architecture types"""    FEEDFORWARD = "feedforward"
+    """Neural network architecture types"""
+    FEEDFORWARD = "feedforward"
     CONVOLUTIONAL = "convolutional"
     RECURRENT = "recurrent"
     TRANSFORMER = "transformer"
@@ -62,7 +64,8 @@ class NetworkType(Enum):
 
 
 class ModelTask(Enum):
-    """Model task types"""    CLASSIFICATION = "classification"
+    """Model task types"""
+    CLASSIFICATION = "classification"
     REGRESSION = "regression"
     GENERATION = "generation"
     EMBEDDING = "embedding"
@@ -73,7 +76,8 @@ class ModelTask(Enum):
 
 @dataclass
 class ModelConfig:
-    """Neural model configuration"""    model_name: str
+    """Neural model configuration"""
+    model_name: str
     network_type: NetworkType
     task_type: ModelTask
     input_shape: Tuple[int, ...]
@@ -90,7 +94,8 @@ class ModelConfig:
 
 @dataclass
 class TrainingResult:
-    """Training process result"""    model_id: str
+    """Training process result"""
+    model_id: str
     final_loss: float
     best_accuracy: float
     training_time: float
@@ -101,7 +106,8 @@ class TrainingResult:
 
 
 class ContentEmbeddingNetwork(nn.Module):
-    """Neural network for content embedding generation"""    
+    """Neural network for content embedding generation"""
+    
     def __init__(self, input_dim: int, embedding_dim: int = 256):
         super(ContentEmbeddingNetwork, self).__init__()
         
@@ -134,7 +140,8 @@ class ContentEmbeddingNetwork(nn.Module):
 
 
 class MultiModalTransformer(nn.Module):
-    """Transformer architecture for multi-modal content"""    
+    """Transformer architecture for multi-modal content"""
+    
     def __init__(
         self,
         text_vocab_size: int,
@@ -197,7 +204,8 @@ class MultiModalTransformer(nn.Module):
 
 
 class AttentionMechanism(nn.Module):
-    """Multi-head attention mechanism"""    
+    """Multi-head attention mechanism"""
+    
     def __init__(self, embed_dim: int, num_heads: int = 8):
         super(AttentionMechanism, self).__init__()
         self.multihead_attn = nn.MultiheadAttention(embed_dim, num_heads)
@@ -210,7 +218,8 @@ class AttentionMechanism(nn.Module):
 
 
 class ContentClassifier(nn.Module):
-    """Deep neural network for content classification"""    
+    """Deep neural network for content classification"""
+    
     def __init__(self, input_dim: int, num_classes: int, hidden_dims: List[int] = [512, 256, 128]):
         super(ContentClassifier, self).__init__()
         
@@ -235,7 +244,8 @@ class ContentClassifier(nn.Module):
 
 
 class EngagementPredictor(nn.Module):
-    """Neural network for engagement prediction"""    
+    """Neural network for engagement prediction"""
+    
     def __init__(self, feature_dim: int):
         super(EngagementPredictor, self).__init__()
         
@@ -263,7 +273,8 @@ class EngagementPredictor(nn.Module):
 
 
 class AudioCNN(nn.Module):
-    """Convolutional network for audio analysis"""    
+    """Convolutional network for audio analysis"""
+    
     def __init__(self, input_channels: int = 1, num_classes: int = 10):
         super(AudioCNN, self).__init__()
         
@@ -298,14 +309,18 @@ class AudioCNN(nn.Module):
 
 
 class NeuralNetworks:
-    """    Advanced neural networks manager for content intelligence
-    """    
+    """
+    Advanced neural networks manager for content intelligence
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialize neural networks manager
+        """
+        Initialize neural networks manager
         
         Args:
             config: Configuration dictionary
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Device configuration
@@ -328,7 +343,8 @@ class NeuralNetworks:
         }
     
     def _initialize_models(self) -> None:
-        """Initialize pre-defined neural network models"""        try:
+        """Initialize pre-defined neural network models"""
+        try:
             # Content embedding model
             self.content_embedder = ContentEmbeddingNetwork(
                 input_dim=self.config.get("content_input_dim", 100),
@@ -379,15 +395,18 @@ class NeuralNetworks:
             raise
     
     def _initialize_processors(self) -> None:
-        """Initialize neural processors"""        self.neural_adapter = NeuralAdapter(self.config)
+        """Initialize neural processors"""
+        self.neural_adapter = NeuralAdapter(self.config)
         self.model_processor = ModelProcessor(self.config)
         self.training_engine = TrainingEngine(self.config)
     
     def _initialize_storage(self) -> None:
-        """Initialize model storage"""        self.model_storage = ModelStorage(self.config)
+        """Initialize model storage"""
+        self.model_storage = ModelStorage(self.config)
     
     def _load_pretrained_weights(self) -> None:
-        """Load pre-trained model weights if available"""        try:
+        """Load pre-trained model weights if available"""
+        try:
             models_dir = self.config.get("models_dir", "./models")
             if not os.path.exists(models_dir):
                 os.makedirs(models_dir)
@@ -409,7 +428,8 @@ class NeuralNetworks:
         validation_data: Optional[Dict[str, Any]] = None,
         config: Optional[ModelConfig] = None
     ) -> TrainingResult:
-        """        Train a neural network model
+        """
+        Train a neural network model
         
         Args:
             model_name: Name of the model to train
@@ -419,7 +439,8 @@ class NeuralNetworks:
             
         Returns:
             TrainingResult: Training process results
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             if model_name not in self.model_registry:
@@ -513,7 +534,8 @@ class NeuralNetworks:
             raise
     
     def _get_default_config(self, model_name: str) -> ModelConfig:
-        """Get default configuration for a model"""        defaults = {
+        """Get default configuration for a model"""
+        defaults = {
             "content_embedder": ModelConfig(
                 model_name=model_name,
                 network_type=NetworkType.AUTOENCODER,
@@ -569,7 +591,8 @@ class NeuralNetworks:
         batch_size: int,
         shuffle: bool = True
     ) -> DataLoader:
-        """Prepare PyTorch data loader from data dictionary"""        # Extract features and targets
+        """Prepare PyTorch data loader from data dictionary"""
+        # Extract features and targets
         features = torch.FloatTensor(data["features"])
         
         if "targets" in data:
@@ -581,7 +604,8 @@ class NeuralNetworks:
         return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)
     
     def _get_optimizer(self, model: nn.Module, config: ModelConfig) -> optim.Optimizer:
-        """Get optimizer for training"""        if config.optimizer.lower() == "adam":
+        """Get optimizer for training"""
+        if config.optimizer.lower() == "adam":
             return optim.Adam(model.parameters(), lr=config.learning_rate)
         elif config.optimizer.lower() == "sgd":
             return optim.SGD(model.parameters(), lr=config.learning_rate, momentum=0.9)
@@ -591,7 +615,8 @@ class NeuralNetworks:
             return optim.Adam(model.parameters(), lr=config.learning_rate)
     
     def _get_loss_function(self, loss_name: str) -> nn.Module:
-        """Get loss function"""        if loss_name.lower() == "mse":
+        """Get loss function"""
+        if loss_name.lower() == "mse":
             return nn.MSELoss()
         elif loss_name.lower() == "crossentropy":
             return nn.CrossEntropyLoss()
@@ -609,7 +634,8 @@ class NeuralNetworks:
         criterion: nn.Module,
         model_name: str
     ) -> torch.Tensor:
-        """Perform forward pass and calculate loss"""        if len(batch) == 1:
+        """Perform forward pass and calculate loss"""
+        if len(batch) == 1:
             # Unsupervised learning (e.g., autoencoder)
             inputs = batch[0].to(self.device)
             
@@ -643,7 +669,8 @@ class NeuralNetworks:
         criterion: nn.Module,
         model_name: str
     ) -> Tuple[float, float]:
-        """Validate model performance"""        model.eval()
+        """Validate model performance"""
+        model.eval()
         total_loss = 0.0
         correct_predictions = 0
         total_samples = 0
@@ -670,7 +697,8 @@ class NeuralNetworks:
         return avg_loss, accuracy
     
     def _check_convergence(self, losses: List[float], patience: int = 10) -> bool:
-        """Check if training has converged"""        if len(losses) < patience:
+        """Check if training has converged"""
+        if len(losses) < patience:
             return False
         
         recent_losses = losses[-patience:]
@@ -679,7 +707,8 @@ class NeuralNetworks:
         return improvement < 0.01  # Less than 1% improvement
     
     async def _save_model(self, model: nn.Module, model_name: str, epoch: int) -> None:
-        """Save model checkpoint"""        try:
+        """Save model checkpoint"""
+        try:
             models_dir = self.config.get("models_dir", "./models")
             os.makedirs(models_dir, exist_ok=True)
             
@@ -699,7 +728,8 @@ class NeuralNetworks:
         input_data: np.ndarray,
         return_embeddings: bool = False
     ) -> Dict[str, Any]:
-        """        Make predictions using a trained model
+        """
+        Make predictions using a trained model
         
         Args:
             model_name: Name of the model to use
@@ -708,7 +738,8 @@ class NeuralNetworks:
             
         Returns:
             Dict containing predictions and optional embeddings
-        """        try:
+        """
+        try:
             if model_name not in self.model_registry:
                 raise ValueError(f"Model {model_name} not found")
             
@@ -778,7 +809,8 @@ class NeuralNetworks:
         content_data: np.ndarray,
         embedding_type: str = "content"
     ) -> np.ndarray:
-        """Generate embeddings for content"""        try:
+        """Generate embeddings for content"""
+        try:
             if embedding_type == "content":
                 result = await self.predict("content_embedder", content_data, return_embeddings=True)
                 return result.get("embeddings", np.array([]))
@@ -795,7 +827,8 @@ class NeuralNetworks:
             return np.array([])
     
     def _update_training_metrics(self, result: TrainingResult) -> None:
-        """Update training performance metrics"""        self.performance_metrics["models_trained"] += 1
+        """Update training performance metrics"""
+        self.performance_metrics["models_trained"] += 1
         self.performance_metrics["total_training_time"] += result.training_time
         
         # Update average accuracy
@@ -809,7 +842,8 @@ class NeuralNetworks:
         self.performance_metrics["active_models"] = len(self.model_registry)
     
     async def get_model_info(self, model_name: str) -> Dict[str, Any]:
-        """Get information about a model"""        if model_name not in self.model_registry:
+        """Get information about a model"""
+        if model_name not in self.model_registry:
             return {}
         
         model = self.model_registry[model_name]
@@ -830,10 +864,12 @@ class NeuralNetworks:
         return info
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get neural networks performance metrics"""        return self.performance_metrics.copy()
+        """Get neural networks performance metrics"""
+        return self.performance_metrics.copy()
     
     async def optimize_model(self, model_name: str) -> bool:
-        """Optimize model for inference"""        try:
+        """Optimize model for inference"""
+        try:
             if model_name not in self.model_registry:
                 return False
             
@@ -864,7 +900,8 @@ class NeuralNetworks:
         export_path: str,
         format: str = "pytorch"
     ) -> bool:
-        """Export model to different formats"""        try:
+        """Export model to different formats"""
+        try:
             if model_name not in self.model_registry:
                 return False
             

@@ -24,7 +24,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
-"""import asyncio
+"""
+import asyncio
 import hashlib
 import hmac
 import json
@@ -56,9 +57,11 @@ logger = logging.getLogger(__name__)
 
 
 class PaymentProcessingEngine:
-    """    Ultra-advanced payment processing engine with multi-gateway support,
+    """
+    Ultra-advanced payment processing engine with multi-gateway support,
     fraud detection, compliance management, and automated retry logic
-    """    
+    """
+    
     def __init__(self):
         self.security_manager = SecurityManager()
         self.gateway_clients = {}
@@ -69,7 +72,8 @@ class PaymentProcessingEngine:
         self._initialize_gateways()
     
     def _initialize_gateways(self):
-        """Initialize payment gateway clients with configuration"""        try:
+        """Initialize payment gateway clients with configuration"""
+        try:
             # Stripe configuration
             stripe.api_key = settings.STRIPE_SECRET_KEY
             stripe.api_version = "2023-10-16"
@@ -109,9 +113,11 @@ class PaymentProcessingEngine:
         payment_method_id: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> PaymentTransaction:
-        """        Process a payment through the specified gateway with comprehensive
+        """
+        Process a payment through the specified gateway with comprehensive
         fraud detection and validation
-        """        try:
+        """
+        try:
             # Get user's payment account
             payment_account = await self._get_payment_account(session, user_id, gateway)
             if not payment_account:
@@ -182,8 +188,10 @@ class PaymentProcessingEngine:
         period_end: datetime,
         gateway: PaymentGateway = PaymentGateway.STRIPE
     ) -> RevenuePayout:
-        """        Process revenue payout for a user within the specified period
-        """        try:
+        """
+        Process revenue payout for a user within the specified period
+        """
+        try:
             # Get user's payment account
             payment_account = await self._get_payment_account(session, user_id, gateway)
             if not payment_account:
@@ -257,7 +265,8 @@ class PaymentProcessingEngine:
         transaction: PaymentTransaction,
         payment_method_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Process payment through specific gateway"""        
+        """Process payment through specific gateway"""
+        
         if gateway == PaymentGateway.STRIPE:
             return await self._process_stripe_payment(
                 payment_account, transaction, payment_method_id
@@ -279,7 +288,8 @@ class PaymentProcessingEngine:
         transaction: PaymentTransaction,
         payment_method_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Process payment through Stripe"""        try:
+        """Process payment through Stripe"""
+        try:
             stripe_client = self.gateway_clients[PaymentGateway.STRIPE]
             
             payment_intent_data = {
@@ -320,7 +330,8 @@ class PaymentProcessingEngine:
         payment_account: PaymentAccount,
         transaction: PaymentTransaction
     ) -> Dict[str, Any]:
-        """Process payment through PayPal"""        try:
+        """Process payment through PayPal"""
+        try:
             payment_data = {
                 "intent": "sale",
                 "payer": {"payment_method": "paypal"},
@@ -361,7 +372,8 @@ class PaymentProcessingEngine:
         payment_account: PaymentAccount,
         transaction: PaymentTransaction
     ) -> Dict[str, Any]:
-        """Process payment through Wise (formerly TransferWise)"""        try:
+        """Process payment through Wise (formerly TransferWise)"""
+        try:
             wise_client = self.gateway_clients[PaymentGateway.WISE]
             
             # Create transfer request
@@ -403,7 +415,8 @@ class PaymentProcessingEngine:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Calculate total revenue for a user within the specified period"""        
+        """Calculate total revenue for a user within the specified period"""
+        
         # Query revenue records for the period
         from .revenue_models import RevenueRecord
         
@@ -477,7 +490,8 @@ class PaymentProcessingEngine:
         user_id: str,
         gateway: PaymentGateway
     ) -> Optional[PaymentAccount]:
-        """Get user's payment account for the specified gateway"""        
+        """Get user's payment account for the specified gateway"""
+        
         stmt = select(PaymentAccount).where(
             and_(
                 PaymentAccount.user_id == uuid.UUID(user_id),
@@ -497,7 +511,8 @@ class PaymentProcessingEngine:
         currency: Currency,
         payment_type: PaymentType
     ):
-        """Validate payment request against account limits and policies"""        
+        """Validate payment request against account limits and policies"""
+        
         # Check currency support
         if currency not in payment_account.supported_currencies:
             raise ValidationError(f"Currency {currency.value} not supported")
@@ -518,7 +533,8 @@ class PaymentProcessingEngine:
             raise ValidationError("Enhanced verification required for amounts over €1000")
     
     def _map_gateway_status(self, gateway: PaymentGateway, gateway_status: str) -> PaymentStatus:
-        """Map gateway-specific status to internal PaymentStatus"""        
+        """Map gateway-specific status to internal PaymentStatus"""
+        
         status_mapping = {
             PaymentGateway.STRIPE: {
                 "succeeded": PaymentStatus.COMPLETED,
@@ -554,7 +570,8 @@ class PaymentProcessingEngine:
         session: AsyncSession,
         transaction_id: str
     ) -> PaymentTransaction:
-        """Retry a failed payment with exponential backoff"""        
+        """Retry a failed payment with exponential backoff"""
+        
         # Get transaction
         stmt = select(PaymentTransaction).where(
             PaymentTransaction.id == uuid.UUID(transaction_id)
@@ -623,7 +640,8 @@ class PaymentProcessingEngine:
         webhook_data: Dict[str, Any],
         signature: str
     ):
-        """Handle webhook notifications from payment gateways"""        
+        """Handle webhook notifications from payment gateways"""
+        
         # Verify webhook signature
         if not await self._verify_webhook_signature(gateway, webhook_data, signature):
             raise SecurityError("Invalid webhook signature")
@@ -642,7 +660,8 @@ class PaymentProcessingEngine:
         payload: Dict[str, Any],
         signature: str
     ) -> bool:
-        """Verify webhook signature for security"""        
+        """Verify webhook signature for security"""
+        
         if gateway == PaymentGateway.STRIPE:
             try:
                 stripe.Webhook.construct_event(
@@ -660,7 +679,8 @@ class PaymentProcessingEngine:
         transaction: PaymentTransaction,
         gateway_response: Dict[str, Any]
     ):
-        """Send internal webhook notifications for payment events"""        
+        """Send internal webhook notifications for payment events"""
+        
         webhook_data = {
             "event_type": "payment.processed",
             "transaction_id": str(transaction.id),
@@ -683,7 +703,8 @@ class PaymentProcessingEngine:
         period_start: Optional[datetime] = None,
         period_end: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive payment analytics and metrics"""        
+        """Get comprehensive payment analytics and metrics"""
+        
         # Build query conditions
         conditions = []
         if user_id:
@@ -747,7 +768,8 @@ class PaymentProcessingEngine:
 
 # Utility functions
 async def calculate_platform_commission(amount: Decimal, platform: str) -> Decimal:
-    """Calculate platform commission based on amount and platform"""    commission_rates = {
+    """Calculate platform commission based on amount and platform"""
+    commission_rates = {
         "spotify": Decimal("0.05"),    # 5%
         "youtube": Decimal("0.03"),    # 3%
         "instagram": Decimal("0.04"),  # 4%
@@ -760,7 +782,8 @@ async def calculate_platform_commission(amount: Decimal, platform: str) -> Decim
 
 
 async def validate_bank_account(account_data: Dict[str, Any]) -> bool:
-    """Validate bank account information using IBAN validation and other checks"""    # Implementation would include IBAN validation, routing number checks, etc.
+    """Validate bank account information using IBAN validation and other checks"""
+    # Implementation would include IBAN validation, routing number checks, etc.
     return True
 
 

@@ -10,7 +10,8 @@ WARNING - COPYRIGHT PROTECTION:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""from typing import Dict, List, Optional, Any, Union
+"""
+from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from enum import Enum
 from dataclasses import dataclass
@@ -31,7 +32,8 @@ from ..integrations.esignature import ESignatureService
 
 
 class ContractType(Enum):
-    """Types of contracts managed by the system"""    LICENSING_AGREEMENT = "licensing_agreement"
+    """Types of contracts managed by the system"""
+    LICENSING_AGREEMENT = "licensing_agreement"
     DISTRIBUTION_AGREEMENT = "distribution_agreement"
     COLLABORATION_AGREEMENT = "collaboration_agreement"
     REVENUE_SHARING = "revenue_sharing"
@@ -44,7 +46,8 @@ class ContractType(Enum):
 
 
 class ContractStatus(Enum):
-    """Contract lifecycle status"""    DRAFT = "draft"
+    """Contract lifecycle status"""
+    DRAFT = "draft"
     UNDER_REVIEW = "under_review"
     IN_NEGOTIATION = "in_negotiation"
     PENDING_SIGNATURE = "pending_signature"
@@ -57,7 +60,8 @@ class ContractStatus(Enum):
 
 
 class NegotiationStatus(Enum):
-    """Contract negotiation status"""    INITIATED = "initiated"
+    """Contract negotiation status"""
+    INITIATED = "initiated"
     COUNTEROFFFER_PENDING = "counteroffer_pending"
     REVISION_REQUESTED = "revision_requested"
     TERMS_AGREED = "terms_agreed"
@@ -67,7 +71,8 @@ class NegotiationStatus(Enum):
 
 @dataclass
 class ContractMetrics:
-    """Contract performance metrics"""    total_value: Decimal
+    """Contract performance metrics"""
+    total_value: Decimal
     executed_value: Decimal
     pending_payments: Decimal
     performance_score: float
@@ -77,7 +82,8 @@ class ContractMetrics:
 
 
 class ContractCreationRequest(BaseModel):
-    """Contract creation request structure"""    contract_type: ContractType = Field(..., description="Type of contract to create")
+    """Contract creation request structure"""
+    contract_type: ContractType = Field(..., description="Type of contract to create")
     template_id: Optional[str] = Field(None, description="Template to base contract on")
     parties: List[Dict[str, Any]] = Field(..., description="Contract parties information")
     terms: Dict[str, Any] = Field(..., description="Contract terms and conditions")
@@ -89,7 +95,8 @@ class ContractCreationRequest(BaseModel):
 
 
 class ContractAmendmentRequest(BaseModel):
-    """Contract amendment request structure"""    contract_id: str = Field(..., description="Contract to amend")
+    """Contract amendment request structure"""
+    contract_id: str = Field(..., description="Contract to amend")
     amendment_type: str = Field(..., description="Type of amendment")
     changes: Dict[str, Any] = Field(..., description="Specific changes requested")
     justification: str = Field(..., description="Reason for amendment")
@@ -97,9 +104,11 @@ class ContractAmendmentRequest(BaseModel):
 
 
 class ContractManagementService:
-    """    Comprehensive contract management system with AI-driven contract analysis,
+    """
+    Comprehensive contract management system with AI-driven contract analysis,
     automated negotiation support, and intelligent compliance monitoring.
-    """    
+    """
+    
     def __init__(self, db: Session = None):
         self.db = db or next(get_db())
         self.logger = get_logger(__name__)
@@ -112,7 +121,8 @@ class ContractManagementService:
         request: ContractCreationRequest,
         auto_generate: bool = True
     ) -> Dict[str, Any]:
-        """        Create new contract with AI-assisted generation and legal review
+        """
+        Create new contract with AI-assisted generation and legal review
         
         Args:
             request: Contract creation parameters
@@ -120,7 +130,8 @@ class ContractManagementService:
             
         Returns:
             Created contract details and next steps
-        """        try:
+        """
+        try:
             self.logger.info(f"Creating contract of type {request.contract_type.value}")
             
             # Validate contract creation request
@@ -178,7 +189,8 @@ class ContractManagementService:
         negotiation_points: List[Dict[str, Any]],
         counterparty_id: str
     ) -> Dict[str, Any]:
-        """        Handle contract negotiation with AI-assisted analysis and recommendations
+        """
+        Handle contract negotiation with AI-assisted analysis and recommendations
         
         Args:
             contract_id: Contract being negotiated
@@ -187,7 +199,8 @@ class ContractManagementService:
             
         Returns:
             Negotiation results and recommendations
-        """        try:
+        """
+        try:
             contract = await self._get_contract(contract_id)
             
             if not contract:
@@ -243,7 +256,8 @@ class ContractManagementService:
         contract_id: str,
         execution_method: str = "electronic"
     ) -> Dict[str, Any]:
-        """        Execute contract with digital signature and automated setup
+        """
+        Execute contract with digital signature and automated setup
         
         Args:
             contract_id: Contract to execute
@@ -251,7 +265,8 @@ class ContractManagementService:
             
         Returns:
             Execution results and contract activation details
-        """        try:
+        """
+        try:
             contract = await self._get_contract(contract_id)
             
             if not contract:
@@ -317,14 +332,16 @@ class ContractManagementService:
         self, 
         contract_id: str
     ) -> Dict[str, Any]:
-        """        Comprehensive contract performance monitoring with AI analytics
+        """
+        Comprehensive contract performance monitoring with AI analytics
         
         Args:
             contract_id: Contract to monitor
             
         Returns:
             Detailed performance analysis and recommendations
-        """        try:
+        """
+        try:
             contract = await self._get_contract(contract_id)
             
             if not contract:
@@ -388,14 +405,16 @@ class ContractManagementService:
         self,
         amendment_request: ContractAmendmentRequest
     ) -> Dict[str, Any]:
-        """        Process contract amendment with legal validation and impact analysis
+        """
+        Process contract amendment with legal validation and impact analysis
         
         Args:
             amendment_request: Amendment details and justification
             
         Returns:
             Amendment processing results
-        """        try:
+        """
+        try:
             contract = await self._get_contract(amendment_request.contract_id)
             
             if not contract:
@@ -452,7 +471,8 @@ class ContractManagementService:
         contract_ids: Optional[List[str]] = None,
         date_range: Optional[Dict[str, datetime]] = None
     ) -> Dict[str, Any]:
-        """        Generate comprehensive contract analytics and insights
+        """
+        Generate comprehensive contract analytics and insights
         
         Args:
             contract_ids: Specific contracts to analyze (None for all)
@@ -460,7 +480,8 @@ class ContractManagementService:
             
         Returns:
             Detailed analytics and business insights
-        """        try:
+        """
+        try:
             # Get contracts for analysis
             if contract_ids:
                 contracts = await self._get_contracts_by_ids(contract_ids)
@@ -511,19 +532,23 @@ class ContractManagementService:
     
     # Helper methods for internal operations
     async def _validate_contract_request(self, request: ContractCreationRequest) -> Dict[str, Any]:
-        """Validate contract creation request"""        # Implementation for request validation
+        """Validate contract creation request"""
+        # Implementation for request validation
         pass
     
     async def _get_contract_template(self, template_id: str) -> Optional[ContractTemplate]:
-        """Retrieve contract template by ID"""        # Implementation for template retrieval
+        """Retrieve contract template by ID"""
+        # Implementation for template retrieval
         pass
     
     async def _perform_legal_risk_assessment(self, contract_content: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform comprehensive legal risk assessment"""        # Implementation for risk assessment
+        """Perform comprehensive legal risk assessment"""
+        # Implementation for risk assessment
         pass
     
     async def _setup_contract_monitoring(self, contract_id: str) -> None:
-        """Setup automated contract monitoring systems"""        # Implementation for monitoring setup
+        """Setup automated contract monitoring systems"""
+        # Implementation for monitoring setup
         pass
     
     async def _calculate_contract_metrics(
@@ -531,5 +556,6 @@ class ContractManagementService:
         contract: Contract, 
         performance_data: Dict[str, Any]
     ) -> ContractMetrics:
-        """Calculate comprehensive contract metrics"""        # Implementation for metrics calculation
+        """Calculate comprehensive contract metrics"""
+        # Implementation for metrics calculation
         pass

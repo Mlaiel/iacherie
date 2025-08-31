@@ -5,7 +5,8 @@ LinkedIn API integration for professional networking and content sharing.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
@@ -21,22 +22,26 @@ logger = logging.getLogger(__name__)
 
 
 class LinkedInPlatform(PlatformBase):
-    """LinkedIn platform integration"""    
+    """LinkedIn platform integration"""
+    
     def __init__(self, config: PlatformConfig):
-        """Initialize LinkedIn platform"""        super().__init__(config)
+        """Initialize LinkedIn platform"""
+        super().__init__(config)
         self.api_base = "https://api.linkedin.com/v2"
         self.auth_url = "https://www.linkedin.com/oauth/v2/accessToken"
         self.session: Optional[aiohttp.ClientSession] = None
         
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""        if not self.session or self.session.closed:
+        """Get or create HTTP session"""
+        if not self.session or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             )
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with LinkedIn OAuth2"""        try:
+        """Authenticate with LinkedIn OAuth2"""
+        try:
             # LinkedIn uses OAuth2 authorization code flow
             access_token = self.config.credentials.get('access_token')
             
@@ -67,11 +72,13 @@ class LinkedInPlatform(PlatformBase):
             return False
     
     async def refresh_token(self) -> bool:
-        """Refresh LinkedIn token (requires re-authorization)"""        # LinkedIn tokens are long-lived, refresh requires user re-authorization
+        """Refresh LinkedIn token (requires re-authorization)"""
+        # LinkedIn tokens are long-lived, refresh requires user re-authorization
         return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to LinkedIn API"""        try:
+        """Make authenticated request to LinkedIn API"""
+        try:
             session = await self._get_session()
             
             # Add authentication headers
@@ -111,7 +118,8 @@ class LinkedInPlatform(PlatformBase):
             return None
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Share content on LinkedIn"""        try:
+        """Share content on LinkedIn"""
+        try:
             # Get user profile to get person URN
             profile = await self._make_request('GET', '/me')
             if not profile:
@@ -189,7 +197,8 @@ class LinkedInPlatform(PlatformBase):
             )
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get LinkedIn post analytics"""        try:
+        """Get LinkedIn post analytics"""
+        try:
             # LinkedIn analytics require specific permissions and endpoints
             # Using share statistics endpoint
             result = await self._make_request('GET', f'/socialActions/{content_id}')
@@ -233,7 +242,8 @@ class LinkedInPlatform(PlatformBase):
             raise
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on LinkedIn (limited API access)"""        try:
+        """Search content on LinkedIn (limited API access)"""
+        try:
             # LinkedIn search requires specific permissions
             # This is a basic implementation using people search
             params = {
@@ -265,7 +275,8 @@ class LinkedInPlatform(PlatformBase):
             return []
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's posts from LinkedIn"""        try:
+        """Get user's posts from LinkedIn"""
+        try:
             # Get current user's posts
             params = {
                 'q': 'authors',
@@ -297,7 +308,8 @@ class LinkedInPlatform(PlatformBase):
             return []
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete LinkedIn post"""        try:
+        """Delete LinkedIn post"""
+        try:
             result = await self._make_request('DELETE', f'/ugcPosts/{content_id}')
             
             # LinkedIn DELETE returns 204 No Content on success
@@ -309,7 +321,8 @@ class LinkedInPlatform(PlatformBase):
             return False
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
-        """Update LinkedIn post (limited editing capabilities)"""        try:
+        """Update LinkedIn post (limited editing capabilities)"""
+        try:
             # LinkedIn doesn't support post editing after publication
             # This is a placeholder for potential future functionality
             logger.warning("LinkedIn doesn't support post editing after publication")
@@ -320,7 +333,8 @@ class LinkedInPlatform(PlatformBase):
             return False
     
     async def get_profile_info(self, user_id: str = None) -> Optional[Dict[str, Any]]:
-        """Get LinkedIn profile information"""        try:
+        """Get LinkedIn profile information"""
+        try:
             endpoint = '/me' if not user_id else f'/people/{user_id}'
             result = await self._make_request('GET', endpoint)
             
@@ -344,7 +358,8 @@ class LinkedInPlatform(PlatformBase):
             return None
     
     async def get_company_info(self, company_id: str) -> Optional[Dict[str, Any]]:
-        """Get LinkedIn company information"""        try:
+        """Get LinkedIn company information"""
+        try:
             result = await self._make_request('GET', f'/companies/{company_id}')
             
             if result:
@@ -368,7 +383,8 @@ class LinkedInPlatform(PlatformBase):
             return None
     
     async def get_connections(self) -> List[Dict[str, Any]]:
-        """Get user's LinkedIn connections"""        try:
+        """Get user's LinkedIn connections"""
+        try:
             result = await self._make_request('GET', '/people/~/connections')
             
             if result and result.get('elements'):
@@ -390,7 +406,8 @@ class LinkedInPlatform(PlatformBase):
             return []
     
     async def send_message(self, recipient_id: str, message_text: str) -> bool:
-        """Send direct message on LinkedIn"""        try:
+        """Send direct message on LinkedIn"""
+        try:
             # LinkedIn messaging requires specific permissions
             message_data = {
                 "recipients": [f"urn:li:person:{recipient_id}"],
@@ -412,7 +429,8 @@ class LinkedInPlatform(PlatformBase):
             return False
     
     async def get_industry_insights(self) -> Dict[str, Any]:
-        """Get industry insights and trends"""        try:
+        """Get industry insights and trends"""
+        try:
             # This would require LinkedIn Marketing API access
             # Placeholder for industry insights functionality
             logger.warning("Industry insights require LinkedIn Marketing API access")
@@ -426,7 +444,8 @@ class LinkedInPlatform(PlatformBase):
             return {}
     
     async def get_page_analytics(self, page_id: str) -> Dict[str, Any]:
-        """Get LinkedIn company page analytics"""        try:
+        """Get LinkedIn company page analytics"""
+        try:
             # Company page analytics require specific permissions
             params = {
                 'q': 'organizationalEntity',
@@ -452,5 +471,6 @@ class LinkedInPlatform(PlatformBase):
             return {}
     
     async def close(self):
-        """Close HTTP session"""        if self.session and not self.session.closed:
+        """Close HTTP session"""
+        if self.session and not self.session.closed:
             await self.session.close()

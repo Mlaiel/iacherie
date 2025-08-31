@@ -3,7 +3,8 @@ Mobile usage tracking, performance monitoring, and business insights
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Business Logic: Data-driven insights for mobile creator engagement and platform optimization
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -32,7 +33,8 @@ except ImportError:
 
 @dataclass
 class MobileEvent:
-    """Mobile analytics event."""    event_id: str
+    """Mobile analytics event."""
+    event_id: str
     user_id: str
     device_id: str
     session_id: str
@@ -50,7 +52,8 @@ class MobileEvent:
 
 @dataclass
 class PerformanceMetric:
-    """Mobile performance metric."""    metric_id: str
+    """Mobile performance metric."""
+    metric_id: str
     device_id: str
     session_id: str
     metric_type: str  # load_time, api_response_time, battery_usage, memory_usage
@@ -66,7 +69,8 @@ class PerformanceMetric:
 
 @dataclass
 class UserSession:
-    """Mobile user session tracking."""    session_id: str
+    """Mobile user session tracking."""
+    session_id: str
     user_id: str
     device_id: str
     start_time: datetime
@@ -78,13 +82,15 @@ class UserSession:
     session_quality: Optional[str] = None  # high, medium, low
     
     def end_session(self):
-        """End the session and calculate duration."""        self.end_time = datetime.utcnow()
+        """End the session and calculate duration."""
+        self.end_time = datetime.utcnow()
         self.is_active = False
         if self.start_time:
             self.duration_seconds = int((self.end_time - self.start_time).total_seconds())
     
     def calculate_quality(self) -> str:
-        """Calculate session quality based on engagement."""        if self.duration_seconds is None:
+        """Calculate session quality based on engagement."""
+        if self.duration_seconds is None:
             return "unknown"
         
         if self.duration_seconds > 300 and self.actions_performed > 5:  # 5+ minutes, 5+ actions
@@ -97,7 +103,8 @@ class UserSession:
 
 @dataclass
 class BusinessMetric:
-    """Business performance metric."""    metric_id: str
+    """Business performance metric."""
+    metric_id: str
     user_id: str
     device_id: str
     metric_type: str  # revenue, uploads, collaborations, engagement
@@ -112,7 +119,8 @@ class BusinessMetric:
 
 
 class MobileAnalytics:
-    """Professional mobile analytics tracking system."""    
+    """Professional mobile analytics tracking system."""
+    
     def __init__(self):
         self.logger = get_logger("mobile.analytics")
         self.settings = get_settings()
@@ -132,7 +140,8 @@ class MobileAnalytics:
         device_info: Optional[Dict[str, Any]] = None,
         location_info: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Track mobile analytics event."""        
+        """Track mobile analytics event."""
+        
         event_id = str(uuid.uuid4())
         
         event = MobileEvent(
@@ -170,7 +179,8 @@ class MobileAnalytics:
         device_id: str,
         session_id: Optional[str] = None
     ) -> UserSession:
-        """Start new user session."""        
+        """Start new user session."""
+        
         if session_id is None:
             session_id = str(uuid.uuid4())
         
@@ -193,7 +203,8 @@ class MobileAnalytics:
         return session
     
     async def end_session(self, session_id: str) -> Optional[UserSession]:
-        """End user session."""        
+        """End user session."""
+        
         if session_id not in self.sessions:
             return None
         
@@ -232,7 +243,8 @@ class MobileAnalytics:
         currency: Optional[str] = None,
         period: str = "daily"
     ) -> str:
-        """Track business performance metric."""        
+        """Track business performance metric."""
+        
         metric_id = str(uuid.uuid4())
         
         metric = BusinessMetric(
@@ -258,7 +270,8 @@ class MobileAnalytics:
         user_id: str,
         days: int = 30
     ) -> Dict[str, Any]:
-        """Get comprehensive analytics for user."""        
+        """Get comprehensive analytics for user."""
+        
         cutoff_date = datetime.utcnow() - timedelta(days=days)
         
         # Filter user events
@@ -297,7 +310,8 @@ class MobileAnalytics:
         self,
         days: int = 7
     ) -> Dict[str, Any]:
-        """Get platform-wide analytics insights."""        
+        """Get platform-wide analytics insights."""
+        
         cutoff_date = datetime.utcnow() - timedelta(days=days)
         
         # Filter recent data
@@ -331,7 +345,8 @@ class MobileAnalytics:
         events: List[MobileEvent],
         sessions: List[UserSession]
     ) -> Dict[str, Any]:
-        """Calculate user engagement metrics."""        
+        """Calculate user engagement metrics."""
+        
         if not events:
             return {"total_events": 0, "average_session_duration": 0}
         
@@ -356,7 +371,8 @@ class MobileAnalytics:
         }
     
     def _calculate_content_metrics(self, events: List[MobileEvent]) -> Dict[str, Any]:
-        """Calculate content-related metrics."""        
+        """Calculate content-related metrics."""
+        
         content_events = [e for e in events if "content" in e.event_type]
         
         upload_events = [e for e in events if e.event_type == "content_upload"]
@@ -372,7 +388,8 @@ class MobileAnalytics:
         }
     
     def _calculate_collaboration_metrics(self, events: List[MobileEvent]) -> Dict[str, Any]:
-        """Calculate collaboration metrics."""        
+        """Calculate collaboration metrics."""
+        
         collab_events = [e for e in events if "collaboration" in e.event_type]
         
         request_events = [e for e in events if e.event_type == "collaboration_request"]
@@ -386,7 +403,8 @@ class MobileAnalytics:
         }
     
     def _calculate_revenue_metrics(self, business_metrics: List[BusinessMetric]) -> Dict[str, Any]:
-        """Calculate revenue metrics."""        
+        """Calculate revenue metrics."""
+        
         revenue_metrics = [m for m in business_metrics if m.metric_type == "revenue"]
         
         total_revenue = sum(m.value for m in revenue_metrics)
@@ -399,7 +417,8 @@ class MobileAnalytics:
         }
     
     def _calculate_device_usage(self, events: List[MobileEvent]) -> Dict[str, Any]:
-        """Calculate device usage patterns."""        
+        """Calculate device usage patterns."""
+        
         devices = defaultdict(int)
         platforms = defaultdict(int)
         
@@ -416,7 +435,8 @@ class MobileAnalytics:
         }
     
     def _calculate_session_summary(self, sessions: List[UserSession]) -> Dict[str, Any]:
-        """Calculate session summary statistics."""        
+        """Calculate session summary statistics."""
+        
         completed_sessions = [s for s in sessions if s.duration_seconds is not None]
         
         if not completed_sessions:
@@ -438,7 +458,8 @@ class MobileAnalytics:
         }
     
     def _get_top_events(self, events: List[MobileEvent]) -> Dict[str, int]:
-        """Get top event types."""        
+        """Get top event types."""
+        
         event_counts = defaultdict(int)
         for event in events:
             event_counts[event.event_type] += 1
@@ -446,7 +467,8 @@ class MobileAnalytics:
         return dict(sorted(event_counts.items(), key=lambda x: x[1], reverse=True)[:10])
     
     def _get_platform_distribution(self, events: List[MobileEvent]) -> Dict[str, int]:
-        """Get platform distribution."""        
+        """Get platform distribution."""
+        
         platforms = defaultdict(int)
         for event in events:
             if event.device_info:
@@ -456,7 +478,8 @@ class MobileAnalytics:
         return dict(platforms)
     
     def _get_engagement_trends(self, sessions: List[UserSession]) -> Dict[str, Any]:
-        """Get engagement trends."""        
+        """Get engagement trends."""
+        
         if not sessions:
             return {}
         
@@ -480,7 +503,8 @@ class MobileAnalytics:
         return daily_metrics
     
     def _get_performance_summary(self) -> Dict[str, Any]:
-        """Get performance metrics summary."""        
+        """Get performance metrics summary."""
+        
         if not self.performance_metrics:
             return {}
         
@@ -501,7 +525,8 @@ class MobileAnalytics:
 
 
 class PerformanceTracker:
-    """Mobile performance monitoring and tracking."""    
+    """Mobile performance monitoring and tracking."""
+    
     def __init__(self, analytics: MobileAnalytics):
         self.logger = get_logger("mobile.performance_tracker")
         self.analytics = analytics
@@ -515,7 +540,8 @@ class PerformanceTracker:
         unit: str,
         context: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Track performance metric."""        
+        """Track performance metric."""
+        
         metric_id = str(uuid.uuid4())
         
         metric = PerformanceMetric(
@@ -542,7 +568,8 @@ class PerformanceTracker:
         device_id: Optional[str] = None,
         hours: int = 24
     ) -> Dict[str, Any]:
-        """Get performance report."""        
+        """Get performance report."""
+        
         cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         
         # Filter metrics
@@ -579,7 +606,8 @@ class PerformanceTracker:
 
 
 class UsageMonitor:
-    """Mobile usage pattern monitoring."""    
+    """Mobile usage pattern monitoring."""
+    
     def __init__(self, analytics: MobileAnalytics):
         self.logger = get_logger("mobile.usage_monitor")
         self.analytics = analytics
@@ -589,7 +617,8 @@ class UsageMonitor:
         user_id: Optional[str] = None,
         days: int = 7
     ) -> Dict[str, Any]:
-        """Generate comprehensive usage insights."""        
+        """Generate comprehensive usage insights."""
+        
         cutoff_date = datetime.utcnow() - timedelta(days=days)
         
         # Filter events
@@ -613,7 +642,8 @@ class UsageMonitor:
         return insights
     
     def _analyze_usage_patterns(self, events: List[MobileEvent]) -> Dict[str, Any]:
-        """Analyze usage patterns."""        
+        """Analyze usage patterns."""
+        
         # Time-based patterns
         hourly_usage = defaultdict(int)
         daily_usage = defaultdict(int)
@@ -634,7 +664,8 @@ class UsageMonitor:
         }
     
     def _analyze_feature_adoption(self, events: List[MobileEvent]) -> Dict[str, Any]:
-        """Analyze feature adoption patterns."""        
+        """Analyze feature adoption patterns."""
+        
         feature_usage = defaultdict(int)
         unique_users_per_feature = defaultdict(set)
         
@@ -654,7 +685,8 @@ class UsageMonitor:
         }
     
     def _analyze_user_journey(self, events: List[MobileEvent]) -> Dict[str, Any]:
-        """Analyze user journey patterns."""        
+        """Analyze user journey patterns."""
+        
         # Group events by user and session
         user_journeys = defaultdict(lambda: defaultdict(list))
         
@@ -685,7 +717,8 @@ class UsageMonitor:
         }
     
     def _generate_recommendations(self, events: List[MobileEvent]) -> List[str]:
-        """Generate usage-based recommendations."""        
+        """Generate usage-based recommendations."""
+        
         recommendations = []
         
         # Analyze engagement patterns
@@ -714,17 +747,20 @@ class UsageMonitor:
 
 # Service factory functions
 def create_mobile_analytics() -> MobileAnalytics:
-    """Create mobile analytics instance."""    return MobileAnalytics()
+    """Create mobile analytics instance."""
+    return MobileAnalytics()
 
 
 def create_performance_tracker(analytics: MobileAnalytics = None) -> PerformanceTracker:
-    """Create performance tracker instance."""    if analytics is None:
+    """Create performance tracker instance."""
+    if analytics is None:
         analytics = create_mobile_analytics()
     return PerformanceTracker(analytics)
 
 
 def create_usage_monitor(analytics: MobileAnalytics = None) -> UsageMonitor:
-    """Create usage monitor instance."""    if analytics is None:
+    """Create usage monitor instance."""
+    if analytics is None:
         analytics = create_mobile_analytics()
     return UsageMonitor(analytics)
 
@@ -734,7 +770,8 @@ if __name__ == "__main__":
     import asyncio
     
     async def test_mobile_analytics():
-        """Test mobile analytics functionality."""        
+        """Test mobile analytics functionality."""
+        
         # Create analytics system
         analytics = create_mobile_analytics()
         performance_tracker = create_performance_tracker(analytics)

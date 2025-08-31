@@ -5,7 +5,8 @@ predictive insights, and AI-powered business intelligence.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -19,7 +20,8 @@ from .marketplace_agent import MarketplaceConfig
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options."""    REAL_TIME = "real_time"
+    """Analytics timeframe options."""
+    REAL_TIME = "real_time"
     HOURLY = "1h"
     DAILY = "1d"
     WEEKLY = "7d"
@@ -29,7 +31,8 @@ class AnalyticsTimeframe(Enum):
 
 
 class MetricType(Enum):
-    """Available analytics metric types."""    REVENUE = "revenue"
+    """Available analytics metric types."""
+    REVENUE = "revenue"
     TRANSACTIONS = "transactions"
     LISTINGS = "listings"
     USERS = "users"
@@ -41,7 +44,8 @@ class MetricType(Enum):
 
 @dataclass
 class AnalyticsMetric:
-    """Individual analytics metric data structure."""    name: str = ""
+    """Individual analytics metric data structure."""
+    name: str = ""
     value: float = 0.0
     unit: str = ""
     change_percentage: float = 0.0
@@ -53,7 +57,8 @@ class AnalyticsMetric:
 
 @dataclass
 class AnalyticsDashboard:
-    """Complete analytics dashboard data."""    overview_metrics: Dict[str, AnalyticsMetric] = field(default_factory=dict)
+    """Complete analytics dashboard data."""
+    overview_metrics: Dict[str, AnalyticsMetric] = field(default_factory=dict)
     revenue_analytics: Dict[str, Any] = field(default_factory=dict)
     user_analytics: Dict[str, Any] = field(default_factory=dict)
     content_analytics: Dict[str, Any] = field(default_factory=dict)
@@ -65,7 +70,8 @@ class AnalyticsDashboard:
 
 @dataclass
 class PredictiveModel:
-    """Predictive analytics model configuration."""    model_name: str = ""
+    """Predictive analytics model configuration."""
+    model_name: str = ""
     model_type: str = ""  # linear_regression, arima, lstm, prophet
     target_metric: str = ""
     features: List[str] = field(default_factory=list)
@@ -77,7 +83,8 @@ class PredictiveModel:
 
 
 class MarketplaceAnalytics:
-    """    Advanced marketplace analytics and intelligence engine.
+    """
+    Advanced marketplace analytics and intelligence engine.
     
     Provides comprehensive analytics capabilities including:
     - Real-time performance tracking and KPI monitoring
@@ -86,12 +93,15 @@ class MarketplaceAnalytics:
     - User behavior analysis and segmentation
     - Revenue optimization and trend analysis
     - Custom analytics and reporting
-    """    def __init__(self, config: MarketplaceConfig):
-        """        Initialize marketplace analytics engine.
+    """
+    def __init__(self, config: MarketplaceConfig):
+        """
+        Initialize marketplace analytics engine.
         
         Args:
             config: Marketplace configuration
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize analytics components
@@ -106,7 +116,8 @@ class MarketplaceAnalytics:
         self.logger.info("Marketplace analytics engine initialized")
 
     def _initialize_analytics_engine(self) -> None:
-        """Initialize core analytics engine components."""        try:
+        """Initialize core analytics engine components."""
+        try:
             # Initialize data aggregation engine
             # Initialize real-time metrics processing
             # Initialize data warehouse connections
@@ -117,7 +128,8 @@ class MarketplaceAnalytics:
             raise
 
     def _initialize_predictive_models(self) -> None:
-        """Initialize predictive analytics models."""        try:
+        """Initialize predictive analytics models."""
+        try:
             # Initialize revenue forecasting models
             # Initialize demand prediction models
             # Initialize user behavior models
@@ -133,7 +145,8 @@ class MarketplaceAnalytics:
         creator_id: Optional[int] = None,
         include_predictions: bool = True
     ) -> Dict[str, Any]:
-        """        Generate comprehensive marketplace analytics.
+        """
+        Generate comprehensive marketplace analytics.
         
         Args:
             time_range: Analytics time range
@@ -142,7 +155,8 @@ class MarketplaceAnalytics:
             
         Returns:
             Complete analytics data
-        """        try:
+        """
+        try:
             # Parse time range
             start_date, end_date = await self._parse_time_range(time_range)
             
@@ -184,7 +198,8 @@ class MarketplaceAnalytics:
         time_range: str = "30d",
         creator_id: Optional[int] = None
     ) -> Dict[str, Any]:
-        """        Generate AI-powered predictive analytics.
+        """
+        Generate AI-powered predictive analytics.
         
         Args:
             time_range: Prediction time horizon
@@ -192,7 +207,8 @@ class MarketplaceAnalytics:
             
         Returns:
             Predictive analytics data
-        """        try:
+        """
+        try:
             predictions = {}
             
             # Revenue predictions
@@ -227,7 +243,8 @@ class MarketplaceAnalytics:
             return {}
 
     async def track_listing_creation(self, listing: Any) -> None:
-        """Track marketplace listing creation analytics."""        try:
+        """Track marketplace listing creation analytics."""
+        try:
             event_data = {
                 "event_type": "listing_created",
                 "listing_id": listing.id,
@@ -244,7 +261,8 @@ class MarketplaceAnalytics:
             self.logger.error(f"Failed to track listing creation: {e}")
 
     async def track_transaction(self, transaction: Any) -> None:
-        """Track marketplace transaction analytics."""        try:
+        """Track marketplace transaction analytics."""
+        try:
             event_data = {
                 "event_type": "transaction_completed",
                 "transaction_id": transaction.id,
@@ -268,7 +286,8 @@ class MarketplaceAnalytics:
         filters: Dict[str, Any],
         results_count: int
     ) -> None:
-        """Track search query analytics."""        try:
+        """Track search query analytics."""
+        try:
             event_data = {
                 "event_type": "search_performed",
                 "query": query,
@@ -284,7 +303,8 @@ class MarketplaceAnalytics:
             self.logger.error(f"Failed to track search query: {e}")
 
     async def track_recommendations(self, user_id: int, recommendations_count: int) -> None:
-        """Track recommendation system analytics."""        try:
+        """Track recommendation system analytics."""
+        try:
             event_data = {
                 "event_type": "recommendations_generated",
                 "user_id": user_id,
@@ -299,7 +319,8 @@ class MarketplaceAnalytics:
             self.logger.error(f"Failed to track recommendations: {e}")
 
     async def generate_creator_insights(self, creator_id: int) -> Dict[str, Any]:
-        """Generate AI-powered insights for individual creators."""        try:
+        """Generate AI-powered insights for individual creators."""
+        try:
             insights = {
                 "performance_summary": await self._analyze_creator_performance(creator_id),
                 "revenue_optimization": await self._analyze_creator_revenue(creator_id),
@@ -316,7 +337,8 @@ class MarketplaceAnalytics:
             return {}
 
     async def generate_market_report(self, category: Optional[str] = None) -> Dict[str, Any]:
-        """Generate comprehensive market intelligence report."""        try:
+        """Generate comprehensive market intelligence report."""
+        try:
             report = {
                 "market_overview": await self._analyze_market_overview(category),
                 "competitive_landscape": await self._analyze_competitive_landscape(category),
@@ -339,7 +361,8 @@ class MarketplaceAnalytics:
         end_date: datetime,
         creator_id: Optional[int]
     ) -> Dict[str, Any]:
-        """Generate overview analytics metrics."""        try:
+        """Generate overview analytics metrics."""
+        try:
             # Mock implementation - would fetch from database
             overview = {
                 "total_revenue": AnalyticsMetric(
@@ -384,7 +407,8 @@ class MarketplaceAnalytics:
         end_date: datetime,
         creator_id: Optional[int]
     ) -> Dict[str, Any]:
-        """Generate detailed revenue analytics."""        try:
+        """Generate detailed revenue analytics."""
+        try:
             revenue_analytics = {
                 "total_gross_revenue": 125000.50,
                 "total_net_revenue": 106250.43,  # After commissions
@@ -413,7 +437,8 @@ class MarketplaceAnalytics:
         end_date: datetime,
         creator_id: Optional[int]
     ) -> Dict[str, Any]:
-        """Generate user behavior and demographics analytics."""        try:
+        """Generate user behavior and demographics analytics."""
+        try:
             user_analytics = {
                 "total_users": 15420,
                 "new_users": 892,
@@ -441,7 +466,8 @@ class MarketplaceAnalytics:
         end_date: datetime,
         creator_id: Optional[int]
     ) -> Dict[str, Any]:
-        """Generate content performance analytics."""        try:
+        """Generate content performance analytics."""
+        try:
             content_analytics = {
                 "total_listings": 3420,
                 "new_listings": 245,
@@ -458,7 +484,8 @@ class MarketplaceAnalytics:
             return {}
 
     async def _parse_time_range(self, time_range: str) -> Tuple[datetime, datetime]:
-        """Parse time range string into start and end dates."""        try:
+        """Parse time range string into start and end dates."""
+        try:
             end_date = datetime.utcnow()
             
             if time_range.endswith('d'):
@@ -488,7 +515,8 @@ class MarketplaceAnalytics:
         time_range: str,
         creator_id: Optional[int]
     ) -> Dict[str, Any]:
-        """Predict future revenue using AI models."""        try:
+        """Predict future revenue using AI models."""
+        try:
             # Mock implementation - would use trained ML models
             prediction = {
                 "predicted_revenue": 145000.00,
@@ -513,14 +541,16 @@ class MarketplaceAnalytics:
             return {}
 
     async def _record_analytics_event(self, event_data: Dict[str, Any]) -> None:
-        """Record analytics event for processing."""        try:
+        """Record analytics event for processing."""
+        try:
             # Implementation would store in analytics database
             self.analytics_history[event_data["event_type"]].append(event_data)
         except Exception as e:
             self.logger.error(f"Failed to record analytics event: {e}")
 
     async def _update_real_time_metrics(self, metric_name: str, value: float) -> None:
-        """Update real-time metrics."""        try:
+        """Update real-time metrics."""
+        try:
             if metric_name not in self.metrics_cache:
                 self.metrics_cache[metric_name] = 0.0
             
@@ -533,7 +563,8 @@ class MarketplaceAnalytics:
             self.logger.error(f"Failed to update real-time metrics: {e}")
 
     async def get_total_users(self) -> int:
-        """Get total number of marketplace users."""        try:
+        """Get total number of marketplace users."""
+        try:
             # Mock implementation - would fetch from database
             return 15420
         except Exception as e:
@@ -541,7 +572,8 @@ class MarketplaceAnalytics:
             return 0
 
     async def get_average_response_time(self) -> float:
-        """Calculate average API response time."""        try:
+        """Calculate average API response time."""
+        try:
             # Mock implementation - would calculate from logs
             return 85.5  # milliseconds
         except Exception as e:
@@ -549,7 +581,8 @@ class MarketplaceAnalytics:
             return 0.0
 
     async def shutdown(self) -> None:
-        """Gracefully shutdown analytics engine."""        try:
+        """Gracefully shutdown analytics engine."""
+        try:
             # Save cached metrics
             # Close database connections
             # Stop background tasks

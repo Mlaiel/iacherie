@@ -1,6 +1,9 @@
 """Application settings loaded from environment with sane defaults.
 All names and comments are in English to ensure professional consistency.
-"""from functools import lru_cache
+"""
+
+from functools import lru_cache
+
 from pydantic import BaseSettings, Field, AnyUrl
 from typing import List, Optional
 

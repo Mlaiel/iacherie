@@ -13,7 +13,8 @@ Project Team Specialists: Lead AI Dev, Backend Senior, ML Engineer, DBA, Securit
 This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be pursued against any infringement.
-"""from typing import Dict, Any, List, Optional, Union
+"""
+from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
@@ -25,7 +26,8 @@ import statistics
 logger = logging.getLogger(__name__)
 
 class PerformanceMetric(Enum):
-    """Types of performance metrics tracked"""    VIEWS = "views"
+    """Types of performance metrics tracked"""
+    VIEWS = "views"
     ENGAGEMENT_RATE = "engagement_rate"
     SHARES = "shares"
     COMMENTS = "comments"
@@ -41,7 +43,8 @@ class PerformanceMetric(Enum):
     SUBSCRIBER_GROWTH = "subscriber_growth"
 
 class TimeFrame(Enum):
-    """Performance tracking time frames"""    DAILY = "daily"
+    """Performance tracking time frames"""
+    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -49,14 +52,16 @@ class TimeFrame(Enum):
     CUSTOM = "custom"
 
 class TrendDirection(Enum):
-    """Trend directions"""    INCREASING = "increasing"
+    """Trend directions"""
+    INCREASING = "increasing"
     DECREASING = "decreasing"
     STABLE = "stable"
     VOLATILE = "volatile"
 
 @dataclass
 class PerformanceDataPoint:
-    """Individual performance data point"""    timestamp: datetime
+    """Individual performance data point"""
+    timestamp: datetime
     metric: PerformanceMetric
     value: float
     platform: str
@@ -65,7 +70,8 @@ class PerformanceDataPoint:
 
 @dataclass
 class PerformanceReport:
-    """Comprehensive performance report"""    report_id: str
+    """Comprehensive performance report"""
+    report_id: str
     creator_id: str
     time_frame: TimeFrame
     start_date: datetime
@@ -84,9 +90,11 @@ class PerformanceReport:
     report_version: str = "1.0"
 
 class PerformanceTracker:
-    """    Advanced performance tracking system with real-time analytics,
+    """
+    Advanced performance tracking system with real-time analytics,
     trend analysis, and predictive insights for creator content.
-    """    
+    """
+    
     def __init__(self):
         self.metric_weights = {
             PerformanceMetric.VIEWS: 0.20,
@@ -116,7 +124,8 @@ class PerformanceTracker:
         self.anomaly_threshold = 2.0  # standard deviations
     
     async def get_creator_performance(self, creator_id: str, time_frame: TimeFrame = TimeFrame.MONTHLY) -> PerformanceReport:
-        """Get comprehensive performance report for creator"""        try:
+        """Get comprehensive performance report for creator"""
+        try:
             # Determine time range
             end_date = datetime.utcnow()
             start_date = self._calculate_start_date(end_date, time_frame)
@@ -178,7 +187,8 @@ class PerformanceTracker:
             raise
     
     def _calculate_start_date(self, end_date: datetime, time_frame: TimeFrame) -> datetime:
-        """Calculate start date based on time frame"""        if time_frame == TimeFrame.DAILY:
+        """Calculate start date based on time frame"""
+        if time_frame == TimeFrame.DAILY:
             return end_date - timedelta(days=1)
         elif time_frame == TimeFrame.WEEKLY:
             return end_date - timedelta(weeks=1)
@@ -192,7 +202,8 @@ class PerformanceTracker:
             return end_date - timedelta(days=30)  # Default to monthly
     
     async def _collect_performance_data(self, creator_id: str, start_date: datetime, end_date: datetime) -> List[PerformanceDataPoint]:
-        """Collect performance data for the specified period"""        # This would typically query databases and external APIs
+        """Collect performance data for the specified period"""
+        # This would typically query databases and external APIs
         # For now, generating realistic sample data
         
         data_points = []
@@ -219,7 +230,8 @@ class PerformanceTracker:
         return data_points
     
     def _generate_sample_metric_value(self, metric: PerformanceMetric, platform: str) -> float:
-        """Generate realistic sample metric values"""        base_values = {
+        """Generate realistic sample metric values"""
+        base_values = {
             PerformanceMetric.VIEWS: {'youtube': 15000, 'instagram': 8000, 'spotify': 5000, 'tiktok': 25000},
             PerformanceMetric.ENGAGEMENT_RATE: {'youtube': 0.08, 'instagram': 0.12, 'spotify': 0.05, 'tiktok': 0.15},
             PerformanceMetric.SHARES: {'youtube': 150, 'instagram': 200, 'spotify': 80, 'tiktok': 500},
@@ -237,7 +249,8 @@ class PerformanceTracker:
         return max(base_value * (1 + variation), 0)
     
     async def _calculate_metrics_summary(self, performance_data: List[PerformanceDataPoint]) -> Dict[PerformanceMetric, Dict[str, float]]:
-        """Calculate summary statistics for each metric"""        metrics_summary = {}
+        """Calculate summary statistics for each metric"""
+        metrics_summary = {}
         
         for metric in PerformanceMetric:
             metric_data = [dp.value for dp in performance_data if dp.metric == metric]
@@ -263,7 +276,8 @@ class PerformanceTracker:
         return metrics_summary
     
     async def _analyze_trends(self, performance_data: List[PerformanceDataPoint], time_frame: TimeFrame) -> Dict[PerformanceMetric, TrendDirection]:
-        """Analyze trends for each metric"""        trend_analysis = {}
+        """Analyze trends for each metric"""
+        trend_analysis = {}
         
         for metric in PerformanceMetric:
             metric_data = [(dp.timestamp, dp.value) for dp in performance_data if dp.metric == metric]
@@ -281,7 +295,8 @@ class PerformanceTracker:
         return trend_analysis
     
     def _calculate_trend_direction(self, values: List[float]) -> TrendDirection:
-        """Calculate trend direction from a series of values"""        if len(values) < 3:
+        """Calculate trend direction from a series of values"""
+        if len(values) < 3:
             return TrendDirection.STABLE
         
         # Simple trend calculation
@@ -305,7 +320,8 @@ class PerformanceTracker:
             return TrendDirection.STABLE
     
     async def _generate_platform_breakdown(self, performance_data: List[PerformanceDataPoint]) -> Dict[str, Dict[PerformanceMetric, float]]:
-        """Generate performance breakdown by platform"""        platform_breakdown = {}
+        """Generate performance breakdown by platform"""
+        platform_breakdown = {}
         
         platforms = set(dp.platform for dp in performance_data)
         
@@ -330,7 +346,8 @@ class PerformanceTracker:
         return platform_breakdown
     
     async def _identify_top_content(self, creator_id: str, performance_data: List[PerformanceDataPoint]) -> List[Dict[str, Any]]:
-        """Identify top performing content"""        # Group by content_id and calculate performance scores
+        """Identify top performing content"""
+        # Group by content_id and calculate performance scores
         content_performance = {}
         
         for dp in performance_data:
@@ -368,7 +385,8 @@ class PerformanceTracker:
         return scored_content[:10]
     
     async def _generate_performance_insights(self, metrics_summary: Dict[PerformanceMetric, Dict[str, float]], trend_analysis: Dict[PerformanceMetric, TrendDirection]) -> List[str]:
-        """Generate performance insights"""        insights = []
+        """Generate performance insights"""
+        insights = []
         
         # Engagement insights
         if PerformanceMetric.ENGAGEMENT_RATE in metrics_summary:
@@ -403,7 +421,8 @@ class PerformanceTracker:
         return insights
     
     async def _generate_recommendations(self, metrics_summary: Dict[PerformanceMetric, Dict[str, float]], trend_analysis: Dict[PerformanceMetric, TrendDirection], creator_id: str) -> List[str]:
-        """Generate actionable recommendations"""        recommendations = []
+        """Generate actionable recommendations"""
+        recommendations = []
         
         # Engagement recommendations
         if PerformanceMetric.ENGAGEMENT_RATE in metrics_summary:
@@ -432,7 +451,8 @@ class PerformanceTracker:
         return recommendations[:8]  # Top 8 recommendations
     
     async def _generate_predictions(self, performance_data: List[PerformanceDataPoint], time_frame: TimeFrame) -> Dict[str, float]:
-        """Generate performance predictions using trend analysis"""        predictions = {}
+        """Generate performance predictions using trend analysis"""
+        predictions = {}
         
         for metric in [PerformanceMetric.VIEWS, PerformanceMetric.ENGAGEMENT_RATE, PerformanceMetric.REVENUE]:
             metric_data = [dp.value for dp in performance_data if dp.metric == metric]
@@ -456,7 +476,8 @@ class PerformanceTracker:
         return predictions
     
     async def _compare_with_benchmarks(self, metrics_summary: Dict[PerformanceMetric, Dict[str, float]]) -> Dict[str, float]:
-        """Compare performance with industry benchmarks"""        comparisons = {}
+        """Compare performance with industry benchmarks"""
+        comparisons = {}
         
         for metric, benchmark in self.benchmark_data['industry_averages'].items():
             if metric in metrics_summary:
@@ -473,7 +494,8 @@ class PerformanceTracker:
         return comparisons
     
     async def _calculate_growth_rates(self, performance_data: List[PerformanceDataPoint], time_frame: TimeFrame) -> Dict[PerformanceMetric, float]:
-        """Calculate growth rates for each metric"""        growth_rates = {}
+        """Calculate growth rates for each metric"""
+        growth_rates = {}
         
         for metric in PerformanceMetric:
             metric_data = [(dp.timestamp, dp.value) for dp in performance_data if dp.metric == metric]
@@ -496,7 +518,8 @@ class PerformanceTracker:
         return growth_rates
     
     async def _detect_anomalies(self, performance_data: List[PerformanceDataPoint]) -> List[Dict[str, Any]]:
-        """Detect performance anomalies"""        anomalies = []
+        """Detect performance anomalies"""
+        anomalies = []
         
         for metric in PerformanceMetric:
             metric_values = [dp.value for dp in performance_data if dp.metric == metric]
@@ -524,7 +547,8 @@ class PerformanceTracker:
         return anomalies[:20]  # Return top 20 anomalies
     
     async def track_real_time_metrics(self, creator_id: str) -> Dict[str, Any]:
-        """Get real-time performance metrics"""        # This would connect to real-time data streams
+        """Get real-time performance metrics"""
+        # This would connect to real-time data streams
         current_time = datetime.utcnow()
         
         real_time_metrics = {
@@ -540,7 +564,8 @@ class PerformanceTracker:
         return real_time_metrics
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for performance tracker"""        return {
+        """Health check for performance tracker"""
+        return {
             "status": "healthy",
             "tracked_metrics": len(PerformanceMetric),
             "time_frames_supported": len(TimeFrame),
@@ -549,4 +574,5 @@ class PerformanceTracker:
         }
     
     async def shutdown(self):
-        """Graceful shutdown"""        logger.info("PerformanceTracker shutting down...")
+        """Graceful shutdown"""
+        logger.info("PerformanceTracker shutting down...")

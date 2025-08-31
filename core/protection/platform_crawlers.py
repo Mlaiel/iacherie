@@ -13,7 +13,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import json
 import random
 import time
@@ -58,7 +59,8 @@ settings = get_settings()
 
 
 class CrawlerPlatform(Enum):
-    """Supported crawler platforms"""    YOUTUBE = "youtube"
+    """Supported crawler platforms"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -70,14 +72,16 @@ class CrawlerPlatform(Enum):
 
 
 class CrawlerType(Enum):
-    """Types of crawlers"""    API_BASED = "api_based"         # Official API access
+    """Types of crawlers"""
+    API_BASED = "api_based"         # Official API access
     SELENIUM_BROWSER = "selenium"   # Browser automation
     REQUESTS_HTTP = "requests"      # HTTP requests
     SCRAPY_SPIDER = "scrapy"        # Scrapy framework
 
 
 class CrawlerStatus(Enum):
-    """Crawler execution status"""    IDLE = "idle"
+    """Crawler execution status"""
+    IDLE = "idle"
     RUNNING = "running"
     PAUSED = "paused"
     ERROR = "error"
@@ -87,7 +91,8 @@ class CrawlerStatus(Enum):
 
 @dataclass
 class CrawlerConfiguration:
-    """Configuration for platform crawlers"""    platform: CrawlerPlatform
+    """Configuration for platform crawlers"""
+    platform: CrawlerPlatform
     crawler_type: CrawlerType
     
     # Rate limiting
@@ -118,7 +123,8 @@ class CrawlerConfiguration:
 
 @dataclass
 class CrawlResult:
-    """Result from a crawling operation"""    platform: CrawlerPlatform
+    """Result from a crawling operation"""
+    platform: CrawlerPlatform
     url: str
     content_type: str
     title: Optional[str] = None
@@ -148,11 +154,13 @@ class CrawlResult:
 
 
 class PlatformCrawler:
-    """    Base class for platform-specific crawlers
+    """
+    Base class for platform-specific crawlers
     
     Provides common functionality for web crawling and content monitoring
     across different social media platforms.
-    """    
+    """
+    
     def __init__(self, config: CrawlerConfiguration):
         self.config = config
         self.status = CrawlerStatus.IDLE
@@ -175,7 +183,8 @@ class PlatformCrawler:
         logger.info(f"Initialized {config.platform.value} crawler with {config.crawler_type.value}")
     
     async def start_monitoring(self, fingerprints: List[ContentFingerprint]) -> List[CrawlResult]:
-        """Start monitoring for content violations"""        try:
+        """Start monitoring for content violations"""
+        try:
             self.status = CrawlerStatus.RUNNING
             results = []
             
@@ -213,7 +222,8 @@ class PlatformCrawler:
             return []
     
     async def _search_content(self, query: str) -> List[CrawlResult]:
-        """Search for content using platform-specific method"""        if self.config.crawler_type == CrawlerType.API_BASED:
+        """Search for content using platform-specific method"""
+        if self.config.crawler_type == CrawlerType.API_BASED:
             return await self._api_search(query)
         elif self.config.crawler_type == CrawlerType.SELENIUM_BROWSER:
             return await self._selenium_search(query)
@@ -224,7 +234,8 @@ class PlatformCrawler:
             return []
     
     async def _api_search(self, query: str) -> List[CrawlResult]:
-        """Search using official platform API"""        results = []
+        """Search using official platform API"""
+        results = []
         
         try:
             if self.config.platform == CrawlerPlatform.YOUTUBE:
@@ -242,7 +253,8 @@ class PlatformCrawler:
         return results
     
     async def _selenium_search(self, query: str) -> List[CrawlResult]:
-        """Search using Selenium browser automation"""        results = []
+        """Search using Selenium browser automation"""
+        results = []
         browser = None
         
         try:
@@ -266,7 +278,8 @@ class PlatformCrawler:
         return results
     
     async def _requests_search(self, query: str) -> List[CrawlResult]:
-        """Search using HTTP requests"""        results = []
+        """Search using HTTP requests"""
+        results = []
         
         try:
             if not self._session:
@@ -288,7 +301,8 @@ class PlatformCrawler:
         return results
     
     async def _youtube_api_search(self, query: str) -> List[CrawlResult]:
-        """YouTube API search implementation"""        results = []
+        """YouTube API search implementation"""
+        results = []
         
         try:
             from googleapiclient.discovery import build
@@ -322,7 +336,8 @@ class PlatformCrawler:
         return results
     
     async def _youtube_selenium_search(self, browser: webdriver.Chrome, query: str) -> List[CrawlResult]:
-        """YouTube Selenium search implementation"""        results = []
+        """YouTube Selenium search implementation"""
+        results = []
         
         try:
             # Navigate to YouTube search
@@ -373,7 +388,8 @@ class PlatformCrawler:
         return results
     
     async def _instagram_selenium_search(self, browser: webdriver.Chrome, query: str) -> List[CrawlResult]:
-        """Instagram Selenium search implementation"""        results = []
+        """Instagram Selenium search implementation"""
+        results = []
         
         try:
             # Instagram search requires login, so we'll use tag search
@@ -418,7 +434,8 @@ class PlatformCrawler:
         return results
     
     async def _tiktok_selenium_search(self, browser: webdriver.Chrome, query: str) -> List[CrawlResult]:
-        """TikTok Selenium search implementation"""        results = []
+        """TikTok Selenium search implementation"""
+        results = []
         
         try:
             search_url = f"https://www.tiktok.com/search?q={urllib.parse.quote(query)}"
@@ -463,7 +480,8 @@ class PlatformCrawler:
         return results
     
     async def _get_browser(self) -> webdriver.Chrome:
-        """Get a browser instance from the pool"""        if self._browser_pool:
+        """Get a browser instance from the pool"""
+        if self._browser_pool:
             return self._browser_pool.pop()
         
         # Create new browser instance
@@ -483,13 +501,15 @@ class PlatformCrawler:
         return browser
     
     async def _return_browser(self, browser: webdriver.Chrome):
-        """Return browser to pool or close if pool is full"""        if len(self._browser_pool) < self._max_browsers:
+        """Return browser to pool or close if pool is full"""
+        if len(self._browser_pool) < self._max_browsers:
             self._browser_pool.append(browser)
         else:
             browser.quit()
     
     async def _check_rate_limits(self):
-        """Check and enforce rate limiting"""        current_time = time.time()
+        """Check and enforce rate limiting"""
+        current_time = time.time()
         
         # Remove old request times (older than 1 minute)
         self._request_times = [t for t in self._request_times if current_time - t < 60]
@@ -512,7 +532,8 @@ class PlatformCrawler:
         self._last_request_time = current_time
     
     def _generate_search_queries(self, fingerprint: ContentFingerprint) -> List[str]:
-        """Generate search queries based on content fingerprint"""        queries = []
+        """Generate search queries based on content fingerprint"""
+        queries = []
         
         # Use content metadata to generate queries
         if fingerprint.metadata:
@@ -544,7 +565,8 @@ class PlatformCrawler:
         return list(set(queries))  # Remove duplicates
     
     async def _check_content_similarity(self, fingerprint: ContentFingerprint, result: CrawlResult) -> float:
-        """Check similarity between original content and crawled result"""        try:
+        """Check similarity between original content and crawled result"""
+        try:
             # Download and fingerprint the crawled content
             if result.thumbnail_url:
                 # For now, we'll use thumbnail similarity
@@ -568,7 +590,8 @@ class PlatformCrawler:
             return 0.0
     
     async def _download_content(self, url: str) -> Optional[bytes]:
-        """Download content from URL"""        try:
+        """Download content from URL"""
+        try:
             if not self._session:
                 self._session = aiohttp.ClientSession()
             
@@ -582,7 +605,8 @@ class PlatformCrawler:
         return None
     
     async def _collect_evidence(self, result: CrawlResult):
-        """Collect evidence for potential violation"""        try:
+        """Collect evidence for potential violation"""
+        try:
             if self.config.capture_screenshots:
                 # Take screenshot of the page
                 screenshot_path = await self.evidence_collector.capture_screenshot(result.url)
@@ -599,7 +623,8 @@ class PlatformCrawler:
             logger.error(f"Evidence collection failed: {e}")
     
     def _get_user_agent(self) -> str:
-        """Get user agent string"""        if self.config.user_agent:
+        """Get user agent string"""
+        if self.config.user_agent:
             return self.config.user_agent
         
         # Default user agents for different platforms
@@ -612,7 +637,8 @@ class PlatformCrawler:
         return random.choice(user_agents)
     
     async def cleanup(self):
-        """Cleanup resources"""        # Close all browsers
+        """Cleanup resources"""
+        # Close all browsers
         for browser in self._browser_pool:
             browser.quit()
         self._browser_pool.clear()
@@ -625,8 +651,10 @@ class PlatformCrawler:
 
 
 class CrawlerManager:
-    """    Manages multiple platform crawlers and coordinates monitoring activities
-    """    
+    """
+    Manages multiple platform crawlers and coordinates monitoring activities
+    """
+    
     def __init__(self):
         self.crawlers: Dict[CrawlerPlatform, PlatformCrawler] = {}
         self.active_monitoring = set()
@@ -635,12 +663,14 @@ class CrawlerManager:
         logger.info("Crawler manager initialized")
     
     def add_crawler(self, config: CrawlerConfiguration):
-        """Add a new platform crawler"""        crawler = PlatformCrawler(config)
+        """Add a new platform crawler"""
+        crawler = PlatformCrawler(config)
         self.crawlers[config.platform] = crawler
         logger.info(f"Added crawler for {config.platform.value}")
     
     async def start_monitoring_all(self, fingerprints: List[ContentFingerprint]) -> Dict[CrawlerPlatform, List[CrawlResult]]:
-        """Start monitoring across all configured platforms"""        results = {}
+        """Start monitoring across all configured platforms"""
+        results = {}
         
         tasks = []
         for platform, crawler in self.crawlers.items():
@@ -660,7 +690,8 @@ class CrawlerManager:
         return results
     
     async def cleanup_all(self):
-        """Cleanup all crawlers"""        for crawler in self.crawlers.values():
+        """Cleanup all crawlers"""
+        for crawler in self.crawlers.values():
             await crawler.cleanup()
         
         logger.info("All crawlers cleaned up")

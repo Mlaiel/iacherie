@@ -13,7 +13,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. Any unauthorized use, modification,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Union
 from contextlib import asynccontextmanager
@@ -45,7 +46,8 @@ logger = logging.getLogger(__name__)
 
 
 class DatabaseConnectionsIndex:
-    """    Central index for all database connections and operations.
+    """
+    Central index for all database connections and operations.
     
     Features:
     - Unified access to all database types
@@ -53,7 +55,8 @@ class DatabaseConnectionsIndex:
     - Health monitoring and failover
     - Transaction coordination
     - Performance optimization
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.connection_manager: Optional[DatabaseConnectionManager] = None
@@ -73,12 +76,14 @@ class DatabaseConnectionsIndex:
         config: Optional[Dict[str, Any]] = None,
         environment: Environment = Environment.DEVELOPMENT
     ) -> None:
-        """        Initialize all database connections and components.
+        """
+        Initialize all database connections and components.
         
         Args:
             config: Configuration dictionary for all databases
             environment: Deployment environment
-        """        if self._initialized:
+        """
+        if self._initialized:
             return
         
         try:
@@ -123,7 +128,8 @@ class DatabaseConnectionsIndex:
         tenant_id: Optional[str] = None,
         readonly: bool = False
     ) -> Any:
-        """        Get database connection with optional tenant isolation.
+        """
+        Get database connection with optional tenant isolation.
         
         Args:
             database_type: Type of database (postgresql, redis, mongodb, etc.)
@@ -132,7 +138,8 @@ class DatabaseConnectionsIndex:
             
         Returns:
             Database connection object
-        """        if not self._initialized:
+        """
+        if not self._initialized:
             await self.initialize()
         
         try:
@@ -158,12 +165,14 @@ class DatabaseConnectionsIndex:
         tenant_id: Optional[str] = None,
         readonly: bool = False
     ):
-        """        Context manager for database sessions.
+        """
+        Context manager for database sessions.
         
         Usage:
             async with db_index.session("postgresql", "artist_123") as session:
                 result = await session.execute(query)
-        """        connection = None
+        """
+        connection = None
         try:
             connection = await self.get_connection(database_type, tenant_id, readonly)
             yield connection
@@ -177,7 +186,8 @@ class DatabaseConnectionsIndex:
         tenant_id: Optional[str] = None,
         databases: Optional[List[str]] = None
     ):
-        """        Context manager for distributed transactions across multiple databases.
+        """
+        Context manager for distributed transactions across multiple databases.
         
         Args:
             tenant_id: Optional tenant ID for isolation
@@ -188,7 +198,8 @@ class DatabaseConnectionsIndex:
                 await tx.postgresql.execute(sql)
                 await tx.mongodb.insert_one(document)
                 await tx.commit()
-        """        if not self._initialized:
+        """
+        if not self._initialized:
             await self.initialize()
         
         transaction = await self.connection_manager.begin_distributed_transaction(
@@ -209,7 +220,8 @@ class DatabaseConnectionsIndex:
         tenant_type: TenantType,
         config_overrides: Optional[Dict[str, Any]] = None
     ) -> TenantConfig:
-        """        Register new content creator tenant.
+        """
+        Register new content creator tenant.
         
         Args:
             tenant_id: Unique tenant identifier
@@ -218,7 +230,8 @@ class DatabaseConnectionsIndex:
             
         Returns:
             TenantConfig object
-        """        if not self._initialized:
+        """
+        if not self._initialized:
             await self.initialize()
         
         return await self.tenant_manager.register_tenant(
@@ -232,7 +245,8 @@ class DatabaseConnectionsIndex:
         collaboration_type: str,
         permissions: Dict[str, List[str]]
     ) -> str:
-        """        Create secure collaboration between content creators.
+        """
+        Create secure collaboration between content creators.
         
         Args:
             primary_tenant_id: Primary content creator
@@ -242,7 +256,8 @@ class DatabaseConnectionsIndex:
             
         Returns:
             Collaboration session ID
-        """        if not self._initialized:
+        """
+        if not self._initialized:
             await self.initialize()
         
         return await self.tenant_manager.create_tenant_collaboration(
@@ -250,7 +265,8 @@ class DatabaseConnectionsIndex:
         )
     
     async def get_health_status(self) -> Dict[str, Any]:
-        """Get comprehensive health status of all database connections."""        if not self._initialized:
+        """Get comprehensive health status of all database connections."""
+        if not self._initialized:
             return {"status": "not_initialized"}
         
         health_status = {
@@ -280,11 +296,13 @@ class DatabaseConnectionsIndex:
         return health_status
     
     async def optimize_connections(self) -> Dict[str, Any]:
-        """        Perform connection optimization across all databases.
+        """
+        Perform connection optimization across all databases.
         
         Returns:
             Optimization results and recommendations
-        """        if not self._initialized:
+        """
+        if not self._initialized:
             await self.initialize()
         
         optimization_results = {
@@ -315,14 +333,16 @@ class DatabaseConnectionsIndex:
         self,
         tenant_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """        Get detailed connection metrics.
+        """
+        Get detailed connection metrics.
         
         Args:
             tenant_id: Optional tenant ID for tenant-specific metrics
             
         Returns:
             Connection metrics and statistics
-        """        if not self._initialized:
+        """
+        if not self._initialized:
             await self.initialize()
         
         metrics = {
@@ -354,7 +374,8 @@ class DatabaseConnectionsIndex:
         return metrics
     
     async def _register_handlers(self):
-        """Register all database handlers with the factory."""        handler_types = [
+        """Register all database handlers with the factory."""
+        handler_types = [
             "postgresql", "redis", "mongodb", "elasticsearch", 
             "vector_store", "object_storage"
         ]
@@ -373,7 +394,8 @@ class DatabaseConnectionsIndex:
                 self.logger.error(f"Failed to register {handler_type} handler: {e}")
     
     async def _setup_monitoring(self):
-        """Setup monitoring for all database connections."""        try:
+        """Setup monitoring for all database connections."""
+        try:
             # Initialize health monitoring
             health_monitor = DatabaseHealthMonitor()
             await health_monitor.initialize(self.handlers)
@@ -386,7 +408,8 @@ class DatabaseConnectionsIndex:
             self.logger.error(f"Failed to setup monitoring: {e}")
     
     async def _periodic_health_check(self):
-        """Periodic health check for all connections."""        while True:
+        """Periodic health check for all connections."""
+        while True:
             try:
                 await asyncio.sleep(30)  # Check every 30 seconds
                 health_status = await self.get_health_status()
@@ -400,7 +423,8 @@ class DatabaseConnectionsIndex:
                 self.logger.error(f"Periodic health check failed: {e}")
     
     async def _get_performance_metrics(self) -> Dict[str, Any]:
-        """Get performance metrics for all database connections."""        metrics = {
+        """Get performance metrics for all database connections."""
+        metrics = {
             "query_latency": {},
             "connection_utilization": {},
             "throughput": {},
@@ -421,7 +445,8 @@ class DatabaseConnectionsIndex:
         return metrics
     
     async def _generate_optimization_recommendations(self) -> List[str]:
-        """Generate optimization recommendations based on metrics."""        recommendations = []
+        """Generate optimization recommendations based on metrics."""
+        recommendations = []
         
         try:
             performance_metrics = await self._get_performance_metrics()
@@ -458,7 +483,8 @@ class DatabaseConnectionsIndex:
         database_type: str,
         tenant_id: Optional[str] = None
     ):
-        """Release database connection back to pool."""        try:
+        """Release database connection back to pool."""
+        try:
             if tenant_id:
                 await self.tenant_manager._release_tenant_connection(tenant_id, connection)
             else:
@@ -467,7 +493,8 @@ class DatabaseConnectionsIndex:
             self.logger.error(f"Failed to release {database_type} connection: {e}")
     
     async def shutdown(self):
-        """Gracefully shutdown all database connections."""        if not self._initialized:
+        """Gracefully shutdown all database connections."""
+        if not self._initialized:
             return
         
         try:
@@ -498,7 +525,8 @@ _db_index: Optional[DatabaseConnectionsIndex] = None
 
 
 async def get_database_index() -> DatabaseConnectionsIndex:
-    """Get or create global database connections index."""    global _db_index
+    """Get or create global database connections index."""
+    global _db_index
     
     if _db_index is None:
         _db_index = DatabaseConnectionsIndex()
@@ -515,7 +543,8 @@ async def get_connection(
     tenant_id: Optional[str] = None,
     readonly: bool = False
 ) -> Any:
-    """Convenience function to get database connection."""    db_index = await get_database_index()
+    """Convenience function to get database connection."""
+    db_index = await get_database_index()
     return await db_index.get_connection(database_type, tenant_id, readonly)
 
 
@@ -524,7 +553,8 @@ async def session(
     tenant_id: Optional[str] = None,
     readonly: bool = False
 ):
-    """Convenience function for database session context manager."""    db_index = await get_database_index()
+    """Convenience function for database session context manager."""
+    db_index = await get_database_index()
     return db_index.session(database_type, tenant_id, readonly)
 
 
@@ -532,7 +562,8 @@ async def distributed_transaction(
     tenant_id: Optional[str] = None,
     databases: Optional[List[str]] = None
 ):
-    """Convenience function for distributed transaction context manager."""    db_index = await get_database_index()
+    """Convenience function for distributed transaction context manager."""
+    db_index = await get_database_index()
     return db_index.distributed_transaction(tenant_id, databases)
 
 

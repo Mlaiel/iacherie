@@ -11,7 +11,8 @@ WARNING: This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
-"""import logging
+"""
+import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -27,7 +28,8 @@ from ...ai.models import ContentAnalyzer, QualityClassifier
 
 
 class QualityDimension(Enum):
-    """Data quality dimensions"""    COMPLETENESS = "completeness"
+    """Data quality dimensions"""
+    COMPLETENESS = "completeness"
     ACCURACY = "accuracy"
     CONSISTENCY = "consistency"
     TIMELINESS = "timeliness"
@@ -38,7 +40,8 @@ class QualityDimension(Enum):
 
 
 class QualityLevel(Enum):
-    """Quality assessment levels"""    EXCELLENT = "excellent"  # 90-100%
+    """Quality assessment levels"""
+    EXCELLENT = "excellent"  # 90-100%
     GOOD = "good"           # 75-89%
     ACCEPTABLE = "acceptable"  # 60-74%
     POOR = "poor"           # 40-59%
@@ -47,7 +50,8 @@ class QualityLevel(Enum):
 
 @dataclass
 class QualityRule:
-    """Data quality rule definition"""    rule_id: str
+    """Data quality rule definition"""
+    rule_id: str
     name: str
     description: str
     dimension: QualityDimension
@@ -61,7 +65,8 @@ class QualityRule:
 
 @dataclass
 class QualityIssue:
-    """Quality issue record"""    issue_id: str
+    """Quality issue record"""
+    issue_id: str
     content_id: str
     rule_id: str
     dimension: QualityDimension
@@ -75,7 +80,8 @@ class QualityIssue:
 
 @dataclass
 class QualityMetrics:
-    """Quality metrics for content"""    content_id: str
+    """Quality metrics for content"""
+    content_id: str
     content_type: str
     overall_score: float  # 0-100
     dimension_scores: Dict[QualityDimension, float]
@@ -87,7 +93,8 @@ class QualityMetrics:
 
 
 class BaseQualityChecker(ABC):
-    """Base class for content-specific quality checkers"""    
+    """Base class for content-specific quality checkers"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -99,7 +106,8 @@ class BaseQualityChecker(ABC):
         content_data: Any,
         metadata: Dict[str, Any]
     ) -> QualityMetrics:
-        """Check quality for specific content type"""        logger.warning(f"check_quality method not implemented in {self.__class__.__name__}")
+        """Check quality for specific content type"""
+        logger.warning(f"check_quality method not implemented in {self.__class__.__name__}")
         
         # Create default quality metrics
         dimension_scores = {
@@ -137,7 +145,8 @@ class BaseQualityChecker(ABC):
     
     @abstractmethod
     def get_quality_rules(self) -> List[QualityRule]:
-        """Get quality rules for this content type"""        logger.warning(f"get_quality_rules method not implemented in {self.__class__.__name__}")
+        """Get quality rules for this content type"""
+        logger.warning(f"get_quality_rules method not implemented in {self.__class__.__name__}")
         
         # Return basic default rules
         return [
@@ -163,7 +172,8 @@ class BaseQualityChecker(ABC):
 
 
 class AudioQualityChecker(BaseQualityChecker):
-    """Quality checker for audio content"""    
+    """Quality checker for audio content"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         self.content_analyzer = ContentAnalyzer(config)
@@ -174,7 +184,8 @@ class AudioQualityChecker(BaseQualityChecker):
         content_data: Any,
         metadata: Dict[str, Any]
     ) -> QualityMetrics:
-        """Check audio content quality"""        dimension_scores = {}
+        """Check audio content quality"""
+        dimension_scores = {}
         issues_count = 0
         critical_issues_count = 0
         
@@ -217,7 +228,8 @@ class AudioQualityChecker(BaseQualityChecker):
         )
     
     async def _check_completeness(self, content_data: Any, metadata: Dict[str, Any]) -> float:
-        """Check audio completeness"""        score = 1.0
+        """Check audio completeness"""
+        score = 1.0
         
         # Check if audio has required metadata
         required_fields = ["duration", "sample_rate", "channels", "format"]
@@ -231,7 +243,8 @@ class AudioQualityChecker(BaseQualityChecker):
         return score
     
     async def _check_audio_accuracy(self, content_data: Any, metadata: Dict[str, Any]) -> float:
-        """Check audio technical accuracy"""        score = 1.0
+        """Check audio technical accuracy"""
+        score = 1.0
         
         # Check sample rate
         sample_rate = metadata.get("sample_rate", 0)
@@ -256,7 +269,8 @@ class AudioQualityChecker(BaseQualityChecker):
         return score
     
     async def _check_consistency(self, content_data: Any, metadata: Dict[str, Any]) -> float:
-        """Check audio consistency"""        score = 1.0
+        """Check audio consistency"""
+        score = 1.0
         
         # Check consistency between metadata and actual content
         stated_duration = metadata.get("duration", 0)
@@ -268,7 +282,8 @@ class AudioQualityChecker(BaseQualityChecker):
         return score
     
     async def _check_validity(self, content_data: Any, metadata: Dict[str, Any]) -> float:
-        """Check audio format validity"""        score = 1.0
+        """Check audio format validity"""
+        score = 1.0
         
         # Check supported format
         audio_format = metadata.get("format", "").lower()
@@ -284,7 +299,8 @@ class AudioQualityChecker(BaseQualityChecker):
         return score
     
     async def _check_integrity(self, content_data: Any, metadata: Dict[str, Any]) -> float:
-        """Check audio data integrity"""        score = 1.0
+        """Check audio data integrity"""
+        score = 1.0
         
         # Check for corruption
         if await self._detect_audio_corruption(content_data):
@@ -298,23 +314,28 @@ class AudioQualityChecker(BaseQualityChecker):
         return score
     
     async def _calculate_actual_duration(self, content_data: Any) -> float:
-        """Calculate actual audio duration"""        # Implementation would use audio processing library
+        """Calculate actual audio duration"""
+        # Implementation would use audio processing library
         return 0.0
     
     async def _validate_audio_headers(self, content_data: Any) -> bool:
-        """Validate audio file headers"""        # Implementation would check audio format headers
+        """Validate audio file headers"""
+        # Implementation would check audio format headers
         return True
     
     async def _detect_audio_corruption(self, content_data: Any) -> bool:
-        """Detect audio corruption"""        # Implementation would analyze audio for corruption patterns
+        """Detect audio corruption"""
+        # Implementation would analyze audio for corruption patterns
         return False
     
     async def _verify_checksum(self, content_data: Any, expected_checksum: str) -> bool:
-        """Verify content checksum"""        # Implementation would calculate and compare checksums
+        """Verify content checksum"""
+        # Implementation would calculate and compare checksums
         return True
     
     def _determine_quality_level(self, score: float) -> QualityLevel:
-        """Determine quality level from score"""        if score >= 90:
+        """Determine quality level from score"""
+        if score >= 90:
             return QualityLevel.EXCELLENT
         elif score >= 75:
             return QualityLevel.GOOD
@@ -326,7 +347,8 @@ class AudioQualityChecker(BaseQualityChecker):
             return QualityLevel.CRITICAL
     
     def get_quality_rules(self) -> List[QualityRule]:
-        """Get audio quality rules"""        return [
+        """Get audio quality rules"""
+        return [
             QualityRule(
                 rule_id="audio_sample_rate",
                 name="Minimum Sample Rate",
@@ -349,7 +371,8 @@ class AudioQualityChecker(BaseQualityChecker):
 
 
 class VideoQualityChecker(BaseQualityChecker):
-    """Quality checker for video content"""    
+    """Quality checker for video content"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         self.content_analyzer = ContentAnalyzer(config)
@@ -360,7 +383,8 @@ class VideoQualityChecker(BaseQualityChecker):
         content_data: Any,
         metadata: Dict[str, Any]
     ) -> QualityMetrics:
-        """Check video content quality"""        dimension_scores = {}
+        """Check video content quality"""
+        dimension_scores = {}
         
         # Check completeness
         dimension_scores[QualityDimension.COMPLETENESS] = await self._check_video_completeness(content_data, metadata)
@@ -393,7 +417,8 @@ class VideoQualityChecker(BaseQualityChecker):
         )
     
     async def _check_video_completeness(self, content_data: Any, metadata: Dict[str, Any]) -> float:
-        """Check video completeness"""        score = 1.0
+        """Check video completeness"""
+        score = 1.0
         
         required_fields = ["duration", "width", "height", "fps", "codec"]
         present_fields = sum(1 for field in required_fields if metadata.get(field))
@@ -402,7 +427,8 @@ class VideoQualityChecker(BaseQualityChecker):
         return score
     
     async def _check_video_accuracy(self, content_data: Any, metadata: Dict[str, Any]) -> float:
-        """Check video technical accuracy"""        score = 1.0
+        """Check video technical accuracy"""
+        score = 1.0
         
         # Check resolution
         width = metadata.get("width", 0)
@@ -419,11 +445,13 @@ class VideoQualityChecker(BaseQualityChecker):
         return score
     
     async def _check_video_consistency(self, content_data: Any, metadata: Dict[str, Any]) -> float:
-        """Check video consistency"""        # Implementation for video consistency checks
+        """Check video consistency"""
+        # Implementation for video consistency checks
         return 1.0
     
     async def _check_video_validity(self, content_data: Any, metadata: Dict[str, Any]) -> float:
-        """Check video format validity"""        score = 1.0
+        """Check video format validity"""
+        score = 1.0
         
         codec = metadata.get("codec", "").lower()
         supported_codecs = ["h264", "h265", "vp8", "vp9", "av1"]
@@ -434,11 +462,13 @@ class VideoQualityChecker(BaseQualityChecker):
         return score
     
     async def _check_video_integrity(self, content_data: Any, metadata: Dict[str, Any]) -> float:
-        """Check video integrity"""        # Implementation for video integrity checks
+        """Check video integrity"""
+        # Implementation for video integrity checks
         return 1.0
     
     def _determine_quality_level(self, score: float) -> QualityLevel:
-        """Determine quality level from score"""        if score >= 90:
+        """Determine quality level from score"""
+        if score >= 90:
             return QualityLevel.EXCELLENT
         elif score >= 75:
             return QualityLevel.GOOD
@@ -450,7 +480,8 @@ class VideoQualityChecker(BaseQualityChecker):
             return QualityLevel.CRITICAL
     
     def get_quality_rules(self) -> List[QualityRule]:
-        """Get video quality rules"""        return [
+        """Get video quality rules"""
+        return [
             QualityRule(
                 rule_id="video_resolution",
                 name="Minimum Resolution",
@@ -464,14 +495,16 @@ class VideoQualityChecker(BaseQualityChecker):
 
 
 class ImageQualityChecker(BaseQualityChecker):
-    """Quality checker for image content"""    
+    """Quality checker for image content"""
+    
     async def check_quality(
         self,
         content_id: str,
         content_data: Any,
         metadata: Dict[str, Any]
     ) -> QualityMetrics:
-        """Check image content quality"""        dimension_scores = {}
+        """Check image content quality"""
+        dimension_scores = {}
         
         # Check completeness
         dimension_scores[QualityDimension.COMPLETENESS] = await self._check_image_completeness(content_data, metadata)
@@ -497,7 +530,8 @@ class ImageQualityChecker(BaseQualityChecker):
         )
     
     async def _check_image_completeness(self, content_data: Any, metadata: Dict[str, Any]) -> float:
-        """Check image completeness"""        score = 1.0
+        """Check image completeness"""
+        score = 1.0
         
         required_fields = ["width", "height", "format", "color_mode"]
         present_fields = sum(1 for field in required_fields if metadata.get(field))
@@ -506,7 +540,8 @@ class ImageQualityChecker(BaseQualityChecker):
         return score
     
     async def _check_image_accuracy(self, content_data: Any, metadata: Dict[str, Any]) -> float:
-        """Check image technical accuracy"""        score = 1.0
+        """Check image technical accuracy"""
+        score = 1.0
         
         width = metadata.get("width", 0)
         height = metadata.get("height", 0)
@@ -517,7 +552,8 @@ class ImageQualityChecker(BaseQualityChecker):
         return score
     
     async def _check_image_validity(self, content_data: Any, metadata: Dict[str, Any]) -> float:
-        """Check image format validity"""        score = 1.0
+        """Check image format validity"""
+        score = 1.0
         
         image_format = metadata.get("format", "").lower()
         supported_formats = ["jpg", "jpeg", "png", "gif", "webp", "bmp"]
@@ -528,7 +564,8 @@ class ImageQualityChecker(BaseQualityChecker):
         return score
     
     def _determine_quality_level(self, score: float) -> QualityLevel:
-        """Determine quality level from score"""        if score >= 90:
+        """Determine quality level from score"""
+        if score >= 90:
             return QualityLevel.EXCELLENT
         elif score >= 75:
             return QualityLevel.GOOD
@@ -540,7 +577,8 @@ class ImageQualityChecker(BaseQualityChecker):
             return QualityLevel.CRITICAL
     
     def get_quality_rules(self) -> List[QualityRule]:
-        """Get image quality rules"""        return [
+        """Get image quality rules"""
+        return [
             QualityRule(
                 rule_id="image_resolution",
                 name="Minimum Image Resolution",
@@ -554,14 +592,16 @@ class ImageQualityChecker(BaseQualityChecker):
 
 
 class TextQualityChecker(BaseQualityChecker):
-    """Quality checker for text content"""    
+    """Quality checker for text content"""
+    
     async def check_quality(
         self,
         content_id: str,
         content_data: Any,
         metadata: Dict[str, Any]
     ) -> QualityMetrics:
-        """Check text content quality"""        dimension_scores = {}
+        """Check text content quality"""
+        dimension_scores = {}
         
         # Check completeness
         dimension_scores[QualityDimension.COMPLETENESS] = await self._check_text_completeness(content_data, metadata)
@@ -590,7 +630,8 @@ class TextQualityChecker(BaseQualityChecker):
         )
     
     async def _check_text_completeness(self, content_data: Any, metadata: Dict[str, Any]) -> float:
-        """Check text completeness"""        score = 1.0
+        """Check text completeness"""
+        score = 1.0
         
         if not content_data or len(str(content_data).strip()) == 0:
             score = 0.0
@@ -603,15 +644,18 @@ class TextQualityChecker(BaseQualityChecker):
         return (score + metadata_score) / 2
     
     async def _check_text_accuracy(self, content_data: Any, metadata: Dict[str, Any]) -> float:
-        """Check text accuracy (grammar, spelling)"""        # Implementation would use NLP models for grammar/spelling check
+        """Check text accuracy (grammar, spelling)"""
+        # Implementation would use NLP models for grammar/spelling check
         return 0.9  # Placeholder
     
     async def _check_text_consistency(self, content_data: Any, metadata: Dict[str, Any]) -> float:
-        """Check text consistency"""        # Implementation would check for consistent formatting, style
+        """Check text consistency"""
+        # Implementation would check for consistent formatting, style
         return 0.95  # Placeholder
     
     async def _check_text_validity(self, content_data: Any, metadata: Dict[str, Any]) -> float:
-        """Check text validity"""        score = 1.0
+        """Check text validity"""
+        score = 1.0
         
         # Check encoding
         encoding = metadata.get("encoding", "").lower()
@@ -621,7 +665,8 @@ class TextQualityChecker(BaseQualityChecker):
         return score
     
     def _determine_quality_level(self, score: float) -> QualityLevel:
-        """Determine quality level from score"""        if score >= 90:
+        """Determine quality level from score"""
+        if score >= 90:
             return QualityLevel.EXCELLENT
         elif score >= 75:
             return QualityLevel.GOOD
@@ -633,7 +678,8 @@ class TextQualityChecker(BaseQualityChecker):
             return QualityLevel.CRITICAL
     
     def get_quality_rules(self) -> List[QualityRule]:
-        """Get text quality rules"""        return [
+        """Get text quality rules"""
+        return [
             QualityRule(
                 rule_id="text_not_empty",
                 name="Text Content Present",
@@ -647,13 +693,16 @@ class TextQualityChecker(BaseQualityChecker):
 
 
 class QualityManager(BaseManager):
-    """    Central data quality management system
+    """
+    Central data quality management system
     
     Orchestrates quality assessment across all content types,
     provides quality monitoring, reporting, and improvement recommendations.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the quality manager"""        super().__init__(config)
+        """Initialize the quality manager"""
+        super().__init__(config)
         self.logger = logging.getLogger(__name__)
         
         # Initialize components
@@ -681,7 +730,8 @@ class QualityManager(BaseManager):
         }
     
     async def initialize(self) -> None:
-        """Initialize the quality manager"""        try:
+        """Initialize the quality manager"""
+        try:
             await self._load_quality_rules()
             await self._load_quality_history()
             
@@ -701,7 +751,8 @@ class QualityManager(BaseManager):
         content_data: Any,
         metadata: Optional[Dict[str, Any]] = None
     ) -> QualityMetrics:
-        """        Assess quality of content
+        """
+        Assess quality of content
         
         Args:
             content_id: Unique content identifier
@@ -711,7 +762,8 @@ class QualityManager(BaseManager):
             
         Returns:
             QualityMetrics: Quality assessment results
-        """        try:
+        """
+        try:
             if content_type not in self.quality_checkers:
                 raise QualityError(f"Unsupported content type: {content_type}")
             
@@ -746,7 +798,8 @@ class QualityManager(BaseManager):
         content_type: Optional[str] = None,
         quality_level: Optional[QualityLevel] = None
     ) -> Union[QualityMetrics, List[QualityMetrics]]:
-        """        Get quality metrics with optional filtering
+        """
+        Get quality metrics with optional filtering
         
         Args:
             content_id: Specific content ID
@@ -755,7 +808,8 @@ class QualityManager(BaseManager):
             
         Returns:
             QualityMetrics or list of QualityMetrics
-        """        if content_id:
+        """
+        if content_id:
             return self.quality_metrics.get(content_id)
         
         # Filter metrics
@@ -773,14 +827,16 @@ class QualityManager(BaseManager):
         self,
         content_type: Optional[str] = None
     ) -> Dict[str, Any]:
-        """        Get quality summary statistics
+        """
+        Get quality summary statistics
         
         Args:
             content_type: Filter by content type
             
         Returns:
             Dict with quality summary
-        """        metrics = await self.get_quality_metrics(content_type=content_type)
+        """
+        metrics = await self.get_quality_metrics(content_type=content_type)
         if isinstance(metrics, QualityMetrics):
             metrics = [metrics]
         
@@ -822,7 +878,8 @@ class QualityManager(BaseManager):
         severity: Optional[QualityLevel] = None,
         resolved: Optional[bool] = None
     ) -> List[QualityIssue]:
-        """        Get quality issues with optional filtering
+        """
+        Get quality issues with optional filtering
         
         Args:
             content_id: Filter by content ID
@@ -832,7 +889,8 @@ class QualityManager(BaseManager):
             
         Returns:
             List of filtered quality issues
-        """        filtered_issues = self.quality_issues.copy()
+        """
+        filtered_issues = self.quality_issues.copy()
         
         if content_id:
             filtered_issues = [i for i in filtered_issues if i.content_id == content_id]
@@ -856,7 +914,8 @@ class QualityManager(BaseManager):
         issue_id: str,
         resolution_notes: Optional[str] = None
     ) -> bool:
-        """        Mark a quality issue as resolved
+        """
+        Mark a quality issue as resolved
         
         Args:
             issue_id: ID of issue to resolve
@@ -864,7 +923,8 @@ class QualityManager(BaseManager):
             
         Returns:
             bool: True if issue resolved successfully
-        """        for issue in self.quality_issues:
+        """
+        for issue in self.quality_issues:
             if issue.issue_id == issue_id:
                 issue.resolved_at = datetime.utcnow()
                 issue.resolution_notes = resolution_notes
@@ -877,14 +937,16 @@ class QualityManager(BaseManager):
         return False
     
     async def add_quality_rule(self, rule: QualityRule) -> bool:
-        """        Add a new quality rule
+        """
+        Add a new quality rule
         
         Args:
             rule: Quality rule to add
             
         Returns:
             bool: True if rule added successfully
-        """        try:
+        """
+        try:
             # Validate rule
             await self._validate_quality_rule(rule)
             
@@ -902,14 +964,16 @@ class QualityManager(BaseManager):
         self,
         content_id: str
     ) -> List[str]:
-        """        Get quality improvement recommendations for content
+        """
+        Get quality improvement recommendations for content
         
         Args:
             content_id: ID of content to analyze
             
         Returns:
             List of improvement recommendations
-        """        recommendations = []
+        """
+        recommendations = []
         
         # Get quality metrics
         metrics = self.quality_metrics.get(content_id)
@@ -933,7 +997,8 @@ class QualityManager(BaseManager):
         return recommendations
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get quality management metrics"""        return {
+        """Get quality management metrics"""
+        return {
             **self.metrics,
             "quality_checkers_count": len(self.quality_checkers),
             "quality_rules_count": len(self.quality_rules),
@@ -942,7 +1007,8 @@ class QualityManager(BaseManager):
         }
     
     def _update_average_quality_score(self, new_score: float) -> None:
-        """Update running average quality score"""        total_assessments = self.metrics["total_assessments"]
+        """Update running average quality score"""
+        total_assessments = self.metrics["total_assessments"]
         current_average = self.metrics["average_quality_score"]
         
         self.metrics["average_quality_score"] = (
@@ -950,7 +1016,8 @@ class QualityManager(BaseManager):
         )
     
     async def _generate_quality_issues(self, metrics: QualityMetrics) -> None:
-        """Generate quality issues based on metrics"""        for dimension, score in metrics.dimension_scores.items():
+        """Generate quality issues based on metrics"""
+        for dimension, score in metrics.dimension_scores.items():
             if score < 0.4:  # Critical threshold
                 issue = QualityIssue(
                     issue_id=f"quality_{metrics.content_id}_{dimension.value}_{datetime.utcnow().timestamp()}",
@@ -972,7 +1039,8 @@ class QualityManager(BaseManager):
         dimension: QualityDimension,
         score: float
     ) -> List[str]:
-        """Get recommendations for improving specific quality dimension"""        recommendations = []
+        """Get recommendations for improving specific quality dimension"""
+        recommendations = []
         
         if dimension == QualityDimension.COMPLETENESS:
             recommendations.append("Ensure all required metadata fields are populated")
@@ -997,7 +1065,8 @@ class QualityManager(BaseManager):
         return recommendations
     
     async def _quality_monitor(self) -> None:
-        """Background task to monitor quality trends"""        while True:
+        """Background task to monitor quality trends"""
+        while True:
             try:
                 # Monitor quality trends
                 await self._analyze_quality_trends()
@@ -1013,7 +1082,8 @@ class QualityManager(BaseManager):
                 await asyncio.sleep(3600)  # Shorter sleep on error
     
     async def _analyze_quality_trends(self) -> None:
-        """Analyze quality trends over time"""        try:
+        """Analyze quality trends over time"""
+        try:
             self.logger.info("Analyzing quality trends")
             
             # Get quality history for trend analysis
@@ -1085,7 +1155,8 @@ class QualityManager(BaseManager):
             self.logger.error(f"Error analyzing quality trends: {str(e)}")
     
     def _calculate_overall_trend(self, trends: Dict[str, Dict]) -> Dict[str, Any]:
-        """Calculate overall quality trend across all content types"""        if not trends:
+        """Calculate overall quality trend across all content types"""
+        if not trends:
             return {"direction": "unknown", "confidence": 0.0}
         
         improving_count = sum(1 for t in trends.values() if t["direction"] == "improving")
@@ -1113,7 +1184,8 @@ class QualityManager(BaseManager):
         }
     
     def _generate_quality_recommendations(self, trends: Dict[str, Dict]) -> List[str]:
-        """Generate recommendations based on quality trends"""        recommendations = []
+        """Generate recommendations based on quality trends"""
+        recommendations = []
         
         for content_type, trend_data in trends.items():
             if trend_data["direction"] == "declining" and trend_data["magnitude"] > 0.05:
@@ -1141,7 +1213,8 @@ class QualityManager(BaseManager):
         return recommendations
     
     async def _cleanup_old_issues(self) -> None:
-        """Clean up old resolved issues"""        cutoff_date = datetime.utcnow() - timedelta(days=90)
+        """Clean up old resolved issues"""
+        cutoff_date = datetime.utcnow() - timedelta(days=90)
         
         self.quality_issues = [
             issue for issue in self.quality_issues
@@ -1149,7 +1222,8 @@ class QualityManager(BaseManager):
         ]
     
     async def _validate_quality_rule(self, rule: QualityRule) -> None:
-        """Validate quality rule configuration"""        if not rule.rule_id or not rule.name:
+        """Validate quality rule configuration"""
+        if not rule.rule_id or not rule.name:
             raise ValidationError("Rule ID and name are required")
         
         if rule.threshold < 0 or rule.threshold > 1:
@@ -1159,13 +1233,15 @@ class QualityManager(BaseManager):
             raise ValidationError("Rule weight must be positive")
     
     async def _load_quality_rules(self) -> None:
-        """Load quality rules from all checkers"""        for checker in self.quality_checkers.values():
+        """Load quality rules from all checkers"""
+        for checker in self.quality_checkers.values():
             rules = checker.get_quality_rules()
             for rule in rules:
                 self.quality_rules[rule.rule_id] = rule
     
     async def _load_quality_history(self) -> None:
-        """Load quality assessment history from database"""        try:
+        """Load quality assessment history from database"""
+        try:
             self.logger.info("Loading quality assessment history from database")
             
             # Simulate database query for quality history

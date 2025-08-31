@@ -15,7 +15,8 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICT
 and will result in immediate legal action under German and International copyright laws.
 
 Contact mlaiel@live.de for licensing inquiries only.
-"""from typing import Dict, List, Optional, Any, Union
+"""
+from typing import Dict, List, Optional, Any, Union
 import logging
 import asyncio
 from datetime import datetime
@@ -74,82 +75,96 @@ TEAM_SPECIALTIES = [
 
 
 class ContentAgentFactory:
-    """    Factory class for creating and managing content agent instances.
+    """
+    Factory class for creating and managing content agent instances.
     
     Provides centralized creation and configuration of content processing components.
-    """    
+    """
+    
     @staticmethod
     async def create_content_agent(config: Optional[Dict[str, Any]] = None) -> ContentAgent:
-        """        Create and initialize a ContentAgent instance.
+        """
+        Create and initialize a ContentAgent instance.
         
         Args:
             config: Optional configuration dictionary
             
         Returns:
             Initialized ContentAgent instance
-        """        agent = ContentAgent(config=config)
+        """
+        agent = ContentAgent(config=config)
         await agent.initialize()
         logger.info("ContentAgent created and initialized")
         return agent
     
     @staticmethod
     async def create_content_manager(config: Optional[Dict[str, Any]] = None) -> ContentAgentManager:
-        """        Create and initialize a ContentAgentManager instance.
+        """
+        Create and initialize a ContentAgentManager instance.
         
         Args:
             config: Optional configuration dictionary
             
         Returns:
             Initialized ContentAgentManager instance
-        """        manager = ContentAgentManager(config=config)
+        """
+        manager = ContentAgentManager(config=config)
         await manager.initialize()
         logger.info("ContentAgentManager created and initialized")
         return manager
     
 class ContentAgentFactory:
-    """    Enterprise factory class for creating and managing content processing ecosystem.
+    """
+    Enterprise factory class for creating and managing content processing ecosystem.
     
     Provides centralized creation, configuration, and orchestration of all content
     processing components including AI engines, protection systems, and distribution.
-    """    
+    """
+    
     @staticmethod
     async def create_content_agent(config: Optional[Dict[str, Any]] = None) -> ContentAgent:
-        """        Create and initialize a ContentAgent instance.
+        """
+        Create and initialize a ContentAgent instance.
         
         Args:
             config: Optional configuration dictionary
             
         Returns:
             Initialized ContentAgent instance
-        """        agent = ContentAgent(config=config)
+        """
+        agent = ContentAgent(config=config)
         await agent.initialize()
         logger.info("ContentAgent created and initialized")
         return agent
     
     @staticmethod
     async def create_content_manager(config: Optional[Dict[str, Any]] = None) -> ContentAgentManager:
-        """        Create and initialize a ContentAgentManager instance.
+        """
+        Create and initialize a ContentAgentManager instance.
         
         Args:
             config: Optional configuration dictionary
             
         Returns:
             Initialized ContentAgentManager instance
-        """        manager = ContentAgentManager(config=config)
+        """
+        manager = ContentAgentManager(config=config)
         await manager.initialize()
         logger.info("ContentAgentManager created and initialized")
         return manager
     
     @staticmethod
     async def create_multimodal_engine(config: Optional[Dict[str, Any]] = None) -> MultimodalIntelligenceEngine:
-        """        Create and initialize a MultimodalIntelligenceEngine instance.
+        """
+        Create and initialize a MultimodalIntelligenceEngine instance.
         
         Args:
             config: Optional configuration dictionary
             
         Returns:
             Initialized MultimodalIntelligenceEngine instance
-        """        from .multimodal_intelligence import MultimodalConfig
+        """
+        from .multimodal_intelligence import MultimodalConfig
         
         engine_config = MultimodalConfig()
         if config:
@@ -164,14 +179,16 @@ class ContentAgentFactory:
     
     @staticmethod
     async def create_smart_protector(config: Optional[Dict[str, Any]] = None) -> SmartContentProtector:
-        """        Create and initialize a SmartContentProtector instance.
+        """
+        Create and initialize a SmartContentProtector instance.
         
         Args:
             config: Optional configuration dictionary
             
         Returns:
             Initialized SmartContentProtector instance
-        """        from .smart_protection import ProtectionConfig
+        """
+        from .smart_protection import ProtectionConfig
         
         protection_config = ProtectionConfig()
         if config:
@@ -186,36 +203,42 @@ class ContentAgentFactory:
     
     @staticmethod
     async def create_distribution_engine() -> IntelligentDistributionEngine:
-        """        Create and initialize an IntelligentDistributionEngine instance.
+        """
+        Create and initialize an IntelligentDistributionEngine instance.
         
         Returns:
             Initialized IntelligentDistributionEngine instance
-        """        engine = IntelligentDistributionEngine()
+        """
+        engine = IntelligentDistributionEngine()
         await engine.initialize()
         logger.info("IntelligentDistributionEngine created and initialized")
         return engine
     
     @staticmethod
     async def create_workflow_orchestrator() -> BusinessWorkflowOrchestrator:
-        """        Create and initialize a BusinessWorkflowOrchestrator instance.
+        """
+        Create and initialize a BusinessWorkflowOrchestrator instance.
         
         Returns:
             Initialized BusinessWorkflowOrchestrator instance
-        """        orchestrator = BusinessWorkflowOrchestrator()
+        """
+        orchestrator = BusinessWorkflowOrchestrator()
         await orchestrator.initialize()
         logger.info("BusinessWorkflowOrchestrator created and initialized")
         return orchestrator
     
     @staticmethod
     async def create_analysis_orchestrator(config: Optional[Dict[str, Any]] = None) -> ContentAnalysisOrchestrator:
-        """        Create and initialize a ContentAnalysisOrchestrator instance.
+        """
+        Create and initialize a ContentAnalysisOrchestrator instance.
         
         Args:
             config: Optional configuration dictionary
             
         Returns:
             Initialized ContentAnalysisOrchestrator instance
-        """        from .content_analyzers import ContentAnalysisConfig
+        """
+        from .content_analyzers import ContentAnalysisConfig
         
         analysis_config = ContentAnalysisConfig()
         if config:
@@ -230,11 +253,13 @@ class ContentAgentFactory:
 
 
 class EnterpriseContentPipeline:
-    """    Complete enterprise content processing pipeline orchestrator.
+    """
+    Complete enterprise content processing pipeline orchestrator.
     
     Integrates all components of the content agent system to provide
     end-to-end content processing workflow for creators.
-    """    
+    """
+    
     def __init__(self):
         # Core components
         self.workflow_orchestrator = None
@@ -248,7 +273,8 @@ class EnterpriseContentPipeline:
         self.active_pipelines = {}
     
     async def initialize(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the complete enterprise pipeline"""        try:
+        """Initialize the complete enterprise pipeline"""
+        try:
             logger.info("Initializing Enterprise Content Pipeline...")
             
             # Initialize global instances
@@ -275,7 +301,8 @@ class EnterpriseContentPipeline:
             raise
     
     async def process_creator_content(self, content_upload: ContentUpload) -> Dict[str, Any]:
-        """        Process creator content through the complete enterprise pipeline.
+        """
+        Process creator content through the complete enterprise pipeline.
         
         Business Logic Flow Implementation:
         User (Creator) → Upload → AI Analysis → Protection → SEO → 
@@ -286,7 +313,8 @@ class EnterpriseContentPipeline:
             
         Returns:
             Complete processing results
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             raise RuntimeError("Enterprise pipeline not initialized")
         
         try:
@@ -320,7 +348,8 @@ class EnterpriseContentPipeline:
             }
     
     async def get_pipeline_status(self, workflow_id: str) -> Dict[str, Any]:
-        """Get status of a processing pipeline"""        if workflow_id in self.active_pipelines:
+        """Get status of a processing pipeline"""
+        if workflow_id in self.active_pipelines:
             pipeline_data = self.active_pipelines[workflow_id]
             workflow_status = await self.workflow_orchestrator.get_workflow_status(workflow_id)
             
@@ -336,20 +365,23 @@ class EnterpriseContentPipeline:
 
 # Utility functions for easy access
 async def create_complete_content_system(config: Optional[Dict[str, Any]] = None) -> EnterpriseContentPipeline:
-    """    Create and initialize the complete enterprise content processing system.
+    """
+    Create and initialize the complete enterprise content processing system.
     
     Args:
         config: Optional system configuration
         
     Returns:
         Fully initialized EnterpriseContentPipeline
-    """    pipeline = EnterpriseContentPipeline()
+    """
+    pipeline = EnterpriseContentPipeline()
     await pipeline.initialize(config)
     return pipeline
 
 
 async def quick_content_analysis(content_path: str, content_type: str) -> AnalysisResult:
-    """    Quick content analysis using multimodal intelligence.
+    """
+    Quick content analysis using multimodal intelligence.
     
     Args:
         content_path: Path to content file
@@ -357,7 +389,8 @@ async def quick_content_analysis(content_path: str, content_type: str) -> Analys
         
     Returns:
         Content analysis results
-    """    engine = multimodal_engine
+    """
+    engine = multimodal_engine
     if not engine.clip_model:  # Check if initialized
         await engine.initialize()
     
@@ -376,7 +409,8 @@ async def quick_content_analysis(content_path: str, content_type: str) -> Analys
 
 async def protect_creator_content(content_path: str, creator_id: str, 
                                 protection_level: str = "standard") -> ContentFingerprint:
-    """    Protect creator content with AI-powered protection.
+    """
+    Protect creator content with AI-powered protection.
     
     Args:
         content_path: Path to content file
@@ -385,7 +419,8 @@ async def protect_creator_content(content_path: str, creator_id: str,
         
     Returns:
         Content fingerprint and protection data
-    """    from .smart_protection import ProtectionConfig
+    """
+    from .smart_protection import ProtectionConfig
     
     protector = smart_protector
     if not protector.fingerprint_engine:  # Check if initialized
@@ -446,38 +481,44 @@ __all__ = [
     "__description__",
     "TEAM_SPECIALTIES"
 ]
-        """        Create and initialize a ContentAnalyzer instance.
+        """
+        Create and initialize a ContentAnalyzer instance.
         
         Args:
             config: Optional configuration dictionary
             
         Returns:
             Initialized ContentAnalyzer instance
-        """        analyzer = ContentAnalyzer(config=config)
+        """
+        analyzer = ContentAnalyzer(config=config)
         await analyzer.initialize()
         logger.info("ContentAnalyzer created and initialized")
         return analyzer
     
     @staticmethod
     async def create_content_optimizer(config: Optional[Dict[str, Any]] = None) -> ContentOptimizer:
-        """        Create and initialize a ContentOptimizer instance.
+        """
+        Create and initialize a ContentOptimizer instance.
         
         Args:
             config: Optional configuration dictionary
             
         Returns:
             Initialized ContentOptimizer instance
-        """        optimizer = ContentOptimizer(config=config)
+        """
+        optimizer = ContentOptimizer(config=config)
         await optimizer.initialize()
         logger.info("ContentOptimizer created and initialized")
         return optimizer
 
 
 class ContentProcessingPipeline:
-    """    Complete content processing pipeline for streamlined operations.
+    """
+    Complete content processing pipeline for streamlined operations.
     
     Combines analysis, optimization, and processing in a single workflow.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.agent = None
@@ -486,7 +527,8 @@ class ContentProcessingPipeline:
         self.is_initialized = False
         
     async def initialize(self) -> None:
-        """Initialize the complete processing pipeline"""        try:
+        """Initialize the complete processing pipeline"""
+        try:
             # Create all components
             self.agent = await ContentAgentFactory.create_content_agent(self.config)
             self.analyzer = await ContentAgentFactory.create_content_analyzer(self.config)
@@ -507,7 +549,8 @@ class ContentProcessingPipeline:
         optimization_options: Optional[Dict[str, Any]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Process content through complete pipeline.
+        """
+        Process content through complete pipeline.
         
         Args:
             content: Content to process
@@ -518,7 +561,8 @@ class ContentProcessingPipeline:
             
         Returns:
             Complete processing results
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             await self.initialize()
         
         start_time = datetime.now()
@@ -589,11 +633,13 @@ class ContentProcessingPipeline:
 
 # Utility functions
 def get_supported_formats() -> Dict[str, List[str]]:
-    """    Get list of supported content formats.
+    """
+    Get list of supported content formats.
     
     Returns:
         Dictionary of content types and their supported formats
-    """    return {
+    """
+    return {
         'audio': ['.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a'],
         'video': ['.mp4', '.avi', '.mov', '.mkv', '.webm', '.flv'],
         'image': ['.jpg', '.jpeg', '.png', '.webp', '.gif', '.bmp', '.svg'],
@@ -602,11 +648,13 @@ def get_supported_formats() -> Dict[str, List[str]]:
 
 
 def get_module_info() -> Dict[str, Any]:
-    """    Get comprehensive module information.
+    """
+    Get comprehensive module information.
     
     Returns:
         Module information including version, author, and capabilities
-    """    return {
+    """
+    return {
         'name': 'Content Agent Module',
         'version': __version__,
         'author': __author__,
@@ -631,14 +679,16 @@ def get_module_info() -> Dict[str, Any]:
 
 
 def validate_content_type(content_type: str) -> bool:
-    """    Validate if content type is supported.
+    """
+    Validate if content type is supported.
     
     Args:
         content_type: Content type to validate
         
     Returns:
         True if supported, False otherwise
-    """    supported_types = list(get_supported_formats().keys())
+    """
+    supported_types = list(get_supported_formats().keys())
     return content_type.lower() in supported_types
 
 
@@ -647,7 +697,8 @@ async def quick_analyze(
     content_type: str,
     analysis_type: str = 'basic'
 ) -> Dict[str, Any]:
-    """    Quick content analysis with minimal configuration.
+    """
+    Quick content analysis with minimal configuration.
     
     Args:
         content: Content to analyze
@@ -656,7 +707,8 @@ async def quick_analyze(
         
     Returns:
         Analysis results
-    """    if not validate_content_type(content_type):
+    """
+    if not validate_content_type(content_type):
         raise ValueError(f"Unsupported content type: {content_type}")
     
     analyzer = await ContentAgentFactory.create_content_analyzer()
@@ -692,7 +744,8 @@ async def quick_optimize(
     content_type: str,
     optimization_level: str = 'standard'
 ) -> Dict[str, Any]:
-    """    Quick content optimization with minimal configuration.
+    """
+    Quick content optimization with minimal configuration.
     
     Args:
         content: Content to optimize
@@ -701,7 +754,8 @@ async def quick_optimize(
         
     Returns:
         Optimization results
-    """    if not validate_content_type(content_type):
+    """
+    if not validate_content_type(content_type):
         raise ValueError(f"Unsupported content type: {content_type}")
     
     optimizer = await ContentAgentFactory.create_content_optimizer()

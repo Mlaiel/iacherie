@@ -6,7 +6,8 @@ and performance insights for content creators and their portfolios.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""from datetime import datetime, timedelta
+"""
+from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
 import asyncio
 import logging
@@ -56,7 +57,8 @@ class MetricType(str, Enum):
 
 # Pydantic models for request/response validation
 class AnalyticsRequest(BaseModel):
-    """Request model for analytics generation"""    timeframe: AnalyticsTimeframe = Field(..., description="Timeframe for analytics")
+    """Request model for analytics generation"""
+    timeframe: AnalyticsTimeframe = Field(..., description="Timeframe for analytics")
     start_date: Optional[datetime] = Field(None, description="Custom start date")
     end_date: Optional[datetime] = Field(None, description="Custom end date")
     content_ids: Optional[List[str]] = Field(None, description="Specific content to analyze")
@@ -66,7 +68,8 @@ class AnalyticsRequest(BaseModel):
     granularity: str = Field("daily", description="Data granularity: hourly, daily, weekly")
 
 class PerformanceInsights(BaseModel):
-    """Model for performance insights response"""    content_id: str = Field(..., description="Content fingerprint ID")
+    """Model for performance insights response"""
+    content_id: str = Field(..., description="Content fingerprint ID")
     content_title: Optional[str] = Field(None, description="Content title")
     performance_score: float = Field(..., description="Overall performance score (0-100)")
     views_total: int = Field(..., description="Total views across platforms")
@@ -78,7 +81,8 @@ class PerformanceInsights(BaseModel):
     recommendations: List[str] = Field(..., description="AI-generated recommendations")
 
 class MarketIntelligence(BaseModel):
-    """Model for market intelligence response"""    market_segment: str = Field(..., description="Market segment analysis")
+    """Model for market intelligence response"""
+    market_segment: str = Field(..., description="Market segment analysis")
     competitive_position: str = Field(..., description="Competitive positioning")
     market_opportunities: List[Dict[str, Any]] = Field(..., description="Identified opportunities")
     trend_analysis: Dict[str, Any] = Field(..., description="Market trend analysis")
@@ -87,7 +91,8 @@ class MarketIntelligence(BaseModel):
     risk_assessment: Dict[str, Any] = Field(..., description="Market risk assessment")
 
 class PredictiveAnalytics(BaseModel):
-    """Model for predictive analytics response"""    forecast_horizon: str = Field(..., description="Forecast time horizon")
+    """Model for predictive analytics response"""
+    forecast_horizon: str = Field(..., description="Forecast time horizon")
     predicted_metrics: Dict[str, Any] = Field(..., description="Predicted performance metrics")
     confidence_levels: Dict[str, float] = Field(..., description="Prediction confidence levels")
     scenario_analysis: Dict[str, Any] = Field(..., description="Best/worst case scenarios")
@@ -103,7 +108,8 @@ async def generate_comprehensive_analytics(
     analytics_service: AnalyticsService = Depends(),
     intelligence_service: IntelligenceService = Depends()
 ):
-    """    Generate comprehensive analytics report with AI-powered insights.
+    """
+    Generate comprehensive analytics report with AI-powered insights.
     
     Features:
     - Multi-platform performance analysis
@@ -111,7 +117,8 @@ async def generate_comprehensive_analytics(
     - Competitive intelligence and market positioning
     - Predictive analytics and forecasting
     - Actionable recommendations for optimization
-    """    try:
+    """
+    try:
         # Determine date range
         if analytics_request.timeframe == AnalyticsTimeframe.CUSTOM:
             if not analytics_request.start_date or not analytics_request.end_date:
@@ -267,14 +274,16 @@ async def get_content_performance(
     db: Session = Depends(get_db),
     performance_service: PerformanceService = Depends()
 ):
-    """    Get detailed performance insights for specific content.
+    """
+    Get detailed performance insights for specific content.
     
     Features:
     - Comprehensive performance scoring algorithm
     - Cross-platform performance comparison
     - AI-generated optimization recommendations
     - Trend analysis and growth trajectory
-    """    try:
+    """
+    try:
         # Validate content belongs to user
         fingerprint = db.query(ContentFingerprint).filter(
             ContentFingerprint.id == content_id,
@@ -333,14 +342,16 @@ async def get_market_intelligence(
     db: Session = Depends(get_db),
     intelligence_service: IntelligenceService = Depends()
 ):
-    """    Get comprehensive market intelligence and competitive analysis.
+    """
+    Get comprehensive market intelligence and competitive analysis.
     
     Features:
     - Real-time market trend analysis
     - Competitive positioning and benchmarking
     - Opportunity identification and market gaps
     - Industry-specific insights and recommendations
-    """    try:
+    """
+    try:
         # Get user's content for market analysis
         query = db.query(ContentFingerprint).filter(
             ContentFingerprint.user_id == current_user.id
@@ -422,14 +433,16 @@ async def generate_predictive_analytics(
     db: Session = Depends(get_db),
     intelligence_service: IntelligenceService = Depends()
 ):
-    """    Generate advanced predictive analytics with machine learning models.
+    """
+    Generate advanced predictive analytics with machine learning models.
     
     Features:
     - Multi-model ensemble forecasting (LSTM, ARIMA, Prophet)
     - Scenario analysis with confidence intervals
     - Market timing optimization
     - Actionable insights for strategic planning
-    """    try:
+    """
+    try:
         # Get user's historical data
         user_content = db.query(ContentFingerprint).filter(
             ContentFingerprint.user_id == current_user.id
@@ -496,7 +509,8 @@ async def get_analytics_dashboard(
     db: Session = Depends(get_db),
     analytics_service: AnalyticsService = Depends()
 ):
-    """Get real-time analytics dashboard with key metrics and insights."""    try:
+    """Get real-time analytics dashboard with key metrics and insights."""
+    try:
         # Get dashboard metrics
         dashboard_data = await analytics_service.generate_dashboard_data(current_user.id)
         
@@ -522,7 +536,8 @@ async def get_analytics_reports(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """Get historical analytics reports for the user."""    try:
+    """Get historical analytics reports for the user."""
+    try:
         reports = db.query(AnalyticsReport).filter(
             AnalyticsReport.user_id == current_user.id
         ).order_by(AnalyticsReport.created_at.desc()).offset(skip).limit(limit).all()

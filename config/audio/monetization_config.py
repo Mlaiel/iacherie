@@ -30,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class MonetizationType(Enum):
-    """Types of monetization models"""    STREAMING_ROYALTIES = "streaming_royalties"
+    """Types of monetization models"""
+    STREAMING_ROYALTIES = "streaming_royalties"
     LICENSING_FEES = "licensing_fees"
     DIRECT_SALES = "direct_sales"
     SUBSCRIPTION = "subscription"
@@ -45,7 +46,8 @@ class MonetizationType(Enum):
 
 
 class PaymentFrequency(Enum):
-    """Payment frequency options"""    INSTANT = "instant"
+    """Payment frequency options"""
+    INSTANT = "instant"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -55,7 +57,8 @@ class PaymentFrequency(Enum):
 
 
 class PlatformCategory(Enum):
-    """Platform categories for monetization"""    MUSIC_STREAMING = "music_streaming"
+    """Platform categories for monetization"""
+    MUSIC_STREAMING = "music_streaming"
     SOCIAL_MEDIA = "social_media"
     VIDEO_PLATFORMS = "video_platforms"
     PODCAST_PLATFORMS = "podcast_platforms"
@@ -66,7 +69,8 @@ class PlatformCategory(Enum):
 
 
 class RevenueShareModel(Enum):
-    """Revenue sharing models"""    FLAT_RATE = "flat_rate"
+    """Revenue sharing models"""
+    FLAT_RATE = "flat_rate"
     PERCENTAGE_BASED = "percentage_based"
     TIERED_PERCENTAGE = "tiered_percentage"
     PERFORMANCE_BASED = "performance_based"
@@ -76,7 +80,8 @@ class RevenueShareModel(Enum):
 
 @dataclass
 class PlatformMonetizationConfig:
-    """Monetization configuration for specific platform"""    platform_name: str
+    """Monetization configuration for specific platform"""
+    platform_name: str
     platform_category: PlatformCategory
     monetization_types: List[MonetizationType]
     
@@ -118,7 +123,8 @@ class PlatformMonetizationConfig:
 
 @dataclass
 class LicensingTier:
-    """Licensing tier configuration"""    tier_name: str
+    """Licensing tier configuration"""
+    tier_name: str
     tier_id: str
     
     # Pricing
@@ -151,7 +157,8 @@ class LicensingTier:
 
 @dataclass
 class RevenueCalculationRule:
-    """Rules for revenue calculation"""    rule_name: str
+    """Rules for revenue calculation"""
+    rule_name: str
     rule_id: str
     
     # Calculation method
@@ -179,7 +186,8 @@ class RevenueCalculationRule:
 
 @dataclass
 class RoyaltyDistributionConfig:
-    """Configuration for royalty distribution"""    distribution_id: str
+    """Configuration for royalty distribution"""
+    distribution_id: str
     content_id: str
     
     # Stakeholders and their shares
@@ -201,7 +209,8 @@ class RoyaltyDistributionConfig:
 
 
 class MonetizationConfig:
-    """Main monetization configuration manager"""    
+    """Main monetization configuration manager"""
+    
     def __init__(self):
         self.platform_configs = self._initialize_platform_configs()
         self.licensing_tiers = self._initialize_licensing_tiers()
@@ -210,7 +219,8 @@ class MonetizationConfig:
         self.custom_configs = {}
     
     def _initialize_platform_configs(self) -> Dict[str, PlatformMonetizationConfig]:
-        """Initialize platform monetization configurations"""        configs = {}
+        """Initialize platform monetization configurations"""
+        configs = {}
         
         # Spotify Configuration
         configs["spotify"] = PlatformMonetizationConfig(
@@ -357,7 +367,8 @@ class MonetizationConfig:
         return configs
     
     def _initialize_licensing_tiers(self) -> Dict[str, LicensingTier]:
-        """Initialize licensing tier configurations"""        tiers = {}
+        """Initialize licensing tier configurations"""
+        tiers = {}
         
         # Personal Use License
         tiers["personal"] = LicensingTier(
@@ -436,7 +447,8 @@ class MonetizationConfig:
         return tiers
     
     def _initialize_revenue_rules(self) -> Dict[str, RevenueCalculationRule]:
-        """Initialize revenue calculation rules"""        rules = {}
+        """Initialize revenue calculation rules"""
+        rules = {}
         
         # Streaming Revenue Rule
         rules["streaming_base"] = RevenueCalculationRule(
@@ -485,7 +497,8 @@ class MonetizationConfig:
         return rules
     
     def _initialize_payment_processors(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize payment processor configurations"""        processors = {
+        """Initialize payment processor configurations"""
+        processors = {
             "stripe": {
                 "name": "Stripe",
                 "supported_currencies": ["USD", "EUR", "GBP", "CAD", "AUD"],
@@ -526,7 +539,8 @@ class MonetizationConfig:
         return processors
     
     def get_platform_config(self, platform_name: str) -> PlatformMonetizationConfig:
-        """Get monetization configuration for platform"""        platform_key = platform_name.lower()
+        """Get monetization configuration for platform"""
+        platform_key = platform_name.lower()
         
         if platform_key in self.custom_configs:
             return self.custom_configs[platform_key]
@@ -537,21 +551,24 @@ class MonetizationConfig:
             return self._get_default_platform_config()
     
     def get_licensing_tier(self, tier_id: str) -> LicensingTier:
-        """Get licensing tier configuration"""        if tier_id in self.licensing_tiers:
+        """Get licensing tier configuration"""
+        if tier_id in self.licensing_tiers:
             return self.licensing_tiers[tier_id]
         else:
             logger.warning(f"No licensing tier found: {tier_id}")
             return self._get_default_licensing_tier()
     
     def get_revenue_rule(self, rule_id: str) -> RevenueCalculationRule:
-        """Get revenue calculation rule"""        if rule_id in self.revenue_rules:
+        """Get revenue calculation rule"""
+        if rule_id in self.revenue_rules:
             return self.revenue_rules[rule_id]
         else:
             logger.warning(f"No revenue rule found: {rule_id}")
             return self._get_default_revenue_rule()
     
     def _get_default_platform_config(self) -> PlatformMonetizationConfig:
-        """Get default platform configuration"""        return PlatformMonetizationConfig(
+        """Get default platform configuration"""
+        return PlatformMonetizationConfig(
             platform_name="Default Platform",
             platform_category=PlatformCategory.MUSIC_STREAMING,
             monetization_types=[MonetizationType.STREAMING_ROYALTIES],
@@ -560,14 +577,17 @@ class MonetizationConfig:
         )
     
     def _get_default_licensing_tier(self) -> LicensingTier:
-        """Get default licensing tier"""        return self.licensing_tiers["standard_commercial"]
+        """Get default licensing tier"""
+        return self.licensing_tiers["standard_commercial"]
     
     def _get_default_revenue_rule(self) -> RevenueCalculationRule:
-        """Get default revenue calculation rule"""        return self.revenue_rules["streaming_base"]
+        """Get default revenue calculation rule"""
+        return self.revenue_rules["streaming_base"]
     
     def calculate_revenue(self, platform: str, content_id: str, 
                          usage_metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate revenue based on platform and usage metrics"""        platform_config = self.get_platform_config(platform)
+        """Calculate revenue based on platform and usage metrics"""
+        platform_config = self.get_platform_config(platform)
         
         total_gross_revenue = Decimal("0.00")
         revenue_breakdown = {}
@@ -613,7 +633,8 @@ class MonetizationConfig:
     
     def create_distribution_plan(self, content_id: str, 
                                stakeholders: Dict[str, Decimal]) -> RoyaltyDistributionConfig:
-        """Create royalty distribution configuration"""        distribution_id = str(uuid.uuid4())
+        """Create royalty distribution configuration"""
+        distribution_id = str(uuid.uuid4())
         
         # Validate that percentages add up to 100%
         total_percentage = sum(stakeholders.values())
@@ -630,7 +651,8 @@ class MonetizationConfig:
         )
     
     def get_multi_platform_strategy(self, platforms: List[str]) -> Dict[str, Any]:
-        """Get optimized monetization strategy for multiple platforms"""        platform_configs = [self.get_platform_config(platform) for platform in platforms]
+        """Get optimized monetization strategy for multiple platforms"""
+        platform_configs = [self.get_platform_config(platform) for platform in platforms]
         
         total_potential_revenue = Decimal("0.00")
         platform_analysis = {}
@@ -662,7 +684,8 @@ class MonetizationConfig:
         }
     
     def _calculate_platform_priority(self, config: PlatformMonetizationConfig) -> int:
-        """Calculate platform priority score (1-10)"""        score = 5  # Base score
+        """Calculate platform priority score (1-10)"""
+        score = 5  # Base score
         
         # Lower platform fees = higher priority
         if config.platform_fee_percentage < 20:
@@ -687,7 +710,8 @@ class MonetizationConfig:
         return min(max(score, 1), 10)  # Clamp between 1-10
     
     def _generate_monetization_recommendations(self, platform_configs: List[PlatformMonetizationConfig]) -> List[Dict[str, Any]]:
-        """Generate monetization strategy recommendations"""        recommendations = []
+        """Generate monetization strategy recommendations"""
+        recommendations = []
         
         # Recommendation 1: Platform diversification
         recommendations.append({
@@ -722,7 +746,8 @@ class MonetizationConfig:
 # Enhanced payment processor configurations
 @dataclass
 class PaymentProcessorConfig:
-    """Configuration for payment processors"""    processor_name: str
+    """Configuration for payment processors"""
+    processor_name: str
     processor_id: str
     
     # Integration settings
@@ -752,7 +777,8 @@ class PaymentProcessorConfig:
 
 @dataclass
 class RevenueTrackingConfig:
-    """Configuration for revenue tracking and analytics"""    
+    """Configuration for revenue tracking and analytics"""
+    
     # Tracking settings
     real_time_tracking: bool = True
     tracking_granularity: str = "per_play"  # "per_play", "per_hour", "per_day"
@@ -788,7 +814,8 @@ class RevenueTrackingConfig:
 
 @dataclass
 class LicensingConfig:
-    """Advanced licensing configuration"""    
+    """Advanced licensing configuration"""
+    
     # Licensing types
     enabled_licensing_types: List[str] = field(default_factory=lambda: [
         "sync_licensing",
@@ -826,7 +853,8 @@ class LicensingConfig:
 
 @dataclass 
 class AutomatedPayoutConfig:
-    """Configuration for automated payout systems"""    
+    """Configuration for automated payout systems"""
+    
     # Automation settings
     automation_enabled: bool = True
     auto_threshold_amount: Decimal = Decimal("10.00")
@@ -865,18 +893,21 @@ DEFAULT_AUTOMATED_PAYOUT_CONFIG = AutomatedPayoutConfig()
 
 
 def get_monetization_config() -> MonetizationConfig:
-    """Get default monetization configuration"""    return DEFAULT_MONETIZATION_CONFIG
+    """Get default monetization configuration"""
+    return DEFAULT_MONETIZATION_CONFIG
 
 
 def validate_monetization_config(config: MonetizationConfig) -> bool:
-    """    Validate monetization configuration
+    """
+    Validate monetization configuration
     
     Args:
         config: Configuration to validate
         
     Returns:
         True if configuration is valid, False otherwise
-    """    try:
+    """
+    try:
         # Validate platform configurations
         for platform_name, platform_config in config.platform_configs.items():
             # Check revenue share percentages sum to 100%
@@ -909,7 +940,8 @@ def calculate_estimated_revenue(
     config: MonetizationConfig,
     content_tier: str = "standard"
 ) -> Dict[str, Any]:
-    """    Calculate estimated revenue for content
+    """
+    Calculate estimated revenue for content
     
     Args:
         streams: Number of streams/plays
@@ -919,7 +951,8 @@ def calculate_estimated_revenue(
         
     Returns:
         Revenue calculation breakdown
-    """    try:
+    """
+    try:
         platform_config = config.get_platform_config(platform)
         if not platform_config:
             raise ValueError(f"Platform {platform} not configured")
@@ -950,7 +983,8 @@ def calculate_estimated_revenue(
         return min(10, max(1, score))
     
     def _generate_monetization_recommendations(self, configs: List[PlatformMonetizationConfig]) -> List[str]:
-        """Generate monetization strategy recommendations"""        recommendations = []
+        """Generate monetization strategy recommendations"""
+        recommendations = []
         
         # Find best platform for each monetization type
         streaming_platforms = [c for c in configs if MonetizationType.STREAMING_ROYALTIES in c.monetization_types]
@@ -975,10 +1009,13 @@ monetization_config = MonetizationConfig()
 
 # Export commonly used functions
 def get_platform_config(platform_name: str) -> PlatformMonetizationConfig:
-    """Get platform monetization configuration"""    return monetization_config.get_platform_config(platform_name)
+    """Get platform monetization configuration"""
+    return monetization_config.get_platform_config(platform_name)
 
 def calculate_revenue(platform: str, content_id: str, usage_metrics: Dict[str, Any]) -> Dict[str, Any]:
-    """Calculate revenue for content on platform"""    return monetization_config.calculate_revenue(platform, content_id, usage_metrics)
+    """Calculate revenue for content on platform"""
+    return monetization_config.calculate_revenue(platform, content_id, usage_metrics)
 
 def get_multi_platform_strategy(platforms: List[str]) -> Dict[str, Any]:
-    """Get multi-platform monetization strategy"""    return monetization_config.get_multi_platform_strategy(platforms)
+    """Get multi-platform monetization strategy"""
+    return monetization_config.get_multi_platform_strategy(platforms)

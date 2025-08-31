@@ -16,7 +16,8 @@ Configuration Areas:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
-"""import os
+"""
+import os
 import yaml
 import json
 from typing import Dict, List, Optional, Any, Union
@@ -26,14 +27,16 @@ from pathlib import Path
 
 
 class EnvironmentType(Enum):
-    """Deployment environment types"""    DEVELOPMENT = "development"
+    """Deployment environment types"""
+    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 
 class MonitoringProfile(Enum):
-    """Monitoring profiles for different use cases"""    MINIMAL = "minimal"           # Resource-constrained environments
+    """Monitoring profiles for different use cases"""
+    MINIMAL = "minimal"           # Resource-constrained environments
     STANDARD = "standard"         # Balanced monitoring for general use
     ADVANCED = "advanced"         # Enhanced monitoring with AI analytics
     ENTERPRISE = "enterprise"     # Complete monitoring with all features
@@ -42,7 +45,8 @@ class MonitoringProfile(Enum):
 
 @dataclass
 class RedisConfiguration:
-    """Redis configuration for monitoring data storage"""    host: str = "localhost"
+    """Redis configuration for monitoring data storage"""
+    host: str = "localhost"
     port: int = 6379
     password: Optional[str] = None
     db: int = 0
@@ -54,7 +58,8 @@ class RedisConfiguration:
     
 @dataclass
 class DatabaseConfiguration:
-    """Database configuration for persistent monitoring data"""    host: str = "localhost"
+    """Database configuration for persistent monitoring data"""
+    host: str = "localhost"
     port: int = 5432
     database: str = "ia_influencer_monitoring"
     username: str = "monitoring_user"
@@ -67,7 +72,8 @@ class DatabaseConfiguration:
     
 @dataclass
 class AlertingConfiguration:
-    """Alerting and notification configuration"""    # Email settings
+    """Alerting and notification configuration"""
+    # Email settings
     smtp_host: str = "smtp.gmail.com"
     smtp_port: int = 587
     smtp_username: Optional[str] = None
@@ -98,7 +104,8 @@ class AlertingConfiguration:
 
 @dataclass
 class AIFingerprintingConfiguration:
-    """AI fingerprinting monitoring configuration"""    # Performance thresholds
+    """AI fingerprinting monitoring configuration"""
+    # Performance thresholds
     accuracy_threshold_warning: float = 0.85
     accuracy_threshold_critical: float = 0.75
     inference_time_threshold_ms: float = 2000.0
@@ -128,7 +135,8 @@ class AIFingerprintingConfiguration:
 
 @dataclass
 class RevenueMonitoringConfiguration:
-    """Revenue monitoring configuration"""    # Revenue thresholds
+    """Revenue monitoring configuration"""
+    # Revenue thresholds
     high_value_transaction_threshold: float = 10000.0
     anomaly_spike_multiplier: float = 5.0
     revenue_decline_threshold: float = -20.0
@@ -158,7 +166,8 @@ class RevenueMonitoringConfiguration:
 
 @dataclass
 class SecurityMonitoringConfiguration:
-    """Security monitoring configuration"""    # Threat detection
+    """Security monitoring configuration"""
+    # Threat detection
     real_time_threat_detection: bool = True
     behavioral_analysis_enabled: bool = True
     geo_ip_analysis_enabled: bool = True
@@ -181,7 +190,8 @@ class SecurityMonitoringConfiguration:
 
 @dataclass
 class BusinessIntelligenceConfiguration:
-    """Business intelligence configuration"""    # Analytics processing
+    """Business intelligence configuration"""
+    # Analytics processing
     real_time_analytics_enabled: bool = True
     predictive_analytics_enabled: bool = True
     anomaly_detection_enabled: bool = True
@@ -205,7 +215,8 @@ class BusinessIntelligenceConfiguration:
 
 @dataclass
 class DashboardConfiguration:
-    """Dashboard and UI configuration"""    # Server settings
+    """Dashboard and UI configuration"""
+    # Server settings
     port: int = 8080
     host: str = "0.0.0.0"
     debug_mode: bool = False
@@ -228,7 +239,8 @@ class DashboardConfiguration:
 
 @dataclass
 class PerformanceConfiguration:
-    """Performance and optimization configuration"""    # Data collection
+    """Performance and optimization configuration"""
+    # Data collection
     metrics_collection_interval: int = 30
     high_frequency_metrics_interval: int = 5
     batch_processing_size: int = 1000
@@ -250,11 +262,13 @@ class PerformanceConfiguration:
 
 
 class MonitoringConfigurationManager:
-    """    Comprehensive configuration manager for IA Influencer Agent monitoring system.
+    """
+    Comprehensive configuration manager for IA Influencer Agent monitoring system.
     
     Provides environment-specific configurations, performance tuning,
     and runtime configuration management.
-    """    
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path or os.getenv("MONITORING_CONFIG_PATH", "config/monitoring.yaml")
         self.environment = EnvironmentType(os.getenv("ENVIRONMENT", "development"))
@@ -271,7 +285,8 @@ class MonitoringConfigurationManager:
         self._config: Dict[str, Any] = {}
         
     def load_configuration(self) -> Dict[str, Any]:
-        """Load configuration from file or environment defaults"""        
+        """Load configuration from file or environment defaults"""
+        
         # Load from file if exists
         config_file = Path(self.config_path)
         if config_file.exists():
@@ -288,7 +303,8 @@ class MonitoringConfigurationManager:
         return self._config
     
     def _load_from_file(self, config_file: Path) -> Dict[str, Any]:
-        """Load configuration from YAML file"""        try:
+        """Load configuration from YAML file"""
+        try:
             with open(config_file, 'r') as f:
                 if config_file.suffix.lower() == '.yaml' or config_file.suffix.lower() == '.yml':
                     return yaml.safe_load(f)
@@ -300,7 +316,8 @@ class MonitoringConfigurationManager:
             raise RuntimeError(f"Failed to load configuration from {config_file}: {e}")
     
     def _apply_environment_overrides(self):
-        """Apply environment variable overrides"""        
+        """Apply environment variable overrides"""
+        
         env_mappings = {
             # Redis overrides
             "REDIS_HOST": ("redis", "host"),
@@ -346,7 +363,8 @@ class MonitoringConfigurationManager:
                 self._config[section][key] = value
     
     def _validate_configuration(self):
-        """Validate configuration completeness and correctness"""        
+        """Validate configuration completeness and correctness"""
+        
         required_sections = ["redis", "database", "alerting", "performance"]
         
         for section in required_sections:
@@ -369,7 +387,8 @@ class MonitoringConfigurationManager:
             raise ValueError("Metrics collection interval must be at least 1 second")
     
     def _get_development_config(self) -> Dict[str, Any]:
-        """Get development environment configuration"""        return {
+        """Get development environment configuration"""
+        return {
             "profile": MonitoringProfile.STANDARD.value,
             "redis": {
                 "host": "localhost",
@@ -422,7 +441,8 @@ class MonitoringConfigurationManager:
         }
     
     def _get_staging_config(self) -> Dict[str, Any]:
-        """Get staging environment configuration"""        return {
+        """Get staging environment configuration"""
+        return {
             "profile": MonitoringProfile.ADVANCED.value,
             "redis": {
                 "host": "redis-staging",
@@ -478,7 +498,8 @@ class MonitoringConfigurationManager:
         }
     
     def _get_production_config(self) -> Dict[str, Any]:
-        """Get production environment configuration"""        return {
+        """Get production environment configuration"""
+        return {
             "profile": MonitoringProfile.ENTERPRISE.value,
             "redis": {
                 "host": "redis-prod-cluster",
@@ -552,7 +573,8 @@ class MonitoringConfigurationManager:
         }
     
     def _get_testing_config(self) -> Dict[str, Any]:
-        """Get testing environment configuration"""        return {
+        """Get testing environment configuration"""
+        return {
             "profile": MonitoringProfile.MINIMAL.value,
             "redis": {
                 "host": "localhost",
@@ -602,43 +624,53 @@ class MonitoringConfigurationManager:
         }
     
     def get_redis_config(self) -> RedisConfiguration:
-        """Get Redis configuration object"""        redis_config = self._config.get("redis", {})
+        """Get Redis configuration object"""
+        redis_config = self._config.get("redis", {})
         return RedisConfiguration(**redis_config)
     
     def get_database_config(self) -> DatabaseConfiguration:
-        """Get database configuration object"""        db_config = self._config.get("database", {})
+        """Get database configuration object"""
+        db_config = self._config.get("database", {})
         return DatabaseConfiguration(**db_config)
     
     def get_alerting_config(self) -> AlertingConfiguration:
-        """Get alerting configuration object"""        alerting_config = self._config.get("alerting", {})
+        """Get alerting configuration object"""
+        alerting_config = self._config.get("alerting", {})
         return AlertingConfiguration(**alerting_config)
     
     def get_ai_fingerprinting_config(self) -> AIFingerprintingConfiguration:
-        """Get AI fingerprinting configuration object"""        ai_config = self._config.get("ai_fingerprinting", {})
+        """Get AI fingerprinting configuration object"""
+        ai_config = self._config.get("ai_fingerprinting", {})
         return AIFingerprintingConfiguration(**ai_config)
     
     def get_revenue_monitoring_config(self) -> RevenueMonitoringConfiguration:
-        """Get revenue monitoring configuration object"""        revenue_config = self._config.get("revenue_monitoring", {})
+        """Get revenue monitoring configuration object"""
+        revenue_config = self._config.get("revenue_monitoring", {})
         return RevenueMonitoringConfiguration(**revenue_config)
     
     def get_security_monitoring_config(self) -> SecurityMonitoringConfiguration:
-        """Get security monitoring configuration object"""        security_config = self._config.get("security_monitoring", {})
+        """Get security monitoring configuration object"""
+        security_config = self._config.get("security_monitoring", {})
         return SecurityMonitoringConfiguration(**security_config)
     
     def get_business_intelligence_config(self) -> BusinessIntelligenceConfiguration:
-        """Get business intelligence configuration object"""        bi_config = self._config.get("business_intelligence", {})
+        """Get business intelligence configuration object"""
+        bi_config = self._config.get("business_intelligence", {})
         return BusinessIntelligenceConfiguration(**bi_config)
     
     def get_dashboard_config(self) -> DashboardConfiguration:
-        """Get dashboard configuration object"""        dashboard_config = self._config.get("dashboard", {})
+        """Get dashboard configuration object"""
+        dashboard_config = self._config.get("dashboard", {})
         return DashboardConfiguration(**dashboard_config)
     
     def get_performance_config(self) -> PerformanceConfiguration:
-        """Get performance configuration object"""        perf_config = self._config.get("performance", {})
+        """Get performance configuration object"""
+        perf_config = self._config.get("performance", {})
         return PerformanceConfiguration(**perf_config)
     
     def save_configuration(self, output_path: Optional[str] = None):
-        """Save current configuration to file"""        output_file = Path(output_path or self.config_path)
+        """Save current configuration to file"""
+        output_file = Path(output_path or self.config_path)
         
         try:
             output_file.parent.mkdir(parents=True, exist_ok=True)
@@ -655,10 +687,12 @@ class MonitoringConfigurationManager:
             raise RuntimeError(f"Failed to save configuration to {output_file}: {e}")
     
     def get_full_config(self) -> Dict[str, Any]:
-        """Get complete configuration dictionary"""        return self._config.copy()
+        """Get complete configuration dictionary"""
+        return self._config.copy()
     
     def update_config(self, updates: Dict[str, Any]):
-        """Update configuration with new values"""        def deep_update(base_dict: Dict, update_dict: Dict):
+        """Update configuration with new values"""
+        def deep_update(base_dict: Dict, update_dict: Dict):
             for key, value in update_dict.items():
                 if isinstance(value, dict) and key in base_dict and isinstance(base_dict[key], dict):
                     deep_update(base_dict[key], value)
@@ -671,7 +705,8 @@ class MonitoringConfigurationManager:
 
 # Convenience function for quick configuration loading
 def load_monitoring_config(config_path: Optional[str] = None) -> MonitoringConfigurationManager:
-    """Load monitoring configuration for current environment"""    config_manager = MonitoringConfigurationManager(config_path)
+    """Load monitoring configuration for current environment"""
+    config_manager = MonitoringConfigurationManager(config_path)
     config_manager.load_configuration()
     return config_manager
 

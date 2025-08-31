@@ -18,7 +18,8 @@ Development Team Specialties:
 - DevOps Engineer
 - AI Prompt Engineering Specialist
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -42,9 +43,11 @@ logger = logging.getLogger(__name__)
 
 
 class ContractEngine:
-    """    Advanced contract generation and management engine for partnerships.
+    """
+    Advanced contract generation and management engine for partnerships.
     Handles legal document creation, template management, and contract lifecycle.
-    """    def __init__(self, templates_path: Optional[str] = None):
+    """
+    def __init__(self, templates_path: Optional[str] = None):
         self.templates_path = templates_path or "./contract_templates"
         self.template_env = Environment(
             loader=FileSystemLoader(self.templates_path),
@@ -67,7 +70,8 @@ class ContractEngine:
         partnership: Partnership,
         contract_terms: Dict[str, Any]
     ) -> Contract:
-        """Generate comprehensive partnership contract"""        try:
+        """Generate comprehensive partnership contract"""
+        try:
             # Determine contract type based on partnership
             contract_type = self._determine_contract_type(partnership, contract_terms)
             
@@ -106,7 +110,8 @@ class ContractEngine:
         contract: Contract,
         validation_rules: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Validate contract terms for legal compliance"""        try:
+        """Validate contract terms for legal compliance"""
+        try:
             validation_result = {
                 'is_valid': True,
                 'warnings': [],
@@ -150,7 +155,8 @@ class ContractEngine:
         amendments: Dict[str, Any],
         amended_by: str
     ) -> Contract:
-        """Create contract amendment with version control"""        try:
+        """Create contract amendment with version control"""
+        try:
             # Validate amendment permissions
             if not await self._validate_amendment_permissions(contract, amended_by):
                 raise ContractError("Insufficient permissions to amend contract")
@@ -197,7 +203,8 @@ class ContractEngine:
         creator_signature: Dict[str, Any],
         partner_signature: Dict[str, Any]
     ) -> Contract:
-        """Execute contract with digital signatures"""        try:
+        """Execute contract with digital signatures"""
+        try:
             # Validate signatures
             creator_validation = await self._validate_signature(creator_signature)
             partner_validation = await self._validate_signature(partner_signature)
@@ -237,7 +244,8 @@ class ContractEngine:
             raise ContractError(f"Failed to execute contract: {str(e)}")
 
     async def generate_contract_summary(self, contract: Contract) -> Dict[str, Any]:
-        """Generate executive summary of contract terms"""        try:
+        """Generate executive summary of contract terms"""
+        try:
             summary = {
                 'contract_overview': {
                     'contract_id': contract.contract_id,
@@ -282,7 +290,8 @@ class ContractEngine:
         partnership: Partnership,
         contract_terms: Dict[str, Any]
     ) -> ContractType:
-        """Determine optimal contract type based on partnership"""        if partnership.revenue_model == RevenueModel.PERCENTAGE_SPLIT:
+        """Determine optimal contract type based on partnership"""
+        if partnership.revenue_model == RevenueModel.PERCENTAGE_SPLIT:
             return ContractType.REVENUE_SHARE
         elif partnership.revenue_model == RevenueModel.FLAT_RATE:
             return ContractType.FLAT_FEE
@@ -299,7 +308,8 @@ class ContractEngine:
         contract_terms: Dict[str, Any],
         contract_type: ContractType
     ) -> List[ContractTerm]:
-        """Generate comprehensive contract terms"""        terms = []
+        """Generate comprehensive contract terms"""
+        terms = []
 
         # Core partnership terms
         terms.append(ContractTerm(
@@ -372,7 +382,8 @@ class ContractEngine:
         partnership: Partnership,
         contract_terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate comprehensive payment terms"""        return {
+        """Generate comprehensive payment terms"""
+        return {
             'payment_schedule': contract_terms.get('payment_schedule', 'monthly'),
             'payment_method': contract_terms.get('payment_method', 'bank_transfer'),
             'payment_currency': contract_terms.get('payment_currency', 'USD'),
@@ -392,7 +403,8 @@ class ContractEngine:
         partnership: Partnership,
         contract_terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate intellectual property terms"""        return {
+        """Generate intellectual property terms"""
+        return {
             'content_ownership': 'Creator retains full ownership',
             'usage_rights': {
                 'partner_usage_scope': contract_terms.get('usage_scope', 'promotional_only'),
@@ -413,7 +425,8 @@ class ContractEngine:
         }
 
     def _generate_termination_clauses(self, contract_terms: Dict[str, Any]) -> List[str]:
-        """Generate contract termination clauses"""        return [
+        """Generate contract termination clauses"""
+        return [
             f"Either party may terminate with {contract_terms.get('termination_notice', 30)} days written notice",
             "Immediate termination for material breach if not cured within 10 days",
             "Termination for insolvency, bankruptcy, or assignment for benefit of creditors",
@@ -430,7 +443,8 @@ class ContractEngine:
         partnership: Partnership,
         contract_terms: Dict[str, Any]
     ) -> str:
-        """Generate formatted contract document"""        try:
+        """Generate formatted contract document"""
+        try:
             template = self.template_env.get_template(
                 self.contract_templates.get(
                     contract.contract_type,
@@ -460,7 +474,8 @@ class ContractEngine:
             raise ContractError(f"Failed to generate document: {str(e)}")
 
     async def _perform_compliance_checks(self, contract: Contract) -> Dict[str, Any]:
-        """Perform legal compliance checks"""        checks = {
+        """Perform legal compliance checks"""
+        checks = {
             'warnings': [],
             'errors': []
         }
@@ -484,7 +499,8 @@ class ContractEngine:
         return checks
 
     async def _validate_business_terms(self, contract: Contract) -> Dict[str, Any]:
-        """Validate business logic in contract terms"""        validation = {
+        """Validate business logic in contract terms"""
+        validation = {
             'warnings': [],
             'errors': []
         }
@@ -505,7 +521,8 @@ class ContractEngine:
         return validation
 
     async def _assess_contract_risks(self, contract: Contract) -> Dict[str, Any]:
-        """Assess legal and business risks in contract"""        risk_factors = []
+        """Assess legal and business risks in contract"""
+        risk_factors = []
         risk_score = 0.0
 
         # High commission rate risk
@@ -544,7 +561,8 @@ class ContractEngine:
         }
 
     async def _calculate_compliance_score(self, validation_result: Dict[str, Any]) -> float:
-        """Calculate overall compliance score"""        base_score = 1.0
+        """Calculate overall compliance score"""
+        base_score = 1.0
         
         # Deduct for errors and warnings
         error_penalty = len(validation_result.get('errors', [])) * 0.2
@@ -554,11 +572,13 @@ class ContractEngine:
         return compliance_score
 
     async def _validate_amendment_permissions(self, contract: Contract, amended_by: str) -> bool:
-        """Validate permissions to amend contract"""        # In production, this would check user permissions
+        """Validate permissions to amend contract"""
+        # In production, this would check user permissions
         return True
 
     async def _requires_legal_review(self, amendments: Dict[str, Any]) -> bool:
-        """Determine if amendments require legal review"""        high_risk_changes = [
+        """Determine if amendments require legal review"""
+        high_risk_changes = [
             'commission_rate', 'exclusivity_clause', 'termination_terms',
             'intellectual_property', 'liability_limitations'
         ]
@@ -566,7 +586,8 @@ class ContractEngine:
         return any(key in amendments for key in high_risk_changes)
 
     async def _apply_amendments(self, contract: Contract, amendments: Dict[str, Any]):
-        """Apply amendments to contract terms"""        for amendment_key, amendment_value in amendments.items():
+        """Apply amendments to contract terms"""
+        for amendment_key, amendment_value in amendments.items():
             # Find existing term and update
             existing_term = next(
                 (term for term in contract.terms_and_conditions 
@@ -588,25 +609,30 @@ class ContractEngine:
                 contract.terms_and_conditions.append(new_term)
 
     async def _regenerate_contract_document(self, contract: Contract) -> str:
-        """Regenerate contract document after amendments"""        # Implementation would regenerate PDF with amendments
+        """Regenerate contract document after amendments"""
+        # Implementation would regenerate PDF with amendments
         return f"/contracts/{contract.contract_id}_v{contract.contract_version}.pdf"
 
     async def _validate_signature(self, signature: Dict[str, Any]) -> Dict[str, bool]:
-        """Validate digital signature"""        # In production, this would validate actual digital signatures
+        """Validate digital signature"""
+        # In production, this would validate actual digital signatures
         required_fields = ['signer_name', 'signature_date', 'ip_address', 'signature_hash']
         
         valid = all(field in signature for field in required_fields)
         return {'valid': valid}
 
     async def _generate_executed_contract_document(self, contract: Contract) -> str:
-        """Generate final executed contract document"""        return f"/contracts/{contract.contract_id}_executed.pdf"
+        """Generate final executed contract document"""
+        return f"/contracts/{contract.contract_id}_executed.pdf"
 
     async def _notify_contract_execution(self, contract: Contract):
-        """Notify stakeholders of contract execution"""        # Implementation would send notifications
+        """Notify stakeholders of contract execution"""
+        # Implementation would send notifications
         self.logger.info(f"Contract execution notifications sent: {contract.contract_id}")
 
     async def _extract_obligations(self, contract: Contract) -> Dict[str, List[str]]:
-        """Extract obligations from contract terms"""        return {
+        """Extract obligations from contract terms"""
+        return {
             'creator_obligations': [
                 'Deliver agreed content according to schedule',
                 'Maintain brand safety standards',
@@ -620,7 +646,8 @@ class ContractEngine:
         }
 
     async def _identify_contract_risks(self, contract: Contract) -> List[str]:
-        """Identify potential risks in contract"""        return [
+        """Identify potential risks in contract"""
+        return [
             'Payment delay risks due to complex approval processes',
             'Performance metric disputes without clear measurement criteria',
             'IP usage scope may be too broad for partner'

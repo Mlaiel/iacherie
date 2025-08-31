@@ -15,7 +15,8 @@ AVERTISSEMENT LÉGAL:
 Ce code est la propriété exclusive de Fahed Mlaiel. Toute utilisation,
 reproduction, modification ou distribution non autorisée est strictement
 interdite et fera l'objet de poursuites judiciaires.
-"""from typing import Dict, List, Optional, Any, Union, BinaryIO, Generator
+"""
+from typing import Dict, List, Optional, Any, Union, BinaryIO, Generator
 import logging
 import asyncio
 import aiofiles
@@ -37,14 +38,16 @@ from concurrent.futures import ThreadPoolExecutor
 logger = logging.getLogger(__name__)
 
 class LocalStorageTier(Enum):
-    """Local storage tiers for performance optimization"""    SSD_HOT = "ssd_hot"        # SSD for frequently accessed files
+    """Local storage tiers for performance optimization"""
+    SSD_HOT = "ssd_hot"        # SSD for frequently accessed files
     SSD_WARM = "ssd_warm"      # SSD for moderate access
     HDD_COLD = "hdd_cold"      # HDD for infrequent access
     ARCHIVE = "archive"        # Compressed archive storage
 
 @dataclass
 class LocalStorageConfig:
-    """Local storage configuration"""    base_path: str
+    """Local storage configuration"""
+    base_path: str
     max_file_size: int = 10 * 1024 * 1024 * 1024  # 10GB
     enable_compression: bool = True
     enable_encryption: bool = True
@@ -66,7 +69,8 @@ class LocalStorageConfig:
     enable_deduplication: bool = True
 
 class LocalStorageManager:
-    """    Enterprise local storage manager for IA Influencer Agent platform.
+    """
+    Enterprise local storage manager for IA Influencer Agent platform.
     
     Features:
     - Multi-tier storage (SSD/HDD optimization)
@@ -75,9 +79,11 @@ class LocalStorageManager:
     - Built-in compression and encryption
     - Automatic cleanup and maintenance
     - File indexing and search capabilities
-    """    
+    """
+    
     def __init__(self, config: LocalStorageConfig):
-        """Initialize local storage manager"""        self.config = config
+        """Initialize local storage manager"""
+        self.config = config
         self.base_path = Path(config.base_path)
         self.executor = ThreadPoolExecutor(max_workers=config.max_concurrent_operations)
         
@@ -108,7 +114,8 @@ class LocalStorageManager:
         logger.info(f"LocalStorageManager initialized at {self.base_path}")
     
     def _initialize_storage(self) -> None:
-        """Initialize storage directory structure"""        try:
+        """Initialize storage directory structure"""
+        try:
             # Create base directory
             self.base_path.mkdir(parents=True, exist_ok=True)
             
@@ -142,7 +149,8 @@ class LocalStorageManager:
         tier: Optional[LocalStorageTier] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Store file in local storage with intelligent organization.
+        """
+        Store file in local storage with intelligent organization.
         
         Business Logic:
         1. Determine optimal storage tier based on content type and metadata
@@ -150,7 +158,8 @@ class LocalStorageManager:
         3. Apply compression for large files
         4. Generate checksums for integrity verification
         5. Update file index for fast lookups
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Validate input
@@ -238,7 +247,8 @@ class LocalStorageManager:
         file_id: str,
         output_path: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Retrieve file by ID with optional output path"""        start_time = time.time()
+        """Retrieve file by ID with optional output path"""
+        start_time = time.time()
         
         try:
             # Look up file in index
@@ -301,7 +311,8 @@ class LocalStorageManager:
             }
     
     async def delete_file(self, file_id: str) -> Dict[str, Any]:
-        """Delete file from storage"""        try:
+        """Delete file from storage"""
+        try:
             # Look up file in index
             file_metadata = await self._get_file_metadata(file_id)
             if not file_metadata:
@@ -347,7 +358,8 @@ class LocalStorageManager:
         limit: int = 100,
         offset: int = 0
     ) -> List[Dict[str, Any]]:
-        """List files with optional filtering"""        try:
+        """List files with optional filtering"""
+        try:
             files = []
             
             with self.index_lock:
@@ -376,7 +388,8 @@ class LocalStorageManager:
         content_type: Optional[str] = None,
         limit: int = 50
     ) -> List[Dict[str, Any]]:
-        """Search files by filename or metadata"""        try:
+        """Search files by filename or metadata"""
+        try:
             results = []
             query_lower = query.lower()
             
@@ -410,7 +423,8 @@ class LocalStorageManager:
             return []
     
     async def get_storage_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive storage statistics"""        try:
+        """Get comprehensive storage statistics"""
+        try:
             # Calculate tier usage
             tier_usage = {}
             for tier_name, tier_path in self.config.tier_paths.items():
@@ -451,7 +465,8 @@ class LocalStorageManager:
             return {}
     
     async def cleanup_storage(self, max_age_days: Optional[int] = None) -> Dict[str, Any]:
-        """Clean up old and unused files"""        try:
+        """Clean up old and unused files"""
+        try:
             max_age = max_age_days or self.config.cleanup_threshold_days
             cutoff_date = datetime.now() - timedelta(days=max_age)
             
@@ -502,7 +517,8 @@ class LocalStorageManager:
     # Private helper methods
     
     async def _prepare_content(self, content: Union[bytes, str, BinaryIO]) -> bytes:
-        """Prepare content for storage"""        if isinstance(content, bytes):
+        """Prepare content for storage"""
+        if isinstance(content, bytes):
             return content
         elif isinstance(content, str):
             return content.encode('utf-8')
@@ -520,7 +536,8 @@ class LocalStorageManager:
         file_size: int,
         metadata: Optional[Dict[str, Any]]
     ) -> LocalStorageTier:
-        """Determine optimal storage tier based on content characteristics"""        
+        """Determine optimal storage tier based on content characteristics"""
+        
         # High-priority content types (fingerprints, embeddings) go to SSD
         if content_type in ['fingerprint', 'embedding', 'model']:
             return LocalStorageTier.SSD_HOT
@@ -550,7 +567,8 @@ class LocalStorageManager:
         content_type: str,
         tier: LocalStorageTier
     ) -> Path:
-        """Generate organized storage path"""        
+        """Generate organized storage path"""
+        
         # Get tier base path
         tier_path = self.config.tier_paths.get(tier.value, self.config.tier_paths['ssd_warm'])
         base_tier_path = self.base_path / tier_path.lstrip('/')
@@ -576,7 +594,8 @@ class LocalStorageManager:
         return date_dir / filename
     
     async def _process_content(self, content: bytes, content_type: str) -> bytes:
-        """Process content with compression and encryption"""        processed_content = content
+        """Process content with compression and encryption"""
+        processed_content = content
         
         # Apply compression if enabled and beneficial
         if self.config.enable_compression:
@@ -596,7 +615,8 @@ class LocalStorageManager:
         return processed_content
     
     async def _unprocess_content(self, content: bytes, metadata: Dict[str, Any]) -> bytes:
-        """Reverse processing (decompression, decryption)"""        processed_content = content
+        """Reverse processing (decompression, decryption)"""
+        processed_content = content
         
         # Decrypt if encrypted
         if metadata.get('encrypted', False):
@@ -612,7 +632,8 @@ class LocalStorageManager:
         return processed_content
     
     async def _update_file_index(self, file_id: str, metadata: Dict[str, Any]) -> None:
-        """Update file index with new entry"""        with self.index_lock:
+        """Update file index with new entry"""
+        with self.index_lock:
             self.file_index[file_id] = metadata
         
         # Periodically save index to disk
@@ -620,24 +641,28 @@ class LocalStorageManager:
             await self._save_file_index()
     
     async def _get_file_metadata(self, file_id: str) -> Optional[Dict[str, Any]]:
-        """Get file metadata from index"""        with self.index_lock:
+        """Get file metadata from index"""
+        with self.index_lock:
             return self.file_index.get(file_id)
     
     async def _update_access_stats(self, file_id: str) -> None:
-        """Update file access statistics"""        with self.index_lock:
+        """Update file access statistics"""
+        with self.index_lock:
             if file_id in self.file_index:
                 self.file_index[file_id]['last_accessed'] = datetime.now().isoformat()
                 self.file_index[file_id]['access_count'] = self.file_index[file_id].get('access_count', 0) + 1
     
     async def _remove_from_index(self, file_id: str) -> None:
-        """Remove file from index"""        with self.index_lock:
+        """Remove file from index"""
+        with self.index_lock:
             if file_id in self.file_index:
                 del self.file_index[file_id]
         
         await self._save_file_index()
     
     async def _load_file_index(self) -> None:
-        """Load file index from disk"""        index_file = self.base_path / '.index' / 'file_index.json'
+        """Load file index from disk"""
+        index_file = self.base_path / '.index' / 'file_index.json'
         
         try:
             if index_file.exists():
@@ -654,7 +679,8 @@ class LocalStorageManager:
             self.file_index = {}
     
     async def _save_file_index(self) -> None:
-        """Save file index to disk"""        index_file = self.base_path / '.index' / 'file_index.json'
+        """Save file index to disk"""
+        index_file = self.base_path / '.index' / 'file_index.json'
         
         try:
             index_file.parent.mkdir(parents=True, exist_ok=True)
@@ -666,7 +692,8 @@ class LocalStorageManager:
             logger.error(f"Failed to save file index: {str(e)}")
     
     def _calculate_relevance(self, query: str, metadata: Dict[str, Any]) -> float:
-        """Calculate search relevance score"""        score = 0.0
+        """Calculate search relevance score"""
+        score = 0.0
         
         # Filename match
         original_path = metadata.get('original_path', '').lower()
@@ -695,7 +722,8 @@ class LocalStorageManager:
         return score
     
     def _start_cleanup_scheduler(self) -> None:
-        """Start background cleanup scheduler"""        def cleanup_worker():
+        """Start background cleanup scheduler"""
+        def cleanup_worker():
             while True:
                 try:
                     # Run cleanup every 24 hours
@@ -709,7 +737,8 @@ class LocalStorageManager:
         cleanup_thread.start()
 
 class AsyncLocalStorageManager:
-    """Async wrapper for high-performance concurrent operations"""    
+    """Async wrapper for high-performance concurrent operations"""
+    
     def __init__(self, config: LocalStorageConfig):
         self.sync_manager = LocalStorageManager(config)
         self.semaphore = asyncio.Semaphore(config.max_concurrent_operations)
@@ -718,7 +747,8 @@ class AsyncLocalStorageManager:
         self,
         files: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Store multiple files concurrently"""        
+        """Store multiple files concurrently"""
+        
         async def store_single(file_info):
             async with self.semaphore:
                 return await self.sync_manager.store_file(
@@ -741,7 +771,8 @@ class AsyncLocalStorageManager:
         self,
         file_ids: List[str]
     ) -> List[Dict[str, Any]]:
-        """Retrieve multiple files concurrently"""        
+        """Retrieve multiple files concurrently"""
+        
         async def retrieve_single(file_id):
             async with self.semaphore:
                 return await self.sync_manager.retrieve_file(file_id)

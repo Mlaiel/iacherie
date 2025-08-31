@@ -8,7 +8,8 @@ License: Proprietary - All rights reserved
 WARNING: This code is proprietary and protected by copyright.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Contact: Fahed Mlaiel (mlaiel@live.de) for licensing agreements.
-"""import os
+"""
+import os
 import hashlib
 import mimetypes
 import asyncio
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioMetadata:
-    """Container for comprehensive audio metadata."""    
+    """Container for comprehensive audio metadata."""
+    
     filename: str
     file_path: Optional[str] = None
     file_size_bytes: int = 0
@@ -57,11 +59,14 @@ class AudioMetadata:
 
 
 class FileValidator:
-    """    Advanced file validation and security checking.
+    """
+    Advanced file validation and security checking.
     Ensures safe processing of uploaded audio files.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the file validator."""        self.config = config or self._default_config()
+        """Initialize the file validator."""
+        self.config = config or self._default_config()
         
         # Supported MIME types
         self.supported_mime_types = {
@@ -79,7 +84,8 @@ class FileValidator:
         logger.debug("FileValidator initialized")
     
     def _default_config(self) -> Dict:
-        """Default validation configuration."""        return {
+        """Default validation configuration."""
+        return {
             'max_file_size_mb': 100.0,
             'min_file_size_bytes': 1024,  # 1KB minimum
             'max_duration_seconds': 1800,  # 30 minutes
@@ -91,14 +97,16 @@ class FileValidator:
         }
     
     async def validate_file(self, file_path: str) -> Tuple[bool, List[str], Optional[AudioMetadata]]:
-        """        Comprehensive file validation.
+        """
+        Comprehensive file validation.
         
         Args:
             file_path: Path to the audio file
             
         Returns:
             Tuple of (is_valid, error_messages, metadata)
-        """        errors = []
+        """
+        errors = []
         metadata = None
         
         try:
@@ -170,7 +178,8 @@ class FileValidator:
             return False, errors, None
     
     async def _extract_audio_metadata(self, file_path: str) -> AudioMetadata:
-        """Extract comprehensive audio metadata."""        loop = asyncio.get_event_loop()
+        """Extract comprehensive audio metadata."""
+        loop = asyncio.get_event_loop()
         
         def _extract_sync():
             # Use librosa to get audio properties
@@ -216,7 +225,8 @@ class FileValidator:
         return await loop.run_in_executor(None, _extract_sync)
     
     def _calculate_file_hash(self, file_path: str, algorithm: str = 'sha256') -> str:
-        """Calculate file hash using specified algorithm."""        hash_obj = hashlib.new(algorithm)
+        """Calculate file hash using specified algorithm."""
+        hash_obj = hashlib.new(algorithm)
         
         with open(file_path, 'rb') as f:
             for chunk in iter(lambda: f.read(8192), b''):
@@ -225,7 +235,8 @@ class FileValidator:
         return hash_obj.hexdigest()
     
     async def _scan_for_security_issues(self, file_path: str) -> List[str]:
-        """Basic security scanning for malicious content."""        issues = []
+        """Basic security scanning for malicious content."""
+        issues = []
         
         try:
             # Check for embedded scripts or executables in metadata
@@ -254,14 +265,18 @@ class FileValidator:
 
 
 class DataSerializer:
-    """    Advanced data serialization utilities for fingerprinting data.
+    """
+    Advanced data serialization utilities for fingerprinting data.
     Handles compression, encoding, and secure data transformation.
-    """    
+    """
+    
     def __init__(self, compression_level: int = 6):
-        """Initialize the data serializer."""        self.compression_level = compression_level
+        """Initialize the data serializer."""
+        self.compression_level = compression_level
         
     def serialize_features(self, features: np.ndarray, compress: bool = True) -> str:
-        """        Serialize numpy array features to string.
+        """
+        Serialize numpy array features to string.
         
         Args:
             features: Numpy array to serialize
@@ -269,7 +284,8 @@ class DataSerializer:
             
         Returns:
             Base64-encoded string representation
-        """        try:
+        """
+        try:
             # Convert to bytes
             features_bytes = features.tobytes()
             
@@ -303,14 +319,16 @@ class DataSerializer:
             raise
     
     def deserialize_features(self, serialized_data: str) -> np.ndarray:
-        """        Deserialize string back to numpy array.
+        """
+        Deserialize string back to numpy array.
         
         Args:
             serialized_data: Base64-encoded serialized features
             
         Returns:
             Reconstructed numpy array
-        """        try:
+        """
+        try:
             # Decode from base64
             json_data = base64.b64decode(serialized_data.encode('ascii'))
             
@@ -342,7 +360,8 @@ class DataSerializer:
             raise
     
     def _json_serializer(self, obj):
-        """Custom JSON serializer for numpy and other objects."""        if isinstance(obj, bytes):
+        """Custom JSON serializer for numpy and other objects."""
+        if isinstance(obj, bytes):
             return obj.decode('latin1')
         elif isinstance(obj, np.integer):
             return int(obj)
@@ -355,16 +374,20 @@ class DataSerializer:
 
 
 class PerformanceMonitor:
-    """    Performance monitoring and profiling utilities.
+    """
+    Performance monitoring and profiling utilities.
     Tracks execution time, memory usage, and system resources.
-    """    
+    """
+    
     def __init__(self, enable_detailed_profiling: bool = False):
-        """Initialize the performance monitor."""        self.enable_detailed_profiling = enable_detailed_profiling
+        """Initialize the performance monitor."""
+        self.enable_detailed_profiling = enable_detailed_profiling
         self.metrics = {}
         self.operation_counts = {}
         
     def measure_execution_time(self, operation_name: str = None):
-        """Decorator to measure function execution time."""        def decorator(func: Callable) -> Callable:
+        """Decorator to measure function execution time."""
+        def decorator(func: Callable) -> Callable:
             @wraps(func)
             async def async_wrapper(*args, **kwargs):
                 start_time = time.perf_counter()
@@ -406,7 +429,8 @@ class PerformanceMonitor:
         return decorator
     
     def _record_metric(self, operation: str, metric_type: str, value: float):
-        """Record a performance metric."""        if operation not in self.metrics:
+        """Record a performance metric."""
+        if operation not in self.metrics:
             self.metrics[operation] = {}
         
         if metric_type not in self.metrics[operation]:
@@ -420,7 +444,8 @@ class PerformanceMonitor:
         self.operation_counts[operation] += 1
     
     def get_performance_summary(self) -> Dict[str, Any]:
-        """Get comprehensive performance summary."""        summary = {}
+        """Get comprehensive performance summary."""
+        summary = {}
         
         for operation, metrics in self.metrics.items():
             op_summary = {
@@ -441,20 +466,25 @@ class PerformanceMonitor:
         return summary
     
     def reset_metrics(self):
-        """Reset all collected metrics."""        self.metrics.clear()
+        """Reset all collected metrics."""
+        self.metrics.clear()
         self.operation_counts.clear()
 
 
 class TemporaryFileManager:
-    """    Safe temporary file management for audio processing.
+    """
+    Safe temporary file management for audio processing.
     Handles cleanup and secure temporary file operations.
-    """    
+    """
+    
     def __init__(self, temp_dir: Optional[str] = None):
-        """Initialize the temporary file manager."""        self.temp_dir = temp_dir or tempfile.gettempdir()
+        """Initialize the temporary file manager."""
+        self.temp_dir = temp_dir or tempfile.gettempdir()
         self.temp_files = []
         
     def create_temp_file(self, suffix: str = '.tmp', prefix: str = 'audio_') -> str:
-        """        Create a temporary file with automatic cleanup tracking.
+        """
+        Create a temporary file with automatic cleanup tracking.
         
         Args:
             suffix: File suffix/extension
@@ -462,7 +492,8 @@ class TemporaryFileManager:
             
         Returns:
             Path to the temporary file
-        """        try:
+        """
+        try:
             # Create temporary file
             fd, temp_path = tempfile.mkstemp(
                 suffix=suffix, 
@@ -482,14 +513,16 @@ class TemporaryFileManager:
             raise
     
     def create_temp_directory(self, prefix: str = 'audio_processing_') -> str:
-        """        Create a temporary directory.
+        """
+        Create a temporary directory.
         
         Args:
             prefix: Directory name prefix
             
         Returns:
             Path to the temporary directory
-        """        try:
+        """
+        try:
             temp_dir = tempfile.mkdtemp(prefix=prefix, dir=self.temp_dir)
             self.temp_files.append(temp_dir)
             
@@ -501,7 +534,8 @@ class TemporaryFileManager:
             raise
     
     def cleanup(self):
-        """Clean up all temporary files and directories."""        for temp_path in self.temp_files:
+        """Clean up all temporary files and directories."""
+        for temp_path in self.temp_files:
             try:
                 if os.path.isfile(temp_path):
                     os.unlink(temp_path)
@@ -515,14 +549,17 @@ class TemporaryFileManager:
         self.temp_files.clear()
     
     def __enter__(self):
-        """Context manager entry."""        return self
+        """Context manager entry."""
+        return self
     
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit with cleanup."""        self.cleanup()
+        """Context manager exit with cleanup."""
+        self.cleanup()
 
 
 def format_duration(seconds: float) -> str:
-    """Format duration in seconds to human-readable string."""    if seconds < 60:
+    """Format duration in seconds to human-readable string."""
+    if seconds < 60:
         return f"{seconds:.1f}s"
     elif seconds < 3600:
         minutes = int(seconds // 60)
@@ -536,7 +573,8 @@ def format_duration(seconds: float) -> str:
 
 
 def format_file_size(bytes_size: int) -> str:
-    """Format file size in bytes to human-readable string."""    for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
+    """Format file size in bytes to human-readable string."""
+    for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
         if bytes_size < 1024.0:
             return f"{bytes_size:.1f} {unit}"
         bytes_size /= 1024.0
@@ -544,7 +582,8 @@ def format_file_size(bytes_size: int) -> str:
 
 
 def safe_filename(filename: str, max_length: int = 255) -> str:
-    """    Create a safe filename by removing/replacing dangerous characters.
+    """
+    Create a safe filename by removing/replacing dangerous characters.
     
     Args:
         filename: Original filename
@@ -552,7 +591,8 @@ def safe_filename(filename: str, max_length: int = 255) -> str:
         
     Returns:
         Safe filename string
-    """    # Remove dangerous characters
+    """
+    # Remove dangerous characters
     safe_chars = []
     dangerous_chars = '<>:"/\\|?*'
     
@@ -576,7 +616,8 @@ def safe_filename(filename: str, max_length: int = 255) -> str:
 
 
 def generate_unique_id(prefix: str = '', suffix: str = '') -> str:
-    """    Generate a unique identifier.
+    """
+    Generate a unique identifier.
     
     Args:
         prefix: Optional prefix
@@ -584,7 +625,8 @@ def generate_unique_id(prefix: str = '', suffix: str = '') -> str:
         
     Returns:
         Unique identifier string
-    """    timestamp = str(int(time.time() * 1000000))  # Microseconds
+    """
+    timestamp = str(int(time.time() * 1000000))  # Microseconds
     random_part = hashlib.sha256(os.urandom(32)).hexdigest()[:8]
     
     unique_id = f"{prefix}{timestamp}_{random_part}{suffix}"
@@ -592,11 +634,14 @@ def generate_unique_id(prefix: str = '', suffix: str = '') -> str:
 
 
 class BatchProcessor:
-    """    Utility for processing items in batches with progress tracking.
+    """
+    Utility for processing items in batches with progress tracking.
     Handles both synchronous and asynchronous batch operations.
-    """    
+    """
+    
     def __init__(self, batch_size: int = 10, max_workers: int = 4):
-        """Initialize the batch processor."""        self.batch_size = batch_size
+        """Initialize the batch processor."""
+        self.batch_size = batch_size
         self.max_workers = max_workers
         self.executor = ThreadPoolExecutor(max_workers=max_workers)
     
@@ -606,7 +651,8 @@ class BatchProcessor:
         processor_func: Callable,
         progress_callback: Optional[Callable] = None
     ) -> List[Any]:
-        """        Process items in async batches.
+        """
+        Process items in async batches.
         
         Args:
             items: List of items to process
@@ -615,7 +661,8 @@ class BatchProcessor:
             
         Returns:
             List of processed results
-        """        results = []
+        """
+        results = []
         total_items = len(items)
         
         for i in range(0, total_items, self.batch_size):
@@ -641,4 +688,5 @@ class BatchProcessor:
         return results
     
     def cleanup(self):
-        """Cleanup resources."""        self.executor.shutdown(wait=True)
+        """Cleanup resources."""
+        self.executor.shutdown(wait=True)

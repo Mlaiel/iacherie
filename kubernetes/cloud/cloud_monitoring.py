@@ -13,7 +13,8 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 This module provides comprehensive monitoring capabilities for the IA Influencer
 Agent platform across multiple cloud providers, including real-time metrics,
 alerting, anomaly detection, and performance analytics.
-"""import logging
+"""
+import logging
 import asyncio
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Callable
@@ -31,27 +32,31 @@ from sklearn.preprocessing import StandardScaler
 logger = logging.getLogger(__name__)
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    CRITICAL = "critical"
+    """Alert severity levels"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
     INFO = "info"
 
 class MetricType(Enum):
-    """Metric types"""    COUNTER = "counter"
+    """Metric types"""
+    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
     RATE = "rate"
 
 class AlertState(Enum):
-    """Alert states"""    FIRING = "firing"
+    """Alert states"""
+    FIRING = "firing"
     RESOLVED = "resolved"
     SUPPRESSED = "suppressed"
     ACKNOWLEDGED = "acknowledged"
 
 class MonitoringProvider(Enum):
-    """Monitoring providers"""    PROMETHEUS = "prometheus"
+    """Monitoring providers"""
+    PROMETHEUS = "prometheus"
     CLOUDWATCH = "cloudwatch"
     AZURE_MONITOR = "azure_monitor"
     STACKDRIVER = "stackdriver"
@@ -61,7 +66,8 @@ class MonitoringProvider(Enum):
 
 @dataclass
 class MetricDefinition:
-    """Metric definition"""    name: str
+    """Metric definition"""
+    name: str
     type: MetricType
     description: str
     unit: str
@@ -72,7 +78,8 @@ class MetricDefinition:
 
 @dataclass
 class AlertRule:
-    """Alert rule definition"""    rule_id: str
+    """Alert rule definition"""
+    rule_id: str
     name: str
     description: str
     severity: AlertSeverity
@@ -87,7 +94,8 @@ class AlertRule:
 
 @dataclass
 class MonitoringAlert:
-    """Monitoring alert"""    alert_id: str
+    """Monitoring alert"""
+    alert_id: str
     rule_id: str
     name: str
     severity: AlertSeverity
@@ -102,13 +110,15 @@ class MonitoringAlert:
 
 @dataclass
 class MetricDataPoint:
-    """Metric data point"""    timestamp: datetime
+    """Metric data point"""
+    timestamp: datetime
     value: float
     labels: Dict[str, str]
 
 @dataclass
 class MonitoringDashboard:
-    """Monitoring dashboard configuration"""    dashboard_id: str
+    """Monitoring dashboard configuration"""
+    dashboard_id: str
     name: str
     description: str
     panels: List[Dict[str, Any]]
@@ -119,7 +129,8 @@ class MonitoringDashboard:
 
 @dataclass
 class AnomalyDetectionResult:
-    """Anomaly detection result"""    metric_name: str
+    """Anomaly detection result"""
+    metric_name: str
     timestamp: datetime
     value: float
     anomaly_score: float
@@ -128,9 +139,11 @@ class AnomalyDetectionResult:
     context: Dict[str, Any]
 
 class CloudMonitoringSystem:
-    """Enterprise cloud monitoring system"""    
+    """Enterprise cloud monitoring system"""
+    
     def __init__(self):
-        """Initialize cloud monitoring system"""        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize cloud monitoring system"""
+        self.logger = logging.getLogger(self.__class__.__name__)
         self.providers: Dict[str, Any] = {}
         self.metrics_store: Dict[str, deque] = defaultdict(lambda: deque(maxlen=10000))
         self.alert_rules: Dict[str, AlertRule] = {}
@@ -151,7 +164,8 @@ class CloudMonitoringSystem:
         self.metric_handlers: List[Callable] = []
         
     async def initialize(self) -> bool:
-        """Initialize monitoring system"""        try:
+        """Initialize monitoring system"""
+        try:
             self.logger.info("Initializing cloud monitoring system")
             
             # Initialize providers
@@ -173,7 +187,8 @@ class CloudMonitoringSystem:
     
     async def register_provider(self, provider_id: str, provider_type: MonitoringProvider, 
                                config: Dict[str, Any]) -> bool:
-        """Register a monitoring provider"""        try:
+        """Register a monitoring provider"""
+        try:
             provider_instance = await self._create_provider_instance(provider_type, config)
             self.providers[provider_id] = {
                 "type": provider_type,
@@ -189,7 +204,8 @@ class CloudMonitoringSystem:
             return False
     
     async def define_metric(self, metric_def: MetricDefinition) -> bool:
-        """Define a new metric"""        try:
+        """Define a new metric"""
+        try:
             # Validate metric definition
             if not await self._validate_metric_definition(metric_def):
                 return False
@@ -213,7 +229,8 @@ class CloudMonitoringSystem:
             return False
     
     async def create_alert_rule(self, rule: AlertRule) -> bool:
-        """Create alert rule"""        try:
+        """Create alert rule"""
+        try:
             # Validate alert rule
             validation_result = await self._validate_alert_rule(rule)
             if not validation_result['valid']:
@@ -230,7 +247,8 @@ class CloudMonitoringSystem:
     
     async def ingest_metric(self, metric_name: str, value: float, labels: Dict[str, str] = None, 
                            timestamp: datetime = None) -> bool:
-        """Ingest metric data point"""        try:
+        """Ingest metric data point"""
+        try:
             if timestamp is None:
                 timestamp = datetime.now()
             
@@ -267,7 +285,8 @@ class CloudMonitoringSystem:
     
     async def query_metrics(self, metric_name: str, start_time: datetime, end_time: datetime, 
                            labels: Dict[str, str] = None, aggregation: str = None) -> List[MetricDataPoint]:
-        """Query metrics from storage"""        try:
+        """Query metrics from storage"""
+        try:
             if labels is None:
                 labels = {}
             
@@ -293,7 +312,8 @@ class CloudMonitoringSystem:
             return []
     
     async def create_dashboard(self, dashboard: MonitoringDashboard) -> bool:
-        """Create monitoring dashboard"""        try:
+        """Create monitoring dashboard"""
+        try:
             # Validate dashboard configuration
             if not await self._validate_dashboard_config(dashboard):
                 return False
@@ -309,7 +329,8 @@ class CloudMonitoringSystem:
     
     async def setup_notification_channel(self, channel_id: str, channel_type: str, 
                                        config: Dict[str, Any]) -> bool:
-        """Setup notification channel"""        try:
+        """Setup notification channel"""
+        try:
             # Validate channel configuration
             if not await self._validate_notification_config(channel_type, config):
                 return False
@@ -327,7 +348,8 @@ class CloudMonitoringSystem:
             return False
     
     async def detect_anomalies(self, metric_name: str, window_size: int = 100) -> List[AnomalyDetectionResult]:
-        """Detect anomalies in metric data"""        try:
+        """Detect anomalies in metric data"""
+        try:
             if metric_name not in self.anomaly_detectors:
                 return []
             
@@ -377,7 +399,8 @@ class CloudMonitoringSystem:
             return []
     
     async def calculate_sla_metrics(self, service_name: str, time_period: timedelta) -> Dict[str, float]:
-        """Calculate SLA metrics for service"""        try:
+        """Calculate SLA metrics for service"""
+        try:
             if service_name not in self.sla_definitions:
                 return {}
             
@@ -420,7 +443,8 @@ class CloudMonitoringSystem:
             return {}
     
     async def get_system_health_score(self) -> Dict[str, Any]:
-        """Get overall system health score"""        try:
+        """Get overall system health score"""
+        try:
             health_metrics = {
                 "overall_score": 0.0,
                 "component_scores": {},
@@ -482,7 +506,8 @@ class CloudMonitoringSystem:
             return {"overall_score": 0.0, "error": str(e)}
     
     async def _initialize_providers(self) -> None:
-        """Initialize monitoring providers"""        # Initialize default providers
+        """Initialize monitoring providers"""
+        # Initialize default providers
         default_providers = [
             {
                 "id": "prometheus",
@@ -500,7 +525,8 @@ class CloudMonitoringSystem:
     
     async def _create_provider_instance(self, provider_type: MonitoringProvider, 
                                       config: Dict[str, Any]) -> Any:
-        """Create provider instance"""        if provider_type == MonitoringProvider.PROMETHEUS:
+        """Create provider instance"""
+        if provider_type == MonitoringProvider.PROMETHEUS:
             return PrometheusProvider(config)
         elif provider_type == MonitoringProvider.CLOUDWATCH:
             return CloudWatchProvider(config)
@@ -512,7 +538,8 @@ class CloudMonitoringSystem:
             return CustomProvider(config)
     
     async def _validate_metric_definition(self, metric_def: MetricDefinition) -> bool:
-        """Validate metric definition"""        if not metric_def.name:
+        """Validate metric definition"""
+        if not metric_def.name:
             return False
         if metric_def.collection_interval <= 0:
             return False
@@ -521,7 +548,8 @@ class CloudMonitoringSystem:
         return True
     
     async def _validate_alert_rule(self, rule: AlertRule) -> Dict[str, Any]:
-        """Validate alert rule"""        errors = []
+        """Validate alert rule"""
+        errors = []
         
         if not rule.name:
             errors.append("Alert rule name is required")
@@ -541,14 +569,16 @@ class CloudMonitoringSystem:
         return {"valid": len(errors) == 0, "errors": errors}
     
     async def _validate_dashboard_config(self, dashboard: MonitoringDashboard) -> bool:
-        """Validate dashboard configuration"""        if not dashboard.name:
+        """Validate dashboard configuration"""
+        if not dashboard.name:
             return False
         if not dashboard.panels:
             return False
         return True
     
     async def _validate_notification_config(self, channel_type: str, config: Dict[str, Any]) -> bool:
-        """Validate notification channel configuration"""        if channel_type == "email":
+        """Validate notification channel configuration"""
+        if channel_type == "email":
             return "smtp_server" in config and "recipients" in config
         elif channel_type == "slack":
             return "webhook_url" in config
@@ -557,7 +587,8 @@ class CloudMonitoringSystem:
         return True
     
     async def _apply_aggregation(self, points: List[MetricDataPoint], aggregation: str) -> List[MetricDataPoint]:
-        """Apply aggregation to metric points"""        if not points:
+        """Apply aggregation to metric points"""
+        if not points:
             return []
         
         values = [point.value for point in points]
@@ -584,7 +615,8 @@ class CloudMonitoringSystem:
     
     async def _calculate_availability(self, service_name: str, start_time: datetime, 
                                     end_time: datetime) -> float:
-        """Calculate service availability"""        # Query uptime metrics
+        """Calculate service availability"""
+        # Query uptime metrics
         uptime_points = await self.query_metrics(
             f"{service_name}_uptime",
             start_time,
@@ -602,7 +634,8 @@ class CloudMonitoringSystem:
     
     async def _get_response_times(self, service_name: str, start_time: datetime, 
                                 end_time: datetime) -> List[float]:
-        """Get response times for service"""        response_time_points = await self.query_metrics(
+        """Get response times for service"""
+        response_time_points = await self.query_metrics(
             f"{service_name}_response_time",
             start_time,
             end_time
@@ -612,7 +645,8 @@ class CloudMonitoringSystem:
     
     async def _calculate_error_rate(self, service_name: str, start_time: datetime, 
                                   end_time: datetime) -> float:
-        """Calculate error rate for service"""        error_points = await self.query_metrics(f"{service_name}_errors", start_time, end_time)
+        """Calculate error rate for service"""
+        error_points = await self.query_metrics(f"{service_name}_errors", start_time, end_time)
         request_points = await self.query_metrics(f"{service_name}_requests", start_time, end_time)
         
         total_errors = sum(point.value for point in error_points)
@@ -622,7 +656,8 @@ class CloudMonitoringSystem:
     
     async def _calculate_throughput(self, service_name: str, start_time: datetime, 
                                   end_time: datetime) -> float:
-        """Calculate throughput for service"""        request_points = await self.query_metrics(f"{service_name}_requests", start_time, end_time)
+        """Calculate throughput for service"""
+        request_points = await self.query_metrics(f"{service_name}_requests", start_time, end_time)
         
         if not request_points:
             return 0.0
@@ -633,11 +668,13 @@ class CloudMonitoringSystem:
         return total_requests / time_period if time_period > 0 else 0.0
     
     async def _load_configurations(self) -> None:
-        """Load monitoring configurations"""        # Load from persistent storage in real implementation
+        """Load monitoring configurations"""
+        # Load from persistent storage in real implementation
         pass
     
     async def _metrics_collection_loop(self) -> None:
-        """Metrics collection loop"""        while True:
+        """Metrics collection loop"""
+        while True:
             try:
                 # Collect metrics from all providers
                 for provider_id, provider_info in self.providers.items():
@@ -650,7 +687,8 @@ class CloudMonitoringSystem:
                 await asyncio.sleep(30)
     
     async def _alert_evaluation_loop(self) -> None:
-        """Alert evaluation loop"""        while True:
+        """Alert evaluation loop"""
+        while True:
             try:
                 # Evaluate all alert rules
                 for rule_id, rule in self.alert_rules.items():
@@ -663,7 +701,8 @@ class CloudMonitoringSystem:
                 await asyncio.sleep(60)
     
     async def _anomaly_detection_loop(self) -> None:
-        """Anomaly detection loop"""        while True:
+        """Anomaly detection loop"""
+        while True:
             try:
                 # Run anomaly detection on all metrics
                 for metric_name in self.anomaly_detectors.keys():
@@ -678,11 +717,13 @@ class CloudMonitoringSystem:
                 await asyncio.sleep(300)
     
     async def _collect_from_provider(self, provider_id: str, provider_instance: Any) -> None:
-        """Collect metrics from provider"""        # Implementation would call provider-specific collection methods
+        """Collect metrics from provider"""
+        # Implementation would call provider-specific collection methods
         pass
     
     async def _evaluate_alert_rule(self, rule: AlertRule) -> None:
-        """Evaluate alert rule"""        # Get recent metrics for evaluation
+        """Evaluate alert rule"""
+        # Get recent metrics for evaluation
         end_time = datetime.now()
         start_time = end_time - timedelta(seconds=rule.evaluation_window)
         
@@ -734,19 +775,22 @@ class CloudMonitoringSystem:
                 del self.active_alerts[alert_id]
     
     async def _handle_anomaly(self, anomaly: AnomalyDetectionResult) -> None:
-        """Handle detected anomaly"""        self.logger.warning(f"Anomaly detected in {anomaly.metric_name}: {anomaly.value} (score: {anomaly.anomaly_score})")
+        """Handle detected anomaly"""
+        self.logger.warning(f"Anomaly detected in {anomaly.metric_name}: {anomaly.value} (score: {anomaly.anomaly_score})")
         
         # Create anomaly alert if configured
         # Implementation would check for anomaly alert rules
     
     async def _send_alert_notification(self, alert: MonitoringAlert, channels: List[str]) -> None:
-        """Send alert notification"""        for channel_id in channels:
+        """Send alert notification"""
+        for channel_id in channels:
             if channel_id in self.notification_channels:
                 channel = self.notification_channels[channel_id]
                 await self._send_to_channel(alert, channel)
     
     async def _send_to_channel(self, alert: MonitoringAlert, channel: Dict[str, Any]) -> None:
-        """Send alert to specific channel"""        try:
+        """Send alert to specific channel"""
+        try:
             if channel["type"] == "webhook":
                 await self._send_webhook_notification(alert, channel["config"])
             elif channel["type"] == "email":
@@ -757,7 +801,8 @@ class CloudMonitoringSystem:
             self.logger.error(f"Failed to send notification: {e}")
     
     async def _send_webhook_notification(self, alert: MonitoringAlert, config: Dict[str, Any]) -> None:
-        """Send webhook notification"""        webhook_data = {
+        """Send webhook notification"""
+        webhook_data = {
             "alert_id": alert.alert_id,
             "name": alert.name,
             "severity": alert.severity.value,
@@ -774,11 +819,13 @@ class CloudMonitoringSystem:
                     raise Exception(f"Webhook failed with status {response.status}")
     
     async def _send_email_notification(self, alert: MonitoringAlert, config: Dict[str, Any]) -> None:
-        """Send email notification"""        # Implementation would use SMTP to send email
+        """Send email notification"""
+        # Implementation would use SMTP to send email
         self.logger.info(f"Would send email notification for alert: {alert.name}")
     
     async def _send_slack_notification(self, alert: MonitoringAlert, config: Dict[str, Any]) -> None:
-        """Send Slack notification"""        slack_data = {
+        """Send Slack notification"""
+        slack_data = {
             "text": f"Alert: {alert.name}",
             "attachments": [
                 {
@@ -799,31 +846,36 @@ class CloudMonitoringSystem:
 
 
 class PrometheusProvider:
-    """Prometheus monitoring provider"""    
+    """Prometheus monitoring provider"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.endpoint = config.get("endpoint", "http://localhost:9090")
 
 
 class CloudWatchProvider:
-    """AWS CloudWatch monitoring provider"""    
+    """AWS CloudWatch monitoring provider"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
 
 
 class AzureMonitorProvider:
-    """Azure Monitor provider"""    
+    """Azure Monitor provider"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
 
 
 class StackdriverProvider:
-    """Google Cloud Stackdriver provider"""    
+    """Google Cloud Stackdriver provider"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
 
 
 class CustomProvider:
-    """Custom monitoring provider"""    
+    """Custom monitoring provider"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config

@@ -16,7 +16,8 @@ Architecture Enterprise 3-Niveaux:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
-"""from typing import Dict, Any, Optional, List, Union
+"""
+from typing import Dict, Any, Optional, List, Union
 import logging
 import asyncio
 from datetime import datetime
@@ -126,7 +127,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CreatorProfile:
-    """Profil créateur multi-format pour IA-Influencer-Agent."""    creator_id: str
+    """Profil créateur multi-format pour IA-Influencer-Agent."""
+    creator_id: str
     creator_type: str  # 'musician', 'influencer', 'photographer', 'blogger', 'comedian'
     name: str
     email: str
@@ -139,7 +141,8 @@ class CreatorProfile:
 
 @dataclass
 class SystemHealth:
-    """État de santé du système de gestion des données."""    status: str
+    """État de santé du système de gestion des données."""
+    status: str
     uptime: float
     components_status: Dict[str, str]
     performance_metrics: Dict[str, float]
@@ -148,7 +151,8 @@ class SystemHealth:
 
 
 class DataManagementSystem:
-    """    🚀 Coordinateur Central - Système de Gestion des Données IA-Influencer-Agent
+    """
+    🚀 Coordinateur Central - Système de Gestion des Données IA-Influencer-Agent
     ===========================================================================
     
     Fournit une interface unifiée pour le traitement, la protection, et la 
@@ -162,13 +166,16 @@ class DataManagementSystem:
     
     FLUX MÉTIER PRINCIPAL:
     Upload Multi-Format → Protection IA → SEO → Collaboration → Distribution → Monétisation
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialise le système de gestion des données enterprise.
+        """
+        Initialise le système de gestion des données enterprise.
         
         Args:
             config: Configuration système complète
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logger
         self.system_id = f"ia-influencer-data-{datetime.now().strftime('%Y%m%d')}"
         
@@ -192,13 +199,15 @@ class DataManagementSystem:
         self.logger.info(f"🚀 Data Management System IA-Influencer-Agent initialisé - ID: {self.system_id}")
     
     async def initialize_components(self, db_session, redis_client, vector_db_client=None):
-        """        Initialise tous les composants système selon l'architecture enterprise.
+        """
+        Initialise tous les composants système selon l'architecture enterprise.
         
         Args:
             db_session: Session base de données PostgreSQL
             redis_client: Client Redis pour cache et queues
             vector_db_client: Client base de données vectorielle (FAISS/Pinecone)
-        """        try:
+        """
+        try:
             self.logger.info("🔧 Initialisation des composants enterprise...")
             
             # === STOCKAGE ET INFRASTRUCTURE ===
@@ -275,7 +284,8 @@ class DataManagementSystem:
         protection_enabled: bool = True,
         monetization_enabled: bool = True
     ) -> Dict[str, Any]:
-        """        Traite le contenu d'un créateur selon la logique métier complète.
+        """
+        Traite le contenu d'un créateur selon la logique métier complète.
         
         FLUX MÉTIER:
         Upload → Ingestion → Protection → SEO → Analytics → Monétisation → Distribution
@@ -288,7 +298,8 @@ class DataManagementSystem:
             
         Returns:
             Résultats du traitement complet
-        """        try:
+        """
+        try:
             processing_id = f"proc_{creator_profile.creator_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             self.logger.info(f"🚀 Début traitement contenu créateur {creator_profile.creator_type}: {processing_id}")
             
@@ -372,7 +383,8 @@ class DataManagementSystem:
         creator_profile: CreatorProfile,
         collaboration_type: str = 'all'  # 'brand', 'creator', 'all'
     ) -> List[Dict[str, Any]]:
-        """        Trouve des matches de collaboration pour un créateur.
+        """
+        Trouve des matches de collaboration pour un créateur.
         
         Args:
             creator_profile: Profil du créateur
@@ -380,7 +392,8 @@ class DataManagementSystem:
             
         Returns:
             Liste des matches de collaboration
-        """        try:
+        """
+        try:
             if not self.analytics:
                 return []
             
@@ -402,11 +415,13 @@ class DataManagementSystem:
 
     
     def get_system_health(self) -> SystemHealth:
-        """        Obtient l'état de santé complet du système enterprise.
+        """
+        Obtient l'état de santé complet du système enterprise.
         
         Returns:
             État de santé détaillé du système
-        """        try:
+        """
+        try:
             uptime = (datetime.now() - self.startup_time).total_seconds()
             
             # Vérification statut composants
@@ -483,11 +498,13 @@ class DataManagementSystem:
             )
     
     def _calculate_system_load(self) -> float:
-        """Calcule la charge système actuelle."""        # Implémentation simplifiée - à remplacer par métriques réelles
+        """Calcule la charge système actuelle."""
+        # Implémentation simplifiée - à remplacer par métriques réelles
         return min(self.processed_content_count / 10000.0, 1.0)
     
     def _get_memory_usage(self) -> float:
-        """Obtient l'utilisation mémoire en MB."""        try:
+        """Obtient l'utilisation mémoire en MB."""
+        try:
             import psutil
             process = psutil.Process()
             return process.memory_info().rss / 1024 / 1024
@@ -495,7 +512,8 @@ class DataManagementSystem:
             return 0.0
     
     def _get_storage_usage(self) -> float:
-        """Obtient l'utilisation stockage en GB."""        if self.storage:
+        """Obtient l'utilisation stockage en GB."""
+        if self.storage:
             return self.storage.get_usage_stats().get('total_size_gb', 0.0)
         return 0.0
 
@@ -505,18 +523,21 @@ data_management_system: Optional[DataManagementSystem] = None
 
 
 def get_system() -> Optional[DataManagementSystem]:
-    """Obtient l'instance globale du système de gestion des données."""    return data_management_system
+    """Obtient l'instance globale du système de gestion des données."""
+    return data_management_system
 
 
 def initialize_system(config: Dict[str, Any]) -> DataManagementSystem:
-    """    Initialise le système global de gestion des données IA-Influencer-Agent.
+    """
+    Initialise le système global de gestion des données IA-Influencer-Agent.
     
     Args:
         config: Configuration système enterprise
         
     Returns:
         Instance système initialisée
-    """    global data_management_system
+    """
+    global data_management_system
     data_management_system = DataManagementSystem(config)
     return data_management_system
 
@@ -623,19 +644,23 @@ MODULE_INFO = {
 
 
 def get_module_info() -> Dict[str, Any]:
-    """Obtient les informations complètes du module enterprise."""    return MODULE_INFO
+    """Obtient les informations complètes du module enterprise."""
+    return MODULE_INFO
 
 
 def get_supported_creator_types() -> List[str]:
-    """Obtient la liste des types de créateurs supportés."""    return list(MODULE_INFO['creator_types'].keys())
+    """Obtient la liste des types de créateurs supportés."""
+    return list(MODULE_INFO['creator_types'].keys())
 
 
 def get_supported_platforms() -> List[str]:
-    """Obtient la liste des plateformes intégrées."""    return MODULE_INFO['platforms_supported']
+    """Obtient la liste des plateformes intégrées."""
+    return MODULE_INFO['platforms_supported']
 
 
 def get_ai_capabilities() -> Dict[str, List[str]]:
-    """Obtient les capacités IA disponibles."""    return MODULE_INFO['ai_features']
+    """Obtient les capacités IA disponibles."""
+    return MODULE_INFO['ai_features']
 
 
 # Export des classes et fonctions principales

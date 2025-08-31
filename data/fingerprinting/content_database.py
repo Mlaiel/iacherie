@@ -21,7 +21,8 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import pickle
@@ -54,7 +55,8 @@ logger = logging.getLogger(__name__)
 
 
 class DatabaseType(Enum):
-    """Supported database types"""    POSTGRESQL = "postgresql"
+    """Supported database types"""
+    POSTGRESQL = "postgresql"
     MONGODB = "mongodb"
     ELASTICSEARCH = "elasticsearch"
     REDIS = "redis"
@@ -62,7 +64,8 @@ class DatabaseType(Enum):
 
 
 class IndexType(Enum):
-    """Database index types"""    BTREE = "btree"
+    """Database index types"""
+    BTREE = "btree"
     HASH = "hash"
     GIN = "gin"
     GIST = "gist"
@@ -71,7 +74,8 @@ class IndexType(Enum):
 
 
 class StorageFormat(Enum):
-    """Content storage formats"""    JSON = "json"
+    """Content storage formats"""
+    JSON = "json"
     BINARY = "binary"
     COMPRESSED = "compressed"
     ENCRYPTED = "encrypted"
@@ -79,7 +83,8 @@ class StorageFormat(Enum):
 
 @dataclass
 class DatabaseConnection:
-    """Database connection configuration"""    db_type: DatabaseType
+    """Database connection configuration"""
+    db_type: DatabaseType
     connection_string: str
     pool_size: int = 10
     max_overflow: int = 20
@@ -91,7 +96,8 @@ class DatabaseConnection:
 
 @dataclass
 class ContentRecord:
-    """Content database record"""    record_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Content database record"""
+    record_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     fingerprint_id: str = ""
     content_id: str = ""
     content_type: ContentType = ContentType.TEXT
@@ -132,7 +138,8 @@ class ContentRecord:
 
 @dataclass
 class QueryFilter:
-    """Database query filter"""    field: str
+    """Database query filter"""
+    field: str
     operator: str  # eq, ne, gt, gte, lt, lte, in, like, exists
     value: Any
     case_sensitive: bool = True
@@ -140,7 +147,8 @@ class QueryFilter:
 
 @dataclass
 class QueryOptions:
-    """Database query options"""    filters: List[QueryFilter] = field(default_factory=list)
+    """Database query options"""
+    filters: List[QueryFilter] = field(default_factory=list)
     sort_by: Optional[str] = None
     sort_order: str = "asc"  # asc, desc
     limit: Optional[int] = None
@@ -151,7 +159,8 @@ class QueryOptions:
 
 @dataclass
 class DatabaseStats:
-    """Database statistics"""    total_records: int = 0
+    """Database statistics"""
+    total_records: int = 0
     records_by_type: Dict[str, int] = field(default_factory=dict)
     records_by_owner: Dict[str, int] = field(default_factory=dict)
     storage_size_bytes: int = 0
@@ -163,7 +172,8 @@ class DatabaseStats:
 
 
 class ContentDatabaseManager:
-    """Advanced content database management system"""    
+    """Advanced content database management system"""
+    
     def __init__(self, config: FingerprintingSystemConfig):
         self.config = config
         
@@ -188,7 +198,8 @@ class ContentDatabaseManager:
         logger.info("Content Database Manager initialized")
     
     async def initialize(self):
-        """Initialize database connections and schema"""        try:
+        """Initialize database connections and schema"""
+        try:
             # Initialize primary database (PostgreSQL)
             await self._initialize_postgresql()
             
@@ -210,7 +221,8 @@ class ContentDatabaseManager:
             raise
     
     async def _initialize_postgresql(self):
-        """Initialize PostgreSQL connection"""        try:
+        """Initialize PostgreSQL connection"""
+        try:
             db_url = getattr(self.config, 'postgresql_url', 
                            'postgresql://localhost:5432/fingerprinting')
             
@@ -230,7 +242,8 @@ class ContentDatabaseManager:
             logger.warning(f"PostgreSQL initialization failed: {str(e)}")
     
     async def _initialize_mongodb(self):
-        """Initialize MongoDB connection"""        try:
+        """Initialize MongoDB connection"""
+        try:
             mongo_url = getattr(self.config, 'mongodb_url', 
                               'mongodb://localhost:27017/fingerprinting')
             
@@ -245,7 +258,8 @@ class ContentDatabaseManager:
             logger.warning(f"MongoDB initialization failed: {str(e)}")
     
     async def _initialize_elasticsearch(self):
-        """Initialize Elasticsearch connection"""        try:
+        """Initialize Elasticsearch connection"""
+        try:
             es_url = getattr(self.config, 'elasticsearch_url', 
                            'http://localhost:9200')
             
@@ -262,7 +276,8 @@ class ContentDatabaseManager:
             logger.warning(f"Elasticsearch initialization failed: {str(e)}")
     
     async def _initialize_redis(self):
-        """Initialize Redis connection"""        try:
+        """Initialize Redis connection"""
+        try:
             redis_url = getattr(self.config, 'redis_url', 
                               'redis://localhost:6379')
             
@@ -279,7 +294,8 @@ class ContentDatabaseManager:
             logger.warning(f"Redis initialization failed: {str(e)}")
     
     async def _ensure_schema(self):
-        """Ensure database schema exists"""        if DatabaseType.POSTGRESQL in self.connections:
+        """Ensure database schema exists"""
+        if DatabaseType.POSTGRESQL in self.connections:
             await self._create_postgresql_schema()
         
         if DatabaseType.MONGODB in self.connections:
@@ -289,12 +305,14 @@ class ContentDatabaseManager:
             await self._create_elasticsearch_schema()
     
     async def _create_postgresql_schema(self):
-        """Create PostgreSQL schema"""        try:
+        """Create PostgreSQL schema"""
+        try:
             pool = self.connections[DatabaseType.POSTGRESQL]
             
             async with pool.acquire() as conn:
                 # Create main content table
-                await conn.execute("""                    CREATE TABLE IF NOT EXISTS content_records (
+                await conn.execute("""
+                    CREATE TABLE IF NOT EXISTS content_records (
                         record_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         fingerprint_id VARCHAR(255) UNIQUE NOT NULL,
                         content_id VARCHAR(255) NOT NULL,
@@ -347,7 +365,8 @@ class ContentDatabaseManager:
                     await conn.execute(index_sql)
                 
                 # Create similarity search function
-                await conn.execute("""                    CREATE OR REPLACE FUNCTION cosine_similarity(a BYTEA, b BYTEA)
+                await conn.execute("""
+                    CREATE OR REPLACE FUNCTION cosine_similarity(a BYTEA, b BYTEA)
                     RETURNS FLOAT AS $$
                     BEGIN
                         -- This would implement actual cosine similarity
@@ -363,7 +382,8 @@ class ContentDatabaseManager:
             logger.error(f"Failed to create PostgreSQL schema: {str(e)}")
     
     async def _create_mongodb_schema(self):
-        """Create MongoDB schema"""        try:
+        """Create MongoDB schema"""
+        try:
             db = self.connections[DatabaseType.MONGODB]
             collection = db.content_records
             
@@ -383,7 +403,8 @@ class ContentDatabaseManager:
             logger.error(f"Failed to create MongoDB schema: {str(e)}")
     
     async def _create_elasticsearch_schema(self):
-        """Create Elasticsearch schema"""        try:
+        """Create Elasticsearch schema"""
+        try:
             es = self.connections[DatabaseType.ELASTICSEARCH]
             
             # Create index with mapping
@@ -421,7 +442,8 @@ class ContentDatabaseManager:
             logger.error(f"Failed to create Elasticsearch schema: {str(e)}")
     
     async def store_content_record(self, record: ContentRecord) -> str:
-        """Store content record in database"""        try:
+        """Store content record in database"""
+        try:
             record.updated_at = datetime.utcnow()
             
             # Store in primary database
@@ -449,7 +471,8 @@ class ContentDatabaseManager:
             raise
     
     async def _store_postgresql_record(self, record: ContentRecord) -> str:
-        """Store record in PostgreSQL"""        pool = self.connections[DatabaseType.POSTGRESQL]
+        """Store record in PostgreSQL"""
+        pool = self.connections[DatabaseType.POSTGRESQL]
         
         async with pool.acquire() as conn:
             # Convert fingerprints to JSON
@@ -461,7 +484,8 @@ class ContentDatabaseManager:
             # Convert metadata
             metadata_json = json.dumps(record.metadata.to_dict()) if record.metadata else None
             
-            result = await conn.fetchrow("""                INSERT INTO content_records (
+            result = await conn.fetchrow("""
+                INSERT INTO content_records (
                     record_id, fingerprint_id, content_id, content_type, owner_id,
                     audio_fingerprint, video_fingerprint, image_fingerprint, text_fingerprint,
                     metadata, technical_metadata, custom_metadata,
@@ -489,12 +513,14 @@ class ContentDatabaseManager:
             return str(result['record_id'])
     
     async def _store_fallback_record(self, record: ContentRecord) -> str:
-        """Store record using fallback method (SQLite)"""        # This would implement SQLite storage as fallback
+        """Store record using fallback method (SQLite)"""
+        # This would implement SQLite storage as fallback
         logger.warning("Using fallback storage method")
         return record.record_id
     
     async def _store_secondary_records(self, record: ContentRecord):
-        """Store record in secondary databases"""        # MongoDB storage
+        """Store record in secondary databases"""
+        # MongoDB storage
         if DatabaseType.MONGODB in self.connections:
             try:
                 db = self.connections[DatabaseType.MONGODB]
@@ -550,7 +576,8 @@ class ContentDatabaseManager:
                 logger.warning(f"Elasticsearch secondary storage failed: {str(e)}")
     
     async def _cache_record(self, record: ContentRecord):
-        """Cache record in Redis"""        if self.redis_client:
+        """Cache record in Redis"""
+        if self.redis_client:
             try:
                 cache_key = f"content_record:{record.fingerprint_id}"
                 record_dict = asdict(record)
@@ -570,7 +597,8 @@ class ContentDatabaseManager:
                 logger.warning(f"Cache storage failed: {str(e)}")
     
     async def get_content_record(self, fingerprint_id: str) -> Optional[ContentRecord]:
-        """Retrieve content record by fingerprint ID"""        try:
+        """Retrieve content record by fingerprint ID"""
+        try:
             # Try cache first
             cached_record = await self._get_cached_record(fingerprint_id)
             if cached_record:
@@ -596,7 +624,8 @@ class ContentDatabaseManager:
             return None
     
     async def _get_cached_record(self, fingerprint_id: str) -> Optional[ContentRecord]:
-        """Get record from cache"""        if not self.redis_client:
+        """Get record from cache"""
+        if not self.redis_client:
             return None
         
         try:
@@ -644,10 +673,12 @@ class ContentDatabaseManager:
         return None
     
     async def _get_postgresql_record(self, fingerprint_id: str) -> Optional[ContentRecord]:
-        """Get record from PostgreSQL"""        pool = self.connections[DatabaseType.POSTGRESQL]
+        """Get record from PostgreSQL"""
+        pool = self.connections[DatabaseType.POSTGRESQL]
         
         async with pool.acquire() as conn:
-            row = await conn.fetchrow("""                SELECT * FROM content_records 
+            row = await conn.fetchrow("""
+                SELECT * FROM content_records 
                 WHERE fingerprint_id = $1
             """, fingerprint_id)
             
@@ -695,14 +726,16 @@ class ContentDatabaseManager:
         return None
     
     async def _get_fallback_record(self, fingerprint_id: str) -> Optional[ContentRecord]:
-        """Get record using fallback method"""        # This would implement SQLite or file-based retrieval
+        """Get record using fallback method"""
+        # This would implement SQLite or file-based retrieval
         return None
     
     async def query_content_records(
         self, 
         options: QueryOptions
     ) -> List[ContentRecord]:
-        """Query content records with filters"""        try:
+        """Query content records with filters"""
+        try:
             if self.primary_db == DatabaseType.POSTGRESQL:
                 return await self._query_postgresql_records(options)
             else:
@@ -713,7 +746,8 @@ class ContentDatabaseManager:
             return []
     
     async def _query_postgresql_records(self, options: QueryOptions) -> List[ContentRecord]:
-        """Query PostgreSQL records"""        pool = self.connections[DatabaseType.POSTGRESQL]
+        """Query PostgreSQL records"""
+        pool = self.connections[DatabaseType.POSTGRESQL]
         
         # Build query
         where_clauses = []
@@ -781,7 +815,8 @@ class ContentDatabaseManager:
             return records
     
     def _row_to_content_record(self, row) -> ContentRecord:
-        """Convert database row to ContentRecord"""        # This would implement the conversion logic
+        """Convert database row to ContentRecord"""
+        # This would implement the conversion logic
         # Similar to _get_postgresql_record but as a separate method
         return ContentRecord(
             record_id=str(row['record_id']),
@@ -793,7 +828,8 @@ class ContentDatabaseManager:
         )
     
     async def _query_fallback_records(self, options: QueryOptions) -> List[ContentRecord]:
-        """Query records using fallback method"""        # This would implement SQLite or file-based querying
+        """Query records using fallback method"""
+        # This would implement SQLite or file-based querying
         return []
     
     async def update_content_record(
@@ -801,7 +837,8 @@ class ContentDatabaseManager:
         fingerprint_id: str, 
         updates: Dict[str, Any]
     ) -> bool:
-        """Update content record"""        try:
+        """Update content record"""
+        try:
             updates['updated_at'] = datetime.utcnow()
             
             if self.primary_db == DatabaseType.POSTGRESQL:
@@ -827,7 +864,8 @@ class ContentDatabaseManager:
         fingerprint_id: str, 
         updates: Dict[str, Any]
     ) -> bool:
-        """Update PostgreSQL record"""        pool = self.connections[DatabaseType.POSTGRESQL]
+        """Update PostgreSQL record"""
+        pool = self.connections[DatabaseType.POSTGRESQL]
         
         # Build update query
         set_clauses = []
@@ -848,10 +886,12 @@ class ContentDatabaseManager:
         param_count += 1
         params.append(fingerprint_id)
         
-        query = f"""            UPDATE content_records 
+        query = f"""
+            UPDATE content_records 
             SET {', '.join(set_clauses)}
             WHERE fingerprint_id = ${param_count}
-        """        
+        """
+        
         async with pool.acquire() as conn:
             result = await conn.execute(query, *params)
             return result == "UPDATE 1"
@@ -861,7 +901,8 @@ class ContentDatabaseManager:
         fingerprint_id: str, 
         updates: Dict[str, Any]
     ) -> bool:
-        """Update record using fallback method"""        # This would implement SQLite or file-based updates
+        """Update record using fallback method"""
+        # This would implement SQLite or file-based updates
         return False
     
     async def _update_secondary_records(
@@ -869,7 +910,8 @@ class ContentDatabaseManager:
         fingerprint_id: str, 
         updates: Dict[str, Any]
     ):
-        """Update records in secondary databases"""        # MongoDB update
+        """Update records in secondary databases"""
+        # MongoDB update
         if DatabaseType.MONGODB in self.connections:
             try:
                 db = self.connections[DatabaseType.MONGODB]
@@ -898,7 +940,8 @@ class ContentDatabaseManager:
                 logger.warning(f"Elasticsearch update failed: {str(e)}")
     
     async def delete_content_record(self, fingerprint_id: str) -> bool:
-        """Delete content record"""        try:
+        """Delete content record"""
+        try:
             if self.primary_db == DatabaseType.POSTGRESQL:
                 success = await self._delete_postgresql_record(fingerprint_id)
             else:
@@ -921,7 +964,8 @@ class ContentDatabaseManager:
             return False
     
     async def _delete_postgresql_record(self, fingerprint_id: str) -> bool:
-        """Delete PostgreSQL record"""        pool = self.connections[DatabaseType.POSTGRESQL]
+        """Delete PostgreSQL record"""
+        pool = self.connections[DatabaseType.POSTGRESQL]
         
         async with pool.acquire() as conn:
             result = await conn.execute(
@@ -931,10 +975,12 @@ class ContentDatabaseManager:
             return result == "DELETE 1"
     
     async def _delete_fallback_record(self, fingerprint_id: str) -> bool:
-        """Delete record using fallback method"""        return False
+        """Delete record using fallback method"""
+        return False
     
     async def _delete_secondary_records(self, fingerprint_id: str):
-        """Delete records from secondary databases"""        # MongoDB deletion
+        """Delete records from secondary databases"""
+        # MongoDB deletion
         if DatabaseType.MONGODB in self.connections:
             try:
                 db = self.connections[DatabaseType.MONGODB]
@@ -964,7 +1010,8 @@ class ContentDatabaseManager:
         threshold: float = 0.8,
         limit: int = 10
     ) -> List[Tuple[ContentRecord, float]]:
-        """Find similar content using vector similarity"""        try:
+        """Find similar content using vector similarity"""
+        try:
             if DatabaseType.ELASTICSEARCH in self.connections:
                 return await self._find_similar_elasticsearch(vector_embedding, threshold, limit)
             elif self.primary_db == DatabaseType.POSTGRESQL:
@@ -982,7 +1029,8 @@ class ContentDatabaseManager:
         threshold: float, 
         limit: int
     ) -> List[Tuple[ContentRecord, float]]:
-        """Find similar content using Elasticsearch"""        es = self.connections[DatabaseType.ELASTICSEARCH]
+        """Find similar content using Elasticsearch"""
+        es = self.connections[DatabaseType.ELASTICSEARCH]
         
         # Convert bytes to vector
         query_vector = np.frombuffer(vector_embedding, dtype=np.float32).tolist()
@@ -1018,11 +1066,13 @@ class ContentDatabaseManager:
         threshold: float, 
         limit: int
     ) -> List[Tuple[ContentRecord, float]]:
-        """Find similar content using PostgreSQL"""        pool = self.connections[DatabaseType.POSTGRESQL]
+        """Find similar content using PostgreSQL"""
+        pool = self.connections[DatabaseType.POSTGRESQL]
         
         async with pool.acquire() as conn:
             # This would use a more sophisticated similarity function
-            rows = await conn.fetch("""                SELECT *, cosine_similarity(vector_embedding, $1) as similarity
+            rows = await conn.fetch("""
+                SELECT *, cosine_similarity(vector_embedding, $1) as similarity
                 FROM content_records
                 WHERE vector_embedding IS NOT NULL
                 AND cosine_similarity(vector_embedding, $1) >= $2
@@ -1039,7 +1089,8 @@ class ContentDatabaseManager:
             return results
     
     def _hit_to_content_record(self, hit_source: Dict[str, Any]) -> ContentRecord:
-        """Convert Elasticsearch hit to ContentRecord"""        # This would implement the conversion logic
+        """Convert Elasticsearch hit to ContentRecord"""
+        # This would implement the conversion logic
         return ContentRecord(
             record_id=hit_source.get('record_id', ''),
             fingerprint_id=hit_source.get('fingerprint_id', ''),
@@ -1050,13 +1101,15 @@ class ContentDatabaseManager:
         )
     
     async def _update_access_time(self, fingerprint_id: str):
-        """Update last access time for record"""        await self.update_content_record(
+        """Update last access time for record"""
+        await self.update_content_record(
             fingerprint_id,
             {'last_accessed': datetime.utcnow()}
         )
     
     async def _invalidate_cache(self, fingerprint_id: str):
-        """Invalidate cached record"""        if self.redis_client:
+        """Invalidate cached record"""
+        if self.redis_client:
             try:
                 cache_key = f"content_record:{fingerprint_id}"
                 await self.redis_client.delete(cache_key)
@@ -1064,7 +1117,8 @@ class ContentDatabaseManager:
                 logger.warning(f"Cache invalidation failed: {str(e)}")
     
     async def _update_statistics(self):
-        """Update database statistics"""        try:
+        """Update database statistics"""
+        try:
             if self.primary_db == DatabaseType.POSTGRESQL:
                 await self._update_postgresql_stats()
             
@@ -1074,7 +1128,8 @@ class ContentDatabaseManager:
             logger.error(f"Failed to update statistics: {str(e)}")
     
     async def _update_postgresql_stats(self):
-        """Update PostgreSQL statistics"""        pool = self.connections[DatabaseType.POSTGRESQL]
+        """Update PostgreSQL statistics"""
+        pool = self.connections[DatabaseType.POSTGRESQL]
         
         async with pool.acquire() as conn:
             # Total records
@@ -1082,7 +1137,8 @@ class ContentDatabaseManager:
             self.stats.total_records = total
             
             # Records by type
-            type_counts = await conn.fetch("""                SELECT content_type, COUNT(*) as count
+            type_counts = await conn.fetch("""
+                SELECT content_type, COUNT(*) as count
                 FROM content_records
                 GROUP BY content_type
             """)
@@ -1091,7 +1147,8 @@ class ContentDatabaseManager:
             }
             
             # Records by owner
-            owner_counts = await conn.fetch("""                SELECT owner_id, COUNT(*) as count
+            owner_counts = await conn.fetch("""
+                SELECT owner_id, COUNT(*) as count
                 FROM content_records
                 GROUP BY owner_id
                 ORDER BY count DESC
@@ -1102,11 +1159,13 @@ class ContentDatabaseManager:
             }
     
     async def get_statistics(self) -> DatabaseStats:
-        """Get current database statistics"""        await self._update_statistics()
+        """Get current database statistics"""
+        await self._update_statistics()
         return self.stats
     
     async def cleanup_expired_records(self) -> int:
-        """Clean up expired records"""        try:
+        """Clean up expired records"""
+        try:
             current_time = datetime.utcnow()
             
             if self.primary_db == DatabaseType.POSTGRESQL:
@@ -1122,10 +1181,12 @@ class ContentDatabaseManager:
             return 0
     
     async def _cleanup_postgresql_expired(self, current_time: datetime) -> int:
-        """Clean up expired PostgreSQL records"""        pool = self.connections[DatabaseType.POSTGRESQL]
+        """Clean up expired PostgreSQL records"""
+        pool = self.connections[DatabaseType.POSTGRESQL]
         
         async with pool.acquire() as conn:
-            result = await conn.execute("""                DELETE FROM content_records
+            result = await conn.execute("""
+                DELETE FROM content_records
                 WHERE expires_at IS NOT NULL AND expires_at < $1
             """, current_time)
             
@@ -1133,7 +1194,8 @@ class ContentDatabaseManager:
             return int(result.split()[-1]) if result.startswith("DELETE") else 0
     
     async def close(self):
-        """Close all database connections"""        try:
+        """Close all database connections"""
+        try:
             # Close PostgreSQL pool
             if DatabaseType.POSTGRESQL in self.connection_pools:
                 await self.connection_pools[DatabaseType.POSTGRESQL].close()
@@ -1152,7 +1214,8 @@ class ContentDatabaseManager:
             logger.error(f"Error closing database connections: {str(e)}")
     
     def _dict_to_metadata(self, metadata_dict: Dict[str, Any]) -> Optional[ContentMetadata]:
-        """Convert dictionary to ContentMetadata object"""        try:
+        """Convert dictionary to ContentMetadata object"""
+        try:
             # Create ContentMetadata from dictionary
             metadata = ContentMetadata(
                 title=metadata_dict.get('title', ''),
@@ -1183,7 +1246,8 @@ _content_db_manager: Optional[ContentDatabaseManager] = None
 
 
 def get_content_database_manager(config: Optional[FingerprintingSystemConfig] = None) -> ContentDatabaseManager:
-    """Get or create content database manager instance"""    global _content_db_manager
+    """Get or create content database manager instance"""
+    global _content_db_manager
     
     if _content_db_manager is None:
         if config is None:
@@ -1195,7 +1259,8 @@ def get_content_database_manager(config: Optional[FingerprintingSystemConfig] = 
 
 
 def reset_content_database_manager():
-    """Reset content database manager (for testing)"""    global _content_db_manager
+    """Reset content database manager (for testing)"""
+    global _content_db_manager
     if _content_db_manager:
         asyncio.create_task(_content_db_manager.close())
     _content_db_manager = None
@@ -1211,7 +1276,8 @@ async def store_fingerprint(
     metadata: Optional[ContentMetadata] = None,
     **kwargs
 ) -> str:
-    """Store fingerprint convenience function"""    manager = get_content_database_manager()
+    """Store fingerprint convenience function"""
+    manager = get_content_database_manager()
     
     record = ContentRecord(
         fingerprint_id=fingerprint_id,
@@ -1236,5 +1302,6 @@ async def store_fingerprint(
 
 
 async def find_fingerprint(fingerprint_id: str) -> Optional[ContentRecord]:
-    """Find fingerprint convenience function"""    manager = get_content_database_manager()
+    """Find fingerprint convenience function"""
+    manager = get_content_database_manager()
     return await manager.get_content_record(fingerprint_id)

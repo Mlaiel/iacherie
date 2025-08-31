@@ -5,7 +5,8 @@ avancées et optimisation des performances financières.
 
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead AI Developer & Platform Revenue Architect
-"""from typing import Dict, List, Optional, Any, Tuple
+"""
+from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 from decimal import Decimal
 from enum import Enum
@@ -30,7 +31,8 @@ Base = declarative_base()
 
 
 class EarningsInterval(Enum):
-    """Intervalles de calcul des revenus"""    HOURLY = "hourly"
+    """Intervalles de calcul des revenus"""
+    HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -39,7 +41,8 @@ class EarningsInterval(Enum):
 
 
 class PlatformPerformanceRating(Enum):
-    """Évaluation des performances plateforme"""    EXCELLENT = "excellent"  # >90% performance
+    """Évaluation des performances plateforme"""
+    EXCELLENT = "excellent"  # >90% performance
     GOOD = "good"           # 70-90% performance
     AVERAGE = "average"     # 50-70% performance
     POOR = "poor"          # 30-50% performance
@@ -48,8 +51,10 @@ class PlatformPerformanceRating(Enum):
 
 @dataclass
 class PlatformEarnings(BaseModel, TimestampMixin):
-    """    Modèle pour les revenus agrégés par plateforme
-    """    __tablename__ = "platform_earnings"
+    """
+    Modèle pour les revenus agrégés par plateforme
+    """
+    __tablename__ = "platform_earnings"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False, index=True)
@@ -108,7 +113,8 @@ class PlatformEarnings(BaseModel, TimestampMixin):
     )
 
     def calculate_performance_score(self) -> float:
-        """Calcule le score de performance de la plateforme"""        score = 0.0
+        """Calcule le score de performance de la plateforme"""
+        score = 0.0
         
         # Facteur volume (30%)
         if self.transaction_count > 0:
@@ -133,7 +139,8 @@ class PlatformEarnings(BaseModel, TimestampMixin):
         return round(score, 2)
 
     def get_performance_rating(self) -> PlatformPerformanceRating:
-        """Détermine la notation de performance"""        score = self.performance_score or 0
+        """Détermine la notation de performance"""
+        score = self.performance_score or 0
         
         if score >= 90:
             return PlatformPerformanceRating.EXCELLENT
@@ -148,8 +155,10 @@ class PlatformEarnings(BaseModel, TimestampMixin):
 
 
 class PlatformComparisonMetrics(BaseModel, TimestampMixin):
-    """    Métriques de comparaison entre plateformes
-    """    __tablename__ = "platform_comparison_metrics"
+    """
+    Métriques de comparaison entre plateformes
+    """
+    __tablename__ = "platform_comparison_metrics"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False, index=True)
@@ -183,8 +192,10 @@ class PlatformComparisonMetrics(BaseModel, TimestampMixin):
 
 
 class PlatformEarningsManager:
-    """    Manager pour la gestion des revenus par plateforme
-    """    
+    """
+    Manager pour la gestion des revenus par plateforme
+    """
+    
     def __init__(self, db_manager: DatabaseManager, cache_manager: CacheManager):
         self.db = db_manager
         self.cache = cache_manager
@@ -200,7 +211,8 @@ class PlatformEarningsManager:
         period_end: datetime,
         interval: EarningsInterval = EarningsInterval.DAILY
     ) -> PlatformEarnings:
-        """        Calcule les revenus agrégés pour une plateforme
+        """
+        Calcule les revenus agrégés pour une plateforme
         
         Args:
             user_id: ID utilisateur
@@ -211,7 +223,8 @@ class PlatformEarningsManager:
             
         Returns:
             PlatformEarnings: Revenus calculés
-        """        try:
+        """
+        try:
             # Vérification cache
             cache_key = f"platform_earnings:{user_id}:{platform_name}:{interval.value}:{period_start.date()}:{period_end.date()}"
             cached_result = await self.cache.get(cache_key)
@@ -331,7 +344,8 @@ class PlatformEarningsManager:
         period_start: datetime,
         period_end: datetime
     ) -> List[Dict[str, Any]]:
-        """        Classement des plateformes par performance
+        """
+        Classement des plateformes par performance
         
         Args:
             user_id: ID utilisateur
@@ -340,7 +354,8 @@ class PlatformEarningsManager:
             
         Returns:
             List[Dict]: Classement des plateformes
-        """        try:
+        """
+        try:
             async with self.db.get_session() as session:
                 earnings = await session.query(PlatformEarnings).filter(
                     PlatformEarnings.user_id == user_id,
@@ -374,7 +389,8 @@ class PlatformEarningsManager:
         period_start: datetime,
         period_end: datetime
     ) -> PlatformComparisonMetrics:
-        """        Génère un rapport de comparaison entre plateformes
+        """
+        Génère un rapport de comparaison entre plateformes
         
         Args:
             user_id: ID utilisateur
@@ -384,7 +400,8 @@ class PlatformEarningsManager:
             
         Returns:
             PlatformComparisonMetrics: Rapport de comparaison
-        """        try:
+        """
+        try:
             # Récupération des données par plateforme
             platform_data = {}
             for platform in platforms:
@@ -475,7 +492,8 @@ class PlatformEarningsManager:
         self, 
         transactions: List
     ) -> Dict[str, Any]:
-        """Calcule la distribution des revenus par type"""        distribution = {}
+        """Calcule la distribution des revenus par type"""
+        distribution = {}
         total = sum(t.amount_gross for t in transactions)
         
         for transaction in transactions:
@@ -500,7 +518,8 @@ class PlatformEarningsManager:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Calcule les métriques d'engagement pour la plateforme"""        # Cette méthode serait intégrée avec les modules d'analytics
+        """Calcule les métriques d'engagement pour la plateforme"""
+        # Cette méthode serait intégrée avec les modules d'analytics
         return {
             "average_engagement_rate": 0.0,
             "total_interactions": 0,
@@ -509,7 +528,8 @@ class PlatformEarningsManager:
         }
 
     async def _calculate_conversion_metrics(self, transactions: List) -> Dict[str, Any]:
-        """Calcule les métriques de conversion"""        return {
+        """Calcule les métriques de conversion"""
+        return {
             "total_conversions": len(transactions),
             "conversion_value": sum(float(t.amount_gross) for t in transactions),
             "average_conversion_value": sum(float(t.amount_gross) for t in transactions) / len(transactions) if transactions else 0
@@ -523,7 +543,8 @@ class PlatformEarningsManager:
         period_end: datetime,
         current_revenue: Decimal
     ) -> Optional[Decimal]:
-        """Calcule le taux de croissance par rapport à la période précédente"""        try:
+        """Calcule le taux de croissance par rapport à la période précédente"""
+        try:
             # Période précédente de même durée
             period_duration = period_end - period_start
             previous_start = period_start - period_duration
@@ -548,7 +569,8 @@ class PlatformEarningsManager:
             return None
 
     async def _determine_revenue_source(self, platform_name: str) -> str:
-        """Détermine la source de revenus basée sur le nom de plateforme"""        platform_mapping = {
+        """Détermine la source de revenus basée sur le nom de plateforme"""
+        platform_mapping = {
             "spotify": RevenueSource.SPOTIFY.value,
             "youtube": RevenueSource.YOUTUBE.value,
             "tiktok": RevenueSource.TIKTOK.value,
@@ -565,7 +587,8 @@ class PlatformEarningsManager:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Calcule les tendances de performance"""        # Implémentation des tendances basée sur l'historique
+        """Calcule les tendances de performance"""
+        # Implémentation des tendances basée sur l'historique
         return {
             "revenue_trend": "increasing",
             "transaction_trend": "stable",
@@ -576,7 +599,8 @@ class PlatformEarningsManager:
         self, 
         earnings: PlatformEarnings
     ) -> List[Dict[str, Any]]:
-        """Génère des suggestions d'optimisation"""        suggestions = []
+        """Génère des suggestions d'optimisation"""
+        suggestions = []
         
         if earnings.performance_score and earnings.performance_score < 70:
             suggestions.append({
@@ -600,7 +624,8 @@ class PlatformEarningsManager:
         self, 
         platform_data: Dict[str, PlatformEarnings]
     ) -> Dict[str, Any]:
-        """Calcule les écarts de performance entre plateformes"""        gaps = {}
+        """Calcule les écarts de performance entre plateformes"""
+        gaps = {}
         
         if len(platform_data) < 2:
             return gaps
@@ -625,7 +650,8 @@ class PlatformEarningsManager:
         self, 
         platform_data: Dict[str, PlatformEarnings]
     ) -> List[Dict[str, Any]]:
-        """Identifie les opportunités d'optimisation cross-platform"""        opportunities = []
+        """Identifie les opportunités d'optimisation cross-platform"""
+        opportunities = []
         
         # Analyse des meilleures pratiques par plateforme
         best_performers = {}
@@ -649,7 +675,8 @@ class PlatformEarningsManager:
         self, 
         platform_data: Dict[str, PlatformEarnings]
     ) -> List[Dict[str, Any]]:
-        """Génère des recommandations stratégiques"""        recommendations = []
+        """Génère des recommandations stratégiques"""
+        recommendations = []
         
         # Analyse de diversification
         total_revenue = sum(data.total_gross_revenue for data in platform_data.values())

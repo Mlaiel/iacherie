@@ -5,7 +5,8 @@ technology for immutable proof of ownership and creation timestamps.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""from typing import Dict, List, Any, Optional, Union
+"""
+from typing import Dict, List, Any, Optional, Union
 from dataclasses import dataclass, asdict
 from enum import Enum
 import json
@@ -21,7 +22,8 @@ from cryptography.hazmat.primitives import serialization
 logger = logging.getLogger(__name__)
 
 class RightsType(Enum):
-    """Types of digital rights that can be registered."""    COPYRIGHT = "copyright"
+    """Types of digital rights that can be registered."""
+    COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PATENT = "patent"
     TRADE_SECRET = "trade_secret"
@@ -29,7 +31,8 @@ class RightsType(Enum):
     MORAL_RIGHTS = "moral_rights"
 
 class ContentCategory(Enum):
-    """Categories of content for rights registration."""    MUSICAL_WORK = "musical_work"
+    """Categories of content for rights registration."""
+    MUSICAL_WORK = "musical_work"
     SOUND_RECORDING = "sound_recording"
     AUDIOVISUAL_WORK = "audiovisual_work"
     LITERARY_WORK = "literary_work"
@@ -39,7 +42,8 @@ class ContentCategory(Enum):
     PERFORMANCE = "performance"
 
 class RightsStatus(Enum):
-    """Status of rights registration."""    PENDING = "pending"
+    """Status of rights registration."""
+    PENDING = "pending"
     REGISTERED = "registered"
     DISPUTED = "disputed"
     EXPIRED = "expired"
@@ -48,7 +52,8 @@ class RightsStatus(Enum):
 
 @dataclass
 class CreatorInfo:
-    """Information about the content creator."""    name: str
+    """Information about the content creator."""
+    name: str
     wallet_address: str
     email: Optional[str] = None
     website: Optional[str] = None
@@ -59,7 +64,8 @@ class CreatorInfo:
 
 @dataclass
 class RightsRegistration:
-    """Complete rights registration record."""    registration_id: str
+    """Complete rights registration record."""
+    registration_id: str
     content_hash: str
     content_fingerprint: str
     rights_type: RightsType
@@ -80,7 +86,8 @@ class RightsRegistration:
 
 @dataclass
 class RightsTransfer:
-    """Rights transfer record."""    transfer_id: str
+    """Rights transfer record."""
+    transfer_id: str
     registration_id: str
     from_owner: str
     to_owner: str
@@ -92,19 +99,23 @@ class RightsTransfer:
     is_exclusive: bool
 
 class DigitalSignatureManager:
-    """Manager for digital signatures and cryptographic operations."""    
+    """Manager for digital signatures and cryptographic operations."""
+    
     def __init__(self):
-        """Initialize digital signature manager."""        self.key_pairs = {}
+        """Initialize digital signature manager."""
+        self.key_pairs = {}
         
     def generate_key_pair(self, creator_id: str) -> Dict[str, bytes]:
-        """        Generate RSA key pair for a creator.
+        """
+        Generate RSA key pair for a creator.
         
         Args:
             creator_id: Unique identifier for the creator
             
         Returns:
             Dictionary with public and private key bytes
-        """        try:
+        """
+        try:
             private_key = rsa.generate_private_key(
                 public_exponent=65537,
                 key_size=2048
@@ -139,7 +150,8 @@ class DigitalSignatureManager:
             raise
             
     def sign_content(self, creator_id: str, content_hash: str) -> bytes:
-        """        Sign content hash with creator's private key.
+        """
+        Sign content hash with creator's private key.
         
         Args:
             creator_id: Identifier for the creator
@@ -147,7 +159,8 @@ class DigitalSignatureManager:
             
         Returns:
             Digital signature bytes
-        """        try:
+        """
+        try:
             if creator_id not in self.key_pairs:
                 raise ValueError(f"No key pair found for creator {creator_id}")
                 
@@ -173,7 +186,8 @@ class DigitalSignatureManager:
             raise
             
     def verify_signature(self, public_key_pem: bytes, content_hash: str, signature: bytes) -> bool:
-        """        Verify digital signature.
+        """
+        Verify digital signature.
         
         Args:
             public_key_pem: Public key in PEM format
@@ -182,7 +196,8 @@ class DigitalSignatureManager:
             
         Returns:
             True if signature is valid
-        """        try:
+        """
+        try:
             public_key = serialization.load_pem_public_key(public_key_pem)
             
             public_key.verify(
@@ -201,17 +216,21 @@ class DigitalSignatureManager:
             return False
 
 class CopyrightRegistry:
-    """    Blockchain-based copyright and digital rights registry.
+    """
+    Blockchain-based copyright and digital rights registry.
     
     Provides immutable registration of digital content ownership,
     creation timestamps, and rights management.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialize the copyright registry.
+        """
+        Initialize the copyright registry.
         
         Args:
             config: Configuration including blockchain settings
-        """        self.config = config
+        """
+        self.config = config
         self.signature_manager = DigitalSignatureManager()
         self.registrations = {}  # In production, this would be blockchain storage
         
@@ -227,7 +246,8 @@ class CopyrightRegistry:
         metadata: Optional[Dict[str, Any]] = None,
         evidence_files: Optional[List[str]] = None
     ) -> RightsRegistration:
-        """        Register digital rights on the blockchain.
+        """
+        Register digital rights on the blockchain.
         
         Args:
             content_hash: Unique hash of the content
@@ -242,7 +262,8 @@ class CopyrightRegistry:
             
         Returns:
             Rights registration record
-        """        try:
+        """
+        try:
             logger.info(f"Registering rights for content: {content_hash}")
             
             # Generate registration ID
@@ -302,7 +323,8 @@ class CopyrightRegistry:
             raise
             
     def _calculate_expiration_date(self, rights_type: RightsType, creation_date: datetime) -> Optional[datetime]:
-        """Calculate expiration date based on rights type and jurisdiction."""        # Copyright terms vary by jurisdiction
+        """Calculate expiration date based on rights type and jurisdiction."""
+        # Copyright terms vary by jurisdiction
         # This is a simplified implementation
         if rights_type == RightsType.COPYRIGHT:
             # Typical copyright term: life + 70 years, but we'll use a fixed term for simplicity
@@ -324,7 +346,8 @@ class CopyrightRegistry:
         rights_type: RightsType,
         signature: bytes
     ) -> Dict[str, Any]:
-        """Submit rights registration to blockchain."""        try:
+        """Submit rights registration to blockchain."""
+        try:
             # Import here to avoid circular imports
             from .contracts import SmartContractManager, ContractType
             
@@ -361,14 +384,16 @@ class CopyrightRegistry:
             raise
 
     def verify_rights(self, content_hash: str) -> Optional[RightsRegistration]:
-        """        Verify rights registration for content.
+        """
+        Verify rights registration for content.
         
         Args:
             content_hash: Hash of the content to verify
             
         Returns:
             Rights registration if found, None otherwise
-        """        try:
+        """
+        try:
             # Search for registration by content hash
             for registration in self.registrations.values():
                 if registration.content_hash == content_hash:
@@ -390,7 +415,8 @@ class CopyrightRegistry:
         terms: Dict[str, Any],
         consideration: Optional[str] = None
     ) -> RightsTransfer:
-        """        Transfer rights to another party.
+        """
+        Transfer rights to another party.
         
         Args:
             registration_id: ID of the rights registration
@@ -402,7 +428,8 @@ class CopyrightRegistry:
             
         Returns:
             Rights transfer record
-        """        try:
+        """
+        try:
             registration = self.registrations.get(registration_id)
             if not registration:
                 raise ValueError(f"Registration {registration_id} not found")
@@ -456,7 +483,8 @@ class CopyrightRegistry:
         to_owner: str,
         transfer_type: str
     ) -> Dict[str, Any]:
-        """Submit rights transfer to blockchain."""        try:
+        """Submit rights transfer to blockchain."""
+        try:
             from .contracts import SmartContractManager, ContractType
             
             contract_manager = SmartContractManager(self.config)
@@ -495,7 +523,8 @@ class CopyrightRegistry:
         rights_type: Optional[RightsType] = None,
         status: Optional[RightsStatus] = None
     ) -> List[RightsRegistration]:
-        """        Search rights registrations by criteria.
+        """
+        Search rights registrations by criteria.
         
         Args:
             creator_address: Filter by creator address
@@ -505,7 +534,8 @@ class CopyrightRegistry:
             
         Returns:
             List of matching registrations
-        """        try:
+        """
+        try:
             results = []
             
             for registration in self.registrations.values():
@@ -527,7 +557,8 @@ class CopyrightRegistry:
             return []
 
     def get_registration_by_id(self, registration_id: str) -> Optional[RightsRegistration]:
-        """Get registration by ID."""        return self.registrations.get(registration_id)
+        """Get registration by ID."""
+        return self.registrations.get(registration_id)
 
     def dispute_registration(
         self,
@@ -535,7 +566,8 @@ class CopyrightRegistry:
         disputant_address: str,
         evidence: Dict[str, Any]
     ) -> str:
-        """        Initiate a dispute over a rights registration.
+        """
+        Initiate a dispute over a rights registration.
         
         Args:
             registration_id: ID of the registration to dispute
@@ -544,7 +576,8 @@ class CopyrightRegistry:
             
         Returns:
             Dispute ID
-        """        try:
+        """
+        try:
             registration = self.registrations.get(registration_id)
             if not registration:
                 raise ValueError(f"Registration {registration_id} not found")

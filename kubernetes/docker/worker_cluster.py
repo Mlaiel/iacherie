@@ -13,7 +13,8 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 Professional Docker configuration for distributed worker cluster
 supporting high-performance async task processing, queue management,
 and auto-scaling for IA-Influencer multi-format content processing.
-"""from typing import Dict, List, Optional, Any
+"""
+from typing import Dict, List, Optional, Any
 import logging
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -22,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class WorkerClusterDockerConfig:
-    """Enterprise Worker Cluster Docker Configuration"""    
+    """Enterprise Worker Cluster Docker Configuration"""
+    
     # Image Configuration
     image_name: str = "ia-influencer/worker-cluster"
     image_tag: str = "2.0.0"
@@ -106,7 +108,8 @@ class WorkerClusterDockerConfig:
     })
     
     def generate_dockerfile(self) -> str:
-        """Generate Dockerfile for worker cluster"""        return f"""# Multi-stage build for Worker Cluster
+        """Generate Dockerfile for worker cluster"""
+        return f"""# Multi-stage build for Worker Cluster
 FROM python:3.11-slim AS builder
 
 # Install system dependencies
@@ -217,8 +220,10 @@ ENV PYTHONPATH=/app \\
 COPY scripts/workers/entrypoint.sh /app/scripts/
 ENTRYPOINT ["/app/scripts/entrypoint.sh"]
 CMD ["celery", "worker", "-A", "workers.celery_app", "--loglevel=info"]
-"""    def generate_docker_compose_services(self) -> Dict[str, Any]:
-        """Generate Docker Compose services for worker cluster"""        services = {}
+"""
+    def generate_docker_compose_services(self) -> Dict[str, Any]:
+        """Generate Docker Compose services for worker cluster"""
+        services = {}
         
         # Generate worker services for each queue
         for queue_name, queue_config in self.queues.items():
@@ -409,7 +414,8 @@ CMD ["celery", "worker", "-A", "workers.celery_app", "--loglevel=info"]
         return services
     
     def generate_worker_requirements(self) -> str:
-        """Generate worker requirements.txt"""        return """# Worker Cluster Requirements
+        """Generate worker requirements.txt"""
+        return """# Worker Cluster Requirements
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
 # Core async framework
@@ -524,8 +530,10 @@ alive-progress==3.1.5
 pytest==7.4.3
 pytest-asyncio==0.21.1
 pytest-celery==0.0.0a1
-"""    def generate_worker_config_files(self) -> Dict[str, str]:
-        """Generate worker configuration files"""        configs = {}
+"""
+    def generate_worker_config_files(self) -> Dict[str, str]:
+        """Generate worker configuration files"""
+        configs = {}
         
         # Celery configuration
         configs["celery_config.py"] = f"""# Celery Configuration for IA-Influencer Workers
@@ -678,7 +686,8 @@ worker_log_color = False
 broker_connection_retry_on_startup = True
 broker_connection_retry = True
 broker_connection_max_retries = 100
-"""        # Autoscaler configuration
+"""
+        # Autoscaler configuration
         configs["autoscaler_config.py"] = """# Worker Autoscaler Configuration
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
@@ -760,10 +769,12 @@ AUTOSCALER_CONFIG: Dict[str, Any] = {
         'log_level': 'INFO'
     }
 }
-"""        return configs
+"""
+        return configs
     
     def generate_scripts(self) -> Dict[str, str]:
-        """Generate worker scripts"""        scripts = {}
+        """Generate worker scripts"""
+        scripts = {}
         
         # Entrypoint script
         scripts["entrypoint.sh"] = """#!/bin/bash
@@ -817,7 +828,8 @@ else
     echo "👷 Starting Celery Worker..."
     exec "$@"
 fi
-"""        # Health check script
+"""
+        # Health check script
         scripts["health-check.sh"] = """#!/bin/bash
 # Worker Health Check Script
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -867,7 +879,8 @@ fi
 
 echo "✅ Worker health check passed"
 exit 0
-"""        # Model downloader script
+"""
+        # Model downloader script
         scripts["download-models.sh"] = """#!/bin/bash
 # ML Models Downloader Script
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -926,10 +939,12 @@ print('✅ Image models downloaded')
 chown -R worker:worker /app/models/
 
 echo "✅ All ML models downloaded successfully!"
-"""        return scripts
+"""
+        return scripts
     
     def save_config_files(self, output_dir: str) -> List[str]:
-        """Save all worker cluster configuration files"""        output_path = Path(output_dir)
+        """Save all worker cluster configuration files"""
+        output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
         
         files_created = []

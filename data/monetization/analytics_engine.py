@@ -10,7 +10,8 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: Unauthorized use, copying, or distribution of this code is strictly 
 prohibited and subject to legal action under German and international copyright law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -34,7 +35,8 @@ from .revenue_calculator import Currency, PlatformType
 
 
 class AnalyticsType(Enum):
-    """Types of analytics"""    REVENUE = "revenue"
+    """Types of analytics"""
+    REVENUE = "revenue"
     PERFORMANCE = "performance"
     AUDIENCE = "audience"
     ENGAGEMENT = "engagement"
@@ -44,7 +46,8 @@ class AnalyticsType(Enum):
 
 
 class MetricType(Enum):
-    """Metric types"""    ABSOLUTE = "absolute"
+    """Metric types"""
+    ABSOLUTE = "absolute"
     PERCENTAGE = "percentage"
     RATIO = "ratio"
     INDEX = "index"
@@ -52,7 +55,8 @@ class MetricType(Enum):
 
 
 class TimeGranularity(Enum):
-    """Time granularity for analytics"""    HOURLY = "hourly"
+    """Time granularity for analytics"""
+    HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -62,7 +66,8 @@ class TimeGranularity(Enum):
 
 @dataclass
 class AnalyticsMetric:
-    """Individual analytics metric"""    metric_id: str
+    """Individual analytics metric"""
+    metric_id: str
     name: str
     value: Union[Decimal, float, int]
     metric_type: MetricType
@@ -73,7 +78,8 @@ class AnalyticsMetric:
 
 @dataclass
 class TimeSeriesData:
-    """Time series analytics data"""    metric_name: str
+    """Time series analytics data"""
+    metric_name: str
     time_granularity: TimeGranularity
     data_points: List[Tuple[datetime, float]]
     trend: str  # increasing, decreasing, stable
@@ -83,7 +89,8 @@ class TimeSeriesData:
 
 @dataclass
 class PerformanceReport:
-    """Performance analytics report"""    user_id: str
+    """Performance analytics report"""
+    user_id: str
     period_start: datetime
     period_end: datetime
     revenue_metrics: Dict[str, AnalyticsMetric]
@@ -96,7 +103,8 @@ class PerformanceReport:
 
 @dataclass
 class PredictiveModel:
-    """Predictive analytics model"""    model_id: str
+    """Predictive analytics model"""
+    model_id: str
     model_type: str
     target_metric: str
     features: List[str]
@@ -106,18 +114,22 @@ class PredictiveModel:
 
 
 class AnalyticsEngine:
-    """    Professional analytics engine for IA Influencer Agent monetization.
+    """
+    Professional analytics engine for IA Influencer Agent monetization.
     
     Provides comprehensive analytics, performance tracking, predictive modeling,
     and data visualization for content creator monetization optimization.
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession, redis_client: Redis):
-        """        Initialize AnalyticsEngine.
+        """
+        Initialize AnalyticsEngine.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
-        """        self.db_session = db_session
+        """
+        self.db_session = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
         
@@ -158,7 +170,8 @@ class AnalyticsEngine:
         self.scalers = {}
     
     async def calculate_revenue_analytics(self, user_id: str, period_days: int = 30) -> Dict[str, AnalyticsMetric]:
-        """        Calculate comprehensive revenue analytics.
+        """
+        Calculate comprehensive revenue analytics.
         
         Args:
             user_id: User identifier
@@ -166,7 +179,8 @@ class AnalyticsEngine:
             
         Returns:
             Dictionary of revenue analytics metrics
-        """        try:
+        """
+        try:
             # Check cache first
             cache_key = f"revenue_analytics:{user_id}:{period_days}"
             cached_analytics = await self._get_from_cache(cache_key)
@@ -272,7 +286,8 @@ class AnalyticsEngine:
             return {}
     
     async def generate_performance_report(self, user_id: str, period_days: int = 30) -> PerformanceReport:
-        """        Generate comprehensive performance report.
+        """
+        Generate comprehensive performance report.
         
         Args:
             user_id: User identifier
@@ -280,7 +295,8 @@ class AnalyticsEngine:
             
         Returns:
             Complete performance report
-        """        try:
+        """
+        try:
             # Calculate date range
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
@@ -342,7 +358,8 @@ class AnalyticsEngine:
     async def create_time_series_analysis(self, user_id: str, metric_name: str,
                                         granularity: TimeGranularity,
                                         period_days: int = 90) -> TimeSeriesData:
-        """        Create time series analysis for specific metric.
+        """
+        Create time series analysis for specific metric.
         
         Args:
             user_id: User identifier
@@ -352,7 +369,8 @@ class AnalyticsEngine:
             
         Returns:
             Time series analysis data
-        """        try:
+        """
+        try:
             # Calculate date range
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
@@ -415,7 +433,8 @@ class AnalyticsEngine:
             )
     
     async def predict_revenue(self, user_id: str, prediction_days: int = 30) -> Dict[str, float]:
-        """        Predict future revenue using ML models.
+        """
+        Predict future revenue using ML models.
         
         Args:
             user_id: User identifier
@@ -423,7 +442,8 @@ class AnalyticsEngine:
             
         Returns:
             Revenue predictions
-        """        try:
+        """
+        try:
             # Check cache first
             cache_key = f"revenue_prediction:{user_id}:{prediction_days}"
             cached_prediction = await self._get_from_cache(cache_key)
@@ -467,14 +487,16 @@ class AnalyticsEngine:
             return {'predicted_revenue': 0.0, 'confidence': 0.0}
     
     async def create_dashboard_visualization(self, user_id: str) -> Dict[str, Any]:
-        """        Create visualization data for analytics dashboard.
+        """
+        Create visualization data for analytics dashboard.
         
         Args:
             user_id: User identifier
             
         Returns:
             Dashboard visualization data
-        """        try:
+        """
+        try:
             visualizations = {}
             
             # Revenue trend chart
@@ -565,7 +587,8 @@ class AnalyticsEngine:
     
     async def _get_user_revenue_data(self, user_id: str, start_date: datetime,
                                    end_date: datetime) -> List[Dict]:
-        """Get user revenue data for period"""        # Implementation would query revenue database
+        """Get user revenue data for period"""
+        # Implementation would query revenue database
         # Placeholder implementation
         revenue_data = []
         
@@ -584,11 +607,13 @@ class AnalyticsEngine:
     
     async def _get_previous_period_revenue(self, user_id: str, start_date: datetime,
                                          end_date: datetime) -> Decimal:
-        """Get revenue for previous period"""        # Implementation would query previous period revenue
+        """Get revenue for previous period"""
+        # Implementation would query previous period revenue
         return Decimal('800.00')  # Sample previous revenue
     
     async def _calculate_platform_revenue(self, revenue_data: List[Dict]) -> Dict[str, Decimal]:
-        """Calculate revenue by platform"""        platform_revenue = {}
+        """Calculate revenue by platform"""
+        platform_revenue = {}
         
         for item in revenue_data:
             platform = item['platform']
@@ -598,7 +623,8 @@ class AnalyticsEngine:
         return platform_revenue
     
     async def _calculate_revenue_diversity(self, platform_revenue: Dict[str, Decimal]) -> float:
-        """Calculate revenue diversity index using Gini coefficient"""        if not platform_revenue:
+        """Calculate revenue diversity index using Gini coefficient"""
+        if not platform_revenue:
             return 0.0
         
         values = [float(v) for v in platform_revenue.values()]
@@ -616,14 +642,16 @@ class AnalyticsEngine:
         return 1.0 - gini
     
     async def _calculate_revenue_volatility(self, revenue_data: List[Dict]) -> float:
-        """Calculate revenue volatility (standard deviation)"""        if len(revenue_data) < 2:
+        """Calculate revenue volatility (standard deviation)"""
+        if len(revenue_data) < 2:
             return 0.0
         
         amounts = [item['amount'] for item in revenue_data]
         return float(np.std(amounts))
     
     async def _calculate_trend(self, values: np.ndarray) -> str:
-        """Calculate trend direction"""        if len(values) < 2:
+        """Calculate trend direction"""
+        if len(values) < 2:
             return 'stable'
         
         # Linear regression slope
@@ -638,7 +666,8 @@ class AnalyticsEngine:
             return 'stable'
     
     async def _calculate_seasonality(self, values: np.ndarray) -> float:
-        """Calculate seasonality factor"""        if len(values) < 7:  # Need at least a week of data
+        """Calculate seasonality factor"""
+        if len(values) < 7:  # Need at least a week of data
             return 0.0
         
         # Simple seasonality: coefficient of variation
@@ -647,7 +676,8 @@ class AnalyticsEngine:
     async def _get_metric_time_series(self, user_id: str, metric_name: str,
                                     start_date: datetime, end_date: datetime,
                                     granularity: TimeGranularity) -> List[Tuple]:
-        """Get time series data for metric"""        # Implementation would query metric data
+        """Get time series data for metric"""
+        # Implementation would query metric data
         # Placeholder implementation generating sample data
         data = []
         
@@ -661,14 +691,16 @@ class AnalyticsEngine:
         return data
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
-        """Get data from cache"""        try:
+        """Get data from cache"""
+        try:
             cached_data = await self.redis.get(key)
             return json.loads(cached_data) if cached_data else None
         except:
             return None
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
-        """Save data to cache"""        try:
+        """Save data to cache"""
+        try:
             ttl = ttl or self.cache_ttl
             await self.redis.setex(key, ttl, json.dumps(data, default=str))
         except Exception as e:

@@ -40,7 +40,8 @@ copyright law.
 
 Contact: Fahed Mlaiel (mlaiel@live.de)
 =============================================================================
-"""import logging
+"""
+import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 import numpy as np
 from enum import Enum
@@ -102,14 +103,16 @@ from .metering_system import (
 
 
 class ProcessingQuality(Enum):
-    """Audio processing quality levels"""    DRAFT = "draft"           # Fast processing, lower quality
+    """Audio processing quality levels"""
+    DRAFT = "draft"           # Fast processing, lower quality
     STANDARD = "standard"     # Balanced quality/performance
     HIGH = "high"            # High quality processing
     ULTRA = "ultra"          # Maximum quality, slower processing
 
 
 class ProcessorType(Enum):
-    """Available audio processor types"""    EQUALIZER = "equalizer"
+    """Available audio processor types"""
+    EQUALIZER = "equalizer"
     COMPRESSOR = "compressor"
     REVERB = "reverb"
     CHORUS = "chorus"
@@ -122,7 +125,8 @@ class ProcessorType(Enum):
 
 
 class EffectsChainProcessor:
-    """Professional effects chain processor for complex audio workflows"""    
+    """Professional effects chain processor for complex audio workflows"""
+    
     def __init__(self, sample_rate: int = 44100, quality: ProcessingQuality = ProcessingQuality.HIGH):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -154,7 +158,8 @@ class EffectsChainProcessor:
         self.logger.info(f"EffectsChainProcessor initialized - Quality: {quality.value}, Sample Rate: {sample_rate}Hz")
     
     def _initialize_processors(self) -> Dict[ProcessorType, Any]:
-        """Initialize all available audio processors"""        processors = {}
+        """Initialize all available audio processors"""
+        processors = {}
         
         try:
             processors[ProcessorType.EQUALIZER] = EqualizerProcessor(
@@ -196,7 +201,8 @@ class EffectsChainProcessor:
         return processors
     
     def add_processor(self, processor_type: ProcessorType, settings: Dict[str, Any]) -> bool:
-        """Add processor to effects chain"""        try:
+        """Add processor to effects chain"""
+        try:
             if processor_type in self.processors:
                 self.effects_chain.append((processor_type, settings))
                 self.logger.info(f"Added {processor_type.value} to effects chain")
@@ -210,7 +216,8 @@ class EffectsChainProcessor:
             return False
     
     def remove_processor(self, index: int) -> bool:
-        """Remove processor from effects chain by index"""        try:
+        """Remove processor from effects chain by index"""
+        try:
             if 0 <= index < len(self.effects_chain):
                 removed = self.effects_chain.pop(index)
                 self.logger.info(f"Removed {removed[0].value} from effects chain")
@@ -224,7 +231,8 @@ class EffectsChainProcessor:
             return False
     
     def process_audio(self, audio_data: np.ndarray) -> np.ndarray:
-        """Process audio through the entire effects chain"""        try:
+        """Process audio through the entire effects chain"""
+        try:
             if self.bypass_all or len(self.effects_chain) == 0:
                 return audio_data
             
@@ -269,7 +277,8 @@ class EffectsChainProcessor:
             return audio_data
     
     def _apply_processor_settings(self, processor: Any, settings: Dict[str, Any]) -> None:
-        """Apply settings to a specific processor"""        try:
+        """Apply settings to a specific processor"""
+        try:
             for key, value in settings.items():
                 if hasattr(processor, key):
                     setattr(processor, key, value)
@@ -277,7 +286,8 @@ class EffectsChainProcessor:
             self.logger.error(f"Failed to apply processor settings: {str(e)}")
     
     def _apply_gain_staging(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply automatic gain staging to prevent clipping"""        peak_level = np.max(np.abs(audio_data))
+        """Apply automatic gain staging to prevent clipping"""
+        peak_level = np.max(np.abs(audio_data))
         if peak_level > 0.95:
             # Reduce gain to prevent clipping
             gain_reduction = 0.95 / peak_level
@@ -285,7 +295,8 @@ class EffectsChainProcessor:
         return audio_data
     
     def load_preset_chain(self, preset_name: str) -> bool:
-        """Load a predefined effects chain preset"""        presets = self._get_chain_presets()
+        """Load a predefined effects chain preset"""
+        presets = self._get_chain_presets()
         
         if preset_name in presets:
             self.effects_chain = presets[preset_name].copy()
@@ -296,7 +307,8 @@ class EffectsChainProcessor:
             return False
     
     def _get_chain_presets(self) -> Dict[str, List[Tuple[ProcessorType, Dict[str, Any]]]]:
-        """Get predefined effects chain presets"""        return {
+        """Get predefined effects chain presets"""
+        return {
             'vocal_production': [
                 (ProcessorType.EQUALIZER, {'apply_preset': EQPreset.VOCAL_CLARITY}),
                 (ProcessorType.COMPRESSOR, {'apply_preset': CompressorPreset.VOCAL_LEVELING}),
@@ -320,7 +332,8 @@ class EffectsChainProcessor:
         }
     
     def analyze_audio_content(self, audio_data: np.ndarray) -> Dict[str, Any]:
-        """Analyze audio content and provide processing recommendations"""        try:
+        """Analyze audio content and provide processing recommendations"""
+        try:
             analysis_result = {}
             
             # Basic audio analysis
@@ -350,7 +363,8 @@ class EffectsChainProcessor:
             return {}
     
     def _detect_content_type(self, audio_data: np.ndarray) -> str:
-        """Detect audio content type (music, speech, etc.)"""        # Simplified content detection based on spectral characteristics
+        """Detect audio content type (music, speech, etc.)"""
+        # Simplified content detection based on spectral characteristics
         # In production, this would use machine learning models
         
         fft = np.fft.fft(audio_data[:min(len(audio_data), 8192)])
@@ -382,7 +396,8 @@ class EffectsChainProcessor:
             return "music_balanced"
     
     def _generate_processing_recommendations(self, analysis: Dict[str, Any]) -> List[str]:
-        """Generate processing recommendations based on analysis"""        recommendations = []
+        """Generate processing recommendations based on analysis"""
+        recommendations = []
         
         # Dynamic range recommendations
         if analysis.get('dynamic_range_db', 0) < 6:
@@ -408,7 +423,8 @@ class EffectsChainProcessor:
         return recommendations
     
     def get_processing_statistics(self) -> Dict[str, Any]:
-        """Get detailed processing performance statistics"""        stats = self.processing_stats.copy()
+        """Get detailed processing performance statistics"""
+        stats = self.processing_stats.copy()
         stats['effects_chain_length'] = len(self.effects_chain)
         stats['active_processors'] = [pt.value for pt, _ in self.effects_chain]
         stats['sample_rate'] = self.sample_rate
@@ -416,7 +432,8 @@ class EffectsChainProcessor:
         return stats
     
     def export_chain_configuration(self) -> Dict[str, Any]:
-        """Export current effects chain configuration"""        config = {
+        """Export current effects chain configuration"""
+        config = {
             'version': '1.0',
             'created_at': datetime.now().isoformat(),
             'sample_rate': self.sample_rate,
@@ -438,7 +455,8 @@ class EffectsChainProcessor:
         return config
     
     def import_chain_configuration(self, config: Dict[str, Any]) -> bool:
-        """Import effects chain configuration"""        try:
+        """Import effects chain configuration"""
+        try:
             # Clear current chain
             self.effects_chain.clear()
             
@@ -469,22 +487,28 @@ class EffectsChainProcessor:
 
 # Module-level convenience functions
 def create_eq_processor(sample_rate: int = 44100, eq_type: EQType = EQType.PARAMETRIC) -> EqualizerProcessor:
-    """Create a professional equalizer processor"""    return EqualizerProcessor(sample_rate, eq_type)
+    """Create a professional equalizer processor"""
+    return EqualizerProcessor(sample_rate, eq_type)
 
 def create_compressor(sample_rate: int = 44100, compressor_type: CompressorType = CompressorType.VCA) -> CompressorProcessor:
-    """Create a professional compressor processor"""    return CompressorProcessor(sample_rate, compressor_type)
+    """Create a professional compressor processor"""
+    return CompressorProcessor(sample_rate, compressor_type)
 
 def create_reverb(sample_rate: int = 44100, reverb_type: ReverbType = ReverbType.ALGORITHMIC) -> ReverbProcessor:
-    """Create a professional reverb processor"""    return ReverbProcessor(sample_rate, reverb_type)
+    """Create a professional reverb processor"""
+    return ReverbProcessor(sample_rate, reverb_type)
 
 def create_effects_chain(sample_rate: int = 44100, quality: ProcessingQuality = ProcessingQuality.HIGH) -> EffectsChainProcessor:
-    """Create a complete effects chain processor"""    return EffectsChainProcessor(sample_rate, quality)
+    """Create a complete effects chain processor"""
+    return EffectsChainProcessor(sample_rate, quality)
 
 def get_available_processors() -> List[ProcessorType]:
-    """Get list of available processor types"""    return list(ProcessorType)
+    """Get list of available processor types"""
+    return list(ProcessorType)
 
 def get_processor_info(processor_type: ProcessorType) -> Dict[str, Any]:
-    """Get information about a specific processor type"""    processor_info = {
+    """Get information about a specific processor type"""
+    processor_info = {
         ProcessorType.EQUALIZER: {
             'name': 'Professional Equalizer',
             'description': 'Multi-band parametric EQ with AI-assisted analysis',

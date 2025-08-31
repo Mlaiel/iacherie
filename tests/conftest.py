@@ -31,7 +31,8 @@ def event_loop():
 
 @pytest.fixture
 def sample_test_file(temp_dir: Path) -> Path:
-    """Create a sample test file"""
+    """
+Create a sample test file"""
     test_file = temp_dir / "test_content.txt"
     test_file.write_text("This is a test content file for validation tests.")
     return test_file

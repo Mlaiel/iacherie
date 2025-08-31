@@ -4,7 +4,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive AutoML capabilities including automated model selection,
 hyperparameter optimization, and neural architecture search.
-"""import logging
+"""
+import logging
 import numpy as np
 import json
 import time
@@ -19,28 +20,32 @@ import random
 logger = logging.getLogger(__name__)
 
 class OptimizationAlgorithm(Enum):
-    """Hyperparameter optimization algorithms"""    RANDOM_SEARCH = "random_search"
+    """Hyperparameter optimization algorithms"""
+    RANDOM_SEARCH = "random_search"
     GRID_SEARCH = "grid_search"
     BAYESIAN = "bayesian"
     GENETIC = "genetic"
     TPE = "tpe"  # Tree-structured Parzen Estimator
 
 class ModelType(Enum):
-    """Supported model types for AutoML"""    CLASSIFICATION = "classification"
+    """Supported model types for AutoML"""
+    CLASSIFICATION = "classification"
     REGRESSION = "regression"
     CLUSTERING = "clustering"
     DEEP_LEARNING = "deep_learning"
     TIME_SERIES = "time_series"
 
 class NASStrategy(Enum):
-    """Neural Architecture Search strategies"""    RANDOM_SEARCH = "random_search"
+    """Neural Architecture Search strategies"""
+    RANDOM_SEARCH = "random_search"
     EVOLUTIONARY = "evolutionary"
     REINFORCEMENT_LEARNING = "reinforcement_learning"
     DIFFERENTIABLE = "differentiable"
 
 @dataclass
 class HyperparameterSpace:
-    """Definition of hyperparameter search space"""    parameter_name: str
+    """Definition of hyperparameter search space"""
+    parameter_name: str
     parameter_type: str  # 'int', 'float', 'categorical', 'bool'
     min_value: Optional[Union[int, float]] = None
     max_value: Optional[Union[int, float]] = None
@@ -49,7 +54,8 @@ class HyperparameterSpace:
 
 @dataclass
 class AutoMLConfig:
-    """Configuration for AutoML pipeline"""    task_type: ModelType
+    """Configuration for AutoML pipeline"""
+    task_type: ModelType
     max_trials: int = 100
     max_time_minutes: int = 60
     optimization_metric: str = "accuracy"
@@ -60,7 +66,8 @@ class AutoMLConfig:
 
 @dataclass
 class TrialResult:
-    """Result of a single AutoML trial"""    trial_id: str
+    """Result of a single AutoML trial"""
+    trial_id: str
     model_type: str
     hyperparameters: Dict[str, Any]
     score: float
@@ -70,7 +77,8 @@ class TrialResult:
     metadata: Dict[str, Any]
 
 class AutoMLEngine:
-    """Main AutoML engine for automated model selection and training"""    
+    """Main AutoML engine for automated model selection and training"""
+    
     def __init__(self, config: AutoMLConfig):
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -81,7 +89,8 @@ class AutoMLEngine:
         self.logger.info("AutoMLEngine initialized successfully")
     
     def _define_default_search_space(self) -> Dict[str, List[HyperparameterSpace]]:
-        """Define default hyperparameter search spaces for different models"""        search_spaces = {
+        """Define default hyperparameter search spaces for different models"""
+        search_spaces = {
             "random_forest": [
                 HyperparameterSpace("n_estimators", "int", 10, 1000),
                 HyperparameterSpace("max_depth", "int", 3, 20),
@@ -112,7 +121,8 @@ class AutoMLEngine:
         return search_spaces
     
     def _initialize_models_registry(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize registry of available models"""        return {
+        """Initialize registry of available models"""
+        return {
             "random_forest": {
                 "class_name": "RandomForestClassifier",
                 "module": "sklearn.ensemble",
@@ -136,7 +146,8 @@ class AutoMLEngine:
         }
     
     def fit(self, X: np.ndarray, y: np.ndarray) -> 'AutoMLEngine':
-        """Fit AutoML pipeline on training data"""        try:
+        """Fit AutoML pipeline on training data"""
+        try:
             self.logger.info(f"Starting AutoML training with {len(X)} samples")
             start_time = time.time()
             
@@ -216,14 +227,16 @@ class AutoMLEngine:
             raise
     
     def _get_compatible_models(self) -> List[str]:
-        """Get models compatible with the current task type"""        compatible = []
+        """Get models compatible with the current task type"""
+        compatible = []
         for model_name, model_info in self.models_registry.items():
             if self.config.task_type in model_info["task_types"]:
                 compatible.append(model_name)
         return compatible
     
     def _sample_hyperparameters(self, model_name: str) -> Dict[str, Any]:
-        """Sample hyperparameters for a model"""        hyperparams = {}
+        """Sample hyperparameters for a model"""
+        hyperparams = {}
         search_space = self.search_space.get(model_name, [])
         
         for param_space in search_space:
@@ -252,7 +265,8 @@ class AutoMLEngine:
     def _evaluate_model(self, model_name: str, hyperparams: Dict[str, Any],
                        X_train: np.ndarray, y_train: np.ndarray,
                        X_val: np.ndarray, y_val: np.ndarray) -> float:
-        """Evaluate a model with given hyperparameters"""        # Simulate model training and evaluation
+        """Evaluate a model with given hyperparameters"""
+        # Simulate model training and evaluation
         # In production, this would actually train the model
         
         # Simulate training time based on model complexity
@@ -277,17 +291,20 @@ class AutoMLEngine:
         return score
     
     def _is_maximizing_metric(self) -> bool:
-        """Check if the optimization metric should be maximized"""        maximizing_metrics = ["accuracy", "precision", "recall", "f1", "auc", "r2"]
+        """Check if the optimization metric should be maximized"""
+        maximizing_metrics = ["accuracy", "precision", "recall", "f1", "auc", "r2"]
         return self.config.optimization_metric.lower() in maximizing_metrics
     
     def _is_better_score(self, new_score: float, current_best: float) -> bool:
-        """Check if new score is better than current best"""        if self._is_maximizing_metric():
+        """Check if new score is better than current best"""
+        if self._is_maximizing_metric():
             return new_score > current_best
         else:
             return new_score < current_best
     
     def get_best_model_config(self) -> Optional[Dict[str, Any]]:
-        """Get configuration of the best model found"""        if self.best_trial is None:
+        """Get configuration of the best model found"""
+        if self.best_trial is None:
             return None
         
         return {
@@ -298,7 +315,8 @@ class AutoMLEngine:
         }
     
     def get_leaderboard(self, top_k: int = 10) -> List[Dict[str, Any]]:
-        """Get leaderboard of top performing trials"""        sorted_trials = sorted(
+        """Get leaderboard of top performing trials"""
+        sorted_trials = sorted(
             self.trials,
             key=lambda t: t.score,
             reverse=self._is_maximizing_metric()
@@ -317,7 +335,8 @@ class AutoMLEngine:
         return leaderboard
 
 class HyperparameterOptimizer:
-    """Advanced hyperparameter optimization engine"""    
+    """Advanced hyperparameter optimization engine"""
+    
     def __init__(self, algorithm: OptimizationAlgorithm = OptimizationAlgorithm.RANDOM_SEARCH):
         self.algorithm = algorithm
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -326,7 +345,8 @@ class HyperparameterOptimizer:
     
     def optimize(self, objective_function: Callable, search_space: List[HyperparameterSpace],
                 max_trials: int = 50, timeout_minutes: int = 30) -> Dict[str, Any]:
-        """Optimize hyperparameters using specified algorithm"""        try:
+        """Optimize hyperparameters using specified algorithm"""
+        try:
             self.logger.info(f"Starting hyperparameter optimization with {self.algorithm.value}")
             start_time = time.time()
             
@@ -390,7 +410,8 @@ class HyperparameterOptimizer:
             raise
     
     def _random_search_sample(self, search_space: List[HyperparameterSpace]) -> Dict[str, Any]:
-        """Sample parameters using random search"""        params = {}
+        """Sample parameters using random search"""
+        params = {}
         for param_space in search_space:
             if param_space.parameter_type == "int":
                 value = random.randint(param_space.min_value, param_space.max_value)
@@ -415,11 +436,13 @@ class HyperparameterOptimizer:
     
     def _grid_search_sample(self, search_space: List[HyperparameterSpace], 
                            trial: int, max_trials: int) -> Dict[str, Any]:
-        """Sample parameters using grid search (simplified)"""        # Simplified grid search - in production would use proper grid generation
+        """Sample parameters using grid search (simplified)"""
+        # Simplified grid search - in production would use proper grid generation
         return self._random_search_sample(search_space)
     
     def _bayesian_sample(self, search_space: List[HyperparameterSpace], trial: int) -> Dict[str, Any]:
-        """Sample parameters using Bayesian optimization (simplified)"""        # Simplified Bayesian - in production would use proper Bayesian optimization
+        """Sample parameters using Bayesian optimization (simplified)"""
+        # Simplified Bayesian - in production would use proper Bayesian optimization
         if trial < 5:  # Random exploration phase
             return self._random_search_sample(search_space)
         
@@ -427,7 +450,8 @@ class HyperparameterOptimizer:
         return self._random_search_sample(search_space)
 
 class NeuralArchitectureSearch:
-    """Neural Architecture Search for automated neural network design"""    
+    """Neural Architecture Search for automated neural network design"""
+    
     def __init__(self, strategy: NASStrategy = NASStrategy.RANDOM_SEARCH):
         self.strategy = strategy
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -436,7 +460,8 @@ class NeuralArchitectureSearch:
         self.logger.info("NeuralArchitectureSearch initialized successfully")
     
     def _define_architecture_space(self) -> Dict[str, List[Any]]:
-        """Define the neural architecture search space"""        return {
+        """Define the neural architecture search space"""
+        return {
             "num_layers": list(range(2, 10)),
             "layer_sizes": [32, 64, 128, 256, 512, 1024],
             "activation_functions": ["relu", "tanh", "sigmoid", "leaky_relu"],
@@ -448,7 +473,8 @@ class NeuralArchitectureSearch:
     
     def search(self, objective_function: Callable, max_architectures: int = 20,
                timeout_minutes: int = 60) -> Dict[str, Any]:
-        """Search for optimal neural architecture"""        try:
+        """Search for optimal neural architecture"""
+        try:
             self.logger.info(f"Starting NAS with {self.strategy.value} strategy")
             start_time = time.time()
             
@@ -510,7 +536,8 @@ class NeuralArchitectureSearch:
             raise
     
     def _random_architecture(self) -> Dict[str, Any]:
-        """Generate random neural architecture"""        num_layers = random.choice(self.architecture_space["num_layers"])
+        """Generate random neural architecture"""
+        num_layers = random.choice(self.architecture_space["num_layers"])
         
         architecture = {
             "num_layers": num_layers,
@@ -533,7 +560,8 @@ class NeuralArchitectureSearch:
         return architecture
     
     def _evolutionary_architecture(self, generation: int) -> Dict[str, Any]:
-        """Generate architecture using evolutionary strategy"""        if generation < 5 or not self.search_history:
+        """Generate architecture using evolutionary strategy"""
+        if generation < 5 or not self.search_history:
             # Random initialization
             return self._random_architecture()
         

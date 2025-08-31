@@ -6,7 +6,8 @@ comprehensive CRUD operations, metadata handling, and analytics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -19,7 +20,8 @@ class BaseRepository:
         self.db_connection = db_connection
         
     async def execute_query(self, query: str, params: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Execute database query (mock implementation)"""        # This would normally execute the query against the database
+        """Execute database query (mock implementation)"""
+        # This would normally execute the query against the database
         # For now, return empty list
         return []
 
@@ -27,13 +29,16 @@ logger = logging.getLogger(__name__)
 
 
 class ContentRepository(BaseRepository):
-    """    Content database repository
+    """
+    Content database repository
     
     Handles all database operations for content management including
     storage, retrieval, metadata management, and analytics.
-    """    
+    """
+    
     def __init__(self, db_connection=None):
-        """Initialize content repository"""        super().__init__(db_connection)
+        """Initialize content repository"""
+        super().__init__(db_connection)
         self.table_name = "content"
         
         # Cache for frequently accessed content
@@ -45,7 +50,8 @@ class ContentRepository(BaseRepository):
         self._initialize_mock_data()
         
     def _initialize_mock_data(self):
-        """Initialize mock content data for testing"""        self.mock_content = {
+        """Initialize mock content data for testing"""
+        self.mock_content = {
             1: {
                 "id": 1,
                 "user_id": 1,
@@ -106,25 +112,29 @@ class ContentRepository(BaseRepository):
         }
     
     async def get_content(self, content_id: int) -> Optional[Dict[str, Any]]:
-        """        Get content by ID
+        """
+        Get content by ID
         
         Args:
             content_id: Content ID
             
         Returns:
             Dict: Content data or None if not found
-        """        try:
+        """
+        try:
             # Check cache first
             if self._is_cached_and_valid(content_id):
                 return self.content_cache[content_id].copy()
             
             # Query database
             if self.db_connection:
-                query = """                SELECT c.*, u.username as user_name
+                query = """
+                SELECT c.*, u.username as user_name
                 FROM content c
                 LEFT JOIN users u ON c.user_id = u.id
                 WHERE c.id = %(content_id)s AND c.status != 'deleted'
-                """                
+                """
+                
                 result = await self.execute_query(query, {"content_id": content_id})
                 
                 if result:
@@ -149,14 +159,16 @@ class ContentRepository(BaseRepository):
             return None
     
     async def create_content(self, content_data: Dict[str, Any]) -> int:
-        """        Create new content record
+        """
+        Create new content record
         
         Args:
             content_data: Content information
             
         Returns:
             int: Content ID
-        """        try:
+        """
+        try:
             # Prepare content data for database
             db_data = {
                 "user_id": content_data["user_id"],
@@ -176,7 +188,8 @@ class ContentRepository(BaseRepository):
             
             # Insert into database
             if self.db_connection:
-                query = """                INSERT INTO content (
+                query = """
+                INSERT INTO content (
                     user_id, title, content_type, file_path, file_size,
                     duration, metadata, fingerprint, status, visibility,
                     license_type, created_at, updated_at
@@ -185,7 +198,8 @@ class ContentRepository(BaseRepository):
                     %(duration)s, %(metadata)s, %(fingerprint)s, %(status)s, %(visibility)s,
                     %(license_type)s, %(created_at)s, %(updated_at)s
                 ) RETURNING id
-                """                
+                """
+                
                 result = await self.execute_query(query, db_data)
                 content_id = result[0]["id"] if result else None
             else:
@@ -211,7 +225,8 @@ class ContentRepository(BaseRepository):
         content_id: int,
         updates: Dict[str, Any]
     ) -> bool:
-        """        Update content record
+        """
+        Update content record
         
         Args:
             content_id: Content ID
@@ -219,7 +234,8 @@ class ContentRepository(BaseRepository):
             
         Returns:
             bool: True if updated successfully
-        """        try:
+        """
+        try:
             # Add update timestamp
             updates["updated_at"] = datetime.utcnow()
             
@@ -234,10 +250,12 @@ class ContentRepository(BaseRepository):
                     set_clauses.append(f"{key} = %({key})s")
                     query_params[key] = value
                 
-                query = f"""                UPDATE content 
+                query = f"""
+                UPDATE content 
                 SET {', '.join(set_clauses)}
                 WHERE id = %(content_id)s
-                """                
+                """
+                
                 await self.execute_query(query, query_params)
             else:
                 # Mock implementation
@@ -259,14 +277,16 @@ class ContentRepository(BaseRepository):
             return False
     
     async def delete_content(self, content_id: int) -> bool:
-        """        Soft delete content (mark as deleted)
+        """
+        Soft delete content (mark as deleted)
         
         Args:
             content_id: Content ID
             
         Returns:
             bool: True if deleted successfully
-        """        try:
+        """
+        try:
             return await self.update_content(content_id, {
                 "status": "deleted",
                 "deleted_at": datetime.utcnow()
@@ -284,7 +304,8 @@ class ContentRepository(BaseRepository):
         limit: int = 50,
         offset: int = 0
     ) -> List[Dict[str, Any]]:
-        """        Get content by user
+        """
+        Get content by user
         
         Args:
             user_id: User ID
@@ -295,7 +316,8 @@ class ContentRepository(BaseRepository):
             
         Returns:
             List[Dict]: User's content
-        """        try:
+        """
+        try:
             if self.db_connection:
                 # Build dynamic query
                 where_conditions = ["user_id = %(user_id)s", "status = %(status)s"]
@@ -307,13 +329,15 @@ class ContentRepository(BaseRepository):
                 
                 where_clause = " AND ".join(where_conditions)
                 
-                query = f"""                SELECT c.*, u.username as user_name
+                query = f"""
+                SELECT c.*, u.username as user_name
                 FROM content c
                 LEFT JOIN users u ON c.user_id = u.id
                 WHERE {where_clause}
                 ORDER BY c.created_at DESC
                 LIMIT %(limit)s OFFSET %(offset)s
-                """                
+                """
+                
                 query_params.update({"limit": limit, "offset": offset})
                 
                 result = await self.execute_query(query, query_params)
@@ -345,7 +369,8 @@ class ContentRepository(BaseRepository):
         limit: int = 50,
         offset: int = 0
     ) -> List[Dict[str, Any]]:
-        """        Search content with various filters
+        """
+        Search content with various filters
         
         Args:
             search_params: Search parameters
@@ -354,7 +379,8 @@ class ContentRepository(BaseRepository):
             
         Returns:
             List[Dict]: Matching content
-        """        try:
+        """
+        try:
             if self.db_connection:
                 # Build dynamic search query
                 where_conditions = ["status != 'deleted'"]
@@ -399,13 +425,15 @@ class ContentRepository(BaseRepository):
                 elif search_params.get("sort_by") == "file_size":
                     order_by = "file_size DESC"
                 
-                query = f"""                SELECT c.*, u.username as user_name
+                query = f"""
+                SELECT c.*, u.username as user_name
                 FROM content c
                 LEFT JOIN users u ON c.user_id = u.id
                 WHERE {where_clause}
                 ORDER BY {order_by}
                 LIMIT %(limit)s OFFSET %(offset)s
-                """                
+                """
+                
                 query_params.update({"limit": limit, "offset": offset})
                 
                 result = await self.execute_query(query, query_params)
@@ -463,7 +491,8 @@ class ContentRepository(BaseRepository):
         period_end: datetime,
         user_id: Optional[int] = None
     ) -> Dict[str, Any]:
-        """        Get content statistics for a period
+        """
+        Get content statistics for a period
         
         Args:
             period_start: Start of period
@@ -472,7 +501,8 @@ class ContentRepository(BaseRepository):
             
         Returns:
             Dict: Content statistics
-        """        try:
+        """
+        try:
             if self.db_connection:
                 # Base statistics query
                 where_conditions = ["created_at BETWEEN %(period_start)s AND %(period_end)s"]
@@ -484,7 +514,8 @@ class ContentRepository(BaseRepository):
                 
                 where_clause = " AND ".join(where_conditions)
                 
-                query = f"""                SELECT 
+                query = f"""
+                SELECT 
                     COUNT(*) as total_content,
                     COUNT(CASE WHEN status = 'active' THEN 1 END) as active_content,
                     COUNT(CASE WHEN content_type = 'audio' THEN 1 END) as audio_content,
@@ -498,16 +529,19 @@ class ContentRepository(BaseRepository):
                     COUNT(DISTINCT user_id) as unique_creators
                 FROM content 
                 WHERE {where_clause}
-                """                
+                """
+                
                 result = await self.execute_query(query, query_params)
                 stats = result[0] if result else {}
                 
                 # License type breakdown
-                license_query = f"""                SELECT license_type, COUNT(*) as count
+                license_query = f"""
+                SELECT license_type, COUNT(*) as count
                 FROM content 
                 WHERE {where_clause}
                 GROUP BY license_type
-                """                
+                """
+                
                 license_result = await self.execute_query(license_query, query_params)
                 license_breakdown = {row["license_type"]: row["count"] for row in license_result}
                 
@@ -558,7 +592,8 @@ class ContentRepository(BaseRepository):
         content_type: Optional[str] = None,
         limit: int = 20
     ) -> List[Dict[str, Any]]:
-        """        Get popular content based on usage metrics
+        """
+        Get popular content based on usage metrics
         
         Args:
             content_type: Filter by content type
@@ -566,7 +601,8 @@ class ContentRepository(BaseRepository):
             
         Returns:
             List[Dict]: Popular content
-        """        try:
+        """
+        try:
             if self.db_connection:
                 # Join with usage statistics to find popular content
                 where_conditions = ["c.status = 'active'"]
@@ -578,7 +614,8 @@ class ContentRepository(BaseRepository):
                 
                 where_clause = " AND ".join(where_conditions)
                 
-                query = f"""                SELECT c.*, u.username as user_name, 
+                query = f"""
+                SELECT c.*, u.username as user_name, 
                        COALESCE(SUM(ls.usage_count), 0) as total_usage
                 FROM content c
                 LEFT JOIN users u ON c.user_id = u.id
@@ -587,7 +624,8 @@ class ContentRepository(BaseRepository):
                 GROUP BY c.id, u.username
                 ORDER BY total_usage DESC, c.created_at DESC
                 LIMIT %(limit)s
-                """                
+                """
+                
                 query_params["limit"] = limit
                 
                 result = await self.execute_query(query, query_params)
@@ -611,7 +649,8 @@ class ContentRepository(BaseRepository):
             return []
     
     def _is_cached_and_valid(self, content_id: int) -> bool:
-        """Check if content is cached and valid"""        if content_id not in self.content_cache:
+        """Check if content is cached and valid"""
+        if content_id not in self.content_cache:
             return False
         
         if content_id not in self.cache_timestamps:
@@ -621,7 +660,8 @@ class ContentRepository(BaseRepository):
         return cache_age < self.cache_ttl
     
     def _format_content_data(self, raw_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Format content data for consumption"""        try:
+        """Format content data for consumption"""
+        try:
             formatted_data = raw_data.copy()
             
             # Parse JSON metadata field
@@ -648,7 +688,8 @@ class ContentRepository(BaseRepository):
             return raw_data
     
     async def cleanup_cache(self) -> None:
-        """Clean up expired cache entries"""        try:
+        """Clean up expired cache entries"""
+        try:
             current_time = datetime.utcnow()
             expired_ids = []
             
@@ -667,7 +708,8 @@ class ContentRepository(BaseRepository):
             logger.error(f"Error cleaning up cache: {e}")
     
     def get_repository_stats(self) -> Dict[str, Any]:
-        """Get repository statistics"""        return {
+        """Get repository statistics"""
+        return {
             "cache_size": len(self.content_cache),
             "mock_content_size": len(self.mock_content),
             "cache_hit_ratio": 0.75,  # Mock value

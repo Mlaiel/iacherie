@@ -10,7 +10,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is protected by copyright law. Unauthorized use, reproduction,
 or distribution without explicit written permission from Fahed Mlaiel is strictly
 prohibited and may result in legal action.
-"""from datetime import datetime, timedelta
+"""
+from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set
 from enum import Enum
 from dataclasses import dataclass
@@ -28,7 +29,8 @@ from backend.utils.content_formatter import ContentFormatter
 
 
 class Platform(str, Enum):
-    """Supported distribution platforms"""    YOUTUBE = "youtube"
+    """Supported distribution platforms"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -43,7 +45,8 @@ class Platform(str, Enum):
 
 
 class DistributionStatus(str, Enum):
-    """Distribution status states"""    PENDING = "pending"
+    """Distribution status states"""
+    PENDING = "pending"
     SCHEDULED = "scheduled"
     PUBLISHING = "publishing"
     PUBLISHED = "published"
@@ -53,7 +56,8 @@ class DistributionStatus(str, Enum):
 
 
 class ContentAdaptation(str, Enum):
-    """Content adaptation types"""    RESIZE_VIDEO = "resize_video"
+    """Content adaptation types"""
+    RESIZE_VIDEO = "resize_video"
     CROP_IMAGE = "crop_image"
     TRUNCATE_TEXT = "truncate_text"
     GENERATE_PREVIEW = "generate_preview"
@@ -65,7 +69,8 @@ class ContentAdaptation(str, Enum):
 
 @dataclass
 class PlatformConfiguration:
-    """Platform-specific configuration"""    platform: Platform
+    """Platform-specific configuration"""
+    platform: Platform
     enabled: bool
     account_id: str
     publishing_settings: Dict[str, Any]
@@ -77,7 +82,8 @@ class PlatformConfiguration:
 
 @dataclass
 class DistributionSchedule:
-    """Content distribution schedule"""    content_id: str
+    """Content distribution schedule"""
+    content_id: str
     platform_schedules: Dict[Platform, datetime]
     timezone: str
     repeat_schedule: Optional[Dict[str, Any]] = None
@@ -87,7 +93,8 @@ class DistributionSchedule:
 
 @dataclass
 class DistributionResult:
-    """Distribution execution result"""    distribution_id: str
+    """Distribution execution result"""
+    distribution_id: str
     content_id: str
     platform: Platform
     status: DistributionStatus
@@ -100,7 +107,8 @@ class DistributionResult:
 
 @dataclass
 class DistributionMetrics:
-    """Distribution performance metrics"""    total_distributions: int
+    """Distribution performance metrics"""
+    total_distributions: int
     successful_distributions: int
     failed_distributions: int
     success_rate: float
@@ -110,12 +118,14 @@ class DistributionMetrics:
 
 
 class DistributionManager:
-    """    Advanced Multi-Platform Content Distribution System
+    """
+    Advanced Multi-Platform Content Distribution System
     
     Provides comprehensive content distribution capabilities including
     automated multi-platform publishing, intelligent scheduling,
     content optimization, and performance analytics.
-    """    
+    """
+    
     def __init__(self):
         self.logger = get_logger(__name__)
         self.content_optimizer = ContentOptimizer()
@@ -141,7 +151,8 @@ class DistributionManager:
         creator_id: str,
         platform_configs: List[PlatformConfiguration]
     ) -> Dict[str, Any]:
-        """        Setup multi-platform distribution for campaign
+        """
+        Setup multi-platform distribution for campaign
         
         Args:
             campaign_id: Campaign unique identifier
@@ -150,7 +161,8 @@ class DistributionManager:
             
         Returns:
             Distribution setup result
-        """        try:
+        """
+        try:
             distribution_setup_id = f"dist_{campaign_id}_{int(datetime.utcnow().timestamp())}"
             
             # Validate platform configurations
@@ -230,7 +242,8 @@ class DistributionManager:
         distribution_schedule: Optional[DistributionSchedule] = None,
         immediate_publish: bool = False
     ) -> Dict[str, Any]:
-        """        Distribute content across configured platforms
+        """
+        Distribute content across configured platforms
         
         Args:
             campaign_id: Campaign unique identifier
@@ -241,7 +254,8 @@ class DistributionManager:
             
         Returns:
             Distribution execution result
-        """        try:
+        """
+        try:
             if campaign_id not in self._active_distributions:
                 raise ValueError(f"Campaign distribution not configured: {campaign_id}")
             
@@ -332,7 +346,8 @@ class DistributionManager:
         content_data: Dict[str, Any],
         optimization_goals: List[str]
     ) -> Dict[str, Any]:
-        """        Optimize content distribution timing using AI
+        """
+        Optimize content distribution timing using AI
         
         Args:
             campaign_id: Campaign unique identifier
@@ -341,7 +356,8 @@ class DistributionManager:
             
         Returns:
             Optimized distribution timing recommendations
-        """        try:
+        """
+        try:
             if campaign_id not in self._active_distributions:
                 raise ValueError(f"Campaign distribution not configured: {campaign_id}")
             
@@ -402,7 +418,8 @@ class DistributionManager:
         platform: Optional[Platform] = None,
         timeframe_days: int = 30
     ) -> Dict[str, Any]:
-        """        Track and analyze distribution performance
+        """
+        Track and analyze distribution performance
         
         Args:
             campaign_id: Campaign unique identifier
@@ -412,7 +429,8 @@ class DistributionManager:
             
         Returns:
             Distribution performance analytics
-        """        try:
+        """
+        try:
             if campaign_id not in self._active_distributions:
                 raise ValueError(f"Campaign distribution not configured: {campaign_id}")
             
@@ -482,7 +500,8 @@ class DistributionManager:
         action: str,
         platform_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Manage platform connections for campaign distribution
+        """
+        Manage platform connections for campaign distribution
         
         Args:
             campaign_id: Campaign unique identifier
@@ -491,7 +510,8 @@ class DistributionManager:
             
         Returns:
             Platform connection management result
-        """        try:
+        """
+        try:
             if campaign_id not in self._active_distributions:
                 raise ValueError(f"Campaign distribution not configured: {campaign_id}")
             
@@ -590,7 +610,8 @@ class DistributionManager:
     # Private helper methods
     
     async def _distribution_worker(self) -> None:
-        """Background distribution worker"""        while True:
+        """Background distribution worker"""
+        while True:
             try:
                 await self._process_distribution_queue()
                 await asyncio.sleep(60)  # Process every minute
@@ -600,7 +621,8 @@ class DistributionManager:
                 await asyncio.sleep(120)
     
     async def _metrics_collection_worker(self) -> None:
-        """Background metrics collection worker"""        while True:
+        """Background metrics collection worker"""
+        while True:
             try:
                 await self._collect_platform_metrics()
                 await asyncio.sleep(1800)  # Collect every 30 minutes
@@ -614,7 +636,8 @@ class DistributionManager:
         config: PlatformConfiguration,
         creator_id: str
     ) -> Dict[str, Any]:
-        """Validate platform configuration"""        # Implementation would validate API credentials, permissions, etc.
+        """Validate platform configuration"""
+        # Implementation would validate API credentials, permissions, etc.
         return {"valid": True, "errors": []}
     
     async def _adapt_content_for_platform(
@@ -623,7 +646,8 @@ class DistributionManager:
         platform: Platform,
         config: PlatformConfiguration
     ) -> Dict[str, Any]:
-        """Adapt content for specific platform requirements"""        adapted_content = content_data.copy()
+        """Adapt content for specific platform requirements"""
+        adapted_content = content_data.copy()
         
         # Apply content adaptations based on platform requirements
         for adaptation in config.content_adaptations:
@@ -639,7 +663,8 @@ class DistributionManager:
         platform: Platform,
         config: PlatformConfiguration
     ) -> Dict[str, Any]:
-        """Generate platform-specific metadata"""        metadata = {}
+        """Generate platform-specific metadata"""
+        metadata = {}
         
         # Generate hashtags
         if config.hashtag_strategy:
@@ -663,7 +688,8 @@ class DistributionManager:
         content_data: Dict[str, Any],
         platform_configs: Dict[Platform, PlatformConfiguration]
     ) -> DistributionSchedule:
-        """Optimize distribution schedule for content"""        optimal_times = await self.scheduling_optimizer.optimize_schedule(
+        """Optimize distribution schedule for content"""
+        optimal_times = await self.scheduling_optimizer.optimize_schedule(
             campaign_id, content_data, list(platform_configs.keys())
         )
         

@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""import re
+"""
+import re
 import cv2
 import numpy as np
 import librosa
@@ -27,11 +28,13 @@ import json
 logger = logging.getLogger(__name__)
 
 class ContentPreprocessor:
-    """    Advanced content preprocessor for preparing multi-format content for analysis
+    """
+    Advanced content preprocessor for preparing multi-format content for analysis
     
     Handles text normalization, image preprocessing, audio feature extraction,
     and video frame extraction with optimized performance.
-    """    
+    """
+    
     def __init__(self):
         # Image preprocessing transforms
         self.image_transforms = {
@@ -78,7 +81,8 @@ class ContentPreprocessor:
         }
     
     def preprocess_text(self, text: str, options: Dict[str, Any] = None) -> Dict[str, Any]:
-        """        Comprehensive text preprocessing with feature extraction
+        """
+        Comprehensive text preprocessing with feature extraction
         
         Args:
             text: Input text to preprocess
@@ -86,7 +90,8 @@ class ContentPreprocessor:
             
         Returns:
             Preprocessed text with extracted features
-        """        if not text or not isinstance(text, str):
+        """
+        if not text or not isinstance(text, str):
             return {
                 'clean_text': '',
                 'original_length': 0,
@@ -182,7 +187,8 @@ class ContentPreprocessor:
     
     def preprocess_image(self, image_input: Union[str, np.ndarray, Image.Image], 
                         transform_type: str = 'standard') -> Dict[str, Any]:
-        """        Advanced image preprocessing with quality enhancement and feature extraction
+        """
+        Advanced image preprocessing with quality enhancement and feature extraction
         
         Args:
             image_input: Image file path, numpy array, or PIL Image
@@ -190,7 +196,8 @@ class ContentPreprocessor:
             
         Returns:
             Preprocessed image tensor and metadata
-        """        try:
+        """
+        try:
             # Load image
             if isinstance(image_input, str):
                 image = Image.open(image_input).convert('RGB')
@@ -237,7 +244,8 @@ class ContentPreprocessor:
     
     def preprocess_audio(self, audio_input: Union[str, np.ndarray], 
                         sample_rate: int = 16000) -> Dict[str, Any]:
-        """        Advanced audio preprocessing with feature extraction
+        """
+        Advanced audio preprocessing with feature extraction
         
         Args:
             audio_input: Audio file path or numpy array
@@ -245,7 +253,8 @@ class ContentPreprocessor:
             
         Returns:
             Processed audio features and metadata
-        """        try:
+        """
+        try:
             # Load audio
             if isinstance(audio_input, str):
                 audio, sr = librosa.load(audio_input, sr=sample_rate)
@@ -288,7 +297,8 @@ class ContentPreprocessor:
             }
     
     def _extract_text_features(self, text: str) -> Dict[str, Any]:
-        """Extract comprehensive text features"""        if not text:
+        """Extract comprehensive text features"""
+        if not text:
             return {}
         
         words = text.split()
@@ -309,7 +319,8 @@ class ContentPreprocessor:
         }
     
     def _detect_language(self, text: str) -> str:
-        """Simple language detection based on character patterns"""        try:
+        """Simple language detection based on character patterns"""
+        try:
             # Simple heuristic-based language detection
             if re.search(r'[äöüÄÖÜß]', text):
                 return 'de'
@@ -335,7 +346,8 @@ class ContentPreprocessor:
             return 'unknown'
     
     def _calculate_readability(self, text: str) -> Dict[str, float]:
-        """Calculate text readability metrics"""        if not text:
+        """Calculate text readability metrics"""
+        if not text:
             return {}
         
         words = text.split()
@@ -357,7 +369,8 @@ class ContentPreprocessor:
         }
     
     def _count_syllables(self, word: str) -> int:
-        """Simple syllable counting"""        word = word.lower()
+        """Simple syllable counting"""
+        word = word.lower()
         vowels = "aeiouy"
         syllable_count = 0
         prev_char_was_vowel = False
@@ -377,7 +390,8 @@ class ContentPreprocessor:
         return syllable_count
     
     def _extract_image_metadata(self, image: Image.Image, image_path: Optional[str]) -> Dict[str, Any]:
-        """Extract comprehensive image metadata"""        metadata = {
+        """Extract comprehensive image metadata"""
+        metadata = {
             'width': image.width,
             'height': image.height,
             'mode': image.mode,
@@ -401,7 +415,8 @@ class ContentPreprocessor:
         return metadata
     
     def _enhance_image_quality(self, image: Image.Image) -> Image.Image:
-        """Enhance image quality for better analysis"""        try:
+        """Enhance image quality for better analysis"""
+        try:
             # Brightness and contrast enhancement
             enhancer = ImageEnhance.Brightness(image)
             enhanced = enhancer.enhance(1.1)
@@ -423,7 +438,8 @@ class ContentPreprocessor:
             return image
     
     def _extract_visual_features(self, image: Image.Image) -> Dict[str, Any]:
-        """Extract visual features from image"""        try:
+        """Extract visual features from image"""
+        try:
             # Convert to numpy array
             img_array = np.array(image)
             
@@ -447,7 +463,8 @@ class ContentPreprocessor:
             return {}
     
     def _analyze_colors(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze color distribution in image"""        # Calculate color histograms
+        """Analyze color distribution in image"""
+        # Calculate color histograms
         hist_r = cv2.calcHist([image], [0], None, [256], [0, 256])
         hist_g = cv2.calcHist([image], [1], None, [256], [0, 256])
         hist_b = cv2.calcHist([image], [2], None, [256], [0, 256])
@@ -469,7 +486,8 @@ class ContentPreprocessor:
         }
     
     def _analyze_texture(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze texture features in image"""        # Convert to grayscale
+        """Analyze texture features in image"""
+        # Convert to grayscale
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         
         # Calculate texture measures
@@ -487,7 +505,8 @@ class ContentPreprocessor:
         }
     
     def _analyze_edges(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze edge features in image"""        # Convert to grayscale
+        """Analyze edge features in image"""
+        # Convert to grayscale
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         
         # Canny edge detection
@@ -508,7 +527,8 @@ class ContentPreprocessor:
         }
     
     def _extract_audio_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract comprehensive audio features"""        try:
+        """Extract comprehensive audio features"""
+        try:
             features = {}
             
             # Spectral features
@@ -548,7 +568,8 @@ class ContentPreprocessor:
             return {}
     
     def _generate_spectrograms(self, audio: np.ndarray, sr: int) -> Dict[str, np.ndarray]:
-        """Generate different types of spectrograms"""        try:
+        """Generate different types of spectrograms"""
+        try:
             spectrograms = {}
             
             # Mel spectrogram
@@ -569,7 +590,8 @@ class ContentPreprocessor:
             return {}
     
     def _analyze_audio_quality(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Analyze audio quality metrics"""        try:
+        """Analyze audio quality metrics"""
+        try:
             # Signal-to-noise ratio estimation
             signal_power = np.mean(audio**2)
             noise_estimate = np.var(audio - np.convolve(audio, np.ones(5)/5, mode='same'))
@@ -594,14 +616,17 @@ class ContentPreprocessor:
             return {}
 
 class ContentHasher:
-    """    Advanced content hashing for duplicate detection and content tracking
+    """
+    Advanced content hashing for duplicate detection and content tracking
     
     Provides perceptual hashing for images, audio fingerprinting,
     and text similarity hashing.
-    """    
+    """
+    
     @staticmethod
     def hash_text(text: str, algorithm: str = 'sha256') -> str:
-        """Generate hash for text content"""        if not text:
+        """Generate hash for text content"""
+        if not text:
             return ""
         
         # Normalize text for consistent hashing
@@ -617,7 +642,8 @@ class ContentHasher:
     
     @staticmethod
     def hash_image(image: Union[Image.Image, np.ndarray]) -> str:
-        """Generate perceptual hash for image"""        try:
+        """Generate perceptual hash for image"""
+        try:
             if isinstance(image, np.ndarray):
                 image = Image.fromarray(image)
             
@@ -645,7 +671,8 @@ class ContentHasher:
     
     @staticmethod
     def hash_audio(audio: np.ndarray, sr: int) -> str:
-        """Generate audio fingerprint hash"""        try:
+        """Generate audio fingerprint hash"""
+        try:
             # Extract spectral features
             mfcc = librosa.feature.mfcc(y=audio, sr=sr, n_mfcc=12)
             
@@ -665,11 +692,13 @@ class ContentHasher:
             return ""
 
 class ViolationReporter:
-    """    Advanced violation reporting and evidence collection system
+    """
+    Advanced violation reporting and evidence collection system
     
     Generates comprehensive reports for content violations with
     detailed evidence, context, and recommendations.
-    """    
+    """
+    
     def __init__(self):
         self.report_templates = {
             'toxicity': "Content contains toxic language with {confidence:.2%} confidence. Detected categories: {categories}",
@@ -682,7 +711,8 @@ class ViolationReporter:
     
     def generate_violation_report(self, violations: List[Dict[str, Any]], 
                                 content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """        Generate comprehensive violation report
+        """
+        Generate comprehensive violation report
         
         Args:
             violations: List of detected violations
@@ -690,7 +720,8 @@ class ViolationReporter:
             
         Returns:
             Detailed violation report
-        """        report = {
+        """
+        report = {
             'report_id': self._generate_report_id(),
             'timestamp': datetime.now(timezone.utc).isoformat(),
             'content_metadata': content_metadata,
@@ -723,12 +754,14 @@ class ViolationReporter:
         return report
     
     def _generate_report_id(self) -> str:
-        """Generate unique report ID"""        timestamp = datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')
+        """Generate unique report ID"""
+        timestamp = datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')
         random_suffix = hashlib.md5(str(datetime.now().timestamp()).encode()).hexdigest()[:8]
         return f"MOD_{timestamp}_{random_suffix}"
     
     def _calculate_overall_severity(self, violations: List[Dict[str, Any]]) -> str:
-        """Calculate overall severity level"""        if not violations:
+        """Calculate overall severity level"""
+        if not violations:
             return 'none'
         
         severity_scores = {'low': 1, 'medium': 2, 'high': 3, 'critical': 4, 'extreme': 5}
@@ -741,7 +774,8 @@ class ViolationReporter:
         return 'low'
     
     def _generate_violation_description(self, violation: Dict[str, Any]) -> str:
-        """Generate human-readable violation description"""        violation_type = violation.get('violation_type', 'unknown')
+        """Generate human-readable violation description"""
+        violation_type = violation.get('violation_type', 'unknown')
         template = self.report_templates.get(violation_type, "Violation of type {type} detected with {confidence:.2%} confidence")
         
         return template.format(
@@ -755,7 +789,8 @@ class ViolationReporter:
         )
     
     def _generate_recommendations(self, violations: List[Dict[str, Any]]) -> List[str]:
-        """Generate actionable recommendations"""        recommendations = []
+        """Generate actionable recommendations"""
+        recommendations = []
         
         violation_types = set(v.get('violation_type') for v in violations)
         
@@ -778,7 +813,8 @@ class ViolationReporter:
     
     def _collect_evidence(self, violations: List[Dict[str, Any]], 
                          content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Collect and organize evidence"""        evidence = {
+        """Collect and organize evidence"""
+        evidence = {
             'violation_count': len(violations),
             'confidence_scores': [v.get('confidence', 0.0) for v in violations],
             'violation_types': list(set(v.get('violation_type') for v in violations)),

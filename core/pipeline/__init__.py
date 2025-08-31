@@ -15,7 +15,9 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICT
 and will result in immediate legal action under German and International copyright laws.
 
 Contact mlaiel@live.de for licensing inquiries only.
-"""from .master_orchestrator import (
+"""
+
+from .master_orchestrator import (
     MasterPipelineOrchestrator,
     PipelineRequest,
     PipelineResponse,

@@ -27,7 +27,8 @@ Technical Team Expertise:
 - IA Prompt Engineer: Prompt optimization and AI interaction
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 import aiohttp
 import json
@@ -64,7 +65,8 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueStatus(Enum):
-    """Revenue tracking status"""    PENDING = "pending"
+    """Revenue tracking status"""
+    PENDING = "pending"
     CONFIRMED = "confirmed" 
     DISPUTED = "disputed"
     FAILED = "failed"
@@ -72,7 +74,8 @@ class RevenueStatus(Enum):
 
 
 class PlatformType(Enum):
-    """Supported monetization platforms"""    YOUTUBE = "youtube"
+    """Supported monetization platforms"""
+    YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -85,7 +88,8 @@ class PlatformType(Enum):
 
 @dataclass
 class RevenueMetrics:
-    """Advanced revenue metrics data structure with AI insights"""    
+    """Advanced revenue metrics data structure with AI insights"""
+    
     # Core revenue data
     gross_revenue: Decimal = Decimal('0.00')
     net_revenue: Decimal = Decimal('0.00')
@@ -137,7 +141,8 @@ class RevenueMetrics:
 
 @dataclass
 class PlatformRevenueData:
-    """Platform-specific revenue data"""    
+    """Platform-specific revenue data"""
+    
     platform: PlatformType
     platform_account_id: str
     platform_username: str
@@ -169,7 +174,8 @@ class PlatformRevenueData:
 
 @dataclass
 class RevenueAlert:
-    """Revenue monitoring alerts"""    
+    """Revenue monitoring alerts"""
+    
     alert_id: str
     alert_type: str  # drop, spike, anomaly, milestone
     severity: str  # low, medium, high, critical
@@ -200,7 +206,8 @@ class RevenueAlert:
 
 @dataclass
 class MonetizationOpportunity:
-    """AI-detected monetization opportunities"""    
+    """AI-detected monetization opportunities"""
+    
     opportunity_id: str
     opportunity_type: str  # new_platform, content_optimization, audience_expansion
     title: str
@@ -230,7 +237,8 @@ class MonetizationOpportunity:
 
 @dataclass
 class RevenueSource:
-    """Revenue source information"""    
+    """Revenue source information"""
+    
     platform: PlatformType
     content_id: str
     content_title: str
@@ -244,7 +252,8 @@ class RevenueSource:
 
 @dataclass
 class PaymentInfo:
-    """Payment processing information"""    
+    """Payment processing information"""
+    
     payment_id: str
     amount: Decimal
     currency: str
@@ -258,7 +267,8 @@ class PaymentInfo:
 
 
 class BaseRevenueExtractor(BaseExtractor):
-    """Advanced base class for AI-powered revenue extractors"""    
+    """Advanced base class for AI-powered revenue extractors"""
+    
     def __init__(self, name: str, platform: PlatformType):
         super().__init__(name)
         self.platform = platform
@@ -282,7 +292,8 @@ class BaseRevenueExtractor(BaseExtractor):
         self._initialize_ai_components()
     
     def _initialize_ai_components(self):
-        """Initialize AI components for revenue analysis"""        try:
+        """Initialize AI components for revenue analysis"""
+        try:
             if HAS_ANALYSIS_LIBS:
                 # Initialize AI models for revenue prediction and analysis
                 self.logger.info(f"Initializing AI components for {self.platform.value}")
@@ -292,14 +303,17 @@ class BaseRevenueExtractor(BaseExtractor):
     @abstractmethod
     async def extract_revenue_data(self, creator_id: str, period_start: datetime, 
                                  period_end: datetime) -> PlatformRevenueData:
-        """Extract comprehensive revenue data for creator in time period"""        pass
+        """Extract comprehensive revenue data for creator in time period"""
+        pass
     
     @abstractmethod
     async def verify_payment(self, payment_info: Dict[str, Any]) -> bool:
-        """Verify payment transaction"""        pass
+        """Verify payment transaction"""
+        pass
     
     async def check_rate_limit(self):
-        """Enhanced rate limiting with exponential backoff"""        now = datetime.now()
+        """Enhanced rate limiting with exponential backoff"""
+        now = datetime.now()
         if now > self.rate_limit_reset:
             self.request_count = 0
             self.rate_limit_reset = now + timedelta(hours=1)
@@ -319,7 +333,8 @@ class BaseRevenueExtractor(BaseExtractor):
         self.request_count += 1
     
     async def analyze_revenue_trends(self, revenue_data: PlatformRevenueData) -> Dict[str, Any]:
-        """Analyze revenue trends using AI"""        try:
+        """Analyze revenue trends using AI"""
+        try:
             if not HAS_ANALYSIS_LIBS:
                 return {"error": "Analysis libraries not available"}
             
@@ -371,7 +386,8 @@ class BaseRevenueExtractor(BaseExtractor):
             return {"error": str(e)}
     
     async def detect_revenue_anomalies(self, revenue_data: PlatformRevenueData) -> List[RevenueAlert]:
-        """Detect revenue anomalies using statistical analysis"""        alerts = []
+        """Detect revenue anomalies using statistical analysis"""
+        alerts = []
         
         try:
             if not revenue_data.revenue_trend or len(revenue_data.revenue_trend) < 7:
@@ -419,7 +435,8 @@ class BaseRevenueExtractor(BaseExtractor):
         return alerts
     
     async def _identify_potential_causes(self, alert_type: str, current_value: float, expected_value: float) -> List[str]:
-        """Identify potential causes for revenue anomalies"""        causes = []
+        """Identify potential causes for revenue anomalies"""
+        causes = []
         
         if alert_type == "spike":
             causes = [
@@ -442,7 +459,8 @@ class BaseRevenueExtractor(BaseExtractor):
         return causes
     
     async def _suggest_actions(self, alert_type: str, severity: str) -> List[str]:
-        """Suggest actions based on alert type and severity"""        actions = []
+        """Suggest actions based on alert type and severity"""
+        actions = []
         
         if alert_type == "spike":
             actions = [
@@ -471,7 +489,8 @@ class BaseRevenueExtractor(BaseExtractor):
         return actions
     
     async def discover_monetization_opportunities(self, revenue_data: PlatformRevenueData) -> List[MonetizationOpportunity]:
-        """AI-powered discovery of monetization opportunities"""        opportunities = []
+        """AI-powered discovery of monetization opportunities"""
+        opportunities = []
         
         try:
             # Analyze current performance
@@ -548,7 +567,8 @@ class BaseRevenueExtractor(BaseExtractor):
         return opportunities
     
     async def calculate_audience_value(self, revenue_data: PlatformRevenueData) -> Decimal:
-        """Calculate the monetary value per audience member"""        try:
+        """Calculate the monetary value per audience member"""
+        try:
             total_revenue = float(revenue_data.total_revenue)
             audience_size = revenue_data.platform_metrics.get('follower_count', 0)
             
@@ -563,7 +583,8 @@ class BaseRevenueExtractor(BaseExtractor):
             return Decimal('0.00')
     
     async def optimize_content_strategy(self, revenue_data: PlatformRevenueData) -> Dict[str, Any]:
-        """AI-powered content strategy optimization"""        try:
+        """AI-powered content strategy optimization"""
+        try:
             optimization_suggestions = {
                 "top_performing_content_types": [],
                 "optimal_posting_times": [],
@@ -637,7 +658,8 @@ class BaseRevenueExtractor(BaseExtractor):
 
 
 class YouTubeRevenueExtractor(BaseRevenueExtractor):
-    """Industrial-grade YouTube revenue and analytics extractor with AI"""    
+    """Industrial-grade YouTube revenue and analytics extractor with AI"""
+    
     def __init__(self, api_key: str):
         super().__init__("YouTubeRevenueExtractor", PlatformType.YOUTUBE)
         self.api_key = api_key
@@ -665,12 +687,14 @@ class YouTubeRevenueExtractor(BaseRevenueExtractor):
         }
     
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request is for YouTube revenue"""        return (request.url and 'youtube.com' in request.url) or \
+        """Check if request is for YouTube revenue"""
+        return (request.url and 'youtube.com' in request.url) or \
                (request.metadata and request.metadata.get('platform') == 'youtube')
     
     async def extract_revenue_data(self, creator_id: str, period_start: datetime, 
                                  period_end: datetime) -> PlatformRevenueData:
-        """Extract comprehensive YouTube revenue data with AI analysis"""        await self.check_rate_limit()
+        """Extract comprehensive YouTube revenue data with AI analysis"""
+        await self.check_rate_limit()
         
         try:
             # Initialize platform revenue data
@@ -785,7 +809,8 @@ class YouTubeRevenueExtractor(BaseRevenueExtractor):
                     }
     
     async def _get_channel_info(self, channel_id: str) -> Dict[str, Any]:
-        """Get comprehensive YouTube channel information"""        try:
+        """Get comprehensive YouTube channel information"""
+        try:
             async with aiohttp.ClientSession() as session:
                 url = f"{self.base_url}/channels"
                 params = {
@@ -807,7 +832,8 @@ class YouTubeRevenueExtractor(BaseRevenueExtractor):
     
     async def _get_channel_videos_in_period(self, channel_id: str, start_date: datetime, 
                                           end_date: datetime) -> List[Dict[str, Any]]:
-        """Get channel videos published in specific time period"""        try:
+        """Get channel videos published in specific time period"""
+        try:
             async with aiohttp.ClientSession() as session:
                 url = f"{self.base_url}/search"
                 params = {
@@ -851,7 +877,8 @@ class YouTubeRevenueExtractor(BaseRevenueExtractor):
             return []
     
     async def _get_videos_details(self, video_ids: List[str]) -> List[Dict[str, Any]]:
-        """Get detailed information for multiple videos"""        if not video_ids:
+        """Get detailed information for multiple videos"""
+        if not video_ids:
             return []
         
         try:
@@ -884,7 +911,8 @@ class YouTubeRevenueExtractor(BaseRevenueExtractor):
     
     async def _get_video_analytics(self, video_id: str, start_date: datetime, 
                                  end_date: datetime) -> Dict[str, Any]:
-        """Get comprehensive video analytics data"""        try:
+        """Get comprehensive video analytics data"""
+        try:
             # Note: This requires YouTube Analytics API access which is restricted
             # For demonstration, we'll calculate estimated metrics from public data
             video_details = await self._get_videos_details([video_id])
@@ -917,7 +945,8 @@ class YouTubeRevenueExtractor(BaseRevenueExtractor):
             return {}
     
     async def _estimate_video_revenue(self, video: Dict[str, Any], analytics: Dict[str, Any]) -> Decimal:
-        """Estimate video revenue using AI-powered algorithms"""        try:
+        """Estimate video revenue using AI-powered algorithms"""
+        try:
             views = analytics.get('views', 0)
             duration = analytics.get('duration', '')
             category_id = analytics.get('category_id', '')
@@ -984,7 +1013,8 @@ class YouTubeRevenueExtractor(BaseRevenueExtractor):
             return Decimal('0.00')
     
     def _parse_youtube_duration(self, duration: str) -> int:
-        """Parse YouTube duration format (PT4M13S) to seconds"""        import re
+        """Parse YouTube duration format (PT4M13S) to seconds"""
+        import re
         
         pattern = r'PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?'
         match = re.match(pattern, duration)
@@ -1000,7 +1030,8 @@ class YouTubeRevenueExtractor(BaseRevenueExtractor):
     
     async def _generate_revenue_trend(self, channel_id: str, start_date: datetime, 
                                     end_date: datetime) -> List[Dict[str, Any]]:
-        """Generate revenue trend data over time period"""        try:
+        """Generate revenue trend data over time period"""
+        try:
             trend_data = []
             current_date = start_date
             
@@ -1042,7 +1073,8 @@ class YouTubeRevenueExtractor(BaseRevenueExtractor):
             return []
     
     async def _analyze_audience_demographics(self, channel_id: str) -> Dict[str, Any]:
-        """Analyze audience demographics using AI"""        try:
+        """Analyze audience demographics using AI"""
+        try:
             # Note: Detailed demographics require YouTube Analytics API access
             # This is a simplified estimation based on available data
             
@@ -1099,7 +1131,8 @@ class YouTubeRevenueExtractor(BaseRevenueExtractor):
             return {}
     
     async def verify_payment(self, payment_info: Dict[str, Any]) -> bool:
-        """Verify YouTube/AdSense payment"""        try:
+        """Verify YouTube/AdSense payment"""
+        try:
             # YouTube payments are handled through AdSense
             # This would require AdSense API integration
             
@@ -1123,7 +1156,8 @@ class YouTubeRevenueExtractor(BaseRevenueExtractor):
 
 
 class SpotifyRevenueExtractor(BaseRevenueExtractor):
-    """Industrial-grade Spotify revenue and analytics extractor with AI"""    
+    """Industrial-grade Spotify revenue and analytics extractor with AI"""
+    
     def __init__(self, client_id: str, client_secret: str):
         super().__init__("SpotifyRevenueExtractor", PlatformType.SPOTIFY)
         self.client_id = client_id
@@ -1133,11 +1167,13 @@ class SpotifyRevenueExtractor(BaseRevenueExtractor):
         self.token_expires = None
         
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request is for Spotify revenue"""        return (request.source_url and 'spotify.com' in request.source_url) or \
+        """Check if request is for Spotify revenue"""
+        return (request.source_url and 'spotify.com' in request.source_url) or \
                (request.metadata and request.metadata.get('platform') == 'spotify')
     
     async def _get_access_token(self) -> str:
-        """Get Spotify API access token"""        if self.access_token and self.token_expires and datetime.now() < self.token_expires:
+        """Get Spotify API access token"""
+        if self.access_token and self.token_expires and datetime.now() < self.token_expires:
             return self.access_token
         
         async with aiohttp.ClientSession() as session:
@@ -1165,7 +1201,8 @@ class SpotifyRevenueExtractor(BaseRevenueExtractor):
     
     async def extract_revenue_data(self, creator_id: str, period_start: datetime, 
                                  period_end: datetime) -> List[RevenueSource]:
-        """Extract Spotify revenue data"""        await self.check_rate_limit()
+        """Extract Spotify revenue data"""
+        await self.check_rate_limit()
         
         try:
             token = await self._get_access_token()
@@ -1224,7 +1261,8 @@ class SpotifyRevenueExtractor(BaseRevenueExtractor):
             return []
     
     async def _get_artist_albums(self, artist_id: str, token: str) -> List[Dict[str, Any]]:
-        """Get albums for Spotify artist"""        async with aiohttp.ClientSession() as session:
+        """Get albums for Spotify artist"""
+        async with aiohttp.ClientSession() as session:
             url = f"{self.base_url}/artists/{artist_id}/albums"
             headers = {'Authorization': f'Bearer {token}'}
             params = {'limit': 50, 'include_groups': 'album,single'}
@@ -1237,7 +1275,8 @@ class SpotifyRevenueExtractor(BaseRevenueExtractor):
                     return []
     
     async def _get_album_tracks(self, album_id: str, token: str) -> List[Dict[str, Any]]:
-        """Get tracks from Spotify album"""        async with aiohttp.ClientSession() as session:
+        """Get tracks from Spotify album"""
+        async with aiohttp.ClientSession() as session:
             url = f"{self.base_url}/albums/{album_id}/tracks"
             headers = {'Authorization': f'Bearer {token}'}
             params = {'limit': 50}
@@ -1250,7 +1289,8 @@ class SpotifyRevenueExtractor(BaseRevenueExtractor):
                     return []
     
     async def _get_track_streams(self, track_id: str, token: str) -> int:
-        """Get stream count for track (estimated from popularity)"""        async with aiohttp.ClientSession() as session:
+        """Get stream count for track (estimated from popularity)"""
+        async with aiohttp.ClientSession() as session:
             url = f"{self.base_url}/tracks/{track_id}"
             headers = {'Authorization': f'Bearer {token}'}
             
@@ -1268,24 +1308,28 @@ class SpotifyRevenueExtractor(BaseRevenueExtractor):
                     return 0
     
     async def verify_payment(self, payment_info: PaymentInfo) -> bool:
-        """Verify Spotify payment"""        # Spotify payments would be verified through their financial APIs
+        """Verify Spotify payment"""
+        # Spotify payments would be verified through their financial APIs
         return True  # Simplified for now
 
 
 class InstagramRevenueExtractor(BaseRevenueExtractor):
-    """Instagram revenue and analytics extractor"""    
+    """Instagram revenue and analytics extractor"""
+    
     def __init__(self, access_token: str):
         super().__init__("InstagramRevenueExtractor", PlatformType.INSTAGRAM)
         self.access_token = access_token
         self.base_url = "https://graph.instagram.com"
         
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request is for Instagram revenue"""        return (request.source_url and 'instagram.com' in request.source_url) or \
+        """Check if request is for Instagram revenue"""
+        return (request.source_url and 'instagram.com' in request.source_url) or \
                (request.metadata and request.metadata.get('platform') == 'instagram')
     
     async def extract_revenue_data(self, creator_id: str, period_start: datetime, 
                                  period_end: datetime) -> List[RevenueSource]:
-        """Extract Instagram revenue data"""        await self.check_rate_limit()
+        """Extract Instagram revenue data"""
+        await self.check_rate_limit()
         
         try:
             revenue_sources = []
@@ -1324,7 +1368,8 @@ class InstagramRevenueExtractor(BaseRevenueExtractor):
             return []
     
     async def _get_user_media(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get Instagram user media"""        async with aiohttp.ClientSession() as session:
+        """Get Instagram user media"""
+        async with aiohttp.ClientSession() as session:
             url = f"{self.base_url}/{user_id}/media"
             params = {
                 'fields': 'id,media_type,media_url,permalink,timestamp,caption',
@@ -1339,7 +1384,8 @@ class InstagramRevenueExtractor(BaseRevenueExtractor):
                     return []
     
     async def _get_media_insights(self, media_id: str) -> Dict[str, Any]:
-        """Get Instagram media insights"""        async with aiohttp.ClientSession() as session:
+        """Get Instagram media insights"""
+        async with aiohttp.ClientSession() as session:
             url = f"{self.base_url}/{media_id}/insights"
             params = {
                 'metric': 'engagement,impressions,reach,saved',
@@ -1354,7 +1400,8 @@ class InstagramRevenueExtractor(BaseRevenueExtractor):
     
     def _calculate_instagram_metrics(self, insights: Dict[str, Any], 
                                    media: Dict[str, Any]) -> RevenueMetrics:
-        """Calculate Instagram revenue metrics"""        # Instagram revenue is typically from brand partnerships and sponsored content
+        """Calculate Instagram revenue metrics"""
+        # Instagram revenue is typically from brand partnerships and sponsored content
         # This is a simplified estimation
         
         data = insights.get('data', [])
@@ -1393,24 +1440,28 @@ class InstagramRevenueExtractor(BaseRevenueExtractor):
         )
     
     async def verify_payment(self, payment_info: PaymentInfo) -> bool:
-        """Verify Instagram payment"""        # Instagram payments would be verified through Meta Business APIs
+        """Verify Instagram payment"""
+        # Instagram payments would be verified through Meta Business APIs
         return True  # Simplified for now
 
 
 class TikTokRevenueExtractor(BaseRevenueExtractor):
-    """TikTok revenue and analytics extractor"""    
+    """TikTok revenue and analytics extractor"""
+    
     def __init__(self, access_token: str):
         super().__init__("TikTokRevenueExtractor", PlatformType.TIKTOK)
         self.access_token = access_token
         self.base_url = "https://open-api.tiktok.com/v1.3"
         
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request is for TikTok revenue"""        return (request.source_url and 'tiktok.com' in request.source_url) or \
+        """Check if request is for TikTok revenue"""
+        return (request.source_url and 'tiktok.com' in request.source_url) or \
                (request.metadata and request.metadata.get('platform') == 'tiktok')
     
     async def extract_revenue_data(self, creator_id: str, period_start: datetime, 
                                  period_end: datetime) -> List[RevenueSource]:
-        """Extract TikTok revenue data"""        await self.check_rate_limit()
+        """Extract TikTok revenue data"""
+        await self.check_rate_limit()
         
         try:
             revenue_sources = []
@@ -1449,7 +1500,8 @@ class TikTokRevenueExtractor(BaseRevenueExtractor):
             return []
     
     async def _get_user_videos(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get TikTok user videos"""        async with aiohttp.ClientSession() as session:
+        """Get TikTok user videos"""
+        async with aiohttp.ClientSession() as session:
             url = f"{self.base_url}/video/list/"
             headers = {'Authorization': f'Bearer {self.access_token}'}
             data = {
@@ -1466,7 +1518,8 @@ class TikTokRevenueExtractor(BaseRevenueExtractor):
                     return []
     
     async def _get_video_analytics(self, video_id: str) -> Dict[str, Any]:
-        """Get TikTok video analytics"""        # TikTok Analytics API would be used here
+        """Get TikTok video analytics"""
+        # TikTok Analytics API would be used here
         # For now, return mock data
         return {
             'play_count': 10000,
@@ -1476,7 +1529,8 @@ class TikTokRevenueExtractor(BaseRevenueExtractor):
         }
     
     def _calculate_tiktok_metrics(self, analytics: Dict[str, Any]) -> RevenueMetrics:
-        """Calculate TikTok revenue metrics"""        play_count = analytics.get('play_count', 0)
+        """Calculate TikTok revenue metrics"""
+        play_count = analytics.get('play_count', 0)
         like_count = analytics.get('like_count', 0)
         engagement = like_count + analytics.get('comment_count', 0) + analytics.get('share_count', 0)
         
@@ -1501,19 +1555,23 @@ class TikTokRevenueExtractor(BaseRevenueExtractor):
         )
     
     async def verify_payment(self, payment_info: PaymentInfo) -> bool:
-        """Verify TikTok payment"""        return True  # Simplified for now
+        """Verify TikTok payment"""
+        return True  # Simplified for now
 
 
 class RevenueAnalyzer:
-    """Advanced revenue analysis and forecasting"""    
+    """Advanced revenue analysis and forecasting"""
+    
     def __init__(self):
         self.extractors = {}
         
     def add_extractor(self, platform: PlatformType, extractor: BaseRevenueExtractor):
-        """Add revenue extractor for platform"""        self.extractors[platform] = extractor
+        """Add revenue extractor for platform"""
+        self.extractors[platform] = extractor
     
     async def analyze_revenue_trends(self, revenue_sources: List[RevenueSource]) -> Dict[str, Any]:
-        """Analyze revenue trends and patterns"""        if not HAS_ANALYSIS_LIBS:
+        """Analyze revenue trends and patterns"""
+        if not HAS_ANALYSIS_LIBS:
             return {}
         
         try:
@@ -1595,7 +1653,8 @@ class RevenueAnalyzer:
     
     async def forecast_revenue(self, revenue_sources: List[RevenueSource], 
                              forecast_days: int = 30) -> Dict[str, Any]:
-        """Forecast future revenue based on historical data"""        if not HAS_ANALYSIS_LIBS:
+        """Forecast future revenue based on historical data"""
+        if not HAS_ANALYSIS_LIBS:
             return {}
         
         try:
@@ -1668,7 +1727,8 @@ class RevenueAnalyzer:
 
 
 class PaymentProcessor:
-    """Payment processing and verification system"""    
+    """Payment processing and verification system"""
+    
     def __init__(self):
         self.processors = {}
         
@@ -1676,11 +1736,13 @@ class PaymentProcessor:
             self.setup_payment_processors()
     
     def setup_payment_processors(self):
-        """Setup payment processor configurations"""        # This would contain actual API keys and configurations
+        """Setup payment processor configurations"""
+        # This would contain actual API keys and configurations
         pass
     
     async def process_payment(self, payment_info: PaymentInfo) -> Dict[str, Any]:
-        """Process payment transaction"""        try:
+        """Process payment transaction"""
+        try:
             # Validate payment information
             if not self._validate_payment_info(payment_info):
                 return {'success': False, 'error': 'Invalid payment information'}
@@ -1700,7 +1762,8 @@ class PaymentProcessor:
             return {'success': False, 'error': str(e)}
     
     def _validate_payment_info(self, payment_info: PaymentInfo) -> bool:
-        """Validate payment information"""        required_fields = ['payment_id', 'amount', 'currency', 'payment_method', 'recipient_id']
+        """Validate payment information"""
+        required_fields = ['payment_id', 'amount', 'currency', 'payment_method', 'recipient_id']
         
         for field in required_fields:
             if not getattr(payment_info, field):
@@ -1718,7 +1781,8 @@ class PaymentProcessor:
         return True
     
     async def _process_stripe_payment(self, payment_info: PaymentInfo) -> Dict[str, Any]:
-        """Process Stripe payment"""        if not HAS_PAYMENT_LIBS:
+        """Process Stripe payment"""
+        if not HAS_PAYMENT_LIBS:
             return {'success': False, 'error': 'Stripe library not available'}
         
         try:
@@ -1744,7 +1808,8 @@ class PaymentProcessor:
             return {'success': False, 'error': str(e)}
     
     async def _process_paypal_payment(self, payment_info: PaymentInfo) -> Dict[str, Any]:
-        """Process PayPal payment"""        if not HAS_PAYMENT_LIBS:
+        """Process PayPal payment"""
+        if not HAS_PAYMENT_LIBS:
             return {'success': False, 'error': 'PayPal library not available'}
         
         try:
@@ -1762,10 +1827,12 @@ class PaymentProcessor:
 
 
 class RevenueExtractorFactory:
-    """Factory for creating revenue extractors"""    
+    """Factory for creating revenue extractors"""
+    
     @staticmethod
     def create_extractor(platform: PlatformType, config: Dict[str, str]) -> BaseRevenueExtractor:
-        """Create appropriate revenue extractor"""        extractors = {
+        """Create appropriate revenue extractor"""
+        extractors = {
             PlatformType.YOUTUBE: YouTubeRevenueExtractor,
             PlatformType.SPOTIFY: SpotifyRevenueExtractor,
             PlatformType.INSTAGRAM: InstagramRevenueExtractor,
@@ -1788,7 +1855,8 @@ class RevenueExtractorFactory:
     
     @staticmethod
     def get_supported_platforms() -> List[PlatformType]:
-        """Get list of supported platforms"""        return [PlatformType.YOUTUBE, PlatformType.SPOTIFY, PlatformType.INSTAGRAM, PlatformType.TIKTOK]
+        """Get list of supported platforms"""
+        return [PlatformType.YOUTUBE, PlatformType.SPOTIFY, PlatformType.INSTAGRAM, PlatformType.TIKTOK]
 
 
 __all__ = [

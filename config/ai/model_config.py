@@ -14,7 +14,8 @@ without explicit written permission is STRICTLY PROHIBITED and will be
 prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, List, Optional, Union, Any
+"""
+from typing import Dict, List, Optional, Union, Any
 from pydantic import BaseSettings, validator
 import torch
 import os
@@ -23,7 +24,8 @@ from dataclasses import dataclass
 
 
 class ModelType(str, Enum):
-    """Supported AI model types for content processing."""    
+    """Supported AI model types for content processing."""
+    
     NLP = "nlp"
     COMPUTER_VISION = "computer_vision"
     AUDIO_ANALYSIS = "audio_analysis"
@@ -35,7 +37,8 @@ class ModelType(str, Enum):
 
 
 class ModelProvider(str, Enum):
-    """AI model providers and sources."""    
+    """AI model providers and sources."""
+    
     HUGGINGFACE = "huggingface"
     OPENAI = "openai"
     ANTHROPIC = "anthropic"
@@ -48,7 +51,8 @@ class ModelProvider(str, Enum):
 
 @dataclass
 class ModelSpec:
-    """Specification for AI model configuration."""    
+    """Specification for AI model configuration."""
+    
     name: str
     provider: ModelProvider
     model_type: ModelType
@@ -67,11 +71,13 @@ class ModelSpec:
 
 
 class AIModelConfig(BaseSettings):
-    """    Professional AI Model Configuration for IA-Influencer Agent.
+    """
+    Professional AI Model Configuration for IA-Influencer Agent.
     
     Manages all AI/ML models used across the platform for content processing,
     protection, analysis, and recommendation systems.
-    """    
+    """
+    
     # Model Registry Configuration
     MODEL_REGISTRY_URL: str = "https://huggingface.co/"
     MODEL_CACHE_DIR: str = "/tmp/ia_influencer_models"
@@ -138,7 +144,8 @@ class AIModelConfig(BaseSettings):
     
     @validator("DEFAULT_DEVICE")
     def validate_device(cls, v):
-        """Validate and auto-detect optimal device."""        if v == "auto":
+        """Validate and auto-detect optimal device."""
+        if v == "auto":
             if torch.cuda.is_available():
                 return "cuda"
             elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
@@ -149,11 +156,13 @@ class AIModelConfig(BaseSettings):
     
     @validator("MODEL_CACHE_DIR")
     def create_cache_dir(cls, v):
-        """Ensure model cache directory exists."""        os.makedirs(v, exist_ok=True)
+        """Ensure model cache directory exists."""
+        os.makedirs(v, exist_ok=True)
         return v
     
     def get_model_spec(self, model_name: str) -> Optional[ModelSpec]:
-        """Get model specification by name."""        model_specs = {
+        """Get model specification by name."""
+        model_specs = {
             # Audio Models
             "audio_fingerprint": ModelSpec(
                 name="audio_fingerprint",
@@ -242,7 +251,8 @@ class AIModelConfig(BaseSettings):
         return model_specs.get(model_name)
     
     def get_models_by_type(self, model_type: ModelType) -> List[ModelSpec]:
-        """Get all models of specific type."""        all_models = []
+        """Get all models of specific type."""
+        all_models = []
         for model_name in [
             "audio_fingerprint", "music_genre_classifier", "image_fingerprint",
             "video_frame_analyzer", "text_embedding", "content_classifier",
@@ -254,7 +264,8 @@ class AIModelConfig(BaseSettings):
         return all_models
     
     def get_device_optimal_models(self, available_memory_gb: float = 4.0) -> List[str]:
-        """Get models that can run on current device with available memory."""        optimal_models = []
+        """Get models that can run on current device with available memory."""
+        optimal_models = []
         available_memory_mb = available_memory_gb * 1024
         
         for model_name in [
@@ -272,7 +283,8 @@ class AIModelConfig(BaseSettings):
         return optimal_models
     
     def get_model_config_dict(self) -> Dict[str, Any]:
-        """Export complete model configuration as dictionary."""        return {
+        """Export complete model configuration as dictionary."""
+        return {
             "registry": {
                 "url": self.MODEL_REGISTRY_URL,
                 "cache_dir": self.MODEL_CACHE_DIR,

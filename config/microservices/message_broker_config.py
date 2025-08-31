@@ -13,7 +13,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -22,7 +23,8 @@ import json
 
 
 class MessageBrokerType(str, Enum):
-    """Message broker types."""    RABBITMQ = "rabbitmq"
+    """Message broker types."""
+    RABBITMQ = "rabbitmq"
     APACHE_KAFKA = "kafka"
     REDIS = "redis"
     NATS = "nats"
@@ -32,20 +34,23 @@ class MessageBrokerType(str, Enum):
 
 
 class ExchangeType(str, Enum):
-    """RabbitMQ exchange types."""    DIRECT = "direct"
+    """RabbitMQ exchange types."""
+    DIRECT = "direct"
     TOPIC = "topic"
     FANOUT = "fanout"
     HEADERS = "headers"
 
 
 class DeliveryMode(int, Enum):
-    """Message delivery modes."""    NON_PERSISTENT = 1
+    """Message delivery modes."""
+    NON_PERSISTENT = 1
     PERSISTENT = 2
 
 
 @dataclass
 class QueueConfig:
-    """Queue configuration."""    name: str
+    """Queue configuration."""
+    name: str
     durable: bool = True
     exclusive: bool = False
     auto_delete: bool = False
@@ -61,7 +66,8 @@ class QueueConfig:
 
 @dataclass
 class ExchangeConfig:
-    """Exchange configuration."""    name: str
+    """Exchange configuration."""
+    name: str
     type: ExchangeType = ExchangeType.DIRECT
     durable: bool = True
     auto_delete: bool = False
@@ -71,7 +77,8 @@ class ExchangeConfig:
 
 @dataclass
 class BindingConfig:
-    """Binding configuration."""    queue: str
+    """Binding configuration."""
+    queue: str
     exchange: str
     routing_key: str = ""
     arguments: Dict[str, Any] = field(default_factory=dict)
@@ -79,7 +86,8 @@ class BindingConfig:
 
 @dataclass
 class MessageConfig:
-    """Message configuration."""    body: Union[str, bytes, dict]
+    """Message configuration."""
+    body: Union[str, bytes, dict]
     routing_key: str
     exchange: str = ""
     delivery_mode: DeliveryMode = DeliveryMode.PERSISTENT
@@ -96,9 +104,11 @@ class MessageConfig:
 
 
 class MessageBrokerConfig(BaseSettings):
-    """    Centralized message broker configuration for microservices communication.
+    """
+    Centralized message broker configuration for microservices communication.
     Supports RabbitMQ, Apache Kafka, Redis, NATS, and cloud message brokers.
-    """    
+    """
+    
     # Broker type selection
     broker_type: MessageBrokerType = Field(
         MessageBrokerType.RABBITMQ, 
@@ -206,7 +216,8 @@ class MessageBrokerConfig(BaseSettings):
         return v
     
     def get_connection_url(self) -> str:
-        """Get connection URL based on broker type."""        if self.broker_type == MessageBrokerType.RABBITMQ:
+        """Get connection URL based on broker type."""
+        if self.broker_type == MessageBrokerType.RABBITMQ:
             protocol = "amqps" if self.rabbitmq_ssl_enabled else "amqp"
             return (
                 f"{protocol}://{self.rabbitmq_username}:{self.rabbitmq_password}@"
@@ -224,7 +235,8 @@ class MessageBrokerConfig(BaseSettings):
             raise ValueError(f"Unsupported broker type: {self.broker_type}")
     
     def get_broker_config(self) -> Dict[str, Any]:
-        """Get complete broker configuration."""        return {
+        """Get complete broker configuration."""
+        return {
             "broker_type": self.broker_type,
             "connection_url": self.get_connection_url(),
             "connection": {

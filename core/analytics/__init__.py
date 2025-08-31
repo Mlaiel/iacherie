@@ -8,7 +8,7 @@ User Upload → Content Processing → Analytics Collection → Performance Moni
 Business Intelligence → Revenue Tracking → Collaboration Analytics → Platform Optimization
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
@@ -26,7 +26,9 @@ Team Specialists:
 - Audio Processing Specialist: Advanced audio AI algorithms
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
-"""from .collector import MetricsCollector, BusinessMetricsCollector
+"""
+
+from .collector import MetricsCollector, BusinessMetricsCollector
 from .aggregator import DataAggregator, TimeSeriesAggregator
 from .dashboard import AnalyticsDashboard, RealtimeDashboard
 from .intelligence import BusinessIntelligence, PredictiveAnalytics
@@ -34,12 +36,13 @@ from .reporting import ReportGenerator, PerformanceReporter
 from .tracking import UserTracker, ContentTracker, RevenueTracker
 from .processor import AnalyticsProcessor, MetricsProcessor
 from .engine import AnalyticsEngine
+
 from .exceptions import AnalyticsError, MetricsError, ReportingError
 
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 __all__ = [
     # Core Components

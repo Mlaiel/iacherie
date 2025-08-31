@@ -5,7 +5,8 @@ dialogue flows and content creator interaction.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import logging
+"""
+import logging
 import asyncio
 import json
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -20,7 +21,8 @@ from .config import ConversationConfig
 logger = logging.getLogger(__name__)
 
 class ConversationIntegrator:
-    """Main integration hub for voice-conversational AI systems"""    
+    """Main integration hub for voice-conversational AI systems"""
+    
     def __init__(self, config: ConversationConfig):
         self.config = config
         self.voice_processor = None
@@ -29,7 +31,8 @@ class ConversationIntegrator:
         self.is_initialized = False
         
     async def initialize(self) -> bool:
-        """Initialize conversation integration system"""        try:
+        """Initialize conversation integration system"""
+        try:
             # Initialize voice processor
             self.voice_processor = VoiceProcessor()
             await self.voice_processor.initialize()
@@ -46,7 +49,8 @@ class ConversationIntegrator:
                                      user_id: str,
                                      conversation_type: str = "content_creation",
                                      language: str = "en") -> Dict[str, Any]:
-        """Start a new voice-enabled conversation session"""        try:
+        """Start a new voice-enabled conversation session"""
+        try:
             # Create conversation context
             context = ConversationContext(
                 session_id=session_id,
@@ -84,7 +88,8 @@ class ConversationIntegrator:
                                 session_id: str,
                                 audio_data: bytes,
                                 audio_format: str = "wav") -> Dict[str, Any]:
-        """Process voice input and generate conversational response"""        try:
+        """Process voice input and generate conversational response"""
+        try:
             if session_id not in self.active_sessions:
                 raise ValueError(f"Session {session_id} not found")
             
@@ -154,7 +159,8 @@ class ConversationIntegrator:
                                               user_input: str,
                                               detected_emotion: str,
                                               context: ConversationContext) -> Dict[str, Any]:
-        """Generate intelligent conversational response"""        try:
+        """Generate intelligent conversational response"""
+        try:
             session = self.active_sessions[session_id]
             
             # Analyze user intent and context
@@ -195,7 +201,8 @@ class ConversationIntegrator:
             raise
     
     def _analyze_user_intent(self, user_input: str, context: ConversationContext) -> str:
-        """Analyze user intent from input"""        user_input_lower = user_input.lower()
+        """Analyze user intent from input"""
+        user_input_lower = user_input.lower()
         
         # Content creation intents
         if any(word in user_input_lower for word in ["create", "generate", "make", "produce"]):
@@ -220,7 +227,8 @@ class ConversationIntegrator:
                                                   emotion: str,
                                                   intent: str,
                                                   session: Dict) -> Dict[str, Any]:
-        """Handle content creation focused conversation"""        responses = {
+        """Handle content creation focused conversation"""
+        responses = {
             "content_creation": "I can help you create amazing voice content! What type of content would you like to work on today?",
             "voice_improvement": "Let's enhance your voice for content creation. I can analyze your speech patterns and suggest improvements.",
             "help_support": "I'm here to guide you through the content creation process. What specific aspect would you like help with?"
@@ -253,7 +261,8 @@ class ConversationIntegrator:
                                                 emotion: str,
                                                 intent: str,
                                                 session: Dict) -> Dict[str, Any]:
-        """Handle voice training conversation"""        return {
+        """Handle voice training conversation"""
+        return {
             "text": "Great! Voice training is key to content success. Let's work on your vocal techniques.",
             "response_emotion": "encouraging",
             "training_focus": ["clarity", "emotion", "naturalness"]
@@ -264,7 +273,8 @@ class ConversationIntegrator:
                                               emotion: str,
                                               intent: str,
                                               session: Dict) -> Dict[str, Any]:
-        """Handle monetization guidance conversation"""        return {
+        """Handle monetization guidance conversation"""
+        return {
             "text": "I can help you understand monetization strategies for voice content. What's your current content focus?",
             "response_emotion": "professional",
             "monetization_options": ["sponsorships", "voice_licensing", "premium_content"]
@@ -275,7 +285,8 @@ class ConversationIntegrator:
                                          emotion: str,
                                          intent: str,
                                          session: Dict) -> Dict[str, Any]:
-        """Handle general conversation"""        return {
+        """Handle general conversation"""
+        return {
             "text": "I'm here to help with your voice and content creation journey. What would you like to explore?",
             "response_emotion": "friendly",
             "options": ["content_creation", "voice_training", "monetization"]
@@ -285,7 +296,8 @@ class ConversationIntegrator:
                                      text: str,
                                      emotion: str,
                                      session_id: str) -> Optional[bytes]:
-        """Generate voice response audio"""        try:
+        """Generate voice response audio"""
+        try:
             # Use voice processor for synthesis
             synthesis_result = await self.voice_processor.process_complete_voice_pipeline(
                 text_data=text,
@@ -302,7 +314,8 @@ class ConversationIntegrator:
             return None
     
     async def end_conversation(self, session_id: str) -> Dict[str, Any]:
-        """End conversation session and cleanup"""        try:
+        """End conversation session and cleanup"""
+        try:
             if session_id in self.active_sessions:
                 session = self.active_sessions[session_id]
                 
@@ -330,7 +343,8 @@ class ConversationIntegrator:
             raise
     
     def _analyze_session_emotions(self, session: Dict) -> List[str]:
-        """Analyze emotions throughout the session"""        emotions = []
+        """Analyze emotions throughout the session"""
+        emotions = []
         for exchange in session["conversation_history"]:
             emotions.append(exchange.get("user_emotion", "neutral"))
         
@@ -342,7 +356,8 @@ class ConversationIntegrator:
         return sorted(emotion_counts.keys(), key=lambda x: emotion_counts[x], reverse=True)[:3]
     
     async def shutdown(self) -> None:
-        """Shutdown conversation integrator"""        if self.voice_processor:
+        """Shutdown conversation integrator"""
+        if self.voice_processor:
             await self.voice_processor.shutdown()
         self.active_sessions.clear()
         self.is_initialized = False
@@ -398,7 +413,8 @@ class ConversationMemory:
         self.long_term_memory = {}
     
     async def store_conversation_context(self, session_id: str, context_data: Dict[str, Any]) -> None:
-        """Store conversation context for future sessions"""        if session_id in self.integrator.active_sessions:
+        """Store conversation context for future sessions"""
+        if session_id in self.integrator.active_sessions:
             session = self.integrator.active_sessions[session_id]
             user_id = session["context"].user_id
             
@@ -412,4 +428,5 @@ class ConversationMemory:
             })
     
     async def retrieve_user_context(self, user_id: str) -> List[Dict[str, Any]]:
-        """Retrieve historical conversation context for user"""        return self.long_term_memory.get(user_id, [])
+        """Retrieve historical conversation context for user"""
+        return self.long_term_memory.get(user_id, [])

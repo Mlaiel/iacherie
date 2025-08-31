@@ -12,7 +12,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Any unauthorized copying, modification, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
-"""import os
+"""
+import os
 import sys
 import asyncio
 import argparse
@@ -33,13 +34,15 @@ except ImportError as e:
 
 
 class ContentSystemLauncher:
-    """Interactive launcher for the content management system."""    
+    """Interactive launcher for the content management system."""
+    
     def __init__(self):
         self.system = None
         self.running = False
     
     def print_banner(self):
-        """Print system banner."""        print("""╔══════════════════════════════════════════════════════════════════════════════╗
+        """Print system banner."""
+        print("""╔══════════════════════════════════════════════════════════════════════════════╗
 ║                IA Influencer Agent - Content Management System              ║
 ║                                                                              ║
 ║  🚀 Industrial-Grade Content Processing Platform                             ║
@@ -56,7 +59,8 @@ class ContentSystemLauncher:
         """)
     
     def print_menu(self):
-        """Print interactive menu."""        print("""┌─ Main Menu ──────────────────────────────────────────────────────────────────┐
+        """Print interactive menu."""
+        print("""┌─ Main Menu ──────────────────────────────────────────────────────────────────┐
 │                                                                              │
 │  1. 🚀 Quick Start - Initialize & Launch System                             │
 │  2. 🔍 System Health Check                                                   │
@@ -73,7 +77,8 @@ class ContentSystemLauncher:
         """)
     
     async def quick_start(self):
-        """Quick start the system."""        print("🚀 Starting Content Management System...")
+        """Quick start the system."""
+        print("🚀 Starting Content Management System...")
         
         try:
             self.system = await initialize_content_system()
@@ -102,7 +107,8 @@ class ContentSystemLauncher:
             return False
     
     async def health_check(self):
-        """Run system health check."""        print("🔍 Running System Health Check...")
+        """Run system health check."""
+        print("🔍 Running System Health Check...")
         
         health_checker = ContentModuleHealthCheck()
         report = await health_checker.run_comprehensive_health_check()
@@ -114,7 +120,8 @@ class ContentSystemLauncher:
         print(f"\n📋 Detailed report saved: {report_path}")
     
     async def setup_system(self):
-        """Run system setup and configuration."""        print("⚙️ Running System Setup...")
+        """Run system setup and configuration."""
+        print("⚙️ Running System Setup...")
         
         setup = ContentModuleSetup()
         
@@ -131,7 +138,8 @@ class ContentSystemLauncher:
         setup.print_setup_summary()
     
     async def maintenance_menu(self):
-        """Show maintenance submenu."""        maintenance = ContentModuleMaintenance()
+        """Show maintenance submenu."""
+        maintenance = ContentModuleMaintenance()
         
         while True:
             print("""┌─ Maintenance Menu ───────────────────────────────────────────────────────────┐
@@ -213,7 +221,8 @@ class ContentSystemLauncher:
             input("\nPress Enter to continue...")
     
     async def performance_monitor(self):
-        """Run performance monitoring."""        print("📊 Starting Performance Monitor...")
+        """Run performance monitoring."""
+        print("📊 Starting Performance Monitor...")
         
         duration = input("Monitoring duration in seconds (default 60): ").strip()
         try:
@@ -232,7 +241,8 @@ class ContentSystemLauncher:
         print(f"   - Samples collected: {summary['samples_collected']}")
     
     async def demo_system(self):
-        """Run complete system demo."""        print("🎬 Starting Complete System Demo...")
+        """Run complete system demo."""
+        print("🎬 Starting Complete System Demo...")
         
         try:
             from demo_complete_system import ContentSystemDemo
@@ -246,7 +256,8 @@ class ContentSystemLauncher:
             print(f"❌ Demo failed: {e}")
     
     async def show_system_info(self):
-        """Show system information."""        if self.system and self.running:
+        """Show system information."""
+        if self.system and self.running:
             info = self.system.get_system_info()
             health = await self.system.health_check()
             
@@ -281,7 +292,8 @@ class ContentSystemLauncher:
             """)
     
     def show_help(self):
-        """Show help information."""        print("""╔─ Help & Documentation ───────────────────────────────────────────────────────╗
+        """Show help information."""
+        print("""╔─ Help & Documentation ───────────────────────────────────────────────────────╗
 ║                                                                              ║
 ║  📖 Documentation Files:                                                     ║
 ║     • README.md - English documentation                                     ║
@@ -308,7 +320,8 @@ class ContentSystemLauncher:
         """)
     
     async def shutdown_system(self):
-        """Shutdown the system."""        if self.system and self.running:
+        """Shutdown the system."""
+        if self.system and self.running:
             print("🛑 Shutting down Content Management System...")
             await shutdown_content_system()
             self.running = False
@@ -318,7 +331,8 @@ class ContentSystemLauncher:
             print("💡 System is not running")
     
     async def run_interactive(self):
-        """Run interactive mode."""        self.print_banner()
+        """Run interactive mode."""
+        self.print_banner()
         
         while True:
             self.print_menu()
@@ -373,7 +387,8 @@ class ContentSystemLauncher:
 
 
 async def main():
-    """Main launcher function."""    parser = argparse.ArgumentParser(
+    """Main launcher function."""
+    parser = argparse.ArgumentParser(
         description="IA Influencer Agent - Content Management System Launcher",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""Examples:
@@ -381,7 +396,8 @@ async def main():
   python launcher.py --quick-start      # Quick start system
   python launcher.py --health-check     # Run health check
   python launcher.py --setup            # Run setup
-        """    )
+        """
+    )
     
     parser.add_argument('--quick-start', action='store_true', help='Quick start the system')
     parser.add_argument('--health-check', action='store_true', help='Run health check')

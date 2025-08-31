@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, ARRAY
+"""
+from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID, JSONB
@@ -35,7 +36,8 @@ Base = declarative_base()
 
 
 class TeamType(Enum):
-    """Team type enumeration"""    ORGANIZATION = "organization"
+    """Team type enumeration"""
+    ORGANIZATION = "organization"
     DEPARTMENT = "department"
     PROJECT_TEAM = "project_team"
     WORKING_GROUP = "working_group"
@@ -50,7 +52,8 @@ class TeamType(Enum):
 
 
 class TeamStatus(Enum):
-    """Team status enumeration"""    ACTIVE = "active"
+    """Team status enumeration"""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     SUSPENDED = "suspended"
     ARCHIVED = "archived"
@@ -62,7 +65,8 @@ class TeamStatus(Enum):
 
 
 class MemberRole(Enum):
-    """Member role enumeration"""    OWNER = "owner"
+    """Member role enumeration"""
+    OWNER = "owner"
     ADMIN = "admin"
     MANAGER = "manager"
     TEAM_LEAD = "team_lead"
@@ -77,7 +81,8 @@ class MemberRole(Enum):
 
 
 class MemberStatus(Enum):
-    """Member status enumeration"""    ACTIVE = "active"
+    """Member status enumeration"""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     PENDING_INVITATION = "pending_invitation"
     INVITATION_EXPIRED = "invitation_expired"
@@ -89,7 +94,8 @@ class MemberStatus(Enum):
 
 
 class InvitationStatus(Enum):
-    """Invitation status enumeration"""    PENDING = "pending"
+    """Invitation status enumeration"""
+    PENDING = "pending"
     ACCEPTED = "accepted"
     DECLINED = "declined"
     EXPIRED = "expired"
@@ -98,7 +104,8 @@ class InvitationStatus(Enum):
 
 
 class PermissionLevel(Enum):
-    """Permission level enumeration"""    READ_ONLY = "read_only"
+    """Permission level enumeration"""
+    READ_ONLY = "read_only"
     READ_WRITE = "read_write"
     FULL_ACCESS = "full_access"
     ADMIN_ACCESS = "admin_access"
@@ -106,7 +113,8 @@ class PermissionLevel(Enum):
 
 
 class TeamVisibility(Enum):
-    """Team visibility enumeration"""    PUBLIC = "public"
+    """Team visibility enumeration"""
+    PUBLIC = "public"
     PRIVATE = "private"
     ORGANIZATION_VISIBLE = "organization_visible"
     INVITE_ONLY = "invite_only"
@@ -114,11 +122,13 @@ class TeamVisibility(Enum):
 
 
 class TeamManagement(Base):
-    """    Enterprise Team Management Model
+    """
+    Enterprise Team Management Model
     
     Comprehensive team management with hierarchical organization,
     role-based access control, and collaboration features.
-    """    __tablename__ = 'team_management'
+    """
+    __tablename__ = 'team_management'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -269,7 +279,8 @@ class TeamManagement(Base):
         created_by: str,
         **kwargs
     ) -> 'TeamManagement':
-        """Create a new team"""        team_id = f"team_{uuid.uuid4().hex[:12]}"
+        """Create a new team"""
+        team_id = f"team_{uuid.uuid4().hex[:12]}"
         
         return cls(
             team_id=team_id,
@@ -288,7 +299,8 @@ class TeamManagement(Base):
         created_by: str,
         **kwargs
     ) -> 'TeamManagement':
-        """Create a new organization"""        return cls.create_team(
+        """Create a new organization"""
+        return cls.create_team(
             name=name,
             team_type=TeamType.ORGANIZATION,
             owner_user_id=owner_user_id,
@@ -299,7 +311,8 @@ class TeamManagement(Base):
         )
     
     def add_member(self, user_id: str, role: MemberRole, added_by: str) -> 'TeamMember':
-        """Add a member to the team"""        member = TeamMember(
+        """Add a member to the team"""
+        member = TeamMember(
             team_id=self.id,
             user_id=user_id,
             role=role,
@@ -315,7 +328,8 @@ class TeamManagement(Base):
         return member
     
     def invite_member(self, email: str, role: MemberRole, invited_by: str, message: str = None) -> 'TeamInvitation':
-        """Invite a new member to the team"""        invitation = TeamInvitation(
+        """Invite a new member to the team"""
+        invitation = TeamInvitation(
             team_id=self.id,
             email=email,
             role=role,
@@ -331,19 +345,22 @@ class TeamManagement(Base):
         return invitation
     
     def update_member_role(self, user_id: str, new_role: MemberRole, updated_by: str) -> bool:
-        """Update a member's role"""        # This would update the associated TeamMember record
+        """Update a member's role"""
+        # This would update the associated TeamMember record
         self.last_activity_at = datetime.now(timezone.utc)
         return True
     
     def remove_member(self, user_id: str, removed_by: str, reason: str = None) -> bool:
-        """Remove a member from the team"""        # This would update the associated TeamMember record
+        """Remove a member from the team"""
+        # This would update the associated TeamMember record
         self.member_count -= 1
         self.active_member_count -= 1
         self.last_activity_at = datetime.now(timezone.utc)
         return True
     
     def get_hierarchy_path(self) -> str:
-        """Get the full hierarchy path"""        if self.hierarchy_path:
+        """Get the full hierarchy path"""
+        if self.hierarchy_path:
             return self.hierarchy_path
         
         path_parts = [self.name]
@@ -356,7 +373,8 @@ class TeamManagement(Base):
         return "/" + "/".join(path_parts)
     
     def can_user_access(self, user_id: str, required_permission: PermissionLevel = None) -> bool:
-        """Check if user can access this team"""        if self.owner_user_id == user_id:
+        """Check if user can access this team"""
+        if self.owner_user_id == user_id:
             return True
         
         if self.visibility == TeamVisibility.PUBLIC:
@@ -366,7 +384,8 @@ class TeamManagement(Base):
         return False
     
     def get_team_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive team statistics"""        return {
+        """Get comprehensive team statistics"""
+        return {
             'basic_info': {
                 'team_id': self.team_id,
                 'name': self.name,
@@ -400,11 +419,13 @@ class TeamManagement(Base):
         }
     
     def update_activity(self) -> None:
-        """Update last activity timestamp"""        self.last_activity_at = datetime.now(timezone.utc)
+        """Update last activity timestamp"""
+        self.last_activity_at = datetime.now(timezone.utc)
         self.updated_at = datetime.now(timezone.utc)
     
     def archive_team(self, archived_by: str, reason: str = None) -> None:
-        """Archive the team"""        self.status = TeamStatus.ARCHIVED
+        """Archive the team"""
+        self.status = TeamStatus.ARCHIVED
         self.archive_at = datetime.now(timezone.utc)
         self.updated_at = datetime.now(timezone.utc)
         
@@ -418,7 +439,8 @@ class TeamManagement(Base):
         }
     
     def restore_team(self, restored_by: str) -> None:
-        """Restore archived team"""        self.status = TeamStatus.ACTIVE
+        """Restore archived team"""
+        self.status = TeamStatus.ACTIVE
         self.archive_at = None
         self.updated_at = datetime.now(timezone.utc)
         
@@ -432,10 +454,12 @@ class TeamManagement(Base):
 
 
 class TeamMember(Base):
-    """    Team Member Model
+    """
+    Team Member Model
     
     Manages individual team memberships with roles and permissions.
-    """    __tablename__ = 'team_members'
+    """
+    __tablename__ = 'team_members'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -490,10 +514,12 @@ class TeamMember(Base):
 
 
 class TeamInvitation(Base):
-    """    Team Invitation Model
+    """
+    Team Invitation Model
     
     Manages team invitations with expiration and tracking.
-    """    __tablename__ = 'team_invitations'
+    """
+    __tablename__ = 'team_invitations'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -537,18 +563,22 @@ class TeamInvitation(Base):
         return f"<TeamInvitation(email={self.email}, team_id={self.team_id}, status={self.status.value})>"
     
     def is_expired(self) -> bool:
-        """Check if invitation is expired"""        return datetime.now(timezone.utc) >= self.expires_at
+        """Check if invitation is expired"""
+        return datetime.now(timezone.utc) >= self.expires_at
     
     def accept_invitation(self, user_id: str) -> None:
-        """Accept the invitation"""        self.status = InvitationStatus.ACCEPTED
+        """Accept the invitation"""
+        self.status = InvitationStatus.ACCEPTED
         self.accepted_by = user_id
         self.accepted_at = datetime.now(timezone.utc)
     
     def decline_invitation(self) -> None:
-        """Decline the invitation"""        self.status = InvitationStatus.DECLINED
+        """Decline the invitation"""
+        self.status = InvitationStatus.DECLINED
     
     def resend_invitation(self, expires_in_days: int = 7) -> None:
-        """Resend the invitation"""        self.status = InvitationStatus.RESENT
+        """Resend the invitation"""
+        self.status = InvitationStatus.RESENT
         self.send_count += 1
         self.last_sent_at = datetime.now(timezone.utc)
         self.expires_at = datetime.now(timezone.utc) + timedelta(days=expires_in_days)

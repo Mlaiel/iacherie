@@ -14,7 +14,8 @@ Contact: mlaiel@live.de
 Development environment configuration with debugging and local development optimizations.
 Handles multi-format content processing, AI fingerprinting, and monetization in dev mode.
 =====================================================
-"""import os
+"""
+import os
 import logging
 from typing import Dict, Any, List, Optional, Set
 from dataclasses import dataclass, field
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class DevelopmentDatabaseConfig:
-    """Development database configuration with debugging features"""    host: str = "localhost"
+    """Development database configuration with debugging features"""
+    host: str = "localhost"
     port: int = 5432
     database: str = "ia_influencer_dev"
     username: str = "dev_user"
@@ -42,7 +44,8 @@ class DevelopmentDatabaseConfig:
 
 @dataclass
 class DevelopmentRedisConfig:
-    """Development Redis configuration for caching and queues"""    host: str = "localhost"
+    """Development Redis configuration for caching and queues"""
+    host: str = "localhost"
     port: int = 6379
     database: int = 0
     password: Optional[str] = None
@@ -55,7 +58,8 @@ class DevelopmentRedisConfig:
 
 @dataclass
 class DevelopmentAIConfig:
-    """Development AI and ML configuration"""    openai_api_key: Optional[str] = None
+    """Development AI and ML configuration"""
+    openai_api_key: Optional[str] = None
     huggingface_token: Optional[str] = None
     tensorflow_gpu_enabled: bool = False
     model_cache_dir: str = "./dev_models"
@@ -69,7 +73,8 @@ class DevelopmentAIConfig:
 
 @dataclass
 class DevelopmentStorageConfig:
-    """Development storage configuration"""    storage_backend: str = "local"
+    """Development storage configuration"""
+    storage_backend: str = "local"
     local_storage_path: str = "./dev_storage"
     max_file_size_mb: int = 100
     allowed_file_types: Set[str] = field(default_factory=lambda: {
@@ -82,7 +87,8 @@ class DevelopmentStorageConfig:
 
 @dataclass
 class DevelopmentSecurityConfig:
-    """Development security configuration with relaxed settings"""    jwt_secret_key: str = "dev_jwt_secret_key_not_for_production"
+    """Development security configuration with relaxed settings"""
+    jwt_secret_key: str = "dev_jwt_secret_key_not_for_production"
     jwt_algorithm: str = "HS256"
     jwt_expiry_hours: int = 24
     oauth2_secret_key: str = "dev_oauth2_secret_key"
@@ -104,7 +110,8 @@ class DevelopmentSecurityConfig:
 
 @dataclass
 class DevelopmentMonitoringConfig:
-    """Development monitoring and logging configuration"""    log_level: str = "DEBUG"
+    """Development monitoring and logging configuration"""
+    log_level: str = "DEBUG"
     log_format: str = "detailed"
     log_to_file: bool = True
     log_file_path: str = "./logs/dev.log"
@@ -121,7 +128,8 @@ class DevelopmentMonitoringConfig:
 
 @dataclass
 class DevelopmentIntegrationConfig:
-    """Development external service integration configuration"""    spotify_client_id: Optional[str] = None
+    """Development external service integration configuration"""
+    spotify_client_id: Optional[str] = None
     spotify_client_secret: Optional[str] = None
     youtube_api_key: Optional[str] = None
     instagram_app_id: Optional[str] = None
@@ -134,7 +142,8 @@ class DevelopmentIntegrationConfig:
 
 
 class DevelopmentEnvironmentManager:
-    """    Development environment manager for local development and debugging.
+    """
+    Development environment manager for local development and debugging.
     
     Features:
     - Hot reload and auto-restart capabilities
@@ -143,7 +152,8 @@ class DevelopmentEnvironmentManager:
     - Seed data management and database reset
     - Performance profiling and optimization
     - Multi-format content processing testing
-    """    
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path or "./config/development.yml"
         self.environment = "development"
@@ -167,7 +177,8 @@ class DevelopmentEnvironmentManager:
         logger.info(f"Development environment manager initialized: {self.environment}")
     
     def load_configuration(self) -> Dict[str, Any]:
-        """Load development environment configuration from file and environment variables"""        try:
+        """Load development environment configuration from file and environment variables"""
+        try:
             config = {
                 'environment': self.environment,
                 'debug': self.debug_mode,
@@ -241,7 +252,8 @@ class DevelopmentEnvironmentManager:
             raise
     
     def setup_database(self) -> bool:
-        """Setup development database with seed data"""        try:
+        """Setup development database with seed data"""
+        try:
             # Create development database if not exists
             self._create_database_if_not_exists()
             
@@ -261,7 +273,8 @@ class DevelopmentEnvironmentManager:
             return False
     
     def setup_storage(self) -> bool:
-        """Setup development storage directories"""        try:
+        """Setup development storage directories"""
+        try:
             storage_path = Path(self.storage.local_storage_path)
             storage_path.mkdir(parents=True, exist_ok=True)
             
@@ -285,7 +298,8 @@ class DevelopmentEnvironmentManager:
             return False
     
     def setup_mock_services(self) -> bool:
-        """Setup mock external services for offline development"""        try:
+        """Setup mock external services for offline development"""
+        try:
             if not self.mock_services_enabled:
                 return True
             
@@ -309,7 +323,8 @@ class DevelopmentEnvironmentManager:
             return False
     
     def enable_hot_reload(self) -> bool:
-        """Enable hot reload for development"""        try:
+        """Enable hot reload for development"""
+        try:
             if self.hot_reload_enabled:
                 # Configure file watchers for auto-reload
                 self._setup_file_watchers()
@@ -321,7 +336,8 @@ class DevelopmentEnvironmentManager:
             return False
     
     def setup_debugging(self) -> bool:
-        """Setup development debugging tools"""        try:
+        """Setup development debugging tools"""
+        try:
             # Configure enhanced logging
             self._setup_debug_logging()
             
@@ -340,7 +356,8 @@ class DevelopmentEnvironmentManager:
             return False
     
     def validate_environment(self) -> Dict[str, bool]:
-        """Validate development environment setup"""        validation_results = {
+        """Validate development environment setup"""
+        validation_results = {
             'database_connection': False,
             'redis_connection': False,
             'storage_access': False,
@@ -376,7 +393,8 @@ class DevelopmentEnvironmentManager:
             return validation_results
     
     def reset_environment(self) -> bool:
-        """Reset development environment to clean state"""        try:
+        """Reset development environment to clean state"""
+        try:
             if self.database.reset_on_restart:
                 self._reset_database()
             
@@ -397,7 +415,8 @@ class DevelopmentEnvironmentManager:
             return False
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get development environment health status"""        return {
+        """Get development environment health status"""
+        return {
             'environment': self.environment,
             'status': 'healthy',
             'debug_mode': self.debug_mode,
@@ -411,94 +430,118 @@ class DevelopmentEnvironmentManager:
     
     # Private helper methods
     def _create_database_if_not_exists(self):
-        """Create development database if it doesn't exist"""        # Implementation for database creation
+        """Create development database if it doesn't exist"""
+        # Implementation for database creation
         pass
     
     def _run_database_migrations(self):
-        """Run database migrations"""        # Implementation for migrations
+        """Run database migrations"""
+        # Implementation for migrations
         pass
     
     def _load_seed_data(self):
-        """Load seed data for development"""        # Implementation for seed data loading
+        """Load seed data for development"""
+        # Implementation for seed data loading
         pass
     
     def _setup_mock_spotify_service(self):
-        """Setup mock Spotify API service"""        # Implementation for Spotify mock
+        """Setup mock Spotify API service"""
+        # Implementation for Spotify mock
         pass
     
     def _setup_mock_youtube_service(self):
-        """Setup mock YouTube API service"""        # Implementation for YouTube mock
+        """Setup mock YouTube API service"""
+        # Implementation for YouTube mock
         pass
     
     def _setup_mock_social_media_services(self):
-        """Setup mock social media API services"""        # Implementation for social media mocks
+        """Setup mock social media API services"""
+        # Implementation for social media mocks
         pass
     
     def _setup_mock_payment_services(self):
-        """Setup mock payment services"""        # Implementation for payment mocks
+        """Setup mock payment services"""
+        # Implementation for payment mocks
         pass
     
     def _setup_file_watchers(self):
-        """Setup file watchers for hot reload"""        # Implementation for file watching
+        """Setup file watchers for hot reload"""
+        # Implementation for file watching
         pass
     
     def _setup_debug_logging(self):
-        """Setup enhanced debug logging"""        # Implementation for debug logging
+        """Setup enhanced debug logging"""
+        # Implementation for debug logging
         pass
     
     def _setup_performance_profiling(self):
-        """Setup performance profiling tools"""        # Implementation for profiling
+        """Setup performance profiling tools"""
+        # Implementation for profiling
         pass
     
     def _setup_request_debugging(self):
-        """Setup request/response debugging"""        # Implementation for request debugging
+        """Setup request/response debugging"""
+        # Implementation for request debugging
         pass
     
     def _validate_database_connection(self) -> bool:
-        """Validate database connection"""        # Implementation for database validation
+        """Validate database connection"""
+        # Implementation for database validation
         return True
     
     def _validate_redis_connection(self) -> bool:
-        """Validate Redis connection"""        # Implementation for Redis validation
+        """Validate Redis connection"""
+        # Implementation for Redis validation
         return True
     
     def _validate_storage_access(self) -> bool:
-        """Validate storage access"""        # Implementation for storage validation
+        """Validate storage access"""
+        # Implementation for storage validation
         return True
     
     def _validate_ai_models_access(self) -> bool:
-        """Validate AI models access"""        # Implementation for AI models validation
+        """Validate AI models access"""
+        # Implementation for AI models validation
         return True
     
     def _validate_external_apis(self) -> bool:
-        """Validate external APIs access"""        # Implementation for APIs validation
+        """Validate external APIs access"""
+        # Implementation for APIs validation
         return True
     
     def _validate_debugging_tools(self) -> bool:
-        """Validate debugging tools"""        # Implementation for debugging validation
+        """Validate debugging tools"""
+        # Implementation for debugging validation
         return True
     
     def _reset_database(self):
-        """Reset database to clean state"""        # Implementation for database reset
+        """Reset database to clean state"""
+        # Implementation for database reset
         pass
     
     def _clear_redis_cache(self):
-        """Clear Redis cache"""        # Implementation for Redis clearing
+        """Clear Redis cache"""
+        # Implementation for Redis clearing
         pass
     
     def _clear_storage_directories(self):
-        """Clear storage directories"""        # Implementation for storage clearing
+        """Clear storage directories"""
+        # Implementation for storage clearing
         pass
     
     def _reset_logs(self):
-        """Reset log files"""        # Implementation for log reset
+        """Reset log files"""
+        # Implementation for log reset
         pass
     
     def _get_uptime(self) -> str:
-        """Get environment uptime"""        return "0:00:00"
+        """Get environment uptime"""
+        return "0:00:00"
     
     def _get_memory_usage(self) -> str:
-        """Get memory usage"""        return "0 MB"
+        """Get memory usage"""
+        return "0 MB"
     
     def _get_active_connections(self) -> int:
-        """Get active connections count"""        return 0
+        """Get active connections count"""
+        return 0

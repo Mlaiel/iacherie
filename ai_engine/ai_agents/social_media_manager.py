@@ -9,7 +9,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import json
 import uuid
 from datetime import datetime, timedelta
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class PostingStrategy(Enum):
-    """Content posting strategies"""    IMMEDIATE = "immediate"
+    """Content posting strategies"""
+    IMMEDIATE = "immediate"
     SCHEDULED = "scheduled"
     OPTIMAL_TIME = "optimal_time"
     TRENDING_MOMENT = "trending_moment"
@@ -36,7 +38,8 @@ class PostingStrategy(Enum):
 
 
 class EngagementGoal(Enum):
-    """Engagement optimization goals"""    REACH = "reach"
+    """Engagement optimization goals"""
+    REACH = "reach"
     ENGAGEMENT_RATE = "engagement_rate"
     CONVERSIONS = "conversions"
     BRAND_AWARENESS = "brand_awareness"
@@ -46,7 +49,8 @@ class EngagementGoal(Enum):
 
 @dataclass
 class SocialMediaPost:
-    """Social media post configuration"""    post_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Social media post configuration"""
+    post_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     platform: SocialPlatform = SocialPlatform.INSTAGRAM
     content_id: str = ""
     caption: str = ""
@@ -65,7 +69,8 @@ class SocialMediaPost:
 
 @dataclass
 class CrossPlatformCampaign:
-    """Multi-platform content campaign"""    campaign_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Multi-platform content campaign"""
+    campaign_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
     platforms: List[SocialPlatform] = field(default_factory=list)
@@ -79,7 +84,8 @@ class CrossPlatformCampaign:
 
 @dataclass
 class EngagementMetrics:
-    """Social media engagement metrics"""    platform: SocialPlatform
+    """Social media engagement metrics"""
+    platform: SocialPlatform
     post_id: str
     likes: int = 0
     comments: int = 0
@@ -97,7 +103,8 @@ class EngagementMetrics:
 
 
 class SocialMediaManagerAgent(BaseAIAgent):
-    """    Advanced social media management agent
+    """
+    Advanced social media management agent
     
     Capabilities:
     - Multi-platform content adaptation
@@ -108,7 +115,8 @@ class SocialMediaManagerAgent(BaseAIAgent):
     - Audience analysis and targeting
     - Influencer collaboration management
     - Performance analytics and optimization
-    """    
+    """
+    
     def __init__(self, config: AgentConfiguration):
         # Ensure required capabilities
         required_capabilities = {
@@ -152,7 +160,8 @@ class SocialMediaManagerAgent(BaseAIAgent):
         self.post_performance: Dict[str, EngagementMetrics] = {}
     
     async def _custom_initialize(self) -> None:
-        """Initialize social media management components"""        try:
+        """Initialize social media management components"""
+        try:
             # Initialize platform integrations
             self.platform_manager = SocialPlatformManager()
             await self.platform_manager.initialize()
@@ -179,7 +188,8 @@ class SocialMediaManagerAgent(BaseAIAgent):
             raise
     
     async def _execute_task_impl(self, task: AgentTask) -> Dict[str, Any]:
-        """Execute social media management task"""        task_type = task.task_type
+        """Execute social media management task"""
+        task_type = task.task_type
         context = task.context
         
         if task_type == "create_post":
@@ -200,7 +210,8 @@ class SocialMediaManagerAgent(BaseAIAgent):
             raise ValueError(f"Unknown task type: {task_type}")
     
     async def _create_social_post(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Create and optimize social media post"""        post_config = SocialMediaPost(**context.get("post_config", {}))
+        """Create and optimize social media post"""
+        post_config = SocialMediaPost(**context.get("post_config", {}))
         
         self.logger.info(f"Creating social media post for {post_config.platform.value}")
         
@@ -272,7 +283,8 @@ class SocialMediaManagerAgent(BaseAIAgent):
             }
     
     async def _optimize_for_platform(self, post_config: SocialMediaPost) -> Dict[str, Any]:
-        """Optimize content for specific platform"""        platform = post_config.platform
+        """Optimize content for specific platform"""
+        platform = post_config.platform
         
         # Platform-specific optimization rules
         optimization_rules = {
@@ -341,7 +353,8 @@ class SocialMediaManagerAgent(BaseAIAgent):
         }
     
     async def _generate_optimal_hashtags(self, platform: SocialPlatform, caption: str, target_audience: Dict[str, Any]) -> List[str]:
-        """Generate optimal hashtags for platform and content"""        # Extract keywords from caption
+        """Generate optimal hashtags for platform and content"""
+        # Extract keywords from caption
         keywords = await self._extract_keywords_from_text(caption)
         
         # Get trending hashtags for platform
@@ -397,7 +410,8 @@ class SocialMediaManagerAgent(BaseAIAgent):
         return [hashtag for hashtag, score in scored_hashtags[:min(optimal_count, max_hashtags)]]
     
     async def _predict_optimal_posting_time(self, platform: SocialPlatform, target_audience: Dict[str, Any]) -> datetime:
-        """Predict optimal posting time based on audience behavior and platform analytics"""        
+        """Predict optimal posting time based on audience behavior and platform analytics"""
+        
         # Check cache first
         cache_key = f"{platform.value}_{json.dumps(target_audience, sort_keys=True)}"
         if cache_key in self.optimal_times_cache:
@@ -442,7 +456,8 @@ class SocialMediaManagerAgent(BaseAIAgent):
         return optimal_time
     
     async def _predict_engagement(self, content: Dict[str, Any], post_config: SocialMediaPost) -> Dict[str, float]:
-        """Predict engagement metrics for content"""        prediction_factors = {
+        """Predict engagement metrics for content"""
+        prediction_factors = {
             "platform": post_config.platform.value,
             "caption_length": len(content["caption"]),
             "hashtag_count": len(content.get("hashtags", [])),
@@ -467,7 +482,8 @@ class SocialMediaManagerAgent(BaseAIAgent):
         }
     
     async def _manage_campaign(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Manage cross-platform campaign"""        campaign_config = CrossPlatformCampaign(**context.get("campaign_config", {}))
+        """Manage cross-platform campaign"""
+        campaign_config = CrossPlatformCampaign(**context.get("campaign_config", {}))
         action = context.get("action", "create")
         
         if action == "create":
@@ -482,7 +498,8 @@ class SocialMediaManagerAgent(BaseAIAgent):
             raise ValueError(f"Unknown campaign action: {action}")
     
     async def _create_campaign(self, campaign: CrossPlatformCampaign) -> Dict[str, Any]:
-        """Create new cross-platform campaign"""        try:
+        """Create new cross-platform campaign"""
+        try:
             # Generate platform-specific content variants
             for platform in campaign.platforms:
                 # Create optimized post for each platform
@@ -542,7 +559,8 @@ class SocialMediaManagerAgent(BaseAIAgent):
             }
     
     async def _monitor_engagement(self) -> None:
-        """Background task to monitor engagement across platforms"""        while not self.shutdown_event.is_set():
+        """Background task to monitor engagement across platforms"""
+        while not self.shutdown_event.is_set():
             try:
                 # Monitor all active posts
                 for post_id, post in list(self.scheduled_posts.items()):
@@ -563,7 +581,8 @@ class SocialMediaManagerAgent(BaseAIAgent):
             await asyncio.sleep(300)  # Check every 5 minutes
     
     async def can_handle_task(self, task_type: str, context: Dict[str, Any]) -> bool:
-        """Check if agent can handle specific social media task"""        supported_tasks = [
+        """Check if agent can handle specific social media task"""
+        supported_tasks = [
             "create_post",
             "schedule_post", 
             "optimize_content",

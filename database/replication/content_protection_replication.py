@@ -16,7 +16,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. Any unauthorized use, modification,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 from typing import Dict, Any, Optional, List, Set, Union, Tuple
@@ -37,7 +38,8 @@ from .utils import ReplicationUtils
 
 
 class ContentType(Enum):
-    """Types of content for protection"""    AUDIO = "audio"
+    """Types of content for protection"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -45,14 +47,16 @@ class ContentType(Enum):
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""    BASIC = "basic"
+    """Content protection levels"""
+    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 
 class ViolationStatus(Enum):
-    """Status of violation detection"""    DETECTED = "detected"
+    """Status of violation detection"""
+    DETECTED = "detected"
     UNDER_REVIEW = "under_review"
     CONFIRMED = "confirmed"
     FALSE_POSITIVE = "false_positive"
@@ -62,7 +66,8 @@ class ViolationStatus(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint data structure"""    id: str
+    """Content fingerprint data structure"""
+    id: str
     user_id: str
     content_type: ContentType
     fingerprint_hash: str
@@ -74,7 +79,8 @@ class ContentFingerprint:
     region: str = "global"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""        return {
+        """Convert to dictionary for serialization"""
+        return {
             "id": self.id,
             "user_id": self.user_id,
             "content_type": self.content_type.value,
@@ -89,7 +95,8 @@ class ContentFingerprint:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ContentFingerprint':
-        """Create from dictionary"""        return cls(
+        """Create from dictionary"""
+        return cls(
             id=data["id"],
             user_id=data["user_id"],
             content_type=ContentType(data["content_type"]),
@@ -105,7 +112,8 @@ class ContentFingerprint:
 
 @dataclass
 class ViolationAlert:
-    """Violation detection alert"""    id: str
+    """Violation detection alert"""
+    id: str
     fingerprint_id: str
     violation_url: str
     platform: str
@@ -118,7 +126,8 @@ class ViolationAlert:
     region: str = "global"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""        return {
+        """Convert to dictionary for serialization"""
+        return {
             "id": self.id,
             "fingerprint_id": self.fingerprint_id,
             "violation_url": self.violation_url,
@@ -135,7 +144,8 @@ class ViolationAlert:
 
 @dataclass
 class RevenueTrackingEntry:
-    """Revenue tracking entry for content monetization"""    id: str
+    """Revenue tracking entry for content monetization"""
+    id: str
     user_id: str
     content_id: str
     platform: str
@@ -148,7 +158,8 @@ class RevenueTrackingEntry:
     region: str = "global"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""        return {
+        """Convert to dictionary for serialization"""
+        return {
             "id": self.id,
             "user_id": self.user_id,
             "content_id": self.content_id,
@@ -164,7 +175,8 @@ class RevenueTrackingEntry:
 
 
 class ContentProtectionReplicationHandler:
-    """    Specialized replication handler for content protection data.
+    """
+    Specialized replication handler for content protection data.
     
     Manages real-time replication of:
     - Content fingerprints across regions
@@ -172,14 +184,17 @@ class ContentProtectionReplicationHandler:
     - Revenue tracking data
     - Content creator rights information
     - Automated protection policies
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any], replication_config: ReplicationConfig):
-        """        Initialize content protection replication handler.
+        """
+        Initialize content protection replication handler.
         
         Args:
             config: Content protection specific configuration
             replication_config: Global replication configuration
-        """        self.config = config
+        """
+        self.config = config
         self.replication_config = replication_config
         self.logger = logging.getLogger(f"{__name__}.ContentProtectionReplicationHandler")
         self.utils = ReplicationUtils(replication_config)
@@ -226,11 +241,13 @@ class ContentProtectionReplicationHandler:
         self.logger.info("ContentProtectionReplicationHandler initialized")
     
     async def initialize(self) -> bool:
-        """        Initialize content protection replication handler.
+        """
+        Initialize content protection replication handler.
         
         Returns:
             bool: True if initialization successful
-        """        try:
+        """
+        try:
             self.logger.info("Initializing content protection replication handler...")
             
             # Initialize database connections
@@ -253,7 +270,8 @@ class ContentProtectionReplicationHandler:
             return False
     
     async def _initialize_redis_connections(self) -> None:
-        """Initialize Redis connections for real-time data"""        try:
+        """Initialize Redis connections for real-time data"""
+        try:
             # Primary Redis connection
             primary_config = self.config.get("redis", {}).get("primary", {})
             if primary_config:
@@ -294,7 +312,8 @@ class ContentProtectionReplicationHandler:
             raise
     
     async def _initialize_mongodb_connections(self) -> None:
-        """Initialize MongoDB connections for document storage"""        try:
+        """Initialize MongoDB connections for document storage"""
+        try:
             # Primary MongoDB connection
             primary_config = self.config.get("mongodb", {}).get("primary", {})
             if primary_config:
@@ -325,7 +344,8 @@ class ContentProtectionReplicationHandler:
             raise
     
     async def _initialize_elasticsearch_connections(self) -> None:
-        """Initialize Elasticsearch connections for search and indexing"""        try:
+        """Initialize Elasticsearch connections for search and indexing"""
+        try:
             # Primary Elasticsearch connection
             primary_config = self.config.get("elasticsearch", {}).get("primary", {})
             if primary_config:
@@ -384,7 +404,8 @@ class ContentProtectionReplicationHandler:
             raise
     
     async def _setup_collections(self) -> None:
-        """Setup MongoDB collections for content protection data"""        try:
+        """Setup MongoDB collections for content protection data"""
+        try:
             if not self.mongodb_primary:
                 return
             
@@ -440,7 +461,8 @@ class ContentProtectionReplicationHandler:
             raise
     
     async def _setup_indices(self) -> None:
-        """Setup Elasticsearch indices for search functionality"""        try:
+        """Setup Elasticsearch indices for search functionality"""
+        try:
             if not self.elasticsearch_primary:
                 return
             
@@ -512,7 +534,8 @@ class ContentProtectionReplicationHandler:
             raise
     
     async def _validate_connections(self) -> None:
-        """Validate all database connections"""        try:
+        """Validate all database connections"""
+        try:
             # Validate Redis
             if self.redis_primary:
                 await self.redis_primary.ping()
@@ -537,7 +560,8 @@ class ContentProtectionReplicationHandler:
         target_config: Dict[str, Any], 
         mode: str = "real_time"
     ) -> bool:
-        """        Start content protection replication.
+        """
+        Start content protection replication.
         
         Args:
             source_config: Source configuration
@@ -546,7 +570,8 @@ class ContentProtectionReplicationHandler:
             
         Returns:
             bool: True if replication started successfully
-        """        try:
+        """
+        try:
             self.logger.info(f"Starting content protection replication in {mode} mode")
             
             if self.is_running:
@@ -587,7 +612,8 @@ class ContentProtectionReplicationHandler:
             return False
     
     async def _real_time_fingerprint_sync(self) -> None:
-        """Real-time synchronization of content fingerprints"""        while self.is_running:
+        """Real-time synchronization of content fingerprints"""
+        while self.is_running:
             try:
                 # Check for new/updated fingerprints
                 await self._sync_pending_fingerprints()
@@ -601,7 +627,8 @@ class ContentProtectionReplicationHandler:
                 await asyncio.sleep(5)
     
     async def _real_time_violation_sync(self) -> None:
-        """Real-time synchronization of violation alerts"""        while self.is_running:
+        """Real-time synchronization of violation alerts"""
+        while self.is_running:
             try:
                 # Check for new/updated violations
                 await self._sync_pending_violations()
@@ -615,7 +642,8 @@ class ContentProtectionReplicationHandler:
                 await asyncio.sleep(5)
     
     async def _real_time_revenue_sync(self) -> None:
-        """Real-time synchronization of revenue tracking data"""        while self.is_running:
+        """Real-time synchronization of revenue tracking data"""
+        while self.is_running:
             try:
                 # Sync revenue data (less frequent than fingerprints/violations)
                 await self._sync_revenue_data()
@@ -629,7 +657,8 @@ class ContentProtectionReplicationHandler:
                 await asyncio.sleep(30)
     
     async def _health_monitor(self) -> None:
-        """Monitor replication health and update metrics"""        while self.is_running:
+        """Monitor replication health and update metrics"""
+        while self.is_running:
             try:
                 start_time = datetime.utcnow()
                 
@@ -654,7 +683,8 @@ class ContentProtectionReplicationHandler:
                 await asyncio.sleep(30)
     
     async def _sync_pending_fingerprints(self) -> None:
-        """Sync pending fingerprints to secondary stores"""        if not self.pending_fingerprints:
+        """Sync pending fingerprints to secondary stores"""
+        if not self.pending_fingerprints:
             return
         
         fingerprint_ids = list(self.pending_fingerprints)[:self.batch_size]
@@ -675,7 +705,8 @@ class ContentProtectionReplicationHandler:
                 self.metrics["error_count"] += 1
     
     async def _sync_pending_violations(self) -> None:
-        """Sync pending violations to secondary stores"""        if not self.pending_violations:
+        """Sync pending violations to secondary stores"""
+        if not self.pending_violations:
             return
         
         violation_ids = list(self.pending_violations)[:self.batch_size]
@@ -696,14 +727,16 @@ class ContentProtectionReplicationHandler:
                 self.metrics["error_count"] += 1
     
     async def add_content_fingerprint(self, fingerprint: ContentFingerprint) -> bool:
-        """        Add new content fingerprint and trigger replication.
+        """
+        Add new content fingerprint and trigger replication.
         
         Args:
             fingerprint: Content fingerprint to add
             
         Returns:
             bool: True if added successfully
-        """        try:
+        """
+        try:
             # Store in primary databases
             await self._store_fingerprint_primary(fingerprint)
             
@@ -718,14 +751,16 @@ class ContentProtectionReplicationHandler:
             return False
     
     async def add_violation_alert(self, violation: ViolationAlert) -> bool:
-        """        Add new violation alert and trigger urgent replication.
+        """
+        Add new violation alert and trigger urgent replication.
         
         Args:
             violation: Violation alert to add
             
         Returns:
             bool: True if added successfully
-        """        try:
+        """
+        try:
             # Store in primary databases
             await self._store_violation_primary(violation)
             
@@ -744,11 +779,13 @@ class ContentProtectionReplicationHandler:
             return False
     
     async def get_replication_metrics(self) -> Dict[str, Any]:
-        """        Get content protection replication metrics.
+        """
+        Get content protection replication metrics.
         
         Returns:
             Dict containing replication metrics
-        """        try:
+        """
+        try:
             # Calculate replication lag
             if self.last_sync_time:
                 lag_ms = (datetime.utcnow() - self.last_sync_time).total_seconds() * 1000
@@ -770,14 +807,16 @@ class ContentProtectionReplicationHandler:
             return self.metrics
     
     async def stop_replication(self, graceful: bool = True) -> bool:
-        """        Stop content protection replication.
+        """
+        Stop content protection replication.
         
         Args:
             graceful: Whether to perform graceful shutdown
             
         Returns:
             bool: True if stopped successfully
-        """        try:
+        """
+        try:
             self.logger.info(f"Stopping content protection replication (graceful={graceful})")
             
             self.is_running = False
@@ -805,7 +844,8 @@ class ContentProtectionReplicationHandler:
             return False
     
     async def shutdown(self) -> None:
-        """Shutdown the content protection replication handler"""        try:
+        """Shutdown the content protection replication handler"""
+        try:
             self.logger.info("Shutting down content protection replication handler...")
             
             # Stop replication
@@ -837,45 +877,56 @@ class ContentProtectionReplicationHandler:
     
     # Helper methods (simplified implementations)
     async def _get_fingerprint_from_primary(self, fingerprint_id: str) -> Optional[Dict[str, Any]]:
-        """Get fingerprint data from primary store"""        # Implementation would fetch from primary MongoDB
+        """Get fingerprint data from primary store"""
+        # Implementation would fetch from primary MongoDB
         return None
     
     async def _get_violation_from_primary(self, violation_id: str) -> Optional[Dict[str, Any]]:
-        """Get violation data from primary store"""        # Implementation would fetch from primary MongoDB
+        """Get violation data from primary store"""
+        # Implementation would fetch from primary MongoDB
         return None
     
     async def _store_fingerprint_primary(self, fingerprint: ContentFingerprint) -> None:
-        """Store fingerprint in primary databases"""        # Implementation would store in MongoDB and Elasticsearch
+        """Store fingerprint in primary databases"""
+        # Implementation would store in MongoDB and Elasticsearch
         pass
     
     async def _store_violation_primary(self, violation: ViolationAlert) -> None:
-        """Store violation in primary databases"""        # Implementation would store in MongoDB and Elasticsearch
+        """Store violation in primary databases"""
+        # Implementation would store in MongoDB and Elasticsearch
         pass
     
     async def _replicate_fingerprint_to_secondaries(self, fingerprint_data: Dict[str, Any]) -> None:
-        """Replicate fingerprint to secondary stores"""        # Implementation would replicate to all secondary stores
+        """Replicate fingerprint to secondary stores"""
+        # Implementation would replicate to all secondary stores
         pass
     
     async def _replicate_violation_to_secondaries(self, violation_data: Dict[str, Any]) -> None:
-        """Replicate violation to secondary stores"""        # Implementation would replicate to all secondary stores
+        """Replicate violation to secondary stores"""
+        # Implementation would replicate to all secondary stores
         pass
     
     async def _replicate_violation_immediate(self, violation: ViolationAlert) -> None:
-        """Immediately replicate critical violation"""        # Implementation for urgent violation replication
+        """Immediately replicate critical violation"""
+        # Implementation for urgent violation replication
         pass
     
     async def _sync_revenue_data(self) -> None:
-        """Sync revenue tracking data"""        # Implementation for revenue data synchronization
+        """Sync revenue tracking data"""
+        # Implementation for revenue data synchronization
         pass
     
     async def _batch_sync_all_data(self) -> None:
-        """Batch synchronization of all data"""        # Implementation for batch sync mode
+        """Batch synchronization of all data"""
+        # Implementation for batch sync mode
         pass
     
     async def _batch_revenue_sync(self) -> None:
-        """Batch synchronization of revenue data"""        # Implementation for batch revenue sync
+        """Batch synchronization of revenue data"""
+        # Implementation for batch revenue sync
         pass
     
     async def _check_connection_health(self) -> None:
-        """Check health of all database connections"""        # Implementation for connection health checks
+        """Check health of all database connections"""
+        # Implementation for connection health checks
         pass

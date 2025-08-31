@@ -1,13 +1,20 @@
 """WSGI application entry point (e.g., for Gunicorn/uWSGI or AWS Lambda via Mangum).
 English-only comments and professional naming.
-"""import os
+"""
+
+import os
+
 import sentry_sdk
 from fastapi import FastAPI
+
 from fastapi.middleware.cors import CORSMiddleware
+
 from starlette_exporter import PrometheusMiddleware, handle_metrics
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+
 from backend.app.api import router as api_router
 from backend.app.core import settings
+
 from mangum import Mangum
 
 sentry_sdk.init(dsn=os.getenv("SENTRY_DSN", ""))

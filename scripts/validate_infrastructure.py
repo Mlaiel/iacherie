@@ -11,7 +11,8 @@ Addresses the full requirement: "INFRASTRUCTURE - Docker Compose, Monitoring, Da
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import sys
+"""
+import sys
 import subprocess
 import time
 from pathlib import Path
@@ -30,14 +31,16 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class InfrastructureValidator:
-    """Comprehensive infrastructure validation for Ainflue Platform"""    
+    """Comprehensive infrastructure validation for Ainflue Platform"""
+    
     def __init__(self, project_root: str):
         self.project_root = Path(project_root)
         self.scripts_dir = self.project_root / "scripts"
         self.validation_results = {}
         
     def run_docker_validation(self) -> Tuple[bool, Dict]:
-        """Run Docker Compose services validation"""        logger.info("🐳 Running Docker Compose Services Validation...")
+        """Run Docker Compose services validation"""
+        logger.info("🐳 Running Docker Compose Services Validation...")
         
         try:
             # Run Docker services validation script
@@ -60,7 +63,8 @@ class InfrastructureValidator:
             return False, {'success': False, 'error': str(e)}
     
     def run_monitoring_validation(self) -> Tuple[bool, Dict]:
-        """Run monitoring configuration validation"""        logger.info("📊 Running Monitoring Configuration Validation...")
+        """Run monitoring configuration validation"""
+        logger.info("📊 Running Monitoring Configuration Validation...")
         
         try:
             # Run monitoring validation script
@@ -83,7 +87,8 @@ class InfrastructureValidator:
             return False, {'success': False, 'error': str(e)}
     
     def run_database_validation(self) -> Tuple[bool, Dict]:
-        """Run database schema and migration validation"""        logger.info("🗄️ Running Database Schema and Migration Validation...")
+        """Run database schema and migration validation"""
+        logger.info("🗄️ Running Database Schema and Migration Validation...")
         
         try:
             # Run database validation script
@@ -106,7 +111,8 @@ class InfrastructureValidator:
             return False, {'success': False, 'error': str(e)}
     
     def check_prerequisites(self) -> Tuple[bool, List[str]]:
-        """Check if all prerequisite tools are available"""        issues = []
+        """Check if all prerequisite tools are available"""
+        issues = []
         
         # Check Docker
         try:
@@ -138,7 +144,8 @@ class InfrastructureValidator:
         return len(issues) == 0, issues
     
     def generate_infrastructure_startup_guide(self) -> str:
-        """Generate comprehensive startup guide"""        guide = """# 🚀 Ainflue Platform Infrastructure Startup Guide
+        """Generate comprehensive startup guide"""
+        guide = """# 🚀 Ainflue Platform Infrastructure Startup Guide
 
 ## Prerequisites
 - Docker Engine 20.10+
@@ -236,10 +243,12 @@ docker exec [redis-container] redis-cli ping
 - Network debugging: `docker network ls`
 
 For support: mlaiel@live.de
-"""        return guide
+"""
+        return guide
     
     def run_comprehensive_validation(self) -> Dict:
-        """Run all infrastructure validations"""        logger.info("🏗️ Starting Comprehensive Infrastructure Validation")
+        """Run all infrastructure validations"""
+        logger.info("🏗️ Starting Comprehensive Infrastructure Validation")
         logger.info("="*80)
         
         start_time = time.time()
@@ -297,7 +306,8 @@ For support: mlaiel@live.de
         return self.validation_results
     
     def generate_comprehensive_report(self) -> str:
-        """Generate comprehensive infrastructure validation report"""        if not self.validation_results:
+        """Generate comprehensive infrastructure validation report"""
+        if not self.validation_results:
             return "No validation results available."
         
         results = self.validation_results
@@ -312,7 +322,8 @@ OVERALL STATUS: {'✅ PASSED' if results['overall_success'] else '❌ FAILED'}
 COMPONENT VALIDATION RESULTS:
 ============================
 
-"""        
+"""
+        
         # Prerequisites
         prereq = results['prerequisites']
         report += f"📋 Prerequisites: {'✅ PASSED' if prereq['success'] else '❌ FAILED'}\n"
@@ -389,7 +400,8 @@ NEXT STEPS:
 3. Initialize database: bash test_database_migrations.sh
 4. Follow the startup guide for detailed instructions
 
-"""        else:
+"""
+        else:
             report += """⚠️ Some infrastructure components need attention.
 
 Please review the individual component reports for details:
@@ -399,7 +411,8 @@ Please review the individual component reports for details:
 
 Fix the reported issues and re-run this validation.
 
-"""        
+"""
+        
         report += f"""SUPPORT:
 ========
 For technical support and deployment assistance:
@@ -407,12 +420,14 @@ For technical support and deployment assistance:
 📖 Documentation: See generated reports and startup guide
 
 © 2025 Fahed Mlaiel. All rights reserved.
-"""        
+"""
+        
         return report
 
 
 def main():
-    """Main execution function"""    script_dir = Path(__file__).parent
+    """Main execution function"""
+    script_dir = Path(__file__).parent
     project_root = script_dir.parent
     
     print("""🏗️ AINFLUE PLATFORM - INFRASTRUCTURE VALIDATION

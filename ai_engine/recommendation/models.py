@@ -19,7 +19,8 @@ Development Team Specialties:
 - DevOps Engineer
 - AI Prompt Engineer
 Email: mlaiel@live.de
-"""from typing import Dict, List, Optional, Any, Union, Tuple, Set, Callable
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple, Set, Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -35,7 +36,8 @@ Base = declarative_base()
 
 
 class PlatformType(Enum):
-    """Comprehensive platform enumeration for multi-platform ecosystem"""    # Music & Audio Platforms
+    """Comprehensive platform enumeration for multi-platform ecosystem"""
+    # Music & Audio Platforms
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE_MUSIC = "youtube_music"
@@ -83,7 +85,8 @@ class PlatformType(Enum):
 
 
 class ContentFormat(Enum):
-    """Advanced content format classification"""    # Audio Formats
+    """Advanced content format classification"""
+    # Audio Formats
     MUSIC_TRACK = "music_track"
     PODCAST = "podcast"
     AUDIOBOOK = "audiobook"
@@ -120,7 +123,8 @@ class ContentFormat(Enum):
 
 
 class RecommendationType(Enum):
-    """Comprehensive recommendation type classification"""    CONTENT_DISCOVERY = "content_discovery"
+    """Comprehensive recommendation type classification"""
+    CONTENT_DISCOVERY = "content_discovery"
     CREATOR_COLLABORATION = "creator_collaboration"
     REVENUE_OPTIMIZATION = "revenue_optimization"
     TREND_ANALYSIS = "trend_analysis"
@@ -135,7 +139,8 @@ class RecommendationType(Enum):
 
 
 class EngagementMetricType(Enum):
-    """Advanced engagement metrics classification"""    VIEWS = "views"
+    """Advanced engagement metrics classification"""
+    VIEWS = "views"
     LIKES = "likes"
     COMMENTS = "comments"
     SHARES = "shares"
@@ -152,7 +157,8 @@ class EngagementMetricType(Enum):
 
 
 class CollaborationType(Enum):
-    """Advanced collaboration type classification"""    MUSIC_PRODUCTION = "music_production"
+    """Advanced collaboration type classification"""
+    MUSIC_PRODUCTION = "music_production"
     VIDEO_PRODUCTION = "video_production"
     CONTENT_CREATION = "content_creation"
     BRAND_CAMPAIGN = "brand_campaign"
@@ -167,7 +173,8 @@ class CollaborationType(Enum):
 
 
 class RevenueModel(Enum):
-    """Comprehensive revenue model types"""    ADVERTISING = "advertising"
+    """Comprehensive revenue model types"""
+    ADVERTISING = "advertising"
     SUBSCRIPTION = "subscription"
     MERCHANDISE = "merchandise"
     DONATIONS = "donations"
@@ -180,7 +187,8 @@ class RevenueModel(Enum):
     EDUCATIONAL_CONTENT = "educational_content"
 @dataclass
 class UserProfile:
-    """Ultra-comprehensive user profile for advanced personalization"""    user_id: str
+    """Ultra-comprehensive user profile for advanced personalization"""
+    user_id: str
     username: str
     email: Optional[str] = None
     
@@ -236,7 +244,8 @@ class UserProfile:
     profile_version: str = "v2.0"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert profile to dictionary for serialization"""        return {
+        """Convert profile to dictionary for serialization"""
+        return {
             'user_id': self.user_id,
             'username': self.username,
             'email': self.email,
@@ -286,7 +295,8 @@ class UserProfile:
 
 @dataclass
 class RecommendationRequest:
-    """Comprehensive recommendation request structure"""    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive recommendation request structure"""
+    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = ""
     
     # Content Specification
@@ -340,7 +350,8 @@ class RecommendationRequest:
     api_version: str = "v2.0"
     
     def validate(self) -> bool:
-        """Validate request parameters"""        if not self.user_id:
+        """Validate request parameters"""
+        if not self.user_id:
             raise ValueError("user_id is required")
         
         if self.max_results <= 0:
@@ -357,7 +368,8 @@ class RecommendationRequest:
 
 @dataclass 
 class ContentRecommendation:
-    """Ultra-detailed content recommendation with comprehensive metadata"""    recommendation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Ultra-detailed content recommendation with comprehensive metadata"""
+    recommendation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = ""
     content_title: str = ""
     content_description: Optional[str] = None
@@ -429,7 +441,8 @@ class ContentRecommendation:
     recommendation_version: str = "v2.0"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert recommendation to dictionary for API response"""        return {
+        """Convert recommendation to dictionary for API response"""
+        return {
             'recommendation_id': self.recommendation_id,
             'content_info': {
                 'content_id': self.content_id,
@@ -542,7 +555,8 @@ class ContentRecommendation:
 
 
 class TrendType(Enum):
-    """Trend type enumeration"""    VIRAL = "viral"
+    """Trend type enumeration"""
+    VIRAL = "viral"
     EMERGING = "emerging"
     SEASONAL = "seasonal"
     PLATFORM_SPECIFIC = "platform_specific"
@@ -552,7 +566,8 @@ class TrendType(Enum):
 
 
 class RevenueStream(Enum):
-    """Revenue stream enumeration"""    ADVERTISING = "advertising"
+    """Revenue stream enumeration"""
+    ADVERTISING = "advertising"
     SPONSORSHIP = "sponsorship"
     AFFILIATE_MARKETING = "affiliate_marketing"
     MERCHANDISE = "merchandise"
@@ -573,7 +588,8 @@ class RevenueStream(Enum):
 
 
 class CollaborationType(Enum):
-    """Collaboration type enumeration"""    DUET = "duet"
+    """Collaboration type enumeration"""
+    DUET = "duet"
     JOINT_CONTENT = "joint_content"
     GUEST_APPEARANCE = "guest_appearance"
     CROSS_PROMOTION = "cross_promotion"
@@ -594,7 +610,8 @@ class CollaborationType(Enum):
 
 
 class MatchType(Enum):
-    """Collaboration match type enumeration"""    COMPLEMENTARY_SKILLS = "complementary_skills"
+    """Collaboration match type enumeration"""
+    COMPLEMENTARY_SKILLS = "complementary_skills"
     SIMILAR_AUDIENCE = "similar_audience"
     CROSS_PROMOTION = "cross_promotion"
     SKILL_EXCHANGE = "skill_exchange"
@@ -608,7 +625,8 @@ class MatchType(Enum):
 
 @dataclass
 class Engagement:
-    """Engagement metrics structure"""    likes: int = 0
+    """Engagement metrics structure"""
+    likes: int = 0
     comments: int = 0
     shares: int = 0
     saves: int = 0
@@ -623,7 +641,8 @@ class Engagement:
 
 @dataclass
 class ContentMetadata:
-    """Content metadata structure"""    title: str = ""
+    """Content metadata structure"""
+    title: str = ""
     description: str = ""
     tags: List[str] = field(default_factory=list)
     duration: float = 0.0
@@ -649,7 +668,8 @@ class ContentMetadata:
 
 @dataclass
 class AudienceInsight:
-    """Audience insights structure"""    total_audience: int = 0
+    """Audience insights structure"""
+    total_audience: int = 0
     demographics: Dict[str, Any] = field(default_factory=dict)
     interests: List[str] = field(default_factory=list)
     behaviors: Dict[str, Any] = field(default_factory=dict)
@@ -665,7 +685,8 @@ class AudienceInsight:
 
 @dataclass
 class CreatorProfile:
-    """Creator profile data structure"""    creator_id: str
+    """Creator profile data structure"""
+    creator_id: str
     username: str
     display_name: str
     bio: str = ""
@@ -713,7 +734,8 @@ class CreatorProfile:
 
 @dataclass
 class ContentRecommendation:
-    """Content recommendation data structure"""    creator_id: str
+    """Content recommendation data structure"""
+    creator_id: str
     title: str
     description: str
     content_type: ContentType
@@ -766,7 +788,8 @@ class ContentRecommendation:
 
 @dataclass
 class CreatorCompatibility:
-    """Creator compatibility analysis"""    creator_a_id: str
+    """Creator compatibility analysis"""
+    creator_a_id: str
     creator_b_id: str
     compatibility_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     overall_score: float = 0.0
@@ -782,7 +805,8 @@ class CreatorCompatibility:
 
 @dataclass
 class CollaborationMatch:
-    """Collaboration match data structure"""    primary_creator_id: str
+    """Collaboration match data structure"""
+    primary_creator_id: str
     suggested_creator_id: str
     collaboration_type: str
     match_id: str = field(default_factory=lambda: str(uuid.uuid4()))
@@ -827,7 +851,8 @@ class CollaborationMatch:
 
 @dataclass
 class BrandMatch:
-    """Brand collaboration match"""    creator_id: str
+    """Brand collaboration match"""
+    creator_id: str
     brand_name: str
     brand_category: str
     match_id: str = field(default_factory=lambda: str(uuid.uuid4()))
@@ -843,7 +868,8 @@ class BrandMatch:
 
 @dataclass
 class TrendInsight:
-    """Trend insight data structure"""    title: str
+    """Trend insight data structure"""
+    title: str
     description: str
     trend_type: TrendType
     trend_id: str = field(default_factory=lambda: str(uuid.uuid4()))
@@ -903,7 +929,8 @@ class TrendInsight:
 
 @dataclass
 class RevenueStrategy:
-    """Revenue strategy recommendation"""    creator_id: str
+    """Revenue strategy recommendation"""
+    creator_id: str
     strategy_name: str
     description: str
     strategy_id: str = field(default_factory=lambda: str(uuid.uuid4()))
@@ -958,7 +985,8 @@ class RevenueStrategy:
 
 @dataclass
 class RecommendationRequest:
-    """Request structure for recommendations"""    creator_id: str
+    """Request structure for recommendations"""
+    creator_id: str
     request_type: RecommendationType
     request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     context: Dict[str, Any] = field(default_factory=dict)
@@ -1010,7 +1038,8 @@ class RecommendationRequest:
 
 @dataclass
 class ContentOpportunity:
-    """Content creation opportunity structure"""    title: str
+    """Content creation opportunity structure"""
+    title: str
     description: str
     content_type: ContentType
     opportunity_id: str = field(default_factory=lambda: str(uuid.uuid4()))
@@ -1035,7 +1064,8 @@ class ContentOpportunity:
 
 @dataclass
 class RecommendationResponse:
-    """Response structure for recommendations"""    request_id: str
+    """Response structure for recommendations"""
+    request_id: str
     creator_id: str
     response_type: RecommendationType
     response_id: str = field(default_factory=lambda: str(uuid.uuid4()))
@@ -1062,7 +1092,8 @@ class RecommendationResponse:
 
 @dataclass
 class PerformanceMetrics:
-    """Performance metrics for recommendation system"""    total_requests: int = 0
+    """Performance metrics for recommendation system"""
+    total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
     average_response_time_ms: float = 0.0
@@ -1090,7 +1121,8 @@ StrategyList = List[RevenueStrategy]
 
 @dataclass
 class AnalysisResult:
-    """Comprehensive analysis result for content."""    content_id: str
+    """Comprehensive analysis result for content."""
+    content_id: str
     content_type: ContentType
     platform: Platform
     analysis_timestamp: str
@@ -1126,7 +1158,8 @@ class AnalysisResult:
 
 @dataclass
 class ContentFeatures:
-    """Base class for content features extracted from analysis."""    extraction_timestamp: str
+    """Base class for content features extracted from analysis."""
+    extraction_timestamp: str
     confidence_score: float
     feature_type: str = "base"
     complexity_score: float = 0.0
@@ -1161,7 +1194,8 @@ class ContentFeatures:
 
 @dataclass
 class VideoFeatures(ContentFeatures):
-    """Video-specific features extracted from content analysis."""    
+    """Video-specific features extracted from content analysis."""
+    
     # Video metadata
     duration: float = 0.0
     resolution: Tuple[int, int] = (1920, 1080)
@@ -1215,7 +1249,8 @@ class VideoFeatures(ContentFeatures):
 
 @dataclass
 class AudioFeatures(ContentFeatures):
-    """Audio-specific features extracted from content analysis."""    
+    """Audio-specific features extracted from content analysis."""
+    
     # Audio metadata
     duration: float = 0.0
     sample_rate: int = 44100
@@ -1285,7 +1320,8 @@ class AudioFeatures(ContentFeatures):
 
 @dataclass
 class TextFeatures(ContentFeatures):
-    """Text-specific features extracted from content analysis."""    
+    """Text-specific features extracted from content analysis."""
+    
     # Basic statistics
     character_count: int = 0
     word_count: int = 0
@@ -1355,7 +1391,8 @@ class TextFeatures(ContentFeatures):
 
 @dataclass
 class CompatibilityScore:
-    """Compatibility scoring result between creators."""    creator1_id: str
+    """Compatibility scoring result between creators."""
+    creator1_id: str
     creator2_id: str
     overall_score: float
     confidence: float = 0.0
@@ -1391,7 +1428,8 @@ class CompatibilityScore:
 
 @dataclass
 class ViralPrediction:
-    """Viral content prediction result."""    content_id: str
+    """Viral content prediction result."""
+    content_id: str
     prediction_timestamp: str
     viral_score: float
     viral_probability: float = 0.0

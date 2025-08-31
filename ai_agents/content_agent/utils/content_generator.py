@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timezone
 from typing import Dict, List, Any, Optional, Union, Tuple, AsyncGenerator
@@ -80,7 +81,8 @@ settings = get_settings()
 
 
 class ContentGenerationType(str, Enum):
-    """Advanced content generation types"""    # Text content
+    """Advanced content generation types"""
+    # Text content
     BLOG_ARTICLE = "blog_article"
     SOCIAL_MEDIA_POST = "social_media_post"
     EMAIL_NEWSLETTER = "email_newsletter"
@@ -121,7 +123,8 @@ class ContentGenerationType(str, Enum):
 
 
 class CreativeEngine(str, Enum):
-    """AI engines for content generation"""    GPT4_TURBO = "gpt-4-turbo"
+    """AI engines for content generation"""
+    GPT4_TURBO = "gpt-4-turbo"
     GPT4_VISION = "gpt-4-vision-preview"
     CLAUDE_3_OPUS = "claude-3-opus"
     CLAUDE_3_SONNET = "claude-3-sonnet"
@@ -135,7 +138,8 @@ class CreativeEngine(str, Enum):
 
 
 class ContentTone(str, Enum):
-    """Content tone and style options"""    PROFESSIONAL = "professional"
+    """Content tone and style options"""
+    PROFESSIONAL = "professional"
     CASUAL = "casual"
     FRIENDLY = "friendly"
     AUTHORITATIVE = "authoritative"
@@ -153,7 +157,8 @@ class ContentTone(str, Enum):
 
 @dataclass
 class GenerationRequest:
-    """Content generation request structure"""    content_type: ContentGenerationType
+    """Content generation request structure"""
+    content_type: ContentGenerationType
     prompt: str
     tone: ContentTone = ContentTone.PROFESSIONAL
     target_audience: Optional[str] = None
@@ -172,7 +177,8 @@ class GenerationRequest:
 
 @dataclass
 class GeneratedContent:
-    """Generated content with metadata"""    content: str
+    """Generated content with metadata"""
+    content: str
     content_type: ContentGenerationType
     metadata: Dict[str, Any]
     quality_score: float
@@ -188,7 +194,8 @@ class GeneratedContent:
 
 
 class ContentGenerator:
-    """Advanced AI-powered content generator"""    
+    """Advanced AI-powered content generator"""
+    
     def __init__(self):
         self.openai_client = AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
         self.anthropic_client = anthropic.AsyncAnthropic(api_key=settings.ANTHROPIC_API_KEY)
@@ -210,7 +217,8 @@ class ContentGenerator:
         logger.info("ContentGenerator initialized with all AI engines")
 
     def _load_specialized_models(self):
-        """Load specialized AI models for different content types"""        try:
+        """Load specialized AI models for different content types"""
+        try:
             # Text generation models
             self.gpt2_model = GPT2LMHeadModel.from_pretrained('gpt2-large')
             self.gpt2_tokenizer = GPT2Tokenizer.from_pretrained('gpt2-large')
@@ -235,11 +243,13 @@ class ContentGenerator:
             self._setup_fallback_models()
 
     def _setup_fallback_models(self):
-        """Setup fallback cloud-based models"""        self.use_cloud_models = True
+        """Setup fallback cloud-based models"""
+        self.use_cloud_models = True
         logger.info("Using cloud-based AI models as fallback")
 
     def _load_content_templates(self) -> Dict[str, Dict]:
-        """Load content templates for different types"""        return {
+        """Load content templates for different types"""
+        return {
             ContentGenerationType.BLOG_ARTICLE: {
                 "structure": ["introduction", "main_points", "conclusion", "call_to_action"],
                 "min_sections": 3,
@@ -276,7 +286,8 @@ class ContentGenerator:
         }
 
     def _load_style_patterns(self) -> Dict[str, Dict]:
-        """Load writing style patterns"""        return {
+        """Load writing style patterns"""
+        return {
             ContentTone.PROFESSIONAL: {
                 "vocabulary": "formal",
                 "sentence_structure": "complex",
@@ -308,7 +319,8 @@ class ContentGenerator:
         }
 
     async def generate_content(self, request: GenerationRequest) -> GeneratedContent:
-        """Generate content based on request parameters"""        start_time = datetime.now()
+        """Generate content based on request parameters"""
+        start_time = datetime.now()
         
         try:
             # Validate request
@@ -377,7 +389,8 @@ class ContentGenerator:
             raise HTTPException(status_code=500, detail=f"Content generation failed: {str(e)}")
 
     def _validate_request(self, request: GenerationRequest):
-        """Validate generation request"""        if not request.prompt or len(request.prompt.strip()) < 10:
+        """Validate generation request"""
+        if not request.prompt or len(request.prompt.strip()) < 10:
             raise ValueError("Prompt must be at least 10 characters long")
         
         if request.creativity_level < 0 or request.creativity_level > 1:
@@ -387,7 +400,8 @@ class ContentGenerator:
             raise ValueError("Length constraint must be positive")
 
     def _select_optimal_engine(self, request: GenerationRequest) -> CreativeEngine:
-        """Select the optimal AI engine for the request"""        if request.engine_preference:
+        """Select the optimal AI engine for the request"""
+        if request.engine_preference:
             return request.engine_preference
         
         # Engine selection logic based on content type
@@ -405,7 +419,8 @@ class ContentGenerator:
         return engine_map.get(request.content_type, CreativeEngine.GPT4_TURBO)
 
     async def _generate_text_content(self, request: GenerationRequest, engine: CreativeEngine) -> str:
-        """Generate text-based content"""        # Build comprehensive prompt
+        """Generate text-based content"""
+        # Build comprehensive prompt
         prompt = self._build_text_prompt(request)
         
         if engine == CreativeEngine.GPT4_TURBO:
@@ -418,7 +433,8 @@ class ContentGenerator:
             return await self._generate_with_custom_model(prompt, request)
 
     async def _generate_creative_content(self, request: GenerationRequest, engine: CreativeEngine) -> str:
-        """Generate creative content like lyrics, poems, stories"""        # Build creative prompt with structure
+        """Generate creative content like lyrics, poems, stories"""
+        # Build creative prompt with structure
         prompt = self._build_creative_prompt(request)
         
         # Add creative constraints
@@ -432,7 +448,8 @@ class ContentGenerator:
         return await self._generate_with_creative_engine(prompt, request, engine)
 
     async def _generate_script_content(self, request: GenerationRequest, engine: CreativeEngine) -> str:
-        """Generate script content for video/audio"""        # Build script prompt with formatting
+        """Generate script content for video/audio"""
+        # Build script prompt with formatting
         prompt = self._build_script_prompt(request)
         
         # Add timing and visual cues
@@ -444,7 +461,8 @@ class ContentGenerator:
         return await self._generate_with_script_engine(prompt, request, engine)
 
     async def _generate_visual_content(self, request: GenerationRequest, engine: CreativeEngine) -> str:
-        """Generate visual content descriptions"""        prompt = self._build_visual_prompt(request)
+        """Generate visual content descriptions"""
+        prompt = self._build_visual_prompt(request)
         
         # Use vision-capable models
         if engine == CreativeEngine.GPT4_VISION:
@@ -453,11 +471,13 @@ class ContentGenerator:
             return await self._generate_visual_description(prompt, request)
 
     async def _generate_generic_content(self, request: GenerationRequest, engine: CreativeEngine) -> str:
-        """Generate generic content for other types"""        prompt = self._build_generic_prompt(request)
+        """Generate generic content for other types"""
+        prompt = self._build_generic_prompt(request)
         return await self._generate_with_selected_engine(prompt, request, engine)
 
     def _build_text_prompt(self, request: GenerationRequest) -> str:
-        """Build comprehensive prompt for text content"""        template = self.content_templates.get(request.content_type, {})
+        """Build comprehensive prompt for text content"""
+        template = self.content_templates.get(request.content_type, {})
         style = self.style_patterns.get(request.tone, {})
         
         prompt_parts = [
@@ -502,7 +522,8 @@ class ContentGenerator:
         return "\n".join(prompt_parts)
 
     def _build_creative_prompt(self, request: GenerationRequest) -> str:
-        """Build prompt for creative content"""        prompt_parts = [
+        """Build prompt for creative content"""
+        prompt_parts = [
             f"Create an original {request.content_type.value} based on:",
             f"Theme/Inspiration: {request.prompt}",
             f"Creative style: {request.tone.value}",
@@ -515,7 +536,8 @@ class ContentGenerator:
         return "\n".join(prompt_parts)
 
     def _build_script_prompt(self, request: GenerationRequest) -> str:
-        """Build prompt for script content"""        template = self.content_templates.get(request.content_type, {})
+        """Build prompt for script content"""
+        template = self.content_templates.get(request.content_type, {})
         
         prompt_parts = [
             f"Write a professional {request.content_type.value} for:",
@@ -534,22 +556,29 @@ class ContentGenerator:
         return "\n".join(prompt_parts)
 
     def _build_visual_prompt(self, request: GenerationRequest) -> str:
-        """Build prompt for visual content"""        return f"""        Generate a detailed and engaging {request.content_type.value} for:
+        """Build prompt for visual content"""
+        return f"""
+        Generate a detailed and engaging {request.content_type.value} for:
         Subject: {request.prompt}
         Style: {request.tone.value}
         
         Focus on visual elements, composition, mood, and storytelling aspects.
         Make it suitable for social media and marketing use.
-        """    def _build_generic_prompt(self, request: GenerationRequest) -> str:
-        """Build generic prompt for other content types"""        return f"""        Create high-quality {request.content_type.value} content about:
+        """
+    def _build_generic_prompt(self, request: GenerationRequest) -> str:
+        """Build generic prompt for other content types"""
+        return f"""
+        Create high-quality {request.content_type.value} content about:
         {request.prompt}
         
         Style: {request.tone.value}
         Target audience: {request.target_audience or 'General audience'}
         
         Ensure the content is engaging, original, and professionally written.
-        """    async def _generate_with_openai(self, prompt: str, request: GenerationRequest) -> str:
-        """Generate content using OpenAI GPT models"""        try:
+        """
+    async def _generate_with_openai(self, prompt: str, request: GenerationRequest) -> str:
+        """Generate content using OpenAI GPT models"""
+        try:
             messages = [
                 {"role": "system", "content": self._get_system_prompt(request)},
                 {"role": "user", "content": prompt}
@@ -572,7 +601,8 @@ class ContentGenerator:
             raise
 
     async def _generate_with_anthropic(self, prompt: str, request: GenerationRequest, engine: CreativeEngine) -> str:
-        """Generate content using Anthropic Claude"""        try:
+        """Generate content using Anthropic Claude"""
+        try:
             model_map = {
                 CreativeEngine.CLAUDE_3_OPUS: "claude-3-opus-20240229",
                 CreativeEngine.CLAUDE_3_SONNET: "claude-3-sonnet-20240229"
@@ -593,7 +623,8 @@ class ContentGenerator:
             raise
 
     async def _generate_with_gemini(self, prompt: str, request: GenerationRequest) -> str:
-        """Generate content using Google Gemini"""        try:
+        """Generate content using Google Gemini"""
+        try:
             model = genai.GenerativeModel('gemini-pro')
             
             generation_config = genai.types.GenerationConfig(
@@ -617,7 +648,8 @@ class ContentGenerator:
             raise
 
     async def _generate_with_custom_model(self, prompt: str, request: GenerationRequest) -> str:
-        """Generate content using custom local models"""        try:
+        """Generate content using custom local models"""
+        try:
             # Use T5 for text-to-text generation
             input_text = f"generate {request.content_type.value}: {prompt}"
             input_ids = self.t5_tokenizer.encode(input_text, return_tensors="pt")
@@ -641,7 +673,9 @@ class ContentGenerator:
             return await self._generate_with_openai(prompt, request)
 
     def _get_system_prompt(self, request: GenerationRequest) -> str:
-        """Get system prompt based on request"""        base_prompt = f"""        You are an expert content creator specializing in {request.content_type.value} creation.
+        """Get system prompt based on request"""
+        base_prompt = f"""
+        You are an expert content creator specializing in {request.content_type.value} creation.
         
         Your expertise includes:
         - Professional writing and creative storytelling
@@ -657,7 +691,8 @@ class ContentGenerator:
         - Ensure content is engaging and actionable
         - Follow platform-specific best practices
         - Maintain professional standards
-        """        
+        """
+        
         # Add specific instructions based on content type
         if request.content_type == ContentGenerationType.SEO_CONTENT:
             base_prompt += "\n- Focus on search engine optimization while maintaining readability"
@@ -669,7 +704,8 @@ class ContentGenerator:
         return base_prompt
 
     def _calculate_max_tokens(self, request: GenerationRequest) -> int:
-        """Calculate maximum tokens based on request"""        if request.length_constraint:
+        """Calculate maximum tokens based on request"""
+        if request.length_constraint:
             # Approximate 1.3 tokens per word
             return min(int(request.length_constraint * 1.5), 4000)
         
@@ -686,7 +722,8 @@ class ContentGenerator:
         return token_map.get(request.content_type, 1000)
 
     async def _enhance_content(self, content: str, request: GenerationRequest) -> str:
-        """Enhance generated content with post-processing"""        enhanced = content
+        """Enhance generated content with post-processing"""
+        enhanced = content
         
         # Apply tone-specific enhancements
         if request.tone == ContentTone.PROFESSIONAL:
@@ -707,7 +744,8 @@ class ContentGenerator:
         return enhanced
 
     def _enhance_professional_tone(self, content: str) -> str:
-        """Enhance content for professional tone"""        # Remove contractions
+        """Enhance content for professional tone"""
+        # Remove contractions
         contractions = {
             "don't": "do not", "won't": "will not", "can't": "cannot",
             "isn't": "is not", "aren't": "are not", "wasn't": "was not",
@@ -722,17 +760,20 @@ class ContentGenerator:
         return content
 
     def _enhance_humor(self, content: str) -> str:
-        """Enhance content with humor elements"""        # This would include humor analysis and enhancement
+        """Enhance content with humor elements"""
+        # This would include humor analysis and enhancement
         # For now, return as is
         return content
 
     def _enhance_educational_content(self, content: str) -> str:
-        """Enhance content for educational purposes"""        # Add structural elements for better learning
+        """Enhance content for educational purposes"""
+        # Add structural elements for better learning
         # This could include adding bullet points, numbered lists, etc.
         return content
 
     async def _apply_seo_enhancements(self, content: str, request: GenerationRequest) -> str:
-        """Apply SEO enhancements to content"""        seo_req = request.seo_requirements
+        """Apply SEO enhancements to content"""
+        seo_req = request.seo_requirements
         
         if not seo_req:
             return content
@@ -756,7 +797,8 @@ class ContentGenerator:
         return enhanced
 
     def _integrate_keyword_naturally(self, content: str, keyword: str) -> str:
-        """Naturally integrate keyword into content"""        # Simple implementation - in production, this would be more sophisticated
+        """Naturally integrate keyword into content"""
+        # Simple implementation - in production, this would be more sophisticated
         sentences = content.split('. ')
         if sentences:
             first_sentence = sentences[0]
@@ -769,7 +811,8 @@ class ContentGenerator:
         return content
 
     async def _generate_meta_description(self, content: str, request: GenerationRequest) -> str:
-        """Generate SEO meta description"""        # Extract key points and create compelling meta description
+        """Generate SEO meta description"""
+        # Extract key points and create compelling meta description
         sentences = content.split('. ')[:3]  # First few sentences
         summary = '. '.join(sentences)[:155]  # Limit to 155 characters
         
@@ -779,7 +822,8 @@ class ContentGenerator:
         return summary
 
     def _apply_format_requirements(self, content: str, request: GenerationRequest) -> str:
-        """Apply specific format requirements"""        format_req = request.format_requirements
+        """Apply specific format requirements"""
+        format_req = request.format_requirements
         
         if not format_req:
             return content
@@ -805,7 +849,8 @@ class ContentGenerator:
         return formatted
 
     def _format_for_instagram(self, content: str) -> str:
-        """Format content for Instagram"""        # Add line breaks for readability
+        """Format content for Instagram"""
+        # Add line breaks for readability
         # Add relevant hashtags
         formatted = content + "\n\n"
         
@@ -816,27 +861,32 @@ class ContentGenerator:
         return formatted
 
     def _format_for_linkedin(self, content: str) -> str:
-        """Format content for LinkedIn"""        # Professional formatting with proper paragraphs
+        """Format content for LinkedIn"""
+        # Professional formatting with proper paragraphs
         return content
 
     def _format_for_twitter(self, content: str) -> str:
-        """Format content for Twitter"""        # Ensure content fits Twitter character limit
+        """Format content for Twitter"""
+        # Ensure content fits Twitter character limit
         if len(content) > 280:
             content = content[:277] + "..."
         return content
 
     def _convert_to_html(self, content: str) -> str:
-        """Convert content to HTML format"""        # Basic HTML conversion
+        """Convert content to HTML format"""
+        # Basic HTML conversion
         html_content = content.replace('\n\n', '</p><p>')
         html_content = f"<p>{html_content}</p>"
         return html_content
 
     def _convert_to_markdown(self, content: str) -> str:
-        """Convert content to Markdown format"""        # Basic Markdown conversion
+        """Convert content to Markdown format"""
+        # Basic Markdown conversion
         return content  # Already in a readable format
 
     async def _calculate_quality_metrics(self, content: str, request: GenerationRequest) -> Dict[str, float]:
-        """Calculate comprehensive quality metrics"""        metrics = {}
+        """Calculate comprehensive quality metrics"""
+        metrics = {}
         
         try:
             # Content length analysis
@@ -891,7 +941,8 @@ class ContentGenerator:
         return metrics
 
     def _calculate_readability_score(self, content: str) -> float:
-        """Calculate Flesch-Kincaid readability score"""        try:
+        """Calculate Flesch-Kincaid readability score"""
+        try:
             sentences = re.split(r'[.!?]+', content)
             sentences = [s.strip() for s in sentences if s.strip()]
             
@@ -914,7 +965,8 @@ class ContentGenerator:
             return 50.0  # Default moderate readability
 
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word"""        word = word.lower().strip(".,!?;:")
+        """Count syllables in a word"""
+        word = word.lower().strip(".,!?;:")
         if len(word) <= 3:
             return 1
         
@@ -935,7 +987,8 @@ class ContentGenerator:
         return max(1, syllable_count)
 
     def _calculate_seo_score(self, content: str, keywords: List[str]) -> float:
-        """Calculate SEO score based on keyword usage"""        content_lower = content.lower()
+        """Calculate SEO score based on keyword usage"""
+        content_lower = content.lower()
         total_words = len(content.split())
         
         if total_words == 0:
@@ -964,7 +1017,8 @@ class ContentGenerator:
         return np.mean(keyword_scores) if keyword_scores else 0.0
 
     def _assess_creativity(self, content: str) -> float:
-        """Assess creativity based on vocabulary diversity"""        words = re.findall(r'\b\w+\b', content.lower())
+        """Assess creativity based on vocabulary diversity"""
+        words = re.findall(r'\b\w+\b', content.lower())
         
         if len(words) == 0:
             return 0.0
@@ -976,7 +1030,8 @@ class ContentGenerator:
         return min(1.0, diversity_ratio * 2)
 
     def _predict_engagement(self, content: str, request: GenerationRequest) -> float:
-        """Predict potential engagement score"""        factors = []
+        """Predict potential engagement score"""
+        factors = []
         
         # Content length factor
         word_count = len(content.split())
@@ -1011,7 +1066,8 @@ class ContentGenerator:
         return np.mean(factors)
 
     def _create_metadata(self, request: GenerationRequest, quality_metrics: Dict[str, float]) -> Dict[str, Any]:
-        """Create comprehensive metadata for generated content"""        return {
+        """Create comprehensive metadata for generated content"""
+        return {
             'generation_params': {
                 'content_type': request.content_type.value,
                 'tone': request.tone.value,
@@ -1034,7 +1090,8 @@ class ContentGenerator:
         }
 
     def _estimate_cost(self, request: GenerationRequest, processing_time: float) -> float:
-        """Estimate generation cost"""        # Base cost factors
+        """Estimate generation cost"""
+        # Base cost factors
         base_cost = 0.01  # Base cost per generation
         
         # Engine cost multipliers
@@ -1063,7 +1120,8 @@ class ContentGenerator:
         return round(total_cost, 4)
 
     async def _store_generation_record(self, request: GenerationRequest, result: GeneratedContent):
-        """Store generation record in database"""        try:
+        """Store generation record in database"""
+        try:
             async with get_async_session() as session:
                 # Store in content generations table (would need to create this table)
                 generation_record = {
@@ -1090,7 +1148,8 @@ class ContentGenerator:
 
 
 class AICreativeEngine:
-    """Advanced AI creative engine with multi-model support"""    
+    """Advanced AI creative engine with multi-model support"""
+    
     def __init__(self):
         self.content_generator = ContentGenerator()
         self.active_sessions = {}
@@ -1099,7 +1158,8 @@ class AICreativeEngine:
         logger.info("AICreativeEngine initialized")
 
     async def create_content_stream(self, request: GenerationRequest) -> AsyncGenerator[str, None]:
-        """Stream content generation for real-time feedback"""        try:
+        """Stream content generation for real-time feedback"""
+        try:
             # Initialize streaming session
             session_id = str(uuid.uuid4())
             self.active_sessions[session_id] = {
@@ -1130,20 +1190,24 @@ class AICreativeEngine:
             yield f"Error: {str(e)}"
 
     async def batch_generate(self, requests: List[GenerationRequest]) -> List[GeneratedContent]:
-        """Generate multiple content pieces in batch"""        tasks = [self.content_generator.generate_content(req) for req in requests]
+        """Generate multiple content pieces in batch"""
+        tasks = [self.content_generator.generate_content(req) for req in requests]
         return await asyncio.gather(*tasks, return_exceptions=True)
 
     async def get_content_suggestions(self, partial_prompt: str, content_type: ContentGenerationType) -> List[str]:
-        """Get content suggestions based on partial prompt"""        suggestions = []
+        """Get content suggestions based on partial prompt"""
+        suggestions = []
         
         # Use AI to generate prompt completions
-        suggestion_prompt = f"""        Based on this partial content prompt: "{partial_prompt}"
+        suggestion_prompt = f"""
+        Based on this partial content prompt: "{partial_prompt}"
         
         Generate 5 creative and engaging completion suggestions for {content_type.value} content.
         Each suggestion should be a complete, actionable prompt that would result in high-quality content.
         
         Suggestions:
-        """        
+        """
+        
         try:
             request = GenerationRequest(
                 content_type=ContentGenerationType.BLOG_ARTICLE,  # Use generic type for suggestions
@@ -1174,7 +1238,8 @@ class AICreativeEngine:
             ]
 
     async def optimize_for_platform(self, content: str, platform: str) -> str:
-        """Optimize content for specific platforms"""        optimization_prompts = {
+        """Optimize content for specific platforms"""
+        optimization_prompts = {
             'instagram': "Optimize this content for Instagram with engaging hashtags, emojis, and visual storytelling elements:",
             'linkedin': "Adapt this content for LinkedIn with professional tone, industry insights, and networking focus:",
             'twitter': "Transform this content for Twitter with concise messaging, trending hashtags, and engagement hooks:",
@@ -1202,7 +1267,8 @@ class AICreativeEngine:
             return content
 
     async def get_performance_analytics(self) -> Dict[str, Any]:
-        """Get performance analytics for the creative engine"""        return {
+        """Get performance analytics for the creative engine"""
+        return {
             'active_sessions': len(self.active_sessions),
             'total_generations': len(self.model_performance),
             'average_quality_score': np.mean([p.get('quality_score', 0) for p in self.model_performance.values()]) if self.model_performance else 0,
@@ -1211,14 +1277,16 @@ class AICreativeEngine:
         }
 
     def _get_model_usage_stats(self) -> Dict[str, int]:
-        """Get model usage statistics"""        usage = {}
+        """Get model usage statistics"""
+        usage = {}
         for perf in self.model_performance.values():
             engine = perf.get('engine_used', 'unknown')
             usage[engine] = usage.get(engine, 0) + 1
         return usage
 
     def _get_content_type_stats(self) -> Dict[str, int]:
-        """Get content type generation statistics"""        stats = {}
+        """Get content type generation statistics"""
+        stats = {}
         for perf in self.model_performance.values():
             content_type = perf.get('content_type', 'unknown')
             stats[content_type] = stats.get(content_type, 0) + 1

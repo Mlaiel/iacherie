@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import time
@@ -86,7 +87,8 @@ from ...models.social_media import (
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Supported social media platforms"""    INSTAGRAM = "instagram"
+    """Supported social media platforms"""
+    INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
     TWITTER = "twitter"
@@ -98,7 +100,8 @@ class PlatformType(Enum):
     TWITCH = "twitch"
 
 class ContentType(Enum):
-    """Content format types"""    IMAGE = "image"
+    """Content format types"""
+    IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
     TEXT = "text"
@@ -109,7 +112,8 @@ class ContentType(Enum):
     LIVE = "live"
 
 class OptimizationLevel(Enum):
-    """AI optimization levels"""    BASIC = "basic"
+    """AI optimization levels"""
+    BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
     PREMIUM = "premium"
@@ -117,7 +121,8 @@ class OptimizationLevel(Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform API credentials"""    platform: PlatformType
+    """Platform API credentials"""
+    platform: PlatformType
     access_token: str
     refresh_token: Optional[str] = None
     api_key: Optional[str] = None
@@ -128,7 +133,8 @@ class PlatformCredentials:
 
 @dataclass
 class ContentOptimization:
-    """AI content optimization settings"""    level: OptimizationLevel
+    """AI content optimization settings"""
+    level: OptimizationLevel
     target_audience: Dict[str, Any] = field(default_factory=dict)
     hashtag_count: int = 30
     caption_style: str = "engaging"
@@ -139,7 +145,8 @@ class ContentOptimization:
 
 @dataclass
 class PublishingSchedule:
-    """Content publishing schedule"""    post_id: str
+    """Content publishing schedule"""
+    post_id: str
     platforms: List[PlatformType]
     scheduled_time: datetime
     timezone: str
@@ -149,7 +156,8 @@ class PublishingSchedule:
 
 @dataclass
 class EngagementStrategy:
-    """Automated engagement strategy"""    auto_respond: bool = True
+    """Automated engagement strategy"""
+    auto_respond: bool = True
     response_delay_min: int = 5
     response_delay_max: int = 30
     sentiment_analysis: bool = True
@@ -159,11 +167,13 @@ class EngagementStrategy:
     competitor_analysis: bool = True
 
 class SocialMediaAgent(BaseAgent):
-    """    Advanced Social Media Management Agent
+    """
+    Advanced Social Media Management Agent
     
     Handles multi-platform content distribution, engagement optimization,
     analytics tracking, and automated social media operations.
-    """    def __init__(
+    """
+    def __init__(
         self,
         platforms: List[str] = None,
         credentials: Dict[str, Dict[str, str]] = None,
@@ -218,7 +228,8 @@ class SocialMediaAgent(BaseAgent):
         logger.info(f"SocialMediaAgent initialized for platforms: {[p.value for p in self.platforms]}")
 
     def _initialize_credentials(self, credentials: Dict[str, Dict[str, str]]) -> Dict[PlatformType, PlatformCredentials]:
-        """Initialize platform credentials"""        creds = {}
+        """Initialize platform credentials"""
+        creds = {}
         for platform_str, cred_data in credentials.items():
             try:
                 platform = PlatformType(platform_str.lower())
@@ -236,7 +247,8 @@ class SocialMediaAgent(BaseAgent):
         return creds
 
     def _initialize_ai_models(self):
-        """Initialize AI models for content optimization"""        if not self.ai_models_enabled:
+        """Initialize AI models for content optimization"""
+        if not self.ai_models_enabled:
             return
             
         try:
@@ -262,7 +274,8 @@ class SocialMediaAgent(BaseAgent):
             self.ai_models_enabled = False
 
     def _initialize_platform_apis(self):
-        """Initialize platform API clients"""        self.api_clients = {}
+        """Initialize platform API clients"""
+        self.api_clients = {}
         self.rate_limiters = {}
         self.circuit_breakers = {}
         
@@ -298,7 +311,8 @@ class SocialMediaAgent(BaseAgent):
                 self.api_clients[platform] = self._create_snapchat_client()
 
     def _initialize_analytics(self):
-        """Initialize analytics and monitoring"""        if not self.analytics_enabled:
+        """Initialize analytics and monitoring"""
+        if not self.analytics_enabled:
             return
             
         self.analytics_redis = redis.Redis(
@@ -314,7 +328,8 @@ class SocialMediaAgent(BaseAgent):
         )
 
     def _initialize_security(self):
-        """Initialize content protection and security"""        if not self.content_protection:
+        """Initialize content protection and security"""
+        if not self.content_protection:
             return
             
         self.content_encryption = ContentEncryption()
@@ -327,7 +342,8 @@ class SocialMediaAgent(BaseAgent):
         self.rights_manager = self._create_rights_manager()
 
     async def process_request(self, request: AgentRequest) -> Dict[str, Any]:
-        """Process social media agent requests"""        try:
+        """Process social media agent requests"""
+        try:
             action = request.action.lower()
             
             if action == "publish_post":
@@ -358,7 +374,8 @@ class SocialMediaAgent(BaseAgent):
             raise ProcessingError(f"Failed to process request: {str(e)}")
 
     async def publish_post(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Publish content to multiple platforms simultaneously"""        with self.processing_time.labels(operation='publish_post', platform='multi').time():
+        """Publish content to multiple platforms simultaneously"""
+        with self.processing_time.labels(operation='publish_post', platform='multi').time():
             try:
                 content = data.get('content', '')
                 media_files = data.get('media_files', [])
@@ -435,7 +452,8 @@ class SocialMediaAgent(BaseAgent):
                 raise ProcessingError(f"Failed to publish post: {str(e)}")
 
     async def schedule_post(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Schedule content for future publishing"""        with self.processing_time.labels(operation='schedule_post', platform='multi').time():
+        """Schedule content for future publishing"""
+        with self.processing_time.labels(operation='schedule_post', platform='multi').time():
             try:
                 content = data.get('content', '')
                 media_files = data.get('media_files', [])
@@ -516,7 +534,8 @@ class SocialMediaAgent(BaseAgent):
                 raise ProcessingError(f"Failed to schedule post: {str(e)}")
 
     async def optimize_content(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """AI-powered content optimization for multiple platforms"""        if not self.ai_models_enabled:
+        """AI-powered content optimization for multiple platforms"""
+        if not self.ai_models_enabled:
             raise ProcessingError("AI models not enabled")
             
         with self.processing_time.labels(operation='optimize_content', platform='multi').time():
@@ -574,7 +593,8 @@ class SocialMediaAgent(BaseAgent):
                 raise ProcessingError(f"Failed to optimize content: {str(e)}")
 
     async def analyze_engagement(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze engagement metrics across platforms"""        if not self.analytics_enabled:
+        """Analyze engagement metrics across platforms"""
+        if not self.analytics_enabled:
             raise ProcessingError("Analytics not enabled")
             
         with self.processing_time.labels(operation='analyze_engagement', platform='multi').time():
@@ -629,7 +649,8 @@ class SocialMediaAgent(BaseAgent):
                 raise ProcessingError(f"Failed to analyze engagement: {str(e)}")
 
     async def sync_platforms(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Synchronize content and settings across platforms"""        with self.processing_time.labels(operation='sync_platforms', platform='multi').time():
+        """Synchronize content and settings across platforms"""
+        with self.processing_time.labels(operation='sync_platforms', platform='multi').time():
             try:
                 sync_type = data.get('type', 'content')  # content, settings, analytics
                 source_platform = PlatformType(data.get('source_platform'))
@@ -664,7 +685,8 @@ class SocialMediaAgent(BaseAgent):
                 raise ProcessingError(f"Failed to sync platforms: {str(e)}")
 
     async def generate_hashtags(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """AI-powered hashtag generation for content"""        if not self.ai_models_enabled:
+        """AI-powered hashtag generation for content"""
+        if not self.ai_models_enabled:
             raise ProcessingError("AI models not enabled")
             
         with self.processing_time.labels(operation='generate_hashtags', platform='multi').time():
@@ -722,7 +744,8 @@ class SocialMediaAgent(BaseAgent):
                 raise ProcessingError(f"Failed to generate hashtags: {str(e)}")
     
     async def integrate_protection_services(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Integrate with protection agent for content fingerprinting and rights management"""        try:
+        """Integrate with protection agent for content fingerprinting and rights management"""
+        try:
             if not hasattr(self, '_protection_agent'):
                 self._protection_agent = ProtectionAgent()
             
@@ -752,7 +775,8 @@ class SocialMediaAgent(BaseAgent):
             return {'protection_status': 'failed', 'error': str(e)}
     
     async def integrate_monetization_tracking(self, content_id: str, platforms: List[str]) -> Dict[str, Any]:
-        """Integrate with monetization agent for revenue tracking"""        try:
+        """Integrate with monetization agent for revenue tracking"""
+        try:
             if not hasattr(self, '_monetization_agent'):
                 self._monetization_agent = MonetizationAgent()
             
@@ -787,7 +811,8 @@ class SocialMediaAgent(BaseAgent):
             return {'integration_status': 'failed', 'error': str(e)}
     
     async def integrate_fingerprinting_services(self, media_content: Dict[str, Any]) -> Dict[str, Any]:
-        """Integrate with fingerprinting agent for advanced content identification"""        try:
+        """Integrate with fingerprinting agent for advanced content identification"""
+        try:
             if not hasattr(self, '_fingerprinting_agent'):
                 self._fingerprinting_agent = FingerprintingAgent()
             
@@ -825,58 +850,72 @@ class SocialMediaAgent(BaseAgent):
     # Due to length constraints, I'll create the remaining methods in separate files
     
     def _load_instagram_optimizer(self):
-        """Load Instagram-specific optimization model"""        # Implementation for Instagram optimization model
+        """Load Instagram-specific optimization model"""
+        # Implementation for Instagram optimization model
         pass
     
     def _load_tiktok_optimizer(self):
-        """Load TikTok-specific optimization model"""        # Implementation for TikTok optimization model
+        """Load TikTok-specific optimization model"""
+        # Implementation for TikTok optimization model
         pass
     
     def _load_youtube_optimizer(self):
-        """Load YouTube-specific optimization model"""        # Implementation for YouTube optimization model
+        """Load YouTube-specific optimization model"""
+        # Implementation for YouTube optimization model
         pass
     
     def _load_twitter_optimizer(self):
-        """Load Twitter-specific optimization model"""        # Implementation for Twitter optimization model
+        """Load Twitter-specific optimization model"""
+        # Implementation for Twitter optimization model
         pass
     
     # Platform API client creators
     def _create_instagram_client(self):
-        """Create Instagram API client"""        # Implementation for Instagram API client
+        """Create Instagram API client"""
+        # Implementation for Instagram API client
         pass
     
     def _create_tiktok_client(self):
-        """Create TikTok API client"""        # Implementation for TikTok API client
+        """Create TikTok API client"""
+        # Implementation for TikTok API client
         pass
     
     def _create_youtube_client(self):
-        """Create YouTube API client"""        # Implementation for YouTube API client
+        """Create YouTube API client"""
+        # Implementation for YouTube API client
         pass
     
     def _create_twitter_client(self):
-        """Create Twitter API client"""        # Implementation for Twitter API client
+        """Create Twitter API client"""
+        # Implementation for Twitter API client
         pass
     
     def _create_facebook_client(self):
-        """Create Facebook API client"""        # Implementation for Facebook API client
+        """Create Facebook API client"""
+        # Implementation for Facebook API client
         pass
     
     def _create_linkedin_client(self):
-        """Create LinkedIn API client"""        # Implementation for LinkedIn API client
+        """Create LinkedIn API client"""
+        # Implementation for LinkedIn API client
         pass
     
     def _create_pinterest_client(self):
-        """Create Pinterest API client"""        # Implementation for Pinterest API client
+        """Create Pinterest API client"""
+        # Implementation for Pinterest API client
         pass
     
     def _create_snapchat_client(self):
-        """Create Snapchat API client"""        # Implementation for Snapchat API client
+        """Create Snapchat API client"""
+        # Implementation for Snapchat API client
         pass
 
 
 class SocialMediaAgentManager:
-    """    Manager for multiple Social Media Agents with load balancing and coordination
-    """    
+    """
+    Manager for multiple Social Media Agents with load balancing and coordination
+    """
+    
     def __init__(self, agent_pool_size: int = 5):
         self.agent_pool_size = agent_pool_size
         self.agents: List[SocialMediaAgent] = []
@@ -884,7 +923,8 @@ class SocialMediaAgentManager:
         self.load_balancer = self._create_load_balancer()
         
     async def initialize_agent_pool(self):
-        """Initialize pool of social media agents"""        for i in range(self.agent_pool_size):
+        """Initialize pool of social media agents"""
+        for i in range(self.agent_pool_size):
             agent = SocialMediaAgent(
                 agent_id=f"social_media_agent_{i}",
                 ai_models_enabled=True,
@@ -895,7 +935,8 @@ class SocialMediaAgentManager:
             self.agents.append(agent)
     
     async def get_next_agent(self) -> SocialMediaAgent:
-        """Get next available agent using round-robin load balancing"""        if not self.agents:
+        """Get next available agent using round-robin load balancing"""
+        if not self.agents:
             await self.initialize_agent_pool()
         
         agent = self.agents[self.current_agent_index]
@@ -903,5 +944,6 @@ class SocialMediaAgentManager:
         return agent
     
     def _create_load_balancer(self):
-        """Create load balancer for agent pool"""        # Implementation for load balancer
+        """Create load balancer for agent pool"""
+        # Implementation for load balancer
         pass

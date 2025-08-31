@@ -9,7 +9,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import uuid
@@ -26,14 +27,16 @@ from .base_agent import BaseAIAgent, AgentCapability, AgentConfiguration, AgentT
 
 # Production-ready engines for brand management
 class BrandAnalyticsEngine:
-    """Advanced brand analytics and performance tracking engine"""    
+    """Advanced brand analytics and performance tracking engine"""
+    
     def __init__(self):
         self.initialized = False
         self.analytics_models = {}
         self.logger = logging.getLogger(f"{__name__}.BrandAnalyticsEngine")
     
     async def initialize(self):
-        """Initialize brand analytics models and tracking systems"""        try:
+        """Initialize brand analytics models and tracking systems"""
+        try:
             self.analytics_models = {
                 'brand_metrics': {
                     'awareness': {'weight': 0.3, 'indicators': ['mentions', 'reach', 'impressions']},
@@ -59,7 +62,8 @@ class BrandAnalyticsEngine:
             raise
     
     async def analyze_brand_performance(self, brand_data: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze overall brand performance across all metrics"""        if not self.initialized:
+        """Analyze overall brand performance across all metrics"""
+        if not self.initialized:
             await self.initialize()
         
         try:
@@ -86,7 +90,8 @@ class BrandAnalyticsEngine:
             return {'overall_brand_score': 0.5, 'individual_metrics': {}}
     
     async def _calculate_metric_score(self, metric_name: str, brand_data: Dict[str, Any]) -> float:
-        """Calculate score for a specific brand metric"""        try:
+        """Calculate score for a specific brand metric"""
+        try:
             if metric_name == 'awareness':
                 mentions = brand_data.get('mentions', 0)
                 reach = brand_data.get('reach', 0)
@@ -118,7 +123,8 @@ class BrandAnalyticsEngine:
             return 0.5
     
     def _compare_to_benchmarks(self, metrics: Dict[str, float], brand_data: Dict[str, Any]) -> Dict[str, str]:
-        """Compare brand metrics to industry benchmarks"""        benchmarks = self.analytics_models['benchmark_data']['industry_averages']
+        """Compare brand metrics to industry benchmarks"""
+        benchmarks = self.analytics_models['benchmark_data']['industry_averages']
         comparison = {}
         
         engagement_rate = brand_data.get('engagement_rate', 0)
@@ -140,7 +146,8 @@ class BrandAnalyticsEngine:
         return comparison
     
     def _identify_improvement_areas(self, metrics: Dict[str, float]) -> List[str]:
-        """Identify areas that need improvement"""        improvement_areas = []
+        """Identify areas that need improvement"""
+        improvement_areas = []
         
         for metric_name, score in metrics.items():
             if score < 0.6:
@@ -150,14 +157,16 @@ class BrandAnalyticsEngine:
         return improvement_areas
 
 class BrandRecognitionEngine:
-    """Brand recognition and logo detection engine"""    
+    """Brand recognition and logo detection engine"""
+    
     def __init__(self):
         self.initialized = False
         self.recognition_models = {}
         self.logger = logging.getLogger(f"{__name__}.BrandRecognitionEngine")
     
     async def initialize(self):
-        """Initialize brand recognition models"""        try:
+        """Initialize brand recognition models"""
+        try:
             # Initialize mock brand templates and features
             self.recognition_models = {
                 'logo_templates': {},  # Would store actual logo templates
@@ -178,7 +187,8 @@ class BrandRecognitionEngine:
             raise
 
     async def detect_logo(self, visual_content: Any, brand_id: str) -> List[Dict[str, Any]]:
-        """Detect brand logos in visual content"""        if not self.initialized:
+        """Detect brand logos in visual content"""
+        if not self.initialized:
             await self.initialize()
         
         try:
@@ -217,7 +227,8 @@ class BrandRecognitionEngine:
             return []
     
     def _assess_logo_quality(self, confidence: float) -> str:
-        """Assess the quality of logo detection"""        levels = self.recognition_models['confidence_levels']
+        """Assess the quality of logo detection"""
+        levels = self.recognition_models['confidence_levels']
         
         if confidence >= levels['high']:
             return 'high_quality'
@@ -227,7 +238,8 @@ class BrandRecognitionEngine:
             return 'low_quality'
     
     async def detect_brand_colors(self, visual_content: Any, brand_id: str) -> Dict[str, Any]:
-        """Detect brand colors in visual content"""        try:
+        """Detect brand colors in visual content"""
+        try:
             # Mock color detection - would use actual color analysis
             dominant_colors = [
                 {'color': '#FF6B6B', 'percentage': 0.35, 'name': 'coral_red'},
@@ -248,14 +260,16 @@ class BrandRecognitionEngine:
             return {'dominant_colors': [], 'color_harmony_score': 0.0}
 
 class VisualConsistencyAnalyzer:
-    """Analyzes visual consistency across brand content"""    
+    """Analyzes visual consistency across brand content"""
+    
     def __init__(self):
         self.initialized = False
         self.consistency_models = {}
         self.logger = logging.getLogger(f"{__name__}.VisualConsistencyAnalyzer")
     
     async def initialize(self):
-        """Initialize visual consistency analysis models"""        try:
+        """Initialize visual consistency analysis models"""
+        try:
             self.consistency_models = {
                 'color_tolerance': 0.15,  # 15% tolerance for color variation
                 'font_consistency_threshold': 0.8,
@@ -276,7 +290,8 @@ class VisualConsistencyAnalyzer:
             raise
 
     async def extract_dominant_colors(self, visual_content: Any) -> List[Dict[str, Any]]:
-        """Extract dominant colors from visual content"""        if not self.initialized:
+        """Extract dominant colors from visual content"""
+        if not self.initialized:
             await self.initialize()
         
         try:
@@ -297,7 +312,8 @@ class VisualConsistencyAnalyzer:
             return []
     
     async def analyze_visual_consistency(self, content_items: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Analyze visual consistency across multiple content items"""        try:
+        """Analyze visual consistency across multiple content items"""
+        try:
             if len(content_items) < 2:
                 return {'consistency_score': 1.0, 'color_consistency': 1.0}
             
@@ -335,7 +351,8 @@ class VisualConsistencyAnalyzer:
             return {'consistency_score': 0.5}
     
     async def _analyze_color_consistency(self, content_items: List[Dict[str, Any]]) -> float:
-        """Analyze color consistency across content items"""        try:
+        """Analyze color consistency across content items"""
+        try:
             # Extract colors from each content item
             all_colors = []
             for item in content_items:
@@ -359,15 +376,18 @@ class VisualConsistencyAnalyzer:
             return 0.5
     
     async def _analyze_typography_consistency(self, content_items: List[Dict[str, Any]]) -> float:
-        """Analyze typography consistency (mock implementation)"""        # Mock typography analysis - would analyze actual fonts in production
+        """Analyze typography consistency (mock implementation)"""
+        # Mock typography analysis - would analyze actual fonts in production
         return np.random.uniform(0.7, 0.9)
     
     async def _analyze_layout_consistency(self, content_items: List[Dict[str, Any]]) -> float:
-        """Analyze layout consistency (mock implementation)"""        # Mock layout analysis - would analyze actual layouts in production
+        """Analyze layout consistency (mock implementation)"""
+        # Mock layout analysis - would analyze actual layouts in production
         return np.random.uniform(0.6, 0.8)
     
     def _generate_consistency_recommendations(self, scores: Dict[str, float]) -> List[str]:
-        """Generate recommendations for improving visual consistency"""        recommendations = []
+        """Generate recommendations for improving visual consistency"""
+        recommendations = []
         
         if scores.get('color', 0) < 0.7:
             recommendations.append("Establish and maintain a consistent color palette")
@@ -381,14 +401,16 @@ class VisualConsistencyAnalyzer:
         return recommendations
 
 class BrandVoiceAnalyzer:
-    """Analyzes and maintains brand voice consistency"""    
+    """Analyzes and maintains brand voice consistency"""
+    
     def __init__(self):
         self.initialized = False
         self.voice_models = {}
         self.logger = logging.getLogger(f"{__name__}.BrandVoiceAnalyzer")
     
     async def initialize(self):
-        """Initialize brand voice analysis models"""        try:
+        """Initialize brand voice analysis models"""
+        try:
             self.voice_models = {
                 'voice_dimensions': {
                     'tone': ['formal', 'casual', 'friendly', 'professional', 'playful'],
@@ -413,7 +435,8 @@ class BrandVoiceAnalyzer:
             raise
     
     async def analyze_brand_voice(self, text_content: str) -> Dict[str, Any]:
-        """Analyze brand voice characteristics in text content"""        if not self.initialized:
+        """Analyze brand voice characteristics in text content"""
+        if not self.initialized:
             await self.initialize()
         
         try:
@@ -450,7 +473,8 @@ class BrandVoiceAnalyzer:
             return {'voice_analysis': {}, 'consistency_score': 0.5}
     
     def _analyze_tone(self, text: str) -> Dict[str, float]:
-        """Analyze tone characteristics in text"""        text_lower = text.lower()
+        """Analyze tone characteristics in text"""
+        text_lower = text.lower()
         tone_scores = {}
         
         for tone, keywords in self.voice_models['voice_keywords'].items():
@@ -461,7 +485,8 @@ class BrandVoiceAnalyzer:
         return tone_scores
     
     def _analyze_personality(self, text: str) -> Dict[str, float]:
-        """Analyze personality traits in text"""        # Mock personality analysis - would use NLP models in production
+        """Analyze personality traits in text"""
+        # Mock personality analysis - would use NLP models in production
         return {
             'authoritative': np.random.uniform(0.4, 0.8),
             'approachable': np.random.uniform(0.5, 0.9),
@@ -470,7 +495,8 @@ class BrandVoiceAnalyzer:
         }
     
     def _analyze_emotion(self, text: str) -> Dict[str, float]:
-        """Analyze emotional characteristics in text"""        # Mock emotion analysis - would use sentiment analysis models
+        """Analyze emotional characteristics in text"""
+        # Mock emotion analysis - would use sentiment analysis models
         return {
             'enthusiastic': np.random.uniform(0.4, 0.8),
             'calm': np.random.uniform(0.5, 0.9),
@@ -479,7 +505,8 @@ class BrandVoiceAnalyzer:
         }
     
     def _analyze_style(self, text: str) -> Dict[str, float]:
-        """Analyze style characteristics in text"""        words = len(text.split())
+        """Analyze style characteristics in text"""
+        words = len(text.split())
         sentences = len([s for s in text.split('.') if s.strip()])
         avg_sentence_length = words / max(sentences, 1)
         
@@ -491,7 +518,8 @@ class BrandVoiceAnalyzer:
         }
     
     def _create_voice_profile(self, voice_analysis: Dict[str, Dict[str, float]]) -> Dict[str, str]:
-        """Create a voice profile based on analysis"""        profile = {}
+        """Create a voice profile based on analysis"""
+        profile = {}
         
         for category, scores in voice_analysis.items():
             if scores:
@@ -501,11 +529,13 @@ class BrandVoiceAnalyzer:
         return profile
     
     def _calculate_voice_consistency(self, voice_analysis: Dict[str, Dict[str, float]]) -> float:
-        """Calculate overall voice consistency score"""        # Mock consistency calculation - would compare against brand guidelines
+        """Calculate overall voice consistency score"""
+        # Mock consistency calculation - would compare against brand guidelines
         return np.random.uniform(0.7, 0.9)
     
     def _generate_voice_recommendations(self, voice_analysis: Dict[str, Dict[str, float]]) -> List[str]:
-        """Generate recommendations for voice improvement"""        recommendations = []
+        """Generate recommendations for voice improvement"""
+        recommendations = []
         
         # Analyze tone balance
         tone_scores = voice_analysis.get('tone', {})
@@ -527,7 +557,8 @@ logger = logging.getLogger(__name__)
 
 
 class BrandElement(Enum):
-    """Brand elements to manage"""    LOGO = "logo"
+    """Brand elements to manage"""
+    LOGO = "logo"
     COLORS = "colors"
     TYPOGRAPHY = "typography"
     VOICE_TONE = "voice_tone"
@@ -540,7 +571,8 @@ class BrandElement(Enum):
 
 
 class ConsistencyLevel(Enum):
-    """Brand consistency levels"""    EXCELLENT = "excellent"    # 90-100%
+    """Brand consistency levels"""
+    EXCELLENT = "excellent"    # 90-100%
     GOOD = "good"             # 80-89%
     ACCEPTABLE = "acceptable"  # 70-79%
     POOR = "poor"             # 50-69%
@@ -548,7 +580,8 @@ class ConsistencyLevel(Enum):
 
 
 class BrandViolationType(Enum):
-    """Types of brand violations"""    COLOR_MISMATCH = "color_mismatch"
+    """Types of brand violations"""
+    COLOR_MISMATCH = "color_mismatch"
     FONT_VIOLATION = "font_violation"
     LOGO_MISUSE = "logo_misuse"
     TONE_INCONSISTENCY = "tone_inconsistency"
@@ -560,7 +593,8 @@ class BrandViolationType(Enum):
 
 @dataclass
 class BrandGuideline:
-    """Comprehensive brand guideline structure"""    guideline_id: str
+    """Comprehensive brand guideline structure"""
+    guideline_id: str
     element: BrandElement
     rule_title: str
     rule_description: str
@@ -575,7 +609,8 @@ class BrandGuideline:
 
 @dataclass
 class BrandViolation:
-    """Brand violation detected"""    violation_id: str
+    """Brand violation detected"""
+    violation_id: str
     violation_type: BrandViolationType
     element: BrandElement
     severity: float  # 0-1 scale
@@ -588,7 +623,8 @@ class BrandViolation:
 
 @dataclass
 class BrandConsistencyReport:
-    """Comprehensive brand consistency analysis"""    report_id: str
+    """Comprehensive brand consistency analysis"""
+    report_id: str
     content_id: str
     platform: str
     overall_score: float
@@ -603,7 +639,8 @@ class BrandConsistencyReport:
 
 @dataclass
 class BrandProfile:
-    """Complete brand profile"""    brand_id: str
+    """Complete brand profile"""
+    brand_id: str
     brand_name: str
     industry: str
     target_audience: Dict[str, Any]
@@ -621,7 +658,8 @@ class BrandProfile:
 
 
 class BrandManagerAgent(BaseAIAgent):
-    """    Advanced AI agent for comprehensive brand management and consistency.
+    """
+    Advanced AI agent for comprehensive brand management and consistency.
     
     Capabilities:
     - Real-time brand consistency monitoring
@@ -632,7 +670,8 @@ class BrandManagerAgent(BaseAIAgent):
     - Automated brand compliance reporting
     - Brand voice and tone analysis
     - Cross-platform brand coordination
-    """    
+    """
+    
     def __init__(self, config: AgentConfiguration):
         # Ensure required capabilities
         required_capabilities = {
@@ -683,7 +722,8 @@ class BrandManagerAgent(BaseAIAgent):
         logger.info("BrandManagerAgent initialized successfully")
 
     async def initialize(self) -> bool:
-        """Initialize brand manager"""        try:
+        """Initialize brand manager"""
+        try:
             await super().initialize()
             
             # Initialize analysis engines
@@ -710,7 +750,8 @@ class BrandManagerAgent(BaseAIAgent):
         brand_id: str,
         platform: str
     ) -> BrandConsistencyReport:
-        """        Comprehensive brand consistency analysis
+        """
+        Comprehensive brand consistency analysis
         
         Args:
             content: Content to analyze
@@ -719,7 +760,8 @@ class BrandManagerAgent(BaseAIAgent):
             
         Returns:
             Detailed consistency report
-        """        try:
+        """
+        try:
             logger.info(f"Analyzing brand consistency for content on {platform}")
             
             if brand_id not in self.brand_profiles:
@@ -830,14 +872,16 @@ class BrandManagerAgent(BaseAIAgent):
         self, 
         brand_data: Dict[str, Any]
     ) -> BrandProfile:
-        """        Create comprehensive brand profile
+        """
+        Create comprehensive brand profile
         
         Args:
             brand_data: Brand information and guidelines
             
         Returns:
             Complete brand profile
-        """        try:
+        """
+        try:
             logger.info(f"Creating brand profile for {brand_data.get('brand_name')}")
             
             # Generate brand guidelines from data
@@ -889,7 +933,8 @@ class BrandManagerAgent(BaseAIAgent):
         platforms: List[str],
         monitoring_period_hours: int = 24
     ) -> Dict[str, Any]:
-        """        Monitor brand violations across platforms
+        """
+        Monitor brand violations across platforms
         
         Args:
             brand_id: Brand to monitor
@@ -898,7 +943,8 @@ class BrandManagerAgent(BaseAIAgent):
             
         Returns:
             Brand violation monitoring report
-        """        try:
+        """
+        try:
             logger.info(f"Monitoring brand violations for {brand_id}")
             
             if brand_id not in self.brand_profiles:
@@ -964,7 +1010,8 @@ class BrandManagerAgent(BaseAIAgent):
         performance_data: Dict[str, Any],
         market_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Optimize brand strategy based on performance and market data
+        """
+        Optimize brand strategy based on performance and market data
         
         Args:
             brand_id: Brand to optimize
@@ -973,7 +1020,8 @@ class BrandManagerAgent(BaseAIAgent):
             
         Returns:
             Brand strategy optimization recommendations
-        """        try:
+        """
+        try:
             logger.info(f"Optimizing brand strategy for {brand_id}")
             
             if brand_id not in self.brand_profiles:
@@ -1033,7 +1081,8 @@ class BrandManagerAgent(BaseAIAgent):
         visual_content: Any, 
         brand_profile: BrandProfile
     ) -> Tuple[float, List[BrandViolation]]:
-        """Analyze logo consistency in visual content"""        violations = []
+        """Analyze logo consistency in visual content"""
+        violations = []
         
         # Extract logo guidelines
         logo_guidelines = brand_profile.visual_identity.get('logo_guidelines', {})
@@ -1083,7 +1132,8 @@ class BrandManagerAgent(BaseAIAgent):
         visual_content: Any, 
         brand_profile: BrandProfile
     ) -> Tuple[float, List[BrandViolation]]:
-        """Analyze color consistency in visual content"""        violations = []
+        """Analyze color consistency in visual content"""
+        violations = []
         
         # Extract brand colors
         brand_colors = brand_profile.visual_identity.get('color_palette', [])
@@ -1112,7 +1162,8 @@ class BrandManagerAgent(BaseAIAgent):
         return consistency_score, violations
 
     async def can_handle_task(self, task_type: str, context: Dict[str, Any]) -> bool:
-        """Check if agent can handle brand management task"""        supported_tasks = [
+        """Check if agent can handle brand management task"""
+        supported_tasks = [
             "analyze_brand_consistency",
             "create_brand_profile",
             "monitor_brand_violations",

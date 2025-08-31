@@ -246,7 +246,8 @@ __all__ = [
 
 # Module initialization message
 def get_module_info() -> dict:
-    """Get comprehensive module information"""    return {
+    """Get comprehensive module information"""
+    return {
         "name": "Multilingual Support Module",
         "version": __version__,
         "author": __author__,

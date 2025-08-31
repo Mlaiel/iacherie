@@ -1,4 +1,5 @@
-"""Health checking system for monitoring service availability."""import asyncio
+"""Health checking system for monitoring service availability."""
+import asyncio
 import time
 import psutil
 from typing import Dict, List, Optional, Callable
@@ -18,7 +19,8 @@ class HealthChecker:
         self.check_results = {}
 
     def register_check(self, name: str, check_func: Callable, critical: bool = True, timeout: int = 5):
-        """Register a health check function."""        self.checks[name] = {
+        """Register a health check function."""
+        self.checks[name] = {
             "function": check_func,
             "critical": critical,
             "timeout": timeout,
@@ -27,7 +29,8 @@ class HealthChecker:
         }
 
     async def run_all_checks(self) -> Dict:
-        """Run all registered health checks."""        results = {}
+        """Run all registered health checks."""
+        results = {}
         overall_status = HealthStatus.HEALTHY
         
         for name, check_config in self.checks.items():
@@ -87,7 +90,8 @@ class HealthChecker:
         }
 
     def get_system_health(self) -> Dict:
-        """Get basic system health metrics."""        try:
+        """Get basic system health metrics."""
+        try:
             cpu_percent = psutil.cpu_percent(interval=1)
             memory = psutil.virtual_memory()
             disk = psutil.disk_usage('/')
@@ -116,7 +120,8 @@ class HealthChecker:
             }
 
     async def check_database_health(self) -> Dict:
-        """Check database connectivity and performance."""        try:
+        """Check database connectivity and performance."""
+        try:
             # Mock database check - in reality would use actual DB connection
             start_time = time.time()
             
@@ -139,7 +144,8 @@ class HealthChecker:
             }
 
     async def check_redis_health(self) -> Dict:
-        """Check Redis connectivity and performance."""        try:
+        """Check Redis connectivity and performance."""
+        try:
             # Mock Redis check
             start_time = time.time()
             await asyncio.sleep(0.005)  # Simulate ping
@@ -160,7 +166,8 @@ class HealthChecker:
             }
 
     async def check_storage_health(self) -> Dict:
-        """Check file storage health."""        try:
+        """Check file storage health."""
+        try:
             import os
             storage_path = "/data/storage"
             
@@ -200,7 +207,8 @@ class HealthChecker:
             }
 
     async def check_external_apis(self) -> Dict:
-        """Check external API dependencies."""        # Mock external API checks
+        """Check external API dependencies."""
+        # Mock external API checks
         apis = {
             "blockchain_provider": {"status": "healthy", "response_time_ms": 250},
             "storage_provider": {"status": "healthy", "response_time_ms": 150},
@@ -216,19 +224,22 @@ class HealthChecker:
         }
 
     def setup_default_checks(self):
-        """Setup default health checks for the system."""        self.register_check("database", self.check_database_health, critical=True)
+        """Setup default health checks for the system."""
+        self.register_check("database", self.check_database_health, critical=True)
         self.register_check("redis", self.check_redis_health, critical=False)
         self.register_check("storage", self.check_storage_health, critical=True)
         self.register_check("external_apis", self.check_external_apis, critical=False)
 
     async def _run_check(self, check_func: Callable) -> Dict:
-        """Run a single health check function."""        if asyncio.iscoroutinefunction(check_func):
+        """Run a single health check function."""
+        if asyncio.iscoroutinefunction(check_func):
             return await check_func()
         else:
             return check_func()
 
     def _generate_summary(self, results: Dict) -> Dict:
-        """Generate summary statistics from check results."""        total_checks = len(results)
+        """Generate summary statistics from check results."""
+        total_checks = len(results)
         healthy_checks = sum(1 for r in results.values() if r["status"] == HealthStatus.HEALTHY.value)
         critical_failures = sum(1 for r in results.values() if r["status"] != HealthStatus.HEALTHY.value and r["critical"])
         

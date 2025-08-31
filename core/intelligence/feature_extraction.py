@@ -13,7 +13,8 @@ Features:
 - Performance optimization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union, Callable
 from dataclasses import dataclass
@@ -63,7 +64,8 @@ from ..extractors.text_extractor import TextExtractor
 
 
 class FeatureType(Enum):
-    """Feature extraction types"""    STATISTICAL = "statistical"
+    """Feature extraction types"""
+    STATISTICAL = "statistical"
     SPECTRAL = "spectral"
     TEMPORAL = "temporal"
     SPATIAL = "spatial"
@@ -74,7 +76,8 @@ class FeatureType(Enum):
 
 
 class ContentModality(Enum):
-    """Content modality types"""    AUDIO = "audio"
+    """Content modality types"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -84,7 +87,8 @@ class ContentModality(Enum):
 
 @dataclass
 class FeatureConfig:
-    """Feature extraction configuration"""    feature_type: FeatureType
+    """Feature extraction configuration"""
+    feature_type: FeatureType
     modality: ContentModality
     extraction_method: str
     parameters: Dict[str, Any]
@@ -95,7 +99,8 @@ class FeatureConfig:
 
 @dataclass
 class ExtractionResult:
-    """Feature extraction result"""    feature_vector: np.ndarray
+    """Feature extraction result"""
+    feature_vector: np.ndarray
     feature_names: List[str]
     extraction_time: float
     quality_score: float
@@ -103,12 +108,14 @@ class ExtractionResult:
 
 
 class AudioFeatureExtractor:
-    """Advanced audio feature extraction"""    
+    """Advanced audio feature extraction"""
+    
     def __init__(self, sample_rate: int = 22050):
         self.sample_rate = sample_rate
         
     def extract_spectral_features(self, audio_data: np.ndarray) -> Dict[str, np.ndarray]:
-        """Extract spectral features from audio"""        features = {}
+        """Extract spectral features from audio"""
+        features = {}
         
         # Basic spectral features
         features['mfcc'] = librosa.feature.mfcc(y=audio_data, sr=self.sample_rate, n_mfcc=13)
@@ -131,7 +138,8 @@ class AudioFeatureExtractor:
         return features
     
     def extract_temporal_features(self, audio_data: np.ndarray) -> Dict[str, float]:
-        """Extract temporal features from audio"""        features = {}
+        """Extract temporal features from audio"""
+        features = {}
         
         # Basic temporal statistics
         features['duration'] = len(audio_data) / self.sample_rate
@@ -155,9 +163,11 @@ class AudioFeatureExtractor:
 
 
 class VisualFeatureExtractor:
-    """Advanced visual feature extraction"""    
+    """Advanced visual feature extraction"""
+    
     def __init__(self):
-        """Initialize visual feature extractor with computer vision models"""        self.logger = logging.getLogger(f"{__name__}.VisualFeatureExtractor")
+        """Initialize visual feature extractor with computer vision models"""
+        self.logger = logging.getLogger(f"{__name__}.VisualFeatureExtractor")
         self.feature_types = ['color', 'texture', 'shape', 'edges', 'keypoints']
         self.color_spaces = ['RGB', 'HSV', 'LAB', 'YUV', 'GRAY']
         self.texture_methods = ['LBP', 'GLCM', 'Gabor', 'Wavelet']
@@ -168,7 +178,8 @@ class VisualFeatureExtractor:
         self.logger.info("VisualFeatureExtractor initialized with CV algorithms")
     
     def extract_color_features(self, image: np.ndarray) -> Dict[str, np.ndarray]:
-        """Extract color-based features"""        features = {}
+        """Extract color-based features"""
+        features = {}
         
         # Convert to different color spaces
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
@@ -203,7 +214,8 @@ class VisualFeatureExtractor:
         return features
     
     def extract_texture_features(self, image: np.ndarray) -> Dict[str, np.ndarray]:
-        """Extract texture features"""        features = {}
+        """Extract texture features"""
+        features = {}
         
         # Convert to grayscale
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -244,7 +256,8 @@ class VisualFeatureExtractor:
         return features
     
     def extract_shape_features(self, image: np.ndarray) -> Dict[str, np.ndarray]:
-        """Extract shape and structure features"""        features = {}
+        """Extract shape and structure features"""
+        features = {}
         
         # Convert to grayscale and apply edge detection
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -284,12 +297,14 @@ class VisualFeatureExtractor:
 
 
 class TextFeatureExtractor:
-    """Advanced text feature extraction"""    
+    """Advanced text feature extraction"""
+    
     def __init__(self):
         self.nlp = spacy.load('en_core_web_sm')
         
     def extract_linguistic_features(self, text: str) -> Dict[str, float]:
-        """Extract linguistic and readability features"""        features = {}
+        """Extract linguistic and readability features"""
+        features = {}
         
         # Basic text statistics
         features['char_count'] = len(text)
@@ -327,7 +342,8 @@ class TextFeatureExtractor:
         return features
     
     def extract_semantic_features(self, text: str) -> Dict[str, np.ndarray]:
-        """Extract semantic features using NLP"""        features = {}
+        """Extract semantic features using NLP"""
+        features = {}
         
         # Process text with spaCy
         doc = self.nlp(text)
@@ -379,7 +395,8 @@ class TextFeatureExtractor:
         max_features: int = 1000,
         ngram_range: Tuple[int, int] = (1, 2)
     ) -> Tuple[np.ndarray, List[str]]:
-        """Extract TF-IDF features from text corpus"""        vectorizer = TfidfVectorizer(
+        """Extract TF-IDF features from text corpus"""
+        vectorizer = TfidfVectorizer(
             max_features=max_features,
             ngram_range=ngram_range,
             stop_words='english',
@@ -394,9 +411,11 @@ class TextFeatureExtractor:
 
 
 class MetadataFeatureExtractor:
-    """Extract features from content metadata"""    
+    """Extract features from content metadata"""
+    
     def extract_temporal_features(self, metadata: Dict[str, Any]) -> Dict[str, float]:
-        """Extract temporal features from metadata"""        features = {}
+        """Extract temporal features from metadata"""
+        features = {}
         
         # Creation time features
         if 'created_at' in metadata:
@@ -423,7 +442,8 @@ class MetadataFeatureExtractor:
         return features
     
     def extract_engagement_features(self, metadata: Dict[str, Any]) -> Dict[str, float]:
-        """Extract engagement-related features"""        features = {}
+        """Extract engagement-related features"""
+        features = {}
         
         # Basic engagement metrics
         features['views'] = metadata.get('views', 0)
@@ -452,14 +472,18 @@ class MetadataFeatureExtractor:
 
 
 class FeatureExtraction:
-    """    Comprehensive feature extraction system for content intelligence
-    """    
+    """
+    Comprehensive feature extraction system for content intelligence
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialize feature extraction system
+        """
+        Initialize feature extraction system
         
         Args:
             config: Configuration dictionary
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize extractors
@@ -483,7 +507,8 @@ class FeatureExtraction:
         }
     
     def _initialize_processors(self) -> None:
-        """Initialize feature processors"""        try:
+        """Initialize feature processors"""
+        try:
             self.feature_processor = FeatureProcessor(self.config)
             self.audio_processor = AudioExtractor(self.config)
             self.visual_processor = VisualExtractor(self.config)
@@ -500,7 +525,8 @@ class FeatureExtraction:
         feature_configs: List[FeatureConfig],
         cache_key: Optional[str] = None
     ) -> Dict[str, ExtractionResult]:
-        """        Extract features from content data
+        """
+        Extract features from content data
         
         Args:
             content_data: Content data dictionary
@@ -509,7 +535,8 @@ class FeatureExtraction:
             
         Returns:
             Dict mapping feature types to extraction results
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             # Check cache if key provided
@@ -550,7 +577,8 @@ class FeatureExtraction:
         content_data: Dict[str, Any],
         config: FeatureConfig
     ) -> ExtractionResult:
-        """Extract a single feature type"""        start_time = datetime.now()
+        """Extract a single feature type"""
+        start_time = datetime.now()
         
         try:
             # Route to appropriate extractor based on modality
@@ -592,7 +620,8 @@ class FeatureExtraction:
         content_data: Dict[str, Any],
         config: FeatureConfig
     ) -> Dict[str, Any]:
-        """Extract audio features"""        audio_data = content_data.get('audio_data')
+        """Extract audio features"""
+        audio_data = content_data.get('audio_data')
         if audio_data is None:
             raise ValueError("No audio data provided")
         
@@ -611,7 +640,8 @@ class FeatureExtraction:
         content_data: Dict[str, Any],
         config: FeatureConfig
     ) -> Dict[str, Any]:
-        """Extract video features (combination of visual and audio)"""        features = {}
+        """Extract video features (combination of visual and audio)"""
+        features = {}
         
         # Extract visual features from frames
         if 'video_frames' in content_data:
@@ -633,7 +663,8 @@ class FeatureExtraction:
         content_data: Dict[str, Any],
         config: FeatureConfig
     ) -> Dict[str, Any]:
-        """Extract image features"""        image_data = content_data.get('image_data')
+        """Extract image features"""
+        image_data = content_data.get('image_data')
         if image_data is None:
             raise ValueError("No image data provided")
         
@@ -655,7 +686,8 @@ class FeatureExtraction:
         content_data: Dict[str, Any],
         config: FeatureConfig
     ) -> Dict[str, Any]:
-        """Extract text features"""        text_data = content_data.get('text_data')
+        """Extract text features"""
+        text_data = content_data.get('text_data')
         if text_data is None:
             raise ValueError("No text data provided")
         
@@ -678,7 +710,8 @@ class FeatureExtraction:
         content_data: Dict[str, Any],
         config: FeatureConfig
     ) -> Dict[str, Any]:
-        """Extract metadata features"""        metadata = content_data.get('metadata', {})
+        """Extract metadata features"""
+        metadata = content_data.get('metadata', {})
         
         if config.feature_type == FeatureType.TEMPORAL:
             return self.metadata_extractor.extract_temporal_features(metadata)
@@ -695,7 +728,8 @@ class FeatureExtraction:
         features: Dict[str, Any],
         config: FeatureConfig
     ) -> Dict[str, Any]:
-        """Post-process extracted features"""        try:
+        """Post-process extracted features"""
+        try:
             # Flatten all features into a single vector
             feature_vector = []
             feature_names = []
@@ -773,7 +807,8 @@ class FeatureExtraction:
             }
     
     def _calculate_feature_quality(self, features: Dict[str, Any]) -> float:
-        """Calculate quality score for extracted features"""        try:
+        """Calculate quality score for extracted features"""
+        try:
             feature_vector = features['vector']
             
             # Quality metrics
@@ -798,7 +833,8 @@ class FeatureExtraction:
         extraction_time: float,
         results: Dict[str, ExtractionResult]
     ) -> None:
-        """Update extraction performance metrics"""        self.performance_metrics["extractions_performed"] += 1
+        """Update extraction performance metrics"""
+        self.performance_metrics["extractions_performed"] += 1
         self.performance_metrics["total_extraction_time"] += extraction_time
         
         # Update average extraction time
@@ -816,7 +852,8 @@ class FeatureExtraction:
         content_data: Dict[str, Any],
         target_dimensions: int = 512
     ) -> ExtractionResult:
-        """Extract comprehensive multi-modal features"""        try:
+        """Extract comprehensive multi-modal features"""
+        try:
             all_features = {}
             
             # Define feature configurations for each modality
@@ -903,7 +940,8 @@ class FeatureExtraction:
         targets: np.ndarray,
         feature_names: List[str]
     ) -> Dict[str, float]:
-        """Calculate feature importance scores"""        try:
+        """Calculate feature importance scores"""
+        try:
             from sklearn.ensemble import RandomForestRegressor
             from sklearn.inspection import permutation_importance
             
@@ -932,8 +970,10 @@ class FeatureExtraction:
             return {name: 1.0 / len(feature_names) for name in feature_names}
     
     async def get_extraction_metrics(self) -> Dict[str, Any]:
-        """Get feature extraction performance metrics"""        return self.performance_metrics.copy()
+        """Get feature extraction performance metrics"""
+        return self.performance_metrics.copy()
     
     def clear_cache(self) -> None:
-        """Clear feature extraction cache"""        self.feature_cache.clear()
+        """Clear feature extraction cache"""
+        self.feature_cache.clear()
         self.logger.info("Feature extraction cache cleared")

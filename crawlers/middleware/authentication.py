@@ -6,7 +6,8 @@ Implements JWT validation, API key management, and multi-factor authentication.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""import asyncio
+"""
+import asyncio
 import json
 import time
 from datetime import datetime, timedelta
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class AuthenticationRequest(BaseModel):
-    """Authentication request model"""    token: Optional[str] = Field(None, description="JWT token")
+    """Authentication request model"""
+    token: Optional[str] = Field(None, description="JWT token")
     api_key: Optional[str] = Field(None, description="API key")
     user_id: Optional[str] = Field(None, description="User identifier")
     permissions: List[str] = Field(default_factory=list, description="Required permissions")
@@ -37,7 +39,8 @@ class AuthenticationRequest(BaseModel):
 
 
 class AuthenticationResult(BaseModel):
-    """Authentication result model"""    success: bool = Field(description="Authentication success status")
+    """Authentication result model"""
+    success: bool = Field(description="Authentication success status")
     user_id: Optional[str] = Field(None, description="Authenticated user ID")
     permissions: List[str] = Field(default_factory=list, description="User permissions")
     rate_limit: Dict[str, int] = Field(default_factory=dict, description="Rate limit info")
@@ -47,7 +50,8 @@ class AuthenticationResult(BaseModel):
 
 
 class TokenManager:
-    """Advanced JWT token management"""    
+    """Advanced JWT token management"""
+    
     def __init__(self):
         self.secret_key = settings.SECRET_KEY
         self.algorithm = "HS256"
@@ -55,7 +59,8 @@ class TokenManager:
         self.cache = CacheManager()
         
     async def validate_jwt_token(self, token: str) -> Dict[str, Any]:
-        """Validate JWT token with advanced security checks"""        try:
+        """Validate JWT token with advanced security checks"""
+        try:
             # Check if token is blacklisted
             if await self.is_token_blacklisted(token):
                 raise HTTPException(
@@ -92,11 +97,13 @@ class TokenManager:
             )
     
     async def is_token_blacklisted(self, token: str) -> bool:
-        """Check if token is in blacklist"""        token_hash = hashlib.sha256(token.encode()).hexdigest()
+        """Check if token is in blacklist"""
+        token_hash = hashlib.sha256(token.encode()).hexdigest()
         return await self.redis_client.sismember("blacklisted_tokens", token_hash)
     
     async def validate_token_integrity(self, token: str, payload: Dict[str, Any]) -> bool:
-        """Validate token integrity and anti-tampering measures"""        try:
+        """Validate token integrity and anti-tampering measures"""
+        try:
             # Check token fingerprint
             expected_fingerprint = self.generate_token_fingerprint(payload)
             actual_fingerprint = payload.get("fingerprint")
@@ -118,7 +125,8 @@ class TokenManager:
             return False
     
     def generate_token_fingerprint(self, payload: Dict[str, Any]) -> str:
-        """Generate security fingerprint for token"""        fingerprint_data = {
+        """Generate security fingerprint for token"""
+        fingerprint_data = {
             "user_id": payload.get("user_id"),
             "issued_at": payload.get("iat"),
             "issuer": payload.get("iss")
@@ -127,13 +135,15 @@ class TokenManager:
 
 
 class APIKeyManager:
-    """Advanced API key management and validation"""    
+    """Advanced API key management and validation"""
+    
     def __init__(self):
         self.redis_client = redis.from_url(settings.REDIS_URL)
         self.cache = CacheManager()
         
     async def validate_api_key(self, api_key: str) -> Dict[str, Any]:
-        """Validate API key with rate limiting and permissions"""        try:
+        """Validate API key with rate limiting and permissions"""
+        try:
             # Check API key format
             if not self.is_valid_api_key_format(api_key):
                 raise HTTPException(
@@ -180,7 +190,8 @@ class APIKeyManager:
             )
     
     def is_valid_api_key_format(self, api_key: str) -> bool:
-        """Validate API key format"""        # Check length and format (example: ia_live_1234567890abcdef)
+        """Validate API key format"""
+        # Check length and format (example: ia_live_1234567890abcdef)
         if not api_key or len(api_key) < 20:
             return False
         
@@ -190,7 +201,8 @@ class APIKeyManager:
         return True
     
     async def get_api_key_info(self, api_key: str) -> Optional[Dict[str, Any]]:
-        """Get API key information from cache or database"""        cache_key = f"api_key:{hashlib.sha256(api_key.encode()).hexdigest()}"
+        """Get API key information from cache or database"""
+        cache_key = f"api_key:{hashlib.sha256(api_key.encode()).hexdigest()}"
         
         # Try cache first
         cached_info = await self.cache.get(cache_key)
@@ -214,17 +226,20 @@ class APIKeyManager:
         return key_info
     
     async def update_api_key_usage(self, api_key: str):
-        """Update API key last used timestamp"""        cache_key = f"api_key_usage:{hashlib.sha256(api_key.encode()).hexdigest()}"
+        """Update API key last used timestamp"""
+        cache_key = f"api_key_usage:{hashlib.sha256(api_key.encode()).hexdigest()}"
         await self.redis_client.set(cache_key, datetime.utcnow().isoformat(), ex=3600)
 
 
 class MultiFactorAuthenticator:
-    """Multi-factor authentication for enhanced security"""    
+    """Multi-factor authentication for enhanced security"""
+    
     def __init__(self):
         self.redis_client = redis.from_url(settings.REDIS_URL)
         
     async def verify_mfa_token(self, user_id: str, mfa_token: str) -> bool:
-        """Verify multi-factor authentication token"""        try:
+        """Verify multi-factor authentication token"""
+        try:
             # Get stored MFA secret for user
             mfa_secret = await self.get_user_mfa_secret(user_id)
             if not mfa_secret:
@@ -250,7 +265,8 @@ class MultiFactorAuthenticator:
             return False
     
     async def get_user_mfa_secret(self, user_id: str) -> Optional[str]:
-        """Get user's MFA secret"""        try:
+        """Get user's MFA secret"""
+        try:
             # Check cache first
             cache_key = f"mfa_secret:{user_id}"
             cached_secret = await self.redis_client.get(cache_key)
@@ -287,7 +303,8 @@ class MultiFactorAuthenticator:
             return None
     
     async def store_user_mfa_secret(self, user_id: str, secret: str):
-        """Store user's MFA secret"""        try:
+        """Store user's MFA secret"""
+        try:
             # Cache the secret
             cache_key = f"mfa_secret:{user_id}"
             await self.redis_client.setex(cache_key, 3600, secret)
@@ -316,13 +333,15 @@ class MultiFactorAuthenticator:
             raise
     
     def verify_totp_token(self, secret: str, token: str) -> bool:
-        """Verify Time-based One-Time Password"""        import pyotp
+        """Verify Time-based One-Time Password"""
+        import pyotp
         totp = pyotp.TOTP(secret)
         return totp.verify(token, valid_window=1)
 
 
 class AuthenticationMiddleware:
-    """Main authentication middleware orchestrator"""    
+    """Main authentication middleware orchestrator"""
+    
     def __init__(self):
         self.token_manager = TokenManager()
         self.api_key_manager = APIKeyManager()
@@ -331,7 +350,8 @@ class AuthenticationMiddleware:
         self.redis_client = redis.from_url(settings.REDIS_URL)
         
     async def authenticate(self, request: AuthenticationRequest) -> AuthenticationResult:
-        """Main authentication method"""        try:
+        """Main authentication method"""
+        try:
             start_time = time.time()
             
             # Initialize result
@@ -382,7 +402,8 @@ class AuthenticationMiddleware:
             )
     
     async def authenticate_with_jwt(self, request: AuthenticationRequest) -> AuthenticationResult:
-        """Authenticate using JWT token"""        try:
+        """Authenticate using JWT token"""
+        try:
             payload = await self.token_manager.validate_jwt_token(request.token)
             
             return AuthenticationResult(
@@ -400,7 +421,8 @@ class AuthenticationMiddleware:
             )
     
     async def authenticate_with_api_key(self, request: AuthenticationRequest) -> AuthenticationResult:
-        """Authenticate using API key"""        try:
+        """Authenticate using API key"""
+        try:
             key_info = await self.api_key_manager.validate_api_key(request.api_key)
             
             return AuthenticationResult(
@@ -418,7 +440,8 @@ class AuthenticationMiddleware:
             )
     
     async def validate_permissions(self, user_id: str, required_permissions: List[str]) -> bool:
-        """Validate user permissions"""        if not required_permissions:
+        """Validate user permissions"""
+        if not required_permissions:
             return True
         
         try:
@@ -437,7 +460,8 @@ class AuthenticationMiddleware:
             return False
     
     async def get_user_permissions(self, user_id: str) -> List[str]:
-        """Get user permissions"""        cache_key = f"user_permissions:{user_id}"
+        """Get user permissions"""
+        cache_key = f"user_permissions:{user_id}"
         
         # Try cache first
         cached_permissions = await self.redis_client.get(cache_key)
@@ -459,14 +483,16 @@ class AuthenticationMiddleware:
 
 
 class BiometricAuthenticator:
-    """Advanced biometric authentication for high-security scenarios"""    
+    """Advanced biometric authentication for high-security scenarios"""
+    
     def __init__(self):
         self.redis_client = redis.from_url(settings.REDIS_URL)
         self.logger = logging.getLogger(__name__)
         
     async def validate_biometric_signature(self, user_id: str, 
                                          signature_data: Dict[str, Any]) -> bool:
-        """Validate biometric signatures (typing patterns, mouse movement, etc.)"""        try:
+        """Validate biometric signatures (typing patterns, mouse movement, etc.)"""
+        try:
             # Retrieve stored biometric profile
             profile_key = f"biometric_profile:{user_id}"
             stored_profile = await self.redis_client.get(profile_key)
@@ -507,7 +533,8 @@ class BiometricAuthenticator:
     
     async def _calculate_biometric_similarity(self, profile1: Dict, 
                                            profile2: Dict) -> float:
-        """Calculate similarity between biometric profiles"""        # Implementation of biometric similarity algorithm
+        """Calculate similarity between biometric profiles"""
+        # Implementation of biometric similarity algorithm
         # This is a simplified version - real implementation would be more complex
         features = ['typing_speed', 'mouse_movement', 'click_patterns']
         similarities = []
@@ -527,7 +554,8 @@ class BiometricAuthenticator:
     
     async def _update_biometric_profile(self, old_profile: Dict, 
                                       new_data: Dict) -> Dict:
-        """Update biometric profile with weighted average"""        weight_old = 0.7
+        """Update biometric profile with weighted average"""
+        weight_old = 0.7
         weight_new = 0.3
         
         updated = {}
@@ -549,14 +577,16 @@ class BiometricAuthenticator:
 
 
 class BehavioralAnalyzer:
-    """Behavioral analysis for anomaly detection"""    
+    """Behavioral analysis for anomaly detection"""
+    
     def __init__(self):
         self.redis_client = redis.from_url(settings.REDIS_URL)
         self.cache = CacheManager()
         
     async def analyze_user_behavior(self, user_id: str, 
                                   request_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze user behavior patterns for anomaly detection"""        behavior_key = f"behavior:{user_id}"
+        """Analyze user behavior patterns for anomaly detection"""
+        behavior_key = f"behavior:{user_id}"
         
         # Get recent behavior history
         recent_behavior = await self.redis_client.lrange(behavior_key, 0, 100)
@@ -589,7 +619,8 @@ class BehavioralAnalyzer:
         }
     
     async def _extract_behavioral_features(self, request_data: Dict) -> Dict:
-        """Extract behavioral features from request"""        return {
+        """Extract behavioral features from request"""
+        return {
             "request_time": datetime.utcnow().hour,
             "user_agent": request_data.get("user_agent", ""),
             "ip_address": request_data.get("ip_address", ""),
@@ -600,7 +631,8 @@ class BehavioralAnalyzer:
     
     async def _calculate_anomaly_score(self, history: List[Dict], 
                                      current: Dict) -> float:
-        """Calculate anomaly score based on historical behavior"""        if not history:
+        """Calculate anomaly score based on historical behavior"""
+        if not history:
             return 0.0
         
         # Simple anomaly detection based on feature deviations
@@ -619,7 +651,8 @@ class BehavioralAnalyzer:
         return sum(scores) / len(scores) if scores else 0.0
     
     def _calculate_risk_level(self, anomaly_score: float) -> str:
-        """Calculate risk level based on anomaly score"""        if anomaly_score < 0.3:
+        """Calculate risk level based on anomaly score"""
+        if anomaly_score < 0.3:
             return "low"
         elif anomaly_score < 0.7:
             return "medium"
@@ -628,14 +661,16 @@ class BehavioralAnalyzer:
 
 
 class GeolocationValidator:
-    """Geolocation-based authentication validation"""    
+    """Geolocation-based authentication validation"""
+    
     def __init__(self):
         self.redis_client = redis.from_url(settings.REDIS_URL)
         self.allowed_countries = settings.ALLOWED_COUNTRIES or []
         self.blocked_countries = settings.BLOCKED_COUNTRIES or []
         
     async def validate_geolocation(self, ip_address: str, user_id: str) -> Dict[str, Any]:
-        """Validate user geolocation"""        try:
+        """Validate user geolocation"""
+        try:
             # Get geolocation data (simplified - would use real GeoIP service)
             geo_data = await self._get_geolocation_data(ip_address)
             
@@ -671,7 +706,8 @@ class GeolocationValidator:
             return {"is_allowed": True, "error": str(e)}
     
     async def _get_geolocation_data(self, ip_address: str) -> Dict[str, Any]:
-        """Get geolocation data for IP address"""        # Simplified implementation - would use real GeoIP service
+        """Get geolocation data for IP address"""
+        # Simplified implementation - would use real GeoIP service
         cache_key = f"geo:{ip_address}"
         cached_data = await self.redis_client.get(cache_key)
         
@@ -691,13 +727,15 @@ class GeolocationValidator:
         return geo_data
     
     async def _get_previous_location(self, user_id: str) -> Optional[Dict]:
-        """Get user's previous location"""        location_key = f"user_location:{user_id}"
+        """Get user's previous location"""
+        location_key = f"user_location:{user_id}"
         data = await self.redis_client.get(location_key)
         return json.loads(data) if data else None
     
     async def _check_location_change(self, previous: Optional[Dict], 
                                    current: Dict) -> bool:
-        """Check if location has significantly changed"""        if not previous:
+        """Check if location has significantly changed"""
+        if not previous:
             return False
         
         # Simple distance calculation
@@ -714,7 +752,8 @@ class GeolocationValidator:
         return lat_diff > 1.0 or lon_diff > 1.0
     
     async def _store_location(self, user_id: str, geo_data: Dict):
-        """Store user's current location"""        location_key = f"user_location:{user_id}"
+        """Store user's current location"""
+        location_key = f"user_location:{user_id}"
         await self.redis_client.set(
             location_key, 
             json.dumps(geo_data), 
@@ -723,7 +762,8 @@ class GeolocationValidator:
     
     async def log_authentication_event(self, user_id: Optional[str], event_type: str, 
                                      duration: float, additional_data: Optional[Dict] = None):
-        """Log authentication events for monitoring"""        event = {
+        """Log authentication events for monitoring"""
+        event = {
             "user_id": user_id,
             "event_type": event_type,
             "timestamp": datetime.utcnow().isoformat(),
@@ -739,38 +779,46 @@ class GeolocationValidator:
 
 # Factory functions for dependency injection
 def get_authentication_middleware() -> AuthenticationMiddleware:
-    """Get authentication middleware instance"""    return AuthenticationMiddleware()
+    """Get authentication middleware instance"""
+    return AuthenticationMiddleware()
 
 
 def get_biometric_authenticator() -> BiometricAuthenticator:
-    """Get biometric authenticator instance"""    return BiometricAuthenticator()
+    """Get biometric authenticator instance"""
+    return BiometricAuthenticator()
 
 
 def get_behavioral_analyzer() -> BehavioralAnalyzer:
-    """Get behavioral analyzer instance"""    return BehavioralAnalyzer()
+    """Get behavioral analyzer instance"""
+    return BehavioralAnalyzer()
 
 
 def get_geolocation_validator() -> GeolocationValidator:
-    """Get geolocation validator instance"""    return GeolocationValidator()
+    """Get geolocation validator instance"""
+    return GeolocationValidator()
 
 
 # Utility functions
 async def require_auth(request: AuthenticationRequest) -> AuthenticationResult:
-    """Convenience function for authentication requirement"""    middleware = get_authentication_middleware()
+    """Convenience function for authentication requirement"""
+    middleware = get_authentication_middleware()
     return await middleware.authenticate(request)
 
 
 async def require_api_key(api_key: str) -> bool:
-    """Convenience function for API key validation"""    middleware = get_authentication_middleware()
+    """Convenience function for API key validation"""
+    middleware = get_authentication_middleware()
     api_manager = APIKeyManager()
     return await api_manager.validate_api_key(api_key)
 
 
 async def require_mfa(user_id: str, mfa_code: str) -> bool:
-    """Convenience function for MFA validation"""    mfa_auth = MultiFactorAuthenticator()
+    """Convenience function for MFA validation"""
+    mfa_auth = MultiFactorAuthenticator()
     return await mfa_auth.validate_mfa_code(user_id, mfa_code)
 
 
 async def require_permissions(user_id: str, permissions: List[str]) -> bool:
-    """Convenience function for permission checking"""    middleware = get_authentication_middleware()
+    """Convenience function for permission checking"""
+    middleware = get_authentication_middleware()
     return await middleware.validate_permissions(user_id, permissions)

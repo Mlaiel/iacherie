@@ -23,7 +23,8 @@ and international copyright laws.
 
 Project: IA Influencer Agent Platform - Metrics and Business Intelligence
 Copyright: Fahed Mlaiel - All rights reserved
-"""import os
+"""
+import os
 import sys
 import time
 import json
@@ -67,7 +68,8 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics collected"""    SYSTEM_PERFORMANCE = "system_performance"
+    """Types of metrics collected"""
+    SYSTEM_PERFORMANCE = "system_performance"
     APPLICATION_METRICS = "application_metrics"
     BUSINESS_METRICS = "business_metrics"
     SECURITY_METRICS = "security_metrics"
@@ -82,7 +84,8 @@ class MetricType(Enum):
 
 
 class DataSource(Enum):
-    """Data sources for metrics collection"""    PROMETHEUS = "prometheus"
+    """Data sources for metrics collection"""
+    PROMETHEUS = "prometheus"
     ELASTICSEARCH = "elasticsearch"
     INFLUXDB = "influxdb"
     GRAFANA = "grafana"
@@ -95,7 +98,8 @@ class DataSource(Enum):
 
 
 class ReportType(Enum):
-    """Types of reports generated"""    REAL_TIME_DASHBOARD = "real_time_dashboard"
+    """Types of reports generated"""
+    REAL_TIME_DASHBOARD = "real_time_dashboard"
     DAILY_SUMMARY = "daily_summary"
     WEEKLY_REPORT = "weekly_report"
     MONTHLY_REPORT = "monthly_report"
@@ -108,7 +112,8 @@ class ReportType(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    INFO = "info"
+    """Alert severity levels"""
+    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -117,7 +122,8 @@ class AlertSeverity(Enum):
 
 @dataclass
 class MetricConfig:
-    """Configuration for metric collection"""    metric_id: str
+    """Configuration for metric collection"""
+    metric_id: str
     metric_name: str
     metric_type: MetricType
     data_sources: List[DataSource]
@@ -145,7 +151,8 @@ class MetricConfig:
 
 @dataclass
 class DashboardConfig:
-    """Configuration for dashboard deployment"""    dashboard_id: str
+    """Configuration for dashboard deployment"""
+    dashboard_id: str
     dashboard_name: str
     dashboard_type: str = "grafana"
     metrics: List[str] = field(default_factory=list)
@@ -173,7 +180,8 @@ class DashboardConfig:
 
 @dataclass
 class AlertConfig:
-    """Configuration for alert rules"""    alert_id: str
+    """Configuration for alert rules"""
+    alert_id: str
     alert_name: str
     metric_id: str
     condition: str  # e.g., "value > threshold"
@@ -199,7 +207,8 @@ class AlertConfig:
 
 @dataclass
 class DeploymentConfig:
-    """Metrics system deployment configuration"""    replicas: int = 3
+    """Metrics system deployment configuration"""
+    replicas: int = 3
     resource_limits: Dict[str, str] = field(default_factory=lambda: {
         'cpu': '2000m',
         'memory': '4Gi',
@@ -230,11 +239,14 @@ class DeploymentConfig:
 
 
 class MetricsReportingDeploymentManager:
-    """    Enterprise Metrics and Reporting Deployment Manager
+    """
+    Enterprise Metrics and Reporting Deployment Manager
     Handles deployment and management of comprehensive metrics collection and reporting systems
-    """    
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize the Metrics and Reporting Deployment Manager"""        self.config_path = config_path or os.getenv('METRICS_CONFIG_PATH', '/etc/metrics/config.yaml')
+        """Initialize the Metrics and Reporting Deployment Manager"""
+        self.config_path = config_path or os.getenv('METRICS_CONFIG_PATH', '/etc/metrics/config.yaml')
         self.metrics: Dict[str, MetricConfig] = {}
         self.dashboards: Dict[str, DashboardConfig] = {}
         self.alerts: Dict[str, AlertConfig] = {}
@@ -256,7 +268,8 @@ class MetricsReportingDeploymentManager:
         logger.info("Metrics and Reporting Deployment Manager initialized successfully")
     
     def _init_kubernetes_client(self):
-        """Initialize Kubernetes client"""        try:
+        """Initialize Kubernetes client"""
+        try:
             config.load_incluster_config()
         except:
             try:
@@ -273,7 +286,8 @@ class MetricsReportingDeploymentManager:
         logger.info("Kubernetes client initialized")
     
     def _init_docker_client(self):
-        """Initialize Docker client"""        try:
+        """Initialize Docker client"""
+        try:
             self.docker_client = docker.from_env()
             logger.info("Docker client initialized")
         except Exception as e:
@@ -281,7 +295,8 @@ class MetricsReportingDeploymentManager:
             self.docker_client = None
     
     def _init_redis_client(self):
-        """Initialize Redis client for caching"""        try:
+        """Initialize Redis client for caching"""
+        try:
             redis_host = os.getenv('REDIS_HOST', 'localhost')
             redis_port = int(os.getenv('REDIS_PORT', '6379'))
             redis_password = os.getenv('REDIS_PASSWORD')
@@ -299,7 +314,8 @@ class MetricsReportingDeploymentManager:
             self.redis_client = None
     
     def _init_database_client(self):
-        """Initialize database client"""        try:
+        """Initialize database client"""
+        try:
             db_url = os.getenv('DATABASE_URL', 'postgresql://user:pass@localhost:5432/ia_influencer')
             self.db_engine = create_engine(db_url)
             logger.info("Database client initialized")
@@ -308,7 +324,8 @@ class MetricsReportingDeploymentManager:
             self.db_engine = None
     
     def _init_prometheus_client(self):
-        """Initialize Prometheus client"""        try:
+        """Initialize Prometheus client"""
+        try:
             prometheus_url = os.getenv('PROMETHEUS_URL', 'http://localhost:9090')
             self.prometheus_url = prometheus_url
             self.registry = CollectorRegistry()
@@ -318,7 +335,8 @@ class MetricsReportingDeploymentManager:
             self.prometheus_url = None
     
     def _init_grafana_client(self):
-        """Initialize Grafana client"""        try:
+        """Initialize Grafana client"""
+        try:
             grafana_url = os.getenv('GRAFANA_URL', 'http://localhost:3000')
             grafana_token = os.getenv('GRAFANA_API_TOKEN')
             
@@ -336,7 +354,8 @@ class MetricsReportingDeploymentManager:
             self.grafana_client = None
     
     def _init_elasticsearch_client(self):
-        """Initialize Elasticsearch client"""        try:
+        """Initialize Elasticsearch client"""
+        try:
             es_host = os.getenv('ELASTICSEARCH_HOST', 'localhost')
             es_port = int(os.getenv('ELASTICSEARCH_PORT', '9200'))
             
@@ -350,7 +369,8 @@ class MetricsReportingDeploymentManager:
             self.es_client = None
     
     def _init_influxdb_client(self):
-        """Initialize InfluxDB client"""        try:
+        """Initialize InfluxDB client"""
+        try:
             influx_host = os.getenv('INFLUXDB_HOST', 'localhost')
             influx_port = int(os.getenv('INFLUXDB_PORT', '8086'))
             influx_database = os.getenv('INFLUXDB_DATABASE', 'ia_influencer_metrics')
@@ -366,7 +386,8 @@ class MetricsReportingDeploymentManager:
             self.influx_client = None
     
     def _load_config(self):
-        """Load metrics and reporting configurations"""        if os.path.exists(self.config_path):
+        """Load metrics and reporting configurations"""
+        if os.path.exists(self.config_path):
             try:
                 with open(self.config_path, 'r') as f:
                     config_data = yaml.safe_load(f)
@@ -423,7 +444,8 @@ class MetricsReportingDeploymentManager:
                 logger.error(f"Failed to load configuration: {e}")
     
     def deploy_prometheus(self, deployment_config: DeploymentConfig) -> bool:
-        """Deploy Prometheus monitoring system"""        if not self.k8s_client:
+        """Deploy Prometheus monitoring system"""
+        if not self.k8s_client:
             logger.error("Kubernetes client not available")
             return False
         
@@ -547,7 +569,8 @@ class MetricsReportingDeploymentManager:
             return False
     
     def deploy_grafana(self, deployment_config: DeploymentConfig) -> bool:
-        """Deploy Grafana dashboard system"""        if not self.k8s_client:
+        """Deploy Grafana dashboard system"""
+        if not self.k8s_client:
             logger.error("Kubernetes client not available")
             return False
         
@@ -645,7 +668,8 @@ class MetricsReportingDeploymentManager:
             return False
     
     def _create_prometheus_config(self) -> Dict[str, Any]:
-        """Create Prometheus configuration"""        return {
+        """Create Prometheus configuration"""
+        return {
             'global': {
                 'scrape_interval': '15s',
                 'evaluation_interval': '15s'
@@ -676,7 +700,8 @@ class MetricsReportingDeploymentManager:
         }
     
     def create_dashboard(self, dashboard_config: DashboardConfig) -> bool:
-        """Create Grafana dashboard"""        if not self.grafana_client:
+        """Create Grafana dashboard"""
+        if not self.grafana_client:
             logger.error("Grafana client not available")
             return False
         
@@ -702,7 +727,8 @@ class MetricsReportingDeploymentManager:
             return False
     
     def _create_grafana_dashboard_json(self, dashboard_config: DashboardConfig) -> Dict[str, Any]:
-        """Create Grafana dashboard JSON configuration"""        return {
+        """Create Grafana dashboard JSON configuration"""
+        return {
             'id': None,
             'title': dashboard_config.dashboard_name,
             'tags': ['ia-influencer-agent'],
@@ -724,7 +750,8 @@ class MetricsReportingDeploymentManager:
         }
     
     def _create_grafana_panels(self, dashboard_config: DashboardConfig) -> List[Dict[str, Any]]:
-        """Create Grafana panels for dashboard"""        panels = []
+        """Create Grafana panels for dashboard"""
+        panels = []
         panel_id = 1
         
         for metric_id in dashboard_config.metrics:
@@ -765,7 +792,8 @@ class MetricsReportingDeploymentManager:
         return panels
     
     def collect_metrics(self) -> Dict[str, Any]:
-        """Collect metrics from all configured sources"""        collected_metrics = {}
+        """Collect metrics from all configured sources"""
+        collected_metrics = {}
         
         for metric_id, metric_config in self.metrics.items():
             if not metric_config.enabled:
@@ -794,7 +822,8 @@ class MetricsReportingDeploymentManager:
         return collected_metrics
     
     def _collect_single_metric(self, metric_config: MetricConfig) -> Optional[float]:
-        """Collect a single metric from configured sources"""        values = []
+        """Collect a single metric from configured sources"""
+        values = []
         
         for data_source in metric_config.data_sources:
             try:
@@ -831,7 +860,8 @@ class MetricsReportingDeploymentManager:
         return None
     
     def _collect_from_prometheus(self, metric_config: MetricConfig) -> Optional[float]:
-        """Collect metric from Prometheus"""        if not self.prometheus_url:
+        """Collect metric from Prometheus"""
+        if not self.prometheus_url:
             return None
         
         try:
@@ -852,7 +882,8 @@ class MetricsReportingDeploymentManager:
         return None
     
     def _collect_from_elasticsearch(self, metric_config: MetricConfig) -> Optional[float]:
-        """Collect metric from Elasticsearch"""        if not self.es_client:
+        """Collect metric from Elasticsearch"""
+        if not self.es_client:
             return None
         
         try:
@@ -865,7 +896,8 @@ class MetricsReportingDeploymentManager:
         return None
     
     def _collect_from_database(self, metric_config: MetricConfig) -> Optional[float]:
-        """Collect metric from database"""        if not self.db_engine:
+        """Collect metric from database"""
+        if not self.db_engine:
             return None
         
         try:
@@ -878,7 +910,8 @@ class MetricsReportingDeploymentManager:
         return None
     
     def _collect_from_kubernetes(self, metric_config: MetricConfig) -> Optional[float]:
-        """Collect metric from Kubernetes"""        if not self.k8s_client:
+        """Collect metric from Kubernetes"""
+        if not self.k8s_client:
             return None
         
         try:
@@ -891,7 +924,8 @@ class MetricsReportingDeploymentManager:
         return None
     
     def _create_namespace(self, namespace: str):
-        """Create Kubernetes namespace if it doesn't exist"""        try:
+        """Create Kubernetes namespace if it doesn't exist"""
+        try:
             self.core_v1.read_namespace(name=namespace)
         except ApiException as e:
             if e.status == 404:
@@ -904,7 +938,8 @@ class MetricsReportingDeploymentManager:
                 logger.info(f"Created namespace: {namespace}")
     
     def _create_or_update_configmap(self, configmap_manifest: Dict[str, Any]):
-        """Create or update ConfigMap"""        try:
+        """Create or update ConfigMap"""
+        try:
             self.core_v1.read_namespaced_config_map(
                 name=configmap_manifest['metadata']['name'],
                 namespace=configmap_manifest['metadata']['namespace']
@@ -924,7 +959,8 @@ class MetricsReportingDeploymentManager:
                 )
     
     def generate_report(self, report_type: ReportType, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Generate comprehensive report"""        report = {
+        """Generate comprehensive report"""
+        report = {
             'report_type': report_type.value,
             'period': {
                 'start': start_date.isoformat(),
@@ -951,7 +987,8 @@ class MetricsReportingDeploymentManager:
         return report
     
     def _get_metric_history(self, metric_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get historical data for a metric"""        # This would typically query the time series database
+        """Get historical data for a metric"""
+        # This would typically query the time series database
         # For now, return placeholder data
         return {
             'metric_id': metric_id,
@@ -965,7 +1002,8 @@ class MetricsReportingDeploymentManager:
         }
     
     def _generate_report_summary(self, metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate report summary"""        return {
+        """Generate report summary"""
+        return {
             'total_metrics': len(metrics),
             'healthy_metrics': sum(1 for m in metrics.values() if m.get('status') == 'healthy'),
             'alerts_triggered': 0,
@@ -973,7 +1011,8 @@ class MetricsReportingDeploymentManager:
         }
     
     def _generate_insights(self, metrics: Dict[str, Any]) -> List[str]:
-        """Generate insights from metrics data"""        insights = []
+        """Generate insights from metrics data"""
+        insights = []
         
         # Add some example insights
         insights.append("System performance is stable over the reporting period")
@@ -983,7 +1022,8 @@ class MetricsReportingDeploymentManager:
         return insights
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive health check"""        health_status = {
+        """Perform comprehensive health check"""
+        health_status = {
             'timestamp': datetime.now().isoformat(),
             'overall_status': 'healthy',
             'components': {
@@ -1013,7 +1053,8 @@ class MetricsReportingDeploymentManager:
 
 
 def main():
-    """Main function for testing the Metrics and Reporting Deployment Manager"""    # Initialize manager
+    """Main function for testing the Metrics and Reporting Deployment Manager"""
+    # Initialize manager
     manager = MetricsReportingDeploymentManager()
     
     # Example configurations

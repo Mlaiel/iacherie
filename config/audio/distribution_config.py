@@ -17,7 +17,8 @@ explicit written permission from Fahed Mlaiel is strictly prohibited and will be
 to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import logging
+"""
+import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
 from dataclasses import dataclass, field
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class DistributionPlatform(Enum):
-    """Supported distribution platforms"""    SPOTIFY = "spotify"
+    """Supported distribution platforms"""
+    SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE_MUSIC = "youtube_music"
     AMAZON_MUSIC = "amazon_music"
@@ -47,7 +49,8 @@ class DistributionPlatform(Enum):
 
 
 class ContentFormat(Enum):
-    """Content formats for distribution"""    AUDIO_TRACK = "audio_track"
+    """Content formats for distribution"""
+    AUDIO_TRACK = "audio_track"
     MUSIC_VIDEO = "music_video"
     LYRIC_VIDEO = "lyric_video"
     ALBUM = "album"
@@ -61,7 +64,8 @@ class ContentFormat(Enum):
 
 
 class DistributionStrategy(Enum):
-    """Distribution strategies"""    SIMULTANEOUS_RELEASE = "simultaneous_release"
+    """Distribution strategies"""
+    SIMULTANEOUS_RELEASE = "simultaneous_release"
     STAGGERED_RELEASE = "staggered_release"
     PLATFORM_EXCLUSIVE = "platform_exclusive"
     WINDOWED_RELEASE = "windowed_release"
@@ -70,7 +74,8 @@ class DistributionStrategy(Enum):
 
 
 class UploadStatus(Enum):
-    """Upload status tracking"""    PENDING = "pending"
+    """Upload status tracking"""
+    PENDING = "pending"
     PROCESSING = "processing"
     UPLOADED = "uploaded"
     PUBLISHED = "published"
@@ -81,7 +86,8 @@ class UploadStatus(Enum):
 
 @dataclass
 class PlatformDistributionConfig:
-    """Configuration for individual platform distribution"""    platform: DistributionPlatform
+    """Configuration for individual platform distribution"""
+    platform: DistributionPlatform
     enabled: bool = True
     
     # Authentication and API settings
@@ -135,7 +141,8 @@ class PlatformDistributionConfig:
 
 @dataclass
 class AutomatedUploadConfig:
-    """Configuration for automated content uploads"""    
+    """Configuration for automated content uploads"""
+    
     # Upload automation settings
     automation_enabled: bool = True
     batch_processing: bool = True
@@ -181,7 +188,8 @@ class AutomatedUploadConfig:
 
 @dataclass
 class SyncConfig:
-    """Configuration for cross-platform synchronization"""    
+    """Configuration for cross-platform synchronization"""
+    
     # Synchronization settings
     sync_enabled: bool = True
     real_time_sync: bool = False
@@ -228,7 +236,8 @@ class SyncConfig:
 
 @dataclass
 class SchedulingConfig:
-    """Configuration for content scheduling"""    
+    """Configuration for content scheduling"""
+    
     # Scheduling strategies
     scheduling_strategy: str = "optimal_engagement"
     timezone_handling: str = "user_timezone"
@@ -276,7 +285,8 @@ class SchedulingConfig:
 
 @dataclass
 class MultiPlatformStrategy:
-    """Multi-platform distribution strategy configuration"""    
+    """Multi-platform distribution strategy configuration"""
+    
     # Strategy type
     strategy_type: DistributionStrategy = DistributionStrategy.SIMULTANEOUS_RELEASE
     
@@ -333,7 +343,8 @@ class MultiPlatformStrategy:
 
 @dataclass
 class DistributionConfig:
-    """Master configuration for content distribution"""    
+    """Master configuration for content distribution"""
+    
     # Core configurations
     platform_configs: Dict[DistributionPlatform, PlatformDistributionConfig] = field(default_factory=dict)
     automated_upload_config: AutomatedUploadConfig = field(default_factory=AutomatedUploadConfig)
@@ -391,14 +402,16 @@ class DistributionConfig:
 
 
 def create_platform_config(platform: DistributionPlatform) -> PlatformDistributionConfig:
-    """    Create optimized platform configuration
+    """
+    Create optimized platform configuration
     
     Args:
         platform: Target distribution platform
         
     Returns:
         Optimized platform configuration
-    """    config = PlatformDistributionConfig(platform=platform)
+    """
+    config = PlatformDistributionConfig(platform=platform)
     
     # Platform-specific optimizations
     if platform == DistributionPlatform.SPOTIFY:
@@ -435,14 +448,16 @@ def create_platform_config(platform: DistributionPlatform) -> PlatformDistributi
 
 
 def validate_distribution_config(config: DistributionConfig) -> bool:
-    """    Validate distribution configuration
+    """
+    Validate distribution configuration
     
     Args:
         config: Configuration to validate
         
     Returns:
         True if configuration is valid, False otherwise
-    """    try:
+    """
+    try:
         # Validate platform configurations
         if not config.platform_configs:
             logger.warning("No platform configurations defined")
@@ -476,4 +491,5 @@ for platform in [DistributionPlatform.SPOTIFY, DistributionPlatform.YOUTUBE, Dis
 
 
 def get_distribution_config() -> DistributionConfig:
-    """Get default distribution configuration"""    return DEFAULT_DISTRIBUTION_CONFIG
+    """Get default distribution configuration"""
+    return DEFAULT_DISTRIBUTION_CONFIG

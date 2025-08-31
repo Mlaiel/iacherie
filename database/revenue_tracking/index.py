@@ -15,7 +15,8 @@ Violation = Poursuites judiciaires selon le droit allemand et international.
 Ce code et concept sont la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Violation = Poursuites judiciaires selon le droit allemand et international.
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, Any, Optional, List
 from datetime import datetime
@@ -59,17 +60,21 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueTrackingModuleManager:
-    """    Gestionnaire principal du module Revenue Tracking
+    """
+    Gestionnaire principal du module Revenue Tracking
     
     Coordonne tous les composants du module et fournit
     une interface unifiée pour le suivi des revenus.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialise le gestionnaire du module.
+        """
+        Initialise le gestionnaire du module.
         
         Args:
             config: Configuration du système
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logging.getLogger(__name__)
         self.initialized = False
         
@@ -88,11 +93,13 @@ class RevenueTrackingModuleManager:
         }
         
     async def initialize(self) -> bool:
-        """        Initialise tous les composants du module.
+        """
+        Initialise tous les composants du module.
         
         Returns:
             True si l'initialisation réussit
-        """        try:
+        """
+        try:
             self.logger.info("Initializing Revenue Tracking Module...")
             
             # Initialize core revenue tracking manager
@@ -131,7 +138,8 @@ class RevenueTrackingModuleManager:
         creator_id: str,
         timeframe_days: int = 30
     ) -> Dict[str, Any]:
-        """        Obtient un aperçu complet des revenus.
+        """
+        Obtient un aperçu complet des revenus.
         
         Args:
             creator_id: ID du créateur
@@ -139,7 +147,8 @@ class RevenueTrackingModuleManager:
             
         Returns:
             Aperçu complet des revenus
-        """        if not self.initialized:
+        """
+        if not self.initialized:
             raise RuntimeError("Module not initialized")
         
         try:
@@ -190,7 +199,8 @@ class RevenueTrackingModuleManager:
         creator_id: str,
         revenue_event: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Traite un événement de revenu complet.
+        """
+        Traite un événement de revenu complet.
         
         Args:
             creator_id: ID du créateur
@@ -198,7 +208,8 @@ class RevenueTrackingModuleManager:
             
         Returns:
             Résultat du traitement
-        """        if not self.initialized:
+        """
+        if not self.initialized:
             raise RuntimeError("Module not initialized")
         
         try:
@@ -242,7 +253,8 @@ class RevenueTrackingModuleManager:
         report_type: str = "comprehensive",
         period_months: int = 3
     ) -> Dict[str, Any]:
-        """        Génère un rapport exécutif complet.
+        """
+        Génère un rapport exécutif complet.
         
         Args:
             creator_id: ID du créateur
@@ -251,7 +263,8 @@ class RevenueTrackingModuleManager:
             
         Returns:
             Rapport exécutif
-        """        if not self.initialized:
+        """
+        if not self.initialized:
             raise RuntimeError("Module not initialized")
         
         try:
@@ -314,7 +327,8 @@ class RevenueTrackingModuleManager:
             raise
     
     async def _perform_health_checks(self) -> Dict[str, Any]:
-        """Effectue des vérifications de santé du système"""        try:
+        """Effectue des vérifications de santé du système"""
+        try:
             health_status = {
                 "overall_status": "healthy",
                 "components": {},
@@ -365,11 +379,13 @@ class RevenueTrackingModuleManager:
             }
     
     async def get_module_status(self) -> Dict[str, Any]:
-        """        Obtient le statut complet du module.
+        """
+        Obtient le statut complet du module.
         
         Returns:
             Statut du module
-        """        try:
+        """
+        try:
             # Perform fresh health check
             health_status = await self._perform_health_checks()
             
@@ -395,14 +411,16 @@ class RevenueTrackingModuleManager:
 
 # Module initialization helper functions
 async def initialize_revenue_tracking_module(config: Dict[str, Any]) -> RevenueTrackingModuleManager:
-    """    Initialise le module Revenue Tracking.
+    """
+    Initialise le module Revenue Tracking.
     
     Args:
         config: Configuration du système
         
     Returns:
         Gestionnaire de module initialisé
-    """    try:
+    """
+    try:
         manager = RevenueTrackingModuleManager(config)
         success = await manager.initialize()
         
@@ -418,14 +436,16 @@ async def initialize_revenue_tracking_module(config: Dict[str, Any]) -> RevenueT
 
 
 async def get_module_health_status(manager: RevenueTrackingModuleManager) -> Dict[str, Any]:
-    """    Obtient le statut de santé du module.
+    """
+    Obtient le statut de santé du module.
     
     Args:
         manager: Gestionnaire de module
         
     Returns:
         Statut de santé
-    """    if manager and manager.initialized:
+    """
+    if manager and manager.initialized:
         return await manager.get_module_status()
     else:
         return {

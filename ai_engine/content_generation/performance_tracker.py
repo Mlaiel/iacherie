@@ -8,7 +8,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Tuple
 from datetime import datetime, timedelta
@@ -20,7 +21,8 @@ import statistics
 
 @dataclass
 class ContentMetrics:
-    """Data class for content performance metrics"""    content_id: str
+    """Data class for content performance metrics"""
+    content_id: str
     content_type: str
     platform: str
     created_at: datetime
@@ -41,7 +43,8 @@ class ContentMetrics:
 
 @dataclass
 class PerformanceInsight:
-    """Data class for performance insights"""    insight_type: str
+    """Data class for performance insights"""
+    insight_type: str
     title: str
     description: str
     impact_level: str  # high, medium, low
@@ -51,7 +54,8 @@ class PerformanceInsight:
 
 
 class PerformanceTracker:
-    """    Advanced performance tracking system that provides:
+    """
+    Advanced performance tracking system that provides:
     
     - Real-time content performance monitoring
     - Multi-platform analytics aggregation
@@ -61,9 +65,11 @@ class PerformanceTracker:
     - A/B testing analytics
     - ROI calculation and attribution
     - Automated insight generation
-    """    
+    """
+    
     def __init__(self):
-        """Initialize performance tracker"""        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize performance tracker"""
+        self.logger = logging.getLogger(self.__class__.__name__)
         
         # Metrics storage
         self.metrics_data = defaultdict(list)
@@ -137,7 +143,8 @@ class PerformanceTracker:
         platform: str,
         metrics_data: Dict[str, Any]
     ) -> ContentMetrics:
-        """        Track performance metrics for a piece of content.
+        """
+        Track performance metrics for a piece of content.
         
         Args:
             content_id: Unique identifier for content
@@ -147,7 +154,8 @@ class PerformanceTracker:
             
         Returns:
             Processed content metrics
-        """        try:
+        """
+        try:
             # Create metrics object
             metrics = ContentMetrics(
                 content_id=content_id,
@@ -176,7 +184,8 @@ class PerformanceTracker:
             return ContentMetrics(content_id, content_type, platform, datetime.now())
     
     def _extract_platform_metrics(self, platform: str, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract metrics based on platform"""        platform_mappings = {
+        """Extract metrics based on platform"""
+        platform_mappings = {
             'instagram': {
                 'views': data.get('impressions', 0),
                 'likes': data.get('like_count', 0),
@@ -232,7 +241,8 @@ class PerformanceTracker:
         })
     
     async def _calculate_engagement_rate(self, metrics: ContentMetrics) -> float:
-        """Calculate engagement rate based on platform"""        total_engagements = metrics.likes + metrics.shares + metrics.comments
+        """Calculate engagement rate based on platform"""
+        total_engagements = metrics.likes + metrics.shares + metrics.comments
         
         if metrics.platform in ['instagram', 'tiktok']:
             # For visual platforms, use reach as denominator
@@ -244,12 +254,14 @@ class PerformanceTracker:
         return total_engagements / base
     
     async def _calculate_ctr(self, metrics: ContentMetrics) -> float:
-        """Calculate click-through rate"""        if metrics.impressions == 0:
+        """Calculate click-through rate"""
+        if metrics.impressions == 0:
             return 0.0
         return metrics.clicks / metrics.impressions
     
     async def _calculate_conversion_rate(self, metrics: ContentMetrics) -> float:
-        """Calculate conversion rate"""        if metrics.clicks == 0:
+        """Calculate conversion rate"""
+        if metrics.clicks == 0:
             return 0.0
         return metrics.conversions / metrics.clicks
     
@@ -259,7 +271,8 @@ class PerformanceTracker:
         platform: Optional[str] = None,
         timeframe_days: int = 30
     ) -> Dict[str, Any]:
-        """        Get performance summary for content.
+        """
+        Get performance summary for content.
         
         Args:
             content_ids: Specific content IDs to analyze
@@ -268,7 +281,8 @@ class PerformanceTracker:
             
         Returns:
             Performance summary with key metrics and insights
-        """        try:
+        """
+        try:
             # Filter metrics based on criteria
             filtered_metrics = await self._filter_metrics(
                 content_ids, platform, timeframe_days
@@ -302,7 +316,8 @@ class PerformanceTracker:
         platform: Optional[str],
         timeframe_days: int
     ) -> List[ContentMetrics]:
-        """Filter metrics based on criteria"""        cutoff_date = datetime.now() - timedelta(days=timeframe_days)
+        """Filter metrics based on criteria"""
+        cutoff_date = datetime.now() - timedelta(days=timeframe_days)
         filtered = []
         
         for content_id, metrics_list in self.metrics_data.items():
@@ -320,7 +335,8 @@ class PerformanceTracker:
         return filtered
     
     async def _get_best_performing_content(self, metrics_list: List[ContentMetrics]) -> Dict[str, Any]:
-        """Identify best performing content"""        if not metrics_list:
+        """Identify best performing content"""
+        if not metrics_list:
             return {}
         
         # Sort by engagement rate
@@ -347,7 +363,8 @@ class PerformanceTracker:
         }
     
     async def _get_platform_breakdown(self, metrics_list: List[ContentMetrics]) -> Dict[str, Any]:
-        """Get performance breakdown by platform"""        platform_data = defaultdict(list)
+        """Get performance breakdown by platform"""
+        platform_data = defaultdict(list)
         
         for metrics in metrics_list:
             platform_data[metrics.platform].append(metrics)
@@ -364,7 +381,8 @@ class PerformanceTracker:
         return breakdown
     
     async def _get_content_type_breakdown(self, metrics_list: List[ContentMetrics]) -> Dict[str, Any]:
-        """Get performance breakdown by content type"""        type_data = defaultdict(list)
+        """Get performance breakdown by content type"""
+        type_data = defaultdict(list)
         
         for metrics in metrics_list:
             type_data[metrics.content_type].append(metrics)
@@ -380,7 +398,8 @@ class PerformanceTracker:
         return breakdown
     
     async def _get_performance_trends(self, metrics_list: List[ContentMetrics]) -> Dict[str, Any]:
-        """Analyze performance trends over time"""        # Sort by date
+        """Analyze performance trends over time"""
+        # Sort by date
         sorted_metrics = sorted(metrics_list, key=lambda m: m.created_at)
         
         if len(sorted_metrics) < 2:
@@ -418,7 +437,8 @@ class PerformanceTracker:
         }
     
     async def _compare_to_benchmarks(self, metrics_list: List[ContentMetrics]) -> Dict[str, Any]:
-        """Compare performance to industry benchmarks"""        platform_performance = {}
+        """Compare performance to industry benchmarks"""
+        platform_performance = {}
         
         platform_data = defaultdict(list)
         for metrics in metrics_list:
@@ -453,7 +473,8 @@ class PerformanceTracker:
         content_ids: Optional[List[str]] = None,
         platform: Optional[str] = None
     ) -> List[PerformanceInsight]:
-        """        Generate actionable insights from performance data.
+        """
+        Generate actionable insights from performance data.
         
         Args:
             content_ids: Specific content to analyze
@@ -461,7 +482,8 @@ class PerformanceTracker:
             
         Returns:
             List of performance insights with recommendations
-        """        try:
+        """
+        try:
             # Get relevant metrics
             filtered_metrics = await self._filter_metrics(content_ids, platform, 30)
             
@@ -496,7 +518,8 @@ class PerformanceTracker:
         pattern: Dict[str, Any], 
         metrics: ContentMetrics
     ) -> PerformanceInsight:
-        """Create insight from pattern and metrics"""        
+        """Create insight from pattern and metrics"""
+        
         # Calculate specific metrics for the insight
         share_rate = metrics.shares / max(metrics.views, 1)
         
@@ -528,7 +551,8 @@ class PerformanceTracker:
         )
     
     async def _generate_aggregated_insights(self, metrics_list: List[ContentMetrics]) -> List[PerformanceInsight]:
-        """Generate insights from aggregated data"""        insights = []
+        """Generate insights from aggregated data"""
+        insights = []
         
         if len(metrics_list) < 3:
             return insights
@@ -579,7 +603,8 @@ class PerformanceTracker:
         variant_b_id: str,
         test_metric: str = 'engagement_rate'
     ) -> Dict[str, Any]:
-        """        Track A/B test performance between two content variants.
+        """
+        Track A/B test performance between two content variants.
         
         Args:
             test_id: Unique test identifier
@@ -589,7 +614,8 @@ class PerformanceTracker:
             
         Returns:
             A/B test results and statistical significance
-        """        try:
+        """
+        try:
             # Get metrics for both variants
             variant_a_metrics = self.metrics_data.get(variant_a_id, [])
             variant_b_metrics = self.metrics_data.get(variant_b_id, [])
@@ -649,7 +675,8 @@ class PerformanceTracker:
             return {'error': f'A/B test analysis failed: {str(e)}'}
     
     async def _get_ab_test_recommendation(self, winner: str, difference: float) -> str:
-        """Generate recommendation based on A/B test results"""        if winner == 'inconclusive':
+        """Generate recommendation based on A/B test results"""
+        if winner == 'inconclusive':
             return "Results are inconclusive. Consider running the test longer or with larger audience."
         elif difference > 0.2:
             return f"Clear winner identified. Implement {winner} strategy across all content."
@@ -663,7 +690,8 @@ class PerformanceTracker:
         format_type: str = 'json',
         timeframe_days: int = 30
     ) -> str:
-        """        Export performance data in specified format.
+        """
+        Export performance data in specified format.
         
         Args:
             format_type: Export format (json, csv)
@@ -671,7 +699,8 @@ class PerformanceTracker:
             
         Returns:
             Formatted data string
-        """        try:
+        """
+        try:
             # Get filtered metrics
             filtered_metrics = await self._filter_metrics(None, None, timeframe_days)
             
@@ -709,16 +738,19 @@ class PerformanceTracker:
 
 
 class MetricsCollector:
-    """Collects performance metrics from various platforms"""    
+    """Collects performance metrics from various platforms"""
+    
     def __init__(self):
         self.platforms = {}
         self.logger = logging.getLogger(self.__class__.__name__)
     
     def register_platform(self, platform_name: str, collector_func: callable) -> None:
-        """Register a platform metrics collector"""        self.platforms[platform_name] = collector_func
+        """Register a platform metrics collector"""
+        self.platforms[platform_name] = collector_func
     
     def collect_metrics(self, platform: str, content_id: str) -> Dict[str, Any]:
-        """Collect metrics for specific content on a platform"""        if platform not in self.platforms:
+        """Collect metrics for specific content on a platform"""
+        if platform not in self.platforms:
             return {}
         
         try:
@@ -728,7 +760,8 @@ class MetricsCollector:
             return {}
     
     def collect_all_metrics(self, content_mapping: Dict[str, str]) -> Dict[str, Dict[str, Any]]:
-        """Collect metrics from all registered platforms"""        all_metrics = {}
+        """Collect metrics from all registered platforms"""
+        all_metrics = {}
         for platform, content_id in content_mapping.items():
             all_metrics[platform] = self.collect_metrics(platform, content_id)
         return all_metrics

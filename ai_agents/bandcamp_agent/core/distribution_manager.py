@@ -6,7 +6,8 @@ and optimization on Bandcamp platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
@@ -16,7 +17,8 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class DistributionStatus(Enum):
-    """Distribution status types"""    PENDING = "pending"
+    """Distribution status types"""
+    PENDING = "pending"
     PROCESSING = "processing"
     LIVE = "live"
     FAILED = "failed"
@@ -24,7 +26,8 @@ class DistributionStatus(Enum):
 
 @dataclass
 class BandcampRelease:
-    """Bandcamp release data structure"""    id: str
+    """Bandcamp release data structure"""
+    id: str
     title: str
     artist: str
     release_type: str  # album, ep, single
@@ -36,7 +39,8 @@ class BandcampRelease:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class DistributionManager:
-    """    Automated Distribution Manager for Bandcamp
+    """
+    Automated Distribution Manager for Bandcamp
     
     Provides comprehensive distribution automation including:
     - Automated release scheduling
@@ -44,7 +48,8 @@ class DistributionManager:
     - Fan engagement automation
     - Sales analytics and reporting
     - Revenue optimization
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.releases = {}
@@ -55,7 +60,8 @@ class DistributionManager:
         release_data: Dict[str, Any],
         release_date: Optional[datetime] = None
     ) -> BandcampRelease:
-        """Schedule an automated release"""        try:
+        """Schedule an automated release"""
+        try:
             release = BandcampRelease(
                 id=f"release_{len(self.releases) + 1}",
                 title=release_data['title'],
@@ -78,7 +84,8 @@ class DistributionManager:
             raise
     
     async def process_distribution_queue(self):
-        """Process pending distributions"""        for release_id in self.distribution_queue[:]:
+        """Process pending distributions"""
+        for release_id in self.distribution_queue[:]:
             try:
                 release = self.releases[release_id]
                 if release.release_date <= datetime.utcnow():
@@ -89,7 +96,8 @@ class DistributionManager:
                 logger.error(f"Distribution processing failed for {release_id}: {e}")
     
     async def _distribute_release(self, release: BandcampRelease):
-        """Execute release distribution"""        try:
+        """Execute release distribution"""
+        try:
             release.status = DistributionStatus.PROCESSING
             
             # Simulate distribution process
@@ -104,7 +112,8 @@ class DistributionManager:
             raise
     
     def get_distribution_stats(self) -> Dict[str, Any]:
-        """Get distribution statistics"""        return {
+        """Get distribution statistics"""
+        return {
             'total_releases': len(self.releases),
             'pending_distributions': len(self.distribution_queue),
             'live_releases': sum(1 for r in self.releases.values() if r.status == DistributionStatus.LIVE)

@@ -15,7 +15,8 @@ Copyright: 2025 - All Rights Reserved
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -41,7 +42,8 @@ from ..base import BaseAgent
 
 
 class BlockchainNetwork(Enum):
-    """Supported blockchain networks."""    ETHEREUM = "ethereum"
+    """Supported blockchain networks."""
+    ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BINANCE_SMART_CHAIN = "bsc"
     SOLANA = "solana"
@@ -50,7 +52,8 @@ class BlockchainNetwork(Enum):
 
 
 class ContractType(Enum):
-    """Types of smart contracts."""    COPYRIGHT_REGISTRY = "copyright_registry"
+    """Types of smart contracts."""
+    COPYRIGHT_REGISTRY = "copyright_registry"
     NFT_COLLECTION = "nft_collection"
     LICENSING_AGREEMENT = "licensing_agreement"
     ROYALTY_DISTRIBUTION = "royalty_distribution"
@@ -58,7 +61,8 @@ class ContractType(Enum):
 
 
 class TransactionStatus(Enum):
-    """Blockchain transaction statuses."""    PENDING = "pending"
+    """Blockchain transaction statuses."""
+    PENDING = "pending"
     CONFIRMED = "confirmed"
     FAILED = "failed"
     CANCELLED = "cancelled"
@@ -66,7 +70,8 @@ class TransactionStatus(Enum):
 
 @dataclass
 class BlockchainTransaction:
-    """Blockchain transaction record."""    id: str
+    """Blockchain transaction record."""
+    id: str
     network: BlockchainNetwork
     transaction_hash: Optional[str] = None
     from_address: str = ""
@@ -82,7 +87,8 @@ class BlockchainTransaction:
 
 @dataclass
 class NFTMetadata:
-    """NFT metadata structure."""    name: str
+    """NFT metadata structure."""
+    name: str
     description: str
     image_url: str
     attributes: List[Dict[str, Any]] = field(default_factory=list)
@@ -97,7 +103,8 @@ class NFTMetadata:
 
 @dataclass
 class SmartContract:
-    """Smart contract definition and deployment info."""    id: str
+    """Smart contract definition and deployment info."""
+    id: str
     name: str
     contract_type: ContractType
     network: BlockchainNetwork
@@ -112,7 +119,8 @@ class SmartContract:
 
 
 class BlockchainAgent(BaseAgent):
-    """    Advanced Blockchain Agent for decentralized content rights management.
+    """
+    Advanced Blockchain Agent for decentralized content rights management.
     
     Provides comprehensive blockchain integration including:
     - Multi-network blockchain support (Ethereum, Polygon, Solana, etc.)
@@ -122,9 +130,11 @@ class BlockchainAgent(BaseAgent):
     - Automated royalty distribution
     - Cryptocurrency payment processing
     - DeFi integration for creator monetization
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the Blockchain Agent with multi-network support."""        super().__init__(config)
+        """Initialize the Blockchain Agent with multi-network support."""
+        super().__init__(config)
         
         # Network configurations
         self.networks = {
@@ -183,7 +193,8 @@ class BlockchainAgent(BaseAgent):
         self.logger.info("Blockchain Agent initialized with multi-network support")
     
     def _initialize_web3_connections(self):
-        """Initialize Web3 connections for supported networks."""        if not Web3:
+        """Initialize Web3 connections for supported networks."""
+        if not Web3:
             self.logger.warning("Web3 library not installed. Install with: pip install web3")
             return
         
@@ -199,7 +210,8 @@ class BlockchainAgent(BaseAgent):
                 self.logger.error(f"Error connecting to {network.value}: {str(e)}")
     
     def _load_contract_templates(self) -> Dict[ContractType, Dict]:
-        """Load smart contract templates and ABIs."""        # In a real implementation, these would be loaded from files
+        """Load smart contract templates and ABIs."""
+        # In a real implementation, these would be loaded from files
         return {
             ContractType.COPYRIGHT_REGISTRY: {
                 'abi': [],  # Contract ABI would be here
@@ -230,7 +242,8 @@ class BlockchainAgent(BaseAgent):
         metadata: Dict[str, Any],
         network: BlockchainNetwork = BlockchainNetwork.POLYGON
     ) -> str:
-        """        Register copyright on blockchain with immutable proof of creation.
+        """
+        Register copyright on blockchain with immutable proof of creation.
         
         Args:
             content_hash: SHA-256 hash of the content
@@ -240,7 +253,8 @@ class BlockchainAgent(BaseAgent):
             
         Returns:
             str: Transaction ID for copyright registration
-        """        try:
+        """
+        try:
             if network not in self.web3_connections:
                 raise ValueError(f"Network {network.value} not available")
             
@@ -297,7 +311,8 @@ class BlockchainAgent(BaseAgent):
         collection_address: Optional[str] = None,
         network: BlockchainNetwork = BlockchainNetwork.POLYGON
     ) -> Tuple[str, str]:
-        """        Create and mint NFT for content with comprehensive metadata.
+        """
+        Create and mint NFT for content with comprehensive metadata.
         
         Args:
             content_url: URL to the content file
@@ -308,7 +323,8 @@ class BlockchainAgent(BaseAgent):
             
         Returns:
             Tuple[str, str]: (Transaction ID, Token ID)
-        """        try:
+        """
+        try:
             if network not in self.web3_connections:
                 raise ValueError(f"Network {network.value} not available")
             
@@ -371,7 +387,8 @@ class BlockchainAgent(BaseAgent):
         licensing_fee: Decimal,
         network: BlockchainNetwork = BlockchainNetwork.ETHEREUM
     ) -> str:
-        """        Deploy smart contract for automated content licensing.
+        """
+        Deploy smart contract for automated content licensing.
         
         Args:
             licensor_address: Content owner's address
@@ -381,7 +398,8 @@ class BlockchainAgent(BaseAgent):
             
         Returns:
             str: Contract deployment transaction ID
-        """        try:
+        """
+        try:
             if network not in self.web3_connections:
                 raise ValueError(f"Network {network.value} not available")
             
@@ -438,7 +456,8 @@ class BlockchainAgent(BaseAgent):
         network: BlockchainNetwork,
         payment_reference: str
     ) -> str:
-        """        Process cryptocurrency payment with automatic conversion if needed.
+        """
+        Process cryptocurrency payment with automatic conversion if needed.
         
         Args:
             from_address: Sender's address
@@ -450,7 +469,8 @@ class BlockchainAgent(BaseAgent):
             
         Returns:
             str: Payment transaction ID
-        """        try:
+        """
+        try:
             if network not in self.web3_connections:
                 raise ValueError(f"Network {network.value} not available")
             
@@ -496,7 +516,8 @@ class BlockchainAgent(BaseAgent):
         beneficiaries: List[Dict[str, Any]],
         network: BlockchainNetwork = BlockchainNetwork.POLYGON
     ) -> str:
-        """        Setup automated royalty distribution smart contract.
+        """
+        Setup automated royalty distribution smart contract.
         
         Args:
             content_id: Unique content identifier
@@ -505,7 +526,8 @@ class BlockchainAgent(BaseAgent):
             
         Returns:
             str: Royalty contract deployment transaction ID
-        """        try:
+        """
+        try:
             # Validate beneficiaries total to 100%
             total_percentage = sum(b.get('percentage', 0) for b in beneficiaries)
             if total_percentage != 100:
@@ -551,7 +573,8 @@ class BlockchainAgent(BaseAgent):
             raise
     
     async def _upload_to_ipfs(self, data: Dict[str, Any]) -> str:
-        """Upload data to IPFS and return the URI."""        try:
+        """Upload data to IPFS and return the URI."""
+        try:
             if not self.ipfs_client and ipfshttpclient:
                 self.ipfs_client = ipfshttpclient.connect('/dns/ipfs.io/tcp/5001/http')
             
@@ -577,7 +600,8 @@ class BlockchainAgent(BaseAgent):
             return f"ipfs://Qm{fake_hash}"
     
     async def _get_exchange_rate(self, from_currency: str, to_currency: str) -> Decimal:
-        """Get current exchange rate between currencies."""        # In real implementation, would call a price API like CoinGecko
+        """Get current exchange rate between currencies."""
+        # In real implementation, would call a price API like CoinGecko
         exchange_rates = {
             ('ETH', 'USD'): Decimal('2500.00'),
             ('MATIC', 'USD'): Decimal('0.85'),
@@ -589,7 +613,8 @@ class BlockchainAgent(BaseAgent):
         return rate
     
     async def _estimate_gas_cost(self, network: BlockchainNetwork, amount: Decimal) -> Dict[str, Any]:
-        """Estimate gas cost for transaction."""        base_gas_costs = {
+        """Estimate gas cost for transaction."""
+        base_gas_costs = {
             BlockchainNetwork.ETHEREUM: {'gas_limit': 21000, 'gas_price_gwei': 50},
             BlockchainNetwork.POLYGON: {'gas_limit': 21000, 'gas_price_gwei': 30},
             BlockchainNetwork.BINANCE_SMART_CHAIN: {'gas_limit': 21000, 'gas_price_gwei': 5}
@@ -605,7 +630,8 @@ class BlockchainAgent(BaseAgent):
         }
     
     def _get_copyright_registry_address(self, network: BlockchainNetwork) -> Optional[str]:
-        """Get deployed copyright registry contract address for network."""        # In real implementation, would return actual deployed contract addresses
+        """Get deployed copyright registry contract address for network."""
+        # In real implementation, would return actual deployed contract addresses
         registry_addresses = {
             BlockchainNetwork.ETHEREUM: "0x1234567890123456789012345678901234567890",
             BlockchainNetwork.POLYGON: "0x0987654321098765432109876543210987654321",
@@ -615,7 +641,8 @@ class BlockchainAgent(BaseAgent):
         return registry_addresses.get(network)
     
     def _get_default_nft_contract(self, network: BlockchainNetwork) -> str:
-        """Get default NFT collection contract address for network."""        nft_contracts = {
+        """Get default NFT collection contract address for network."""
+        nft_contracts = {
             BlockchainNetwork.ETHEREUM: "0xaaaabbbbccccddddeeeeffffgggghhhhiiiijjjj",
             BlockchainNetwork.POLYGON: "0xkkkkllllmmmmnnnnoooopp_contract_address",
             BlockchainNetwork.BINANCE_SMART_CHAIN: "0xqqqqrrrrssssttttuuuuvvvvwwwwxxxxyyyyzzzz"
@@ -624,7 +651,8 @@ class BlockchainAgent(BaseAgent):
         return nft_contracts.get(network, "0x0000000000000000000000000000000000000000")
     
     async def get_transaction_status(self, transaction_id: str) -> Dict[str, Any]:
-        """Get detailed status of a blockchain transaction."""        if transaction_id not in self.transactions:
+        """Get detailed status of a blockchain transaction."""
+        if transaction_id not in self.transactions:
             raise ValueError(f"Transaction not found: {transaction_id}")
         
         transaction = self.transactions[transaction_id]
@@ -646,7 +674,8 @@ class BlockchainAgent(BaseAgent):
         }
     
     async def get_contract_info(self, contract_id: str) -> Dict[str, Any]:
-        """Get information about a deployed smart contract."""        if contract_id not in self.deployed_contracts:
+        """Get information about a deployed smart contract."""
+        if contract_id not in self.deployed_contracts:
             raise ValueError(f"Contract not found: {contract_id}")
         
         contract = self.deployed_contracts[contract_id]
@@ -666,7 +695,8 @@ class BlockchainAgent(BaseAgent):
         }
     
     async def get_blockchain_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive blockchain analytics and statistics."""        total_transactions = len(self.transactions)
+        """Get comprehensive blockchain analytics and statistics."""
+        total_transactions = len(self.transactions)
         confirmed_transactions = sum(1 for t in self.transactions.values() if t.status == TransactionStatus.CONFIRMED)
         
         # Transaction stats by network

@@ -5,7 +5,8 @@ YouTube, Instagram, TikTok, Spotify, and other social media platforms.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -32,7 +33,8 @@ from ...utils.retry_utils import retry_with_backoff
 logger = get_logger(__name__)
 
 class PlatformType(Enum):
-    """Supported platform types"""    YOUTUBE = "youtube"
+    """Supported platform types"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     SPOTIFY = "spotify"
@@ -42,14 +44,16 @@ class PlatformType(Enum):
     TWITCH = "twitch"
 
 class DistributionPriority(Enum):
-    """Distribution priority levels"""    LOW = 1
+    """Distribution priority levels"""
+    LOW = 1
     MEDIUM = 2
     HIGH = 3
     URGENT = 4
 
 @dataclass
 class PlatformConfig:
-    """Platform-specific configuration"""    platform: PlatformType
+    """Platform-specific configuration"""
+    platform: PlatformType
     api_service: Any
     max_file_size: int
     supported_formats: List[str]
@@ -60,7 +64,8 @@ class PlatformConfig:
 
 @dataclass
 class DistributionRequest:
-    """Distribution request structure"""    user_id: int
+    """Distribution request structure"""
+    user_id: int
     content_id: int
     platforms: List[PlatformType]
     content_path: str
@@ -72,7 +77,8 @@ class DistributionRequest:
 
 @dataclass
 class DistributionResult:
-    """Distribution result for single platform"""    platform: PlatformType
+    """Distribution result for single platform"""
+    platform: PlatformType
     success: bool
     platform_id: Optional[str] = None
     platform_url: Optional[str] = None
@@ -82,7 +88,8 @@ class DistributionResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class DistributionManager:
-    """    Multi-platform content distribution engine
+    """
+    Multi-platform content distribution engine
     
     Features:
     - Automated content distribution
@@ -91,7 +98,8 @@ class DistributionManager:
     - Real-time analytics tracking
     - Error handling and retry logic
     - Cross-platform synchronization
-    """    
+    """
+    
     def __init__(self):
         self.notification_service = NotificationService()
         
@@ -143,11 +151,13 @@ class DistributionManager:
         self.active_distributions = {}
         
     async def initialize(self) -> bool:
-        """        Initialize distribution manager
+        """
+        Initialize distribution manager
         
         Returns:
             bool: Initialization success status
-        """        try:
+        """
+        try:
             logger.info("Initializing Distribution Manager...")
             
             # Initialize platform services
@@ -173,7 +183,8 @@ class DistributionManager:
         distribution_request: DistributionRequest,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """        Distribute content to multiple platforms
+        """
+        Distribute content to multiple platforms
         
         Args:
             distribution_request: Distribution configuration
@@ -181,7 +192,8 @@ class DistributionManager:
             
         Returns:
             Dict containing distribution job information
-        """        try:
+        """
+        try:
             # Validate distribution request
             await self._validate_distribution_request(distribution_request, session)
             
@@ -234,7 +246,8 @@ class DistributionManager:
         job_id: str,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """        Get distribution job status and results
+        """
+        Get distribution job status and results
         
         Args:
             job_id: Distribution job ID
@@ -242,7 +255,8 @@ class DistributionManager:
             
         Returns:
             Dict containing job status and results
-        """        try:
+        """
+        try:
             # Get distribution job
             result = await session.execute(
                 select(DistributionJob).where(DistributionJob.job_id == job_id)
@@ -281,7 +295,8 @@ class DistributionManager:
         job_id: str,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """        Cancel pending distribution job
+        """
+        Cancel pending distribution job
         
         Args:
             job_id: Distribution job ID
@@ -289,7 +304,8 @@ class DistributionManager:
             
         Returns:
             Dict containing cancellation status
-        """        try:
+        """
+        try:
             # Get distribution job
             result = await session.execute(
                 select(DistributionJob).where(DistributionJob.job_id == job_id)
@@ -331,7 +347,8 @@ class DistributionManager:
         platforms: Optional[List[str]] = None,
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """        Retry failed distribution for specific platforms
+        """
+        Retry failed distribution for specific platforms
         
         Args:
             job_id: Distribution job ID
@@ -340,7 +357,8 @@ class DistributionManager:
             
         Returns:
             Dict containing retry status
-        """        try:
+        """
+        try:
             # Get distribution job
             result = await session.execute(
                 select(DistributionJob).where(DistributionJob.job_id == job_id)
@@ -408,7 +426,8 @@ class DistributionManager:
         date_range: Optional[Dict[str, datetime]] = None,
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """        Get analytics data for distributed content
+        """
+        Get analytics data for distributed content
         
         Args:
             user_id: User ID
@@ -419,7 +438,8 @@ class DistributionManager:
             
         Returns:
             Dict containing analytics data
-        """        try:
+        """
+        try:
             platform_type = PlatformType(platform)
             
             if platform_type not in self.platform_services:
@@ -456,7 +476,8 @@ class DistributionManager:
         request: DistributionRequest,
         session: AsyncSession
     ):
-        """Validate distribution request"""        # Check if content exists and belongs to user
+        """Validate distribution request"""
+        # Check if content exists and belongs to user
         # Check platform credentials
         # Validate file format compatibility
         # Check quota limits
@@ -480,7 +501,8 @@ class DistributionManager:
                 )
     
     async def _process_distribution_queue(self):
-        """Background task to process distribution queue"""        while True:
+        """Background task to process distribution queue"""
+        while True:
             try:
                 # Get distribution request from queue
                 request = await self.distribution_queue.get()
@@ -496,7 +518,8 @@ class DistributionManager:
                 await asyncio.sleep(5)
     
     async def _execute_distribution(self, request: DistributionRequest):
-        """Execute distribution to all platforms"""        try:
+        """Execute distribution to all platforms"""
+        try:
             logger.info(f"Executing distribution for user {request.user_id}")
             
             # Distribute to each platform
@@ -527,7 +550,8 @@ class DistributionManager:
         request: DistributionRequest,
         platform: PlatformType
     ) -> DistributionResult:
-        """Distribute content to specific platform"""        start_time = datetime.utcnow()
+        """Distribute content to specific platform"""
+        start_time = datetime.utcnow()
         
         try:
             logger.info(f"Distributing to {platform.value}")
@@ -578,7 +602,8 @@ class DistributionManager:
         metadata: Dict[str, Any],
         platform: PlatformType
     ) -> Dict[str, Any]:
-        """Prepare platform-specific metadata"""        platform_metadata = metadata.copy()
+        """Prepare platform-specific metadata"""
+        platform_metadata = metadata.copy()
         
         # Platform-specific metadata transformations
         if platform == PlatformType.YOUTUBE:
@@ -616,7 +641,8 @@ class DistributionManager:
         request: DistributionRequest,
         results: List[DistributionResult]
     ):
-        """Update distribution job results"""        # Implementation to update database with results
+        """Update distribution job results"""
+        # Implementation to update database with results
         pass
     
     async def _send_distribution_notification(
@@ -624,7 +650,8 @@ class DistributionManager:
         request: DistributionRequest,
         results: List[DistributionResult]
     ):
-        """Send distribution completion notification"""        successful_platforms = [r.platform.value for r in results if r.success]
+        """Send distribution completion notification"""
+        successful_platforms = [r.platform.value for r in results if r.success]
         failed_platforms = [r.platform.value for r in results if not r.success]
         
         await self.notification_service.send_distribution_notification(
@@ -635,7 +662,8 @@ class DistributionManager:
         )
     
     async def _handle_distribution_error(self, request: DistributionRequest, error: str):
-        """Handle distribution error"""        logger.error(f"Distribution error for user {request.user_id}: {error}")
+        """Handle distribution error"""
+        logger.error(f"Distribution error for user {request.user_id}: {error}")
         
         # Send error notification
         await self.notification_service.send_distribution_error(
@@ -649,11 +677,13 @@ class DistributionManager:
         job: DistributionJob,
         scheduling: Dict[str, Any]
     ):
-        """Schedule distribution for later execution"""        # Implementation for scheduled distribution
+        """Schedule distribution for later execution"""
+        # Implementation for scheduled distribution
         pass
     
     async def _check_scheduled_distributions(self):
-        """Check and execute scheduled distributions"""        while True:
+        """Check and execute scheduled distributions"""
+        while True:
             try:
                 # Check for due scheduled distributions
                 # Execute them
@@ -669,7 +699,8 @@ class DistributionManager:
         platform: PlatformType,
         session: AsyncSession
     ) -> Optional[Dict[str, Any]]:
-        """Get platform credentials for user"""        result = await session.execute(
+        """Get platform credentials for user"""
+        result = await session.execute(
             select(PlatformCredentials).where(
                 and_(
                     PlatformCredentials.user_id == user_id,

@@ -19,7 +19,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 This code is proprietary and confidential. Any unauthorized copying, modification, 
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and may result in legal action.
-"""import logging
+"""
+import logging
 import os
 import platform
 import shutil
@@ -54,7 +55,8 @@ logger = logging.getLogger(__name__)
 
 
 class DriverProfile(Enum):
-    """Predefined driver configuration profiles"""    STEALTH = "stealth"
+    """Predefined driver configuration profiles"""
+    STEALTH = "stealth"
     PERFORMANCE = "performance"
     DEBUGGING = "debugging"
     MOBILE = "mobile"
@@ -64,7 +66,8 @@ class DriverProfile(Enum):
 
 
 class EnvironmentType(Enum):
-    """Target environment types"""    LOCAL = "local"
+    """Target environment types"""
+    LOCAL = "local"
     DOCKER = "docker"
     CLOUD = "cloud"
     CI_CD = "ci_cd"
@@ -72,7 +75,8 @@ class EnvironmentType(Enum):
 
 @dataclass
 class DriverCapability:
-    """Individual driver capability setting"""    name: str
+    """Individual driver capability setting"""
+    name: str
     value: Any
     required: bool = False
     description: str = ""
@@ -80,7 +84,8 @@ class DriverCapability:
 
 @dataclass
 class DriverPreset:
-    """Driver configuration preset"""    profile: DriverProfile
+    """Driver configuration preset"""
+    profile: DriverProfile
     browser_type: BrowserType
     capabilities: List[DriverCapability]
     options: List[str]
@@ -90,11 +95,13 @@ class DriverPreset:
 
 
 class WebDriverFactory:
-    """    Enterprise WebDriver Factory System
+    """
+    Enterprise WebDriver Factory System
     
     Creates optimized WebDriver instances based on configuration profiles,
     environment requirements, and performance specifications.
-    """    
+    """
+    
     def __init__(self, environment: EnvironmentType = EnvironmentType.LOCAL):
         self.environment = environment
         self.temp_directories: List[str] = []
@@ -109,7 +116,8 @@ class WebDriverFactory:
     
     def create_driver(self, config: BrowserConfiguration, 
                      profile: Optional[DriverProfile] = None) -> webdriver.Remote:
-        """Create optimized WebDriver instance"""        try:
+        """Create optimized WebDriver instance"""
+        try:
             # Apply preset if specified
             if profile:
                 config = self._apply_preset(config, profile)
@@ -134,7 +142,8 @@ class WebDriverFactory:
             raise DriverError(f"Driver creation failed: {str(e)}")
     
     def create_stealth_driver(self, browser_type: BrowserType = BrowserType.CHROME) -> webdriver.Remote:
-        """Create stealth-optimized driver for anti-detection"""        config = BrowserConfiguration(
+        """Create stealth-optimized driver for anti-detection"""
+        config = BrowserConfiguration(
             browser_type=browser_type,
             mode=BrowserMode.STEALTH,
             capabilities=BrowserCapabilities(automation_hidden=True)
@@ -142,7 +151,8 @@ class WebDriverFactory:
         return self.create_driver(config, DriverProfile.STEALTH)
     
     def create_performance_driver(self, browser_type: BrowserType = BrowserType.CHROME) -> webdriver.Remote:
-        """Create performance-optimized driver for speed"""        config = BrowserConfiguration(
+        """Create performance-optimized driver for speed"""
+        config = BrowserConfiguration(
             browser_type=browser_type,
             mode=BrowserMode.HEADLESS,
             capabilities=BrowserCapabilities(
@@ -154,14 +164,16 @@ class WebDriverFactory:
         return self.create_driver(config, DriverProfile.PERFORMANCE)
     
     def create_mobile_driver(self, device_name: str = "iPhone 12") -> webdriver.Remote:
-        """Create mobile-emulation driver"""        config = BrowserConfiguration(
+        """Create mobile-emulation driver"""
+        config = BrowserConfiguration(
             browser_type=BrowserType.CHROME,
             mode=BrowserMode.GUI
         )
         return self._create_mobile_chrome_driver(config, device_name)
     
     def create_testing_driver(self, browser_type: BrowserType = BrowserType.CHROME) -> webdriver.Remote:
-        """Create driver optimized for testing"""        config = BrowserConfiguration(
+        """Create driver optimized for testing"""
+        config = BrowserConfiguration(
             browser_type=browser_type,
             mode=BrowserMode.HEADLESS,
             timeout=60,
@@ -170,7 +182,8 @@ class WebDriverFactory:
         return self.create_driver(config, DriverProfile.TESTING)
     
     def _create_chrome_driver(self, config: BrowserConfiguration) -> webdriver.Chrome:
-        """Create Chrome WebDriver with advanced configuration"""        options = ChromeOptions()
+        """Create Chrome WebDriver with advanced configuration"""
+        options = ChromeOptions()
         
         # Basic configuration
         if config.mode in [BrowserMode.HEADLESS, BrowserMode.STEALTH]:
@@ -281,7 +294,8 @@ class WebDriverFactory:
             raise DriverError(f"Chrome driver creation failed: {str(e)}")
     
     def _create_firefox_driver(self, config: BrowserConfiguration) -> webdriver.Firefox:
-        """Create Firefox WebDriver with advanced configuration"""        options = FirefoxOptions()
+        """Create Firefox WebDriver with advanced configuration"""
+        options = FirefoxOptions()
         
         if config.mode in [BrowserMode.HEADLESS, BrowserMode.STEALTH]:
             options.add_argument("--headless")
@@ -319,7 +333,8 @@ class WebDriverFactory:
             raise DriverError(f"Firefox driver creation failed: {str(e)}")
     
     def _create_edge_driver(self, config: BrowserConfiguration) -> webdriver.Edge:
-        """Create Edge WebDriver with advanced configuration"""        options = EdgeOptions()
+        """Create Edge WebDriver with advanced configuration"""
+        options = EdgeOptions()
         
         if config.mode in [BrowserMode.HEADLESS, BrowserMode.STEALTH]:
             options.add_argument("--headless")
@@ -343,7 +358,8 @@ class WebDriverFactory:
             raise DriverError(f"Edge driver creation failed: {str(e)}")
     
     def _create_safari_driver(self, config: BrowserConfiguration) -> webdriver.Safari:
-        """Create Safari WebDriver (macOS only)"""        if platform.system() != "Darwin":
+        """Create Safari WebDriver (macOS only)"""
+        if platform.system() != "Darwin":
             raise DriverError("Safari WebDriver is only available on macOS")
         
         try:
@@ -360,7 +376,8 @@ class WebDriverFactory:
     
     def _create_mobile_chrome_driver(self, config: BrowserConfiguration, 
                                    device_name: str) -> webdriver.Chrome:
-        """Create Chrome driver with mobile device emulation"""        options = ChromeOptions()
+        """Create Chrome driver with mobile device emulation"""
+        options = ChromeOptions()
         
         # Mobile emulation
         mobile_emulation = {"deviceName": device_name}
@@ -384,24 +401,28 @@ class WebDriverFactory:
             raise DriverError(f"Mobile Chrome driver creation failed: {str(e)}")
     
     def _apply_stealth_scripts(self, driver: webdriver.Remote) -> None:
-        """Apply comprehensive stealth scripts to hide automation"""        stealth_scripts = [
+        """Apply comprehensive stealth scripts to hide automation"""
+        stealth_scripts = [
             # Hide webdriver property
             "Object.defineProperty(navigator, 'webdriver', {get: () => undefined});",
             
             # Mock plugins
-            """            Object.defineProperty(navigator, 'plugins', {
+            """
+            Object.defineProperty(navigator, 'plugins', {
                 get: () => [1, 2, 3, 4, 5]
             });
             """,
             
             # Mock languages
-            """            Object.defineProperty(navigator, 'languages', {
+            """
+            Object.defineProperty(navigator, 'languages', {
                 get: () => ['en-US', 'en']
             });
             """,
             
             # Mock permissions
-            """            const originalQuery = window.navigator.permissions.query;
+            """
+            const originalQuery = window.navigator.permissions.query;
             window.navigator.permissions.query = (parameters) => (
                 parameters.name === 'notifications' ?
                     Promise.resolve({ state: Notification.permission }) :
@@ -410,17 +431,20 @@ class WebDriverFactory:
             """,
             
             # Mock chrome runtime
-            """            window.chrome = {
+            """
+            window.chrome = {
                 runtime: {}
             };
             """,
             
             # Randomize screen properties
-            """            Object.defineProperty(screen, 'availHeight', {get: () => 1040});
+            """
+            Object.defineProperty(screen, 'availHeight', {get: () => 1040});
             Object.defineProperty(screen, 'availWidth', {get: () => 1920});
             Object.defineProperty(screen, 'colorDepth', {get: () => 24});
             Object.defineProperty(screen, 'pixelDepth', {get: () => 24});
-            """        ]
+            """
+        ]
         
         for script in stealth_scripts:
             try:
@@ -430,7 +454,8 @@ class WebDriverFactory:
     
     def _apply_preset(self, config: BrowserConfiguration, 
                      profile: DriverProfile) -> BrowserConfiguration:
-        """Apply configuration preset to browser configuration"""        preset = self.presets.get((profile, config.browser_type))
+        """Apply configuration preset to browser configuration"""
+        preset = self.presets.get((profile, config.browser_type))
         if not preset:
             logger.warning(f"No preset found for {profile.value} + {config.browser_type.value}")
             return config
@@ -445,7 +470,8 @@ class WebDriverFactory:
         return config
     
     def _apply_environment_settings(self, config: BrowserConfiguration) -> BrowserConfiguration:
-        """Apply environment-specific settings"""        env_args = self.env_settings.get("arguments", [])
+        """Apply environment-specific settings"""
+        env_args = self.env_settings.get("arguments", [])
         config.arguments.extend(env_args)
         
         # Docker-specific settings
@@ -469,7 +495,8 @@ class WebDriverFactory:
         return config
     
     def _initialize_presets(self) -> Dict[tuple, DriverPreset]:
-        """Initialize driver configuration presets"""        presets = {}
+        """Initialize driver configuration presets"""
+        presets = {}
         
         # Stealth preset for Chrome
         stealth_chrome = DriverPreset(
@@ -534,7 +561,8 @@ class WebDriverFactory:
         return presets
     
     def _get_environment_settings(self) -> Dict[str, Any]:
-        """Get environment-specific settings"""        settings_map = {
+        """Get environment-specific settings"""
+        settings_map = {
             EnvironmentType.LOCAL: {
                 "arguments": [],
                 "driver_path": None
@@ -571,7 +599,8 @@ class WebDriverFactory:
         return settings_map.get(self.environment, settings_map[EnvironmentType.LOCAL])
     
     def get_available_presets(self) -> Dict[str, List[str]]:
-        """Get list of available presets by browser type"""        presets_by_browser = {}
+        """Get list of available presets by browser type"""
+        presets_by_browser = {}
         
         for (profile, browser_type), preset in self.presets.items():
             browser_name = browser_type.value
@@ -586,7 +615,8 @@ class WebDriverFactory:
         return presets_by_browser
     
     def cleanup_temp_directories(self) -> None:
-        """Cleanup temporary directories created during driver operations"""        for temp_dir in self.temp_directories:
+        """Cleanup temporary directories created during driver operations"""
+        for temp_dir in self.temp_directories:
             try:
                 shutil.rmtree(temp_dir, ignore_errors=True)
             except Exception as e:
@@ -597,22 +627,26 @@ class WebDriverFactory:
 
 # Factory functions for common use cases
 def create_stealth_driver(environment: EnvironmentType = EnvironmentType.LOCAL) -> webdriver.Remote:
-    """Create stealth-optimized Chrome driver"""    factory = WebDriverFactory(environment)
+    """Create stealth-optimized Chrome driver"""
+    factory = WebDriverFactory(environment)
     return factory.create_stealth_driver()
 
 
 def create_performance_driver(environment: EnvironmentType = EnvironmentType.LOCAL) -> webdriver.Remote:
-    """Create performance-optimized Chrome driver"""    factory = WebDriverFactory(environment)
+    """Create performance-optimized Chrome driver"""
+    factory = WebDriverFactory(environment)
     return factory.create_performance_driver()
 
 
 def create_mobile_driver(device_name: str = "iPhone 12", 
                         environment: EnvironmentType = EnvironmentType.LOCAL) -> webdriver.Remote:
-    """Create mobile-emulation Chrome driver"""    factory = WebDriverFactory(environment)
+    """Create mobile-emulation Chrome driver"""
+    factory = WebDriverFactory(environment)
     return factory.create_mobile_driver(device_name)
 
 
 def create_testing_driver(browser_type: BrowserType = BrowserType.CHROME,
                          environment: EnvironmentType = EnvironmentType.LOCAL) -> webdriver.Remote:
-    """Create testing-optimized driver"""    factory = WebDriverFactory(environment)
+    """Create testing-optimized driver"""
+    factory = WebDriverFactory(environment)
     return factory.create_testing_driver(browser_type)

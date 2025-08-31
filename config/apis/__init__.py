@@ -27,7 +27,8 @@ Collaboration Matching → Multi-platform Distribution → Revenue Tracking → 
 
 This module ensures industrial-grade API configuration, rate limiting, authentication,
 error handling, and monitoring for the IA Influencer Agent platform.
-"""import logging
+"""
+import logging
 from typing import Dict, List, Any, Optional
 from .platform_apis import PlatformAPIConfig, PLATFORM_CONFIGS
 from .payment_apis import PaymentAPIConfig, PAYMENT_CONFIGS
@@ -143,7 +144,8 @@ __all__ = [
 ]
 
 def get_api_config(platform: str, environment: str = "production") -> Optional[Dict[str, Any]]:
-    """    Get API configuration for specified platform and environment
+    """
+    Get API configuration for specified platform and environment
     
     Args:
         platform: Platform identifier (spotify, youtube, instagram, etc.)
@@ -151,7 +153,8 @@ def get_api_config(platform: str, environment: str = "production") -> Optional[D
     
     Returns:
         API configuration dictionary or None if not found
-    """    try:
+    """
+    try:
         all_configs = {
             **PLATFORM_CONFIGS,
             **PAYMENT_CONFIGS,
@@ -174,11 +177,13 @@ def get_api_config(platform: str, environment: str = "production") -> Optional[D
         return None
 
 def validate_api_configs() -> Dict[str, bool]:
-    """    Validate all API configurations
+    """
+    Validate all API configurations
     
     Returns:
         Dictionary with validation results for each platform
-    """    validator = APIConfigValidator()
+    """
+    validator = APIConfigValidator()
     results = {}
     
     all_configs = {
@@ -200,14 +205,16 @@ def validate_api_configs() -> Dict[str, bool]:
     return results
 
 def initialize_api_manager(environment: str = "production") -> APIManager:
-    """    Initialize and configure the main API manager
+    """
+    Initialize and configure the main API manager
     
     Args:
         environment: Target environment
         
     Returns:
         Configured APIManager instance
-    """    try:
+    """
+    try:
         manager = APIManager(environment=environment)
         
         # Load all configurations
@@ -231,7 +238,8 @@ def initialize_api_manager(environment: str = "production") -> APIManager:
         raise
 
 async def get_authenticated_client(platform: str, user_id: Optional[str] = None) -> Any:
-    """    Get authenticated API client for specified platform
+    """
+    Get authenticated API client for specified platform
     
     Args:
         platform: Platform identifier
@@ -239,7 +247,8 @@ async def get_authenticated_client(platform: str, user_id: Optional[str] = None)
         
     Returns:
         Authenticated API client instance
-    """    try:
+    """
+    try:
         manager = initialize_api_manager()
         auth_manager = APIAuthenticationManager()
         
@@ -277,7 +286,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from .spotify_config import SpotifyAPIConfig
+"""
+from .spotify_config import SpotifyAPIConfig
 from .youtube_config import YouTubeAPIConfig
 from .instagram_config import InstagramAPIConfig
 from .tiktok_config import TikTokAPIConfig

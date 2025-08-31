@@ -3,7 +3,8 @@ Advanced multi-database management for PostgreSQL, Redis, and MongoDB.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 from typing import Optional, Dict, Any, List
 from contextlib import asynccontextmanager
 import asyncpg
@@ -22,9 +23,11 @@ metadata = MetaData()
 
 
 class DatabaseManager:
-    """    Advanced database manager handling multiple database systems.
+    """
+    Advanced database manager handling multiple database systems.
     Provides connection pooling, transaction management, and health monitoring.
-    """    
+    """
+    
     def __init__(self):
         self.postgres_engine = None
         self.postgres_sessionmaker = None
@@ -38,13 +41,15 @@ class DatabaseManager:
         }
     
     async def initialize(self) -> None:
-        """Initialize all database connections"""        await self._initialize_postgres()
+        """Initialize all database connections"""
+        await self._initialize_postgres()
         await self._initialize_redis()
         await self._initialize_mongodb()
         await self._run_health_checks()
     
     async def _initialize_postgres(self) -> None:
-        """Initialize PostgreSQL connection with connection pooling"""        try:
+        """Initialize PostgreSQL connection with connection pooling"""
+        try:
             # Create async engine with connection pooling
             self.postgres_engine = create_async_engine(
                 settings.database.postgres_url,
@@ -73,7 +78,8 @@ class DatabaseManager:
             raise Exception(f"PostgreSQL initialization failed: {str(e)}")
     
     async def _initialize_redis(self) -> None:
-        """Initialize Redis connection with connection pooling"""        try:
+        """Initialize Redis connection with connection pooling"""
+        try:
             self.redis_client = aioredis.from_url(
                 settings.database.redis_url,
                 encoding="utf-8",
@@ -92,7 +98,8 @@ class DatabaseManager:
             raise Exception(f"Redis initialization failed: {str(e)}")
     
     async def _initialize_mongodb(self) -> None:
-        """Initialize MongoDB connection"""        try:
+        """Initialize MongoDB connection"""
+        try:
             self.mongodb_client = AsyncIOMotorClient(
                 settings.database.mongodb_url,
                 maxPoolSize=50,
@@ -113,7 +120,8 @@ class DatabaseManager:
     
     @asynccontextmanager
     async def get_postgres_session(self):
-        """Get PostgreSQL session with automatic cleanup"""        async with self.postgres_sessionmaker() as session:
+        """Get PostgreSQL session with automatic cleanup"""
+        async with self.postgres_sessionmaker() as session:
             try:
                 yield session
                 await session.commit()
@@ -124,21 +132,25 @@ class DatabaseManager:
                 await session.close()
     
     async def get_redis_client(self):
-        """Get Redis client"""        if not self.redis_client:
+        """Get Redis client"""
+        if not self.redis_client:
             raise Exception("Redis client not initialized")
         return self.redis_client
     
     async def get_mongodb_database(self):
-        """Get MongoDB database"""        if not self.mongodb_database:
+        """Get MongoDB database"""
+        if not self.mongodb_database:
             raise Exception("MongoDB database not initialized")
         return self.mongodb_database
     
     async def get_mongodb_collection(self, collection_name: str):
-        """Get MongoDB collection"""        database = await self.get_mongodb_database()
+        """Get MongoDB collection"""
+        database = await self.get_mongodb_database()
         return database[collection_name]
     
     async def _run_health_checks(self) -> None:
-        """Run health checks on all databases"""        # PostgreSQL health check
+        """Run health checks on all databases"""
+        # PostgreSQL health check
         try:
             async with self.postgres_engine.begin() as conn:
                 await conn.execute("SELECT 1")
@@ -161,21 +173,25 @@ class DatabaseManager:
             self._health_status["mongodb"] = False
     
     async def get_health_status(self) -> Dict[str, bool]:
-        """Get current health status of all databases"""        await self._run_health_checks()
+        """Get current health status of all databases"""
+        await self._run_health_checks()
         return self._health_status.copy()
     
     async def execute_postgres_query(self, query: str, params: Optional[Dict] = None) -> List[Dict]:
-        """Execute raw PostgreSQL query"""        async with self.get_postgres_session() as session:
+        """Execute raw PostgreSQL query"""
+        async with self.get_postgres_session() as session:
             result = await session.execute(query, params or {})
             return [dict(row) for row in result.fetchall()]
     
     async def execute_redis_command(self, command: str, *args, **kwargs) -> Any:
-        """Execute Redis command"""        redis_client = await self.get_redis_client()
+        """Execute Redis command"""
+        redis_client = await self.get_redis_client()
         return await getattr(redis_client, command)(*args, **kwargs)
     
     async def find_mongodb_documents(self, collection: str, filter_dict: Dict = None, 
                                    limit: Optional[int] = None) -> List[Dict]:
-        """Find documents in MongoDB collection"""        collection_obj = await self.get_mongodb_collection(collection)
+        """Find documents in MongoDB collection"""
+        collection_obj = await self.get_mongodb_collection(collection)
         cursor = collection_obj.find(filter_dict or {})
         
         if limit:
@@ -184,23 +200,27 @@ class DatabaseManager:
         return await cursor.to_list(length=None)
     
     async def insert_mongodb_document(self, collection: str, document: Dict) -> str:
-        """Insert document into MongoDB collection"""        collection_obj = await self.get_mongodb_collection(collection)
+        """Insert document into MongoDB collection"""
+        collection_obj = await self.get_mongodb_collection(collection)
         result = await collection_obj.insert_one(document)
         return str(result.inserted_id)
     
     async def update_mongodb_document(self, collection: str, filter_dict: Dict, 
                                     update_dict: Dict) -> int:
-        """Update documents in MongoDB collection"""        collection_obj = await self.get_mongodb_collection(collection)
+        """Update documents in MongoDB collection"""
+        collection_obj = await self.get_mongodb_collection(collection)
         result = await collection_obj.update_many(filter_dict, {"$set": update_dict})
         return result.modified_count
     
     async def delete_mongodb_documents(self, collection: str, filter_dict: Dict) -> int:
-        """Delete documents from MongoDB collection"""        collection_obj = await self.get_mongodb_collection(collection)
+        """Delete documents from MongoDB collection"""
+        collection_obj = await self.get_mongodb_collection(collection)
         result = await collection_obj.delete_many(filter_dict)
         return result.deleted_count
     
     async def create_indexes(self) -> None:
-        """Create database indexes for performance optimization"""        # PostgreSQL indexes will be created via SQLAlchemy migrations
+        """Create database indexes for performance optimization"""
+        # PostgreSQL indexes will be created via SQLAlchemy migrations
         
         # MongoDB indexes
         try:
@@ -225,7 +245,8 @@ class DatabaseManager:
             raise Exception(f"Index creation failed: {str(e)}")
     
     async def close_connections(self) -> None:
-        """Close all database connections"""        try:
+        """Close all database connections"""
+        try:
             if self.postgres_engine:
                 await self.postgres_engine.dispose()
             

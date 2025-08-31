@@ -12,7 +12,8 @@ distribution, or commercialization without explicit written permission is
 strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import json
@@ -52,7 +53,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(str, Enum):
-    """Types of content"""    AUDIO = "audio"
+    """Types of content"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -62,7 +64,8 @@ class ContentType(str, Enum):
 
 
 class ProcessingStage(str, Enum):
-    """Content processing stages"""    UPLOAD = "upload"
+    """Content processing stages"""
+    UPLOAD = "upload"
     VALIDATION = "validation"
     ANALYSIS = "analysis"
     ENHANCEMENT = "enhancement"
@@ -74,7 +77,8 @@ class ProcessingStage(str, Enum):
 
 
 class ProcessingPriority(str, Enum):
-    """Processing priority levels"""    LOW = "low"
+    """Processing priority levels"""
+    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -82,7 +86,8 @@ class ProcessingPriority(str, Enum):
 
 
 class ContentStatus(str, Enum):
-    """Content status"""    PENDING = "pending"
+    """Content status"""
+    PENDING = "pending"
     PROCESSING = "processing"
     PROCESSED = "processed"
     ENHANCED = "enhanced"
@@ -95,7 +100,8 @@ class ContentStatus(str, Enum):
 
 @dataclass
 class ContentProcessingConfig:
-    """Configuration for content processing"""    # Pipeline configuration
+    """Configuration for content processing"""
+    # Pipeline configuration
     enable_auto_enhancement: bool = True
     enable_content_protection: bool = True
     enable_seo_optimization: bool = True
@@ -147,7 +153,8 @@ class ContentProcessingConfig:
 
 @dataclass
 class ContentMetadata:
-    """Comprehensive content metadata"""    content_id: str
+    """Comprehensive content metadata"""
+    content_id: str
     content_type: ContentType
     original_filename: Optional[str] = None
     file_size: Optional[int] = None
@@ -178,7 +185,8 @@ class ContentMetadata:
 
 @dataclass
 class ProcessingJob:
-    """Content processing job"""    job_id: str
+    """Content processing job"""
+    job_id: str
     content_id: str
     stage: ProcessingStage
     status: ContentStatus
@@ -198,7 +206,8 @@ class ProcessingJob:
 
 @dataclass
 class ContentEnhancement:
-    """Content enhancement results"""    auto_generated_title: Optional[str] = None
+    """Content enhancement results"""
+    auto_generated_title: Optional[str] = None
     auto_generated_description: Optional[str] = None
     auto_generated_tags: List[str] = field(default_factory=list)
     auto_generated_summary: Optional[str] = None
@@ -213,7 +222,8 @@ class ContentEnhancement:
 
 @dataclass
 class ContentProtection:
-    """Content protection measures"""    watermark_applied: bool = False
+    """Content protection measures"""
+    watermark_applied: bool = False
     fingerprint_registered: bool = False
     copyright_claimed: bool = False
     usage_tracking_enabled: bool = False
@@ -227,7 +237,8 @@ class ContentProtection:
 
 @dataclass
 class QualityAssessment:
-    """Content quality assessment"""    overall_score: float = 0.0
+    """Content quality assessment"""
+    overall_score: float = 0.0
     technical_quality: float = 0.0
     content_quality: float = 0.0
     originality_score: float = 0.0
@@ -243,7 +254,8 @@ class QualityAssessment:
 
 @dataclass
 class ContentAnalysisResult:
-    """Comprehensive content analysis result"""    content_metadata: ContentMetadata
+    """Comprehensive content analysis result"""
+    content_metadata: ContentMetadata
     processing_results: Dict[str, Any] = field(default_factory=dict)
     enhancement: Optional[ContentEnhancement] = None
     protection: Optional[ContentProtection] = None
@@ -258,11 +270,13 @@ class ContentAnalysisResult:
 
 
 class ContentProcessor:
-    """    🎯 ENTERPRISE CONTENT PROCESSOR
+    """
+    🎯 ENTERPRISE CONTENT PROCESSOR
     
     Industrial-grade content processing orchestrator that manages the complete
     content lifecycle from upload to distribution for creators and influencers.
-    """    
+    """
+    
     def __init__(
         self,
         db_session,
@@ -304,7 +318,8 @@ class ContentProcessor:
             self.logger.warning("AI enhancement libraries not available")
     
     async def initialize(self) -> bool:
-        """Initialize the content processor"""        try:
+        """Initialize the content processor"""
+        try:
             # Initialize individual processors
             self.audio_processor = AudioProcessor(
                 db_session=self.db_session,
@@ -369,7 +384,8 @@ class ContentProcessor:
         metadata: Optional[Dict[str, Any]] = None,
         priority: ProcessingPriority = ProcessingPriority.NORMAL
     ) -> Dict[str, Any]:
-        """        Process content through the complete pipeline
+        """
+        Process content through the complete pipeline
         
         Args:
             content: Content to process
@@ -379,7 +395,8 @@ class ContentProcessor:
             
         Returns:
             Processing result with job ID for tracking
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         options = options or {}
         metadata = metadata or {}
         
@@ -440,7 +457,8 @@ class ContentProcessor:
             }
     
     async def get_job_status(self, job_id: str) -> Dict[str, Any]:
-        """Get status of a processing job"""        try:
+        """Get status of a processing job"""
+        try:
             if job_id not in self._active_jobs:
                 return {
                     "success": False,
@@ -472,7 +490,8 @@ class ContentProcessor:
             }
     
     async def get_content_analysis(self, content_id: str) -> Dict[str, Any]:
-        """Get comprehensive content analysis results"""        try:
+        """Get comprehensive content analysis results"""
+        try:
             if content_id not in self._content_registry:
                 return {
                     "success": False,
@@ -512,7 +531,8 @@ class ContentProcessor:
         content: Union[str, bytes, BinaryIO, Path],
         metadata: Dict[str, Any]
     ) -> ContentType:
-        """Detect content type from input"""        try:
+        """Detect content type from input"""
+        try:
             # Check metadata first
             if "content_type" in metadata:
                 return ContentType(metadata["content_type"])
@@ -566,7 +586,8 @@ class ContentProcessor:
         content: Union[str, bytes, BinaryIO, Path],
         metadata: Dict[str, Any]
     ) -> ContentMetadata:
-        """Create comprehensive content metadata"""        try:
+        """Create comprehensive content metadata"""
+        try:
             # Extract basic information
             filename = None
             file_size = None
@@ -615,7 +636,8 @@ class ContentProcessor:
             )
     
     async def _setup_pipeline(self):
-        """Setup the content processing pipeline"""        try:
+        """Setup the content processing pipeline"""
+        try:
             # Define pipeline stages and their handlers
             self._pipeline_stages = {
                 ProcessingStage.UPLOAD: self._handle_upload_stage,
@@ -634,7 +656,8 @@ class ContentProcessor:
             raise
     
     async def _start_workers(self):
-        """Start background worker tasks"""        try:
+        """Start background worker tasks"""
+        try:
             # Start worker tasks for processing jobs
             for i in range(self.config.max_concurrent_jobs):
                 worker_task = asyncio.create_task(
@@ -649,7 +672,8 @@ class ContentProcessor:
             raise
     
     async def _worker_loop(self, worker_id: str):
-        """Worker loop for processing jobs"""        while True:
+        """Worker loop for processing jobs"""
+        while True:
             try:
                 # Get job from queue
                 job = await asyncio.wait_for(self._job_queue.get(), timeout=1.0)
@@ -665,7 +689,8 @@ class ContentProcessor:
                 await asyncio.sleep(1)
     
     async def _process_job(self, job: ProcessingJob, worker_id: str):
-        """Process a single job"""        try:
+        """Process a single job"""
+        try:
             job.worker_id = worker_id
             job.started_at = datetime.now()
             job.status = ContentStatus.PROCESSING
@@ -713,7 +738,8 @@ class ContentProcessor:
             await self._handle_job_failure(job, str(e))
     
     async def _get_next_stage(self, current_stage: ProcessingStage) -> Optional[ProcessingStage]:
-        """Get the next processing stage"""        stage_order = [
+        """Get the next processing stage"""
+        stage_order = [
             ProcessingStage.UPLOAD,
             ProcessingStage.VALIDATION,
             ProcessingStage.ANALYSIS,
@@ -746,7 +772,8 @@ class ContentProcessor:
             return None
     
     async def _handle_job_failure(self, job: ProcessingJob, error_message: str):
-        """Handle job failure with retry logic"""        try:
+        """Handle job failure with retry logic"""
+        try:
             job.error_message = error_message
             job.retry_count += 1
             job.failed_at = datetime.now()
@@ -774,7 +801,8 @@ class ContentProcessor:
     # Stage Handlers
     
     async def _handle_upload_stage(self, job: ProcessingJob) -> Dict[str, Any]:
-        """Handle upload stage"""        try:
+        """Handle upload stage"""
+        try:
             content_data = self._content_registry[job.content_id]
             content = content_data["content"]
             metadata = content_data["metadata"]
@@ -811,7 +839,8 @@ class ContentProcessor:
             }
     
     async def _handle_validation_stage(self, job: ProcessingJob) -> Dict[str, Any]:
-        """Handle validation stage"""        try:
+        """Handle validation stage"""
+        try:
             content_data = self._content_registry[job.content_id]
             content = content_data["content"]
             metadata = content_data["metadata"]
@@ -857,7 +886,8 @@ class ContentProcessor:
             }
     
     async def _handle_analysis_stage(self, job: ProcessingJob) -> Dict[str, Any]:
-        """Handle analysis stage"""        try:
+        """Handle analysis stage"""
+        try:
             content_data = self._content_registry[job.content_id]
             content = content_data["content"]
             metadata = content_data["metadata"]
@@ -909,7 +939,8 @@ class ContentProcessor:
             }
     
     async def _handle_enhancement_stage(self, job: ProcessingJob) -> Dict[str, Any]:
-        """Handle enhancement stage"""        try:
+        """Handle enhancement stage"""
+        try:
             if not self.config.enable_auto_enhancement:
                 return {
                     "success": True,
@@ -971,7 +1002,8 @@ class ContentProcessor:
             }
     
     async def _handle_protection_stage(self, job: ProcessingJob) -> Dict[str, Any]:
-        """Handle protection stage"""        try:
+        """Handle protection stage"""
+        try:
             if not self.config.enable_content_protection:
                 return {
                     "success": True,
@@ -1011,7 +1043,8 @@ class ContentProcessor:
             }
     
     async def _handle_optimization_stage(self, job: ProcessingJob) -> Dict[str, Any]:
-        """Handle optimization stage"""        try:
+        """Handle optimization stage"""
+        try:
             # Placeholder for optimization logic
             # This would include format optimization, compression, etc.
             
@@ -1029,7 +1062,8 @@ class ContentProcessor:
             }
     
     async def _handle_distribution_stage(self, job: ProcessingJob) -> Dict[str, Any]:
-        """Handle distribution stage"""        try:
+        """Handle distribution stage"""
+        try:
             # Placeholder for distribution logic
             # This would include publishing to platforms, CDN upload, etc.
             
@@ -1049,15 +1083,18 @@ class ContentProcessor:
     # Helper Methods
     
     async def _scan_for_viruses(self, content) -> Dict[str, Any]:
-        """Scan content for viruses (placeholder)"""        # In production, this would integrate with antivirus APIs
+        """Scan content for viruses (placeholder)"""
+        # In production, this would integrate with antivirus APIs
         return {"clean": True, "scan_result": "clean"}
     
     async def _moderate_content(self, content, metadata) -> Dict[str, Any]:
-        """Moderate content for policy compliance"""        # Placeholder for content moderation
+        """Moderate content for policy compliance"""
+        # Placeholder for content moderation
         return {"approved": True, "score": 1.0, "reason": None}
     
     async def _update_content_metadata(self, content_id: str, analysis_result: Dict[str, Any]):
-        """Update content metadata with analysis results"""        try:
+        """Update content metadata with analysis results"""
+        try:
             if content_id in self._content_registry:
                 content_data = self._content_registry[content_id]
                 metadata = content_data["metadata"]
@@ -1085,7 +1122,8 @@ class ContentProcessor:
             self.logger.error(f"Metadata update failed: {e}")
     
     async def _generate_title(self, analysis_result: Dict[str, Any]) -> Optional[str]:
-        """Generate auto title from analysis results"""        try:
+        """Generate auto title from analysis results"""
+        try:
             # Extract keywords and topics for title generation
             keywords = []
             
@@ -1107,7 +1145,8 @@ class ContentProcessor:
             return None
     
     async def _generate_description(self, analysis_result: Dict[str, Any]) -> Optional[str]:
-        """Generate auto description from analysis results"""        try:
+        """Generate auto description from analysis results"""
+        try:
             # Use summary if available
             if "features" in analysis_result:
                 features = analysis_result["features"]
@@ -1121,7 +1160,8 @@ class ContentProcessor:
             return None
     
     async def _generate_tags(self, analysis_result: Dict[str, Any]) -> List[str]:
-        """Generate auto tags from analysis results"""        try:
+        """Generate auto tags from analysis results"""
+        try:
             tags = []
             
             if "tags" in analysis_result:
@@ -1141,7 +1181,8 @@ class ContentProcessor:
             return []
     
     async def _generate_summary(self, analysis_result: Dict[str, Any]) -> Optional[str]:
-        """Generate auto summary from analysis results"""        try:
+        """Generate auto summary from analysis results"""
+        try:
             if "features" in analysis_result:
                 features = analysis_result["features"]
                 if "summary" in features:
@@ -1158,7 +1199,8 @@ class ContentProcessor:
         analysis_result: Dict[str, Any],
         metadata: ContentMetadata
     ) -> Dict[str, Any]:
-        """Generate SEO optimizations"""        try:
+        """Generate SEO optimizations"""
+        try:
             optimizations = {}
             
             # Extract SEO score if available
@@ -1182,7 +1224,8 @@ class ContentProcessor:
             return {}
     
     async def _register_content_fingerprint(self, content_id: str) -> bool:
-        """Register content fingerprint for protection"""        try:
+        """Register content fingerprint for protection"""
+        try:
             # Placeholder for fingerprint registration
             return True
         except Exception as e:
@@ -1190,7 +1233,8 @@ class ContentProcessor:
             return False
     
     async def _apply_watermark(self, content_id: str) -> bool:
-        """Apply watermark to content"""        try:
+        """Apply watermark to content"""
+        try:
             # Placeholder for watermarking
             return True
         except Exception as e:
@@ -1198,7 +1242,8 @@ class ContentProcessor:
             return False
     
     async def _enable_usage_tracking(self, content_id: str) -> bool:
-        """Enable usage tracking for content"""        try:
+        """Enable usage tracking for content"""
+        try:
             # Placeholder for usage tracking setup
             return True
         except Exception as e:
@@ -1206,7 +1251,8 @@ class ContentProcessor:
             return False
     
     async def _determine_protection_level(self, metadata: ContentMetadata) -> str:
-        """Determine appropriate protection level"""        try:
+        """Determine appropriate protection level"""
+        try:
             if metadata.is_monetizable:
                 return "premium"
             elif metadata.license_type == "proprietary":
@@ -1221,7 +1267,8 @@ class ContentProcessor:
         content_id: str,
         completed_jobs: List[ProcessingJob]
     ) -> ContentAnalysisResult:
-        """Aggregate results from all processing stages"""        try:
+        """Aggregate results from all processing stages"""
+        try:
             content_data = self._content_registry[content_id]
             metadata = content_data["metadata"]
             
@@ -1255,7 +1302,8 @@ class ContentProcessor:
             return ContentAnalysisResult(content_metadata=metadata)
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on the content processor"""        health_status = {
+        """Perform health check on the content processor"""
+        health_status = {
             "status": "healthy" if self._initialized else "not_initialized",
             "active_jobs": len(self._active_jobs),
             "queue_size": self._job_queue.qsize(),
@@ -1281,7 +1329,8 @@ class ContentProcessor:
         return health_status
     
     async def shutdown(self):
-        """Gracefully shutdown the content processor"""        try:
+        """Gracefully shutdown the content processor"""
+        try:
             # Cancel worker tasks
             for task in self._worker_tasks:
                 task.cancel()
@@ -1300,7 +1349,8 @@ async def create_content_processor(
     redis_client,
     config: Optional[Dict[str, Any]] = None
 ) -> ContentProcessor:
-    """    Factory function to create and initialize a content processor
+    """
+    Factory function to create and initialize a content processor
     
     Args:
         db_session: Database session
@@ -1309,7 +1359,8 @@ async def create_content_processor(
         
     Returns:
         Initialized ContentProcessor instance
-    """    # Create config from dict if provided
+    """
+    # Create config from dict if provided
     processor_config = None
     if config:
         processor_config = ContentProcessingConfig(**{

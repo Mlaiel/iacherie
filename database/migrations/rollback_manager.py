@@ -22,7 +22,8 @@ Advanced rollback management for:
 ROLLBACK LOGIC PIPELINE:
 Safety Assessment → Backup Verification → Dependency Analysis → 
 Rollback Execution → Data Integrity Check → System Verification → Recovery Completion
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Set, Tuple, Any
 from dataclasses import dataclass, field
@@ -47,7 +48,8 @@ logger = logging.getLogger(__name__)
 
 
 class RollbackTrigger(Enum):
-    """Triggers that can initiate rollback operations"""    MANUAL = "manual"
+    """Triggers that can initiate rollback operations"""
+    MANUAL = "manual"
     AUTOMATIC = "automatic"
     HEALTH_CHECK_FAILURE = "health_check_failure"
     PERFORMANCE_DEGRADATION = "performance_degradation"
@@ -58,7 +60,8 @@ class RollbackTrigger(Enum):
 
 
 class RollbackSafety(Enum):
-    """Safety levels for rollback operations"""    SAFE = "safe"
+    """Safety levels for rollback operations"""
+    SAFE = "safe"
     CAUTION = "caution"
     HIGH_RISK = "high_risk"
     UNSAFE = "unsafe"
@@ -66,7 +69,8 @@ class RollbackSafety(Enum):
 
 
 class RecoveryMode(Enum):
-    """Recovery modes for different scenarios"""    POINT_IN_TIME = "point_in_time"
+    """Recovery modes for different scenarios"""
+    POINT_IN_TIME = "point_in_time"
     PREVIOUS_VERSION = "previous_version"
     KNOWN_GOOD_STATE = "known_good_state"
     EMERGENCY_RESTORE = "emergency_restore"
@@ -76,7 +80,8 @@ class RecoveryMode(Enum):
 
 @dataclass
 class RollbackConfiguration:
-    """Advanced rollback configuration for enterprise deployments"""    default_strategy: RollbackStrategy = RollbackStrategy.SAFE_ROLLBACK
+    """Advanced rollback configuration for enterprise deployments"""
+    default_strategy: RollbackStrategy = RollbackStrategy.SAFE_ROLLBACK
     auto_rollback_enabled: bool = True
     max_rollback_time_minutes: int = 60
     enable_backup_verification: bool = True
@@ -92,7 +97,8 @@ class RollbackConfiguration:
 
 @dataclass
 class RollbackContext:
-    """Comprehensive context for rollback operations"""    rollback_id: str
+    """Comprehensive context for rollback operations"""
+    rollback_id: str
     trigger: RollbackTrigger
     source_version: str
     target_version: str
@@ -107,7 +113,8 @@ class RollbackContext:
 
 
 class ProductionRollbackManager:
-    """    Ultra-advanced production rollback manager for enterprise content protection platform
+    """
+    Ultra-advanced production rollback manager for enterprise content protection platform
     
     Provides comprehensive rollback capabilities for:
     - Content fingerprinting schema rollbacks
@@ -115,7 +122,8 @@ class ProductionRollbackManager:
     - AI processing pipeline restoration
     - Platform integration recovery
     - Emergency disaster recovery procedures
-    """    
+    """
+    
     def __init__(
         self,
         connection_manager: DatabaseConnectionManager,
@@ -138,7 +146,8 @@ class ProductionRollbackManager:
         logger.info("✅ Production Rollback Manager initialized")
     
     async def initialize(self) -> bool:
-        """Initialize rollback manager with all safety systems"""        try:
+        """Initialize rollback manager with all safety systems"""
+        try:
             # Setup rollback tracking tables
             await self._ensure_rollback_tables()
             
@@ -164,7 +173,8 @@ class ProductionRollbackManager:
         target_version: str,
         recovery_mode: RecoveryMode = RecoveryMode.PREVIOUS_VERSION
     ) -> Dict[str, Any]:
-        """Assess safety and feasibility of rollback operation"""        
+        """Assess safety and feasibility of rollback operation"""
+        
         assessment_id = str(uuid.uuid4())
         
         logger.info(f"🔍 Assessing rollback safety: {source_version} → {target_version}")
@@ -243,7 +253,8 @@ class ProductionRollbackManager:
         self,
         context: RollbackContext
     ) -> RollbackPlan:
-        """Create comprehensive rollback execution plan"""        
+        """Create comprehensive rollback execution plan"""
+        
         logger.info(f"📋 Creating rollback plan: {context.source_version} → {context.target_version}")
         
         try:
@@ -295,7 +306,8 @@ class ProductionRollbackManager:
         plan: RollbackPlan,
         dry_run: bool = False
     ) -> str:
-        """Execute rollback operation with comprehensive monitoring"""        
+        """Execute rollback operation with comprehensive monitoring"""
+        
         execution_id = str(uuid.uuid4())
         
         async with self._rollback_lock:
@@ -343,7 +355,8 @@ class ProductionRollbackManager:
         return execution_id
     
     async def get_rollback_status(self, execution_id: str) -> Dict[str, Any]:
-        """Get detailed rollback execution status"""        
+        """Get detailed rollback execution status"""
+        
         if execution_id in self.active_rollbacks:
             execution = self.active_rollbacks[execution_id]
             return await self._build_status_response(execution, active=True)
@@ -356,7 +369,8 @@ class ProductionRollbackManager:
         return {"error": f"Rollback execution {execution_id} not found"}
     
     async def cancel_rollback(self, execution_id: str) -> bool:
-        """Cancel active rollback operation safely"""        
+        """Cancel active rollback operation safely"""
+        
         if execution_id not in self.active_rollbacks:
             return False
         
@@ -382,7 +396,8 @@ class ProductionRollbackManager:
         description: str = "",
         metadata: Dict[str, Any] = None
     ) -> str:
-        """Create recovery point for future rollback operations"""        
+        """Create recovery point for future rollback operations"""
+        
         recovery_point_id = str(uuid.uuid4())
         
         logger.info(f"💾 Creating recovery point: {version}")
@@ -421,7 +436,8 @@ class ProductionRollbackManager:
         self,
         version_filter: Optional[str] = None
     ) -> List[Dict[str, Any]]:
-        """Get list of available recovery points"""        
+        """Get list of available recovery points"""
+        
         try:
             recovery_points = []
             
@@ -450,7 +466,8 @@ class ProductionRollbackManager:
         source_version: str,
         target_version: str
     ) -> Dict[str, Any]:
-        """Test rollback procedure without actual execution"""        
+        """Test rollback procedure without actual execution"""
+        
         test_id = str(uuid.uuid4())
         
         logger.info(f"🧪 Testing rollback procedure: {source_version} → {target_version}")
@@ -499,9 +516,11 @@ class ProductionRollbackManager:
     # Private implementation methods
     
     async def _ensure_rollback_tables(self):
-        """Ensure rollback tracking tables exist"""        try:
+        """Ensure rollback tracking tables exist"""
+        try:
             async with self.connection_manager.get_session() as session:
-                await session.execute(text("""                    CREATE TABLE IF NOT EXISTS rollback_executions (
+                await session.execute(text("""
+                    CREATE TABLE IF NOT EXISTS rollback_executions (
                         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         execution_id UUID NOT NULL UNIQUE,
                         plan_id UUID,
@@ -522,7 +541,8 @@ class ProductionRollbackManager:
                     )
                 """))
                 
-                await session.execute(text("""                    CREATE TABLE IF NOT EXISTS recovery_points (
+                await session.execute(text("""
+                    CREATE TABLE IF NOT EXISTS recovery_points (
                         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         recovery_point_id UUID NOT NULL UNIQUE,
                         version VARCHAR(255) NOT NULL,
@@ -544,9 +564,11 @@ class ProductionRollbackManager:
             raise
     
     async def _load_rollback_history(self):
-        """Load rollback history from database"""        try:
+        """Load rollback history from database"""
+        try:
             async with self.connection_manager.get_session() as session:
-                result = await session.execute(text("""                    SELECT * FROM rollback_executions 
+                result = await session.execute(text("""
+                    SELECT * FROM rollback_executions 
                     ORDER BY start_time DESC 
                     LIMIT 50
                 """))
@@ -569,9 +591,11 @@ class ProductionRollbackManager:
             logger.warning(f"⚠️ Could not load rollback history: {e}")
     
     async def _load_recovery_points(self):
-        """Load recovery points from database"""        try:
+        """Load recovery points from database"""
+        try:
             async with self.connection_manager.get_session() as session:
-                result = await session.execute(text("""                    SELECT * FROM recovery_points 
+                result = await session.execute(text("""
+                    SELECT * FROM recovery_points 
                     WHERE expires_at IS NULL OR expires_at > NOW()
                     ORDER BY created_at DESC
                 """))
@@ -595,7 +619,8 @@ class ProductionRollbackManager:
             logger.warning(f"⚠️ Could not load recovery points: {e}")
     
     async def _start_safety_monitoring(self):
-        """Start safety monitoring systems"""        try:
+        """Start safety monitoring systems"""
+        try:
             # Start monitoring task
             monitoring_task = asyncio.create_task(self._safety_monitoring_loop())
             self._monitoring_tasks.append(monitoring_task)
@@ -606,7 +631,8 @@ class ProductionRollbackManager:
             logger.error(f"❌ Failed to start safety monitoring: {e}")
     
     async def _safety_monitoring_loop(self):
-        """Continuous safety monitoring loop"""        while True:
+        """Continuous safety monitoring loop"""
+        while True:
             try:
                 # Monitor active rollbacks
                 for execution in self.active_rollbacks.values():
@@ -621,7 +647,8 @@ class ProductionRollbackManager:
                 await asyncio.sleep(1)
     
     async def _monitor_rollback_safety(self, execution: RollbackExecution):
-        """Monitor individual rollback execution safety"""        # Check execution time limits
+        """Monitor individual rollback execution safety"""
+        # Check execution time limits
         if execution.start_time:
             duration = datetime.utcnow() - execution.start_time
             if duration.total_seconds() > (self.config.max_rollback_time_minutes * 60):
@@ -631,7 +658,8 @@ class ProductionRollbackManager:
     # Placeholder implementations for assessment methods
     
     async def _assess_backup_availability(self, version: str) -> Dict[str, Any]:
-        """Assess backup availability for target version"""        return {
+        """Assess backup availability for target version"""
+        return {
             "available": True,
             "backup_location": f"backup_{version}",
             "backup_age_hours": 2,
@@ -639,7 +667,8 @@ class ProductionRollbackManager:
         }
     
     async def _assess_data_loss_risk(self, source_version: str, target_version: str) -> Dict[str, Any]:
-        """Assess data loss risk for rollback"""        return {
+        """Assess data loss risk for rollback"""
+        return {
             "high_risk": False,
             "affected_tables": [],
             "estimated_data_loss": 0,
@@ -647,14 +676,16 @@ class ProductionRollbackManager:
         }
     
     async def _assess_dependency_impact(self, source_version: str, target_version: str) -> Dict[str, Any]:
-        """Assess dependency impact of rollback"""        return {
+        """Assess dependency impact of rollback"""
+        return {
             "impacted_systems": [],
             "breaking_changes": [],
             "compatibility_issues": []
         }
     
     async def _assess_rollback_complexity(self, source_version: str, target_version: str) -> Dict[str, Any]:
-        """Assess rollback complexity"""        return {
+        """Assess rollback complexity"""
+        return {
             "complexity_level": "medium",
             "estimated_time": 30,
             "required_steps": 5,
@@ -662,7 +693,8 @@ class ProductionRollbackManager:
         }
     
     def _determine_safety_level(self, *assessments) -> RollbackSafety:
-        """Determine overall safety level from assessments"""        # Simple logic - would be more sophisticated in production
+        """Determine overall safety level from assessments"""
+        # Simple logic - would be more sophisticated in production
         return RollbackSafety.SAFE
     
     async def _generate_rollback_recommendations(
@@ -671,7 +703,8 @@ class ProductionRollbackManager:
         target_version: str,
         assessment: Dict[str, Any]
     ) -> List[str]:
-        """Generate rollback recommendations"""        recommendations = []
+        """Generate rollback recommendations"""
+        recommendations = []
         
         if not assessment["backup_available"]:
             recommendations.append("Create backup before proceeding")
@@ -685,7 +718,8 @@ class ProductionRollbackManager:
         return recommendations
     
     async def _build_rollback_steps(self, context: RollbackContext, safety_assessment: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Build detailed rollback execution steps"""        return [
+        """Build detailed rollback execution steps"""
+        return [
             {"step": 1, "action": "Create backup", "estimated_time": 5},
             {"step": 2, "action": "Stop application services", "estimated_time": 2},
             {"step": 3, "action": "Execute rollback", "estimated_time": 15},
@@ -694,7 +728,8 @@ class ProductionRollbackManager:
         ]
     
     async def _create_verification_checkpoints(self, context: RollbackContext) -> List[Dict[str, Any]]:
-        """Create verification checkpoints for rollback"""        return [
+        """Create verification checkpoints for rollback"""
+        return [
             {"checkpoint": "backup_verified", "critical": True},
             {"checkpoint": "schema_reverted", "critical": True},
             {"checkpoint": "data_integrity_ok", "critical": True},
@@ -702,7 +737,8 @@ class ProductionRollbackManager:
         ]
     
     async def _setup_recovery_procedures(self, context: RollbackContext) -> Dict[str, Any]:
-        """Setup recovery procedures for rollback"""        return {
+        """Setup recovery procedures for rollback"""
+        return {
             "emergency_contacts": self.config.emergency_contacts,
             "escalation_procedures": ["level1", "level2", "level3"],
             "recovery_time_objective": 30,
@@ -710,7 +746,8 @@ class ProductionRollbackManager:
         }
     
     async def _calculate_resource_requirements(self, context: RollbackContext) -> Dict[str, Any]:
-        """Calculate resource requirements for rollback"""        return {
+        """Calculate resource requirements for rollback"""
+        return {
             "cpu_cores": 4,
             "memory_gb": 8,
             "disk_space_gb": 50,
@@ -718,10 +755,12 @@ class ProductionRollbackManager:
         }
     
     async def _estimate_rollback_duration(self, context: RollbackContext, steps: List[Dict[str, Any]]) -> int:
-        """Estimate total rollback duration"""        return sum(step.get("estimated_time", 0) for step in steps)
+        """Estimate total rollback duration"""
+        return sum(step.get("estimated_time", 0) for step in steps)
     
     async def _create_contingency_plans(self, context: RollbackContext) -> List[Dict[str, Any]]:
-        """Create contingency plans for rollback failures"""        return [
+        """Create contingency plans for rollback failures"""
+        return [
             {
                 "scenario": "rollback_failure",
                 "action": "restore_from_backup",
@@ -737,16 +776,20 @@ class ProductionRollbackManager:
     # Additional placeholder methods for complete implementation
     
     async def _execute_rollback_with_monitoring(self, execution: RollbackExecution, dry_run: bool):
-        """Execute rollback with comprehensive monitoring"""        pass
+        """Execute rollback with comprehensive monitoring"""
+        pass
     
     async def _execute_emergency_recovery(self, execution: RollbackExecution):
-        """Execute emergency recovery procedures"""        pass
+        """Execute emergency recovery procedures"""
+        pass
     
     async def _record_rollback_execution(self, execution: RollbackExecution):
-        """Record rollback execution in database"""        pass
+        """Record rollback execution in database"""
+        pass
     
     async def _build_status_response(self, execution: RollbackExecution, active: bool) -> Dict[str, Any]:
-        """Build comprehensive status response"""        return {
+        """Build comprehensive status response"""
+        return {
             "execution_id": execution.execution_id,
             "status": execution.status.value,
             "start_time": execution.start_time.isoformat(),
@@ -756,22 +799,28 @@ class ProductionRollbackManager:
         }
     
     async def _execute_rollback_cancellation(self, execution: RollbackExecution):
-        """Execute rollback cancellation procedures"""        pass
+        """Execute rollback cancellation procedures"""
+        pass
     
     async def _create_recovery_backup(self, version: str, recovery_point_id: str) -> str:
-        """Create backup for recovery point"""        return f"recovery_backup_{version}_{recovery_point_id}"
+        """Create backup for recovery point"""
+        return f"recovery_backup_{version}_{recovery_point_id}"
     
     async def _validate_recovery_point(self, recovery_point: RecoveryPoint) -> Dict[str, Any]:
-        """Validate recovery point integrity"""        return {"valid": True, "integrity_score": 95.0}
+        """Validate recovery point integrity"""
+        return {"valid": True, "integrity_score": 95.0}
     
     async def _record_recovery_point(self, recovery_point: RecoveryPoint):
-        """Record recovery point in database"""        pass
+        """Record recovery point in database"""
+        pass
     
     async def _analyze_test_results(self, test_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze rollback test results"""        return {"overall_score": 85.0, "issues_found": 2}
+        """Analyze rollback test results"""
+        return {"overall_score": 85.0, "issues_found": 2}
     
     async def _generate_test_recommendations(self, analysis: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on test analysis"""        return ["Consider additional verification steps", "Optimize rollback sequence"]
+        """Generate recommendations based on test analysis"""
+        return ["Consider additional verification steps", "Optimize rollback sequence"]
 
 
 # Export the main class

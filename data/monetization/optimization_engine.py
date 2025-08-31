@@ -10,7 +10,8 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: Unauthorized use, copying, or distribution of this code is strictly 
 prohibited and subject to legal action under German and international copyright law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -33,7 +34,8 @@ from .analytics_engine import AnalyticsEngine
 
 
 class OptimizationType(Enum):
-    """Types of optimization"""    CONTENT_TIMING = "content_timing"
+    """Types of optimization"""
+    CONTENT_TIMING = "content_timing"
     PRICING_STRATEGY = "pricing_strategy"
     PLATFORM_ALLOCATION = "platform_allocation"
     AUDIENCE_TARGETING = "audience_targeting"
@@ -44,14 +46,16 @@ class OptimizationType(Enum):
 
 
 class OptimizationPriority(Enum):
-    """Optimization priority levels"""    LOW = "low"
+    """Optimization priority levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class OptimizationStatus(Enum):
-    """Optimization implementation status"""    PENDING = "pending"
+    """Optimization implementation status"""
+    PENDING = "pending"
     TESTING = "testing"
     IMPLEMENTED = "implemented"
     COMPLETED = "completed"
@@ -61,7 +65,8 @@ class OptimizationStatus(Enum):
 
 @dataclass
 class OptimizationRecommendation:
-    """Optimization recommendation"""    recommendation_id: str
+    """Optimization recommendation"""
+    recommendation_id: str
     optimization_type: OptimizationType
     title: str
     description: str
@@ -78,7 +83,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class ABTestConfiguration:
-    """A/B test configuration"""    test_id: str
+    """A/B test configuration"""
+    test_id: str
     test_name: str
     optimization_type: OptimizationType
     control_group_size: float  # Percentage of traffic
@@ -92,7 +98,8 @@ class ABTestConfiguration:
 
 @dataclass
 class ABTestResult:
-    """A/B test result"""    test_id: str
+    """A/B test result"""
+    test_id: str
     status: str
     start_date: datetime
     end_date: Optional[datetime]
@@ -106,7 +113,8 @@ class ABTestResult:
 
 @dataclass
 class OptimizationStrategy:
-    """Complete optimization strategy"""    strategy_id: str
+    """Complete optimization strategy"""
+    strategy_id: str
     user_id: str
     recommendations: List[OptimizationRecommendation]
     prioritized_actions: List[str]
@@ -117,20 +125,24 @@ class OptimizationStrategy:
 
 
 class OptimizationEngine:
-    """    Professional revenue optimization engine for IA Influencer Agent platform.
+    """
+    Professional revenue optimization engine for IA Influencer Agent platform.
     
     Provides AI-powered optimization recommendations, A/B testing capabilities,
     and automated revenue enhancement strategies for content creators.
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession, redis_client: Redis,
                  analytics_engine: AnalyticsEngine):
-        """        Initialize OptimizationEngine.
+        """
+        Initialize OptimizationEngine.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
             analytics_engine: Analytics engine for data analysis
-        """        self.db_session = db_session
+        """
+        self.db_session = db_session
         self.redis = redis_client
         self.analytics_engine = analytics_engine
         self.logger = logging.getLogger(__name__)
@@ -170,14 +182,16 @@ class OptimizationEngine:
         self.scalers = {}
     
     async def generate_optimization_strategy(self, user_id: str) -> OptimizationStrategy:
-        """        Generate comprehensive optimization strategy for user.
+        """
+        Generate comprehensive optimization strategy for user.
         
         Args:
             user_id: User identifier
             
         Returns:
             Complete optimization strategy
-        """        try:
+        """
+        try:
             # Analyze current performance
             performance_data = await self._analyze_current_performance(user_id)
             
@@ -243,7 +257,8 @@ class OptimizationEngine:
             )
     
     async def optimize_content_timing(self, user_id: str, content_id: str) -> OptimizationRecommendation:
-        """        Optimize content posting timing.
+        """
+        Optimize content posting timing.
         
         Args:
             user_id: User identifier
@@ -251,7 +266,8 @@ class OptimizationEngine:
             
         Returns:
             Timing optimization recommendation
-        """        try:
+        """
+        try:
             # Analyze posting time performance
             timing_data = await self._analyze_posting_times(user_id, content_id)
             
@@ -302,14 +318,16 @@ class OptimizationEngine:
             return await self._create_baseline_timing_recommendation(user_id)
     
     async def optimize_pricing_strategy(self, user_id: str) -> OptimizationRecommendation:
-        """        Optimize pricing strategy for monetized content.
+        """
+        Optimize pricing strategy for monetized content.
         
         Args:
             user_id: User identifier
             
         Returns:
             Pricing optimization recommendation
-        """        try:
+        """
+        try:
             # Analyze current pricing performance
             pricing_data = await self._analyze_pricing_performance(user_id)
             
@@ -359,7 +377,8 @@ class OptimizationEngine:
     
     async def create_ab_test(self, user_id: str, optimization_type: OptimizationType,
                            test_parameters: Dict[str, Any]) -> ABTestConfiguration:
-        """        Create A/B test for optimization.
+        """
+        Create A/B test for optimization.
         
         Args:
             user_id: User identifier
@@ -368,7 +387,8 @@ class OptimizationEngine:
             
         Returns:
             A/B test configuration
-        """        try:
+        """
+        try:
             # Calculate required sample size
             effect_size = test_parameters.get('expected_effect_size', 0.1)
             power = test_parameters.get('statistical_power', 0.8)
@@ -406,14 +426,16 @@ class OptimizationEngine:
             raise
     
     async def analyze_ab_test_results(self, test_id: str) -> ABTestResult:
-        """        Analyze A/B test results and provide recommendations.
+        """
+        Analyze A/B test results and provide recommendations.
         
         Args:
             test_id: A/B test identifier
             
         Returns:
             A/B test analysis results
-        """        try:
+        """
+        try:
             # Get test configuration
             test_config = await self._get_ab_test_config(test_id)
             if not test_config:
@@ -468,7 +490,8 @@ class OptimizationEngine:
     
     async def optimize_with_hyperparameter_tuning(self, user_id: str,
                                                  optimization_type: OptimizationType) -> Dict[str, Any]:
-        """        Use Optuna for hyperparameter optimization.
+        """
+        Use Optuna for hyperparameter optimization.
         
         Args:
             user_id: User identifier
@@ -476,7 +499,8 @@ class OptimizationEngine:
             
         Returns:
             Optimized parameters and expected performance
-        """        try:
+        """
+        try:
             # Get historical data for optimization
             historical_data = await self._get_optimization_data(user_id, optimization_type)
             
@@ -512,7 +536,8 @@ class OptimizationEngine:
     # Private helper methods
     
     async def _analyze_current_performance(self, user_id: str) -> Dict[str, Any]:
-        """Analyze user's current performance"""        # Get revenue analytics
+        """Analyze user's current performance"""
+        # Get revenue analytics
         revenue_metrics = await self.analytics_engine.calculate_revenue_analytics(user_id, 30)
         
         # Get performance trends
@@ -530,7 +555,8 @@ class OptimizationEngine:
     
     async def _identify_optimization_opportunities(self, user_id: str,
                                                  performance_data: Dict) -> List[Dict]:
-        """Identify optimization opportunities"""        opportunities = []
+        """Identify optimization opportunities"""
+        opportunities = []
         
         # Analyze each optimization type
         for opt_type in OptimizationType:
@@ -544,7 +570,8 @@ class OptimizationEngine:
     
     async def _create_optimization_recommendation(self, user_id: str,
                                                 opportunity: Dict) -> OptimizationRecommendation:
-        """Create specific optimization recommendation"""        opt_type = opportunity['optimization_type']
+        """Create specific optimization recommendation"""
+        opt_type = opportunity['optimization_type']
         
         if opt_type == OptimizationType.CONTENT_TIMING:
             return await self.optimize_content_timing(user_id, opportunity.get('content_id', ''))
@@ -569,7 +596,8 @@ class OptimizationEngine:
             )
     
     async def _prioritize_recommendations(self, recommendations: List[OptimizationRecommendation]) -> List[OptimizationRecommendation]:
-        """Prioritize recommendations by impact and feasibility"""        def priority_score(rec):
+        """Prioritize recommendations by impact and feasibility"""
+        def priority_score(rec):
             impact_score = float(rec.expected_impact) * rec.confidence_score
             effort_multiplier = {'low': 1.0, 'medium': 0.8, 'high': 0.6}
             return impact_score * effort_multiplier.get(rec.implementation_effort, 0.8)
@@ -577,7 +605,8 @@ class OptimizationEngine:
         return sorted(recommendations, key=priority_score, reverse=True)
     
     async def _analyze_posting_times(self, user_id: str, content_id: str) -> List[Dict]:
-        """Analyze posting time performance"""        # Implementation would analyze historical posting time data
+        """Analyze posting time performance"""
+        # Implementation would analyze historical posting time data
         # Placeholder implementation
         timing_data = []
         
@@ -594,7 +623,8 @@ class OptimizationEngine:
         return timing_data
     
     async def _find_optimal_posting_times(self, timing_data: List[Dict]) -> Dict[str, Any]:
-        """Find optimal posting times from timing data"""        # Analyze by hour
+        """Find optimal posting times from timing data"""
+        # Analyze by hour
         hourly_performance = {}
         for data in timing_data:
             hour = data['hour']
@@ -629,14 +659,16 @@ class OptimizationEngine:
         }
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
-        """Get data from cache"""        try:
+        """Get data from cache"""
+        try:
             cached_data = await self.redis.get(key)
             return json.loads(cached_data) if cached_data else None
         except:
             return None
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
-        """Save data to cache"""        try:
+        """Save data to cache"""
+        try:
             ttl = ttl or self.cache_ttl
             await self.redis.setex(key, ttl, json.dumps(data, default=str))
         except Exception as e:

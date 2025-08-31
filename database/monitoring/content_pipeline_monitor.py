@@ -12,7 +12,8 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute violation sera poursuivie selon les lois en vigueur.
-"""import asyncio
+"""
+import asyncio
 import time
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -33,7 +34,8 @@ from ...ai.analysis.content_pipeline_ai import ContentPipelineAnalyzer
 
 
 class ContentType(Enum):
-    """Content type classification for IA Influencer Agent"""    AUDIO = "audio"          # Music files, podcasts, voice recordings
+    """Content type classification for IA Influencer Agent"""
+    AUDIO = "audio"          # Music files, podcasts, voice recordings
     VIDEO = "video"          # Video content, streams, recordings  
     IMAGE = "image"          # Photos, graphics, artwork
     TEXT = "text"            # Blog posts, social media content
@@ -42,7 +44,8 @@ class ContentType(Enum):
 
 
 class PipelineStage(Enum):
-    """Content processing pipeline stages"""    UPLOAD = "upload"                    # Initial content upload
+    """Content processing pipeline stages"""
+    UPLOAD = "upload"                    # Initial content upload
     VALIDATION = "validation"            # Content validation and preprocessing
     FINGERPRINTING = "fingerprinting"    # AI fingerprint generation
     AI_ANALYSIS = "ai_analysis"         # AI content analysis and tagging
@@ -55,7 +58,8 @@ class PipelineStage(Enum):
 
 
 class PipelineStatus(Enum):
-    """Pipeline execution status"""    PENDING = "pending"
+    """Pipeline execution status"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -65,7 +69,8 @@ class PipelineStatus(Enum):
 
 @dataclass
 class ContentProcessingMetrics:
-    """Metrics for content processing pipeline"""    content_id: str
+    """Metrics for content processing pipeline"""
+    content_id: str
     content_type: ContentType
     creator_id: str
     pipeline_stage: PipelineStage
@@ -80,7 +85,8 @@ class ContentProcessingMetrics:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for JSON serialization"""        data = {
+        """Convert to dictionary for JSON serialization"""
+        data = {
             'content_id': self.content_id,
             'content_type': self.content_type.value,
             'creator_id': self.creator_id,
@@ -100,7 +106,8 @@ class ContentProcessingMetrics:
 
 @dataclass
 class PipelinePerformanceSnapshot:
-    """Pipeline performance snapshot"""    timestamp: datetime
+    """Pipeline performance snapshot"""
+    timestamp: datetime
     active_content_count: int
     pending_content_count: int
     processing_rate_per_minute: float
@@ -115,7 +122,8 @@ class PipelinePerformanceSnapshot:
     creator_satisfaction_score: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        data = {
+        """Convert to dictionary"""
+        data = {
             'timestamp': self.timestamp.isoformat(),
             'active_content_count': self.active_content_count,
             'pending_content_count': self.pending_content_count,
@@ -134,7 +142,8 @@ class PipelinePerformanceSnapshot:
 
 
 class ContentPipelineMonitor:
-    """    Advanced content pipeline monitoring for IA Influencer Agent platform.
+    """
+    Advanced content pipeline monitoring for IA Influencer Agent platform.
     
     Monitors multi-format content processing including:
     - Audio fingerprinting and analysis
@@ -144,7 +153,8 @@ class ContentPipelineMonitor:
     - AI-powered content enhancement
     - Creator collaboration workflows
     - Monetization pipeline performance
-    """    
+    """
+    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
@@ -222,7 +232,8 @@ class ContentPipelineMonitor:
     
     async def start_pipeline_monitoring(self, content_id: str, content_type: ContentType, 
                                       creator_id: str, metadata: Dict[str, Any] = None) -> None:
-        """Start monitoring a new content processing pipeline"""        try:
+        """Start monitoring a new content processing pipeline"""
+        try:
             pipeline_metrics = ContentProcessingMetrics(
                 content_id=content_id,
                 content_type=content_type,
@@ -251,7 +262,8 @@ class ContentPipelineMonitor:
     async def update_pipeline_stage(self, content_id: str, stage: PipelineStage, 
                                   status: PipelineStatus, quality_score: float = 0.0,
                                   ai_confidence: float = 0.0, error_message: str = None) -> None:
-        """Update pipeline stage and status"""        try:
+        """Update pipeline stage and status"""
+        try:
             if content_id not in self.active_pipelines:
                 self.logger.warning(f"Pipeline {content_id} not found in active pipelines")
                 return
@@ -290,7 +302,8 @@ class ContentPipelineMonitor:
     
     async def complete_pipeline(self, content_id: str, final_quality_score: float = 0.0,
                               monetization_data: Dict[str, Any] = None) -> None:
-        """Complete pipeline monitoring and archive metrics"""        try:
+        """Complete pipeline monitoring and archive metrics"""
+        try:
             if content_id not in self.active_pipelines:
                 self.logger.warning(f"Pipeline {content_id} not found in active pipelines")
                 return
@@ -325,7 +338,8 @@ class ContentPipelineMonitor:
             raise
     
     async def _check_pipeline_performance(self, pipeline: ContentProcessingMetrics) -> None:
-        """Check pipeline performance against thresholds"""        try:
+        """Check pipeline performance against thresholds"""
+        try:
             content_config = self.content_configs.get(pipeline.content_type, {})
             
             # Check processing time thresholds
@@ -357,7 +371,8 @@ class ContentPipelineMonitor:
             self.logger.error(f"Error checking pipeline performance: {e}")
     
     async def _send_performance_alert(self, pipeline: ContentProcessingMetrics, message: str) -> None:
-        """Send performance alert for pipeline issues"""        try:
+        """Send performance alert for pipeline issues"""
+        try:
             alert_data = {
                 'alert_type': 'pipeline_performance',
                 'content_id': pipeline.content_id,
@@ -381,9 +396,11 @@ class ContentPipelineMonitor:
             self.logger.error(f"Error sending performance alert: {e}")
     
     async def _store_pipeline_metrics(self, pipeline: ContentProcessingMetrics) -> None:
-        """Store pipeline metrics in database for historical analysis"""        try:
+        """Store pipeline metrics in database for historical analysis"""
+        try:
             async with get_database_session() as session:
-                await session.execute(text("""                    INSERT INTO content_pipeline_metrics 
+                await session.execute(text("""
+                    INSERT INTO content_pipeline_metrics 
                     (content_id, content_type, creator_id, pipeline_stage, status,
                      start_time, end_time, processing_duration, file_size_mb,
                      quality_score, ai_confidence, error_message, metadata)
@@ -411,7 +428,8 @@ class ContentPipelineMonitor:
             self.logger.error(f"Error storing pipeline metrics: {e}")
     
     async def _analyze_pipeline_performance(self, pipeline: ContentProcessingMetrics) -> None:
-        """Run AI analysis on pipeline performance"""        try:
+        """Run AI analysis on pipeline performance"""
+        try:
             # Analyze pipeline efficiency
             efficiency_score = await self.ai_analyzer.analyze_pipeline_efficiency(pipeline.to_dict())
             
@@ -438,7 +456,8 @@ class ContentPipelineMonitor:
             self.logger.error(f"Error analyzing pipeline performance: {e}")
     
     async def get_pipeline_analytics(self, hours: int = 24) -> Dict[str, Any]:
-        """Get comprehensive pipeline analytics"""        try:
+        """Get comprehensive pipeline analytics"""
+        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             
             # Get recent pipelines
@@ -483,7 +502,8 @@ class ContentPipelineMonitor:
             return {"error": str(e)}
     
     def _calculate_type_analytics(self, pipelines: List[ContentProcessingMetrics]) -> Dict[str, Any]:
-        """Calculate analytics for specific content type"""        processing_times = [p.processing_duration for p in pipelines if p.processing_duration]
+        """Calculate analytics for specific content type"""
+        processing_times = [p.processing_duration for p in pipelines if p.processing_duration]
         quality_scores = [p.quality_score for p in pipelines if p.quality_score > 0]
         ai_confidences = [p.ai_confidence for p in pipelines if p.ai_confidence > 0]
         
@@ -501,7 +521,8 @@ class ContentPipelineMonitor:
         }
     
     async def get_creator_analytics(self, creator_id: str, days: int = 7) -> Dict[str, Any]:
-        """Get analytics for specific creator"""        try:
+        """Get analytics for specific creator"""
+        try:
             cutoff_time = datetime.utcnow() - timedelta(days=days)
             
             # Get creator's pipelines
@@ -543,7 +564,8 @@ class ContentPipelineMonitor:
             return {"error": str(e)}
     
     async def get_real_time_pipeline_status(self) -> Dict[str, Any]:
-        """Get real-time status of all active pipelines"""        try:
+        """Get real-time status of all active pipelines"""
+        try:
             active_status = {}
             for content_id, pipeline in self.active_pipelines.items():
                 active_status[content_id] = {
@@ -582,4 +604,5 @@ class ContentPipelineMonitor:
 
 
 async def create_content_pipeline_monitor(settings: Settings) -> ContentPipelineMonitor:
-    """Factory function to create content pipeline monitor"""    return ContentPipelineMonitor(settings)
+    """Factory function to create content pipeline monitor"""
+    return ContentPipelineMonitor(settings)

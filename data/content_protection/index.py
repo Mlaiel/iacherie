@@ -12,7 +12,8 @@ Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, modification ou distribution sans autorisation 
 écrite explicite de l'auteur est strictement interdite et constitue une violation 
 du droit d'auteur. Les contrevenants s'exposent à des poursuites judiciaires.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -63,7 +64,8 @@ from .revenue_tracker import (
 
 @dataclass
 class ServiceConfig:
-    """Unified service configuration"""    db_session: AsyncSession
+    """Unified service configuration"""
+    db_session: AsyncSession
     redis_client: Redis
     api_keys: Dict[str, str]
     ml_models_path: str
@@ -75,7 +77,8 @@ class ServiceConfig:
 
 @dataclass
 class ProtectionSummary:
-    """Comprehensive protection status summary"""    user_id: str
+    """Comprehensive protection status summary"""
+    user_id: str
     total_content_protected: int
     active_violations: int
     resolved_violations: int
@@ -87,17 +90,21 @@ class ProtectionSummary:
 
 
 class ContentProtectionService:
-    """    Unified Content Protection Service.
+    """
+    Unified Content Protection Service.
     
     Orchestrates all content protection components for comprehensive
     multi-format content protection across platforms.
-    """    
+    """
+    
     def __init__(self, config: ServiceConfig):
-        """        Initialize ContentProtectionService.
+        """
+        Initialize ContentProtectionService.
         
         Args:
             config: Service configuration
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize core managers
@@ -140,11 +147,13 @@ class ContentProtectionService:
         self.monitoring_tasks: List[asyncio.Task] = []
     
     async def initialize(self) -> bool:
-        """        Initialize the content protection service.
+        """
+        Initialize the content protection service.
         
         Returns:
             Initialization success status
-        """        try:
+        """
+        try:
             self.logger.info("Initializing Content Protection Service...")
             
             # Initialize fingerprinting engine
@@ -166,7 +175,8 @@ class ContentProtectionService:
             return False
     
     async def shutdown(self):
-        """Shutdown the content protection service"""        try:
+        """Shutdown the content protection service"""
+        try:
             self.logger.info("Shutting down Content Protection Service...")
             
             # Stop monitoring tasks
@@ -184,7 +194,8 @@ class ContentProtectionService:
     
     async def protect_content(self, user_id: str, content_data: Dict[str, Any],
                             protection_config: Optional[ProtectionConfig] = None) -> Dict[str, Any]:
-        """        Comprehensive content protection setup.
+        """
+        Comprehensive content protection setup.
         
         Args:
             user_id: User identifier
@@ -193,7 +204,8 @@ class ContentProtectionService:
             
         Returns:
             Protection setup result
-        """        try:
+        """
+        try:
             content_id = content_data.get('content_id', str(uuid.uuid4()))
             content_type = ContentType(content_data.get('content_type', 'audio'))
             
@@ -258,14 +270,16 @@ class ContentProtectionService:
             return {'success': False, 'error': str(e)}
     
     async def scan_and_respond(self, content_id: str) -> Dict[str, Any]:
-        """        Comprehensive violation scan and automated response.
+        """
+        Comprehensive violation scan and automated response.
         
         Args:
             content_id: Content identifier to scan for
             
         Returns:
             Scan and response results
-        """        try:
+        """
+        try:
             # Step 1: Scan for violations
             violations = await self.violation_detector.scan_for_violations(content_id)
             
@@ -332,14 +346,16 @@ class ContentProtectionService:
             return {'error': str(e)}
     
     async def get_comprehensive_status(self, user_id: str) -> ProtectionSummary:
-        """        Get comprehensive protection status for user.
+        """
+        Get comprehensive protection status for user.
         
         Args:
             user_id: User identifier
             
         Returns:
             Protection status summary
-        """        try:
+        """
+        try:
             # Get protected content count
             protected_content = await self._get_protected_content_count(user_id)
             
@@ -376,7 +392,8 @@ class ContentProtectionService:
     async def generate_protection_report(self, user_id: str, 
                                        report_type: str = "comprehensive",
                                        period_days: int = 30) -> Dict[str, Any]:
-        """        Generate comprehensive protection report.
+        """
+        Generate comprehensive protection report.
         
         Args:
             user_id: User identifier
@@ -385,7 +402,8 @@ class ContentProtectionService:
             
         Returns:
             Generated report data
-        """        try:
+        """
+        try:
             # Generate analytics report
             analytics_report = await self.protection_analytics.generate_comprehensive_report(
                 user_id, ReportType.EXECUTIVE_SUMMARY, period_days
@@ -439,7 +457,8 @@ class ContentProtectionService:
     # Private helper methods
     
     async def _start_realtime_monitoring(self):
-        """Start real-time monitoring tasks"""        try:
+        """Start real-time monitoring tasks"""
+        try:
             # Start violation monitoring task
             violation_task = asyncio.create_task(self._realtime_violation_monitor())
             self.monitoring_tasks.append(violation_task)
@@ -454,7 +473,8 @@ class ContentProtectionService:
             self.logger.error(f"Error starting real-time monitoring: {str(e)}")
     
     async def _realtime_violation_monitor(self):
-        """Real-time violation monitoring loop"""        while True:
+        """Real-time violation monitoring loop"""
+        while True:
             try:
                 # Get active protected content
                 protected_content = await self._get_all_protected_content()
@@ -484,7 +504,8 @@ class ContentProtectionService:
                 await asyncio.sleep(300)  # 5 minutes before retry
     
     async def _realtime_revenue_monitor(self):
-        """Real-time revenue monitoring loop"""        while True:
+        """Real-time revenue monitoring loop"""
+        while True:
             try:
                 # Get active users
                 active_users = await self._get_active_users()
@@ -513,7 +534,8 @@ class ContentProtectionService:
                 await asyncio.sleep(1800)  # 30 minutes before retry
     
     def _get_default_protection_config(self, content_id: str, content_type: ContentType) -> ProtectionConfig:
-        """Get default protection configuration"""        return ProtectionConfig(
+        """Get default protection configuration"""
+        return ProtectionConfig(
             content_id=content_id,
             protection_level=ProtectionLevel.STANDARD,
             enable_automated_takedown=self.config.auto_takedown_enabled,
@@ -525,21 +547,25 @@ class ContentProtectionService:
         )
     
     def _batch_content(self, content_list: List[str], batch_size: int) -> List[List[str]]:
-        """Batch content list into smaller chunks"""        for i in range(0, len(content_list), batch_size):
+        """Batch content list into smaller chunks"""
+        for i in range(0, len(content_list), batch_size):
             yield content_list[i:i + batch_size]
     
     async def _handle_realtime_violations(self, content_id: str, violations: List[ViolationAlert]):
-        """Handle violations detected in real-time"""        for violation in violations:
+        """Handle violations detected in real-time"""
+        for violation in violations:
             if violation.severity in [ViolationSeverity.CRITICAL, ViolationSeverity.HIGH]:
                 # Immediate response for critical violations
                 await self.scan_and_respond(content_id)
     
     async def _get_protected_content_count(self, user_id: str) -> int:
-        """Get count of protected content for user"""        # Implementation would query database
+        """Get count of protected content for user"""
+        # Implementation would query database
         return 15  # Placeholder
     
     async def _get_user_violation_statistics(self, user_id: str) -> Dict[str, Any]:
-        """Get violation statistics for user"""        # Implementation would query database
+        """Get violation statistics for user"""
+        # Implementation would query database
         return {
             'active_violations': 3,
             'resolved_violations': 12,
@@ -547,11 +573,13 @@ class ContentProtectionService:
         }
     
     async def _get_user_takedown_statistics(self, user_id: str) -> Dict[str, Any]:
-        """Get takedown statistics for user"""        # Implementation would query database
+        """Get takedown statistics for user"""
+        # Implementation would query database
         return {'pending_takedowns': 2}
     
     async def _get_next_scan_schedule(self, user_id: str) -> Dict[str, datetime]:
-        """Get next scan schedule for user"""        # Implementation would query scheduled scans
+        """Get next scan schedule for user"""
+        # Implementation would query scheduled scans
         return {
             'last_scan': datetime.utcnow() - timedelta(hours=2),
             'next_scan': datetime.utcnow() + timedelta(hours=22)
@@ -559,7 +587,8 @@ class ContentProtectionService:
     
     async def _generate_recommendations(self, user_id: str, analytics_report: Any, 
                                       revenue_analytics: RevenueAnalytics) -> List[Dict[str, str]]:
-        """Generate protection recommendations"""        recommendations = []
+        """Generate protection recommendations"""
+        recommendations = []
         
         # Analyze protection effectiveness
         if revenue_analytics.protection_roi < 2.0:
@@ -591,25 +620,29 @@ class ContentProtectionService:
         return recommendations
     
     async def _get_all_protected_content(self) -> List[str]:
-        """Get all protected content IDs"""        # Implementation would query database
+        """Get all protected content IDs"""
+        # Implementation would query database
         return ['content_1', 'content_2', 'content_3']
     
     async def _get_active_users(self) -> List[str]:
-        """Get active user IDs"""        # Implementation would query database
+        """Get active user IDs"""
+        # Implementation would query database
         return ['user_1', 'user_2', 'user_3']
 
 
 # Convenience functions for easy service setup
 
 async def initialize_protection_service(config: ServiceConfig) -> ContentProtectionService:
-    """    Initialize and configure content protection service.
+    """
+    Initialize and configure content protection service.
     
     Args:
         config: Service configuration
         
     Returns:
         Initialized content protection service
-    """    service = ContentProtectionService(config)
+    """
+    service = ContentProtectionService(config)
     success = await service.initialize()
     
     if not success:
@@ -620,7 +653,8 @@ async def initialize_protection_service(config: ServiceConfig) -> ContentProtect
 
 async def quick_protection_setup(user_id: str, content_data: Dict[str, Any],
                                service: ContentProtectionService) -> Dict[str, Any]:
-    """    Quick setup for content protection.
+    """
+    Quick setup for content protection.
     
     Args:
         user_id: User identifier
@@ -629,7 +663,8 @@ async def quick_protection_setup(user_id: str, content_data: Dict[str, Any],
         
     Returns:
         Protection setup result
-    """    return await service.protect_content(user_id, content_data)
+    """
+    return await service.protect_content(user_id, content_data)
 
 import asyncio
 import logging
@@ -694,18 +729,22 @@ from .protection_analytics import (
 
 
 class ContentProtectionService:
-    """    Unified Content Protection Service.
+    """
+    Unified Content Protection Service.
     
     Orchestrates all content protection components and provides
     a simplified interface for comprehensive content protection.
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession, redis_client: Redis):
-        """        Initialize ContentProtectionService.
+        """
+        Initialize ContentProtectionService.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
-        """        self.db_session = db_session
+        """
+        self.db_session = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
         
@@ -720,7 +759,8 @@ class ContentProtectionService:
     
     async def setup_complete_protection(self, content_id: str, user_id: str,
                                       protection_config: Dict[str, Any]) -> Dict[str, Any]:
-        """        Set up complete content protection workflow.
+        """
+        Set up complete content protection workflow.
         
         Args:
             content_id: Content identifier
@@ -729,7 +769,8 @@ class ContentProtectionService:
             
         Returns:
             Setup results and status
-        """        try:
+        """
+        try:
             results = {
                 'content_id': content_id,
                 'user_id': user_id,
@@ -822,14 +863,16 @@ class ContentProtectionService:
             return results
     
     async def get_protection_dashboard(self, user_id: str) -> Dict[str, Any]:
-        """        Get comprehensive protection dashboard for user.
+        """
+        Get comprehensive protection dashboard for user.
         
         Args:
             user_id: User identifier
             
         Returns:
             Complete protection dashboard data
-        """        try:
+        """
+        try:
             dashboard = {
                 'user_id': user_id,
                 'generated_at': datetime.utcnow().isoformat(),
@@ -865,14 +908,16 @@ class ContentProtectionService:
             return {'error': str(e), 'user_id': user_id}
     
     async def handle_violation_workflow(self, violation_data: Dict[str, Any]) -> Dict[str, Any]:
-        """        Handle complete violation detection and response workflow.
+        """
+        Handle complete violation detection and response workflow.
         
         Args:
             violation_data: Violation detection data
             
         Returns:
             Workflow execution results
-        """        try:
+        """
+        try:
             workflow_results = {
                 'violation_id': violation_data.get('violation_id'),
                 'content_id': violation_data.get('content_id'),
@@ -951,7 +996,8 @@ class ContentProtectionService:
     
     async def generate_comprehensive_report(self, user_id: str, 
                                           report_type: str = "monthly") -> Dict[str, Any]:
-        """        Generate comprehensive protection report across all components.
+        """
+        Generate comprehensive protection report across all components.
         
         Args:
             user_id: User identifier
@@ -959,7 +1005,8 @@ class ContentProtectionService:
             
         Returns:
             Comprehensive protection report
-        """        try:
+        """
+        try:
             period_days = {
                 'daily': 1,
                 'weekly': 7,
@@ -1015,7 +1062,8 @@ class ContentProtectionService:
 
 async def initialize_protection_service(db_session: AsyncSession, 
                                        redis_client: Redis) -> ContentProtectionService:
-    """    Initialize and return a ContentProtectionService instance.
+    """
+    Initialize and return a ContentProtectionService instance.
     
     Args:
         db_session: Async database session
@@ -1023,13 +1071,15 @@ async def initialize_protection_service(db_session: AsyncSession,
         
     Returns:
         Initialized ContentProtectionService
-    """    return ContentProtectionService(db_session, redis_client)
+    """
+    return ContentProtectionService(db_session, redis_client)
 
 
 async def quick_protection_setup(service: ContentProtectionService,
                                 content_id: str, user_id: str,
                                 protection_level: str = "premium") -> Dict[str, Any]:
-    """    Quick setup for standard content protection.
+    """
+    Quick setup for standard content protection.
     
     Args:
         service: ContentProtectionService instance
@@ -1039,7 +1089,8 @@ async def quick_protection_setup(service: ContentProtectionService,
         
     Returns:
         Setup results
-    """    config = {
+    """
+    config = {
         'protection_level': protection_level,
         'enable_protection': True,
         'enable_detection': True,

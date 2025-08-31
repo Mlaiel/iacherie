@@ -7,7 +7,8 @@ alliances between content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 Warning: Unauthorized use, reproduction, or distribution of this code is strictly prohibited.
-"""import logging
+"""
+import logging
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any, Set
 from dataclasses import dataclass
@@ -25,7 +26,8 @@ from .engine import CreatorProfile, MatchResult
 
 
 class RecommendationType(Enum):
-    """Types of collaboration recommendations"""    CONTENT_COLLABORATION = "content_collaboration"
+    """Types of collaboration recommendations"""
+    CONTENT_COLLABORATION = "content_collaboration"
     CROSS_PROMOTION = "cross_promotion"
     JOINT_CAMPAIGN = "joint_campaign"
     SKILL_EXCHANGE = "skill_exchange"
@@ -36,7 +38,8 @@ class RecommendationType(Enum):
 
 
 class CollaborationFormat(Enum):
-    """Collaboration format options"""    DUET_SONG = "duet_song"
+    """Collaboration format options"""
+    DUET_SONG = "duet_song"
     REMIX_COLLABORATION = "remix_collaboration"
     JOINT_VIDEO = "joint_video"
     PODCAST_GUEST = "podcast_guest"
@@ -50,7 +53,8 @@ class CollaborationFormat(Enum):
 
 @dataclass
 class RecommendationContext:
-    """Context for generating recommendations"""    creator_id: int
+    """Context for generating recommendations"""
+    creator_id: int
     goals: List[str]
     preferences: Dict[str, Any]
     constraints: Dict[str, Any]
@@ -62,7 +66,8 @@ class RecommendationContext:
 
 @dataclass
 class CollaborationRecommendation:
-    """Collaboration recommendation structure"""    recommendation_id: str
+    """Collaboration recommendation structure"""
+    recommendation_id: str
     target_creator_id: int
     recommendation_type: RecommendationType
     collaboration_format: CollaborationFormat
@@ -82,7 +87,8 @@ class CollaborationRecommendation:
 
 @dataclass
 class RecommendationBundle:
-    """Bundle of related recommendations"""    bundle_id: str
+    """Bundle of related recommendations"""
+    bundle_id: str
     theme: str
     recommendations: List[CollaborationRecommendation]
     synergy_score: float
@@ -93,12 +99,14 @@ class RecommendationBundle:
 
 
 class RecommendationEngine:
-    """    Intelligent recommendation engine for content creator collaborations
+    """
+    Intelligent recommendation engine for content creator collaborations
     
     This class implements advanced algorithms to generate personalized
     collaboration recommendations using machine learning models,
     collaborative filtering, and content-based recommendation techniques.
-    """    
+    """
+    
     def __init__(
         self,
         cache_manager: CacheManager,
@@ -135,7 +143,8 @@ class RecommendationEngine:
         }
     
     def _initialize_models(self) -> None:
-        """Initialize ML models for recommendation generation"""        try:
+        """Initialize ML models for recommendation generation"""
+        try:
             # Initialize collaborative filtering model
             self.collaborative_model = NearestNeighbors(
                 n_neighbors=20,
@@ -165,7 +174,8 @@ class RecommendationEngine:
         limit: int = 10,
         recommendation_types: Optional[List[RecommendationType]] = None
     ) -> List[CollaborationRecommendation]:
-        """        Generate personalized collaboration recommendations
+        """
+        Generate personalized collaboration recommendations
         
         Args:
             context: Recommendation context with creator preferences
@@ -174,7 +184,8 @@ class RecommendationEngine:
             
         Returns:
             List of personalized collaboration recommendations
-        """        cache_key = f"recommendations:{context.creator_id}:{limit}:{hash(str(recommendation_types))}"
+        """
+        cache_key = f"recommendations:{context.creator_id}:{limit}:{hash(str(recommendation_types))}"
         
         # Check cache first
         cached_recommendations = await self.cache_manager.get(cache_key)
@@ -243,7 +254,8 @@ class RecommendationEngine:
         context: RecommendationContext,
         recommendation_type: RecommendationType
     ) -> List[CollaborationRecommendation]:
-        """Generate recommendations for a specific type"""        try:
+        """Generate recommendations for a specific type"""
+        try:
             if recommendation_type == RecommendationType.CONTENT_COLLABORATION:
                 return await self._generate_content_collaboration_recommendations(
                     creator_profile, context
@@ -297,7 +309,8 @@ class RecommendationEngine:
         creator_profile: CreatorProfile,
         context: RecommendationContext
     ) -> List[CollaborationRecommendation]:
-        """Generate content collaboration recommendations"""        recommendations = []
+        """Generate content collaboration recommendations"""
+        recommendations = []
         
         try:
             # Find creators with complementary content styles
@@ -361,7 +374,8 @@ class RecommendationEngine:
         creator_profile: CreatorProfile,
         context: RecommendationContext
     ) -> List[CollaborationRecommendation]:
-        """Generate cross-promotion recommendations"""        recommendations = []
+        """Generate cross-promotion recommendations"""
+        recommendations = []
         
         try:
             # Find creators with complementary audiences
@@ -410,7 +424,8 @@ class RecommendationEngine:
         creator_profile: CreatorProfile,
         context: RecommendationContext
     ) -> List[CollaborationRecommendation]:
-        """Generate joint campaign recommendations"""        # Implementation for joint marketing campaigns
+        """Generate joint campaign recommendations"""
+        # Implementation for joint marketing campaigns
         return []
     
     async def _generate_skill_exchange_recommendations(
@@ -418,7 +433,8 @@ class RecommendationEngine:
         creator_profile: CreatorProfile,
         context: RecommendationContext
     ) -> List[CollaborationRecommendation]:
-        """Generate skill exchange recommendations"""        # Implementation for skill-based collaborations
+        """Generate skill exchange recommendations"""
+        # Implementation for skill-based collaborations
         return []
     
     async def _generate_mentorship_recommendations(
@@ -426,7 +442,8 @@ class RecommendationEngine:
         creator_profile: CreatorProfile,
         context: RecommendationContext
     ) -> List[CollaborationRecommendation]:
-        """Generate mentorship recommendations"""        # Implementation for mentorship opportunities
+        """Generate mentorship recommendations"""
+        # Implementation for mentorship opportunities
         return []
     
     async def _generate_network_expansion_recommendations(
@@ -434,7 +451,8 @@ class RecommendationEngine:
         creator_profile: CreatorProfile,
         context: RecommendationContext
     ) -> List[CollaborationRecommendation]:
-        """Generate network expansion recommendations"""        # Implementation for network building
+        """Generate network expansion recommendations"""
+        # Implementation for network building
         return []
     
     async def _generate_brand_partnership_recommendations(
@@ -442,7 +460,8 @@ class RecommendationEngine:
         creator_profile: CreatorProfile,
         context: RecommendationContext
     ) -> List[CollaborationRecommendation]:
-        """Generate brand partnership recommendations"""        # Implementation for brand collaborations
+        """Generate brand partnership recommendations"""
+        # Implementation for brand collaborations
         return []
     
     async def _generate_creative_challenge_recommendations(
@@ -450,7 +469,8 @@ class RecommendationEngine:
         creator_profile: CreatorProfile,
         context: RecommendationContext
     ) -> List[CollaborationRecommendation]:
-        """Generate creative challenge recommendations"""        # Implementation for creative challenges
+        """Generate creative challenge recommendations"""
+        # Implementation for creative challenges
         return []
     
     async def _score_recommendations(
@@ -458,7 +478,8 @@ class RecommendationEngine:
         recommendations: List[CollaborationRecommendation],
         context: RecommendationContext
     ) -> List[CollaborationRecommendation]:
-        """Score and prioritize recommendations"""        try:
+        """Score and prioritize recommendations"""
+        try:
             for recommendation in recommendations:
                 # Calculate priority score based on multiple factors
                 priority_score = (
@@ -482,7 +503,8 @@ class RecommendationEngine:
         recommendations: List[CollaborationRecommendation],
         context: RecommendationContext
     ) -> List[CollaborationRecommendation]:
-        """Apply quality and diversity filters to recommendations"""        try:
+        """Apply quality and diversity filters to recommendations"""
+        try:
             # Remove low-quality recommendations
             quality_filtered = [
                 rec for rec in recommendations
@@ -505,7 +527,8 @@ class RecommendationEngine:
         self,
         recommendations: List[CollaborationRecommendation]
     ) -> List[CollaborationRecommendation]:
-        """Ensure diversity in recommendation types and targets"""        # Group by type and target to ensure diversity
+        """Ensure diversity in recommendation types and targets"""
+        # Group by type and target to ensure diversity
         type_counts = {}
         target_counts = {}
         filtered_recommendations = []
@@ -529,7 +552,8 @@ class RecommendationEngine:
         recommendations: List[CollaborationRecommendation],
         context: RecommendationContext
     ) -> List[CollaborationRecommendation]:
-        """Filter recommendations based on user preferences"""        # Apply user-specific filters based on context preferences
+        """Filter recommendations based on user preferences"""
+        # Apply user-specific filters based on context preferences
         filtered = []
         
         for rec in recommendations:
@@ -548,7 +572,8 @@ class RecommendationEngine:
         context: RecommendationContext,
         limit: int = 5
     ) -> List[RecommendationBundle]:
-        """Generate bundles of synergistic recommendations"""        try:
+        """Generate bundles of synergistic recommendations"""
+        try:
             # Get individual recommendations
             individual_recommendations = await self.generate_recommendations(
                 context, limit=20
@@ -572,7 +597,8 @@ class RecommendationEngine:
     # Helper methods for recommendation generation
     
     async def _get_creator_profile(self, creator_id: int) -> Optional[CreatorProfile]:
-        """Get creator profile for recommendation generation"""        # Implementation would fetch creator data
+        """Get creator profile for recommendation generation"""
+        # Implementation would fetch creator data
         return None
     
     async def _find_content_compatible_creators(
@@ -580,7 +606,8 @@ class RecommendationEngine:
         creator_profile: CreatorProfile,
         context: RecommendationContext
     ) -> List[CreatorProfile]:
-        """Find creators with compatible content styles"""        # Implementation for content compatibility search
+        """Find creators with compatible content styles"""
+        # Implementation for content compatibility search
         return []
     
     async def _find_audience_complementary_creators(
@@ -588,7 +615,8 @@ class RecommendationEngine:
         creator_profile: CreatorProfile,
         context: RecommendationContext
     ) -> List[CreatorProfile]:
-        """Find creators with complementary audiences"""        # Implementation for audience complementarity search
+        """Find creators with complementary audiences"""
+        # Implementation for audience complementarity search
         return []
     
     def _determine_collaboration_format(
@@ -596,7 +624,8 @@ class RecommendationEngine:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> CollaborationFormat:
-        """Determine optimal collaboration format"""        # Logic to determine best collaboration format
+        """Determine optimal collaboration format"""
+        # Logic to determine best collaboration format
         return CollaborationFormat.JOINT_VIDEO
     
     async def _predict_collaboration_success(
@@ -605,7 +634,8 @@ class RecommendationEngine:
         creator_b: CreatorProfile,
         collaboration_format: CollaborationFormat
     ) -> float:
-        """Predict collaboration success probability using ML"""        # Use trained model to predict success
+        """Predict collaboration success probability using ML"""
+        # Use trained model to predict success
         return 0.75
     
     def _calculate_collaboration_benefits(
@@ -614,7 +644,8 @@ class RecommendationEngine:
         creator_b: CreatorProfile,
         collaboration_format: CollaborationFormat
     ) -> Dict[str, Any]:
-        """Calculate expected benefits of collaboration"""        return {
+        """Calculate expected benefits of collaboration"""
+        return {
             'audience_growth': 'Estimated 15-25% audience expansion',
             'engagement_boost': 'Expected 20% engagement increase',
             'skill_development': 'Enhanced content creation skills'
@@ -624,7 +655,8 @@ class RecommendationEngine:
         self,
         collaboration_format: CollaborationFormat
     ) -> str:
-        """Estimate effort required for collaboration"""        effort_map = {
+        """Estimate effort required for collaboration"""
+        effort_map = {
             CollaborationFormat.DUET_SONG: "High",
             CollaborationFormat.JOINT_VIDEO: "Medium",
             CollaborationFormat.PODCAST_GUEST: "Low",
@@ -636,7 +668,8 @@ class RecommendationEngine:
         self,
         collaboration_format: CollaborationFormat
     ) -> str:
-        """Estimate timeline for collaboration"""        timeline_map = {
+        """Estimate timeline for collaboration"""
+        timeline_map = {
             CollaborationFormat.DUET_SONG: "6-8 weeks",
             CollaborationFormat.JOINT_VIDEO: "3-4 weeks",
             CollaborationFormat.PODCAST_GUEST: "1-2 weeks",
@@ -649,7 +682,8 @@ class RecommendationEngine:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> List[str]:
-        """Identify potential collaboration risks"""        return [
+        """Identify potential collaboration risks"""
+        return [
             'Creative differences',
             'Timeline misalignment',
             'Quality expectations mismatch'
@@ -661,7 +695,8 @@ class RecommendationEngine:
         creator_b: CreatorProfile,
         collaboration_format: CollaborationFormat
     ) -> List[str]:
-        """Generate actionable steps for collaboration"""        return [
+        """Generate actionable steps for collaboration"""
+        return [
             'Send collaboration proposal',
             'Schedule initial discussion call',
             'Define collaboration scope and timeline',
@@ -674,14 +709,16 @@ class RecommendationEngine:
         creator_b: CreatorProfile,
         collaboration_format: CollaborationFormat
     ) -> str:
-        """Generate human-readable recommendation rationale"""        return "Strong content style compatibility with complementary audience demographics"
+        """Generate human-readable recommendation rationale"""
+        return "Strong content style compatibility with complementary audience demographics"
     
     def _estimate_collaboration_reach(
         self,
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> int:
-        """Estimate combined reach of collaboration"""        return 50000
+        """Estimate combined reach of collaboration"""
+        return 50000
     
     def _estimate_potential_revenue(
         self,
@@ -689,58 +726,67 @@ class RecommendationEngine:
         creator_b: CreatorProfile,
         collaboration_format: CollaborationFormat
     ) -> Optional[float]:
-        """Estimate potential revenue from collaboration"""        return 2000.0
+        """Estimate potential revenue from collaboration"""
+        return 2000.0
     
     def _calculate_alignment_score(
         self,
         recommendation: CollaborationRecommendation,
         context: RecommendationContext
     ) -> float:
-        """Calculate alignment with creator goals"""        return 0.8
+        """Calculate alignment with creator goals"""
+        return 0.8
     
     def _calculate_timing_score(
         self,
         recommendation: CollaborationRecommendation,
         context: RecommendationContext
     ) -> float:
-        """Calculate timing appropriateness score"""        return 0.7
+        """Calculate timing appropriateness score"""
+        return 0.7
     
     def _calculate_effort_efficiency(
         self,
         recommendation: CollaborationRecommendation
     ) -> float:
-        """Calculate effort to benefit ratio"""        return 0.75
+        """Calculate effort to benefit ratio"""
+        return 0.75
     
     def _matches_format_preferences(
         self,
         recommendation: CollaborationRecommendation,
         context: RecommendationContext
     ) -> bool:
-        """Check if recommendation matches format preferences"""        return True
+        """Check if recommendation matches format preferences"""
+        return True
     
     def _matches_effort_preferences(
         self,
         recommendation: CollaborationRecommendation,
         context: RecommendationContext
     ) -> bool:
-        """Check if recommendation matches effort preferences"""        return True
+        """Check if recommendation matches effort preferences"""
+        return True
     
     def _matches_timeline_preferences(
         self,
         recommendation: CollaborationRecommendation,
         context: RecommendationContext
     ) -> bool:
-        """Check if recommendation matches timeline preferences"""        return True
+        """Check if recommendation matches timeline preferences"""
+        return True
     
     def _create_recommendation_bundles(
         self,
         recommendations: List[CollaborationRecommendation]
     ) -> List[RecommendationBundle]:
-        """Create synergistic recommendation bundles"""        return []
+        """Create synergistic recommendation bundles"""
+        return []
     
     def _score_recommendation_bundles(
         self,
         bundles: List[RecommendationBundle],
         context: RecommendationContext
     ) -> List[RecommendationBundle]:
-        """Score recommendation bundles"""        return bundles
+        """Score recommendation bundles"""
+        return bundles

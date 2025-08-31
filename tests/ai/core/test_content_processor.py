@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -32,7 +33,8 @@ Team Expertise:
 - Quality Assurance Lead: Comprehensive pipeline testing, edge case validation
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -76,9 +78,11 @@ from ai.core.exceptions import ContentGenerationError, OptimizationError, Protec
 
 
 class TestProcessingStage:
-    """Test suite for ProcessingStage enumeration"""    
+    """Test suite for ProcessingStage enumeration"""
+    
     def test_processing_stage_values(self):
-        """Test processing stage enum values"""        assert ProcessingStage.UPLOAD.value == "upload"
+        """Test processing stage enum values"""
+        assert ProcessingStage.UPLOAD.value == "upload"
         assert ProcessingStage.VALIDATION.value == "validation"
         assert ProcessingStage.PREPROCESSING.value == "preprocessing"
         assert ProcessingStage.AI_ANALYSIS.value == "ai_analysis"
@@ -92,7 +96,8 @@ class TestProcessingStage:
         assert ProcessingStage.FAILED.value == "failed"
     
     def test_processing_stage_workflow_coverage(self):
-        """Test processing stages cover complete business logic workflow"""        # Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
+        """Test processing stages cover complete business logic workflow"""
+        # Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
         workflow_stages = [
             ProcessingStage.UPLOAD,
             ProcessingStage.VALIDATION,
@@ -110,7 +115,8 @@ class TestProcessingStage:
             assert isinstance(stage.value, str)
     
     def test_processing_stage_sequence_validation(self):
-        """Test logical sequence of processing stages"""        # Should have proper progression
+        """Test logical sequence of processing stages"""
+        # Should have proper progression
         stages_sequence = [
             ProcessingStage.UPLOAD,
             ProcessingStage.VALIDATION,
@@ -131,9 +137,11 @@ class TestProcessingStage:
 
 
 class TestProcessingStatus:
-    """Test suite for ProcessingStatus enumeration"""    
+    """Test suite for ProcessingStatus enumeration"""
+    
     def test_processing_status_values(self):
-        """Test processing status enum values"""        assert ProcessingStatus.PENDING.value == "pending"
+        """Test processing status enum values"""
+        assert ProcessingStatus.PENDING.value == "pending"
         assert ProcessingStatus.PROCESSING.value == "processing"
         assert ProcessingStatus.COMPLETED.value == "completed"
         assert ProcessingStatus.FAILED.value == "failed"
@@ -141,7 +149,8 @@ class TestProcessingStatus:
         assert ProcessingStatus.RETRYING.value == "retrying"
     
     def test_processing_status_lifecycle(self):
-        """Test processing status lifecycle"""        lifecycle_sequence = [
+        """Test processing status lifecycle"""
+        lifecycle_sequence = [
             ProcessingStatus.PENDING,
             ProcessingStatus.PROCESSING,
             ProcessingStatus.COMPLETED
@@ -169,9 +178,11 @@ class TestProcessingStatus:
 
 
 class TestContentFormat:
-    """Test suite for ContentFormat enumeration"""    
+    """Test suite for ContentFormat enumeration"""
+    
     def test_content_format_values(self):
-        """Test content format enum values"""        assert ContentFormat.AUDIO.value == "audio"
+        """Test content format enum values"""
+        assert ContentFormat.AUDIO.value == "audio"
         assert ContentFormat.VIDEO.value == "video"
         assert ContentFormat.IMAGE.value == "image"
         assert ContentFormat.TEXT.value == "text"
@@ -179,7 +190,8 @@ class TestContentFormat:
         assert ContentFormat.MIXED_MEDIA.value == "mixed_media"
     
     def test_creator_specific_formats(self):
-        """Test content formats cover all creator types"""        # Musicians
+        """Test content formats cover all creator types"""
+        # Musicians
         musician_formats = [ContentFormat.AUDIO, ContentFormat.VIDEO, ContentFormat.TEXT]
         assert all(fmt in ContentFormat for fmt in musician_formats)
         
@@ -196,9 +208,11 @@ class TestContentFormat:
 
 
 class TestProcessingContext:
-    """Test suite for ProcessingContext data class"""    
+    """Test suite for ProcessingContext data class"""
+    
     def test_processing_context_creation(self):
-        """Test processing context creation"""        context = ProcessingContext(
+        """Test processing context creation"""
+        context = ProcessingContext(
             user_id="user123",
             session_id="session456",
             content_id="content789",
@@ -221,7 +235,8 @@ class TestProcessingContext:
         assert context.processing_options["quality"] == "high"
     
     def test_processing_context_defaults(self):
-        """Test processing context default values"""        context = ProcessingContext(
+        """Test processing context default values"""
+        context = ProcessingContext(
             user_id="user123",
             session_id="session456",
             content_id="content789",
@@ -235,7 +250,8 @@ class TestProcessingContext:
         assert context.processing_options == {}
     
     def test_processing_context_to_dict(self):
-        """Test processing context dictionary conversion"""        context = ProcessingContext(
+        """Test processing context dictionary conversion"""
+        context = ProcessingContext(
             user_id="dict_test",
             session_id="session_dict",
             content_id="content_dict",
@@ -256,7 +272,8 @@ class TestProcessingContext:
         assert "instagram" in context_dict["platform_targets"]
     
     def test_creator_specific_contexts(self):
-        """Test processing contexts for different creator types"""        # Musician context
+        """Test processing contexts for different creator types"""
+        # Musician context
         musician_context = ProcessingContext(
             user_id="musician123",
             session_id="music_session",
@@ -311,9 +328,11 @@ class TestProcessingContext:
 
 
 class TestProcessingResult:
-    """Test suite for ProcessingResult data class"""    
+    """Test suite for ProcessingResult data class"""
+    
     def test_processing_result_creation(self):
-        """Test processing result creation"""        result = ProcessingResult(
+        """Test processing result creation"""
+        result = ProcessingResult(
             stage=ProcessingStage.VALIDATION,
             status=ProcessingStatus.COMPLETED,
             processing_time_ms=150.5,
@@ -334,7 +353,8 @@ class TestProcessingResult:
         assert isinstance(result.timestamp, datetime)
     
     def test_processing_result_defaults(self):
-        """Test processing result default values"""        result = ProcessingResult(
+        """Test processing result default values"""
+        result = ProcessingResult(
             stage=ProcessingStage.AI_ANALYSIS,
             status=ProcessingStatus.COMPLETED
         )
@@ -348,7 +368,8 @@ class TestProcessingResult:
         assert isinstance(result.timestamp, datetime)
     
     def test_processing_result_to_dict(self):
-        """Test processing result dictionary conversion"""        result = ProcessingResult(
+        """Test processing result dictionary conversion"""
+        result = ProcessingResult(
             stage=ProcessingStage.PROTECTION,
             status=ProcessingStatus.FAILED,
             processing_time_ms=75.2,
@@ -367,9 +388,11 @@ class TestProcessingResult:
 
 
 class TestPipelineState:
-    """Test suite for PipelineState data class"""    
+    """Test suite for PipelineState data class"""
+    
     def setup_method(self):
-        """Setup pipeline state for testing"""        self.context = ProcessingContext(
+        """Setup pipeline state for testing"""
+        self.context = ProcessingContext(
             user_id="state_test_user",
             session_id="state_test_session",
             content_id="state_test_content",
@@ -379,7 +402,8 @@ class TestPipelineState:
         self.state = PipelineState(context=self.context)
     
     def test_pipeline_state_creation(self):
-        """Test pipeline state creation"""        assert self.state.context == self.context
+        """Test pipeline state creation"""
+        assert self.state.context == self.context
         assert self.state.current_stage == ProcessingStage.UPLOAD
         assert self.state.status == ProcessingStatus.PENDING
         assert isinstance(self.state.created_at, datetime)
@@ -392,7 +416,8 @@ class TestPipelineState:
         assert self.state.final_content is None
     
     def test_pipeline_state_stage_update(self):
-        """Test pipeline state stage updates"""        validation_result = ProcessingResult(
+        """Test pipeline state stage updates"""
+        validation_result = ProcessingResult(
             stage=ProcessingStage.VALIDATION,
             status=ProcessingStatus.COMPLETED,
             processing_time_ms=100.0,
@@ -411,7 +436,8 @@ class TestPipelineState:
         assert self.state.status == ProcessingStatus.PENDING  # Not completed yet
     
     def test_pipeline_state_completion(self):
-        """Test pipeline state completion"""        completion_result = ProcessingResult(
+        """Test pipeline state completion"""
+        completion_result = ProcessingResult(
             stage=ProcessingStage.COMPLETED,
             status=ProcessingStatus.COMPLETED,
             processing_time_ms=50.0
@@ -425,7 +451,8 @@ class TestPipelineState:
         assert isinstance(self.state.completed_at, datetime)
     
     def test_pipeline_state_failure(self):
-        """Test pipeline state failure handling"""        failure_result = ProcessingResult(
+        """Test pipeline state failure handling"""
+        failure_result = ProcessingResult(
             stage=ProcessingStage.FAILED,
             status=ProcessingStatus.FAILED,
             errors=["Processing failed due to invalid content"]
@@ -438,7 +465,8 @@ class TestPipelineState:
         assert self.state.completed_at is None  # Failed, not completed
     
     def test_pipeline_state_processing_summary(self):
-        """Test pipeline state processing summary"""        # Add multiple stage results
+        """Test pipeline state processing summary"""
+        # Add multiple stage results
         stages_and_times = [
             (ProcessingStage.VALIDATION, 100.0),
             (ProcessingStage.AI_ANALYSIS, 250.0),
@@ -465,7 +493,8 @@ class TestPipelineState:
         assert len(summary["stage_times"]) == 3
     
     def test_pipeline_state_with_errors_and_warnings(self):
-        """Test pipeline state with errors and warnings"""        # Add results with errors and warnings
+        """Test pipeline state with errors and warnings"""
+        # Add results with errors and warnings
         error_result = ProcessingResult(
             stage=ProcessingStage.PROTECTION,
             status=ProcessingStatus.FAILED,
@@ -494,9 +523,11 @@ class TestPipelineState:
 
 
 class TestBaseProcessor:
-    """Test suite for BaseProcessor class"""    
+    """Test suite for BaseProcessor class"""
+    
     def test_base_processor_creation(self):
-        """Test base processor creation"""        processor = BaseProcessor("test-processor")
+        """Test base processor creation"""
+        processor = BaseProcessor("test-processor")
         
         assert processor.name == "test-processor"
         assert hasattr(processor, 'logger')
@@ -504,7 +535,8 @@ class TestBaseProcessor:
     
     @pytest.mark.asyncio
     async def test_base_processor_abstract_process(self):
-        """Test base processor abstract process method"""        processor = BaseProcessor("abstract-test")
+        """Test base processor abstract process method"""
+        processor = BaseProcessor("abstract-test")
         
         context = ProcessingContext(
             user_id="test",
@@ -528,9 +560,11 @@ class TestBaseProcessor:
 
 
 class TestValidationProcessor:
-    """Test suite for ValidationProcessor class"""    
+    """Test suite for ValidationProcessor class"""
+    
     def setup_method(self):
-        """Setup validation processor for testing"""        self.processor = ValidationProcessor()
+        """Setup validation processor for testing"""
+        self.processor = ValidationProcessor()
         self.context = ProcessingContext(
             user_id="validation_test",
             session_id="validation_session",
@@ -542,7 +576,8 @@ class TestValidationProcessor:
     
     @pytest.mark.asyncio
     async def test_validation_processor_text_content(self):
-        """Test validation processor with text content"""        content = "This is a test blog post content that should pass validation checks."
+        """Test validation processor with text content"""
+        content = "This is a test blog post content that should pass validation checks."
         
         with patch('backend.ai.core.content_processor.ContentValidator') as mock_validator:
             mock_validation_result = Mock()
@@ -568,7 +603,8 @@ class TestValidationProcessor:
     
     @pytest.mark.asyncio
     async def test_validation_processor_invalid_content(self):
-        """Test validation processor with invalid content"""        malicious_content = "<script>alert('XSS')</script>This content has security issues."
+        """Test validation processor with invalid content"""
+        malicious_content = "<script>alert('XSS')</script>This content has security issues."
         
         with patch('backend.ai.core.content_processor.ContentValidator') as mock_validator:
             mock_validation_result = Mock()
@@ -592,7 +628,8 @@ class TestValidationProcessor:
     
     @pytest.mark.asyncio
     async def test_validation_processor_performance(self):
-        """Test validation processor performance tracking"""        content = "Performance test content for validation processor."
+        """Test validation processor performance tracking"""
+        content = "Performance test content for validation processor."
         
         with patch('backend.ai.core.content_processor.ContentValidator'):
             result = await self.processor.process(content, self.context, self.state)
@@ -602,9 +639,11 @@ class TestValidationProcessor:
 
 
 class TestAIAnalysisProcessor:
-    """Test suite for AIAnalysisProcessor class"""    
+    """Test suite for AIAnalysisProcessor class"""
+    
     def setup_method(self):
-        """Setup AI analysis processor for testing"""        self.processor = AIAnalysisProcessor()
+        """Setup AI analysis processor for testing"""
+        self.processor = AIAnalysisProcessor()
         self.context = ProcessingContext(
             user_id="ai_test",
             session_id="ai_session",
@@ -616,7 +655,8 @@ class TestAIAnalysisProcessor:
     
     @pytest.mark.asyncio
     async def test_ai_analysis_processor_music_content(self):
-        """Test AI analysis processor with music content"""        audio_content = b"fake_audio_data_for_testing"
+        """Test AI analysis processor with music content"""
+        audio_content = b"fake_audio_data_for_testing"
         
         result = await self.processor.process(audio_content, self.context, self.state)
         
@@ -634,7 +674,8 @@ class TestAIAnalysisProcessor:
     
     @pytest.mark.asyncio
     async def test_ai_analysis_processor_text_content(self):
-        """Test AI analysis processor with text content"""        text_context = ProcessingContext(
+        """Test AI analysis processor with text content"""
+        text_context = ProcessingContext(
             user_id="text_ai_test",
             session_id="text_ai_session",
             content_id="text_ai_content",
@@ -656,7 +697,8 @@ class TestAIAnalysisProcessor:
     
     @pytest.mark.asyncio
     async def test_ai_analysis_processor_error_handling(self):
-        """Test AI analysis processor error handling"""        invalid_content = None
+        """Test AI analysis processor error handling"""
+        invalid_content = None
         
         result = await self.processor.process(invalid_content, self.context, self.state)
         
@@ -666,9 +708,11 @@ class TestAIAnalysisProcessor:
 
 
 class TestProtectionProcessor:
-    """Test suite for ProtectionProcessor class"""    
+    """Test suite for ProtectionProcessor class"""
+    
     def setup_method(self):
-        """Setup protection processor for testing"""        self.processor = ProtectionProcessor()
+        """Setup protection processor for testing"""
+        self.processor = ProtectionProcessor()
         self.context = ProcessingContext(
             user_id="protection_test",
             session_id="protection_session",
@@ -680,7 +724,8 @@ class TestProtectionProcessor:
     
     @pytest.mark.asyncio
     async def test_protection_processor_image_content(self):
-        """Test protection processor with image content"""        image_content = b"fake_image_data_for_testing"
+        """Test protection processor with image content"""
+        image_content = b"fake_image_data_for_testing"
         
         result = await self.processor.process(image_content, self.context, self.state)
         
@@ -698,7 +743,8 @@ class TestProtectionProcessor:
     
     @pytest.mark.asyncio
     async def test_protection_processor_duplicate_content(self):
-        """Test protection processor with duplicate content detection"""        content = "This content already exists in the system"
+        """Test protection processor with duplicate content detection"""
+        content = "This content already exists in the system"
         
         # Mock similarity check to return high similarity
         with patch.object(self.processor, '_check_content_similarity') as mock_similarity:
@@ -712,7 +758,8 @@ class TestProtectionProcessor:
     
     @pytest.mark.asyncio
     async def test_protection_processor_copyright_violation(self):
-        """Test protection processor with copyright violation"""        content = "Copyrighted content that should be detected"
+        """Test protection processor with copyright violation"""
+        content = "Copyrighted content that should be detected"
         
         # Mock copyright check to detect violations
         with patch.object(self.processor, '_validate_copyright') as mock_copyright:
@@ -725,9 +772,11 @@ class TestProtectionProcessor:
 
 
 class TestOptimizationProcessor:
-    """Test suite for OptimizationProcessor class"""    
+    """Test suite for OptimizationProcessor class"""
+    
     def setup_method(self):
-        """Setup optimization processor for testing"""        self.processor = OptimizationProcessor()
+        """Setup optimization processor for testing"""
+        self.processor = OptimizationProcessor()
         self.context = ProcessingContext(
             user_id="optimization_test",
             session_id="optimization_session",
@@ -740,7 +789,8 @@ class TestOptimizationProcessor:
     
     @pytest.mark.asyncio
     async def test_optimization_processor_video_content(self):
-        """Test optimization processor with video content"""        video_content = b"fake_video_data_for_testing"
+        """Test optimization processor with video content"""
+        video_content = b"fake_video_data_for_testing"
         
         result = await self.processor.process(video_content, self.context, self.state)
         
@@ -761,7 +811,8 @@ class TestOptimizationProcessor:
     
     @pytest.mark.asyncio
     async def test_optimization_processor_quality_enhancement(self):
-        """Test optimization processor quality enhancement"""        low_quality_content = b"low_quality_content_data"
+        """Test optimization processor quality enhancement"""
+        low_quality_content = b"low_quality_content_data"
         
         result = await self.processor.process(low_quality_content, self.context, self.state)
         
@@ -775,7 +826,8 @@ class TestOptimizationProcessor:
     
     @pytest.mark.asyncio
     async def test_optimization_processor_platform_specific(self):
-        """Test optimization processor platform-specific optimization"""        # Test with different platform combinations
+        """Test optimization processor platform-specific optimization"""
+        # Test with different platform combinations
         platforms = [
             ["youtube"],
             ["instagram", "tiktok"],
@@ -801,9 +853,11 @@ class TestOptimizationProcessor:
 
 
 class TestSEOProcessor:
-    """Test suite for SEOProcessor class"""    
+    """Test suite for SEOProcessor class"""
+    
     def setup_method(self):
-        """Setup SEO processor for testing"""        self.processor = SEOProcessor()
+        """Setup SEO processor for testing"""
+        self.processor = SEOProcessor()
         self.context = ProcessingContext(
             user_id="seo_test",
             session_id="seo_session",
@@ -816,7 +870,9 @@ class TestSEOProcessor:
     
     @pytest.mark.asyncio
     async def test_seo_processor_blog_content(self):
-        """Test SEO processor with blog content"""        blog_content = """        # The Future of AI in Content Creation
+        """Test SEO processor with blog content"""
+        blog_content = """
+        # The Future of AI in Content Creation
         
         Artificial intelligence is revolutionizing how creators produce, optimize, and distribute content.
         This comprehensive guide explores the latest AI tools and techniques for content creators.
@@ -832,7 +888,8 @@ class TestSEOProcessor:
         ## Conclusion
         
         The future of content creation is bright with AI assistance.
-        """        
+        """
+        
         result = await self.processor.process(blog_content, self.context, self.state)
         
         assert isinstance(result, ProcessingResult)
@@ -848,7 +905,8 @@ class TestSEOProcessor:
     
     @pytest.mark.asyncio
     async def test_seo_processor_keyword_optimization(self):
-        """Test SEO processor keyword optimization"""        content = "Content creation AI tools machine learning automation"
+        """Test SEO processor keyword optimization"""
+        content = "Content creation AI tools machine learning automation"
         
         result = await self.processor.process(content, self.context, self.state)
         
@@ -860,7 +918,8 @@ class TestSEOProcessor:
     
     @pytest.mark.asyncio
     async def test_seo_processor_meta_tag_generation(self):
-        """Test SEO processor meta tag generation"""        content = "A comprehensive guide to using AI for content creation and optimization."
+        """Test SEO processor meta tag generation"""
+        content = "A comprehensive guide to using AI for content creation and optimization."
         
         result = await self.processor.process(content, self.context, self.state)
         
@@ -880,9 +939,11 @@ class TestSEOProcessor:
 
 
 class TestCollaborationProcessor:
-    """Test suite for CollaborationProcessor class"""    
+    """Test suite for CollaborationProcessor class"""
+    
     def setup_method(self):
-        """Setup collaboration processor for testing"""        self.processor = CollaborationProcessor()
+        """Setup collaboration processor for testing"""
+        self.processor = CollaborationProcessor()
         self.context = ProcessingContext(
             user_id="collab_test",
             session_id="collab_session",
@@ -899,7 +960,8 @@ class TestCollaborationProcessor:
     
     @pytest.mark.asyncio
     async def test_collaboration_processor_music_matching(self):
-        """Test collaboration processor with music content"""        audio_content = b"electronic_music_content"
+        """Test collaboration processor with music content"""
+        audio_content = b"electronic_music_content"
         
         result = await self.processor.process(audio_content, self.context, self.state)
         
@@ -914,7 +976,8 @@ class TestCollaborationProcessor:
     
     @pytest.mark.asyncio
     async def test_collaboration_processor_photographer_matching(self):
-        """Test collaboration processor for photographers"""        photo_context = ProcessingContext(
+        """Test collaboration processor for photographers"""
+        photo_context = ProcessingContext(
             user_id="photographer_test",
             session_id="photo_session",
             content_id="photo_content",
@@ -941,7 +1004,8 @@ class TestCollaborationProcessor:
     
     @pytest.mark.asyncio
     async def test_collaboration_processor_cross_media_matching(self):
-        """Test collaboration processor for cross-media opportunities"""        # Test content that could match across different media types
+        """Test collaboration processor for cross-media opportunities"""
+        # Test content that could match across different media types
         versatile_context = ProcessingContext(
             user_id="versatile_creator",
             session_id="versatile_session",
@@ -963,9 +1027,11 @@ class TestCollaborationProcessor:
 
 
 class TestContentProcessingPipeline:
-    """Test suite for ContentProcessingPipeline class"""    
+    """Test suite for ContentProcessingPipeline class"""
+    
     def setup_method(self):
-        """Setup content processing pipeline for testing"""        self.pipeline = ContentProcessingPipeline()
+        """Setup content processing pipeline for testing"""
+        self.pipeline = ContentProcessingPipeline()
         self.context = ProcessingContext(
             user_id="pipeline_test",
             session_id="pipeline_session",
@@ -975,11 +1041,13 @@ class TestContentProcessingPipeline:
         )
     
     def teardown_method(self):
-        """Cleanup after pipeline tests"""        # Clear any active pipelines
+        """Cleanup after pipeline tests"""
+        # Clear any active pipelines
         self.pipeline.active_pipelines.clear()
     
     def test_pipeline_initialization(self):
-        """Test pipeline initialization"""        assert isinstance(self.pipeline.processors, dict)
+        """Test pipeline initialization"""
+        assert isinstance(self.pipeline.processors, dict)
         assert len(self.pipeline.processors) > 5  # Should have all main processors
         assert isinstance(self.pipeline.active_pipelines, dict)
         assert hasattr(self.pipeline, 'executor')
@@ -999,7 +1067,8 @@ class TestContentProcessingPipeline:
     
     @pytest.mark.asyncio
     async def test_pipeline_full_processing_success(self):
-        """Test complete pipeline processing success"""        content = "This is a test blog post content for pipeline processing."
+        """Test complete pipeline processing success"""
+        content = "This is a test blog post content for pipeline processing."
         
         # Mock all processors to return successful results
         with patch.multiple(
@@ -1040,7 +1109,8 @@ class TestContentProcessingPipeline:
     
     @pytest.mark.asyncio
     async def test_pipeline_processing_failure(self):
-        """Test pipeline processing with failure"""        content = "Content that will cause processing failure"
+        """Test pipeline processing with failure"""
+        content = "Content that will cause processing failure"
         
         # Mock validation processor to fail
         failing_processor = Mock()
@@ -1063,7 +1133,8 @@ class TestContentProcessingPipeline:
         assert len(state.stage_results[ProcessingStage.VALIDATION].errors) > 0
     
     def test_pipeline_status_tracking(self):
-        """Test pipeline status tracking"""        # Create a mock active pipeline
+        """Test pipeline status tracking"""
+        # Create a mock active pipeline
         mock_state = PipelineState(context=self.context)
         mock_state.status = ProcessingStatus.PROCESSING
         mock_state.current_stage = ProcessingStage.AI_ANALYSIS
@@ -1078,7 +1149,8 @@ class TestContentProcessingPipeline:
         assert status["current_stage"] == "ai_analysis"
     
     def test_pipeline_cancellation(self):
-        """Test pipeline cancellation"""        # Create a mock active pipeline
+        """Test pipeline cancellation"""
+        # Create a mock active pipeline
         mock_state = PipelineState(context=self.context)
         self.pipeline.active_pipelines[self.context.content_id] = mock_state
         
@@ -1093,7 +1165,8 @@ class TestContentProcessingPipeline:
         assert success is False
     
     def test_pipeline_metrics(self):
-        """Test pipeline metrics collection"""        # Add some mock active pipelines
+        """Test pipeline metrics collection"""
+        # Add some mock active pipelines
         for i in range(3):
             content_id = f"content_{i}"
             context = ProcessingContext(
@@ -1115,7 +1188,8 @@ class TestContentProcessingPipeline:
     
     @pytest.mark.asyncio
     async def test_pipeline_batch_processing(self):
-        """Test pipeline batch processing"""        # Create batch of content items
+        """Test pipeline batch processing"""
+        # Create batch of content items
         content_batch = []
         for i in range(3):
             content = f"Batch content item {i}"
@@ -1146,13 +1220,16 @@ class TestContentProcessingPipeline:
 
 
 class TestGlobalPipeline:
-    """Test suite for global pipeline instance"""    
+    """Test suite for global pipeline instance"""
+    
     def test_global_pipeline_instance(self):
-        """Test global pipeline instance"""        assert content_pipeline is not None
+        """Test global pipeline instance"""
+        assert content_pipeline is not None
         assert isinstance(content_pipeline, ContentProcessingPipeline)
     
     def test_global_pipeline_functionality(self):
-        """Test global pipeline functionality"""        # Test that global pipeline has all required processors
+        """Test global pipeline functionality"""
+        # Test that global pipeline has all required processors
         assert len(content_pipeline.processors) > 5
         
         # Test metrics access
@@ -1162,7 +1239,8 @@ class TestGlobalPipeline:
     
     @pytest.mark.asyncio
     async def test_process_content_async_function(self):
-        """Test process_content_async convenience function"""        with patch('backend.ai.core.content_processor.content_pipeline') as mock_pipeline:
+        """Test process_content_async convenience function"""
+        with patch('backend.ai.core.content_processor.content_pipeline') as mock_pipeline:
             mock_state = Mock()
             mock_pipeline.process_content = AsyncMock(return_value=mock_state)
             
@@ -1179,13 +1257,16 @@ class TestGlobalPipeline:
 
 
 class TestPipelineIntegration:
-    """Integration tests for complete pipeline scenarios"""    
+    """Integration tests for complete pipeline scenarios"""
+    
     def setup_method(self):
-        """Setup integration testing"""        self.pipeline = ContentProcessingPipeline()
+        """Setup integration testing"""
+        self.pipeline = ContentProcessingPipeline()
     
     @pytest.mark.asyncio
     async def test_musician_content_workflow(self):
-        """Test complete workflow for musician content"""        # Musician uploads a new track
+        """Test complete workflow for musician content"""
+        # Musician uploads a new track
         audio_content = b"fake_audio_track_data"
         context = ProcessingContext(
             user_id="musician_user_123",
@@ -1270,7 +1351,8 @@ class TestPipelineIntegration:
     
     @pytest.mark.asyncio
     async def test_photographer_content_workflow(self):
-        """Test complete workflow for photographer content"""        # Photographer uploads a new photo
+        """Test complete workflow for photographer content"""
+        # Photographer uploads a new photo
         image_content = b"fake_image_photo_data"
         context = ProcessingContext(
             user_id="photographer_user_456",
@@ -1313,8 +1395,10 @@ class TestPipelineIntegration:
     
     @pytest.mark.asyncio
     async def test_blogger_content_workflow(self):
-        """Test complete workflow for blogger content"""        # Blogger publishes a new blog post
-        blog_content = """        # The Future of AI in Content Creation: A Creator's Perspective
+        """Test complete workflow for blogger content"""
+        # Blogger publishes a new blog post
+        blog_content = """
+        # The Future of AI in Content Creation: A Creator's Perspective
         
         As content creators, we're witnessing a revolutionary transformation in how we produce,
         optimize, and distribute our creative work. Artificial intelligence is no longer just
@@ -1340,7 +1424,8 @@ class TestPipelineIntegration:
         makes content authentic and engaging. AI should enhance creativity, not replace it.
         
         What are your thoughts on AI in content creation? Share your experiences in the comments!
-        """        
+        """
+        
         context = ProcessingContext(
             user_id="blogger_user_789",
             session_id="blog_publish_session",

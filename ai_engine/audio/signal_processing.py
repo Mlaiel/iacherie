@@ -3,7 +3,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive audio signal processing capabilities.
-"""import logging
+"""
+import logging
 import numpy as np
 import time
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -15,14 +16,16 @@ import json
 logger = logging.getLogger(__name__)
 
 class AudioFormat(Enum):
-    """Supported audio formats"""    WAV = "wav"
+    """Supported audio formats"""
+    WAV = "wav"
     MP3 = "mp3"
     FLAC = "flac"
     AAC = "aac"
     OGG = "ogg"
 
 class ProcessingType(Enum):
-    """Audio processing types"""    NORMALIZE = "normalize"
+    """Audio processing types"""
+    NORMALIZE = "normalize"
     DENOISE = "denoise"
     ENHANCE = "enhance"
     COMPRESS = "compress"
@@ -32,7 +35,8 @@ class ProcessingType(Enum):
 
 @dataclass
 class AudioData:
-    """Audio data representation"""    samples: np.ndarray
+    """Audio data representation"""
+    samples: np.ndarray
     sample_rate: int
     channels: int = 1
     duration: float = 0.0
@@ -41,7 +45,8 @@ class AudioData:
 
 @dataclass
 class ProcessingResult:
-    """Audio processing result"""    processed_audio: AudioData
+    """Audio processing result"""
+    processed_audio: AudioData
     processing_time: float
     processing_type: ProcessingType
     quality_metrics: Dict[str, float] = field(default_factory=dict)
@@ -49,7 +54,8 @@ class ProcessingResult:
     error_message: Optional[str] = None
 
 class AudioSignalProcessor:
-    """Advanced audio signal processor"""    
+    """Advanced audio signal processor"""
+    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         
@@ -61,7 +67,8 @@ class AudioSignalProcessor:
     
     def process_audio(self, audio_data: AudioData, processing_type: ProcessingType,
                      parameters: Optional[Dict[str, Any]] = None) -> ProcessingResult:
-        """Process audio with specified processing type"""        start_time = time.time()
+        """Process audio with specified processing type"""
+        start_time = time.time()
         
         try:
             if processing_type == ProcessingType.NORMALIZE:
@@ -99,7 +106,8 @@ class AudioSignalProcessor:
             )
     
     def _normalize_audio(self, audio_data: AudioData, params: Dict[str, Any]) -> AudioData:
-        """Normalize audio amplitude"""        target_level = params.get('target_level', 0.95)
+        """Normalize audio amplitude"""
+        target_level = params.get('target_level', 0.95)
         
         # Simple amplitude normalization
         max_val = np.max(np.abs(audio_data.samples))
@@ -118,7 +126,8 @@ class AudioSignalProcessor:
         )
     
     def _denoise_audio(self, audio_data: AudioData, params: Dict[str, Any]) -> AudioData:
-        """Simple denoising (placeholder implementation)"""        # Placeholder: In real implementation, would use spectral subtraction or similar
+        """Simple denoising (placeholder implementation)"""
+        # Placeholder: In real implementation, would use spectral subtraction or similar
         denoised_samples = audio_data.samples * 0.98  # Slight reduction
         
         return AudioData(
@@ -131,7 +140,8 @@ class AudioSignalProcessor:
         )
     
     def _enhance_audio(self, audio_data: AudioData, params: Dict[str, Any]) -> AudioData:
-        """Audio enhancement (placeholder implementation)"""        enhancement_factor = params.get('enhancement_factor', 1.1)
+        """Audio enhancement (placeholder implementation)"""
+        enhancement_factor = params.get('enhancement_factor', 1.1)
         enhanced_samples = audio_data.samples * enhancement_factor
         
         # Ensure no clipping
@@ -147,7 +157,8 @@ class AudioSignalProcessor:
         )
     
     def _compress_audio(self, audio_data: AudioData, params: Dict[str, Any]) -> AudioData:
-        """Dynamic range compression"""        threshold = params.get('threshold', 0.5)
+        """Dynamic range compression"""
+        threshold = params.get('threshold', 0.5)
         ratio = params.get('ratio', 4.0)
         
         # Simple compression
@@ -167,7 +178,8 @@ class AudioSignalProcessor:
         )
     
     def _equalize_audio(self, audio_data: AudioData, params: Dict[str, Any]) -> AudioData:
-        """Basic equalization (placeholder)"""        # Placeholder implementation
+        """Basic equalization (placeholder)"""
+        # Placeholder implementation
         eq_samples = audio_data.samples * 1.05  # Slight boost
         
         return AudioData(
@@ -180,7 +192,8 @@ class AudioSignalProcessor:
         )
     
     def _calculate_quality_metrics(self, audio_data: AudioData) -> Dict[str, float]:
-        """Calculate audio quality metrics"""        try:
+        """Calculate audio quality metrics"""
+        try:
             samples = audio_data.samples
             
             # Basic quality metrics
@@ -200,7 +213,8 @@ class AudioSignalProcessor:
             return {}
     
     def analyze_audio(self, audio_data: AudioData) -> Dict[str, Any]:
-        """Analyze audio characteristics"""        try:
+        """Analyze audio characteristics"""
+        try:
             samples = audio_data.samples
             
             analysis = {
@@ -226,7 +240,8 @@ class AudioSignalProcessor:
     
     def create_audio_data(self, samples: np.ndarray, sample_rate: int,
                          channels: int = 1, audio_format: AudioFormat = AudioFormat.WAV) -> AudioData:
-        """Create AudioData object from samples"""        duration = len(samples) / sample_rate if sample_rate > 0 else 0.0
+        """Create AudioData object from samples"""
+        duration = len(samples) / sample_rate if sample_rate > 0 else 0.0
         
         return AudioData(
             samples=samples,
@@ -237,7 +252,8 @@ class AudioSignalProcessor:
         )
     
     def generate_silence(self, duration_seconds: float, sample_rate: int = None) -> AudioData:
-        """Generate silence"""        sample_rate = sample_rate or self.default_sample_rate
+        """Generate silence"""
+        sample_rate = sample_rate or self.default_sample_rate
         num_samples = int(duration_seconds * sample_rate)
         samples = np.zeros(num_samples, dtype=np.float32)
         
@@ -245,7 +261,8 @@ class AudioSignalProcessor:
     
     def generate_tone(self, frequency: float, duration_seconds: float,
                      amplitude: float = 0.5, sample_rate: int = None) -> AudioData:
-        """Generate a sine wave tone"""        sample_rate = sample_rate or self.default_sample_rate
+        """Generate a sine wave tone"""
+        sample_rate = sample_rate or self.default_sample_rate
         num_samples = int(duration_seconds * sample_rate)
         
         t = np.linspace(0, duration_seconds, num_samples, False)

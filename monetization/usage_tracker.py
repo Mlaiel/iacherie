@@ -6,7 +6,8 @@ analytics, and comprehensive reporting capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""import logging
+"""
+import logging
 import asyncio
 import time
 from typing import Dict, List, Optional, Any, Union
@@ -20,7 +21,8 @@ logger = logging.getLogger(__name__)
 
 
 class UsageType(Enum):
-    """Types of content usage"""    STREAM = "stream"
+    """Types of content usage"""
+    STREAM = "stream"
     DOWNLOAD = "download"
     SYNC = "sync"
     COMMERCIAL = "commercial"
@@ -31,7 +33,8 @@ class UsageType(Enum):
 
 
 class UsageStatus(Enum):
-    """Status of usage records"""    RECORDED = "recorded"
+    """Status of usage records"""
+    RECORDED = "recorded"
     VERIFIED = "verified"
     DISPUTED = "disputed"
     CANCELLED = "cancelled"
@@ -39,7 +42,8 @@ class UsageStatus(Enum):
 
 @dataclass
 class UsageRecord:
-    """Individual usage record"""    record_id: str
+    """Individual usage record"""
+    record_id: str
     license_id: int
     content_id: int
     user_id: int
@@ -56,7 +60,8 @@ class UsageRecord:
 
 @dataclass
 class UsageStatistics:
-    """Usage statistics for a license"""    license_id: int
+    """Usage statistics for a license"""
+    license_id: int
     period_start: datetime
     period_end: datetime
     total_usage: int
@@ -70,7 +75,8 @@ class UsageStatistics:
 
 
 class UsageTracker:
-    """    Advanced usage tracking and analytics system
+    """
+    Advanced usage tracking and analytics system
     
     Features:
     - Real-time usage recording
@@ -81,9 +87,11 @@ class UsageTracker:
     - Platform-specific metrics
     - Historical trend analysis
     - Automated reporting
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize usage tracker"""        self.config = config or {}
+        """Initialize usage tracker"""
+        self.config = config or {}
         
         # Usage storage
         self.usage_records: List[UsageRecord] = []
@@ -118,14 +126,16 @@ class UsageTracker:
         logger.info("UsageTracker initialized successfully")
     
     async def record_usage(self, usage_data: Dict[str, Any]) -> str:
-        """        Record a usage event
+        """
+        Record a usage event
         
         Args:
             usage_data: Usage event data
             
         Returns:
             str: Usage record ID
-        """        try:
+        """
+        try:
             # Generate record ID
             record_id = f"usage_{usage_data['license_id']}_{datetime.utcnow().timestamp()}"
             
@@ -176,7 +186,8 @@ class UsageTracker:
         start_date: datetime,
         end_date: datetime
     ) -> List[Dict[str, Any]]:
-        """        Get usage records for a specific period
+        """
+        Get usage records for a specific period
         
         Args:
             license_id: License ID
@@ -185,7 +196,8 @@ class UsageTracker:
             
         Returns:
             List[Dict]: Usage records in the period
-        """        try:
+        """
+        try:
             # Filter records by license and period
             filtered_records = [
                 record for record in self.usage_records
@@ -218,7 +230,8 @@ class UsageTracker:
             return []
     
     async def get_current_usage(self, license_id: int, usage_type: str) -> int:
-        """        Get current usage count for a license and usage type
+        """
+        Get current usage count for a license and usage type
         
         Args:
             license_id: License ID
@@ -226,7 +239,8 @@ class UsageTracker:
             
         Returns:
             int: Current usage count
-        """        try:
+        """
+        try:
             # Get current month start
             now = datetime.utcnow()
             month_start = datetime(now.year, now.month, 1)
@@ -247,14 +261,16 @@ class UsageTracker:
             return 0
     
     async def get_license_usage_stats(self, license_id: int) -> Dict[str, Any]:
-        """        Get comprehensive usage statistics for a license
+        """
+        Get comprehensive usage statistics for a license
         
         Args:
             license_id: License ID
             
         Returns:
             Dict: Usage statistics
-        """        try:
+        """
+        try:
             cache_key = f"stats_{license_id}"
             
             # Check cache
@@ -354,14 +370,16 @@ class UsageTracker:
             return {"error": str(e)}
     
     async def get_real_time_analytics(self, license_id: int) -> Dict[str, Any]:
-        """        Get real-time analytics for a license
+        """
+        Get real-time analytics for a license
         
         Args:
             license_id: License ID
             
         Returns:
             Dict: Real-time analytics data
-        """        try:
+        """
+        try:
             # Get recent usage (last hour)
             now = datetime.utcnow()
             hour_ago = now - timedelta(hours=1)
@@ -403,14 +421,16 @@ class UsageTracker:
             return {"error": str(e)}
     
     async def detect_usage_anomalies(self, license_id: int) -> List[Dict[str, Any]]:
-        """        Detect usage anomalies for fraud prevention
+        """
+        Detect usage anomalies for fraud prevention
         
         Args:
             license_id: License ID
             
         Returns:
             List[Dict]: Detected anomalies
-        """        anomalies = []
+        """
+        anomalies = []
         
         try:
             # Get recent usage patterns
@@ -488,7 +508,8 @@ class UsageTracker:
             return []
     
     async def start_session(self, session_data: Dict[str, Any]) -> str:
-        """Start a usage tracking session"""        try:
+        """Start a usage tracking session"""
+        try:
             session_id = f"session_{datetime.utcnow().timestamp()}"
             
             self.active_sessions[session_id] = {
@@ -505,7 +526,8 @@ class UsageTracker:
             return ""
     
     async def end_session(self, session_id: str) -> bool:
-        """End a usage tracking session"""        try:
+        """End a usage tracking session"""
+        try:
             if session_id in self.active_sessions:
                 session = self.active_sessions[session_id]
                 session["ended_at"] = datetime.utcnow()
@@ -527,7 +549,8 @@ class UsageTracker:
             return False
     
     async def _update_user_patterns(self, record: UsageRecord) -> None:
-        """Update user usage patterns for fraud detection"""        try:
+        """Update user usage patterns for fraud detection"""
+        try:
             user_id = record.user_id
             
             if user_id not in self.user_usage_patterns:
@@ -557,7 +580,8 @@ class UsageTracker:
             logger.error(f"Error updating user patterns: {e}")
     
     async def _detect_fraud(self, record: UsageRecord) -> None:
-        """Detect potential fraud in usage record"""        try:
+        """Detect potential fraud in usage record"""
+        try:
             user_pattern = self.user_usage_patterns.get(record.user_id, {})
             
             # Check for rapid usage increases
@@ -570,7 +594,8 @@ class UsageTracker:
             logger.error(f"Error detecting fraud: {e}")
     
     async def _update_real_time_analytics(self, record: UsageRecord) -> None:
-        """Update real-time analytics cache"""        try:
+        """Update real-time analytics cache"""
+        try:
             cache_key = f"realtime_{record.license_id}"
             
             if cache_key not in self.usage_cache:
@@ -595,7 +620,8 @@ class UsageTracker:
             logger.error(f"Error updating real-time analytics: {e}")
     
     async def _update_performance_metrics(self) -> None:
-        """Update performance metrics"""        try:
+        """Update performance metrics"""
+        try:
             # Update records per minute
             now = datetime.utcnow()
             minute_ago = now - timedelta(minutes=1)
@@ -618,7 +644,8 @@ class UsageTracker:
             logger.error(f"Error updating performance metrics: {e}")
     
     def _calculate_trend(self, license_id: int) -> str:
-        """Calculate usage trend for license"""        try:
+        """Calculate usage trend for license"""
+        try:
             now = datetime.utcnow()
             hour_ago = now - timedelta(hours=1)
             two_hours_ago = now - timedelta(hours=2)
@@ -652,7 +679,8 @@ class UsageTracker:
             return "unknown"
     
     def _statistics_to_dict(self, stats: UsageStatistics) -> Dict[str, Any]:
-        """Convert UsageStatistics to dictionary"""        return {
+        """Convert UsageStatistics to dictionary"""
+        return {
             "license_id": stats.license_id,
             "period": {
                 "start": stats.period_start.isoformat(),
@@ -669,7 +697,8 @@ class UsageTracker:
         }
     
     def get_tracker_stats(self) -> Dict[str, Any]:
-        """Get usage tracker statistics"""        return {
+        """Get usage tracker statistics"""
+        return {
             "version": "1.0.0",
             "metrics": self.metrics,
             "active_sessions": len(self.active_sessions),

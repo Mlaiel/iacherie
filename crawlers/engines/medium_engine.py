@@ -11,7 +11,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
 from dataclasses import dataclass, asdict
@@ -47,7 +48,8 @@ settings = get_settings()
 
 @dataclass
 class MediumArticle:
-    """Medium article data structure"""    id: str
+    """Medium article data structure"""
+    id: str
     title: str
     subtitle: Optional[str]
     author_id: str
@@ -79,7 +81,8 @@ class MediumArticle:
 
 @dataclass
 class MediumAuthor:
-    """Medium author data structure"""    id: str
+    """Medium author data structure"""
+    id: str
     username: str
     name: str
     bio: Optional[str]
@@ -103,7 +106,8 @@ class MediumAuthor:
 
 @dataclass
 class MediumPublication:
-    """Medium publication data structure"""    id: str
+    """Medium publication data structure"""
+    id: str
     name: str
     slug: str
     description: Optional[str]
@@ -121,7 +125,8 @@ class MediumPublication:
 
 @dataclass
 class MediumResponse:
-    """Medium response/comment data structure"""    id: str
+    """Medium response/comment data structure"""
+    id: str
     content: str
     author_id: str
     author_name: str
@@ -133,7 +138,8 @@ class MediumResponse:
 
 
 class MediumCrawlerEngine(BaseCrawlerEngine):
-    """    Professional Medium crawler engine for content and author analytics.
+    """
+    Professional Medium crawler engine for content and author analytics.
     
     Features:
     - Article discovery and analysis
@@ -142,9 +148,11 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
     - Content engagement tracking
     - Topic trend analysis
     - Content protection monitoring
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Medium crawler engine"""        super().__init__(platform="medium", config=config)
+        """Initialize Medium crawler engine"""
+        super().__init__(platform="medium", config=config)
         
         # Rate limiting (conservative due to anti-bot measures)
         self.rate_limiter = RateLimiter(
@@ -171,7 +179,8 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
         logger.info("Medium crawler engine initialized")
     
     async def initialize(self) -> None:
-        """Initialize the crawler engine"""        try:
+        """Initialize the crawler engine"""
+        try:
             await self._create_session()
             self._setup_selenium()
             logger.info("Medium engine initialized successfully")
@@ -180,7 +189,8 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Initialization failed: {e}")
     
     async def _create_session(self) -> None:
-        """Create HTTP session with proper headers"""        headers = {
+        """Create HTTP session with proper headers"""
+        headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
             'Accept': 'application/json, text/plain, */*',
             'Accept-Language': 'en-US,en;q=0.9',
@@ -198,7 +208,8 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
         )
     
     def _setup_selenium(self) -> None:
-        """Setup Selenium WebDriver for dynamic content"""        try:
+        """Setup Selenium WebDriver for dynamic content"""
+        try:
             options = webdriver.ChromeOptions()
             options.add_argument('--headless')
             options.add_argument('--no-sandbox')
@@ -216,7 +227,8 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
         query: str,
         limit: int = 50
     ) -> List[MediumArticle]:
-        """        Search for articles on Medium
+        """
+        Search for articles on Medium
         
         Args:
             query: Search query
@@ -224,7 +236,8 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of articles matching the query
-        """        try:
+        """
+        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -270,14 +283,16 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Article search failed: {e}")
     
     async def get_article_details(self, article_url: str) -> Optional[MediumArticle]:
-        """        Get detailed information about a specific article
+        """
+        Get detailed information about a specific article
         
         Args:
             article_url: Medium article URL
             
         Returns:
             Article details or None if not found
-        """        try:
+        """
+        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -313,14 +328,16 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Article details retrieval failed: {e}")
     
     async def get_author_profile(self, username: str) -> Optional[MediumAuthor]:
-        """        Get author profile information
+        """
+        Get author profile information
         
         Args:
             username: Medium username (with or without @)
             
         Returns:
             Author profile data or None if not found
-        """        try:
+        """
+        try:
             await self.rate_limiter.acquire()
             
             # Clean username
@@ -364,7 +381,8 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
         username: str,
         limit: int = 50
     ) -> List[MediumArticle]:
-        """        Get articles by a specific author
+        """
+        Get articles by a specific author
         
         Args:
             username: Medium username
@@ -372,7 +390,8 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of author's articles
-        """        try:
+        """
+        try:
             await self.rate_limiter.acquire()
             
             # Clean username
@@ -426,14 +445,16 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Author articles retrieval failed: {e}")
     
     async def get_publication_info(self, publication_slug: str) -> Optional[MediumPublication]:
-        """        Get publication information
+        """
+        Get publication information
         
         Args:
             publication_slug: Publication slug
             
         Returns:
             Publication information or None if not found
-        """        try:
+        """
+        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -470,7 +491,8 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Publication info retrieval failed: {e}")
     
     def _parse_article_element(self, article_element) -> Optional[MediumArticle]:
-        """Parse article element from page"""        try:
+        """Parse article element from page"""
+        try:
             # Extract title
             title_elem = article_element.find_element(By.CSS_SELECTOR, 'h2, h3')
             title = title_elem.text if title_elem else ""
@@ -531,26 +553,31 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
             return None
     
     def _parse_article_page(self) -> MediumArticle:
-        """Parse full article page"""        # Implementation for parsing complete article page
+        """Parse full article page"""
+        # Implementation for parsing complete article page
         # This would extract all available article metadata and content
         pass
     
     def _parse_author_profile(self) -> MediumAuthor:
-        """Parse author profile page"""        # Implementation for parsing author profile page
+        """Parse author profile page"""
+        # Implementation for parsing author profile page
         # This would extract all available author data
         pass
     
     def _parse_publication_page(self) -> MediumPublication:
-        """Parse publication page"""        # Implementation for parsing publication page
+        """Parse publication page"""
+        # Implementation for parsing publication page
         # This would extract all available publication data
         pass
     
     async def analyze_trending_topics(self) -> List[Dict[str, Any]]:
-        """        Analyze trending topics on Medium
+        """
+        Analyze trending topics on Medium
         
         Returns:
             List of trending topics with metadata
-        """        try:
+        """
+        try:
             trending_data = []
             
             # Use Selenium to access trending page
@@ -596,7 +623,8 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
         content_snippet: str,
         author_name: str
     ) -> Dict[str, Any]:
-        """        Monitor for potential plagiarism of content
+        """
+        Monitor for potential plagiarism of content
         
         Args:
             content_snippet: Text snippet to search for
@@ -604,7 +632,8 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             Plagiarism monitoring results
-        """        try:
+        """
+        try:
             plagiarism_results = {
                 'original_author': author_name,
                 'content_snippet': content_snippet[:100] + "...",
@@ -641,7 +670,8 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Content plagiarism monitoring failed: {e}")
     
     def _calculate_content_similarity(self, text1: str, text2: str) -> float:
-        """Calculate similarity between two text snippets"""        # Simple word-based similarity calculation
+        """Calculate similarity between two text snippets"""
+        # Simple word-based similarity calculation
         words1 = set(text1.lower().split())
         words2 = set(text2.lower().split())
         
@@ -654,7 +684,8 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
         return len(intersection) / len(union)
     
     async def cleanup(self) -> None:
-        """Clean up resources"""        try:
+        """Clean up resources"""
+        try:
             if self.session:
                 await self.session.close()
             if self.driver:

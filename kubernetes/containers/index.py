@@ -16,7 +16,8 @@ Contact légal: mlaiel@live.de
 Central index and orchestration point for the Container Management Module.
 Provides unified interface for container operations, service discovery,
 and platform-wide container lifecycle management.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
@@ -38,9 +39,11 @@ logger = logging.getLogger(__name__)
 
 
 class ContainerPlatformManager:
-    """    Unified container platform manager for IA-Influencer-Agent.
+    """
+    Unified container platform manager for IA-Influencer-Agent.
     Central orchestration point for all container operations.
-    """    
+    """
+    
     def __init__(self, config_path: str = "/app/config/containers"):
         self.config_path = Path(config_path)
         self.initialized = False
@@ -72,7 +75,8 @@ class ContainerPlatformManager:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def initialize(self) -> bool:
-        """Initialize the complete container platform."""        try:
+        """Initialize the complete container platform."""
+        try:
             self.logger.info("🚀 Initializing IA-Influencer Container Platform...")
             
             # Create configuration directory
@@ -164,7 +168,8 @@ class ContainerPlatformManager:
             return False
     
     async def _setup_ia_influencer_configurations(self):
-        """Setup specific configurations for IA-Influencer platform."""        try:
+        """Setup specific configurations for IA-Influencer platform."""
+        try:
             # Setup service definitions for IA-Influencer components
             ia_services = {
                 "web-api": {
@@ -293,7 +298,8 @@ class ContainerPlatformManager:
             raise
     
     async def _validate_platform_readiness(self) -> bool:
-        """Validate that the platform is ready for operations."""        try:
+        """Validate that the platform is ready for operations."""
+        try:
             validation_results = {
                 "security_manager": False,
                 "monitoring_manager": False,
@@ -354,7 +360,8 @@ class ContainerPlatformManager:
             return False
     
     async def deploy_ia_influencer_stack(self) -> bool:
-        """Deploy the complete IA-Influencer application stack."""        try:
+        """Deploy the complete IA-Influencer application stack."""
+        try:
             if not self.initialized:
                 self.logger.error("❌ Platform not initialized")
                 return False
@@ -398,7 +405,8 @@ class ContainerPlatformManager:
             return False
     
     async def _deploy_infrastructure(self) -> bool:
-        """Deploy infrastructure components."""        try:
+        """Deploy infrastructure components."""
+        try:
             # Deploy storage components
             if self.storage_manager:
                 storage_requirements = self.platform_config["storage_requirements"]
@@ -425,7 +433,8 @@ class ContainerPlatformManager:
             return False
     
     async def _deploy_application_services(self) -> bool:
-        """Deploy IA-Influencer application services."""        try:
+        """Deploy IA-Influencer application services."""
+        try:
             ia_services = self.platform_config["ia_services"]
             
             for service_name, service_config in ia_services.items():
@@ -456,7 +465,8 @@ class ContainerPlatformManager:
             return False
     
     async def _configure_service_mesh(self) -> bool:
-        """Configure service mesh for IA-Influencer services."""        try:
+        """Configure service mesh for IA-Influencer services."""
+        try:
             # Configure Istio/Linkerd service mesh
             # Setup traffic management, security policies, observability
             self.logger.info("✅ Service mesh configured")
@@ -467,7 +477,8 @@ class ContainerPlatformManager:
             return False
     
     async def _configure_monitoring(self) -> bool:
-        """Configure monitoring and alerting."""        try:
+        """Configure monitoring and alerting."""
+        try:
             if self.monitoring_manager:
                 # Configure dashboards, alerts, SLOs
                 pass
@@ -480,7 +491,8 @@ class ContainerPlatformManager:
             return False
     
     async def _verify_service_deployment(self, service_name: str) -> bool:
-        """Verify that a service is properly deployed and healthy."""        try:
+        """Verify that a service is properly deployed and healthy."""
+        try:
             # Check pod status, readiness probes, health endpoints
             return True
             
@@ -489,7 +501,8 @@ class ContainerPlatformManager:
             return False
     
     async def _validate_deployment(self) -> bool:
-        """Validate the complete deployment."""        try:
+        """Validate the complete deployment."""
+        try:
             # Run end-to-end tests
             # Verify service connectivity
             # Check health endpoints
@@ -503,7 +516,8 @@ class ContainerPlatformManager:
             return False
     
     async def get_platform_status(self) -> Dict[str, Any]:
-        """Get comprehensive platform status."""        try:
+        """Get comprehensive platform status."""
+        try:
             status = {
                 "platform_initialized": self.initialized,
                 "timestamp": datetime.now().isoformat(),
@@ -542,7 +556,8 @@ class ContainerPlatformManager:
             return {"error": str(e)}
     
     async def _get_service_status(self, service_name: str) -> Dict[str, Any]:
-        """Get status of a specific service."""        try:
+        """Get status of a specific service."""
+        try:
             # Check pod status, health endpoints, metrics
             return {
                 "status": "running",
@@ -556,7 +571,8 @@ class ContainerPlatformManager:
             return {"status": "unknown", "error": str(e)}
     
     async def scale_service(self, service_name: str, replicas: int) -> bool:
-        """Scale a specific service."""        try:
+        """Scale a specific service."""
+        try:
             if not self.initialized:
                 return False
             
@@ -572,7 +588,8 @@ class ContainerPlatformManager:
             return False
     
     async def update_service(self, service_name: str, new_image: str) -> bool:
-        """Update a service with a new image."""        try:
+        """Update a service with a new image."""
+        try:
             if not self.initialized:
                 return False
             
@@ -596,7 +613,8 @@ class ContainerPlatformManager:
             return False
     
     async def backup_platform(self) -> bool:
-        """Backup the entire platform state."""        try:
+        """Backup the entire platform state."""
+        try:
             if not self.backup_manager:
                 return False
             
@@ -634,7 +652,8 @@ class ContainerPlatformManager:
             return False
     
     async def shutdown(self) -> bool:
-        """Gracefully shutdown the platform."""        try:
+        """Gracefully shutdown the platform."""
+        try:
             self.logger.info("🔄 Initiating platform shutdown...")
             
             # Stop monitoring loops
@@ -666,7 +685,8 @@ _platform_manager: Optional[ContainerPlatformManager] = None
 
 
 async def get_platform_manager() -> ContainerPlatformManager:
-    """Get or create the global platform manager instance."""    global _platform_manager
+    """Get or create the global platform manager instance."""
+    global _platform_manager
     
     if _platform_manager is None:
         _platform_manager = ContainerPlatformManager()
@@ -676,7 +696,8 @@ async def get_platform_manager() -> ContainerPlatformManager:
 
 
 async def deploy_ia_influencer_platform() -> bool:
-    """Deploy the complete IA-Influencer platform."""    try:
+    """Deploy the complete IA-Influencer platform."""
+    try:
         platform = await get_platform_manager()
         return await platform.deploy_ia_influencer_stack()
     except Exception as e:
@@ -685,7 +706,8 @@ async def deploy_ia_influencer_platform() -> bool:
 
 
 async def get_platform_health() -> Dict[str, Any]:
-    """Get platform health status."""    try:
+    """Get platform health status."""
+    try:
         platform = await get_platform_manager()
         return await platform.get_platform_status()
     except Exception as e:

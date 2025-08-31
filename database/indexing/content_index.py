@@ -22,7 +22,8 @@ This software is proprietary and confidential.
 Unauthorized use, modification, or distribution by any individual or entity 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from enum import Enum
@@ -37,21 +38,24 @@ from ..security.index_security import IndexSecurityManager
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Content types for indexing optimization"""    AUDIO = "audio"
+    """Content types for indexing optimization"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
     COMPOSITE = "composite"
 
 class IndexStrategy(Enum):
-    """Index strategies for different content processing scenarios"""    PERFORMANCE_OPTIMIZED = "performance_optimized"
+    """Index strategies for different content processing scenarios"""
+    PERFORMANCE_OPTIMIZED = "performance_optimized"
     STORAGE_OPTIMIZED = "storage_optimized"
     SEARCH_OPTIMIZED = "search_optimized"
     REAL_TIME = "real_time"
     ANALYTICS = "analytics"
 
 class ContentIndexManager:
-    """    Ultra-advanced content index manager for multi-format content processing
+    """
+    Ultra-advanced content index manager for multi-format content processing
     
     Handles sophisticated indexing strategies for:
     - Audio content fingerprinting and analysis
@@ -59,9 +63,11 @@ class ContentIndexManager:
     - Image recognition and content protection
     - Text analysis and SEO optimization
     - Composite multi-format content handling
-    """    
+    """
+    
     def __init__(self):
-        """Initialize content index manager with enterprise-grade components"""        self.db_manager = PostgreSQLManager()
+        """Initialize content index manager with enterprise-grade components"""
+        self.db_manager = PostgreSQLManager()
         self.performance_tracker = PerformanceTracker()
         self.security_manager = IndexSecurityManager()
         
@@ -128,7 +134,8 @@ class ContentIndexManager:
         logger.info("ContentIndexManager initialized with enterprise configurations")
     
     async def initialize(self) -> bool:
-        """Initialize content index manager and create base indexes"""        try:
+        """Initialize content index manager and create base indexes"""
+        try:
             await self.db_manager.initialize()
             await self.performance_tracker.initialize()
             await self.security_manager.initialize()
@@ -148,7 +155,8 @@ class ContentIndexManager:
     
     async def create_content_index(self, table_name: str, content_type: ContentType,
                                  strategy: IndexStrategy = IndexStrategy.PERFORMANCE_OPTIMIZED) -> bool:
-        """        Create optimized indexes for specific content type and strategy
+        """
+        Create optimized indexes for specific content type and strategy
         
         Args:
             table_name: Target table for index creation
@@ -157,7 +165,8 @@ class ContentIndexManager:
             
         Returns:
             bool: Success status of index creation
-        """        try:
+        """
+        try:
             # Get content-specific index configuration
             index_config = self.content_indexes.get(content_type, {})
             
@@ -201,7 +210,8 @@ class ContentIndexManager:
     
     async def _create_optimized_index(self, index_name: str, table_name: str,
                                     column: str, index_type: str, strategy: IndexStrategy) -> bool:
-        """Create an optimized index with strategy-specific parameters"""        try:
+        """Create an optimized index with strategy-specific parameters"""
+        try:
             # Build index creation SQL with optimizations
             sql_parts = [f"CREATE INDEX CONCURRENTLY IF NOT EXISTS {index_name}"]
             sql_parts.append(f"ON {table_name}")
@@ -240,7 +250,8 @@ class ContentIndexManager:
     
     async def _apply_strategy_optimizations(self, base_config: Dict[str, str], 
                                           strategy: IndexStrategy) -> Dict[str, str]:
-        """Apply strategy-specific optimizations to index configuration"""        optimized_config = base_config.copy()
+        """Apply strategy-specific optimizations to index configuration"""
+        optimized_config = base_config.copy()
         
         if strategy == IndexStrategy.PERFORMANCE_OPTIMIZED:
             # Prioritize btree indexes for fast lookups
@@ -273,7 +284,8 @@ class ContentIndexManager:
         return optimized_config
     
     async def _create_base_content_indexes(self) -> bool:
-        """Create essential base indexes for content management"""        try:
+        """Create essential base indexes for content management"""
+        try:
             base_indexes = [
                 {
                     'name': 'idx_content_created_at',
@@ -309,9 +321,11 @@ class ContentIndexManager:
             
             async with self.db_manager.get_connection() as conn:
                 for index_info in base_indexes:
-                    sql = f"""                    CREATE INDEX CONCURRENTLY IF NOT EXISTS {index_info['name']}
+                    sql = f"""
+                    CREATE INDEX CONCURRENTLY IF NOT EXISTS {index_info['name']}
                     ON {index_info['table']} USING {index_info['type']} {index_info['column']}
-                    """                    await conn.execute(sql)
+                    """
+                    await conn.execute(sql)
                     logger.info(f"Base content index created: {index_info['name']}")
             
             return True
@@ -321,9 +335,11 @@ class ContentIndexManager:
             return False
     
     async def _setup_index_monitoring(self) -> bool:
-        """Setup comprehensive monitoring for content indexes"""        try:
+        """Setup comprehensive monitoring for content indexes"""
+        try:
             # Create monitoring views and functions
-            monitoring_sql = """            CREATE OR REPLACE VIEW content_index_usage AS
+            monitoring_sql = """
+            CREATE OR REPLACE VIEW content_index_usage AS
             SELECT 
                 schemaname,
                 tablename,
@@ -364,7 +380,8 @@ class ContentIndexManager:
                 ORDER BY i.idx_scan DESC;
             END;
             $$ LANGUAGE plpgsql;
-            """            
+            """
+            
             async with self.db_manager.get_connection() as conn:
                 await conn.execute(monitoring_sql)
             
@@ -376,14 +393,16 @@ class ContentIndexManager:
             return False
     
     async def optimize_content_indexes(self, table_name: str = None) -> Dict[str, Any]:
-        """        Optimize content indexes for maximum performance
+        """
+        Optimize content indexes for maximum performance
         
         Args:
             table_name: Optional specific table to optimize
             
         Returns:
             Dict containing optimization results and metrics
-        """        try:
+        """
+        try:
             optimization_results = {
                 'optimized_indexes': [],
                 'performance_improvements': {},
@@ -441,12 +460,14 @@ class ContentIndexManager:
             return {'error': str(e)}
     
     async def _get_index_usage_statistics(self, table_name: str = None) -> List[Dict[str, Any]]:
-        """Get comprehensive index usage statistics"""        try:
+        """Get comprehensive index usage statistics"""
+        try:
             where_clause = ""
             if table_name:
                 where_clause = f"AND tablename = '{table_name}'"
             
-            sql = f"""            SELECT 
+            sql = f"""
+            SELECT 
                 indexname,
                 tablename,
                 idx_scan,
@@ -459,7 +480,8 @@ class ContentIndexManager:
             AND indexname LIKE 'idx_content_%'
             {where_clause}
             ORDER BY idx_scan DESC
-            """            
+            """
+            
             async with self.db_manager.get_connection() as conn:
                 rows = await conn.fetch(sql)
                 
@@ -470,7 +492,8 @@ class ContentIndexManager:
             return []
     
     async def _identify_optimization_candidates(self, usage_stats: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Identify indexes that would benefit from optimization"""        candidates = []
+        """Identify indexes that would benefit from optimization"""
+        candidates = []
         
         for stats in usage_stats:
             index_name = stats['indexname']
@@ -514,7 +537,8 @@ class ContentIndexManager:
         return candidates
     
     async def _reindex_content_index(self, index_name: str) -> bool:
-        """Reindex a content index to improve performance"""        try:
+        """Reindex a content index to improve performance"""
+        try:
             sql = f"REINDEX INDEX CONCURRENTLY {index_name}"
             
             async with self.db_manager.get_connection() as conn:
@@ -528,7 +552,8 @@ class ContentIndexManager:
             return False
     
     async def _cluster_content_table(self, table_name: str, index_name: str) -> bool:
-        """Cluster table data based on index for improved locality"""        try:
+        """Cluster table data based on index for improved locality"""
+        try:
             sql = f"CLUSTER {table_name} USING {index_name}"
             
             async with self.db_manager.get_connection() as conn:
@@ -542,7 +567,8 @@ class ContentIndexManager:
             return False
     
     async def _analyze_content_table(self, table_name: str) -> bool:
-        """Update table statistics for query optimization"""        try:
+        """Update table statistics for query optimization"""
+        try:
             sql = f"ANALYZE {table_name}"
             
             async with self.db_manager.get_connection() as conn:
@@ -557,7 +583,8 @@ class ContentIndexManager:
     
     async def _calculate_performance_improvements(self, before_stats: List[Dict[str, Any]], 
                                                 after_stats: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate performance improvements after optimization"""        improvements = {
+        """Calculate performance improvements after optimization"""
+        improvements = {
             'scan_efficiency_improvements': {},
             'overall_improvement': 0.0
         }
@@ -592,7 +619,8 @@ class ContentIndexManager:
         return improvements
     
     async def _generate_optimization_recommendations(self, usage_stats: List[Dict[str, Any]]) -> List[str]:
-        """Generate optimization recommendations based on current statistics"""        recommendations = []
+        """Generate optimization recommendations based on current statistics"""
+        recommendations = []
         
         # Analyze statistics and generate recommendations
         total_indexes = len(usage_stats)
@@ -627,7 +655,8 @@ class ContentIndexManager:
         return recommendations
     
     async def get_content_index_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive statistics for all content indexes"""        try:
+        """Get comprehensive statistics for all content indexes"""
+        try:
             statistics = {
                 'total_indexes': 0,
                 'index_usage': {},
@@ -682,7 +711,8 @@ class ContentIndexManager:
             return {'error': str(e)}
     
     async def cleanup(self):
-        """Cleanup resources and connections"""        try:
+        """Cleanup resources and connections"""
+        try:
             await self.db_manager.cleanup()
             await self.performance_tracker.cleanup()
             await self.security_manager.cleanup()
@@ -691,13 +721,15 @@ class ContentIndexManager:
             
         except Exception as e:
             logger.error(f"ContentIndexManager cleanup failed: {str(e)}")
-    """Index creation strategies"""    PERFORMANCE = "performance"
+    """Index creation strategies"""
+    PERFORMANCE = "performance"
     STORAGE = "storage"
     BALANCED = "balanced"
     REAL_TIME = "real_time"
 
 class ContentIndexManager:
-    """    Advanced content indexing manager for IA-Influencer platform
+    """
+    Advanced content indexing manager for IA-Influencer platform
     
     Provides enterprise-grade indexing solutions for multi-format content:
     - Audio fingerprint indexes
@@ -705,9 +737,11 @@ class ContentIndexManager:
     - Image similarity indexes
     - Text semantic indexes
     - Cross-modal composite indexes
-    """    
+    """
+    
     def __init__(self):
-        """Initialize content index manager"""        self.db_manager = PostgreSQLManager()
+        """Initialize content index manager"""
+        self.db_manager = PostgreSQLManager()
         self.performance_tracker = PerformanceTracker()
         self.security_manager = IndexSecurityManager()
         self.active_indexes = {}
@@ -771,7 +805,8 @@ class ContentIndexManager:
         logger.info("ContentIndexManager initialized")
     
     async def initialize(self) -> bool:
-        """Initialize content index manager"""        try:
+        """Initialize content index manager"""
+        try:
             # Initialize database connection
             if not await self.db_manager.initialize():
                 raise Exception("Failed to initialize database manager")
@@ -800,7 +835,8 @@ class ContentIndexManager:
             return False
     
     async def _setup_database_schema(self):
-        """Setup required database schema and extensions"""        conn = await self.db_manager.get_connection()
+        """Setup required database schema and extensions"""
+        conn = await self.db_manager.get_connection()
         try:
             # Enable required extensions
             await conn.execute("CREATE EXTENSION IF NOT EXISTS btree_gin;")
@@ -808,7 +844,8 @@ class ContentIndexManager:
             await conn.execute("CREATE EXTENSION IF NOT EXISTS vector;")
             
             # Create index metadata table
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS content_index_metadata (
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS content_index_metadata (
                     index_id SERIAL PRIMARY KEY,
                     index_name VARCHAR(255) UNIQUE NOT NULL,
                     content_type VARCHAR(50) NOT NULL,
@@ -824,7 +861,8 @@ class ContentIndexManager:
             """)
             
             # Create performance tracking table
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS index_performance_log (
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS index_performance_log (
                     log_id SERIAL PRIMARY KEY,
                     index_name VARCHAR(255) NOT NULL,
                     operation_type VARCHAR(50) NOT NULL,
@@ -846,7 +884,8 @@ class ContentIndexManager:
             await self.db_manager.return_connection(conn)
     
     async def create_index(self, index_name: str, index_type: str, config: Dict[str, Any]) -> bool:
-        """Create a new content index with specified configuration"""        try:
+        """Create a new content index with specified configuration"""
+        try:
             content_type = ContentType(config.get('content_type', 'composite'))
             table_name = config.get('table_name')
             columns = config.get('columns', [])
@@ -905,7 +944,8 @@ class ContentIndexManager:
     async def _generate_index_sql(self, index_name: str, index_type: str, 
                                  table_name: str, columns: List[str], 
                                  config: Dict[str, Any]) -> str:
-        """Generate optimized SQL for index creation"""        column_list = ', '.join(columns)
+        """Generate optimized SQL for index creation"""
+        column_list = ', '.join(columns)
         
         # Base SQL templates
         if index_type == 'btree':
@@ -938,9 +978,11 @@ class ContentIndexManager:
     async def _store_index_metadata(self, index_name: str, content_type: ContentType,
                                    index_type: str, table_name: str, columns: List[str],
                                    config: Dict[str, Any], creation_time: float):
-        """Store index metadata for tracking and optimization"""        conn = await self.db_manager.get_connection()
+        """Store index metadata for tracking and optimization"""
+        conn = await self.db_manager.get_connection()
         try:
-            await conn.execute("""                INSERT INTO content_index_metadata 
+            await conn.execute("""
+                INSERT INTO content_index_metadata 
                 (index_name, content_type, index_type, table_name, column_names, index_config, performance_stats)
                 VALUES ($1, $2, $3, $4, $5, $6, $7)
                 ON CONFLICT (index_name) DO UPDATE SET
@@ -957,7 +999,8 @@ class ContentIndexManager:
             await self.db_manager.return_connection(conn)
     
     async def optimize_content_indexes(self, content_type: Optional[ContentType] = None) -> Dict[str, Any]:
-        """Optimize indexes for specific content type or all content types"""        try:
+        """Optimize indexes for specific content type or all content types"""
+        try:
             optimization_results = {}
             
             # Filter indexes by content type if specified
@@ -985,7 +1028,8 @@ class ContentIndexManager:
             return {'error': str(e)}
     
     async def _optimize_single_index(self, index_name: str, index_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize a single index"""        conn = await self.db_manager.get_connection()
+        """Optimize a single index"""
+        conn = await self.db_manager.get_connection()
         try:
             start_time = datetime.now()
             
@@ -1003,7 +1047,8 @@ class ContentIndexManager:
             )
             
             # Update metadata
-            await conn.execute("""                UPDATE content_index_metadata 
+            await conn.execute("""
+                UPDATE content_index_metadata 
                 SET last_optimized = NOW(),
                     performance_stats = performance_stats || $1
                 WHERE index_name = $2
@@ -1022,11 +1067,13 @@ class ContentIndexManager:
             await self.db_manager.return_connection(conn)
     
     async def get_index_statistics(self, index_name: Optional[str] = None) -> Dict[str, Any]:
-        """Get comprehensive statistics for content indexes"""        conn = await self.db_manager.get_connection()
+        """Get comprehensive statistics for content indexes"""
+        conn = await self.db_manager.get_connection()
         try:
             if index_name:
                 # Get statistics for specific index
-                result = await conn.fetchrow("""                    SELECT ci.*, 
+                result = await conn.fetchrow("""
+                    SELECT ci.*, 
                            pg_size_pretty(pg_relation_size(ci.index_name::regclass)) as index_size,
                            s.n_tup_ins, s.n_tup_upd, s.n_tup_del, s.n_tup_hot_upd
                     FROM content_index_metadata ci
@@ -1040,7 +1087,8 @@ class ContentIndexManager:
                     return {'error': f'Index {index_name} not found'}
             else:
                 # Get statistics for all indexes
-                results = await conn.fetch("""                    SELECT ci.*, 
+                results = await conn.fetch("""
+                    SELECT ci.*, 
                            pg_size_pretty(pg_relation_size(ci.index_name::regclass)) as index_size,
                            s.n_tup_ins, s.n_tup_upd, s.n_tup_del, s.n_tup_hot_upd
                     FROM content_index_metadata ci
@@ -1057,9 +1105,11 @@ class ContentIndexManager:
             await self.db_manager.return_connection(conn)
     
     async def _load_existing_indexes(self):
-        """Load existing index information from database"""        conn = await self.db_manager.get_connection()
+        """Load existing index information from database"""
+        conn = await self.db_manager.get_connection()
         try:
-            results = await conn.fetch("""                SELECT index_name, content_type, index_type, table_name, 
+            results = await conn.fetch("""
+                SELECT index_name, content_type, index_type, table_name, 
                        column_names, index_config, created_at
                 FROM content_index_metadata
             """)
@@ -1080,7 +1130,8 @@ class ContentIndexManager:
             await self.db_manager.return_connection(conn)
     
     async def _setup_optimization_schedule(self):
-        """Setup automatic index optimization schedule"""        # Schedule daily optimization for high-traffic indexes
+        """Setup automatic index optimization schedule"""
+        # Schedule daily optimization for high-traffic indexes
         for index_name, index_info in self.active_indexes.items():
             content_type = index_info['content_type']
             
@@ -1108,7 +1159,8 @@ class ContentIndexManager:
                 }
     
     async def cleanup(self):
-        """Cleanup resources and connections"""        try:
+        """Cleanup resources and connections"""
+        try:
             if self.performance_tracker:
                 await self.performance_tracker.cleanup()
             if self.security_manager:

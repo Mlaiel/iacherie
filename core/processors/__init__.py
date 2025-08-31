@@ -166,7 +166,8 @@ except ImportError as e:
 
 
 class ProcessorType(str, Enum):
-    """Types of content processors available"""    AUDIO = "audio"
+    """Types of content processors available"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -184,7 +185,8 @@ class ProcessorType(str, Enum):
 
 
 class ProcessingPriority(str, Enum):
-    """Processing priority levels"""    LOW = "low"
+    """Processing priority levels"""
+    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     CRITICAL = "critical"
@@ -193,7 +195,8 @@ class ProcessingPriority(str, Enum):
 
 @dataclass
 class ProcessorConfig:
-    """Configuration for processor initialization"""    enable_gpu: bool = True
+    """Configuration for processor initialization"""
+    enable_gpu: bool = True
     enable_ai_analysis: bool = True
     enable_quality_check: bool = True
     enable_metadata_extraction: bool = True
@@ -246,7 +249,8 @@ class ProcessorConfig:
 
 @dataclass
 class ProcessingRequest:
-    """Request for content processing"""    content: Union[bytes, str, BinaryIO]
+    """Request for content processing"""
+    content: Union[bytes, str, BinaryIO]
     processor_type: ProcessorType
     content_type: str
     user_id: str
@@ -267,7 +271,8 @@ class ProcessingRequest:
 
 @dataclass
 class ProcessingResponse:
-    """Response from content processing"""    request_id: str
+    """Response from content processing"""
+    request_id: str
     success: bool
     processor_type: ProcessorType
     content_type: str
@@ -288,18 +293,21 @@ class ProcessingResponse:
 
 
 class ProcessorRegistry:
-    """    🏭 ENTERPRISE PROCESSOR REGISTRY
+    """
+    🏭 ENTERPRISE PROCESSOR REGISTRY
     
     Central registry for managing all content processors
     with dependency injection and configuration management
-    """    
+    """
+    
     def __init__(self):
         self._processors: Dict[ProcessorType, Any] = {}
         self._config: Optional[ProcessorConfig] = None
         self._initialized: bool = False
         
     def configure(self, config: Union[ProcessorConfig, Dict[str, Any]]) -> None:
-        """Configure the processor registry"""        if isinstance(config, dict):
+        """Configure the processor registry"""
+        if isinstance(config, dict):
             self._config = ProcessorConfig(**config)
         else:
             self._config = config
@@ -312,7 +320,8 @@ class ProcessorRegistry:
         redis_client,
         processors_to_init: Optional[List[ProcessorType]] = None
     ) -> Dict[ProcessorType, bool]:
-        """        Initialize specified processors or all processors
+        """
+        Initialize specified processors or all processors
         
         Args:
             db_session: Database session
@@ -321,7 +330,8 @@ class ProcessorRegistry:
             
         Returns:
             Dict with initialization status for each processor
-        """        if not self._config:
+        """
+        if not self._config:
             raise ValueError("Processor registry not configured. Call configure() first.")
         
         initialization_results = {}
@@ -477,7 +487,8 @@ class ProcessorRegistry:
         return initialization_results
     
     def get_processor(self, processor_type: ProcessorType) -> Any:
-        """Get an initialized processor"""        if not self._initialized:
+        """Get an initialized processor"""
+        if not self._initialized:
             raise ValueError("Processor registry not initialized. Call initialize_processors() first.")
         
         if processor_type not in self._processors:
@@ -486,20 +497,24 @@ class ProcessorRegistry:
         return self._processors[processor_type]
     
     def list_processors(self) -> List[ProcessorType]:
-        """List all initialized processors"""        return list(self._processors.keys())
+        """List all initialized processors"""
+        return list(self._processors.keys())
     
     def is_initialized(self) -> bool:
-        """Check if registry is initialized"""        return self._initialized
+        """Check if registry is initialized"""
+        return self._initialized
     
     async def process_content(self, request: ProcessingRequest) -> ProcessingResponse:
-        """        Process content using the appropriate processor
+        """
+        Process content using the appropriate processor
         
         Args:
             request: Processing request
             
         Returns:
             Processing response
-        """        import time
+        """
+        import time
         import uuid
         
         start_time = time.time()
@@ -567,7 +582,8 @@ class ProcessorRegistry:
             )
     
     def _validate_content(self, request: ProcessingRequest) -> bool:
-        """Validate content before processing"""        if not self._config.enable_content_validation:
+        """Validate content before processing"""
+        if not self._config.enable_content_validation:
             return True
         
         # Check content size
@@ -586,7 +602,8 @@ class ProcessorRegistry:
         return True
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on all processors"""        health_status = {
+        """Perform health check on all processors"""
+        health_status = {
             "registry_initialized": self._initialized,
             "total_processors": len(self._processors),
             "processor_status": {}
@@ -625,7 +642,8 @@ async def initialize_processors(
     config: Optional[Union[ProcessorConfig, Dict[str, Any]]] = None,
     processors_to_init: Optional[List[ProcessorType]] = None
 ) -> Dict[ProcessorType, bool]:
-    """    Initialize processors with default configuration
+    """
+    Initialize processors with default configuration
     
     Args:
         db_session: Database session
@@ -635,7 +653,8 @@ async def initialize_processors(
         
     Returns:
         Initialization results
-    """    if config:
+    """
+    if config:
         processor_registry.configure(config)
     elif not processor_registry._config:
         # Use default configuration
@@ -645,19 +664,23 @@ async def initialize_processors(
 
 
 def get_processor(processor_type: ProcessorType) -> Any:
-    """Get an initialized processor"""    return processor_registry.get_processor(processor_type)
+    """Get an initialized processor"""
+    return processor_registry.get_processor(processor_type)
 
 
 def list_processors() -> List[ProcessorType]:
-    """List all initialized processors"""    return processor_registry.list_processors()
+    """List all initialized processors"""
+    return processor_registry.list_processors()
 
 
 async def process_content(request: ProcessingRequest) -> ProcessingResponse:
-    """Process content using the appropriate processor"""    return await processor_registry.process_content(request)
+    """Process content using the appropriate processor"""
+    return await processor_registry.process_content(request)
 
 
 async def health_check() -> Dict[str, Any]:
-    """Perform health check on all processors"""    return await processor_registry.health_check()
+    """Perform health check on all processors"""
+    return await processor_registry.health_check()
 
 
 # Export des classes et fonctions principales

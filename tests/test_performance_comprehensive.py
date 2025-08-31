@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -13,7 +14,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 """Performance and Load Tests for Production Readiness
 Ensures system can handle production workloads efficiently
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -25,10 +27,12 @@ import json
 
 
 class TestPerformanceBenchmarks:
-    """Performance benchmark tests for critical components"""    
+    """Performance benchmark tests for critical components"""
+    
     @pytest.mark.asyncio
     async def test_concurrent_uploads_performance(self):
-        """Test concurrent content upload performance"""        upload_count = 10
+        """Test concurrent content upload performance"""
+        upload_count = 10
         max_concurrent = 5
         
         async def mock_upload(content_id):
@@ -53,7 +57,8 @@ class TestPerformanceBenchmarks:
         assert duration < 1.0  # Should complete within 1 second
     
     def test_database_query_performance(self):
-        """Test database query performance"""        query_count = 100
+        """Test database query performance"""
+        query_count = 100
         max_query_time = 0.05  # 50ms per query
         
         def mock_database_query(query_id):
@@ -76,7 +81,8 @@ class TestPerformanceBenchmarks:
     
     @pytest.mark.asyncio
     async def test_api_response_time(self):
-        """Test API endpoint response times"""        endpoint_count = 50
+        """Test API endpoint response times"""
+        endpoint_count = 50
         max_response_time = 0.2  # 200ms max response time
         
         async def mock_api_call(endpoint_id):
@@ -103,7 +109,8 @@ class TestPerformanceBenchmarks:
         assert max_measured_time < max_response_time * 2  # Allow some variance
     
     def test_memory_usage_efficiency(self):
-        """Test memory usage efficiency"""        import psutil
+        """Test memory usage efficiency"""
+        import psutil
         import os
         
         process = psutil.Process(os.getpid())
@@ -127,10 +134,12 @@ class TestPerformanceBenchmarks:
 
 
 class TestScalabilityTests:
-    """Scalability tests for handling increased load"""    
+    """Scalability tests for handling increased load"""
+    
     @pytest.mark.asyncio
     async def test_user_load_scaling(self):
-        """Test system behavior under increasing user load"""        user_loads = [10, 50, 100, 200]
+        """Test system behavior under increasing user load"""
+        user_loads = [10, 50, 100, 200]
         max_response_degradation = 2.0  # Max 2x slower under high load
         
         baseline_time = None
@@ -157,7 +166,8 @@ class TestScalabilityTests:
             assert degradation_factor < max_response_degradation
     
     def test_data_volume_scaling(self):
-        """Test system behavior with increasing data volumes"""        data_sizes = [100, 500, 1000, 2000]  # Number of records
+        """Test system behavior with increasing data volumes"""
+        data_sizes = [100, 500, 1000, 2000]  # Number of records
         max_processing_time = 1.0  # 1 second max
         
         for size in data_sizes:
@@ -183,7 +193,8 @@ class TestScalabilityTests:
     
     @pytest.mark.asyncio
     async def test_concurrent_connections(self):
-        """Test handling of concurrent connections"""        connection_counts = [10, 25, 50, 100]
+        """Test handling of concurrent connections"""
+        connection_counts = [10, 25, 50, 100]
         max_connection_time = 0.5  # 500ms max connection time
         
         for conn_count in connection_counts:
@@ -204,9 +215,11 @@ class TestScalabilityTests:
 
 
 class TestCachePerformance:
-    """Cache performance and efficiency tests"""    
+    """Cache performance and efficiency tests"""
+    
     def test_cache_hit_ratio(self):
-        """Test cache hit ratio performance"""        cache = {}  # Simple dict cache for testing
+        """Test cache hit ratio performance"""
+        cache = {}  # Simple dict cache for testing
         cache_hits = 0
         cache_misses = 0
         
@@ -228,7 +241,8 @@ class TestCachePerformance:
         assert hit_ratio > 0.5  # Should have >50% hit ratio
     
     def test_cache_eviction_performance(self):
-        """Test cache eviction performance"""        max_cache_size = 10
+        """Test cache eviction performance"""
+        max_cache_size = 10
         cache = {}
         access_order = []
         
@@ -254,7 +268,8 @@ class TestCachePerformance:
     
     @pytest.mark.asyncio
     async def test_cache_concurrent_access(self):
-        """Test cache performance under concurrent access"""        cache = {}
+        """Test cache performance under concurrent access"""
+        cache = {}
         cache_lock = asyncio.Lock()
         
         async def cache_operation(operation_id):
@@ -277,9 +292,11 @@ class TestCachePerformance:
 
 
 class TestDatabasePerformance:
-    """Database performance tests"""    
+    """Database performance tests"""
+    
     def test_connection_pooling_efficiency(self):
-        """Test database connection pooling efficiency"""        pool_size = 5
+        """Test database connection pooling efficiency"""
+        pool_size = 5
         active_connections = []
         available_connections = list(range(pool_size))
         
@@ -313,7 +330,8 @@ class TestDatabasePerformance:
         assert len(active_connections) == 0
     
     def test_query_optimization(self):
-        """Test query optimization strategies"""        # Mock query execution times
+        """Test query optimization strategies"""
+        # Mock query execution times
         queries = {
             "SELECT * FROM users": 0.1,  # Unoptimized
             "SELECT id, name FROM users WHERE active = true": 0.02,  # Optimized
@@ -334,7 +352,8 @@ class TestDatabasePerformance:
                 assert is_optimized, f"Query '{query}' not optimized: {execution_time}s"
     
     def test_index_usage_efficiency(self):
-        """Test database index usage efficiency"""        # Mock index statistics
+        """Test database index usage efficiency"""
+        # Mock index statistics
         indexes = {
             "users_email_idx": {"usage_count": 1000, "selectivity": 0.95},
             "users_created_at_idx": {"usage_count": 500, "selectivity": 0.8},
@@ -355,9 +374,11 @@ class TestDatabasePerformance:
 
 
 class TestResourceUtilization:
-    """Resource utilization tests"""    
+    """Resource utilization tests"""
+    
     def test_cpu_utilization_efficiency(self):
-        """Test CPU utilization efficiency"""        import psutil
+        """Test CPU utilization efficiency"""
+        import psutil
         
         # Get initial CPU usage
         initial_cpu = psutil.cpu_percent(interval=0.1)
@@ -382,7 +403,8 @@ class TestResourceUtilization:
         assert final_cpu >= 0 and final_cpu <= 100
     
     def test_io_operation_efficiency(self):
-        """Test I/O operation efficiency"""        import tempfile
+        """Test I/O operation efficiency"""
+        import tempfile
         import os
         
         # Test file I/O performance
@@ -410,7 +432,8 @@ class TestResourceUtilization:
         assert read_time < 0.1   # 100ms max read time
     
     def test_network_simulation_performance(self):
-        """Test network operation simulation performance"""        import asyncio
+        """Test network operation simulation performance"""
+        import asyncio
         
         async def mock_network_request(request_id, latency=0.05):
             # Simulate network latency

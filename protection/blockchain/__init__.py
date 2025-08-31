@@ -50,7 +50,8 @@ UNAUTHORIZED ACCESS CONSTITUTES FEDERAL CYBER CRIME:
 
 Contact mlaiel@live.de for MANDATORY blockchain access authorization.
 All blockchain transactions are permanently recorded and legally traceable.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
 from dataclasses import dataclass, field
@@ -85,7 +86,8 @@ logger = logging.getLogger(__name__)
 
 
 class BlockchainNetwork(Enum):
-    """Supported blockchain networks for content protection"""    ETHEREUM = "ethereum"
+    """Supported blockchain networks for content protection"""
+    ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BINANCE_SMART_CHAIN = "binance_smart_chain"
     HYPERLEDGER_FABRIC = "hyperledger_fabric"
@@ -96,7 +98,8 @@ class BlockchainNetwork(Enum):
 
 
 class CertificationType(Enum):
-    """Types de certification blockchain"""    COPYRIGHT_REGISTRATION = "copyright_registration"
+    """Types de certification blockchain"""
+    COPYRIGHT_REGISTRATION = "copyright_registration"
     CONTENT_AUTHENTICITY = "content_authenticity"
     OWNERSHIP_PROOF = "ownership_proof"
     TIMESTAMP_PROOF = "timestamp_proof"
@@ -106,7 +109,8 @@ class CertificationType(Enum):
 
 
 class TransactionStatus(Enum):
-    """Statuts des transactions blockchain"""    PENDING = "pending"
+    """Statuts des transactions blockchain"""
+    PENDING = "pending"
     CONFIRMED = "confirmed"
     FAILED = "failed"
     EXPIRED = "expired"
@@ -114,7 +118,8 @@ class TransactionStatus(Enum):
 
 @dataclass
 class ContentHash:
-    """Hash de contenu pour la blockchain"""    content_id: str
+    """Hash de contenu pour la blockchain"""
+    content_id: str
     file_hash: str
     metadata_hash: str
     timestamp: datetime
@@ -132,7 +137,8 @@ class ContentHash:
 
 @dataclass
 class OwnershipRecord:
-    """Enregistrement de propriété sur blockchain"""    owner_address: str
+    """Enregistrement de propriété sur blockchain"""
+    owner_address: str
     owner_name: str
     content_identifier: str
     rights_description: str
@@ -153,7 +159,8 @@ class OwnershipRecord:
 
 
 class BlockchainCertificate(BaseModel):
-    """Certificat blockchain pour contenu protégé"""    certificate_id: str
+    """Certificat blockchain pour contenu protégé"""
+    certificate_id: str
     content_id: str
     owner_id: str
     certification_type: CertificationType
@@ -187,7 +194,8 @@ class BlockchainCertificate(BaseModel):
 
 
 class SmartContractInterface:
-    """Interface pour les contrats intelligents"""    
+    """Interface pour les contrats intelligents"""
+    
     def __init__(self, network: BlockchainNetwork, config: Dict[str, Any]):
         self.network = network
         self.config = config
@@ -196,7 +204,8 @@ class SmartContractInterface:
         self.contract_address = None
     
     async def initialize(self) -> bool:
-        """Initialise la connexion au contrat intelligent"""        try:
+        """Initialise la connexion au contrat intelligent"""
+        try:
             # Configuration selon le réseau
             if self.network == BlockchainNetwork.ETHEREUM:
                 await self._setup_ethereum()
@@ -216,7 +225,8 @@ class SmartContractInterface:
             return False
     
     async def _setup_ethereum(self):
-        """Configure l'interface Ethereum"""        try:
+        """Configure l'interface Ethereum"""
+        try:
             # Initialize Web3.py for Ethereum integration
             try:
                 from web3 import Web3
@@ -246,7 +256,8 @@ class SmartContractInterface:
             raise
     
     async def _setup_polygon(self):
-        """Configure l'interface Polygon"""        try:
+        """Configure l'interface Polygon"""
+        try:
             # Configuration similaire à Ethereum mais avec les paramètres Polygon
             self.contract_address = self.config.get('contract_address')
             logger.info("Interface Polygon configurée")
@@ -256,7 +267,8 @@ class SmartContractInterface:
             raise
     
     async def _setup_bsc(self):
-        """Configure l'interface Binance Smart Chain"""        try:
+        """Configure l'interface Binance Smart Chain"""
+        try:
             self.contract_address = self.config.get('contract_address')
             logger.info("Interface BSC configurée")
             
@@ -265,7 +277,8 @@ class SmartContractInterface:
             raise
     
     def _get_contract_abi(self) -> Optional[List[Dict]]:
-        """Get contract ABI from configuration or default ABI"""        try:
+        """Get contract ABI from configuration or default ABI"""
+        try:
             # Try to load from config first
             if 'contract_abi' in self.config:
                 return self.config['contract_abi']
@@ -307,7 +320,8 @@ class SmartContractInterface:
         content_hash: ContentHash,
         ownership_record: OwnershipRecord
     ) -> str:
-        """Enregistre un contenu sur la blockchain"""        try:
+        """Enregistre un contenu sur la blockchain"""
+        try:
             # Smart contract implementation for content registration
             if self.web3_client and self.web3_client.is_connected():
                 try:
@@ -371,7 +385,8 @@ class SmartContractInterface:
         content_id: str,
         owner_address: str
     ) -> bool:
-        """Vérifie la propriété d'un contenu"""        try:
+        """Vérifie la propriété d'un contenu"""
+        try:
             # Smart contract verification implementation
             if self.web3_client and self.web3_client.is_connected():
                 try:
@@ -411,7 +426,8 @@ class SmartContractInterface:
             return False
     
     async def get_transaction_status(self, tx_hash: str) -> Dict[str, Any]:
-        """Récupère le statut d'une transaction"""        try:
+        """Récupère le statut d'une transaction"""
+        try:
             # Transaction status verification implementation
             if self.web3_client and self.web3_client.is_connected():
                 try:
@@ -458,14 +474,16 @@ class SmartContractInterface:
 
 
 class IPFSInterface:
-    """Interface pour IPFS (InterPlanetary File System)"""    
+    """Interface pour IPFS (InterPlanetary File System)"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.ipfs_client = None
         self.gateway_url = config.get('gateway_url', 'https://ipfs.io/ipfs/')
     
     async def initialize(self) -> bool:
-        """Initialise la connexion IPFS"""        try:
+        """Initialise la connexion IPFS"""
+        try:
             # Initialize IPFS client
             try:
                 import ipfshttpclient
@@ -498,7 +516,8 @@ class IPFSInterface:
             return False
     
     async def store_content(self, content_data: bytes) -> str:
-        """Stocke du contenu sur IPFS"""        try:
+        """Stocke du contenu sur IPFS"""
+        try:
             # IPFS storage implementation
             if self.ipfs_client:
                 try:
@@ -533,7 +552,8 @@ class IPFSInterface:
             raise
     
     async def retrieve_content(self, ipfs_hash: str) -> bytes:
-        """Récupère du contenu depuis IPFS"""        try:
+        """Récupère du contenu depuis IPFS"""
+        try:
             # IPFS content retrieval implementation
             if self.ipfs_client:
                 try:
@@ -561,7 +581,8 @@ class IPFSInterface:
             raise
     
     async def pin_content(self, ipfs_hash: str) -> bool:
-        """Épingle du contenu sur IPFS"""        try:
+        """Épingle du contenu sur IPFS"""
+        try:
             # IPFS content pinning implementation
             if self.ipfs_client:
                 try:
@@ -584,7 +605,8 @@ class IPFSInterface:
 
 
 class BlockchainService:
-    """Service professionnel d'intégration blockchain"""    
+    """Service professionnel d'intégration blockchain"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.smart_contracts: Dict[BlockchainNetwork, SmartContractInterface] = {}
@@ -603,7 +625,8 @@ class BlockchainService:
         }
     
     async def initialize(self) -> bool:
-        """Initialise le service blockchain"""        try:
+        """Initialise le service blockchain"""
+        try:
             logger.info("Initialisation du service blockchain...")
             
             # Initialisation des interfaces de contrats intelligents
@@ -644,7 +667,8 @@ class BlockchainService:
         certification_type: CertificationType = CertificationType.COPYRIGHT_REGISTRATION,
         network: Optional[BlockchainNetwork] = None
     ) -> str:
-        """Enregistre la propriété d'un contenu sur la blockchain"""        try:
+        """Enregistre la propriété d'un contenu sur la blockchain"""
+        try:
             # Sélection du réseau
             target_network = network or self.config.get('default_network', self.default_config['default_network'])
             
@@ -714,7 +738,8 @@ class BlockchainService:
         content_path: str,
         network: Optional[BlockchainNetwork] = None
     ) -> Dict[str, Any]:
-        """Vérifie l'authenticité d'un contenu via la blockchain"""        try:
+        """Vérifie l'authenticité d'un contenu via la blockchain"""
+        try:
             # Génération du hash du contenu actuel
             current_hash = await self._generate_content_hash(content_id, content_path)
             
@@ -792,7 +817,8 @@ class BlockchainService:
         content_path: str,
         network: Optional[BlockchainNetwork] = None
     ) -> str:
-        """Crée une preuve de timestamp sur la blockchain"""        try:
+        """Crée une preuve de timestamp sur la blockchain"""
+        try:
             # Génération du hash avec timestamp
             content_hash = await self._generate_content_hash(content_id, content_path)
             
@@ -857,7 +883,8 @@ class BlockchainService:
         license_info: Dict[str, Any],
         usage_event: Dict[str, Any]
     ) -> str:
-        """Enregistre l'utilisation d'une licence sur la blockchain"""        try:
+        """Enregistre l'utilisation d'une licence sur la blockchain"""
+        try:
             # Création de l'enregistrement d'usage
             usage_record = {
                 'content_id': content_id,
@@ -917,7 +944,8 @@ class BlockchainService:
         new_owner_info: Dict[str, Any],
         transfer_terms: Dict[str, Any]
     ) -> str:
-        """Transfère la propriété d'un contenu sur la blockchain"""        try:
+        """Transfère la propriété d'un contenu sur la blockchain"""
+        try:
             certificate = self.certificates.get(certificate_id)
             if not certificate:
                 raise ValueError(f"Certificat {certificate_id} non trouvé")
@@ -991,7 +1019,8 @@ class BlockchainService:
             raise
     
     async def _generate_content_hash(self, content_id: str, content_path: str) -> ContentHash:
-        """Génère un hash sécurisé du contenu"""        try:
+        """Génère un hash sécurisé du contenu"""
+        try:
             # Hash du fichier
             with open(content_path, 'rb') as f:
                 file_content = f.read()
@@ -1019,7 +1048,8 @@ class BlockchainService:
             raise
     
     async def _transaction_monitor(self):
-        """Surveille les transactions blockchain en cours"""        while self.running:
+        """Surveille les transactions blockchain en cours"""
+        while self.running:
             try:
                 pending_certificates = [
                     cert for cert in self.certificates.values()
@@ -1064,12 +1094,14 @@ class BlockchainService:
                 await asyncio.sleep(60)
     
     def _generate_certificate_id(self) -> str:
-        """Génère un ID unique pour les certificats"""        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        """Génère un ID unique pour les certificats"""
+        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         random_suffix = secrets.token_hex(4)
         return f"CERT-{timestamp}-{random_suffix}"
     
     async def _load_certificates(self):
-        """Charge les certificats existants depuis le stockage persistant"""        try:
+        """Charge les certificats existants depuis le stockage persistant"""
+        try:
             # Database loading implementation for certificates
             try:
                 # Attempt to connect to database and load certificates
@@ -1100,7 +1132,8 @@ class BlockchainService:
             logger.error(f"Erreur chargement certificats: {e}")
     
     async def get_certificate(self, certificate_id: str) -> Optional[Dict[str, Any]]:
-        """Récupère un certificat blockchain"""        try:
+        """Récupère un certificat blockchain"""
+        try:
             certificate = self.certificates.get(certificate_id)
             if not certificate:
                 return None
@@ -1133,7 +1166,8 @@ class BlockchainService:
         certification_type: Optional[CertificationType] = None,
         network: Optional[BlockchainNetwork] = None
     ) -> List[Dict[str, Any]]:
-        """Recherche des certificats selon des critères"""        try:
+        """Recherche des certificats selon des critères"""
+        try:
             results = []
             
             for certificate in self.certificates.values():
@@ -1162,7 +1196,8 @@ class BlockchainService:
         self,
         date_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Génère un rapport des activités blockchain"""        try:
+        """Génère un rapport des activités blockchain"""
+        try:
             start_date, end_date = date_range
             
             filtered_certificates = [
@@ -1221,7 +1256,8 @@ class BlockchainService:
             return {}
     
     async def shutdown(self):
-        """Arrêt propre du service"""        try:
+        """Arrêt propre du service"""
+        try:
             logger.info("Arrêt du service blockchain...")
             self.running = False
             
@@ -1242,7 +1278,8 @@ class BlockchainService:
             logger.error(f"Erreur arrêt service blockchain: {e}")
     
     async def _save_certificates(self):
-        """Sauvegarde les certificats"""        try:
+        """Sauvegarde les certificats"""
+        try:
             # Database saving implementation for certificates
             try:
                 # Attempt to connect to database and save certificates
@@ -1286,7 +1323,8 @@ blockchain_service = BlockchainService()
 
 
 async def get_blockchain_service() -> BlockchainService:
-    """Récupère l'instance du service blockchain"""    return blockchain_service
+    """Récupère l'instance du service blockchain"""
+    return blockchain_service
 
 
 __all__ = [

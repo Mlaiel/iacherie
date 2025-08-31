@@ -19,7 +19,8 @@ Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou tentative de reverse engineering
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
-"""from typing import Dict, List, Optional, Any, Union
+"""
+from typing import Dict, List, Optional, Any, Union
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 class CrawlerEventType(Enum):
-    """Types d'événements de surveillance/crawling"""    CONTENT_DETECTED = "content_detected"
+    """Types d'événements de surveillance/crawling"""
+    CONTENT_DETECTED = "content_detected"
     VIOLATION_FOUND = "violation_found"
     PLATFORM_SCAN_COMPLETED = "platform_scan_completed"
     CRAWLER_ERROR = "crawler_error"
@@ -50,7 +52,8 @@ class CrawlerEventType(Enum):
 
 
 class PlatformType(Enum):
-    """Plateformes supportées pour le crawling"""    YOUTUBE = "youtube"
+    """Plateformes supportées pour le crawling"""
+    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
@@ -64,7 +67,8 @@ class PlatformType(Enum):
 
 
 class ViolationSeverity(Enum):
-    """Niveaux de sévérité des violations"""    LOW = "low"
+    """Niveaux de sévérité des violations"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -72,7 +76,8 @@ class ViolationSeverity(Enum):
 
 @dataclass
 class CrawlerNotificationData:
-    """Structure des données de notification de crawling"""    content_id: str
+    """Structure des données de notification de crawling"""
+    content_id: str
     platform: PlatformType
     detected_url: str
     similarity_score: float
@@ -88,19 +93,23 @@ class CrawlerNotificationData:
 
 
 class CrawlerSurveillanceManager:
-    """    Gestionnaire de notifications pour la surveillance et le crawling.
+    """
+    Gestionnaire de notifications pour la surveillance et le crawling.
     
     Ce gestionnaire orchestre les notifications liées à la surveillance web,
     la détection de violations, et les actions de protection automatisées.
-    """    
+    """
+    
     def __init__(self, db_pool: asyncpg.Pool, redis_client: aioredis.Redis, config: Dict[str, Any]):
-        """        Initialise le gestionnaire de surveillance crawler.
+        """
+        Initialise le gestionnaire de surveillance crawler.
         
         Args:
             db_pool: Pool de connexions PostgreSQL
             redis_client: Client Redis pour cache et queues
             config: Configuration du gestionnaire
-        """        self.db_pool = db_pool
+        """
+        self.db_pool = db_pool
         self.redis = redis_client
         self.config = config
         
@@ -137,7 +146,8 @@ class CrawlerSurveillanceManager:
         notification_data: CrawlerNotificationData,
         notification_channels: List[str] = None
     ) -> Dict[str, Any]:
-        """        Traite une notification d'événement de surveillance/crawling.
+        """
+        Traite une notification d'événement de surveillance/crawling.
         
         Args:
             event_type: Type d'événement
@@ -146,7 +156,8 @@ class CrawlerSurveillanceManager:
             
         Returns:
             Résultat du traitement
-        """        try:
+        """
+        try:
             # Channels par défaut si non spécifiés
             if notification_channels is None:
                 notification_channels = self._get_default_channels(event_type, notification_data.severity)
@@ -200,7 +211,8 @@ class CrawlerSurveillanceManager:
         event_type: CrawlerEventType, 
         data: CrawlerNotificationData
     ) -> Dict[str, Any]:
-        """Prépare les données du message selon le type d'événement de crawling"""        
+        """Prépare les données du message selon le type d'événement de crawling"""
+        
         base_data = {
             "content_id": data.content_id,
             "platform": data.platform.value,
@@ -332,15 +344,18 @@ class CrawlerSurveillanceManager:
         data: CrawlerNotificationData,
         message_data: Dict[str, Any]
     ) -> str:
-        """Stocke la notification de surveillance en base de données"""        
-        query = """        INSERT INTO crawler_surveillance_notifications (
+        """Stocke la notification de surveillance en base de données"""
+        
+        query = """
+        INSERT INTO crawler_surveillance_notifications (
             user_id, content_id, platform, event_type, detected_url, 
             similarity_score, violation_type, severity, violator_profile,
             evidence_urls, automated_actions, crawler_metadata, message_data,
             priority, category, action_required, created_at
         ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, NOW())
         RETURNING id
-        """        
+        """
+        
         async with self.db_pool.acquire() as conn:
             notification_id = await conn.fetchval(
                 query,
@@ -369,7 +384,8 @@ class CrawlerSurveillanceManager:
         event_type: CrawlerEventType,
         data: CrawlerNotificationData
     ):
-        """Traitement spécialisé selon le type d'événement de surveillance"""        
+        """Traitement spécialisé selon le type d'événement de surveillance"""
+        
         try:
             if event_type == CrawlerEventType.VIOLATION_FOUND:
                 await self._process_violation_found(data)
@@ -390,7 +406,8 @@ class CrawlerSurveillanceManager:
             logger.error(f"Erreur traitement spécialisé surveillance {event_type.value}: {str(e)}")
 
     async def _process_violation_found(self, data: CrawlerNotificationData):
-        """Traite une violation trouvée"""        
+        """Traite une violation trouvée"""
+        
         # Actions automatiques selon la sévérité
         actions = self.automated_actions.get(data.severity, [])
         
@@ -411,7 +428,8 @@ class CrawlerSurveillanceManager:
         await self._update_violation_statistics(data)
 
     async def _handle_mass_upload_event(self, data: CrawlerNotificationData):
-        """Gère un événement d'upload en masse"""        
+        """Gère un événement d'upload en masse"""
+        
         # Analyser les patterns d'upload
         upload_analysis = await self._analyze_mass_upload_pattern(data)
         
@@ -423,7 +441,8 @@ class CrawlerSurveillanceManager:
         await self._temporary_block_similar_uploads(data)
 
     async def _investigate_suspicious_activity(self, data: CrawlerNotificationData):
-        """Lance une investigation sur une activité suspecte"""        
+        """Lance une investigation sur une activité suspecte"""
+        
         investigation_id = await self._create_investigation_case(data)
         
         # Collecter des données supplémentaires
@@ -433,7 +452,8 @@ class CrawlerSurveillanceManager:
         await self._notify_security_team(data, investigation_id)
 
     async def _get_default_channels(self, event_type: CrawlerEventType, severity: ViolationSeverity) -> List[str]:
-        """Retourne les canaux par défaut selon le type d'événement et la sévérité"""        
+        """Retourne les canaux par défaut selon le type d'événement et la sévérité"""
+        
         if severity == ViolationSeverity.CRITICAL:
             return ["email", "push", "websocket", "dashboard", "sms"]
         elif severity == ViolationSeverity.HIGH:
@@ -444,7 +464,8 @@ class CrawlerSurveillanceManager:
             return ["dashboard", "websocket"]
 
     def _get_priority_from_severity(self, severity: ViolationSeverity) -> str:
-        """Convertit la sévérité en priorité de notification"""        severity_to_priority = {
+        """Convertit la sévérité en priorité de notification"""
+        severity_to_priority = {
             ViolationSeverity.CRITICAL: "urgent",
             ViolationSeverity.HIGH: "high",
             ViolationSeverity.MEDIUM: "medium",
@@ -453,7 +474,8 @@ class CrawlerSurveillanceManager:
         return severity_to_priority.get(severity, "normal")
 
     def _get_platform_icon(self, platform: PlatformType) -> str:
-        """Retourne l'icône de la plateforme"""        platform_icons = {
+        """Retourne l'icône de la plateforme"""
+        platform_icons = {
             PlatformType.YOUTUBE: "🎥",
             PlatformType.TIKTOK: "🎵",
             PlatformType.INSTAGRAM: "📸",
@@ -469,7 +491,8 @@ class CrawlerSurveillanceManager:
         return platform_icons.get(platform, "📱")
 
     def _get_recommended_actions(self, severity: ViolationSeverity) -> List[str]:
-        """Retourne les actions recommandées selon la sévérité"""        
+        """Retourne les actions recommandées selon la sévérité"""
+        
         actions_by_severity = {
             ViolationSeverity.CRITICAL: [
                 "Contacter immédiatement le support légal",
@@ -499,10 +522,12 @@ class CrawlerSurveillanceManager:
         return actions_by_severity.get(severity, [])
 
     async def get_surveillance_dashboard_data(self, user_id: str) -> Dict[str, Any]:
-        """Récupère les données du tableau de bord de surveillance"""        
+        """Récupère les données du tableau de bord de surveillance"""
+        
         # Statistiques récentes
         async with self.db_pool.acquire() as conn:
-            stats = await conn.fetchrow("""            SELECT 
+            stats = await conn.fetchrow("""
+            SELECT 
                 COUNT(*) as total_detections,
                 COUNT(*) FILTER (WHERE severity = 'critical') as critical_violations,
                 COUNT(*) FILTER (WHERE severity = 'high') as high_violations,
@@ -514,7 +539,8 @@ class CrawlerSurveillanceManager:
             """, user_id)
             
             # Détections par plateforme
-            platform_stats = await conn.fetch("""            SELECT platform, COUNT(*) as detection_count, AVG(similarity_score) as avg_score
+            platform_stats = await conn.fetch("""
+            SELECT platform, COUNT(*) as detection_count, AVG(similarity_score) as avg_score
             FROM crawler_surveillance_notifications
             WHERE user_id = $1 AND created_at >= NOW() - INTERVAL '7 days'
             GROUP BY platform
@@ -533,13 +559,15 @@ class CrawlerSurveillanceManager:
         }
 
     async def get_surveillance_metrics(self) -> Dict[str, Any]:
-        """Retourne les métriques système de surveillance"""        
+        """Retourne les métriques système de surveillance"""
+        
         # Métriques Redis temps réel
         redis_metrics = await self.redis.hgetall("surveillance:metrics")
         
         # Métriques base de données
         async with self.db_pool.acquire() as conn:
-            db_metrics = await conn.fetchrow("""            SELECT 
+            db_metrics = await conn.fetchrow("""
+            SELECT 
                 COUNT(*) as total_notifications,
                 COUNT(DISTINCT platform) as platforms_monitored,
                 COUNT(*) FILTER (WHERE event_type = 'violation_found') as violations_found,
@@ -564,7 +592,8 @@ class CrawlerSurveillanceManager:
         message_data: Dict[str, Any],
         channels: List[str]
     ) -> Dict[str, Any]:
-        """Envoie les notifications sur les canaux spécifiés"""        
+        """Envoie les notifications sur les canaux spécifiés"""
+        
         delivery_results = {}
         
         for channel in channels:
@@ -600,7 +629,8 @@ class CrawlerSurveillanceManager:
         message_data: Dict[str, Any],
         notification_data: CrawlerNotificationData
     ):
-        """Met en cache les données de surveillance pour accès rapide"""        
+        """Met en cache les données de surveillance pour accès rapide"""
+        
         cache_data = {
             "notification_id": notification_id,
             "platform": notification_data.platform.value,
@@ -624,7 +654,8 @@ class CrawlerSurveillanceManager:
         await self.redis.ltrim(f"surveillance:alerts:{notification_data.user_id}", 0, 49)  # Garder 50 dernières
 
     async def _update_crawler_metrics(self, event_type: CrawlerEventType, data: CrawlerNotificationData):
-        """Met à jour les métriques de surveillance"""        
+        """Met à jour les métriques de surveillance"""
+        
         # Incrémenter compteurs Redis
         await self.redis.hincrby("surveillance:metrics", f"event:{event_type.value}", 1)
         await self.redis.hincrby("surveillance:metrics", f"platform:{data.platform.value}", 1)
@@ -632,43 +663,56 @@ class CrawlerSurveillanceManager:
 
     # Méthodes de traitement spécialisé (stubs pour intégration future)
     async def _initiate_immediate_takedown(self, data: CrawlerNotificationData):
-        """Initie un retrait immédiat"""        logger.info(f"Retrait immédiat initié pour {data.detected_url}")
+        """Initie un retrait immédiat"""
+        logger.info(f"Retrait immédiat initié pour {data.detected_url}")
 
     async def _send_legal_notice(self, data: CrawlerNotificationData):
-        """Envoie un avis légal"""        logger.info(f"Avis légal envoyé pour violation sur {data.platform.value}")
+        """Envoie un avis légal"""
+        logger.info(f"Avis légal envoyé pour violation sur {data.platform.value}")
 
     async def _collect_violation_evidence(self, data: CrawlerNotificationData):
-        """Collecte les preuves de violation"""        logger.info(f"Collection de preuves pour {data.content_id}")
+        """Collecte les preuves de violation"""
+        logger.info(f"Collection de preuves pour {data.content_id}")
 
     async def _increase_monitoring_frequency(self, data: CrawlerNotificationData):
-        """Augmente la fréquence de surveillance"""        logger.info(f"Augmentation surveillance pour {data.content_id}")
+        """Augmente la fréquence de surveillance"""
+        logger.info(f"Augmentation surveillance pour {data.content_id}")
 
     async def _update_violation_statistics(self, data: CrawlerNotificationData):
-        """Met à jour les statistiques de violation"""        pass
+        """Met à jour les statistiques de violation"""
+        pass
 
     async def _analyze_mass_upload_pattern(self, data: CrawlerNotificationData) -> Dict[str, Any]:
-        """Analyse les patterns d'upload en masse"""        return {"bot_activity_confirmed": False}
+        """Analyse les patterns d'upload en masse"""
+        return {"bot_activity_confirmed": False}
 
     async def _escalate_to_legal_team(self, data: CrawlerNotificationData, reason: str):
-        """Escalade vers l'équipe légale"""        logger.info(f"Escalade légale: {reason}")
+        """Escalade vers l'équipe légale"""
+        logger.info(f"Escalade légale: {reason}")
 
     async def _temporary_block_similar_uploads(self, data: CrawlerNotificationData):
-        """Bloque temporairement les uploads similaires"""        pass
+        """Bloque temporairement les uploads similaires"""
+        pass
 
     async def _create_investigation_case(self, data: CrawlerNotificationData) -> str:
-        """Crée un cas d'investigation"""        return f"INV_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
+        """Crée un cas d'investigation"""
+        return f"INV_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
 
     async def _collect_extended_evidence(self, data: CrawlerNotificationData, investigation_id: str):
-        """Collecte des preuves étendues"""        pass
+        """Collecte des preuves étendues"""
+        pass
 
     async def _notify_security_team(self, data: CrawlerNotificationData, investigation_id: str):
-        """Notifie l'équipe de sécurité"""        pass
+        """Notifie l'équipe de sécurité"""
+        pass
 
     async def _handle_rate_limiting(self, data: CrawlerNotificationData):
-        """Gère la limitation de taux"""        pass
+        """Gère la limitation de taux"""
+        pass
 
     async def _analyze_content_detection(self, data: CrawlerNotificationData):
-        """Analyse la détection de contenu"""        pass
+        """Analyse la détection de contenu"""
+        pass
 
     # Méthodes de notification (stubs pour intégration)
     async def _send_email_notification(self, notification_id: str, message_data: Dict[str, Any]) -> Dict[str, Any]:

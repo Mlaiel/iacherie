@@ -10,7 +10,8 @@ ANY unauthorized use, reproduction, distribution, or theft of this code/concept
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is 
 STRICTLY PROHIBITED and will result in immediate legal action.
 All rights reserved. Patent pending.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
 from dataclasses import dataclass, field
@@ -42,7 +43,8 @@ Base = declarative_base()
 
 
 class CreatorType(Enum):
-    """Types of content creators"""    MUSICIAN = "musician"
+    """Types of content creators"""
+    MUSICIAN = "musician"
     PODCASTER = "podcaster"
     VOICE_ACTOR = "voice_actor"
     AUDIO_PRODUCER = "audio_producer"
@@ -57,7 +59,8 @@ class CreatorType(Enum):
 
 
 class CollaborationType(Enum):
-    """Types of collaborations"""    FEATURING = "featuring"
+    """Types of collaborations"""
+    FEATURING = "featuring"
     REMIX = "remix"
     COVER = "cover"
     DUET = "duet"
@@ -72,7 +75,8 @@ class CollaborationType(Enum):
 
 
 class SkillLevel(Enum):
-    """Skill level classifications"""    BEGINNER = "beginner"
+    """Skill level classifications"""
+    BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
     PROFESSIONAL = "professional"
@@ -80,7 +84,8 @@ class SkillLevel(Enum):
 
 
 class CollaborationStatus(Enum):
-    """Collaboration status states"""    PROPOSED = "proposed"
+    """Collaboration status states"""
+    PROPOSED = "proposed"
     ACCEPTED = "accepted"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -89,7 +94,8 @@ class CollaborationStatus(Enum):
 
 
 class MatchingCriteria(Enum):
-    """Criteria for matching creators"""    GENRE_COMPATIBILITY = "genre_compatibility"
+    """Criteria for matching creators"""
+    GENRE_COMPATIBILITY = "genre_compatibility"
     SKILL_LEVEL = "skill_level"
     GEOGRAPHIC_PROXIMITY = "geographic_proximity"
     AUDIENCE_OVERLAP = "audience_overlap"
@@ -103,7 +109,8 @@ class MatchingCriteria(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile"""    creator_id: str
+    """Comprehensive creator profile"""
+    creator_id: str
     name: str
     creator_type: CreatorType
     email: str
@@ -146,7 +153,8 @@ class CreatorProfile:
 
 @dataclass
 class CollaborationRequest:
-    """Collaboration request structure"""    request_id: str
+    """Collaboration request structure"""
+    request_id: str
     requester_id: str
     target_id: str
     collaboration_type: CollaborationType
@@ -169,7 +177,8 @@ class CollaborationRequest:
 
 @dataclass
 class MatchResult:
-    """Creator matching result"""    matched_creator: CreatorProfile
+    """Creator matching result"""
+    matched_creator: CreatorProfile
     compatibility_score: float  # 0.0 to 1.0
     match_reasons: List[str]
     compatibility_breakdown: Dict[MatchingCriteria, float]
@@ -180,7 +189,8 @@ class MatchResult:
 
 @dataclass
 class ProjectOpportunity:
-    """Project opportunity for creators"""    opportunity_id: str
+    """Project opportunity for creators"""
+    opportunity_id: str
     title: str
     description: str
     project_type: CollaborationType
@@ -199,7 +209,8 @@ class ProjectOpportunity:
 
 
 class CreatorDatabase(Base):
-    """Database model for creator profiles"""    __tablename__ = 'creators'
+    """Database model for creator profiles"""
+    __tablename__ = 'creators'
     
     id = Column(String, primary_key=True)
     name = Column(String, nullable=False)
@@ -213,7 +224,8 @@ class CreatorDatabase(Base):
 
 
 class CollaborationDatabase(Base):
-    """Database model for collaborations"""    __tablename__ = 'collaborations'
+    """Database model for collaborations"""
+    __tablename__ = 'collaborations'
     
     id = Column(String, primary_key=True)
     requester_id = Column(String, ForeignKey('creators.id'), nullable=False)
@@ -225,7 +237,8 @@ class CollaborationDatabase(Base):
 
 
 class ProjectDatabase(Base):
-    """Database model for project opportunities"""    __tablename__ = 'projects'
+    """Database model for project opportunities"""
+    __tablename__ = 'projects'
     
     id = Column(String, primary_key=True)
     posted_by = Column(String, ForeignKey('creators.id'), nullable=False)
@@ -236,7 +249,8 @@ class ProjectDatabase(Base):
 
 
 class AdvancedMatchingEngine:
-    """AI-powered creator matching engine"""    
+    """AI-powered creator matching engine"""
+    
     def __init__(self, database_url: str, redis_host: str = "localhost"):
         # Database setup
         self.engine = create_engine(database_url)
@@ -260,7 +274,8 @@ class AdvancedMatchingEngine:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize ML models with existing data"""        try:
+        """Initialize ML models with existing data"""
+        try:
             # Load existing creator data for model training
             creators = self.session.query(CreatorDatabase).filter(
                 CreatorDatabase.is_active == True
@@ -278,7 +293,8 @@ class AdvancedMatchingEngine:
             logger.error(f"Model initialization failed: {e}")
     
     def _train_matching_models(self, creator_profiles: List[CreatorProfile]):
-        """Train ML models for creator matching"""        try:
+        """Train ML models for creator matching"""
+        try:
             # Prepare genre data
             genre_texts = []
             skill_texts = []
@@ -326,7 +342,8 @@ class AdvancedMatchingEngine:
                           collaboration_type: CollaborationType,
                           max_matches: int = 10,
                           filters: Optional[Dict[str, Any]] = None) -> List[MatchResult]:
-        """Find compatible creators for collaboration"""        try:
+        """Find compatible creators for collaboration"""
+        try:
             # Check cache first
             cache_key = f"matches_{creator_profile.creator_id}_{collaboration_type.value}_{max_matches}"
             if self.redis_client:
@@ -394,7 +411,8 @@ class AdvancedMatchingEngine:
                                    creator_profile: CreatorProfile,
                                    collaboration_type: CollaborationType,
                                    filters: Optional[Dict[str, Any]]) -> List[CreatorProfile]:
-        """Get potential matches from database with initial filtering"""        try:
+        """Get potential matches from database with initial filtering"""
+        try:
             query = self.session.query(CreatorDatabase).filter(
                 CreatorDatabase.is_active == True,
                 CreatorDatabase.id != creator_profile.creator_id
@@ -442,7 +460,8 @@ class AdvancedMatchingEngine:
                                      creator1: CreatorProfile,
                                      creator2: CreatorProfile,
                                      collaboration_type: CollaborationType) -> Dict[str, Any]:
-        """Calculate detailed compatibility between two creators"""        try:
+        """Calculate detailed compatibility between two creators"""
+        try:
             compatibility_scores = {}
             reasons = []
             challenges = []
@@ -565,7 +584,8 @@ class AdvancedMatchingEngine:
     def _calculate_genre_compatibility(self,
                                      creator1: CreatorProfile,
                                      creator2: CreatorProfile) -> float:
-        """Calculate genre compatibility score"""        if not creator1.genres or not creator2.genres:
+        """Calculate genre compatibility score"""
+        if not creator1.genres or not creator2.genres:
             return 0.5  # Neutral if no genre info
         
         # Direct overlap
@@ -605,7 +625,8 @@ class AdvancedMatchingEngine:
                                      creator1: CreatorProfile,
                                      creator2: CreatorProfile,
                                      collaboration_type: CollaborationType) -> float:
-        """Calculate skill level compatibility"""        if not creator1.skills or not creator2.skills:
+        """Calculate skill level compatibility"""
+        if not creator1.skills or not creator2.skills:
             return 0.5
         
         # Get relevant skills for collaboration type
@@ -658,7 +679,8 @@ class AdvancedMatchingEngine:
         return sum(skill_scores) / len(skill_scores) if skill_scores else 0.5
     
     def _get_relevant_skills_for_collaboration(self, collaboration_type: CollaborationType) -> List[str]:
-        """Get relevant skills for collaboration type"""        skill_mapping = {
+        """Get relevant skills for collaboration type"""
+        skill_mapping = {
             CollaborationType.FEATURING: ['vocals', 'performance', 'songwriting'],
             CollaborationType.REMIX: ['production', 'mixing', 'electronic_music'],
             CollaborationType.PRODUCTION: ['audio_production', 'mixing', 'mastering'],
@@ -672,7 +694,8 @@ class AdvancedMatchingEngine:
     def _calculate_geographic_proximity(self,
                                       creator1: CreatorProfile,
                                       creator2: CreatorProfile) -> float:
-        """Calculate geographic proximity score"""        if not creator1.location or not creator2.location:
+        """Calculate geographic proximity score"""
+        if not creator1.location or not creator2.location:
             return 0.5  # Remote collaboration possible
         
         try:
@@ -700,7 +723,8 @@ class AdvancedMatchingEngine:
     def _calculate_audience_overlap(self,
                                   creator1: CreatorProfile,
                                   creator2: CreatorProfile) -> float:
-        """Calculate audience overlap potential"""        # Simplified calculation based on follower counts and genres
+        """Calculate audience overlap potential"""
+        # Simplified calculation based on follower counts and genres
         score = 0.0
         
         # Similar follower counts suggest similar audience levels
@@ -735,7 +759,8 @@ class AdvancedMatchingEngine:
     def _calculate_equipment_compatibility(self,
                                          creator1: CreatorProfile,
                                          creator2: CreatorProfile) -> float:
-        """Calculate equipment and software compatibility"""        score = 0.0
+        """Calculate equipment and software compatibility"""
+        score = 0.0
         
         # DAW compatibility
         if creator1.daw_software and creator2.daw_software:
@@ -774,7 +799,8 @@ class AdvancedMatchingEngine:
     def _calculate_schedule_alignment(self,
                                     creator1: CreatorProfile,
                                     creator2: CreatorProfile) -> float:
-        """Calculate schedule compatibility"""        if not creator1.availability or not creator2.availability:
+        """Calculate schedule compatibility"""
+        if not creator1.availability or not creator2.availability:
             return 0.5  # Unknown, assume moderate compatibility
         
         overlap_score = 0.0
@@ -798,7 +824,8 @@ class AdvancedMatchingEngine:
         return overlap_score / days_checked
     
     def _calculate_time_overlap(self, times1: List[str], times2: List[str]) -> float:
-        """Calculate overlapping hours between time ranges"""        # Simplified implementation - assume format "HH:MM-HH:MM"
+        """Calculate overlapping hours between time ranges"""
+        # Simplified implementation - assume format "HH:MM-HH:MM"
         try:
             overlap_minutes = 0
             
@@ -825,7 +852,8 @@ class AdvancedMatchingEngine:
             return 2.0  # Default assume some overlap
     
     def _time_to_minutes(self, time_str: str) -> int:
-        """Convert HH:MM to minutes since midnight"""        try:
+        """Convert HH:MM to minutes since midnight"""
+        try:
             hours, minutes = map(int, time_str.split(':'))
             return hours * 60 + minutes
         except Exception:
@@ -834,7 +862,8 @@ class AdvancedMatchingEngine:
     def _calculate_collaboration_history_score(self,
                                              creator1: CreatorProfile,
                                              creator2: CreatorProfile) -> float:
-        """Calculate score based on collaboration network"""        # Check if they've collaborated before
+        """Calculate score based on collaboration network"""
+        # Check if they've collaborated before
         if creator2.creator_id in creator1.collaboration_history:
             return 1.0  # Perfect if they've worked together
         
@@ -866,7 +895,8 @@ class AdvancedMatchingEngine:
     def _calculate_budget_compatibility(self,
                                       creator1: CreatorProfile,
                                       creator2: CreatorProfile) -> float:
-        """Calculate budget range compatibility"""        budget1 = creator1.budget_range
+        """Calculate budget range compatibility"""
+        budget1 = creator1.budget_range
         budget2 = creator2.budget_range
         
         if not budget1 or not budget2:
@@ -907,7 +937,8 @@ class AdvancedMatchingEngine:
                                    creator2: CreatorProfile,
                                    compatibility_scores: Dict[MatchingCriteria, float],
                                    original_type: CollaborationType) -> List[CollaborationType]:
-        """Suggest best collaboration types based on compatibility"""        suggestions = [original_type]  # Always include requested type
+        """Suggest best collaboration types based on compatibility"""
+        suggestions = [original_type]  # Always include requested type
         
         # High genre compatibility - good for featuring/duets
         if compatibility_scores.get(MatchingCriteria.GENRE_COMPATIBILITY, 0) > 0.7:
@@ -948,7 +979,8 @@ class AdvancedMatchingEngine:
                                     creator1: CreatorProfile,
                                     creator2: CreatorProfile,
                                     collaboration_type: CollaborationType) -> List[str]:
-        """Generate specific collaboration ideas"""        ideas = []
+        """Generate specific collaboration ideas"""
+        ideas = []
         
         # Genre-specific ideas
         common_genres = set(creator1.genres) & set(creator2.genres)
@@ -1001,7 +1033,8 @@ class AdvancedMatchingEngine:
                                          target_id: str,
                                          collaboration_type: CollaborationType,
                                          project_details: Dict[str, Any]) -> str:
-        """Create a new collaboration request"""        try:
+        """Create a new collaboration request"""
+        try:
             request_id = str(uuid.uuid4())
             
             collaboration_request = CollaborationRequest(
@@ -1041,13 +1074,15 @@ class AdvancedMatchingEngine:
             raise
     
     async def _send_collaboration_notification(self, request: CollaborationRequest):
-        """Send notification about collaboration request"""        # Implement notification system (email, push notifications, etc.)
+        """Send notification about collaboration request"""
+        # Implement notification system (email, push notifications, etc.)
         logger.info(f"Notification sent for collaboration request {request.request_id}")
     
     async def get_collaboration_recommendations(self,
                                              creator_id: str,
                                              limit: int = 20) -> Dict[str, Any]:
-        """Get personalized collaboration recommendations"""        try:
+        """Get personalized collaboration recommendations"""
+        try:
             # Get creator profile
             creator_db = self.session.query(CreatorDatabase).filter(
                 CreatorDatabase.id == creator_id
@@ -1099,7 +1134,8 @@ class AdvancedMatchingEngine:
             return {'error': str(e)}
     
     async def _get_trending_opportunities(self, creator_profile: CreatorProfile) -> List[Dict[str, Any]]:
-        """Get trending collaboration opportunities"""        # This would analyze current trends, popular genres, etc.
+        """Get trending collaboration opportunities"""
+        # This would analyze current trends, popular genres, etc.
         trends = []
         
         # Simulate trend analysis
@@ -1122,7 +1158,8 @@ class AdvancedMatchingEngine:
         return trends
     
     async def _get_network_recommendations(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Get recommendations based on collaboration network"""        network_recs = []
+        """Get recommendations based on collaboration network"""
+        network_recs = []
         
         if not self.collaboration_graph.has_node(creator_id):
             return network_recs
@@ -1161,7 +1198,8 @@ class AdvancedMatchingEngine:
 
 # Factory function for creating collaboration system
 async def create_collaboration_system(database_url: str, redis_host: str = "localhost") -> AdvancedMatchingEngine:
-    """Create configured collaboration matching system"""    return AdvancedMatchingEngine(database_url, redis_host)
+    """Create configured collaboration matching system"""
+    return AdvancedMatchingEngine(database_url, redis_host)
 
 
 # Utility functions
@@ -1170,7 +1208,8 @@ async def quick_find_collaborators(
     collaboration_type: str = "featuring",
     database_url: str = "sqlite:///collaborations.db"
 ) -> List[Dict[str, Any]]:
-    """Quick collaborator search"""    try:
+    """Quick collaborator search"""
+    try:
         # Create creator profile
         creator_profile = CreatorProfile(
             creator_id=creator_data.get('id', str(uuid.uuid4())),

@@ -20,7 +20,8 @@
 ---------------------------------------
 Generiert automatisch API-Dokumentation (OpenAPI, Markdown, mehrsprachig) aus FastAPI/Django-Code.
 Rollen: Lead Dev, Architecte IA, Backend Senior, Security Specialist
-"""import os
+"""
+import os
 import subprocess
 import shutil
 
@@ -61,7 +62,8 @@ print("[OK] API-Dokumentation generiert und validiert.")
 
 Autoren & Rollen:
 - Lead Dev, Architecte IA, Backend Senior, ML Engineer, DBA/Data Engineer, Security Specialist, Microservices Architect
-"""import os
+"""
+import os
 import sentry_sdk
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -111,7 +113,8 @@ handler = Mangum(app)
 
 Autoren & Rollen:
 - Lead Dev, Architecte IA, Backend Senior, ML Engineer, DBA/Data Engineer, Security Specialist, Microservices Architect
-"""import os
+"""
+import os
 import sentry_sdk
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -173,7 +176,8 @@ Project Team Specialties:
 This code and concept are exclusively owned by Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be taken against violators.
-"""import os
+"""
+import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union
 from enum import Enum
@@ -181,7 +185,8 @@ from urllib.parse import urlparse
 
 
 class ServiceType(Enum):
-    """Types of external services."""    SPOTIFY_API = "spotify_api"
+    """Types of external services."""
+    SPOTIFY_API = "spotify_api"
     YOUTUBE_API = "youtube_api"
     INSTAGRAM_API = "instagram_api"
     TIKTOK_API = "tiktok_api"
@@ -197,7 +202,8 @@ class ServiceType(Enum):
 
 
 class AuthType(Enum):
-    """Authentication types for external services."""    API_KEY = "api_key"
+    """Authentication types for external services."""
+    API_KEY = "api_key"
     OAUTH2 = "oauth2"
     JWT = "jwt"
     BASIC_AUTH = "basic_auth"
@@ -206,7 +212,8 @@ class AuthType(Enum):
 
 
 class Protocol(Enum):
-    """Communication protocols."""    HTTP = "http"
+    """Communication protocols."""
+    HTTP = "http"
     HTTPS = "https"
     WEBSOCKET = "websocket"
     GRPC = "grpc"
@@ -215,7 +222,8 @@ class Protocol(Enum):
 
 @dataclass
 class APIEndpoints:
-    """API endpoint configurations for external services."""    # Spotify Integration
+    """API endpoint configurations for external services."""
+    # Spotify Integration
     spotify_auth_url: str = "https://accounts.spotify.com/authorize"
     spotify_token_url: str = "https://accounts.spotify.com/api/token"
     spotify_api_base: str = "https://api.spotify.com/v1"
@@ -271,7 +279,8 @@ class APIEndpoints:
     amplitude_api: str = "https://api2.amplitude.com"
     
     def get_endpoint(self, service: ServiceType) -> Optional[str]:
-        """Get endpoint URL for a specific service."""        endpoint_mapping = {
+        """Get endpoint URL for a specific service."""
+        endpoint_mapping = {
             ServiceType.SPOTIFY_API: self.spotify_api_base,
             ServiceType.YOUTUBE_API: self.youtube_api_base,
             ServiceType.INSTAGRAM_API: self.instagram_graph_api,
@@ -288,7 +297,8 @@ class APIEndpoints:
         return endpoint_mapping.get(service)
     
     def validate_urls(self) -> List[str]:
-        """Validate all endpoint URLs."""        errors = []
+        """Validate all endpoint URLs."""
+        errors = []
         for field_name, url in self.__dict__.items():
             if isinstance(url, str) and url:
                 try:
@@ -302,7 +312,8 @@ class APIEndpoints:
 
 @dataclass
 class ServiceCredentials:
-    """Credential configurations for external services."""    # API Keys (retrieved from environment variables)
+    """Credential configurations for external services."""
+    # API Keys (retrieved from environment variables)
     spotify_client_id: str = field(default_factory=lambda: os.getenv("SPOTIFY_CLIENT_ID", ""))
     spotify_client_secret: str = field(default_factory=lambda: os.getenv("SPOTIFY_CLIENT_SECRET", ""))
     youtube_api_key: str = field(default_factory=lambda: os.getenv("YOUTUBE_API_KEY", ""))
@@ -343,7 +354,8 @@ class ServiceCredentials:
     encryption_key: str = field(default_factory=lambda: os.getenv("ENCRYPTION_KEY", ""))
     
     def get_credentials(self, service: ServiceType) -> Dict[str, str]:
-        """Get credentials for a specific service."""        credential_mapping = {
+        """Get credentials for a specific service."""
+        credential_mapping = {
             ServiceType.SPOTIFY_API: {
                 "client_id": self.spotify_client_id,
                 "client_secret": self.spotify_client_secret
@@ -377,7 +389,8 @@ class ServiceCredentials:
         return credential_mapping.get(service, {})
     
     def validate_credentials(self) -> List[str]:
-        """Validate that required credentials are present."""        errors = []
+        """Validate that required credentials are present."""
+        errors = []
         required_credentials = [
             ("spotify_client_id", self.spotify_client_id),
             ("jwt_secret_key", self.jwt_secret_key),
@@ -393,7 +406,8 @@ class ServiceCredentials:
 
 @dataclass
 class ConnectionSettings:
-    """Connection settings for external services."""    # Default connection settings
+    """Connection settings for external services."""
+    # Default connection settings
     default_timeout: int = 30
     default_connect_timeout: int = 10
     default_read_timeout: int = 30
@@ -435,7 +449,8 @@ class ConnectionSettings:
     custom_headers: Dict[str, str] = field(default_factory=dict)
     
     def get_timeout_for_service(self, service: ServiceType) -> int:
-        """Get appropriate timeout for a specific service type."""        timeout_mapping = {
+        """Get appropriate timeout for a specific service type."""
+        timeout_mapping = {
             ServiceType.BLOCKCHAIN_SERVICE: self.blockchain_timeout,
             ServiceType.PAYMENT_GATEWAY: self.payment_timeout,
             ServiceType.CLOUD_STORAGE: self.upload_timeout,
@@ -446,7 +461,8 @@ class ConnectionSettings:
 
 @dataclass
 class TimeoutSettings:
-    """Detailed timeout configurations."""    # Connection timeouts
+    """Detailed timeout configurations."""
+    # Connection timeouts
     connection_timeout: int = 30
     read_timeout: int = 60
     write_timeout: int = 30
@@ -474,7 +490,8 @@ class TimeoutSettings:
     session_timeout: int = 7200
     
     def get_timeout_config(self) -> Dict[str, int]:
-        """Get timeout configuration as dictionary."""        return {
+        """Get timeout configuration as dictionary."""
+        return {
             "connection": self.connection_timeout,
             "read": self.read_timeout,
             "write": self.write_timeout,
@@ -484,7 +501,8 @@ class TimeoutSettings:
 
 @dataclass
 class RetryPolicies:
-    """Retry policy configurations for external service calls."""    # Basic retry settings
+    """Retry policy configurations for external service calls."""
+    # Basic retry settings
     enable_retries: bool = True
     max_retries: int = 3
     base_delay: float = 1.0
@@ -518,7 +536,8 @@ class RetryPolicies:
     circuit_breaker_expected_recovery_time: int = 30
     
     def calculate_delay(self, attempt: int) -> float:
-        """Calculate delay for retry attempt."""        if not self.use_exponential_backoff:
+        """Calculate delay for retry attempt."""
+        if not self.use_exponential_backoff:
             return self.base_delay
         
         delay = self.base_delay * (self.backoff_factor ** attempt)
@@ -533,7 +552,8 @@ class RetryPolicies:
     
     def should_retry(self, attempt: int, status_code: Optional[int] = None, 
                     exception: Optional[Exception] = None) -> bool:
-        """Determine if request should be retried."""        if attempt >= self.max_retries:
+        """Determine if request should be retried."""
+        if attempt >= self.max_retries:
             return False
         
         if status_code and status_code in self.retryable_status_codes:
@@ -550,7 +570,8 @@ class RetryPolicies:
 
 @dataclass
 class IntegrationConfig:
-    """Main integration configuration class."""    # Core components
+    """Main integration configuration class."""
+    # Core components
     endpoints: APIEndpoints = field(default_factory=APIEndpoints)
     credentials: ServiceCredentials = field(default_factory=ServiceCredentials)
     connections: ConnectionSettings = field(default_factory=ConnectionSettings)
@@ -585,7 +606,8 @@ class IntegrationConfig:
     health_check_timeout: int = 10
     
     def validate_configuration(self) -> List[str]:
-        """Validate the entire integration configuration."""        errors = []
+        """Validate the entire integration configuration."""
+        errors = []
         
         # Validate endpoints
         errors.extend(self.endpoints.validate_urls())
@@ -604,7 +626,8 @@ class IntegrationConfig:
         return errors
     
     def get_service_config(self, service: ServiceType) -> Dict[str, Any]:
-        """Get complete configuration for a specific service."""        return {
+        """Get complete configuration for a specific service."""
+        return {
             "endpoint": self.endpoints.get_endpoint(service),
             "credentials": self.credentials.get_credentials(service),
             "timeout": self.connections.get_timeout_for_service(service),
@@ -614,12 +637,14 @@ class IntegrationConfig:
     
     @classmethod
     def from_environment(cls) -> 'IntegrationConfig':
-        """Create configuration from environment variables."""        return cls()
+        """Create configuration from environment variables."""
+        return cls()
 
 
 # Configuration factory functions
 def create_production_integration_config() -> IntegrationConfig:
-    """Create production-optimized integration configuration."""    config = IntegrationConfig()
+    """Create production-optimized integration configuration."""
+    config = IntegrationConfig()
     config.environment = "production"
     config.debug_mode = False
     config.enable_monitoring = True
@@ -630,7 +655,8 @@ def create_production_integration_config() -> IntegrationConfig:
 
 
 def create_development_integration_config() -> IntegrationConfig:
-    """Create development-optimized integration configuration."""    config = IntegrationConfig()
+    """Create development-optimized integration configuration."""
+    config = IntegrationConfig()
     config.environment = "development"
     config.debug_mode = True
     config.enable_request_logging = True
@@ -664,7 +690,8 @@ Features:
 - Real-time API monitoring and alerting
 - GraphQL and REST API support
 - OAuth2 and JWT authentication management
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import time
 import json
@@ -692,7 +719,8 @@ logger = logging.getLogger(__name__)
 
 
 class HTTPMethod(Enum):
-    """HTTP methods"""    GET = "GET"
+    """HTTP methods"""
+    GET = "GET"
     POST = "POST"
     PUT = "PUT"
     DELETE = "DELETE"
@@ -702,7 +730,8 @@ class HTTPMethod(Enum):
 
 
 class APIService(Enum):
-    """Supported API services"""    SPOTIFY = "spotify"
+    """Supported API services"""
+    SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE_MUSIC = "youtube_music"
     SOUNDCLOUD = "soundcloud"
@@ -715,7 +744,8 @@ class APIService(Enum):
 
 
 class RetryStrategy(Enum):
-    """Retry strategies"""    EXPONENTIAL_BACKOFF = "exponential_backoff"
+    """Retry strategies"""
+    EXPONENTIAL_BACKOFF = "exponential_backoff"
     LINEAR_BACKOFF = "linear_backoff"
     FIXED_DELAY = "fixed_delay"
     FIBONACCI = "fibonacci"
@@ -724,7 +754,8 @@ class RetryStrategy(Enum):
 
 @dataclass
 class APIEndpoint:
-    """API endpoint configuration"""    url: str
+    """API endpoint configuration"""
+    url: str
     method: HTTPMethod
     headers: Dict[str, str] = field(default_factory=dict)
     timeout: float = 30.0
@@ -738,7 +769,8 @@ class APIEndpoint:
 
 @dataclass
 class APIRequest:
-    """API request data structure"""    endpoint: APIEndpoint
+    """API request data structure"""
+    endpoint: APIEndpoint
     params: Dict[str, Any] = field(default_factory=dict)
     data: Optional[Dict[str, Any]] = None
     json_data: Optional[Dict[str, Any]] = None
@@ -748,7 +780,8 @@ class APIRequest:
     auth: Optional[Tuple[str, str]] = None
     
     def get_cache_key(self) -> str:
-        """Generate cache key for request"""        key_parts = [
+        """Generate cache key for request"""
+        key_parts = [
             self.endpoint.url,
             self.endpoint.method.value,
             json.dumps(self.params, sort_keys=True),
@@ -761,7 +794,8 @@ class APIRequest:
 
 @dataclass
 class APIResponse:
-    """API response data structure"""    status_code: int
+    """API response data structure"""
+    status_code: int
     data: Any
     headers: Dict[str, str]
     response_time_ms: float
@@ -770,10 +804,12 @@ class APIResponse:
     
     @property
     def success(self) -> bool:
-        """Check if response is successful"""        return 200 <= self.status_code < 300
+        """Check if response is successful"""
+        return 200 <= self.status_code < 300
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             'status_code': self.status_code,
             'data': self.data,
             'headers': dict(self.headers),
@@ -786,14 +822,16 @@ class APIResponse:
 
 @dataclass
 class CircuitBreakerState:
-    """Circuit breaker state"""    failures: int = 0
+    """Circuit breaker state"""
+    failures: int = 0
     last_failure_time: Optional[datetime] = None
     state: str = "closed"  # closed, open, half_open
     success_count: int = 0
 
 
 class APICircuitBreaker:
-    """Advanced circuit breaker for API calls"""    
+    """Advanced circuit breaker for API calls"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.failure_threshold = config.get('failure_threshold', 5)
         self.recovery_timeout = config.get('recovery_timeout', 60)
@@ -803,7 +841,8 @@ class APICircuitBreaker:
         self.states: Dict[str, CircuitBreakerState] = {}
     
     def should_allow_request(self, endpoint_key: str) -> bool:
-        """Check if request should be allowed"""        state = self.states.get(endpoint_key, CircuitBreakerState())
+        """Check if request should be allowed"""
+        state = self.states.get(endpoint_key, CircuitBreakerState())
         
         if state.state == "closed":
             return True
@@ -821,7 +860,8 @@ class APICircuitBreaker:
         return False
     
     def record_success(self, endpoint_key: str):
-        """Record successful request"""        state = self.states.get(endpoint_key, CircuitBreakerState())
+        """Record successful request"""
+        state = self.states.get(endpoint_key, CircuitBreakerState())
         
         if state.state == "half_open":
             state.success_count += 1
@@ -834,7 +874,8 @@ class APICircuitBreaker:
         self.states[endpoint_key] = state
     
     def record_failure(self, endpoint_key: str):
-        """Record failed request"""        state = self.states.get(endpoint_key, CircuitBreakerState())
+        """Record failed request"""
+        state = self.states.get(endpoint_key, CircuitBreakerState())
         
         state.failures += 1
         state.last_failure_time = datetime.now()
@@ -846,11 +887,13 @@ class APICircuitBreaker:
         self.states[endpoint_key] = state
     
     def get_state(self, endpoint_key: str) -> str:
-        """Get current circuit breaker state"""        return self.states.get(endpoint_key, CircuitBreakerState()).state
+        """Get current circuit breaker state"""
+        return self.states.get(endpoint_key, CircuitBreakerState()).state
 
 
 class AdaptiveRateLimiter:
-    """Adaptive rate limiter for API calls"""    
+    """Adaptive rate limiter for API calls"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.redis_client = None
         self.default_rate_limit = config.get('default_rate_limit', 100)
@@ -863,7 +906,8 @@ class AdaptiveRateLimiter:
             self.redis_client = redis.Redis.from_url(redis_url)
     
     async def is_allowed(self, key: str, rate_limit: Optional[int] = None) -> Tuple[bool, Dict[str, Any]]:
-        """Check if request is allowed under rate limit"""        rate_limit = rate_limit or self.default_rate_limit
+        """Check if request is allowed under rate limit"""
+        rate_limit = rate_limit or self.default_rate_limit
         
         if not self.redis_client:
             # No Redis, allow all requests
@@ -912,7 +956,8 @@ class AdaptiveRateLimiter:
             return True, {'allowed': True, 'error': str(e)}
     
     async def get_usage_stats(self, key: str) -> Dict[str, Any]:
-        """Get rate limit usage statistics"""        if not self.redis_client:
+        """Get rate limit usage statistics"""
+        if not self.redis_client:
             return {}
         
         try:
@@ -937,7 +982,8 @@ class AdaptiveRateLimiter:
 
 
 class APICache:
-    """Intelligent API response caching"""    
+    """Intelligent API response caching"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.redis_client = None
         self.default_ttl = config.get('default_ttl', 3600)
@@ -953,7 +999,8 @@ class APICache:
         self.cache_timestamps = {}
     
     async def get_cached_response(self, cache_key: str) -> Optional[APIResponse]:
-        """Get cached API response"""        try:
+        """Get cached API response"""
+        try:
             if self.redis_client:
                 cached_data = await self.redis_client.get(f"api_cache:{cache_key}")
                 if cached_data:
@@ -979,7 +1026,8 @@ class APICache:
         return None
     
     async def cache_response(self, cache_key: str, response: APIResponse, ttl: Optional[int] = None):
-        """Cache API response"""        if not response.success:
+        """Cache API response"""
+        if not response.success:
             return  # Don't cache error responses
         
         ttl = ttl or self.default_ttl
@@ -1010,7 +1058,8 @@ class APICache:
             logger.error(f"Cache set error: {e}")
     
     async def invalidate_cache(self, pattern: str):
-        """Invalidate cached responses by pattern"""        try:
+        """Invalidate cached responses by pattern"""
+        try:
             if self.redis_client:
                 keys = await self.redis_client.keys(f"api_cache:{pattern}")
                 if keys:
@@ -1028,7 +1077,8 @@ class APICache:
 
 
 class HTTPClient:
-    """Advanced HTTP client with retry, caching, and circuit breaking"""    
+    """Advanced HTTP client with retry, caching, and circuit breaking"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.base_url = config.get('base_url', '')
@@ -1050,18 +1100,21 @@ class HTTPClient:
         self.total_response_time = 0.0
     
     async def __aenter__(self):
-        """Async context manager entry"""        self.session = aiohttp.ClientSession(
+        """Async context manager entry"""
+        self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=self.default_timeout),
             headers=self.default_headers
         )
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""        if self.session:
+        """Async context manager exit"""
+        if self.session:
             await self.session.close()
     
     async def make_request(self, request: APIRequest) -> APIResponse:
-        """Make HTTP request with all advanced features"""        endpoint_key = f"{request.endpoint.method.value}:{request.endpoint.url}"
+        """Make HTTP request with all advanced features"""
+        endpoint_key = f"{request.endpoint.method.value}:{request.endpoint.url}"
         
         # Check circuit breaker
         if request.endpoint.circuit_breaker and not self.circuit_breaker.should_allow_request(endpoint_key):
@@ -1102,7 +1155,8 @@ class HTTPClient:
         return response
     
     async def _make_request_with_retry(self, request: APIRequest) -> APIResponse:
-        """Make request with retry logic"""        last_exception = None
+        """Make request with retry logic"""
+        last_exception = None
         
         for attempt in range(request.endpoint.retry_count + 1):
             try:
@@ -1164,7 +1218,8 @@ class HTTPClient:
         raise APIException(f"Request failed after {request.endpoint.retry_count + 1} attempts: {last_exception}")
     
     async def _wait_for_retry(self, attempt: int, strategy: RetryStrategy):
-        """Wait for retry based on strategy"""        if strategy == RetryStrategy.EXPONENTIAL_BACKOFF:
+        """Wait for retry based on strategy"""
+        if strategy == RetryStrategy.EXPONENTIAL_BACKOFF:
             delay = min(2 ** attempt, 60)  # Cap at 60 seconds
         elif strategy == RetryStrategy.LINEAR_BACKOFF:
             delay = attempt * 2
@@ -1179,7 +1234,8 @@ class HTTPClient:
         await asyncio.sleep(delay)
     
     def _build_url(self, endpoint_url: str, params: Dict[str, Any]) -> str:
-        """Build complete URL with parameters"""        if endpoint_url.startswith('http'):
+        """Build complete URL with parameters"""
+        if endpoint_url.startswith('http'):
             base_url = endpoint_url
         else:
             base_url = f"{self.base_url.rstrip('/')}/{endpoint_url.lstrip('/')}"
@@ -1191,7 +1247,8 @@ class HTTPClient:
         return base_url
     
     def _update_metrics(self, response: APIResponse):
-        """Update client metrics"""        self.request_count += 1
+        """Update client metrics"""
+        self.request_count += 1
         self.total_response_time += response.response_time_ms
         
         if response.success:
@@ -1200,7 +1257,8 @@ class HTTPClient:
             self.error_count += 1
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get client performance metrics"""        avg_response_time = (self.total_response_time / self.request_count 
+        """Get client performance metrics"""
+        avg_response_time = (self.total_response_time / self.request_count 
                            if self.request_count > 0 else 0)
         
         return {
@@ -1214,7 +1272,8 @@ class HTTPClient:
 
 
 class SpotifyAPIClient:
-    """Specialized Spotify API client"""    
+    """Specialized Spotify API client"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.client_id = config['client_id']
@@ -1232,7 +1291,8 @@ class SpotifyAPIClient:
         self.http_client = HTTPClient(http_config)
     
     async def authenticate(self):
-        """Authenticate with Spotify API"""        auth_url = 'https://accounts.spotify.com/api/token'
+        """Authenticate with Spotify API"""
+        auth_url = 'https://accounts.spotify.com/api/token'
         
         auth_header = base64.b64encode(
             f"{self.client_id}:{self.client_secret}".encode()
@@ -1254,7 +1314,8 @@ class SpotifyAPIClient:
                     raise APIException(f"Spotify authentication failed: {response.status}")
     
     async def search_tracks(self, query: str, limit: int = 20) -> List[Dict[str, Any]]:
-        """Search for tracks on Spotify"""        await self._ensure_authenticated()
+        """Search for tracks on Spotify"""
+        await self._ensure_authenticated()
         
         endpoint = APIEndpoint(
             url='/search',
@@ -1281,7 +1342,8 @@ class SpotifyAPIClient:
                 raise APIException(f"Spotify search failed: {response.status_code}")
     
     async def get_audio_features(self, track_ids: List[str]) -> List[Dict[str, Any]]:
-        """Get audio features for tracks"""        await self._ensure_authenticated()
+        """Get audio features for tracks"""
+        await self._ensure_authenticated()
         
         endpoint = APIEndpoint(
             url='/audio-features',
@@ -1308,7 +1370,8 @@ class SpotifyAPIClient:
                                 seed_genres: List[str] = None,
                                 target_features: Dict[str, float] = None,
                                 limit: int = 20) -> List[Dict[str, Any]]:
-        """Get track recommendations from Spotify"""        await self._ensure_authenticated()
+        """Get track recommendations from Spotify"""
+        await self._ensure_authenticated()
         
         params = {'limit': limit}
         
@@ -1341,14 +1404,16 @@ class SpotifyAPIClient:
                 raise APIException(f"Spotify recommendations failed: {response.status_code}")
     
     async def _ensure_authenticated(self):
-        """Ensure we have a valid access token"""        if (not self.access_token or 
+        """Ensure we have a valid access token"""
+        if (not self.access_token or 
             not self.token_expires_at or 
             datetime.now() >= self.token_expires_at):
             await self.authenticate()
 
 
 class GraphQLClient:
-    """Advanced GraphQL client with caching and optimization"""    
+    """Advanced GraphQL client with caching and optimization"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.endpoint_url = config['endpoint_url']
@@ -1366,7 +1431,8 @@ class GraphQLClient:
     
     async def execute_query(self, query: str, variables: Optional[Dict[str, Any]] = None,
                           cache_ttl: Optional[int] = None) -> Dict[str, Any]:
-        """Execute GraphQL query with caching"""        
+        """Execute GraphQL query with caching"""
+        
         # Generate cache key
         cache_key = hashlib.md5(f"{query}:{variables}".encode()).hexdigest()
         
@@ -1403,7 +1469,8 @@ class GraphQLClient:
 
 
 class APIServiceManager:
-    """Manager for multiple API services"""    
+    """Manager for multiple API services"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.services = {}
@@ -1413,7 +1480,8 @@ class APIServiceManager:
         self._initialize_services()
     
     def _initialize_services(self):
-        """Initialize configured API services"""        for service_name, service_config in self.config.get('services', {}).items():
+        """Initialize configured API services"""
+        for service_name, service_config in self.config.get('services', {}).items():
             service_type = APIService(service_config.get('type', 'custom'))
             
             if service_type == APIService.SPOTIFY:
@@ -1423,14 +1491,16 @@ class APIServiceManager:
             # Add more service types as needed
     
     def get_service(self, service_name: str):
-        """Get API service by name"""        if service_name not in self.services:
+        """Get API service by name"""
+        if service_name not in self.services:
             raise ValueError(f"Service '{service_name}' not configured")
         
         return self.services[service_name]
     
     async def execute_with_fallback(self, service_names: List[str], 
                                   operation: Callable, *args, **kwargs):
-        """Execute operation with service fallback"""        last_exception = None
+        """Execute operation with service fallback"""
+        last_exception = None
         
         for service_name in service_names:
             try:
@@ -1445,7 +1515,8 @@ class APIServiceManager:
 
 
 class ServiceLoadBalancer:
-    """Load balancer for API services"""    
+    """Load balancer for API services"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.strategy = config.get('strategy', 'round_robin')
@@ -1459,7 +1530,8 @@ class ServiceLoadBalancer:
         self.round_robin_counter = 0
     
     def get_best_service(self, available_services: List[str]) -> str:
-        """Get best service based on load balancing strategy"""        healthy_services = [s for s in available_services 
+        """Get best service based on load balancing strategy"""
+        healthy_services = [s for s in available_services 
                           if self.service_health.get(s, True)]
         
         if not healthy_services:
@@ -1479,15 +1551,18 @@ class ServiceLoadBalancer:
 
 # Custom exceptions
 class APIException(Exception):
-    """Base API exception"""    pass
+    """Base API exception"""
+    pass
 
 
 class RateLimitException(APIException):
-    """Rate limit exceeded exception"""    pass
+    """Rate limit exceeded exception"""
+    pass
 
 
 class CircuitBreakerException(APIException):
-    """Circuit breaker open exception"""    pass
+    """Circuit breaker open exception"""
+    pass
 
 
 # Utility functions
@@ -1495,7 +1570,8 @@ async def make_simple_request(url: str, method: HTTPMethod = HTTPMethod.GET,
                             headers: Dict[str, str] = None,
                             params: Dict[str, Any] = None,
                             json_data: Dict[str, Any] = None) -> APIResponse:
-    """Make a simple HTTP request"""    
+    """Make a simple HTTP request"""
+    
     config = {'default_timeout': 30}
     
     async with HTTPClient(config) as client:
@@ -1506,7 +1582,8 @@ async def make_simple_request(url: str, method: HTTPMethod = HTTPMethod.GET,
 
 
 def create_spotify_client(client_id: str, client_secret: str) -> SpotifyAPIClient:
-    """Create Spotify API client"""    config = {
+    """Create Spotify API client"""
+    config = {
         'client_id': client_id,
         'client_secret': client_secret
     }
@@ -1517,7 +1594,8 @@ def create_spotify_client(client_id: str, client_secret: str) -> SpotifyAPIClien
 _service_manager = None
 
 def get_api_service_manager(config: Optional[Dict[str, Any]] = None) -> APIServiceManager:
-    """Get global API service manager"""    global _service_manager
+    """Get global API service manager"""
+    global _service_manager
     
     if _service_manager is None:
         if config is None:
@@ -1535,7 +1613,8 @@ def get_api_service_manager(config: Optional[Dict[str, Any]] = None) -> APIServi
 """🌐 External APIs - Ultra-Advanced API Integration Hub
 Enterprise-grade external API connectors for Spotify, OpenAI, Stripe, and other services
 with intelligent rate limiting, caching, retry logic, and comprehensive monitoring.
-"""import asyncio
+"""
+import asyncio
 import time
 import json
 import uuid
@@ -1558,7 +1637,8 @@ import yaml
 logger = logging.getLogger(__name__)
 
 class APIProvider(Enum):
-    """Fournisseurs d'API supportés."""    SPOTIFY = "spotify"
+    """Fournisseurs d'API supportés."""
+    SPOTIFY = "spotify"
     OPENAI = "openai"
     STRIPE = "stripe"
     GOOGLE = "google"
@@ -1572,7 +1652,8 @@ class APIProvider(Enum):
     CUSTOM = "custom"
 
 class AuthenticationType(Enum):
-    """Types d'authentification API."""    OAUTH2 = "oauth2"
+    """Types d'authentification API."""
+    OAUTH2 = "oauth2"
     API_KEY = "api_key"
     BEARER_TOKEN = "bearer_token"
     BASIC_AUTH = "basic_auth"
@@ -1581,7 +1662,8 @@ class AuthenticationType(Enum):
     CUSTOM = "custom"
 
 class RateLimitStrategy(Enum):
-    """Stratégies de limitation de taux."""    FIXED_WINDOW = "fixed_window"
+    """Stratégies de limitation de taux."""
+    FIXED_WINDOW = "fixed_window"
     SLIDING_WINDOW = "sliding_window"
     TOKEN_BUCKET = "token_bucket"
     LEAKY_BUCKET = "leaky_bucket"
@@ -1589,7 +1671,8 @@ class RateLimitStrategy(Enum):
 
 @dataclass
 class APIConfig:
-    """Configuration d'API externe."""    provider: APIProvider
+    """Configuration d'API externe."""
+    provider: APIProvider
     base_url: str
     auth_type: AuthenticationType
     credentials: Dict[str, str]
@@ -1606,7 +1689,8 @@ class APIConfig:
 
 @dataclass
 class APIMetrics:
-    """Métriques d'API."""    requests_total: int = 0
+    """Métriques d'API."""
+    requests_total: int = 0
     requests_success: int = 0
     requests_failed: int = 0
     requests_cached: int = 0
@@ -1619,7 +1703,8 @@ class APIMetrics:
 
 @dataclass
 class APIRequest:
-    """Requête API."""    method: str
+    """Requête API."""
+    method: str
     endpoint: str
     params: Optional[Dict[str, Any]] = None
     data: Optional[Dict[str, Any]] = None
@@ -1630,7 +1715,8 @@ class APIRequest:
 
 @dataclass
 class APIResponse:
-    """Réponse API."""    status_code: int
+    """Réponse API."""
+    status_code: int
     data: Any
     headers: Dict[str, str]
     cached: bool = False
@@ -1639,13 +1725,16 @@ class APIResponse:
     rate_limit_reset: Optional[datetime] = None
 
 class SpotifyAPIIntegrator:
-    """    🎵 Intégrateur Spotify API Ultra-Avancé
+    """
+    🎵 Intégrateur Spotify API Ultra-Avancé
     
     Connecteur Spotify Web API avec OAuth2, gestion automatique des tokens,
     cache intelligent, et intégration complète des fonctionnalités Spotify.
-    """    
+    """
+    
     def __init__(self, config: APIConfig):
-        """Initialise l'intégrateur Spotify API."""        self.config = config
+        """Initialise l'intégrateur Spotify API."""
+        self.config = config
         self.session = None
         self.access_token = None
         self.refresh_token = None
@@ -1672,7 +1761,8 @@ class SpotifyAPIIntegrator:
         )
     
     async def initialize(self) -> bool:
-        """Initialise la connexion Spotify API."""        try:
+        """Initialise la connexion Spotify API."""
+        try:
             # Créer session HTTP
             timeout = aiohttp.ClientTimeout(total=self.config.timeout_seconds)
             self.session = aiohttp.ClientSession(
@@ -1697,7 +1787,8 @@ class SpotifyAPIIntegrator:
             return False
     
     async def _authenticate(self) -> bool:
-        """Authentification OAuth2 Spotify."""        try:
+        """Authentification OAuth2 Spotify."""
+        try:
             client_id = self.config.credentials.get('client_id')
             client_secret = self.config.credentials.get('client_secret')
             
@@ -1736,12 +1827,14 @@ class SpotifyAPIIntegrator:
             return False
     
     async def _refresh_token_if_needed(self):
-        """Rafraîchit le token si nécessaire."""        if (self.token_expires_at and 
+        """Rafraîchit le token si nécessaire."""
+        if (self.token_expires_at and 
             datetime.utcnow() >= self.token_expires_at - timedelta(minutes=5)):
             await self._authenticate()
     
     async def health_check(self) -> bool:
-        """Vérifie la santé de l'API Spotify."""        try:
+        """Vérifie la santé de l'API Spotify."""
+        try:
             await self._refresh_token_if_needed()
             
             start_time = time.time()
@@ -1771,7 +1864,8 @@ class SpotifyAPIIntegrator:
             return False
     
     async def make_request(self, request: APIRequest) -> APIResponse:
-        """Effectue une requête API avec toutes les optimisations."""        if self.circuit_breaker_open:
+        """Effectue une requête API avec toutes les optimisations."""
+        if self.circuit_breaker_open:
             raise Exception("Spotify API circuit breaker is open")
         
         # Vérifier le cache
@@ -1907,7 +2001,8 @@ class SpotifyAPIIntegrator:
         offset: int = 0,
         market: str = "US"
     ) -> APIResponse:
-        """Recherche de pistes Spotify."""        request = APIRequest(
+        """Recherche de pistes Spotify."""
+        request = APIRequest(
             method="GET",
             endpoint="/search",
             params={
@@ -1923,7 +2018,8 @@ class SpotifyAPIIntegrator:
         return await self.make_request(request)
     
     async def get_track_features(self, track_id: str) -> APIResponse:
-        """Récupère les caractéristiques audio d'une piste."""        request = APIRequest(
+        """Récupère les caractéristiques audio d'une piste."""
+        request = APIRequest(
             method="GET",
             endpoint=f"/audio-features/{track_id}",
             cache_key=f"track_features_{track_id}"
@@ -1938,7 +2034,8 @@ class SpotifyAPIIntegrator:
         seed_genres: List[str] = None,
         **audio_features
     ) -> APIResponse:
-        """Obtient des recommandations Spotify."""        params = {}
+        """Obtient des recommandations Spotify."""
+        params = {}
         
         if seed_tracks:
             params['seed_tracks'] = ','.join(seed_tracks[:5])  # Max 5
@@ -1970,7 +2067,8 @@ class SpotifyAPIIntegrator:
         description: str = "",
         public: bool = True
     ) -> APIResponse:
-        """Crée une playlist Spotify."""        request = APIRequest(
+        """Crée une playlist Spotify."""
+        request = APIRequest(
             method="POST",
             endpoint=f"/users/{user_id}/playlists",
             data={
@@ -1983,10 +2081,12 @@ class SpotifyAPIIntegrator:
         return await self.make_request(request)
     
     async def get_metrics(self) -> APIMetrics:
-        """Retourne les métriques actuelles."""        return self.metrics
+        """Retourne les métriques actuelles."""
+        return self.metrics
     
     async def cleanup(self):
-        """Nettoie les ressources."""        try:
+        """Nettoie les ressources."""
+        try:
             if self.session:
                 await self.session.close()
             
@@ -1996,13 +2096,16 @@ class SpotifyAPIIntegrator:
             logger.error(f"Error during Spotify API integrator cleanup: {e}")
 
 class OpenAIIntegrator:
-    """    🤖 Intégrateur OpenAI API Ultra-Avancé
+    """
+    🤖 Intégrateur OpenAI API Ultra-Avancé
     
     Connecteur OpenAI API avec gestion des modèles, streaming, fine-tuning,
     optimisation des coûts, et monitoring des performances.
-    """    
+    """
+    
     def __init__(self, config: APIConfig):
-        """Initialise l'intégrateur OpenAI API."""        self.config = config
+        """Initialise l'intégrateur OpenAI API."""
+        self.config = config
         self.session = None
         self.metrics = APIMetrics()
         self.circuit_breaker_open = False
@@ -2025,7 +2128,8 @@ class OpenAIIntegrator:
         )
     
     async def initialize(self) -> bool:
-        """Initialise la connexion OpenAI API."""        try:
+        """Initialise la connexion OpenAI API."""
+        try:
             api_key = self.config.credentials.get('api_key')
             if not api_key:
                 raise ValueError("OpenAI API key required")
@@ -2056,7 +2160,8 @@ class OpenAIIntegrator:
             return False
     
     async def health_check(self) -> bool:
-        """Vérifie la santé de l'API OpenAI."""        try:
+        """Vérifie la santé de l'API OpenAI."""
+        try:
             start_time = time.time()
             
             # Test avec l'endpoint models
@@ -2094,7 +2199,8 @@ class OpenAIIntegrator:
         presence_penalty: float = 0.0,
         stop: Optional[List[str]] = None
     ) -> APIResponse:
-        """Crée une completion avec un modèle OpenAI."""        if self.circuit_breaker_open:
+        """Crée une completion avec un modèle OpenAI."""
+        if self.circuit_breaker_open:
             raise Exception("OpenAI API circuit breaker is open")
         
         start_time = time.time()
@@ -2175,7 +2281,8 @@ class OpenAIIntegrator:
         presence_penalty: float = 0.0,
         stream: bool = False
     ) -> APIResponse:
-        """Crée une chat completion avec un modèle OpenAI."""        if self.circuit_breaker_open:
+        """Crée une chat completion avec un modèle OpenAI."""
+        if self.circuit_breaker_open:
             raise Exception("OpenAI API circuit breaker is open")
         
         start_time = time.time()
@@ -2249,7 +2356,8 @@ class OpenAIIntegrator:
             raise
     
     async def _handle_streaming_response(self, response) -> Dict[str, Any]:
-        """Gère les réponses en streaming d'OpenAI."""        chunks = []
+        """Gère les réponses en streaming d'OpenAI."""
+        chunks = []
         full_content = ""
         
         async for line in response.content:
@@ -2278,7 +2386,8 @@ class OpenAIIntegrator:
         }
     
     def _calculate_cost(self, model: str, prompt_tokens: int, completion_tokens: int) -> float:
-        """Calcule le coût approximatif d'une requête."""        # Prix approximatifs en USD pour 1K tokens (à mettre à jour selon les tarifs actuels)
+        """Calcule le coût approximatif d'une requête."""
+        # Prix approximatifs en USD pour 1K tokens (à mettre à jour selon les tarifs actuels)
         pricing = {
             'gpt-4': {'prompt': 0.03, 'completion': 0.06},
             'gpt-4-32k': {'prompt': 0.06, 'completion': 0.12},
@@ -2300,7 +2409,8 @@ class OpenAIIntegrator:
         model: str,
         input_text: Union[str, List[str]]
     ) -> APIResponse:
-        """Crée des embeddings avec OpenAI."""        start_time = time.time()
+        """Crée des embeddings avec OpenAI."""
+        start_time = time.time()
         
         try:
             data = {
@@ -2348,7 +2458,8 @@ class OpenAIIntegrator:
             raise
     
     async def get_cost_breakdown(self) -> Dict[str, Any]:
-        """Récupère la répartition des coûts par modèle."""        return {
+        """Récupère la répartition des coûts par modèle."""
+        return {
             'total_cost': sum(self.cost_tracker.values()),
             'cost_by_model': dict(self.cost_tracker),
             'currency': 'USD',
@@ -2356,10 +2467,12 @@ class OpenAIIntegrator:
         }
     
     async def get_metrics(self) -> APIMetrics:
-        """Retourne les métriques actuelles."""        return self.metrics
+        """Retourne les métriques actuelles."""
+        return self.metrics
     
     async def cleanup(self):
-        """Nettoie les ressources."""        try:
+        """Nettoie les ressources."""
+        try:
             if self.session:
                 await self.session.close()
             
@@ -2369,13 +2482,16 @@ class OpenAIIntegrator:
             logger.error(f"Error during OpenAI API integrator cleanup: {e}")
 
 class ExternalAPIManager:
-    """    🌐 Gestionnaire d'APIs Externes Ultra-Avancé
+    """
+    🌐 Gestionnaire d'APIs Externes Ultra-Avancé
     
     Orchestrateur central pour toutes les APIs externes avec load balancing,
     failover automatique, monitoring unifié, et optimisation intelligente.
-    """    
+    """
+    
     def __init__(self):
-        """Initialise le gestionnaire d'APIs externes."""        self.integrators: Dict[APIProvider, Any] = {}
+        """Initialise le gestionnaire d'APIs externes."""
+        self.integrators: Dict[APIProvider, Any] = {}
         self.circuit_breakers = {}
         self.rate_limiters = {}
         self.cache_manager = None
@@ -2400,7 +2516,8 @@ class ExternalAPIManager:
         provider: APIProvider,
         config: APIConfig
     ) -> bool:
-        """Enregistre une API externe."""        try:
+        """Enregistre une API externe."""
+        try:
             if provider == APIProvider.SPOTIFY:
                 integrator = SpotifyAPIIntegrator(config)
             elif provider == APIProvider.OPENAI:
@@ -2429,7 +2546,8 @@ class ExternalAPIManager:
         provider: APIProvider,
         request: APIRequest
     ) -> APIResponse:
-        """Effectue une requête API avec tous les middlewares."""        integrator = self.integrators.get(provider)
+        """Effectue une requête API avec tous les middlewares."""
+        integrator = self.integrators.get(provider)
         if not integrator:
             raise ValueError(f"API provider {provider.value} not registered")
         
@@ -2459,14 +2577,16 @@ class ExternalAPIManager:
             raise
     
     async def start_monitoring(self):
-        """Démarre le monitoring des APIs."""        if self.monitoring_task:
+        """Démarre le monitoring des APIs."""
+        if self.monitoring_task:
             return
         
         self.monitoring_task = asyncio.create_task(self._monitoring_loop())
         logger.info("External API monitoring started")
     
     async def stop_monitoring(self):
-        """Arrête le monitoring des APIs."""        if self.monitoring_task:
+        """Arrête le monitoring des APIs."""
+        if self.monitoring_task:
             self.monitoring_task.cancel()
             try:
                 await self.monitoring_task
@@ -2477,7 +2597,8 @@ class ExternalAPIManager:
         logger.info("External API monitoring stopped")
     
     async def _monitoring_loop(self):
-        """Boucle de monitoring des APIs."""        while True:
+        """Boucle de monitoring des APIs."""
+        while True:
             try:
                 await asyncio.sleep(self.health_check_interval)
                 
@@ -2504,7 +2625,8 @@ class ExternalAPIManager:
                 logger.error(f"Error in API monitoring loop: {e}")
     
     async def get_global_metrics(self) -> Dict[str, Any]:
-        """Récupère les métriques globales."""        global_metrics = {
+        """Récupère les métriques globales."""
+        global_metrics = {
             'total_apis': len(self.integrators),
             'healthy_apis': 0,
             'total_cost': 0.0,
@@ -2545,7 +2667,8 @@ class ExternalAPIManager:
         return global_metrics
     
     async def cleanup(self):
-        """Nettoie toutes les ressources."""        try:
+        """Nettoie toutes les ressources."""
+        try:
             # Arrêter le monitoring
             await self.stop_monitoring()
             
@@ -2584,7 +2707,8 @@ Examples:
     python backup_restore.py --create-backup --description "Pre-deployment backup"
     python backup_restore.py --restore --backup-id backup-20250717-143022
     python backup_restore.py --sync-to-s3 --bucket spotify-ai-backups
-"""import argparse
+"""
+import argparse
 import json
 import yaml
 import os
@@ -2610,7 +2734,8 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 @dataclass
 class BackupMetadata:
-    """Métadonnées complètes d'une sauvegarde."""    backup_id: str
+    """Métadonnées complètes d'une sauvegarde."""
+    backup_id: str
     timestamp: datetime
     namespace: str
     description: str
@@ -2630,7 +2755,8 @@ class BackupMetadata:
 
 @dataclass
 class RestoreOperation:
-    """Informations d'une opération de restauration."""    restore_id: str
+    """Informations d'une opération de restauration."""
+    restore_id: str
     backup_id: str
     timestamp: datetime
     target_namespace: str
@@ -2644,7 +2770,8 @@ class RestoreOperation:
     validation_results: Dict[str, bool]
 
 class BackupRestoreManager:
-    """Gestionnaire avancé de sauvegarde et restauration."""    
+    """Gestionnaire avancé de sauvegarde et restauration."""
+    
     def __init__(self, 
                  namespace: str = "spotify-ai-agent-dev",
                  kubeconfig: Optional[str] = None,
@@ -2676,7 +2803,8 @@ class BackupRestoreManager:
                           encrypt: bool = True,
                           compress: bool = True,
                           verify: bool = True) -> BackupMetadata:
-        """Crée une sauvegarde complète."""        print("📦 Création d'une sauvegarde complète...")
+        """Crée une sauvegarde complète."""
+        print("📦 Création d'une sauvegarde complète...")
         
         backup_id = f"backup-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
         backup_start = datetime.now()
@@ -2788,7 +2916,8 @@ class BackupRestoreManager:
                                  base_backup_id: str,
                                  description: str = "",
                                  created_by: str = "system") -> BackupMetadata:
-        """Crée une sauvegarde incrémentale."""        print(f"📦 Création d'une sauvegarde incrémentale basée sur {base_backup_id}...")
+        """Crée une sauvegarde incrémentale."""
+        print(f"📦 Création d'une sauvegarde incrémentale basée sur {base_backup_id}...")
         
         # Chargement de la sauvegarde de base
         base_backup = self._load_backup_metadata(base_backup_id)
@@ -2857,7 +2986,8 @@ class BackupRestoreManager:
                            dry_run: bool = False,
                            requested_by: str = "system",
                            selective_resources: Optional[List[str]] = None) -> RestoreOperation:
-        """Restaure depuis une sauvegarde."""        print(f"🔄 Restauration depuis la sauvegarde {backup_id}...")
+        """Restaure depuis une sauvegarde."""
+        print(f"🔄 Restauration depuis la sauvegarde {backup_id}...")
         
         restore_id = f"restore-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
         restore_start = datetime.now()
@@ -2965,7 +3095,8 @@ class BackupRestoreManager:
                     limit: Optional[int] = None,
                     backup_type: Optional[str] = None,
                     status: Optional[str] = None) -> List[BackupMetadata]:
-        """Liste les sauvegardes disponibles."""        backups = []
+        """Liste les sauvegardes disponibles."""
+        backups = []
         
         # Chargement depuis les métadonnées sauvegardées
         metadata_files = list(self.backup_dir.glob("*.metadata.json"))
@@ -3003,7 +3134,8 @@ class BackupRestoreManager:
                            retention_days: int = 30,
                            max_backups: int = 100,
                            dry_run: bool = False) -> Dict[str, int]:
-        """Nettoie les anciennes sauvegardes selon les politiques de rétention."""        print(f"🧹 Nettoyage des sauvegardes (rétention: {retention_days} jours, max: {max_backups})")
+        """Nettoie les anciennes sauvegardes selon les politiques de rétention."""
+        print(f"🧹 Nettoyage des sauvegardes (rétention: {retention_days} jours, max: {max_backups})")
         
         backups = self.list_backups()
         cutoff_date = datetime.now() - timedelta(days=retention_days)
@@ -3057,7 +3189,8 @@ class BackupRestoreManager:
                              provider: str,
                              backup_ids: Optional[List[str]] = None,
                              parallel_uploads: int = 3) -> Dict[str, str]:
-        """Synchronise les sauvegardes vers le stockage cloud."""        print(f"☁️ Synchronisation vers {provider}...")
+        """Synchronise les sauvegardes vers le stockage cloud."""
+        print(f"☁️ Synchronisation vers {provider}...")
         
         backups_to_sync = []
         
@@ -3108,7 +3241,8 @@ class BackupRestoreManager:
         return sync_results
     
     def verify_backup_integrity(self, backup_id: str) -> bool:
-        """Vérifie l'intégrité d'une sauvegarde."""        print(f"🔍 Vérification de l'intégrité de {backup_id}...")
+        """Vérifie l'intégrité d'une sauvegarde."""
+        print(f"🔍 Vérification de l'intégrité de {backup_id}...")
         
         metadata = self._load_backup_metadata(backup_id)
         if not metadata:
@@ -3141,7 +3275,8 @@ class BackupRestoreManager:
         return True
     
     def test_restore(self, backup_id: str) -> bool:
-        """Teste la restauration d'une sauvegarde en mode dry-run."""        print(f"🧪 Test de restauration de {backup_id}...")
+        """Teste la restauration d'une sauvegarde en mode dry-run."""
+        print(f"🧪 Test de restauration de {backup_id}...")
         
         try:
             restore_op = self.restore_from_backup(
@@ -3173,7 +3308,8 @@ class BackupRestoreManager:
     # Méthodes privées helper
     
     def _init_storage_clients(self) -> None:
-        """Initialise les clients de stockage externe."""        if "aws" in self.storage_config:
+        """Initialise les clients de stockage externe."""
+        if "aws" in self.storage_config:
             try:
                 self.s3_client = boto3.client(
                     's3',
@@ -3202,7 +3338,8 @@ class BackupRestoreManager:
                 print(f"⚠️ Impossible d'initialiser le client GCS: {e}")
     
     def _get_or_create_encryption_key(self) -> str:
-        """Obtient ou crée une clé de chiffrement."""        key_file = self.backup_dir / ".encryption_key"
+        """Obtient ou crée une clé de chiffrement."""
+        key_file = self.backup_dir / ".encryption_key"
         
         if key_file.exists():
             with open(key_file, 'r') as f:
@@ -3221,7 +3358,8 @@ class BackupRestoreManager:
             return key
     
     def _collect_all_resources(self) -> List[Dict[str, Any]]:
-        """Collecte toutes les ressources du namespace."""        resources = []
+        """Collecte toutes les ressources du namespace."""
+        resources = []
         
         resource_types = [
             "pods", "deployments", "services", "configmaps", "secrets",
@@ -3250,7 +3388,8 @@ class BackupRestoreManager:
         return resources
     
     def _clean_resource_for_backup(self, resource: Dict[str, Any]) -> None:
-        """Nettoie une ressource pour la sauvegarde."""        metadata = resource.get("metadata", {})
+        """Nettoie une ressource pour la sauvegarde."""
+        metadata = resource.get("metadata", {})
         
         # Suppression des champs système
         system_fields = [
@@ -3273,7 +3412,8 @@ class BackupRestoreManager:
             annotations.pop(annotation, None)
     
     def _get_cluster_info(self) -> Dict[str, str]:
-        """Récupère les informations du cluster."""        cluster_info = {}
+        """Récupère les informations du cluster."""
+        cluster_info = {}
         
         try:
             # Version de Kubernetes
@@ -3304,7 +3444,8 @@ class BackupRestoreManager:
     
     def _save_backup_to_disk(self, backup_structure: Dict[str, Any], 
                            backup_id: str, compress: bool, encrypt: bool) -> Path:
-        """Sauvegarde la structure sur disque."""        backup_file = self.backup_dir / f"{backup_id}.backup"
+        """Sauvegarde la structure sur disque."""
+        backup_file = self.backup_dir / f"{backup_id}.backup"
         
         # Sérialisation
         backup_content = json.dumps(backup_structure, indent=2, default=str).encode('utf-8')
@@ -3326,7 +3467,8 @@ class BackupRestoreManager:
         return backup_file
     
     def _encrypt_data(self, data: bytes) -> bytes:
-        """Chiffre des données."""        try:
+        """Chiffre des données."""
+        try:
             from cryptography.fernet import Fernet
             import base64
             
@@ -3340,7 +3482,8 @@ class BackupRestoreManager:
             return data
     
     def _decrypt_data(self, encrypted_data: bytes) -> bytes:
-        """Déchiffre des données."""        try:
+        """Déchiffre des données."""
+        try:
             from cryptography.fernet import Fernet
             import base64
             
@@ -3353,7 +3496,8 @@ class BackupRestoreManager:
             return encrypted_data
     
     def _calculate_file_checksum(self, file_path: Path) -> str:
-        """Calcule le checksum SHA-256 d'un fichier."""        hash_sha256 = hashlib.sha256()
+        """Calcule le checksum SHA-256 d'un fichier."""
+        hash_sha256 = hashlib.sha256()
         
         with open(file_path, 'rb') as f:
             for chunk in iter(lambda: f.read(4096), b""):
@@ -3362,7 +3506,8 @@ class BackupRestoreManager:
         return hash_sha256.hexdigest()
     
     def _calculate_compression_ratio(self, original_data: Dict[str, Any], compressed_file: Path) -> float:
-        """Calcule le ratio de compression."""        original_size = len(json.dumps(original_data, default=str).encode('utf-8'))
+        """Calcule le ratio de compression."""
+        original_size = len(json.dumps(original_data, default=str).encode('utf-8'))
         compressed_size = compressed_file.stat().st_size
         
         if original_size == 0:
@@ -3371,20 +3516,23 @@ class BackupRestoreManager:
         return compressed_size / original_size
     
     def _count_resource_types(self, resources: List[Dict[str, Any]]) -> Dict[str, int]:
-        """Compte les ressources par type."""        counts = {}
+        """Compte les ressources par type."""
+        counts = {}
         for resource in resources:
             kind = resource.get("kind", "Unknown")
             counts[kind] = counts.get(kind, 0) + 1
         return counts
     
     def _save_backup_metadata(self, metadata: BackupMetadata) -> None:
-        """Sauvegarde les métadonnées."""        metadata_file = self.backup_dir / f"{metadata.backup_id}.metadata.json"
+        """Sauvegarde les métadonnées."""
+        metadata_file = self.backup_dir / f"{metadata.backup_id}.metadata.json"
         
         with open(metadata_file, 'w', encoding='utf-8') as f:
             json.dump(asdict(metadata), f, indent=2, default=str)
     
     def _load_backup_metadata(self, backup_id: str) -> Optional[BackupMetadata]:
-        """Charge les métadonnées d'une sauvegarde."""        metadata_file = self.backup_dir / f"{backup_id}.metadata.json"
+        """Charge les métadonnées d'une sauvegarde."""
+        metadata_file = self.backup_dir / f"{backup_id}.metadata.json"
         
         if not metadata_file.exists():
             return None
@@ -3402,14 +3550,16 @@ class BackupRestoreManager:
             return None
     
     def _format_size(self, size_bytes: int) -> str:
-        """Formate une taille en bytes en unité lisible."""        for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
+        """Formate une taille en bytes en unité lisible."""
+        for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
             if size_bytes < 1024.0:
                 return f"{size_bytes:.1f} {unit}"
             size_bytes /= 1024.0
         return f"{size_bytes:.1f} PB"
 
 def main():
-    """Fonction principale du script."""    parser = argparse.ArgumentParser(
+    """Fonction principale du script."""
+    parser = argparse.ArgumentParser(
         description="Système de sauvegarde et restauration Spotify AI Agent",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""Exemples d'utilisation:
@@ -3417,7 +3567,8 @@ def main():
   python backup_restore.py --list-backups --limit 10
   python backup_restore.py --restore --backup-id backup-20250717-143022
   python backup_restore.py --sync-to-cloud aws --bucket my-backups
-        """    )
+        """
+    )
     
     parser.add_argument(
         "--namespace", "-n",
@@ -3640,7 +3791,8 @@ Features:
 - Webhook replay and debugging
 - Custom event handlers and transformers
 - Monitoring and analytics
-"""import asyncio
+"""
+import asyncio
 import hmac
 import hashlib
 import json
@@ -3662,22 +3814,26 @@ logger = logging.getLogger(__name__)
 
 
 class WebhookValidationError(Exception):
-    """Exception raised for webhook validation errors."""    pass
+    """Exception raised for webhook validation errors."""
+    pass
 
 
 class WebhookProcessingError(Exception):
-    """Exception raised for webhook processing errors."""    pass
+    """Exception raised for webhook processing errors."""
+    pass
 
 
 class WebhookFormat(Enum):
-    """Supported webhook payload formats."""    JSON = "json"
+    """Supported webhook payload formats."""
+    JSON = "json"
     XML = "xml"
     FORM_DATA = "form_data"
     PLAIN_TEXT = "plain_text"
 
 
 class WebhookEventType(Enum):
-    """PagerDuty webhook event types."""    INCIDENT_TRIGGER = "incident.trigger"
+    """PagerDuty webhook event types."""
+    INCIDENT_TRIGGER = "incident.trigger"
     INCIDENT_ACKNOWLEDGE = "incident.acknowledge"
     INCIDENT_RESOLVE = "incident.resolve"
     INCIDENT_ASSIGN = "incident.assign"
@@ -3692,7 +3848,8 @@ class WebhookEventType(Enum):
 
 @dataclass
 class WebhookRequest:
-    """Webhook request data."""    method: str
+    """Webhook request data."""
+    method: str
     url: str
     headers: Dict[str, str]
     body: bytes
@@ -3703,7 +3860,8 @@ class WebhookRequest:
 
 @dataclass
 class WebhookEvent:
-    """Parsed webhook event."""    event_type: str
+    """Parsed webhook event."""
+    event_type: str
     event_id: str
     webhook_id: Optional[str] = None
     resource_type: Optional[str] = None
@@ -3715,7 +3873,8 @@ class WebhookEvent:
 
 @dataclass
 class WebhookConfig:
-    """Webhook endpoint configuration."""    name: str
+    """Webhook endpoint configuration."""
+    name: str
     endpoint_path: str
     secret: Optional[str] = None
     signature_header: str = "X-PagerDuty-Signature"
@@ -3728,7 +3887,8 @@ class WebhookConfig:
 
 
 class WebhookProcessor:
-    """    Advanced webhook processor with security and reliability features.
+    """
+    Advanced webhook processor with security and reliability features.
     
     Features:
     - Signature validation and security
@@ -3737,18 +3897,21 @@ class WebhookProcessor:
     - Event routing and processing
     - Async processing with queues
     - Comprehensive monitoring
-    """    
+    """
+    
     def __init__(self,
                  default_secret: Optional[str] = None,
                  enable_rate_limiting: bool = True,
                  enable_monitoring: bool = True):
-        """        Initialize webhook processor.
+        """
+        Initialize webhook processor.
         
         Args:
             default_secret: Default webhook secret for validation
             enable_rate_limiting: Enable rate limiting protection
             enable_monitoring: Enable metrics and monitoring
-        """        self.default_secret = default_secret
+        """
+        self.default_secret = default_secret
         self.enable_rate_limiting = enable_rate_limiting
         self.enable_monitoring = enable_monitoring
         
@@ -3777,34 +3940,40 @@ class WebhookProcessor:
         logger.info("Webhook processor initialized")
     
     def register_webhook(self, config: WebhookConfig):
-        """Register a webhook endpoint configuration."""        self.webhooks[config.endpoint_path] = config
+        """Register a webhook endpoint configuration."""
+        self.webhooks[config.endpoint_path] = config
         logger.info(f"Registered webhook endpoint: {config.endpoint_path}")
     
     def register_event_handler(self, event_type: str, handler: Callable):
-        """        Register an event handler for specific event type.
+        """
+        Register an event handler for specific event type.
         
         Args:
             event_type: Event type to handle (e.g., 'incident.trigger')
             handler: Async function to handle the event
-        """        if event_type not in self.event_handlers:
+        """
+        if event_type not in self.event_handlers:
             self.event_handlers[event_type] = []
         
         self.event_handlers[event_type].append(handler)
         logger.debug(f"Registered event handler for: {event_type}")
     
     def register_global_handler(self, handler: Callable):
-        """Register a global event handler that processes all events."""        self.global_handlers.append(handler)
+        """Register a global event handler that processes all events."""
+        self.global_handlers.append(handler)
         logger.debug("Registered global event handler")
     
     async def process_webhook(self, request: WebhookRequest) -> Dict[str, Any]:
-        """        Process incoming webhook request.
+        """
+        Process incoming webhook request.
         
         Args:
             request: Webhook request data
             
         Returns:
             Processing result dictionary
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Find webhook configuration
@@ -3871,13 +4040,15 @@ class WebhookProcessor:
             raise WebhookProcessingError(f"Webhook processing failed: {e}")
     
     def _find_webhook_config(self, url: str) -> Optional[WebhookConfig]:
-        """Find webhook configuration by URL path."""        parsed_url = urllib.parse.urlparse(url)
+        """Find webhook configuration by URL path."""
+        parsed_url = urllib.parse.urlparse(url)
         path = parsed_url.path
         
         return self.webhooks.get(path)
     
     async def _validate_request(self, request: WebhookRequest, config: WebhookConfig):
-        """Validate webhook request security and format."""        # Check IP whitelist
+        """Validate webhook request security and format."""
+        # Check IP whitelist
         if config.allowed_ips and request.remote_addr:
             if request.remote_addr not in config.allowed_ips:
                 raise WebhookValidationError(f"IP address not allowed: {request.remote_addr}")
@@ -3899,7 +4070,8 @@ class WebhookProcessor:
             raise WebhookValidationError("Expected XML content type")
     
     async def _validate_signature(self, request: WebhookRequest, secret: str, config: WebhookConfig):
-        """Validate webhook signature."""        signature_header = request.headers.get(config.signature_header)
+        """Validate webhook signature."""
+        signature_header = request.headers.get(config.signature_header)
         if not signature_header:
             raise WebhookValidationError(f"Missing signature header: {config.signature_header}")
         
@@ -3931,7 +4103,8 @@ class WebhookProcessor:
             raise WebhookValidationError("Invalid signature")
     
     async def _validate_timestamp(self, request: WebhookRequest, config: WebhookConfig):
-        """Validate request timestamp to prevent replay attacks."""        timestamp_header = request.headers.get(config.timestamp_header)
+        """Validate request timestamp to prevent replay attacks."""
+        timestamp_header = request.headers.get(config.timestamp_header)
         if not timestamp_header:
             raise WebhookValidationError(f"Missing timestamp header: {config.timestamp_header}")
         
@@ -3946,7 +4119,8 @@ class WebhookProcessor:
             raise WebhookValidationError("Invalid timestamp format")
     
     async def _parse_payload(self, request: WebhookRequest, config: WebhookConfig) -> Dict[str, Any]:
-        """Parse webhook payload based on format."""        try:
+        """Parse webhook payload based on format."""
+        try:
             if config.format == WebhookFormat.JSON:
                 return json.loads(request.body.decode('utf-8'))
             
@@ -3971,7 +4145,8 @@ class WebhookProcessor:
             raise WebhookProcessingError(f"Failed to parse payload: {e}")
     
     async def _extract_events(self, payload: Dict[str, Any], config: WebhookConfig) -> List[WebhookEvent]:
-        """Extract events from webhook payload."""        events = []
+        """Extract events from webhook payload."""
+        events = []
         
         # Handle PagerDuty v3 webhook format
         if 'messages' in payload:
@@ -3999,7 +4174,8 @@ class WebhookProcessor:
         return events
     
     def _create_pagerduty_event(self, message: Dict[str, Any]) -> Optional[WebhookEvent]:
-        """Create webhook event from PagerDuty message."""        try:
+        """Create webhook event from PagerDuty message."""
+        try:
             event_type = message.get('event')
             if not event_type:
                 return None
@@ -4037,7 +4213,8 @@ class WebhookProcessor:
             return None
     
     async def _process_event(self, event: WebhookEvent, config: WebhookConfig):
-        """Process a single webhook event."""        try:
+        """Process a single webhook event."""
+        try:
             # Call global handlers first
             for handler in self.global_handlers:
                 try:
@@ -4076,7 +4253,8 @@ class WebhookProcessor:
             raise
     
     async def _worker(self):
-        """Background worker to process events from queue."""        while True:
+        """Background worker to process events from queue."""
+        while True:
             try:
                 # Get event from queue
                 event, config = await self.processing_queue.get()
@@ -4094,7 +4272,8 @@ class WebhookProcessor:
                 self.processing_queue.task_done()
     
     def start_workers(self):
-        """Start background workers for event processing."""        if self.worker_tasks:
+        """Start background workers for event processing."""
+        if self.worker_tasks:
             return  # Already started
         
         loop = asyncio.get_event_loop()
@@ -4105,7 +4284,8 @@ class WebhookProcessor:
         logger.info(f"Started {self.max_workers} webhook processing workers")
     
     async def stop_workers(self):
-        """Stop background workers."""        # Cancel all worker tasks
+        """Stop background workers."""
+        # Cancel all worker tasks
         for task in self.worker_tasks:
             task.cancel()
         
@@ -4117,13 +4297,15 @@ class WebhookProcessor:
         logger.info("Stopped webhook processing workers")
     
     async def drain_queue(self, timeout: float = 30.0):
-        """Wait for all queued events to be processed."""        try:
+        """Wait for all queued events to be processed."""
+        try:
             await asyncio.wait_for(self.processing_queue.join(), timeout=timeout)
         except asyncio.TimeoutError:
             logger.warning(f"Queue drain timed out after {timeout} seconds")
     
     def get_webhook_stats(self) -> Dict[str, Any]:
-        """Get webhook processing statistics."""        stats = {
+        """Get webhook processing statistics."""
+        stats = {
             'registered_webhooks': len(self.webhooks),
             'event_handlers': {
                 event_type: len(handlers)
@@ -4143,7 +4325,8 @@ class WebhookProcessor:
                                        name: str,
                                        endpoint_path: str,
                                        secret: str) -> WebhookConfig:
-        """Create standard PagerDuty webhook configuration."""        return WebhookConfig(
+        """Create standard PagerDuty webhook configuration."""
+        return WebhookConfig(
             name=name,
             endpoint_path=endpoint_path,
             secret=secret,
@@ -4160,7 +4343,8 @@ class WebhookProcessor:
 _global_webhook_processor = None
 
 def get_webhook_processor() -> WebhookProcessor:
-    """Get global webhook processor instance."""    global _global_webhook_processor
+    """Get global webhook processor instance."""
+    global _global_webhook_processor
     if _global_webhook_processor is None:
         _global_webhook_processor = WebhookProcessor()
     return _global_webhook_processor
@@ -4169,17 +4353,20 @@ def get_webhook_processor() -> WebhookProcessor:
 # Convenience functions for common PagerDuty events
 
 async def handle_incident_trigger(event: WebhookEvent):
-    """Example handler for incident trigger events."""    incident_data = event.data.get('incident', {})
+    """Example handler for incident trigger events."""
+    incident_data = event.data.get('incident', {})
     logger.info(f"Incident triggered: {incident_data.get('id')} - {incident_data.get('title')}")
 
 
 async def handle_incident_resolve(event: WebhookEvent):
-    """Example handler for incident resolve events."""    incident_data = event.data.get('incident', {})
+    """Example handler for incident resolve events."""
+    incident_data = event.data.get('incident', {})
     logger.info(f"Incident resolved: {incident_data.get('id')} - {incident_data.get('title')}")
 
 
 def setup_default_pagerduty_handlers():
-    """Setup default PagerDuty event handlers."""    processor = get_webhook_processor()
+    """Setup default PagerDuty event handlers."""
+    processor = get_webhook_processor()
     
     processor.register_event_handler('incident.trigger', handle_incident_trigger)
     processor.register_event_handler('incident.resolve', handle_incident_resolve)
@@ -4218,7 +4405,8 @@ Architecture API:
 
 License: Spotify Proprietary
 Copyright: © 2025 Spotify Technology S.A.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 from datetime import datetime, timedelta
@@ -4305,7 +4493,8 @@ ACTIVE_WEBSOCKET_CONNECTIONS = Gauge(
 # Modèles Pydantic pour l'API
 
 class TenantInfo(BaseModel):
-    """Informations sur un tenant"""    tenant_id: str = Field(..., description="Identifiant unique du tenant")
+    """Informations sur un tenant"""
+    tenant_id: str = Field(..., description="Identifiant unique du tenant")
     name: str = Field(..., description="Nom du tenant")
     environment: str = Field(default="dev", description="Environnement (dev, staging, prod)")
     
@@ -4320,7 +4509,8 @@ class TenantInfo(BaseModel):
 
 
 class ConditionConfigModel(BaseModel):
-    """Configuration d'une condition de règle"""    type: str = Field(..., description="Type de condition")
+    """Configuration d'une condition de règle"""
+    type: str = Field(..., description="Type de condition")
     condition_id: Optional[str] = Field(None, description="ID unique de la condition")
     weight: float = Field(default=1.0, ge=0.1, le=10.0, description="Poids de la condition")
     
@@ -4359,7 +4549,8 @@ ConditionConfigModel.update_forward_refs()
 
 
 class RuleConfigModel(BaseModel):
-    """Configuration complète d'une règle d'alerte"""    name: constr(min_length=1, max_length=200) = Field(..., description="Nom de la règle")
+    """Configuration complète d'une règle d'alerte"""
+    name: constr(min_length=1, max_length=200) = Field(..., description="Nom de la règle")
     description: str = Field(default="", max_length=1000, description="Description de la règle")
     severity: str = Field(..., description="Niveau de sévérité")
     category: str = Field(..., description="Catégorie de la règle")
@@ -4422,7 +4613,8 @@ class RuleConfigModel(BaseModel):
 
 
 class RuleUpdateModel(BaseModel):
-    """Modèle pour mise à jour partielle d'une règle"""    name: Optional[str] = Field(None, max_length=200)
+    """Modèle pour mise à jour partielle d'une règle"""
+    name: Optional[str] = Field(None, max_length=200)
     description: Optional[str] = Field(None, max_length=1000)
     enabled: Optional[bool] = None
     cooldown_period_seconds: Optional[conint(ge=0, le=86400)] = None
@@ -4431,7 +4623,8 @@ class RuleUpdateModel(BaseModel):
 
 
 class AlertMetricsModel(BaseModel):
-    """Modèle pour les métriques d'alerte"""    cpu_usage: float = Field(..., ge=0, le=100, description="Utilisation CPU en %")
+    """Modèle pour les métriques d'alerte"""
+    cpu_usage: float = Field(..., ge=0, le=100, description="Utilisation CPU en %")
     memory_usage: float = Field(..., ge=0, le=100, description="Utilisation mémoire en %")
     disk_usage: float = Field(..., ge=0, le=100, description="Utilisation disque en %")
     network_latency: float = Field(..., ge=0, description="Latence réseau en ms")
@@ -4442,13 +4635,15 @@ class AlertMetricsModel(BaseModel):
 
 
 class EvaluationRequestModel(BaseModel):
-    """Demande d'évaluation de règles"""    tenant_id: str = Field(..., description="ID du tenant")
+    """Demande d'évaluation de règles"""
+    tenant_id: str = Field(..., description="ID du tenant")
     metrics: Optional[AlertMetricsModel] = Field(None, description="Métriques à évaluer")
     rule_ids: Optional[List[str]] = Field(None, description="IDs spécifiques des règles à évaluer")
 
 
 class EvaluationResultModel(BaseModel):
-    """Résultat d'évaluation d'une règle"""    rule_id: str
+    """Résultat d'évaluation d'une règle"""
+    rule_id: str
     triggered: bool
     severity: str
     message: str
@@ -4458,7 +4653,8 @@ class EvaluationResultModel(BaseModel):
 
 
 class RuleInfoModel(BaseModel):
-    """Informations sur une règle"""    rule_id: str
+    """Informations sur une règle"""
+    rule_id: str
     name: str
     description: str
     severity: str
@@ -4474,7 +4670,8 @@ class RuleInfoModel(BaseModel):
 
 
 class APIResponse(BaseModel):
-    """Réponse API standardisée"""    success: bool
+    """Réponse API standardisée"""
+    success: bool
     message: str
     data: Optional[Any] = None
     errors: Optional[List[str]] = None
@@ -4485,7 +4682,8 @@ class APIResponse(BaseModel):
 
 @strawberry.type
 class GraphQLRule:
-    """Représentation GraphQL d'une règle"""    rule_id: str
+    """Représentation GraphQL d'une règle"""
+    rule_id: str
     name: str
     description: str
     severity: str
@@ -4497,7 +4695,8 @@ class GraphQLRule:
 
 @strawberry.type
 class GraphQLEvaluationResult:
-    """Résultat d'évaluation GraphQL"""    rule_id: str
+    """Résultat d'évaluation GraphQL"""
+    rule_id: str
     triggered: bool
     severity: str
     message: str
@@ -4507,7 +4706,8 @@ class GraphQLEvaluationResult:
 
 @strawberry.input
 class GraphQLRuleInput:
-    """Input GraphQL pour création de règle"""    name: str
+    """Input GraphQL pour création de règle"""
+    name: str
     description: str = ""
     severity: str
     category: str
@@ -4518,13 +4718,15 @@ class GraphQLRuleInput:
 # Gestion de l'authentification
 
 class AuthManager:
-    """Gestionnaire d'authentification et d'autorisation"""    
+    """Gestionnaire d'authentification et d'autorisation"""
+    
     def __init__(self, secret_key: str, algorithm: str = "HS256"):
         self.secret_key = secret_key
         self.algorithm = algorithm
     
     def create_access_token(self, data: dict, expires_delta: Optional[timedelta] = None):
-        """Crée un token d'accès JWT"""        to_encode = data.copy()
+        """Crée un token d'accès JWT"""
+        to_encode = data.copy()
         if expires_delta:
             expire = datetime.utcnow() + expires_delta
         else:
@@ -4535,14 +4737,16 @@ class AuthManager:
         return encoded_jwt
     
     def verify_token(self, token: str) -> Dict[str, Any]:
-        """Vérifie et décode un token JWT"""        try:
+        """Vérifie et décode un token JWT"""
+        try:
             payload = jwt.decode(token, self.secret_key, algorithms=[self.algorithm])
             return payload
         except jwt.PyJWTError:
             raise AuthenticationException("Invalid token")
     
     def get_current_user(self, credentials: HTTPAuthorizationCredentials = Depends(security)):
-        """Récupère l'utilisateur actuel depuis le token"""        try:
+        """Récupère l'utilisateur actuel depuis le token"""
+        try:
             payload = self.verify_token(credentials.credentials)
             tenant_id: str = payload.get("tenant_id")
             user_id: str = payload.get("user_id")
@@ -4566,13 +4770,15 @@ class AuthManager:
 # WebSocket Manager pour streaming temps réel
 
 class WebSocketManager:
-    """Gestionnaire de connexions WebSocket"""    
+    """Gestionnaire de connexions WebSocket"""
+    
     def __init__(self):
         self.active_connections: Dict[str, Set[WebSocket]] = {}
         self.connection_metadata: Dict[WebSocket, Dict[str, Any]] = {}
     
     async def connect(self, websocket: WebSocket, tenant_id: str, user_id: str):
-        """Nouvelle connexion WebSocket"""        await websocket.accept()
+        """Nouvelle connexion WebSocket"""
+        await websocket.accept()
         
         if tenant_id not in self.active_connections:
             self.active_connections[tenant_id] = set()
@@ -4593,7 +4799,8 @@ class WebSocketManager:
         )
     
     def disconnect(self, websocket: WebSocket):
-        """Déconnexion WebSocket"""        if websocket in self.connection_metadata:
+        """Déconnexion WebSocket"""
+        if websocket in self.connection_metadata:
             metadata = self.connection_metadata[websocket]
             tenant_id = metadata["tenant_id"]
             
@@ -4609,7 +4816,8 @@ class WebSocketManager:
             )
     
     async def send_to_tenant(self, tenant_id: str, message: dict):
-        """Envoie un message à toutes les connexions d'un tenant"""        if tenant_id in self.active_connections:
+        """Envoie un message à toutes les connexions d'un tenant"""
+        if tenant_id in self.active_connections:
             connections_to_remove = []
             
             for websocket in self.active_connections[tenant_id]:
@@ -4628,7 +4836,8 @@ class WebSocketManager:
                 self.disconnect(websocket)
     
     async def send_to_user(self, tenant_id: str, user_id: str, message: dict):
-        """Envoie un message à un utilisateur spécifique"""        if tenant_id in self.active_connections:
+        """Envoie un message à un utilisateur spécifique"""
+        if tenant_id in self.active_connections:
             for websocket in self.active_connections[tenant_id]:
                 metadata = self.connection_metadata.get(websocket)
                 if metadata and metadata["user_id"] == user_id:
@@ -4646,7 +4855,8 @@ class WebSocketManager:
 # Classe principale de l'API
 
 class AlertRulesAPI:
-    """API principale pour la gestion des règles d'alertes"""    
+    """API principale pour la gestion des règles d'alertes"""
+    
     def __init__(
         self,
         rule_manager: RuleManager,
@@ -4679,7 +4889,8 @@ class AlertRulesAPI:
         self._setup_monitoring()
     
     def _setup_middlewares(self):
-        """Configuration des middlewares"""        
+        """Configuration des middlewares"""
+        
         # CORS
         self.app.add_middleware(
             CORSMiddleware,
@@ -4713,10 +4924,12 @@ class AlertRulesAPI:
             return response
     
     def _setup_routes(self):
-        """Configuration des routes API"""        
+        """Configuration des routes API"""
+        
         @self.app.get("/", response_model=APIResponse)
         async def root():
-            """Point d'entrée de l'API"""            return APIResponse(
+            """Point d'entrée de l'API"""
+            return APIResponse(
                 success=True,
                 message="Spotify Alert Rules API v2.0.0",
                 data={"status": "operational", "version": "2.0.0"}
@@ -4724,7 +4937,8 @@ class AlertRulesAPI:
         
         @self.app.get("/health", response_model=APIResponse)
         async def health_check():
-            """Health check de l'API"""            stats = await self.rule_manager.get_statistics()
+            """Health check de l'API"""
+            stats = await self.rule_manager.get_statistics()
             return APIResponse(
                 success=True,
                 message="Service healthy",
@@ -4744,7 +4958,8 @@ class AlertRulesAPI:
         self._setup_websocket_routes()
     
     def _setup_rule_routes(self):
-        """Configuration des routes de gestion des règles"""        
+        """Configuration des routes de gestion des règles"""
+        
         @self.app.post("/api/v1/rules", response_model=APIResponse)
         @limiter.limit("100/minute")
         async def create_rule(
@@ -4752,7 +4967,8 @@ class AlertRulesAPI:
             rule_config: RuleConfigModel,
             current_user: dict = Depends(self.auth_manager.get_current_user)
         ):
-            """Crée une nouvelle règle d'alerte"""            try:
+            """Crée une nouvelle règle d'alerte"""
+            try:
                 # Vérification des permissions
                 if rule_config.tenant_id != current_user["tenant_id"]:
                     raise HTTPException(
@@ -4808,7 +5024,8 @@ class AlertRulesAPI:
             offset: int = 0,
             current_user: dict = Depends(self.auth_manager.get_current_user)
         ):
-            """Liste les règles d'un tenant"""            try:
+            """Liste les règles d'un tenant"""
+            try:
                 tenant_id = current_user["tenant_id"]
                 
                 # Conversion des paramètres
@@ -4876,7 +5093,8 @@ class AlertRulesAPI:
             rule_id: str,
             current_user: dict = Depends(self.auth_manager.get_current_user)
         ):
-            """Récupère une règle spécifique"""            try:
+            """Récupère une règle spécifique"""
+            try:
                 rule = await self.rule_manager.get_rule(rule_id)
                 
                 if not rule:
@@ -4935,7 +5153,8 @@ class AlertRulesAPI:
             updates: RuleUpdateModel,
             current_user: dict = Depends(self.auth_manager.get_current_user)
         ):
-            """Met à jour une règle"""            try:
+            """Met à jour une règle"""
+            try:
                 rule = await self.rule_manager.get_rule(rule_id)
                 
                 if not rule:
@@ -4987,7 +5206,8 @@ class AlertRulesAPI:
             rule_id: str,
             current_user: dict = Depends(self.auth_manager.get_current_user)
         ):
-            """Supprime une règle"""            try:
+            """Supprime une règle"""
+            try:
                 rule = await self.rule_manager.get_rule(rule_id)
                 
                 if not rule:
@@ -5036,7 +5256,8 @@ class AlertRulesAPI:
                 )
     
     def _setup_evaluation_routes(self):
-        """Configuration des routes d'évaluation"""        
+        """Configuration des routes d'évaluation"""
+        
         @self.app.post("/api/v1/evaluate", response_model=APIResponse)
         @limiter.limit("50/minute")
         async def evaluate_rules(
@@ -5045,7 +5266,8 @@ class AlertRulesAPI:
             background_tasks: BackgroundTasks,
             current_user: dict = Depends(self.auth_manager.get_current_user)
         ):
-            """Évalue les règles d'un tenant"""            try:
+            """Évalue les règles d'un tenant"""
+            try:
                 # Vérification des permissions
                 if evaluation_request.tenant_id != current_user["tenant_id"]:
                     raise HTTPException(
@@ -5122,7 +5344,8 @@ class AlertRulesAPI:
             interval: int = 30,
             current_user: dict = Depends(self.auth_manager.get_current_user)
         ):
-            """Stream en temps réel des évaluations"""            
+            """Stream en temps réel des évaluations"""
+            
             # Vérification des permissions
             if tenant_id != current_user["tenant_id"]:
                 raise HTTPException(
@@ -5168,14 +5391,16 @@ class AlertRulesAPI:
             )
     
     def _setup_monitoring_routes(self):
-        """Configuration des routes de monitoring"""        
+        """Configuration des routes de monitoring"""
+        
         @self.app.get("/api/v1/stats", response_model=APIResponse)
         @limiter.limit("100/minute")
         async def get_statistics(
             request: Request,
             current_user: dict = Depends(self.auth_manager.get_current_user)
         ):
-            """Récupère les statistiques du gestionnaire"""            try:
+            """Récupère les statistiques du gestionnaire"""
+            try:
                 stats = await self.rule_manager.get_statistics()
                 
                 return APIResponse(
@@ -5193,7 +5418,8 @@ class AlertRulesAPI:
         
         @self.app.get("/metrics")
         async def prometheus_metrics():
-            """Point d'accès aux métriques Prometheus"""            from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
+            """Point d'accès aux métriques Prometheus"""
+            from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
             
             return Response(
                 generate_latest(),
@@ -5201,10 +5427,12 @@ class AlertRulesAPI:
             )
     
     def _setup_websocket_routes(self):
-        """Configuration des routes WebSocket"""        
+        """Configuration des routes WebSocket"""
+        
         @self.app.websocket("/ws/{tenant_id}")
         async def websocket_endpoint(websocket: WebSocket, tenant_id: str):
-            """Point d'accès WebSocket pour notifications temps réel"""            
+            """Point d'accès WebSocket pour notifications temps réel"""
+            
             # Authentification WebSocket (simplifié pour l'exemple)
             # En production, utiliser un mécanisme d'auth plus robuste
             
@@ -5225,12 +5453,14 @@ class AlertRulesAPI:
                 self.websocket_manager.disconnect(websocket)
     
     def _setup_graphql(self):
-        """Configuration GraphQL"""        
+        """Configuration GraphQL"""
+        
         @strawberry.type
         class Query:
             @strawberry.field
             async def rules(self, tenant_id: str) -> List[GraphQLRule]:
-                """Récupère les règles via GraphQL"""                rules = await self.rule_manager.list_rules(tenant_id=tenant_id)
+                """Récupère les règles via GraphQL"""
+                rules = await self.rule_manager.list_rules(tenant_id=tenant_id)
                 return [
                     GraphQLRule(
                         rule_id=rule.rule_id,
@@ -5249,7 +5479,8 @@ class AlertRulesAPI:
         class Mutation:
             @strawberry.mutation
             async def create_rule(self, rule_input: GraphQLRuleInput) -> GraphQLRule:
-                """Crée une règle via GraphQL"""                # Implementation simplifiée
+                """Crée une règle via GraphQL"""
+                # Implementation simplifiée
                 rule_config = {
                     "name": rule_input.name,
                     "description": rule_input.description,
@@ -5279,7 +5510,8 @@ class AlertRulesAPI:
         self.app.include_router(graphql_app, prefix="/graphql")
     
     def _setup_monitoring(self):
-        """Configuration du monitoring Prometheus"""        instrumentator = Instrumentator()
+        """Configuration du monitoring Prometheus"""
+        instrumentator = Instrumentator()
         instrumentator.instrument(self.app).expose(self.app)
     
     async def _notify_triggered_alerts(
@@ -5287,7 +5519,8 @@ class AlertRulesAPI:
         tenant_id: str,
         triggered_alerts: List[EvaluationResult]
     ):
-        """Notifie les alertes déclenchées via WebSocket"""        for alert in triggered_alerts:
+        """Notifie les alertes déclenchées via WebSocket"""
+        for alert in triggered_alerts:
             message = {
                 "type": "alert_triggered",
                 "rule_id": alert.rule_id,
@@ -5306,7 +5539,8 @@ async def create_api(
     database_url: Optional[str] = None,
     secret_key: str = "your-secret-key-here"
 ) -> AlertRulesAPI:
-    """Factory pour créer l'API configurée"""    
+    """Factory pour créer l'API configurée"""
+    
     # Configuration
     config = RuleEvaluationConfig(
         max_concurrent_evaluations=100,
@@ -5377,7 +5611,8 @@ __all__ = [
 
 """Schémas d'intégration webhook - Spotify AI Agent
 Gestion avancée des webhooks entrants et sortants
-"""from datetime import datetime, timezone, timedelta
+"""
+from datetime import datetime, timezone, timedelta
 from typing import Any, Dict, List, Optional, Set, Union, Literal
 from uuid import UUID, uuid4
 from enum import Enum
@@ -5395,13 +5630,15 @@ from . import (
 
 
 class WebhookType(str, Enum):
-    """Types de webhook"""    INCOMING = "incoming"      # Webhook entrant (réception)
+    """Types de webhook"""
+    INCOMING = "incoming"      # Webhook entrant (réception)
     OUTGOING = "outgoing"      # Webhook sortant (envoi)
     BIDIRECTIONAL = "bidirectional"  # Les deux
 
 
 class WebhookEvent(str, Enum):
-    """Événements de webhook"""    ALERT_CREATED = "alert.created"
+    """Événements de webhook"""
+    ALERT_CREATED = "alert.created"
     ALERT_UPDATED = "alert.updated"
     ALERT_RESOLVED = "alert.resolved"
     ALERT_ESCALATED = "alert.escalated"
@@ -5416,7 +5653,8 @@ class WebhookEvent(str, Enum):
 
 
 class WebhookStatus(str, Enum):
-    """États de webhook"""    ACTIVE = "active"
+    """États de webhook"""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     PAUSED = "paused"
     ERROR = "error"
@@ -5424,7 +5662,8 @@ class WebhookStatus(str, Enum):
 
 
 class DeliveryStatus(str, Enum):
-    """États de livraison"""    PENDING = "pending"
+    """États de livraison"""
+    PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
     FAILED = "failed"
@@ -5433,7 +5672,8 @@ class DeliveryStatus(str, Enum):
 
 
 class SecurityLevel(str, Enum):
-    """Niveaux de sécurité"""    NONE = "none"
+    """Niveaux de sécurité"""
+    NONE = "none"
     BASIC = "basic"
     HMAC = "hmac"
     JWT = "jwt"
@@ -5442,7 +5682,8 @@ class SecurityLevel(str, Enum):
 
 
 class WebhookConfiguration(BaseModel):
-    """Configuration de webhook"""    
+    """Configuration de webhook"""
+    
     # URL et méthode
     url: HttpUrl = Field(...)
     method: str = Field("POST", regex=r"^(GET|POST|PUT|PATCH|DELETE)$")
@@ -5478,14 +5719,16 @@ class WebhookConfiguration(BaseModel):
     
     @validator('url')
     def validate_url(cls, v):
-        """Valide l'URL du webhook"""        parsed = urlparse(str(v))
+        """Valide l'URL du webhook"""
+        parsed = urlparse(str(v))
         if parsed.scheme not in ['http', 'https']:
             raise ValueError('URL must use http or https scheme')
         return v
 
 
 class WebhookEndpoint(BaseSchema, TimestampMixin, TenantMixin, MetadataMixin):
-    """Point de terminaison webhook"""    
+    """Point de terminaison webhook"""
+    
     # Informations de base
     name: str = Field(..., min_length=1, max_length=255)
     description: Optional[str] = Field(None, max_length=1000)
@@ -5547,21 +5790,24 @@ class WebhookEndpoint(BaseSchema, TimestampMixin, TenantMixin, MetadataMixin):
     @computed_field
     @property
     def success_rate(self) -> float:
-        """Taux de succès des livraisons"""        if self.total_deliveries == 0:
+        """Taux de succès des livraisons"""
+        if self.total_deliveries == 0:
             return 0.0
         return (self.successful_deliveries / self.total_deliveries) * 100
 
     @computed_field
     @property
     def is_healthy(self) -> bool:
-        """Indique si le webhook est en bonne santé"""        return (
+        """Indique si le webhook est en bonne santé"""
+        return (
             self.enabled and
             self.status == WebhookStatus.ACTIVE and
             self.health_status in ["healthy", "unknown"]
         )
 
     def generate_signature(self, payload: str, timestamp: Optional[str] = None) -> str:
-        """Génère la signature HMAC pour le payload"""        if not self.config.secret_key:
+        """Génère la signature HMAC pour le payload"""
+        if not self.config.secret_key:
             return ""
         
         if timestamp is None:
@@ -5580,14 +5826,16 @@ class WebhookEndpoint(BaseSchema, TimestampMixin, TenantMixin, MetadataMixin):
         return f"sha256={signature}"
 
     def verify_signature(self, payload: str, signature: str, timestamp: str) -> bool:
-        """Vérifie la signature d'un webhook entrant"""        if not self.config.secret_key:
+        """Vérifie la signature d'un webhook entrant"""
+        if not self.config.secret_key:
             return True  # Pas de vérification si pas de clé
         
         expected_signature = self.generate_signature(payload, timestamp)
         return hmac.compare_digest(signature, expected_signature)
 
     def format_payload(self, data: Dict[str, Any]) -> str:
-        """Formate le payload selon la configuration"""        # Filtrer les champs si nécessaire
+        """Formate le payload selon la configuration"""
+        # Filtrer les champs si nécessaire
         if self.config.field_filters:
             filtered_data = {
                 k: v for k, v in data.items()
@@ -5627,7 +5875,8 @@ class WebhookEndpoint(BaseSchema, TimestampMixin, TenantMixin, MetadataMixin):
             return json.dumps(filtered_data, default=str)
 
     def _dict_to_xml(self, data: Dict[str, Any], root_tag: str = "webhook") -> str:
-        """Convertit un dictionnaire en XML"""        def _to_xml(obj, tag="item"):
+        """Convertit un dictionnaire en XML"""
+        def _to_xml(obj, tag="item"):
             if isinstance(obj, dict):
                 xml = f"<{tag}>"
                 for k, v in obj.items():
@@ -5647,7 +5896,8 @@ class WebhookEndpoint(BaseSchema, TimestampMixin, TenantMixin, MetadataMixin):
 
 
 class WebhookDelivery(BaseSchema, TimestampMixin, TenantMixin):
-    """Livraison de webhook"""    
+    """Livraison de webhook"""
+    
     delivery_id: UUID = Field(default_factory=uuid4)
     webhook_id: UUID = Field(...)
     event: WebhookEvent = Field(...)
@@ -5687,7 +5937,8 @@ class WebhookDelivery(BaseSchema, TimestampMixin, TenantMixin):
     @computed_field
     @property
     def is_successful(self) -> bool:
-        """Indique si la livraison a réussi"""        return (
+        """Indique si la livraison a réussi"""
+        return (
             self.status == DeliveryStatus.DELIVERED and
             self.response_status_code is not None and
             200 <= self.response_status_code < 300
@@ -5696,7 +5947,8 @@ class WebhookDelivery(BaseSchema, TimestampMixin, TenantMixin):
     @computed_field
     @property
     def should_retry(self) -> bool:
-        """Indique si une nouvelle tentative doit être faite"""        return (
+        """Indique si une nouvelle tentative doit être faite"""
+        return (
             self.status in [DeliveryStatus.FAILED, DeliveryStatus.TIMEOUT] and
             self.attempt_count < self.max_attempts and
             self.next_retry_at is not None and
@@ -5706,7 +5958,8 @@ class WebhookDelivery(BaseSchema, TimestampMixin, TenantMixin):
     def mark_as_sent(self, response_code: int, response_body: Optional[str] = None,
                      response_time_ms: Optional[float] = None,
                      response_headers: Optional[Dict[str, str]] = None):
-        """Marque la livraison comme envoyée"""        self.sent_at = datetime.now(timezone.utc)
+        """Marque la livraison comme envoyée"""
+        self.sent_at = datetime.now(timezone.utc)
         self.response_status_code = response_code
         self.response_body = response_body
         self.response_time_ms = response_time_ms
@@ -5721,14 +5974,16 @@ class WebhookDelivery(BaseSchema, TimestampMixin, TenantMixin):
             self._schedule_retry()
 
     def mark_as_failed(self, error_message: str, error_type: Optional[str] = None):
-        """Marque la livraison comme échouée"""        self.status = DeliveryStatus.FAILED
+        """Marque la livraison comme échouée"""
+        self.status = DeliveryStatus.FAILED
         self.error_message = error_message
         self.error_type = error_type
         self.attempt_count += 1
         self._schedule_retry()
 
     def _schedule_retry(self):
-        """Programme une nouvelle tentative"""        if self.attempt_count < self.max_attempts:
+        """Programme une nouvelle tentative"""
+        if self.attempt_count < self.max_attempts:
             # Backoff exponentiel: 5s, 25s, 125s, etc.
             delay = 5 * (5 ** (self.attempt_count - 1))
             self.next_retry_at = datetime.now(timezone.utc) + timedelta(seconds=delay)
@@ -5736,7 +5991,8 @@ class WebhookDelivery(BaseSchema, TimestampMixin, TenantMixin):
 
 
 class WebhookSubscription(BaseSchema, TimestampMixin, TenantMixin):
-    """Abonnement à des événements webhook"""    
+    """Abonnement à des événements webhook"""
+    
     subscription_id: UUID = Field(default_factory=uuid4)
     webhook_id: UUID = Field(...)
     
@@ -5757,7 +6013,8 @@ class WebhookSubscription(BaseSchema, TimestampMixin, TenantMixin):
     total_events_sent: int = Field(0, ge=0)
     
     def matches_event(self, event: WebhookEvent, event_data: Dict[str, Any]) -> bool:
-        """Vérifie si l'événement correspond aux filtres"""        if event not in self.subscribed_events:
+        """Vérifie si l'événement correspond aux filtres"""
+        if event not in self.subscribed_events:
             return False
         
         # Appliquer les filtres
@@ -5790,7 +6047,8 @@ class WebhookSubscription(BaseSchema, TimestampMixin, TenantMixin):
 
 
 class WebhookMetrics(BaseSchema, TimestampMixin, TenantMixin):
-    """Métriques de webhook"""    
+    """Métriques de webhook"""
+    
     metrics_id: UUID = Field(default_factory=uuid4)
     webhook_id: UUID = Field(...)
     
@@ -5824,14 +6082,16 @@ class WebhookMetrics(BaseSchema, TimestampMixin, TenantMixin):
     @computed_field
     @property
     def success_rate(self) -> float:
-        """Taux de succès"""        if self.total_deliveries == 0:
+        """Taux de succès"""
+        if self.total_deliveries == 0:
             return 0.0
         return (self.successful_deliveries / self.total_deliveries) * 100
 
     @computed_field
     @property
     def error_rate(self) -> float:
-        """Taux d'erreur"""        if self.total_deliveries == 0:
+        """Taux d'erreur"""
+        if self.total_deliveries == 0:
             return 0.0
         return (self.failed_deliveries / self.total_deliveries) * 100
 
@@ -5856,7 +6116,8 @@ du Spotify AI Agent. Fournit une gestion robuste, sécurisée et performante
 des webhooks avec retry automatique, rate limiting et monitoring complet.
 
 Développé par l'équipe Backend Senior sous la direction de Fahed Mlaiel.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import hashlib
@@ -5898,7 +6159,8 @@ webhook_queue_size = Gauge(
 
 @dataclass
 class WebhookRequest:
-    """Représente une requête webhook Slack."""    
+    """Représente une requête webhook Slack."""
+    
     id: str = field(default_factory=lambda: SlackUtils.generate_id())
     tenant_id: str = ""
     webhook_url: str = ""
@@ -5918,7 +6180,8 @@ class WebhookRequest:
 
 @dataclass 
 class WebhookResponse:
-    """Représente la réponse d'un webhook Slack."""    
+    """Représente la réponse d'un webhook Slack."""
+    
     request_id: str
     status_code: int
     response_body: str
@@ -5932,7 +6195,8 @@ class WebhookResponse:
 
 @dataclass
 class WebhookConfig:
-    """Configuration d'un webhook Slack."""    
+    """Configuration d'un webhook Slack."""
+    
     url: str
     tenant_id: str
     signing_secret: Optional[str] = None
@@ -5945,7 +6209,8 @@ class WebhookConfig:
     created_at: datetime = field(default_factory=datetime.utcnow)
 
 class SlackWebhookManager:
-    """    Gestionnaire ultra-avancé des webhooks Slack.
+    """
+    Gestionnaire ultra-avancé des webhooks Slack.
     
     Fonctionnalités:
     - Pool de connexions HTTP réutilisables
@@ -5956,20 +6221,23 @@ class SlackWebhookManager:
     - Métriques et monitoring complets
     - Circuit breaker pattern
     - Audit trail détaillé
-    """    
+    """
+    
     def __init__(self,
                  redis_client: Optional[redis.Redis] = None,
                  max_concurrent_requests: int = 100,
                  default_timeout: int = 30,
                  rate_limit_per_minute: int = 100):
-        """        Initialise le gestionnaire de webhooks.
+        """
+        Initialise le gestionnaire de webhooks.
         
         Args:
             redis_client: Client Redis pour la queue et le cache
             max_concurrent_requests: Nombre max de requêtes concurrentes
             default_timeout: Timeout par défaut en secondes
             rate_limit_per_minute: Limite de taux par minute
-        """        self.redis_client = redis_client
+        """
+        self.redis_client = redis_client
         self.max_concurrent_requests = max_concurrent_requests
         self.default_timeout = default_timeout
         self.rate_limit_per_minute = rate_limit_per_minute
@@ -6015,14 +6283,17 @@ class SlackWebhookManager:
         logger.info("SlackWebhookManager initialisé")
     
     async def __aenter__(self):
-        """Contexte manager - entrée."""        await self.start()
+        """Contexte manager - entrée."""
+        await self.start()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Contexte manager - sortie."""        await self.stop()
+        """Contexte manager - sortie."""
+        await self.stop()
     
     async def start(self):
-        """Démarre le gestionnaire de webhooks."""        try:
+        """Démarre le gestionnaire de webhooks."""
+        try:
             # Créer la session HTTP
             connector = aiohttp.TCPConnector(
                 limit=200,
@@ -6057,7 +6328,8 @@ class SlackWebhookManager:
             raise
     
     async def stop(self):
-        """Arrête le gestionnaire de webhooks."""        try:
+        """Arrête le gestionnaire de webhooks."""
+        try:
             # Arrêter les workers
             await self._stop_workers()
             
@@ -6072,7 +6344,8 @@ class SlackWebhookManager:
             logger.error(f"Erreur arrêt SlackWebhookManager: {e}")
     
     async def _start_workers(self):
-        """Démarre les workers de traitement des queues."""        if self.workers_running:
+        """Démarre les workers de traitement des queues."""
+        if self.workers_running:
             return
         
         self.workers_running = True
@@ -6091,7 +6364,8 @@ class SlackWebhookManager:
         logger.info(f"Démarré {len(self.worker_tasks)} workers")
     
     async def _stop_workers(self):
-        """Arrête les workers."""        self.workers_running = False
+        """Arrête les workers."""
+        self.workers_running = False
         
         # Annuler toutes les tâches
         for task in self.worker_tasks:
@@ -6105,7 +6379,8 @@ class SlackWebhookManager:
         logger.info("Workers arrêtés")
     
     async def _queue_worker(self, severity: SlackSeverity):
-        """Worker pour traiter une queue de priorité."""        queue = self.priority_queues[severity]
+        """Worker pour traiter une queue de priorité."""
+        queue = self.priority_queues[severity]
         
         while self.workers_running:
             try:
@@ -6129,7 +6404,8 @@ class SlackWebhookManager:
                 await asyncio.sleep(1)
     
     async def _maintenance_worker(self):
-        """Worker de maintenance périodique."""        while self.workers_running:
+        """Worker de maintenance périodique."""
+        while self.workers_running:
             try:
                 await asyncio.sleep(60)  # Maintenance toutes les minutes
                 
@@ -6149,7 +6425,8 @@ class SlackWebhookManager:
                              tenant_id: str,
                              webhook_url: str,
                              config: Optional[WebhookConfig] = None) -> bool:
-        """        Enregistre un nouveau webhook pour un tenant.
+        """
+        Enregistre un nouveau webhook pour un tenant.
         
         Args:
             tenant_id: ID du tenant
@@ -6158,7 +6435,8 @@ class SlackWebhookManager:
             
         Returns:
             True si succès, False sinon
-        """        try:
+        """
+        try:
             # Valider l'URL
             if not self._validate_webhook_url(webhook_url):
                 raise ValueError(f"URL webhook invalide: {webhook_url}")
@@ -6197,7 +6475,8 @@ class SlackWebhookManager:
             return False
     
     def _validate_webhook_url(self, url: str) -> bool:
-        """Valide une URL de webhook Slack."""        try:
+        """Valide une URL de webhook Slack."""
+        try:
             parsed = urlparse(url)
             
             # Vérifier le schéma
@@ -6218,10 +6497,12 @@ class SlackWebhookManager:
             return False
     
     def _get_webhook_key(self, webhook_url: str) -> str:
-        """Génère une clé unique pour un webhook."""        return hashlib.md5(webhook_url.encode()).hexdigest()[:16]
+        """Génère une clé unique pour un webhook."""
+        return hashlib.md5(webhook_url.encode()).hexdigest()[:16]
     
     async def _init_rate_limiter(self, tenant_id: str, webhook_key: str, rate_limit: int):
-        """Initialise le rate limiter pour un webhook."""        if tenant_id not in self.rate_limiters:
+        """Initialise le rate limiter pour un webhook."""
+        if tenant_id not in self.rate_limiters:
             self.rate_limiters[tenant_id] = {}
         
         self.rate_limiters[tenant_id][webhook_key] = {
@@ -6232,7 +6513,8 @@ class SlackWebhookManager:
         }
     
     async def _init_circuit_breaker(self, tenant_id: str, webhook_key: str):
-        """Initialise le circuit breaker pour un webhook."""        if tenant_id not in self.circuit_breakers:
+        """Initialise le circuit breaker pour un webhook."""
+        if tenant_id not in self.circuit_breakers:
             self.circuit_breakers[tenant_id] = {}
         
         self.circuit_breakers[tenant_id][webhook_key] = {
@@ -6250,7 +6532,8 @@ class SlackWebhookManager:
                           payload: Dict[str, Any],
                           severity: SlackSeverity = SlackSeverity.INFO,
                           priority: bool = False) -> str:
-        """        Envoie un webhook Slack de manière asynchrone.
+        """
+        Envoie un webhook Slack de manière asynchrone.
         
         Args:
             tenant_id: ID du tenant
@@ -6261,7 +6544,8 @@ class SlackWebhookManager:
             
         Returns:
             ID de la requête
-        """        try:
+        """
+        try:
             # Créer la requête
             request = WebhookRequest(
                 tenant_id=tenant_id,
@@ -6301,7 +6585,8 @@ class SlackWebhookManager:
             raise
     
     async def _process_webhook_request(self, request: WebhookRequest):
-        """Traite une requête webhook."""        start_time = datetime.utcnow()
+        """Traite une requête webhook."""
+        start_time = datetime.utcnow()
         
         try:
             # Vérifier le circuit breaker
@@ -6366,7 +6651,8 @@ class SlackWebhookManager:
         retry=retry_if_exception_type((aiohttp.ClientError, asyncio.TimeoutError))
     )
     async def _send_webhook_with_retry(self, request: WebhookRequest) -> WebhookResponse:
-        """Envoie un webhook avec retry automatique."""        async with self.semaphore:
+        """Envoie un webhook avec retry automatique."""
+        async with self.semaphore:
             start_time = datetime.utcnow()
             
             try:
@@ -6415,7 +6701,8 @@ class SlackWebhookManager:
                 raise
     
     def _calculate_signature(self, signing_secret: str, timestamp: str, body: str) -> str:
-        """Calcule la signature Slack pour la vérification."""        sig_basestring = f"v0:{timestamp}:{body}"
+        """Calcule la signature Slack pour la vérification."""
+        sig_basestring = f"v0:{timestamp}:{body}"
         signature = hmac.new(
             signing_secret.encode(),
             sig_basestring.encode(),
@@ -6424,7 +6711,8 @@ class SlackWebhookManager:
         return f"v0={signature}"
     
     async def _check_circuit_breaker(self, tenant_id: str, webhook_url: str) -> bool:
-        """Vérifie l'état du circuit breaker."""        webhook_key = self._get_webhook_key(webhook_url)
+        """Vérifie l'état du circuit breaker."""
+        webhook_key = self._get_webhook_key(webhook_url)
         
         if tenant_id not in self.circuit_breakers:
             return True
@@ -6446,7 +6734,8 @@ class SlackWebhookManager:
         return True
     
     async def _check_rate_limit(self, tenant_id: str, webhook_url: str) -> bool:
-        """Vérifie le rate limiting."""        webhook_key = self._get_webhook_key(webhook_url)
+        """Vérifie le rate limiting."""
+        webhook_key = self._get_webhook_key(webhook_url)
         
         if tenant_id not in self.rate_limiters:
             return True
@@ -6477,7 +6766,8 @@ class SlackWebhookManager:
         return True
     
     async def _record_success(self, tenant_id: str, webhook_url: str):
-        """Enregistre un succès pour le circuit breaker."""        webhook_key = self._get_webhook_key(webhook_url)
+        """Enregistre un succès pour le circuit breaker."""
+        webhook_key = self._get_webhook_key(webhook_url)
         
         if tenant_id in self.circuit_breakers and webhook_key in self.circuit_breakers[tenant_id]:
             breaker = self.circuit_breakers[tenant_id][webhook_key]
@@ -6488,7 +6778,8 @@ class SlackWebhookManager:
                 logger.info(f"Circuit breaker fermé: {tenant_id}/{webhook_key}")
     
     async def _record_failure(self, tenant_id: str, webhook_url: str):
-        """Enregistre un échec pour le circuit breaker."""        webhook_key = self._get_webhook_key(webhook_url)
+        """Enregistre un échec pour le circuit breaker."""
+        webhook_key = self._get_webhook_key(webhook_url)
         
         if tenant_id not in self.circuit_breakers:
             await self._init_circuit_breaker(tenant_id, webhook_key)
@@ -6506,7 +6797,8 @@ class SlackWebhookManager:
             logger.warning(f"Circuit breaker ouvert: {tenant_id}/{webhook_key}")
     
     async def _get_webhook_config(self, tenant_id: str, webhook_url: str) -> Optional[WebhookConfig]:
-        """Récupère la configuration d'un webhook."""        webhook_key = self._get_webhook_key(webhook_url)
+        """Récupère la configuration d'un webhook."""
+        webhook_key = self._get_webhook_key(webhook_url)
         
         if tenant_id in self.webhook_configs and webhook_key in self.webhook_configs[tenant_id]:
             return self.webhook_configs[tenant_id][webhook_key]
@@ -6514,7 +6806,8 @@ class SlackWebhookManager:
         return None
     
     async def _cleanup_rate_limiters(self):
-        """Nettoie les rate limiters expirés."""        now = datetime.utcnow()
+        """Nettoie les rate limiters expirés."""
+        now = datetime.utcnow()
         
         for tenant_id, webhooks in self.rate_limiters.items():
             for webhook_key, limiter in list(webhooks.items()):
@@ -6523,7 +6816,8 @@ class SlackWebhookManager:
                     del webhooks[webhook_key]
     
     async def _reset_circuit_breakers(self):
-        """Réinitialise les circuit breakers si nécessaire."""        now = datetime.utcnow()
+        """Réinitialise les circuit breakers si nécessaire."""
+        now = datetime.utcnow()
         
         for tenant_id, webhooks in self.circuit_breakers.items():
             for webhook_key, breaker in webhooks.items():
@@ -6537,11 +6831,13 @@ class SlackWebhookManager:
                     logger.info(f"Circuit breaker réinitialisé: {tenant_id}/{webhook_key}")
     
     async def _update_queue_metrics(self):
-        """Met à jour les métriques des queues."""        for severity, queue in self.priority_queues.items():
+        """Met à jour les métriques des queues."""
+        for severity, queue in self.priority_queues.items():
             webhook_queue_size.labels(tenant_id='global').set(queue.qsize())
     
     async def _persist_webhook_config(self, tenant_id: str, webhook_key: str, config: WebhookConfig):
-        """Persiste la configuration webhook en Redis."""        try:
+        """Persiste la configuration webhook en Redis."""
+        try:
             if self.redis_client:
                 key = f"webhook_config:{tenant_id}:{webhook_key}"
                 data = {
@@ -6560,7 +6856,8 @@ class SlackWebhookManager:
             logger.error(f"Erreur persistance config webhook: {e}")
     
     async def _persist_request_result(self, request: WebhookRequest):
-        """Persiste le résultat d'une requête en Redis."""        try:
+        """Persiste le résultat d'une requête en Redis."""
+        try:
             if self.redis_client:
                 key = f"webhook_result:{request.tenant_id}:{request.id}"
                 data = {
@@ -6581,7 +6878,8 @@ class SlackWebhookManager:
             logger.error(f"Erreur persistance résultat: {e}")
     
     async def get_webhook_status(self, tenant_id: str, request_id: str) -> Optional[Dict[str, Any]]:
-        """Récupère le statut d'une requête webhook."""        try:
+        """Récupère le statut d'une requête webhook."""
+        try:
             if self.redis_client:
                 key = f"webhook_result:{tenant_id}:{request_id}"
                 result = await self.redis_client.hgetall(key)
@@ -6596,7 +6894,8 @@ class SlackWebhookManager:
             return None
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Retourne les métriques du gestionnaire."""        queue_sizes = {
+        """Retourne les métriques du gestionnaire."""
+        queue_sizes = {
             severity.value: queue.qsize()
             for severity, queue in self.priority_queues.items()
         }
@@ -6758,19 +7057,22 @@ active_users = Gauge(
 # =============================================================================
 
 class UserRole(str, Enum):
-    """Rôles utilisateur"""    VIEWER = "viewer"
+    """Rôles utilisateur"""
+    VIEWER = "viewer"
     OPERATOR = "operator"
     ADMIN = "admin"
     SUPER_ADMIN = "super_admin"
 
 class AlertSeverity(str, Enum):
-    """Niveaux de sévérité des alertes"""    INFO = "info"
+    """Niveaux de sévérité des alertes"""
+    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 class APIResponse(BaseModel):
-    """Réponse API standardisée"""    success: bool = True
+    """Réponse API standardisée"""
+    success: bool = True
     message: str = ""
     data: Optional[Any] = None
     errors: List[str] = Field(default_factory=list)
@@ -6778,7 +7080,8 @@ class APIResponse(BaseModel):
     request_id: Optional[str] = None
 
 class UserModel(BaseModel):
-    """Modèle utilisateur"""    id: Optional[str] = None
+    """Modèle utilisateur"""
+    id: Optional[str] = None
     username: str = Field(..., min_length=3, max_length=50, regex=r'^[a-zA-Z0-9_-]+$')
     email: EmailStr
     full_name: Optional[str] = Field(None, max_length=100)
@@ -6790,7 +7093,8 @@ class UserModel(BaseModel):
     permissions: List[str] = Field(default_factory=list)
 
 class UserCreate(BaseModel):
-    """Modèle création utilisateur"""    username: str = Field(..., min_length=3, max_length=50, regex=r'^[a-zA-Z0-9_-]+$')
+    """Modèle création utilisateur"""
+    username: str = Field(..., min_length=3, max_length=50, regex=r'^[a-zA-Z0-9_-]+$')
     email: EmailStr
     password: str = Field(..., min_length=8, max_length=128)
     full_name: Optional[str] = Field(None, max_length=100)
@@ -6798,12 +7102,14 @@ class UserCreate(BaseModel):
     tenant_id: str = Field(..., min_length=1)
 
 class LoginRequest(BaseModel):
-    """Requête de connexion"""    username: str = Field(..., min_length=1)
+    """Requête de connexion"""
+    username: str = Field(..., min_length=1)
     password: str = Field(..., min_length=1)
     tenant_id: Optional[str] = None
 
 class TokenData(BaseModel):
-    """Données du token JWT"""    user_id: str
+    """Données du token JWT"""
+    user_id: str
     username: str
     tenant_id: str
     role: UserRole
@@ -6811,7 +7117,8 @@ class TokenData(BaseModel):
     exp: datetime
 
 class IncidentCreate(BaseModel):
-    """Modèle création incident"""    title: str = Field(..., min_length=1, max_length=200)
+    """Modèle création incident"""
+    title: str = Field(..., min_length=1, max_length=200)
     description: str = Field(..., min_length=1, max_length=2000)
     severity: AlertSeverity
     category: str = Field(..., min_length=1, max_length=50)
@@ -6820,7 +7127,8 @@ class IncidentCreate(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
 class IncidentUpdate(BaseModel):
-    """Modèle mise à jour incident"""    title: Optional[str] = Field(None, min_length=1, max_length=200)
+    """Modèle mise à jour incident"""
+    title: Optional[str] = Field(None, min_length=1, max_length=200)
     description: Optional[str] = Field(None, min_length=1, max_length=2000)
     severity: Optional[AlertSeverity] = None
     status: Optional[str] = None
@@ -6828,7 +7136,8 @@ class IncidentUpdate(BaseModel):
     metadata: Optional[Dict[str, Any]] = None
 
 class IncidentFilter(BaseModel):
-    """Filtres pour recherche d'incidents"""    severity: Optional[AlertSeverity] = None
+    """Filtres pour recherche d'incidents"""
+    severity: Optional[AlertSeverity] = None
     category: Optional[str] = None
     status: Optional[str] = None
     source: Optional[str] = None
@@ -6838,21 +7147,24 @@ class IncidentFilter(BaseModel):
     search: Optional[str] = None
 
 class MetricsQuery(BaseModel):
-    """Requête de métriques"""    metrics: List[str] = Field(..., min_items=1)
+    """Requête de métriques"""
+    metrics: List[str] = Field(..., min_items=1)
     start_time: Optional[datetime] = None
     end_time: Optional[datetime] = None
     step: Optional[str] = Field(None, regex=r'^\d+[smhd]$')
     filters: Dict[str, str] = Field(default_factory=dict)
 
 class DashboardCreate(BaseModel):
-    """Modèle création dashboard"""    name: str = Field(..., min_length=1, max_length=100)
+    """Modèle création dashboard"""
+    name: str = Field(..., min_length=1, max_length=100)
     description: Optional[str] = Field(None, max_length=500)
     config: Dict[str, Any] = Field(...)
     tags: List[str] = Field(default_factory=list)
     is_public: bool = False
 
 class AlertRuleCreate(BaseModel):
-    """Modèle création règle d'alerte"""    name: str = Field(..., min_length=1, max_length=100)
+    """Modèle création règle d'alerte"""
+    name: str = Field(..., min_length=1, max_length=100)
     description: Optional[str] = Field(None, max_length=500)
     query: str = Field(..., min_length=1)
     for_duration: str = Field(default="5m", regex=r'^\d+[smh]$')
@@ -6866,7 +7178,8 @@ class AlertRuleCreate(BaseModel):
 # =============================================================================
 
 class AuthManager:
-    """Gestionnaire d'authentification et autorisation"""    
+    """Gestionnaire d'authentification et autorisation"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.jwt_secret = config.get('jwt_secret', 'monitoring-secret-2025')
@@ -6880,7 +7193,8 @@ class AuthManager:
         self._create_default_users()
 
     def _create_default_users(self):
-        """Création des utilisateurs par défaut"""        default_users = [
+        """Création des utilisateurs par défaut"""
+        default_users = [
             {
                 'username': 'admin',
                 'email': 'admin@monitoring.local',
@@ -6929,13 +7243,16 @@ class AuthManager:
             }
 
     def verify_password(self, plain_password: str, hashed_password: str) -> bool:
-        """Vérification du mot de passe"""        return pwd_context.verify(plain_password, hashed_password)
+        """Vérification du mot de passe"""
+        return pwd_context.verify(plain_password, hashed_password)
 
     def get_password_hash(self, password: str) -> str:
-        """Hashage du mot de passe"""        return pwd_context.hash(password)
+        """Hashage du mot de passe"""
+        return pwd_context.hash(password)
 
     def authenticate_user(self, username: str, password: str, tenant_id: Optional[str] = None) -> Optional[Dict[str, Any]]:
-        """Authentification utilisateur"""        
+        """Authentification utilisateur"""
+        
         for user_id, user in self.users_db.items():
             if (user['username'] == username and 
                 user['is_active'] and
@@ -6949,7 +7266,8 @@ class AuthManager:
         return None
 
     def create_access_token(self, user: Dict[str, Any]) -> str:
-        """Création d'un token d'accès JWT"""        
+        """Création d'un token d'accès JWT"""
+        
         expire = datetime.utcnow() + timedelta(hours=self.jwt_expiration_hours)
         
         token_data = {
@@ -6978,7 +7296,8 @@ class AuthManager:
         return token
 
     def verify_token(self, token: str) -> Optional[TokenData]:
-        """Vérification d'un token JWT"""        
+        """Vérification d'un token JWT"""
+        
         try:
             payload = jwt.decode(token, self.jwt_secret, algorithms=[self.algorithm])
             
@@ -7000,7 +7319,8 @@ class AuthManager:
             return None
 
     def has_permission(self, user: TokenData, required_permission: str) -> bool:
-        """Vérification des permissions"""        
+        """Vérification des permissions"""
+        
         # Super admin a tous les droits
         if user.role == UserRole.SUPER_ADMIN:
             return True
@@ -7034,7 +7354,8 @@ monitoring_orchestrator: Optional[EnterpriseMonitoringOrchestrator] = None
 config_manager: Optional[ConfigurationManager] = None
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Security(security)) -> TokenData:
-    """Récupération de l'utilisateur actuel"""    
+    """Récupération de l'utilisateur actuel"""
+    
     global auth_manager
     
     if not auth_manager:
@@ -7052,7 +7373,8 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Security(
     return token_data
 
 def require_permission(permission: str):
-    """Décorateur pour vérifier les permissions"""    
+    """Décorateur pour vérifier les permissions"""
+    
     def permission_checker(current_user: TokenData = Depends(get_current_user)) -> TokenData:
         global auth_manager
         
@@ -7067,7 +7389,8 @@ def require_permission(permission: str):
     return permission_checker
 
 async def get_monitoring_orchestrator() -> EnterpriseMonitoringOrchestrator:
-    """Récupération de l'orchestrateur de monitoring"""    
+    """Récupération de l'orchestrateur de monitoring"""
+    
     global monitoring_orchestrator
     
     if not monitoring_orchestrator:
@@ -7080,7 +7403,8 @@ async def get_monitoring_orchestrator() -> EnterpriseMonitoringOrchestrator:
 # =============================================================================
 
 class SecurityHeadersMiddleware:
-    """Middleware pour les en-têtes de sécurité"""    
+    """Middleware pour les en-têtes de sécurité"""
+    
     def __init__(self, app):
         self.app = app
 
@@ -7110,7 +7434,8 @@ class SecurityHeadersMiddleware:
             await self.app(scope, receive, send)
 
 class RequestLoggingMiddleware:
-    """Middleware pour logging des requêtes"""    
+    """Middleware pour logging des requêtes"""
+    
     def __init__(self, app):
         self.app = app
 
@@ -7167,10 +7492,12 @@ class RequestLoggingMiddleware:
 # =============================================================================
 
 def create_monitoring_api() -> FastAPI:
-    """Création de l'application FastAPI"""    
+    """Création de l'application FastAPI"""
+    
     app = FastAPI(
         title="Monitoring API Enterprise",
-        description="""        API REST enterprise pour le système de monitoring avancé.
+        description="""
+        API REST enterprise pour le système de monitoring avancé.
         
         ## Fonctionnalités
         
@@ -7236,7 +7563,8 @@ app = create_monitoring_api()
 @app.post("/auth/login", response_model=APIResponse, tags=["Authentication"])
 @limiter.limit("10/minute")
 async def login(request: Request, login_data: LoginRequest):
-    """Connexion utilisateur"""    
+    """Connexion utilisateur"""
+    
     global auth_manager
     
     if not auth_manager:
@@ -7275,7 +7603,8 @@ async def login(request: Request, login_data: LoginRequest):
 
 @app.post("/auth/logout", response_model=APIResponse, tags=["Authentication"])
 async def logout(current_user: TokenData = Depends(get_current_user)):
-    """Déconnexion utilisateur"""    
+    """Déconnexion utilisateur"""
+    
     # En production, invalider le token côté serveur
     
     return APIResponse(
@@ -7285,7 +7614,8 @@ async def logout(current_user: TokenData = Depends(get_current_user)):
 
 @app.get("/auth/me", response_model=APIResponse, tags=["Authentication"])
 async def get_current_user_info(current_user: TokenData = Depends(get_current_user)):
-    """Informations de l'utilisateur actuel"""    
+    """Informations de l'utilisateur actuel"""
+    
     return APIResponse(
         success=True,
         data={
@@ -7305,7 +7635,8 @@ async def get_current_user_info(current_user: TokenData = Depends(get_current_us
 @app.get("/health", response_model=APIResponse, tags=["System"])
 @limiter.limit("100/minute")
 async def health_check(request: Request):
-    """Vérification de santé de l'API"""    
+    """Vérification de santé de l'API"""
+    
     health_data = {
         "status": "healthy",
         "timestamp": datetime.utcnow().isoformat(),
@@ -7324,7 +7655,8 @@ async def get_system_status(
     current_user: TokenData = Depends(require_permission("read")),
     orchestrator: EnterpriseMonitoringOrchestrator = Depends(get_monitoring_orchestrator)
 ):
-    """Statut du système de monitoring"""    
+    """Statut du système de monitoring"""
+    
     health = await orchestrator.get_system_health()
     metrics_summary = await orchestrator.get_metrics_summary(current_user.tenant_id)
     
@@ -7349,7 +7681,8 @@ async def create_incident(
     current_user: TokenData = Depends(require_permission("write")),
     orchestrator: EnterpriseMonitoringOrchestrator = Depends(get_monitoring_orchestrator)
 ):
-    """Création d'un incident"""    
+    """Création d'un incident"""
+    
     # Enregistrement de l'incident
     await orchestrator.record_incident(
         tenant_id=current_user.tenant_id,
@@ -7387,7 +7720,8 @@ async def query_metrics(
     step: Optional[str] = Query("1m", regex=r'^\d+[smhd]$', description="Pas de temps"),
     current_user: TokenData = Depends(require_permission("read"))
 ):
-    """Requête de métriques Prometheus"""    
+    """Requête de métriques Prometheus"""
+    
     # En production, proxy vers Prometheus avec filtrage par tenant
     mock_data = {
         "query": query,
@@ -7412,7 +7746,8 @@ async def query_metrics(
 async def list_dashboards(
     current_user: TokenData = Depends(require_permission("read"))
 ):
-    """Liste des dashboards disponibles"""    
+    """Liste des dashboards disponibles"""
+    
     # En production, récupérer depuis la base de données
     mock_dashboards = [
         {
@@ -7442,7 +7777,8 @@ async def create_dashboard(
     current_user: TokenData = Depends(require_permission("write")),
     orchestrator: EnterpriseMonitoringOrchestrator = Depends(get_monitoring_orchestrator)
 ):
-    """Création d'un dashboard personnalisé"""    
+    """Création d'un dashboard personnalisé"""
+    
     dashboard_id = await orchestrator.create_custom_dashboard(
         name=dashboard_data.name,
         tenant_id=current_user.tenant_id,
@@ -7473,7 +7809,8 @@ async def get_configuration(
     component: Optional[str] = Query(None, description="Composant spécifique"),
     current_user: TokenData = Depends(require_permission("admin"))
 ):
-    """Récupération de la configuration"""    
+    """Récupération de la configuration"""
+    
     global config_manager
     
     if not config_manager:
@@ -7496,7 +7833,8 @@ async def get_configuration(
 async def prometheus_metrics(
     current_user: TokenData = Depends(require_permission("read"))
 ):
-    """Export des métriques Prometheus"""    
+    """Export des métriques Prometheus"""
+    
     # Generation des métriques Prometheus
     metrics_data = generate_latest()
     
@@ -7511,7 +7849,8 @@ async def prometheus_metrics(
 
 @app.on_event("startup")
 async def startup_event():
-    """Événement de démarrage de l'application"""    
+    """Événement de démarrage de l'application"""
+    
     global auth_manager, monitoring_orchestrator, config_manager
     
     try:
@@ -7539,7 +7878,8 @@ async def startup_event():
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    """Événement d'arrêt de l'application"""    
+    """Événement d'arrêt de l'application"""
+    
     global monitoring_orchestrator
     
     try:
@@ -7603,7 +7943,8 @@ Usage:
 
 Auteur: Fahed Mlaiel - Lead Full-Stack Developer & API Architect
 Équipe: Backend Engineers, Frontend Developers, UX/UI Designers
-"""from fastapi import FastAPI, HTTPException, Depends, Query, Path, Body, BackgroundTasks, WebSocket, WebSocketDisconnect
+"""
+from fastapi import FastAPI, HTTPException, Depends, Query, Path, Body, BackgroundTasks, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -7633,7 +7974,8 @@ from performance_monitor import PerformanceMonitor
 # Configuration FastAPI
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Gestionnaire de cycle de vie de l'application."""    # Startup
+    """Gestionnaire de cycle de vie de l'application."""
+    # Startup
     logger = Logger("DashboardAPI")
     logger.info("Démarrage de l'API Dashboard...")
     
@@ -7700,27 +8042,31 @@ redis_client = None
 
 # WebSocket Manager
 class WebSocketManager:
-    """Gestionnaire de connexions WebSocket."""    
+    """Gestionnaire de connexions WebSocket."""
+    
     def __init__(self):
         self.active_connections: List[WebSocket] = []
         self.subscriptions: Dict[str, List[WebSocket]] = defaultdict(list)
         self.logger = Logger("WebSocketManager")
     
     async def connect(self, websocket: WebSocket, topic: str = "general"):
-        """Connecte un client WebSocket."""        await websocket.accept()
+        """Connecte un client WebSocket."""
+        await websocket.accept()
         self.active_connections.append(websocket)
         self.subscriptions[topic].append(websocket)
         self.logger.info(f"Client connecté à {topic}. Total: {len(self.active_connections)}")
     
     def disconnect(self, websocket: WebSocket):
-        """Déconnecte un client WebSocket."""        self.active_connections.remove(websocket)
+        """Déconnecte un client WebSocket."""
+        self.active_connections.remove(websocket)
         for topic, connections in self.subscriptions.items():
             if websocket in connections:
                 connections.remove(websocket)
         self.logger.info(f"Client déconnecté. Total: {len(self.active_connections)}")
     
     async def send_to_topic(self, topic: str, message: dict):
-        """Envoie un message à tous les clients d'un topic."""        if topic in self.subscriptions:
+        """Envoie un message à tous les clients d'un topic."""
+        if topic in self.subscriptions:
             disconnected = []
             for websocket in self.subscriptions[topic]:
                 try:
@@ -7733,7 +8079,8 @@ class WebSocketManager:
                 self.disconnect(ws)
     
     async def broadcast(self, message: dict):
-        """Diffuse un message à tous les clients connectés."""        disconnected = []
+        """Diffuse un message à tous les clients connectés."""
+        disconnected = []
         for websocket in self.active_connections:
             try:
                 await websocket.send_json(message)
@@ -7749,7 +8096,8 @@ websocket_manager = WebSocketManager()
 
 # Modèles de données API
 class MetricRequest(BaseModel):
-    """Requête de création de métrique."""    name: str = Field(..., description="Nom de la métrique")
+    """Requête de création de métrique."""
+    name: str = Field(..., description="Nom de la métrique")
     value: float = Field(..., description="Valeur de la métrique")
     tenant_id: str = Field(..., description="ID du tenant")
     tags: Dict[str, str] = Field(default_factory=dict, description="Tags de la métrique")
@@ -7757,7 +8105,8 @@ class MetricRequest(BaseModel):
 
 
 class DashboardRequest(BaseModel):
-    """Requête de création de tableau de bord."""    name: str = Field(..., description="Nom du dashboard")
+    """Requête de création de tableau de bord."""
+    name: str = Field(..., description="Nom du dashboard")
     description: str = Field("", description="Description du dashboard")
     tenant_id: str = Field(..., description="ID du tenant")
     layout: Dict[str, Any] = Field(default_factory=dict, description="Configuration layout")
@@ -7766,7 +8115,8 @@ class DashboardRequest(BaseModel):
 
 
 class AlertRequest(BaseModel):
-    """Requête de création d'alerte."""    name: str = Field(..., description="Nom de l'alerte")
+    """Requête de création d'alerte."""
+    name: str = Field(..., description="Nom de l'alerte")
     description: str = Field("", description="Description de l'alerte")
     tenant_id: str = Field(..., description="ID du tenant")
     condition: Dict[str, Any] = Field(..., description="Condition de déclenchement")
@@ -7775,13 +8125,15 @@ class AlertRequest(BaseModel):
 
 
 class PredictionRequest(BaseModel):
-    """Requête de prédiction ML."""    model_name: str = Field(..., description="Nom du modèle")
+    """Requête de prédiction ML."""
+    model_name: str = Field(..., description="Nom du modèle")
     features: Dict[str, Any] = Field(..., description="Features pour la prédiction")
     tenant_id: str = Field(..., description="ID du tenant")
 
 
 class QueryFilter(BaseModel):
-    """Filtre de requête avancé."""    tenant_id: Optional[str] = None
+    """Filtre de requête avancé."""
+    tenant_id: Optional[str] = None
     start_time: Optional[datetime] = None
     end_time: Optional[datetime] = None
     tags: Optional[Dict[str, str]] = None
@@ -7793,7 +8145,8 @@ class QueryFilter(BaseModel):
 
 # Dépendances
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
-    """Obtient l'utilisateur actuel à partir du token JWT."""    try:
+    """Obtient l'utilisateur actuel à partir du token JWT."""
+    try:
         token = credentials.credentials
         payload = jwt.decode(token, config.security.secret_key, algorithms=["HS256"])
         user_id = payload.get("sub")
@@ -7805,7 +8158,8 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
 
 
 async def check_rate_limit(user: dict = Depends(get_current_user)):
-    """Vérification du rate limiting."""    user_id = user["user_id"]
+    """Vérification du rate limiting."""
+    user_id = user["user_id"]
     if not await rate_limiter.check_rate_limit(f"api:{user_id}", limit=100, window=60):
         raise HTTPException(status_code=429, detail="Rate limit dépassé")
     return user
@@ -7814,7 +8168,8 @@ async def check_rate_limit(user: dict = Depends(get_current_user)):
 # Endpoints d'authentification
 @app.post("/api/v1/auth/login")
 async def login(username: str = Body(...), password: str = Body(...)):
-    """Authentification utilisateur."""    # Simulation d'authentification
+    """Authentification utilisateur."""
+    # Simulation d'authentification
     if username == "admin" and password == "admin123":
         token_data = {
             "sub": "admin",
@@ -7829,7 +8184,8 @@ async def login(username: str = Body(...), password: str = Body(...)):
 
 @app.post("/api/v1/auth/refresh")
 async def refresh_token(user: dict = Depends(get_current_user)):
-    """Renouvellement du token."""    token_data = {
+    """Renouvellement du token."""
+    token_data = {
         "sub": user["user_id"],
         "tenant_id": user["tenant_id"],
         "exp": datetime.utcnow() + timedelta(hours=24)
@@ -7845,7 +8201,8 @@ async def create_metric(
     background_tasks: BackgroundTasks,
     user: dict = Depends(check_rate_limit)
 ):
-    """Créer une nouvelle métrique."""    try:
+    """Créer une nouvelle métrique."""
+    try:
         # Créer la métrique
         metric = create_metric(
             name=metric_data.name,
@@ -7887,7 +8244,8 @@ async def get_metrics(
     offset: int = Query(0, ge=0),
     user: dict = Depends(check_rate_limit)
 ):
-    """Récupérer les métriques avec filtrage."""    try:
+    """Récupérer les métriques avec filtrage."""
+    try:
         # Filtres
         filters = {
             "tenant_id": tenant_id or user["tenant_id"],
@@ -7927,7 +8285,8 @@ async def get_metric(
     metric_id: str = Path(...),
     user: dict = Depends(check_rate_limit)
 ):
-    """Récupérer une métrique spécifique."""    try:
+    """Récupérer une métrique spécifique."""
+    try:
         # Simulation
         metric = create_metric(
             name="sample_metric",
@@ -7952,7 +8311,8 @@ async def get_aggregated_metrics(
     end_time: datetime = Query(...),
     user: dict = Depends(check_rate_limit)
 ):
-    """Récupérer des métriques agrégées."""    try:
+    """Récupérer des métriques agrégées."""
+    try:
         # Simulation de données agrégées
         time_points = []
         current_time = start_time
@@ -7994,7 +8354,8 @@ async def create_dashboard(
     dashboard_data: DashboardRequest,
     user: dict = Depends(check_rate_limit)
 ):
-    """Créer un nouveau tableau de bord."""    try:
+    """Créer un nouveau tableau de bord."""
+    try:
         # Créer le dashboard
         dashboard = Dashboard(
             name=dashboard_data.name,
@@ -8025,7 +8386,8 @@ async def get_dashboards(
     include_public: bool = Query(True),
     user: dict = Depends(check_rate_limit)
 ):
-    """Récupérer les tableaux de bord."""    try:
+    """Récupérer les tableaux de bord."""
+    try:
         # Simulation
         dashboards = []
         for i in range(5):
@@ -8057,7 +8419,8 @@ async def create_alert(
     background_tasks: BackgroundTasks,
     user: dict = Depends(check_rate_limit)
 ):
-    """Créer une nouvelle alerte."""    try:
+    """Créer une nouvelle alerte."""
+    try:
         # Créer l'alerte
         alert = Alert(
             name=alert_data.name,
@@ -8089,7 +8452,8 @@ async def get_alerts(
     severity: Optional[str] = Query(None, regex="^(info|warning|critical)$"),
     user: dict = Depends(check_rate_limit)
 ):
-    """Récupérer les alertes."""    try:
+    """Récupérer les alertes."""
+    try:
         # Récupérer depuis le gestionnaire d'alertes
         active_alerts = analytics_engine.alert_manager.active_alerts
         
@@ -8121,7 +8485,8 @@ async def predict(
     prediction_request: PredictionRequest,
     user: dict = Depends(check_rate_limit)
 ):
-    """Faire une prédiction avec un modèle ML."""    try:
+    """Faire une prédiction avec un modèle ML."""
+    try:
         # Récupérer le modèle
         model = model_manager.get_model(prediction_request.model_name)
         if not model:
@@ -8149,7 +8514,8 @@ async def predict(
 
 @app.get("/api/v1/ml/models")
 async def get_models(user: dict = Depends(check_rate_limit)):
-    """Récupérer la liste des modèles ML."""    try:
+    """Récupérer la liste des modèles ML."""
+    try:
         models_stats = model_manager.get_all_model_stats()
         
         models = []
@@ -8176,7 +8542,8 @@ async def train_model(
     background_tasks: BackgroundTasks,
     user: dict = Depends(check_rate_limit)
 ):
-    """Entraîner un modèle ML."""    try:
+    """Entraîner un modèle ML."""
+    try:
         model = model_manager.get_model(model_name)
         if not model:
             raise HTTPException(status_code=404, detail="Modèle non trouvé")
@@ -8196,7 +8563,8 @@ async def train_model(
 
 
 async def _train_model_background(model, model_name: str):
-    """Entraînement de modèle en arrière-plan."""    try:
+    """Entraînement de modèle en arrière-plan."""
+    try:
         # Simulation de données d'entraînement
         training_data = [{"feature1": i, "feature2": i*2} for i in range(100)]
         
@@ -8219,7 +8587,8 @@ async def _train_model_background(model, model_name: str):
 # Endpoints Performance
 @app.get("/api/v1/performance/status")
 async def get_performance_status(user: dict = Depends(check_rate_limit)):
-    """Récupérer le statut de performances."""    try:
+    """Récupérer le statut de performances."""
+    try:
         # Collecter les métriques actuelles
         system_metrics = performance_monitor.collect_system_metrics()
         db_metrics = await performance_monitor.collect_database_metrics()
@@ -8265,7 +8634,8 @@ async def get_performance_report(
     format: str = Query("json", regex="^(json|summary)$"),
     user: dict = Depends(check_rate_limit)
 ):
-    """Générer un rapport de performances."""    try:
+    """Générer un rapport de performances."""
+    try:
         report = performance_monitor.generate_performance_report()
         
         if format == "summary":
@@ -8285,7 +8655,8 @@ async def get_performance_report(
 # WebSocket Endpoints
 @app.websocket("/ws/metrics")
 async def websocket_metrics(websocket: WebSocket):
-    """WebSocket pour streaming des métriques en temps réel."""    await websocket_manager.connect(websocket, "metrics")
+    """WebSocket pour streaming des métriques en temps réel."""
+    await websocket_manager.connect(websocket, "metrics")
     try:
         while True:
             # Attendre un message (keep-alive)
@@ -8310,7 +8681,8 @@ async def websocket_metrics(websocket: WebSocket):
 
 @app.websocket("/ws/performance")
 async def websocket_performance(websocket: WebSocket):
-    """WebSocket pour monitoring des performances en temps réel."""    await websocket_manager.connect(websocket, "performance")
+    """WebSocket pour monitoring des performances en temps réel."""
+    await websocket_manager.connect(websocket, "performance")
     try:
         while True:
             await asyncio.sleep(5)  # Mise à jour toutes les 5 secondes
@@ -8335,7 +8707,8 @@ async def websocket_performance(websocket: WebSocket):
 # Endpoints de santé et monitoring
 @app.get("/health")
 async def health_check():
-    """Vérification de santé de l'API."""    return {
+    """Vérification de santé de l'API."""
+    return {
         "status": "healthy",
         "timestamp": datetime.utcnow().isoformat(),
         "version": "2.0.0",
@@ -8350,7 +8723,8 @@ async def health_check():
 
 @app.get("/metrics")
 async def prometheus_metrics():
-    """Endpoint Prometheus pour métriques."""    # Simulation de métriques Prometheus
+    """Endpoint Prometheus pour métriques."""
+    # Simulation de métriques Prometheus
     metrics = f"""# HELP api_requests_total Total API requests
 # TYPE api_requests_total counter
 api_requests_total{{method="GET",endpoint="/api/v1/metrics"}} {hash("requests") % 1000}
@@ -8368,7 +8742,8 @@ system_cpu_usage {performance_monitor.system_metrics_history[-1].cpu_percent if 
 # HELP system_memory_usage Memory usage percentage
 # TYPE system_memory_usage gauge
 system_memory_usage {performance_monitor.system_metrics_history[-1].memory_percent if performance_monitor.system_metrics_history else 0}
-"""    
+"""
+    
     return StreamingResponse(
         iter([metrics]),
         media_type="text/plain"
@@ -8396,7 +8771,8 @@ async def internal_error_handler(request, exc):
 if __name__ == "__main__":
     import uvicorn
     
-    print("""    🚀 SPOTIFY AI ANALYTICS DASHBOARD API
+    print("""
+    🚀 SPOTIFY AI ANALYTICS DASHBOARD API
     ====================================
     📊 API REST complète
     🔄 WebSocket temps réel
@@ -8435,7 +8811,8 @@ Key Features:
 - Comprehensive monitoring and analytics
 - Multi-tenant support and resource management
 - Compliance and audit logging
-"""from .base_connector import (
+"""
+from .base_connector import (
     BaseAPIConnector,
     APIResponse,
     APIError,
@@ -8482,7 +8859,8 @@ This module provides:
 - Integration management for enterprise directories
 - Multi-tenant administration with role-based access
 - Advanced reporting and analytics capabilities
-"""from typing import Dict, List, Any, Optional, Union, Callable, AsyncGenerator
+"""
+from typing import Dict, List, Any, Optional, Union, Callable, AsyncGenerator
 from datetime import datetime, timezone, timedelta
 from enum import Enum
 from dataclasses import dataclass, field
@@ -8521,7 +8899,8 @@ logger = structlog.get_logger(__name__)
 
 
 class EnterpriseAdminRole(Enum):
-    """Enterprise admin roles."""    SUPER_ADMIN = "super_admin"
+    """Enterprise admin roles."""
+    SUPER_ADMIN = "super_admin"
     TENANT_ADMIN = "tenant_admin"
     SECURITY_ADMIN = "security_admin"
     COMPLIANCE_ADMIN = "compliance_admin"
@@ -8530,7 +8909,8 @@ class EnterpriseAdminRole(Enum):
 
 
 class EnterpriseAdminPermission(Enum):
-    """Enterprise admin permissions."""    USER_MANAGEMENT = "user_management"
+    """Enterprise admin permissions."""
+    USER_MANAGEMENT = "user_management"
     TENANT_MANAGEMENT = "tenant_management"
     SECURITY_POLICY_MANAGEMENT = "security_policy_management"
     COMPLIANCE_MANAGEMENT = "compliance_management"
@@ -8544,7 +8924,8 @@ class EnterpriseAdminPermission(Enum):
 
 @dataclass
 class EnterpriseAdminUser:
-    """Enterprise admin user."""    
+    """Enterprise admin user."""
+    
     admin_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     username: str = ""
     email: str = ""
@@ -8571,7 +8952,8 @@ class EnterpriseAdminUser:
 
 @dataclass
 class EnterpriseSystemHealth:
-    """Enterprise system health status."""    
+    """Enterprise system health status."""
+    
     overall_status: str = "healthy"
     overall_score: float = 100.0
     components: Dict[str, Dict[str, Any]] = field(default_factory=dict)
@@ -8582,7 +8964,8 @@ class EnterpriseSystemHealth:
 
 @dataclass
 class EnterpriseBulkOperation:
-    """Enterprise bulk operation."""    
+    """Enterprise bulk operation."""
+    
     operation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     operation_type: str = "user_update"
     tenant_id: str = "default"
@@ -8602,7 +8985,8 @@ class EnterpriseBulkOperation:
 
 
 class EnterpriseAdminConsole:
-    """Enterprise administration console."""    
+    """Enterprise administration console."""
+    
     def __init__(
         self,
         database_url: str,
@@ -8643,7 +9027,8 @@ class EnterpriseAdminConsole:
         self._initialize_admin_console()
     
     def _initialize_admin_console(self):
-        """Initialize admin console application."""        
+        """Initialize admin console application."""
+        
         self.app = FastAPI(
             title="Enterprise Authentication Admin Console",
             description="Ultra-advanced enterprise administration interface",
@@ -8658,12 +9043,14 @@ class EnterpriseAdminConsole:
         logger.info("Enterprise admin console initialized")
     
     def _add_admin_routes(self):
-        """Add admin console routes."""        
+        """Add admin console routes."""
+        
         security = HTTPBearer()
         
         @self.app.get("/admin", response_class=HTMLResponse)
         async def admin_dashboard(request: Request):
-            """Admin dashboard homepage."""            
+            """Admin dashboard homepage."""
+            
             try:
                 # Get system overview
                 system_health = await self.get_system_health()
@@ -8686,7 +9073,8 @@ class EnterpriseAdminConsole:
             user_data: Dict[str, Any],
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Create new admin user."""            
+            """Create new admin user."""
+            
             try:
                 # Validate admin permissions
                 current_admin = await self._validate_admin_permissions(
@@ -8736,7 +9124,8 @@ class EnterpriseAdminConsole:
             tenant_id: Optional[str] = None,
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """List admin users."""            
+            """List admin users."""
+            
             try:
                 # Validate admin permissions
                 await self._validate_admin_permissions(
@@ -8774,7 +9163,8 @@ class EnterpriseAdminConsole:
         async def list_tenants(
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """List all tenants."""            
+            """List all tenants."""
+            
             try:
                 # Validate admin permissions
                 current_admin = await self._validate_admin_permissions(
@@ -8797,7 +9187,8 @@ class EnterpriseAdminConsole:
         async def get_system_health_api(
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Get system health status."""            
+            """Get system health status."""
+            
             try:
                 # Validate admin permissions
                 await self._validate_admin_permissions(
@@ -8821,7 +9212,8 @@ class EnterpriseAdminConsole:
             background_tasks: BackgroundTasks,
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Start bulk operation."""            
+            """Start bulk operation."""
+            
             try:
                 # Validate admin permissions
                 current_admin = await self._validate_admin_permissions(
@@ -8864,7 +9256,8 @@ class EnterpriseAdminConsole:
             operation_id: str,
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Get bulk operation status."""            
+            """Get bulk operation status."""
+            
             try:
                 # Validate admin permissions
                 await self._validate_admin_permissions(
@@ -8903,7 +9296,8 @@ class EnterpriseAdminConsole:
             end_date: Optional[str] = None,
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Generate analytics report."""            
+            """Generate analytics report."""
+            
             try:
                 # Validate admin permissions
                 await self._validate_admin_permissions(
@@ -8953,7 +9347,8 @@ class EnterpriseAdminConsole:
             severity: Optional[str] = None,
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Get security threats."""            
+            """Get security threats."""
+            
             try:
                 # Validate admin permissions
                 await self._validate_admin_permissions(
@@ -8977,7 +9372,8 @@ class EnterpriseAdminConsole:
             response_data: Dict[str, Any],
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Respond to security threat."""            
+            """Respond to security threat."""
+            
             try:
                 # Validate admin permissions
                 current_admin = await self._validate_admin_permissions(
@@ -9011,7 +9407,8 @@ class EnterpriseAdminConsole:
             page_size: int = 100,
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Get audit logs."""            
+            """Get audit logs."""
+            
             try:
                 # Validate admin permissions
                 await self._validate_admin_permissions(
@@ -9048,7 +9445,8 @@ class EnterpriseAdminConsole:
             tenant_id: str = "default",
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Get real-time metrics."""            
+            """Get real-time metrics."""
+            
             try:
                 # Validate admin permissions
                 await self._validate_admin_permissions(
@@ -9071,7 +9469,8 @@ class EnterpriseAdminConsole:
         access_token: str,
         required_permissions: List[EnterpriseAdminPermission]
     ) -> EnterpriseAdminUser:
-        """Validate admin permissions."""        
+        """Validate admin permissions."""
+        
         # Mock token validation - in production, implement proper JWT validation
         admin_id = self._extract_admin_id_from_token(access_token)
         
@@ -9087,11 +9486,13 @@ class EnterpriseAdminConsole:
         return admin_user
     
     def _extract_admin_id_from_token(self, token: str) -> str:
-        """Extract admin ID from access token."""        # Mock implementation - in production, decode JWT
+        """Extract admin ID from access token."""
+        # Mock implementation - in production, decode JWT
         return "admin_" + hashlib.md5(token.encode()).hexdigest()[:8]
     
     async def _get_admin_user(self, admin_id: str) -> Optional[EnterpriseAdminUser]:
-        """Get admin user by ID."""        
+        """Get admin user by ID."""
+        
         # Check cache first
         if admin_id in self.admin_users_cache:
             return self.admin_users_cache[admin_id]
@@ -9114,10 +9515,12 @@ class EnterpriseAdminConsole:
         return admin_user
     
     async def _store_admin_user(self, admin_user: EnterpriseAdminUser):
-        """Store admin user in database."""        
+        """Store admin user in database."""
+        
         try:
             async with self.async_session_maker() as session:
-                query = text("""                    INSERT INTO enterprise_admin_users (
+                query = text("""
+                    INSERT INTO enterprise_admin_users (
                         admin_id, username, email, full_name, role, permissions,
                         tenant_access, organization_access, is_active, created_at, created_by
                     ) VALUES (
@@ -9154,7 +9557,8 @@ class EnterpriseAdminConsole:
     async def _list_admin_users(
         self, tenant_id: Optional[str] = None
     ) -> List[EnterpriseAdminUser]:
-        """List admin users."""        
+        """List admin users."""
+        
         # Mock implementation - in production, fetch from database
         admin_users = []
         
@@ -9174,7 +9578,8 @@ class EnterpriseAdminConsole:
         return admin_users
     
     async def _list_tenants(self, accessible_tenants: List[str]) -> List[Dict[str, Any]]:
-        """List tenants accessible to admin."""        
+        """List tenants accessible to admin."""
+        
         # Mock implementation
         all_tenants = [
             {
@@ -9210,7 +9615,8 @@ class EnterpriseAdminConsole:
             return all_tenants
     
     async def get_system_health(self) -> EnterpriseSystemHealth:
-        """Get comprehensive system health."""        
+        """Get comprehensive system health."""
+        
         health = EnterpriseSystemHealth()
         
         try:
@@ -9268,7 +9674,8 @@ class EnterpriseAdminConsole:
         return health
     
     async def get_recent_activity(self) -> List[Dict[str, Any]]:
-        """Get recent activity summary."""        
+        """Get recent activity summary."""
+        
         # Mock recent activity
         activities = [
             {
@@ -9300,7 +9707,8 @@ class EnterpriseAdminConsole:
         return activities
     
     async def get_key_metrics(self) -> Dict[str, Any]:
-        """Get key metrics for dashboard."""        
+        """Get key metrics for dashboard."""
+        
         # Mock key metrics
         metrics = {
             "total_users": 15420,
@@ -9318,7 +9726,8 @@ class EnterpriseAdminConsole:
         operation_id: str,
         operation_data: Dict[str, Any]
     ):
-        """Process bulk operation in background."""        
+        """Process bulk operation in background."""
+        
         if operation_id not in self.bulk_operations:
             return
         
@@ -9378,7 +9787,8 @@ class EnterpriseAdminConsole:
         target: str,
         details: Dict[str, Any]
     ):
-        """Log admin action for audit trail."""        
+        """Log admin action for audit trail."""
+        
         try:
             audit_entry = {
                 "admin_id": admin_id,
@@ -9404,7 +9814,8 @@ class EnterpriseAdminConsole:
     async def _get_security_threats(
         self, tenant_id: str, severity: Optional[str] = None
     ) -> List[Dict[str, Any]]:
-        """Get security threats."""        
+        """Get security threats."""
+        
         # Mock security threats
         threats = [
             {
@@ -9451,7 +9862,8 @@ class EnterpriseAdminConsole:
         response_data: Dict[str, Any],
         admin_id: str
     ) -> Dict[str, Any]:
-        """Respond to security threat."""        
+        """Respond to security threat."""
+        
         # Mock threat response
         response_action = response_data.get("action", "acknowledge")
         
@@ -9480,7 +9892,8 @@ class EnterpriseAdminConsole:
         page: int,
         page_size: int
     ) -> Dict[str, Any]:
-        """Get audit logs."""        
+        """Get audit logs."""
+        
         # Mock audit logs
         logs = []
         
@@ -9508,7 +9921,8 @@ class EnterpriseAdminConsole:
         }
     
     async def _get_real_time_metrics(self, tenant_id: str) -> Dict[str, Any]:
-        """Get real-time metrics."""        
+        """Get real-time metrics."""
+        
         # Mock real-time metrics
         metrics = {
             "current_timestamp": datetime.now(timezone.utc).isoformat(),
@@ -9573,7 +9987,8 @@ Features:
     - Analytics insights artistes et contenu
 
 Author: Expert Spotify Integration + Music Platform Analytics Team
-"""import asyncio
+"""
+import asyncio
 import json
 import requests
 import base64
@@ -9595,7 +10010,8 @@ logger = logging.getLogger(__name__)
 
 
 class SpotifyApiEndpoint(Enum):
-    """Points d'API Spotify surveillés."""    SEARCH = "search"
+    """Points d'API Spotify surveillés."""
+    SEARCH = "search"
     TRACKS = "tracks"
     PLAYLISTS = "playlists"
     ARTISTS = "artists"
@@ -9610,7 +10026,8 @@ class SpotifyApiEndpoint(Enum):
 
 
 class SpotifyDataType(Enum):
-    """Types de données Spotify."""    TRACK = "track"
+    """Types de données Spotify."""
+    TRACK = "track"
     PLAYLIST = "playlist"
     ARTIST = "artist"
     ALBUM = "album"
@@ -9621,7 +10038,8 @@ class SpotifyDataType(Enum):
 
 @dataclass
 class SpotifyApiMetrics:
-    """Métriques d'appel API Spotify."""    endpoint: SpotifyApiEndpoint
+    """Métriques d'appel API Spotify."""
+    endpoint: SpotifyApiEndpoint
     response_time_ms: float
     status_code: int
     rate_limit_remaining: int
@@ -9634,7 +10052,8 @@ class SpotifyApiMetrics:
 
 @dataclass
 class TrackAnalytics:
-    """Analytics détaillées d'un track."""    track_id: str
+    """Analytics détaillées d'un track."""
+    track_id: str
     name: str
     artist_name: str
     popularity: int
@@ -9651,7 +10070,8 @@ class TrackAnalytics:
 
 
 class SpotifyAPIMetricsCollector(BaseCollector):
-    """Collecteur principal pour les métriques API Spotify."""    
+    """Collecteur principal pour les métriques API Spotify."""
+    
     def __init__(self, config: CollectorConfig):
         super().__init__(config)
         self.api_monitor = SpotifyAPIMonitor()
@@ -9660,7 +10080,8 @@ class SpotifyAPIMetricsCollector(BaseCollector):
         self.cache_analyzer = CacheAnalyzer()
         
     async def collect(self) -> Dict[str, Any]:
-        """Collecte complète des métriques API Spotify."""        tenant_id = self.config.tags.get('tenant_id', 'default')
+        """Collecte complète des métriques API Spotify."""
+        tenant_id = self.config.tags.get('tenant_id', 'default')
         
         try:
             # Métriques d'API en temps réel
@@ -9705,7 +10126,8 @@ class SpotifyAPIMetricsCollector(BaseCollector):
             raise
     
     async def _collect_api_metrics(self, tenant_id: str) -> Dict[str, Any]:
-        """Collecte les métriques d'API en temps réel."""        # Simulation de métriques API
+        """Collecte les métriques d'API en temps réel."""
+        # Simulation de métriques API
         endpoints_metrics = {}
         
         for endpoint in SpotifyApiEndpoint:
@@ -9777,7 +10199,8 @@ class SpotifyAPIMetricsCollector(BaseCollector):
         }
     
     async def _analyze_data_quality(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse la qualité des données Spotify."""        data_quality_metrics = {
+        """Analyse la qualité des données Spotify."""
+        data_quality_metrics = {
             'completeness': {
                 'track_metadata': 0.94,
                 'artist_information': 0.89,
@@ -9861,7 +10284,8 @@ class SpotifyAPIMetricsCollector(BaseCollector):
     
     async def _assess_api_health(self, api_metrics: Dict, rate_limits: Dict, 
                                sync_performance: Dict) -> Dict[str, Any]:
-        """Évalue la santé globale de l'API."""        # Score de performance API (40%)
+        """Évalue la santé globale de l'API."""
+        # Score de performance API (40%)
         avg_response_time = api_metrics['aggregate_metrics']['avg_response_time_ms']
         api_performance_score = max(0, 40 - (avg_response_time / 10))
         
@@ -9921,7 +10345,8 @@ class SpotifyAPIMetricsCollector(BaseCollector):
     
     async def _generate_api_recommendations(self, api_metrics: Dict, rate_limits: Dict, 
                                           sync_performance: Dict) -> List[Dict[str, Any]]:
-        """Génère des recommandations d'optimisation API."""        recommendations = []
+        """Génère des recommandations d'optimisation API."""
+        recommendations = []
         
         # Recommandation basée sur la latence
         avg_latency = api_metrics['aggregate_metrics']['avg_response_time_ms']
@@ -9990,7 +10415,8 @@ class SpotifyAPIMetricsCollector(BaseCollector):
         return recommendations
     
     async def validate_data(self, data: Dict[str, Any]) -> bool:
-        """Valide les données de métriques API Spotify."""        try:
+        """Valide les données de métriques API Spotify."""
+        try:
             api_data = data.get('spotify_api_metrics', {})
             
             required_fields = ['api_metrics', 'rate_limits', 'data_quality', 'integration_score']
@@ -10011,9 +10437,11 @@ class SpotifyAPIMetricsCollector(BaseCollector):
 
 
 class PlaylistAnalyticsCollector(BaseCollector):
-    """Collecteur d'analytics pour les playlists."""    
+    """Collecteur d'analytics pour les playlists."""
+    
     async def collect(self) -> Dict[str, Any]:
-        """Collecte les analytics de playlists."""        tenant_id = self.config.tags.get('tenant_id', 'default')
+        """Collecte les analytics de playlists."""
+        tenant_id = self.config.tags.get('tenant_id', 'default')
         
         try:
             # Analytics des playlists populaires
@@ -10051,7 +10479,8 @@ class PlaylistAnalyticsCollector(BaseCollector):
             raise
     
     async def _analyze_popular_playlists(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse les playlists populaires."""        # Simulation de playlists populaires
+        """Analyse les playlists populaires."""
+        # Simulation de playlists populaires
         top_playlists = [
             {
                 'playlist_id': 'pl_001',
@@ -10136,7 +10565,8 @@ class PlaylistAnalyticsCollector(BaseCollector):
         }
     
     async def _analyze_playlist_creation_trends(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse les tendances de création de playlists."""        # Données temporelles
+        """Analyse les tendances de création de playlists."""
+        # Données temporelles
         daily_creation = {}
         for day in range(30):  # 30 derniers jours
             date = datetime.utcnow() - timedelta(days=day)
@@ -10202,7 +10632,8 @@ class PlaylistAnalyticsCollector(BaseCollector):
         }
     
     async def _analyze_playlist_engagement(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse l'engagement avec les playlists."""        engagement_metrics = {
+        """Analyse l'engagement avec les playlists."""
+        engagement_metrics = {
             'listening_patterns': {
                 'avg_session_duration_minutes': 34.7,
                 'avg_tracks_per_session': 8.9,
@@ -10283,7 +10714,8 @@ class PlaylistAnalyticsCollector(BaseCollector):
         }
     
     async def _analyze_collaborative_playlists(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse les playlists collaboratives."""        collaborative_metrics = {
+        """Analyse les playlists collaboratives."""
+        collaborative_metrics = {
             'total_collaborative_playlists': 2345,
             'avg_collaborators_per_playlist': 3.7,
             'max_collaborators_per_playlist': 25,
@@ -10349,7 +10781,8 @@ class PlaylistAnalyticsCollector(BaseCollector):
         }
     
     async def _analyze_playlist_recommendations(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse la performance des recommandations de playlists."""        recommendation_metrics = {
+        """Analyse la performance des recommandations de playlists."""
+        recommendation_metrics = {
             'algorithm_performance': {
                 'accuracy_score': 0.76,
                 'precision': 0.72,
@@ -10433,7 +10866,8 @@ class PlaylistAnalyticsCollector(BaseCollector):
         }
     
     def _calculate_playlist_health_score(self, engagement: Dict, trends: Dict) -> float:
-        """Calcule un score de santé des playlists."""        # Score d'engagement (50%)
+        """Calcule un score de santé des playlists."""
+        # Score d'engagement (50%)
         avg_engagement = statistics.mean([
             engagement['engagement_metrics']['save_rate'],
             engagement['engagement_metrics']['share_rate'],
@@ -10455,7 +10889,8 @@ class PlaylistAnalyticsCollector(BaseCollector):
         return round(total_score, 2)
     
     async def validate_data(self, data: Dict[str, Any]) -> bool:
-        """Valide les données d'analytics playlists."""        try:
+        """Valide les données d'analytics playlists."""
+        try:
             playlist_data = data.get('playlist_analytics', {})
             
             required_sections = ['popular_playlists', 'engagement', 'creation_trends']
@@ -10471,9 +10906,11 @@ class PlaylistAnalyticsCollector(BaseCollector):
 
 
 class SpotifyAPIMonitor:
-    """Moniteur des API Spotify."""    
+    """Moniteur des API Spotify."""
+    
     async def check_api_status(self) -> Dict[str, Any]:
-        """Vérifie le statut des API Spotify."""        # Simulation de vérification d'API
+        """Vérifie le statut des API Spotify."""
+        # Simulation de vérification d'API
         return {
             'status': 'operational',
             'response_time_ms': 125,
@@ -10483,9 +10920,11 @@ class SpotifyAPIMonitor:
 
 
 class RateLimitAnalyzer:
-    """Analyseur des limites de taux Spotify."""    
+    """Analyseur des limites de taux Spotify."""
+    
     async def analyze_rate_limits(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse l'utilisation des rate limits."""        return {
+        """Analyse l'utilisation des rate limits."""
+        return {
             'current_usage': {
                 'requests_per_hour': 2850,
                 'limit_per_hour': 3600,
@@ -10513,9 +10952,11 @@ class RateLimitAnalyzer:
 
 
 class DataSyncMonitor:
-    """Moniteur de synchronisation des données."""    
+    """Moniteur de synchronisation des données."""
+    
     async def analyze_sync_performance(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse la performance de synchronisation."""        return {
+        """Analyse la performance de synchronisation."""
+        return {
             'sync_metrics': {
                 'last_full_sync': '2024-03-11T08:00:00Z',
                 'sync_duration_minutes': 45,
@@ -10552,9 +10993,11 @@ class DataSyncMonitor:
 
 
 class CacheAnalyzer:
-    """Analyseur de performance du cache."""    
+    """Analyseur de performance du cache."""
+    
     async def analyze_cache_performance(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse la performance du cache."""        return {
+        """Analyse la performance du cache."""
+        return {
             'cache_metrics': {
                 'hit_rate_overall': 0.847,
                 'miss_rate': 0.153,
@@ -10585,9 +11028,11 @@ class CacheAnalyzer:
 
 
 class TrackMetricsCollector(BaseCollector):
-    """Collecteur de métriques pour les tracks."""    
+    """Collecteur de métriques pour les tracks."""
+    
     async def collect(self) -> Dict[str, Any]:
-        """Collecte les métriques de tracks."""        tenant_id = self.config.tags.get('tenant_id', 'default')
+        """Collecte les métriques de tracks."""
+        tenant_id = self.config.tags.get('tenant_id', 'default')
         
         try:
             # Métriques de popularité
@@ -10621,7 +11066,8 @@ class TrackMetricsCollector(BaseCollector):
             raise
     
     async def _analyze_track_popularity(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse la popularité des tracks."""        # Top tracks simulés
+        """Analyse la popularité des tracks."""
+        # Top tracks simulés
         top_tracks = []
         for i in range(10):
             track = {
@@ -10658,7 +11104,8 @@ class TrackMetricsCollector(BaseCollector):
         }
     
     async def _analyze_audio_features(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse les caractéristiques audio."""        # Distribution des features audio
+        """Analyse les caractéristiques audio."""
+        # Distribution des features audio
         audio_features_distribution = {
             'danceability': {
                 'mean': 0.67,
@@ -10709,7 +11156,8 @@ class TrackMetricsCollector(BaseCollector):
         }
     
     async def _analyze_playlist_performance(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse la performance dans les playlists."""        return {
+        """Analyse la performance dans les playlists."""
+        return {
             'playlist_inclusion_metrics': {
                 'avg_playlists_per_track': 8.7,
                 'max_playlists_single_track': 1247,
@@ -10731,7 +11179,8 @@ class TrackMetricsCollector(BaseCollector):
         }
     
     async def _analyze_discovery_trends(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse les tendances de découverte."""        return {
+        """Analyse les tendances de découverte."""
+        return {
             'discovery_channels': {
                 'recommendations': 0.34,
                 'search': 0.28,
@@ -10753,7 +11202,8 @@ class TrackMetricsCollector(BaseCollector):
         }
     
     def _calculate_track_quality_score(self, popularity: Dict, features: Dict) -> float:
-        """Calcule un score de qualité des tracks."""        # Score basé sur la popularité (60%)
+        """Calcule un score de qualité des tracks."""
+        # Score basé sur la popularité (60%)
         avg_popularity = statistics.mean([
             track['popularity_score'] for track in popularity.get('top_tracks', [])
         ]) if popularity.get('top_tracks') else 70
@@ -10767,7 +11217,8 @@ class TrackMetricsCollector(BaseCollector):
         return round(total_score, 2)
     
     async def validate_data(self, data: Dict[str, Any]) -> bool:
-        """Valide les données de métriques tracks."""        try:
+        """Valide les données de métriques tracks."""
+        try:
             track_data = data.get('track_metrics', {})
             
             required_sections = ['popularity', 'audio_features', 'discovery']
@@ -10783,9 +11234,11 @@ class TrackMetricsCollector(BaseCollector):
 
 
 class ArtistInsightsCollector(BaseCollector):
-    """Collecteur d'insights pour les artistes."""    
+    """Collecteur d'insights pour les artistes."""
+    
     async def collect(self) -> Dict[str, Any]:
-        """Collecte les insights d'artistes."""        tenant_id = self.config.tags.get('tenant_id', 'default')
+        """Collecte les insights d'artistes."""
+        tenant_id = self.config.tags.get('tenant_id', 'default')
         
         try:
             # Métriques de performance d'artistes
@@ -10819,7 +11272,8 @@ class ArtistInsightsCollector(BaseCollector):
             raise
     
     async def _analyze_artist_performance(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse la performance des artistes."""        # Top artistes
+        """Analyse la performance des artistes."""
+        # Top artistes
         top_artists = [
             {
                 'artist_id': 'artist_001',
@@ -10870,7 +11324,8 @@ class ArtistInsightsCollector(BaseCollector):
         }
     
     async def _analyze_artist_audience(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse l'audience des artistes."""        return {
+        """Analyse l'audience des artistes."""
+        return {
             'demographic_breakdown': {
                 'age_groups': {
                     '13-17': 0.08,
@@ -10903,7 +11358,8 @@ class ArtistInsightsCollector(BaseCollector):
         }
     
     async def _analyze_geographic_distribution(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse la distribution géographique."""        return {
+        """Analyse la distribution géographique."""
+        return {
             'top_countries': {
                 'US': 0.28,
                 'UK': 0.12,
@@ -10941,7 +11397,8 @@ class ArtistInsightsCollector(BaseCollector):
         }
     
     async def _generate_artist_recommendations(self, tenant_id: str) -> List[Dict[str, Any]]:
-        """Génère des recommandations pour les artistes."""        return [
+        """Génère des recommandations pour les artistes."""
+        return [
             {
                 'type': 'audience_expansion',
                 'priority': 'high',
@@ -10977,7 +11434,8 @@ class ArtistInsightsCollector(BaseCollector):
         ]
     
     def _calculate_artist_success_score(self, performance: Dict, audience: Dict) -> float:
-        """Calcule un score de succès d'artiste."""        # Score de performance (60%)
+        """Calcule un score de succès d'artiste."""
+        # Score de performance (60%)
         top_artists = performance.get('top_artists', [])
         if top_artists:
             avg_popularity = statistics.mean([
@@ -11000,7 +11458,8 @@ class ArtistInsightsCollector(BaseCollector):
         return round(total_score, 2)
     
     async def validate_data(self, data: Dict[str, Any]) -> bool:
-        """Valide les données d'insights artistes."""        try:
+        """Valide les données d'insights artistes."""
+        try:
             artist_data = data.get('artist_insights', {})
             
             required_sections = ['performance', 'audience', 'geographic']
@@ -11054,7 +11513,8 @@ Project Team Specialties:
 This code and concept are exclusively owned by Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be taken against violators.
-"""import os
+"""
+import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union
 from enum import Enum
@@ -11062,7 +11522,8 @@ from urllib.parse import urlparse
 
 
 class ServiceType(Enum):
-    """Types of external services."""    SPOTIFY_API = "spotify_api"
+    """Types of external services."""
+    SPOTIFY_API = "spotify_api"
     YOUTUBE_API = "youtube_api"
     INSTAGRAM_API = "instagram_api"
     TIKTOK_API = "tiktok_api"
@@ -11078,7 +11539,8 @@ class ServiceType(Enum):
 
 
 class AuthType(Enum):
-    """Authentication types for external services."""    API_KEY = "api_key"
+    """Authentication types for external services."""
+    API_KEY = "api_key"
     OAUTH2 = "oauth2"
     JWT = "jwt"
     BASIC_AUTH = "basic_auth"
@@ -11087,7 +11549,8 @@ class AuthType(Enum):
 
 
 class Protocol(Enum):
-    """Communication protocols."""    HTTP = "http"
+    """Communication protocols."""
+    HTTP = "http"
     HTTPS = "https"
     WEBSOCKET = "websocket"
     GRPC = "grpc"
@@ -11096,7 +11559,8 @@ class Protocol(Enum):
 
 @dataclass
 class APIEndpoints:
-    """API endpoint configurations for external services."""    # Spotify Integration
+    """API endpoint configurations for external services."""
+    # Spotify Integration
     spotify_auth_url: str = "https://accounts.spotify.com/authorize"
     spotify_token_url: str = "https://accounts.spotify.com/api/token"
     spotify_api_base: str = "https://api.spotify.com/v1"
@@ -11152,7 +11616,8 @@ class APIEndpoints:
     amplitude_api: str = "https://api2.amplitude.com"
     
     def get_endpoint(self, service: ServiceType) -> Optional[str]:
-        """Get endpoint URL for a specific service."""        endpoint_mapping = {
+        """Get endpoint URL for a specific service."""
+        endpoint_mapping = {
             ServiceType.SPOTIFY_API: self.spotify_api_base,
             ServiceType.YOUTUBE_API: self.youtube_api_base,
             ServiceType.INSTAGRAM_API: self.instagram_graph_api,
@@ -11169,7 +11634,8 @@ class APIEndpoints:
         return endpoint_mapping.get(service)
     
     def validate_urls(self) -> List[str]:
-        """Validate all endpoint URLs."""        errors = []
+        """Validate all endpoint URLs."""
+        errors = []
         for field_name, url in self.__dict__.items():
             if isinstance(url, str) and url:
                 try:
@@ -11183,7 +11649,8 @@ class APIEndpoints:
 
 @dataclass
 class ServiceCredentials:
-    """Credential configurations for external services."""    # API Keys (retrieved from environment variables)
+    """Credential configurations for external services."""
+    # API Keys (retrieved from environment variables)
     spotify_client_id: str = field(default_factory=lambda: os.getenv("SPOTIFY_CLIENT_ID", ""))
     spotify_client_secret: str = field(default_factory=lambda: os.getenv("SPOTIFY_CLIENT_SECRET", ""))
     youtube_api_key: str = field(default_factory=lambda: os.getenv("YOUTUBE_API_KEY", ""))
@@ -11224,7 +11691,8 @@ class ServiceCredentials:
     encryption_key: str = field(default_factory=lambda: os.getenv("ENCRYPTION_KEY", ""))
     
     def get_credentials(self, service: ServiceType) -> Dict[str, str]:
-        """Get credentials for a specific service."""        credential_mapping = {
+        """Get credentials for a specific service."""
+        credential_mapping = {
             ServiceType.SPOTIFY_API: {
                 "client_id": self.spotify_client_id,
                 "client_secret": self.spotify_client_secret
@@ -11258,7 +11726,8 @@ class ServiceCredentials:
         return credential_mapping.get(service, {})
     
     def validate_credentials(self) -> List[str]:
-        """Validate that required credentials are present."""        errors = []
+        """Validate that required credentials are present."""
+        errors = []
         required_credentials = [
             ("spotify_client_id", self.spotify_client_id),
             ("jwt_secret_key", self.jwt_secret_key),
@@ -11274,7 +11743,8 @@ class ServiceCredentials:
 
 @dataclass
 class ConnectionSettings:
-    """Connection settings for external services."""    # Default connection settings
+    """Connection settings for external services."""
+    # Default connection settings
     default_timeout: int = 30
     default_connect_timeout: int = 10
     default_read_timeout: int = 30
@@ -11316,7 +11786,8 @@ class ConnectionSettings:
     custom_headers: Dict[str, str] = field(default_factory=dict)
     
     def get_timeout_for_service(self, service: ServiceType) -> int:
-        """Get appropriate timeout for a specific service type."""        timeout_mapping = {
+        """Get appropriate timeout for a specific service type."""
+        timeout_mapping = {
             ServiceType.BLOCKCHAIN_SERVICE: self.blockchain_timeout,
             ServiceType.PAYMENT_GATEWAY: self.payment_timeout,
             ServiceType.CLOUD_STORAGE: self.upload_timeout,
@@ -11327,7 +11798,8 @@ class ConnectionSettings:
 
 @dataclass
 class TimeoutSettings:
-    """Detailed timeout configurations."""    # Connection timeouts
+    """Detailed timeout configurations."""
+    # Connection timeouts
     connection_timeout: int = 30
     read_timeout: int = 60
     write_timeout: int = 30
@@ -11355,7 +11827,8 @@ class TimeoutSettings:
     session_timeout: int = 7200
     
     def get_timeout_config(self) -> Dict[str, int]:
-        """Get timeout configuration as dictionary."""        return {
+        """Get timeout configuration as dictionary."""
+        return {
             "connection": self.connection_timeout,
             "read": self.read_timeout,
             "write": self.write_timeout,
@@ -11365,7 +11838,8 @@ class TimeoutSettings:
 
 @dataclass
 class RetryPolicies:
-    """Retry policy configurations for external service calls."""    # Basic retry settings
+    """Retry policy configurations for external service calls."""
+    # Basic retry settings
     enable_retries: bool = True
     max_retries: int = 3
     base_delay: float = 1.0
@@ -11399,7 +11873,8 @@ class RetryPolicies:
     circuit_breaker_expected_recovery_time: int = 30
     
     def calculate_delay(self, attempt: int) -> float:
-        """Calculate delay for retry attempt."""        if not self.use_exponential_backoff:
+        """Calculate delay for retry attempt."""
+        if not self.use_exponential_backoff:
             return self.base_delay
         
         delay = self.base_delay * (self.backoff_factor ** attempt)
@@ -11414,7 +11889,8 @@ class RetryPolicies:
     
     def should_retry(self, attempt: int, status_code: Optional[int] = None, 
                     exception: Optional[Exception] = None) -> bool:
-        """Determine if request should be retried."""        if attempt >= self.max_retries:
+        """Determine if request should be retried."""
+        if attempt >= self.max_retries:
             return False
         
         if status_code and status_code in self.retryable_status_codes:
@@ -11431,7 +11907,8 @@ class RetryPolicies:
 
 @dataclass
 class IntegrationConfig:
-    """Main integration configuration class."""    # Core components
+    """Main integration configuration class."""
+    # Core components
     endpoints: APIEndpoints = field(default_factory=APIEndpoints)
     credentials: ServiceCredentials = field(default_factory=ServiceCredentials)
     connections: ConnectionSettings = field(default_factory=ConnectionSettings)
@@ -11466,7 +11943,8 @@ class IntegrationConfig:
     health_check_timeout: int = 10
     
     def validate_configuration(self) -> List[str]:
-        """Validate the entire integration configuration."""        errors = []
+        """Validate the entire integration configuration."""
+        errors = []
         
         # Validate endpoints
         errors.extend(self.endpoints.validate_urls())
@@ -11485,7 +11963,8 @@ class IntegrationConfig:
         return errors
     
     def get_service_config(self, service: ServiceType) -> Dict[str, Any]:
-        """Get complete configuration for a specific service."""        return {
+        """Get complete configuration for a specific service."""
+        return {
             "endpoint": self.endpoints.get_endpoint(service),
             "credentials": self.credentials.get_credentials(service),
             "timeout": self.connections.get_timeout_for_service(service),
@@ -11495,12 +11974,14 @@ class IntegrationConfig:
     
     @classmethod
     def from_environment(cls) -> 'IntegrationConfig':
-        """Create configuration from environment variables."""        return cls()
+        """Create configuration from environment variables."""
+        return cls()
 
 
 # Configuration factory functions
 def create_production_integration_config() -> IntegrationConfig:
-    """Create production-optimized integration configuration."""    config = IntegrationConfig()
+    """Create production-optimized integration configuration."""
+    config = IntegrationConfig()
     config.environment = "production"
     config.debug_mode = False
     config.enable_monitoring = True
@@ -11511,7 +11992,8 @@ def create_production_integration_config() -> IntegrationConfig:
 
 
 def create_development_integration_config() -> IntegrationConfig:
-    """Create development-optimized integration configuration."""    config = IntegrationConfig()
+    """Create development-optimized integration configuration."""
+    config = IntegrationConfig()
     config.environment = "development"
     config.debug_mode = True
     config.enable_request_logging = True
@@ -11544,7 +12026,8 @@ Project Team Specialties:
 This code and concept are exclusively owned by Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be taken against violators.
-"""import os
+"""
+import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union
 from enum import Enum
@@ -11552,7 +12035,8 @@ from urllib.parse import urlparse
 
 
 class ServiceType(Enum):
-    """Types of external services."""    SPOTIFY_API = "spotify_api"
+    """Types of external services."""
+    SPOTIFY_API = "spotify_api"
     YOUTUBE_API = "youtube_api"
     INSTAGRAM_API = "instagram_api"
     TIKTOK_API = "tiktok_api"
@@ -11568,7 +12052,8 @@ class ServiceType(Enum):
 
 
 class AuthType(Enum):
-    """Authentication types for external services."""    API_KEY = "api_key"
+    """Authentication types for external services."""
+    API_KEY = "api_key"
     OAUTH2 = "oauth2"
     JWT = "jwt"
     BASIC_AUTH = "basic_auth"
@@ -11577,7 +12062,8 @@ class AuthType(Enum):
 
 
 class Protocol(Enum):
-    """Communication protocols."""    HTTP = "http"
+    """Communication protocols."""
+    HTTP = "http"
     HTTPS = "https"
     WEBSOCKET = "websocket"
     GRPC = "grpc"
@@ -11586,7 +12072,8 @@ class Protocol(Enum):
 
 @dataclass
 class APIEndpoints:
-    """API endpoint configurations for external services."""    # Spotify Integration
+    """API endpoint configurations for external services."""
+    # Spotify Integration
     spotify_auth_url: str = "https://accounts.spotify.com/authorize"
     spotify_token_url: str = "https://accounts.spotify.com/api/token"
     spotify_api_base: str = "https://api.spotify.com/v1"
@@ -11642,7 +12129,8 @@ class APIEndpoints:
     amplitude_api: str = "https://api2.amplitude.com"
     
     def get_endpoint(self, service: ServiceType) -> Optional[str]:
-        """Get endpoint URL for a specific service."""        endpoint_mapping = {
+        """Get endpoint URL for a specific service."""
+        endpoint_mapping = {
             ServiceType.SPOTIFY_API: self.spotify_api_base,
             ServiceType.YOUTUBE_API: self.youtube_api_base,
             ServiceType.INSTAGRAM_API: self.instagram_graph_api,
@@ -11659,7 +12147,8 @@ class APIEndpoints:
         return endpoint_mapping.get(service)
     
     def validate_urls(self) -> List[str]:
-        """Validate all endpoint URLs."""        errors = []
+        """Validate all endpoint URLs."""
+        errors = []
         for field_name, url in self.__dict__.items():
             if isinstance(url, str) and url:
                 try:
@@ -11673,7 +12162,8 @@ class APIEndpoints:
 
 @dataclass
 class ServiceCredentials:
-    """Credential configurations for external services."""    # API Keys (retrieved from environment variables)
+    """Credential configurations for external services."""
+    # API Keys (retrieved from environment variables)
     spotify_client_id: str = field(default_factory=lambda: os.getenv("SPOTIFY_CLIENT_ID", ""))
     spotify_client_secret: str = field(default_factory=lambda: os.getenv("SPOTIFY_CLIENT_SECRET", ""))
     youtube_api_key: str = field(default_factory=lambda: os.getenv("YOUTUBE_API_KEY", ""))
@@ -11714,7 +12204,8 @@ class ServiceCredentials:
     encryption_key: str = field(default_factory=lambda: os.getenv("ENCRYPTION_KEY", ""))
     
     def get_credentials(self, service: ServiceType) -> Dict[str, str]:
-        """Get credentials for a specific service."""        credential_mapping = {
+        """Get credentials for a specific service."""
+        credential_mapping = {
             ServiceType.SPOTIFY_API: {
                 "client_id": self.spotify_client_id,
                 "client_secret": self.spotify_client_secret
@@ -11748,7 +12239,8 @@ class ServiceCredentials:
         return credential_mapping.get(service, {})
     
     def validate_credentials(self) -> List[str]:
-        """Validate that required credentials are present."""        errors = []
+        """Validate that required credentials are present."""
+        errors = []
         required_credentials = [
             ("spotify_client_id", self.spotify_client_id),
             ("jwt_secret_key", self.jwt_secret_key),
@@ -11764,7 +12256,8 @@ class ServiceCredentials:
 
 @dataclass
 class ConnectionSettings:
-    """Connection settings for external services."""    # Default connection settings
+    """Connection settings for external services."""
+    # Default connection settings
     default_timeout: int = 30
     default_connect_timeout: int = 10
     default_read_timeout: int = 30
@@ -11806,7 +12299,8 @@ class ConnectionSettings:
     custom_headers: Dict[str, str] = field(default_factory=dict)
     
     def get_timeout_for_service(self, service: ServiceType) -> int:
-        """Get appropriate timeout for a specific service type."""        timeout_mapping = {
+        """Get appropriate timeout for a specific service type."""
+        timeout_mapping = {
             ServiceType.BLOCKCHAIN_SERVICE: self.blockchain_timeout,
             ServiceType.PAYMENT_GATEWAY: self.payment_timeout,
             ServiceType.CLOUD_STORAGE: self.upload_timeout,
@@ -11817,7 +12311,8 @@ class ConnectionSettings:
 
 @dataclass
 class TimeoutSettings:
-    """Detailed timeout configurations."""    # Connection timeouts
+    """Detailed timeout configurations."""
+    # Connection timeouts
     connection_timeout: int = 30
     read_timeout: int = 60
     write_timeout: int = 30
@@ -11845,7 +12340,8 @@ class TimeoutSettings:
     session_timeout: int = 7200
     
     def get_timeout_config(self) -> Dict[str, int]:
-        """Get timeout configuration as dictionary."""        return {
+        """Get timeout configuration as dictionary."""
+        return {
             "connection": self.connection_timeout,
             "read": self.read_timeout,
             "write": self.write_timeout,
@@ -11855,7 +12351,8 @@ class TimeoutSettings:
 
 @dataclass
 class RetryPolicies:
-    """Retry policy configurations for external service calls."""    # Basic retry settings
+    """Retry policy configurations for external service calls."""
+    # Basic retry settings
     enable_retries: bool = True
     max_retries: int = 3
     base_delay: float = 1.0
@@ -11889,7 +12386,8 @@ class RetryPolicies:
     circuit_breaker_expected_recovery_time: int = 30
     
     def calculate_delay(self, attempt: int) -> float:
-        """Calculate delay for retry attempt."""        if not self.use_exponential_backoff:
+        """Calculate delay for retry attempt."""
+        if not self.use_exponential_backoff:
             return self.base_delay
         
         delay = self.base_delay * (self.backoff_factor ** attempt)
@@ -11904,7 +12402,8 @@ class RetryPolicies:
     
     def should_retry(self, attempt: int, status_code: Optional[int] = None, 
                     exception: Optional[Exception] = None) -> bool:
-        """Determine if request should be retried."""        if attempt >= self.max_retries:
+        """Determine if request should be retried."""
+        if attempt >= self.max_retries:
             return False
         
         if status_code and status_code in self.retryable_status_codes:
@@ -11921,7 +12420,8 @@ class RetryPolicies:
 
 @dataclass
 class IntegrationConfig:
-    """Main integration configuration class."""    # Core components
+    """Main integration configuration class."""
+    # Core components
     endpoints: APIEndpoints = field(default_factory=APIEndpoints)
     credentials: ServiceCredentials = field(default_factory=ServiceCredentials)
     connections: ConnectionSettings = field(default_factory=ConnectionSettings)
@@ -11956,7 +12456,8 @@ class IntegrationConfig:
     health_check_timeout: int = 10
     
     def validate_configuration(self) -> List[str]:
-        """Validate the entire integration configuration."""        errors = []
+        """Validate the entire integration configuration."""
+        errors = []
         
         # Validate endpoints
         errors.extend(self.endpoints.validate_urls())
@@ -11975,7 +12476,8 @@ class IntegrationConfig:
         return errors
     
     def get_service_config(self, service: ServiceType) -> Dict[str, Any]:
-        """Get complete configuration for a specific service."""        return {
+        """Get complete configuration for a specific service."""
+        return {
             "endpoint": self.endpoints.get_endpoint(service),
             "credentials": self.credentials.get_credentials(service),
             "timeout": self.connections.get_timeout_for_service(service),
@@ -11985,12 +12487,14 @@ class IntegrationConfig:
     
     @classmethod
     def from_environment(cls) -> 'IntegrationConfig':
-        """Create configuration from environment variables."""        return cls()
+        """Create configuration from environment variables."""
+        return cls()
 
 
 # Configuration factory functions
 def create_production_integration_config() -> IntegrationConfig:
-    """Create production-optimized integration configuration."""    config = IntegrationConfig()
+    """Create production-optimized integration configuration."""
+    config = IntegrationConfig()
     config.environment = "production"
     config.debug_mode = False
     config.enable_monitoring = True
@@ -12001,7 +12505,8 @@ def create_production_integration_config() -> IntegrationConfig:
 
 
 def create_development_integration_config() -> IntegrationConfig:
-    """Create development-optimized integration configuration."""    config = IntegrationConfig()
+    """Create development-optimized integration configuration."""
+    config = IntegrationConfig()
     config.environment = "development"
     config.debug_mode = True
     config.enable_request_logging = True
@@ -12085,7 +12590,8 @@ Expose les modules avancés : graphql, grpc.
 
 """Module GraphQL industriel pour l’agent IA Spotify.
 Expose : schéma, resolvers, mutations, subscriptions, scalaires custom.
-"""from .schema import schema
+"""
+from .schema import schema
 from .resolvers import query, mutation, subscription
 from .mutations import mutation as advanced_mutation
 from .subscriptions import subscription as advanced_subscription
@@ -12136,13 +12642,16 @@ __all__ = [
 - Intégration FastAPI/Django, scalable microservices
 
 Auteur : Spécialiste Sécurité, Backend Senior, Lead Dev
-"""from typing import Callable
+"""
+from typing import Callable
 from fastapi import Request, Response
 import time
 
 class SecurityMiddleware:
-    """    Middleware de sécurité pour API FastAPI/Django.
-    """    def __init__(self, app, rate_limit: int = 100):
+    """
+    Middleware de sécurité pour API FastAPI/Django.
+    """
+    def __init__(self, app, rate_limit: int = 100):
         self.app = app
         self.rate_limit = rate_limit
         self.requests = {}
@@ -12179,13 +12688,16 @@ class SecurityMiddleware:
 - Intégration scalable (FastAPI, Redis, WebSocket)
 
 Auteur : Backend Senior, Lead Dev, Architecte Microservices
-"""from typing import List, Dict, Any
+"""
+from typing import List, Dict, Any
 import time
 import requests
 
 class NotificationSystem:
-    """    Gère l’envoi de notifications, rappels et webhooks pour la collaboration.
-    """    def __init__(self):
+    """
+    Gère l’envoi de notifications, rappels et webhooks pour la collaboration.
+    """
+    def __init__(self):
         self.notifications = []  # À remplacer par Redis/DB en prod
 
     def send_notification(self, user_id: str, message: str, channel: str = "in-app"):
@@ -12231,7 +12743,8 @@ class NotificationSystem:
 - Intégration scalable (FastAPI, microservices)
 
 Auteur : Lead Dev, ML Engineer, Backend Senior
-"""from fastapi import APIRouter, Query
+"""
+from fastapi import APIRouter, Query
 from typing import Dict, Any
 import numpy as np
 
@@ -12239,8 +12752,10 @@ router = APIRouter()
 
 @router.get("/collaboration/score")
 def get_collab_score(ws_id: str = Query(...), nb_members: int = Query(2), nb_actions: int = Query(10)) -> Dict[str, Any]:
-    """    Endpoint scoring IA : retourne un score de collaboration en temps réel.
-    """    # Mock scoring IA (à remplacer par vrai modèle ML)
+    """
+    Endpoint scoring IA : retourne un score de collaboration en temps réel.
+    """
+    # Mock scoring IA (à remplacer par vrai modèle ML)
     score = 0.5 + 0.05 * nb_members + 0.01 * nb_actions
     score = min(score, 1.0)
     return {
@@ -12268,7 +12783,8 @@ def get_collab_score(ws_id: str = Query(...), nb_members: int = Query(2), nb_act
 
 """Module d'intégration avancée Spotify pour artistes.
 Expose : stats, playlists, webhooks, synchronisation, analytics, analyse tracks.
-"""from .spotify_client import SpotifyClient
+"""
+from .spotify_client import SpotifyClient
 from .artist_insights import ArtistInsights
 from .playlists_manager import PlaylistsManager
 from .spotify_webhook import SpotifyWebhook
@@ -12311,7 +12827,8 @@ Beispiel-API-Integration (FastAPI):
     result = st.transfer_style(audio_bytes, source_style, target_style, user_profile)
 
 Autoren: Lead Dev, ML Engineer, Backend Senior, Security
-"""import logging
+"""
+import logging
 from typing import Dict, Any, Optional
 from datetime import datetime
 import uuid
@@ -12322,13 +12839,16 @@ def dummy_style_transfer(audio: bytes, source: str, target: str) -> bytes:
     return audio[:-1]  # Dummy: invertiert Bytes
 
 class StyleTransfer:
-    """    KI-gestützter Style-Transfer-Service mit API, Export, Feedback, Versionierung, Security.
-    """    def __init__(self):
+    """
+    KI-gestützter Style-Transfer-Service mit API, Export, Feedback, Versionierung, Security.
+    """
+    def __init__(self):
         self.history = []
         self.logger = logging.getLogger("StyleTransfer")
 
     def transfer_style(self, audio: bytes, source_style: str, target_style: str, user_profile: Dict[str, Any]) -> Dict[str, Any]:
-        """        Überträgt den Stil eines Musikstücks auf einen Zielstil (Genre, Ära, Künstler).
+        """
+        Überträgt den Stil eines Musikstücks auf einen Zielstil (Genre, Ära, Künstler).
         Args:
             audio: Audio-Bytes (WAV, MP3, etc.)
             source_style: Ursprungsstil
@@ -12336,7 +12856,8 @@ class StyleTransfer:
             user_profile: Nutzerprofil für Personalisierung
         Returns:
             Dict mit Ergebnis, Metadaten, Version
-        """        result_audio = dummy_style_transfer(audio, source_style, target_style)
+        """
+        result_audio = dummy_style_transfer(audio, source_style, target_style)
         result = {
             "id": str(uuid.uuid4(),
             "created_at": datetime.utcnow().isoformat(),
@@ -12350,13 +12871,15 @@ class StyleTransfer:
         return result
 
     def export(self, result: Dict[str, Any], format: str = "wav") -> bytes:
-        """        Exportiert das Ergebnis in das gewünschte Format (wav, midi, json).
+        """
+        Exportiert das Ergebnis in das gewünschte Format (wav, midi, json).
         Args:
             result: Ergebnis-Dict
             format: Exportformat
         Returns:
             Bytes-Objekt
-        """        if format == "wav":
+        """
+        if format == "wav":
             return result["audio"]
         elif format == "json":
             import json
@@ -12368,12 +12891,16 @@ class StyleTransfer:
             raise ValueError("Unsupported export format")
 
     def feedback(self, transfer_id: str, user_id: str, rating: int, comment: Optional[str] = None):
-        """        Integriert Nutzerfeedback für kontinuierliche Verbesserung.
-        """        self.logger.info(f"Feedback erhalten: {transfer_id}, User: {user_id}, Rating: {rating}, Comment: {comment}")
+        """
+        Integriert Nutzerfeedback für kontinuierliche Verbesserung.
+        """
+        self.logger.info(f"Feedback erhalten: {transfer_id}, User: {user_id}, Rating: {rating}, Comment: {comment}")
 
     def get_history(self, user_id: Optional[str] = None):
-        """        Gibt die Style-Transfer-Historie zurück (mit Versionierung, Audit, Security).
-        """        if user_id:
+        """
+        Gibt die Style-Transfer-Historie zurück (mit Versionierung, Audit, Security).
+        """
+        if user_id:
             return [t for t in self.history if t["user_profile"].get("user_id") == user_id]
         return self.history
 
@@ -12421,7 +12948,8 @@ Beispiel-API-Integration (FastAPI):
     arrangement = suggester.suggest_arrangement(track_features, user_profile)
 
 Autoren: Lead Dev, ML Engineer, Backend Senior, Security
-"""import logging
+"""
+import logging
 from typing import Dict, Any, List, Optional
 from datetime import datetime
 import uuid
@@ -12431,21 +12959,25 @@ from sklearn.cluster import KMeans
 import numpy as np
 
 class ArrangementSuggester:
-    """    KI-gestützter Arrangement-Vorschlagsservice mit Feedback, Export, Versionierung und Security.
-    """    def __init__(self):
+    """
+    KI-gestützter Arrangement-Vorschlagsservice mit Feedback, Export, Versionierung und Security.
+    """
+    def __init__(self):
         self.history = []  # Versionierung aller Vorschläge
         self.logger = logging.getLogger("ArrangementSuggester")
 
     def suggest_arrangement(self, track_features: Dict[str, Any], user_profile: Dict[str, Any],)
                             n_sections: int = 4) -> Dict[str, Any]:
-        """        Generiert ein Arrangement auf Basis von Track-Features und User-Profil.
+        """
+        Generiert ein Arrangement auf Basis von Track-Features und User-Profil.
         Args:
             track_features: Dict mit extrahierten Audio/MIDI-Features
             user_profile: Dict mit Präferenzen, Zielgruppe, Historie
             n_sections: Anzahl Arrangement-Sektionen (z.B. Intro, Verse, Chorus, Bridge)
         Returns:
             Arrangement-Dict mit Struktur, Zeitachsen, Empfehlungen
-        """        # Dummy-Feature-Vektor (ersetzbar durch echte Embeddings)
+        """
+        # Dummy-Feature-Vektor (ersetzbar durch echte Embeddings)
         X = np.random.rand(100, 8)
         kmeans = KMeans(n_clusters=n_sections, random_state=42).fit(X)
         sections = [f"Section_{i+1}" for i in range(n_sections)]
@@ -12464,13 +12996,15 @@ class ArrangementSuggester:
         return arrangement
 
     def export(self, arrangement: Dict[str, Any], format: str = "json") -> bytes:
-        """        Exportiert das Arrangement in das gewünschte Format (json, midi, pdf).
+        """
+        Exportiert das Arrangement in das gewünschte Format (json, midi, pdf).
         Args:
             arrangement: Arrangement-Dict
             format: Exportformat
         Returns:
             Bytes-Objekt (z.B. für Download)
-        """        import json
+        """
+        import json
         if format == "json":
             return json.dumps(arrangement, indent=2).encode("utf-8")
         elif format == "midi":
@@ -12483,28 +13017,34 @@ class ArrangementSuggester:
             raise ValueError("Unsupported export format")
 
     def feedback(self, arrangement_id: str, user_id: str, rating: int, comment: Optional[str] = None):
-        """        Integriert Nutzerfeedback für kontinuierliche Verbesserung.
+        """
+        Integriert Nutzerfeedback für kontinuierliche Verbesserung.
         Args:
             arrangement_id: ID des Arrangements
             user_id: Nutzer-ID
             rating: Bewertung (1-5)
             comment: Optionaler Kommentar
-        """        self.logger.info(f"Feedback erhalten: {arrangement_id}, User: {user_id}, Rating: {rating}, Comment: {comment}")
+        """
+        self.logger.info(f"Feedback erhalten: {arrangement_id}, User: {user_id}, Rating: {rating}, Comment: {comment}")
         # Feedback kann in DB oder Analytics-Dienst gespeichert werden
 
     def get_history(self, user_id: Optional[str] = None) -> List[Dict[str, Any]:
-        """        Gibt die Arrangement-Historie zurück (mit Versionierung, Audit, Security).
+        """
+        Gibt die Arrangement-Historie zurück (mit Versionierung, Audit, Security).
         Args:
             user_id: Optional, filtert nach Nutzer
         Returns:
             Liste von Arrangement-Dicts
-        """        if user_id:
+        """
+        if user_id:
             return [a for a in self.history if a["user_profile"].get("user_id") == user_id]
         return self.history
 
     def _log_arrangement(self, arrangement: Dict[str, Any]):
-        """        Interne Methode: Logging, Audit, Versionierung, Security.
-        """        self.history.append(arrangement)
+        """
+        Interne Methode: Logging, Audit, Versionierung, Security.
+        """
+        self.history.append(arrangement)
         self.logger.info(f"Arrangement gespeichert: {arrangement['id']}")
 
 # Beispiel für FastAPI-Endpoint (in api/content_generation_api.py):
@@ -12547,7 +13087,8 @@ Beispiel-API-Integration (FastAPI):
     melody = composer.compose_melody(seed_notes, user_profile)
 
 Autoren: Lead Dev, ML Engineer, Backend Senior, Security
-"""import logging
+"""
+import logging
 from typing import List, Dict, Any, Optional
 from datetime import datetime
 import uuid
@@ -12558,20 +13099,24 @@ def dummy_melody(seed_notes: List[int], length: int = 16) -> List[int]:
     return seed_notes + [random.randint(60, 72) for _ in range(length - len(seed_notes)]
 
 class MelodyComposer:
-    """    KI-gestützter Melodie-Kompositionsservice mit API, Export, Feedback, Versionierung, Security.
-    """    def __init__(self):
+    """
+    KI-gestützter Melodie-Kompositionsservice mit API, Export, Feedback, Versionierung, Security.
+    """
+    def __init__(self):
         self.history = []
         self.logger = logging.getLogger("MelodyComposer")
 
     def compose_melody(self, seed_notes: List[int], user_profile: Dict[str, Any], length: int = 16) -> Dict[str, Any]:
-        """        Komponiert eine Melodie basierend auf Seed-Noten und Nutzerprofil.
+        """
+        Komponiert eine Melodie basierend auf Seed-Noten und Nutzerprofil.
         Args:
             seed_notes: Startnoten (MIDI-Nummern)
             user_profile: Nutzerprofil für Personalisierung
             length: Länge der Melodie
         Returns:
             Dict mit Melodie, Metadaten, Version
-        """        melody = dummy_melody(seed_notes, length)
+        """
+        melody = dummy_melody(seed_notes, length)
         result = {
             "id": str(uuid.uuid4(),
             "created_at": datetime.utcnow().isoformat(),
@@ -12583,8 +13128,10 @@ class MelodyComposer:
         return result
 
     def export(self, result: Dict[str, Any], format: str = "midi") -> bytes:
-        """        Exportiert die Melodie in das gewünschte Format (midi, json, pdf).
-        """        if format == "midi":
+        """
+        Exportiert die Melodie in das gewünschte Format (midi, json, pdf).
+        """
+        if format == "midi":
             # Placeholder: MIDI-Export-Logik (z.B. mit mido)
             return b"MIDI_BINARY_DATA"
         elif format == "json":
@@ -12597,12 +13144,16 @@ class MelodyComposer:
             raise ValueError("Unsupported export format")
 
     def feedback(self, melody_id: str, user_id: str, rating: int, comment: Optional[str] = None):
-        """        Integriert Nutzerfeedback für kontinuierliche Verbesserung.
-        """        self.logger.info(f"Feedback erhalten: {melody_id}, User: {user_id}, Rating: {rating}, Comment: {comment}")
+        """
+        Integriert Nutzerfeedback für kontinuierliche Verbesserung.
+        """
+        self.logger.info(f"Feedback erhalten: {melody_id}, User: {user_id}, Rating: {rating}, Comment: {comment}")
 
     def get_history(self, user_id: Optional[str] = None):
-        """        Gibt die Melodie-Historie zurück (mit Versionierung, Audit, Security).
-        """        if user_id:
+        """
+        Gibt die Melodie-Historie zurück (mit Versionierung, Audit, Security).
+        """
+        if user_id:
             return [m for m in self.history if m["user_profile"].get("user_id") == user_id]
         return self.history
 
@@ -12650,7 +13201,8 @@ Beispiel-API-Integration (FastAPI):
     result = classifier.classify(audio_features, lyrics, user_profile)
 
 Autoren: Lead Dev, ML Engineer, Backend Senior, Security
-"""import logging
+"""
+import logging
 from typing import Dict, Any, Optional
 from datetime import datetime
 import uuid
@@ -12665,20 +13217,24 @@ def dummy_genre_classification(audio_features: Dict[str, float], lyrics: str) ->
     return "Rock"
 
 class GenreClassifier:
-    """    KI-gestützter Genre-Klassifikationsservice mit API, Export, Feedback, Versionierung, Security.
-    """    def __init__(self):
+    """
+    KI-gestützter Genre-Klassifikationsservice mit API, Export, Feedback, Versionierung, Security.
+    """
+    def __init__(self):
         self.history = []
         self.logger = logging.getLogger("GenreClassifier")
 
     def classify(self, audio_features: Dict[str, float], lyrics: str, user_profile: Dict[str, Any]) -> Dict[str, Any]:
-        """        Klassifiziert das Genre eines Songs basierend auf Audio-Features und Lyrics.
+        """
+        Klassifiziert das Genre eines Songs basierend auf Audio-Features und Lyrics.
         Args:
             audio_features: Dict mit extrahierten Audio-Features
             lyrics: Songtext
             user_profile: Nutzerprofil für Personalisierung
         Returns:
             Dict mit Genre, Score, Metadaten, Version
-        """        genre = dummy_genre_classification(audio_features, lyrics)
+        """
+        genre = dummy_genre_classification(audio_features, lyrics)
         result = {
             "id": str(uuid.uuid4(),
             "created_at": datetime.utcnow().isoformat(),
@@ -12693,8 +13249,10 @@ class GenreClassifier:
         return result
 
     def export(self, result: Dict[str, Any], format: str = "json") -> bytes:
-        """        Exportiert das Klassifikationsergebnis in das gewünschte Format (json, csv, pdf).
-        """        if format == "json":
+        """
+        Exportiert das Klassifikationsergebnis in das gewünschte Format (json, csv, pdf).
+        """
+        if format == "json":
             import json
             return json.dumps(result, indent=2).encode("utf-8")
         elif format == "csv":
@@ -12712,12 +13270,16 @@ class GenreClassifier:
             raise ValueError("Unsupported export format")
 
     def feedback(self, classification_id: str, user_id: str, rating: int, comment: Optional[str] = None):
-        """        Integriert Nutzerfeedback für kontinuierliche Verbesserung.
-        """        self.logger.info(f"Feedback erhalten: {classification_id}, User: {user_id}, Rating: {rating}, Comment: {comment}")
+        """
+        Integriert Nutzerfeedback für kontinuierliche Verbesserung.
+        """
+        self.logger.info(f"Feedback erhalten: {classification_id}, User: {user_id}, Rating: {rating}, Comment: {comment}")
 
     def get_history(self, user_id: Optional[str] = None):
-        """        Gibt die Klassifikations-Historie zurück (mit Versionierung, Audit, Security).
-        """        if user_id:
+        """
+        Gibt die Klassifikations-Historie zurück (mit Versionierung, Audit, Security).
+        """
+        if user_id:
             return [c for c in self.history if c["user_profile"].get("user_id") == user_id]
         return self.history
 
@@ -12765,7 +13327,8 @@ Beispiel-API-Integration (FastAPI):
     lyrics = generator.generate_lyrics(theme, language, user_profile)
 
 Autoren: Lead Dev, ML Engineer, Backend Senior, Security
-"""import logging
+"""
+import logging
 from typing import Dict, Any, Optional
 from datetime import datetime
 import uuid
@@ -12775,20 +13338,24 @@ def dummy_lyrics(theme: str, language: str) -> str:
     return f"[{language.upper()}] Song about {theme}\nVerse 1: ...\nChorus: ...\nVerse 2: ...\n"
 
 class LyricsGenerator:
-    """    KI-gestützter Lyrics-Generator mit API, Export, Feedback, Versionierung, Security.
-    """    def __init__(self):
+    """
+    KI-gestützter Lyrics-Generator mit API, Export, Feedback, Versionierung, Security.
+    """
+    def __init__(self):
         self.history = []
         self.logger = logging.getLogger("LyricsGenerator")
 
     def generate_lyrics(self, theme: str, language: str, user_profile: Dict[str, Any]) -> Dict[str, Any]:
-        """        Generiert Songtexte zu einem Thema und in einer Sprache.
+        """
+        Generiert Songtexte zu einem Thema und in einer Sprache.
         Args:
             theme: Songthema (z.B. Liebe, Party, Protest)
             language: Sprachcode (z.B. 'en', 'fr', 'de')
             user_profile: Nutzerprofil für Personalisierung
         Returns:
             Dict mit Lyrics, Metadaten, Version
-        """        lyrics = dummy_lyrics(theme, language)
+        """
+        lyrics = dummy_lyrics(theme, language)
         result = {
             "id": str(uuid.uuid4(),
             "created_at": datetime.utcnow().isoformat(),
@@ -12802,8 +13369,10 @@ class LyricsGenerator:
         return result
 
     def export(self, result: Dict[str, Any], format: str = "txt") -> bytes:
-        """        Exportiert die Lyrics in das gewünschte Format (txt, pdf, json).
-        """        if format == "txt":
+        """
+        Exportiert die Lyrics in das gewünschte Format (txt, pdf, json).
+        """
+        if format == "txt":
             return result["lyrics"].encode("utf-8")
         elif format == "json":
             import json
@@ -12815,12 +13384,16 @@ class LyricsGenerator:
             raise ValueError("Unsupported export format")
 
     def feedback(self, lyrics_id: str, user_id: str, rating: int, comment: Optional[str] = None):
-        """        Integriert Nutzerfeedback für kontinuierliche Verbesserung.
-        """        self.logger.info(f"Feedback erhalten: {lyrics_id}, User: {user_id}, Rating: {rating}, Comment: {comment}")
+        """
+        Integriert Nutzerfeedback für kontinuierliche Verbesserung.
+        """
+        self.logger.info(f"Feedback erhalten: {lyrics_id}, User: {user_id}, Rating: {rating}, Comment: {comment}")
 
     def get_history(self, user_id: Optional[str] = None):
-        """        Gibt die Lyrics-Historie zurück (mit Versionierung, Audit, Security).
-        """        if user_id:
+        """
+        Gibt die Lyrics-Historie zurück (mit Versionierung, Audit, Security).
+        """
+        if user_id:
             return [l for l in self.history if l["user_profile"].get("user_id") == user_id]
         return self.history
 
@@ -12864,7 +13437,8 @@ Architecture:
 - Singleton management
 
 Développé par Fahed Mlaiel - Enterprise Factory Pattern Expert
-"""import inspect
+"""
+import inspect
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Type, TypeVar, Callable, Optional, List
 from functools import lru_cache
@@ -12884,7 +13458,8 @@ ServiceType = TypeVar('ServiceType')
 
 
 class ComponentType(str, Enum):
-    """Types de composants disponibles"""    MIDDLEWARE = "middleware"
+    """Types de composants disponibles"""
+    MIDDLEWARE = "middleware"
     SERVICE = "service"
     REPOSITORY = "repository"
     CONTROLLER = "controller"
@@ -12895,14 +13470,16 @@ class ComponentType(str, Enum):
 
 
 class LifecycleType(str, Enum):
-    """Types de cycle de vie des composants"""    SINGLETON = "singleton"
+    """Types de cycle de vie des composants"""
+    SINGLETON = "singleton"
     TRANSIENT = "transient"
     SCOPED = "scoped"  # Per request
     PROTOTYPE = "prototype"  # New instance each time
 
 
 class ComponentRegistry:
-    """Registre des composants avec gestion du cycle de vie"""    
+    """Registre des composants avec gestion du cycle de vie"""
+    
     def __init__(self):
         self._factories: Dict[str, Callable] = {}
         self._instances: Dict[str, Any] = {}
@@ -12916,12 +13493,14 @@ class ComponentRegistry:
         lifecycle: LifecycleType = LifecycleType.SINGLETON,
         dependencies: List[str] = None
     ):
-        """Enregistre un composant"""        self._factories[name] = factory
+        """Enregistre un composant"""
+        self._factories[name] = factory
         self._lifecycles[name] = lifecycle
         self._dependencies[name] = dependencies or []
     
     def get(self, name: str, **kwargs) -> Any:
-        """Récupère une instance de composant"""        if name not in self._factories:
+        """Récupère une instance de composant"""
+        if name not in self._factories:
             raise ValueError(f"Component '{name}' not registered")
         
         lifecycle = self._lifecycles[name]
@@ -12957,7 +13536,8 @@ class ComponentRegistry:
             return self._create_instance(name, **kwargs)
     
     def _create_instance(self, name: str, **kwargs) -> Any:
-        """Crée une instance avec injection de dépendances"""        factory = self._factories[name]
+        """Crée une instance avec injection de dépendances"""
+        factory = self._factories[name]
         dependencies = self._dependencies[name]
         
         # Résoudre les dépendances
@@ -12978,36 +13558,44 @@ class ComponentRegistry:
         return factory(**filtered_kwargs)
     
     def is_registered(self, name: str) -> bool:
-        """Vérifie si un composant est enregistré"""        return name in self._factories
+        """Vérifie si un composant est enregistré"""
+        return name in self._factories
     
     def clear(self):
-        """Vide le registre"""        self._factories.clear()
+        """Vide le registre"""
+        self._factories.clear()
         self._instances.clear()
         self._lifecycles.clear()
         self._dependencies.clear()
 
 
 class ComponentFactory(ABC):
-    """Factory abstrait pour les composants"""    
+    """Factory abstrait pour les composants"""
+    
     def __init__(self, registry: ComponentRegistry):
         self.registry = registry
     
     @abstractmethod
     def create(self, name: str, **kwargs) -> Any:
-        """Crée un composant"""        pass
+        """Crée un composant"""
+        pass
     
     @abstractmethod
     def register_defaults(self):
-        """Enregistre les composants par défaut"""        pass
+        """Enregistre les composants par défaut"""
+        pass
 
 
 class MiddlewareFactory(ComponentFactory):
-    """Factory pour les middlewares"""    
+    """Factory pour les middlewares"""
+    
     def create(self, name: str, **kwargs) -> BaseHTTPMiddleware:
-        """Crée un middleware"""        return self.registry.get(name, **kwargs)
+        """Crée un middleware"""
+        return self.registry.get(name, **kwargs)
     
     def register_defaults(self):
-        """Enregistre les middlewares par défaut"""        from app.api.middleware.cache_middleware import AdvancedCacheMiddleware
+        """Enregistre les middlewares par défaut"""
+        from app.api.middleware.cache_middleware import AdvancedCacheMiddleware
         from app.api.middleware.auth_middleware import AuthenticationMiddleware
         from app.api.middleware.cors_middleware import CORSMiddleware
         
@@ -13034,12 +13622,15 @@ class MiddlewareFactory(ComponentFactory):
 
 
 class ServiceFactory(ComponentFactory):
-    """Factory pour les services métier"""    
+    """Factory pour les services métier"""
+    
     def create(self, name: str, **kwargs) -> Any:
-        """Crée un service"""        return self.registry.get(name, **kwargs)
+        """Crée un service"""
+        return self.registry.get(name, **kwargs)
     
     def register_defaults(self):
-        """Enregistre les services par défaut"""        # Register core application services
+        """Enregistre les services par défaut"""
+        # Register core application services
         
         # Register logging service
         self.register(
@@ -13071,12 +13662,15 @@ class ServiceFactory(ComponentFactory):
 
 
 class DatabaseFactory(ComponentFactory):
-    """Factory pour les composants de base de données"""    
+    """Factory pour les composants de base de données"""
+    
     def create(self, name: str, **kwargs) -> Any:
-        """Crée un composant database"""        return self.registry.get(name, **kwargs)
+        """Crée un composant database"""
+        return self.registry.get(name, **kwargs)
     
     def register_defaults(self):
-        """Enregistre les composants database par défaut"""        from app.core.database import get_database_pool
+        """Enregistre les composants database par défaut"""
+        from app.core.database import get_database_pool
         
         self.registry.register(
             "database_pool",
@@ -13086,12 +13680,15 @@ class DatabaseFactory(ComponentFactory):
 
 
 class CacheFactory(ComponentFactory):
-    """Factory pour les composants de cache"""    
+    """Factory pour les composants de cache"""
+    
     def create(self, name: str, **kwargs) -> Any:
-        """Crée un composant cache"""        return self.registry.get(name, **kwargs)
+        """Crée un composant cache"""
+        return self.registry.get(name, **kwargs)
     
     def register_defaults(self):
-        """Enregistre les composants cache par défaut"""        from app.utils.cache.manager import AdvancedCacheManager
+        """Enregistre les composants cache par défaut"""
+        from app.utils.cache.manager import AdvancedCacheManager
         
         self.registry.register(
             "cache_manager", 
@@ -13105,7 +13702,8 @@ class CacheFactory(ComponentFactory):
 # =============================================================================
 
 class DependencyContainer:
-    """Container pour l'injection de dépendances"""    
+    """Container pour l'injection de dépendances"""
+    
     def __init__(self):
         self.registry = ComponentRegistry()
         self.factories = {
@@ -13119,11 +13717,13 @@ class DependencyContainer:
         self._register_defaults()
     
     def _register_defaults(self):
-        """Enregistre tous les composants par défaut"""        for factory in self.factories.values():
+        """Enregistre tous les composants par défaut"""
+        for factory in self.factories.values():
             factory.register_defaults()
     
     def get(self, name: str, component_type: ComponentType = None) -> Any:
-        """Récupère un composant"""        if component_type and component_type in self.factories:
+        """Récupère un composant"""
+        if component_type and component_type in self.factories:
             return self.factories[component_type].create(name)
         else:
             return self.registry.get(name)
@@ -13136,10 +13736,12 @@ class DependencyContainer:
         lifecycle: LifecycleType = LifecycleType.SINGLETON,
         dependencies: List[str] = None
     ):
-        """Enregistre un nouveau composant"""        self.registry.register(name, factory, lifecycle, dependencies)
+        """Enregistre un nouveau composant"""
+        self.registry.register(name, factory, lifecycle, dependencies)
     
     def create_middleware_stack(self, app: FastAPI, middleware_names: List[str]) -> FastAPI:
-        """Crée une pile de middlewares"""        for name in reversed(middleware_names):  # Ordre inverse pour FastAPI
+        """Crée une pile de middlewares"""
+        for name in reversed(middleware_names):  # Ordre inverse pour FastAPI
             middleware = self.get(name, ComponentType.MIDDLEWARE)
             app.add_middleware(type(middleware))
         return app
@@ -13153,14 +13755,16 @@ _container: Optional[DependencyContainer] = None
 
 
 def get_container() -> DependencyContainer:
-    """Retourne le container global (Singleton)"""    global _container
+    """Retourne le container global (Singleton)"""
+    global _container
     if _container is None:
         _container = DependencyContainer()
     return _container
 
 
 def get_component(name: str, component_type: ComponentType = None) -> Any:
-    """Récupère un composant depuis le container global"""    return get_container().get(name, component_type)
+    """Récupère un composant depuis le container global"""
+    return get_container().get(name, component_type)
 
 
 def register_component(
@@ -13170,7 +13774,8 @@ def register_component(
     lifecycle: LifecycleType = LifecycleType.SINGLETON,
     dependencies: List[str] = None
 ):
-    """Enregistre un composant dans le container global"""    get_container().register(name, factory, component_type, lifecycle, dependencies)
+    """Enregistre un composant dans le container global"""
+    get_container().register(name, factory, component_type, lifecycle, dependencies)
 
 
 # =============================================================================
@@ -13182,7 +13787,8 @@ def create_api_component(
     name: str,
     **kwargs
 ) -> Any:
-    """Crée un composant API"""    container = get_container()
+    """Crée un composant API"""
+    container = get_container()
     return container.get(name, component_type)
 
 
@@ -13190,7 +13796,8 @@ def create_middleware_stack(
     app: FastAPI,
     settings: APISettings = None
 ) -> FastAPI:
-    """Crée la pile complète de middlewares"""    if settings is None:
+    """Crée la pile complète de middlewares"""
+    if settings is None:
         settings = get_settings()
     
     container = get_container()
@@ -13215,7 +13822,8 @@ def create_middleware_stack(
 
 
 def create_fastapi_app(settings: APISettings = None) -> FastAPI:
-    """Crée une application FastAPI complète avec tous les composants"""    if settings is None:
+    """Crée une application FastAPI complète avec tous les composants"""
+    if settings is None:
         settings = get_settings()
     
     # Créer l'app FastAPI
@@ -13236,7 +13844,8 @@ def create_fastapi_app(settings: APISettings = None) -> FastAPI:
 
 @lru_cache()
 def get_cached_component(name: str, component_type: str = None) -> Any:
-    """Version cachée de get_component pour les dépendances FastAPI"""    return get_component(name, ComponentType(component_type) if component_type else None)
+    """Version cachée de get_component pour les dépendances FastAPI"""
+    return get_component(name, ComponentType(component_type) if component_type else None)
 
 
 # =============================================================================
@@ -13244,7 +13853,8 @@ def get_cached_component(name: str, component_type: str = None) -> Any:
 # =============================================================================
 
 def inject(component_name: str, component_type: ComponentType = None):
-    """Décorateur pour injecter des dépendances"""    def decorator(func):
+    """Décorateur pour injecter des dépendances"""
+    def decorator(func):
         def wrapper(*args, **kwargs):
             component = get_component(component_name, component_type)
             return func(component, *args, **kwargs)
@@ -13257,7 +13867,8 @@ def injectable(
     component_type: ComponentType = None,
     lifecycle: LifecycleType = LifecycleType.SINGLETON
 ):
-    """Décorateur pour marquer une classe comme injectable"""    def decorator(cls):
+    """Décorateur pour marquer une classe comme injectable"""
+    def decorator(cls):
         register_component(name, cls, component_type, lifecycle)
         return cls
     return decorator
@@ -13303,7 +13914,8 @@ __all__ = [
 # =============================================================================
 
 def create_api_components(app: FastAPI, settings: APISettings = None) -> Dict[str, Any]:
-    """Créer tous les composants API nécessaires"""    if settings is None:
+    """Créer tous les composants API nécessaires"""
+    if settings is None:
         settings = get_settings()
     
     container = get_container()
@@ -13320,19 +13932,23 @@ def create_api_components(app: FastAPI, settings: APISettings = None) -> Dict[st
 
 
 def create_service_registry():
-    """Créer un registre de services"""    return ComponentRegistry()
+    """Créer un registre de services"""
+    return ComponentRegistry()
 
 
 def get_component_factory():
-    """Obtenir la factory de composants"""    return ComponentFactory()
+    """Obtenir la factory de composants"""
+    return ComponentFactory()
 
 
 def get_dependency_container():
-    """Obtenir le container de dépendances"""    return get_container()
+    """Obtenir le container de dépendances"""
+    return get_container()
 
 
 def configure_dependencies(container, config=None):
-    """Configurer les dépendances dans le container"""    if config is None:
+    """Configurer les dépendances dans le container"""
+    if config is None:
         config = {}
     
     # Configuration par défaut
@@ -13344,13 +13960,15 @@ def configure_dependencies(container, config=None):
 
 
 def cleanup_components():
-    """Nettoyer les composants"""    container = get_container()
+    """Nettoyer les composants"""
+    container = get_container()
     container._instances.clear()
     container._factories.clear()
 
 
 class LifecycleHook:
-    """Hook de cycle de vie pour les composants"""    
+    """Hook de cycle de vie pour les composants"""
+    
     def __init__(self, name: str, callback: Callable = None):
         self.name = name
         self.callback = callback or (lambda: None)
@@ -13361,7 +13979,8 @@ class LifecycleHook:
 
 @dataclass
 class ComponentConfig:
-    """Configuration d'un composant"""    name: str
+    """Configuration d'un composant"""
+    name: str
     component_type: ComponentType = ComponentType.SERVICE
     lifecycle: LifecycleType = LifecycleType.SINGLETON
     dependencies: List[str] = field(default_factory=list)
@@ -13369,7 +13988,8 @@ class ComponentConfig:
 
 
 class ServiceLifetime:
-    """Gestion de la durée de vie des services"""    SINGLETON = LifecycleType.SINGLETON
+    """Gestion de la durée de vie des services"""
+    SINGLETON = LifecycleType.SINGLETON
     TRANSIENT = LifecycleType.TRANSIENT
     SCOPED = LifecycleType.SCOPED
 \n\n
@@ -13395,7 +14015,8 @@ Architecture:
 - Gestion d'erreurs centralisée
 
 Développé par Fahed Mlaiel - Enterprise API Architecture Expert
-"""from .config import (
+"""
+from .config import (
     APIConfig,
     APISettings, 
     SecurityConfig,
@@ -13550,20 +14171,24 @@ __all__ = [
 # LIGNES: 1
 # ==========================================================================================
 
-"""API Response Handler - Gestionnaire de réponses API enterprise"""from typing import Any, Dict
+"""API Response Handler - Gestionnaire de réponses API enterprise"""
+from typing import Any, Dict
 import json
 
 class APIResponseHandler:
-    """Gestionnaire enterprise pour réponses API"""    
+    """Gestionnaire enterprise pour réponses API"""
+    
     def __init__(self):
         self.response_cache = {}
         self.error_handlers = {}
     
     async def handle_response(self, response: Any) -> Dict[str, Any]:
-        """Traite et normalise les réponses API"""        pass
+        """Traite et normalise les réponses API"""
+        pass
     
     async def handle_error(self, error: Exception) -> Dict[str, Any]:
-        """Gère les erreurs API avec retry et fallback"""        pass
+        """Gère les erreurs API avec retry et fallback"""
+        pass
 \n\n
 # ==========================================================================================
 # MODULE 46/74: api_client_factory.py
@@ -13571,14 +14196,17 @@ class APIResponseHandler:
 # LIGNES: 1
 # ==========================================================================================
 
-"""API Client Factory - Factory Pattern pour clients API externes"""from typing import Dict, Any
+"""API Client Factory - Factory Pattern pour clients API externes"""
+from typing import Dict, Any
 from abc import ABC, abstractmethod
 
 class APIClientFactory:
-    """Factory pour création de clients API spécialisés"""    
+    """Factory pour création de clients API spécialisés"""
+    
     @staticmethod
     def create_spotify_client(config: Dict[str, Any]):
-        """Crée un client Spotify API avec authentification avancée et intégration Kubernetes."""        try:
+        """Crée un client Spotify API avec authentification avancée et intégration Kubernetes."""
+        try:
             import logging
             logger = logging.getLogger(__name__)
             
@@ -13612,7 +14240,8 @@ class APIClientFactory:
                     self.service_mesh = config['service_mesh_enabled']
                     
                 async def authenticate(self):
-                    """Authentification OAuth dans environnement Kubernetes distribué."""                    try:
+                    """Authentification OAuth dans environnement Kubernetes distribué."""
+                    try:
                         # Intégration avec secrets Kubernetes
                         self.auth_token = {
                             'access_token': f'k8s_spotify_token_{hash(self.config["client_id"])}_{self.k8s_namespace}',
@@ -13634,7 +14263,8 @@ class APIClientFactory:
                         return False
                 
                 async def get_user_profile(self, user_id: str = 'me'):
-                    """Récupère le profil utilisateur avec analytics distribués."""                    if not self.auth_token:
+                    """Récupère le profil utilisateur avec analytics distribués."""
+                    if not self.auth_token:
                         await self.authenticate()
                     
                     # Cache distribué pour optimiser les performances en cluster
@@ -13676,7 +14306,8 @@ class APIClientFactory:
                     return user_profile
                 
                 async def get_user_playlists_distributed(self, user_id: str = 'me', limit: int = 50):
-                    """Récupère les playlists avec traitement distribué Kubernetes."""                    if not self.auth_token:
+                    """Récupère les playlists avec traitement distribué Kubernetes."""
+                    if not self.auth_token:
                         await self.authenticate()
                     
                     # Traitement distribué des playlists
@@ -13751,7 +14382,8 @@ class APIClientFactory:
     
     @staticmethod  
     def create_oauth_client(provider: str, config: Dict[str, Any]):
-        """Crée un client OAuth générique optimisé pour environnement Kubernetes."""        try:
+        """Crée un client OAuth générique optimisé pour environnement Kubernetes."""
+        try:
             import logging
             logger = logging.getLogger(__name__)
             
@@ -13853,7 +14485,8 @@ class APIClientFactory:
                     self.distributed_sessions = config['distributed_sessions']
                     
                 async def get_authorization_url(self, state: str = None):
-                    """Génère l'URL d'autorisation OAuth avec intégration Kubernetes."""                    import urllib.parse
+                    """Génère l'URL d'autorisation OAuth avec intégration Kubernetes."""
+                    import urllib.parse
                     
                     params = {
                         'client_id': self.config['client_id'],
@@ -13886,7 +14519,8 @@ class APIClientFactory:
                     return auth_url
                 
                 async def exchange_code_for_token(self, authorization_code: str):
-                    """Échange le code d'autorisation avec stockage sécurisé Kubernetes."""                    try:
+                    """Échange le code d'autorisation avec stockage sécurisé Kubernetes."""
+                    try:
                         # Intégration avec Kubernetes Secrets pour stockage sécurisé
                         token_data = {
                             'access_token': f'k8s_{self.provider}_token_{hash(authorization_code)}_{self.k8s_namespace}',
@@ -13924,7 +14558,8 @@ class APIClientFactory:
                         return None
                 
                 async def make_authenticated_request_distributed(self, url: str, method: str = 'GET', **kwargs):
-                    """Effectue une requête authentifiée avec distribution Kubernetes."""                    # Vérifier si le token doit être rafraîchi
+                    """Effectue une requête authentifiée avec distribution Kubernetes."""
+                    # Vérifier si le token doit être rafraîchi
                     if self.token_expires_at:
                         from datetime import datetime, timedelta
                         if datetime.now() >= self.token_expires_at - timedelta(minutes=5):
@@ -13970,7 +14605,8 @@ class APIClientFactory:
                     }
                 
                 async def get_user_info_distributed(self):
-                    """Récupère les informations utilisateur avec traitement distribué Kubernetes."""                    if not self.access_token:
+                    """Récupère les informations utilisateur avec traitement distribué Kubernetes."""
+                    if not self.access_token:
                         self.logger.error(f"No access token available for {self.provider}")
                         return None
                     
@@ -14021,7 +14657,8 @@ class APIClientFactory:
                 
                 # Méthodes spécifiques Kubernetes
                 async def _store_token_in_k8s_secret(self, token_data):
-                    """Stocke les tokens dans Kubernetes Secrets."""                    secret_name = f'{self.provider}-oauth-secret'
+                    """Stocke les tokens dans Kubernetes Secrets."""
+                    secret_name = f'{self.provider}-oauth-secret'
                     self.logger.info(f"Storing tokens in Kubernetes secret: {secret_name}")
                     
                 async def _get_cluster_region(self): return 'k8s-central-1'
@@ -14062,7 +14699,8 @@ Components:
 - api_response_handler: Gestionnaire de réponses API  
 - api_authentication: Authentification API
 - api_rate_limiter: Limitation de débit API
-"""from .api_integration_hub import *
+"""
+from .api_integration_hub import *
 
 __all__ = [
     'APIManager',
@@ -14080,7 +14718,8 @@ __all__ = [
 
 """Module: api_key_manager.py
 Description: Gestion industrielle des API Keys (génération, validation, rotation, permissions, audit, stockage sécurisé).
-"""import secrets
+"""
+import secrets
 import hashlib
 from typing import Dict, Optional
 
@@ -14121,7 +14760,8 @@ class APIKeyManager:
 Expert Team: Senior Backend Developer, Microservices Architect
 
 Architecture hybride ultra-avancée avec orchestration intelligente des frameworks
-"""import asyncio
+"""
+import asyncio
 import os
 import threading
 from typing import Optional, Dict, Any, List, Union, Callable
@@ -14162,7 +14802,8 @@ from opentelemetry import trace
 
 @dataclass
 class HybridConfig:
-    """Configuration du backend hybride"""    
+    """Configuration du backend hybride"""
+    
     # Django settings
     django_settings_module: str = "backend.config.settings.development"
     django_secret_key: str = "django-hybrid-secret-key"
@@ -14203,14 +14844,16 @@ class HybridConfig:
 
 
 class DjangoFramework(BaseFramework):
-    """    🐍 FRAMEWORK DJANGO ENTERPRISE
+    """
+    🐍 FRAMEWORK DJANGO ENTERPRISE
     
     Gestion avancée de Django avec:
     - Configuration automatique
     - Gestion des migrations
     - Admin interface
     - ORM optimisé
-    """    
+    """
+    
     def __init__(self, config: HybridConfig):
         super().__init__("django", config.__dict__)
         self.config = config
@@ -14219,7 +14862,8 @@ class DjangoFramework(BaseFramework):
         self._django_setup_done = False
         
     async def initialize(self) -> bool:
-        """Initialise Django avec configuration optimisée"""        try:
+        """Initialise Django avec configuration optimisée"""
+        try:
             if not self._django_setup_done:
                 self._configure_django()
                 django.setup()
@@ -14246,7 +14890,8 @@ class DjangoFramework(BaseFramework):
             return False
     
     def _configure_django(self):
-        """Configure Django avec paramètres optimisés"""        if settings.configured:
+        """Configure Django avec paramètres optimisés"""
+        if settings.configured:
             return
         
         settings.configure(
@@ -14404,7 +15049,8 @@ class DjangoFramework(BaseFramework):
         )
     
     async def _run_migrations(self):
-        """Exécute les migrations Django"""        try:
+        """Exécute les migrations Django"""
+        try:
             # Dans un thread séparé pour éviter les blocages
             loop = asyncio.get_event_loop()
             executor = ThreadPoolExecutor(max_workers=1)
@@ -14429,7 +15075,8 @@ class DjangoFramework(BaseFramework):
             self.logger.error(f"Migration execution failed: {e}")
     
     def _setup_admin(self):
-        """Configure l'interface admin Django"""        try:
+        """Configure l'interface admin Django"""
+        try:
             # Import des modèles et admin configs
             from backend.app.models.orm.spotify import Track, Artist, Album, Playlist
             from backend.app.models.orm.users import User, UserProfile
@@ -14504,7 +15151,8 @@ class DjangoFramework(BaseFramework):
             self.logger.error(f"Admin setup failed: {e}")
     
     async def _create_default_superuser(self):
-        """Crée un superuser par défaut si nécessaire"""        try:
+        """Crée un superuser par défaut si nécessaire"""
+        try:
             from django.contrib.auth.models import User
             
             if not User.objects.filter(is_superuser=True).exists():
@@ -14519,7 +15167,8 @@ class DjangoFramework(BaseFramework):
             self.logger.error(f"Superuser creation failed: {e}")
     
     async def shutdown(self) -> bool:
-        """Arrête Django proprement"""        try:
+        """Arrête Django proprement"""
+        try:
             # Fermer les connexions DB
             from django.db import connections
             for conn in connections.all():
@@ -14533,7 +15182,8 @@ class DjangoFramework(BaseFramework):
             return False
     
     async def health_check(self) -> FrameworkHealth:
-        """Vérifie la santé de Django"""        health = FrameworkHealth(
+        """Vérifie la santé de Django"""
+        health = FrameworkHealth(
             status=FrameworkStatus.RUNNING,
             last_check=time.time()
         )
@@ -14573,14 +15223,16 @@ class DjangoFramework(BaseFramework):
 
 
 class FastAPIFramework(BaseFramework):
-    """    ⚡ FRAMEWORK FASTAPI ENTERPRISE
+    """
+    ⚡ FRAMEWORK FASTAPI ENTERPRISE
     
     FastAPI haute performance avec:
     - Async/await natif
     - Validation automatique
     - Documentation interactive
     - Middleware avancé
-    """    
+    """
+    
     def __init__(self, config: HybridConfig):
         super().__init__("fastapi", config.__dict__)
         self.config = config
@@ -14589,7 +15241,8 @@ class FastAPIFramework(BaseFramework):
         self.async_session: Optional[Any] = None
         
     async def initialize(self) -> bool:
-        """Initialise FastAPI avec configuration optimisée"""        try:
+        """Initialise FastAPI avec configuration optimisée"""
+        try:
             # Créer l'application FastAPI
             self.app = FastAPI(
                 title=self.config.fastapi_title,
@@ -14597,7 +15250,8 @@ class FastAPIFramework(BaseFramework):
                 debug=self.config.fastapi_debug,
                 docs_url=self.config.fastapi_docs_url,
                 redoc_url=self.config.fastapi_redoc_url,
-                description="""                🎵 **Spotify AI Agent API** - Architecture Enterprise
+                description="""
+                🎵 **Spotify AI Agent API** - Architecture Enterprise
                 
                 API haute performance avec FastAPI pour l'agent IA Spotify.
                 
@@ -14641,7 +15295,8 @@ class FastAPIFramework(BaseFramework):
             return False
     
     def _setup_middleware(self):
-        """Configure les middleware FastAPI"""        # CORS Middleware
+        """Configure les middleware FastAPI"""
+        # CORS Middleware
         if self.config.enable_cors:
             self.app.add_middleware(
                 CORSMiddleware,
@@ -14686,7 +15341,8 @@ class FastAPIFramework(BaseFramework):
                 return response
     
     async def _setup_database(self):
-        """Configure la base de données SQLAlchemy"""        try:
+        """Configure la base de données SQLAlchemy"""
+        try:
             self.engine = create_async_engine(
                 self.config.database_url,
                 pool_size=self.config.database_pool_size,
@@ -14715,10 +15371,12 @@ class FastAPIFramework(BaseFramework):
             raise
     
     def _setup_routes(self):
-        """Configure les routes FastAPI"""        # Route de santé
+        """Configure les routes FastAPI"""
+        # Route de santé
         @self.app.get("/health", tags=["Health"])
         async def health_check():
-            """Vérification de santé de l'API"""            return {
+            """Vérification de santé de l'API"""
+            return {
                 "status": "healthy",
                 "timestamp": time.time(),
                 "version": self.config.fastapi_version
@@ -14727,7 +15385,8 @@ class FastAPIFramework(BaseFramework):
         # Route de métriques Prometheus
         @self.app.get("/metrics", tags=["Monitoring"])
         async def metrics():
-            """Métriques Prometheus"""            return prometheus_client.generate_latest()
+            """Métriques Prometheus"""
+            return prometheus_client.generate_latest()
         
         # Inclure les routeurs des modules
         try:
@@ -14758,7 +15417,8 @@ class FastAPIFramework(BaseFramework):
             self.logger.warning(f"Some API routes not available: {e}")
     
     def _setup_error_handlers(self):
-        """Configure les gestionnaires d'erreurs"""        @self.app.exception_handler(HTTPException)
+        """Configure les gestionnaires d'erreurs"""
+        @self.app.exception_handler(HTTPException)
         async def http_exception_handler(request, exc):
             return JSONResponse(
                 status_code=exc.status_code,
@@ -14782,7 +15442,8 @@ class FastAPIFramework(BaseFramework):
             )
     
     def _setup_events(self):
-        """Configure les événements de l'application"""        @self.app.on_event("startup")
+        """Configure les événements de l'application"""
+        @self.app.on_event("startup")
         async def startup_event():
             self.logger.info("FastAPI application starting up")
             
@@ -14793,7 +15454,8 @@ class FastAPIFramework(BaseFramework):
                 await self.engine.dispose()
     
     async def shutdown(self) -> bool:
-        """Arrête FastAPI proprement"""        try:
+        """Arrête FastAPI proprement"""
+        try:
             if self.engine:
                 await self.engine.dispose()
             
@@ -14805,7 +15467,8 @@ class FastAPIFramework(BaseFramework):
             return False
     
     async def health_check(self) -> FrameworkHealth:
-        """Vérifie la santé de FastAPI"""        health = FrameworkHealth(
+        """Vérifie la santé de FastAPI"""
+        health = FrameworkHealth(
             status=FrameworkStatus.RUNNING,
             last_check=time.time()
         )
@@ -14828,14 +15491,16 @@ class FastAPIFramework(BaseFramework):
 
 
 class HybridBackend:
-    """    🚀 BACKEND HYBRIDE ENTERPRISE
+    """
+    🚀 BACKEND HYBRIDE ENTERPRISE
     
     Orchestration intelligente Django + FastAPI avec:
     - Load balancing automatique
     - Partage de session
     - Cache distribué
     - Monitoring unifié
-    """    
+    """
+    
     def __init__(self, config: Optional[HybridConfig] = None):
         self.config = config or HybridConfig()
         self.django_framework = DjangoFramework(self.config)
@@ -14857,7 +15522,8 @@ class HybridBackend:
         )
     
     async def initialize(self) -> bool:
-        """Initialise le backend hybride"""        try:
+        """Initialise le backend hybride"""
+        try:
             # Enregistrer les frameworks dans l'orchestrateur
             framework_orchestrator.register_framework(self.django_framework)
             framework_orchestrator.register_framework(
@@ -14882,7 +15548,8 @@ class HybridBackend:
             return False
     
     def _setup_shared_components(self):
-        """Configure les composants partagés"""        # Session partagée entre Django et FastAPI
+        """Configure les composants partagés"""
+        # Session partagée entre Django et FastAPI
         # Cache Redis partagé
         # Logging unifié
         # Métriques centralisées
@@ -14890,7 +15557,8 @@ class HybridBackend:
         self.logger.info("Shared components configured")
     
     async def shutdown(self) -> bool:
-        """Arrête le backend hybride"""        try:
+        """Arrête le backend hybride"""
+        try:
             results = await framework_orchestrator.shutdown_all()
             success = all(results.values())
             
@@ -14906,13 +15574,16 @@ class HybridBackend:
             return False
     
     def get_django_app(self):
-        """Récupère l'application Django"""        return self.django_framework.wsgi_app
+        """Récupère l'application Django"""
+        return self.django_framework.wsgi_app
     
     def get_fastapi_app(self):
-        """Récupère l'application FastAPI"""        return self.fastapi_framework.app
+        """Récupère l'application FastAPI"""
+        return self.fastapi_framework.app
     
     async def get_health_status(self) -> Dict[str, Any]:
-        """Récupère le statut de santé complet"""        return await framework_orchestrator.get_health_status()
+        """Récupère le statut de santé complet"""
+        return await framework_orchestrator.get_health_status()
 
 
 # Instance globale du backend hybride
@@ -14921,7 +15592,8 @@ hybrid_backend = HybridBackend()
 
 # Fonctions utilitaires
 async def initialize_hybrid_backend(config: Optional[HybridConfig] = None) -> HybridBackend:
-    """Initialise et retourne le backend hybride"""    global hybrid_backend
+    """Initialise et retourne le backend hybride"""
+    global hybrid_backend
     if config:
         hybrid_backend = HybridBackend(config)
     
@@ -14930,11 +15602,13 @@ async def initialize_hybrid_backend(config: Optional[HybridConfig] = None) -> Hy
 
 
 def get_django_app():
-    """Récupère l'application Django"""    return hybrid_backend.get_django_app()
+    """Récupère l'application Django"""
+    return hybrid_backend.get_django_app()
 
 
 def get_fastapi_app():
-    """Récupère l'application FastAPI"""    return hybrid_backend.get_fastapi_app()
+    """Récupère l'application FastAPI"""
+    return hybrid_backend.get_fastapi_app()
 
 
 # Export des classes principales
@@ -14971,7 +15645,8 @@ Fonctionnalités:
 
 Version: 4.0.0
 Développé par l'équipe Spotify AI Agent
-"""import asyncio
+"""
+import asyncio
 import json
 import hmac
 import hashlib
@@ -15005,7 +15680,8 @@ from . import (
 
 @dataclass
 class WebhookConfig:
-    """Configuration du processeur de webhooks"""    port: int = 8080
+    """Configuration du processeur de webhooks"""
+    port: int = 8080
     host: str = "0.0.0.0"
     max_payload_size: int = 1024 * 1024  # 1MB
     timeout: int = 30
@@ -15018,7 +15694,8 @@ class WebhookConfig:
     enable_audit_logging: bool = True
 
 class WebhookEventType(Enum):
-    """Types d'événements webhook supportés"""    INCIDENT_TRIGGERED = "incident.triggered"
+    """Types d'événements webhook supportés"""
+    INCIDENT_TRIGGERED = "incident.triggered"
     INCIDENT_ACKNOWLEDGED = "incident.acknowledged"
     INCIDENT_ESCALATED = "incident.escalated"
     INCIDENT_RESOLVED = "incident.resolved"
@@ -15034,13 +15711,15 @@ class WebhookEventType(Enum):
     SERVICE_DELETED = "service.deleted"
 
 class ProcessingPriority(Enum):
-    """Priorités de traitement des webhooks"""    CRITICAL = 1
+    """Priorités de traitement des webhooks"""
+    CRITICAL = 1
     HIGH = 2
     MEDIUM = 3
     LOW = 4
 
 class ProcessingStatus(Enum):
-    """Statuts de traitement des webhooks"""    PENDING = "pending"
+    """Statuts de traitement des webhooks"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -15051,7 +15730,8 @@ class ProcessingStatus(Enum):
 # ============================================================================
 
 class WebhookPayload(BaseModel):
-    """Modèle pour les payloads webhook PagerDuty"""    event_type: str
+    """Modèle pour les payloads webhook PagerDuty"""
+    event_type: str
     created_on: datetime
     id: str = Field(..., min_length=1)
     data: Dict[str, Any]
@@ -15063,7 +15743,8 @@ class WebhookPayload(BaseModel):
         return v
 
 class WebhookEvent(BaseModel):
-    """Événement webhook enrichi"""    webhook_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Événement webhook enrichi"""
+    webhook_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     payload: WebhookPayload
     received_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     processed_at: Optional[datetime] = None
@@ -15076,7 +15757,8 @@ class WebhookEvent(BaseModel):
     signature_valid: bool = False
 
 class WebhookTransformationRule(BaseModel):
-    """Règle de transformation des webhooks"""    event_type: WebhookEventType
+    """Règle de transformation des webhooks"""
+    event_type: WebhookEventType
     conditions: Dict[str, Any] = Field(default_factory=dict)
     transformations: List[Dict[str, Any]] = Field(default_factory=list)
     target_systems: List[str] = Field(default_factory=list)
@@ -15087,7 +15769,8 @@ class WebhookTransformationRule(BaseModel):
 # ============================================================================
 
 class WebhookProcessor:
-    """Processeur de webhooks avancé"""    
+    """Processeur de webhooks avancé"""
+    
     def __init__(self, config: WebhookConfig):
         self.config = config
         self.app = web.Application()
@@ -15105,7 +15788,8 @@ class WebhookProcessor:
         self._setup_routes()
         
     async def initialize(self, redis_url: str, encryption_key: str, webhook_secret: str):
-        """Initialise le processeur de webhooks"""        try:
+        """Initialise le processeur de webhooks"""
+        try:
             # Sécurité
             self.security_manager = SecurityManager(encryption_key)
             self.webhook_secret = webhook_secret
@@ -15132,7 +15816,8 @@ class WebhookProcessor:
             raise
             
     def _setup_routes(self):
-        """Configure les routes HTTP"""        self.app.router.add_post('/webhook/pagerduty', self._handle_pagerduty_webhook)
+        """Configure les routes HTTP"""
+        self.app.router.add_post('/webhook/pagerduty', self._handle_pagerduty_webhook)
         self.app.router.add_post('/webhook/generic', self._handle_generic_webhook)
         self.app.router.add_get('/webhook/health', self._health_check)
         self.app.router.add_get('/webhook/metrics', self._get_metrics)
@@ -15142,7 +15827,8 @@ class WebhookProcessor:
         self.app.middlewares.append(self._logging_middleware)
         
     async def start_server(self):
-        """Démarre le serveur webhook"""        runner = web.AppRunner(self.app)
+        """Démarre le serveur webhook"""
+        runner = web.AppRunner(self.app)
         await runner.setup()
         
         site = web.TCPSite(runner, self.config.host, self.config.port)
@@ -15151,7 +15837,8 @@ class WebhookProcessor:
         logger.info(f"Webhook server started on {self.config.host}:{self.config.port}")
         
     async def _handle_pagerduty_webhook(self, request: web.Request) -> web.Response:
-        """Traite les webhooks PagerDuty"""        try:
+        """Traite les webhooks PagerDuty"""
+        try:
             start_time = time.time()
             
             # Validation de la taille du payload
@@ -15219,11 +15906,13 @@ class WebhookProcessor:
             return web.Response(status=500, text="Internal server error")
             
     async def _handle_generic_webhook(self, request: web.Request) -> web.Response:
-        """Traite les webhooks génériques"""        # Implémentation similaire mais plus flexible pour d'autres sources
+        """Traite les webhooks génériques"""
+        # Implémentation similaire mais plus flexible pour d'autres sources
         return web.Response(status=200, text="Generic webhook received")
         
     async def _health_check(self, request: web.Request) -> web.Response:
-        """Check de santé du processeur"""        health_data = {
+        """Check de santé du processeur"""
+        health_data = {
             'status': 'healthy',
             'queue_size': self.processing_queue.qsize(),
             'active_processors': self.active_processors,
@@ -15234,7 +15923,8 @@ class WebhookProcessor:
         return web.json_response(health_data)
         
     async def _get_metrics(self, request: web.Request) -> web.Response:
-        """Retourne les métriques du processeur"""        metrics = {
+        """Retourne les métriques du processeur"""
+        metrics = {
             'total_events': sum(self.event_stats.values()),
             'event_breakdown': dict(self.event_stats),
             'average_processing_time': self._calculate_avg_processing_time(),
@@ -15244,7 +15934,8 @@ class WebhookProcessor:
         return web.json_response(metrics)
         
     async def _security_middleware(self, request: web.Request, handler: Callable) -> web.Response:
-        """Middleware de sécurité"""        # Vérification des headers de sécurité
+        """Middleware de sécurité"""
+        # Vérification des headers de sécurité
         if 'X-Forwarded-For' in request.headers:
             real_ip = request.headers['X-Forwarded-For'].split(',')[0].strip()
             request['real_ip'] = real_ip
@@ -15259,7 +15950,8 @@ class WebhookProcessor:
         return response
         
     async def _logging_middleware(self, request: web.Request, handler: Callable) -> web.Response:
-        """Middleware de logging"""        start_time = time.time()
+        """Middleware de logging"""
+        start_time = time.time()
         
         response = await handler(request)
         
@@ -15278,7 +15970,8 @@ class WebhookProcessor:
         return response
         
     def _validate_signature(self, payload: str, signature: str) -> bool:
-        """Valide la signature HMAC du webhook"""        try:
+        """Valide la signature HMAC du webhook"""
+        try:
             expected_signature = self.security_manager.generate_webhook_signature(
                 payload, self.webhook_secret
             )
@@ -15290,7 +15983,8 @@ class WebhookProcessor:
             return False
             
     def _validate_webhook_schema(self, data: Dict[str, Any]) -> bool:
-        """Valide le schéma du webhook"""        try:
+        """Valide le schéma du webhook"""
+        try:
             # Schéma de base pour les webhooks PagerDuty
             schema = {
                 "type": "object",
@@ -15310,7 +16004,8 @@ class WebhookProcessor:
             return False
             
     async def _create_webhook_event(self, webhook_data: Dict[str, Any], source_ip: str, user_agent: str) -> WebhookEvent:
-        """Crée un événement webhook enrichi"""        try:
+        """Crée un événement webhook enrichi"""
+        try:
             payload = WebhookPayload(**webhook_data)
             
             # Détermination de la priorité
@@ -15331,7 +16026,8 @@ class WebhookProcessor:
             raise
             
     def _determine_priority(self, event_type: str) -> ProcessingPriority:
-        """Détermine la priorité de traitement"""        critical_events = ['incident.triggered', 'incident.escalated']
+        """Détermine la priorité de traitement"""
+        critical_events = ['incident.triggered', 'incident.escalated']
         high_events = ['incident.acknowledged', 'incident.resolved']
         
         if event_type in critical_events:
@@ -15342,7 +16038,8 @@ class WebhookProcessor:
             return ProcessingPriority.MEDIUM
             
     async def _processing_worker(self):
-        """Worker de traitement des webhooks"""        self.active_processors += 1
+        """Worker de traitement des webhooks"""
+        self.active_processors += 1
         
         try:
             while True:
@@ -15366,7 +16063,8 @@ class WebhookProcessor:
             self.active_processors -= 1
             
     async def _process_webhook_event(self, event: WebhookEvent):
-        """Traite un événement webhook"""        try:
+        """Traite un événement webhook"""
+        try:
             event.status = ProcessingStatus.PROCESSING
             event.processed_at = datetime.now(timezone.utc)
             
@@ -15415,7 +16113,8 @@ class WebhookProcessor:
                 await self._log_webhook_event(event, 'failed')
                 
     async def _apply_transformations(self, event: WebhookEvent) -> Dict[str, Any]:
-        """Applique les transformations configurées"""        transformed_data = event.payload.data.copy()
+        """Applique les transformations configurées"""
+        transformed_data = event.payload.data.copy()
         
         try:
             # Recherche des règles applicables
@@ -15437,13 +16136,15 @@ class WebhookProcessor:
         return transformed_data
         
     def _check_conditions(self, data: Dict[str, Any], conditions: Dict[str, Any]) -> bool:
-        """Vérifie si les conditions sont remplies"""        for key, expected_value in conditions.items():
+        """Vérifie si les conditions sont remplies"""
+        for key, expected_value in conditions.items():
             if key not in data or data[key] != expected_value:
                 return False
         return True
         
     def _apply_transformation(self, data: Dict[str, Any], transformation: Dict[str, Any]) -> Dict[str, Any]:
-        """Applique une transformation spécifique"""        transform_type = transformation.get('type')
+        """Applique une transformation spécifique"""
+        transform_type = transformation.get('type')
         
         if transform_type == 'add_field':
             data[transformation['field']] = transformation['value']
@@ -15458,7 +16159,8 @@ class WebhookProcessor:
         return data
         
     async def _default_event_handler(self, event: WebhookEvent, data: Dict[str, Any]):
-        """Handler par défaut pour les événements"""        logger.info(
+        """Handler par défaut pour les événements"""
+        logger.info(
             "Processing webhook event",
             event_type=event.payload.event_type,
             webhook_id=event.webhook_id,
@@ -15466,7 +16168,8 @@ class WebhookProcessor:
         )
         
     async def _forward_to_external_systems(self, event: WebhookEvent, data: Dict[str, Any]):
-        """Transmet les événements aux systèmes externes"""        try:
+        """Transmet les événements aux systèmes externes"""
+        try:
             # Exemple: envoi vers Slack, Jira, etc.
             for rule in self.transformation_rules:
                 if (rule.event_type.value == event.payload.event_type and 
@@ -15479,11 +16182,13 @@ class WebhookProcessor:
             logger.warning(f"External system forwarding failed: {e}")
             
     async def _send_to_target_system(self, target_system: str, event: WebhookEvent, data: Dict[str, Any]):
-        """Envoie vers un système cible spécifique"""        # Implémentation spécifique selon le système cible
+        """Envoie vers un système cible spécifique"""
+        # Implémentation spécifique selon le système cible
         logger.debug(f"Forwarding to {target_system}", webhook_id=event.webhook_id)
         
     async def _load_transformation_rules(self):
-        """Charge les règles de transformation depuis Redis"""        try:
+        """Charge les règles de transformation depuis Redis"""
+        try:
             async with aioredis.Redis(connection_pool=self.redis_pool) as redis:
                 rules_data = await redis.get("webhook:transformation_rules")
                 if rules_data:
@@ -15496,7 +16201,8 @@ class WebhookProcessor:
             logger.warning(f"Failed to load transformation rules: {e}")
             
     async def _log_webhook_event(self, event: WebhookEvent, action: str):
-        """Log l'événement webhook pour audit"""        try:
+        """Log l'événement webhook pour audit"""
+        try:
             async with aioredis.Redis(connection_pool=self.redis_pool) as redis:
                 audit_data = {
                     'webhook_id': event.webhook_id,
@@ -15516,17 +16222,20 @@ class WebhookProcessor:
             logger.warning(f"Audit logging failed: {e}")
             
     def _calculate_avg_processing_time(self) -> float:
-        """Calcule le temps de traitement moyen"""        if not self.performance_metrics:
+        """Calcule le temps de traitement moyen"""
+        if not self.performance_metrics:
             return 0.0
             
         processing_times = [m['processing_time'] for m in self.performance_metrics]
         return sum(processing_times) / len(processing_times)
         
     def register_event_handler(self, event_type: str, handler: Callable):
-        """Enregistre un handler pour un type d'événement"""        self.webhook_handlers[event_type] = handler
+        """Enregistre un handler pour un type d'événement"""
+        self.webhook_handlers[event_type] = handler
         
     async def add_transformation_rule(self, rule: WebhookTransformationRule):
-        """Ajoute une règle de transformation"""        self.transformation_rules.append(rule)
+        """Ajoute une règle de transformation"""
+        self.transformation_rules.append(rule)
         
         # Sauvegarde en Redis
         try:
@@ -15610,7 +16319,8 @@ Tests enterprise complets pour le module network_utils
 avec validation de réseau, sécurité et performance.
 
 🎖️ Développé par l'équipe d'experts enterprise
-"""import pytest
+"""
+import pytest
 import asyncio
 import aiohttp
 import socket
@@ -15652,9 +16362,11 @@ from . import TestUtils, security_test, performance_test, integration_test
 
 
 class TestNetworkUtils:
-    """Tests pour le module network_utils"""    
+    """Tests pour le module network_utils"""
+    
     def test_make_request_get(self):
-        """Test requête GET basique"""        # Mock response
+        """Test requête GET basique"""
+        # Mock response
         with patch('requests.get') as mock_get:
             mock_response = Mock()
             mock_response.status_code = 200
@@ -15669,7 +16381,8 @@ class TestNetworkUtils:
             mock_get.assert_called_once()
     
     def test_make_request_post_with_data(self):
-        """Test requête POST avec données"""        with patch('requests.post') as mock_post:
+        """Test requête POST avec données"""
+        with patch('requests.post') as mock_post:
             mock_response = Mock()
             mock_response.status_code = 201
             mock_response.text = '{"id": 123, "created": true}'
@@ -15689,7 +16402,8 @@ class TestNetworkUtils:
             )
     
     def test_make_request_with_headers(self):
-        """Test requête avec headers personnalisés"""        with patch('requests.get') as mock_get:
+        """Test requête avec headers personnalisés"""
+        with patch('requests.get') as mock_get:
             mock_response = Mock()
             mock_response.status_code = 200
             mock_response.text = '{"authenticated": true}'
@@ -15712,7 +16426,8 @@ class TestNetworkUtils:
             )
     
     def test_make_request_error_handling(self):
-        """Test gestion erreurs requête"""        with patch('requests.get') as mock_get:
+        """Test gestion erreurs requête"""
+        with patch('requests.get') as mock_get:
             mock_response = Mock()
             mock_response.status_code = 404
             mock_response.text = 'Not Found'
@@ -15725,7 +16440,8 @@ class TestNetworkUtils:
     
     @pytest.mark.asyncio
     async def test_async_request_get(self):
-        """Test requête asynchrone GET"""        with patch('aiohttp.ClientSession.get') as mock_get:
+        """Test requête asynchrone GET"""
+        with patch('aiohttp.ClientSession.get') as mock_get:
             mock_response = AsyncMock()
             mock_response.status = 200
             mock_response.text.return_value = '{"async": "response"}'
@@ -15739,7 +16455,8 @@ class TestNetworkUtils:
     
     @pytest.mark.asyncio
     async def test_async_request_concurrent(self):
-        """Test requêtes asynchrones concurrentes"""        async def mock_request(method, url, **kwargs):
+        """Test requêtes asynchrones concurrentes"""
+        async def mock_request(method, url, **kwargs):
             await asyncio.sleep(0.01)  # Simulation latence
             return {
                 'status_code': 200,
@@ -15763,7 +16480,8 @@ class TestNetworkUtils:
             assert execution_time < 0.1  # Concurrent donc rapide
     
     def test_download_file_basic(self):
-        """Test téléchargement fichier basique"""        with patch('requests.get') as mock_get:
+        """Test téléchargement fichier basique"""
+        with patch('requests.get') as mock_get:
             mock_response = Mock()
             mock_response.status_code = 200
             mock_response.content = b"File content data"
@@ -15781,7 +16499,8 @@ class TestNetworkUtils:
                 mock_file.write.assert_called_once_with(b"File content data")
     
     def test_download_file_with_progress(self):
-        """Test téléchargement avec suivi progression"""        progress_updates = []
+        """Test téléchargement avec suivi progression"""
+        progress_updates = []
         
         def progress_callback(downloaded, total):
             progress_updates.append((downloaded, total))
@@ -15805,7 +16524,8 @@ class TestNetworkUtils:
                 assert len(progress_updates) >= 2  # Au moins quelques updates
     
     def test_upload_file_basic(self):
-        """Test upload fichier basique"""        with patch('requests.post') as mock_post:
+        """Test upload fichier basique"""
+        with patch('requests.post') as mock_post:
             mock_response = Mock()
             mock_response.status_code = 200
             mock_response.json.return_value = {"file_id": "abc123", "uploaded": True}
@@ -15822,7 +16542,8 @@ class TestNetworkUtils:
                 assert result['response']['file_id'] == "abc123"
     
     def test_check_connectivity_online(self):
-        """Test vérification connectivité - en ligne"""        with patch('socket.create_connection') as mock_socket:
+        """Test vérification connectivité - en ligne"""
+        with patch('socket.create_connection') as mock_socket:
             mock_socket.return_value = Mock()
             
             is_online = check_connectivity()
@@ -15830,7 +16551,8 @@ class TestNetworkUtils:
             assert is_online is True
     
     def test_check_connectivity_offline(self):
-        """Test vérification connectivité - hors ligne"""        with patch('socket.create_connection') as mock_socket:
+        """Test vérification connectivité - hors ligne"""
+        with patch('socket.create_connection') as mock_socket:
             mock_socket.side_effect = socket.error("No connection")
             
             is_online = check_connectivity()
@@ -15838,7 +16560,8 @@ class TestNetworkUtils:
             assert is_online is False
     
     def test_ping_host_success(self):
-        """Test ping host succès"""        with patch('subprocess.run') as mock_run:
+        """Test ping host succès"""
+        with patch('subprocess.run') as mock_run:
             mock_result = Mock()
             mock_result.returncode = 0
             mock_result.stdout = "64 bytes from 8.8.8.8: time=20.1 ms"
@@ -15850,7 +16573,8 @@ class TestNetworkUtils:
             assert 'response_time' in result
     
     def test_ping_host_failure(self):
-        """Test ping host échec"""        with patch('subprocess.run') as mock_run:
+        """Test ping host échec"""
+        with patch('subprocess.run') as mock_run:
             mock_result = Mock()
             mock_result.returncode = 1
             mock_result.stderr = "Host unreachable"
@@ -15862,7 +16586,8 @@ class TestNetworkUtils:
             assert 'error' in result
     
     def test_resolve_hostname_success(self):
-        """Test résolution hostname succès"""        with patch('socket.gethostbyname') as mock_resolve:
+        """Test résolution hostname succès"""
+        with patch('socket.gethostbyname') as mock_resolve:
             mock_resolve.return_value = '93.184.216.34'
             
             ip = resolve_hostname('example.com')
@@ -15870,7 +16595,8 @@ class TestNetworkUtils:
             assert ip == '93.184.216.34'
     
     def test_resolve_hostname_failure(self):
-        """Test résolution hostname échec"""        with patch('socket.gethostbyname') as mock_resolve:
+        """Test résolution hostname échec"""
+        with patch('socket.gethostbyname') as mock_resolve:
             mock_resolve.side_effect = socket.gaierror("Name resolution failed")
             
             ip = resolve_hostname('nonexistent.invalid')
@@ -15878,7 +16604,8 @@ class TestNetworkUtils:
             assert ip is None
     
     def test_get_public_ip(self):
-        """Test obtention IP publique"""        with patch('requests.get') as mock_get:
+        """Test obtention IP publique"""
+        with patch('requests.get') as mock_get:
             mock_response = Mock()
             mock_response.status_code = 200
             mock_response.text = '{"ip": "203.0.113.42"}'
@@ -15890,7 +16617,8 @@ class TestNetworkUtils:
             assert public_ip == "203.0.113.42"
     
     def test_validate_url_valid(self):
-        """Test validation URL valide"""        valid_urls = [
+        """Test validation URL valide"""
+        valid_urls = [
             'https://example.com',
             'http://subdomain.example.org/path?param=value',
             'https://api.service.com:8443/v1/endpoint',
@@ -15901,7 +16629,8 @@ class TestNetworkUtils:
             assert validate_url(url) is True
     
     def test_validate_url_invalid(self):
-        """Test validation URL invalide"""        invalid_urls = [
+        """Test validation URL invalide"""
+        invalid_urls = [
             'not-a-url',
             'http://',
             'https://.',
@@ -15914,7 +16643,8 @@ class TestNetworkUtils:
     
     @security_test
     def test_validate_url_security(self):
-        """Test validation URL sécurité"""        malicious_urls = [
+        """Test validation URL sécurité"""
+        malicious_urls = [
             'javascript:alert("XSS")',
             'data:text/html,<script>alert("XSS")</script>',
             'file:///etc/passwd',
@@ -15927,7 +16657,8 @@ class TestNetworkUtils:
             assert validate_url(url, security_check=True) is False
     
     def test_parse_url_basic(self):
-        """Test parsing URL basique"""        url = 'https://api.example.com:8443/v1/users?id=123&format=json#section'
+        """Test parsing URL basique"""
+        url = 'https://api.example.com:8443/v1/users?id=123&format=json#section'
         
         parsed = parse_url(url)
         
@@ -15939,7 +16670,8 @@ class TestNetworkUtils:
         assert parsed['fragment'] == 'section'
     
     def test_build_url_basic(self):
-        """Test construction URL"""        components = {
+        """Test construction URL"""
+        components = {
             'scheme': 'https',
             'hostname': 'api.example.com',
             'port': 443,
@@ -15955,7 +16687,8 @@ class TestNetworkUtils:
         assert 'limit=10' in url
     
     def test_encode_params_basic(self):
-        """Test encodage paramètres"""        params = {
+        """Test encodage paramètres"""
+        params = {
             'query': 'hello world',
             'special': 'chars & symbols',
             'unicode': 'café à paris'
@@ -15968,7 +16701,8 @@ class TestNetworkUtils:
         assert 'caf%C3%A9' in encoded
     
     def test_create_session_basic(self):
-        """Test création session HTTP"""        session_config = {
+        """Test création session HTTP"""
+        session_config = {
             'timeout': 30,
             'retries': 3,
             'headers': {'User-Agent': 'Test-Client/1.0'}
@@ -15982,7 +16716,8 @@ class TestNetworkUtils:
             assert session.timeout == 30
     
     def test_retry_request_success_after_retries(self):
-        """Test retry requête succès après échecs"""        attempt_count = 0
+        """Test retry requête succès après échecs"""
+        attempt_count = 0
         
         def mock_request(*args, **kwargs):
             nonlocal attempt_count
@@ -15998,7 +16733,8 @@ class TestNetworkUtils:
             assert attempt_count == 3
     
     def test_retry_request_max_retries_exceeded(self):
-        """Test dépassement max retries"""        def mock_request(*args, **kwargs):
+        """Test dépassement max retries"""
+        def mock_request(*args, **kwargs):
             raise ConnectionError("Persistent failure")
         
         with patch('backend.app.api.utils.network_utils.make_request', side_effect=mock_request):
@@ -16008,7 +16744,8 @@ class TestNetworkUtils:
             assert 'max retries' in response['error'].lower()
     
     def test_rate_limited_request_basic(self):
-        """Test requête avec limitation débit"""        responses = []
+        """Test requête avec limitation débit"""
+        responses = []
         
         def mock_request(*args, **kwargs):
             responses.append(time.time())
@@ -16033,7 +16770,8 @@ class TestNetworkUtils:
     
     @pytest.mark.asyncio
     async def test_websocket_client_basic(self):
-        """Test client WebSocket basique"""        messages_received = []
+        """Test client WebSocket basique"""
+        messages_received = []
         
         class MockWebSocket:
             async def __aenter__(self):
@@ -16063,7 +16801,8 @@ class TestNetworkUtils:
             assert len(messages_received) >= 0  # Peut recevoir messages
     
     def test_tcp_client_basic(self):
-        """Test client TCP basique"""        with patch('socket.socket') as mock_socket:
+        """Test client TCP basique"""
+        with patch('socket.socket') as mock_socket:
             mock_conn = Mock()
             mock_conn.recv.return_value = b"Server response"
             mock_socket.return_value.__enter__.return_value = mock_conn
@@ -16075,7 +16814,8 @@ class TestNetworkUtils:
             mock_conn.send.assert_called_with(b"Hello server")
     
     def test_udp_client_basic(self):
-        """Test client UDP basique"""        with patch('socket.socket') as mock_socket:
+        """Test client UDP basique"""
+        with patch('socket.socket') as mock_socket:
             mock_sock = Mock()
             mock_sock.recvfrom.return_value = (b"UDP response", ('localhost', 8080))
             mock_socket.return_value = mock_sock
@@ -16087,7 +16827,8 @@ class TestNetworkUtils:
             mock_sock.sendto.assert_called_with(b"UDP message", ('localhost', 8080))
     
     def test_network_scanner_basic(self):
-        """Test scanner réseau basique"""        def mock_ping(host):
+        """Test scanner réseau basique"""
+        def mock_ping(host):
             # Simulation: quelques hosts répondent
             responding_hosts = ['192.168.1.1', '192.168.1.100', '192.168.1.200']
             return {'reachable': host in responding_hosts, 'response_time': 10.5}
@@ -16100,7 +16841,8 @@ class TestNetworkUtils:
             assert len(reachable_hosts) == 3
     
     def test_bandwidth_test_basic(self):
-        """Test mesure bande passante"""        def mock_download_test():
+        """Test mesure bande passante"""
+        def mock_download_test():
             # Simulation téléchargement 1MB en 0.5s = 2MB/s
             time.sleep(0.1)  # Simulation temps téléchargement
             return {
@@ -16122,7 +16864,8 @@ class TestNetworkUtils:
             assert result['download_speed_mbps'] > 0
     
     def test_latency_test_basic(self):
-        """Test mesure latence"""        def mock_ping_results():
+        """Test mesure latence"""
+        def mock_ping_results():
             return [
                 {'reachable': True, 'response_time': 20.1},
                 {'reachable': True, 'response_time': 21.5},
@@ -16143,7 +16886,8 @@ class TestNetworkUtils:
             assert result['packet_loss'] == 0  # Tous réussis
     
     def test_ssl_certificate_info(self):
-        """Test informations certificat SSL"""        with patch('ssl.get_server_certificate') as mock_cert:
+        """Test informations certificat SSL"""
+        with patch('ssl.get_server_certificate') as mock_cert:
             with patch('ssl.PEM_cert_to_DER_cert') as mock_der:
                 with patch('ssl.DER_cert_to_PEM_cert') as mock_pem:
                     mock_cert.return_value = "MOCK_CERTIFICATE"
@@ -16156,7 +16900,8 @@ class TestNetworkUtils:
     
     @security_test
     def test_security_headers_check(self):
-        """Test vérification headers sécurité"""        with patch('requests.head') as mock_head:
+        """Test vérification headers sécurité"""
+        with patch('requests.head') as mock_head:
             mock_response = Mock()
             mock_response.status_code = 200
             mock_response.headers = {
@@ -16176,7 +16921,8 @@ class TestNetworkUtils:
     
     @security_test
     def test_security_headers_missing(self):
-        """Test headers sécurité manquants"""        with patch('requests.head') as mock_head:
+        """Test headers sécurité manquants"""
+        with patch('requests.head') as mock_head:
             mock_response = Mock()
             mock_response.status_code = 200
             mock_response.headers = {
@@ -16193,7 +16939,8 @@ class TestNetworkUtils:
     
     @performance_test
     def test_concurrent_requests_performance(self):
-        """Test performance requêtes concurrentes"""        async def mock_async_request(method, url, **kwargs):
+        """Test performance requêtes concurrentes"""
+        async def mock_async_request(method, url, **kwargs):
             await asyncio.sleep(0.01)  # Simulation latence réseau
             return {
                 'status_code': 200,
@@ -16217,7 +16964,8 @@ class TestNetworkUtils:
     
     @integration_test
     def test_complete_network_workflow(self):
-        """Test workflow réseau complet"""        # Scénario: Client API avec retry, cache, monitoring
+        """Test workflow réseau complet"""
+        # Scénario: Client API avec retry, cache, monitoring
         
         request_count = 0
         
@@ -16291,10 +17039,12 @@ class TestNetworkUtils:
 
 # Tests de robustesse réseau
 class TestNetworkRobustness:
-    """Tests de robustesse et gestion erreurs réseau"""    
+    """Tests de robustesse et gestion erreurs réseau"""
+    
     @security_test
     def test_url_injection_protection(self):
-        """Test protection injection URL"""        malicious_urls = [
+        """Test protection injection URL"""
+        malicious_urls = [
             'https://example.com/../../../etc/passwd',
             'https://example.com/api?redirect=javascript:alert(1)',
             'https://user:pass@evil.com@trusted.com/path',
@@ -16311,7 +17061,8 @@ class TestNetworkRobustness:
     
     @security_test
     def test_ssrf_protection(self):
-        """Test protection SSRF (Server-Side Request Forgery)"""        internal_urls = [
+        """Test protection SSRF (Server-Side Request Forgery)"""
+        internal_urls = [
             'http://localhost:8080/admin',
             'http://127.0.0.1:22/',
             'http://169.254.169.254/metadata',  # AWS metadata
@@ -16325,7 +17076,8 @@ class TestNetworkRobustness:
             assert is_safe is False
     
     def test_network_timeout_handling(self):
-        """Test gestion timeouts réseau"""        def slow_request(*args, **kwargs):
+        """Test gestion timeouts réseau"""
+        def slow_request(*args, **kwargs):
             time.sleep(2)  # Plus lent que timeout
             return {'status_code': 200}
         
@@ -16339,7 +17091,8 @@ class TestNetworkRobustness:
             assert 'error' in response or 'timeout' in response
     
     def test_connection_pool_exhaustion(self):
-        """Test épuisement pool connexions"""        session_config = {'max_connections': 2}
+        """Test épuisement pool connexions"""
+        session_config = {'max_connections': 2}
         
         def mock_request_with_delay(*args, **kwargs):
             time.sleep(0.1)
@@ -16761,7 +17514,8 @@ Tests d'intégration industriels pour valider l'interaction entre tous les
 composants du module core avec patterns enterprise et validation complète.
 
 Développé par Fahed Mlaiel - Enterprise Integration Testing Expert
-"""import pytest
+"""
+import pytest
 import asyncio
 import time
 import json
@@ -16789,7 +17543,8 @@ from app.api.core.monitoring import get_api_metrics, get_health_checker, setup_m
 
 @pytest.fixture
 def integration_config():
-    """Configuration complète pour les tests d'intégration"""    return {
+    """Configuration complète pour les tests d'intégration"""
+    return {
         "app": {
             "name": "Test Spotify AI Agent",
             "version": "1.0.0",
@@ -16829,7 +17584,8 @@ def integration_config():
 
 @pytest.fixture
 def clean_integration_env():
-    """Environnement propre pour les tests d'intégration"""    # Nettoyer les singletons
+    """Environnement propre pour les tests d'intégration"""
+    # Nettoyer les singletons
     ComponentFactory._instance = None
     DependencyContainer._instance = None
     
@@ -16847,7 +17603,8 @@ def clean_integration_env():
 
 @pytest.fixture
 def integrated_app(integration_config, clean_integration_env):
-    """Application FastAPI complètement intégrée"""    app = FastAPI(
+    """Application FastAPI complètement intégrée"""
+    app = FastAPI(
         title=integration_config["app"]["name"],
         version=integration_config["app"]["version"],
         debug=integration_config["app"]["debug"]
@@ -16862,7 +17619,8 @@ def integrated_app(integration_config, clean_integration_env):
     # Ajouter des endpoints de test
     @app.get("/api/v1/test/success")
     async def test_success():
-        """Endpoint de test qui utilise tous les composants core"""        # Utiliser le contexte
+        """Endpoint de test qui utilise tous les composants core"""
+        # Utiliser le contexte
         context = get_request_context()
         
         # Utiliser la configuration
@@ -16881,7 +17639,8 @@ def integrated_app(integration_config, clean_integration_env):
     
     @app.get("/api/v1/test/validation-error")
     async def test_validation_error():
-        """Endpoint qui déclenche une erreur de validation"""        raise ValidationException(
+        """Endpoint qui déclenche une erreur de validation"""
+        raise ValidationException(
             message="Test validation error",
             field="test_field",
             value="invalid_value"
@@ -16889,7 +17648,8 @@ def integrated_app(integration_config, clean_integration_env):
     
     @app.get("/api/v1/test/api-error")
     async def test_api_error():
-        """Endpoint qui déclenche une erreur API"""        raise APIException(
+        """Endpoint qui déclenche une erreur API"""
+        raise APIException(
             message="Test API error",
             error_code=ErrorCode.INTERNAL_ERROR,
             status_code=500
@@ -16897,7 +17657,8 @@ def integrated_app(integration_config, clean_integration_env):
     
     @app.get("/api/v1/test/context")
     async def test_context():
-        """Endpoint qui teste le contexte de requête"""        context = get_request_context()
+        """Endpoint qui teste le contexte de requête"""
+        context = get_request_context()
         
         if not context:
             raise APIException("No request context available")
@@ -16913,7 +17674,8 @@ def integrated_app(integration_config, clean_integration_env):
     
     @app.get("/api/v1/test/dependencies")
     async def test_dependencies():
-        """Endpoint qui teste les dépendances"""        from app.api.core.factory import get_dependency_container
+        """Endpoint qui teste les dépendances"""
+        from app.api.core.factory import get_dependency_container
         
         container = get_dependency_container()
         
@@ -16934,7 +17696,8 @@ def integrated_app(integration_config, clean_integration_env):
     
     @app.get("/api/v1/test/monitoring")
     async def test_monitoring():
-        """Endpoint qui teste le monitoring"""        metrics = get_api_metrics()
+        """Endpoint qui teste le monitoring"""
+        metrics = get_api_metrics()
         health_checker = get_health_checker()
         
         return create_success_response(
@@ -16952,15 +17715,18 @@ def integrated_app(integration_config, clean_integration_env):
 # =============================================================================
 
 class TestCoreModuleIntegration:
-    """Tests d'intégration pour le module core complet"""    
+    """Tests d'intégration pour le module core complet"""
+    
     def test_application_startup_integration(self, integrated_app):
-        """Test démarrage complet de l'application"""        with TestClient(integrated_app) as client:
+        """Test démarrage complet de l'application"""
+        with TestClient(integrated_app) as client:
             # L'application devrait démarrer sans erreur
             response = client.get("/docs")
             assert response.status_code == 200
     
     def test_success_endpoint_integration(self, integrated_app):
-        """Test endpoint de succès avec tous les composants"""        with TestClient(integrated_app) as client:
+        """Test endpoint de succès avec tous les composants"""
+        with TestClient(integrated_app) as client:
             response = client.get("/api/v1/test/success")
             
             assert response.status_code == 200
@@ -16983,7 +17749,8 @@ class TestCoreModuleIntegration:
             assert data["metadata"]["timestamp"] is not None
     
     def test_context_integration(self, integrated_app):
-        """Test intégration du contexte de requête"""        with TestClient(integrated_app) as client:
+        """Test intégration du contexte de requête"""
+        with TestClient(integrated_app) as client:
             response = client.get("/api/v1/test/context")
             
             assert response.status_code == 200
@@ -16999,7 +17766,8 @@ class TestCoreModuleIntegration:
             assert "X-Correlation-ID" in response.headers
     
     def test_dependencies_integration(self, integrated_app):
-        """Test intégration des dépendances"""        with TestClient(integrated_app) as client:
+        """Test intégration des dépendances"""
+        with TestClient(integrated_app) as client:
             response = client.get("/api/v1/test/dependencies")
             
             assert response.status_code == 200
@@ -17011,7 +17779,8 @@ class TestCoreModuleIntegration:
             assert data["data"]["dependencies_count"] > 0
     
     def test_monitoring_integration(self, integrated_app):
-        """Test intégration du monitoring"""        with TestClient(integrated_app) as client:
+        """Test intégration du monitoring"""
+        with TestClient(integrated_app) as client:
             # Faire quelques requêtes pour générer des métriques
             for _ in range(5):
                 client.get("/api/v1/test/success")
@@ -17035,9 +17804,11 @@ class TestCoreModuleIntegration:
 # =============================================================================
 
 class TestErrorHandlingIntegration:
-    """Tests d'intégration pour la gestion d'erreurs"""    
+    """Tests d'intégration pour la gestion d'erreurs"""
+    
     def test_validation_error_integration(self, integrated_app):
-        """Test gestion d'erreur de validation"""        with TestClient(integrated_app) as client:
+        """Test gestion d'erreur de validation"""
+        with TestClient(integrated_app) as client:
             response = client.get("/api/v1/test/validation-error")
             
             assert response.status_code == 422
@@ -17057,7 +17828,8 @@ class TestErrorHandlingIntegration:
             assert detail["value"] == "invalid_value"
     
     def test_api_error_integration(self, integrated_app):
-        """Test gestion d'erreur API"""        with TestClient(integrated_app) as client:
+        """Test gestion d'erreur API"""
+        with TestClient(integrated_app) as client:
             response = client.get("/api/v1/test/api-error")
             
             assert response.status_code == 500
@@ -17072,7 +17844,8 @@ class TestErrorHandlingIntegration:
             assert "X-Error-ID" in response.headers
     
     def test_http_exception_integration(self, integrated_app):
-        """Test gestion HTTPException standard"""        with TestClient(integrated_app) as client:
+        """Test gestion HTTPException standard"""
+        with TestClient(integrated_app) as client:
             # Endpoint inexistant
             response = client.get("/api/v1/nonexistent")
             
@@ -17083,7 +17856,8 @@ class TestErrorHandlingIntegration:
             assert "error" in data
     
     def test_error_correlation_integration(self, integrated_app):
-        """Test corrélation des erreurs avec le contexte"""        with TestClient(integrated_app) as client:
+        """Test corrélation des erreurs avec le contexte"""
+        with TestClient(integrated_app) as client:
             # Première requête réussie pour établir le contexte
             success_response = client.get("/api/v1/test/success")
             correlation_id = success_response.headers.get("X-Correlation-ID")
@@ -17105,9 +17879,11 @@ class TestErrorHandlingIntegration:
 # =============================================================================
 
 class TestPerformanceIntegration:
-    """Tests d'intégration pour les performances"""    
+    """Tests d'intégration pour les performances"""
+    
     def test_response_time_monitoring_integration(self, integrated_app):
-        """Test monitoring du temps de réponse"""        with TestClient(integrated_app) as client:
+        """Test monitoring du temps de réponse"""
+        with TestClient(integrated_app) as client:
             # Faire plusieurs requêtes
             start_time = time.time()
             responses = []
@@ -17134,7 +17910,8 @@ class TestPerformanceIntegration:
             assert metrics["avg_response_time"] > 0
     
     def test_concurrent_requests_integration(self, integrated_app):
-        """Test requêtes concurrentes"""        import threading
+        """Test requêtes concurrentes"""
+        import threading
         from concurrent.futures import ThreadPoolExecutor
         
         def make_request():
@@ -17152,7 +17929,8 @@ class TestPerformanceIntegration:
         assert len(results) == 20
     
     def test_memory_usage_integration(self, integrated_app):
-        """Test utilisation mémoire sous charge"""        import psutil
+        """Test utilisation mémoire sous charge"""
+        import psutil
         import os
         
         process = psutil.Process(os.getpid())
@@ -17177,9 +17955,11 @@ class TestPerformanceIntegration:
 # =============================================================================
 
 class TestSecurityIntegration:
-    """Tests d'intégration pour la sécurité"""    
+    """Tests d'intégration pour la sécurité"""
+    
     def test_headers_security_integration(self, integrated_app):
-        """Test headers de sécurité"""        with TestClient(integrated_app) as client:
+        """Test headers de sécurité"""
+        with TestClient(integrated_app) as client:
             response = client.get("/api/v1/test/success")
             
             # Vérifier les headers de sécurité
@@ -17190,7 +17970,8 @@ class TestSecurityIntegration:
             assert "X-Correlation-ID" in response.headers
     
     def test_error_information_disclosure_integration(self, integrated_app):
-        """Test non-divulgation d'informations dans les erreurs"""        with TestClient(integrated_app) as client:
+        """Test non-divulgation d'informations dans les erreurs"""
+        with TestClient(integrated_app) as client:
             response = client.get("/api/v1/test/api-error")
             
             assert response.status_code == 500
@@ -17205,7 +17986,8 @@ class TestSecurityIntegration:
             assert "line " not in error_message
     
     def test_input_validation_integration(self, integrated_app):
-        """Test validation des entrées"""        with TestClient(integrated_app) as client:
+        """Test validation des entrées"""
+        with TestClient(integrated_app) as client:
             # Test avec des données malicieuses
             malicious_headers = {
                 "X-Malicious": "<script>alert('xss')</script>",
@@ -17231,9 +18013,11 @@ class TestSecurityIntegration:
 # =============================================================================
 
 class TestMiddlewareIntegration:
-    """Tests d'intégration pour les middlewares"""    
+    """Tests d'intégration pour les middlewares"""
+    
     def test_middleware_chain_integration(self, integrated_app):
-        """Test chaîne de middlewares"""        with TestClient(integrated_app) as client:
+        """Test chaîne de middlewares"""
+        with TestClient(integrated_app) as client:
             response = client.get("/api/v1/test/success")
             
             assert response.status_code == 200
@@ -17251,7 +18035,8 @@ class TestMiddlewareIntegration:
             assert monitoring_data["data"]["metrics_summary"]["total_requests"] > 0
     
     def test_middleware_error_handling_integration(self, integrated_app):
-        """Test gestion d'erreur dans les middlewares"""        with TestClient(integrated_app) as client:
+        """Test gestion d'erreur dans les middlewares"""
+        with TestClient(integrated_app) as client:
             response = client.get("/api/v1/test/validation-error")
             
             assert response.status_code == 422
@@ -17270,9 +18055,11 @@ class TestMiddlewareIntegration:
 # =============================================================================
 
 class TestAdvancedIntegration:
-    """Tests d'intégration avancés"""    
+    """Tests d'intégration avancés"""
+    
     def test_configuration_hot_reload_integration(self, integrated_app, integration_config):
-        """Test rechargement à chaud de la configuration"""        with TestClient(integrated_app) as client:
+        """Test rechargement à chaud de la configuration"""
+        with TestClient(integrated_app) as client:
             # Requête initiale
             response1 = client.get("/api/v1/test/success")
             assert response1.status_code == 200
@@ -17285,7 +18072,8 @@ class TestAdvancedIntegration:
             assert response2.status_code == 200
     
     def test_graceful_degradation_integration(self, integrated_app):
-        """Test dégradation gracieuse"""        with TestClient(integrated_app) as client:
+        """Test dégradation gracieuse"""
+        with TestClient(integrated_app) as client:
             # Simuler la panne d'un service non critique
             # (Par exemple, le monitoring)
             
@@ -17294,7 +18082,8 @@ class TestAdvancedIntegration:
             assert response.status_code == 200
     
     def test_metrics_aggregation_integration(self, integrated_app):
-        """Test agrégation des métriques"""        with TestClient(integrated_app) as client:
+        """Test agrégation des métriques"""
+        with TestClient(integrated_app) as client:
             # Faire différents types de requêtes
             client.get("/api/v1/test/success")  # Succès
             client.get("/api/v1/test/validation-error")  # Erreur validation
@@ -17312,7 +18101,8 @@ class TestAdvancedIntegration:
     
     @pytest.mark.asyncio
     async def test_async_integration(self, integrated_app):
-        """Test intégration asynchrone"""        # Test avec des opérations asynchrones
+        """Test intégration asynchrone"""
+        # Test avec des opérations asynchrones
         
         async def async_test():
             # Simuler des opérations async
@@ -17334,9 +18124,11 @@ class TestAdvancedIntegration:
 
 @pytest.mark.e2e
 class TestEndToEndIntegration:
-    """Tests d'intégration end-to-end"""    
+    """Tests d'intégration end-to-end"""
+    
     def test_complete_request_lifecycle(self, integrated_app):
-        """Test cycle de vie complet d'une requête"""        with TestClient(integrated_app) as client:
+        """Test cycle de vie complet d'une requête"""
+        with TestClient(integrated_app) as client:
             # 1. Requête initiale
             response = client.get("/api/v1/test/success")
             
@@ -17361,7 +18153,8 @@ class TestEndToEndIntegration:
             assert monitoring_data["data"]["metrics_summary"]["total_requests"] > 0
     
     def test_error_to_recovery_flow(self, integrated_app):
-        """Test flux d'erreur vers récupération"""        with TestClient(integrated_app) as client:
+        """Test flux d'erreur vers récupération"""
+        with TestClient(integrated_app) as client:
             # 1. Déclencher une erreur
             error_response = client.get("/api/v1/test/api-error")
             assert error_response.status_code == 500
@@ -17387,7 +18180,8 @@ class TestEndToEndIntegration:
             assert metrics["total_errors"] >= 1    # L'erreur API
     
     def test_load_and_monitoring_integration(self, integrated_app):
-        """Test intégration charge et monitoring"""        with TestClient(integrated_app) as client:
+        """Test intégration charge et monitoring"""
+        with TestClient(integrated_app) as client:
             # 1. Générer de la charge
             for i in range(20):
                 if i % 4 == 0:
@@ -17428,7 +18222,8 @@ Tests industriels complets pour la gestion de contexte avec patterns enterprise,
 tests de concurrence, performance, et validation thread-safety.
 
 Développé par Fahed Mlaiel - Enterprise Context Testing Expert
-"""import pytest
+"""
+import pytest
 import asyncio
 import time
 import threading
@@ -17472,7 +18267,8 @@ from app.api.core.context import (
 
 @pytest.fixture
 def clean_context():
-    """Context propre pour les tests"""    # Nettoyer le contexte avant et après chaque test
+    """Context propre pour les tests"""
+    # Nettoyer le contexte avant et après chaque test
     clear_request_context()
     yield
     clear_request_context()
@@ -17480,7 +18276,8 @@ def clean_context():
 
 @pytest.fixture
 def sample_user_context():
-    """Contexte utilisateur de test"""    return UserContext(
+    """Contexte utilisateur de test"""
+    return UserContext(
         user_id="user_12345",
         username="test_user",
         email="test@example.com",
@@ -17497,7 +18294,8 @@ def sample_user_context():
 
 @pytest.fixture
 def sample_request_context(sample_user_context):
-    """Contexte de requête de test"""    context = RequestContext(
+    """Contexte de requête de test"""
+    context = RequestContext(
         request_id="req_123456",
         correlation_id="corr_789012",
         method="POST",
@@ -17513,7 +18311,8 @@ def sample_request_context(sample_user_context):
 
 @pytest.fixture
 def mock_request():
-    """Requête FastAPI mockée"""    request = Mock(spec=Request)
+    """Requête FastAPI mockée"""
+    request = Mock(spec=Request)
     request.method = "GET"
     request.url.path = "/api/v1/test"
     request.query_params = {"param1": "value1"}
@@ -17529,7 +18328,8 @@ def mock_request():
 
 @pytest.fixture
 def fastapi_app():
-    """Application FastAPI de test"""    app = Starlette()
+    """Application FastAPI de test"""
+    app = Starlette()
     
     @app.route("/test", methods=["GET", "POST"])
     async def test_endpoint(request):
@@ -17551,9 +18351,11 @@ def fastapi_app():
 # =============================================================================
 
 class TestUserContext:
-    """Tests pour UserContext"""    
+    """Tests pour UserContext"""
+    
     def test_user_context_creation(self, sample_user_context):
-        """Test création UserContext"""        user = sample_user_context
+        """Test création UserContext"""
+        user = sample_user_context
         
         assert user.user_id == "user_12345"
         assert user.username == "test_user"
@@ -17563,7 +18365,8 @@ class TestUserContext:
         assert user.auth_method == "jwt"
     
     def test_user_context_roles_and_permissions(self, sample_user_context):
-        """Test gestion des rôles et permissions"""        user = sample_user_context
+        """Test gestion des rôles et permissions"""
+        user = sample_user_context
         
         # Test rôles
         assert user.has_role("user") is True
@@ -17577,7 +18380,8 @@ class TestUserContext:
         assert user.has_permission("admin_access") is False
     
     def test_user_context_to_dict(self, sample_user_context):
-        """Test conversion en dictionnaire"""        user = sample_user_context
+        """Test conversion en dictionnaire"""
+        user = sample_user_context
         user_dict = user.to_dict()
         
         assert user_dict["user_id"] == "user_12345"
@@ -17587,7 +18391,8 @@ class TestUserContext:
         assert "permissions" in user_dict
     
     def test_anonymous_user_context(self):
-        """Test contexte utilisateur anonyme"""        user = UserContext()
+        """Test contexte utilisateur anonyme"""
+        user = UserContext()
         
         assert user.user_id is None
         assert user.is_authenticated is False
@@ -17597,9 +18402,11 @@ class TestUserContext:
 
 
 class TestPerformanceContext:
-    """Tests pour PerformanceContext"""    
+    """Tests pour PerformanceContext"""
+    
     def test_performance_context_initialization(self):
-        """Test initialisation PerformanceContext"""        perf = PerformanceContext()
+        """Test initialisation PerformanceContext"""
+        perf = PerformanceContext()
         
         assert perf.start_time is not None
         assert perf.end_time is None
@@ -17610,7 +18417,8 @@ class TestPerformanceContext:
         assert perf.external_calls == 0
     
     def test_performance_context_finish(self):
-        """Test finalisation des métriques"""        perf = PerformanceContext()
+        """Test finalisation des métriques"""
+        perf = PerformanceContext()
         initial_time = perf.start_time
         
         time.sleep(0.01)  # Attendre un peu
@@ -17622,7 +18430,8 @@ class TestPerformanceContext:
         assert perf.duration_ms > 0
     
     def test_performance_counters(self):
-        """Test compteurs de performance"""        perf = PerformanceContext()
+        """Test compteurs de performance"""
+        perf = PerformanceContext()
         
         # Test incrémentation des compteurs
         perf.add_db_query()
@@ -17643,9 +18452,11 @@ class TestPerformanceContext:
 
 
 class TestErrorContext:
-    """Tests pour ErrorContext"""    
+    """Tests pour ErrorContext"""
+    
     def test_error_context_creation(self):
-        """Test création ErrorContext"""        error_ctx = ErrorContext()
+        """Test création ErrorContext"""
+        error_ctx = ErrorContext()
         
         assert error_ctx.error_id is None
         assert error_ctx.error_type is None
@@ -17654,7 +18465,8 @@ class TestErrorContext:
         assert error_ctx.is_retryable is False
     
     def test_error_context_set_error(self):
-        """Test configuration d'erreur"""        error_ctx = ErrorContext()
+        """Test configuration d'erreur"""
+        error_ctx = ErrorContext()
         exception = ValueError("Test error message")
         
         error_ctx.set_error(exception, "User friendly message")
@@ -17666,7 +18478,8 @@ class TestErrorContext:
         assert error_ctx.stack_trace is not None
     
     def test_error_context_without_user_message(self):
-        """Test configuration d'erreur sans message utilisateur"""        error_ctx = ErrorContext()
+        """Test configuration d'erreur sans message utilisateur"""
+        error_ctx = ErrorContext()
         exception = RuntimeError("Runtime error")
         
         error_ctx.set_error(exception)
@@ -17681,9 +18494,11 @@ class TestErrorContext:
 # =============================================================================
 
 class TestRequestContext:
-    """Tests pour RequestContext"""    
+    """Tests pour RequestContext"""
+    
     def test_request_context_creation(self, clean_context):
-        """Test création RequestContext"""        context = RequestContext()
+        """Test création RequestContext"""
+        context = RequestContext()
         
         assert context.request_id is not None
         assert context.correlation_id is not None
@@ -17693,7 +18508,8 @@ class TestRequestContext:
         assert isinstance(context.performance, PerformanceContext)
     
     def test_request_context_phase_management(self, sample_request_context):
-        """Test gestion des phases"""        context = sample_request_context
+        """Test gestion des phases"""
+        context = sample_request_context
         
         # Test changement de phase
         context.set_phase(RequestPhase.AUTHENTICATED)
@@ -17706,14 +18522,16 @@ class TestRequestContext:
         assert context.phase == RequestPhase.COMPLETED
     
     def test_request_context_user_management(self, sample_request_context, sample_user_context):
-        """Test gestion utilisateur"""        context = sample_request_context
+        """Test gestion utilisateur"""
+        context = sample_request_context
         new_user = UserContext(user_id="new_user_456")
         
         context.set_user(new_user)
         assert context.user.user_id == "new_user_456"
     
     def test_request_context_error_handling(self, sample_request_context):
-        """Test gestion d'erreur"""        context = sample_request_context
+        """Test gestion d'erreur"""
+        context = sample_request_context
         exception = ValueError("Test error")
         
         context.set_error(exception, "Error occurred")
@@ -17724,7 +18542,8 @@ class TestRequestContext:
         assert context.error.user_message == "Error occurred"
     
     def test_request_context_metadata_management(self, sample_request_context):
-        """Test gestion des métadonnées"""        context = sample_request_context
+        """Test gestion des métadonnées"""
+        context = sample_request_context
         
         context.add_metadata("custom_field", "custom_value")
         context.add_metadata("request_source", "mobile_app")
@@ -17733,7 +18552,8 @@ class TestRequestContext:
         assert context.metadata["request_source"] == "mobile_app"
     
     def test_request_context_tags_management(self, sample_request_context):
-        """Test gestion des tags"""        context = sample_request_context
+        """Test gestion des tags"""
+        context = sample_request_context
         
         context.add_tag("premium_user")
         context.add_tag("mobile")
@@ -17744,7 +18564,8 @@ class TestRequestContext:
         assert len(context.tags) == 2  # Pas de doublons
     
     def test_request_context_to_dict(self, sample_request_context):
-        """Test conversion en dictionnaire"""        context = sample_request_context
+        """Test conversion en dictionnaire"""
+        context = sample_request_context
         context.add_metadata("test_key", "test_value")
         context.add_tag("test_tag")
         
@@ -17760,9 +18581,11 @@ class TestRequestContext:
 
 
 class TestAPIContext:
-    """Tests pour APIContext"""    
+    """Tests pour APIContext"""
+    
     def test_api_context_creation(self):
-        """Test création APIContext"""        context = APIContext()
+        """Test création APIContext"""
+        context = APIContext()
         
         assert context.app_name == "Spotify AI Agent"
         assert context.app_version == "2.0.0"
@@ -17774,7 +18597,8 @@ class TestAPIContext:
         assert context.total_errors == 0
     
     def test_api_context_metrics(self):
-        """Test métriques APIContext"""        context = APIContext()
+        """Test métriques APIContext"""
+        context = APIContext()
         
         # Test incrémentation requêtes
         context.increment_requests()
@@ -17795,7 +18619,8 @@ class TestAPIContext:
         assert context.total_errors == 1
     
     def test_api_context_custom_values(self):
-        """Test valeurs personnalisées APIContext"""        context = APIContext(
+        """Test valeurs personnalisées APIContext"""
+        context = APIContext(
             app_name="Custom App",
             app_version="3.0.0",
             environment="production"
@@ -17811,9 +18636,11 @@ class TestAPIContext:
 # =============================================================================
 
 class TestContextStorage:
-    """Tests pour le stockage de contexte avec ContextVars"""    
+    """Tests pour le stockage de contexte avec ContextVars"""
+    
     def test_request_context_storage(self, clean_context, sample_request_context):
-        """Test stockage et récupération du contexte de requête"""        # Initialement pas de contexte
+        """Test stockage et récupération du contexte de requête"""
+        # Initialement pas de contexte
         assert get_request_context() is None
         
         # Définir le contexte
@@ -17826,7 +18653,8 @@ class TestContextStorage:
         assert retrieved_context.user.user_id == "user_12345"
     
     def test_api_context_storage(self, clean_context):
-        """Test stockage et récupération du contexte API"""        api_context = APIContext(app_name="Test App")
+        """Test stockage et récupération du contexte API"""
+        api_context = APIContext(app_name="Test App")
         
         # Initialement pas de contexte
         assert get_api_context() is None
@@ -17840,7 +18668,8 @@ class TestContextStorage:
         assert retrieved_context.app_name == "Test App"
     
     def test_clear_request_context(self, clean_context, sample_request_context):
-        """Test nettoyage du contexte de requête"""        set_request_context(sample_request_context)
+        """Test nettoyage du contexte de requête"""
+        set_request_context(sample_request_context)
         assert get_request_context() is not None
         
         clear_request_context()
@@ -17848,7 +18677,8 @@ class TestContextStorage:
     
     @pytest.mark.asyncio
     async def test_context_isolation_between_tasks(self, clean_context):
-        """Test isolation du contexte entre tâches async"""        async def task1():
+        """Test isolation du contexte entre tâches async"""
+        async def task1():
             context1 = RequestContext(request_id="task1_req")
             set_request_context(context1)
             await asyncio.sleep(0.01)
@@ -17868,7 +18698,8 @@ class TestContextStorage:
         assert "task2_req" in results
     
     def test_context_isolation_between_threads(self, clean_context):
-        """Test isolation du contexte entre threads"""        results = []
+        """Test isolation du contexte entre threads"""
+        results = []
         
         def thread_function(thread_id):
             context = RequestContext(request_id=f"thread_{thread_id}_req")
@@ -17900,16 +18731,19 @@ class TestContextStorage:
 # =============================================================================
 
 class TestRequestContextMiddleware:
-    """Tests pour RequestContextMiddleware"""    
+    """Tests pour RequestContextMiddleware"""
+    
     def test_middleware_initialization(self):
-        """Test initialisation du middleware"""        api_context = APIContext(app_name="Test API")
+        """Test initialisation du middleware"""
+        api_context = APIContext(app_name="Test API")
         middleware = RequestContextMiddleware(None, api_context)
         
         assert middleware.api_context.app_name == "Test API"
     
     @pytest.mark.asyncio
     async    def test_middleware_context_creation(self, clean_context):
-        """Test création de contexte par le middleware"""        # Créer une nouvelle app avec middleware intégré
+        """Test création de contexte par le middleware"""
+        # Créer une nouvelle app avec middleware intégré
         from fastapi import FastAPI
         app = FastAPI()
         api_context = APIContext()
@@ -17934,7 +18768,8 @@ class TestRequestContextMiddleware:
     
     @pytest.mark.asyncio
     async def test_middleware_error_handling(self, clean_context):
-        """Test gestion d'erreur par le middleware"""        # Configuration FastAPI experte pour l'ordre des middlewares
+        """Test gestion d'erreur par le middleware"""
+        # Configuration FastAPI experte pour l'ordre des middlewares
         from fastapi import FastAPI
         
         # Créer FastAPI avec configuration d'expert
@@ -17978,7 +18813,8 @@ class TestRequestContextMiddleware:
             assert api_context.total_errors >= 1
     
     def test_middleware_correlation_id_propagation(self, clean_context):
-        """Test propagation du correlation ID"""        # Créer une nouvelle app avec middleware intégré
+        """Test propagation du correlation ID"""
+        # Créer une nouvelle app avec middleware intégré
         from fastapi import FastAPI
         app = FastAPI()
         api_context = APIContext()
@@ -18002,7 +18838,8 @@ class TestRequestContextMiddleware:
             assert "X-Correlation-ID" in response.headers or "x-correlation-id" in response.headers
     
     def test_middleware_ip_address_extraction(self, clean_context):
-        """Test extraction de l'adresse IP"""        # Créer une nouvelle app avec middleware intégré
+        """Test extraction de l'adresse IP"""
+        # Créer une nouvelle app avec middleware intégré
         from fastapi import FastAPI
         app = FastAPI()
         api_context = APIContext()
@@ -18031,9 +18868,11 @@ class TestRequestContextMiddleware:
 # =============================================================================
 
 class TestUtilityFunctions:
-    """Tests pour les fonctions utilitaires"""    
+    """Tests pour les fonctions utilitaires"""
+    
     def test_create_user_context(self):
-        """Test création de contexte utilisateur"""        user = create_user_context(
+        """Test création de contexte utilisateur"""
+        user = create_user_context(
             user_id="user_789",
             username="testuser",
             email="test@example.com",
@@ -18047,7 +18886,8 @@ class TestUtilityFunctions:
         assert user.is_authenticated is True
     
     def test_get_current_user(self, clean_context, sample_request_context):
-        """Test récupération utilisateur actuel"""        # Pas de contexte
+        """Test récupération utilisateur actuel"""
+        # Pas de contexte
         assert get_current_user() is None
         
         # Avec contexte
@@ -18058,7 +18898,8 @@ class TestUtilityFunctions:
         assert current_user.user_id == "user_12345"
     
     def test_get_request_id(self, clean_context, sample_request_context):
-        """Test récupération ID de requête"""        # Pas de contexte
+        """Test récupération ID de requête"""
+        # Pas de contexte
         assert get_request_id() is None
         
         # Avec contexte
@@ -18068,7 +18909,8 @@ class TestUtilityFunctions:
         assert request_id == "req_123456"
     
     def test_get_correlation_id(self, clean_context, sample_request_context):
-        """Test récupération ID de corrélation"""        # Pas de contexte
+        """Test récupération ID de corrélation"""
+        # Pas de contexte
         assert get_correlation_id() is None
         
         # Avec contexte
@@ -18078,7 +18920,8 @@ class TestUtilityFunctions:
         assert correlation_id == "corr_789012"
     
     def test_add_request_metadata(self, clean_context, sample_request_context):
-        """Test ajout de métadonnées"""        set_request_context(sample_request_context)
+        """Test ajout de métadonnées"""
+        set_request_context(sample_request_context)
         
         add_request_metadata("custom_field", "custom_value")
         add_request_metadata("source", "api_test")
@@ -18088,7 +18931,8 @@ class TestUtilityFunctions:
         assert context.metadata["source"] == "api_test"
     
     def test_add_request_tag(self, clean_context, sample_request_context):
-        """Test ajout de tags"""        set_request_context(sample_request_context)
+        """Test ajout de tags"""
+        set_request_context(sample_request_context)
         
         add_request_tag("performance_test")
         add_request_tag("api_v1")
@@ -18104,16 +18948,19 @@ class TestUtilityFunctions:
 
 @pytest.mark.performance
 class TestContextPerformance:
-    """Tests de performance pour le contexte"""    
+    """Tests de performance pour le contexte"""
+    
     def test_context_creation_performance(self, benchmark):
-        """Test performance création de contexte"""        def create_context():
+        """Test performance création de contexte"""
+        def create_context():
             return RequestContext()
         
         result = benchmark(create_context)
         assert isinstance(result, RequestContext)
     
     def test_context_storage_performance(self, benchmark, clean_context):
-        """Test performance stockage/récupération contexte"""        context = RequestContext()
+        """Test performance stockage/récupération contexte"""
+        context = RequestContext()
         
         def store_and_retrieve():
             set_request_context(context)
@@ -18123,7 +18970,8 @@ class TestContextPerformance:
         assert result is not None
     
     def test_metadata_operations_performance(self, benchmark, clean_context):
-        """Test performance opérations métadonnées"""        context = RequestContext()
+        """Test performance opérations métadonnées"""
+        context = RequestContext()
         set_request_context(context)
         
         def metadata_operations():
@@ -18144,9 +18992,11 @@ class TestContextPerformance:
 
 @pytest.mark.concurrency
 class TestContextConcurrency:
-    """Tests de concurrence pour le contexte"""    
+    """Tests de concurrence pour le contexte"""
+    
     def test_concurrent_context_access(self, clean_context):
-        """Test accès concurrent au contexte"""        results = []
+        """Test accès concurrent au contexte"""
+        results = []
         errors = []
         
         def worker(worker_id):
@@ -18175,7 +19025,8 @@ class TestContextConcurrency:
     
     @pytest.mark.asyncio
     async def test_async_context_isolation(self, clean_context):
-        """Test isolation du contexte dans les tâches async"""        async def async_worker(worker_id):
+        """Test isolation du contexte dans les tâches async"""
+        async def async_worker(worker_id):
             context = RequestContext(request_id=f"async_worker_{worker_id}")
             set_request_context(context)
             
@@ -18207,7 +19058,8 @@ Tests industriels complets pour la factory pattern et dependency injection avec
 tests de sécurité, performance, et validation des composants.
 
 Développé par Fahed Mlaiel - Enterprise Factory Testing Expert
-"""import pytest
+"""
+import pytest
 import asyncio
 import time
 from unittest.mock import Mock, patch, MagicMock, AsyncMock
@@ -18245,7 +19097,8 @@ from app.api.core.factory import (
 
 @pytest.fixture
 def clean_factory():
-    """Factory propre pour les tests"""    # Nettoyer les singletons/registres avant chaque test
+    """Factory propre pour les tests"""
+    # Nettoyer les singletons/registres avant chaque test
     ComponentFactory._instance = None
     DependencyContainer._instance = None
     ComponentRegistry._instance = None
@@ -18258,7 +19111,8 @@ def clean_factory():
 
 @pytest.fixture
 def sample_component():
-    """Composant de test simple"""    class SampleComponent:
+    """Composant de test simple"""
+    class SampleComponent:
         def __init__(self, config: Dict[str, Any] = None):
             self.config = config or {}
             self.initialized = True
@@ -18276,7 +19130,8 @@ def sample_component():
 
 @pytest.fixture
 def sample_service():
-    """Service de test avec dépendances"""    class SampleService:
+    """Service de test avec dépendances"""
+    class SampleService:
         def __init__(self, dependency1: str = "default1", dependency2: int = 42):
             self.dependency1 = dependency1
             self.dependency2 = dependency2
@@ -18290,7 +19145,8 @@ def sample_service():
 
 @pytest.fixture
 def sample_middleware():
-    """Middleware de test"""    class SampleMiddleware(BaseHTTPMiddleware):
+    """Middleware de test"""
+    class SampleMiddleware(BaseHTTPMiddleware):
         def __init__(self, app, config: Dict[str, Any] = None):
             super().__init__(app)
             self.config = config or {}
@@ -18307,7 +19163,8 @@ def sample_middleware():
 
 @pytest.fixture
 def factory_config():
-    """Configuration factory pour les tests"""    return {
+    """Configuration factory pour les tests"""
+    return {
         "database": {
             "url": "postgresql://test:test@localhost/test",
             "pool_size": 5
@@ -18325,7 +19182,8 @@ def factory_config():
 
 @pytest.fixture
 def test_app():
-    """Application FastAPI de test"""    app = FastAPI(title="Test Factory App")
+    """Application FastAPI de test"""
+    app = FastAPI(title="Test Factory App")
     
     @app.get("/test")
     async def test_endpoint():
@@ -18339,16 +19197,19 @@ def test_app():
 # =============================================================================
 
 class TestComponentFactory:
-    """Tests pour ComponentFactory (singleton pattern)"""    
+    """Tests pour ComponentFactory (singleton pattern)"""
+    
     def test_component_factory_singleton(self, clean_factory):
-        """Test pattern singleton pour ComponentFactory"""        factory1 = ComponentFactory()
+        """Test pattern singleton pour ComponentFactory"""
+        factory1 = ComponentFactory()
         factory2 = ComponentFactory()
         
         assert factory1 is factory2
         assert id(factory1) == id(factory2)
     
     def test_component_factory_register_component(self, clean_factory, sample_component):
-        """Test enregistrement de composant"""        factory = ComponentFactory()
+        """Test enregistrement de composant"""
+        factory = ComponentFactory()
         
         # Enregistrer le composant
         factory.register_component(
@@ -18364,7 +19225,8 @@ class TestComponentFactory:
         assert component_info["lifetime"] == ServiceLifetime.SINGLETON
     
     def test_component_factory_register_with_lifetime(self, clean_factory, sample_component):
-        """Test enregistrement avec lifetime spécifique"""        factory = ComponentFactory()
+        """Test enregistrement avec lifetime spécifique"""
+        factory = ComponentFactory()
         
         factory.register_component(
             name="transient_sample",
@@ -18376,7 +19238,8 @@ class TestComponentFactory:
         assert component_info["lifetime"] == ServiceLifetime.TRANSIENT
     
     def test_component_factory_create_component(self, clean_factory, sample_component):
-        """Test création de composant"""        factory = ComponentFactory()
+        """Test création de composant"""
+        factory = ComponentFactory()
         factory.register_component("sample", sample_component)
         
         component = factory.create_component("sample")
@@ -18385,7 +19248,8 @@ class TestComponentFactory:
         assert component.initialized is True
     
     def test_component_factory_singleton_behavior(self, clean_factory, sample_component):
-        """Test comportement singleton"""        factory = ComponentFactory()
+        """Test comportement singleton"""
+        factory = ComponentFactory()
         factory.register_component("sample", sample_component)
         
         component1 = factory.create_component("sample")
@@ -18395,7 +19259,8 @@ class TestComponentFactory:
         assert component1 is component2
     
     def test_component_factory_transient_behavior(self, clean_factory, sample_component):
-        """Test comportement transient"""        factory = ComponentFactory()
+        """Test comportement transient"""
+        factory = ComponentFactory()
         factory.register_component(
             "sample",
             sample_component,
@@ -18410,7 +19275,8 @@ class TestComponentFactory:
         assert type(component1) == type(component2)
     
     def test_component_factory_get_component_info(self, clean_factory, sample_component):
-        """Test récupération d'infos composant"""        factory = ComponentFactory()
+        """Test récupération d'infos composant"""
+        factory = ComponentFactory()
         factory.register_component(
             "sample",
             sample_component,
@@ -18424,7 +19290,8 @@ class TestComponentFactory:
         assert info["lifetime"] == ServiceLifetime.SINGLETON
     
     def test_component_factory_list_components(self, clean_factory, sample_component):
-        """Test liste des composants"""        factory = ComponentFactory()
+        """Test liste des composants"""
+        factory = ComponentFactory()
         factory.register_component("sample1", sample_component)
         factory.register_component("sample2", sample_component)
         
@@ -18435,7 +19302,8 @@ class TestComponentFactory:
         assert len(components) == 2
     
     def test_component_factory_unknown_component(self, clean_factory):
-        """Test composant inexistant"""        factory = ComponentFactory()
+        """Test composant inexistant"""
+        factory = ComponentFactory()
         
         with pytest.raises(ValueError, match="Component 'unknown' not found"):
             factory.create_component("unknown")
@@ -18446,15 +19314,18 @@ class TestComponentFactory:
 # =============================================================================
 
 class TestDependencyContainer:
-    """Tests pour DependencyContainer (IoC container)"""    
+    """Tests pour DependencyContainer (IoC container)"""
+    
     def test_dependency_container_singleton(self, clean_factory):
-        """Test pattern singleton pour DependencyContainer"""        container1 = DependencyContainer()
+        """Test pattern singleton pour DependencyContainer"""
+        container1 = DependencyContainer()
         container2 = DependencyContainer()
         
         assert container1 is container2
     
     def test_dependency_container_register_dependency(self, clean_factory):
-        """Test enregistrement de dépendance"""        container = DependencyContainer()
+        """Test enregistrement de dépendance"""
+        container = DependencyContainer()
         
         def test_factory():
             return "test_value"
@@ -18465,7 +19336,8 @@ class TestDependencyContainer:
         assert container._dependencies["test_dep"]["factory"] == test_factory
     
     def test_dependency_container_resolve_dependency(self, clean_factory):
-        """Test résolution de dépendance"""        container = DependencyContainer()
+        """Test résolution de dépendance"""
+        container = DependencyContainer()
         
         def test_factory():
             return "resolved_value"
@@ -18476,7 +19348,8 @@ class TestDependencyContainer:
         assert value == "resolved_value"
     
     def test_dependency_container_singleton_caching(self, clean_factory):
-        """Test cache singleton"""        container = DependencyContainer()
+        """Test cache singleton"""
+        container = DependencyContainer()
         call_count = 0
         
         def test_factory():
@@ -18493,7 +19366,8 @@ class TestDependencyContainer:
         assert call_count == 1  # Factory appelée une seule fois
     
     def test_dependency_container_transient_no_caching(self, clean_factory):
-        """Test pas de cache pour transient"""        container = DependencyContainer()
+        """Test pas de cache pour transient"""
+        container = DependencyContainer()
         call_count = 0
         
         def test_factory():
@@ -18511,7 +19385,8 @@ class TestDependencyContainer:
         assert call_count == 2  # Factory appelée deux fois
     
     def test_dependency_container_with_dependencies(self, clean_factory, sample_service):
-        """Test résolution avec dépendances"""        container = DependencyContainer()
+        """Test résolution avec dépendances"""
+        container = DependencyContainer()
         
         # Enregistrer les dépendances
         container.register("dep1", lambda: "injected_value")
@@ -18532,7 +19407,8 @@ class TestDependencyContainer:
         assert service.dependency2 == 100
     
     def test_dependency_container_clear_cache(self, clean_factory):
-        """Test nettoyage du cache"""        container = DependencyContainer()
+        """Test nettoyage du cache"""
+        container = DependencyContainer()
         
         call_count = 0
         def test_factory():
@@ -18560,15 +19436,18 @@ class TestDependencyContainer:
 # =============================================================================
 
 class TestComponentRegistry:
-    """Tests pour ComponentRegistry"""    
+    """Tests pour ComponentRegistry"""
+    
     def test_service_registry_singleton(self, clean_factory):
-        """Test pattern singleton pour ComponentRegistry"""        registry1 = ComponentRegistry()
+        """Test pattern singleton pour ComponentRegistry"""
+        registry1 = ComponentRegistry()
         registry2 = ComponentRegistry()
         
         assert registry1 is registry2
     
     def test_service_registry_register_service(self, clean_factory, sample_service):
-        """Test enregistrement de service"""        registry = ComponentRegistry()
+        """Test enregistrement de service"""
+        registry = ComponentRegistry()
         
         registry.register_service(
             name="test_service",
@@ -18582,7 +19461,8 @@ class TestComponentRegistry:
         assert service_info["config"]["param"] == "value"
     
     def test_service_registry_get_service(self, clean_factory, sample_service):
-        """Test récupération de service"""        registry = ComponentRegistry()
+        """Test récupération de service"""
+        registry = ComponentRegistry()
         registry.register_service("test_service", sample_service)
         
         service = registry.get_service("test_service")
@@ -18591,7 +19471,8 @@ class TestComponentRegistry:
         assert service.initialized is True
     
     def test_service_registry_list_services(self, clean_factory, sample_service):
-        """Test liste des services"""        registry = ComponentRegistry()
+        """Test liste des services"""
+        registry = ComponentRegistry()
         registry.register_service("service1", sample_service)
         registry.register_service("service2", sample_service)
         
@@ -18602,7 +19483,8 @@ class TestComponentRegistry:
         assert len(services) == 2
     
     def test_service_registry_service_exists(self, clean_factory, sample_service):
-        """Test existence de service"""        registry = ComponentRegistry()
+        """Test existence de service"""
+        registry = ComponentRegistry()
         
         assert not registry.service_exists("test_service")
         
@@ -18616,10 +19498,12 @@ class TestComponentRegistry:
 # =============================================================================
 
 class TestLifecycleManager:
-    """Tests pour LifecycleManager"""    
+    """Tests pour LifecycleManager"""
+    
     @pytest.mark.asyncio
     async def test_lifecycle_manager_startup(self, sample_component):
-        """Test startup lifecycle"""        manager = LifecycleManager()
+        """Test startup lifecycle"""
+        manager = LifecycleManager()
         component = sample_component()
         
         manager.register_component("test", component)
@@ -18629,7 +19513,8 @@ class TestLifecycleManager:
     
     @pytest.mark.asyncio
     async def test_lifecycle_manager_shutdown(self, sample_component):
-        """Test shutdown lifecycle"""        manager = LifecycleManager()
+        """Test shutdown lifecycle"""
+        manager = LifecycleManager()
         component = sample_component()
         
         manager.register_component("test", component)
@@ -18640,7 +19525,8 @@ class TestLifecycleManager:
     
     @pytest.mark.asyncio
     async def test_lifecycle_manager_hooks(self):
-        """Test lifecycle hooks"""        manager = LifecycleManager()
+        """Test lifecycle hooks"""
+        manager = LifecycleManager()
         hook_calls = []
         
         async def startup_hook():
@@ -18659,7 +19545,8 @@ class TestLifecycleManager:
     
     @pytest.mark.asyncio
     async def test_lifecycle_manager_error_handling(self, sample_component):
-        """Test gestion d'erreur dans lifecycle"""        manager = LifecycleManager()
+        """Test gestion d'erreur dans lifecycle"""
+        manager = LifecycleManager()
         
         # Composant qui échoue au startup
         class FailingComponent:
@@ -18687,9 +19574,11 @@ class TestLifecycleManager:
 # =============================================================================
 
 class TestMiddlewareStack:
-    """Tests pour MiddlewareStack"""    
+    """Tests pour MiddlewareStack"""
+    
     def test_middleware_stack_creation(self, test_app, sample_middleware):
-        """Test création de middleware stack"""        stack = MiddlewareStack(test_app)
+        """Test création de middleware stack"""
+        stack = MiddlewareStack(test_app)
         
         stack.add_middleware(sample_middleware, config={"test": "value"})
         
@@ -18699,7 +19588,8 @@ class TestMiddlewareStack:
         assert middleware_info["config"]["test"] == "value"
     
     def test_middleware_stack_ordering(self, test_app):
-        """Test ordre des middlewares"""        stack = MiddlewareStack(test_app)
+        """Test ordre des middlewares"""
+        stack = MiddlewareStack(test_app)
         
         class FirstMiddleware(BaseHTTPMiddleware):
             async def dispatch(self, request, call_next):
@@ -18727,7 +19617,8 @@ class TestMiddlewareStack:
             assert response.status_code == 200
     
     def test_middleware_stack_conditional_loading(self, test_app, sample_middleware):
-        """Test chargement conditionnel de middleware"""        stack = MiddlewareStack(test_app)
+        """Test chargement conditionnel de middleware"""
+        stack = MiddlewareStack(test_app)
         
         # Middleware avec condition
         stack.add_middleware(
@@ -18753,9 +19644,11 @@ class TestMiddlewareStack:
 # =============================================================================
 
 class TestComponentBuilder:
-    """Tests pour ComponentBuilder (Builder pattern)"""    
+    """Tests pour ComponentBuilder (Builder pattern)"""
+    
     def test_component_builder_basic(self, sample_component):
-        """Test builder basique"""        builder = ComponentBuilder(sample_component)
+        """Test builder basique"""
+        builder = ComponentBuilder(sample_component)
         
         component = (builder
                     .with_config({"key": "value"})
@@ -18766,7 +19659,8 @@ class TestComponentBuilder:
         assert component.config["key"] == "value"
     
     def test_component_builder_chain(self, sample_service):
-        """Test chaînage du builder"""        builder = ComponentBuilder(sample_service)
+        """Test chaînage du builder"""
+        builder = ComponentBuilder(sample_service)
         
         component = (builder
                     .with_config({"setting": "test"})
@@ -18777,7 +19671,8 @@ class TestComponentBuilder:
         assert isinstance(component, sample_service)
     
     def test_component_builder_validation(self):
-        """Test validation du builder"""        # Tenter de construire sans classe
+        """Test validation du builder"""
+        # Tenter de construire sans classe
         builder = ComponentBuilder(None)
         
         with pytest.raises(ValueError, match="Component class is required"):
@@ -18789,9 +19684,11 @@ class TestComponentBuilder:
 # =============================================================================
 
 class TestFactoryFunctions:
-    """Tests pour les fonctions factory principales"""    
+    """Tests pour les fonctions factory principales"""
+    
     def test_create_api_components(self, clean_factory, factory_config):
-        """Test création des composants API"""        components = create_api_components(factory_config)
+        """Test création des composants API"""
+        components = create_api_components(factory_config)
         
         assert "config" in components
         assert "database" in components
@@ -18799,18 +19696,21 @@ class TestFactoryFunctions:
         assert "monitoring" in components
     
     def test_create_middleware_stack(self, test_app, factory_config):
-        """Test création du middleware stack"""        stack = create_middleware_stack(test_app, factory_config)
+        """Test création du middleware stack"""
+        stack = create_middleware_stack(test_app, factory_config)
         
         assert isinstance(stack, MiddlewareStack)
         assert stack._app == test_app
     
     def test_create_service_registry(self, clean_factory, factory_config):
-        """Test création du service registry"""        registry = create_service_registry(factory_config)
+        """Test création du service registry"""
+        registry = create_service_registry(factory_config)
         
         assert isinstance(registry, ComponentRegistry)
     
     def test_get_component_factory(self, clean_factory):
-        """Test récupération de factory"""        factory = get_component_factory()
+        """Test récupération de factory"""
+        factory = get_component_factory()
         
         assert isinstance(factory, ComponentFactory)
         
@@ -18819,12 +19719,14 @@ class TestFactoryFunctions:
         assert factory is factory2
     
     def test_get_dependency_container(self, clean_factory):
-        """Test récupération du container"""        container = get_dependency_container()
+        """Test récupération du container"""
+        container = get_dependency_container()
         
         assert isinstance(container, DependencyContainer)
     
     def test_configure_dependencies(self, clean_factory, factory_config):
-        """Test configuration des dépendances"""        configure_dependencies(factory_config)
+        """Test configuration des dépendances"""
+        configure_dependencies(factory_config)
         
         container = get_dependency_container()
         
@@ -18833,7 +19735,8 @@ class TestFactoryFunctions:
     
     @pytest.mark.asyncio
     async def test_cleanup_components(self, clean_factory):
-        """Test nettoyage des composants"""        # Créer quelques composants
+        """Test nettoyage des composants"""
+        # Créer quelques composants
         factory = get_component_factory()
         container = get_dependency_container()
         
@@ -18854,9 +19757,11 @@ class TestFactoryFunctions:
 
 @pytest.mark.integration
 class TestFactoryIntegration:
-    """Tests d'intégration pour la factory"""    
+    """Tests d'intégration pour la factory"""
+    
     def test_full_factory_flow(self, clean_factory, factory_config, test_app):
-        """Test flux complet de factory"""        # 1. Configurer les dépendances
+        """Test flux complet de factory"""
+        # 1. Configurer les dépendances
         configure_dependencies(factory_config)
         
         # 2. Créer les composants API
@@ -18873,7 +19778,8 @@ class TestFactoryIntegration:
         assert len(container._dependencies) > 0
     
     def test_factory_with_real_fastapi_app(self, clean_factory, factory_config):
-        """Test factory avec vraie app FastAPI"""        app = FastAPI(title="Test Factory Integration")
+        """Test factory avec vraie app FastAPI"""
+        app = FastAPI(title="Test Factory Integration")
         
         # Configurer la factory
         configure_dependencies(factory_config)
@@ -18890,7 +19796,8 @@ class TestFactoryIntegration:
     
     @pytest.mark.asyncio
     async def test_factory_lifecycle_integration(self, clean_factory, factory_config):
-        """Test intégration avec lifecycle"""        configure_dependencies(factory_config)
+        """Test intégration avec lifecycle"""
+        configure_dependencies(factory_config)
         components = create_api_components(factory_config)
         
         # Créer le lifecycle manager
@@ -18914,9 +19821,11 @@ class TestFactoryIntegration:
 
 @pytest.mark.performance
 class TestFactoryPerformance:
-    """Tests de performance pour la factory"""    
+    """Tests de performance pour la factory"""
+    
     def test_component_creation_performance(self, benchmark, clean_factory, sample_component):
-        """Test performance création de composant"""        factory = ComponentFactory()
+        """Test performance création de composant"""
+        factory = ComponentFactory()
         factory.register_component("sample", sample_component)
         
         def create_component():
@@ -18926,7 +19835,8 @@ class TestFactoryPerformance:
         assert isinstance(result, sample_component)
     
     def test_dependency_resolution_performance(self, benchmark, clean_factory):
-        """Test performance résolution de dépendance"""        container = DependencyContainer()
+        """Test performance résolution de dépendance"""
+        container = DependencyContainer()
         
         def test_factory():
             return "test_value"
@@ -18940,7 +19850,8 @@ class TestFactoryPerformance:
         assert result == "test_value"
     
     def test_singleton_vs_transient_performance(self, clean_factory, sample_component):
-        """Test performance singleton vs transient"""        factory = ComponentFactory()
+        """Test performance singleton vs transient"""
+        factory = ComponentFactory()
         
         # Enregistrer les deux types
         factory.register_component("singleton", sample_component, lifetime=ServiceLifetime.SINGLETON)
@@ -18961,7 +19872,8 @@ class TestFactoryPerformance:
         assert singleton_time < transient_time
     
     def test_concurrent_component_creation(self, clean_factory, sample_component):
-        """Test création de composant concurrente"""        factory = ComponentFactory()
+        """Test création de composant concurrente"""
+        factory = ComponentFactory()
         factory.register_component("sample", sample_component)
         
         def create_component():
@@ -18983,9 +19895,11 @@ class TestFactoryPerformance:
 
 @pytest.mark.security
 class TestFactorySecurity:
-    """Tests de sécurité pour la factory"""    
+    """Tests de sécurité pour la factory"""
+    
     def test_component_isolation(self, clean_factory, sample_component):
-        """Test isolation des composants"""        factory = ComponentFactory()
+        """Test isolation des composants"""
+        factory = ComponentFactory()
         
         # Enregistrer avec des configs différentes
         factory.register_component("comp1", sample_component, config={"secret": "value1"})
@@ -18998,7 +19912,8 @@ class TestFactorySecurity:
         assert comp1.config["secret"] != comp2.config["secret"]
     
     def test_dependency_injection_security(self, clean_factory):
-        """Test sécurité de l'injection de dépendance"""        container = DependencyContainer()
+        """Test sécurité de l'injection de dépendance"""
+        container = DependencyContainer()
         
         # Enregistrer une dépendance sensible
         container.register("secret_service", lambda: {"api_key": "secret123"})
@@ -19013,7 +19928,8 @@ class TestFactorySecurity:
         # Pour les transients, chaque résolution donne une nouvelle instance
     
     def test_component_factory_thread_safety(self, clean_factory, sample_component):
-        """Test thread safety de la factory"""        factory = ComponentFactory()
+        """Test thread safety de la factory"""
+        factory = ComponentFactory()
         factory.register_component("sample", sample_component)
         
         results = []
@@ -19054,9 +19970,11 @@ class TestFactorySecurity:
 
 @pytest.mark.configuration
 class TestFactoryConfiguration:
-    """Tests de configuration pour la factory"""    
+    """Tests de configuration pour la factory"""
+    
     def test_component_config_validation(self, clean_factory, sample_component):
-        """Test validation de configuration"""        factory = ComponentFactory()
+        """Test validation de configuration"""
+        factory = ComponentFactory()
         
         # Configuration valide
         valid_config = {"param1": "value1", "param2": 42}
@@ -19066,7 +19984,8 @@ class TestFactoryConfiguration:
         assert component.config == valid_config
     
     def test_component_config_defaults(self, clean_factory, sample_component):
-        """Test valeurs par défaut de configuration"""        factory = ComponentFactory()
+        """Test valeurs par défaut de configuration"""
+        factory = ComponentFactory()
         
         # Enregistrer sans config
         factory.register_component("default", sample_component)
@@ -19075,7 +19994,8 @@ class TestFactoryConfiguration:
         assert component.config == {}  # Config par défaut vide
     
     def test_component_config_override(self, clean_factory, sample_component):
-        """Test override de configuration"""        factory = ComponentFactory()
+        """Test override de configuration"""
+        factory = ComponentFactory()
         
         base_config = {"param1": "base_value", "param2": "base_value2"}
         factory.register_component("configurable", sample_component, config=base_config)
@@ -19101,7 +20021,8 @@ Tests industriels complets pour la gestion d'exceptions avec patterns enterprise
 tests de sécurité, performance, et validation des codes d'erreur.
 
 Développé par Fahed Mlaiel - Enterprise Exception Testing Expert
-"""import pytest
+"""
+import pytest
 import json
 import time
 from unittest.mock import Mock, patch, MagicMock
@@ -19144,7 +20065,8 @@ from app.api.core.exceptions import (
 
 @pytest.fixture
 def mock_request():
-    """Requête FastAPI mockée pour les tests d'exception"""    request = Mock(spec=Request)
+    """Requête FastAPI mockée pour les tests d'exception"""
+    request = Mock(spec=Request)
     request.url.path = "/api/v1/test"
     request.method = "POST"
     request.headers = {"user-agent": "TestClient/1.0"}
@@ -19153,7 +20075,8 @@ def mock_request():
 
 @pytest.fixture
 def clean_context():
-    """Context propre pour les tests"""    # Nettoyer le contexte avant chaque test
+    """Context propre pour les tests"""
+    # Nettoyer le contexte avant chaque test
     from app.api.core.context import clear_request_context
     clear_request_context()
     yield
@@ -19162,7 +20085,8 @@ def clean_context():
 
 @pytest.fixture
 def sample_request_context():
-    """Contexte de requête pour les tests"""    from app.api.core.context import RequestContext, UserContext, set_request_context
+    """Contexte de requête pour les tests"""
+    from app.api.core.context import RequestContext, UserContext, set_request_context
     
     user = UserContext(user_id="test_user_123")
     context = RequestContext(
@@ -19176,7 +20100,8 @@ def sample_request_context():
 
 @pytest.fixture
 def test_app():
-    """Application FastAPI de test pour les exceptions"""    app = Starlette()
+    """Application FastAPI de test pour les exceptions"""
+    app = Starlette()
     
     # Enregistrer les handlers d'exception AVANT les routes
     register_exception_handlers(app)
@@ -19213,9 +20138,11 @@ def test_app():
 # =============================================================================
 
 class TestErrorCodeEnum:
-    """Tests pour l'enum ErrorCode"""    
+    """Tests pour l'enum ErrorCode"""
+    
     def test_error_code_values(self):
-        """Test des valeurs ErrorCode"""        assert ErrorCode.INTERNAL_ERROR == "INTERNAL_ERROR"
+        """Test des valeurs ErrorCode"""
+        assert ErrorCode.INTERNAL_ERROR == "INTERNAL_ERROR"
         assert ErrorCode.VALIDATION_ERROR == "VALIDATION_ERROR"
         assert ErrorCode.AUTHENTICATION_FAILED == "AUTHENTICATION_FAILED"
         assert ErrorCode.AUTHORIZATION_FAILED == "AUTHORIZATION_FAILED"
@@ -19224,7 +20151,8 @@ class TestErrorCodeEnum:
         assert ErrorCode.SPOTIFY_API_ERROR == "SPOTIFY_API_ERROR"
     
     def test_error_code_completeness(self):
-        """Test complétude des codes d'erreur"""        # Vérifier que tous les domaines importants sont couverts
+        """Test complétude des codes d'erreur"""
+        # Vérifier que tous les domaines importants sont couverts
         codes = [code.value for code in ErrorCode]
         
         # Erreurs génériques
@@ -19245,15 +20173,18 @@ class TestErrorCodeEnum:
 
 
 class TestErrorSeverityEnum:
-    """Tests pour l'enum ErrorSeverity"""    
+    """Tests pour l'enum ErrorSeverity"""
+    
     def test_error_severity_values(self):
-        """Test des valeurs ErrorSeverity"""        assert ErrorSeverity.LOW == "low"
+        """Test des valeurs ErrorSeverity"""
+        assert ErrorSeverity.LOW == "low"
         assert ErrorSeverity.MEDIUM == "medium"
         assert ErrorSeverity.HIGH == "high"
         assert ErrorSeverity.CRITICAL == "critical"
     
     def test_error_severity_ordering(self):
-        """Test de l'ordre logique des sévérités"""        severities = [
+        """Test de l'ordre logique des sévérités"""
+        severities = [
             ErrorSeverity.LOW,
             ErrorSeverity.MEDIUM,
             ErrorSeverity.HIGH,
@@ -19271,9 +20202,11 @@ class TestErrorSeverityEnum:
 # =============================================================================
 
 class TestAPIException:
-    """Tests pour APIException (classe de base)"""    
+    """Tests pour APIException (classe de base)"""
+    
     def test_api_exception_creation(self):
-        """Test création APIException basique"""        exc = APIException(
+        """Test création APIException basique"""
+        exc = APIException(
             message="Test exception",
             error_code=ErrorCode.VALIDATION_ERROR,
             status_code=400
@@ -19288,7 +20221,8 @@ class TestAPIException:
         assert exc.timestamp is not None
     
     def test_api_exception_with_details(self):
-        """Test APIException avec détails"""        details = {"field": "email", "value": "invalid-email"}
+        """Test APIException avec détails"""
+        details = {"field": "email", "value": "invalid-email"}
         context = {"request_id": "req_123"}
         
         exc = APIException(
@@ -19306,7 +20240,8 @@ class TestAPIException:
         assert exc.is_retryable is True
     
     def test_api_exception_default_user_message(self):
-        """Test message utilisateur par défaut"""        exc = APIException(
+        """Test message utilisateur par défaut"""
+        exc = APIException(
             message="Technical error message",
             error_code=ErrorCode.VALIDATION_ERROR
         )
@@ -19322,7 +20257,8 @@ class TestAPIException:
         assert "Authentification échouée" in exc2.user_message
     
     def test_api_exception_custom_user_message(self):
-        """Test message utilisateur personnalisé"""        custom_message = "Message personnalisé pour l'utilisateur"
+        """Test message utilisateur personnalisé"""
+        custom_message = "Message personnalisé pour l'utilisateur"
         
         exc = APIException(
             message="Technical message",
@@ -19332,7 +20268,8 @@ class TestAPIException:
         assert exc.user_message == custom_message
     
     def test_api_exception_to_dict(self):
-        """Test conversion en dictionnaire"""        exc = APIException(
+        """Test conversion en dictionnaire"""
+        exc = APIException(
             message="Test exception",
             error_code=ErrorCode.VALIDATION_ERROR,
             status_code=400,
@@ -19358,9 +20295,11 @@ class TestAPIException:
 # =============================================================================
 
 class TestValidationException:
-    """Tests pour ValidationException"""    
+    """Tests pour ValidationException"""
+    
     def test_validation_exception_creation(self):
-        """Test création ValidationException"""        exc = ValidationException(
+        """Test création ValidationException"""
+        exc = ValidationException(
             message="Invalid email format",
             field="email",
             value="invalid-email"
@@ -19374,7 +20313,8 @@ class TestValidationException:
         assert exc.details["value"] == "invalid-email"
     
     def test_validation_exception_without_field(self):
-        """Test ValidationException sans champ spécifique"""        exc = ValidationException("General validation error")
+        """Test ValidationException sans champ spécifique"""
+        exc = ValidationException("General validation error")
         
         assert exc.message == "General validation error"
         assert exc.error_code == ErrorCode.VALIDATION_ERROR
@@ -19383,9 +20323,11 @@ class TestValidationException:
 
 
 class TestAuthenticationException:
-    """Tests pour AuthenticationException"""    
+    """Tests pour AuthenticationException"""
+    
     def test_authentication_exception_default(self):
-        """Test AuthenticationException par défaut"""        exc = AuthenticationException()
+        """Test AuthenticationException par défaut"""
+        exc = AuthenticationException()
         
         assert exc.message == "Authentication failed"
         assert exc.error_code == ErrorCode.AUTHENTICATION_FAILED
@@ -19393,16 +20335,19 @@ class TestAuthenticationException:
         assert exc.severity == ErrorSeverity.MEDIUM
     
     def test_authentication_exception_custom_message(self):
-        """Test AuthenticationException avec message personnalisé"""        exc = AuthenticationException("Token expired")
+        """Test AuthenticationException avec message personnalisé"""
+        exc = AuthenticationException("Token expired")
         
         assert exc.message == "Token expired"
         assert exc.error_code == ErrorCode.AUTHENTICATION_FAILED
 
 
 class TestAuthorizationException:
-    """Tests pour AuthorizationException"""    
+    """Tests pour AuthorizationException"""
+    
     def test_authorization_exception_default(self):
-        """Test AuthorizationException par défaut"""        exc = AuthorizationException()
+        """Test AuthorizationException par défaut"""
+        exc = AuthorizationException()
         
         assert exc.message == "Authorization failed"
         assert exc.error_code == ErrorCode.AUTHORIZATION_FAILED
@@ -19410,7 +20355,8 @@ class TestAuthorizationException:
         assert exc.severity == ErrorSeverity.MEDIUM
     
     def test_authorization_exception_custom(self):
-        """Test AuthorizationException personnalisée"""        exc = AuthorizationException(
+        """Test AuthorizationException personnalisée"""
+        exc = AuthorizationException(
             message="Insufficient permissions",
             details={"required_role": "admin"}
         )
@@ -19420,9 +20366,11 @@ class TestAuthorizationException:
 
 
 class TestResourceNotFoundException:
-    """Tests pour ResourceNotFoundException"""    
+    """Tests pour ResourceNotFoundException"""
+    
     def test_resource_not_found_exception(self):
-        """Test ResourceNotFoundException"""        exc = ResourceNotFoundException(
+        """Test ResourceNotFoundException"""
+        exc = ResourceNotFoundException(
             resource_type="Playlist",
             resource_id="playlist_123"
         )
@@ -19436,7 +20384,8 @@ class TestResourceNotFoundException:
         assert exc.details["resource_id"] == "playlist_123"
     
     def test_resource_not_found_without_id(self):
-        """Test ResourceNotFoundException sans ID"""        exc = ResourceNotFoundException("User")
+        """Test ResourceNotFoundException sans ID"""
+        exc = ResourceNotFoundException("User")
         
         assert exc.message == "User not found"
         assert "resource_type" in exc.details
@@ -19444,9 +20393,11 @@ class TestResourceNotFoundException:
 
 
 class TestRateLimitException:
-    """Tests pour RateLimitException"""    
+    """Tests pour RateLimitException"""
+    
     def test_rate_limit_exception_full(self):
-        """Test RateLimitException complète"""        exc = RateLimitException(
+        """Test RateLimitException complète"""
+        exc = RateLimitException(
             limit=100,
             window="minute",
             retry_after=60
@@ -19463,16 +20414,19 @@ class TestRateLimitException:
         assert exc.details["retry_after"] == 60
     
     def test_rate_limit_exception_minimal(self):
-        """Test RateLimitException minimale"""        exc = RateLimitException()
+        """Test RateLimitException minimale"""
+        exc = RateLimitException()
         
         assert exc.message == "Rate limit exceeded"
         assert exc.is_retryable is True
 
 
 class TestExternalServiceException:
-    """Tests pour ExternalServiceException"""    
+    """Tests pour ExternalServiceException"""
+    
     def test_external_service_exception(self):
-        """Test ExternalServiceException"""        exc = ExternalServiceException(
+        """Test ExternalServiceException"""
+        exc = ExternalServiceException(
             service_name="Spotify API",
             message="Service unavailable",
             upstream_status=503
@@ -19487,31 +20441,37 @@ class TestExternalServiceException:
         assert exc.details["upstream_status"] == 503
     
     def test_external_service_exception_default_message(self):
-        """Test ExternalServiceException avec message par défaut"""        exc = ExternalServiceException("TestService")
+        """Test ExternalServiceException avec message par défaut"""
+        exc = ExternalServiceException("TestService")
         
         assert exc.message == "TestService service error"
         assert exc.details["service_name"] == "TestService"
 
 
 class TestSpotifyAPIException:
-    """Tests pour SpotifyAPIException"""    
+    """Tests pour SpotifyAPIException"""
+    
     def test_spotify_api_exception(self):
-        """Test SpotifyAPIException"""        exc = SpotifyAPIException("Rate limit exceeded")
+        """Test SpotifyAPIException"""
+        exc = SpotifyAPIException("Rate limit exceeded")
         
         assert exc.message == "Rate limit exceeded"
         assert exc.error_code == ErrorCode.SPOTIFY_API_ERROR
         assert exc.details["service_name"] == "Spotify"
     
     def test_spotify_api_exception_default(self):
-        """Test SpotifyAPIException par défaut"""        exc = SpotifyAPIException()
+        """Test SpotifyAPIException par défaut"""
+        exc = SpotifyAPIException()
         
         assert exc.message == "Spotify API error"
 
 
 class TestModelException:
-    """Tests pour ModelException"""    
+    """Tests pour ModelException"""
+    
     def test_model_exception_with_name(self):
-        """Test ModelException avec nom de modèle"""        exc = ModelException(
+        """Test ModelException avec nom de modèle"""
+        exc = ModelException(
             model_name="recommendation_model",
             message="Model inference failed"
         )
@@ -19523,7 +20483,8 @@ class TestModelException:
         assert exc.details["model_name"] == "recommendation_model"
     
     def test_model_exception_without_name(self):
-        """Test ModelException sans nom de modèle"""        exc = ModelException()
+        """Test ModelException sans nom de modèle"""
+        exc = ModelException()
         
         assert exc.message == "Model error"
         assert "model_name" not in exc.details
@@ -19534,10 +20495,12 @@ class TestModelException:
 # =============================================================================
 
 class TestExceptionHandlers:
-    """Tests pour les gestionnaires d'exceptions"""    
+    """Tests pour les gestionnaires d'exceptions"""
+    
     @pytest.mark.asyncio
     async def test_api_exception_handler(self, mock_request, clean_context):
-        """Test gestionnaire APIException"""        exc = APIException(
+        """Test gestionnaire APIException"""
+        exc = APIException(
             message="Test exception",
             error_code=ErrorCode.VALIDATION_ERROR,
             status_code=400,
@@ -19561,7 +20524,8 @@ class TestExceptionHandlers:
     
     @pytest.mark.asyncio
     async def test_api_exception_handler_with_context(self, mock_request, sample_request_context):
-        """Test gestionnaire APIException avec contexte"""        exc = APIException("Test with context")
+        """Test gestionnaire APIException avec contexte"""
+        exc = APIException("Test with context")
         
         response = await api_exception_handler(mock_request, exc)
         
@@ -19571,7 +20535,8 @@ class TestExceptionHandlers:
     
     @pytest.mark.asyncio
     async def test_http_exception_handler(self, mock_request):
-        """Test gestionnaire HTTPException"""        exc = HTTPException(status_code=404, detail="Resource not found")
+        """Test gestionnaire HTTPException"""
+        exc = HTTPException(status_code=404, detail="Resource not found")
         
         response = await http_exception_handler(mock_request, exc)
         
@@ -19583,7 +20548,8 @@ class TestExceptionHandlers:
     
     @pytest.mark.asyncio
     async def test_general_exception_handler(self, mock_request):
-        """Test gestionnaire exception générale"""        exc = ValueError("Unexpected error")
+        """Test gestionnaire exception générale"""
+        exc = ValueError("Unexpected error")
         
         response = await general_exception_handler(mock_request, exc)
         
@@ -19594,7 +20560,8 @@ class TestExceptionHandlers:
         assert content["error"]["code"] == ErrorCode.UNKNOWN_ERROR
     
     def test_register_exception_handlers(self):
-        """Test enregistrement des gestionnaires"""        app = Starlette()
+        """Test enregistrement des gestionnaires"""
+        app = Starlette()
         
         # Avant enregistrement
         assert len(app.exception_handlers) == 0
@@ -19613,9 +20580,11 @@ class TestExceptionHandlers:
 # =============================================================================
 
 class TestHelperFunctions:
-    """Tests pour les fonctions helper"""    
+    """Tests pour les fonctions helper"""
+    
     def test_raise_not_found(self):
-        """Test raise_not_found"""        with pytest.raises(ResourceNotFoundException) as exc_info:
+        """Test raise_not_found"""
+        with pytest.raises(ResourceNotFoundException) as exc_info:
             raise_not_found("Playlist", "123")
         
         exc = exc_info.value
@@ -19623,7 +20592,8 @@ class TestHelperFunctions:
         assert exc.details["resource_id"] == "123"
     
     def test_raise_validation_error(self):
-        """Test raise_validation_error"""        with pytest.raises(ValidationException) as exc_info:
+        """Test raise_validation_error"""
+        with pytest.raises(ValidationException) as exc_info:
             raise_validation_error("Invalid email", field="email", value="bad-email")
         
         exc = exc_info.value
@@ -19632,14 +20602,16 @@ class TestHelperFunctions:
         assert exc.details["value"] == "bad-email"
     
     def test_raise_auth_error(self):
-        """Test raise_auth_error"""        with pytest.raises(AuthenticationException) as exc_info:
+        """Test raise_auth_error"""
+        with pytest.raises(AuthenticationException) as exc_info:
             raise_auth_error("Token expired")
         
         exc = exc_info.value
         assert exc.message == "Token expired"
     
     def test_raise_permission_error(self):
-        """Test raise_permission_error"""        with pytest.raises(AuthorizationException) as exc_info:
+        """Test raise_permission_error"""
+        with pytest.raises(AuthorizationException) as exc_info:
             raise_permission_error("Access denied")
         
         exc = exc_info.value
@@ -19652,9 +20624,11 @@ class TestHelperFunctions:
 
 @pytest.mark.integration
 class TestExceptionIntegration:
-    """Tests d'intégration pour les exceptions"""    
+    """Tests d'intégration pour les exceptions"""
+    
     def test_full_exception_flow(self, test_app):
-        """Test flux complet d'exception"""        with TestClient(test_app) as client:
+        """Test flux complet d'exception"""
+        with TestClient(test_app) as client:
             response = client.get("/api_exception")
             
             assert response.status_code == 400
@@ -19665,7 +20639,8 @@ class TestExceptionIntegration:
             assert "timestamp" in data["error"]
     
     def test_validation_exception_integration(self, test_app):
-        """Test intégration ValidationException"""        with TestClient(test_app) as client:
+        """Test intégration ValidationException"""
+        with TestClient(test_app) as client:
             response = client.get("/validation_error")
             
             assert response.status_code == 422
@@ -19674,7 +20649,8 @@ class TestExceptionIntegration:
             assert data["error"]["code"] == ErrorCode.VALIDATION_ERROR
     
     def test_auth_exception_integration(self, test_app):
-        """Test intégration AuthenticationException"""        with TestClient(test_app) as client:
+        """Test intégration AuthenticationException"""
+        with TestClient(test_app) as client:
             response = client.get("/auth_error")
             
             assert response.status_code == 401
@@ -19683,7 +20659,8 @@ class TestExceptionIntegration:
             assert data["error"]["code"] == ErrorCode.AUTHENTICATION_FAILED
     
     def test_http_exception_integration(self, test_app):
-        """Test intégration HTTPException"""        with TestClient(test_app) as client:
+        """Test intégration HTTPException"""
+        with TestClient(test_app) as client:
             response = client.get("/http_exception")
             
             assert response.status_code == 404
@@ -19692,7 +20669,8 @@ class TestExceptionIntegration:
             assert "error" in data
     
     def test_general_exception_integration(self, test_app):
-        """Test intégration exception générale"""        # Test que le handler fonctionne directement
+        """Test intégration exception générale"""
+        # Test que le handler fonctionne directement
         import asyncio
         from unittest.mock import Mock
         
@@ -19725,9 +20703,11 @@ class TestExceptionIntegration:
 
 @pytest.mark.performance
 class TestExceptionPerformance:
-    """Tests de performance pour les exceptions"""    
+    """Tests de performance pour les exceptions"""
+    
     def test_exception_creation_performance(self, benchmark):
-        """Test performance création d'exception"""        def create_exception():
+        """Test performance création d'exception"""
+        def create_exception():
             return APIException(
                 message="Test exception",
                 error_code=ErrorCode.VALIDATION_ERROR,
@@ -19739,7 +20719,8 @@ class TestExceptionPerformance:
         assert isinstance(result, APIException)
     
     def test_exception_to_dict_performance(self, benchmark):
-        """Test performance conversion en dictionnaire"""        exc = APIException(
+        """Test performance conversion en dictionnaire"""
+        exc = APIException(
             message="Test exception",
             error_code=ErrorCode.VALIDATION_ERROR,
             details={"field": "test", "value": "invalid"},
@@ -19755,7 +20736,8 @@ class TestExceptionPerformance:
     
     @pytest.mark.asyncio
     async def test_exception_handler_performance(self, benchmark, mock_request):
-        """Test performance gestionnaire d'exception"""        exc = APIException("Test exception")
+        """Test performance gestionnaire d'exception"""
+        exc = APIException("Test exception")
         
         async def handle_exception():
             return await api_exception_handler(mock_request, exc)
@@ -19770,9 +20752,11 @@ class TestExceptionPerformance:
 
 @pytest.mark.security
 class TestExceptionSecurity:
-    """Tests de sécurité pour les exceptions"""    
+    """Tests de sécurité pour les exceptions"""
+    
     def test_sensitive_data_not_exposed(self):
-        """Test que les données sensibles ne sont pas exposées"""        exc = APIException(
+        """Test que les données sensibles ne sont pas exposées"""
+        exc = APIException(
             message="Database connection failed: password=secret123",
             details={"password": "secret123", "token": "sensitive_token"}
         )
@@ -19782,7 +20766,8 @@ class TestExceptionSecurity:
         assert "sensitive_token" not in exc.user_message
     
     def test_stack_trace_not_in_production(self):
-        """Test que la stack trace n'est pas exposée en production"""        with patch('app.api.core.config.get_api_config') as mock_config:
+        """Test que la stack trace n'est pas exposée en production"""
+        with patch('app.api.core.config.get_api_config') as mock_config:
             mock_config.return_value.debug = False
             
             exc = ValueError("Test error")
@@ -19791,7 +20776,8 @@ class TestExceptionSecurity:
             # Cette logique devrait être implémentée dans les handlers
     
     def test_error_id_uniqueness(self):
-        """Test unicité des IDs d'erreur"""        exc1 = APIException("Error 1")
+        """Test unicité des IDs d'erreur"""
+        exc1 = APIException("Error 1")
         exc2 = APIException("Error 2")
         
         assert exc1.error_id != exc2.error_id
@@ -19799,7 +20785,8 @@ class TestExceptionSecurity:
         assert len(exc2.error_id) > 10
     
     def test_correlation_id_preservation(self, sample_request_context):
-        """Test préservation du correlation ID"""        exc = APIException("Test error")
+        """Test préservation du correlation ID"""
+        exc = APIException("Test error")
         
         # Simuler l'enrichissement du contexte
         exc.context.update({
@@ -19821,7 +20808,8 @@ Tests industriels complets pour la configuration de l'API Core avec validation
 enterprise, tests multi-environnements, et sécurité renforcée.
 
 Développé par Fahed Mlaiel - Enterprise Configuration Testing Expert
-"""import pytest
+"""
+import pytest
 import os
 import tempfile
 from unittest.mock import patch, MagicMock
@@ -19852,7 +20840,8 @@ from app.api.core.config import (
 
 @pytest.fixture
 def clean_env():
-    """Environment propre pour les tests"""    # Sauvegarder les variables d'environnement actuelles
+    """Environment propre pour les tests"""
+    # Sauvegarder les variables d'environnement actuelles
     original_env = dict(os.environ)
     
     # Nettoyer les variables de config
@@ -19873,7 +20862,8 @@ def clean_env():
 
 @pytest.fixture
 def sample_env_vars():
-    """Variables d'environnement de test"""    return {
+    """Variables d'environnement de test"""
+    return {
         'API_HOST': '127.0.0.1',
         'API_PORT': '9000',
         'API_DEBUG': 'true',
@@ -19897,7 +20887,8 @@ def sample_env_vars():
 
 @pytest.fixture
 def temp_env_file():
-    """Fichier .env temporaire pour les tests"""    with tempfile.NamedTemporaryFile(mode='w', suffix='.env', delete=False) as f:
+    """Fichier .env temporaire pour les tests"""
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.env', delete=False) as f:
         f.write("""API_HOST=0.0.0.0
 API_PORT=8080
 API_DEBUG=false
@@ -19920,9 +20911,11 @@ REDIS_PORT=6379
 # =============================================================================
 
 class TestAPIConfig:
-    """Tests pour APIConfig"""    
+    """Tests pour APIConfig"""
+    
     def test_api_config_defaults(self, clean_env):
-        """Test des valeurs par défaut APIConfig"""        config = APIConfig()
+        """Test des valeurs par défaut APIConfig"""
+        config = APIConfig()
         
         assert config.app_name == "Spotify AI Agent API"
         assert config.app_version == "2.0.0"
@@ -19934,7 +20927,8 @@ class TestAPIConfig:
         assert config.workers == 1
     
     def test_api_config_from_env(self, clean_env, sample_env_vars):
-        """Test chargement depuis variables d'environnement"""        with patch.dict(os.environ, sample_env_vars):
+        """Test chargement depuis variables d'environnement"""
+        with patch.dict(os.environ, sample_env_vars):
             config = APIConfig()
             
             assert config.host == "127.0.0.1"
@@ -19944,12 +20938,14 @@ class TestAPIConfig:
             assert config.environment == Environment.TESTING
     
     def test_api_config_validation_environment(self):
-        """Test validation de l'environnement"""        from pydantic import ValidationError
+        """Test validation de l'environnement"""
+        from pydantic import ValidationError
         with pytest.raises(ValidationError, match="Input should be"):
             APIConfig(environment="invalid_env")
     
     def test_api_config_production_validation(self):
-        """Test validation production"""        with pytest.raises(ValueError, match="Debug mode cannot be enabled in production"):
+        """Test validation production"""
+        with pytest.raises(ValueError, match="Debug mode cannot be enabled in production"):
             APIConfig(
                 environment=Environment.PRODUCTION,
                 debug=True
@@ -19962,7 +20958,8 @@ class TestAPIConfig:
             )
     
     def test_middleware_configuration(self):
-        """Test configuration des middlewares"""        config = APIConfig()
+        """Test configuration des middlewares"""
+        config = APIConfig()
         
         assert "cors" in config.middleware_enabled
         assert "gzip" in config.middleware_enabled
@@ -19973,9 +20970,11 @@ class TestAPIConfig:
 
 
 class TestSecurityConfig:
-    """Tests pour SecurityConfig"""    
+    """Tests pour SecurityConfig"""
+    
     def test_security_config_defaults(self, clean_env):
-        """Test des valeurs par défaut SecurityConfig"""        config = SecurityConfig()
+        """Test des valeurs par défaut SecurityConfig"""
+        config = SecurityConfig()
         
         assert len(config.secret_key) >= 32  # Token sécurisé
         assert config.algorithm == "HS256"
@@ -19986,7 +20985,8 @@ class TestSecurityConfig:
         assert config.api_key_validation_enabled is True
     
     def test_cors_configuration(self):
-        """Test configuration CORS"""        config = SecurityConfig()
+        """Test configuration CORS"""
+        config = SecurityConfig()
         
         expected_origins = ["http://localhost:3000", "http://localhost:8000"]
         assert config.cors_origins == expected_origins
@@ -19995,7 +20995,8 @@ class TestSecurityConfig:
         assert "POST" in config.cors_methods
     
     def test_security_headers(self):
-        """Test configuration des headers de sécurité"""        config = SecurityConfig()
+        """Test configuration des headers de sécurité"""
+        config = SecurityConfig()
         
         assert config.hsts_max_age == 31536000  # 1 an
         assert "default-src 'self'" in config.content_security_policy
@@ -20003,9 +21004,11 @@ class TestSecurityConfig:
 
 
 class TestDatabaseConfig:
-    """Tests pour DatabaseConfig"""    
+    """Tests pour DatabaseConfig"""
+    
     def test_database_config_defaults(self, clean_env):
-        """Test des valeurs par défaut DatabaseConfig"""        config = DatabaseConfig()
+        """Test des valeurs par défaut DatabaseConfig"""
+        config = DatabaseConfig()
         
         assert config.postgres_host == "localhost"
         assert config.postgres_port == 5432
@@ -20015,7 +21018,8 @@ class TestDatabaseConfig:
         assert config.postgres_max_overflow == 10
     
     def test_postgres_url_generation(self):
-        """Test génération URL PostgreSQL"""        config = DatabaseConfig(
+        """Test génération URL PostgreSQL"""
+        config = DatabaseConfig(
             postgres_host="test-host",
             postgres_port=5433,
             postgres_user="test_user",
@@ -20027,7 +21031,8 @@ class TestDatabaseConfig:
         assert config.postgres_url == expected_url
     
     def test_postgres_async_url_generation(self):
-        """Test génération URL PostgreSQL async"""        config = DatabaseConfig(
+        """Test génération URL PostgreSQL async"""
+        config = DatabaseConfig(
             postgres_host="async-host",
             postgres_port=5432,
             postgres_user="async_user",
@@ -20039,7 +21044,8 @@ class TestDatabaseConfig:
         assert config.postgres_async_url == expected_url
     
     def test_mongodb_configuration(self):
-        """Test configuration MongoDB"""        config = DatabaseConfig(
+        """Test configuration MongoDB"""
+        config = DatabaseConfig(
             mongodb_url="mongodb://test:27017",
             mongodb_db="test_mongo_db",
             mongodb_collection_prefix="test_"
@@ -20050,7 +21056,8 @@ class TestDatabaseConfig:
         assert config.mongodb_collection_prefix == "test_"
     
     def test_elasticsearch_configuration(self):
-        """Test configuration Elasticsearch"""        config = DatabaseConfig(
+        """Test configuration Elasticsearch"""
+        config = DatabaseConfig(
             elasticsearch_hosts=["http://es1:9200", "http://es2:9200"],
             elasticsearch_timeout=15,
             elasticsearch_max_retries=5
@@ -20062,9 +21069,11 @@ class TestDatabaseConfig:
 
 
 class TestRedisConfig:
-    """Tests pour RedisConfig"""    
+    """Tests pour RedisConfig"""
+    
     def test_redis_config_defaults(self, clean_env):
-        """Test des valeurs par défaut RedisConfig"""        config = RedisConfig()
+        """Test des valeurs par défaut RedisConfig"""
+        config = RedisConfig()
         
         assert config.host == "localhost"
         assert config.port == 6379
@@ -20075,7 +21084,8 @@ class TestRedisConfig:
         assert config.retry_on_timeout is True
     
     def test_redis_url_generation_without_auth(self):
-        """Test génération URL Redis sans authentification"""        config = RedisConfig(
+        """Test génération URL Redis sans authentification"""
+        config = RedisConfig(
             host="redis-host",
             port=6380,
             db=1
@@ -20085,7 +21095,8 @@ class TestRedisConfig:
         assert config.url == expected_url
     
     def test_redis_url_generation_with_auth(self):
-        """Test génération URL Redis avec authentification"""        config = RedisConfig(
+        """Test génération URL Redis avec authentification"""
+        config = RedisConfig(
             host="redis-host",
             port=6379,
             db=0,
@@ -20096,7 +21107,8 @@ class TestRedisConfig:
         assert config.url == expected_url
     
     def test_redis_ssl_url_generation(self):
-        """Test génération URL Redis avec SSL"""        config = RedisConfig(
+        """Test génération URL Redis avec SSL"""
+        config = RedisConfig(
             host="redis-ssl",
             port=6380,
             db=0,
@@ -20108,7 +21120,8 @@ class TestRedisConfig:
         assert config.url == expected_url
     
     def test_sentinel_configuration(self):
-        """Test configuration Redis Sentinel"""        config = RedisConfig(
+        """Test configuration Redis Sentinel"""
+        config = RedisConfig(
             sentinel_enabled=True,
             sentinel_hosts=["sentinel1:26379", "sentinel2:26379"],
             sentinel_service="mymaster"
@@ -20119,7 +21132,8 @@ class TestRedisConfig:
         assert config.sentinel_service == "mymaster"
     
     def test_cluster_configuration(self):
-        """Test configuration Redis Cluster"""        config = RedisConfig(
+        """Test configuration Redis Cluster"""
+        config = RedisConfig(
             cluster_enabled=True,
             cluster_nodes=["node1:7000", "node2:7001", "node3:7002"]
         )
@@ -20129,9 +21143,11 @@ class TestRedisConfig:
 
 
 class TestCacheConfig:
-    """Tests pour CacheConfig"""    
+    """Tests pour CacheConfig"""
+    
     def test_cache_config_defaults(self, clean_env):
-        """Test des valeurs par défaut CacheConfig"""        config = CacheConfig()
+        """Test des valeurs par défaut CacheConfig"""
+        config = CacheConfig()
         
         assert config.redis_url == "redis://localhost:6379"
         assert config.redis_db == 0
@@ -20143,7 +21159,8 @@ class TestCacheConfig:
         assert config.l3_enabled is False
     
     def test_cache_levels_configuration(self):
-        """Test configuration des niveaux de cache"""        config = CacheConfig(
+        """Test configuration des niveaux de cache"""
+        config = CacheConfig(
             l1_enabled=True,
             l1_max_size=2000,
             l1_ttl=600,
@@ -20160,7 +21177,8 @@ class TestCacheConfig:
         assert config.l3_enabled is True
     
     def test_memcached_configuration(self):
-        """Test configuration Memcached"""        config = CacheConfig(
+        """Test configuration Memcached"""
+        config = CacheConfig(
             memcached_servers=["mc1:11211", "mc2:11211"],
             memcached_timeout=10
         )
@@ -20170,9 +21188,11 @@ class TestCacheConfig:
 
 
 class TestMonitoringConfig:
-    """Tests pour MonitoringConfig"""    
+    """Tests pour MonitoringConfig"""
+    
     def test_monitoring_config_defaults(self, clean_env):
-        """Test des valeurs par défaut MonitoringConfig"""        config = MonitoringConfig()
+        """Test des valeurs par défaut MonitoringConfig"""
+        config = MonitoringConfig()
         
         assert config.metrics_enabled is True
         assert config.metrics_port == 8080
@@ -20183,7 +21203,8 @@ class TestMonitoringConfig:
         assert config.tracing_enabled is False
     
     def test_alerting_configuration(self):
-        """Test configuration des alertes"""        config = MonitoringConfig(
+        """Test configuration des alertes"""
+        config = MonitoringConfig(
             alerting_enabled=True,
             slack_webhook="https://hooks.slack.com/test",
             email_alerts=["admin@example.com", "dev@example.com"]
@@ -20194,7 +21215,8 @@ class TestMonitoringConfig:
         assert len(config.email_alerts) == 2
     
     def test_tracing_configuration(self):
-        """Test configuration du tracing"""        config = MonitoringConfig(
+        """Test configuration du tracing"""
+        config = MonitoringConfig(
             tracing_enabled=True,
             jaeger_endpoint="http://jaeger:14268/api/traces"
         )
@@ -20204,9 +21226,11 @@ class TestMonitoringConfig:
 
 
 class TestAPISettings:
-    """Tests pour APISettings (configuration composée)"""    
+    """Tests pour APISettings (configuration composée)"""
+    
     def test_api_settings_composition(self, clean_env):
-        """Test composition des configurations"""        settings = APISettings()
+        """Test composition des configurations"""
+        settings = APISettings()
         
         assert isinstance(settings.api, APIConfig)
         assert isinstance(settings.security, SecurityConfig)
@@ -20216,7 +21240,8 @@ class TestAPISettings:
         assert isinstance(settings.monitoring, MonitoringConfig)
     
     def test_feature_flags_defaults(self):
-        """Test des feature flags par défaut"""        settings = APISettings()
+        """Test des feature flags par défaut"""
+        settings = APISettings()
         
         assert settings.features["ml_recommendations"] is True
         assert settings.features["audio_analysis"] is True
@@ -20225,7 +21250,8 @@ class TestAPISettings:
         assert settings.features["ai_playlists"] is True
     
     def test_external_services_configuration(self):
-        """Test configuration des services externes"""        with patch.dict(os.environ, {
+        """Test configuration des services externes"""
+        with patch.dict(os.environ, {
             'SPOTIFY_CLIENT_ID': 'test_spotify_id',
             'SPOTIFY_CLIENT_SECRET': 'test_spotify_secret',
             'OPENAI_API_KEY': 'test_openai_key',
@@ -20239,7 +21265,8 @@ class TestAPISettings:
             assert settings.huggingface_token == 'test_hf_token'
     
     def test_production_validation(self):
-        """Test validation en production"""        with pytest.raises(ValueError, match="Spotify client ID is required in production"):
+        """Test validation en production"""
+        with pytest.raises(ValueError, match="Spotify client ID is required in production"):
             APISettings(
                 api=APIConfig(environment=Environment.PRODUCTION),
                 spotify_client_id=None
@@ -20251,21 +21278,25 @@ class TestAPISettings:
 # =============================================================================
 
 class TestConfigurationFactories:
-    """Tests des fonctions factory de configuration"""    
+    """Tests des fonctions factory de configuration"""
+    
     def test_get_settings_singleton(self, clean_env):
-        """Test du pattern singleton pour get_settings"""        settings1 = get_settings()
+        """Test du pattern singleton pour get_settings"""
+        settings1 = get_settings()
         settings2 = get_settings()
         
         assert settings1 is settings2  # Même instance
     
     def test_get_api_config(self, clean_env):
-        """Test get_api_config"""        api_config = get_api_config()
+        """Test get_api_config"""
+        api_config = get_api_config()
         
         assert isinstance(api_config, APIConfig)
         assert api_config.app_name == "Spotify AI Agent API"
     
     def test_create_development_config(self):
-        """Test création configuration développement"""        config = create_development_config()
+        """Test création configuration développement"""
+        config = create_development_config()
         
         assert config.api.environment == Environment.DEVELOPMENT
         assert config.api.debug is True
@@ -20275,7 +21306,8 @@ class TestConfigurationFactories:
         assert config.cache.l2_enabled is False
     
     def test_create_production_config(self):
-        """Test création configuration production"""        config = create_production_config()
+        """Test création configuration production"""
+        config = create_production_config()
         
         assert config.api.environment == Environment.PRODUCTION
         assert config.api.debug is False
@@ -20287,7 +21319,8 @@ class TestConfigurationFactories:
         assert config.cache.l3_enabled is True
     
     def test_create_testing_config(self):
-        """Test création configuration test"""        config = create_testing_config()
+        """Test création configuration test"""
+        config = create_testing_config()
         
         assert config.api.environment == Environment.TESTING
         assert config.api.debug is True
@@ -20303,16 +21336,19 @@ class TestConfigurationFactories:
 
 @pytest.mark.performance
 class TestConfigurationPerformance:
-    """Tests de performance pour la configuration"""    
+    """Tests de performance pour la configuration"""
+    
     def test_config_loading_performance(self, clean_env, benchmark):
-        """Test performance chargement configuration"""        def load_config():
+        """Test performance chargement configuration"""
+        def load_config():
             return APISettings()
         
         result = benchmark(load_config)
         assert isinstance(result, APISettings)
     
     def test_config_access_performance(self, benchmark):
-        """Test performance accès configuration"""        settings = APISettings()
+        """Test performance accès configuration"""
+        settings = APISettings()
         
         def access_config():
             return (
@@ -20326,7 +21362,8 @@ class TestConfigurationPerformance:
         assert len(result) == 4
     
     def test_config_validation_performance(self, benchmark):
-        """Test performance validation configuration"""        def validate_config():
+        """Test performance validation configuration"""
+        def validate_config():
             config = APIConfig(
                 environment=Environment.PRODUCTION,
                 debug=False,
@@ -20344,9 +21381,11 @@ class TestConfigurationPerformance:
 
 @pytest.mark.security
 class TestConfigurationSecurity:
-    """Tests de sécurité pour la configuration"""    
+    """Tests de sécurité pour la configuration"""
+    
     def test_secret_key_generation(self):
-        """Test génération sécurisée des clés secrètes"""        config1 = SecurityConfig()
+        """Test génération sécurisée des clés secrètes"""
+        config1 = SecurityConfig()
         config2 = SecurityConfig()
         
         # Les clés doivent être différentes
@@ -20357,7 +21396,8 @@ class TestConfigurationSecurity:
         assert len(config2.secret_key) >= 32
     
     def test_sensitive_data_not_logged(self, caplog):
-        """Test que les données sensibles ne sont pas loggées"""        config = SecurityConfig(secret_key="super-secret-key")
+        """Test que les données sensibles ne sont pas loggées"""
+        config = SecurityConfig(secret_key="super-secret-key")
         
         # Simuler un log de configuration
         repr(config)
@@ -20368,7 +21408,8 @@ class TestConfigurationSecurity:
             assert "super-secret-key" not in record.message
     
     def test_cors_origin_validation(self):
-        """Test validation des origines CORS"""        config = SecurityConfig(
+        """Test validation des origines CORS"""
+        config = SecurityConfig(
             cors_origins=["http://localhost:3000", "https://app.example.com"]
         )
         
@@ -20379,7 +21420,8 @@ class TestConfigurationSecurity:
         assert "*" not in config.cors_origins
     
     def test_database_password_handling(self):
-        """Test gestion sécurisée des mots de passe DB"""        config = DatabaseConfig(
+        """Test gestion sécurisée des mots de passe DB"""
+        config = DatabaseConfig(
             postgres_password="secret_db_password"
         )
         
@@ -20397,9 +21439,11 @@ class TestConfigurationSecurity:
 
 @pytest.mark.integration
 class TestConfigurationIntegration:
-    """Tests d'intégration pour la configuration"""    
+    """Tests d'intégration pour la configuration"""
+    
     def test_env_file_loading(self, temp_env_file):
-        """Test chargement depuis fichier .env"""        # Utiliser les variables d'environnement directement plutôt que de patch model_config
+        """Test chargement depuis fichier .env"""
+        # Utiliser les variables d'environnement directement plutôt que de patch model_config
         env_vars = {
             'API_HOST': '0.0.0.0',
             'API_PORT': '8080',
@@ -20413,7 +21457,8 @@ class TestConfigurationIntegration:
             assert settings.api.debug is False
     
     def test_environment_override_priority(self, temp_env_file):
-        """Test priorité des variables d'environnement sur le fichier .env"""        env_override = {'API_PORT': '9999'}
+        """Test priorité des variables d'environnement sur le fichier .env"""
+        env_override = {'API_PORT': '9999'}
         
         with patch.dict(os.environ, env_override):
             settings = APISettings()
@@ -20422,7 +21467,8 @@ class TestConfigurationIntegration:
             assert settings.api.port == 9999
     
     def test_configuration_dependencies(self):
-        """Test des dépendances entre configurations"""        settings = APISettings()
+        """Test des dépendances entre configurations"""
+        settings = APISettings()
         
         # Redis config doit être cohérente avec cache config
         assert settings.redis.host in settings.cache.redis_url
@@ -20906,7 +21952,8 @@ def test_spotifyapiratelimitmiddleware_class():
 ==================================
 
 Comprehensive tests for webhook handling from payment providers.
-"""import pytest
+"""
+import pytest
 from datetime import datetime, timedelta
 from decimal import Decimal
 from unittest.mock import AsyncMock, Mock, patch, MagicMock
@@ -20923,10 +21970,12 @@ from billing.models import (
 
 
 class TestWebhookProcessor:
-    """Test main webhook processor functionality"""    
+    """Test main webhook processor functionality"""
+    
     @pytest.mark.asyncio
     async def test_process_stripe_webhook(self, webhook_processor, mock_stripe_handler):
-        """Test Stripe webhook processing"""        webhook_data = {
+        """Test Stripe webhook processing"""
+        webhook_data = {
             "id": "evt_stripe_test",
             "type": "payment_intent.succeeded",
             "data": {
@@ -20955,7 +22004,8 @@ class TestWebhookProcessor:
     
     @pytest.mark.asyncio
     async def test_process_paypal_webhook(self, webhook_processor, mock_paypal_handler):
-        """Test PayPal webhook processing"""        webhook_data = {
+        """Test PayPal webhook processing"""
+        webhook_data = {
             "id": "WH-paypal-test",
             "event_type": "PAYMENT.CAPTURE.COMPLETED",
             "resource": {
@@ -20983,7 +22033,8 @@ class TestWebhookProcessor:
     
     @pytest.mark.asyncio
     async def test_webhook_signature_verification_failure(self, webhook_processor, mock_stripe_handler):
-        """Test webhook processing with invalid signature"""        webhook_data = {"id": "evt_invalid", "type": "test.event"}
+        """Test webhook processing with invalid signature"""
+        webhook_data = {"id": "evt_invalid", "type": "test.event"}
         invalid_signature = "invalid_signature"
         
         mock_stripe_handler.verify_webhook_signature.return_value = False
@@ -20998,7 +22049,8 @@ class TestWebhookProcessor:
     
     @pytest.mark.asyncio
     async def test_duplicate_webhook_handling(self, webhook_processor, mock_stripe_handler, db_session):
-        """Test handling of duplicate webhook events"""        webhook_data = {
+        """Test handling of duplicate webhook events"""
+        webhook_data = {
             "id": "evt_duplicate_test",
             "type": "payment_intent.succeeded",
             "data": {"object": {"id": "pi_duplicate"}}
@@ -21028,7 +22080,8 @@ class TestWebhookProcessor:
     
     @pytest.mark.asyncio
     async def test_webhook_retry_mechanism(self, webhook_processor, mock_stripe_handler):
-        """Test webhook retry mechanism for failed processing"""        webhook_data = {
+        """Test webhook retry mechanism for failed processing"""
+        webhook_data = {
             "id": "evt_retry_test",
             "type": "payment_intent.failed",
             "data": {"object": {"id": "pi_retry_test"}}
@@ -21055,9 +22108,11 @@ class TestWebhookProcessor:
 
 
 class TestStripeWebhookHandler:
-    """Test Stripe-specific webhook handling"""    
+    """Test Stripe-specific webhook handling"""
+    
     def test_verify_webhook_signature(self, stripe_webhook_handler):
-        """Test Stripe webhook signature verification"""        # Mock webhook data
+        """Test Stripe webhook signature verification"""
+        # Mock webhook data
         payload = '{"id":"evt_test","type":"test.event"}'
         secret = "whsec_test_secret"
         timestamp = str(int(datetime.utcnow().timestamp()))
@@ -21082,7 +22137,8 @@ class TestStripeWebhookHandler:
     
     @pytest.mark.asyncio
     async def test_payment_intent_succeeded(self, stripe_webhook_handler, test_customer, db_session):
-        """Test processing payment_intent.succeeded event"""        event_data = {
+        """Test processing payment_intent.succeeded event"""
+        event_data = {
             "id": "evt_payment_succeeded",
             "type": "payment_intent.succeeded",
             "data": {
@@ -21117,7 +22173,8 @@ class TestStripeWebhookHandler:
     
     @pytest.mark.asyncio
     async def test_payment_intent_failed(self, stripe_webhook_handler, test_customer, db_session):
-        """Test processing payment_intent.payment_failed event"""        event_data = {
+        """Test processing payment_intent.payment_failed event"""
+        event_data = {
             "id": "evt_payment_failed",
             "type": "payment_intent.payment_failed",
             "data": {
@@ -21149,7 +22206,8 @@ class TestStripeWebhookHandler:
     
     @pytest.mark.asyncio
     async def test_invoice_payment_succeeded(self, stripe_webhook_handler, test_subscription_active, test_invoice_draft, db_session):
-        """Test processing invoice.payment_succeeded event"""        event_data = {
+        """Test processing invoice.payment_succeeded event"""
+        event_data = {
             "id": "evt_invoice_paid",
             "type": "invoice.payment_succeeded",
             "data": {
@@ -21178,7 +22236,8 @@ class TestStripeWebhookHandler:
     
     @pytest.mark.asyncio
     async def test_customer_subscription_updated(self, stripe_webhook_handler, test_subscription_active, db_session):
-        """Test processing customer.subscription.updated event"""        event_data = {
+        """Test processing customer.subscription.updated event"""
+        event_data = {
             "id": "evt_subscription_updated",
             "type": "customer.subscription.updated",
             "data": {
@@ -21206,7 +22265,8 @@ class TestStripeWebhookHandler:
     
     @pytest.mark.asyncio
     async def test_setup_intent_succeeded(self, stripe_webhook_handler, test_customer, db_session):
-        """Test processing setup_intent.succeeded event"""        event_data = {
+        """Test processing setup_intent.succeeded event"""
+        event_data = {
             "id": "evt_setup_succeeded",
             "type": "setup_intent.succeeded",
             "data": {
@@ -21233,9 +22293,11 @@ class TestStripeWebhookHandler:
 
 
 class TestPayPalWebhookHandler:
-    """Test PayPal-specific webhook handling"""    
+    """Test PayPal-specific webhook handling"""
+    
     def test_verify_webhook_signature(self, paypal_webhook_handler):
-        """Test PayPal webhook signature verification"""        # Mock webhook data
+        """Test PayPal webhook signature verification"""
+        # Mock webhook data
         payload = '{"id":"WH-test","event_type":"PAYMENT.CAPTURE.COMPLETED"}'
         
         # Mock PayPal signature verification
@@ -21259,7 +22321,8 @@ class TestPayPalWebhookHandler:
     
     @pytest.mark.asyncio
     async def test_payment_capture_completed(self, paypal_webhook_handler, test_customer, db_session):
-        """Test processing PAYMENT.CAPTURE.COMPLETED event"""        event_data = {
+        """Test processing PAYMENT.CAPTURE.COMPLETED event"""
+        event_data = {
             "id": "WH-payment-completed",
             "event_type": "PAYMENT.CAPTURE.COMPLETED",
             "resource": {
@@ -21293,7 +22356,8 @@ class TestPayPalWebhookHandler:
     
     @pytest.mark.asyncio
     async def test_payment_capture_denied(self, paypal_webhook_handler, test_customer, db_session):
-        """Test processing PAYMENT.CAPTURE.DENIED event"""        event_data = {
+        """Test processing PAYMENT.CAPTURE.DENIED event"""
+        event_data = {
             "id": "WH-payment-denied",
             "event_type": "PAYMENT.CAPTURE.DENIED",
             "resource": {
@@ -21324,7 +22388,8 @@ class TestPayPalWebhookHandler:
     
     @pytest.mark.asyncio
     async def test_billing_subscription_activated(self, paypal_webhook_handler, test_subscription_active, db_session):
-        """Test processing BILLING.SUBSCRIPTION.ACTIVATED event"""        event_data = {
+        """Test processing BILLING.SUBSCRIPTION.ACTIVATED event"""
+        event_data = {
             "id": "WH-subscription-activated",
             "event_type": "BILLING.SUBSCRIPTION.ACTIVATED",
             "resource": {
@@ -21357,7 +22422,8 @@ class TestPayPalWebhookHandler:
     
     @pytest.mark.asyncio
     async def test_billing_subscription_cancelled(self, paypal_webhook_handler, test_subscription_active, db_session):
-        """Test processing BILLING.SUBSCRIPTION.CANCELLED event"""        event_data = {
+        """Test processing BILLING.SUBSCRIPTION.CANCELLED event"""
+        event_data = {
             "id": "WH-subscription-cancelled",
             "event_type": "BILLING.SUBSCRIPTION.CANCELLED",
             "resource": {
@@ -21381,10 +22447,12 @@ class TestPayPalWebhookHandler:
 
 
 class TestWebhookSecurity:
-    """Test webhook security features"""    
+    """Test webhook security features"""
+    
     @pytest.mark.asyncio
     async def test_webhook_timestamp_validation(self, stripe_webhook_handler):
-        """Test webhook timestamp validation to prevent replay attacks"""        # Create payload with old timestamp (more than 5 minutes ago)
+        """Test webhook timestamp validation to prevent replay attacks"""
+        # Create payload with old timestamp (more than 5 minutes ago)
         old_timestamp = str(int((datetime.utcnow() - timedelta(minutes=10)).timestamp()))
         payload = '{"id":"evt_old","type":"test.event"}'
         secret = "whsec_test_secret"
@@ -21409,7 +22477,8 @@ class TestWebhookSecurity:
     
     @pytest.mark.asyncio
     async def test_webhook_rate_limiting(self, webhook_processor):
-        """Test webhook rate limiting protection"""        webhook_data = {"id": "evt_rate_limit", "type": "test.event"}
+        """Test webhook rate limiting protection"""
+        webhook_data = {"id": "evt_rate_limit", "type": "test.event"}
         signature = "test_signature"
         
         # Mock rate limiter
@@ -21426,7 +22495,8 @@ class TestWebhookSecurity:
     
     @pytest.mark.asyncio
     async def test_webhook_ip_whitelist(self, webhook_processor):
-        """Test webhook IP address whitelisting"""        webhook_data = {"id": "evt_ip_test", "type": "test.event"}
+        """Test webhook IP address whitelisting"""
+        webhook_data = {"id": "evt_ip_test", "type": "test.event"}
         
         # Test with allowed IP
         with patch.object(webhook_processor, 'is_ip_allowed') as mock_ip_check:
@@ -21458,10 +22528,12 @@ class TestWebhookSecurity:
 
 
 class TestWebhookLogging:
-    """Test webhook logging and monitoring"""    
+    """Test webhook logging and monitoring"""
+    
     @pytest.mark.asyncio
     async def test_webhook_event_logging(self, webhook_processor, mock_stripe_handler, mock_logger):
-        """Test webhook event logging"""        webhook_data = {
+        """Test webhook event logging"""
+        webhook_data = {
             "id": "evt_logging_test",
             "type": "payment_intent.succeeded",
             "data": {"object": {"id": "pi_logging_test"}}
@@ -21483,7 +22555,8 @@ class TestWebhookLogging:
     
     @pytest.mark.asyncio
     async def test_webhook_error_logging(self, webhook_processor, mock_stripe_handler, mock_logger):
-        """Test webhook error logging"""        webhook_data = {"id": "evt_error_test", "type": "test.event"}
+        """Test webhook error logging"""
+        webhook_data = {"id": "evt_error_test", "type": "test.event"}
         
         mock_stripe_handler.verify_webhook_signature.return_value = True
         mock_stripe_handler.process_event.side_effect = Exception("Processing failed")
@@ -21501,7 +22574,8 @@ class TestWebhookLogging:
     
     @pytest.mark.asyncio
     async def test_webhook_metrics_collection(self, webhook_processor, mock_metrics):
-        """Test webhook metrics collection"""        webhook_data = {"id": "evt_metrics_test", "type": "payment_intent.succeeded"}
+        """Test webhook metrics collection"""
+        webhook_data = {"id": "evt_metrics_test", "type": "payment_intent.succeeded"}
         
         with patch.object(webhook_processor.stripe_handler, 'verify_webhook_signature', return_value=True):
             with patch.object(webhook_processor.stripe_handler, 'process_event', return_value={"processed": True}):
@@ -21711,7 +22785,8 @@ Comprehensive test suite for the Real-Time Connection Manager:
 - Error handling and recovery tests
 - Multi-platform connection tests
 - Connection lifecycle management tests
-"""import asyncio
+"""
+import asyncio
 import json
 import pytest
 import time
@@ -21737,9 +22812,11 @@ from . import TestUtils, REDIS_TEST_URL
 
 
 class TestServerEndpoint:
-    """Tests pour ServerEndpoint"""    
+    """Tests pour ServerEndpoint"""
+    
     def test_endpoint_creation(self):
-        """Test de création d'endpoint"""        endpoint = ServerEndpoint(
+        """Test de création d'endpoint"""
+        endpoint = ServerEndpoint(
             host="localhost",
             port=8080,
             path="/ws",
@@ -21756,7 +22833,8 @@ class TestServerEndpoint:
         assert endpoint.max_connections == 500
     
     def test_url_generation(self):
-        """Test de génération d'URL"""        # Endpoint HTTP
+        """Test de génération d'URL"""
+        # Endpoint HTTP
         http_endpoint = ServerEndpoint(
             host="example.com",
             port=80,
@@ -21777,7 +22855,8 @@ class TestServerEndpoint:
         assert https_endpoint.get_url() == "wss://secure.example.com:443/secure/ws"
     
     def test_connection_capacity_check(self):
-        """Test de vérification de capacité"""        endpoint = ServerEndpoint(
+        """Test de vérification de capacité"""
+        endpoint = ServerEndpoint(
             host="test.com",
             port=8080,
             max_connections=10
@@ -21796,7 +22875,8 @@ class TestServerEndpoint:
         assert endpoint.can_accept_connection() is False
     
     def test_load_factor_calculation(self):
-        """Test de calcul du facteur de charge"""        endpoint = ServerEndpoint(
+        """Test de calcul du facteur de charge"""
+        endpoint = ServerEndpoint(
             host="load.test",
             port=8080,
             max_connections=100
@@ -21815,9 +22895,11 @@ class TestServerEndpoint:
 
 
 class TestConnectionMetrics:
-    """Tests pour ConnectionMetrics"""    
+    """Tests pour ConnectionMetrics"""
+    
     def test_metrics_initialization(self):
-        """Test d'initialisation des métriques"""        connection_id = "test_conn_123"
+        """Test d'initialisation des métriques"""
+        connection_id = "test_conn_123"
         metrics = ConnectionMetrics(connection_id)
         
         assert metrics.connection_id == connection_id
@@ -21832,7 +22914,8 @@ class TestConnectionMetrics:
         assert metrics.error_count == 0
     
     def test_latency_update(self):
-        """Test de mise à jour de latence"""        metrics = ConnectionMetrics("latency_test")
+        """Test de mise à jour de latence"""
+        metrics = ConnectionMetrics("latency_test")
         
         # Ajouter quelques échantillons de latence
         latencies = [10.0, 15.0, 20.0, 25.0, 30.0]
@@ -21845,7 +22928,8 @@ class TestConnectionMetrics:
         assert len(metrics.latency_samples) == 5
     
     def test_error_recording(self):
-        """Test d'enregistrement d'erreur"""        metrics = ConnectionMetrics("error_test")
+        """Test d'enregistrement d'erreur"""
+        metrics = ConnectionMetrics("error_test")
         initial_health = metrics.health_score
         
         metrics.record_error("Connection timeout")
@@ -21857,7 +22941,8 @@ class TestConnectionMetrics:
         assert metrics.health_score < initial_health
     
     def test_success_recording(self):
-        """Test d'enregistrement de succès"""        metrics = ConnectionMetrics("success_test")
+        """Test d'enregistrement de succès"""
+        metrics = ConnectionMetrics("success_test")
         
         # D'abord quelques erreurs
         for i in range(3):
@@ -21875,10 +22960,12 @@ class TestConnectionMetrics:
 
 
 class TestConnection:
-    """Tests pour Connection"""    
+    """Tests pour Connection"""
+    
     @pytest.fixture
     def mock_websocket(self):
-        """Mock WebSocket"""        websocket = Mock()
+        """Mock WebSocket"""
+        websocket = Mock()
         websocket.send = AsyncMock()
         websocket.recv = AsyncMock()
         websocket.close = AsyncMock()
@@ -21888,7 +22975,8 @@ class TestConnection:
     
     @pytest.fixture
     def test_endpoint(self):
-        """Endpoint de test"""        return ServerEndpoint(
+        """Endpoint de test"""
+        return ServerEndpoint(
             host="localhost",
             port=8080,
             path="/test",
@@ -21897,7 +22985,8 @@ class TestConnection:
     
     @pytest.fixture
     async def connection(self, mock_websocket, test_endpoint):
-        """Connexion de test"""        connection_id = str(uuid.uuid4())
+        """Connexion de test"""
+        connection_id = str(uuid.uuid4())
         user_id = TestUtils.generate_test_user_id()
         
         conn = Connection(
@@ -21918,7 +23007,8 @@ class TestConnection:
     
     @pytest.mark.asyncio
     async def test_connection_initialization(self, connection):
-        """Test d'initialisation de connexion"""        assert connection.connection_id is not None
+        """Test d'initialisation de connexion"""
+        assert connection.connection_id is not None
         assert connection.connection_type == ConnectionType.WEBSOCKET
         assert connection.user_id is not None
         assert connection.state == ConnectionState.CONNECTED
@@ -21927,7 +23017,8 @@ class TestConnection:
     
     @pytest.mark.asyncio
     async def test_message_sending(self, connection):
-        """Test d'envoi de message"""        message = {"type": "test", "data": "hello world"}
+        """Test d'envoi de message"""
+        message = {"type": "test", "data": "hello world"}
         
         result = await connection.send_message(message)
         
@@ -21938,7 +23029,8 @@ class TestConnection:
     
     @pytest.mark.asyncio
     async def test_message_sending_failure(self, connection):
-        """Test d'échec d'envoi de message"""        connection.websocket.send.side_effect = Exception("Send failed")
+        """Test d'échec d'envoi de message"""
+        connection.websocket.send.side_effect = Exception("Send failed")
         
         message = {"type": "test", "data": "fail"}
         result = await connection.send_message(message)
@@ -21949,7 +23041,8 @@ class TestConnection:
     
     @pytest.mark.asyncio
     async def test_authentication(self, connection):
-        """Test d'authentification"""        # Mock JWT decode
+        """Test d'authentification"""
+        # Mock JWT decode
         with patch('jwt.decode') as mock_decode:
             mock_decode.return_value = {
                 "user_id": connection.user_id,
@@ -21966,7 +23059,8 @@ class TestConnection:
     
     @pytest.mark.asyncio
     async def test_authentication_failure(self, connection):
-        """Test d'échec d'authentification"""        with patch('jwt.decode') as mock_decode:
+        """Test d'échec d'authentification"""
+        with patch('jwt.decode') as mock_decode:
             mock_decode.side_effect = Exception("Invalid token")
             
             result = await connection.authenticate("invalid_token")
@@ -21977,7 +23071,8 @@ class TestConnection:
     
     @pytest.mark.asyncio
     async def test_connection_status(self, connection):
-        """Test de statut de connexion"""        status = connection.get_status()
+        """Test de statut de connexion"""
+        status = connection.get_status()
         
         assert "connection_id" in status
         assert "state" in status
@@ -21995,10 +23090,12 @@ class TestConnection:
 
 
 class TestConnectionPool:
-    """Tests pour ConnectionPool"""    
+    """Tests pour ConnectionPool"""
+    
     @pytest.fixture
     def test_endpoints(self):
-        """Endpoints de test"""        return [
+        """Endpoints de test"""
+        return [
             ServerEndpoint("server1.test", 8080, weight=10),
             ServerEndpoint("server2.test", 8080, weight=5),
             ServerEndpoint("server3.test", 8080, weight=15)
@@ -22006,7 +23103,8 @@ class TestConnectionPool:
     
     @pytest.fixture
     async def connection_pool(self, test_endpoints):
-        """Pool de connexions de test"""        pool = ConnectionPool(
+        """Pool de connexions de test"""
+        pool = ConnectionPool(
             endpoints=test_endpoints,
             strategy=LoadBalanceStrategy.LEAST_CONNECTIONS
         )
@@ -22018,14 +23116,16 @@ class TestConnectionPool:
     
     @pytest.mark.asyncio
     async def test_pool_initialization(self, connection_pool, test_endpoints):
-        """Test d'initialisation du pool"""        assert len(connection_pool.endpoints) == len(test_endpoints)
+        """Test d'initialisation du pool"""
+        assert len(connection_pool.endpoints) == len(test_endpoints)
         assert connection_pool.strategy == LoadBalanceStrategy.LEAST_CONNECTIONS
         assert connection_pool.total_connections == 0
         assert connection_pool.active_connections == 0
     
     @pytest.mark.asyncio
     async def test_round_robin_selection(self):
-        """Test de sélection round-robin"""        endpoints = [
+        """Test de sélection round-robin"""
+        endpoints = [
             ServerEndpoint("rr1.test", 8080),
             ServerEndpoint("rr2.test", 8080),
             ServerEndpoint("rr3.test", 8080)
@@ -22045,7 +23145,8 @@ class TestConnectionPool:
     
     @pytest.mark.asyncio
     async def test_least_connections_selection(self):
-        """Test de sélection par moindres connexions"""        endpoints = [
+        """Test de sélection par moindres connexions"""
+        endpoints = [
             ServerEndpoint("lc1.test", 8080),
             ServerEndpoint("lc2.test", 8080),
             ServerEndpoint("lc3.test", 8080)
@@ -22063,7 +23164,8 @@ class TestConnectionPool:
     
     @pytest.mark.asyncio
     async def test_weighted_round_robin_selection(self):
-        """Test de sélection weighted round-robin"""        endpoints = [
+        """Test de sélection weighted round-robin"""
+        endpoints = [
             ServerEndpoint("wr1.test", 8080, weight=1),
             ServerEndpoint("wr2.test", 8080, weight=3),  # Poids plus élevé
             ServerEndpoint("wr3.test", 8080, weight=1)
@@ -22083,7 +23185,8 @@ class TestConnectionPool:
     
     @pytest.mark.asyncio
     async def test_pool_stats(self, connection_pool):
-        """Test de statistiques du pool"""        stats = connection_pool.get_pool_stats()
+        """Test de statistiques du pool"""
+        stats = connection_pool.get_pool_stats()
         
         assert "total_connections" in stats
         assert "active_connections" in stats
@@ -22104,17 +23207,20 @@ class TestConnectionPool:
 
 
 class TestRealTimeConnectionManager:
-    """Tests pour RealTimeConnectionManager complet"""    
+    """Tests pour RealTimeConnectionManager complet"""
+    
     @pytest.fixture
     def test_endpoints(self):
-        """Endpoints de test pour le manager"""        return [
+        """Endpoints de test pour le manager"""
+        return [
             ServerEndpoint("mgr1.test", 8080, max_connections=100),
             ServerEndpoint("mgr2.test", 8080, max_connections=100)
         ]
     
     @pytest.fixture
     async def connection_manager(self, test_endpoints):
-        """Manager de connexions de test"""        manager = RealTimeConnectionManager(
+        """Manager de connexions de test"""
+        manager = RealTimeConnectionManager(
             endpoints=test_endpoints,
             redis_url=REDIS_TEST_URL
         )
@@ -22126,7 +23232,8 @@ class TestRealTimeConnectionManager:
     
     @pytest.mark.asyncio
     async def test_manager_initialization(self, connection_manager):
-        """Test d'initialisation du manager"""        assert connection_manager.redis_client is not None
+        """Test d'initialisation du manager"""
+        assert connection_manager.redis_client is not None
         assert connection_manager.websocket_pool is not None
         assert connection_manager.http_stream_pool is not None
         assert connection_manager.max_connections_per_user == 10
@@ -22134,7 +23241,8 @@ class TestRealTimeConnectionManager:
     
     @pytest.mark.asyncio
     async def test_connection_limits_check(self, connection_manager):
-        """Test de vérification des limites de connexion"""        user_id = TestUtils.generate_test_user_id()
+        """Test de vérification des limites de connexion"""
+        user_id = TestUtils.generate_test_user_id()
         
         # Devrait être autorisé initialement
         can_connect = await connection_manager._check_connection_limits(user_id)
@@ -22152,7 +23260,8 @@ class TestRealTimeConnectionManager:
     
     @pytest.mark.asyncio
     async def test_session_registration(self, connection_manager):
-        """Test d'enregistrement de session"""        user_id = TestUtils.generate_test_user_id()
+        """Test d'enregistrement de session"""
+        user_id = TestUtils.generate_test_user_id()
         
         # Mock connexion
         mock_connection = Mock()
@@ -22173,7 +23282,8 @@ class TestRealTimeConnectionManager:
     
     @pytest.mark.asyncio
     async def test_session_cleanup(self, connection_manager):
-        """Test de nettoyage de sessions"""        user_id = TestUtils.generate_test_user_id()
+        """Test de nettoyage de sessions"""
+        user_id = TestUtils.generate_test_user_id()
         
         # Créer quelques sessions de test
         for i in range(3):
@@ -22199,7 +23309,8 @@ class TestRealTimeConnectionManager:
     
     @pytest.mark.asyncio
     async def test_manager_stats(self, connection_manager):
-        """Test de statistiques du manager"""        stats = connection_manager.get_manager_stats()
+        """Test de statistiques du manager"""
+        stats = connection_manager.get_manager_stats()
         
         assert "total_metrics" in stats
         assert "websocket_pool" in stats
@@ -22216,10 +23327,12 @@ class TestRealTimeConnectionManager:
 
 @pytest.mark.integration
 class TestConnectionManagerIntegration:
-    """Tests d'intégration pour le gestionnaire de connexions"""    
+    """Tests d'intégration pour le gestionnaire de connexions"""
+    
     @pytest.mark.asyncio
     async def test_full_connection_lifecycle(self):
-        """Test du cycle de vie complet d'une connexion"""        endpoints = [
+        """Test du cycle de vie complet d'une connexion"""
+        endpoints = [
             ServerEndpoint("integration.test", 8080, max_connections=50)
         ]
         
@@ -22265,7 +23378,8 @@ class TestConnectionManagerIntegration:
     
     @pytest.mark.asyncio
     async def test_load_balancing_under_load(self):
-        """Test de load balancing sous charge"""        # Plusieurs endpoints avec différentes capacités
+        """Test de load balancing sous charge"""
+        # Plusieurs endpoints avec différentes capacités
         endpoints = [
             ServerEndpoint("lb1.test", 8080, max_connections=10, weight=1),
             ServerEndpoint("lb2.test", 8080, max_connections=20, weight=2),
@@ -22301,7 +23415,8 @@ class TestConnectionManagerIntegration:
     
     @pytest.mark.asyncio
     async def test_failover_scenario(self):
-        """Test de scénario de basculement"""        endpoints = [
+        """Test de scénario de basculement"""
+        endpoints = [
             ServerEndpoint("primary.test", 8080, max_connections=100),
             ServerEndpoint("backup.test", 8080, max_connections=50)
         ]
@@ -22334,11 +23449,13 @@ class TestConnectionManagerIntegration:
 
 
 class TestConnectionPerformance:
-    """Tests de performance pour les connexions"""    
+    """Tests de performance pour les connexions"""
+    
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_connection_pool_scalability(self):
-        """Test de scalabilité du pool de connexions"""        # Simuler beaucoup d'endpoints
+        """Test de scalabilité du pool de connexions"""
+        # Simuler beaucoup d'endpoints
         endpoints = []
         for i in range(10):
             endpoints.append(
@@ -22367,7 +23484,8 @@ class TestConnectionPerformance:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_concurrent_connection_creation(self):
-        """Test de création simultanée de connexions"""        endpoints = [
+        """Test de création simultanée de connexions"""
+        endpoints = [
             ServerEndpoint("concurrent.test", 8080, max_connections=1000)
         ]
         
@@ -22415,10 +23533,12 @@ class TestConnectionPerformance:
 
 # Utilitaires pour les tests de connexions
 class ConnectionTestUtils:
-    """Utilitaires pour les tests de connexions"""    
+    """Utilitaires pour les tests de connexions"""
+    
     @staticmethod
     def create_mock_websocket():
-        """Crée un mock WebSocket"""        websocket = Mock()
+        """Crée un mock WebSocket"""
+        websocket = Mock()
         websocket.send = AsyncMock()
         websocket.recv = AsyncMock()
         websocket.close = AsyncMock()
@@ -22428,7 +23548,8 @@ class ConnectionTestUtils:
     
     @staticmethod
     def create_test_endpoints(count=3):
-        """Crée des endpoints de test"""        endpoints = []
+        """Crée des endpoints de test"""
+        endpoints = []
         for i in range(count):
             endpoint = ServerEndpoint(
                 host=f"test{i}.example.com",
@@ -22442,7 +23563,8 @@ class ConnectionTestUtils:
     
     @staticmethod
     async def simulate_connection_load(pool, num_connections=10):
-        """Simule une charge de connexions"""        connections = []
+        """Simule une charge de connexions"""
+        connections = []
         
         for i in range(num_connections):
             # Simuler l'ajout de connexion au pool
@@ -22456,7 +23578,8 @@ class ConnectionTestUtils:
     
     @staticmethod
     async def simulate_health_checks(endpoints):
-        """Simule des vérifications de santé"""        import random
+        """Simule des vérifications de santé"""
+        import random
         
         for endpoint in endpoints:
             # Simuler aléatoirement des endpoints sains/non sains

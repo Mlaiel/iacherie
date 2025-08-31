@@ -1,7 +1,7 @@
 """Revenue Management System - Core Revenue Components
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
@@ -57,7 +57,7 @@ from .index import RevenueManagementSystem, create_revenue_management_system, cr
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 __license__ = "Proprietary - All Rights Reserved"
-__copyright__ = "© 2025 Fahed Mlaiel"
+__copyright__ = "(c) 2025 Fahed Mlaiel"
 
 # Export all public interfaces
 __all__ = [

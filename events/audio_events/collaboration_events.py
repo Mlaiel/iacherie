@@ -6,7 +6,8 @@ versioning, and social interaction features for creators and artists.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from dataclasses import dataclass, field
+"""
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Tuple
 from uuid import UUID
@@ -16,7 +17,8 @@ from ...core.events.base_event import BaseEvent, EventPriority, EventCategory
 
 
 class CollaborationType(Enum):
-    """Types of collaboration"""    REMIX = "remix"
+    """Types of collaboration"""
+    REMIX = "remix"
     COVER = "cover"
     COLLABORATION = "collaboration"
     SAMPLE_USAGE = "sample_usage"
@@ -29,7 +31,8 @@ class CollaborationType(Enum):
 
 
 class CollaborationStatus(Enum):
-    """Status of collaboration requests"""    PENDING = "pending"
+    """Status of collaboration requests"""
+    PENDING = "pending"
     ACCEPTED = "accepted"
     REJECTED = "rejected"
     NEGOTIATING = "negotiating"
@@ -39,7 +42,8 @@ class CollaborationStatus(Enum):
 
 
 class RemixType(Enum):
-    """Types of remixes"""    OFFICIAL_REMIX = "official_remix"
+    """Types of remixes"""
+    OFFICIAL_REMIX = "official_remix"
     BOOTLEG_REMIX = "bootleg_remix"
     RADIO_EDIT = "radio_edit"
     EXTENDED_MIX = "extended_mix"
@@ -53,10 +57,12 @@ class RemixType(Enum):
 
 @dataclass
 class AudioCollaborationRequestEvent(BaseEvent):
-    """    Event triggered when a collaboration request is initiated.
+    """
+    Event triggered when a collaboration request is initiated.
     
     Handles collaboration invitations between artists and creators.
-    """    requester_id: UUID
+    """
+    requester_id: UUID
     target_artist_id: UUID
     original_file_id: UUID
     collaboration_id: UUID
@@ -93,10 +99,12 @@ class AudioCollaborationRequestEvent(BaseEvent):
 
 @dataclass
 class AudioCollaborationAcceptedEvent(BaseEvent):
-    """    Event triggered when a collaboration request is accepted.
+    """
+    Event triggered when a collaboration request is accepted.
     
     Initiates the collaborative workflow and resource allocation.
-    """    target_artist_id: UUID
+    """
+    target_artist_id: UUID
     requester_id: UUID
     collaboration_id: UUID
     original_file_id: UUID
@@ -130,10 +138,12 @@ class AudioCollaborationAcceptedEvent(BaseEvent):
 
 @dataclass
 class AudioCollaborationRejectedEvent(BaseEvent):
-    """    Event triggered when a collaboration request is rejected.
+    """
+    Event triggered when a collaboration request is rejected.
     
     Handles rejection feedback and alternative suggestions.
-    """    target_artist_id: UUID
+    """
+    target_artist_id: UUID
     requester_id: UUID
     collaboration_id: UUID
     original_file_id: UUID
@@ -164,10 +174,12 @@ class AudioCollaborationRejectedEvent(BaseEvent):
 
 @dataclass
 class AudioRemixCreatedEvent(BaseEvent):
-    """    Event triggered when a remix is created and completed.
+    """
+    Event triggered when a remix is created and completed.
     
     Contains comprehensive remix metadata and analysis.
-    """    creator_id: UUID
+    """
+    creator_id: UUID
     original_file_id: UUID
     remix_file_id: UUID
     remix_id: UUID
@@ -208,10 +220,12 @@ class AudioRemixCreatedEvent(BaseEvent):
 
 @dataclass
 class AudioVersionCreatedEvent(BaseEvent):
-    """    Event triggered when a new version of a collaborative work is created.
+    """
+    Event triggered when a new version of a collaborative work is created.
     
     Handles version control and collaborative editing workflows.
-    """    creator_id: UUID
+    """
+    creator_id: UUID
     collaboration_id: UUID
     original_file_id: UUID
     version_file_id: UUID
@@ -248,10 +262,12 @@ class AudioVersionCreatedEvent(BaseEvent):
 
 @dataclass
 class AudioCollaborationFeedbackEvent(BaseEvent):
-    """    Event triggered when feedback is provided on collaborative work.
+    """
+    Event triggered when feedback is provided on collaborative work.
     
     Handles peer review and feedback workflows.
-    """    reviewer_id: UUID
+    """
+    reviewer_id: UUID
     collaboration_id: UUID
     version_id: UUID
     feedback_id: UUID
@@ -286,10 +302,12 @@ class AudioCollaborationFeedbackEvent(BaseEvent):
 
 @dataclass
 class AudioCollaborationMilestoneEvent(BaseEvent):
-    """    Event triggered when a collaboration milestone is reached.
+    """
+    Event triggered when a collaboration milestone is reached.
     
     Tracks progress and completion of collaborative projects.
-    """    collaboration_id: UUID
+    """
+    collaboration_id: UUID
     milestone_id: UUID
     milestone_name: str
     milestone_type: str  # checkpoint, deadline, completion, approval
@@ -322,10 +340,12 @@ class AudioCollaborationMilestoneEvent(BaseEvent):
 
 @dataclass
 class AudioCollaborationCompletedEvent(BaseEvent):
-    """    Event triggered when a collaboration is fully completed.
+    """
+    Event triggered when a collaboration is fully completed.
     
     Finalizes collaborative work and initiates distribution/monetization.
-    """    collaboration_id: UUID
+    """
+    collaboration_id: UUID
     final_file_id: UUID
     final_version_id: UUID
     participants: List[UUID]
@@ -361,10 +381,12 @@ class AudioCollaborationCompletedEvent(BaseEvent):
 
 @dataclass
 class AudioSampleUsageEvent(BaseEvent):
-    """    Event triggered when an audio sample is used in a new creation.
+    """
+    Event triggered when an audio sample is used in a new creation.
     
     Handles sample clearance and usage tracking.
-    """    user_id: UUID
+    """
+    user_id: UUID
     original_file_id: UUID
     new_file_id: UUID
     sample_id: UUID

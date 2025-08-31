@@ -22,7 +22,8 @@ LOGIQUE MÉTIER ORCHESTRÉE:
 Content Request → Storage Orchestration → Multi-Manager Coordination → 
 File Processing + Version Control + Backup Protection → 
 Unified Response → Performance Metrics → Security Compliance
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -68,7 +69,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class StorageOperation:
-    """Unified storage operation result"""    operation_id: str
+    """Unified storage operation result"""
+    operation_id: str
     operation_type: str
     success: bool
     timestamp: datetime
@@ -100,7 +102,8 @@ class StorageOperation:
 
 @dataclass
 class StorageIndexConfig:
-    """Configuration for storage index orchestrator"""    # Base paths
+    """Configuration for storage index orchestrator"""
+    # Base paths
     storage_base_path: str = "/data/storage"
     temp_path: str = "/tmp/ia_storage"
     
@@ -136,18 +139,22 @@ class StorageIndexConfig:
 
 
 class StorageIndex:
-    """    Unified storage orchestrator for IA Influencer Agent platform.
+    """
+    Unified storage orchestrator for IA Influencer Agent platform.
     
     Coordinates file management, versioning, and backup operations
     through a single, cohesive interface for optimal performance
     and reliability.
-    """    
+    """
+    
     def __init__(self, config: StorageIndexConfig):
-        """        Initialize StorageIndex with comprehensive configuration.
+        """
+        Initialize StorageIndex with comprehensive configuration.
         
         Args:
             config: Storage index configuration
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize storage managers
@@ -173,7 +180,8 @@ class StorageIndex:
         self.logger.info("🎯 StorageIndex initialized with unified orchestration")
     
     def _initialize_managers(self):
-        """Initialize all storage managers"""        try:
+        """Initialize all storage managers"""
+        try:
             base_path = Path(self.config.storage_base_path)
             base_path.mkdir(parents=True, exist_ok=True)
             
@@ -235,7 +243,8 @@ class StorageIndex:
                            create_version: bool = True,
                            create_backup: bool = True,
                            change_description: str = "Initial upload") -> StorageOperation:
-        """        Store content with comprehensive processing.
+        """
+        Store content with comprehensive processing.
         
         Args:
             file_data: File content as bytes or file-like object
@@ -249,7 +258,8 @@ class StorageIndex:
             
         Returns:
             Complete storage operation result
-        """        operation_id = str(uuid.uuid4())
+        """
+        operation_id = str(uuid.uuid4())
         start_time = datetime.now()
         
         operation = StorageOperation(
@@ -341,7 +351,8 @@ class StorageIndex:
                               file_id: str,
                               version_id: Optional[str] = None,
                               user_id: Optional[str] = None) -> Optional[bytes]:
-        """        Retrieve content with version support.
+        """
+        Retrieve content with version support.
         
         Args:
             file_id: File identifier
@@ -350,7 +361,8 @@ class StorageIndex:
             
         Returns:
             File content as bytes or None if not found
-        """        operation_id = str(uuid.uuid4())
+        """
+        operation_id = str(uuid.uuid4())
         start_time = datetime.now()
         
         operation = StorageOperation(
@@ -403,7 +415,8 @@ class StorageIndex:
                             user_id: str,
                             change_description: str,
                             create_backup: bool = True) -> StorageOperation:
-        """        Update existing content with versioning.
+        """
+        Update existing content with versioning.
         
         Args:
             file_id: File to update
@@ -414,7 +427,8 @@ class StorageIndex:
             
         Returns:
             Storage operation result
-        """        operation_id = str(uuid.uuid4())
+        """
+        operation_id = str(uuid.uuid4())
         start_time = datetime.now()
         
         operation = StorageOperation(
@@ -493,7 +507,8 @@ class StorageIndex:
                             file_id: str,
                             user_id: str,
                             permanent: bool = False) -> StorageOperation:
-        """        Delete content with optional permanent removal.
+        """
+        Delete content with optional permanent removal.
         
         Args:
             file_id: File to delete
@@ -502,7 +517,8 @@ class StorageIndex:
             
         Returns:
             Storage operation result
-        """        operation_id = str(uuid.uuid4())
+        """
+        operation_id = str(uuid.uuid4())
         start_time = datetime.now()
         
         operation = StorageOperation(
@@ -566,7 +582,8 @@ class StorageIndex:
                               file_id: str,
                               version_a: str,
                               version_b: str) -> Optional[VersionComparison]:
-        """        Compare two versions of a file.
+        """
+        Compare two versions of a file.
         
         Args:
             file_id: File identifier
@@ -575,7 +592,8 @@ class StorageIndex:
             
         Returns:
             Version comparison result or None
-        """        try:
+        """
+        try:
             if not self.version_manager:
                 return None
             
@@ -594,7 +612,8 @@ class StorageIndex:
                                  target_path: str,
                                  target_timestamp: Optional[datetime] = None,
                                  user_id: str = "") -> Optional[Any]:
-        """        Restore file from backup.
+        """
+        Restore file from backup.
         
         Args:
             file_id: File to restore
@@ -604,7 +623,8 @@ class StorageIndex:
             
         Returns:
             Restore job result or None
-        """        try:
+        """
+        try:
             if not self.backup_manager:
                 return None
             
@@ -622,14 +642,16 @@ class StorageIndex:
             return None
     
     async def get_file_history(self, file_id: str) -> Dict[str, Any]:
-        """        Get complete history of a file including versions and backups.
+        """
+        Get complete history of a file including versions and backups.
         
         Args:
             file_id: File identifier
             
         Returns:
             Complete file history
-        """        try:
+        """
+        try:
             history = {
                 "file_id": file_id,
                 "versions": [],
@@ -666,11 +688,13 @@ class StorageIndex:
             return {"file_id": file_id, "error": str(e)}
     
     async def get_storage_statistics(self) -> Dict[str, Any]:
-        """        Get comprehensive storage statistics.
+        """
+        Get comprehensive storage statistics.
         
         Returns:
             Complete storage statistics across all managers
-        """        try:
+        """
+        try:
             stats = {
                 "timestamp": datetime.now().isoformat(),
                 "file_management": {},
@@ -708,7 +732,8 @@ class StorageIndex:
             return {"error": str(e)}
     
     async def _complete_operation(self, operation: StorageOperation) -> StorageOperation:
-        """Complete storage operation and update metrics"""        try:
+        """Complete storage operation and update metrics"""
+        try:
             # Calculate processing time
             processing_time = (datetime.now() - operation.timestamp).total_seconds()
             operation.processing_time_seconds = processing_time
@@ -751,14 +776,16 @@ class StorageIndex:
             return operation
     
     async def cleanup_temp_files(self, max_age_hours: int = 24) -> int:
-        """        Clean up temporary files across all managers.
+        """
+        Clean up temporary files across all managers.
         
         Args:
             max_age_hours: Maximum age of temporary files to keep
             
         Returns:
             Number of files cleaned up
-        """        try:
+        """
+        try:
             total_cleaned = 0
             
             # Clean up file manager temp files
@@ -789,11 +816,13 @@ class StorageIndex:
             return 0
     
     async def health_check(self) -> Dict[str, Any]:
-        """        Perform comprehensive health check of all storage components.
+        """
+        Perform comprehensive health check of all storage components.
         
         Returns:
             Health status of all components
-        """        try:
+        """
+        try:
             health = {
                 "timestamp": datetime.now().isoformat(),
                 "overall_status": "healthy",

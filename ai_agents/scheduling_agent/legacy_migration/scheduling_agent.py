@@ -28,7 +28,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -69,14 +70,16 @@ from ...integrations.platform_apis import PlatformAPIManager
 logger = logging.getLogger(__name__)
 
 class SchedulingPriority(Enum):
-    """Scheduling priority levels"""    LOW = "low"
+    """Scheduling priority levels"""
+    LOW = "low"
     NORMAL = "normal" 
     HIGH = "high"
     URGENT = "urgent"
     CRITICAL = "critical"
 
 class ScheduleStatus(Enum):
-    """Schedule execution status"""    PENDING = "pending"
+    """Schedule execution status"""
+    PENDING = "pending"
     SCHEDULED = "scheduled"
     EXECUTING = "executing"
     COMPLETED = "completed"
@@ -85,7 +88,8 @@ class ScheduleStatus(Enum):
     RESCHEDULED = "rescheduled"
 
 class ScheduleType(Enum):
-    """Types of scheduling"""    IMMEDIATE = "immediate"
+    """Types of scheduling"""
+    IMMEDIATE = "immediate"
     DELAYED = "delayed"
     RECURRING = "recurring"
     CONDITIONAL = "conditional"
@@ -93,7 +97,8 @@ class ScheduleType(Enum):
 
 @dataclass
 class SchedulingRequest:
-    """Scheduling request configuration"""    content_id: str
+    """Scheduling request configuration"""
+    content_id: str
     platforms: List[str]
     schedule_time: Optional[datetime] = None
     priority: SchedulingPriority = SchedulingPriority.NORMAL
@@ -105,7 +110,8 @@ class SchedulingRequest:
 
 @dataclass
 class OptimalTimingAnalysis:
-    """Optimal timing analysis results"""    recommended_time: datetime
+    """Optimal timing analysis results"""
+    recommended_time: datetime
     confidence_score: float
     audience_activity_score: float
     competition_score: float
@@ -115,7 +121,8 @@ class OptimalTimingAnalysis:
 
 @dataclass
 class ScheduleResult:
-    """Schedule execution result"""    schedule_id: str
+    """Schedule execution result"""
+    schedule_id: str
     status: ScheduleStatus
     execution_time: Optional[datetime]
     platforms_executed: List[str]
@@ -126,7 +133,8 @@ class ScheduleResult:
 Base = declarative_base()
 
 class ScheduledJob(Base):
-    """Database model for scheduled jobs"""    __tablename__ = 'scheduled_jobs'
+    """Database model for scheduled jobs"""
+    __tablename__ = 'scheduled_jobs'
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     content_id = Column(String, nullable=False, index=True)
@@ -146,7 +154,8 @@ class ScheduledJob(Base):
     updated_at = Column(DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class AudienceActivity(Base):
-    """Database model for audience activity tracking"""    __tablename__ = 'audience_activity'
+    """Database model for audience activity tracking"""
+    __tablename__ = 'audience_activity'
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     creator_id = Column(String, nullable=False, index=True)
@@ -161,7 +170,8 @@ class AudienceActivity(Base):
     updated_at = Column(DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class SchedulingAgent(BaseAgent):
-    """    Enterprise scheduling agent for intelligent content timing and distribution.
+    """
+    Enterprise scheduling agent for intelligent content timing and distribution.
     
     Provides industrial-grade scheduling capabilities including:
     - AI-driven optimal timing analysis
@@ -170,7 +180,8 @@ class SchedulingAgent(BaseAgent):
     - Enterprise calendar integration
     - Performance-based optimization
     - Real-time adaptation and learning
-    """    
+    """
+    
     def __init__(self, agent_id: str = None):
         super().__init__(
             agent_id=agent_id or f"scheduling_agent_{uuid.uuid4().hex[:8]}",
@@ -195,7 +206,8 @@ class SchedulingAgent(BaseAgent):
         self._initialize_models()
     
     def _setup_scheduler(self):
-        """Initialize the enterprise scheduler with database persistence"""        try:
+        """Initialize the enterprise scheduler with database persistence"""
+        try:
             jobstores = {
                 'default': SQLAlchemyJobStore(url=settings.DATABASE_URL)
             }
@@ -220,7 +232,8 @@ class SchedulingAgent(BaseAgent):
             raise AgentError(f"Scheduler initialization failed: {str(e)}")
     
     def _initialize_models(self):
-        """Initialize AI models for timing optimization"""        # This would typically load pre-trained models
+        """Initialize AI models for timing optimization"""
+        # This would typically load pre-trained models
         # Initialize production-ready scheduler with database persistence
         self.timing_models = {
             'engagement_predictor': None,  # ML model for engagement prediction
@@ -237,7 +250,8 @@ class SchedulingAgent(BaseAgent):
         creator_id: str,
         optimize_timing: bool = True
     ) -> str:
-        """        Create a new content schedule with intelligent optimization.
+        """
+        Create a new content schedule with intelligent optimization.
         
         Args:
             request: Scheduling request configuration
@@ -246,7 +260,8 @@ class SchedulingAgent(BaseAgent):
             
         Returns:
             Schedule ID
-        """        try:
+        """
+        try:
             self.logger.info(f"Creating schedule for content {request.content_id}")
             
             # Validate request
@@ -306,7 +321,8 @@ class SchedulingAgent(BaseAgent):
         content_metadata: Dict[str, Any],
         timezone: str = "UTC"
     ) -> OptimalTimingAnalysis:
-        """        Analyze and determine optimal posting time using AI.
+        """
+        Analyze and determine optimal posting time using AI.
         
         Args:
             creator_id: Creator identifier
@@ -316,7 +332,8 @@ class SchedulingAgent(BaseAgent):
             
         Returns:
             Optimal timing analysis results
-        """        try:
+        """
+        try:
             self.logger.info(f"Analyzing optimal timing for creator {creator_id}")
             
             # Check cache first
@@ -384,14 +401,16 @@ class SchedulingAgent(BaseAgent):
             raise AgentError(f"Optimal timing analysis failed: {str(e)}")
     
     async def execute_scheduled_job(self, schedule_id: str) -> ScheduleResult:
-        """        Execute a scheduled content distribution job.
+        """
+        Execute a scheduled content distribution job.
         
         Args:
             schedule_id: Schedule identifier
             
         Returns:
             Execution result
-        """        try:
+        """
+        try:
             self.logger.info(f"Executing scheduled job {schedule_id}")
             
             # Get job details from database
@@ -462,7 +481,8 @@ class SchedulingAgent(BaseAgent):
             raise AgentError(f"Job execution failed: {str(e)}")
     
     async def get_schedule_status(self, schedule_id: str) -> Dict[str, Any]:
-        """Get current status of a scheduled job"""        try:
+        """Get current status of a scheduled job"""
+        try:
             with get_db_session() as db:
                 job = db.query(ScheduledJob).filter(ScheduledJob.id == schedule_id).first()
                 if not job:
@@ -485,7 +505,8 @@ class SchedulingAgent(BaseAgent):
             raise AgentError(f"Status retrieval failed: {str(e)}")
     
     async def cancel_schedule(self, schedule_id: str) -> bool:
-        """Cancel a scheduled job"""        try:
+        """Cancel a scheduled job"""
+        try:
             # Remove from scheduler
             try:
                 self.scheduler.remove_job(schedule_id)
@@ -511,7 +532,8 @@ class SchedulingAgent(BaseAgent):
         new_schedule_time: datetime,
         reason: str = None
     ) -> bool:
-        """Reschedule an existing job"""        try:
+        """Reschedule an existing job"""
+        try:
             # Update scheduler
             self.scheduler.modify_job(
                 schedule_id,
@@ -542,7 +564,8 @@ class SchedulingAgent(BaseAgent):
         status_filter: Optional[List[ScheduleStatus]] = None,
         limit: int = 100
     ) -> List[Dict[str, Any]]:
-        """Get schedules for a specific creator"""        try:
+        """Get schedules for a specific creator"""
+        try:
             with get_db_session() as db:
                 query = db.query(ScheduledJob).filter(ScheduledJob.creator_id == creator_id)
                 
@@ -570,7 +593,8 @@ class SchedulingAgent(BaseAgent):
             raise AgentError(f"Schedule retrieval failed: {str(e)}")
     
     async def _validate_scheduling_request(self, request: SchedulingRequest):
-        """Validate scheduling request parameters"""        if not request.content_id:
+        """Validate scheduling request parameters"""
+        if not request.content_id:
             raise AgentError("Content ID is required")
         
         if not request.platforms:
@@ -596,7 +620,8 @@ class SchedulingAgent(BaseAgent):
                 raise AgentError(f"Invalid cron pattern: {request.recurring_pattern}")
     
     async def _schedule_single_job(self, schedule_id: str, request: SchedulingRequest):
-        """Schedule a single execution job"""        if request.schedule_type == ScheduleType.IMMEDIATE:
+        """Schedule a single execution job"""
+        if request.schedule_type == ScheduleType.IMMEDIATE:
             # Execute immediately
             asyncio.create_task(self.execute_scheduled_job(schedule_id))
         else:
@@ -610,7 +635,8 @@ class SchedulingAgent(BaseAgent):
             )
     
     async def _schedule_recurring_job(self, schedule_id: str, request: SchedulingRequest):
-        """Schedule a recurring job"""        if not request.recurring_pattern:
+        """Schedule a recurring job"""
+        if not request.recurring_pattern:
             raise AgentError("Recurring pattern is required for recurring jobs")
         
         # Parse cron pattern
@@ -641,7 +667,8 @@ class SchedulingAgent(BaseAgent):
         platforms: List[str],
         timezone: str
     ) -> Dict[str, Any]:
-        """Analyze audience activity patterns"""        try:
+        """Analyze audience activity patterns"""
+        try:
             activity_data = {}
             
             with get_db_session() as db:
@@ -707,7 +734,8 @@ class SchedulingAgent(BaseAgent):
         platforms: List[str],
         content_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze posting competition levels"""        # This is a simplified implementation
+        """Analyze posting competition levels"""
+        # This is a simplified implementation
         # In a real system, this would analyze historical posting volumes
         competition_scores = {}
         
@@ -755,7 +783,8 @@ class SchedulingAgent(BaseAgent):
         platforms: List[str],
         content_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze platform-specific optimization factors"""        platform_scores = {}
+        """Analyze platform-specific optimization factors"""
+        platform_scores = {}
         
         current_time = datetime.utcnow()
         
@@ -823,7 +852,8 @@ class SchedulingAgent(BaseAgent):
         platform_analysis: Dict[str, Any],
         timezone: str
     ) -> datetime:
-        """Calculate optimal posting time using weighted scoring"""        
+        """Calculate optimal posting time using weighted scoring"""
+        
         # Get current time in target timezone
         tz = pytz.timezone(timezone)
         current_time = datetime.now(tz)
@@ -866,7 +896,8 @@ class SchedulingAgent(BaseAgent):
         candidate_time: datetime,
         audience_analysis: Dict[str, Any]
     ) -> float:
-        """Calculate audience activity score for a given time"""        hour = candidate_time.hour
+        """Calculate audience activity score for a given time"""
+        hour = candidate_time.hour
         day_of_week = candidate_time.weekday()
         
         platform_data = audience_analysis.get('platform_data', {})
@@ -891,7 +922,8 @@ class SchedulingAgent(BaseAgent):
         candidate_time: datetime,
         competition_analysis: Dict[str, Any]
     ) -> float:
-        """Calculate competition level score for a given time"""        hour = candidate_time.hour
+        """Calculate competition level score for a given time"""
+        hour = candidate_time.hour
         
         peak_hours = competition_analysis.get('peak_competition_hours', [])
         low_hours = competition_analysis.get('low_competition_hours', [])
@@ -908,7 +940,8 @@ class SchedulingAgent(BaseAgent):
         candidate_time: datetime,
         platform_analysis: Dict[str, Any]
     ) -> float:
-        """Calculate platform optimization score for a given time"""        return platform_analysis.get('overall_score', 0.5)
+        """Calculate platform optimization score for a given time"""
+        return platform_analysis.get('overall_score', 0.5)
     
     def _calculate_confidence_score(
         self,
@@ -916,7 +949,8 @@ class SchedulingAgent(BaseAgent):
         competition_analysis: Dict[str, Any],
         platform_analysis: Dict[str, Any]
     ) -> float:
-        """Calculate overall confidence in the timing recommendation"""        audience_confidence = audience_analysis.get('confidence', 0.0)
+        """Calculate overall confidence in the timing recommendation"""
+        audience_confidence = audience_analysis.get('confidence', 0.0)
         competition_confidence = 0.7  # Mock confidence for competition analysis
         platform_confidence = 0.8     # Mock confidence for platform analysis
         
@@ -928,7 +962,8 @@ class SchedulingAgent(BaseAgent):
         competition_analysis: Dict[str, Any],
         platform_analysis: Dict[str, Any]
     ) -> List[str]:
-        """Generate human-readable reasoning for the timing recommendation"""        reasoning = []
+        """Generate human-readable reasoning for the timing recommendation"""
+        reasoning = []
         
         # Audience-based reasoning
         if audience_analysis.get('overall_score', 0) > 0.6:
@@ -948,7 +983,8 @@ class SchedulingAgent(BaseAgent):
         return reasoning
     
     def _get_default_activity_patterns(self, platform: str) -> Dict[str, Any]:
-        """Get default activity patterns when no data is available"""        default_patterns = {
+        """Get default activity patterns when no data is available"""
+        default_patterns = {
             'instagram': {
                 'hourly_activity': {i: 0.7 if i in [6, 7, 8, 12, 17, 18, 19, 20] else 0.4 for i in range(24)},
                 'daily_activity': {i: 0.8 if i < 5 else 0.6 for i in range(7)},
@@ -976,7 +1012,8 @@ class SchedulingAgent(BaseAgent):
         platform: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Execute content distribution on a specific platform"""        # This would integrate with actual platform APIs
+        """Execute content distribution on a specific platform"""
+        # This would integrate with actual platform APIs
         # For now, return mock performance metrics
         
         await asyncio.sleep(0.1)  # Simulate API call
@@ -990,13 +1027,16 @@ class SchedulingAgent(BaseAgent):
         }
     
     async def cleanup(self):
-        """Cleanup resources"""        if self.scheduler:
+        """Cleanup resources"""
+        if self.scheduler:
             self.scheduler.shutdown()
         await super().cleanup()
 
 class SchedulingAgentManager:
-    """    Manager for multiple scheduling agents with load balancing and coordination.
-    """    
+    """
+    Manager for multiple scheduling agents with load balancing and coordination.
+    """
+    
     def __init__(self, max_agents: int = 5):
         self.agents = {}
         self.max_agents = max_agents
@@ -1004,7 +1044,8 @@ class SchedulingAgentManager:
         self.lock = asyncio.Lock()
     
     async def get_agent(self, creator_id: str = None) -> SchedulingAgent:
-        """Get an available scheduling agent"""        async with self.lock:
+        """Get an available scheduling agent"""
+        async with self.lock:
             if creator_id and creator_id in self.agents:
                 return self.agents[creator_id]
             
@@ -1021,6 +1062,7 @@ class SchedulingAgentManager:
             return self.agents[agent_key]
     
     async def shutdown_all(self):
-        """Shutdown all agents"""        for agent in self.agents.values():
+        """Shutdown all agents"""
+        for agent in self.agents.values():
             await agent.cleanup()
         self.agents.clear()

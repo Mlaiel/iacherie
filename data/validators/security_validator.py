@@ -7,7 +7,8 @@ and threat assessment for creator content workflows.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
 from pathlib import Path
@@ -24,14 +25,16 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityLevel(Enum):
-    """Security validation levels."""    LOW = "low"
+    """Security validation levels."""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class ThreatType(Enum):
-    """Types of security threats."""    MALWARE = "malware"
+    """Types of security threats."""
+    MALWARE = "malware"
     VIRUS = "virus"
     TROJAN = "trojan"
     PHISHING = "phishing"
@@ -44,7 +47,8 @@ class ThreatType(Enum):
 
 
 class SecurityStatus(Enum):
-    """Security validation status."""    SAFE = "safe"
+    """Security validation status."""
+    SAFE = "safe"
     SUSPICIOUS = "suspicious"
     DANGEROUS = "dangerous"
     BLOCKED = "blocked"
@@ -52,7 +56,8 @@ class SecurityStatus(Enum):
 
 
 class SecurityThreat(Enum):
-    """Security threat categories."""    MALWARE = "malware"
+    """Security threat categories."""
+    MALWARE = "malware"
     VIRUS = "virus"
     INJECTION = "injection"
     XSS = "xss"
@@ -66,7 +71,8 @@ class SecurityThreat(Enum):
 
 @dataclass
 class ThreatDetection:
-    """Threat detection result."""    threat_type: SecurityThreat
+    """Threat detection result."""
+    threat_type: SecurityThreat
     severity: SecurityLevel
     confidence: float
     description: str
@@ -77,7 +83,8 @@ class ThreatDetection:
 
 @dataclass 
 class SecurityValidationResult:
-    """Security validation result."""    is_safe: bool
+    """Security validation result."""
+    is_safe: bool
     status: SecurityStatus
     overall_risk_score: float
     
@@ -105,17 +112,21 @@ class SecurityValidationResult:
 
 
 class ThreatDetector:
-    """    Advanced threat detection engine for content security.
+    """
+    Advanced threat detection engine for content security.
     
     Provides multi-layered threat detection with machine learning
     and signature-based detection capabilities.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize threat detector.
+        """
+        Initialize threat detector.
         
         Args:
             config: Detector configuration
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         
         # Initialize threat signatures
         self.malware_signatures = self._load_malware_signatures()
@@ -135,7 +146,8 @@ class ThreatDetector:
         data: Union[bytes, str, Dict[str, Any]],
         content_type: Optional[str] = None
     ) -> List[ThreatDetection]:
-        """        Detect threats in content.
+        """
+        Detect threats in content.
         
         Args:
             data: Content data to analyze
@@ -143,7 +155,8 @@ class ThreatDetector:
             
         Returns:
             List of detected threats
-        """        threats = []
+        """
+        threats = []
         
         try:
             # Signature-based detection
@@ -171,7 +184,8 @@ class ThreatDetector:
             return []
     
     async def _detect_malware_signatures(self, data: Union[bytes, str]) -> List[ThreatDetection]:
-        """Detect known malware signatures."""        threats = []
+        """Detect known malware signatures."""
+        threats = []
         
         try:
             if isinstance(data, str):
@@ -196,7 +210,8 @@ class ThreatDetector:
             return []
     
     async def _detect_suspicious_patterns(self, data: Union[bytes, str]) -> List[ThreatDetection]:
-        """Detect suspicious patterns in content."""        threats = []
+        """Detect suspicious patterns in content."""
+        threats = []
         
         try:
             if isinstance(data, bytes):
@@ -222,7 +237,8 @@ class ThreatDetector:
             return []
     
     async def _analyze_text_content(self, text: str) -> List[ThreatDetection]:
-        """Analyze text content for threats."""        threats = []
+        """Analyze text content for threats."""
+        threats = []
         
         try:
             # Phishing detection
@@ -260,7 +276,8 @@ class ThreatDetector:
         data: bytes,
         content_type: Optional[str]
     ) -> List[ThreatDetection]:
-        """Analyze binary content for threats."""        threats = []
+        """Analyze binary content for threats."""
+        threats = []
         
         try:
             # Check file entropy (high entropy may indicate packing/encryption)
@@ -293,7 +310,8 @@ class ThreatDetector:
             return []
     
     async def _ml_threat_detection(self, data: Union[bytes, str]) -> List[ThreatDetection]:
-        """ML-based threat detection."""        threats = []
+        """ML-based threat detection."""
+        threats = []
         
         try:
             # This would integrate with ML models for threat detection
@@ -325,7 +343,8 @@ class ThreatDetector:
             return []
     
     async def _calculate_spam_score(self, text: str) -> float:
-        """Calculate spam score for text content."""        try:
+        """Calculate spam score for text content."""
+        try:
             score = 0.0
             
             # Check for spam indicators
@@ -354,7 +373,8 @@ class ThreatDetector:
             return 0.0
     
     def _calculate_entropy(self, data: bytes) -> float:
-        """Calculate Shannon entropy of data."""        try:
+        """Calculate Shannon entropy of data."""
+        try:
             if len(data) == 0:
                 return 0.0
             
@@ -378,7 +398,8 @@ class ThreatDetector:
             return 0.0
     
     def _contains_executable_code(self, data: bytes) -> bool:
-        """Check if data contains executable code."""        try:
+        """Check if data contains executable code."""
+        try:
             # Check for common executable signatures
             executable_signatures = [
                 b'\x4d\x5a',  # DOS/Windows PE
@@ -397,7 +418,8 @@ class ThreatDetector:
             return False
     
     def _load_malware_signatures(self) -> Dict[bytes, Dict[str, str]]:
-        """Load malware signatures database."""        # In production, this would load from external threat intelligence feeds
+        """Load malware signatures database."""
+        # In production, this would load from external threat intelligence feeds
         return {
             b'\x4d\x5a\x90\x00\x03\x00\x00\x00': {
                 "name": "Generic Windows Executable",
@@ -406,7 +428,8 @@ class ThreatDetector:
         }
     
     def _load_script_patterns(self) -> Dict[str, str]:
-        """Load suspicious script patterns."""        return {
+        """Load suspicious script patterns."""
+        return {
             r'<script[^>]*>.*?</script>': "medium",
             r'javascript:': "medium",
             r'eval\s*\(': "high",
@@ -420,7 +443,8 @@ class ThreatDetector:
         }
     
     def _load_phishing_indicators(self) -> List[str]:
-        """Load phishing indicators."""        return [
+        """Load phishing indicators."""
+        return [
             "verify your account",
             "suspended account",
             "click here immediately",
@@ -433,17 +457,21 @@ class ThreatDetector:
 
 
 class InputSanitizer:
-    """    Input sanitization engine for preventing injection attacks.
+    """
+    Input sanitization engine for preventing injection attacks.
     
     Provides comprehensive input cleaning and validation for all
     user-submitted content types.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize input sanitizer.
+        """
+        Initialize input sanitizer.
         
         Args:
             config: Sanitizer configuration
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         
         # Sanitization rules
         self.html_rules = self._init_html_rules()
@@ -458,7 +486,8 @@ class InputSanitizer:
         input_type: str = "text",
         strict_mode: bool = True
     ) -> Union[str, Dict[str, Any], List[Any]]:
-        """        Sanitize input data.
+        """
+        Sanitize input data.
         
         Args:
             data: Input data to sanitize
@@ -467,7 +496,8 @@ class InputSanitizer:
             
         Returns:
             Sanitized data
-        """        try:
+        """
+        try:
             if isinstance(data, str):
                 return await self._sanitize_string(data, input_type, strict_mode)
             elif isinstance(data, dict):
@@ -482,7 +512,8 @@ class InputSanitizer:
             return ""  # Return safe default
     
     async def _sanitize_string(self, text: str, input_type: str, strict_mode: bool) -> str:
-        """Sanitize string input."""        try:
+        """Sanitize string input."""
+        try:
             # Remove null bytes
             text = text.replace('\x00', '')
             
@@ -503,7 +534,8 @@ class InputSanitizer:
             return ""
     
     async def _sanitize_html(self, html: str, strict_mode: bool) -> str:
-        """Sanitize HTML content."""        try:
+        """Sanitize HTML content."""
+        try:
             # Remove dangerous tags
             dangerous_tags = ['script', 'iframe', 'object', 'embed', 'form', 'input']
             
@@ -532,7 +564,8 @@ class InputSanitizer:
             return ""
     
     async def _sanitize_sql(self, text: str) -> str:
-        """Sanitize SQL input."""        try:
+        """Sanitize SQL input."""
+        try:
             # Remove common SQL injection patterns
             sql_patterns = [
                 r"('\s*(or|and)\s*')",
@@ -559,7 +592,8 @@ class InputSanitizer:
             return ""
     
     async def _sanitize_javascript(self, text: str) -> str:
-        """Sanitize JavaScript content."""        try:
+        """Sanitize JavaScript content."""
+        try:
             # Remove dangerous JavaScript patterns
             js_patterns = [
                 r'eval\s*\(',
@@ -581,7 +615,8 @@ class InputSanitizer:
             return ""
     
     async def _sanitize_text(self, text: str, strict_mode: bool) -> str:
-        """Sanitize plain text."""        try:
+        """Sanitize plain text."""
+        try:
             # Remove control characters
             text = ''.join(char for char in text if ord(char) >= 32 or char in '\t\n\r')
             
@@ -601,7 +636,8 @@ class InputSanitizer:
             return ""
     
     async def _sanitize_dict(self, data: Dict[str, Any], strict_mode: bool) -> Dict[str, Any]:
-        """Sanitize dictionary data."""        sanitized = {}
+        """Sanitize dictionary data."""
+        sanitized = {}
         
         try:
             for key, value in data.items():
@@ -620,7 +656,8 @@ class InputSanitizer:
             return {}
     
     async def _sanitize_list(self, data: List[Any], strict_mode: bool) -> List[Any]:
-        """Sanitize list data."""        sanitized = []
+        """Sanitize list data."""
+        sanitized = []
         
         try:
             for item in data:
@@ -634,14 +671,16 @@ class InputSanitizer:
             return []
     
     def _init_html_rules(self) -> Dict[str, str]:
-        """Initialize HTML sanitization rules."""        return {
+        """Initialize HTML sanitization rules."""
+        return {
             "allowed_tags": "p,br,strong,em,ul,ol,li,h1,h2,h3,h4,h5,h6",
             "allowed_attrs": "class,id",
             "remove_empty_tags": True
         }
     
     def _init_sql_patterns(self) -> List[str]:
-        """Initialize SQL injection patterns."""        return [
+        """Initialize SQL injection patterns."""
+        return [
             r"('\s*(or|and)\s*')",
             r"(\bor\s+1\s*=\s*1\b)",
             r"(\bunion\s+select\b)",
@@ -649,13 +688,15 @@ class InputSanitizer:
         ]
     
     def _init_script_patterns(self) -> List[str]:
-        """Initialize script injection patterns."""        return [
+        """Initialize script injection patterns."""
+        return [
             r'<script[^>]*>.*?</script>',
             r'javascript:',
             r'eval\s*\(',
             r'document\.write\s*\('
         ]
-    """Security validation status."""    SAFE = "safe"
+    """Security validation status."""
+    SAFE = "safe"
     SUSPICIOUS = "suspicious"
     DANGEROUS = "dangerous"
     BLOCKED = "blocked"
@@ -664,7 +705,8 @@ class InputSanitizer:
 
 @dataclass
 class SecurityThreat:
-    """Individual security threat."""    threat_type: ThreatType
+    """Individual security threat."""
+    threat_type: ThreatType
     severity: SecurityLevel
     confidence: float
     message: str
@@ -684,7 +726,8 @@ class SecurityThreat:
 
 @dataclass
 class SecurityScanResult:
-    """Comprehensive security scan result."""    is_safe: bool
+    """Comprehensive security scan result."""
+    is_safe: bool
     status: SecurityStatus
     security_level: SecurityLevel
     
@@ -719,24 +762,28 @@ class SecurityScanResult:
 
 
 class SecurityValidator:
-    """    Advanced security validator for the IA Influencer Agent Platform.
+    """
+    Advanced security validator for the IA Influencer Agent Platform.
     
     Provides comprehensive security scanning including malware detection,
     content analysis, and threat assessment for creator content.
-    """    
+    """
+    
     def __init__(
         self,
         config: Optional[Dict[str, Any]] = None,
         enable_deep_scan: bool = True,
         enable_ai_analysis: bool = True
     ):
-        """        Initialize security validator.
+        """
+        Initialize security validator.
         
         Args:
             config: Security validation configuration
             enable_deep_scan: Enable deep file analysis
             enable_ai_analysis: Enable AI-powered threat detection
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         self.enable_deep_scan = enable_deep_scan
         self.enable_ai_analysis = enable_ai_analysis
         
@@ -771,7 +818,8 @@ class SecurityValidator:
         filename: Optional[str] = None,
         security_level: SecurityLevel = SecurityLevel.MEDIUM
     ) -> SecurityScanResult:
-        """        Perform security scan on file.
+        """
+        Perform security scan on file.
         
         Args:
             file_path: Path to file
@@ -781,7 +829,8 @@ class SecurityValidator:
             
         Returns:
             Security scan result
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Prepare file data
@@ -860,7 +909,8 @@ class SecurityValidator:
         security_level: SecurityLevel = SecurityLevel.MEDIUM,
         max_workers: int = 4
     ) -> List[SecurityScanResult]:
-        """        Scan multiple files in batch.
+        """
+        Scan multiple files in batch.
         
         Args:
             file_items: List of file items to scan
@@ -869,7 +919,8 @@ class SecurityValidator:
             
         Returns:
             List of security scan results
-        """        try:
+        """
+        try:
             semaphore = asyncio.Semaphore(max_workers)
             
             async def scan_item(item):
@@ -905,7 +956,8 @@ class SecurityValidator:
         url: str,
         security_level: SecurityLevel = SecurityLevel.MEDIUM
     ) -> SecurityScanResult:
-        """        Scan content from URL.
+        """
+        Scan content from URL.
         
         Args:
             url: Content URL
@@ -913,7 +965,8 @@ class SecurityValidator:
             
         Returns:
             Security scan result
-        """        try:
+        """
+        try:
             import aiohttp
             
             # Check URL safety first
@@ -958,7 +1011,8 @@ class SecurityValidator:
         content: str,
         content_type: str = "text"
     ) -> SecurityScanResult:
-        """        Check content safety for text, scripts, etc.
+        """
+        Check content safety for text, scripts, etc.
         
         Args:
             content: Content to check
@@ -966,7 +1020,8 @@ class SecurityValidator:
             
         Returns:
             Security scan result
-        """        try:
+        """
+        try:
             result = SecurityScanResult(
                 is_safe=True,
                 status=SecurityStatus.SAFE,
@@ -1003,7 +1058,8 @@ class SecurityValidator:
         file_hash: str,
         sources: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """        Get threat intelligence for file hash.
+        """
+        Get threat intelligence for file hash.
         
         Args:
             file_hash: File hash to check
@@ -1011,7 +1067,8 @@ class SecurityValidator:
             
         Returns:
             Threat intelligence data
-        """        try:
+        """
+        try:
             intelligence = {
                 "hash": file_hash,
                 "known_threats": [],
@@ -1042,7 +1099,8 @@ class SecurityValidator:
         reason: str,
         quarantine_dir: Optional[str] = None
     ) -> bool:
-        """        Quarantine suspicious file.
+        """
+        Quarantine suspicious file.
         
         Args:
             file_path: Path to file to quarantine
@@ -1051,7 +1109,8 @@ class SecurityValidator:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             file_path = Path(file_path)
             if not file_path.exists():
                 return False
@@ -1092,7 +1151,8 @@ class SecurityValidator:
         filename: str,
         result: SecurityScanResult
     ):
-        """Perform basic security checks."""        try:
+        """Perform basic security checks."""
+        try:
             # File extension check
             file_ext = Path(filename).suffix.lower()
             if file_ext in self.blocked_extensions:
@@ -1146,7 +1206,8 @@ class SecurityValidator:
         filename: str,
         result: SecurityScanResult
     ):
-        """Signature-based malware detection."""        try:
+        """Signature-based malware detection."""
+        try:
             # Check against known threat signatures
             for signature, threat_info in self.threat_signatures.items():
                 if signature.encode() in file_data:
@@ -1190,7 +1251,8 @@ class SecurityValidator:
         filename: str,
         result: SecurityScanResult
     ):
-        """Heuristic analysis for unknown threats."""        try:
+        """Heuristic analysis for unknown threats."""
+        try:
             # Entropy analysis
             entropy = self._calculate_entropy(file_data)
             if entropy > 7.5:  # High entropy indicates possible encryption/compression
@@ -1248,7 +1310,8 @@ class SecurityValidator:
         filename: str,
         result: SecurityScanResult
     ):
-        """Deep content analysis for high security levels."""        try:
+        """Deep content analysis for high security levels."""
+        try:
             # MIME type analysis
             mime_type = mimetypes.guess_type(filename)[0]
             if mime_type:
@@ -1287,7 +1350,8 @@ class SecurityValidator:
         filename: str,
         result: SecurityScanResult
     ):
-        """AI-powered threat analysis."""        try:
+        """AI-powered threat analysis."""
+        try:
             # This would integrate with AI models for threat detection
             # For now, simulate AI analysis
             
@@ -1319,7 +1383,8 @@ class SecurityValidator:
         content_type: str,
         result: SecurityScanResult
     ):
-        """Check content for suspicious patterns."""        try:
+        """Check content for suspicious patterns."""
+        try:
             # Check for injection patterns
             injection_patterns = [
                 r'<script[^>]*>.*?</script>',
@@ -1372,7 +1437,8 @@ class SecurityValidator:
         content: str,
         result: SecurityScanResult
     ):
-        """Extract and check URLs in content."""        try:
+        """Extract and check URLs in content."""
+        try:
             urls = self._extract_urls(content)
             result.external_urls.extend(urls)
             
@@ -1394,7 +1460,8 @@ class SecurityValidator:
         content: str,
         result: SecurityScanResult
     ):
-        """Analyze scripts for threats."""        try:
+        """Analyze scripts for threats."""
+        try:
             # Extract script content
             script_patterns = [
                 r'<script[^>]*>(.*?)</script>',
@@ -1431,7 +1498,8 @@ class SecurityValidator:
         content_type: str,
         result: SecurityScanResult
     ):
-        """AI-powered content safety analysis."""        try:
+        """AI-powered content safety analysis."""
+        try:
             # This would integrate with AI content moderation APIs
             # For now, simulate content safety analysis
             
@@ -1465,7 +1533,8 @@ class SecurityValidator:
             logger.error(f"AI content safety analysis failed: {str(e)}")
     
     async def _calculate_risk_score(self, result: SecurityScanResult) -> float:
-        """Calculate overall risk score."""        try:
+        """Calculate overall risk score."""
+        try:
             risk_score = 0.0
             
             # Threat-based scoring
@@ -1500,7 +1569,8 @@ class SecurityValidator:
             return 50.0  # Default moderate risk
     
     async def _calculate_content_risk_score(self, result: SecurityScanResult) -> float:
-        """Calculate risk score for content analysis."""        try:
+        """Calculate risk score for content analysis."""
+        try:
             risk_score = 0.0
             
             # Threat-based scoring
@@ -1520,7 +1590,8 @@ class SecurityValidator:
             return 25.0
     
     async def _generate_security_recommendations(self, result: SecurityScanResult):
-        """Generate security recommendations."""        recommendations = []
+        """Generate security recommendations."""
+        recommendations = []
         
         try:
             # Threat-specific recommendations
@@ -1557,7 +1628,8 @@ class SecurityValidator:
             logger.error(f"Failed to generate recommendations: {str(e)}")
     
     def _calculate_entropy(self, data: bytes) -> float:
-        """Calculate Shannon entropy of data."""        try:
+        """Calculate Shannon entropy of data."""
+        try:
             if len(data) == 0:
                 return 0.0
             
@@ -1581,7 +1653,8 @@ class SecurityValidator:
             return 0.0
     
     def _extract_urls(self, text: str) -> List[str]:
-        """Extract URLs from text."""        try:
+        """Extract URLs from text."""
+        try:
             url_pattern = r'https?://(?:[-\w.])+(?:[:\d]+)?(?:/(?:[\w/_.])*(?:\?(?:[\w&=%.])*)?(?:#(?:[\w.])*)?)?'
             urls = re.findall(url_pattern, text, re.IGNORECASE)
             return list(set(urls))  # Remove duplicates
@@ -1590,7 +1663,8 @@ class SecurityValidator:
             return []
     
     async def _is_malicious_url(self, url: str) -> bool:
-        """Check if URL is malicious."""        try:
+        """Check if URL is malicious."""
+        try:
             # Basic malicious URL patterns
             malicious_patterns = [
                 r'[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+',  # IP addresses
@@ -1613,7 +1687,8 @@ class SecurityValidator:
             return False
     
     async def _validate_file_signature(self, file_data: bytes, filename: str) -> bool:
-        """Validate file signature matches extension."""        try:
+        """Validate file signature matches extension."""
+        try:
             if len(file_data) < 10:
                 return False
             
@@ -1643,7 +1718,8 @@ class SecurityValidator:
             return False
     
     def _has_embedded_files(self, file_data: bytes) -> bool:
-        """Check if file contains embedded files."""        try:
+        """Check if file contains embedded files."""
+        try:
             # Look for common file signatures within the data
             embedded_signatures = [
                 b'\xff\xd8\xff',  # JPEG
@@ -1664,7 +1740,8 @@ class SecurityValidator:
             return False
     
     async def _detect_steganography(self, file_data: bytes, filename: str) -> bool:
-        """Detect possible steganography."""        try:
+        """Detect possible steganography."""
+        try:
             # Basic steganography detection
             file_ext = Path(filename).suffix.lower()
             
@@ -1690,7 +1767,8 @@ class SecurityValidator:
         file_data: bytes,
         filename: str
     ) -> List[SecurityThreat]:
-        """Analyze file metadata for security threats."""        threats = []
+        """Analyze file metadata for security threats."""
+        threats = []
         
         try:
             # This would use libraries like exifread, mutagen, etc.
@@ -1722,7 +1800,8 @@ class SecurityValidator:
             return []
     
     def _create_error_result(self, error_message: str, security_level: SecurityLevel) -> SecurityScanResult:
-        """Create error security scan result."""        return SecurityScanResult(
+        """Create error security scan result."""
+        return SecurityScanResult(
             is_safe=False,
             status=SecurityStatus.BLOCKED,
             security_level=security_level,
@@ -1736,7 +1815,8 @@ class SecurityValidator:
         )
     
     def _init_threat_signatures(self) -> Dict[str, Dict[str, str]]:
-        """Initialize threat signatures database."""        return {
+        """Initialize threat signatures database."""
+        return {
             "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR": {
                 "name": "EICAR Test Signature",
                 "type": "test_virus"
@@ -1752,7 +1832,8 @@ class SecurityValidator:
         }
     
     def _init_suspicious_patterns(self) -> List[str]:
-        """Initialize suspicious patterns."""        return [
+        """Initialize suspicious patterns."""
+        return [
             "powershell -enc",
             "javascript:void(0)",
             "document.write",
@@ -1764,14 +1845,16 @@ class SecurityValidator:
         ]
     
     def _init_blocked_extensions(self) -> Set[str]:
-        """Initialize blocked file extensions."""        return {
+        """Initialize blocked file extensions."""
+        return {
             '.exe', '.bat', '.cmd', '.com', '.pif', '.scr',
             '.vbs', '.vbe', '.js', '.jse', '.ws', '.wsf',
             '.msi', '.msp', '.dll', '.cpl', '.jar'
         }
     
     def _init_safe_file_types(self) -> Set[str]:
-        """Initialize safe file types."""        return {
+        """Initialize safe file types."""
+        return {
             '.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp',
             '.mp4', '.avi', '.mov', '.mkv', '.webm',
             '.mp3', '.wav', '.flac', '.ogg', '.m4a',
@@ -1779,7 +1862,8 @@ class SecurityValidator:
         }
     
     def _init_risk_weights(self) -> Dict[str, float]:
-        """Initialize risk assessment weights."""        return {
+        """Initialize risk assessment weights."""
+        return {
             "large_file": 0.1,
             "high_entropy": 0.2,
             "external_urls": 0.15,

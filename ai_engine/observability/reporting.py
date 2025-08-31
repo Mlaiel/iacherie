@@ -12,7 +12,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import pandas as pd
@@ -55,7 +56,8 @@ except ImportError:
 
 
 class ReportType(Enum):
-    """Types of reports"""    EXECUTIVE_SUMMARY = "executive_summary"
+    """Types of reports"""
+    EXECUTIVE_SUMMARY = "executive_summary"
     DETAILED_ANALYTICS = "detailed_analytics"
     FINANCIAL_REPORT = "financial_report"
     COMPLIANCE_REPORT = "compliance_report"
@@ -68,7 +70,8 @@ class ReportType(Enum):
 
 
 class ReportFormat(Enum):
-    """Report output formats"""    PDF = "pdf"
+    """Report output formats"""
+    PDF = "pdf"
     HTML = "html"
     EXCEL = "excel"
     JSON = "json"
@@ -78,7 +81,8 @@ class ReportFormat(Enum):
 
 
 class ReportFrequency(Enum):
-    """Report generation frequency"""    REAL_TIME = "real_time"
+    """Report generation frequency"""
+    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -89,7 +93,8 @@ class ReportFrequency(Enum):
 
 
 class KPICategory(Enum):
-    """KPI categories"""    FINANCIAL = "financial"
+    """KPI categories"""
+    FINANCIAL = "financial"
     OPERATIONAL = "operational"
     CUSTOMER = "customer"
     CONTENT = "content"
@@ -100,7 +105,8 @@ class KPICategory(Enum):
 
 @dataclass
 class KPI:
-    """Key Performance Indicator definition"""    kpi_id: str = field(default_factory=lambda: str(uuid4()))
+    """Key Performance Indicator definition"""
+    kpi_id: str = field(default_factory=lambda: str(uuid4()))
     name: str = ""
     category: KPICategory = KPICategory.OPERATIONAL
     description: str = ""
@@ -113,12 +119,14 @@ class KPI:
     historical_values: List[Dict[str, Any]] = field(default_factory=list)
     
     def calculate_performance(self) -> float:
-        """Calculate performance percentage against target"""        if self.target_value == 0:
+        """Calculate performance percentage against target"""
+        if self.target_value == 0:
             return 0.0
         return (self.current_value / self.target_value) * 100
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             **asdict(self),
             'performance_percentage': self.calculate_performance(),
             'last_updated': self.last_updated.isoformat()
@@ -127,7 +135,8 @@ class KPI:
 
 @dataclass
 class ReportTemplate:
-    """Report template configuration"""    template_id: str = field(default_factory=lambda: str(uuid4()))
+    """Report template configuration"""
+    template_id: str = field(default_factory=lambda: str(uuid4()))
     name: str = ""
     report_type: ReportType = ReportType.EXECUTIVE_SUMMARY
     description: str = ""
@@ -141,13 +150,15 @@ class ReportTemplate:
 
 
 class VisualizationEngine:
-    """Advanced visualization engine for reports"""    
+    """Advanced visualization engine for reports"""
+    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.chart_cache = {}
         
     async def create_executive_dashboard(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create executive dashboard with key metrics"""        try:
+        """Create executive dashboard with key metrics"""
+        try:
             if not HAS_PLOTTING:
                 return {"error": "Plotting libraries not available"}
             
@@ -185,7 +196,8 @@ class VisualizationEngine:
             return {"error": str(e)}
     
     async def _create_revenue_trend_chart(self, financial_data: List[Dict]) -> Dict[str, Any]:
-        """Create revenue trend visualization"""        try:
+        """Create revenue trend visualization"""
+        try:
             df = pd.DataFrame(financial_data)
             if df.empty or 'date' not in df.columns or 'revenue' not in df.columns:
                 return {"error": "Invalid financial data"}
@@ -223,7 +235,8 @@ class VisualizationEngine:
             return {"error": str(e)}
     
     async def _create_engagement_chart(self, engagement_data: List[Dict]) -> Dict[str, Any]:
-        """Create user engagement visualization"""        try:
+        """Create user engagement visualization"""
+        try:
             df = pd.DataFrame(engagement_data)
             if df.empty:
                 return {"error": "No engagement data"}
@@ -282,7 +295,8 @@ class VisualizationEngine:
             return {"error": str(e)}
     
     async def _create_content_heatmap(self, content_data: List[Dict]) -> Dict[str, Any]:
-        """Create content performance heatmap"""        try:
+        """Create content performance heatmap"""
+        try:
             df = pd.DataFrame(content_data)
             if df.empty:
                 return {"error": "No content data"}
@@ -326,7 +340,8 @@ class VisualizationEngine:
             return {"error": str(e)}
     
     async def _create_kpi_scorecard(self, kpi_data: List[Dict]) -> Dict[str, Any]:
-        """Create KPI scorecard visualization"""        try:
+        """Create KPI scorecard visualization"""
+        try:
             if not kpi_data:
                 return {"error": "No KPI data"}
             
@@ -391,7 +406,8 @@ class VisualizationEngine:
             return {"error": str(e)}
     
     def _analyze_revenue_trend(self, revenue_data: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze revenue trend patterns"""        if len(revenue_data) < 2:
+        """Analyze revenue trend patterns"""
+        if len(revenue_data) < 2:
             return {"trend": "insufficient_data"}
         
         # Calculate trend
@@ -417,7 +433,8 @@ class VisualizationEngine:
         }
     
     def _summarize_engagement(self, engagement_data: pd.DataFrame, metrics: List[str]) -> Dict[str, Any]:
-        """Summarize engagement metrics"""        summary = {}
+        """Summarize engagement metrics"""
+        summary = {}
         
         for metric in metrics:
             if metric in engagement_data.columns:
@@ -434,7 +451,8 @@ class VisualizationEngine:
         return summary
     
     def _identify_top_content_combinations(self, performance_matrix: pd.DataFrame) -> List[Dict[str, Any]]:
-        """Identify top performing content type/platform combinations"""        # Flatten the matrix and sort by performance
+        """Identify top performing content type/platform combinations"""
+        # Flatten the matrix and sort by performance
         combinations = []
         
         for content_type in performance_matrix.index:
@@ -452,7 +470,8 @@ class VisualizationEngine:
         return top_combinations
     
     def _summarize_kpi_performance(self, kpi_data: List[Dict]) -> Dict[str, Any]:
-        """Summarize overall KPI performance"""        if not kpi_data:
+        """Summarize overall KPI performance"""
+        if not kpi_data:
             return {}
         
         total_kpis = len(kpi_data)
@@ -472,7 +491,8 @@ class VisualizationEngine:
         }
     
     def _calculate_metric_trend(self, values: pd.Series) -> str:
-        """Calculate trend for a metric series"""        if len(values) < 3:
+        """Calculate trend for a metric series"""
+        if len(values) < 3:
             return "insufficient_data"
         
         # Use linear regression slope to determine trend
@@ -488,7 +508,8 @@ class VisualizationEngine:
             return "stable"
     
     def _get_dashboard_layout(self) -> Dict[str, Any]:
-        """Get default dashboard layout configuration"""        return {
+        """Get default dashboard layout configuration"""
+        return {
             "grid": {
                 "columns": 12,
                 "rows": 8
@@ -503,7 +524,8 @@ class VisualizationEngine:
 
 
 class ReportGenerator:
-    """Advanced report generation engine"""    
+    """Advanced report generation engine"""
+    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.visualization_engine = VisualizationEngine()
@@ -511,7 +533,8 @@ class ReportGenerator:
         self.report_cache = {}
         
     async def generate_executive_report(self, data: Dict[str, Any], template_id: Optional[str] = None) -> Dict[str, Any]:
-        """Generate comprehensive executive report"""        try:
+        """Generate comprehensive executive report"""
+        try:
             report_id = str(uuid4())
             
             # Get or create template
@@ -574,7 +597,8 @@ class ReportGenerator:
             return {"error": str(e)}
     
     async def _generate_executive_summary(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate executive summary section"""        try:
+        """Generate executive summary section"""
+        try:
             summary = {
                 "title": "Executive Summary",
                 "key_highlights": [],
@@ -638,7 +662,8 @@ class ReportGenerator:
             return {"error": str(e)}
     
     async def _generate_kpi_section(self, kpi_data: List[Dict]) -> Dict[str, Any]:
-        """Generate KPI performance section"""        try:
+        """Generate KPI performance section"""
+        try:
             kpi_section = {
                 "title": "Key Performance Indicators",
                 "overall_performance": {},
@@ -691,7 +716,8 @@ class ReportGenerator:
             return {"error": str(e)}
     
     async def _generate_financial_section(self, financial_data: List[Dict]) -> Dict[str, Any]:
-        """Generate financial performance section"""        try:
+        """Generate financial performance section"""
+        try:
             financial_section = {
                 "title": "Financial Performance",
                 "revenue_analysis": {},
@@ -749,7 +775,8 @@ class ReportGenerator:
             return {"error": str(e)}
     
     async def _generate_user_analytics_section(self, user_data: List[Dict]) -> Dict[str, Any]:
-        """Generate user analytics section"""        try:
+        """Generate user analytics section"""
+        try:
             user_section = {
                 "title": "User Analytics & Behavior",
                 "user_metrics": {},
@@ -791,7 +818,8 @@ class ReportGenerator:
             return {"error": str(e)}
     
     async def _generate_content_section(self, content_data: List[Dict]) -> Dict[str, Any]:
-        """Generate content performance section"""        try:
+        """Generate content performance section"""
+        try:
             content_section = {
                 "title": "Content Performance Analysis",
                 "content_metrics": {},
@@ -830,7 +858,8 @@ class ReportGenerator:
             return {"error": str(e)}
     
     async def _generate_strategic_recommendations(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate strategic recommendations based on data analysis"""        try:
+        """Generate strategic recommendations based on data analysis"""
+        try:
             recommendations = {
                 "title": "Strategic Recommendations",
                 "immediate_actions": [],
@@ -875,7 +904,8 @@ class ReportGenerator:
             return {"error": str(e)}
     
     def _get_default_executive_template(self) -> ReportTemplate:
-        """Get default executive report template"""        return ReportTemplate(
+        """Get default executive report template"""
+        return ReportTemplate(
             name="Default Executive Template",
             report_type=ReportType.EXECUTIVE_SUMMARY,
             sections=[
@@ -891,7 +921,8 @@ class ReportGenerator:
         )
     
     def _determine_report_period(self, data: Dict[str, Any]) -> Dict[str, str]:
-        """Determine the reporting period from data"""        period_info = {
+        """Determine the reporting period from data"""
+        period_info = {
             "type": "monthly",
             "start_date": "",
             "end_date": ""
@@ -919,14 +950,16 @@ class ReportGenerator:
         return period_info
     
     def _estimate_page_count(self, sections: Dict[str, Any]) -> int:
-        """Estimate page count for report"""        base_pages = 1  # Cover page
+        """Estimate page count for report"""
+        base_pages = 1  # Cover page
         section_pages = len(sections) * 2  # Assume 2 pages per section on average
         appendix_pages = 1
         
         return base_pages + section_pages + appendix_pages
     
     def _calculate_report_confidence(self, data: Dict[str, Any]) -> float:
-        """Calculate confidence score based on data completeness"""        total_datasets = len(data)
+        """Calculate confidence score based on data completeness"""
+        total_datasets = len(data)
         complete_datasets = 0
         
         for dataset in data.values():
@@ -936,7 +969,8 @@ class ReportGenerator:
         return (complete_datasets / max(total_datasets, 1)) * 100
     
     def _calculate_growth_rate(self, df: pd.DataFrame, column: str) -> float:
-        """Calculate growth rate for a given column"""        if len(df) < 2 or column not in df.columns:
+        """Calculate growth rate for a given column"""
+        if len(df) < 2 or column not in df.columns:
             return 0.0
         
         first_half = df.head(len(df) // 2)[column].mean()
@@ -948,7 +982,8 @@ class ReportGenerator:
         return ((second_half - first_half) / first_half) * 100
     
     def _calculate_growth_indicators(self, data: Dict[str, Any]) -> Dict[str, str]:
-        """Calculate growth indicators across different metrics"""        indicators = {}
+        """Calculate growth indicators across different metrics"""
+        indicators = {}
         
         for data_type, dataset in data.items():
             if isinstance(dataset, list) and len(dataset) > 1:
@@ -971,7 +1006,8 @@ class ReportGenerator:
         return indicators
     
     def _analyze_engagement_distribution(self, df: pd.DataFrame) -> Dict[str, int]:
-        """Analyze engagement score distribution"""        if 'engagement_score' not in df.columns:
+        """Analyze engagement score distribution"""
+        if 'engagement_score' not in df.columns:
             return {}
         
         return {
@@ -982,7 +1018,8 @@ class ReportGenerator:
 
 
 class AutomatedReportingEngine:
-    """Automated report scheduling and distribution system"""    
+    """Automated report scheduling and distribution system"""
+    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.report_generator = ReportGenerator()
@@ -994,14 +1031,16 @@ class AutomatedReportingEngine:
         self._start_automated_reporting()
     
     def _start_automated_reporting(self):
-        """Start automated reporting background process"""        threading.Thread(
+        """Start automated reporting background process"""
+        threading.Thread(
             target=self._automated_reporting_loop,
             daemon=True,
             name="AutomatedReportingEngine"
         ).start()
     
     def _automated_reporting_loop(self):
-        """Background loop for automated report generation"""        while self._active:
+        """Background loop for automated report generation"""
+        while self._active:
             try:
                 current_time = datetime.utcnow()
                 
@@ -1017,7 +1056,8 @@ class AutomatedReportingEngine:
                 time.sleep(60)
     
     def schedule_report(self, report_config: Dict[str, Any]) -> str:
-        """Schedule a report for automated generation"""        try:
+        """Schedule a report for automated generation"""
+        try:
             report_id = str(uuid4())
             
             schedule = {
@@ -1046,7 +1086,8 @@ class AutomatedReportingEngine:
             return ""
     
     def _should_generate_report(self, schedule: Dict[str, Any], current_time: datetime) -> bool:
-        """Check if a report should be generated now"""        if not schedule.get("is_active", False):
+        """Check if a report should be generated now"""
+        if not schedule.get("is_active", False):
             return False
         
         next_gen_time = schedule.get("next_generation")
@@ -1056,7 +1097,8 @@ class AutomatedReportingEngine:
         return current_time >= next_gen_time
     
     async def _generate_scheduled_report(self, report_id: str, schedule: Dict[str, Any]):
-        """Generate a scheduled report"""        try:
+        """Generate a scheduled report"""
+        try:
             self.logger.info(f"Generating scheduled report: {schedule['name']}")
             
             # Fetch data from configured sources
@@ -1085,7 +1127,8 @@ class AutomatedReportingEngine:
             self.logger.error(f"Scheduled report generation failed: {str(e)}")
     
     def _calculate_next_generation_time(self, frequency: ReportFrequency) -> datetime:
-        """Calculate next report generation time"""        now = datetime.utcnow()
+        """Calculate next report generation time"""
+        now = datetime.utcnow()
         
         if frequency == ReportFrequency.HOURLY:
             return now + timedelta(hours=1)
@@ -1103,7 +1146,8 @@ class AutomatedReportingEngine:
             return now + timedelta(days=1)  # Default to daily
     
     async def _fetch_report_data(self, data_sources: List[str]) -> Dict[str, Any]:
-        """Fetch data from configured sources for report generation"""        # This would typically fetch from databases, APIs, etc.
+        """Fetch data from configured sources for report generation"""
+        # This would typically fetch from databases, APIs, etc.
         # For now, return empty structure
         data = {}
         
@@ -1134,7 +1178,8 @@ class AutomatedReportingEngine:
         return data
     
     async def _distribute_report(self, report: Dict[str, Any], recipients: List[str]):
-        """Distribute report to configured recipients"""        try:
+        """Distribute report to configured recipients"""
+        try:
             # Here you would implement report distribution logic
             # - Email sending
             # - Slack notifications  
@@ -1147,10 +1192,12 @@ class AutomatedReportingEngine:
             self.logger.error(f"Report distribution failed: {str(e)}")
     
     def get_scheduled_reports(self) -> List[Dict[str, Any]]:
-        """Get list of all scheduled reports"""        return list(self.scheduled_reports.values())
+        """Get list of all scheduled reports"""
+        return list(self.scheduled_reports.values())
     
     def update_report_schedule(self, report_id: str, updates: Dict[str, Any]) -> bool:
-        """Update a scheduled report configuration"""        try:
+        """Update a scheduled report configuration"""
+        try:
             if report_id in self.scheduled_reports:
                 self.scheduled_reports[report_id].update(updates)
                 return True
@@ -1160,7 +1207,8 @@ class AutomatedReportingEngine:
             return False
     
     def cancel_scheduled_report(self, report_id: str) -> bool:
-        """Cancel a scheduled report"""        try:
+        """Cancel a scheduled report"""
+        try:
             if report_id in self.scheduled_reports:
                 self.scheduled_reports[report_id]["is_active"] = False
                 return True
@@ -1170,11 +1218,13 @@ class AutomatedReportingEngine:
             return False
     
     def stop_automated_reporting(self):
-        """Stop the automated reporting engine"""        self._active = False
+        """Stop the automated reporting engine"""
+        self._active = False
         self.logger.info("Automated reporting engine stopped")
     
     async def _fetch_analytics_data(self) -> List[Dict[str, Any]]:
-        """Fetch analytics data"""        try:
+        """Fetch analytics data"""
+        try:
             # Simulate analytics data fetching
             current_time = datetime.now(timezone.utc)
             return [
@@ -1196,7 +1246,8 @@ class AutomatedReportingEngine:
             return []
     
     async def _fetch_monitoring_data(self) -> List[Dict[str, Any]]:
-        """Fetch monitoring data"""        try:
+        """Fetch monitoring data"""
+        try:
             current_time = datetime.now(timezone.utc)
             return [
                 {
@@ -1217,7 +1268,8 @@ class AutomatedReportingEngine:
             return []
     
     async def _fetch_logging_data(self) -> List[Dict[str, Any]]:
-        """Fetch logging data"""        try:
+        """Fetch logging data"""
+        try:
             current_time = datetime.now(timezone.utc)
             return [
                 {
@@ -1238,7 +1290,8 @@ class AutomatedReportingEngine:
             return []
     
     async def _fetch_user_behavior_data(self) -> List[Dict[str, Any]]:
-        """Fetch user behavior data"""        try:
+        """Fetch user behavior data"""
+        try:
             current_time = datetime.now(timezone.utc)
             return [
                 {
@@ -1254,7 +1307,8 @@ class AutomatedReportingEngine:
             return []
     
     async def _fetch_performance_data(self) -> List[Dict[str, Any]]:
-        """Fetch performance data"""        try:
+        """Fetch performance data"""
+        try:
             current_time = datetime.now(timezone.utc)
             return [
                 {
@@ -1270,7 +1324,8 @@ class AutomatedReportingEngine:
             return []
     
     async def _fetch_security_data(self) -> List[Dict[str, Any]]:
-        """Fetch security data"""        try:
+        """Fetch security data"""
+        try:
             current_time = datetime.now(timezone.utc)
             return [
                 {
@@ -1286,7 +1341,8 @@ class AutomatedReportingEngine:
             return []
     
     async def _fetch_business_data(self) -> List[Dict[str, Any]]:
-        """Fetch business data"""        try:
+        """Fetch business data"""
+        try:
             current_time = datetime.now(timezone.utc)
             return [
                 {
@@ -1302,7 +1358,8 @@ class AutomatedReportingEngine:
             return []
     
     async def _fetch_generic_data(self, source: str) -> List[Dict[str, Any]]:
-        """Fetch generic data from unknown source"""        try:
+        """Fetch generic data from unknown source"""
+        try:
             current_time = datetime.now(timezone.utc)
             return [
                 {

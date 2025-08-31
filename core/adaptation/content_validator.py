@@ -27,7 +27,8 @@ Business Logic: Content Ingestion → Security Scanning → Quality Validation �
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
 from dataclasses import dataclass, field
@@ -69,7 +70,8 @@ from .exceptions import ValidationError, ContentValidationError, ComplianceError
 
 
 class ValidationLevel(str, Enum):
-    """Advanced content validation levels with AI sophistication"""    BASIC = "basic"                    # Essential validation only
+    """Advanced content validation levels with AI sophistication"""
+    BASIC = "basic"                    # Essential validation only
     STANDARD = "standard"              # Standard compliance checks
     STRICT = "strict"                  # Comprehensive validation
     PREMIUM = "premium"                # Professional-grade validation
@@ -80,7 +82,8 @@ class ValidationLevel(str, Enum):
 
 
 class ContentType(str, Enum):
-    """Comprehensive content types for validation across all creator categories"""    IMAGE = "image"
+    """Comprehensive content types for validation across all creator categories"""
+    IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
     TEXT = "text"
@@ -103,7 +106,8 @@ class ContentType(str, Enum):
 
 
 class ValidationResult(str, Enum):
-    """Advanced validation result status with severity levels"""    PASSED = "passed"                  # Validation successful
+    """Advanced validation result status with severity levels"""
+    PASSED = "passed"                  # Validation successful
     WARNING = "warning"                # Minor issues detected
     FAILED = "failed"                  # Validation failed
     CRITICAL = "critical"              # Critical issues detected
@@ -113,7 +117,8 @@ class ValidationResult(str, Enum):
 
 
 class ComplianceStandard(str, Enum):
-    """Comprehensive compliance standards for all jurisdictions"""    DMCA = "dmca"                      # Digital Millennium Copyright Act
+    """Comprehensive compliance standards for all jurisdictions"""
+    DMCA = "dmca"                      # Digital Millennium Copyright Act
     GDPR = "gdpr"                      # General Data Protection Regulation
     COPPA = "coppa"                    # Children's Online Privacy Protection Act
     CCPA = "ccpa"                      # California Consumer Privacy Act
@@ -132,7 +137,8 @@ class ComplianceStandard(str, Enum):
 
 
 class CreatorValidationType(str, Enum):
-    """Creator-specific validation types"""    # Musicians
+    """Creator-specific validation types"""
+    # Musicians
     AUDIO_AUTHENTICITY = "audio_authenticity"
     COPYRIGHT_VERIFICATION = "copyright_verification"
     MASTERING_QUALITY = "mastering_quality"
@@ -166,7 +172,8 @@ class CreatorValidationType(str, Enum):
 
 @dataclass
 class ValidationRule:
-    """Advanced validation rule definition with AI capabilities"""    rule_id: str
+    """Advanced validation rule definition with AI capabilities"""
+    rule_id: str
     rule_name: str
     rule_type: str
     creator_type: Optional[str]
@@ -187,7 +194,8 @@ class ValidationRule:
 
 @dataclass
 class ValidationIssue:
-    """Comprehensive content validation issue with detailed analysis"""    issue_id: str
+    """Comprehensive content validation issue with detailed analysis"""
+    issue_id: str
     rule_id: str
     severity: str
     category: str
@@ -207,7 +215,8 @@ class ValidationIssue:
 
 @dataclass
 class SecurityScanResult:
-    """Advanced security scanning results"""    malware_detected: bool
+    """Advanced security scanning results"""
+    malware_detected: bool
     virus_signature: Optional[str]
     suspicious_patterns: List[str]
     metadata_anomalies: List[str]
@@ -220,7 +229,8 @@ class SecurityScanResult:
 
 @dataclass
 class AuthenticityAnalysis:
-    """Comprehensive content authenticity analysis"""    authenticity_score: float
+    """Comprehensive content authenticity analysis"""
+    authenticity_score: float
     ai_generated_probability: float
     deepfake_probability: float
     manipulation_detected: bool
@@ -234,7 +244,8 @@ class AuthenticityAnalysis:
 
 @dataclass
 class ContentValidationRequest:
-    """Enterprise-grade content validation request with comprehensive configuration"""    content_id: str
+    """Enterprise-grade content validation request with comprehensive configuration"""
+    content_id: str
     creator_id: str
     creator_type: str
     content_type: ContentType
@@ -262,7 +273,8 @@ class ContentValidationRequest:
 
 @dataclass
 class ValidationSummary:
-    """Comprehensive validation summary with actionable insights"""    total_issues: int
+    """Comprehensive validation summary with actionable insights"""
+    total_issues: int
     critical_issues: int
     high_priority_issues: int
     medium_priority_issues: int
@@ -282,7 +294,8 @@ class ValidationSummary:
 
 @dataclass
 class ContentValidationResult:
-    """Comprehensive content validation result with detailed analysis and recommendations"""    validation_id: str
+    """Comprehensive content validation result with detailed analysis and recommendations"""
+    validation_id: str
     creator_id: str
     creator_type: str
     content_id: str
@@ -310,7 +323,8 @@ class ContentValidationResult:
 
 
 class ContentValidator:
-    """    Ultra-Advanced Enterprise Content Validation Engine
+    """
+    Ultra-Advanced Enterprise Content Validation Engine
     
     Revolutionary content validation system providing industrial-strength capabilities
     for comprehensive content validation, quality assurance, brand compliance, and
@@ -333,7 +347,8 @@ class ContentValidator:
     - Photographers: Image authenticity, metadata validation, rights verification
     - Influencers: Content authenticity, FTC compliance, brand safety validation
     - Comedians: Content appropriateness, timing validation, audience suitability
-    """    
+    """
+    
     def __init__(self):
         self.settings = get_settings()
         self.logger = logging.getLogger(__name__)
@@ -366,7 +381,8 @@ class ContentValidator:
 
 @dataclass
 class QualityMetrics:
-    """Content quality metrics"""    technical_quality: float
+    """Content quality metrics"""
+    technical_quality: float
     content_quality: float
     accessibility_score: float
     platform_compatibility: Dict[str, float]
@@ -378,7 +394,8 @@ class QualityMetrics:
 
 @dataclass
 class ValidationReport:
-    """Comprehensive validation report"""    validation_id: str
+    """Comprehensive validation report"""
+    validation_id: str
     content_id: str
     content_type: ContentType
     validation_level: ValidationLevel
@@ -394,7 +411,8 @@ class ValidationReport:
 
 
 class ContentValidator:
-    """    Advanced content validation and quality assurance system
+    """
+    Advanced content validation and quality assurance system
     
     Features:
     - Multi-format content validation
@@ -405,7 +423,8 @@ class ContentValidator:
     - Brand safety analysis
     - Auto-fix suggestions
     - Comprehensive reporting
-    """    
+    """
+    
     def __init__(self):
         self.settings = get_settings()
         self.logger = logging.getLogger(__name__)
@@ -422,7 +441,8 @@ class ContentValidator:
         platform_targets: Optional[List[str]] = None,
         session: AsyncSession = None
     ) -> ValidationReport:
-        """        Validate content comprehensively
+        """
+        Validate content comprehensively
         
         Args:
             content_path: Path to content file
@@ -433,7 +453,8 @@ class ContentValidator:
             
         Returns:
             ValidationReport: Comprehensive validation results
-        """        validation_id = f"validation_{hashlib.md5(content_path.encode()).hexdigest()}_{int(datetime.utcnow().timestamp())}"
+        """
+        validation_id = f"validation_{hashlib.md5(content_path.encode()).hexdigest()}_{int(datetime.utcnow().timestamp())}"
         start_time = datetime.utcnow()
         
         try:
@@ -502,7 +523,8 @@ class ContentValidator:
         platform_targets: Optional[List[str]] = None,
         session: AsyncSession = None
     ) -> List[ValidationReport]:
-        """        Validate multiple content items in batch
+        """
+        Validate multiple content items in batch
         
         Args:
             content_list: List of (content_path, content_type) tuples
@@ -512,7 +534,8 @@ class ContentValidator:
             
         Returns:
             List[ValidationReport]: Validation reports for all content
-        """        self.logger.info(f"Starting batch validation for {len(content_list)} items")
+        """
+        self.logger.info(f"Starting batch validation for {len(content_list)} items")
         
         # Create validation tasks
         validation_tasks = []
@@ -547,7 +570,8 @@ class ContentValidator:
         platform: str,
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """        Check content compliance for specific platform
+        """
+        Check content compliance for specific platform
         
         Args:
             content_path: Path to content file
@@ -557,7 +581,8 @@ class ContentValidator:
             
         Returns:
             Dict containing platform compliance results
-        """        platform_rules = self._get_platform_rules(platform)
+        """
+        platform_rules = self._get_platform_rules(platform)
         content_data = await self._load_content_data(content_path, content_type)
         
         compliance_results = {
@@ -596,7 +621,8 @@ class ContentValidator:
         content_type: ContentType,
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """        Assess content accessibility compliance
+        """
+        Assess content accessibility compliance
         
         Args:
             content_path: Path to content file
@@ -605,7 +631,8 @@ class ContentValidator:
             
         Returns:
             Dict containing accessibility assessment
-        """        content_data = await self._load_content_data(content_path, content_type)
+        """
+        content_data = await self._load_content_data(content_path, content_type)
         
         accessibility_results = {
             'wcag_level': 'AA',
@@ -633,7 +660,8 @@ class ContentValidator:
         brand_guidelines: Optional[Dict[str, Any]] = None,
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """        Analyze content for brand safety compliance
+        """
+        Analyze content for brand safety compliance
         
         Args:
             content_path: Path to content file
@@ -643,7 +671,8 @@ class ContentValidator:
             
         Returns:
             Dict containing brand safety analysis
-        """        content_data = await self._load_content_data(content_path, content_type)
+        """
+        content_data = await self._load_content_data(content_path, content_type)
         
         safety_analysis = {
             'overall_safety_score': 0.0,
@@ -692,7 +721,8 @@ class ContentValidator:
         content_path: str,
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """        Automatically fix identified validation issues
+        """
+        Automatically fix identified validation issues
         
         Args:
             validation_report: Original validation report
@@ -701,7 +731,8 @@ class ContentValidator:
             
         Returns:
             Dict containing auto-fix results
-        """        auto_fix_results = {
+        """
+        auto_fix_results = {
             'fixes_applied': [],
             'fixes_failed': [],
             'modified_content_path': None,
@@ -757,7 +788,8 @@ class ContentValidator:
         return auto_fix_results
     
     def _load_validation_rules(self) -> Dict[str, List[ValidationRule]]:
-        """Load validation rules for different content types"""        rules = {
+        """Load validation rules for different content types"""
+        rules = {
             'image': [
                 ValidationRule(
                     rule_id='image_resolution_min',
@@ -823,7 +855,8 @@ class ContentValidator:
         return rules
     
     def _initialize_quality_models(self) -> Dict[str, Any]:
-        """Initialize quality assessment models"""        return {
+        """Initialize quality assessment models"""
+        return {
             'image_quality': {
                 'factors': ['resolution', 'compression', 'noise_level', 'sharpness'],
                 'weights': [0.3, 0.25, 0.25, 0.2]
@@ -839,7 +872,8 @@ class ContentValidator:
         }
     
     def _initialize_compliance_checkers(self) -> Dict[str, Any]:
-        """Initialize compliance checking systems"""        return {
+        """Initialize compliance checking systems"""
+        return {
             'content_policy': {
                 'inappropriate_content': ['violence', 'adult', 'hate_speech'],
                 'copyright': ['audio_fingerprint', 'visual_match'],
@@ -853,7 +887,8 @@ class ContentValidator:
         }
     
     def _load_nlp_model(self):
-        """Load NLP model for text analysis"""        try:
+        """Load NLP model for text analysis"""
+        try:
             return spacy.load('en_core_web_sm')
         except OSError:
             self.logger.warning("spaCy model not found, using fallback text analysis")
@@ -872,7 +907,8 @@ class ContentValidator:
     # And other supporting methods
     
     async def _detect_content_type(self, content_path: str) -> ContentType:
-        """Detect content type from file"""        mime_type = magic.from_file(content_path, mime=True)
+        """Detect content type from file"""
+        mime_type = magic.from_file(content_path, mime=True)
         
         if mime_type.startswith('image/'):
             return ContentType.IMAGE
@@ -886,7 +922,8 @@ class ContentValidator:
             return ContentType.DOCUMENT
     
     async def _load_content_data(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
-        """Load content data for analysis"""        content_data = {
+        """Load content data for analysis"""
+        content_data = {
             'file_path': content_path,
             'file_size': 0,
             'content_type': content_type,

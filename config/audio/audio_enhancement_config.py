@@ -17,7 +17,8 @@ explicit written permission from Fahed Mlaiel is strictly prohibited and will be
 to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import logging
+"""
+import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, NamedTuple
 from dataclasses import dataclass, field
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class EnhancementType(Enum):
-    """Audio enhancement types"""    NOISE_REDUCTION = "noise_reduction"         # Noise suppression and reduction
+    """Audio enhancement types"""
+    NOISE_REDUCTION = "noise_reduction"         # Noise suppression and reduction
     EQUALIZATION = "equalization"               # Frequency equalization
     DYNAMICS = "dynamics"                       # Compression, limiting, gating
     SPATIAL = "spatial"                         # Stereo widening, 3D audio
@@ -39,7 +41,8 @@ class EnhancementType(Enum):
 
 
 class NoiseReductionAlgorithm(Enum):
-    """Noise reduction algorithms"""    SPECTRAL_SUBTRACTION = "spectral_subtraction"
+    """Noise reduction algorithms"""
+    SPECTRAL_SUBTRACTION = "spectral_subtraction"
     WIENER_FILTERING = "wiener_filtering"
     KALMAN_FILTERING = "kalman_filtering"
     ADAPTIVE_FILTERING = "adaptive_filtering"
@@ -50,7 +53,8 @@ class NoiseReductionAlgorithm(Enum):
 
 
 class EqualizerType(Enum):
-    """Equalizer types"""    PARAMETRIC = "parametric"                   # Parametric EQ
+    """Equalizer types"""
+    PARAMETRIC = "parametric"                   # Parametric EQ
     GRAPHIC = "graphic"                         # Graphic EQ
     SHELVING = "shelving"                       # High/Low shelf filters
     LINEAR_PHASE = "linear_phase"               # Linear phase EQ
@@ -60,7 +64,8 @@ class EqualizerType(Enum):
 
 
 class DynamicsProcessorType(Enum):
-    """Dynamics processor types"""    COMPRESSOR = "compressor"                   # Standard compressor
+    """Dynamics processor types"""
+    COMPRESSOR = "compressor"                   # Standard compressor
     LIMITER = "limiter"                         # Peak limiter
     EXPANDER = "expander"                       # Downward expander
     GATE = "gate"                              # Noise gate
@@ -71,7 +76,8 @@ class DynamicsProcessorType(Enum):
 
 
 class SpatialAudioType(Enum):
-    """Spatial audio processing types"""    STEREO_WIDENING = "stereo_widening"        # Stereo field widening
+    """Spatial audio processing types"""
+    STEREO_WIDENING = "stereo_widening"        # Stereo field widening
     BINAURAL = "binaural"                      # Binaural processing
     SURROUND_UPMIX = "surround_upmix"         # Surround sound upmixing
     AMBISONICS = "ambisonics"                  # Ambisonics encoding
@@ -81,7 +87,8 @@ class SpatialAudioType(Enum):
 
 
 class ProcessingQuality(Enum):
-    """Processing quality levels"""    DRAFT = "draft"                            # Fast, low quality
+    """Processing quality levels"""
+    DRAFT = "draft"                            # Fast, low quality
     GOOD = "good"                              # Balanced quality/speed
     HIGH = "high"                              # High quality
     ULTRA = "ultra"                            # Ultra high quality
@@ -91,7 +98,8 @@ class ProcessingQuality(Enum):
 
 @dataclass
 class NoiseReductionConfig:
-    """Noise reduction configuration"""    enabled: bool = True
+    """Noise reduction configuration"""
+    enabled: bool = True
     algorithm: NoiseReductionAlgorithm = NoiseReductionAlgorithm.NEURAL_NETWORK
     strength: float = 0.7                      # 0.0 to 1.0
     preserve_speech: bool = True
@@ -107,7 +115,8 @@ class NoiseReductionConfig:
 
 @dataclass
 class EqualizerBand:
-    """Individual equalizer band configuration"""    frequency: float                           # Center frequency in Hz
+    """Individual equalizer band configuration"""
+    frequency: float                           # Center frequency in Hz
     gain_db: float                            # Gain in dB
     q_factor: float                           # Q factor (bandwidth)
     filter_type: str = "bell"                 # bell, highpass, lowpass, notch
@@ -116,7 +125,8 @@ class EqualizerBand:
 
 @dataclass
 class EqualizerConfig:
-    """Equalizer configuration"""    enabled: bool = True
+    """Equalizer configuration"""
+    enabled: bool = True
     eq_type: EqualizerType = EqualizerType.PARAMETRIC
     bands: List[EqualizerBand] = field(default_factory=list)
     auto_gain_compensation: bool = True
@@ -128,7 +138,8 @@ class EqualizerConfig:
 
 @dataclass
 class DynamicsConfig:
-    """Dynamics processor configuration"""    enabled: bool = True
+    """Dynamics processor configuration"""
+    enabled: bool = True
     processor_type: DynamicsProcessorType = DynamicsProcessorType.COMPRESSOR
     threshold_db: float = -20.0
     ratio: float = 4.0
@@ -145,7 +156,8 @@ class DynamicsConfig:
 
 @dataclass
 class SpatialAudioConfig:
-    """Spatial audio processing configuration"""    enabled: bool = False
+    """Spatial audio processing configuration"""
+    enabled: bool = False
     processing_type: SpatialAudioType = SpatialAudioType.STEREO_WIDENING
     width_factor: float = 1.5                 # 0.0 to 2.0
     depth_factor: float = 1.0                 # 0.0 to 2.0
@@ -158,7 +170,8 @@ class SpatialAudioConfig:
 
 @dataclass
 class HarmonicEnhancementConfig:
-    """Harmonic enhancement configuration"""    enabled: bool = False
+    """Harmonic enhancement configuration"""
+    enabled: bool = False
     enhancement_type: str = "tube_saturation"  # tube_saturation, tape_saturation, exciter
     drive: float = 0.3                        # 0.0 to 1.0
     harmonics_level: float = 0.2              # Amount of harmonics
@@ -169,13 +182,16 @@ class HarmonicEnhancementConfig:
 
 
 class AudioEnhancementConfig:
-    """    Comprehensive audio enhancement configuration manager
+    """
+    Comprehensive audio enhancement configuration manager
     
     Manages all aspects of audio enhancement including noise reduction,
     equalization, dynamics processing, spatial audio, and AI-based enhancements.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize audio enhancement configuration"""        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize audio enhancement configuration"""
+        self.logger = logging.getLogger(self.__class__.__name__)
         
         # Core enhancement components
         self.noise_reduction = NoiseReductionConfig()
@@ -213,7 +229,8 @@ class AudioEnhancementConfig:
         self.logger.info("AudioEnhancementConfig initialized successfully")
     
     def _initialize_enhancement_presets(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize enhancement presets"""        return {
+        """Initialize enhancement presets"""
+        return {
             "voice_clarity": {
                 "name": "Voice Clarity",
                 "description": "Optimized for speech and vocal clarity",
@@ -385,7 +402,8 @@ class AudioEnhancementConfig:
         }
     
     def _initialize_platform_profiles(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize platform-specific enhancement profiles"""        return {
+        """Initialize platform-specific enhancement profiles"""
+        return {
             "spotify": {
                 "name": "Spotify Optimization",
                 "loudness_target": -14.0,  # LUFS
@@ -454,7 +472,8 @@ class AudioEnhancementConfig:
         }
     
     def _initialize_ai_models(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize AI-based enhancement models"""        return {
+        """Initialize AI-based enhancement models"""
+        return {
             "facebook_denoiser": {
                 "name": "Meta Denoiser",
                 "type": "noise_reduction",
@@ -512,7 +531,8 @@ class AudioEnhancementConfig:
         }
     
     def _initialize_realtime_config(self) -> Dict[str, Any]:
-        """Initialize real-time processing configuration"""        return {
+        """Initialize real-time processing configuration"""
+        return {
             "enabled": True,
             "max_latency_ms": 20,
             "buffer_size": 512,
@@ -529,7 +549,8 @@ class AudioEnhancementConfig:
         }
     
     def _initialize_eq_presets(self):
-        """Initialize equalizer presets"""        self.equalizer.presets = {
+        """Initialize equalizer presets"""
+        self.equalizer.presets = {
             "voice_clarity": [
                 EqualizerBand(frequency=80, gain_db=-6, q_factor=0.7, filter_type="highpass"),
                 EqualizerBand(frequency=200, gain_db=-2, q_factor=1.0),
@@ -579,34 +600,40 @@ class AudioEnhancementConfig:
         }
     
     def get_enhancement_preset(self, preset_name: str) -> Optional[Dict[str, Any]]:
-        """        Get enhancement preset by name
+        """
+        Get enhancement preset by name
         
         Args:
             preset_name: Name of the preset
             
         Returns:
             Preset configuration or None if not found
-        """        return self._enhancement_presets.get(preset_name)
+        """
+        return self._enhancement_presets.get(preset_name)
     
     def get_platform_profile(self, platform: str) -> Optional[Dict[str, Any]]:
-        """        Get platform-specific profile
+        """
+        Get platform-specific profile
         
         Args:
             platform: Platform name
             
         Returns:
             Platform profile or None if not found
-        """        return self._platform_profiles.get(platform.lower())
+        """
+        return self._platform_profiles.get(platform.lower())
     
     def apply_enhancement_preset(self, preset_name: str) -> bool:
-        """        Apply enhancement preset to current configuration
+        """
+        Apply enhancement preset to current configuration
         
         Args:
             preset_name: Name of the preset to apply
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             preset = self.get_enhancement_preset(preset_name)
             if not preset:
                 self.logger.error(f"Preset '{preset_name}' not found")
@@ -672,7 +699,8 @@ class AudioEnhancementConfig:
                            name: str,
                            description: str,
                            components: Dict[str, Any]) -> bool:
-        """        Create custom enhancement preset
+        """
+        Create custom enhancement preset
         
         Args:
             name: Preset name
@@ -681,7 +709,8 @@ class AudioEnhancementConfig:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             self._enhancement_presets[name] = {
                 "name": name,
                 "description": description,
@@ -697,14 +726,16 @@ class AudioEnhancementConfig:
             return False
     
     def optimize_for_platform(self, platform: str) -> bool:
-        """        Optimize enhancement settings for specific platform
+        """
+        Optimize enhancement settings for specific platform
         
         Args:
             platform: Target platform name
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             profile = self.get_platform_profile(platform)
             if not profile:
                 self.logger.warning(f"No profile found for platform: {platform}")
@@ -749,21 +780,24 @@ class AudioEnhancementConfig:
             return False
     
     def get_ai_model_config(self, model_name: str) -> Optional[Dict[str, Any]]:
-        """        Get AI model configuration
+        """
+        Get AI model configuration
         
         Args:
             model_name: Name of the AI model
             
         Returns:
             Model configuration or None if not found
-        """        return self._ai_models.get(model_name)
+        """
+        return self._ai_models.get(model_name)
     
     def estimate_processing_latency(self, 
                                   enabled_components: List[str],
                                   sample_rate: int = 48000,
                                   buffer_size: int = 512,
                                   use_ai_models: bool = False) -> Dict[str, Any]:
-        """        Estimate processing latency for current configuration
+        """
+        Estimate processing latency for current configuration
         
         Args:
             enabled_components: List of enabled enhancement components
@@ -773,7 +807,8 @@ class AudioEnhancementConfig:
             
         Returns:
             Latency estimation breakdown
-        """        try:
+        """
+        try:
             # Base latencies for different components (in milliseconds)
             component_latencies = {
                 "noise_reduction": 5 if not use_ai_models else 30,
@@ -838,7 +873,8 @@ class AudioEnhancementConfig:
             return {"error": str(e)}
     
     def _get_latency_recommendation(self, total_latency: float) -> str:
-        """Get recommendation based on total latency"""        if total_latency < 10:
+        """Get recommendation based on total latency"""
+        if total_latency < 10:
             return "Excellent for real-time applications"
         elif total_latency < 20:
             return "Good for real-time applications"
@@ -853,7 +889,8 @@ class AudioEnhancementConfig:
                               use_case: str,
                               quality_level: ProcessingQuality = ProcessingQuality.HIGH,
                               real_time: bool = False) -> Dict[str, Any]:
-        """        Create optimized processing chain for use case
+        """
+        Create optimized processing chain for use case
         
         Args:
             use_case: Audio processing use case
@@ -862,7 +899,8 @@ class AudioEnhancementConfig:
             
         Returns:
             Processing chain configuration
-        """        try:
+        """
+        try:
             # Define processing chains for different use cases
             use_case_chains = {
                 "voice_communication": ["noise_reduction", "equalizer", "dynamics"],
@@ -969,14 +1007,16 @@ class AudioEnhancementConfig:
             return {"error": str(e)}
     
     def validate_enhancement_config(self, config: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """        Validate enhancement configuration
+        """
+        Validate enhancement configuration
         
         Args:
             config: Enhancement configuration to validate
             
         Returns:
             Tuple of (is_valid, error_messages)
-        """        errors = []
+        """
+        errors = []
         is_valid = True
         
         try:
@@ -1041,7 +1081,8 @@ class AudioEnhancementConfig:
         return is_valid, errors
     
     def export_config(self) -> Dict[str, Any]:
-        """Export complete enhancement configuration"""        try:
+        """Export complete enhancement configuration"""
+        try:
             return {
                 "noise_reduction": {
                     "enabled": self.noise_reduction.enabled,

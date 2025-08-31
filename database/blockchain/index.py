@@ -5,7 +5,8 @@ in the IA Influencer Agent content protection ecosystem.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""from typing import Dict, List, Any, Optional, Union
+"""
+from typing import Dict, List, Any, Optional, Union
 import logging
 from datetime import datetime
 import asyncio
@@ -21,17 +22,21 @@ from .validators import ContentValidator, ValidationResult
 logger = logging.getLogger(__name__)
 
 class BlockchainIndex:
-    """    Central index for all blockchain operations and data.
+    """
+    Central index for all blockchain operations and data.
     
     Provides unified access to contracts, NFTs, registrations, storage,
     transactions, and validations for the IA Influencer Agent platform.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialize blockchain index.
+        """
+        Initialize blockchain index.
         
         Args:
             config: Comprehensive configuration for all blockchain services
-        """        self.config = config
+        """
+        self.config = config
         
         # Initialize core services
         self.contract_manager = SmartContractManager(config.get("contracts", {}))
@@ -57,7 +62,8 @@ class BlockchainIndex:
         creator_address: str,
         protection_options: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """        Comprehensive content protection registration.
+        """
+        Comprehensive content protection registration.
         
         Performs copyright registration, NFT creation, storage, and validation
         in a single coordinated operation.
@@ -71,7 +77,8 @@ class BlockchainIndex:
             
         Returns:
             Dictionary with all protection results
-        """        try:
+        """
+        try:
             protection_options = protection_options or {}
             logger.info(f"Starting comprehensive protection for: {content_hash}")
             
@@ -191,7 +198,8 @@ class BlockchainIndex:
         nft_result: Optional[NFTCreationResult],
         validation_result: ValidationResult
     ) -> None:
-        """Update all relevant indexes with new content."""        try:
+        """Update all relevant indexes with new content."""
+        try:
             # Update content index
             self.content_index[content_hash] = {
                 "creator_address": creator_address,
@@ -227,7 +235,8 @@ class BlockchainIndex:
         content_hash: str,
         claiming_address: str
     ) -> Dict[str, Any]:
-        """        Verify ownership of content across all protection mechanisms.
+        """
+        Verify ownership of content across all protection mechanisms.
         
         Args:
             content_hash: Hash of the content to verify
@@ -235,7 +244,8 @@ class BlockchainIndex:
             
         Returns:
             Comprehensive ownership verification result
-        """        try:
+        """
+        try:
             content_info = self.content_index.get(content_hash)
             if not content_info:
                 return {
@@ -314,7 +324,8 @@ class BlockchainIndex:
         transfer_type: str = "sale",
         terms: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """        Transfer content rights to another party.
+        """
+        Transfer content rights to another party.
         
         Args:
             content_hash: Hash of the content
@@ -325,7 +336,8 @@ class BlockchainIndex:
             
         Returns:
             Transfer result with transaction details
-        """        try:
+        """
+        try:
             content_info = self.content_index.get(content_hash)
             if not content_info:
                 raise ValueError("Content not found")
@@ -398,7 +410,8 @@ class BlockchainIndex:
             raise
 
     def search_content_by_creator(self, creator_address: str) -> List[Dict[str, Any]]:
-        """Search all content by creator address."""        content_hashes = self.owner_index.get(creator_address, [])
+        """Search all content by creator address."""
+        content_hashes = self.owner_index.get(creator_address, [])
         return [
             {
                 "content_hash": content_hash,
@@ -409,10 +422,12 @@ class BlockchainIndex:
         ]
 
     def get_content_info(self, content_hash: str) -> Optional[Dict[str, Any]]:
-        """Get comprehensive information about content."""        return self.content_index.get(content_hash)
+        """Get comprehensive information about content."""
+        return self.content_index.get(content_hash)
 
     def get_blockchain_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive blockchain operation statistics."""        total_content = len(self.content_index)
+        """Get comprehensive blockchain operation statistics."""
+        total_content = len(self.content_index)
         total_creators = len(self.owner_index)
         total_nfts = len(self.nft_index)
         
@@ -434,7 +449,8 @@ class BlockchainIndex:
         }
 
     async def monitor_blockchain_events(self) -> None:
-        """Monitor blockchain events for updates."""        try:
+        """Monitor blockchain events for updates."""
+        try:
             # Monitor pending transactions
             await self.transaction_processor.monitor_pending_transactions()
             
@@ -448,7 +464,8 @@ class BlockchainIndex:
 _blockchain_index_instance = None
 
 def get_blockchain_index(config: Dict[str, Any] = None) -> BlockchainIndex:
-    """Get the singleton blockchain index instance."""    global _blockchain_index_instance
+    """Get the singleton blockchain index instance."""
+    global _blockchain_index_instance
     if _blockchain_index_instance is None and config:
         _blockchain_index_instance = BlockchainIndex(config)
     return _blockchain_index_instance

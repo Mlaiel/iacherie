@@ -235,11 +235,14 @@ from . import ResponseGenerationSystem
 
 
 class ResponseGenerationAPI:
-    """    High-level API interface for the response generation system
+    """
+    High-level API interface for the response generation system
     Provides simplified access to all capabilities
-    """    
+    """
+    
     def __init__(self, config: ResponseGenerationConfig = None):
-        """Initialize the response generation API"""        if config is None:
+        """Initialize the response generation API"""
+        if config is None:
             config = ResponseGenerationConfig()
         
         self.config = config
@@ -254,7 +257,8 @@ class ResponseGenerationAPI:
         context: dict = None,
         **kwargs
     ) -> GeneratedResponse:
-        """        Generate a response for any type of content creator
+        """
+        Generate a response for any type of content creator
         
         Args:
             creator_type: Type of creator (musician, photographer, influencer, etc.)
@@ -266,7 +270,8 @@ class ResponseGenerationAPI:
             
         Returns:
             GeneratedResponse with personalized, contextual response
-        """        request = ResponseRequest(
+        """
+        request = ResponseRequest(
             context=ResponseContext(
                 user_id=user_id,
                 user_type=creator_type,
@@ -285,7 +290,8 @@ class ResponseGenerationAPI:
         analysis_type: str = "full",
         **kwargs
     ) -> dict:
-        """        Get business intelligence analysis for a creator
+        """
+        Get business intelligence analysis for a creator
         
         Args:
             creator_profile: Creator's profile information
@@ -293,7 +299,8 @@ class ResponseGenerationAPI:
             
         Returns:
             Business intelligence insights and recommendations
-        """        return await self.system.business_intelligence.analyze_creator_business(
+        """
+        return await self.system.business_intelligence.analyze_creator_business(
             creator_profile, analysis_type, **kwargs
         )
     
@@ -304,7 +311,8 @@ class ResponseGenerationAPI:
         protection_level: str = "comprehensive",
         **kwargs
     ) -> dict:
-        """        Assess content protection needs and generate protection strategy
+        """
+        Assess content protection needs and generate protection strategy
         
         Args:
             creator_id: Creator's unique identifier
@@ -313,7 +321,8 @@ class ResponseGenerationAPI:
             
         Returns:
             Content protection strategy and recommendations
-        """        return await self.system.protection_advisor.assess_protection_requirements(
+        """
+        return await self.system.protection_advisor.assess_protection_requirements(
             creator_id, content_portfolio, protection_level, **kwargs
         )
     
@@ -324,7 +333,8 @@ class ResponseGenerationAPI:
         geographic_scope: str = "global",
         **kwargs
     ) -> list:
-        """        Find collaboration opportunities for a creator
+        """
+        Find collaboration opportunities for a creator
         
         Args:
             creator_profile: Creator's profile and preferences
@@ -333,7 +343,8 @@ class ResponseGenerationAPI:
             
         Returns:
             List of collaboration opportunities with compatibility scores
-        """        return await self.system.collaboration_engine.find_collaboration_opportunities(
+        """
+        return await self.system.collaboration_engine.find_collaboration_opportunities(
             creator_profile, collaboration_goals, geographic_scope, **kwargs
         )
     
@@ -344,7 +355,8 @@ class ResponseGenerationAPI:
         time_horizon: str = "12_months",
         **kwargs
     ) -> dict:
-        """        Optimize revenue strategy for a creator
+        """
+        Optimize revenue strategy for a creator
         
         Args:
             creator_financial_profile: Financial profile and current revenue streams
@@ -353,7 +365,8 @@ class ResponseGenerationAPI:
             
         Returns:
             Revenue optimization strategy and projections
-        """        return await self.system.revenue_intelligence.optimize_revenue_strategy(
+        """
+        return await self.system.revenue_intelligence.optimize_revenue_strategy(
             creator_financial_profile, optimization_goals, time_horizon, **kwargs
         )
     
@@ -364,7 +377,8 @@ class ResponseGenerationAPI:
         quality_level: str = "high",
         **kwargs
     ) -> dict:
-        """        Generate multimodal content (text, audio, visual)
+        """
+        Generate multimodal content (text, audio, visual)
         
         Args:
             content_request: Content generation request
@@ -373,7 +387,8 @@ class ResponseGenerationAPI:
             
         Returns:
             Generated multimodal content
-        """        return await self.system.multimodal_generator.generate_content(
+        """
+        return await self.system.multimodal_generator.generate_content(
             content_request, output_formats, quality_level, **kwargs
         )
     
@@ -384,7 +399,8 @@ class ResponseGenerationAPI:
         time_period: str = "30_days",
         **kwargs
     ) -> dict:
-        """        Get performance analytics for a creator
+        """
+        Get performance analytics for a creator
         
         Args:
             creator_id: Creator's unique identifier
@@ -393,7 +409,8 @@ class ResponseGenerationAPI:
             
         Returns:
             Performance analytics and insights
-        """        return await self.system.analytics_engine.analyze_creator_performance(
+        """
+        return await self.system.analytics_engine.analyze_creator_performance(
             creator_id, metrics, time_period, **kwargs
         )
 
@@ -405,7 +422,8 @@ async def quick_response(
     user_id: str,
     config: ResponseGenerationConfig = None
 ) -> str:
-    """    Quick response generation for simple use cases
+    """
+    Quick response generation for simple use cases
     
     Args:
         creator_type: Type of content creator
@@ -415,7 +433,8 @@ async def quick_response(
         
     Returns:
         Text response
-    """    api = ResponseGenerationAPI(config)
+    """
+    api = ResponseGenerationAPI(config)
     response = await api.generate_creator_response(creator_type, question, user_id)
     return response.text
 
@@ -424,7 +443,8 @@ async def quick_business_advice(
     creator_profile: dict,
     config: ResponseGenerationConfig = None
 ) -> dict:
-    """    Quick business intelligence for creators
+    """
+    Quick business intelligence for creators
     
     Args:
         creator_profile: Creator's profile
@@ -432,7 +452,8 @@ async def quick_business_advice(
         
     Returns:
         Business advice and insights
-    """    api = ResponseGenerationAPI(config)
+    """
+    api = ResponseGenerationAPI(config)
     return await api.get_business_intelligence(creator_profile)
 
 
@@ -441,7 +462,8 @@ async def quick_protection_check(
     content_info: dict,
     config: ResponseGenerationConfig = None
 ) -> dict:
-    """    Quick content protection assessment
+    """
+    Quick content protection assessment
     
     Args:
         creator_id: Creator identifier
@@ -450,7 +472,8 @@ async def quick_protection_check(
         
     Returns:
         Protection recommendations
-    """    api = ResponseGenerationAPI(config)
+    """
+    api = ResponseGenerationAPI(config)
     return await api.assess_content_protection(creator_id, content_info)
 
 
@@ -608,10 +631,13 @@ from .collaboration_intelligence import (
 
 
 class ResponseGenerationSystem:
-    """    Unified response generation system orchestrating all specialized modules
-    """    
+    """
+    Unified response generation system orchestrating all specialized modules
+    """
+    
     def __init__(self, db_session, cache_manager):
-        """Initialize the unified response generation system"""        self.db_session = db_session
+        """Initialize the unified response generation system"""
+        self.db_session = db_session
         self.cache_manager = cache_manager
         
         # Initialize core systems
@@ -640,8 +666,10 @@ class ResponseGenerationSystem:
         request: ResponseRequest,
         specialized_context: dict = None
     ) -> GeneratedResponse:
-        """        Generate comprehensive response using all available intelligence
-        """        # Integrate context
+        """
+        Generate comprehensive response using all available intelligence
+        """
+        # Integrate context
         enriched_context = await self.context_integrator.enrich_context(
             request.context, specialized_context
         )
@@ -670,7 +698,8 @@ class ResponseGenerationSystem:
         request: ResponseRequest, 
         context: dict
     ) -> dict:
-        """Determine the best response strategy based on context and intent"""        # Analyze request intent and context to determine optimal strategy
+        """Determine the best response strategy based on context and intent"""
+        # Analyze request intent and context to determine optimal strategy
         # Implementation details...
         pass
     
@@ -679,7 +708,8 @@ class ResponseGenerationSystem:
         request: ResponseRequest, 
         context: dict
     ) -> GeneratedResponse:
-        """Generate revenue optimization focused response"""        # Implementation details...
+        """Generate revenue optimization focused response"""
+        # Implementation details...
         pass
     
     async def _generate_protection_response(
@@ -687,7 +717,8 @@ class ResponseGenerationSystem:
         request: ResponseRequest, 
         context: dict
     ) -> GeneratedResponse:
-        """Generate content protection focused response"""        # Implementation details...
+        """Generate content protection focused response"""
+        # Implementation details...
         pass
     
     async def _generate_collaboration_response(
@@ -695,7 +726,8 @@ class ResponseGenerationSystem:
         request: ResponseRequest, 
         context: dict
     ) -> GeneratedResponse:
-        """Generate collaboration focused response"""        # Implementation details...
+        """Generate collaboration focused response"""
+        # Implementation details...
         pass
 
 

@@ -10,7 +10,8 @@ STRICT COPYRIGHT WARNING: This code and concept are EXCLUSIVE intellectual prope
 ANY unauthorized use, copying, or theft without explicit written authorization is STRICTLY PROHIBITED
 and subject to immediate legal prosecution under German law.
 Contact: mlaiel@live.de for ANY authorization requests.
-"""from typing import Dict, List, Optional, Any, Union, Tuple, Set, Callable
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple, Set, Callable
 from datetime import datetime, timedelta, timezone
 from enum import Enum, IntEnum
 from dataclasses import dataclass, field
@@ -64,7 +65,8 @@ active_licenses_gauge = Gauge('active_licenses_total', 'Total active licenses')
 logger = logging.getLogger(__name__)
 
 class AutomationLevel(IntEnum):
-    """Advanced automation levels with priority scoring"""    MANUAL = 1
+    """Advanced automation levels with priority scoring"""
+    MANUAL = 1
     RULE_BASED = 2
     SEMI_AUTOMATED = 3
     FULLY_AUTOMATED = 4
@@ -74,7 +76,8 @@ class AutomationLevel(IntEnum):
     AUTONOMOUS = 8
 
 class RequestStatus(Enum):
-    """Comprehensive request status tracking"""    SUBMITTED = "submitted"
+    """Comprehensive request status tracking"""
+    SUBMITTED = "submitted"
     VALIDATED = "validated"
     UNDER_REVIEW = "under_review"
     AI_ANALYZING = "ai_analyzing"
@@ -94,7 +97,8 @@ class RequestStatus(Enum):
     TERMINATED = "terminated"
 
 class LicenseType(Enum):
-    """Comprehensive license types"""    STANDARD = "standard"
+    """Comprehensive license types"""
+    STANDARD = "standard"
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     CREATIVE_COMMONS = "creative_commons"
@@ -110,7 +114,8 @@ class LicenseType(Enum):
     STREAMING_LICENSE = "streaming_license"
 
 class PricingModel(Enum):
-    """Advanced pricing models"""    FIXED_RATE = "fixed_rate"
+    """Advanced pricing models"""
+    FIXED_RATE = "fixed_rate"
     USAGE_BASED = "usage_based"
     ROYALTY_PERCENTAGE = "royalty_percentage"
     TIERED_PRICING = "tiered_pricing"
@@ -122,7 +127,8 @@ class PricingModel(Enum):
     REVENUE_SHARE = "revenue_share"
 
 class NegotiationStrategy(Enum):
-    """AI negotiation strategies"""    CONSERVATIVE = "conservative"
+    """AI negotiation strategies"""
+    CONSERVATIVE = "conservative"
     BALANCED = "balanced"
     AGGRESSIVE = "aggressive"
     ADAPTIVE = "adaptive"
@@ -132,7 +138,8 @@ class NegotiationStrategy(Enum):
 
 @dataclass
 class LicensingMetrics:
-    """Advanced licensing metrics tracking"""    total_requests: int = 0
+    """Advanced licensing metrics tracking"""
+    total_requests: int = 0
     approved_requests: int = 0
     rejected_requests: int = 0
     average_processing_time: float = 0.0
@@ -143,12 +150,15 @@ class LicensingMetrics:
     legal_compliance_rate: float = 100.0
     
     def approval_rate(self) -> float:
-        """Calculate approval rate percentage"""        if self.total_requests == 0:
+        """Calculate approval rate percentage"""
+        if self.total_requests == 0:
             return 0.0
 class LicenseNegotiation(BaseModel, TimestampMixin, AuditMixin):
-    """    AI-powered license negotiation tracking with advanced strategy optimization.
+    """
+    AI-powered license negotiation tracking with advanced strategy optimization.
     Supports multi-round negotiations and machine learning-based recommendations.
-    """    __tablename__ = "license_negotiations"
+    """
+    __tablename__ = "license_negotiations"
     
     # Primary identifiers
     id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -215,9 +225,11 @@ class LicenseNegotiation(BaseModel, TimestampMixin, AuditMixin):
     )
 
 class SmartContract(BaseModel, TimestampMixin, AuditMixin):
-    """    Blockchain-enabled smart contracts for automated license execution.
+    """
+    Blockchain-enabled smart contracts for automated license execution.
     Integrates with multiple blockchain networks for secure, transparent licensing.
-    """    __tablename__ = "smart_contracts"
+    """
+    __tablename__ = "smart_contracts"
     
     # Primary identifiers
     id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -273,9 +285,11 @@ class SmartContract(BaseModel, TimestampMixin, AuditMixin):
     )
 
 class WorkflowExecution(BaseModel, TimestampMixin, AuditMixin):
-    """    Advanced workflow execution engine with parallel processing and error recovery.
+    """
+    Advanced workflow execution engine with parallel processing and error recovery.
     Supports complex business process automation and human-in-the-loop workflows.
-    """    __tablename__ = "workflow_executions"
+    """
+    __tablename__ = "workflow_executions"
     
     # Primary identifiers
     id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -338,8 +352,10 @@ class WorkflowExecution(BaseModel, TimestampMixin, AuditMixin):
     )
 
 class RuleExecution(BaseModel, TimestampMixin):
-    """    Detailed tracking of automation rule executions for analytics and optimization.
-    """    __tablename__ = "rule_executions"
+    """
+    Detailed tracking of automation rule executions for analytics and optimization.
+    """
+    __tablename__ = "rule_executions"
     
     # Primary identifiers
     id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -368,9 +384,11 @@ class RuleExecution(BaseModel, TimestampMixin):
     )
 
 class AutomatedLicensingService:
-    """    Enterprise-grade automated licensing service with AI-powered decision making.
+    """
+    Enterprise-grade automated licensing service with AI-powered decision making.
     Provides comprehensive licensing workflow automation and optimization.
-    """    
+    """
+    
     def __init__(self, db_session: Session, cache_manager: CacheManager, security_manager: SecurityManager):
         self.db = db_session
         self.cache = cache_manager
@@ -391,14 +409,16 @@ class AutomatedLicensingService:
         logger.info("AutomatedLicensingService initialized")
     
     async def process_license_request(self, request_data: Dict[str, Any]) -> Dict[str, Any]:
-        """        Main entry point for processing license requests with full automation pipeline.
+        """
+        Main entry point for processing license requests with full automation pipeline.
         
         Args:
             request_data: Complete license request information
             
         Returns:
             Processing result with status, recommendations, and next steps
-        """        with licensing_processing_time.time():
+        """
+        with licensing_processing_time.time():
             try:
                 # Create license request record
                 request = await self._create_license_request(request_data)
@@ -434,7 +454,8 @@ class AutomatedLicensingService:
                 raise
     
     async def _create_license_request(self, request_data: Dict[str, Any]) -> LicenseRequest:
-        """Create and validate license request record"""        request_number = self._generate_request_number()
+        """Create and validate license request record"""
+        request_number = self._generate_request_number()
         
         request = LicenseRequest(
             request_number=request_number,
@@ -458,7 +479,8 @@ class AutomatedLicensingService:
         return request
     
     async def _analyze_request_with_ai(self, request: LicenseRequest) -> Dict[str, Any]:
-        """Comprehensive AI analysis of license request"""        analysis_tasks = [
+        """Comprehensive AI analysis of license request"""
+        analysis_tasks = [
             self._analyze_content_rights(request),
             self._analyze_market_pricing(request),
             self._assess_risk_factors(request),
@@ -484,7 +506,8 @@ class AutomatedLicensingService:
         return combined_analysis
     
     async def _determine_automation_level(self, request: LicenseRequest, analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Determine appropriate automation level based on AI analysis"""        automation_score = Decimal('0.0')
+        """Determine appropriate automation level based on AI analysis"""
+        automation_score = Decimal('0.0')
         factors = []
         
         # Template automation capability
@@ -538,12 +561,14 @@ class AutomatedLicensingService:
         }
     
     def _generate_request_number(self) -> str:
-        """Generate unique request number"""        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        """Generate unique request number"""
+        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         random_suffix = str(uuid4())[:8].upper()
         return f"LR-{timestamp}-{random_suffix}"
     
     async def _analyze_content_rights(self, request: LicenseRequest) -> Dict[str, Any]:
-        """Analyze content ownership and rights status"""        # Implementation would integrate with copyright database
+        """Analyze content ownership and rights status"""
+        # Implementation would integrate with copyright database
         return {
             'ownership_verified': True,
             'rights_clear': True,
@@ -552,10 +577,12 @@ class AutomatedLicensingService:
         }
     
     async def _analyze_market_pricing(self, request: LicenseRequest) -> Dict[str, Any]:
-        """AI-powered market pricing analysis"""        return await self.pricing_optimizer.analyze_pricing(request)
+        """AI-powered market pricing analysis"""
+        return await self.pricing_optimizer.analyze_pricing(request)
     
     async def _assess_risk_factors(self, request: LicenseRequest) -> Dict[str, Any]:
-        """Comprehensive risk assessment"""        return {
+        """Comprehensive risk assessment"""
+        return {
             'overall_risk': 0.3,
             'legal_risk': 0.2,
             'financial_risk': 0.1,
@@ -564,10 +591,12 @@ class AutomatedLicensingService:
         }
     
     async def _check_compliance_requirements(self, request: LicenseRequest) -> Dict[str, Any]:
-        """Check legal and regulatory compliance"""        return await self.legal_service.check_compliance(request)
+        """Check legal and regulatory compliance"""
+        return await self.legal_service.check_compliance(request)
     
     async def _evaluate_negotiation_potential(self, request: LicenseRequest) -> Dict[str, Any]:
-        """Evaluate potential for automated negotiation"""        return {
+        """Evaluate potential for automated negotiation"""
+        return {
             'negotiation_likelihood': 0.4,
             'price_flexibility': 0.3,
             'terms_flexibility': 0.2,
@@ -575,7 +604,8 @@ class AutomatedLicensingService:
         }
     
     async def _get_historical_success_rate(self, request: LicenseRequest) -> float:
-        """Get historical success rate for similar requests"""        # Query historical data for similar requests
+        """Get historical success rate for similar requests"""
+        # Query historical data for similar requests
         similar_requests = self.db.query(LicenseRequest).filter(
             and_(
                 LicenseRequest.content_type == request.content_type,
@@ -593,7 +623,8 @@ class AutomatedLicensingService:
         return successful_requests / total_requests if total_requests > 0 else 0.5
     
     def _get_automation_recommendation(self, level: AutomationLevel) -> str:
-        """Get human-readable automation recommendation"""        recommendations = {
+        """Get human-readable automation recommendation"""
+        recommendations = {
             AutomationLevel.MANUAL: "Manual review required - complex case",
             AutomationLevel.SEMI_AUTOMATED: "Automated pre-processing with human approval",
             AutomationLevel.FULLY_AUTOMATED: "Full automation with monitoring",
@@ -603,7 +634,8 @@ class AutomatedLicensingService:
         return recommendations.get(level, "Unknown automation level")
     
     async def _process_automatically(self, request: LicenseRequest, decision: Dict[str, Any]) -> Dict[str, Any]:
-        """Process request with full automation"""        # Implementation for full automation pipeline
+        """Process request with full automation"""
+        # Implementation for full automation pipeline
         request.status = RequestStatus.AI_ANALYZING.value
         self.db.commit()
         
@@ -629,7 +661,8 @@ class AutomatedLicensingService:
         }
     
     async def _execute_ai_processing_pipeline(self, request: LicenseRequest) -> Dict[str, Any]:
-        """Execute comprehensive AI processing pipeline"""        pipeline_steps = [
+        """Execute comprehensive AI processing pipeline"""
+        pipeline_steps = [
             ('content_verification', self._verify_content_authenticity),
             ('rights_validation', self._validate_usage_rights),
             ('pricing_optimization', self._optimize_pricing),
@@ -665,27 +698,33 @@ class AutomatedLicensingService:
         }
     
     async def _verify_content_authenticity(self, request: LicenseRequest) -> Dict[str, Any]:
-        """Verify content authenticity and ownership"""        # Implementation would integrate with fingerprinting system
+        """Verify content authenticity and ownership"""
+        # Implementation would integrate with fingerprinting system
         return {'success': True, 'authenticity_score': 0.95}
     
     async def _validate_usage_rights(self, request: LicenseRequest) -> Dict[str, Any]:
-        """Validate requested usage rights against available rights"""        return {'success': True, 'rights_available': True}
+        """Validate requested usage rights against available rights"""
+        return {'success': True, 'rights_available': True}
     
     async def _optimize_pricing(self, request: LicenseRequest) -> Dict[str, Any]:
-        """AI-optimized pricing calculation"""        optimized_price = await self.pricing_optimizer.calculate_optimal_price(request)
+        """AI-optimized pricing calculation"""
+        optimized_price = await self.pricing_optimizer.calculate_optimal_price(request)
         request.offered_amount = optimized_price
         return {'success': True, 'optimized_price': float(optimized_price)}
     
     async def _generate_license_terms(self, request: LicenseRequest) -> Dict[str, Any]:
-        """Generate customized license terms"""        terms = await self.contract_analyzer.generate_terms(request)
+        """Generate customized license terms"""
+        terms = await self.contract_analyzer.generate_terms(request)
         return {'success': True, 'terms': terms}
     
     async def _final_compliance_check(self, request: LicenseRequest) -> Dict[str, Any]:
-        """Final compliance verification"""        compliance_result = await self.legal_service.final_compliance_check(request)
+        """Final compliance verification"""
+        compliance_result = await self.legal_service.final_compliance_check(request)
         return compliance_result
     
     async def _generate_smart_contract(self, request: LicenseRequest) -> SmartContract:
-        """Generate blockchain smart contract for license"""        contract_terms = {
+        """Generate blockchain smart contract for license"""
+        contract_terms = {
             'licensor': str(request.licensor_id),
             'licensee': str(request.licensee_id),
             'content_id': str(request.content_id),
@@ -713,7 +752,8 @@ class AutomatedLicensingService:
         return contract
     
     async def _deploy_smart_contract(self, contract: SmartContract):
-        """Deploy smart contract to blockchain"""        try:
+        """Deploy smart contract to blockchain"""
+        try:
             deployment_result = await self.blockchain_service.deploy_contract(contract)
             contract.contract_address = deployment_result['address']
             contract.deployment_hash = deployment_result['hash']
@@ -733,9 +773,11 @@ __all__ = [
     'LicensingMetrics'
 ]
 class LicenseTemplate(BaseModel, TimestampMixin, AuditMixin):
-    """    Enterprise-grade license template model with AI-powered customization.
+    """
+    Enterprise-grade license template model with AI-powered customization.
     Supports dynamic contract generation and multi-jurisdiction compliance.
-    """    __tablename__ = "license_templates"
+    """
+    __tablename__ = "license_templates"
     
     # Primary identifiers
     id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -818,7 +860,8 @@ class LicenseTemplate(BaseModel, TimestampMixin, AuditMixin):
         return self.automation_level >= AutomationLevel.FULLY_AUTOMATED
     
     def can_auto_approve(self, request_amount: Decimal) -> bool:
-        """Check if request can be automatically approved"""        if not self.is_active:
+        """Check if request can be automatically approved"""
+        if not self.is_active:
             return False
         if self.requires_human_review:
             return False
@@ -827,9 +870,11 @@ class LicenseTemplate(BaseModel, TimestampMixin, AuditMixin):
         return self.automation_level >= AutomationLevel.SEMI_AUTOMATED
 
 class AutomationRule(BaseModel, TimestampMixin, AuditMixin):
-    """    Advanced automation rules engine with AI-powered decision making.
+    """
+    Advanced automation rules engine with AI-powered decision making.
     Supports complex conditional logic and machine learning optimization.
-    """    __tablename__ = "automation_rules"
+    """
+    __tablename__ = "automation_rules"
     
     # Primary identifiers
     id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -891,7 +936,8 @@ class AutomationRule(BaseModel, TimestampMixin, AuditMixin):
         return Decimal(self.success_count) / Decimal(self.execution_count)
     
     def should_execute(self, context: Dict[str, Any]) -> bool:
-        """Determine if rule should execute based on conditions and constraints"""        if not self.is_active:
+        """Determine if rule should execute based on conditions and constraints"""
+        if not self.is_active:
             return False
             
         # Check cooldown period
@@ -912,7 +958,8 @@ class AutomationRule(BaseModel, TimestampMixin, AuditMixin):
         return self._evaluate_conditions(context)
     
     def _evaluate_conditions(self, context: Dict[str, Any]) -> bool:
-        """Evaluate rule conditions against provided context"""        try:
+        """Evaluate rule conditions against provided context"""
+        try:
             # Simple JSON-based conditions
             for key, expected_value in self.conditions.items():
                 if key not in context:
@@ -937,9 +984,11 @@ class AutomationRule(BaseModel, TimestampMixin, AuditMixin):
             return False
 
 class LicenseRequest(BaseModel, TimestampMixin, AuditMixin):
-    """    Comprehensive license request model with AI-powered processing pipeline.
+    """
+    Comprehensive license request model with AI-powered processing pipeline.
     Supports complex negotiations, multi-party approvals, and automated workflows.
-    """    __tablename__ = "license_requests"
+    """
+    __tablename__ = "license_requests"
     
     # Primary identifiers
     id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -1045,23 +1094,27 @@ class LicenseRequest(BaseModel, TimestampMixin, AuditMixin):
         return self.deadline and datetime.now(timezone.utc) > self.deadline
     
     def can_auto_process(self) -> bool:
-        """Determine if request can be automatically processed"""        return (
+        """Determine if request can be automatically processed"""
+        return (
             self.automation_score >= Decimal('0.8') and
             self.template and 
             self.template.is_fully_automated and
             not self.is_expired
         )
 class PricingStrategy:
-    """Stratégie de tarification automatique"""    base_price: Decimal
+    """Stratégie de tarification automatique"""
+    base_price: Decimal
     pricing_model: PricingModel
     tier_multipliers: Optional[Dict[str, Decimal]] = None
     volume_discounts: Optional[Dict[str, Decimal]] = None
     time_based_adjustments: Optional[Dict[str, Decimal]] = None
 
 class LicenseTemplate(BaseModel):
-    """    Modèle de template de licence pour l'automatisation.
+    """
+    Modèle de template de licence pour l'automatisation.
     Définit les paramètres standard pour différents types de licences.
-    """    __tablename__ = "license_templates"
+    """
+    __tablename__ = "license_templates"
 
     # Identifiants
     id = Column(Integer, primary_key=True, index=True)
@@ -1116,7 +1169,8 @@ class LicenseTemplate(BaseModel):
         territory: str,
         requested_usage: List[str]
     ) -> Tuple[bool, str]:
-        """Vérifie si le template est applicable à une demande"""        
+        """Vérifie si le template est applicable à une demande"""
+        
         # Vérification du type de contenu
         if self.eligible_content_types:
             if content_type not in self.eligible_content_types:
@@ -1140,7 +1194,8 @@ class LicenseTemplate(BaseModel):
         self,
         request_data: Dict[str, Any]
     ) -> Tuple[Decimal, Dict[str, Any]]:
-        """Calcule le prix selon la stratégie de tarification"""        
+        """Calcule le prix selon la stratégie de tarification"""
+        
         pricing = self.pricing_strategy
         base_price = Decimal(str(pricing['base_price']))
         pricing_model = pricing['pricing_model']
@@ -1202,7 +1257,8 @@ class LicenseTemplate(BaseModel):
         requester_reputation: float,
         content_sensitivity: str
     ) -> Tuple[bool, str]:
-        """Détermine si une demande peut être approuvée automatiquement"""        
+        """Détermine si une demande peut être approuvée automatiquement"""
+        
         if self.automation_level == AutomationLevel.MANUAL.value:
             return False, "Template configuré en mode manuel"
         
@@ -1221,7 +1277,8 @@ class LicenseTemplate(BaseModel):
         return True, "Éligible pour approbation automatique"
 
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit le template en dictionnaire"""        return {
+        """Convertit le template en dictionnaire"""
+        return {
             "id": self.id,
             "template_id": self.template_id,
             "template_name": self.template_name,
@@ -1235,9 +1292,11 @@ class LicenseTemplate(BaseModel):
         }
 
 class AutomatedLicenseRequest(BaseModel):
-    """    Modèle des demandes de licence automatisées.
+    """
+    Modèle des demandes de licence automatisées.
     Gère le processus complet de demande et d'approbation.
-    """    __tablename__ = "automated_license_requests"
+    """
+    __tablename__ = "automated_license_requests"
 
     # Identifiants
     id = Column(Integer, primary_key=True, index=True)
@@ -1302,7 +1361,8 @@ class AutomatedLicenseRequest(BaseModel):
             self.request_id = f"ALR-{uuid.uuid4().hex[:8].upper()}"
 
     def calculate_risk_score(self) -> Decimal:
-        """Calcule un score de risque pour la demande"""        
+        """Calcule un score de risque pour la demande"""
+        
         risk_score = Decimal('0.5')  # Score de base
         
         # Facteurs de risque
@@ -1329,7 +1389,8 @@ class AutomatedLicenseRequest(BaseModel):
         return min(risk_score, Decimal('1.0'))
     
     def _get_requester_reputation(self) -> float:
-        """Récupère la réputation du demandeur"""        try:
+        """Récupère la réputation du demandeur"""
+        try:
             # En production, ceci interrogerait la base de données des réputations
             # Simulation basée sur l'ID utilisateur
             if hasattr(self, 'user_id'):
@@ -1344,7 +1405,8 @@ class AutomatedLicenseRequest(BaseModel):
             return 0.5  # Réputation conservatrice en cas d'erreur
     
     def _analyze_license_history(self) -> Decimal:
-        """Analyse l'historique des licences pour évaluer le risque"""        try:
+        """Analyse l'historique des licences pour évaluer le risque"""
+        try:
             # Simulation de l'analyse de l'historique
             if hasattr(self, 'user_id'):
                 user_id = self.user_id
@@ -1358,7 +1420,8 @@ class AutomatedLicenseRequest(BaseModel):
             return Decimal('0.1')  # Légère augmentation du risque en cas d'erreur
     
     def _evaluate_content_sensitivity(self) -> str:
-        """Évalue la sensibilité du contenu"""        try:
+        """Évalue la sensibilité du contenu"""
+        try:
             # En production, ceci analyserait les métadonnées du contenu
             if hasattr(self, 'content_id'):
                 content_id = self.content_id
@@ -1373,7 +1436,8 @@ class AutomatedLicenseRequest(BaseModel):
             return "high"  # Prudence en cas d'erreur
     
     def _get_user_tier(self, user_id: int) -> str:
-        """Récupère le tier de l'utilisateur"""        try:
+        """Récupère le tier de l'utilisateur"""
+        try:
             # En production, ceci interrogerait la table des abonnements
             # Simulation basée sur l'ID utilisateur
             if user_id % 10 == 0:
@@ -1385,7 +1449,8 @@ class AutomatedLicenseRequest(BaseModel):
             return "standard"
 
     def generate_ai_recommendation(self) -> Dict[str, Any]:
-        """Génère une recommandation IA pour la demande"""        
+        """Génère une recommandation IA pour la demande"""
+        
         risk_score = float(self.calculate_risk_score())
         
         # Recommandation basée sur le risque et d'autres facteurs
@@ -1432,7 +1497,8 @@ class AutomatedLicenseRequest(BaseModel):
         return recommendation_data
 
     def auto_process(self) -> bool:
-        """Traite automatiquement la demande si possible"""        
+        """Traite automatiquement la demande si possible"""
+        
         try:
             # Génération de la recommandation IA
             recommendation_data = self.generate_ai_recommendation()
@@ -1489,7 +1555,8 @@ class AutomatedLicenseRequest(BaseModel):
             return False
 
     def generate_contract(self) -> Dict[str, Any]:
-        """Génère automatiquement le contrat de licence"""        
+        """Génère automatiquement le contrat de licence"""
+        
         if self.decision != "approved":
             raise ValueError("Impossible de générer un contrat pour une demande non approuvée")
         
@@ -1523,7 +1590,8 @@ class AutomatedLicenseRequest(BaseModel):
         return contract_data
 
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit la demande en dictionnaire"""        return {
+        """Convertit la demande en dictionnaire"""
+        return {
             "id": self.id,
             "request_id": self.request_id,
             "requester_id": self.requester_id,
@@ -1541,9 +1609,11 @@ class AutomatedLicenseRequest(BaseModel):
         }
 
 class LicenseAutomationEngine(BaseModel):
-    """    Moteur d'automatisation des licences.
+    """
+    Moteur d'automatisation des licences.
     Configure et gère les règles d'automatisation globales.
-    """    __tablename__ = "license_automation_engines"
+    """
+    __tablename__ = "license_automation_engines"
 
     # Identifiants
     id = Column(Integer, primary_key=True, index=True)
@@ -1583,9 +1653,11 @@ class LicenseAutomationEngine(BaseModel):
             self.engine_id = f"LAE-{uuid.uuid4().hex[:8].upper()}"
 
 class AutomatedLicensingManager:
-    """    Gestionnaire pour le système de licence automatisée.
+    """
+    Gestionnaire pour le système de licence automatisée.
     Fournit une interface complète pour l'automatisation des licences.
-    """    def __init__(self, db_session: Session):
+    """
+    def __init__(self, db_session: Session):
         self.db = db_session
         self.logger = logging.getLogger(__name__)
 
@@ -1599,7 +1671,8 @@ class AutomatedLicensingManager:
         automation_rules: List[AutomationRule],
         automation_level: AutomationLevel = AutomationLevel.SEMI_AUTOMATED
     ) -> LicenseTemplate:
-        """Crée un nouveau template de licence"""        
+        """Crée un nouveau template de licence"""
+        
         try:
             template = LicenseTemplate(
                 creator_id=creator_id,
@@ -1634,7 +1707,8 @@ class AutomatedLicensingManager:
         proposed_price: Optional[Decimal] = None,
         urgency: str = "normal"
     ) -> AutomatedLicenseRequest:
-        """Soumet une nouvelle demande de licence"""        
+        """Soumet une nouvelle demande de licence"""
+        
         try:
             # Récupération des informations du contenu
             content = self.db.query(ContentItem).filter(
@@ -1692,7 +1766,8 @@ class AutomatedLicensingManager:
             raise
 
     def process_pending_requests(self) -> Dict[str, int]:
-        """Traite automatiquement les demandes en attente"""        
+        """Traite automatiquement les demandes en attente"""
+        
         pending_requests = self.db.query(AutomatedLicenseRequest).filter(
             AutomatedLicenseRequest.status.in_([
                 RequestStatus.SUBMITTED.value,
@@ -1738,7 +1813,8 @@ class AutomatedLicensingManager:
         conditions: Optional[List[str]] = None,
         custom_terms: Optional[Dict] = None
     ) -> bool:
-        """Approuve manuellement une demande de licence"""        
+        """Approuve manuellement une demande de licence"""
+        
         try:
             request = self.db.query(AutomatedLicenseRequest).filter(
                 AutomatedLicenseRequest.request_id == request_id
@@ -1782,7 +1858,8 @@ class AutomatedLicensingManager:
         rejector_id: int,
         reason: str
     ) -> bool:
-        """Rejette une demande de licence"""        
+        """Rejette une demande de licence"""
+        
         try:
             request = self.db.query(AutomatedLicenseRequest).filter(
                 AutomatedLicenseRequest.request_id == request_id
@@ -1816,7 +1893,8 @@ class AutomatedLicensingManager:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Génère des analytics d'automatisation"""        
+        """Génère des analytics d'automatisation"""
+        
         # Récupération des demandes pour la période
         requests = self.db.query(AutomatedLicenseRequest).filter(
             AutomatedLicenseRequest.content_owner_id == user_id,
@@ -1877,7 +1955,8 @@ class AutomatedLicensingManager:
         usage_types: List[str],
         commercial_use: bool
     ) -> Optional[LicenseTemplate]:
-        """Trouve le meilleur template pour une demande"""        
+        """Trouve le meilleur template pour une demande"""
+        
         # Recherche des templates actifs et applicables
         templates = self.db.query(LicenseTemplate).filter(
             LicenseTemplate.is_active == True
@@ -1920,7 +1999,8 @@ class AutomatedLicensingManager:
         self,
         requests: List[AutomatedLicenseRequest]
     ) -> List[str]:
-        """Génère des recommandations d'amélioration de l'automatisation"""        
+        """Génère des recommandations d'amélioration de l'automatisation"""
+        
         recommendations = []
         
         if not requests:

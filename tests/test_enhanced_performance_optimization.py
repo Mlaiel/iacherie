@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -15,7 +16,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 This test validates the enhanced performance profiling, caching strategy,
 and database indexing optimizations.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -26,9 +28,11 @@ from datetime import datetime, timedelta
 
 # Test Performance Optimization Profiling
 class TestEnhancedPerformanceProfiling:
-    """Test enhanced performance profiling capabilities"""    
+    """Test enhanced performance profiling capabilities"""
+    
     def test_advanced_performance_analyzer_initialization(self):
-        """Test AdvancedPerformanceAnalyzer initialization"""        from core.pipeline.performance_optimizer import AdvancedPerformanceAnalyzer
+        """Test AdvancedPerformanceAnalyzer initialization"""
+        from core.pipeline.performance_optimizer import AdvancedPerformanceAnalyzer
         
         config = {
             "ml_enabled": True,
@@ -45,7 +49,8 @@ class TestEnhancedPerformanceProfiling:
         assert hasattr(analyzer, 'real_time_analytics')
     
     def test_performance_trend_analysis(self):
-        """Test performance trend analysis"""        from core.pipeline.performance_optimizer import AdvancedPerformanceAnalyzer, PerformanceMeasurement, PerformanceProfile, PerformanceMetric
+        """Test performance trend analysis"""
+        from core.pipeline.performance_optimizer import AdvancedPerformanceAnalyzer, PerformanceMeasurement, PerformanceProfile, PerformanceMetric
         
         config = {"analysis_enabled": True}
         analyzer = AdvancedPerformanceAnalyzer(config)
@@ -83,7 +88,8 @@ class TestEnhancedPerformanceProfiling:
             assert trend["slope"] > 0
     
     def test_anomaly_detection(self):
-        """Test performance anomaly detection"""        from core.pipeline.performance_optimizer import AdvancedPerformanceAnalyzer, PerformanceMeasurement, PerformanceProfile, PerformanceMetric
+        """Test performance anomaly detection"""
+        from core.pipeline.performance_optimizer import AdvancedPerformanceAnalyzer, PerformanceMeasurement, PerformanceProfile, PerformanceMetric
         
         config = {"anomaly_detection_enabled": True}
         analyzer = AdvancedPerformanceAnalyzer(config)
@@ -118,7 +124,8 @@ class TestEnhancedPerformanceProfiling:
             assert len(anomaly_detection["detected_anomalies"]) > 0
     
     def test_optimization_opportunity_identification(self):
-        """Test optimization opportunity identification"""        from core.pipeline.performance_optimizer import AdvancedPerformanceAnalyzer, PerformanceMeasurement, PerformanceProfile, PerformanceMetric
+        """Test optimization opportunity identification"""
+        from core.pipeline.performance_optimizer import AdvancedPerformanceAnalyzer, PerformanceMeasurement, PerformanceProfile, PerformanceMetric
         
         config = {"optimization_analysis_enabled": True}
         analyzer = AdvancedPerformanceAnalyzer(config)
@@ -171,7 +178,8 @@ class TestEnhancedPerformanceProfiling:
     
     @pytest.mark.asyncio
     async def test_real_time_performance_monitor(self):
-        """Test real-time performance monitoring"""        from core.pipeline.performance_optimizer import RealTimePerformanceMonitor
+        """Test real-time performance monitoring"""
+        from core.pipeline.performance_optimizer import RealTimePerformanceMonitor
         
         config = {
             "monitoring_interval": 0.1,  # 100ms for fast testing
@@ -206,7 +214,8 @@ class TestEnhancedPerformanceProfiling:
         assert monitor.monitoring_active is False
     
     def test_performance_risk_assessment(self):
-        """Test performance risk assessment"""        from core.pipeline.performance_optimizer import AdvancedPerformanceAnalyzer, PerformanceMeasurement, PerformanceProfile, PerformanceMetric
+        """Test performance risk assessment"""
+        from core.pipeline.performance_optimizer import AdvancedPerformanceAnalyzer, PerformanceMeasurement, PerformanceProfile, PerformanceMetric
         
         config = {"risk_assessment_enabled": True}
         analyzer = AdvancedPerformanceAnalyzer(config)
@@ -256,9 +265,11 @@ class TestEnhancedPerformanceProfiling:
 
 
 class TestCacheStrategyEnhancements:
-    """Test advanced caching strategy enhancements"""    
+    """Test advanced caching strategy enhancements"""
+    
     def test_cache_manager_initialization(self):
-        """Test cache manager initialization"""        # Test with simple import to avoid complex dependencies
+        """Test cache manager initialization"""
+        # Test with simple import to avoid complex dependencies
         try:
             from crawlers.caching.memory_cache import MemoryCache
             
@@ -274,7 +285,8 @@ class TestCacheStrategyEnhancements:
             pytest.skip("Cache modules not available for testing")
     
     def test_cache_operations(self):
-        """Test basic cache operations"""        try:
+        """Test basic cache operations"""
+        try:
             from crawlers.caching.memory_cache import MemoryCache
             
             cache = MemoryCache(max_size=1024, ttl=300)
@@ -299,7 +311,8 @@ class TestCacheStrategyEnhancements:
             pytest.skip("Cache modules not available for testing")
     
     def test_cache_metrics(self):
-        """Test cache performance metrics"""        try:
+        """Test cache performance metrics"""
+        try:
             from crawlers.caching.metrics import CacheMetrics
             
             metrics = CacheMetrics()
@@ -331,9 +344,11 @@ class TestCacheStrategyEnhancements:
 
 
 class TestDatabaseIndexingOptimization:
-    """Test database indexing optimization enhancements"""    
+    """Test database indexing optimization enhancements"""
+    
     def test_index_optimization_config(self):
-        """Test index optimization configuration"""        config = {
+        """Test index optimization configuration"""
+        config = {
             "auto_optimization": True,
             "monitoring_enabled": True,
             "optimization_threshold": 0.1,
@@ -347,7 +362,8 @@ class TestDatabaseIndexingOptimization:
         assert len(config["index_types"]) == 4
     
     def test_optimization_strategy_selection(self):
-        """Test optimization strategy selection"""        # Mock query performance data
+        """Test optimization strategy selection"""
+        # Mock query performance data
         query_stats = {
             "avg_execution_time": 250.0,  # ms
             "query_frequency": 100,       # queries per minute
@@ -370,9 +386,11 @@ class TestDatabaseIndexingOptimization:
 
 
 class TestCodeQualityRefactoring:
-    """Test code quality improvements and refactoring"""    
+    """Test code quality improvements and refactoring"""
+    
     def test_error_handling_standardization(self):
-        """Test standardized error handling"""        from core.pipeline.performance_optimizer import AdvancedPerformanceAnalyzer
+        """Test standardized error handling"""
+        from core.pipeline.performance_optimizer import AdvancedPerformanceAnalyzer
         
         config = {}
         analyzer = AdvancedPerformanceAnalyzer(config)
@@ -393,7 +411,8 @@ class TestCodeQualityRefactoring:
             pytest.fail(f"Error handling failed: {e}")
     
     def test_logging_integration(self):
-        """Test logging integration"""        from core.pipeline.performance_optimizer import AdvancedPerformanceAnalyzer
+        """Test logging integration"""
+        from core.pipeline.performance_optimizer import AdvancedPerformanceAnalyzer
         import logging
         
         # Create analyzer and verify logger is set up
@@ -405,7 +424,8 @@ class TestCodeQualityRefactoring:
         assert analyzer.logger.name.endswith("AdvancedPerformanceAnalyzer")
     
     def test_configuration_validation(self):
-        """Test configuration validation and defaults"""        from core.pipeline.performance_optimizer import AdvancedPerformanceAnalyzer
+        """Test configuration validation and defaults"""
+        from core.pipeline.performance_optimizer import AdvancedPerformanceAnalyzer
         
         # Test with empty config
         analyzer1 = AdvancedPerformanceAnalyzer({})
@@ -434,10 +454,12 @@ class TestCodeQualityRefactoring:
 
 # Integration Tests
 class TestPerformanceOptimizationIntegration:
-    """Integration tests for performance optimization features"""    
+    """Integration tests for performance optimization features"""
+    
     @pytest.mark.asyncio
     async def test_performance_monitoring_workflow(self):
-        """Test complete performance monitoring workflow"""        from core.pipeline.performance_optimizer import RealTimePerformanceMonitor, AdvancedPerformanceAnalyzer
+        """Test complete performance monitoring workflow"""
+        from core.pipeline.performance_optimizer import RealTimePerformanceMonitor, AdvancedPerformanceAnalyzer
         
         config = {
             "monitoring_interval": 0.1,
@@ -468,7 +490,8 @@ class TestPerformanceOptimizationIntegration:
         assert monitor.monitoring_active is False
     
     def test_performance_optimization_pipeline(self):
-        """Test the complete performance optimization pipeline"""        from core.pipeline.performance_optimizer import AdvancedPerformanceAnalyzer, PerformanceMeasurement, PerformanceProfile, PerformanceMetric
+        """Test the complete performance optimization pipeline"""
+        from core.pipeline.performance_optimizer import AdvancedPerformanceAnalyzer, PerformanceMeasurement, PerformanceProfile, PerformanceMetric
         
         # Step 1: Data Collection (simulated)
         profile = PerformanceProfile(

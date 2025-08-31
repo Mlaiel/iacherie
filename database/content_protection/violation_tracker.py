@@ -15,7 +15,8 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 from collections import defaultdict
@@ -45,7 +46,8 @@ logger = logging.getLogger(__name__)
 
 
 class ViolationType(Enum):
-    """Types of content violations"""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Types of content violations"""
+    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_DISTRIBUTION = "unauthorized_distribution"
     CONTENT_MANIPULATION = "content_manipulation"
     TRADEMARK_VIOLATION = "trademark_violation"
@@ -56,7 +58,8 @@ class ViolationType(Enum):
 
 
 class ViolationSeverity(Enum):
-    """Violation severity levels"""    LOW = "low"
+    """Violation severity levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -64,7 +67,8 @@ class ViolationSeverity(Enum):
 
 
 class ViolationStatus(Enum):
-    """Violation status types"""    DETECTED = "detected"
+    """Violation status types"""
+    DETECTED = "detected"
     INVESTIGATING = "investigating"
     CONFIRMED = "confirmed"
     ACTION_PENDING = "action_pending"
@@ -75,7 +79,8 @@ class ViolationStatus(Enum):
 
 
 class ActionType(Enum):
-    """Types of actions taken for violations"""    DMCA_TAKEDOWN = "dmca_takedown"
+    """Types of actions taken for violations"""
+    DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     PLATFORM_REPORT = "platform_report"
     LEGAL_NOTICE = "legal_notice"
@@ -86,18 +91,21 @@ class ActionType(Enum):
 
 
 class ViolationTrackerError(Exception):
-    """Custom exception for violation tracker operations"""    pass
+    """Custom exception for violation tracker operations"""
+    pass
 
 
 class ViolationTracker:
-    """    Ultra-advanced violation tracking system with enterprise features:
+    """
+    Ultra-advanced violation tracking system with enterprise features:
     - Comprehensive violation lifecycle management
     - Advanced pattern recognition and offender profiling
     - Automated response escalation and legal integration
     - Multi-jurisdiction compliance and enforcement
     - Real-time monitoring and analytics
     - ML-powered risk assessment and prediction
-    """    
+    """
+    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -149,7 +157,8 @@ class ViolationTracker:
         evidence_files: Optional[List[Dict[str, Any]]] = None,
         auto_analyze: bool = True
     ) -> ViolationReport:
-        """        Create comprehensive violation report with automated analysis
+        """
+        Create comprehensive violation report with automated analysis
         
         Args:
             alert_id: Associated protection alert ID
@@ -162,7 +171,8 @@ class ViolationTracker:
             
         Raises:
             ViolationTrackerError: If creation fails
-        """        try:
+        """
+        try:
             # Validate violation data
             await self._validate_violation_data(violation_data)
             
@@ -244,7 +254,8 @@ class ViolationTracker:
         status_data: Optional[Dict[str, Any]] = None,
         investigator_id: Optional[str] = None
     ) -> ViolationReport:
-        """        Update violation status with comprehensive tracking
+        """
+        Update violation status with comprehensive tracking
         
         Args:
             violation_id: Violation identifier
@@ -254,7 +265,8 @@ class ViolationTracker:
             
         Returns:
             Updated ViolationReport record
-        """        try:
+        """
+        try:
             violation = await self.db_session.query(ViolationReport).filter(
                 ViolationReport.violation_id == violation_id
             ).first()
@@ -325,7 +337,8 @@ class ViolationTracker:
         action_data: Dict[str, Any],
         initiated_by: Optional[str] = None
     ) -> ViolationAction:
-        """        Initiate legal or enforcement action for violation
+        """
+        Initiate legal or enforcement action for violation
         
         Args:
             violation_id: Violation identifier
@@ -335,7 +348,8 @@ class ViolationTracker:
             
         Returns:
             Created ViolationAction record
-        """        try:
+        """
+        try:
             violation = await self.db_session.query(ViolationReport).filter(
                 ViolationReport.violation_id == violation_id
             ).first()
@@ -403,7 +417,8 @@ class ViolationTracker:
         lookback_days: int = 30,
         min_violations: int = 2
     ) -> List[Dict[str, Any]]:
-        """        Analyze and track repeat offender patterns for proactive enforcement
+        """
+        Analyze and track repeat offender patterns for proactive enforcement
         
         Args:
             lookback_days: Days to analyze for patterns
@@ -411,7 +426,8 @@ class ViolationTracker:
             
         Returns:
             List of offender patterns and recommendations
-        """        try:
+        """
+        try:
             start_date = datetime.now(timezone.utc) - timedelta(days=lookback_days)
             
             # Get recent violations with offender info
@@ -487,7 +503,8 @@ class ViolationTracker:
         time_range_days: int = 30,
         include_predictions: bool = True
     ) -> Dict[str, Any]:
-        """        Generate comprehensive violation analytics and insights
+        """
+        Generate comprehensive violation analytics and insights
         
         Args:
             time_range_days: Number of days to analyze
@@ -495,7 +512,8 @@ class ViolationTracker:
             
         Returns:
             Comprehensive analytics and insights
-        """        try:
+        """
+        try:
             start_date = datetime.now(timezone.utc) - timedelta(days=time_range_days)
             
             # Basic violation statistics
@@ -612,7 +630,8 @@ class ViolationTracker:
     # Private helper methods
     
     async def _validate_violation_data(self, violation_data: Dict[str, Any]) -> None:
-        """Validate violation data structure"""        required_fields = ["detected_url", "platform", "confidence_score"]
+        """Validate violation data structure"""
+        required_fields = ["detected_url", "platform", "confidence_score"]
         
         for field in required_fields:
             if field not in violation_data:
@@ -622,7 +641,8 @@ class ViolationTracker:
             raise ViolationTrackerError("Confidence score must be between 0.0 and 1.0")
     
     async def _classify_violation_type(self, violation_data: Dict[str, Any]) -> ViolationType:
-        """Classify violation type based on detection data"""        detection_method = violation_data.get("detection_method", "").lower()
+        """Classify violation type based on detection data"""
+        detection_method = violation_data.get("detection_method", "").lower()
         platform = violation_data.get("platform", "").lower()
         content_analysis = violation_data.get("content_analysis", {})
         
@@ -641,7 +661,8 @@ class ViolationTracker:
             return ViolationType.COPYRIGHT_INFRINGEMENT  # Default
     
     async def _assess_violation_severity(self, violation_data: Dict[str, Any]) -> ViolationSeverity:
-        """Assess violation severity based on multiple factors"""        confidence_score = violation_data.get("confidence_score", 0.0)
+        """Assess violation severity based on multiple factors"""
+        confidence_score = violation_data.get("confidence_score", 0.0)
         commercial_use = violation_data.get("commercial_use", False)
         platform_reach = violation_data.get("platform_reach", {}).get("estimated_views", 0)
         
@@ -669,7 +690,8 @@ class ViolationTracker:
         return severity
     
     async def _generate_violation_id(self, violation_data: Dict[str, Any]) -> str:
-        """Generate unique violation identifier"""        import hashlib
+        """Generate unique violation identifier"""
+        import hashlib
         
         id_components = [
             violation_data.get("detected_url", ""),
@@ -683,7 +705,8 @@ class ViolationTracker:
         return f"VIO-{hash_object.hexdigest()[:12].upper()}"
     
     async def _identify_risk_factors(self, violation_data: Dict[str, Any]) -> List[str]:
-        """Identify risk factors associated with violation"""        risk_factors = []
+        """Identify risk factors associated with violation"""
+        risk_factors = []
         
         if violation_data.get("commercial_use"):
             risk_factors.append("commercial_exploitation")
@@ -708,7 +731,8 @@ class ViolationTracker:
         violation_id: UUID,
         evidence_file: Dict[str, Any]
     ) -> ViolationEvidence:
-        """Store violation evidence file"""        evidence = ViolationEvidence(
+        """Store violation evidence file"""
+        evidence = ViolationEvidence(
             id=uuid4(),
             violation_id=violation_id,
             evidence_type=evidence_file.get("type", "screenshot"),
@@ -721,7 +745,8 @@ class ViolationTracker:
         return evidence
     
     async def _analyze_violation(self, violation: ViolationReport) -> None:
-        """Perform automatic violation analysis"""        try:
+        """Perform automatic violation analysis"""
+        try:
             # Add analysis results to metadata
             analysis_results = {
                 "analyzed_at": datetime.now(timezone.utc).isoformat(),
@@ -736,7 +761,8 @@ class ViolationTracker:
             logger.warning(f"Violation analysis failed: {e}")
     
     async def _update_offender_profile(self, violation: ViolationReport) -> None:
-        """Update or create offender profile"""        try:
+        """Update or create offender profile"""
+        try:
             offender_info = violation.offender_info or {}
             if not offender_info:
                 return
@@ -770,7 +796,8 @@ class ViolationTracker:
             logger.warning(f"Offender profile update failed: {e}")
     
     async def _initiate_automatic_actions(self, violation: ViolationReport) -> None:
-        """Initiate automatic actions based on violation severity"""        try:
+        """Initiate automatic actions based on violation severity"""
+        try:
             severity = ViolationSeverity(violation.violation_severity)
             automatic_actions = self.escalation_matrix.get(severity, [])
             
@@ -789,7 +816,8 @@ class ViolationTracker:
             logger.warning(f"Automatic action initiation failed: {e}")
     
     async def _extract_domain(self, url: str) -> str:
-        """Extract domain from URL"""        try:
+        """Extract domain from URL"""
+        try:
             from urllib.parse import urlparse
             parsed = urlparse(url)
             return parsed.netloc.lower()
@@ -797,7 +825,8 @@ class ViolationTracker:
             return url.lower()
     
     async def _calculate_average_severity(self, violations: List[ViolationReport]) -> float:
-        """Calculate average severity score for violations"""        severity_scores = {
+        """Calculate average severity score for violations"""
+        severity_scores = {
             "low": 1,
             "medium": 2,
             "high": 3,
@@ -809,7 +838,8 @@ class ViolationTracker:
         return total_score / len(violations) if violations else 0
     
     async def _assess_offender_risk_level(self, violations: List[ViolationReport]) -> str:
-        """Assess risk level for repeat offender"""        violation_count = len(violations)
+        """Assess risk level for repeat offender"""
+        violation_count = len(violations)
         commercial_violations = sum(1 for v in violations if v.commercial_use_detected)
         avg_severity = await self._calculate_average_severity(violations)
         
@@ -827,7 +857,8 @@ class ViolationTracker:
         violations: List[ViolationReport],
         risk_level: str
     ) -> List[str]:
-        """Generate recommendations for handling repeat offender"""        recommendations = []
+        """Generate recommendations for handling repeat offender"""
+        recommendations = []
         
         if risk_level == "critical":
             recommendations.extend([
@@ -862,7 +893,8 @@ class ViolationTracker:
         violation: ViolationReport,
         action_type: ActionType
     ) -> bool:
-        """Validate if action is appropriate for violation severity"""        severity = ViolationSeverity(violation.violation_severity)
+        """Validate if action is appropriate for violation severity"""
+        severity = ViolationSeverity(violation.violation_severity)
         allowed_actions = self.escalation_matrix.get(severity, [])
         return action_type in allowed_actions or severity == ViolationSeverity.CATASTROPHIC
     
@@ -871,7 +903,8 @@ class ViolationTracker:
         violation: ViolationReport,
         action_type: ActionType
     ) -> str:
-        """Determine legal basis for action"""        legal_bases = {
+        """Determine legal basis for action"""
+        legal_bases = {
             ActionType.DMCA_TAKEDOWN: "Digital Millennium Copyright Act (DMCA)",
             ActionType.CEASE_DESIST: "Copyright infringement under applicable law",
             ActionType.LEGAL_NOTICE: "Intellectual property rights violation",
@@ -881,7 +914,8 @@ class ViolationTracker:
         return legal_bases.get(action_type, "Applicable intellectual property law")
     
     async def _estimate_action_completion(self, action_type: ActionType) -> datetime:
-        """Estimate action completion time"""        completion_estimates = {
+        """Estimate action completion time"""
+        completion_estimates = {
             ActionType.WARNING_NOTICE: timedelta(hours=1),
             ActionType.PLATFORM_REPORT: timedelta(hours=24),
             ActionType.DMCA_TAKEDOWN: timedelta(days=7),
@@ -898,7 +932,8 @@ class ViolationTracker:
         violation: ViolationReport,
         action: ViolationAction
     ) -> Dict[str, Any]:
-        """Execute the specified violation action"""        action_type = ActionType(action.action_type)
+        """Execute the specified violation action"""
+        action_type = ActionType(action.action_type)
         
         if action_type in [ActionType.DMCA_TAKEDOWN, ActionType.LEGAL_NOTICE, ActionType.COURT_ACTION]:
             # Delegate to legal manager
@@ -912,7 +947,8 @@ class ViolationTracker:
         violation: ViolationReport,
         action: ViolationAction
     ) -> Dict[str, Any]:
-        """Execute platform-specific action"""        # Implementation would integrate with platform APIs
+        """Execute platform-specific action"""
+        # Implementation would integrate with platform APIs
         return {
             "status": "initiated",
             "platform": violation.platform,
@@ -921,11 +957,13 @@ class ViolationTracker:
         }
     
     async def _handle_confirmed_violation(self, violation: ViolationReport) -> None:
-        """Handle confirmed violation status"""        # Trigger additional actions for confirmed violations
+        """Handle confirmed violation status"""
+        # Trigger additional actions for confirmed violations
         pass
     
     async def _handle_action_taken(self, violation: ViolationReport) -> None:
-        """Handle action taken status"""        # Start monitoring for compliance
+        """Handle action taken status"""
+        # Start monitoring for compliance
         pass
     
     async def _send_violation_status_notifications(
@@ -934,7 +972,8 @@ class ViolationTracker:
         old_status: str,
         new_status: str
     ) -> None:
-        """Send notifications for status updates"""        try:
+        """Send notifications for status updates"""
+        try:
             notification_data = {
                 "violation_id": violation.violation_id,
                 "old_status": old_status,
@@ -952,7 +991,8 @@ class ViolationTracker:
         violation: ViolationReport,
         action: ViolationAction
     ) -> None:
-        """Send notifications for action initiation"""        try:
+        """Send notifications for action initiation"""
+        try:
             notification_data = {
                 "violation_id": violation.violation_id,
                 "action_id": str(action.id),
@@ -966,22 +1006,26 @@ class ViolationTracker:
             logger.warning(f"Action notification failed: {e}")
     
     async def _assess_violation_risk(self, violation: ViolationReport) -> Dict[str, Any]:
-        """Assess risk level of violation"""        return {
+        """Assess risk level of violation"""
+        return {
             "overall_risk": "medium",
             "factors": ["similarity_score", "platform_reach"],
             "mitigation_recommended": True
         }
     
     async def _recommend_actions(self, violation: ViolationReport) -> List[str]:
-        """Recommend actions for violation"""        severity = ViolationSeverity(violation.violation_severity)
+        """Recommend actions for violation"""
+        severity = ViolationSeverity(violation.violation_severity)
         return [action.value for action in self.escalation_matrix.get(severity, [])]
     
     async def _is_automatic_action_enabled(self, action_type: ActionType) -> bool:
-        """Check if automatic action is enabled"""        # Configuration-based check for automatic actions
+        """Check if automatic action is enabled"""
+        # Configuration-based check for automatic actions
         return action_type in [ActionType.WARNING_NOTICE, ActionType.PLATFORM_REPORT]
     
     async def _generate_violation_predictions(self, analytics: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate ML-based violation predictions"""        # Placeholder for ML-based predictions
+        """Generate ML-based violation predictions"""
+        # Placeholder for ML-based predictions
         return {
             "predicted_violations_next_week": analytics["total_violations"] * 1.1,
             "high_risk_platforms": ["platform1", "platform2"],

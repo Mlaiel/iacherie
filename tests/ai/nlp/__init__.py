@@ -46,16 +46,20 @@ from .test_analysis import TextAnalysisTests, AdvancedTextAnalysisTests
 
 # Create additional test classes
 class SentimentAnalysisTests(TextAnalysisTests):
-    """Specialized tests for sentiment analysis"""    pass
+    """Specialized tests for sentiment analysis"""
+    pass
 
 class ContentGenerationTests(TextAnalysisTests):
-    """Specialized tests for content generation"""    pass
+    """Specialized tests for content generation"""
+    pass
 
 class LanguageDetectionTests(TextAnalysisTests):
-    """Specialized tests for language detection"""    pass
+    """Specialized tests for language detection"""
+    pass
 
 class TranslationTests(TextAnalysisTests):
-    """Specialized tests for translation"""    pass
+    """Specialized tests for translation"""
+    pass
 
 # Export test classes
 __all__ = [

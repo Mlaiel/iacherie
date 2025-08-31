@@ -18,7 +18,8 @@ Professional Development Team Specialties:
 🥇 Database Administrator & Security Expert - Data protection and performance
 🥇 Microservices Architect & DevOps Engineer - Scalable infrastructure
 🥇 AI Prompt Engineer & Content Protection Specialist - Content security
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Union, Any, Callable
@@ -37,7 +38,8 @@ from .user_agent_rotator import UserAgentRotator
 
 
 class AutomationMode(Enum):
-    """Automation execution modes"""    STEALTH = "stealth"
+    """Automation execution modes"""
+    STEALTH = "stealth"
     PERFORMANCE = "performance"
     BALANCED = "balanced"
     AGGRESSIVE = "aggressive"
@@ -45,7 +47,8 @@ class AutomationMode(Enum):
 
 
 class TaskPriority(Enum):
-    """Task execution priority levels"""    CRITICAL = 1
+    """Task execution priority levels"""
+    CRITICAL = 1
     HIGH = 2
     NORMAL = 3
     LOW = 4
@@ -53,7 +56,8 @@ class TaskPriority(Enum):
 
 
 class AutomationStatus(Enum):
-    """Automation controller status"""    IDLE = "idle"
+    """Automation controller status"""
+    IDLE = "idle"
     INITIALIZING = "initializing"
     RUNNING = "running"
     PAUSED = "paused"
@@ -64,7 +68,8 @@ class AutomationStatus(Enum):
 
 @dataclass
 class AutomationTask:
-    """Automation task definition"""    task_id: str
+    """Automation task definition"""
+    task_id: str
     task_type: str
     priority: TaskPriority
     target_url: Optional[str] = None
@@ -83,7 +88,8 @@ class AutomationTask:
 
 @dataclass
 class AutomationMetrics:
-    """Automation performance metrics"""    tasks_total: int = 0
+    """Automation performance metrics"""
+    tasks_total: int = 0
     tasks_completed: int = 0
     tasks_failed: int = 0
     tasks_retried: int = 0
@@ -96,7 +102,8 @@ class AutomationMetrics:
 
 
 class AutomationController:
-    """    Enterprise automation controller for coordinating browser and API operations.
+    """
+    Enterprise automation controller for coordinating browser and API operations.
     
     Features:
     - Centralized task orchestration
@@ -104,7 +111,8 @@ class AutomationController:
     - Performance monitoring and metrics
     - Error handling and recovery
     - Configurable execution modes
-    """    
+    """
+    
     def __init__(
         self,
         mode: AutomationMode = AutomationMode.BALANCED,
@@ -145,7 +153,8 @@ class AutomationController:
         self.logger = logging.getLogger(__name__)
         
     async def initialize(self) -> bool:
-        """Initialize automation controller and all managers"""        try:
+        """Initialize automation controller and all managers"""
+        try:
             self.status = AutomationStatus.INITIALIZING
             self.logger.info("Initializing automation controller...")
             
@@ -165,11 +174,13 @@ class AutomationController:
             return False
     
     def register_task_handler(self, task_type: str, handler: Callable):
-        """Register a task handler for specific task type"""        self.task_handlers[task_type] = handler
+        """Register a task handler for specific task type"""
+        self.task_handlers[task_type] = handler
         self.logger.info(f"Registered handler for task type: {task_type}")
     
     def submit_task(self, task: AutomationTask) -> str:
-        """Submit a task for execution"""        if task.scheduled_at and task.scheduled_at > datetime.utcnow():
+        """Submit a task for execution"""
+        if task.scheduled_at and task.scheduled_at > datetime.utcnow():
             # Add to scheduled tasks
             self.task_queue.append(task)
             self.logger.info(f"Task {task.task_id} scheduled for {task.scheduled_at}")
@@ -182,7 +193,8 @@ class AutomationController:
         return task.task_id
     
     async def execute_task(self, task: AutomationTask) -> Dict[str, Any]:
-        """Execute a single automation task"""        task.started_at = datetime.utcnow()
+        """Execute a single automation task"""
+        task.started_at = datetime.utcnow()
         self.active_tasks[task.task_id] = task
         
         try:
@@ -234,7 +246,8 @@ class AutomationController:
                 self.logger.info(f"Task {task.task_id} scheduled for retry {task.retry_count}")
     
     async def start(self):
-        """Start the automation controller"""        if self.status != AutomationStatus.IDLE:
+        """Start the automation controller"""
+        if self.status != AutomationStatus.IDLE:
             raise RuntimeError(f"Cannot start controller in status: {self.status}")
         
         self.status = AutomationStatus.RUNNING
@@ -248,7 +261,8 @@ class AutomationController:
         await self._execution_loop()
     
     async def stop(self):
-        """Stop the automation controller gracefully"""        self.status = AutomationStatus.STOPPING
+        """Stop the automation controller gracefully"""
+        self.status = AutomationStatus.STOPPING
         self.logger.info("Stopping automation controller...")
         
         # Signal shutdown
@@ -269,15 +283,18 @@ class AutomationController:
         self.logger.info("Automation controller stopped")
     
     async def pause(self):
-        """Pause task execution"""        self.status = AutomationStatus.PAUSED
+        """Pause task execution"""
+        self.status = AutomationStatus.PAUSED
         self.logger.info("Automation controller paused")
     
     async def resume(self):
-        """Resume task execution"""        self.status = AutomationStatus.RUNNING
+        """Resume task execution"""
+        self.status = AutomationStatus.RUNNING
         self.logger.info("Automation controller resumed")
     
     def get_metrics(self) -> AutomationMetrics:
-        """Get current automation metrics"""        self.metrics.current_load = len(self.active_tasks)
+        """Get current automation metrics"""
+        self.metrics.current_load = len(self.active_tasks)
         self.metrics.uptime = datetime.utcnow() - self.start_time
         self.metrics.success_rate = (
             self.metrics.tasks_completed / max(self.metrics.tasks_total, 1) * 100
@@ -286,7 +303,8 @@ class AutomationController:
         return self.metrics
     
     def get_task_status(self, task_id: str) -> Optional[AutomationTask]:
-        """Get status of a specific task"""        # Check active tasks
+        """Get status of a specific task"""
+        # Check active tasks
         if task_id in self.active_tasks:
             return self.active_tasks[task_id]
         
@@ -303,7 +321,8 @@ class AutomationController:
         return None
     
     async def _execution_loop(self):
-        """Main execution loop for processing tasks"""        while not self.shutdown_event.is_set():
+        """Main execution loop for processing tasks"""
+        while not self.shutdown_event.is_set():
             try:
                 if self.status == AutomationStatus.PAUSED:
                     await asyncio.sleep(1)
@@ -334,7 +353,8 @@ class AutomationController:
                 await asyncio.sleep(1)
     
     async def _monitoring_loop(self):
-        """Monitoring loop for metrics and health checks"""        while not self.shutdown_event.is_set():
+        """Monitoring loop for metrics and health checks"""
+        while not self.shutdown_event.is_set():
             try:
                 # Update metrics
                 self.get_metrics()
@@ -361,7 +381,8 @@ class AutomationController:
                 await asyncio.sleep(10)
     
     async def _perform_health_checks(self):
-        """Perform health checks on all managers"""        try:
+        """Perform health checks on all managers"""
+        try:
             # Check browser manager health
             if not await self.browser_manager.health_check():
                 self.logger.warning("Browser manager health check failed")
@@ -378,7 +399,8 @@ class AutomationController:
             self.logger.error(f"Health check error: {e}")
     
     def _update_execution_metrics(self, execution_time: float):
-        """Update execution time metrics"""        total_time = (
+        """Update execution time metrics"""
+        total_time = (
             self.metrics.average_execution_time * self.metrics.tasks_completed +
             execution_time
         )
@@ -390,7 +412,8 @@ async def create_automation_controller(
     mode: AutomationMode = AutomationMode.BALANCED,
     **kwargs
 ) -> AutomationController:
-    """Create and initialize an automation controller"""    controller = AutomationController(mode=mode, **kwargs)
+    """Create and initialize an automation controller"""
+    controller = AutomationController(mode=mode, **kwargs)
     await controller.initialize()
     return controller
 
@@ -400,7 +423,8 @@ async def automation_context(
     mode: AutomationMode = AutomationMode.BALANCED,
     **kwargs
 ):
-    """Context manager for automation controller"""    controller = await create_automation_controller(mode=mode, **kwargs)
+    """Context manager for automation controller"""
+    controller = await create_automation_controller(mode=mode, **kwargs)
     try:
         yield controller
     finally:

@@ -26,7 +26,8 @@ Business Logic: Content Registration → Monitoring Setup → Threat Detection �
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
 from dataclasses import dataclass, field
@@ -65,7 +66,8 @@ from .exceptions import AdaptationError, ValidationError
 
 
 class ThreatLevel(str, Enum):
-    """Content protection threat severity levels"""    CRITICAL = "critical"      # Commercial infringement, high revenue impact
+    """Content protection threat severity levels"""
+    CRITICAL = "critical"      # Commercial infringement, high revenue impact
     HIGH = "high"             # Large-scale unauthorized distribution
     MEDIUM = "medium"         # Moderate exposure, potential commercial use
     LOW = "low"              # Limited exposure, likely personal use
@@ -73,7 +75,8 @@ class ThreatLevel(str, Enum):
 
 
 class InfringementType(str, Enum):
-    """Types of content infringement"""    DIRECT_COPY = "direct_copy"
+    """Types of content infringement"""
+    DIRECT_COPY = "direct_copy"
     MODIFIED_COPY = "modified_copy"
     DERIVATIVE_WORK = "derivative_work"
     UNAUTHORIZED_DISTRIBUTION = "unauthorized_distribution"
@@ -88,7 +91,8 @@ class InfringementType(str, Enum):
 
 
 class PlatformType(str, Enum):
-    """Monitored platform categories"""    SOCIAL_MEDIA = "social_media"
+    """Monitored platform categories"""
+    SOCIAL_MEDIA = "social_media"
     VIDEO_SHARING = "video_sharing"
     MUSIC_STREAMING = "music_streaming"
     PHOTO_SHARING = "photo_sharing"
@@ -103,7 +107,8 @@ class PlatformType(str, Enum):
 
 
 class ProtectionAction(str, Enum):
-    """Automated protection actions"""    MONITOR = "monitor"
+    """Automated protection actions"""
+    MONITOR = "monitor"
     ALERT = "alert"
     DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
@@ -117,7 +122,8 @@ class ProtectionAction(str, Enum):
 
 @dataclass
 class ThreatDetection:
-    """Comprehensive threat detection with forensic evidence"""    detection_id: str
+    """Comprehensive threat detection with forensic evidence"""
+    detection_id: str
     content_id: str
     creator_id: str
     infringing_url: str
@@ -141,7 +147,8 @@ class ThreatDetection:
 
 @dataclass
 class ProtectionCampaign:
-    """Comprehensive protection campaign configuration"""    campaign_id: str
+    """Comprehensive protection campaign configuration"""
+    campaign_id: str
     content_id: str
     creator_id: str
     creator_type: str
@@ -163,7 +170,8 @@ class ProtectionCampaign:
 
 @dataclass
 class EnforcementAction:
-    """Automated enforcement action with tracking"""    action_id: str
+    """Automated enforcement action with tracking"""
+    action_id: str
     detection_id: str
     action_type: ProtectionAction
     target_platform: str
@@ -183,7 +191,8 @@ class EnforcementAction:
 
 @dataclass
 class ProtectionRequest:
-    """Enterprise-grade content protection request"""    content_id: str
+    """Enterprise-grade content protection request"""
+    content_id: str
     creator_id: str
     creator_type: str
     protection_level: str = "standard"  # basic, standard, premium, enterprise
@@ -199,7 +208,8 @@ class ProtectionRequest:
 
 @dataclass
 class ProtectionResult:
-    """Comprehensive protection setup result with monitoring insights"""    protection_id: str
+    """Comprehensive protection setup result with monitoring insights"""
+    protection_id: str
     content_id: str
     creator_id: str
     creator_type: str
@@ -219,13 +229,15 @@ class ProtectionResult:
 
 
 class PlatformMonitor:
-    """Advanced platform monitoring with AI-powered detection"""    
+    """Advanced platform monitoring with AI-powered detection"""
+    
     def __init__(self, platform_type: PlatformType):
         self.platform_type = platform_type
         self.logger = logging.getLogger(__name__)
         
     async def scan_platform(self, search_terms: List[str]) -> List[Dict[str, Any]]:
-        """Scan platform for potential infringement"""        results = []
+        """Scan platform for potential infringement"""
+        results = []
         
         # Platform-specific scanning logic
         if self.platform_type == PlatformType.SOCIAL_MEDIA:
@@ -238,20 +250,24 @@ class PlatformMonitor:
         return results
     
     async def _scan_social_media(self, search_terms: List[str]) -> List[Dict[str, Any]]:
-        """Scan social media platforms"""        # Placeholder for actual social media API integration
+        """Scan social media platforms"""
+        # Placeholder for actual social media API integration
         return [{"url": "example.com", "similarity": 0.9}]
     
     async def _scan_video_platforms(self, search_terms: List[str]) -> List[Dict[str, Any]]:
-        """Scan video sharing platforms"""        # Placeholder for video platform API integration
+        """Scan video sharing platforms"""
+        # Placeholder for video platform API integration
         return [{"url": "video-example.com", "similarity": 0.85}]
     
     async def _scan_torrent_sites(self, search_terms: List[str]) -> List[Dict[str, Any]]:
-        """Scan torrent and file sharing sites"""        # Placeholder for torrent site monitoring
+        """Scan torrent and file sharing sites"""
+        # Placeholder for torrent site monitoring
         return [{"url": "torrent-example.com", "similarity": 0.95}]
 
 
 class ContentProtectionSystem:
-    """    Ultra-Advanced Enterprise Content Protection System
+    """
+    Ultra-Advanced Enterprise Content Protection System
     
     Revolutionary anti-piracy engine providing industrial-strength content
     protection with real-time monitoring, automated enforcement, and
@@ -273,7 +289,8 @@ class ContentProtectionSystem:
     - Photographers: Image theft detection, stock photo tracking, commercial use monitoring
     - Influencers: Brand content protection, sponsored content tracking, identity theft prevention
     - Comedians: Performance recording detection, script protection, venue compliance
-    """    
+    """
+    
     def __init__(self):
         self.settings = get_settings()
         self.logger = logging.getLogger(__name__)
@@ -305,14 +322,16 @@ class ContentProtectionSystem:
         self,
         request: ProtectionRequest
     ) -> ProtectionResult:
-        """        Set up comprehensive content protection with monitoring and enforcement
+        """
+        Set up comprehensive content protection with monitoring and enforcement
         
         Args:
             request: Protection configuration and requirements
             
         Returns:
             ProtectionResult: Complete protection setup results
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         protection_id = f"protect_{request.content_id}_{uuid.uuid4().hex[:8]}"
         
         try:
@@ -382,7 +401,8 @@ class ContentProtectionSystem:
         protection_id: str,
         scan_scope: str = "comprehensive"
     ) -> List[ThreatDetection]:
-        """        Detect content threats across all monitored platforms
+        """
+        Detect content threats across all monitored platforms
         
         Args:
             protection_id: Protection campaign identifier
@@ -390,7 +410,8 @@ class ContentProtectionSystem:
             
         Returns:
             List[ThreatDetection]: Detected threats with evidence
-        """        try:
+        """
+        try:
             campaign = self.active_campaigns.get(protection_id)
             if not campaign:
                 raise ValueError(f"Protection campaign not found: {protection_id}")
@@ -426,7 +447,8 @@ class ContentProtectionSystem:
         protection_id: str,
         request: ProtectionRequest
     ) -> ProtectionCampaign:
-        """Create comprehensive protection campaign"""        
+        """Create comprehensive protection campaign"""
+        
         # Get creator-specific protection profile
         creator_profile = self.creator_protection_profiles.get(request.creator_type, {})
         
@@ -476,24 +498,30 @@ class ContentProtectionSystem:
         )
     
     async def _setup_monitoring(self, campaign: ProtectionCampaign) -> str:
-        """Set up platform monitoring"""        self.logger.info(f"Setting up monitoring for campaign {campaign.campaign_id}")
+        """Set up platform monitoring"""
+        self.logger.info(f"Setting up monitoring for campaign {campaign.campaign_id}")
         return "active"
     
     async def _setup_fingerprinting(self, campaign: ProtectionCampaign):
-        """Set up content fingerprinting for detection"""        self.logger.info(f"Setting up fingerprinting for campaign {campaign.campaign_id}")
+        """Set up content fingerprinting for detection"""
+        self.logger.info(f"Setting up fingerprinting for campaign {campaign.campaign_id}")
     
     async def _configure_enforcement(self, campaign: ProtectionCampaign):
-        """Configure automated enforcement actions"""        self.logger.info(f"Configuring enforcement for campaign {campaign.campaign_id}")
+        """Configure automated enforcement actions"""
+        self.logger.info(f"Configuring enforcement for campaign {campaign.campaign_id}")
     
     async def _setup_revenue_tracking(self, campaign: ProtectionCampaign):
-        """Set up revenue impact tracking"""        self.logger.info(f"Setting up revenue tracking for campaign {campaign.campaign_id}")
+        """Set up revenue impact tracking"""
+        self.logger.info(f"Setting up revenue tracking for campaign {campaign.campaign_id}")
     
     async def _initial_threat_scan(self, campaign: ProtectionCampaign) -> List[ThreatDetection]:
-        """Perform initial threat scan"""        # Placeholder for initial threat scanning
+        """Perform initial threat scan"""
+        # Placeholder for initial threat scanning
         return []
     
     async def _calculate_protection_metrics(self, campaign: ProtectionCampaign) -> Dict[str, float]:
-        """Calculate protection effectiveness metrics"""        return {
+        """Calculate protection effectiveness metrics"""
+        return {
             "coverage_score": 0.95,
             "detection_accuracy": 0.98,
             "response_time": 30.0,  # minutes
@@ -506,7 +534,8 @@ class ContentProtectionSystem:
         platform: str,
         scan_scope: str
     ) -> List[ThreatDetection]:
-        """Scan specific platform for threats"""        threats = []
+        """Scan specific platform for threats"""
+        threats = []
         
         # Get platform monitor
         platform_type = self._get_platform_type(platform)
@@ -528,7 +557,8 @@ class ContentProtectionSystem:
         return threats
     
     async def _prioritize_threats(self, threats: List[ThreatDetection]) -> List[ThreatDetection]:
-        """Prioritize threats based on severity and impact"""        # Sort by threat level and similarity score
+        """Prioritize threats based on severity and impact"""
+        # Sort by threat level and similarity score
         return sorted(
             threats,
             key=lambda t: (t.threat_level.value, t.similarity_score),
@@ -541,7 +571,8 @@ class ContentProtectionSystem:
         scan_result: Dict[str, Any],
         platform: str
     ) -> ThreatDetection:
-        """Create threat detection from scan result"""        detection_id = f"threat_{campaign.campaign_id}_{uuid.uuid4().hex[:8]}"
+        """Create threat detection from scan result"""
+        detection_id = f"threat_{campaign.campaign_id}_{uuid.uuid4().hex[:8]}"
         
         return ThreatDetection(
             detection_id=detection_id,
@@ -566,26 +597,30 @@ class ContentProtectionSystem:
         )
     
     def _initialize_platform_monitors(self) -> Dict[PlatformType, PlatformMonitor]:
-        """Initialize platform-specific monitors"""        monitors = {}
+        """Initialize platform-specific monitors"""
+        monitors = {}
         for platform_type in PlatformType:
             monitors[platform_type] = PlatformMonitor(platform_type)
         return monitors
     
     def _load_legal_templates(self) -> Dict[str, Any]:
-        """Load legal document templates"""        return {
+        """Load legal document templates"""
+        return {
             "dmca_takedown": "DMCA takedown notice template",
             "cease_desist": "Cease and desist letter template",
             "legal_notice": "Legal notice template"
         }
     
     def _load_dmca_templates(self) -> Dict[str, Any]:
-        """Load DMCA-specific templates"""        return {
+        """Load DMCA-specific templates"""
+        return {
             "standard": "Standard DMCA template",
             "expedited": "Expedited DMCA template"
         }
     
     def _load_creator_protection_profiles(self) -> Dict[str, Any]:
-        """Load creator-specific protection profiles"""        return {
+        """Load creator-specific protection profiles"""
+        return {
             "musician": {
                 "default_platforms": ["spotify", "youtube", "soundcloud", "bandcamp"],
                 "priority_threats": ["streaming_piracy", "download_piracy"],
@@ -604,7 +639,8 @@ class ContentProtectionSystem:
         }
     
     def _get_platform_type(self, platform: str) -> PlatformType:
-        """Determine platform type from platform name"""        platform_mapping = {
+        """Determine platform type from platform name"""
+        platform_mapping = {
             "youtube": PlatformType.VIDEO_SHARING,
             "facebook": PlatformType.SOCIAL_MEDIA,
             "instagram": PlatformType.SOCIAL_MEDIA,
@@ -615,10 +651,12 @@ class ContentProtectionSystem:
         return platform_mapping.get(platform.lower(), PlatformType.SOCIAL_MEDIA)
     
     async def _generate_search_terms(self, campaign: ProtectionCampaign) -> List[str]:
-        """Generate search terms for content detection"""        return [f"content_{campaign.content_id}", campaign.creator_id]
+        """Generate search terms for content detection"""
+        return [f"content_{campaign.content_id}", campaign.creator_id]
     
     def _assess_threat_level(self, scan_result: Dict[str, Any]) -> ThreatLevel:
-        """Assess threat level based on scan results"""        similarity = scan_result.get("similarity", 0)
+        """Assess threat level based on scan results"""
+        similarity = scan_result.get("similarity", 0)
         if similarity > 0.95:
             return ThreatLevel.CRITICAL
         elif similarity > 0.85:
@@ -633,14 +671,16 @@ class ContentProtectionSystem:
         campaign: ProtectionCampaign,
         threats: List[ThreatDetection]
     ) -> List[str]:
-        """Generate protection recommendations"""        return [
+        """Generate protection recommendations"""
+        return [
             "Enable watermarking for enhanced protection",
             "Consider expanding monitoring to additional platforms",
             "Set up automated DMCA takedown for faster response"
         ]
     
     def _generate_next_actions(self, campaign: ProtectionCampaign) -> List[str]:
-        """Generate recommended next actions"""        return [
+        """Generate recommended next actions"""
+        return [
             "Review protection dashboard regularly",
             "Monitor threat detection alerts",
             "Update protection settings as needed"

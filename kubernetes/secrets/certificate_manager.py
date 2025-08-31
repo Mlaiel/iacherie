@@ -3,7 +3,8 @@ PKI and certificate management with automated renewal
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""import os
+"""
+import os
 import logging
 import json
 import threading
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 
 class CertificateType(Enum):
-    """Certificate types."""    SSL_TLS = "ssl_tls"
+    """Certificate types."""
+    SSL_TLS = "ssl_tls"
     CLIENT_AUTH = "client_auth"
     CODE_SIGNING = "code_signing"
     EMAIL = "email"
@@ -43,7 +45,8 @@ class CertificateType(Enum):
 
 
 class CertificateStatus(Enum):
-    """Certificate status."""    ACTIVE = "active"
+    """Certificate status."""
+    ACTIVE = "active"
     EXPIRED = "expired"
     REVOKED = "revoked"
     PENDING = "pending"
@@ -51,7 +54,8 @@ class CertificateStatus(Enum):
 
 
 class KeyType(Enum):
-    """Key types."""    RSA_2048 = "rsa_2048"
+    """Key types."""
+    RSA_2048 = "rsa_2048"
     RSA_4096 = "rsa_4096"
     ECDSA_P256 = "ecdsa_p256"
     ECDSA_P384 = "ecdsa_p384"
@@ -59,7 +63,8 @@ class KeyType(Enum):
 
 @dataclass
 class CertificateInfo:
-    """Certificate information."""    cert_id: str
+    """Certificate information."""
+    cert_id: str
     common_name: str
     certificate_type: CertificateType
     key_type: KeyType
@@ -80,7 +85,8 @@ class CertificateInfo:
 
 @dataclass
 class CertificateRequest:
-    """Certificate request configuration."""    common_name: str
+    """Certificate request configuration."""
+    common_name: str
     certificate_type: CertificateType = CertificateType.SSL_TLS
     key_type: KeyType = KeyType.RSA_2048
     subject: Dict[str, str] = field(default_factory=dict)
@@ -98,20 +104,24 @@ class CertificateRequest:
 
 
 class CertificateManager:
-    """    Enterprise certificate manager with automated PKI operations,
+    """
+    Enterprise certificate manager with automated PKI operations,
     Let's Encrypt integration, and certificate lifecycle management.
-    """    
+    """
+    
     def __init__(
         self,
         vault_manager: VaultManager,
         config: SecretsConfig = None
     ):
-        """        Initialize certificate manager.
+        """
+        Initialize certificate manager.
         
         Args:
             vault_manager: Configured VaultManager instance
             config: Optional secrets configuration
-        """        self.vault = vault_manager
+        """
+        self.vault = vault_manager
         self.config = config or SecretsConfig()
         self.security = SecurityUtils()
         self.notifications = NotificationUtils()
@@ -131,7 +141,8 @@ class CertificateManager:
         logger.info("CertificateManager initialized")
     
     def start_monitoring(self) -> None:
-        """Start certificate monitoring and auto-renewal."""        if self.is_monitoring:
+        """Start certificate monitoring and auto-renewal."""
+        if self.is_monitoring:
             logger.warning("Certificate monitoring is already running")
             return
         
@@ -144,7 +155,8 @@ class CertificateManager:
         logger.info("Certificate monitoring started")
     
     def stop_monitoring(self) -> None:
-        """Stop certificate monitoring."""        self.is_monitoring = False
+        """Stop certificate monitoring."""
+        self.is_monitoring = False
         if self.monitor_thread:
             self.monitor_thread.join(timeout=30)
         
@@ -159,14 +171,16 @@ class CertificateManager:
         self,
         request: CertificateRequest
     ) -> Optional[str]:
-        """        Generate new certificate.
+        """
+        Generate new certificate.
         
         Args:
             request: Certificate request configuration
             
         Returns:
             str: Certificate ID if successful
-        """        try:
+        """
+        try:
             cert_id = self._generate_cert_id()
             logger.info(f"Generating certificate {cert_id} for {request.common_name}")
             
@@ -252,7 +266,8 @@ class CertificateManager:
         cert_id: str,
         force: bool = False
     ) -> bool:
-        """        Renew certificate.
+        """
+        Renew certificate.
         
         Args:
             cert_id: Certificate ID to renew
@@ -260,7 +275,8 @@ class CertificateManager:
             
         Returns:
             bool: True if renewal successful
-        """        try:
+        """
+        try:
             cert_info = self.certificates.get(cert_id)
             if not cert_info:
                 logger.error(f"Certificate not found: {cert_id}")
@@ -363,7 +379,8 @@ class CertificateManager:
         cert_id: str,
         reason: str = "unspecified"
     ) -> bool:
-        """        Revoke certificate.
+        """
+        Revoke certificate.
         
         Args:
             cert_id: Certificate ID to revoke
@@ -371,7 +388,8 @@ class CertificateManager:
             
         Returns:
             bool: True if revocation successful
-        """        try:
+        """
+        try:
             cert_info = self.certificates.get(cert_id)
             if not cert_info:
                 logger.error(f"Certificate not found: {cert_id}")
@@ -413,14 +431,16 @@ class CertificateManager:
             return False
     
     def get_certificate(self, cert_id: str) -> Optional[Dict[str, Any]]:
-        """        Get certificate data.
+        """
+        Get certificate data.
         
         Args:
             cert_id: Certificate ID
             
         Returns:
             dict: Certificate data
-        """        try:
+        """
+        try:
             cert_info = self.certificates.get(cert_id)
             if not cert_info:
                 return None
@@ -446,14 +466,16 @@ class CertificateManager:
         self,
         status_filter: CertificateStatus = None
     ) -> List[Dict[str, Any]]:
-        """        List certificates.
+        """
+        List certificates.
         
         Args:
             status_filter: Optional status filter
             
         Returns:
             list: List of certificate information
-        """        certificates = []
+        """
+        certificates = []
         
         for cert_info in self.certificates.values():
             if status_filter and cert_info.status != status_filter:
@@ -475,14 +497,16 @@ class CertificateManager:
         return sorted(certificates, key=lambda x: x['not_after'] or '')
     
     def check_certificate_expiry(self, cert_id: str) -> Dict[str, Any]:
-        """        Check certificate expiry status.
+        """
+        Check certificate expiry status.
         
         Args:
             cert_id: Certificate ID
             
         Returns:
             dict: Expiry status information
-        """        cert_info = self.certificates.get(cert_id)
+        """
+        cert_info = self.certificates.get(cert_id)
         if not cert_info:
             return {'error': 'Certificate not found'}
         
@@ -509,14 +533,16 @@ class CertificateManager:
         }
     
     def validate_certificate_chain(self, cert_id: str) -> Dict[str, Any]:
-        """        Validate certificate chain.
+        """
+        Validate certificate chain.
         
         Args:
             cert_id: Certificate ID
             
         Returns:
             dict: Validation results
-        """        try:
+        """
+        try:
             cert_data = self.get_certificate(cert_id)
             if not cert_data:
                 return {'valid': False, 'error': 'Certificate not found'}
@@ -596,7 +622,8 @@ class CertificateManager:
         include_chain: bool = True,
         include_private_key: bool = False
     ) -> Optional[Dict[str, str]]:
-        """        Export certificate in various formats.
+        """
+        Export certificate in various formats.
         
         Args:
             cert_id: Certificate ID
@@ -606,7 +633,8 @@ class CertificateManager:
             
         Returns:
             dict: Exported certificate data
-        """        try:
+        """
+        try:
             cert_data = self.get_certificate(cert_id)
             if not cert_data:
                 return None
@@ -652,7 +680,8 @@ class CertificateManager:
         self,
         request: CertificateRequest
     ) -> Optional[Dict[str, str]]:
-        """Generate self-signed certificate."""        try:
+        """Generate self-signed certificate."""
+        try:
             # Generate private key
             if request.key_type in [KeyType.RSA_2048, KeyType.RSA_4096]:
                 key_size = 2048 if request.key_type == KeyType.RSA_2048 else 4096
@@ -751,7 +780,8 @@ class CertificateManager:
         self,
         request: CertificateRequest
     ) -> Optional[Dict[str, str]]:
-        """Generate CA-signed certificate."""        try:
+        """Generate CA-signed certificate."""
+        try:
             # Load CA certificate and key
             with open(request.ca_cert_path, 'rb') as f:
                 ca_cert = x509.load_pem_x509_certificate(f.read())
@@ -835,7 +865,8 @@ class CertificateManager:
         self,
         request: CertificateRequest
     ) -> Optional[Dict[str, str]]:
-        """Generate Let's Encrypt certificate."""        try:
+        """Generate Let's Encrypt certificate."""
+        try:
             # Initialize ACME client if needed
             if not self.acme_client:
                 self._initialize_acme_client(
@@ -921,7 +952,8 @@ class CertificateManager:
         email: str,
         staging: bool = False
     ) -> None:
-        """Initialize ACME client for Let's Encrypt."""        try:
+        """Initialize ACME client for Let's Encrypt."""
+        try:
             # ACME directory URL
             if staging:
                 directory_url = "https://acme-staging-v02.api.letsencrypt.org/directory"
@@ -958,7 +990,8 @@ class CertificateManager:
             self.acme_client = None
     
     def _complete_challenge(self, authz) -> None:
-        """Complete ACME challenge."""        # This is a simplified implementation
+        """Complete ACME challenge."""
+        # This is a simplified implementation
         # In a real implementation, you would need to:
         # 1. Set up HTTP challenge response
         # 2. Or configure DNS challenge
@@ -979,7 +1012,8 @@ class CertificateManager:
                 break
     
     def _monitoring_loop(self) -> None:
-        """Certificate monitoring loop."""        while self.is_monitoring:
+        """Certificate monitoring loop."""
+        while self.is_monitoring:
             try:
                 # Check all certificates for renewal needs
                 for cert_id, cert_info in self.certificates.items():
@@ -1022,7 +1056,8 @@ class CertificateManager:
                 time.sleep(60)  # Short sleep on error
     
     def _renewal_worker(self, cert_id: str) -> None:
-        """Certificate renewal worker."""        try:
+        """Certificate renewal worker."""
+        try:
             logger.info(f"Starting automatic renewal for certificate {cert_id}")
             success = self.renew_certificate(cert_id)
             
@@ -1040,7 +1075,8 @@ class CertificateManager:
         success: bool,
         error: str = None
     ) -> None:
-        """Send certificate renewal notification."""        try:
+        """Send certificate renewal notification."""
+        try:
             cert_info = self.certificates.get(cert_id)
             if not cert_info:
                 return
@@ -1064,7 +1100,8 @@ class CertificateManager:
         cert_id: str,
         reason: str
     ) -> None:
-        """Send certificate revocation notification."""        try:
+        """Send certificate revocation notification."""
+        try:
             cert_info = self.certificates.get(cert_id)
             if not cert_info:
                 return
@@ -1083,11 +1120,13 @@ class CertificateManager:
             logger.error(f"Failed to send revocation notification: {e}")
     
     def _generate_cert_id(self) -> str:
-        """Generate unique certificate ID."""        import secrets
+        """Generate unique certificate ID."""
+        import secrets
         return f"cert_{secrets.token_hex(8)}_{int(datetime.utcnow().timestamp())}"
     
     def _load_certificates(self) -> None:
-        """Load certificates from storage."""        try:
+        """Load certificates from storage."""
+        try:
             certs_file = Path(self.config.certificates_file)
             if not certs_file.exists():
                 return
@@ -1123,7 +1162,8 @@ class CertificateManager:
             logger.error(f"Failed to load certificates: {e}")
     
     def _save_certificates(self) -> None:
-        """Save certificates to storage."""        try:
+        """Save certificates to storage."""
+        try:
             certs_data = []
             
             for cert_info in self.certificates.values():
@@ -1158,7 +1198,8 @@ class CertificateManager:
 
 
 class InfluencerCertificateManager(CertificateManager):
-    """    Specialized certificate manager for IA Influencer Agent platform.
+    """
+    Specialized certificate manager for IA Influencer Agent platform.
     
     Handles certificates for:
     - Platform API endpoints (YouTube, Instagram, TikTok, Spotify, etc.)
@@ -1167,7 +1208,8 @@ class InfluencerCertificateManager(CertificateManager):
     - AI model API endpoints (OpenAI, Anthropic, Hugging Face)
     - Microservices communication
     - Admin dashboard and user interfaces
-    """    
+    """
+    
     def __init__(
         self,
         vault_manager: VaultManager,
@@ -1307,7 +1349,8 @@ class InfluencerCertificateManager(CertificateManager):
         use_lets_encrypt: bool = True,
         lets_encrypt_email: str = "admin@ia-influencer.com"
     ) -> Dict[str, Any]:
-        """        Setup all platform certificates for IA Influencer Agent.
+        """
+        Setup all platform certificates for IA Influencer Agent.
         
         Args:
             environment: Environment (production, staging, development)
@@ -1316,7 +1359,8 @@ class InfluencerCertificateManager(CertificateManager):
             
         Returns:
             dict: Setup results
-        """        try:
+        """
+        try:
             setup_results = {
                 'environment': environment,
                 'timestamp': datetime.utcnow().isoformat(),
@@ -1395,7 +1439,8 @@ class InfluencerCertificateManager(CertificateManager):
         compliance_level: str = "level_1",
         validity_days: int = 90
     ) -> Dict[str, Any]:
-        """        Setup PCI-DSS compliant certificates for payment processing.
+        """
+        Setup PCI-DSS compliant certificates for payment processing.
         
         Args:
             compliance_level: PCI compliance level (level_1, level_2, level_3, level_4)
@@ -1403,7 +1448,8 @@ class InfluencerCertificateManager(CertificateManager):
             
         Returns:
             dict: PCI certificate setup results
-        """        try:
+        """
+        try:
             pci_results = {
                 'compliance_level': compliance_level,
                 'validity_days': validity_days,
@@ -1517,14 +1563,16 @@ class InfluencerCertificateManager(CertificateManager):
         self,
         ai_providers: List[str] = None
     ) -> Dict[str, Any]:
-        """        Setup certificates for AI model API integrations.
+        """
+        Setup certificates for AI model API integrations.
         
         Args:
             ai_providers: List of AI providers (openai, anthropic, huggingface, etc.)
             
         Returns:
             dict: AI model certificate setup results
-        """        try:
+        """
+        try:
             if ai_providers is None:
                 ai_providers = ['openai', 'anthropic', 'huggingface', 'google_ai', 'aws_bedrock']
             
@@ -1635,14 +1683,16 @@ class InfluencerCertificateManager(CertificateManager):
         self,
         cdn_regions: List[str] = None
     ) -> Dict[str, Any]:
-        """        Setup certificates for content delivery network endpoints.
+        """
+        Setup certificates for content delivery network endpoints.
         
         Args:
             cdn_regions: List of CDN regions (us-east, eu-west, asia-pacific, etc.)
             
         Returns:
             dict: CDN certificate setup results
-        """        try:
+        """
+        try:
             if cdn_regions is None:
                 cdn_regions = ['us-east', 'eu-west', 'asia-pacific', 'global']
             
@@ -1719,14 +1769,16 @@ class InfluencerCertificateManager(CertificateManager):
         self,
         services: List[str] = None
     ) -> Dict[str, Any]:
-        """        Generate client certificates for microservice authentication.
+        """
+        Generate client certificates for microservice authentication.
         
         Args:
             services: List of microservice names
             
         Returns:
             dict: Microservice certificate generation results
-        """        try:
+        """
+        try:
             if services is None:
                 services = [
                     'user-service',
@@ -1811,11 +1863,13 @@ class InfluencerCertificateManager(CertificateManager):
             }
     
     def audit_platform_certificates(self) -> Dict[str, Any]:
-        """        Audit all platform certificates for compliance and security.
+        """
+        Audit all platform certificates for compliance and security.
         
         Returns:
             dict: Certificate audit results
-        """        try:
+        """
+        try:
             audit_results = {
                 'audit_id': f"platform_cert_audit_{int(datetime.utcnow().timestamp())}",
                 'timestamp': datetime.utcnow().isoformat(),
@@ -1907,7 +1961,8 @@ class InfluencerCertificateManager(CertificateManager):
         certificate_category: str = "all",
         emergency_rotation: bool = False
     ) -> Dict[str, Any]:
-        """        Rotate platform certificates by category.
+        """
+        Rotate platform certificates by category.
         
         Args:
             certificate_category: Category to rotate (payment, api, cdn, microservices, all)
@@ -1915,7 +1970,8 @@ class InfluencerCertificateManager(CertificateManager):
             
         Returns:
             dict: Certificate rotation results
-        """        try:
+        """
+        try:
             rotation_results = {
                 'rotation_id': f"platform_rotation_{int(datetime.utcnow().timestamp())}",
                 'category': certificate_category,
@@ -1992,7 +2048,8 @@ class InfluencerCertificateManager(CertificateManager):
         use_lets_encrypt: bool,
         lets_encrypt_email: str
     ) -> Dict[str, Any]:
-        """Setup API Gateway certificates."""        api_domains = [
+        """Setup API Gateway certificates."""
+        api_domains = [
             f"api{domain_suffix}.ia-influencer.com",
             f"gateway{domain_suffix}.ia-influencer.com",
             f"api-v1{domain_suffix}.ia-influencer.com",
@@ -2048,7 +2105,8 @@ class InfluencerCertificateManager(CertificateManager):
         use_lets_encrypt: bool,
         lets_encrypt_email: str
     ) -> Dict[str, Any]:
-        """Setup platform integration certificates."""        platforms = ['youtube', 'instagram', 'tiktok', 'spotify', 'twitter', 'linkedin', 'twitch']
+        """Setup platform integration certificates."""
+        platforms = ['youtube', 'instagram', 'tiktok', 'spotify', 'twitter', 'linkedin', 'twitch']
         results = {}
         
         for platform in platforms:
@@ -2108,7 +2166,8 @@ class InfluencerCertificateManager(CertificateManager):
         use_lets_encrypt: bool,
         lets_encrypt_email: str
     ) -> Dict[str, Any]:
-        """Setup payment processing certificates."""        payment_domains = [
+        """Setup payment processing certificates."""
+        payment_domains = [
             f"payments{domain_suffix}.ia-influencer.com",
             f"secure-pay{domain_suffix}.ia-influencer.com",
             f"pci-gateway{domain_suffix}.ia-influencer.com",
@@ -2169,7 +2228,8 @@ class InfluencerCertificateManager(CertificateManager):
         use_lets_encrypt: bool,
         lets_encrypt_email: str
     ) -> Dict[str, Any]:
-        """Setup AI model certificates."""        ai_domains = [
+        """Setup AI model certificates."""
+        ai_domains = [
             f"ai-api{domain_suffix}.ia-influencer.com",
             f"ml-models{domain_suffix}.ia-influencer.com",
             f"inference{domain_suffix}.ia-influencer.com",
@@ -2228,7 +2288,8 @@ class InfluencerCertificateManager(CertificateManager):
         use_lets_encrypt: bool,
         lets_encrypt_email: str
     ) -> Dict[str, Any]:
-        """Setup CDN certificates."""        cdn_domains = [
+        """Setup CDN certificates."""
+        cdn_domains = [
             f"cdn{domain_suffix}.ia-influencer.com",
             f"assets{domain_suffix}.ia-influencer.com",
             f"media{domain_suffix}.ia-influencer.com",
@@ -2283,7 +2344,8 @@ class InfluencerCertificateManager(CertificateManager):
         environment: str,
         domain_suffix: str
     ) -> Dict[str, Any]:
-        """Setup microservices certificates."""        services = [
+        """Setup microservices certificates."""
+        services = [
             'user-service',
             'content-service',
             'analytics-service',
@@ -2345,7 +2407,8 @@ class InfluencerCertificateManager(CertificateManager):
         return results
     
     def _setup_microservices_ca(self) -> Optional[str]:
-        """Setup or retrieve microservices CA certificate."""        try:
+        """Setup or retrieve microservices CA certificate."""
+        try:
             # Check if CA already exists
             ca_path = "ia-influencer/ca/microservices"
             existing_ca = self.vault.get_secret(ca_path)
@@ -2384,7 +2447,8 @@ class InfluencerCertificateManager(CertificateManager):
             return None
     
     def _perform_pci_compliance_checks(self, certificates: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform PCI compliance checks on payment certificates."""        compliance_results = {
+        """Perform PCI compliance checks on payment certificates."""
+        compliance_results = {
             'total_certificates': len(certificates),
             'compliant_certificates': 0,
             'non_compliant_certificates': 0,
@@ -2423,7 +2487,8 @@ class InfluencerCertificateManager(CertificateManager):
         return compliance_results
     
     def _check_pci_certificate_compliance(self, cert_info: CertificateInfo) -> bool:
-        """Check if certificate meets PCI-DSS requirements."""        try:
+        """Check if certificate meets PCI-DSS requirements."""
+        try:
             # Key size check
             if cert_info.key_type != KeyType.RSA_4096:
                 return False
@@ -2449,7 +2514,8 @@ class InfluencerCertificateManager(CertificateManager):
             return False
     
     def _filter_certificates_by_category(self, category: str) -> Dict[str, CertificateInfo]:
-        """Filter certificates by category."""        filtered_certs = {}
+        """Filter certificates by category."""
+        filtered_certs = {}
         
         for cert_id, cert_info in self.certificates.items():
             cert_category = self._get_certificate_category(cert_info)
@@ -2460,7 +2526,8 @@ class InfluencerCertificateManager(CertificateManager):
         return filtered_certs
     
     def _get_certificate_category(self, cert_info: CertificateInfo) -> str:
-        """Get certificate category based on metadata and domain."""        # Check metadata first
+        """Get certificate category based on metadata and domain."""
+        # Check metadata first
         if 'certificate_category' in cert_info.metadata:
             return cert_info.metadata['certificate_category']
         
@@ -2481,7 +2548,8 @@ class InfluencerCertificateManager(CertificateManager):
             return 'general'
     
     def _generate_security_issues(self, audit_results: Dict[str, Any]) -> List[str]:
-        """Generate security issues from audit results."""        issues = []
+        """Generate security issues from audit results."""
+        issues = []
         
         # High-level issues
         if audit_results['compliance_summary']['expired_certs'] > 0:
@@ -2499,7 +2567,8 @@ class InfluencerCertificateManager(CertificateManager):
         return issues
     
     def _generate_audit_recommendations(self, audit_results: Dict[str, Any]) -> List[str]:
-        """Generate recommendations from audit results."""        recommendations = []
+        """Generate recommendations from audit results."""
+        recommendations = []
         
         # Certificate-specific recommendations
         expired_count = audit_results['compliance_summary']['expired_certs']
@@ -2574,7 +2643,8 @@ class InfluencerCertificateManager(CertificateManager):
         use_lets_encrypt: bool,
         lets_encrypt_email: str
     ) -> Dict[str, Any]:
-        """Setup API gateway certificates."""        results = {}
+        """Setup API gateway certificates."""
+        results = {}
         
         for domain in self.platform_domains['api_gateway']:
             full_domain = f"{domain.replace('.ia-influencer.com', '')}{domain_suffix}.ia-influencer.com"
@@ -2619,7 +2689,8 @@ class InfluencerCertificateManager(CertificateManager):
         use_lets_encrypt: bool,
         lets_encrypt_email: str
     ) -> Dict[str, Any]:
-        """Setup platform integration certificates."""        results = {}
+        """Setup platform integration certificates."""
+        results = {}
         
         platforms = ['youtube_integration', 'instagram_integration', 'tiktok_integration', 'spotify_integration']
         
@@ -2671,7 +2742,8 @@ class InfluencerCertificateManager(CertificateManager):
         use_lets_encrypt: bool,
         lets_encrypt_email: str
     ) -> Dict[str, Any]:
-        """Setup payment processing certificates."""        results = {}
+        """Setup payment processing certificates."""
+        results = {}
         
         for domain in self.platform_domains['payment_processing']:
             full_domain = f"{domain.replace('.ia-influencer.com', '')}{domain_suffix}.ia-influencer.com"
@@ -2718,7 +2790,8 @@ class InfluencerCertificateManager(CertificateManager):
         use_lets_encrypt: bool,
         lets_encrypt_email: str
     ) -> Dict[str, Any]:
-        """Setup AI model certificates."""        results = {}
+        """Setup AI model certificates."""
+        results = {}
         
         for domain in self.platform_domains['ai_models']:
             full_domain = f"{domain.replace('.ia-influencer.com', '')}{domain_suffix}.ia-influencer.com"
@@ -2763,7 +2836,8 @@ class InfluencerCertificateManager(CertificateManager):
         use_lets_encrypt: bool,
         lets_encrypt_email: str
     ) -> Dict[str, Any]:
-        """Setup CDN certificates."""        results = {}
+        """Setup CDN certificates."""
+        results = {}
         
         for domain in self.platform_domains['cdn']:
             full_domain = f"{domain.replace('.ia-influencer.com', '')}{domain_suffix}.ia-influencer.com"
@@ -2806,7 +2880,8 @@ class InfluencerCertificateManager(CertificateManager):
         environment: str,
         domain_suffix: str
     ) -> Dict[str, Any]:
-        """Setup microservice certificates."""        results = {}
+        """Setup microservice certificates."""
+        results = {}
         
         services = [
             'user-service',
@@ -2860,7 +2935,8 @@ class InfluencerCertificateManager(CertificateManager):
         return results
     
     def _setup_microservices_ca(self) -> Optional[str]:
-        """Setup Certificate Authority for microservices."""        try:
+        """Setup Certificate Authority for microservices."""
+        try:
             # Check if CA already exists
             ca_cert_path = "certificates/microservices_ca"
             ca_data = self.vault.get_secret(ca_cert_path)
@@ -2896,7 +2972,8 @@ class InfluencerCertificateManager(CertificateManager):
             return None
     
     def _perform_pci_compliance_checks(self, certificates: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform PCI compliance checks on certificates."""        compliance_results = {
+        """Perform PCI compliance checks on certificates."""
+        compliance_results = {
             'total_certificates': len(certificates),
             'compliant_certificates': 0,
             'non_compliant_certificates': 0,
@@ -2932,7 +3009,8 @@ class InfluencerCertificateManager(CertificateManager):
         return compliance_results
     
     def _check_pci_certificate_compliance(self, cert_info: CertificateInfo) -> bool:
-        """Check if certificate meets PCI-DSS requirements."""        try:
+        """Check if certificate meets PCI-DSS requirements."""
+        try:
             # Key strength check
             if cert_info.key_type == KeyType.RSA_2048:
                 key_compliant = True
@@ -2961,7 +3039,8 @@ class InfluencerCertificateManager(CertificateManager):
             return False
     
     def _filter_certificates_by_category(self, category: str) -> Dict[str, CertificateInfo]:
-        """Filter certificates by category."""        if category == "all":
+        """Filter certificates by category."""
+        if category == "all":
             return self.certificates
         
         filtered_certs = {}
@@ -2983,7 +3062,8 @@ class InfluencerCertificateManager(CertificateManager):
         return filtered_certs
     
     def _generate_security_issues(self, audit_results: Dict[str, Any]) -> List[str]:
-        """Generate list of security issues from audit results."""        issues = []
+        """Generate list of security issues from audit results."""
+        issues = []
         
         summary = audit_results['compliance_summary']
         
@@ -3002,7 +3082,8 @@ class InfluencerCertificateManager(CertificateManager):
         return issues
     
     def _generate_audit_recommendations(self, audit_results: Dict[str, Any]) -> List[str]:
-        """Generate audit recommendations."""        recommendations = []
+        """Generate audit recommendations."""
+        recommendations = []
         
         summary = audit_results['compliance_summary']
         

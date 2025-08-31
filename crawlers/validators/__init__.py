@@ -37,7 +37,8 @@ Enterprise Features:
 - Content fingerprinting for copyright protection and duplicate detection
 - Platform compliance validation for Spotify, YouTube, Instagram, TikTok
 - Revenue optimization recommendations and monetization eligibility assessment
-"""from .content_validator import (
+"""
+from .content_validator import (
     ContentValidator,
     ContentType,
     ValidationResult,
@@ -440,7 +441,8 @@ def create_enterprise_validation_suite(
     enable_security_validation: bool = True,
     cache_size: int = 10000
 ) -> Dict[str, Any]:
-    """    Create complete enterprise validation suite with all validators.
+    """
+    Create complete enterprise validation suite with all validators.
     
     Args:
         enable_ai_analysis: Enable AI-powered analysis features
@@ -451,7 +453,8 @@ def create_enterprise_validation_suite(
         
     Returns:
         Dict containing all configured validators
-    """    suite = {
+    """
+    suite = {
         "content_validator": create_content_validator_with_config(
             enable_ai_analysis=enable_ai_analysis,
             security_level="enterprise",
@@ -507,7 +510,8 @@ def validate_creator_content_comprehensive(
     include_business: bool = True,
     include_platform_compliance: bool = True
 ) -> Dict[str, Any]:
-    """    Comprehensive creator content validation across all validators.
+    """
+    Comprehensive creator content validation across all validators.
     
     Args:
         content: Content to validate
@@ -522,7 +526,8 @@ def validate_creator_content_comprehensive(
         
     Returns:
         Dict containing comprehensive validation results
-    """    results = {
+    """
+    results = {
         "overall_valid": True,
         "overall_score": 0.0,
         "processing_time_ms": 0.0,
@@ -641,7 +646,8 @@ def validate_creator_content_comprehensive(
 
 
 def get_validation_system_metrics() -> Dict[str, Any]:
-    """Get comprehensive validation system metrics and health information"""    metrics = {
+    """Get comprehensive validation system metrics and health information"""
+    metrics = {
         "version": __version__,
         "available_validators": [
             "ContentValidator",
@@ -698,7 +704,8 @@ def get_validation_system_metrics() -> Dict[str, Any]:
 
 
 def get_validation_system_info() -> Dict[str, Any]:
-    """Get detailed validation system information"""    return {
+    """Get detailed validation system information"""
+    return {
         "system_name": "IA Influencer Agent - Advanced Validation System",
         "version": __version__,
         "author": __author__,

@@ -1,7 +1,8 @@
 """User Seeds Manager - User Management and Role Configuration
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: All rights reserved - Unauthorized use strictly prohibited
-"""from typing import Dict, List, Any, Optional, Union, Set, Tuple
+"""
+from typing import Dict, List, Any, Optional, Union, Set, Tuple
 import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
@@ -17,7 +18,8 @@ logger = logging.getLogger(__name__)
 
 
 class UserRole(str, Enum):
-    """User roles in the IA Influencer Agent platform."""    SUPER_ADMIN = "super_admin"
+    """User roles in the IA Influencer Agent platform."""
+    SUPER_ADMIN = "super_admin"
     PLATFORM_ADMIN = "platform_admin"
     CONTENT_MODERATOR = "content_moderator"
     CREATOR = "creator"
@@ -32,7 +34,8 @@ class UserRole(str, Enum):
 
 
 class CreatorTier(str, Enum):
-    """Creator tiers based on performance and engagement."""    ROOKIE = "rookie"
+    """Creator tiers based on performance and engagement."""
+    ROOKIE = "rookie"
     RISING = "rising"
     ESTABLISHED = "established"
     INFLUENCER = "influencer"
@@ -42,7 +45,8 @@ class CreatorTier(str, Enum):
 
 
 class AccountStatus(str, Enum):
-    """User account status types."""    ACTIVE = "active"
+    """User account status types."""
+    ACTIVE = "active"
     PENDING_VERIFICATION = "pending_verification"
     SUSPENDED = "suspended"
     BANNED = "banned"
@@ -53,7 +57,8 @@ class AccountStatus(str, Enum):
 
 
 class SubscriptionTier(str, Enum):
-    """Subscription tiers for platform access."""    FREE = "free"
+    """Subscription tiers for platform access."""
+    FREE = "free"
     BASIC = "basic"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
@@ -61,7 +66,8 @@ class SubscriptionTier(str, Enum):
 
 
 class ContentCreatorType(str, Enum):
-    """Creator specialization types."""    MUSICIAN = "musician"
+    """Creator specialization types."""
+    MUSICIAN = "musician"
     BLOGGER = "blogger" 
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -76,7 +82,8 @@ class ContentCreatorType(str, Enum):
 
 
 class PlatformIntegration(str, Enum):
-    """Supported platform integrations."""    SPOTIFY = "spotify"
+    """Supported platform integrations."""
+    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -91,7 +98,8 @@ class PlatformIntegration(str, Enum):
 
 
 class SecurityLevel(str, Enum):
-    """User security levels."""    BASIC = "basic"
+    """User security levels."""
+    BASIC = "basic"
     ENHANCED = "enhanced"
     ENTERPRISE = "enterprise"
     MAXIMUM = "maximum"
@@ -99,7 +107,8 @@ class SecurityLevel(str, Enum):
 
 @dataclass
 class UserPermissions:
-    """User permission configuration."""    content_creation: bool = True
+    """User permission configuration."""
+    content_creation: bool = True
     content_editing: bool = True
     content_deletion: bool = False
     analytics_access: bool = True
@@ -117,7 +126,8 @@ class UserPermissions:
 
 @dataclass
 class CreatorMetrics:
-    """Creator performance metrics."""    total_content_count: int = 0
+    """Creator performance metrics."""
+    total_content_count: int = 0
     total_views: int = 0
     total_likes: int = 0
     total_shares: int = 0
@@ -129,7 +139,8 @@ class CreatorMetrics:
 
 
 class UserSeedsManager:
-    """    Enterprise-grade user seeds manager for comprehensive user management and role configuration.
+    """
+    Enterprise-grade user seeds manager for comprehensive user management and role configuration.
     
     Handles:
     - Multi-tier user roles and permissions
@@ -139,9 +150,11 @@ class UserSeedsManager:
     - Subscription and billing configurations
     - Authentication and authorization systems
     - User lifecycle and onboarding flows
-    """    
+    """
+    
     def __init__(self):
-        """Initialize user seeds manager with enterprise configurations."""        self.user_roles = {}
+        """Initialize user seeds manager with enterprise configurations."""
+        self.user_roles = {}
         self.permission_sets = {}
         self.creator_configurations = {}
         self.authentication_settings = {}
@@ -152,7 +165,8 @@ class UserSeedsManager:
         self.compliance_settings = {}
         
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize all user management seed data with full enterprise support."""        logger.info("Initializing comprehensive user management seeds data...")
+        """Initialize all user management seed data with full enterprise support."""
+        logger.info("Initializing comprehensive user management seeds data...")
         start_time = datetime.now(timezone.utc)
         
         results = {}
@@ -237,7 +251,8 @@ class UserSeedsManager:
             raise
     
     async def _initialize_user_roles(self) -> Dict[str, Any]:
-        """Initialize comprehensive user roles and hierarchies."""        user_roles = {
+        """Initialize comprehensive user roles and hierarchies."""
+        user_roles = {
             # Administrative Roles
             'super_admin': {
                 'role_name': 'Super Administrator',
@@ -553,7 +568,8 @@ class UserSeedsManager:
         }
     
     async def _initialize_permission_sets(self) -> Dict[str, Any]:
-        """Initialize permission sets for different user roles."""        permission_sets = {
+        """Initialize permission sets for different user roles."""
+        permission_sets = {
             'content_permissions': {
                 'content_create': {
                     'description': 'Create new content',
@@ -729,7 +745,8 @@ class UserSeedsManager:
         }
     
     async def _initialize_creator_configurations(self) -> Dict[str, Any]:
-        """Initialize creator tier configurations and progression systems."""        creator_configs = {
+        """Initialize creator tier configurations and progression systems."""
+        creator_configs = {
             'creator_tiers': {
                 'rookie': {
                     'tier_name': 'Rookie Creator',
@@ -960,7 +977,8 @@ class UserSeedsManager:
         }
     
     async def _initialize_authentication_settings(self) -> Dict[str, Any]:
-        """Initialize authentication and security settings for users."""        auth_settings = {
+        """Initialize authentication and security settings for users."""
+        auth_settings = {
             'authentication_methods': {
                 'email_password': {
                     'enabled': True,
@@ -1134,7 +1152,8 @@ class UserSeedsManager:
         }
     
     async def _initialize_subscription_tiers(self) -> Dict[str, Any]:
-        """Initialize subscription tier configurations and pricing."""        subscription_tiers = {
+        """Initialize subscription tier configurations and pricing."""
+        subscription_tiers = {
             'free_tier': {
                 'tier_name': 'Free',
                 'tier_type': SubscriptionTier.FREE,
@@ -1313,7 +1332,8 @@ class UserSeedsManager:
         }
     
     async def _initialize_verification_systems(self) -> Dict[str, Any]:
-        """Initialize user verification systems and processes."""        verification_systems = {
+        """Initialize user verification systems and processes."""
+        verification_systems = {
             'identity_verification': {
                 'verification_levels': {
                     'email_only': {
@@ -1450,7 +1470,8 @@ class UserSeedsManager:
         }
     
     async def _initialize_onboarding_flows(self) -> Dict[str, Any]:
-        """Initialize user onboarding flows and experiences."""        onboarding_flows = {
+        """Initialize user onboarding flows and experiences."""
+        onboarding_flows = {
             'new_user_onboarding': {
                 'registration_flow': {
                     'steps': [
@@ -1557,7 +1578,8 @@ class UserSeedsManager:
         }
     
     async def _initialize_user_analytics(self) -> Dict[str, Any]:
-        """Initialize user analytics and behavior tracking configurations."""        user_analytics = {
+        """Initialize user analytics and behavior tracking configurations."""
+        user_analytics = {
             'user_behavior_tracking': {
                 'engagement_metrics': [
                     'session_duration',
@@ -1689,7 +1711,8 @@ class UserSeedsManager:
         }
     
     async def reset(self) -> Dict[str, Any]:
-        """Reset all user management seed data (use with caution)."""        logger.warning("Resetting user management seeds data...")
+        """Reset all user management seed data (use with caution)."""
+        logger.warning("Resetting user management seeds data...")
         
         self.user_roles.clear()
         self.permission_sets.clear()

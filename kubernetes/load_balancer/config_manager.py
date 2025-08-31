@@ -10,7 +10,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import yaml
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ServiceConfiguration:
-    """Service configuration for load balancing"""    name: str
+    """Service configuration for load balancing"""
+    name: str
     port: int
     instances: int
     health_check_path: str = "/health"
@@ -50,7 +52,8 @@ class ServiceConfiguration:
 
 @dataclass
 class LoadBalancerConfiguration:
-    """Complete load balancer configuration"""    version: str
+    """Complete load balancer configuration"""
+    version: str
     environment: str
     created_at: datetime
     updated_at: datetime
@@ -64,12 +67,14 @@ class LoadBalancerConfiguration:
 
 
 class ConfigurationManager:
-    """    Enterprise Configuration Manager for Load Balancer
+    """
+    Enterprise Configuration Manager for Load Balancer
     
     Provides centralized configuration management, validation,
     template rendering, and dynamic updates for all load balancing
     components in the IA Influencer Agent platform.
-    """    
+    """
+    
     def __init__(self, config_dir: str = "/etc/ia-influencer/load-balancer"):
         self.config_dir = Path(config_dir)
         self.templates_dir = self.config_dir / "templates"
@@ -95,7 +100,8 @@ class ConfigurationManager:
         logger.info("Configuration Manager initialized")
     
     async def initialize(self) -> None:
-        """Initialize configuration manager"""        try:
+        """Initialize configuration manager"""
+        try:
             logger.info("Initializing Configuration Manager...")
             
             # Create directories
@@ -120,7 +126,8 @@ class ConfigurationManager:
             raise
     
     async def _create_directories(self) -> None:
-        """Create necessary directories"""        directories = [
+        """Create necessary directories"""
+        directories = [
             self.config_dir,
             self.templates_dir,
             self.schemas_dir,
@@ -132,7 +139,8 @@ class ConfigurationManager:
             logger.debug(f"Directory created/verified: {directory}")
     
     async def _initialize_templates(self) -> None:
-        """Initialize Jinja2 template environment"""        self.jinja_env = Environment(
+        """Initialize Jinja2 template environment"""
+        self.jinja_env = Environment(
             loader=FileSystemLoader(str(self.templates_dir)),
             autoescape=False,
             trim_blocks=True,
@@ -145,7 +153,8 @@ class ConfigurationManager:
         logger.info("Template engine initialized")
     
     async def _create_default_templates(self) -> None:
-        """Create default configuration templates"""        templates = {
+        """Create default configuration templates"""
+        templates = {
             "nginx.conf.j2": self._get_nginx_template(),
             "haproxy.cfg.j2": self._get_haproxy_template(),
             "envoy.yaml.j2": self._get_envoy_template(),
@@ -160,7 +169,8 @@ class ConfigurationManager:
                 logger.debug(f"Created template: {template_name}")
     
     def _get_nginx_template(self) -> str:
-        """Get Nginx configuration template"""        return """# Nginx Configuration for IA Influencer Agent Platform
+        """Get Nginx configuration template"""
+        return """# Nginx Configuration for IA Influencer Agent Platform
 # Generated at {{ generated_at }}
 
 user nginx;
@@ -291,9 +301,11 @@ http {
         }
     }
 }
-"""    
+"""
+    
     def _get_haproxy_template(self) -> str:
-        """Get HAProxy configuration template"""        return """# HAProxy Configuration for IA Influencer Agent Platform
+        """Get HAProxy configuration template"""
+        return """# HAProxy Configuration for IA Influencer Agent Platform
 # Generated at {{ generated_at }}
 
 global
@@ -386,9 +398,11 @@ backend {{ service_name }}_backend
 # Default backend
 backend api_backend
     http-request return status 404 content-type "application/json" string '{"error":"Not Found","code":404}'
-"""    
+"""
+    
     def _get_envoy_template(self) -> str:
-        """Get Envoy configuration template"""        return """# Envoy Configuration for IA Influencer Agent Platform
+        """Get Envoy configuration template"""
+        return """# Envoy Configuration for IA Influencer Agent Platform
 # Generated at {{ generated_at }}
 
 admin:
@@ -469,9 +483,11 @@ static_resources:
         path: "{{ service.health_check_path }}"
   {% endif %}
   {% endfor %}
-"""    
+"""
+    
     def _get_ssl_template(self) -> str:
-        """Get SSL configuration template"""        return """# SSL Configuration for IA Influencer Agent Platform
+        """Get SSL configuration template"""
+        return """# SSL Configuration for IA Influencer Agent Platform
 # Generated at {{ generated_at }}
 
 {% if ssl_config.enabled %}
@@ -500,9 +516,11 @@ HSTS_ENABLED={{ ssl_config.hsts_enabled | default(true) | lower }}
 HSTS_MAX_AGE={{ ssl_config.hsts_max_age | default(31536000) }}
 HSTS_INCLUDE_SUBDOMAINS={{ ssl_config.hsts_include_subdomains | default(true) | lower }}
 {% endif %}
-"""    
+"""
+    
     async def _load_schemas(self) -> None:
-        """Load JSON schemas for validation"""        # Create default schemas if they don't exist
+        """Load JSON schemas for validation"""
+        # Create default schemas if they don't exist
         await self._create_default_schemas()
         
         # Load schemas
@@ -519,7 +537,8 @@ HSTS_INCLUDE_SUBDOMAINS={{ ssl_config.hsts_include_subdomains | default(true) | 
         logger.info(f"Loaded {len(self.schemas)} validation schemas")
     
     async def _create_default_schemas(self) -> None:
-        """Create default JSON schemas"""        service_schema = {
+        """Create default JSON schemas"""
+        service_schema = {
             "type": "object",
             "properties": {
                 "name": {"type": "string"},
@@ -575,7 +594,8 @@ HSTS_INCLUDE_SUBDOMAINS={{ ssl_config.hsts_include_subdomains | default(true) | 
                 logger.debug(f"Created schema: {schema_name}")
     
     async def _load_configuration(self) -> None:
-        """Load or create configuration"""        if self.config_file.exists():
+        """Load or create configuration"""
+        if self.config_file.exists():
             try:
                 with open(self.config_file, 'r') as f:
                     config_data = yaml.safe_load(f)
@@ -599,7 +619,8 @@ HSTS_INCLUDE_SUBDOMAINS={{ ssl_config.hsts_include_subdomains | default(true) | 
             await self._create_default_configuration()
     
     async def _create_default_configuration(self) -> None:
-        """Create default configuration"""        logger.info("Creating default configuration...")
+        """Create default configuration"""
+        logger.info("Creating default configuration...")
         
         config_data = {
             "version": "1.0.0",
@@ -747,7 +768,8 @@ HSTS_INCLUDE_SUBDOMAINS={{ ssl_config.hsts_include_subdomains | default(true) | 
         logger.info("Default configuration created")
     
     def _dict_to_config(self, config_data: Dict[str, Any]) -> LoadBalancerConfiguration:
-        """Convert dictionary to configuration object"""        services = {}
+        """Convert dictionary to configuration object"""
+        services = {}
         for service_name, service_data in config_data.get("services", {}).items():
             services[service_name] = ServiceConfiguration(**service_data)
         
@@ -766,7 +788,8 @@ HSTS_INCLUDE_SUBDOMAINS={{ ssl_config.hsts_include_subdomains | default(true) | 
         )
     
     def _config_to_dict(self, config: LoadBalancerConfiguration) -> Dict[str, Any]:
-        """Convert configuration object to dictionary"""        services = {}
+        """Convert configuration object to dictionary"""
+        services = {}
         for service_name, service in config.services.items():
             services[service_name] = asdict(service)
         
@@ -783,11 +806,13 @@ HSTS_INCLUDE_SUBDOMAINS={{ ssl_config.hsts_include_subdomains | default(true) | 
         }
     
     def _calculate_config_hash(self, config_data: Dict[str, Any]) -> str:
-        """Calculate hash of configuration data"""        config_str = json.dumps(config_data, sort_keys=True)
+        """Calculate hash of configuration data"""
+        config_str = json.dumps(config_data, sort_keys=True)
         return hashlib.sha256(config_str.encode()).hexdigest()
     
     async def save_configuration(self, config: LoadBalancerConfiguration) -> bool:
-        """Save configuration to file"""        try:
+        """Save configuration to file"""
+        try:
             # Create backup of current configuration
             await self._backup_configuration()
             
@@ -825,7 +850,8 @@ HSTS_INCLUDE_SUBDOMAINS={{ ssl_config.hsts_include_subdomains | default(true) | 
             return False
     
     async def _backup_configuration(self) -> None:
-        """Backup current configuration"""        if self.config_file.exists():
+        """Backup current configuration"""
+        if self.config_file.exists():
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             backup_file = self.backups_dir / f"config_{timestamp}.yaml"
             shutil.copy2(self.config_file, backup_file)
@@ -837,7 +863,8 @@ HSTS_INCLUDE_SUBDOMAINS={{ ssl_config.hsts_include_subdomains | default(true) | 
                     old_backup.unlink()
     
     async def generate_configurations(self) -> Dict[str, str]:
-        """Generate configuration files for all load balancers"""        if not self.current_config:
+        """Generate configuration files for all load balancers"""
+        if not self.current_config:
             raise ValueError("No configuration loaded")
         
         generated_configs = {}
@@ -876,7 +903,8 @@ HSTS_INCLUDE_SUBDOMAINS={{ ssl_config.hsts_include_subdomains | default(true) | 
             raise
     
     async def validate_configuration(self, config_data: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """Validate configuration data"""        errors = []
+        """Validate configuration data"""
+        errors = []
         
         try:
             # Schema validation
@@ -916,16 +944,19 @@ HSTS_INCLUDE_SUBDOMAINS={{ ssl_config.hsts_include_subdomains | default(true) | 
             return False, errors
     
     async def add_config_watcher(self, callback: callable) -> None:
-        """Add configuration change watcher"""        self.config_watchers.append(callback)
+        """Add configuration change watcher"""
+        self.config_watchers.append(callback)
         logger.debug(f"Added configuration watcher: {callback.__name__}")
     
     async def remove_config_watcher(self, callback: callable) -> None:
-        """Remove configuration change watcher"""        if callback in self.config_watchers:
+        """Remove configuration change watcher"""
+        if callback in self.config_watchers:
             self.config_watchers.remove(callback)
             logger.debug(f"Removed configuration watcher: {callback.__name__}")
     
     async def _notify_config_watchers(self) -> None:
-        """Notify all configuration watchers"""        for callback in self.config_watchers:
+        """Notify all configuration watchers"""
+        for callback in self.config_watchers:
             try:
                 if asyncio.iscoroutinefunction(callback):
                     await callback(self.current_config)
@@ -935,12 +966,14 @@ HSTS_INCLUDE_SUBDOMAINS={{ ssl_config.hsts_include_subdomains | default(true) | 
                 logger.error(f"Error in config watcher {callback.__name__}: {e}")
     
     async def _start_config_watching(self) -> None:
-        """Start watching configuration file for changes"""        self.is_watching = True
+        """Start watching configuration file for changes"""
+        self.is_watching = True
         self.watch_task = asyncio.create_task(self._config_watch_loop())
         logger.info("Configuration file watching started")
     
     async def _config_watch_loop(self) -> None:
-        """Configuration file watch loop"""        while self.is_watching:
+        """Configuration file watch loop"""
+        while self.is_watching:
             try:
                 if self.config_file.exists():
                     # Check if file has changed
@@ -970,23 +1003,27 @@ HSTS_INCLUDE_SUBDOMAINS={{ ssl_config.hsts_include_subdomains | default(true) | 
                 await asyncio.sleep(10)
     
     async def get_configuration(self) -> Optional[LoadBalancerConfiguration]:
-        """Get current configuration"""        return self.current_config
+        """Get current configuration"""
+        return self.current_config
     
     async def get_service_configuration(self, service_name: str) -> Optional[ServiceConfiguration]:
-        """Get configuration for a specific service"""        if self.current_config and service_name in self.current_config.services:
+        """Get configuration for a specific service"""
+        if self.current_config and service_name in self.current_config.services:
             return self.current_config.services[service_name]
         return None
     
     async def update_service_configuration(self, service_name: str, 
                                          service_config: ServiceConfiguration) -> bool:
-        """Update configuration for a specific service"""        if not self.current_config:
+        """Update configuration for a specific service"""
+        if not self.current_config:
             return False
         
         self.current_config.services[service_name] = service_config
         return await self.save_configuration(self.current_config)
     
     async def shutdown(self) -> None:
-        """Shutdown configuration manager"""        try:
+        """Shutdown configuration manager"""
+        try:
             logger.info("Shutting down Configuration Manager...")
             
             self.is_watching = False

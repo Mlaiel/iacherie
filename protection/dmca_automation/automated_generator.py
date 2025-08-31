@@ -8,7 +8,8 @@ Email: mlaiel@live.de
 
 ⚠️ COPYRIGHT WARNING ⚠️
 Unauthorized copying or distribution prohibited. All rights reserved © 2025 Fahed Mlaiel
-"""import asyncio
+"""
+import asyncio
 import logging
 import uuid
 from datetime import datetime, timezone, timedelta
@@ -27,14 +28,16 @@ logger = logging.getLogger(__name__)
 
 
 class NoticeComplexity(Enum):
-    """Notice generation complexity levels"""    SIMPLE = "simple"
+    """Notice generation complexity levels"""
+    SIMPLE = "simple"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
     LEGAL_GRADE = "legal_grade"
 
 
 class GenerationStrategy(Enum):
-    """AI generation strategies"""    TEMPLATE_BASED = "template_based"
+    """AI generation strategies"""
+    TEMPLATE_BASED = "template_based"
     AI_GENERATED = "ai_generated" 
     HYBRID_ENHANCED = "hybrid_enhanced"
     LEGAL_REVIEWED = "legal_reviewed"
@@ -42,7 +45,8 @@ class GenerationStrategy(Enum):
 
 @dataclass
 class GenerationRequest:
-    """DMCA notice generation request"""    content_id: str
+    """DMCA notice generation request"""
+    content_id: str
     copyright_owner: str
     owner_contact: Dict[str, str]
     infringing_urls: List[str]
@@ -60,7 +64,8 @@ class GenerationRequest:
 
 @dataclass
 class GenerationResult:
-    """Generation result with validation metrics"""    success: bool
+    """Generation result with validation metrics"""
+    success: bool
     notice_id: str
     generation_time: float
     legal_compliance_score: float
@@ -73,7 +78,8 @@ class GenerationResult:
 
 
 class AutomatedNoticeGenerator:
-    """    Advanced AI-powered DMCA notice generator with legal compliance validation
+    """
+    Advanced AI-powered DMCA notice generator with legal compliance validation
     
     Features:
     - Multi-platform optimization
@@ -82,9 +88,11 @@ class AutomatedNoticeGenerator:
     - Evidence integration
     - Quality validation
     - Batch processing
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize automated notice generator"""        self.config = config or {}
+        """Initialize automated notice generator"""
+        self.config = config or {}
         self.db = get_database()
         self.template_manager = TemplateManager(config)
         self.platform_integrator = PlatformIntegrator(config)
@@ -113,14 +121,16 @@ class AutomatedNoticeGenerator:
         }
     
     async def generate_notice(self, request: GenerationRequest) -> GenerationResult:
-        """        Generate comprehensive DMCA takedown notice
+        """
+        Generate comprehensive DMCA takedown notice
         
         Args:
             request: Generation request with all required parameters
             
         Returns:
             GenerationResult with validation metrics and generated notice
-        """        start_time = datetime.now(timezone.utc)
+        """
+        start_time = datetime.now(timezone.utc)
         notice_id = str(uuid.uuid4())
         
         try:
@@ -207,14 +217,16 @@ class AutomatedNoticeGenerator:
     
     async def generate_batch_notices(self, 
                                    requests: List[GenerationRequest]) -> List[GenerationResult]:
-        """        Generate multiple DMCA notices in batch with optimization
+        """
+        Generate multiple DMCA notices in batch with optimization
         
         Args:
             requests: List of generation requests
             
         Returns:
             List of generation results
-        """        self.logger.info(f"Starting batch generation for {len(requests)} notices")
+        """
+        self.logger.info(f"Starting batch generation for {len(requests)} notices")
         
         # Group requests by platform for optimization
         platform_groups = await self._group_requests_by_platform(requests)
@@ -255,7 +267,8 @@ class AutomatedNoticeGenerator:
     async def enhance_existing_notice(self, 
                                     notice_id: str, 
                                     enhancement_type: str = "legal_review") -> GenerationResult:
-        """        Enhance existing notice with AI improvements
+        """
+        Enhance existing notice with AI improvements
         
         Args:
             notice_id: ID of existing notice
@@ -263,7 +276,8 @@ class AutomatedNoticeGenerator:
             
         Returns:
             Enhanced notice generation result
-        """        try:
+        """
+        try:
             self.logger.info(f"Enhancing notice: {notice_id}, type: {enhancement_type}")
             
             # Retrieve existing notice
@@ -310,16 +324,19 @@ class AutomatedNoticeGenerator:
     
     async def get_generation_analytics(self, 
                                      time_range: Optional[Dict[str, datetime]] = None) -> Dict[str, Any]:
-        """        Get comprehensive generation analytics and metrics
+        """
+        Get comprehensive generation analytics and metrics
         
         Args:
             time_range: Optional time range filter
             
         Returns:
             Analytics data with performance metrics
-        """        try:
+        """
+        try:
             # Query generation statistics from database
-            analytics_query = """                SELECT 
+            analytics_query = """
+                SELECT 
                     COUNT(*) as total_notices,
                     AVG(generation_time) as avg_generation_time,
                     AVG(legal_compliance_score) as avg_compliance_score,
@@ -333,7 +350,8 @@ class AutomatedNoticeGenerator:
                 WHERE created_at >= %s AND created_at <= %s
                 GROUP BY generation_strategy, jurisdiction, DATE(created_at)
                 ORDER BY generation_date DESC
-            """            
+            """
+            
             # Set default time range if not provided
             if not time_range:
                 time_range = {
@@ -403,7 +421,8 @@ class AutomatedNoticeGenerator:
     # Private helper methods
     
     async def _validate_generation_request(self, request: GenerationRequest) -> Dict[str, Any]:
-        """Validate generation request parameters"""        errors = []
+        """Validate generation request parameters"""
+        errors = []
         
         # Validate required fields
         if not request.content_id:
@@ -436,7 +455,8 @@ class AutomatedNoticeGenerator:
                                            infringing_urls: List[str],
                                            evidence_urls: List[str],
                                            original_url: str) -> Dict[str, Any]:
-        """Analyze infringement evidence using AI"""        evidence = []
+        """Analyze infringement evidence using AI"""
+        evidence = []
         
         # Analyze each infringing URL
         for url in infringing_urls:
@@ -465,7 +485,8 @@ class AutomatedNoticeGenerator:
     async def _select_generation_strategy(self, 
                                         request: GenerationRequest,
                                         evidence_analysis: Dict[str, Any]) -> GenerationStrategy:
-        """Select optimal generation strategy based on request complexity"""        # Complex cases require legal review
+        """Select optimal generation strategy based on request complexity"""
+        # Complex cases require legal review
         if (request.complexity == NoticeComplexity.LEGAL_GRADE or 
             len(request.infringing_urls) > 10 or 
             evidence_analysis['evidence_strength'] < 0.5):
@@ -486,7 +507,8 @@ class AutomatedNoticeGenerator:
     async def _generate_template_based_notice(self, 
                                             request: GenerationRequest,
                                             evidence_analysis: Dict[str, Any]) -> TakedownNotice:
-        """Generate notice using template-based approach"""        template = await self.template_manager.get_template(
+        """Generate notice using template-based approach"""
+        template = await self.template_manager.get_template(
             template_type="dmca_takedown",
             jurisdiction=request.jurisdiction,
             platform=evidence_analysis['platforms_involved'][0] if evidence_analysis['platforms_involved'] else "generic"
@@ -522,7 +544,8 @@ class AutomatedNoticeGenerator:
     async def _generate_ai_notice(self, 
                                 request: GenerationRequest,
                                 evidence_analysis: Dict[str, Any]) -> TakedownNotice:
-        """Generate notice using AI models"""        # Simulate AI-generated content (would use actual models)
+        """Generate notice using AI models"""
+        # Simulate AI-generated content (would use actual models)
         ai_content = f"""DMCA TAKEDOWN NOTICE
 
 To: Platform Copyright Team
@@ -571,7 +594,8 @@ Date: {datetime.now(timezone.utc).strftime("%Y-%m-%d")}
     async def _generate_hybrid_notice(self, 
                                     request: GenerationRequest,
                                     evidence_analysis: Dict[str, Any]) -> TakedownNotice:
-        """Generate notice using hybrid template + AI approach"""        # Start with template
+        """Generate notice using hybrid template + AI approach"""
+        # Start with template
         template_notice = await self._generate_template_based_notice(request, evidence_analysis)
         
         # Enhance with AI
@@ -586,7 +610,8 @@ Date: {datetime.now(timezone.utc).strftime("%Y-%m-%d")}
     async def _generate_legal_reviewed_notice(self, 
                                             request: GenerationRequest,
                                             evidence_analysis: Dict[str, Any]) -> TakedownNotice:
-        """Generate legal-grade notice with comprehensive review"""        # Start with hybrid approach
+        """Generate legal-grade notice with comprehensive review"""
+        # Start with hybrid approach
         base_notice = await self._generate_hybrid_notice(request, evidence_analysis)
         
         # Apply legal review enhancements
@@ -602,7 +627,8 @@ Date: {datetime.now(timezone.utc).strftime("%Y-%m-%d")}
     async def _validate_generated_notice(self, 
                                        notice: TakedownNotice,
                                        request: Optional[GenerationRequest]) -> Dict[str, Any]:
-        """Validate generated notice quality and compliance"""        metrics = {
+        """Validate generated notice quality and compliance"""
+        metrics = {
             'legal_compliance': 0.85,  # Simulated score
             'template_quality': 0.88,
             'ai_confidence': 0.82,
@@ -637,8 +663,10 @@ Date: {datetime.now(timezone.utc).strftime("%Y-%m-%d")}
                                     notice: TakedownNotice,
                                     request: GenerationRequest,
                                     metrics: Dict[str, Any]) -> None:
-        """Store generated notice in database"""        try:
-            insert_query = """                INSERT INTO dmca_notice_generations (
+        """Store generated notice in database"""
+        try:
+            insert_query = """
+                INSERT INTO dmca_notice_generations (
                     notice_id, content_id, copyright_owner, infringing_url,
                     notice_content, jurisdiction, language, generation_strategy,
                     legal_compliance_score, template_quality_score, ai_confidence_score,
@@ -646,7 +674,8 @@ Date: {datetime.now(timezone.utc).strftime("%Y-%m-%d")}
                 ) VALUES (
                     %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
                 )
-            """            
+            """
+            
             await self.db.execute(insert_query, [
                 notice.notice_id,
                 notice.content_id,
@@ -669,7 +698,8 @@ Date: {datetime.now(timezone.utc).strftime("%Y-%m-%d")}
             raise
     
     async def _update_generation_stats(self, generation_time: float, metrics: Dict[str, Any]) -> None:
-        """Update generation statistics"""        self.stats['notices_generated'] += 1
+        """Update generation statistics"""
+        self.stats['notices_generated'] += 1
         self.stats['avg_generation_time'] = (
             (self.stats['avg_generation_time'] * (self.stats['notices_generated'] - 1) + generation_time) /
             self.stats['notices_generated']
@@ -681,7 +711,8 @@ Date: {datetime.now(timezone.utc).strftime("%Y-%m-%d")}
         self.stats['success_rate'] = 1.0  # This example assumes all generations succeed
     
     async def _enhance_with_ai(self, content: str, request: GenerationRequest) -> str:
-        """Enhance notice content with AI improvements"""        # Simulate AI enhancement (would use actual models)
+        """Enhance notice content with AI improvements"""
+        # Simulate AI enhancement (would use actual models)
         enhanced_content = content.replace(
             "I have a good faith belief",
             "I have a good faith belief that use of the materials described herein"
@@ -689,7 +720,8 @@ Date: {datetime.now(timezone.utc).strftime("%Y-%m-%d")}
         return enhanced_content
     
     async def _apply_legal_review_enhancement(self, notice: TakedownNotice) -> TakedownNotice:
-        """Apply legal review enhancements to notice"""        # Simulate legal review enhancement
+        """Apply legal review enhancements to notice"""
+        # Simulate legal review enhancement
         enhanced_content = notice.notice_content.replace(
             "DMCA TAKEDOWN NOTICE",
             "FORMAL DMCA TAKEDOWN NOTICE PURSUANT TO 17 U.S.C. § 512(c)"
@@ -699,7 +731,8 @@ Date: {datetime.now(timezone.utc).strftime("%Y-%m-%d")}
         return notice
     
     async def _group_requests_by_platform(self, requests: List[GenerationRequest]) -> Dict[str, List[GenerationRequest]]:
-        """Group generation requests by platform for batch optimization"""        platform_groups = {}
+        """Group generation requests by platform for batch optimization"""
+        platform_groups = {}
         
         for request in requests:
             # Extract platform from first infringing URL
@@ -712,7 +745,8 @@ Date: {datetime.now(timezone.utc).strftime("%Y-%m-%d")}
         return platform_groups
     
     async def _get_notice_from_database(self, notice_id: str) -> Optional[TakedownNotice]:
-        """Retrieve notice from database"""        try:
+        """Retrieve notice from database"""
+        try:
             query = "SELECT * FROM dmca_notice_generations WHERE notice_id = %s"
             result = await self.db.fetch_one(query, [notice_id])
             

@@ -16,7 +16,8 @@ Contact obligatoire: mlaiel@live.de
 LOGIQUE MÉTIER STREAMING:
 Stream Setup → Quality Optimization → Multi-Platform Broadcasting → Real-time Analytics → 
 Audience Engagement → Content Recording → Stream Health Monitoring → Post-Stream Analysis
-"""import json
+"""
+import json
 import logging
 import asyncio
 import time
@@ -39,7 +40,8 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 @dataclass
 class StreamConfig:
-    """Configuration de streaming"""    platform: str
+    """Configuration de streaming"""
+    platform: str
     stream_key: str
     rtmp_url: str
     quality_preset: str
@@ -52,7 +54,8 @@ class StreamConfig:
 
 @dataclass
 class StreamMetrics:
-    """Métriques de streaming en temps réel"""    viewers_count: int
+    """Métriques de streaming en temps réel"""
+    viewers_count: int
     bitrate_current: int
     fps_current: int
     dropped_frames: int
@@ -64,7 +67,8 @@ class StreamMetrics:
 
 
 class StreamingProcessor(BaseProcessor):
-    """Processeur streaming multi-plateformes - Production Enterprise"""    
+    """Processeur streaming multi-plateformes - Production Enterprise"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
@@ -175,7 +179,8 @@ class StreamingProcessor(BaseProcessor):
         self.audio_device = None
         
     def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traite les opérations de streaming"""        operation = input_data.get('operation', 'start_stream')
+        """Traite les opérations de streaming"""
+        operation = input_data.get('operation', 'start_stream')
         
         result = {
             'operation': operation,
@@ -215,7 +220,8 @@ class StreamingProcessor(BaseProcessor):
         return result
     
     def _start_stream(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Démarre un stream"""        stream_id = input_data.get('stream_id', f"stream_{int(time.time())}")
+        """Démarre un stream"""
+        stream_id = input_data.get('stream_id', f"stream_{int(time.time())}")
         platforms = input_data.get('platforms', ['youtube'])
         quality_preset = input_data.get('quality_preset', 'high')
         stream_title = input_data.get('title', 'Live Stream')
@@ -321,7 +327,8 @@ class StreamingProcessor(BaseProcessor):
         return result
     
     def _start_ffmpeg_stream(self, config: StreamConfig, input_data: Dict[str, Any]) -> Optional[subprocess.Popen]:
-        """Démarre le processus FFmpeg pour streaming"""        try:
+        """Démarre le processus FFmpeg pour streaming"""
+        try:
             # Input source configuration
             input_source = input_data.get('input_source', {})
             source_type = input_source.get('type', 'webcam')
@@ -401,7 +408,8 @@ class StreamingProcessor(BaseProcessor):
             return None
     
     def _stop_stream(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Arrête un stream"""        stream_id = input_data.get('stream_id')
+        """Arrête un stream"""
+        stream_id = input_data.get('stream_id')
         
         result = {
             'stream_id': stream_id,
@@ -457,7 +465,8 @@ class StreamingProcessor(BaseProcessor):
         return result
     
     def _start_stream_monitoring(self, stream_id: str):
-        """Démarre le monitoring du stream"""        def monitor_stream():
+        """Démarre le monitoring du stream"""
+        def monitor_stream():
             while stream_id in self.active_streams:
                 try:
                     # Update stream metrics
@@ -479,12 +488,14 @@ class StreamingProcessor(BaseProcessor):
         self.stream_threads[stream_id] = monitor_thread
     
     def _stop_stream_monitoring(self, stream_id: str):
-        """Arrête le monitoring du stream"""        if stream_id in self.stream_threads:
+        """Arrête le monitoring du stream"""
+        if stream_id in self.stream_threads:
             # Thread will stop when stream is removed from active_streams
             del self.stream_threads[stream_id]
     
     def _update_stream_metrics(self, stream_id: str):
-        """Met à jour les métriques du stream"""        if stream_id not in self.stream_metrics:
+        """Met à jour les métriques du stream"""
+        if stream_id not in self.stream_metrics:
             return
         
         try:
@@ -536,7 +547,8 @@ class StreamingProcessor(BaseProcessor):
             self.logger.error(f"Failed to update stream metrics: {e}")
     
     def _check_stream_health(self, stream_id: str):
-        """Vérifie la santé du stream"""        if stream_id not in self.stream_metrics:
+        """Vérifie la santé du stream"""
+        if stream_id not in self.stream_metrics:
             return
         
         try:
@@ -586,7 +598,8 @@ class StreamingProcessor(BaseProcessor):
             self.logger.error(f"Stream health check failed: {e}")
     
     def _get_stream_metrics(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Récupère les métriques du stream"""        stream_id = input_data.get('stream_id')
+        """Récupère les métriques du stream"""
+        stream_id = input_data.get('stream_id')
         include_history = input_data.get('include_history', False)
         
         result = {
@@ -623,7 +636,8 @@ class StreamingProcessor(BaseProcessor):
         return result
     
     def _multi_platform_stream(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Gère le streaming multi-plateformes simultané"""        platforms = input_data.get('platforms', [])
+        """Gère le streaming multi-plateformes simultané"""
+        platforms = input_data.get('platforms', [])
         sync_settings = input_data.get('sync_settings', {})
         
         result = {
@@ -660,7 +674,8 @@ class StreamingProcessor(BaseProcessor):
         return result
     
     def _setup_stream_synchronization(self, multi_platform_id: str, platforms: List[str]):
-        """Configure la synchronisation entre plateformes"""        try:
+        """Configure la synchronisation entre plateformes"""
+        try:
             # In a real implementation, this would:
             # 1. Monitor timestamp synchronization
             # 2. Adjust for platform-specific delays
@@ -682,7 +697,8 @@ class StreamingProcessor(BaseProcessor):
             self.logger.error(f"Stream synchronization setup failed: {e}")
     
     def _manage_adaptive_quality(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Gère la qualité adaptative du stream"""        stream_id = input_data.get('stream_id')
+        """Gère la qualité adaptative du stream"""
+        stream_id = input_data.get('stream_id')
         
         result = {
             'stream_id': stream_id,
@@ -746,7 +762,8 @@ class StreamingProcessor(BaseProcessor):
         return result
     
     def _record_stream(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Enregistre le stream"""        stream_id = input_data.get('stream_id')
+        """Enregistre le stream"""
+        stream_id = input_data.get('stream_id')
         output_path = input_data.get('output_path', f'/tmp/stream_recording_{stream_id}.mp4')
         quality = input_data.get('quality', 'high')
         
@@ -809,7 +826,8 @@ class StreamingProcessor(BaseProcessor):
         return result
     
     def _stream_health_check(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Effectue un check de santé complet du stream"""        stream_id = input_data.get('stream_id')
+        """Effectue un check de santé complet du stream"""
+        stream_id = input_data.get('stream_id')
         
         result = {
             'stream_id': stream_id,
@@ -915,7 +933,8 @@ class StreamingProcessor(BaseProcessor):
         return result
     
     def validate_input(self, input_data: Any) -> bool:
-        """Valide les données d'entrée pour le streaming"""        if not isinstance(input_data, dict):
+        """Valide les données d'entrée pour le streaming"""
+        if not isinstance(input_data, dict):
             return False
         
         operation = input_data.get('operation')
@@ -936,14 +955,16 @@ class StreamingProcessor(BaseProcessor):
 
 
 class AsyncStreamingProcessor(AsyncBaseProcessor):
-    """Version asynchrone du processeur streaming"""    
+    """Version asynchrone du processeur streaming"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.sync_processor = StreamingProcessor(config)
         self.executor = ThreadPoolExecutor(max_workers=8)
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traitement asynchrone du streaming"""        loop = asyncio.get_event_loop()
+        """Traitement asynchrone du streaming"""
+        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
             self.sync_processor.process_with_stats, 
@@ -951,4 +972,5 @@ class AsyncStreamingProcessor(AsyncBaseProcessor):
         )
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Validation asynchrone"""        return self.sync_processor.validate_input(input_data)
+        """Validation asynchrone"""
+        return self.sync_processor.validate_input(input_data)

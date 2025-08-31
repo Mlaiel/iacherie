@@ -14,7 +14,8 @@ Features:
 - Platform-specific compliance
 - Business rule enforcement
 - Security threat detection
-"""import re
+"""
+import re
 import hashlib
 import mimetypes
 from enum import Enum
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content type enumeration for validation"""    TEXT = "text"
+    """Content type enumeration for validation"""
+    TEXT = "text"
     HTML = "html"
     JSON = "json"
     XML = "xml"
@@ -46,14 +48,16 @@ class ContentType(Enum):
 
 
 class ValidationLevel(Enum):
-    """Validation strictness levels"""    BASIC = "basic"
+    """Validation strictness levels"""
+    BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
     ENTERPRISE = "enterprise"
 
 
 class ValidationStatus(Enum):
-    """Validation result status"""    VALID = "valid"
+    """Validation result status"""
+    VALID = "valid"
     WARNING = "warning"
     ERROR = "error"
     BLOCKED = "blocked"
@@ -61,7 +65,8 @@ class ValidationStatus(Enum):
 
 @dataclass
 class ValidationIssue:
-    """Individual validation issue"""    level: ValidationStatus
+    """Individual validation issue"""
+    level: ValidationStatus
     code: str
     message: str
     field: Optional[str] = None
@@ -72,7 +77,8 @@ class ValidationIssue:
 
 @dataclass
 class ContentMetadata:
-    """Content metadata for validation"""    title: Optional[str] = None
+    """Content metadata for validation"""
+    title: Optional[str] = None
     description: Optional[str] = None
     author: Optional[str] = None
     keywords: List[str] = field(default_factory=list)
@@ -89,7 +95,8 @@ class ContentMetadata:
 
 @dataclass
 class ValidationResult:
-    """Comprehensive validation result"""    is_valid: bool
+    """Comprehensive validation result"""
+    is_valid: bool
     status: ValidationStatus
     content_type: ContentType
     validation_level: ValidationLevel
@@ -105,24 +112,29 @@ class ValidationResult:
     
     @property
     def has_errors(self) -> bool:
-        """Check if validation has errors"""        return any(issue.level in [ValidationStatus.ERROR, ValidationStatus.BLOCKED] 
+        """Check if validation has errors"""
+        return any(issue.level in [ValidationStatus.ERROR, ValidationStatus.BLOCKED] 
                   for issue in self.issues)
     
     @property
     def has_warnings(self) -> bool:
-        """Check if validation has warnings"""        return any(issue.level == ValidationStatus.WARNING for issue in self.issues)
+        """Check if validation has warnings"""
+        return any(issue.level == ValidationStatus.WARNING for issue in self.issues)
     
     @property
     def error_count(self) -> int:
-        """Count of error-level issues"""        return len([i for i in self.issues if i.level in [ValidationStatus.ERROR, ValidationStatus.BLOCKED]])
+        """Count of error-level issues"""
+        return len([i for i in self.issues if i.level in [ValidationStatus.ERROR, ValidationStatus.BLOCKED]])
     
     @property
     def warning_count(self) -> int:
-        """Count of warning-level issues"""        return len([i for i in self.issues if i.level == ValidationStatus.WARNING])
+        """Count of warning-level issues"""
+        return len([i for i in self.issues if i.level == ValidationStatus.WARNING])
 
 
 class ContentValidator:
-    """    Enterprise-grade content validation engine for crawler systems.
+    """
+    Enterprise-grade content validation engine for crawler systems.
     
     Provides comprehensive validation including:
     - Content structure and format validation
@@ -130,7 +142,8 @@ class ContentValidator:
     - Security threat detection
     - Platform compliance checking
     - Business rule enforcement
-    """    
+    """
+    
     def __init__(self, validation_level: ValidationLevel = ValidationLevel.STANDARD):
         self.validation_level = validation_level
         self.business_rules = self._load_business_rules()
@@ -152,7 +165,8 @@ class ContentValidator:
         platform_target: Optional[str] = None,
         **kwargs
     ) -> ValidationResult:
-        """        Validate content comprehensively.
+        """
+        Validate content comprehensively.
         
         Args:
             content: Content to validate
@@ -163,7 +177,8 @@ class ContentValidator:
             
         Returns:
             ValidationResult: Comprehensive validation result
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         
         # Check cache first
         cache_key = self._generate_cache_key(content, content_type, metadata)
@@ -228,7 +243,8 @@ class ContentValidator:
         return result
     
     def _validate_basic_content(self, content: Union[str, bytes], result: ValidationResult) -> None:
-        """Perform basic content validation"""        
+        """Perform basic content validation"""
+        
         # Check if content is empty
         if not content:
             result.issues.append(ValidationIssue(
@@ -266,7 +282,8 @@ class ContentValidator:
         content_type: ContentType, 
         result: ValidationResult
     ) -> None:
-        """Perform content type specific validation"""        
+        """Perform content type specific validation"""
+        
         if content_type == ContentType.HTML:
             self._validate_html_content(content, result)
         elif content_type == ContentType.JSON:
@@ -289,7 +306,8 @@ class ContentValidator:
             self._validate_media_content(content, content_type, result)
     
     def _validate_html_content(self, content: str, result: ValidationResult) -> None:
-        """Validate HTML content structure and safety"""        
+        """Validate HTML content structure and safety"""
+        
         # Check for basic HTML structure
         if not re.search(r'<html[^>]*>', content, re.IGNORECASE):
             result.issues.append(ValidationIssue(
@@ -319,7 +337,8 @@ class ContentValidator:
         self._validate_html_tag_balance(content, result)
     
     def _validate_json_content(self, content: str, result: ValidationResult) -> None:
-        """Validate JSON content structure"""        import json
+        """Validate JSON content structure"""
+        import json
         
         try:
             data = json.loads(content)
@@ -341,7 +360,8 @@ class ContentValidator:
             ))
     
     def _validate_security(self, content: Union[str, bytes], result: ValidationResult) -> None:
-        """Perform security validation"""        
+        """Perform security validation"""
+        
         if isinstance(content, bytes):
             try:
                 content = content.decode('utf-8', errors='ignore')
@@ -378,7 +398,8 @@ class ContentValidator:
         result: ValidationResult,
         metadata: Optional[ContentMetadata] = None
     ) -> None:
-        """Assess content quality and generate score"""        
+        """Assess content quality and generate score"""
+        
         if isinstance(content, bytes):
             content_str = content.decode('utf-8', errors='ignore')
         else:
@@ -438,7 +459,8 @@ class ContentValidator:
         result: ValidationResult,
         **kwargs
     ) -> None:
-        """Validate against business rules"""        
+        """Validate against business rules"""
+        
         rules = self.business_rules.get(content_type.value, {})
         
         # Content length rules
@@ -489,7 +511,8 @@ class ContentValidator:
         platform: str, 
         result: ValidationResult
     ) -> None:
-        """Validate platform-specific compliance requirements"""        
+        """Validate platform-specific compliance requirements"""
+        
         platform_rules = self.platform_requirements.get(platform, {})
         if not platform_rules:
             result.issues.append(ValidationIssue(
@@ -525,7 +548,8 @@ class ContentValidator:
                     ))
     
     def _calculate_scores(self, result: ValidationResult) -> None:
-        """Calculate various scoring metrics"""        
+        """Calculate various scoring metrics"""
+        
         # Security score
         security_issues = [i for i in result.issues if i.code.startswith('SECURITY_')]
         result.security_score = max(0.0, 1.0 - len(security_issues) * 0.2)
@@ -543,7 +567,8 @@ class ContentValidator:
         )
     
     def _determine_final_status(self, result: ValidationResult) -> None:
-        """Determine final validation status"""        
+        """Determine final validation status"""
+        
         if result.has_errors:
             result.is_valid = False
             result.status = ValidationStatus.ERROR
@@ -558,7 +583,8 @@ class ContentValidator:
             result.status = ValidationStatus.VALID
     
     def _generate_recommendations(self, result: ValidationResult) -> None:
-        """Generate improvement recommendations"""        
+        """Generate improvement recommendations"""
+        
         if result.quality_score < 0.7:
             result.recommendations.append("Consider improving content quality and structure")
         
@@ -579,19 +605,22 @@ class ContentValidator:
         content_type: ContentType, 
         metadata: Optional[ContentMetadata]
     ) -> str:
-        """Generate cache key for validation result"""        content_hash = hashlib.md5(str(content).encode()).hexdigest()
+        """Generate cache key for validation result"""
+        content_hash = hashlib.md5(str(content).encode()).hexdigest()
         metadata_hash = hashlib.md5(str(metadata).encode()).hexdigest() if metadata else "none"
         return f"{content_hash}_{content_type.value}_{metadata_hash}_{self.validation_level.value}"
     
     def _get_json_depth(self, data: Any, depth: int = 0) -> int:
-        """Calculate maximum JSON nesting depth"""        if isinstance(data, dict):
+        """Calculate maximum JSON nesting depth"""
+        if isinstance(data, dict):
             return max((self._get_json_depth(v, depth + 1) for v in data.values()), default=depth)
         elif isinstance(data, list):
             return max((self._get_json_depth(item, depth + 1) for item in data), default=depth)
         return depth
     
     def _is_suspicious_url(self, url: str) -> bool:
-        """Check if URL is potentially suspicious"""        suspicious_patterns = [
+        """Check if URL is potentially suspicious"""
+        suspicious_patterns = [
             r'bit\.ly|tinyurl|t\.co',  # URL shorteners
             r'[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+',  # IP addresses
             r'[a-z0-9]{20,}\.com',  # Very long domains
@@ -601,7 +630,8 @@ class ContentValidator:
         return any(re.search(pattern, url, re.IGNORECASE) for pattern in suspicious_patterns)
     
     def _assess_readability(self, content: str) -> float:
-        """Assess content readability (simplified implementation)"""        sentences = len(re.findall(r'[.!?]+', content))
+        """Assess content readability (simplified implementation)"""
+        sentences = len(re.findall(r'[.!?]+', content))
         words = len(content.split())
         
         if sentences == 0 or words == 0:
@@ -618,7 +648,8 @@ class ContentValidator:
             return max(0.3, 1.0 - (avg_sentence_length - 25) * 0.02)
     
     def _assess_structure(self, content: str, content_type: ContentType) -> float:
-        """Assess content structure quality"""        structure_score = 0.5  # Base score
+        """Assess content structure quality"""
+        structure_score = 0.5  # Base score
         
         if content_type == ContentType.HTML:
             # Check for proper heading structure
@@ -644,7 +675,8 @@ class ContentValidator:
         return min(1.0, structure_score)
     
     def _assess_uniqueness(self, content: str) -> float:
-        """Assess content uniqueness (simplified implementation)"""        # Count repeated phrases
+        """Assess content uniqueness (simplified implementation)"""
+        # Count repeated phrases
         words = content.lower().split()
         if len(words) < 10:
             return 0.5
@@ -656,7 +688,8 @@ class ContentValidator:
         return min(1.0, uniqueness_ratio * 1.2)
     
     def _assess_metadata_completeness(self, metadata: ContentMetadata) -> float:
-        """Assess metadata completeness"""        required_fields = ['title', 'description', 'language']
+        """Assess metadata completeness"""
+        required_fields = ['title', 'description', 'language']
         optional_fields = ['author', 'keywords', 'created_at']
         
         required_score = sum(1 for field in required_fields if getattr(metadata, field))
@@ -666,7 +699,8 @@ class ContentValidator:
         return (required_score + optional_score) / total_possible if total_possible > 0 else 0
     
     def _validate_html_tag_balance(self, content: str, result: ValidationResult) -> None:
-        """Validate HTML tag balance"""        # Simplified tag balance check
+        """Validate HTML tag balance"""
+        # Simplified tag balance check
         opening_tags = re.findall(r'<([a-z][a-z0-9]*)[^>]*>', content, re.IGNORECASE)
         closing_tags = re.findall(r'</([a-z][a-z0-9]*)>', content, re.IGNORECASE)
         
@@ -684,7 +718,8 @@ class ContentValidator:
             ))
     
     def _validate_social_post(self, content: str, result: ValidationResult) -> None:
-        """Validate social media post content"""        # Check for hashtags
+        """Validate social media post content"""
+        # Check for hashtags
         hashtags = re.findall(r'#\w+', content)
         if len(hashtags) > 10:
             result.issues.append(ValidationIssue(
@@ -703,7 +738,8 @@ class ContentValidator:
             ))
     
     def _validate_blog_post(self, content: str, result: ValidationResult) -> None:
-        """Validate blog post content"""        # Check for title (assuming first line or H1)
+        """Validate blog post content"""
+        # Check for title (assuming first line or H1)
         lines = content.strip().split('\n')
         if not lines or len(lines[0]) < 10:
             result.issues.append(ValidationIssue(
@@ -722,7 +758,8 @@ class ContentValidator:
             ))
     
     def _validate_news_article(self, content: str, result: ValidationResult) -> None:
-        """Validate news article content"""        # Check for dateline
+        """Validate news article content"""
+        # Check for dateline
         dateline_pattern = r'\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{4}\b|\b\w+\s\d{1,2},\s\d{4}\b'
         if not re.search(dateline_pattern, content):
             result.issues.append(ValidationIssue(
@@ -741,7 +778,8 @@ class ContentValidator:
             ))
     
     def _validate_product_listing(self, content: str, result: ValidationResult) -> None:
-        """Validate product listing content"""        # Check for price information
+        """Validate product listing content"""
+        # Check for price information
         price_pattern = r'\$\d+\.?\d*|€\d+\.?\d*|£\d+\.?\d*|\d+\.?\d*\s*(USD|EUR|GBP)'
         if not re.search(price_pattern, content, re.IGNORECASE):
             result.issues.append(ValidationIssue(
@@ -761,7 +799,8 @@ class ContentValidator:
             ))
     
     def _validate_user_profile(self, content: str, result: ValidationResult) -> None:
-        """Validate user profile content"""        # Check for contact information
+        """Validate user profile content"""
+        # Check for contact information
         email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
         if re.search(email_pattern, content):
             result.issues.append(ValidationIssue(
@@ -780,7 +819,8 @@ class ContentValidator:
             ))
     
     def _validate_media_content(self, content: bytes, content_type: ContentType, result: ValidationResult) -> None:
-        """Validate media content (audio, video, image)"""        # Basic file signature validation
+        """Validate media content (audio, video, image)"""
+        # Basic file signature validation
         signatures = {
             ContentType.IMAGE: [
                 b'\xFF\xD8\xFF',  # JPEG
@@ -813,7 +853,8 @@ class ContentValidator:
                 ))
     
     def _check_format_requirement(self, content: Union[str, bytes], requirement: str) -> bool:
-        """Check if content meets a specific format requirement"""        # Simplified implementation
+        """Check if content meets a specific format requirement"""
+        # Simplified implementation
         if requirement == 'hashtags_allowed' and isinstance(content, str):
             return '#' in content
         elif requirement == 'no_html' and isinstance(content, str):
@@ -824,7 +865,8 @@ class ContentValidator:
         return True  # Default to passing unknown requirements
     
     def _load_business_rules(self) -> Dict[str, Dict[str, Any]]:
-        """Load business rules configuration"""        return {
+        """Load business rules configuration"""
+        return {
             'text': {
                 'min_length': 10,
                 'max_length': 100000,
@@ -869,7 +911,8 @@ class ContentValidator:
         }
     
     def _load_security_patterns(self) -> Dict[str, str]:
-        """Load security threat patterns"""        return {
+        """Load security threat patterns"""
+        return {
             'xss_script': r'<script[^>]*>.*?</script>',
             'javascript_url': r'javascript:',
             'vbscript_url': r'vbscript:',
@@ -883,7 +926,8 @@ class ContentValidator:
         }
     
     def _load_quality_metrics(self) -> Dict[str, Any]:
-        """Load quality assessment metrics"""        return {
+        """Load quality assessment metrics"""
+        return {
             'optimal_length': {
                 'text': (50, 5000),
                 'social_post': (10, 280),
@@ -901,7 +945,8 @@ class ContentValidator:
         }
     
     def _load_platform_requirements(self) -> Dict[str, Dict[str, Any]]:
-        """Load platform-specific requirements"""        return {
+        """Load platform-specific requirements"""
+        return {
             'twitter': {
                 'content_length': {
                     'social_post': 280,

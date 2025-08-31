@@ -3,7 +3,8 @@ Intelligent content analysis, SEO optimization, and platform recommendations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import re
 from typing import Dict, Any, List, Optional, Tuple
 from datetime import datetime
@@ -25,7 +26,8 @@ from ..core.logging import logger
 
 
 class SEOAnalyzer:
-    """Advanced SEO analysis and optimization"""    
+    """Advanced SEO analysis and optimization"""
+    
     def __init__(self):
         self.target_platforms = {
             "youtube": {
@@ -59,7 +61,8 @@ class SEOAnalyzer:
     
     async def analyze_content_seo(self, content_data: Dict[str, Any], 
                                 target_platforms: List[str]) -> Dict[str, Any]:
-        """Comprehensive SEO analysis for content"""        try:
+        """Comprehensive SEO analysis for content"""
+        try:
             seo_analysis = {
                 "platform_optimizations": {},
                 "keyword_analysis": {},
@@ -94,7 +97,8 @@ class SEOAnalyzer:
             return {}
     
     async def _extract_text_for_seo(self, content_data: Dict[str, Any]) -> str:
-        """Extract relevant text content for SEO analysis"""        text_parts = []
+        """Extract relevant text content for SEO analysis"""
+        text_parts = []
         
         # Get title if available
         if "title" in content_data:
@@ -115,7 +119,8 @@ class SEOAnalyzer:
         return " ".join(text_parts)
     
     async def _analyze_keywords(self, text: str) -> Dict[str, Any]:
-        """Analyze keywords in content"""        if not text:
+        """Analyze keywords in content"""
+        if not text:
             return {}
         
         # Extract keywords using YAKE
@@ -143,7 +148,8 @@ class SEOAnalyzer:
         }
     
     async def _analyze_content_quality(self, text: str) -> Dict[str, Any]:
-        """Analyze content quality metrics"""        if not text:
+        """Analyze content quality metrics"""
+        if not text:
             return {}
         
         # Readability metrics
@@ -177,7 +183,8 @@ class SEOAnalyzer:
         }
     
     def _get_reading_level(self, flesch_score: float) -> str:
-        """Convert Flesch score to reading level"""        if flesch_score >= 90:
+        """Convert Flesch score to reading level"""
+        if flesch_score >= 90:
             return "Very Easy"
         elif flesch_score >= 80:
             return "Easy"
@@ -193,7 +200,8 @@ class SEOAnalyzer:
             return "Very Difficult"
     
     def _classify_sentiment(self, polarity: float) -> str:
-        """Classify sentiment based on polarity"""        if polarity > 0.1:
+        """Classify sentiment based on polarity"""
+        if polarity > 0.1:
             return "Positive"
         elif polarity < -0.1:
             return "Negative"
@@ -201,7 +209,8 @@ class SEOAnalyzer:
             return "Neutral"
     
     async def _analyze_platform_seo(self, text: str, platform: str) -> Dict[str, Any]:
-        """Analyze SEO for specific platform"""        platform_config = self.target_platforms[platform]
+        """Analyze SEO for specific platform"""
+        platform_config = self.target_platforms[platform]
         analysis = {}
         
         if platform == "youtube":
@@ -226,7 +235,8 @@ class SEOAnalyzer:
         return analysis
     
     def _check_title_optimization(self, text: str, config: Dict) -> Dict[str, Any]:
-        """Check title optimization for platform"""        # Extract potential title (first sentence or first 100 chars)
+        """Check title optimization for platform"""
+        # Extract potential title (first sentence or first 100 chars)
         potential_title = text.split('.')[0][:config["optimal_title_length"]]
         
         return {
@@ -237,7 +247,8 @@ class SEOAnalyzer:
         }
     
     def _check_description_optimization(self, text: str, config: Dict) -> Dict[str, Any]:
-        """Check description optimization"""        return {
+        """Check description optimization"""
+        return {
             "length": len(text),
             "max_length": config["description_max_length"],
             "within_limits": len(text) <= config["description_max_length"],
@@ -245,7 +256,8 @@ class SEOAnalyzer:
         }
     
     async def _generate_tag_recommendations(self, text: str) -> List[str]:
-        """Generate tag recommendations for content"""        # Extract keywords and convert to tags
+        """Generate tag recommendations for content"""
+        # Extract keywords and convert to tags
         kw_extractor = yake.KeywordExtractor(lan="en", n=2, top=15)
         keywords = kw_extractor.extract_keywords(text)
         
@@ -259,7 +271,8 @@ class SEOAnalyzer:
         return tags[:10]
     
     async def _generate_instagram_hashtags(self, text: str) -> List[str]:
-        """Generate Instagram-specific hashtags"""        base_tags = await self._generate_tag_recommendations(text)
+        """Generate Instagram-specific hashtags"""
+        base_tags = await self._generate_tag_recommendations(text)
         
         # Add Instagram-specific formatting
         instagram_tags = []
@@ -273,7 +286,8 @@ class SEOAnalyzer:
         return instagram_tags[:11]  # Instagram optimal
     
     async def _generate_tiktok_hashtags(self, text: str) -> List[str]:
-        """Generate TikTok-specific hashtags"""        base_tags = await self._generate_tag_recommendations(text)
+        """Generate TikTok-specific hashtags"""
+        base_tags = await self._generate_tag_recommendations(text)
         
         # Add TikTok-specific formatting and trending tags
         tiktok_tags = [f"#{tag}" for tag in base_tags[:5]]
@@ -284,7 +298,8 @@ class SEOAnalyzer:
     
     async def _generate_seo_recommendations(self, analysis: Dict[str, Any], 
                                           platforms: List[str]) -> List[str]:
-        """Generate comprehensive SEO recommendations"""        recommendations = []
+        """Generate comprehensive SEO recommendations"""
+        recommendations = []
         
         # Content quality recommendations
         quality = analysis.get("content_quality", {})
@@ -320,7 +335,8 @@ class SEOAnalyzer:
 
 
 class ContentQualityAnalyzer:
-    """Analyze content quality and engagement potential"""    
+    """Analyze content quality and engagement potential"""
+    
     def __init__(self):
         # Load sentiment analysis pipeline
         try:
@@ -333,7 +349,8 @@ class ContentQualityAnalyzer:
             logger.warning("Sentiment analysis models not available")
     
     async def analyze_content_quality(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Comprehensive content quality analysis"""        try:
+        """Comprehensive content quality analysis"""
+        try:
             analysis = {
                 "engagement_score": 0.0,
                 "viral_potential": 0.0,
@@ -365,7 +382,8 @@ class ContentQualityAnalyzer:
             return {}
     
     async def _analyze_audio_quality(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze audio content quality"""        features = content_data.get("features", {})
+        """Analyze audio content quality"""
+        features = content_data.get("features", {})
         
         quality_score = 0.0
         factors = []
@@ -398,7 +416,8 @@ class ContentQualityAnalyzer:
         }
     
     async def _analyze_video_quality(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze video content quality"""        features = content_data.get("features", {})
+        """Analyze video content quality"""
+        features = content_data.get("features", {})
         
         quality_score = 0.0
         factors = []
@@ -436,7 +455,8 @@ class ContentQualityAnalyzer:
         }
     
     async def _analyze_image_quality(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze image content quality"""        features = content_data.get("features", {})
+        """Analyze image content quality"""
+        features = content_data.get("features", {})
         
         quality_score = 0.0
         factors = []
@@ -477,7 +497,8 @@ class ContentQualityAnalyzer:
         }
     
     async def _analyze_text_quality(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze text content quality"""        features = content_data.get("features", {})
+        """Analyze text content quality"""
+        features = content_data.get("features", {})
         text_content = content_data.get("content_preview", "")
         
         quality_score = 0.0
@@ -519,7 +540,8 @@ class ContentQualityAnalyzer:
         }
     
     async def _calculate_engagement_score(self, analysis: Dict[str, Any]) -> float:
-        """Calculate overall engagement potential score"""        # Base score from content quality
+        """Calculate overall engagement potential score"""
+        # Base score from content quality
         quality_scores = [
             analysis.get("audio_quality_score", 0),
             analysis.get("video_quality_score", 0),
@@ -545,7 +567,8 @@ class ContentQualityAnalyzer:
         return min(engagement_score, 100.0)
     
     async def _calculate_viral_potential(self, analysis: Dict[str, Any]) -> float:
-        """Calculate viral potential score"""        viral_score = 0.0
+        """Calculate viral potential score"""
+        viral_score = 0.0
         
         # High engagement score contributes to viral potential
         engagement_score = analysis.get("engagement_score", 0)
@@ -569,7 +592,8 @@ class ContentQualityAnalyzer:
 
 
 class PlatformRecommendationEngine:
-    """Recommend optimal platforms for content distribution"""    
+    """Recommend optimal platforms for content distribution"""
+    
     def __init__(self):
         self.platform_characteristics = {
             "youtube": {
@@ -611,7 +635,8 @@ class PlatformRecommendationEngine:
     
     async def recommend_platforms(self, content_data: Dict[str, Any], 
                                 user_goals: List[str] = None) -> List[Dict[str, Any]]:
-        """Recommend optimal platforms for content"""        try:
+        """Recommend optimal platforms for content"""
+        try:
             content_type = content_data.get("content_type", "unknown")
             recommendations = []
             
@@ -645,7 +670,8 @@ class PlatformRecommendationEngine:
     async def _calculate_platform_score(self, content_data: Dict[str, Any], 
                                       characteristics: Dict[str, str],
                                       user_goals: List[str]) -> float:
-        """Calculate how well content matches platform"""        score = 0.0
+        """Calculate how well content matches platform"""
+        score = 0.0
         
         # Content type match
         content_type = content_data.get("content_type", "")
@@ -672,7 +698,8 @@ class PlatformRecommendationEngine:
         return min(score, 100.0)
     
     async def _check_length_match(self, duration: float, preferred_length: str) -> float:
-        """Check if content length matches platform preference"""        if preferred_length == "very_short" and duration <= 60:
+        """Check if content length matches platform preference"""
+        if preferred_length == "very_short" and duration <= 60:
             return 1.0
         elif preferred_length == "short" and 60 < duration <= 300:
             return 1.0
@@ -687,7 +714,8 @@ class PlatformRecommendationEngine:
     
     async def _get_recommendation_reasons(self, content_data: Dict[str, Any], 
                                         platform: str, characteristics: Dict[str, str]) -> List[str]:
-        """Generate reasons for platform recommendation"""        reasons = []
+        """Generate reasons for platform recommendation"""
+        reasons = []
         
         content_type = content_data.get("content_type", "")
         if content_type in characteristics["preferred_content"]:
@@ -703,7 +731,8 @@ class PlatformRecommendationEngine:
     
     async def _get_optimization_tips(self, content_data: Dict[str, Any], 
                                    platform: str) -> List[str]:
-        """Generate platform-specific optimization tips"""        tips = []
+        """Generate platform-specific optimization tips"""
+        tips = []
         
         if platform == "youtube":
             tips.extend([
@@ -731,7 +760,8 @@ class PlatformRecommendationEngine:
 
 
 class ContentAnalyzer:
-    """Main content analysis orchestrator"""    
+    """Main content analysis orchestrator"""
+    
     def __init__(self):
         self.seo_analyzer = SEOAnalyzer()
         self.quality_analyzer = ContentQualityAnalyzer()
@@ -740,7 +770,8 @@ class ContentAnalyzer:
     async def analyze_content(self, content_data: Dict[str, Any], 
                             target_platforms: List[str] = None,
                             user_goals: List[str] = None) -> Dict[str, Any]:
-        """Comprehensive content analysis"""        try:
+        """Comprehensive content analysis"""
+        try:
             analysis_result = {
                 "content_id": content_data.get("content_id", "unknown"),
                 "analysis_timestamp": datetime.utcnow().isoformat(),
@@ -785,7 +816,8 @@ class ContentAnalyzer:
             return {}
     
     async def _calculate_overall_score(self, analysis_result: Dict[str, Any]) -> float:
-        """Calculate overall content performance score"""        scores = []
+        """Calculate overall content performance score"""
+        scores = []
         
         # Quality score
         quality_analysis = analysis_result.get("quality_analysis", {})
@@ -802,7 +834,8 @@ class ContentAnalyzer:
         return np.mean(scores) if scores else 0.0
     
     async def _generate_insights(self, analysis_result: Dict[str, Any]) -> List[str]:
-        """Generate actionable insights from analysis"""        insights = []
+        """Generate actionable insights from analysis"""
+        insights = []
         
         # Quality insights
         quality_analysis = analysis_result.get("quality_analysis", {})

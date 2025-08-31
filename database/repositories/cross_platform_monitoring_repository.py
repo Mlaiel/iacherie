@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""import logging
+"""
+import logging
 from typing import List, Dict, Any, Optional, Tuple
 from datetime import datetime, timezone, timedelta
 from decimal import Decimal
@@ -46,11 +47,13 @@ logger = logging.getLogger(__name__)
 
 
 class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
-    """    Enterprise Cross-Platform Monitoring Repository
+    """
+    Enterprise Cross-Platform Monitoring Repository
     
     Manages real-time monitoring across multiple content platforms with
     AI-powered violation detection and automated response systems.
-    """    
+    """
+    
     def __init__(self, db_session: Session):
         super().__init__(PlatformMonitoring, db_session)
         self.model = PlatformMonitoring
@@ -63,7 +66,8 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
         detection_methods: List[DetectionMethod],
         **kwargs
     ) -> PlatformMonitoring:
-        """        Create new platform monitoring job
+        """
+        Create new platform monitoring job
         
         Args:
             content_fingerprint_id: Content fingerprint UUID
@@ -74,7 +78,8 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
             
         Returns:
             Created PlatformMonitoring instance
-        """        try:
+        """
+        try:
             monitoring_data = {
                 "content_fingerprint_id": content_fingerprint_id,
                 "user_id": user_id,
@@ -103,14 +108,16 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
         self,
         limit: int = 100
     ) -> List[PlatformMonitoring]:
-        """        Get monitoring jobs that are due for scanning
+        """
+        Get monitoring jobs that are due for scanning
         
         Args:
             limit: Maximum number of jobs to return
             
         Returns:
             List of PlatformMonitoring instances due for scanning
-        """        try:
+        """
+        try:
             current_time = datetime.now(timezone.utc)
             
             due_scans = self.db_session.query(self.model).filter(
@@ -135,7 +142,8 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
         next_scan_time: datetime,
         scan_successful: bool = True
     ) -> PlatformMonitoring:
-        """        Update monitoring job scan schedule
+        """
+        Update monitoring job scan schedule
         
         Args:
             monitoring_id: PlatformMonitoring UUID
@@ -145,7 +153,8 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
             
         Returns:
             Updated PlatformMonitoring instance
-        """        try:
+        """
+        try:
             monitoring_job = await self.get_by_id(monitoring_id)
             if not monitoring_job:
                 raise ValueError(f"Monitoring job not found: {monitoring_id}")
@@ -184,7 +193,8 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
         potential_matches_found: int,
         scan_results_data: Dict[str, Any]
     ) -> ScanResult:
-        """        Record detailed scan results
+        """
+        Record detailed scan results
         
         Args:
             monitoring_id: PlatformMonitoring UUID
@@ -196,7 +206,8 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
             
         Returns:
             Created ScanResult instance
-        """        try:
+        """
+        try:
             scan_duration = (scan_completed_at - scan_started_at).total_seconds()
             
             scan_result_data = {
@@ -240,7 +251,8 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
         detection_method: DetectionMethod,
         **kwargs
     ) -> ViolationDetection:
-        """        Record a content violation detection
+        """
+        Record a content violation detection
         
         Args:
             monitoring_id: PlatformMonitoring UUID
@@ -253,7 +265,8 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
             
         Returns:
             Created ViolationDetection instance
-        """        try:
+        """
+        try:
             violation_data = {
                 "platform_monitoring_id": monitoring_id,
                 "scan_result_id": scan_result_id,
@@ -297,7 +310,8 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
         status: Optional[MonitoringStatus] = None,
         active_only: bool = True
     ) -> List[PlatformMonitoring]:
-        """        Get monitoring jobs by user with optional filters
+        """
+        Get monitoring jobs by user with optional filters
         
         Args:
             user_id: User UUID
@@ -307,7 +321,8 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
             
         Returns:
             List of PlatformMonitoring instances
-        """        try:
+        """
+        try:
             query = self.db_session.query(self.model).filter(
                 self.model.user_id == user_id
             )
@@ -336,7 +351,8 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
         days: int = 7,
         severity_filter: Optional[str] = None
     ) -> List[ViolationDetection]:
-        """        Get recent violation detections for a user
+        """
+        Get recent violation detections for a user
         
         Args:
             user_id: User UUID
@@ -345,7 +361,8 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
             
         Returns:
             List of ViolationDetection instances
-        """        try:
+        """
+        try:
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=days)
             
             query = self.db_session.query(ViolationDetection).join(
@@ -377,7 +394,8 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
         response_sent_at: datetime,
         response_successful: bool = True
     ) -> ViolationDetection:
-        """        Update automated response status for a violation
+        """
+        Update automated response status for a violation
         
         Args:
             violation_id: ViolationDetection UUID
@@ -387,7 +405,8 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
             
         Returns:
             Updated ViolationDetection instance
-        """        try:
+        """
+        try:
             violation = self.db_session.query(ViolationDetection).filter(
                 ViolationDetection.id == violation_id
             ).first()
@@ -420,7 +439,8 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
         user_id: str,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """        Get comprehensive monitoring analytics for a user
+        """
+        Get comprehensive monitoring analytics for a user
         
         Args:
             user_id: User UUID
@@ -428,7 +448,8 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
             
         Returns:
             Dictionary containing monitoring analytics
-        """        try:
+        """
+        try:
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=period_days)
             
             # Total monitoring jobs
@@ -528,7 +549,8 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
         monitoring_id: str,
         reason: str = "Manual pause"
     ) -> PlatformMonitoring:
-        """        Pause a monitoring job
+        """
+        Pause a monitoring job
         
         Args:
             monitoring_id: PlatformMonitoring UUID
@@ -536,7 +558,8 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
             
         Returns:
             Updated PlatformMonitoring instance
-        """        try:
+        """
+        try:
             monitoring_job = await self.get_by_id(monitoring_id)
             if not monitoring_job:
                 raise ValueError(f"Monitoring job not found: {monitoring_id}")
@@ -558,14 +581,16 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
         self,
         monitoring_id: str
     ) -> PlatformMonitoring:
-        """        Resume a paused monitoring job
+        """
+        Resume a paused monitoring job
         
         Args:
             monitoring_id: PlatformMonitoring UUID
             
         Returns:
             Updated PlatformMonitoring instance
-        """        try:
+        """
+        try:
             monitoring_job = await self.get_by_id(monitoring_id)
             if not monitoring_job:
                 raise ValueError(f"Monitoring job not found: {monitoring_id}")

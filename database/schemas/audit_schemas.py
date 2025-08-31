@@ -12,7 +12,8 @@ ALL RIGHTS RESERVED - This code, concept, and implementation are the exclusive
 intellectual property of Fahed Mlaiel (mlaiel@live.de). Unauthorized use, copying, 
 modification, or distribution is strictly prohibited and will result in immediate 
 legal action under German and international copyright law.
-"""from datetime import datetime, date
+"""
+from datetime import datetime, date
 from decimal import Decimal
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any
@@ -23,7 +24,8 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class AuditEventTypeEnum(str, Enum):
-    """Types of audit events"""    USER_LOGIN = "user_login"
+    """Types of audit events"""
+    USER_LOGIN = "user_login"
     USER_LOGOUT = "user_logout"
     USER_REGISTRATION = "user_registration"
     CONTENT_UPLOAD = "content_upload"
@@ -46,7 +48,8 @@ class AuditEventTypeEnum(str, Enum):
 
 
 class ComplianceFrameworkEnum(str, Enum):
-    """Compliance frameworks"""    GDPR = "gdpr"
+    """Compliance frameworks"""
+    GDPR = "gdpr"
     CCPA = "ccpa"
     SOX = "sox"
     HIPAA = "hipaa"
@@ -64,7 +67,8 @@ class ComplianceFrameworkEnum(str, Enum):
 
 
 class ComplianceStatusEnum(str, Enum):
-    """Compliance status levels"""    COMPLIANT = "compliant"
+    """Compliance status levels"""
+    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
     UNDER_REVIEW = "under_review"
@@ -75,7 +79,8 @@ class ComplianceStatusEnum(str, Enum):
 
 
 class RiskLevelEnum(str, Enum):
-    """Risk assessment levels"""    VERY_LOW = "very_low"
+    """Risk assessment levels"""
+    VERY_LOW = "very_low"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -84,7 +89,8 @@ class RiskLevelEnum(str, Enum):
 
 
 class DataCategoryEnum(str, Enum):
-    """Data categories for privacy compliance"""    PERSONAL_IDENTITY = "personal_identity"
+    """Data categories for privacy compliance"""
+    PERSONAL_IDENTITY = "personal_identity"
     FINANCIAL_DATA = "financial_data"
     BIOMETRIC_DATA = "biometric_data"
     LOCATION_DATA = "location_data"
@@ -99,7 +105,8 @@ class DataCategoryEnum(str, Enum):
 
 
 class AuditTrailSchema(BaseModel):
-    """Schema for comprehensive audit trail entries"""    audit_id: str = Field(..., description="Unique audit identifier")
+    """Schema for comprehensive audit trail entries"""
+    audit_id: str = Field(..., description="Unique audit identifier")
     event_type: AuditEventTypeEnum = Field(..., description="Type of audited event")
     user_id: Optional[PositiveInt] = Field(None, description="User who performed the action")
     session_id: Optional[str] = Field(None, description="Session identifier")
@@ -154,7 +161,8 @@ class AuditTrailSchema(BaseModel):
 
 
 class ComplianceAssessmentSchema(BaseModel):
-    """Schema for compliance assessments"""    assessment_id: str = Field(..., description="Unique assessment identifier")
+    """Schema for compliance assessments"""
+    assessment_id: str = Field(..., description="Unique assessment identifier")
     framework: ComplianceFrameworkEnum = Field(..., description="Compliance framework")
     user_id: Optional[PositiveInt] = Field(None, description="User being assessed")
     resource_type: Optional[str] = Field(None, description="Resource type being assessed")
@@ -200,7 +208,8 @@ class ComplianceAssessmentSchema(BaseModel):
 
 
 class PrivacyImpactAssessmentSchema(BaseModel):
-    """Schema for Privacy Impact Assessments (PIA)"""    pia_id: str = Field(..., description="Unique PIA identifier")
+    """Schema for Privacy Impact Assessments (PIA)"""
+    pia_id: str = Field(..., description="Unique PIA identifier")
     project_name: str = Field(..., description="Name of project being assessed")
     project_description: str = Field(..., description="Description of the project")
     
@@ -246,7 +255,8 @@ class PrivacyImpactAssessmentSchema(BaseModel):
 
 
 class DataSubjectRequestSchema(BaseModel):
-    """Schema for data subject requests (GDPR Article 15-22)"""    request_id: str = Field(..., description="Unique request identifier")
+    """Schema for data subject requests (GDPR Article 15-22)"""
+    request_id: str = Field(..., description="Unique request identifier")
     request_type: str = Field(..., description="Type of request (access, rectification, erasure, etc.)")
     requester_email: str = Field(..., description="Email of the data subject")
     requester_name: Optional[str] = Field(None, description="Name of the data subject")
@@ -292,7 +302,8 @@ class DataSubjectRequestSchema(BaseModel):
 
 
 class ComplianceReportSchema(BaseModel):
-    """Schema for compliance reporting"""    report_id: str = Field(..., description="Unique report identifier")
+    """Schema for compliance reporting"""
+    report_id: str = Field(..., description="Unique report identifier")
     report_type: str = Field(..., description="Type of compliance report")
     reporting_period_start: date = Field(..., description="Start of reporting period")
     reporting_period_end: date = Field(..., description="End of reporting period")
@@ -342,7 +353,8 @@ class ComplianceReportSchema(BaseModel):
 
 
 class RetentionPolicySchema(BaseModel):
-    """Schema for data retention policies"""    policy_id: str = Field(..., description="Unique policy identifier")
+    """Schema for data retention policies"""
+    policy_id: str = Field(..., description="Unique policy identifier")
     policy_name: str = Field(..., description="Name of the retention policy")
     data_category: DataCategoryEnum = Field(..., description="Category of data covered")
     

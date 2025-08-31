@@ -8,7 +8,7 @@ Responsibility: Enterprise challenge and competition management system
 ============================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
 
@@ -20,7 +20,9 @@ Multi-platform distribution
 CHALLENGE SYSTEM ARCHITECTURE:
 Challenge Creation → User Participation → Progress Tracking → 
 Competition Management → Scoring & Ranking → Reward Distribution
-"""from .challenge_engine import (
+"""
+
+from .challenge_engine import (
     ChallengeEngine,
     ChallengeType,
     ChallengeCategory,
@@ -67,7 +69,7 @@ from .index import (
 
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel (mlaiel@live.de)"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 __all__ = [
     # Core Engine

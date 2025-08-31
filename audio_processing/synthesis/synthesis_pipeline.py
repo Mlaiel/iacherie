@@ -7,7 +7,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
-"""import torch
+"""
+import torch
 import torch.nn as nn
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Union, Any, Callable, Iterator
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class PipelineStatus(Enum):
-    """Pipeline execution status."""    IDLE = "idle"
+    """Pipeline execution status."""
+    IDLE = "idle"
     PREPARING = "preparing"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -38,14 +40,16 @@ class PipelineStatus(Enum):
 
 
 class ProcessingMode(Enum):
-    """Processing execution modes."""    SEQUENTIAL = "sequential"
+    """Processing execution modes."""
+    SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     ADAPTIVE = "adaptive"
     DISTRIBUTED = "distributed"
 
 
 class PipelineEvent(Enum):
-    """Pipeline event types."""    STAGE_STARTED = "stage_started"
+    """Pipeline event types."""
+    STAGE_STARTED = "stage_started"
     STAGE_COMPLETED = "stage_completed"
     STAGE_FAILED = "stage_failed"
     PIPELINE_STARTED = "pipeline_started"
@@ -57,7 +61,8 @@ class PipelineEvent(Enum):
 
 @dataclass
 class PipelineContext:
-    """Context information passed through pipeline stages."""    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Context information passed through pipeline stages."""
+    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     metadata: Dict[str, Any] = field(default_factory=dict)
     parameters: Dict[str, Any] = field(default_factory=dict)
     quality_metrics: Dict[str, float] = field(default_factory=dict)
@@ -69,7 +74,8 @@ class PipelineContext:
 
 @dataclass
 class StageResult:
-    """Result from a pipeline stage."""    stage_name: str
+    """Result from a pipeline stage."""
+    stage_name: str
     output: Any
     execution_time: float
     memory_used: int
@@ -81,7 +87,8 @@ class StageResult:
 
 @dataclass
 class PipelineConfig:
-    """Configuration for synthesis pipelines."""    max_concurrent_pipelines: int = 4
+    """Configuration for synthesis pipelines."""
+    max_concurrent_pipelines: int = 4
     stage_timeout: float = 60.0
     quality_threshold: float = 0.8
     enable_caching: bool = True
@@ -96,7 +103,8 @@ class PipelineConfig:
 
 
 class SynthesisStage(ABC):
-    """Abstract base class for pipeline stages."""    
+    """Abstract base class for pipeline stages."""
+    
     def __init__(self, name: str, config: Dict[str, Any] = None):
         self.name = name
         self.config = config or {}
@@ -107,25 +115,30 @@ class SynthesisStage(ABC):
         
     @abstractmethod
     async def process(self, input_data: Any, context: PipelineContext) -> StageResult:
-        """Process input data and return result."""        pass
+        """Process input data and return result."""
+        pass
         
     def validate_input(self, input_data: Any) -> bool:
-        """Validate input data format."""        if not self.input_types:
+        """Validate input data format."""
+        if not self.input_types:
             return True
             
         return any(isinstance(input_data, input_type) for input_type in self.input_types)
         
     def estimate_processing_time(self, input_data: Any) -> float:
-        """Estimate processing time for input."""        # Default estimation based on historical data
+        """Estimate processing time for input."""
+        # Default estimation based on historical data
         if self.performance_metrics['execution_times']:
             return np.mean(self.performance_metrics['execution_times'])
         return 1.0  # Default 1 second
         
     def can_process(self, input_data: Any, context: PipelineContext) -> bool:
-        """Check if stage can process the input."""        return self.validate_input(input_data)
+        """Check if stage can process the input."""
+        return self.validate_input(input_data)
         
     def record_performance(self, execution_time: float, memory_used: int) -> None:
-        """Record performance metrics."""        self.performance_metrics['execution_times'].append(execution_time)
+        """Record performance metrics."""
+        self.performance_metrics['execution_times'].append(execution_time)
         self.performance_metrics['memory_usage'].append(memory_used)
         
         # Keep only recent metrics (last 100 executions)
@@ -135,14 +148,16 @@ class SynthesisStage(ABC):
 
 
 class AudioPreprocessingStage(SynthesisStage):
-    """Audio preprocessing stage."""    
+    """Audio preprocessing stage."""
+    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__("audio_preprocessing", config)
         self.input_types = [torch.Tensor, np.ndarray]
         self.output_types = [torch.Tensor]
         
     async def process(self, input_data: Any, context: PipelineContext) -> StageResult:
-        """Preprocess audio data."""        start_time = time.time()
+        """Preprocess audio data."""
+        start_time = time.time()
         
         try:
             # Convert to tensor if needed
@@ -200,7 +215,8 @@ class AudioPreprocessingStage(SynthesisStage):
             )
             
     def _apply_highpass_filter(self, audio: torch.Tensor, sample_rate: int, cutoff: float = 80) -> torch.Tensor:
-        """Apply high-pass filter."""        from scipy import signal
+        """Apply high-pass filter."""
+        from scipy import signal
         
         # Design high-pass filter
         nyquist = sample_rate / 2
@@ -216,7 +232,8 @@ class AudioPreprocessingStage(SynthesisStage):
         return torch.from_numpy(filtered).float()
         
     def _apply_noise_gate(self, audio: torch.Tensor, threshold_db: float) -> torch.Tensor:
-        """Apply noise gate."""        # Convert dB to linear
+        """Apply noise gate."""
+        # Convert dB to linear
         threshold_linear = 10 ** (threshold_db / 20)
         
         # Create gate mask
@@ -229,7 +246,8 @@ class AudioPreprocessingStage(SynthesisStage):
         return audio * gate_smooth
         
     def _smooth_gate(self, gate_mask: torch.Tensor, attack: float = 0.001, release: float = 0.1) -> torch.Tensor:
-        """Smooth gate transitions."""        # Simple exponential smoothing
+        """Smooth gate transitions."""
+        # Simple exponential smoothing
         smoothed = torch.zeros_like(gate_mask)
         prev_value = 0.0
         
@@ -246,7 +264,8 @@ class AudioPreprocessingStage(SynthesisStage):
         return smoothed
         
     def _apply_compression(self, audio: torch.Tensor, ratio: float, threshold: float = 0.5) -> torch.Tensor:
-        """Apply dynamic range compression."""        amplitude = torch.abs(audio)
+        """Apply dynamic range compression."""
+        amplitude = torch.abs(audio)
         
         # Apply compression above threshold
         compressed_amplitude = torch.where(
@@ -261,7 +280,8 @@ class AudioPreprocessingStage(SynthesisStage):
         return compressed_amplitude * phase
         
     def _calculate_audio_quality(self, audio: torch.Tensor) -> float:
-        """Calculate audio quality score."""        # Simple quality metrics
+        """Calculate audio quality score."""
+        # Simple quality metrics
         snr = self._calculate_snr(audio)
         thd = self._calculate_thd(audio)
         
@@ -271,7 +291,8 @@ class AudioPreprocessingStage(SynthesisStage):
         return max(0.0, min(1.0, quality))
         
     def _calculate_snr(self, audio: torch.Tensor) -> float:
-        """Calculate signal-to-noise ratio."""        # Estimate noise as the quietest 10% of samples
+        """Calculate signal-to-noise ratio."""
+        # Estimate noise as the quietest 10% of samples
         sorted_amplitude = torch.sort(torch.abs(audio))[0]
         noise_level = torch.mean(sorted_amplitude[:len(sorted_amplitude)//10])
         signal_level = torch.mean(torch.abs(audio))
@@ -283,7 +304,8 @@ class AudioPreprocessingStage(SynthesisStage):
             return 60.0  # Very high SNR
             
     def _calculate_thd(self, audio: torch.Tensor) -> float:
-        """Calculate total harmonic distortion."""        # Simplified THD estimation
+        """Calculate total harmonic distortion."""
+        # Simplified THD estimation
         fft = torch.fft.fft(audio)
         magnitude = torch.abs(fft)
         
@@ -306,7 +328,8 @@ class AudioPreprocessingStage(SynthesisStage):
 
 
 class SynthesisProcessingStage(SynthesisStage):
-    """Main synthesis processing stage."""    
+    """Main synthesis processing stage."""
+    
     def __init__(self, model: nn.Module, config: Dict[str, Any] = None):
         super().__init__("synthesis_processing", config)
         self.model = model
@@ -314,7 +337,8 @@ class SynthesisProcessingStage(SynthesisStage):
         self.output_types = [torch.Tensor]
         
     async def process(self, input_data: Any, context: PipelineContext) -> StageResult:
-        """Process data through synthesis model."""        start_time = time.time()
+        """Process data through synthesis model."""
+        start_time = time.time()
         
         try:
             # Prepare input for model
@@ -361,7 +385,8 @@ class SynthesisProcessingStage(SynthesisStage):
             )
             
     def _prepare_model_input(self, input_dict: Dict, context: PipelineContext) -> torch.Tensor:
-        """Prepare input dictionary for model."""        # Extract relevant features based on model requirements
+        """Prepare input dictionary for model."""
+        # Extract relevant features based on model requirements
         if 'audio' in input_dict:
             return input_dict['audio']
         elif 'features' in input_dict:
@@ -374,7 +399,8 @@ class SynthesisProcessingStage(SynthesisStage):
             raise ValueError("No suitable tensor found in input dictionary")
             
     def _post_process_output(self, output: torch.Tensor, context: PipelineContext) -> torch.Tensor:
-        """Post-process model output."""        # Apply any configured post-processing
+        """Post-process model output."""
+        # Apply any configured post-processing
         processed = output
         
         # Normalization
@@ -394,7 +420,8 @@ class SynthesisProcessingStage(SynthesisStage):
         return processed
         
     def _apply_fades(self, audio: torch.Tensor, fade_length: int = 1024) -> torch.Tensor:
-        """Apply fade in/out to audio."""        length = audio.shape[-1]
+        """Apply fade in/out to audio."""
+        length = audio.shape[-1]
         fade_length = min(fade_length, length // 4)
         
         # Create fade curves
@@ -412,10 +439,12 @@ class SynthesisProcessingStage(SynthesisStage):
         return audio
         
     def _estimate_memory_usage(self, tensor: torch.Tensor) -> int:
-        """Estimate memory usage of tensor."""        return tensor.numel() * tensor.element_size()
+        """Estimate memory usage of tensor."""
+        return tensor.numel() * tensor.element_size()
         
     def _evaluate_synthesis_quality(self, output: torch.Tensor, context: PipelineContext) -> float:
-        """Evaluate quality of synthesized audio."""        # Basic quality metrics
+        """Evaluate quality of synthesized audio."""
+        # Basic quality metrics
         quality_score = 0.0
         
         # Check for clipping
@@ -440,7 +469,8 @@ class SynthesisProcessingStage(SynthesisStage):
         return max(0.0, min(1.0, quality_score))
         
     def _calculate_spectral_centroid(self, audio: torch.Tensor) -> float:
-        """Calculate spectral centroid."""        if audio.dim() > 1:
+        """Calculate spectral centroid."""
+        if audio.dim() > 1:
             audio = torch.mean(audio, dim=0)
             
         # Compute FFT
@@ -454,7 +484,8 @@ class SynthesisProcessingStage(SynthesisStage):
         return abs(centroid.item())
         
     def _check_continuity(self, audio: torch.Tensor) -> float:
-        """Check audio continuity (no sudden jumps)."""        if audio.dim() > 1:
+        """Check audio continuity (no sudden jumps)."""
+        if audio.dim() > 1:
             audio = torch.mean(audio, dim=0)
             
         # Calculate first derivative
@@ -467,14 +498,16 @@ class SynthesisProcessingStage(SynthesisStage):
 
 
 class AudioPostprocessingStage(SynthesisStage):
-    """Audio post-processing and enhancement stage."""    
+    """Audio post-processing and enhancement stage."""
+    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__("audio_postprocessing", config)
         self.input_types = [torch.Tensor]
         self.output_types = [torch.Tensor, np.ndarray]
         
     async def process(self, input_data: torch.Tensor, context: PipelineContext) -> StageResult:
-        """Post-process synthesized audio."""        start_time = time.time()
+        """Post-process synthesized audio."""
+        start_time = time.time()
         
         try:
             audio = input_data.clone()
@@ -531,7 +564,8 @@ class AudioPostprocessingStage(SynthesisStage):
             )
             
     def _apply_equalization(self, audio: torch.Tensor, context: PipelineContext) -> torch.Tensor:
-        """Apply equalization."""        # Simple 3-band EQ
+        """Apply equalization."""
+        # Simple 3-band EQ
         eq_config = self.config.get('eq_settings', {'low': 0, 'mid': 0, 'high': 0})
         
         sample_rate = context.parameters.get('sample_rate', 44100)
@@ -554,7 +588,8 @@ class AudioPostprocessingStage(SynthesisStage):
         return torch.fft.ifft(fft).real
         
     def _apply_reverb(self, audio: torch.Tensor, context: PipelineContext) -> torch.Tensor:
-        """Apply artificial reverb."""        reverb_config = self.config.get('reverb_settings', {'room_size': 0.5, 'damping': 0.5, 'wet': 0.3})
+        """Apply artificial reverb."""
+        reverb_config = self.config.get('reverb_settings', {'room_size': 0.5, 'damping': 0.5, 'wet': 0.3})
         
         # Simple convolution reverb with synthetic impulse response
         impulse_length = int(0.5 * context.parameters.get('sample_rate', 44100))  # 0.5 second
@@ -582,7 +617,8 @@ class AudioPostprocessingStage(SynthesisStage):
         return dry_level * audio + wet_level * reverb_audio[:len(audio)]
         
     def _apply_lowpass_filter(self, audio: torch.Tensor, cutoff_normalized: float) -> torch.Tensor:
-        """Apply simple lowpass filter."""        # Simple one-pole lowpass filter
+        """Apply simple lowpass filter."""
+        # Simple one-pole lowpass filter
         alpha = cutoff_normalized
         filtered = torch.zeros_like(audio)
         prev_sample = 0.0
@@ -594,7 +630,8 @@ class AudioPostprocessingStage(SynthesisStage):
         return filtered
         
     def _apply_mastering_chain(self, audio: torch.Tensor, context: PipelineContext) -> torch.Tensor:
-        """Apply mastering processing chain."""        processed = audio
+        """Apply mastering processing chain."""
+        processed = audio
         
         # Multiband compression
         processed = self._apply_multiband_compression(processed)
@@ -611,7 +648,8 @@ class AudioPostprocessingStage(SynthesisStage):
         return processed
         
     def _apply_multiband_compression(self, audio: torch.Tensor) -> torch.Tensor:
-        """Apply multiband compression."""        # Simplified multiband compression
+        """Apply multiband compression."""
+        # Simplified multiband compression
         # In practice, this would split audio into frequency bands
         
         # Apply gentle compression
@@ -631,14 +669,16 @@ class AudioPostprocessingStage(SynthesisStage):
         return compressed_amplitude * phase
         
     def _apply_harmonic_enhancement(self, audio: torch.Tensor) -> torch.Tensor:
-        """Apply subtle harmonic enhancement."""        # Add subtle harmonic distortion
+        """Apply subtle harmonic enhancement."""
+        # Add subtle harmonic distortion
         drive = 0.1
         enhanced = audio + drive * torch.tanh(audio * 3.0) * 0.1
         
         return enhanced
         
     def _apply_stereo_widening(self, stereo_audio: torch.Tensor) -> torch.Tensor:
-        """Apply stereo widening effect."""        left = stereo_audio[0]
+        """Apply stereo widening effect."""
+        left = stereo_audio[0]
         right = stereo_audio[1]
         
         # Calculate mid and side signals
@@ -656,11 +696,13 @@ class AudioPostprocessingStage(SynthesisStage):
         return torch.stack([left_enhanced, right_enhanced])
         
     def _apply_limiter(self, audio: torch.Tensor, threshold: float = 0.95) -> torch.Tensor:
-        """Apply limiting to prevent clipping."""        # Soft limiting
+        """Apply limiting to prevent clipping."""
+        # Soft limiting
         return torch.tanh(audio / threshold) * threshold
         
     def _assess_final_quality(self, audio: torch.Tensor) -> float:
-        """Assess final audio quality."""        quality_metrics = []
+        """Assess final audio quality."""
+        quality_metrics = []
         
         # Peak level check
         peak_level = torch.max(torch.abs(audio)).item()
@@ -706,7 +748,8 @@ class AudioPostprocessingStage(SynthesisStage):
 
 
 class SynthesisPipelineManager:
-    """Manager for complex synthesis pipelines."""    
+    """Manager for complex synthesis pipelines."""
+    
     def __init__(self, config: PipelineConfig):
         self.config = config
         self.pipelines: Dict[str, 'SynthesisPipeline'] = {}
@@ -734,7 +777,8 @@ class SynthesisPipelineManager:
         self._initialize_pipeline_templates()
         
     def _initialize_pipeline_templates(self) -> None:
-        """Initialize built-in pipeline templates."""        # Basic synthesis pipeline
+        """Initialize built-in pipeline templates."""
+        # Basic synthesis pipeline
         self.pipeline_templates['basic_synthesis'] = {
             'stages': [
                 {'type': 'preprocessing', 'config': {'normalize': True}},
@@ -765,11 +809,13 @@ class SynthesisPipelineManager:
         }
         
     def register_pipeline(self, name: str, pipeline: 'SynthesisPipeline') -> None:
-        """Register a custom pipeline."""        self.pipelines[name] = pipeline
+        """Register a custom pipeline."""
+        self.pipelines[name] = pipeline
         logger.info(f"Registered pipeline: {name}")
         
     def create_pipeline_from_template(self, template_name: str, **kwargs) -> 'SynthesisPipeline':
-        """Create pipeline from template."""        if template_name not in self.pipeline_templates:
+        """Create pipeline from template."""
+        if template_name not in self.pipeline_templates:
             raise ValueError(f"Pipeline template '{template_name}' not found")
             
         template = self.pipeline_templates[template_name]
@@ -791,7 +837,8 @@ class SynthesisPipelineManager:
         return pipeline
         
     def _create_stage_from_config(self, stage_config: Dict[str, Any], **kwargs) -> SynthesisStage:
-        """Create stage from configuration."""        stage_type = stage_config['type']
+        """Create stage from configuration."""
+        stage_type = stage_config['type']
         config = {**stage_config.get('config', {}), **kwargs}
         
         if stage_type == 'preprocessing':
@@ -811,7 +858,8 @@ class SynthesisPipelineManager:
             
     async def execute_pipeline(self, pipeline_name: str, input_data: Any,
                               context: PipelineContext = None) -> Dict[str, Any]:
-        """Execute a registered pipeline."""        if pipeline_name not in self.pipelines:
+        """Execute a registered pipeline."""
+        if pipeline_name not in self.pipelines:
             raise ValueError(f"Pipeline '{pipeline_name}' not found")
             
         pipeline = self.pipelines[pipeline_name]
@@ -891,7 +939,8 @@ class SynthesisPipelineManager:
                 
     def _generate_cache_key(self, pipeline_name: str, input_data: Any,
                            context: PipelineContext) -> str:
-        """Generate cache key for pipeline execution."""        # Simple cache key based on pipeline name and input hash
+        """Generate cache key for pipeline execution."""
+        # Simple cache key based on pipeline name and input hash
         import hashlib
         
         key_data = f"{pipeline_name}_{context.parameters}_{hash(str(input_data))}"
@@ -899,7 +948,8 @@ class SynthesisPipelineManager:
         
     def _record_execution(self, pipeline_name: str, execution_id: str,
                          result: Dict[str, Any], context: PipelineContext) -> None:
-        """Record pipeline execution for analysis."""        execution_record = {
+        """Record pipeline execution for analysis."""
+        execution_record = {
             'pipeline_name': pipeline_name,
             'execution_id': execution_id,
             'timestamp': time.time(),
@@ -916,10 +966,12 @@ class SynthesisPipelineManager:
             self.execution_history = self.execution_history[-1000:]
             
     def add_event_handler(self, event: PipelineEvent, handler: Callable) -> None:
-        """Add event handler for pipeline events."""        self.event_handlers[event].append(handler)
+        """Add event handler for pipeline events."""
+        self.event_handlers[event].append(handler)
         
     async def _emit_event(self, event: PipelineEvent, data: Dict[str, Any]) -> None:
-        """Emit pipeline event to registered handlers."""        for handler in self.event_handlers[event]:
+        """Emit pipeline event to registered handlers."""
+        for handler in self.event_handlers[event]:
             try:
                 if asyncio.iscoroutinefunction(handler):
                     await handler(event, data)
@@ -929,7 +981,8 @@ class SynthesisPipelineManager:
                 logger.error(f"Event handler error: {e}")
                 
     def get_pipeline_statistics(self, pipeline_name: str = None) -> Dict[str, Any]:
-        """Get pipeline execution statistics."""        if pipeline_name:
+        """Get pipeline execution statistics."""
+        if pipeline_name:
             executions = [e for e in self.execution_history if e['pipeline_name'] == pipeline_name]
         else:
             executions = self.execution_history
@@ -958,7 +1011,8 @@ class SynthesisPipelineManager:
 
 
 class SynthesisPipeline:
-    """Individual synthesis pipeline with stages."""    
+    """Individual synthesis pipeline with stages."""
+    
     def __init__(self, name: str, config: PipelineConfig):
         self.name = name
         self.config = config
@@ -967,14 +1021,17 @@ class SynthesisPipeline:
         self.status = PipelineStatus.IDLE
         
     def add_stage(self, stage: SynthesisStage) -> None:
-        """Add processing stage to pipeline."""        self.stages.append(stage)
+        """Add processing stage to pipeline."""
+        self.stages.append(stage)
         logger.debug(f"Added stage '{stage.name}' to pipeline '{self.name}'")
         
     def set_processing_mode(self, mode: ProcessingMode) -> None:
-        """Set processing mode for pipeline."""        self.processing_mode = mode
+        """Set processing mode for pipeline."""
+        self.processing_mode = mode
         
     async def execute(self, input_data: Any, context: PipelineContext) -> Dict[str, Any]:
-        """Execute pipeline with input data."""        self.status = PipelineStatus.PREPARING
+        """Execute pipeline with input data."""
+        self.status = PipelineStatus.PREPARING
         start_time = time.time()
         
         stage_results = []
@@ -1038,7 +1095,8 @@ class SynthesisPipeline:
             }
             
     async def _execute_parallel(self, input_data: Any, context: PipelineContext) -> List[StageResult]:
-        """Execute stages in parallel where possible."""        # This is a simplified implementation
+        """Execute stages in parallel where possible."""
+        # This is a simplified implementation
         # In practice, would need dependency analysis
         
         tasks = []
@@ -1067,18 +1125,21 @@ class SynthesisPipeline:
 
 
 class ChainedSynthesis:
-    """Chained synthesis for complex multi-stage processing."""    
+    """Chained synthesis for complex multi-stage processing."""
+    
     def __init__(self, config: PipelineConfig):
         self.config = config
         self.chains: Dict[str, List[SynthesisPipeline]] = {}
         
     def create_chain(self, name: str, pipelines: List[SynthesisPipeline]) -> None:
-        """Create pipeline chain."""        self.chains[name] = pipelines
+        """Create pipeline chain."""
+        self.chains[name] = pipelines
         logger.info(f"Created synthesis chain '{name}' with {len(pipelines)} pipelines")
         
     async def execute_chain(self, chain_name: str, input_data: Any,
                            context: PipelineContext = None) -> Dict[str, Any]:
-        """Execute pipeline chain."""        if chain_name not in self.chains:
+        """Execute pipeline chain."""
+        if chain_name not in self.chains:
             raise ValueError(f"Chain '{chain_name}' not found")
             
         pipelines = self.chains[chain_name]
@@ -1124,14 +1185,16 @@ class ChainedSynthesis:
 
 
 class ParallelSynthesis:
-    """Parallel synthesis execution manager."""    
+    """Parallel synthesis execution manager."""
+    
     def __init__(self, config: PipelineConfig):
         self.config = config
         self.executor = ThreadPoolExecutor(max_workers=config.max_concurrent_pipelines)
         
     async def execute_multiple_pipelines(self, pipeline_configs: List[Dict[str, Any]],
                                         input_data: Any) -> Dict[str, Any]:
-        """Execute multiple pipelines in parallel."""        start_time = time.time()
+        """Execute multiple pipelines in parallel."""
+        start_time = time.time()
         
         # Create execution tasks
         tasks = []
@@ -1180,7 +1243,8 @@ class ParallelSynthesis:
         
     async def execute_with_voting(self, pipelines: List[SynthesisPipeline],
                                  input_data: Any, voting_strategy: str = 'quality') -> Dict[str, Any]:
-        """Execute multiple pipelines and select best result using voting."""        # Execute all pipelines
+        """Execute multiple pipelines and select best result using voting."""
+        # Execute all pipelines
         pipeline_configs = [{'pipeline': p, 'context': PipelineContext()} for p in pipelines]
         results = await self.execute_multiple_pipelines(pipeline_configs, input_data)
         
@@ -1214,14 +1278,16 @@ class ParallelSynthesis:
 
 
 class PipelineCache:
-    """Cache system for pipeline results."""    
+    """Cache system for pipeline results."""
+    
     def __init__(self, ttl: int = 3600):
         self.ttl = ttl
         self.cache: Dict[str, Dict[str, Any]] = {}
         self.access_times: Dict[str, float] = {}
         
     def get(self, key: str) -> Optional[Any]:
-        """Get cached result."""        if key not in self.cache:
+        """Get cached result."""
+        if key not in self.cache:
             return None
             
         # Check TTL
@@ -1235,7 +1301,8 @@ class PipelineCache:
         return self.cache[key]
         
     def put(self, key: str, value: Any) -> None:
-        """Cache result."""        self.cache[key] = value
+        """Cache result."""
+        self.cache[key] = value
         self.access_times[key] = time.time()
         
         # Cleanup expired entries periodically
@@ -1243,7 +1310,8 @@ class PipelineCache:
             self._cleanup_expired()
             
     def _cleanup_expired(self) -> None:
-        """Remove expired cache entries."""        current_time = time.time()
+        """Remove expired cache entries."""
+        current_time = time.time()
         expired_keys = [
             key for key, access_time in self.access_times.items()
             if current_time - access_time > self.ttl
@@ -1255,19 +1323,23 @@ class PipelineCache:
 
 
 class PipelineResourceMonitor:
-    """Monitor resource usage during pipeline execution."""    
+    """Monitor resource usage during pipeline execution."""
+    
     def __init__(self):
         self.resource_history = defaultdict(list)
         self.monitoring = False
         
     def start_monitoring(self) -> None:
-        """Start resource monitoring."""        self.monitoring = True
+        """Start resource monitoring."""
+        self.monitoring = True
         
     def stop_monitoring(self) -> None:
-        """Stop resource monitoring."""        self.monitoring = False
+        """Stop resource monitoring."""
+        self.monitoring = False
         
     def get_resource_usage(self) -> Dict[str, Any]:
-        """Get current resource usage."""        import psutil
+        """Get current resource usage."""
+        import psutil
         
         return {
             'cpu_percent': psutil.cpu_percent(),
@@ -1278,12 +1350,14 @@ class PipelineResourceMonitor:
 
 
 class PipelineOptimizer:
-    """Optimize pipeline execution based on performance data."""    
+    """Optimize pipeline execution based on performance data."""
+    
     def __init__(self, pipeline_manager: SynthesisPipelineManager):
         self.pipeline_manager = pipeline_manager
         
     def optimize_pipeline_order(self, pipeline: SynthesisPipeline) -> SynthesisPipeline:
-        """Optimize stage order based on performance data."""        # Analyze stage performance
+        """Optimize stage order based on performance data."""
+        # Analyze stage performance
         stage_performance = {}
         
         for stage in pipeline.stages:
@@ -1298,7 +1372,8 @@ class PipelineOptimizer:
         return pipeline
         
     def suggest_processing_mode(self, pipeline: SynthesisPipeline) -> ProcessingMode:
-        """Suggest optimal processing mode based on stage characteristics."""        # Analyze stage dependencies and performance
+        """Suggest optimal processing mode based on stage characteristics."""
+        # Analyze stage dependencies and performance
         total_stages = len(pipeline.stages)
         
         if total_stages <= 2:

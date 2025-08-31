@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -22,7 +23,8 @@ Tests the complete AI remix generation system including:
 - Model performance and output
 
 Author: Integration Test Suite
-"""import asyncio
+"""
+import asyncio
 import pytest
 import sys
 import os
@@ -39,10 +41,12 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 
 class TestAIRemixGeneration:
-    """Integration tests for AI remix generation system"""    
+    """Integration tests for AI remix generation system"""
+    
     @pytest.fixture
     def sample_audio_metadata(self):
-        """Sample audio metadata for testing"""        return {
+        """Sample audio metadata for testing"""
+        return {
             "file_path": "/tmp/test_audio.mp3",
             "duration": 180.5,  # seconds
             "sample_rate": 44100,
@@ -56,7 +60,8 @@ class TestAIRemixGeneration:
     
     @pytest.fixture
     def sample_remix_parameters(self):
-        """Sample remix generation parameters"""        return {
+        """Sample remix generation parameters"""
+        return {
             "style": "lo-fi",
             "tempo_change": 0.9,  # 90% of original tempo
             "key_change": 0,  # no key change
@@ -69,7 +74,8 @@ class TestAIRemixGeneration:
     
     @pytest.fixture
     def mock_remix_engine(self):
-        """Mock AI remix generation engine"""        try:
+        """Mock AI remix generation engine"""
+        try:
             from ai_engine.remix_generation.remix_engine import RemixEngine
             return RemixEngine()
         except ImportError:
@@ -82,7 +88,8 @@ class TestAIRemixGeneration:
     
     @pytest.fixture
     def mock_audio_processor(self):
-        """Mock audio processing module"""        try:
+        """Mock audio processing module"""
+        try:
             from ai_engine.remix_generation.audio_processor import AudioProcessor
             return AudioProcessor()
         except ImportError:
@@ -93,7 +100,8 @@ class TestAIRemixGeneration:
     
     @pytest.fixture
     def mock_quality_assessor(self):
-        """Mock quality assessment module"""        try:
+        """Mock quality assessment module"""
+        try:
             from ai_engine.remix_generation.quality_assessor import QualityAssessor
             return QualityAssessor()
         except ImportError:
@@ -103,7 +111,8 @@ class TestAIRemixGeneration:
     
     @pytest.mark.asyncio
     async def test_ai_model_initialization(self, mock_remix_engine):
-        """Test AI model loading and initialization"""        print("🤖 Testing AI model initialization...")
+        """Test AI model loading and initialization"""
+        print("🤖 Testing AI model initialization...")
         
         # Mock model loading
         with patch.object(mock_remix_engine, 'load_models', new_callable=AsyncMock) as mock_load:
@@ -145,7 +154,8 @@ class TestAIRemixGeneration:
     
     @pytest.mark.asyncio
     async def test_audio_preprocessing_workflow(self, mock_audio_processor, sample_audio_metadata):
-        """Test audio preprocessing and analysis workflow"""        print("🎵 Testing audio preprocessing workflow...")
+        """Test audio preprocessing and analysis workflow"""
+        print("🎵 Testing audio preprocessing workflow...")
         
         # Mock audio analysis
         with patch.object(mock_audio_processor, 'analyze_audio', new_callable=AsyncMock) as mock_analyze:
@@ -185,7 +195,8 @@ class TestAIRemixGeneration:
     
     @pytest.mark.asyncio
     async def test_remix_generation_workflow(self, mock_remix_engine, sample_audio_metadata, sample_remix_parameters):
-        """Test complete remix generation workflow"""        print("🎛️ Testing remix generation workflow...")
+        """Test complete remix generation workflow"""
+        print("🎛️ Testing remix generation workflow...")
         
         # Mock remix generation
         with patch.object(mock_remix_engine, 'generate_remix', new_callable=AsyncMock) as mock_generate:
@@ -222,7 +233,8 @@ class TestAIRemixGeneration:
     
     @pytest.mark.asyncio
     async def test_style_transfer_functionality(self, mock_remix_engine, sample_audio_metadata):
-        """Test AI style transfer capabilities"""        print("🎨 Testing style transfer functionality...")
+        """Test AI style transfer capabilities"""
+        print("🎨 Testing style transfer functionality...")
         
         style_parameters = {
             "target_style": "lo-fi",
@@ -257,7 +269,8 @@ class TestAIRemixGeneration:
     
     @pytest.mark.asyncio
     async def test_quality_assessment_workflow(self, mock_quality_assessor, mock_remix_engine):
-        """Test remix quality assessment and validation"""        print("🔍 Testing quality assessment workflow...")
+        """Test remix quality assessment and validation"""
+        print("🔍 Testing quality assessment workflow...")
         
         generated_remix_path = "/tmp/generated_remix.wav"
         
@@ -306,7 +319,8 @@ class TestAIRemixGeneration:
     
     @pytest.mark.asyncio
     async def test_batch_processing_capability(self, mock_remix_engine):
-        """Test batch processing of multiple remixes"""        print("🔄 Testing batch processing capability...")
+        """Test batch processing of multiple remixes"""
+        print("🔄 Testing batch processing capability...")
         
         batch_request = {
             "audio_files": [
@@ -351,7 +365,8 @@ class TestAIRemixGeneration:
     
     @pytest.mark.asyncio
     async def test_model_performance_monitoring(self, mock_remix_engine):
-        """Test AI model performance monitoring and metrics"""        print("📊 Testing model performance monitoring...")
+        """Test AI model performance monitoring and metrics"""
+        print("📊 Testing model performance monitoring...")
         
         # Mock performance monitoring
         with patch.object(mock_remix_engine, 'get_performance_metrics', new_callable=AsyncMock) as mock_perf:
@@ -394,7 +409,8 @@ class TestAIRemixGeneration:
     
     @pytest.mark.asyncio
     async def test_error_handling_and_recovery(self, mock_remix_engine, sample_audio_metadata, sample_remix_parameters):
-        """Test error handling and recovery mechanisms"""        print("🚨 Testing error handling and recovery...")
+        """Test error handling and recovery mechanisms"""
+        print("🚨 Testing error handling and recovery...")
         
         # Test model failure recovery
         with patch.object(mock_remix_engine, 'generate_remix', new_callable=AsyncMock) as mock_generate:

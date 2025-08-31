@@ -11,17 +11,20 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
-"""from typing import Optional, Dict, Any, List
+"""
+from typing import Optional, Dict, Any, List
 import logging
 from datetime import datetime
 
 
 class IntentRecognitionError(Exception):
-    """    Base exception class for intent recognition system
+    """
+    Base exception class for intent recognition system
     
     Provides structured error handling with context information,
     recovery suggestions, and integration with monitoring systems.
-    """    
+    """
+    
     def __init__(
         self,
         message: str,
@@ -43,7 +46,8 @@ class IntentRecognitionError(Exception):
         self._log_error()
     
     def _log_error(self) -> None:
-        """Log error with appropriate level based on severity"""        logger = logging.getLogger(__name__)
+        """Log error with appropriate level based on severity"""
+        logger = logging.getLogger(__name__)
         
         error_details = {
             'error_code': self.error_code,
@@ -59,7 +63,8 @@ class IntentRecognitionError(Exception):
             logger.error(f"Non-recoverable error: {error_details}")
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary for API responses"""        return {
+        """Convert exception to dictionary for API responses"""
+        return {
             'error_type': self.__class__.__name__,
             'error_code': self.error_code,
             'message': self.message,
@@ -70,7 +75,8 @@ class IntentRecognitionError(Exception):
         }
     
     def __str__(self) -> str:
-        """Human-readable error message"""        base_message = f"[{self.error_code}] {self.message}"
+        """Human-readable error message"""
+        base_message = f"[{self.error_code}] {self.message}"
         
         if self.context:
             context_str = ", ".join([f"{k}={v}" for k, v in self.context.items()])
@@ -84,11 +90,13 @@ class IntentRecognitionError(Exception):
 
 
 class ClassificationError(IntentRecognitionError):
-    """    Exception raised during intent classification process
+    """
+    Exception raised during intent classification process
     
     Covers errors in model inference, preprocessing, postprocessing,
     and result formatting.
-    """    
+    """
+    
     def __init__(
         self,
         message: str,
@@ -123,11 +131,13 @@ class ClassificationError(IntentRecognitionError):
 
 
 class ModelLoadError(IntentRecognitionError):
-    """    Exception raised when model loading fails
+    """
+    Exception raised when model loading fails
     
     Covers errors in model initialization, weight loading,
     tokenizer setup, and model validation.
-    """    
+    """
+    
     def __init__(
         self,
         message: str,
@@ -162,11 +172,13 @@ class ModelLoadError(IntentRecognitionError):
 
 
 class ConfigurationError(IntentRecognitionError):
-    """    Exception raised for configuration-related issues
+    """
+    Exception raised for configuration-related issues
     
     Covers invalid settings, missing required parameters,
     environment setup issues, and validation failures.
-    """    
+    """
+    
     def __init__(
         self,
         message: str,
@@ -201,11 +213,13 @@ class ConfigurationError(IntentRecognitionError):
 
 
 class ValidationError(IntentRecognitionError):
-    """    Exception raised for input validation failures
+    """
+    Exception raised for input validation failures
     
     Covers text format validation, length restrictions,
     language detection issues, and content filtering.
-    """    
+    """
+    
     def __init__(
         self,
         message: str,
@@ -241,11 +255,13 @@ class ValidationError(IntentRecognitionError):
 
 
 class ProcessingTimeoutError(IntentRecognitionError):
-    """    Exception raised when processing exceeds timeout limits
+    """
+    Exception raised when processing exceeds timeout limits
     
     Covers classification timeouts, queue timeouts,
     and batch processing timeouts.
-    """    
+    """
+    
     def __init__(
         self,
         message: str,
@@ -281,11 +297,13 @@ class ProcessingTimeoutError(IntentRecognitionError):
 
 
 class CacheError(IntentRecognitionError):
-    """    Exception raised for caching system issues
+    """
+    Exception raised for caching system issues
     
     Covers cache store/retrieve failures, cache corruption,
     and cache eviction problems.
-    """    
+    """
+    
     def __init__(
         self,
         message: str,
@@ -319,11 +337,13 @@ class CacheError(IntentRecognitionError):
 
 
 class RateLimitError(IntentRecognitionError):
-    """    Exception raised when rate limits are exceeded
+    """
+    Exception raised when rate limits are exceeded
     
     Covers per-user limits, per-IP limits, global limits,
     and burst limit violations.
-    """    
+    """
+    
     def __init__(
         self,
         message: str,
@@ -361,11 +381,13 @@ class RateLimitError(IntentRecognitionError):
 
 
 class ResourceError(IntentRecognitionError):
-    """    Exception raised for resource-related issues
+    """
+    Exception raised for resource-related issues
     
     Covers memory limitations, disk space issues,
     GPU availability, and system resource constraints.
-    """    
+    """
+    
     def __init__(
         self,
         message: str,
@@ -401,11 +423,13 @@ class ResourceError(IntentRecognitionError):
 
 
 class IntegrationError(IntentRecognitionError):
-    """    Exception raised for external integration failures
+    """
+    Exception raised for external integration failures
     
     Covers API connection issues, authentication failures,
     service unavailability, and data format mismatches.
-    """    
+    """
+    
     def __init__(
         self,
         message: str,
@@ -460,7 +484,8 @@ def create_error_response(
     include_suggestions: bool = True,
     include_context: bool = False
 ) -> Dict[str, Any]:
-    """    Create standardized error response dictionary
+    """
+    Create standardized error response dictionary
     
     Args:
         exception: The exception to convert
@@ -469,7 +494,8 @@ def create_error_response(
         
     Returns:
         Standardized error response dictionary
-    """    response = {
+    """
+    response = {
         'success': False,
         'error': {
             'type': exception.__class__.__name__,
@@ -499,7 +525,8 @@ def handle_exception(
     exception: Exception,
     context: Optional[Dict[str, Any]] = None
 ) -> IntentRecognitionError:
-    """    Convert generic exceptions to structured intent recognition errors
+    """
+    Convert generic exceptions to structured intent recognition errors
     
     Args:
         func_name: Name of function where exception occurred
@@ -508,7 +535,8 @@ def handle_exception(
         
     Returns:
         Structured intent recognition error
-    """    context = context or {}
+    """
+    context = context or {}
     context['function'] = func_name
     context['original_exception_type'] = exception.__class__.__name__
     
@@ -549,8 +577,10 @@ def handle_exception(
 
 
 class MonetizationIntentError(IntentRecognitionError):
-    """Monetization intent processing error"""    pass
+    """Monetization intent processing error"""
+    pass
 
 
 class CollaborationIntentError(IntentRecognitionError):
-    """Collaboration intent processing error"""    pass
+    """Collaboration intent processing error"""
+    pass

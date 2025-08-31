@@ -22,7 +22,8 @@ Contact: mlaiel@live.de
 ⚠️ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import time
@@ -39,7 +40,8 @@ logger = logging.getLogger(__name__)
 
 
 class PrivilegeType(Enum):
-    """Database privilege types"""    SELECT = "SELECT"
+    """Database privilege types"""
+    SELECT = "SELECT"
     INSERT = "INSERT"
     UPDATE = "UPDATE"
     DELETE = "DELETE"
@@ -57,7 +59,8 @@ class PrivilegeType(Enum):
 
 
 class ResourceType(Enum):
-    """Database resource types"""    DATABASE = "database"
+    """Database resource types"""
+    DATABASE = "database"
     SCHEMA = "schema"
     TABLE = "table"
     COLUMN = "column"
@@ -70,13 +73,15 @@ class ResourceType(Enum):
 
 
 class GrantOption(Enum):
-    """Grant option types"""    NONE = "none"
+    """Grant option types"""
+    NONE = "none"
     GRANT_OPTION = "grant_option"
     ADMIN_OPTION = "admin_option"
 
 
 class PrivilegeScope(Enum):
-    """Privilege scope levels"""    GLOBAL = "global"
+    """Privilege scope levels"""
+    GLOBAL = "global"
     DATABASE = "database"
     SCHEMA = "schema"
     TABLE = "table"
@@ -86,7 +91,8 @@ class PrivilegeScope(Enum):
 
 @dataclass
 class DatabaseResource:
-    """Database resource definition"""    resource_id: str
+    """Database resource definition"""
+    resource_id: str
     resource_type: ResourceType
     name: str
     schema_name: Optional[str] = None
@@ -99,7 +105,8 @@ class DatabaseResource:
 
 @dataclass
 class PrivilegeGrant:
-    """Database privilege grant"""    grant_id: str
+    """Database privilege grant"""
+    grant_id: str
     principal_id: str
     principal_type: str  # user, role, group
     resource_id: str
@@ -115,7 +122,8 @@ class PrivilegeGrant:
 
 @dataclass
 class Role:
-    """Database role definition"""    role_id: str
+    """Database role definition"""
+    role_id: str
     name: str
     description: str
     parent_roles: List[str] = field(default_factory=list)
@@ -130,7 +138,8 @@ class Role:
 
 @dataclass
 class User:
-    """Database user definition"""    user_id: str
+    """Database user definition"""
+    user_id: str
     username: str
     email: Optional[str] = None
     full_name: Optional[str] = None
@@ -147,7 +156,8 @@ class User:
 
 @dataclass
 class AccessRequest:
-    """Privilege access request"""    request_id: str
+    """Privilege access request"""
+    request_id: str
     requester_id: str
     user_id: str
     resource_id: str
@@ -163,7 +173,8 @@ class AccessRequest:
 
 @dataclass
 class PrivilegeAudit:
-    """Privilege audit record"""    audit_id: str
+    """Privilege audit record"""
+    audit_id: str
     action: str  # grant, revoke, modify, access
     principal_id: str
     resource_id: str
@@ -176,7 +187,8 @@ class PrivilegeAudit:
 
 
 class PrivilegeEngine(ABC):
-    """Abstract privilege engine interface"""    
+    """Abstract privilege engine interface"""
+    
     @abstractmethod
     async def grant_privilege(
         self, 
@@ -185,7 +197,8 @@ class PrivilegeEngine(ABC):
         privilege_type: PrivilegeType,
         grant_option: GrantOption = GrantOption.NONE
     ) -> bool:
-        """Grant privilege to principal"""        pass
+        """Grant privilege to principal"""
+        pass
     
     @abstractmethod
     async def revoke_privilege(
@@ -194,7 +207,8 @@ class PrivilegeEngine(ABC):
         resource_id: str, 
         privilege_type: PrivilegeType
     ) -> bool:
-        """Revoke privilege from principal"""        pass
+        """Revoke privilege from principal"""
+        pass
     
     @abstractmethod
     async def check_privilege(
@@ -203,11 +217,13 @@ class PrivilegeEngine(ABC):
         resource_id: str, 
         privilege_type: PrivilegeType
     ) -> bool:
-        """Check if principal has privilege on resource"""        pass
+        """Check if principal has privilege on resource"""
+        pass
 
 
 class PostgreSQLPrivilegeEngine(PrivilegeEngine):
-    """PostgreSQL-specific privilege engine"""    
+    """PostgreSQL-specific privilege engine"""
+    
     def __init__(self, connection_config: Dict[str, Any]):
         self.connection_config = connection_config
         # In production, this would initialize database connection
@@ -219,7 +235,8 @@ class PostgreSQLPrivilegeEngine(PrivilegeEngine):
         privilege_type: PrivilegeType,
         grant_option: GrantOption = GrantOption.NONE
     ) -> bool:
-        """Grant PostgreSQL privilege"""        try:
+        """Grant PostgreSQL privilege"""
+        try:
             # Construct GRANT statement
             grant_sql = self._build_grant_statement(
                 principal_id, resource_id, privilege_type, grant_option
@@ -240,7 +257,8 @@ class PostgreSQLPrivilegeEngine(PrivilegeEngine):
         resource_id: str, 
         privilege_type: PrivilegeType
     ) -> bool:
-        """Revoke PostgreSQL privilege"""        try:
+        """Revoke PostgreSQL privilege"""
+        try:
             # Construct REVOKE statement
             revoke_sql = self._build_revoke_statement(
                 principal_id, resource_id, privilege_type
@@ -261,7 +279,8 @@ class PostgreSQLPrivilegeEngine(PrivilegeEngine):
         resource_id: str, 
         privilege_type: PrivilegeType
     ) -> bool:
-        """Check PostgreSQL privilege"""        try:
+        """Check PostgreSQL privilege"""
+        try:
             # Query privilege information
             check_sql = self._build_privilege_check(
                 principal_id, resource_id, privilege_type
@@ -283,7 +302,8 @@ class PostgreSQLPrivilegeEngine(PrivilegeEngine):
         privilege_type: PrivilegeType,
         grant_option: GrantOption
     ) -> str:
-        """Build PostgreSQL GRANT statement"""        privilege = privilege_type.value
+        """Build PostgreSQL GRANT statement"""
+        privilege = privilege_type.value
         resource = resource_id  # Simplified
         
         sql = f"GRANT {privilege} ON {resource} TO {principal_id}"
@@ -299,7 +319,8 @@ class PostgreSQLPrivilegeEngine(PrivilegeEngine):
         resource_id: str, 
         privilege_type: PrivilegeType
     ) -> str:
-        """Build PostgreSQL REVOKE statement"""        privilege = privilege_type.value
+        """Build PostgreSQL REVOKE statement"""
+        privilege = privilege_type.value
         resource = resource_id  # Simplified
         
         return f"REVOKE {privilege} ON {resource} FROM {principal_id}"
@@ -310,11 +331,14 @@ class PostgreSQLPrivilegeEngine(PrivilegeEngine):
         resource_id: str, 
         privilege_type: PrivilegeType
     ) -> str:
-        """Build PostgreSQL privilege check query"""        # Simplified query - in production would check information_schema
-        return f"""        SELECT has_table_privilege('{principal_id}', '{resource_id}', '{privilege_type.value}')
+        """Build PostgreSQL privilege check query"""
+        # Simplified query - in production would check information_schema
+        return f"""
+        SELECT has_table_privilege('{principal_id}', '{resource_id}', '{privilege_type.value}')
         """
 class PrivilegeManager:
-    """    Enterprise-grade database privilege manager
+    """
+    Enterprise-grade database privilege manager
     
     Provides comprehensive privilege management capabilities including:
     - Role-based access control (RBAC)
@@ -322,9 +346,11 @@ class PrivilegeManager:
     - Privilege inheritance and delegation
     - Access request workflows
     - Comprehensive audit logging
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize privilege manager"""        self.config = config or {}
+        """Initialize privilege manager"""
+        self.config = config or {}
         self.users: Dict[str, User] = {}
         self.roles: Dict[str, Role] = {}
         self.resources: Dict[str, DatabaseResource] = {}
@@ -347,7 +373,8 @@ class PrivilegeManager:
         logger.info("Database privilege manager initialized successfully")
     
     def _initialize_system_roles(self):
-        """Initialize system roles"""        try:
+        """Initialize system roles"""
+        try:
             # Create default system roles
             system_roles = [
                 Role(
@@ -400,7 +427,8 @@ class PrivilegeManager:
         full_name: Optional[str] = None,
         initial_roles: Optional[List[str]] = None
     ) -> str:
-        """        Create new database user
+        """
+        Create new database user
         
         Args:
             username: Username
@@ -410,7 +438,8 @@ class PrivilegeManager:
             
         Returns:
             User ID
-        """        try:
+        """
+        try:
             # Check if username already exists
             if any(user.username == username for user in self.users.values()):
                 raise ValueError(f"Username already exists: {username}")
@@ -449,7 +478,8 @@ class PrivilegeManager:
         parent_roles: Optional[List[str]] = None,
         created_by: str = ""
     ) -> str:
-        """        Create new database role
+        """
+        Create new database role
         
         Args:
             name: Role name
@@ -459,7 +489,8 @@ class PrivilegeManager:
             
         Returns:
             Role ID
-        """        try:
+        """
+        try:
             # Check if role name already exists
             if any(role.name == name for role in self.roles.values()):
                 raise ValueError(f"Role name already exists: {name}")
@@ -510,7 +541,8 @@ class PrivilegeManager:
         role_id: str,
         assigned_by: str = ""
     ) -> bool:
-        """        Assign role to user
+        """
+        Assign role to user
         
         Args:
             user_id: User ID
@@ -519,7 +551,8 @@ class PrivilegeManager:
             
         Returns:
             True if successful, False otherwise
-        """        try:
+        """
+        try:
             # Validate user and role exist
             if user_id not in self.users:
                 raise ValueError(f"User not found: {user_id}")
@@ -568,7 +601,8 @@ class PrivilegeManager:
         role_id: str,
         revoked_by: str = ""
     ) -> bool:
-        """        Revoke role from user
+        """
+        Revoke role from user
         
         Args:
             user_id: User ID
@@ -577,7 +611,8 @@ class PrivilegeManager:
             
         Returns:
             True if successful, False otherwise
-        """        try:
+        """
+        try:
             # Validate user and role exist
             if user_id not in self.users:
                 raise ValueError(f"User not found: {user_id}")
@@ -629,7 +664,8 @@ class PrivilegeManager:
         granted_by: str = "",
         expires_at: Optional[datetime] = None
     ) -> str:
-        """        Grant privilege to principal
+        """
+        Grant privilege to principal
         
         Args:
             principal_id: Principal ID (user or role)
@@ -641,7 +677,8 @@ class PrivilegeManager:
             
         Returns:
             Grant ID
-        """        try:
+        """
+        try:
             # Create privilege grant
             grant = PrivilegeGrant(
                 grant_id=str(uuid.uuid4()),
@@ -697,7 +734,8 @@ class PrivilegeManager:
         privilege_type: PrivilegeType,
         revoked_by: str = ""
     ) -> bool:
-        """        Revoke privilege from principal
+        """
+        Revoke privilege from principal
         
         Args:
             principal_id: Principal ID
@@ -707,7 +745,8 @@ class PrivilegeManager:
             
         Returns:
             True if successful, False otherwise
-        """        try:
+        """
+        try:
             # Find matching grant
             grant_to_revoke = None
             for grant in self.privilege_grants.values():
@@ -760,7 +799,8 @@ class PrivilegeManager:
         resource_id: str,
         privilege_type: PrivilegeType
     ) -> bool:
-        """        Check if user has privilege on resource
+        """
+        Check if user has privilege on resource
         
         Args:
             user_id: User ID
@@ -769,7 +809,8 @@ class PrivilegeManager:
             
         Returns:
             True if user has privilege, False otherwise
-        """        try:
+        """
+        try:
             if user_id not in self.users:
                 return False
             
@@ -797,7 +838,8 @@ class PrivilegeManager:
         resource_id: str,
         privilege_type: PrivilegeType
     ) -> bool:
-        """Check if principal has direct privilege"""        current_time = datetime.now()
+        """Check if principal has direct privilege"""
+        current_time = datetime.now()
         
         for grant in self.privilege_grants.values():
             if (grant.principal_id == principal_id and
@@ -815,7 +857,8 @@ class PrivilegeManager:
         return False
     
     async def _get_all_user_roles(self, user_id: str) -> List[str]:
-        """Get all roles for user including inherited roles"""        if user_id not in self.users:
+        """Get all roles for user including inherited roles"""
+        if user_id not in self.users:
             return []
         
         user = self.users[user_id]
@@ -839,7 +882,8 @@ class PrivilegeManager:
         return list(all_roles)
     
     def _get_principal_type(self, principal_id: str) -> str:
-        """Determine principal type"""        if principal_id in self.users:
+        """Determine principal type"""
+        if principal_id in self.users:
             return "user"
         elif principal_id in self.roles:
             return "role"
@@ -847,11 +891,13 @@ class PrivilegeManager:
             return "unknown"
     
     async def _execute_privilege_grant(self, grant: PrivilegeGrant):
-        """Execute privilege grant in database"""        # In production, this would use appropriate privilege engine
+        """Execute privilege grant in database"""
+        # In production, this would use appropriate privilege engine
         logger.info(f"Would execute privilege grant: {grant.grant_id}")
     
     async def _execute_privilege_revoke(self, grant: PrivilegeGrant):
-        """Execute privilege revocation in database"""        # In production, this would use appropriate privilege engine
+        """Execute privilege revocation in database"""
+        # In production, this would use appropriate privilege engine
         logger.info(f"Would execute privilege revoke: {grant.grant_id}")
     
     async def _audit_action(
@@ -865,7 +911,8 @@ class PrivilegeManager:
         error_message: Optional[str] = None,
         details: Optional[Dict[str, Any]] = None
     ):
-        """Audit privilege action"""        audit = PrivilegeAudit(
+        """Audit privilege action"""
+        audit = PrivilegeAudit(
             audit_id=str(uuid.uuid4()),
             action=action,
             principal_id=principal_id,
@@ -884,7 +931,8 @@ class PrivilegeManager:
             self.audit_records = self.audit_records[-10000:]
     
     def get_user_privileges(self, user_id: str) -> Dict[str, Any]:
-        """Get comprehensive privilege summary for user"""        if user_id not in self.users:
+        """Get comprehensive privilege summary for user"""
+        if user_id not in self.users:
             return {"error": "User not found"}
         
         user = self.users[user_id]
@@ -933,7 +981,8 @@ class PrivilegeManager:
         }
     
     def get_privilege_metrics(self) -> Dict[str, Any]:
-        """Get privilege management metrics"""        active_grants = sum(1 for grant in self.privilege_grants.values() if grant.is_active)
+        """Get privilege management metrics"""
+        active_grants = sum(1 for grant in self.privilege_grants.values() if grant.is_active)
         expired_grants = sum(
             1 for grant in self.privilege_grants.values() 
             if grant.expires_at and grant.expires_at < datetime.now()

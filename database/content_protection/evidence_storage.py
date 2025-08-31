@@ -15,7 +15,8 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
-"""import asyncio
+"""
+import asyncio
 import hashlib
 import json
 import logging
@@ -48,7 +49,8 @@ logger = logging.getLogger(__name__)
 
 
 class EvidenceType(Enum):
-    """Types of evidence that can be stored"""    SCREENSHOT = "screenshot"
+    """Types of evidence that can be stored"""
+    SCREENSHOT = "screenshot"
     VIDEO_RECORDING = "video_recording"
     NETWORK_CAPTURE = "network_capture"
     DOCUMENT = "document"
@@ -61,7 +63,8 @@ class EvidenceType(Enum):
 
 
 class EvidenceStatus(Enum):
-    """Evidence processing status"""    UPLOADED = "uploaded"
+    """Evidence processing status"""
+    UPLOADED = "uploaded"
     PROCESSING = "processing"
     VERIFIED = "verified"
     BLOCKCHAIN_SECURED = "blockchain_secured"
@@ -72,7 +75,8 @@ class EvidenceStatus(Enum):
 
 
 class CustodyEventType(Enum):
-    """Types of custody events"""    CREATION = "creation"
+    """Types of custody events"""
+    CREATION = "creation"
     ACCESS = "access"
     MODIFICATION = "modification"
     TRANSFER = "transfer"
@@ -82,18 +86,21 @@ class CustodyEventType(Enum):
 
 
 class EvidenceStorageManagerError(Exception):
-    """Custom exception for evidence storage operations"""    pass
+    """Custom exception for evidence storage operations"""
+    pass
 
 
 class EvidenceStorageManager:
-    """    Ultra-advanced evidence storage manager with enterprise features:
+    """
+    Ultra-advanced evidence storage manager with enterprise features:
     - Forensic-grade evidence collection and preservation
     - Blockchain-secured chain of custody
     - Advanced encryption and integrity protection
     - Legal admissibility compliance
     - Automated forensic analysis
     - Tamper-proof storage and verification
-    """    
+    """
+    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -149,7 +156,8 @@ class EvidenceStorageManager:
         collection_metadata: Optional[Dict[str, Any]] = None,
         auto_analyze: bool = True
     ) -> EvidenceRecord:
-        """        Store evidence file with full chain of custody and verification
+        """
+        Store evidence file with full chain of custody and verification
         
         Args:
             violation_id: Associated violation report ID
@@ -165,7 +173,8 @@ class EvidenceStorageManager:
             
         Raises:
             EvidenceStorageManagerError: If storage fails
-        """        try:
+        """
+        try:
             # Validate file and evidence type
             await self._validate_evidence_file(file_data, file_name, evidence_type)
             
@@ -255,7 +264,8 @@ class EvidenceStorageManager:
         collection_context: Dict[str, Any],
         collector_id: str
     ) -> List[EvidenceRecord]:
-        """        Create collection of related evidence files with batch processing
+        """
+        Create collection of related evidence files with batch processing
         
         Args:
             violation_id: Associated violation report ID
@@ -265,7 +275,8 @@ class EvidenceStorageManager:
             
         Returns:
             List of created EvidenceRecord objects
-        """        try:
+        """
+        try:
             stored_evidence = []
             collection_start_time = datetime.now()
             
@@ -320,7 +331,8 @@ class EvidenceStorageManager:
         evidence_id: UUID,
         verification_method: str = "comprehensive"
     ) -> bool:
-        """        Verify evidence integrity using multiple validation methods
+        """
+        Verify evidence integrity using multiple validation methods
         
         Args:
             evidence_id: Evidence record identifier
@@ -328,7 +340,8 @@ class EvidenceStorageManager:
             
         Returns:
             Verification success status
-        """        try:
+        """
+        try:
             evidence = await self.db_session.get(EvidenceRecord, evidence_id)
             
             if not evidence:
@@ -413,7 +426,8 @@ class EvidenceStorageManager:
         evidence_id: UUID,
         blockchain_network: str = "ethereum"
     ) -> BlockchainVerification:
-        """        Create blockchain verification record for evidence
+        """
+        Create blockchain verification record for evidence
         
         Args:
             evidence_id: Evidence record identifier
@@ -421,7 +435,8 @@ class EvidenceStorageManager:
             
         Returns:
             Created BlockchainVerification record
-        """        try:
+        """
+        try:
             evidence = await self.db_session.get(EvidenceRecord, evidence_id)
             
             if not evidence:
@@ -493,7 +508,8 @@ class EvidenceStorageManager:
         evidence_id: UUID,
         analysis_type: str = "comprehensive"
     ) -> ForensicAnalysis:
-        """        Perform comprehensive forensic analysis of evidence
+        """
+        Perform comprehensive forensic analysis of evidence
         
         Args:
             evidence_id: Evidence record identifier
@@ -501,7 +517,8 @@ class EvidenceStorageManager:
             
         Returns:
             Created ForensicAnalysis record
-        """        try:
+        """
+        try:
             evidence = await self.db_session.get(EvidenceRecord, evidence_id)
             
             if not evidence:
@@ -591,7 +608,8 @@ class EvidenceStorageManager:
         access_purpose: str,
         authorized_by: Optional[str] = None
     ) -> bytes:
-        """        Access evidence file with complete chain of custody tracking
+        """
+        Access evidence file with complete chain of custody tracking
         
         Args:
             evidence_id: Evidence record identifier
@@ -601,7 +619,8 @@ class EvidenceStorageManager:
             
         Returns:
             Evidence file data
-        """        try:
+        """
+        try:
             evidence = await self.db_session.get(EvidenceRecord, evidence_id)
             
             if not evidence:
@@ -646,7 +665,8 @@ class EvidenceStorageManager:
         requester_id: str,
         export_purpose: str
     ) -> Dict[str, Any]:
-        """        Export comprehensive evidence package for legal proceedings
+        """
+        Export comprehensive evidence package for legal proceedings
         
         Args:
             violation_id: Violation report identifier
@@ -656,7 +676,8 @@ class EvidenceStorageManager:
             
         Returns:
             Export package information and download details
-        """        try:
+        """
+        try:
             # Get all evidence for violation
             evidence_records = await self.db_session.query(EvidenceRecord).filter(
                 EvidenceRecord.violation_id == violation_id
@@ -731,7 +752,8 @@ class EvidenceStorageManager:
         file_name: str,
         evidence_type: EvidenceType
     ) -> None:
-        """Validate evidence file before storage"""        # Size validation
+        """Validate evidence file before storage"""
+        # Size validation
         file_size_mb = len(file_data) / (1024 * 1024)
         if file_size_mb > self.max_file_size_mb:
             raise EvidenceStorageManagerError(f"File size exceeds limit: {file_size_mb:.2f}MB")
@@ -748,7 +770,8 @@ class EvidenceStorageManager:
             raise EvidenceStorageManagerError("File format validation failed")
     
     async def _calculate_file_hash(self, file_data: bytes, algorithm: str = "sha256") -> str:
-        """Calculate cryptographic hash of file data"""        if algorithm == "sha256":
+        """Calculate cryptographic hash of file data"""
+        if algorithm == "sha256":
             return hashlib.sha256(file_data).hexdigest()
         elif algorithm == "sha512":
             return hashlib.sha512(file_data).hexdigest()
@@ -763,7 +786,8 @@ class EvidenceStorageManager:
         file_name: str,
         collection_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create comprehensive forensic metadata"""        metadata = {
+        """Create comprehensive forensic metadata"""
+        metadata = {
             "file_name": file_name,
             "file_size": len(file_data),
             "mime_type": mimetypes.guess_type(file_name)[0],
@@ -793,7 +817,8 @@ class EvidenceStorageManager:
         description: str,
         event_data: Optional[Dict[str, Any]] = None
     ) -> ChainOfCustody:
-        """Create chain of custody entry"""        custody_entry = ChainOfCustody(
+        """Create chain of custody entry"""
+        custody_entry = ChainOfCustody(
             id=uuid4(),
             evidence_id=evidence_id,
             event_type=event_type.value,
@@ -810,7 +835,8 @@ class EvidenceStorageManager:
         return custody_entry
     
     async def _verify_file_format(self, file_data: bytes, file_name: str) -> bool:
-        """Verify file format matches expected type"""        try:
+        """Verify file format matches expected type"""
+        try:
             # Basic magic number validation
             magic_signatures = {
                 b'\x89PNG\r\n\x1a\n': '.png',
@@ -831,7 +857,8 @@ class EvidenceStorageManager:
             return False
     
     async def _verify_metadata_consistency(self, evidence: EvidenceRecord) -> bool:
-        """Verify metadata consistency"""        try:
+        """Verify metadata consistency"""
+        try:
             # Check timestamp consistency
             if evidence.collection_timestamp > datetime.now(timezone.utc):
                 return False
@@ -850,7 +877,8 @@ class EvidenceStorageManager:
             return False
     
     async def _perform_batch_forensic_analysis(self, evidence_list: List[EvidenceRecord]) -> None:
-        """Perform batch forensic analysis for efficiency"""        for evidence in evidence_list:
+        """Perform batch forensic analysis for efficiency"""
+        for evidence in evidence_list:
             try:
                 await self.perform_forensic_analysis(evidence.id, "basic")
             except Exception as e:
@@ -862,7 +890,8 @@ class EvidenceStorageManager:
         evidence_list: List[EvidenceRecord],
         context: Dict[str, Any]
     ) -> None:
-        """Create summary for evidence collection"""        # Implementation would create collection summary record
+        """Create summary for evidence collection"""
+        # Implementation would create collection summary record
         pass
     
     async def _verify_access_authorization(
@@ -871,7 +900,8 @@ class EvidenceStorageManager:
         accessor_id: str,
         purpose: str
     ) -> bool:
-        """Verify if access is authorized"""        # Implementation would check access permissions
+        """Verify if access is authorized"""
+        # Implementation would check access permissions
         return True  # Simplified for example
     
     async def _compile_evidence_package(
@@ -881,7 +911,8 @@ class EvidenceStorageManager:
         requester_id: str,
         purpose: str
     ) -> Dict[str, Any]:
-        """Compile evidence into exportable package"""        # Implementation would create comprehensive evidence package
+        """Compile evidence into exportable package"""
+        # Implementation would create comprehensive evidence package
         return {
             "package_bytes": b"mock_package_data",
             "contents_manifest": ["evidence_list", "chain_of_custody", "forensic_reports"],
@@ -892,19 +923,24 @@ class EvidenceStorageManager:
     # Additional helper methods for metadata extraction
     
     async def _extract_image_metadata(self, file_data: bytes) -> Dict[str, Any]:
-        """Extract image-specific metadata"""        return {"image_metadata": "extracted"}
+        """Extract image-specific metadata"""
+        return {"image_metadata": "extracted"}
     
     async def _extract_video_metadata(self, file_data: bytes) -> Dict[str, Any]:
-        """Extract video-specific metadata"""        return {"video_metadata": "extracted"}
+        """Extract video-specific metadata"""
+        return {"video_metadata": "extracted"}
     
     async def _extract_audio_metadata(self, file_data: bytes) -> Dict[str, Any]:
-        """Extract audio-specific metadata"""        return {"audio_metadata": "extracted"}
+        """Extract audio-specific metadata"""
+        return {"audio_metadata": "extracted"}
     
     async def _get_location_data(self) -> Dict[str, Any]:
-        """Get current location data for custody tracking"""        return {"location": "secure_datacenter", "jurisdiction": "legal_compliant"}
+        """Get current location data for custody tracking"""
+        return {"location": "secure_datacenter", "jurisdiction": "legal_compliant"}
     
     async def _get_system_metadata(self) -> Dict[str, Any]:
-        """Get system metadata for custody tracking"""        return {
+        """Get system metadata for custody tracking"""
+        return {
             "system_id": "evidence_storage_system",
             "software_version": "2.0.0",
             "timestamp": datetime.now(timezone.utc).isoformat()

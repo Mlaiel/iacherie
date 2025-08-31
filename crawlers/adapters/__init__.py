@@ -92,7 +92,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""import logging
+"""
+import logging
 from typing import Dict, List, Optional, Any, Type, Union
 from enum import Enum
 import importlib
@@ -101,7 +102,8 @@ from dataclasses import dataclass
 logger = logging.getLogger(__name__)
 
 class AdapterType(Enum):
-    """Supported adapter types."""    CONTENT = "content"
+    """Supported adapter types."""
+    CONTENT = "content"
     PLATFORM = "platform" 
     API = "api"
     STORAGE = "storage"
@@ -113,7 +115,8 @@ class AdapterType(Enum):
 
 @dataclass
 class AdapterInfo:
-    """Adapter information container."""    name: str
+    """Adapter information container."""
+    name: str
     adapter_type: AdapterType
     description: str
     supported_formats: List[str]
@@ -122,14 +125,17 @@ class AdapterInfo:
     dependencies: List[str] = None
 
 class AdapterManager:
-    """Central manager for all adapter types."""    
+    """Central manager for all adapter types."""
+    
     def __init__(self):
-        """Initialize the adapter manager."""        self._adapters: Dict[str, Type] = {}
+        """Initialize the adapter manager."""
+        self._adapters: Dict[str, Type] = {}
         self._adapter_info: Dict[str, AdapterInfo] = {}
         self._initialized = False
         
     def initialize(self):
-        """Initialize all available adapters."""        if self._initialized:
+        """Initialize all available adapters."""
+        if self._initialized:
             return
             
         logger.info("Initializing enterprise adapter system...")
@@ -162,7 +168,8 @@ class AdapterManager:
         logger.info(f"✅ Adapter system initialized with {len(self._adapters)} adapters")
     
     def _register_content_adapters(self):
-        """Register content processing adapters."""        content_adapters = [
+        """Register content processing adapters."""
+        content_adapters = [
             AdapterInfo(
                 name="audio_content",
                 adapter_type=AdapterType.CONTENT,
@@ -204,7 +211,8 @@ class AdapterManager:
             self._adapter_info[adapter_info.name] = adapter_info
     
     def _register_platform_adapters(self):
-        """Register social media platform adapters."""        platform_adapters = [
+        """Register social media platform adapters."""
+        platform_adapters = [
             AdapterInfo(
                 name="youtube",
                 adapter_type=AdapterType.PLATFORM,
@@ -251,7 +259,8 @@ class AdapterManager:
             self._adapter_info[adapter_info.name] = adapter_info
     
     def _register_api_adapters(self):
-        """Register API communication adapters."""        api_adapters = [
+        """Register API communication adapters."""
+        api_adapters = [
             AdapterInfo(
                 name="rest_api",
                 adapter_type=AdapterType.API,
@@ -279,7 +288,8 @@ class AdapterManager:
             self._adapter_info[adapter_info.name] = adapter_info
     
     def _register_storage_adapters(self):
-        """Register storage system adapters."""        storage_adapters = [
+        """Register storage system adapters."""
+        storage_adapters = [
             AdapterInfo(
                 name="postgresql",
                 adapter_type=AdapterType.STORAGE,
@@ -314,7 +324,8 @@ class AdapterManager:
             self._adapter_info[adapter_info.name] = adapter_info
     
     def _register_data_adapters(self):
-        """Register data format adapters."""        data_adapters = [
+        """Register data format adapters."""
+        data_adapters = [
             AdapterInfo(
                 name="json",
                 adapter_type=AdapterType.DATA,
@@ -349,7 +360,8 @@ class AdapterManager:
             self._adapter_info[adapter_info.name] = adapter_info
     
     def _register_protocol_adapters(self):
-        """Register network protocol adapters."""        protocol_adapters = [
+        """Register network protocol adapters."""
+        protocol_adapters = [
             AdapterInfo(
                 name="http",
                 adapter_type=AdapterType.PROTOCOL,
@@ -377,7 +389,8 @@ class AdapterManager:
             self._adapter_info[adapter_info.name] = adapter_info
     
     def _register_authentication_adapters(self):
-        """Register authentication and security adapters."""        auth_adapters = [
+        """Register authentication and security adapters."""
+        auth_adapters = [
             AdapterInfo(
                 name="oauth2",
                 adapter_type=AdapterType.AUTHENTICATION,
@@ -405,7 +418,8 @@ class AdapterManager:
             self._adapter_info[adapter_info.name] = adapter_info
     
     def _register_format_adapters(self):
-        """Register format processing adapters."""        format_adapters = [
+        """Register format processing adapters."""
+        format_adapters = [
             AdapterInfo(
                 name="compression",
                 adapter_type=AdapterType.FORMAT,
@@ -433,12 +447,14 @@ class AdapterManager:
             self._adapter_info[adapter_info.name] = adapter_info
     
     def get_adapter(self, name: str) -> Optional[Type]:
-        """Get adapter class by name."""        if not self._initialized:
+        """Get adapter class by name."""
+        if not self._initialized:
             self.initialize()
         return self._adapters.get(name)
     
     def get_adapters_by_type(self, adapter_type: AdapterType) -> List[str]:
-        """Get all adapters of a specific type."""        if not self._initialized:
+        """Get all adapters of a specific type."""
+        if not self._initialized:
             self.initialize()
         return [
             name for name, info in self._adapter_info.items()
@@ -446,12 +462,14 @@ class AdapterManager:
         ]
     
     def get_adapter_info(self, name: str) -> Optional[AdapterInfo]:
-        """Get adapter information."""        if not self._initialized:
+        """Get adapter information."""
+        if not self._initialized:
             self.initialize()
         return self._adapter_info.get(name)
     
     def list_all_adapters(self) -> Dict[str, AdapterInfo]:
-        """List all available adapters."""        if not self._initialized:
+        """List all available adapters."""
+        if not self._initialized:
             self.initialize()
         return self._adapter_info.copy()
 
@@ -459,14 +477,17 @@ class AdapterManager:
 adapter_manager = AdapterManager()
 
 def get_available_adapters() -> List[str]:
-    """Get list of all available adapter names."""    adapter_manager.initialize()
+    """Get list of all available adapter names."""
+    adapter_manager.initialize()
     return list(adapter_manager.list_all_adapters().keys())
 
 def get_adapter_by_name(name: str) -> Optional[Type]:
-    """Get adapter class by name."""    return adapter_manager.get_adapter(name)
+    """Get adapter class by name."""
+    return adapter_manager.get_adapter(name)
 
 def get_adapters_by_type(adapter_type: AdapterType) -> List[str]:
-    """Get adapters of specific type."""    return adapter_manager.get_adapters_by_type(adapter_type)
+    """Get adapters of specific type."""
+    return adapter_manager.get_adapters_by_type(adapter_type)
 
 # Export main components
 __all__ = [
@@ -526,7 +547,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Type
 from dataclasses import dataclass
@@ -766,7 +788,8 @@ from .format_adapters import (
 # Define adapter manager for centralized control
 @dataclass
 class AdapterManagerConfig:
-    """Configuration for the adapter manager."""    enable_metrics: bool = True
+    """Configuration for the adapter manager."""
+    enable_metrics: bool = True
     enable_caching: bool = True
     cache_ttl: int = 3600
     max_concurrent_operations: int = 100
@@ -775,9 +798,11 @@ class AdapterManagerConfig:
     circuit_breaker_enabled: bool = True
 
 class AdapterManager:
-    """Enterprise adapter manager for centralized control and monitoring."""    
+    """Enterprise adapter manager for centralized control and monitoring."""
+    
     def __init__(self, config: Optional[AdapterManagerConfig] = None):
-        """Initialize adapter manager."""        self.config = config or AdapterManagerConfig()
+        """Initialize adapter manager."""
+        self.config = config or AdapterManagerConfig()
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Adapter registries
@@ -795,7 +820,8 @@ class AdapterManager:
         self._performance_stats: Dict[str, List[float]] = {}
         
     async def register_adapter(self, adapter_type: str, name: str, adapter: Any):
-        """Register an adapter with the manager."""        registry = getattr(self, f'_{adapter_type}_adapters', None)
+        """Register an adapter with the manager."""
+        registry = getattr(self, f'_{adapter_type}_adapters', None)
         if registry is not None:
             registry[name] = adapter
             self.logger.info(f"Registered {adapter_type} adapter: {name}")
@@ -803,13 +829,15 @@ class AdapterManager:
             raise ValueError(f"Unknown adapter type: {adapter_type}")
     
     async def get_adapter(self, adapter_type: str, name: str) -> Optional[Any]:
-        """Get an adapter by type and name."""        registry = getattr(self, f'_{adapter_type}_adapters', None)
+        """Get an adapter by type and name."""
+        registry = getattr(self, f'_{adapter_type}_adapters', None)
         if registry is not None:
             return registry.get(name)
         return None
     
     async def initialize_all(self):
-        """Initialize all registered adapters."""        for adapter_type in ['content', 'platform', 'api', 'storage', 'data', 'protocol', 'auth', 'format']:
+        """Initialize all registered adapters."""
+        for adapter_type in ['content', 'platform', 'api', 'storage', 'data', 'protocol', 'auth', 'format']:
             registry = getattr(self, f'_{adapter_type}_adapters')
             for name, adapter in registry.items():
                 try:
@@ -820,7 +848,8 @@ class AdapterManager:
                     self.logger.error(f"Failed to initialize {adapter_type} adapter {name}: {e}")
     
     async def shutdown_all(self):
-        """Shutdown all registered adapters."""        for adapter_type in ['content', 'platform', 'api', 'storage', 'data', 'protocol', 'auth', 'format']:
+        """Shutdown all registered adapters."""
+        for adapter_type in ['content', 'platform', 'api', 'storage', 'data', 'protocol', 'auth', 'format']:
             registry = getattr(self, f'_{adapter_type}_adapters')
             for name, adapter in registry.items():
                 try:
@@ -833,7 +862,8 @@ class AdapterManager:
                     self.logger.error(f"Failed to shutdown {adapter_type} adapter {name}: {e}")
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive metrics from all adapters."""        metrics = {
+        """Get comprehensive metrics from all adapters."""
+        metrics = {
             'adapter_counts': {
                 'content': len(self._content_adapters),
                 'platform': len(self._platform_adapters),
@@ -867,7 +897,8 @@ adapter_manager = AdapterManager()
 
 # Utility functions for adapter discovery and management
 def get_available_adapters() -> Dict[str, List[str]]:
-    """Get list of all available adapters by category."""    return {
+    """Get list of all available adapters by category."""
+    return {
         'content': ['audio', 'video', 'image', 'text', 'document'],
         'platform': ['youtube', 'spotify', 'instagram', 'tiktok', 'twitter', 'facebook', 'linkedin'],
         'api': ['rest', 'graphql', 'websocket', 'webhook', 'streaming'],
@@ -879,7 +910,8 @@ def get_available_adapters() -> Dict[str, List[str]]:
     }
 
 def create_adapter_from_config(adapter_type: str, adapter_name: str, config: Dict[str, Any]) -> Any:
-    """Create an adapter instance from configuration."""    factories = {
+    """Create an adapter instance from configuration."""
+    factories = {
         'content': ContentAdapterFactory,
         'platform': PlatformAdapterFactory,
         'api': APIAdapterFactory,
@@ -1039,7 +1071,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AdapterConfig:
-    """Configuration for adapter system."""    max_concurrent_adapters: int = 100
+    """Configuration for adapter system."""
+    max_concurrent_adapters: int = 100
     default_timeout: float = 30.0
     enable_caching: bool = True
     enable_retry: bool = True
@@ -1050,9 +1083,11 @@ class AdapterConfig:
     log_level: str = "INFO"
 
 class AdapterRegistry:
-    """Central registry for all adapter types."""    
+    """Central registry for all adapter types."""
+    
     def __init__(self):
-        """Initialize adapter registry."""        self._content_adapters: Dict[str, Type] = {}
+        """Initialize adapter registry."""
+        self._content_adapters: Dict[str, Type] = {}
         self._platform_adapters: Dict[str, Type] = {}
         self._api_adapters: Dict[str, Type] = {}
         self._storage_adapters: Dict[str, Type] = {}
@@ -1064,7 +1099,8 @@ class AdapterRegistry:
         self._register_default_adapters()
     
     def _register_default_adapters(self):
-        """Register all default adapters."""        # Content adapters
+        """Register all default adapters."""
+        # Content adapters
         self._content_adapters.update({
             'audio': AudioContentAdapter,
             'video': VideoContentAdapter,
@@ -1141,28 +1177,36 @@ class AdapterRegistry:
         })
     
     def get_content_adapter(self, content_type: str) -> Optional[Type]:
-        """Get content adapter by type."""        return self._content_adapters.get(content_type.lower())
+        """Get content adapter by type."""
+        return self._content_adapters.get(content_type.lower())
     
     def get_platform_adapter(self, platform: str) -> Optional[Type]:
-        """Get platform adapter by name."""        return self._platform_adapters.get(platform.lower())
+        """Get platform adapter by name."""
+        return self._platform_adapters.get(platform.lower())
     
     def get_api_adapter(self, api_type: str) -> Optional[Type]:
-        """Get API adapter by type."""        return self._api_adapters.get(api_type.lower())
+        """Get API adapter by type."""
+        return self._api_adapters.get(api_type.lower())
     
     def get_storage_adapter(self, storage_type: str) -> Optional[Type]:
-        """Get storage adapter by type."""        return self._storage_adapters.get(storage_type.lower())
+        """Get storage adapter by type."""
+        return self._storage_adapters.get(storage_type.lower())
     
     def get_data_adapter(self, data_format: str) -> Optional[Type]:
-        """Get data adapter by format."""        return self._data_adapters.get(data_format.lower())
+        """Get data adapter by format."""
+        return self._data_adapters.get(data_format.lower())
     
     def get_protocol_adapter(self, protocol: str) -> Optional[Type]:
-        """Get protocol adapter by name."""        return self._protocol_adapters.get(protocol.lower())
+        """Get protocol adapter by name."""
+        return self._protocol_adapters.get(protocol.lower())
     
     def get_auth_adapter(self, auth_type: str) -> Optional[Type]:
-        """Get authentication adapter by type."""        return self._auth_adapters.get(auth_type.lower())
+        """Get authentication adapter by type."""
+        return self._auth_adapters.get(auth_type.lower())
     
     def get_format_adapter(self, format_type: str) -> Optional[Type]:
-        """Get format adapter by type."""        return self._format_adapters.get(format_type.lower())
+        """Get format adapter by type."""
+        return self._format_adapters.get(format_type.lower())
     
     def register_adapter(
         self,
@@ -1170,7 +1214,8 @@ class AdapterRegistry:
         name: str,
         adapter_class: Type
     ) -> bool:
-        """Register custom adapter."""        try:
+        """Register custom adapter."""
+        try:
             registry = getattr(self, f"_{category}_adapters", None)
             if registry is None:
                 logger.error(f"Unknown adapter category: {category}")
@@ -1185,7 +1230,8 @@ class AdapterRegistry:
             return False
     
     def list_adapters(self, category: Optional[str] = None) -> Dict[str, List[str]]:
-        """List all available adapters."""        if category:
+        """List all available adapters."""
+        if category:
             registry = getattr(self, f"_{category}_adapters", {})
             return {category: list(registry.keys())}
         
@@ -1201,13 +1247,16 @@ class AdapterRegistry:
         }
 
 class AdapterManager:
-    """    Central adapter management system.
+    """
+    Central adapter management system.
     
     Coordinates all adapter operations including initialization,
     configuration, lifecycle management, and performance monitoring.
-    """    
+    """
+    
     def __init__(self, config: Optional[AdapterConfig] = None):
-        """Initialize adapter manager."""        self.config = config or AdapterConfig()
+        """Initialize adapter manager."""
+        self.config = config or AdapterConfig()
         
         # Setup logging
         logging.basicConfig(level=getattr(logging, self.config.log_level))
@@ -1237,7 +1286,8 @@ class AdapterManager:
         config: Optional[Dict[str, Any]] = None,
         instance_id: Optional[str] = None
     ) -> Optional[Any]:
-        """Create and configure adapter instance."""        try:
+        """Create and configure adapter instance."""
+        try:
             # Get adapter class from registry
             adapter_class = None
             
@@ -1285,10 +1335,12 @@ class AdapterManager:
             return None
     
     async def get_adapter(self, instance_id: str) -> Optional[Any]:
-        """Get active adapter by instance ID."""        return self._active_adapters.get(instance_id)
+        """Get active adapter by instance ID."""
+        return self._active_adapters.get(instance_id)
     
     async def destroy_adapter(self, instance_id: str) -> bool:
-        """Destroy adapter instance."""        try:
+        """Destroy adapter instance."""
+        try:
             adapter = self._active_adapters.get(instance_id)
             if not adapter:
                 logger.warning(f"Adapter not found: {instance_id}")
@@ -1317,7 +1369,8 @@ class AdapterManager:
         *args,
         **kwargs
     ) -> Any:
-        """Execute operation on adapter instance."""        start_time = datetime.now()
+        """Execute operation on adapter instance."""
+        start_time = datetime.now()
         
         try:
             adapter = self._active_adapters.get(instance_id)
@@ -1341,7 +1394,8 @@ class AdapterManager:
             raise
     
     def _update_success_metrics(self, start_time: datetime):
-        """Update metrics for successful operation."""        response_time = (datetime.now() - start_time).total_seconds()
+        """Update metrics for successful operation."""
+        response_time = (datetime.now() - start_time).total_seconds()
         
         self._metrics['total_requests'] += 1
         self._metrics['successful_requests'] += 1
@@ -1354,17 +1408,21 @@ class AdapterManager:
         )
     
     def _update_error_metrics(self, start_time: datetime):
-        """Update metrics for failed operation."""        self._metrics['total_requests'] += 1
+        """Update metrics for failed operation."""
+        self._metrics['total_requests'] += 1
         self._metrics['failed_requests'] += 1
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get adapter system metrics."""        return self._metrics.copy()
+        """Get adapter system metrics."""
+        return self._metrics.copy()
     
     def get_active_adapters(self) -> List[str]:
-        """Get list of active adapter instance IDs."""        return list(self._active_adapters.keys())
+        """Get list of active adapter instance IDs."""
+        return list(self._active_adapters.keys())
     
     async def shutdown(self):
-        """Shutdown adapter manager and cleanup resources."""        logger.info("Shutting down adapter manager...")
+        """Shutdown adapter manager and cleanup resources."""
+        logger.info("Shutting down adapter manager...")
         
         # Cleanup all active adapters
         for instance_id in list(self._active_adapters.keys()):
@@ -1376,7 +1434,8 @@ class AdapterManager:
 _adapter_manager = None
 
 def get_adapter_manager(config: Optional[AdapterConfig] = None) -> AdapterManager:
-    """Get global adapter manager instance."""    global _adapter_manager
+    """Get global adapter manager instance."""
+    global _adapter_manager
     if _adapter_manager is None:
         _adapter_manager = AdapterManager(config)
     return _adapter_manager

@@ -14,7 +14,8 @@ is STRICTLY PROHIBITED and will be prosecuted under international copyright law.
 
 Business Logic: Continuous monitoring → Quality tracking → Threshold detection → 
 Alert generation → Trend analysis → Performance optimization → Automated responses
-"""import logging
+"""
+import logging
 import asyncio
 import json
 import numpy as np
@@ -50,7 +51,8 @@ from ..models.quality_models import QualityAssessment, QualityAlert, QualityTren
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    CRITICAL = "critical"
+    """Alert severity levels"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -58,7 +60,8 @@ class AlertSeverity(Enum):
 
 
 class AlertType(Enum):
-    """Types of quality alerts"""    QUALITY_DEGRADATION = "quality_degradation"
+    """Types of quality alerts"""
+    QUALITY_DEGRADATION = "quality_degradation"
     THRESHOLD_BREACH = "threshold_breach"
     ANOMALY_DETECTED = "anomaly_detected"
     SYSTEM_PERFORMANCE = "system_performance"
@@ -68,7 +71,8 @@ class AlertType(Enum):
 
 
 class MonitoringStatus(Enum):
-    """Monitoring system status"""    ACTIVE = "active"
+    """Monitoring system status"""
+    ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
     ERROR = "error"
@@ -76,7 +80,8 @@ class MonitoringStatus(Enum):
 
 @dataclass
 class QualityThreshold:
-    """Quality monitoring threshold definition"""    name: str
+    """Quality monitoring threshold definition"""
+    name: str
     metric: str
     operator: str  # >, <, >=, <=, ==
     value: float
@@ -89,7 +94,8 @@ class QualityThreshold:
 
 @dataclass
 class QualityAlert:
-    """Quality alert structure"""    alert_id: str
+    """Quality alert structure"""
+    alert_id: str
     alert_type: AlertType
     severity: AlertSeverity
     title: str
@@ -110,7 +116,8 @@ class QualityAlert:
 
 @dataclass
 class MonitoringMetrics:
-    """System monitoring metrics"""    timestamp: datetime
+    """System monitoring metrics"""
+    timestamp: datetime
     quality_scores: Dict[str, float]
     processing_times: Dict[str, float]
     system_metrics: Dict[str, float]
@@ -120,7 +127,8 @@ class MonitoringMetrics:
 
 
 class MetricsCollector:
-    """Metrics collection and aggregation system"""    
+    """Metrics collection and aggregation system"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
@@ -156,7 +164,8 @@ class MetricsCollector:
         quality_assessments: List[Dict[str, Any]],
         system_info: Optional[Dict[str, Any]] = None
     ) -> MonitoringMetrics:
-        """Collect and aggregate quality metrics."""        timestamp = datetime.utcnow()
+        """Collect and aggregate quality metrics."""
+        timestamp = datetime.utcnow()
         
         # Quality score metrics
         quality_scores = {}
@@ -273,7 +282,8 @@ class MetricsCollector:
         end_time: datetime,
         aggregation_interval: timedelta = timedelta(minutes=5)
     ) -> List[MonitoringMetrics]:
-        """Get historical metrics from buffer."""        historical_metrics = []
+        """Get historical metrics from buffer."""
+        historical_metrics = []
         
         for metrics in self.metrics_buffer:
             if start_time <= metrics.timestamp <= end_time:
@@ -286,7 +296,8 @@ class MetricsCollector:
 
 
 class AlertManager:
-    """Alert management and notification system"""    
+    """Alert management and notification system"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.AlertManager")
@@ -343,7 +354,8 @@ class AlertManager:
         ]
     
     async def check_thresholds(self, metrics: MonitoringMetrics) -> List[QualityAlert]:
-        """Check metrics against defined thresholds."""        alerts = []
+        """Check metrics against defined thresholds."""
+        alerts = []
         
         for threshold in self.thresholds:
             if not threshold.enabled:
@@ -374,7 +386,8 @@ class AlertManager:
         return alerts
     
     def _get_metric_value(self, metrics: MonitoringMetrics, metric_path: str) -> Optional[float]:
-        """Get metric value from metrics object using dot notation."""        try:
+        """Get metric value from metrics object using dot notation."""
+        try:
             parts = metric_path.split('.')
             value = metrics
             
@@ -392,7 +405,8 @@ class AlertManager:
             return None
     
     def _check_threshold_violation(self, metric_value: float, threshold: QualityThreshold) -> bool:
-        """Check if metric value violates threshold."""        if threshold.operator == ">":
+        """Check if metric value violates threshold."""
+        if threshold.operator == ">":
             return metric_value > threshold.value
         elif threshold.operator == "<":
             return metric_value < threshold.value
@@ -411,7 +425,8 @@ class AlertManager:
         metric_value: float,
         metrics: MonitoringMetrics
     ) -> QualityAlert:
-        """Create alert for threshold violation."""        alert_id = f"alert_{int(datetime.utcnow().timestamp())}_{threshold.name}"
+        """Create alert for threshold violation."""
+        alert_id = f"alert_{int(datetime.utcnow().timestamp())}_{threshold.name}"
         
         alert = QualityAlert(
             alert_id=alert_id,
@@ -452,7 +467,8 @@ class AlertManager:
         user_id: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> QualityAlert:
-        """Create custom alert."""        alert_id = f"custom_{int(datetime.utcnow().timestamp())}"
+        """Create custom alert."""
+        alert_id = f"custom_{int(datetime.utcnow().timestamp())}"
         
         alert = QualityAlert(
             alert_id=alert_id,
@@ -480,7 +496,8 @@ class AlertManager:
         return alert
     
     async def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> bool:
-        """Acknowledge an alert."""        if alert_id in self.active_alerts:
+        """Acknowledge an alert."""
+        if alert_id in self.active_alerts:
             alert = self.active_alerts[alert_id]
             alert.acknowledged = True
             alert.acknowledged_by = acknowledged_by
@@ -492,7 +509,8 @@ class AlertManager:
         return False
     
     async def resolve_alert(self, alert_id: str) -> bool:
-        """Resolve an alert."""        if alert_id in self.active_alerts:
+        """Resolve an alert."""
+        if alert_id in self.active_alerts:
             alert = self.active_alerts[alert_id]
             alert.resolved = True
             alert.resolved_at = datetime.utcnow()
@@ -510,7 +528,8 @@ class AlertManager:
         severity_filter: Optional[AlertSeverity] = None,
         alert_type_filter: Optional[AlertType] = None
     ) -> List[QualityAlert]:
-        """Get list of active alerts with optional filtering."""        alerts = list(self.active_alerts.values())
+        """Get list of active alerts with optional filtering."""
+        alerts = list(self.active_alerts.values())
         
         if severity_filter:
             alerts = [a for a in alerts if a.severity == severity_filter]
@@ -532,18 +551,21 @@ class AlertManager:
         return alerts
     
     async def _send_notifications(self, alert: QualityAlert):
-        """Send alert notifications."""        for handler in self.notification_handlers:
+        """Send alert notifications."""
+        for handler in self.notification_handlers:
             try:
                 await handler(alert)
             except Exception as e:
                 self.logger.error(f"Notification handler failed: {str(e)}")
     
     def add_notification_handler(self, handler: Callable[[QualityAlert], None]):
-        """Add notification handler."""        self.notification_handlers.append(handler)
+        """Add notification handler."""
+        self.notification_handlers.append(handler)
 
 
 class TrendAnalyzer:
-    """Quality trend analysis system"""    
+    """Quality trend analysis system"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.TrendAnalyzer")
@@ -558,7 +580,8 @@ class TrendAnalyzer:
         historical_metrics: List[MonitoringMetrics],
         lookback_hours: int = 24
     ) -> Dict[str, Any]:
-        """Analyze quality trends from historical metrics."""        if len(historical_metrics) < self.min_data_points:
+        """Analyze quality trends from historical metrics."""
+        if len(historical_metrics) < self.min_data_points:
             return {'status': 'insufficient_data', 'trends': {}}
         
         # Sort by timestamp
@@ -601,7 +624,8 @@ class TrendAnalyzer:
         }
     
     async def _analyze_quality_score_trends(self, metrics: List[MonitoringMetrics]) -> Dict[str, Any]:
-        """Analyze quality score trends."""        scores = [m.quality_scores.get('average', 0) for m in metrics if m.quality_scores]
+        """Analyze quality score trends."""
+        scores = [m.quality_scores.get('average', 0) for m in metrics if m.quality_scores]
         
         if len(scores) < 2:
             return {'status': 'insufficient_data'}
@@ -647,7 +671,8 @@ class TrendAnalyzer:
         }
     
     async def _analyze_performance_trends(self, metrics: List[MonitoringMetrics]) -> Dict[str, Any]:
-        """Analyze processing time trends."""        times = [m.processing_times.get('average', 0) for m in metrics if m.processing_times]
+        """Analyze processing time trends."""
+        times = [m.processing_times.get('average', 0) for m in metrics if m.processing_times]
         
         if len(times) < 2:
             return {'status': 'insufficient_data'}
@@ -679,7 +704,8 @@ class TrendAnalyzer:
         }
     
     async def _analyze_volume_trends(self, metrics: List[MonitoringMetrics]) -> Dict[str, Any]:
-        """Analyze content volume trends."""        volumes = [sum(m.content_volume.values()) for m in metrics if m.content_volume]
+        """Analyze content volume trends."""
+        volumes = [sum(m.content_volume.values()) for m in metrics if m.content_volume]
         
         if len(volumes) < 2:
             return {'status': 'insufficient_data'}
@@ -709,7 +735,8 @@ class TrendAnalyzer:
         }
     
     async def _analyze_error_rate_trends(self, metrics: List[MonitoringMetrics]) -> Dict[str, Any]:
-        """Analyze error rate trends."""        error_rates = [m.error_rates.get('overall_error_rate', 0) for m in metrics if m.error_rates]
+        """Analyze error rate trends."""
+        error_rates = [m.error_rates.get('overall_error_rate', 0) for m in metrics if m.error_rates]
         
         if len(error_rates) < 2:
             return {'status': 'insufficient_data'}
@@ -740,7 +767,8 @@ class TrendAnalyzer:
         }
     
     async def _calculate_overall_trend(self, trends: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate overall system trend."""        trend_scores = []
+        """Calculate overall system trend."""
+        trend_scores = []
         
         # Quality score trend (weight: 40%)
         quality_trend = trends.get('quality_scores', {})
@@ -803,11 +831,13 @@ class TrendAnalyzer:
 
 
 class QualityMonitor:
-    """    Enterprise quality monitoring system.
+    """
+    Enterprise quality monitoring system.
     
     Provides real-time monitoring of quality metrics, automated alerting,
     trend analysis, and performance tracking for the quality management system.
-    """    
+    """
+    
     def __init__(
         self,
         db_session: sessionmaker,
@@ -843,7 +873,8 @@ class QualityMonitor:
         self.logger.info("QualityMonitor initialized successfully")
     
     async def start_monitoring(self):
-        """Start continuous quality monitoring."""        if self.status == MonitoringStatus.ACTIVE:
+        """Start continuous quality monitoring."""
+        if self.status == MonitoringStatus.ACTIVE:
             self.logger.warning("Monitoring already active")
             return
         
@@ -853,7 +884,8 @@ class QualityMonitor:
         self.logger.info("Quality monitoring started")
     
     async def stop_monitoring(self):
-        """Stop quality monitoring."""        if self.status != MonitoringStatus.ACTIVE:
+        """Stop quality monitoring."""
+        if self.status != MonitoringStatus.ACTIVE:
             return
         
         self.status = MonitoringStatus.STOPPED
@@ -868,17 +900,20 @@ class QualityMonitor:
         self.logger.info("Quality monitoring stopped")
     
     async def pause_monitoring(self):
-        """Pause quality monitoring."""        if self.status == MonitoringStatus.ACTIVE:
+        """Pause quality monitoring."""
+        if self.status == MonitoringStatus.ACTIVE:
             self.status = MonitoringStatus.PAUSED
             self.logger.info("Quality monitoring paused")
     
     async def resume_monitoring(self):
-        """Resume quality monitoring."""        if self.status == MonitoringStatus.PAUSED:
+        """Resume quality monitoring."""
+        if self.status == MonitoringStatus.PAUSED:
             self.status = MonitoringStatus.ACTIVE
             self.logger.info("Quality monitoring resumed")
     
     async def _monitoring_loop(self):
-        """Main monitoring loop."""        self.logger.info("Starting monitoring loop")
+        """Main monitoring loop."""
+        self.logger.info("Starting monitoring loop")
         
         while self.status != MonitoringStatus.STOPPED:
             try:
@@ -896,7 +931,8 @@ class QualityMonitor:
                 await asyncio.sleep(self.monitoring_interval)
     
     async def _perform_monitoring_cycle(self):
-        """Perform one monitoring cycle."""        cycle_start = datetime.utcnow()
+        """Perform one monitoring cycle."""
+        cycle_start = datetime.utcnow()
         
         try:
             # Collect quality data
@@ -938,7 +974,8 @@ class QualityMonitor:
             self.status = MonitoringStatus.ERROR
     
     async def _collect_quality_data(self) -> List[Dict[str, Any]]:
-        """Collect recent quality assessment data."""        try:
+        """Collect recent quality assessment data."""
+        try:
             cutoff_time = datetime.utcnow() - timedelta(minutes=self.monitoring_interval // 60 + 5)
             
             async with self.db_session() as session:
@@ -971,7 +1008,8 @@ class QualityMonitor:
             return []
     
     async def _collect_system_info(self) -> Dict[str, Any]:
-        """Collect system performance information."""        system_info = {}
+        """Collect system performance information."""
+        system_info = {}
         
         try:
             if HAS_MONITORING_LIBS:
@@ -998,7 +1036,8 @@ class QualityMonitor:
         return system_info
     
     async def _perform_trend_analysis(self):
-        """Perform periodic trend analysis."""        try:
+        """Perform periodic trend analysis."""
+        try:
             # Get historical metrics
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(hours=24)
@@ -1019,7 +1058,8 @@ class QualityMonitor:
             self.logger.error(f"Trend analysis failed: {str(e)}")
     
     async def _check_trend_alerts(self, trend_analysis: Dict[str, Any]):
-        """Check if trend analysis should generate alerts."""        if trend_analysis.get('status') != 'success':
+        """Check if trend analysis should generate alerts."""
+        if trend_analysis.get('status') != 'success':
             return
         
         overall_trend = trend_analysis.get('overall_trend', {})
@@ -1041,7 +1081,8 @@ class QualityMonitor:
             )
     
     async def get_monitoring_status(self) -> Dict[str, Any]:
-        """Get current monitoring status and statistics."""        return {
+        """Get current monitoring status and statistics."""
+        return {
             'status': self.status.value,
             'monitoring_interval': self.monitoring_interval,
             'performance_stats': self.performance_stats.copy(),
@@ -1055,7 +1096,8 @@ class QualityMonitor:
         }
     
     async def get_current_metrics(self) -> Optional[MonitoringMetrics]:
-        """Get most recent monitoring metrics."""        if self.metrics_collector.metrics_buffer:
+        """Get most recent monitoring metrics."""
+        if self.metrics_collector.metrics_buffer:
             return self.metrics_collector.metrics_buffer[-1]
         return None
     
@@ -1064,14 +1106,17 @@ class QualityMonitor:
         severity_filter: Optional[AlertSeverity] = None,
         limit: int = 50
     ) -> List[QualityAlert]:
-        """Get recent alerts with optional filtering."""        alerts = await self.alert_manager.get_active_alerts(severity_filter)
+        """Get recent alerts with optional filtering."""
+        alerts = await self.alert_manager.get_active_alerts(severity_filter)
         return alerts[:limit]
     
     async def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> bool:
-        """Acknowledge an alert."""        return await self.alert_manager.acknowledge_alert(alert_id, acknowledged_by)
+        """Acknowledge an alert."""
+        return await self.alert_manager.acknowledge_alert(alert_id, acknowledged_by)
     
     async def resolve_alert(self, alert_id: str) -> bool:
-        """Resolve an alert."""        return await self.alert_manager.resolve_alert(alert_id)
+        """Resolve an alert."""
+        return await self.alert_manager.resolve_alert(alert_id)
     
     async def add_custom_threshold(
         self,
@@ -1083,7 +1128,8 @@ class QualityMonitor:
         description: str,
         consecutive_violations: int = 1
     ) -> bool:
-        """Add custom monitoring threshold."""        try:
+        """Add custom monitoring threshold."""
+        try:
             threshold = QualityThreshold(
                 name=name,
                 metric=metric,
@@ -1103,7 +1149,8 @@ class QualityMonitor:
             return False
     
     async def remove_threshold(self, threshold_name: str) -> bool:
-        """Remove a monitoring threshold."""        try:
+        """Remove a monitoring threshold."""
+        try:
             self.alert_manager.thresholds = [
                 t for t in self.alert_manager.thresholds 
                 if t.name != threshold_name
@@ -1119,7 +1166,8 @@ class QualityMonitor:
         self,
         lookback_hours: int = 24
     ) -> Dict[str, Any]:
-        """Get current trend analysis."""        try:
+        """Get current trend analysis."""
+        try:
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(hours=lookback_hours)
             
@@ -1139,7 +1187,8 @@ class QualityMonitor:
         end_time: datetime,
         format: str = 'json'
     ) -> Union[str, Dict[str, Any]]:
-        """Export metrics data for external analysis."""        try:
+        """Export metrics data for external analysis."""
+        try:
             historical_metrics = await self.metrics_collector.get_historical_metrics(
                 start_time, end_time
             )
@@ -1173,7 +1222,8 @@ class QualityMonitor:
             return {'error': str(e)}
     
     async def cleanup_old_data(self):
-        """Clean up old monitoring data."""        try:
+        """Clean up old monitoring data."""
+        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=self.max_age_hours)
             
             # Clean up metrics buffer
@@ -1194,7 +1244,8 @@ class QualityMonitor:
             self.logger.error(f"Error cleaning up old data: {str(e)}")
     
     async def shutdown(self):
-        """Shutdown the monitoring system."""        self.logger.info("Shutting down QualityMonitor")
+        """Shutdown the monitoring system."""
+        self.logger.info("Shutting down QualityMonitor")
         
         await self.stop_monitoring()
         await self.cleanup_old_data()

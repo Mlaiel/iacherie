@@ -10,7 +10,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  WARNING: Unauthorized use, reproduction, or distribution of this code is strictly prohibited.
     This system is proprietary and protected by international copyright laws.
     Violations will be prosecuted to the full extent of the law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -33,7 +34,8 @@ from ..models.copyright_models import CopyrightClaim, ProtectedContent, LicenseA
 
 
 class ContentType(Enum):
-    """Types of protected content"""    AUDIO = "audio"
+    """Types of protected content"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -43,14 +45,16 @@ class ContentType(Enum):
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""    BASIC = "basic"
+    """Content protection levels"""
+    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 
 class LicenseType(Enum):
-    """Copyright license types"""    EXCLUSIVE = "exclusive"
+    """Copyright license types"""
+    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     CREATIVE_COMMONS = "creative_commons"
     ROYALTY_FREE = "royalty_free"
@@ -59,7 +63,8 @@ class LicenseType(Enum):
 
 
 class InfringementSeverity(Enum):
-    """Infringement severity levels"""    LOW = "low"
+    """Infringement severity levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -67,7 +72,8 @@ class InfringementSeverity(Enum):
 
 @dataclass
 class CopyrightMetadata:
-    """Copyright metadata structure"""    content_id: str
+    """Copyright metadata structure"""
+    content_id: str
     owner_id: int
     title: str
     description: str
@@ -82,7 +88,8 @@ class CopyrightMetadata:
 
 @dataclass
 class InfringementReport:
-    """Copyright infringement report structure"""    report_id: str
+    """Copyright infringement report structure"""
+    report_id: str
     original_content_id: str
     infringing_content_id: str
     infringing_url: str
@@ -97,7 +104,8 @@ class InfringementReport:
 
 @dataclass
 class LicenseVerification:
-    """License verification result"""    content_id: str
+    """License verification result"""
+    content_id: str
     user_id: int
     license_valid: bool
     license_type: LicenseType
@@ -108,11 +116,13 @@ class LicenseVerification:
 
 
 class CopyrightProtectionEngine:
-    """    Comprehensive Copyright Protection Engine
+    """
+    Comprehensive Copyright Protection Engine
     
     Provides multi-format content protection, automated infringement detection,
     license management, and copyright enforcement capabilities.
-    """    
+    """
+    
     def __init__(self, 
                  db_manager: DatabaseManager,
                  cache_manager: CacheManager,
@@ -154,14 +164,16 @@ class CopyrightProtectionEngine:
         self.active_monitors = {}
     
     async def register_content_protection(self, metadata: CopyrightMetadata) -> Dict[str, Any]:
-        """        Register content for copyright protection with fingerprinting
+        """
+        Register content for copyright protection with fingerprinting
         
         Args:
             metadata: Copyright metadata and content information
             
         Returns:
             Dict: Registration result with protection details
-        """        try:
+        """
+        try:
             # Generate content fingerprints
             fingerprints = await self._generate_content_fingerprints(metadata)
             
@@ -208,7 +220,8 @@ class CopyrightProtectionEngine:
     async def detect_copyright_infringement(self, 
                                           suspicious_content: Dict[str, Any],
                                           platform: str) -> Optional[InfringementReport]:
-        """        Detect potential copyright infringement using AI fingerprinting
+        """
+        Detect potential copyright infringement using AI fingerprinting
         
         Args:
             suspicious_content: Content data to analyze
@@ -216,7 +229,8 @@ class CopyrightProtectionEngine:
             
         Returns:
             InfringementReport: Infringement details if detected
-        """        try:
+        """
+        try:
             # Generate fingerprint for suspicious content
             suspect_fingerprint = await self.fingerprint_engine.generate_fingerprint(
                 content=suspicious_content["content"],
@@ -286,7 +300,8 @@ class CopyrightProtectionEngine:
                                    content_id: str, 
                                    user_id: int,
                                    intended_use: str) -> LicenseVerification:
-        """        Verify user's license to use specific content
+        """
+        Verify user's license to use specific content
         
         Args:
             content_id: Content to verify license for
@@ -295,7 +310,8 @@ class CopyrightProtectionEngine:
             
         Returns:
             LicenseVerification: License verification result
-        """        try:
+        """
+        try:
             # Get content protection details
             protected_content = await self._get_protected_content(content_id)
             
@@ -374,7 +390,8 @@ class CopyrightProtectionEngine:
                                      content_id: str,
                                      licensee_id: int,
                                      license_terms: Dict[str, Any]) -> Dict[str, Any]:
-        """        Create new license agreement for protected content
+        """
+        Create new license agreement for protected content
         
         Args:
             content_id: Content to license
@@ -383,7 +400,8 @@ class CopyrightProtectionEngine:
             
         Returns:
             Dict: License creation result
-        """        try:
+        """
+        try:
             # Validate content ownership
             content_owner = await self._get_content_owner(content_id)
             if not content_owner:
@@ -445,14 +463,16 @@ class CopyrightProtectionEngine:
             }
     
     async def monitor_platform_infringement(self, platform: str) -> List[InfringementReport]:
-        """        Monitor specific platform for copyright infringement
+        """
+        Monitor specific platform for copyright infringement
         
         Args:
             platform: Platform to monitor
             
         Returns:
             List[InfringementReport]: Detected infringements
-        """        try:
+        """
+        try:
             infringement_reports = []
             
             # Get platform-specific crawler
@@ -492,7 +512,8 @@ class CopyrightProtectionEngine:
     async def generate_copyright_report(self, 
                                       owner_id: int, 
                                       period_days: int = 30) -> Dict[str, Any]:
-        """        Generate comprehensive copyright protection report
+        """
+        Generate comprehensive copyright protection report
         
         Args:
             owner_id: Content owner ID
@@ -500,7 +521,8 @@ class CopyrightProtectionEngine:
             
         Returns:
             Dict: Comprehensive copyright report
-        """        try:
+        """
+        try:
             start_date = datetime.now() - timedelta(days=period_days)
             
             with self.db_manager.get_session() as session:
@@ -581,7 +603,8 @@ class CopyrightProtectionEngine:
             return {"error": str(e)}
     
     async def _generate_content_fingerprints(self, metadata: CopyrightMetadata) -> Dict[str, str]:
-        """Generate fingerprints for different content aspects"""        fingerprints = {}
+        """Generate fingerprints for different content aspects"""
+        fingerprints = {}
         
         try:
             # Audio fingerprint
@@ -620,7 +643,8 @@ class CopyrightProtectionEngine:
     async def _create_protection_record(self, 
                                       metadata: CopyrightMetadata, 
                                       fingerprints: Dict[str, str]) -> str:
-        """Create database record for protected content"""        try:
+        """Create database record for protected content"""
+        try:
             protection_id = str(uuid.uuid4())
             
             with self.db_manager.get_session() as session:
@@ -651,7 +675,8 @@ class CopyrightProtectionEngine:
             raise
     
     async def get_protection_status(self, content_id: str) -> Dict[str, Any]:
-        """Get comprehensive protection status for content"""        try:
+        """Get comprehensive protection status for content"""
+        try:
             # Check if content is in active registry
             if content_id in self.protected_content:
                 active_protection = self.protected_content[content_id]

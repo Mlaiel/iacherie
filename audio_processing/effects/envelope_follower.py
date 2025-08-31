@@ -5,12 +5,14 @@ multiple detection modes and adaptive response characteristics.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""import numpy as np
+"""
+import numpy as np
 from typing import Optional
 
 
 class EnvelopeFollower:
-    """Professional envelope follower for dynamics processing"""    
+    """Professional envelope follower for dynamics processing"""
+    
     def __init__(self, sample_rate: int):
         self.sample_rate = sample_rate
         self.envelope = 0.0
@@ -19,7 +21,8 @@ class EnvelopeFollower:
         self.rms_index = 0
         
     def process_peak(self, audio_data: np.ndarray, attack_time: float, release_time: float) -> np.ndarray:
-        """Peak envelope following"""        attack_coeff = np.exp(-1.0 / (attack_time * self.sample_rate))
+        """Peak envelope following"""
+        attack_coeff = np.exp(-1.0 / (attack_time * self.sample_rate))
         release_coeff = np.exp(-1.0 / (release_time * self.sample_rate))
         
         envelope = np.zeros_like(audio_data)
@@ -37,7 +40,8 @@ class EnvelopeFollower:
         return envelope
     
     def process_rms(self, audio_data: np.ndarray, attack_time: float, release_time: float) -> np.ndarray:
-        """RMS envelope following"""        attack_coeff = np.exp(-1.0 / (attack_time * self.sample_rate))
+        """RMS envelope following"""
+        attack_coeff = np.exp(-1.0 / (attack_time * self.sample_rate))
         release_coeff = np.exp(-1.0 / (release_time * self.sample_rate))
         
         envelope = np.zeros_like(audio_data)

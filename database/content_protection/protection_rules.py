@@ -15,7 +15,8 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 from datetime import datetime, timedelta, timezone
@@ -43,7 +44,8 @@ logger = logging.getLogger(__name__)
 
 
 class RuleType(Enum):
-    """Types of protection rules"""    SIMILARITY_THRESHOLD = "similarity_threshold"
+    """Types of protection rules"""
+    SIMILARITY_THRESHOLD = "similarity_threshold"
     PLATFORM_SPECIFIC = "platform_specific"
     CONTENT_TYPE_FILTER = "content_type_filter"
     GEOGRAPHICAL_RESTRICTION = "geographical_restriction"
@@ -56,7 +58,8 @@ class RuleType(Enum):
 
 
 class RulePriority(Enum):
-    """Rule priority levels"""    LOW = "low"
+    """Rule priority levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -64,7 +67,8 @@ class RulePriority(Enum):
 
 
 class RuleStatus(Enum):
-    """Rule status types"""    DRAFT = "draft"
+    """Rule status types"""
+    DRAFT = "draft"
     ACTIVE = "active"
     INACTIVE = "inactive"
     TESTING = "testing"
@@ -73,7 +77,8 @@ class RuleStatus(Enum):
 
 
 class ActionType(Enum):
-    """Types of actions rules can trigger"""    ALERT_CREATION = "alert_creation"
+    """Types of actions rules can trigger"""
+    ALERT_CREATION = "alert_creation"
     AUTOMATIC_TAKEDOWN = "automatic_takedown"
     ESCALATION = "escalation"
     NOTIFICATION = "notification"
@@ -85,18 +90,21 @@ class ActionType(Enum):
 
 
 class ProtectionRulesRepositoryError(Exception):
-    """Custom exception for protection rules operations"""    pass
+    """Custom exception for protection rules operations"""
+    pass
 
 
 class ProtectionRulesRepository:
-    """    Ultra-advanced protection rules repository with enterprise features:
+    """
+    Ultra-advanced protection rules repository with enterprise features:
     - Dynamic rule generation and adaptation
     - AI-powered rule optimization
     - Multi-level rule hierarchies and inheritance
     - Real-time rule execution and monitoring
     - Performance analytics and rule effectiveness tracking
     - Compliance-aware rule management
-    """    
+    """
+    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -145,7 +153,8 @@ class ProtectionRulesRepository:
         rule_metadata: Optional[Dict[str, Any]] = None,
         auto_activate: bool = False
     ) -> ProtectionRule:
-        """        Create comprehensive protection rule with validation and testing
+        """
+        Create comprehensive protection rule with validation and testing
         
         Args:
             rule_name: Human-readable rule name
@@ -162,7 +171,8 @@ class ProtectionRulesRepository:
             
         Raises:
             ProtectionRulesRepositoryError: If creation fails
-        """        try:
+        """
+        try:
             # Validate rule structure
             await self._validate_rule_structure(rule_conditions, rule_actions)
             
@@ -268,7 +278,8 @@ class ProtectionRulesRepository:
         creator_id: str,
         auto_activate: bool = False
     ) -> ProtectionRule:
-        """        Generate protection rule using AI based on violation patterns
+        """
+        Generate protection rule using AI based on violation patterns
         
         Args:
             violation_patterns: Historical violation patterns to learn from
@@ -278,7 +289,8 @@ class ProtectionRulesRepository:
             
         Returns:
             AI-generated ProtectionRule record
-        """        try:
+        """
+        try:
             if not self.ai_rule_generation_enabled:
                 raise ProtectionRulesRepositoryError("AI rule generation not enabled")
             
@@ -330,7 +342,8 @@ class ProtectionRulesRepository:
         rule_id: str,
         activation_metadata: Optional[Dict[str, Any]] = None
     ) -> ProtectionRule:
-        """        Activate protection rule with comprehensive validation
+        """
+        Activate protection rule with comprehensive validation
         
         Args:
             rule_id: Rule identifier
@@ -338,7 +351,8 @@ class ProtectionRulesRepository:
             
         Returns:
             Activated ProtectionRule record
-        """        try:
+        """
+        try:
             rule = await self.db_session.query(ProtectionRule).filter(
                 ProtectionRule.rule_id == rule_id
             ).first()
@@ -397,7 +411,8 @@ class ProtectionRulesRepository:
         content_context: Dict[str, Any],
         rule_categories: Optional[List[str]] = None
     ) -> List[Dict[str, Any]]:
-        """        Execute applicable protection rules for content
+        """
+        Execute applicable protection rules for content
         
         Args:
             content_data: Content data to evaluate
@@ -406,7 +421,8 @@ class ProtectionRulesRepository:
             
         Returns:
             List of rule execution results
-        """        try:
+        """
+        try:
             execution_start = datetime.now()
             
             # Get applicable rules
@@ -457,7 +473,8 @@ class ProtectionRulesRepository:
         category: Optional[str] = None,
         priority_filter: Optional[List[RulePriority]] = None
     ) -> List[ProtectionRule]:
-        """        Get active protection rules filtered by category and priority
+        """
+        Get active protection rules filtered by category and priority
         
         Args:
             category: Rule category to filter by
@@ -465,7 +482,8 @@ class ProtectionRulesRepository:
             
         Returns:
             List of active ProtectionRule records
-        """        try:
+        """
+        try:
             # Check cache first
             cache_key = f"active_rules_{category}_{priority_filter}"
             if cache_key in self.active_rules_cache:
@@ -515,7 +533,8 @@ class ProtectionRulesRepository:
         analysis_period_days: int = 30,
         min_execution_count: int = 10
     ) -> Dict[str, Any]:
-        """        Analyze and optimize rule performance using ML insights
+        """
+        Analyze and optimize rule performance using ML insights
         
         Args:
             analysis_period_days: Period to analyze for optimization
@@ -523,7 +542,8 @@ class ProtectionRulesRepository:
             
         Returns:
             Optimization results and recommendations
-        """        try:
+        """
+        try:
             start_date = datetime.now(timezone.utc) - timedelta(days=analysis_period_days)
             
             # Get rules with sufficient execution history
@@ -599,7 +619,8 @@ class ProtectionRulesRepository:
         creator_id: str,
         rule_name_override: Optional[str] = None
     ) -> ProtectionRule:
-        """        Create protection rule from predefined template
+        """
+        Create protection rule from predefined template
         
         Args:
             template_id: Template identifier
@@ -609,7 +630,8 @@ class ProtectionRulesRepository:
             
         Returns:
             Created ProtectionRule record
-        """        try:
+        """
+        try:
             # Get template
             template = await self._get_rule_template(template_id)
             
@@ -654,7 +676,8 @@ class ProtectionRulesRepository:
         conditions: List[Dict[str, Any]],
         actions: List[Dict[str, Any]]
     ) -> None:
-        """Validate rule structure and syntax"""        if not conditions:
+        """Validate rule structure and syntax"""
+        if not conditions:
             raise ProtectionRulesRepositoryError("Rule must have at least one condition")
         
         if not actions:
@@ -673,7 +696,8 @@ class ProtectionRulesRepository:
                 raise ProtectionRulesRepositoryError("Action missing required field: type")
     
     async def _generate_rule_id(self, rule_name: str, rule_type: RuleType) -> str:
-        """Generate unique rule identifier"""        import hashlib
+        """Generate unique rule identifier"""
+        import hashlib
         
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         type_prefix = rule_type.value[:4].upper()
@@ -684,17 +708,20 @@ class ProtectionRulesRepository:
         return f"RULE-{type_prefix}-{timestamp}-{hash_suffix}"
     
     async def _test_rule_execution(self, rule: ProtectionRule) -> Dict[str, Any]:
-        """Test rule execution with sample data"""        # Implementation would test rule with sample violation data
+        """Test rule execution with sample data"""
+        # Implementation would test rule with sample violation data
         return {"test_passed": True, "execution_time_ms": 10}
     
     async def _validate_rule_for_activation(self, rule: ProtectionRule) -> None:
-        """Validate rule is ready for activation"""        if rule.status == RuleStatus.DEPRECATED.value:
+        """Validate rule is ready for activation"""
+        if rule.status == RuleStatus.DEPRECATED.value:
             raise ProtectionRulesRepositoryError("Cannot activate deprecated rule")
         
         # Additional validation logic would go here
     
     async def _check_rule_conflicts(self, rule: ProtectionRule) -> List[str]:
-        """Check for conflicts with existing active rules"""        # Implementation would check for logical conflicts
+        """Check for conflicts with existing active rules"""
+        # Implementation would check for logical conflicts
         return []  # No conflicts found
     
     async def _get_applicable_rules(
@@ -703,7 +730,8 @@ class ProtectionRulesRepository:
         content_context: Dict[str, Any],
         rule_categories: Optional[List[str]] = None
     ) -> List[ProtectionRule]:
-        """Get rules applicable to content"""        query = self.db_session.query(ProtectionRule).filter(
+        """Get rules applicable to content"""
+        query = self.db_session.query(ProtectionRule).filter(
             ProtectionRule.status == RuleStatus.ACTIVE.value
         )
         
@@ -718,7 +746,8 @@ class ProtectionRulesRepository:
         content_data: Dict[str, Any],
         content_context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute individual protection rule"""        execution_start = datetime.now()
+        """Execute individual protection rule"""
+        execution_start = datetime.now()
         
         try:
             # Decrypt rule conditions and actions
@@ -773,7 +802,8 @@ class ProtectionRulesRepository:
         rule: ProtectionRule,
         execution_result: Dict[str, Any]
     ) -> None:
-        """Update rule execution metrics"""        rule.execution_count += 1
+        """Update rule execution metrics"""
+        rule.execution_count += 1
         rule.last_execution_at = datetime.now(timezone.utc)
         
         if execution_result["success"]:
@@ -789,7 +819,8 @@ class ProtectionRulesRepository:
         rule: ProtectionRule,
         executions: List[RuleExecution]
     ) -> Dict[str, Any]:
-        """Analyze rule performance patterns"""        if not executions:
+        """Analyze rule performance patterns"""
+        if not executions:
             return {}
         
         total_time = sum(e.execution_time_ms for e in executions)
@@ -810,7 +841,8 @@ class ProtectionRulesRepository:
         rule: ProtectionRule,
         performance_analysis: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate optimization recommendations for rule"""        recommendations = []
+        """Generate optimization recommendations for rule"""
+        recommendations = []
         
         # Check execution time
         if performance_analysis.get("avg_execution_time", 0) > 1000:  # > 1 second
@@ -838,7 +870,8 @@ class ProtectionRulesRepository:
         self,
         effectiveness_ranking: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Generate overall performance insights"""        if not effectiveness_ranking:
+        """Generate overall performance insights"""
+        if not effectiveness_ranking:
             return {}
         
         avg_effectiveness = sum(r["effectiveness_score"] for r in effectiveness_ranking) / len(effectiveness_ranking)
@@ -860,7 +893,8 @@ class ProtectionRulesRepository:
         }
     
     async def _get_rule_template(self, template_id: str) -> Optional[Dict[str, Any]]:
-        """Get rule template by ID"""        # Check cache first
+        """Get rule template by ID"""
+        # Check cache first
         if template_id in self.rule_templates_cache:
             return self.rule_templates_cache[template_id]
         
@@ -881,7 +915,8 @@ class ProtectionRulesRepository:
         template: Dict[str, Any],
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process rule template with parameters"""        # Implementation would substitute template variables with parameters
+        """Process rule template with parameters"""
+        # Implementation would substitute template variables with parameters
         processed = template.copy()
         
         # Simple parameter substitution example
@@ -893,5 +928,6 @@ class ProtectionRulesRepository:
         return processed
     
     def _clear_rules_cache(self) -> None:
-        """Clear rules cache to force refresh"""        self.active_rules_cache.clear()
+        """Clear rules cache to force refresh"""
+        self.active_rules_cache.clear()
         logger.debug("Rules cache cleared")

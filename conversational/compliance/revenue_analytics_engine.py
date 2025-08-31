@@ -35,7 +35,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
     This system contains proprietary financial algorithms, trade secrets, and compliance 
     methodologies protected by international copyright laws, financial regulations, and patents.
     Violations will be prosecuted to the full extent of the law with criminal charges.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import time
@@ -122,7 +123,8 @@ from ..ml.models.revenue_models import RevenuePredicationModel, MonetizationOpti
 
 
 class RevenueSource(Enum):
-    """Revenue source types"""    YOUTUBE_ADS = "youtube_ads"
+    """Revenue source types"""
+    YOUTUBE_ADS = "youtube_ads"
     YOUTUBE_MEMBERSHIPS = "youtube_memberships"
     INSTAGRAM_CREATOR = "instagram_creator"
     TIKTOK_CREATOR = "tiktok_creator"
@@ -136,7 +138,8 @@ class RevenueSource(Enum):
 
 
 class MonetizationStrategy(Enum):
-    """Monetization strategy types"""    PASSIVE_INCOME = "passive_income"
+    """Monetization strategy types"""
+    PASSIVE_INCOME = "passive_income"
     ACTIVE_PROMOTION = "active_promotion"
     PREMIUM_CONTENT = "premium_content"
     SUBSCRIPTION_MODEL = "subscription_model"
@@ -146,7 +149,8 @@ class MonetizationStrategy(Enum):
 
 
 class RevenueMetric(Enum):
-    """Revenue tracking metrics"""    TOTAL_REVENUE = "total_revenue"
+    """Revenue tracking metrics"""
+    TOTAL_REVENUE = "total_revenue"
     MONTHLY_RECURRING = "monthly_recurring"
     AVERAGE_RPM = "average_rpm"
     CONVERSION_RATE = "conversion_rate"
@@ -157,7 +161,8 @@ class RevenueMetric(Enum):
 
 @dataclass
 class RevenueEntry:
-    """Individual revenue entry structure"""    entry_id: str
+    """Individual revenue entry structure"""
+    entry_id: str
     user_id: int
     content_id: Optional[str]
     revenue_source: RevenueSource
@@ -174,7 +179,8 @@ class RevenueEntry:
 
 @dataclass
 class RevenueAnalytics:
-    """Revenue analytics result structure"""    user_id: int
+    """Revenue analytics result structure"""
+    user_id: int
     analysis_period: Tuple[datetime, datetime]
     total_revenue: Decimal
     revenue_by_source: Dict[str, Decimal]
@@ -190,7 +196,8 @@ class RevenueAnalytics:
 
 @dataclass
 class MonetizationOpportunity:
-    """Monetization opportunity structure"""    opportunity_id: str
+    """Monetization opportunity structure"""
+    opportunity_id: str
     user_id: int
     content_id: Optional[str]
     strategy: MonetizationStrategy
@@ -206,7 +213,8 @@ class MonetizationOpportunity:
 
 @dataclass
 class RevenueOptimization:
-    """Revenue optimization recommendation"""    optimization_id: str
+    """Revenue optimization recommendation"""
+    optimization_id: str
     user_id: int
     current_performance: Dict[str, float]
     optimization_areas: List[str]
@@ -218,11 +226,13 @@ class RevenueOptimization:
 
 
 class RevenueAnalyticsEngine:
-    """    Advanced Revenue Analytics & Monetization Intelligence Engine
+    """
+    Advanced Revenue Analytics & Monetization Intelligence Engine
     
     Provides comprehensive revenue tracking, analysis, optimization, and prediction
     capabilities for multi-format content creators across various platforms.
-    """    
+    """
+    
     def __init__(self, 
                  db_manager: DatabaseManager,
                  cache_manager: CacheManager,
@@ -251,7 +261,8 @@ class RevenueAnalyticsEngine:
         self._update_currency_rates()
     
     def _initialize_platform_apis(self):
-        """Initialize platform API clients for revenue data"""        try:
+        """Initialize platform API clients for revenue data"""
+        try:
             # YouTube Analytics API
             self.youtube_analytics = self._init_youtube_analytics()
             
@@ -281,7 +292,8 @@ class RevenueAnalyticsEngine:
     async def track_revenue_entry(self, 
                                 revenue_data: Dict[str, Any],
                                 auto_verify: bool = False) -> str:
-        """        Track new revenue entry with comprehensive validation
+        """
+        Track new revenue entry with comprehensive validation
         
         Args:
             revenue_data: Revenue entry data
@@ -289,7 +301,8 @@ class RevenueAnalyticsEngine:
             
         Returns:
             Entry ID of the tracked revenue
-        """        try:
+        """
+        try:
             # Validate revenue data
             validated_data = await self._validate_revenue_data(revenue_data)
             
@@ -346,7 +359,8 @@ class RevenueAnalyticsEngine:
                                  period_start: datetime,
                                  period_end: datetime,
                                  include_predictions: bool = True) -> RevenueAnalytics:
-        """        Perform comprehensive revenue analysis for user
+        """
+        Perform comprehensive revenue analysis for user
         
         Args:
             user_id: User ID to analyze
@@ -356,7 +370,8 @@ class RevenueAnalyticsEngine:
             
         Returns:
             Comprehensive revenue analytics
-        """        try:
+        """
+        try:
             # Fetch revenue data
             revenue_entries = await self._fetch_user_revenue(user_id, period_start, period_end)
             
@@ -426,7 +441,8 @@ class RevenueAnalyticsEngine:
     async def identify_monetization_opportunities(self, 
                                                 user_id: int,
                                                 content_analysis: Optional[Dict] = None) -> List[MonetizationOpportunity]:
-        """        Identify monetization opportunities using AI analysis
+        """
+        Identify monetization opportunities using AI analysis
         
         Args:
             user_id: User ID to analyze
@@ -434,7 +450,8 @@ class RevenueAnalyticsEngine:
             
         Returns:
             List of monetization opportunities
-        """        try:
+        """
+        try:
             # Fetch user data and content
             user_data = await self._fetch_user_data(user_id)
             content_portfolio = await self._fetch_user_content_portfolio(user_id)
@@ -489,7 +506,8 @@ class RevenueAnalyticsEngine:
     async def optimize_revenue_strategy(self, 
                                       user_id: int,
                                       optimization_goals: Dict[str, Any]) -> RevenueOptimization:
-        """        Generate revenue optimization recommendations
+        """
+        Generate revenue optimization recommendations
         
         Args:
             user_id: User ID to optimize
@@ -497,7 +515,8 @@ class RevenueAnalyticsEngine:
             
         Returns:
             Revenue optimization recommendations
-        """        try:
+        """
+        try:
             # Analyze current performance
             current_performance = await self._analyze_current_performance(user_id)
             
@@ -555,7 +574,8 @@ class RevenueAnalyticsEngine:
                                   user_id: int,
                                   platforms: List[str],
                                   sync_period: timedelta = timedelta(days=30)) -> Dict[str, Any]:
-        """        Sync revenue data from external platforms
+        """
+        Sync revenue data from external platforms
         
         Args:
             user_id: User ID to sync
@@ -564,7 +584,8 @@ class RevenueAnalyticsEngine:
             
         Returns:
             Sync results and statistics
-        """        try:
+        """
+        try:
             sync_results = {}
             total_synced = 0
             
@@ -623,7 +644,8 @@ class RevenueAnalyticsEngine:
                                       user_id: int,
                                       forecast_period: timedelta = timedelta(days=90),
                                       scenario: str = 'base') -> Dict[str, Any]:
-        """        Generate revenue forecast using ML models
+        """
+        Generate revenue forecast using ML models
         
         Args:
             user_id: User ID to forecast
@@ -632,7 +654,8 @@ class RevenueAnalyticsEngine:
             
         Returns:
             Revenue forecast data
-        """        try:
+        """
+        try:
             # Fetch historical data
             historical_data = await self._fetch_historical_revenue_data(user_id)
             
@@ -682,7 +705,8 @@ class RevenueAnalyticsEngine:
     # Helper methods for revenue validation and processing
     
     async def _validate_revenue_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate and clean revenue data"""        try:
+        """Validate and clean revenue data"""
+        try:
             required_fields = ['user_id', 'amount', 'currency', 'revenue_source', 'platform']
             for field in required_fields:
                 if field not in data:
@@ -716,7 +740,8 @@ class RevenueAnalyticsEngine:
             raise
     
     async def _convert_to_usd(self, amount: Decimal, currency: str) -> Decimal:
-        """Convert amount to USD using current exchange rates"""        try:
+        """Convert amount to USD using current exchange rates"""
+        try:
             if currency == 'USD':
                 return amount
             
@@ -729,7 +754,8 @@ class RevenueAnalyticsEngine:
             return amount
     
     async def _get_exchange_rate(self, from_currency: str, to_currency: str) -> float:
-        """Get exchange rate between currencies"""        try:
+        """Get exchange rate between currencies"""
+        try:
             cache_key = f"exchange_rate:{from_currency}:{to_currency}"
             cached_rate = await self.cache_manager.get(cache_key)
             
@@ -752,7 +778,8 @@ class RevenueAnalyticsEngine:
             return 1.0
     
     async def _verify_revenue_with_platform(self, revenue_data: Dict[str, Any]) -> bool:
-        """Verify revenue data with platform APIs"""        try:
+        """Verify revenue data with platform APIs"""
+        try:
             platform = revenue_data['platform'].lower()
             
             if platform == 'youtube':
@@ -770,7 +797,8 @@ class RevenueAnalyticsEngine:
             return False
     
     async def _calculate_monthly_trends(self, revenue_entries: List[RevenueEntry]) -> List[Dict[str, Any]]:
-        """Calculate monthly revenue trends"""        try:
+        """Calculate monthly revenue trends"""
+        try:
             monthly_data = {}
             
             for entry in revenue_entries:
@@ -819,7 +847,8 @@ class RevenueAnalyticsEngine:
             return []
     
     async def _identify_top_content(self, user_id: int, revenue_entries: List[RevenueEntry]) -> List[Dict[str, Any]]:
-        """Identify top performing content by revenue"""        try:
+        """Identify top performing content by revenue"""
+        try:
             content_revenue = {}
             
             for entry in revenue_entries:
@@ -860,7 +889,8 @@ class RevenueAnalyticsEngine:
             return []
     
     async def _calculate_monetization_efficiency(self, user_id: int, revenue_entries: List[RevenueEntry]) -> float:
-        """Calculate monetization efficiency score"""        try:
+        """Calculate monetization efficiency score"""
+        try:
             # Fetch user content statistics
             content_stats = await self._fetch_user_content_stats(user_id)
             
@@ -887,7 +917,8 @@ class RevenueAnalyticsEngine:
             return 0.0
     
     async def _calculate_growth_rate(self, user_id: int, period_start: datetime, period_end: datetime) -> float:
-        """Calculate revenue growth rate"""        try:
+        """Calculate revenue growth rate"""
+        try:
             # Compare with previous period
             period_length = period_end - period_start
             prev_period_start = period_start - period_length
@@ -907,7 +938,8 @@ class RevenueAnalyticsEngine:
             return 0.0
     
     async def _predict_future_revenue(self, user_id: int, revenue_entries: List[RevenueEntry]) -> Decimal:
-        """Predict future revenue using ML model"""        try:
+        """Predict future revenue using ML model"""
+        try:
             # Prepare historical data
             historical_data = [
                 {
@@ -933,7 +965,8 @@ class RevenueAnalyticsEngine:
             return Decimal('0')
     
     async def _generate_revenue_recommendations(self, user_id: int, revenue_entries: List[RevenueEntry]) -> List[str]:
-        """Generate AI-powered revenue recommendations"""        try:
+        """Generate AI-powered revenue recommendations"""
+        try:
             recommendations = []
             
             # Analyze revenue patterns
@@ -971,7 +1004,8 @@ class RevenueAnalyticsEngine:
             return []
     
     async def _calculate_kpi_metrics(self, user_id: int, revenue_entries: List[RevenueEntry]) -> Dict[str, float]:
-        """Calculate key performance indicator metrics"""        try:
+        """Calculate key performance indicator metrics"""
+        try:
             metrics = {}
             
             if not revenue_entries:
@@ -1012,12 +1046,15 @@ class RevenueAnalyticsEngine:
     # Database operations
     
     async def _store_revenue_entry(self, entry: RevenueEntry) -> bool:
-        """Store revenue entry in database"""        try:
-            query = """                INSERT INTO revenue_entries 
+        """Store revenue entry in database"""
+        try:
+            query = """
+                INSERT INTO revenue_entries 
                 (entry_id, user_id, content_id, revenue_source, amount, currency, platform,
                  period_start, period_end, transaction_id, metadata, verified, created_at)
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
-            """            
+            """
+            
             await self.db_manager.execute_query(
                 query,
                 entry.entry_id,
@@ -1042,13 +1079,16 @@ class RevenueAnalyticsEngine:
             return False
     
     async def _fetch_user_revenue(self, user_id: int, start_date: datetime, end_date: datetime) -> List[RevenueEntry]:
-        """Fetch user revenue entries from database"""        try:
-            query = """                SELECT entry_id, user_id, content_id, revenue_source, amount, currency, platform,
+        """Fetch user revenue entries from database"""
+        try:
+            query = """
+                SELECT entry_id, user_id, content_id, revenue_source, amount, currency, platform,
                        period_start, period_end, transaction_id, metadata, verified, created_at
                 FROM revenue_entries
                 WHERE user_id = $1 AND period_start >= $2 AND period_end <= $3
                 ORDER BY period_start DESC
-            """            
+            """
+            
             rows = await self.db_manager.fetch_all(query, user_id, start_date, end_date)
             
             entries = []
@@ -1079,71 +1119,91 @@ class RevenueAnalyticsEngine:
     # Platform API integration methods (stubs - would be implemented with actual APIs)
     
     def _init_youtube_analytics(self):
-        """Initialize YouTube Analytics API client"""        # Would initialize actual YouTube Analytics API
+        """Initialize YouTube Analytics API client"""
+        # Would initialize actual YouTube Analytics API
         return None
     
     def _init_instagram_api(self):
-        """Initialize Instagram Creator API client"""        # Would initialize actual Instagram API
+        """Initialize Instagram Creator API client"""
+        # Would initialize actual Instagram API
         return None
     
     def _init_tiktok_api(self):
-        """Initialize TikTok Creator API client"""        # Would initialize actual TikTok API
+        """Initialize TikTok Creator API client"""
+        # Would initialize actual TikTok API
         return None
     
     def _init_spotify_api(self):
-        """Initialize Spotify for Artists API client"""        # Would initialize actual Spotify API
+        """Initialize Spotify for Artists API client"""
+        # Would initialize actual Spotify API
         return None
     
     def _get_stripe_key(self) -> str:
-        """Get Stripe API key from secure configuration"""        return "sk_test_..."
+        """Get Stripe API key from secure configuration"""
+        return "sk_test_..."
     
     def _get_paypal_client_id(self) -> str:
-        """Get PayPal client ID from secure configuration"""        return "paypal_client_id"
+        """Get PayPal client ID from secure configuration"""
+        return "paypal_client_id"
     
     def _get_paypal_secret(self) -> str:
-        """Get PayPal secret from secure configuration"""        return "paypal_secret"
+        """Get PayPal secret from secure configuration"""
+        return "paypal_secret"
     
     async def _sync_youtube_revenue(self, user_id: int, start_date: datetime, end_date: datetime) -> List[Dict]:
-        """Sync revenue from YouTube Analytics API"""        # Would implement actual YouTube revenue sync
+        """Sync revenue from YouTube Analytics API"""
+        # Would implement actual YouTube revenue sync
         return []
     
     async def _sync_instagram_revenue(self, user_id: int, start_date: datetime, end_date: datetime) -> List[Dict]:
-        """Sync revenue from Instagram Creator API"""        # Would implement actual Instagram revenue sync
+        """Sync revenue from Instagram Creator API"""
+        # Would implement actual Instagram revenue sync
         return []
     
     async def _sync_tiktok_revenue(self, user_id: int, start_date: datetime, end_date: datetime) -> List[Dict]:
-        """Sync revenue from TikTok Creator API"""        # Would implement actual TikTok revenue sync
+        """Sync revenue from TikTok Creator API"""
+        # Would implement actual TikTok revenue sync
         return []
     
     async def _sync_spotify_revenue(self, user_id: int, start_date: datetime, end_date: datetime) -> List[Dict]:
-        """Sync revenue from Spotify for Artists API"""        # Would implement actual Spotify revenue sync
+        """Sync revenue from Spotify for Artists API"""
+        # Would implement actual Spotify revenue sync
         return []
     
     # Additional helper methods (stubs)
     
     async def _update_currency_rates(self):
-        """Update currency conversion rates"""        pass
+        """Update currency conversion rates"""
+        pass
     
     async def _fetch_user_data(self, user_id: int) -> Dict:
-        """Fetch user data from database"""        return {'created_at': datetime.now() - timedelta(days=365)}
+        """Fetch user data from database"""
+        return {'created_at': datetime.now() - timedelta(days=365)}
     
     async def _fetch_user_content_portfolio(self, user_id: int) -> Dict:
-        """Fetch user's content portfolio"""        return {}
+        """Fetch user's content portfolio"""
+        return {}
     
     async def _fetch_revenue_history(self, user_id: int) -> List:
-        """Fetch complete revenue history"""        return []
+        """Fetch complete revenue history"""
+        return []
     
     async def _analyze_content_performance(self, user_id: int) -> Dict:
-        """Analyze content performance metrics"""        return {}
+        """Analyze content performance metrics"""
+        return {}
     
     async def _fetch_market_conditions(self, strategy: MonetizationStrategy) -> Dict:
-        """Fetch market conditions for monetization strategy"""        return {}
+        """Fetch market conditions for monetization strategy"""
+        return {}
     
     async def _analyze_competition(self, user_id: int, strategy: MonetizationStrategy) -> Dict:
-        """Analyze competitive landscape"""        return {}
+        """Analyze competitive landscape"""
+        return {}
     
     async def _update_user_revenue_cache(self, user_id: int):
-        """Update user revenue cache"""        pass
+        """Update user revenue cache"""
+        pass
     
     async def _trigger_analytics_update(self, user_id: int):
-        """Trigger analytics update for user"""        pass
+        """Trigger analytics update for user"""
+        pass

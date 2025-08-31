@@ -22,7 +22,8 @@ Team Specialists:
 - Audio Processing Specialist: Advanced audio AI algorithms
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Union, Callable
 from datetime import datetime, timedelta
@@ -44,14 +45,16 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsMode(Enum):
-    """Analytics operation modes"""    REALTIME = "realtime"
+    """Analytics operation modes"""
+    REALTIME = "realtime"
     BATCH = "batch"
     STREAMING = "streaming"
     HYBRID = "hybrid"
 
 
 class PerformanceLevel(Enum):
-    """Performance optimization levels"""    BASIC = "basic"
+    """Performance optimization levels"""
+    BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
     ENTERPRISE = "enterprise"
@@ -59,7 +62,8 @@ class PerformanceLevel(Enum):
 
 @dataclass
 class AnalyticsConfig:
-    """Analytics engine configuration"""    mode: AnalyticsMode = AnalyticsMode.HYBRID
+    """Analytics engine configuration"""
+    mode: AnalyticsMode = AnalyticsMode.HYBRID
     performance_level: PerformanceLevel = PerformanceLevel.ENTERPRISE
     enable_realtime: bool = True
     enable_predictions: bool = True
@@ -73,7 +77,8 @@ class AnalyticsConfig:
 
 @dataclass
 class AnalyticsMetrics:
-    """Analytics engine performance metrics"""    timestamp: datetime = field(default_factory=datetime.now)
+    """Analytics engine performance metrics"""
+    timestamp: datetime = field(default_factory=datetime.now)
     total_events_processed: int = 0
     processing_rate_per_second: float = 0.0
     average_processing_time_ms: float = 0.0
@@ -85,11 +90,13 @@ class AnalyticsMetrics:
 
 
 class AnalyticsEngine:
-    """    Central analytics orchestration engine for industrial IA influencer platform.
+    """
+    Central analytics orchestration engine for industrial IA influencer platform.
     
     Manages all analytics operations including real-time monitoring, business intelligence,
     predictive analytics, and performance optimization for multi-format content creators.
-    """    
+    """
+    
     def __init__(self, config: Optional[AnalyticsConfig] = None):
         self.config = config or AnalyticsConfig()
         self.logger = logging.getLogger(__name__)
@@ -131,7 +138,8 @@ class AnalyticsEngine:
         self.cache = {} if self.config.cache_enabled else None
         
     async def start(self) -> None:
-        """Start the analytics engine"""        try:
+        """Start the analytics engine"""
+        try:
             self.logger.info("Starting Analytics Engine...")
             
             # Initialize all components
@@ -152,7 +160,8 @@ class AnalyticsEngine:
             raise AnalyticsError(f"Engine startup failed: {str(e)}")
     
     async def stop(self) -> None:
-        """Stop the analytics engine"""        try:
+        """Stop the analytics engine"""
+        try:
             self.logger.info("Stopping Analytics Engine...")
             
             self.is_running = False
@@ -167,7 +176,8 @@ class AnalyticsEngine:
             raise AnalyticsError(f"Engine shutdown failed: {str(e)}")
     
     async def process_event(self, event: Dict[str, Any]) -> Dict[str, Any]:
-        """Process analytics event"""        try:
+        """Process analytics event"""
+        try:
             start_time = datetime.now()
             
             # Validate event
@@ -188,7 +198,8 @@ class AnalyticsEngine:
             raise AnalyticsError(f"Event processing failed: {str(e)}")
     
     async def get_realtime_metrics(self) -> Dict[str, Any]:
-        """Get real-time analytics metrics"""        try:
+        """Get real-time analytics metrics"""
+        try:
             # Collect current metrics from all components
             user_metrics = await self.user_tracker.get_realtime_metrics()
             content_metrics = await self.content_tracker.get_realtime_metrics()
@@ -214,7 +225,8 @@ class AnalyticsEngine:
         period: str = "daily",
         include_predictions: bool = True
     ) -> Dict[str, Any]:
-        """Generate comprehensive business analytics report"""        try:
+        """Generate comprehensive business analytics report"""
+        try:
             # Generate business intelligence insights
             bi_insights = await self.business_intelligence.generate_insights(period)
             
@@ -247,7 +259,8 @@ class AnalyticsEngine:
         user_id: str, 
         activity: Dict[str, Any]
     ) -> None:
-        """Track user activity for analytics"""        try:
+        """Track user activity for analytics"""
+        try:
             await self.user_tracker.track_activity(user_id, activity)
             
             # Queue for real-time processing
@@ -267,7 +280,8 @@ class AnalyticsEngine:
         content_id: str, 
         metrics: Dict[str, Any]
     ) -> None:
-        """Track content performance metrics"""        try:
+        """Track content performance metrics"""
+        try:
             await self.content_tracker.track_performance(content_id, metrics)
             
             # Queue for real-time processing
@@ -288,7 +302,8 @@ class AnalyticsEngine:
         amount: float, 
         metadata: Dict[str, Any]
     ) -> None:
-        """Track revenue-related events"""        try:
+        """Track revenue-related events"""
+        try:
             await self.revenue_tracker.track_event(event_type, amount, metadata)
             
             # Queue for real-time processing
@@ -305,7 +320,8 @@ class AnalyticsEngine:
             raise AnalyticsError(f"Revenue event tracking failed: {str(e)}")
     
     async def get_dashboard_data(self, dashboard_type: str = "analytics") -> Dict[str, Any]:
-        """Get dashboard data for specified dashboard type"""        try:
+        """Get dashboard data for specified dashboard type"""
+        try:
             if dashboard_type == "analytics":
                 return await self.analytics_dashboard.get_data()
             elif dashboard_type == "realtime":
@@ -320,7 +336,8 @@ class AnalyticsEngine:
     # Private Methods
     
     async def _initialize_components(self) -> None:
-        """Initialize all analytics components"""        components = [
+        """Initialize all analytics components"""
+        components = [
             self.metrics_collector,
             self.business_collector,
             self.data_aggregator,
@@ -343,7 +360,8 @@ class AnalyticsEngine:
                 await component.initialize()
     
     async def _shutdown_components(self) -> None:
-        """Shutdown all analytics components"""        components = [
+        """Shutdown all analytics components"""
+        components = [
             self.metrics_collector,
             self.business_collector,
             self.data_aggregator,
@@ -366,7 +384,8 @@ class AnalyticsEngine:
                 await component.shutdown()
     
     async def _validate_event(self, event: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate analytics event"""        required_fields = ['type', 'timestamp']
+        """Validate analytics event"""
+        required_fields = ['type', 'timestamp']
         
         for field in required_fields:
             if field not in event:
@@ -375,7 +394,8 @@ class AnalyticsEngine:
         return event
     
     async def _route_event(self, event: Dict[str, Any]) -> Dict[str, Any]:
-        """Route event to appropriate processor"""        event_type = event.get('type')
+        """Route event to appropriate processor"""
+        event_type = event.get('type')
         
         if event_type == 'user_activity':
             return await self.analytics_processor.process_user_event(event)
@@ -387,7 +407,8 @@ class AnalyticsEngine:
             return await self.analytics_processor.process_generic_event(event)
     
     async def _realtime_processor(self) -> None:
-        """Process real-time analytics events"""        while self.is_running:
+        """Process real-time analytics events"""
+        while self.is_running:
             try:
                 # Process events from queue with timeout
                 try:
@@ -404,7 +425,8 @@ class AnalyticsEngine:
                 await asyncio.sleep(1)
     
     async def _batch_processor(self) -> None:
-        """Process batch analytics operations"""        while self.is_running:
+        """Process batch analytics operations"""
+        while self.is_running:
             try:
                 # Run batch processing every 5 minutes
                 await asyncio.sleep(300)
@@ -420,7 +442,8 @@ class AnalyticsEngine:
                 await asyncio.sleep(60)
     
     async def _performance_monitor(self) -> None:
-        """Monitor analytics engine performance"""        while self.is_running:
+        """Monitor analytics engine performance"""
+        while self.is_running:
             try:
                 # Update performance metrics every minute
                 await asyncio.sleep(60)
@@ -435,7 +458,8 @@ class AnalyticsEngine:
                 await asyncio.sleep(60)
     
     async def _update_processing_metrics(self, processing_time_ms: float) -> None:
-        """Update processing performance metrics"""        self.performance_metrics.total_events_processed += 1
+        """Update processing performance metrics"""
+        self.performance_metrics.total_events_processed += 1
         
         # Update rolling average processing time
         if self.performance_metrics.average_processing_time_ms == 0:
@@ -449,11 +473,13 @@ class AnalyticsEngine:
             )
     
     async def _update_error_metrics(self) -> None:
-        """Update error rate metrics"""        # Implement error rate calculation
+        """Update error rate metrics"""
+        # Implement error rate calculation
         pass
     
     async def _update_performance_metrics(self) -> None:
-        """Update overall performance metrics"""        self.performance_metrics.timestamp = datetime.now()
+        """Update overall performance metrics"""
+        self.performance_metrics.timestamp = datetime.now()
         self.performance_metrics.realtime_connections = len(
             getattr(self.realtime_dashboard, 'active_connections', [])
         )
@@ -464,7 +490,8 @@ class AnalyticsEngine:
             pass
     
     async def _get_system_metrics(self) -> Dict[str, Any]:
-        """Get system-level metrics"""        import psutil
+        """Get system-level metrics"""
+        import psutil
         
         return {
             'cpu_usage': psutil.cpu_percent(),
@@ -478,7 +505,8 @@ class AnalyticsEngine:
         bi_insights: Dict[str, Any], 
         performance_report: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate executive summary for reports"""        return {
+        """Generate executive summary for reports"""
+        return {
             'key_insights': bi_insights.get('key_insights', []),
             'performance_highlights': performance_report.get('highlights', []),
             'recommendations': bi_insights.get('recommendations', []),
@@ -486,5 +514,6 @@ class AnalyticsEngine:
         }
     
     def _generate_report_id(self) -> str:
-        """Generate unique report ID"""        import uuid
+        """Generate unique report ID"""
+        import uuid
         return f"report_{uuid.uuid4().hex[:8]}_{int(datetime.now().timestamp())}"

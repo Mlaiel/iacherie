@@ -27,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintAlgorithm(Enum):
-    """Audio fingerprinting algorithms"""    CHROMAPRINT = "chromaprint"              # AcoustID Chromaprint
+    """Audio fingerprinting algorithms"""
+    CHROMAPRINT = "chromaprint"              # AcoustID Chromaprint
     ECHOPRINT = "echoprint"                  # The Echo Nest fingerprinting
     SPECTRAL_HASH = "spectral_hash"          # Spectral peaks hashing
     MFCC_HASH = "mfcc_hash"                  # MFCC-based hashing
@@ -38,7 +39,8 @@ class FingerprintAlgorithm(Enum):
 
 
 class MatchingStrategy(Enum):
-    """Fingerprint matching strategies"""    EXACT = "exact"                          # Exact hash matching
+    """Fingerprint matching strategies"""
+    EXACT = "exact"                          # Exact hash matching
     HAMMING_DISTANCE = "hamming_distance"    # Hamming distance similarity
     COSINE_SIMILARITY = "cosine_similarity"  # Vector cosine similarity
     EUCLIDEAN_DISTANCE = "euclidean_distance" # Euclidean distance
@@ -49,7 +51,8 @@ class MatchingStrategy(Enum):
 
 
 class FingerprintQuality(Enum):
-    """Fingerprint quality levels"""    BASIC = "basic"                          # Fast, low-precision
+    """Fingerprint quality levels"""
+    BASIC = "basic"                          # Fast, low-precision
     STANDARD = "standard"                    # Balanced speed/precision
     HIGH = "high"                           # High precision
     ULTRA = "ultra"                         # Maximum precision
@@ -57,7 +60,8 @@ class FingerprintQuality(Enum):
 
 
 class DatabaseBackend(Enum):
-    """Fingerprint database backends"""    POSTGRESQL = "postgresql"               # PostgreSQL with extensions
+    """Fingerprint database backends"""
+    POSTGRESQL = "postgresql"               # PostgreSQL with extensions
     ELASTICSEARCH = "elasticsearch"         # Elasticsearch
     FAISS = "faiss"                        # Facebook AI Similarity Search
     REDIS = "redis"                        # Redis with modules
@@ -67,7 +71,8 @@ class DatabaseBackend(Enum):
 
 @dataclass
 class FingerprintParameters:
-    """Fingerprint extraction parameters"""    sample_rate: int = 22050
+    """Fingerprint extraction parameters"""
+    sample_rate: int = 22050
     hop_length: int = 512
     n_fft: int = 2048
     n_mels: int = 128
@@ -81,7 +86,8 @@ class FingerprintParameters:
 
 @dataclass
 class MatchingThresholds:
-    """Fingerprint matching thresholds"""    exact_match: float = 1.0
+    """Fingerprint matching thresholds"""
+    exact_match: float = 1.0
     high_confidence: float = 0.95
     medium_confidence: float = 0.85
     low_confidence: float = 0.70
@@ -91,7 +97,8 @@ class MatchingThresholds:
 
 @dataclass
 class PerformanceConfig:
-    """Fingerprinting performance configuration"""    max_processing_time_seconds: float = 30.0
+    """Fingerprinting performance configuration"""
+    max_processing_time_seconds: float = 30.0
     max_memory_usage_mb: int = 1024
     parallel_processing: bool = True
     gpu_acceleration: bool = True
@@ -102,7 +109,8 @@ class PerformanceConfig:
 
 @dataclass
 class SecurityConfig:
-    """Fingerprinting security configuration"""    encrypt_fingerprints: bool = True
+    """Fingerprinting security configuration"""
+    encrypt_fingerprints: bool = True
     hash_salt: Optional[str] = None
     access_control_enabled: bool = True
     audit_logging: bool = True
@@ -111,13 +119,16 @@ class SecurityConfig:
 
 
 class AudioFingerprintConfig:
-    """    Comprehensive audio fingerprinting configuration manager
+    """
+    Comprehensive audio fingerprinting configuration manager
     
     Manages all aspects of audio fingerprinting for content protection,
     copyright detection, and similarity matching.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize audio fingerprint configuration"""        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize audio fingerprint configuration"""
+        self.logger = logging.getLogger(self.__class__.__name__)
         
         # Core configuration
         self._primary_algorithm = FingerprintAlgorithm.CHROMAPRINT
@@ -144,7 +155,8 @@ class AudioFingerprintConfig:
         self.logger.info("AudioFingerprintConfig initialized successfully")
     
     def _initialize_algorithm_configs(self) -> Dict[FingerprintAlgorithm, Dict[str, Any]]:
-        """Initialize algorithm-specific configurations"""        return {
+        """Initialize algorithm-specific configurations"""
+        return {
             FingerprintAlgorithm.CHROMAPRINT: {
                 "name": "Chromaprint",
                 "description": "AcoustID Chromaprint algorithm",
@@ -282,7 +294,8 @@ class AudioFingerprintConfig:
         }
     
     def _initialize_database_configs(self) -> Dict[DatabaseBackend, Dict[str, Any]]:
-        """Initialize database backend configurations"""        return {
+        """Initialize database backend configurations"""
+        return {
             DatabaseBackend.POSTGRESQL: {
                 "name": "PostgreSQL",
                 "connection_params": {
@@ -379,7 +392,8 @@ class AudioFingerprintConfig:
         }
     
     def _initialize_quality_profiles(self) -> Dict[FingerprintQuality, Dict[str, Any]]:
-        """Initialize quality profiles for fingerprinting"""        return {
+        """Initialize quality profiles for fingerprinting"""
+        return {
             FingerprintQuality.BASIC: {
                 "description": "Fast processing, basic accuracy",
                 "algorithms": [FingerprintAlgorithm.SPECTRAL_HASH],
@@ -472,20 +486,23 @@ class AudioFingerprintConfig:
         }
     
     def get_algorithm_config(self, algorithm: FingerprintAlgorithm) -> Dict[str, Any]:
-        """        Get configuration for specific fingerprinting algorithm
+        """
+        Get configuration for specific fingerprinting algorithm
         
         Args:
             algorithm: Fingerprinting algorithm
             
         Returns:
             Algorithm configuration
-        """        return self._algorithm_configs.get(algorithm, {})
+        """
+        return self._algorithm_configs.get(algorithm, {})
     
     def get_recommended_algorithms(self, 
                                   use_case: str,
                                   performance_priority: bool = False,
                                   accuracy_priority: bool = False) -> List[FingerprintAlgorithm]:
-        """        Get recommended algorithms based on use case and priorities
+        """
+        Get recommended algorithms based on use case and priorities
         
         Args:
             use_case: Specific use case
@@ -494,7 +511,8 @@ class AudioFingerprintConfig:
             
         Returns:
             List of recommended algorithms
-        """        try:
+        """
+        try:
             use_case_map = {
                 "music_identification": [
                     FingerprintAlgorithm.CHROMAPRINT,
@@ -556,30 +574,35 @@ class AudioFingerprintConfig:
             return [FingerprintAlgorithm.CHROMAPRINT]
     
     def get_quality_config(self, quality: FingerprintQuality) -> Dict[str, Any]:
-        """        Get configuration for specific quality level
+        """
+        Get configuration for specific quality level
         
         Args:
             quality: Quality level
             
         Returns:
             Quality configuration
-        """        return self._quality_profiles.get(quality, {})
+        """
+        return self._quality_profiles.get(quality, {})
     
     def get_database_config(self, backend: DatabaseBackend) -> Dict[str, Any]:
-        """        Get configuration for database backend
+        """
+        Get configuration for database backend
         
         Args:
             backend: Database backend
             
         Returns:
             Database configuration
-        """        return self._database_configs.get(backend, {})
+        """
+        return self._database_configs.get(backend, {})
     
     def recommend_database_backend(self, 
                                   expected_size: int,
                                   performance_priority: bool = False,
                                   scalability_priority: bool = False) -> DatabaseBackend:
-        """        Recommend database backend based on requirements
+        """
+        Recommend database backend based on requirements
         
         Args:
             expected_size: Expected number of fingerprints
@@ -588,7 +611,8 @@ class AudioFingerprintConfig:
             
         Returns:
             Recommended database backend
-        """        try:
+        """
+        try:
             if expected_size < 10000:
                 return DatabaseBackend.SQLITE
             elif expected_size < 1000000:
@@ -612,7 +636,8 @@ class AudioFingerprintConfig:
                                  quality: FingerprintQuality,
                                  use_case: str,
                                  performance_requirements: Optional[Dict[str, float]] = None) -> Dict[str, Any]:
-        """        Create complete fingerprinting configuration
+        """
+        Create complete fingerprinting configuration
         
         Args:
             quality: Quality level
@@ -621,7 +646,8 @@ class AudioFingerprintConfig:
             
         Returns:
             Complete fingerprinting configuration
-        """        try:
+        """
+        try:
             # Get base quality configuration
             quality_config = self.get_quality_config(quality)
             
@@ -672,7 +698,8 @@ class AudioFingerprintConfig:
             return self._get_fallback_config()
     
     def _get_fallback_config(self) -> Dict[str, Any]:
-        """Get fallback configuration for error scenarios"""        return {
+        """Get fallback configuration for error scenarios"""
+        return {
             "quality_level": FingerprintQuality.STANDARD.value,
             "use_case": "general",
             "algorithms": [FingerprintAlgorithm.CHROMAPRINT.value],
@@ -686,14 +713,16 @@ class AudioFingerprintConfig:
         }
     
     def validate_config(self, config: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """        Validate fingerprinting configuration
+        """
+        Validate fingerprinting configuration
         
         Args:
             config: Configuration to validate
             
         Returns:
             Tuple of (is_valid, error_messages)
-        """        errors = []
+        """
+        errors = []
         is_valid = True
         
         try:
@@ -738,7 +767,8 @@ class AudioFingerprintConfig:
                                config: Dict[str, Any],
                                audio_duration: float,
                                audio_count: int = 1) -> Dict[str, Any]:
-        """        Estimate performance for given configuration
+        """
+        Estimate performance for given configuration
         
         Args:
             config: Fingerprinting configuration
@@ -747,7 +777,8 @@ class AudioFingerprintConfig:
             
         Returns:
             Performance estimates
-        """        try:
+        """
+        try:
             algorithms = config.get("algorithms", [FingerprintAlgorithm.CHROMAPRINT.value])
             primary_algo = FingerprintAlgorithm(config.get("primary_algorithm", "chromaprint"))
             
@@ -811,7 +842,8 @@ class AudioFingerprintConfig:
     def _get_performance_recommendations(self, 
                                        processing_time: float, 
                                        memory_usage: float) -> List[str]:
-        """Get performance optimization recommendations"""        recommendations = []
+        """Get performance optimization recommendations"""
+        recommendations = []
         
         if processing_time > 300:  # > 5 minutes
             recommendations.append("Consider using faster algorithms like Spectral Hash")
@@ -829,7 +861,8 @@ class AudioFingerprintConfig:
         return recommendations
     
     def export_config(self) -> Dict[str, Any]:
-        """Export complete fingerprinting configuration"""        try:
+        """Export complete fingerprinting configuration"""
+        try:
             return {
                 "primary_algorithm": self._primary_algorithm.value,
                 "fallback_algorithms": [algo.value for algo in self._fallback_algorithms],

@@ -11,7 +11,8 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Any attempt to steal the concept, idea, or code without explicit written authorization
 from Fahed Mlaiel will result in immediate legal prosecution under German and international law.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import json
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class IndexStatistics:
-    """Statistics for vector index performance"""    total_documents: int = 0
+    """Statistics for vector index performance"""
+    total_documents: int = 0
     total_vectors: int = 0
     average_dimension: float = 0.0
     storage_size_mb: float = 0.0
@@ -44,7 +46,8 @@ class IndexStatistics:
 
 
 class VectorDocumentStore:
-    """High-performance vector document storage backend"""    
+    """High-performance vector document storage backend"""
+    
     def __init__(self, storage_path: str):
         self.storage_path = storage_path
         self.db_path = os.path.join(storage_path, "vector_documents.db")
@@ -53,13 +56,16 @@ class VectorDocumentStore:
         self._initialize_database()
     
     def _ensure_storage_directory(self):
-        """Ensure storage directory exists"""        os.makedirs(self.storage_path, exist_ok=True)
+        """Ensure storage directory exists"""
+        os.makedirs(self.storage_path, exist_ok=True)
     
     def _initialize_database(self):
-        """Initialize SQLite database for vector metadata"""        with self.lock:
+        """Initialize SQLite database for vector metadata"""
+        with self.lock:
             conn = sqlite3.connect(self.db_path)
             try:
-                conn.execute("""                    CREATE TABLE IF NOT EXISTS vector_documents (
+                conn.execute("""
+                    CREATE TABLE IF NOT EXISTS vector_documents (
                         document_id TEXT PRIMARY KEY,
                         content_type TEXT NOT NULL,
                         vector_dimension INTEGER NOT NULL,
@@ -74,13 +80,16 @@ class VectorDocumentStore:
                     )
                 """)
                 
-                conn.execute("""                    CREATE INDEX IF NOT EXISTS idx_content_type ON vector_documents(content_type)
+                conn.execute("""
+                    CREATE INDEX IF NOT EXISTS idx_content_type ON vector_documents(content_type)
                 """)
                 
-                conn.execute("""                    CREATE INDEX IF NOT EXISTS idx_created_at ON vector_documents(created_at)
+                conn.execute("""
+                    CREATE INDEX IF NOT EXISTS idx_created_at ON vector_documents(created_at)
                 """)
                 
-                conn.execute("""                    CREATE INDEX IF NOT EXISTS idx_vector_dimension ON vector_documents(vector_dimension)
+                conn.execute("""
+                    CREATE INDEX IF NOT EXISTS idx_vector_dimension ON vector_documents(vector_dimension)
                 """)
                 
                 conn.commit()
@@ -89,7 +98,8 @@ class VectorDocumentStore:
                 conn.close()
     
     def store_document(self, document: VectorDocument) -> IndexingResult:
-        """Store vector document with metadata"""        with self.lock:
+        """Store vector document with metadata"""
+        with self.lock:
             try:
                 # Generate vector data file path
                 vector_filename = f"{document.document_id}.npy"
@@ -108,7 +118,8 @@ class VectorDocumentStore:
                 # Store metadata in database
                 conn = sqlite3.connect(self.db_path)
                 try:
-                    conn.execute("""                        INSERT OR REPLACE INTO vector_documents (
+                    conn.execute("""
+                        INSERT OR REPLACE INTO vector_documents (
                             document_id, content_type, vector_dimension, vector_data_path,
                             metadata_json, created_at, updated_at, storage_size, checksum
                         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -146,18 +157,21 @@ class VectorDocumentStore:
                 )
     
     def retrieve_document(self, document_id: str) -> Optional[VectorDocument]:
-        """Retrieve vector document by ID"""        with self.lock:
+        """Retrieve vector document by ID"""
+        with self.lock:
             try:
                 conn = sqlite3.connect(self.db_path)
                 try:
                     # Update access statistics
-                    conn.execute("""                        UPDATE vector_documents 
+                    conn.execute("""
+                        UPDATE vector_documents 
                         SET accessed_at = ?, access_count = access_count + 1
                         WHERE document_id = ?
                     """, (datetime.now(timezone.utc).isoformat(), document_id))
                     
                     # Retrieve document metadata
-                    cursor = conn.execute("""                        SELECT document_id, content_type, vector_dimension, vector_data_path,
+                    cursor = conn.execute("""
+                        SELECT document_id, content_type, vector_dimension, vector_data_path,
                                metadata_json, created_at, updated_at, checksum
                         FROM vector_documents WHERE document_id = ?
                     """, (document_id,))
@@ -195,12 +209,14 @@ class VectorDocumentStore:
                 return None
     
     def delete_document(self, document_id: str) -> bool:
-        """Delete vector document"""        with self.lock:
+        """Delete vector document"""
+        with self.lock:
             try:
                 conn = sqlite3.connect(self.db_path)
                 try:
                     # Get vector data path
-                    cursor = conn.execute("""                        SELECT vector_data_path FROM vector_documents WHERE document_id = ?
+                    cursor = conn.execute("""
+                        SELECT vector_data_path FROM vector_documents WHERE document_id = ?
                     """, (document_id,))
                     
                     row = cursor.fetchone()
@@ -212,7 +228,8 @@ class VectorDocumentStore:
                             os.remove(vector_data_path)
                         
                         # Delete database record
-                        conn.execute("""                            DELETE FROM vector_documents WHERE document_id = ?
+                        conn.execute("""
+                            DELETE FROM vector_documents WHERE document_id = ?
                         """, (document_id,))
                         
                         conn.commit()
@@ -229,14 +246,17 @@ class VectorDocumentStore:
     
     def query_documents(self, content_type: Optional[str] = None, 
                        limit: int = 100, offset: int = 0) -> List[Dict[str, Any]]:
-        """Query documents with filtering"""        with self.lock:
+        """Query documents with filtering"""
+        with self.lock:
             try:
                 conn = sqlite3.connect(self.db_path)
                 try:
-                    query = """                        SELECT document_id, content_type, vector_dimension, 
+                    query = """
+                        SELECT document_id, content_type, vector_dimension, 
                                created_at, access_count, storage_size
                         FROM vector_documents
-                    """                    params = []
+                    """
+                    params = []
                     
                     if content_type:
                         query += " WHERE content_type = ?"
@@ -268,12 +288,14 @@ class VectorDocumentStore:
                 return []
     
     def get_statistics(self) -> IndexStatistics:
-        """Get storage statistics"""        with self.lock:
+        """Get storage statistics"""
+        with self.lock:
             try:
                 conn = sqlite3.connect(self.db_path)
                 try:
                     # Get basic statistics
-                    cursor = conn.execute("""                        SELECT COUNT(*) as total_docs,
+                    cursor = conn.execute("""
+                        SELECT COUNT(*) as total_docs,
                                AVG(vector_dimension) as avg_dimension,
                                SUM(storage_size) as total_size,
                                AVG(access_count) as avg_access
@@ -299,14 +321,16 @@ class VectorDocumentStore:
                 return IndexStatistics()
     
     def cleanup_old_documents(self, max_age_days: int = 90) -> int:
-        """Cleanup old documents"""        with self.lock:
+        """Cleanup old documents"""
+        with self.lock:
             try:
                 cutoff_date = datetime.now(timezone.utc) - timedelta(days=max_age_days)
                 
                 conn = sqlite3.connect(self.db_path)
                 try:
                     # Get documents to delete
-                    cursor = conn.execute("""                        SELECT document_id, vector_data_path 
+                    cursor = conn.execute("""
+                        SELECT document_id, vector_data_path 
                         FROM vector_documents 
                         WHERE accessed_at < ?
                     """, (cutoff_date.isoformat(),))
@@ -320,7 +344,8 @@ class VectorDocumentStore:
                             os.remove(vector_path)
                         
                         # Delete database record
-                        conn.execute("""                            DELETE FROM vector_documents WHERE document_id = ?
+                        conn.execute("""
+                            DELETE FROM vector_documents WHERE document_id = ?
                         """, (doc_id,))
                         
                         deleted_count += 1
@@ -336,16 +361,19 @@ class VectorDocumentStore:
                 return 0
     
     def _calculate_checksum(self, vector_data: np.ndarray) -> str:
-        """Calculate checksum for vector data integrity"""        import hashlib
+        """Calculate checksum for vector data integrity"""
+        import hashlib
         return hashlib.md5(vector_data.tobytes()).hexdigest()
 
 
 class VectorIndexer:
-    """    Ultra-Advanced Vector Document Indexer
+    """
+    Ultra-Advanced Vector Document Indexer
     
     Provides high-performance vector document management with advanced
     indexing, storage optimization, and retrieval capabilities.
-    """    
+    """
+    
     def __init__(self, config: VectorConfig):
         self.config = config
         self.document_store = VectorDocumentStore(config.persistence_dir)
@@ -368,7 +396,8 @@ class VectorIndexer:
         logger.info("Vector Indexer initialized")
     
     async def initialize(self) -> None:
-        """Initialize vector indexer"""        try:
+        """Initialize vector indexer"""
+        try:
             # Verify storage accessibility
             test_document = VectorDocument(
                 document_id="__test__",
@@ -399,7 +428,8 @@ class VectorIndexer:
             raise VectorIndexError(f"Initialization failed: {str(e)}")
     
     async def add_document(self, document: VectorDocument) -> IndexingResult:
-        """Add single document to index"""        try:
+        """Add single document to index"""
+        try:
             start_time = time.time()
             
             # Validate document
@@ -436,7 +466,8 @@ class VectorIndexer:
             )
     
     async def add_batch_documents(self, documents: List[VectorDocument]) -> List[IndexingResult]:
-        """Add batch of documents to index"""        try:
+        """Add batch of documents to index"""
+        try:
             start_time = time.time()
             batch_size = min(self.config.batch_size, len(documents))
             
@@ -486,7 +517,8 @@ class VectorIndexer:
             return [IndexingResult(success=False, document_id="batch", error=str(e))]
     
     async def retrieve_document(self, document_id: str) -> Optional[VectorDocument]:
-        """Retrieve document by ID"""        try:
+        """Retrieve document by ID"""
+        try:
             document = await asyncio.get_event_loop().run_in_executor(
                 self.thread_pool,
                 self.document_store.retrieve_document,
@@ -503,7 +535,8 @@ class VectorIndexer:
             return None
     
     async def delete_document(self, document_id: str) -> bool:
-        """Delete document from index"""        try:
+        """Delete document from index"""
+        try:
             success = await asyncio.get_event_loop().run_in_executor(
                 self.thread_pool,
                 self.document_store.delete_document,
@@ -523,7 +556,8 @@ class VectorIndexer:
     
     async def query_documents(self, content_type: Optional[str] = None, 
                             limit: int = 100, offset: int = 0) -> List[Dict[str, Any]]:
-        """Query documents with filtering"""        try:
+        """Query documents with filtering"""
+        try:
             documents = await asyncio.get_event_loop().run_in_executor(
                 self.thread_pool,
                 self.document_store.query_documents,
@@ -539,7 +573,8 @@ class VectorIndexer:
             return []
     
     async def optimize_index(self, content_type: Optional[str] = None) -> Dict[str, Any]:
-        """Optimize index for better performance"""        try:
+        """Optimize index for better performance"""
+        try:
             start_time = time.time()
             
             # Get current statistics
@@ -584,7 +619,8 @@ class VectorIndexer:
             return {"success": False, "error": str(e)}
     
     async def store_processing_result(self, task_id: str, result: Dict[str, Any]):
-        """Store processing result for task tracking"""        try:
+        """Store processing result for task tracking"""
+        try:
             # Convert to IndexingResult if needed
             if not isinstance(result, IndexingResult):
                 indexing_result = IndexingResult(
@@ -602,10 +638,12 @@ class VectorIndexer:
             logger.error(f"Failed to store processing result for {task_id}: {e}")
     
     async def get_processing_result(self, task_id: str) -> Optional[IndexingResult]:
-        """Get processing result by task ID"""        return self.processing_results.get(task_id)
+        """Get processing result by task ID"""
+        return self.processing_results.get(task_id)
     
     async def cleanup_old_documents(self, max_age_days: int = 90) -> Dict[str, Any]:
-        """Cleanup old documents"""        try:
+        """Cleanup old documents"""
+        try:
             start_time = time.time()
             
             deleted_count = await asyncio.get_event_loop().run_in_executor(
@@ -627,7 +665,8 @@ class VectorIndexer:
             return {"success": False, "error": str(e)}
     
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive indexer statistics"""        try:
+        """Get comprehensive indexer statistics"""
+        try:
             # Get storage statistics
             storage_stats = await asyncio.get_event_loop().run_in_executor(
                 self.thread_pool,
@@ -647,10 +686,12 @@ class VectorIndexer:
             return {}
     
     async def get_metrics(self) -> VectorMetrics:
-        """Get current metrics"""        return self.metrics
+        """Get current metrics"""
+        return self.metrics
     
     def _validate_document(self, document: VectorDocument) -> bool:
-        """Validate document before indexing"""        try:
+        """Validate document before indexing"""
+        try:
             # Check required fields
             if not document.document_id or not document.content_type:
                 return False
@@ -674,7 +715,8 @@ class VectorIndexer:
             return False
     
     async def _defragment_storage(self) -> Dict[str, Any]:
-        """Defragment storage to improve performance"""        try:
+        """Defragment storage to improve performance"""
+        try:
             # Simulate defragmentation process
             await asyncio.sleep(0.1)
             return {"defragmentation": "completed", "improvement": 0.05}
@@ -682,7 +724,8 @@ class VectorIndexer:
             return {"defragmentation": "failed", "error": str(e)}
     
     async def _rebuild_indices(self) -> Dict[str, Any]:
-        """Rebuild database indices"""        try:
+        """Rebuild database indices"""
+        try:
             # Simulate index rebuilding
             await asyncio.sleep(0.1)
             return {"index_rebuild": "completed", "improvement": 0.1}
@@ -690,7 +733,8 @@ class VectorIndexer:
             return {"index_rebuild": "failed", "error": str(e)}
     
     async def _cleanup_orphaned_files(self) -> Dict[str, Any]:
-        """Cleanup orphaned vector files"""        try:
+        """Cleanup orphaned vector files"""
+        try:
             # Simulate cleanup
             await asyncio.sleep(0.05)
             return {"orphan_cleanup": "completed", "files_cleaned": 0}
@@ -698,7 +742,8 @@ class VectorIndexer:
             return {"orphan_cleanup": "failed", "error": str(e)}
     
     async def _optimize_database(self) -> Dict[str, Any]:
-        """Optimize database performance"""        try:
+        """Optimize database performance"""
+        try:
             # Simulate database optimization
             await asyncio.sleep(0.1)
             return {"database_optimization": "completed", "improvement": 0.08}
@@ -706,13 +751,15 @@ class VectorIndexer:
             return {"database_optimization": "failed", "error": str(e)}
     
     async def _get_detailed_statistics(self) -> IndexStatistics:
-        """Get detailed performance statistics"""        return await asyncio.get_event_loop().run_in_executor(
+        """Get detailed performance statistics"""
+        return await asyncio.get_event_loop().run_in_executor(
             self.thread_pool,
             self.document_store.get_statistics
         )
     
     async def shutdown(self):
-        """Graceful shutdown of vector indexer"""        try:
+        """Graceful shutdown of vector indexer"""
+        try:
             # Complete pending operations
             if self.processing_results:
                 logger.info(f"Finalizing {len(self.processing_results)} processing results")

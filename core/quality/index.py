@@ -12,7 +12,8 @@ Unauthorized use, modification, or distribution by any individual or entity
 without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Violators will face immediate legal action under German and international law.
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, Any, Optional
+"""
+from typing import Dict, Any, Optional
 import logging
 
 # Import all quality components
@@ -35,14 +36,18 @@ logger = logging.getLogger(__name__)
 
 
 class QualityManagementSystem:
-    """    Central quality management system providing unified access to all quality components
-    """    
+    """
+    Central quality management system providing unified access to all quality components
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize the Quality Management System
+        """
+        Initialize the Quality Management System
         
         Args:
             config: Configuration dictionary for system components
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # Initialize all components
@@ -69,7 +74,8 @@ class QualityManagementSystem:
         creator_data: Dict[str, Any],
         analysis_options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Perform comprehensive quality analysis across all dimensions
+        """
+        Perform comprehensive quality analysis across all dimensions
         
         Args:
             content_path: Path to content file
@@ -78,7 +84,8 @@ class QualityManagementSystem:
             
         Returns:
             Dict containing all analysis results
-        """        try:
+        """
+        try:
             self.logger.info(f"Starting comprehensive quality analysis for {content_path}")
             
             results = {
@@ -155,7 +162,8 @@ class QualityManagementSystem:
         engagement_data: Dict[str, Any],
         historical_data: Optional[list] = None
     ) -> Dict[str, Any]:
-        """        Perform comprehensive creator monetization analysis
+        """
+        Perform comprehensive creator monetization analysis
         
         Args:
             creator_data: Creator profile and metrics
@@ -165,7 +173,8 @@ class QualityManagementSystem:
             
         Returns:
             Dict containing monetization analysis results
-        """        try:
+        """
+        try:
             self.logger.info(f"Starting monetization analysis for creator {creator_data.get('creator_id', 'unknown')}")
             
             # Revenue quality analysis
@@ -198,7 +207,8 @@ class QualityManagementSystem:
         potential_partners: list,
         collaboration_preferences: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Analyze collaboration opportunities and quality
+        """
+        Analyze collaboration opportunities and quality
         
         Args:
             creator_data: Primary creator data
@@ -207,7 +217,8 @@ class QualityManagementSystem:
             
         Returns:
             Dict containing collaboration analysis results
-        """        try:
+        """
+        try:
             self.logger.info(f"Starting collaboration analysis for creator {creator_data.get('creator_id', 'unknown')}")
             
             collaboration_analysis = await self.collaboration_analyzer.analyze_collaboration_quality(
@@ -230,7 +241,8 @@ class QualityManagementSystem:
         content_data: Dict[str, Any],
         platform_requirements: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Perform comprehensive compliance validation
+        """
+        Perform comprehensive compliance validation
         
         Args:
             content_data: Content information and metadata
@@ -238,7 +250,8 @@ class QualityManagementSystem:
             
         Returns:
             Dict containing compliance validation results
-        """        try:
+        """
+        try:
             self.logger.info("Starting compliance validation")
             
             compliance_result = await self.compliance_checker.check_compliance(
@@ -256,11 +269,13 @@ class QualityManagementSystem:
             raise
     
     def get_system_status(self) -> Dict[str, Any]:
-        """        Get overall system status and health
+        """
+        Get overall system status and health
         
         Returns:
             Dict containing system status information
-        """        return {
+        """
+        return {
             'system_name': 'Quality Management System',
             'version': '2.1.0',
             'status': 'operational',
@@ -289,14 +304,16 @@ class QualityManagementSystem:
 default_quality_system = None
 
 def get_quality_system(config: Optional[Dict[str, Any]] = None) -> QualityManagementSystem:
-    """    Get or create the default quality management system instance
+    """
+    Get or create the default quality management system instance
     
     Args:
         config: Optional configuration for the system
         
     Returns:
         QualityManagementSystem instance
-    """    global default_quality_system
+    """
+    global default_quality_system
     
     if default_quality_system is None:
         default_quality_system = QualityManagementSystem(config)

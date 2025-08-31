@@ -13,7 +13,8 @@ Any unauthorized use, reproduction, or distribution without explicit written per
 is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from typing import Dict, Any, Optional, List, Union
 from pydantic import BaseSettings, Field, validator
 from enum import Enum
@@ -22,7 +23,8 @@ from dataclasses import dataclass
 
 
 class APIProvider(str, Enum):
-    """Supported API providers for content platforms and services."""    SPOTIFY = "spotify"
+    """Supported API providers for content platforms and services."""
+    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -56,7 +58,8 @@ class APIProvider(str, Enum):
 
 @dataclass
 class RateLimitConfig:
-    """Rate limiting configuration for API clients."""    requests_per_second: float = 10.0
+    """Rate limiting configuration for API clients."""
+    requests_per_second: float = 10.0
     requests_per_minute: int = 600
     requests_per_hour: int = 10000
     requests_per_day: int = 100000
@@ -67,14 +70,16 @@ class RateLimitConfig:
 
 @dataclass
 class TimeoutConfig:
-    """Timeout configuration for API clients."""    connect_timeout: float = 30.0
+    """Timeout configuration for API clients."""
+    connect_timeout: float = 30.0
     read_timeout: float = 60.0
     write_timeout: float = 30.0
     pool_timeout: float = 10.0
 
 
 class APIClientConfig(BaseSettings):
-    """API client configuration for external service integrations."""    
+    """API client configuration for external service integrations."""
+    
     # Spotify API
     spotify_base_url: str = Field(default="https://api.spotify.com/v1", env="SPOTIFY_BASE_URL")
     spotify_api_key: Optional[str] = Field(default=None, env="SPOTIFY_API_KEY")
@@ -195,7 +200,8 @@ class APIClientConfig(BaseSettings):
 
 
 class APIEndpoints:
-    """API endpoints configuration for supported platforms."""    
+    """API endpoints configuration for supported platforms."""
+    
     ENDPOINTS = {
         APIProvider.SPOTIFY: {
             "me": "/me",
@@ -251,17 +257,20 @@ class APIEndpoints:
     
     @classmethod
     def get_endpoints(cls, provider: APIProvider) -> Dict[str, str]:
-        """Get API endpoints for a specific provider."""        return cls.ENDPOINTS.get(provider, {})
+        """Get API endpoints for a specific provider."""
+        return cls.ENDPOINTS.get(provider, {})
 
 
 class APIClientManager:
-    """API client manager for handling external service communications."""    
+    """API client manager for handling external service communications."""
+    
     def __init__(self, config: APIClientConfig):
         self.config = config
         self.clients: Dict[APIProvider, httpx.AsyncClient] = {}
         
     def get_base_headers(self, provider: APIProvider) -> Dict[str, str]:
-        """Get base headers for API requests."""        headers = {
+        """Get base headers for API requests."""
+        headers = {
             "User-Agent": self.config.user_agent,
             "Accept": "application/json",
             "Content-Type": "application/json"
@@ -286,7 +295,8 @@ class APIClientManager:
         return headers
     
     def get_rate_limit_config(self, provider: APIProvider) -> RateLimitConfig:
-        """Get rate limiting configuration for a specific provider."""        rate_limit_attr = f"{provider}_rate_limit"
+        """Get rate limiting configuration for a specific provider."""
+        rate_limit_attr = f"{provider}_rate_limit"
         rate_limit = getattr(self.config, rate_limit_attr, 1000)
         
         return RateLimitConfig(
@@ -297,7 +307,8 @@ class APIClientManager:
         )
     
     def get_timeout_config(self) -> TimeoutConfig:
-        """Get timeout configuration for API clients."""        return TimeoutConfig(
+        """Get timeout configuration for API clients."""
+        return TimeoutConfig(
             connect_timeout=self.config.default_timeout,
             read_timeout=self.config.default_timeout * 2,
             write_timeout=self.config.default_timeout,
@@ -305,7 +316,8 @@ class APIClientManager:
         )
     
     async def get_client(self, provider: APIProvider) -> httpx.AsyncClient:
-        """Get or create an async HTTP client for a specific provider."""        if provider not in self.clients:
+        """Get or create an async HTTP client for a specific provider."""
+        if provider not in self.clients:
             base_url = getattr(self.config, f"{provider}_base_url", "")
             headers = self.get_base_headers(provider)
             timeout_config = self.get_timeout_config()
@@ -327,7 +339,8 @@ class APIClientManager:
         return self.clients[provider]
     
     def get_provider_config(self, provider: APIProvider) -> Dict[str, Any]:
-        """Get complete configuration for a specific provider."""        base_url_attr = f"{provider}_base_url"
+        """Get complete configuration for a specific provider."""
+        base_url_attr = f"{provider}_base_url"
         rate_limit_attr = f"{provider}_rate_limit"
         
         return {
@@ -340,7 +353,8 @@ class APIClientManager:
         }
     
     async def close_all_clients(self):
-        """Close all HTTP clients."""        for client in self.clients.values():
+        """Close all HTTP clients."""
+        for client in self.clients.values():
             await client.aclose()
         self.clients.clear()
 

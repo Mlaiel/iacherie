@@ -13,7 +13,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 from enum import Enum
@@ -24,7 +25,8 @@ from pydantic import BaseSettings, Field, validator
 
 
 class ServiceDiscoveryType(str, Enum):
-    """Service discovery backend types."""    CONSUL = "consul"
+    """Service discovery backend types."""
+    CONSUL = "consul"
     ETCD = "etcd"
     REDIS = "redis"
     KUBERNETES = "kubernetes"
@@ -32,7 +34,8 @@ class ServiceDiscoveryType(str, Enum):
 
 
 class HealthCheckType(str, Enum):
-    """Health check types for service registration."""    HTTP = "http"
+    """Health check types for service registration."""
+    HTTP = "http"
     TCP = "tcp"
     GRPC = "grpc"
     SCRIPT = "script"
@@ -40,7 +43,8 @@ class HealthCheckType(str, Enum):
 
 @dataclass
 class ServiceEndpoint:
-    """Service endpoint configuration."""    host: str
+    """Service endpoint configuration."""
+    host: str
     port: int
     protocol: str = "http"
     weight: int = 100
@@ -49,7 +53,8 @@ class ServiceEndpoint:
 
 @dataclass
 class HealthCheckConfig:
-    """Health check configuration for services."""    type: HealthCheckType
+    """Health check configuration for services."""
+    type: HealthCheckType
     endpoint: str
     interval: int = 30  # seconds
     timeout: int = 10   # seconds
@@ -59,7 +64,8 @@ class HealthCheckConfig:
 
 @dataclass
 class ServiceRegistration:
-    """Service registration configuration."""    service_id: str
+    """Service registration configuration."""
+    service_id: str
     service_name: str
     version: str
     endpoints: List[ServiceEndpoint]
@@ -69,9 +75,11 @@ class ServiceRegistration:
 
 
 class ServiceDiscoveryConfig(BaseSettings):
-    """    Centralized service discovery configuration for microservices architecture.
+    """
+    Centralized service discovery configuration for microservices architecture.
     Supports multiple backends: Consul, etcd, Redis, Kubernetes.
-    """    
+    """
+    
     # Service discovery backend
     discovery_type: ServiceDiscoveryType = ServiceDiscoveryType.CONSUL
     
@@ -136,7 +144,8 @@ class ServiceDiscoveryConfig(BaseSettings):
         return v
     
     def get_consul_client(self) -> consul.Consul:
-        """Get configured Consul client."""        return consul.Consul(
+        """Get configured Consul client."""
+        return consul.Consul(
             host=self.consul_host,
             port=self.consul_port,
             token=self.consul_token,
@@ -145,7 +154,8 @@ class ServiceDiscoveryConfig(BaseSettings):
         )
     
     def get_etcd_client(self) -> etcd3.Etcd3Client:
-        """Get configured etcd client."""        return etcd3.client(
+        """Get configured etcd client."""
+        return etcd3.client(
             host=self.etcd_host,
             port=self.etcd_port,
             user=self.etcd_user,
@@ -156,7 +166,8 @@ class ServiceDiscoveryConfig(BaseSettings):
         )
     
     def get_redis_client(self) -> redis.Redis:
-        """Get configured Redis client."""        return redis.Redis(
+        """Get configured Redis client."""
+        return redis.Redis(
             host=self.redis_host,
             port=self.redis_port,
             password=self.redis_password,
@@ -165,7 +176,8 @@ class ServiceDiscoveryConfig(BaseSettings):
         )
     
     def get_service_config(self) -> Dict[str, Any]:
-        """Get complete service configuration."""        return {
+        """Get complete service configuration."""
+        return {
             "discovery": {
                 "type": self.discovery_type,
                 "consul": {
@@ -213,28 +225,33 @@ class ServiceDiscoveryConfig(BaseSettings):
 
 
 class ServiceRegistry:
-    """Service registry for managing service registrations."""    
+    """Service registry for managing service registrations."""
+    
     def __init__(self, config: ServiceDiscoveryConfig):
         self.config = config
         self._services: Dict[str, List[ServiceRegistration]] = {}
         
     def register_service(self, registration: ServiceRegistration):
-        """Register a service."""        if registration.service_name not in self._services:
+        """Register a service."""
+        if registration.service_name not in self._services:
             self._services[registration.service_name] = []
         self._services[registration.service_name].append(registration)
     
     def deregister_service(self, service_name: str, service_id: str):
-        """Deregister a service."""        if service_name in self._services:
+        """Deregister a service."""
+        if service_name in self._services:
             self._services[service_name] = [
                 s for s in self._services[service_name] 
                 if s.service_id != service_id
             ]
     
     def get_service_instances(self, service_name: str) -> List[ServiceRegistration]:
-        """Get all instances of a service."""        return self._services.get(service_name, [])
+        """Get all instances of a service."""
+        return self._services.get(service_name, [])
     
     def get_healthy_instances(self, service_name: str) -> List[ServiceRegistration]:
-        """Get healthy instances of a service."""        # Implementation would include health checking logic
+        """Get healthy instances of a service."""
+        # Implementation would include health checking logic
         return self.get_service_instances(service_name)
 
 

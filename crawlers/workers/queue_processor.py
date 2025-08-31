@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Queue ingestion → Priority analysis → Dead letter handling → 
 Batch processing → Distribution optimization → Recovery mechanisms → Monitoring
-"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, Generic, TypeVar
+"""
+from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, Generic, TypeVar
 import logging
 import asyncio
 import redis.asyncio as redis
@@ -45,7 +46,8 @@ T = TypeVar('T')
 
 
 class QueueType(Enum):
-    """Queue types for different processing needs"""    HIGH_PRIORITY = "high_priority"
+    """Queue types for different processing needs"""
+    HIGH_PRIORITY = "high_priority"
     NORMAL_PRIORITY = "normal_priority"
     LOW_PRIORITY = "low_priority"
     BATCH_PROCESSING = "batch_processing"
@@ -56,7 +58,8 @@ class QueueType(Enum):
 
 
 class QueueStatus(Enum):
-    """Queue processing status"""    ACTIVE = "active"
+    """Queue processing status"""
+    ACTIVE = "active"
     PAUSED = "paused"
     DRAINING = "draining"
     BLOCKED = "blocked"
@@ -65,7 +68,8 @@ class QueueStatus(Enum):
 
 
 class ProcessingMode(Enum):
-    """Queue processing modes"""    FIFO = "fifo"
+    """Queue processing modes"""
+    FIFO = "fifo"
     LIFO = "lifo"
     PRIORITY = "priority"
     BATCH = "batch"
@@ -75,7 +79,8 @@ class ProcessingMode(Enum):
 
 @dataclass
 class QueueConfig:
-    """Queue configuration settings"""    queue_name: str
+    """Queue configuration settings"""
+    queue_name: str
     queue_type: QueueType
     processing_mode: ProcessingMode
     max_size: int = 10000
@@ -92,7 +97,8 @@ class QueueConfig:
 
 @dataclass
 class QueueMetrics:
-    """Queue performance metrics"""    queue_name: str
+    """Queue performance metrics"""
+    queue_name: str
     total_messages: int = 0
     pending_messages: int = 0
     processing_messages: int = 0
@@ -110,7 +116,8 @@ class QueueMetrics:
 
 @dataclass
 class QueueMessage(Generic[T]):
-    """Queue message wrapper"""    message_id: str
+    """Queue message wrapper"""
+    message_id: str
     queue_name: str
     payload: T
     priority: int = 0
@@ -126,7 +133,8 @@ class QueueMessage(Generic[T]):
 
 
 class QueueProcessor:
-    """    High-performance queue processor for distributed task management
+    """
+    High-performance queue processor for distributed task management
     
     Features:
     - Multiple queue types and priorities
@@ -135,7 +143,8 @@ class QueueProcessor:
     - Redis and RabbitMQ backends
     - Compression and encryption
     - Circuit breaker patterns
-    """    def __init__(self, config: QueueConfig, redis_url: str = "redis://localhost:6379"):
+    """
+    def __init__(self, config: QueueConfig, redis_url: str = "redis://localhost:6379"):
         self.config = config
         self.queue_name = config.queue_name
         self.redis_url = redis_url
@@ -165,7 +174,8 @@ class QueueProcessor:
         self.circuit_breaker_last_failure = None
 
     async def start(self) -> bool:
-        """Start queue processor"""        try:
+        """Start queue processor"""
+        try:
             logger.info(f"🚀 Starting queue processor: {self.queue_name}")
             
             # Initialize Redis connection
@@ -186,7 +196,8 @@ class QueueProcessor:
             return False
 
     async def stop(self) -> None:
-        """Stop queue processor gracefully"""        try:
+        """Stop queue processor gracefully"""
+        try:
             logger.info(f"🛑 Stopping queue processor: {self.queue_name}")
             
             self.is_running = False
@@ -215,7 +226,8 @@ class QueueProcessor:
 
     async def enqueue(self, payload: Any, priority: int = 0, delay_seconds: int = 0, 
                      metadata: Optional[Dict[str, Any]] = None) -> str:
-        """Enqueue a message for processing"""        try:
+        """Enqueue a message for processing"""
+        try:
             # Create message
             message = QueueMessage(
                 message_id=str(uuid.uuid4()),
@@ -248,7 +260,8 @@ class QueueProcessor:
             raise
 
     async def dequeue(self, timeout: int = 30) -> Optional[QueueMessage]:
-        """Dequeue a message for processing"""        try:
+        """Dequeue a message for processing"""
+        try:
             if self.status != QueueStatus.ACTIVE:
                 return None
             
@@ -270,7 +283,8 @@ class QueueProcessor:
             return None
 
     async def acknowledge(self, message_id: str, success: bool = True, error_message: Optional[str] = None) -> bool:
-        """Acknowledge message processing completion"""        try:
+        """Acknowledge message processing completion"""
+        try:
             message = self.processing_messages.get(message_id)
             if not message:
                 logger.warning(f"⚠️ Message not found for acknowledgment: {message_id}")
@@ -303,7 +317,8 @@ class QueueProcessor:
             return False
 
     async def get_queue_info(self) -> Dict[str, Any]:
-        """Get comprehensive queue information"""        try:
+        """Get comprehensive queue information"""
+        try:
             # Update current metrics
             await self._update_metrics()
             
@@ -347,7 +362,8 @@ class QueueProcessor:
             return {"error": str(e)}
 
     async def clear_queue(self, queue_type: Optional[QueueType] = None) -> int:
-        """Clear messages from queue"""        try:
+        """Clear messages from queue"""
+        try:
             if queue_type == QueueType.DEAD_LETTER:
                 count = len(self.dead_letter_messages)
                 self.dead_letter_messages.clear()
@@ -366,7 +382,8 @@ class QueueProcessor:
             return 0
 
     async def _initialize_redis(self) -> None:
-        """Initialize Redis connection"""        try:
+        """Initialize Redis connection"""
+        try:
             self.redis = redis.from_url(self.redis_url, decode_responses=False)
             
             # Test connection
@@ -379,7 +396,8 @@ class QueueProcessor:
             raise
 
     async def _start_background_tasks(self) -> None:
-        """Start background processing tasks"""        try:
+        """Start background processing tasks"""
+        try:
             # Message processor
             processor_task = asyncio.create_task(self._background_processor())
             self.background_tasks.add(processor_task)
@@ -407,7 +425,8 @@ class QueueProcessor:
             raise
 
     async def _serialize_message(self, message: QueueMessage) -> bytes:
-        """Serialize message for storage"""        try:
+        """Serialize message for storage"""
+        try:
             # Convert to dict
             message_dict = {
                 'message_id': message.message_id,
@@ -443,7 +462,8 @@ class QueueProcessor:
             raise
 
     async def _deserialize_message(self, data: bytes) -> QueueMessage:
-        """Deserialize message from storage"""        try:
+        """Deserialize message from storage"""
+        try:
             # Decrypt if enabled
             if self.config.encryption_enabled:
                 data = await self.serialization_utils.decrypt_data(data)
@@ -479,7 +499,8 @@ class QueueProcessor:
             raise
 
     async def _store_message(self, message: QueueMessage, serialized_data: bytes) -> None:
-        """Store message in Redis based on processing mode"""        try:
+        """Store message in Redis based on processing mode"""
+        try:
             queue_key = self._get_queue_key(message)
             
             if self.config.processing_mode == ProcessingMode.PRIORITY:
@@ -506,7 +527,8 @@ class QueueProcessor:
             raise
 
     async def _get_next_message(self, timeout: int) -> Optional[QueueMessage]:
-        """Get next message based on processing mode"""        try:
+        """Get next message based on processing mode"""
+        try:
             queue_key = self._get_queue_key()
             
             if self.config.processing_mode == ProcessingMode.PRIORITY:
@@ -533,7 +555,8 @@ class QueueProcessor:
             return None
 
     async def _handle_failed_message(self, message: QueueMessage, error_message: Optional[str] = None) -> None:
-        """Handle failed message processing"""        try:
+        """Handle failed message processing"""
+        try:
             message.attempt_count += 1
             
             if message.attempt_count <= message.max_retries:
@@ -560,7 +583,8 @@ class QueueProcessor:
             logger.error(f"❌ Failed to handle failed message: {e}")
 
     async def _move_to_dead_letter(self, message: QueueMessage, error_message: Optional[str] = None) -> None:
-        """Move message to dead letter queue"""        try:
+        """Move message to dead letter queue"""
+        try:
             # Add error information
             message.metadata['error_message'] = error_message
             message.metadata['failed_at'] = datetime.utcnow().isoformat()
@@ -579,7 +603,8 @@ class QueueProcessor:
             logger.error(f"❌ Failed to move message to dead letter queue: {e}")
 
     async def _background_processor(self) -> None:
-        """Background task for processing delayed messages"""        while not self.shutdown_event.is_set():
+        """Background task for processing delayed messages"""
+        while not self.shutdown_event.is_set():
             try:
                 # Process delayed messages
                 await self._process_delayed_messages()
@@ -594,7 +619,8 @@ class QueueProcessor:
                 await asyncio.sleep(30)
 
     async def _process_delayed_messages(self) -> None:
-        """Process delayed messages that are ready"""        try:
+        """Process delayed messages that are ready"""
+        try:
             delayed_key = f"{self.queue_name}:delayed"
             current_time = datetime.utcnow().timestamp()
             
@@ -619,7 +645,8 @@ class QueueProcessor:
             logger.error(f"❌ Failed to process delayed messages: {e}")
 
     async def _process_retry_messages(self) -> None:
-        """Process retry messages that are ready"""        try:
+        """Process retry messages that are ready"""
+        try:
             retry_key = f"{self.queue_name}:retry"
             current_time = datetime.utcnow().timestamp()
             
@@ -644,7 +671,8 @@ class QueueProcessor:
             logger.error(f"❌ Failed to process retry messages: {e}")
 
     async def _dead_letter_processor(self) -> None:
-        """Background task for dead letter queue processing"""        while not self.shutdown_event.is_set():
+        """Background task for dead letter queue processing"""
+        while not self.shutdown_event.is_set():
             try:
                 # Monitor dead letter queue size
                 dlq_size = await self.redis.llen(f"{self.queue_name}:dead_letter")
@@ -659,7 +687,8 @@ class QueueProcessor:
                 await asyncio.sleep(120)
 
     async def _metrics_updater(self) -> None:
-        """Background task for updating metrics"""        while not self.shutdown_event.is_set():
+        """Background task for updating metrics"""
+        while not self.shutdown_event.is_set():
             try:
                 await self._update_metrics()
                 await asyncio.sleep(30)  # Update every 30 seconds
@@ -669,7 +698,8 @@ class QueueProcessor:
                 await asyncio.sleep(60)
 
     async def _update_metrics(self) -> None:
-        """Update queue metrics"""        try:
+        """Update queue metrics"""
+        try:
             # Update queue sizes
             queue_key = self._get_queue_key()
             self.metrics.pending_messages = await self.redis.llen(queue_key)
@@ -695,7 +725,8 @@ class QueueProcessor:
             logger.error(f"❌ Failed to update metrics: {e}")
 
     async def _ttl_cleaner(self) -> None:
-        """Background task for cleaning expired messages"""        while not self.shutdown_event.is_set():
+        """Background task for cleaning expired messages"""
+        while not self.shutdown_event.is_set():
             try:
                 current_time = datetime.utcnow()
                 
@@ -715,7 +746,8 @@ class QueueProcessor:
                 await asyncio.sleep(600)
 
     async def _circuit_breaker_monitor(self) -> None:
-        """Monitor circuit breaker state"""        while not self.shutdown_event.is_set():
+        """Monitor circuit breaker state"""
+        while not self.shutdown_event.is_set():
             try:
                 # Reset circuit breaker if enough time has passed
                 if self.circuit_breaker_open and self.circuit_breaker_last_failure:
@@ -732,7 +764,8 @@ class QueueProcessor:
                 await asyncio.sleep(120)
 
     async def _drain_messages(self) -> None:
-        """Drain remaining messages during shutdown"""        try:
+        """Drain remaining messages during shutdown"""
+        try:
             logger.info(f"🔄 Draining messages for queue {self.queue_name}")
             
             # Wait for processing messages to complete
@@ -752,7 +785,8 @@ class QueueProcessor:
             logger.error(f"❌ Failed to drain messages: {e}")
 
     async def _remove_message_from_storage(self, message_id: str) -> None:
-        """Remove message from Redis storage"""        try:
+        """Remove message from Redis storage"""
+        try:
             # This is a simplified implementation
             # In practice, you'd need to track message locations more precisely
             pass
@@ -761,35 +795,40 @@ class QueueProcessor:
             logger.error(f"❌ Failed to remove message from storage: {e}")
 
     async def _clear_redis_queue(self, queue_key: str) -> None:
-        """Clear Redis queue"""        try:
+        """Clear Redis queue"""
+        try:
             await self.redis.delete(queue_key)
             
         except Exception as e:
             logger.error(f"❌ Failed to clear Redis queue: {e}")
 
     def _get_queue_key(self, message: Optional[QueueMessage] = None) -> str:
-        """Get Redis key for queue"""        if self.config.processing_mode == ProcessingMode.PRIORITY:
+        """Get Redis key for queue"""
+        if self.config.processing_mode == ProcessingMode.PRIORITY:
             return f"{self.queue_name}:priority"
         else:
             return self.queue_name
 
 
 class QueueProcessorManager:
-    """    Manager for multiple queue processors
+    """
+    Manager for multiple queue processors
     
     Features:
     - Multiple queue management
     - Global metrics aggregation
     - Cross-queue load balancing
     - Centralized monitoring
-    """    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    """
+    def __init__(self, redis_url: str = "redis://localhost:6379"):
         self.redis_url = redis_url
         self.processors: Dict[str, QueueProcessor] = {}
         self.global_metrics: Dict[str, Any] = {}
         self.is_running = False
 
     async def start(self) -> bool:
-        """Start queue processor manager"""        try:
+        """Start queue processor manager"""
+        try:
             logger.info("🚀 Starting queue processor manager")
             
             self.is_running = True
@@ -802,7 +841,8 @@ class QueueProcessorManager:
             return False
 
     async def stop(self) -> None:
-        """Stop all queue processors"""        try:
+        """Stop all queue processors"""
+        try:
             logger.info("🛑 Stopping queue processor manager")
             
             # Stop all processors
@@ -817,7 +857,8 @@ class QueueProcessorManager:
             logger.error(f"❌ Error stopping queue processor manager: {e}")
 
     async def create_processor(self, config: QueueConfig) -> bool:
-        """Create a new queue processor"""        try:
+        """Create a new queue processor"""
+        try:
             if config.queue_name in self.processors:
                 logger.warning(f"⚠️ Queue processor already exists: {config.queue_name}")
                 return False
@@ -838,10 +879,12 @@ class QueueProcessorManager:
             return False
 
     async def get_processor(self, queue_name: str) -> Optional[QueueProcessor]:
-        """Get queue processor by name"""        return self.processors.get(queue_name)
+        """Get queue processor by name"""
+        return self.processors.get(queue_name)
 
     async def get_global_status(self) -> Dict[str, Any]:
-        """Get global status of all processors"""        try:
+        """Get global status of all processors"""
+        try:
             total_processors = len(self.processors)
             active_processors = sum(1 for p in self.processors.values() if p.status == QueueStatus.ACTIVE)
             

@@ -17,7 +17,8 @@ Features:
 - Predictive analytics
 - Advanced statistical modeling
 - Content optimization insights
-"""import logging
+"""
+import logging
 import numpy as np
 import torch
 import torch.nn as nn
@@ -59,7 +60,8 @@ except ImportError:
 
 
 class MetricType(Enum):
-    """Types of metrics to analyze"""    VIEWS = "views"
+    """Types of metrics to analyze"""
+    VIEWS = "views"
     LIKES = "likes"
     SHARES = "shares"
     COMMENTS = "comments"
@@ -72,7 +74,8 @@ class MetricType(Enum):
 
 
 class ContentType(Enum):
-    """Types of content for analysis"""    VIDEO = "video"
+    """Types of content for analysis"""
+    VIDEO = "video"
     IMAGE = "image"
     AUDIO = "audio"
     TEXT = "text"
@@ -83,7 +86,8 @@ class ContentType(Enum):
 
 
 class Platform(Enum):
-    """Social media platforms"""    INSTAGRAM = "instagram"
+    """Social media platforms"""
+    INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
     FACEBOOK = "facebook"
@@ -94,7 +98,8 @@ class Platform(Enum):
 
 
 class TimeFrame(Enum):
-    """Time frames for analysis"""    HOUR = "hour"
+    """Time frames for analysis"""
+    HOUR = "hour"
     DAY = "day"
     WEEK = "week"
     MONTH = "month"
@@ -104,7 +109,8 @@ class TimeFrame(Enum):
 
 @dataclass
 class ContentMetrics:
-    """Content performance metrics"""    content_id: str
+    """Content performance metrics"""
+    content_id: str
     content_type: ContentType
     platform: Platform
     views: int
@@ -121,7 +127,8 @@ class ContentMetrics:
 
 @dataclass
 class PerformancePrediction:
-    """Performance prediction result"""    predicted_metrics: Dict[MetricType, float]
+    """Performance prediction result"""
+    predicted_metrics: Dict[MetricType, float]
     confidence_intervals: Dict[MetricType, Tuple[float, float]]
     prediction_timeframe: TimeFrame
     confidence_score: float
@@ -132,7 +139,8 @@ class PerformancePrediction:
 
 @dataclass
 class EngagementForecast:
-    """Engagement forecasting result"""    forecasted_engagement: List[Dict[str, Any]]
+    """Engagement forecasting result"""
+    forecasted_engagement: List[Dict[str, Any]]
     trend_analysis: Dict[str, Any]
     seasonal_patterns: Dict[str, Any]
     peak_times: List[Dict[str, Any]]
@@ -143,7 +151,8 @@ class EngagementForecast:
 
 @dataclass
 class GrowthAnalysis:
-    """Growth analysis result"""    growth_rate: float
+    """Growth analysis result"""
+    growth_rate: float
     growth_trajectory: List[Dict[str, Any]]
     growth_factors: Dict[str, float]
     bottlenecks: List[Dict[str, Any]]
@@ -154,7 +163,8 @@ class GrowthAnalysis:
 
 
 class BaseAnalyzer(ABC):
-    """Base class for analytics modules"""    
+    """Base class for analytics modules"""
+    
     def __init__(self, analyzer_name: str = "base_analyzer"):
         self.analyzer_name = analyzer_name
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -164,10 +174,12 @@ class BaseAnalyzer(ABC):
         
     @abstractmethod
     def load_model(self) -> bool:
-        """Load the analytics model"""        pass
+        """Load the analytics model"""
+        pass
     
     def _prepare_data(self, data: List[Dict[str, Any]]) -> np.ndarray:
-        """Prepare data for analysis"""        try:
+        """Prepare data for analysis"""
+        try:
             if PANDAS_AVAILABLE:
                 df = pd.DataFrame(data)
                 # Convert datetime columns
@@ -198,14 +210,16 @@ class BaseAnalyzer(ABC):
 
 
 class PerformancePredictor(BaseAnalyzer):
-    """Performance prediction and forecasting"""    
+    """Performance prediction and forecasting"""
+    
     def __init__(self, model_name: str = "performance_predictor_v1"):
         super().__init__(f"perf_pred_{model_name}")
         self.prediction_models = {}
         self.feature_importance = {}
         
     def load_model(self) -> bool:
-        """Load performance prediction model"""        try:
+        """Load performance prediction model"""
+        try:
             # Create prediction models for different metrics
             for metric in MetricType:
                 self.prediction_models[metric] = self._create_prediction_model(metric)
@@ -223,7 +237,8 @@ class PerformancePredictor(BaseAnalyzer):
             return False
     
     def _create_prediction_model(self, metric: MetricType):
-        """Create prediction model for specific metric"""        class MetricPredictionModel(nn.Module):
+        """Create prediction model for specific metric"""
+        class MetricPredictionModel(nn.Module):
             def __init__(self, input_size=64, hidden_size=128):
                 super().__init__()
                 
@@ -259,7 +274,8 @@ class PerformancePredictor(BaseAnalyzer):
         return model
     
     def train_on_historical_data(self, historical_data: List[ContentMetrics]) -> bool:
-        """Train the predictor on historical data"""        try:
+        """Train the predictor on historical data"""
+        try:
             if not self.is_loaded:
                 if not self.load_model():
                     return False
@@ -295,7 +311,8 @@ class PerformancePredictor(BaseAnalyzer):
     
     def predict_performance(self, content_features: Dict[str, Any],
                           timeframe: TimeFrame = TimeFrame.DAY) -> PerformancePrediction:
-        """Predict content performance"""        start_time = time.time()
+        """Predict content performance"""
+        start_time = time.time()
         
         try:
             if not self.is_loaded:
@@ -354,7 +371,8 @@ class PerformancePredictor(BaseAnalyzer):
             )
     
     def _extract_features(self, content_features: Dict[str, Any]) -> np.ndarray:
-        """Extract numerical features from content data"""        features = []
+        """Extract numerical features from content data"""
+        features = []
         
         # Content type encoding
         content_types = [ct.value for ct in ContentType]
@@ -411,7 +429,8 @@ class PerformancePredictor(BaseAnalyzer):
     
     def _predict_metric(self, features: np.ndarray, metric: MetricType, 
                        timeframe: TimeFrame) -> Tuple[float, Tuple[float, float]]:
-        """Predict specific metric"""        try:
+        """Predict specific metric"""
+        try:
             model = self.prediction_models[metric]
             
             with torch.no_grad():
@@ -450,7 +469,8 @@ class PerformancePredictor(BaseAnalyzer):
             return float(base_value), (float(base_value * 0.5), float(base_value * 1.5))
     
     def _calculate_feature_importance(self, training_data: List[Dict[str, Any]]):
-        """Calculate feature importance from training data"""        try:
+        """Calculate feature importance from training data"""
+        try:
             if SKLEARN_AVAILABLE and len(training_data) > 10:
                 # Prepare data
                 features_list = []
@@ -479,7 +499,8 @@ class PerformancePredictor(BaseAnalyzer):
     
     def _identify_key_factors(self, features: np.ndarray, 
                             predictions: Dict[MetricType, float]) -> Dict[str, float]:
-        """Identify key factors affecting performance"""        try:
+        """Identify key factors affecting performance"""
+        try:
             factors = {}
             
             # Use feature importance if available
@@ -511,14 +532,16 @@ class PerformancePredictor(BaseAnalyzer):
 
 
 class EngagementForecaster(BaseAnalyzer):
-    """Engagement forecasting and analysis"""    
+    """Engagement forecasting and analysis"""
+    
     def __init__(self, model_name: str = "engagement_forecaster_v1"):
         super().__init__(f"engage_forecast_{model_name}")
         self.time_series_model = None
         self.seasonal_patterns = {}
         
     def load_model(self) -> bool:
-        """Load engagement forecasting model"""        try:
+        """Load engagement forecasting model"""
+        try:
             # Create time series forecasting model
             self.time_series_model = self._create_time_series_model()
             self.time_series_model.to(self.device)
@@ -533,7 +556,8 @@ class EngagementForecaster(BaseAnalyzer):
             return False
     
     def _create_time_series_model(self):
-        """Create time series forecasting model"""        class TimeSeriesLSTM(nn.Module):
+        """Create time series forecasting model"""
+        class TimeSeriesLSTM(nn.Module):
             def __init__(self, input_size=10, hidden_size=64, num_layers=2, output_size=1):
                 super().__init__()
                 
@@ -563,7 +587,8 @@ class EngagementForecaster(BaseAnalyzer):
         return TimeSeriesLSTM()
     
     def analyze_engagement_patterns(self, historical_data: List[ContentMetrics]) -> Dict[str, Any]:
-        """Analyze engagement patterns from historical data"""        try:
+        """Analyze engagement patterns from historical data"""
+        try:
             if PANDAS_AVAILABLE:
                 # Convert to DataFrame
                 data = []
@@ -603,7 +628,8 @@ class EngagementForecaster(BaseAnalyzer):
     def forecast_engagement(self, historical_data: List[ContentMetrics],
                           forecast_periods: int = 7,
                           timeframe: TimeFrame = TimeFrame.DAY) -> EngagementForecast:
-        """Forecast future engagement"""        start_time = time.time()
+        """Forecast future engagement"""
+        start_time = time.time()
         
         try:
             if not self.is_loaded:
@@ -659,7 +685,8 @@ class EngagementForecaster(BaseAnalyzer):
             )
     
     def _analyze_hourly_patterns(self, df) -> Dict[str, float]:
-        """Analyze hourly engagement patterns"""        try:
+        """Analyze hourly engagement patterns"""
+        try:
             df['hour'] = df['created_at'].dt.hour
             hourly_avg = df.groupby('hour')['engagement_rate'].mean()
             return hourly_avg.to_dict()
@@ -667,7 +694,8 @@ class EngagementForecaster(BaseAnalyzer):
             return {str(h): 0.05 for h in range(24)}
     
     def _analyze_daily_patterns(self, df) -> Dict[str, float]:
-        """Analyze daily engagement patterns"""        try:
+        """Analyze daily engagement patterns"""
+        try:
             df['day_of_week'] = df['created_at'].dt.day_name()
             daily_avg = df.groupby('day_of_week')['engagement_rate'].mean()
             return daily_avg.to_dict()
@@ -676,21 +704,24 @@ class EngagementForecaster(BaseAnalyzer):
             return {day: 0.05 for day in days}
     
     def _analyze_content_patterns(self, df) -> Dict[str, float]:
-        """Analyze content type patterns"""        try:
+        """Analyze content type patterns"""
+        try:
             content_avg = df.groupby('content_type')['engagement_rate'].mean()
             return content_avg.to_dict()
         except Exception:
             return {ct.value: 0.05 for ct in ContentType}
     
     def _analyze_platform_patterns(self, df) -> Dict[str, float]:
-        """Analyze platform-specific patterns"""        try:
+        """Analyze platform-specific patterns"""
+        try:
             platform_avg = df.groupby('platform')['engagement_rate'].mean()
             return platform_avg.to_dict()
         except Exception:
             return {p.value: 0.05 for p in Platform}
     
     def _simple_pattern_analysis(self, historical_data: List[ContentMetrics]) -> Dict[str, Any]:
-        """Simple pattern analysis without pandas"""        try:
+        """Simple pattern analysis without pandas"""
+        try:
             hourly_engagement = {str(h): [] for h in range(24)}
             platform_engagement = {}
             content_engagement = {}
@@ -733,7 +764,8 @@ class EngagementForecaster(BaseAnalyzer):
     
     def _generate_forecasts(self, historical_data: List[ContentMetrics],
                            periods: int, timeframe: TimeFrame) -> List[Dict[str, Any]]:
-        """Generate engagement forecasts"""        forecasts = []
+        """Generate engagement forecasts"""
+        forecasts = []
         
         try:
             # Simple trend-based forecasting
@@ -781,7 +813,8 @@ class EngagementForecaster(BaseAnalyzer):
         return forecasts
     
     def _analyze_trends(self, historical_data: List[ContentMetrics]) -> Dict[str, Any]:
-        """Analyze engagement trends"""        try:
+        """Analyze engagement trends"""
+        try:
             if len(historical_data) < 2:
                 return {'trend': 'insufficient_data', 'slope': 0}
             
@@ -816,7 +849,8 @@ class EngagementForecaster(BaseAnalyzer):
             return {'trend': 'unknown', 'slope': 0}
     
     def _identify_peak_times(self, patterns: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Identify peak engagement times"""        peak_times = []
+        """Identify peak engagement times"""
+        peak_times = []
         
         try:
             # Find peak hours
@@ -854,7 +888,8 @@ class EngagementForecaster(BaseAnalyzer):
     
     def _generate_optimization_suggestions(self, patterns: Dict[str, Any], 
                                          trend_analysis: Dict[str, Any]) -> List[str]:
-        """Generate optimization suggestions"""        suggestions = []
+        """Generate optimization suggestions"""
+        suggestions = []
         
         try:
             # Timing suggestions
@@ -901,13 +936,15 @@ class EngagementForecaster(BaseAnalyzer):
 
 
 class GrowthAnalyzer(BaseAnalyzer):
-    """Growth analysis and optimization"""    
+    """Growth analysis and optimization"""
+    
     def __init__(self, model_name: str = "growth_analyzer_v1"):
         super().__init__(f"growth_{model_name}")
         self.growth_model = None
         
     def load_model(self) -> bool:
-        """Load growth analysis model"""        try:
+        """Load growth analysis model"""
+        try:
             # Create growth analysis model
             self.growth_model = self._create_growth_model()
             self.growth_model.to(self.device)
@@ -922,7 +959,8 @@ class GrowthAnalyzer(BaseAnalyzer):
             return False
     
     def _create_growth_model(self):
-        """Create growth analysis model"""        class GrowthAnalysisModel(nn.Module):
+        """Create growth analysis model"""
+        class GrowthAnalysisModel(nn.Module):
             def __init__(self, input_size=32, output_size=16):
                 super().__init__()
                 
@@ -943,7 +981,8 @@ class GrowthAnalyzer(BaseAnalyzer):
     
     def analyze_growth(self, historical_metrics: List[ContentMetrics],
                       user_metrics: Dict[str, Any]) -> GrowthAnalysis:
-        """Comprehensive growth analysis"""        start_time = time.time()
+        """Comprehensive growth analysis"""
+        start_time = time.time()
         
         try:
             if not self.is_loaded:
@@ -1000,7 +1039,8 @@ class GrowthAnalyzer(BaseAnalyzer):
     
     def _calculate_growth_rate(self, historical_metrics: List[ContentMetrics],
                               user_metrics: Dict[str, Any]) -> float:
-        """Calculate overall growth rate"""        try:
+        """Calculate overall growth rate"""
+        try:
             if len(historical_metrics) < 2:
                 return 0.0
             
@@ -1044,7 +1084,8 @@ class GrowthAnalyzer(BaseAnalyzer):
             return 0.0
     
     def _analyze_growth_trajectory(self, historical_metrics: List[ContentMetrics]) -> List[Dict[str, Any]]:
-        """Analyze growth trajectory over time"""        trajectory = []
+        """Analyze growth trajectory over time"""
+        trajectory = []
         
         try:
             if len(historical_metrics) < 7:
@@ -1087,7 +1128,8 @@ class GrowthAnalyzer(BaseAnalyzer):
     
     def _identify_growth_factors(self, historical_metrics: List[ContentMetrics],
                                user_metrics: Dict[str, Any]) -> Dict[str, float]:
-        """Identify key growth factors"""        try:
+        """Identify key growth factors"""
+        try:
             factors = {}
             
             # Content consistency factor
@@ -1129,7 +1171,8 @@ class GrowthAnalyzer(BaseAnalyzer):
     
     def _identify_bottlenecks(self, historical_metrics: List[ContentMetrics],
                              user_metrics: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Identify growth bottlenecks"""        bottlenecks = []
+        """Identify growth bottlenecks"""
+        bottlenecks = []
         
         try:
             # Low engagement bottleneck
@@ -1184,7 +1227,8 @@ class GrowthAnalyzer(BaseAnalyzer):
     
     def _identify_opportunities(self, historical_metrics: List[ContentMetrics],
                               growth_factors: Dict[str, float]) -> List[Dict[str, Any]]:
-        """Identify growth opportunities"""        opportunities = []
+        """Identify growth opportunities"""
+        opportunities = []
         
         try:
             # High-performing content opportunity
@@ -1248,7 +1292,8 @@ class GrowthAnalyzer(BaseAnalyzer):
     
     def _generate_projections(self, growth_rate: float, 
                             trajectory: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Generate growth projections"""        try:
+        """Generate growth projections"""
+        try:
             current_date = datetime.now()
             projections = {}
             

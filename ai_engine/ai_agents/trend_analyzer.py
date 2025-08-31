@@ -9,7 +9,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 from datetime import datetime, timedelta, timezone
@@ -24,7 +25,8 @@ from .base_agent import BaseAIAgent, AgentCapability, AgentConfiguration, AgentT
 # Mock engines for testing - would be replaced with actual implementations
 class TrendPredictionEngine:
     async def initialize(self):
-        """Initialize trend prediction models and algorithms"""        self.models = {}
+        """Initialize trend prediction models and algorithms"""
+        self.models = {}
         self.algorithms = ['temporal_analysis', 'pattern_matching', 'velocity_tracking']
         self.initialized = True
         logger.info("TrendPredictionEngine initialized with prediction algorithms")
@@ -33,7 +35,8 @@ class TrendPredictionEngine:
 
 class SocialListeningEngine:
     async def initialize(self):
-        """Initialize social listening capabilities"""        self.platforms = ['twitter', 'instagram', 'tiktok', 'youtube', 'facebook']
+        """Initialize social listening capabilities"""
+        self.platforms = ['twitter', 'instagram', 'tiktok', 'youtube', 'facebook']
         self.sentiment_analyzer = {}
         self.keyword_tracker = {}
         self.initialized = True
@@ -41,7 +44,8 @@ class SocialListeningEngine:
 
 class PlatformDataCollector:
     async def initialize(self, platforms):
-        """Initialize data collection for specified platforms"""        self.platforms = platforms or ['all']
+        """Initialize data collection for specified platforms"""
+        self.platforms = platforms or ['all']
         self.collectors = {}
         self.api_connections = {}
         self.rate_limiters = {}
@@ -54,7 +58,8 @@ logger = logging.getLogger(__name__)
 
 
 class TrendCategory(Enum):
-    """Trend categories"""    MUSIC = "music"
+    """Trend categories"""
+    MUSIC = "music"
     VIDEO = "video"
     FASHION = "fashion"
     TECHNOLOGY = "technology"
@@ -77,7 +82,8 @@ class TrendCategory(Enum):
 
 
 class TrendScope(Enum):
-    """Geographic scope of trends"""    GLOBAL = "global"
+    """Geographic scope of trends"""
+    GLOBAL = "global"
     REGIONAL = "regional"
     NATIONAL = "national"
     LOCAL = "local"
@@ -85,7 +91,8 @@ class TrendScope(Enum):
 
 
 class TrendVelocity(Enum):
-    """Speed of trend growth"""    EXPLOSIVE = "explosive"    # >100% growth in 24h
+    """Speed of trend growth"""
+    EXPLOSIVE = "explosive"    # >100% growth in 24h
     RAPID = "rapid"           # 50-100% growth in 24h
     STEADY = "steady"         # 10-50% growth in 24h
     SLOW = "slow"            # 1-10% growth in 24h
@@ -95,7 +102,8 @@ class TrendVelocity(Enum):
 
 @dataclass
 class TrendData:
-    """Comprehensive trend data structure"""    trend_id: str
+    """Comprehensive trend data structure"""
+    trend_id: str
     category: TrendCategory
     scope: TrendScope
     velocity: TrendVelocity
@@ -123,7 +131,8 @@ class TrendData:
 
 @dataclass
 class TrendPrediction:
-    """Future trend prediction"""    prediction_id: str
+    """Future trend prediction"""
+    prediction_id: str
     predicted_trend: str
     category: TrendCategory
     confidence_score: float
@@ -138,7 +147,8 @@ class TrendPrediction:
 
 @dataclass
 class TrendAnalysisReport:
-    """Comprehensive trend analysis report"""    report_id: str
+    """Comprehensive trend analysis report"""
+    report_id: str
     analysis_period: Tuple[datetime, datetime]
     platform_coverage: List[str]
     total_trends_detected: int
@@ -154,7 +164,8 @@ class TrendAnalysisReport:
 
 
 class TrendAnalyzerAgent(BaseAIAgent):
-    """    AI agent specialized in comprehensive trend analysis and prediction.
+    """
+    AI agent specialized in comprehensive trend analysis and prediction.
     
     Capabilities:
     - Real-time trend detection across all major platforms
@@ -165,7 +176,8 @@ class TrendAnalyzerAgent(BaseAIAgent):
     - Viral content pattern recognition
     - Cross-platform trend correlation
     - Monetization opportunity assessment
-    """    
+    """
+    
     def __init__(self, config: AgentConfiguration):
         # Ensure required capabilities
         required_capabilities = {
@@ -218,7 +230,8 @@ class TrendAnalyzerAgent(BaseAIAgent):
         logger.info("TrendAnalyzerAgent initialized successfully")
 
     async def initialize(self) -> bool:
-        """Initialize trend analyzer"""        try:
+        """Initialize trend analyzer"""
+        try:
             await super().initialize()
             
             # Initialize prediction engine
@@ -248,7 +261,8 @@ class TrendAnalyzerAgent(BaseAIAgent):
         categories: Optional[List[TrendCategory]] = None,
         scope: Optional[TrendScope] = None
     ) -> TrendAnalysisReport:
-        """        Analyze current trending content and topics
+        """
+        Analyze current trending content and topics
         
         Args:
             platforms: Specific platforms to analyze (None for all)
@@ -257,7 +271,8 @@ class TrendAnalyzerAgent(BaseAIAgent):
             
         Returns:
             Comprehensive trend analysis report
-        """        try:
+        """
+        try:
             logger.info("Analyzing current trends across platforms")
             
             analysis_start = datetime.now(timezone.utc) - timedelta(hours=24)
@@ -320,7 +335,8 @@ class TrendAnalyzerAgent(BaseAIAgent):
         prediction_horizon_days: int = 30,
         confidence_threshold: float = 0.7
     ) -> List[TrendPrediction]:
-        """        Predict emerging trends using ML models
+        """
+        Predict emerging trends using ML models
         
         Args:
             prediction_horizon_days: How far ahead to predict
@@ -328,7 +344,8 @@ class TrendAnalyzerAgent(BaseAIAgent):
             
         Returns:
             List of trend predictions
-        """        try:
+        """
+        try:
             logger.info(f"Predicting trends for next {prediction_horizon_days} days")
             
             # Collect historical patterns
@@ -370,7 +387,8 @@ class TrendAnalyzerAgent(BaseAIAgent):
         content_type: str,
         time_window_hours: int = 24
     ) -> Dict[str, Any]:
-        """        Analyze patterns in viral content
+        """
+        Analyze patterns in viral content
         
         Args:
             platform: Platform to analyze
@@ -379,7 +397,8 @@ class TrendAnalyzerAgent(BaseAIAgent):
             
         Returns:
             Viral content pattern analysis
-        """        try:
+        """
+        try:
             logger.info(f"Analyzing viral {content_type} patterns on {platform}")
             
             # Collect viral content data
@@ -429,7 +448,8 @@ class TrendAnalyzerAgent(BaseAIAgent):
         hashtags: List[str],
         platforms: Optional[List[str]] = None
     ) -> Dict[str, Dict[str, Any]]:
-        """        Track performance and trends for specific hashtags
+        """
+        Track performance and trends for specific hashtags
         
         Args:
             hashtags: List of hashtags to track
@@ -437,7 +457,8 @@ class TrendAnalyzerAgent(BaseAIAgent):
             
         Returns:
             Hashtag trend analysis
-        """        try:
+        """
+        try:
             logger.info(f"Tracking {len(hashtags)} hashtags across platforms")
             
             platforms = platforms or self.monitored_platforms
@@ -497,14 +518,16 @@ class TrendAnalyzerAgent(BaseAIAgent):
         self, 
         creator_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """        Generate personalized trend opportunities for creator
+        """
+        Generate personalized trend opportunities for creator
         
         Args:
             creator_profile: Creator's profile and preferences
             
         Returns:
             List of trend opportunities ranked by relevance
-        """        try:
+        """
+        try:
             logger.info(f"Generating trend opportunities for creator {creator_profile.get('user_id')}")
             
             # Get creator's content categories and style
@@ -574,7 +597,8 @@ class TrendAnalyzerAgent(BaseAIAgent):
     # Private helper methods for trend analysis
 
     async def _collect_platform_data(self, platforms: List[str]) -> Dict[str, Any]:
-        """Collect raw data from social media platforms"""        platform_data = {}
+        """Collect raw data from social media platforms"""
+        platform_data = {}
         
         for platform in platforms:
             try:
@@ -593,7 +617,8 @@ class TrendAnalyzerAgent(BaseAIAgent):
         categories: Optional[List[TrendCategory]],
         scope: Optional[TrendScope]
     ) -> List[TrendData]:
-        """Detect trends from platform data"""        trends = []
+        """Detect trends from platform data"""
+        trends = []
         trend_candidates = {}
         
         # Process data from each platform
@@ -634,7 +659,8 @@ class TrendAnalyzerAgent(BaseAIAgent):
         return trends
 
     async def _extract_platform_trends(self, platform: str, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract trend signals from platform data"""        trends = {}
+        """Extract trend signals from platform data"""
+        trends = {}
         
         # Extract trending topics, hashtags, and content
         trending_items = data.get('trending_items', [])
@@ -686,7 +712,8 @@ class TrendAnalyzerAgent(BaseAIAgent):
         return trends
 
     async def _score_trend_candidate(self, candidate: Dict[str, Any]) -> float:
-        """Score a trend candidate based on multiple factors"""        scores = {}
+        """Score a trend candidate based on multiple factors"""
+        scores = {}
         
         # Volume score (mentions across platforms)
         total_mentions = sum(
@@ -751,7 +778,8 @@ class TrendAnalyzerAgent(BaseAIAgent):
         candidate: Dict[str, Any], 
         trend_score: float
     ) -> TrendData:
-        """Create TrendData object from candidate"""        
+        """Create TrendData object from candidate"""
+        
         # Determine category
         category = await self._classify_trend_category(candidate)
         
@@ -794,7 +822,8 @@ class TrendAnalyzerAgent(BaseAIAgent):
         )
 
     async def can_handle_task(self, task_type: str, context: Dict[str, Any]) -> bool:
-        """Check if agent can handle trend analysis task"""        supported_tasks = [
+        """Check if agent can handle trend analysis task"""
+        supported_tasks = [
             "analyze_current_trends",
             "predict_emerging_trends",
             "analyze_viral_content_patterns",

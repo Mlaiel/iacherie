@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -19,7 +20,8 @@ Tests the complete content protection and monetization pipeline.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Address critical testing gap - "Tests Manquants: Pas de tests unitaires centralisés"
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -31,7 +33,8 @@ import uuid
 
 
 class MockContentProtectionWorkflow:
-    """Mock implementation of complete content protection workflow"""    
+    """Mock implementation of complete content protection workflow"""
+    
     def __init__(self):
         self.content_database = {}
         self.fingerprint_database = {}
@@ -40,7 +43,8 @@ class MockContentProtectionWorkflow:
         self.user_profiles = {}
         
     async def register_content_creator(self, creator_data: Dict) -> Dict[str, Any]:
-        """Register a new content creator"""        creator_id = str(uuid.uuid4())
+        """Register a new content creator"""
+        creator_id = str(uuid.uuid4())
         
         creator_profile = {
             "creator_id": creator_id,
@@ -64,7 +68,8 @@ class MockContentProtectionWorkflow:
         }
     
     async def upload_and_protect_content(self, creator_id: str, content_data: Dict) -> Dict[str, Any]:
-        """Complete workflow: upload content and enable protection"""        if creator_id not in self.user_profiles:
+        """Complete workflow: upload content and enable protection"""
+        if creator_id not in self.user_profiles:
             raise ValueError("Creator not found")
         
         content_id = str(uuid.uuid4())
@@ -110,7 +115,8 @@ class MockContentProtectionWorkflow:
         }
     
     async def detect_content_infringement(self, suspicious_content: Dict) -> Dict[str, Any]:
-        """Detect potential content infringement"""        detection_results = []
+        """Detect potential content infringement"""
+        detection_results = []
         
         suspicious_fingerprint = await self._generate_content_fingerprint(
             "suspicious_content", suspicious_content
@@ -147,7 +153,8 @@ class MockContentProtectionWorkflow:
         }
     
     async def process_monetization_cycle(self, period_days: int = 30) -> Dict[str, Any]:
-        """Process complete monetization cycle for all creators"""        cycle_results = {
+        """Process complete monetization cycle for all creators"""
+        cycle_results = {
             "cycle_id": str(uuid.uuid4()),
             "period_days": period_days,
             "processed_creators": 0,
@@ -187,7 +194,8 @@ class MockContentProtectionWorkflow:
         return cycle_results
     
     async def generate_platform_analytics(self) -> Dict[str, Any]:
-        """Generate comprehensive platform analytics"""        total_creators = len(self.user_profiles)
+        """Generate comprehensive platform analytics"""
+        total_creators = len(self.user_profiles)
         total_content = len(self.content_database)
         protected_content = len([c for c in self.content_database.values() if c["status"] == "protected"])
         
@@ -227,7 +235,8 @@ class MockContentProtectionWorkflow:
         }
     
     async def _generate_content_fingerprint(self, content_id: str, content_data: Dict) -> Dict[str, Any]:
-        """Internal method to generate content fingerprint"""        fingerprint_id = str(uuid.uuid4())
+        """Internal method to generate content fingerprint"""
+        fingerprint_id = str(uuid.uuid4())
         
         fingerprint_data = {
             "fingerprint_id": fingerprint_id,
@@ -245,7 +254,8 @@ class MockContentProtectionWorkflow:
         return fingerprint_data
     
     async def _setup_protection_rules(self, content_id: str, creator_id: str) -> Dict[str, Any]:
-        """Internal method to setup protection rules"""        rules_id = str(uuid.uuid4())
+        """Internal method to setup protection rules"""
+        rules_id = str(uuid.uuid4())
         
         protection_rules = {
             "rules_id": rules_id,
@@ -263,7 +273,8 @@ class MockContentProtectionWorkflow:
         return protection_rules
     
     async def _setup_monetization(self, content_id: str, creator_id: str) -> Dict[str, Any]:
-        """Internal method to setup monetization"""        monetization_id = str(uuid.uuid4())
+        """Internal method to setup monetization"""
+        monetization_id = str(uuid.uuid4())
         
         monetization_config = {
             "monetization_id": monetization_id,
@@ -280,7 +291,8 @@ class MockContentProtectionWorkflow:
         return monetization_config
     
     async def _calculate_creator_revenue(self, creator_id: str, period_days: int) -> Dict[str, Any]:
-        """Internal method to calculate creator revenue"""        creator_content = [
+        """Internal method to calculate creator revenue"""
+        creator_content = [
             c for c in self.content_database.values()
             if c["creator_id"] == creator_id and c["status"] == "protected"
         ]
@@ -304,7 +316,8 @@ class MockContentProtectionWorkflow:
         }
     
     def _get_recommended_actions(self, detection_results: List[Dict]) -> List[str]:
-        """Get recommended actions for infringement detection"""        if not detection_results:
+        """Get recommended actions for infringement detection"""
+        if not detection_results:
             return ["No action required"]
         
         actions = []
@@ -326,14 +339,17 @@ class MockContentProtectionWorkflow:
 
 
 class TestFullWorkflowIntegration:
-    """Test suite for full workflow integration"""    
+    """Test suite for full workflow integration"""
+    
     @pytest.fixture
     def workflow_engine(self):
-        """Create workflow engine fixture"""        return MockContentProtectionWorkflow()
+        """Create workflow engine fixture"""
+        return MockContentProtectionWorkflow()
     
     @pytest.fixture
     def sample_creator_data(self):
-        """Sample creator registration data"""        return {
+        """Sample creator registration data"""
+        return {
             "name": "Test Creator",
             "email": "creator@example.com",
             "tier": "premium"
@@ -341,7 +357,8 @@ class TestFullWorkflowIntegration:
     
     @pytest.fixture
     def sample_content_data(self):
-        """Sample content upload data"""        return {
+        """Sample content upload data"""
+        return {
             "title": "My Original Song",
             "content_type": "audio/mp3",
             "file_size": 5000000,
@@ -350,7 +367,8 @@ class TestFullWorkflowIntegration:
     
     @pytest.mark.asyncio
     async def test_complete_content_protection_workflow(self, workflow_engine, sample_creator_data, sample_content_data):
-        """Test complete content protection workflow"""        # Step 1: Register creator
+        """Test complete content protection workflow"""
+        # Step 1: Register creator
         creator_result = await workflow_engine.register_content_creator(sample_creator_data)
         
         assert "creator_id" in creator_result
@@ -390,7 +408,8 @@ class TestFullWorkflowIntegration:
     
     @pytest.mark.asyncio
     async def test_content_infringement_detection(self, workflow_engine, sample_creator_data, sample_content_data):
-        """Test content infringement detection workflow"""        # Setup: Register creator and upload content
+        """Test content infringement detection workflow"""
+        # Setup: Register creator and upload content
         creator_result = await workflow_engine.register_content_creator(sample_creator_data)
         creator_id = creator_result["creator_id"]
         
@@ -433,7 +452,8 @@ class TestFullWorkflowIntegration:
     
     @pytest.mark.asyncio
     async def test_monetization_cycle_processing(self, workflow_engine):
-        """Test complete monetization cycle processing"""        # Setup: Create multiple creators with content
+        """Test complete monetization cycle processing"""
+        # Setup: Create multiple creators with content
         creators = []
         
         for i in range(3):
@@ -484,7 +504,8 @@ class TestFullWorkflowIntegration:
     
     @pytest.mark.asyncio
     async def test_platform_analytics_generation(self, workflow_engine):
-        """Test platform analytics generation"""        # Setup: Create some data
+        """Test platform analytics generation"""
+        # Setup: Create some data
         creator_data = {
             "name": "Analytics Test Creator",
             "email": "analytics@example.com",
@@ -544,7 +565,8 @@ class TestFullWorkflowIntegration:
     
     @pytest.mark.asyncio
     async def test_multi_creator_workflow_scaling(self, workflow_engine):
-        """Test workflow scaling with multiple creators"""        # Create multiple creators
+        """Test workflow scaling with multiple creators"""
+        # Create multiple creators
         creator_count = 5
         content_per_creator = 3
         
@@ -594,7 +616,8 @@ class TestFullWorkflowIntegration:
     
     @pytest.mark.asyncio
     async def test_error_handling_in_workflow(self, workflow_engine, sample_content_data):
-        """Test error handling in workflow scenarios"""        # Test uploading content for non-existent creator
+        """Test error handling in workflow scenarios"""
+        # Test uploading content for non-existent creator
         with pytest.raises(ValueError, match="Creator not found"):
             await workflow_engine.upload_and_protect_content(
                 "non_existent_creator", sample_content_data
@@ -609,7 +632,8 @@ class TestFullWorkflowIntegration:
         assert "infringement_detected" in detection_result
     
     def test_workflow_initialization(self):
-        """Test workflow engine initialization"""        workflow = MockContentProtectionWorkflow()
+        """Test workflow engine initialization"""
+        workflow = MockContentProtectionWorkflow()
         
         assert workflow.content_database == {}
         assert workflow.fingerprint_database == {}

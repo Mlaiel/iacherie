@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -21,7 +22,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -47,7 +49,8 @@ from ai.core.exceptions import (
 
 
 class MockContentGenerator(BaseContentGenerator):
-    """Mock implementation for testing BaseContentGenerator"""    
+    """Mock implementation for testing BaseContentGenerator"""
+    
     def __init__(self):
         config = {
             "model_name": "mock_model",
@@ -60,7 +63,8 @@ class MockContentGenerator(BaseContentGenerator):
         self.generation_delay = 0.1
         
     async def generate_content(self, request: Dict[str, Any]) -> str:
-        """Mock content generation"""        self.generation_call_count += 1
+        """Mock content generation"""
+        self.generation_call_count += 1
         
         if self.should_fail:
             raise ContentGenerationError("Mock generation failure")
@@ -71,25 +75,31 @@ class MockContentGenerator(BaseContentGenerator):
         return f"Mock generated content for request: {request.get('prompt', 'default')}"
     
     def _setup_models(self):
-        """Mock model setup"""        pass
+        """Mock model setup"""
+        pass
     
     def _setup_resources(self):
-        """Mock resource setup"""        pass
+        """Mock resource setup"""
+        pass
     
     def _setup_validation_rules(self):
-        """Mock validation rules setup"""        pass
+        """Mock validation rules setup"""
+        pass
     
     async def validate_output(self, content: str, context: Any) -> bool:
-        """Mock output validation"""        return len(content) > 0
+        """Mock output validation"""
+        return len(content) > 0
     
     async def _release_model_resources(self):
-        """Mock resource cleanup"""        pass
+        """Mock resource cleanup"""
+        pass
         await asyncio.sleep(self.generation_delay)
         
         return f"Generated content for: {request.get('topic', 'unknown')}"
     
     async def validate_input(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Mock input validation"""        errors = []
+        """Mock input validation"""
+        errors = []
         
         if not request.get('topic'):
             errors.append("Topic is required")
@@ -104,14 +114,17 @@ class MockContentGenerator(BaseContentGenerator):
 
 
 class TestBaseContentGenerator:
-    """Test suite for BaseContentGenerator"""    
+    """Test suite for BaseContentGenerator"""
+    
     @pytest.fixture
     def generator(self):
-        """Create a mock generator instance"""        return MockContentGenerator()
+        """Create a mock generator instance"""
+        return MockContentGenerator()
     
     @pytest.fixture
     def valid_request(self):
-        """Create a valid generation request"""        return {
+        """Create a valid generation request"""
+        return {
             "topic": "AI technology trends",
             "content_type": "blog_post",
             "word_count": 500,
@@ -120,13 +133,15 @@ class TestBaseContentGenerator:
     
     @pytest.fixture
     def invalid_request(self):
-        """Create an invalid generation request"""        return {
+        """Create an invalid generation request"""
+        return {
             "content_type": "blog_post",
             "word_count": -100  # Invalid negative word count
         }
     
     def test_generator_initialization(self, generator):
-        """Test generator initialization"""        assert generator is not None
+        """Test generator initialization"""
+        assert generator is not None
         assert hasattr(generator, 'config')
         assert hasattr(generator, 'logger')
         assert hasattr(generator, '_generation_stats')
@@ -135,7 +150,8 @@ class TestBaseContentGenerator:
     
     @pytest.mark.asyncio
     async def test_successful_generation(self, generator, valid_request):
-        """Test successful content generation"""        result = await generator.generate_with_monitoring(valid_request)
+        """Test successful content generation"""
+        result = await generator.generate_with_monitoring(valid_request)
         
         assert result is not None
         assert "Generated content for: AI technology trends" in result
@@ -150,7 +166,8 @@ class TestBaseContentGenerator:
     
     @pytest.mark.asyncio
     async def test_generation_failure(self, generator, valid_request):
-        """Test generation failure handling"""        generator.should_fail = True
+        """Test generation failure handling"""
+        generator.should_fail = True
         
         with pytest.raises(ContentGenerationError):
             await generator.generate_with_monitoring(valid_request)
@@ -163,14 +180,16 @@ class TestBaseContentGenerator:
     
     @pytest.mark.asyncio
     async def test_input_validation_success(self, generator, valid_request):
-        """Test successful input validation"""        validation_result = await generator.validate_input(valid_request)
+        """Test successful input validation"""
+        validation_result = await generator.validate_input(valid_request)
         
         assert validation_result['valid'] is True
         assert len(validation_result['errors']) == 0
     
     @pytest.mark.asyncio
     async def test_input_validation_failure(self, generator, invalid_request):
-        """Test input validation failure"""        validation_result = await generator.validate_input(invalid_request)
+        """Test input validation failure"""
+        validation_result = await generator.validate_input(invalid_request)
         
         assert validation_result['valid'] is False
         assert len(validation_result['errors']) > 0
@@ -179,7 +198,8 @@ class TestBaseContentGenerator:
     
     @pytest.mark.asyncio
     async def test_output_validation(self, generator):
-        """Test output validation"""        # Test valid output
+        """Test output validation"""
+        # Test valid output
         valid_output = "This is a properly formatted content piece."
         validation_result = await generator.validate_output(valid_output)
         assert validation_result['valid'] is True
@@ -198,7 +218,8 @@ class TestBaseContentGenerator:
     
     @pytest.mark.asyncio
     async def test_resource_monitoring(self, generator, valid_request):
-        """Test resource monitoring during generation"""        initial_memory = generator.get_memory_usage()
+        """Test resource monitoring during generation"""
+        initial_memory = generator.get_memory_usage()
         
         await generator.generate_with_monitoring(valid_request)
         
@@ -210,7 +231,8 @@ class TestBaseContentGenerator:
     
     @pytest.mark.asyncio
     async def test_performance_monitoring(self, generator, valid_request):
-        """Test performance monitoring"""        start_time = time.time()
+        """Test performance monitoring"""
+        start_time = time.time()
         
         await generator.generate_with_monitoring(valid_request)
         
@@ -223,7 +245,8 @@ class TestBaseContentGenerator:
     
     @pytest.mark.asyncio
     async def test_concurrent_generations(self, generator, valid_request):
-        """Test concurrent generation handling"""        # Start multiple generations concurrently
+        """Test concurrent generation handling"""
+        # Start multiple generations concurrently
         tasks = []
         for i in range(3):
             request = valid_request.copy()
@@ -241,7 +264,8 @@ class TestBaseContentGenerator:
     
     @pytest.mark.asyncio
     async def test_error_recovery(self, generator, valid_request):
-        """Test error recovery mechanisms"""        # First generation fails
+        """Test error recovery mechanisms"""
+        # First generation fails
         generator.should_fail = True
         
         with pytest.raises(ContentGenerationError):
@@ -259,7 +283,8 @@ class TestBaseContentGenerator:
         assert metrics['failed_generations'] == 1
     
     def test_metrics_collection(self, generator):
-        """Test metrics collection functionality"""        initial_metrics = generator.get_metrics()
+        """Test metrics collection functionality"""
+        initial_metrics = generator.get_metrics()
         
         expected_keys = [
             'total_generations',
@@ -279,7 +304,8 @@ class TestBaseContentGenerator:
         assert initial_metrics['failed_generations'] == 0
     
     def test_cache_functionality(self, generator, valid_request):
-        """Test caching functionality"""        # Test cache key generation
+        """Test caching functionality"""
+        # Test cache key generation
         cache_key = generator._generate_cache_key(valid_request)
         assert cache_key is not None
         assert isinstance(cache_key, str)
@@ -297,7 +323,8 @@ class TestBaseContentGenerator:
     
     @pytest.mark.asyncio
     async def test_cleanup_resources(self, generator, valid_request):
-        """Test resource cleanup"""        # Generate content to use resources
+        """Test resource cleanup"""
+        # Generate content to use resources
         await generator.generate_with_monitoring(valid_request)
         
         # Test cleanup
@@ -308,7 +335,8 @@ class TestBaseContentGenerator:
     
     @pytest.mark.asyncio
     async def test_timeout_handling(self, generator, valid_request):
-        """Test timeout handling during generation"""        # Set a very long delay
+        """Test timeout handling during generation"""
+        # Set a very long delay
         generator.generation_delay = 5.0
         
         # This should timeout (assuming timeout is set to less than 5 seconds)
@@ -324,14 +352,16 @@ class TestBaseContentGenerator:
         assert elapsed_time < 4.0
     
     def test_logging_functionality(self, generator, caplog):
-        """Test logging functionality"""        with caplog.at_level(logging.INFO):
+        """Test logging functionality"""
+        with caplog.at_level(logging.INFO):
             generator.logger.info("Test log message")
         
         assert "Test log message" in caplog.text
     
     @pytest.mark.asyncio
     async def test_generation_with_different_parameters(self, generator):
-        """Test generation with various parameter combinations"""        test_cases = [
+        """Test generation with various parameter combinations"""
+        test_cases = [
             {
                 "topic": "Technology",
                 "content_type": "blog_post",
@@ -360,7 +390,8 @@ class TestBaseContentGenerator:
     
     @pytest.mark.asyncio
     async def test_memory_leak_prevention(self, generator, valid_request):
-        """Test memory leak prevention"""        initial_memory = generator.get_memory_usage()
+        """Test memory leak prevention"""
+        initial_memory = generator.get_memory_usage()
         
         # Generate multiple pieces of content
         for _ in range(10):
@@ -376,7 +407,8 @@ class TestBaseContentGenerator:
         assert memory_growth < 100 * 1024 * 1024  # Less than 100MB growth
     
     def test_configuration_validation(self, generator):
-        """Test configuration validation"""        # Test valid configuration
+        """Test configuration validation"""
+        # Test valid configuration
         valid_config = {
             "max_word_count": 1000,
             "timeout": 30,
@@ -395,30 +427,37 @@ class TestBaseContentGenerator:
 
 
 class TestGenerationErrors:
-    """Test suite for generation error handling"""    
+    """Test suite for generation error handling"""
+    
     def test_generation_error_creation(self):
-        """Test ContentGenerationError creation"""        error = ContentGenerationError("Test error message")
+        """Test ContentGenerationError creation"""
+        error = ContentGenerationError("Test error message")
         assert str(error) == "Test error message"
         assert isinstance(error, Exception)
 
     def test_validation_error_creation(self):
-        """Test ContentValidationError creation"""        error = ContentValidationError("Validation failed")
+        """Test ContentValidationError creation"""
+        error = ContentValidationError("Validation failed")
         assert str(error) == "Validation failed"
         assert isinstance(error, ContentGenerationError)
 
     def test_resource_exhaustion_error_creation(self):
-        """Test RateLimitError creation"""        error = RateLimitError("Rate limit exceeded")
+        """Test RateLimitError creation"""
+        error = RateLimitError("Rate limit exceeded")
         assert str(error) == "Rate limit exceeded"
         assert isinstance(error, ContentGenerationError)
 class TestPerformanceMetrics:
-    """Test suite for performance metrics"""    
+    """Test suite for performance metrics"""
+    
     @pytest.fixture
     def generator(self):
-        """Create a generator for performance testing"""        return MockContentGenerator()
+        """Create a generator for performance testing"""
+        return MockContentGenerator()
     
     @pytest.mark.asyncio
     async def test_performance_under_load(self, generator):
-        """Test generator performance under load"""        request = {
+        """Test generator performance under load"""
+        request = {
             "topic": "Performance test",
             "content_type": "blog_post",
             "word_count": 100
@@ -446,7 +485,8 @@ class TestPerformanceMetrics:
     
     @pytest.mark.asyncio
     async def test_memory_usage_tracking(self, generator):
-        """Test memory usage tracking accuracy"""        initial_memory = generator.get_memory_usage()
+        """Test memory usage tracking accuracy"""
+        initial_memory = generator.get_memory_usage()
         
         # Create some memory load
         large_data = "x" * 1024 * 1024  # 1MB string
@@ -465,7 +505,8 @@ class TestPerformanceMetrics:
         assert final_memory > initial_memory
     
     def test_metrics_reset(self, generator):
-        """Test metrics reset functionality"""        # Generate some metrics
+        """Test metrics reset functionality"""
+        # Generate some metrics
         generator.metrics['total_generations'] = 5
         generator.metrics['successful_generations'] = 4
         generator.metrics['failed_generations'] = 1

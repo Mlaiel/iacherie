@@ -11,7 +11,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Callable, Union, Set
@@ -34,7 +35,8 @@ from backend.core.orchestration.error_handler import ErrorHandler
 
 
 class OrchestrationMode(Enum):
-    """Orchestration operation modes."""    NORMAL = "normal"
+    """Orchestration operation modes."""
+    NORMAL = "normal"
     HIGH_PERFORMANCE = "high_performance"
     BATCH_PROCESSING = "batch_processing"
     REAL_TIME = "real_time"
@@ -43,7 +45,8 @@ class OrchestrationMode(Enum):
 
 
 class Priority(Enum):
-    """Workflow execution priority levels."""    CRITICAL = 1
+    """Workflow execution priority levels."""
+    CRITICAL = 1
     HIGH = 2
     NORMAL = 3
     LOW = 4
@@ -52,7 +55,8 @@ class Priority(Enum):
 
 @dataclass
 class OrchestrationConfig:
-    """Orchestration system configuration."""    mode: OrchestrationMode = OrchestrationMode.NORMAL
+    """Orchestration system configuration."""
+    mode: OrchestrationMode = OrchestrationMode.NORMAL
     max_concurrent_workflows: int = 50
     max_concurrent_tasks: int = 200
     default_timeout: int = 3600
@@ -79,7 +83,8 @@ class OrchestrationConfig:
 
 @dataclass
 class WorkflowRequest:
-    """Workflow execution request."""    request_id: str
+    """Workflow execution request."""
+    request_id: str
     workflow_name: str
     template_id: Optional[str] = None
     workflow_definition: Optional[WorkflowDefinition] = None
@@ -96,7 +101,8 @@ class WorkflowRequest:
 
 @dataclass
 class OrchestrationMetrics:
-    """System orchestration metrics."""    active_workflows: int
+    """System orchestration metrics."""
+    active_workflows: int
     completed_workflows: int
     failed_workflows: int
     queued_requests: int
@@ -109,7 +115,8 @@ class OrchestrationMetrics:
 
 
 class OrchestrationController:
-    """    Master Orchestration Controller for IA Influencer Agent Platform.
+    """
+    Master Orchestration Controller for IA Influencer Agent Platform.
     
     Features:
     - Centralized workflow management
@@ -119,12 +126,14 @@ class OrchestrationController:
     - Multi-tenant support
     - Priority-based scheduling
     - Fault tolerance and recovery
-    """    def __init__(
+    """
+    def __init__(
         self,
         config: Optional[OrchestrationConfig] = None,
         logger: Optional[logging.Logger] = None
     ):
-        """Initialize the orchestration controller."""        self.config = config or OrchestrationConfig()
+        """Initialize the orchestration controller."""
+        self.config = config or OrchestrationConfig()
         self.logger = logger or logging.getLogger(__name__)
         
         # Initialize core components
@@ -153,7 +162,8 @@ class OrchestrationController:
         self._initialize_system()
 
     def _initialize_system(self):
-        """Initialize orchestration system components."""        try:
+        """Initialize orchestration system components."""
+        try:
             # Configure resource limits
             self.resource_manager.configure_limits(self.config.resource_limits)
             
@@ -173,7 +183,8 @@ class OrchestrationController:
             raise
 
     def _setup_monitoring(self):
-        """Set up system monitoring and health checks."""        # Configure metrics collection
+        """Set up system monitoring and health checks."""
+        # Configure metrics collection
         self.metrics_collector.configure(self.config.monitoring_config)
         
         # Set up periodic health checks
@@ -181,19 +192,22 @@ class OrchestrationController:
         asyncio.create_task(self._metrics_collection_loop())
 
     def _load_pipeline_templates(self):
-        """Load default pipeline templates."""        # This would load predefined templates from configuration or database
+        """Load default pipeline templates."""
+        # This would load predefined templates from configuration or database
         # For now, the PipelineBuilder handles template initialization
         pass
 
     async def submit_workflow(self, request: WorkflowRequest) -> str:
-        """        Submit a workflow for execution.
+        """
+        Submit a workflow for execution.
         
         Args:
             request: Workflow execution request
             
         Returns:
             str: Execution ID for tracking
-        """        try:
+        """
+        try:
             execution_id = str(uuid.uuid4())
             request.metadata["execution_id"] = execution_id
             request.metadata["submitted_at"] = datetime.utcnow().isoformat()
@@ -221,7 +235,8 @@ class OrchestrationController:
             raise
 
     def _validate_workflow_request(self, request: WorkflowRequest):
-        """Validate workflow request parameters."""        if not request.workflow_name:
+        """Validate workflow request parameters."""
+        if not request.workflow_name:
             raise ValueError("Workflow name is required")
         
         if not request.template_id and not request.workflow_definition:
@@ -232,7 +247,8 @@ class OrchestrationController:
             raise ValueError(f"Timeout exceeds maximum allowed: {self.config.default_timeout * 2}")
 
     async def _schedule_workflow_execution(self, request: WorkflowRequest):
-        """Schedule workflow for execution based on priority and resources."""        try:
+        """Schedule workflow for execution based on priority and resources."""
+        try:
             # Check resource availability
             if not await self._check_resource_availability(request):
                 self.logger.warning(f"Insufficient resources for workflow {request.request_id}")
@@ -249,14 +265,16 @@ class OrchestrationController:
             await self._handle_execution_error(request, e)
 
     async def _check_resource_availability(self, request: WorkflowRequest) -> bool:
-        """Check if sufficient resources are available for workflow execution."""        return await self.resource_manager.check_availability(
+        """Check if sufficient resources are available for workflow execution."""
+        return await self.resource_manager.check_availability(
             cpu_required=request.metadata.get("cpu_cores", 1),
             memory_required=request.metadata.get("memory_mb", 1024),
             storage_required=request.metadata.get("storage_mb", 100)
         )
 
     async def _prepare_workflow_definition(self, request: WorkflowRequest) -> WorkflowDefinition:
-        """Prepare workflow definition from request."""        if request.workflow_definition:
+        """Prepare workflow definition from request."""
+        if request.workflow_definition:
             return request.workflow_definition
         
         if request.template_id:
@@ -289,7 +307,8 @@ class OrchestrationController:
         raise ValueError("No workflow definition or template provided")
 
     async def _execute_workflow(self, workflow: WorkflowDefinition, request: WorkflowRequest):
-        """Execute workflow with monitoring and error handling."""        try:
+        """Execute workflow with monitoring and error handling."""
+        try:
             # Add to active workflows
             self.active_workflows[workflow.workflow_id] = workflow
             
@@ -315,7 +334,8 @@ class OrchestrationController:
         execution_task: asyncio.Task,
         request: WorkflowRequest
     ):
-        """Monitor workflow execution progress and handle completion."""        try:
+        """Monitor workflow execution progress and handle completion."""
+        try:
             # Wait for completion with timeout
             timeout = workflow.timeout or self.config.default_timeout
             result = await asyncio.wait_for(execution_task, timeout=timeout)
@@ -340,7 +360,8 @@ class OrchestrationController:
         request: WorkflowRequest,
         result: Any
     ):
-        """Handle successful workflow completion."""        try:
+        """Handle successful workflow completion."""
+        try:
             # Update metrics
             self.metrics_collector.record_workflow_completion(
                 workflow_id=workflow.workflow_id,
@@ -362,7 +383,8 @@ class OrchestrationController:
             self.logger.error(f"Error handling workflow completion: {str(e)}")
 
     async def _handle_workflow_timeout(self, workflow: WorkflowDefinition, request: WorkflowRequest):
-        """Handle workflow timeout."""        try:
+        """Handle workflow timeout."""
+        try:
             # Update metrics
             self.metrics_collector.record_workflow_completion(
                 workflow_id=workflow.workflow_id,
@@ -386,7 +408,8 @@ class OrchestrationController:
             self.logger.error(f"Error handling workflow timeout: {str(e)}")
 
     async def _handle_execution_error(self, request: WorkflowRequest, error: Exception):
-        """Handle workflow execution error."""        try:
+        """Handle workflow execution error."""
+        try:
             # Record error metrics
             self.metrics_collector.record_error(
                 error_type=type(error).__name__,
@@ -413,14 +436,16 @@ class OrchestrationController:
         result: Any,
         success: bool
     ):
-        """Send workflow completion callback."""        # This would implement HTTP callback to the specified URL
+        """Send workflow completion callback."""
+        # This would implement HTTP callback to the specified URL
         # For now, just log the callback
         self.logger.info(
             f"Callback for {request.request_id}: success={success}, result={result}"
         )
 
     async def get_workflow_status(self, execution_id: str) -> Dict[str, Any]:
-        """Get current status of a workflow execution."""        try:
+        """Get current status of a workflow execution."""
+        try:
             if execution_id not in self.workflow_requests:
                 raise ValueError(f"Workflow execution {execution_id} not found")
             
@@ -456,7 +481,8 @@ class OrchestrationController:
             raise
 
     async def cancel_workflow(self, execution_id: str) -> bool:
-        """Cancel a workflow execution."""        try:
+        """Cancel a workflow execution."""
+        try:
             if execution_id not in self.workflow_requests:
                 raise ValueError(f"Workflow execution {execution_id} not found")
             
@@ -483,7 +509,8 @@ class OrchestrationController:
             raise
 
     async def pause_workflow(self, execution_id: str) -> bool:
-        """Pause a workflow execution."""        try:
+        """Pause a workflow execution."""
+        try:
             # Find and pause active workflow
             for workflow_id, workflow in self.active_workflows.items():
                 if workflow.metadata.get("request_id") == execution_id:
@@ -499,7 +526,8 @@ class OrchestrationController:
             raise
 
     async def resume_workflow(self, execution_id: str) -> bool:
-        """Resume a paused workflow execution."""        try:
+        """Resume a paused workflow execution."""
+        try:
             # Find and resume paused workflow
             for workflow_id, workflow in self.active_workflows.items():
                 if workflow.metadata.get("request_id") == execution_id:
@@ -515,7 +543,8 @@ class OrchestrationController:
             raise
 
     async def list_active_workflows(self) -> List[Dict[str, Any]]:
-        """List all currently active workflows."""        try:
+        """List all currently active workflows."""
+        try:
             active_list = []
             
             for workflow_id, workflow in self.active_workflows.items():
@@ -540,7 +569,8 @@ class OrchestrationController:
             raise
 
     async def get_system_metrics(self) -> OrchestrationMetrics:
-        """Get current system orchestration metrics."""        try:
+        """Get current system orchestration metrics."""
+        try:
             # Collect current metrics
             current_metrics = OrchestrationMetrics(
                 active_workflows=len(self.active_workflows),
@@ -569,7 +599,8 @@ class OrchestrationController:
             raise
 
     async def optimize_performance(self) -> Dict[str, Any]:
-        """Trigger performance optimization across the system."""        try:
+        """Trigger performance optimization across the system."""
+        try:
             optimization_results = {}
             
             # Optimize resource allocation
@@ -592,7 +623,8 @@ class OrchestrationController:
             raise
 
     async def _health_check_loop(self):
-        """Periodic health check loop."""        while True:
+        """Periodic health check loop."""
+        while True:
             try:
                 await asyncio.sleep(self.config.monitoring_config["health_check_interval"])
                 
@@ -607,7 +639,8 @@ class OrchestrationController:
                 self.logger.error(f"Health check loop error: {str(e)}")
 
     async def _metrics_collection_loop(self):
-        """Periodic metrics collection loop."""        while True:
+        """Periodic metrics collection loop."""
+        while True:
             try:
                 await asyncio.sleep(self.config.monitoring_config["metrics_interval"])
                 
@@ -618,7 +651,8 @@ class OrchestrationController:
                 self.logger.error(f"Metrics collection loop error: {str(e)}")
 
     async def _check_system_health(self) -> Dict[str, Any]:
-        """Check overall system health."""        health_status = {
+        """Check overall system health."""
+        health_status = {
             "healthy": True,
             "issues": [],
             "metrics": {}
@@ -657,7 +691,8 @@ class OrchestrationController:
         return health_status
 
     async def _handle_health_issues(self, health_status: Dict[str, Any]):
-        """Handle detected health issues."""        self.logger.warning(f"Health issues detected: {health_status['issues']}")
+        """Handle detected health issues."""
+        self.logger.warning(f"Health issues detected: {health_status['issues']}")
         
         # Trigger optimization if needed
         if len(health_status["issues"]) > 2:
@@ -668,7 +703,8 @@ class OrchestrationController:
             await self.resource_manager.scale_resources()
 
     async def shutdown(self):
-        """Gracefully shutdown the orchestration controller."""        try:
+        """Gracefully shutdown the orchestration controller."""
+        try:
             self.logger.info("Shutting down orchestration controller...")
             
             # Cancel all active workflows
@@ -687,10 +723,12 @@ class OrchestrationController:
             self.logger.error(f"Error during shutdown: {str(e)}")
 
     def get_configuration(self) -> OrchestrationConfig:
-        """Get current orchestration configuration."""        return self.config
+        """Get current orchestration configuration."""
+        return self.config
 
     async def update_configuration(self, new_config: OrchestrationConfig):
-        """Update orchestration configuration."""        try:
+        """Update orchestration configuration."""
+        try:
             old_config = self.config
             self.config = new_config
             
@@ -709,7 +747,8 @@ class OrchestrationController:
         old_config: OrchestrationConfig,
         new_config: OrchestrationConfig
     ):
-        """Apply configuration changes to system components."""        # Update resource limits
+        """Apply configuration changes to system components."""
+        # Update resource limits
         if old_config.resource_limits != new_config.resource_limits:
             self.resource_manager.configure_limits(new_config.resource_limits)
         

@@ -17,7 +17,8 @@ Unauthorized use, modification, or distribution by any individual or entity
 without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Violators will face immediate legal action under German and international law.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import hashlib
@@ -55,7 +56,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentFormat(Enum):
-    """Supported content formats"""    # Audio formats
+    """Supported content formats"""
+    # Audio formats
     AUDIO_MP3 = "audio_mp3"
     AUDIO_WAV = "audio_wav"
     AUDIO_FLAC = "audio_flac"
@@ -84,7 +86,8 @@ class ContentFormat(Enum):
 
 
 class QualityLevel(Enum):
-    """Content quality levels"""    EXCELLENT = "excellent"  # 90-100
+    """Content quality levels"""
+    EXCELLENT = "excellent"  # 90-100
     GOOD = "good"           # 80-89
     FAIR = "fair"           # 60-79
     POOR = "poor"           # 40-59
@@ -92,7 +95,8 @@ class QualityLevel(Enum):
 
 
 class ProtectionReadiness(Enum):
-    """Content protection readiness levels"""    READY = "ready"              # 90-100 - Ready for protection
+    """Content protection readiness levels"""
+    READY = "ready"              # 90-100 - Ready for protection
     MOSTLY_READY = "mostly_ready"  # 70-89 - Minor improvements needed
     NEEDS_WORK = "needs_work"    # 50-69 - Significant improvements needed
     NOT_READY = "not_ready"      # 0-49 - Major issues must be resolved
@@ -100,7 +104,8 @@ class ProtectionReadiness(Enum):
 
 @dataclass
 class TechnicalSpecs:
-    """Technical specifications of content"""    file_size: int = 0
+    """Technical specifications of content"""
+    file_size: int = 0
     duration: Optional[float] = None  # For audio/video
     dimensions: Optional[Tuple[int, int]] = None  # For images/video
     bit_rate: Optional[int] = None
@@ -124,7 +129,8 @@ class TechnicalSpecs:
 
 @dataclass
 class QualityMetrics:
-    """Comprehensive quality metrics"""    technical_quality_score: float = 0.0
+    """Comprehensive quality metrics"""
+    technical_quality_score: float = 0.0
     content_quality_score: float = 0.0
     aesthetic_quality_score: float = 0.0
     uniqueness_score: float = 0.0
@@ -140,7 +146,8 @@ class QualityMetrics:
     text_quality: Optional[Dict[str, float]] = None
     
     def calculate_overall_score(self) -> float:
-        """Calculate weighted overall quality score"""        weights = {
+        """Calculate weighted overall quality score"""
+        weights = {
             'technical': 0.20,
             'content': 0.25,
             'aesthetic': 0.15,
@@ -184,7 +191,8 @@ class QualityMetrics:
 
 @dataclass
 class ContentIssue:
-    """Individual content quality issue"""    issue_id: str
+    """Individual content quality issue"""
+    issue_id: str
     category: str
     severity: str  # critical, high, medium, low
     title: str
@@ -210,7 +218,8 @@ class ContentIssue:
 
 @dataclass
 class OptimizationRecommendation:
-    """Content optimization recommendation"""    recommendation_id: str
+    """Content optimization recommendation"""
+    recommendation_id: str
     category: str
     priority: str  # high, medium, low
     title: str
@@ -236,7 +245,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class MultiFormatQualityAnalysis:
-    """Comprehensive multi-format content quality analysis result"""    content_id: str
+    """Comprehensive multi-format content quality analysis result"""
+    content_id: str
     content_format: ContentFormat
     analysis_timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
@@ -261,7 +271,8 @@ class MultiFormatQualityAnalysis:
     ai_insights: Dict[str, Any] = field(default_factory=dict)
     
     def determine_quality_level(self):
-        """Determine overall quality level based on score"""        overall_score = self.quality_metrics.calculate_overall_score()
+        """Determine overall quality level based on score"""
+        overall_score = self.quality_metrics.calculate_overall_score()
         
         if overall_score >= 90:
             self.overall_quality_level = QualityLevel.EXCELLENT
@@ -275,7 +286,8 @@ class MultiFormatQualityAnalysis:
             self.overall_quality_level = QualityLevel.UNACCEPTABLE
     
     def determine_protection_readiness(self):
-        """Determine protection readiness based on score"""        protection_score = self.quality_metrics.protection_readiness_score
+        """Determine protection readiness based on score"""
+        protection_score = self.quality_metrics.protection_readiness_score
         
         if protection_score >= 90:
             self.protection_readiness = ProtectionReadiness.READY
@@ -303,8 +315,10 @@ class MultiFormatQualityAnalysis:
 
 
 class MultiFormatContentQualityAnalyzer:
-    """    Ultra-advanced multi-format content quality analyzer with AI-powered assessment
-    """    
+    """
+    Ultra-advanced multi-format content quality analyzer with AI-powered assessment
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.supported_formats = {
@@ -348,7 +362,8 @@ class MultiFormatContentQualityAnalyzer:
             self._initialize_ai_models()
     
     def _initialize_ai_models(self):
-        """Initialize AI models for content analysis"""        try:
+        """Initialize AI models for content analysis"""
+        try:
             # Text analysis models
             self.ai_models['sentiment'] = pipeline("sentiment-analysis")
             self.ai_models['text_similarity'] = SentenceTransformer('all-MiniLM-L6-v2')
@@ -366,7 +381,8 @@ class MultiFormatContentQualityAnalyzer:
         content_metadata: Optional[Dict[str, Any]] = None,
         analysis_options: Optional[Dict[str, Any]] = None
     ) -> MultiFormatQualityAnalysis:
-        """        Perform comprehensive multi-format content quality analysis
+        """
+        Perform comprehensive multi-format content quality analysis
         
         Args:
             content_path: Path to the content file
@@ -375,7 +391,8 @@ class MultiFormatContentQualityAnalyzer:
             
         Returns:
             MultiFormatQualityAnalysis: Comprehensive analysis result
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         content_path = Path(content_path)
         content_id = content_metadata.get('content_id', str(content_path.stem)) if content_metadata else str(content_path.stem)
         
@@ -442,7 +459,8 @@ class MultiFormatContentQualityAnalyzer:
             raise
     
     async def _detect_content_format(self, content_path: Path) -> ContentFormat:
-        """Detect content format based on file extension and MIME type"""        file_extension = content_path.suffix.lower()
+        """Detect content format based on file extension and MIME type"""
+        file_extension = content_path.suffix.lower()
         mime_type, _ = mimetypes.guess_type(str(content_path))
         
         # Audio formats
@@ -499,7 +517,8 @@ class MultiFormatContentQualityAnalyzer:
         content_path: Path,
         content_format: ContentFormat
     ) -> TechnicalSpecs:
-        """Extract technical specifications from content"""        specs = TechnicalSpecs()
+        """Extract technical specifications from content"""
+        specs = TechnicalSpecs()
         
         try:
             # Basic file info
@@ -554,7 +573,8 @@ class MultiFormatContentQualityAnalyzer:
         technical_specs: TechnicalSpecs,
         metadata: Optional[Dict[str, Any]]
     ) -> QualityMetrics:
-        """Analyze audio content quality"""        metrics = QualityMetrics()
+        """Analyze audio content quality"""
+        metrics = QualityMetrics()
         
         if not MULTIMEDIA_AVAILABLE:
             self.logger.warning("Multimedia libraries not available for audio analysis")
@@ -626,7 +646,8 @@ class MultiFormatContentQualityAnalyzer:
         technical_specs: TechnicalSpecs,
         metadata: Optional[Dict[str, Any]]
     ) -> QualityMetrics:
-        """Analyze video content quality"""        metrics = QualityMetrics()
+        """Analyze video content quality"""
+        metrics = QualityMetrics()
         
         if not MULTIMEDIA_AVAILABLE:
             self.logger.warning("Multimedia libraries not available for video analysis")
@@ -717,7 +738,8 @@ class MultiFormatContentQualityAnalyzer:
         technical_specs: TechnicalSpecs,
         metadata: Optional[Dict[str, Any]]
     ) -> QualityMetrics:
-        """Analyze image content quality"""        metrics = QualityMetrics()
+        """Analyze image content quality"""
+        metrics = QualityMetrics()
         
         if not MULTIMEDIA_AVAILABLE:
             self.logger.warning("Multimedia libraries not available for image analysis")
@@ -813,7 +835,8 @@ class MultiFormatContentQualityAnalyzer:
         technical_specs: TechnicalSpecs,
         metadata: Optional[Dict[str, Any]]
     ) -> QualityMetrics:
-        """Analyze text content quality"""        metrics = QualityMetrics()
+        """Analyze text content quality"""
+        metrics = QualityMetrics()
         
         try:
             # Read text content
@@ -911,7 +934,8 @@ class MultiFormatContentQualityAnalyzer:
         content_path: Path,
         content_format: ContentFormat
     ) -> Dict[str, Any]:
-        """Perform AI-powered content analysis"""        ai_insights = {}
+        """Perform AI-powered content analysis"""
+        ai_insights = {}
         
         if not AI_MODELS_AVAILABLE:
             return ai_insights
@@ -945,7 +969,8 @@ class MultiFormatContentQualityAnalyzer:
         content_format: ContentFormat,
         technical_specs: TechnicalSpecs
     ) -> Dict[str, Dict[str, Any]]:
-        """Analyze compatibility with various platforms"""        compatibility = {}
+        """Analyze compatibility with various platforms"""
+        compatibility = {}
         
         # YouTube compatibility
         youtube_compat = await self._check_youtube_compatibility(content_format, technical_specs)
@@ -971,7 +996,8 @@ class MultiFormatContentQualityAnalyzer:
         content_format: ContentFormat,
         technical_specs: TechnicalSpecs
     ) -> Dict[str, Any]:
-        """Check YouTube platform compatibility"""        compat = {
+        """Check YouTube platform compatibility"""
+        compat = {
             'compatible': False,
             'score': 0,
             'issues': [],
@@ -1017,7 +1043,8 @@ class MultiFormatContentQualityAnalyzer:
         content_format: ContentFormat,
         technical_specs: TechnicalSpecs
     ) -> Dict[str, Any]:
-        """Check Instagram platform compatibility"""        compat = {
+        """Check Instagram platform compatibility"""
+        compat = {
             'compatible': False,
             'score': 0,
             'issues': [],
@@ -1070,7 +1097,8 @@ class MultiFormatContentQualityAnalyzer:
         content_format: ContentFormat,
         technical_specs: TechnicalSpecs
     ) -> Dict[str, Any]:
-        """Check TikTok platform compatibility"""        compat = {
+        """Check TikTok platform compatibility"""
+        compat = {
             'compatible': False,
             'score': 0,
             'issues': [],
@@ -1112,7 +1140,8 @@ class MultiFormatContentQualityAnalyzer:
         content_format: ContentFormat,
         technical_specs: TechnicalSpecs
     ) -> Dict[str, Any]:
-        """Check Spotify platform compatibility"""        compat = {
+        """Check Spotify platform compatibility"""
+        compat = {
             'compatible': False,
             'score': 0,
             'issues': [],
@@ -1138,7 +1167,8 @@ class MultiFormatContentQualityAnalyzer:
         return compat
     
     async def _identify_issues(self, analysis: MultiFormatQualityAnalysis):
-        """Identify quality issues based on analysis results"""        
+        """Identify quality issues based on analysis results"""
+        
         # Technical issues
         if analysis.quality_metrics.technical_quality_score < 60:
             issue = ContentIssue(
@@ -1187,7 +1217,8 @@ class MultiFormatContentQualityAnalyzer:
             analysis.issues.append(issue)
     
     async def _generate_optimization_recommendations(self, analysis: MultiFormatQualityAnalysis):
-        """Generate optimization recommendations based on analysis"""        
+        """Generate optimization recommendations based on analysis"""
+        
         # Technical optimization
         if analysis.quality_metrics.technical_quality_score < 80:
             rec = OptimizationRecommendation(

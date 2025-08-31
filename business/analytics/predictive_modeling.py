@@ -6,7 +6,8 @@ algorithms, trend forecasting, and performance prediction capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -26,7 +27,8 @@ from fastapi import HTTPException
 logger = logging.getLogger(__name__)
 
 class PredictionType(Enum):
-    """Types of predictions supported"""    ENGAGEMENT_RATE = "engagement_rate"
+    """Types of predictions supported"""
+    ENGAGEMENT_RATE = "engagement_rate"
     VIEWS = "views"
     REVENUE = "revenue"
     FOLLOWER_GROWTH = "follower_growth"
@@ -35,7 +37,8 @@ class PredictionType(Enum):
 
 @dataclass
 class PredictionResult:
-    """Result of a predictive model"""    prediction_id: str
+    """Result of a predictive model"""
+    prediction_id: str
     creator_id: str
     prediction_type: PredictionType
     predicted_value: float
@@ -48,9 +51,11 @@ class PredictionResult:
     created_at: datetime = field(default_factory=datetime.now)
 
 class PredictiveModelingEngine:
-    """    Advanced predictive modeling system for content creator analytics with
+    """
+    Advanced predictive modeling system for content creator analytics with
     machine learning algorithms and trend forecasting capabilities.
-    """    
+    """
+    
     def __init__(self, redis_client: redis.Redis, db_pool: asyncpg.Pool):
         self.redis = redis_client
         self.db_pool = db_pool
@@ -59,7 +64,8 @@ class PredictiveModelingEngine:
         self.model_accuracy = {}
         
     async def initialize(self) -> None:
-        """Initialize predictive modeling engine"""        try:
+        """Initialize predictive modeling engine"""
+        try:
             await self._setup_database_tables()
             await self._train_prediction_models()
             logger.info("Predictive Modeling Engine initialized successfully")
@@ -68,8 +74,10 @@ class PredictiveModelingEngine:
             raise
 
     async def _setup_database_tables(self) -> None:
-        """Setup database tables for predictions"""        async with self.db_pool.acquire() as conn:
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS predictions (
+        """Setup database tables for predictions"""
+        async with self.db_pool.acquire() as conn:
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS predictions (
                     id SERIAL PRIMARY KEY,
                     prediction_id VARCHAR(255) UNIQUE NOT NULL,
                     creator_id VARCHAR(255) NOT NULL,
@@ -90,7 +98,8 @@ class PredictiveModelingEngine:
             """)
 
     async def _train_prediction_models(self) -> None:
-        """Train predictive models with historical data"""        try:
+        """Train predictive models with historical data"""
+        try:
             # Initialize models for different prediction types
             for pred_type in PredictionType:
                 self.models[pred_type] = {
@@ -109,9 +118,11 @@ class PredictiveModelingEngine:
             logger.error(f"Failed to train prediction models: {e}")
 
     async def _train_engagement_model(self) -> None:
-        """Train engagement prediction model"""        try:
+        """Train engagement prediction model"""
+        try:
             async with self.db_pool.acquire() as conn:
-                data = await conn.fetch("""                    SELECT cm.metrics, cm.virality_score, cm.quality_score,
+                data = await conn.fetch("""
+                    SELECT cm.metrics, cm.virality_score, cm.quality_score,
                            EXTRACT(HOUR FROM cm.publish_date) as hour,
                            EXTRACT(DOW FROM cm.publish_date) as day_of_week,
                            ap.total_followers, ap.active_followers
@@ -156,15 +167,18 @@ class PredictiveModelingEngine:
             logger.error(f"Failed to train engagement model: {e}")
 
     async def _train_revenue_model(self) -> None:
-        """Train revenue prediction model"""        # Similar implementation for revenue prediction
+        """Train revenue prediction model"""
+        # Similar implementation for revenue prediction
         self.model_accuracy[PredictionType.REVENUE] = 0.75
 
     async def _train_growth_model(self) -> None:
-        """Train follower growth prediction model"""        # Similar implementation for growth prediction
+        """Train follower growth prediction model"""
+        # Similar implementation for growth prediction
         self.model_accuracy[PredictionType.FOLLOWER_GROWTH] = 0.68
 
     async def predict_engagement(self, creator_id: str, content_data: Dict[str, Any]) -> PredictionResult:
-        """Predict engagement rate for content"""        try:
+        """Predict engagement rate for content"""
+        try:
             # Prepare features
             features = np.array([[
                 content_data.get('virality_score', 50),
@@ -212,7 +226,8 @@ class PredictiveModelingEngine:
             raise HTTPException(status_code=500, detail="Engagement prediction failed")
 
     def _generate_engagement_recommendations(self, predicted_engagement: float, content_data: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on predicted engagement"""        recommendations = []
+        """Generate recommendations based on predicted engagement"""
+        recommendations = []
         
         if predicted_engagement < 0.03:
             recommendations.append("Consider improving content quality and virality factors")
@@ -224,10 +239,12 @@ class PredictiveModelingEngine:
         return recommendations
 
     async def predict_revenue(self, creator_id: str, prediction_horizon: int = 30) -> PredictionResult:
-        """Predict revenue for specified time horizon"""        try:
+        """Predict revenue for specified time horizon"""
+        try:
             # Get historical revenue data
             async with self.db_pool.acquire() as conn:
-                revenue_data = await conn.fetch("""                    SELECT total_revenue, revenue_growth_rate, created_at
+                revenue_data = await conn.fetch("""
+                    SELECT total_revenue, revenue_growth_rate, created_at
                     FROM revenue_analyses 
                     WHERE creator_id = $1 
                     ORDER BY created_at DESC 
@@ -275,7 +292,8 @@ class PredictiveModelingEngine:
             raise HTTPException(status_code=500, detail="Revenue prediction failed")
 
     def _generate_revenue_recommendations(self, predicted_revenue: float) -> List[str]:
-        """Generate revenue optimization recommendations"""        recommendations = []
+        """Generate revenue optimization recommendations"""
+        recommendations = []
         
         if predicted_revenue < 5000:
             recommendations.append("Focus on diversifying revenue streams")
@@ -287,9 +305,11 @@ class PredictiveModelingEngine:
         return recommendations
 
     async def predict_optimal_posting_time(self, creator_id: str) -> PredictionResult:
-        """Predict optimal posting time for maximum engagement"""        try:
+        """Predict optimal posting time for maximum engagement"""
+        try:
             async with self.db_pool.acquire() as conn:
-                timing_data = await conn.fetch("""                    SELECT EXTRACT(HOUR FROM publish_date) as hour,
+                timing_data = await conn.fetch("""
+                    SELECT EXTRACT(HOUR FROM publish_date) as hour,
                            EXTRACT(DOW FROM publish_date) as day_of_week,
                            (metrics->>'engagement_rate')::float as engagement_rate
                     FROM content_metrics 
@@ -344,9 +364,11 @@ class PredictiveModelingEngine:
             raise HTTPException(status_code=500, detail="Optimal time prediction failed")
 
     async def _store_prediction(self, prediction: PredictionResult) -> None:
-        """Store prediction result in database"""        try:
+        """Store prediction result in database"""
+        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""                    INSERT INTO predictions 
+                await conn.execute("""
+                    INSERT INTO predictions 
                     (prediction_id, creator_id, prediction_type, predicted_value,
                      confidence_interval_lower, confidence_interval_upper, confidence_score,
                      prediction_horizon, model_accuracy, factors_considered, recommendations)
@@ -369,7 +391,8 @@ class PredictiveModelingEngine:
             logger.error(f"Failed to store prediction: {e}")
 
     async def get_prediction_dashboard_data(self, creator_id: str) -> Dict[str, Any]:
-        """Get comprehensive prediction data for dashboard"""        try:
+        """Get comprehensive prediction data for dashboard"""
+        try:
             # Generate multiple predictions
             engagement_pred = await self.predict_engagement(creator_id, {
                 'virality_score': 60,

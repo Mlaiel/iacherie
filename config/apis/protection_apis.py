@@ -4,13 +4,15 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module configures AI-powered content protection services including fingerprinting,
 DMCA takedown services, copyright verification, and content monitoring platforms.
-"""import os
+"""
+import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional
 from enum import Enum
 
 class ProtectionServiceType(Enum):
-    """Content protection service types"""    FINGERPRINTING = "fingerprinting"
+    """Content protection service types"""
+    FINGERPRINTING = "fingerprinting"
     COPYRIGHT_DETECTION = "copyright_detection"
     DMCA_TAKEDOWN = "dmca_takedown"
     CONTENT_MONITORING = "content_monitoring"
@@ -18,7 +20,8 @@ class ProtectionServiceType(Enum):
     BLOCKCHAIN_PROTECTION = "blockchain_protection"
 
 class ContentType(Enum):
-    """Supported content types for protection"""    AUDIO = "audio"
+    """Supported content types for protection"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -27,7 +30,8 @@ class ContentType(Enum):
 
 @dataclass
 class ProtectionAPIConfig:
-    """Configuration class for content protection APIs"""    service_name: str
+    """Configuration class for content protection APIs"""
+    service_name: str
     service_type: ProtectionServiceType
     base_url: str
     api_version: str
@@ -71,7 +75,8 @@ class ProtectionAPIConfig:
     environments: Dict[str, Dict[str, Any]] = field(default_factory=dict)
     
     def get_environment_config(self, environment: str = "production") -> Dict[str, Any]:
-        """Get configuration for specific environment"""        base_config = self.__dict__.copy()
+        """Get configuration for specific environment"""
+        base_config = self.__dict__.copy()
         env_config = self.environments.get(environment, {})
         base_config.update(env_config)
         return base_config
@@ -336,20 +341,25 @@ PROTECTION_CONFIGS: Dict[str, ProtectionAPIConfig] = {
 }
 
 def get_protection_config(service: str) -> Optional[ProtectionAPIConfig]:
-    """Get protection service configuration by name"""    return PROTECTION_CONFIGS.get(service.lower())
+    """Get protection service configuration by name"""
+    return PROTECTION_CONFIGS.get(service.lower())
 
 def get_services_by_type(service_type: ProtectionServiceType) -> List[ProtectionAPIConfig]:
-    """Get all protection services of specific type"""    return [config for config in PROTECTION_CONFIGS.values() 
+    """Get all protection services of specific type"""
+    return [config for config in PROTECTION_CONFIGS.values() 
             if config.service_type == service_type]
 
 def get_services_by_content_type(content_type: ContentType) -> List[ProtectionAPIConfig]:
-    """Get protection services supporting specific content type"""    return [config for config in PROTECTION_CONFIGS.values() 
+    """Get protection services supporting specific content type"""
+    return [config for config in PROTECTION_CONFIGS.values() 
             if content_type in config.supported_content_types]
 
 def get_real_time_services() -> List[ProtectionAPIConfig]:
-    """Get services that support real-time processing"""    return [config for config in PROTECTION_CONFIGS.values() 
+    """Get services that support real-time processing"""
+    return [config for config in PROTECTION_CONFIGS.values() 
             if config.supports_real_time]
 
 def get_monitoring_services() -> List[ProtectionAPIConfig]:
-    """Get services that support web monitoring"""    return [config for config in PROTECTION_CONFIGS.values() 
+    """Get services that support web monitoring"""
+    return [config for config in PROTECTION_CONFIGS.values() 
             if config.supports_web_monitoring]

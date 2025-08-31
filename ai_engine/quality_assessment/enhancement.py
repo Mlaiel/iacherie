@@ -12,7 +12,8 @@ intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, re
 distribution, modification, or appropriation of this code, in whole or in part, without 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
-"""import asyncio
+"""
+import asyncio
 import logging
 import re
 from datetime import datetime, timedelta
@@ -33,7 +34,8 @@ logger = logging.getLogger(__name__)
 
 
 class EnhancementType(Enum):
-    """Types of content enhancements"""    TEXT_OPTIMIZATION = "text_optimization"
+    """Types of content enhancements"""
+    TEXT_OPTIMIZATION = "text_optimization"
     IMAGE_ENHANCEMENT = "image_enhancement"
     VIDEO_ENHANCEMENT = "video_enhancement"
     AUDIO_ENHANCEMENT = "audio_enhancement"
@@ -46,7 +48,8 @@ class EnhancementType(Enum):
 
 
 class EnhancementPriority(Enum):
-    """Enhancement priority levels"""    CRITICAL = "critical"
+    """Enhancement priority levels"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -54,7 +57,8 @@ class EnhancementPriority(Enum):
 
 
 class EnhancementCategory(Enum):
-    """Enhancement categories"""    QUALITY_IMPROVEMENT = "quality_improvement"
+    """Enhancement categories"""
+    QUALITY_IMPROVEMENT = "quality_improvement"
     PERFORMANCE_BOOST = "performance_boost"
     ENGAGEMENT_INCREASE = "engagement_increase"
     COMPLIANCE_FIX = "compliance_fix"
@@ -65,7 +69,8 @@ class EnhancementCategory(Enum):
 
 
 class ProcessingMethod(Enum):
-    """Enhancement processing methods"""    AUTOMATED = "automated"
+    """Enhancement processing methods"""
+    AUTOMATED = "automated"
     AI_ASSISTED = "ai_assisted"
     MANUAL_REVIEW = "manual_review"
     HYBRID = "hybrid"
@@ -73,7 +78,8 @@ class ProcessingMethod(Enum):
 
 @dataclass
 class EnhancementSuggestion:
-    """Individual enhancement suggestion"""    enhancement_type: EnhancementType
+    """Individual enhancement suggestion"""
+    enhancement_type: EnhancementType
     category: EnhancementCategory
     priority: EnhancementPriority
     title: str
@@ -103,7 +109,8 @@ class EnhancementSuggestion:
 
 @dataclass
 class TextEnhancement:
-    """Text content enhancement results"""    original_text: str = field(default="")
+    """Text content enhancement results"""
+    original_text: str = field(default="")
     enhanced_text: str = field(default="")
     
     # Enhancement metrics
@@ -129,7 +136,8 @@ class TextEnhancement:
 
 @dataclass
 class ImageEnhancement:
-    """Image enhancement results"""    # Enhancement applied
+    """Image enhancement results"""
+    # Enhancement applied
     brightness_adjustment: float = field(default=0.0)
     contrast_adjustment: float = field(default=0.0)
     saturation_adjustment: float = field(default=0.0)
@@ -161,7 +169,8 @@ class ImageEnhancement:
 
 @dataclass
 class VideoEnhancement:
-    """Video enhancement results"""    # Quality improvements
+    """Video enhancement results"""
+    # Quality improvements
     resolution_upscaling: bool = field(default=False)
     framerate_optimization: bool = field(default=False)
     stabilization_applied: bool = field(default=False)
@@ -194,7 +203,8 @@ class VideoEnhancement:
 
 @dataclass
 class SEOEnhancement:
-    """SEO optimization results"""    # Keyword optimization
+    """SEO optimization results"""
+    # Keyword optimization
     primary_keywords: List[str] = field(default_factory=list)
     secondary_keywords: List[str] = field(default_factory=list)
     long_tail_keywords: List[str] = field(default_factory=list)
@@ -223,7 +233,8 @@ class SEOEnhancement:
 
 @dataclass
 class EngagementEnhancement:
-    """Engagement optimization results"""    # Content timing
+    """Engagement optimization results"""
+    # Content timing
     optimal_posting_times: List[str] = field(default_factory=list)
     posting_frequency_optimization: str = field(default="")
     
@@ -250,7 +261,8 @@ class EngagementEnhancement:
 
 @dataclass
 class AccessibilityEnhancement:
-    """Accessibility improvement results"""    # Visual accessibility
+    """Accessibility improvement results"""
+    # Visual accessibility
     color_contrast_improvements: List[str] = field(default_factory=list)
     font_size_recommendations: List[str] = field(default_factory=list)
     alt_text_additions: List[str] = field(default_factory=list)
@@ -273,7 +285,8 @@ class AccessibilityEnhancement:
 
 @dataclass
 class EnhancementProfile:
-    """Comprehensive enhancement profile"""    # Enhancement results
+    """Comprehensive enhancement profile"""
+    # Enhancement results
     text_enhancement: TextEnhancement = field(default_factory=TextEnhancement)
     image_enhancement: ImageEnhancement = field(default_factory=ImageEnhancement)
     video_enhancement: VideoEnhancement = field(default_factory=VideoEnhancement)
@@ -298,7 +311,8 @@ class EnhancementProfile:
 
 @dataclass
 class EnhancementAnalysisMetrics:
-    """Enhancement analysis metrics container"""    profile: EnhancementProfile = field(default_factory=EnhancementProfile)
+    """Enhancement analysis metrics container"""
+    profile: EnhancementProfile = field(default_factory=EnhancementProfile)
     
     # Analysis metadata
     content_types_analyzed: List[str] = field(default_factory=list)
@@ -322,7 +336,8 @@ class EnhancementAnalysisMetrics:
 
 
 class ContentEnhancer(BaseAIModel):
-    """    Professional Content Enhancement Engine
+    """
+    Professional Content Enhancement Engine
     
     Provides AI-powered content optimization for:
     - Content creators and influencers
@@ -330,9 +345,11 @@ class ContentEnhancer(BaseAIModel):
     - Brand management
     - Social media optimization
     - Performance enhancement
-    """    
+    """
+    
     def __init__(self, config: Optional[ModelConfig] = None):
-        """Initialize content enhancer"""        super().__init__(config or ModelConfig(
+        """Initialize content enhancer"""
+        super().__init__(config or ModelConfig(
             model_name="content_enhancer",
             provider="internal",
             version="1.0.0"
@@ -351,7 +368,8 @@ class ContentEnhancer(BaseAIModel):
         logger.info("Content Enhancer initialized successfully")
     
     def _initialize_text_enhancer(self):
-        """Initialize text enhancement engine"""        self.text_enhancement_rules = {
+        """Initialize text enhancement engine"""
+        self.text_enhancement_rules = {
             'grammar_patterns': [
                 (r'\bi\b', 'I'),  # Capitalize standalone 'i'
                 (r'\s+', ' '),    # Multiple spaces to single space
@@ -379,7 +397,8 @@ class ContentEnhancer(BaseAIModel):
         }
     
     def _initialize_image_enhancer(self):
-        """Initialize image enhancement engine"""        self.image_enhancement_settings = {
+        """Initialize image enhancement engine"""
+        self.image_enhancement_settings = {
             'auto_enhance': {
                 'brightness_range': (-20, 20),
                 'contrast_range': (0.8, 1.3),
@@ -400,7 +419,8 @@ class ContentEnhancer(BaseAIModel):
         }
     
     def _initialize_video_enhancer(self):
-        """Initialize video enhancement engine"""        self.video_enhancement_settings = {
+        """Initialize video enhancement engine"""
+        self.video_enhancement_settings = {
             'quality_presets': {
                 'social_media': {
                     'resolution': (1080, 1920),  # 9:16 aspect ratio
@@ -424,7 +444,8 @@ class ContentEnhancer(BaseAIModel):
         }
     
     def _initialize_seo_optimizer(self):
-        """Initialize SEO optimization engine"""        self.seo_optimization_rules = {
+        """Initialize SEO optimization engine"""
+        self.seo_optimization_rules = {
             'keyword_density': {
                 'primary': (1.0, 3.0),      # 1-3%
                 'secondary': (0.5, 2.0),    # 0.5-2%
@@ -445,7 +466,8 @@ class ContentEnhancer(BaseAIModel):
         }
     
     def _initialize_engagement_optimizer(self):
-        """Initialize engagement optimization engine"""        self.engagement_optimization_data = {
+        """Initialize engagement optimization engine"""
+        self.engagement_optimization_data = {
             'optimal_posting_times': {
                 'instagram': ['6:00', '12:00', '19:00'],
                 'tiktok': ['6:00', '10:00', '19:00'],
@@ -472,7 +494,8 @@ class ContentEnhancer(BaseAIModel):
         enhancement_options: Optional[Dict[str, Any]] = None,
         target_platforms: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """        Comprehensive content enhancement
+        """
+        Comprehensive content enhancement
         
         Args:
             content_data: Content information and metadata
@@ -485,7 +508,8 @@ class ContentEnhancer(BaseAIModel):
         Raises:
             QualityCheckError: If enhancement fails
             EnhancementError: If specific enhancement fails
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             if not content_data:
@@ -650,7 +674,8 @@ class ContentEnhancer(BaseAIModel):
             raise QualityCheckError(f"Content enhancement failed: {str(e)}") from e
     
     async def _enhance_text_content(self, content_data: Dict[str, Any], profile: EnhancementProfile, options: Dict[str, Any]):
-        """Enhance text content quality and engagement"""        try:
+        """Enhance text content quality and engagement"""
+        try:
             text_content = content_data.get('text', '')
             if not text_content:
                 return
@@ -728,7 +753,8 @@ class ContentEnhancer(BaseAIModel):
             logger.warning(f"Text enhancement failed: {str(e)}")
     
     async def _enhance_image_content(self, content_data: Dict[str, Any], profile: EnhancementProfile, options: Dict[str, Any]):
-        """Enhance image quality and visual appeal"""        try:
+        """Enhance image quality and visual appeal"""
+        try:
             image_path = content_data.get('image_path')
             image_data = content_data.get('image_data')
             
@@ -798,7 +824,8 @@ class ContentEnhancer(BaseAIModel):
             logger.warning(f"Image enhancement failed: {str(e)}")
     
     async def _enhance_video_content(self, content_data: Dict[str, Any], profile: EnhancementProfile, options: Dict[str, Any]):
-        """Enhance video quality and performance"""        try:
+        """Enhance video quality and performance"""
+        try:
             video_path = content_data.get('video_path')
             video_data = content_data.get('video_data')
             
@@ -853,7 +880,8 @@ class ContentEnhancer(BaseAIModel):
             logger.warning(f"Video enhancement failed: {str(e)}")
     
     async def _optimize_seo(self, content_data: Dict[str, Any], profile: EnhancementProfile, options: Dict[str, Any]):
-        """Optimize content for search engines"""        try:
+        """Optimize content for search engines"""
+        try:
             text_content = content_data.get('text', '')
             title = content_data.get('title', '')
             
@@ -936,7 +964,8 @@ class ContentEnhancer(BaseAIModel):
             logger.warning(f"SEO optimization failed: {str(e)}")
     
     async def _optimize_engagement(self, content_data: Dict[str, Any], profile: EnhancementProfile, target_platforms: List[str]):
-        """Optimize content for maximum engagement"""        try:
+        """Optimize content for maximum engagement"""
+        try:
             engagement = profile.engagement_enhancement
             
             # Optimal posting times
@@ -1022,7 +1051,8 @@ class ContentEnhancer(BaseAIModel):
             logger.warning(f"Engagement optimization failed: {str(e)}")
     
     async def _improve_accessibility(self, content_data: Dict[str, Any], profile: EnhancementProfile, options: Dict[str, Any]):
-        """Improve content accessibility"""        try:
+        """Improve content accessibility"""
+        try:
             accessibility = profile.accessibility_enhancement
             
             # Alt text for images
@@ -1097,7 +1127,8 @@ class ContentEnhancer(BaseAIModel):
             logger.warning(f"Accessibility improvement failed: {str(e)}")
     
     async def _generate_enhancement_suggestions(self, content_data: Dict[str, Any], profile: EnhancementProfile, target_platforms: List[str]):
-        """Generate comprehensive enhancement suggestions"""        try:
+        """Generate comprehensive enhancement suggestions"""
+        try:
             suggestions = []
             
             # Text enhancement suggestions
@@ -1277,7 +1308,8 @@ class ContentEnhancer(BaseAIModel):
             logger.warning(f"Enhancement suggestions generation failed: {str(e)}")
     
     def _calculate_overall_improvements(self, profile: EnhancementProfile):
-        """Calculate overall improvement metrics"""        try:
+        """Calculate overall improvement metrics"""
+        try:
             improvements = []
             
             # Collect all improvement scores
@@ -1316,7 +1348,8 @@ class ContentEnhancer(BaseAIModel):
             logger.warning(f"Overall improvements calculation failed: {str(e)}")
     
     def _create_implementation_plan(self, profile: EnhancementProfile):
-        """Create implementation plan based on suggestions"""        try:
+        """Create implementation plan based on suggestions"""
+        try:
             # Quick wins (low complexity, high impact)
             profile.quick_wins = [
                 s for s in profile.suggestions 
@@ -1339,7 +1372,8 @@ class ContentEnhancer(BaseAIModel):
             logger.warning(f"Implementation plan creation failed: {str(e)}")
     
     async def _calculate_enhancement_metrics(self, content_data: Dict[str, Any], profile: EnhancementProfile, metrics: EnhancementAnalysisMetrics):
-        """Calculate enhancement analysis metrics"""        try:
+        """Calculate enhancement analysis metrics"""
+        try:
             # Content types analyzed
             content_types = []
             if content_data.get('text'):
@@ -1379,7 +1413,8 @@ class ContentEnhancer(BaseAIModel):
             logger.warning(f"Enhancement metrics calculation failed: {str(e)}")
     
     def _calculate_confidence(self, profile: EnhancementProfile, content_data: Dict[str, Any]) -> float:
-        """Calculate enhancement confidence score"""        confidence = 0.8  # Base confidence
+        """Calculate enhancement confidence score"""
+        confidence = 0.8  # Base confidence
         
         # Adjust based on content completeness
         if content_data.get('text'):
@@ -1407,7 +1442,8 @@ async def enhance_content_quality(
     enhancement_options: Optional[Dict[str, Any]] = None,
     target_platforms: Optional[List[str]] = None
 ) -> Dict[str, Any]:
-    """    Convenient function for content enhancement
+    """
+    Convenient function for content enhancement
     
     Args:
         content_data: Content information and metadata
@@ -1416,7 +1452,8 @@ async def enhance_content_quality(
         
     Returns:
         Dict containing enhancement results
-    """    try:
+    """
+    try:
         # result = await content_enhancer.enhance_content(
         #     content_data, enhancement_options, target_platforms
         # )

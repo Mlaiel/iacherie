@@ -15,7 +15,8 @@ AVERTISSEMENT LÉGAL:
 Ce code est la propriété exclusive de Fahed Mlaiel. Toute utilisation,
 reproduction, modification ou distribution non autorisée est strictement
 interdite et fera l'objet de poursuites judiciaires.
-"""from typing import Dict, List, Optional, Any, Union, BinaryIO, Tuple
+"""
+from typing import Dict, List, Optional, Any, Union, BinaryIO, Tuple
 import logging
 import asyncio
 import aiohttp
@@ -33,7 +34,8 @@ import time
 logger = logging.getLogger(__name__)
 
 class CDNProvider(Enum):
-    """Supported CDN providers"""    CLOUDFLARE = "cloudflare"
+    """Supported CDN providers"""
+    CLOUDFLARE = "cloudflare"
     AMAZON_CLOUDFRONT = "cloudfront"
     FASTLY = "fastly"
     AKAMAI = "akamai"
@@ -41,13 +43,15 @@ class CDNProvider(Enum):
     GOOGLE_CDN = "google_cdn"
 
 class ContentTier(Enum):
-    """Content distribution tiers"""    GLOBAL = "global"      # Worldwide distribution
+    """Content distribution tiers"""
+    GLOBAL = "global"      # Worldwide distribution
     REGIONAL = "regional"  # Regional distribution
     LOCAL = "local"        # Single region only
 
 @dataclass
 class CDNConfig:
-    """CDN configuration"""    provider: CDNProvider
+    """CDN configuration"""
+    provider: CDNProvider
     api_key: str
     api_secret: str
     zone_id: Optional[str] = None
@@ -76,7 +80,8 @@ class CDNConfig:
     enable_ddos_protection: bool = True
 
 class CDNStorageManager:
-    """    Enterprise CDN storage manager for global content distribution.
+    """
+    Enterprise CDN storage manager for global content distribution.
     
     Features:
     - Multi-CDN support with failover
@@ -85,9 +90,11 @@ class CDNStorageManager:
     - Automatic format optimization (WebP, AVIF)
     - Edge caching with intelligent purging
     - Content security and hotlink protection
-    """    
+    """
+    
     def __init__(self, config: CDNConfig):
-        """Initialize CDN storage manager"""        self.config = config
+        """Initialize CDN storage manager"""
+        self.config = config
         self.session = None
         
         # CDN API endpoints
@@ -117,11 +124,13 @@ class CDNStorageManager:
         logger.info(f"CDNStorageManager initialized for {config.provider.value}")
     
     async def __aenter__(self):
-        """Async context manager entry"""        self.session = aiohttp.ClientSession()
+        """Async context manager entry"""
+        self.session = aiohttp.ClientSession()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""        if self.session:
+        """Async context manager exit"""
+        if self.session:
             await self.session.close()
     
     async def distribute_content(
@@ -132,7 +141,8 @@ class CDNStorageManager:
         tier: ContentTier = ContentTier.GLOBAL,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Distribute content to CDN with global optimization.
+        """
+        Distribute content to CDN with global optimization.
         
         Business Logic:
         1. Optimize content based on type (images, videos, etc.)
@@ -140,7 +150,8 @@ class CDNStorageManager:
         3. Distribute to optimal edge locations
         4. Configure caching policies
         5. Set up geographic routing
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Prepare content
@@ -225,7 +236,8 @@ class CDNStorageManager:
         preferred_format: Optional[str] = None,
         geographic_region: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Retrieve content from CDN with geographic optimization"""        start_time = time.time()
+        """Retrieve content from CDN with geographic optimization"""
+        start_time = time.time()
         
         try:
             # Check local cache first
@@ -281,7 +293,8 @@ class CDNStorageManager:
         urls: Optional[List[str]] = None,
         patterns: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """Purge content from CDN cache"""        try:
+        """Purge content from CDN cache"""
+        try:
             # Determine what to purge
             purge_targets = []
             
@@ -325,7 +338,8 @@ class CDNStorageManager:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """Get CDN analytics and performance metrics"""        try:
+        """Get CDN analytics and performance metrics"""
+        try:
             # Default to last 24 hours if no dates specified
             if not end_date:
                 end_date = datetime.now()
@@ -364,7 +378,8 @@ class CDNStorageManager:
         limit: int = 100,
         prefix: Optional[str] = None
     ) -> List[Dict[str, Any]]:
-        """List content distributed in CDN"""        try:
+        """List content distributed in CDN"""
+        try:
             content_list = []
             
             for content_hash, cache_data in list(self.content_cache.items())[:limit]:
@@ -395,7 +410,8 @@ class CDNStorageManager:
         content_data: bytes,
         optimization_level: str = 'medium'
     ) -> Dict[str, Any]:
-        """        Advanced static content optimization for CDN delivery
+        """
+        Advanced static content optimization for CDN delivery
         
         Features:
         - CSS/JS minification
@@ -403,7 +419,8 @@ class CDNStorageManager:
         - Content compression
         - Cache-optimized headers
         - Performance analytics
-        """        try:
+        """
+        try:
             optimization_result = {
                 'original_size': len(content_data),
                 'optimized_variants': {},
@@ -445,7 +462,8 @@ class CDNStorageManager:
             }
     
     async def _optimize_css_content(self, css_data: bytes, optimization_level: str) -> Dict[str, Any]:
-        """Optimize CSS content"""        try:
+        """Optimize CSS content"""
+        try:
             css_text = css_data.decode('utf-8')
             
             # Basic CSS minification
@@ -502,7 +520,8 @@ class CDNStorageManager:
             return {'success': False, 'error': str(e)}
     
     async def _optimize_js_content(self, js_data: bytes, optimization_level: str) -> Dict[str, Any]:
-        """Optimize JavaScript content"""        try:
+        """Optimize JavaScript content"""
+        try:
             js_text = js_data.decode('utf-8')
             
             # Basic JS minification
@@ -559,7 +578,8 @@ class CDNStorageManager:
             return {'success': False, 'error': str(e)}
     
     async def _optimize_image_content_cdn(self, image_data: bytes, optimization_level: str) -> Dict[str, Any]:
-        """Optimize image content for CDN delivery"""        try:
+        """Optimize image content for CDN delivery"""
+        try:
             # Use the image optimizer if available
             try:
                 from ...optimization.image_optimizer import ImageOptimizer
@@ -616,7 +636,8 @@ class CDNStorageManager:
             return {'success': False, 'error': str(e)}
     
     async def _optimize_html_content(self, html_data: bytes, optimization_level: str) -> Dict[str, Any]:
-        """Optimize HTML content"""        try:
+        """Optimize HTML content"""
+        try:
             html_text = html_data.decode('utf-8')
             
             # Basic HTML minification
@@ -668,7 +689,8 @@ class CDNStorageManager:
             return {'success': False, 'error': str(e)}
     
     async def _optimize_generic_content_enhanced(self, content_data: bytes, optimization_level: str) -> Dict[str, Any]:
-        """Enhanced generic content optimization"""        try:
+        """Enhanced generic content optimization"""
+        try:
             # Apply compression
             import gzip
             import brotli
@@ -714,7 +736,8 @@ class CDNStorageManager:
             return {'success': False, 'error': str(e)}
     
     def _get_cache_control_header(self, content_type: str) -> str:
-        """Get appropriate Cache-Control header for content type"""        
+        """Get appropriate Cache-Control header for content type"""
+        
         if content_type.startswith('text/css') or content_type.startswith('application/javascript'):
             # CSS and JS can be cached for longer
             return 'public, max-age=31536000, immutable'  # 1 year
@@ -733,7 +756,8 @@ class CDNStorageManager:
         content_hash: str,
         optimization_options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply additional content optimizations"""        try:
+        """Apply additional content optimizations"""
+        try:
             if content_hash not in self.content_cache:
                 return {
                     'success': False,
@@ -771,7 +795,8 @@ class CDNStorageManager:
         filename: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Upload content to Cloudflare"""        try:
+        """Upload content to Cloudflare"""
+        try:
             urls = []
             
             for variant_name, content in content_variants.items():
@@ -819,7 +844,8 @@ class CDNStorageManager:
         filename: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Upload content to Amazon CloudFront"""        # CloudFront-specific implementation
+        """Upload content to Amazon CloudFront"""
+        # CloudFront-specific implementation
         pass
     
     async def _upload_to_fastly(
@@ -828,7 +854,8 @@ class CDNStorageManager:
         filename: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Upload content to Fastly"""        # Fastly-specific implementation
+        """Upload content to Fastly"""
+        # Fastly-specific implementation
         pass
     
     async def _upload_to_generic_cdn(
@@ -837,7 +864,8 @@ class CDNStorageManager:
         filename: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generic CDN upload implementation"""        # Generic implementation for other CDN providers
+        """Generic CDN upload implementation"""
+        # Generic implementation for other CDN providers
         urls = []
         
         for variant_name, content in content_variants.items():
@@ -864,7 +892,8 @@ class CDNStorageManager:
         filename: str,
         content_type: str
     ) -> Dict[str, bytes]:
-        """Generate optimized content variants"""        variants = {'original': content}
+        """Generate optimized content variants"""
+        variants = {'original': content}
         
         try:
             if content_type == 'image' and self.config.enable_image_optimization:
@@ -899,7 +928,8 @@ class CDNStorageManager:
         return variants
     
     async def _convert_to_webp(self, image_content: bytes) -> Optional[bytes]:
-        """Convert image to WebP format"""        try:
+        """Convert image to WebP format"""
+        try:
             from PIL import Image
             import io
             
@@ -917,7 +947,8 @@ class CDNStorageManager:
             return None
     
     async def _compress_image(self, image_content: bytes) -> Optional[bytes]:
-        """Compress image with quality optimization"""        try:
+        """Compress image with quality optimization"""
+        try:
             from PIL import Image
             import io
             
@@ -940,17 +971,20 @@ class CDNStorageManager:
             return None
     
     async def _generate_video_variants(self, video_content: bytes) -> Dict[str, bytes]:
-        """Generate video quality variants"""        # Video processing implementation would go here
+        """Generate video quality variants"""
+        # Video processing implementation would go here
         # For now, return empty dict
         return {}
     
     async def _generate_audio_variants(self, audio_content: bytes) -> Dict[str, bytes]:
-        """Generate audio quality variants"""        # Audio processing implementation would go here
+        """Generate audio quality variants"""
+        # Audio processing implementation would go here
         # For now, return empty dict
         return {}
     
     async def _compress_content(self, content: bytes) -> Optional[bytes]:
-        """Apply general content compression"""        try:
+        """Apply general content compression"""
+        try:
             import gzip
             
             compressed = gzip.compress(content, compresslevel=6)
@@ -968,7 +1002,8 @@ class CDNStorageManager:
     # Helper methods
     
     async def _prepare_content(self, content: Union[bytes, str, BinaryIO]) -> bytes:
-        """Prepare content for CDN distribution"""        if isinstance(content, bytes):
+        """Prepare content for CDN distribution"""
+        if isinstance(content, bytes):
             return content
         elif isinstance(content, str):
             return content.encode('utf-8')
@@ -981,7 +1016,8 @@ class CDNStorageManager:
             raise ValueError(f"Unsupported content type: {type(content)}")
     
     def _generate_variant_filename(self, original_filename: str, variant: str) -> str:
-        """Generate filename for content variant"""        path = Path(original_filename)
+        """Generate filename for content variant"""
+        path = Path(original_filename)
         stem = path.stem
         suffix = path.suffix
         
@@ -996,7 +1032,8 @@ class CDNStorageManager:
         preferred_format: Optional[str],
         geographic_region: Optional[str]
     ) -> Optional[str]:
-        """Select optimal URL based on criteria"""        if not urls:
+        """Select optimal URL based on criteria"""
+        if not urls:
             return None
         
         # Prefer specific format if requested
@@ -1028,7 +1065,8 @@ class CDNStorageManager:
         urls: List[Dict[str, Any]],
         content_type: str
     ) -> None:
-        """Configure CDN caching policies"""        try:
+        """Configure CDN caching policies"""
+        try:
             # Different caching strategies based on content type
             if content_type in ['image', 'audio', 'video']:
                 # Long-term caching for media
@@ -1053,7 +1091,8 @@ class CDNStorageManager:
         urls: List[Dict[str, Any]],
         cache_ttl: int
     ) -> None:
-        """Configure Cloudflare-specific caching"""        # Cloudflare caching configuration implementation
+        """Configure Cloudflare-specific caching"""
+        # Cloudflare caching configuration implementation
         pass
     
     # Analytics methods (provider-specific)
@@ -1063,7 +1102,8 @@ class CDNStorageManager:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Get Cloudflare analytics"""        # Cloudflare analytics implementation
+        """Get Cloudflare analytics"""
+        # Cloudflare analytics implementation
         return {}
     
     async def _get_cloudfront_analytics(
@@ -1071,7 +1111,8 @@ class CDNStorageManager:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Get CloudFront analytics"""        # CloudFront analytics implementation
+        """Get CloudFront analytics"""
+        # CloudFront analytics implementation
         return {}
     
     async def _get_fastly_analytics(
@@ -1079,7 +1120,8 @@ class CDNStorageManager:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Get Fastly analytics"""        # Fastly analytics implementation
+        """Get Fastly analytics"""
+        # Fastly analytics implementation
         return {}
     
     async def _get_generic_cdn_analytics(
@@ -1087,7 +1129,8 @@ class CDNStorageManager:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Get generic CDN analytics"""        return {
+        """Get generic CDN analytics"""
+        return {
             'requests': 0,
             'bandwidth': 0,
             'cache_hit_ratio': 0.0,
@@ -1102,7 +1145,8 @@ class CDNStorageManager:
         urls: List[str],
         patterns: Optional[List[str]]
     ) -> Dict[str, Any]:
-        """Purge Cloudflare cache"""        # Cloudflare cache purging implementation
+        """Purge Cloudflare cache"""
+        # Cloudflare cache purging implementation
         return {'success': True}
     
     async def _purge_cloudfront_cache(
@@ -1110,7 +1154,8 @@ class CDNStorageManager:
         urls: List[str],
         patterns: Optional[List[str]]
     ) -> Dict[str, Any]:
-        """Purge CloudFront cache"""        # CloudFront cache purging implementation
+        """Purge CloudFront cache"""
+        # CloudFront cache purging implementation
         return {'success': True}
     
     async def _purge_fastly_cache(
@@ -1118,7 +1163,8 @@ class CDNStorageManager:
         urls: List[str],
         patterns: Optional[List[str]]
     ) -> Dict[str, Any]:
-        """Purge Fastly cache"""        # Fastly cache purging implementation
+        """Purge Fastly cache"""
+        # Fastly cache purging implementation
         return {'success': True}
     
     async def _purge_generic_cdn_cache(
@@ -1126,7 +1172,8 @@ class CDNStorageManager:
         urls: List[str],
         patterns: Optional[List[str]]
     ) -> Dict[str, Any]:
-        """Purge generic CDN cache"""        return {'success': True}
+        """Purge generic CDN cache"""
+        return {'success': True}
     
     # Content optimization methods (provider-specific)
     
@@ -1135,31 +1182,36 @@ class CDNStorageManager:
         content_hash: str,
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize image content"""        return {'success': True, 'optimizations_applied': []}
+        """Optimize image content"""
+        return {'success': True, 'optimizations_applied': []}
     
     async def _optimize_video_content(
         self,
         content_hash: str,
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize video content"""        return {'success': True, 'optimizations_applied': []}
+        """Optimize video content"""
+        return {'success': True, 'optimizations_applied': []}
     
     async def _optimize_audio_content(
         self,
         content_hash: str,
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize audio content"""        return {'success': True, 'optimizations_applied': []}
+        """Optimize audio content"""
+        return {'success': True, 'optimizations_applied': []}
     
     async def _optimize_generic_content(
         self,
         content_hash: str,
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize generic content"""        return {'success': True, 'optimizations_applied': []}
+        """Optimize generic content"""
+        return {'success': True, 'optimizations_applied': []}
     
     def _calculate_performance_summary(self, analytics: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate performance summary from analytics"""        return {
+        """Calculate performance summary from analytics"""
+        return {
             'total_requests': analytics.get('requests', 0),
             'total_bandwidth': analytics.get('bandwidth', 0),
             'cache_hit_ratio': analytics.get('cache_hit_ratio', 0.0),
@@ -1168,7 +1220,8 @@ class CDNStorageManager:
         }
     
     def _update_metrics(self, operation: str, size: int, processing_time: float) -> None:
-        """Update performance metrics"""        if operation == 'upload':
+        """Update performance metrics"""
+        if operation == 'upload':
             self.metrics['uploads'] += 1
         elif operation == 'download':
             self.metrics['downloads'] += 1
@@ -1189,7 +1242,8 @@ class CDNStorageManager:
         stats['avg_time'] = stats['total_time'] / stats['count']
 
 class AsyncCDNStorageManager:
-    """Async wrapper for high-performance concurrent CDN operations"""    
+    """Async wrapper for high-performance concurrent CDN operations"""
+    
     def __init__(self, config: CDNConfig):
         self.sync_manager = CDNStorageManager(config)
         self.semaphore = asyncio.Semaphore(10)  # Limit concurrent operations
@@ -1198,7 +1252,8 @@ class AsyncCDNStorageManager:
         self,
         content_list: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Distribute multiple content items concurrently"""        
+        """Distribute multiple content items concurrently"""
+        
         async def distribute_single(content_info):
             async with self.semaphore:
                 return await self.sync_manager.distribute_content(

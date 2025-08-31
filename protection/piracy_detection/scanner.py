@@ -12,7 +12,8 @@ This module provides:
 - API integration for major platforms
 - Web scraping with anti-detection
 - Real-time content discovery
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set
 from datetime import datetime, timedelta
@@ -24,7 +25,8 @@ import time
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Platform types for scanning."""    VIDEO = "video"
+    """Platform types for scanning."""
+    VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
     SOCIAL = "social"
@@ -32,14 +34,16 @@ class PlatformType(Enum):
     MARKETPLACE = "marketplace"
 
 class ScanMethod(Enum):
-    """Scanning methods."""    API = "api"
+    """Scanning methods."""
+    API = "api"
     WEB_SCRAPING = "web_scraping"
     RSS_FEED = "rss_feed"
     WEBHOOK = "webhook"
 
 @dataclass
 class PlatformConfig:
-    """Platform scanning configuration."""    platform_name: str
+    """Platform scanning configuration."""
+    platform_name: str
     platform_type: PlatformType
     scan_method: ScanMethod
     api_endpoint: Optional[str]
@@ -50,7 +54,8 @@ class PlatformConfig:
 
 @dataclass
 class ScanResult:
-    """Platform scan result."""    platform: str
+    """Platform scan result."""
+    platform: str
     scan_id: str
     items_found: int
     scan_duration_seconds: float
@@ -60,18 +65,22 @@ class ScanResult:
     next_scan_token: Optional[str]
 
 class PlatformScanner:
-    """    Advanced multi-platform content scanner.
+    """
+    Advanced multi-platform content scanner.
     
     Provides comprehensive scanning capabilities across major platforms
     with intelligent rate limiting and anti-detection measures.
-    """    
+    """
+    
     def __init__(self, platform: Optional[str] = None, config: Optional[Dict[str, Any]] = None):
-        """        Initialize the Platform Scanner.
+        """
+        Initialize the Platform Scanner.
         
         Args:
             platform: Specific platform to initialize (None for all platforms)
             config: Scanner configuration parameters
-        """        self.platform = platform
+        """
+        self.platform = platform
         self.config = config or {}
         self._initialized = False
         
@@ -100,11 +109,13 @@ class PlatformScanner:
         logger.info(f"Platform Scanner initialized for platform: {platform or 'all'}")
     
     async def initialize(self) -> bool:
-        """        Initialize scanner components and platform configurations.
+        """
+        Initialize scanner components and platform configurations.
         
         Returns:
             bool: True if initialization successful
-        """        try:
+        """
+        try:
             logger.info("Initializing Platform Scanner...")
             
             # Initialize HTTP session
@@ -137,7 +148,8 @@ class PlatformScanner:
             return False
     
     async def _initialize_platform_configs(self) -> None:
-        """Initialize platform-specific configurations."""        self.platform_configs = {
+        """Initialize platform-specific configurations."""
+        self.platform_configs = {
             'youtube': PlatformConfig(
                 platform_name='youtube',
                 platform_type=PlatformType.VIDEO,
@@ -243,7 +255,8 @@ class PlatformScanner:
         logger.info(f"Initialized {len(self.platform_configs)} platform configurations")
     
     async def _initialize_rate_limiters(self) -> None:
-        """Initialize rate limiters for each platform."""        for platform_name, config in self.platform_configs.items():
+        """Initialize rate limiters for each platform."""
+        for platform_name, config in self.platform_configs.items():
             self.rate_limiters[platform_name] = {
                 'requests_per_hour': config.rate_limit_per_hour,
                 'requests_made': 0,
@@ -254,7 +267,8 @@ class PlatformScanner:
         logger.info("Rate limiters initialized")
     
     async def _initialize_single_platform(self, platform_name: str) -> None:
-        """Initialize scanner for a single platform."""        if platform_name not in self.platform_configs:
+        """Initialize scanner for a single platform."""
+        if platform_name not in self.platform_configs:
             raise ValueError(f"Unknown platform: {platform_name}")
         
         config = self.platform_configs[platform_name]
@@ -264,7 +278,8 @@ class PlatformScanner:
         logger.info(f"Initialized scanner for platform: {platform_name}")
     
     async def _initialize_all_platforms(self) -> None:
-        """Initialize scanners for all platforms."""        for platform_name, config in self.platform_configs.items():
+        """Initialize scanners for all platforms."""
+        for platform_name, config in self.platform_configs.items():
             try:
                 scanner = await self._create_platform_scanner(config)
                 self.active_scanners[platform_name] = scanner
@@ -274,7 +289,8 @@ class PlatformScanner:
         logger.info(f"Initialized scanners for {len(self.active_scanners)} platforms")
     
     async def _create_platform_scanner(self, config: PlatformConfig) -> Dict[str, Any]:
-        """Create platform-specific scanner."""        scanner = {
+        """Create platform-specific scanner."""
+        scanner = {
             'config': config,
             'authenticated': False,
             'auth_token': None,
@@ -289,7 +305,8 @@ class PlatformScanner:
         return scanner
     
     async def _authenticate_platform(self, scanner: Dict[str, Any]) -> None:
-        """Authenticate with platform API."""        config = scanner['config']
+        """Authenticate with platform API."""
+        config = scanner['config']
         platform_name = config.platform_name
         
         # Get authentication credentials from config
@@ -312,7 +329,8 @@ class PlatformScanner:
     
     async def scan_for_content(self, fingerprint: Dict[str, Any], 
                              platforms: Optional[List[str]] = None) -> ScanResult:
-        """        Scan for content across specified platforms.
+        """
+        Scan for content across specified platforms.
         
         Args:
             fingerprint: Content fingerprint to search for
@@ -320,7 +338,8 @@ class PlatformScanner:
             
         Returns:
             Aggregated scan results
-        """        if not self._initialized:
+        """
+        if not self._initialized:
             raise RuntimeError("Scanner not initialized")
         
         scan_id = f"scan_{int(time.time())}"
@@ -400,7 +419,8 @@ class PlatformScanner:
     
     async def _scan_platform(self, platform_name: str, fingerprint: Dict[str, Any], 
                            scan_id: str) -> Dict[str, Any]:
-        """        Scan a specific platform for content.
+        """
+        Scan a specific platform for content.
         
         Args:
             platform_name: Name of platform to scan
@@ -409,7 +429,8 @@ class PlatformScanner:
             
         Returns:
             Platform scan results
-        """        scanner = self.active_scanners.get(platform_name)
+        """
+        scanner = self.active_scanners.get(platform_name)
         if not scanner:
             raise ValueError(f"No scanner available for platform: {platform_name}")
         
@@ -435,14 +456,16 @@ class PlatformScanner:
             return {'items': [], 'errors': [str(e)]}
     
     async def _check_rate_limit(self, platform_name: str) -> bool:
-        """        Check if platform scan is within rate limits.
+        """
+        Check if platform scan is within rate limits.
         
         Args:
             platform_name: Platform name
             
         Returns:
             bool: True if within limits, False otherwise
-        """        limiter = self.rate_limiters.get(platform_name)
+        """
+        limiter = self.rate_limiters.get(platform_name)
         if not limiter:
             return True
         
@@ -471,7 +494,8 @@ class PlatformScanner:
     
     async def _scan_via_api(self, scanner: Dict[str, Any], fingerprint: Dict[str, Any], 
                           scan_id: str) -> Dict[str, Any]:
-        """Scan platform using API."""        config = scanner['config']
+        """Scan platform using API."""
+        config = scanner['config']
         platform_name = config.platform_name
         
         # Prepare search query based on fingerprint
@@ -505,7 +529,8 @@ class PlatformScanner:
     
     async def _scan_via_scraping(self, scanner: Dict[str, Any], fingerprint: Dict[str, Any], 
                                scan_id: str) -> Dict[str, Any]:
-        """Scan platform using web scraping."""        config = scanner['config']
+        """Scan platform using web scraping."""
+        config = scanner['config']
         platform_name = config.platform_name
         
         # Prepare scraping URL
@@ -534,14 +559,16 @@ class PlatformScanner:
     
     async def _scan_via_rss(self, scanner: Dict[str, Any], fingerprint: Dict[str, Any], 
                           scan_id: str) -> Dict[str, Any]:
-        """Scan platform using RSS feeds."""        # Simplified RSS scanning implementation
+        """Scan platform using RSS feeds."""
+        # Simplified RSS scanning implementation
         return {
             'items': [],
             'errors': ['RSS scanning not implemented']
         }
     
     def _prepare_search_query(self, fingerprint: Dict[str, Any], config: PlatformConfig) -> str:
-        """Prepare search query from fingerprint."""        # Extract searchable terms from fingerprint
+        """Prepare search query from fingerprint."""
+        # Extract searchable terms from fingerprint
         content_type = fingerprint.get('content_type', 'unknown')
         metadata = fingerprint.get('metadata', {})
         
@@ -565,7 +592,8 @@ class PlatformScanner:
         return ' '.join(query_parts) if query_parts else 'content'
     
     def _build_api_url(self, config: PlatformConfig, search_query: str) -> str:
-        """Build API URL for platform."""        base_url = config.api_endpoint
+        """Build API URL for platform."""
+        base_url = config.api_endpoint
         platform = config.platform_name
         
         # Platform-specific URL building
@@ -583,7 +611,8 @@ class PlatformScanner:
             return f"{base_url}/search?q={search_query}"
     
     def _build_api_headers(self, scanner: Dict[str, Any]) -> Dict[str, str]:
-        """Build API headers for platform."""        headers = {
+        """Build API headers for platform."""
+        headers = {
             'User-Agent': 'IA-Influencer-Agent-Scanner/2.0',
             'Accept': 'application/json'
         }
@@ -602,7 +631,8 @@ class PlatformScanner:
         return headers
     
     def _build_scraping_url(self, config: PlatformConfig, fingerprint: Dict[str, Any]) -> str:
-        """Build URL for web scraping."""        platform = config.platform_name
+        """Build URL for web scraping."""
+        platform = config.platform_name
         search_query = self._prepare_search_query(fingerprint, config)
         
         # Platform-specific scraping URLs
@@ -612,7 +642,8 @@ class PlatformScanner:
             return f"https://{platform}.com/search?q={search_query}"
     
     def _build_scraping_headers(self) -> Dict[str, str]:
-        """Build headers for web scraping."""        return {
+        """Build headers for web scraping."""
+        return {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
             'Accept-Language': 'en-US,en;q=0.5',
@@ -621,7 +652,8 @@ class PlatformScanner:
         }
     
     def _parse_api_response(self, data: Dict[str, Any], platform: str) -> List[Dict[str, Any]]:
-        """Parse API response data."""        items = []
+        """Parse API response data."""
+        items = []
         
         try:
             if platform == 'youtube':
@@ -657,7 +689,8 @@ class PlatformScanner:
         return items
     
     def _parse_scraped_content(self, html_content: str, platform: str) -> List[Dict[str, Any]]:
-        """Parse scraped HTML content."""        items = []
+        """Parse scraped HTML content."""
+        items = []
         
         try:
             # Simplified HTML parsing
@@ -679,7 +712,8 @@ class PlatformScanner:
         return items
     
     def _update_scan_stats(self, scan_result: ScanResult) -> None:
-        """Update scanning statistics."""        self.scan_stats['total_scans'] += 1
+        """Update scanning statistics."""
+        self.scan_stats['total_scans'] += 1
         
         if scan_result.errors:
             self.scan_stats['failed_scans'] += 1
@@ -689,10 +723,12 @@ class PlatformScanner:
         self.scan_stats['items_discovered'] += scan_result.items_found
     
     async def get_scan_stats(self) -> Dict[str, Any]:
-        """Get scanning performance statistics."""        return self.scan_stats.copy()
+        """Get scanning performance statistics."""
+        return self.scan_stats.copy()
     
     async def get_platform_status(self) -> Dict[str, Any]:
-        """Get status of all platform scanners."""        status = {}
+        """Get status of all platform scanners."""
+        status = {}
         
         for platform_name, scanner in self.active_scanners.items():
             limiter = self.rate_limiters.get(platform_name, {})
@@ -711,7 +747,8 @@ class PlatformScanner:
         return status
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown the scanner."""        logger.info("Shutting down Platform Scanner...")
+        """Gracefully shutdown the scanner."""
+        logger.info("Shutting down Platform Scanner...")
         
         # Close HTTP session
         if self.session:

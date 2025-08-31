@@ -10,7 +10,8 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, modification, 
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
-"""import os
+"""
+import os
 import json
 import pickle
 import logging
@@ -36,7 +37,8 @@ settings = get_settings()
 
 @dataclass
 class VectorSearchResult:
-    """Vector search result with metadata"""    fingerprint_id: int
+    """Vector search result with metadata"""
+    fingerprint_id: int
     content_id: str
     similarity_score: float
     content_type: str
@@ -46,7 +48,8 @@ class VectorSearchResult:
 
 @dataclass
 class IndexStats:
-    """FAISS index statistics"""    total_vectors: int
+    """FAISS index statistics"""
+    total_vectors: int
     dimension: int
     index_type: str
     memory_usage_mb: float
@@ -54,7 +57,8 @@ class IndexStats:
 
 
 class FAISSVectorStore:
-    """    High-performance FAISS vector store for content fingerprinting and similarity search.
+    """
+    High-performance FAISS vector store for content fingerprinting and similarity search.
     
     Features:
     - Multi-modal vector storage (audio, video, image, text)
@@ -62,7 +66,8 @@ class FAISSVectorStore:
     - Persistent storage with encryption
     - Index optimization and memory management
     - Batch operations for high-throughput scenarios
-    """    
+    """
+    
     def __init__(
         self,
         dimension: int = 512,
@@ -71,7 +76,8 @@ class FAISSVectorStore:
         storage_path: str = None,
         enable_encryption: bool = True
     ):
-        """        Initialize FAISS vector store
+        """
+        Initialize FAISS vector store
         
         Args:
             dimension: Vector dimension (default: 512)
@@ -79,7 +85,8 @@ class FAISSVectorStore:
             nlist: Number of clusters for IVF index
             storage_path: Path for persistent storage
             enable_encryption: Enable vector encryption
-        """        self.dimension = dimension
+        """
+        self.dimension = dimension
         self.index_type = index_type
         self.nlist = nlist
         self.enable_encryption = enable_encryption
@@ -110,11 +117,13 @@ class FAISSVectorStore:
     
     @measure_execution_time
     async def initialize_index(self, content_type: str) -> None:
-        """        Initialize FAISS index for specific content type
+        """
+        Initialize FAISS index for specific content type
         
         Args:
             content_type: Content type (audio, video, image, text)
-        """        try:
+        """
+        try:
             if content_type in self.indices:
                 logger.info(f"Index already exists for content type: {content_type}")
                 return
@@ -159,7 +168,8 @@ class FAISSVectorStore:
         content_ids: List[str],
         metadata: List[Dict[str, Any]] = None
     ) -> List[int]:
-        """        Add vectors to FAISS index
+        """
+        Add vectors to FAISS index
         
         Args:
             content_type: Content type
@@ -169,7 +179,8 @@ class FAISSVectorStore:
             
         Returns:
             List of FAISS internal IDs
-        """        try:
+        """
+        try:
             if content_type not in self.indices:
                 await self.initialize_index(content_type)
             
@@ -241,7 +252,8 @@ class FAISSVectorStore:
         similarity_threshold: float = 0.8,
         include_metadata: bool = True
     ) -> List[VectorSearchResult]:
-        """        Search for similar vectors
+        """
+        Search for similar vectors
         
         Args:
             content_type: Content type to search
@@ -252,7 +264,8 @@ class FAISSVectorStore:
             
         Returns:
             List of search results
-        """        try:
+        """
+        try:
             self.search_stats["total_searches"] += 1
             start_time = datetime.now()
             
@@ -346,7 +359,8 @@ class FAISSVectorStore:
         content_type: str,
         content_ids: List[str]
     ) -> int:
-        """        Remove vectors from index
+        """
+        Remove vectors from index
         
         Args:
             content_type: Content type
@@ -354,7 +368,8 @@ class FAISSVectorStore:
             
         Returns:
             Number of vectors removed
-        """        try:
+        """
+        try:
             if content_type not in self.indices:
                 logger.warning(f"No index found for content type: {content_type}")
                 return 0
@@ -393,14 +408,16 @@ class FAISSVectorStore:
             raise VectorStoreError(f"Vector removal failed: {str(e)}")
     
     async def get_index_stats(self, content_type: str) -> Optional[IndexStats]:
-        """        Get index statistics
+        """
+        Get index statistics
         
         Args:
             content_type: Content type
             
         Returns:
             Index statistics or None if index doesn't exist
-        """        try:
+        """
+        try:
             if content_type not in self.indices:
                 return None
             
@@ -424,11 +441,13 @@ class FAISSVectorStore:
             return None
     
     async def optimize_index(self, content_type: str) -> None:
-        """        Optimize index performance
+        """
+        Optimize index performance
         
         Args:
             content_type: Content type to optimize
-        """        try:
+        """
+        try:
             if content_type not in self.indices:
                 logger.warning(f"No index found for content type: {content_type}")
                 return
@@ -457,7 +476,8 @@ class FAISSVectorStore:
             raise VectorStoreError(f"Index optimization failed: {str(e)}")
     
     async def backup_index(self, content_type: str, backup_path: str = None) -> str:
-        """        Create index backup
+        """
+        Create index backup
         
         Args:
             content_type: Content type to backup
@@ -465,7 +485,8 @@ class FAISSVectorStore:
             
         Returns:
             Backup file path
-        """        try:
+        """
+        try:
             if content_type not in self.indices:
                 raise VectorStoreError(f"No index found for content type: {content_type}")
             
@@ -503,7 +524,8 @@ class FAISSVectorStore:
             raise VectorStoreError(f"Index backup failed: {str(e)}")
     
     def _encrypt_vectors(self, vectors: np.ndarray) -> np.ndarray:
-        """Encrypt vector data"""        if not self.enable_encryption:
+        """Encrypt vector data"""
+        if not self.enable_encryption:
             return vectors
         
         try:
@@ -520,7 +542,8 @@ class FAISSVectorStore:
             return vectors
     
     async def _get_fingerprint_info(self, content_id: str) -> Dict[str, Any]:
-        """Get fingerprint information from database"""        try:
+        """Get fingerprint information from database"""
+        try:
             async with get_db_session() as session:
                 stmt = select(ContentFingerprint).where(
                     ContentFingerprint.content_id == content_id
@@ -543,7 +566,8 @@ class FAISSVectorStore:
             return {"id": 0}
     
     async def _save_index(self, content_type: str) -> None:
-        """Save index to persistent storage"""        try:
+        """Save index to persistent storage"""
+        try:
             if content_type not in self.indices:
                 return
             
@@ -570,7 +594,8 @@ class FAISSVectorStore:
             logger.error(f"Failed to save {content_type} index: {str(e)}")
     
     async def _load_index(self, content_type: str) -> None:
-        """Load index from persistent storage"""        try:
+        """Load index from persistent storage"""
+        try:
             index_path = os.path.join(self.storage_path, f"{content_type}.index")
             metadata_path = os.path.join(self.storage_path, f"{content_type}_metadata.json")
             
@@ -599,7 +624,8 @@ class FAISSVectorStore:
             logger.error(f"Failed to load {content_type} index: {str(e)}")
     
     def _update_search_stats(self, response_time: float) -> None:
-        """Update search performance statistics"""        total_searches = self.search_stats["total_searches"]
+        """Update search performance statistics"""
+        total_searches = self.search_stats["total_searches"]
         current_avg = self.search_stats["avg_response_time"]
         
         # Calculate new average
@@ -607,7 +633,8 @@ class FAISSVectorStore:
         self.search_stats["avg_response_time"] = new_avg
     
     async def close(self) -> None:
-        """Close vector store and cleanup resources"""        try:
+        """Close vector store and cleanup resources"""
+        try:
             # Save all indices
             for content_type in list(self.indices.keys()):
                 await self._save_index(content_type)

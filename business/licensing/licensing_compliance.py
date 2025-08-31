@@ -10,7 +10,8 @@ WARNING - COPYRIGHT PROTECTION:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""from typing import Dict, List, Optional, Any, Set
+"""
+from typing import Dict, List, Optional, Any, Set
 from datetime import datetime, timedelta
 from enum import Enum
 from dataclasses import dataclass, field
@@ -28,7 +29,8 @@ from ..ai.compliance_intelligence import ComplianceIntelligenceEngine
 
 
 class ComplianceFramework(Enum):
-    """Compliance frameworks and standards"""    GDPR = "gdpr"                           # General Data Protection Regulation
+    """Compliance frameworks and standards"""
+    GDPR = "gdpr"                           # General Data Protection Regulation
     CCPA = "ccpa"                           # California Consumer Privacy Act
     DMCA = "dmca"                           # Digital Millennium Copyright Act
     COPPA = "coppa"                         # Children's Online Privacy Protection Act
@@ -42,7 +44,8 @@ class ComplianceFramework(Enum):
 
 
 class ComplianceLevel(Enum):
-    """Compliance assessment levels"""    FULLY_COMPLIANT = "fully_compliant"
+    """Compliance assessment levels"""
+    FULLY_COMPLIANT = "fully_compliant"
     MOSTLY_COMPLIANT = "mostly_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
     NON_COMPLIANT = "non_compliant"
@@ -51,7 +54,8 @@ class ComplianceLevel(Enum):
 
 
 class ViolationSeverity(Enum):
-    """Compliance violation severity levels"""    CRITICAL = "critical"        # Immediate action required
+    """Compliance violation severity levels"""
+    CRITICAL = "critical"        # Immediate action required
     HIGH = "high"                # Action required within 24h
     MEDIUM = "medium"            # Action required within 1 week
     LOW = "low"                  # Action required within 1 month
@@ -60,7 +64,8 @@ class ViolationSeverity(Enum):
 
 @dataclass
 class ComplianceMetrics:
-    """Compliance performance metrics"""    overall_compliance_score: float
+    """Compliance performance metrics"""
+    overall_compliance_score: float
     framework_compliance_scores: Dict[str, float]
     active_violations: int
     resolved_violations: int
@@ -70,7 +75,8 @@ class ComplianceMetrics:
 
 
 class ComplianceAssessmentRequest(BaseModel):
-    """Compliance assessment request"""    entity_type: str = Field(..., description="Type of entity to assess (user, content, agreement)")
+    """Compliance assessment request"""
+    entity_type: str = Field(..., description="Type of entity to assess (user, content, agreement)")
     entity_id: str = Field(..., description="ID of entity to assess")
     frameworks: List[ComplianceFramework] = Field(..., description="Frameworks to assess against")
     assessment_scope: str = Field("comprehensive", description="Scope of assessment")
@@ -78,9 +84,11 @@ class ComplianceAssessmentRequest(BaseModel):
 
 
 class LicensingComplianceService:
-    """    Advanced compliance monitoring system with AI-driven assessment, automated reporting,
+    """
+    Advanced compliance monitoring system with AI-driven assessment, automated reporting,
     and proactive violation detection for licensing operations.
-    """    
+    """
+    
     def __init__(self, db: Session = None):
         self.db = db or next(get_db())
         self.logger = get_logger(__name__)
@@ -94,14 +102,16 @@ class LicensingComplianceService:
         self,
         assessment_request: ComplianceAssessmentRequest
     ) -> Dict[str, Any]:
-        """        Perform comprehensive compliance assessment with AI analysis
+        """
+        Perform comprehensive compliance assessment with AI analysis
         
         Args:
             assessment_request: Compliance assessment parameters
             
         Returns:
             Detailed compliance assessment results with recommendations
-        """        try:
+        """
+        try:
             self.logger.info(f"Performing compliance assessment for {assessment_request.entity_id}")
             
             # Validate assessment request
@@ -180,7 +190,8 @@ class LicensingComplianceService:
         entity_ids: List[str],
         monitoring_period: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """        Monitor ongoing compliance across multiple entities
+        """
+        Monitor ongoing compliance across multiple entities
         
         Args:
             entity_ids: Entities to monitor
@@ -188,7 +199,8 @@ class LicensingComplianceService:
             
         Returns:
             Comprehensive compliance monitoring results
-        """        try:
+        """
+        try:
             self.logger.info(f"Monitoring ongoing compliance for {len(entity_ids)} entities")
             
             monitoring_results = []
@@ -265,7 +277,8 @@ class LicensingComplianceService:
         frameworks: Optional[List[ComplianceFramework]] = None,
         date_range: Optional[Dict[str, datetime]] = None
     ) -> Dict[str, Any]:
-        """        Generate comprehensive compliance reports for auditing and management
+        """
+        Generate comprehensive compliance reports for auditing and management
         
         Args:
             report_type: Type of report (audit, management, regulatory, summary)
@@ -275,7 +288,8 @@ class LicensingComplianceService:
             
         Returns:
             Detailed compliance report with executive summary
-        """        try:
+        """
+        try:
             self.logger.info(f"Generating {report_type} compliance report")
             
             # Collect compliance data for report
@@ -356,14 +370,16 @@ class LicensingComplianceService:
         self,
         violation_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Handle detected compliance violations with automated response
+        """
+        Handle detected compliance violations with automated response
         
         Args:
             violation_data: Details of detected violation
             
         Returns:
             Violation handling results with remediation actions
-        """        try:
+        """
+        try:
             violation_id = str(uuid.uuid4())
             self.logger.info(f"Handling compliance violation {violation_id}")
             
@@ -430,7 +446,8 @@ class LicensingComplianceService:
             raise ComplianceError(f"Violation handling failed: {str(e)}")
     
     def _initialize_compliance_frameworks(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize compliance frameworks and their requirements"""        return {
+        """Initialize compliance frameworks and their requirements"""
+        return {
             "gdpr": {
                 "name": "General Data Protection Regulation",
                 "scope": "EU data protection",
@@ -482,7 +499,8 @@ class LicensingComplianceService:
         }
     
     def _initialize_regulatory_requirements(self) -> Dict[str, List[Dict[str, Any]]]:
-        """Initialize regulatory requirements by jurisdiction"""        return {
+        """Initialize regulatory requirements by jurisdiction"""
+        return {
             "US": [
                 {
                     "requirement": "DMCA Safe Harbor Compliance",
@@ -523,7 +541,8 @@ class LicensingComplianceService:
         self, 
         request: ComplianceAssessmentRequest
     ) -> Dict[str, Any]:
-        """Validate compliance assessment request"""        # Implementation for request validation
+        """Validate compliance assessment request"""
+        # Implementation for request validation
         pass
     
     async def _assess_framework_compliance(
@@ -532,12 +551,14 @@ class LicensingComplianceService:
         framework: ComplianceFramework, 
         scope: str
     ) -> Dict[str, Any]:
-        """Assess compliance against specific framework"""        # Implementation for framework-specific assessment
+        """Assess compliance against specific framework"""
+        # Implementation for framework-specific assessment
         pass
     
     async def _calculate_overall_compliance_score(
         self, 
         framework_assessments: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate overall compliance score from framework assessments"""        # Implementation for overall score calculation
+        """Calculate overall compliance score from framework assessments"""
+        # Implementation for overall score calculation
         pass

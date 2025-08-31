@@ -6,7 +6,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
-"""from datetime import datetime
+"""
+from datetime import datetime
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Set
 from uuid import UUID
@@ -17,7 +18,8 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class CollaborationRequest(BaseSchema):
-    """Collaboration request schema."""    
+    """Collaboration request schema."""
+    
     requester_id: UUID = Field(description="ID of the creator requesting collaboration")
     target_creator_id: UUID = Field(description="ID of the target creator")
     collaboration_type: str = Field(description="Type of collaboration requested")
@@ -59,7 +61,8 @@ class CollaborationRequest(BaseSchema):
     
     @validator('collaboration_type')
     def validate_collaboration_type(cls, v):
-        """Validate collaboration type."""        allowed_types = {
+        """Validate collaboration type."""
+        allowed_types = {
             "music_production", "songwriting", "vocal_performance", "mixing_mastering",
             "video_production", "photography", "content_creation", "marketing_campaign",
             "brand_partnership", "cross_promotion", "remix_collaboration", "cover_collaboration",
@@ -71,7 +74,8 @@ class CollaborationRequest(BaseSchema):
 
 
 class CollaborationOut(UUIDSchema, TimestampSchema):
-    """Active collaboration information schema."""    
+    """Active collaboration information schema."""
+    
     requester_id: UUID
     collaborator_id: UUID
     collaboration_type: str
@@ -111,13 +115,15 @@ class CollaborationOut(UUIDSchema, TimestampSchema):
     
     @property
     def completion_rate(self) -> float:
-        """Calculate completion rate."""        if self.total_deliverables == 0:
+        """Calculate completion rate."""
+        if self.total_deliverables == 0:
             return 0.0
         return self.completed_deliverables / self.total_deliverables
 
 
 class CollaborationAgreement(UUIDSchema, TimestampSchema, AuditSchema):
-    """Legal collaboration agreement schema."""    
+    """Legal collaboration agreement schema."""
+    
     collaboration_id: UUID = Field(description="Associated collaboration ID")
     agreement_type: str = Field(description="Type of legal agreement")
     legal_status: str = Field(description="Legal validation status")
@@ -171,7 +177,8 @@ class CollaborationAgreement(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('agreement_type')
     def validate_agreement_type(cls, v):
-        """Validate agreement type."""        allowed_types = {
+        """Validate agreement type."""
+        allowed_types = {
             "collaboration_contract", "work_for_hire", "joint_venture", "partnership_agreement",
             "licensing_agreement", "revenue_sharing_agreement", "non_disclosure_agreement"
         }
@@ -181,7 +188,8 @@ class CollaborationAgreement(UUIDSchema, TimestampSchema, AuditSchema):
 
 
 class CollaborationRevenue(UUIDSchema, TimestampSchema):
-    """Collaboration revenue tracking schema."""    
+    """Collaboration revenue tracking schema."""
+    
     collaboration_id: UUID
     revenue_period_start: datetime
     revenue_period_end: datetime
@@ -216,7 +224,8 @@ class CollaborationRevenue(UUIDSchema, TimestampSchema):
 
 
 class PartnerMatching(UUIDSchema, TimestampSchema):
-    """AI-powered partner matching results schema."""    
+    """AI-powered partner matching results schema."""
+    
     creator_id: UUID = Field(description="Creator seeking collaboration")
     matching_algorithm_version: str = Field(description="Matching algorithm version")
     
@@ -250,7 +259,8 @@ class PartnerMatching(UUIDSchema, TimestampSchema):
 
 
 class CollaborationMessage(UUIDSchema, TimestampSchema):
-    """Collaboration messaging schema."""    
+    """Collaboration messaging schema."""
+    
     collaboration_id: UUID
     sender_id: UUID
     recipient_id: UUID
@@ -284,7 +294,8 @@ class CollaborationMessage(UUIDSchema, TimestampSchema):
     
     @validator('message_type')
     def validate_message_type(cls, v):
-        """Validate message type."""        allowed_types = {
+        """Validate message type."""
+        allowed_types = {
             "text_message", "file_share", "milestone_update", "feedback_request",
             "revision_request", "approval_notification", "payment_update", 
             "contract_discussion", "meeting_request", "project_update"
@@ -295,7 +306,8 @@ class CollaborationMessage(UUIDSchema, TimestampSchema):
 
 
 class ProjectCollaboration(UUIDSchema, TimestampSchema, AuditSchema):
-    """Extended project collaboration management schema."""    
+    """Extended project collaboration management schema."""
+    
     collaboration_id: UUID
     project_name: str = Field(min_length=3, max_length=200)
     project_type: str = Field(description="Type of collaborative project")
@@ -337,7 +349,8 @@ class ProjectCollaboration(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('project_type')
     def validate_project_type(cls, v):
-        """Validate project type."""        allowed_types = {
+        """Validate project type."""
+        allowed_types = {
             "album_production", "single_release", "music_video", "podcast_series",
             "content_campaign", "brand_collaboration", "live_event", "tour_planning",
             "merchandise_development", "app_development", "platform_integration"
@@ -348,7 +361,8 @@ class ProjectCollaboration(UUIDSchema, TimestampSchema, AuditSchema):
 
 
 class CollaborationFeedback(UUIDSchema, TimestampSchema):
-    """Collaboration feedback and rating schema."""    
+    """Collaboration feedback and rating schema."""
+    
     collaboration_id: UUID
     reviewer_id: UUID = Field(description="ID of the person providing feedback")
     reviewee_id: UUID = Field(description="ID of the person being reviewed")
@@ -383,7 +397,8 @@ class CollaborationFeedback(UUIDSchema, TimestampSchema):
 
 
 class CollaborationAnalytics(UUIDSchema, TimestampSchema):
-    """Collaboration analytics and insights schema."""    
+    """Collaboration analytics and insights schema."""
+    
     collaboration_id: UUID
     analytics_period_start: datetime
     analytics_period_end: datetime

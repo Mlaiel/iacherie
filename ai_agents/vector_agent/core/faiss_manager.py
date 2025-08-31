@@ -11,7 +11,8 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Any attempt to steal the concept, idea, or code without explicit written authorization
 from Fahed Mlaiel will result in immediate legal prosecution under German and international law.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import pickle
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 class FAISSIndexManager:
-    """Manager for individual FAISS indices"""    
+    """Manager for individual FAISS indices"""
+    
     def __init__(self, index_name: str, dimension: int, index_type: str = "flat"):
         self.index_name = index_name
         self.dimension = dimension
@@ -47,7 +49,8 @@ class FAISSIndexManager:
         self._create_index()
     
     def _create_index(self):
-        """Create FAISS index based on type and dimension"""        try:
+        """Create FAISS index based on type and dimension"""
+        try:
             if self.index_type == "flat":
                 # Flat index for exact search (L2 distance)
                 self.index = faiss.IndexFlatL2(self.dimension)
@@ -74,7 +77,8 @@ class FAISSIndexManager:
     
     def add_vectors(self, vectors: np.ndarray, document_ids: List[str], 
                    metadata_list: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Add vectors to the index"""        with self.lock:
+        """Add vectors to the index"""
+        with self.lock:
             try:
                 if vectors.shape[1] != self.dimension:
                     raise VectorIndexError(f"Vector dimension mismatch: expected {self.dimension}, got {vectors.shape[1]}")
@@ -111,7 +115,8 @@ class FAISSIndexManager:
     
     def search(self, query_vector: np.ndarray, k: int = 10, 
                similarity_threshold: float = None) -> List[Dict[str, Any]]:
-        """Search for similar vectors"""        with self.lock:
+        """Search for similar vectors"""
+        with self.lock:
             try:
                 if self.index.ntotal == 0:
                     return []
@@ -148,7 +153,8 @@ class FAISSIndexManager:
                 raise VectorSearchError(f"Search failed: {str(e)}")
     
     def remove_vector(self, document_id: str) -> bool:
-        """Remove vector by document ID"""        with self.lock:
+        """Remove vector by document ID"""
+        with self.lock:
             try:
                 if document_id in self.document_ids:
                     idx = self.document_ids.index(document_id)
@@ -162,7 +168,8 @@ class FAISSIndexManager:
                 return False
     
     def optimize(self) -> Dict[str, Any]:
-        """Optimize index for better performance"""        with self.lock:
+        """Optimize index for better performance"""
+        with self.lock:
             try:
                 old_size = self.index.ntotal
                 start_time = time.time()
@@ -186,7 +193,8 @@ class FAISSIndexManager:
                 return {"success": False, "error": str(e)}
     
     def save(self, filepath: str) -> bool:
-        """Save index to disk"""        with self.lock:
+        """Save index to disk"""
+        with self.lock:
             try:
                 # Save FAISS index
                 faiss.write_index(self.index, f"{filepath}.faiss")
@@ -210,7 +218,8 @@ class FAISSIndexManager:
                 return False
     
     def load(self, filepath: str) -> bool:
-        """Load index from disk"""        with self.lock:
+        """Load index from disk"""
+        with self.lock:
             try:
                 # Load FAISS index
                 self.index = faiss.read_index(f"{filepath}.faiss")
@@ -232,7 +241,8 @@ class FAISSIndexManager:
                 return False
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get index statistics"""        with self.lock:
+        """Get index statistics"""
+        with self.lock:
             return {
                 "index_name": self.index_name,
                 "total_vectors": self.index.ntotal,
@@ -243,7 +253,8 @@ class FAISSIndexManager:
             }
     
     def _estimate_memory_usage(self) -> int:
-        """Estimate memory usage in bytes"""        try:
+        """Estimate memory usage in bytes"""
+        try:
             # Basic estimation: vectors * dimension * 4 bytes (float32)
             vector_memory = self.index.ntotal * self.dimension * 4
             # Add overhead for index structure (approximate)
@@ -254,11 +265,13 @@ class FAISSIndexManager:
 
 
 class FAISSManager:
-    """    Ultra-Advanced FAISS Vector Database Manager
+    """
+    Ultra-Advanced FAISS Vector Database Manager
     
     Manages multiple FAISS indices for different content types with
     high-performance search, optimization, and persistence capabilities.
-    """    
+    """
+    
     def __init__(self, config: VectorConfig):
         self.config = config
         self.indices: Dict[str, FAISSIndexManager] = {}
@@ -278,7 +291,8 @@ class FAISSManager:
         logger.info("FAISS Manager initialized")
     
     async def initialize(self) -> None:
-        """Initialize FAISS manager and load existing indices"""        try:
+        """Initialize FAISS manager and load existing indices"""
+        try:
             # Load existing indices from disk
             await self._load_existing_indices()
             
@@ -292,7 +306,8 @@ class FAISSManager:
             raise VectorIndexError(f"Initialization failed: {str(e)}")
     
     async def _load_existing_indices(self):
-        """Load existing indices from persistence directory"""        try:
+        """Load existing indices from persistence directory"""
+        try:
             index_files = [f for f in os.listdir(self.persistence_dir) if f.endswith('.faiss')]
             
             for index_file in index_files:
@@ -312,7 +327,8 @@ class FAISSManager:
             logger.warning(f"Error loading existing indices: {e}")
     
     async def _create_default_indices(self):
-        """Create default indices for standard content types"""        default_indices = [
+        """Create default indices for standard content types"""
+        default_indices = [
             ("audio", 512, "ivf"),
             ("video", 1024, "hnsw"),
             ("image", 2048, "ivf"),
@@ -330,7 +346,8 @@ class FAISSManager:
     
     async def add_vector(self, content_id: str, vector_data: np.ndarray, 
                         content_type: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Add single vector to appropriate index"""        try:
+        """Add single vector to appropriate index"""
+        try:
             # Get or create index for content type
             index_manager = await self._get_or_create_index(content_type, vector_data.shape[0])
             
@@ -358,7 +375,8 @@ class FAISSManager:
     
     async def add_batch_vectors(self, content_ids: List[str], vectors: np.ndarray,
                                content_type: str, metadata_list: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Add batch of vectors to appropriate index"""        try:
+        """Add batch of vectors to appropriate index"""
+        try:
             # Get or create index for content type
             index_manager = await self._get_or_create_index(content_type, vectors.shape[1])
             
@@ -386,7 +404,8 @@ class FAISSManager:
     
     async def search_similar(self, query_vector: np.ndarray, content_type: str,
                            max_results: int = 10, similarity_threshold: float = 0.75) -> List[Dict[str, Any]]:
-        """Search for similar vectors in specific content type"""        try:
+        """Search for similar vectors in specific content type"""
+        try:
             if content_type not in self.indices:
                 return []
             
@@ -416,11 +435,13 @@ class FAISSManager:
     
     async def search_by_type(self, query_vector: np.ndarray, content_type: str,
                             max_results: int = 10, similarity_threshold: float = 0.75) -> List[Dict[str, Any]]:
-        """Search vectors by specific content type"""        return await self.search_similar(query_vector, content_type, max_results, similarity_threshold)
+        """Search vectors by specific content type"""
+        return await self.search_similar(query_vector, content_type, max_results, similarity_threshold)
     
     async def cross_modal_search(self, query_vector: np.ndarray, content_types: List[str],
                                max_results_per_type: int = 10, similarity_threshold: float = 0.75) -> Dict[str, List[Dict[str, Any]]]:
-        """Search across multiple content types"""        results = {}
+        """Search across multiple content types"""
+        results = {}
         
         search_tasks = []
         for content_type in content_types:
@@ -440,7 +461,8 @@ class FAISSManager:
         return results
     
     async def optimize_indices(self, content_types: List[str] = None) -> Dict[str, Any]:
-        """Optimize specific indices"""        if content_types is None:
+        """Optimize specific indices"""
+        if content_types is None:
             content_types = list(self.indices.keys())
         
         optimization_results = []
@@ -485,10 +507,12 @@ class FAISSManager:
         }
     
     async def optimize_all_indices(self) -> Dict[str, Any]:
-        """Optimize all indices"""        return await self.optimize_indices(list(self.indices.keys()))
+        """Optimize all indices"""
+        return await self.optimize_indices(list(self.indices.keys()))
     
     async def auto_optimize(self):
-        """Automatic optimization based on usage patterns"""        try:
+        """Automatic optimization based on usage patterns"""
+        try:
             # Get statistics for all indices
             stats = await self.get_statistics()
             
@@ -510,7 +534,8 @@ class FAISSManager:
             logger.error(f"Auto-optimization failed: {e}")
     
     async def _get_or_create_index(self, content_type: str, dimension: int) -> FAISSIndexManager:
-        """Get existing index or create new one"""        if content_type in self.indices:
+        """Get existing index or create new one"""
+        if content_type in self.indices:
             index_manager = self.indices[content_type]
             
             # Check dimension compatibility
@@ -534,7 +559,8 @@ class FAISSManager:
         return index_manager
     
     def _determine_index_type(self, content_type: str, dimension: int) -> str:
-        """Determine best index type based on content type and dimension"""        if content_type in ["text", "document"] and dimension <= 512:
+        """Determine best index type based on content type and dimension"""
+        if content_type in ["text", "document"] and dimension <= 512:
             return "flat"
         elif content_type in ["audio", "music"] and dimension <= 1024:
             return "ivf"
@@ -547,7 +573,8 @@ class FAISSManager:
             return "flat" if dimension <= 512 else "ivf"
     
     async def _save_index(self, content_type: str):
-        """Save specific index to disk"""        try:
+        """Save specific index to disk"""
+        try:
             if content_type in self.indices:
                 filepath = os.path.join(self.persistence_dir, content_type)
                 
@@ -566,7 +593,8 @@ class FAISSManager:
             logger.error(f"Error saving index {content_type}: {e}")
     
     async def save_all_indices(self):
-        """Save all indices to disk"""        save_tasks = []
+        """Save all indices to disk"""
+        save_tasks = []
         for content_type in self.indices.keys():
             task = self._save_index(content_type)
             save_tasks.append(task)
@@ -575,7 +603,8 @@ class FAISSManager:
         logger.info(f"Saved {len(save_tasks)} indices to disk")
     
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive statistics for all indices"""        index_stats = {}
+        """Get comprehensive statistics for all indices"""
+        index_stats = {}
         total_vectors = 0
         total_memory = 0
         
@@ -599,10 +628,12 @@ class FAISSManager:
         }
     
     async def get_metrics(self) -> VectorMetrics:
-        """Get current metrics"""        return self.metrics
+        """Get current metrics"""
+        return self.metrics
     
     async def shutdown(self):
-        """Graceful shutdown with persistence"""        try:
+        """Graceful shutdown with persistence"""
+        try:
             # Save all indices
             await self.save_all_indices()
             

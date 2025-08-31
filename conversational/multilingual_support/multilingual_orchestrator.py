@@ -14,7 +14,8 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -65,7 +66,8 @@ logger = logging.getLogger(__name__)
 
 
 class SessionState(Enum):
-    """Multilingual session states"""    INITIALIZING = "initializing"
+    """Multilingual session states"""
+    INITIALIZING = "initializing"
     LANGUAGE_DETECTION = "language_detection"
     ACTIVE = "active"
     TRANSLATING = "translating"
@@ -76,7 +78,8 @@ class SessionState(Enum):
 
 
 class CrossLanguageStrategy(Enum):
-    """Strategies for cross-language conversations"""    AUTO_TRANSLATE = "auto_translate"
+    """Strategies for cross-language conversations"""
+    AUTO_TRANSLATE = "auto_translate"
     MANUAL_TRANSLATE = "manual_translate"
     LANGUAGE_SWITCH = "language_switch"
     MULTILINGUAL_MIXED = "multilingual_mixed"
@@ -85,7 +88,8 @@ class CrossLanguageStrategy(Enum):
 
 @dataclass
 class MultilingualSession:
-    """Comprehensive multilingual session management"""    session_id: str
+    """Comprehensive multilingual session management"""
+    session_id: str
     user_id: str
     primary_language: SupportedLanguage
     active_languages: List[SupportedLanguage] = field(default_factory=list)
@@ -105,7 +109,8 @@ class MultilingualSession:
 
 @dataclass
 class LanguageFlowEvent:
-    """Language flow event for tracking and analytics"""    event_id: str
+    """Language flow event for tracking and analytics"""
+    event_id: str
     session_id: str
     event_type: str  # detection, translation, adaptation, switch
     source_language: Optional[SupportedLanguage] = None
@@ -119,7 +124,8 @@ class LanguageFlowEvent:
 
 @dataclass
 class MultilingualResponse:
-    """Comprehensive multilingual response"""    original_message: str
+    """Comprehensive multilingual response"""
+    original_message: str
     processed_message: LocalizedMessage
     language_detection: Optional[LanguageDetectionResult] = None
     translation_result: Optional[TranslationResult] = None
@@ -135,7 +141,8 @@ class MultilingualResponse:
 
 
 class LanguageFlowManager:
-    """Advanced language flow management with analytics"""    
+    """Advanced language flow management with analytics"""
+    
     def __init__(self, redis_client: aioredis.Redis):
         self.redis_client = redis_client
         self.flow_events = defaultdict(list)
@@ -150,7 +157,8 @@ class LanguageFlowManager:
         target_language: Optional[SupportedLanguage] = None,
         **kwargs
     ) -> LanguageFlowEvent:
-        """Track language flow event for analytics"""        try:
+        """Track language flow event for analytics"""
+        try:
             event = LanguageFlowEvent(
                 event_id=str(uuid.uuid4()),
                 session_id=session_id,
@@ -187,7 +195,8 @@ class LanguageFlowManager:
             )
     
     async def _store_flow_event(self, event: LanguageFlowEvent):
-        """Store flow event in cache and analytics"""        try:
+        """Store flow event in cache and analytics"""
+        try:
             # Store in Redis for real-time access
             event_data = {
                 "event_id": event.event_id,
@@ -220,7 +229,8 @@ class LanguageFlowManager:
             logger.error(f"Failed to store flow event: {e}")
     
     async def get_session_flow_analytics(self, session_id: str) -> Dict[str, Any]:
-        """Get flow analytics for session"""        try:
+        """Get flow analytics for session"""
+        try:
             # Get session events
             events_data = await self.redis_client.lrange(f"session_events:{session_id}", 0, -1)
             events = [json.loads(event) for event in events_data]
@@ -260,7 +270,8 @@ class LanguageFlowManager:
             return {}
     
     async def get_global_flow_analytics(self) -> Dict[str, Any]:
-        """Get global language flow analytics"""        return {
+        """Get global language flow analytics"""
+        return {
             "performance_metrics": dict(self.performance_metrics),
             "language_patterns": dict(self.language_patterns),
             "popular_language_pairs": sorted(
@@ -272,7 +283,8 @@ class LanguageFlowManager:
 
 
 class CrossLanguageContextManager:
-    """Advanced cross-language context management"""    
+    """Advanced cross-language context management"""
+    
     def __init__(self, redis_client: aioredis.Redis):
         self.redis_client = redis_client
         self.context_cache = {}
@@ -283,7 +295,8 @@ class CrossLanguageContextManager:
         primary_context: ConversationContext,
         target_languages: List[SupportedLanguage]
     ) -> Dict[str, ConversationContext]:
-        """Create cross-language contexts for session"""        try:
+        """Create cross-language contexts for session"""
+        try:
             contexts = {}
             
             for target_lang in target_languages:
@@ -325,7 +338,8 @@ class CrossLanguageContextManager:
         source_context: ConversationContext,
         target_contexts: List[ConversationContext]
     ):
-        """Synchronize context state across languages"""        try:
+        """Synchronize context state across languages"""
+        try:
             # Update shared metadata
             shared_metadata = {
                 "last_sync": datetime.now(timezone.utc).isoformat(),
@@ -348,7 +362,8 @@ class CrossLanguageContextManager:
         session_id: str,
         contexts: Dict[str, ConversationContext]
     ):
-        """Cache cross-language contexts"""        try:
+        """Cache cross-language contexts"""
+        try:
             cache_data = {}
             for lang, context in contexts.items():
                 cache_data[lang] = {
@@ -374,7 +389,8 @@ class CrossLanguageContextManager:
 
 
 class MultilingualSessionManager:
-    """Advanced multilingual session management"""    
+    """Advanced multilingual session management"""
+    
     def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
         self.redis_client = redis_client
         self.db_session = db_session
@@ -388,7 +404,8 @@ class MultilingualSessionManager:
         target_languages: List[SupportedLanguage],
         **kwargs
     ) -> MultilingualSession:
-        """Create new multilingual session"""        try:
+        """Create new multilingual session"""
+        try:
             session_id = str(uuid.uuid4())
             
             # Calculate session expiry (default 24 hours)
@@ -423,7 +440,8 @@ class MultilingualSessionManager:
             raise
     
     async def get_session(self, session_id: str) -> Optional[MultilingualSession]:
-        """Get multilingual session"""        try:
+        """Get multilingual session"""
+        try:
             # Check cache first
             if session_id in self.active_sessions:
                 return self.active_sessions[session_id]
@@ -447,7 +465,8 @@ class MultilingualSessionManager:
         new_state: SessionState,
         metadata: Optional[Dict[str, Any]] = None
     ):
-        """Update session state"""        try:
+        """Update session state"""
+        try:
             session = await self.get_session(session_id)
             if not session:
                 logger.warning(f"Session {session_id} not found for state update")
@@ -472,7 +491,8 @@ class MultilingualSessionManager:
         to_language: SupportedLanguage,
         switch_reason: str = "user_request"
     ):
-        """Record language switch event"""        try:
+        """Record language switch event"""
+        try:
             session = await self.get_session(session_id)
             if not session:
                 return
@@ -496,7 +516,8 @@ class MultilingualSessionManager:
             logger.error(f"Failed to record language switch: {e}")
     
     async def cleanup_expired_sessions(self):
-        """Cleanup expired sessions"""        try:
+        """Cleanup expired sessions"""
+        try:
             current_time = datetime.now(timezone.utc)
             expired_sessions = []
             
@@ -514,7 +535,8 @@ class MultilingualSessionManager:
             logger.error(f"Failed to cleanup expired sessions: {e}")
     
     async def _cache_session(self, session: MultilingualSession):
-        """Cache session in Redis"""        try:
+        """Cache session in Redis"""
+        try:
             session_data = {
                 "session_id": session.session_id,
                 "user_id": session.user_id,
@@ -551,7 +573,8 @@ class MultilingualSessionManager:
             logger.error(f"Failed to cache session: {e}")
     
     def _deserialize_session(self, data: Dict[str, Any]) -> MultilingualSession:
-        """Deserialize session from cached data"""        return MultilingualSession(
+        """Deserialize session from cached data"""
+        return MultilingualSession(
             session_id=data["session_id"],
             user_id=data["user_id"],
             primary_language=SupportedLanguage(data["primary_language"]),
@@ -570,7 +593,8 @@ class MultilingualSessionManager:
         )
     
     async def _cleanup_session(self, session_id: str):
-        """Cleanup session data"""        try:
+        """Cleanup session data"""
+        try:
             # Remove from Redis
             await self.redis_client.delete(f"ml_session:{session_id}")
             await self.redis_client.delete(f"cross_lang_contexts:{session_id}")
@@ -585,7 +609,8 @@ class MultilingualSessionManager:
 
 
 class InternationalConversationHandler:
-    """Specialized handler for international conversation scenarios"""    
+    """Specialized handler for international conversation scenarios"""
+    
     def __init__(
         self,
         conversation_localizer: ConversationLocalizer,
@@ -602,7 +627,8 @@ class InternationalConversationHandler:
         conversation_context: ConversationContext,
         cross_language_strategy: CrossLanguageStrategy = CrossLanguageStrategy.AUTO_TRANSLATE
     ) -> MultilingualResponse:
-        """Handle international conversation with cultural awareness"""        try:
+        """Handle international conversation with cultural awareness"""
+        try:
             start_time = datetime.now()
             processing_chain = []
             
@@ -690,7 +716,8 @@ class InternationalConversationHandler:
         message: str,
         context: ConversationContext
     ) -> LocalizedMessage:
-        """Handle mixed multilingual messages"""        # This would implement sophisticated multilingual message processing
+        """Handle mixed multilingual messages"""
+        # This would implement sophisticated multilingual message processing
         # For now, return basic localized message
         return await self.conversation_localizer.message_localizer.localize_message(
             message,
@@ -703,7 +730,8 @@ class InternationalConversationHandler:
         response: MultilingualResponse,
         context: ConversationContext
     ):
-        """Apply international conversation patterns"""        try:
+        """Apply international conversation patterns"""
+        try:
             # Apply time zone awareness
             if context.cultural_context:
                 current_time = datetime.now(timezone.utc)
@@ -724,7 +752,8 @@ class InternationalConversationHandler:
 
 
 class MultilingualOrchestrator:
-    """Master multilingual system orchestrator"""    
+    """Master multilingual system orchestrator"""
+    
     def __init__(
         self,
         language_manager: LanguageManager,
@@ -767,7 +796,8 @@ class MultilingualOrchestrator:
         domain: str = "general",
         **kwargs
     ) -> Tuple[MultilingualSession, Dict[str, ConversationContext]]:
-        """Initialize comprehensive multilingual conversation"""        try:
+        """Initialize comprehensive multilingual conversation"""
+        try:
             start_time = datetime.now()
             
             # Create multilingual session
@@ -828,7 +858,8 @@ class MultilingualOrchestrator:
         message_type: MessageType = MessageType.USER_MESSAGE,
         cross_language_strategy: CrossLanguageStrategy = CrossLanguageStrategy.AUTO_TRANSLATE
     ) -> MultilingualResponse:
-        """Process message through complete multilingual pipeline"""        try:
+        """Process message through complete multilingual pipeline"""
+        try:
             start_time = datetime.now()
             
             # Get session
@@ -959,7 +990,8 @@ class MultilingualOrchestrator:
         target_language: SupportedLanguage,
         cultural_context: Optional[CulturalContext]
     ) -> List[LocalizationResult]:
-        """Apply advanced content localization"""        results = []
+        """Apply advanced content localization"""
+        results = []
         
         try:
             # Extract and localize dates, numbers, etc. from content
@@ -996,7 +1028,8 @@ class MultilingualOrchestrator:
         new_target_language: SupportedLanguage,
         switch_reason: str = "user_request"
     ) -> bool:
-        """Switch conversation language"""        try:
+        """Switch conversation language"""
+        try:
             session = await self.session_manager.get_session(session_id)
             if not session:
                 return False
@@ -1037,7 +1070,8 @@ class MultilingualOrchestrator:
         self,
         session_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive multilingual analytics"""        try:
+        """Get comprehensive multilingual analytics"""
+        try:
             analytics = {
                 "system_metrics": dict(self.system_metrics),
                 "orchestration_stats": dict(self.orchestration_stats),
@@ -1059,7 +1093,8 @@ class MultilingualOrchestrator:
             return {}
     
     async def _background_maintenance(self):
-        """Background maintenance tasks"""        while True:
+        """Background maintenance tasks"""
+        while True:
             try:
                 # Cleanup expired sessions every 30 minutes
                 await self.session_manager.cleanup_expired_sessions()
@@ -1075,7 +1110,8 @@ class MultilingualOrchestrator:
                 await asyncio.sleep(60)  # Wait 1 minute before retrying
     
     async def _update_system_metrics(self):
-        """Update system performance metrics"""        try:
+        """Update system performance metrics"""
+        try:
             # Calculate success rates
             total_messages = self.orchestration_stats.get("messages_processed", 0)
             if total_messages > 0:

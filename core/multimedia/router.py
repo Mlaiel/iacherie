@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Union, Callable, Tuple
 from dataclasses import dataclass, field
@@ -37,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 
 class RoutingStrategy(Enum):
-    """Content routing strategies"""    ROUND_ROBIN = "round_robin"
+    """Content routing strategies"""
+    ROUND_ROBIN = "round_robin"
     LOAD_BALANCED = "load_balanced"
     PRIORITY_BASED = "priority_based"
     CONTENT_AWARE = "content_aware"
@@ -47,7 +49,8 @@ class RoutingStrategy(Enum):
 
 
 class DestinationType(Enum):
-    """Types of routing destinations"""    PROCESSING_PIPELINE = "processing_pipeline"
+    """Types of routing destinations"""
+    PROCESSING_PIPELINE = "processing_pipeline"
     STORAGE_SYSTEM = "storage_system"
     CDN_ENDPOINT = "cdn_endpoint"
     STREAMING_SERVER = "streaming_server"
@@ -57,7 +60,8 @@ class DestinationType(Enum):
 
 
 class RoutingPriority(Enum):
-    """Routing priority levels"""    CRITICAL = "critical"
+    """Routing priority levels"""
+    CRITICAL = "critical"
     HIGH = "high"
     NORMAL = "normal"
     LOW = "low"
@@ -66,7 +70,8 @@ class RoutingPriority(Enum):
 
 @dataclass
 class RoutingDestination:
-    """Routing destination configuration"""    destination_id: str
+    """Routing destination configuration"""
+    destination_id: str
     name: str
     destination_type: DestinationType
     endpoint_url: str
@@ -82,7 +87,8 @@ class RoutingDestination:
 
 @dataclass
 class RoutingRule:
-    """Content routing rule"""    rule_id: str
+    """Content routing rule"""
+    rule_id: str
     name: str
     conditions: Dict[str, Any]
     destination_ids: List[str]
@@ -96,7 +102,8 @@ class RoutingRule:
 
 @dataclass
 class RoutingRequest:
-    """Content routing request"""    request_id: str
+    """Content routing request"""
+    request_id: str
     content_path: str
     content_metadata: Dict[str, Any]
     target_destinations: Optional[List[str]] = None
@@ -109,7 +116,8 @@ class RoutingRequest:
 
 @dataclass
 class RoutingResult:
-    """Routing operation result"""    request_id: str
+    """Routing operation result"""
+    request_id: str
     success: bool
     destination_id: str
     routing_time: float
@@ -120,7 +128,8 @@ class RoutingResult:
 
 
 class MultimediaRouter:
-    """    Advanced multimedia content routing engine with intelligent distribution.
+    """
+    Advanced multimedia content routing engine with intelligent distribution.
     
     Features:
     - Multiple routing strategies
@@ -130,9 +139,11 @@ class MultimediaRouter:
     - Geographic distribution
     - Performance optimization
     - Real-time metrics and monitoring
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize multimedia router"""        self.config = config or {}
+        """Initialize multimedia router"""
+        self.config = config or {}
         self.metrics = MetricsCollector()
         self.events = EventDispatcher()
         self.metadata_analyzer = MultimediaMetadata()
@@ -172,7 +183,8 @@ class MultimediaRouter:
         logger.info("Multimedia router initialized successfully")
     
     def _initialize_default_configuration(self):
-        """Initialize default routing configuration"""        # Default destinations
+        """Initialize default routing configuration"""
+        # Default destinations
         self.add_destination(RoutingDestination(
             destination_id="local_storage",
             name="Local Storage",
@@ -222,7 +234,8 @@ class MultimediaRouter:
         ))
     
     def add_destination(self, destination: RoutingDestination):
-        """Add routing destination"""        self.destinations[destination.destination_id] = destination
+        """Add routing destination"""
+        self.destinations[destination.destination_id] = destination
         self.load_balancer_state['round_robin_counters'][destination.destination_id] = 0
         self.load_balancer_state['destination_loads'][destination.destination_id] = 0
         self.load_balancer_state['destination_health'][destination.destination_id] = True
@@ -230,7 +243,8 @@ class MultimediaRouter:
         logger.info(f"Added routing destination: {destination.name}")
     
     def add_routing_rule(self, rule: RoutingRule):
-        """Add routing rule"""        self.routing_rules[rule.rule_id] = rule
+        """Add routing rule"""
+        self.routing_rules[rule.rule_id] = rule
         logger.info(f"Added routing rule: {rule.name}")
     
     async def route_content(
@@ -240,7 +254,8 @@ class MultimediaRouter:
         target_destinations: Optional[List[str]] = None,
         priority: RoutingPriority = RoutingPriority.NORMAL
     ) -> str:
-        """        Route content to appropriate destinations
+        """
+        Route content to appropriate destinations
         
         Args:
             content_path: Path to content file
@@ -250,7 +265,8 @@ class MultimediaRouter:
             
         Returns:
             str: Request ID
-        """        # Generate request ID
+        """
+        # Generate request ID
         request_id = str(uuid.uuid4())
         
         # Extract metadata if not provided
@@ -283,7 +299,8 @@ class MultimediaRouter:
         return request_id
     
     async def _execute_routing(self, request: RoutingRequest) -> List[RoutingResult]:
-        """Execute content routing for a request"""        start_time = time.time()
+        """Execute content routing for a request"""
+        start_time = time.time()
         results = []
         
         try:
@@ -368,7 +385,8 @@ class MultimediaRouter:
             return [error_result]
     
     async def _select_destinations(self, request: RoutingRequest) -> List[str]:
-        """Select appropriate destinations for routing request"""        selected_destinations = []
+        """Select appropriate destinations for routing request"""
+        selected_destinations = []
         
         # Find matching routing rules
         matching_rules = []
@@ -403,7 +421,8 @@ class MultimediaRouter:
         request: RoutingRequest,
         rule: RoutingRule
     ) -> bool:
-        """Evaluate if request matches rule conditions"""        if not rule.conditions:
+        """Evaluate if request matches rule conditions"""
+        if not rule.conditions:
             return True  # Empty conditions match all
         
         metadata = request.content_metadata
@@ -436,7 +455,8 @@ class MultimediaRouter:
         return True
     
     async def _select_round_robin(self, destination_ids: List[str]) -> str:
-        """Select destination using round-robin strategy"""        active_destinations = [d for d in destination_ids if self.destinations[d].is_active]
+        """Select destination using round-robin strategy"""
+        active_destinations = [d for d in destination_ids if self.destinations[d].is_active]
         
         if not active_destinations:
             return destination_ids[0] if destination_ids else ""
@@ -451,7 +471,8 @@ class MultimediaRouter:
         return selected
     
     async def _select_load_balanced(self, destination_ids: List[str]) -> str:
-        """Select destination using load-balanced strategy"""        active_destinations = [d for d in destination_ids if self.destinations[d].is_active]
+        """Select destination using load-balanced strategy"""
+        active_destinations = [d for d in destination_ids if self.destinations[d].is_active]
         
         if not active_destinations:
             return destination_ids[0] if destination_ids else ""
@@ -474,7 +495,8 @@ class MultimediaRouter:
         request: RoutingRequest,
         destination_ids: List[str]
     ) -> List[str]:
-        """Select destinations using content-aware strategy"""        metadata = request.content_metadata
+        """Select destinations using content-aware strategy"""
+        metadata = request.content_metadata
         content_type = metadata.get('content_type', 'unknown')
         file_size = metadata.get('file_size', 0)
         
@@ -496,7 +518,8 @@ class MultimediaRouter:
         return selected if selected else destination_ids
     
     async def _check_destination_availability(self, destination: RoutingDestination) -> bool:
-        """Check if destination is available for routing"""        if not destination.is_active:
+        """Check if destination is available for routing"""
+        if not destination.is_active:
             return False
         
         # Check current load
@@ -516,7 +539,8 @@ class MultimediaRouter:
         request: RoutingRequest,
         destination: RoutingDestination
     ) -> RoutingResult:
-        """Route content to specific destination"""        start_time = time.time()
+        """Route content to specific destination"""
+        start_time = time.time()
         
         try:
             # Prepare routing data
@@ -566,7 +590,8 @@ class MultimediaRouter:
         routing_data: Dict[str, Any],
         destination: RoutingDestination
     ) -> Dict[str, Any]:
-        """Route content to storage system"""        # This would implement actual storage routing
+        """Route content to storage system"""
+        # This would implement actual storage routing
         content_path = routing_data['content_path']
         
         # Simulate storage operation
@@ -583,7 +608,8 @@ class MultimediaRouter:
         routing_data: Dict[str, Any],
         destination: RoutingDestination
     ) -> Dict[str, Any]:
-        """Route content to CDN endpoint"""        # This would implement actual CDN upload
+        """Route content to CDN endpoint"""
+        # This would implement actual CDN upload
         content_path = routing_data['content_path']
         
         # Simulate CDN upload
@@ -600,7 +626,8 @@ class MultimediaRouter:
         routing_data: Dict[str, Any],
         destination: RoutingDestination
     ) -> Dict[str, Any]:
-        """Route content to processing pipeline"""        # This would implement actual processing pipeline routing
+        """Route content to processing pipeline"""
+        # This would implement actual processing pipeline routing
         
         # Simulate processing submission
         await asyncio.sleep(0.05)
@@ -616,7 +643,8 @@ class MultimediaRouter:
         routing_data: Dict[str, Any],
         destination: RoutingDestination
     ) -> Dict[str, Any]:
-        """Route content to generic API endpoint"""        # This would implement actual HTTP API call
+        """Route content to generic API endpoint"""
+        # This would implement actual HTTP API call
         
         # Simulate API call
         await asyncio.sleep(0.1)
@@ -628,10 +656,12 @@ class MultimediaRouter:
         }
     
     def _start_health_monitoring(self):
-        """Start health monitoring for destinations"""        asyncio.create_task(self._health_monitor_loop())
+        """Start health monitoring for destinations"""
+        asyncio.create_task(self._health_monitor_loop())
     
     async def _health_monitor_loop(self):
-        """Health monitoring loop"""        while True:
+        """Health monitoring loop"""
+        while True:
             try:
                 for destination in self.destinations.values():
                     health_status = await self._check_destination_health(destination)
@@ -650,7 +680,8 @@ class MultimediaRouter:
                 await asyncio.sleep(60)  # Wait longer on error
     
     async def _check_destination_health(self, destination: RoutingDestination) -> bool:
-        """Check health of a specific destination"""        if not destination.health_check_url:
+        """Check health of a specific destination"""
+        if not destination.health_check_url:
             return True  # Assume healthy if no health check configured
         
         try:
@@ -664,7 +695,8 @@ class MultimediaRouter:
             return False
     
     def get_request_status(self, request_id: str) -> Optional[Dict[str, Any]]:
-        """Get routing request status"""        if request_id in self.active_requests:
+        """Get routing request status"""
+        if request_id in self.active_requests:
             request = self.active_requests[request_id]
             return {
                 'request_id': request_id,
@@ -687,7 +719,8 @@ class MultimediaRouter:
         return None
     
     def get_destination_status(self) -> Dict[str, Any]:
-        """Get status of all destinations"""        status = {}
+        """Get status of all destinations"""
+        status = {}
         
         for dest_id, destination in self.destinations.items():
             status[dest_id] = {
@@ -703,7 +736,8 @@ class MultimediaRouter:
         return status
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get routing statistics"""        stats = self.stats.copy()
+        """Get routing statistics"""
+        stats = self.stats.copy()
         stats.update({
             'active_requests': len(self.active_requests),
             'completed_requests': len(self.completed_requests),
@@ -713,7 +747,8 @@ class MultimediaRouter:
         return stats
     
     def update_destination(self, destination_id: str, updates: Dict[str, Any]):
-        """Update destination configuration"""        if destination_id not in self.destinations:
+        """Update destination configuration"""
+        if destination_id not in self.destinations:
             raise ValueError(f"Unknown destination: {destination_id}")
         
         destination = self.destinations[destination_id]
@@ -725,7 +760,8 @@ class MultimediaRouter:
         logger.info(f"Updated destination {destination_id}: {updates}")
     
     def remove_destination(self, destination_id: str):
-        """Remove routing destination"""        if destination_id in self.destinations:
+        """Remove routing destination"""
+        if destination_id in self.destinations:
             del self.destinations[destination_id]
             del self.load_balancer_state['round_robin_counters'][destination_id]
             del self.load_balancer_state['destination_loads'][destination_id]
@@ -734,6 +770,7 @@ class MultimediaRouter:
             logger.info(f"Removed destination: {destination_id}")
     
     def remove_routing_rule(self, rule_id: str):
-        """Remove routing rule"""        if rule_id in self.routing_rules:
+        """Remove routing rule"""
+        if rule_id in self.routing_rules:
             del self.routing_rules[rule_id]
             logger.info(f"Removed routing rule: {rule_id}")

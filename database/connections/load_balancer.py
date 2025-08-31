@@ -10,7 +10,8 @@ Advanced load balancing for database connections:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 from typing import Dict, Any, List, Optional, Tuple, Set
@@ -23,7 +24,8 @@ import statistics
 
 
 class LoadBalancingAlgorithm(Enum):
-    """Load balancing algorithms"""    ROUND_ROBIN = "round_robin"
+    """Load balancing algorithms"""
+    ROUND_ROBIN = "round_robin"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     LEAST_CONNECTIONS = "least_connections"
     WEIGHTED_LEAST_CONNECTIONS = "weighted_least_connections"
@@ -35,7 +37,8 @@ class LoadBalancingAlgorithm(Enum):
 
 
 class ServerStatus(Enum):
-    """Server status for load balancing"""    ACTIVE = "active"
+    """Server status for load balancing"""
+    ACTIVE = "active"
     DEGRADED = "degraded"
     MAINTENANCE = "maintenance"
     FAILED = "failed"
@@ -43,7 +46,8 @@ class ServerStatus(Enum):
 
 @dataclass
 class ServerMetrics:
-    """Server performance metrics"""    active_connections: int = 0
+    """Server performance metrics"""
+    active_connections: int = 0
     total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
@@ -54,17 +58,20 @@ class ServerMetrics:
     last_updated: datetime = field(default_factory=datetime.utcnow)
     
     def success_rate(self) -> float:
-        """Calculate success rate"""        if self.total_requests == 0:
+        """Calculate success rate"""
+        if self.total_requests == 0:
             return 1.0
         return self.successful_requests / self.total_requests
     
     def error_rate(self) -> float:
-        """Calculate error rate"""        return 1.0 - self.success_rate()
+        """Calculate error rate"""
+        return 1.0 - self.success_rate()
 
 
 @dataclass
 class DatabaseServer:
-    """Database server configuration"""    server_id: str
+    """Database server configuration"""
+    server_id: str
     host: str
     port: int
     weight: float = 1.0  # Static weight
@@ -83,20 +90,23 @@ class DatabaseServer:
     circuit_breaker_open: bool = False
     
     def is_available(self) -> bool:
-        """Check if server is available for load balancing"""        return (
+        """Check if server is available for load balancing"""
+        return (
             self.status in [ServerStatus.ACTIVE, ServerStatus.DEGRADED] and
             not self.circuit_breaker_open and
             self.metrics.active_connections < self.max_connections
         )
     
     def load_factor(self) -> float:
-        """Calculate current load factor (0.0 = no load, 1.0 = full load)"""        if self.max_connections == 0:
+        """Calculate current load factor (0.0 = no load, 1.0 = full load)"""
+        if self.max_connections == 0:
             return 0.0
         return self.metrics.active_connections / self.max_connections
 
 
 class DatabaseLoadBalancer:
-    """    Advanced database load balancer.
+    """
+    Advanced database load balancer.
     
     Provides:
     - Multiple load balancing algorithms
@@ -105,7 +115,8 @@ class DatabaseLoadBalancer:
     - Circuit breaker protection
     - Connection affinity
     - Geographic load distribution
-    """    
+    """
+    
     def __init__(self, algorithm: LoadBalancingAlgorithm = LoadBalancingAlgorithm.WEIGHTED_ROUND_ROBIN):
         self.logger = logging.getLogger(__name__)
         
@@ -149,7 +160,8 @@ class DatabaseLoadBalancer:
         }
     
     async def initialize(self, server_configs: Dict[str, List[Dict[str, Any]]]) -> None:
-        """Initialize load balancer with server configurations"""        
+        """Initialize load balancer with server configurations"""
+        
         # Configure servers
         for group_name, configs in server_configs.items():
             self.server_groups[group_name] = []
@@ -172,7 +184,8 @@ class DatabaseLoadBalancer:
         self.logger.info(f"Load balancer initialized with {len(self.servers)} servers")
     
     def _build_hash_ring(self, group_name: str) -> None:
-        """Build consistent hash ring for hash-based load balancing"""        if group_name not in self.server_groups:
+        """Build consistent hash ring for hash-based load balancing"""
+        if group_name not in self.server_groups:
             return
         
         ring = []
@@ -191,7 +204,8 @@ class DatabaseLoadBalancer:
         self.hash_ring[group_name] = ring
     
     async def start_monitoring(self) -> None:
-        """Start performance monitoring"""        for group_name in self.server_groups.keys():
+        """Start performance monitoring"""
+        for group_name in self.server_groups.keys():
             task = asyncio.create_task(self._monitoring_loop(group_name))
             self.metrics_tasks[group_name] = task
         
@@ -203,7 +217,8 @@ class DatabaseLoadBalancer:
         self.logger.info("Started load balancer monitoring")
     
     async def stop_monitoring(self) -> None:
-        """Stop performance monitoring"""        for task in self.metrics_tasks.values():
+        """Stop performance monitoring"""
+        for task in self.metrics_tasks.values():
             task.cancel()
             try:
                 await task
@@ -214,7 +229,8 @@ class DatabaseLoadBalancer:
         self.logger.info("Stopped load balancer monitoring")
     
     async def _monitoring_loop(self, group_name: str) -> None:
-        """Performance monitoring loop for server group"""        while True:
+        """Performance monitoring loop for server group"""
+        while True:
             try:
                 await self._collect_metrics(group_name)
                 await asyncio.sleep(self.metrics_collection_interval)
@@ -225,7 +241,8 @@ class DatabaseLoadBalancer:
                 await asyncio.sleep(self.metrics_collection_interval)
     
     async def _collect_metrics(self, group_name: str) -> None:
-        """Collect performance metrics for server group"""        if group_name not in self.server_groups:
+        """Collect performance metrics for server group"""
+        if group_name not in self.server_groups:
             return
         
         for server_id in self.server_groups[group_name]:
@@ -242,7 +259,8 @@ class DatabaseLoadBalancer:
                 self.logger.warning(f"Failed to collect metrics for {server_id}: {e}")
     
     async def _update_server_metrics(self, server: DatabaseServer) -> None:
-        """Update server metrics (simplified implementation)"""        # In real implementation, this would query the actual database server
+        """Update server metrics (simplified implementation)"""
+        # In real implementation, this would query the actual database server
         # For now, simulate some metrics
         
         # Simulate varying response times and load
@@ -267,7 +285,8 @@ class DatabaseLoadBalancer:
         server.metrics.last_updated = datetime.utcnow()
     
     def _check_circuit_breaker(self, server: DatabaseServer) -> None:
-        """Check and update circuit breaker status"""        now = datetime.utcnow()
+        """Check and update circuit breaker status"""
+        now = datetime.utcnow()
         
         # Reset circuit breaker if timeout exceeded
         if (server.circuit_breaker_open and 
@@ -289,7 +308,8 @@ class DatabaseLoadBalancer:
             self.logger.warning(f"Circuit breaker tripped for server {server.server_id}")
     
     async def _weight_adjustment_loop(self) -> None:
-        """Adaptive weight adjustment loop"""        while True:
+        """Adaptive weight adjustment loop"""
+        while True:
             try:
                 await self._adjust_weights()
                 await asyncio.sleep(self.weight_adjustment_interval)
@@ -300,7 +320,8 @@ class DatabaseLoadBalancer:
                 await asyncio.sleep(self.weight_adjustment_interval)
     
     async def _adjust_weights(self) -> None:
-        """Adjust server weights based on performance"""        for group_name, server_ids in self.server_groups.items():
+        """Adjust server weights based on performance"""
+        for group_name, server_ids in self.server_groups.items():
             if len(server_ids) < 2:
                 continue
             
@@ -345,7 +366,8 @@ class DatabaseLoadBalancer:
             self._build_hash_ring(group_name)
     
     def _calculate_performance_score(self, server: DatabaseServer) -> float:
-        """Calculate performance score for a server (higher = better)"""        # Base score from success rate
+        """Calculate performance score for a server (higher = better)"""
+        # Base score from success rate
         success_rate = server.metrics.success_rate()
         
         # Response time factor (lower is better)
@@ -372,7 +394,8 @@ class DatabaseLoadBalancer:
                           session_id: Optional[str] = None,
                           routing_key: Optional[str] = None,
                           preferred_region: Optional[str] = None) -> Optional[DatabaseServer]:
-        """Select best server using configured algorithm"""        
+        """Select best server using configured algorithm"""
+        
         if group_name not in self.server_groups:
             return None
         
@@ -452,7 +475,8 @@ class DatabaseLoadBalancer:
         return selected_server
     
     def _round_robin_select(self, group_name: str, servers: List[DatabaseServer]) -> DatabaseServer:
-        """Round robin server selection"""        if not servers:
+        """Round robin server selection"""
+        if not servers:
             return None
         
         index = self.round_robin_index[group_name] % len(servers)
@@ -461,7 +485,8 @@ class DatabaseLoadBalancer:
         return servers[index]
     
     def _weighted_round_robin_select(self, group_name: str, servers: List[DatabaseServer]) -> DatabaseServer:
-        """Weighted round robin server selection"""        if not servers:
+        """Weighted round robin server selection"""
+        if not servers:
             return None
         
         # Create weighted list
@@ -479,7 +504,8 @@ class DatabaseLoadBalancer:
         return weighted_servers[index]
     
     def _hash_based_select(self, group_name: str, key: str) -> Optional[DatabaseServer]:
-        """Consistent hash-based server selection"""        if group_name not in self.hash_ring or not self.hash_ring[group_name]:
+        """Consistent hash-based server selection"""
+        if group_name not in self.hash_ring or not self.hash_ring[group_name]:
             return None
         
         # Calculate hash of the key
@@ -499,7 +525,8 @@ class DatabaseLoadBalancer:
         return server if server and server.is_available() else None
     
     def _geographic_select(self, servers: List[DatabaseServer], preferred_region: Optional[str]) -> DatabaseServer:
-        """Geographic-aware server selection"""        if preferred_region:
+        """Geographic-aware server selection"""
+        if preferred_region:
             # First try servers in preferred region
             region_servers = [s for s in servers if s.region == preferred_region]
             if region_servers:
@@ -510,7 +537,8 @@ class DatabaseLoadBalancer:
         return min(servers, key=lambda s: s.metrics.active_connections)
     
     async def report_connection_start(self, server_id: str) -> None:
-        """Report that a connection has started to a server"""        server = self.servers.get(server_id)
+        """Report that a connection has started to a server"""
+        server = self.servers.get(server_id)
         if server:
             server.metrics.active_connections += 1
             server.metrics.total_requests += 1
@@ -519,7 +547,8 @@ class DatabaseLoadBalancer:
                                   server_id: str, 
                                   success: bool, 
                                   response_time: float) -> None:
-        """Report that a connection has ended"""        server = self.servers.get(server_id)
+        """Report that a connection has ended"""
+        server = self.servers.get(server_id)
         if not server:
             return
         
@@ -546,7 +575,8 @@ class DatabaseLoadBalancer:
             )
     
     def add_server(self, group_name: str, server_config: Dict[str, Any]) -> bool:
-        """Add a new server to the load balancer"""        try:
+        """Add a new server to the load balancer"""
+        try:
             server = DatabaseServer(**server_config)
             
             # Add to servers
@@ -570,7 +600,8 @@ class DatabaseLoadBalancer:
             return False
     
     def remove_server(self, server_id: str) -> bool:
-        """Remove a server from the load balancer"""        try:
+        """Remove a server from the load balancer"""
+        try:
             if server_id not in self.servers:
                 return False
             
@@ -597,7 +628,8 @@ class DatabaseLoadBalancer:
             return False
     
     def set_server_status(self, server_id: str, status: ServerStatus) -> bool:
-        """Set server status"""        server = self.servers.get(server_id)
+        """Set server status"""
+        server = self.servers.get(server_id)
         if server:
             server.status = status
             self.logger.info(f"Set server {server_id} status to {status.value}")
@@ -605,7 +637,8 @@ class DatabaseLoadBalancer:
         return False
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive load balancer metrics"""        group_stats = {}
+        """Get comprehensive load balancer metrics"""
+        group_stats = {}
         
         for group_name, server_ids in self.server_groups.items():
             servers_info = []
@@ -653,7 +686,8 @@ class DatabaseLoadBalancer:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown load balancer"""        self.logger.info("Shutting down load balancer...")
+        """Shutdown load balancer"""
+        self.logger.info("Shutting down load balancer...")
         
         await self.stop_monitoring()
         

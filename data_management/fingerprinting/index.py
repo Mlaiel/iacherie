@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC INDEX:
 Central Orchestration → Engine Selection → Processing Pipeline → 
 Result Aggregation → Performance Tracking → System Monitoring
-"""from typing import Dict, List, Any, Optional, Union, Tuple
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple
 from datetime import datetime
 import asyncio
 import logging
@@ -105,14 +106,16 @@ __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 logger = logging.getLogger(__name__)
 
 class ProcessingMode(Enum):
-    """Modes de traitement pour le fingerprinting"""    FAST = "fast"           # Traitement rapide avec précision standard
+    """Modes de traitement pour le fingerprinting"""
+    FAST = "fast"           # Traitement rapide avec précision standard
     BALANCED = "balanced"   # Équilibre entre vitesse et précision
     ACCURATE = "accurate"   # Précision maximale avec temps de traitement plus long
     REALTIME = "realtime"   # Optimisé pour temps réel
     BATCH = "batch"        # Optimisé pour traitement par lot
 
 class FingerprintingOrchestrator:
-    """    Orchestrateur principal pour le système de fingerprinting
+    """
+    Orchestrateur principal pour le système de fingerprinting
     
     Responsabilités:
     - Coordination de tous les moteurs de fingerprinting
@@ -120,7 +123,8 @@ class FingerprintingOrchestrator:
     - Optimisation des performances
     - Surveillance et reporting
     - Gestion des erreurs et récupération
-    """    
+    """
+    
     def __init__(self, config: Optional[FingerprintConfig] = None):
         self.config = config or FingerprintConfig()
         
@@ -157,7 +161,8 @@ class FingerprintingOrchestrator:
                             creator_id: str = "",
                             processing_mode: ProcessingMode = ProcessingMode.BALANCED,
                             metadata: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """        Traite un contenu avec le système de fingerprinting complet
+        """
+        Traite un contenu avec le système de fingerprinting complet
         
         Args:
             content_path: Chemin vers le contenu
@@ -168,7 +173,8 @@ class FingerprintingOrchestrator:
             
         Returns:
             Résultat complet du fingerprinting
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             # Auto-detect content type if not provided
@@ -253,7 +259,8 @@ class FingerprintingOrchestrator:
     async def batch_process_contents(self,
                                    content_list: List[Dict[str, Any]],
                                    processing_mode: ProcessingMode = ProcessingMode.BATCH) -> List[Dict[str, Any]]:
-        """        Traite une liste de contenus en lot
+        """
+        Traite une liste de contenus en lot
         
         Args:
             content_list: Liste des contenus à traiter
@@ -261,7 +268,8 @@ class FingerprintingOrchestrator:
             
         Returns:
             Liste des résultats de traitement
-        """        try:
+        """
+        try:
             # Optimize for batch processing
             batch_config = await self._optimize_for_batch_processing(len(content_list))
             
@@ -304,7 +312,8 @@ class FingerprintingOrchestrator:
                                    fingerprint_data: Dict[str, Any],
                                    similarity_threshold: float = 0.8,
                                    max_results: int = 100) -> List[Dict[str, Any]]:
-        """        Recherche de contenu similaire basé sur l'empreinte
+        """
+        Recherche de contenu similaire basé sur l'empreinte
         
         Args:
             fingerprint_data: Données d'empreinte à comparer
@@ -313,7 +322,8 @@ class FingerprintingOrchestrator:
             
         Returns:
             Liste des contenus similaires trouvés
-        """        try:
+        """
+        try:
             # Use vector similarity engine
             vector_engine = self.main_engine.vector_engine
             
@@ -333,7 +343,8 @@ class FingerprintingOrchestrator:
     async def monitor_violations(self,
                                fingerprint_id: str,
                                monitoring_config: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """        Active la surveillance des violations pour une empreinte
+        """
+        Active la surveillance des violations pour une empreinte
         
         Args:
             fingerprint_id: Identifiant de l'empreinte
@@ -341,7 +352,8 @@ class FingerprintingOrchestrator:
             
         Returns:
             Résultat de l'activation de surveillance
-        """        try:
+        """
+        try:
             # Get real-time monitor
             monitor = self.main_engine.realtime_monitor
             
@@ -366,7 +378,8 @@ class FingerprintingOrchestrator:
                                       start_date: datetime,
                                       end_date: datetime,
                                       report_type: str = "comprehensive") -> Dict[str, Any]:
-        """        Génère un rapport d'analytics
+        """
+        Génère un rapport d'analytics
         
         Args:
             start_date: Date de début
@@ -375,7 +388,8 @@ class FingerprintingOrchestrator:
             
         Returns:
             Rapport d'analytics généré
-        """        try:
+        """
+        try:
             from .analytics import AnalyticsQuery, AnalyticsMetricType, TimeGranularity
             
             # Create analytics query
@@ -401,7 +415,8 @@ class FingerprintingOrchestrator:
             raise
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Récupère le statut du système de fingerprinting"""        try:
+        """Récupère le statut du système de fingerprinting"""
+        try:
             # System health check
             health_status = await self._check_system_health()
             
@@ -441,7 +456,8 @@ class FingerprintingOrchestrator:
     # Private helper methods
     
     async def _detect_content_type(self, content_path: str) -> str:
-        """Détecte automatiquement le type de contenu"""        path = Path(content_path)
+        """Détecte automatiquement le type de contenu"""
+        path = Path(content_path)
         extension = path.suffix.lower()
         
         audio_extensions = {'.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a'}
@@ -461,7 +477,8 @@ class FingerprintingOrchestrator:
             return 'unknown'
     
     async def _validate_content(self, content_path: str, content_type: str) -> Dict[str, Any]:
-        """Valide le contenu avant traitement"""        path = Path(content_path)
+        """Valide le contenu avant traitement"""
+        path = Path(content_path)
         
         if not path.exists():
             return {'valid': False, 'error': f'File not found: {content_path}'}
@@ -492,7 +509,8 @@ class FingerprintingOrchestrator:
     async def _select_engine_configuration(self,
                                          content_type: str,
                                          processing_mode: ProcessingMode) -> Dict[str, Any]:
-        """Sélectionne la configuration optimale pour le moteur"""        base_config = {
+        """Sélectionne la configuration optimale pour le moteur"""
+        base_config = {
             'content_type': content_type,
             'processing_mode': processing_mode,
             'gpu_acceleration': self.config.gpu_acceleration,
@@ -533,7 +551,8 @@ class FingerprintingOrchestrator:
                                  content_path: str,
                                  content_type: str,
                                  engine_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Traite l'empreinte avec le moteur approprié"""        # Use main engine for unified processing
+        """Traite l'empreinte avec le moteur approprié"""
+        # Use main engine for unified processing
         result = await self.main_engine.generate_fingerprint(
             content_path=content_path,
             content_type=content_type,
@@ -547,7 +566,8 @@ class FingerprintingOrchestrator:
                                fingerprint_result: Dict[str, Any],
                                creator_id: str,
                                metadata: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Stocke l'empreinte dans le système"""        # This would integrate with the storage system
+        """Stocke l'empreinte dans le système"""
+        # This would integrate with the storage system
         storage_info = {
             'stored_at': datetime.now().isoformat(),
             'creator_id': creator_id,
@@ -561,7 +581,8 @@ class FingerprintingOrchestrator:
         return storage_info
     
     async def _check_violations(self, fingerprint_result: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Vérifie les violations potentielles"""        # Use protection manager for violation checking
+        """Vérifie les violations potentielles"""
+        # Use protection manager for violation checking
         protection_manager = self.main_engine.protection_manager
         
         # This would implement real violation checking
@@ -575,12 +596,14 @@ class FingerprintingOrchestrator:
                                         content_type: str,
                                         processing_time: float,
                                         success: bool):
-        """Met à jour les métriques de performance"""        await self.performance_tracker.record_processing(
+        """Met à jour les métriques de performance"""
+        await self.performance_tracker.record_processing(
             content_type, processing_time, success
         )
     
     async def _optimize_for_batch_processing(self, batch_size: int) -> Dict[str, Any]:
-        """Optimise la configuration pour le traitement par lot"""        # Calculate optimal concurrency based on system resources
+        """Optimise la configuration pour le traitement par lot"""
+        # Calculate optimal concurrency based on system resources
         max_concurrent = min(batch_size, self.config.max_workers)
         
         return {
@@ -591,7 +614,8 @@ class FingerprintingOrchestrator:
         }
     
     async def _check_system_health(self) -> Dict[str, str]:
-        """Vérifie la santé du système"""        health_checks = {
+        """Vérifie la santé du système"""
+        health_checks = {
             'fingerprinting_engine': 'healthy',
             'vector_similarity': 'healthy',
             'storage_system': 'healthy',
@@ -602,7 +626,8 @@ class FingerprintingOrchestrator:
         return health_checks
 
 class PerformanceTracker:
-    """Suivi des performances du système de fingerprinting"""    
+    """Suivi des performances du système de fingerprinting"""
+    
     def __init__(self):
         self.metrics = {
             'audio': {'total_time': 0.0, 'count': 0, 'errors': 0},
@@ -612,14 +637,16 @@ class PerformanceTracker:
         }
     
     async def record_processing(self, content_type: str, processing_time: float, success: bool):
-        """Enregistre une métrique de traitement"""        if content_type in self.metrics:
+        """Enregistre une métrique de traitement"""
+        if content_type in self.metrics:
             self.metrics[content_type]['total_time'] += processing_time
             self.metrics[content_type]['count'] += 1
             if not success:
                 self.metrics[content_type]['errors'] += 1
     
     async def get_current_metrics(self) -> Dict[str, Any]:
-        """Récupère les métriques actuelles"""        result = {}
+        """Récupère les métriques actuelles"""
+        result = {}
         
         for content_type, data in self.metrics.items():
             if data['count'] > 0:
@@ -662,7 +689,8 @@ __all__ = [
 default_orchestrator = None
 
 def get_default_orchestrator(config: Optional[FingerprintConfig] = None) -> FingerprintingOrchestrator:
-    """Récupère l'orchestrateur par défaut (singleton pattern)"""    global default_orchestrator
+    """Récupère l'orchestrateur par défaut (singleton pattern)"""
+    global default_orchestrator
     
     if default_orchestrator is None:
         default_orchestrator = FingerprintingOrchestrator(config)
@@ -674,7 +702,8 @@ async def fingerprint_content(content_path: str,
                             content_type: Optional[str] = None,
                             creator_id: str = "",
                             processing_mode: ProcessingMode = ProcessingMode.BALANCED) -> Dict[str, Any]:
-    """    Fonction de convenance pour fingerprinter un contenu
+    """
+    Fonction de convenance pour fingerprinter un contenu
     
     Args:
         content_path: Chemin vers le contenu
@@ -684,7 +713,8 @@ async def fingerprint_content(content_path: str,
         
     Returns:
         Résultat du fingerprinting
-    """    orchestrator = get_default_orchestrator()
+    """
+    orchestrator = get_default_orchestrator()
     return await orchestrator.process_content(
         content_path, content_type, creator_id, processing_mode
     )
@@ -692,7 +722,8 @@ async def fingerprint_content(content_path: str,
 async def search_similar(fingerprint_data: Dict[str, Any],
                         similarity_threshold: float = 0.8,
                         max_results: int = 100) -> List[Dict[str, Any]]:
-    """    Fonction de convenance pour rechercher du contenu similaire
+    """
+    Fonction de convenance pour rechercher du contenu similaire
     
     Args:
         fingerprint_data: Données d'empreinte
@@ -701,17 +732,20 @@ async def search_similar(fingerprint_data: Dict[str, Any],
         
     Returns:
         Liste des contenus similaires
-    """    orchestrator = get_default_orchestrator()
+    """
+    orchestrator = get_default_orchestrator()
     return await orchestrator.search_similar_content(
         fingerprint_data, similarity_threshold, max_results
     )
 
 async def get_system_health() -> Dict[str, Any]:
-    """    Fonction de convenance pour obtenir la santé du système
+    """
+    Fonction de convenance pour obtenir la santé du système
     
     Returns:
         État de santé du système
-    """    orchestrator = get_default_orchestrator()
+    """
+    orchestrator = get_default_orchestrator()
     return await orchestrator.get_system_status()
 
 # Initialize logging for the index module

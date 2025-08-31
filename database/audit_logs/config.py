@@ -21,14 +21,16 @@ This revolutionary audit configuration system is the EXCLUSIVE property of Fahed
 Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
-"""import os
+"""
+import os
 from dataclasses import dataclass, field
 from typing import Dict, Any, List, Optional
 from enum import Enum
 
 
 class LogLevel(Enum):
-    """Audit log levels."""    DEBUG = "debug"
+    """Audit log levels."""
+    DEBUG = "debug"
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -36,7 +38,8 @@ class LogLevel(Enum):
 
 
 class StorageBackend(Enum):
-    """Storage backend options."""    POSTGRESQL = "postgresql"
+    """Storage backend options."""
+    POSTGRESQL = "postgresql"
     ELASTICSEARCH = "elasticsearch"
     MONGODB = "mongodb"
     CASSANDRA = "cassandra"
@@ -44,14 +47,16 @@ class StorageBackend(Enum):
 
 
 class RetentionPolicy(Enum):
-    """Data retention policies."""    STANDARD = "standard"  # 7 years
+    """Data retention policies."""
+    STANDARD = "standard"  # 7 years
     EXTENDED = "extended"  # 10 years
     MINIMAL = "minimal"    # 3 years
     CUSTOM = "custom"      # User-defined
 
 
 class ExportFormat(Enum):
-    """Export format options."""    JSON = "json"
+    """Export format options."""
+    JSON = "json"
     CSV = "csv"
     XML = "xml"
     PARQUET = "parquet"
@@ -60,7 +65,8 @@ class ExportFormat(Enum):
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration for audit logs."""    primary_url: str = os.getenv("AUDIT_DB_URL", "postgresql://user:pass@localhost/audit_db")
+    """Database configuration for audit logs."""
+    primary_url: str = os.getenv("AUDIT_DB_URL", "postgresql://user:pass@localhost/audit_db")
     replica_urls: List[str] = field(default_factory=list)
     connection_pool_size: int = 20
     max_overflow: int = 30
@@ -78,7 +84,8 @@ class DatabaseConfig:
 
 @dataclass
 class ElasticsearchConfig:
-    """Elasticsearch configuration for search and analytics."""    hosts: List[str] = field(default_factory=lambda: ["http://localhost:9200"])
+    """Elasticsearch configuration for search and analytics."""
+    hosts: List[str] = field(default_factory=lambda: ["http://localhost:9200"])
     username: Optional[str] = None
     password: Optional[str] = None
     use_ssl: bool = True
@@ -100,7 +107,8 @@ class ElasticsearchConfig:
 
 @dataclass
 class RedisConfig:
-    """Redis configuration for caching and real-time features."""    host: str = os.getenv("REDIS_HOST", "localhost")
+    """Redis configuration for caching and real-time features."""
+    host: str = os.getenv("REDIS_HOST", "localhost")
     port: int = int(os.getenv("REDIS_PORT", "6379"))
     password: Optional[str] = os.getenv("REDIS_PASSWORD")
     db: int = int(os.getenv("REDIS_DB", "0"))
@@ -123,7 +131,8 @@ class RedisConfig:
 
 @dataclass
 class S3Config:
-    """S3 configuration for evidence storage."""    bucket_name: str = os.getenv("AUDIT_S3_BUCKET", "audit-evidence-storage")
+    """S3 configuration for evidence storage."""
+    bucket_name: str = os.getenv("AUDIT_S3_BUCKET", "audit-evidence-storage")
     region: str = os.getenv("AWS_REGION", "eu-west-1")
     access_key_id: Optional[str] = os.getenv("AWS_ACCESS_KEY_ID")
     secret_access_key: Optional[str] = os.getenv("AWS_SECRET_ACCESS_KEY")
@@ -145,7 +154,8 @@ class S3Config:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration for audit logs."""    encryption_algorithm: str = "AES-256-GCM"
+    """Security configuration for audit logs."""
+    encryption_algorithm: str = "AES-256-GCM"
     key_rotation_days: int = 90
     hash_algorithm: str = "SHA-256"
     
@@ -172,7 +182,8 @@ class SecurityConfig:
 
 @dataclass
 class ComplianceConfig:
-    """Compliance configuration for audit logs."""    enabled_frameworks: List[str] = field(default_factory=lambda: [
+    """Compliance configuration for audit logs."""
+    enabled_frameworks: List[str] = field(default_factory=lambda: [
         "GDPR", "CCPA", "PCI_DSS", "HIPAA", "SOX", "ISO_27001", "NIST"
     ])
     
@@ -202,7 +213,8 @@ class ComplianceConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring and alerting configuration."""    enable_real_time_monitoring: bool = True
+    """Monitoring and alerting configuration."""
+    enable_real_time_monitoring: bool = True
     enable_anomaly_detection: bool = True
     enable_threat_intelligence: bool = True
     
@@ -234,7 +246,8 @@ class MonitoringConfig:
 
 @dataclass
 class ForensicsConfig:
-    """Forensics and investigation configuration."""    enable_forensic_mode: bool = True
+    """Forensics and investigation configuration."""
+    enable_forensic_mode: bool = True
     evidence_collection_enabled: bool = True
     chain_of_custody_enabled: bool = True
     
@@ -261,7 +274,8 @@ class ForensicsConfig:
 
 @dataclass
 class ExportConfig:
-    """Data export and backup configuration."""    enabled_formats: List[ExportFormat] = field(default_factory=lambda: [
+    """Data export and backup configuration."""
+    enabled_formats: List[ExportFormat] = field(default_factory=lambda: [
         ExportFormat.JSON, ExportFormat.CSV, ExportFormat.PARQUET
     ])
     
@@ -285,7 +299,8 @@ class ExportConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance optimization configuration."""    # Database optimization
+    """Performance optimization configuration."""
+    # Database optimization
     enable_query_caching: bool = True
     query_cache_ttl_seconds: int = 300
     enable_connection_pooling: bool = True
@@ -316,7 +331,8 @@ class PerformanceConfig:
 
 @dataclass
 class AuditLogsConfig:
-    """Main configuration class for audit logs module."""    
+    """Main configuration class for audit logs module."""
+    
     # Core settings
     service_name: str = "ia_influencer_agent"
     environment: str = os.getenv("ENVIRONMENT", "production")
@@ -349,11 +365,13 @@ class AuditLogsConfig:
     enable_automated_response: bool = True
     
     def validate(self) -> List[str]:
-        """        Validate the configuration and return any errors.
+        """
+        Validate the configuration and return any errors.
         
         Returns:
             List[str]: List of validation errors, empty if valid
-        """        errors = []
+        """
+        errors = []
         
         # Validate database URL
         if not self.database.primary_url:
@@ -380,11 +398,13 @@ class AuditLogsConfig:
     
     @classmethod
     def from_env(cls) -> 'AuditLogsConfig':
-        """        Create configuration from environment variables.
+        """
+        Create configuration from environment variables.
         
         Returns:
             AuditLogsConfig: Configuration instance
-        """        return cls(
+        """
+        return cls(
             service_name=os.getenv("AUDIT_SERVICE_NAME", "ia_influencer_agent"),
             environment=os.getenv("ENVIRONMENT", "production"),
             debug_mode=os.getenv("DEBUG", "false").lower() == "true",
@@ -394,11 +414,13 @@ class AuditLogsConfig:
         )
     
     def to_dict(self) -> Dict[str, Any]:
-        """        Convert configuration to dictionary.
+        """
+        Convert configuration to dictionary.
         
         Returns:
             Dict[str, Any]: Configuration as dictionary
-        """        return {
+        """
+        return {
             "service_name": self.service_name,
             "environment": self.environment,
             "debug_mode": self.debug_mode,
@@ -448,7 +470,8 @@ default_config = AuditLogsConfig()
 
 # Environment-specific configurations
 def get_development_config() -> AuditLogsConfig:
-    """Get development environment configuration."""    config = AuditLogsConfig()
+    """Get development environment configuration."""
+    config = AuditLogsConfig()
     config.environment = "development"
     config.debug_mode = True
     config.log_level = LogLevel.DEBUG
@@ -459,7 +482,8 @@ def get_development_config() -> AuditLogsConfig:
 
 
 def get_testing_config() -> AuditLogsConfig:
-    """Get testing environment configuration."""    config = AuditLogsConfig()
+    """Get testing environment configuration."""
+    config = AuditLogsConfig()
     config.environment = "testing"
     config.debug_mode = True
     config.log_level = LogLevel.INFO
@@ -470,7 +494,8 @@ def get_testing_config() -> AuditLogsConfig:
 
 
 def get_production_config() -> AuditLogsConfig:
-    """Get production environment configuration."""    config = AuditLogsConfig()
+    """Get production environment configuration."""
+    config = AuditLogsConfig()
     config.environment = "production"
     config.debug_mode = False
     config.log_level = LogLevel.WARNING
@@ -483,14 +508,16 @@ def get_production_config() -> AuditLogsConfig:
 
 # Configuration factory
 def create_config(environment: str = None) -> AuditLogsConfig:
-    """    Create configuration based on environment.
+    """
+    Create configuration based on environment.
     
     Args:
         environment: Environment name (development, testing, production)
         
     Returns:
         AuditLogsConfig: Environment-specific configuration
-    """    if environment is None:
+    """
+    if environment is None:
         environment = os.getenv("ENVIRONMENT", "production")
     
     if environment.lower() == "development":

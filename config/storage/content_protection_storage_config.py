@@ -13,13 +13,15 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 
 class ProtectionContentType(Enum):
-    """Types of content that can be protected."""    AUDIO = "audio"
+    """Types of content that can be protected."""
+    AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
     TEXT = "text"
@@ -27,7 +29,8 @@ class ProtectionContentType(Enum):
     MIXED_MEDIA = "mixed_media"
 
 class FingerprintingEngine(Enum):
-    """Available fingerprinting engines for content protection."""    CHROMAPRINT = "chromaprint"  # Audio fingerprinting
+    """Available fingerprinting engines for content protection."""
+    CHROMAPRINT = "chromaprint"  # Audio fingerprinting
     ESSENTIA = "essentia"        # Advanced audio analysis
     OPENCV_PHASH = "opencv_phash"  # Perceptual hash for images/video
     CLIP_EMBEDDINGS = "clip_embeddings"  # Image/text embeddings
@@ -37,9 +40,11 @@ class FingerprintingEngine(Enum):
 
 @dataclass
 class ContentProtectionStorageConfig:
-    """    Comprehensive content protection storage configuration.
+    """
+    Comprehensive content protection storage configuration.
     Handles fingerprinting, monitoring, and protection storage requirements.
-    """    
+    """
+    
     # Storage paths for protection data
     fingerprint_storage_path: str = "protection/fingerprints"
     monitoring_data_path: str = "protection/monitoring"
@@ -100,7 +105,8 @@ class ContentProtectionStorageConfig:
     })
     
     def __post_init__(self):
-        """Initialize fingerprint storage configuration by content type."""        if not self.fingerprint_storage_by_type:
+        """Initialize fingerprint storage configuration by content type."""
+        if not self.fingerprint_storage_by_type:
             self.fingerprint_storage_by_type = {
                 ProtectionContentType.AUDIO: {
                     'storage_path': f"{self.fingerprint_storage_path}/audio",
@@ -146,20 +152,25 @@ class ContentProtectionStorageConfig:
             }
     
     def get_storage_path_for_content_type(self, content_type: ProtectionContentType) -> str:
-        """Get storage path for specific content type."""        return self.fingerprint_storage_by_type[content_type]['storage_path']
+        """Get storage path for specific content type."""
+        return self.fingerprint_storage_by_type[content_type]['storage_path']
     
     def get_engines_for_content_type(self, content_type: ProtectionContentType) -> List[FingerprintingEngine]:
-        """Get fingerprinting engines for specific content type."""        return self.fingerprint_storage_by_type[content_type]['engines']
+        """Get fingerprinting engines for specific content type."""
+        return self.fingerprint_storage_by_type[content_type]['engines']
     
     def get_vector_storage_config(self) -> Dict[str, Any]:
-        """Get vector database configuration for similarity search."""        return self.vector_storage_config
+        """Get vector database configuration for similarity search."""
+        return self.vector_storage_config
     
     def is_backup_enabled(self) -> bool:
-        """Check if backup is enabled for protection data."""        return self.protection_backup_config.get('enable_backup', False)
+        """Check if backup is enabled for protection data."""
+        return self.protection_backup_config.get('enable_backup', False)
 
 @dataclass
 class MonitoringStorageConfig:
-    """Configuration for content monitoring and surveillance storage."""    
+    """Configuration for content monitoring and surveillance storage."""
+    
     # Monitoring data storage paths
     crawl_data_path: str = "monitoring/crawl_data"
     platform_data_path: str = "monitoring/platforms"
@@ -218,7 +229,8 @@ monitoring_storage_config = MonitoringStorageConfig()
 
 # Configuration validation functions
 def validate_content_protection_storage_config() -> bool:
-    """Validate content protection storage configuration."""    try:
+    """Validate content protection storage configuration."""
+    try:
         # Validate required paths
         required_paths = [
             content_protection_storage_config.fingerprint_storage_path,
@@ -245,7 +257,8 @@ def validate_content_protection_storage_config() -> bool:
         return False
 
 def validate_monitoring_storage_config() -> bool:
-    """Validate monitoring storage configuration."""    try:
+    """Validate monitoring storage configuration."""
+    try:
         # Validate required paths
         required_paths = [
             monitoring_storage_config.crawl_data_path,

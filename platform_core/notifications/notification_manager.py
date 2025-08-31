@@ -14,7 +14,8 @@ Notifications intelligentes avec templates et targeting avancé
 - Templates dynamiques avec personnalisation IA
 - Scheduling et automation de campagnes
 - Analytics et tracking des engagements
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import uuid
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationType(Enum):
-    """Types de notifications"""    EMAIL = "email"
+    """Types de notifications"""
+    EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
     IN_APP = "in_app"
@@ -41,7 +43,8 @@ class NotificationType(Enum):
 
 
 class NotificationPriority(Enum):
-    """Priorités des notifications"""    LOW = "low"
+    """Priorités des notifications"""
+    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     CRITICAL = "critical"
@@ -49,7 +52,8 @@ class NotificationPriority(Enum):
 
 
 class NotificationStatus(Enum):
-    """Statuts des notifications"""    PENDING = "pending"
+    """Statuts des notifications"""
+    PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
     READ = "read"
@@ -59,7 +63,8 @@ class NotificationStatus(Enum):
 
 @dataclass
 class NotificationTemplate:
-    """Template de notification"""    template_id: str
+    """Template de notification"""
+    template_id: str
     name: str
     type: NotificationType
     subject_template: str
@@ -72,7 +77,8 @@ class NotificationTemplate:
 
 @dataclass
 class NotificationRecipient:
-    """Destinataire d'une notification"""    user_id: str
+    """Destinataire d'une notification"""
+    user_id: str
     email: Optional[str] = None
     phone: Optional[str] = None
     push_token: Optional[str] = None
@@ -82,7 +88,8 @@ class NotificationRecipient:
 
 @dataclass
 class NotificationRequest:
-    """Demande de notification"""    notification_id: str
+    """Demande de notification"""
+    notification_id: str
     type: NotificationType
     recipients: List[NotificationRecipient]
     template_id: Optional[str] = None
@@ -97,7 +104,8 @@ class NotificationRequest:
 
 @dataclass
 class NotificationResult:
-    """Résultat d'envoi de notification"""    notification_id: str
+    """Résultat d'envoi de notification"""
+    notification_id: str
     recipient_id: str
     status: NotificationStatus
     sent_at: Optional[datetime] = None
@@ -108,7 +116,8 @@ class NotificationResult:
 
 
 class NotificationManager:
-    """Gestionnaire principal des notifications"""    
+    """Gestionnaire principal des notifications"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.templates: Dict[str, NotificationTemplate] = {}
@@ -123,7 +132,8 @@ class NotificationManager:
         logger.info("✅ NotificationManager initialized")
     
     async def send_notification(self, request: NotificationRequest) -> List[NotificationResult]:
-        """Envoyer une notification"""        try:
+        """Envoyer une notification"""
+        try:
             results = []
             
             # Vérifier si c'est programmé
@@ -151,7 +161,8 @@ class NotificationManager:
             )]
     
     async def _send_to_recipient(self, request: NotificationRequest, recipient: NotificationRecipient) -> NotificationResult:
-        """Envoyer la notification à un destinataire spécifique"""        try:
+        """Envoyer la notification à un destinataire spécifique"""
+        try:
             # Vérifier les préférences du destinataire
             if not self._check_recipient_preferences(request, recipient):
                 return NotificationResult(
@@ -200,7 +211,8 @@ class NotificationManager:
             )
     
     async def _prepare_content(self, request: NotificationRequest, recipient: NotificationRecipient) -> tuple[str, str]:
-        """Préparer le contenu de la notification"""        try:
+        """Préparer le contenu de la notification"""
+        try:
             subject = request.subject or ""
             body = request.body or ""
             
@@ -230,7 +242,8 @@ class NotificationManager:
             return request.subject or "Notification", request.body or ""
     
     async def _send_email(self, email: str, subject: str, body: str) -> tuple[bool, Optional[str]]:
-        """Envoyer un email"""        try:
+        """Envoyer un email"""
+        try:
             smtp_server = self.email_config.get("smtp_server", "localhost")
             smtp_port = self.email_config.get("smtp_port", 587)
             username = self.email_config.get("username", "")
@@ -253,7 +266,8 @@ class NotificationManager:
             return False, str(e)
     
     async def _send_sms(self, phone: str, message: str) -> tuple[bool, Optional[str]]:
-        """Envoyer un SMS"""        try:
+        """Envoyer un SMS"""
+        try:
             # Placeholder pour intégration SMS (Twilio, etc.)
             logger.info(f"📱 SMS sent to {phone}: {message[:50]}...")
             return True, None
@@ -263,7 +277,8 @@ class NotificationManager:
             return False, str(e)
     
     async def _send_push(self, push_token: str, title: str, body: str) -> tuple[bool, Optional[str]]:
-        """Envoyer une notification push"""        try:
+        """Envoyer une notification push"""
+        try:
             # Placeholder pour intégration push (Firebase, etc.)
             logger.info(f"🔔 Push notification sent to {push_token[:20]}...: {title}")
             return True, None
@@ -273,7 +288,8 @@ class NotificationManager:
             return False, str(e)
     
     async def _send_in_app(self, user_id: str, title: str, body: str) -> tuple[bool, Optional[str]]:
-        """Envoyer une notification in-app"""        try:
+        """Envoyer une notification in-app"""
+        try:
             # Stocker en base pour récupération par l'app
             logger.info(f"💬 In-app notification sent to {user_id}: {title}")
             return True, None
@@ -283,7 +299,8 @@ class NotificationManager:
             return False, str(e)
     
     def _check_recipient_preferences(self, request: NotificationRequest, recipient: NotificationRecipient) -> bool:
-        """Vérifier les préférences du destinataire"""        try:
+        """Vérifier les préférences du destinataire"""
+        try:
             # Vérifier si le type est autorisé
             pref_key = f"allow_{request.type.value}"
             if pref_key in recipient.preferences:
@@ -300,7 +317,8 @@ class NotificationManager:
             return True  # Permettre par défaut en cas d'erreur
     
     async def create_template(self, template: NotificationTemplate) -> bool:
-        """Créer un template de notification"""        try:
+        """Créer un template de notification"""
+        try:
             self.templates[template.template_id] = template
             logger.info(f"✅ Template created: {template.template_id}")
             return True
@@ -316,7 +334,8 @@ class NotificationManager:
         variables: Dict[str, Any],
         notification_type: NotificationType = NotificationType.EMAIL
     ) -> List[NotificationResult]:
-        """Envoyer une notification en masse"""        try:
+        """Envoyer une notification en masse"""
+        try:
             request = NotificationRequest(
                 notification_id=f"bulk_{uuid.uuid4().hex[:12]}",
                 type=notification_type,
@@ -333,7 +352,8 @@ class NotificationManager:
             return []
     
     async def process_scheduled_notifications(self) -> None:
-        """Traiter les notifications programmées"""        try:
+        """Traiter les notifications programmées"""
+        try:
             now = datetime.utcnow()
             to_send = []
             
@@ -360,7 +380,8 @@ class NotificationManager:
             logger.error(f"❌ Failed to process scheduled notifications: {e}")
     
     async def get_notification_analytics(self, days: int = 30) -> Dict[str, Any]:
-        """Obtenir les analytics des notifications"""        try:
+        """Obtenir les analytics des notifications"""
+        try:
             cutoff_date = datetime.utcnow() - timedelta(days=days)
             
             # Compter les notifications récentes
@@ -397,19 +418,22 @@ class NotificationManager:
 
 
 class TemplateManager:
-    """Gestionnaire de templates de notifications"""    
+    """Gestionnaire de templates de notifications"""
+    
     def __init__(self):
         self.templates: Dict[str, NotificationTemplate] = {}
         self._create_default_templates()
     
     def _create_default_templates(self) -> None:
-        """Créer les templates par défaut"""        default_templates = [
+        """Créer les templates par défaut"""
+        default_templates = [
             NotificationTemplate(
                 template_id="welcome_email",
                 name="Email de bienvenue",
                 type=NotificationType.EMAIL,
                 subject_template="Bienvenue sur IA Influencer Agent, {user_name}!",
-                body_template="""                <h1>Bienvenue {user_name}!</h1>
+                body_template="""
+                <h1>Bienvenue {user_name}!</h1>
                 <p>Nous sommes ravis de vous accueillir sur notre plateforme.</p>
                 <p>Votre identifiant: {user_id}</p>
                 """,
@@ -420,7 +444,8 @@ class TemplateManager:
                 name="Contenu protégé",
                 type=NotificationType.EMAIL,
                 subject_template="Votre contenu '{content_title}' est maintenant protégé",
-                body_template="""                <h2>Protection activée</h2>
+                body_template="""
+                <h2>Protection activée</h2>
                 <p>Votre contenu '{content_title}' est maintenant protégé par notre IA.</p>
                 <p>ID de protection: {protection_id}</p>
                 """,
@@ -431,7 +456,8 @@ class TemplateManager:
                 name="Piratage détecté",
                 type=NotificationType.EMAIL,
                 subject_template="⚠️ Piratage détecté pour '{content_title}'",
-                body_template="""                <h2>⚠️ Alerte Piratage</h2>
+                body_template="""
+                <h2>⚠️ Alerte Piratage</h2>
                 <p>Nous avons détecté un usage non autorisé de votre contenu '{content_title}'.</p>
                 <p>Plateforme: {platform}</p>
                 <p>Actions automatiques en cours...</p>
@@ -444,10 +470,12 @@ class TemplateManager:
             self.templates[template.template_id] = template
     
     def get_template(self, template_id: str) -> Optional[NotificationTemplate]:
-        """Récupérer un template"""        return self.templates.get(template_id)
+        """Récupérer un template"""
+        return self.templates.get(template_id)
     
     def create_template(self, template: NotificationTemplate) -> bool:
-        """Créer un nouveau template"""        try:
+        """Créer un nouveau template"""
+        try:
             self.templates[template.template_id] = template
             logger.info(f"✅ Template created: {template.template_id}")
             return True

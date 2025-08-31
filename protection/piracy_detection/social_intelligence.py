@@ -30,7 +30,8 @@ This module provides:
 - Cross-platform content attribution
 - Social sentiment analysis and reputation monitoring
 - Community detection and behavior analysis
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Set
 from datetime import datetime, timedelta
@@ -59,7 +60,8 @@ import asyncpg
 logger = logging.getLogger(__name__)
 
 class SocialPlatform(Enum):
-    """Supported social media platforms."""    TWITTER = "twitter"
+    """Supported social media platforms."""
+    TWITTER = "twitter"
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
     TIKTOK = "tiktok"
@@ -73,7 +75,8 @@ class SocialPlatform(Enum):
     TWITCH = "twitch"
 
 class ContentStatus(Enum):
-    """Content status on social platforms."""    ORIGINAL = "original"
+    """Content status on social platforms."""
+    ORIGINAL = "original"
     REPOST = "repost"
     MODIFIED = "modified"
     REMIXED = "remixed"
@@ -82,14 +85,16 @@ class ContentStatus(Enum):
     STOLEN = "stolen"
 
 class InfluencerTier(Enum):
-    """Influencer tier classification."""    NANO = "nano"           # 1K-10K followers
+    """Influencer tier classification."""
+    NANO = "nano"           # 1K-10K followers
     MICRO = "micro"         # 10K-100K followers
     MACRO = "macro"         # 100K-1M followers
     MEGA = "mega"           # 1M+ followers
     CELEBRITY = "celebrity" # 10M+ followers
 
 class NetworkRole(Enum):
-    """Role in social network."""    CREATOR = "creator"
+    """Role in social network."""
+    CREATOR = "creator"
     AMPLIFIER = "amplifier"
     CURATOR = "curator"
     CONSUMER = "consumer"
@@ -98,7 +103,8 @@ class NetworkRole(Enum):
 
 @dataclass
 class SocialProfile:
-    """Social media profile information."""    profile_id: str
+    """Social media profile information."""
+    profile_id: str
     platform: SocialPlatform
     username: str
     display_name: str
@@ -119,7 +125,8 @@ class SocialProfile:
 
 @dataclass
 class ContentPost:
-    """Social media content post."""    post_id: str
+    """Social media content post."""
+    post_id: str
     platform: SocialPlatform
     author_profile: SocialProfile
     content_text: str
@@ -137,7 +144,8 @@ class ContentPost:
 
 @dataclass
 class NetworkConnection:
-    """Connection between social media profiles."""    connection_id: str
+    """Connection between social media profiles."""
+    connection_id: str
     source_profile: str
     target_profile: str
     connection_type: str
@@ -150,7 +158,8 @@ class NetworkConnection:
 
 @dataclass
 class PropagationPath:
-    """Content propagation path through social networks."""    path_id: str
+    """Content propagation path through social networks."""
+    path_id: str
     original_content_id: str
     propagation_steps: List[Dict[str, Any]]
     total_reach: int
@@ -164,7 +173,8 @@ class PropagationPath:
 
 @dataclass
 class SocialIntelligenceReport:
-    """Comprehensive social intelligence analysis report."""    report_id: str
+    """Comprehensive social intelligence analysis report."""
+    report_id: str
     content_id: str
     analysis_period: Tuple[datetime, datetime]
     network_analysis: Dict[str, Any]
@@ -181,7 +191,8 @@ class SocialIntelligenceReport:
     timestamp: datetime
 
 class SocialNetworkIntelligence:
-    """    Advanced social network intelligence engine for content tracking and analysis.
+    """
+    Advanced social network intelligence engine for content tracking and analysis.
     
     This class provides comprehensive social media intelligence capabilities including:
     - Social network graph construction and analysis
@@ -190,9 +201,11 @@ class SocialNetworkIntelligence:
     - Cross-platform content attribution and source tracking
     - Sentiment analysis and reputation monitoring
     - Community detection and behavioral pattern analysis
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the social network intelligence engine."""        self.config = config or {}
+        """Initialize the social network intelligence engine."""
+        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # Core components
@@ -231,7 +244,8 @@ class SocialNetworkIntelligence:
         self.initialized = False
     
     async def initialize(self) -> bool:
-        """Initialize the social network intelligence engine."""        try:
+        """Initialize the social network intelligence engine."""
+        try:
             self.logger.info("Initializing Social Network Intelligence Engine...")
             
             # Initialize AI models
@@ -259,7 +273,8 @@ class SocialNetworkIntelligence:
             return False
     
     async def _initialize_ai_models(self) -> None:
-        """Initialize AI models for social analysis."""        try:
+        """Initialize AI models for social analysis."""
+        try:
             # Sentiment analysis model
             self.sentiment_analyzer = pipeline(
                 "sentiment-analysis",
@@ -282,7 +297,8 @@ class SocialNetworkIntelligence:
             raise
     
     async def _setup_platform_clients(self) -> None:
-        """Setup API clients for social media platforms."""        try:
+        """Setup API clients for social media platforms."""
+        try:
             # Twitter API client
             if self.config.get('twitter_bearer_token'):
                 self.platform_clients['twitter'] = aiohttp.ClientSession(
@@ -316,7 +332,8 @@ class SocialNetworkIntelligence:
             raise
     
     async def _initialize_data_storage(self) -> None:
-        """Initialize data storage connections."""        try:
+        """Initialize data storage connections."""
+        try:
             # Redis for caching and real-time data
             self.redis_client = aioredis.from_url(
                 self.config.get('redis_url', 'redis://localhost:6379'),
@@ -337,10 +354,12 @@ class SocialNetworkIntelligence:
             raise
     
     async def _create_database_tables(self) -> None:
-        """Create necessary database tables."""        try:
+        """Create necessary database tables."""
+        try:
             async with self.postgres_pool.acquire() as conn:
                 # Social profiles table
-                await conn.execute("""                    CREATE TABLE IF NOT EXISTS social_profiles (
+                await conn.execute("""
+                    CREATE TABLE IF NOT EXISTS social_profiles (
                         profile_id VARCHAR PRIMARY KEY,
                         platform VARCHAR NOT NULL,
                         username VARCHAR NOT NULL,
@@ -357,7 +376,8 @@ class SocialNetworkIntelligence:
                 """)
                 
                 # Content posts table
-                await conn.execute("""                    CREATE TABLE IF NOT EXISTS content_posts (
+                await conn.execute("""
+                    CREATE TABLE IF NOT EXISTS content_posts (
                         post_id VARCHAR PRIMARY KEY,
                         platform VARCHAR NOT NULL,
                         author_profile_id VARCHAR,
@@ -374,7 +394,8 @@ class SocialNetworkIntelligence:
                 """)
                 
                 # Network connections table
-                await conn.execute("""                    CREATE TABLE IF NOT EXISTS network_connections (
+                await conn.execute("""
+                    CREATE TABLE IF NOT EXISTS network_connections (
                         connection_id VARCHAR PRIMARY KEY,
                         source_profile VARCHAR,
                         target_profile VARCHAR,
@@ -388,7 +409,8 @@ class SocialNetworkIntelligence:
                 """)
                 
                 # Propagation paths table
-                await conn.execute("""                    CREATE TABLE IF NOT EXISTS propagation_paths (
+                await conn.execute("""
+                    CREATE TABLE IF NOT EXISTS propagation_paths (
                         path_id VARCHAR PRIMARY KEY,
                         original_content_id VARCHAR,
                         total_reach INTEGER,
@@ -405,7 +427,8 @@ class SocialNetworkIntelligence:
             raise
     
     async def _load_network_data(self) -> None:
-        """Load existing network data from storage."""        try:
+        """Load existing network data from storage."""
+        try:
             async with self.postgres_pool.acquire() as conn:
                 # Load social profiles
                 profiles = await conn.fetch("SELECT * FROM social_profiles")
@@ -428,7 +451,8 @@ class SocialNetworkIntelligence:
             self.logger.error(f"Failed to load network data: {e}")
     
     async def _start_real_time_monitoring(self) -> None:
-        """Start real-time monitoring of social platforms."""        try:
+        """Start real-time monitoring of social platforms."""
+        try:
             # Create monitoring tasks for each platform
             monitoring_tasks = []
             
@@ -445,7 +469,8 @@ class SocialNetworkIntelligence:
             self.logger.error(f"Failed to start real-time monitoring: {e}")
     
     async def _monitor_platform(self, platform: str) -> None:
-        """Monitor a specific social media platform."""        try:
+        """Monitor a specific social media platform."""
+        try:
             while True:
                 # Platform-specific monitoring logic
                 if platform == 'twitter':
@@ -468,7 +493,8 @@ class SocialNetworkIntelligence:
     async def analyze_content_propagation(
         self, content_id: str, analysis_period_days: int = 7
     ) -> SocialIntelligenceReport:
-        """        Analyze content propagation across social networks.
+        """
+        Analyze content propagation across social networks.
         
         Args:
             content_id: Unique identifier for the content
@@ -476,7 +502,8 @@ class SocialNetworkIntelligence:
             
         Returns:
             SocialIntelligenceReport: Comprehensive analysis report
-        """        if not self.initialized:
+        """
+        if not self.initialized:
             await self.initialize()
         
         try:
@@ -556,7 +583,8 @@ class SocialNetworkIntelligence:
     async def _gather_content_mentions(
         self, content_id: str, start_date: datetime, end_date: datetime
     ) -> List[ContentPost]:
-        """Gather all mentions of content across social platforms."""        try:
+        """Gather all mentions of content across social platforms."""
+        try:
             all_mentions = []
             
             # Search each platform for content mentions
@@ -586,7 +614,8 @@ class SocialNetworkIntelligence:
             return []
     
     async def _build_propagation_network(self, content_mentions: List[ContentPost]) -> nx.DiGraph:
-        """Build content propagation network graph."""        try:
+        """Build content propagation network graph."""
+        try:
             propagation_graph = nx.DiGraph()
             
             # Add nodes for each mention
@@ -617,7 +646,8 @@ class SocialNetworkIntelligence:
             return nx.DiGraph()
     
     async def _analyze_propagation_paths(self, propagation_network: nx.DiGraph) -> List[PropagationPath]:
-        """Analyze content propagation paths through the network."""        try:
+        """Analyze content propagation paths through the network."""
+        try:
             propagation_paths = []
             
             # Find all paths from original content to end nodes
@@ -652,7 +682,8 @@ class SocialNetworkIntelligence:
             return []
     
     async def _identify_key_influencers(self, content_mentions: List[ContentPost]) -> List[SocialProfile]:
-        """Identify key influencers involved in content propagation."""        try:
+        """Identify key influencers involved in content propagation."""
+        try:
             influencer_metrics = defaultdict(lambda: {
                 'total_engagement': 0,
                 'posts_count': 0,
@@ -691,7 +722,8 @@ class SocialNetworkIntelligence:
             return []
     
     async def _analyze_content_sentiment(self, content_mentions: List[ContentPost]) -> Dict[str, Any]:
-        """Analyze sentiment of content mentions."""        try:
+        """Analyze sentiment of content mentions."""
+        try:
             if not self.sentiment_analysis_enabled:
                 return {}
             
@@ -748,7 +780,8 @@ class SocialNetworkIntelligence:
             return {}
     
     def _calculate_sentiment_distribution(self, sentiment_scores: List[float]) -> Dict[str, float]:
-        """Calculate sentiment distribution statistics."""        if not sentiment_scores:
+        """Calculate sentiment distribution statistics."""
+        if not sentiment_scores:
             return {}
         
         total = len(sentiment_scores)
@@ -766,12 +799,14 @@ class SocialNetworkIntelligence:
         }
     
     async def _create_authenticity_detector(self):
-        """Create custom authenticity detection model."""        # Placeholder for custom authenticity detection implementation
+        """Create custom authenticity detection model."""
+        # Placeholder for custom authenticity detection implementation
         # This would include bot detection, fake account identification, etc.
         return None
     
     async def close(self) -> None:
-        """Clean up resources."""        try:
+        """Clean up resources."""
+        try:
             # Cancel monitoring tasks
             if hasattr(self, 'monitoring_tasks'):
                 for task in self.monitoring_tasks:
@@ -795,11 +830,13 @@ class SocialNetworkIntelligence:
 
     # Additional helper methods would be implemented here
     async def _search_twitter_mentions(self, content_id: str, start_date: datetime, end_date: datetime) -> List[ContentPost]:
-        """Search Twitter for content mentions."""        # Implementation for Twitter API search
+        """Search Twitter for content mentions."""
+        # Implementation for Twitter API search
         return []
     
     async def _search_instagram_mentions(self, content_id: str, start_date: datetime, end_date: datetime) -> List[ContentPost]:
-        """Search Instagram for content mentions."""        # Implementation for Instagram API search
+        """Search Instagram for content mentions."""
+        # Implementation for Instagram API search
         return []
     
     async def _search_youtube_mentions(self, content_id: str, start_date: datetime, end_date: datetime) -> List[ContentPost]:
@@ -808,5 +845,6 @@ class SocialNetworkIntelligence:
         return []
     
     async def _search_reddit_mentions(self, content_id: str, start_date: datetime, end_date: datetime) -> List[ContentPost]:
-        """Search Reddit for content mentions."""        # Implementation for Reddit API search  
+        """Search Reddit for content mentions."""
+        # Implementation for Reddit API search  
         return []

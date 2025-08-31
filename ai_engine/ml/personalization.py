@@ -4,7 +4,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive personalization capabilities using machine learning
 to create tailored user experiences, content recommendations, and interface adaptations.
-"""import logging
+"""
+import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass
@@ -17,14 +18,16 @@ import random
 logger = logging.getLogger(__name__)
 
 class PersonalizationType(Enum):
-    """Types of personalization"""    CONTENT_RECOMMENDATION = "content_recommendation"
+    """Types of personalization"""
+    CONTENT_RECOMMENDATION = "content_recommendation"
     UI_ADAPTATION = "ui_adaptation"
     NOTIFICATION_TIMING = "notification_timing"
     CONTENT_FILTERING = "content_filtering"
     INTERACTION_OPTIMIZATION = "interaction_optimization"
 
 class UserSegment(Enum):
-    """User segments for personalization"""    MUSIC_CREATOR = "music_creator"
+    """User segments for personalization"""
+    MUSIC_CREATOR = "music_creator"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -32,7 +35,8 @@ class UserSegment(Enum):
     CASUAL_USER = "casual_user"
 
 class PersonalizationStrategy(Enum):
-    """Personalization strategies"""    COLLABORATIVE = "collaborative"
+    """Personalization strategies"""
+    COLLABORATIVE = "collaborative"
     CONTENT_BASED = "content_based"
     HYBRID = "hybrid"
     DEMOGRAPHIC = "demographic"
@@ -40,7 +44,8 @@ class PersonalizationStrategy(Enum):
 
 @dataclass
 class UserProfile:
-    """User profile for personalization"""    user_id: str
+    """User profile for personalization"""
+    user_id: str
     segment: UserSegment
     preferences: Dict[str, Any]
     behavior_patterns: Dict[str, Any]
@@ -50,7 +55,8 @@ class UserProfile:
 
 @dataclass
 class PersonalizationContext:
-    """Context for personalization decisions"""    user_profile: UserProfile
+    """Context for personalization decisions"""
+    user_profile: UserProfile
     current_session: Dict[str, Any]
     device_info: Dict[str, Any]
     time_context: Dict[str, Any]
@@ -58,7 +64,8 @@ class PersonalizationContext:
 
 @dataclass
 class PersonalizationResult:
-    """Result of personalization operation"""    user_id: str
+    """Result of personalization operation"""
+    user_id: str
     personalization_type: PersonalizationType
     recommendations: List[Dict[str, Any]]
     confidence_score: float
@@ -67,7 +74,8 @@ class PersonalizationResult:
     timestamp: datetime
 
 class PersonalizationEngine:
-    """Main personalization engine"""    
+    """Main personalization engine"""
+    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.user_profiles = {}
@@ -77,7 +85,8 @@ class PersonalizationEngine:
         self.logger.info("PersonalizationEngine initialized successfully")
     
     def _initialize_segment_models(self) -> Dict[str, Any]:
-        """Initialize models for different user segments"""        return {
+        """Initialize models for different user segments"""
+        return {
             UserSegment.MUSIC_CREATOR.value: {
                 "content_preferences": ["audio", "music_tools", "collaboration"],
                 "feature_weights": {"audio_quality": 0.9, "collaboration": 0.8, "monetization": 0.7},
@@ -106,7 +115,8 @@ class PersonalizationEngine:
         }
     
     def _initialize_strategy_weights(self) -> Dict[str, float]:
-        """Initialize weights for different personalization strategies"""        return {
+        """Initialize weights for different personalization strategies"""
+        return {
             PersonalizationStrategy.COLLABORATIVE.value: 0.3,
             PersonalizationStrategy.CONTENT_BASED.value: 0.3,
             PersonalizationStrategy.BEHAVIORAL.value: 0.2,
@@ -115,7 +125,8 @@ class PersonalizationEngine:
         }
     
     def _initialize_feature_extractors(self) -> Dict[str, Any]:
-        """Initialize feature extractors for different data types"""        return {
+        """Initialize feature extractors for different data types"""
+        return {
             "behavioral": self._extract_behavioral_features,
             "content": self._extract_content_features,
             "temporal": self._extract_temporal_features,
@@ -123,7 +134,8 @@ class PersonalizationEngine:
         }
     
     def create_user_profile(self, user_id: str, initial_data: Dict[str, Any]) -> UserProfile:
-        """Create a new user profile"""        try:
+        """Create a new user profile"""
+        try:
             # Determine user segment
             segment = self._determine_user_segment(initial_data)
             
@@ -153,7 +165,8 @@ class PersonalizationEngine:
             raise
     
     def update_user_profile(self, user_id: str, interaction_data: Dict[str, Any]) -> UserProfile:
-        """Update user profile based on new interaction data"""        try:
+        """Update user profile based on new interaction data"""
+        try:
             if user_id not in self.user_profiles:
                 raise ValueError(f"User profile not found: {user_id}")
             
@@ -182,7 +195,8 @@ class PersonalizationEngine:
     def personalize(self, context: PersonalizationContext, 
                    personalization_type: PersonalizationType,
                    candidates: List[Dict[str, Any]] = None) -> PersonalizationResult:
-        """Generate personalized recommendations"""        try:
+        """Generate personalized recommendations"""
+        try:
             user_profile = context.user_profile
             
             # Extract features for personalization
@@ -230,7 +244,8 @@ class PersonalizationEngine:
             raise
     
     def _determine_user_segment(self, initial_data: Dict[str, Any]) -> UserSegment:
-        """Determine user segment based on initial data"""        # Simple segment determination based on stated profession/interests
+        """Determine user segment based on initial data"""
+        # Simple segment determination based on stated profession/interests
         profession = initial_data.get('profession', '').lower()
         interests = initial_data.get('interests', [])
         
@@ -248,7 +263,8 @@ class PersonalizationEngine:
             return UserSegment.CASUAL_USER
     
     def _extract_initial_preferences(self, initial_data: Dict[str, Any], segment: UserSegment) -> Dict[str, Any]:
-        """Extract initial preferences from user data"""        segment_model = self.segment_models[segment.value]
+        """Extract initial preferences from user data"""
+        segment_model = self.segment_models[segment.value]
         
         preferences = {
             'content_types': segment_model['content_preferences'],
@@ -261,7 +277,8 @@ class PersonalizationEngine:
         return preferences
     
     def _initialize_behavior_patterns(self, segment: UserSegment) -> Dict[str, Any]:
-        """Initialize behavior patterns based on segment"""        segment_model = self.segment_models[segment.value]
+        """Initialize behavior patterns based on segment"""
+        segment_model = self.segment_models[segment.value]
         
         return {
             'interaction_patterns': segment_model['interaction_patterns'],
@@ -272,7 +289,8 @@ class PersonalizationEngine:
         }
     
     def _update_behavior_patterns(self, profile: UserProfile, interaction_data: Dict[str, Any]) -> None:
-        """Update behavior patterns based on interaction data"""        patterns = profile.behavior_patterns
+        """Update behavior patterns based on interaction data"""
+        patterns = profile.behavior_patterns
         
         # Update feature usage
         features_used = interaction_data.get('features_used', [])
@@ -297,7 +315,8 @@ class PersonalizationEngine:
             patterns['session_duration']['mean'] = (current_mean + session_duration) / 2
     
     def _update_preferences(self, profile: UserProfile, interaction_data: Dict[str, Any]) -> None:
-        """Update preferences based on interaction data"""        preferences = profile.preferences
+        """Update preferences based on interaction data"""
+        preferences = profile.preferences
         
         # Update content type preferences based on usage
         content_used = interaction_data.get('content_types_used', [])
@@ -313,7 +332,8 @@ class PersonalizationEngine:
             preferences['feature_priorities'][feature] = min(current_weight + 0.1, 1.0)
     
     def _extract_all_features(self, context: PersonalizationContext) -> Dict[str, Any]:
-        """Extract all features for personalization"""        features = {}
+        """Extract all features for personalization"""
+        features = {}
         
         for extractor_name, extractor_func in self.feature_extractors.items():
             try:
@@ -325,7 +345,8 @@ class PersonalizationEngine:
         return features
     
     def _extract_behavioral_features(self, context: PersonalizationContext) -> Dict[str, Any]:
-        """Extract behavioral features"""        profile = context.user_profile
+        """Extract behavioral features"""
+        profile = context.user_profile
         
         # Recent interaction frequency
         recent_interactions = [
@@ -350,7 +371,8 @@ class PersonalizationEngine:
         }
     
     def _extract_content_features(self, context: PersonalizationContext) -> Dict[str, Any]:
-        """Extract content-based features"""        profile = context.user_profile
+        """Extract content-based features"""
+        profile = context.user_profile
         
         return {
             'preferred_content_types': profile.preferences.get('content_types', []),
@@ -359,7 +381,8 @@ class PersonalizationEngine:
         }
     
     def _extract_temporal_features(self, context: PersonalizationContext) -> Dict[str, Any]:
-        """Extract temporal features"""        now = datetime.utcnow()
+        """Extract temporal features"""
+        now = datetime.utcnow()
         
         return {
             'hour_of_day': now.hour,
@@ -369,7 +392,8 @@ class PersonalizationEngine:
         }
     
     def _extract_contextual_features(self, context: PersonalizationContext) -> Dict[str, Any]:
-        """Extract contextual features"""        return {
+        """Extract contextual features"""
+        return {
             'device_type': context.device_info.get('type', 'unknown'),
             'screen_size': context.device_info.get('screen_size', 'medium'),
             'connection_speed': context.device_info.get('connection_speed', 'medium'),
@@ -377,7 +401,8 @@ class PersonalizationEngine:
         }
     
     def _get_applicable_strategies(self, profile: UserProfile) -> List[PersonalizationStrategy]:
-        """Get applicable strategies for user profile"""        strategies = [PersonalizationStrategy.CONTENT_BASED, PersonalizationStrategy.BEHAVIORAL]
+        """Get applicable strategies for user profile"""
+        strategies = [PersonalizationStrategy.CONTENT_BASED, PersonalizationStrategy.BEHAVIORAL]
         
         # Add collaborative if enough interaction history
         if len(profile.interaction_history) >= 10:
@@ -388,7 +413,8 @@ class PersonalizationEngine:
     def _apply_collaborative_strategy(self, context: PersonalizationContext, 
                                     features: Dict[str, Any], 
                                     candidates: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Apply collaborative filtering strategy"""        # Simulate collaborative filtering
+        """Apply collaborative filtering strategy"""
+        # Simulate collaborative filtering
         profile = context.user_profile
         
         # Find similar users (simplified)
@@ -410,7 +436,8 @@ class PersonalizationEngine:
     def _apply_content_based_strategy(self, context: PersonalizationContext,
                                     features: Dict[str, Any],
                                     candidates: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Apply content-based filtering strategy"""        profile = context.user_profile
+        """Apply content-based filtering strategy"""
+        profile = context.user_profile
         content_features = features.get('content', {})
         
         recommendations = []
@@ -428,7 +455,8 @@ class PersonalizationEngine:
     def _apply_behavioral_strategy(self, context: PersonalizationContext,
                                  features: Dict[str, Any],
                                  candidates: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Apply behavioral-based strategy"""        behavioral_features = features.get('behavioral', {})
+        """Apply behavioral-based strategy"""
+        behavioral_features = features.get('behavioral', {})
         
         recommendations = []
         if candidates:
@@ -443,7 +471,8 @@ class PersonalizationEngine:
         return recommendations
     
     def _combine_strategy_results(self, strategy_results: Dict[PersonalizationStrategy, List[Dict[str, Any]]]) -> List[Dict[str, Any]]:
-        """Combine results from different strategies"""        all_recommendations = []
+        """Combine results from different strategies"""
+        all_recommendations = []
         
         for strategy, recommendations in strategy_results.items():
             weight = self.strategy_weights[strategy.value]
@@ -458,7 +487,8 @@ class PersonalizationEngine:
     
     def _calculate_confidence_score(self, strategy_results: Dict[PersonalizationStrategy, List[Dict[str, Any]]], 
                                   features: Dict[str, Any]) -> float:
-        """Calculate confidence score for personalization"""        base_confidence = 0.5
+        """Calculate confidence score for personalization"""
+        base_confidence = 0.5
         
         # Increase confidence based on number of strategies used
         strategy_bonus = len(strategy_results) * 0.1
@@ -472,7 +502,8 @@ class PersonalizationEngine:
     
     def _generate_explanation(self, strategy_results: Dict[PersonalizationStrategy, List[Dict[str, Any]]],
                             profile: UserProfile, personalization_type: PersonalizationType) -> str:
-        """Generate explanation for personalization decisions"""        explanations = []
+        """Generate explanation for personalization decisions"""
+        explanations = []
         
         if PersonalizationStrategy.COLLABORATIVE in strategy_results:
             explanations.append("based on preferences of similar users")
@@ -491,7 +522,8 @@ class PersonalizationEngine:
             return f"Recommendations {segment_context}"
     
     def _find_similar_users(self, profile: UserProfile) -> List[str]:
-        """Find users similar to the given profile"""        similar_users = []
+        """Find users similar to the given profile"""
+        similar_users = []
         
         for user_id, other_profile in self.user_profiles.items():
             if user_id != profile.user_id and other_profile.segment == profile.segment:
@@ -503,7 +535,8 @@ class PersonalizationEngine:
         return similar_users[:10]  # Top 10 similar users
     
     def _calculate_user_similarity(self, profile1: UserProfile, profile2: UserProfile) -> float:
-        """Calculate similarity between two user profiles"""        # Simple similarity based on shared preferences
+        """Calculate similarity between two user profiles"""
+        # Simple similarity based on shared preferences
         prefs1 = set(profile1.preferences.get('content_types', []))
         prefs2 = set(profile2.preferences.get('content_types', []))
         
@@ -516,7 +549,8 @@ class PersonalizationEngine:
         return intersection / union if union > 0 else 0.0
     
     def _calculate_content_similarity(self, candidate: Dict[str, Any], content_features: Dict[str, Any]) -> float:
-        """Calculate content similarity score"""        # Simulate content similarity calculation
+        """Calculate content similarity score"""
+        # Simulate content similarity calculation
         preferred_types = content_features.get('preferred_content_types', [])
         candidate_type = candidate.get('content_type', 'unknown')
         
@@ -526,7 +560,8 @@ class PersonalizationEngine:
             return random.uniform(0.3, 0.6)
     
     def _calculate_behavioral_compatibility(self, candidate: Dict[str, Any], behavioral_features: Dict[str, Any]) -> float:
-        """Calculate behavioral compatibility score"""        # Simulate behavioral compatibility
+        """Calculate behavioral compatibility score"""
+        # Simulate behavioral compatibility
         activity_level = behavioral_features.get('recent_activity_level', 0)
         
         if activity_level > 10:  # High activity user
@@ -535,7 +570,8 @@ class PersonalizationEngine:
             return random.uniform(0.4, 0.7)
     
     def _time_since_last_interaction(self, profile: UserProfile) -> int:
-        """Calculate time since last interaction in hours"""        if not profile.interaction_history:
+        """Calculate time since last interaction in hours"""
+        if not profile.interaction_history:
             return 24 * 7  # 1 week default
         
         last_interaction = max(profile.interaction_history, key=lambda x: x['timestamp'])
@@ -543,7 +579,8 @@ class PersonalizationEngine:
         return int(time_diff.total_seconds() / 3600)  # Convert to hours
     
     def get_user_insights(self, user_id: str) -> Dict[str, Any]:
-        """Get insights about user behavior and preferences"""        if user_id not in self.user_profiles:
+        """Get insights about user behavior and preferences"""
+        if user_id not in self.user_profiles:
             return {"error": "User not found"}
         
         profile = self.user_profiles[user_id]
@@ -564,7 +601,8 @@ class PersonalizationEngine:
         return insights
     
     def _calculate_engagement_summary(self, profile: UserProfile) -> Dict[str, Any]:
-        """Calculate engagement summary for user"""        if not profile.interaction_history:
+        """Calculate engagement summary for user"""
+        if not profile.interaction_history:
             return {"average_session_duration": 0, "interaction_frequency": 0}
         
         # Calculate average session duration
@@ -584,7 +622,8 @@ class PersonalizationEngine:
         }
     
     def _calculate_personalization_effectiveness(self, profile: UserProfile) -> float:
-        """Calculate effectiveness of personalization for this user"""        # Simple effectiveness calculation based on interaction patterns
+        """Calculate effectiveness of personalization for this user"""
+        # Simple effectiveness calculation based on interaction patterns
         behavior_patterns = profile.behavior_patterns
         
         # Users with more diverse feature usage indicate good personalization
@@ -601,7 +640,8 @@ class PersonalizationEngine:
         return min(effectiveness, 1.0)
     
     def _recommend_feature_adoption(self, profile: UserProfile) -> List[str]:
-        """Recommend features for user to try"""        segment_model = self.segment_models[profile.segment.value]
+        """Recommend features for user to try"""
+        segment_model = self.segment_models[profile.segment.value]
         recommended_features = segment_model['content_preferences']
         
         used_features = set(profile.behavior_patterns.get('feature_usage', {}).keys())
@@ -612,7 +652,8 @@ class PersonalizationEngine:
         return list(unused_features)[:3]
     
     def _recommend_content_exploration(self, profile: UserProfile) -> List[str]:
-        """Recommend content types for user to explore"""        current_types = set(profile.preferences.get('content_types', []))
+        """Recommend content types for user to explore"""
+        current_types = set(profile.preferences.get('content_types', []))
         
         # Content types that similar segments also use
         segment_model = self.segment_models[profile.segment.value]

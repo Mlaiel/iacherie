@@ -6,7 +6,8 @@ for PostgreSQL, Redis, MongoDB, Elasticsearch, and Vector stores.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Set
 from dataclasses import dataclass, field
@@ -24,7 +25,8 @@ from .utils import ReplicationUtils
 
 
 class ReplicationHandlerType(Enum):
-    """Supported replication handler types"""    POSTGRESQL = "postgresql"
+    """Supported replication handler types"""
+    POSTGRESQL = "postgresql"
     REDIS = "redis"
     MONGODB = "mongodb"
     ELASTICSEARCH = "elasticsearch"
@@ -33,7 +35,8 @@ class ReplicationHandlerType(Enum):
 
 @dataclass
 class ReplicationJob:
-    """Replication job configuration"""    database_type: str
+    """Replication job configuration"""
+    database_type: str
     source_config: Dict[str, Any]
     target_config: Dict[str, Any]
     replication_mode: str
@@ -45,13 +48,16 @@ class ReplicationJob:
 
 
 class ReplicationManager:
-    """    Central manager for database replication lifecycle operations.
+    """
+    Central manager for database replication lifecycle operations.
     
     Coordinates replication setup, monitoring, and maintenance across
     multiple database systems supporting the content creator platform.
-    """    
+    """
+    
     def __init__(self, config: ReplicationConfig):
-        """Initialize replication manager with configuration"""        self.config = config
+        """Initialize replication manager with configuration"""
+        self.config = config
         self.logger = logging.getLogger(f"{__name__}.ReplicationManager")
         self.utils = ReplicationUtils(config)
         
@@ -67,11 +73,13 @@ class ReplicationManager:
         self.logger.info("ReplicationManager initialized")
     
     async def initialize(self) -> bool:
-        """        Initialize replication manager and all database handlers.
+        """
+        Initialize replication manager and all database handlers.
         
         Returns:
             bool: True if initialization successful
-        """        try:
+        """
+        try:
             self.logger.info("Initializing replication manager...")
             
             # Initialize database handlers
@@ -92,7 +100,8 @@ class ReplicationManager:
             return False
     
     async def _initialize_handlers(self) -> None:
-        """Initialize all database replication handlers"""        handler_configs = {
+        """Initialize all database replication handlers"""
+        handler_configs = {
             ReplicationHandlerType.POSTGRESQL: PostgreSQLReplicationHandler,
             ReplicationHandlerType.REDIS: RedisReplicationHandler,
             ReplicationHandlerType.MONGODB: MongoDBReplicationHandler,
@@ -116,7 +125,8 @@ class ReplicationManager:
                 # Continue with other handlers
     
     async def _setup_monitoring(self) -> None:
-        """Setup replication monitoring"""        self.logger.info("Setting up replication monitoring...")
+        """Setup replication monitoring"""
+        self.logger.info("Setting up replication monitoring...")
         
         # Start periodic monitoring task
         asyncio.create_task(self._periodic_monitoring())
@@ -129,7 +139,8 @@ class ReplicationManager:
         config: Dict[str, Any], 
         mode: str = "master_slave"
     ) -> bool:
-        """        Start replication for specified database type.
+        """
+        Start replication for specified database type.
         
         Args:
             database_type: Type of database to replicate
@@ -138,7 +149,8 @@ class ReplicationManager:
             
         Returns:
             bool: True if replication started successfully
-        """        try:
+        """
+        try:
             if not self.initialized:
                 self.logger.error("Replication manager not initialized")
                 return False
@@ -186,7 +198,8 @@ class ReplicationManager:
             return False
     
     async def stop_replication(self, database_type: str, graceful: bool = True) -> bool:
-        """        Stop replication for specified database type.
+        """
+        Stop replication for specified database type.
         
         Args:
             database_type: Database type to stop replication
@@ -194,7 +207,8 @@ class ReplicationManager:
             
         Returns:
             bool: True if replication stopped successfully
-        """        try:
+        """
+        try:
             self.logger.info(f"Stopping replication for {database_type} (graceful={graceful})")
             
             # Get handler and job
@@ -227,14 +241,16 @@ class ReplicationManager:
             return False
     
     async def pause_replication(self, database_type: str) -> bool:
-        """        Pause replication for specified database type.
+        """
+        Pause replication for specified database type.
         
         Args:
             database_type: Database type to pause
             
         Returns:
             bool: True if replication paused successfully
-        """        try:
+        """
+        try:
             self.logger.info(f"Pausing replication for {database_type}")
             
             handler = self.handlers.get(database_type)
@@ -260,14 +276,16 @@ class ReplicationManager:
             return False
     
     async def resume_replication(self, database_type: str) -> bool:
-        """        Resume paused replication for specified database type.
+        """
+        Resume paused replication for specified database type.
         
         Args:
             database_type: Database type to resume
             
         Returns:
             bool: True if replication resumed successfully
-        """        try:
+        """
+        try:
             self.logger.info(f"Resuming replication for {database_type}")
             
             handler = self.handlers.get(database_type)
@@ -294,7 +312,8 @@ class ReplicationManager:
             return False
     
     async def sync_replication(self, database_type: str, force: bool = False) -> bool:
-        """        Trigger manual synchronization for specified database type.
+        """
+        Trigger manual synchronization for specified database type.
         
         Args:
             database_type: Database type to synchronize
@@ -302,7 +321,8 @@ class ReplicationManager:
             
         Returns:
             bool: True if synchronization successful
-        """        try:
+        """
+        try:
             self.logger.info(f"Triggering manual sync for {database_type} (force={force})")
             
             handler = self.handlers.get(database_type)
@@ -329,7 +349,8 @@ class ReplicationManager:
             return False
     
     async def prepare_maintenance(self, database_type: str, duration: timedelta) -> bool:
-        """        Prepare database for maintenance mode.
+        """
+        Prepare database for maintenance mode.
         
         Args:
             database_type: Database to prepare for maintenance
@@ -337,7 +358,8 @@ class ReplicationManager:
             
         Returns:
             bool: True if preparation successful
-        """        try:
+        """
+        try:
             self.logger.info(f"Preparing {database_type} for maintenance (duration: {duration})")
             
             handler = self.handlers.get(database_type)
@@ -363,14 +385,16 @@ class ReplicationManager:
             return False
     
     async def exit_maintenance(self, database_type: str) -> bool:
-        """        Exit maintenance mode for database.
+        """
+        Exit maintenance mode for database.
         
         Args:
             database_type: Database to exit maintenance
             
         Returns:
             bool: True if exit successful
-        """        try:
+        """
+        try:
             self.logger.info(f"Exiting maintenance mode for {database_type}")
             
             handler = self.handlers.get(database_type)
@@ -397,7 +421,8 @@ class ReplicationManager:
             return False
     
     async def _monitor_job(self, database_type: str) -> None:
-        """Monitor specific replication job"""        while database_type in self.active_jobs:
+        """Monitor specific replication job"""
+        while database_type in self.active_jobs:
             try:
                 job = self.active_jobs[database_type]
                 handler = self.handlers.get(database_type)
@@ -430,7 +455,8 @@ class ReplicationManager:
                 await asyncio.sleep(30)  # Longer delay on error
     
     async def _periodic_monitoring(self) -> None:
-        """Periodic monitoring of all replication jobs"""        while True:
+        """Periodic monitoring of all replication jobs"""
+        while True:
             try:
                 await asyncio.sleep(self.config.health_check_interval)
                 
@@ -458,7 +484,8 @@ class ReplicationManager:
                 self.logger.error(f"Error in periodic monitoring: {e}")
     
     async def _attempt_recovery(self, database_type: str) -> bool:
-        """Attempt automatic recovery for failed replication"""        try:
+        """Attempt automatic recovery for failed replication"""
+        try:
             self.logger.info(f"Attempting recovery for {database_type}")
             
             job = self.active_jobs.get(database_type)
@@ -498,11 +525,13 @@ class ReplicationManager:
             return False
     
     async def get_replication_status(self) -> Dict[str, Any]:
-        """        Get comprehensive replication status for all jobs.
+        """
+        Get comprehensive replication status for all jobs.
         
         Returns:
             Dict containing status information for all replication jobs
-        """        status = {
+        """
+        status = {
             "manager_status": self.manager_status,
             "initialized": self.initialized,
             "total_jobs": len(self.active_jobs),
@@ -535,7 +564,8 @@ class ReplicationManager:
         return status
     
     async def shutdown(self) -> None:
-        """Shutdown replication manager and all handlers"""        try:
+        """Shutdown replication manager and all handlers"""
+        try:
             self.logger.info("Shutting down replication manager...")
             
             # Stop all active jobs

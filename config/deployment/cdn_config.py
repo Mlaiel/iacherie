@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -22,7 +23,8 @@ import json
 
 
 class CDNProvider(Enum):
-    """CDN provider types"""    CLOUDFLARE = "cloudflare"
+    """CDN provider types"""
+    CLOUDFLARE = "cloudflare"
     AWS_CLOUDFRONT = "aws_cloudfront"
     AZURE_CDN = "azure_cdn"
     GOOGLE_CDN = "google_cdn"
@@ -32,7 +34,8 @@ class CDNProvider(Enum):
 
 
 class CachePolicy(Enum):
-    """CDN cache policies"""    NO_CACHE = "no_cache"
+    """CDN cache policies"""
+    NO_CACHE = "no_cache"
     SHORT_CACHE = "short_cache"  # 5 minutes
     MEDIUM_CACHE = "medium_cache"  # 1 hour
     LONG_CACHE = "long_cache"  # 1 day
@@ -42,7 +45,8 @@ class CachePolicy(Enum):
 
 @dataclass
 class CacheRule:
-    """CDN cache rule configuration"""    path_pattern: str
+    """CDN cache rule configuration"""
+    path_pattern: str
     cache_policy: CachePolicy
     ttl_seconds: int = 0
     browser_cache_ttl: Optional[int] = None
@@ -56,7 +60,8 @@ class CacheRule:
 
 @dataclass
 class OriginConfig:
-    """CDN origin server configuration"""    domain_name: str
+    """CDN origin server configuration"""
+    domain_name: str
     origin_path: str = ""
     protocol: str = "HTTPS"
     port: int = 443
@@ -70,7 +75,8 @@ class OriginConfig:
 
 @dataclass
 class SecurityConfig:
-    """CDN security configuration"""    geo_blocking: Dict[str, List[str]] = field(default_factory=dict)  # {"allow": ["DE", "US"], "block": ["CN"]}
+    """CDN security configuration"""
+    geo_blocking: Dict[str, List[str]] = field(default_factory=dict)  # {"allow": ["DE", "US"], "block": ["CN"]}
     ip_whitelist: List[str] = field(default_factory=list)
     ip_blacklist: List[str] = field(default_factory=list)
     rate_limiting: Dict[str, int] = field(default_factory=dict)  # {"requests_per_second": 100}
@@ -82,7 +88,8 @@ class SecurityConfig:
 
 
 class CDNConfig:
-    """    Professional CDN configuration manager for IA-Influencer Agent Platform.
+    """
+    Professional CDN configuration manager for IA-Influencer Agent Platform.
     
     Manages content delivery and edge caching for:
     - Static assets (JS, CSS, images, fonts)
@@ -92,7 +99,8 @@ class CDNConfig:
     - Real-time content protection assets
     - Revenue analytics dashboards
     - Multi-region content distribution
-    """    
+    """
+    
     def __init__(self, environment: str = "development"):
         self.environment = environment
         self.project_name = "ia-influencer-agent"
@@ -100,7 +108,8 @@ class CDNConfig:
         self.cdn_provider = self._get_cdn_provider()
         
     def _get_base_domain(self) -> str:
-        """Get base domain based on environment"""        domains = {
+        """Get base domain based on environment"""
+        domains = {
             "development": "dev.ia-influencer.com",
             "staging": "staging.ia-influencer.com",
             "production": "ia-influencer.com"
@@ -108,7 +117,8 @@ class CDNConfig:
         return domains.get(self.environment, "localhost")
     
     def _get_cdn_provider(self) -> CDNProvider:
-        """Get CDN provider based on environment"""        providers = {
+        """Get CDN provider based on environment"""
+        providers = {
             "development": CDNProvider.CLOUDFLARE,
             "staging": CDNProvider.CLOUDFLARE,
             "production": CDNProvider.AWS_CLOUDFRONT
@@ -116,7 +126,8 @@ class CDNConfig:
         return providers.get(self.environment, CDNProvider.CLOUDFLARE)
     
     def get_cache_rules(self) -> List[CacheRule]:
-        """Get CDN cache rules for different content types"""        return [
+        """Get CDN cache rules for different content types"""
+        return [
             # Static assets - long cache
             CacheRule(
                 path_pattern="/static/*",
@@ -268,7 +279,8 @@ class CDNConfig:
         ]
     
     def get_origin_configs(self) -> Dict[str, OriginConfig]:
-        """Get origin server configurations"""        return {
+        """Get origin server configurations"""
+        return {
             # Main API origin
             "api": OriginConfig(
                 domain_name=f"api.{self.base_domain}",
@@ -341,7 +353,8 @@ class CDNConfig:
         }
     
     def get_security_config(self) -> SecurityConfig:
-        """Get CDN security configuration"""        if self.environment == "production":
+        """Get CDN security configuration"""
+        if self.environment == "production":
             return SecurityConfig(
                 geo_blocking={
                     "allow": ["DE", "US", "GB", "FR", "CA", "AU", "NL", "CH", "AT", "SE"],
@@ -384,7 +397,8 @@ class CDNConfig:
             )
     
     def get_cloudflare_config(self) -> Dict[str, Any]:
-        """Get Cloudflare CDN configuration"""        cache_rules = self.get_cache_rules()
+        """Get Cloudflare CDN configuration"""
+        cache_rules = self.get_cache_rules()
         origins = self.get_origin_configs()
         security = self.get_security_config()
         
@@ -494,7 +508,8 @@ class CDNConfig:
         }
     
     def get_aws_cloudfront_config(self) -> Dict[str, Any]:
-        """Get AWS CloudFront CDN configuration"""        cache_rules = self.get_cache_rules()
+        """Get AWS CloudFront CDN configuration"""
+        cache_rules = self.get_cache_rules()
         origins = self.get_origin_configs()
         security = self.get_security_config()
         
@@ -615,7 +630,8 @@ class CDNConfig:
         }
     
     def get_azure_cdn_config(self) -> Dict[str, Any]:
-        """Get Azure CDN configuration"""        return {
+        """Get Azure CDN configuration"""
+        return {
             "profile": {
                 "name": f"{self.project_name}-{self.environment}-cdn-profile",
                 "location": "Global",
@@ -662,7 +678,8 @@ class CDNConfig:
         }
     
     def get_google_cdn_config(self) -> Dict[str, Any]:
-        """Get Google Cloud CDN configuration"""        return {
+        """Get Google Cloud CDN configuration"""
+        return {
             "backend_service": {
                 "name": f"{self.project_name}-{self.environment}-backend",
                 "description": f"Backend service for {self.project_name} {self.environment}",
@@ -742,7 +759,8 @@ class CDNConfig:
         }
     
     def _get_origin_id_for_path(self, path_pattern: str) -> str:
-        """Get appropriate origin ID for a given path pattern"""        if path_pattern.startswith("/static"):
+        """Get appropriate origin ID for a given path pattern"""
+        if path_pattern.startswith("/static"):
             return "static_origin"
         elif path_pattern.startswith("/media"):
             return "media_origin"
@@ -754,14 +772,17 @@ class CDNConfig:
             return "api_origin"
     
     def _get_project_id(self) -> str:
-        """Get Google Cloud project ID"""        return f"{self.project_name}-{self.environment}"
+        """Get Google Cloud project ID"""
+        return f"{self.project_name}-{self.environment}"
     
     def _get_timestamp(self) -> str:
-        """Get current timestamp for unique identifiers"""        import time
+        """Get current timestamp for unique identifiers"""
+        import time
         return str(int(time.time()))
     
     def generate_cache_purge_script(self) -> str:
-        """Generate cache purging script for different CDN providers"""        script = f"""#!/bin/bash
+        """Generate cache purging script for different CDN providers"""
+        script = f"""#!/bin/bash
 # CDN Cache Purging Script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
 
@@ -852,10 +873,12 @@ case "$CDN_PROVIDER" in
 esac
 
 log "Cache purging completed for $CDN_PROVIDER"
-"""        return script
+"""
+        return script
     
     def export_configurations(self, output_dir: str = "./cdn-configs") -> Dict[str, str]:
-        """Export all CDN configurations to files"""        import os
+        """Export all CDN configurations to files"""
+        import os
         os.makedirs(output_dir, exist_ok=True)
         
         configs = {}

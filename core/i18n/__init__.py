@@ -8,14 +8,16 @@ Technologies: Python, NLP, Translation APIs, Cultural Adaptation, RTL Support
 ================================================================================
 
 ⚠️  PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
 BUSINESS LOGIC:
 Multi-format content → Language detection → Cultural adaptation → 
 Translation quality → RTL/Voice support → Regional compliance → Global distribution
-"""from .language_manager import (
+"""
+
+from .language_manager import (
     InternationalizationManager,
     LanguageInfo,
     LanguageRegion,
@@ -124,4 +126,4 @@ __all__ = [
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."

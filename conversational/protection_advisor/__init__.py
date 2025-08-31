@@ -18,7 +18,9 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ INTELLECTUAL PROPERTY WARNING ⚠️
 This code is proprietary and confidential. Unauthorized copying, distribution,
 or use is strictly prohibited and may result in severe legal consequences.
-"""from .advisor_core import (
+"""
+
+from .advisor_core import (
     ProtectionAdvisorCore,
     ContentAnalysis,
     ProtectionAdvice,
@@ -78,12 +80,19 @@ from .threat_detector import (
 )
 
 from .protection_strategies import ProtectionStrategies
+
 from .compliance_checker import ComplianceChecker
+
 from .protection_metrics import ProtectionMetrics
+
 from .alert_manager import AlertManager
+
 from .policy_engine import PolicyEngine
+
 from .advisory_orchestrator import AdvisoryOrchestrator
+
 from .fingerprinting_integration import FingerprintingIntegration
+
 from .content_surveillance import ContentSurveillance
 
 __version__ = "2.0.0"
@@ -158,8 +167,11 @@ __all__ = [
     "ContentSurveillance"
 ]
 from .policy_engine import PolicyEngine
+
 from .fingerprinting_integration import FingerprintingIntegration
+
 from .content_surveillance import ContentSurveillance
+
 from .index import ProtectionAdvisorIndex
 
 __all__ = [

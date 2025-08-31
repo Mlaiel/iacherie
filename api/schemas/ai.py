@@ -6,7 +6,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
-"""from datetime import datetime
+"""
+from datetime import datetime
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Union
 from uuid import UUID
@@ -17,7 +18,8 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class AIModelConfiguration(UUIDSchema, TimestampSchema, AuditSchema):
-    """AI model configuration and management schema."""    
+    """AI model configuration and management schema."""
+    
     model_name: str = Field(description="AI model name")
     model_type: str = Field(description="Type of AI model")
     model_version: str = Field(description="Model version identifier")
@@ -83,7 +85,8 @@ class AIModelConfiguration(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('model_type')
     def validate_model_type(cls, v):
-        """Validate model type."""        allowed_types = {
+        """Validate model type."""
+        allowed_types = {
             "language_model", "computer_vision", "audio_processing", "multimodal",
             "content_generation", "content_analysis", "sentiment_analysis",
             "object_detection", "face_recognition", "voice_synthesis",
@@ -95,7 +98,8 @@ class AIModelConfiguration(UUIDSchema, TimestampSchema, AuditSchema):
 
 
 class AIProcessingRequest(UUIDSchema, TimestampSchema):
-    """AI processing request schema."""    
+    """AI processing request schema."""
+    
     requester_id: UUID = Field(description="User/system making the request")
     model_id: UUID = Field(description="AI model to use")
     processing_type: str = Field(description="Type of AI processing requested")
@@ -137,7 +141,8 @@ class AIProcessingRequest(UUIDSchema, TimestampSchema):
     
     @validator('processing_type')
     def validate_processing_type(cls, v):
-        """Validate processing type."""        allowed_types = {
+        """Validate processing type."""
+        allowed_types = {
             "content_generation", "content_analysis", "content_enhancement",
             "content_moderation", "sentiment_analysis", "language_translation",
             "image_recognition", "video_analysis", "audio_processing",
@@ -149,14 +154,16 @@ class AIProcessingRequest(UUIDSchema, TimestampSchema):
     
     @validator('priority_level')
     def validate_priority_level(cls, v):
-        """Validate priority level."""        allowed_levels = {"low", "normal", "high", "urgent", "critical"}
+        """Validate priority level."""
+        allowed_levels = {"low", "normal", "high", "urgent", "critical"}
         if v not in allowed_levels:
             raise ValueError(f'Priority level must be one of: {", ".join(allowed_levels)}')
         return v
 
 
 class AIProcessingResult(UUIDSchema, TimestampSchema):
-    """AI processing result schema."""    
+    """AI processing result schema."""
+    
     request_id: UUID = Field(description="Associated processing request")
     model_id: UUID = Field(description="AI model used")
     processing_status: str = Field(description="Final processing status")
@@ -209,7 +216,8 @@ class AIProcessingResult(UUIDSchema, TimestampSchema):
     
     @validator('processing_status')
     def validate_processing_status(cls, v):
-        """Validate processing status."""        allowed_statuses = {
+        """Validate processing status."""
+        allowed_statuses = {
             "completed", "partial_success", "failed", "timeout",
             "cancelled", "error", "quality_issue", "safety_violation"
         }
@@ -219,7 +227,8 @@ class AIProcessingResult(UUIDSchema, TimestampSchema):
 
 
 class MLPipeline(UUIDSchema, TimestampSchema, AuditSchema):
-    """Machine Learning pipeline configuration schema."""    
+    """Machine Learning pipeline configuration schema."""
+    
     pipeline_name: str = Field(description="ML pipeline name")
     pipeline_type: str = Field(description="Type of ML pipeline")
     pipeline_purpose: str = Field(description="Purpose of the pipeline")
@@ -276,7 +285,8 @@ class MLPipeline(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('pipeline_type')
     def validate_pipeline_type(cls, v):
-        """Validate pipeline type."""        allowed_types = {
+        """Validate pipeline type."""
+        allowed_types = {
             "training_pipeline", "inference_pipeline", "data_processing",
             "feature_engineering", "model_evaluation", "automated_retraining",
             "batch_processing", "real_time_processing", "hybrid_pipeline"
@@ -287,7 +297,8 @@ class MLPipeline(UUIDSchema, TimestampSchema, AuditSchema):
 
 
 class ContentIntelligence(UUIDSchema, TimestampSchema):
-    """AI-powered content intelligence and insights schema."""    
+    """AI-powered content intelligence and insights schema."""
+    
     content_id: UUID = Field(description="Content being analyzed")
     analysis_type: str = Field(description="Type of intelligence analysis")
     ai_model_used: str = Field(description="AI model used for analysis")
@@ -353,7 +364,8 @@ class ContentIntelligence(UUIDSchema, TimestampSchema):
     
     @validator('analysis_type')
     def validate_analysis_type(cls, v):
-        """Validate analysis type."""        allowed_types = {
+        """Validate analysis type."""
+        allowed_types = {
             "comprehensive_analysis", "sentiment_analysis", "quality_assessment",
             "audience_targeting", "performance_prediction", "seo_analysis",
             "competitive_intelligence", "risk_assessment", "optimization_analysis"
@@ -364,7 +376,8 @@ class ContentIntelligence(UUIDSchema, TimestampSchema):
 
 
 class AIRecommendationEngine(UUIDSchema, TimestampSchema):
-    """AI-powered recommendation engine schema."""    
+    """AI-powered recommendation engine schema."""
+    
     user_id: UUID = Field(description="User receiving recommendations")
     recommendation_type: str = Field(description="Type of recommendations")
     recommendation_context: str = Field(description="Context for recommendations")
@@ -419,7 +432,8 @@ class AIRecommendationEngine(UUIDSchema, TimestampSchema):
     
     @validator('recommendation_type')
     def validate_recommendation_type(cls, v):
-        """Validate recommendation type."""        allowed_types = {
+        """Validate recommendation type."""
+        allowed_types = {
             "content_recommendations", "collaboration_matching", "audience_targeting",
             "optimization_suggestions", "strategy_recommendations", "trend_opportunities",
             "monetization_advice", "platform_expansion", "performance_improvement"
@@ -430,7 +444,8 @@ class AIRecommendationEngine(UUIDSchema, TimestampSchema):
 
 
 class NeuralNetworkConfiguration(UUIDSchema, TimestampSchema):
-    """Advanced neural network configuration schema."""    
+    """Advanced neural network configuration schema."""
+    
     network_name: str = Field(description="Neural network name")
     architecture_type: str = Field(description="Type of neural network architecture")
     task_type: str = Field(description="Primary task for the network")
@@ -479,7 +494,8 @@ class NeuralNetworkConfiguration(UUIDSchema, TimestampSchema):
     
     @validator('architecture_type')
     def validate_architecture_type(cls, v):
-        """Validate architecture type."""        allowed_types = {
+        """Validate architecture type."""
+        allowed_types = {
             "feedforward", "convolutional", "recurrent", "transformer",
             "attention_based", "generative_adversarial", "autoencoder",
             "reinforcement_learning", "graph_neural", "hybrid"

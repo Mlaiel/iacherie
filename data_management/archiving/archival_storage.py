@@ -12,7 +12,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import hashlib
@@ -33,7 +34,8 @@ from ..exceptions import ArchivalError, StorageQuotaExceededError
 
 
 class ArchivalStorageBackend(ABC):
-    """Abstract base class for archival storage backends"""    
+    """Abstract base class for archival storage backends"""
+    
     @abstractmethod
     async def store_archive(
         self,
@@ -42,35 +44,43 @@ class ArchivalStorageBackend(ABC):
         tier: ArchivalTier,
         metadata: Dict[str, Any]
     ) -> str:
-        """Store archive content and return storage path"""        pass
+        """Store archive content and return storage path"""
+        pass
     
     @abstractmethod
     async def retrieve_archive(self, archive_id: str) -> Optional[bytes]:
-        """Retrieve archive content by ID"""        pass
+        """Retrieve archive content by ID"""
+        pass
     
     @abstractmethod
     async def delete_archive(self, archive_id: str) -> bool:
-        """Delete archive from storage"""        pass
+        """Delete archive from storage"""
+        pass
     
     @abstractmethod
     async def migrate_archive(self, archive_id: str, target_tier: ArchivalTier) -> bool:
-        """Migrate archive to different storage tier"""        pass
+        """Migrate archive to different storage tier"""
+        pass
     
     @abstractmethod
     async def get_archive_metadata(self, archive_id: str) -> Optional[Dict[str, Any]]:
-        """Get archive metadata"""        pass
+        """Get archive metadata"""
+        pass
     
     @abstractmethod
     async def get_storage_statistics(self) -> Dict[str, Any]:
-        """Get storage usage statistics"""        pass
+        """Get storage usage statistics"""
+        pass
     
     @abstractmethod
     async def health_check(self) -> Dict[str, Any]:
-        """Perform storage backend health check"""        pass
+        """Perform storage backend health check"""
+        pass
 
 
 class LocalArchivalStorage(ArchivalStorageBackend):
-    """Local filesystem archival storage backend"""    
+    """Local filesystem archival storage backend"""
+    
     def __init__(self, base_path: str, enable_redundancy: bool = True):
         self.base_path = Path(base_path)
         self.enable_redundancy = enable_redundancy
@@ -89,7 +99,8 @@ class LocalArchivalStorage(ArchivalStorageBackend):
         self._ensure_directories()
     
     def _ensure_directories(self):
-        """Ensure all required directories exist"""        self.base_path.mkdir(parents=True, exist_ok=True)
+        """Ensure all required directories exist"""
+        self.base_path.mkdir(parents=True, exist_ok=True)
         self.metadata_path.mkdir(exist_ok=True)
         
         for tier_path in self.tier_paths.values():
@@ -105,7 +116,8 @@ class LocalArchivalStorage(ArchivalStorageBackend):
         tier: ArchivalTier,
         metadata: Dict[str, Any]
     ) -> str:
-        """Store archive in local filesystem"""        
+        """Store archive in local filesystem"""
+        
         try:
             tier_path = self.tier_paths[tier]
             archive_file = tier_path / f"{archive_id}.archive"
@@ -147,7 +159,8 @@ class LocalArchivalStorage(ArchivalStorageBackend):
             raise ArchivalError(f"Storage operation failed: {e}")
     
     async def retrieve_archive(self, archive_id: str) -> Optional[bytes]:
-        """Retrieve archive from local filesystem"""        
+        """Retrieve archive from local filesystem"""
+        
         try:
             # Find archive across all tiers
             for tier, tier_path in self.tier_paths.items():
@@ -191,7 +204,8 @@ class LocalArchivalStorage(ArchivalStorageBackend):
             return None
     
     async def delete_archive(self, archive_id: str) -> bool:
-        """Delete archive from local filesystem"""        
+        """Delete archive from local filesystem"""
+        
         try:
             deleted = False
             
@@ -223,7 +237,8 @@ class LocalArchivalStorage(ArchivalStorageBackend):
             return False
     
     async def migrate_archive(self, archive_id: str, target_tier: ArchivalTier) -> bool:
-        """Migrate archive to different tier"""        
+        """Migrate archive to different tier"""
+        
         try:
             # Find current location
             current_tier = None
@@ -289,7 +304,8 @@ class LocalArchivalStorage(ArchivalStorageBackend):
             return False
     
     async def get_archive_metadata(self, archive_id: str) -> Optional[Dict[str, Any]]:
-        """Get archive metadata"""        
+        """Get archive metadata"""
+        
         try:
             metadata_file = self.metadata_path / f"{archive_id}.json"
             
@@ -305,7 +321,8 @@ class LocalArchivalStorage(ArchivalStorageBackend):
             return None
     
     async def get_storage_statistics(self) -> Dict[str, Any]:
-        """Get storage usage statistics"""        
+        """Get storage usage statistics"""
+        
         try:
             stats = {
                 "total_archives": 0,
@@ -344,7 +361,8 @@ class LocalArchivalStorage(ArchivalStorageBackend):
             return {}
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform storage backend health check"""        
+        """Perform storage backend health check"""
+        
         health = {
             "status": "healthy",
             "checks": {},
@@ -399,7 +417,8 @@ class LocalArchivalStorage(ArchivalStorageBackend):
 
 
 class CloudArchivalStorage(ArchivalStorageBackend):
-    """Cloud-based archival storage backend (AWS S3, Azure, GCP)"""    
+    """Cloud-based archival storage backend (AWS S3, Azure, GCP)"""
+    
     def __init__(
         self,
         provider: str,
@@ -442,7 +461,8 @@ class CloudArchivalStorage(ArchivalStorageBackend):
         tier: ArchivalTier,
         metadata: Dict[str, Any]
     ) -> str:
-        """Store archive in cloud storage"""        
+        """Store archive in cloud storage"""
+        
         try:
             storage_class = self.tier_mapping[tier]
             object_key = f"archives/{tier.value}/{archive_id}.archive"
@@ -494,7 +514,8 @@ class CloudArchivalStorage(ArchivalStorageBackend):
             raise ArchivalError(f"Cloud storage operation failed: {e}")
     
     async def retrieve_archive(self, archive_id: str) -> Optional[bytes]:
-        """Retrieve archive from cloud storage"""        
+        """Retrieve archive from cloud storage"""
+        
         try:
             # Try to find archive across all tiers
             for tier in ArchivalTier:
@@ -531,7 +552,8 @@ class CloudArchivalStorage(ArchivalStorageBackend):
             return None
     
     async def delete_archive(self, archive_id: str) -> bool:
-        """Delete archive from cloud storage"""        
+        """Delete archive from cloud storage"""
+        
         try:
             deleted = False
             
@@ -571,7 +593,8 @@ class CloudArchivalStorage(ArchivalStorageBackend):
             return False
     
     async def migrate_archive(self, archive_id: str, target_tier: ArchivalTier) -> bool:
-        """Migrate archive to different cloud storage tier"""        
+        """Migrate archive to different cloud storage tier"""
+        
         try:
             # Find current location
             current_object_key = None
@@ -632,7 +655,8 @@ class CloudArchivalStorage(ArchivalStorageBackend):
             return False
     
     async def get_archive_metadata(self, archive_id: str) -> Optional[Dict[str, Any]]:
-        """Get archive metadata from cloud storage"""        
+        """Get archive metadata from cloud storage"""
+        
         try:
             metadata_key = f"metadata/{archive_id}.json"
             
@@ -650,7 +674,8 @@ class CloudArchivalStorage(ArchivalStorageBackend):
             return None
     
     async def get_storage_statistics(self) -> Dict[str, Any]:
-        """Get cloud storage usage statistics"""        
+        """Get cloud storage usage statistics"""
+        
         try:
             stats = {
                 "total_archives": 0,
@@ -684,7 +709,8 @@ class CloudArchivalStorage(ArchivalStorageBackend):
             return {}
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform cloud storage health check"""        
+        """Perform cloud storage health check"""
+        
         health = {
             "status": "healthy",
             "checks": {},
@@ -729,9 +755,11 @@ class CloudArchivalStorage(ArchivalStorageBackend):
 
 
 class HierarchicalStorageManager:
-    """    Manages hierarchical storage across multiple backends
+    """
+    Manages hierarchical storage across multiple backends
     with intelligent data placement and tier management
-    """    
+    """
+    
     def __init__(self):
         self.backends: Dict[ArchivalTier, ArchivalStorageBackend] = {}
         self.logger = logging.getLogger("archival.storage.hsm")
@@ -746,7 +774,8 @@ class HierarchicalStorageManager:
         }
     
     def register_backend(self, tier: ArchivalTier, backend: ArchivalStorageBackend):
-        """Register storage backend for specific tier"""        self.backends[tier] = backend
+        """Register storage backend for specific tier"""
+        self.backends[tier] = backend
         self.logger.info(f"Registered backend for tier {tier.value}")
     
     async def store_archive(
@@ -756,7 +785,8 @@ class HierarchicalStorageManager:
         tier: ArchivalTier,
         metadata: Dict[str, Any]
     ) -> str:
-        """Store archive using appropriate backend"""        
+        """Store archive using appropriate backend"""
+        
         if tier not in self.backends:
             raise ArchivalError(f"No backend registered for tier {tier.value}")
         
@@ -764,7 +794,8 @@ class HierarchicalStorageManager:
         return await backend.store_archive(archive_id, content_data, tier, metadata)
     
     async def retrieve_archive(self, archive_id: str) -> Optional[bytes]:
-        """Retrieve archive from any available backend"""        
+        """Retrieve archive from any available backend"""
+        
         # Search across all backends in order of priority
         for tier in sorted(self.backends.keys(), key=lambda t: self.tier_priorities[t]):
             backend = self.backends[tier]
@@ -775,7 +806,8 @@ class HierarchicalStorageManager:
         return None
     
     async def find_archive_tier(self, archive_id: str) -> Optional[ArchivalTier]:
-        """Find which tier contains the archive"""        
+        """Find which tier contains the archive"""
+        
         for tier, backend in self.backends.items():
             metadata = await backend.get_archive_metadata(archive_id)
             if metadata:
@@ -784,7 +816,8 @@ class HierarchicalStorageManager:
         return None
     
     async def migrate_archive(self, archive_id: str, target_tier: ArchivalTier) -> bool:
-        """Migrate archive between tiers/backends"""        
+        """Migrate archive between tiers/backends"""
+        
         # Find current tier
         current_tier = await self.find_archive_tier(archive_id)
         if not current_tier:
@@ -822,7 +855,8 @@ class HierarchicalStorageManager:
             return False
     
     async def get_consolidated_statistics(self) -> Dict[str, Any]:
-        """Get consolidated statistics from all backends"""        
+        """Get consolidated statistics from all backends"""
+        
         consolidated_stats = {
             "total_archives": 0,
             "total_size": 0,
@@ -842,7 +876,8 @@ class HierarchicalStorageManager:
         return consolidated_stats
     
     async def health_check_all(self) -> Dict[str, Any]:
-        """Perform health check on all backends"""        
+        """Perform health check on all backends"""
+        
         overall_health = {
             "status": "healthy",
             "backend_health": {},

@@ -12,7 +12,8 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import time
@@ -32,7 +33,8 @@ settings = get_settings()
 
 
 class WebSocketConnection(BaseModel):
-    """WebSocket connection information"""    id: str = Field(..., description="Connection ID")
+    """WebSocket connection information"""
+    id: str = Field(..., description="Connection ID")
     user_id: str = Field(..., description="User ID")
     websocket: Any = Field(..., description="WebSocket instance")
     connected_at: float = Field(default_factory=time.time, description="Connection timestamp")
@@ -42,7 +44,8 @@ class WebSocketConnection(BaseModel):
 
 
 class NotificationChannel(str, Enum):
-    """Notification channel types"""    CONTENT_ALERTS = "content.alerts"
+    """Notification channel types"""
+    CONTENT_ALERTS = "content.alerts"
     PROTECTION_VIOLATIONS = "protection.violations"
     AI_PROCESSING = "ai.processing"
     REVENUE_UPDATES = "revenue.updates"
@@ -53,7 +56,8 @@ class NotificationChannel(str, Enum):
 
 
 class RealTimeMessage(BaseModel):
-    """Real-time message format"""    id: str = Field(..., description="Message ID")
+    """Real-time message format"""
+    id: str = Field(..., description="Message ID")
     channel: NotificationChannel = Field(..., description="Notification channel")
     type: str = Field(..., description="Message type")
     title: str = Field(..., description="Message title")
@@ -66,9 +70,11 @@ class RealTimeMessage(BaseModel):
 
 
 class RealTimeCommunicationManager:
-    """    Enterprise real-time communication manager
+    """
+    Enterprise real-time communication manager
     Handles WebSocket connections, notifications, and live updates
-    """    def __init__(self):
+    """
+    def __init__(self):
         self.connections: Dict[str, WebSocketConnection] = {}
         self.user_connections: Dict[str, List[str]] = {}  # user_id -> connection_ids
         self.channel_subscribers: Dict[str, Set[str]] = {}  # channel -> connection_ids
@@ -90,7 +96,8 @@ class RealTimeCommunicationManager:
         self.background_tasks: List[asyncio.Task] = []
 
     async def initialize(self) -> None:
-        """Initialize real-time communication manager"""        try:
+        """Initialize real-time communication manager"""
+        try:
             # Setup Redis connection
             self.redis_client = aioredis.from_url(
                 settings.REDIS_URL,
@@ -108,10 +115,12 @@ class RealTimeCommunicationManager:
             raise
 
     def _setup_socketio_handlers(self) -> None:
-        """Setup Socket.IO event handlers"""        
+        """Setup Socket.IO event handlers"""
+        
         @self.sio_server.event
         async def connect(sid: str, environ: Dict[str, Any], auth: Dict[str, Any]):
-            """Handle Socket.IO connection"""            try:
+            """Handle Socket.IO connection"""
+            try:
                 # Verify authentication
                 token = auth.get("token")
                 if not token:
@@ -149,7 +158,8 @@ class RealTimeCommunicationManager:
 
         @self.sio_server.event
         async def disconnect(sid: str):
-            """Handle Socket.IO disconnection"""            try:
+            """Handle Socket.IO disconnection"""
+            try:
                 session = await self.sio_server.get_session(sid)
                 user_id = session.get("user_id")
                 
@@ -160,7 +170,8 @@ class RealTimeCommunicationManager:
 
         @self.sio_server.event
         async def subscribe_channel(sid: str, data: Dict[str, Any]):
-            """Subscribe to notification channel"""            try:
+            """Subscribe to notification channel"""
+            try:
                 channel = data.get("channel")
                 if not channel or channel not in NotificationChannel:
                     await self.sio_server.emit("error", {
@@ -183,7 +194,8 @@ class RealTimeCommunicationManager:
 
         @self.sio_server.event
         async def unsubscribe_channel(sid: str, data: Dict[str, Any]):
-            """Unsubscribe from notification channel"""            try:
+            """Unsubscribe from notification channel"""
+            try:
                 channel = data.get("channel")
                 if not channel:
                     return
@@ -203,10 +215,12 @@ class RealTimeCommunicationManager:
 
         @self.sio_server.event
         async def heartbeat(sid: str):
-            """Handle heartbeat ping"""            await self.sio_server.emit("heartbeat_ack", {"timestamp": time.time()}, room=sid)
+            """Handle heartbeat ping"""
+            await self.sio_server.emit("heartbeat_ack", {"timestamp": time.time()}, room=sid)
 
     async def handle_websocket_connection(self, websocket: WebSocket, user_id: str) -> None:
-        """Handle raw WebSocket connection"""        try:
+        """Handle raw WebSocket connection"""
+        try:
             await websocket.accept()
             
             connection_id = f"ws_{user_id}_{int(time.time())}"
@@ -249,7 +263,8 @@ class RealTimeCommunicationManager:
             await self._cleanup_websocket_connection(connection_id)
 
     async def _handle_websocket_message(self, connection_id: str, message: Dict[str, Any]) -> None:
-        """Handle incoming WebSocket message"""        try:
+        """Handle incoming WebSocket message"""
+        try:
             message_type = message.get("type")
             
             if message_type == "subscribe":
@@ -273,7 +288,8 @@ class RealTimeCommunicationManager:
             logger.error(f"Error handling WebSocket message: {e}")
 
     async def _subscribe_connection_to_channel(self, connection_id: str, channel: str) -> None:
-        """Subscribe connection to notification channel"""        try:
+        """Subscribe connection to notification channel"""
+        try:
             if channel not in NotificationChannel:
                 await self.send_to_connection(connection_id, {
                     "type": "error",
@@ -303,7 +319,8 @@ class RealTimeCommunicationManager:
             logger.error(f"Subscription error: {e}")
 
     async def _unsubscribe_connection_from_channel(self, connection_id: str, channel: str) -> None:
-        """Unsubscribe connection from notification channel"""        try:
+        """Unsubscribe connection from notification channel"""
+        try:
             # Remove from channel subscribers
             if channel in self.channel_subscribers:
                 self.channel_subscribers[channel].discard(connection_id)
@@ -325,7 +342,8 @@ class RealTimeCommunicationManager:
             logger.error(f"Unsubscription error: {e}")
 
     async def send_to_connection(self, connection_id: str, message: Dict[str, Any]) -> bool:
-        """Send message to specific connection"""        try:
+        """Send message to specific connection"""
+        try:
             connection = self.connections.get(connection_id)
             if not connection:
                 return False
@@ -344,7 +362,8 @@ class RealTimeCommunicationManager:
             return False
 
     async def send_to_user(self, user_id: str, message: RealTimeMessage) -> int:
-        """Send message to all connections of a user"""        try:
+        """Send message to all connections of a user"""
+        try:
             connections = self.user_connections.get(user_id, [])
             sent_count = 0
             
@@ -376,7 +395,8 @@ class RealTimeCommunicationManager:
             return 0
 
     async def broadcast_to_channel(self, channel: NotificationChannel, message: RealTimeMessage) -> int:
-        """Broadcast message to all subscribers of a channel"""        try:
+        """Broadcast message to all subscribers of a channel"""
+        try:
             subscribers = self.channel_subscribers.get(channel, set())
             sent_count = 0
             
@@ -400,7 +420,8 @@ class RealTimeCommunicationManager:
             return 0
 
     async def send_content_protection_alert(self, user_id: str, violation_data: Dict[str, Any]) -> None:
-        """Send content protection violation alert"""        try:
+        """Send content protection violation alert"""
+        try:
             message = RealTimeMessage(
                 id=f"protection_alert_{int(time.time())}",
                 channel=NotificationChannel.PROTECTION_VIOLATIONS,
@@ -418,7 +439,8 @@ class RealTimeCommunicationManager:
             logger.error(f"Error sending protection alert: {e}")
 
     async def send_ai_processing_update(self, user_id: str, processing_data: Dict[str, Any]) -> None:
-        """Send AI processing status update"""        try:
+        """Send AI processing status update"""
+        try:
             message = RealTimeMessage(
                 id=f"ai_update_{int(time.time())}",
                 channel=NotificationChannel.AI_PROCESSING,
@@ -435,7 +457,8 @@ class RealTimeCommunicationManager:
             logger.error(f"Error sending AI processing update: {e}")
 
     async def send_revenue_notification(self, user_id: str, revenue_data: Dict[str, Any]) -> None:
-        """Send revenue update notification"""        try:
+        """Send revenue update notification"""
+        try:
             message = RealTimeMessage(
                 id=f"revenue_update_{int(time.time())}",
                 channel=NotificationChannel.REVENUE_UPDATES,
@@ -452,7 +475,8 @@ class RealTimeCommunicationManager:
             logger.error(f"Error sending revenue notification: {e}")
 
     async def get_offline_notifications(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get offline notifications for user"""        try:
+        """Get offline notifications for user"""
+        try:
             if not self.redis_client:
                 return []
             
@@ -477,7 +501,8 @@ class RealTimeCommunicationManager:
             return []
 
     async def _cleanup_websocket_connection(self, connection_id: str) -> None:
-        """Clean up WebSocket connection"""        try:
+        """Clean up WebSocket connection"""
+        try:
             connection = self.connections.get(connection_id)
             if not connection:
                 return
@@ -505,7 +530,8 @@ class RealTimeCommunicationManager:
             logger.error(f"Error cleaning up connection {connection_id}: {e}")
 
     async def _start_background_tasks(self) -> None:
-        """Start background maintenance tasks"""        try:
+        """Start background maintenance tasks"""
+        try:
             # Connection health checker
             health_task = asyncio.create_task(self._connection_health_checker())
             self.background_tasks.append(health_task)
@@ -520,7 +546,8 @@ class RealTimeCommunicationManager:
             logger.error(f"Error starting background tasks: {e}")
 
     async def _connection_health_checker(self) -> None:
-        """Check connection health and clean up stale connections"""        while True:
+        """Check connection health and clean up stale connections"""
+        while True:
             try:
                 current_time = time.time()
                 stale_connections = []
@@ -544,7 +571,8 @@ class RealTimeCommunicationManager:
                 await asyncio.sleep(60)
 
     async def _notification_cleanup(self) -> None:
-        """Clean up expired notifications"""        while True:
+        """Clean up expired notifications"""
+        while True:
             try:
                 if self.redis_client:
                     # Clean up expired notifications
@@ -561,7 +589,8 @@ class RealTimeCommunicationManager:
                 await asyncio.sleep(3600)
 
     async def get_connection_stats(self) -> Dict[str, Union[int, Dict]]:
-        """Get real-time connection statistics"""        try:
+        """Get real-time connection statistics"""
+        try:
             channel_stats = {}
             for channel, subscribers in self.channel_subscribers.items():
                 channel_stats[channel] = len(subscribers)
@@ -579,7 +608,8 @@ class RealTimeCommunicationManager:
             return {}
 
     async def shutdown(self) -> None:
-        """Shutdown real-time communication manager"""        try:
+        """Shutdown real-time communication manager"""
+        try:
             logger.info("Shutting down real-time communication manager")
             
             # Cancel background tasks

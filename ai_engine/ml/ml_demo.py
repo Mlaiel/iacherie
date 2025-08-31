@@ -14,7 +14,8 @@ Contact: mlaiel@live.de
 
 Usage:
     python ml_demo.py --demo [all|sentiment|trends|content|recommendations]
-"""import asyncio
+"""
+import asyncio
 import argparse
 import logging
 import pandas as pd
@@ -40,7 +41,8 @@ logger = logging.getLogger(__name__)
 
 
 class MLModuleDemo:
-    """Comprehensive demo of ML module capabilities"""    
+    """Comprehensive demo of ML module capabilities"""
+    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -68,7 +70,8 @@ class MLModuleDemo:
         ]
     
     async def run_demo(self, demo_type: str = "all"):
-        """Run specified demo"""        self.logger.info(f"Starting ML Module Demo: {demo_type}")
+        """Run specified demo"""
+        self.logger.info(f"Starting ML Module Demo: {demo_type}")
         
         try:
             if demo_type in ["all", "sentiment"]:
@@ -90,7 +93,8 @@ class MLModuleDemo:
             raise
     
     async def demo_sentiment_analysis(self):
-        """Demonstrate sentiment analysis capabilities"""        print("\n" + "="*60)
+        """Demonstrate sentiment analysis capabilities"""
+        print("\n" + "="*60)
         print("SENTIMENT ANALYSIS DEMO")
         print("="*60)
         
@@ -130,7 +134,8 @@ class MLModuleDemo:
         print(f"  Combined confidence: {multimodal_result.sentiment.confidence:.2f}")
     
     async def demo_trend_detection(self):
-        """Demonstrate trend detection capabilities"""        print("\n" + "="*60)
+        """Demonstrate trend detection capabilities"""
+        print("\n" + "="*60)
         print("TREND DETECTION DEMO")
         print("="*60)
         
@@ -181,7 +186,8 @@ class MLModuleDemo:
         print(f"  Average Virality: {summary.get('average_virality_score', 0):.3f}")
     
     async def demo_content_analysis(self):
-        """Demonstrate content analysis capabilities"""        print("\n" + "="*60)
+        """Demonstrate content analysis capabilities"""
+        print("\n" + "="*60)
         print("CONTENT ANALYSIS DEMO")
         print("="*60)
         
@@ -225,7 +231,8 @@ class MLModuleDemo:
         print("  Capabilities: Quality assessment, style analysis, caption generation")
     
     async def demo_recommendation_system(self):
-        """Demonstrate recommendation system capabilities"""        print("\n" + "="*60)
+        """Demonstrate recommendation system capabilities"""
+        print("\n" + "="*60)
         print("RECOMMENDATION SYSTEM DEMO")
         print("="*60)
         
@@ -284,7 +291,8 @@ class MLModuleDemo:
             print(f"    #{i}. {item['title']} (Trending Score: {item['trending_score']:.3f})")
     
     def print_performance_stats(self):
-        """Print performance statistics"""        print("\n" + "="*60)
+        """Print performance statistics"""
+        print("\n" + "="*60)
         print("PERFORMANCE & CAPABILITIES OVERVIEW")
         print("="*60)
         
@@ -322,7 +330,8 @@ class MLModuleDemo:
 
 
 async def main():
-    """Main demo function"""    parser = argparse.ArgumentParser(description="ML Module Demo")
+    """Main demo function"""
+    parser = argparse.ArgumentParser(description="ML Module Demo")
     parser.add_argument(
         "--demo",
         choices=["all", "sentiment", "trends", "content", "recommendations"],

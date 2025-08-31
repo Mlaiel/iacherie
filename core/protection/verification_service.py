@@ -9,7 +9,8 @@ This module provides advanced content verification capabilities:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import hashlib
 import json
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -42,7 +43,8 @@ settings = get_settings()
 
 
 class VerificationStatus(Enum):
-    """Status of verification process"""    PENDING = "pending"
+    """Status of verification process"""
+    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     VERIFIED_VALID = "verified_valid"
     VERIFIED_INVALID = "verified_invalid"
@@ -52,7 +54,8 @@ class VerificationStatus(Enum):
 
 
 class VerificationMethod(Enum):
-    """Methods used for verification"""    AUTOMATED_ML = "automated_ml"
+    """Methods used for verification"""
+    AUTOMATED_ML = "automated_ml"
     CROWDSOURCE = "crowdsource"
     EXPERT_REVIEW = "expert_review"
     BLOCKCHAIN = "blockchain"
@@ -62,7 +65,8 @@ class VerificationMethod(Enum):
 
 @dataclass
 class VerificationResult:
-    """Result of content verification"""    verification_id: str
+    """Result of content verification"""
+    verification_id: str
     violation_evidence: ViolationEvidence
     status: VerificationStatus
     confidence_score: float
@@ -77,7 +81,8 @@ class VerificationResult:
 
 @dataclass
 class HumanReviewTask:
-    """Human review task for content verification"""    task_id: str
+    """Human review task for content verification"""
+    task_id: str
     violation_evidence: ViolationEvidence
     priority: int = 5  # 1-10, higher is more urgent
     assigned_reviewer: Optional[str] = None
@@ -88,7 +93,8 @@ class HumanReviewTask:
 
 
 class MLVerificationModel:
-    """Machine learning model for automated verification"""    
+    """Machine learning model for automated verification"""
+    
     def __init__(self):
         self.model = None
         self.scaler = None
@@ -97,7 +103,8 @@ class MLVerificationModel:
         self._initialize_model()
     
     def _initialize_model(self):
-        """Initialize ML model for verification"""        try:
+        """Initialize ML model for verification"""
+        try:
             # Try to load pre-trained model
             model_path = Path("models/verification_model.joblib")
             scaler_path = Path("models/verification_scaler.joblib")
@@ -125,7 +132,8 @@ class MLVerificationModel:
             self.scaler = StandardScaler()
     
     def extract_features(self, evidence: ViolationEvidence) -> np.ndarray:
-        """Extract features from violation evidence for ML prediction"""        features = []
+        """Extract features from violation evidence for ML prediction"""
+        features = []
         
         # Similarity score features
         if evidence.similarity_scores:
@@ -196,7 +204,8 @@ class MLVerificationModel:
         return np.array(features)
     
     def _extract_url_features(self, url: str) -> List[float]:
-        """Extract features from URL"""        from urllib.parse import urlparse
+        """Extract features from URL"""
+        from urllib.parse import urlparse
         
         features = []
         
@@ -242,7 +251,8 @@ class MLVerificationModel:
         return features
     
     async def predict_verification(self, evidence: ViolationEvidence) -> Tuple[float, Dict[str, float]]:
-        """Predict verification result using ML model"""        try:
+        """Predict verification result using ML model"""
+        try:
             if not self.is_trained:
                 # Return conservative estimate if model not trained
                 return 0.5, {'ml_confidence': 0.3}
@@ -273,7 +283,8 @@ class MLVerificationModel:
             return 0.5, {'error': str(e)}
     
     def update_model(self, training_data: List[Tuple[ViolationEvidence, bool]]):
-        """Update model with new training data"""        try:
+        """Update model with new training data"""
+        try:
             if len(training_data) < 10:
                 logger.warning("Insufficient training data for model update")
                 return
@@ -311,9 +322,11 @@ class MLVerificationModel:
 
 
 class MetadataAnalyzer:
-    """Analyzer for content metadata verification"""    
+    """Analyzer for content metadata verification"""
+    
     async def analyze_metadata(self, evidence: ViolationEvidence) -> Dict[str, float]:
-        """Analyze metadata for verification clues"""        scores = {}
+        """Analyze metadata for verification clues"""
+        scores = {}
         
         try:
             metadata = evidence.metadata
@@ -376,9 +389,11 @@ class MetadataAnalyzer:
 
 
 class ReverseSearchAnalyzer:
-    """Analyzer using reverse image/content search"""    
+    """Analyzer using reverse image/content search"""
+    
     async def perform_reverse_search(self, evidence: ViolationEvidence) -> Dict[str, Any]:
-        """Perform reverse search analysis"""        results = {}
+        """Perform reverse search analysis"""
+        results = {}
         
         try:
             # For images, we could use Google Images API or TinEye
@@ -397,7 +412,8 @@ class ReverseSearchAnalyzer:
         return results
     
     async def _reverse_image_search(self, image_path: str) -> Dict[str, Any]:
-        """Perform reverse image search (simplified implementation)"""        try:
+        """Perform reverse image search (simplified implementation)"""
+        try:
             # This would integrate with actual reverse image search APIs
             # For now, return placeholder results
             
@@ -413,7 +429,8 @@ class ReverseSearchAnalyzer:
             return {}
     
     def _analyze_url_patterns(self, url: str) -> Dict[str, Any]:
-        """Analyze URL for suspicious patterns"""        analysis = {}
+        """Analyze URL for suspicious patterns"""
+        analysis = {}
         
         try:
             from urllib.parse import urlparse
@@ -441,7 +458,8 @@ class ReverseSearchAnalyzer:
         return analysis
     
     def _check_domain_reputation(self, domain: str) -> float:
-        """Check domain reputation (simplified implementation)"""        # In production, this would check against reputation databases
+        """Check domain reputation (simplified implementation)"""
+        # In production, this would check against reputation databases
         
         known_good_domains = [
             'youtube.com', 'instagram.com', 'twitter.com',
@@ -465,9 +483,11 @@ class ReverseSearchAnalyzer:
 
 
 class BlockchainVerifier:
-    """Blockchain-based content verification (future implementation)"""    
+    """Blockchain-based content verification (future implementation)"""
+    
     async def verify_ownership(self, evidence: ViolationEvidence) -> Dict[str, Any]:
-        """Verify content ownership using blockchain records"""        # Placeholder for future blockchain integration
+        """Verify content ownership using blockchain records"""
+        # Placeholder for future blockchain integration
         return {
             'blockchain_verified': False,
             'ownership_record_found': False,
@@ -475,12 +495,14 @@ class BlockchainVerifier:
         }
     
     def create_content_hash(self, content_data: bytes) -> str:
-        """Create blockchain-compatible content hash"""        sha256_hash = hashlib.sha256(content_data).hexdigest()
+        """Create blockchain-compatible content hash"""
+        sha256_hash = hashlib.sha256(content_data).hexdigest()
         return base64.b64encode(sha256_hash.encode()).decode()
 
 
 class VerificationService:
-    """Main verification service coordinating all verification methods"""    
+    """Main verification service coordinating all verification methods"""
+    
     def __init__(self):
         self.ml_model = MLVerificationModel()
         self.metadata_analyzer = MetadataAnalyzer()
@@ -496,7 +518,8 @@ class VerificationService:
         self.human_review_threshold = 0.60
     
     async def verify_violation(self, evidence: ViolationEvidence) -> VerificationResult:
-        """Perform comprehensive verification of violation evidence"""        verification_id = f"verify_{evidence.violation_id}_{int(datetime.utcnow().timestamp())}"
+        """Perform comprehensive verification of violation evidence"""
+        verification_id = f"verify_{evidence.violation_id}_{int(datetime.utcnow().timestamp())}"
         
         try:
             # Initialize result
@@ -556,7 +579,8 @@ class VerificationService:
             return result
     
     def _calculate_overall_confidence(self, scores: Dict[str, float]) -> float:
-        """Calculate overall confidence from individual scores"""        try:
+        """Calculate overall confidence from individual scores"""
+        try:
             # Weight different verification methods
             weights = {
                 'ml_verification': 0.4,
@@ -586,7 +610,8 @@ class VerificationService:
             return 0.5
     
     async def _create_human_review_task(self, evidence: ViolationEvidence, verification_result: VerificationResult):
-        """Create human review task for manual verification"""        try:
+        """Create human review task for manual verification"""
+        try:
             task_id = f"review_{evidence.violation_id}_{int(datetime.utcnow().timestamp())}"
             
             # Determine priority based on severity and confidence
@@ -615,7 +640,8 @@ class VerificationService:
             logger.error(f"Error creating human review task: {e}")
     
     async def submit_human_review(self, task_id: str, reviewer_id: str, is_valid: bool, notes: str = "") -> bool:
-        """Submit human review result"""        try:
+        """Submit human review result"""
+        try:
             if task_id not in self.human_review_tasks:
                 return False
             
@@ -655,7 +681,8 @@ class VerificationService:
             return False
     
     def get_pending_human_reviews(self, reviewer_id: Optional[str] = None) -> List[HumanReviewTask]:
-        """Get pending human review tasks"""        pending_tasks = [
+        """Get pending human review tasks"""
+        pending_tasks = [
             task for task in self.human_review_tasks.values()
             if task.status == "open" and (reviewer_id is None or task.assigned_reviewer == reviewer_id)
         ]
@@ -666,10 +693,12 @@ class VerificationService:
         return pending_tasks
     
     def get_verification_result(self, verification_id: str) -> Optional[VerificationResult]:
-        """Get verification result by ID"""        return self.verification_results.get(verification_id)
+        """Get verification result by ID"""
+        return self.verification_results.get(verification_id)
     
     def get_verification_statistics(self) -> Dict[str, Any]:
-        """Get verification system statistics"""        total_verifications = len(self.verification_results)
+        """Get verification system statistics"""
+        total_verifications = len(self.verification_results)
         
         if total_verifications == 0:
             return {'total_verifications': 0}

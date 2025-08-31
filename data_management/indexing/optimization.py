@@ -12,7 +12,8 @@ This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import psutil
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationStrategy(Enum):
-    """Optimization strategy types"""    PERFORMANCE = "performance"
+    """Optimization strategy types"""
+    PERFORMANCE = "performance"
     MEMORY = "memory"
     THROUGHPUT = "throughput"
     LATENCY = "latency"
@@ -43,7 +45,8 @@ class OptimizationStrategy(Enum):
 
 
 class CacheStrategy(Enum):
-    """Cache strategy types"""    LRU = "lru"
+    """Cache strategy types"""
+    LRU = "lru"
     LFU = "lfu"
     TTL = "ttl"
     ADAPTIVE = "adaptive"
@@ -52,7 +55,8 @@ class CacheStrategy(Enum):
 
 @dataclass
 class OptimizationConfig:
-    """Configuration for optimization settings"""    strategy: OptimizationStrategy = OptimizationStrategy.BALANCED
+    """Configuration for optimization settings"""
+    strategy: OptimizationStrategy = OptimizationStrategy.BALANCED
     max_workers: int = multiprocessing.cpu_count()
     batch_size: int = 100
     cache_size_mb: int = 512
@@ -66,7 +70,8 @@ class OptimizationConfig:
 
 @dataclass
 class PerformanceMetrics:
-    """Performance metrics tracking"""    cpu_usage: float
+    """Performance metrics tracking"""
+    cpu_usage: float
     memory_usage: float
     gpu_usage: float
     throughput: float
@@ -79,7 +84,8 @@ class PerformanceMetrics:
 
 @dataclass
 class OptimizationResult:
-    """Result of optimization operation"""    strategy_applied: str
+    """Result of optimization operation"""
+    strategy_applied: str
     performance_improvement: float
     resource_savings: Dict[str, float]
     recommendations: List[str]
@@ -88,7 +94,8 @@ class OptimizationResult:
 
 
 class IntelligentCache:
-    """Advanced caching system with multiple strategies"""    
+    """Advanced caching system with multiple strategies"""
+    
     def __init__(self, config: OptimizationConfig, redis_client: Redis):
         self.config = config
         self.redis_client = redis_client
@@ -103,7 +110,8 @@ class IntelligentCache:
         self.predictive_model = None
         
     async def get(self, key: str) -> Optional[Any]:
-        """Get value from cache with intelligent strategy"""        try:
+        """Get value from cache with intelligent strategy"""
+        try:
             # Check local cache first
             if key in self.local_cache:
                 self.cache_stats["hits"] += 1
@@ -138,7 +146,8 @@ class IntelligentCache:
         ttl: int = None, 
         priority: int = 1
     ):
-        """Set value in cache with intelligent placement"""        try:
+        """Set value in cache with intelligent placement"""
+        try:
             ttl = ttl or self.config.cache_ttl_seconds
             
             # Serialize data
@@ -163,7 +172,8 @@ class IntelligentCache:
             logger.error(f"Cache set error for key {key}: {e}")
     
     async def _store_local(self, key: str, value: Any, ttl: int = None):
-        """Store data in local cache with eviction policy"""        try:
+        """Store data in local cache with eviction policy"""
+        try:
             current_time = time.time()
             
             # Check if we need to evict
@@ -181,7 +191,8 @@ class IntelligentCache:
             logger.error(f"Local cache store error for key {key}: {e}")
     
     async def _evict_if_needed(self):
-        """Evict cache entries based on strategy"""        try:
+        """Evict cache entries based on strategy"""
+        try:
             # Calculate current cache size
             current_size = sum(
                 len(pickle.dumps(entry["data"])) 
@@ -226,7 +237,8 @@ class IntelligentCache:
             logger.error(f"Cache eviction error: {e}")
     
     def _update_access_pattern(self, key: str):
-        """Update access patterns for predictive caching"""        current_time = time.time()
+        """Update access patterns for predictive caching"""
+        current_time = time.time()
         self.access_patterns[key].append(current_time)
         
         # Keep only recent access patterns
@@ -241,7 +253,8 @@ class IntelligentCache:
             self.local_cache[key]["last_access"] = current_time
     
     def _should_promote_to_local(self, key: str) -> bool:
-        """Determine if key should be promoted to local cache"""        access_history = self.access_patterns.get(key, [])
+        """Determine if key should be promoted to local cache"""
+        access_history = self.access_patterns.get(key, [])
         
         # Promote if frequently accessed
         if len(access_history) >= 3:
@@ -254,7 +267,8 @@ class IntelligentCache:
         return False
     
     def _should_store_local(self, key: str, data_size: int, priority: int) -> bool:
-        """Determine if data should be stored in local cache"""        # Don't store large objects locally
+        """Determine if data should be stored in local cache"""
+        # Don't store large objects locally
         if data_size > 1024 * 1024:  # 1MB
             return False
         
@@ -270,7 +284,8 @@ class IntelligentCache:
         return False
     
     async def get_cache_statistics(self) -> Dict[str, Any]:
-        """Get cache performance statistics"""        total_requests = self.cache_stats["hits"] + self.cache_stats["misses"]
+        """Get cache performance statistics"""
+        total_requests = self.cache_stats["hits"] + self.cache_stats["misses"]
         hit_rate = self.cache_stats["hits"] / total_requests if total_requests > 0 else 0
         
         return {
@@ -286,7 +301,8 @@ class IntelligentCache:
         }
     
     def _get_most_accessed_keys(self) -> List[Tuple[str, int]]:
-        """Get most frequently accessed cache keys"""        key_access_counts = [
+        """Get most frequently accessed cache keys"""
+        key_access_counts = [
             (key, len(access_list)) 
             for key, access_list in self.access_patterns.items()
         ]
@@ -294,7 +310,8 @@ class IntelligentCache:
 
 
 class WorkloadBalancer:
-    """Intelligent workload balancing and auto-scaling"""    
+    """Intelligent workload balancing and auto-scaling"""
+    
     def __init__(self, config: OptimizationConfig):
         self.config = config
         self.worker_pool = None
@@ -307,7 +324,8 @@ class WorkloadBalancer:
         self.last_scale_action = 0
         
     async def initialize(self):
-        """Initialize workload balancer"""        try:
+        """Initialize workload balancer"""
+        try:
             self.worker_pool = ThreadPoolExecutor(max_workers=self.config.max_workers)
             logger.info(f"WorkloadBalancer initialized with {self.config.max_workers} workers")
             
@@ -322,7 +340,8 @@ class WorkloadBalancer:
         priority: int = 1,
         **kwargs
     ) -> asyncio.Future:
-        """Submit task with intelligent scheduling"""        try:
+        """Submit task with intelligent scheduling"""
+        try:
             # Create task wrapper with monitoring
             wrapped_task = self._wrap_task(func, *args, **kwargs)
             
@@ -340,7 +359,8 @@ class WorkloadBalancer:
             raise
     
     def _wrap_task(self, func: Callable, *args, **kwargs) -> Callable:
-        """Wrap task with performance monitoring"""        def wrapper():
+        """Wrap task with performance monitoring"""
+        def wrapper():
             start_time = time.time()
             start_cpu = psutil.cpu_percent()
             start_memory = psutil.virtual_memory().percent
@@ -373,7 +393,8 @@ class WorkloadBalancer:
         return wrapper
     
     async def _monitor_performance(self):
-        """Monitor performance and trigger auto-scaling if needed"""        try:
+        """Monitor performance and trigger auto-scaling if needed"""
+        try:
             if not self.config.auto_scaling_enabled:
                 return
             
@@ -400,7 +421,8 @@ class WorkloadBalancer:
             logger.error(f"Performance monitoring error: {e}")
     
     def _calculate_current_load(self) -> float:
-        """Calculate current system load"""        try:
+        """Calculate current system load"""
+        try:
             # CPU load
             cpu_load = psutil.cpu_percent() / 100.0
             
@@ -424,7 +446,8 @@ class WorkloadBalancer:
             return 0.5
     
     async def _scale_up(self):
-        """Scale up worker pool"""        try:
+        """Scale up worker pool"""
+        try:
             new_max_workers = min(
                 self.config.max_workers * 2,
                 multiprocessing.cpu_count() * 4
@@ -440,7 +463,8 @@ class WorkloadBalancer:
             logger.error(f"Scale up error: {e}")
     
     async def _scale_down(self):
-        """Scale down worker pool"""        try:
+        """Scale down worker pool"""
+        try:
             new_max_workers = max(
                 self.config.max_workers // 2,
                 multiprocessing.cpu_count()
@@ -456,7 +480,8 @@ class WorkloadBalancer:
             logger.error(f"Scale down error: {e}")
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get current performance metrics"""        try:
+        """Get current performance metrics"""
+        try:
             recent_metrics = list(self.performance_history)[-10:]
             
             if not recent_metrics:
@@ -482,7 +507,8 @@ class WorkloadBalancer:
 
 
 class BatchProcessor:
-    """Intelligent batch processing optimization"""    
+    """Intelligent batch processing optimization"""
+    
     def __init__(self, config: OptimizationConfig):
         self.config = config
         self.pending_batches = defaultdict(list)
@@ -495,7 +521,8 @@ class BatchProcessor:
         item: Any, 
         callback: Callable = None
     ):
-        """Add item to batch with intelligent batching"""        try:
+        """Add item to batch with intelligent batching"""
+        try:
             self.pending_batches[batch_type].append({
                 "item": item,
                 "callback": callback,
@@ -510,7 +537,8 @@ class BatchProcessor:
             logger.error(f"Failed to add item to batch {batch_type}: {e}")
     
     async def _should_process_batch(self, batch_type: str) -> bool:
-        """Determine if batch should be processed now"""        batch = self.pending_batches[batch_type]
+        """Determine if batch should be processed now"""
+        batch = self.pending_batches[batch_type]
         
         # Process if batch is full
         if len(batch) >= self.config.batch_size:
@@ -530,7 +558,8 @@ class BatchProcessor:
         return False
     
     async def _process_batch(self, batch_type: str):
-        """Process accumulated batch"""        try:
+        """Process accumulated batch"""
+        try:
             batch = self.pending_batches[batch_type]
             if not batch:
                 return
@@ -567,7 +596,8 @@ class BatchProcessor:
             logger.error(f"Failed to process batch {batch_type}: {e}")
     
     async def _process_indexing_batch(self, items: List[Any], callbacks: List[Callable]):
-        """Process indexing batch"""        # Implementation would depend on specific indexing logic
+        """Process indexing batch"""
+        # Implementation would depend on specific indexing logic
         for i, item in enumerate(items):
             try:
                 # Process item
@@ -581,7 +611,8 @@ class BatchProcessor:
                 logger.error(f"Failed to process indexing item: {e}")
     
     async def _process_search_batch(self, items: List[Any], callbacks: List[Callable]):
-        """Process search batch"""        # Implementation would depend on specific search logic
+        """Process search batch"""
+        # Implementation would depend on specific search logic
         for i, item in enumerate(items):
             try:
                 # Process item
@@ -595,7 +626,8 @@ class BatchProcessor:
                 logger.error(f"Failed to process search item: {e}")
     
     async def _process_fingerprinting_batch(self, items: List[Any], callbacks: List[Callable]):
-        """Process fingerprinting batch"""        # Implementation would depend on specific fingerprinting logic
+        """Process fingerprinting batch"""
+        # Implementation would depend on specific fingerprinting logic
         for i, item in enumerate(items):
             try:
                 # Process item
@@ -609,22 +641,26 @@ class BatchProcessor:
                 logger.error(f"Failed to process fingerprinting item: {e}")
     
     async def _process_indexing_item(self, item: Any) -> Any:
-        """Process individual indexing item"""        # Placeholder - would be implemented based on specific requirements
+        """Process individual indexing item"""
+        # Placeholder - would be implemented based on specific requirements
         await asyncio.sleep(0.1)  # Simulate processing
         return {"status": "indexed", "item_id": str(item)}
     
     async def _process_search_item(self, item: Any) -> Any:
-        """Process individual search item"""        # Placeholder - would be implemented based on specific requirements
+        """Process individual search item"""
+        # Placeholder - would be implemented based on specific requirements
         await asyncio.sleep(0.05)  # Simulate processing
         return {"status": "searched", "results": []}
     
     async def _process_fingerprinting_item(self, item: Any) -> Any:
-        """Process individual fingerprinting item"""        # Placeholder - would be implemented based on specific requirements
+        """Process individual fingerprinting item"""
+        # Placeholder - would be implemented based on specific requirements
         await asyncio.sleep(0.2)  # Simulate processing
         return {"status": "fingerprinted", "hash": "abc123"}
     
     async def get_batch_statistics(self) -> Dict[str, Any]:
-        """Get batch processing statistics"""        try:
+        """Get batch processing statistics"""
+        try:
             stats = {}
             
             for batch_type, batch_stats in self.processing_stats.items():
@@ -647,7 +683,8 @@ class BatchProcessor:
 
 
 class OptimizationEngine:
-    """Main optimization engine coordinating all optimization strategies"""    
+    """Main optimization engine coordinating all optimization strategies"""
+    
     def __init__(self, config: OptimizationConfig, redis_url: str):
         self.config = config
         self.redis_client = None
@@ -657,7 +694,8 @@ class OptimizationEngine:
         self.optimization_history = deque(maxlen=100)
         
     async def initialize(self):
-        """Initialize optimization engine"""        try:
+        """Initialize optimization engine"""
+        try:
             # Initialize Redis client
             self.redis_client = Redis.from_url(redis_url)
             await self.redis_client.ping()
@@ -676,7 +714,8 @@ class OptimizationEngine:
             raise
     
     async def optimize_performance(self) -> OptimizationResult:
-        """Perform comprehensive performance optimization"""        try:
+        """Perform comprehensive performance optimization"""
+        try:
             # Collect baseline metrics
             metrics_before = await self._collect_performance_metrics()
             
@@ -726,7 +765,8 @@ class OptimizationEngine:
             raise
     
     async def _collect_performance_metrics(self) -> PerformanceMetrics:
-        """Collect current performance metrics"""        try:
+        """Collect current performance metrics"""
+        try:
             cpu_usage = psutil.cpu_percent()
             memory_info = psutil.virtual_memory()
             memory_usage = memory_info.percent
@@ -770,7 +810,8 @@ class OptimizationEngine:
             )
     
     async def _optimize_cpu_usage(self):
-        """Optimize CPU usage"""        try:
+        """Optimize CPU usage"""
+        try:
             # Adjust worker pool size based on CPU usage
             current_cpu = psutil.cpu_percent()
             
@@ -788,7 +829,8 @@ class OptimizationEngine:
             logger.error(f"CPU optimization error: {e}")
     
     async def _optimize_memory_usage(self):
-        """Optimize memory usage"""        try:
+        """Optimize memory usage"""
+        try:
             memory_info = psutil.virtual_memory()
             
             if memory_info.percent > 85:
@@ -804,7 +846,8 @@ class OptimizationEngine:
             logger.error(f"Memory optimization error: {e}")
     
     async def _optimize_throughput(self):
-        """Optimize throughput"""        try:
+        """Optimize throughput"""
+        try:
             # Increase batch sizes if system can handle it
             current_load = psutil.cpu_percent() / 100.0
             
@@ -816,7 +859,8 @@ class OptimizationEngine:
             logger.error(f"Throughput optimization error: {e}")
     
     async def _optimize_latency(self):
-        """Optimize latency"""        try:
+        """Optimize latency"""
+        try:
             # Reduce batch sizes for lower latency
             self.config.batch_size = max(self.config.batch_size // 2, 5)
             
@@ -833,7 +877,8 @@ class OptimizationEngine:
         before: PerformanceMetrics, 
         after: PerformanceMetrics
     ) -> float:
-        """Calculate overall performance improvement percentage"""        try:
+        """Calculate overall performance improvement percentage"""
+        try:
             improvements = []
             
             # CPU improvement (lower is better)
@@ -866,7 +911,8 @@ class OptimizationEngine:
         before: PerformanceMetrics, 
         after: PerformanceMetrics
     ) -> Dict[str, float]:
-        """Calculate resource savings"""        try:
+        """Calculate resource savings"""
+        try:
             return {
                 "cpu_savings_percent": max(0, before.cpu_usage - after.cpu_usage),
                 "memory_savings_percent": max(0, before.memory_usage - after.memory_usage),
@@ -882,7 +928,8 @@ class OptimizationEngine:
         self, 
         metrics: PerformanceMetrics
     ) -> List[str]:
-        """Generate optimization recommendations"""        recommendations = []
+        """Generate optimization recommendations"""
+        recommendations = []
         
         try:
             if metrics.cpu_usage > 85:

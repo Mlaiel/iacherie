@@ -10,7 +10,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import json
 import time
 import uuid
@@ -60,7 +61,8 @@ logger = logging.getLogger(__name__)
 
 
 class PipelineStatus(Enum):
-    """Pipeline execution status"""    PENDING = "pending"
+    """Pipeline execution status"""
+    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -70,7 +72,8 @@ class PipelineStatus(Enum):
 
 
 class StepStatus(Enum):
-    """Pipeline step status"""    WAITING = "waiting"
+    """Pipeline step status"""
+    WAITING = "waiting"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -79,7 +82,8 @@ class StepStatus(Enum):
 
 
 class ExecutionMode(Enum):
-    """Pipeline execution modes"""    SEQUENTIAL = "sequential"
+    """Pipeline execution modes"""
+    SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     DISTRIBUTED = "distributed"
     STREAMING = "streaming"
@@ -88,7 +92,8 @@ class ExecutionMode(Enum):
 
 
 class ResourceType(Enum):
-    """Resource types for pipeline steps"""    CPU = "cpu"
+    """Resource types for pipeline steps"""
+    CPU = "cpu"
     GPU = "gpu"
     MEMORY = "memory"
     STORAGE = "storage"
@@ -97,7 +102,8 @@ class ResourceType(Enum):
 
 @dataclass
 class ResourceRequirement:
-    """Resource requirements for pipeline steps"""    cpu_cores: Optional[int] = None
+    """Resource requirements for pipeline steps"""
+    cpu_cores: Optional[int] = None
     gpu_count: Optional[int] = None
     memory_gb: Optional[float] = None
     storage_gb: Optional[float] = None
@@ -117,7 +123,8 @@ class ResourceRequirement:
 
 @dataclass
 class StepMetrics:
-    """Metrics for pipeline step execution"""    step_id: str
+    """Metrics for pipeline step execution"""
+    step_id: str
     start_time: datetime
     end_time: Optional[datetime] = None
     duration_seconds: float = 0.0
@@ -145,7 +152,8 @@ class StepMetrics:
 
 @dataclass
 class PipelineConfig:
-    """Configuration for ML pipeline"""    name: str
+    """Configuration for ML pipeline"""
+    name: str
     version: str = "1.0.0"
     description: str = ""
     execution_mode: ExecutionMode = ExecutionMode.SEQUENTIAL
@@ -186,7 +194,8 @@ class PipelineConfig:
 
 
 class PipelineStep(ABC):
-    """Abstract base class for pipeline steps"""    
+    """Abstract base class for pipeline steps"""
+    
     def __init__(
         self,
         step_id: str,
@@ -225,16 +234,20 @@ class PipelineStep(ABC):
     
     @abstractmethod
     async def execute(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute the pipeline step"""        pass
+        """Execute the pipeline step"""
+        pass
     
     def validate_inputs(self, inputs: Dict[str, Any]) -> bool:
-        """Validate step inputs"""        return True
+        """Validate step inputs"""
+        return True
     
     def validate_outputs(self, outputs: Dict[str, Any]) -> bool:
-        """Validate step outputs"""        return True
+        """Validate step outputs"""
+        return True
     
     async def run(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
-        """Run the step with error handling and metrics"""        self.status = StepStatus.RUNNING
+        """Run the step with error handling and metrics"""
+        self.status = StepStatus.RUNNING
         self.start_time = datetime.now()
         
         try:
@@ -283,7 +296,8 @@ class PipelineStep(ABC):
             raise
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert step to dictionary representation"""        return {
+        """Convert step to dictionary representation"""
+        return {
             'step_id': self.step_id,
             'name': self.name,
             'description': self.description,
@@ -304,13 +318,15 @@ class PipelineStep(ABC):
 
 
 class DataLoadingStep(PipelineStep):
-    """Data loading pipeline step"""    
+    """Data loading pipeline step"""
+    
     def __init__(self, step_id: str, data_source: str, **kwargs):
         super().__init__(step_id, f"Load Data from {data_source}", **kwargs)
         self.data_source = data_source
     
     async def execute(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
-        """Load data from specified source"""        self.logger.info(f"Loading data from {self.data_source}")
+        """Load data from specified source"""
+        self.logger.info(f"Loading data from {self.data_source}")
         
         # Simulate data loading
         await asyncio.sleep(1)
@@ -329,13 +345,15 @@ class DataLoadingStep(PipelineStep):
 
 
 class DataPreprocessingStep(PipelineStep):
-    """Data preprocessing pipeline step"""    
+    """Data preprocessing pipeline step"""
+    
     def __init__(self, step_id: str, preprocessing_config: Dict[str, Any], **kwargs):
         super().__init__(step_id, "Data Preprocessing", **kwargs)
         self.preprocessing_config = preprocessing_config
     
     async def execute(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
-        """Preprocess data according to configuration"""        data = inputs.get('data')
+        """Preprocess data according to configuration"""
+        data = inputs.get('data')
         if data is None:
             raise ValueError("No data provided for preprocessing")
         
@@ -368,13 +386,15 @@ class DataPreprocessingStep(PipelineStep):
 
 
 class ModelTrainingStep(PipelineStep):
-    """Model training pipeline step"""    
+    """Model training pipeline step"""
+    
     def __init__(self, step_id: str, model_config: Dict[str, Any], **kwargs):
         super().__init__(step_id, "Model Training", **kwargs)
         self.model_config = model_config
     
     async def execute(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
-        """Train machine learning model"""        data = inputs.get('processed_data')
+        """Train machine learning model"""
+        data = inputs.get('processed_data')
         if data is None:
             raise ValueError("No processed data provided for training")
         
@@ -403,13 +423,15 @@ class ModelTrainingStep(PipelineStep):
 
 
 class ModelValidationStep(PipelineStep):
-    """Model validation pipeline step"""    
+    """Model validation pipeline step"""
+    
     def __init__(self, step_id: str, validation_config: Dict[str, Any], **kwargs):
         super().__init__(step_id, "Model Validation", **kwargs)
         self.validation_config = validation_config
     
     async def execute(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate trained model"""        model_path = inputs.get('model_path')
+        """Validate trained model"""
+        model_path = inputs.get('model_path')
         if not model_path:
             raise ValueError("No model path provided for validation")
         
@@ -438,13 +460,15 @@ class ModelValidationStep(PipelineStep):
 
 
 class ModelDeploymentStep(PipelineStep):
-    """Model deployment pipeline step"""    
+    """Model deployment pipeline step"""
+    
     def __init__(self, step_id: str, deployment_config: Dict[str, Any], **kwargs):
         super().__init__(step_id, "Model Deployment", **kwargs)
         self.deployment_config = deployment_config
     
     async def execute(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy validated model"""        model_path = inputs.get('model_path')
+        """Deploy validated model"""
+        model_path = inputs.get('model_path')
         model_approved = inputs.get('model_approved', False)
         
         if not model_approved:
@@ -469,7 +493,8 @@ class ModelDeploymentStep(PipelineStep):
 
 
 class MLPipeline:
-    """Advanced ML pipeline orchestrator"""    
+    """Advanced ML pipeline orchestrator"""
+    
     def __init__(self, config: PipelineConfig):
         self.config = config
         self.steps: Dict[str, PipelineStep] = {}
@@ -493,7 +518,8 @@ class MLPipeline:
         Path(self.config.artifact_storage_path).mkdir(parents=True, exist_ok=True)
     
     def add_step(self, step: PipelineStep) -> 'MLPipeline':
-        """Add a step to the pipeline"""        self.steps[step.step_id] = step
+        """Add a step to the pipeline"""
+        self.steps[step.step_id] = step
         self.execution_graph.add_node(step.step_id, step=step)
         
         # Add dependencies
@@ -507,14 +533,16 @@ class MLPipeline:
         return self
     
     def remove_step(self, step_id: str) -> 'MLPipeline':
-        """Remove a step from the pipeline"""        if step_id in self.steps:
+        """Remove a step from the pipeline"""
+        if step_id in self.steps:
             del self.steps[step_id]
             self.execution_graph.remove_node(step_id)
             self.logger.info(f"Removed step: {step_id}")
         return self
     
     def validate_pipeline(self) -> Tuple[bool, List[str]]:
-        """Validate pipeline structure and dependencies"""        errors = []
+        """Validate pipeline structure and dependencies"""
+        errors = []
         
         # Check for cycles
         if not nx.is_directed_acyclic_graph(self.execution_graph):
@@ -535,14 +563,16 @@ class MLPipeline:
         return len(errors) == 0, errors
     
     def get_execution_order(self) -> List[str]:
-        """Get topological order for pipeline execution"""        try:
+        """Get topological order for pipeline execution"""
+        try:
             return list(nx.topological_sort(self.execution_graph))
         except nx.NetworkXError as e:
             self.logger.error(f"Failed to determine execution order: {e}")
             raise
     
     def visualize_pipeline(self, output_path: Optional[str] = None) -> str:
-        """Generate pipeline visualization"""        import matplotlib.pyplot as plt
+        """Generate pipeline visualization"""
+        import matplotlib.pyplot as plt
         
         plt.figure(figsize=(12, 8))
         
@@ -588,7 +618,8 @@ class MLPipeline:
         return output_path
     
     async def execute_step(self, step_id: str, inputs: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute a single pipeline step"""        step = self.steps[step_id]
+        """Execute a single pipeline step"""
+        step = self.steps[step_id]
         
         try:
             # Check resource requirements
@@ -608,7 +639,8 @@ class MLPipeline:
             raise
     
     async def execute_sequential(self, initial_inputs: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Execute pipeline sequentially"""        execution_order = self.get_execution_order()
+        """Execute pipeline sequentially"""
+        execution_order = self.get_execution_order()
         current_outputs = initial_inputs or {}
         
         for step_id in execution_order:
@@ -626,7 +658,8 @@ class MLPipeline:
         return current_outputs
     
     async def execute_parallel(self, initial_inputs: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Execute pipeline with parallel processing where possible"""        execution_order = self.get_execution_order()
+        """Execute pipeline with parallel processing where possible"""
+        execution_order = self.get_execution_order()
         completed_steps = set()
         running_tasks = {}
         all_outputs = initial_inputs or {}
@@ -683,7 +716,8 @@ class MLPipeline:
         return all_outputs
     
     async def execute_distributed(self, initial_inputs: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Execute pipeline with distributed computing"""        try:
+        """Execute pipeline with distributed computing"""
+        try:
             from dask.distributed import Client, as_completed
             
             if not self.dask_client:
@@ -723,10 +757,12 @@ class MLPipeline:
             return await self.execute_parallel(initial_inputs)
     
     def _execute_step_sync(self, step_id: str, inputs: Dict[str, Any]) -> Dict[str, Any]:
-        """Synchronous wrapper for step execution (for Dask)"""        return asyncio.run(self.execute_step(step_id, inputs))
+        """Synchronous wrapper for step execution (for Dask)"""
+        return asyncio.run(self.execute_step(step_id, inputs))
     
     def _prepare_step_inputs(self, step_id: str, all_outputs: Dict[str, Any]) -> Dict[str, Any]:
-        """Prepare inputs for a specific step"""        step = self.steps[step_id]
+        """Prepare inputs for a specific step"""
+        step = self.steps[step_id]
         step_inputs = {}
         
         # Include outputs from dependency steps
@@ -741,7 +777,8 @@ class MLPipeline:
         return step_inputs
     
     def _check_resources(self, step: PipelineStep) -> bool:
-        """Check if resources are available for step execution"""        # Simple resource check implementation
+        """Check if resources are available for step execution"""
+        # Simple resource check implementation
         req = step.resource_requirements
         
         if req.cpu_cores and req.cpu_cores > psutil.cpu_count():
@@ -756,7 +793,8 @@ class MLPipeline:
         return True
     
     def _store_step_artifacts(self, step_id: str, outputs: Dict[str, Any]):
-        """Store step artifacts for later retrieval"""        artifact_path = Path(self.config.artifact_storage_path) / self.execution_id / step_id
+        """Store step artifacts for later retrieval"""
+        artifact_path = Path(self.config.artifact_storage_path) / self.execution_id / step_id
         artifact_path.mkdir(parents=True, exist_ok=True)
         
         # Store outputs as JSON
@@ -777,7 +815,8 @@ class MLPipeline:
             self.logger.warning(f"Failed to store metadata for step {step_id}: {e}")
     
     async def execute(self, initial_inputs: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Execute the complete pipeline"""        self.status = PipelineStatus.RUNNING
+        """Execute the complete pipeline"""
+        self.status = PipelineStatus.RUNNING
         self.start_time = datetime.now()
         
         try:
@@ -826,7 +865,8 @@ class MLPipeline:
                 self.dask_client.close()
     
     def _generate_pipeline_metrics(self):
-        """Generate overall pipeline metrics"""        if not self.start_time or not self.end_time:
+        """Generate overall pipeline metrics"""
+        if not self.start_time or not self.end_time:
             return
         
         total_duration = (self.end_time - self.start_time).total_seconds()
@@ -846,7 +886,8 @@ class MLPipeline:
         }
     
     def _store_pipeline_results(self, results: Dict[str, Any]):
-        """Store final pipeline results"""        results_path = Path(self.config.artifact_storage_path) / self.execution_id / "pipeline_results.json"
+        """Store final pipeline results"""
+        results_path = Path(self.config.artifact_storage_path) / self.execution_id / "pipeline_results.json"
         results_path.parent.mkdir(parents=True, exist_ok=True)
         
         pipeline_results = {
@@ -863,13 +904,15 @@ class MLPipeline:
             self.logger.warning(f"Failed to store pipeline results: {e}")
     
     def get_step_status(self, step_id: str) -> Dict[str, Any]:
-        """Get status of a specific step"""        if step_id not in self.steps:
+        """Get status of a specific step"""
+        if step_id not in self.steps:
             return {"error": f"Step {step_id} not found"}
         
         return self.steps[step_id].to_dict()
     
     def get_pipeline_status(self) -> Dict[str, Any]:
-        """Get overall pipeline status"""        return {
+        """Get overall pipeline status"""
+        return {
             'pipeline_id': self.execution_id,
             'name': self.config.name,
             'status': self.status.value,
@@ -882,7 +925,8 @@ class MLPipeline:
     
     @classmethod
     def from_yaml(cls, config_path: str) -> 'MLPipeline':
-        """Create pipeline from YAML configuration"""        with open(config_path, 'r') as f:
+        """Create pipeline from YAML configuration"""
+        with open(config_path, 'r') as f:
             config_dict = yaml.safe_load(f)
         
         # Create pipeline config
@@ -912,7 +956,8 @@ class MLPipeline:
         return pipeline
     
     def to_yaml(self, output_path: str):
-        """Export pipeline configuration to YAML"""        config_dict = {
+        """Export pipeline configuration to YAML"""
+        config_dict = {
             'pipeline': self.config.to_dict(),
             'steps': [step.to_dict() for step in self.steps.values()]
         }

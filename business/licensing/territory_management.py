@@ -10,7 +10,8 @@ WARNING - COPYRIGHT PROTECTION:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""from typing import Dict, List, Optional, Any, Set, Tuple
+"""
+from typing import Dict, List, Optional, Any, Set, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
 from dataclasses import dataclass, field
@@ -28,7 +29,8 @@ from ..ai.territory_intelligence import TerritoryIntelligenceEngine
 
 
 class TerritoryScope(Enum):
-    """Territory scope definitions"""    GLOBAL = "global"
+    """Territory scope definitions"""
+    GLOBAL = "global"
     CONTINENTAL = "continental"
     REGIONAL = "regional"
     NATIONAL = "national"
@@ -38,7 +40,8 @@ class TerritoryScope(Enum):
 
 
 class RightsType(Enum):
-    """Types of territorial rights"""    DISTRIBUTION = "distribution"
+    """Types of territorial rights"""
+    DISTRIBUTION = "distribution"
     PERFORMANCE = "performance"
     BROADCASTING = "broadcasting"
     STREAMING = "streaming"
@@ -51,7 +54,8 @@ class RightsType(Enum):
 
 
 class TerritoryStatus(Enum):
-    """Territory licensing status"""    AVAILABLE = "available"
+    """Territory licensing status"""
+    AVAILABLE = "available"
     LICENSED_EXCLUSIVE = "licensed_exclusive"
     LICENSED_NON_EXCLUSIVE = "licensed_non_exclusive"
     RESTRICTED = "restricted"
@@ -63,7 +67,8 @@ class TerritoryStatus(Enum):
 
 @dataclass
 class TerritoryProfile:
-    """Comprehensive territory profile"""    territory_code: str
+    """Comprehensive territory profile"""
+    territory_code: str
     territory_name: str
     scope: TerritoryScope
     population: int
@@ -78,7 +83,8 @@ class TerritoryProfile:
 
 
 class TerritoryRequest(BaseModel):
-    """Territory rights management request"""    content_id: str = Field(..., description="Content for territory management")
+    """Territory rights management request"""
+    content_id: str = Field(..., description="Content for territory management")
     territories: List[str] = Field(..., description="Territory codes")
     rights_types: List[RightsType] = Field(..., description="Types of rights")
     operation: str = Field(..., description="Operation: add, modify, remove, query")
@@ -88,9 +94,11 @@ class TerritoryRequest(BaseModel):
 
 
 class TerritoryManagementService:
-    """    Advanced territory management system with AI-driven market analysis,
+    """
+    Advanced territory management system with AI-driven market analysis,
     automated rights clearance, and intelligent territory optimization.
-    """    
+    """
+    
     def __init__(self, db: Session = None):
         self.db = db or next(get_db())
         self.logger = get_logger(__name__)
@@ -105,14 +113,16 @@ class TerritoryManagementService:
         self,
         territory_request: TerritoryRequest
     ) -> Dict[str, Any]:
-        """        Manage territory rights with comprehensive analysis and optimization
+        """
+        Manage territory rights with comprehensive analysis and optimization
         
         Args:
             territory_request: Territory management parameters
             
         Returns:
             Territory management results with recommendations
-        """        try:
+        """
+        try:
             self.logger.info(f"Managing territory rights for content {territory_request.content_id}")
             
             # Validate territory request
@@ -184,7 +194,8 @@ class TerritoryManagementService:
         content_id: str,
         optimization_goals: List[str] = None
     ) -> Dict[str, Any]:
-        """        Optimize territory strategy using AI-driven market intelligence
+        """
+        Optimize territory strategy using AI-driven market intelligence
         
         Args:
             content_id: Content to optimize territory strategy for
@@ -192,7 +203,8 @@ class TerritoryManagementService:
             
         Returns:
             Territory strategy optimization results
-        """        try:
+        """
+        try:
             if not optimization_goals:
                 optimization_goals = [
                     "maximize_revenue",
@@ -272,7 +284,8 @@ class TerritoryManagementService:
         content_ids: List[str],
         monitoring_period: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """        Monitor territorial performance across content portfolio
+        """
+        Monitor territorial performance across content portfolio
         
         Args:
             content_ids: Content to monitor
@@ -280,7 +293,8 @@ class TerritoryManagementService:
             
         Returns:
             Comprehensive territorial performance analysis
-        """        try:
+        """
+        try:
             self.logger.info(f"Monitoring territorial performance for {len(content_ids)} content items")
             
             territorial_performance = {}
@@ -355,7 +369,8 @@ class TerritoryManagementService:
         content_id: str,
         territories: List[str]
     ) -> Dict[str, Any]:
-        """        Analyze regulatory compliance requirements across territories
+        """
+        Analyze regulatory compliance requirements across territories
         
         Args:
             content_id: Content to analyze compliance for
@@ -363,7 +378,8 @@ class TerritoryManagementService:
             
         Returns:
             Comprehensive regulatory compliance analysis
-        """        try:
+        """
+        try:
             self.logger.info(f"Analyzing regulatory compliance for content {content_id} across {len(territories)} territories")
             
             compliance_analysis = {}
@@ -441,7 +457,8 @@ class TerritoryManagementService:
             raise TerritoryManagementError(f"Regulatory compliance analysis failed: {str(e)}")
     
     def _initialize_territory_database(self) -> Dict[str, TerritoryProfile]:
-        """Initialize comprehensive territory database"""        return {
+        """Initialize comprehensive territory database"""
+        return {
             "US": TerritoryProfile(
                 territory_code="US",
                 territory_name="United States",
@@ -502,7 +519,8 @@ class TerritoryManagementService:
         }
     
     def _initialize_regulatory_database(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize regulatory requirements database"""        return {
+        """Initialize regulatory requirements database"""
+        return {
             "US": {
                 "copyright_registration": {
                     "required": False,
@@ -538,7 +556,8 @@ class TerritoryManagementService:
         }
     
     def _initialize_market_intelligence_database(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize market intelligence database"""        return {
+        """Initialize market intelligence database"""
+        return {
             "global_streaming_trends": {
                 "total_market_value_usd": Decimal("23800000000"),  # $23.8B
                 "growth_rate_annual": 0.079,  # 7.9%
@@ -562,7 +581,8 @@ class TerritoryManagementService:
     
     # Helper methods for internal operations
     async def _validate_territory_request(self, request: TerritoryRequest) -> Dict[str, Any]:
-        """Validate territory management request"""        # Implementation for request validation
+        """Validate territory management request"""
+        # Implementation for request validation
         pass
     
     async def _analyze_territory_market_potential(
@@ -570,7 +590,8 @@ class TerritoryManagementService:
         territories: List[str], 
         content_id: str
     ) -> Dict[str, Any]:
-        """Analyze market potential for territories"""        # Implementation for market analysis
+        """Analyze market potential for territories"""
+        # Implementation for market analysis
         pass
     
     async def _calculate_territory_revenue_projections(
@@ -579,5 +600,6 @@ class TerritoryManagementService:
         market_analysis: Dict[str, Any],
         recommendations: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate revenue projections for territory strategy"""        # Implementation for revenue projection calculation
+        """Calculate revenue projections for territory strategy"""
+        # Implementation for revenue projection calculation
         pass

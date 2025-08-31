@@ -11,7 +11,8 @@ Features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
 from dataclasses import dataclass, field
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 
 class AlertCategory(Enum):
-    """Alert categories for intelligent routing"""    BUSINESS = "business"
+    """Alert categories for intelligent routing"""
+    BUSINESS = "business"
     TECHNICAL = "technical" 
     AI_ML = "ai_ml"
     SECURITY = "security"
@@ -33,14 +35,16 @@ class AlertCategory(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels with escalation priority"""    EMERGENCY = "emergency"  # Immediate escalation required
+    """Alert severity levels with escalation priority"""
+    EMERGENCY = "emergency"  # Immediate escalation required
     CRITICAL = "critical"    # Escalate within 15 minutes
     WARNING = "warning"      # Escalate within 1 hour
     INFO = "info"           # No automatic escalation
     
 
 class AlertType(Enum):
-    """Specific alert types"""    # Business Alerts
+    """Specific alert types"""
+    # Business Alerts
     REVENUE_DROP = "revenue_drop"
     REVENUE_ANOMALY = "revenue_anomaly"
     USER_EXPERIENCE_DEGRADATION = "user_experience_degradation"
@@ -70,7 +74,8 @@ class AlertType(Enum):
 
 @dataclass
 class AlertRule:
-    """Intelligent alert rule with advanced capabilities"""    rule_id: str
+    """Intelligent alert rule with advanced capabilities"""
+    rule_id: str
     name: str
     category: AlertCategory
     alert_type: AlertType
@@ -88,7 +93,8 @@ class AlertRule:
 
 @dataclass
 class IntelligentAlert:
-    """Enhanced alert with intelligent features"""    alert_id: str
+    """Enhanced alert with intelligent features"""
+    alert_id: str
     rule_id: str
     category: AlertCategory
     alert_type: AlertType
@@ -113,7 +119,8 @@ class IntelligentAlert:
 
 
 class IntelligentAlertManager:
-    """    Central intelligent alert management system
+    """
+    Central intelligent alert management system
     
     Features:
     - Intelligent alert correlation and deduplication
@@ -121,9 +128,11 @@ class IntelligentAlertManager:
     - Alert suppression and noise reduction
     - Business, technical, and AI/ML alert categorization
     - Advanced notification routing
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the intelligent alert manager"""        self.alert_rules: Dict[str, AlertRule] = {}
+        """Initialize the intelligent alert manager"""
+        self.alert_rules: Dict[str, AlertRule] = {}
         self.active_alerts: Dict[str, IntelligentAlert] = {}
         self.alert_history: List[IntelligentAlert] = []
         self.correlation_groups: Dict[str, List[str]] = defaultdict(list)
@@ -144,7 +153,8 @@ class IntelligentAlertManager:
         logger.info("IntelligentAlertManager initialized")
     
     def _initialize_default_rules(self):
-        """Initialize default alert rules for all categories"""        
+        """Initialize default alert rules for all categories"""
+        
         # Business Alert Rules
         self.add_alert_rule(AlertRule(
             rule_id="business_revenue_drop",
@@ -289,16 +299,19 @@ class IntelligentAlertManager:
         logger.info(f"Initialized {len(self.alert_rules)} default alert rules")
     
     def add_alert_rule(self, rule: AlertRule):
-        """Add a new alert rule"""        self.alert_rules[rule.rule_id] = rule
+        """Add a new alert rule"""
+        self.alert_rules[rule.rule_id] = rule
         logger.info(f"Added alert rule: {rule.rule_id} - {rule.name}")
     
     def remove_alert_rule(self, rule_id: str):
-        """Remove an alert rule"""        if rule_id in self.alert_rules:
+        """Remove an alert rule"""
+        if rule_id in self.alert_rules:
             del self.alert_rules[rule_id]
             logger.info(f"Removed alert rule: {rule_id}")
     
     async def evaluate_alert_rules(self, metrics: Dict[str, Any]) -> List[IntelligentAlert]:
-        """Evaluate all alert rules against current metrics"""        triggered_alerts = []
+        """Evaluate all alert rules against current metrics"""
+        triggered_alerts = []
         
         for rule_id, rule in self.alert_rules.items():
             if not rule.enabled:
@@ -320,7 +333,8 @@ class IntelligentAlertManager:
         return triggered_alerts
     
     async def _evaluate_rule_expression(self, rule: AlertRule, metrics: Dict[str, Any]) -> bool:
-        """Evaluate if a rule expression is triggered"""        try:
+        """Evaluate if a rule expression is triggered"""
+        try:
             # This is a simplified evaluation - in production, use a proper expression evaluator
             if rule.alert_type == AlertType.REVENUE_DROP:
                 current = metrics.get("current_revenue", 0)
@@ -367,7 +381,8 @@ class IntelligentAlertManager:
             return False
     
     async def _create_alert(self, rule: AlertRule, metrics: Dict[str, Any]) -> IntelligentAlert:
-        """Create a new alert from a triggered rule"""        alert_id = self._generate_alert_id(rule.rule_id, metrics)
+        """Create a new alert from a triggered rule"""
+        alert_id = self._generate_alert_id(rule.rule_id, metrics)
         
         # Generate correlation ID if rule has correlation rules
         correlation_id = None
@@ -396,7 +411,8 @@ class IntelligentAlertManager:
         return alert
     
     async def _is_duplicate_alert(self, alert: IntelligentAlert) -> bool:
-        """Check if this is a duplicate alert that should be suppressed"""        # Check if the same alert is already active
+        """Check if this is a duplicate alert that should be suppressed"""
+        # Check if the same alert is already active
         if alert.alert_id in self.active_alerts:
             existing_alert = self.active_alerts[alert.alert_id]
             if not existing_alert.resolved:
@@ -422,7 +438,8 @@ class IntelligentAlertManager:
         return False
     
     async def _process_new_alert(self, alert: IntelligentAlert):
-        """Process a new alert through the intelligent system"""        # Add to active alerts
+        """Process a new alert through the intelligent system"""
+        # Add to active alerts
         self.active_alerts[alert.alert_id] = alert
         self.alert_history.append(alert)
         
@@ -444,7 +461,8 @@ class IntelligentAlertManager:
         logger.info(f"Processed new alert: {alert.alert_id} - {alert.title}")
     
     async def _schedule_escalation(self, alert: IntelligentAlert):
-        """Schedule automatic escalation for an alert"""        rule = self.alert_rules[alert.rule_id]
+        """Schedule automatic escalation for an alert"""
+        rule = self.alert_rules[alert.rule_id]
         
         if not rule.escalation_levels:
             return
@@ -485,7 +503,8 @@ class IntelligentAlertManager:
         self.escalation_tasks[alert.alert_id] = task
     
     async def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> bool:
-        """Acknowledge an alert"""        if alert_id not in self.active_alerts:
+        """Acknowledge an alert"""
+        if alert_id not in self.active_alerts:
             return False
         
         alert = self.active_alerts[alert_id]
@@ -502,7 +521,8 @@ class IntelligentAlertManager:
         return True
     
     async def resolve_alert(self, alert_id: str, auto_resolved: bool = False) -> bool:
-        """Resolve an alert"""        if alert_id not in self.active_alerts:
+        """Resolve an alert"""
+        if alert_id not in self.active_alerts:
             return False
         
         alert = self.active_alerts[alert_id]
@@ -526,7 +546,8 @@ class IntelligentAlertManager:
         return True
     
     async def get_alert_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive alert statistics"""        active_count = len(self.active_alerts)
+        """Get comprehensive alert statistics"""
+        active_count = len(self.active_alerts)
         
         # Calculate alert distribution
         severity_distribution = {}
@@ -549,15 +570,18 @@ class IntelligentAlertManager:
         }
     
     def _generate_alert_id(self, rule_id: str, metrics: Dict[str, Any]) -> str:
-        """Generate a unique alert ID"""        content = f"{rule_id}_{datetime.utcnow().isoformat()}"
+        """Generate a unique alert ID"""
+        content = f"{rule_id}_{datetime.utcnow().isoformat()}"
         return hashlib.md5(content.encode()).hexdigest()[:16]
     
     def _generate_correlation_id(self, correlation_rules: List[str], metrics: Dict[str, Any]) -> str:
-        """Generate correlation ID for related alerts"""        content = "_".join(sorted(correlation_rules))
+        """Generate correlation ID for related alerts"""
+        content = "_".join(sorted(correlation_rules))
         return hashlib.md5(content.encode()).hexdigest()[:12]
     
     def _generate_alert_title(self, rule: AlertRule, metrics: Dict[str, Any]) -> str:
-        """Generate alert title based on rule and metrics"""        base_title = rule.name
+        """Generate alert title based on rule and metrics"""
+        base_title = rule.name
         
         if rule.alert_type == AlertType.REVENUE_DROP:
             drop_amount = metrics.get("current_revenue", 0) - metrics.get("previous_revenue", 0)
@@ -574,7 +598,8 @@ class IntelligentAlertManager:
         return base_title
     
     def _generate_alert_description(self, rule: AlertRule, metrics: Dict[str, Any]) -> str:
-        """Generate detailed alert description"""        base_desc = f"Alert triggered for rule: {rule.name}\n"
+        """Generate detailed alert description"""
+        base_desc = f"Alert triggered for rule: {rule.name}\n"
         base_desc += f"Severity: {rule.severity.value}\n"
         base_desc += f"Category: {rule.category.value}\n\n"
         
@@ -593,7 +618,8 @@ class IntelligentAlertManager:
         return base_desc
     
     def _extract_alert_value(self, rule: AlertRule, metrics: Dict[str, Any]) -> Union[float, str, Dict[str, Any]]:
-        """Extract the key value that triggered the alert"""        if rule.alert_type == AlertType.REVENUE_DROP:
+        """Extract the key value that triggered the alert"""
+        if rule.alert_type == AlertType.REVENUE_DROP:
             return {
                 "current_revenue": metrics.get("current_revenue", 0),
                 "previous_revenue": metrics.get("previous_revenue", 0),
@@ -613,7 +639,8 @@ class IntelligentAlertManager:
         return str(metrics)
     
     def _parse_duration(self, duration_str: str) -> timedelta:
-        """Parse duration string to timedelta"""        if duration_str.endswith('m'):
+        """Parse duration string to timedelta"""
+        if duration_str.endswith('m'):
             return timedelta(minutes=int(duration_str[:-1]))
         elif duration_str.endswith('h'):
             return timedelta(hours=int(duration_str[:-1]))
@@ -623,7 +650,8 @@ class IntelligentAlertManager:
             return timedelta(minutes=5)  # Default to 5 minutes
     
     def _update_resolution_time_stats(self, resolution_time_seconds: float):
-        """Update average resolution time statistics"""        current_avg = self.alert_stats["avg_resolution_time"]
+        """Update average resolution time statistics"""
+        current_avg = self.alert_stats["avg_resolution_time"]
         total_alerts = self.alert_stats["total_alerts"]
         
         # Calculate running average
@@ -635,12 +663,14 @@ class IntelligentAlertManager:
             self.alert_stats["avg_resolution_time"] = resolution_time_seconds
     
     async def _send_alert_notifications(self, alert: IntelligentAlert):
-        """Send initial alert notifications"""        # This would integrate with existing notification systems
+        """Send initial alert notifications"""
+        # This would integrate with existing notification systems
         logger.info(f"Sending notifications for alert: {alert.alert_id}")
         # Implementation would call existing notification services
     
     async def _send_escalation_notifications(self, alert: IntelligentAlert, level_config: Dict[str, Any]):
-        """Send escalation notifications"""        channels = level_config.get("channels", [])
+        """Send escalation notifications"""
+        channels = level_config.get("channels", [])
         logger.warning(f"Sending escalation notifications for alert {alert.alert_id} to channels: {channels}")
         # Implementation would call existing notification services with escalation context
 

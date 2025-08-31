@@ -11,7 +11,8 @@ This cutting-edge content protection system is protected intellectual property.
 Any unauthorized copying, distribution, or use will result in immediate legal action.
 
 Business Logic: Content Upload → Fingerprint Generation → Protection Registration → Violation Detection → Automated Enforcement
-"""import asyncio
+"""
+import asyncio
 import hashlib
 import json
 import uuid
@@ -57,7 +58,8 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""    BASIC = "basic"
+    """Content protection levels"""
+    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
@@ -65,7 +67,8 @@ class ProtectionLevel(Enum):
 
 
 class ViolationType(Enum):
-    """Types of content violations"""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Types of content violations"""
+    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_DISTRIBUTION = "unauthorized_distribution"
     TRADEMARK_VIOLATION = "trademark_violation"
     PLAGIARISM = "plagiarism"
@@ -78,7 +81,8 @@ class ViolationType(Enum):
 
 
 class EnforcementAction(Enum):
-    """Automated enforcement actions"""    DMCA_TAKEDOWN = "dmca_takedown"
+    """Automated enforcement actions"""
+    DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_AND_DESIST = "cease_and_desist"
     PLATFORM_REPORT = "platform_report"
     LEGAL_NOTICE = "legal_notice"
@@ -90,7 +94,8 @@ class EnforcementAction(Enum):
 
 
 class FingerprintType(Enum):
-    """Types of content fingerprints"""    PERCEPTUAL_HASH = "perceptual_hash"
+    """Types of content fingerprints"""
+    PERCEPTUAL_HASH = "perceptual_hash"
     CHROMAPRINT = "chromaprint"  # Audio fingerprinting
     VISUAL_FEATURES = "visual_features"
     SPECTRAL_HASH = "spectral_hash"
@@ -102,7 +107,8 @@ class FingerprintType(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint for protection"""    fingerprint_id: str
+    """Content fingerprint for protection"""
+    fingerprint_id: str
     content_id: str
     fingerprint_type: FingerprintType
     fingerprint_data: str  # Base64 encoded fingerprint
@@ -132,7 +138,8 @@ class ContentFingerprint:
 
 @dataclass
 class ProtectionRecord:
-    """Content protection record"""    protection_id: str
+    """Content protection record"""
+    protection_id: str
     content_id: str
     owner_id: str
     content_type: ContentType
@@ -172,7 +179,8 @@ class ProtectionRecord:
 
 @dataclass
 class ViolationReport:
-    """Content violation report"""    violation_id: str
+    """Content violation report"""
+    violation_id: str
     protection_id: str
     violating_content_url: str
     violation_type: ViolationType
@@ -211,7 +219,8 @@ class ViolationReport:
 
 
 class AudioFingerprintGenerator:
-    """Advanced audio fingerprinting using AI"""    
+    """Advanced audio fingerprinting using AI"""
+    
     def __init__(self):
         self.sample_rate = 22050
         self.frame_length = 2048
@@ -220,7 +229,8 @@ class AudioFingerprintGenerator:
     async def generate_audio_fingerprint(self, 
                                        audio_data: Union[str, np.ndarray, BinaryIO],
                                        method: str = "chromaprint") -> ContentFingerprint:
-        """Generate audio fingerprint"""        try:
+        """Generate audio fingerprint"""
+        try:
             # Load audio data
             if isinstance(audio_data, str):
                 y, sr = librosa.load(audio_data, sr=self.sample_rate)
@@ -264,7 +274,8 @@ class AudioFingerprintGenerator:
             raise ProtectionError(f"Audio fingerprinting failed: {str(e)}")
     
     async def _generate_chromaprint(self, y: np.ndarray, sr: int) -> str:
-        """Generate Chromaprint-style fingerprint"""        try:
+        """Generate Chromaprint-style fingerprint"""
+        try:
             # Extract chroma features
             chroma = librosa.feature.chroma_stft(y=y, sr=sr, 
                                                hop_length=self.hop_length,
@@ -285,7 +296,8 @@ class AudioFingerprintGenerator:
             return ""
     
     async def _generate_spectral_fingerprint(self, y: np.ndarray, sr: int) -> str:
-        """Generate spectral fingerprint"""        try:
+        """Generate spectral fingerprint"""
+        try:
             # Compute spectral features
             spectral_centroids = librosa.feature.spectral_centroid(y=y, sr=sr)[0]
             spectral_rolloff = librosa.feature.spectral_rolloff(y=y, sr=sr)[0]
@@ -309,7 +321,8 @@ class AudioFingerprintGenerator:
             return ""
     
     async def _generate_mfcc_fingerprint(self, y: np.ndarray, sr: int) -> str:
-        """Generate MFCC-based fingerprint"""        try:
+        """Generate MFCC-based fingerprint"""
+        try:
             # Extract MFCC features
             mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
             
@@ -333,14 +346,16 @@ class AudioFingerprintGenerator:
 
 
 class ImageFingerprintGenerator:
-    """Advanced image fingerprinting using AI"""    
+    """Advanced image fingerprinting using AI"""
+    
     def __init__(self):
         if TORCH_AVAILABLE:
             self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
             self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize pre-trained models for feature extraction"""        try:
+        """Initialize pre-trained models for feature extraction"""
+        try:
             # Load pre-trained ResNet for feature extraction
             self.feature_extractor = models.resnet50(pretrained=True)
             self.feature_extractor.fc = nn.Identity()  # Remove final layer
@@ -362,7 +377,8 @@ class ImageFingerprintGenerator:
     async def generate_image_fingerprint(self, 
                                        image_data: Union[str, np.ndarray, Image.Image, BinaryIO],
                                        method: str = "perceptual") -> ContentFingerprint:
-        """Generate image fingerprint"""        try:
+        """Generate image fingerprint"""
+        try:
             # Load and preprocess image
             if isinstance(image_data, str):
                 image = Image.open(image_data).convert('RGB')
@@ -407,7 +423,8 @@ class ImageFingerprintGenerator:
             raise ProtectionError(f"Image fingerprinting failed: {str(e)}")
     
     async def _generate_perceptual_hash(self, image: Image.Image) -> str:
-        """Generate perceptual hash using multiple algorithms"""        try:
+        """Generate perceptual hash using multiple algorithms"""
+        try:
             # Multiple perceptual hashes for robustness
             dhash = imagehash.dhash(image)
             phash = imagehash.phash(image)
@@ -427,7 +444,8 @@ class ImageFingerprintGenerator:
             return ""
     
     async def _generate_deep_features_hash(self, image: Image.Image) -> str:
-        """Generate deep features hash using pre-trained CNN"""        try:
+        """Generate deep features hash using pre-trained CNN"""
+        try:
             if not TORCH_AVAILABLE or not hasattr(self, 'feature_extractor'):
                 # Fallback to perceptual hash
                 return await self._generate_perceptual_hash(image)
@@ -454,7 +472,8 @@ class ImageFingerprintGenerator:
             return await self._generate_perceptual_hash(image)
     
     async def _generate_structural_hash(self, image: Image.Image) -> str:
-        """Generate structural signature based on image structure"""        try:
+        """Generate structural signature based on image structure"""
+        try:
             # Convert to numpy array
             img_array = np.array(image)
             
@@ -492,7 +511,8 @@ class ImageFingerprintGenerator:
 
 
 class TextFingerprintGenerator:
-    """Advanced text fingerprinting and plagiarism detection"""    
+    """Advanced text fingerprinting and plagiarism detection"""
+    
     def __init__(self):
         self.min_shingle_size = 3
         self.max_shingle_size = 8
@@ -500,7 +520,8 @@ class TextFingerprintGenerator:
     async def generate_text_fingerprint(self, 
                                       text: str,
                                       method: str = "semantic") -> ContentFingerprint:
-        """Generate text fingerprint"""        try:
+        """Generate text fingerprint"""
+        try:
             if method == "semantic":
                 fingerprint_data = await self._generate_semantic_fingerprint(text)
                 fingerprint_type = FingerprintType.SEMANTIC_EMBEDDING
@@ -535,7 +556,8 @@ class TextFingerprintGenerator:
             raise ProtectionError(f"Text fingerprinting failed: {str(e)}")
     
     async def _generate_semantic_fingerprint(self, text: str) -> str:
-        """Generate semantic fingerprint using text analysis"""        try:
+        """Generate semantic fingerprint using text analysis"""
+        try:
             # Text preprocessing
             words = text.lower().split()
             
@@ -561,7 +583,8 @@ class TextFingerprintGenerator:
             return ""
     
     async def _generate_structural_fingerprint(self, text: str) -> str:
-        """Generate structural fingerprint based on text structure"""        try:
+        """Generate structural fingerprint based on text structure"""
+        try:
             # Analyze text structure
             sentences = text.split('.')
             paragraphs = text.split('\n\n')
@@ -595,7 +618,8 @@ class TextFingerprintGenerator:
             return ""
     
     async def _generate_hash_fingerprint(self, text: str) -> str:
-        """Generate hash-based fingerprint"""        try:
+        """Generate hash-based fingerprint"""
+        try:
             # Multiple hash algorithms for robustness
             md5_hash = hashlib.md5(text.encode()).hexdigest()
             sha1_hash = hashlib.sha1(text.encode()).hexdigest()
@@ -612,7 +636,8 @@ class TextFingerprintGenerator:
 
 
 class ContentProtectionEngine:
-    """Main content protection engine"""    
+    """Main content protection engine"""
+    
     def __init__(self):
         self.audio_generator = AudioFingerprintGenerator()
         self.image_generator = ImageFingerprintGenerator()
@@ -622,7 +647,8 @@ class ContentProtectionEngine:
         self._initialize_protection_systems()
     
     def _initialize_protection_systems(self):
-        """Initialize protection subsystems"""        logger.info("Content protection engine initialized")
+        """Initialize protection subsystems"""
+        logger.info("Content protection engine initialized")
     
     async def protect_content(self, 
                             content_id: str,
@@ -632,7 +658,8 @@ class ContentProtectionEngine:
                             protection_level: ProtectionLevel = ProtectionLevel.STANDARD,
                             copyright_info: Dict[str, Any] = None,
                             custom_settings: Dict[str, Any] = None) -> ProtectionRecord:
-        """Protect content with comprehensive fingerprinting"""        try:
+        """Protect content with comprehensive fingerprinting"""
+        try:
             copyright_info = copyright_info or {}
             custom_settings = custom_settings or {}
             
@@ -686,7 +713,8 @@ class ContentProtectionEngine:
                                            content_type: ContentType,
                                            content_data: Any,
                                            protection_level: ProtectionLevel) -> List[ContentFingerprint]:
-        """Generate fingerprints based on content type"""        fingerprints = []
+        """Generate fingerprints based on content type"""
+        fingerprints = []
         
         try:
             if content_type in [ContentType.AUDIO, ContentType.MUSIC, ContentType.PODCAST]:
@@ -756,7 +784,8 @@ class ContentProtectionEngine:
             return []
     
     def _generate_metadata_fingerprint(self, content_id: str, content_type: ContentType) -> ContentFingerprint:
-        """Generate metadata-based fingerprint"""        try:
+        """Generate metadata-based fingerprint"""
+        try:
             # Create metadata signature
             metadata = {
                 "content_id": content_id,
@@ -787,7 +816,8 @@ class ContentProtectionEngine:
                               owner_id: str,
                               content_id: str,
                               copyright_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Create cryptographic ownership proof"""        try:
+        """Create cryptographic ownership proof"""
+        try:
             ownership_data = {
                 "owner_id": owner_id,
                 "content_id": content_id,
@@ -819,7 +849,8 @@ class ContentProtectionEngine:
     def _configure_protection_settings(self, 
                                      protection_level: ProtectionLevel,
                                      custom_settings: Dict[str, Any]) -> Dict[str, Any]:
-        """Configure protection settings based on level"""        base_settings = {
+        """Configure protection settings based on level"""
+        base_settings = {
             ProtectionLevel.BASIC: {
                 "auto_monitoring": True,
                 "monitoring_frequency": "daily",
@@ -888,7 +919,8 @@ class ContentProtectionEngine:
         return settings
     
     def _get_protected_platforms(self, protection_level: ProtectionLevel) -> List[str]:
-        """Get list of platforms to monitor based on protection level"""        platform_lists = {
+        """Get list of platforms to monitor based on protection level"""
+        platform_lists = {
             ProtectionLevel.BASIC: ["youtube", "instagram"],
             ProtectionLevel.STANDARD: ["youtube", "instagram", "tiktok", "facebook", "twitter"],
             ProtectionLevel.PREMIUM: [
@@ -906,7 +938,8 @@ class ContentProtectionEngine:
         return platform_lists.get(protection_level, platform_lists[ProtectionLevel.STANDARD])
     
     async def _initialize_content_monitoring(self, protection_record: ProtectionRecord):
-        """Initialize automated content monitoring"""        try:
+        """Initialize automated content monitoring"""
+        try:
             # Set up monitoring task (simplified)
             logger.info(f"Initialized monitoring for content: {protection_record.content_id}")
             
@@ -923,7 +956,8 @@ class ContentProtectionEngine:
                               suspicious_content: Any,
                               suspicious_url: str,
                               platform: str) -> List[ViolationReport]:
-        """Detect content violations using fingerprint matching"""        try:
+        """Detect content violations using fingerprint matching"""
+        try:
             violations = []
             
             # Check against all protected content
@@ -952,7 +986,8 @@ class ContentProtectionEngine:
     async def _compare_content_fingerprints(self, 
                                           suspicious_content: Any,
                                           protection_record: ProtectionRecord) -> List[Dict[str, Any]]:
-        """Compare suspicious content against protected fingerprints"""        try:
+        """Compare suspicious content against protected fingerprints"""
+        try:
             results = []
             
             # Generate fingerprints for suspicious content
@@ -983,7 +1018,8 @@ class ContentProtectionEngine:
     def _calculate_fingerprint_similarity(self, 
                                         fingerprint1: ContentFingerprint,
                                         fingerprint2: ContentFingerprint) -> float:
-        """Calculate similarity between two fingerprints"""        try:
+        """Calculate similarity between two fingerprints"""
+        try:
             # Decode fingerprints
             data1 = base64.b64decode(fingerprint1.fingerprint_data.encode()).decode()
             data2 = base64.b64decode(fingerprint2.fingerprint_data.encode()).decode()
@@ -1012,7 +1048,8 @@ class ContentProtectionEngine:
                                      violating_url: str,
                                      platform: str,
                                      match_data: Dict[str, Any]) -> ViolationReport:
-        """Create violation report"""        try:
+        """Create violation report"""
+        try:
             # Assess violation severity
             similarity = match_data["similarity"]
             if similarity >= 0.95:
@@ -1062,7 +1099,8 @@ class ContentProtectionEngine:
                                  protection_record: ProtectionRecord,
                                  similarity: float,
                                  platform: str) -> float:
-        """Estimate financial impact of violation"""        try:
+        """Estimate financial impact of violation"""
+        try:
             # Base impact factors
             base_impacts = {
                 "youtube": 100.0,
@@ -1097,7 +1135,8 @@ class ContentProtectionEngine:
     async def _trigger_enforcement_actions(self, 
                                          violation_report: ViolationReport,
                                          protection_record: ProtectionRecord):
-        """Trigger appropriate enforcement actions"""        try:
+        """Trigger appropriate enforcement actions"""
+        try:
             enforcement_settings = protection_record.protection_settings
             actions = []
             
@@ -1129,7 +1168,8 @@ class ContentProtectionEngine:
                                         action: EnforcementAction,
                                         violation_report: ViolationReport,
                                         protection_record: ProtectionRecord):
-        """Execute specific enforcement action"""        try:
+        """Execute specific enforcement action"""
+        try:
             logger.info(f"Executing enforcement action: {action.value} for violation: {violation_report.violation_id}")
             
             # In a real implementation, this would:

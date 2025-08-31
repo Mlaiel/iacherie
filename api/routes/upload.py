@@ -3,7 +3,8 @@ Multi-format file upload and processing endpoints.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import os
+"""
+import os
 import uuid
 import mimetypes
 from typing import List, Dict, Any, Optional
@@ -107,7 +108,8 @@ text_processor = TextProcessor()
 
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
-    """Get current authenticated user"""    if not credentials:
+    """Get current authenticated user"""
+    if not credentials:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Authentication required"
@@ -125,7 +127,8 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
 
 
 def detect_content_type(file_content: bytes, filename: str) -> str:
-    """Detect content type using file magic and extension"""    try:
+    """Detect content type using file magic and extension"""
+    try:
         # Use python-magic for MIME type detection
         mime_type = magic.from_buffer(file_content, mime=True)
         
@@ -149,7 +152,8 @@ def detect_content_type(file_content: bytes, filename: str) -> str:
 
 
 def validate_file(file_content: bytes, filename: str, content_type: str) -> Dict[str, Any]:
-    """Validate uploaded file"""    errors = []
+    """Validate uploaded file"""
+    errors = []
     
     # Check file size
     if len(file_content) > MAX_FILE_SIZE:
@@ -181,7 +185,8 @@ async def upload_single_file(
     background_tasks: BackgroundTasks,
     user: dict = Depends(get_current_user)
 ):
-    """Upload a single file with metadata"""    try:
+    """Upload a single file with metadata"""
+    try:
         # Parse metadata
         import json
         try:
@@ -233,7 +238,8 @@ async def upload_single_file(
         }
         
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                INSERT INTO uploaded_files (file_id, user_id, original_filename, stored_filename,
+            await session.execute("""
+                INSERT INTO uploaded_files (file_id, user_id, original_filename, stored_filename,
                                           file_path, content_type, file_size, status,
                                           metadata, upload_timestamp, processing_status)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -278,7 +284,8 @@ async def upload_multiple_files(
     background_tasks: BackgroundTasks,
     user: dict = Depends(get_current_user)
 ):
-    """Upload multiple files with shared metadata"""    try:
+    """Upload multiple files with shared metadata"""
+    try:
         if len(files) > 20:  # Limit batch size
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
@@ -333,7 +340,8 @@ async def upload_multiple_files(
                 }
                 
                 async with database_manager.get_postgres_session() as session:
-                    await session.execute("""                        INSERT INTO uploaded_files (file_id, user_id, original_filename, stored_filename,
+                    await session.execute("""
+                        INSERT INTO uploaded_files (file_id, user_id, original_filename, stored_filename,
                                                   file_path, content_type, file_size, status,
                                                   metadata, upload_timestamp, processing_status)
                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -382,9 +390,11 @@ async def get_processing_status(
     file_id: str,
     user: dict = Depends(get_current_user)
 ):
-    """Get file processing status"""    try:
+    """Get file processing status"""
+    try:
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT processing_status, processing_progress, processing_step,
+            result = await session.execute("""
+                SELECT processing_status, processing_progress, processing_step,
                        processing_error, processing_results, updated_at
                 FROM uploaded_files
                 WHERE file_id = %s AND user_id = %s
@@ -422,10 +432,12 @@ async def convert_file_format(
     background_tasks: BackgroundTasks,
     user: dict = Depends(get_current_user)
 ):
-    """Convert file to different format"""    try:
+    """Convert file to different format"""
+    try:
         # Verify file ownership
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT file_path, content_type, original_filename
+            result = await session.execute("""
+                SELECT file_path, content_type, original_filename
                 FROM uploaded_files
                 WHERE file_id = %s AND user_id = %s
             """, (conversion_request.file_id, user['user_id']))
@@ -450,7 +462,8 @@ async def convert_file_format(
         
         # Create conversion job
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                INSERT INTO file_conversions (conversion_id, file_id, user_id, source_format,
+            await session.execute("""
+                INSERT INTO file_conversions (conversion_id, file_id, user_id, source_format,
                                             target_format, quality_settings, processing_options,
                                             status, created_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -490,12 +503,15 @@ async def list_uploaded_files(
     offset: int = Field(default=0, ge=0),
     user: dict = Depends(get_current_user)
 ):
-    """List user's uploaded files"""    try:
-        query = """            SELECT file_id, original_filename, content_type, file_size, status,
+    """List user's uploaded files"""
+    try:
+        query = """
+            SELECT file_id, original_filename, content_type, file_size, status,
                    metadata, upload_timestamp, processing_status, processing_progress
             FROM uploaded_files
             WHERE user_id = %s
-        """        params = [user['user_id']]
+        """
+        params = [user['user_id']]
         
         if content_type:
             query += " AND content_type = %s"
@@ -541,10 +557,12 @@ async def delete_uploaded_file(
     file_id: str,
     user: dict = Depends(get_current_user)
 ):
-    """Delete an uploaded file"""    try:
+    """Delete an uploaded file"""
+    try:
         async with database_manager.get_postgres_session() as session:
             # Get file info
-            result = await session.execute("""                SELECT file_path, stored_filename
+            result = await session.execute("""
+                SELECT file_path, stored_filename
                 FROM uploaded_files
                 WHERE file_id = %s AND user_id = %s
             """, (file_id, user['user_id']))
@@ -559,7 +577,8 @@ async def delete_uploaded_file(
             file_path, stored_filename = file_info
             
             # Delete from database
-            await session.execute("""                DELETE FROM uploaded_files WHERE file_id = %s
+            await session.execute("""
+                DELETE FROM uploaded_files WHERE file_id = %s
             """, (file_id,))
             await session.commit()
         
@@ -595,9 +614,11 @@ async def download_file(
     version: str = Field(default="original", regex="^(original|processed|compressed)$"),
     user: dict = Depends(get_current_user)
 ):
-    """Download uploaded file"""    try:
+    """Download uploaded file"""
+    try:
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT file_path, original_filename, content_type
+            result = await session.execute("""
+                SELECT file_path, original_filename, content_type
                 FROM uploaded_files
                 WHERE file_id = %s AND user_id = %s
             """, (file_id, user['user_id']))
@@ -647,10 +668,12 @@ async def download_file(
 
 # Background processing functions
 async def _process_uploaded_file(file_id: str, file_path: str, content_type: str, metadata: UploadMetadata):
-    """Process uploaded file in background"""    try:
+    """Process uploaded file in background"""
+    try:
         # Update status to processing
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                UPDATE uploaded_files 
+            await session.execute("""
+                UPDATE uploaded_files 
                 SET processing_status = 'processing', processing_step = 'initializing'
                 WHERE file_id = %s
             """, (file_id,))
@@ -682,7 +705,8 @@ async def _process_uploaded_file(file_id: str, file_path: str, content_type: str
         
         # Update with results
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                UPDATE uploaded_files 
+            await session.execute("""
+                UPDATE uploaded_files 
                 SET processing_status = 'completed', processing_progress = 100.0,
                     processing_results = %s, processing_step = 'completed'
                 WHERE file_id = %s
@@ -696,7 +720,8 @@ async def _process_uploaded_file(file_id: str, file_path: str, content_type: str
         
         # Update status to failed
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                UPDATE uploaded_files 
+            await session.execute("""
+                UPDATE uploaded_files 
                 SET processing_status = 'failed', processing_error = %s
                 WHERE file_id = %s
             """, (str(e), file_id))
@@ -705,10 +730,12 @@ async def _process_uploaded_file(file_id: str, file_path: str, content_type: str
 
 async def _process_file_conversion(conversion_id: str, conversion_request: ConversionRequest, 
                                   source_path: str, source_type: str):
-    """Process file format conversion"""    try:
+    """Process file format conversion"""
+    try:
         # Update status to processing
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                UPDATE file_conversions 
+            await session.execute("""
+                UPDATE file_conversions 
                 SET status = 'processing', started_at = %s
                 WHERE conversion_id = %s
             """, (datetime.utcnow(), conversion_id))
@@ -742,7 +769,8 @@ async def _process_file_conversion(conversion_id: str, conversion_request: Conve
         
         # Update conversion record
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                UPDATE file_conversions 
+            await session.execute("""
+                UPDATE file_conversions 
                 SET status = 'completed', output_path = %s, completed_at = %s
                 WHERE conversion_id = %s
             """, (converted_path, datetime.utcnow(), conversion_id))
@@ -755,7 +783,8 @@ async def _process_file_conversion(conversion_id: str, conversion_request: Conve
         
         # Update status to failed
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                UPDATE file_conversions 
+            await session.execute("""
+                UPDATE file_conversions 
                 SET status = 'failed', error_message = %s
                 WHERE conversion_id = %s
             """, (str(e), conversion_id))

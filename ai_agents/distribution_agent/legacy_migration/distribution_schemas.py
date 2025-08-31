@@ -17,7 +17,8 @@ Violators will be prosecuted to the full extent of the law.
 - Audio Engineer: Professional Audio Processing
 - DevOps Engineer: Cloud Infrastructure & CI/CD
 - IA Prompt Engineer: Advanced Prompt Engineering & LLM Integration
-"""from marshmallow import Schema, fields, validate, post_load, ValidationError
+"""
+from marshmallow import Schema, fields, validate, post_load, ValidationError
 from typing import Dict, List, Any
 from datetime import datetime
 import re
@@ -30,7 +31,8 @@ from .distribution_models import (
 
 
 class ContentMetadataSchema(Schema):
-    """Professional content metadata schema with advanced validation"""    
+    """Professional content metadata schema with advanced validation"""
+    
     title = fields.Str(
         required=True,
         validate=validate.Length(min=1, max=200),
@@ -82,7 +84,8 @@ class ContentMetadataSchema(Schema):
 
 
 class DistributionConfigSchema(Schema):
-    """Professional distribution configuration schema"""    
+    """Professional distribution configuration schema"""
+    
     platform = fields.Enum(
         PlatformType,
         required=True,
@@ -110,7 +113,8 @@ class DistributionConfigSchema(Schema):
     custom_settings = fields.Dict(missing=dict)
 
     def validate_scheduled_time(self, value):
-        """Validate scheduled time is in the future"""        if value and value <= datetime.now():
+        """Validate scheduled time is in the future"""
+        if value and value <= datetime.now():
             raise ValidationError("Scheduled time must be in the future")
 
     @post_load
@@ -119,7 +123,8 @@ class DistributionConfigSchema(Schema):
 
 
 class DistributionRequestSchema(Schema):
-    """Professional distribution request schema"""    
+    """Professional distribution request schema"""
+    
     id = fields.Str(missing=lambda: str(__import__('uuid').uuid4()))
     user_id = fields.Str(
         required=True,
@@ -154,7 +159,8 @@ class DistributionRequestSchema(Schema):
     updated_at = fields.DateTime(missing=datetime.now)
 
     def validate_content_path(self, value):
-        """Validate content path format"""        if not re.match(r'^[a-zA-Z0-9/_\-\.]+$', value):
+        """Validate content path format"""
+        if not re.match(r'^[a-zA-Z0-9/_\-\.]+$', value):
             raise ValidationError("Invalid content path format")
 
     @post_load
@@ -163,7 +169,8 @@ class DistributionRequestSchema(Schema):
 
 
 class DistributionResultSchema(Schema):
-    """Professional distribution result schema"""    
+    """Professional distribution result schema"""
+    
     id = fields.Str(required=True)
     request_id = fields.Str(required=True)
     platform = fields.Enum(PlatformType, required=True)
@@ -192,7 +199,8 @@ class DistributionResultSchema(Schema):
 
 
 class PlatformCredentialsSchema(Schema):
-    """Professional platform credentials schema with security validation"""    
+    """Professional platform credentials schema with security validation"""
+    
     platform = fields.Enum(PlatformType, required=True)
     user_id = fields.Str(
         required=True,
@@ -220,7 +228,8 @@ class PlatformCredentialsSchema(Schema):
     updated_at = fields.DateTime(missing=datetime.now)
 
     def validate_token_format(self, token):
-        """Validate token format (basic validation)"""        if token and len(token) < 10:
+        """Validate token format (basic validation)"""
+        if token and len(token) < 10:
             raise ValidationError("Token too short")
         return True
 
@@ -230,7 +239,8 @@ class PlatformCredentialsSchema(Schema):
 
 
 class DistributionAnalyticsSchema(Schema):
-    """Professional distribution analytics schema"""    
+    """Professional distribution analytics schema"""
+    
     id = fields.Str(missing=lambda: str(__import__('uuid').uuid4()))
     distribution_result_id = fields.Str(required=True)
     platform = fields.Enum(PlatformType, required=True)
@@ -258,7 +268,8 @@ class DistributionAnalyticsSchema(Schema):
     raw_data = fields.Dict(missing=dict)
 
     def validate_date_range(self, data):
-        """Validate date range consistency"""        if data.get('period_start') and data.get('period_end'):
+        """Validate date range consistency"""
+        if data.get('period_start') and data.get('period_end'):
             if data['period_start'] >= data['period_end']:
                 raise ValidationError("Period start must be before period end")
 
@@ -268,7 +279,8 @@ class DistributionAnalyticsSchema(Schema):
 
 
 class CollaborationRequestSchema(Schema):
-    """Professional collaboration request schema"""    
+    """Professional collaboration request schema"""
+    
     id = fields.Str(missing=lambda: str(__import__('uuid').uuid4()))
     creator_id = fields.Str(required=True, validate=validate.Length(min=1, max=100))
     collaborator_id = fields.Str(required=True, validate=validate.Length(min=1, max=100))
@@ -296,14 +308,16 @@ class CollaborationRequestSchema(Schema):
     expires_at = fields.DateTime(allow_none=True)
 
     def validate_revenue_split(self, data):
-        """Validate revenue split adds up to 100%"""        if data.get('revenue_split'):
+        """Validate revenue split adds up to 100%"""
+        if data.get('revenue_split'):
             total = sum(data['revenue_split'].values())
             if abs(total - 100.0) > 0.01:  # Allow small floating point errors
                 raise ValidationError("Revenue split must add up to 100%")
 
 
 class ContentProtectionSchema(Schema):
-    """Professional content protection schema"""    
+    """Professional content protection schema"""
+    
     content_id = fields.Str(required=True, validate=validate.Length(min=1, max=100))
     protection_level = fields.Str(
         validate=validate.OneOf(['basic', 'standard', 'premium', 'enterprise']),
@@ -327,7 +341,8 @@ class ContentProtectionSchema(Schema):
 
 
 class DistributionBatchSchema(Schema):
-    """Professional distribution batch schema"""    
+    """Professional distribution batch schema"""
+    
     id = fields.Str(missing=lambda: str(__import__('uuid').uuid4()))
     user_id = fields.Str(required=True, validate=validate.Length(min=1, max=100))
     name = fields.Str(required=True, validate=validate.Length(min=1, max=200))
@@ -350,7 +365,8 @@ class DistributionBatchSchema(Schema):
 
 
 class ValidationErrorSchema(Schema):
-    """Professional validation error schema"""    
+    """Professional validation error schema"""
+    
     field = fields.Str(required=True)
     message = fields.Str(required=True)
     code = fields.Str(missing='validation_error')
@@ -358,7 +374,8 @@ class ValidationErrorSchema(Schema):
 
 
 class APIResponseSchema(Schema):
-    """Professional API response schema"""    
+    """Professional API response schema"""
+    
     success = fields.Bool(required=True)
     data = fields.Raw(allow_none=True)
     message = fields.Str(allow_none=True)
@@ -369,7 +386,8 @@ class APIResponseSchema(Schema):
 
 
 class PlatformStatusSchema(Schema):
-    """Professional platform status schema"""    
+    """Professional platform status schema"""
+    
     platform = fields.Enum(PlatformType, required=True)
     status = fields.Str(
         validate=validate.OneOf(['online', 'offline', 'maintenance', 'limited']),
@@ -401,13 +419,15 @@ SCHEMA_REGISTRY = {
 
 
 def get_schema(schema_name: str) -> Schema:
-    """Get schema instance by name"""    if schema_name not in SCHEMA_REGISTRY:
+    """Get schema instance by name"""
+    if schema_name not in SCHEMA_REGISTRY:
         raise ValueError(f"Unknown schema: {schema_name}")
     return SCHEMA_REGISTRY[schema_name]()
 
 
 def validate_data(schema_name: str, data: Dict[str, Any]) -> Dict[str, Any]:
-    """Validate data using specified schema"""    schema = get_schema(schema_name)
+    """Validate data using specified schema"""
+    schema = get_schema(schema_name)
     try:
         return schema.load(data)
     except ValidationError as e:

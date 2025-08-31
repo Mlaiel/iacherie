@@ -6,7 +6,8 @@ Implements enterprise-grade performance monitoring and resource management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import psutil
@@ -19,14 +20,17 @@ from .filter_engine import FilterResponse, FilterResult, FilterType, ContentItem
 
 
 class PerformanceContentFilter:
-    """Performance monitoring and optimization filter."""    
+    """Performance monitoring and optimization filter."""
+    
     def __init__(self, config: PerformanceFilterConfig):
-        """Initialize performance filter."""        self.config = config
+        """Initialize performance filter."""
+        self.config = config
         self.logger = logging.getLogger(__name__)
         self.processing_stats = {'start_time': time.time(), 'processed_count': 0}
     
     async def filter_async(self, content: ContentItem, ai_validation: bool = True, strict_mode: bool = False) -> FilterResponse:
-        """Filter content with performance monitoring."""        start_time = time.time()
+        """Filter content with performance monitoring."""
+        start_time = time.time()
         
         try:
             # Check system resources
@@ -67,16 +71,20 @@ class PerformanceContentFilter:
             )
     
     def filter(self, content: ContentItem, ai_validation: bool = True, strict_mode: bool = False) -> FilterResponse:
-        """Synchronous performance filter."""        return asyncio.run(self.filter_async(content, ai_validation, strict_mode))
+        """Synchronous performance filter."""
+        return asyncio.run(self.filter_async(content, ai_validation, strict_mode))
 
 
 class QualityContentFilter:
-    """General quality assessment filter."""    
+    """General quality assessment filter."""
+    
     def __init__(self):
-        """Initialize quality filter."""        self.logger = logging.getLogger(__name__)
+        """Initialize quality filter."""
+        self.logger = logging.getLogger(__name__)
     
     async def filter_async(self, content: ContentItem, ai_validation: bool = True, strict_mode: bool = False) -> FilterResponse:
-        """Filter content for quality metrics."""        start_time = time.time()
+        """Filter content for quality metrics."""
+        start_time = time.time()
         
         try:
             quality_score = 0.8  # Default quality score
@@ -109,16 +117,20 @@ class QualityContentFilter:
             )
     
     def filter(self, content: ContentItem, ai_validation: bool = True, strict_mode: bool = False) -> FilterResponse:
-        """Synchronous quality filter."""        return asyncio.run(self.filter_async(content, ai_validation, strict_mode))
+        """Synchronous quality filter."""
+        return asyncio.run(self.filter_async(content, ai_validation, strict_mode))
 
 
 class RelevanceContentFilter:
-    """Content relevance assessment filter."""    
+    """Content relevance assessment filter."""
+    
     def __init__(self):
-        """Initialize relevance filter."""        self.logger = logging.getLogger(__name__)
+        """Initialize relevance filter."""
+        self.logger = logging.getLogger(__name__)
     
     async def filter_async(self, content: ContentItem, ai_validation: bool = True, strict_mode: bool = False) -> FilterResponse:
-        """Filter content for relevance."""        start_time = time.time()
+        """Filter content for relevance."""
+        start_time = time.time()
         
         try:
             relevance_score = 0.7  # Default relevance score
@@ -148,17 +160,21 @@ class RelevanceContentFilter:
             )
     
     def filter(self, content: ContentItem, ai_validation: bool = True, strict_mode: bool = False) -> FilterResponse:
-        """Synchronous relevance filter."""        return asyncio.run(self.filter_async(content, ai_validation, strict_mode))
+        """Synchronous relevance filter."""
+        return asyncio.run(self.filter_async(content, ai_validation, strict_mode))
 
 
 class DuplicateContentFilter:
-    """Duplicate content detection filter."""    
+    """Duplicate content detection filter."""
+    
     def __init__(self):
-        """Initialize duplicate filter."""        self.logger = logging.getLogger(__name__)
+        """Initialize duplicate filter."""
+        self.logger = logging.getLogger(__name__)
         self.content_hashes = set()
     
     async def filter_async(self, content: ContentItem, ai_validation: bool = True, strict_mode: bool = False) -> FilterResponse:
-        """Filter for duplicate content."""        start_time = time.time()
+        """Filter for duplicate content."""
+        start_time = time.time()
         
         try:
             import hashlib
@@ -202,4 +218,5 @@ class DuplicateContentFilter:
             )
     
     def filter(self, content: ContentItem, ai_validation: bool = True, strict_mode: bool = False) -> FilterResponse:
-        """Synchronous duplicate filter."""        return asyncio.run(self.filter_async(content, ai_validation, strict_mode))
+        """Synchronous duplicate filter."""
+        return asyncio.run(self.filter_async(content, ai_validation, strict_mode))

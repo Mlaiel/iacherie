@@ -6,7 +6,8 @@ and machine learning pipeline health tracking.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
 from datetime import datetime, timedelta
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 
 class AIModelType(Enum):
-    """AI model types"""    CONTENT_FINGERPRINTING = "content_fingerprinting"
+    """AI model types"""
+    CONTENT_FINGERPRINTING = "content_fingerprinting"
     SIMILARITY_DETECTION = "similarity_detection"
     COPYRIGHT_CLASSIFICATION = "copyright_classification"
     SENTIMENT_ANALYSIS = "sentiment_analysis"
@@ -34,14 +36,16 @@ class AIModelType(Enum):
 
 
 class DriftType(Enum):
-    """Types of model drift"""    DATA_DRIFT = "data_drift"
+    """Types of model drift"""
+    DATA_DRIFT = "data_drift"
     CONCEPT_DRIFT = "concept_drift"
     PREDICTION_DRIFT = "prediction_drift"
     LABEL_DRIFT = "label_drift"
 
 
 class ModelHealth(Enum):
-    """Model health status"""    HEALTHY = "healthy"
+    """Model health status"""
+    HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
     FAILING = "failing"
@@ -49,7 +53,8 @@ class ModelHealth(Enum):
 
 @dataclass
 class ModelMetrics:
-    """AI model performance metrics"""    model_id: str
+    """AI model performance metrics"""
+    model_id: str
     model_name: str
     model_type: AIModelType
     timestamp: datetime
@@ -95,7 +100,8 @@ class ModelMetrics:
 
 @dataclass
 class ModelBaseline:
-    """Model baseline performance for comparison"""    model_id: str
+    """Model baseline performance for comparison"""
+    model_id: str
     baseline_accuracy: float
     baseline_precision: float
     baseline_recall: float
@@ -108,7 +114,8 @@ class ModelBaseline:
 
 @dataclass
 class DriftDetectionResult:
-    """Drift detection analysis result"""    model_id: str
+    """Drift detection analysis result"""
+    model_id: str
     drift_type: DriftType
     drift_score: float
     confidence: float
@@ -119,7 +126,8 @@ class DriftDetectionResult:
 
 
 class AIAlertManager:
-    """    Advanced AI/ML alert management for model monitoring and health tracking
+    """
+    Advanced AI/ML alert management for model monitoring and health tracking
     
     Features:
     - Model performance degradation detection
@@ -129,9 +137,11 @@ class AIAlertManager:
     - Model training failure detection
     - Resource utilization alerts
     - Business impact assessment
-    """    
+    """
+    
     def __init__(self, alert_manager: IntelligentAlertManager):
-        """Initialize AI alert manager"""        self.alert_manager = alert_manager
+        """Initialize AI alert manager"""
+        self.alert_manager = alert_manager
         self.model_metrics_history: Dict[str, List[ModelMetrics]] = {}
         self.model_baselines: Dict[str, ModelBaseline] = {}
         self.drift_detection_results: List[DriftDetectionResult] = []
@@ -166,7 +176,8 @@ class AIAlertManager:
         logger.info("AIAlertManager initialized")
     
     def _initialize_ai_rules(self):
-        """Initialize AI/ML specific alert rules"""        
+        """Initialize AI/ML specific alert rules"""
+        
         # Model Drift Detection
         self.alert_manager.add_alert_rule(AlertRule(
             rule_id="ai_model_drift_critical",
@@ -272,7 +283,8 @@ class AIAlertManager:
         logger.info("AI/ML alert rules initialized")
     
     async def evaluate_model_metrics(self, metrics: ModelMetrics) -> List[IntelligentAlert]:
-        """Evaluate AI model metrics and trigger alerts"""        triggered_alerts = []
+        """Evaluate AI model metrics and trigger alerts"""
+        triggered_alerts = []
         
         # Store metrics for trend analysis
         if metrics.model_id not in self.model_metrics_history:
@@ -315,7 +327,8 @@ class AIAlertManager:
         return triggered_alerts
     
     async def _evaluate_model_performance_alerts(self, metrics: ModelMetrics) -> List[IntelligentAlert]:
-        """Evaluate model performance degradation alerts"""        alerts = []
+        """Evaluate model performance degradation alerts"""
+        alerts = []
         
         try:
             # Get baseline for comparison
@@ -353,7 +366,8 @@ class AIAlertManager:
         return alerts
     
     async def _evaluate_drift_alerts(self, metrics: ModelMetrics) -> List[IntelligentAlert]:
-        """Evaluate model drift alerts"""        alerts = []
+        """Evaluate model drift alerts"""
+        alerts = []
         
         try:
             # Evaluate different types of drift
@@ -404,7 +418,8 @@ class AIAlertManager:
         return alerts
     
     async def _evaluate_operational_alerts(self, metrics: ModelMetrics) -> List[IntelligentAlert]:
-        """Evaluate operational performance alerts"""        alerts = []
+        """Evaluate operational performance alerts"""
+        alerts = []
         
         try:
             # Inference Latency Alert
@@ -445,7 +460,8 @@ class AIAlertManager:
         return alerts
     
     async def _evaluate_data_quality_alerts(self, metrics: ModelMetrics) -> List[IntelligentAlert]:
-        """Evaluate data quality alerts"""        alerts = []
+        """Evaluate data quality alerts"""
+        alerts = []
         
         try:
             if metrics.data_quality_score < self.thresholds["data_quality_critical"]:
@@ -472,7 +488,8 @@ class AIAlertManager:
     
     async def process_training_failure(self, model_id: str, model_name: str, 
                                      failure_details: Dict[str, Any]) -> List[IntelligentAlert]:
-        """Process model training failure and trigger alerts"""        alerts = []
+        """Process model training failure and trigger alerts"""
+        alerts = []
         
         try:
             alert_metrics = {
@@ -497,7 +514,8 @@ class AIAlertManager:
     
     async def _analyze_drift_details(self, metrics: ModelMetrics, drift_type: str, 
                                    drift_score: float) -> Dict[str, Any]:
-        """Analyze drift details and provide recommendations"""        try:
+        """Analyze drift details and provide recommendations"""
+        try:
             analysis = {
                 "drift_type": drift_type,
                 "drift_score": drift_score,
@@ -531,7 +549,8 @@ class AIAlertManager:
     
     async def _assess_performance_impact(self, metrics: ModelMetrics, 
                                        baseline: ModelBaseline) -> Dict[str, Any]:
-        """Assess the business impact of performance degradation"""        try:
+        """Assess the business impact of performance degradation"""
+        try:
             impact_assessment = {
                 "accuracy_impact": "high" if metrics.accuracy < baseline.baseline_accuracy * 0.9 else "medium",
                 "latency_impact": "high" if metrics.inference_latency_p95 > baseline.baseline_latency * 2 else "low",
@@ -564,7 +583,8 @@ class AIAlertManager:
             return {"overall_impact": "unknown"}
     
     async def _identify_quality_issues(self, metrics: ModelMetrics) -> List[str]:
-        """Identify specific data quality issues"""        issues = []
+        """Identify specific data quality issues"""
+        issues = []
         
         try:
             if metrics.missing_values_ratio > 0.15:
@@ -583,10 +603,12 @@ class AIAlertManager:
             return ["Error analyzing data quality"]
     
     async def _get_model_baseline(self, model_id: str) -> Optional[ModelBaseline]:
-        """Get baseline metrics for a model"""        return self.model_baselines.get(model_id)
+        """Get baseline metrics for a model"""
+        return self.model_baselines.get(model_id)
     
     async def _update_model_baseline(self, metrics: ModelMetrics):
-        """Update model baseline if performance is good"""        try:
+        """Update model baseline if performance is good"""
+        try:
             # Only update baseline if model is performing well
             if (metrics.accuracy > 0.85 and 
                 metrics.error_rate < 0.05 and 
@@ -611,7 +633,8 @@ class AIAlertManager:
             logger.error(f"Error updating model baseline: {e}")
     
     async def _calculate_latency_trend(self, model_id: str) -> str:
-        """Calculate latency trend for a model"""        try:
+        """Calculate latency trend for a model"""
+        try:
             if model_id not in self.model_metrics_history:
                 return "insufficient_data"
             
@@ -633,7 +656,8 @@ class AIAlertManager:
             return "unknown"
     
     async def _calculate_drift_trend(self, history: List[ModelMetrics], drift_type: str) -> str:
-        """Calculate drift trend over time"""        try:
+        """Calculate drift trend over time"""
+        try:
             if len(history) < 3:
                 return "insufficient_data"
             
@@ -658,7 +682,8 @@ class AIAlertManager:
             return "unknown"
     
     async def get_ai_alert_summary(self) -> Dict[str, Any]:
-        """Get AI/ML alert summary and model health overview"""        try:
+        """Get AI/ML alert summary and model health overview"""
+        try:
             model_statuses = {}
             overall_health = ModelHealth.HEALTHY
             
@@ -720,7 +745,8 @@ class AIAlertManager:
             return {"error": str(e)}
     
     async def _calculate_model_health(self, metrics: ModelMetrics) -> ModelHealth:
-        """Calculate overall model health status"""        try:
+        """Calculate overall model health status"""
+        try:
             health_factors = []
             
             # Performance factors

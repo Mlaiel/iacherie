@@ -6,7 +6,8 @@ high accuracy using transformer models and fallback methods.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
@@ -45,7 +46,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class LanguageScore:
-    """Individual language detection score"""    language: str
+    """Individual language detection score"""
+    language: str
     language_name: str
     confidence: float
     iso_code: str
@@ -53,7 +55,8 @@ class LanguageScore:
 
 @dataclass
 class LanguageResult:
-    """Complete language detection result"""    text: str
+    """Complete language detection result"""
+    text: str
     primary_language: str
     primary_language_name: str
     confidence: float
@@ -68,11 +71,14 @@ class LanguageResult:
     timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
 
 class LanguageDetector:
-    """    Advanced language detection system supporting 100+ languages with
+    """
+    Advanced language detection system supporting 100+ languages with
     high accuracy using transformer models and fallback methods.
-    """    
+    """
+    
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize Language Detector"""        self.config = config or default_config
+        """Initialize Language Detector"""
+        self.config = config or default_config
         self.models = {}
         self.pipelines = {}
         
@@ -83,7 +89,8 @@ class LanguageDetector:
         self._initialize_models()
     
     def _load_language_mappings(self) -> Dict[str, str]:
-        """Load ISO language code to name mappings"""        return {
+        """Load ISO language code to name mappings"""
+        return {
             'af': 'Afrikaans', 'ar': 'Arabic', 'bg': 'Bulgarian', 'bn': 'Bengali',
             'ca': 'Catalan', 'cs': 'Czech', 'cy': 'Welsh', 'da': 'Danish',
             'de': 'German', 'el': 'Greek', 'en': 'English', 'es': 'Spanish',
@@ -102,7 +109,8 @@ class LanguageDetector:
         }
     
     def _load_script_patterns(self) -> Dict[str, re.Pattern]:
-        """Load regex patterns for script detection"""        return {
+        """Load regex patterns for script detection"""
+        return {
             'latin': re.compile(r'[a-zA-Z]'),
             'cyrillic': re.compile(r'[а-яё]', re.IGNORECASE),
             'arabic': re.compile(r'[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]'),
@@ -117,7 +125,8 @@ class LanguageDetector:
         }
     
     def _initialize_models(self):
-        """Initialize language detection models"""        try:
+        """Initialize language detection models"""
+        try:
             # Primary transformer model
             if TRANSFORMERS_AVAILABLE:
                 model_name = self.config.language_detection.model_name
@@ -140,7 +149,8 @@ class LanguageDetector:
             self._setup_fallback_models()
     
     def _setup_fallback_models(self):
-        """Setup fallback language detection methods"""        self.fallback_methods = []
+        """Setup fallback language detection methods"""
+        self.fallback_methods = []
         
         if LANGDETECT_AVAILABLE:
             self.fallback_methods.append("langdetect")
@@ -155,7 +165,8 @@ class LanguageDetector:
         logger.info("Rule-based fallback available")
     
     def _get_device(self) -> int:
-        """Get optimal device for model execution"""        if self.config.performance.enable_gpu and TRANSFORMERS_AVAILABLE:
+        """Get optimal device for model execution"""
+        if self.config.performance.enable_gpu and TRANSFORMERS_AVAILABLE:
             try:
                 if torch.cuda.is_available():
                     return 0  # Use first GPU
@@ -168,7 +179,8 @@ class LanguageDetector:
         text: Union[str, List[str]],
         max_languages: Optional[int] = None
     ) -> Union[LanguageResult, List[LanguageResult]]:
-        """        Detect language(s) in text
+        """
+        Detect language(s) in text
         
         Args:
             text: Text or list of texts to analyze
@@ -176,7 +188,8 @@ class LanguageDetector:
         
         Returns:
             LanguageResult or list of results
-        """        start_time = asyncio.get_event_loop().time()
+        """
+        start_time = asyncio.get_event_loop().time()
         
         # Handle batch processing
         is_batch = isinstance(text, list)
@@ -207,7 +220,8 @@ class LanguageDetector:
         text: str,
         max_languages: int
     ) -> LanguageResult:
-        """Detect language for a single text"""        if not text or not isinstance(text, str):
+        """Detect language for a single text"""
+        if not text or not isinstance(text, str):
             raise ValueError("Input text must be a non-empty string")
         
         result = LanguageResult(
@@ -260,7 +274,8 @@ class LanguageDetector:
             return result
     
     def _preprocess_text(self, text: str) -> str:
-        """Preprocess text for language detection"""        # Remove URLs
+        """Preprocess text for language detection"""
+        # Remove URLs
         text = re.sub(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', '', text)
         
         # Remove email addresses
@@ -279,7 +294,8 @@ class LanguageDetector:
         text: str,
         max_languages: int
     ) -> Optional[List[Dict[str, Any]]]:
-        """Detect language using transformer model"""        try:
+        """Detect language using transformer model"""
+        try:
             pipeline_obj = self.pipelines["primary"]
             
             predictions = await asyncio.get_event_loop().run_in_executor(
@@ -317,7 +333,8 @@ class LanguageDetector:
         method: str,
         max_languages: int
     ) -> Optional[List[Dict[str, Any]]]:
-        """Detect language using fallback methods"""        if method == "langdetect" and LANGDETECT_AVAILABLE:
+        """Detect language using fallback methods"""
+        if method == "langdetect" and LANGDETECT_AVAILABLE:
             try:
                 detected_langs = detect_langs(text)
                 results = []
@@ -344,7 +361,8 @@ class LanguageDetector:
         text: str,
         max_languages: int
     ) -> List[Dict[str, Any]]:
-        """Rule-based language detection using script patterns"""        script_scores = {}
+        """Rule-based language detection using script patterns"""
+        script_scores = {}
         total_chars = len(text)
         
         if total_chars == 0:
@@ -392,7 +410,8 @@ class LanguageDetector:
         detected: List[Dict[str, Any]],
         max_languages: int
     ):
-        """Populate result object from detection data"""        if not detected:
+        """Populate result object from detection data"""
+        if not detected:
             return
         
         # Primary language
@@ -429,7 +448,8 @@ class LanguageDetector:
         result.is_multilingual = len(significant_languages) > 1
     
     def _analyze_text_properties(self, text: str, result: LanguageResult):
-        """Analyze additional text properties"""        # Script type detection
+        """Analyze additional text properties"""
+        # Script type detection
         result.script_type = self._detect_primary_script(text)
         
         # Text direction (RTL languages)
@@ -454,7 +474,8 @@ class LanguageDetector:
         })
     
     def _detect_primary_script(self, text: str) -> Optional[str]:
-        """Detect the primary script used in text"""        script_counts = {}
+        """Detect the primary script used in text"""
+        script_counts = {}
         total_chars = 0
         
         for char in text:
@@ -473,7 +494,8 @@ class LanguageDetector:
         return max_script[0] if max_script and max_script[1] / total_chars > 0.3 else None
     
     def _analyze_encoding(self, text: str) -> str:
-        """Analyze character encoding of text"""        try:
+        """Analyze character encoding of text"""
+        try:
             # Check for common encodings
             if all(ord(char) < 128 for char in text):
                 return "ascii"
@@ -489,7 +511,8 @@ class LanguageDetector:
         text: str,
         target_language: str
     ) -> float:
-        """Get confidence that text is in a specific language"""        result = await self.detect_language(text)
+        """Get confidence that text is in a specific language"""
+        result = await self.detect_language(text)
         
         # Find confidence for target language
         for lang_score in result.language_scores:
@@ -499,7 +522,8 @@ class LanguageDetector:
         return 0.0
     
     async def is_multilingual(self, text: str, threshold: float = 0.15) -> bool:
-        """Check if text contains multiple languages"""        result = await self.detect_language(text)
+        """Check if text contains multiple languages"""
+        result = await self.detect_language(text)
         
         significant_languages = [
             lang for lang in result.language_scores
@@ -509,13 +533,15 @@ class LanguageDetector:
         return len(significant_languages) > 1
     
     def get_supported_languages(self) -> List[Dict[str, str]]:
-        """Get list of supported languages"""        return [
+        """Get list of supported languages"""
+        return [
             {"code": code, "name": name}
             for code, name in self.iso_to_name.items()
         ]
     
     def get_language_info(self, language_code: str) -> Dict[str, Any]:
-        """Get detailed information about a language"""        if language_code not in self.iso_to_name:
+        """Get detailed information about a language"""
+        if language_code not in self.iso_to_name:
             return {"error": "Language not supported"}
         
         rtl_languages = {'ar', 'he', 'fa', 'ur'}
@@ -529,7 +555,8 @@ class LanguageDetector:
         }
     
     def _get_primary_script_for_language(self, language_code: str) -> str:
-        """Get primary script for a language"""        script_mapping = {
+        """Get primary script for a language"""
+        script_mapping = {
             'ar': 'arabic', 'he': 'hebrew', 'fa': 'arabic', 'ur': 'arabic',
             'zh': 'chinese', 'ja': 'japanese', 'ko': 'korean',
             'hi': 'hindi', 'th': 'thai', 'el': 'greek',
@@ -539,7 +566,8 @@ class LanguageDetector:
         return script_mapping.get(language_code, 'latin')
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform health check"""        status = {
+        """Perform health check"""
+        status = {
             "status": "healthy",
             "models_loaded": len(self.pipelines),
             "fallback_methods": len(self.fallback_methods),
@@ -568,7 +596,8 @@ class LanguageDetector:
         return status
     
     def shutdown(self):
-        """Shutdown the language detector"""        logger.info("Shutting down Language Detector")
+        """Shutdown the language detector"""
+        logger.info("Shutting down Language Detector")
         
         # Clear models
         self.models.clear()
@@ -580,7 +609,8 @@ class LanguageDetector:
 
 # Utility functions
 def normalize_language_code(lang_code: str) -> str:
-    """Normalize language code to ISO 639-1 format"""    # Handle common variations
+    """Normalize language code to ISO 639-1 format"""
+    # Handle common variations
     code_mappings = {
         'zh-cn': 'zh',
         'zh-tw': 'zh',
@@ -598,7 +628,8 @@ def normalize_language_code(lang_code: str) -> str:
     return code_mappings.get(normalized, normalized[:2])
 
 def get_language_family(language_code: str) -> str:
-    """Get language family for a given language code"""    families = {
+    """Get language family for a given language code"""
+    families = {
         'romance': ['es', 'fr', 'it', 'pt', 'ro', 'ca'],
         'germanic': ['en', 'de', 'nl', 'sv', 'da', 'no'],
         'slavic': ['ru', 'pl', 'cs', 'sk', 'bg', 'hr', 'sl', 'mk', 'uk'],

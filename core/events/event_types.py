@@ -10,7 +10,8 @@ Description:
     Définitions des types d'événements métier pour la plateforme IA-Influencer-Agent.
     Couvre tous les événements de la logique métier : contenu, protection, monétisation, 
     collaboration et système.
-"""from typing import Any, Dict, List, Optional, Union
+"""
+from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum
@@ -20,7 +21,8 @@ from .event_bus import Event, EventPriority
 
 
 class EventType(Enum):
-    """Types d'événements principaux de la plateforme"""    
+    """Types d'événements principaux de la plateforme"""
+    
     # Événements contenu
     CONTENT_UPLOADED = "content.uploaded"
     CONTENT_PROCESSED = "content.processed"
@@ -70,7 +72,8 @@ class EventType(Enum):
 
 @dataclass
 class ContentEvent(Event):
-    """Événement lié au contenu"""    
+    """Événement lié au contenu"""
+    
     content_id: str = ""
     content_type: str = ""  # audio, video, image, text
     file_size: int = 0
@@ -97,7 +100,8 @@ class ContentEvent(Event):
         tenant_id: str,
         **kwargs
     ) -> "ContentEvent":
-        """Crée un événement de contenu uploadé"""        return cls(
+        """Crée un événement de contenu uploadé"""
+        return cls(
             type=EventType.CONTENT_UPLOADED.value,
             content_id=content_id,
             content_type=content_type,
@@ -125,7 +129,8 @@ class ContentEvent(Event):
         user_id: str,
         tenant_id: str
     ) -> "ContentEvent":
-        """Crée un événement de contenu fingerprinté"""        return cls(
+        """Crée un événement de contenu fingerprinté"""
+        return cls(
             type=EventType.CONTENT_FINGERPRINTED.value,
             content_id=content_id,
             user_id=user_id,
@@ -142,7 +147,8 @@ class ContentEvent(Event):
 
 @dataclass
 class ProtectionEvent(Event):
-    """Événement lié à la protection du contenu"""    
+    """Événement lié à la protection du contenu"""
+    
     content_id: str = ""
     protection_id: str = ""
     violation_url: Optional[str] = None
@@ -167,7 +173,8 @@ class ProtectionEvent(Event):
         user_id: str,
         tenant_id: str
     ) -> "ProtectionEvent":
-        """Crée un événement de violation détectée"""        return cls(
+        """Crée un événement de violation détectée"""
+        return cls(
             type=EventType.PROTECTION_VIOLATION_DETECTED.value,
             content_id=content_id,
             protection_id=str(uuid.uuid4()),
@@ -196,7 +203,8 @@ class ProtectionEvent(Event):
         user_id: str,
         tenant_id: str
     ) -> "ProtectionEvent":
-        """Crée un événement de demande de takedown"""        return cls(
+        """Crée un événement de demande de takedown"""
+        return cls(
             type=EventType.PROTECTION_TAKEDOWN_REQUESTED.value,
             content_id=content_id,
             protection_id=str(uuid.uuid4()),
@@ -217,7 +225,8 @@ class ProtectionEvent(Event):
 
 @dataclass
 class MonetizationEvent(Event):
-    """Événement lié à la monétisation"""    
+    """Événement lié à la monétisation"""
+    
     content_id: str = ""
     revenue_amount: float = 0.0
     currency: str = "EUR"
@@ -242,7 +251,8 @@ class MonetizationEvent(Event):
         user_id: str,
         tenant_id: str
     ) -> "MonetizationEvent":
-        """Crée un événement de revenus détectés"""        return cls(
+        """Crée un événement de revenus détectés"""
+        return cls(
             type=EventType.MONETIZATION_REVENUE_DETECTED.value,
             content_id=content_id,
             revenue_amount=revenue_amount,
@@ -271,7 +281,8 @@ class MonetizationEvent(Event):
         user_id: str,
         tenant_id: str
     ) -> "MonetizationEvent":
-        """Crée un événement de paiement traité"""        return cls(
+        """Crée un événement de paiement traité"""
+        return cls(
             type=EventType.MONETIZATION_PAYMENT_PROCESSED.value,
             content_id=content_id,
             payment_id=payment_id,
@@ -293,7 +304,8 @@ class MonetizationEvent(Event):
 
 @dataclass
 class CollaborationEvent(Event):
-    """Événement lié à la collaboration"""    
+    """Événement lié à la collaboration"""
+    
     project_id: str = ""
     collaborator_id: Optional[str] = None
     invite_id: Optional[str] = None
@@ -316,7 +328,8 @@ class CollaborationEvent(Event):
         user_id: str,
         tenant_id: str
     ) -> "CollaborationEvent":
-        """Crée un événement d'invitation envoyée"""        return cls(
+        """Crée un événement d'invitation envoyée"""
+        return cls(
             type=EventType.COLLABORATION_INVITE_SENT.value,
             project_id=project_id,
             collaborator_id=collaborator_id,
@@ -342,7 +355,8 @@ class CollaborationEvent(Event):
         user_id: str,
         tenant_id: str
     ) -> "CollaborationEvent":
-        """Crée un événement de matching trouvé"""        return cls(
+        """Crée un événement de matching trouvé"""
+        return cls(
             type=EventType.COLLABORATION_MATCHING_FOUND.value,
             project_id=project_id,
             collaborator_id=collaborator_id,
@@ -362,7 +376,8 @@ class CollaborationEvent(Event):
 
 @dataclass
 class SystemEvent(Event):
-    """Événement système"""    
+    """Événement système"""
+    
     severity: str = "info"  # info, warning, error, critical
     component: str = ""
     error_code: Optional[str] = None
@@ -382,7 +397,8 @@ class SystemEvent(Event):
         tenant_id: str,
         plan: str = "free"
     ) -> "SystemEvent":
-        """Crée un événement d'utilisateur enregistré"""        return cls(
+        """Crée un événement d'utilisateur enregistré"""
+        return cls(
             type=EventType.SYSTEM_USER_REGISTERED.value,
             user_id=user_id,
             tenant_id=tenant_id,
@@ -407,7 +423,8 @@ class SystemEvent(Event):
         user_id: Optional[str] = None,
         tenant_id: Optional[str] = None
     ) -> "SystemEvent":
-        """Crée un événement d'erreur système"""        return cls(
+        """Crée un événement d'erreur système"""
+        return cls(
             type=EventType.SYSTEM_ERROR_OCCURRED.value,
             user_id=user_id,
             tenant_id=tenant_id,
@@ -427,20 +444,25 @@ class SystemEvent(Event):
 
 # Helper functions pour création rapide d'événements
 def create_content_event(event_type: str, content_id: str, **kwargs) -> ContentEvent:
-    """Fonction helper pour créer des événements de contenu"""    return ContentEvent(type=event_type, content_id=content_id, **kwargs)
+    """Fonction helper pour créer des événements de contenu"""
+    return ContentEvent(type=event_type, content_id=content_id, **kwargs)
 
 
 def create_protection_event(event_type: str, content_id: str, **kwargs) -> ProtectionEvent:
-    """Fonction helper pour créer des événements de protection"""    return ProtectionEvent(type=event_type, content_id=content_id, **kwargs)
+    """Fonction helper pour créer des événements de protection"""
+    return ProtectionEvent(type=event_type, content_id=content_id, **kwargs)
 
 
 def create_monetization_event(event_type: str, content_id: str, **kwargs) -> MonetizationEvent:
-    """Fonction helper pour créer des événements de monétisation"""    return MonetizationEvent(type=event_type, content_id=content_id, **kwargs)
+    """Fonction helper pour créer des événements de monétisation"""
+    return MonetizationEvent(type=event_type, content_id=content_id, **kwargs)
 
 
 def create_collaboration_event(event_type: str, project_id: str, **kwargs) -> CollaborationEvent:
-    """Fonction helper pour créer des événements de collaboration"""    return CollaborationEvent(type=event_type, project_id=project_id, **kwargs)
+    """Fonction helper pour créer des événements de collaboration"""
+    return CollaborationEvent(type=event_type, project_id=project_id, **kwargs)
 
 
 def create_system_event(event_type: str, component: str, **kwargs) -> SystemEvent:
-    """Fonction helper pour créer des événements système"""    return SystemEvent(type=event_type, component=component, **kwargs)
+    """Fonction helper pour créer des événements système"""
+    return SystemEvent(type=event_type, component=component, **kwargs)

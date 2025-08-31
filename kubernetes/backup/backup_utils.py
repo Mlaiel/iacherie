@@ -10,7 +10,8 @@ All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited
 WARNING: This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, or distribution is strictly prohibited and will result
 in immediate legal action under German and international law.
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import shutil
@@ -35,16 +36,20 @@ from ...core.utils import format_bytes, calculate_checksum
 
 
 class BackupUtils:
-    """    Utility class providing helper functions for backup operations.
+    """
+    Utility class providing helper functions for backup operations.
     
     Contains common operations, validation helpers, and optimization
     utilities used across the backup system.
-    """    def __init__(self, config: Optional[BackupConfig] = None):
-        """        Initialize backup utilities.
+    """
+    def __init__(self, config: Optional[BackupConfig] = None):
+        """
+        Initialize backup utilities.
         
         Args:
             config: Backup configuration
-        """        self.logger = logging.getLogger(__name__)
+        """
+        self.logger = logging.getLogger(__name__)
         self.config = config or BackupConfig()
 
     @staticmethod
@@ -52,7 +57,8 @@ class BackupUtils:
         file_path: Union[str, Path],
         algorithm: str = "SHA-256"
     ) -> str:
-        """        Calculate file checksum.
+        """
+        Calculate file checksum.
         
         Args:
             file_path: Path to file
@@ -60,7 +66,8 @@ class BackupUtils:
             
         Returns:
             File checksum
-        """        file_path = Path(file_path)
+        """
+        file_path = Path(file_path)
         
         if not file_path.exists():
             raise FileNotFoundError(f"File not found: {file_path}")
@@ -88,14 +95,16 @@ class BackupUtils:
 
     @staticmethod
     def get_file_info(file_path: Union[str, Path]) -> Dict[str, Any]:
-        """        Get comprehensive file information.
+        """
+        Get comprehensive file information.
         
         Args:
             file_path: Path to file
             
         Returns:
             File information dictionary
-        """        file_path = Path(file_path)
+        """
+        file_path = Path(file_path)
         
         if not file_path.exists():
             raise FileNotFoundError(f"File not found: {file_path}")
@@ -131,7 +140,8 @@ class BackupUtils:
         algorithm: CompressionAlgorithm = CompressionAlgorithm.GZIP,
         compression_level: int = 6
     ) -> Tuple[bytes, float]:
-        """        Compress data using specified algorithm.
+        """
+        Compress data using specified algorithm.
         
         Args:
             data: Data to compress
@@ -140,7 +150,8 @@ class BackupUtils:
             
         Returns:
             Tuple of (compressed_data, compression_ratio)
-        """        original_size = len(data)
+        """
+        original_size = len(data)
         
         try:
             if algorithm == CompressionAlgorithm.GZIP:
@@ -169,7 +180,8 @@ class BackupUtils:
         compressed_data: bytes,
         algorithm: CompressionAlgorithm = CompressionAlgorithm.GZIP
     ) -> bytes:
-        """        Decompress data using specified algorithm.
+        """
+        Decompress data using specified algorithm.
         
         Args:
             compressed_data: Compressed data
@@ -177,7 +189,8 @@ class BackupUtils:
             
         Returns:
             Decompressed data
-        """        try:
+        """
+        try:
             if algorithm == CompressionAlgorithm.GZIP:
                 return gzip.decompress(compressed_data)
             elif algorithm == CompressionAlgorithm.BZIP2:
@@ -192,14 +205,16 @@ class BackupUtils:
 
     @staticmethod
     def validate_backup_file(backup_path: Union[str, Path]) -> Dict[str, Any]:
-        """        Validate backup file structure and integrity.
+        """
+        Validate backup file structure and integrity.
         
         Args:
             backup_path: Path to backup file
             
         Returns:
             Validation results
-        """        backup_path = Path(backup_path)
+        """
+        backup_path = Path(backup_path)
         
         if not backup_path.exists():
             return {
@@ -279,7 +294,8 @@ class BackupUtils:
         source_paths: List[Union[str, Path]],
         compression_ratio: float = 0.7
     ) -> Dict[str, Any]:
-        """        Estimate backup size for given source paths.
+        """
+        Estimate backup size for given source paths.
         
         Args:
             source_paths: List of source paths to backup
@@ -287,7 +303,8 @@ class BackupUtils:
             
         Returns:
             Size estimation information
-        """        total_size = 0
+        """
+        total_size = 0
         file_count = 0
         directory_count = 0
         errors = []
@@ -328,11 +345,13 @@ class BackupUtils:
 
     @staticmethod
     def get_system_resources() -> Dict[str, Any]:
-        """        Get current system resource usage.
+        """
+        Get current system resource usage.
         
         Returns:
             System resource information
-        """        try:
+        """
+        try:
             # CPU usage
             cpu_percent = psutil.cpu_percent(interval=1)
             cpu_count = psutil.cpu_count()
@@ -381,7 +400,8 @@ class BackupUtils:
         historical_data: List[Dict[str, Any]],
         resource_constraints: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Optimize backup schedule based on historical data and constraints.
+        """
+        Optimize backup schedule based on historical data and constraints.
         
         Args:
             historical_data: Historical backup performance data
@@ -389,7 +409,8 @@ class BackupUtils:
             
         Returns:
             Optimized schedule recommendations
-        """        if not historical_data:
+        """
+        if not historical_data:
             return {
                 "recommendations": [],
                 "reason": "No historical data available"
@@ -453,7 +474,8 @@ class BackupUtils:
         backup_data: Dict[str, Any],
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Create comprehensive backup manifest.
+        """
+        Create comprehensive backup manifest.
         
         Args:
             backup_data: Backup data dictionary
@@ -461,7 +483,8 @@ class BackupUtils:
             
         Returns:
             Backup manifest
-        """        manifest = {
+        """
+        manifest = {
             "manifest_version": "2.0.0",
             "created_at": datetime.now().isoformat(),
             "backup_id": metadata.get("backup_id", "unknown"),
@@ -510,14 +533,16 @@ class BackupUtils:
         return manifest
 
     def cleanup_temporary_files(self, temp_dir: Optional[str] = None) -> int:
-        """        Clean up temporary backup files.
+        """
+        Clean up temporary backup files.
         
         Args:
             temp_dir: Temporary directory to clean (optional)
             
         Returns:
             Number of files cleaned up
-        """        cleaned_count = 0
+        """
+        cleaned_count = 0
         
         # Default temp directory
         if temp_dir is None:
@@ -558,14 +583,16 @@ class BackupUtils:
 
     @staticmethod
     def validate_backup_chain(backup_chain: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """        Validate backup chain consistency.
+        """
+        Validate backup chain consistency.
         
         Args:
             backup_chain: List of backup metadata in chronological order
             
         Returns:
             Validation results
-        """        if not backup_chain:
+        """
+        if not backup_chain:
             return {
                 "valid": False,
                 "errors": ["Empty backup chain"]
@@ -633,16 +660,19 @@ class BackupUtils:
 
 # Utility functions for common operations
 def format_backup_size(size_bytes: int) -> str:
-    """Format backup size in human-readable format."""    return format_bytes(size_bytes)
+    """Format backup size in human-readable format."""
+    return format_bytes(size_bytes)
 
 
 def generate_backup_id(operation_type: str = "backup") -> str:
-    """Generate unique backup identifier."""    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3]
+    """Generate unique backup identifier."""
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3]
     return f"{operation_type}_{timestamp}"
 
 
 def parse_backup_id(backup_id: str) -> Dict[str, Any]:
-    """Parse backup ID to extract information."""    try:
+    """Parse backup ID to extract information."""
+    try:
         parts = backup_id.split("_")
         if len(parts) >= 3:
             operation_type = parts[0]
@@ -674,13 +704,15 @@ async def async_file_copy(
     target_path: Union[str, Path],
     chunk_size: int = 64 * 1024
 ) -> None:
-    """    Asynchronous file copy with progress tracking.
+    """
+    Asynchronous file copy with progress tracking.
     
     Args:
         source_path: Source file path
         target_path: Target file path
         chunk_size: Copy chunk size in bytes
-    """    source_path = Path(source_path)
+    """
+    source_path = Path(source_path)
     target_path = Path(target_path)
     
     # Ensure target directory exists
@@ -700,7 +732,8 @@ async def async_file_copy(
 
 
 def validate_backup_path(path: Union[str, Path]) -> bool:
-    """Validate backup file path."""    path = Path(path)
+    """Validate backup file path."""
+    path = Path(path)
     
     # Check if path is valid
     try:
@@ -720,7 +753,8 @@ def validate_backup_path(path: Union[str, Path]) -> bool:
 
 
 def get_backup_file_extension(compression_algorithm: CompressionAlgorithm) -> str:
-    """Get appropriate file extension for backup file."""    extensions = {
+    """Get appropriate file extension for backup file."""
+    extensions = {
         CompressionAlgorithm.GZIP: ".backup.gz",
         CompressionAlgorithm.BZIP2: ".backup.bz2",
         CompressionAlgorithm.LZMA: ".backup.xz",

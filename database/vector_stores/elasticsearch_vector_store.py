@@ -10,7 +10,8 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, modification, 
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
-"""import os
+"""
+import os
 import json
 import logging
 import asyncio
@@ -35,7 +36,8 @@ settings = get_settings()
 
 @dataclass
 class HybridSearchResult:
-    """Hybrid search result combining vector and text search"""    content_id: str
+    """Hybrid search result combining vector and text search"""
+    content_id: str
     fingerprint_id: int
     vector_score: float
     text_score: float
@@ -47,7 +49,8 @@ class HybridSearchResult:
 
 @dataclass
 class ElasticsearchStats:
-    """Elasticsearch cluster and index statistics"""    cluster_health: str
+    """Elasticsearch cluster and index statistics"""
+    cluster_health: str
     total_documents: int
     index_size_bytes: int
     search_latency_ms: float
@@ -56,7 +59,8 @@ class ElasticsearchStats:
 
 
 class ElasticsearchVectorStore:
-    """    Elasticsearch-based vector store with hybrid search capabilities.
+    """
+    Elasticsearch-based vector store with hybrid search capabilities.
     
     Features:
     - Dense vector search using kNN
@@ -65,7 +69,8 @@ class ElasticsearchVectorStore:
     - Real-time indexing and search
     - Distributed storage and search
     - Advanced analytics and aggregations
-    """    
+    """
+    
     def __init__(
         self,
         hosts: List[str] = None,
@@ -74,7 +79,8 @@ class ElasticsearchVectorStore:
         shard_count: int = 1,
         replica_count: int = 0
     ):
-        """        Initialize Elasticsearch vector store
+        """
+        Initialize Elasticsearch vector store
         
         Args:
             hosts: Elasticsearch cluster hosts
@@ -82,7 +88,8 @@ class ElasticsearchVectorStore:
             vector_dimension: Vector dimension
             shard_count: Number of shards per index
             replica_count: Number of replicas per index
-        """        self.hosts = hosts or [settings.ELASTICSEARCH_URL or "http://localhost:9200"]
+        """
+        self.hosts = hosts or [settings.ELASTICSEARCH_URL or "http://localhost:9200"]
         self.index_prefix = index_prefix
         self.vector_dimension = vector_dimension
         self.shard_count = shard_count
@@ -119,7 +126,8 @@ class ElasticsearchVectorStore:
         )
     
     async def initialize(self) -> None:
-        """Initialize Elasticsearch cluster and indices"""        try:
+        """Initialize Elasticsearch cluster and indices"""
+        try:
             # Check cluster health
             health = await self.client.cluster.health()
             logger.info(f"Elasticsearch cluster health: {health['status']}")
@@ -144,7 +152,8 @@ class ElasticsearchVectorStore:
         text_content: str = None,
         fingerprint_id: int = None
     ) -> str:
-        """        Index a document with vector and metadata
+        """
+        Index a document with vector and metadata
         
         Args:
             content_type: Content type (audio, video, image, text)
@@ -156,7 +165,8 @@ class ElasticsearchVectorStore:
             
         Returns:
             Document ID in Elasticsearch
-        """        try:
+        """
+        try:
             index_name = f"{self.index_prefix}_{content_type}"
             
             # Validate vector dimension
@@ -207,7 +217,8 @@ class ElasticsearchVectorStore:
         similarity_threshold: float = 0.8,
         filters: Dict[str, Any] = None
     ) -> List[HybridSearchResult]:
-        """        Perform vector similarity search
+        """
+        Perform vector similarity search
         
         Args:
             content_type: Content type to search
@@ -218,7 +229,8 @@ class ElasticsearchVectorStore:
             
         Returns:
             List of search results
-        """        try:
+        """
+        try:
             self.search_stats["vector_searches"] += 1
             start_time = datetime.now()
             
@@ -316,7 +328,8 @@ class ElasticsearchVectorStore:
         k: int = 10,
         filters: Dict[str, Any] = None
     ) -> List[HybridSearchResult]:
-        """        Perform full-text search
+        """
+        Perform full-text search
         
         Args:
             content_type: Content type to search
@@ -326,7 +339,8 @@ class ElasticsearchVectorStore:
             
         Returns:
             List of search results
-        """        try:
+        """
+        try:
             self.search_stats["text_searches"] += 1
             start_time = datetime.now()
             
@@ -428,7 +442,8 @@ class ElasticsearchVectorStore:
         text_weight: float = 0.3,
         filters: Dict[str, Any] = None
     ) -> List[HybridSearchResult]:
-        """        Perform hybrid search combining vector and text search
+        """
+        Perform hybrid search combining vector and text search
         
         Args:
             content_type: Content type to search
@@ -441,7 +456,8 @@ class ElasticsearchVectorStore:
             
         Returns:
             List of hybrid search results
-        """        try:
+        """
+        try:
             self.search_stats["hybrid_searches"] += 1
             start_time = datetime.now()
             
@@ -460,7 +476,8 @@ class ElasticsearchVectorStore:
                     "script_score": {
                         "query": {"match_all": {}},
                         "script": {
-                            "source": f"""                                cosineSimilarity(params.query_vector, 'vector') * {vector_weight}
+                            "source": f"""
+                                cosineSimilarity(params.query_vector, 'vector') * {vector_weight}
                             """,
                             "params": {
                                 "query_vector": query_vector.tolist()
@@ -565,7 +582,8 @@ class ElasticsearchVectorStore:
             raise SearchError(f"Hybrid search failed: {str(e)}")
     
     async def delete_document(self, content_type: str, content_id: str) -> bool:
-        """        Delete a document from the index
+        """
+        Delete a document from the index
         
         Args:
             content_type: Content type
@@ -573,7 +591,8 @@ class ElasticsearchVectorStore:
             
         Returns:
             True if deleted successfully
-        """        try:
+        """
+        try:
             index_name = f"{self.index_prefix}_{content_type}"
             
             response = await self.client.delete(
@@ -597,7 +616,8 @@ class ElasticsearchVectorStore:
         content_type: str,
         documents: List[Dict[str, Any]]
     ) -> Dict[str, int]:
-        """        Bulk index multiple documents
+        """
+        Bulk index multiple documents
         
         Args:
             content_type: Content type
@@ -605,7 +625,8 @@ class ElasticsearchVectorStore:
             
         Returns:
             Statistics about the bulk operation
-        """        try:
+        """
+        try:
             index_name = f"{self.index_prefix}_{content_type}"
             
             # Prepare bulk actions
@@ -643,7 +664,8 @@ class ElasticsearchVectorStore:
             raise VectorStoreError(f"Bulk indexing failed: {str(e)}")
     
     async def get_cluster_stats(self) -> ElasticsearchStats:
-        """Get Elasticsearch cluster statistics"""        try:
+        """Get Elasticsearch cluster statistics"""
+        try:
             # Get cluster health
             health = await self.client.cluster.health()
             
@@ -681,7 +703,8 @@ class ElasticsearchVectorStore:
             raise VectorStoreError(f"Cluster stats retrieval failed: {str(e)}")
     
     async def _create_index(self, content_type: str) -> None:
-        """Create index for content type"""        try:
+        """Create index for content type"""
+        try:
             index_name = f"{self.index_prefix}_{content_type}"
             
             if await self.client.indices.exists(index=index_name):
@@ -724,7 +747,8 @@ class ElasticsearchVectorStore:
             raise VectorStoreError(f"Index creation failed: {str(e)}")
     
     def _get_default_mapping(self) -> Dict[str, Any]:
-        """Get default mapping for content"""        return {
+        """Get default mapping for content"""
+        return {
             "properties": {
                 "content_id": {"type": "keyword"},
                 "fingerprint_id": {"type": "long"},
@@ -748,7 +772,8 @@ class ElasticsearchVectorStore:
         }
     
     def _get_audio_mapping(self) -> Dict[str, Any]:
-        """Get mapping for audio content"""        mapping = self._get_default_mapping()
+        """Get mapping for audio content"""
+        mapping = self._get_default_mapping()
         mapping["properties"]["metadata"]["properties"] = {
             "title": {"type": "text", "analyzer": "content_analyzer"},
             "artist": {"type": "keyword"},
@@ -766,7 +791,8 @@ class ElasticsearchVectorStore:
         return mapping
     
     def _get_video_mapping(self) -> Dict[str, Any]:
-        """Get mapping for video content"""        mapping = self._get_default_mapping()
+        """Get mapping for video content"""
+        mapping = self._get_default_mapping()
         mapping["properties"]["metadata"]["properties"] = {
             "title": {"type": "text", "analyzer": "content_analyzer"},
             "description": {"type": "text", "analyzer": "content_analyzer"},
@@ -782,7 +808,8 @@ class ElasticsearchVectorStore:
         return mapping
     
     def _get_image_mapping(self) -> Dict[str, Any]:
-        """Get mapping for image content"""        mapping = self._get_default_mapping()
+        """Get mapping for image content"""
+        mapping = self._get_default_mapping()
         mapping["properties"]["metadata"]["properties"] = {
             "title": {"type": "text", "analyzer": "content_analyzer"},
             "description": {"type": "text", "analyzer": "content_analyzer"},
@@ -798,7 +825,8 @@ class ElasticsearchVectorStore:
         return mapping
     
     def _get_text_mapping(self) -> Dict[str, Any]:
-        """Get mapping for text content"""        mapping = self._get_default_mapping()
+        """Get mapping for text content"""
+        mapping = self._get_default_mapping()
         mapping["properties"]["metadata"]["properties"] = {
             "title": {"type": "text", "analyzer": "content_analyzer"},
             "author": {"type": "keyword"},
@@ -812,11 +840,13 @@ class ElasticsearchVectorStore:
         return mapping
     
     def _score_to_similarity(self, score: float) -> float:
-        """Convert Elasticsearch score to similarity score (0-1)"""        # This is a simple conversion, can be adjusted based on requirements
+        """Convert Elasticsearch score to similarity score (0-1)"""
+        # This is a simple conversion, can be adjusted based on requirements
         return min(1.0, score / 10.0)
     
     def _update_search_stats(self, response_time: float) -> None:
-        """Update search performance statistics"""        total_searches = self.search_stats["total_searches"]
+        """Update search performance statistics"""
+        total_searches = self.search_stats["total_searches"]
         current_avg = self.search_stats["avg_response_time"]
         
         # Calculate new average
@@ -824,7 +854,8 @@ class ElasticsearchVectorStore:
         self.search_stats["avg_response_time"] = new_avg
     
     async def close(self) -> None:
-        """Close Elasticsearch client"""        try:
+        """Close Elasticsearch client"""
+        try:
             await self.client.close()
             logger.info("Elasticsearch client closed successfully")
         except Exception as e:

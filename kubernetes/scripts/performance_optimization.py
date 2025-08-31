@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Performance Optimization Manager
 Automated performance monitoring, analysis, and optimization for the IA Influencer Agent platform
-"""import os
+"""
+import os
 import sys
 import time
 import json
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationType(Enum):
-    """Optimization type enumeration"""    CPU = "cpu"
+    """Optimization type enumeration"""
+    CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
     NETWORK = "network"
@@ -38,7 +40,8 @@ class OptimizationType(Enum):
 
 
 class OptimizationStatus(Enum):
-    """Optimization status enumeration"""    PENDING = "pending"
+    """Optimization status enumeration"""
+    PENDING = "pending"
     ANALYZING = "analyzing"
     OPTIMIZING = "optimizing"
     COMPLETED = "completed"
@@ -47,7 +50,8 @@ class OptimizationStatus(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Performance metric data class"""    name: str
+    """Performance metric data class"""
+    name: str
     value: float
     unit: str
     timestamp: datetime
@@ -58,7 +62,8 @@ class PerformanceMetric:
 
 @dataclass
 class OptimizationTask:
-    """Optimization task data class"""    id: str
+    """Optimization task data class"""
+    id: str
     optimization_type: OptimizationType
     description: str
     status: OptimizationStatus
@@ -71,11 +76,14 @@ class OptimizationTask:
 
 
 class PerformanceOptimizer:
-    """    Enterprise-grade performance optimization manager
+    """
+    Enterprise-grade performance optimization manager
     Monitors system performance and applies automated optimizations
-    """    
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize performance optimizer"""        self.config_path = config_path or "/etc/optimization/config.yaml"
+        """Initialize performance optimizer"""
+        self.config_path = config_path or "/etc/optimization/config.yaml"
         self.optimization_tasks = {}
         self.metrics_history = []
         self.running = False
@@ -85,7 +93,8 @@ class PerformanceOptimizer:
         self._initialize_monitoring()
     
     def _load_configuration(self) -> None:
-        """Load optimization configuration"""        try:
+        """Load optimization configuration"""
+        try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r') as f:
                     self.config = yaml.safe_load(f)
@@ -98,7 +107,8 @@ class PerformanceOptimizer:
             self.config = self._get_default_config()
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default optimization configuration"""        return {
+        """Get default optimization configuration"""
+        return {
             "monitoring": {
                 "interval_seconds": 60,
                 "metrics_retention_days": 7
@@ -148,7 +158,8 @@ class PerformanceOptimizer:
         }
     
     def _initialize_monitoring(self) -> None:
-        """Initialize performance monitoring"""        try:
+        """Initialize performance monitoring"""
+        try:
             logger.info("Initializing performance monitoring")
             
             # Initialize system monitoring
@@ -165,7 +176,8 @@ class PerformanceOptimizer:
             logger.error(f"Monitoring initialization error: {e}")
     
     def start_optimization(self) -> None:
-        """Start performance optimization monitoring"""        try:
+        """Start performance optimization monitoring"""
+        try:
             logger.info("Starting performance optimization")
             self.running = True
             
@@ -181,12 +193,14 @@ class PerformanceOptimizer:
             logger.error(f"Optimization startup error: {e}")
     
     def stop_optimization(self) -> None:
-        """Stop performance optimization"""        self.running = False
+        """Stop performance optimization"""
+        self.running = False
         self.executor.shutdown(wait=True)
         logger.info("Performance optimization stopped")
     
     def _monitoring_loop(self) -> None:
-        """Main monitoring loop"""        try:
+        """Main monitoring loop"""
+        try:
             interval = self.config.get("monitoring", {}).get("interval_seconds", 60)
             
             while self.running:
@@ -210,7 +224,8 @@ class PerformanceOptimizer:
             logger.error(f"Monitoring loop fatal error: {e}")
     
     def _optimization_loop(self) -> None:
-        """Main optimization loop"""        try:
+        """Main optimization loop"""
+        try:
             while self.running:
                 try:
                     # Process pending optimization tasks
@@ -228,7 +243,8 @@ class PerformanceOptimizer:
             logger.error(f"Optimization loop fatal error: {e}")
     
     def _collect_performance_metrics(self) -> List[PerformanceMetric]:
-        """Collect performance metrics from all sources"""        try:
+        """Collect performance metrics from all sources"""
+        try:
             metrics = []
             current_time = datetime.now()
             thresholds = self.config.get("thresholds", {})
@@ -285,7 +301,8 @@ class PerformanceOptimizer:
             return []
     
     def _get_metric_unit(self, metric_name: str) -> str:
-        """Get unit for metric"""        unit_mapping = {
+        """Get unit for metric"""
+        unit_mapping = {
             "cpu_usage": "%",
             "memory_usage": "%",
             "disk_usage": "%",
@@ -300,7 +317,8 @@ class PerformanceOptimizer:
         return unit_mapping.get(metric_name, "")
     
     def _store_metrics(self, metrics: List[PerformanceMetric]) -> None:
-        """Store metrics in history"""        try:
+        """Store metrics in history"""
+        try:
             self.metrics_history.extend(metrics)
             
             # Clean up old metrics
@@ -316,7 +334,8 @@ class PerformanceOptimizer:
             logger.error(f"Metrics storage error: {e}")
     
     def _analyze_metrics(self, metrics: List[PerformanceMetric]) -> None:
-        """Analyze metrics for optimization opportunities"""        try:
+        """Analyze metrics for optimization opportunities"""
+        try:
             auto_optimize = self.config.get("optimizations", {}).get("auto_optimize", True)
             
             for metric in metrics:
@@ -341,7 +360,8 @@ class PerformanceOptimizer:
             logger.error(f"Metrics analysis error: {e}")
     
     def _create_optimization_task(self, metric: PerformanceMetric, severity: str) -> None:
-        """Create optimization task based on metric"""        try:
+        """Create optimization task based on metric"""
+        try:
             task_id = f"opt_{int(time.time())}_{metric.name}"
             
             # Determine optimization type
@@ -365,7 +385,8 @@ class PerformanceOptimizer:
             logger.error(f"Optimization task creation error: {e}")
     
     def _determine_optimization_type(self, metric_name: str) -> OptimizationType:
-        """Determine optimization type based on metric name"""        if "cpu" in metric_name.lower():
+        """Determine optimization type based on metric name"""
+        if "cpu" in metric_name.lower():
             return OptimizationType.CPU
         elif "memory" in metric_name.lower():
             return OptimizationType.MEMORY
@@ -379,7 +400,8 @@ class PerformanceOptimizer:
             return OptimizationType.APPLICATION
     
     def _execute_optimization_task(self, task: OptimizationTask) -> None:
-        """Execute optimization task"""        try:
+        """Execute optimization task"""
+        try:
             logger.info(f"Executing optimization task: {task.id}")
             task.status = OptimizationStatus.ANALYZING
             
@@ -421,7 +443,8 @@ class PerformanceOptimizer:
             task.status = OptimizationStatus.FAILED
     
     def _analyze_optimization_target(self, task: OptimizationTask) -> Dict[str, Any]:
-        """Analyze optimization target and generate recommendations"""        try:
+        """Analyze optimization target and generate recommendations"""
+        try:
             analysis = {}
             
             if task.optimization_type == OptimizationType.CPU:
@@ -445,7 +468,8 @@ class PerformanceOptimizer:
             return {}
     
     def _analyze_cpu_usage(self) -> Dict[str, Any]:
-        """Analyze CPU usage patterns"""        try:
+        """Analyze CPU usage patterns"""
+        try:
             # Get CPU info
             cpu_percent = psutil.cpu_percent(interval=1)
             cpu_count = psutil.cpu_count()
@@ -486,7 +510,8 @@ class PerformanceOptimizer:
             return {}
     
     def _analyze_memory_usage(self) -> Dict[str, Any]:
-        """Analyze memory usage patterns"""        try:
+        """Analyze memory usage patterns"""
+        try:
             memory = psutil.virtual_memory()
             swap = psutil.swap_memory()
             
@@ -525,7 +550,8 @@ class PerformanceOptimizer:
             return {}
     
     def _analyze_disk_usage(self) -> Dict[str, Any]:
-        """Analyze disk usage patterns"""        try:
+        """Analyze disk usage patterns"""
+        try:
             disk_usage = psutil.disk_usage('/')
             disk_io = psutil.disk_io_counters()
             
@@ -554,7 +580,8 @@ class PerformanceOptimizer:
             return {}
     
     def _analyze_database_performance(self) -> Dict[str, Any]:
-        """Analyze database performance"""        try:
+        """Analyze database performance"""
+        try:
             db_metrics = self.database_monitor.get_detailed_metrics()
             
             recommendations = []
@@ -581,7 +608,8 @@ class PerformanceOptimizer:
             return {}
     
     def _analyze_application_performance(self) -> Dict[str, Any]:
-        """Analyze application performance"""        try:
+        """Analyze application performance"""
+        try:
             app_metrics = self.application_monitor.get_detailed_metrics()
             
             recommendations = []
@@ -604,7 +632,8 @@ class PerformanceOptimizer:
             return {}
     
     def _optimize_cpu(self, task: OptimizationTask) -> bool:
-        """Optimize CPU performance"""        try:
+        """Optimize CPU performance"""
+        try:
             logger.info("Optimizing CPU performance")
             
             optimizations = self.config.get("optimizations", {}).get("cpu", {})
@@ -630,7 +659,8 @@ class PerformanceOptimizer:
             return False
     
     def _optimize_memory(self, task: OptimizationTask) -> bool:
-        """Optimize memory performance"""        try:
+        """Optimize memory performance"""
+        try:
             logger.info("Optimizing memory performance")
             
             optimizations = self.config.get("optimizations", {}).get("memory", {})
@@ -662,7 +692,8 @@ class PerformanceOptimizer:
             return False
     
     def _optimize_disk(self, task: OptimizationTask) -> bool:
-        """Optimize disk performance"""        try:
+        """Optimize disk performance"""
+        try:
             logger.info("Optimizing disk performance")
             
             optimizations = self.config.get("optimizations", {}).get("disk", {})
@@ -688,7 +719,8 @@ class PerformanceOptimizer:
             return False
     
     def _optimize_database(self, task: OptimizationTask) -> bool:
-        """Optimize database performance"""        try:
+        """Optimize database performance"""
+        try:
             logger.info("Optimizing database performance")
             
             optimizations = self.config.get("optimizations", {}).get("database", {})
@@ -720,7 +752,8 @@ class PerformanceOptimizer:
             return False
     
     def _optimize_application(self, task: OptimizationTask) -> bool:
-        """Optimize application performance"""        try:
+        """Optimize application performance"""
+        try:
             logger.info("Optimizing application performance")
             
             optimizations = self.config.get("optimizations", {}).get("application", {})
@@ -754,7 +787,8 @@ class PerformanceOptimizer:
     # Specific optimization methods (simplified implementations)
     
     def _optimize_process_priorities(self) -> bool:
-        """Optimize process priorities"""        try:
+        """Optimize process priorities"""
+        try:
             # This would implement actual process priority optimization
             logger.info("Process priorities optimized")
             return True
@@ -763,7 +797,8 @@ class PerformanceOptimizer:
             return False
     
     def _optimize_cpu_frequency(self) -> bool:
-        """Optimize CPU frequency scaling"""        try:
+        """Optimize CPU frequency scaling"""
+        try:
             # This would implement CPU frequency optimization
             logger.info("CPU frequency scaling optimized")
             return True
@@ -772,7 +807,8 @@ class PerformanceOptimizer:
             return False
     
     def _enable_memory_compression(self) -> bool:
-        """Enable memory compression"""        try:
+        """Enable memory compression"""
+        try:
             # This would implement memory compression
             logger.info("Memory compression enabled")
             return True
@@ -781,7 +817,8 @@ class PerformanceOptimizer:
             return False
     
     def _optimize_swap_settings(self) -> bool:
-        """Optimize swap settings"""        try:
+        """Optimize swap settings"""
+        try:
             # This would implement swap optimization
             logger.info("Swap settings optimized")
             return True
@@ -790,7 +827,8 @@ class PerformanceOptimizer:
             return False
     
     def _tune_system_caches(self) -> bool:
-        """Tune system caches"""        try:
+        """Tune system caches"""
+        try:
             # This would implement cache tuning
             logger.info("System caches tuned")
             return True
@@ -799,7 +837,8 @@ class PerformanceOptimizer:
             return False
     
     def _optimize_io_scheduler(self) -> bool:
-        """Optimize I/O scheduler"""        try:
+        """Optimize I/O scheduler"""
+        try:
             # This would implement I/O scheduler optimization
             logger.info("I/O scheduler optimized")
             return True
@@ -808,7 +847,8 @@ class PerformanceOptimizer:
             return False
     
     def _optimize_filesystem(self) -> bool:
-        """Optimize filesystem settings"""        try:
+        """Optimize filesystem settings"""
+        try:
             # This would implement filesystem optimization
             logger.info("Filesystem optimized")
             return True
@@ -817,7 +857,8 @@ class PerformanceOptimizer:
             return False
     
     def _optimize_database_queries(self) -> bool:
-        """Optimize database queries"""        try:
+        """Optimize database queries"""
+        try:
             # This would implement query optimization
             logger.info("Database queries optimized")
             return True
@@ -826,7 +867,8 @@ class PerformanceOptimizer:
             return False
     
     def _optimize_connection_pool(self) -> bool:
-        """Optimize database connection pool"""        try:
+        """Optimize database connection pool"""
+        try:
             # This would implement connection pool optimization
             logger.info("Database connection pool optimized")
             return True
@@ -835,7 +877,8 @@ class PerformanceOptimizer:
             return False
     
     def _optimize_database_indexes(self) -> bool:
-        """Optimize database indexes"""        try:
+        """Optimize database indexes"""
+        try:
             # This would implement index optimization
             logger.info("Database indexes optimized")
             return True
@@ -844,7 +887,8 @@ class PerformanceOptimizer:
             return False
     
     def _enable_jit_compilation(self) -> bool:
-        """Enable JIT compilation"""        try:
+        """Enable JIT compilation"""
+        try:
             # This would implement JIT compilation
             logger.info("JIT compilation enabled")
             return True
@@ -853,7 +897,8 @@ class PerformanceOptimizer:
             return False
     
     def _optimize_app_connection_pooling(self) -> bool:
-        """Optimize application connection pooling"""        try:
+        """Optimize application connection pooling"""
+        try:
             # This would implement app connection pooling optimization
             logger.info("Application connection pooling optimized")
             return True
@@ -862,7 +907,8 @@ class PerformanceOptimizer:
             return False
     
     def _optimize_application_caching(self) -> bool:
-        """Optimize application caching"""        try:
+        """Optimize application caching"""
+        try:
             # This would implement application caching optimization
             logger.info("Application caching optimized")
             return True
@@ -871,7 +917,8 @@ class PerformanceOptimizer:
             return False
     
     def _collect_post_optimization_metrics(self, task: OptimizationTask) -> Dict[str, float]:
-        """Collect metrics after optimization"""        try:
+        """Collect metrics after optimization"""
+        try:
             # Wait a bit for changes to take effect
             time.sleep(30)
             
@@ -890,7 +937,8 @@ class PerformanceOptimizer:
             return {}
     
     def get_optimization_report(self, task_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get optimization report"""        try:
+        """Get optimization report"""
+        try:
             if task_id:
                 if task_id not in self.optimization_tasks:
                     return {"error": "Task not found"}
@@ -935,7 +983,8 @@ class PerformanceOptimizer:
             return {"error": str(e)}
     
     def get_performance_dashboard(self) -> Dict[str, Any]:
-        """Get performance dashboard data"""        try:
+        """Get performance dashboard data"""
+        try:
             # Get current metrics
             current_metrics = self._collect_performance_metrics()
             
@@ -963,7 +1012,8 @@ class PerformanceOptimizer:
             return {"error": str(e)}
     
     def _get_metric_status(self, metric: PerformanceMetric) -> str:
-        """Get metric status based on thresholds"""        if metric.threshold_critical and metric.value >= metric.threshold_critical:
+        """Get metric status based on thresholds"""
+        if metric.threshold_critical and metric.value >= metric.threshold_critical:
             return "critical"
         elif metric.threshold_warning and metric.value >= metric.threshold_warning:
             return "warning"
@@ -971,7 +1021,8 @@ class PerformanceOptimizer:
             return "ok"
     
     def _calculate_metric_trends(self) -> Dict[str, str]:
-        """Calculate metric trends"""        try:
+        """Calculate metric trends"""
+        try:
             trends = {}
             
             # Group metrics by name
@@ -1000,7 +1051,8 @@ class PerformanceOptimizer:
             return {}
     
     def _get_current_recommendations(self) -> List[str]:
-        """Get current performance recommendations"""        try:
+        """Get current performance recommendations"""
+        try:
             recommendations = []
             
             # Aggregate recommendations from recent tasks
@@ -1018,9 +1070,11 @@ class PerformanceOptimizer:
 
 # Helper classes for monitoring
 class SystemMonitor:
-    """System performance monitor"""    
+    """System performance monitor"""
+    
     def get_metrics(self) -> Dict[str, float]:
-        """Get system metrics"""        try:
+        """Get system metrics"""
+        try:
             return {
                 "cpu_usage": psutil.cpu_percent(interval=1),
                 "memory_usage": psutil.virtual_memory().percent,
@@ -1033,14 +1087,16 @@ class SystemMonitor:
             return {}
     
     def _get_io_wait_percentage(self) -> float:
-        """Get I/O wait percentage"""        try:
+        """Get I/O wait percentage"""
+        try:
             # Simplified I/O wait calculation
             return 0.0  # Would implement actual I/O wait measurement
         except Exception:
             return 0.0
     
     def _get_network_errors(self) -> float:
-        """Get network error count"""        try:
+        """Get network error count"""
+        try:
             net_io = psutil.net_io_counters()
             if net_io:
                 return net_io.errin + net_io.errout
@@ -1050,12 +1106,14 @@ class SystemMonitor:
 
 
 class DatabaseMonitor:
-    """Database performance monitor"""    
+    """Database performance monitor"""
+    
     def __init__(self, db_config: Dict[str, Any]):
         self.db_config = db_config
     
     def get_metrics(self) -> Dict[str, float]:
-        """Get database metrics"""        try:
+        """Get database metrics"""
+        try:
             conn = psycopg2.connect(**self.db_config)
             cur = conn.cursor()
             
@@ -1079,7 +1137,8 @@ class DatabaseMonitor:
             return {}
     
     def get_detailed_metrics(self) -> Dict[str, float]:
-        """Get detailed database metrics"""        try:
+        """Get detailed database metrics"""
+        try:
             # This would implement detailed database performance analysis
             return {
                 "connection_usage_percent": 50.0,
@@ -1092,9 +1151,11 @@ class DatabaseMonitor:
 
 
 class ApplicationMonitor:
-    """Application performance monitor"""    
+    """Application performance monitor"""
+    
     def get_metrics(self) -> Dict[str, float]:
-        """Get application metrics"""        try:
+        """Get application metrics"""
+        try:
             # This would integrate with application metrics
             return {
                 "response_time": 500.0,  # ms
@@ -1107,7 +1168,8 @@ class ApplicationMonitor:
             return {}
     
     def get_detailed_metrics(self) -> Dict[str, float]:
-        """Get detailed application metrics"""        try:
+        """Get detailed application metrics"""
+        try:
             return {
                 "avg_response_time": 500.0,
                 "error_rate": 2.0,
@@ -1119,7 +1181,8 @@ class ApplicationMonitor:
 
 
 def main():
-    """Main function for standalone execution"""    import argparse
+    """Main function for standalone execution"""
+    import argparse
     
     parser = argparse.ArgumentParser(description="Performance Optimization Manager")
     parser.add_argument("--action", required=True, 

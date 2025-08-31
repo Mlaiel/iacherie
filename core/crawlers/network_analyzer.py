@@ -3,7 +3,8 @@ AI-Powered Social Network Analysis and Relationship Mapping
 
 This module provides comprehensive social network analysis including
 relationship mapping, influence detection, community analysis, and network optimization.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import json
 import logging
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 
 class NodeType(str, Enum):
-    """Types of network nodes"""    USER = "user"
+    """Types of network nodes"""
+    USER = "user"
     INFLUENCER = "influencer"
     BRAND = "brand"
     ORGANIZATION = "organization"
@@ -43,7 +45,8 @@ class NodeType(str, Enum):
 
 
 class RelationshipType(str, Enum):
-    """Types of relationships between nodes"""    FOLLOWER = "follower"
+    """Types of relationships between nodes"""
+    FOLLOWER = "follower"
     FOLLOWING = "following"
     MUTUAL = "mutual"
     MENTION = "mention"
@@ -59,7 +62,8 @@ class RelationshipType(str, Enum):
 
 
 class CommunityType(str, Enum):
-    """Types of detected communities"""    INTEREST_BASED = "interest_based"
+    """Types of detected communities"""
+    INTEREST_BASED = "interest_based"
     GEOGRAPHIC = "geographic"
     PROFESSIONAL = "professional"
     DEMOGRAPHIC = "demographic"
@@ -69,7 +73,8 @@ class CommunityType(str, Enum):
 
 
 class InfluenceType(str, Enum):
-    """Types of influence in network"""    THOUGHT_LEADER = "thought_leader"
+    """Types of influence in network"""
+    THOUGHT_LEADER = "thought_leader"
     CONTENT_CREATOR = "content_creator"
     CONNECTOR = "connector"
     TRENDSETTER = "trendsetter"
@@ -80,7 +85,8 @@ class InfluenceType(str, Enum):
 
 
 class NetworkNode(BaseModel):
-    """Network node representation"""    node_id: str
+    """Network node representation"""
+    node_id: str
     node_type: NodeType
     name: str
     platform: str
@@ -117,7 +123,8 @@ class NetworkNode(BaseModel):
 
 
 class NetworkEdge(BaseModel):
-    """Network edge representation"""    edge_id: str
+    """Network edge representation"""
+    edge_id: str
     source_node: str
     target_node: str
     relationship_type: RelationshipType
@@ -143,7 +150,8 @@ class NetworkEdge(BaseModel):
 
 
 class NetworkCommunity(BaseModel):
-    """Network community representation"""    community_id: str
+    """Network community representation"""
+    community_id: str
     community_type: CommunityType
     name: str
     platform: str
@@ -184,7 +192,8 @@ class NetworkCommunity(BaseModel):
 
 
 class InfluencerProfile(BaseModel):
-    """Influencer analysis profile"""    node_id: str
+    """Influencer analysis profile"""
+    node_id: str
     username: str
     platform: str
     
@@ -232,7 +241,8 @@ class InfluencerProfile(BaseModel):
 
 
 class NetworkAnalysisResult(BaseModel):
-    """Result of network analysis"""    analysis_id: str
+    """Result of network analysis"""
+    analysis_id: str
     analysis_timestamp: datetime
     processing_time_ms: int
     
@@ -267,7 +277,8 @@ class NetworkAnalysisResult(BaseModel):
 
 
 class PathAnalysisResult(BaseModel):
-    """Result of path analysis between nodes"""    source_node: str
+    """Result of path analysis between nodes"""
+    source_node: str
     target_node: str
     shortest_path: List[str] = Field(default_factory=list)
     path_length: int = 0
@@ -288,11 +299,13 @@ class PathAnalysisResult(BaseModel):
 
 
 class AdvancedNetworkAnalyzer(BaseCrawler):
-    """    Ultra-Advanced Network Analyzer
+    """
+    Ultra-Advanced Network Analyzer
     
     Provides comprehensive social network analysis including relationship mapping,
     community detection, influence analysis, and network optimization.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         
@@ -356,7 +369,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
         platform: str,
         attributes: Dict[str, Any] = None
     ) -> NetworkNode:
-        """        Add node to network
+        """
+        Add node to network
         
         Args:
             node_id: Unique node identifier
@@ -367,7 +381,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
             
         Returns:
             NetworkNode: Created node
-        """        try:
+        """
+        try:
             # Create network node
             network_node = NetworkNode(
                 node_id=node_id,
@@ -407,7 +422,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
         weight: float = 1.0,
         interaction_context: Dict[str, Any] = None
     ) -> NetworkEdge:
-        """        Add edge to network
+        """
+        Add edge to network
         
         Args:
             source_node: Source node ID
@@ -419,7 +435,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
             
         Returns:
             NetworkEdge: Created edge
-        """        try:
+        """
+        try:
             edge_id = f"{source_node}_{target_node}_{relationship_type.value}"
             
             # Create network edge
@@ -462,7 +479,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
         analysis_type: str = "comprehensive",
         focus_nodes: List[str] = None
     ) -> NetworkAnalysisResult:
-        """        Perform comprehensive network analysis
+        """
+        Perform comprehensive network analysis
         
         Args:
             analysis_type: Type of analysis ("basic", "standard", "comprehensive")
@@ -470,7 +488,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
             
         Returns:
             NetworkAnalysisResult: Analysis results
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         
         try:
             await self.rate_limiter.acquire()
@@ -557,7 +576,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
         target_node: str,
         max_length: int = None
     ) -> PathAnalysisResult:
-        """        Find shortest path between nodes
+        """
+        Find shortest path between nodes
         
         Args:
             source_node: Source node ID
@@ -566,7 +586,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
             
         Returns:
             PathAnalysisResult: Path analysis results
-        """        try:
+        """
+        try:
             if not self.path_analysis_enabled:
                 return PathAnalysisResult(
                     source_node=source_node,
@@ -651,7 +672,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
         algorithm: str = "louvain",
         resolution: float = 1.0
     ) -> List[NetworkCommunity]:
-        """        Detect communities in network
+        """
+        Detect communities in network
         
         Args:
             algorithm: Community detection algorithm
@@ -659,7 +681,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
             
         Returns:
             List[NetworkCommunity]: Detected communities
-        """        try:
+        """
+        try:
             if not self.community_detection_enabled:
                 return []
             
@@ -675,7 +698,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
         source_nodes: List[str],
         max_steps: int = 3
     ) -> Dict[str, Any]:
-        """        Analyze influence flow from source nodes
+        """
+        Analyze influence flow from source nodes
         
         Args:
             source_nodes: Starting nodes for influence analysis
@@ -683,7 +707,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
             
         Returns:
             Dict[str, Any]: Influence flow analysis
-        """        try:
+        """
+        try:
             influence_flow = {
                 'source_nodes': source_nodes,
                 'influence_paths': {},
@@ -749,7 +774,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
         node_id: str,
         recommendation_type: str = "connections"
     ) -> List[Dict[str, Any]]:
-        """        Get recommendations for a specific node
+        """
+        Get recommendations for a specific node
         
         Args:
             node_id: Node identifier
@@ -757,7 +783,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
             
         Returns:
             List[Dict[str, Any]]: Recommendations
-        """        try:
+        """
+        try:
             if node_id not in self.network_graph:
                 return []
             
@@ -777,7 +804,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
             return []
 
     async def start_real_time_monitoring(self):
-        """Start real-time network monitoring"""        try:
+        """Start real-time network monitoring"""
+        try:
             if self.monitoring_active:
                 return
             
@@ -795,7 +823,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
             logger.error(f"Error starting real-time monitoring: {str(e)}")
 
     async def stop_real_time_monitoring(self):
-        """Stop real-time network monitoring"""        try:
+        """Stop real-time network monitoring"""
+        try:
             self.monitoring_active = False
             
             # Cancel monitoring tasks
@@ -814,7 +843,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
     # Helper methods for network analysis
     
     async def _update_node_centrality_metrics(self, node_id: str):
-        """Update centrality metrics for a node"""        if node_id not in self.network_graph or self.network_graph.number_of_nodes() < 2:
+        """Update centrality metrics for a node"""
+        if node_id not in self.network_graph or self.network_graph.number_of_nodes() < 2:
             return
         
         try:
@@ -854,7 +884,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
             logger.error(f"Error updating centrality metrics for {node_id}: {str(e)}")
 
     async def _detect_communities(self, algorithm: str = "louvain", resolution: float = 1.0) -> Tuple[List[NetworkCommunity], float]:
-        """Detect communities using specified algorithm"""        try:
+        """Detect communities using specified algorithm"""
+        try:
             communities = []
             modularity_score = 0.0
             
@@ -903,7 +934,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
             return [], 0.0
 
     def _simple_community_detection(self, graph: nx.Graph) -> Dict[str, int]:
-        """Simple community detection using connected components"""        communities = {}
+        """Simple community detection using connected components"""
+        communities = {}
         community_id = 0
         
         # Use connected components as simple communities
@@ -915,7 +947,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
         return communities
 
     async def _calculate_community_metrics(self, community: NetworkCommunity, graph: nx.Graph):
-        """Calculate metrics for a community"""        members = community.members
+        """Calculate metrics for a community"""
+        members = community.members
         subgraph = graph.subgraph(members)
         
         # Density
@@ -939,7 +972,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
         community.external_connections = external_connections
 
     async def _analyze_influencers(self, focus_nodes: List[str] = None) -> List[InfluencerProfile]:
-        """Analyze influencers in the network"""        influencers = []
+        """Analyze influencers in the network"""
+        influencers = []
         
         nodes_to_analyze = focus_nodes if focus_nodes else list(self.network_graph.nodes())
         
@@ -973,7 +1007,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
         return influencers[:50]  # Return top 50 influencers
 
     async def _classify_influencer(self, influencer: InfluencerProfile, node: NetworkNode):
-        """Classify influencer type and level"""        # Classify influence type based on network position
+        """Classify influencer type and level"""
+        # Classify influence type based on network position
         if node.betweenness_centrality > 0.1:
             influencer.influence_type = InfluenceType.CONNECTOR
         elif node.degree_centrality > 0.1:
@@ -992,7 +1027,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
             influencer.influence_level = "nano"
 
     async def _calculate_influence_distribution(self) -> Dict[str, int]:
-        """Calculate distribution of influence levels"""        distribution = {
+        """Calculate distribution of influence levels"""
+        distribution = {
             "nano": 0,
             "micro": 0,
             "macro": 0,
@@ -1012,7 +1048,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
         return distribution
 
     async def _assess_network_health(self) -> Dict[str, float]:
-        """Assess overall network health"""        health_metrics = {
+        """Assess overall network health"""
+        health_metrics = {
             'overall_score': 0.0,
             'authenticity_score': 0.0,
             'bot_prevalence': 0.0,
@@ -1045,7 +1082,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
         return health_metrics
 
     async def _identify_trending_topics(self) -> List[str]:
-        """Identify trending topics in the network"""        # Simplified trending topic identification
+        """Identify trending topics in the network"""
+        # Simplified trending topic identification
         topics = []
         
         # Analyze node attributes for keywords
@@ -1062,11 +1100,13 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
         return topics
 
     async def _identify_emerging_communities(self) -> List[str]:
-        """Identify emerging communities"""        # Simplified emerging community identification
+        """Identify emerging communities"""
+        # Simplified emerging community identification
         return ["Tech Innovators", "Content Creators", "Brand Advocates"]
 
     async def _analyze_growth_patterns(self) -> Dict[str, Any]:
-        """Analyze network growth patterns"""        return {
+        """Analyze network growth patterns"""
+        return {
             'growth_rate': 0.05,  # 5% growth
             'node_growth': 0.1,
             'edge_growth': 0.15,
@@ -1074,7 +1114,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
         }
 
     async def _generate_optimization_recommendations(self) -> List[str]:
-        """Generate network optimization recommendations"""        recommendations = []
+        """Generate network optimization recommendations"""
+        recommendations = []
         
         # Network density check
         density = nx.density(self.network_graph)
@@ -1093,14 +1134,16 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
         return recommendations
 
     async def _generate_community_suggestions(self) -> List[str]:
-        """Generate community suggestions"""        return [
+        """Generate community suggestions"""
+        return [
             "Create interest-based sub-communities",
             "Establish geographic communities",
             "Form professional networking groups"
         ]
 
     async def _identify_collaboration_opportunities(self) -> List[Dict[str, Any]]:
-        """Identify collaboration opportunities"""        opportunities = []
+        """Identify collaboration opportunities"""
+        opportunities = []
         
         # Find nodes with complementary attributes
         for node1_id, node1 in list(self.node_cache.items())[:10]:  # Limit for performance
@@ -1118,7 +1161,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
         return opportunities[:20]  # Return top 20 opportunities
 
     async def _calculate_path_strength(self, path: List[str]) -> float:
-        """Calculate strength of a path"""        if len(path) < 2:
+        """Calculate strength of a path"""
+        if len(path) < 2:
             return 0.0
         
         strengths = []
@@ -1138,7 +1182,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
         primary_path: List[str],
         max_length: int
     ) -> List[List[str]]:
-        """Find alternative paths between nodes"""        alternative_paths = []
+        """Find alternative paths between nodes"""
+        alternative_paths = []
         
         try:
             # Find multiple shortest paths
@@ -1162,7 +1207,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
             return []
 
     async def _identify_bridge_nodes(self, path: List[str]) -> List[str]:
-        """Identify bridge nodes in path"""        bridge_nodes = []
+        """Identify bridge nodes in path"""
+        bridge_nodes = []
         
         for node in path[1:-1]:  # Exclude source and target
             # Check if removing this node would disconnect components
@@ -1178,23 +1224,27 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
         return bridge_nodes
 
     async def _calculate_influence_decay(self, path: List[str]) -> float:
-        """Calculate influence decay along path"""        decay_rate = 0.2  # 20% decay per hop
+        """Calculate influence decay along path"""
+        decay_rate = 0.2  # 20% decay per hop
         path_length = len(path) - 1
         return decay_rate * path_length
 
     async def _calculate_propagation_probability(self, path: List[str]) -> float:
-        """Calculate probability of information propagation"""        base_probability = 0.8
+        """Calculate probability of information propagation"""
+        base_probability = 0.8
         decay_per_hop = 0.1
         hops = len(path) - 1
         return max(0.1, base_probability - (decay_per_hop * hops))
 
     async def _estimate_reach_time(self, path: List[str]) -> timedelta:
-        """Estimate time for information to reach target"""        base_time_per_hop = timedelta(minutes=30)
+        """Estimate time for information to reach target"""
+        base_time_per_hop = timedelta(minutes=30)
         hops = len(path) - 1
         return base_time_per_hop * hops
 
     async def _calculate_reach_metrics(self, influence_flow: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate reach metrics for influence flow"""        return {
+        """Calculate reach metrics for influence flow"""
+        return {
             'total_reach': len(influence_flow['influenced_nodes']),
             'average_strength': np.mean(list(influence_flow['influence_strength'].values())),
             'max_depth': 3,  # Would calculate actual max depth
@@ -1204,7 +1254,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
     # Recommendation methods
     
     async def _recommend_connections(self, node_id: str) -> List[Dict[str, Any]]:
-        """Recommend new connections for a node"""        recommendations = []
+        """Recommend new connections for a node"""
+        recommendations = []
         
         if node_id not in self.network_graph:
             return recommendations
@@ -1238,7 +1289,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
         return recommendations[:10]
 
     async def _recommend_communities(self, node_id: str) -> List[Dict[str, Any]]:
-        """Recommend communities for a node"""        recommendations = []
+        """Recommend communities for a node"""
+        recommendations = []
         
         # Find communities with similar characteristics
         target_node = self.node_cache.get(node_id)
@@ -1257,7 +1309,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
         return recommendations[:5]
 
     async def _recommend_content(self, node_id: str) -> List[Dict[str, Any]]:
-        """Recommend content for a node"""        # Simplified content recommendations
+        """Recommend content for a node"""
+        # Simplified content recommendations
         return [
             {
                 'content_type': 'article',
@@ -1268,7 +1321,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
         ]
 
     async def _recommend_collaborations(self, node_id: str) -> List[Dict[str, Any]]:
-        """Recommend collaboration opportunities"""        recommendations = []
+        """Recommend collaboration opportunities"""
+        recommendations = []
         
         if node_id not in self.network_graph:
             return recommendations
@@ -1295,7 +1349,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
         return recommendations[:5]
 
     async def _calculate_node_similarity(self, node1: NetworkNode, node2: NetworkNode) -> float:
-        """Calculate similarity between two nodes"""        similarities = []
+        """Calculate similarity between two nodes"""
+        similarities = []
         
         # Platform similarity
         if node1.platform == node2.platform:
@@ -1318,7 +1373,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
     # Real-time monitoring methods
     
     async def _real_time_monitor(self):
-        """Real-time network monitoring loop"""        while self.monitoring_active:
+        """Real-time network monitoring loop"""
+        while self.monitoring_active:
             try:
                 # Monitor network changes
                 await self._monitor_network_changes()
@@ -1331,7 +1387,8 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
                 await asyncio.sleep(60)
 
     async def _change_detection_monitor(self):
-        """Monitor for significant network changes"""        while self.monitoring_active:
+        """Monitor for significant network changes"""
+        while self.monitoring_active:
             try:
                 # Detect significant changes
                 await self._detect_significant_changes()
@@ -1344,15 +1401,18 @@ class AdvancedNetworkAnalyzer(BaseCrawler):
                 await asyncio.sleep(300)
 
     async def _monitor_network_changes(self):
-        """Monitor network for changes"""        # Simplified monitoring - would implement actual change detection
+        """Monitor network for changes"""
+        # Simplified monitoring - would implement actual change detection
         pass
 
     async def _detect_significant_changes(self):
-        """Detect significant changes in network structure"""        # Simplified change detection - would implement actual algorithms
+        """Detect significant changes in network structure"""
+        # Simplified change detection - would implement actual algorithms
         pass
 
     async def close(self):
-        """Close network analyzer and cleanup resources"""        try:
+        """Close network analyzer and cleanup resources"""
+        try:
             await self.stop_real_time_monitoring()
             await self.cache_manager.close()
             self.thread_pool.shutdown(wait=True)

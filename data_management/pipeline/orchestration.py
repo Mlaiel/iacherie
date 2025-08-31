@@ -6,7 +6,8 @@ with intelligent scheduling, dependency resolution, distributed execution,
 and specialized creator content workflows supporting the complete monetization pipeline:
 
 Creator Workflow: Upload → AI Protection → SEO Optimization → Platform Distribution → Monetization Tracking
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable, Set
 from datetime import datetime, timedelta
@@ -37,7 +38,8 @@ from ..utils.state_manager import StateManager
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status."""    PENDING = "pending"
+    """Workflow execution status."""
+    PENDING = "pending"
     SCHEDULED = "scheduled"
     RUNNING = "running"
     PAUSED = "paused"
@@ -48,7 +50,8 @@ class WorkflowStatus(Enum):
 
 
 class TaskStatus(Enum):
-    """Individual task status."""    WAITING = "waiting"
+    """Individual task status."""
+    WAITING = "waiting"
     READY = "ready"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -58,14 +61,16 @@ class TaskStatus(Enum):
 
 
 class DependencyType(Enum):
-    """Dependency relationship types."""    SEQUENTIAL = "sequential"  # Must complete before next starts
+    """Dependency relationship types."""
+    SEQUENTIAL = "sequential"  # Must complete before next starts
     PARALLEL = "parallel"     # Can run concurrently
     CONDITIONAL = "conditional"  # Depends on condition/result
     TRIGGER = "trigger"       # Triggers next task on completion
 
 
 class CreatorWorkflowType(Enum):
-    """Creator-specific workflow types."""    CONTENT_UPLOAD = "content_upload"
+    """Creator-specific workflow types."""
+    CONTENT_UPLOAD = "content_upload"
     PROTECTION_PIPELINE = "protection_pipeline"
     SEO_OPTIMIZATION = "seo_optimization"
     PLATFORM_DISTRIBUTION = "platform_distribution"
@@ -77,7 +82,8 @@ class CreatorWorkflowType(Enum):
 
 @dataclass
 class Task:
-    """Workflow task definition."""    task_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Workflow task definition."""
+    task_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     function: Optional[Callable] = None
     parameters: Dict[str, Any] = field(default_factory=dict)
@@ -97,7 +103,8 @@ class Task:
 
 @dataclass
 class CreatorWorkflow:
-    """Creator-specific workflow definition with monetization pipeline."""    workflow_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Creator-specific workflow definition with monetization pipeline."""
+    workflow_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
     creator_type: str = ""  # musician, blogger, photographer, influencer, comedian
@@ -119,7 +126,8 @@ class CreatorWorkflow:
 
 @dataclass
 class Workflow:
-    """Complete workflow definition."""    workflow_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Complete workflow definition."""
+    workflow_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
     tasks: List[Task] = field(default_factory=list)
@@ -135,9 +143,11 @@ class Workflow:
 
 
 class WorkflowOrchestrator:
-    """    Advanced workflow orchestration engine with intelligent scheduling,
+    """
+    Advanced workflow orchestration engine with intelligent scheduling,
     dynamic dependency resolution, and distributed execution capabilities.
-    """    
+    """
+    
     def __init__(self, config: OrchestrationConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -166,7 +176,8 @@ class WorkflowOrchestrator:
         self._initialize_orchestrator()
     
     def _initialize_orchestrator(self):
-        """Initialize orchestrator components."""        
+        """Initialize orchestrator components."""
+        
         self.scheduler.start()
         self.logger.info("Workflow orchestrator initialized")
     
@@ -176,7 +187,8 @@ class WorkflowOrchestrator:
         workflow: Workflow,
         auto_schedule: bool = True
     ) -> str:
-        """        Register a workflow for orchestration.
+        """
+        Register a workflow for orchestration.
         
         Args:
             workflow: Workflow definition
@@ -184,7 +196,8 @@ class WorkflowOrchestrator:
             
         Returns:
             Workflow ID
-        """        
+        """
+        
         # Validate workflow
         await self._validate_workflow(workflow)
         
@@ -204,7 +217,8 @@ class WorkflowOrchestrator:
         return workflow.workflow_id
     
     async def _validate_workflow(self, workflow: Workflow):
-        """Validate workflow definition."""        
+        """Validate workflow definition."""
+        
         if not workflow.name:
             raise OrchestrationError("Workflow name is required")
         
@@ -230,7 +244,8 @@ class WorkflowOrchestrator:
         await self._check_circular_dependencies(workflow.tasks)
     
     async def _check_circular_dependencies(self, tasks: List[Task]):
-        """Check for circular dependencies in task list."""        
+        """Check for circular dependencies in task list."""
+        
         temp_graph = nx.DiGraph()
         
         for task in tasks:
@@ -242,7 +257,8 @@ class WorkflowOrchestrator:
             raise DependencyError("Circular dependency detected in workflow")
     
     async def _build_dependency_graph(self, workflow: Workflow):
-        """Build dependency graph for workflow."""        
+        """Build dependency graph for workflow."""
+        
         workflow_graph_id = f"workflow_{workflow.workflow_id}"
         
         # Add nodes for all tasks
@@ -259,7 +275,8 @@ class WorkflowOrchestrator:
                 self.dependency_graph.add_edge(dep_node_id, task_node_id)
     
     async def _schedule_workflow(self, workflow: Workflow):
-        """Schedule workflow using cron expression."""        
+        """Schedule workflow using cron expression."""
+        
         if not workflow.schedule:
             return
         
@@ -285,7 +302,8 @@ class WorkflowOrchestrator:
             raise SchedulingError(f"Failed to schedule workflow: {e}")
     
     def _parse_cron_expression(self, cron_expr: str) -> Dict[str, Any]:
-        """Parse cron expression into scheduler parameters."""        
+        """Parse cron expression into scheduler parameters."""
+        
         parts = cron_expr.split()
         if len(parts) != 5:
             raise SchedulingError("Invalid cron expression format")
@@ -301,7 +319,8 @@ class WorkflowOrchestrator:
         }
     
     async def _execute_scheduled_workflow(self, workflow_id: str):
-        """Execute scheduled workflow."""        
+        """Execute scheduled workflow."""
+        
         try:
             await self.execute_workflow(workflow_id)
         except Exception as e:
@@ -313,7 +332,8 @@ class WorkflowOrchestrator:
         workflow_id: str,
         execution_parameters: Optional[Dict[str, Any]] = None
     ) -> str:
-        """        Execute workflow with intelligent task orchestration.
+        """
+        Execute workflow with intelligent task orchestration.
         
         Args:
             workflow_id: Workflow identifier
@@ -321,7 +341,8 @@ class WorkflowOrchestrator:
             
         Returns:
             Execution ID
-        """        
+        """
+        
         if workflow_id not in self.workflows:
             raise OrchestrationError(f"Workflow {workflow_id} not found")
         
@@ -405,14 +426,16 @@ class WorkflowOrchestrator:
         workflow_id: str,
         execution_parameters: Optional[Dict[str, Any]] = None
     ):
-        """Retry failed workflow execution."""        
+        """Retry failed workflow execution."""
+        
         try:
             await self.execute_workflow(workflow_id, execution_parameters)
         except Exception as e:
             self.logger.error(f"Workflow retry failed: {e}")
     
     async def _orchestrate_workflow_execution(self, execution_context: Dict[str, Any]) -> Dict[str, Any]:
-        """Orchestrate the execution of workflow tasks."""        
+        """Orchestrate the execution of workflow tasks."""
+        
         workflow = execution_context['workflow']
         task_states = execution_context['task_states']
         task_results = execution_context['task_results']
@@ -463,7 +486,8 @@ class WorkflowOrchestrator:
         task_states: Dict[str, TaskStatus],
         remaining_tasks: Set[str]
     ) -> List[Task]:
-        """Find tasks that are ready to execute."""        
+        """Find tasks that are ready to execute."""
+        
         ready_tasks = []
         
         for task in tasks:
@@ -487,7 +511,8 @@ class WorkflowOrchestrator:
     
     @retry_on_failure(max_retries=3)
     async def _execute_task(self, task: Task, execution_context: Dict[str, Any]) -> Any:
-        """Execute individual task with monitoring and error handling."""        
+        """Execute individual task with monitoring and error handling."""
+        
         task.started_at = datetime.utcnow()
         execution_context['task_states'][task.task_id] = TaskStatus.RUNNING
         
@@ -548,7 +573,8 @@ class WorkflowOrchestrator:
             raise OrchestrationError(f"Task {task.task_id} failed: {e}")
     
     async def _run_task_function(self, function: Callable, parameters: Dict[str, Any]) -> Any:
-        """Run task function with proper async handling."""        
+        """Run task function with proper async handling."""
+        
         if asyncio.iscoroutinefunction(function):
             return await function(**parameters)
         else:
@@ -564,7 +590,8 @@ class WorkflowOrchestrator:
         execution_context: Dict[str, Any],
         running_tasks: Set[str]
     ) -> List[str]:
-        """Wait for task completions and return completed task IDs."""        
+        """Wait for task completions and return completed task IDs."""
+        
         completed_tasks = []
         futures = []
         
@@ -594,9 +621,11 @@ class WorkflowOrchestrator:
 
 
 class TaskScheduler:
-    """    Intelligent task scheduler with priority-based queuing,
+    """
+    Intelligent task scheduler with priority-based queuing,
     resource-aware scheduling, and load balancing capabilities.
-    """    
+    """
+    
     def __init__(self, config: OrchestrationConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -629,12 +658,14 @@ class TaskScheduler:
         self._start_scheduler()
     
     def _start_scheduler(self):
-        """Start task scheduling."""        
+        """Start task scheduling."""
+        
         self.scheduler_thread.start()
         self.logger.info("Task scheduler started")
     
     def _scheduling_loop(self):
-        """Main scheduling loop."""        
+        """Main scheduling loop."""
+        
         while not self.stop_scheduling.wait(0.1):
             try:
                 # Check resource availability
@@ -650,7 +681,8 @@ class TaskScheduler:
                 self.logger.error(f"Scheduling loop error: {e}")
     
     def _can_schedule_more_tasks(self) -> bool:
-        """Check if more tasks can be scheduled based on resource constraints."""        
+        """Check if more tasks can be scheduled based on resource constraints."""
+        
         # Check concurrent task limit
         if len(self.active_workers) >= self.config.max_concurrent_tasks:
             return False
@@ -665,7 +697,8 @@ class TaskScheduler:
         return True
     
     def _get_next_task(self) -> Optional[tuple]:
-        """Get next task from priority queues."""        
+        """Get next task from priority queues."""
+        
         # Check queues from highest to lowest priority
         for priority in sorted(self.priority_queues.keys(), reverse=True):
             task_queue = self.priority_queues[priority]
@@ -679,7 +712,8 @@ class TaskScheduler:
         return None
     
     def _schedule_task_execution(self, task: Task):
-        """Schedule task for execution."""        
+        """Schedule task for execution."""
+        
         worker_id = f"worker_{task.task_id}"
         
         future = self.worker_pool.submit(self._execute_task_worker, task)
@@ -697,7 +731,8 @@ class TaskScheduler:
         self.logger.debug(f"Task {task.task_id} scheduled for execution")
     
     def _execute_task_worker(self, task: Task) -> Any:
-        """Execute task in worker thread."""        
+        """Execute task in worker thread."""
+        
         try:
             # Update resource usage
             self._update_resource_usage(task, 'start')
@@ -730,7 +765,8 @@ class TaskScheduler:
             self._update_resource_usage(task, 'end')
     
     def _handle_task_completion(self, worker_id: str, future):
-        """Handle task completion and cleanup."""        
+        """Handle task completion and cleanup."""
+        
         if worker_id in self.active_workers:
             worker_info = self.active_workers[worker_id]
             task = worker_info['task']
@@ -749,7 +785,8 @@ class TaskScheduler:
                 del self.active_workers[worker_id]
     
     def _update_resource_usage(self, task: Task, phase: str):
-        """Update resource usage tracking."""        
+        """Update resource usage tracking."""
+        
         resource_requirements = task.resource_requirements
         
         if phase == 'start':
@@ -765,7 +802,8 @@ class TaskScheduler:
                     self.resource_usage[resource] = max(0, self.resource_usage[resource] - amount)
     
     async def submit_task(self, task: Task) -> str:
-        """Submit task for scheduling."""        
+        """Submit task for scheduling."""
+        
         priority = task.priority
         timestamp = datetime.utcnow().timestamp()
         
@@ -779,9 +817,11 @@ class TaskScheduler:
 
 
 class DependencyResolver:
-    """    Advanced dependency resolution system with intelligent conflict resolution
+    """
+    Advanced dependency resolution system with intelligent conflict resolution
     and dynamic dependency management.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.dependency_cache = {}
@@ -791,7 +831,8 @@ class DependencyResolver:
         tasks: List[Task],
         context: Dict[str, Any] = None
     ) -> List[List[Task]]:
-        """        Resolve task dependencies and return execution batches.
+        """
+        Resolve task dependencies and return execution batches.
         
         Args:
             tasks: List of tasks to resolve
@@ -799,7 +840,8 @@ class DependencyResolver:
             
         Returns:
             List of task batches for parallel execution
-        """        
+        """
+        
         # Build dependency graph
         graph = nx.DiGraph()
         
@@ -828,7 +870,8 @@ class DependencyResolver:
         execution_order: List[str],
         tasks: List[Task]
     ) -> List[List[Task]]:
-        """Create batches of tasks that can be executed in parallel."""        
+        """Create batches of tasks that can be executed in parallel."""
+        
         task_map = {task.task_id: task for task in tasks}
         batches = []
         remaining_tasks = set(execution_order)
@@ -854,9 +897,11 @@ class DependencyResolver:
 
 
 class ExecutionPlanner:
-    """    Intelligent execution planning system with optimization strategies,
+    """
+    Intelligent execution planning system with optimization strategies,
     resource allocation, and performance prediction.
-    """    
+    """
+    
     def __init__(self, config: OrchestrationConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -867,7 +912,8 @@ class ExecutionPlanner:
         workflow: Workflow,
         constraints: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """        Create optimized execution plan for workflow.
+        """
+        Create optimized execution plan for workflow.
         
         Args:
             workflow: Workflow to plan
@@ -875,7 +921,8 @@ class ExecutionPlanner:
             
         Returns:
             Detailed execution plan
-        """        
+        """
+        
         constraints = constraints or {}
         
         # Analyze workflow complexity
@@ -909,7 +956,8 @@ class ExecutionPlanner:
         return execution_plan
     
     async def _analyze_workflow_complexity(self, workflow: Workflow) -> Dict[str, Any]:
-        """Analyze workflow complexity metrics."""        
+        """Analyze workflow complexity metrics."""
+        
         task_count = len(workflow.tasks)
         dependency_count = sum(len(task.dependencies) for task in workflow.tasks)
         
@@ -930,7 +978,8 @@ class ExecutionPlanner:
         }
     
     def _classify_complexity(self, score: float) -> str:
-        """Classify workflow complexity level."""        
+        """Classify workflow complexity level."""
+        
         if score < 10:
             return 'simple'
         elif score < 50:
@@ -941,7 +990,8 @@ class ExecutionPlanner:
             return 'very_complex'
     
     async def _estimate_resource_requirements(self, workflow: Workflow) -> Dict[str, Any]:
-        """Estimate resource requirements for workflow execution."""        
+        """Estimate resource requirements for workflow execution."""
+        
         total_cpu = sum(
             task.resource_requirements.get('cpu', 1.0) 
             for task in workflow.tasks
@@ -975,7 +1025,8 @@ class ExecutionPlanner:
         }
     
     def _estimate_execution_cost(self, cpu_hours: float, memory_mb: float) -> float:
-        """Estimate execution cost based on resource usage."""        
+        """Estimate execution cost based on resource usage."""
+        
         # Simple cost estimation (adjust based on actual cloud pricing)
         cpu_cost_per_hour = 0.05
         memory_cost_per_gb_hour = 0.01

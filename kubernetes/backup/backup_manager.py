@@ -6,7 +6,8 @@ user data, and system configurations with enterprise-grade features.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -26,14 +27,16 @@ from .backup_storage import BackupStorage
 
 
 class BackupType(Enum):
-    """Backup type enumeration."""    FULL = "full"
+    """Backup type enumeration."""
+    FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
     SNAPSHOT = "snapshot"
 
 
 class BackupStatus(Enum):
-    """Backup status enumeration."""    PENDING = "pending"
+    """Backup status enumeration."""
+    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -42,7 +45,8 @@ class BackupStatus(Enum):
 
 @dataclass
 class BackupMetadata:
-    """Backup metadata container."""    backup_id: str
+    """Backup metadata container."""
+    backup_id: str
     backup_type: BackupType
     created_at: datetime
     completed_at: Optional[datetime]
@@ -56,25 +60,29 @@ class BackupMetadata:
 
 
 class BackupManager:
-    """    Enterprise backup manager orchestrating all backup operations.
+    """
+    Enterprise backup manager orchestrating all backup operations.
     
     Manages content protection backups, user data backups, system configs,
     with scheduling, monitoring, encryption, and recovery capabilities.
-    """    def __init__(
+    """
+    def __init__(
         self,
         storage_config: Dict[str, Any],
         encryption_key: Optional[str] = None,
         compression_level: int = 6,
         max_concurrent_backups: int = 3
     ):
-        """        Initialize backup manager.
+        """
+        Initialize backup manager.
         
         Args:
             storage_config: Storage configuration
             encryption_key: Encryption key for backups
             compression_level: Compression level (0-9)
             max_concurrent_backups: Maximum concurrent backup operations
-        """        self.logger = logging.getLogger(__name__)
+        """
+        self.logger = logging.getLogger(__name__)
         self.storage_config = storage_config
         self.compression_level = compression_level
         self.max_concurrent_backups = max_concurrent_backups
@@ -104,7 +112,8 @@ class BackupManager:
         include_system_config: bool = True,
         tags: Optional[List[str]] = None
     ) -> str:
-        """        Create comprehensive full backup.
+        """
+        Create comprehensive full backup.
         
         Args:
             include_content: Include content protection data
@@ -114,7 +123,8 @@ class BackupManager:
             
         Returns:
             Backup ID
-        """        backup_id = f"full_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        """
+        backup_id = f"full_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         
         async with self._backup_lock:
             try:
@@ -190,7 +200,8 @@ class BackupManager:
         include_system_config: bool = True,
         tags: Optional[List[str]] = None
     ) -> str:
-        """        Create incremental backup based on previous backup.
+        """
+        Create incremental backup based on previous backup.
         
         Args:
             base_backup_id: Base backup for incremental changes
@@ -201,7 +212,8 @@ class BackupManager:
             
         Returns:
             Backup ID
-        """        backup_id = f"inc_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        """
+        backup_id = f"inc_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         
         async with self._backup_lock:
             try:
@@ -284,7 +296,8 @@ class BackupManager:
         restore_system_config: bool = True,
         target_path: Optional[str] = None
     ) -> bool:
-        """        Restore backup by ID.
+        """
+        Restore backup by ID.
         
         Args:
             backup_id: Backup to restore
@@ -295,7 +308,8 @@ class BackupManager:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             self.logger.info(f"Starting backup restoration: {backup_id}")
             
             # Retrieve backup data
@@ -333,24 +347,28 @@ class BackupManager:
         self,
         schedule_config: Dict[str, Any]
     ) -> str:
-        """        Schedule automatic backup.
+        """
+        Schedule automatic backup.
         
         Args:
             schedule_config: Scheduling configuration
             
         Returns:
             Schedule ID
-        """        return await self.scheduler.add_schedule(schedule_config, self.create_full_backup)
+        """
+        return await self.scheduler.add_schedule(schedule_config, self.create_full_backup)
 
     async def get_backup_status(self, backup_id: str) -> Optional[Dict[str, Any]]:
-        """        Get backup status and metadata.
+        """
+        Get backup status and metadata.
         
         Args:
             backup_id: Backup identifier
             
         Returns:
             Backup status information
-        """        # Check active backups
+        """
+        # Check active backups
         if backup_id in self.active_backups:
             metadata = self.active_backups[backup_id]
             return {
@@ -375,7 +393,8 @@ class BackupManager:
         tags: Optional[List[str]] = None,
         limit: int = 100
     ) -> List[BackupMetadata]:
-        """        List available backups with filtering.
+        """
+        List available backups with filtering.
         
         Args:
             backup_type: Filter by backup type
@@ -384,7 +403,8 @@ class BackupManager:
             
         Returns:
             List of backup metadata
-        """        backups = self.backup_history.copy()
+        """
+        backups = self.backup_history.copy()
         
         if backup_type:
             backups = [b for b in backups if b.backup_type == backup_type]
@@ -401,14 +421,16 @@ class BackupManager:
         return backups[:limit]
 
     async def delete_backup(self, backup_id: str) -> bool:
-        """        Delete backup and cleanup storage.
+        """
+        Delete backup and cleanup storage.
         
         Args:
             backup_id: Backup to delete
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             # Remove from storage
             await self.storage.delete_backup(backup_id)
             
@@ -426,14 +448,16 @@ class BackupManager:
             return False
 
     async def verify_backup_integrity(self, backup_id: str) -> bool:
-        """        Verify backup integrity and consistency.
+        """
+        Verify backup integrity and consistency.
         
         Args:
             backup_id: Backup to verify
             
         Returns:
             Integrity status
-        """        return await self.validator.verify_backup(backup_id)
+        """
+        return await self.validator.verify_backup(backup_id)
 
     async def cleanup_old_backups(
         self,
@@ -441,7 +465,8 @@ class BackupManager:
         keep_weekly: int = 4,
         keep_monthly: int = 12
     ) -> int:
-        """        Cleanup old backups based on retention policy.
+        """
+        Cleanup old backups based on retention policy.
         
         Args:
             retention_days: Days to keep daily backups
@@ -450,7 +475,8 @@ class BackupManager:
             
         Returns:
             Number of deleted backups
-        """        deleted_count = 0
+        """
+        deleted_count = 0
         cutoff_date = datetime.now() - timedelta(days=retention_days)
         
         # Group backups by time periods
@@ -489,7 +515,8 @@ class BackupManager:
         backup_id: str, 
         backup_data: Dict[str, Any]
     ) -> bytes:
-        """Process backup data with compression and encryption."""        # Serialize data
+        """Process backup data with compression and encryption."""
+        # Serialize data
         import json
         import gzip
         
@@ -510,7 +537,8 @@ class BackupManager:
         backup_id: str, 
         backup_data: bytes
     ) -> Dict[str, Any]:
-        """Process restore data with decryption and decompression."""        import json
+        """Process restore data with decryption and decompression."""
+        import json
         import gzip
         
         # Decrypt if needed
@@ -526,17 +554,20 @@ class BackupManager:
         return data
 
     async def _get_backup_metadata(self, backup_id: str) -> Optional[BackupMetadata]:
-        """Get backup metadata by ID."""        for metadata in self.backup_history:
+        """Get backup metadata by ID."""
+        for metadata in self.backup_history:
             if metadata.backup_id == backup_id:
                 return metadata
         return None
 
     async def get_backup_statistics(self) -> Dict[str, Any]:
-        """        Get comprehensive backup statistics.
+        """
+        Get comprehensive backup statistics.
         
         Returns:
             Backup statistics
-        """        total_backups = len(self.backup_history)
+        """
+        total_backups = len(self.backup_history)
         total_size = sum(b.size_bytes for b in self.backup_history)
         
         backup_types = {}

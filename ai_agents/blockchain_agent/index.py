@@ -10,7 +10,8 @@ Copyright: 2025 - All Rights Reserved
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
-"""from typing import Dict, List, Optional, Any, Union
+"""
+from typing import Dict, List, Optional, Any, Union
 import logging
 
 from .blockchain_agent import BlockchainAgent, BlockchainNetwork
@@ -22,7 +23,8 @@ from .defi_integration import DeFiIntegration, DeFiProtocol
 
 
 class BlockchainAgentIndex:
-    """    Unified Blockchain Agent Index.
+    """
+    Unified Blockchain Agent Index.
     
     Provides centralized access to all blockchain agent functionality:
     - Smart contract management and deployment
@@ -30,9 +32,11 @@ class BlockchainAgentIndex:
     - Copyright registration and protection
     - Cryptocurrency payment processing
     - DeFi yield farming and optimization
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the Blockchain Agent Index with all services."""        self.config = config or {}
+        """Initialize the Blockchain Agent Index with all services."""
+        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # Initialize core blockchain agent
@@ -68,7 +72,8 @@ class BlockchainAgentIndex:
         self.logger.info("Blockchain Agent Index initialized with all services")
     
     async def get_comprehensive_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive analytics from all blockchain services."""        try:
+        """Get comprehensive analytics from all blockchain services."""
+        try:
             analytics = {
                 'blockchain': await self.blockchain_agent.get_blockchain_analytics(),
                 'smart_contracts': await self.smart_contracts.get_contracts_analytics(),
@@ -111,7 +116,8 @@ class BlockchainAgentIndex:
         network: BlockchainNetwork = BlockchainNetwork.POLYGON,
         enable_monetization: bool = True
     ) -> Dict[str, str]:
-        """        Create complete creator solution: Copyright + NFT + Monetization.
+        """
+        Create complete creator solution: Copyright + NFT + Monetization.
         
         Args:
             creator_address: Creator's blockchain address
@@ -124,7 +130,8 @@ class BlockchainAgentIndex:
             
         Returns:
             Dict containing all created service IDs
-        """        try:
+        """
+        try:
             from .nft_creator import ContentMetadata
             from decimal import Decimal
             import hashlib
@@ -206,7 +213,8 @@ class BlockchainAgentIndex:
         monthly_revenue_target: float = 1000.0,
         risk_level: str = "moderate"
     ) -> Dict[str, str]:
-        """        Setup comprehensive monetization strategy for creator.
+        """
+        Setup comprehensive monetization strategy for creator.
         
         Args:
             creator_address: Creator's address
@@ -215,7 +223,8 @@ class BlockchainAgentIndex:
             
         Returns:
             Dict containing monetization setup results
-        """        try:
+        """
+        try:
             from .defi_integration import RiskLevel
             from decimal import Decimal
             
@@ -288,7 +297,8 @@ class BlockchainAgentIndex:
             raise
     
     def _map_content_to_copyright_type(self, content_type: ContentType) -> CopyrightType:
-        """Map ContentType to CopyrightType."""        mapping = {
+        """Map ContentType to CopyrightType."""
+        mapping = {
             ContentType.AUDIO: CopyrightType.SOUND_RECORDING,
             ContentType.VIDEO: CopyrightType.AUDIOVISUAL_WORK,
             ContentType.IMAGE: CopyrightType.VISUAL_ART,
@@ -298,7 +308,8 @@ class BlockchainAgentIndex:
         return mapping.get(content_type, CopyrightType.VISUAL_ART)
     
     async def _get_system_status(self) -> Dict[str, Any]:
-        """Get overall system status."""        return {
+        """Get overall system status."""
+        return {
             'blockchain_connections': len(self.blockchain_agent.web3_connections),
             'supported_networks': len(self.blockchain_agent.networks),
             'services_active': 6,  # All 6 services
@@ -307,7 +318,8 @@ class BlockchainAgentIndex:
         }
     
     def get_service_info(self) -> Dict[str, Any]:
-        """Get information about all available services."""        return {
+        """Get information about all available services."""
+        return {
             'blockchain_agent': {
                 'description': 'Core blockchain integration and transaction management',
                 'networks_supported': len(self.blockchain_agent.networks),
@@ -345,7 +357,8 @@ class BlockchainAgentIndex:
 blockchain_index = None
 
 def get_blockchain_index(config: Optional[Dict] = None) -> BlockchainAgentIndex:
-    """Get or create global blockchain agent index instance."""    global blockchain_index
+    """Get or create global blockchain agent index instance."""
+    global blockchain_index
     if blockchain_index is None:
         blockchain_index = BlockchainAgentIndex(config)
     return blockchain_index
@@ -358,7 +371,8 @@ async def create_nft_with_copyright(
     creator_address: str,
     content_type: ContentType = ContentType.IMAGE
 ) -> Dict[str, str]:
-    """Quick function to create NFT with copyright protection."""    index = get_blockchain_index()
+    """Quick function to create NFT with copyright protection."""
+    index = get_blockchain_index()
     return await index.create_complete_creator_solution(
         creator_address=creator_address,
         content_file_path=content_file,
@@ -370,7 +384,8 @@ async def create_nft_with_copyright(
 
 
 async def setup_creator_platform(creator_address: str) -> Dict[str, Any]:
-    """Quick setup for creator platform with all services."""    index = get_blockchain_index()
+    """Quick setup for creator platform with all services."""
+    index = get_blockchain_index()
     
     # Setup monetization
     monetization = await index.setup_creator_monetization(

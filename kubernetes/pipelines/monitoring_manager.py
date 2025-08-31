@@ -16,7 +16,8 @@ Features:
 
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import json
@@ -39,14 +40,16 @@ except ImportError:
 from .pipeline_manager import PipelineExecution, PipelineStatus
 
 class MetricType(Enum):
-    """Metric type definitions"""    COUNTER = "counter"
+    """Metric type definitions"""
+    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
 
 @dataclass
 class MetricDefinition:
-    """Metric definition structure"""    name: str
+    """Metric definition structure"""
+    name: str
     metric_type: MetricType
     description: str
     labels: List[str] = None
@@ -54,7 +57,8 @@ class MetricDefinition:
     
 @dataclass
 class MetricData:
-    """Metric data point"""    name: str
+    """Metric data point"""
+    name: str
     value: float
     labels: Dict[str, str] = None
     timestamp: datetime = None
@@ -66,7 +70,8 @@ class MetricData:
             self.labels = {}
 
 class PipelineMetrics:
-    """Pipeline-specific metrics collection"""    
+    """Pipeline-specific metrics collection"""
+    
     def __init__(self):
         self.execution_start_times: Dict[str, datetime] = {}
         self.step_start_times: Dict[str, Dict[str, datetime]] = defaultdict(dict)
@@ -74,7 +79,8 @@ class PipelineMetrics:
         self.logger = logging.getLogger(__name__)
         
     def record_pipeline_start(self, execution_id: str, config: Any):
-        """Record pipeline start event"""        self.execution_start_times[execution_id] = datetime.utcnow()
+        """Record pipeline start event"""
+        self.execution_start_times[execution_id] = datetime.utcnow()
         
         # Record start metric
         metric = MetricData(
@@ -89,7 +95,8 @@ class PipelineMetrics:
         self.metrics_data.append(metric)
         
     def record_pipeline_end(self, execution: PipelineExecution):
-        """Record pipeline completion/failure event"""        execution_id = execution.execution_id
+        """Record pipeline completion/failure event"""
+        execution_id = execution.execution_id
         
         if execution_id in self.execution_start_times:
             start_time = self.execution_start_times[execution_id]
@@ -133,11 +140,13 @@ class PipelineMetrics:
                 del self.step_start_times[execution_id]
                 
     def record_step_start(self, execution_id: str, step_name: str):
-        """Record pipeline step start"""        self.step_start_times[execution_id][step_name] = datetime.utcnow()
+        """Record pipeline step start"""
+        self.step_start_times[execution_id][step_name] = datetime.utcnow()
         
     def record_step_end(self, execution_id: str, step_name: str, 
                        success: bool, config: Any):
-        """Record pipeline step completion"""        if (execution_id in self.step_start_times and 
+        """Record pipeline step completion"""
+        if (execution_id in self.step_start_times and 
             step_name in self.step_start_times[execution_id]):
             
             start_time = self.step_start_times[execution_id][step_name]
@@ -170,7 +179,8 @@ class PipelineMetrics:
             self.metrics_data.append(metric)
 
 class PrometheusExporter:
-    """Prometheus metrics exporter"""    
+    """Prometheus metrics exporter"""
+    
     def __init__(self, port: int = 8000):
         self.port = port
         self.metrics: Dict[str, Any] = {}
@@ -188,7 +198,8 @@ class PrometheusExporter:
         self.logger.info(f"Prometheus metrics server started on port {self.port}")
         
     def _initialize_metrics(self):
-        """Initialize Prometheus metrics"""        if not PROMETHEUS_AVAILABLE:
+        """Initialize Prometheus metrics"""
+        if not PROMETHEUS_AVAILABLE:
             return
             
         # Pipeline metrics
@@ -250,7 +261,8 @@ class PrometheusExporter:
         )
         
     def record_metric(self, metric_data: MetricData):
-        """Record metric data point to Prometheus"""        if not PROMETHEUS_AVAILABLE:
+        """Record metric data point to Prometheus"""
+        if not PROMETHEUS_AVAILABLE:
             return
             
         metric = self.metrics.get(metric_data.name)
@@ -272,7 +284,8 @@ class PrometheusExporter:
             self.logger.error(f"Failed to record metric {metric_data.name}: {str(e)}")
 
 class MetricsStorage:
-    """Local metrics storage for historical data"""    
+    """Local metrics storage for historical data"""
+    
     def __init__(self, db_path: Optional[Path] = None):
         self.db_path = db_path or Path(__file__).parent / "metrics.db"
         self.logger = logging.getLogger(__name__)
@@ -281,7 +294,8 @@ class MetricsStorage:
         self._initialize_database()
         
     def _initialize_database(self):
-        """Initialize SQLite database for metrics storage"""        try:
+        """Initialize SQLite database for metrics storage"""
+        try:
             with sqlite3.connect(str(self.db_path)) as conn:
                 conn.execute('''
                     CREATE TABLE IF NOT EXISTS metrics (
@@ -310,7 +324,8 @@ class MetricsStorage:
             self.logger.error(f"Failed to initialize metrics database: {str(e)}")
             
     def store_metric(self, metric_data: MetricData):
-        """Store metric data point"""        try:
+        """Store metric data point"""
+        try:
             with sqlite3.connect(str(self.db_path)) as conn:
                 conn.execute(
                     'INSERT INTO metrics (name, value, labels, timestamp) VALUES (?, ?, ?, ?)',
@@ -328,7 +343,8 @@ class MetricsStorage:
     def get_metrics(self, metric_name: str, start_time: datetime, 
                    end_time: Optional[datetime] = None,
                    labels: Optional[Dict[str, str]] = None) -> List[MetricData]:
-        """Retrieve metrics from storage"""        try:
+        """Retrieve metrics from storage"""
+        try:
             with sqlite3.connect(str(self.db_path)) as conn:
                 query = 'SELECT name, value, labels, timestamp FROM metrics WHERE name = ? AND timestamp >= ?'
                 params = [metric_name, start_time.isoformat()]
@@ -364,7 +380,8 @@ class MetricsStorage:
             return []
             
     def cleanup_old_metrics(self, retention_days: int = 30):
-        """Clean up old metrics data"""        try:
+        """Clean up old metrics data"""
+        try:
             cutoff_date = datetime.utcnow() - timedelta(days=retention_days)
             
             with sqlite3.connect(str(self.db_path)) as conn:
@@ -379,7 +396,8 @@ class MetricsStorage:
             self.logger.error(f"Failed to cleanup old metrics: {str(e)}")
 
 class MetricsAnalyzer:
-    """Metrics analysis and alerting"""    
+    """Metrics analysis and alerting"""
+    
     def __init__(self, storage: MetricsStorage):
         self.storage = storage
         self.alert_thresholds: Dict[str, Dict[str, Any]] = {}
@@ -389,7 +407,8 @@ class MetricsAnalyzer:
         self._set_default_thresholds()
         
     def _set_default_thresholds(self):
-        """Set default alert thresholds"""        self.alert_thresholds = {
+        """Set default alert thresholds"""
+        self.alert_thresholds = {
             'pipeline_failure_rate': {
                 'threshold': 0.1,  # 10% failure rate
                 'window_minutes': 60,
@@ -409,7 +428,8 @@ class MetricsAnalyzer:
         
     def set_alert_threshold(self, metric_name: str, threshold: float,
                           window_minutes: int = 60, severity: str = 'warning'):
-        """Set custom alert threshold"""        self.alert_thresholds[metric_name] = {
+        """Set custom alert threshold"""
+        self.alert_thresholds[metric_name] = {
             'threshold': threshold,
             'window_minutes': window_minutes,
             'severity': severity
@@ -418,7 +438,8 @@ class MetricsAnalyzer:
     def analyze_pipeline_performance(self, pipeline_name: str, 
                                    environment: str,
                                    hours: int = 24) -> Dict[str, Any]:
-        """Analyze pipeline performance over specified time period"""        end_time = datetime.utcnow()
+        """Analyze pipeline performance over specified time period"""
+        end_time = datetime.utcnow()
         start_time = end_time - timedelta(hours=hours)
         
         # Get pipeline metrics
@@ -482,7 +503,8 @@ class MetricsAnalyzer:
         }
         
     def check_alerts(self) -> List[Dict[str, Any]]:
-        """Check for alert conditions"""        alerts = []
+        """Check for alert conditions"""
+        alerts = []
         current_time = datetime.utcnow()
         
         for metric_name, config in self.alert_thresholds.items():
@@ -497,7 +519,8 @@ class MetricsAnalyzer:
         
     def _check_failure_rate_alert(self, start_time: datetime, end_time: datetime,
                                 config: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Check for pipeline failure rate alerts"""        alerts = []
+        """Check for pipeline failure rate alerts"""
+        alerts = []
         
         # Get all pipeline executions in window
         success_metrics = self.storage.get_metrics('pipeline_success_total', start_time, end_time)
@@ -533,7 +556,8 @@ class MetricsAnalyzer:
         return alerts
 
 class PipelineMonitoringManager:
-    """    Comprehensive Pipeline Monitoring and Metrics Management System
+    """
+    Comprehensive Pipeline Monitoring and Metrics Management System
     
     Provides enterprise-grade monitoring capabilities with:
     - Real-time metrics collection and export
@@ -541,7 +565,8 @@ class PipelineMonitoringManager:
     - Alert detection and notification
     - Integration with Prometheus and Grafana
     - Historical data storage and retrieval
-    """    
+    """
+    
     def __init__(self, prometheus_port: int = 8000, 
                  storage_path: Optional[Path] = None):
         self.logger = logging.getLogger(__name__)
@@ -568,13 +593,15 @@ class PipelineMonitoringManager:
         self._start_metrics_processing()
         
     def _start_metrics_processing(self):
-        """Start background metrics processing"""        self.processing_thread = threading.Thread(target=self._process_metrics_loop)
+        """Start background metrics processing"""
+        self.processing_thread = threading.Thread(target=self._process_metrics_loop)
         self.processing_thread.daemon = True
         self.processing_thread.start()
         self.logger.info("Started metrics processing thread")
         
     def _process_metrics_loop(self):
-        """Background metrics processing loop"""        while not self.stop_processing.is_set():
+        """Background metrics processing loop"""
+        while not self.stop_processing.is_set():
             try:
                 if self.metrics_queue:
                     metric_data = self.metrics_queue.popleft()
@@ -594,10 +621,12 @@ class PipelineMonitoringManager:
                 time.sleep(1)
                 
     def record_metric(self, metric_data: MetricData):
-        """Record metric data point"""        self.metrics_queue.append(metric_data)
+        """Record metric data point"""
+        self.metrics_queue.append(metric_data)
         
     def record_pipeline_event(self, event_type: str, execution: PipelineExecution):
-        """Record pipeline event with automatic metric generation"""        if event_type == 'start':
+        """Record pipeline event with automatic metric generation"""
+        if event_type == 'start':
             self.pipeline_metrics.record_pipeline_start(
                 execution.execution_id, 
                 execution.config
@@ -614,24 +643,29 @@ class PipelineMonitoringManager:
         
     def get_pipeline_analytics(self, pipeline_name: str, environment: str,
                              hours: int = 24) -> Dict[str, Any]:
-        """Get comprehensive pipeline analytics"""        return self.analyzer.analyze_pipeline_performance(
+        """Get comprehensive pipeline analytics"""
+        return self.analyzer.analyze_pipeline_performance(
             pipeline_name, environment, hours
         )
         
     def check_alerts(self) -> List[Dict[str, Any]]:
-        """Check for active alerts"""        return self.analyzer.check_alerts()
+        """Check for active alerts"""
+        return self.analyzer.check_alerts()
         
     def set_alert_threshold(self, metric_name: str, threshold: float,
                           window_minutes: int = 60, severity: str = 'warning'):
-        """Configure alert threshold"""        self.analyzer.set_alert_threshold(
+        """Configure alert threshold"""
+        self.analyzer.set_alert_threshold(
             metric_name, threshold, window_minutes, severity
         )
         
     def cleanup_old_data(self, retention_days: int = 30):
-        """Clean up old metrics data"""        self.storage.cleanup_old_metrics(retention_days)
+        """Clean up old metrics data"""
+        self.storage.cleanup_old_metrics(retention_days)
         
     def shutdown(self):
-        """Shutdown monitoring manager"""        self.stop_processing.set()
+        """Shutdown monitoring manager"""
+        self.stop_processing.set()
         if self.processing_thread:
             self.processing_thread.join(timeout=5)
         self.logger.info("Pipeline monitoring manager shutdown complete")

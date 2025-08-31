@@ -12,7 +12,8 @@ or distribution without explicit written permission from Fahed Mlaiel (mlaiel@li
 is strictly prohibited and may result in legal action.
 
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
-"""import logging
+"""
+import logging
 from typing import Dict, Any, Optional, List
 from datetime import datetime
 
@@ -38,13 +39,16 @@ from . import (
 logger = logging.getLogger(__name__)
 
 class AIProcessingEventsManager:
-    """    Central manager for AI Processing Events
+    """
+    Central manager for AI Processing Events
     
     Provides unified interface for managing all event processing operations
     including handler initialization, pipeline execution, and system monitoring.
-    """    
+    """
+    
     def __init__(self, ai_engine: Any):
-        """Initialize the events manager with AI engine"""        self.ai_engine = ai_engine
+        """Initialize the events manager with AI engine"""
+        self.ai_engine = ai_engine
         self.handlers = {}
         self.pipeline = None
         self.active_events = {}
@@ -64,7 +68,8 @@ class AIProcessingEventsManager:
         logger.info("AI Processing Events Manager initialized successfully")
     
     def _initialize_handlers(self):
-        """Initialize all event handlers"""        try:
+        """Initialize all event handlers"""
+        try:
             self.handlers = {
                 'content_analysis': ContentAnalysisHandler(self.ai_engine),
                 'ai_enhancement': AIEnhancementHandler(self.ai_engine),
@@ -80,7 +85,8 @@ class AIProcessingEventsManager:
             raise
     
     def _initialize_pipeline(self):
-        """Initialize the processing pipeline"""        try:
+        """Initialize the processing pipeline"""
+        try:
             self.pipeline = create_event_processing_pipeline(self.ai_engine)
             if self.pipeline:
                 logger.info("Processing pipeline initialized successfully")
@@ -94,7 +100,8 @@ class AIProcessingEventsManager:
     
     async def process_content(self, content_data: Dict[str, Any], 
                             processing_options: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """        Process content through the complete AI processing pipeline
+        """
+        Process content through the complete AI processing pipeline
         
         Args:
             content_data: Content information and metadata
@@ -102,7 +109,8 @@ class AIProcessingEventsManager:
             
         Returns:
             Dict containing processing results and metrics
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         event_id = f"event_{start_time.timestamp()}"
         
         try:
@@ -163,7 +171,8 @@ class AIProcessingEventsManager:
     
     def _create_processing_config(self, content_data: Dict[str, Any], 
                                 processing_options: Optional[Dict[str, Any]] = None) -> Any:
-        """Create processing configuration from content data and options"""        from .event_processing_pipeline import PipelineConfiguration, PipelineStage
+        """Create processing configuration from content data and options"""
+        from .event_processing_pipeline import PipelineConfiguration, PipelineStage
         
         options = processing_options or {}
         
@@ -182,7 +191,8 @@ class AIProcessingEventsManager:
         )
     
     def _update_processing_stats(self, success: bool, processing_time: float):
-        """Update processing statistics"""        self.processing_stats['total_events_processed'] += 1
+        """Update processing statistics"""
+        self.processing_stats['total_events_processed'] += 1
         
         if success:
             self.processing_stats['successful_events'] += 1
@@ -196,7 +206,8 @@ class AIProcessingEventsManager:
         self.processing_stats['average_processing_time'] = new_avg
     
     def _extract_business_metrics(self, pipeline_result: Any) -> Dict[str, Any]:
-        """Extract business-relevant metrics from pipeline result"""        if not pipeline_result or not hasattr(pipeline_result, 'final_quality_score'):
+        """Extract business-relevant metrics from pipeline result"""
+        if not pipeline_result or not hasattr(pipeline_result, 'final_quality_score'):
             return {}
         
         return {
@@ -208,14 +219,16 @@ class AIProcessingEventsManager:
         }
     
     async def analyze_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze content using ContentAnalysisHandler"""        handler = self.handlers.get('content_analysis')
+        """Analyze content using ContentAnalysisHandler"""
+        handler = self.handlers.get('content_analysis')
         if handler:
             return await handler.handle_event({'content_data': content_data})
         raise ValueError("Content analysis handler not available")
     
     async def enhance_content(self, content_data: Dict[str, Any], 
                             enhancement_options: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Enhance content using AIEnhancementHandler"""        handler = self.handlers.get('ai_enhancement')
+        """Enhance content using AIEnhancementHandler"""
+        handler = self.handlers.get('ai_enhancement')
         if handler:
             event_data = {'content_data': content_data}
             if enhancement_options:
@@ -224,14 +237,16 @@ class AIProcessingEventsManager:
         raise ValueError("AI enhancement handler not available")
     
     async def protect_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Protect content using ContentProtectionHandler"""        handler = self.handlers.get('content_protection')
+        """Protect content using ContentProtectionHandler"""
+        handler = self.handlers.get('content_protection')
         if handler:
             return await handler.handle_event({'content_data': content_data})
         raise ValueError("Content protection handler not available")
     
     async def optimize_seo(self, content_data: Dict[str, Any], 
                           target_platforms: Optional[List[str]] = None) -> Dict[str, Any]:
-        """Optimize content for SEO using SEOOptimizationHandler"""        handler = self.handlers.get('seo_optimization')
+        """Optimize content for SEO using SEOOptimizationHandler"""
+        handler = self.handlers.get('seo_optimization')
         if handler:
             event_data = {
                 'content_data': content_data,
@@ -241,14 +256,16 @@ class AIProcessingEventsManager:
         raise ValueError("SEO optimization handler not available")
     
     async def find_collaborations(self, creator_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Find collaboration opportunities using CollaborationMatchingHandler"""        handler = self.handlers.get('collaboration_matching')
+        """Find collaboration opportunities using CollaborationMatchingHandler"""
+        handler = self.handlers.get('collaboration_matching')
         if handler:
             return await handler.handle_event({'creator_data': creator_data})
         raise ValueError("Collaboration matching handler not available")
     
     async def prepare_distribution(self, content_data: Dict[str, Any], 
                                  target_platforms: Optional[List[str]] = None) -> Dict[str, Any]:
-        """Prepare content for distribution using DistributionPreparationHandler"""        handler = self.handlers.get('distribution_preparation')
+        """Prepare content for distribution using DistributionPreparationHandler"""
+        handler = self.handlers.get('distribution_preparation')
         if handler:
             event_data = {
                 'content_data': content_data,
@@ -258,7 +275,8 @@ class AIProcessingEventsManager:
         raise ValueError("Distribution preparation handler not available")
     
     def get_system_status(self) -> Dict[str, Any]:
-        """Get system status and statistics"""        return {
+        """Get system status and statistics"""
+        return {
             'handlers_status': {name: 'active' for name in self.handlers.keys()},
             'pipeline_status': 'active' if self.pipeline else 'inactive',
             'active_events': len(self.active_events),
@@ -268,7 +286,8 @@ class AIProcessingEventsManager:
         }
     
     def get_handler_statistics(self) -> Dict[str, Any]:
-        """Get detailed statistics from all handlers"""        stats = {}
+        """Get detailed statistics from all handlers"""
+        stats = {}
         
         for name, handler in self.handlers.items():
             if hasattr(handler, 'get_statistics'):
@@ -287,7 +306,8 @@ class AIProcessingEventsManager:
         return stats
     
     async def cleanup(self):
-        """Cleanup all handlers and resources"""        logger.info("Starting cleanup of AI Processing Events Manager")
+        """Cleanup all handlers and resources"""
+        logger.info("Starting cleanup of AI Processing Events Manager")
         
         # Cleanup all handlers
         for name, handler in self.handlers.items():
@@ -314,14 +334,16 @@ class AIProcessingEventsManager:
 
 # Factory function for easy initialization
 def create_ai_processing_manager(ai_engine: Any) -> AIProcessingEventsManager:
-    """    Factory function to create AI Processing Events Manager
+    """
+    Factory function to create AI Processing Events Manager
     
     Args:
         ai_engine: AI engine instance for processing
         
     Returns:
         AIProcessingEventsManager: Configured manager instance
-    """    return AIProcessingEventsManager(ai_engine)
+    """
+    return AIProcessingEventsManager(ai_engine)
 
 # Export main classes and functions
 __all__ = [

@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -18,7 +19,8 @@ Basic tests to validate the platform integration modules work correctly.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -32,10 +34,12 @@ from integrations.platforms.platform_coordinator import PlatformCoordinator, Pla
 
 
 class TestAPIRateLimiter:
-    """Test API Rate Limiter functionality"""    
+    """Test API Rate Limiter functionality"""
+    
     @pytest.mark.asyncio
     async def test_rate_limit_check(self):
-        """Test basic rate limit checking"""        async with APIRateLimiter() as limiter:
+        """Test basic rate limit checking"""
+        async with APIRateLimiter() as limiter:
             # First request should be allowed
             status = await limiter.check_rate_limit("youtube", "search")
             assert not status.is_limited
@@ -46,7 +50,8 @@ class TestAPIRateLimiter:
             
     @pytest.mark.asyncio 
     async def test_rate_limit_rules(self):
-        """Test rate limit rule configuration"""        async with APIRateLimiter() as limiter:
+        """Test rate limit rule configuration"""
+        async with APIRateLimiter() as limiter:
             # Test default YouTube limits
             assert "youtube" in limiter.platform_limits
             youtube_limits = limiter.platform_limits["youtube"]
@@ -55,17 +60,20 @@ class TestAPIRateLimiter:
             
     @pytest.mark.asyncio
     async def test_platform_status(self):
-        """Test platform status retrieval"""        async with APIRateLimiter() as limiter:
+        """Test platform status retrieval"""
+        async with APIRateLimiter() as limiter:
             status = await limiter.get_platform_status("youtube")
             assert isinstance(status, dict)
             assert "*" in status
 
 
 class TestPlatformOAuthManager:
-    """Test Platform OAuth Manager functionality"""    
+    """Test Platform OAuth Manager functionality"""
+    
     @pytest.mark.asyncio
     async def test_oauth_manager_initialization(self):
-        """Test OAuth manager initialization"""        async with PlatformOAuthManager() as oauth_manager:
+        """Test OAuth manager initialization"""
+        async with PlatformOAuthManager() as oauth_manager:
             supported_platforms = oauth_manager.get_supported_platforms()
             assert "youtube" in supported_platforms
             assert "instagram" in supported_platforms
@@ -76,7 +84,8 @@ class TestPlatformOAuthManager:
             
     @pytest.mark.asyncio
     async def test_platform_configuration(self):
-        """Test platform OAuth configuration"""        async with PlatformOAuthManager() as oauth_manager:
+        """Test platform OAuth configuration"""
+        async with PlatformOAuthManager() as oauth_manager:
             oauth_manager.configure_platform(
                 "youtube",
                 "test_client_id",
@@ -91,7 +100,8 @@ class TestPlatformOAuthManager:
             
     @pytest.mark.asyncio
     async def test_authorization_url_generation(self):
-        """Test OAuth authorization URL generation"""        async with PlatformOAuthManager() as oauth_manager:
+        """Test OAuth authorization URL generation"""
+        async with PlatformOAuthManager() as oauth_manager:
             oauth_manager.configure_platform(
                 "youtube",
                 "test_client_id",
@@ -109,7 +119,8 @@ class TestPlatformOAuthManager:
             
     @pytest.mark.asyncio
     async def test_token_encryption(self):
-        """Test token encryption and decryption"""        async with PlatformOAuthManager() as oauth_manager:
+        """Test token encryption and decryption"""
+        async with PlatformOAuthManager() as oauth_manager:
             # Create test tokens
             tokens = OAuthTokens(
                 platform="youtube",
@@ -133,10 +144,12 @@ class TestPlatformOAuthManager:
 
 
 class TestPlatformCoordinator:
-    """Test Platform Coordinator functionality"""    
+    """Test Platform Coordinator functionality"""
+    
     @pytest.mark.asyncio
     async def test_coordinator_initialization(self):
-        """Test coordinator initialization"""        async with PlatformCoordinator() as coordinator:
+        """Test coordinator initialization"""
+        async with PlatformCoordinator() as coordinator:
             assert coordinator.oauth_manager is not None
             assert coordinator.rate_limiter is not None
             assert coordinator.youtube_api is not None
@@ -149,7 +162,8 @@ class TestPlatformCoordinator:
             
     @pytest.mark.asyncio
     async def test_platform_oauth_configuration(self):
-        """Test platform OAuth configuration through coordinator"""        async with PlatformCoordinator() as coordinator:
+        """Test platform OAuth configuration through coordinator"""
+        async with PlatformCoordinator() as coordinator:
             coordinator.configure_platform_oauth(
                 "youtube",
                 "test_client_id",
@@ -162,7 +176,8 @@ class TestPlatformCoordinator:
             
     @pytest.mark.asyncio
     async def test_platform_health_check(self):
-        """Test platform health checking"""        async with PlatformCoordinator() as coordinator:
+        """Test platform health checking"""
+        async with PlatformCoordinator() as coordinator:
             # Test with no tokens (should be disconnected)
             status = await coordinator.check_platform_health("test_user", "youtube")
             assert isinstance(status, PlatformStatus)
@@ -172,7 +187,8 @@ class TestPlatformCoordinator:
             
     @pytest.mark.asyncio
     async def test_token_storage(self):
-        """Test token storage and retrieval"""        async with PlatformCoordinator() as coordinator:
+        """Test token storage and retrieval"""
+        async with PlatformCoordinator() as coordinator:
             # Store test tokens
             tokens = OAuthTokens(
                 platform="youtube",
@@ -191,7 +207,8 @@ class TestPlatformCoordinator:
             
     @pytest.mark.asyncio
     async def test_all_platform_status(self):
-        """Test getting status for all platforms"""        async with PlatformCoordinator() as coordinator:
+        """Test getting status for all platforms"""
+        async with PlatformCoordinator() as coordinator:
             status_dict = await coordinator.get_all_platform_status("test_user")
             
             assert isinstance(status_dict, dict)
@@ -209,7 +226,8 @@ class TestPlatformCoordinator:
 
 @pytest.mark.asyncio
 async def test_integration_basic_workflow():
-    """Test basic integration workflow"""    async with PlatformCoordinator() as coordinator:
+    """Test basic integration workflow"""
+    async with PlatformCoordinator() as coordinator:
         # Configure OAuth
         coordinator.configure_platform_oauth(
             "youtube",
@@ -232,7 +250,8 @@ async def test_integration_basic_workflow():
 
 
 def test_module_imports():
-    """Test that all modules can be imported successfully"""    from integrations.platforms import (
+    """Test that all modules can be imported successfully"""
+    from integrations.platforms import (
         PlatformCoordinator,
         PlatformOAuthManager,
         APIRateLimiter,

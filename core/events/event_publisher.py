@@ -9,7 +9,8 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Description:
     Système de publication d'événements avec notifications temps réel,
     intégrations multi-canaux et orchestration pour la plateforme IA-Influencer-Agent.
-"""from typing import Any, Dict, List, Optional, Union, Callable, Set
+"""
+from typing import Any, Dict, List, Optional, Union, Callable, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -34,14 +35,16 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationPriority(Enum):
-    """Priorité des notifications"""    LOW = "low"
+    """Priorité des notifications"""
+    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
 
 
 class NotificationStatus(Enum):
-    """Statut des notifications"""    PENDING = "pending"
+    """Statut des notifications"""
+    PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
     FAILED = "failed"
@@ -49,7 +52,8 @@ class NotificationStatus(Enum):
 
 
 class ChannelType(Enum):
-    """Types de canaux de notification"""    EMAIL = "email"
+    """Types de canaux de notification"""
+    EMAIL = "email"
     WEBSOCKET = "websocket"
     PUSH = "push"
     SMS = "sms"
@@ -60,7 +64,8 @@ class ChannelType(Enum):
 
 @dataclass
 class NotificationTemplate:
-    """Modèle de notification"""    template_id: str
+    """Modèle de notification"""
+    template_id: str
     channel_type: ChannelType
     subject_template: str
     body_template: str
@@ -71,7 +76,8 @@ class NotificationTemplate:
 
 @dataclass
 class NotificationMessage:
-    """Message de notification"""    message_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Message de notification"""
+    message_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     event: Optional[Event] = None
     channel_type: ChannelType = ChannelType.EMAIL
     recipient: str = ""
@@ -102,7 +108,8 @@ class NotificationMessage:
 
 
 class NotificationChannel(ABC):
-    """Interface pour les canaux de notification"""    
+    """Interface pour les canaux de notification"""
+    
     def __init__(self, channel_id: str, config: Dict[str, Any]):
         self.channel_id = channel_id
         self.config = config
@@ -113,14 +120,17 @@ class NotificationChannel(ABC):
     
     @abstractmethod
     async def send(self, message: NotificationMessage) -> bool:
-        """Envoie une notification"""        pass
+        """Envoie une notification"""
+        pass
     
     @abstractmethod
     async def validate_config(self) -> bool:
-        """Valide la configuration du canal"""        pass
+        """Valide la configuration du canal"""
+        pass
     
     def can_send(self) -> bool:
-        """Vérifie si le canal peut envoyer (rate limiting)"""        if not self.enabled:
+        """Vérifie si le canal peut envoyer (rate limiting)"""
+        if not self.enabled:
             return False
         
         now = datetime.now(timezone.utc)
@@ -131,11 +141,13 @@ class NotificationChannel(ABC):
         return self._sent_count < self.rate_limit
     
     def increment_sent(self):
-        """Incrémente le compteur d'envois"""        self._sent_count += 1
+        """Incrémente le compteur d'envois"""
+        self._sent_count += 1
 
 
 class EmailChannel(NotificationChannel):
-    """Canal de notification par email"""    
+    """Canal de notification par email"""
+    
     def __init__(self, channel_id: str, config: Dict[str, Any]):
         super().__init__(channel_id, config)
         self.smtp_host = config.get("smtp_host", "localhost")
@@ -146,7 +158,8 @@ class EmailChannel(NotificationChannel):
         self.use_tls = config.get("use_tls", True)
     
     async def validate_config(self) -> bool:
-        """Valide la configuration SMTP"""        try:
+        """Valide la configuration SMTP"""
+        try:
             server = smtplib.SMTP(self.smtp_host, self.smtp_port)
             if self.use_tls:
                 server.starttls()
@@ -159,7 +172,8 @@ class EmailChannel(NotificationChannel):
             return False
     
     async def send(self, message: NotificationMessage) -> bool:
-        """Envoie un email"""        if not self.can_send():
+        """Envoie un email"""
+        if not self.can_send():
             logger.warning("Email rate limit exceeded for channel %s", self.channel_id)
             return False
         
@@ -193,7 +207,8 @@ class EmailChannel(NotificationChannel):
 
 
 class WebSocketChannel(NotificationChannel):
-    """Canal de notification par WebSocket"""    
+    """Canal de notification par WebSocket"""
+    
     def __init__(self, channel_id: str, config: Dict[str, Any]):
         super().__init__(channel_id, config)
         self.connections: Dict[str, WebSocketServerProtocol] = {}
@@ -203,7 +218,8 @@ class WebSocketChannel(NotificationChannel):
         self.server = None
     
     async def start_server(self):
-        """Démarre le serveur WebSocket"""        self.server = await serve(
+        """Démarre le serveur WebSocket"""
+        self.server = await serve(
             self.handle_connection,
             self.host,
             self.port
@@ -211,12 +227,14 @@ class WebSocketChannel(NotificationChannel):
         logger.info("WebSocket server started on %s:%d", self.host, self.port)
     
     async def stop_server(self):
-        """Arrête le serveur WebSocket"""        if self.server:
+        """Arrête le serveur WebSocket"""
+        if self.server:
             self.server.close()
             await self.server.wait_closed()
     
     async def handle_connection(self, websocket, path):
-        """Gère une nouvelle connexion WebSocket"""        connection_id = str(uuid.uuid4())
+        """Gère une nouvelle connexion WebSocket"""
+        connection_id = str(uuid.uuid4())
         self.connections[connection_id] = websocket
         
         try:
@@ -245,10 +263,12 @@ class WebSocketChannel(NotificationChannel):
                 connections.discard(connection_id)
     
     async def validate_config(self) -> bool:
-        """Valide la configuration WebSocket"""        return True  # Configuration simple
+        """Valide la configuration WebSocket"""
+        return True  # Configuration simple
     
     async def send(self, message: NotificationMessage) -> bool:
-        """Envoie via WebSocket"""        if not self.can_send():
+        """Envoie via WebSocket"""
+        if not self.can_send():
             return False
         
         try:
@@ -311,7 +331,8 @@ class WebSocketChannel(NotificationChannel):
 
 
 class SlackChannel(NotificationChannel):
-    """Canal de notification Slack"""    
+    """Canal de notification Slack"""
+    
     def __init__(self, channel_id: str, config: Dict[str, Any]):
         super().__init__(channel_id, config)
         self.bot_token = config.get("bot_token", "")
@@ -319,7 +340,8 @@ class SlackChannel(NotificationChannel):
         self.client = slack.AsyncWebClient(token=self.bot_token)
     
     async def validate_config(self) -> bool:
-        """Valide la configuration Slack"""        try:
+        """Valide la configuration Slack"""
+        try:
             response = await self.client.auth_test()
             return response["ok"]
         except Exception as e:
@@ -327,7 +349,8 @@ class SlackChannel(NotificationChannel):
             return False
     
     async def send(self, message: NotificationMessage) -> bool:
-        """Envoie via Slack"""        if not self.can_send():
+        """Envoie via Slack"""
+        if not self.can_send():
             return False
         
         try:
@@ -377,7 +400,8 @@ class SlackChannel(NotificationChannel):
 
 
 class WebhookChannel(NotificationChannel):
-    """Canal de notification par webhook"""    
+    """Canal de notification par webhook"""
+    
     def __init__(self, channel_id: str, config: Dict[str, Any]):
         super().__init__(channel_id, config)
         self.webhook_url = config.get("webhook_url", "")
@@ -386,7 +410,8 @@ class WebhookChannel(NotificationChannel):
         self.verify_ssl = config.get("verify_ssl", True)
     
     async def validate_config(self) -> bool:
-        """Valide la configuration webhook"""        if not self.webhook_url:
+        """Valide la configuration webhook"""
+        if not self.webhook_url:
             return False
         
         try:
@@ -402,7 +427,8 @@ class WebhookChannel(NotificationChannel):
             return False
     
     async def send(self, message: NotificationMessage) -> bool:
-        """Envoie via webhook"""        if not self.can_send():
+        """Envoie via webhook"""
+        if not self.can_send():
             return False
         
         try:
@@ -446,8 +472,10 @@ class WebhookChannel(NotificationChannel):
 
 
 class EventPublisher:
-    """    Système principal de publication d'événements avec notifications
-    """    
+    """
+    Système principal de publication d'événements avec notifications
+    """
+    
     def __init__(
         self,
         redis_client: Optional[redis.Redis] = None,
@@ -477,7 +505,8 @@ class EventPublisher:
         logger.info("EventPublisher initialized")
     
     async def start(self):
-        """Démarre le système de publication"""        if self._processing:
+        """Démarre le système de publication"""
+        if self._processing:
             return
         
         self._processing = True
@@ -485,7 +514,8 @@ class EventPublisher:
         logger.info("EventPublisher started")
     
     async def stop(self):
-        """Arrête le système de publication"""        self._processing = False
+        """Arrête le système de publication"""
+        self._processing = False
         
         # Arrêt des serveurs WebSocket
         for channel in self._channels.values():
@@ -495,7 +525,8 @@ class EventPublisher:
         logger.info("EventPublisher stopped")
     
     def register_channel(self, channel: NotificationChannel) -> bool:
-        """Enregistre un canal de notification"""        try:
+        """Enregistre un canal de notification"""
+        try:
             self._channels[channel.channel_id] = channel
             self._stats["channels_count"] += 1
             logger.info("Channel registered: %s (%s)", 
@@ -506,7 +537,8 @@ class EventPublisher:
             return False
     
     def register_template(self, template: NotificationTemplate) -> bool:
-        """Enregistre un template de notification"""        try:
+        """Enregistre un template de notification"""
+        try:
             self._templates[template.template_id] = template
             self._stats["templates_count"] += 1
             logger.info("Template registered: %s", template.template_id)
@@ -516,7 +548,8 @@ class EventPublisher:
             return False
     
     def subscribe_channel(self, event_type: str, channel_id: str):
-        """Abonne un canal à un type d'événement"""        if event_type not in self._subscriptions:
+        """Abonne un canal à un type d'événement"""
+        if event_type not in self._subscriptions:
             self._subscriptions[event_type] = []
         
         if channel_id not in self._subscriptions[event_type]:
@@ -524,7 +557,8 @@ class EventPublisher:
             logger.debug("Channel %s subscribed to %s", channel_id, event_type)
     
     async def publish_event(self, event: Event) -> Dict[str, Any]:
-        """Publie un événement avec notifications"""        self._stats["events_published"] += 1
+        """Publie un événement avec notifications"""
+        self._stats["events_published"] += 1
         
         # Recherche des canaux abonnés
         subscribed_channels = self._get_subscribed_channels(event.type)
@@ -547,11 +581,13 @@ class EventPublisher:
         }
     
     async def send_notification(self, message: NotificationMessage) -> bool:
-        """Envoie une notification directement"""        await self._message_queue.put(message)
+        """Envoie une notification directement"""
+        await self._message_queue.put(message)
         return True
     
     def _get_subscribed_channels(self, event_type: str) -> List[NotificationChannel]:
-        """Trouve les canaux abonnés à un type d'événement"""        channels = []
+        """Trouve les canaux abonnés à un type d'événement"""
+        channels = []
         
         # Recherche exacte et wildcard
         for subscription_type, channel_ids in self._subscriptions.items():
@@ -570,7 +606,8 @@ class EventPublisher:
         event: Event, 
         channels: List[NotificationChannel]
     ) -> List[NotificationMessage]:
-        """Crée les messages de notification pour un événement"""        messages = []
+        """Crée les messages de notification pour un événement"""
+        messages = []
         
         for channel in channels:
             try:
@@ -592,7 +629,8 @@ class EventPublisher:
         return messages
     
     def _find_template(self, event_type: str, channel_id: str) -> Optional[NotificationTemplate]:
-        """Trouve un template approprié"""        # Logic simplifiée - amélioration possible avec système de matching avancé
+        """Trouve un template approprié"""
+        # Logic simplifiée - amélioration possible avec système de matching avancé
         for template in self._templates.values():
             if template.enabled and event_type.startswith(template.template_id.split('.')[0]):
                 return template
@@ -604,7 +642,8 @@ class EventPublisher:
         template: NotificationTemplate,
         channel: NotificationChannel
     ) -> Optional[NotificationMessage]:
-        """Crée un message depuis un template"""        try:
+        """Crée un message depuis un template"""
+        try:
             # Variables pour le template
             variables = {
                 "event_id": event.id,
@@ -643,7 +682,8 @@ class EventPublisher:
         event: Event, 
         channel: NotificationChannel
     ) -> NotificationMessage:
-        """Crée un message par défaut"""        subject = f"IA-Influencer-Agent: {event.type}"
+        """Crée un message par défaut"""
+        subject = f"IA-Influencer-Agent: {event.type}"
         body = f"Event {event.id} occurred at {event.timestamp}\nType: {event.type}\nData: {json.dumps(event.data, indent=2)}"
         
         return NotificationMessage(
@@ -655,7 +695,8 @@ class EventPublisher:
         )
     
     async def _process_messages(self):
-        """Traitement continu des messages en queue"""        while self._processing:
+        """Traitement continu des messages en queue"""
+        while self._processing:
             try:
                 message = await asyncio.wait_for(
                     self._message_queue.get(), timeout=1.0
@@ -669,7 +710,8 @@ class EventPublisher:
                 logger.error("Error in message processing: %s", e)
     
     async def _send_message(self, message: NotificationMessage):
-        """Envoie un message via le canal approprié"""        try:
+        """Envoie un message via le canal approprié"""
+        try:
             # Recherche du canal approprié
             channel = None
             for ch in self._channels.values():
@@ -706,7 +748,8 @@ class EventPublisher:
             logger.error("Error sending message %s: %s", message.message_id, e)
     
     def get_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques"""        return {
+        """Retourne les statistiques"""
+        return {
             "stats": self._stats.copy(),
             "queue_size": self._message_queue.qsize(),
             "channels": list(self._channels.keys()),
@@ -717,13 +760,15 @@ class EventPublisher:
 
 # Service de notification global
 class NotificationService:
-    """Service global de notifications"""    
+    """Service global de notifications"""
+    
     def __init__(self):
         self.publisher = EventPublisher()
         self._initialized = False
     
     async def initialize(self, config: Dict[str, Any]):
-        """Initialise le service avec la configuration"""        if self._initialized:
+        """Initialise le service avec la configuration"""
+        if self._initialized:
             return
         
         # Configuration des canaux
@@ -755,7 +800,8 @@ class NotificationService:
         logger.info("NotificationService initialized")
     
     def _register_default_templates(self):
-        """Enregistre les templates par défaut"""        templates = [
+        """Enregistre les templates par défaut"""
+        templates = [
             NotificationTemplate(
                 template_id="content_uploaded",
                 channel_type=ChannelType.EMAIL,
@@ -780,7 +826,8 @@ class NotificationService:
             self.publisher.register_template(template)
     
     def _setup_default_subscriptions(self):
-        """Configure les abonnements par défaut"""        subscriptions = {
+        """Configure les abonnements par défaut"""
+        subscriptions = {
             "content.*": ["email_default", "websocket_default"],
             "protection.violation.*": ["email_default", "slack_default", "websocket_default"],
             "monetization.*": ["email_default", "websocket_default"],
@@ -792,10 +839,12 @@ class NotificationService:
                 self.publisher.subscribe_channel(event_type, channel_id)
     
     async def notify(self, event: Event) -> Dict[str, Any]:
-        """Envoie les notifications pour un événement"""        return await self.publisher.publish_event(event)
+        """Envoie les notifications pour un événement"""
+        return await self.publisher.publish_event(event)
     
     async def send_direct(self, message: NotificationMessage) -> bool:
-        """Envoie une notification directe"""        return await self.publisher.send_notification(message)
+        """Envoie une notification directe"""
+        return await self.publisher.send_notification(message)
 
 
 # Instance globale

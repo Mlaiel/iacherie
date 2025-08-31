@@ -25,7 +25,8 @@ AI Prompt Engineer
 Contact: mlaiel@live.de for licensing inquiries. 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import pytest
+"""
+import pytest
 import asyncio
 import logging
 from typing import Dict, Any, Optional
@@ -102,33 +103,39 @@ SAMPLE_FINGERPRINT_DATA = {
 
 @pytest.fixture
 def test_config():
-    """Provide test configuration"""    return TEST_CONFIG.copy()
+    """Provide test configuration"""
+    return TEST_CONFIG.copy()
 
 
 @pytest.fixture
 def sample_content_metadata():
-    """Provide sample content metadata"""    return SAMPLE_CONTENT_METADATA.copy()
+    """Provide sample content metadata"""
+    return SAMPLE_CONTENT_METADATA.copy()
 
 
 @pytest.fixture
 def sample_rights_data():
-    """Provide sample rights data"""    return SAMPLE_RIGHTS_DATA.copy()
+    """Provide sample rights data"""
+    return SAMPLE_RIGHTS_DATA.copy()
 
 
 @pytest.fixture
 def sample_fingerprint_data():
-    """Provide sample fingerprint data"""    return SAMPLE_FINGERPRINT_DATA.copy()
+    """Provide sample fingerprint data"""
+    return SAMPLE_FINGERPRINT_DATA.copy()
 
 
 @pytest.fixture
 def temp_directory():
-    """Create temporary directory for test files"""    with tempfile.TemporaryDirectory() as temp_dir:
+    """Create temporary directory for test files"""
+    with tempfile.TemporaryDirectory() as temp_dir:
         yield temp_dir
 
 
 @pytest.fixture
 def sample_audio_file(temp_directory):
-    """Create sample audio file for testing"""    import numpy as np
+    """Create sample audio file for testing"""
+    import numpy as np
     from scipy.io import wavfile
     
     # Generate a simple sine wave
@@ -148,7 +155,8 @@ def sample_audio_file(temp_directory):
 
 @pytest.fixture
 def sample_image_file(temp_directory):
-    """Create sample image file for testing"""    from PIL import Image
+    """Create sample image file for testing"""
+    from PIL import Image
     import numpy as np
     
     # Create a simple gradient image
@@ -168,7 +176,8 @@ def sample_image_file(temp_directory):
 
 @pytest.fixture
 def sample_video_file(temp_directory):
-    """Create sample video file for testing"""    # For testing purposes, we'll use a simple MP4 file
+    """Create sample video file for testing"""
+    # For testing purposes, we'll use a simple MP4 file
     # In a real test environment, you'd generate or use a real video file
     video_path = os.path.join(temp_directory, 'test_video.mp4')
     
@@ -182,7 +191,8 @@ def sample_video_file(temp_directory):
 
 @pytest.fixture
 def mock_blockchain_client():
-    """Mock blockchain client for testing"""    mock_client = AsyncMock()
+    """Mock blockchain client for testing"""
+    mock_client = AsyncMock()
     mock_client.create_transaction.return_value = {
         'tx_hash': '0xabcdef1234567890',
         'block_number': 12345,
@@ -197,7 +207,8 @@ def mock_blockchain_client():
 
 @pytest.fixture
 def mock_external_api():
-    """Mock external API responses"""    mock_api = MagicMock()
+    """Mock external API responses"""
+    mock_api = MagicMock()
     mock_api.search_content.return_value = {
         'results': [
             {
@@ -219,16 +230,19 @@ def mock_external_api():
 
 @pytest.fixture
 def event_loop():
-    """Create event loop for async tests"""    loop = asyncio.new_event_loop()
+    """Create event loop for async tests"""
+    loop = asyncio.new_event_loop()
     yield loop
     loop.close()
 
 
 class TestDataGenerator:
-    """Generate test data for various scenarios"""    
+    """Generate test data for various scenarios"""
+    
     @staticmethod
     def generate_content_variants(base_metadata: Dict[str, Any], count: int = 5) -> list:
-        """Generate multiple content variants for testing"""        variants = []
+        """Generate multiple content variants for testing"""
+        variants = []
         for i in range(count):
             variant = base_metadata.copy()
             variant['content_id'] = f"{base_metadata['content_id']}_variant_{i}"
@@ -238,7 +252,8 @@ class TestDataGenerator:
     
     @staticmethod
     def generate_piracy_scenarios() -> list:
-        """Generate piracy test scenarios"""        return [
+        """Generate piracy test scenarios"""
+        return [
             {
                 'scenario': 'exact_copy',
                 'similarity_score': 1.0,
@@ -263,7 +278,8 @@ class TestDataGenerator:
     
     @staticmethod
     def generate_load_test_data(content_count: int = 1000) -> list:
-        """Generate data for load testing"""        test_data = []
+        """Generate data for load testing"""
+        test_data = []
         for i in range(content_count):
             test_data.append({
                 'content_id': f'load_test_content_{i:06d}',
@@ -277,23 +293,27 @@ class TestDataGenerator:
 
 # Test utilities
 class TestUtils:
-    """Utility functions for tests"""    
+    """Utility functions for tests"""
+    
     @staticmethod
     async def wait_for_async_completion(coro, timeout: float = 5.0):
-        """Wait for async operation with timeout"""        try:
+        """Wait for async operation with timeout"""
+        try:
             return await asyncio.wait_for(coro, timeout=timeout)
         except asyncio.TimeoutError:
             pytest.fail(f"Async operation timed out after {timeout} seconds")
     
     @staticmethod
     def assert_protection_result(result: Dict[str, Any], expected_keys: list):
-        """Assert protection result contains expected keys"""        for key in expected_keys:
+        """Assert protection result contains expected keys"""
+        for key in expected_keys:
             assert key in result, f"Missing key '{key}' in protection result"
             assert result[key] is not None, f"Key '{key}' has None value"
     
     @staticmethod
     def assert_fingerprint_quality(fingerprint: Dict[str, Any], min_confidence: float = 0.8):
-        """Assert fingerprint meets quality standards"""        assert 'hash_value' in fingerprint
+        """Assert fingerprint meets quality standards"""
+        assert 'hash_value' in fingerprint
         assert 'confidence_score' in fingerprint
         assert fingerprint['confidence_score'] >= min_confidence
         assert len(fingerprint['hash_value']) > 0
@@ -313,7 +333,8 @@ pytest_markers = [
 
 # Custom test decorators
 def requires_external_service(service_name: str):
-    """Skip test if external service is not available"""    def decorator(func):
+    """Skip test if external service is not available"""
+    def decorator(func):
         return pytest.mark.skipif(
             not os.getenv(f'TEST_{service_name.upper()}_AVAILABLE'),
             reason=f'{service_name} service not available for testing'
@@ -322,7 +343,8 @@ def requires_external_service(service_name: str):
 
 
 def requires_gpu():
-    """Skip test if GPU is not available"""    def decorator(func):
+    """Skip test if GPU is not available"""
+    def decorator(func):
         return pytest.mark.skipif(
             not os.getenv('TEST_GPU_AVAILABLE'),
             reason='GPU not available for testing'
@@ -332,7 +354,8 @@ def requires_gpu():
 
 # Test configuration validation
 def validate_test_environment():
-    """Validate test environment setup"""    required_env_vars = [
+    """Validate test environment setup"""
+    required_env_vars = [
         'TEST_DATABASE_URL',
         'TEST_REDIS_URL',
         'TEST_ENCRYPTION_KEY'
@@ -349,7 +372,8 @@ def validate_test_environment():
 
 # Initialize test environment
 def setup_test_environment():
-    """Setup test environment"""    # Set test environment variables if not already set
+    """Setup test environment"""
+    # Set test environment variables if not already set
     test_env_vars = {
         'TEST_DATABASE_URL': 'sqlite:///test_content_protection.db',
         'TEST_REDIS_URL': 'redis://localhost:6379/1',
@@ -371,44 +395,59 @@ setup_test_environment()
 import unittest
 
 class CopyrightProtectionTests(unittest.TestCase):
-    """Tests for Copyright Protection"""    
+    """Tests for Copyright Protection"""
+    
     def setUp(self):
-        """Set up test fixtures"""        self.protection = None  # Will be implemented
+        """Set up test fixtures"""
+        self.protection = None  # Will be implemented
     
     def test_copyright_detection(self):
-        """Test copyright detection functionality"""        pass
+        """Test copyright detection functionality"""
+        pass
 
 class AntiPiracyTests(unittest.TestCase):
-    """Tests for Anti-Piracy"""    
+    """Tests for Anti-Piracy"""
+    
     def setUp(self):
-        """Set up test fixtures"""        self.anti_piracy = None  # Will be implemented
+        """Set up test fixtures"""
+        self.anti_piracy = None  # Will be implemented
     
     def test_piracy_detection(self):
-        """Test piracy detection functionality"""        pass
+        """Test piracy detection functionality"""
+        pass
 
 class WatermarkingTests(unittest.TestCase):
-    """Tests for Watermarking"""    
+    """Tests for Watermarking"""
+    
     def setUp(self):
-        """Set up test fixtures"""        self.watermarking = None  # Will be implemented
+        """Set up test fixtures"""
+        self.watermarking = None  # Will be implemented
     
     def test_watermark_embedding(self):
-        """Test watermark embedding functionality"""        pass
+        """Test watermark embedding functionality"""
+        pass
 
 class FingerprintingTests(unittest.TestCase):
-    """Tests for Fingerprinting"""    
+    """Tests for Fingerprinting"""
+    
     def setUp(self):
-        """Set up test fixtures"""        self.fingerprinting = None  # Will be implemented
+        """Set up test fixtures"""
+        self.fingerprinting = None  # Will be implemented
     
     def test_content_fingerprinting(self):
-        """Test content fingerprinting functionality"""        pass
+        """Test content fingerprinting functionality"""
+        pass
 
 class LicensingTests(unittest.TestCase):
-    """Tests for Licensing"""    
+    """Tests for Licensing"""
+    
     def setUp(self):
-        """Set up test fixtures"""        self.licensing = None  # Will be implemented
+        """Set up test fixtures"""
+        self.licensing = None  # Will be implemented
     
     def test_license_validation(self):
-        """Test license validation functionality"""        pass
+        """Test license validation functionality"""
+        pass
 
 # Export main testing classes
 __all__ = [

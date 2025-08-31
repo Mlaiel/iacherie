@@ -15,7 +15,8 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 des droits d'auteur passible de poursuites judiciaires.
 
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import numpy as np
 from typing import Dict, List, Any
 import time
@@ -29,8 +30,10 @@ from .query_engine import QueryType, QueryPriority, QueryFilter
 
 
 async def basic_content_protection_example():
-    """    Basic example: Store and search audio content for copyright protection
-    """    print("🎵 Basic Content Protection Example")
+    """
+    Basic example: Store and search audio content for copyright protection
+    """
+    print("🎵 Basic Content Protection Example")
     print("=" * 50)
     
     # Initialize vector database with production configuration
@@ -109,8 +112,10 @@ async def basic_content_protection_example():
 
 
 async def enterprise_analytics_example():
-    """    Enterprise example: Advanced analytics and performance monitoring
-    """    print("\n📊 Enterprise Analytics Example")
+    """
+    Enterprise example: Advanced analytics and performance monitoring
+    """
+    print("\n📊 Enterprise Analytics Example")
     print("=" * 50)
     
     # Use enterprise configuration
@@ -219,8 +224,10 @@ async def enterprise_analytics_example():
 
 
 async def optimization_example():
-    """    Example: Automatic performance optimization
-    """    print("\n⚡ Performance Optimization Example")
+    """
+    Example: Automatic performance optimization
+    """
+    print("\n⚡ Performance Optimization Example")
     print("=" * 50)
     
     config = get_config('production')
@@ -289,8 +296,10 @@ async def optimization_example():
 
 
 async def multi_modal_search_example():
-    """    Advanced example: Cross-modal content search
-    """    print("\n🔄 Multi-Modal Search Example")
+    """
+    Advanced example: Cross-modal content search
+    """
+    print("\n🔄 Multi-Modal Search Example")
     print("=" * 50)
     
     config = create_custom_config('production', {
@@ -374,8 +383,10 @@ async def multi_modal_search_example():
 
 
 async def real_time_monitoring_example():
-    """    Example: Real-time system monitoring and alerts
-    """    print("\n📺 Real-Time Monitoring Example")
+    """
+    Example: Real-time system monitoring and alerts
+    """
+    print("\n📺 Real-Time Monitoring Example")
     print("=" * 50)
     
     config = get_config('enterprise')
@@ -450,8 +461,10 @@ async def real_time_monitoring_example():
 
 
 async def main():
-    """    Run all examples to demonstrate the vector database capabilities
-    """    print("🔍 ULTRA-ADVANCED VECTOR DATABASE SYSTEM")
+    """
+    Run all examples to demonstrate the vector database capabilities
+    """
+    print("🔍 ULTRA-ADVANCED VECTOR DATABASE SYSTEM")
     print("🎯 Professional Examples for Content Protection")
     print("👨‍💻 Created by: Fahed Mlaiel (mlaiel@live.de)")
     print("=" * 60)

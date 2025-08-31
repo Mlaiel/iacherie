@@ -11,7 +11,8 @@ Features:
 - Automated evidence collection and legal documentation
 - Multi-platform monitoring (YouTube, TikTok, Instagram, etc.)
 - Smart alert filtering and notification management
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any, Set
 from dataclasses import dataclass, asdict
@@ -34,14 +35,16 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(str, Enum):
-    """Alert severity levels."""    LOW = "low"
+    """Alert severity levels."""
+    LOW = "low"
     MEDIUM = "medium" 
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class AlertStatus(str, Enum):
-    """Alert processing status."""    PENDING = "pending"
+    """Alert processing status."""
+    PENDING = "pending"
     INVESTIGATING = "investigating"
     CONFIRMED = "confirmed"
     FALSE_POSITIVE = "false_positive"
@@ -49,7 +52,8 @@ class AlertStatus(str, Enum):
 
 
 class PlatformType(str, Enum):
-    """Supported monitoring platforms."""    YOUTUBE = "youtube"
+    """Supported monitoring platforms."""
+    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
@@ -62,7 +66,8 @@ class PlatformType(str, Enum):
 
 @dataclass
 class ViolationAlert:
-    """Data structure for content violation alerts."""    alert_id: str
+    """Data structure for content violation alerts."""
+    alert_id: str
     fingerprint_id: int
     detected_url: str
     platform: PlatformType
@@ -86,7 +91,8 @@ class ViolationAlert:
 
 @dataclass
 class MonitoringConfig:
-    """Configuration for protection monitoring."""    scan_interval_minutes: int = 30
+    """Configuration for protection monitoring."""
+    scan_interval_minutes: int = 30
     similarity_threshold: float = 0.85
     platforms_enabled: Set[PlatformType] = None
     max_concurrent_scans: int = 10
@@ -104,7 +110,8 @@ class MonitoringConfig:
 
 
 class BasePlatformMonitor:
-    """Abstract base class for platform-specific monitors."""    
+    """Abstract base class for platform-specific monitors."""
+    
     def __init__(self, platform: PlatformType, config: MonitoringConfig):
         self.platform = platform
         self.config = config
@@ -112,17 +119,20 @@ class BasePlatformMonitor:
         self.session: Optional[aiohttp.ClientSession] = None
     
     async def initialize(self) -> None:
-        """Initialize the platform monitor."""        self.session = aiohttp.ClientSession(
+        """Initialize the platform monitor."""
+        self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=30),
             headers={'User-Agent': 'IA-Influencer-Agent-Monitor/1.0'}
         )
     
     async def cleanup(self) -> None:
-        """Cleanup resources."""        if self.session:
+        """Cleanup resources."""
+        if self.session:
             await self.session.close()
     
     async def search_content(self, query: str, content_type: str) -> List[Dict[str, Any]]:
-        """        Search for content on the platform with comprehensive error handling.
+        """
+        Search for content on the platform with comprehensive error handling.
         
         Args:
             query: Search query string
@@ -130,7 +140,8 @@ class BasePlatformMonitor:
             
         Returns:
             List[Dict[str, Any]]: List of search results
-        """        # Default implementation for platforms that don't implement specific search
+        """
+        # Default implementation for platforms that don't implement specific search
         self.logger.info(f"Executing generic content search on {self.platform.value} for query: '{query}'")
         
         try:
@@ -173,7 +184,8 @@ class BasePlatformMonitor:
             return []
     
     async def capture_evidence(self, url: str) -> Dict[str, Any]:
-        """Capture evidence for a potential violation."""        try:
+        """Capture evidence for a potential violation."""
+        try:
             if not self.session:
                 await self.initialize()
             
@@ -222,7 +234,8 @@ class BasePlatformMonitor:
             return {'error': str(e)}
     
     def _extract_title(self, html_content: str) -> Optional[str]:
-        """Extract page title from HTML content."""        try:
+        """Extract page title from HTML content."""
+        try:
             import re
             title_match = re.search(r'<title[^>]*>([^<]+)</title>', html_content, re.IGNORECASE)
             return title_match.group(1).strip() if title_match else None
@@ -230,14 +243,16 @@ class BasePlatformMonitor:
             return None
     
     async def _capture_screenshot_with_fallback(self, url: str) -> Optional[str]:
-        """        Capture screenshot with multiple fallback options
+        """
+        Capture screenshot with multiple fallback options
         
         Args:
             url: URL to capture screenshot of
             
         Returns:
             URL or path to captured screenshot, None if failed
-        """        # Try Playwright first (if available)
+        """
+        # Try Playwright first (if available)
         screenshot_url = await self._capture_with_playwright(url)
         if screenshot_url:
             return screenshot_url
@@ -252,7 +267,8 @@ class BasePlatformMonitor:
         return screenshot_url
     
     async def _capture_with_playwright(self, url: str) -> Optional[str]:
-        """Capture screenshot using Playwright"""        try:
+        """Capture screenshot using Playwright"""
+        try:
             from playwright.async_api import async_playwright
             
             async with async_playwright() as p:
@@ -290,7 +306,8 @@ class BasePlatformMonitor:
             return None
     
     async def _capture_with_selenium(self, url: str) -> Optional[str]:
-        """Capture screenshot using Selenium"""        try:
+        """Capture screenshot using Selenium"""
+        try:
             from selenium import webdriver
             from selenium.webdriver.chrome.options import Options
             
@@ -334,7 +351,8 @@ class BasePlatformMonitor:
             return None
     
     async def _capture_with_mock_browser(self, url: str) -> Optional[str]:
-        """Mock screenshot capture for testing environments"""        try:
+        """Mock screenshot capture for testing environments"""
+        try:
             # In environments without browser automation, create a mock screenshot
             import hashlib
             from PIL import Image, ImageDraw, ImageFont
@@ -378,14 +396,16 @@ class BasePlatformMonitor:
 
 
 class YouTubeMonitor(BasePlatformMonitor):
-    """YouTube-specific content monitoring."""    
+    """YouTube-specific content monitoring."""
+    
     def __init__(self, config: MonitoringConfig, api_key: Optional[str] = None):
         super().__init__(PlatformType.YOUTUBE, config)
         self.api_key = api_key
         self.base_url = "https://www.googleapis.com/youtube/v3"
     
     async def search_content(self, query: str, content_type: str) -> List[Dict[str, Any]]:
-        """Search YouTube for potentially infringing content."""        try:
+        """Search YouTube for potentially infringing content."""
+        try:
             if not self.api_key:
                 self.logger.warning("YouTube API key not configured")
                 return []
@@ -431,12 +451,14 @@ class YouTubeMonitor(BasePlatformMonitor):
 
 
 class TikTokMonitor(BasePlatformMonitor):
-    """TikTok content monitoring using web scraping."""    
+    """TikTok content monitoring using web scraping."""
+    
     def __init__(self, config: MonitoringConfig):
         super().__init__(PlatformType.TIKTOK, config)
     
     async def search_content(self, query: str, content_type: str) -> List[Dict[str, Any]]:
-        """Search TikTok for potentially infringing content."""        try:
+        """Search TikTok for potentially infringing content."""
+        try:
             if not self.session:
                 await self.initialize()
             
@@ -463,14 +485,16 @@ class TikTokMonitor(BasePlatformMonitor):
 
 
 class InstagramMonitor(BasePlatformMonitor):
-    """Instagram content monitoring."""    
+    """Instagram content monitoring."""
+    
     def __init__(self, config: MonitoringConfig, access_token: Optional[str] = None):
         super().__init__(PlatformType.INSTAGRAM, config)
         self.access_token = access_token
         self.base_url = "https://graph.instagram.com"
     
     async def search_content(self, query: str, content_type: str) -> List[Dict[str, Any]]:
-        """Search Instagram for potentially infringing content."""        try:
+        """Search Instagram for potentially infringing content."""
+        try:
             if not self.access_token:
                 self.logger.warning("Instagram access token not configured")
                 return []
@@ -490,12 +514,14 @@ class InstagramMonitor(BasePlatformMonitor):
 
 
 class GenericWebMonitor(BasePlatformMonitor):
-    """Generic web scraping for other platforms."""    
+    """Generic web scraping for other platforms."""
+    
     def __init__(self, config: MonitoringConfig):
         super().__init__(PlatformType.GENERIC_WEB, config)
     
     async def search_content(self, query: str, content_type: str) -> List[Dict[str, Any]]:
-        """Search web using search engines for content."""        try:
+        """Search web using search engines for content."""
+        try:
             if not self.session:
                 await self.initialize()
             
@@ -514,7 +540,8 @@ class GenericWebMonitor(BasePlatformMonitor):
 
 
 class ProtectionMonitoringService:
-    """Main service for coordinating content protection monitoring."""    
+    """Main service for coordinating content protection monitoring."""
+    
     def __init__(
         self, 
         config: Optional[MonitoringConfig] = None,
@@ -540,7 +567,8 @@ class ProtectionMonitoringService:
         self.active_alerts: Dict[str, ViolationAlert] = {}
     
     def _initialize_monitors(self) -> None:
-        """Initialize platform-specific monitors."""        try:
+        """Initialize platform-specific monitors."""
+        try:
             # Get API keys from configuration
             config_manager = self._get_config_manager()
             
@@ -571,7 +599,8 @@ class ProtectionMonitoringService:
             self.logger.error(f"Monitor initialization failed: {str(e)}")
     
     async def start_monitoring(self) -> None:
-        """Start background monitoring task."""        try:
+        """Start background monitoring task."""
+        try:
             if self.is_monitoring:
                 self.logger.warning("Monitoring already running")
                 return
@@ -590,7 +619,8 @@ class ProtectionMonitoringService:
             raise
     
     async def stop_monitoring(self) -> None:
-        """Stop background monitoring task."""        try:
+        """Stop background monitoring task."""
+        try:
             self.is_monitoring = False
             
             if self.monitoring_task:
@@ -610,7 +640,8 @@ class ProtectionMonitoringService:
             self.logger.error(f"Failed to stop monitoring: {str(e)}")
     
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop."""        while self.is_monitoring:
+        """Main monitoring loop."""
+        while self.is_monitoring:
             try:
                 # Get all fingerprints to monitor
                 await self._scan_for_violations()
@@ -625,7 +656,8 @@ class ProtectionMonitoringService:
                 await asyncio.sleep(60)  # Wait 1 minute on error
     
     async def _scan_for_violations(self) -> None:
-        """Scan for content violations across all platforms."""        try:
+        """Scan for content violations across all platforms."""
+        try:
             async with get_database_session() as session:
                 # Get active fingerprints to monitor
                 fingerprints = await self._get_active_fingerprints(session)
@@ -644,7 +676,8 @@ class ProtectionMonitoringService:
             self.logger.error(f"Violation scan failed: {str(e)}")
     
     async def _get_active_fingerprints(self, session: AsyncSession) -> List[ContentFingerprint]:
-        """Get fingerprints that should be monitored."""        # Implementation would query database for active fingerprints
+        """Get fingerprints that should be monitored."""
+        # Implementation would query database for active fingerprints
         # This is simplified for the example
         return []
     
@@ -653,7 +686,8 @@ class ProtectionMonitoringService:
         fingerprints: List[ContentFingerprint],
         session: AsyncSession
     ) -> None:
-        """Process a batch of fingerprints for violation detection."""        tasks = []
+        """Process a batch of fingerprints for violation detection."""
+        tasks = []
         
         for fingerprint in fingerprints:
             task = self._check_fingerprint_violations(fingerprint, session)
@@ -667,7 +701,8 @@ class ProtectionMonitoringService:
         fingerprint: ContentFingerprint,
         session: AsyncSession
     ) -> None:
-        """Check a single fingerprint for violations across platforms."""        try:
+        """Check a single fingerprint for violations across platforms."""
+        try:
             # Generate search queries based on fingerprint metadata
             search_queries = self._generate_search_queries(fingerprint)
             
@@ -696,7 +731,8 @@ class ProtectionMonitoringService:
             )
     
     def _generate_search_queries(self, fingerprint: ContentFingerprint) -> List[str]:
-        """Generate search queries based on fingerprint metadata."""        queries = []
+        """Generate search queries based on fingerprint metadata."""
+        queries = []
         
         # Use metadata to generate relevant search terms
         metadata = fingerprint.metadata or {}
@@ -723,7 +759,8 @@ class ProtectionMonitoringService:
         platform: PlatformType,
         session: AsyncSession
     ) -> None:
-        """Analyze a search result as a potential content match."""        try:
+        """Analyze a search result as a potential content match."""
+        try:
             # This would involve downloading and analyzing the content
             # For now, we'll use a simplified similarity check based on metadata
             
@@ -745,7 +782,8 @@ class ProtectionMonitoringService:
         fingerprint_metadata: Dict[str, Any],
         search_result: Dict[str, Any]
     ) -> float:
-        """Calculate similarity between fingerprint metadata and search result."""        # Simplified similarity calculation
+        """Calculate similarity between fingerprint metadata and search result."""
+        # Simplified similarity calculation
         # In practice, this would use more sophisticated matching algorithms
         
         title_similarity = 0.0
@@ -769,7 +807,8 @@ class ProtectionMonitoringService:
         similarity_score: float,
         session: AsyncSession
     ) -> None:
-        """Create a new violation alert."""        try:
+        """Create a new violation alert."""
+        try:
             alert_id = hashlib.md5(
                 f"{fingerprint.id}:{search_result['url']}".encode()
             ).hexdigest()
@@ -821,7 +860,8 @@ class ProtectionMonitoringService:
         alert: ViolationAlert, 
         session: AsyncSession
     ) -> None:
-        """Save alert to database."""        try:
+        """Save alert to database."""
+        try:
             db_alert = ProtectionAlert(
                 id=alert.alert_id,
                 fingerprint_id=alert.fingerprint_id,
@@ -840,14 +880,17 @@ class ProtectionMonitoringService:
             self.logger.error(f"Database save failed: {str(e)}")
     
     async def _send_violation_notification(self, alert: ViolationAlert) -> None:
-        """Send notification about content violation."""        try:
-            message = f"""            Content Violation Detected!
+        """Send notification about content violation."""
+        try:
+            message = f"""
+            Content Violation Detected!
             
             Platform: {alert.platform.value.upper()}
             URL: {alert.detected_url}
             Similarity: {alert.similarity_score:.1%}
             Severity: {alert.severity.value.upper()}
-            """            
+            """
+            
             await self.notification_service.send_alert_notification(
                 user_id=alert.user_id,
                 title="Content Protection Alert",
@@ -859,7 +902,8 @@ class ProtectionMonitoringService:
             self.logger.error(f"Notification failed: {str(e)}")
     
     def get_monitoring_stats(self) -> Dict[str, Any]:
-        """Get monitoring system statistics."""        return {
+        """Get monitoring system statistics."""
+        return {
             'is_monitoring': self.is_monitoring,
             'platforms_enabled': [p.value for p in self.config.platforms_enabled],
             'scan_interval_minutes': self.config.scan_interval_minutes,
@@ -869,8 +913,10 @@ class ProtectionMonitoringService:
         }
     
     def _get_config_manager(self):
-        """Get configuration manager for API keys and settings"""        class ConfigManager:
-            """Configuration manager for API keys and platform settings"""            
+        """Get configuration manager for API keys and settings"""
+        class ConfigManager:
+            """Configuration manager for API keys and platform settings"""
+            
             def __init__(self):
                 self.config_data = {
                     'youtube': {
@@ -901,7 +947,8 @@ class ProtectionMonitoringService:
                 }
             
             def get_api_key(self, platform: str, key_name: str) -> Optional[str]:
-                """Get API key for specific platform and key name"""                try:
+                """Get API key for specific platform and key name"""
+                try:
                     platform_config = self.config_data.get(platform, {})
                     api_key = platform_config.get(key_name)
                     
@@ -919,7 +966,8 @@ class ProtectionMonitoringService:
                     return None
             
             def _load_from_config_file(self, platform: str, key_name: str) -> Optional[str]:
-                """Load API key from configuration file as fallback"""                try:
+                """Load API key from configuration file as fallback"""
+                try:
                     import json
                     from pathlib import Path
                     
@@ -947,10 +995,12 @@ class ProtectionMonitoringService:
                     return None
             
             def get_platform_config(self, platform: str) -> Dict[str, Any]:
-                """Get full configuration for a platform"""                return self.config_data.get(platform, {})
+                """Get full configuration for a platform"""
+                return self.config_data.get(platform, {})
             
             def is_platform_configured(self, platform: str) -> bool:
-                """Check if platform has required configuration"""                platform_config = self.config_data.get(platform, {})
+                """Check if platform has required configuration"""
+                platform_config = self.config_data.get(platform, {})
                 
                 # Define required keys for each platform
                 required_keys = {

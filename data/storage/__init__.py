@@ -8,7 +8,7 @@ Technologies: Python, Multi-cloud, Version control, Backup & Recovery
 ===================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
@@ -28,7 +28,10 @@ MODULES PROFESSIONNELS:
 - FileManager: Multi-format file processing & validation
 - VersionManager: Git-like version control for content
 - BackupManager: Multi-tier backup & disaster recovery
-"""from .storage_manager import StorageManager
+"""
+
+from .storage_manager import StorageManager
+
 from .file_manager import (
     FileManager, 
     ContentType, 

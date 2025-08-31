@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -21,7 +22,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT LEGAL WARNING ⚠️
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -57,9 +59,11 @@ from ai.ml.model_manager import (
 
 
 class TestModelManager:
-    """Tests for core model management functionality"""    
+    """Tests for core model management functionality"""
+    
     def test_init_model_manager(self):
-        """Test model manager initialization"""        manager = ModelManager(
+        """Test model manager initialization"""
+        manager = ModelManager(
             registry_backend="mlflow",
             storage_backend="s3",
             deployment_targets=["kubernetes", "cloud_run", "edge"],
@@ -76,7 +80,8 @@ class TestModelManager:
         assert manager.enable_governance
 
     def test_model_registration(self, trained_model, model_metadata):
-        """Test model registration process"""        manager = ModelManager()
+        """Test model registration process"""
+        manager = ModelManager()
         
         registration_config = {
             "model_name": "content_classifier_v2",
@@ -111,7 +116,8 @@ class TestModelManager:
             assert registration_result["status"] == "registered"
 
     def test_model_loading_pytorch(self, temp_dir):
-        """Test PyTorch model loading"""        manager = ModelManager()
+        """Test PyTorch model loading"""
+        manager = ModelManager()
         
         # Create mock PyTorch model
         model_path = temp_dir / "pytorch_model.pth"
@@ -133,7 +139,8 @@ class TestModelManager:
             assert "loading_time" in loaded_model
 
     def test_model_loading_tensorflow(self, temp_dir):
-        """Test TensorFlow model loading"""        manager = ModelManager()
+        """Test TensorFlow model loading"""
+        manager = ModelManager()
         
         # Create mock TensorFlow model directory
         model_dir = temp_dir / "tensorflow_model"
@@ -149,7 +156,8 @@ class TestModelManager:
             mock_tf_load.assert_called_once_with(str(model_dir))
 
     def test_model_loading_huggingface(self):
-        """Test Hugging Face model loading"""        manager = ModelManager()
+        """Test Hugging Face model loading"""
+        manager = ModelManager()
         
         model_name = "bert-base-uncased"
         
@@ -167,7 +175,8 @@ class TestModelManager:
             mock_tokenizer.assert_called_once_with(model_name)
 
     def test_model_serialization_formats(self, trained_model, temp_dir):
-        """Test model serialization in different formats"""        manager = ModelManager()
+        """Test model serialization in different formats"""
+        manager = ModelManager()
         
         serialization_formats = ["pickle", "joblib", "onnx", "torchscript"]
         
@@ -192,7 +201,8 @@ class TestModelManager:
                 assert serialization_result["format"] == fmt
 
     def test_model_validation(self, trained_model, validation_dataset):
-        """Test model validation process"""        manager = ModelManager()
+        """Test model validation process"""
+        manager = ModelManager()
         
         validation_config = {
             "validation_metrics": ["accuracy", "precision", "recall", "f1_score"],
@@ -232,7 +242,8 @@ class TestModelManager:
             assert validation_result["validation_status"] == "passed"
 
     def test_model_optimization(self, trained_model):
-        """Test model optimization techniques"""        manager = ModelManager()
+        """Test model optimization techniques"""
+        manager = ModelManager()
         
         optimization_config = {
             "techniques": ["quantization", "pruning", "knowledge_distillation"],
@@ -266,7 +277,8 @@ class TestModelManager:
             assert optimization_result["optimization_results"]["quality_retention"] >= 0.9
 
     def test_model_conversion_onnx(self, trained_pytorch_model, temp_dir):
-        """Test model conversion to ONNX format"""        manager = ModelManager()
+        """Test model conversion to ONNX format"""
+        manager = ModelManager()
         
         conversion_config = {
             "input_shape": (1, 3, 224, 224),
@@ -302,9 +314,11 @@ class TestModelManager:
 
 
 class TestModelRegistry:
-    """Tests for model registry functionality"""    
+    """Tests for model registry functionality"""
+    
     def test_init_model_registry(self):
-        """Test model registry initialization"""        registry = ModelRegistry(
+        """Test model registry initialization"""
+        registry = ModelRegistry(
             backend="mlflow",
             tracking_uri="http://mlflow:5000",
             default_experiment="model_experiments",
@@ -316,7 +330,8 @@ class TestModelRegistry:
         assert registry.enable_model_staging
 
     def test_model_search_and_discovery(self):
-        """Test model search and discovery functionality"""        registry = ModelRegistry()
+        """Test model search and discovery functionality"""
+        registry = ModelRegistry()
         
         search_criteria = {
             "model_name": "content_classifier*",
@@ -358,7 +373,8 @@ class TestModelRegistry:
             assert all(model["accuracy"] >= 0.9 for model in search_results["models"])
 
     def test_model_lineage_tracking(self):
-        """Test model lineage tracking"""        registry = ModelRegistry()
+        """Test model lineage tracking"""
+        registry = ModelRegistry()
         
         lineage_info = {
             "model_id": "model_123",
@@ -404,7 +420,8 @@ class TestModelRegistry:
             assert "provenance_score" in lineage_result
 
     def test_model_staging_workflow(self):
-        """Test model staging workflow"""        registry = ModelRegistry(enable_model_staging=True)
+        """Test model staging workflow"""
+        registry = ModelRegistry(enable_model_staging=True)
         
         staging_config = {
             "model_id": "model_123",
@@ -440,7 +457,8 @@ class TestModelRegistry:
             assert "quality_gate_results" in transition_result
 
     def test_model_comparison(self):
-        """Test model comparison functionality"""        registry = ModelRegistry()
+        """Test model comparison functionality"""
+        registry = ModelRegistry()
         
         comparison_config = {
             "model_ids": ["model_123", "model_124", "model_125"],
@@ -491,9 +509,11 @@ class TestModelRegistry:
 
 
 class TestModelVersionController:
-    """Tests for model version control functionality"""    
+    """Tests for model version control functionality"""
+    
     def test_init_version_controller(self):
-        """Test version controller initialization"""        controller = ModelVersionController(
+        """Test version controller initialization"""
+        controller = ModelVersionController(
             versioning_backend="git",
             enable_semantic_versioning=True,
             auto_increment_policy="patch",
@@ -505,7 +525,8 @@ class TestModelVersionController:
         assert controller.auto_increment_policy == "patch"
 
     def test_semantic_versioning(self):
-        """Test semantic versioning functionality"""        controller = ModelVersionController(enable_semantic_versioning=True)
+        """Test semantic versioning functionality"""
+        controller = ModelVersionController(enable_semantic_versioning=True)
         
         version_operations = [
             {"current": "1.0.0", "change_type": "patch", "expected": "1.0.1"},
@@ -522,7 +543,8 @@ class TestModelVersionController:
             assert new_version == op["expected"]
 
     def test_model_branching(self):
-        """Test model branching functionality"""        controller = ModelVersionController(enable_branching=True)
+        """Test model branching functionality"""
+        controller = ModelVersionController(enable_branching=True)
         
         branching_config = {
             "base_model_id": "model_123",
@@ -549,7 +571,8 @@ class TestModelVersionController:
             assert branch_result["branch_name"] == "experimental_features"
 
     def test_model_merging(self):
-        """Test model merging functionality"""        controller = ModelVersionController()
+        """Test model merging functionality"""
+        controller = ModelVersionController()
         
         merge_config = {
             "source_branch_id": "branch_456",
@@ -580,7 +603,8 @@ class TestModelVersionController:
             assert merge_result["merge_status"] == "completed"
 
     def test_version_rollback(self):
-        """Test version rollback functionality"""        controller = ModelVersionController()
+        """Test version rollback functionality"""
+        controller = ModelVersionController()
         
         rollback_config = {
             "model_id": "model_123",
@@ -609,9 +633,11 @@ class TestModelVersionController:
 
 
 class TestModelDeploymentManager:
-    """Tests for model deployment management"""    
+    """Tests for model deployment management"""
+    
     def test_init_deployment_manager(self):
-        """Test deployment manager initialization"""        manager = ModelDeploymentManager(
+        """Test deployment manager initialization"""
+        manager = ModelDeploymentManager(
             deployment_targets=["kubernetes", "cloud_run", "lambda", "edge"],
             default_scaling_policy="auto",
             enable_blue_green_deployment=True,
@@ -624,7 +650,8 @@ class TestModelDeploymentManager:
         assert manager.enable_canary_deployment
 
     def test_kubernetes_deployment(self, trained_model):
-        """Test Kubernetes deployment"""        manager = ModelDeploymentManager()
+        """Test Kubernetes deployment"""
+        manager = ModelDeploymentManager()
         
         k8s_config = {
             "model_id": "model_123",
@@ -665,7 +692,8 @@ class TestModelDeploymentManager:
                 assert deployment_result["deployment_status"] == "running"
 
     def test_cloud_run_deployment(self, trained_model):
-        """Test Google Cloud Run deployment"""        manager = ModelDeploymentManager()
+        """Test Google Cloud Run deployment"""
+        manager = ModelDeploymentManager()
         
         cloud_run_config = {
             "model_id": "model_123",
@@ -694,7 +722,8 @@ class TestModelDeploymentManager:
             assert deployment_result["deployment_status"] == "ready"
 
     def test_blue_green_deployment(self, trained_model):
-        """Test blue-green deployment strategy"""        manager = ModelDeploymentManager(enable_blue_green_deployment=True)
+        """Test blue-green deployment strategy"""
+        manager = ModelDeploymentManager(enable_blue_green_deployment=True)
         
         blue_green_config = {
             "model_id": "model_124",
@@ -725,7 +754,8 @@ class TestModelDeploymentManager:
             assert "current_traffic" in bg_result
 
     def test_canary_deployment(self, trained_model):
-        """Test canary deployment strategy"""        manager = ModelDeploymentManager(enable_canary_deployment=True)
+        """Test canary deployment strategy"""
+        manager = ModelDeploymentManager(enable_canary_deployment=True)
         
         canary_config = {
             "model_id": "model_125",
@@ -764,7 +794,8 @@ class TestModelDeploymentManager:
             assert canary_result["canary_status"] == "healthy"
 
     def test_deployment_rollback(self):
-        """Test deployment rollback functionality"""        manager = ModelDeploymentManager()
+        """Test deployment rollback functionality"""
+        manager = ModelDeploymentManager()
         
         rollback_config = {
             "deployment_id": "deploy_k8s_456",
@@ -791,9 +822,11 @@ class TestModelDeploymentManager:
 
 
 class TestModelMonitor:
-    """Tests for model monitoring functionality"""    
+    """Tests for model monitoring functionality"""
+    
     def test_init_model_monitor(self):
-        """Test model monitor initialization"""        monitor = ModelMonitor(
+        """Test model monitor initialization"""
+        monitor = ModelMonitor(
             monitoring_backend="prometheus",
             alert_channels=["slack", "email", "pagerduty"],
             metrics_retention_days=90,
@@ -807,7 +840,8 @@ class TestModelMonitor:
         assert monitor.enable_bias_monitoring
 
     def test_performance_monitoring(self):
-        """Test model performance monitoring"""        monitor = ModelMonitor()
+        """Test model performance monitoring"""
+        monitor = ModelMonitor()
         
         performance_config = {
             "model_id": "model_123",
@@ -844,7 +878,8 @@ class TestModelMonitor:
             assert metrics["metrics"]["error_rate"] < 0.01
 
     def test_data_drift_detection(self, production_data, training_data):
-        """Test data drift detection"""        monitor = ModelMonitor(enable_drift_detection=True)
+        """Test data drift detection"""
+        monitor = ModelMonitor(enable_drift_detection=True)
         
         drift_config = {
             "model_id": "model_123",
@@ -874,7 +909,8 @@ class TestModelMonitor:
             assert "drift_features" in drift_result
 
     def test_model_bias_monitoring(self, model_predictions, sensitive_attributes):
-        """Test model bias monitoring"""        monitor = ModelMonitor(enable_bias_monitoring=True)
+        """Test model bias monitoring"""
+        monitor = ModelMonitor(enable_bias_monitoring=True)
         
         bias_config = {
             "model_id": "model_123",
@@ -911,7 +947,8 @@ class TestModelMonitor:
             assert bias_result["compliance_status"] == "compliant"
 
     def test_alert_generation(self):
-        """Test alert generation system"""        monitor = ModelMonitor(alert_channels=["slack", "email"])
+        """Test alert generation system"""
+        monitor = ModelMonitor(alert_channels=["slack", "email"])
         
         alert_config = {
             "alert_type": "performance_degradation",
@@ -943,10 +980,12 @@ class TestModelMonitor:
 
 @pytest.mark.integration
 class TestModelManagerIntegration:
-    """Integration tests for model management systems"""    
+    """Integration tests for model management systems"""
+    
     @pytest.mark.slow
     def test_end_to_end_model_lifecycle(self, trained_model, temp_dir):
-        """Test complete model lifecycle management"""        # Initialize components
+        """Test complete model lifecycle management"""
+        # Initialize components
         manager = ModelManager(enable_versioning=True, enable_monitoring=True)
         registry = ModelRegistry()
         deployment_manager = ModelDeploymentManager()
@@ -987,7 +1026,8 @@ class TestModelManagerIntegration:
             assert monitoring_result["alert_status"] == "healthy"
 
     def test_multi_cloud_deployment(self, trained_model):
-        """Test multi-cloud deployment integration"""        cloud_manager = CloudModelManager(
+        """Test multi-cloud deployment integration"""
+        cloud_manager = CloudModelManager(
             cloud_providers=["aws", "gcp", "azure"]
         )
         
@@ -1016,7 +1056,8 @@ class TestModelManagerIntegration:
             assert len(deployment_result["deployments"]) == 3
 
     def test_edge_deployment_integration(self, optimized_model):
-        """Test edge deployment integration"""        edge_manager = EdgeModelManager(
+        """Test edge deployment integration"""
+        edge_manager = EdgeModelManager(
             edge_devices=["nvidia_jetson", "raspberry_pi", "mobile"]
         )
         

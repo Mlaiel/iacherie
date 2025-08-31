@@ -24,7 +24,8 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Performance monitoring → AI analysis → Bottleneck detection → 
 Optimization recommendations → Automatic tuning → Capacity planning → ROI analysis
-"""import logging
+"""
+import logging
 import asyncio
 import numpy as np
 import pandas as pd
@@ -51,7 +52,8 @@ logger = logging.getLogger(__name__)
 
 
 class PerformanceMetricType(Enum):
-    """Types of performance metrics"""    LATENCY = "latency"
+    """Types of performance metrics"""
+    LATENCY = "latency"
     THROUGHPUT = "throughput"
     IOPS = "iops"
     BANDWIDTH = "bandwidth"
@@ -64,7 +66,8 @@ class PerformanceMetricType(Enum):
 
 
 class OptimizationPriority(Enum):
-    """Optimization priority levels"""    CRITICAL = "critical"  # Performance issues affecting SLA
+    """Optimization priority levels"""
+    CRITICAL = "critical"  # Performance issues affecting SLA
     HIGH = "high"  # Significant performance impact
     MEDIUM = "medium"  # Moderate optimization potential
     LOW = "low"  # Minor improvements
@@ -72,7 +75,8 @@ class OptimizationPriority(Enum):
 
 
 class OptimizationType(Enum):
-    """Types of storage optimizations"""    CACHE_TUNING = "cache_tuning"
+    """Types of storage optimizations"""
+    CACHE_TUNING = "cache_tuning"
     PREFETCH_OPTIMIZATION = "prefetch_optimization"
     COMPRESSION_TUNING = "compression_tuning"
     DEDUPLICATION = "deduplication"
@@ -86,7 +90,8 @@ class OptimizationType(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Individual performance metric data point"""    metric_type: PerformanceMetricType
+    """Individual performance metric data point"""
+    metric_type: PerformanceMetricType
     value: float
     timestamp: datetime
     source: str  # Storage node/system identifier
@@ -102,7 +107,8 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceBaseline:
-    """Performance baseline for comparison"""    metric_type: PerformanceMetricType
+    """Performance baseline for comparison"""
+    metric_type: PerformanceMetricType
     baseline_value: float
     acceptable_range: Tuple[float, float]
     warning_threshold: float
@@ -113,7 +119,8 @@ class PerformanceBaseline:
 
 @dataclass
 class OptimizationRecommendation:
-    """Storage optimization recommendation"""    optimization_type: OptimizationType
+    """Storage optimization recommendation"""
+    optimization_type: OptimizationType
     priority: OptimizationPriority
     description: str
     estimated_improvement: float  # Expected performance gain percentage
@@ -135,7 +142,8 @@ class OptimizationRecommendation:
 
 @dataclass
 class PerformanceAnalysisResult:
-    """Result of performance analysis"""    analysis_timestamp: datetime
+    """Result of performance analysis"""
+    analysis_timestamp: datetime
     analysis_period: timedelta
     total_metrics_analyzed: int
     
@@ -161,7 +169,8 @@ class PerformanceAnalysisResult:
 
 
 class StoragePerformanceOptimizer:
-    """    🎯 Industrial Storage Performance Optimizer - IA-Influencer-Agent
+    """
+    🎯 Industrial Storage Performance Optimizer - IA-Influencer-Agent
     
     Advanced storage performance analysis and optimization system providing:
     - Real-time performance monitoring and anomaly detection
@@ -172,7 +181,8 @@ class StoragePerformanceOptimizer:
     - Multi-dimensional performance analytics and reporting
     - Cost optimization with performance trade-off analysis
     - SLA compliance monitoring and alerting
-    """    
+    """
+    
     def __init__(self):
         self.metrics_history: deque = deque(maxlen=10000)  # Last 10k metrics
         self.baselines: Dict[str, PerformanceBaseline] = {}
@@ -194,7 +204,8 @@ class StoragePerformanceOptimizer:
         logger.info("🚀 StoragePerformanceOptimizer initialized")
     
     def _initialize_ml_models(self):
-        """Initialize machine learning models for performance analysis"""        try:
+        """Initialize machine learning models for performance analysis"""
+        try:
             # Anomaly detection model
             self.ml_models['anomaly_detector'] = IsolationForest(
                 contamination=0.1,
@@ -219,7 +230,8 @@ class StoragePerformanceOptimizer:
             logger.error(f"❌ Failed to initialize ML models: {e}")
     
     async def collect_performance_metrics(self, source: str) -> Dict[str, PerformanceMetric]:
-        """Collect real-time performance metrics from storage system"""        try:
+        """Collect real-time performance metrics from storage system"""
+        try:
             logger.debug(f"📊 Collecting performance metrics from {source}")
             
             current_time = datetime.now()
@@ -311,7 +323,8 @@ class StoragePerformanceOptimizer:
             return {}
     
     async def analyze_performance_trends(self, analysis_period: timedelta = timedelta(hours=24)) -> PerformanceAnalysisResult:
-        """Analyze performance trends and identify optimization opportunities"""        try:
+        """Analyze performance trends and identify optimization opportunities"""
+        try:
             logger.info(f"🔍 Analyzing performance trends for period: {analysis_period}")
             
             analysis_start = datetime.now() - analysis_period
@@ -405,7 +418,8 @@ class StoragePerformanceOptimizer:
             raise
     
     async def _detect_performance_anomalies(self, metrics: List[PerformanceMetric]) -> List[str]:
-        """Detect performance anomalies using machine learning"""        try:
+        """Detect performance anomalies using machine learning"""
+        try:
             if len(metrics) < 50:  # Need minimum data for anomaly detection
                 return []
             
@@ -454,7 +468,8 @@ class StoragePerformanceOptimizer:
             return []
     
     async def _identify_bottlenecks(self, metric_summaries: Dict[str, Dict[str, float]]) -> List[str]:
-        """Identify performance bottlenecks based on metric analysis"""        try:
+        """Identify performance bottlenecks based on metric analysis"""
+        try:
             bottlenecks = []
             
             # CPU bottleneck detection
@@ -510,7 +525,8 @@ class StoragePerformanceOptimizer:
         bottlenecks: List[str], 
         anomalies: List[str]
     ) -> List[OptimizationRecommendation]:
-        """Generate intelligent optimization recommendations"""        try:
+        """Generate intelligent optimization recommendations"""
+        try:
             recommendations = []
             
             # CPU optimization recommendations
@@ -680,7 +696,8 @@ class StoragePerformanceOptimizer:
             return []
     
     def _calculate_performance_score(self, metric_summaries: Dict[str, Dict[str, float]]) -> float:
-        """Calculate overall performance score (0-100)"""        try:
+        """Calculate overall performance score (0-100)"""
+        try:
             scores = []
             
             # CPU performance score
@@ -717,7 +734,8 @@ class StoragePerformanceOptimizer:
             return 50.0  # Default score
     
     def _analyze_performance_trend(self, metrics_by_type: Dict[PerformanceMetricType, List[PerformanceMetric]]) -> str:
-        """Analyze performance trend over time"""        try:
+        """Analyze performance trend over time"""
+        try:
             trends = []
             
             for metric_type, metrics_list in metrics_by_type.items():
@@ -766,7 +784,8 @@ class StoragePerformanceOptimizer:
             return "stable"
     
     async def _forecast_capacity_needs(self, metrics_by_type: Dict[PerformanceMetricType, List[PerformanceMetric]]) -> Dict[str, float]:
-        """Forecast future capacity needs using time series analysis"""        try:
+        """Forecast future capacity needs using time series analysis"""
+        try:
             capacity_forecast = {}
             
             # Storage usage forecast
@@ -816,7 +835,8 @@ class StoragePerformanceOptimizer:
             return {}
     
     async def _forecast_performance(self, metrics_by_type: Dict[PerformanceMetricType, List[PerformanceMetric]]) -> Dict[str, float]:
-        """Forecast future performance metrics"""        try:
+        """Forecast future performance metrics"""
+        try:
             performance_forecast = {}
             
             # Latency forecast
@@ -856,7 +876,8 @@ class StoragePerformanceOptimizer:
             return {}
     
     def _calculate_growth_rate(self, sorted_metrics: List[PerformanceMetric]) -> float:
-        """Calculate growth rate from time series data"""        try:
+        """Calculate growth rate from time series data"""
+        try:
             if len(sorted_metrics) < 2:
                 return 0.0
             
@@ -878,7 +899,8 @@ class StoragePerformanceOptimizer:
             return 0.0
     
     def _compare_with_baselines(self, metric_summaries: Dict[str, Dict[str, float]]) -> Dict[str, Dict[str, float]]:
-        """Compare current metrics with established baselines"""        try:
+        """Compare current metrics with established baselines"""
+        try:
             comparisons = {}
             
             for metric_name, stats in metric_summaries.items():
@@ -901,7 +923,8 @@ class StoragePerformanceOptimizer:
             return {}
     
     def _generate_scaling_recommendations(self, metric_summaries: Dict[str, Dict[str, float]], capacity_forecast: Dict[str, float]) -> Dict[str, Any]:
-        """Generate scaling recommendations based on analysis"""        try:
+        """Generate scaling recommendations based on analysis"""
+        try:
             scaling_recommendations = {
                 "immediate_scaling": [],
                 "planned_scaling": [],
@@ -962,7 +985,8 @@ class StoragePerformanceOptimizer:
             return {}
     
     async def implement_optimization(self, recommendation: OptimizationRecommendation) -> Dict[str, Any]:
-        """Implement a specific optimization recommendation"""        try:
+        """Implement a specific optimization recommendation"""
+        try:
             logger.info(f"🔧 Implementing optimization: {recommendation.optimization_type.value}")
             
             implementation_result = {
@@ -1023,7 +1047,8 @@ class StoragePerformanceOptimizer:
             return {"success": False, "error": str(e)}
     
     async def _backup_current_configuration(self) -> Dict[str, Any]:
-        """Backup current configuration before making changes"""        try:
+        """Backup current configuration before making changes"""
+        try:
             backup_id = f"backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             # This would backup actual system configuration
@@ -1044,7 +1069,8 @@ class StoragePerformanceOptimizer:
             return {}
     
     async def _implement_cache_optimization(self, recommendation: OptimizationRecommendation) -> List[str]:
-        """Implement cache optimization changes"""        changes = []
+        """Implement cache optimization changes"""
+        changes = []
         
         for key, value in recommendation.configuration_changes.items():
             if key == "cache_size":
@@ -1060,7 +1086,8 @@ class StoragePerformanceOptimizer:
         return changes
     
     async def _implement_compression_optimization(self, recommendation: OptimizationRecommendation) -> List[str]:
-        """Implement compression optimization changes"""        changes = []
+        """Implement compression optimization changes"""
+        changes = []
         
         for key, value in recommendation.configuration_changes.items():
             if key == "compression_algorithm":
@@ -1073,7 +1100,8 @@ class StoragePerformanceOptimizer:
         return changes
     
     async def _implement_deduplication_optimization(self, recommendation: OptimizationRecommendation) -> List[str]:
-        """Implement deduplication optimization changes"""        changes = []
+        """Implement deduplication optimization changes"""
+        changes = []
         
         for key, value in recommendation.configuration_changes.items():
             if key == "dedup_algorithm":
@@ -1086,7 +1114,8 @@ class StoragePerformanceOptimizer:
         return changes
     
     async def _implement_tiering_optimization(self, recommendation: OptimizationRecommendation) -> List[str]:
-        """Implement storage tiering optimization changes"""        changes = []
+        """Implement storage tiering optimization changes"""
+        changes = []
         
         for key, value in recommendation.configuration_changes.items():
             if key == "hot_tier":
@@ -1101,7 +1130,8 @@ class StoragePerformanceOptimizer:
         return changes
     
     async def _implement_load_balancing_optimization(self, recommendation: OptimizationRecommendation) -> List[str]:
-        """Implement load balancing optimization changes"""        changes = []
+        """Implement load balancing optimization changes"""
+        changes = []
         
         for key, value in recommendation.configuration_changes.items():
             if key == "load_balancer":
@@ -1116,7 +1146,8 @@ class StoragePerformanceOptimizer:
         return changes
     
     async def _implement_network_optimization(self, recommendation: OptimizationRecommendation) -> List[str]:
-        """Implement network optimization changes"""        changes = []
+        """Implement network optimization changes"""
+        changes = []
         
         for key, value in recommendation.configuration_changes.items():
             if key == "tcp_window_size":
@@ -1131,7 +1162,8 @@ class StoragePerformanceOptimizer:
         return changes
     
     async def _implement_generic_optimization(self, recommendation: OptimizationRecommendation) -> List[str]:
-        """Implement generic optimization changes"""        changes = []
+        """Implement generic optimization changes"""
+        changes = []
         
         for key, value in recommendation.configuration_changes.items():
             changes.append(f"Configuration updated - {key}: {value}")
@@ -1139,7 +1171,8 @@ class StoragePerformanceOptimizer:
         return changes
     
     async def _rollback_configuration(self, backup_config: Dict[str, Any]):
-        """Rollback configuration to previous state"""        try:
+        """Rollback configuration to previous state"""
+        try:
             if not backup_config:
                 logger.warning("⚠️ No backup configuration available for rollback")
                 return
@@ -1155,7 +1188,8 @@ class StoragePerformanceOptimizer:
             logger.error(f"❌ Configuration rollback failed: {e}")
     
     async def generate_performance_report(self, analysis_result: PerformanceAnalysisResult) -> str:
-        """Generate comprehensive performance report"""        try:
+        """Generate comprehensive performance report"""
+        try:
             report_lines = []
             report_lines.append("=" * 80)
             report_lines.append("🎯 IA-INFLUENCER-AGENT STORAGE PERFORMANCE REPORT")
@@ -1255,12 +1289,14 @@ performance_optimizer = StoragePerformanceOptimizer()
 
 # Factory function
 def create_performance_optimizer() -> StoragePerformanceOptimizer:
-    """Factory function to create performance optimizer instance"""    return StoragePerformanceOptimizer()
+    """Factory function to create performance optimizer instance"""
+    return StoragePerformanceOptimizer()
 
 
 # Usage Example
 async def main():
-    """Example usage of StoragePerformanceOptimizer"""    try:
+    """Example usage of StoragePerformanceOptimizer"""
+    try:
         optimizer = create_performance_optimizer()
         
         # Collect metrics from storage systems

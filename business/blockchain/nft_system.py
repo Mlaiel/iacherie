@@ -6,7 +6,8 @@ and metadata handling for audio, video, image, and text content.
 
 © 2025 Fahed Mlaiel (mlaiel@live.de) - IA-Influencer-Agent Platform
 Propriété Intellectuelle Exclusive - Tous Droits Réservés
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Supported content types for NFT minting"""    AUDIO = "audio"
+    """Supported content types for NFT minting"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -42,7 +44,8 @@ class ContentType(Enum):
 
 
 class LicenseType(Enum):
-    """Types of licenses available for NFT content"""    COMMERCIAL = "commercial"
+    """Types of licenses available for NFT content"""
+    COMMERCIAL = "commercial"
     PERSONAL = "personal"
     EXCLUSIVE = "exclusive"
     LIMITED = "limited"
@@ -54,7 +57,8 @@ class LicenseType(Enum):
 
 @dataclass
 class NFTMetadata:
-    """NFT metadata structure compliant with OpenSea and other standards"""    name: str
+    """NFT metadata structure compliant with OpenSea and other standards"""
+    name: str
     description: str
     image: str
     content_type: ContentType
@@ -70,7 +74,8 @@ class NFTMetadata:
 
 @dataclass
 class LicenseTerms:
-    """License terms for NFT content"""    license_type: LicenseType
+    """License terms for NFT content"""
+    license_type: LicenseType
     duration: Optional[timedelta]
     territory: str
     usage_rights: List[str]
@@ -84,7 +89,8 @@ class LicenseTerms:
 
 @dataclass
 class NFTListing:
-    """NFT marketplace listing"""    token_id: int
+    """NFT marketplace listing"""
+    token_id: int
     contract_address: str
     network: str
     price: Decimal
@@ -98,11 +104,13 @@ class NFTListing:
 
 
 class NFTMinter:
-    """    NFT minting service for content creators
+    """
+    NFT minting service for content creators
     
     Handles the creation of NFTs for various content types with proper
     metadata, IPFS storage, and blockchain minting operations.
-    """    
+    """
+    
     def __init__(self, config: BlockchainConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.NFTMinter")
@@ -111,7 +119,8 @@ class NFTMinter:
         self.nft_contracts: Dict[str, Contract] = {}
     
     async def initialize(self) -> None:
-        """Initialize NFT minter with IPFS and blockchain connections"""        try:
+        """Initialize NFT minter with IPFS and blockchain connections"""
+        try:
             # Initialize IPFS client
             self.ipfs_client = ipfs_connect(self.config.ipfs_gateway)
             
@@ -142,11 +151,13 @@ class NFTMinter:
         metadata: NFTMetadata,
         network: str = "polygon_mainnet"
     ) -> Dict[str, Any]:
-        """        Mint NFT for content with automatic IPFS upload and metadata creation
+        """
+        Mint NFT for content with automatic IPFS upload and metadata creation
         
         This creates a unique NFT representing ownership and licensing rights
         for the content, enabling monetization and proof of authenticity.
-        """        try:
+        """
+        try:
             self.logger.info(f"Minting NFT for content: {metadata.name}")
             
             # Upload content to IPFS
@@ -199,7 +210,8 @@ class NFTMinter:
         license_data: Dict[str, Any],
         price: Decimal
     ) -> Dict[str, Any]:
-        """Mint NFT representing a content license"""        try:
+        """Mint NFT representing a content license"""
+        try:
             self.logger.info(f"Minting license NFT for recipient: {recipient_address}")
             
             # Prepare license metadata
@@ -250,7 +262,8 @@ class NFTMinter:
         metadata: Dict[str, Any],
         network: str = "polygon_mainnet"
     ) -> Dict[str, Any]:
-        """Mint NFT for a collection of content (album, series, etc.)"""        try:
+        """Mint NFT for a collection of content (album, series, etc.)"""
+        try:
             self.logger.info(f"Minting collection NFT: {collection_name}")
             
             # Process all content items
@@ -303,7 +316,8 @@ class NFTMinter:
             raise NFTError(f"Collection NFT minting failed: {str(e)}")
     
     async def _upload_content_to_ipfs(self, file_path: str, content_type: ContentType) -> str:
-        """Upload content file to IPFS and return hash"""        try:
+        """Upload content file to IPFS and return hash"""
+        try:
             with open(file_path, 'rb') as file:
                 result = self.ipfs_client.add(file)
                 return result['Hash']
@@ -312,7 +326,8 @@ class NFTMinter:
             raise NFTError(f"IPFS upload failed: {str(e)}")
     
     async def _upload_metadata_to_ipfs(self, metadata: Dict[str, Any]) -> str:
-        """Upload NFT metadata to IPFS"""        try:
+        """Upload NFT metadata to IPFS"""
+        try:
             metadata_json = json.dumps(metadata, indent=2, default=str)
             result = self.ipfs_client.add_json(metadata)
             return result
@@ -321,7 +336,8 @@ class NFTMinter:
             raise NFTError(f"Metadata upload failed: {str(e)}")
     
     async def _generate_and_upload_preview(self, content_path: str, content_type: ContentType) -> str:
-        """Generate and upload preview/thumbnail for content"""        if content_type == ContentType.AUDIO:
+        """Generate and upload preview/thumbnail for content"""
+        if content_type == ContentType.AUDIO:
             # Generate audio waveform visualization
             return await self._generate_audio_preview(content_path)
         elif content_type == ContentType.VIDEO:
@@ -335,22 +351,26 @@ class NFTMinter:
             return await self._generate_generic_preview(content_type)
     
     async def _generate_audio_preview(self, audio_path: str) -> str:
-        """Generate waveform visualization for audio content"""        # This would use libraries like librosa and matplotlib to generate waveforms
+        """Generate waveform visualization for audio content"""
+        # This would use libraries like librosa and matplotlib to generate waveforms
         # For now, returning a placeholder
         return "QmAudioWaveformPreview"
     
     async def _generate_video_thumbnail(self, video_path: str) -> str:
-        """Generate thumbnail from video content"""        # This would use ffmpeg or similar to extract frame
+        """Generate thumbnail from video content"""
+        # This would use ffmpeg or similar to extract frame
         # For now, returning a placeholder
         return "QmVideoThumbnailPreview"
     
     async def _generate_image_preview(self, image_path: str) -> str:
-        """Generate optimized preview for image content"""        # This would resize and optimize the image
+        """Generate optimized preview for image content"""
+        # This would resize and optimize the image
         # For now, returning a placeholder
         return "QmImagePreview"
     
     async def _generate_generic_preview(self, content_type: ContentType) -> str:
-        """Generate generic preview for content type"""        return f"QmGenericPreview{content_type.value}"
+        """Generate generic preview for content type"""
+        return f"QmGenericPreview{content_type.value}"
     
     async def _create_complete_metadata(
         self,
@@ -358,7 +378,8 @@ class NFTMinter:
         content_hash: str,
         preview_hash: str
     ) -> Dict[str, Any]:
-        """Create complete NFT metadata with all required fields"""        return {
+        """Create complete NFT metadata with all required fields"""
+        return {
             "name": base_metadata.name,
             "description": base_metadata.description,
             "image": f"ipfs://{preview_hash}",
@@ -384,7 +405,8 @@ class NFTMinter:
         token_uri: str,
         content_hash: str
     ) -> Dict[str, Any]:
-        """Mint NFT on blockchain network"""        try:
+        """Mint NFT on blockchain network"""
+        try:
             web3 = self.web3_instances[network]
             contract = self.nft_contracts[network]
             
@@ -430,7 +452,8 @@ class NFTMinter:
             raise BlockchainError(f"Blockchain minting failed: {str(e)}")
     
     def _get_nft_contract_abi(self) -> List[Dict]:
-        """Get NFT contract ABI"""        # This would return the actual ERC-721 contract ABI
+        """Get NFT contract ABI"""
+        # This would return the actual ERC-721 contract ABI
         return [
             {
                 "inputs": [
@@ -447,7 +470,8 @@ class NFTMinter:
         ]
     
     def _generate_opensea_url(self, network: str, token_id: int) -> str:
-        """Generate OpenSea URL for NFT"""        network_mapping = {
+        """Generate OpenSea URL for NFT"""
+        network_mapping = {
             "ethereum_mainnet": "",
             "polygon_mainnet": "matic/",
             "binance_smart_chain": "bsc/"
@@ -460,11 +484,13 @@ class NFTMinter:
 
 
 class NFTLicenseManager:
-    """    NFT-based licensing system for automated content licensing
+    """
+    NFT-based licensing system for automated content licensing
     
     Manages license NFTs that represent specific usage rights for content,
     enabling automated licensing and rights management.
-    """    
+    """
+    
     def __init__(self, config: BlockchainConfig, redis_client: redis.Redis):
         self.config = config
         self.redis = redis_client
@@ -473,7 +499,8 @@ class NFTLicenseManager:
         self.license_contracts: Dict[str, Contract] = {}
     
     async def initialize(self) -> None:
-        """Initialize license manager"""        try:
+        """Initialize license manager"""
+        try:
             for network in self.config.supported_networks:
                 web3 = Web3(Web3.HTTPProvider(getattr(self.config, f"{network}_rpc")))
                 self.web3_instances[network] = web3
@@ -500,7 +527,8 @@ class NFTLicenseManager:
         quantity: int,
         network: str = "polygon_mainnet"
     ) -> Dict[str, Any]:
-        """Create license offering for content NFT"""        try:
+        """Create license offering for content NFT"""
+        try:
             self.logger.info(f"Creating license offering for NFT {content_nft_id}")
             
             # Prepare license data
@@ -574,7 +602,8 @@ class NFTLicenseManager:
         quantity: int,
         network: str = "polygon_mainnet"
     ) -> Dict[str, Any]:
-        """Purchase license from offering"""        try:
+        """Purchase license from offering"""
+        try:
             self.logger.info(f"Purchasing license from offering {offering_id}")
             
             # Get offering details
@@ -631,7 +660,8 @@ class NFTLicenseManager:
         user_address: str,
         network: str = "polygon_mainnet"
     ) -> Dict[str, Any]:
-        """Validate license usage rights"""        try:
+        """Validate license usage rights"""
+        try:
             contract = self.license_contracts[network]
             
             # Check if user owns the license NFT
@@ -664,7 +694,8 @@ class NFTLicenseManager:
             return {"valid": False, "reason": f"Validation error: {str(e)}"}
     
     def _get_license_contract_abi(self) -> List[Dict]:
-        """Get license contract ABI"""        return [
+        """Get license contract ABI"""
+        return [
             {
                 "inputs": [
                     {"name": "contentNFTId", "type": "uint256"},
@@ -681,11 +712,13 @@ class NFTLicenseManager:
 
 
 class NFTMarketplace:
-    """    NFT marketplace for content creators to sell and license their work
+    """
+    NFT marketplace for content creators to sell and license their work
     
     Provides marketplace functionality including listings, auctions,
     offers, and automated transactions for NFT-based content licensing.
-    """    
+    """
+    
     def __init__(self, config: BlockchainConfig, redis_client: redis.Redis):
         self.config = config
         self.redis = redis_client
@@ -695,7 +728,8 @@ class NFTMarketplace:
         self.active_listings: Dict[str, NFTListing] = {}
     
     async def initialize(self) -> None:
-        """Initialize NFT marketplace"""        try:
+        """Initialize NFT marketplace"""
+        try:
             for network in self.config.supported_networks:
                 web3 = Web3(Web3.HTTPProvider(getattr(self.config, f"{network}_rpc")))
                 self.web3_instances[network] = web3
@@ -728,7 +762,8 @@ class NFTMarketplace:
         duration: timedelta,
         network: str = "polygon_mainnet"
     ) -> Dict[str, Any]:
-        """List NFT for sale on marketplace"""        try:
+        """List NFT for sale on marketplace"""
+        try:
             self.logger.info(f"Listing NFT {token_id} for sale")
             
             expiration = datetime.utcnow() + duration
@@ -816,7 +851,8 @@ class NFTMarketplace:
         price: Decimal,
         license_terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """List license NFT on marketplace"""        try:
+        """List license NFT on marketplace"""
+        try:
             # This would implement license-specific listing logic
             return await self.list_nft(
                 token_id=token_id,
@@ -849,7 +885,8 @@ class NFTMarketplace:
         buyer_address: str,
         network: str = "polygon_mainnet"
     ) -> Dict[str, Any]:
-        """Purchase NFT from marketplace listing"""        try:
+        """Purchase NFT from marketplace listing"""
+        try:
             self.logger.info(f"Purchasing NFT from listing {listing_id}")
             
             # Get listing details
@@ -906,7 +943,8 @@ class NFTMarketplace:
         seller_address: str,
         network: str = "polygon_mainnet"
     ) -> Dict[str, Any]:
-        """Create auction for NFT"""        try:
+        """Create auction for NFT"""
+        try:
             self.logger.info(f"Creating auction for NFT {token_id}")
             
             end_time = datetime.utcnow() + duration
@@ -957,7 +995,8 @@ class NFTMarketplace:
         bidder_address: str,
         network: str = "polygon_mainnet"
     ) -> Dict[str, Any]:
-        """Place bid on NFT auction"""        try:
+        """Place bid on NFT auction"""
+        try:
             contract = self.marketplace_contracts[network]
             
             function_call = contract.functions.placeBid(auction_id)
@@ -991,7 +1030,8 @@ class NFTMarketplace:
         price_range: Optional[tuple] = None,
         license_type: Optional[LicenseType] = None
     ) -> List[Dict[str, Any]]:
-        """Get marketplace listings with optional filters"""        try:
+        """Get marketplace listings with optional filters"""
+        try:
             # This would query blockchain and cache for active listings
             listings = []
             
@@ -1027,7 +1067,8 @@ class NFTMarketplace:
             return []
     
     async def _load_active_listings(self) -> None:
-        """Load active listings from cache"""        try:
+        """Load active listings from cache"""
+        try:
             pattern = "marketplace_listing:*"
             keys = await self.redis.keys(pattern)
             
@@ -1044,7 +1085,8 @@ class NFTMarketplace:
             self.logger.error(f"Failed to load active listings: {str(e)}")
     
     def _get_marketplace_contract_abi(self) -> List[Dict]:
-        """Get marketplace contract ABI"""        return [
+        """Get marketplace contract ABI"""
+        return [
             {
                 "inputs": [
                     {"name": "nftContract", "type": "address"},
@@ -1062,15 +1104,18 @@ class NFTMarketplace:
         ]
     
     def _generate_marketplace_url(self, network: str, listing_id: int) -> str:
-        """Generate marketplace URL for listing"""        return f"https://ia-influencer-marketplace.com/{network}/listing/{listing_id}"
+        """Generate marketplace URL for listing"""
+        return f"https://ia-influencer-marketplace.com/{network}/listing/{listing_id}"
 
 
 class NFTRoyaltyManager:
-    """    NFT royalty management system for automated creator compensation
+    """
+    NFT royalty management system for automated creator compensation
     
     Handles royalty distribution for NFT sales, ensuring creators
     receive their fair share of secondary market transactions.
-    """    
+    """
+    
     def __init__(self, config: BlockchainConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.NFTRoyaltyManager")
@@ -1078,7 +1123,8 @@ class NFTRoyaltyManager:
         self.royalty_contracts: Dict[str, Contract] = {}
     
     async def initialize(self) -> None:
-        """Initialize royalty manager"""        try:
+        """Initialize royalty manager"""
+        try:
             for network in self.config.supported_networks:
                 web3 = Web3(Web3.HTTPProvider(getattr(self.config, f"{network}_rpc")))
                 self.web3_instances[network] = web3
@@ -1104,7 +1150,8 @@ class NFTRoyaltyManager:
         royalty_percentage: Decimal,
         network: str = "polygon_mainnet"
     ) -> Dict[str, Any]:
-        """Set royalty information for NFT"""        try:
+        """Set royalty information for NFT"""
+        try:
             contract = self.royalty_contracts[network]
             
             # Convert percentage to basis points (1% = 100 basis points)
@@ -1144,7 +1191,8 @@ class NFTRoyaltyManager:
         sale_price: Decimal,
         network: str = "polygon_mainnet"
     ) -> Dict[str, Any]:
-        """Distribute royalty payment for NFT sale"""        try:
+        """Distribute royalty payment for NFT sale"""
+        try:
             contract = self.royalty_contracts[network]
             
             # Get royalty info
@@ -1187,7 +1235,8 @@ class NFTRoyaltyManager:
             raise NFTError(f"Royalty distribution failed: {str(e)}")
     
     def _get_royalty_contract_abi(self) -> List[Dict]:
-        """Get royalty contract ABI (EIP-2981 compatible)"""        return [
+        """Get royalty contract ABI (EIP-2981 compatible)"""
+        return [
             {
                 "inputs": [
                     {"name": "tokenId", "type": "uint256"},
@@ -1205,18 +1254,21 @@ class NFTRoyaltyManager:
 
 
 class NFTMetadataManager:
-    """    NFT metadata management system for content creators
+    """
+    NFT metadata management system for content creators
     
     Handles metadata creation, validation, IPFS storage, and updates
     for various content types with proper standards compliance.
-    """    
+    """
+    
     def __init__(self, config: BlockchainConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.NFTMetadataManager")
         self.ipfs_client = None
     
     async def initialize(self) -> None:
-        """Initialize metadata manager"""        try:
+        """Initialize metadata manager"""
+        try:
             self.ipfs_client = ipfs_connect(self.config.ipfs_gateway)
             self.logger.info("NFT Metadata Manager initialized successfully")
             
@@ -1235,7 +1287,8 @@ class NFTMetadataManager:
         properties: Dict[str, Any],
         attributes: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Create NFT metadata with proper standards compliance"""        try:
+        """Create NFT metadata with proper standards compliance"""
+        try:
             metadata = {
                 "name": title,
                 "description": description,
@@ -1282,7 +1335,8 @@ class NFTMetadataManager:
         current_ipfs_hash: str,
         updates: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Update existing NFT metadata"""        try:
+        """Update existing NFT metadata"""
+        try:
             # Fetch current metadata
             current_metadata = await self._fetch_from_ipfs(current_ipfs_hash)
             
@@ -1308,7 +1362,8 @@ class NFTMetadataManager:
             raise NFTError(f"Metadata update failed: {str(e)}")
     
     async def validate_metadata_standards(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate metadata against various NFT standards"""        validation_results = {
+        """Validate metadata against various NFT standards"""
+        validation_results = {
             "opensea": await self._validate_opensea_standard(metadata),
             "erc721": await self._validate_erc721_standard(metadata),
             "erc1155": await self._validate_erc1155_standard(metadata)
@@ -1324,7 +1379,8 @@ class NFTMetadataManager:
         }
     
     async def _validate_metadata(self, metadata: Dict[str, Any]) -> None:
-        """Validate metadata structure and required fields"""        required_fields = ["name", "description", "image"]
+        """Validate metadata structure and required fields"""
+        required_fields = ["name", "description", "image"]
         
         for field in required_fields:
             if field not in metadata:
@@ -1337,7 +1393,8 @@ class NFTMetadataManager:
                     raise ValidationError(f"Invalid URL in field '{url_field}'")
     
     async def _validate_opensea_standard(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate against OpenSea metadata standards"""        required = ["name", "description", "image"]
+        """Validate against OpenSea metadata standards"""
+        required = ["name", "description", "image"]
         optional = ["external_url", "animation_url", "attributes", "background_color"]
         
         missing_required = [field for field in required if field not in metadata]
@@ -1349,32 +1406,37 @@ class NFTMetadataManager:
         }
     
     async def _validate_erc721_standard(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate against ERC-721 metadata standards"""        return {
+        """Validate against ERC-721 metadata standards"""
+        return {
             "valid": "name" in metadata,
             "warnings": []
         }
     
     async def _validate_erc1155_standard(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate against ERC-1155 metadata standards"""        return {
+        """Validate against ERC-1155 metadata standards"""
+        return {
             "valid": True,
             "warnings": []
         }
     
     async def _upload_to_ipfs(self, metadata: Dict[str, Any]) -> str:
-        """Upload metadata to IPFS"""        try:
+        """Upload metadata to IPFS"""
+        try:
             result = self.ipfs_client.add_json(metadata)
             return result
         except Exception as e:
             raise NFTError(f"IPFS upload failed: {str(e)}")
     
     async def _fetch_from_ipfs(self, ipfs_hash: str) -> Dict[str, Any]:
-        """Fetch metadata from IPFS"""        try:
+        """Fetch metadata from IPFS"""
+        try:
             return self.ipfs_client.get_json(ipfs_hash)
         except Exception as e:
             raise NFTError(f"IPFS fetch failed: {str(e)}")
     
     def _is_valid_url(self, url: str) -> bool:
-        """Validate URL format"""        import re
+        """Validate URL format"""
+        import re
         url_pattern = re.compile(
             r'^https?://',  # http:// or https://
             re.IGNORECASE

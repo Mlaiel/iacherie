@@ -18,7 +18,8 @@ Business Logic Flow:
 User (musician/blogger/photographer/influencer/comedian) → Upload multi-format content
 → AI protection rights analysis → Professional SEO optimization → Collaboration matching
 → Multi-platform distribution → Automated licensing & royalty management
-"""import asyncio
+"""
+import asyncio
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Set
@@ -41,7 +42,8 @@ from ..legal.jurisdiction_database import JurisdictionDatabase
 
 
 class TerritoryType(Enum):
-    """Comprehensive territory classification types"""    COUNTRY = "country"
+    """Comprehensive territory classification types"""
+    COUNTRY = "country"
     REGION = "region"
     CONTINENT = "continent"
     ECONOMIC_ZONE = "economic_zone"
@@ -56,7 +58,8 @@ class TerritoryType(Enum):
 
 
 class JurisdictionLevel(Enum):
-    """Levels of legal jurisdiction"""    FEDERAL = "federal"
+    """Levels of legal jurisdiction"""
+    FEDERAL = "federal"
     NATIONAL = "national"
     STATE_PROVINCIAL = "state_provincial"
     REGIONAL = "regional"
@@ -68,7 +71,8 @@ class JurisdictionLevel(Enum):
 
 
 class LegalFramework(Enum):
-    """Legal framework systems"""    COMMON_LAW = "common_law"
+    """Legal framework systems"""
+    COMMON_LAW = "common_law"
     CIVIL_LAW = "civil_law"
     RELIGIOUS_LAW = "religious_law"
     MIXED_SYSTEM = "mixed_system"
@@ -79,7 +83,8 @@ class LegalFramework(Enum):
 
 
 class CopyrightLaw(Enum):
-    """Copyright law systems"""    BERNE_CONVENTION = "berne_convention"
+    """Copyright law systems"""
+    BERNE_CONVENTION = "berne_convention"
     UNIVERSAL_COPYRIGHT = "universal_copyright"
     TRIPS_AGREEMENT = "trips_agreement"
     WIPO_COPYRIGHT_TREATY = "wipo_copyright_treaty"
@@ -91,7 +96,8 @@ class CopyrightLaw(Enum):
 
 @dataclass
 class TerritoryInfo:
-    """Comprehensive territory information"""    territory_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive territory information"""
+    territory_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     territory_code: str = ""  # ISO codes, custom codes
     territory_name: str = ""
     territory_type: TerritoryType = TerritoryType.COUNTRY
@@ -159,7 +165,8 @@ class TerritoryInfo:
 
 @dataclass
 class LegalRequirement:
-    """Legal requirement for specific territory"""    requirement_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Legal requirement for specific territory"""
+    requirement_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     territory_code: str = ""
     territory_name: str = ""
     
@@ -205,7 +212,8 @@ class LegalRequirement:
 
 @dataclass
 class TerritoryCompliance:
-    """Territory-specific compliance assessment"""    compliance_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Territory-specific compliance assessment"""
+    compliance_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     territory_code: str = ""
     content_id: str = ""
     license_id: str = ""
@@ -243,9 +251,11 @@ class TerritoryCompliance:
 
 
 class UltraAdvancedTerritoryManager:
-    """    Ultra-advanced territory management engine with comprehensive global jurisdiction
+    """
+    Ultra-advanced territory management engine with comprehensive global jurisdiction
     support, AI-powered territorial analysis, and automated compliance management
-    """    
+    """
+    
     def __init__(
         self,
         security_manager: SecurityManager,
@@ -277,7 +287,8 @@ class UltraAdvancedTerritoryManager:
         self._validate_business_logic()
     
     def _validate_business_logic(self) -> None:
-        """Validate business logic flow requirements"""        required_components = [
+        """Validate business logic flow requirements"""
+        required_components = [
             self.security_manager,
             self.blockchain_verifier,
             self.ai_optimizer,
@@ -297,8 +308,10 @@ class UltraAdvancedTerritoryManager:
         include_risk_assessment: bool = True,
         session: Optional[AsyncSession] = None
     ) -> TerritoryInfo:
-        """        Get comprehensive territory information with legal requirements and risk assessment
-        """        try:
+        """
+        Get comprehensive territory information with legal requirements and risk assessment
+        """
+        try:
             # Check cache first
             cached_info = await self._get_cached_territory_info(territory_code)
             if cached_info:
@@ -383,8 +396,10 @@ class UltraAdvancedTerritoryManager:
         content_type: str = "music",
         session: Optional[AsyncSession] = None
     ) -> TerritoryCompliance:
-        """        Assess compliance for specific content in a territory
-        """        try:
+        """
+        Assess compliance for specific content in a territory
+        """
+        try:
             # Security validation
             await self.security_manager.validate_territory_operation(
                 territory_code, "assess_compliance"
@@ -484,8 +499,10 @@ class UltraAdvancedTerritoryManager:
         content_type: str = "music",
         session: Optional[AsyncSession] = None
     ) -> Dict[str, TerritoryCompliance]:
-        """        Perform global territory analysis for content distribution
-        """        try:
+        """
+        Perform global territory analysis for content distribution
+        """
+        try:
             # Use target territories or get all major territories
             territories = target_territories or await self._get_major_territories()
             
@@ -550,7 +567,8 @@ class UltraAdvancedTerritoryManager:
             return {}
     
     async def _get_licensing_requirements(self, territory_code: str) -> List[str]:
-        """Get licensing requirements for territory"""        try:
+        """Get licensing requirements for territory"""
+        try:
             requirements = await self.jurisdiction_database.get_licensing_requirements(territory_code)
             return requirements or []
         except Exception as e:
@@ -558,7 +576,8 @@ class UltraAdvancedTerritoryManager:
             return []
     
     async def _get_compliance_frameworks(self, territory_code: str) -> List[str]:
-        """Get compliance frameworks for territory"""        try:
+        """Get compliance frameworks for territory"""
+        try:
             frameworks = await self.jurisdiction_database.get_compliance_frameworks(territory_code)
             return frameworks or []
         except Exception as e:
@@ -566,7 +585,8 @@ class UltraAdvancedTerritoryManager:
             return []
     
     async def _get_data_protection_laws(self, territory_code: str) -> List[str]:
-        """Get data protection laws for territory"""        try:
+        """Get data protection laws for territory"""
+        try:
             laws = await self.jurisdiction_database.get_data_protection_laws(territory_code)
             return laws or []
         except Exception as e:
@@ -574,7 +594,8 @@ class UltraAdvancedTerritoryManager:
             return []
     
     async def _assess_territory_risk(self, territory_code: str) -> Dict[str, float]:
-        """Assess various risk factors for territory"""        risk_assessment = {
+        """Assess various risk factors for territory"""
+        risk_assessment = {
             "political": 0.0,
             "economic": 0.0,
             "legal": 0.0,
@@ -612,7 +633,8 @@ class UltraAdvancedTerritoryManager:
         territory_code: str,
         content_type: str
     ) -> List[LegalRequirement]:
-        """Get all legal requirements for territory and content type"""        try:
+        """Get all legal requirements for territory and content type"""
+        try:
             # Check cache first
             cache_key = f"requirements:{territory_code}:{content_type}"
             if cache_key in self._requirements_cache:
@@ -656,7 +678,8 @@ class UltraAdvancedTerritoryManager:
         content_id: str,
         license_id: Optional[str]
     ) -> bool:
-        """Assess if a specific requirement is met"""        try:
+        """Assess if a specific requirement is met"""
+        try:
             # This would implement specific compliance checks based on requirement type
             # For now, return a simplified assessment
             
@@ -677,7 +700,8 @@ class UltraAdvancedTerritoryManager:
             return False
     
     async def _cache_territory_info(self, territory: TerritoryInfo) -> None:
-        """Cache territory information"""        try:
+        """Cache territory information"""
+        try:
             if self.redis_client:
                 cache_key = f"territory:info:{territory.territory_code}"
                 cache_data = {
@@ -703,7 +727,8 @@ class UltraAdvancedTerritoryManager:
             self.logger.warning(f"Failed to cache territory info: {str(e)}")
     
     async def _get_cached_territory_info(self, territory_code: str) -> Optional[TerritoryInfo]:
-        """Get cached territory information"""        try:
+        """Get cached territory information"""
+        try:
             # Check memory cache first
             if territory_code in self._territory_cache:
                 cached_territory = self._territory_cache[territory_code]
@@ -728,7 +753,8 @@ class UltraAdvancedTerritoryManager:
             return None
     
     async def _get_major_territories(self) -> List[str]:
-        """Get list of major territories for global analysis"""        major_territories = [
+        """Get list of major territories for global analysis"""
+        major_territories = [
             "US", "CA", "GB", "DE", "FR", "IT", "ES", "NL", "SE", "NO", "DK",
             "AU", "NZ", "JP", "KR", "CN", "IN", "BR", "MX", "AR", "ZA"
         ]
@@ -737,7 +763,8 @@ class UltraAdvancedTerritoryManager:
 
 @dataclass
 class TerritoryInfo:
-    """Territory information structure"""    territory_id: str
+    """Territory information structure"""
+    territory_id: str
     name: str
     territory_type: TerritoryType
     iso_codes: List[str]
@@ -752,7 +779,8 @@ class TerritoryInfo:
 
 @dataclass
 class LicensingRule:
-    """Territory-specific licensing rule"""    rule_id: str
+    """Territory-specific licensing rule"""
+    rule_id: str
     territory_id: str
     content_type: str
     rule_type: str
@@ -766,7 +794,8 @@ class LicensingRule:
 
 @dataclass
 class TerritoryValidation:
-    """Territory validation result"""    territory: str
+    """Territory validation result"""
+    territory: str
     valid: bool
     compliant: bool
     primary_jurisdiction: str
@@ -778,7 +807,8 @@ class TerritoryValidation:
 
 
 class TerritoryManager:
-    """    Global territory administration and jurisdiction management system
+    """
+    Global territory administration and jurisdiction management system
     
     Features:
     - 195+ country support with legal framework mapping
@@ -789,7 +819,8 @@ class TerritoryManager:
     - Automated legal requirement assessment
     - Currency and taxation territory mapping
     - Custom territory definition support
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -812,7 +843,8 @@ class TerritoryManager:
         self.is_initialized = False
     
     async def initialize(self) -> None:
-        """Initialize territory manager and jurisdiction database"""        try:
+        """Initialize territory manager and jurisdiction database"""
+        try:
             self.logger.info("Initializing TerritoryManager")
             
             # Initialize components
@@ -843,7 +875,8 @@ class TerritoryManager:
         content_format: str,
         license_type: str
     ) -> TerritoryValidation:
-        """        Validate territory licensing requirements and compliance
+        """
+        Validate territory licensing requirements and compliance
         
         Args:
             territory: Territory identifier (country code, region, etc.)
@@ -852,7 +885,8 @@ class TerritoryManager:
             
         Returns:
             Comprehensive territory validation result
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             raise TerritoryError("TerritoryManager not initialized")
         
         try:
@@ -923,7 +957,8 @@ class TerritoryManager:
             raise TerritoryError(f"Territory validation failed: {str(e)}")
     
     async def is_valid_territory(self, territory: str) -> bool:
-        """Check if territory is valid and supported"""        try:
+        """Check if territory is valid and supported"""
+        try:
             territory_info = await self._get_territory_info(territory)
             return territory_info is not None
         except Exception:
@@ -934,7 +969,8 @@ class TerritoryManager:
         territory: str,
         content_format: str = None
     ) -> Dict[str, Any]:
-        """Get comprehensive territory requirements for licensing"""        if not self.is_initialized:
+        """Get comprehensive territory requirements for licensing"""
+        if not self.is_initialized:
             raise TerritoryError("TerritoryManager not initialized")
         
         try:
@@ -991,7 +1027,8 @@ class TerritoryManager:
         content_format: Optional[str] = None,
         license_type: Optional[str] = None
     ) -> List[Dict[str, Any]]:
-        """Get list of supported territories with optional filtering"""        supported = []
+        """Get list of supported territories with optional filtering"""
+        supported = []
         
         for territory_id, territory_info in self.territories.items():
             # Apply filters if specified
@@ -1018,7 +1055,8 @@ class TerritoryManager:
         return sorted(supported, key=lambda x: x['name'])
     
     async def get_territory_hierarchy(self, territory: str) -> Dict[str, Any]:
-        """Get territory hierarchy (parent and sub-territories)"""        territory_info = await self._get_territory_info(territory)
+        """Get territory hierarchy (parent and sub-territories)"""
+        territory_info = await self._get_territory_info(territory)
         if not territory_info:
             raise ValidationError(f"Territory not found: {territory}")
         
@@ -1058,7 +1096,8 @@ class TerritoryManager:
         content_format: str,
         license_type: str
     ) -> Dict[str, Any]:
-        """Resolve conflicts between multiple territories for licensing"""        try:
+        """Resolve conflicts between multiple territories for licensing"""
+        try:
             conflict_analysis = {
                 'territories': territories,
                 'conflicts': [],
@@ -1100,7 +1139,8 @@ class TerritoryManager:
             raise TerritoryError(f"Conflict resolution failed: {str(e)}")
     
     async def _get_territory_info(self, territory: str) -> Optional[TerritoryInfo]:
-        """Get territory information by ID or ISO code"""        # Direct lookup
+        """Get territory information by ID or ISO code"""
+        # Direct lookup
         if territory in self.territories:
             return self.territories[territory]
         
@@ -1122,7 +1162,8 @@ class TerritoryManager:
         content_format: str,
         license_type: str
     ) -> List[LicensingRule]:
-        """Get licensing rules applicable to territory and content"""        applicable_rules = []
+        """Get licensing rules applicable to territory and content"""
+        applicable_rules = []
         
         for rule in self.licensing_rules.values():
             # Check territory match
@@ -1145,7 +1186,8 @@ class TerritoryManager:
         content_format: str,
         license_type: str
     ) -> Any:  # RuleValidationResult
-        """Validate licensing against territory rules"""        class RuleValidationResult:
+        """Validate licensing against territory rules"""
+        class RuleValidationResult:
             def __init__(self):
                 self.compliant = True
                 self.restrictions = []
@@ -1180,7 +1222,8 @@ class TerritoryManager:
         return result
     
     async def _get_legal_framework_info(self, territory_info: TerritoryInfo) -> Any:
-        """Get legal framework information for territory"""        class LegalFrameworkInfo:
+        """Get legal framework information for territory"""
+        class LegalFrameworkInfo:
             def __init__(self):
                 self.primary_jurisdiction = territory_info.name
                 self.applicable_laws = []
@@ -1208,7 +1251,8 @@ class TerritoryManager:
         territory: str,
         content_format: str
     ) -> List[LicensingRule]:
-        """Get all rules for specific territory and content format"""        rules = []
+        """Get all rules for specific territory and content format"""
+        rules = []
         
         for rule in self.licensing_rules.values():
             if (rule.territory_id == territory and 
@@ -1218,10 +1262,12 @@ class TerritoryManager:
         return rules
     
     async def _get_all_territory_rules(self, territory: str) -> List[LicensingRule]:
-        """Get all rules for specific territory"""        return [rule for rule in self.licensing_rules.values() if rule.territory_id == territory]
+        """Get all rules for specific territory"""
+        return [rule for rule in self.licensing_rules.values() if rule.territory_id == territory]
     
     async def _get_tax_requirements(self, territory: str) -> List[str]:
-        """Get tax requirements for territory"""        # Mock tax requirements - would integrate with tax database
+        """Get tax requirements for territory"""
+        # Mock tax requirements - would integrate with tax database
         tax_reqs = {
             'US': ['Federal income tax withholding', 'State tax compliance', 'Form 1099-MISC reporting'],
             'DE': ['Umsatzsteuer (VAT) 19%', 'Künstlersozialabgabe', 'Tax certificate required'],
@@ -1232,7 +1278,8 @@ class TerritoryManager:
         return tax_reqs.get(territory, tax_reqs['default'])
     
     async def _get_legal_requirements(self, territory: str) -> List[str]:
-        """Get legal documentation requirements for territory"""        # Mock legal requirements
+        """Get legal documentation requirements for territory"""
+        # Mock legal requirements
         legal_reqs = {
             'US': ['Copyright registration with US Copyright Office', 'ASCAP/BMI registration'],
             'DE': ['GEMA registration', 'Copyright notice in German', 'Data protection compliance'],
@@ -1246,7 +1293,8 @@ class TerritoryManager:
         self,
         territory_validations: Dict[str, TerritoryValidation]
     ) -> List[Dict[str, Any]]:
-        """Detect conflicts between territories"""        conflicts = []
+        """Detect conflicts between territories"""
+        conflicts = []
         
         # Check for exclusive licensing conflicts
         exclusive_territories = []
@@ -1281,7 +1329,8 @@ class TerritoryManager:
         conflicts: List[Dict[str, Any]],
         validations: Dict[str, TerritoryValidation]
     ) -> List[Dict[str, Any]]:
-        """Generate conflict resolution strategies"""        resolutions = []
+        """Generate conflict resolution strategies"""
+        resolutions = []
         
         for conflict in conflicts:
             if conflict['type'] == 'exclusive_licensing_conflict':
@@ -1302,14 +1351,16 @@ class TerritoryManager:
         return resolutions
     
     def _get_cached_validation(self, cache_key: str) -> Optional[TerritoryValidation]:
-        """Get cached territory validation if still valid"""        if cache_key in self.validation_cache:
+        """Get cached territory validation if still valid"""
+        if cache_key in self.validation_cache:
             cached_data = self.validation_cache[cache_key]
             if datetime.now() - cached_data['timestamp'] < timedelta(seconds=self.cache_ttl):
                 return cached_data['result']
         return None
     
     def _cache_validation(self, cache_key: str, result: TerritoryValidation) -> None:
-        """Cache territory validation result"""        self.validation_cache[cache_key] = {
+        """Cache territory validation result"""
+        self.validation_cache[cache_key] = {
             'result': result,
             'timestamp': datetime.now()
         }
@@ -1324,7 +1375,8 @@ class TerritoryManager:
                 del self.validation_cache[key]
     
     async def _load_territory_data(self) -> None:
-        """Load territory information database"""        # Mock territory data - would load from database
+        """Load territory information database"""
+        # Mock territory data - would load from database
         self.territories = {
             'US': TerritoryInfo(
                 territory_id='US',
@@ -1371,7 +1423,8 @@ class TerritoryManager:
         self.logger.info("Territory data loaded")
     
     async def _load_licensing_rules(self) -> None:
-        """Load territory-specific licensing rules"""        # Mock licensing rules
+        """Load territory-specific licensing rules"""
+        # Mock licensing rules
         self.licensing_rules = {
             'us_audio_001': LicensingRule(
                 rule_id='us_audio_001',
@@ -1400,5 +1453,6 @@ class TerritoryManager:
         self.logger.info("Licensing rules loaded")
     
     async def _build_territory_hierarchies(self) -> None:
-        """Build territory hierarchy relationships"""        # This would build parent-child relationships between territories
+        """Build territory hierarchy relationships"""
+        # This would build parent-child relationships between territories
         self.logger.info("Territory hierarchies built")

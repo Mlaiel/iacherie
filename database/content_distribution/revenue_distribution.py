@@ -14,7 +14,8 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Team Specialties: Lead AI Developer + Senior Backend Engineer + Database Administrator + 
 Financial Systems Engineer + Revenue Optimization Expert + Payment Processing Specialist
-"""import asyncio
+"""
+import asyncio
 import json
 import uuid
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -40,7 +41,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class RevenueSource(str, Enum):
-    """Revenue source types"""    AD_REVENUE = "ad_revenue"
+    """Revenue source types"""
+    AD_REVENUE = "ad_revenue"
     SUBSCRIPTION = "subscription"
     SPONSORSHIP = "sponsorship"
     MERCHANDISE = "merchandise"
@@ -52,7 +54,8 @@ class RevenueSource(str, Enum):
     COLLABORATION = "collaboration"
 
 class PaymentStatus(str, Enum):
-    """Payment processing status"""    PENDING = "pending"
+    """Payment processing status"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -62,7 +65,8 @@ class PaymentStatus(str, Enum):
     ON_HOLD = "on_hold"
 
 class DistributionMethod(str, Enum):
-    """Revenue distribution methods"""    EQUAL_SPLIT = "equal_split"
+    """Revenue distribution methods"""
+    EQUAL_SPLIT = "equal_split"
     PERFORMANCE_BASED = "performance_based"
     CONTRIBUTION_BASED = "contribution_based"
     FIXED_AMOUNT = "fixed_amount"
@@ -71,7 +75,8 @@ class DistributionMethod(str, Enum):
     CUSTOM_FORMULA = "custom_formula"
 
 class Currency(str, Enum):
-    """Supported currencies"""    USD = "USD"
+    """Supported currencies"""
+    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     JPY = "JPY"
@@ -84,7 +89,8 @@ class Currency(str, Enum):
 
 @dataclass
 class RevenueMetrics:
-    """Revenue performance metrics"""    total_revenue_cents: int = 0
+    """Revenue performance metrics"""
+    total_revenue_cents: int = 0
     revenue_growth_rate: float = 0.0
     average_revenue_per_user: float = 0.0
     conversion_rate: float = 0.0
@@ -95,7 +101,8 @@ class RevenueMetrics:
 
 @dataclass
 class TaxInformation:
-    """Tax calculation information"""    tax_rate_percent: float = 0.0
+    """Tax calculation information"""
+    tax_rate_percent: float = 0.0
     tax_jurisdiction: str = ""
     tax_exempt: bool = False
     tax_amount_cents: int = 0
@@ -103,7 +110,8 @@ class TaxInformation:
     tax_calculation_method: str = "standard"
 
 class RevenueStream(Base):
-    """Revenue streams database model"""    __tablename__ = "revenue_streams"
+    """Revenue streams database model"""
+    __tablename__ = "revenue_streams"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -171,7 +179,8 @@ class RevenueStream(Base):
     notes = Column(Text, nullable=True)
 
 class RevenueDistribution(Base):
-    """Revenue distribution database model"""    __tablename__ = "revenue_distributions"
+    """Revenue distribution database model"""
+    __tablename__ = "revenue_distributions"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     revenue_stream_id = Column(UUID(as_uuid=True), ForeignKey('revenue_streams.id'), nullable=False)
@@ -226,7 +235,8 @@ class RevenueDistribution(Base):
     created_by = Column(String(100), nullable=True)
 
 class PaymentTransaction(Base):
-    """Payment transactions database model"""    __tablename__ = "payment_transactions"
+    """Payment transactions database model"""
+    __tablename__ = "payment_transactions"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     distribution_id = Column(UUID(as_uuid=True), ForeignKey('revenue_distributions.id'), nullable=False)
@@ -290,7 +300,8 @@ class PaymentTransaction(Base):
     metadata = Column(JSONB, nullable=True)
 
 class MonetizationRule(Base):
-    """Monetization rules database model"""    __tablename__ = "monetization_rules"
+    """Monetization rules database model"""
+    __tablename__ = "monetization_rules"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -340,7 +351,8 @@ class MonetizationRule(Base):
     created_by = Column(String(100), nullable=True)
 
 class RevenueAnalytics(Base):
-    """Revenue analytics database model"""    __tablename__ = "revenue_analytics"
+    """Revenue analytics database model"""
+    __tablename__ = "revenue_analytics"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -410,7 +422,8 @@ class RevenueAnalytics(Base):
 
 # Pydantic Models for API
 class RevenueStreamRequest(BaseModel):
-    """Request model for revenue streams"""    content_id: Optional[str] = None
+    """Request model for revenue streams"""
+    content_id: Optional[str] = None
     platform_name: str
     revenue_source: RevenueSource
     amount_cents: int
@@ -423,7 +436,8 @@ class RevenueStreamRequest(BaseModel):
     campaign_id: Optional[str] = None
 
 class DistributionRequest(BaseModel):
-    """Request model for revenue distribution"""    revenue_stream_ids: List[str]
+    """Request model for revenue distribution"""
+    revenue_stream_ids: List[str]
     distribution_name: str
     distribution_method: DistributionMethod
     recipients_config: Dict[str, Any]
@@ -432,7 +446,8 @@ class DistributionRequest(BaseModel):
     scheduled_date: Optional[datetime] = None
 
 class PaymentRequest(BaseModel):
-    """Request model for payment processing"""    distribution_id: str
+    """Request model for payment processing"""
+    distribution_id: str
     recipient_user_id: str
     payment_method: str
     payment_provider: str
@@ -441,7 +456,8 @@ class PaymentRequest(BaseModel):
     currency: Currency = Currency.USD
 
 class MonetizationRuleRequest(BaseModel):
-    """Request model for monetization rules"""    rule_name: str
+    """Request model for monetization rules"""
+    rule_name: str
     rule_type: str
     conditions: Dict[str, Any]
     actions: Dict[str, Any]
@@ -451,7 +467,8 @@ class MonetizationRuleRequest(BaseModel):
     fixed_fee_cents: Optional[int] = None
 
 class RevenueDistributionManager:
-    """Enterprise revenue distribution management system"""    
+    """Enterprise revenue distribution management system"""
+    
     def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -463,7 +480,8 @@ class RevenueDistributionManager:
         user_id: str,
         revenue_request: RevenueStreamRequest
     ) -> RevenueStream:
-        """Record new revenue stream"""        try:
+        """Record new revenue stream"""
+        try:
             # Calculate revenue metrics
             revenue_metrics = await self._calculate_revenue_metrics(revenue_request)
             
@@ -533,7 +551,8 @@ class RevenueDistributionManager:
         user_id: str,
         distribution_request: DistributionRequest
     ) -> RevenueDistribution:
-        """Create revenue distribution"""        try:
+        """Create revenue distribution"""
+        try:
             # Get revenue streams
             revenue_streams = []
             total_amount_cents = 0
@@ -605,7 +624,8 @@ class RevenueDistributionManager:
         user_id: str,
         payment_request: PaymentRequest
     ) -> PaymentTransaction:
-        """Process payment transaction"""        try:
+        """Process payment transaction"""
+        try:
             # Get distribution
             distribution = await self._get_distribution_by_id(payment_request.distribution_id)
             if not distribution or str(distribution.user_id) != user_id:
@@ -678,7 +698,8 @@ class RevenueDistributionManager:
         period_end: datetime,
         platforms: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive revenue analytics"""        try:
+        """Get comprehensive revenue analytics"""
+        try:
             # Get revenue streams for period
             query = self.db_session.query(RevenueStream).filter(
                 RevenueStream.user_id == uuid.UUID(user_id),
@@ -727,7 +748,8 @@ class RevenueDistributionManager:
         user_id: str,
         rule_request: MonetizationRuleRequest
     ) -> MonetizationRule:
-        """Create monetization rule"""        try:
+        """Create monetization rule"""
+        try:
             # Validate rule configuration
             await self._validate_monetization_rule(rule_request)
             
@@ -763,7 +785,8 @@ class RevenueDistributionManager:
             raise
     
     async def _calculate_revenue_metrics(self, request: RevenueStreamRequest) -> Dict[str, Any]:
-        """Calculate revenue performance metrics"""        metrics = {}
+        """Calculate revenue performance metrics"""
+        metrics = {}
         
         if request.views_count > 0:
             metrics['rpm'] = (request.amount_cents / request.views_count) * 1000  # Revenue per mille
@@ -777,7 +800,8 @@ class RevenueDistributionManager:
         return metrics
     
     async def _calculate_fees(self, revenue_stream: RevenueStream) -> Dict[str, int]:
-        """Calculate platform and processing fees"""        # This would implement actual fee calculation logic
+        """Calculate platform and processing fees"""
+        # This would implement actual fee calculation logic
         # For now, return sample fees
         gross_amount = revenue_stream.gross_revenue_cents
         
@@ -788,7 +812,8 @@ class RevenueDistributionManager:
         }
     
     async def _validate_revenue_quality(self, revenue_stream: RevenueStream) -> float:
-        """Validate revenue stream quality"""        score = 100.0
+        """Validate revenue stream quality"""
+        score = 100.0
         
         # Check for reasonable ratios
         if revenue_stream.revenue_per_view_cents and revenue_stream.revenue_per_view_cents > 10.0:
@@ -803,7 +828,8 @@ class RevenueDistributionManager:
         return max(0.0, score)
     
     async def _get_revenue_stream_by_id(self, stream_id: str) -> Optional[RevenueStream]:
-        """Get revenue stream by ID"""        try:
+        """Get revenue stream by ID"""
+        try:
             stream_uuid = uuid.UUID(stream_id)
             return await self.db_session.query(RevenueStream).filter(
                 RevenueStream.id == stream_uuid

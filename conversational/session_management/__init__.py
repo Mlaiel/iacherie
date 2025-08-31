@@ -33,7 +33,9 @@ Business Logic Integration:
 Creator (musician/blogger/photographer/influencer/comedian) → 
 Multi-format upload → AI processing → Rights protection → 
 Professional SEO → Collaboration matching → Multi-platform distribution
-"""from .session_lifecycle_manager import (
+"""
+
+from .session_lifecycle_manager import (
     SessionLifecycleManager,
     SessionCreationHandler,
     SessionTerminationHandler,

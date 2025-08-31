@@ -20,7 +20,8 @@ poursuivie selon les lois allemandes et internationales.
 - DevOps Engineer: Fahed Mlaiel (mlaiel@live.de)
 - DBA: Fahed Mlaiel (mlaiel@live.de)
 - Sécurité Expert: Fahed Mlaiel (mlaiel@live.de)
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import json
@@ -58,7 +59,8 @@ settings = get_settings()
 logger = logging.getLogger(__name__)
 
 class AIModelType(Enum):
-    """Types de modèles IA supportés"""    # Language Models
+    """Types de modèles IA supportés"""
+    # Language Models
     GPT2 = "gpt2"
     GPT3 = "gpt3"
     GPT4 = "gpt4"
@@ -79,7 +81,8 @@ class AIModelType(Enum):
     DALL_E = "dalle"
 
 class TransformationType(Enum):
-    """Types de transformations IA"""    TEXT_GENERATION = "text_generation"
+    """Types de transformations IA"""
+    TEXT_GENERATION = "text_generation"
     TEXT_SUMMARIZATION = "text_summarization"
     TEXT_TRANSLATION = "text_translation"
     SENTIMENT_ANALYSIS = "sentiment_analysis"
@@ -98,7 +101,8 @@ class TransformationType(Enum):
     CONTENT_MODERATION = "content_moderation"
 
 class CreatorOptimization(Enum):
-    """Optimisations spécifiques par type de créateur"""    MUSICIAN_FOCUSED = "musician_focused"
+    """Optimisations spécifiques par type de créateur"""
+    MUSICIAN_FOCUSED = "musician_focused"
     INFLUENCER_FOCUSED = "influencer_focused"
     PHOTOGRAPHER_FOCUSED = "photographer_focused"
     BLOGGER_FOCUSED = "blogger_focused"
@@ -106,7 +110,8 @@ class CreatorOptimization(Enum):
 
 @dataclass
 class AITransformationConfig:
-    """Configuration pour transformation IA"""    model_type: AIModelType
+    """Configuration pour transformation IA"""
+    model_type: AIModelType
     transformation_type: TransformationType
     model_name: str
     generation_params: GenerationParams
@@ -120,7 +125,8 @@ class AITransformationConfig:
 
 @dataclass
 class AIProcessingResult:
-    """Résultat de traitement IA"""    success: bool
+    """Résultat de traitement IA"""
+    success: bool
     original_content: Any
     transformed_content: Any
     model_used: str
@@ -134,7 +140,8 @@ class AIProcessingResult:
     warnings: List[str]
 
 class AIModelManager:
-    """Gestionnaire des modèles IA"""    
+    """Gestionnaire des modèles IA"""
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.loaded_models = {}
@@ -169,7 +176,8 @@ class AIModelManager:
         }
     
     async def load_model(self, model_type: AIModelType, model_name: Optional[str] = None) -> Any:
-        """Charge un modèle IA"""        
+        """Charge un modèle IA"""
+        
         cache_key = f"{model_type.value}_{model_name or 'default'}"
         
         if cache_key in self.loaded_models:
@@ -213,7 +221,8 @@ class AIModelManager:
             raise ModelLoadError(f"Impossible de charger {model_type}: {str(e)}")
     
     def unload_model(self, model_type: AIModelType, model_name: Optional[str] = None) -> None:
-        """Décharge un modèle de la mémoire"""        
+        """Décharge un modèle de la mémoire"""
+        
         cache_key = f"{model_type.value}_{model_name or 'default'}"
         
         if cache_key in self.loaded_models:
@@ -226,7 +235,8 @@ class AIModelManager:
             self.logger.info(f"Modèle {cache_key} déchargé")
     
     def get_model_info(self, model_type: AIModelType) -> Dict[str, Any]:
-        """Récupère les informations d'un modèle"""        
+        """Récupère les informations d'un modèle"""
+        
         config = self.model_configs.get(model_type, {})
         
         return {
@@ -238,7 +248,8 @@ class AIModelManager:
         }
     
     def _estimate_model_memory(self, model_type: AIModelType) -> str:
-        """Estime l'usage mémoire d'un modèle"""        
+        """Estime l'usage mémoire d'un modèle"""
+        
         memory_estimates = {
             AIModelType.GPT2: "~500MB",
             AIModelType.BERT: "~400MB", 
@@ -250,7 +261,8 @@ class AIModelManager:
         return memory_estimates.get(model_type, "Unknown")
 
 class TextAITransformer:
-    """Transformateur IA spécialisé pour texte"""    
+    """Transformateur IA spécialisé pour texte"""
+    
     def __init__(self, model_manager: AIModelManager):
         self.model_manager = model_manager
         self.logger = logging.getLogger(__name__)
@@ -260,7 +272,8 @@ class TextAITransformer:
         text: str,
         config: AITransformationConfig
     ) -> AIProcessingResult:
-        """Transforme le texte avec IA"""        
+        """Transforme le texte avec IA"""
+        
         start_time = time.time()
         
         try:
@@ -313,7 +326,8 @@ class TextAITransformer:
             )
     
     async def _generate_text(self, prompt: str, config: AITransformationConfig) -> Dict[str, Any]:
-        """Génération de texte"""        
+        """Génération de texte"""
+        
         model_components = await self.model_manager.load_model(config.model_type, config.model_name)
         
         if config.model_type == AIModelType.GPT2:
@@ -377,7 +391,8 @@ class TextAITransformer:
             raise AITransformationError(f"Génération non supportée pour: {config.model_type}")
     
     async def _summarize_text(self, text: str, config: AITransformationConfig) -> Dict[str, Any]:
-        """Résumé de texte"""        
+        """Résumé de texte"""
+        
         # Utilisation des pipelines Hugging Face pour simplifier
         summarizer = pipeline(
             "summarization",
@@ -428,7 +443,8 @@ class TextAITransformer:
         }
     
     async def _translate_text(self, text: str, config: AITransformationConfig) -> Dict[str, Any]:
-        """Traduction de texte"""        
+        """Traduction de texte"""
+        
         # Détection de langue source
         try:
             from langdetect import detect
@@ -486,7 +502,8 @@ class TextAITransformer:
             }
     
     async def _analyze_sentiment(self, text: str, config: AITransformationConfig) -> Dict[str, Any]:
-        """Analyse de sentiment"""        
+        """Analyse de sentiment"""
+        
         sentiment_analyzer = pipeline(
             "sentiment-analysis",
             model="cardiffnlp/twitter-roberta-base-sentiment-latest",
@@ -520,7 +537,8 @@ class TextAITransformer:
         }
     
     async def _classify_content(self, text: str, config: AITransformationConfig) -> Dict[str, Any]:
-        """Classification de contenu"""        
+        """Classification de contenu"""
+        
         # Labels pour classification selon le type de créateur
         labels = self._get_classification_labels(config.creator_optimization)
         
@@ -547,7 +565,8 @@ class TextAITransformer:
         }
     
     def _get_classification_labels(self, creator_optimization: Optional[CreatorOptimization]) -> List[str]:
-        """Récupère les labels de classification selon le type de créateur"""        
+        """Récupère les labels de classification selon le type de créateur"""
+        
         base_labels = ["entertainment", "educational", "promotional", "personal", "news"]
         
         if creator_optimization == CreatorOptimization.MUSICIAN_FOCUSED:
@@ -564,7 +583,8 @@ class TextAITransformer:
             return base_labels
     
     def _calculate_text_quality_metrics(self, original: str, transformed: str) -> EnhancementMetrics:
-        """Calcule les métriques de qualité pour transformation de texte"""        
+        """Calcule les métriques de qualité pour transformation de texte"""
+        
         # Métriques basiques
         length_ratio = len(transformed) / len(original) if len(original) > 0 else 0
         
@@ -596,7 +616,8 @@ class TextAITransformer:
         )
     
     def _calculate_readability(self, text: str) -> float:
-        """Calcule un score de lisibilité simplifié"""        
+        """Calcule un score de lisibilité simplifié"""
+        
         sentences = text.count('.') + text.count('!') + text.count('?')
         words = len(text.split())
         
@@ -611,7 +632,8 @@ class TextAITransformer:
         return readability
 
 class VisionAITransformer:
-    """Transformateur IA spécialisé pour images"""    
+    """Transformateur IA spécialisé pour images"""
+    
     def __init__(self, model_manager: AIModelManager):
         self.model_manager = model_manager
         self.logger = logging.getLogger(__name__)
@@ -621,7 +643,8 @@ class VisionAITransformer:
         image_path: str,
         config: AITransformationConfig
     ) -> AIProcessingResult:
-        """Transforme une image avec IA"""        
+        """Transforme une image avec IA"""
+        
         start_time = time.time()
         
         try:
@@ -673,7 +696,8 @@ class VisionAITransformer:
             )
     
     async def _generate_caption(self, image: Image.Image, config: AITransformationConfig) -> Dict[str, Any]:
-        """Génère une description d'image"""        
+        """Génère une description d'image"""
+        
         model_components = await self.model_manager.load_model(AIModelType.BLIP, config.model_name)
         processor = model_components['processor']
         model = model_components['model']
@@ -705,7 +729,8 @@ class VisionAITransformer:
         }
     
     async def _detect_objects(self, image: Image.Image, config: AITransformationConfig) -> Dict[str, Any]:
-        """Détection d'objets dans l'image"""        
+        """Détection d'objets dans l'image"""
+        
         # Conversion PIL vers OpenCV
         import cv2
         import numpy as np
@@ -744,7 +769,8 @@ class VisionAITransformer:
         }
     
     async def _enhance_image(self, image: Image.Image, config: AITransformationConfig) -> Dict[str, Any]:
-        """Amélioration d'image avec IA"""        
+        """Amélioration d'image avec IA"""
+        
         # Amélioration basique avec PIL
         from PIL import ImageEnhance
         
@@ -784,7 +810,8 @@ class VisionAITransformer:
         }
     
     def _optimize_caption_for_creator(self, caption: str, creator_opt: Optional[CreatorOptimization]) -> str:
-        """Optimise la description selon le type de créateur"""        
+        """Optimise la description selon le type de créateur"""
+        
         if not creator_opt:
             return caption
         
@@ -809,7 +836,8 @@ class VisionAITransformer:
         return caption
     
     def _calculate_image_quality_metrics(self, image: Image.Image, metadata: Dict[str, Any]) -> EnhancementMetrics:
-        """Calcule les métriques de qualité pour images"""        
+        """Calcule les métriques de qualité pour images"""
+        
         # Analyse basique de l'image
         width, height = image.size
         aspect_ratio = width / height
@@ -837,7 +865,8 @@ class VisionAITransformer:
         )
 
 class AudioAITransformer:
-    """Transformateur IA spécialisé pour audio"""    
+    """Transformateur IA spécialisé pour audio"""
+    
     def __init__(self, model_manager: AIModelManager):
         self.model_manager = model_manager
         self.logger = logging.getLogger(__name__)
@@ -847,7 +876,8 @@ class AudioAITransformer:
         audio_path: str,
         config: AITransformationConfig
     ) -> AIProcessingResult:
-        """Transforme l'audio avec IA"""        
+        """Transforme l'audio avec IA"""
+        
         start_time = time.time()
         
         try:
@@ -894,7 +924,8 @@ class AudioAITransformer:
             )
     
     async def _transcribe_audio(self, audio_path: str, config: AITransformationConfig) -> Dict[str, Any]:
-        """Transcription audio vers texte"""        
+        """Transcription audio vers texte"""
+        
         model = await self.model_manager.load_model(AIModelType.WHISPER, config.model_name)
         
         # Transcription avec Whisper
@@ -927,7 +958,8 @@ class AudioAITransformer:
         }
     
     async def _analyze_music(self, audio_path: str, config: AITransformationConfig) -> Dict[str, Any]:
-        """Analyse musicale avancée"""        
+        """Analyse musicale avancée"""
+        
         # Chargement audio avec librosa
         y, sr = librosa.load(audio_path)
         
@@ -970,7 +1002,8 @@ class AudioAITransformer:
         }
     
     def _format_music_transcription(self, transcription: str, segments: List[Dict]) -> str:
-        """Formate la transcription pour musiciens avec timestamps"""        
+        """Formate la transcription pour musiciens avec timestamps"""
+        
         formatted_lines = []
         
         for segment in segments:
@@ -984,7 +1017,8 @@ class AudioAITransformer:
         return '\n'.join(formatted_lines) if formatted_lines else transcription
     
     def _predict_instruments(self, mfcc: np.ndarray) -> List[str]:
-        """Prédiction d'instruments (simplifié)"""        
+        """Prédiction d'instruments (simplifié)"""
+        
         # Analyse basique des MFCC pour prédire les instruments
         mean_mfcc = np.mean(mfcc, axis=1)
         
@@ -1003,7 +1037,8 @@ class AudioAITransformer:
         return instruments if instruments else ["unknown"]
     
     def _predict_genre(self, y: np.ndarray, sr: int) -> str:
-        """Prédiction de genre musical (simplifié)"""        
+        """Prédiction de genre musical (simplifié)"""
+        
         # Analyse des caractéristiques pour prédire le genre
         tempo, _ = librosa.beat.beat_track(y=y, sr=sr)
         
@@ -1020,7 +1055,8 @@ class AudioAITransformer:
             return "dance"
     
     def _calculate_audio_quality_metrics(self, audio_path: str, metadata: Dict[str, Any]) -> EnhancementMetrics:
-        """Calcule les métriques de qualité pour audio"""        
+        """Calcule les métriques de qualité pour audio"""
+        
         try:
             # Analyse basique du fichier audio
             y, sr = librosa.load(audio_path)
@@ -1062,7 +1098,8 @@ class AudioAITransformer:
             )
 
 class AITransformer:
-    """Transformateur IA principal"""    
+    """Transformateur IA principal"""
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.file_manager = FileManager()
@@ -1078,7 +1115,8 @@ class AITransformer:
         input_data: Union[str, bytes, Any],
         config: AITransformationConfig
     ) -> AIProcessingResult:
-        """Transformation IA selon le type de contenu"""        
+        """Transformation IA selon le type de contenu"""
+        
         try:
             # Détermination du type de contenu
             if isinstance(input_data, str):
@@ -1115,7 +1153,8 @@ class AITransformer:
             )
     
     async def _transform_file(self, file_path: str, config: AITransformationConfig) -> AIProcessingResult:
-        """Transformation d'un fichier"""        
+        """Transformation d'un fichier"""
+        
         file_ext = Path(file_path).suffix.lower()
         
         # Images
@@ -1136,7 +1175,8 @@ class AITransformer:
             raise AITransformationError(f"Type de fichier non supporté: {file_ext}")
     
     async def _transform_binary_data(self, data: bytes, config: AITransformationConfig) -> AIProcessingResult:
-        """Transformation de données binaires"""        
+        """Transformation de données binaires"""
+        
         # Sauvegarde temporaire pour traitement
         with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
             tmp_file.write(data)
@@ -1152,7 +1192,8 @@ class AITransformer:
         inputs: List[Tuple[Any, AITransformationConfig]],
         max_concurrent: int = 4
     ) -> List[AIProcessingResult]:
-        """Transformation en lot"""        
+        """Transformation en lot"""
+        
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def transform_single(input_config_tuple):
@@ -1164,7 +1205,8 @@ class AITransformer:
         return await asyncio.gather(*tasks, return_exceptions=True)
     
     def get_supported_transformations(self) -> Dict[str, List[str]]:
-        """Récupère les transformations supportées par type de contenu"""        
+        """Récupère les transformations supportées par type de contenu"""
+        
         return {
             'text': [
                 TransformationType.TEXT_GENERATION.value,
@@ -1185,7 +1227,8 @@ class AITransformer:
         }
     
     async def cleanup_models(self) -> None:
-        """Nettoie les modèles chargés"""        
+        """Nettoie les modèles chargés"""
+        
         for model_type in AIModelType:
             try:
                 self.model_manager.unload_model(model_type)

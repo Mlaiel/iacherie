@@ -6,7 +6,8 @@ management, resource optimization, and automated load balancing.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable, Union
 from datetime import datetime, timezone, timedelta
@@ -26,7 +27,8 @@ settings = get_settings()
 
 
 class TaskPriority(int, Enum):
-    """Task priority levels"""    LOW = 1
+    """Task priority levels"""
+    LOW = 1
     NORMAL = 2
     HIGH = 3
     CRITICAL = 4
@@ -34,7 +36,8 @@ class TaskPriority(int, Enum):
 
 
 class TaskStatus(str, Enum):
-    """Task execution status"""    PENDING = "pending"
+    """Task execution status"""
+    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -43,7 +46,8 @@ class TaskStatus(str, Enum):
 
 
 class SchedulingStrategy(str, Enum):
-    """Task scheduling strategies"""    FIFO = "fifo"  # First In, First Out
+    """Task scheduling strategies"""
+    FIFO = "fifo"  # First In, First Out
     PRIORITY = "priority"  # Priority-based
     ROUND_ROBIN = "round_robin"  # Round-robin
     WEIGHTED = "weighted"  # Weighted scheduling
@@ -52,7 +56,8 @@ class SchedulingStrategy(str, Enum):
 
 @dataclass
 class ScheduledTask:
-    """Scheduled task definition"""    id: str
+    """Scheduled task definition"""
+    id: str
     name: str
     function: Callable
     args: tuple = ()
@@ -73,13 +78,15 @@ class ScheduledTask:
     result: Optional[Any] = None
     
     def __lt__(self, other):
-        """For heap comparison - higher priority first"""        if self.priority != other.priority:
+        """For heap comparison - higher priority first"""
+        if self.priority != other.priority:
             return self.priority.value > other.priority.value
         return self.scheduled_at < other.scheduled_at
 
 
 class WorkerConfig(BaseModel):
-    """Worker configuration"""    worker_id: str = Field(description="Worker identifier")
+    """Worker configuration"""
+    worker_id: str = Field(description="Worker identifier")
     max_concurrent_tasks: int = Field(default=5, description="Maximum concurrent tasks")
     specialized_types: List[str] = Field(default_factory=list, description="Task types this worker handles")
     resources: Dict[str, Any] = Field(default_factory=dict, description="Worker resources")
@@ -87,7 +94,8 @@ class WorkerConfig(BaseModel):
 
 
 class SchedulerStats(BaseModel):
-    """Scheduler performance statistics"""    total_tasks: int = Field(default=0, description="Total tasks scheduled")
+    """Scheduler performance statistics"""
+    total_tasks: int = Field(default=0, description="Total tasks scheduled")
     completed_tasks: int = Field(default=0, description="Successfully completed tasks")
     failed_tasks: int = Field(default=0, description="Failed tasks")
     pending_tasks: int = Field(default=0, description="Pending tasks")
@@ -100,9 +108,11 @@ class SchedulerStats(BaseModel):
 
 
 class StreamScheduler:
-    """    Intelligent scheduling system for stream processing tasks with priority
+    """
+    Intelligent scheduling system for stream processing tasks with priority
     management, resource optimization, and automated load balancing.
-    """    
+    """
+    
     def __init__(self, strategy: SchedulingStrategy = SchedulingStrategy.PRIORITY):
         self.strategy = strategy
         self.task_queue: List[ScheduledTask] = []
@@ -116,7 +126,8 @@ class StreamScheduler:
         self._queue_lock = asyncio.Lock()
         
     async def initialize(self) -> None:
-        """Initialize stream scheduler"""        try:
+        """Initialize stream scheduler"""
+        try:
             # Initialize default worker
             await self.add_worker(WorkerConfig(
                 worker_id="default_worker",
@@ -147,7 +158,8 @@ class StreamScheduler:
         timeout_seconds: Optional[float] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """        Schedule task for execution
+        """
+        Schedule task for execution
         
         Args:
             name: Task name
@@ -163,7 +175,8 @@ class StreamScheduler:
             
         Returns:
             Task identifier
-        """        try:
+        """
+        try:
             task_id = str(uuid4())
             
             if scheduled_at is None:
@@ -209,7 +222,8 @@ class StreamScheduler:
         max_occurrences: Optional[int] = None,
         end_time: Optional[datetime] = None
     ) -> str:
-        """        Schedule recurring task
+        """
+        Schedule recurring task
         
         Args:
             name: Task name
@@ -223,7 +237,8 @@ class StreamScheduler:
             
         Returns:
             Recurring task identifier
-        """        try:
+        """
+        try:
             recurring_id = str(uuid4())
             
             async def recurring_wrapper():
@@ -259,7 +274,8 @@ class StreamScheduler:
             raise
             
     async def cancel_task(self, task_id: str) -> bool:
-        """Cancel scheduled or running task"""        try:
+        """Cancel scheduled or running task"""
+        try:
             # Check active tasks
             if task_id in self.active_tasks:
                 task = self.active_tasks[task_id]
@@ -296,7 +312,8 @@ class StreamScheduler:
             return False
             
     async def get_task_status(self, task_id: str) -> Optional[Dict[str, Any]]:
-        """Get task status and details"""        # Check active tasks
+        """Get task status and details"""
+        # Check active tasks
         if task_id in self.active_tasks:
             task = self.active_tasks[task_id]
         # Check completed tasks
@@ -327,7 +344,8 @@ class StreamScheduler:
         }
         
     async def add_worker(self, config: WorkerConfig) -> bool:
-        """Add worker to scheduler"""        try:
+        """Add worker to scheduler"""
+        try:
             self.workers[config.worker_id] = config
             self.worker_tasks[config.worker_id] = set()
             
@@ -339,7 +357,8 @@ class StreamScheduler:
             return False
             
     async def remove_worker(self, worker_id: str) -> bool:
-        """Remove worker from scheduler"""        try:
+        """Remove worker from scheduler"""
+        try:
             if worker_id in self.workers:
                 del self.workers[worker_id]
                 
@@ -361,12 +380,14 @@ class StreamScheduler:
         event_type: str,
         callback: Callable[[ScheduledTask], None]
     ) -> None:
-        """Register callback for task events"""        if event_type not in self.task_callbacks:
+        """Register callback for task events"""
+        if event_type not in self.task_callbacks:
             self.task_callbacks[event_type] = []
         self.task_callbacks[event_type].append(callback)
         
     async def get_scheduler_stats(self) -> SchedulerStats:
-        """Get scheduler performance statistics"""        # Update real-time stats
+        """Get scheduler performance statistics"""
+        # Update real-time stats
         self.stats.pending_tasks = len(self.task_queue)
         self.stats.running_tasks = len(self.active_tasks)
         
@@ -379,7 +400,8 @@ class StreamScheduler:
         return self.stats
         
     async def _scheduler_loop(self) -> None:
-        """Main scheduler loop"""        while not self._shutdown_event.is_set():
+        """Main scheduler loop"""
+        while not self._shutdown_event.is_set():
             try:
                 await asyncio.sleep(0.1)  # Check every 100ms
                 
@@ -406,7 +428,8 @@ class StreamScheduler:
                 logger.error(f"Scheduler loop error: {e}")
                 
     async def _get_next_task(self) -> Optional[ScheduledTask]:
-        """Get next task to execute based on strategy"""        async with self._queue_lock:
+        """Get next task to execute based on strategy"""
+        async with self._queue_lock:
             if not self.task_queue:
                 return None
                 
@@ -429,7 +452,8 @@ class StreamScheduler:
             return None
             
     async def _find_available_worker(self, task: ScheduledTask) -> Optional[str]:
-        """Find available worker for task"""        for worker_id, worker in self.workers.items():
+        """Find available worker for task"""
+        for worker_id, worker in self.workers.items():
             if not worker.enabled:
                 continue
                 
@@ -448,7 +472,8 @@ class StreamScheduler:
         return None
         
     async def _execute_task(self, task: ScheduledTask, worker_id: str) -> None:
-        """Execute task on worker"""        try:
+        """Execute task on worker"""
+        try:
             # Update task status
             task.status = TaskStatus.RUNNING
             task.started_at = datetime.now(timezone.utc)
@@ -472,7 +497,8 @@ class StreamScheduler:
             await self._handle_task_failure(task, worker_id, str(e))
             
     async def _run_task(self, task: ScheduledTask, worker_id: str) -> None:
-        """Run task function with timeout and error handling"""        try:
+        """Run task function with timeout and error handling"""
+        try:
             # Execute with timeout if specified
             if task.timeout_seconds:
                 result = await asyncio.wait_for(
@@ -491,7 +517,8 @@ class StreamScheduler:
             await self._handle_task_failure(task, worker_id, str(e))
             
     async def _call_task_function(self, task: ScheduledTask) -> Any:
-        """Call task function with proper async handling"""        if asyncio.iscoroutinefunction(task.function):
+        """Call task function with proper async handling"""
+        if asyncio.iscoroutinefunction(task.function):
             return await task.function(*task.args, **task.kwargs)
         else:
             return task.function(*task.args, **task.kwargs)
@@ -502,7 +529,8 @@ class StreamScheduler:
         worker_id: str,
         result: Any
     ) -> None:
-        """Handle successful task completion"""        try:
+        """Handle successful task completion"""
+        try:
             # Update task
             task.status = TaskStatus.COMPLETED
             task.completed_at = datetime.now(timezone.utc)
@@ -544,7 +572,8 @@ class StreamScheduler:
         worker_id: str,
         error_message: str
     ) -> None:
-        """Handle task failure with retry logic"""        try:
+        """Handle task failure with retry logic"""
+        try:
             task.error_message = error_message
             task.retry_count += 1
             
@@ -595,7 +624,8 @@ class StreamScheduler:
             logger.error(f"Error handling task failure: {e}")
             
     async def _notify_callbacks(self, event_type: str, task: ScheduledTask) -> None:
-        """Notify registered callbacks"""        callbacks = self.task_callbacks.get(event_type, [])
+        """Notify registered callbacks"""
+        callbacks = self.task_callbacks.get(event_type, [])
         for callback in callbacks:
             try:
                 if asyncio.iscoroutinefunction(callback):
@@ -606,7 +636,8 @@ class StreamScheduler:
                 logger.error(f"Callback error for {event_type}: {e}")
                 
     async def _stats_updater(self) -> None:
-        """Background stats update task"""        while not self._shutdown_event.is_set():
+        """Background stats update task"""
+        while not self._shutdown_event.is_set():
             try:
                 await asyncio.sleep(60)  # Update every minute
                 
@@ -625,7 +656,8 @@ class StreamScheduler:
                 logger.error(f"Stats updater error: {e}")
                 
     async def _cleanup_task(self) -> None:
-        """Background cleanup task"""        while not self._shutdown_event.is_set():
+        """Background cleanup task"""
+        while not self._shutdown_event.is_set():
             try:
                 await asyncio.sleep(3600)  # Cleanup every hour
                 
@@ -646,7 +678,8 @@ class StreamScheduler:
                 logger.error(f"Cleanup task error: {e}")
                 
     async def shutdown(self) -> None:
-        """Gracefully shutdown scheduler"""        try:
+        """Gracefully shutdown scheduler"""
+        try:
             self._shutdown_event.set()
             
             # Cancel all pending tasks

@@ -19,7 +19,8 @@ IA protection rights → Web Surveillance → Violation Detection → Automated 
 WEB CRAWLER MODEL ARCHITECTURE:
 Crawl Scheduling → Multi-Platform Monitoring → Content Fingerprinting → 
 Violation Detection → Evidence Collection → Alert Generation → Takedown Processing
-"""from typing import Dict, List, Optional, Any, Union
+"""
+from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timezone, timedelta
 from dataclasses import dataclass, field
 from enum import Enum
@@ -27,7 +28,8 @@ import uuid
 import json
 
 class CrawlStatus(Enum):
-    """Crawl job status enumeration"""    PENDING = "pending"
+    """Crawl job status enumeration"""
+    PENDING = "pending"
     SCHEDULED = "scheduled"
     RUNNING = "running"
     PAUSED = "paused"
@@ -37,7 +39,8 @@ class CrawlStatus(Enum):
     TIMEOUT = "timeout"
 
 class PlatformType(Enum):
-    """Supported platforms for crawling"""    YOUTUBE = "youtube"
+    """Supported platforms for crawling"""
+    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
@@ -54,7 +57,8 @@ class PlatformType(Enum):
     GENERIC_WEB = "generic_web"
 
 class ViolationType(Enum):
-    """Types of content violations"""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Types of content violations"""
+    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_USE = "unauthorized_use"
     TRADEMARK_VIOLATION = "trademark_violation"
     PLAGIARISM = "plagiarism"
@@ -64,7 +68,8 @@ class ViolationType(Enum):
     FAIR_USE_ABUSE = "fair_use_abuse"
 
 class EvidenceType(Enum):
-    """Types of evidence collected"""    SCREENSHOT = "screenshot"
+    """Types of evidence collected"""
+    SCREENSHOT = "screenshot"
     VIDEO_RECORDING = "video_recording"
     AUDIO_SAMPLE = "audio_sample"
     HTML_SOURCE = "html_source"
@@ -74,7 +79,8 @@ class EvidenceType(Enum):
     FINGERPRINT_MATCH = "fingerprint_match"
 
 class TakedownStatus(Enum):
-    """Takedown request status"""    PENDING = "pending"
+    """Takedown request status"""
+    PENDING = "pending"
     SUBMITTED = "submitted"
     IN_REVIEW = "in_review"
     APPROVED = "approved"
@@ -85,7 +91,8 @@ class TakedownStatus(Enum):
 
 @dataclass
 class CrawlJobModel:
-    """Main crawl job model for web surveillance"""    job_id: str = field(default_factory=lambda: f"crawl_{uuid.uuid4().hex[:12]}")
+    """Main crawl job model for web surveillance"""
+    job_id: str = field(default_factory=lambda: f"crawl_{uuid.uuid4().hex[:12]}")
     creator_id: str = ""
     
     # Crawl configuration
@@ -143,7 +150,8 @@ class CrawlJobModel:
     created_by: Optional[str] = None
     
     def __post_init__(self):
-        """Post-initialization validation"""        if not self.search_terms and not self.target_urls:
+        """Post-initialization validation"""
+        if not self.search_terms and not self.target_urls:
             raise ValueError("Either search_terms or target_urls must be provided")
         
         if self.priority < 1:
@@ -152,7 +160,8 @@ class CrawlJobModel:
             self.priority = 10
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""        return {
+        """Convert to dictionary for serialization"""
+        return {
             'job_id': self.job_id,
             'creator_id': self.creator_id,
             'platform': self.platform.value,
@@ -193,7 +202,8 @@ class CrawlJobModel:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'CrawlJobModel':
-        """Create instance from dictionary"""        # Convert datetime strings
+        """Create instance from dictionary"""
+        # Convert datetime strings
         datetime_fields = ['scheduled_at', 'started_at', 'completed_at', 'next_run_at', 'created_at', 'updated_at']
         for field_name in datetime_fields:
             if field_name in data and data[field_name] and isinstance(data[field_name], str):
@@ -208,14 +218,17 @@ class CrawlJobModel:
         return cls(**data)
     
     def is_ready_to_run(self) -> bool:
-        """Check if job is ready to run"""        return (self.status == CrawlStatus.PENDING and 
+        """Check if job is ready to run"""
+        return (self.status == CrawlStatus.PENDING and 
                 self.scheduled_at <= datetime.now(timezone.utc))
     
     def can_retry(self) -> bool:
-        """Check if job can be retried"""        return self.status == CrawlStatus.FAILED
+        """Check if job can be retried"""
+        return self.status == CrawlStatus.FAILED
     
     def calculate_next_run(self):
-        """Calculate next run time for recurring jobs"""        if not self.is_recurring or not self.recurrence_pattern:
+        """Calculate next run time for recurring jobs"""
+        if not self.is_recurring or not self.recurrence_pattern:
             return
         
         base_time = self.completed_at or datetime.now(timezone.utc)
@@ -230,7 +243,8 @@ class CrawlJobModel:
 
 @dataclass
 class DetectedContentModel:
-    """Model for content detected during crawling"""    detection_id: str = field(default_factory=lambda: f"detect_{uuid.uuid4().hex[:12]}")
+    """Model for content detected during crawling"""
+    detection_id: str = field(default_factory=lambda: f"detect_{uuid.uuid4().hex[:12]}")
     job_id: str = ""
     creator_id: str = ""
     original_content_id: str = ""
@@ -291,7 +305,8 @@ class DetectedContentModel:
     updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def __post_init__(self):
-        """Post-initialization validation"""        if self.similarity_score < 0 or self.similarity_score > 1:
+        """Post-initialization validation"""
+        if self.similarity_score < 0 or self.similarity_score > 1:
             raise ValueError("Similarity score must be between 0 and 1")
         
         if self.confidence_level < 0 or self.confidence_level > 1:
@@ -303,7 +318,8 @@ class DetectedContentModel:
             self.urgency_level = 10
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""        return {
+        """Convert to dictionary for serialization"""
+        return {
             'detection_id': self.detection_id,
             'job_id': self.job_id,
             'creator_id': self.creator_id,
@@ -343,7 +359,8 @@ class DetectedContentModel:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'DetectedContentModel':
-        """Create instance from dictionary"""        # Convert datetime strings
+        """Create instance from dictionary"""
+        # Convert datetime strings
         datetime_fields = ['detected_at', 'upload_date', 'takedown_submitted_at', 
                           'takedown_completed_at', 'created_at', 'updated_at']
         for field_name in datetime_fields:
@@ -361,17 +378,20 @@ class DetectedContentModel:
         return cls(**data)
     
     def is_high_priority(self) -> bool:
-        """Check if detection is high priority"""        return (self.urgency_level >= 8 or 
+        """Check if detection is high priority"""
+        return (self.urgency_level >= 8 or 
                 self.similarity_score >= 0.95 or
                 (self.revenue_estimate and self.revenue_estimate > 1000))
     
     def requires_immediate_action(self) -> bool:
-        """Check if detection requires immediate action"""        return (self.urgency_level >= 9 or
+        """Check if detection requires immediate action"""
+        return (self.urgency_level >= 9 or
                 self.violation_type in [ViolationType.COPYRIGHT_INFRINGEMENT, ViolationType.REVENUE_THEFT])
 
 @dataclass
 class EvidenceModel:
-    """Model for evidence collected during crawling"""    evidence_id: str = field(default_factory=lambda: f"evidence_{uuid.uuid4().hex[:12]}")
+    """Model for evidence collected during crawling"""
+    evidence_id: str = field(default_factory=lambda: f"evidence_{uuid.uuid4().hex[:12]}")
     detection_id: str = ""
     job_id: str = ""
     
@@ -412,14 +432,16 @@ class EvidenceModel:
     updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def __post_init__(self):
-        """Post-initialization validation"""        if self.legal_weight < 0 or self.legal_weight > 1:
+        """Post-initialization validation"""
+        if self.legal_weight < 0 or self.legal_weight > 1:
             raise ValueError("Legal weight must be between 0 and 1")
         
         if self.quality_score < 0 or self.quality_score > 1:
             raise ValueError("Quality score must be between 0 and 1")
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""        return {
+        """Convert to dictionary for serialization"""
+        return {
             'evidence_id': self.evidence_id,
             'detection_id': self.detection_id,
             'job_id': self.job_id,
@@ -449,7 +471,8 @@ class EvidenceModel:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'EvidenceModel':
-        """Create instance from dictionary"""        # Convert datetime strings
+        """Create instance from dictionary"""
+        # Convert datetime strings
         datetime_fields = ['captured_at', 'expiry_date', 'created_at', 'updated_at']
         for field_name in datetime_fields:
             if field_name in data and data[field_name] and isinstance(data[field_name], str):
@@ -462,12 +485,14 @@ class EvidenceModel:
         return cls(**data)
     
     def is_expired(self) -> bool:
-        """Check if evidence has expired"""        if not self.expiry_date:
+        """Check if evidence has expired"""
+        if not self.expiry_date:
             return False
         return datetime.now(timezone.utc) > self.expiry_date
     
     def add_chain_of_custody_entry(self, action: str, performed_by: str, notes: str = ""):
-        """Add entry to chain of custody"""        entry = {
+        """Add entry to chain of custody"""
+        entry = {
             'timestamp': datetime.now(timezone.utc).isoformat(),
             'action': action,
             'performed_by': performed_by,
@@ -477,7 +502,8 @@ class EvidenceModel:
 
 @dataclass
 class CrawlMetricsModel:
-    """Model for crawl performance metrics"""    metrics_id: str = field(default_factory=lambda: f"metrics_{uuid.uuid4().hex[:12]}")
+    """Model for crawl performance metrics"""
+    metrics_id: str = field(default_factory=lambda: f"metrics_{uuid.uuid4().hex[:12]}")
     job_id: str = ""
     
     # Performance metrics
@@ -514,13 +540,15 @@ class CrawlMetricsModel:
     completed_at: Optional[datetime] = None
     
     def __post_init__(self):
-        """Post-initialization calculations"""        # Calculate success rate
+        """Post-initialization calculations"""
+        # Calculate success rate
         total_requests = self.pages_crawled + self.pages_failed
         if total_requests > 0:
             self.success_rate = (self.pages_crawled / total_requests) * 100
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""        return {
+        """Convert to dictionary for serialization"""
+        return {
             'metrics_id': self.metrics_id,
             'job_id': self.job_id,
             'crawl_duration': self.crawl_duration,

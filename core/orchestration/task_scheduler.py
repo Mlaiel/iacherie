@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Callable, Union, Set, Tuple
@@ -25,7 +26,8 @@ from backend.core.utils.event_dispatcher import EventDispatcher
 
 
 class TaskPriority(Enum):
-    """Task priority levels."""    CRITICAL = 1
+    """Task priority levels."""
+    CRITICAL = 1
     HIGH = 2
     NORMAL = 3
     LOW = 4
@@ -33,7 +35,8 @@ class TaskPriority(Enum):
 
 
 class SchedulingStrategy(Enum):
-    """Task scheduling strategy options."""    FIFO = "fifo"
+    """Task scheduling strategy options."""
+    FIFO = "fifo"
     PRIORITY = "priority"
     ROUND_ROBIN = "round_robin"
     WEIGHTED_FAIR = "weighted_fair"
@@ -43,7 +46,8 @@ class SchedulingStrategy(Enum):
 
 
 class TaskType(Enum):
-    """Task type classification."""    CONTENT_UPLOAD = "content_upload"
+    """Task type classification."""
+    CONTENT_UPLOAD = "content_upload"
     AI_PROCESSING = "ai_processing"
     CONTENT_ANALYSIS = "content_analysis"
     PROTECTION_SCAN = "protection_scan"
@@ -55,7 +59,8 @@ class TaskType(Enum):
 
 
 class ResourceType(Enum):
-    """System resource types."""    CPU = "cpu"
+    """System resource types."""
+    CPU = "cpu"
     MEMORY = "memory"
     GPU = "gpu"
     STORAGE = "storage"
@@ -65,7 +70,8 @@ class ResourceType(Enum):
 
 @dataclass
 class ResourceRequirement:
-    """Resource requirement specification."""    resource_type: ResourceType
+    """Resource requirement specification."""
+    resource_type: ResourceType
     amount: float
     unit: str
     duration_estimate: Optional[float] = None
@@ -75,7 +81,8 @@ class ResourceRequirement:
 
 @dataclass
 class ScheduledTask:
-    """Scheduled task definition with execution parameters."""    task_id: str
+    """Scheduled task definition with execution parameters."""
+    task_id: str
     name: str
     task_type: TaskType
     executor: str
@@ -103,7 +110,8 @@ class ScheduledTask:
 
 @dataclass
 class TaskExecution:
-    """Task execution tracking information."""    task_id: str
+    """Task execution tracking information."""
+    task_id: str
     execution_id: str
     executor_id: str
     start_time: datetime
@@ -119,7 +127,8 @@ class TaskExecution:
 
 @dataclass
 class ExecutorNode:
-    """Task executor node information."""    executor_id: str
+    """Task executor node information."""
+    executor_id: str
     name: str
     node_type: str
     capacity: Dict[str, float]
@@ -135,7 +144,8 @@ class ExecutorNode:
 
 @dataclass
 class SchedulingDecision:
-    """Scheduling decision with rationale."""    task_id: str
+    """Scheduling decision with rationale."""
+    task_id: str
     executor_id: str
     scheduled_time: datetime
     estimated_completion: datetime
@@ -148,7 +158,8 @@ class SchedulingDecision:
 
 
 class TaskScheduler:
-    """    Enterprise-grade intelligent task scheduling system with AI optimization.
+    """
+    Enterprise-grade intelligent task scheduling system with AI optimization.
     
     Provides comprehensive task scheduling capabilities including:
     - Multi-strategy scheduling algorithms with AI optimization
@@ -156,7 +167,8 @@ class TaskScheduler:
     - Predictive scheduling based on historical patterns
     - Multi-tenant isolation and fair resource sharing
     - Real-time performance monitoring and optimization
-    """    
+    """
+    
     def __init__(
         self,
         strategy: SchedulingStrategy = SchedulingStrategy.AI_OPTIMIZED,
@@ -213,7 +225,8 @@ class TaskScheduler:
         self.logger.info(f"TaskScheduler initialized with strategy: {strategy.value}")
     
     async def register_executor(self, executor_id: str, executor_func: Callable, node_info: ExecutorNode) -> bool:
-        """        Register a task executor with node information.
+        """
+        Register a task executor with node information.
         
         Args:
             executor_id: Unique executor identifier
@@ -222,7 +235,8 @@ class TaskScheduler:
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             if not asyncio.iscoroutinefunction(executor_func):
                 raise ValueError("Executor must be an async function")
             
@@ -244,14 +258,16 @@ class TaskScheduler:
             return False
     
     async def schedule_task(self, task: ScheduledTask) -> bool:
-        """        Schedule a new task for execution.
+        """
+        Schedule a new task for execution.
         
         Args:
             task: Task definition to schedule
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             # Validate task
             if not await self._validate_task(task):
                 return False
@@ -286,7 +302,8 @@ class TaskScheduler:
             return False
     
     async def _scheduler_loop(self) -> None:
-        """Main scheduler loop for task execution."""        while self._scheduler_running:
+        """Main scheduler loop for task execution."""
+        while self._scheduler_running:
             try:
                 await self._process_task_queue()
                 await self._cleanup_completed_tasks()
@@ -298,7 +315,8 @@ class TaskScheduler:
                 await asyncio.sleep(1.0)
     
     async def _process_task_queue(self) -> None:
-        """Process tasks from the scheduling queue."""        current_time = datetime.now()
+        """Process tasks from the scheduling queue."""
+        current_time = datetime.now()
         
         # Check for available resources and ready tasks
         while (self.task_queue and 
@@ -324,14 +342,16 @@ class TaskScheduler:
             await self._execute_task(task, scheduling_decision)
     
     async def _find_optimal_executor(self, task: ScheduledTask) -> Optional[SchedulingDecision]:
-        """        Find optimal executor for task using scheduling strategy.
+        """
+        Find optimal executor for task using scheduling strategy.
         
         Args:
             task: Task to schedule
             
         Returns:
             Optional[SchedulingDecision]: Scheduling decision or None
-        """        available_executors = []
+        """
+        available_executors = []
         
         # Filter available executors
         for executor_id, node in self.executor_nodes.items():
@@ -359,7 +379,8 @@ class TaskScheduler:
         task: ScheduledTask,
         available_executors: List[Tuple[str, ExecutorNode]]
     ) -> Optional[SchedulingDecision]:
-        """AI-powered optimal executor selection."""        best_decision = None
+        """AI-powered optimal executor selection."""
+        best_decision = None
         best_score = float('-inf')
         
         for executor_id, node in available_executors:
@@ -402,7 +423,8 @@ class TaskScheduler:
         task: ScheduledTask,
         available_executors: List[Tuple[str, ExecutorNode]]
     ) -> Optional[SchedulingDecision]:
-        """Priority-based executor selection."""        # Select executor with highest performance score
+        """Priority-based executor selection."""
+        # Select executor with highest performance score
         best_executor = max(available_executors, key=lambda x: x[1].performance_score)
         executor_id, node = best_executor
         
@@ -423,7 +445,8 @@ class TaskScheduler:
         task: ScheduledTask,
         available_executors: List[Tuple[str, ExecutorNode]]
     ) -> Optional[SchedulingDecision]:
-        """Shortest job first executor selection."""        # Select executor with lowest current load
+        """Shortest job first executor selection."""
+        # Select executor with lowest current load
         best_executor = min(available_executors, key=lambda x: len(x[1].active_tasks))
         executor_id, node = best_executor
         
@@ -444,7 +467,8 @@ class TaskScheduler:
         task: ScheduledTask,
         available_executors: List[Tuple[str, ExecutorNode]]
     ) -> Optional[SchedulingDecision]:
-        """Deadline-aware executor selection."""        if not task.deadline:
+        """Deadline-aware executor selection."""
+        if not task.deadline:
             return await self._priority_scheduling(task, available_executors)
         
         # Calculate deadline urgency
@@ -474,7 +498,8 @@ class TaskScheduler:
         task: ScheduledTask,
         available_executors: List[Tuple[str, ExecutorNode]]
     ) -> Optional[SchedulingDecision]:
-        """Round-robin executor selection."""        # Simple round-robin based on task count
+        """Round-robin executor selection."""
+        # Simple round-robin based on task count
         executor_id, node = min(available_executors, key=lambda x: len(x[1].active_tasks))
         
         return SchedulingDecision(
@@ -490,12 +515,14 @@ class TaskScheduler:
         )
     
     async def _execute_task(self, task: ScheduledTask, decision: SchedulingDecision) -> None:
-        """        Execute task on selected executor.
+        """
+        Execute task on selected executor.
         
         Args:
             task: Task to execute
             decision: Scheduling decision
-        """        execution_id = str(uuid.uuid4())
+        """
+        execution_id = str(uuid.uuid4())
         
         try:
             # Create execution tracking
@@ -537,7 +564,8 @@ class TaskScheduler:
         execution: TaskExecution,
         decision: SchedulingDecision
     ) -> None:
-        """Asynchronous task execution wrapper."""        try:
+        """Asynchronous task execution wrapper."""
+        try:
             # Get executor function
             executor_func = self.task_executors[decision.executor_id]
             
@@ -613,7 +641,8 @@ class TaskScheduler:
         execution: TaskExecution,
         decision: SchedulingDecision
     ) -> None:
-        """Cleanup after task execution."""        try:
+        """Cleanup after task execution."""
+        try:
             # Release resources
             await self._release_task_resources(task, decision.executor_id)
             
@@ -637,7 +666,8 @@ class TaskScheduler:
             self.logger.error(f"Cleanup failed: {e}")
     
     async def _calculate_priority_score(self, task: ScheduledTask) -> float:
-        """Calculate task priority score."""        base_score = task.priority.value
+        """Calculate task priority score."""
+        base_score = task.priority.value
         
         # Deadline urgency
         if task.deadline:
@@ -660,7 +690,8 @@ class TaskScheduler:
         return base_score
     
     async def _calculate_resource_score(self, node: ExecutorNode, task: ScheduledTask) -> float:
-        """Calculate resource availability score."""        total_score = 0.0
+        """Calculate resource availability score."""
+        total_score = 0.0
         requirement_count = 0
         
         for req in task.resource_requirements:
@@ -677,19 +708,22 @@ class TaskScheduler:
         return total_score / max(requirement_count, 1)
     
     async def _calculate_load_score(self, node: ExecutorNode) -> float:
-        """Calculate executor load score."""        max_tasks = 10  # Configurable
+        """Calculate executor load score."""
+        max_tasks = 10  # Configurable
         current_tasks = len(node.active_tasks)
         return max(0.0, 1.0 - (current_tasks / max_tasks))
     
     async def _check_resource_availability(self, node: ExecutorNode, task: ScheduledTask) -> bool:
-        """Check if node has sufficient resources for task."""        for req in task.resource_requirements:
+        """Check if node has sufficient resources for task."""
+        for req in task.resource_requirements:
             if req.resource_type.value in node.available_resources:
                 if node.available_resources[req.resource_type.value] < req.amount:
                     return False
         return True
     
     async def _allocate_task_resources(self, task: ScheduledTask, executor_id: str) -> None:
-        """Allocate resources for task execution."""        node = self.executor_nodes[executor_id]
+        """Allocate resources for task execution."""
+        node = self.executor_nodes[executor_id]
         
         for req in task.resource_requirements:
             if req.resource_type.value in node.available_resources:
@@ -700,7 +734,8 @@ class TaskScheduler:
                 node.allocated_resources[req.resource_type.value] += req.amount
     
     async def _release_task_resources(self, task: ScheduledTask, executor_id: str) -> None:
-        """Release allocated task resources."""        node = self.executor_nodes[executor_id]
+        """Release allocated task resources."""
+        node = self.executor_nodes[executor_id]
         
         for req in task.resource_requirements:
             if req.resource_type.value in node.available_resources:
@@ -712,7 +747,8 @@ class TaskScheduler:
                         del node.allocated_resources[req.resource_type.value]
     
     async def _validate_task(self, task: ScheduledTask) -> bool:
-        """Validate task definition."""        try:
+        """Validate task definition."""
+        try:
             if not task.task_id or not task.executor:
                 return False
             
@@ -725,7 +761,8 @@ class TaskScheduler:
             return False
     
     async def _check_task_dependencies(self, task: ScheduledTask) -> bool:
-        """Check if task dependencies are satisfied."""        for dep_id in task.dependencies:
+        """Check if task dependencies are satisfied."""
+        for dep_id in task.dependencies:
             # Check if dependency is completed
             if dep_id in self.scheduled_tasks:
                 return False  # Dependency still scheduled
@@ -742,7 +779,8 @@ class TaskScheduler:
         return True
     
     async def _cleanup_completed_tasks(self) -> None:
-        """Cleanup old completed task records."""        cutoff_time = datetime.now() - timedelta(hours=24)
+        """Cleanup old completed task records."""
+        cutoff_time = datetime.now() - timedelta(hours=24)
         
         tasks_to_remove = [
             exec_id for exec_id, execution in self.completed_tasks.items()
@@ -753,7 +791,8 @@ class TaskScheduler:
             del self.completed_tasks[exec_id]
     
     async def _update_performance_metrics(self) -> None:
-        """Update scheduler performance metrics."""        if self.scheduling_stats['total_tasks_completed'] > 0:
+        """Update scheduler performance metrics."""
+        if self.scheduling_stats['total_tasks_completed'] > 0:
             # Calculate average metrics
             total_wait_time = 0.0
             total_execution_time = 0.0
@@ -792,7 +831,8 @@ class TaskScheduler:
                 self.scheduling_stats['resource_utilization'] = total_allocated / total_capacity
     
     async def get_task_status(self, task_id: str) -> Optional[Dict[str, Any]]:
-        """Get current task status."""        # Check scheduled tasks
+        """Get current task status."""
+        # Check scheduled tasks
         if task_id in self.scheduled_tasks:
             return {
                 'status': 'scheduled',
@@ -818,7 +858,8 @@ class TaskScheduler:
         return None
     
     async def cancel_task(self, task_id: str) -> bool:
-        """Cancel a scheduled or running task."""        try:
+        """Cancel a scheduled or running task."""
+        try:
             # Remove from scheduled tasks
             if task_id in self.scheduled_tasks:
                 del self.scheduled_tasks[task_id]
@@ -858,7 +899,8 @@ class TaskScheduler:
             return False
     
     async def get_scheduling_stats(self) -> Dict[str, Any]:
-        """Get scheduler performance statistics."""        return {
+        """Get scheduler performance statistics."""
+        return {
             **self.scheduling_stats,
             'active_tasks': len(self.active_executions),
             'scheduled_tasks': len(self.scheduled_tasks),
@@ -870,7 +912,8 @@ class TaskScheduler:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown scheduler gracefully."""        self._scheduler_running = False
+        """Shutdown scheduler gracefully."""
+        self._scheduler_running = False
         
         # Cancel all active tasks
         for task_id in list(self.scheduled_tasks.keys()):

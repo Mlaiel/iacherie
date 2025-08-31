@@ -6,7 +6,8 @@ Optimized for real-time similarity search across millions of content fingerprint
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import numpy as np
+"""
+import numpy as np
 import asyncio
 import logging
 import pickle
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class IndexType(Enum):
-    """FAISS index types"""    FLAT_L2 = "IndexFlatL2"
+    """FAISS index types"""
+    FLAT_L2 = "IndexFlatL2"
     FLAT_IP = "IndexFlatIP"
     IVF_FLAT = "IndexIVFFlat"
     IVF_PQ = "IndexIVFPQ"
@@ -39,7 +41,8 @@ class IndexType(Enum):
 
 @dataclass
 class SearchResult:
-    """Vector search result"""    vector_id: str
+    """Vector search result"""
+    vector_id: str
     similarity_score: float
     distance: float
     metadata: Dict[str, Any]
@@ -49,7 +52,8 @@ class SearchResult:
 
 @dataclass
 class IndexStats:
-    """FAISS index statistics"""    total_vectors: int
+    """FAISS index statistics"""
+    total_vectors: int
     index_type: str
     dimension: int
     memory_usage_mb: float
@@ -58,7 +62,8 @@ class IndexStats:
 
 
 class FaissVectorStore:
-    """FAISS-based vector storage and search engine"""    
+    """FAISS-based vector storage and search engine"""
+    
     def __init__(self, config: Dict[str, Any]):
         if not FAISS_AVAILABLE:
             raise ImportError("FAISS is required but not available")
@@ -93,7 +98,8 @@ class FaissVectorStore:
         self.logger.info(f"FaissVectorStore initialized with {self.index_type.value}")
     
     def _initialize_index(self):
-        """Initialize FAISS index based on configuration"""        try:
+        """Initialize FAISS index based on configuration"""
+        try:
             if self.index_type == IndexType.FLAT_L2:
                 self.index = faiss.IndexFlatL2(self.dimension)
             elif self.index_type == IndexType.FLAT_IP:
@@ -129,7 +135,8 @@ class FaissVectorStore:
         vector: np.ndarray,
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Add a vector to the index"""        try:
+        """Add a vector to the index"""
+        try:
             # Validate vector
             if vector.shape[0] != self.dimension:
                 raise ValueError(f"Vector dimension {vector.shape[0]} doesn't match index dimension {self.dimension}")
@@ -155,7 +162,8 @@ class FaissVectorStore:
             return False
     
     def _add_vector_sync(self, vector_id: str, vector: np.ndarray, metadata: Dict[str, Any]):
-        """Synchronous vector addition"""        faiss_id = self.next_id
+        """Synchronous vector addition"""
+        faiss_id = self.next_id
         
         # Add to FAISS index
         self.index.add(vector)
@@ -175,7 +183,8 @@ class FaissVectorStore:
         self,
         vectors_data: List[Tuple[str, np.ndarray, Optional[Dict[str, Any]]]]
     ) -> List[bool]:
-        """Add multiple vectors in batch"""        try:
+        """Add multiple vectors in batch"""
+        try:
             # Validate all vectors first
             for vector_id, vector, _ in vectors_data:
                 if vector.shape[0] != self.dimension:
@@ -220,7 +229,8 @@ class FaissVectorStore:
         vectors: np.ndarray,
         metadatas: List[Dict[str, Any]]
     ):
-        """Synchronous batch vector addition"""        start_id = self.next_id
+        """Synchronous batch vector addition"""
+        start_id = self.next_id
         
         # Add to FAISS index
         self.index.add(vectors)
@@ -245,7 +255,8 @@ class FaissVectorStore:
         similarity_threshold: Optional[float] = None,
         metadata_filter: Optional[Dict[str, Any]] = None
     ) -> List[SearchResult]:
-        """Search for similar vectors"""        try:
+        """Search for similar vectors"""
+        try:
             # Validate query vector
             if query_vector.shape[0] != self.dimension:
                 raise ValueError(f"Query vector dimension mismatch")
@@ -306,10 +317,12 @@ class FaissVectorStore:
             return []
     
     def _search_sync(self, query_vector: np.ndarray, k: int) -> Tuple[np.ndarray, np.ndarray]:
-        """Synchronous vector search"""        return self.index.search(query_vector, k)
+        """Synchronous vector search"""
+        return self.index.search(query_vector, k)
     
     def _matches_filter(self, metadata: Dict[str, Any], filter_criteria: Dict[str, Any]) -> bool:
-        """Check if metadata matches filter criteria"""        for key, value in filter_criteria.items():
+        """Check if metadata matches filter criteria"""
+        for key, value in filter_criteria.items():
             if key not in metadata:
                 return False
             
@@ -322,7 +335,8 @@ class FaissVectorStore:
         return True
     
     async def remove_vector(self, vector_id: str) -> bool:
-        """Remove a vector from the index"""        try:
+        """Remove a vector from the index"""
+        try:
             if vector_id not in self.reverse_id_mapping:
                 self.logger.warning(f"Vector {vector_id} not found in index")
                 return False
@@ -344,7 +358,8 @@ class FaissVectorStore:
             return False
     
     async def update_metadata(self, vector_id: str, metadata: Dict[str, Any]) -> bool:
-        """Update metadata for a vector"""        try:
+        """Update metadata for a vector"""
+        try:
             if vector_id not in self.metadata_store:
                 return False
             
@@ -356,10 +371,12 @@ class FaissVectorStore:
             return False
     
     async def get_vector_count(self) -> int:
-        """Get total number of vectors in index"""        return self.index.ntotal if self.index else 0
+        """Get total number of vectors in index"""
+        return self.index.ntotal if self.index else 0
     
     async def get_stats(self) -> IndexStats:
-        """Get index statistics"""        try:
+        """Get index statistics"""
+        try:
             # Calculate memory usage (approximate)
             if hasattr(self.index, 'sa_encode'):
                 # For PQ indexes
@@ -382,7 +399,8 @@ class FaissVectorStore:
             return IndexStats(0, self.index_type.value, self.dimension, 0.0, 0.0, "unknown")
     
     async def save_index(self, filename: Optional[str] = None) -> str:
-        """Save index to disk"""        try:
+        """Save index to disk"""
+        try:
             if filename is None:
                 filename = f"faiss_index_{self.index_type.value}_{self.dimension}d.index"
             
@@ -418,7 +436,8 @@ class FaissVectorStore:
             raise
     
     async def load_index(self, filename: str) -> bool:
-        """Load index from disk"""        try:
+        """Load index from disk"""
+        try:
             index_path = self.storage_path / filename
             metadata_path = self.storage_path / f"{filename}.metadata"
             
@@ -451,7 +470,8 @@ class FaissVectorStore:
             return False
     
     async def train_index(self, training_vectors: np.ndarray) -> bool:
-        """Train index (required for some index types like IVF)"""        try:
+        """Train index (required for some index types like IVF)"""
+        try:
             if not self.index.is_trained:
                 self.logger.info(f"Training {self.index_type.value} index with {len(training_vectors)} vectors")
                 
@@ -471,7 +491,8 @@ class FaissVectorStore:
             return False
     
     async def optimize_index(self) -> bool:
-        """Optimize index for better performance"""        try:
+        """Optimize index for better performance"""
+        try:
             # For IVF indexes, set search parameters
             if self.index_type in [IndexType.IVF_FLAT, IndexType.IVF_PQ]:
                 # Set number of clusters to search
@@ -491,7 +512,8 @@ class FaissVectorStore:
             return False
     
     async def clear_index(self) -> bool:
-        """Clear all vectors from index"""        try:
+        """Clear all vectors from index"""
+        try:
             # Reinitialize index
             self._initialize_index()
             
@@ -509,5 +531,6 @@ class FaissVectorStore:
             return False
     
     def __del__(self):
-        """Cleanup resources"""        if hasattr(self, 'executor'):
+        """Cleanup resources"""
+        if hasattr(self, 'executor'):
             self.executor.shutdown(wait=False)

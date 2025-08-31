@@ -8,7 +8,8 @@ Infringement Detection → Automated Response → Legal Enforcement
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""from typing import Dict, List, Any, Optional, Union, Tuple, Set
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
 import asyncio
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 
 class SurveillancePlatform(Enum):
-    """Platforms monitored for content infringement."""    YOUTUBE = "youtube"
+    """Platforms monitored for content infringement."""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     FACEBOOK = "facebook"
@@ -38,7 +40,8 @@ class SurveillancePlatform(Enum):
 
 
 class InfringementType(Enum):
-    """Types of content infringement."""    EXACT_COPY = "exact_copy"
+    """Types of content infringement."""
+    EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     UNAUTHORIZED_REMIX = "unauthorized_remix"
     CROPPED_IMAGE = "cropped_image"
@@ -50,7 +53,8 @@ class InfringementType(Enum):
 
 
 class ConfidenceLevel(Enum):
-    """AI confidence levels for infringement detection."""    VERY_HIGH = "very_high"  # 95%+
+    """AI confidence levels for infringement detection."""
+    VERY_HIGH = "very_high"  # 95%+
     HIGH = "high"           # 85-94%
     MEDIUM = "medium"       # 70-84%
     LOW = "low"            # 50-69%
@@ -58,7 +62,8 @@ class ConfidenceLevel(Enum):
 
 
 class InfringementStatus(Enum):
-    """Status of infringement cases."""    DETECTED = "detected"
+    """Status of infringement cases."""
+    DETECTED = "detected"
     VALIDATED = "validated"
     DMCA_SENT = "dmca_sent"
     CONTENT_REMOVED = "content_removed"
@@ -69,7 +74,8 @@ class InfringementStatus(Enum):
 
 
 class EnforcementAction(Enum):
-    """Available enforcement actions."""    SEND_DMCA = "send_dmca"
+    """Available enforcement actions."""
+    SEND_DMCA = "send_dmca"
     PLATFORM_REPORT = "platform_report"
     MONETIZE_CLAIM = "monetize_claim"
     LEGAL_NOTICE = "legal_notice"
@@ -81,7 +87,8 @@ class EnforcementAction(Enum):
 
 @dataclass
 class SurveillanceTarget:
-    """Content target for surveillance."""    target_id: str
+    """Content target for surveillance."""
+    target_id: str
     content_id: str
     creator_id: str
     content_type: str
@@ -96,7 +103,8 @@ class SurveillanceTarget:
 
 @dataclass
 class InfringementDetection:
-    """Detected infringement case."""    detection_id: str
+    """Detected infringement case."""
+    detection_id: str
     target_id: str
     original_content_id: str
     infringing_url: str
@@ -116,7 +124,8 @@ class InfringementDetection:
 
 @dataclass
 class SurveillanceReport:
-    """Surveillance activity report."""    report_id: str
+    """Surveillance activity report."""
+    report_id: str
     creator_id: str
     period_start: datetime
     period_end: datetime
@@ -131,13 +140,16 @@ class SurveillanceReport:
 
 
 class ContentSurveillanceManager:
-    """    Advanced content surveillance and infringement detection system.
+    """
+    Advanced content surveillance and infringement detection system.
     
     Provides continuous monitoring across multiple platforms using AI-powered
     detection algorithms to identify unauthorized content usage.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the Content Surveillance Manager."""        self.config = config
+        """Initialize the Content Surveillance Manager."""
+        self.config = config
         self.db_config = config.get("database", {})
         self.surveillance_config = config.get("surveillance", {})
         
@@ -174,7 +186,8 @@ class ContentSurveillanceManager:
         platforms_to_monitor: List[SurveillancePlatform] = None,
         sensitivity_level: float = 0.8
     ) -> SurveillanceTarget:
-        """        Register content for continuous surveillance monitoring.
+        """
+        Register content for continuous surveillance monitoring.
         
         Args:
             content_id: Unique content identifier
@@ -183,7 +196,8 @@ class ContentSurveillanceManager:
             content_data: Raw content data for fingerprint generation
             platforms_to_monitor: Specific platforms to monitor
             sensitivity_level: Detection sensitivity (0.0-1.0)
-        """        try:
+        """
+        try:
             # Generate AI fingerprints using multiple algorithms
             ai_fingerprints = await self._generate_multi_algorithm_fingerprints(
                 content_data, content_type
@@ -225,7 +239,8 @@ class ContentSurveillanceManager:
         content_data: bytes,
         content_type: str
     ) -> Dict[str, str]:
-        """Generate fingerprints using multiple AI algorithms."""        fingerprints = {}
+        """Generate fingerprints using multiple AI algorithms."""
+        fingerprints = {}
         
         try:
             if content_type == "audio":
@@ -262,56 +277,69 @@ class ContentSurveillanceManager:
             raise
     
     async def _generate_chromaprint(self, audio_data: bytes) -> str:
-        """Generate Chromaprint audio fingerprint."""        # Placeholder implementation - would use actual Chromaprint library
+        """Generate Chromaprint audio fingerprint."""
+        # Placeholder implementation - would use actual Chromaprint library
         return hashlib.md5(audio_data[:1024]).hexdigest()
     
     async def _generate_spectral_hash(self, audio_data: bytes) -> str:
-        """Generate spectral hash for audio."""        # Placeholder implementation - would use FFT analysis
+        """Generate spectral hash for audio."""
+        # Placeholder implementation - would use FFT analysis
         return hashlib.sha1(audio_data[::100]).hexdigest()
     
     async def _generate_mel_spectrogram_hash(self, audio_data: bytes) -> str:
-        """Generate mel-spectrogram based hash."""        # Placeholder implementation - would use actual mel-spectrogram analysis
+        """Generate mel-spectrogram based hash."""
+        # Placeholder implementation - would use actual mel-spectrogram analysis
         return hashlib.sha256(audio_data[::50]).hexdigest()
     
     async def _generate_perceptual_hash(self, image_data: bytes) -> str:
-        """Generate perceptual hash for images."""        # Placeholder implementation - would use actual pHash algorithm
+        """Generate perceptual hash for images."""
+        # Placeholder implementation - would use actual pHash algorithm
         return hashlib.md5(image_data[:2048]).hexdigest()
     
     async def _generate_feature_hash(self, image_data: bytes) -> str:
-        """Generate feature-based hash for images."""        # Placeholder implementation - would use SIFT/SURF features
+        """Generate feature-based hash for images."""
+        # Placeholder implementation - would use SIFT/SURF features
         return hashlib.sha1(image_data[::200]).hexdigest()
     
     async def _generate_dl_hash(self, image_data: bytes) -> str:
-        """Generate deep learning based hash."""        # Placeholder implementation - would use CNN features
+        """Generate deep learning based hash."""
+        # Placeholder implementation - would use CNN features
         return hashlib.sha256(image_data[::150]).hexdigest()
     
     async def _generate_frame_hash(self, video_data: bytes) -> str:
-        """Generate frame-based hash for videos."""        # Placeholder implementation - would analyze key frames
+        """Generate frame-based hash for videos."""
+        # Placeholder implementation - would analyze key frames
         return hashlib.md5(video_data[:4096]).hexdigest()
     
     async def _generate_motion_hash(self, video_data: bytes) -> str:
-        """Generate motion-based hash for videos."""        # Placeholder implementation - would analyze motion vectors
+        """Generate motion-based hash for videos."""
+        # Placeholder implementation - would analyze motion vectors
         return hashlib.sha1(video_data[::500]).hexdigest()
     
     async def _generate_av_hash(self, video_data: bytes) -> str:
-        """Generate combined audio-video hash."""        # Placeholder implementation - would combine audio and video features
+        """Generate combined audio-video hash."""
+        # Placeholder implementation - would combine audio and video features
         return hashlib.sha256(video_data[::300]).hexdigest()
     
     async def _generate_semantic_hash(self, text_data: bytes) -> str:
-        """Generate semantic hash for text."""        # Placeholder implementation - would use NLP embeddings
+        """Generate semantic hash for text."""
+        # Placeholder implementation - would use NLP embeddings
         text = text_data.decode('utf-8', errors='ignore')
         return hashlib.md5(text.lower().encode()).hexdigest()
     
     async def _generate_style_hash(self, text_data: bytes) -> str:
-        """Generate writing style hash."""        # Placeholder implementation - would analyze writing patterns
+        """Generate writing style hash."""
+        # Placeholder implementation - would analyze writing patterns
         return hashlib.sha1(text_data[::10]).hexdigest()
     
     async def _generate_structural_hash(self, text_data: bytes) -> str:
-        """Generate structural hash for text."""        # Placeholder implementation - would analyze document structure
+        """Generate structural hash for text."""
+        # Placeholder implementation - would analyze document structure
         return hashlib.sha256(text_data[::20]).hexdigest()
     
     def _get_default_platforms_for_content_type(self, content_type: str) -> List[SurveillancePlatform]:
-        """Get default platforms to monitor based on content type."""        platform_mapping = {
+        """Get default platforms to monitor based on content type."""
+        platform_mapping = {
             "audio": [
                 SurveillancePlatform.YOUTUBE, SurveillancePlatform.SPOTIFY,
                 SurveillancePlatform.SOUNDCLOUD, SurveillancePlatform.TIKTOK
@@ -333,7 +361,8 @@ class ContentSurveillanceManager:
         return platform_mapping.get(content_type, [SurveillancePlatform.GENERIC_WEB])
     
     async def _schedule_surveillance_scan(self, target: SurveillanceTarget) -> None:
-        """Schedule surveillance scan for a target."""        scan_config = {
+        """Schedule surveillance scan for a target."""
+        scan_config = {
             "target_id": target.target_id,
             "frequency": "daily",  # Can be hourly, daily, weekly
             "next_scan": datetime.utcnow() + timedelta(hours=1),
@@ -344,7 +373,8 @@ class ContentSurveillanceManager:
         logger.info(f"Surveillance scan scheduled for target {target.target_id}")
     
     async def perform_surveillance_scan(self, target_id: str) -> List[InfringementDetection]:
-        """Perform surveillance scan for a specific target."""        try:
+        """Perform surveillance scan for a specific target."""
+        try:
             target = self.surveillance_targets.get(target_id)
             if not target or not target.surveillance_enabled:
                 return []
@@ -376,7 +406,8 @@ class ContentSurveillanceManager:
         target: SurveillanceTarget,
         platform: SurveillancePlatform
     ) -> List[InfringementDetection]:
-        """Scan a specific platform for infringements."""        detections = []
+        """Scan a specific platform for infringements."""
+        detections = []
         
         try:
             # Get platform-specific scanner
@@ -424,7 +455,8 @@ class ContentSurveillanceManager:
             return []
     
     async def _initialize_platform_scanner(self, platform: SurveillancePlatform) -> Any:
-        """Initialize platform-specific scanner."""        # Placeholder implementation - would initialize actual platform APIs
+        """Initialize platform-specific scanner."""
+        # Placeholder implementation - would initialize actual platform APIs
         scanner = {
             "platform": platform,
             "api_client": None,  # Would be actual API client
@@ -440,7 +472,8 @@ class ContentSurveillanceManager:
         target: SurveillanceTarget,
         platform: SurveillancePlatform
     ) -> List[Dict[str, Any]]:
-        """Simulate platform scan results."""        # This would be replaced with actual platform API calls
+        """Simulate platform scan results."""
+        # This would be replaced with actual platform API calls
         return [
             {
                 "url": f"https://{platform.value}.com/content/123456",
@@ -462,7 +495,8 @@ class ContentSurveillanceManager:
         detected_fingerprints: Dict[str, str],
         content_type: str
     ) -> Dict[str, Any]:
-        """Analyze similarity between original and detected content."""        total_score = 0.0
+        """Analyze similarity between original and detected content."""
+        total_score = 0.0
         total_weight = 0.0
         algorithm_scores = {}
         
@@ -496,7 +530,8 @@ class ContentSurveillanceManager:
         fingerprint2: str,
         algorithm: str
     ) -> float:
-        """Calculate similarity between two fingerprints."""        # Simplified similarity calculation
+        """Calculate similarity between two fingerprints."""
+        # Simplified similarity calculation
         if fingerprint1 == fingerprint2:
             return 1.0
         
@@ -513,7 +548,8 @@ class ContentSurveillanceManager:
         algorithm_scores: Dict[str, float],
         content_type: str
     ) -> float:
-        """Calculate overall detection confidence."""        if not algorithm_scores:
+        """Calculate overall detection confidence."""
+        if not algorithm_scores:
             return 0.0
         
         # Weight algorithms differently based on content type
@@ -540,7 +576,8 @@ class ContentSurveillanceManager:
         return weighted_score / max(total_weight, 1.0)
     
     def _classify_infringement_type(self, similarity_analysis: Dict[str, Any]) -> InfringementType:
-        """Classify the type of infringement based on analysis."""        similarity_score = similarity_analysis["similarity_score"]
+        """Classify the type of infringement based on analysis."""
+        similarity_score = similarity_analysis["similarity_score"]
         algorithm_scores = similarity_analysis["algorithm_scores"]
         
         if similarity_score >= 0.95:
@@ -555,7 +592,8 @@ class ContentSurveillanceManager:
             return InfringementType.STYLE_THEFT
     
     def _classify_confidence_level(self, confidence_score: float) -> ConfidenceLevel:
-        """Classify confidence level based on score."""        if confidence_score >= 0.95:
+        """Classify confidence level based on score."""
+        if confidence_score >= 0.95:
             return ConfidenceLevel.VERY_HIGH
         elif confidence_score >= 0.85:
             return ConfidenceLevel.HIGH
@@ -567,7 +605,8 @@ class ContentSurveillanceManager:
             return ConfidenceLevel.VERY_LOW
     
     async def _process_infringement_detection(self, detection: InfringementDetection) -> None:
-        """Process and store infringement detection."""        try:
+        """Process and store infringement detection."""
+        try:
             # Store detection
             self.infringement_detections[detection.detection_id] = detection
             
@@ -590,7 +629,8 @@ class ContentSurveillanceManager:
         self,
         detection: InfringementDetection
     ) -> List[EnforcementAction]:
-        """Determine appropriate enforcement actions."""        actions = []
+        """Determine appropriate enforcement actions."""
+        actions = []
         
         # Based on confidence level and infringement type
         if detection.confidence_level in [ConfidenceLevel.VERY_HIGH, ConfidenceLevel.HIGH]:
@@ -614,7 +654,8 @@ class ContentSurveillanceManager:
         detection: InfringementDetection,
         action: EnforcementAction
     ) -> bool:
-        """Execute a specific enforcement action."""        try:
+        """Execute a specific enforcement action."""
+        try:
             if action == EnforcementAction.SEND_DMCA:
                 return await self._send_dmca_takedown(detection)
             elif action == EnforcementAction.PLATFORM_REPORT:
@@ -633,28 +674,33 @@ class ContentSurveillanceManager:
             return False
     
     async def _send_dmca_takedown(self, detection: InfringementDetection) -> bool:
-        """Send DMCA takedown notice."""        # Placeholder implementation - would integrate with DMCA processor
+        """Send DMCA takedown notice."""
+        # Placeholder implementation - would integrate with DMCA processor
         detection.status = InfringementStatus.DMCA_SENT
         logger.info(f"DMCA takedown sent for detection {detection.detection_id}")
         return True
     
     async def _submit_platform_report(self, detection: InfringementDetection) -> bool:
-        """Submit report to platform."""        # Placeholder implementation - would use platform APIs
+        """Submit report to platform."""
+        # Placeholder implementation - would use platform APIs
         logger.info(f"Platform report submitted for detection {detection.detection_id}")
         return True
     
     async def _submit_monetization_claim(self, detection: InfringementDetection) -> bool:
-        """Submit monetization claim."""        # Placeholder implementation - would use platform monetization APIs
+        """Submit monetization claim."""
+        # Placeholder implementation - would use platform monetization APIs
         logger.info(f"Monetization claim submitted for detection {detection.detection_id}")
         return True
     
     async def _send_legal_notice(self, detection: InfringementDetection) -> bool:
-        """Send legal notice."""        # Placeholder implementation - would generate and send legal notice
+        """Send legal notice."""
+        # Placeholder implementation - would generate and send legal notice
         logger.info(f"Legal notice sent for detection {detection.detection_id}")
         return True
     
     async def _queue_manual_review(self, detection: InfringementDetection) -> bool:
-        """Queue detection for manual review."""        detection.status = InfringementStatus.MONITORING
+        """Queue detection for manual review."""
+        detection.status = InfringementStatus.MONITORING
         logger.info(f"Detection queued for manual review: {detection.detection_id}")
         return True
     
@@ -663,7 +709,8 @@ class ContentSurveillanceManager:
         creator_id: str,
         period_days: int = 30
     ) -> SurveillanceReport:
-        """Generate comprehensive surveillance report for a creator."""        try:
+        """Generate comprehensive surveillance report for a creator."""
+        try:
             period_start = datetime.utcnow() - timedelta(days=period_days)
             period_end = datetime.utcnow()
             
@@ -740,7 +787,8 @@ class ContentSurveillanceManager:
         target_id: str,
         new_sensitivity: float
     ) -> bool:
-        """Update surveillance sensitivity for a target."""        try:
+        """Update surveillance sensitivity for a target."""
+        try:
             target = self.surveillance_targets.get(target_id)
             if not target:
                 raise ValueError(f"Target {target_id} not found")
@@ -756,7 +804,8 @@ class ContentSurveillanceManager:
             return False
     
     async def disable_surveillance(self, target_id: str) -> bool:
-        """Disable surveillance for a specific target."""        try:
+        """Disable surveillance for a specific target."""
+        try:
             target = self.surveillance_targets.get(target_id)
             if not target:
                 raise ValueError(f"Target {target_id} not found")

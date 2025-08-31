@@ -27,7 +27,8 @@ Technical Team Expertise:
 - IA Prompt Engineer: Prompt optimization and AI interaction
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
-"""from typing import Dict, List, Optional, Union, Any
+"""
+from typing import Dict, List, Optional, Union, Any
 from enum import Enum
 from dataclasses import dataclass, field
 from pydantic import BaseModel, Field, validator
@@ -35,7 +36,8 @@ import os
 
 
 class FilterType(Enum):
-    """Types of content filters available."""    AUDIO = "audio"
+    """Types of content filters available."""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -47,7 +49,8 @@ class FilterType(Enum):
 
 
 class QualityLevel(str, Enum):
-    """Content quality levels."""    LOW = "low"
+    """Content quality levels."""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     ULTRA = "ultra"
@@ -55,7 +58,8 @@ class QualityLevel(str, Enum):
 
 
 class SecurityLevel(str, Enum):
-    """Security filtering levels."""    BASIC = "basic"
+    """Security filtering levels."""
+    BASIC = "basic"
     ENHANCED = "enhanced"
     STRICT = "strict"
     ENTERPRISE = "enterprise"
@@ -64,7 +68,8 @@ class SecurityLevel(str, Enum):
 
 @dataclass
 class AudioFilterConfig:
-    """Audio content filtering configuration."""    
+    """Audio content filtering configuration."""
+    
     # Quality thresholds
     min_bitrate: int = 128  # kbps
     max_bitrate: int = 320  # kbps
@@ -91,7 +96,8 @@ class AudioFilterConfig:
 
 @dataclass
 class VideoFilterConfig:
-    """Video content filtering configuration."""    
+    """Video content filtering configuration."""
+    
     # Quality thresholds
     min_resolution: tuple = (480, 360)  # width, height
     max_resolution: tuple = (7680, 4320)  # 8K
@@ -121,7 +127,8 @@ class VideoFilterConfig:
 
 @dataclass
 class ImageFilterConfig:
-    """Image content filtering configuration."""    
+    """Image content filtering configuration."""
+    
     # Quality thresholds
     min_resolution: tuple = (100, 100)  # width, height
     max_resolution: tuple = (8192, 8192)
@@ -148,7 +155,8 @@ class ImageFilterConfig:
 
 @dataclass
 class TextFilterConfig:
-    """Text content filtering configuration."""    
+    """Text content filtering configuration."""
+    
     # Content thresholds
     min_length: int = 10  # characters
     max_length: int = 1000000  # 1M characters
@@ -175,7 +183,8 @@ class TextFilterConfig:
 
 @dataclass
 class SecurityFilterConfig:
-    """Configuration for security filters."""    malware_scan_enabled: bool = True
+    """Configuration for security filters."""
+    malware_scan_enabled: bool = True
     phishing_detection_enabled: bool = True
     suspicious_pattern_scan: bool = True
     hash_verification: bool = True
@@ -184,7 +193,8 @@ class SecurityFilterConfig:
 
 @dataclass
 class PerformanceFilterConfig:
-    """Configuration for performance filters."""    max_cpu_usage: float = 80.0
+    """Configuration for performance filters."""
+    max_cpu_usage: float = 80.0
     max_memory_usage: float = 85.0
     max_processing_time: float = 30.0
     enable_monitoring: bool = True
@@ -193,7 +203,8 @@ class PerformanceFilterConfig:
 
 @dataclass
 class PerformanceFilterConfig:
-    """Performance filtering configuration."""    
+    """Performance filtering configuration."""
+    
     # Processing limits
     max_file_size: int = 100 * 1024 * 1024  # 100MB
     max_processing_time: float = 30.0  # seconds
@@ -215,9 +226,11 @@ class PerformanceFilterConfig:
 
 
 class FilterConfigManager:
-    """Centralized filter configuration manager."""    
+    """Centralized filter configuration manager."""
+    
     def __init__(self):
-        """Initialize configuration manager."""        self.audio_config = AudioFilterConfig()
+        """Initialize configuration manager."""
+        self.audio_config = AudioFilterConfig()
         self.video_config = VideoFilterConfig()
         self.image_config = ImageFilterConfig()
         self.text_config = TextFilterConfig()
@@ -228,7 +241,8 @@ class FilterConfigManager:
         self._load_from_environment()
     
     def _load_from_environment(self) -> None:
-        """Load configuration from environment variables."""        # Audio config
+        """Load configuration from environment variables."""
+        # Audio config
         if os.getenv('FILTER_AUDIO_MIN_BITRATE'):
             self.audio_config.min_bitrate = int(os.getenv('FILTER_AUDIO_MIN_BITRATE'))
         
@@ -253,7 +267,8 @@ class FilterConfigManager:
             self.performance_config.max_file_size = int(os.getenv('FILTER_MAX_FILE_SIZE'))
     
     def get_config(self, filter_type: FilterType) -> Any:
-        """Get configuration for specific filter type."""        config_mapping = {
+        """Get configuration for specific filter type."""
+        config_mapping = {
             FilterType.AUDIO: self.audio_config,
             FilterType.VIDEO: self.video_config,
             FilterType.IMAGE: self.image_config,
@@ -265,14 +280,16 @@ class FilterConfigManager:
         return config_mapping.get(filter_type)
     
     def update_config(self, filter_type: FilterType, **kwargs) -> None:
-        """Update configuration for specific filter type."""        config = self.get_config(filter_type)
+        """Update configuration for specific filter type."""
+        config = self.get_config(filter_type)
         if config:
             for key, value in kwargs.items():
                 if hasattr(config, key):
                     setattr(config, key, value)
     
     def validate_config(self) -> Dict[str, bool]:
-        """Validate all configurations."""        validation_results = {}
+        """Validate all configurations."""
+        validation_results = {}
         
         # Validate audio config
         validation_results['audio'] = (
@@ -316,7 +333,8 @@ class FilterConfigManager:
         return validation_results
     
     def get_summary(self) -> Dict[str, Any]:
-        """Get configuration summary."""        return {
+        """Get configuration summary."""
+        return {
             'audio': {
                 'bitrate_range': f"{self.audio_config.min_bitrate}-{self.audio_config.max_bitrate} kbps",
                 'supported_formats': len(self.audio_config.supported_formats),

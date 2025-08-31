@@ -28,7 +28,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -60,7 +61,8 @@ Base = declarative_base()
 
 @dataclass
 class TimezoneInfo:
-    """Comprehensive timezone information structure"""    timezone_id: str
+    """Comprehensive timezone information structure"""
+    timezone_id: str
     utc_offset: int  # Offset in minutes
     dst_active: bool
     dst_offset: int  # Additional DST offset in minutes
@@ -76,7 +78,8 @@ class TimezoneInfo:
 
 @dataclass
 class AudienceTimezoneProfile:
-    """Audience timezone distribution profile"""    user_id: str
+    """Audience timezone distribution profile"""
+    user_id: str
     primary_timezone: str
     secondary_timezones: List[str]
     timezone_weights: Dict[str, float]  # timezone -> audience percentage
@@ -86,7 +89,8 @@ class AudienceTimezoneProfile:
 
 @dataclass
 class GlobalSchedulingWindow:
-    """Global optimal scheduling window"""    window_id: str
+    """Global optimal scheduling window"""
+    window_id: str
     start_time: datetime
     end_time: datetime
     target_timezones: List[str]
@@ -97,14 +101,16 @@ class GlobalSchedulingWindow:
     recommendations: List[str]
 
 class TimezoneDetectionMethod(Enum):
-    """Timezone detection methods"""    IP_GEOLOCATION = "ip_geolocation"
+    """Timezone detection methods"""
+    IP_GEOLOCATION = "ip_geolocation"
     USER_PROFILE = "user_profile"
     ENGAGEMENT_PATTERN = "engagement_pattern"
     DEVICE_SETTINGS = "device_settings"
     MANUAL_SELECTION = "manual_selection"
 
 class RegionType(Enum):
-    """Geographic region types"""    CONTINENT = "continent"
+    """Geographic region types"""
+    CONTINENT = "continent"
     COUNTRY = "country"
     STATE_PROVINCE = "state_province"
     CITY = "city"
@@ -112,16 +118,20 @@ class RegionType(Enum):
     CUSTOM = "custom"
 
 class TimezoneManagerError(AgentError):
-    """Timezone manager specific exceptions"""    pass
+    """Timezone manager specific exceptions"""
+    pass
 
 class TimezoneManager(BaseAgent):
-    """    Enterprise timezone management system for global content scheduling.
+    """
+    Enterprise timezone management system for global content scheduling.
     
     Handles timezone conversion, DST management, and regional optimization
     for content distribution across multiple geographical markets.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize timezone manager with configuration"""        super().__init__(config or {})
+        """Initialize timezone manager with configuration"""
+        super().__init__(config or {})
         self.performance_monitor = PerformanceMonitor()
         
         # Core timezone data
@@ -145,7 +155,8 @@ class TimezoneManager(BaseAgent):
         asyncio.create_task(self._initialize_timezone_database())
     
     async def _initialize_timezone_database(self):
-        """Initialize comprehensive timezone database"""        try:
+        """Initialize comprehensive timezone database"""
+        try:
             # Load all pytz timezones
             all_timezones = pytz.all_timezones
             
@@ -167,7 +178,8 @@ class TimezoneManager(BaseAgent):
             raise TimezoneManagerError(f"Timezone database initialization failed: {e}")
     
     async def _build_timezone_info(self, timezone_id: str) -> Optional[TimezoneInfo]:
-        """Build comprehensive timezone information"""        try:
+        """Build comprehensive timezone information"""
+        try:
             tz = pytz.timezone(timezone_id)
             now = datetime.now(tz)
             
@@ -209,7 +221,8 @@ class TimezoneManager(BaseAgent):
             return None
     
     async def _get_country_code_from_timezone(self, timezone_id: str) -> str:
-        """Extract country code from timezone identifier"""        # Mapping of common timezone prefixes to country codes
+        """Extract country code from timezone identifier"""
+        # Mapping of common timezone prefixes to country codes
         timezone_country_map = {
             'US': 'US', 'Europe': 'EU', 'Asia': 'AS', 'Africa': 'AF',
             'Australia': 'AU', 'Pacific': 'PA', 'Atlantic': 'AT',
@@ -224,7 +237,8 @@ class TimezoneManager(BaseAgent):
         return 'UN'
     
     async def _estimate_business_hours(self, country_code: str, region: str) -> Tuple[int, int]:
-        """Estimate typical business hours for region"""        # Default business hours mapping by region/country
+        """Estimate typical business hours for region"""
+        # Default business hours mapping by region/country
         business_hours_map = {
             'US': (9, 17),    # 9 AM - 5 PM
             'EU': (8, 16),    # 8 AM - 4 PM
@@ -236,7 +250,8 @@ class TimezoneManager(BaseAgent):
         return business_hours_map.get(country_code, business_hours_map['default'])
     
     async def _get_weekend_pattern(self, country_code: str) -> List[int]:
-        """Get weekend days pattern for country"""        # Weekend patterns by country/region
+        """Get weekend days pattern for country"""
+        # Weekend patterns by country/region
         weekend_patterns = {
             'US': [5, 6],     # Saturday, Sunday
             'EU': [5, 6],     # Saturday, Sunday
@@ -246,7 +261,8 @@ class TimezoneManager(BaseAgent):
         return weekend_patterns.get(country_code, weekend_patterns['default'])
     
     async def _estimate_timezone_population(self, timezone_id: str) -> int:
-        """Estimate population in timezone (rough approximation)"""        # This is a simplified estimation - in production, you'd use actual demographic data
+        """Estimate population in timezone (rough approximation)"""
+        # This is a simplified estimation - in production, you'd use actual demographic data
         major_timezone_populations = {
             'US/Eastern': 50000000,
             'US/Central': 30000000,
@@ -263,7 +279,8 @@ class TimezoneManager(BaseAgent):
         return major_timezone_populations.get(timezone_id, 1000000)  # Default 1M
     
     async def _build_regional_mappings(self):
-        """Build regional timezone mappings"""        for tz_id, tz_info in self.timezone_cache.items():
+        """Build regional timezone mappings"""
+        for tz_id, tz_info in self.timezone_cache.items():
             # Map by country
             self.global_timezone_map[f"country:{tz_info.country_code}"].add(tz_id)
             
@@ -278,7 +295,8 @@ class TimezoneManager(BaseAgent):
                                  user_id: str,
                                  detection_data: Dict[str, Any],
                                  method: TimezoneDetectionMethod = TimezoneDetectionMethod.IP_GEOLOCATION) -> str:
-        """        Detect user timezone using various methods
+        """
+        Detect user timezone using various methods
         
         Args:
             user_id: User identifier
@@ -287,7 +305,8 @@ class TimezoneManager(BaseAgent):
         
         Returns:
             Detected timezone identifier
-        """        try:
+        """
+        try:
             detected_timezone = None
             confidence = 0.0
             
@@ -325,7 +344,8 @@ class TimezoneManager(BaseAgent):
             return 'UTC'  # Fallback to UTC
     
     async def _detect_timezone_by_ip(self, ip_address: str) -> Tuple[Optional[str], float]:
-        """Detect timezone using IP geolocation"""        if not ip_address:
+        """Detect timezone using IP geolocation"""
+        if not ip_address:
             return None, 0.0
         
         try:
@@ -356,7 +376,8 @@ class TimezoneManager(BaseAgent):
             return None, 0.0
     
     async def _detect_timezone_by_profile(self, profile_data: Dict[str, Any]) -> Tuple[Optional[str], float]:
-        """Detect timezone from user profile information"""        try:
+        """Detect timezone from user profile information"""
+        try:
             # Check for explicit timezone setting
             if 'timezone' in profile_data:
                 tz_id = profile_data['timezone']
@@ -379,7 +400,8 @@ class TimezoneManager(BaseAgent):
             return None, 0.0
     
     async def _detect_timezone_by_engagement(self, user_id: str, engagement_history: List[Dict]) -> Tuple[Optional[str], float]:
-        """Detect timezone based on engagement pattern analysis"""        try:
+        """Detect timezone based on engagement pattern analysis"""
+        try:
             if not engagement_history:
                 return None, 0.0
             
@@ -420,7 +442,8 @@ class TimezoneManager(BaseAgent):
             return None, 0.0
     
     async def _detect_timezone_by_device(self, device_timezone: str) -> Tuple[Optional[str], float]:
-        """Detect timezone from device settings"""        try:
+        """Detect timezone from device settings"""
+        try:
             if device_timezone and device_timezone in pytz.all_timezones:
                 return device_timezone, 0.85  # High confidence for device settings
             
@@ -431,7 +454,8 @@ class TimezoneManager(BaseAgent):
             return None, 0.0
     
     async def _get_timezone_from_location(self, location: str) -> Optional[str]:
-        """Get timezone from location string using geocoding"""        try:
+        """Get timezone from location string using geocoding"""
+        try:
             location_data = self.geocoder.geocode(location)
             if location_data:
                 # This is simplified - in production, use a timezone lookup service
@@ -455,7 +479,8 @@ class TimezoneManager(BaseAgent):
     
     async def _store_detection_result(self, user_id: str, method: TimezoneDetectionMethod, 
                                     timezone: str, confidence: float):
-        """Store timezone detection result for accuracy tracking"""        try:
+        """Store timezone detection result for accuracy tracking"""
+        try:
             # In production, store in database for analytics
             detection_key = f"{method.value}:{user_id}"
             self.detection_accuracy[detection_key] = confidence
@@ -465,7 +490,8 @@ class TimezoneManager(BaseAgent):
     
     async def build_audience_timezone_profile(self, user_id: str, 
                                             audience_data: List[Dict[str, Any]]) -> AudienceTimezoneProfile:
-        """        Build comprehensive timezone profile for user's audience
+        """
+        Build comprehensive timezone profile for user's audience
         
         Args:
             user_id: User identifier
@@ -473,7 +499,8 @@ class TimezoneManager(BaseAgent):
         
         Returns:
             Comprehensive audience timezone profile
-        """        try:
+        """
+        try:
             timezone_distribution = Counter()
             engagement_by_timezone = defaultdict(lambda: defaultdict(float))
             content_performance_by_timezone = defaultdict(lambda: defaultdict(list))
@@ -572,7 +599,8 @@ class TimezoneManager(BaseAgent):
                                              audience_profile: AudienceTimezoneProfile,
                                              content_type: str = 'general',
                                              window_duration_hours: int = 2) -> List[GlobalSchedulingWindow]:
-        """        Calculate globally optimal scheduling windows across all audience timezones
+        """
+        Calculate globally optimal scheduling windows across all audience timezones
         
         Args:
             audience_profile: User's audience timezone profile
@@ -581,7 +609,8 @@ class TimezoneManager(BaseAgent):
         
         Returns:
             List of optimal global scheduling windows
-        """        try:
+        """
+        try:
             windows = []
             
             # Generate potential windows across 24-hour period
@@ -669,7 +698,8 @@ class TimezoneManager(BaseAgent):
             raise TimezoneManagerError(f"Global window calculation failed: {e}")
     
     async def _estimate_competition_level(self, hour_utc: int, content_type: str) -> float:
-        """Estimate competition level for posting at specific UTC hour"""        try:
+        """Estimate competition level for posting at specific UTC hour"""
+        try:
             # Simplified competition estimation - in production, use real platform data
             peak_hours_utc = [12, 13, 14, 18, 19, 20]  # Common global peak hours
             
@@ -686,7 +716,8 @@ class TimezoneManager(BaseAgent):
     
     async def _generate_window_recommendations(self, hour_utc: int, target_timezones: List[str], 
                                              audience_coverage: float, expected_engagement: float) -> List[str]:
-        """Generate recommendations for scheduling window"""        recommendations = []
+        """Generate recommendations for scheduling window"""
+        recommendations = []
         
         try:
             # Coverage recommendations
@@ -725,17 +756,21 @@ class TimezoneManager(BaseAgent):
         return recommendations
 
 class GlobalScheduler:
-    """    Global scheduling coordinator that works across multiple timezones
+    """
+    Global scheduling coordinator that works across multiple timezones
     and integrates with the main scheduling system.
-    """    
+    """
+    
     def __init__(self, timezone_manager: TimezoneManager):
-        """Initialize global scheduler with timezone manager"""        self.timezone_manager = timezone_manager
+        """Initialize global scheduler with timezone manager"""
+        self.timezone_manager = timezone_manager
         self.active_schedules: Dict[str, List[GlobalSchedulingWindow]] = {}
         self.performance_tracker: Dict[str, Dict[str, float]] = {}
     
     async def create_global_schedule(self, user_id: str, content_items: List[Dict[str, Any]],
                                    schedule_preferences: Dict[str, Any]) -> Dict[str, Any]:
-        """        Create optimized global posting schedule for content items
+        """
+        Create optimized global posting schedule for content items
         
         Args:
             user_id: User identifier
@@ -744,7 +779,8 @@ class GlobalScheduler:
         
         Returns:
             Optimized global schedule with timezone-aware posting times
-        """        try:
+        """
+        try:
             # Get user's audience timezone profile
             audience_profile = self.timezone_manager.audience_profiles.get(user_id)
             if not audience_profile:
@@ -807,7 +843,8 @@ class GlobalScheduler:
     
     async def _select_optimal_window(self, windows: List[GlobalSchedulingWindow], 
                                    priority: str, existing_schedules: List[Dict]) -> Optional[GlobalSchedulingWindow]:
-        """Select optimal window avoiding conflicts with existing schedules"""        try:
+        """Select optimal window avoiding conflicts with existing schedules"""
+        try:
             priority_weights = {
                 'high': 1.0,
                 'medium': 0.7,
@@ -844,7 +881,8 @@ class GlobalScheduler:
     
     async def _calculate_schedule_metrics(self, schedule: Dict[str, Any], 
                                         audience_profile: AudienceTimezoneProfile):
-        """Calculate overall schedule performance metrics"""        try:
+        """Calculate overall schedule performance metrics"""
+        try:
             if not schedule['content_schedules']:
                 return
             
@@ -876,7 +914,8 @@ class GlobalScheduler:
             logger.warning(f"Schedule metrics calculation failed: {e}")
     
     async def optimize_existing_schedule(self, user_id: str, schedule_id: str) -> Dict[str, Any]:
-        """Optimize existing schedule based on performance data"""        try:
+        """Optimize existing schedule based on performance data"""
+        try:
             # This would analyze actual performance data and suggest improvements
             # For now, return optimization suggestions
             

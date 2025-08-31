@@ -4,7 +4,8 @@ Manages the content agent lifecycle, configurations, and provides high-level int
 for content processing operations across multiple formats.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -33,7 +34,8 @@ from ...monitoring.metrics import MetricsCollector
 logger = logging.getLogger(__name__)
 
 class ContentAgentManager:
-    """    High-level manager for content processing operations.
+    """
+    High-level manager for content processing operations.
     
     Responsibilities:
     - Agent lifecycle management
@@ -41,7 +43,8 @@ class ContentAgentManager:
     - Result caching and storage
     - Performance monitoring
     - Error handling and recovery
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or self._get_default_config()
         self.agent = None
@@ -51,7 +54,8 @@ class ContentAgentManager:
         self.is_initialized = False
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration for content agent"""        return {
+        """Get default configuration for content agent"""
+        return {
             'max_file_size_mb': 500,
             'supported_formats': {
                 'audio': ['.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a'],
@@ -66,7 +70,8 @@ class ContentAgentManager:
         }
     
     async def initialize(self):
-        """Initialize the content agent manager"""        try:
+        """Initialize the content agent manager"""
+        try:
             # Initialize the content agent
             self.agent = ContentAgent(config=self.config)
             await self.agent.initialize()
@@ -85,7 +90,8 @@ class ContentAgentManager:
             raise AgentManagerError(f"Initialization failed: {e}")
     
     def get_agent(self) -> ContentAgent:
-        """Get the managed content agent instance"""        if not self.is_initialized:
+        """Get the managed content agent instance"""
+        if not self.is_initialized:
             raise AgentManagerError("Manager not initialized")
         return self.agent
     
@@ -98,7 +104,8 @@ class ContentAgentManager:
         use_cache: bool = True,
         store_results: bool = True
     ) -> Dict[str, Any]:
-        """        Process single content file with advanced options.
+        """
+        Process single content file with advanced options.
         
         Args:
             content_path: Path to content file
@@ -110,7 +117,8 @@ class ContentAgentManager:
         
         Returns:
             Dictionary with analysis results
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             await self.initialize()
         
         content_path = Path(content_path)
@@ -179,7 +187,8 @@ class ContentAgentManager:
         metadata: Optional[Dict[str, Any]] = None,
         max_workers: Optional[int] = None
     ) -> Dict[str, Dict[str, Any]]:
-        """        Process multiple content files in parallel.
+        """
+        Process multiple content files in parallel.
         
         Args:
             content_paths: List of content file paths
@@ -190,7 +199,8 @@ class ContentAgentManager:
         
         Returns:
             Dictionary mapping file paths to analysis results
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             await self.initialize()
         
         max_workers = max_workers or self.config['max_concurrent_jobs']
@@ -236,7 +246,8 @@ class ContentAgentManager:
         metadata: Optional[Dict[str, Any]] = None,
         priority: int = 1
     ) -> str:
-        """        Schedule a background processing job.
+        """
+        Schedule a background processing job.
         
         Args:
             job_id: Unique job identifier
@@ -248,7 +259,8 @@ class ContentAgentManager:
         
         Returns:
             Job ID for tracking
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             await self.initialize()
         
         # Create job data
@@ -283,7 +295,8 @@ class ContentAgentManager:
         return job_id
     
     async def get_job_status(self, job_id: str) -> Dict[str, Any]:
-        """Get status of a processing job"""        if job_id not in self.processing_jobs:
+        """Get status of a processing job"""
+        if job_id not in self.processing_jobs:
             return {'error': f'Job {job_id} not found'}
         
         job = self.processing_jobs[job_id]
@@ -312,7 +325,8 @@ class ContentAgentManager:
         return status
     
     async def cancel_job(self, job_id: str) -> bool:
-        """Cancel a processing job"""        if job_id not in self.processing_jobs:
+        """Cancel a processing job"""
+        if job_id not in self.processing_jobs:
             return False
         
         job = self.processing_jobs[job_id]
@@ -329,7 +343,8 @@ class ContentAgentManager:
         content_path: Union[str, Path],
         limit: int = 10
     ) -> List[Dict[str, Any]]:
-        """Get processing history for a content file"""        try:
+        """Get processing history for a content file"""
+        try:
             # Query database for historical analysis results
             from ...database.queries import get_content_analysis_history
             
@@ -348,7 +363,8 @@ class ContentAgentManager:
         self, 
         date_range: Optional[tuple] = None
     ) -> Dict[str, Any]:
-        """Get analytics summary for content processing"""        try:
+        """Get analytics summary for content processing"""
+        try:
             # Get metrics from collector
             metrics = self.metrics.get_summary()
             
@@ -379,7 +395,8 @@ class ContentAgentManager:
             return {'error': str(e)}
     
     async def cleanup_old_data(self, days_old: int = 30) -> Dict[str, int]:
-        """Clean up old cache and database entries"""        try:
+        """Clean up old cache and database entries"""
+        try:
             # Clean cache
             cache_cleaned = await self.cache_manager.cleanup_expired()
             
@@ -416,7 +433,8 @@ class ContentAgentManager:
         content_path: Path, 
         analysis_options: Optional[List[str]]
     ) -> str:
-        """Generate cache key for content analysis"""        import hashlib
+        """Generate cache key for content analysis"""
+        import hashlib
         
         # Include file hash, modification time, and options
         file_stats = content_path.stat()
@@ -431,7 +449,8 @@ class ContentAgentManager:
         return hashlib.md5(key_string.encode()).hexdigest()
     
     async def _validate_content_file(self, content_path: Path) -> bool:
-        """Validate content file before processing"""        try:
+        """Validate content file before processing"""
+        try:
             # Check file existence
             if not content_path.exists():
                 return False
@@ -463,7 +482,8 @@ class ContentAgentManager:
         content_path: Path, 
         analysis_data: Dict[str, Any]
     ) -> bool:
-        """Store analysis results in database"""        try:
+        """Store analysis results in database"""
+        try:
             from ...database.operations import store_content_analysis
             
             await store_content_analysis({
@@ -481,7 +501,8 @@ class ContentAgentManager:
             return False
     
     async def shutdown(self):
-        """Shutdown the content agent manager"""        try:
+        """Shutdown the content agent manager"""
+        try:
             # Cancel all running jobs
             for job_id, job in self.processing_jobs.items():
                 if 'task' in job and not job['task'].done():

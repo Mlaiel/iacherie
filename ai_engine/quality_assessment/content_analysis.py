@@ -12,7 +12,8 @@ intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, re
 distribution, modification, or appropriation of this code, in whole or in part, without 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -32,7 +33,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentCategory(Enum):
-    """Content category classifications"""    ENTERTAINMENT = "entertainment"
+    """Content category classifications"""
+    ENTERTAINMENT = "entertainment"
     EDUCATION = "education"
     LIFESTYLE = "lifestyle"
     TECHNOLOGY = "technology"
@@ -50,7 +52,8 @@ class ContentCategory(Enum):
 
 
 class ContentFormat(Enum):
-    """Content format types"""    VIDEO_SHORT = "video_short"  # < 60 seconds
+    """Content format types"""
+    VIDEO_SHORT = "video_short"  # < 60 seconds
     VIDEO_MEDIUM = "video_medium"  # 1-10 minutes
     VIDEO_LONG = "video_long"  # > 10 minutes
     AUDIO_PODCAST = "audio_podcast"
@@ -63,7 +66,8 @@ class ContentFormat(Enum):
 
 
 class AudienceSegment(Enum):
-    """Target audience segments"""    GEN_Z = "gen_z"  # 16-24
+    """Target audience segments"""
+    GEN_Z = "gen_z"  # 16-24
     MILLENNIALS = "millennials"  # 25-40
     GEN_X = "gen_x"  # 41-56
     BOOMERS = "boomers"  # 57+
@@ -75,7 +79,8 @@ class AudienceSegment(Enum):
 
 
 class EngagementType(Enum):
-    """Types of engagement patterns"""    VIRAL = "viral"
+    """Types of engagement patterns"""
+    VIRAL = "viral"
     EDUCATIONAL = "educational"
     INSPIRATIONAL = "inspirational"
     CONTROVERSIAL = "controversial"
@@ -87,7 +92,8 @@ class EngagementType(Enum):
 
 @dataclass
 class TrendAnalysis:
-    """Content trend analysis results"""    trending_topics: List[str] = field(default_factory=list)
+    """Content trend analysis results"""
+    trending_topics: List[str] = field(default_factory=list)
     hashtag_relevance: Dict[str, float] = field(default_factory=dict)
     seasonal_relevance: float = field(default=0.0)
     timing_score: float = field(default=50.0)
@@ -101,7 +107,8 @@ class TrendAnalysis:
 
 @dataclass
 class AudienceAnalysis:
-    """Target audience analysis"""    primary_audience: AudienceSegment = field(default=AudienceSegment.MILLENNIALS)
+    """Target audience analysis"""
+    primary_audience: AudienceSegment = field(default=AudienceSegment.MILLENNIALS)
     secondary_audiences: List[AudienceSegment] = field(default_factory=list)
     audience_match_score: float = field(default=50.0)
     
@@ -118,7 +125,8 @@ class AudienceAnalysis:
 
 @dataclass
 class CompetitorAnalysis:
-    """Competitive landscape analysis"""    content_saturation: float = field(default=50.0)
+    """Competitive landscape analysis"""
+    content_saturation: float = field(default=50.0)
     differentiation_score: float = field(default=50.0)
     competitive_advantage: List[str] = field(default_factory=list)
     
@@ -130,7 +138,8 @@ class CompetitorAnalysis:
 
 @dataclass
 class ContentTheme:
-    """Content thematic analysis"""    primary_theme: str = field(default="general")
+    """Content thematic analysis"""
+    primary_theme: str = field(default="general")
     secondary_themes: List[str] = field(default_factory=list)
     emotional_themes: List[str] = field(default_factory=list)
     
@@ -142,7 +151,8 @@ class ContentTheme:
 
 @dataclass
 class ContentStructureAnalysis:
-    """Content structure and flow analysis"""    narrative_structure: str = field(default="linear")
+    """Content structure and flow analysis"""
+    narrative_structure: str = field(default="linear")
     pacing_score: float = field(default=50.0)
     attention_retention: float = field(default=50.0)
     
@@ -159,7 +169,8 @@ class ContentStructureAnalysis:
 
 @dataclass
 class ContentAnalysisProfile:
-    """Comprehensive content analysis profile"""    # Classification
+    """Comprehensive content analysis profile"""
+    # Classification
     category: ContentCategory = field(default=ContentCategory.ENTERTAINMENT)
     format: ContentFormat = field(default=ContentFormat.MIXED_MEDIA)
     engagement_type: EngagementType = field(default=EngagementType.ENTERTAINING)
@@ -190,7 +201,8 @@ class ContentAnalysisProfile:
 
 @dataclass
 class ContentAnalysisMetrics:
-    """Content analysis metrics container"""    profile: ContentAnalysisProfile = field(default_factory=ContentAnalysisProfile)
+    """Content analysis metrics container"""
+    profile: ContentAnalysisProfile = field(default_factory=ContentAnalysisProfile)
     
     # Performance indicators
     viral_potential: float = field(default=30.0)
@@ -215,7 +227,8 @@ class ContentAnalysisMetrics:
 
 
 class ContentAnalyzer(BaseAIModel):
-    """    Professional Content Analyzer
+    """
+    Professional Content Analyzer
     
     Provides comprehensive content intelligence for:
     - Content creators and influencers
@@ -223,9 +236,11 @@ class ContentAnalyzer(BaseAIModel):
     - Social media managers
     - Brand content teams
     - Creator economy platforms
-    """    
+    """
+    
     def __init__(self, config: Optional[ModelConfig] = None):
-        """Initialize content analyzer"""        super().__init__(config or ModelConfig(
+        """Initialize content analyzer"""
+        super().__init__(config or ModelConfig(
             model_name="content_analyzer",
             provider="internal",
             version="1.0.0"
@@ -273,7 +288,8 @@ class ContentAnalyzer(BaseAIModel):
         logger.info("Content Analyzer initialized successfully")
     
     def _initialize_classification_models(self):
-        """Initialize content classification models"""        try:
+        """Initialize content classification models"""
+        try:
             # Category keywords mapping
             self.category_keywords = {
                 ContentCategory.ENTERTAINMENT: ['funny', 'comedy', 'music', 'movie', 'celebrity', 'meme'],
@@ -303,7 +319,8 @@ class ContentAnalyzer(BaseAIModel):
         content_data: Dict[str, Any],
         analysis_options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Comprehensive content analysis
+        """
+        Comprehensive content analysis
         
         Args:
             content_data: Content information including text, metadata, etc.
@@ -315,7 +332,8 @@ class ContentAnalyzer(BaseAIModel):
         Raises:
             QualityCheckError: If analysis fails
             ContentValidationError: If content data is invalid
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             if not content_data:
@@ -451,7 +469,8 @@ class ContentAnalyzer(BaseAIModel):
             raise QualityCheckError(f"Content analysis failed: {str(e)}") from e
     
     async def _classify_content(self, content_data: Dict[str, Any], profile: ContentAnalysisProfile):
-        """Classify content category, format, and engagement type"""        try:
+        """Classify content category, format, and engagement type"""
+        try:
             text_content = content_data.get('text', '').lower()
             media_type = content_data.get('media_type', 'unknown')
             metadata = content_data.get('metadata', {})
@@ -514,7 +533,8 @@ class ContentAnalyzer(BaseAIModel):
             logger.warning(f"Content classification failed: {str(e)}")
     
     async def _analyze_trends_and_timing(self, content_data: Dict[str, Any], profile: ContentAnalysisProfile):
-        """Analyze content trends and timing relevance"""        try:
+        """Analyze content trends and timing relevance"""
+        try:
             text_content = content_data.get('text', '').lower()
             hashtags = content_data.get('hashtags', [])
             category = profile.category.value
@@ -606,7 +626,8 @@ class ContentAnalyzer(BaseAIModel):
             logger.warning(f"Trends analysis failed: {str(e)}")
     
     async def _analyze_target_audience(self, content_data: Dict[str, Any], profile: ContentAnalysisProfile):
-        """Analyze target audience and demographic appeal"""        try:
+        """Analyze target audience and demographic appeal"""
+        try:
             text_content = content_data.get('text', '').lower()
             metadata = content_data.get('metadata', {})
             
@@ -727,7 +748,8 @@ class ContentAnalyzer(BaseAIModel):
             logger.warning(f"Audience analysis failed: {str(e)}")
     
     async def _analyze_competitive_landscape(self, content_data: Dict[str, Any], profile: ContentAnalysisProfile):
-        """Analyze competitive landscape and differentiation"""        try:
+        """Analyze competitive landscape and differentiation"""
+        try:
             text_content = content_data.get('text', '').lower()
             category = profile.category.value
             
@@ -810,7 +832,8 @@ class ContentAnalyzer(BaseAIModel):
             logger.warning(f"Competitive analysis failed: {str(e)}")
     
     async def _analyze_content_themes(self, content_data: Dict[str, Any], profile: ContentAnalysisProfile):
-        """Analyze content themes and messaging"""        try:
+        """Analyze content themes and messaging"""
+        try:
             text_content = content_data.get('text', '').lower()
             
             # Primary theme detection based on category
@@ -902,7 +925,8 @@ class ContentAnalyzer(BaseAIModel):
             logger.warning(f"Theme analysis failed: {str(e)}")
     
     async def _analyze_content_structure(self, content_data: Dict[str, Any], profile: ContentAnalysisProfile):
-        """Analyze content structure and narrative flow"""        try:
+        """Analyze content structure and narrative flow"""
+        try:
             text_content = content_data.get('text', '')
             metadata = content_data.get('metadata', {})
             
@@ -1043,7 +1067,8 @@ class ContentAnalyzer(BaseAIModel):
             logger.warning(f"Structure analysis failed: {str(e)}")
     
     async def _predict_performance(self, profile: ContentAnalysisProfile):
-        """Predict content performance metrics"""        try:
+        """Predict content performance metrics"""
+        try:
             # Engagement prediction factors
             engagement_factors = [
                 profile.trend_analysis.trend_alignment,
@@ -1089,7 +1114,8 @@ class ContentAnalyzer(BaseAIModel):
             logger.warning(f"Performance prediction failed: {str(e)}")
     
     def _generate_optimization_recommendations(self, profile: ContentAnalysisProfile):
-        """Generate optimization recommendations"""        recommendations = []
+        """Generate optimization recommendations"""
+        recommendations = []
         improvement_areas = []
         
         # Trend alignment recommendations
@@ -1143,7 +1169,8 @@ class ContentAnalyzer(BaseAIModel):
         profile.strategic_recommendations = recommendations
     
     def _calculate_strategic_scores(self, profile: ContentAnalysisProfile):
-        """Calculate strategic and overall scores"""        try:
+        """Calculate strategic and overall scores"""
+        try:
             # Optimization score
             optimization_factors = [
                 profile.trend_analysis.trend_alignment,
@@ -1191,7 +1218,8 @@ class ContentAnalyzer(BaseAIModel):
             profile.content_intelligence_score = 50
     
     async def _analyze_content_risks(self, content_data: Dict[str, Any], profile: ContentAnalysisProfile, metrics: ContentAnalysisMetrics):
-        """Analyze content risks and compliance"""        try:
+        """Analyze content risks and compliance"""
+        try:
             text_content = content_data.get('text', '').lower()
             
             # Controversy risk assessment
@@ -1250,7 +1278,8 @@ class ContentAnalyzer(BaseAIModel):
             logger.warning(f"Risk analysis failed: {str(e)}")
     
     async def _calculate_value_metrics(self, profile: ContentAnalysisProfile, metrics: ContentAnalysisMetrics):
-        """Calculate content value metrics"""        try:
+        """Calculate content value metrics"""
+        try:
             # Educational value
             educational_indicators = [
                 profile.engagement_type == EngagementType.EDUCATIONAL,
@@ -1310,7 +1339,8 @@ class ContentAnalyzer(BaseAIModel):
             logger.warning(f"Value metrics calculation failed: {str(e)}")
     
     def _calculate_confidence(self, profile: ContentAnalysisProfile, content_data: Dict[str, Any]) -> float:
-        """Calculate analysis confidence score"""        confidence = 0.85  # Base confidence
+        """Calculate analysis confidence score"""
+        confidence = 0.85  # Base confidence
         
         # Adjust based on content completeness
         text_length = len(content_data.get('text', ''))
@@ -1339,14 +1369,16 @@ class ContentAnalyzer(BaseAIModel):
 
 
 async def analyze_content_intelligence(content_data: Dict[str, Any]) -> Dict[str, Any]:
-    """    Convenient function for content intelligence analysis
+    """
+    Convenient function for content intelligence analysis
     
     Args:
         content_data: Content information and metadata
         
     Returns:
         Dict containing content analysis results
-    """    try:
+    """
+    try:
         result = await content_analyzer.analyze_content(content_data)
         return result
     except Exception as e:

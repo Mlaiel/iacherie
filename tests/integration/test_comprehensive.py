@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -12,7 +13,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 """Simple functional test for the FastAPI application
-"""import asyncio
+"""
+import asyncio
 import subprocess
 import time
 import sys
@@ -23,7 +25,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 def test_dependencies():
-    """Test that all required dependencies are available"""    print("🔍 Testing dependencies...")
+    """Test that all required dependencies are available"""
+    print("🔍 Testing dependencies...")
     
     try:
         import passlib
@@ -40,7 +43,8 @@ def test_dependencies():
         return False
 
 def test_server_startup():
-    """Test that the FastAPI server can start and respond"""    print("🚀 Testing FastAPI server startup...")
+    """Test that the FastAPI server can start and respond"""
+    print("🚀 Testing FastAPI server startup...")
     
     # Start server in background
     process = subprocess.Popen([
@@ -96,7 +100,8 @@ def test_server_startup():
         process.wait()
 
 def test_async_functionality():
-    """Test async functionality"""    print("⚡ Testing async functionality...")
+    """Test async functionality"""
+    print("⚡ Testing async functionality...")
     
     async def simple_async_test():
         await asyncio.sleep(0.01)
@@ -115,7 +120,8 @@ def test_async_functionality():
         return False
 
 def main():
-    """Run all tests"""    print("🧪 Running Ainflue Platform Tests")
+    """Run all tests"""
+    print("🧪 Running Ainflue Platform Tests")
     print("=" * 50)
     
     tests = [

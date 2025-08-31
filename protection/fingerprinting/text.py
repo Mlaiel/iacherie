@@ -16,7 +16,8 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission from Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple, Union, Set
@@ -59,7 +60,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TextMetadata:
-    """Comprehensive text metadata extraction."""    char_count: int
+    """Comprehensive text metadata extraction."""
+    char_count: int
     word_count: int
     sentence_count: int
     paragraph_count: int
@@ -73,7 +75,8 @@ class TextMetadata:
     complexity_score: Optional[float]
 
 class BERTEmbeddingExtractor:
-    """BERT-based neural embeddings for semantic text understanding."""    
+    """BERT-based neural embeddings for semantic text understanding."""
+    
     def __init__(self, model_name: str = "bert-base-uncased"):
         self.model_name = model_name
         self.tokenizer = None
@@ -81,7 +84,8 @@ class BERTEmbeddingExtractor:
         self._initialize_model()
         
     def _initialize_model(self):
-        """Initialize BERT model."""        try:
+        """Initialize BERT model."""
+        try:
             self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
             self.model = AutoModel.from_pretrained(self.model_name)
             self.model.eval()
@@ -89,14 +93,16 @@ class BERTEmbeddingExtractor:
             logger.warning(f"BERT model initialization failed: {e}")
     
     def extract_embeddings(self, text: str) -> Dict[str, Any]:
-        """        Extract BERT embeddings from text.
+        """
+        Extract BERT embeddings from text.
         
         Args:
             text: Input text
             
         Returns:
             Dictionary containing embeddings and metadata
-        """        if not self.model or not self.tokenizer:
+        """
+        if not self.model or not self.tokenizer:
             return {"error": "BERT model not initialized"}
             
         try:
@@ -151,7 +157,8 @@ class BERTEmbeddingExtractor:
             return {"error": str(e)}
     
     def _preprocess_text(self, text: str) -> str:
-        """Preprocess text for BERT."""        # Remove excessive whitespace
+        """Preprocess text for BERT."""
+        # Remove excessive whitespace
         text = re.sub(r'\s+', ' ', text)
         
         # Normalize unicode
@@ -163,7 +170,8 @@ class BERTEmbeddingExtractor:
         return text.strip()
     
     def _chunk_text(self, text: str, max_length: int = 512) -> List[str]:
-        """Split text into chunks that fit BERT's maximum length."""        # Tokenize to get accurate token count
+        """Split text into chunks that fit BERT's maximum length."""
+        # Tokenize to get accurate token count
         tokens = self.tokenizer.tokenize(text)
         
         if len(tokens) <= max_length - 2:  # Account for [CLS] and [SEP]
@@ -181,7 +189,8 @@ class BERTEmbeddingExtractor:
         return chunks
     
     def _compute_embedding_hash(self, embeddings: np.ndarray) -> str:
-        """Compute hash from BERT embeddings."""        # Quantize embeddings to binary
+        """Compute hash from BERT embeddings."""
+        # Quantize embeddings to binary
         binary_embeddings = (embeddings > np.median(embeddings)).astype(int)
         
         # Convert to hash
@@ -189,7 +198,8 @@ class BERTEmbeddingExtractor:
         return hashlib.md5(hash_string.encode()).hexdigest()
     
     def _extract_semantic_features(self, embeddings: np.ndarray) -> Dict[str, float]:
-        """Extract semantic features from embeddings."""        return {
+        """Extract semantic features from embeddings."""
+        return {
             "embedding_mean": float(np.mean(embeddings)),
             "embedding_std": float(np.std(embeddings)),
             "embedding_max": float(np.max(embeddings)),
@@ -199,27 +209,31 @@ class BERTEmbeddingExtractor:
         }
 
 class SentenceTransformerExtractor:
-    """Sentence-BERT embeddings for better semantic similarity."""    
+    """Sentence-BERT embeddings for better semantic similarity."""
+    
     def __init__(self, model_name: str = "all-MiniLM-L6-v2"):
         self.model_name = model_name
         self.model = None
         self._initialize_model()
         
     def _initialize_model(self):
-        """Initialize Sentence-BERT model."""        try:
+        """Initialize Sentence-BERT model."""
+        try:
             self.model = SentenceTransformer(self.model_name)
         except Exception as e:
             logger.warning(f"Sentence-BERT model initialization failed: {e}")
     
     def extract_embeddings(self, text: str) -> Dict[str, Any]:
-        """        Extract sentence-level embeddings.
+        """
+        Extract sentence-level embeddings.
         
         Args:
             text: Input text
             
         Returns:
             Dictionary containing sentence embeddings
-        """        if not self.model:
+        """
+        if not self.model:
             return {"error": "Sentence-BERT model not initialized"}
             
         try:
@@ -253,12 +267,14 @@ class SentenceTransformerExtractor:
             return {"error": str(e)}
     
     def _compute_embedding_hash(self, embeddings: np.ndarray) -> str:
-        """Compute hash from sentence embeddings."""        binary_embeddings = (embeddings > np.median(embeddings)).astype(int)
+        """Compute hash from sentence embeddings."""
+        binary_embeddings = (embeddings > np.median(embeddings)).astype(int)
         hash_string = ''.join([str(bit) for bit in binary_embeddings])
         return hashlib.md5(hash_string.encode()).hexdigest()
 
 class TFIDFAnalyzer:
-    """TF-IDF vectorization and analysis."""    
+    """TF-IDF vectorization and analysis."""
+    
     def __init__(self, max_features: int = 5000, ngram_range: Tuple[int, int] = (1, 3)):
         self.max_features = max_features
         self.ngram_range = ngram_range
@@ -266,7 +282,8 @@ class TFIDFAnalyzer:
         self.stop_words = self._get_stop_words()
         
     def _get_stop_words(self) -> Set[str]:
-        """Get combined stop words from multiple sources."""        try:
+        """Get combined stop words from multiple sources."""
+        try:
             nltk_stops = set(stopwords.words('english'))
         except LookupError:
             nltk_stops = set()
@@ -282,14 +299,16 @@ class TFIDFAnalyzer:
         return nltk_stops.union(custom_stops)
     
     def analyze_tfidf(self, text: str) -> Dict[str, Any]:
-        """        Perform TF-IDF analysis on text.
+        """
+        Perform TF-IDF analysis on text.
         
         Args:
             text: Input text
             
         Returns:
             Dictionary containing TF-IDF analysis results
-        """        try:
+        """
+        try:
             # Preprocess text
             processed_text = self._preprocess_text(text)
             
@@ -336,7 +355,8 @@ class TFIDFAnalyzer:
             return {"error": str(e)}
     
     def _preprocess_text(self, text: str) -> str:
-        """Preprocess text for TF-IDF analysis."""        # Convert to lowercase
+        """Preprocess text for TF-IDF analysis."""
+        # Convert to lowercase
         text = text.lower()
         
         # Remove special characters but keep spaces
@@ -348,7 +368,8 @@ class TFIDFAnalyzer:
         return text.strip()
     
     def _generate_tfidf_fingerprint(self, tfidf_scores: np.ndarray) -> str:
-        """Generate fingerprint from TF-IDF scores."""        # Use top N features for fingerprint
+        """Generate fingerprint from TF-IDF scores."""
+        # Use top N features for fingerprint
         top_indices = np.argsort(tfidf_scores)[-100:][::-1]  # Top 100 features
         top_scores = tfidf_scores[top_indices]
         
@@ -360,7 +381,8 @@ class TFIDFAnalyzer:
         return hashlib.md5(fingerprint_string.encode()).hexdigest()
     
     def _calculate_document_stats(self, tfidf_scores: np.ndarray, feature_names: np.ndarray) -> Dict[str, float]:
-        """Calculate document-level statistics from TF-IDF."""        non_zero_scores = tfidf_scores[tfidf_scores > 0]
+        """Calculate document-level statistics from TF-IDF."""
+        non_zero_scores = tfidf_scores[tfidf_scores > 0]
         
         return {
             "tfidf_mean": float(np.mean(non_zero_scores)) if len(non_zero_scores) > 0 else 0.0,
@@ -372,20 +394,23 @@ class TFIDFAnalyzer:
         }
 
 class NGramAnalyzer:
-    """N-gram analysis for pattern detection and fingerprinting."""    
+    """N-gram analysis for pattern detection and fingerprinting."""
+    
     def __init__(self, max_n: int = 5):
         self.max_n = max_n
         self.stemmer = PorterStemmer()
         
     def analyze_ngrams(self, text: str) -> Dict[str, Any]:
-        """        Perform comprehensive N-gram analysis.
+        """
+        Perform comprehensive N-gram analysis.
         
         Args:
             text: Input text
             
         Returns:
             Dictionary containing N-gram analysis results
-        """        try:
+        """
+        try:
             # Preprocess and tokenize
             tokens = self._preprocess_and_tokenize(text)
             
@@ -420,7 +445,8 @@ class NGramAnalyzer:
             return {"error": str(e)}
     
     def _preprocess_and_tokenize(self, text: str) -> List[str]:
-        """Preprocess text and tokenize into words."""        # Convert to lowercase
+        """Preprocess text and tokenize into words."""
+        # Convert to lowercase
         text = text.lower()
         
         # Remove punctuation but keep word boundaries
@@ -438,7 +464,8 @@ class NGramAnalyzer:
         return tokens
     
     def _extract_ngrams(self, tokens: List[str], n: int) -> Dict[str, Any]:
-        """Extract N-grams of specified length."""        if len(tokens) < n:
+        """Extract N-grams of specified length."""
+        if len(tokens) < n:
             return {"ngrams": [], "frequencies": {}, "total_count": 0}
         
         # Generate N-grams
@@ -464,7 +491,8 @@ class NGramAnalyzer:
         }
     
     def _extract_character_ngrams(self, text: str, n_values: List[int] = [3, 4, 5]) -> Dict[str, Any]:
-        """Extract character-level N-grams."""        # Clean text
+        """Extract character-level N-grams."""
+        # Clean text
         clean_text = re.sub(r'\s+', ' ', text.lower())
         clean_text = re.sub(r'[^a-z0-9\s]', '', clean_text)
         
@@ -491,7 +519,8 @@ class NGramAnalyzer:
         return char_ngram_data
     
     def _generate_ngram_fingerprints(self, ngram_data: Dict, char_ngrams: Dict) -> Dict[str, str]:
-        """Generate fingerprints from N-gram data."""        fingerprints = {}
+        """Generate fingerprints from N-gram data."""
+        fingerprints = {}
         
         # Word N-gram fingerprints
         for ngram_type, data in ngram_data.items():
@@ -511,7 +540,8 @@ class NGramAnalyzer:
         return fingerprints
     
     def _calculate_diversity_metrics(self, ngram_data: Dict) -> Dict[str, float]:
-        """Calculate lexical diversity metrics."""        metrics = {}
+        """Calculate lexical diversity metrics."""
+        metrics = {}
         
         for ngram_type, data in ngram_data.items():
             total_count = data.get("total_count", 0)
@@ -534,28 +564,32 @@ class NGramAnalyzer:
         return metrics
 
 class SemanticAnalyzer:
-    """Semantic analysis including topic modeling and sentiment analysis."""    
+    """Semantic analysis including topic modeling and sentiment analysis."""
+    
     def __init__(self):
         self.sentiment_pipeline = None
         self.ner_pipeline = None
         self._initialize_pipelines()
         
     def _initialize_pipelines(self):
-        """Initialize HuggingFace pipelines."""        try:
+        """Initialize HuggingFace pipelines."""
+        try:
             self.sentiment_pipeline = pipeline("sentiment-analysis")
             self.ner_pipeline = pipeline("ner", aggregation_strategy="simple")
         except Exception as e:
             logger.warning(f"Pipeline initialization failed: {e}")
     
     def analyze_semantics(self, text: str) -> Dict[str, Any]:
-        """        Perform comprehensive semantic analysis.
+        """
+        Perform comprehensive semantic analysis.
         
         Args:
             text: Input text
             
         Returns:
             Dictionary containing semantic analysis results
-        """        try:
+        """
+        try:
             # Language detection
             language_info = self._detect_language(text)
             
@@ -591,7 +625,8 @@ class SemanticAnalyzer:
             return {"error": str(e)}
     
     def _detect_language(self, text: str) -> Dict[str, Any]:
-        """Detect text language."""        try:
+        """Detect text language."""
+        try:
             # Clean text for language detection
             clean_text = re.sub(r'[^a-zA-Z\s]', ' ', text)
             clean_text = re.sub(r'\s+', ' ', clean_text).strip()
@@ -614,7 +649,8 @@ class SemanticAnalyzer:
             return {"error": str(e)}
     
     def _analyze_sentiment(self, text: str) -> Dict[str, Any]:
-        """Analyze text sentiment."""        if not self.sentiment_pipeline:
+        """Analyze text sentiment."""
+        if not self.sentiment_pipeline:
             return {"error": "Sentiment pipeline not initialized"}
             
         try:
@@ -660,7 +696,8 @@ class SemanticAnalyzer:
             return {"error": str(e)}
     
     def _extract_named_entities(self, text: str) -> Dict[str, Any]:
-        """Extract named entities from text."""        if not self.ner_pipeline:
+        """Extract named entities from text."""
+        if not self.ner_pipeline:
             return {"error": "NER pipeline not initialized"}
             
         try:
@@ -706,7 +743,8 @@ class SemanticAnalyzer:
             return {"error": str(e)}
     
     def _analyze_topics(self, text: str) -> Dict[str, Any]:
-        """Simplified topic analysis using keyword extraction."""        try:
+        """Simplified topic analysis using keyword extraction."""
+        try:
             # Preprocess text
             tokens = self._preprocess_and_tokenize(text)
             
@@ -743,7 +781,8 @@ class SemanticAnalyzer:
             return {"error": str(e)}
     
     def _cluster_keywords(self, keywords: List[Tuple[str, float]]) -> List[Dict[str, Any]]:
-        """Simple keyword clustering for topic identification."""        # Group keywords by semantic similarity (simplified)
+        """Simple keyword clustering for topic identification."""
+        # Group keywords by semantic similarity (simplified)
         topics = []
         used_keywords = set()
         
@@ -775,7 +814,8 @@ class SemanticAnalyzer:
         return topics[:5]  # Limit to top 5 topics
     
     def _keywords_similar(self, kw1: str, kw2: str) -> bool:
-        """Check if two keywords are similar."""        words1 = set(kw1.lower().split())
+        """Check if two keywords are similar."""
+        words1 = set(kw1.lower().split())
         words2 = set(kw2.lower().split())
         
         # Check for word overlap
@@ -783,7 +823,8 @@ class SemanticAnalyzer:
         return overlap > 0 and overlap / max(len(words1), len(words2)) > 0.3
     
     def _calculate_topic_coherence(self, topics: List[Dict[str, Any]]) -> float:
-        """Calculate topic coherence score."""        if not topics:
+        """Calculate topic coherence score."""
+        if not topics:
             return 0.0
         
         # Simple coherence: average topic score normalized by number of keywords
@@ -796,7 +837,8 @@ class SemanticAnalyzer:
         return float(np.mean(coherence_scores)) if coherence_scores else 0.0
     
     def _analyze_readability(self, text: str) -> Dict[str, Any]:
-        """Analyze text readability."""        try:
+        """Analyze text readability."""
+        try:
             # Basic text statistics
             sentences = sent_tokenize(text)
             words = word_tokenize(text.lower())
@@ -838,7 +880,8 @@ class SemanticAnalyzer:
             return {"error": str(e)}
     
     def _interpret_flesch_score(self, score: float) -> str:
-        """Interpret Flesch reading ease score."""        if score >= 90:
+        """Interpret Flesch reading ease score."""
+        if score >= 90:
             return "Very Easy"
         elif score >= 80:
             return "Easy"
@@ -854,7 +897,8 @@ class SemanticAnalyzer:
             return "Very Difficult"
     
     def _split_text_into_chunks(self, text: str, max_length: int = 500) -> List[str]:
-        """Split text into chunks for processing."""        sentences = sent_tokenize(text)
+        """Split text into chunks for processing."""
+        sentences = sent_tokenize(text)
         chunks = []
         current_chunk = ""
         
@@ -872,7 +916,8 @@ class SemanticAnalyzer:
         return chunks
     
     def _preprocess_and_tokenize(self, text: str) -> List[str]:
-        """Preprocess text and tokenize."""        # Convert to lowercase
+        """Preprocess text and tokenize."""
+        # Convert to lowercase
         text = text.lower()
         
         # Remove punctuation
@@ -888,7 +933,8 @@ class SemanticAnalyzer:
     
     def _generate_semantic_fingerprint(self, sentiment_info: Dict, ner_info: Dict,
                                      topic_info: Dict, readability_info: Dict) -> str:
-        """Generate fingerprint from semantic analysis."""        fingerprint_components = []
+        """Generate fingerprint from semantic analysis."""
+        fingerprint_components = []
         
         # Sentiment fingerprint
         if "overall_sentiment" in sentiment_info:
@@ -918,7 +964,8 @@ class SemanticAnalyzer:
         return ""
 
 class TextFingerprintingService:
-    """    Comprehensive text fingerprinting service combining multiple NLP techniques.
+    """
+    Comprehensive text fingerprinting service combining multiple NLP techniques.
     
     Features:
     - BERT/RoBERTa neural embeddings
@@ -928,7 +975,8 @@ class TextFingerprintingService:
     - Semantic analysis (sentiment, NER, topics)
     - Plagiarism detection capabilities
     - Multi-language support
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.bert_extractor = BERTEmbeddingExtractor()
@@ -948,7 +996,8 @@ class TextFingerprintingService:
         }
         
     async def process_text(self, text: str, user_id: int, file_path: Optional[str] = None) -> FingerprintResult:
-        """        Process text and generate comprehensive fingerprint.
+        """
+        Process text and generate comprehensive fingerprint.
         
         Args:
             text: Input text content
@@ -957,7 +1006,8 @@ class TextFingerprintingService:
             
         Returns:
             FingerprintResult containing all fingerprint data
-        """        try:
+        """
+        try:
             logger.info(f"Processing text fingerprint for user {user_id}")
             
             # Extract metadata
@@ -1009,7 +1059,8 @@ class TextFingerprintingService:
             raise
     
     async def _extract_metadata(self, text: str) -> TextMetadata:
-        """Extract comprehensive text metadata."""        try:
+        """Extract comprehensive text metadata."""
+        try:
             # Basic counts
             char_count = len(text)
             words = word_tokenize(text.lower())
@@ -1069,7 +1120,8 @@ class TextFingerprintingService:
             )
     
     def _calculate_complexity_score(self, text: str, words: List[str], sentences: List[str]) -> float:
-        """Calculate text complexity score."""        try:
+        """Calculate text complexity score."""
+        try:
             # Average word length
             avg_word_length = sum(len(word) for word in words) / len(words) if words else 0
             
@@ -1093,32 +1145,38 @@ class TextFingerprintingService:
             return 0.0
     
     async def _run_bert_extraction(self, text: str) -> Dict[str, Any]:
-        """Run BERT embedding extraction."""        return await asyncio.get_event_loop().run_in_executor(
+        """Run BERT embedding extraction."""
+        return await asyncio.get_event_loop().run_in_executor(
             None, self.bert_extractor.extract_embeddings, text
         )
     
     async def _run_sentence_bert_extraction(self, text: str) -> Dict[str, Any]:
-        """Run Sentence-BERT extraction."""        return await asyncio.get_event_loop().run_in_executor(
+        """Run Sentence-BERT extraction."""
+        return await asyncio.get_event_loop().run_in_executor(
             None, self.sentence_bert_extractor.extract_embeddings, text
         )
     
     async def _run_tfidf_analysis(self, text: str) -> Dict[str, Any]:
-        """Run TF-IDF analysis."""        return await asyncio.get_event_loop().run_in_executor(
+        """Run TF-IDF analysis."""
+        return await asyncio.get_event_loop().run_in_executor(
             None, self.tfidf_analyzer.analyze_tfidf, text
         )
     
     async def _run_ngram_analysis(self, text: str) -> Dict[str, Any]:
-        """Run N-gram analysis."""        return await asyncio.get_event_loop().run_in_executor(
+        """Run N-gram analysis."""
+        return await asyncio.get_event_loop().run_in_executor(
             None, self.ngram_analyzer.analyze_ngrams, text
         )
     
     async def _run_semantic_analysis(self, text: str) -> Dict[str, Any]:
-        """Run semantic analysis."""        return await asyncio.get_event_loop().run_in_executor(
+        """Run semantic analysis."""
+        return await asyncio.get_event_loop().run_in_executor(
             None, self.semantic_analyzer.analyze_semantics, text
         )
     
     def _generate_combined_hash(self, fingerprint_data: Dict[str, Any]) -> str:
-        """Generate combined hash from all fingerprint components."""        hash_components = []
+        """Generate combined hash from all fingerprint components."""
+        hash_components = []
         
         # Extract key hash components
         if "bert" in fingerprint_data and "embedding_hash" in fingerprint_data["bert"]:
@@ -1142,7 +1200,8 @@ class TextFingerprintingService:
         return hashlib.sha256(combined_string.encode()).hexdigest()
     
     async def find_similar(self, fingerprint_data: Dict[str, Any], threshold: float = 0.8) -> List[SimilarityMatch]:
-        """        Find similar text content based on fingerprint data.
+        """
+        Find similar text content based on fingerprint data.
         
         Args:
             fingerprint_data: Fingerprint data to match against
@@ -1150,13 +1209,15 @@ class TextFingerprintingService:
             
         Returns:
             List of similarity matches
-        """        # This would typically interface with a vector database
+        """
+        # This would typically interface with a vector database
         # For now, return empty list (implementation depends on storage backend)
         logger.info(f"Searching for similar text with threshold {threshold}")
         return []
     
     def calculate_similarity(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """        Calculate similarity score between two text fingerprints.
+        """
+        Calculate similarity score between two text fingerprints.
         
         Args:
             fp1: First fingerprint data
@@ -1164,7 +1225,8 @@ class TextFingerprintingService:
             
         Returns:
             Similarity score (0.0 to 1.0)
-        """        similarity_scores = []
+        """
+        similarity_scores = []
         
         # BERT similarity
         if ("bert" in fp1 and "bert" in fp2 and
@@ -1193,7 +1255,8 @@ class TextFingerprintingService:
         return sum(similarity_scores) if similarity_scores else 0.0
     
     def _cosine_similarity(self, vec1: List[float], vec2: List[float]) -> float:
-        """Calculate cosine similarity between vectors."""        try:
+        """Calculate cosine similarity between vectors."""
+        try:
             vec1_array = np.array(vec1)
             vec2_array = np.array(vec2)
             
@@ -1211,7 +1274,8 @@ class TextFingerprintingService:
             return 0.0
     
     def _ngram_similarity(self, ngrams1: Dict[str, str], ngrams2: Dict[str, str]) -> float:
-        """Calculate N-gram fingerprint similarity."""        try:
+        """Calculate N-gram fingerprint similarity."""
+        try:
             # Compare common fingerprint types
             common_types = set(ngrams1.keys()).intersection(set(ngrams2.keys()))
             

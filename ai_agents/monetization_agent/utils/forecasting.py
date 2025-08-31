@@ -21,7 +21,8 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - Audio Processing Specialist: Professional audio analysis and enhancement
 - DevOps Engineer: Infrastructure automation and deployment pipelines
 - AI Prompt Engineer: Advanced AI interaction and optimization systems
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import json
@@ -65,7 +66,8 @@ from ...ml.models import RevenuePredictor as MLRevenuePredictor
 logger = logging.getLogger(__name__)
 
 class ForecastModel(Enum):
-    """Types of forecasting models"""    LINEAR_REGRESSION = "linear_regression"
+    """Types of forecasting models"""
+    LINEAR_REGRESSION = "linear_regression"
     POLYNOMIAL_REGRESSION = "polynomial_regression"
     RANDOM_FOREST = "random_forest"
     GRADIENT_BOOSTING = "gradient_boosting"
@@ -75,7 +77,8 @@ class ForecastModel(Enum):
     SEASONAL_DECOMPOSITION = "seasonal_decomposition"
 
 class MarketTrendType(Enum):
-    """Types of market trends"""    SEASONAL = "seasonal"
+    """Types of market trends"""
+    SEASONAL = "seasonal"
     CYCLICAL = "cyclical"
     TRENDING = "trending"
     VOLATILE = "volatile"
@@ -84,7 +87,8 @@ class MarketTrendType(Enum):
     DECLINING = "declining"
 
 class OpportunityType(Enum):
-    """Types of revenue opportunities"""    PLATFORM_EXPANSION = "platform_expansion"
+    """Types of revenue opportunities"""
+    PLATFORM_EXPANSION = "platform_expansion"
     CONTENT_DIVERSIFICATION = "content_diversification"
     LICENSING_DEALS = "licensing_deals"
     BRAND_PARTNERSHIPS = "brand_partnerships"
@@ -97,7 +101,8 @@ class OpportunityType(Enum):
 
 @dataclass
 class ForecastResult:
-    """Comprehensive forecast result"""    forecast_id: str
+    """Comprehensive forecast result"""
+    forecast_id: str
     user_id: str
     forecast_type: str
     model_used: ForecastModel
@@ -111,7 +116,8 @@ class ForecastResult:
 
 @dataclass
 class MarketAnalysis:
-    """Comprehensive market analysis result"""    analysis_id: str
+    """Comprehensive market analysis result"""
+    analysis_id: str
     market_segment: str
     analysis_date: datetime
     trend_direction: MarketTrendType
@@ -126,7 +132,8 @@ class MarketAnalysis:
 
 @dataclass
 class RevenueOpportunity:
-    """Identified revenue opportunity"""    opportunity_id: str
+    """Identified revenue opportunity"""
+    opportunity_id: str
     opportunity_type: OpportunityType
     title: str
     description: str
@@ -141,7 +148,8 @@ class RevenueOpportunity:
     potential_obstacles: List[str]
 
 class RevenuePredictor:
-    """    Ultra-advanced AI-powered revenue forecasting system using multiple
+    """
+    Ultra-advanced AI-powered revenue forecasting system using multiple
     machine learning models and statistical analysis techniques.
     
     Features:
@@ -153,7 +161,8 @@ class RevenuePredictor:
     - Advanced feature engineering from historical data
     - External factor integration (holidays, events, trends)
     - Automated model selection based on data characteristics
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -183,7 +192,8 @@ class RevenuePredictor:
         self.is_initialized = False
     
     async def initialize(self):
-        """Initialize revenue prediction models"""        try:
+        """Initialize revenue prediction models"""
+        try:
             # Initialize data processors
             await self.statistical_analyzer.initialize()
             await self.time_series_analyzer.initialize()
@@ -212,7 +222,8 @@ class RevenuePredictor:
             raise ModelError(f"Revenue predictor initialization failed: {e}")
     
     async def load_model(self):
-        """Load and prepare forecasting models"""        if not self.is_initialized:
+        """Load and prepare forecasting models"""
+        if not self.is_initialized:
             await self.initialize()
     
     @monitor_performance
@@ -223,7 +234,8 @@ class RevenuePredictor:
         models: List[ForecastModel] = None,
         include_confidence_intervals: bool = True
     ) -> ForecastResult:
-        """        Generate comprehensive revenue forecast using multiple models.
+        """
+        Generate comprehensive revenue forecast using multiple models.
         
         Args:
             user_id: User identifier
@@ -233,7 +245,8 @@ class RevenuePredictor:
         
         Returns:
             Comprehensive forecast result
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             raise ModelError("Revenue predictor not initialized")
         
         horizon = forecast_horizon or self.default_forecast_horizon
@@ -325,7 +338,8 @@ class RevenuePredictor:
         targets: np.ndarray,
         horizon: int
     ) -> List[Tuple[date, Decimal]]:
-        """Generate ensemble forecast combining multiple models"""        
+        """Generate ensemble forecast combining multiple models"""
+        
         # Individual model forecasts
         individual_forecasts = {}
         
@@ -372,7 +386,8 @@ class RevenuePredictor:
         targets: np.ndarray,
         horizon: int
     ) -> List[Tuple[date, Decimal]]:
-        """Generate forecast using a single model"""        
+        """Generate forecast using a single model"""
+        
         # Get or train model
         model = await self._get_or_train_model(model_type, features, targets)
         
@@ -405,7 +420,8 @@ class RevenuePredictor:
         features: np.ndarray,
         targets: np.ndarray
     ) -> Any:
-        """Get existing model or train new one"""        
+        """Get existing model or train new one"""
+        
         # Check if model exists and is recent
         model_key = f"{model_type.value}_model"
         
@@ -433,7 +449,8 @@ class RevenuePredictor:
         features: np.ndarray,
         targets: np.ndarray
     ) -> Any:
-        """Train a specific model type"""        
+        """Train a specific model type"""
+        
         # Split data for training and validation
         X_train, X_val, y_train, y_val = train_test_split(
             features, targets, test_size=0.2, random_state=42, shuffle=False
@@ -493,17 +510,20 @@ class RevenuePredictor:
         return model
     
     async def cleanup(self):
-        """Cleanup predictor resources"""        self.model_cache.clear()
+        """Cleanup predictor resources"""
+        self.model_cache.clear()
         self.scalers.clear()
         logger.info("Revenue Predictor cleaned up successfully")
 
 
 class MarketAnalyzer:
-    """    Advanced market analysis system for trend identification and competitive analysis.
+    """
+    Advanced market analysis system for trend identification and competitive analysis.
     
     Analyzes market conditions, identifies trends, and provides strategic insights
     for revenue optimization and market positioning.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -520,7 +540,8 @@ class MarketAnalyzer:
         self.is_initialized = False
     
     async def initialize(self):
-        """Initialize market analyzer"""        try:
+        """Initialize market analyzer"""
+        try:
             await self.market_data_manager.initialize()
             await self.trend_analysis_manager.initialize()
             await self.market_data_repository.initialize()
@@ -533,7 +554,8 @@ class MarketAnalyzer:
             raise ModelError(f"Market analyzer initialization failed: {e}")
     
     async def load_model(self):
-        """Load market analysis models"""        if not self.is_initialized:
+        """Load market analysis models"""
+        if not self.is_initialized:
             await self.initialize()
     
     @cache_result(ttl=3600)  # Cache for 1 hour
@@ -543,7 +565,8 @@ class MarketAnalyzer:
         genres: List[str],
         geographic_regions: List[str] = None
     ) -> Dict[str, Any]:
-        """        Analyze market trends for specific content types and genres.
+        """
+        Analyze market trends for specific content types and genres.
         
         Args:
             content_types: List of content types to analyze
@@ -552,7 +575,8 @@ class MarketAnalyzer:
         
         Returns:
             Comprehensive market trend analysis
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             raise ModelError("Market analyzer not initialized")
         
         regions = geographic_regions or ['global']
@@ -596,11 +620,13 @@ class MarketAnalyzer:
 
 
 class OpportunityIdentifier:
-    """    AI-powered revenue opportunity identification system.
+    """
+    AI-powered revenue opportunity identification system.
     
     Identifies and ranks potential revenue opportunities based on
     user data, market conditions, and predictive analytics.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -613,7 +639,8 @@ class OpportunityIdentifier:
         self.is_initialized = False
     
     async def initialize(self):
-        """Initialize opportunity identification system"""        try:
+        """Initialize opportunity identification system"""
+        try:
             # Load opportunity templates
             await self._load_opportunity_templates()
             
@@ -628,7 +655,8 @@ class OpportunityIdentifier:
             raise ModelError(f"Opportunity identifier initialization failed: {e}")
     
     async def load_model(self):
-        """Load opportunity identification models"""        if not self.is_initialized:
+        """Load opportunity identification models"""
+        if not self.is_initialized:
             await self.initialize()
     
     async def identify_opportunities(
@@ -638,7 +666,8 @@ class OpportunityIdentifier:
         opportunity_types: List[str] = None,
         risk_tolerance: str = "medium"
     ) -> List[RevenueOpportunity]:
-        """        Identify revenue opportunities for a user.
+        """
+        Identify revenue opportunities for a user.
         
         Args:
             user_profile: User's content and performance profile
@@ -648,7 +677,8 @@ class OpportunityIdentifier:
         
         Returns:
             List of ranked revenue opportunities
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             raise ModelError("Opportunity identifier not initialized")
         
         # Filter opportunity types based on user preferences
@@ -686,7 +716,8 @@ class OpportunityIdentifier:
         return filtered_opportunities[:10]  # Return top 10 opportunities
     
     async def _load_opportunity_templates(self):
-        """Load opportunity templates and requirements"""        
+        """Load opportunity templates and requirements"""
+        
         self.opportunity_templates = {
             OpportunityType.PLATFORM_EXPANSION: {
                 'title': "Platform Expansion Opportunity",
@@ -737,5 +768,6 @@ class OpportunityIdentifier:
         }
     
     async def cleanup(self):
-        """Cleanup opportunity identifier resources"""        self.opportunity_models.clear()
+        """Cleanup opportunity identifier resources"""
+        self.opportunity_models.clear()
         logger.info("Opportunity Identifier cleaned up successfully")

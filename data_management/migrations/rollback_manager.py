@@ -37,7 +37,8 @@ For licensing inquiries: mlaiel@live.de
 Business Logic Flow:
 Migration Failure → Risk Assessment → Rollback Strategy Selection → 
 Data Backup Verification → Rollback Execution → Integrity Validation → Recovery Confirmation
-"""import asyncio
+"""
+import asyncio
 import logging
 import traceback
 import psutil
@@ -65,7 +66,8 @@ logger = logging.getLogger(__name__)
 
 
 class RollbackStrategy(Enum):
-    """Rollback strategy types"""    IMMEDIATE = "immediate"
+    """Rollback strategy types"""
+    IMMEDIATE = "immediate"
     GRACEFUL = "graceful"
     SCHEDULED = "scheduled"
     POINT_IN_TIME = "point_in_time"
@@ -77,7 +79,8 @@ class RollbackStrategy(Enum):
 
 
 class RollbackRisk(Enum):
-    """Risk levels for rollback operations"""    MINIMAL = "minimal"
+    """Risk levels for rollback operations"""
+    MINIMAL = "minimal"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -86,7 +89,8 @@ class RollbackRisk(Enum):
 
 
 class RecoveryType(Enum):
-    """Types of recovery operations"""    DATA_RECOVERY = "data_recovery"
+    """Types of recovery operations"""
+    DATA_RECOVERY = "data_recovery"
     SCHEMA_RECOVERY = "schema_recovery"
     INDEX_RECOVERY = "index_recovery"
     CONSTRAINT_RECOVERY = "constraint_recovery"
@@ -96,7 +100,8 @@ class RecoveryType(Enum):
 
 
 class RollbackStatus(Enum):
-    """Status of rollback operations"""    PENDING = "pending"
+    """Status of rollback operations"""
+    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     VALIDATING = "validating"
     COMPLETED = "completed"
@@ -107,7 +112,8 @@ class RollbackStatus(Enum):
 
 @dataclass
 class RollbackPlan:
-    """Comprehensive rollback plan structure"""    plan_id: str
+    """Comprehensive rollback plan structure"""
+    plan_id: str
     migration_id: str
     strategy: RollbackStrategy
     risk_level: RollbackRisk
@@ -127,7 +133,8 @@ class RollbackPlan:
 
 @dataclass
 class RollbackExecution:
-    """Rollback execution tracking"""    execution_id: str
+    """Rollback execution tracking"""
+    execution_id: str
     plan_id: str
     status: RollbackStatus = RollbackStatus.PENDING
     started_at: Optional[datetime] = None
@@ -145,7 +152,8 @@ class RollbackExecution:
 
 @dataclass
 class RecoveryCheckpoint:
-    """Recovery checkpoint for incremental rollback"""    checkpoint_id: str
+    """Recovery checkpoint for incremental rollback"""
+    checkpoint_id: str
     execution_id: str
     step_index: int
     checkpoint_type: str
@@ -157,7 +165,8 @@ class RecoveryCheckpoint:
 
 
 class RollbackRiskAssessment:
-    """Advanced risk assessment for rollback operations"""    
+    """Advanced risk assessment for rollback operations"""
+    
     def __init__(self):
         self.risk_factors = {
             'data_volume': 0.2,
@@ -169,7 +178,8 @@ class RollbackRiskAssessment:
     
     def assess_rollback_risk(self, migration_id: str, plan: RollbackPlan, 
                            session: Session) -> Dict[str, Any]:
-        """Perform comprehensive risk assessment for rollback operation"""        risk_assessment = {
+        """Perform comprehensive risk assessment for rollback operation"""
+        risk_assessment = {
             'overall_risk': RollbackRisk.MEDIUM,
             'risk_score': 0.0,
             'risk_factors': {},
@@ -230,11 +240,14 @@ class RollbackRiskAssessment:
         return risk_assessment
     
     def _assess_data_volume_risk(self, session: Session) -> float:
-        """Assess risk based on data volume"""        try:
+        """Assess risk based on data volume"""
+        try:
             # Get total database size
-            size_query = """            SELECT pg_size_pretty(pg_database_size(current_database())) as size,
+            size_query = """
+            SELECT pg_size_pretty(pg_database_size(current_database())) as size,
                    pg_database_size(current_database()) as size_bytes;
-            """            
+            """
+            
             result = session.execute(text(size_query))
             row = result.fetchone()
             
@@ -256,7 +269,8 @@ class RollbackRiskAssessment:
         return 0.5  # Default medium risk
     
     def _assess_dependency_risk(self, dependencies: List[str]) -> float:
-        """Assess risk based on migration dependencies"""        if not dependencies:
+        """Assess risk based on migration dependencies"""
+        if not dependencies:
             return 0.1
         
         # Risk increases with number of dependencies
@@ -271,7 +285,8 @@ class RollbackRiskAssessment:
             return 0.9
     
     def _assess_system_criticality(self, migration_id: str) -> float:
-        """Assess risk based on system criticality"""        critical_migrations = [
+        """Assess risk based on system criticality"""
+        critical_migrations = [
             'user_', 'security_', 'payment_', 'monetization_'
         ]
         
@@ -282,7 +297,8 @@ class RollbackRiskAssessment:
         return 0.4  # Medium criticality for other migrations
     
     def _assess_backup_availability(self, backup_requirements: Dict[str, Any]) -> float:
-        """Assess risk based on backup availability"""        if not backup_requirements:
+        """Assess risk based on backup availability"""
+        if not backup_requirements:
             return 0.9  # High risk if no backup requirements
         
         backup_age = backup_requirements.get('max_age_hours', 24)
@@ -296,7 +312,8 @@ class RollbackRiskAssessment:
             return 0.9
     
     def _assess_execution_time_risk(self, estimated_duration: timedelta) -> float:
-        """Assess risk based on estimated execution time"""        hours = estimated_duration.total_seconds() / 3600
+        """Assess risk based on estimated execution time"""
+        hours = estimated_duration.total_seconds() / 3600
         
         if hours <= 0.5:  # 30 minutes
             return 0.1
@@ -308,7 +325,8 @@ class RollbackRiskAssessment:
             return 0.9
     
     def _generate_risk_recommendations(self, risk_factors: Dict[str, float]) -> List[str]:
-        """Generate risk mitigation recommendations"""        recommendations = []
+        """Generate risk mitigation recommendations"""
+        recommendations = []
         
         if risk_factors.get('data_volume', 0) > 0.6:
             recommendations.append("Consider scheduling rollback during low-traffic hours")
@@ -330,7 +348,8 @@ class RollbackRiskAssessment:
 
 
 class RecoveryValidator:
-    """Comprehensive recovery validation and verification"""    
+    """Comprehensive recovery validation and verification"""
+    
     def __init__(self):
         self.validation_checks = [
             'schema_integrity',
@@ -343,7 +362,8 @@ class RecoveryValidator:
     
     async def validate_recovery(self, session: Session, 
                               original_state: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform comprehensive recovery validation"""        validation_result = {
+        """Perform comprehensive recovery validation"""
+        validation_result = {
             'is_valid': True,
             'checks_passed': 0,
             'total_checks': len(self.validation_checks),
@@ -383,7 +403,8 @@ class RecoveryValidator:
     
     async def _run_validation_check(self, session: Session, check_type: str, 
                                   original_state: Dict[str, Any]) -> Dict[str, Any]:
-        """Run specific validation check"""        check_result = {
+        """Run specific validation check"""
+        check_result = {
             'passed': False,
             'errors': [],
             'warnings': [],
@@ -411,13 +432,16 @@ class RecoveryValidator:
     
     async def _validate_schema_integrity(self, session: Session, 
                                        original_state: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate database schema integrity"""        check_result = {'passed': True, 'errors': [], 'warnings': []}
+        """Validate database schema integrity"""
+        check_result = {'passed': True, 'errors': [], 'warnings': []}
         
         try:
             # Check if all expected tables exist
-            tables_query = """            SELECT table_name FROM information_schema.tables 
+            tables_query = """
+            SELECT table_name FROM information_schema.tables 
             WHERE table_schema = 'public' ORDER BY table_name;
-            """            
+            """
+            
             result = session.execute(text(tables_query))
             current_tables = set(row[0] for row in result.fetchall())
             
@@ -441,7 +465,8 @@ class RecoveryValidator:
     
     async def _validate_data_consistency(self, session: Session, 
                                        original_state: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate data consistency"""        check_result = {'passed': True, 'errors': [], 'warnings': []}
+        """Validate data consistency"""
+        check_result = {'passed': True, 'errors': [], 'warnings': []}
         
         try:
             # Check row counts for key tables
@@ -462,23 +487,28 @@ class RecoveryValidator:
         return check_result
     
     async def _validate_referential_integrity(self, session: Session) -> Dict[str, Any]:
-        """Validate referential integrity constraints"""        check_result = {'passed': True, 'errors': [], 'warnings': []}
+        """Validate referential integrity constraints"""
+        check_result = {'passed': True, 'errors': [], 'warnings': []}
         
         try:
             # Check for foreign key violations
-            fk_query = """            SELECT conname, conrelid::regclass, confrelid::regclass
+            fk_query = """
+            SELECT conname, conrelid::regclass, confrelid::regclass
             FROM pg_constraint 
             WHERE contype = 'f';
-            """            
+            """
+            
             result = session.execute(text(fk_query))
             foreign_keys = result.fetchall()
             
             for fk_name, child_table, parent_table in foreign_keys:
                 # Check for orphaned records (simplified check)
-                violation_query = f"""                SELECT COUNT(*) FROM {child_table} c
+                violation_query = f"""
+                SELECT COUNT(*) FROM {child_table} c
                 LEFT JOIN {parent_table} p ON true
                 WHERE p.id IS NULL AND c.id IS NOT NULL;
-                """                
+                """
+                
                 try:
                     result = session.execute(text(violation_query))
                     violations = result.scalar()
@@ -500,16 +530,19 @@ class RecoveryValidator:
         return check_result
     
     async def _validate_index_validity(self, session: Session) -> Dict[str, Any]:
-        """Validate database indexes"""        check_result = {'passed': True, 'errors': [], 'warnings': []}
+        """Validate database indexes"""
+        check_result = {'passed': True, 'errors': [], 'warnings': []}
         
         try:
             # Check for invalid indexes
-            invalid_indexes_query = """            SELECT schemaname, tablename, indexname, pg_size_pretty(pg_relation_size(indexrelid))
+            invalid_indexes_query = """
+            SELECT schemaname, tablename, indexname, pg_size_pretty(pg_relation_size(indexrelid))
             FROM pg_indexes 
             JOIN pg_class ON pg_class.relname = indexname 
             JOIN pg_index ON pg_index.indexrelid = pg_class.oid 
             WHERE pg_index.indisvalid = false;
-            """            
+            """
+            
             result = session.execute(text(invalid_indexes_query))
             invalid_indexes = result.fetchall()
             
@@ -525,14 +558,17 @@ class RecoveryValidator:
         return check_result
     
     async def _validate_constraints(self, session: Session) -> Dict[str, Any]:
-        """Validate database constraints"""        check_result = {'passed': True, 'errors': [], 'warnings': []}
+        """Validate database constraints"""
+        check_result = {'passed': True, 'errors': [], 'warnings': []}
         
         try:
             # Check for constraint violations
-            constraints_query = """            SELECT conname, conrelid::regclass, contype
+            constraints_query = """
+            SELECT conname, conrelid::regclass, contype
             FROM pg_constraint 
             WHERE contype IN ('c', 'u', 'p');
-            """            
+            """
+            
             result = session.execute(text(constraints_query))
             constraints = result.fetchall()
             
@@ -555,7 +591,8 @@ class RecoveryValidator:
     
     async def _validate_performance_baseline(self, session: Session, 
                                            original_state: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate performance baseline"""        check_result = {'passed': True, 'errors': [], 'warnings': []}
+        """Validate performance baseline"""
+        check_result = {'passed': True, 'errors': [], 'warnings': []}
         
         try:
             # Run basic performance queries
@@ -590,7 +627,8 @@ class RecoveryValidator:
     
     async def _calculate_performance_impact(self, session: Session, 
                                           original_state: Dict[str, Any]) -> float:
-        """Calculate performance impact of rollback"""        try:
+        """Calculate performance impact of rollback"""
+        try:
             # Simple performance impact calculation
             baseline_time = original_state.get('performance_baseline', 1.0)
             
@@ -609,7 +647,8 @@ class RecoveryValidator:
 
 
 class RollbackManager:
-    """Comprehensive rollback management and orchestration"""    
+    """Comprehensive rollback management and orchestration"""
+    
     def __init__(self):
         self.risk_assessor = RollbackRiskAssessment()
         self.validator = RecoveryValidator()
@@ -617,7 +656,8 @@ class RollbackManager:
     
     async def create_rollback_plan(self, migration: BaseMigration, 
                                  session: Session) -> RollbackPlan:
-        """Create comprehensive rollback plan for migration"""        plan_id = str(uuid.uuid4())
+        """Create comprehensive rollback plan for migration"""
+        plan_id = str(uuid.uuid4())
         
         # Determine rollback strategy based on migration type
         strategy = self._determine_rollback_strategy(migration)
@@ -659,7 +699,8 @@ class RollbackManager:
     
     async def execute_rollback(self, plan: RollbackPlan, session: Session, 
                              executed_by: str = None) -> RollbackExecution:
-        """Execute rollback plan with comprehensive monitoring"""        execution_id = str(uuid.uuid4())
+        """Execute rollback plan with comprehensive monitoring"""
+        execution_id = str(uuid.uuid4())
         
         execution = RollbackExecution(
             execution_id=execution_id,
@@ -705,7 +746,8 @@ class RollbackManager:
         return execution
     
     def _determine_rollback_strategy(self, migration: BaseMigration) -> RollbackStrategy:
-        """Determine appropriate rollback strategy based on migration"""        if migration.category in ['security', 'encryption']:
+        """Determine appropriate rollback strategy based on migration"""
+        if migration.category in ['security', 'encryption']:
             return RollbackStrategy.GRACEFUL
         elif migration.category in ['user', 'monetization']:
             return RollbackStrategy.TRANSACTION_BASED
@@ -716,7 +758,8 @@ class RollbackManager:
     
     def _estimate_rollback_duration(self, migration: BaseMigration, 
                                   session: Session) -> timedelta:
-        """Estimate rollback duration based on migration complexity"""        base_duration = timedelta(minutes=30)
+        """Estimate rollback duration based on migration complexity"""
+        base_duration = timedelta(minutes=30)
         
         # Adjust based on migration category
         category_multipliers = {
@@ -737,7 +780,8 @@ class RollbackManager:
     
     async def _generate_recovery_steps(self, migration: BaseMigration, 
                                      session: Session) -> List[Dict[str, Any]]:
-        """Generate recovery steps for rollback plan"""        recovery_steps = []
+        """Generate recovery steps for rollback plan"""
+        recovery_steps = []
         
         # Add pre-rollback steps
         recovery_steps.append({
@@ -786,7 +830,8 @@ class RollbackManager:
         return recovery_steps
     
     def _generate_validation_steps(self, migration: BaseMigration) -> List[Dict[str, Any]]:
-        """Generate validation steps for rollback plan"""        return [
+        """Generate validation steps for rollback plan"""
+        return [
             {
                 'step_id': 'schema_validation',
                 'description': 'Validate database schema integrity',
@@ -818,7 +863,8 @@ class RollbackManager:
         ]
     
     async def _capture_database_state(self, session: Session) -> Dict[str, Any]:
-        """Capture current database state for validation"""        state = {
+        """Capture current database state for validation"""
+        state = {
             'timestamp': datetime.now(timezone.utc).isoformat(),
             'tables': [],
             'row_counts': {},
@@ -827,9 +873,11 @@ class RollbackManager:
         
         try:
             # Get table list
-            tables_query = """            SELECT table_name FROM information_schema.tables 
+            tables_query = """
+            SELECT table_name FROM information_schema.tables 
             WHERE table_schema = 'public' ORDER BY table_name;
-            """            
+            """
+            
             result = session.execute(text(tables_query))
             state['tables'] = [row[0] for row in result.fetchall()]
             
@@ -853,7 +901,8 @@ class RollbackManager:
     
     async def _execute_recovery_steps(self, plan: RollbackPlan, 
                                     execution: RollbackExecution, session: Session):
-        """Execute recovery steps in rollback plan"""        for i, step in enumerate(plan.recovery_steps):
+        """Execute recovery steps in rollback plan"""
+        for i, step in enumerate(plan.recovery_steps):
             try:
                 execution.current_step = step['description']
                 logger.info(f"Executing rollback step: {step['description']}")
@@ -879,7 +928,8 @@ class RollbackManager:
     async def _execute_validation_steps(self, plan: RollbackPlan, 
                                       execution: RollbackExecution, session: Session,
                                       original_state: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute validation steps in rollback plan"""        validation_result = await self.validator.validate_recovery(session, original_state)
+        """Execute validation steps in rollback plan"""
+        validation_result = await self.validator.validate_recovery(session, original_state)
         
         for step in plan.validation_steps:
             execution.steps_completed += 1
@@ -888,14 +938,16 @@ class RollbackManager:
         return validation_result
     
     async def _execute_backup_step(self, step: Dict[str, Any], session: Session):
-        """Execute backup step"""        logger.info("Creating pre-rollback backup...")
+        """Execute backup step"""
+        logger.info("Creating pre-rollback backup...")
         # In production, this would create an actual database backup
         # For now, we'll simulate the backup process
         await asyncio.sleep(1)  # Simulate backup time
     
     async def _execute_rollback_step(self, step: Dict[str, Any], session: Session, 
                                    plan: RollbackPlan):
-        """Execute migration rollback step"""        logger.info("Executing migration rollback...")
+        """Execute migration rollback step"""
+        logger.info("Executing migration rollback...")
         
         # Execute rollback SQL if provided
         for sql_statement in plan.rollback_sql:
@@ -907,10 +959,13 @@ class RollbackManager:
         session.commit()
     
     async def _execute_maintenance_step(self, step: Dict[str, Any], session: Session):
-        """Execute maintenance step"""        if step['step_id'] == 'refresh_materialized_views':
+        """Execute maintenance step"""
+        if step['step_id'] == 'refresh_materialized_views':
             # Refresh materialized views if any exist
-            views_query = """            SELECT schemaname, matviewname FROM pg_matviews;
-            """            
+            views_query = """
+            SELECT schemaname, matviewname FROM pg_matviews;
+            """
+            
             result = session.execute(text(views_query))
             views = result.fetchall()
             

@@ -29,7 +29,8 @@ Features:
 - Email & Notification Settings
 - File Storage Configuration
 - Backup & Recovery Settings
-"""import os
+"""
+import os
 import json
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -43,13 +44,15 @@ from cryptography.fernet import Fernet
 logger = logging.getLogger(__name__)
 
 class Environment(Enum):
-    """Environment enumeration"""    DEVELOPMENT = "development"
+    """Environment enumeration"""
+    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
 
 class DatabaseType(Enum):
-    """Database type enumeration"""    POSTGRESQL = "postgresql"
+    """Database type enumeration"""
+    POSTGRESQL = "postgresql"
     MYSQL = "mysql"
     MONGODB = "mongodb"
     REDIS = "redis"
@@ -57,7 +60,8 @@ class DatabaseType(Enum):
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration"""    type: DatabaseType
+    """Database configuration"""
+    type: DatabaseType
     host: str
     port: int
     database: str
@@ -73,7 +77,8 @@ class DatabaseConfig:
     
     @property
     def url(self) -> str:
-        """Generate database URL"""        if self.type == DatabaseType.POSTGRESQL:
+        """Generate database URL"""
+        if self.type == DatabaseType.POSTGRESQL:
             return f"postgresql://{self.username}:{self.password}@{self.host}:{self.port}/{self.database}"
         elif self.type == DatabaseType.MYSQL:
             return f"mysql://{self.username}:{self.password}@{self.host}:{self.port}/{self.database}"
@@ -86,7 +91,8 @@ class DatabaseConfig:
 
 @dataclass
 class CacheConfig:
-    """Cache configuration"""    redis_host: str = "localhost"
+    """Cache configuration"""
+    redis_host: str = "localhost"
     redis_port: int = 6379
     redis_password: Optional[str] = None
     redis_db: int = 0
@@ -99,13 +105,15 @@ class CacheConfig:
     
     @property
     def redis_url(self) -> str:
-        """Generate Redis URL"""        if self.redis_password:
+        """Generate Redis URL"""
+        if self.redis_password:
             return f"redis://:{self.redis_password}@{self.redis_host}:{self.redis_port}/{self.redis_db}"
         return f"redis://{self.redis_host}:{self.redis_port}/{self.redis_db}"
 
 @dataclass
 class AIModelConfig:
-    """AI/ML model configuration"""    model_name: str
+    """AI/ML model configuration"""
+    model_name: str
     model_path: str
     model_version: str
     provider: str  # openai, huggingface, local, etc.
@@ -120,7 +128,8 @@ class AIModelConfig:
     
 @dataclass
 class ExternalServiceConfig:
-    """External service configuration"""    service_name: str
+    """External service configuration"""
+    service_name: str
     api_key: str
     endpoint: str
     timeout: int = 30
@@ -132,7 +141,8 @@ class ExternalServiceConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration"""    encryption_key: str
+    """Security configuration"""
+    encryption_key: str
     jwt_secret: str
     jwt_expiry_hours: int = 24
     password_min_length: int = 8
@@ -147,7 +157,8 @@ class SecurityConfig:
     
 @dataclass
 class NotificationConfig:
-    """Notification configuration"""    smtp_host: str
+    """Notification configuration"""
+    smtp_host: str
     smtp_port: int
     smtp_username: str
     smtp_password: str
@@ -161,7 +172,8 @@ class NotificationConfig:
     
 @dataclass
 class MonitoringConfig:
-    """Monitoring and alerting configuration"""    enable_metrics: bool = True
+    """Monitoring and alerting configuration"""
+    enable_metrics: bool = True
     metrics_port: int = 9090
     log_level: str = "INFO"
     sentry_dsn: Optional[str] = None
@@ -173,7 +185,8 @@ class MonitoringConfig:
     
 @dataclass
 class FeatureFlags:
-    """Feature flag configuration"""    enable_ai_recommendations: bool = True
+    """Feature flag configuration"""
+    enable_ai_recommendations: bool = True
     enable_blockchain_contracts: bool = False
     enable_real_time_chat: bool = True
     enable_video_processing: bool = True
@@ -185,14 +198,16 @@ class FeatureFlags:
     enable_premium_features: bool = True
 
 class CollaborationConfig:
-    """Main collaboration system configuration"""    
+    """Main collaboration system configuration"""
+    
     def __init__(self, environment: Environment = Environment.DEVELOPMENT):
         self.environment = environment
         self._load_config()
         self._setup_logging()
         
     def _load_config(self) -> None:
-        """Load configuration from various sources"""        # Load from environment variables
+        """Load configuration from various sources"""
+        # Load from environment variables
         self._load_from_env()
         
         # Load from config files
@@ -205,7 +220,8 @@ class CollaborationConfig:
         self._validate_config()
         
     def _load_from_env(self) -> None:
-        """Load configuration from environment variables"""        # Database configuration
+        """Load configuration from environment variables"""
+        # Database configuration
         self.database = DatabaseConfig(
             type=DatabaseType(os.getenv('DATABASE_TYPE', 'postgresql')),
             host=os.getenv('DATABASE_HOST', 'localhost'),
@@ -310,7 +326,8 @@ class CollaborationConfig:
         ]
         
     def _load_from_files(self) -> None:
-        """Load configuration from YAML/JSON files"""        config_dir = Path(__file__).parent / "configs"
+        """Load configuration from YAML/JSON files"""
+        config_dir = Path(__file__).parent / "configs"
         
         # Load environment-specific config
         env_config_file = config_dir / f"{self.environment.value}.yaml"
@@ -327,7 +344,8 @@ class CollaborationConfig:
                 self._merge_secrets(secrets)
                 
     def _apply_environment_overrides(self) -> None:
-        """Apply environment-specific configuration overrides"""        if self.environment == Environment.PRODUCTION:
+        """Apply environment-specific configuration overrides"""
+        if self.environment == Environment.PRODUCTION:
             # Production overrides
             self.security.require_https = True
             self.security.session_cookie_secure = True
@@ -348,7 +366,8 @@ class CollaborationConfig:
             self.monitoring.log_level = "ERROR"
             
     def _validate_config(self) -> None:
-        """Validate configuration for required fields"""        required_fields = [
+        """Validate configuration for required fields"""
+        required_fields = [
             (self.database.host, "Database host"),
             (self.database.username, "Database username"),
             (self.security.jwt_secret, "JWT secret"),
@@ -365,36 +384,43 @@ class CollaborationConfig:
                 logger.warning(f"OpenAI API key missing for model {model.model_name}")
                 
     def _setup_logging(self) -> None:
-        """Setup logging configuration"""        logging.basicConfig(
+        """Setup logging configuration"""
+        logging.basicConfig(
             level=getattr(logging, self.monitoring.log_level),
             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
         )
         
     def _merge_config(self, config_dict: Dict[str, Any]) -> None:
-        """Merge configuration from dictionary"""        # Implementation would merge config values
+        """Merge configuration from dictionary"""
+        # Implementation would merge config values
         pass
         
     def _merge_secrets(self, secrets_dict: Dict[str, Any]) -> None:
-        """Merge secrets from dictionary"""        # Implementation would merge secret values
+        """Merge secrets from dictionary"""
+        # Implementation would merge secret values
         pass
         
     def get_model_config(self, model_name: str) -> Optional[AIModelConfig]:
-        """Get configuration for specific AI model"""        for model in self.ai_models:
+        """Get configuration for specific AI model"""
+        for model in self.ai_models:
             if model.model_name == model_name:
                 return model
         return None
         
     def get_service_config(self, service_name: str) -> Optional[ExternalServiceConfig]:
-        """Get configuration for specific external service"""        for service in self.external_services:
+        """Get configuration for specific external service"""
+        for service in self.external_services:
             if service.service_name == service_name:
                 return service
         return None
         
     def is_feature_enabled(self, feature_name: str) -> bool:
-        """Check if feature flag is enabled"""        return getattr(self.features, feature_name, False)
+        """Check if feature flag is enabled"""
+        return getattr(self.features, feature_name, False)
         
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary (excluding secrets)"""        return {
+        """Convert configuration to dictionary (excluding secrets)"""
+        return {
             'environment': self.environment.value,
             'database': {
                 'type': self.database.type.value,
@@ -429,7 +455,8 @@ config = CollaborationConfig(
 
 # Configuration factory
 def get_config(environment: Optional[str] = None) -> CollaborationConfig:
-    """Get configuration instance"""    if environment:
+    """Get configuration instance"""
+    if environment:
         return CollaborationConfig(Environment(environment))
     return config
 

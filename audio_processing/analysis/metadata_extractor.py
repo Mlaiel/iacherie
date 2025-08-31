@@ -5,7 +5,8 @@ technical specifications, and content analysis.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""import numpy as np
+"""
+import numpy as np
 import logging
 from typing import Dict, Any
 from dataclasses import dataclass
@@ -14,7 +15,8 @@ import librosa
 
 @dataclass
 class AudioMetadata:
-    """Complete audio metadata"""    duration: float
+    """Complete audio metadata"""
+    duration: float
     sample_rate: int
     channels: int
     bit_depth: Optional[int]
@@ -25,7 +27,8 @@ class AudioMetadata:
 
 
 class AudioMetadataExtractor:
-    """Professional audio metadata extraction engine"""    
+    """Professional audio metadata extraction engine"""
+    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.logger.info("AudioMetadataExtractor initialized")
@@ -34,7 +37,8 @@ class AudioMetadataExtractor:
                              audio_data: np.ndarray,
                              sample_rate: int = 44100,
                              **kwargs) -> AudioMetadata:
-        """Extract comprehensive audio metadata"""        try:
+        """Extract comprehensive audio metadata"""
+        try:
             # Basic technical specs
             duration = len(audio_data) / sample_rate
             channels = 1 if audio_data.ndim == 1 else audio_data.shape[1]

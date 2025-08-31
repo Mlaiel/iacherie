@@ -13,7 +13,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 WARNING: Any attempt to steal, copy, or use the concept, idea, or code without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 class BehaviorType(str, Enum):
-    """Types of user behaviors to analyze"""    CONTENT_CONSUMPTION = "content_consumption"
+    """Types of user behaviors to analyze"""
+    CONTENT_CONSUMPTION = "content_consumption"
     CREATION_PATTERN = "creation_pattern"
     ENGAGEMENT_STYLE = "engagement_style"
     COLLABORATION_BEHAVIOR = "collaboration_behavior"
@@ -45,7 +47,8 @@ class BehaviorType(str, Enum):
 
 
 class EngagementLevel(str, Enum):
-    """User engagement levels"""    HIGH_ENGAGED = "high_engaged"
+    """User engagement levels"""
+    HIGH_ENGAGED = "high_engaged"
     MODERATELY_ENGAGED = "moderately_engaged"
     LOW_ENGAGED = "low_engaged"
     DORMANT = "dormant"
@@ -53,7 +56,8 @@ class EngagementLevel(str, Enum):
 
 
 class ContentInteractionType(str, Enum):
-    """Types of content interactions"""    VIEW = "view"
+    """Types of content interactions"""
+    VIEW = "view"
     LIKE = "like"
     SHARE = "share"
     COMMENT = "comment"
@@ -65,7 +69,8 @@ class ContentInteractionType(str, Enum):
 
 @dataclass
 class BehaviorPattern:
-    """User behavior pattern data"""    pattern_id: str
+    """User behavior pattern data"""
+    pattern_id: str
     user_id: str
     behavior_type: BehaviorType
     pattern_data: Dict[str, Any]
@@ -79,7 +84,8 @@ class BehaviorPattern:
 
 @dataclass
 class EngagementMetrics:
-    """User engagement metrics"""    user_id: str
+    """User engagement metrics"""
+    user_id: str
     engagement_level: EngagementLevel
     session_duration_avg: float
     interaction_frequency: float
@@ -94,7 +100,8 @@ class EngagementMetrics:
 
 @dataclass
 class BehavioralInsight:
-    """Behavioral insight for personalization"""    insight_id: str
+    """Behavioral insight for personalization"""
+    insight_id: str
     user_id: str
     insight_type: str
     description: str
@@ -105,8 +112,10 @@ class BehavioralInsight:
 
 
 class BehavioralAnalyzer(BaseService):
-    """    Advanced behavioral analysis engine for user personalization
-    """    
+    """
+    Advanced behavioral analysis engine for user personalization
+    """
+    
     def __init__(
         self,
         mongodb_handler: MongoDBHandler,
@@ -134,7 +143,8 @@ class BehavioralAnalyzer(BaseService):
         logger.info("BehavioralAnalyzer initialized successfully")
 
     async def initialize(self) -> None:
-        """Initialize behavioral analyzer"""        try:
+        """Initialize behavioral analyzer"""
+        try:
             # Load pre-trained pattern models
             await self._load_pattern_models()
             
@@ -153,7 +163,8 @@ class BehavioralAnalyzer(BaseService):
         analysis_period: Optional[Tuple[datetime, datetime]] = None,
         behavior_types: Optional[List[BehaviorType]] = None
     ) -> Dict[str, Any]:
-        """        Comprehensive behavioral analysis for a user
+        """
+        Comprehensive behavioral analysis for a user
         
         Args:
             user_id: User identifier
@@ -162,7 +173,8 @@ class BehavioralAnalyzer(BaseService):
             
         Returns:
             Complete behavioral analysis results
-        """        try:
+        """
+        try:
             # Set default analysis period
             if not analysis_period:
                 end_date = datetime.now()
@@ -246,12 +258,14 @@ class BehavioralAnalyzer(BaseService):
         user_id: str,
         interaction: Dict[str, Any]
     ) -> None:
-        """        Track real-time user behavior for immediate insights
+        """
+        Track real-time user behavior for immediate insights
         
         Args:
             user_id: User identifier
             interaction: Real-time interaction data
-        """        try:
+        """
+        try:
             # Validate interaction data
             await self._validate_interaction_data(interaction)
             
@@ -278,7 +292,8 @@ class BehavioralAnalyzer(BaseService):
         user_id: str,
         prediction_horizon: int = 7  # days
     ) -> Dict[str, Any]:
-        """        Generate behavioral predictions for user
+        """
+        Generate behavioral predictions for user
         
         Args:
             user_id: User identifier
@@ -286,7 +301,8 @@ class BehavioralAnalyzer(BaseService):
             
         Returns:
             Behavioral predictions and recommendations
-        """        try:
+        """
+        try:
             # Get recent behavioral data
             recent_behavior = await self.analyze_user_behavior(user_id)
             
@@ -343,7 +359,8 @@ class BehavioralAnalyzer(BaseService):
         user_id: str,
         period: Tuple[datetime, datetime]
     ) -> List[Dict[str, Any]]:
-        """Collect user interaction data for the specified period"""        try:
+        """Collect user interaction data for the specified period"""
+        try:
             # Query interaction data from MongoDB
             interactions = await self.mongodb.find_many(
                 "user_interactions",
@@ -370,7 +387,8 @@ class BehavioralAnalyzer(BaseService):
         interaction_data: List[Dict[str, Any]],
         period: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Analyze specific behavior type"""        try:
+        """Analyze specific behavior type"""
+        try:
             if behavior_type == BehaviorType.CONTENT_CONSUMPTION:
                 return await self._analyze_content_consumption(interaction_data)
             elif behavior_type == BehaviorType.CREATION_PATTERN:
@@ -398,7 +416,8 @@ class BehavioralAnalyzer(BaseService):
         interaction_data: List[Dict[str, Any]],
         period: Tuple[datetime, datetime]
     ) -> Optional[EngagementMetrics]:
-        """Calculate comprehensive engagement metrics"""        try:
+        """Calculate comprehensive engagement metrics"""
+        try:
             if not interaction_data:
                 return None
             
@@ -476,7 +495,8 @@ class BehavioralAnalyzer(BaseService):
         interaction_data: List[Dict[str, Any]],
         period: Tuple[datetime, datetime]
     ) -> List[BehaviorPattern]:
-        """Detect behavioral patterns from interaction data"""        try:
+        """Detect behavioral patterns from interaction data"""
+        try:
             patterns = []
             
             # Temporal patterns
@@ -514,7 +534,8 @@ class BehavioralAnalyzer(BaseService):
         engagement_metrics: Optional[EngagementMetrics],
         patterns: List[BehaviorPattern]
     ) -> List[BehavioralInsight]:
-        """Generate actionable behavioral insights"""        try:
+        """Generate actionable behavioral insights"""
+        try:
             insights = []
             
             # Engagement insights
@@ -552,7 +573,8 @@ class BehavioralAnalyzer(BaseService):
         self,
         interaction_data: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze content consumption patterns"""        content_interactions = [
+        """Analyze content consumption patterns"""
+        content_interactions = [
             i for i in interaction_data 
             if i.get("interaction_type") in ["view", "download", "bookmark"]
         ]
@@ -587,7 +609,8 @@ class BehavioralAnalyzer(BaseService):
         self,
         interaction_data: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze content creation patterns"""        creation_interactions = [
+        """Analyze content creation patterns"""
+        creation_interactions = [
             i for i in interaction_data 
             if i.get("interaction_type") in ["create", "upload", "publish", "edit"]
         ]
@@ -623,7 +646,8 @@ class BehavioralAnalyzer(BaseService):
         self,
         interaction_data: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze user engagement style"""        engagement_interactions = [
+        """Analyze user engagement style"""
+        engagement_interactions = [
             i for i in interaction_data 
             if i.get("interaction_type") in ["like", "share", "comment", "follow"]
         ]
@@ -655,7 +679,8 @@ def create_behavioral_analyzer(
     metrics_calculator: MetricsCalculator,
     clustering_model: UserClusteringModel
 ) -> BehavioralAnalyzer:
-    """Create behavioral analyzer instance"""    return BehavioralAnalyzer(
+    """Create behavioral analyzer instance"""
+    return BehavioralAnalyzer(
         mongodb_handler=mongodb_handler,
         redis_cache=redis_cache,
         metrics_calculator=metrics_calculator,
@@ -667,7 +692,8 @@ def validate_behavior_analysis_request(
     user_id: str,
     analysis_period: Optional[Tuple[datetime, datetime]] = None
 ) -> bool:
-    """Validate behavior analysis request"""    if not user_id or not isinstance(user_id, str):
+    """Validate behavior analysis request"""
+    if not user_id or not isinstance(user_id, str):
         return False
     
     if analysis_period and len(analysis_period) != 2:

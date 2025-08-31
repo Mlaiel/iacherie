@@ -9,7 +9,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import sys
 import traceback
 from typing import Dict, List, Any
@@ -21,15 +22,18 @@ logger = logging.getLogger(__name__)
 
 
 class AIAgentsValidator:
-    """    Comprehensive validation system for AI Agents module
-    """    
+    """
+    Comprehensive validation system for AI Agents module
+    """
+    
     def __init__(self):
         self.validation_results = []
         self.errors = []
         self.warnings = []
     
     def validate_imports(self) -> bool:
-        """Validate all module imports"""        print("🔍 Validating module imports...")
+        """Validate all module imports"""
+        print("🔍 Validating module imports...")
         
         try:
             # Test core imports
@@ -80,7 +84,8 @@ class AIAgentsValidator:
             return False
     
     def validate_class_definitions(self) -> bool:
-        """Validate that all classes are properly defined"""        print("🔍 Validating class definitions...")
+        """Validate that all classes are properly defined"""
+        print("🔍 Validating class definitions...")
         
         try:
             from . import (
@@ -131,7 +136,8 @@ class AIAgentsValidator:
             return False
     
     def validate_configuration_system(self) -> bool:
-        """Validate configuration management"""        print("🔍 Validating configuration system...")
+        """Validate configuration management"""
+        print("🔍 Validating configuration system...")
         
         try:
             from .config import (
@@ -176,7 +182,8 @@ class AIAgentsValidator:
             return False
     
     async def validate_system_initialization(self) -> bool:
-        """Validate system initialization"""        print("🔍 Validating system initialization...")
+        """Validate system initialization"""
+        print("🔍 Validating system initialization...")
         
         try:
             from . import initialize_system, get_default_config, shutdown_system
@@ -220,7 +227,8 @@ class AIAgentsValidator:
             return False
     
     def validate_agent_capabilities(self) -> bool:
-        """Validate agent capabilities and enums"""        print("🔍 Validating agent capabilities...")
+        """Validate agent capabilities and enums"""
+        print("🔍 Validating agent capabilities...")
         
         try:
             from . import AgentCapability
@@ -254,7 +262,8 @@ class AIAgentsValidator:
             return False
     
     def validate_communication_system(self) -> bool:
-        """Validate inter-agent communication"""        print("🔍 Validating communication system...")
+        """Validate inter-agent communication"""
+        print("🔍 Validating communication system...")
         
         try:
             from . import AgentCommunicationHub, TaskManager, WorkflowEngine
@@ -285,7 +294,8 @@ class AIAgentsValidator:
             return False
     
     def validate_module_completeness(self) -> bool:
-        """Validate overall module completeness"""        print("🔍 Validating module completeness...")
+        """Validate overall module completeness"""
+        print("🔍 Validating module completeness...")
         
         try:
             from . import __all__, MODULE_INFO, AVAILABLE_AGENTS
@@ -323,7 +333,8 @@ class AIAgentsValidator:
             return False
     
     async def run_full_validation(self) -> Dict[str, Any]:
-        """Run complete validation suite"""        print("🚀 Starting AI Agents Module Validation")
+        """Run complete validation suite"""
+        print("🚀 Starting AI Agents Module Validation")
         print("=" * 50)
         
         validation_steps = [
@@ -381,7 +392,8 @@ class AIAgentsValidator:
         return results
     
     def print_validation_summary(self, results: Dict[str, Any]) -> None:
-        """Print validation summary"""        print("\n" + "=" * 50)
+        """Print validation summary"""
+        print("\n" + "=" * 50)
         print("📊 VALIDATION SUMMARY")
         print("=" * 50)
         
@@ -416,7 +428,8 @@ class AIAgentsValidator:
 
 
 async def validate_ai_agents_module():
-    """Main validation function"""    validator = AIAgentsValidator()
+    """Main validation function"""
+    validator = AIAgentsValidator()
     results = await validator.run_full_validation()
     return results
 

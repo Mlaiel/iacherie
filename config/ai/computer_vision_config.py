@@ -14,7 +14,8 @@ without explicit written permission is STRICTLY PROHIBITED and will be
 prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, List, Optional, Union, Any, Tuple
+"""
+from typing import Dict, List, Optional, Union, Any, Tuple
 from pydantic import BaseSettings, validator
 from enum import Enum
 from dataclasses import dataclass
@@ -22,7 +23,8 @@ import os
 
 
 class VisionTask(str, Enum):
-    """Supported computer vision tasks."""    
+    """Supported computer vision tasks."""
+    
     IMAGE_CLASSIFICATION = "image_classification"
     OBJECT_DETECTION = "object_detection"
     IMAGE_SEGMENTATION = "image_segmentation"
@@ -43,7 +45,8 @@ class VisionTask(str, Enum):
 
 
 class ImageFormat(str, Enum):
-    """Supported image formats."""    
+    """Supported image formats."""
+    
     JPEG = "jpeg"
     PNG = "png"
     WEBP = "webp"
@@ -54,7 +57,8 @@ class ImageFormat(str, Enum):
 
 
 class VideoFormat(str, Enum):
-    """Supported video formats."""    
+    """Supported video formats."""
+    
     MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
@@ -66,7 +70,8 @@ class VideoFormat(str, Enum):
 
 @dataclass
 class VisionModelSpec:
-    """Specification for computer vision model configuration."""    
+    """Specification for computer vision model configuration."""
+    
     task: VisionTask
     model_name: str
     model_path: str
@@ -84,11 +89,13 @@ class VisionModelSpec:
 
 
 class ComputerVisionConfig(BaseSettings):
-    """    Professional Computer Vision Configuration for IA-Influencer Agent Platform.
+    """
+    Professional Computer Vision Configuration for IA-Influencer Agent Platform.
     
     Manages all computer vision models and configurations for image/video
     processing, analysis, protection, and content understanding.
-    """    
+    """
+    
     # Core Vision Configuration
     DEFAULT_INPUT_SIZE: Tuple[int, int] = (224, 224)
     MAX_IMAGE_SIZE_MB: float = 50.0
@@ -170,7 +177,8 @@ class ComputerVisionConfig(BaseSettings):
     
     @validator("VISION_MODEL_CACHE_DIR")
     def create_cache_dir(cls, v):
-        """Ensure vision model cache directory exists."""        os.makedirs(v, exist_ok=True)
+        """Ensure vision model cache directory exists."""
+        os.makedirs(v, exist_ok=True)
         os.makedirs(f"{v}/classification", exist_ok=True)
         os.makedirs(f"{v}/detection", exist_ok=True)
         os.makedirs(f"{v}/similarity", exist_ok=True)
@@ -178,7 +186,8 @@ class ComputerVisionConfig(BaseSettings):
         return v
     
     def get_vision_model_spec(self, task: VisionTask) -> VisionModelSpec:
-        """Get computer vision model specification by task."""        specs = {
+        """Get computer vision model specification by task."""
+        specs = {
             VisionTask.IMAGE_CLASSIFICATION: VisionModelSpec(
                 task=VisionTask.IMAGE_CLASSIFICATION,
                 model_name="general_classifier",
@@ -352,7 +361,8 @@ class ComputerVisionConfig(BaseSettings):
         return specs.get(task, self._get_default_vision_spec(task))
     
     def _get_default_vision_spec(self, task: VisionTask) -> VisionModelSpec:
-        """Get default vision model specification."""        return VisionModelSpec(
+        """Get default vision model specification."""
+        return VisionModelSpec(
             task=task,
             model_name="default_vision",
             model_path=self.GENERAL_CLASSIFIER,
@@ -361,7 +371,8 @@ class ComputerVisionConfig(BaseSettings):
         )
     
     def get_image_processing_config(self) -> Dict[str, Any]:
-        """Get image processing configuration."""        return {
+        """Get image processing configuration."""
+        return {
             "supported_formats": self.SUPPORTED_IMAGE_FORMATS,
             "max_size_mb": self.MAX_IMAGE_SIZE_MB,
             "default_input_size": self.DEFAULT_INPUT_SIZE,
@@ -382,7 +393,8 @@ class ComputerVisionConfig(BaseSettings):
         }
     
     def get_video_processing_config(self) -> Dict[str, Any]:
-        """Get video processing configuration."""        return {
+        """Get video processing configuration."""
+        return {
             "supported_formats": self.SUPPORTED_VIDEO_FORMATS,
             "max_size_mb": self.MAX_VIDEO_SIZE_MB,
             "max_duration": self.MAX_VIDEO_DURATION,
@@ -399,7 +411,8 @@ class ComputerVisionConfig(BaseSettings):
         }
     
     def get_fingerprinting_config(self) -> Dict[str, Any]:
-        """Get image fingerprinting configuration."""        return {
+        """Get image fingerprinting configuration."""
+        return {
             "similarity_threshold": self.SIMILARITY_THRESHOLD,
             "duplicate_threshold": self.DUPLICATE_THRESHOLD,
             "fingerprint_dimension": self.FINGERPRINT_DIMENSION,
@@ -421,7 +434,8 @@ class ComputerVisionConfig(BaseSettings):
         }
     
     def get_content_moderation_config(self) -> Dict[str, Any]:
-        """Get content moderation configuration."""        return {
+        """Get content moderation configuration."""
+        return {
             "nsfw_detection": {
                 "enabled": True,
                 "model": self.NSFW_DETECTOR,
@@ -444,7 +458,8 @@ class ComputerVisionConfig(BaseSettings):
         }
     
     def get_performance_config(self) -> Dict[str, Any]:
-        """Get vision processing performance configuration."""        return {
+        """Get vision processing performance configuration."""
+        return {
             "gpu_acceleration": self.GPU_ACCELERATION,
             "batch_processing": self.BATCH_PROCESSING,
             "batch_size": self.VISION_BATCH_SIZE,
@@ -457,10 +472,12 @@ class ComputerVisionConfig(BaseSettings):
         }
     
     def get_supported_tasks(self) -> List[VisionTask]:
-        """Get list of all supported vision tasks."""        return [task for task in VisionTask]
+        """Get list of all supported vision tasks."""
+        return [task for task in VisionTask]
     
     def get_models_by_gpu_requirement(self, gpu_available: bool) -> List[VisionModelSpec]:
-        """Get models based on GPU availability."""        all_tasks = self.get_supported_tasks()
+        """Get models based on GPU availability."""
+        all_tasks = self.get_supported_tasks()
         models = []
         
         for task in all_tasks:
@@ -471,7 +488,8 @@ class ComputerVisionConfig(BaseSettings):
         return models
     
     def estimate_processing_time(self, task: VisionTask, num_items: int) -> float:
-        """Estimate processing time in seconds for a batch of items."""        spec = self.get_vision_model_spec(task)
+        """Estimate processing time in seconds for a batch of items."""
+        spec = self.get_vision_model_spec(task)
         batches = (num_items + spec.batch_size - 1) // spec.batch_size
         return batches * (spec.inference_time_ms / 1000.0)
 

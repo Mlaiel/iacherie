@@ -47,7 +47,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -77,7 +78,8 @@ logger = logging.getLogger(__name__)
 
 
 class AdvancedReportType(Enum):
-    """Advanced report types for the IA Influencer Agent platform."""    CREATOR_SUCCESS_ANALYTICS = "creator_success_analytics"
+    """Advanced report types for the IA Influencer Agent platform."""
+    CREATOR_SUCCESS_ANALYTICS = "creator_success_analytics"
     COLLABORATION_ROI_ANALYSIS = "collaboration_roi_analysis"
     AI_PROTECTION_EFFECTIVENESS = "ai_protection_effectiveness"
     MONETIZATION_OPTIMIZATION = "monetization_optimization"
@@ -90,7 +92,8 @@ class AdvancedReportType(Enum):
 
 
 class CreatorTier(Enum):
-    """Creator performance tiers."""    EMERGING = "emerging"
+    """Creator performance tiers."""
+    EMERGING = "emerging"
     RISING = "rising"
     ESTABLISHED = "established"
     ELITE = "elite"
@@ -98,7 +101,8 @@ class CreatorTier(Enum):
 
 
 class ContentCategory(Enum):
-    """Content categories supported by the platform."""    MUSIC = "music"
+    """Content categories supported by the platform."""
+    MUSIC = "music"
     VIDEO = "video"
     PHOTOGRAPHY = "photography"
     BLOG_CONTENT = "blog_content"
@@ -109,7 +113,8 @@ class ContentCategory(Enum):
 
 @dataclass
 class CreatorSuccessMetrics:
-    """Comprehensive creator success metrics."""    creator_id: str
+    """Comprehensive creator success metrics."""
+    creator_id: str
     tier: CreatorTier
     overall_success_score: float
     content_performance_score: float
@@ -126,7 +131,8 @@ class CreatorSuccessMetrics:
 
 
 class CreatorSuccessReportGenerator(ReportGenerator):
-    """    Advanced creator success analytics generator.
+    """
+    Advanced creator success analytics generator.
     
     Implements sophisticated creator performance analysis using the IA Influencer Agent
     business logic: Content creation → AI protection → Platform optimization → 
@@ -141,9 +147,11 @@ class CreatorSuccessReportGenerator(ReportGenerator):
     - Revenue optimization recommendations
     - Collaboration opportunity identification
     - Content strategy optimization insights
-    """    
+    """
+    
     async def generate_report(self, session: AsyncSession) -> Dict[str, Any]:
-        """Generate comprehensive creator success analytics report."""        try:
+        """Generate comprehensive creator success analytics report."""
+        try:
             await self.validate_configuration()
             
             # Collect comprehensive creator data
@@ -190,13 +198,15 @@ class CreatorSuccessReportGenerator(ReportGenerator):
             raise
     
     async def collect_data(self, session: AsyncSession) -> Dict[str, Any]:
-        """Collect comprehensive creator performance data."""        try:
+        """Collect comprehensive creator performance data."""
+        try:
             start_date = self.config.date_range["start_date"]
             end_date = self.config.date_range["end_date"]
             
             # Creator performance metrics
             creator_metrics = await session.execute(
-                text("""                    SELECT 
+                text("""
+                    SELECT 
                         c.creator_id,
                         c.username,
                         c.creation_date,
@@ -228,7 +238,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
             
             # Content performance by category
             content_performance = await session.execute(
-                text("""                    SELECT 
+                text("""
+                    SELECT 
                         creator_id,
                         content_category,
                         COUNT(*) as content_count,
@@ -246,7 +257,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
             
             # Collaboration effectiveness
             collaboration_data = await session.execute(
-                text("""                    SELECT 
+                text("""
+                    SELECT 
                         c.creator_id,
                         COUNT(DISTINCT co.collaboration_id) as collaboration_count,
                         AVG(co.success_score) as avg_collaboration_success,
@@ -263,7 +275,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
             
             # AI protection utilization and effectiveness
             ai_protection_data = await session.execute(
-                text("""                    SELECT 
+                text("""
+                    SELECT 
                         creator_id,
                         COUNT(*) as protection_requests,
                         AVG(protection_effectiveness_score) as avg_effectiveness,
@@ -280,7 +293,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
             
             # Revenue and monetization data
             monetization_data = await session.execute(
-                text("""                    SELECT 
+                text("""
+                    SELECT 
                         creator_id,
                         SUM(revenue_amount) as total_revenue,
                         COUNT(DISTINCT revenue_stream) as revenue_stream_count,
@@ -308,7 +322,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
             raise
     
     async def _generate_creator_success_insights(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate advanced creator success insights using machine learning."""        insights = {}
+        """Generate advanced creator success insights using machine learning."""
+        insights = {}
         
         # Calculate creator success scores
         creator_scores = await self._calculate_creator_success_scores(data)
@@ -333,7 +348,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
         return insights
     
     async def _calculate_creator_success_scores(self, data: Dict[str, Any]) -> Dict[str, CreatorSuccessMetrics]:
-        """Calculate comprehensive success scores for each creator."""        creator_scores = {}
+        """Calculate comprehensive success scores for each creator."""
+        creator_scores = {}
         creator_metrics = {row["creator_id"]: row for row in data.get("creator_metrics", [])}
         content_performance = defaultdict(list)
         
@@ -402,7 +418,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
         return creator_scores
     
     def _calculate_content_performance_score(self, creator_metrics: Dict[str, Any], content_data: List[Dict[str, Any]]) -> float:
-        """Calculate content performance score based on views, engagement, and quality."""        if not content_data:
+        """Calculate content performance score based on views, engagement, and quality."""
+        if not content_data:
             return 0.0
         
         # Normalize view counts (log scale to handle wide range)
@@ -430,7 +447,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
         return min(100, (avg_view_score * 0.4 + avg_engagement_score * 0.3 + diversity_bonus + monetization_score * 0.3))
     
     def _calculate_engagement_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate engagement score based on multiple engagement metrics."""        engagement_rate = metrics.get("avg_engagement_rate", 0.0)
+        """Calculate engagement score based on multiple engagement metrics."""
+        engagement_rate = metrics.get("avg_engagement_rate", 0.0)
         follower_count = metrics.get("follower_count", 0)
         
         # Base engagement score
@@ -445,7 +463,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
         return min(100, base_score + follower_quality_bonus)
     
     def _calculate_monetization_score(self, creator_metrics: Dict[str, Any], monetization_data: Dict[str, Any]) -> float:
-        """Calculate monetization effectiveness score."""        if not monetization_data:
+        """Calculate monetization effectiveness score."""
+        if not monetization_data:
             return 0.0
         
         total_revenue = monetization_data.get("total_revenue", 0.0)
@@ -466,7 +485,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
         return revenue_score + diversification_score + consistency_score
     
     def _calculate_collaboration_score(self, collaboration_data: Dict[str, Any]) -> float:
-        """Calculate collaboration effectiveness score."""        if not collaboration_data:
+        """Calculate collaboration effectiveness score."""
+        if not collaboration_data:
             return 0.0
         
         collaboration_count = collaboration_data.get("collaboration_count", 0)
@@ -489,7 +509,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
         return frequency_score + quality_score + revenue_impact_score + growth_impact_score
     
     def _calculate_growth_trajectory_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate growth trajectory and momentum score."""        growth_30d = metrics.get("growth_rate_30d", 0.0)
+        """Calculate growth trajectory and momentum score."""
+        growth_30d = metrics.get("growth_rate_30d", 0.0)
         growth_90d = metrics.get("growth_rate_90d", 0.0)
         
         # Recent growth score (30-day)
@@ -507,7 +528,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
         return recent_growth_score + sustained_growth_score + acceleration_bonus
     
     def _calculate_ai_protection_utilization_score(self, ai_protection_data: Dict[str, Any]) -> float:
-        """Calculate AI protection system utilization and effectiveness score."""        if not ai_protection_data:
+        """Calculate AI protection system utilization and effectiveness score."""
+        if not ai_protection_data:
             return 0.0
         
         protection_requests = ai_protection_data.get("protection_requests", 0)
@@ -527,7 +549,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
         return usage_score + effectiveness_score + protection_value_score
     
     def _calculate_platform_diversification_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate platform diversification score."""        platform_count = metrics.get("platform_count", 1)
+        """Calculate platform diversification score."""
+        platform_count = metrics.get("platform_count", 1)
         platform_diversity_score = metrics.get("platform_diversity_score", 0.0)
         
         # Platform count score
@@ -539,7 +562,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
         return count_score + diversity_quality_score
     
     def _calculate_audience_loyalty_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate audience loyalty and retention score."""        total_comments = metrics.get("total_comments", 0)
+        """Calculate audience loyalty and retention score."""
+        total_comments = metrics.get("total_comments", 0)
         total_shares = metrics.get("total_shares", 0)
         total_views = metrics.get("total_views", 1)
         follower_count = metrics.get("follower_count", 1)
@@ -559,7 +583,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
         return comment_score + share_score + ratio_score
     
     def _calculate_innovation_score(self, creator_metrics: Dict[str, Any], content_data: List[Dict[str, Any]]) -> float:
-        """Calculate innovation and creativity score."""        if not content_data:
+        """Calculate innovation and creativity score."""
+        if not content_data:
             return 0.0
         
         # Content category diversity
@@ -585,7 +610,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
         return category_diversity + variance_score + viral_bonus
     
     def _determine_creator_tier(self, overall_score: float, metrics: Dict[str, Any]) -> CreatorTier:
-        """Determine creator tier based on overall score and additional criteria."""        follower_count = metrics.get("follower_count", 0)
+        """Determine creator tier based on overall score and additional criteria."""
+        follower_count = metrics.get("follower_count", 0)
         total_revenue = metrics.get("total_revenue", 0.0)
         
         if overall_score >= 90 and follower_count >= 100000 and total_revenue >= 10000:
@@ -600,7 +626,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
             return CreatorTier.EMERGING
     
     async def _analyze_success_patterns(self, data: Dict[str, Any], creator_scores: Dict[str, CreatorSuccessMetrics]) -> Dict[str, Any]:
-        """Analyze patterns among successful creators."""        success_patterns = {}
+        """Analyze patterns among successful creators."""
+        success_patterns = {}
         
         # Group creators by tier
         tier_groups = defaultdict(list)
@@ -636,7 +663,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
         return success_patterns
     
     def _identify_success_formula(self, creators: List[CreatorSuccessMetrics]) -> Dict[str, Any]:
-        """Identify success formula for a group of creators."""        if len(creators) < 3:
+        """Identify success formula for a group of creators."""
+        if len(creators) < 3:
             return {}
         
         # Calculate correlations between different scores and overall success
@@ -665,7 +693,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
         }
     
     async def _identify_key_success_factors(self, data: Dict[str, Any], creator_scores: Dict[str, CreatorSuccessMetrics]) -> Dict[str, Any]:
-        """Identify key factors that drive creator success using statistical analysis."""        if len(creator_scores) < 10:
+        """Identify key factors that drive creator success using statistical analysis."""
+        if len(creator_scores) < 10:
             return {"insufficient_data": True}
         
         # Prepare data for analysis
@@ -709,7 +738,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
         }
     
     async def _predict_creator_growth(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict creator growth using machine learning models."""        creator_metrics = data.get("creator_metrics", [])
+        """Predict creator growth using machine learning models."""
+        creator_metrics = data.get("creator_metrics", [])
         
         if len(creator_metrics) < 20:
             return {"insufficient_data": True}
@@ -781,7 +811,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
         data: Dict[str, Any],
         success_insights: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate personalized optimization recommendations for creators."""        recommendations = []
+        """Generate personalized optimization recommendations for creators."""
+        recommendations = []
         
         creator_scores = success_insights.get("creator_success_scores", {})
         success_factors = success_insights.get("key_success_factors", {})
@@ -862,7 +893,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
         return recommendations
     
     async def _analyze_creator_tiers(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze creator distribution across tiers and tier-specific insights."""        creator_metrics = data.get("creator_metrics", [])
+        """Analyze creator distribution across tiers and tier-specific insights."""
+        creator_metrics = data.get("creator_metrics", [])
         
         tier_analysis = {
             "tier_distribution": defaultdict(int),
@@ -893,7 +925,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
         return tier_analysis
     
     async def _identify_collaboration_opportunities(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Identify collaboration opportunities based on creator analysis."""        # This is a simplified version - full implementation would use sophisticated matching
+        """Identify collaboration opportunities based on creator analysis."""
+        # This is a simplified version - full implementation would use sophisticated matching
         creator_metrics = data.get("creator_metrics", [])
         
         opportunities = {
@@ -920,7 +953,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
         return opportunities
     
     async def _analyze_ai_protection_impact(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze the impact of AI protection on creator success."""        ai_protection_data = data.get("ai_protection_data", [])
+        """Analyze the impact of AI protection on creator success."""
+        ai_protection_data = data.get("ai_protection_data", [])
         creator_metrics = data.get("creator_metrics", [])
         
         # Create mapping for analysis
@@ -967,7 +1001,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
         }
     
     async def _generate_executive_summary(self, report_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate executive summary of creator success analytics."""        success_insights = report_data.get("success_insights", {})
+        """Generate executive summary of creator success analytics."""
+        success_insights = report_data.get("success_insights", {})
         creator_scores = success_insights.get("creator_success_scores", {})
         
         if not creator_scores:
@@ -996,7 +1031,8 @@ class CreatorSuccessReportGenerator(ReportGenerator):
         }
     
     async def _extract_key_insights(self, report_data: Dict[str, Any]) -> List[str]:
-        """Extract key actionable insights from the report."""        insights = []
+        """Extract key actionable insights from the report."""
+        insights = []
         
         # Success factors insights
         success_factors = report_data.get("success_insights", {}).get("key_success_factors", {})
@@ -1055,7 +1091,8 @@ __all__ = [
 
 
 class ReportType(Enum):
-    """Report type enumeration."""    PERFORMANCE = "performance"
+    """Report type enumeration."""
+    PERFORMANCE = "performance"
     CONTENT = "content"
     PROTECTION = "protection"
     REVENUE = "revenue"
@@ -1066,7 +1103,8 @@ class ReportType(Enum):
 
 
 class ReportFormat(Enum):
-    """Report format enumeration."""    PDF = "pdf"
+    """Report format enumeration."""
+    PDF = "pdf"
     EXCEL = "excel"
     JSON = "json"
     CSV = "csv"
@@ -1075,7 +1113,8 @@ class ReportFormat(Enum):
 
 
 class ReportPriority(Enum):
-    """Report priority levels."""    LOW = "low"
+    """Report priority levels."""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -1083,7 +1122,8 @@ class ReportPriority(Enum):
 
 @dataclass
 class ReportConfiguration:
-    """Report configuration dataclass."""    report_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Report configuration dataclass."""
+    report_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     report_type: ReportType = ReportType.PERFORMANCE
     format: ReportFormat = ReportFormat.JSON
     priority: ReportPriority = ReportPriority.MEDIUM
@@ -1099,7 +1139,8 @@ class ReportConfiguration:
 
 
 class ReportMetrics(BaseModel):
-    """Report metrics model."""    total_records: int = 0
+    """Report metrics model."""
+    total_records: int = 0
     processing_time: float = 0.0
     success_rate: float = 0.0
     error_count: int = 0
@@ -1108,7 +1149,8 @@ class ReportMetrics(BaseModel):
 
 
 class ReportGenerator(ABC):
-    """    Abstract base class for report generators.
+    """
+    Abstract base class for report generators.
     
     Provides common functionality for all report generators including:
     - Template management
@@ -1116,7 +1158,8 @@ class ReportGenerator(ABC):
     - Output formatting
     - Error handling
     - Metrics collection
-    """    
+    """
+    
     def __init__(self, config: ReportConfiguration):
         self.config = config
         self.metrics = ReportMetrics()
@@ -1126,14 +1169,17 @@ class ReportGenerator(ABC):
     
     @abstractmethod
     async def generate_report(self, session: AsyncSession) -> Dict[str, Any]:
-        """Generate report with specific implementation."""        pass
+        """Generate report with specific implementation."""
+        pass
     
     @abstractmethod
     async def collect_data(self, session: AsyncSession) -> Dict[str, Any]:
-        """Collect data for report generation."""        pass
+        """Collect data for report generation."""
+        pass
     
     async def validate_configuration(self) -> bool:
-        """Validate report configuration."""        try:
+        """Validate report configuration."""
+        try:
             if not self.config.title:
                 raise ValueError("Report title is required")
             
@@ -1153,7 +1199,8 @@ class ReportGenerator(ABC):
             return False
     
     async def process_data(self, raw_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process raw data for report generation."""        try:
+        """Process raw data for report generation."""
+        try:
             start_time = datetime.utcnow()
             
             # Apply filters
@@ -1177,7 +1224,8 @@ class ReportGenerator(ABC):
             raise
     
     async def _apply_filters(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply filters to data based on configuration."""        if not self.config.filters:
+        """Apply filters to data based on configuration."""
+        if not self.config.filters:
             return data
         
         filtered_data = data.copy()
@@ -1207,7 +1255,8 @@ class ReportGenerator(ABC):
         return filtered_data
     
     async def _apply_aggregations(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply aggregations to data."""        aggregated_data = data.copy()
+        """Apply aggregations to data."""
+        aggregated_data = data.copy()
         
         # Calculate summary statistics
         for key, values in data.items():
@@ -1224,7 +1273,8 @@ class ReportGenerator(ABC):
         return aggregated_data
     
     async def _calculate_metrics(self, data: Dict[str, Any]):
-        """Calculate report metrics."""        total_records = 0
+        """Calculate report metrics."""
+        total_records = 0
         
         for key, values in data.items():
             if isinstance(values, list):
@@ -1236,7 +1286,8 @@ class ReportGenerator(ABC):
         self.metrics.data_size = len(json.dumps(data, default=str))
     
     async def save_report(self, report_data: Dict[str, Any]) -> str:
-        """Save generated report."""        try:
+        """Save generated report."""
+        try:
             report_path = self.config.output_path or f"reports/{self.config.report_id}.json"
             
             # Ensure directory exists
@@ -1264,7 +1315,8 @@ class ReportGenerator(ABC):
 
 
 class PerformanceReportGenerator(ReportGenerator):
-    """    Performance report generator for crawler metrics and analytics.
+    """
+    Performance report generator for crawler metrics and analytics.
     
     Generates comprehensive performance reports including:
     - Crawler success/failure rates
@@ -1272,9 +1324,11 @@ class PerformanceReportGenerator(ReportGenerator):
     - Resource utilization metrics
     - Platform-specific performance data
     - Trend analysis and predictions
-    """    
+    """
+    
     async def generate_report(self, session: AsyncSession) -> Dict[str, Any]:
-        """Generate performance report."""        try:
+        """Generate performance report."""
+        try:
             await self.validate_configuration()
             
             # Collect performance data
@@ -1308,13 +1362,15 @@ class PerformanceReportGenerator(ReportGenerator):
             raise
     
     async def collect_data(self, session: AsyncSession) -> Dict[str, Any]:
-        """Collect performance data from database."""        try:
+        """Collect performance data from database."""
+        try:
             start_date = self.config.date_range["start_date"]
             end_date = self.config.date_range["end_date"]
             
             # Crawler performance metrics
             crawler_metrics = await session.execute(
-                text("""                    SELECT 
+                text("""
+                    SELECT 
                         platform,
                         COUNT(*) as total_requests,
                         SUM(CASE WHEN status = 'success' THEN 1 ELSE 0 END) as successful_requests,
@@ -1329,7 +1385,8 @@ class PerformanceReportGenerator(ReportGenerator):
             
             # System resource metrics
             resource_metrics = await session.execute(
-                text("""                    SELECT 
+                text("""
+                    SELECT 
                         DATE(created_at) as date,
                         AVG(cpu_usage) as avg_cpu,
                         AVG(memory_usage) as avg_memory,
@@ -1344,7 +1401,8 @@ class PerformanceReportGenerator(ReportGenerator):
             
             # Error analysis
             error_metrics = await session.execute(
-                text("""                    SELECT 
+                text("""
+                    SELECT 
                         error_type,
                         COUNT(*) as error_count,
                         platform
@@ -1366,7 +1424,8 @@ class PerformanceReportGenerator(ReportGenerator):
             raise
     
     async def _generate_performance_insights(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate performance insights from processed data."""        insights = {}
+        """Generate performance insights from processed data."""
+        insights = {}
         
         # Platform performance insights
         if "crawler_performance" in data:
@@ -1400,7 +1459,8 @@ class PerformanceReportGenerator(ReportGenerator):
         return insights
     
     async def _generate_recommendations(self, data: Dict[str, Any]) -> List[str]:
-        """Generate performance recommendations."""        recommendations = []
+        """Generate performance recommendations."""
+        recommendations = []
         
         # Analyze crawler performance
         if "crawler_performance" in data:
@@ -1439,7 +1499,8 @@ class PerformanceReportGenerator(ReportGenerator):
         return recommendations
     
     def _calculate_performance_rating(self, platform_data: Dict[str, Any]) -> str:
-        """Calculate performance rating for a platform."""        success_rate = (platform_data["successful_requests"] / 
+        """Calculate performance rating for a platform."""
+        success_rate = (platform_data["successful_requests"] / 
                        platform_data["total_requests"] * 100)
         response_time = platform_data["avg_response_time"]
         
@@ -1485,7 +1546,8 @@ class PerformanceReportGenerator(ReportGenerator):
             return "poor"
     
     async def _identify_bottlenecks(self, platform_data: Dict[str, Any]) -> List[str]:
-        """Identify performance bottlenecks."""        bottlenecks = []
+        """Identify performance bottlenecks."""
+        bottlenecks = []
         
         success_rate = (platform_data["successful_requests"] / 
                        platform_data["total_requests"] * 100)
@@ -1502,7 +1564,8 @@ class PerformanceReportGenerator(ReportGenerator):
         return bottlenecks
     
     def _determine_health_status(self, cpu_usage: float, memory_usage: float) -> str:
-        """Determine overall system health status."""        if cpu_usage > 90 or memory_usage > 95:
+        """Determine overall system health status."""
+        if cpu_usage > 90 or memory_usage > 95:
             return "critical"
         elif cpu_usage > 80 or memory_usage > 85:
             return "warning"
@@ -1512,7 +1575,8 @@ class PerformanceReportGenerator(ReportGenerator):
             return "healthy"
     
     async def _generate_summary(self, report_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate report summary."""        summary = {
+        """Generate report summary."""
+        summary = {
             "total_platforms": 0,
             "overall_success_rate": 0.0,
             "avg_response_time": 0.0,
@@ -1542,7 +1606,8 @@ class PerformanceReportGenerator(ReportGenerator):
 
 
 class ContentReportGenerator(ReportGenerator):
-    """    Content report generator for content discovery and protection analytics.
+    """
+    Content report generator for content discovery and protection analytics.
     
     Generates comprehensive content reports including:
     - Content discovery statistics
@@ -1550,9 +1615,11 @@ class ContentReportGenerator(ReportGenerator):
     - Platform content distribution
     - Content type analysis
     - Violation detection summaries
-    """    
+    """
+    
     async def generate_report(self, session: AsyncSession) -> Dict[str, Any]:
-        """Generate content report."""        try:
+        """Generate content report."""
+        try:
             await self.validate_configuration()
             
             # Collect content data
@@ -1586,13 +1653,15 @@ class ContentReportGenerator(ReportGenerator):
             raise
     
     async def collect_data(self, session: AsyncSession) -> Dict[str, Any]:
-        """Collect content data from database."""        try:
+        """Collect content data from database."""
+        try:
             start_date = self.config.date_range["start_date"]
             end_date = self.config.date_range["end_date"]
             
             # Content discovery metrics
             discovery_metrics = await session.execute(
-                text("""                    SELECT 
+                text("""
+                    SELECT 
                         platform,
                         content_type,
                         COUNT(*) as content_count,
@@ -1606,7 +1675,8 @@ class ContentReportGenerator(ReportGenerator):
             
             # Protection coverage
             protection_metrics = await session.execute(
-                text("""                    SELECT 
+                text("""
+                    SELECT 
                         platform,
                         protection_status,
                         COUNT(*) as content_count
@@ -1619,7 +1689,8 @@ class ContentReportGenerator(ReportGenerator):
             
             # Content fingerprinting
             fingerprint_metrics = await session.execute(
-                text("""                    SELECT 
+                text("""
+                    SELECT 
                         fingerprint_type,
                         COUNT(*) as fingerprint_count,
                         AVG(processing_time) as avg_processing_time
@@ -1641,7 +1712,8 @@ class ContentReportGenerator(ReportGenerator):
             raise
     
     async def _generate_content_insights(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate content insights from processed data."""        insights = {}
+        """Generate content insights from processed data."""
+        insights = {}
         
         # Platform distribution insights
         if "content_discovery" in data:
@@ -1690,7 +1762,8 @@ class ContentReportGenerator(ReportGenerator):
         return insights
     
     async def _generate_content_recommendations(self, data: Dict[str, Any]) -> List[str]:
-        """Generate content-related recommendations."""        recommendations = []
+        """Generate content-related recommendations."""
+        recommendations = []
         
         # Analyze protection coverage
         if "protection_coverage" in data:
@@ -1722,7 +1795,8 @@ class ContentReportGenerator(ReportGenerator):
         return recommendations
     
     async def _generate_content_summary(self, report_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate content report summary."""        summary = {
+        """Generate content report summary."""
+        summary = {
             "total_content_discovered": 0,
             "total_platforms": 0,
             "protection_rate": 0.0,
@@ -1757,7 +1831,8 @@ class ContentReportGenerator(ReportGenerator):
 
 
 class ProtectionReportGenerator(ReportGenerator):
-    """    Protection report generator for security and violation detection analytics.
+    """
+    Protection report generator for security and violation detection analytics.
     
     Generates comprehensive protection reports including:
     - Security violation detection
@@ -1765,9 +1840,11 @@ class ProtectionReportGenerator(ReportGenerator):
     - Content theft analytics
     - Protection system effectiveness
     - Legal compliance metrics
-    """    
+    """
+    
     async def generate_report(self, session: AsyncSession) -> Dict[str, Any]:
-        """Generate protection report."""        try:
+        """Generate protection report."""
+        try:
             await self.validate_configuration()
             
             # Collect protection data
@@ -1801,13 +1878,15 @@ class ProtectionReportGenerator(ReportGenerator):
             raise
     
     async def collect_data(self, session: AsyncSession) -> Dict[str, Any]:
-        """Collect protection data from database."""        try:
+        """Collect protection data from database."""
+        try:
             start_date = self.config.date_range["start_date"]
             end_date = self.config.date_range["end_date"]
             
             # Violation detection metrics
             violation_metrics = await session.execute(
-                text("""                    SELECT 
+                text("""
+                    SELECT 
                         platform,
                         violation_type,
                         COUNT(*) as violation_count,
@@ -1821,7 +1900,8 @@ class ProtectionReportGenerator(ReportGenerator):
             
             # DMCA takedown tracking
             dmca_metrics = await session.execute(
-                text("""                    SELECT 
+                text("""
+                    SELECT 
                         platform,
                         status,
                         COUNT(*) as request_count,
@@ -1835,7 +1915,8 @@ class ProtectionReportGenerator(ReportGenerator):
             
             # Content matching results
             matching_metrics = await session.execute(
-                text("""                    SELECT 
+                text("""
+                    SELECT 
                         DATE(created_at) as date,
                         SUM(CASE WHEN match_score > 0.8 THEN 1 ELSE 0 END) as high_confidence_matches,
                         SUM(CASE WHEN match_score BETWEEN 0.6 AND 0.8 THEN 1 ELSE 0 END) as medium_confidence_matches,
@@ -1859,7 +1940,8 @@ class ProtectionReportGenerator(ReportGenerator):
             raise
     
     async def _generate_protection_insights(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate protection insights from processed data."""        insights = {}
+        """Generate protection insights from processed data."""
+        insights = {}
         
         # Violation patterns analysis
         if "violation_detection" in data:
@@ -1910,7 +1992,8 @@ class ProtectionReportGenerator(ReportGenerator):
         return insights
     
     async def _generate_protection_recommendations(self, data: Dict[str, Any]) -> List[str]:
-        """Generate protection-related recommendations."""        recommendations = []
+        """Generate protection-related recommendations."""
+        recommendations = []
         
         # Analyze DMCA effectiveness
         if "dmca_tracking" in data:
@@ -1953,7 +2036,8 @@ class ProtectionReportGenerator(ReportGenerator):
         return recommendations
     
     async def _generate_protection_summary(self, report_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate protection report summary."""        summary = {
+        """Generate protection report summary."""
+        summary = {
             "total_violations_detected": 0,
             "total_dmca_requests": 0,
             "dmca_success_rate": 0.0,
@@ -1996,7 +2080,8 @@ class ProtectionReportGenerator(ReportGenerator):
 
 
 class RevenueReportGenerator(ReportGenerator):
-    """    Revenue report generator for monetization and financial analytics.
+    """
+    Revenue report generator for monetization and financial analytics.
     
     Generates comprehensive revenue reports including:
     - Revenue tracking and analytics
@@ -2004,9 +2089,11 @@ class RevenueReportGenerator(ReportGenerator):
     - Creator revenue distribution
     - Monetization effectiveness
     - Financial forecasting
-    """    
+    """
+    
     async def generate_report(self, session: AsyncSession) -> Dict[str, Any]:
-        """Generate revenue report."""        try:
+        """Generate revenue report."""
+        try:
             await self.validate_configuration()
             
             # Collect revenue data
@@ -2040,13 +2127,15 @@ class RevenueReportGenerator(ReportGenerator):
             raise
     
     async def collect_data(self, session: AsyncSession) -> Dict[str, Any]:
-        """Collect revenue data from database."""        try:
+        """Collect revenue data from database."""
+        try:
             start_date = self.config.date_range["start_date"]
             end_date = self.config.date_range["end_date"]
             
             # Revenue by platform
             platform_revenue = await session.execute(
-                text("""                    SELECT 
+                text("""
+                    SELECT 
                         platform,
                         currency,
                         SUM(amount) as total_revenue,
@@ -2061,7 +2150,8 @@ class RevenueReportGenerator(ReportGenerator):
             
             # Revenue trends
             revenue_trends = await session.execute(
-                text("""                    SELECT 
+                text("""
+                    SELECT 
                         DATE(period_start) as date,
                         SUM(amount) as daily_revenue,
                         COUNT(*) as payment_count
@@ -2075,7 +2165,8 @@ class RevenueReportGenerator(ReportGenerator):
             
             # Creator performance
             creator_performance = await session.execute(
-                text("""                    SELECT 
+                text("""
+                    SELECT 
                         user_id,
                         SUM(amount) as total_earnings,
                         COUNT(*) as payment_count,
@@ -2101,7 +2192,8 @@ class RevenueReportGenerator(ReportGenerator):
             raise
     
     async def _generate_revenue_insights(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate revenue insights from processed data."""        insights = {}
+        """Generate revenue insights from processed data."""
+        insights = {}
         
         # Platform revenue analysis
         if "platform_revenue" in data:
@@ -2175,7 +2267,8 @@ class RevenueReportGenerator(ReportGenerator):
         return insights
     
     async def _generate_revenue_recommendations(self, data: Dict[str, Any]) -> List[str]:
-        """Generate revenue-related recommendations."""        recommendations = []
+        """Generate revenue-related recommendations."""
+        recommendations = []
         
         # Analyze platform performance
         if "platform_revenue" in data:
@@ -2229,7 +2322,8 @@ class RevenueReportGenerator(ReportGenerator):
         return recommendations
     
     async def _generate_revenue_summary(self, report_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate revenue report summary."""        summary = {
+        """Generate revenue report summary."""
+        summary = {
             "total_revenue": 0.0,
             "total_creators": 0,
             "top_platform": "unknown",
@@ -2256,7 +2350,8 @@ class RevenueReportGenerator(ReportGenerator):
 
 
 class ComplianceReportGenerator(ReportGenerator):
-    """    Compliance report generator for legal compliance and regulatory reporting.
+    """
+    Compliance report generator for legal compliance and regulatory reporting.
     
     Generates comprehensive compliance reports including:
     - GDPR compliance tracking
@@ -2264,9 +2359,11 @@ class ComplianceReportGenerator(ReportGenerator):
     - Data retention compliance
     - User consent management
     - Regulatory audit trails
-    """    
+    """
+    
     async def generate_report(self, session: AsyncSession) -> Dict[str, Any]:
-        """Generate compliance report."""        try:
+        """Generate compliance report."""
+        try:
             await self.validate_configuration()
             
             # Collect compliance data
@@ -2300,13 +2397,15 @@ class ComplianceReportGenerator(ReportGenerator):
             raise
     
     async def collect_data(self, session: AsyncSession) -> Dict[str, Any]:
-        """Collect compliance data from database."""        try:
+        """Collect compliance data from database."""
+        try:
             start_date = self.config.date_range["start_date"]
             end_date = self.config.date_range["end_date"]
             
             # GDPR compliance metrics
             gdpr_metrics = await session.execute(
-                text("""                    SELECT 
+                text("""
+                    SELECT 
                         consent_type,
                         COUNT(*) as consent_count,
                         SUM(CASE WHEN status = 'granted' THEN 1 ELSE 0 END) as granted_count,
@@ -2320,7 +2419,8 @@ class ComplianceReportGenerator(ReportGenerator):
             
             # Data retention compliance
             retention_metrics = await session.execute(
-                text("""                    SELECT 
+                text("""
+                    SELECT 
                         data_type,
                         COUNT(*) as total_records,
                         SUM(CASE WHEN retention_status = 'compliant' THEN 1 ELSE 0 END) as compliant_records,
@@ -2334,7 +2434,8 @@ class ComplianceReportGenerator(ReportGenerator):
             
             # Audit trail compliance
             audit_metrics = await session.execute(
-                text("""                    SELECT 
+                text("""
+                    SELECT 
                         action_type,
                         COUNT(*) as action_count,
                         COUNT(DISTINCT user_id) as unique_users
@@ -2356,7 +2457,8 @@ class ComplianceReportGenerator(ReportGenerator):
             raise
     
     async def _generate_compliance_insights(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate compliance insights from processed data."""        insights = {}
+        """Generate compliance insights from processed data."""
+        insights = {}
         
         # GDPR compliance analysis
         if "gdpr_compliance" in data:
@@ -2416,7 +2518,8 @@ class ComplianceReportGenerator(ReportGenerator):
         return insights
     
     async def _generate_compliance_recommendations(self, data: Dict[str, Any]) -> List[str]:
-        """Generate compliance-related recommendations."""        recommendations = []
+        """Generate compliance-related recommendations."""
+        recommendations = []
         
         # Analyze GDPR compliance
         if "gdpr_compliance" in data:
@@ -2458,7 +2561,8 @@ class ComplianceReportGenerator(ReportGenerator):
         return recommendations
     
     async def _generate_compliance_summary(self, report_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate compliance report summary."""        summary = {
+        """Generate compliance report summary."""
+        summary = {
             "overall_compliance_rate": 0.0,
             "gdpr_consent_rate": 0.0,
             "data_retention_compliance": 0.0,
@@ -2501,7 +2605,8 @@ class ComplianceReportGenerator(ReportGenerator):
 
 # Factory function for creating report generators
 def create_report_generator(report_type: ReportType, config: ReportConfiguration) -> ReportGenerator:
-    """    Factory function to create appropriate report generator based on type.
+    """
+    Factory function to create appropriate report generator based on type.
     
     Args:
         report_type: Type of report to generate
@@ -2512,7 +2617,8 @@ def create_report_generator(report_type: ReportType, config: ReportConfiguration
         
     Raises:
         ValueError: If report type is not supported
-    """    generators = {
+    """
+    generators = {
         ReportType.PERFORMANCE: PerformanceReportGenerator,
         ReportType.CONTENT: ContentReportGenerator,
         ReportType.PROTECTION: ProtectionReportGenerator,
@@ -2532,7 +2638,8 @@ async def generate_multiple_reports(
     session: AsyncSession,
     report_configs: List[ReportConfiguration]
 ) -> List[Dict[str, Any]]:
-    """    Generate multiple reports concurrently.
+    """
+    Generate multiple reports concurrently.
     
     Args:
         session: Database session
@@ -2540,7 +2647,8 @@ async def generate_multiple_reports(
         
     Returns:
         List[Dict[str, Any]]: List of generated reports
-    """    tasks = []
+    """
+    tasks = []
     
     for config in report_configs:
         generator = create_report_generator(config.report_type, config)
@@ -2566,14 +2674,16 @@ async def generate_multiple_reports(
 
 
 async def validate_report_configuration(config: ReportConfiguration) -> List[str]:
-    """    Validate report configuration and return list of validation errors.
+    """
+    Validate report configuration and return list of validation errors.
     
     Args:
         config: Report configuration to validate
         
     Returns:
         List[str]: List of validation error messages
-    """    errors = []
+    """
+    errors = []
     
     if not config.title:
         errors.append("Report title is required")
@@ -2598,14 +2708,16 @@ async def validate_report_configuration(config: ReportConfiguration) -> List[str
 
 
 def get_default_report_configuration(report_type: ReportType) -> ReportConfiguration:
-    """    Get default configuration for a specific report type.
+    """
+    Get default configuration for a specific report type.
     
     Args:
         report_type: Type of report
         
     Returns:
         ReportConfiguration: Default configuration
-    """    end_date = datetime.utcnow()
+    """
+    end_date = datetime.utcnow()
     start_date = end_date - timedelta(days=30)
     
     base_config = ReportConfiguration(

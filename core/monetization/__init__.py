@@ -2,7 +2,7 @@
 Enterprise-grade revenue tracking, licensing, and payment processing system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Warning: Unauthorized use, reproduction, or distribution is strictly prohibited.
 
 Expert Team Specialties:
@@ -15,7 +15,9 @@ Expert Team Specialties:
 - Audio Processing Engineer
 - DevOps & Infrastructure Engineer
 - IA Prompt Engineering Specialist
-"""from .payment_processor import PaymentProcessor, PaymentConfig
+"""
+
+from .payment_processor import PaymentProcessor, PaymentConfig
 from .revenue_calculator import RevenueCalculator, RevenueMetrics
 from .platform_connector import PlatformConnector, PlatformManager
 from .licensing_engine import LicensingEngine, LicenseManager

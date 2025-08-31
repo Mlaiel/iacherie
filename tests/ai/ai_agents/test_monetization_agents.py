@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -24,7 +25,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -47,14 +49,17 @@ from ai.ai_agents.monetization_agents import (
 
 
 class TestMonetizationAgent:
-    """Test MonetizationAgent functionality"""    
+    """Test MonetizationAgent functionality"""
+    
     @pytest.fixture
     def agent(self):
-        """Create MonetizationAgent instance"""        return MonetizationAgent()
+        """Create MonetizationAgent instance"""
+        return MonetizationAgent()
     
     @pytest.fixture
     def sample_creator_profile(self):
-        """Sample creator profile for monetization analysis"""        return {
+        """Sample creator profile for monetization analysis"""
+        return {
             "creator_id": "creator_001",
             "name": "TechEducator",
             "niche": "technology_education",
@@ -91,7 +96,8 @@ class TestMonetizationAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_monetization_opportunities(self, agent, sample_creator_profile):
-        """Test monetization opportunity analysis"""        opportunities = await agent.analyze_monetization_opportunities(sample_creator_profile)
+        """Test monetization opportunity analysis"""
+        opportunities = await agent.analyze_monetization_opportunities(sample_creator_profile)
         
         assert "identified_opportunities" in opportunities
         assert "revenue_potential" in opportunities
@@ -111,7 +117,8 @@ class TestMonetizationAgent:
     
     @pytest.mark.asyncio
     async def test_create_monetization_strategy(self, agent, sample_creator_profile):
-        """Test monetization strategy creation"""        strategy_goals = {
+        """Test monetization strategy creation"""
+        strategy_goals = {
             "revenue_target": 10000,  # Monthly target
             "timeline_months": 12,
             "risk_tolerance": "medium",
@@ -132,7 +139,8 @@ class TestMonetizationAgent:
     
     @pytest.mark.asyncio
     async def test_optimize_revenue_streams(self, agent, sample_creator_profile):
-        """Test revenue stream optimization"""        current_streams = {
+        """Test revenue stream optimization"""
+        current_streams = {
             "ad_revenue": {"monthly": 1800, "growth_rate": 0.05, "effort_required": "low"},
             "affiliate_marketing": {"monthly": 700, "growth_rate": 0.15, "effort_required": "medium"},
             "sponsorships": {"monthly": 0, "potential": 2000, "effort_required": "high"}
@@ -157,7 +165,8 @@ class TestMonetizationAgent:
     
     @pytest.mark.asyncio
     async def test_calculate_pricing_recommendations(self, agent, sample_creator_profile):
-        """Test pricing recommendation calculation"""        product_details = {
+        """Test pricing recommendation calculation"""
+        product_details = {
             "product_type": "online_course",
             "content_hours": 20,
             "production_cost": 5000,
@@ -184,7 +193,8 @@ class TestMonetizationAgent:
     
     @pytest.mark.asyncio
     async def test_track_monetization_performance(self, agent, sample_creator_profile):
-        """Test monetization performance tracking"""        performance_data = {
+        """Test monetization performance tracking"""
+        performance_data = {
             "time_period": "90_days",
             "revenue_data": {
                 "total_revenue": 8500,
@@ -219,14 +229,17 @@ class TestMonetizationAgent:
 
 
 class TestSponsorshipAgent:
-    """Test SponsorshipAgent functionality"""    
+    """Test SponsorshipAgent functionality"""
+    
     @pytest.fixture
     def agent(self):
-        """Create SponsorshipAgent instance"""        return SponsorshipAgent()
+        """Create SponsorshipAgent instance"""
+        return SponsorshipAgent()
     
     @pytest.fixture
     def sample_sponsorship_profile(self):
-        """Sample profile for sponsorship matching"""        return {
+        """Sample profile for sponsorship matching"""
+        return {
             "creator_id": "creator_002",
             "niche": "fitness_lifestyle",
             "audience_demographics": {
@@ -256,7 +269,8 @@ class TestSponsorshipAgent:
     
     @pytest.mark.asyncio
     async def test_find_sponsorship_matches(self, agent, sample_sponsorship_profile):
-        """Test sponsorship match finding"""        matches = await agent.find_sponsorship_matches(sample_sponsorship_profile)
+        """Test sponsorship match finding"""
+        matches = await agent.find_sponsorship_matches(sample_sponsorship_profile)
         
         assert isinstance(matches, list)
         assert len(matches) > 0
@@ -272,7 +286,8 @@ class TestSponsorshipAgent:
     
     @pytest.mark.asyncio
     async def test_evaluate_brand_alignment(self, agent, sample_sponsorship_profile):
-        """Test brand alignment evaluation"""        brand_proposal = {
+        """Test brand alignment evaluation"""
+        brand_proposal = {
             "brand_name": "FitLife Supplements",
             "industry": "health_supplements",
             "brand_values": ["health", "performance", "natural_ingredients"],
@@ -305,7 +320,8 @@ class TestSponsorshipAgent:
     
     @pytest.mark.asyncio
     async def test_negotiate_sponsorship_terms(self, agent, sample_sponsorship_profile):
-        """Test sponsorship term negotiation"""        initial_offer = {
+        """Test sponsorship term negotiation"""
+        initial_offer = {
             "brand": "FitLife Supplements",
             "offered_amount": 2000,
             "deliverables": ["2 instagram posts", "1 story series", "1 reel"],
@@ -331,7 +347,8 @@ class TestSponsorshipAgent:
     
     @pytest.mark.asyncio
     async def test_manage_sponsorship_campaigns(self, agent, sample_sponsorship_profile):
-        """Test sponsorship campaign management"""        campaign_details = {
+        """Test sponsorship campaign management"""
+        campaign_details = {
             "campaign_id": "camp_001",
             "brand": "FitLife Supplements",
             "agreed_terms": {
@@ -360,7 +377,8 @@ class TestSponsorshipAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_sponsorship_performance(self, agent, sample_sponsorship_profile):
-        """Test sponsorship performance analysis"""        campaign_results = {
+        """Test sponsorship performance analysis"""
+        campaign_results = {
             "campaign_id": "camp_001",
             "deliverable_performance": {
                 "product_review_video": {
@@ -397,14 +415,17 @@ class TestSponsorshipAgent:
 
 
 class TestPricingOptimizationAgent:
-    """Test PricingOptimizationAgent functionality"""    
+    """Test PricingOptimizationAgent functionality"""
+    
     @pytest.fixture
     def agent(self):
-        """Create PricingOptimizationAgent instance"""        return PricingOptimizationAgent()
+        """Create PricingOptimizationAgent instance"""
+        return PricingOptimizationAgent()
     
     @pytest.fixture
     def sample_pricing_context(self):
-        """Sample pricing context for optimization"""        return {
+        """Sample pricing context for optimization"""
+        return {
             "creator_profile": {
                 "creator_id": "creator_003",
                 "reputation_score": 0.85,
@@ -439,7 +460,8 @@ class TestPricingOptimizationAgent:
     
     @pytest.mark.asyncio
     async def test_optimize_product_pricing(self, agent, sample_pricing_context):
-        """Test product pricing optimization"""        pricing_optimization = await agent.optimize_product_pricing(sample_pricing_context)
+        """Test product pricing optimization"""
+        pricing_optimization = await agent.optimize_product_pricing(sample_pricing_context)
         
         assert isinstance(pricing_optimization, PricingRecommendation)
         assert pricing_optimization.recommended_price > 0
@@ -451,7 +473,8 @@ class TestPricingOptimizationAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_price_sensitivity(self, agent, sample_pricing_context):
-        """Test price sensitivity analysis"""        price_sensitivity = await agent.analyze_price_sensitivity(sample_pricing_context)
+        """Test price sensitivity analysis"""
+        price_sensitivity = await agent.analyze_price_sensitivity(sample_pricing_context)
         
         assert "sensitivity_score" in price_sensitivity
         assert "price_elasticity" in price_sensitivity
@@ -465,7 +488,8 @@ class TestPricingOptimizationAgent:
     
     @pytest.mark.asyncio
     async def test_create_pricing_strategies(self, agent, sample_pricing_context):
-        """Test pricing strategy creation"""        pricing_strategies = await agent.create_pricing_strategies(sample_pricing_context)
+        """Test pricing strategy creation"""
+        pricing_strategies = await agent.create_pricing_strategies(sample_pricing_context)
         
         assert isinstance(pricing_strategies, list)
         assert len(pricing_strategies) >= 3  # Should provide multiple strategy options
@@ -486,7 +510,8 @@ class TestPricingOptimizationAgent:
     
     @pytest.mark.asyncio
     async def test_optimize_subscription_pricing(self, agent, sample_pricing_context):
-        """Test subscription pricing optimization"""        subscription_context = {
+        """Test subscription pricing optimization"""
+        subscription_context = {
             **sample_pricing_context,
             "subscription_model": {
                 "billing_cycles": ["monthly", "quarterly", "annual"],
@@ -515,7 +540,8 @@ class TestPricingOptimizationAgent:
     
     @pytest.mark.asyncio
     async def test_monitor_pricing_performance(self, agent, sample_pricing_context):
-        """Test pricing performance monitoring"""        performance_data = {
+        """Test pricing performance monitoring"""
+        performance_data = {
             "current_price": 249,
             "sales_data": {
                 "units_sold": 180,
@@ -551,14 +577,17 @@ class TestPricingOptimizationAgent:
 
 
 class TestRevenueAnalysisAgent:
-    """Test RevenueAnalysisAgent functionality"""    
+    """Test RevenueAnalysisAgent functionality"""
+    
     @pytest.fixture
     def agent(self):
-        """Create RevenueAnalysisAgent instance"""        return RevenueAnalysisAgent()
+        """Create RevenueAnalysisAgent instance"""
+        return RevenueAnalysisAgent()
     
     @pytest.fixture
     def sample_revenue_data(self):
-        """Sample revenue data for analysis"""        return {
+        """Sample revenue data for analysis"""
+        return {
             "creator_id": "creator_004",
             "time_period": "12_months",
             "revenue_streams": {
@@ -600,7 +629,8 @@ class TestRevenueAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_revenue_trends(self, agent, sample_revenue_data):
-        """Test revenue trend analysis"""        trend_analysis = await agent.analyze_revenue_trends(sample_revenue_data)
+        """Test revenue trend analysis"""
+        trend_analysis = await agent.analyze_revenue_trends(sample_revenue_data)
         
         assert "overall_trend" in trend_analysis
         assert "stream_analysis" in trend_analysis
@@ -616,7 +646,8 @@ class TestRevenueAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_forecast_revenue_projections(self, agent, sample_revenue_data):
-        """Test revenue projection forecasting"""        forecast_params = {
+        """Test revenue projection forecasting"""
+        forecast_params = {
             "forecast_horizon": 6,  # months
             "growth_assumptions": {
                 "ad_revenue": 0.05,  # 5% monthly growth
@@ -644,7 +675,8 @@ class TestRevenueAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_identify_revenue_optimization_opportunities(self, agent, sample_revenue_data):
-        """Test revenue optimization opportunity identification"""        optimization_opportunities = await agent.identify_revenue_optimization_opportunities(
+        """Test revenue optimization opportunity identification"""
+        optimization_opportunities = await agent.identify_revenue_optimization_opportunities(
             sample_revenue_data
         )
         
@@ -666,7 +698,8 @@ class TestRevenueAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_calculate_roi_metrics(self, agent, sample_revenue_data):
-        """Test ROI metrics calculation"""        investment_data = {
+        """Test ROI metrics calculation"""
+        investment_data = {
             "marketing_spend": 8000,
             "content_production_investment": 15000,
             "technology_tools": 2400,
@@ -689,7 +722,8 @@ class TestRevenueAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_generate_revenue_reports(self, agent, sample_revenue_data):
-        """Test revenue report generation"""        report_config = {
+        """Test revenue report generation"""
+        report_config = {
             "report_type": "comprehensive",
             "include_forecasts": True,
             "include_benchmarks": True,
@@ -710,10 +744,12 @@ class TestRevenueAnalysisAgent:
 
 
 class TestIntegrationScenarios:
-    """Test integration between different monetization agents"""    
+    """Test integration between different monetization agents"""
+    
     @pytest.fixture
     def agents(self):
-        """Create all monetization agents for integration testing"""        return {
+        """Create all monetization agents for integration testing"""
+        return {
             "monetization": MonetizationAgent(),
             "sponsorship": SponsorshipAgent(),
             "pricing": PricingOptimizationAgent(),
@@ -722,7 +758,8 @@ class TestIntegrationScenarios:
     
     @pytest.mark.asyncio
     async def test_comprehensive_monetization_strategy(self, agents):
-        """Test comprehensive monetization strategy development"""        # Creator profile for comprehensive monetization analysis
+        """Test comprehensive monetization strategy development"""
+        # Creator profile for comprehensive monetization analysis
         creator_data = {
             "creator_id": "integration_creator",
             "profile": {
@@ -784,21 +821,25 @@ class TestIntegrationScenarios:
 
 
 class TestErrorHandling:
-    """Test error handling scenarios"""    
+    """Test error handling scenarios"""
+    
     @pytest.fixture
     def agent(self):
-        """Create MonetizationAgent for error testing"""        return MonetizationAgent()
+        """Create MonetizationAgent for error testing"""
+        return MonetizationAgent()
     
     @pytest.mark.asyncio
     async def test_insufficient_creator_data(self, agent):
-        """Test handling of insufficient creator data"""        minimal_data = {"creator_id": "test"}
+        """Test handling of insufficient creator data"""
+        minimal_data = {"creator_id": "test"}
         
         with pytest.raises((ValueError, KeyError)):
             await agent.analyze_monetization_opportunities(minimal_data)
     
     @pytest.mark.asyncio
     async def test_invalid_revenue_data(self, agent):
-        """Test handling of invalid revenue data"""        invalid_data = {
+        """Test handling of invalid revenue data"""
+        invalid_data = {
             "creator_id": "test",
             "monthly_revenue": -1000,  # Invalid negative revenue
             "followers": "invalid_number"  # Invalid type
@@ -814,7 +855,8 @@ class TestErrorHandling:
     
     @pytest.mark.asyncio
     async def test_external_api_failures(self, agent):
-        """Test handling of external API failures"""        with patch('aiohttp.ClientSession.get') as mock_get:
+        """Test handling of external API failures"""
+        with patch('aiohttp.ClientSession.get') as mock_get:
             mock_get.side_effect = Exception("External service unavailable")
             
             creator_data = {"creator_id": "test", "followers": 10000}
@@ -829,14 +871,17 @@ class TestErrorHandling:
 
 
 class TestPerformanceAndScaling:
-    """Test performance and scaling scenarios"""    
+    """Test performance and scaling scenarios"""
+    
     @pytest.fixture
     def agent(self):
-        """Create MonetizationAgent for performance testing"""        return MonetizationAgent()
+        """Create MonetizationAgent for performance testing"""
+        return MonetizationAgent()
     
     @pytest.mark.asyncio
     async def test_large_scale_opportunity_analysis(self, agent):
-        """Test large-scale monetization opportunity analysis"""        large_creator_portfolio = {
+        """Test large-scale monetization opportunity analysis"""
+        large_creator_portfolio = {
             "creators": [
                 {
                     "creator_id": f"creator_{i}",
@@ -868,7 +913,8 @@ class TestPerformanceAndScaling:
     
     @pytest.mark.asyncio
     async def test_concurrent_pricing_optimization(self, agent):
-        """Test concurrent pricing optimization for multiple products"""        product_scenarios = [
+        """Test concurrent pricing optimization for multiple products"""
+        product_scenarios = [
             {
                 "creator_profile": {"creator_id": f"creator_{i}", "reputation_score": 0.7 + (i * 0.05)},
                 "product_details": {"product_type": "course", "content_hours": 10 + i},

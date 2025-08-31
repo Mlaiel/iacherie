@@ -89,7 +89,8 @@ from ..core.exceptions import ProtectionException, FingerprintException
 
 
 class ContentType(Enum):
-    """Content types for protection."""    AUDIO = "audio"
+    """Content types for protection."""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -98,21 +99,24 @@ class ContentType(Enum):
 
 
 class ProtectionLevel(Enum):
-    """Protection intensity levels."""    STANDARD = "standard"
+    """Protection intensity levels."""
+    STANDARD = "standard"
     ENHANCED = "enhanced"
     MAXIMUM = "maximum"
     ENTERPRISE = "enterprise"
 
 
 class ThreatSeverity(Enum):
-    """Threat severity classification."""    LOW = "low"
+    """Threat severity classification."""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class ProtectionStatus(Enum):
-    """Protection operation status."""    PENDING = "pending"
+    """Protection operation status."""
+    PENDING = "pending"
     PROCESSING = "processing"
     PROTECTED = "protected"
     MONITORING = "monitoring"
@@ -123,7 +127,8 @@ class ProtectionStatus(Enum):
 
 @dataclass
 class ContentProtectionRequest:
-    """Content protection request configuration."""    content_id: str
+    """Content protection request configuration."""
+    content_id: str
     user_id: str
     content_type: ContentType
     content_path: str
@@ -139,7 +144,8 @@ class ContentProtectionRequest:
 
 @dataclass
 class ProtectionResult:
-    """Content protection operation result."""    protection_id: str
+    """Content protection operation result."""
+    protection_id: str
     content_id: str
     protection_status: ProtectionStatus
     protection_methods: List[str]
@@ -156,7 +162,8 @@ class ProtectionResult:
 
 @dataclass
 class ThreatAlert:
-    """Security threat alert."""    alert_id: str
+    """Security threat alert."""
+    alert_id: str
     content_id: str
     threat_type: str
     severity: ThreatSeverity
@@ -170,7 +177,8 @@ class ThreatAlert:
 
 
 class ContentProtectionSystem:
-    """    Advanced content protection system with AI-powered threat detection.
+    """
+    Advanced content protection system with AI-powered threat detection.
     
     Provides comprehensive protection services including:
     - Multi-format fingerprinting and detection
@@ -178,7 +186,8 @@ class ContentProtectionSystem:
     - Automated legal response workflows
     - Blockchain-based rights registry
     - Advanced watermarking and DRM
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger("protection.system")
@@ -202,7 +211,8 @@ class ContentProtectionSystem:
         self.logger.info("ContentProtectionSystem initialized successfully")
     
     def _initialize_protection_engines(self):
-        """Initialize all protection engine components."""        try:
+        """Initialize all protection engine components."""
+        try:
             # AI fingerprint engines
             self.audio_fingerprint = AudioFingerprintEngine(
                 self.config.get("audio_fingerprint", {})
@@ -241,11 +251,13 @@ class ContentProtectionSystem:
         self,
         protection_request: ContentProtectionRequest
     ) -> ProtectionResult:
-        """        Apply comprehensive protection to content.
+        """
+        Apply comprehensive protection to content.
         
         Performs multi-layered protection including fingerprinting,
         watermarking, blockchain registration, and monitoring setup.
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         protection_id = f"prot_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
         
         self.logger.info(f"Starting content protection: {protection_id}")
@@ -368,11 +380,13 @@ class ContentProtectionSystem:
         content_id: str,
         search_platforms: List[str] = None
     ) -> List[ThreatAlert]:
-        """        Actively scan for content piracy and unauthorized usage.
+        """
+        Actively scan for content piracy and unauthorized usage.
         
         Performs comprehensive threat detection across multiple platforms
         using AI-powered similarity matching and pattern recognition.
-        """        self.logger.info(f"Starting threat detection for content: {content_id}")
+        """
+        self.logger.info(f"Starting threat detection for content: {content_id}")
         
         if content_id not in self.active_protections:
             raise ProtectionException(f"No active protection found for content: {content_id}")
@@ -413,7 +427,8 @@ class ContentProtectionSystem:
             raise ProtectionException(f"Threat detection error: {e}")
     
     async def get_protection_status(self, protection_id: str) -> Dict[str, Any]:
-        """Get detailed protection status and monitoring data."""        if protection_id not in self.active_protections:
+        """Get detailed protection status and monitoring data."""
+        if protection_id not in self.active_protections:
             return {
                 "protection_id": protection_id,
                 "status": "not_found",
@@ -458,11 +473,13 @@ class ContentProtectionSystem:
         threat_alert: ThreatAlert,
         action_type: str = "dmca_takedown"
     ) -> Dict[str, Any]:
-        """        Initiate automated legal action for content infringement.
+        """
+        Initiate automated legal action for content infringement.
         
         Supports various legal response mechanisms including DMCA takedowns,
         cease and desist notices, and platform reporting.
-        """        self.logger.info(f"Initiating legal action for threat: {threat_alert.alert_id}")
+        """
+        self.logger.info(f"Initiating legal action for threat: {threat_alert.alert_id}")
         
         try:
             legal_action_result = await self.legal_automation.initiate_action(
@@ -492,7 +509,8 @@ class ContentProtectionSystem:
         content_id: str,
         report_type: str = "comprehensive"
     ) -> Dict[str, Any]:
-        """Generate comprehensive protection and threat analysis report."""        self.logger.info(f"Generating protection report for content: {content_id}")
+        """Generate comprehensive protection and threat analysis report."""
+        self.logger.info(f"Generating protection report for content: {content_id}")
         
         # Find protection data
         protection_data = None
@@ -554,7 +572,8 @@ class ContentProtectionSystem:
         self,
         protection_request: ContentProtectionRequest
     ) -> Dict[str, str]:
-        """Generate fingerprint hashes for content."""        fingerprints = {}
+        """Generate fingerprint hashes for content."""
+        fingerprints = {}
         content_type = protection_request.content_type
         content_path = protection_request.content_path
         
@@ -600,7 +619,8 @@ class ContentProtectionSystem:
         self,
         protection_request: ContentProtectionRequest
     ) -> Dict[str, Any]:
-        """Apply digital watermarking to content."""        try:
+        """Apply digital watermarking to content."""
+        try:
             watermark_data = {
                 "owner_id": protection_request.user_id,
                 "content_id": protection_request.content_id,
@@ -637,7 +657,8 @@ class ContentProtectionSystem:
         protection_request: ContentProtectionRequest,
         fingerprint_hashes: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Register content protection on blockchain."""        try:
+        """Register content protection on blockchain."""
+        try:
             registration_data = {
                 "content_id": protection_request.content_id,
                 "owner_id": protection_request.user_id,
@@ -662,7 +683,8 @@ class ContentProtectionSystem:
         protection_request: ContentProtectionRequest,
         fingerprint_hashes: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Setup real-time content monitoring."""        try:
+        """Setup real-time content monitoring."""
+        try:
             monitoring_config = {
                 "content_id": protection_request.content_id,
                 "fingerprint_hashes": fingerprint_hashes,
@@ -692,7 +714,8 @@ class ContentProtectionSystem:
         fingerprint_hashes: Dict[str, str],
         watermark_applied: bool
     ) -> float:
-        """Calculate comprehensive security score."""        base_score = 0.0
+        """Calculate comprehensive security score."""
+        base_score = 0.0
         
         # Protection method scores
         method_scores = {
@@ -728,7 +751,8 @@ class ContentProtectionSystem:
         platform: str,
         fingerprint_hashes: Dict[str, str]
     ) -> List[ThreatAlert]:
-        """Scan specific platform for content threats."""        platform_threats = []
+        """Scan specific platform for content threats."""
+        platform_threats = []
         
         try:
             scan_results = await self.piracy_detector.scan_platform(
@@ -760,7 +784,8 @@ class ContentProtectionSystem:
         return platform_threats
     
     def _determine_threat_severity(self, similarity_score: float) -> ThreatSeverity:
-        """Determine threat severity based on similarity score."""        if similarity_score >= 0.95:
+        """Determine threat severity based on similarity score."""
+        if similarity_score >= 0.95:
             return ThreatSeverity.CRITICAL
         elif similarity_score >= 0.90:
             return ThreatSeverity.HIGH
@@ -773,7 +798,8 @@ class ContentProtectionSystem:
         self,
         threats: List[ThreatAlert]
     ) -> List[ThreatAlert]:
-        """Analyze and prioritize detected threats."""        # Sort threats by severity and similarity score
+        """Analyze and prioritize detected threats."""
+        # Sort threats by severity and similarity score
         prioritized = sorted(
             threats,
             key=lambda t: (t.severity.value, t.similarity_score),
@@ -786,7 +812,8 @@ class ContentProtectionSystem:
         self,
         threats: List[ThreatAlert]
     ):
-        """Trigger automated responses for high-priority threats."""        critical_threats = [t for t in threats if t.severity == ThreatSeverity.CRITICAL]
+        """Trigger automated responses for high-priority threats."""
+        critical_threats = [t for t in threats if t.severity == ThreatSeverity.CRITICAL]
         
         for threat in critical_threats:
             try:
@@ -799,7 +826,8 @@ class ContentProtectionSystem:
                 self.logger.error(f"Automated response failed for threat {threat.alert_id}: {e}")
     
     async def _get_monitoring_data(self, content_id: str) -> Dict[str, Any]:
-        """Get real-time monitoring data for content."""        return {
+        """Get real-time monitoring data for content."""
+        return {
             "monitoring_active": True,
             "last_scan": datetime.utcnow().isoformat(),
             "platforms_monitored": 7,
@@ -812,7 +840,8 @@ class ContentProtectionSystem:
         self,
         threats: List[ThreatAlert]
     ) -> Dict[str, int]:
-        """Analyze threats breakdown by platform."""        platform_counts = {}
+        """Analyze threats breakdown by platform."""
+        platform_counts = {}
         for threat in threats:
             platform = threat.source_platform
             platform_counts[platform] = platform_counts.get(platform, 0) + 1
@@ -823,7 +852,8 @@ class ContentProtectionSystem:
         self,
         threats: List[ThreatAlert]
     ) -> List[Dict[str, Any]]:
-        """Generate threat detection timeline."""        timeline = []
+        """Generate threat detection timeline."""
+        timeline = []
         for threat in sorted(threats, key=lambda t: t.detected_at):
             timeline.append({
                 "date": threat.detected_at.isoformat(),
@@ -840,7 +870,8 @@ class ContentProtectionSystem:
         protection_data: ProtectionResult,
         threats: List[ThreatAlert]
     ) -> Dict[str, Any]:
-        """Generate comprehensive protection analytics."""        protection_duration = (datetime.utcnow() - protection_data.created_at).days
+        """Generate comprehensive protection analytics."""
+        protection_duration = (datetime.utcnow() - protection_data.created_at).days
         
         return {
             "protection_effectiveness": {
@@ -883,14 +914,16 @@ from ..core.models import BaseModel
 
 # Factory functions for creating integrated protection systems
 async def create_integrated_protection_system(config: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-    """    Create integrated content protection system with all components.
+    """
+    Create integrated content protection system with all components.
     
     Args:
         config: Configuration dictionary for all protection components
         
     Returns:
         Dictionary containing all initialized protection components
-    """    protection_config = config or {}
+    """
+    protection_config = config or {}
     
     # Create individual components
     content_engine = create_protection_engine(protection_config.get("content_protection", {}))
@@ -912,7 +945,8 @@ async def initialize_content_protection_workflow(
     protection_system: Dict[str, Any],
     protection_level: ProtectionLevel = ProtectionLevel.HIGH_SECURITY
 ) -> Dict[str, Any]:
-    """    Initialize complete content protection workflow.
+    """
+    Initialize complete content protection workflow.
     
     Args:
         content_id: Content identifier
@@ -922,7 +956,8 @@ async def initialize_content_protection_workflow(
         
     Returns:
         Protection workflow results
-    """    workflow_results = {}
+    """
+    workflow_results = {}
     
     # Step 1: Apply content protection
     content_engine = protection_system["content_protection"]
@@ -1016,7 +1051,8 @@ __all__ = [
         protection_data: ProtectionResult,
         threats: List[ThreatAlert]
     ) -> List[str]:
-        """Generate intelligent protection recommendations."""        recommendations = []
+        """Generate intelligent protection recommendations."""
+        recommendations = []
         
         # Security score based recommendations
         if protection_data.security_score < 0.7:

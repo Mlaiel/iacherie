@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -39,7 +40,8 @@ Violators will face legal action under international copyright law.
 THEFT OF IDEAS, CONCEPTS, OR CODE WITHOUT EXPLICIT WRITTEN AUTHORIZATION 
 FROM FAHED MLAIEL (mlaiel@live.de) IS STRICTLY FORBIDDEN AND WILL RESULT 
 IN IMMEDIATE LEGAL PROSECUTION.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -55,10 +57,12 @@ from . import (
 )
 
 class TestBaseContentEngine:
-    """Comprehensive tests for BaseContentEngine"""    
+    """Comprehensive tests for BaseContentEngine"""
+    
     @pytest.fixture
     async def mock_engine(self):
-        """Create a mock engine for testing"""        
+        """Create a mock engine for testing"""
+        
         class MockContentEngine(BaseContentEngine):
             def __init__(self):
                 super().__init__("mock_engine")
@@ -104,7 +108,8 @@ class TestBaseContentEngine:
     
     @pytest.mark.asyncio
     async def test_engine_initialization(self, mock_engine):
-        """Test engine initialization process"""        validator = TestEngineValidator()
+        """Test engine initialization process"""
+        validator = TestEngineValidator()
         
         assert await validator.validate_engine_initialization(mock_engine)
         assert mock_engine.is_initialized is True
@@ -114,7 +119,8 @@ class TestBaseContentEngine:
     
     @pytest.mark.asyncio
     async def test_content_processing(self, mock_engine, sample_content, test_options):
-        """Test content processing functionality"""        validator = TestEngineValidator()
+        """Test content processing functionality"""
+        validator = TestEngineValidator()
         performance_tracker = PerformanceTracker()
         
         # Test with different content types
@@ -146,7 +152,8 @@ class TestBaseContentEngine:
     
     @pytest.mark.asyncio
     async def test_engine_metrics_update(self, mock_engine):
-        """Test engine metrics updating"""        initial_requests = mock_engine.metrics.requests_total
+        """Test engine metrics updating"""
+        initial_requests = mock_engine.metrics.requests_total
         
         # Process content to update metrics
         await mock_engine.process_content("test content")
@@ -157,7 +164,8 @@ class TestBaseContentEngine:
     
     @pytest.mark.asyncio
     async def test_content_validation(self, mock_engine):
-        """Test content validation functionality"""        # Test valid content
+        """Test content validation functionality"""
+        # Test valid content
         is_valid, errors = await mock_engine.validate_content("valid content")
         assert is_valid is True
         assert len(errors) == 0
@@ -174,7 +182,8 @@ class TestBaseContentEngine:
     
     @pytest.mark.asyncio
     async def test_fingerprint_generation(self, mock_engine):
-        """Test content fingerprint generation"""        content = "test content for fingerprinting"
+        """Test content fingerprint generation"""
+        content = "test content for fingerprinting"
         fingerprint = await mock_engine.generate_fingerprint(content)
         
         assert isinstance(fingerprint, str)
@@ -186,7 +195,8 @@ class TestBaseContentEngine:
     
     @pytest.mark.asyncio
     async def test_caching_functionality(self, mock_engine):
-        """Test result caching functionality"""        key = "test_cache_key"
+        """Test result caching functionality"""
+        key = "test_cache_key"
         test_data = {"test": "data", "timestamp": time.time()}
         
         # Cache data
@@ -202,7 +212,8 @@ class TestBaseContentEngine:
     
     @pytest.mark.asyncio
     async def test_health_check(self, mock_engine):
-        """Test engine health check functionality"""        health_status = await mock_engine.health_check()
+        """Test engine health check functionality"""
+        health_status = await mock_engine.health_check()
         
         assert isinstance(health_status, dict)
         assert health_status['status'] == 'healthy'
@@ -212,10 +223,12 @@ class TestBaseContentEngine:
         assert health_status['is_initialized'] is True
 
 class TestContentEngineManager:
-    """Comprehensive tests for ContentEngineManager"""    
+    """Comprehensive tests for ContentEngineManager"""
+    
     @pytest.fixture
     async def manager_with_engines(self):
-        """Create manager with registered engines"""        manager = ContentEngineManager()
+        """Create manager with registered engines"""
+        manager = ContentEngineManager()
         
         # Create and register mock engines
         class MockAudioEngine(BaseContentEngine):
@@ -289,7 +302,8 @@ class TestContentEngineManager:
     
     @pytest.mark.asyncio
     async def test_engine_registration(self, manager_with_engines):
-        """Test engine registration functionality"""        assert len(manager_with_engines.engines) == 2
+        """Test engine registration functionality"""
+        assert len(manager_with_engines.engines) == 2
         assert 'mock_audio' in manager_with_engines.engines
         assert 'mock_text' in manager_with_engines.engines
         
@@ -300,7 +314,8 @@ class TestContentEngineManager:
     
     @pytest.mark.asyncio
     async def test_intelligent_content_processing(self, manager_with_engines, sample_content):
-        """Test intelligent content routing and processing"""        validator = TestEngineValidator()
+        """Test intelligent content routing and processing"""
+        validator = TestEngineValidator()
         
         # Test audio content processing
         result = await manager_with_engines.process_content_intelligent(
@@ -326,7 +341,8 @@ class TestContentEngineManager:
     
     @pytest.mark.asyncio
     async def test_bulk_content_processing(self, manager_with_engines, sample_content):
-        """Test bulk content processing functionality"""        content_items = [
+        """Test bulk content processing functionality"""
+        content_items = [
             {'content': sample_content['text'], 'content_type': 'text'},
             {'content': sample_content['audio'], 'content_type': 'audio'},
             {'content': sample_content['text'], 'content_type': 'text'}
@@ -341,7 +357,8 @@ class TestContentEngineManager:
     
     @pytest.mark.asyncio
     async def test_engine_selection_optimization(self, manager_with_engines):
-        """Test optimal engine selection based on load and performance"""        # Simulate load on engines
+        """Test optimal engine selection based on load and performance"""
+        # Simulate load on engines
         content = "test content"
         
         # Process multiple requests to test load balancing
@@ -365,7 +382,8 @@ class TestContentEngineManager:
     
     @pytest.mark.asyncio
     async def test_system_status_monitoring(self, manager_with_engines):
-        """Test system status monitoring and reporting"""        status = await manager_with_engines.get_system_status()
+        """Test system status monitoring and reporting"""
+        status = await manager_with_engines.get_system_status()
         
         assert isinstance(status, dict)
         assert status['total_engines'] == 2
@@ -380,7 +398,8 @@ class TestContentEngineManager:
     
     @pytest.mark.asyncio
     async def test_error_handling_and_failover(self, manager_with_engines):
-        """Test error handling and failover mechanisms"""        # Test with unsupported content type
+        """Test error handling and failover mechanisms"""
+        # Test with unsupported content type
         with pytest.raises(ValueError, match="No engine available"):
             await manager_with_engines.process_content_intelligent(
                 content="test",
@@ -389,7 +408,8 @@ class TestContentEngineManager:
     
     @pytest.mark.asyncio
     async def test_performance_optimization(self, manager_with_engines, sample_content):
-        """Test performance optimization features"""        performance_tracker = PerformanceTracker()
+        """Test performance optimization features"""
+        performance_tracker = PerformanceTracker()
         
         # Process content with performance measurement
         content = sample_content['text']
@@ -405,10 +425,12 @@ class TestContentEngineManager:
         assert performance_tracker.validate_performance(threshold=2.0)
 
 class TestEngineIntegration:
-    """Integration tests for engine ecosystem"""    
+    """Integration tests for engine ecosystem"""
+    
     @pytest.mark.asyncio
     async def test_end_to_end_processing_pipeline(self, sample_content, test_options):
-        """Test complete end-to-end processing pipeline"""        validator = TestEngineValidator()
+        """Test complete end-to-end processing pipeline"""
+        validator = TestEngineValidator()
         
         # Create a comprehensive mock engine that handles all processing steps
         class ComprehensiveEngine(BaseContentEngine):
@@ -503,7 +525,8 @@ class TestEngineIntegration:
     
     @pytest.mark.asyncio
     async def test_multi_engine_coordination(self):
-        """Test coordination between multiple engines"""        manager = ContentEngineManager()
+        """Test coordination between multiple engines"""
+        manager = ContentEngineManager()
         
         # Create specialized engines for different tasks
         class AnalysisEngine(BaseContentEngine):
@@ -592,10 +615,12 @@ class TestEngineIntegration:
 
 # Performance and stress tests
 class TestEnginePerformance:
-    """Performance and stress testing for engines"""    
+    """Performance and stress testing for engines"""
+    
     @pytest.mark.asyncio
     async def test_high_load_processing(self, sample_content):
-        """Test engine performance under high load"""        manager = ContentEngineManager()
+        """Test engine performance under high load"""
+        manager = ContentEngineManager()
         
         # Create a fast mock engine
         class FastMockEngine(BaseContentEngine):
@@ -663,7 +688,8 @@ class TestEnginePerformance:
     
     @pytest.mark.asyncio
     async def test_concurrent_processing_safety(self, sample_content):
-        """Test thread safety and concurrent processing"""        manager = ContentEngineManager()
+        """Test thread safety and concurrent processing"""
+        manager = ContentEngineManager()
         
         # Create thread-safe mock engine
         class ThreadSafeMockEngine(BaseContentEngine):

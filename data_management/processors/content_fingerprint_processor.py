@@ -16,7 +16,8 @@ Contact obligatoire: mlaiel@live.de
 LOGIQUE MÉTIER FINGERPRINTING:
 Content Upload → Type Detection → AI Analysis → Feature Extraction → 
 Vector Embedding → Hash Generation → FAISS Storage → Similarity Indexing
-"""import numpy as np
+"""
+import numpy as np
 import hashlib
 import cv2
 import librosa
@@ -43,7 +44,8 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 
 class ContentFingerprintProcessor(BaseProcessor):
-    """Processeur d'empreintes AI multi-format - Production Enterprise"""    
+    """Processeur d'empreintes AI multi-format - Production Enterprise"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
@@ -83,7 +85,8 @@ class ContentFingerprintProcessor(BaseProcessor):
         }
     
     def _initialize_ai_models(self) -> Dict[str, Any]:
-        """Initialise les modèles AI pour fingerprinting"""        models = {}
+        """Initialise les modèles AI pour fingerprinting"""
+        models = {}
         
         try:
             # CLIP Model for images
@@ -108,7 +111,8 @@ class ContentFingerprintProcessor(BaseProcessor):
         return models
     
     def _initialize_faiss_indices(self) -> Dict[str, Any]:
-        """Initialise les indices FAISS pour recherche vectorielle"""        indices = {}
+        """Initialise les indices FAISS pour recherche vectorielle"""
+        indices = {}
         
         try:
             # Audio fingerprint index (MFCC + Chromaprint vectors)
@@ -136,7 +140,8 @@ class ContentFingerprintProcessor(BaseProcessor):
         return indices
     
     def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Génère l'empreinte complète selon le type de contenu"""        content_type = input_data.get('content_type')
+        """Génère l'empreinte complète selon le type de contenu"""
+        content_type = input_data.get('content_type')
         content_path = input_data.get('file_path')
         content_data = input_data.get('data')
         
@@ -172,7 +177,8 @@ class ContentFingerprintProcessor(BaseProcessor):
         return fingerprint_result
     
     def _process_audio_fingerprint(self, file_path: Optional[str], data: Optional[bytes]) -> Dict[str, Any]:
-        """Génère empreinte audio avec Chromaprint + MFCC + AI features"""        fingerprints = {}
+        """Génère empreinte audio avec Chromaprint + MFCC + AI features"""
+        fingerprints = {}
         metadata = {}
         
         try:
@@ -230,7 +236,8 @@ class ContentFingerprintProcessor(BaseProcessor):
         return {'fingerprints': fingerprints, 'metadata': metadata}
     
     def _process_video_fingerprint(self, file_path: Optional[str], data: Optional[bytes]) -> Dict[str, Any]:
-        """Génère empreinte vidéo avec OpenCV + CNN features"""        fingerprints = {}
+        """Génère empreinte vidéo avec OpenCV + CNN features"""
+        fingerprints = {}
         metadata = {}
         
         try:
@@ -315,7 +322,8 @@ class ContentFingerprintProcessor(BaseProcessor):
         return {'fingerprints': fingerprints, 'metadata': metadata}
     
     def _process_image_fingerprint(self, file_path: Optional[str], data: Optional[bytes]) -> Dict[str, Any]:
-        """Génère empreinte image avec perceptual hash + CLIP embeddings"""        fingerprints = {}
+        """Génère empreinte image avec perceptual hash + CLIP embeddings"""
+        fingerprints = {}
         metadata = {}
         
         try:
@@ -365,7 +373,8 @@ class ContentFingerprintProcessor(BaseProcessor):
         return {'fingerprints': fingerprints, 'metadata': metadata}
     
     def _process_text_fingerprint(self, text_content: str) -> Dict[str, Any]:
-        """Génère empreinte texte avec embeddings sémantiques"""        fingerprints = {}
+        """Génère empreinte texte avec embeddings sémantiques"""
+        fingerprints = {}
         metadata = {}
         
         try:
@@ -404,7 +413,8 @@ class ContentFingerprintProcessor(BaseProcessor):
         return {'fingerprints': fingerprints, 'metadata': metadata}
     
     def _extract_audio_spectral_features(self, y: np.ndarray, sr: int) -> np.ndarray:
-        """Extrait les caractéristiques spectrales audio"""        spectral_features = []
+        """Extrait les caractéristiques spectrales audio"""
+        spectral_features = []
         
         # Spectral centroid
         spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=y, sr=sr))
@@ -425,7 +435,8 @@ class ContentFingerprintProcessor(BaseProcessor):
         return np.array(spectral_features)
     
     def _extract_audio_ai_features(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extrait les caractéristiques AI de l'audio"""        # This would typically use the audio classifier
+        """Extrait les caractéristiques AI de l'audio"""
+        # This would typically use the audio classifier
         # For now, return basic features
         return {
             'tempo': float(librosa.beat.tempo(y=y, sr=sr)[0]),
@@ -434,7 +445,8 @@ class ContentFingerprintProcessor(BaseProcessor):
         }
     
     def _extract_video_cnn_features(self, frames: List[np.ndarray]) -> np.ndarray:
-        """Extrait les caractéristiques CNN des frames vidéo"""        # Use a pre-trained CNN model to extract features
+        """Extrait les caractéristiques CNN des frames vidéo"""
+        # Use a pre-trained CNN model to extract features
         # For now, return mean pixel values as basic features
         features = []
         for frame in frames:
@@ -445,7 +457,8 @@ class ContentFingerprintProcessor(BaseProcessor):
         return np.mean(features, axis=0)
     
     def _extract_color_histogram(self, image: Image.Image) -> np.ndarray:
-        """Extrait l'histogramme des couleurs"""        # Convert to numpy array
+        """Extrait l'histogramme des couleurs"""
+        # Convert to numpy array
         img_array = np.array(image)
         
         # Calculate histogram for each channel
@@ -456,7 +469,8 @@ class ContentFingerprintProcessor(BaseProcessor):
         return np.concatenate([hist_r, hist_g, hist_b])
     
     def _normalize_text(self, text: str) -> str:
-        """Normalise le texte pour la comparaison"""        import re
+        """Normalise le texte pour la comparaison"""
+        import re
         # Convert to lowercase
         text = text.lower()
         # Remove punctuation and extra spaces
@@ -465,7 +479,8 @@ class ContentFingerprintProcessor(BaseProcessor):
         return text.strip()
     
     def _extract_ngram_hashes(self, text: str, n: int = 3) -> List[str]:
-        """Extrait les hashes des n-grammes"""        words = text.split()
+        """Extrait les hashes des n-grammes"""
+        words = text.split()
         ngrams = []
         
         for i in range(len(words) - n + 1):
@@ -476,7 +491,8 @@ class ContentFingerprintProcessor(BaseProcessor):
         return ngrams
     
     def find_similar_content(self, fingerprint_vector: List[float], content_type: str, threshold: float = 0.8) -> List[Dict[str, Any]]:
-        """Recherche de contenu similaire dans l'index FAISS"""        if content_type not in self.faiss_indices:
+        """Recherche de contenu similaire dans l'index FAISS"""
+        if content_type not in self.faiss_indices:
             return []
         
         try:
@@ -502,7 +518,8 @@ class ContentFingerprintProcessor(BaseProcessor):
             return []
     
     def add_to_similarity_index(self, fingerprint_vector: List[float], content_type: str, content_id: str) -> bool:
-        """Ajoute un vecteur à l'index de similarité FAISS"""        if content_type not in self.faiss_indices:
+        """Ajoute un vecteur à l'index de similarité FAISS"""
+        if content_type not in self.faiss_indices:
             return False
         
         try:
@@ -518,7 +535,8 @@ class ContentFingerprintProcessor(BaseProcessor):
             return False
     
     def validate_input(self, input_data: Any) -> bool:
-        """Valide les données d'entrée pour le fingerprinting"""        if not isinstance(input_data, dict):
+        """Valide les données d'entrée pour le fingerprinting"""
+        if not isinstance(input_data, dict):
             return False
         
         content_type = input_data.get('content_type')
@@ -538,14 +556,16 @@ class ContentFingerprintProcessor(BaseProcessor):
 
 
 class AsyncContentFingerprintProcessor(AsyncBaseProcessor):
-    """Version asynchrone du processeur d'empreintes"""    
+    """Version asynchrone du processeur d'empreintes"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.sync_processor = ContentFingerprintProcessor(config)
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traitement asynchrone des empreintes"""        loop = asyncio.get_event_loop()
+        """Traitement asynchrone des empreintes"""
+        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
             self.sync_processor.process_with_stats, 
@@ -553,10 +573,12 @@ class AsyncContentFingerprintProcessor(AsyncBaseProcessor):
         )
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Validation asynchrone"""        return self.sync_processor.validate_input(input_data)
+        """Validation asynchrone"""
+        return self.sync_processor.validate_input(input_data)
     
     async def find_similar_content(self, fingerprint_vector: List[float], content_type: str, threshold: float = 0.8) -> List[Dict[str, Any]]:
-        """Recherche asynchrone de contenu similaire"""        loop = asyncio.get_event_loop()
+        """Recherche asynchrone de contenu similaire"""
+        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor,
             self.sync_processor.find_similar_content,

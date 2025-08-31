@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -24,7 +25,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -47,14 +49,17 @@ from ai.ai_agents.audience_development_agents import (
 
 
 class TestAudienceDevelopmentAgent:
-    """Test AudienceDevelopmentAgent functionality"""    
+    """Test AudienceDevelopmentAgent functionality"""
+    
     @pytest.fixture
     def agent(self):
-        """Create AudienceDevelopmentAgent instance"""        return AudienceDevelopmentAgent()
+        """Create AudienceDevelopmentAgent instance"""
+        return AudienceDevelopmentAgent()
     
     @pytest.fixture
     def sample_audience_data(self):
-        """Sample audience data for testing"""        return {
+        """Sample audience data for testing"""
+        return {
             "total_followers": 15000,
             "monthly_growth": 1200,
             "engagement_rate": 0.045,
@@ -78,7 +83,8 @@ class TestAudienceDevelopmentAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_audience_demographics(self, agent, sample_audience_data):
-        """Test audience demographic analysis"""        analysis = await agent.analyze_audience_demographics(sample_audience_data)
+        """Test audience demographic analysis"""
+        analysis = await agent.analyze_audience_demographics(sample_audience_data)
         
         assert isinstance(analysis, AudienceAnalysis)
         assert analysis.audience_size == 15000
@@ -90,7 +96,8 @@ class TestAudienceDevelopmentAgent:
         
     @pytest.mark.asyncio
     async def test_predict_growth_potential(self, agent, sample_audience_data):
-        """Test growth potential prediction"""        growth_prediction = await agent.predict_growth_potential(
+        """Test growth potential prediction"""
+        growth_prediction = await agent.predict_growth_potential(
             sample_audience_data,
             time_horizon_months=6
         )
@@ -103,7 +110,8 @@ class TestAudienceDevelopmentAgent:
     
     @pytest.mark.asyncio
     async def test_identify_growth_opportunities(self, agent, sample_audience_data):
-        """Test growth opportunity identification"""        opportunities = await agent.identify_growth_opportunities(sample_audience_data)
+        """Test growth opportunity identification"""
+        opportunities = await agent.identify_growth_opportunities(sample_audience_data)
         
         assert isinstance(opportunities, list)
         assert len(opportunities) > 0
@@ -116,7 +124,8 @@ class TestAudienceDevelopmentAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_audience_loyalty(self, agent, sample_audience_data):
-        """Test audience loyalty analysis"""        loyalty_analysis = await agent.analyze_audience_loyalty(sample_audience_data)
+        """Test audience loyalty analysis"""
+        loyalty_analysis = await agent.analyze_audience_loyalty(sample_audience_data)
         
         assert "loyalty_score" in loyalty_analysis
         assert "churn_risk" in loyalty_analysis
@@ -126,7 +135,8 @@ class TestAudienceDevelopmentAgent:
     
     @pytest.mark.asyncio
     async def test_segment_audience(self, agent, sample_audience_data):
-        """Test audience segmentation"""        segments = await agent.segment_audience(sample_audience_data)
+        """Test audience segmentation"""
+        segments = await agent.segment_audience(sample_audience_data)
         
         assert isinstance(segments, dict)
         assert len(segments) > 0
@@ -139,7 +149,8 @@ class TestAudienceDevelopmentAgent:
     
     @pytest.mark.asyncio
     async def test_recommend_targeting_strategy(self, agent, sample_audience_data):
-        """Test targeting strategy recommendations"""        strategy = await agent.recommend_targeting_strategy(
+        """Test targeting strategy recommendations"""
+        strategy = await agent.recommend_targeting_strategy(
             sample_audience_data,
             goal="growth"
         )
@@ -151,14 +162,17 @@ class TestAudienceDevelopmentAgent:
 
 
 class TestCommunityBuildingAgent:
-    """Test CommunityBuildingAgent functionality"""    
+    """Test CommunityBuildingAgent functionality"""
+    
     @pytest.fixture
     def agent(self):
-        """Create CommunityBuildingAgent instance"""        return CommunityBuildingAgent()
+        """Create CommunityBuildingAgent instance"""
+        return CommunityBuildingAgent()
     
     @pytest.fixture
     def sample_community_data(self):
-        """Sample community data for testing"""        return {
+        """Sample community data for testing"""
+        return {
             "total_members": 5000,
             "active_members": 1500,
             "engagement_metrics": {
@@ -181,7 +195,8 @@ class TestCommunityBuildingAgent:
     
     @pytest.mark.asyncio
     async def test_assess_community_health(self, agent, sample_community_data):
-        """Test community health assessment"""        health = await agent.assess_community_health(sample_community_data)
+        """Test community health assessment"""
+        health = await agent.assess_community_health(sample_community_data)
         
         assert isinstance(health, CommunityHealth)
         assert 0 <= health.overall_health_score <= 1
@@ -191,7 +206,8 @@ class TestCommunityBuildingAgent:
     
     @pytest.mark.asyncio
     async def test_identify_community_leaders(self, agent, sample_community_data):
-        """Test community leader identification"""        leaders = await agent.identify_community_leaders(sample_community_data)
+        """Test community leader identification"""
+        leaders = await agent.identify_community_leaders(sample_community_data)
         
         assert isinstance(leaders, list)
         
@@ -203,7 +219,8 @@ class TestCommunityBuildingAgent:
     
     @pytest.mark.asyncio
     async def test_generate_community_initiatives(self, agent, sample_community_data):
-        """Test community initiative generation"""        initiatives = await agent.generate_community_initiatives(sample_community_data)
+        """Test community initiative generation"""
+        initiatives = await agent.generate_community_initiatives(sample_community_data)
         
         assert isinstance(initiatives, list)
         assert len(initiatives) > 0
@@ -216,7 +233,8 @@ class TestCommunityBuildingAgent:
     
     @pytest.mark.asyncio
     async def test_create_engagement_campaigns(self, agent, sample_community_data):
-        """Test engagement campaign creation"""        campaigns = await agent.create_engagement_campaigns(
+        """Test engagement campaign creation"""
+        campaigns = await agent.create_engagement_campaigns(
             sample_community_data,
             campaign_goals=["increase_participation", "build_relationships"]
         )
@@ -231,14 +249,17 @@ class TestCommunityBuildingAgent:
 
 
 class TestEngagementOptimizationAgent:
-    """Test EngagementOptimizationAgent functionality"""    
+    """Test EngagementOptimizationAgent functionality"""
+    
     @pytest.fixture
     def agent(self):
-        """Create EngagementOptimizationAgent instance"""        return EngagementOptimizationAgent()
+        """Create EngagementOptimizationAgent instance"""
+        return EngagementOptimizationAgent()
     
     @pytest.fixture
     def sample_engagement_data(self):
-        """Sample engagement data for testing"""        return {
+        """Sample engagement data for testing"""
+        return {
             "content_performance": {
                 "posts": [
                     {
@@ -270,7 +291,8 @@ class TestEngagementOptimizationAgent:
     
     @pytest.mark.asyncio
     async def test_optimize_posting_schedule(self, agent, sample_engagement_data):
-        """Test posting schedule optimization"""        schedule = await agent.optimize_posting_schedule(sample_engagement_data)
+        """Test posting schedule optimization"""
+        schedule = await agent.optimize_posting_schedule(sample_engagement_data)
         
         assert "optimal_times" in schedule
         assert "frequency_recommendations" in schedule
@@ -280,7 +302,8 @@ class TestEngagementOptimizationAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_content_performance(self, agent, sample_engagement_data):
-        """Test content performance analysis"""        analysis = await agent.analyze_content_performance(sample_engagement_data)
+        """Test content performance analysis"""
+        analysis = await agent.analyze_content_performance(sample_engagement_data)
         
         assert "top_performing_content" in analysis
         assert "performance_patterns" in analysis
@@ -289,7 +312,8 @@ class TestEngagementOptimizationAgent:
     
     @pytest.mark.asyncio
     async def test_generate_engagement_strategies(self, agent, sample_engagement_data):
-        """Test engagement strategy generation"""        strategies = await agent.generate_engagement_strategies(sample_engagement_data)
+        """Test engagement strategy generation"""
+        strategies = await agent.generate_engagement_strategies(sample_engagement_data)
         
         assert isinstance(strategies, list)
         
@@ -301,7 +325,8 @@ class TestEngagementOptimizationAgent:
     
     @pytest.mark.asyncio
     async def test_predict_viral_potential(self, agent, sample_engagement_data):
-        """Test viral potential prediction"""        potential = await agent.predict_viral_potential(
+        """Test viral potential prediction"""
+        potential = await agent.predict_viral_potential(
             content_data={
                 "type": "video",
                 "duration": 30,
@@ -318,14 +343,17 @@ class TestEngagementOptimizationAgent:
 
 
 class TestGrowthStrategyAgent:
-    """Test GrowthStrategyAgent functionality"""    
+    """Test GrowthStrategyAgent functionality"""
+    
     @pytest.fixture
     def agent(self):
-        """Create GrowthStrategyAgent instance"""        return GrowthStrategyAgent()
+        """Create GrowthStrategyAgent instance"""
+        return GrowthStrategyAgent()
     
     @pytest.fixture
     def sample_creator_profile(self):
-        """Sample creator profile for testing"""        return {
+        """Sample creator profile for testing"""
+        return {
             "creator_id": "test_creator",
             "current_metrics": {
                 "followers": 10000,
@@ -344,7 +372,8 @@ class TestGrowthStrategyAgent:
     
     @pytest.mark.asyncio
     async def test_develop_growth_strategy(self, agent, sample_creator_profile):
-        """Test growth strategy development"""        strategy = await agent.develop_growth_strategy(sample_creator_profile)
+        """Test growth strategy development"""
+        strategy = await agent.develop_growth_strategy(sample_creator_profile)
         
         assert isinstance(strategy, GrowthStrategy)
         assert strategy.target_growth_rate > 0
@@ -354,7 +383,8 @@ class TestGrowthStrategyAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_competitor_strategies(self, agent, sample_creator_profile):
-        """Test competitor strategy analysis"""        competitor_analysis = await agent.analyze_competitor_strategies(
+        """Test competitor strategy analysis"""
+        competitor_analysis = await agent.analyze_competitor_strategies(
             sample_creator_profile,
             competitor_data=[
                 {"name": "competitor1", "followers": 25000, "growth_rate": 0.08},
@@ -368,7 +398,8 @@ class TestGrowthStrategyAgent:
     
     @pytest.mark.asyncio
     async def test_recommend_collaboration_opportunities(self, agent, sample_creator_profile):
-        """Test collaboration opportunity recommendations"""        collaborations = await agent.recommend_collaboration_opportunities(
+        """Test collaboration opportunity recommendations"""
+        collaborations = await agent.recommend_collaboration_opportunities(
             sample_creator_profile
         )
         
@@ -382,7 +413,8 @@ class TestGrowthStrategyAgent:
     
     @pytest.mark.asyncio
     async def test_create_content_calendar(self, agent, sample_creator_profile):
-        """Test content calendar creation"""        calendar = await agent.create_content_calendar(
+        """Test content calendar creation"""
+        calendar = await agent.create_content_calendar(
             sample_creator_profile,
             duration_weeks=4
         )
@@ -394,10 +426,12 @@ class TestGrowthStrategyAgent:
 
 
 class TestIntegrationScenarios:
-    """Test integration between different audience development agents"""    
+    """Test integration between different audience development agents"""
+    
     @pytest.fixture
     def agents(self):
-        """Create all agents for integration testing"""        return {
+        """Create all agents for integration testing"""
+        return {
             "audience_dev": AudienceDevelopmentAgent(),
             "community": CommunityBuildingAgent(),
             "engagement": EngagementOptimizationAgent(),
@@ -406,7 +440,8 @@ class TestIntegrationScenarios:
     
     @pytest.mark.asyncio
     async def test_comprehensive_audience_strategy(self, agents):
-        """Test comprehensive audience development workflow"""        # Sample comprehensive data
+        """Test comprehensive audience development workflow"""
+        # Sample comprehensive data
         creator_data = {
             "creator_id": "integration_test",
             "audience": {
@@ -455,21 +490,25 @@ class TestIntegrationScenarios:
 
 
 class TestErrorHandling:
-    """Test error handling scenarios"""    
+    """Test error handling scenarios"""
+    
     @pytest.fixture
     def agent(self):
-        """Create AudienceDevelopmentAgent for error testing"""        return AudienceDevelopmentAgent()
+        """Create AudienceDevelopmentAgent for error testing"""
+        return AudienceDevelopmentAgent()
     
     @pytest.mark.asyncio
     async def test_invalid_audience_data(self, agent):
-        """Test handling of invalid audience data"""        invalid_data = {"invalid": "data"}
+        """Test handling of invalid audience data"""
+        invalid_data = {"invalid": "data"}
         
         with pytest.raises((ValueError, KeyError)):
             await agent.analyze_audience_demographics(invalid_data)
     
     @pytest.mark.asyncio
     async def test_empty_data_handling(self, agent):
-        """Test handling of empty data"""        empty_data = {}
+        """Test handling of empty data"""
+        empty_data = {}
         
         # Should handle gracefully without crashing
         try:
@@ -481,7 +520,8 @@ class TestErrorHandling:
     
     @pytest.mark.asyncio
     async def test_network_failure_handling(self, agent):
-        """Test handling of network failures"""        with patch('aiohttp.ClientSession.post') as mock_post:
+        """Test handling of network failures"""
+        with patch('aiohttp.ClientSession.post') as mock_post:
             mock_post.side_effect = Exception("Network error")
             
             # Should handle network errors gracefully
@@ -495,14 +535,17 @@ class TestErrorHandling:
 
 
 class TestPerformanceAndScaling:
-    """Test performance and scaling scenarios"""    
+    """Test performance and scaling scenarios"""
+    
     @pytest.fixture
     def agent(self):
-        """Create AudienceDevelopmentAgent for performance testing"""        return AudienceDevelopmentAgent()
+        """Create AudienceDevelopmentAgent for performance testing"""
+        return AudienceDevelopmentAgent()
     
     @pytest.mark.asyncio
     async def test_large_dataset_processing(self, agent):
-        """Test processing of large audience datasets"""        large_dataset = {
+        """Test processing of large audience datasets"""
+        large_dataset = {
             "total_followers": 1000000,
             "demographics": {
                 f"segment_{i}": {"size": 10000, "engagement": 0.05} 
@@ -524,7 +567,8 @@ class TestPerformanceAndScaling:
     
     @pytest.mark.asyncio
     async def test_concurrent_analysis(self, agent):
-        """Test concurrent processing capabilities"""        datasets = [
+        """Test concurrent processing capabilities"""
+        datasets = [
             {"followers": 10000, "engagement": 0.04},
             {"followers": 25000, "engagement": 0.03},
             {"followers": 5000, "engagement": 0.06},

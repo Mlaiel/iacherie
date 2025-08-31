@@ -22,7 +22,8 @@ distribution, or commercial exploitation without explicit written
 permission is strictly prohibited and will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import time
@@ -54,7 +55,8 @@ logger = logging.getLogger(__name__)
 
 
 class TaskStatus(Enum):
-    """Task execution status."""    PENDING = "pending"
+    """Task execution status."""
+    PENDING = "pending"
     QUEUED = "queued"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -65,7 +67,8 @@ class TaskStatus(Enum):
 
 
 class TaskPriority(Enum):
-    """Task priority levels."""    LOW = 1
+    """Task priority levels."""
+    LOW = 1
     NORMAL = 2
     HIGH = 3
     CRITICAL = 4
@@ -73,7 +76,8 @@ class TaskPriority(Enum):
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status."""    CREATED = "created"
+    """Workflow execution status."""
+    CREATED = "created"
     SCHEDULED = "scheduled"
     RUNNING = "running"
     PAUSED = "paused"
@@ -83,7 +87,8 @@ class WorkflowStatus(Enum):
 
 
 class ResourceType(Enum):
-    """Types of computational resources."""    CPU = "cpu"
+    """Types of computational resources."""
+    CPU = "cpu"
     MEMORY = "memory"
     GPU = "gpu"
     STORAGE = "storage"
@@ -92,7 +97,8 @@ class ResourceType(Enum):
 
 @dataclass
 class TaskDefinition:
-    """Definition of a processing task."""    task_id: str
+    """Definition of a processing task."""
+    task_id: str
     task_type: str
     task_name: str
     priority: TaskPriority = TaskPriority.NORMAL
@@ -123,7 +129,8 @@ class TaskDefinition:
 
 @dataclass
 class TaskExecution:
-    """Task execution instance with runtime information."""    execution_id: str
+    """Task execution instance with runtime information."""
+    execution_id: str
     task_definition: TaskDefinition
     status: TaskStatus = TaskStatus.PENDING
     
@@ -152,7 +159,8 @@ class TaskExecution:
 
 @dataclass
 class WorkflowDefinition:
-    """Definition of a processing workflow."""    workflow_id: str
+    """Definition of a processing workflow."""
+    workflow_id: str
     workflow_name: str
     description: str = ""
     
@@ -183,7 +191,8 @@ class WorkflowDefinition:
 
 @dataclass
 class WorkflowExecution:
-    """Workflow execution instance with runtime information."""    execution_id: str
+    """Workflow execution instance with runtime information."""
+    execution_id: str
     workflow_definition: WorkflowDefinition
     status: WorkflowStatus = WorkflowStatus.CREATED
     
@@ -209,7 +218,8 @@ class WorkflowExecution:
 
 @dataclass
 class NodeCapacity:
-    """Computational node capacity information."""    node_id: str
+    """Computational node capacity information."""
+    node_id: str
     node_name: str
     
     # Resource capacity
@@ -237,11 +247,14 @@ class NodeCapacity:
 
 
 class TaskScheduler:
-    """    Advanced task scheduler with priority-based scheduling,
+    """
+    Advanced task scheduler with priority-based scheduling,
     resource optimization, and load balancing.
-    """    
+    """
+    
     def __init__(self, config: CompleteAIProcessingConfig):
-        """Initialize task scheduler."""        self.config = config
+        """Initialize task scheduler."""
+        self.config = config
         self.task_queue = PriorityQueue()
         self.running_tasks: Dict[str, TaskExecution] = {}
         self.completed_tasks: Dict[str, TaskExecution] = {}
@@ -259,12 +272,14 @@ class TaskScheduler:
         self.queue_size = Gauge('ai_task_queue_size', 'Current task queue size')
         
     def add_node(self, node_capacity: NodeCapacity):
-        """Add computational node to scheduler."""        with self.scheduler_lock:
+        """Add computational node to scheduler."""
+        with self.scheduler_lock:
             self.node_capacities[node_capacity.node_id] = node_capacity
             logger.info(f"Added node to scheduler: {node_capacity.node_name}")
     
     def remove_node(self, node_id: str):
-        """Remove computational node from scheduler."""        with self.scheduler_lock:
+        """Remove computational node from scheduler."""
+        with self.scheduler_lock:
             if node_id in self.node_capacities:
                 # Move running tasks to other nodes
                 self._reschedule_node_tasks(node_id)
@@ -272,7 +287,8 @@ class TaskScheduler:
                 logger.info(f"Removed node from scheduler: {node_id}")
     
     def _reschedule_node_tasks(self, node_id: str):
-        """Reschedule tasks from unavailable node."""        tasks_to_reschedule = []
+        """Reschedule tasks from unavailable node."""
+        tasks_to_reschedule = []
         
         for task_id, execution in self.running_tasks.items():
             if execution.node_id == node_id:
@@ -287,7 +303,8 @@ class TaskScheduler:
             logger.warning(f"Rescheduled task {execution.task_definition.task_id} from unavailable node")
     
     def schedule_task(self, task_definition: TaskDefinition) -> str:
-        """Schedule task for execution."""        with self.scheduling_duration.time():
+        """Schedule task for execution."""
+        with self.scheduling_duration.time():
             execution_id = str(uuid.uuid4())
             
             # Create task execution
@@ -308,7 +325,8 @@ class TaskScheduler:
             return execution_id
     
     def find_best_node(self, task_definition: TaskDefinition) -> Optional[NodeCapacity]:
-        """Find the best node for task execution based on resources and constraints."""        best_node = None
+        """Find the best node for task execution based on resources and constraints."""
+        best_node = None
         best_score = -1
         
         for node_id, node in self.node_capacities.items():
@@ -334,7 +352,8 @@ class TaskScheduler:
         return best_node
     
     def _node_has_sufficient_resources(self, node: NodeCapacity, task: TaskDefinition) -> bool:
-        """Check if node has sufficient resources for task."""        # CPU check
+        """Check if node has sufficient resources for task."""
+        # CPU check
         if (node.used_cpu_cores + task.cpu_cores) > node.total_cpu_cores:
             return False
         
@@ -352,7 +371,8 @@ class TaskScheduler:
         return True
     
     def _calculate_node_score(self, node: NodeCapacity, task: TaskDefinition) -> float:
-        """Calculate node score for task assignment."""        # Resource utilization score (prefer less utilized nodes)
+        """Calculate node score for task assignment."""
+        # Resource utilization score (prefer less utilized nodes)
         cpu_utilization = node.used_cpu_cores / node.total_cpu_cores
         memory_utilization = node.used_memory_mb / node.total_memory_mb
         
@@ -374,7 +394,8 @@ class TaskScheduler:
         return total_score
     
     async def start_scheduler(self):
-        """Start the task scheduler."""        self.is_running = True
+        """Start the task scheduler."""
+        self.is_running = True
         logger.info("Task scheduler started")
         
         # Start scheduler loop
@@ -382,7 +403,8 @@ class TaskScheduler:
         return scheduler_task
     
     async def _scheduler_loop(self):
-        """Main scheduler loop."""        while self.is_running:
+        """Main scheduler loop."""
+        while self.is_running:
             try:
                 # Check for new tasks to schedule
                 if not self.task_queue.empty():
@@ -415,7 +437,8 @@ class TaskScheduler:
                 await asyncio.sleep(5)
     
     async def _assign_task_to_node(self, execution: TaskExecution, node: NodeCapacity):
-        """Assign task execution to specific node."""        try:
+        """Assign task execution to specific node."""
+        try:
             # Update execution info
             execution.node_id = node.node_id
             execution.status = TaskStatus.RUNNING
@@ -438,7 +461,8 @@ class TaskScheduler:
             execution.error_message = str(e)
     
     def _reserve_node_resources(self, node: NodeCapacity, task: TaskDefinition):
-        """Reserve node resources for task execution."""        node.used_cpu_cores += task.cpu_cores
+        """Reserve node resources for task execution."""
+        node.used_cpu_cores += task.cpu_cores
         node.used_memory_mb += task.memory_mb
         
         if task.gpu_required:
@@ -446,7 +470,8 @@ class TaskScheduler:
             node.used_gpu_memory_mb += task.gpu_memory_mb
     
     def _release_node_resources(self, node: NodeCapacity, task: TaskDefinition):
-        """Release node resources after task completion."""        node.used_cpu_cores = max(0, node.used_cpu_cores - task.cpu_cores)
+        """Release node resources after task completion."""
+        node.used_cpu_cores = max(0, node.used_cpu_cores - task.cpu_cores)
         node.used_memory_mb = max(0, node.used_memory_mb - task.memory_mb)
         
         if task.gpu_required:
@@ -454,7 +479,8 @@ class TaskScheduler:
             node.used_gpu_memory_mb = max(0, node.used_gpu_memory_mb - task.gpu_memory_mb)
     
     def _execute_task(self, execution: TaskExecution) -> TaskExecution:
-        """Execute task and return updated execution info."""        try:
+        """Execute task and return updated execution info."""
+        try:
             start_time = time.time()
             
             # Update progress
@@ -515,7 +541,8 @@ class TaskScheduler:
         return execution
     
     async def _update_node_heartbeats(self):
-        """Update node heartbeat information."""        current_time = datetime.utcnow()
+        """Update node heartbeat information."""
+        current_time = datetime.utcnow()
         heartbeat_timeout = timedelta(minutes=5)
         
         for node_id, node in self.node_capacities.items():
@@ -526,7 +553,8 @@ class TaskScheduler:
                     logger.warning(f"Node {node.node_name} heartbeat timeout")
     
     def _cleanup_completed_tasks(self):
-        """Clean up old completed and failed tasks."""        cutoff_time = datetime.utcnow() - timedelta(hours=24)
+        """Clean up old completed and failed tasks."""
+        cutoff_time = datetime.utcnow() - timedelta(hours=24)
         
         # Clean completed tasks
         completed_to_remove = []
@@ -547,7 +575,8 @@ class TaskScheduler:
             del self.failed_tasks[execution_id]
     
     def get_task_status(self, execution_id: str) -> Optional[TaskExecution]:
-        """Get current task execution status."""        # Check running tasks
+        """Get current task execution status."""
+        # Check running tasks
         if execution_id in self.running_tasks:
             return self.running_tasks[execution_id]
         
@@ -562,7 +591,8 @@ class TaskScheduler:
         return None
     
     def cancel_task(self, execution_id: str) -> bool:
-        """Cancel task execution."""        if execution_id in self.running_tasks:
+        """Cancel task execution."""
+        if execution_id in self.running_tasks:
             execution = self.running_tasks[execution_id]
             execution.status = TaskStatus.CANCELLED
             execution.completed_at = datetime.utcnow()
@@ -582,7 +612,8 @@ class TaskScheduler:
         return False
     
     async def stop_scheduler(self):
-        """Stop the task scheduler."""        self.is_running = False
+        """Stop the task scheduler."""
+        self.is_running = False
         
         # Cancel all running tasks
         for execution_id in list(self.running_tasks.keys()):
@@ -595,11 +626,14 @@ class TaskScheduler:
 
 
 class WorkflowOrchestrator:
-    """    Advanced workflow orchestrator for managing complex multi-task workflows
+    """
+    Advanced workflow orchestrator for managing complex multi-task workflows
     with dependency resolution, parallel execution, and fault tolerance.
-    """    
+    """
+    
     def __init__(self, config: CompleteAIProcessingConfig, task_scheduler: TaskScheduler):
-        """Initialize workflow orchestrator."""        self.config = config
+        """Initialize workflow orchestrator."""
+        self.config = config
         self.task_scheduler = task_scheduler
         self.workflows: Dict[str, WorkflowDefinition] = {}
         self.running_workflows: Dict[str, WorkflowExecution] = {}
@@ -612,11 +646,13 @@ class WorkflowOrchestrator:
         self.workflows_failed = Counter('ai_workflows_failed_total', 'Total workflows failed')
         
     def register_workflow(self, workflow_definition: WorkflowDefinition):
-        """Register workflow definition."""        self.workflows[workflow_definition.workflow_id] = workflow_definition
+        """Register workflow definition."""
+        self.workflows[workflow_definition.workflow_id] = workflow_definition
         logger.info(f"Registered workflow: {workflow_definition.workflow_name}")
     
     async def start_workflow(self, workflow_id: str, parameters: Dict[str, Any] = None) -> str:
-        """Start workflow execution."""        async with self.workflow_lock:
+        """Start workflow execution."""
+        async with self.workflow_lock:
             if workflow_id not in self.workflows:
                 raise ValueError(f"Workflow not found: {workflow_id}")
             
@@ -645,12 +681,14 @@ class WorkflowOrchestrator:
             return execution_id
     
     def _apply_parameters_to_tasks(self, execution: WorkflowExecution, parameters: Dict[str, Any]):
-        """Apply runtime parameters to workflow tasks."""        for task in execution.workflow_definition.tasks:
+        """Apply runtime parameters to workflow tasks."""
+        for task in execution.workflow_definition.tasks:
             # Update task parameters with workflow parameters
             task.parameters.update(parameters)
     
     async def _execute_workflow(self, execution: WorkflowExecution):
-        """Execute workflow with dependency resolution and parallel execution."""        try:
+        """Execute workflow with dependency resolution and parallel execution."""
+        try:
             execution.status = WorkflowStatus.RUNNING
             execution.started_at = datetime.utcnow()
             
@@ -683,7 +721,8 @@ class WorkflowOrchestrator:
                 self.completed_workflows[execution.execution_id] = execution
     
     def _build_dependency_graph(self, workflow: WorkflowDefinition) -> Dict[str, Set[str]]:
-        """Build task dependency graph."""        graph = {}
+        """Build task dependency graph."""
+        graph = {}
         
         # Initialize graph with all tasks
         for task in workflow.tasks:
@@ -698,7 +737,8 @@ class WorkflowOrchestrator:
     
     async def _execute_tasks_with_dependencies(self, execution: WorkflowExecution, 
                                              dependency_graph: Dict[str, Set[str]]):
-        """Execute tasks respecting dependencies and parallel execution limits."""        completed_tasks = set()
+        """Execute tasks respecting dependencies and parallel execution limits."""
+        completed_tasks = set()
         running_tasks = {}
         task_dict = {task.task_id: task for task in execution.workflow_definition.tasks}
         
@@ -755,7 +795,8 @@ class WorkflowOrchestrator:
             await asyncio.sleep(1)
     
     def get_workflow_status(self, execution_id: str) -> Optional[WorkflowExecution]:
-        """Get workflow execution status."""        if execution_id in self.running_workflows:
+        """Get workflow execution status."""
+        if execution_id in self.running_workflows:
             return self.running_workflows[execution_id]
         
         if execution_id in self.completed_workflows:
@@ -764,7 +805,8 @@ class WorkflowOrchestrator:
         return None
     
     async def pause_workflow(self, execution_id: str) -> bool:
-        """Pause workflow execution."""        async with self.workflow_lock:
+        """Pause workflow execution."""
+        async with self.workflow_lock:
             if execution_id in self.running_workflows:
                 execution = self.running_workflows[execution_id]
                 execution.status = WorkflowStatus.PAUSED
@@ -781,7 +823,8 @@ class WorkflowOrchestrator:
         return False
     
     async def resume_workflow(self, execution_id: str) -> bool:
-        """Resume paused workflow execution."""        async with self.workflow_lock:
+        """Resume paused workflow execution."""
+        async with self.workflow_lock:
             if execution_id in self.running_workflows:
                 execution = self.running_workflows[execution_id]
                 if execution.status == WorkflowStatus.PAUSED:
@@ -797,7 +840,8 @@ class WorkflowOrchestrator:
         return False
     
     async def cancel_workflow(self, execution_id: str) -> bool:
-        """Cancel workflow execution."""        async with self.workflow_lock:
+        """Cancel workflow execution."""
+        async with self.workflow_lock:
             if execution_id in self.running_workflows:
                 execution = self.running_workflows[execution_id]
                 execution.status = WorkflowStatus.CANCELLED
@@ -819,11 +863,14 @@ class WorkflowOrchestrator:
 
 
 class DistributedOrchestrator:
-    """    Distributed orchestration system for coordinating AI processing
+    """
+    Distributed orchestration system for coordinating AI processing
     across multiple nodes and clusters with fault tolerance.
-    """    
+    """
+    
     def __init__(self, config: CompleteAIProcessingConfig):
-        """Initialize distributed orchestrator."""        self.config = config
+        """Initialize distributed orchestrator."""
+        self.config = config
         self.node_id = str(uuid.uuid4())
         self.task_scheduler = TaskScheduler(config)
         self.workflow_orchestrator = WorkflowOrchestrator(config, self.task_scheduler)
@@ -839,7 +886,8 @@ class DistributedOrchestrator:
         self.node_heartbeat_interval = 30  # seconds
         
     async def initialize(self):
-        """Initialize distributed orchestrator."""        try:
+        """Initialize distributed orchestrator."""
+        try:
             # Initialize Redis client
             await self._initialize_redis()
             
@@ -874,7 +922,8 @@ class DistributedOrchestrator:
             raise
     
     async def _initialize_redis(self):
-        """Initialize Redis client for coordination."""        if self.config.redis:
+        """Initialize Redis client for coordination."""
+        if self.config.redis:
             self.redis_client = aioredis.Redis(
                 host=self.config.redis.host,
                 port=self.config.redis.port,
@@ -887,7 +936,8 @@ class DistributedOrchestrator:
             logger.info("Redis client initialized for distributed coordination")
     
     async def _initialize_celery(self):
-        """Initialize Celery for distributed task execution."""        if self.redis_client:
+        """Initialize Celery for distributed task execution."""
+        if self.redis_client:
             redis_url = f"redis://{self.config.redis.host}:{self.config.redis.port}/{self.config.redis.database}"
             
             self.celery_app = Celery(
@@ -911,7 +961,8 @@ class DistributedOrchestrator:
             logger.info("Celery initialized for distributed task execution")
     
     async def _register_node(self):
-        """Register this node in the distributed system."""        if not self.redis_client:
+        """Register this node in the distributed system."""
+        if not self.redis_client:
             return
         
         node_info = {
@@ -936,7 +987,8 @@ class DistributedOrchestrator:
         logger.info(f"Registered node in distributed system: {node_info['node_name']}")
     
     async def _leader_election_loop(self):
-        """Leader election loop using Redis."""        while True:
+        """Leader election loop using Redis."""
+        while True:
             try:
                 async with self.leader_election_lock:
                     # Try to become leader
@@ -968,15 +1020,18 @@ class DistributedOrchestrator:
                 await asyncio.sleep(10)
     
     async def _on_become_leader(self):
-        """Actions to take when becoming leader."""        # Leader is responsible for workflow scheduling and cluster coordination
+        """Actions to take when becoming leader."""
+        # Leader is responsible for workflow scheduling and cluster coordination
         logger.info("Taking leadership responsibilities")
     
     async def _on_lose_leadership(self):
-        """Actions to take when losing leadership."""        # Stop leader-specific tasks
+        """Actions to take when losing leadership."""
+        # Stop leader-specific tasks
         logger.info("Relinquishing leadership responsibilities")
     
     async def _heartbeat_loop(self):
-        """Send periodic heartbeats to indicate node health."""        while True:
+        """Send periodic heartbeats to indicate node health."""
+        while True:
             try:
                 if self.redis_client:
                     heartbeat_data = {
@@ -1001,7 +1056,8 @@ class DistributedOrchestrator:
                 await asyncio.sleep(self.node_heartbeat_interval)
     
     async def _node_discovery_loop(self):
-        """Discover and monitor other nodes in the cluster."""        while True:
+        """Discover and monitor other nodes in the cluster."""
+        while True:
             try:
                 if self.redis_client:
                     # Get all registered nodes
@@ -1026,7 +1082,8 @@ class DistributedOrchestrator:
                 await asyncio.sleep(60)
     
     async def _update_scheduler_nodes(self):
-        """Update task scheduler with current node information."""        current_time = datetime.utcnow()
+        """Update task scheduler with current node information."""
+        current_time = datetime.utcnow()
         
         for node_id, node_info in self.active_nodes.items():
             # Check node health based on heartbeat
@@ -1056,7 +1113,8 @@ class DistributedOrchestrator:
                 self.task_scheduler.add_node(node_capacity)
     
     async def submit_processing_request(self, request: ProcessingRequest) -> str:
-        """Submit processing request for distributed execution."""        # Create task definition
+        """Submit processing request for distributed execution."""
+        # Create task definition
         task_definition = TaskDefinition(
             task_id=str(uuid.uuid4()),
             task_type="ai_processing",
@@ -1073,7 +1131,8 @@ class DistributedOrchestrator:
         return execution_id
     
     async def submit_workflow(self, workflow_definition: WorkflowDefinition) -> str:
-        """Submit workflow for distributed execution."""        # Register workflow
+        """Submit workflow for distributed execution."""
+        # Register workflow
         self.workflow_orchestrator.register_workflow(workflow_definition)
         
         # Start workflow execution
@@ -1083,7 +1142,8 @@ class DistributedOrchestrator:
         return execution_id
     
     async def get_cluster_status(self) -> Dict[str, Any]:
-        """Get overall cluster status."""        total_nodes = len(self.active_nodes)
+        """Get overall cluster status."""
+        total_nodes = len(self.active_nodes)
         healthy_nodes = sum(1 for node in self.active_nodes.values() 
                           if node.get('status') == 'active')
         
@@ -1103,13 +1163,15 @@ class DistributedOrchestrator:
         }
     
     async def _get_current_leader(self) -> Optional[str]:
-        """Get current cluster leader."""        if self.redis_client:
+        """Get current cluster leader."""
+        if self.redis_client:
             leader = await self.redis_client.get("ai_processing_leader")
             return leader.decode('utf-8') if leader else None
         return None
     
     async def shutdown(self):
-        """Shutdown distributed orchestrator."""        try:
+        """Shutdown distributed orchestrator."""
+        try:
             # Stop task scheduler
             await self.task_scheduler.stop_scheduler()
             
@@ -1133,14 +1195,16 @@ class DistributedOrchestrator:
 
 # Factory functions for easy setup
 async def create_distributed_orchestrator(config: CompleteAIProcessingConfig) -> DistributedOrchestrator:
-    """Create and initialize distributed orchestrator."""    orchestrator = DistributedOrchestrator(config)
+    """Create and initialize distributed orchestrator."""
+    orchestrator = DistributedOrchestrator(config)
     await orchestrator.initialize()
     return orchestrator
 
 
 def create_simple_workflow(name: str, tasks: List[TaskDefinition], 
                          dependencies: Dict[str, List[str]] = None) -> WorkflowDefinition:
-    """Create simple workflow definition."""    workflow_id = str(uuid.uuid4())
+    """Create simple workflow definition."""
+    workflow_id = str(uuid.uuid4())
     
     return WorkflowDefinition(
         workflow_id=workflow_id,
@@ -1154,7 +1218,8 @@ def create_simple_workflow(name: str, tasks: List[TaskDefinition],
 
 def create_processing_task(content_path: str, model_type: AIModelType, 
                          priority: TaskPriority = TaskPriority.NORMAL) -> TaskDefinition:
-    """Create processing task definition."""    task_id = str(uuid.uuid4())
+    """Create processing task definition."""
+    task_id = str(uuid.uuid4())
     
     processing_request = ProcessingRequest(
         request_id=str(uuid.uuid4()),

@@ -3,7 +3,8 @@ Professional notification management and communication orchestration
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""from typing import Dict, List, Optional, Any, Set, Tuple, Union
+"""
+from typing import Dict, List, Optional, Any, Set, Tuple, Union
 from datetime import datetime, timedelta
 from enum import Enum
 from dataclasses import dataclass, field
@@ -17,7 +18,8 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationType(Enum):
-    """Types of collaboration notifications"""    COLLABORATION_REQUEST = "collaboration_request"
+    """Types of collaboration notifications"""
+    COLLABORATION_REQUEST = "collaboration_request"
     COLLABORATION_ACCEPTED = "collaboration_accepted"
     COLLABORATION_REJECTED = "collaboration_rejected"
     COLLABORATION_EXPIRED = "collaboration_expired"
@@ -36,7 +38,8 @@ class NotificationType(Enum):
 
 
 class NotificationPriority(Enum):
-    """Notification priority levels"""    LOW = "low"
+    """Notification priority levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     URGENT = "urgent"
@@ -44,7 +47,8 @@ class NotificationPriority(Enum):
 
 
 class NotificationChannel(Enum):
-    """Notification delivery channels"""    EMAIL = "email"
+    """Notification delivery channels"""
+    EMAIL = "email"
     SMS = "sms"
     PUSH_NOTIFICATION = "push_notification"
     IN_APP = "in_app"
@@ -55,7 +59,8 @@ class NotificationChannel(Enum):
 
 
 class NotificationStatus(Enum):
-    """Notification delivery status"""    PENDING = "pending"
+    """Notification delivery status"""
+    PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
     READ = "read"
@@ -66,7 +71,8 @@ class NotificationStatus(Enum):
 
 @dataclass
 class NotificationRecipient:
-    """Notification recipient configuration"""    user_id: str
+    """Notification recipient configuration"""
+    user_id: str
     user_name: str
     email: Optional[str] = None
     phone: Optional[str] = None
@@ -79,7 +85,8 @@ class NotificationRecipient:
 
 @dataclass
 class NotificationTemplate:
-    """Notification template configuration"""    template_id: str
+    """Notification template configuration"""
+    template_id: str
     notification_type: NotificationType
     channel: NotificationChannel
     subject_template: str
@@ -90,7 +97,8 @@ class NotificationTemplate:
 
 
 class CollaborationNotification(BaseModel):
-    """Collaboration notification model"""    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Collaboration notification model"""
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     type: NotificationType
     priority: NotificationPriority = NotificationPriority.MEDIUM
     
@@ -133,7 +141,8 @@ class CollaborationNotification(BaseModel):
 
 @dataclass
 class NotificationDeliveryResult:
-    """Result of notification delivery attempt"""    notification_id: str
+    """Result of notification delivery attempt"""
+    notification_id: str
     recipient_id: str
     channel: NotificationChannel
     status: NotificationStatus
@@ -146,7 +155,8 @@ class NotificationDeliveryResult:
 
 @dataclass
 class NotificationAnalytics:
-    """Notification analytics data"""    total_sent: int = 0
+    """Notification analytics data"""
+    total_sent: int = 0
     total_delivered: int = 0
     total_read: int = 0
     total_clicked: int = 0
@@ -159,9 +169,11 @@ class NotificationAnalytics:
 
 
 class NotificationEngine:
-    """    Advanced Collaboration Notification Engine
+    """
+    Advanced Collaboration Notification Engine
     Manages notification delivery, templates, preferences, and analytics
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.notification_queue: List[CollaborationNotification] = []
@@ -175,7 +187,8 @@ class NotificationEngine:
         asyncio.create_task(self._initialize_engine())
     
     async def _initialize_engine(self):
-        """Initialize notification engine"""        try:
+        """Initialize notification engine"""
+        try:
             await self._setup_channel_providers()
             await self._load_notification_templates()
             await self._initialize_analytics_tracking()
@@ -192,8 +205,10 @@ class NotificationEngine:
         notification: CollaborationNotification,
         immediate: bool = False
     ) -> Dict[str, Any]:
-        """        Send notification to recipients
-        """        try:
+        """
+        Send notification to recipients
+        """
+        try:
             notification_id = notification.id
             
             # Validate notification
@@ -251,8 +266,10 @@ class NotificationEngine:
         collaboration_data: Dict[str, Any],
         recipients: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """        Send collaboration request notification
-        """        try:
+        """
+        Send collaboration request notification
+        """
+        try:
             # Create recipients
             notification_recipients = [
                 NotificationRecipient(
@@ -293,8 +310,10 @@ class NotificationEngine:
         revenue_data: Dict[str, Any],
         recipients: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """        Send revenue notification to collaborators
-        """        try:
+        """
+        Send revenue notification to collaborators
+        """
+        try:
             # Create recipients
             notification_recipients = [
                 NotificationRecipient(
@@ -336,8 +355,10 @@ class NotificationEngine:
         payout_data: Dict[str, Any],
         recipient: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Send payout notification to collaborator
-        """        try:
+        """
+        Send payout notification to collaborator
+        """
+        try:
             # Create recipient
             notification_recipient = NotificationRecipient(
                 user_id=recipient['user_id'],
@@ -378,8 +399,10 @@ class NotificationEngine:
         recipients: List[Dict[str, Any]],
         deadline: datetime
     ) -> Dict[str, Any]:
-        """        Send deadline reminder notification
-        """        try:
+        """
+        Send deadline reminder notification
+        """
+        try:
             days_remaining = (deadline - datetime.utcnow()).days
             
             # Determine priority based on time remaining
@@ -431,8 +454,10 @@ class NotificationEngine:
         time_period: Optional[Tuple[datetime, datetime]] = None,
         collaboration_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """        Get notification analytics
-        """        try:
+        """
+        Get notification analytics
+        """
+        try:
             # Filter notifications based on criteria
             filtered_notifications = list(self.sent_notifications.values())
             
@@ -499,7 +524,8 @@ class NotificationEngine:
     
     # Private helper methods
     async def _setup_channel_providers(self):
-        """Setup notification channel providers"""        self.channel_providers = {
+        """Setup notification channel providers"""
+        self.channel_providers = {
             NotificationChannel.EMAIL: {
                 'provider': 'sendgrid',
                 'configured': True,
@@ -528,7 +554,8 @@ class NotificationEngine:
         }
     
     async def _load_notification_templates(self):
-        """Load notification templates"""        # Mock templates - in reality would load from database
+        """Load notification templates"""
+        # Mock templates - in reality would load from database
         self.templates = {
             'collaboration_request_email': NotificationTemplate(
                 template_id='collaboration_request_email',
@@ -549,14 +576,17 @@ class NotificationEngine:
         }
     
     async def _initialize_analytics_tracking(self):
-        """Initialize analytics tracking"""        self.analytics_data = NotificationAnalytics()
+        """Initialize analytics tracking"""
+        self.analytics_data = NotificationAnalytics()
     
     async def _setup_delivery_scheduler(self):
-        """Setup notification delivery scheduler"""        # This would setup a background task to process scheduled notifications
+        """Setup notification delivery scheduler"""
+        # This would setup a background task to process scheduled notifications
         asyncio.create_task(self._process_scheduled_notifications())
     
     async def _validate_notification(self, notification: CollaborationNotification) -> Dict[str, Any]:
-        """Validate notification before sending"""        try:
+        """Validate notification before sending"""
+        try:
             # Check recipients
             if not notification.recipients:
                 return {'valid': False, 'error': 'No recipients specified'}
@@ -582,7 +612,8 @@ class NotificationEngine:
         self, 
         notification: CollaborationNotification
     ) -> CollaborationNotification:
-        """Apply user preferences to notification"""        # Filter recipients based on their preferences
+        """Apply user preferences to notification"""
+        # Filter recipients based on their preferences
         filtered_recipients = []
         
         for recipient in notification.recipients:
@@ -607,7 +638,8 @@ class NotificationEngine:
         recipient: NotificationRecipient, 
         notification_type: NotificationType
     ) -> bool:
-        """Check if user allows this type of notification"""        # Check notification preferences
+        """Check if user allows this type of notification"""
+        # Check notification preferences
         preferences = recipient.notification_preferences
         type_key = f"allow_{notification_type.value}"
         
@@ -618,7 +650,8 @@ class NotificationEngine:
         self, 
         notification: CollaborationNotification
     ) -> List[NotificationDeliveryResult]:
-        """Deliver notification to all recipients via all channels"""        delivery_results = []
+        """Deliver notification to all recipients via all channels"""
+        delivery_results = []
         
         for recipient in notification.recipients:
             for channel in notification.channels:
@@ -639,7 +672,8 @@ class NotificationEngine:
         recipient: NotificationRecipient, 
         notification: CollaborationNotification
     ) -> bool:
-        """Check if it's do-not-disturb time for recipient"""        if not notification.respect_do_not_disturb or not recipient.do_not_disturb_hours:
+        """Check if it's do-not-disturb time for recipient"""
+        if not notification.respect_do_not_disturb or not recipient.do_not_disturb_hours:
             return False
         
         # Convert current time to recipient's timezone
@@ -657,7 +691,8 @@ class NotificationEngine:
         recipient: NotificationRecipient,
         channel: NotificationChannel
     ) -> NotificationDeliveryResult:
-        """Deliver notification via specific channel"""        try:
+        """Deliver notification via specific channel"""
+        try:
             # Get channel provider
             provider = self.channel_providers.get(channel)
             if not provider or not provider['configured']:
@@ -710,7 +745,8 @@ class NotificationEngine:
             )
     
     async def _schedule_notification(self, notification: CollaborationNotification):
-        """Schedule notification for later delivery"""        notification.status = NotificationStatus.SCHEDULED
+        """Schedule notification for later delivery"""
+        notification.status = NotificationStatus.SCHEDULED
         self.notification_queue.append(notification)
     
     async def _schedule_notification_for_recipient(
@@ -719,7 +755,8 @@ class NotificationEngine:
         recipient: NotificationRecipient,
         channel: NotificationChannel
     ):
-        """Schedule notification for specific recipient and channel"""        # Implementation would add to scheduled queue with specific timing
+        """Schedule notification for specific recipient and channel"""
+        # Implementation would add to scheduled queue with specific timing
         pass
     
     async def _update_analytics(
@@ -727,7 +764,8 @@ class NotificationEngine:
         notification: CollaborationNotification,
         delivery_results: List[NotificationDeliveryResult]
     ):
-        """Update analytics with notification results"""        self.analytics_data.total_sent += 1
+        """Update analytics with notification results"""
+        self.analytics_data.total_sent += 1
         
         delivered_count = sum(1 for r in delivery_results if r.status == NotificationStatus.DELIVERED)
         self.analytics_data.total_delivered += delivered_count
@@ -737,7 +775,8 @@ class NotificationEngine:
             self.analytics_data.delivery_rate = self.analytics_data.total_delivered / self.analytics_data.total_sent
     
     async def _process_scheduled_notifications(self):
-        """Background task to process scheduled notifications"""        while True:
+        """Background task to process scheduled notifications"""
+        while True:
             try:
                 current_time = datetime.utcnow()
                 

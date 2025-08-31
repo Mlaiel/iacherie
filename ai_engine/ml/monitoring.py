@@ -4,7 +4,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive monitoring capabilities for ML models including
 performance tracking, data drift detection, model degradation monitoring.
-"""import logging
+"""
+import logging
 import time
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable
@@ -19,7 +20,8 @@ import threading
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Types of metrics that can be monitored"""    ACCURACY = "accuracy"
+    """Types of metrics that can be monitored"""
+    ACCURACY = "accuracy"
     PRECISION = "precision"
     RECALL = "recall"
     F1_SCORE = "f1_score"
@@ -31,27 +33,31 @@ class MetricType(Enum):
     PREDICTION_CONFIDENCE = "prediction_confidence"
 
 class AlertSeverity(Enum):
-    """Severity levels for monitoring alerts"""    INFO = "info"
+    """Severity levels for monitoring alerts"""
+    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 class DriftType(Enum):
-    """Types of data drift"""    DATA_DRIFT = "data_drift"
+    """Types of data drift"""
+    DATA_DRIFT = "data_drift"
     CONCEPT_DRIFT = "concept_drift"
     FEATURE_DRIFT = "feature_drift"
     PREDICTION_DRIFT = "prediction_drift"
 
 @dataclass
 class MetricPoint:
-    """Single metric measurement"""    metric_type: MetricType
+    """Single metric measurement"""
+    metric_type: MetricType
     value: float
     timestamp: datetime
     metadata: Dict[str, Any]
 
 @dataclass
 class Alert:
-    """Monitoring alert"""    alert_id: str
+    """Monitoring alert"""
+    alert_id: str
     severity: AlertSeverity
     message: str
     metric_type: MetricType
@@ -62,7 +68,8 @@ class Alert:
 
 @dataclass
 class MonitoringConfig:
-    """Configuration for model monitoring"""    model_name: str
+    """Configuration for model monitoring"""
+    model_name: str
     collection_interval: int = 60  # seconds
     retention_days: int = 30
     enable_drift_detection: bool = True
@@ -70,7 +77,8 @@ class MonitoringConfig:
     alert_thresholds: Dict[MetricType, Tuple[float, float]] = None  # (min, max)
 
 class ModelMonitor:
-    """Main model monitoring system"""    
+    """Main model monitoring system"""
+    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -83,7 +91,8 @@ class ModelMonitor:
         self.logger.info("ModelMonitor initialized successfully")
     
     def _initialize_storage(self):
-        """Initialize metrics storage"""        try:
+        """Initialize metrics storage"""
+        try:
             # Initialize storage for each metric type
             for metric_type in MetricType:
                 self.metrics_storage[metric_type] = deque(maxlen=10000)  # Keep last 10k points
@@ -102,7 +111,8 @@ class ModelMonitor:
             self.logger.error(f"Storage initialization failed: {e}")
     
     def start_monitoring(self):
-        """Start continuous monitoring"""        try:
+        """Start continuous monitoring"""
+        try:
             if self.is_monitoring:
                 self.logger.warning("Monitoring is already running")
                 return
@@ -119,7 +129,8 @@ class ModelMonitor:
             self.is_monitoring = False
     
     def stop_monitoring(self):
-        """Stop continuous monitoring"""        try:
+        """Stop continuous monitoring"""
+        try:
             self.is_monitoring = False
             if self.monitor_thread:
                 self.monitor_thread.join(timeout=5.0)
@@ -130,7 +141,8 @@ class ModelMonitor:
             self.logger.error(f"Failed to stop monitoring: {e}")
     
     def _monitoring_loop(self):
-        """Main monitoring loop"""        while self.is_monitoring:
+        """Main monitoring loop"""
+        while self.is_monitoring:
             try:
                 # Collect current metrics
                 current_metrics = self._collect_metrics()
@@ -150,7 +162,8 @@ class ModelMonitor:
                 self.logger.error(f"Monitoring loop error: {e}")
     
     def _collect_metrics(self) -> Dict[MetricType, float]:
-        """Collect current model metrics"""        # Simulate metric collection - in production this would interface with actual systems
+        """Collect current model metrics"""
+        # Simulate metric collection - in production this would interface with actual systems
         metrics = {}
         
         try:
@@ -171,7 +184,8 @@ class ModelMonitor:
         return metrics
     
     def record_metric(self, metric_type: MetricType, value: float, metadata: Dict[str, Any] = None):
-        """Record a metric measurement"""        try:
+        """Record a metric measurement"""
+        try:
             if metadata is None:
                 metadata = {}
             
@@ -189,7 +203,8 @@ class ModelMonitor:
             self.logger.error(f"Failed to record metric: {e}")
     
     def _check_alert_conditions(self):
-        """Check if any alert conditions are met"""        try:
+        """Check if any alert conditions are met"""
+        try:
             for metric_type, threshold in self.config.alert_thresholds.items():
                 if metric_type not in self.metrics_storage:
                     continue
@@ -221,7 +236,8 @@ class ModelMonitor:
     
     def _trigger_alert(self, metric_type: MetricType, actual_value: float, 
                       threshold_value: float, severity: AlertSeverity, message: str):
-        """Trigger a monitoring alert"""        try:
+        """Trigger a monitoring alert"""
+        try:
             alert = Alert(
                 alert_id=f"{int(time.time())}_{metric_type.value}",
                 severity=severity,
@@ -248,10 +264,12 @@ class ModelMonitor:
             self.logger.error(f"Failed to trigger alert: {e}")
     
     def add_alert_callback(self, callback: Callable[[Alert], None]):
-        """Add callback function for alerts"""        self.alert_callbacks.append(callback)
+        """Add callback function for alerts"""
+        self.alert_callbacks.append(callback)
     
     def get_metrics(self, metric_type: MetricType, hours: int = 24) -> List[MetricPoint]:
-        """Get historical metrics for a specific type"""        try:
+        """Get historical metrics for a specific type"""
+        try:
             if metric_type not in self.metrics_storage:
                 return []
             
@@ -268,7 +286,8 @@ class ModelMonitor:
             return []
     
     def get_recent_alerts(self, hours: int = 24) -> List[Alert]:
-        """Get recent alerts"""        try:
+        """Get recent alerts"""
+        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             return [
                 alert for alert in self.alerts 
@@ -280,7 +299,8 @@ class ModelMonitor:
             return []
 
 class PerformanceTracker:
-    """Track model performance over time"""    
+    """Track model performance over time"""
+    
     def __init__(self, model_name: str):
         self.model_name = model_name
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -289,7 +309,8 @@ class PerformanceTracker:
         self.logger.info("PerformanceTracker initialized successfully")
     
     def set_baseline(self, metrics: Dict[str, float]):
-        """Set baseline performance metrics"""        try:
+        """Set baseline performance metrics"""
+        try:
             self.baseline_metrics = metrics.copy()
             self.logger.info(f"Baseline set for model {self.model_name}: {metrics}")
             
@@ -297,7 +318,8 @@ class PerformanceTracker:
             self.logger.error(f"Failed to set baseline: {e}")
     
     def record_performance(self, metrics: Dict[str, float], metadata: Dict[str, Any] = None):
-        """Record performance metrics"""        try:
+        """Record performance metrics"""
+        try:
             if metadata is None:
                 metadata = {}
             
@@ -318,7 +340,8 @@ class PerformanceTracker:
             self.logger.error(f"Failed to record performance: {e}")
     
     def _calculate_degradation(self, current_metrics: Dict[str, float]) -> Optional[Dict[str, float]]:
-        """Calculate performance degradation from baseline"""        if not self.baseline_metrics:
+        """Calculate performance degradation from baseline"""
+        if not self.baseline_metrics:
             return None
         
         degradation = {}
@@ -333,7 +356,8 @@ class PerformanceTracker:
         return degradation if degradation else None
     
     def get_performance_summary(self, hours: int = 24) -> Dict[str, Any]:
-        """Get performance summary for the specified time period"""        try:
+        """Get performance summary for the specified time period"""
+        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             cutoff_str = cutoff_time.isoformat()
             
@@ -370,7 +394,8 @@ class PerformanceTracker:
             return {"error": str(e)}
 
 class DriftDetector:
-    """Detect data and concept drift in models"""    
+    """Detect data and concept drift in models"""
+    
     def __init__(self, model_name: str, sensitivity: float = 0.1):
         self.model_name = model_name
         self.sensitivity = sensitivity
@@ -381,7 +406,8 @@ class DriftDetector:
         self.logger.info("DriftDetector initialized successfully")
     
     def set_reference_data(self, data: np.ndarray, predictions: Optional[np.ndarray] = None):
-        """Set reference data for drift detection"""        try:
+        """Set reference data for drift detection"""
+        try:
             self.reference_data = data.copy()
             if predictions is not None:
                 self.reference_predictions = predictions.copy()
@@ -392,7 +418,8 @@ class DriftDetector:
             self.logger.error(f"Failed to set reference data: {e}")
     
     def detect_data_drift(self, current_data: np.ndarray) -> Dict[str, Any]:
-        """Detect data drift using statistical methods"""        try:
+        """Detect data drift using statistical methods"""
+        try:
             if self.reference_data is None:
                 return {"error": "No reference data set"}
             
@@ -435,7 +462,8 @@ class DriftDetector:
             return {"error": str(e)}
     
     def detect_prediction_drift(self, current_predictions: np.ndarray) -> Dict[str, Any]:
-        """Detect prediction drift"""        try:
+        """Detect prediction drift"""
+        try:
             if self.reference_predictions is None:
                 return {"error": "No reference predictions set"}
             
@@ -467,7 +495,8 @@ class DriftDetector:
             return {"error": str(e)}
     
     def _calculate_drift_score(self, reference: np.ndarray, current: np.ndarray) -> float:
-        """Calculate drift score between two datasets"""        try:
+        """Calculate drift score between two datasets"""
+        try:
             # Simple statistical comparison (in production, use proper statistical tests)
             ref_mean = np.mean(reference)
             ref_std = np.std(reference)
@@ -491,7 +520,8 @@ class DriftDetector:
             return 0.0
     
     def get_drift_summary(self, hours: int = 24) -> Dict[str, Any]:
-        """Get summary of drift events"""        try:
+        """Get summary of drift events"""
+        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             cutoff_str = cutoff_time.isoformat()
             

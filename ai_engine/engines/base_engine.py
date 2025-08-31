@@ -30,7 +30,8 @@ IN IMMEDIATE LEGAL PROSECUTION UNDER INTERNATIONAL COPYRIGHT LAW.
 🔒 NO UNAUTHORIZED USE, COPYING, MODIFICATION, OR DISTRIBUTION ALLOWED.
 
 Business Logic: User Upload → AI Processing → Protection → SEO → Collaboration → Distribution
-"""import asyncio
+"""
+import asyncio
 import threading
 import logging
 import json
@@ -49,7 +50,8 @@ from pathlib import Path
 
 
 class EngineStatus(Enum):
-    """Engine operational status states"""    INITIALIZING = "initializing"
+    """Engine operational status states"""
+    INITIALIZING = "initializing"
     READY = "ready"
     PROCESSING = "processing"
     BUSY = "busy"
@@ -59,7 +61,8 @@ class EngineStatus(Enum):
 
 
 class ProcessingPriority(Enum):
-    """Content processing priority levels"""    LOW = 1
+    """Content processing priority levels"""
+    LOW = 1
     NORMAL = 2
     HIGH = 3
     CRITICAL = 4
@@ -67,7 +70,8 @@ class ProcessingPriority(Enum):
 
 
 class ContentType(Enum):
-    """Supported content types for multi-format processing"""    AUDIO = "audio"
+    """Supported content types for multi-format processing"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -85,7 +89,8 @@ class ContentType(Enum):
 
 @dataclass
 class EngineMetrics:
-    """Advanced engine performance and business metrics"""    total_processed: int = 0
+    """Advanced engine performance and business metrics"""
+    total_processed: int = 0
     successful_processed: int = 0
     failed_processed: int = 0
     average_processing_time: float = 0.0
@@ -103,7 +108,8 @@ class EngineMetrics:
 
 @dataclass
 class ProcessingResult:
-    """Comprehensive processing result with business intelligence"""    success: bool
+    """Comprehensive processing result with business intelligence"""
+    success: bool
     content_id: str
     processed_content: Any
     original_metadata: Dict[str, Any]
@@ -121,7 +127,8 @@ class ProcessingResult:
 
 
 class BaseContentEngine(ABC):
-    """    Enterprise-grade base class for all content processing engines.
+    """
+    Enterprise-grade base class for all content processing engines.
     Implements advanced features for content creators in the IA-Influencer ecosystem.
     
     Core Features:
@@ -131,7 +138,8 @@ class BaseContentEngine(ABC):
     - Revenue optimization and monetization strategies
     - Collaboration matching for creators
     - Multi-platform distribution
-    """    
+    """
+    
     def __init__(self, engine_name: str, config: Optional[Dict[str, Any]] = None):
         self.engine_name = engine_name
         self.config = config or {}
@@ -151,7 +159,8 @@ class BaseContentEngine(ABC):
         
     @abstractmethod
     async def process_content(self, content: Any, options: Optional[Dict] = None) -> ProcessingResult:
-        """        Process content with advanced AI capabilities
+        """
+        Process content with advanced AI capabilities
         
         Args:
             content: Raw content to process (audio, video, image, text)
@@ -159,19 +168,23 @@ class BaseContentEngine(ABC):
             
         Returns:
             ProcessingResult with enhanced content and metadata
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def initialize(self) -> bool:
-        """        Initialize the content engine with all dependencies
+        """
+        Initialize the content engine with all dependencies
         
         Returns:
             True if initialization successful, False otherwise
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def optimize_for_seo(self, content: Any, target_keywords: List[str]) -> Dict[str, Any]:
-        """        Optimize content for search engine visibility and discoverability
+        """
+        Optimize content for search engine visibility and discoverability
         
         Args:
             content: Content to optimize
@@ -179,43 +192,51 @@ class BaseContentEngine(ABC):
             
         Returns:
             SEO optimization results and recommendations
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """        Apply advanced content protection and digital fingerprinting
+        """
+        Apply advanced content protection and digital fingerprinting
         
         Args:
             content: Content to protect
             
         Returns:
             Protection status and security metadata
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def analyze_monetization_potential(self, content: Any) -> Dict[str, Any]:
-        """        Analyze content for revenue generation opportunities
+        """
+        Analyze content for revenue generation opportunities
         
         Args:
             content: Content to analyze
             
         Returns:
             Monetization strategies and revenue predictions
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def find_collaboration_opportunities(self, content: Any) -> List[Dict]:
-        """        Find collaboration opportunities with other creators
+        """
+        Find collaboration opportunities with other creators
         
         Args:
             content: Content to analyze for collaborations
             
         Returns:
             List of potential collaboration matches
-        """        pass
+        """
+        pass
     
     async def validate_input(self, content: Any, **kwargs) -> Tuple[bool, List[str]]:
-        """        Advanced input validation with detailed error reporting
+        """
+        Advanced input validation with detailed error reporting
         
         Args:
             content: Content to validate
@@ -223,7 +244,8 @@ class BaseContentEngine(ABC):
             
         Returns:
             Tuple of (is_valid, error_messages)
-        """        errors = []
+        """
+        errors = []
         
         if content is None:
             errors.append("Content cannot be None")
@@ -244,26 +266,30 @@ class BaseContentEngine(ABC):
         return len(errors) == 0, errors
     
     async def get_content_fingerprint(self, content: Any) -> str:
-        """        Generate unique fingerprint for content identification and protection
+        """
+        Generate unique fingerprint for content identification and protection
         
         Args:
             content: Content to fingerprint
             
         Returns:
             Unique content fingerprint
-        """        content_str = json.dumps(content, sort_keys=True, default=str) if not isinstance(content, str) else content
+        """
+        content_str = json.dumps(content, sort_keys=True, default=str) if not isinstance(content, str) else content
         fingerprint = hashlib.sha256(content_str.encode()).hexdigest()
         self._fingerprints.add(fingerprint)
         return fingerprint
     
     async def update_metrics(self, processing_time: float, success: bool, revenue: float = 0.0):
-        """        Update engine performance and business metrics
+        """
+        Update engine performance and business metrics
         
         Args:
             processing_time: Time taken for processing
             success: Whether processing was successful
             revenue: Revenue generated from processing
-        """        self.metrics.total_processed += 1
+        """
+        self.metrics.total_processed += 1
         
         if success:
             self.metrics.successful_processed += 1
@@ -282,24 +308,28 @@ class BaseContentEngine(ABC):
         self.metrics.last_updated = datetime.now()
     
     async def cache_result(self, key: str, result: Any, expiry: Optional[datetime] = None):
-        """        Cache processing results for performance optimization
+        """
+        Cache processing results for performance optimization
         
         Args:
             key: Cache key
             result: Result to cache
             expiry: Optional expiry time
-        """        expiry = expiry or datetime.now() + timedelta(hours=1)
+        """
+        expiry = expiry or datetime.now() + timedelta(hours=1)
         self._cache[key] = {'result': result, 'expiry': expiry}
     
     async def get_cached_result(self, key: str) -> Optional[Any]:
-        """        Retrieve cached result if still valid
+        """
+        Retrieve cached result if still valid
         
         Args:
             key: Cache key
             
         Returns:
             Cached result or None if not found/expired
-        """        if key in self._cache:
+        """
+        if key in self._cache:
             cache_entry = self._cache[key]
             if datetime.now() < cache_entry['expiry']:
                 return cache_entry['result']
@@ -308,16 +338,19 @@ class BaseContentEngine(ABC):
         return None
     
     async def shutdown(self):
-        """Gracefully shutdown the engine"""        self.status = EngineStatus.SHUTDOWN
+        """Gracefully shutdown the engine"""
+        self.status = EngineStatus.SHUTDOWN
         self._thread_pool.shutdown(wait=True)
         self.logger.info(f"Engine {self.engine_name} shutdown completed")
     
     def get_health_status(self) -> Dict[str, Any]:
-        """        Get comprehensive health status of the engine
+        """
+        Get comprehensive health status of the engine
         
         Returns:
             Health status information
-        """        uptime = datetime.now() - self._startup_time
+        """
+        uptime = datetime.now() - self._startup_time
         
         return {
             'engine_name': self.engine_name,

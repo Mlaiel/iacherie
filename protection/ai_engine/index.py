@@ -21,7 +21,8 @@ UNAUTHORIZED USE IS STRICTLY PROHIBITED:
 
 Legal violations will result in immediate prosecution under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union
 from datetime import datetime
@@ -56,7 +57,8 @@ from . import (
 logger = logging.getLogger(__name__)
 
 class AIEngineOrchestrator:
-    """    Master orchestrator for the entire AI engine ecosystem
+    """
+    Master orchestrator for the entire AI engine ecosystem
     
     Provides unified access and coordination across all AI capabilities:
     - Content analysis and classification
@@ -64,7 +66,8 @@ class AIEngineOrchestrator:
     - Revenue optimization and forecasting
     - Market intelligence and competitive analysis
     - Real-time analytics and business intelligence
-    """    
+    """
+    
     def __init__(self, master_config: Dict[str, Any] = None):
         self.master_config = master_config or {}
         self.ai_engine = None
@@ -73,7 +76,8 @@ class AIEngineOrchestrator:
         logger.info("AI Engine Orchestrator initializing...")
     
     async def initialize(self):
-        """Initialize the complete AI engine ecosystem"""        try:
+        """Initialize the complete AI engine ecosystem"""
+        try:
             # Create main AI engine instance
             engine_config = AIEngineConfig(**self.master_config.get('engine', {}))
             self.ai_engine = EnterpriseAIProtectionEngine(engine_config)
@@ -86,20 +90,23 @@ class AIEngineOrchestrator:
             raise
     
     async def process_content_comprehensive(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """        Comprehensive content processing through the entire AI pipeline
+        """
+        Comprehensive content processing through the entire AI pipeline
         
         Args:
             content_data: Multi-modal content data for analysis
             
         Returns:
             Complete AI analysis results across all capabilities
-        """        if not self.initialized:
+        """
+        if not self.initialized:
             await self.initialize()
         
         return await self.ai_engine.analyze_content_comprehensive(content_data)
     
     async def get_business_intelligence(self, user_id: str, time_range: tuple) -> Dict[str, Any]:
-        """        Generate comprehensive business intelligence report
+        """
+        Generate comprehensive business intelligence report
         
         Args:
             user_id: Creator/user identifier
@@ -107,7 +114,8 @@ class AIEngineOrchestrator:
             
         Returns:
             Complete business intelligence analytics
-        """        if not self.initialized:
+        """
+        if not self.initialized:
             await self.initialize()
         
         # This would integrate with the analytics dashboard
@@ -115,7 +123,8 @@ class AIEngineOrchestrator:
         return await analytics_engine.generate_comprehensive_analytics(user_id, time_range)
     
     def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status across all components"""        if not self.initialized or not self.ai_engine:
+        """Get comprehensive system status across all components"""
+        if not self.initialized or not self.ai_engine:
             return {
                 'status': 'not_initialized',
                 'message': 'AI Engine not yet initialized'
@@ -144,22 +153,26 @@ class AIEngineOrchestrator:
 _orchestrator: Optional[AIEngineOrchestrator] = None
 
 def get_orchestrator(config: Dict[str, Any] = None) -> AIEngineOrchestrator:
-    """Get global AI engine orchestrator instance"""    global _orchestrator
+    """Get global AI engine orchestrator instance"""
+    global _orchestrator
     if _orchestrator is None:
         _orchestrator = AIEngineOrchestrator(config)
     return _orchestrator
 
 # Convenience functions for direct access
 async def process_content(content_data: Dict[str, Any]) -> Dict[str, Any]:
-    """Direct content processing through the AI engine"""    orchestrator = get_orchestrator()
+    """Direct content processing through the AI engine"""
+    orchestrator = get_orchestrator()
     return await orchestrator.process_content_comprehensive(content_data)
 
 async def generate_business_report(user_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-    """Generate comprehensive business intelligence report"""    orchestrator = get_orchestrator()
+    """Generate comprehensive business intelligence report"""
+    orchestrator = get_orchestrator()
     return await orchestrator.get_business_intelligence(user_id, (start_date, end_date))
 
 def get_ai_status() -> Dict[str, Any]:
-    """Get current AI engine system status"""    orchestrator = get_orchestrator()
+    """Get current AI engine system status"""
+    orchestrator = get_orchestrator()
     return orchestrator.get_system_status()
 
 # Module metadata

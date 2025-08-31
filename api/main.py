@@ -1,7 +1,10 @@
 """Main application entrypoint (developer convenience).
 - Starts the ASGI server (uvicorn) pointing to backend.app.asgi:app.
 - Keeps all code comments and naming in English for professionalism.
-"""import os
+"""
+
+import os
+
 import uvicorn
 from api.asgi import app
 

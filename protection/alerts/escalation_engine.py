@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Ultra-advanced escalation engine with intelligent routing, predictive escalation,
 automated decision-making, and enterprise-grade workflow orchestration.
 Business Logic: Alert assessment → escalation criteria → intelligent routing → action execution → feedback loop
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
 from dataclasses import dataclass, field
@@ -33,7 +34,8 @@ from ...core.cache import CacheManager
 logger = logging.getLogger(__name__)
 
 class EscalationTrigger(str, Enum):
-    """Advanced escalation trigger types for enterprise systems"""    TIME_BASED = "time_based"
+    """Advanced escalation trigger types for enterprise systems"""
+    TIME_BASED = "time_based"
     SEVERITY_CHANGE = "severity_change"
     FAILURE_COUNT = "failure_count"
     MANUAL = "manual"
@@ -48,7 +50,8 @@ class EscalationTrigger(str, Enum):
 
 
 class EscalationOutcome(str, Enum):
-    """Comprehensive escalation outcome tracking"""    ESCALATED = "escalated"
+    """Comprehensive escalation outcome tracking"""
+    ESCALATED = "escalated"
     RESOLVED = "resolved"
     DEFERRED = "deferred"
     CANCELLED = "cancelled"
@@ -60,7 +63,8 @@ class EscalationOutcome(str, Enum):
 
 
 class EscalationUrgency(str, Enum):
-    """Escalation urgency levels for prioritization"""    IMMEDIATE = "immediate"
+    """Escalation urgency levels for prioritization"""
+    IMMEDIATE = "immediate"
     HIGH = "high"
     NORMAL = "normal"
     LOW = "low"
@@ -68,7 +72,8 @@ class EscalationUrgency(str, Enum):
 
 
 class EscalationChannel(str, Enum):
-    """Available escalation channels"""    EMAIL = "email"
+    """Available escalation channels"""
+    EMAIL = "email"
     SMS = "sms"
     SLACK = "slack"
     TEAMS = "teams"
@@ -80,7 +85,8 @@ class EscalationChannel(str, Enum):
 
 @dataclass
 class EscalationConfig:
-    """Escalation system configuration."""    max_escalation_levels: int = 5
+    """Escalation system configuration."""
+    max_escalation_levels: int = 5
     default_escalation_timeout_minutes: int = 30
     auto_escalation_enabled: bool = True
     escalation_retry_attempts: int = 3
@@ -89,7 +95,8 @@ class EscalationConfig:
 
 @dataclass
 class EscalationContext:
-    """Context for escalation decisions."""    alert: Alert
+    """Context for escalation decisions."""
+    alert: Alert
     current_level: int = 0
     trigger_reason: str = ""
     escalation_history: List[EscalationHistory] = field(default_factory=list)
@@ -97,7 +104,8 @@ class EscalationContext:
 
 @dataclass
 class EscalationResult:
-    """Result of escalation attempt."""    success: bool
+    """Result of escalation attempt."""
+    success: bool
     new_level: int
     assigned_to: Optional[str] = None
     actions_taken: List[str] = field(default_factory=list)
@@ -105,8 +113,10 @@ class EscalationResult:
     error_message: Optional[str] = None
 
 class EscalationEngine:
-    """    Enterprise-grade escalation engine with intelligent routing and automation.
-    """    
+    """
+    Enterprise-grade escalation engine with intelligent routing and automation.
+    """
+    
     def __init__(
         self,
         config: EscalationConfig,
@@ -129,7 +139,8 @@ class EscalationEngine:
         logger.info("EscalationEngine initialized with config: %s", config)
 
     async def start(self) -> None:
-        """Start the escalation engine."""        if self._is_running:
+        """Start the escalation engine."""
+        if self._is_running:
             return
             
         self._is_running = True
@@ -145,7 +156,8 @@ class EscalationEngine:
         logger.info("EscalationEngine started with %d workers", len(self._workers))
 
     async def stop(self) -> None:
-        """Stop the escalation engine."""        self._is_running = False
+        """Stop the escalation engine."""
+        self._is_running = False
         
         # Cancel workers
         for worker in self._workers:
@@ -163,7 +175,8 @@ class EscalationEngine:
         escalated_by: Optional[str] = None,
         target_level: Optional[int] = None
     ) -> EscalationResult:
-        """        Escalate an alert to the next level or specified level.
+        """
+        Escalate an alert to the next level or specified level.
         
         Args:
             alert: Alert to escalate
@@ -173,7 +186,8 @@ class EscalationEngine:
             
         Returns:
             EscalationResult with escalation outcome
-        """        try:
+        """
+        try:
             # Get current escalation context
             context = await self._get_escalation_context(alert)
             context.trigger_reason = reason
@@ -251,14 +265,16 @@ class EscalationEngine:
             )
 
     async def should_escalate(self, alert: Alert) -> bool:
-        """        Check if an alert should be automatically escalated.
+        """
+        Check if an alert should be automatically escalated.
         
         Args:
             alert: Alert to check
             
         Returns:
             True if escalation is recommended
-        """        try:
+        """
+        try:
             if not self.config.auto_escalation_enabled:
                 return False
             
@@ -288,7 +304,8 @@ class EscalationEngine:
             return False
 
     async def get_escalation_candidates(self) -> List[str]:
-        """Get list of alert IDs that are candidates for escalation."""        try:
+        """Get list of alert IDs that are candidates for escalation."""
+        try:
             candidates = []
             
             # Get alerts that haven't been updated recently
@@ -327,7 +344,8 @@ class EscalationEngine:
         severities: List[AlertSeverity],
         levels: List[Dict[str, Any]]
     ) -> bool:
-        """Create an escalation policy."""        try:
+        """Create an escalation policy."""
+        try:
             policy = EscalationPolicy(
                 id=str(uuid4()),
                 name=name,
@@ -374,7 +392,8 @@ class EscalationEngine:
         level: int,
         notes: Optional[str] = None
     ) -> bool:
-        """Assign alert to a specific user at an escalation level."""        try:
+        """Assign alert to a specific user at an escalation level."""
+        try:
             async with get_async_session() as session:
                 # Update alert assignment
                 await session.execute(
@@ -407,7 +426,8 @@ class EscalationEngine:
             return False
 
     async def get_escalation_history(self, alert_id: str) -> List[EscalationHistory]:
-        """Get escalation history for an alert."""        try:
+        """Get escalation history for an alert."""
+        try:
             async with get_async_session() as session:
                 result = await session.execute(
                     select(EscalationHistory)
@@ -425,7 +445,8 @@ class EscalationEngine:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """Get escalation metrics for analytics."""        try:
+        """Get escalation metrics for analytics."""
+        try:
             if not start_date:
                 start_date = datetime.utcnow() - timedelta(days=30)
             if not end_date:
@@ -482,7 +503,8 @@ class EscalationEngine:
             return {}
 
     async def _escalation_worker(self) -> None:
-        """Background worker for processing escalations."""        while self._is_running:
+        """Background worker for processing escalations."""
+        while self._is_running:
             try:
                 # Check for escalation candidates
                 candidates = await self.get_escalation_candidates()
@@ -514,7 +536,8 @@ class EscalationEngine:
                 await asyncio.sleep(5)
 
     async def _timeout_monitor(self) -> None:
-        """Monitor escalation timeouts."""        while self._is_running:
+        """Monitor escalation timeouts."""
+        while self._is_running:
             try:
                 current_time = datetime.utcnow()
                 
@@ -537,7 +560,8 @@ class EscalationEngine:
                 await asyncio.sleep(10)
 
     async def _pattern_detector(self) -> None:
-        """Detect escalation patterns."""        while self._is_running:
+        """Detect escalation patterns."""
+        while self._is_running:
             try:
                 # Analyze recent escalations for patterns
                 window_start = datetime.utcnow() - timedelta(
@@ -565,7 +589,8 @@ class EscalationEngine:
                 await asyncio.sleep(60)
 
     async def _cleanup_worker(self) -> None:
-        """Clean up old escalation data."""        while self._is_running:
+        """Clean up old escalation data."""
+        while self._is_running:
             try:
                 # Remove old escalation contexts
                 cutoff_time = datetime.utcnow() - timedelta(hours=24)
@@ -593,7 +618,8 @@ class EscalationEngine:
                 await asyncio.sleep(300)
 
     async def _get_escalation_context(self, alert: Alert) -> EscalationContext:
-        """Get or create escalation context for alert."""        if alert.id in self._active_escalations:
+        """Get or create escalation context for alert."""
+        if alert.id in self._active_escalations:
             return self._active_escalations[alert.id]
         
         # Create new context
@@ -610,7 +636,8 @@ class EscalationEngine:
         return context
 
     async def _get_escalation_policy(self, alert: Alert) -> Optional[EscalationPolicy]:
-        """Get applicable escalation policy for alert."""        try:
+        """Get applicable escalation policy for alert."""
+        try:
             # Check cache first
             cache_key = f"escalation_policy:{alert.type}:{alert.severity}"
             cached_policy = await self.cache_manager.get(cache_key)
@@ -653,7 +680,8 @@ class EscalationEngine:
             return None
 
     async def _get_escalation_level(self, policy_id: str, level: int) -> Optional[EscalationLevel]:
-        """Get escalation level configuration."""        try:
+        """Get escalation level configuration."""
+        try:
             async with get_async_session() as session:
                 result = await session.execute(
                     select(EscalationLevel).where(
@@ -675,7 +703,8 @@ class EscalationEngine:
         level_config: EscalationLevel,
         escalated_by: Optional[str] = None
     ) -> EscalationResult:
-        """Execute escalation actions."""        try:
+        """Execute escalation actions."""
+        try:
             actions_taken = []
             assigned_to = None
             
@@ -730,7 +759,8 @@ class EscalationEngine:
         context: EscalationContext,
         level_config: EscalationLevel
     ) -> List[str]:
-        """Execute a specific escalation action."""        actions = []
+        """Execute a specific escalation action."""
+        actions = []
         
         try:
             action_type = action_data.get("type")
@@ -767,7 +797,8 @@ class EscalationEngine:
         return actions
 
     async def _check_time_escalation(self, alert: Alert, context: EscalationContext) -> bool:
-        """Check if alert should be escalated based on time."""        if not context.escalation_history:
+        """Check if alert should be escalated based on time."""
+        if not context.escalation_history:
             # Check if alert is old enough for initial escalation
             age = datetime.utcnow() - alert.created_at
             return age > timedelta(minutes=self.config.default_escalation_timeout_minutes)
@@ -779,13 +810,15 @@ class EscalationEngine:
         return time_since_escalation > timedelta(minutes=self.config.default_escalation_timeout_minutes)
 
     async def _check_failure_escalation(self, alert: Alert, context: EscalationContext) -> bool:
-        """Check if alert should be escalated based on failure count."""        # Count recent failures (would need failure tracking)
+        """Check if alert should be escalated based on failure count."""
+        # Count recent failures (would need failure tracking)
         failure_count = 0  # Placeholder
         
         return failure_count >= 3  # Escalate after 3 failures
 
     async def _check_pattern_escalation(self, alert: Alert, context: EscalationContext) -> bool:
-        """Check if alert should be escalated based on patterns."""        # Check for recurring patterns
+        """Check if alert should be escalated based on patterns."""
+        # Check for recurring patterns
         pattern_key = f"{alert.user_id}:{alert.platform}:{alert.violation_type}"
         
         if pattern_key not in self._pattern_cache:
@@ -803,7 +836,8 @@ class EscalationEngine:
         return len(self._pattern_cache[pattern_key]) >= 5
 
     async def _check_threshold_escalation(self, alert: Alert, context: EscalationContext) -> bool:
-        """Check if alert should be escalated based on thresholds."""        # Check confidence score threshold
+        """Check if alert should be escalated based on thresholds."""
+        # Check confidence score threshold
         if alert.confidence_score and alert.confidence_score > 0.95:
             return True
         
@@ -814,7 +848,8 @@ class EscalationEngine:
         return False
 
     async def _process_escalation_request(self, escalation_data: Dict[str, Any]) -> None:
-        """Process an escalation request."""        try:
+        """Process an escalation request."""
+        try:
             alert_id = escalation_data["alert_id"]
             trigger = escalation_data["trigger"]
             reason = escalation_data["reason"]
@@ -845,7 +880,8 @@ class EscalationEngine:
             logger.error("Failed to process escalation request: %s", str(e))
 
     def _analyze_escalation_patterns(self, escalations: List[EscalationHistory]) -> List[Dict[str, Any]]:
-        """Analyze escalation patterns."""        patterns = []
+        """Analyze escalation patterns."""
+        patterns = []
         
         # Group by user/platform
         groups = {}
@@ -868,7 +904,8 @@ class EscalationEngine:
         return patterns
 
     async def _handle_pattern_detection(self, pattern: Dict[str, Any]) -> None:
-        """Handle detected escalation pattern."""        try:
+        """Handle detected escalation pattern."""
+        try:
             pattern_type = pattern["type"]
             
             if pattern_type == "repeated_escalations":
@@ -881,7 +918,8 @@ class EscalationEngine:
             logger.error("Failed to handle pattern detection: %s", str(e))
 
     async def _update_alert_escalation_status(self, alert_id: str, level: int) -> None:
-        """Update alert escalation status."""        try:
+        """Update alert escalation status."""
+        try:
             async with get_async_session() as session:
                 await session.execute(
                     update(Alert)
@@ -898,7 +936,8 @@ class EscalationEngine:
             logger.error("Failed to update alert escalation status: %s", str(e))
 
     async def _update_alert_priority(self, alert_id: str, priority: str) -> None:
-        """Update alert priority."""        try:
+        """Update alert priority."""
+        try:
             async with get_async_session() as session:
                 await session.execute(
                     update(Alert)
@@ -922,7 +961,8 @@ class EscalationEngine:
         escalated_by: Optional[str] = None,
         actions: Optional[List[str]] = None
     ) -> None:
-        """Log escalation history."""        try:
+        """Log escalation history."""
+        try:
             history = EscalationHistory(
                 id=str(uuid4()),
                 alert_id=alert_id,

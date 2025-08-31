@@ -12,7 +12,8 @@ This revolutionary content protection audit system is the EXCLUSIVE property of 
 Unauthorized use, copying, distribution, or reverse engineering is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
-"""from typing import List, Dict, Any, Optional, Union, Tuple, Set
+"""
+from typing import List, Dict, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timezone, timedelta
 from enum import Enum
 from dataclasses import dataclass, asdict
@@ -30,7 +31,8 @@ Base = declarative_base()
 
 
 class ContentType(Enum):
-    """Content types for protection auditing."""    
+    """Content types for protection auditing."""
+    
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -43,7 +45,8 @@ class ContentType(Enum):
 
 
 class ProtectionEventType(Enum):
-    """Content protection event types."""    
+    """Content protection event types."""
+    
     # Fingerprinting Events
     CONTENT_FINGERPRINTED = "content_fingerprinted"
     FINGERPRINT_UPDATED = "fingerprint_updated"
@@ -82,7 +85,8 @@ class ProtectionEventType(Enum):
 
 
 class ViolationSeverity(Enum):
-    """Content violation severity levels."""    
+    """Content violation severity levels."""
+    
     CRITICAL = "critical"      # Full unauthorized reproduction
     HIGH = "high"             # Substantial unauthorized use
     MEDIUM = "medium"         # Partial unauthorized use
@@ -91,7 +95,8 @@ class ViolationSeverity(Enum):
 
 
 class LicenseType(Enum):
-    """Content license types."""    
+    """Content license types."""
+    
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     CREATIVE_COMMONS = "creative_commons"
@@ -103,7 +108,8 @@ class LicenseType(Enum):
 
 
 class PlatformType(Enum):
-    """Platform types for content distribution."""    
+    """Platform types for content distribution."""
+    
     YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
@@ -122,7 +128,8 @@ class PlatformType(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint data structure."""    
+    """Content fingerprint data structure."""
+    
     content_id: str
     fingerprint_hash: str
     algorithm_type: str
@@ -133,7 +140,8 @@ class ContentFingerprint:
 
 @dataclass
 class ContentProtectionContext:
-    """Context information for content protection events."""    
+    """Context information for content protection events."""
+    
     content_id: str
     content_type: ContentType
     content_hash: str
@@ -149,7 +157,8 @@ class ContentProtectionContext:
 
 
 class ContentProtectionLog(Base):
-    """Content protection audit log model."""    
+    """Content protection audit log model."""
+    
     __tablename__ = "content_protection_logs"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -203,9 +212,11 @@ class ContentProtectionLog(Base):
 
 
 class FingerprintingEventLogger:
-    """Advanced fingerprinting event logging system."""    
+    """Advanced fingerprinting event logging system."""
+    
     def __init__(self, db_session=None):
-        """Initialize fingerprinting event logger."""        self.db_session = db_session
+        """Initialize fingerprinting event logger."""
+        self.db_session = db_session
         self.fingerprint_cache = {}
         self.algorithm_registry = {
             'audio': ['chromaprint', 'essentia', 'dejavu'],
@@ -221,7 +232,8 @@ class FingerprintingEventLogger:
         fingerprint_data: ContentFingerprint,
         context: ContentProtectionContext
     ) -> str:
-        """        Log content fingerprint creation event.
+        """
+        Log content fingerprint creation event.
         
         Args:
             content_id: Unique content identifier
@@ -231,7 +243,8 @@ class FingerprintingEventLogger:
             
         Returns:
             str: Log entry ID
-        """        try:
+        """
+        try:
             log_entry = ContentProtectionLog(
                 event_type=ProtectionEventType.CONTENT_FINGERPRINTED.value,
                 severity="info",
@@ -276,7 +289,8 @@ class FingerprintingEventLogger:
         algorithm_type: str,
         match_metadata: Dict[str, Any]
     ) -> str:
-        """        Log fingerprint match detection.
+        """
+        Log fingerprint match detection.
         
         Args:
             original_content_id: Original content ID
@@ -287,7 +301,8 @@ class FingerprintingEventLogger:
             
         Returns:
             str: Log entry ID
-        """        try:
+        """
+        try:
             # Determine severity based on similarity score
             if similarity_score >= 0.95:
                 severity = ViolationSeverity.CRITICAL.value
@@ -344,7 +359,8 @@ class FingerprintingEventLogger:
         error_message: str,
         error_metadata: Dict[str, Any]
     ) -> str:
-        """        Log fingerprinting failure.
+        """
+        Log fingerprinting failure.
         
         Args:
             content_id: Content identifier
@@ -355,7 +371,8 @@ class FingerprintingEventLogger:
             
         Returns:
             str: Log entry ID
-        """        try:
+        """
+        try:
             log_entry = ContentProtectionLog(
                 event_type=ProtectionEventType.FINGERPRINT_FAILED.value,
                 severity="high",
@@ -390,9 +407,11 @@ class FingerprintingEventLogger:
 
 
 class CopyrightViolationTracker:
-    """Advanced copyright violation tracking and management."""    
+    """Advanced copyright violation tracking and management."""
+    
     def __init__(self, db_session=None):
-        """Initialize copyright violation tracker."""        self.db_session = db_session
+        """Initialize copyright violation tracker."""
+        self.db_session = db_session
         self.violation_thresholds = {
             'audio': 0.85,
             'video': 0.80,
@@ -408,7 +427,8 @@ class CopyrightViolationTracker:
         violation_details: Dict[str, Any],
         evidence_data: Dict[str, Any]
     ) -> str:
-        """        Track a copyright violation incident.
+        """
+        Track a copyright violation incident.
         
         Args:
             original_content_id: Original protected content ID
@@ -418,7 +438,8 @@ class CopyrightViolationTracker:
             
         Returns:
             str: Violation tracking ID
-        """        try:
+        """
+        try:
             violation_id = str(uuid.uuid4())
             
             log_entry = ContentProtectionLog(
@@ -474,7 +495,8 @@ class CopyrightViolationTracker:
         platform: PlatformType,
         takedown_details: Dict[str, Any]
     ) -> str:
-        """        Initiate DMCA takedown process.
+        """
+        Initiate DMCA takedown process.
         
         Args:
             violation_id: Violation tracking ID
@@ -483,7 +505,8 @@ class CopyrightViolationTracker:
             
         Returns:
             str: DMCA notice ID
-        """        try:
+        """
+        try:
             dmca_notice_id = f"DMCA-{uuid.uuid4().hex[:8].upper()}"
             
             log_entry = ContentProtectionLog(
@@ -538,7 +561,8 @@ class CopyrightViolationTracker:
         response_type: str,
         response_details: Dict[str, Any]
     ) -> str:
-        """        Track platform response to DMCA takedown.
+        """
+        Track platform response to DMCA takedown.
         
         Args:
             dmca_notice_id: DMCA notice identifier
@@ -547,7 +571,8 @@ class CopyrightViolationTracker:
             
         Returns:
             str: Log entry ID
-        """        try:
+        """
+        try:
             if response_type == "complied":
                 event_type = ProtectionEventType.TAKEDOWN_REQUEST.value
                 severity = "info"
@@ -597,9 +622,11 @@ class CopyrightViolationTracker:
 
 
 class LicensingAuditor:
-    """Advanced licensing audit and management system."""    
+    """Advanced licensing audit and management system."""
+    
     def __init__(self, db_session=None):
-        """Initialize licensing auditor."""        self.db_session = db_session
+        """Initialize licensing auditor."""
+        self.db_session = db_session
         self.active_licenses = {}
         self.license_templates = {}
     
@@ -611,7 +638,8 @@ class LicensingAuditor:
         license_terms: Dict[str, Any],
         financial_terms: Dict[str, Any]
     ) -> str:
-        """        Audit license grant event.
+        """
+        Audit license grant event.
         
         Args:
             content_id: Content being licensed
@@ -622,7 +650,8 @@ class LicensingAuditor:
             
         Returns:
             str: License audit ID
-        """        try:
+        """
+        try:
             license_id = f"LIC-{uuid.uuid4().hex[:8].upper()}"
             
             log_entry = ContentProtectionLog(
@@ -680,7 +709,8 @@ class LicensingAuditor:
         violation_type: str,
         violation_details: Dict[str, Any]
     ) -> str:
-        """        Audit license violation.
+        """
+        Audit license violation.
         
         Args:
             license_id: License identifier
@@ -689,7 +719,8 @@ class LicensingAuditor:
             
         Returns:
             str: Violation audit ID
-        """        try:
+        """
+        try:
             log_entry = ContentProtectionLog(
                 event_type=ProtectionEventType.VIOLATION_DETECTED.value,
                 severity=violation_details.get('severity', 'high'),
@@ -731,9 +762,11 @@ class LicensingAuditor:
 
 
 class RoyaltyTracker:
-    """Advanced royalty tracking and revenue audit system."""    
+    """Advanced royalty tracking and revenue audit system."""
+    
     def __init__(self, db_session=None):
-        """Initialize royalty tracker."""        self.db_session = db_session
+        """Initialize royalty tracker."""
+        self.db_session = db_session
         self.royalty_calculations = {}
         self.payment_schedules = {}
     
@@ -744,7 +777,8 @@ class RoyaltyTracker:
         revenue_data: Dict[str, Any],
         distribution_details: Dict[str, Any]
     ) -> str:
-        """        Track royalty calculation event.
+        """
+        Track royalty calculation event.
         
         Args:
             content_id: Content identifier
@@ -754,7 +788,8 @@ class RoyaltyTracker:
             
         Returns:
             str: Calculation tracking ID
-        """        try:
+        """
+        try:
             calculation_id = f"ROY-{uuid.uuid4().hex[:8].upper()}"
             
             total_revenue = revenue_data.get('total_revenue', 0.0)
@@ -816,7 +851,8 @@ class RoyaltyTracker:
         payment_details: Dict[str, Any],
         payment_status: str
     ) -> str:
-        """        Track royalty payment processing.
+        """
+        Track royalty payment processing.
         
         Args:
             calculation_id: Royalty calculation ID
@@ -825,7 +861,8 @@ class RoyaltyTracker:
             
         Returns:
             str: Payment tracking ID
-        """        try:
+        """
+        try:
             payment_id = f"PAY-{uuid.uuid4().hex[:8].upper()}"
             
             log_entry = ContentProtectionLog(
@@ -876,9 +913,11 @@ class RoyaltyTracker:
 
 
 class ContentProtectionAuditor:
-    """Main content protection audit orchestrator."""    
+    """Main content protection audit orchestrator."""
+    
     def __init__(self, db_session=None, config: Dict[str, Any] = None):
-        """Initialize content protection auditor."""        self.db_session = db_session
+        """Initialize content protection auditor."""
+        self.db_session = db_session
         self.config = config or {}
         
         # Initialize sub-components
@@ -903,7 +942,8 @@ class ContentProtectionAuditor:
         content_id: str,
         audit_scope: List[str] = None
     ) -> Dict[str, Any]:
-        """        Perform comprehensive content protection audit.
+        """
+        Perform comprehensive content protection audit.
         
         Args:
             content_id: Content to audit
@@ -911,7 +951,8 @@ class ContentProtectionAuditor:
             
         Returns:
             Dict[str, Any]: Comprehensive audit results
-        """        if audit_scope is None:
+        """
+        if audit_scope is None:
             audit_scope = ['fingerprinting', 'violations', 'licensing', 'royalties']
         
         audit_results = {
@@ -959,7 +1000,8 @@ class ContentProtectionAuditor:
             raise
     
     async def _audit_fingerprinting(self, content_id: str) -> Dict[str, Any]:
-        """Audit fingerprinting status for content."""        # Implementation would query fingerprinting logs and status
+        """Audit fingerprinting status for content."""
+        # Implementation would query fingerprinting logs and status
         return {
             'fingerprints_created': 1,
             'algorithms_used': ['chromaprint', 'perceptual_hash'],
@@ -968,7 +1010,8 @@ class ContentProtectionAuditor:
         }
     
     async def _audit_violations(self, content_id: str) -> Dict[str, Any]:
-        """Audit violation detection for content."""        # Implementation would query violation tracking logs
+        """Audit violation detection for content."""
+        # Implementation would query violation tracking logs
         return {
             'violations_detected': 0,
             'dmca_notices_sent': 0,
@@ -977,7 +1020,8 @@ class ContentProtectionAuditor:
         }
     
     async def _audit_licensing(self, content_id: str) -> Dict[str, Any]:
-        """Audit licensing status for content."""        # Implementation would query licensing logs
+        """Audit licensing status for content."""
+        # Implementation would query licensing logs
         return {
             'active_licenses': 2,
             'expired_licenses': 0,
@@ -986,7 +1030,8 @@ class ContentProtectionAuditor:
         }
     
     async def _audit_royalties(self, content_id: str) -> Dict[str, Any]:
-        """Audit royalty calculations for content."""        # Implementation would query royalty tracking logs
+        """Audit royalty calculations for content."""
+        # Implementation would query royalty tracking logs
         return {
             'total_royalties_calculated': 2500.0,
             'payments_processed': 5,
@@ -995,7 +1040,8 @@ class ContentProtectionAuditor:
         }
     
     def _generate_audit_summary(self, results: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate audit summary from results."""        summary = {
+        """Generate audit summary from results."""
+        summary = {
             'overall_protection_status': 'good',
             'key_metrics': {},
             'issues_identified': 0,
@@ -1015,7 +1061,8 @@ class ContentProtectionAuditor:
         return summary
     
     def _generate_audit_recommendations(self, results: Dict[str, Any]) -> List[Dict[str, str]]:
-        """Generate audit recommendations."""        recommendations = []
+        """Generate audit recommendations."""
+        recommendations = []
         
         # Check fingerprinting status
         if 'fingerprinting' in results:
@@ -1063,7 +1110,8 @@ async def create_content_protection_auditor(
     db_session=None,
     config: Dict[str, Any] = None
 ) -> ContentProtectionAuditor:
-    """    Create and configure content protection auditor.
+    """
+    Create and configure content protection auditor.
     
     Args:
         db_session: Database session
@@ -1071,7 +1119,8 @@ async def create_content_protection_auditor(
         
     Returns:
         ContentProtectionAuditor: Configured auditor
-    """    auditor = ContentProtectionAuditor(db_session, config)
+    """
+    auditor = ContentProtectionAuditor(db_session, config)
     return auditor
 
 

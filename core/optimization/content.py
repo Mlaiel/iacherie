@@ -3,7 +3,8 @@ Copyright (C) 2025 Fahed Mlaiel <mlaiel@live.de>
 
 Advanced content optimization for distribution, SEO, metadata,
 and format optimization across multiple platforms.
-"""import asyncio
+"""
+import asyncio
 import json
 import re
 from typing import Dict, List, Optional, Any, Tuple
@@ -19,7 +20,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content type enumeration"""    AUDIO = "audio"
+    """Content type enumeration"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -29,7 +31,8 @@ class ContentType(Enum):
 
 
 class Platform(Enum):
-    """Supported platforms"""    SPOTIFY = "spotify"
+    """Supported platforms"""
+    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -41,7 +44,8 @@ class Platform(Enum):
 
 @dataclass
 class OptimizedContent:
-    """Optimized content result"""    original_title: str
+    """Optimized content result"""
+    original_title: str
     optimized_title: str
     original_description: str
     optimized_description: str
@@ -55,7 +59,8 @@ class OptimizedContent:
 
 
 class ContentDistributionOptimizer(BaseEngine):
-    """Optimize content distribution across multiple platforms"""    
+    """Optimize content distribution across multiple platforms"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.platform_service = PlatformService(config.get("platforms", {}))
@@ -67,7 +72,8 @@ class ContentDistributionOptimizer(BaseEngine):
         target_audience: Dict[str, Any],
         content_metadata: Dict[str, Any]
     ) -> Dict[Platform, Dict[str, Any]]:
-        """Optimize content distribution strategy across platforms"""        
+        """Optimize content distribution strategy across platforms"""
+        
         # Analyze target audience
         audience_insights = await self._analyze_target_audience(target_audience)
         
@@ -91,7 +97,8 @@ class ContentDistributionOptimizer(BaseEngine):
         return distribution_plan
     
     async def _analyze_target_audience(self, target_audience: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze target audience for platform optimization"""        
+        """Analyze target audience for platform optimization"""
+        
         insights = {
             "age_groups": target_audience.get("age_groups", []),
             "interests": target_audience.get("interests", []),
@@ -125,7 +132,8 @@ class ContentDistributionOptimizer(BaseEngine):
         content_type: ContentType,
         audience_insights: Dict[str, Any]
     ) -> Dict[Platform, float]:
-        """Score platforms based on content type and audience"""        
+        """Score platforms based on content type and audience"""
+        
         scores = {}
         
         # Content type weights
@@ -177,7 +185,8 @@ class ContentDistributionOptimizer(BaseEngine):
         content_metadata: Dict[str, Any],
         audience_insights: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate platform-specific optimization recommendations"""        
+        """Generate platform-specific optimization recommendations"""
+        
         optimization = {
             "title_length": self._get_optimal_title_length(platform),
             "description_length": self._get_optimal_description_length(platform),
@@ -194,7 +203,8 @@ class ContentDistributionOptimizer(BaseEngine):
         platform: Platform,
         audience_insights: Dict[str, Any]
     ) -> List[str]:
-        """Get optimal posting times for platform and audience"""        
+        """Get optimal posting times for platform and audience"""
+        
         # Default posting times by platform
         default_times = {
             Platform.INSTAGRAM: ["09:00", "11:00", "13:00", "17:00", "19:00"],
@@ -210,7 +220,8 @@ class ContentDistributionOptimizer(BaseEngine):
         return default_times.get(platform, ["12:00", "18:00"])
     
     async def _get_platform_format_requirements(self, platform: Platform) -> Dict[str, Any]:
-        """Get platform-specific format requirements"""        
+        """Get platform-specific format requirements"""
+        
         requirements = {
             Platform.INSTAGRAM: {
                 "video": {"aspect_ratio": "1:1 or 9:16", "max_duration": 60, "format": "MP4"},
@@ -233,7 +244,8 @@ class ContentDistributionOptimizer(BaseEngine):
         return requirements.get(platform, {})
     
     def _get_optimal_title_length(self, platform: Platform) -> int:
-        """Get optimal title length for platform"""        lengths = {
+        """Get optimal title length for platform"""
+        lengths = {
             Platform.YOUTUBE: 60,
             Platform.INSTAGRAM: 125,
             Platform.TIKTOK: 100,
@@ -246,7 +258,8 @@ class ContentDistributionOptimizer(BaseEngine):
         return lengths.get(platform, 100)
     
     def _get_optimal_description_length(self, platform: Platform) -> int:
-        """Get optimal description length for platform"""        lengths = {
+        """Get optimal description length for platform"""
+        lengths = {
             Platform.YOUTUBE: 5000,
             Platform.INSTAGRAM: 2200,
             Platform.TIKTOK: 300,
@@ -259,7 +272,8 @@ class ContentDistributionOptimizer(BaseEngine):
         return lengths.get(platform, 500)
     
     def _get_optimal_hashtag_count(self, platform: Platform) -> int:
-        """Get optimal hashtag count for platform"""        counts = {
+        """Get optimal hashtag count for platform"""
+        counts = {
             Platform.INSTAGRAM: 11,
             Platform.TIKTOK: 5,
             Platform.TWITTER: 2,
@@ -272,7 +286,8 @@ class ContentDistributionOptimizer(BaseEngine):
         return counts.get(platform, 3)
     
     def _get_optimal_posting_frequency(self, platform: Platform) -> str:
-        """Get optimal posting frequency for platform"""        frequencies = {
+        """Get optimal posting frequency for platform"""
+        frequencies = {
             Platform.INSTAGRAM: "1-2 times per day",
             Platform.TIKTOK: "1-4 times per day",
             Platform.TWITTER: "3-5 times per day",
@@ -285,7 +300,8 @@ class ContentDistributionOptimizer(BaseEngine):
         return frequencies.get(platform, "1 time per day")
     
     def _get_engagement_tactics(self, platform: Platform) -> List[str]:
-        """Get platform-specific engagement tactics"""        tactics = {
+        """Get platform-specific engagement tactics"""
+        tactics = {
             Platform.INSTAGRAM: [
                 "Use Stories for behind-the-scenes content",
                 "Engage with comments within first hour",
@@ -318,7 +334,8 @@ class ContentDistributionOptimizer(BaseEngine):
         return tactics.get(platform, ["Engage with your audience", "Post consistently"])
     
     def _get_content_format_specs(self, platform: Platform, content_type: ContentType) -> Dict[str, Any]:
-        """Get content format specifications"""        specs = {
+        """Get content format specifications"""
+        specs = {
             "resolution": "1080p minimum",
             "frame_rate": "30fps",
             "audio_quality": "128kbps minimum",
@@ -347,7 +364,8 @@ class ContentDistributionOptimizer(BaseEngine):
         return specs
     
     def _load_distribution_rules(self) -> Dict[str, Any]:
-        """Load distribution rules and strategies"""        return {
+        """Load distribution rules and strategies"""
+        return {
             "cross_posting_delay": 30,  # minutes between cross-posts
             "platform_priority": [
                 Platform.YOUTUBE,
@@ -366,7 +384,8 @@ class ContentDistributionOptimizer(BaseEngine):
 
 
 class SEOOptimizer(BaseEngine):
-    """Advanced SEO optimization for content"""    
+    """Advanced SEO optimization for content"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.seo_analyzer = SEOAnalyzer(config.get("seo", {}))
@@ -379,7 +398,8 @@ class SEOOptimizer(BaseEngine):
         content_type: ContentType,
         target_keywords: List[str] = None
     ) -> Dict[str, Any]:
-        """Optimize content for SEO"""        
+        """Optimize content for SEO"""
+        
         # Analyze current content
         current_analysis = await self.seo_analyzer.analyze_content(title, description)
         
@@ -419,7 +439,8 @@ class SEOOptimizer(BaseEngine):
         }
     
     async def _research_keywords(self, title: str, content_type: ContentType) -> List[str]:
-        """Research relevant keywords for content"""        
+        """Research relevant keywords for content"""
+        
         # Extract base keywords from title
         base_keywords = self._extract_keywords_from_text(title)
         
@@ -440,7 +461,8 @@ class SEOOptimizer(BaseEngine):
         return unique_keywords[:15]  # Top 15 keywords
     
     async def _optimize_title(self, title: str, keywords: List[str]) -> str:
-        """Optimize title for SEO"""        
+        """Optimize title for SEO"""
+        
         # Ensure primary keyword is in title
         primary_keyword = keywords[0] if keywords else ""
         
@@ -462,7 +484,8 @@ class SEOOptimizer(BaseEngine):
         return title
     
     async def _optimize_description(self, description: str, keywords: List[str]) -> str:
-        """Optimize description for SEO"""        
+        """Optimize description for SEO"""
+        
         if not description:
             # Generate description from keywords
             description = self._generate_description_from_keywords(keywords)
@@ -492,7 +515,8 @@ class SEOOptimizer(BaseEngine):
         description: str,
         keywords: List[str]
     ) -> Dict[str, Any]:
-        """Generate additional SEO elements"""        
+        """Generate additional SEO elements"""
+        
         return {
             "meta_title": title,
             "meta_description": description,
@@ -515,7 +539,8 @@ class SEOOptimizer(BaseEngine):
         }
     
     def _extract_keywords_from_text(self, text: str) -> List[str]:
-        """Extract keywords from text"""        
+        """Extract keywords from text"""
+        
         # Remove common stop words
         stop_words = {
             "the", "a", "an", "and", "or", "but", "in", "on", "at", "to", "for",
@@ -536,7 +561,8 @@ class SEOOptimizer(BaseEngine):
         return keywords + phrases
     
     def _get_content_type_keywords(self, content_type: ContentType) -> List[str]:
-        """Get keywords specific to content type"""        
+        """Get keywords specific to content type"""
+        
         type_keywords = {
             ContentType.AUDIO: [
                 "music", "song", "audio", "track", "sound", "melody", "rhythm",
@@ -559,7 +585,8 @@ class SEOOptimizer(BaseEngine):
         return type_keywords.get(content_type, [])
     
     def _capitalize_title(self, title: str) -> str:
-        """Properly capitalize title"""        
+        """Properly capitalize title"""
+        
         # Words that should not be capitalized (unless first/last word)
         small_words = {"a", "an", "and", "as", "at", "but", "by", "for", "if", 
                       "in", "nor", "of", "on", "or", "so", "the", "to", "up", "yet"}
@@ -576,7 +603,8 @@ class SEOOptimizer(BaseEngine):
         return " ".join(capitalized_words)
     
     def _generate_description_from_keywords(self, keywords: List[str]) -> str:
-        """Generate description from keywords"""        
+        """Generate description from keywords"""
+        
         if not keywords:
             return "Professional content creation and optimization."
         
@@ -591,7 +619,8 @@ class SEOOptimizer(BaseEngine):
         return description
     
     def _generate_schema_markup(self, title: str, description: str) -> Dict[str, Any]:
-        """Generate schema.org markup"""        
+        """Generate schema.org markup"""
+        
         return {
             "@context": "https://schema.org",
             "@type": "CreativeWork",
@@ -607,7 +636,8 @@ class SEOOptimizer(BaseEngine):
         }
     
     def _generate_alt_texts(self, keywords: List[str]) -> List[str]:
-        """Generate alt text suggestions"""        
+        """Generate alt text suggestions"""
+        
         if not keywords:
             return ["Professional content image", "Creative media content"]
         
@@ -619,7 +649,8 @@ class SEOOptimizer(BaseEngine):
         ]
     
     def _generate_heading_structure(self, title: str, keywords: List[str]) -> Dict[str, str]:
-        """Generate SEO-optimized heading structure"""        
+        """Generate SEO-optimized heading structure"""
+        
         return {
             "h1": title,
             "h2": f"About This {keywords[0] if keywords else 'Content'}",
@@ -635,7 +666,8 @@ class SEOOptimizer(BaseEngine):
         optimized_title: str,
         optimized_description: str
     ) -> float:
-        """Calculate SEO improvement score"""        
+        """Calculate SEO improvement score"""
+        
         # Analyze optimized content
         new_analysis = await self.seo_analyzer.analyze_content(optimized_title, optimized_description)
         
@@ -648,7 +680,8 @@ class SEOOptimizer(BaseEngine):
 
 
 class MetadataOptimizer(BaseEngine):
-    """Advanced metadata optimization"""    
+    """Advanced metadata optimization"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         
@@ -658,7 +691,8 @@ class MetadataOptimizer(BaseEngine):
         original_metadata: Dict[str, Any],
         target_platforms: List[Platform]
     ) -> Dict[str, Any]:
-        """Optimize metadata for multiple platforms"""        
+        """Optimize metadata for multiple platforms"""
+        
         optimized_metadata = {}
         
         for platform in target_platforms:
@@ -680,7 +714,8 @@ class MetadataOptimizer(BaseEngine):
         metadata: Dict[str, Any],
         platform: Platform
     ) -> Dict[str, Any]:
-        """Optimize metadata for specific platform"""        
+        """Optimize metadata for specific platform"""
+        
         platform_metadata = metadata.copy()
         
         # Platform-specific optimizations
@@ -715,7 +750,8 @@ class MetadataOptimizer(BaseEngine):
         content_type: ContentType,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate universal metadata applicable across platforms"""        
+        """Generate universal metadata applicable across platforms"""
+        
         return {
             "title": metadata.get("title", ""),
             "description": metadata.get("description", ""),
@@ -737,7 +773,8 @@ class MetadataOptimizer(BaseEngine):
         }
     
     def _map_to_youtube_category(self, content_type: ContentType) -> str:
-        """Map content type to YouTube category"""        
+        """Map content type to YouTube category"""
+        
         mapping = {
             ContentType.AUDIO: "Music",
             ContentType.VIDEO: "Entertainment",
@@ -749,7 +786,8 @@ class MetadataOptimizer(BaseEngine):
 
 
 class FormatOptimizer(BaseEngine):
-    """Content format optimization for different platforms"""    
+    """Content format optimization for different platforms"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         
@@ -759,7 +797,8 @@ class FormatOptimizer(BaseEngine):
         source_file_path: str,
         target_platforms: List[Platform]
     ) -> Dict[Platform, Dict[str, Any]]:
-        """Optimize content formats for target platforms"""        
+        """Optimize content formats for target platforms"""
+        
         format_recommendations = {}
         
         for platform in target_platforms:
@@ -776,7 +815,8 @@ class FormatOptimizer(BaseEngine):
         platform: Platform,
         source_file: str
     ) -> Dict[str, Any]:
-        """Get format recommendations for specific platform"""        
+        """Get format recommendations for specific platform"""
+        
         if content_type == ContentType.AUDIO:
             return await self._get_audio_format_recommendations(platform, source_file)
         elif content_type == ContentType.VIDEO:
@@ -791,7 +831,8 @@ class FormatOptimizer(BaseEngine):
         platform: Platform,
         source_file: str
     ) -> Dict[str, Any]:
-        """Get audio format recommendations"""        
+        """Get audio format recommendations"""
+        
         recommendations = {
             Platform.SPOTIFY: {
                 "format": "FLAC or WAV",
@@ -828,7 +869,8 @@ class FormatOptimizer(BaseEngine):
         platform: Platform,
         source_file: str
     ) -> Dict[str, Any]:
-        """Get video format recommendations"""        
+        """Get video format recommendations"""
+        
         recommendations = {
             Platform.YOUTUBE: {
                 "format": "MP4",
@@ -867,7 +909,8 @@ class FormatOptimizer(BaseEngine):
         platform: Platform,
         source_file: str
     ) -> Dict[str, Any]:
-        """Get image format recommendations"""        
+        """Get image format recommendations"""
+        
         recommendations = {
             Platform.INSTAGRAM: {
                 "format": "JPEG",

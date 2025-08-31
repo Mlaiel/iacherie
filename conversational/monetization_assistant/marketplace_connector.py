@@ -8,7 +8,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass, asdict
@@ -31,7 +32,8 @@ settings = get_settings()
 
 
 class MarketplaceType(Enum):
-    """Types of supported marketplaces."""    STOCK_PHOTO = "stock_photo"
+    """Types of supported marketplaces."""
+    STOCK_PHOTO = "stock_photo"
     STOCK_VIDEO = "stock_video"
     MUSIC_LICENSING = "music_licensing"
     NFT_MARKETPLACE = "nft_marketplace"
@@ -44,7 +46,8 @@ class MarketplaceType(Enum):
 
 
 class ListingStatus(Enum):
-    """Content listing status."""    DRAFT = "draft"
+    """Content listing status."""
+    DRAFT = "draft"
     PENDING_REVIEW = "pending_review"
     ACTIVE = "active"
     PAUSED = "paused"
@@ -55,7 +58,8 @@ class ListingStatus(Enum):
 
 @dataclass
 class MarketplaceAccount:
-    """Marketplace account information."""    account_id: str
+    """Marketplace account information."""
+    account_id: str
     creator_id: str
     marketplace: str
     marketplace_type: MarketplaceType
@@ -70,7 +74,8 @@ class MarketplaceAccount:
 
 @dataclass
 class ContentListing:
-    """Content listing on marketplace."""    listing_id: str
+    """Content listing on marketplace."""
+    listing_id: str
     marketplace_account_id: str
     content_id: str
     title: str
@@ -89,7 +94,8 @@ class ContentListing:
 
 @dataclass
 class MarketplaceOpportunity:
-    """Marketplace opportunity identification."""    opportunity_id: str
+    """Marketplace opportunity identification."""
+    opportunity_id: str
     marketplace: str
     content_type: str
     demand_score: float
@@ -101,19 +107,23 @@ class MarketplaceOpportunity:
 
 
 class MarketplaceConnector:
-    """    Advanced marketplace connector for multi-platform content distribution.
+    """
+    Advanced marketplace connector for multi-platform content distribution.
     
     Automates content listing, optimization, and revenue tracking across
     multiple marketplaces and licensing platforms.
-    """    
+    """
+    
     def __init__(self, config: Optional[MonetizationConfig] = None):
-        """Initialize the marketplace connector."""        self.config = config or MonetizationConfig()
+        """Initialize the marketplace connector."""
+        self.config = config or MonetizationConfig()
         self._api_manager = MarketplaceAPIManager()
         self._connected_accounts = {}
         self._sync_status = {}
         
     async def initialize(self) -> None:
-        """Initialize the marketplace connector."""        try:
+        """Initialize the marketplace connector."""
+        try:
             await self._api_manager.initialize()
             await self._load_marketplace_accounts()
             logger.info("Marketplace connector initialized successfully")
@@ -128,7 +138,8 @@ class MarketplaceConnector:
         marketplace_type: MarketplaceType,
         credentials: Dict[str, Any]
     ) -> MarketplaceAccount:
-        """        Connect creator account to marketplace.
+        """
+        Connect creator account to marketplace.
         
         Args:
             creator_id: Creator identifier
@@ -138,7 +149,8 @@ class MarketplaceConnector:
             
         Returns:
             Connected marketplace account
-        """        try:
+        """
+        try:
             # Validate credentials
             validation_result = await self._validate_marketplace_credentials(
                 marketplace, credentials
@@ -185,7 +197,8 @@ class MarketplaceConnector:
         marketplace_accounts: List[str],
         listing_config: Dict[str, Any]
     ) -> List[ContentListing]:
-        """        List content on specified marketplaces.
+        """
+        List content on specified marketplaces.
         
         Args:
             creator_id: Creator identifier
@@ -195,7 +208,8 @@ class MarketplaceConnector:
             
         Returns:
             Created content listings
-        """        try:
+        """
+        try:
             listings = []
             
             # Get content information
@@ -232,7 +246,8 @@ class MarketplaceConnector:
         creator_id: str,
         marketplace_account_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """        Optimize existing marketplace listings.
+        """
+        Optimize existing marketplace listings.
         
         Args:
             creator_id: Creator identifier
@@ -240,7 +255,8 @@ class MarketplaceConnector:
             
         Returns:
             Optimization results
-        """        try:
+        """
+        try:
             # Get listings to optimize
             if marketplace_account_id:
                 listings = await self._get_account_listings(marketplace_account_id)
@@ -288,7 +304,8 @@ class MarketplaceConnector:
         creator_id: str,
         force_sync: bool = False
     ) -> Dict[str, Any]:
-        """        Sync data from all connected marketplaces.
+        """
+        Sync data from all connected marketplaces.
         
         Args:
             creator_id: Creator identifier
@@ -296,7 +313,8 @@ class MarketplaceConnector:
             
         Returns:
             Sync results
-        """        try:
+        """
+        try:
             # Get creator's marketplace accounts
             accounts = await self._get_creator_marketplace_accounts(creator_id)
             
@@ -332,7 +350,8 @@ class MarketplaceConnector:
         creator_id: str,
         content_analysis: Dict[str, Any]
     ) -> List[MarketplaceOpportunity]:
-        """        Identify marketplace opportunities for creator content.
+        """
+        Identify marketplace opportunities for creator content.
         
         Args:
             creator_id: Creator identifier
@@ -340,7 +359,8 @@ class MarketplaceConnector:
             
         Returns:
             List of marketplace opportunities
-        """        try:
+        """
+        try:
             opportunities = []
             
             # Analyze content types
@@ -386,7 +406,8 @@ class MarketplaceConnector:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """        Track marketplace performance across all platforms.
+        """
+        Track marketplace performance across all platforms.
         
         Args:
             creator_id: Creator identifier
@@ -395,7 +416,8 @@ class MarketplaceConnector:
             
         Returns:
             Marketplace performance analysis
-        """        try:
+        """
+        try:
             # Get marketplace accounts
             accounts = await self._get_creator_marketplace_accounts(creator_id)
             
@@ -443,7 +465,8 @@ class MarketplaceConnector:
         creator_id: str,
         automation_rules: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """        Set up automated marketplace operations.
+        """
+        Set up automated marketplace operations.
         
         Args:
             creator_id: Creator identifier
@@ -451,7 +474,8 @@ class MarketplaceConnector:
             
         Returns:
             Automation setup results
-        """        try:
+        """
+        try:
             # Validate automation rules
             validated_rules = []
             for rule in automation_rules:
@@ -485,27 +509,33 @@ class MarketplaceConnector:
     # Private helper methods
     
     async def _load_marketplace_accounts(self) -> None:
-        """Load marketplace accounts from database."""        # Implementation for loading accounts
+        """Load marketplace accounts from database."""
+        # Implementation for loading accounts
         pass
     
     async def _validate_marketplace_credentials(
         self, marketplace: str, credentials: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate marketplace credentials."""        # Implementation for credential validation
+        """Validate marketplace credentials."""
+        # Implementation for credential validation
         pass
     
     async def _fetch_account_info(
         self, marketplace: str, credentials: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Fetch account information from marketplace."""        # Implementation for account info fetching
+        """Fetch account information from marketplace."""
+        # Implementation for account info fetching
         pass
     
     async def _encrypt_credentials(self, credentials: Dict[str, Any]) -> Dict[str, Any]:
-        """Encrypt marketplace credentials."""        # Implementation for credential encryption
+        """Encrypt marketplace credentials."""
+        # Implementation for credential encryption
         pass
     
     def _generate_account_id(self) -> str:
-        """Generate unique account ID."""        return f"MKT_{datetime.now().strftime('%Y%m%d')}_{hash(datetime.now().isoformat())}"
+        """Generate unique account ID."""
+        return f"MKT_{datetime.now().strftime('%Y%m%d')}_{hash(datetime.now().isoformat())}"
     
     def _generate_opportunity_id(self) -> str:
-        """Generate unique opportunity ID."""        return f"OPP_{datetime.now().strftime('%Y%m%d')}_{hash(datetime.now().isoformat())}"
+        """Generate unique opportunity ID."""
+        return f"OPP_{datetime.now().strftime('%Y%m%d')}_{hash(datetime.now().isoformat())}"

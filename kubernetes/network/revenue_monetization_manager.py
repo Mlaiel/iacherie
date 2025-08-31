@@ -11,7 +11,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
@@ -39,7 +40,8 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueSource(Enum):
-    """Sources of revenue"""    CONTENT_VIEWS = "content_views"
+    """Sources of revenue"""
+    CONTENT_VIEWS = "content_views"
     PREMIUM_SUBSCRIPTIONS = "premium_subscriptions"
     ADVERTISING = "advertising"
     CONTENT_LICENSING = "content_licensing"
@@ -51,7 +53,8 @@ class RevenueSource(Enum):
 
 
 class PaymentProvider(Enum):
-    """Supported payment providers"""    STRIPE = "stripe"
+    """Supported payment providers"""
+    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     BANK_TRANSFER = "bank_transfer"
@@ -59,7 +62,8 @@ class PaymentProvider(Enum):
 
 
 class RevenueStatus(Enum):
-    """Revenue status tracking"""    PENDING = "pending"
+    """Revenue status tracking"""
+    PENDING = "pending"
     CONFIRMED = "confirmed"
     PROCESSING = "processing"
     PAID = "paid"
@@ -69,7 +73,8 @@ class RevenueStatus(Enum):
 
 
 class PayoutFrequency(Enum):
-    """Payout frequency options"""    DAILY = "daily"
+    """Payout frequency options"""
+    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -77,7 +82,8 @@ class PayoutFrequency(Enum):
 
 @dataclass
 class RevenueRecord:
-    """Individual revenue record"""    revenue_id: str
+    """Individual revenue record"""
+    revenue_id: str
     user_id: str
     content_id: Optional[str]
     source: RevenueSource
@@ -96,7 +102,8 @@ class RevenueRecord:
 
 @dataclass
 class MonetizationMetrics:
-    """Monetization performance metrics"""    content_id: str
+    """Monetization performance metrics"""
+    content_id: str
     content_type: str
     total_revenue: Decimal
     views_count: int
@@ -109,7 +116,8 @@ class MonetizationMetrics:
 
 @dataclass
 class UserRevenueProfile:
-    """User revenue and earning profile"""    user_id: str
+    """User revenue and earning profile"""
+    user_id: str
     total_earnings: Decimal
     pending_earnings: Decimal
     lifetime_revenue: Decimal
@@ -122,9 +130,11 @@ class UserRevenueProfile:
 
 
 class NetworkRevenueMonetizationManager:
-    """    Network Revenue & Monetization Manager for IA Influencer Agent Platform
+    """
+    Network Revenue & Monetization Manager for IA Influencer Agent Platform
     Provides comprehensive revenue tracking and monetization optimization
-    """    
+    """
+    
     def __init__(
         self,
         database_url: str,
@@ -165,7 +175,8 @@ class NetworkRevenueMonetizationManager:
         self.revenue_analytics_interval = 3600  # 1 hour
     
     async def initialize(self) -> bool:
-        """Initialize revenue and monetization manager"""        try:
+        """Initialize revenue and monetization manager"""
+        try:
             logger.info("Initializing Network Revenue & Monetization Manager...")
             
             # Initialize database connection
@@ -211,7 +222,8 @@ class NetworkRevenueMonetizationManager:
         content_id: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Record revenue transaction"""        try:
+        """Record revenue transaction"""
+        try:
             # Calculate fees and net amount
             platform_fee = gross_amount * self.platform_fee_rate
             processing_fee = gross_amount * self.processing_fee_rate
@@ -260,7 +272,8 @@ class NetworkRevenueMonetizationManager:
         content_id: str,
         time_range: Optional[timedelta] = None
     ) -> MonetizationMetrics:
-        """Analyze monetization performance for specific content"""        try:
+        """Analyze monetization performance for specific content"""
+        try:
             if not time_range:
                 time_range = timedelta(days=30)
             
@@ -321,7 +334,8 @@ class NetworkRevenueMonetizationManager:
         current_price: Decimal,
         optimization_strategy: str = "revenue_maximization"
     ) -> Dict[str, Any]:
-        """Optimize content pricing using ML and market analysis"""        try:
+        """Optimize content pricing using ML and market analysis"""
+        try:
             if not self.dynamic_pricing_enabled:
                 return {'optimized_price': current_price, 'strategy': 'static_pricing'}
             
@@ -383,7 +397,8 @@ class NetworkRevenueMonetizationManager:
         payment_provider: PaymentProvider,
         force_payout: bool = False
     ) -> Dict[str, Any]:
-        """Process payout for user"""        try:
+        """Process payout for user"""
+        try:
             start_time = payout_processing_time.time()
             
             # Get user revenue profile
@@ -441,7 +456,8 @@ class NetworkRevenueMonetizationManager:
         self,
         time_range: Optional[timedelta] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive revenue dashboard data"""        try:
+        """Get comprehensive revenue dashboard data"""
+        try:
             if not time_range:
                 time_range = timedelta(days=30)
             
@@ -521,7 +537,8 @@ class NetworkRevenueMonetizationManager:
     # Private methods
     
     async def _initialize_payment_providers(self) -> None:
-        """Initialize payment provider clients"""        try:
+        """Initialize payment provider clients"""
+        try:
             # Initialize Stripe
             if 'stripe' in self.payment_providers_config:
                 stripe.api_key = self.payment_providers_config['stripe']['secret_key']
@@ -544,7 +561,8 @@ class NetworkRevenueMonetizationManager:
         metrics: MonetizationMetrics,
         market_data: Dict[str, Any]
     ) -> Decimal:
-        """Calculate revenue-maximizing price using price elasticity"""        try:
+        """Calculate revenue-maximizing price using price elasticity"""
+        try:
             # Revenue maximization formula: Price = -1 / (2 * elasticity) * marginal_cost
             # Simplified version for content pricing
             
@@ -580,7 +598,8 @@ class NetworkRevenueMonetizationManager:
         amount: Decimal,
         payout_preferences: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process payout via Stripe"""        try:
+        """Process payout via Stripe"""
+        try:
             if not self.stripe_client:
                 raise ValueError("Stripe client not initialized")
             
@@ -625,7 +644,8 @@ class NetworkRevenueMonetizationManager:
             return {'success': False, 'error': str(e)}
     
     async def _revenue_processing_loop(self) -> None:
-        """Background revenue processing loop"""        while True:
+        """Background revenue processing loop"""
+        while True:
             try:
                 if self.revenue_tracking_enabled and self.revenue_buffer:
                     # Process buffered revenue records
@@ -645,7 +665,8 @@ class NetworkRevenueMonetizationManager:
                 await asyncio.sleep(60)
     
     async def _monetization_analytics_loop(self) -> None:
-        """Background monetization analytics loop"""        while True:
+        """Background monetization analytics loop"""
+        while True:
             try:
                 # Update monetization metrics for active content
                 active_content = await self._get_active_content_list()
@@ -664,7 +685,8 @@ class NetworkRevenueMonetizationManager:
 
 
 async def main():
-    """Demo of Network Revenue & Monetization Manager"""    
+    """Demo of Network Revenue & Monetization Manager"""
+    
     # Initialize revenue manager
     revenue_manager = NetworkRevenueMonetizationManager(
         database_url="postgresql://localhost/ia_revenue",

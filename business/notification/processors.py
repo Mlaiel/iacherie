@@ -14,7 +14,8 @@ Processors:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from typing import Dict, List, Optional, Any, Tuple
+"""
+from typing import Dict, List, Optional, Any, Tuple
 import logging
 from datetime import datetime, timezone
 from abc import ABC, abstractmethod
@@ -27,9 +28,11 @@ logger = logging.getLogger(__name__)
 
 
 class BaseBusinessProcessor(ABC):
-    """Base class for business notification processors."""    
+    """Base class for business notification processors."""
+    
     def __init__(self, config: NotificationConfig):
-        """Initialize processor with configuration."""        self.config = config
+        """Initialize processor with configuration."""
+        self.config = config
         self.processor_name = self.__class__.__name__
         self.business_rules = BUSINESS_RULES
         self.processing_stats = {
@@ -43,18 +46,21 @@ class BaseBusinessProcessor(ABC):
     
     @abstractmethod
     async def process_notification(self, request: NotificationRequest) -> NotificationRequest:
-        """Process notification with business-specific logic."""        pass
+        """Process notification with business-specific logic."""
+        pass
     
     @abstractmethod
     def get_supported_types(self) -> List[str]:
-        """Get list of supported notification types."""        pass
+        """Get list of supported notification types."""
+        pass
     
     def _enhance_content_with_business_context(
         self,
         content: NotificationContent,
         business_context: Dict[str, Any]
     ) -> NotificationContent:
-        """Enhance notification content with business context."""        try:
+        """Enhance notification content with business context."""
+        try:
             # Add business-specific variables to content
             if business_context:
                 # Update message with business context variables
@@ -82,7 +88,8 @@ class BaseBusinessProcessor(ABC):
         request: NotificationRequest,
         rule_category: str
     ) -> NotificationRequest:
-        """Apply business rules to notification request."""        try:
+        """Apply business rules to notification request."""
+        try:
             rules = self.business_rules.get(rule_category, {})
             
             # Apply priority rules
@@ -112,7 +119,8 @@ class BaseBusinessProcessor(ABC):
             return request
     
     async def _update_processing_stats(self, processing_time: float, success: bool):
-        """Update processor statistics."""        self.processing_stats["total_processed"] += 1
+        """Update processor statistics."""
+        self.processing_stats["total_processed"] += 1
         
         if success:
             self.processing_stats["successful_processing"] += 1
@@ -127,13 +135,16 @@ class BaseBusinessProcessor(ABC):
         )
     
     def get_processing_stats(self) -> Dict[str, Any]:
-        """Get processor statistics."""        return self.processing_stats.copy()
+        """Get processor statistics."""
+        return self.processing_stats.copy()
 
 
 class ContentProtectionProcessor(BaseBusinessProcessor):
-    """Processor for content protection and copyright notifications."""    
+    """Processor for content protection and copyright notifications."""
+    
     def get_supported_types(self) -> List[str]:
-        """Get supported notification types."""        return [
+        """Get supported notification types."""
+        return [
             "content_protection",
             "copyright_infringement", 
             "protection_alert",
@@ -143,7 +154,8 @@ class ContentProtectionProcessor(BaseBusinessProcessor):
         ]
     
     async def process_notification(self, request: NotificationRequest) -> NotificationRequest:
-        """Process content protection notification."""        start_time = datetime.now(timezone.utc)
+        """Process content protection notification."""
+        start_time = datetime.now(timezone.utc)
         
         try:
             # Apply content protection business rules
@@ -183,7 +195,8 @@ class ContentProtectionProcessor(BaseBusinessProcessor):
             return request
     
     async def _get_protection_context(self, request: NotificationRequest) -> Dict[str, Any]:
-        """Get protection-specific context."""        business_context = request.business_context or {}
+        """Get protection-specific context."""
+        business_context = request.business_context or {}
         
         context = {
             "content_type": business_context.get("content_type", "unknown"),
@@ -204,7 +217,8 @@ class ContentProtectionProcessor(BaseBusinessProcessor):
         return context
     
     def _get_content_category_for_creator(self, user_type: str) -> str:
-        """Get content category based on creator type."""        category_map = {
+        """Get content category based on creator type."""
+        category_map = {
             "musician": "audio",
             "blogger": "text",
             "photographer": "image",
@@ -215,9 +229,11 @@ class ContentProtectionProcessor(BaseBusinessProcessor):
 
 
 class CollaborationProcessor(BaseBusinessProcessor):
-    """Processor for collaboration and partnership notifications."""    
+    """Processor for collaboration and partnership notifications."""
+    
     def get_supported_types(self) -> List[str]:
-        """Get supported notification types."""        return [
+        """Get supported notification types."""
+        return [
             "collaboration_match",
             "partnership_opportunity", 
             "collaboration_request",
@@ -228,7 +244,8 @@ class CollaborationProcessor(BaseBusinessProcessor):
         ]
     
     async def process_notification(self, request: NotificationRequest) -> NotificationRequest:
-        """Process collaboration notification."""        start_time = datetime.now(timezone.utc)
+        """Process collaboration notification."""
+        start_time = datetime.now(timezone.utc)
         
         try:
             # Apply collaboration business rules
@@ -269,7 +286,8 @@ class CollaborationProcessor(BaseBusinessProcessor):
             return request
     
     async def _get_collaboration_context(self, request: NotificationRequest) -> Dict[str, Any]:
-        """Get collaboration-specific context."""        business_context = request.business_context or {}
+        """Get collaboration-specific context."""
+        business_context = request.business_context or {}
         
         context = {
             "collaboration_type": business_context.get("collaboration_type", "content_creation"),
@@ -296,7 +314,8 @@ class CollaborationProcessor(BaseBusinessProcessor):
         return context
     
     def _get_ab_test_variant(self, request: NotificationRequest) -> str:
-        """Get A/B test variant for collaboration notification."""        # Simple hash-based variant assignment
+        """Get A/B test variant for collaboration notification."""
+        # Simple hash-based variant assignment
         import hashlib
         hash_input = f"{request.recipient.user_id}_{request.notification_type}"
         hash_value = int(hashlib.md5(hash_input.encode()).hexdigest()[:8], 16)
@@ -306,9 +325,11 @@ class CollaborationProcessor(BaseBusinessProcessor):
 
 
 class MonetizationProcessor(BaseBusinessProcessor):
-    """Processor for monetization and revenue notifications."""    
+    """Processor for monetization and revenue notifications."""
+    
     def get_supported_types(self) -> List[str]:
-        """Get supported notification types."""        return [
+        """Get supported notification types."""
+        return [
             "monetization_opportunity",
             "revenue_alert",
             "payment_notification", 
@@ -319,7 +340,8 @@ class MonetizationProcessor(BaseBusinessProcessor):
         ]
     
     async def process_notification(self, request: NotificationRequest) -> NotificationRequest:
-        """Process monetization notification."""        start_time = datetime.now(timezone.utc)
+        """Process monetization notification."""
+        start_time = datetime.now(timezone.utc)
         
         try:
             # Apply monetization business rules
@@ -364,7 +386,8 @@ class MonetizationProcessor(BaseBusinessProcessor):
             return request
     
     async def _get_monetization_context(self, request: NotificationRequest) -> Dict[str, Any]:
-        """Get monetization-specific context."""        business_context = request.business_context or {}
+        """Get monetization-specific context."""
+        business_context = request.business_context or {}
         
         context = {
             "opportunity_type": business_context.get("opportunity_type", "direct"),
@@ -391,7 +414,8 @@ class MonetizationProcessor(BaseBusinessProcessor):
         return context
     
     def _calculate_opportunity_score(self, context: Dict[str, Any]) -> float:
-        """Calculate monetization opportunity score."""        try:
+        """Calculate monetization opportunity score."""
+        try:
             score = 50.0  # Base score
             
             # Revenue potential factor (40% weight)
@@ -438,7 +462,8 @@ class MonetizationProcessor(BaseBusinessProcessor):
             return 50.0
     
     def _get_creator_monetization_profile(self, user_type: str) -> Dict[str, Any]:
-        """Get creator-specific monetization profile."""        profiles = {
+        """Get creator-specific monetization profile."""
+        profiles = {
             "musician": {
                 "primary_channels": ["streaming", "licensing", "merchandise"],
                 "avg_revenue_per_opportunity": 250.0,
@@ -474,9 +499,11 @@ class MonetizationProcessor(BaseBusinessProcessor):
 
 
 class SEOProcessor(BaseBusinessProcessor):
-    """Processor for SEO optimization and performance notifications."""    
+    """Processor for SEO optimization and performance notifications."""
+    
     def get_supported_types(self) -> List[str]:
-        """Get supported notification types."""        return [
+        """Get supported notification types."""
+        return [
             "seo_optimization",
             "performance_alert",
             "ranking_update", 
@@ -487,7 +514,8 @@ class SEOProcessor(BaseBusinessProcessor):
         ]
     
     async def process_notification(self, request: NotificationRequest) -> NotificationRequest:
-        """Process SEO notification."""        start_time = datetime.now(timezone.utc)
+        """Process SEO notification."""
+        start_time = datetime.now(timezone.utc)
         
         try:
             # Apply SEO business rules
@@ -528,7 +556,8 @@ class SEOProcessor(BaseBusinessProcessor):
             return request
     
     async def _get_seo_context(self, request: NotificationRequest) -> Dict[str, Any]:
-        """Get SEO-specific context."""        business_context = request.business_context or {}
+        """Get SEO-specific context."""
+        business_context = request.business_context or {}
         
         context = {
             "optimization_type": business_context.get("optimization_type", "general"),
@@ -557,7 +586,8 @@ class SEOProcessor(BaseBusinessProcessor):
         return context
     
     def _get_seo_recommendations(self, user_type: str) -> List[str]:
-        """Get SEO recommendations based on creator type."""        recommendations = {
+        """Get SEO recommendations based on creator type."""
+        recommendations = {
             "musician": [
                 "Optimize track titles with relevant keywords",
                 "Use music genre tags effectively",
@@ -599,9 +629,11 @@ class SEOProcessor(BaseBusinessProcessor):
 
 
 class DistributionProcessor(BaseBusinessProcessor):
-    """Processor for distribution and platform management notifications."""    
+    """Processor for distribution and platform management notifications."""
+    
     def get_supported_types(self) -> List[str]:
-        """Get supported notification types."""        return [
+        """Get supported notification types."""
+        return [
             "distribution_status",
             "platform_sync",
             "content_published",
@@ -612,7 +644,8 @@ class DistributionProcessor(BaseBusinessProcessor):
         ]
     
     async def process_notification(self, request: NotificationRequest) -> NotificationRequest:
-        """Process distribution notification."""        start_time = datetime.now(timezone.utc)
+        """Process distribution notification."""
+        start_time = datetime.now(timezone.utc)
         
         try:
             # Apply distribution business rules
@@ -654,7 +687,8 @@ class DistributionProcessor(BaseBusinessProcessor):
             return request
     
     async def _get_distribution_context(self, request: NotificationRequest) -> Dict[str, Any]:
-        """Get distribution-specific context."""        business_context = request.business_context or {}
+        """Get distribution-specific context."""
+        business_context = request.business_context or {}
         
         context = {
             "distribution_type": business_context.get("distribution_type", "content"),
@@ -683,7 +717,8 @@ class DistributionProcessor(BaseBusinessProcessor):
         return context
     
     def _get_platform_details(self, platforms: List[str]) -> Dict[str, Dict[str, Any]]:
-        """Get detailed information for each platform."""        platform_info = {
+        """Get detailed information for each platform."""
+        platform_info = {
             "youtube": {"name": "YouTube", "type": "video", "audience": "global"},
             "instagram": {"name": "Instagram", "type": "image_video", "audience": "social"},
             "tiktok": {"name": "TikTok", "type": "video", "audience": "young"},
@@ -702,7 +737,8 @@ class DistributionProcessor(BaseBusinessProcessor):
         }
     
     def _get_next_steps(self, context: Dict[str, Any]) -> List[str]:
-        """Get recommended next steps based on distribution status."""        status = context.get("status", "unknown")
+        """Get recommended next steps based on distribution status."""
+        status = context.get("status", "unknown")
         failed_platforms = context.get("failed_platforms", [])
         requires_action = context.get("requires_action", False)
         

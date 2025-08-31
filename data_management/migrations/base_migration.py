@@ -15,7 +15,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This migration framework is protected intellectual property.
 Contact mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 import traceback
 from abc import ABC, abstractmethod
@@ -40,7 +41,8 @@ logger = logging.getLogger(__name__)
 
 
 class MigrationStatus(Enum):
-    """Migration execution status tracking"""    PENDING = "pending"
+    """Migration execution status tracking"""
+    PENDING = "pending"
     RUNNING = "running" 
     COMPLETED = "completed"
     FAILED = "failed"
@@ -49,14 +51,16 @@ class MigrationStatus(Enum):
 
 
 class MigrationPriority(Enum):
-    """Migration priority levels for execution ordering"""    CRITICAL = "critical"     # Security, data integrity
+    """Migration priority levels for execution ordering"""
+    CRITICAL = "critical"     # Security, data integrity
     HIGH = "high"            # Performance, new features
     MEDIUM = "medium"        # Optimizations, enhancements
     LOW = "low"              # Cleanup, documentation
 
 
 class MigrationCategory(Enum):
-    """Migration categories for organization"""    SCHEMA = "schema"                    # Table structure changes
+    """Migration categories for organization"""
+    SCHEMA = "schema"                    # Table structure changes
     DATA = "data"                       # Data transformations
     INDEX = "index"                     # Index optimizations
     SECURITY = "security"               # Security enhancements
@@ -70,7 +74,8 @@ class MigrationCategory(Enum):
 
 @dataclass
 class MigrationDependency:
-    """Migration dependency specification"""    migration_id: str
+    """Migration dependency specification"""
+    migration_id: str
     version: str
     required: bool = True
     description: str = ""
@@ -78,7 +83,8 @@ class MigrationDependency:
 
 @dataclass
 class MigrationMetadata:
-    """Comprehensive migration metadata"""    migration_id: str
+    """Comprehensive migration metadata"""
+    migration_id: str
     version: str
     name: str
     description: str
@@ -97,7 +103,8 @@ class MigrationMetadata:
 
 @dataclass
 class MigrationResult:
-    """Migration execution result"""    migration_id: str
+    """Migration execution result"""
+    migration_id: str
     status: MigrationStatus
     started_at: datetime
     completed_at: Optional[datetime] = None
@@ -109,7 +116,8 @@ class MigrationResult:
 
 
 class BaseMigration(ABC):
-    """    Abstract base class for all database migrations
+    """
+    Abstract base class for all database migrations
     
     Provides enterprise-grade migration framework with:
     - Transaction safety and rollback capabilities
@@ -117,7 +125,8 @@ class BaseMigration(ABC):
     - Dependency resolution and conflict detection
     - Multi-tenant support with data isolation
     - Security validation and compliance checks
-    """    
+    """
+    
     def __init__(self, 
                  database_url: str,
                  metadata: MigrationMetadata,
@@ -132,35 +141,41 @@ class BaseMigration(ABC):
         
     @abstractmethod
     async def execute_up(self, session: Session) -> MigrationResult:
-        """        Execute migration forward operation
+        """
+        Execute migration forward operation
         
         Args:
             session: Database session with transaction context
             
         Returns:
             MigrationResult with execution details
-        """        pass
+        """
+        pass
         
     @abstractmethod
     async def execute_down(self, session: Session) -> MigrationResult:
-        """        Execute migration rollback operation
+        """
+        Execute migration rollback operation
         
         Args:
             session: Database session with transaction context
             
         Returns:
             MigrationResult with rollback details
-        """        pass
+        """
+        pass
         
     async def run_migration(self, direction: str = "up") -> MigrationResult:
-        """        Execute migration with full transaction safety
+        """
+        Execute migration with full transaction safety
         
         Args:
             direction: "up" for forward, "down" for rollback
             
         Returns:
             Comprehensive migration result
-        """        start_time = datetime.now(timezone.utc)
+        """
+        start_time = datetime.now(timezone.utc)
         result = MigrationResult(
             migration_id=self.metadata.migration_id,
             status=MigrationStatus.RUNNING,
@@ -215,7 +230,8 @@ class BaseMigration(ABC):
             return result
             
     async def _validate_prerequisites(self) -> None:
-        """Validate migration prerequisites"""        # Check dependencies
+        """Validate migration prerequisites"""
+        # Check dependencies
         for dependency in self.metadata.dependencies:
             if dependency.required:
                 await self._check_dependency(dependency)
@@ -227,8 +243,10 @@ class BaseMigration(ABC):
         await self._validate_data_integrity()
         
     async def _check_dependency(self, dependency: MigrationDependency) -> None:
-        """Check if migration dependency is satisfied"""        async with self._get_session() as session:
-            query = text("""                SELECT version FROM migration_history 
+        """Check if migration dependency is satisfied"""
+        async with self._get_session() as session:
+            query = text("""
+                SELECT version FROM migration_history 
                 WHERE migration_id = :migration_id 
                 AND status = 'completed'
             """)
@@ -237,7 +255,8 @@ class BaseMigration(ABC):
                 raise ValueError(f"Required dependency not met: {dependency.migration_id}")
                 
     async def _validate_table_access(self) -> None:
-        """Validate access to affected tables"""        async with self._get_session() as session:
+        """Validate access to affected tables"""
+        async with self._get_session() as session:
             for table_name in self.metadata.affects_tables:
                 try:
                     query = text(f"SELECT 1 FROM {table_name} LIMIT 1")
@@ -246,18 +265,22 @@ class BaseMigration(ABC):
                     raise ValueError(f"Cannot access table {table_name}: {e}")
                     
     async def _validate_data_integrity(self) -> None:
-        """Validate data integrity before migration"""        # Override in subclasses for specific integrity checks
+        """Validate data integrity before migration"""
+        # Override in subclasses for specific integrity checks
         pass
         
     async def _validate_post_migration(self, session: Session) -> None:
-        """Validate data integrity after migration"""        # Override in subclasses for specific post-migration validation
+        """Validate data integrity after migration"""
+        # Override in subclasses for specific post-migration validation
         pass
         
     async def _get_session(self) -> Session:
-        """Get database session"""        return self.session_maker()
+        """Get database session"""
+        return self.session_maker()
         
     async def _get_transaction_session(self) -> Session:
-        """Get database session with transaction management"""        session = self.session_maker()
+        """Get database session with transaction management"""
+        session = self.session_maker()
         try:
             session.begin()
             yield session
@@ -269,9 +292,11 @@ class BaseMigration(ABC):
             session.close()
             
     async def _record_migration_execution(self, result: MigrationResult) -> None:
-        """Record migration execution in history"""        async with self._get_session() as session:
+        """Record migration execution in history"""
+        async with self._get_session() as session:
             try:
-                insert_query = text("""                    INSERT INTO migration_history 
+                insert_query = text("""
+                    INSERT INTO migration_history 
                     (migration_id, version, name, category, status, started_at, completed_at, 
                      duration_seconds, affected_rows, error_message, tenant_id, metadata)
                     VALUES 
@@ -298,31 +323,37 @@ class BaseMigration(ABC):
                 logger.error(f"Failed to record migration history: {e}")
                 
     def calculate_checksum(self, data: str) -> str:
-        """Calculate data checksum for integrity validation"""        return hashlib.sha256(data.encode()).hexdigest()
+        """Calculate data checksum for integrity validation"""
+        return hashlib.sha256(data.encode()).hexdigest()
         
     def log_operation(self, operation: str, details: Dict[str, Any]) -> None:
-        """Log migration operation for rollback purposes"""        self.executed_operations.append({
+        """Log migration operation for rollback purposes"""
+        self.executed_operations.append({
             "operation": operation,
             "details": details,
             "timestamp": datetime.now(timezone.utc).isoformat()
         })
         
     async def create_backup_point(self, session: Session, identifier: str) -> str:
-        """Create data backup point for rollback"""        # Override in subclasses for specific backup strategies
+        """Create data backup point for rollback"""
+        # Override in subclasses for specific backup strategies
         backup_id = str(uuid.uuid4())
         self.rollback_data[identifier] = backup_id
         return backup_id
 
 
 class MigrationRegistry:
-    """    Migration registry for tracking and managing migrations
-    """    
+    """
+    Migration registry for tracking and managing migrations
+    """
+    
     def __init__(self):
         self.migrations: Dict[str, BaseMigration] = {}
         self.dependencies: Dict[str, Set[str]] = {}
         
     def register(self, migration: BaseMigration) -> None:
-        """Register migration in registry"""        migration_id = migration.metadata.migration_id
+        """Register migration in registry"""
+        migration_id = migration.metadata.migration_id
         self.migrations[migration_id] = migration
         
         # Register dependencies
@@ -330,7 +361,8 @@ class MigrationRegistry:
         self.dependencies[migration_id] = deps
         
     def get_execution_order(self) -> List[str]:
-        """Get migrations in dependency-resolved execution order"""        ordered = []
+        """Get migrations in dependency-resolved execution order"""
+        ordered = []
         resolved = set()
         
         def resolve_dependencies(migration_id: str):
@@ -350,10 +382,12 @@ class MigrationRegistry:
         return ordered
         
     def get_migration(self, migration_id: str) -> Optional[BaseMigration]:
-        """Get migration by ID"""        return self.migrations.get(migration_id)
+        """Get migration by ID"""
+        return self.migrations.get(migration_id)
         
     def list_pending_migrations(self, executed_migrations: Set[str]) -> List[str]:
-        """List migrations that haven't been executed"""        all_migrations = set(self.migrations.keys())
+        """List migrations that haven't been executed"""
+        all_migrations = set(self.migrations.keys())
         pending = all_migrations - executed_migrations
         
         # Return in execution order

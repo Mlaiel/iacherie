@@ -16,7 +16,8 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICT
 and will result in immediate legal action under German and International copyright laws.
 
 Contact: mlaiel@live.de for licensing inquiries only.
-"""import logging
+"""
+import logging
 import json
 from datetime import datetime
 from typing import Dict, Any, Optional, List
@@ -29,7 +30,8 @@ from pythonjsonlogger import jsonlogger
 
 
 class RightsType(str, Enum):
-    """Types of intellectual property rights"""    COPYRIGHT = "copyright"
+    """Types of intellectual property rights"""
+    COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PATENT = "patent"
     TRADE_SECRET = "trade_secret"
@@ -42,7 +44,8 @@ class RightsType(str, Enum):
 
 
 class LicenseType(str, Enum):
-    """Types of content licenses"""    EXCLUSIVE_LICENSE = "exclusive_license"
+    """Types of content licenses"""
+    EXCLUSIVE_LICENSE = "exclusive_license"
     NON_EXCLUSIVE_LICENSE = "non_exclusive_license"
     PERPETUAL_LICENSE = "perpetual_license"
     TERM_LIMITED_LICENSE = "term_limited_license"
@@ -57,7 +60,8 @@ class LicenseType(str, Enum):
 
 
 class EnforcementAction(str, Enum):
-    """Copyright enforcement actions"""    DMCA_TAKEDOWN = "dmca_takedown"
+    """Copyright enforcement actions"""
+    DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     LEGAL_NOTICE = "legal_notice"
     PLATFORM_REPORT = "platform_report"
@@ -70,7 +74,8 @@ class EnforcementAction(str, Enum):
 
 
 class LegalJurisdiction(str, Enum):
-    """Legal jurisdictions for rights management"""    UNITED_STATES = "united_states"
+    """Legal jurisdictions for rights management"""
+    UNITED_STATES = "united_states"
     EUROPEAN_UNION = "european_union"
     UNITED_KINGDOM = "united_kingdom"
     CANADA = "canada"
@@ -86,7 +91,8 @@ class LegalJurisdiction(str, Enum):
 
 @dataclass
 class RightsManagementLogConfig:
-    """Configuration for rights management logging"""    enable_copyright_logging: bool = True
+    """Configuration for rights management logging"""
+    enable_copyright_logging: bool = True
     enable_licensing_logging: bool = True
     enable_enforcement_logging: bool = True
     enable_legal_compliance_logging: bool = True
@@ -119,13 +125,15 @@ class RightsManagementLogConfig:
 
 
 class RightsManagementLogger:
-    """Specialized logger for rights management operations"""    
+    """Specialized logger for rights management operations"""
+    
     def __init__(self, config: RightsManagementLogConfig):
         self.config = config
         self.logger = self._setup_logger()
         
     def _setup_logger(self) -> structlog.BoundLogger:
-        """Setup structured logger for rights management"""        processors = [
+        """Setup structured logger for rights management"""
+        processors = [
             structlog.threadlocal.merge_threadlocal_context,
             structlog.processors.TimeStamper(fmt="iso"),
             structlog.processors.add_log_level,
@@ -154,13 +162,15 @@ class RightsManagementLogger:
         return structlog.get_logger("ia_influencer_rights_management")
     
     def _mark_privileged_communications(self, logger, method_name, event_dict):
-        """Mark attorney-client privileged communications"""        if any(keyword in str(event_dict).lower() for keyword in ['attorney', 'lawyer', 'legal_counsel', 'privileged']):
+        """Mark attorney-client privileged communications"""
+        if any(keyword in str(event_dict).lower() for keyword in ['attorney', 'lawyer', 'legal_counsel', 'privileged']):
             event_dict['attorney_client_privileged'] = True
             event_dict['confidentiality_required'] = True
         return event_dict
     
     def _mark_confidential_data(self, logger, method_name, event_dict):
-        """Mark confidential legal data"""        event_dict['confidentiality_level'] = 'LEGAL_CONFIDENTIAL'
+        """Mark confidential legal data"""
+        event_dict['confidentiality_level'] = 'LEGAL_CONFIDENTIAL'
         event_dict['access_restricted'] = True
         return event_dict
     
@@ -176,7 +186,8 @@ class RightsManagementLogger:
         registration_status: str = "pending",
         filing_fee: Optional[Decimal] = None
     ) -> None:
-        """Log copyright registration events"""        if not self.config.enable_copyright_logging:
+        """Log copyright registration events"""
+        if not self.config.enable_copyright_logging:
             return
             
         log_data = {
@@ -218,7 +229,8 @@ class RightsManagementLogger:
         exclusivity: bool,
         agreement_date: datetime
     ) -> None:
-        """Log licensing agreement creation and modifications"""        if not self.config.enable_licensing_logging:
+        """Log licensing agreement creation and modifications"""
+        if not self.config.enable_licensing_logging:
             return
             
         log_data = {
@@ -265,7 +277,8 @@ class RightsManagementLogger:
         evidence_collected: List[str],
         initial_assessment: Dict[str, Any]
     ) -> None:
-        """Log intellectual property rights violations"""        if not self.config.enable_violation_tracking:
+        """Log intellectual property rights violations"""
+        if not self.config.enable_violation_tracking:
             return
             
         log_data = {
@@ -306,7 +319,8 @@ class RightsManagementLogger:
         action_cost: Optional[Decimal] = None,
         attorney_involved: bool = False
     ) -> None:
-        """Log copyright enforcement actions"""        if not self.config.enable_enforcement_logging:
+        """Log copyright enforcement actions"""
+        if not self.config.enable_enforcement_logging:
             return
             
         log_data = {
@@ -346,7 +360,8 @@ class RightsManagementLogger:
         notice_sent_date: datetime,
         platform_response_deadline: datetime
     ) -> None:
-        """Log DMCA takedown notices"""        if not self.config.dmca_compliance:
+        """Log DMCA takedown notices"""
+        if not self.config.dmca_compliance:
             return
             
         log_data = {
@@ -392,7 +407,8 @@ class RightsManagementLogger:
         attorney_info: Optional[Dict[str, Any]] = None,
         filing_date: Optional[datetime] = None
     ) -> None:
-        """Log legal proceedings and litigation"""        log_data = {
+        """Log legal proceedings and litigation"""
+        log_data = {
             "event_type": "legal_proceedings",
             "case_id": case_id,
             "violation_id": violation_id,
@@ -433,7 +449,8 @@ class RightsManagementLogger:
         negotiation_deadline: Optional[datetime] = None,
         mediator_involved: bool = False
     ) -> None:
-        """Log settlement negotiations"""        if not self.config.enable_settlement_tracking:
+        """Log settlement negotiations"""
+        if not self.config.enable_settlement_tracking:
             return
             
         log_data = {
@@ -471,7 +488,8 @@ class RightsManagementLogger:
         payment_status: str,
         territory: str
     ) -> None:
-        """Log licensing revenue and royalty payments"""        if not self.config.enable_revenue_tracking:
+        """Log licensing revenue and royalty payments"""
+        if not self.config.enable_revenue_tracking:
             return
             
         log_data = {
@@ -494,7 +512,8 @@ class RightsManagementLogger:
         self.logger.info("Licensing revenue logged", **log_data)
     
     def get_rights_management_metrics(self) -> Dict[str, Any]:
-        """Get rights management system metrics"""        return {
+        """Get rights management system metrics"""
+        return {
             "copyright_logging_enabled": self.config.enable_copyright_logging,
             "licensing_logging_enabled": self.config.enable_licensing_logging,
             "enforcement_logging_enabled": self.config.enable_enforcement_logging,
@@ -511,14 +530,17 @@ class RightsManagementLogger:
 
 
 class RightsManagementLoggingConfig:
-    """Main configuration class for rights management logging"""    
+    """Main configuration class for rights management logging"""
+    
     @staticmethod
     def create_default_config() -> RightsManagementLogConfig:
-        """Create default rights management logging configuration"""        return RightsManagementLogConfig()
+        """Create default rights management logging configuration"""
+        return RightsManagementLogConfig()
     
     @staticmethod
     def create_legal_compliant_config() -> RightsManagementLogConfig:
-        """Create legally compliant rights management logging configuration"""        return RightsManagementLogConfig(
+        """Create legally compliant rights management logging configuration"""
+        return RightsManagementLogConfig(
             enable_copyright_logging=True,
             enable_licensing_logging=True,
             enable_enforcement_logging=True,

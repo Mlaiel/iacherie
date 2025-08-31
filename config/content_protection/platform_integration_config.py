@@ -15,21 +15,24 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strict
 Violators will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, Any, Optional, List, Set, Union
+"""
+from typing import Dict, Any, Optional, List, Set, Union
 from dataclasses import dataclass, field
 from enum import Enum
 import os
 
 
 class IntegrationMethod(str, Enum):
-    """Platform integration methods."""    API = "api"
+    """Platform integration methods."""
+    API = "api"
     SCRAPING = "scraping"
     HYBRID = "hybrid"
     WEBHOOK = "webhook"
 
 
 class AuthenticationMethod(str, Enum):
-    """Authentication methods for platform integration."""    OAUTH2 = "oauth2"
+    """Authentication methods for platform integration."""
+    OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT_TOKEN = "jwt_token"
     BASIC_AUTH = "basic_auth"
@@ -38,7 +41,8 @@ class AuthenticationMethod(str, Enum):
 
 
 class PlatformCapability(str, Enum):
-    """Platform capabilities and features."""    CONTENT_UPLOAD = "content_upload"
+    """Platform capabilities and features."""
+    CONTENT_UPLOAD = "content_upload"
     CONTENT_SEARCH = "content_search"
     CONTENT_DOWNLOAD = "content_download"
     METADATA_EXTRACTION = "metadata_extraction"
@@ -51,7 +55,8 @@ class PlatformCapability(str, Enum):
 
 
 class DataFormat(str, Enum):
-    """Supported data formats for platform integration."""    JSON = "json"
+    """Supported data formats for platform integration."""
+    JSON = "json"
     XML = "xml"
     RSS = "rss"
     CSV = "csv"
@@ -61,7 +66,8 @@ class DataFormat(str, Enum):
 
 @dataclass
 class RateLimitConfig:
-    """Rate limiting configuration for platform APIs."""    requests_per_second: int = 1
+    """Rate limiting configuration for platform APIs."""
+    requests_per_second: int = 1
     requests_per_minute: int = 60
     requests_per_hour: int = 1000
     requests_per_day: int = 10000
@@ -79,7 +85,8 @@ class RateLimitConfig:
 
 @dataclass
 class AuthConfig:
-    """Authentication configuration for platform integration."""    method: AuthenticationMethod
+    """Authentication configuration for platform integration."""
+    method: AuthenticationMethod
     
     # OAuth2 settings
     client_id: Optional[str] = None
@@ -106,7 +113,8 @@ class AuthConfig:
 
 @dataclass
 class ContentFilterConfig:
-    """Content filtering configuration for platform monitoring."""    # Content type filters
+    """Content filtering configuration for platform monitoring."""
+    # Content type filters
     include_audio: bool = True
     include_video: bool = True
     include_image: bool = True
@@ -135,7 +143,8 @@ class ContentFilterConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring configuration for platform surveillance."""    # Monitoring intervals
+    """Monitoring configuration for platform surveillance."""
+    # Monitoring intervals
     real_time_monitoring: bool = True
     batch_monitoring_interval_minutes: int = 60
     full_scan_interval_hours: int = 24
@@ -160,7 +169,8 @@ class MonitoringConfig:
 
 @dataclass
 class DataExtractionConfig:
-    """Data extraction configuration for platform content."""    # Metadata extraction
+    """Data extraction configuration for platform content."""
+    # Metadata extraction
     extract_basic_metadata: bool = True
     extract_engagement_metrics: bool = True
     extract_user_information: bool = True
@@ -181,7 +191,8 @@ class DataExtractionConfig:
 
 @dataclass
 class ErrorHandlingConfig:
-    """Error handling configuration for platform integration."""    # Retry settings
+    """Error handling configuration for platform integration."""
+    # Retry settings
     max_retries: int = 3
     retry_delay_seconds: int = 1
     exponential_backoff: bool = True
@@ -204,7 +215,8 @@ class ErrorHandlingConfig:
 
 @dataclass
 class PlatformConfig:
-    """Base platform configuration."""    platform_name: str
+    """Base platform configuration."""
+    platform_name: str
     platform_url: str
     integration_method: IntegrationMethod
     capabilities: Set[PlatformCapability] = field(default_factory=set)
@@ -228,12 +240,14 @@ class PlatformConfig:
     custom_settings: Dict[str, Any] = field(default_factory=dict)
     
     def is_capable(self, capability: PlatformCapability) -> bool:
-        """Check if platform supports a specific capability."""        return capability in self.capabilities
+        """Check if platform supports a specific capability."""
+        return capability in self.capabilities
 
 
 @dataclass
 class YoutubeConfig(PlatformConfig):
-    """YouTube platform integration configuration."""    
+    """YouTube platform integration configuration."""
+    
     def __post_init__(self):
         self.platform_name = "YouTube"
         self.platform_url = "https://youtube.com"
@@ -266,7 +280,8 @@ class YoutubeConfig(PlatformConfig):
 
 @dataclass
 class InstagramConfig(PlatformConfig):
-    """Instagram platform integration configuration."""    
+    """Instagram platform integration configuration."""
+    
     def __post_init__(self):
         self.platform_name = "Instagram"
         self.platform_url = "https://instagram.com"
@@ -297,7 +312,8 @@ class InstagramConfig(PlatformConfig):
 
 @dataclass
 class TiktokConfig(PlatformConfig):
-    """TikTok platform integration configuration."""    
+    """TikTok platform integration configuration."""
+    
     def __post_init__(self):
         self.platform_name = "TikTok"
         self.platform_url = "https://tiktok.com"
@@ -327,7 +343,8 @@ class TiktokConfig(PlatformConfig):
 
 @dataclass
 class TwitterConfig(PlatformConfig):
-    """Twitter/X platform integration configuration."""    
+    """Twitter/X platform integration configuration."""
+    
     def __post_init__(self):
         self.platform_name = "Twitter"
         self.platform_url = "https://twitter.com"
@@ -358,7 +375,8 @@ class TwitterConfig(PlatformConfig):
 
 @dataclass
 class SpotifyConfig(PlatformConfig):
-    """Spotify platform integration configuration."""    
+    """Spotify platform integration configuration."""
+    
     def __post_init__(self):
         self.platform_name = "Spotify"
         self.platform_url = "https://spotify.com"
@@ -387,7 +405,8 @@ class SpotifyConfig(PlatformConfig):
 
 @dataclass
 class SoundcloudConfig(PlatformConfig):
-    """SoundCloud platform integration configuration."""    
+    """SoundCloud platform integration configuration."""
+    
     def __post_init__(self):
         self.platform_name = "SoundCloud"
         self.platform_url = "https://soundcloud.com"
@@ -415,7 +434,8 @@ class SoundcloudConfig(PlatformConfig):
 
 @dataclass
 class PlatformIntegrationConfig:
-    """Main configuration for platform integrations."""    
+    """Main configuration for platform integrations."""
+    
     # Enabled platforms
     enabled_platforms: Set[str] = field(
         default_factory=lambda: {"youtube", "instagram", "tiktok", "twitter", "spotify"}
@@ -441,11 +461,13 @@ class PlatformIntegrationConfig:
     platform_status_cache_minutes: int = 15
     
     def __post_init__(self):
-        """Initialize platform configurations."""        if not self.platforms:
+        """Initialize platform configurations."""
+        if not self.platforms:
             self._initialize_default_platforms()
     
     def _initialize_default_platforms(self):
-        """Initialize default platform configurations."""        if "youtube" in self.enabled_platforms:
+        """Initialize default platform configurations."""
+        if "youtube" in self.enabled_platforms:
             self.platforms["youtube"] = YoutubeConfig()
         
         if "instagram" in self.enabled_platforms:
@@ -464,20 +486,24 @@ class PlatformIntegrationConfig:
             self.platforms["soundcloud"] = SoundcloudConfig()
     
     def get_platform_config(self, platform_name: str) -> Optional[PlatformConfig]:
-        """Get configuration for a specific platform."""        return self.platforms.get(platform_name.lower())
+        """Get configuration for a specific platform."""
+        return self.platforms.get(platform_name.lower())
     
     def is_platform_enabled(self, platform_name: str) -> bool:
-        """Check if a platform is enabled."""        return platform_name.lower() in self.enabled_platforms
+        """Check if a platform is enabled."""
+        return platform_name.lower() in self.enabled_platforms
     
     def get_platforms_with_capability(self, capability: PlatformCapability) -> List[str]:
-        """Get list of platforms that support a specific capability."""        platforms = []
+        """Get list of platforms that support a specific capability."""
+        platforms = []
         for name, config in self.platforms.items():
             if config.is_capable(capability):
                 platforms.append(name)
         return platforms
     
     def validate_config(self) -> bool:
-        """Validate the platform integration configuration."""        try:
+        """Validate the platform integration configuration."""
+        try:
             if not self.enabled_platforms:
                 raise ValueError("At least one platform must be enabled")
             
@@ -503,7 +529,8 @@ class PlatformIntegrationConfig:
     
     @classmethod
     def from_environment(cls) -> 'PlatformIntegrationConfig':
-        """Create configuration from environment variables."""        config = cls()
+        """Create configuration from environment variables."""
+        config = cls()
         
         # Load enabled platforms from environment
         enabled_platforms_env = os.getenv('ENABLED_PLATFORMS', 'youtube,instagram,tiktok')
@@ -539,7 +566,8 @@ class PlatformIntegrationConfig:
 # Factory functions for different environments
 
 def create_production_platform_config() -> PlatformIntegrationConfig:
-    """Create production platform integration configuration."""    config = PlatformIntegrationConfig()
+    """Create production platform integration configuration."""
+    config = PlatformIntegrationConfig()
     
     # Production settings
     config.enable_parallel_processing = True
@@ -558,7 +586,8 @@ def create_production_platform_config() -> PlatformIntegrationConfig:
 
 
 def create_development_platform_config() -> PlatformIntegrationConfig:
-    """Create development platform integration configuration."""    config = PlatformIntegrationConfig()
+    """Create development platform integration configuration."""
+    config = PlatformIntegrationConfig()
     
     # Development settings
     config.enabled_platforms = {"youtube"}  # Single platform for development
@@ -576,7 +605,8 @@ def create_development_platform_config() -> PlatformIntegrationConfig:
 
 
 def create_testing_platform_config() -> PlatformIntegrationConfig:
-    """Create testing platform integration configuration."""    config = PlatformIntegrationConfig()
+    """Create testing platform integration configuration."""
+    config = PlatformIntegrationConfig()
     
     # Testing settings
     config.enabled_platforms = {"youtube"}

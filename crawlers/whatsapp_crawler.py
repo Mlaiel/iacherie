@@ -11,7 +11,8 @@ Created by: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import json
 import logging
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 class WhatsAppMessageType(str, Enum):
-    """WhatsApp message types"""    TEXT = "text"
+    """WhatsApp message types"""
+    TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
@@ -49,7 +51,8 @@ class WhatsAppMessageType(str, Enum):
 
 
 class WhatsAppInteractionType(str, Enum):
-    """WhatsApp interaction types"""    MESSAGE = "message"
+    """WhatsApp interaction types"""
+    MESSAGE = "message"
     REPLY = "reply"
     REACTION = "reaction"
     FORWARD = "forward"
@@ -58,14 +61,16 @@ class WhatsAppInteractionType(str, Enum):
 
 
 class WhatsAppContactType(str, Enum):
-    """WhatsApp contact types"""    INDIVIDUAL = "individual"
+    """WhatsApp contact types"""
+    INDIVIDUAL = "individual"
     BUSINESS = "business"
     GROUP = "group"
     BROADCAST = "broadcast"
 
 
 class WhatsAppMedia(BaseModel):
-    """WhatsApp media data model"""    media_id: str
+    """WhatsApp media data model"""
+    media_id: str
     media_type: WhatsAppMessageType
     url: Optional[str] = None
     filename: Optional[str] = None
@@ -81,7 +86,8 @@ class WhatsAppMedia(BaseModel):
 
 
 class WhatsAppContact(BaseModel):
-    """WhatsApp contact data model"""    phone_number: str
+    """WhatsApp contact data model"""
+    phone_number: str
     contact_name: Optional[str] = None
     profile_name: Optional[str] = None
     profile_picture_url: Optional[str] = None
@@ -100,7 +106,8 @@ class WhatsAppContact(BaseModel):
 
 
 class WhatsAppMessage(BaseModel):
-    """WhatsApp message data model"""    message_id: str
+    """WhatsApp message data model"""
+    message_id: str
     from_contact: WhatsAppContact
     to_contact: Optional[WhatsAppContact] = None
     chat_id: str
@@ -127,7 +134,8 @@ class WhatsAppMessage(BaseModel):
 
 
 class WhatsAppGroup(BaseModel):
-    """WhatsApp group data model"""    group_id: str
+    """WhatsApp group data model"""
+    group_id: str
     group_name: str
     description: Optional[str] = None
     group_picture_url: Optional[str] = None
@@ -142,7 +150,8 @@ class WhatsAppGroup(BaseModel):
 
 
 class WhatsAppStatus(BaseModel):
-    """WhatsApp status data model"""    status_id: str
+    """WhatsApp status data model"""
+    status_id: str
     contact: WhatsAppContact
     content: Optional[str] = None
     media: Optional[WhatsAppMedia] = None
@@ -156,7 +165,8 @@ class WhatsAppStatus(BaseModel):
 
 
 class WhatsAppConversation(BaseModel):
-    """WhatsApp conversation data model"""    conversation_id: str
+    """WhatsApp conversation data model"""
+    conversation_id: str
     participant: WhatsAppContact
     last_message: Optional[WhatsAppMessage] = None
     message_count: int = 0
@@ -171,7 +181,8 @@ class WhatsAppConversation(BaseModel):
 
 
 class WhatsAppSearchResults(BaseModel):
-    """WhatsApp search results data model"""    query: str
+    """WhatsApp search results data model"""
+    query: str
     total_results: int
     contacts: List[WhatsAppContact] = Field(default_factory=list)
     messages: List[WhatsAppMessage] = Field(default_factory=list)
@@ -185,7 +196,8 @@ class WhatsAppSearchResults(BaseModel):
 
 
 class WhatsAppAnalytics(BaseModel):
-    """WhatsApp analytics data model"""    phone_number: str
+    """WhatsApp analytics data model"""
+    phone_number: str
     analysis_period: Tuple[datetime, datetime]
     total_messages_sent: int
     total_messages_received: int
@@ -208,11 +220,13 @@ class WhatsAppAnalytics(BaseModel):
 
 
 class WhatsAppCrawler(BaseCrawler):
-    """    Ultra-Advanced WhatsApp Platform Crawler
+    """
+    Ultra-Advanced WhatsApp Platform Crawler
     
     Provides comprehensive crawling and monitoring capabilities for WhatsApp Business platform,
     specializing in business messaging, status monitoring, and conversation analytics.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         
@@ -264,7 +278,8 @@ class WhatsAppCrawler(BaseCrawler):
         business_account_id: str = None,
         webhook_verify_token: str = None
     ) -> bool:
-        """        Authenticate with WhatsApp Business API
+        """
+        Authenticate with WhatsApp Business API
         
         Args:
             access_token: WhatsApp Business API access token
@@ -274,7 +289,8 @@ class WhatsAppCrawler(BaseCrawler):
             
         Returns:
             bool: Authentication success status
-        """        try:
+        """
+        try:
             self.access_token = access_token
             self.phone_number_id = phone_number_id
             self.business_account_id = business_account_id
@@ -306,7 +322,8 @@ class WhatsAppCrawler(BaseCrawler):
         contact_type: Optional[WhatsAppContactType] = None,
         limit: int = 50
     ) -> WhatsAppSearchResults:
-        """        Search WhatsApp content with advanced filtering
+        """
+        Search WhatsApp content with advanced filtering
         
         Args:
             query: Search query
@@ -316,7 +333,8 @@ class WhatsAppCrawler(BaseCrawler):
             
         Returns:
             WhatsAppSearchResults: Comprehensive search results
-        """        await self.rate_limiter.acquire()
+        """
+        await self.rate_limiter.acquire()
         
         try:
             results = WhatsAppSearchResults(
@@ -377,7 +395,8 @@ class WhatsAppCrawler(BaseCrawler):
         keywords: List[str] = None,
         check_interval: int = 60  # 1 minute for business messages
     ) -> AsyncGenerator[WhatsAppMessage, None]:
-        """        Real-time content monitoring for WhatsApp
+        """
+        Real-time content monitoring for WhatsApp
         
         Args:
             phone_numbers: Phone numbers to monitor
@@ -386,7 +405,8 @@ class WhatsAppCrawler(BaseCrawler):
             
         Yields:
             WhatsAppMessage: New messages detected
-        """        phone_numbers = phone_numbers or []
+        """
+        phone_numbers = phone_numbers or []
         keywords = keywords or []
         
         self.monitored_contacts.update(phone_numbers)
@@ -433,7 +453,8 @@ class WhatsAppCrawler(BaseCrawler):
         comparison_set: List[WhatsAppMessage],
         threshold: float = None
     ) -> List[Tuple[WhatsAppMessage, float]]:
-        """        Detect message similarity for content protection
+        """
+        Detect message similarity for content protection
         
         Args:
             target_message: Message to compare
@@ -442,7 +463,8 @@ class WhatsAppCrawler(BaseCrawler):
             
         Returns:
             List[Tuple[WhatsAppMessage, float]]: Similar messages with scores
-        """        threshold = threshold or self.similarity_threshold
+        """
+        threshold = threshold or self.similarity_threshold
         similar_messages = []
         
         try:
@@ -474,7 +496,8 @@ class WhatsAppCrawler(BaseCrawler):
         phone_number: str,
         analysis_period: Tuple[datetime, datetime]
     ) -> WhatsAppAnalytics:
-        """        Generate comprehensive analytics for WhatsApp Business account
+        """
+        Generate comprehensive analytics for WhatsApp Business account
         
         Args:
             phone_number: Phone number to analyze
@@ -482,7 +505,8 @@ class WhatsAppCrawler(BaseCrawler):
             
         Returns:
             WhatsAppAnalytics: Comprehensive analytics data
-        """        try:
+        """
+        try:
             start_time, end_time = analysis_period
             
             # Get messages in the period
@@ -624,23 +648,28 @@ class WhatsAppCrawler(BaseCrawler):
     # Helper methods
     
     async def _search_contacts(self, query: str, contact_type: Optional[WhatsAppContactType], limit: int) -> List[WhatsAppContact]:
-        """Search for WhatsApp contacts"""        # Implementation would depend on available contact API
+        """Search for WhatsApp contacts"""
+        # Implementation would depend on available contact API
         return []
 
     async def _search_messages(self, query: str, message_type: Optional[WhatsAppMessageType], limit: int) -> List[WhatsAppMessage]:
-        """Search for WhatsApp messages"""        # WhatsApp Business API doesn't provide message search, would need webhook data
+        """Search for WhatsApp messages"""
+        # WhatsApp Business API doesn't provide message search, would need webhook data
         return []
 
     async def _search_groups(self, query: str, limit: int) -> List[WhatsAppGroup]:
-        """Search for WhatsApp groups"""        # Implementation would depend on group API availability
+        """Search for WhatsApp groups"""
+        # Implementation would depend on group API availability
         return []
 
     async def _search_statuses(self, query: str, limit: int) -> List[WhatsAppStatus]:
-        """Search for WhatsApp status updates"""        # Implementation would depend on status API availability
+        """Search for WhatsApp status updates"""
+        # Implementation would depend on status API availability
         return []
 
     async def _get_recent_messages(self) -> List[WhatsAppMessage]:
-        """Get recent messages from webhook or API"""        # This would typically be populated by webhook data
+        """Get recent messages from webhook or API"""
+        # This would typically be populated by webhook data
         return []
 
     async def _send_message(
@@ -649,7 +678,8 @@ class WhatsAppCrawler(BaseCrawler):
         message_type: WhatsAppMessageType,
         content: Dict[str, Any]
     ) -> bool:
-        """Send a WhatsApp message"""        try:
+        """Send a WhatsApp message"""
+        try:
             payload = {
                 "messaging_product": "whatsapp",
                 "to": to_phone_number,
@@ -686,7 +716,8 @@ class WhatsAppCrawler(BaseCrawler):
             return False
 
     async def _mark_message_as_read(self, message_id: str) -> bool:
-        """Mark a message as read"""        try:
+        """Mark a message as read"""
+        try:
             payload = {
                 "messaging_product": "whatsapp",
                 "status": "read",
@@ -704,7 +735,8 @@ class WhatsAppCrawler(BaseCrawler):
             return False
 
     async def _process_webhook_message(self, webhook_data: Dict[str, Any]) -> Optional[WhatsAppMessage]:
-        """Process incoming webhook message"""        try:
+        """Process incoming webhook message"""
+        try:
             entry = webhook_data.get("entry", [{}])[0]
             changes = entry.get("changes", [{}])[0]
             value = changes.get("value", {})
@@ -762,7 +794,8 @@ class WhatsAppCrawler(BaseCrawler):
             return None
 
     async def _extract_message_features(self, message: WhatsAppMessage) -> Dict[str, Any]:
-        """Extract features for similarity comparison"""        features = {
+        """Extract features for similarity comparison"""
+        features = {
             "text": (message.text or "").lower(),
             "from_contact": message.from_contact.phone_number,
             "message_type": message.message_type.value,
@@ -784,7 +817,8 @@ class WhatsAppCrawler(BaseCrawler):
         features1: Dict[str, Any],
         features2: Dict[str, Any]
     ) -> float:
-        """Calculate similarity between message features"""        try:
+        """Calculate similarity between message features"""
+        try:
             scores = []
             
             # Text similarity (high weight for messages)
@@ -818,7 +852,8 @@ class WhatsAppCrawler(BaseCrawler):
         start_time: datetime,
         end_time: datetime
     ) -> List[WhatsAppMessage]:
-        """Get sent messages in specific time period"""        # Implementation would require message storage/webhook data
+        """Get sent messages in specific time period"""
+        # Implementation would require message storage/webhook data
         return []
 
     async def _get_received_messages_in_period(
@@ -827,20 +862,24 @@ class WhatsAppCrawler(BaseCrawler):
         start_time: datetime,
         end_time: datetime
     ) -> List[WhatsAppMessage]:
-        """Get received messages in specific time period"""        # Implementation would require message storage/webhook data
+        """Get received messages in specific time period"""
+        # Implementation would require message storage/webhook data
         return []
 
     async def _calculate_similarity(self, message: WhatsAppMessage) -> float:
-        """Calculate similarity score against protected content"""        # Simplified similarity calculation
+        """Calculate similarity score against protected content"""
+        # Simplified similarity calculation
         return 0.0
 
     async def _check_protection_status(self, message: WhatsAppMessage) -> str:
-        """Check protection status of message"""        if message.message_id in self.protected_content:
+        """Check protection status of message"""
+        if message.message_id in self.protected_content:
             return "protected"
         return "unprotected"
 
     async def setup_webhook(self) -> bool:
-        """Setup webhook for real-time message monitoring"""        try:
+        """Setup webhook for real-time message monitoring"""
+        try:
             if not self.webhook_url:
                 logger.warning("No webhook URL configured")
                 return False
@@ -854,7 +893,8 @@ class WhatsAppCrawler(BaseCrawler):
             return False
 
     async def close(self):
-        """Close crawler and cleanup resources"""        try:
+        """Close crawler and cleanup resources"""
+        try:
             await self.cache_manager.close()
             await super().close()
             logger.info("WhatsApp crawler closed successfully")

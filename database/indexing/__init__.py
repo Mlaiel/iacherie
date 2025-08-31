@@ -22,7 +22,8 @@ This software is proprietary and confidential.
 Unauthorized use, modification, or distribution by any individual or entity 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""from typing import Dict, List, Optional, Any, Union, Tuple
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
 from enum import Enum
@@ -44,7 +45,8 @@ from .vector_index import VectorIndexManager
 logger = logging.getLogger(__name__)
 
 class IndexType(Enum):
-    """Supported index types for platform optimization"""    BTREE = "btree"
+    """Supported index types for platform optimization"""
+    BTREE = "btree"
     HASH = "hash"
     GIN = "gin"
     GIST = "gist"
@@ -54,7 +56,8 @@ class IndexType(Enum):
     COMPOSITE = "composite"
 
 class IndexingManager:
-    """    Central indexing management system for IA-Influencer-Agent platform
+    """
+    Central indexing management system for IA-Influencer-Agent platform
     
     Provides unified interface for all indexing operations across:
     - Content fingerprinting indexes
@@ -62,9 +65,11 @@ class IndexingManager:
     - Elasticsearch full-text search indexes
     - Performance optimization indexes
     - Statistics and analytics indexes
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the indexing management system"""        self.content_manager = ContentIndexManager()
+        """Initialize the indexing management system"""
+        self.content_manager = ContentIndexManager()
         self.vector_manager = VectorIndexManager()
         self.faiss_manager = FAISSIndexManager()
         self.elasticsearch_manager = ElasticsearchIndexManager()
@@ -80,7 +85,8 @@ class IndexingManager:
         logger.info("IndexingManager initialized successfully")
     
     async def initialize(self) -> bool:
-        """Initialize all indexing subsystems"""        try:
+        """Initialize all indexing subsystems"""
+        try:
             # Initialize all managers
             await asyncio.gather(
                 self.content_manager.initialize(),
@@ -106,7 +112,8 @@ class IndexingManager:
     
     async def create_index(self, index_name: str, index_type: IndexType, 
                           config: Dict[str, Any]) -> bool:
-        """Create a new index with specified configuration"""        try:
+        """Create a new index with specified configuration"""
+        try:
             if index_type == IndexType.VECTOR:
                 return await self.vector_manager.create_index(index_name, config)
             elif index_type == IndexType.FAISS:
@@ -123,13 +130,16 @@ class IndexingManager:
             return False
     
     async def optimize_all_indexes(self) -> Dict[str, Any]:
-        """Optimize all indexes for maximum performance"""        return await self.optimization_engine.optimize_all_indexes()
+        """Optimize all indexes for maximum performance"""
+        return await self.optimization_engine.optimize_all_indexes()
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive performance metrics for all indexes"""        return await self.performance_monitor.get_comprehensive_metrics()
+        """Get comprehensive performance metrics for all indexes"""
+        return await self.performance_monitor.get_comprehensive_metrics()
     
     async def cleanup(self):
-        """Cleanup resources and connections"""        try:
+        """Cleanup resources and connections"""
+        try:
             await asyncio.gather(
                 self.content_manager.cleanup(),
                 self.vector_manager.cleanup(),

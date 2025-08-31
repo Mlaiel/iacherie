@@ -12,14 +12,16 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER BASE PROCESSOR:
 Input Data → Validation → Processing → Feature Extraction → 
 Output Generation → Quality Check → Performance Monitoring
-"""from typing import Dict, List, Optional, Any, Union
+"""
+from typing import Dict, List, Optional, Any, Union
 from abc import ABC, abstractmethod
 import logging
 import time
 from datetime import datetime, timezone
 
 class BaseProcessor(ABC):
-    """Processeur de base pour traitement de données"""    
+    """Processeur de base pour traitement de données"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -31,7 +33,8 @@ class BaseProcessor(ABC):
         }
     
     def process(self, input_data: Any) -> Dict[str, Any]:
-        """Process input data - base implementation"""        try:
+        """Process input data - base implementation"""
+        try:
             self.logger.info(f"Processing data with {self.__class__.__name__}")
             
             # Base implementation that returns processed data structure
@@ -57,7 +60,8 @@ class BaseProcessor(ABC):
             }
     
     def validate_input(self, input_data: Any) -> bool:
-        """Validate input data - base implementation"""        try:
+        """Validate input data - base implementation"""
+        try:
             self.logger.debug(f"Validating input data in {self.__class__.__name__}")
             
             # Basic validation - check if data is not None
@@ -80,7 +84,8 @@ class BaseProcessor(ABC):
             return False
     
     def process_with_stats(self, input_data: Any) -> Dict[str, Any]:
-        """Traite avec collection de statistiques"""        start_time = time.time()
+        """Traite avec collection de statistiques"""
+        start_time = time.time()
         
         try:
             # Validation
@@ -118,7 +123,8 @@ class BaseProcessor(ABC):
             }
     
     def _update_stats(self, processing_time: float, success: bool):
-        """Met à jour les statistiques de traitement"""        self.processing_stats["total_processed"] += 1
+        """Met à jour les statistiques de traitement"""
+        self.processing_stats["total_processed"] += 1
         if not success:
             self.processing_stats["total_errors"] += 1
         
@@ -132,10 +138,12 @@ class BaseProcessor(ABC):
         self.processing_stats["last_processed_at"] = datetime.now(timezone.utc).isoformat()
     
     def get_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques de traitement"""        return self.processing_stats.copy()
+        """Retourne les statistiques de traitement"""
+        return self.processing_stats.copy()
     
     def reset_stats(self):
-        """Remet à zéro les statistiques"""        self.processing_stats = {
+        """Remet à zéro les statistiques"""
+        self.processing_stats = {
             "total_processed": 0,
             "total_errors": 0,
             "average_processing_time": 0.0,
@@ -143,7 +151,8 @@ class BaseProcessor(ABC):
         }
 
 class AsyncBaseProcessor(ABC):
-    """Processeur de base asynchrone"""    
+    """Processeur de base asynchrone"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -155,7 +164,8 @@ class AsyncBaseProcessor(ABC):
         }
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Process input data asynchronously - base implementation"""        try:
+        """Process input data asynchronously - base implementation"""
+        try:
             self.logger.info(f"Async processing data with {self.__class__.__name__}")
             
             # Base async implementation that returns processed data structure
@@ -183,7 +193,8 @@ class AsyncBaseProcessor(ABC):
             }
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Validate input data asynchronously - base implementation"""        try:
+        """Validate input data asynchronously - base implementation"""
+        try:
             self.logger.debug(f"Async validating input data in {self.__class__.__name__}")
             
             # Basic async validation - check if data is not None
@@ -206,7 +217,8 @@ class AsyncBaseProcessor(ABC):
             return False
     
     async def process_with_stats(self, input_data: Any) -> Dict[str, Any]:
-        """Traite avec collection de statistiques de manière asynchrone"""        start_time = time.time()
+        """Traite avec collection de statistiques de manière asynchrone"""
+        start_time = time.time()
         
         try:
             if not await self.validate_input(input_data):
@@ -241,7 +253,8 @@ class AsyncBaseProcessor(ABC):
             }
     
     def _update_stats(self, processing_time: float, success: bool):
-        """Met à jour les statistiques de traitement"""        self.processing_stats["total_processed"] += 1
+        """Met à jour les statistiques de traitement"""
+        self.processing_stats["total_processed"] += 1
         if not success:
             self.processing_stats["total_errors"] += 1
         
@@ -254,10 +267,12 @@ class AsyncBaseProcessor(ABC):
         self.processing_stats["last_processed_at"] = datetime.now(timezone.utc).isoformat()
     
     def get_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques de traitement"""        return self.processing_stats.copy()
+        """Retourne les statistiques de traitement"""
+        return self.processing_stats.copy()
     
     def reset_stats(self):
-        """Remet à zéro les statistiques"""        self.processing_stats = {
+        """Remet à zéro les statistiques"""
+        self.processing_stats = {
             "total_processed": 0,
             "total_errors": 0,
             "average_processing_time": 0.0,

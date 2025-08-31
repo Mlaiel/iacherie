@@ -12,7 +12,8 @@ LEGAL WARNING: This software and all associated intellectual property
 belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import uuid
@@ -52,7 +53,8 @@ logger = logging.getLogger(__name__)
 
 
 class ModelType(Enum):
-    """AI model types"""    CONTENT_CLASSIFIER = "content_classifier"
+    """AI model types"""
+    CONTENT_CLASSIFIER = "content_classifier"
     FINGERPRINT_EXTRACTOR = "fingerprint_extractor"
     SIMILARITY_MATCHER = "similarity_matcher"
     LANGUAGE_DETECTOR = "language_detector"
@@ -65,7 +67,8 @@ class ModelType(Enum):
 
 
 class TrainingStatus(Enum):
-    """Training status enumeration"""    PENDING = "pending"
+    """Training status enumeration"""
+    PENDING = "pending"
     INITIALIZING = "initializing"
     TRAINING = "training"
     VALIDATING = "validating"
@@ -76,7 +79,8 @@ class TrainingStatus(Enum):
 
 
 class DatasetFormat(Enum):
-    """Dataset format types"""    CSV = "csv"
+    """Dataset format types"""
+    CSV = "csv"
     JSON = "json"
     JSONL = "jsonl"
     PARQUET = "parquet"
@@ -88,7 +92,8 @@ class DatasetFormat(Enum):
 
 
 class TrainingStrategy(Enum):
-    """Training strategy types"""    FULL_FINE_TUNING = "full_fine_tuning"
+    """Training strategy types"""
+    FULL_FINE_TUNING = "full_fine_tuning"
     LORA = "lora"
     ADALORA = "adalora"
     PROMPT_TUNING = "prompt_tuning"
@@ -99,7 +104,8 @@ class TrainingStrategy(Enum):
 
 @dataclass
 class DatasetMetadata:
-    """Dataset metadata information"""    dataset_id: str
+    """Dataset metadata information"""
+    dataset_id: str
     name: str
     description: str
     format: DatasetFormat
@@ -120,7 +126,8 @@ class DatasetMetadata:
 
 @dataclass
 class TrainingConfiguration:
-    """Training configuration parameters"""    model_type: ModelType
+    """Training configuration parameters"""
+    model_type: ModelType
     base_model: str
     training_strategy: TrainingStrategy
     hyperparameters: Dict[str, Any] = field(default_factory=dict)
@@ -147,7 +154,8 @@ class TrainingConfiguration:
 
 @dataclass
 class TrainingMetrics:
-    """Training metrics and progress tracking"""    training_id: str
+    """Training metrics and progress tracking"""
+    training_id: str
     epoch: int
     step: int
     train_loss: float
@@ -163,7 +171,8 @@ class TrainingMetrics:
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_wandb_dict(self) -> Dict[str, Any]:
-        """Convert metrics to WandB logging format"""        return {
+        """Convert metrics to WandB logging format"""
+        return {
             'epoch': self.epoch,
             'step': self.step,
             'train_loss': self.train_loss,
@@ -181,7 +190,8 @@ class TrainingMetrics:
 
 @dataclass
 class ModelVersion:
-    """Model version information"""    model_id: str
+    """Model version information"""
+    model_id: str
     version: str
     model_type: ModelType
     base_model: str
@@ -201,7 +211,8 @@ class ModelVersion:
 
 
 class CustomDataset(Dataset):
-    """Custom PyTorch dataset for flexible data loading"""    
+    """Custom PyTorch dataset for flexible data loading"""
+    
     def __init__(
         self,
         data: Union[pd.DataFrame, List[Dict[str, Any]]],
@@ -261,7 +272,8 @@ class CustomDataset(Dataset):
 
 
 class DatasetManager:
-    """Advanced dataset management and preprocessing"""    
+    """Advanced dataset management and preprocessing"""
+    
     def __init__(self, storage_path: str = "/tmp/ai_training_datasets"):
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(exist_ok=True, parents=True)
@@ -276,7 +288,8 @@ class DatasetManager:
         format: DatasetFormat,
         tags: Optional[List[str]] = None
     ) -> DatasetMetadata:
-        """Register a new dataset"""        try:
+        """Register a new dataset"""
+        try:
             dataset_id = f"dataset_{uuid.uuid4().hex[:12]}"
             
             # Process data based on source type
@@ -325,7 +338,8 @@ class DatasetManager:
             raise
     
     async def _load_dataset_file(self, file_path: Path, format: DatasetFormat) -> pd.DataFrame:
-        """Load dataset from file"""        try:
+        """Load dataset from file"""
+        try:
             if format == DatasetFormat.CSV:
                 return pd.read_csv(file_path)
             elif format == DatasetFormat.JSON:
@@ -341,7 +355,8 @@ class DatasetManager:
             raise
     
     async def _analyze_dataset(self, data: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze dataset for quality and characteristics"""        try:
+        """Analyze dataset for quality and characteristics"""
+        try:
             analysis = {
                 'label_distribution': {},
                 'feature_types': {},
@@ -370,7 +385,8 @@ class DatasetManager:
             return {'label_distribution': {}, 'feature_types': {}, 'quality_score': 0.0}
     
     async def get_dataset(self, dataset_id: str) -> Optional[Tuple[pd.DataFrame, DatasetMetadata]]:
-        """Get dataset by ID"""        try:
+        """Get dataset by ID"""
+        try:
             if dataset_id not in self._datasets:
                 return None
             
@@ -398,7 +414,8 @@ class DatasetManager:
         dataset_id: str,
         preprocessing_config: Dict[str, Any]
     ) -> str:
-        """Apply preprocessing to dataset and create new version"""        try:
+        """Apply preprocessing to dataset and create new version"""
+        try:
             dataset_result = await self.get_dataset(dataset_id)
             if not dataset_result:
                 raise ValueError(f"Dataset not found: {dataset_id}")
@@ -465,7 +482,8 @@ class DatasetManager:
         test_ratio: float = 0.1,
         stratify_column: Optional[str] = None
     ) -> Dict[str, str]:
-        """Split dataset into train/validation/test sets"""        try:
+        """Split dataset into train/validation/test sets"""
+        try:
             dataset_result = await self.get_dataset(dataset_id)
             if not dataset_result:
                 raise ValueError(f"Dataset not found: {dataset_id}")
@@ -551,7 +569,8 @@ class DatasetManager:
 
 
 class ModelTrainingPipeline:
-    """Advanced model training pipeline with distributed support"""    
+    """Advanced model training pipeline with distributed support"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self._accelerator = None
@@ -560,7 +579,8 @@ class ModelTrainingPipeline:
         self._training_jobs: Dict[str, Dict[str, Any]] = {}
         
     def _setup_accelerator(self):
-        """Setup Accelerate for distributed training"""        try:
+        """Setup Accelerate for distributed training"""
+        try:
             self._accelerator = Accelerator(
                 mixed_precision='fp16' if self.config.get('mixed_precision', True) else 'no',
                 gradient_accumulation_steps=self.config.get('gradient_accumulation_steps', 1)
@@ -578,7 +598,8 @@ class ModelTrainingPipeline:
         config: TrainingConfiguration,
         val_dataset_id: Optional[str] = None
     ) -> str:
-        """Start model training job"""        try:
+        """Start model training job"""
+        try:
             training_id = f"training_{uuid.uuid4().hex[:12]}"
             
             # Initialize MLflow tracking
@@ -625,7 +646,8 @@ class ModelTrainingPipeline:
         config: TrainingConfiguration,
         val_dataset_id: Optional[str] = None
     ):
-        """Execute the actual training process"""        try:
+        """Execute the actual training process"""
+        try:
             # Update status
             self._training_jobs[training_id]['status'] = TrainingStatus.INITIALIZING
             
@@ -741,7 +763,8 @@ class ModelTrainingPipeline:
             raise
     
     async def _initialize_model(self, config: TrainingConfiguration) -> Tuple[Any, Any]:
-        """Initialize model and tokenizer based on configuration"""        try:
+        """Initialize model and tokenizer based on configuration"""
+        try:
             if config.model_type == ModelType.CONTENT_CLASSIFIER:
                 tokenizer = AutoTokenizer.from_pretrained(config.base_model)
                 model = AutoModelForSequenceClassification.from_pretrained(
@@ -770,7 +793,8 @@ class ModelTrainingPipeline:
         training_id: str,
         config: TrainingConfiguration
     ):
-        """Train model with progress tracking"""        try:
+        """Train model with progress tracking"""
+        try:
             # Custom callback for progress tracking
             class ProgressCallback:
                 def __init__(self, training_id, total_epochs, training_jobs):
@@ -806,7 +830,8 @@ class ModelTrainingPipeline:
             raise
     
     async def get_training_status(self, training_id: str) -> Optional[Dict[str, Any]]:
-        """Get training job status"""        if training_id not in self._training_jobs:
+        """Get training job status"""
+        if training_id not in self._training_jobs:
             return None
         
         job_info = self._training_jobs[training_id].copy()
@@ -829,7 +854,8 @@ class ModelTrainingPipeline:
         return job_info
     
     async def cancel_training(self, training_id: str) -> bool:
-        """Cancel training job"""        try:
+        """Cancel training job"""
+        try:
             if training_id not in self._training_jobs:
                 return False
             
@@ -849,7 +875,8 @@ class ModelTrainingPipeline:
             return False
     
     async def list_training_jobs(self, organization_id: Optional[str] = None) -> List[Dict[str, Any]]:
-        """List training jobs"""        jobs = []
+        """List training jobs"""
+        jobs = []
         
         for training_id, job_info in self._training_jobs.items():
             if organization_id and job_info.get('organization_id') != organization_id:
@@ -864,7 +891,8 @@ class ModelTrainingPipeline:
 
 
 class CustomAITrainer:
-    """Main custom AI trainer orchestrator"""    
+    """Main custom AI trainer orchestrator"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.dataset_manager = DatasetManager()
@@ -876,7 +904,8 @@ class CustomAITrainer:
             self._initialize_ray_cluster()
     
     def _initialize_ray_cluster(self):
-        """Initialize Ray cluster for distributed training"""        try:
+        """Initialize Ray cluster for distributed training"""
+        try:
             if not ray.is_initialized():
                 ray.init(
                     address=self.config.get('ray_address', 'auto'),
@@ -894,7 +923,8 @@ class CustomAITrainer:
         dataset_config: Dict[str, Any],
         training_config: Dict[str, Any]
     ) -> str:
-        """Create comprehensive training job"""        try:
+        """Create comprehensive training job"""
+        try:
             # Register dataset if not exists
             if 'dataset_id' not in dataset_config:
                 dataset_metadata = await self.dataset_manager.register_dataset(
@@ -958,7 +988,8 @@ class CustomAITrainer:
             raise
     
     async def get_training_progress(self, training_id: str) -> Optional[Dict[str, Any]]:
-        """Get detailed training progress"""        return await self.training_pipeline.get_training_status(training_id)
+        """Get detailed training progress"""
+        return await self.training_pipeline.get_training_status(training_id)
     
     async def register_model_version(
         self,
@@ -968,7 +999,8 @@ class CustomAITrainer:
         training_id: str,
         description: str = ""
     ) -> ModelVersion:
-        """Register a trained model version"""        try:
+        """Register a trained model version"""
+        try:
             # Get training info
             training_info = await self.training_pipeline.get_training_status(training_id)
             if not training_info:
@@ -1006,7 +1038,8 @@ class CustomAITrainer:
             raise
     
     async def list_model_versions(self, organization_id: str) -> List[ModelVersion]:
-        """List model versions for organization"""        versions = []
+        """List model versions for organization"""
+        versions = []
         
         for version_key, model_version in self._model_registry.items():
             if model_version.trained_by == organization_id:
@@ -1020,7 +1053,8 @@ class CustomAITrainer:
         version: str,
         test_dataset_id: str
     ) -> Dict[str, float]:
-        """Benchmark model performance"""        try:
+        """Benchmark model performance"""
+        try:
             version_key = f"{model_id}:{version}"
             if version_key not in self._model_registry:
                 raise ValueError(f"Model version not found: {version_key}")
@@ -1060,7 +1094,8 @@ class CustomAITrainer:
         version: str,
         deployment_config: Dict[str, Any]
     ) -> str:
-        """Deploy model for inference"""        try:
+        """Deploy model for inference"""
+        try:
             version_key = f"{model_id}:{version}"
             if version_key not in self._model_registry:
                 raise ValueError(f"Model version not found: {version_key}")
@@ -1081,7 +1116,8 @@ class CustomAITrainer:
             raise
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for AI trainer"""        try:
+        """Health check for AI trainer"""
+        try:
             return {
                 'status': 'healthy',
                 'components': {

@@ -22,7 +22,8 @@ TEAM SPECIALTIES:
 - Audio Processing Specialist: Audio fingerprinting & analysis
 - Computer Vision Engineer: Image/video processing & recognition
 - Microservices Architect: Distributed systems & API design
-"""from enum import Enum, IntEnum
+"""
+from enum import Enum, IntEnum
 from typing import Dict, List, Tuple, Any, Final
 
 # ================================
@@ -41,7 +42,8 @@ SYSTEM_LICENSE: Final[str] = "Proprietary - Unauthorized use prohibited"
 # ================================
 
 class ContentType(Enum):
-    """Supported content types for vector database."""    TEXT = "text"
+    """Supported content types for vector database."""
+    TEXT = "text"
     AUDIO = "audio"
     IMAGE = "image"
     VIDEO = "video"
@@ -49,7 +51,8 @@ class ContentType(Enum):
 
 
 class AudioFormat(Enum):
-    """Supported audio formats."""    WAV = "wav"
+    """Supported audio formats."""
+    WAV = "wav"
     MP3 = "mp3"
     FLAC = "flac"
     AAC = "aac"
@@ -57,7 +60,8 @@ class AudioFormat(Enum):
 
 
 class ImageFormat(Enum):
-    """Supported image formats."""    JPEG = "jpeg"
+    """Supported image formats."""
+    JPEG = "jpeg"
     PNG = "png"
     GIF = "gif"
     BMP = "bmp"
@@ -66,7 +70,8 @@ class ImageFormat(Enum):
 
 
 class VideoFormat(Enum):
-    """Supported video formats."""    MP4 = "mp4"
+    """Supported video formats."""
+    MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
     MKV = "mkv"
@@ -79,7 +84,8 @@ class VideoFormat(Enum):
 # ================================
 
 class BackendType(Enum):
-    """Vector database backend types."""    FAISS = "faiss"
+    """Vector database backend types."""
+    FAISS = "faiss"
     CHROMA = "chroma"
     PINECONE = "pinecone"
     WEAVIATE = "weaviate"
@@ -87,7 +93,8 @@ class BackendType(Enum):
 
 
 class FAISSIndexType(Enum):
-    """FAISS index types."""    FLAT = "flat"
+    """FAISS index types."""
+    FLAT = "flat"
     IVF_FLAT = "ivf_flat"
     IVF_PQ = "ivf_pq"
     HNSW = "hnsw"
@@ -95,7 +102,8 @@ class FAISSIndexType(Enum):
 
 
 class DistanceMetric(Enum):
-    """Distance metrics for similarity computation."""    COSINE = "cosine"
+    """Distance metrics for similarity computation."""
+    COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     DOT_PRODUCT = "dot_product"
     MANHATTAN = "manhattan"
@@ -323,7 +331,8 @@ SECURITY_CONFIG: Final[Dict[str, Any]] = {
 # ================================
 
 class ErrorCode(IntEnum):
-    """System error codes."""    SUCCESS = 0
+    """System error codes."""
+    SUCCESS = 0
     GENERAL_ERROR = 1000
     VALIDATION_ERROR = 1001
     BACKEND_ERROR = 1002
@@ -394,7 +403,8 @@ HTTP_STATUS_CODES: Final[Dict[str, int]] = {
 # ================================
 
 class FeatureFlag(Enum):
-    """Feature flags for enabling/disabling functionality."""    ENABLE_AUDIO_PROCESSING = "enable_audio_processing"
+    """Feature flags for enabling/disabling functionality."""
+    ENABLE_AUDIO_PROCESSING = "enable_audio_processing"
     ENABLE_VIDEO_PROCESSING = "enable_video_processing"
     ENABLE_GPU_ACCELERATION = "enable_gpu_acceleration"
     ENABLE_DISTRIBUTED_PROCESSING = "enable_distributed_processing"
@@ -571,7 +581,8 @@ EXPERT_TEAM_ROLES: Final[Dict[str, Dict[str, str]]] = {
 # ================================
 
 def get_default_config_for_content_type(content_type: ContentType) -> Dict[str, Any]:
-    """Get default configuration for a specific content type."""    configs = {
+    """Get default configuration for a specific content type."""
+    configs = {
         ContentType.TEXT: {
             "embedding_model": "all-MiniLM-L6-v2",
             "similarity_threshold": DEFAULT_SIMILARITY_THRESHOLDS[ContentType.TEXT.value],
@@ -598,15 +609,18 @@ def get_default_config_for_content_type(content_type: ContentType) -> Dict[str, 
 
 
 def validate_feature_flag(flag_name: str) -> bool:
-    """Validate if a feature flag is enabled."""    return DEFAULT_FEATURE_FLAGS.get(flag_name, False)
+    """Validate if a feature flag is enabled."""
+    return DEFAULT_FEATURE_FLAGS.get(flag_name, False)
 
 
 def get_performance_threshold(metric_name: str) -> float:
-    """Get performance threshold for a specific metric."""    return PERFORMANCE_THRESHOLDS.get(metric_name, 0.0)
+    """Get performance threshold for a specific metric."""
+    return PERFORMANCE_THRESHOLDS.get(metric_name, 0.0)
 
 
 def get_error_message(error_code: int) -> str:
-    """Get error message for an error code."""    return ERROR_MESSAGES.get(error_code, "Unknown error")
+    """Get error message for an error code."""
+    return ERROR_MESSAGES.get(error_code, "Unknown error")
 
 
 # Export all constants and enums

@@ -15,7 +15,8 @@ Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Revenue Calculation
 ===============================================================================================
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from dataclasses import dataclass, field
@@ -38,7 +39,8 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueType(Enum):
-    """Revenue stream types for comprehensive tracking"""    STREAMING = "streaming"
+    """Revenue stream types for comprehensive tracking"""
+    STREAMING = "streaming"
     LICENSING = "licensing"
     SYNCHRONIZATION = "synchronization"
     MERCHANDISE = "merchandise"
@@ -52,7 +54,8 @@ class RevenueType(Enum):
 
 
 class CalculationMethod(Enum):
-    """Revenue calculation methodologies"""    REAL_TIME = "real_time"
+    """Revenue calculation methodologies"""
+    REAL_TIME = "real_time"
     BATCH_PROCESSING = "batch_processing"
     PREDICTIVE = "predictive"
     HYBRID = "hybrid"
@@ -60,7 +63,8 @@ class CalculationMethod(Enum):
 
 @dataclass
 class RevenueData:
-    """Revenue data structure for calculations"""    platform: str
+    """Revenue data structure for calculations"""
+    platform: str
     revenue_type: RevenueType
     gross_amount: Decimal
     platform_fee: Decimal
@@ -71,13 +75,15 @@ class RevenueData:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Calculate net amount after deductions"""        total_deductions = self.platform_fee + self.taxes + self.commission
+        """Calculate net amount after deductions"""
+        total_deductions = self.platform_fee + self.taxes + self.commission
         self.net_amount = self.gross_amount - total_deductions
 
 
 @dataclass
 class PlatformRevenue:
-    """Platform-specific revenue configuration"""    platform_id: str
+    """Platform-specific revenue configuration"""
+    platform_id: str
     platform_name: str
     commission_rate: Decimal
     minimum_payout: Decimal
@@ -89,7 +95,8 @@ class PlatformRevenue:
 
 
 class RevenueCalculator:
-    """    Ultra-advanced revenue calculation engine for multi-platform content creators
+    """
+    Ultra-advanced revenue calculation engine for multi-platform content creators
     
     Features:
     - Real-time revenue calculations across all platforms
@@ -99,7 +106,8 @@ class RevenueCalculator:
     - Tax calculations with international compliance
     - Performance analytics and forecasting
     - Automated payout scheduling and processing
-    """    
+    """
+    
     def __init__(self, 
                  db_manager: DatabaseManager,
                  security_manager: SecurityManager,
@@ -124,7 +132,8 @@ class RevenueCalculator:
         self._initialize_calculation_engines()
         
     async def _initialize_calculation_engines(self):
-        """Initialize all calculation engines and platform configurations"""        try:
+        """Initialize all calculation engines and platform configurations"""
+        try:
             # Load platform configurations
             self._platform_configs = await self._load_platform_configurations()
             
@@ -146,7 +155,8 @@ class RevenueCalculator:
                               revenue_type: RevenueType,
                               raw_data: Dict[str, Any],
                               calculation_method: CalculationMethod = CalculationMethod.REAL_TIME) -> RevenueData:
-        """        Calculate revenue for a specific creator and platform
+        """
+        Calculate revenue for a specific creator and platform
         
         Args:
             creator_id: Unique creator identifier
@@ -157,7 +167,8 @@ class RevenueCalculator:
             
         Returns:
             Calculated revenue data with all deductions
-        """        try:
+        """
+        try:
             # Validate input data
             await self._validate_revenue_data(creator_id, platform, raw_data)
             
@@ -217,7 +228,8 @@ class RevenueCalculator:
                                              creator_id: str,
                                              platforms_data: Dict[str, Dict[str, Any]],
                                              date_range: Tuple[datetime, datetime]) -> Dict[str, List[RevenueData]]:
-        """        Calculate revenue across multiple platforms for a creator
+        """
+        Calculate revenue across multiple platforms for a creator
         
         Args:
             creator_id: Unique creator identifier
@@ -226,7 +238,8 @@ class RevenueCalculator:
             
         Returns:
             Dictionary with platform revenues
-        """        results = {}
+        """
+        results = {}
         
         try:
             # Process platforms concurrently
@@ -262,7 +275,8 @@ class RevenueCalculator:
                                        platform: str,
                                        platform_data: Dict[str, Any],
                                        date_range: Tuple[datetime, datetime]) -> List[RevenueData]:
-        """Process revenue for a specific platform"""        revenue_calculations = []
+        """Process revenue for a specific platform"""
+        revenue_calculations = []
         
         try:
             # Get platform integration
@@ -301,7 +315,8 @@ class RevenueCalculator:
                                     revenue_type: RevenueType,
                                     raw_data: Dict[str, Any],
                                     platform_config: Dict[str, Any]) -> Decimal:
-        """Calculate gross revenue amount based on platform and type"""        try:
+        """Calculate gross revenue amount based on platform and type"""
+        try:
             # Platform-specific calculation logic
             if platform == 'spotify':
                 return await self._calculate_spotify_gross(revenue_type, raw_data, platform_config)
@@ -323,7 +338,8 @@ class RevenueCalculator:
                                      revenue_type: RevenueType,
                                      raw_data: Dict[str, Any],
                                      platform_config: Dict[str, Any]) -> Decimal:
-        """Calculate Spotify-specific gross revenue"""        if revenue_type == RevenueType.STREAMING:
+        """Calculate Spotify-specific gross revenue"""
+        if revenue_type == RevenueType.STREAMING:
             streams = Decimal(str(raw_data.get('streams', 0)))
             rate_per_stream = Decimal(str(platform_config.get('rate_per_stream', '0.003')))
             return streams * rate_per_stream
@@ -337,7 +353,8 @@ class RevenueCalculator:
                                      revenue_type: RevenueType,
                                      raw_data: Dict[str, Any],
                                      platform_config: Dict[str, Any]) -> Decimal:
-        """Calculate YouTube-specific gross revenue"""        if revenue_type == RevenueType.STREAMING:
+        """Calculate YouTube-specific gross revenue"""
+        if revenue_type == RevenueType.STREAMING:
             # YouTube ad revenue calculation
             views = Decimal(str(raw_data.get('views', 0)))
             rpm = Decimal(str(raw_data.get('rpm', 2.0)))  # Revenue per mille
@@ -357,7 +374,8 @@ class RevenueCalculator:
                                     gross_amount: Decimal,
                                     platform_config: Dict[str, Any],
                                     revenue_type: RevenueType) -> Decimal:
-        """Calculate platform-specific fees"""        fee_config = platform_config.get('fees', {})
+        """Calculate platform-specific fees"""
+        fee_config = platform_config.get('fees', {})
         
         if revenue_type.value in fee_config:
             fee_rate = Decimal(str(fee_config[revenue_type.value]))
@@ -371,7 +389,8 @@ class RevenueCalculator:
                              gross_amount: Decimal,
                              platform: str,
                              revenue_type: RevenueType) -> Decimal:
-        """Calculate taxes based on creator location and platform"""        try:
+        """Calculate taxes based on creator location and platform"""
+        try:
             # Get creator tax information
             creator_tax_info = await self.db.fetch_one(
                 "SELECT * FROM creator_tax_info WHERE creator_id = %s",
@@ -399,7 +418,8 @@ class RevenueCalculator:
                                   gross_amount: Decimal,
                                   platform_config: Dict[str, Any],
                                   revenue_type: RevenueType) -> Decimal:
-        """Calculate commission based on creator tier and revenue type"""        try:
+        """Calculate commission based on creator tier and revenue type"""
+        try:
             # Get creator tier information
             creator_info = await self.db.fetch_one(
                 "SELECT tier, commission_rate FROM creators WHERE id = %s",
@@ -432,7 +452,8 @@ class RevenueCalculator:
                                 creator_id: str,
                                 date_range: Tuple[datetime, datetime],
                                 platforms: Optional[List[str]] = None) -> Dict[str, Any]:
-        """        Get comprehensive revenue summary for a creator
+        """
+        Get comprehensive revenue summary for a creator
         
         Args:
             creator_id: Unique creator identifier
@@ -441,7 +462,8 @@ class RevenueCalculator:
             
         Returns:
             Comprehensive revenue summary
-        """        try:
+        """
+        try:
             # Build query conditions
             conditions = ["creator_id = %s", "calculation_date BETWEEN %s AND %s"]
             params = [creator_id, date_range[0], date_range[1]]
@@ -451,7 +473,8 @@ class RevenueCalculator:
                 params.extend(platforms)
             
             # Fetch revenue data
-            query = f"""                SELECT 
+            query = f"""
+                SELECT 
                     platform,
                     revenue_type,
                     SUM(gross_amount) as total_gross,
@@ -464,7 +487,8 @@ class RevenueCalculator:
                 WHERE {' AND '.join(conditions)}
                 GROUP BY platform, revenue_type
                 ORDER BY total_net DESC
-            """            
+            """
+            
             revenue_data = await self.db.fetch_all(query, params)
             
             # Calculate summary metrics
@@ -516,7 +540,8 @@ class RevenueCalculator:
                                    creator_id: str,
                                    platform: str,
                                    raw_data: Dict[str, Any]):
-        """Validate revenue calculation input data"""        if not creator_id:
+        """Validate revenue calculation input data"""
+        if not creator_id:
             raise ValueError("Creator ID is required")
         
         if not platform:
@@ -533,7 +558,8 @@ class RevenueCalculator:
             raise ValueError("YouTube data must include views")
 
     async def _load_platform_configurations(self) -> Dict[str, Any]:
-        """Load platform-specific configurations"""        try:
+        """Load platform-specific configurations"""
+        try:
             configs = await self.db.fetch_all(
                 "SELECT platform, configuration FROM platform_configurations WHERE active = TRUE"
             )
@@ -548,7 +574,8 @@ class RevenueCalculator:
             return {}
 
     async def _get_platform_config(self, platform: str) -> Dict[str, Any]:
-        """Get configuration for a specific platform"""        if platform not in self._platform_configs:
+        """Get configuration for a specific platform"""
+        if platform not in self._platform_configs:
             # Load default configuration
             return {
                 'fees': {'default': '0.10'},
@@ -560,17 +587,21 @@ class RevenueCalculator:
         return self._platform_configs[platform]
 
     async def _setup_calculation_cache(self):
-        """Setup calculation result cache"""        # Initialize Redis cache for calculation results
+        """Setup calculation result cache"""
+        # Initialize Redis cache for calculation results
         # This would be implemented with actual Redis connection
         pass
 
     async def _store_revenue_calculation(self, revenue_data: RevenueData):
-        """Store revenue calculation result in database"""        try:
-            query = """                INSERT INTO revenue_calculations 
+        """Store revenue calculation result in database"""
+        try:
+            query = """
+                INSERT INTO revenue_calculations 
                 (platform, revenue_type, gross_amount, platform_fee, taxes, 
                  commission, net_amount, calculation_date, metadata)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """            
+            """
+            
             await self.db.execute(query, (
                 revenue_data.platform,
                 revenue_data.revenue_type.value,
@@ -591,7 +622,8 @@ class RevenueCalculator:
                                           creator_id: str,
                                           platform_results: Dict[str, List[RevenueData]],
                                           date_range: Tuple[datetime, datetime]):
-        """Calculate and store aggregated revenue metrics"""        try:
+        """Calculate and store aggregated revenue metrics"""
+        try:
             # Calculate total revenue across all platforms
             total_gross = Decimal('0')
             total_net = Decimal('0')
@@ -602,7 +634,8 @@ class RevenueCalculator:
                     total_net += revenue.net_amount
             
             # Store aggregated metrics
-            await self.db.execute("""                INSERT INTO creator_revenue_aggregates 
+            await self.db.execute("""
+                INSERT INTO creator_revenue_aggregates 
                 (creator_id, date_start, date_end, total_gross, total_net, created_at)
                 VALUES (%s, %s, %s, %s, %s, %s)
                 ON CONFLICT (creator_id, date_start, date_end) 
@@ -619,7 +652,8 @@ class RevenueCalculator:
                           country: str,
                           tax_status: str,
                           revenue_type: RevenueType) -> Decimal:
-        """Get tax rate based on country, status, and revenue type"""        try:
+        """Get tax rate based on country, status, and revenue type"""
+        try:
             # This would integrate with a comprehensive tax calculation service
             # For now, returning basic rates
             base_rates = {
@@ -640,7 +674,8 @@ class RevenueCalculator:
                                      revenue_type: RevenueType,
                                      raw_data: Dict[str, Any],
                                      platform_config: Dict[str, Any]) -> Decimal:
-        """Generic gross revenue calculation for unknown platforms"""        # Extract amount from common field names
+        """Generic gross revenue calculation for unknown platforms"""
+        # Extract amount from common field names
         amount_fields = ['amount', 'revenue', 'earnings', 'gross', 'total']
         
         for field in amount_fields:
@@ -650,7 +685,8 @@ class RevenueCalculator:
         return Decimal('0')
 
     async def cleanup(self):
-        """Cleanup resources and connections"""        try:
+        """Cleanup resources and connections"""
+        try:
             # Close platform connections
             for platform_integration in self.platforms.values():
                 if hasattr(platform_integration, 'close'):

@@ -28,7 +28,8 @@ Team Specialties & Expertise:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import os
+"""
+import os
 import json
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -38,14 +39,16 @@ from pathlib import Path
 
 
 class Environment(Enum):
-    """Deployment environment types"""    DEVELOPMENT = "development"
+    """Deployment environment types"""
+    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 
 class FeatureFlag(Enum):
-    """Feature flags for notification system"""    AI_OPTIMIZATION = "ai_optimization"
+    """Feature flags for notification system"""
+    AI_OPTIMIZATION = "ai_optimization"
     PREDICTIVE_ANALYTICS = "predictive_analytics"
     ADVANCED_WORKFLOWS = "advanced_workflows"
     REAL_TIME_PROCESSING = "real_time_processing"
@@ -57,7 +60,8 @@ class FeatureFlag(Enum):
 
 @dataclass
 class ChannelConfiguration:
-    """Configuration for individual notification channels"""    enabled: bool = True
+    """Configuration for individual notification channels"""
+    enabled: bool = True
     max_concurrent_sends: int = 100
     timeout_seconds: int = 30
     retry_attempts: int = 3
@@ -69,7 +73,8 @@ class ChannelConfiguration:
 
 @dataclass
 class BusinessRuleConfiguration:
-    """Configuration for business rules and logic"""    content_protection_enabled: bool = True
+    """Configuration for business rules and logic"""
+    content_protection_enabled: bool = True
     collaboration_matching_enabled: bool = True
     monetization_alerts_enabled: bool = True
     seo_notifications_enabled: bool = True
@@ -81,7 +86,8 @@ class BusinessRuleConfiguration:
 
 @dataclass
 class PerformanceConfiguration:
-    """Performance and scaling configuration"""    max_concurrent_notifications: int = 1000
+    """Performance and scaling configuration"""
+    max_concurrent_notifications: int = 1000
     batch_size: int = 100
     queue_size_limit: int = 10000
     processing_timeout_seconds: int = 3600
@@ -94,7 +100,8 @@ class PerformanceConfiguration:
 
 @dataclass
 class SecurityConfiguration:
-    """Security and privacy configuration"""    encryption_enabled: bool = True
+    """Security and privacy configuration"""
+    encryption_enabled: bool = True
     encryption_algorithm: str = "AES-256"
     data_retention_days: int = 365
     personal_data_protection_enabled: bool = True
@@ -107,7 +114,8 @@ class SecurityConfiguration:
 
 @dataclass
 class IntegrationConfiguration:
-    """External service integration configuration"""    email_provider: str = "sendgrid"
+    """External service integration configuration"""
+    email_provider: str = "sendgrid"
     sms_provider: str = "twilio"
     push_provider: str = "firebase"
     analytics_provider: str = "mixpanel"
@@ -119,7 +127,8 @@ class IntegrationConfiguration:
 
 @dataclass
 class NotificationSystemConfiguration:
-    """Complete notification system configuration"""    environment: Environment = Environment.PRODUCTION
+    """Complete notification system configuration"""
+    environment: Environment = Environment.PRODUCTION
     feature_flags: Dict[FeatureFlag, bool] = field(default_factory=dict)
     channels: Dict[str, ChannelConfiguration] = field(default_factory=dict)
     business_rules: BusinessRuleConfiguration = field(default_factory=BusinessRuleConfiguration)
@@ -130,7 +139,8 @@ class NotificationSystemConfiguration:
 
 
 class NotificationConfigurationManager:
-    """    Advanced configuration management system for notification infrastructure
+    """
+    Advanced configuration management system for notification infrastructure
     
     Key Features:
     - Environment-specific configuration management
@@ -141,7 +151,8 @@ class NotificationConfigurationManager:
     - Security and compliance configuration
     - External service integration management
     - Configuration versioning and rollback
-    """    
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
         self.logger = logging.getLogger(__name__)
         self.config_path = config_path or self._get_default_config_path()
@@ -152,36 +163,44 @@ class NotificationConfigurationManager:
         self._load_configuration()
     
     def get_config(self) -> NotificationSystemConfiguration:
-        """Get current system configuration"""        if self._config is None:
+        """Get current system configuration"""
+        if self._config is None:
             self._load_configuration()
         return self._config
     
     def get_channel_config(self, channel_name: str) -> ChannelConfiguration:
-        """Get configuration for specific channel"""        config = self.get_config()
+        """Get configuration for specific channel"""
+        config = self.get_config()
         return config.channels.get(channel_name, self._get_default_channel_config())
     
     def is_feature_enabled(self, feature: FeatureFlag) -> bool:
-        """Check if feature flag is enabled"""        config = self.get_config()
+        """Check if feature flag is enabled"""
+        config = self.get_config()
         return config.feature_flags.get(feature, self._get_default_feature_flags()[feature])
     
     def get_business_rules(self) -> BusinessRuleConfiguration:
-        """Get business rules configuration"""        return self.get_config().business_rules
+        """Get business rules configuration"""
+        return self.get_config().business_rules
     
     def get_performance_config(self) -> PerformanceConfiguration:
-        """Get performance configuration"""        return self.get_config().performance
+        """Get performance configuration"""
+        return self.get_config().performance
     
     def get_security_config(self) -> SecurityConfiguration:
-        """Get security configuration"""        return self.get_config().security
+        """Get security configuration"""
+        return self.get_config().security
     
     def get_integration_config(self) -> IntegrationConfiguration:
-        """Get integration configuration"""        return self.get_config().integrations
+        """Get integration configuration"""
+        return self.get_config().integrations
     
     def update_configuration(
         self, 
         updates: Dict[str, Any], 
         validate: bool = True
     ) -> bool:
-        """        Update configuration with new values
+        """
+        Update configuration with new values
         
         Args:
             updates: Configuration updates to apply
@@ -189,7 +208,8 @@ class NotificationConfigurationManager:
             
         Returns:
             True if update successful
-        """        try:
+        """
+        try:
             current_config = self.get_config()
             
             # Apply updates
@@ -216,7 +236,8 @@ class NotificationConfigurationManager:
             return False
     
     def reload_configuration(self) -> bool:
-        """Reload configuration from file"""        try:
+        """Reload configuration from file"""
+        try:
             self._load_configuration()
             self._notify_config_watchers()
             self.logger.info("Configuration reloaded successfully")
@@ -226,14 +247,17 @@ class NotificationConfigurationManager:
             return False
     
     def add_config_watcher(self, callback: callable):
-        """Add callback for configuration changes"""        self._config_watchers.append(callback)
+        """Add callback for configuration changes"""
+        self._config_watchers.append(callback)
     
     def remove_config_watcher(self, callback: callable):
-        """Remove configuration change callback"""        if callback in self._config_watchers:
+        """Remove configuration change callback"""
+        if callback in self._config_watchers:
             self._config_watchers.remove(callback)
     
     def export_configuration(self, export_path: str) -> bool:
-        """Export current configuration to file"""        try:
+        """Export current configuration to file"""
+        try:
             config_dict = asdict(self.get_config())
             
             # Convert enums to strings for JSON serialization
@@ -250,7 +274,8 @@ class NotificationConfigurationManager:
             return False
     
     def import_configuration(self, import_path: str, merge: bool = True) -> bool:
-        """Import configuration from file"""        try:
+        """Import configuration from file"""
+        try:
             with open(import_path, 'r') as f:
                 imported_config = json.load(f)
             
@@ -279,7 +304,8 @@ class NotificationConfigurationManager:
             return False
     
     def _load_configuration(self):
-        """Load configuration from file or create defaults"""        try:
+        """Load configuration from file or create defaults"""
+        try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r') as f:
                     config_dict = json.load(f)
@@ -296,7 +322,8 @@ class NotificationConfigurationManager:
             self._config = self._create_default_configuration()
     
     def _save_configuration(self):
-        """Save current configuration to file"""        try:
+        """Save current configuration to file"""
+        try:
             # Ensure directory exists
             os.makedirs(os.path.dirname(self.config_path), exist_ok=True)
             
@@ -312,7 +339,8 @@ class NotificationConfigurationManager:
             self.logger.error(f"Configuration save failed: {str(e)}")
     
     def _create_default_configuration(self) -> NotificationSystemConfiguration:
-        """Create default system configuration"""        
+        """Create default system configuration"""
+        
         # Determine environment from env vars
         env_name = os.getenv('NOTIFICATION_ENVIRONMENT', 'production').lower()
         try:
@@ -453,7 +481,8 @@ class NotificationConfigurationManager:
         )
     
     def _get_default_feature_flags(self) -> Dict[FeatureFlag, bool]:
-        """Get default feature flag settings"""        return {
+        """Get default feature flag settings"""
+        return {
             FeatureFlag.AI_OPTIMIZATION: True,
             FeatureFlag.PREDICTIVE_ANALYTICS: True,
             FeatureFlag.ADVANCED_WORKFLOWS: True,
@@ -465,14 +494,17 @@ class NotificationConfigurationManager:
         }
     
     def _get_default_channel_config(self) -> ChannelConfiguration:
-        """Get default channel configuration"""        return ChannelConfiguration()
+        """Get default channel configuration"""
+        return ChannelConfiguration()
     
     def _get_default_config_path(self) -> str:
-        """Get default configuration file path"""        config_dir = os.getenv('NOTIFICATION_CONFIG_DIR', '/workspaces/Achiri/config')
+        """Get default configuration file path"""
+        config_dir = os.getenv('NOTIFICATION_CONFIG_DIR', '/workspaces/Achiri/config')
         return os.path.join(config_dir, 'notification_system.json')
     
     def _validate_configuration(self, config: NotificationSystemConfiguration) -> bool:
-        """Validate configuration for correctness"""        try:
+        """Validate configuration for correctness"""
+        try:
             # Validate required fields
             if not config.channels:
                 return False
@@ -496,7 +528,8 @@ class NotificationConfigurationManager:
             return False
     
     def _serialize_config_for_export(self, config_dict: Dict[str, Any]) -> Dict[str, Any]:
-        """Serialize configuration for JSON export"""        def serialize_value(value):
+        """Serialize configuration for JSON export"""
+        def serialize_value(value):
             if isinstance(value, Enum):
                 return value.value
             elif isinstance(value, dict):
@@ -509,7 +542,8 @@ class NotificationConfigurationManager:
         return serialize_value(config_dict)
     
     def _deserialize_config_from_import(self, config_dict: Dict[str, Any]) -> NotificationSystemConfiguration:
-        """Deserialize configuration from imported JSON"""        # This would implement proper deserialization with enum conversion
+        """Deserialize configuration from imported JSON"""
+        # This would implement proper deserialization with enum conversion
         # For now, return default config (implementation would be more complex)
         return self._create_default_configuration()
     
@@ -518,7 +552,8 @@ class NotificationConfigurationManager:
         current_config: NotificationSystemConfiguration,
         updates: Dict[str, Any]
     ) -> NotificationSystemConfiguration:
-        """Apply updates to current configuration"""        # Create a copy of current config
+        """Apply updates to current configuration"""
+        # Create a copy of current config
         config_dict = asdict(current_config)
         
         # Apply updates (deep merge)
@@ -535,7 +570,8 @@ class NotificationConfigurationManager:
         return self._deserialize_config_from_import(config_dict)
     
     def _merge_configurations(self, base: Dict[str, Any], overlay: Dict[str, Any]) -> Dict[str, Any]:
-        """Merge two configuration dictionaries"""        result = base.copy()
+        """Merge two configuration dictionaries"""
+        result = base.copy()
         
         def deep_merge(target, source):
             for key, value in source.items():
@@ -548,7 +584,8 @@ class NotificationConfigurationManager:
         return result
     
     def _notify_config_watchers(self):
-        """Notify all registered configuration watchers"""        for watcher in self._config_watchers:
+        """Notify all registered configuration watchers"""
+        for watcher in self._config_watchers:
             try:
                 watcher(self._config)
             except Exception as e:
@@ -560,13 +597,17 @@ config_manager = NotificationConfigurationManager()
 
 # Convenience functions for common configuration access
 def get_channel_config(channel_name: str) -> ChannelConfiguration:
-    """Get channel configuration"""    return config_manager.get_channel_config(channel_name)
+    """Get channel configuration"""
+    return config_manager.get_channel_config(channel_name)
 
 def is_feature_enabled(feature: FeatureFlag) -> bool:
-    """Check if feature is enabled"""    return config_manager.is_feature_enabled(feature)
+    """Check if feature is enabled"""
+    return config_manager.is_feature_enabled(feature)
 
 def get_business_rules() -> BusinessRuleConfiguration:
-    """Get business rules configuration"""    return config_manager.get_business_rules()
+    """Get business rules configuration"""
+    return config_manager.get_business_rules()
 
 def get_performance_config() -> PerformanceConfiguration:
-    """Get performance configuration"""    return config_manager.get_performance_config()
+    """Get performance configuration"""
+    return config_manager.get_performance_config()

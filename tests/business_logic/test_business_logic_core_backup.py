@@ -18,7 +18,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 Integration Test for AI Agents Business Logic Core
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -36,15 +37,18 @@ from simple_agents import BaseAgent, AgentStatus
 
 # Create a simple workflow orchestrator for testing
 class BusinessWorkflowOrchestrator:
-    """Simple workflow orchestrator for testing"""    
+    """Simple workflow orchestrator for testing"""
+    
     def __init__(self):
         self.business_core = BusinessLogicCore()
         
     async def initialize(self):
-        """Initialize the orchestrator"""        return await self.business_core.initialize()
+        """Initialize the orchestrator"""
+        return await self.business_core.initialize()
         
     async def process_content(self, content_upload):
-        """Process content through workflow"""        return await self.business_core.process_creator_workflow(content_upload)
+        """Process content through workflow"""
+        return await self.business_core.process_creator_workflow(content_upload)
 
 # Define WorkflowConfig for compatibility
 class WorkflowConfig:
@@ -54,16 +58,19 @@ class WorkflowConfig:
 
 
 class TestBusinessLogicCore:
-    """Integration tests for the complete business logic core"""    
+    """Integration tests for the complete business logic core"""
+    
     @pytest.fixture
     async def workflow_orchestrator(self):
-        """Create and initialize workflow orchestrator"""        orchestrator = BusinessWorkflowOrchestrator()
+        """Create and initialize workflow orchestrator"""
+        orchestrator = BusinessWorkflowOrchestrator()
         await orchestrator.initialize()
         return orchestrator
     
     @pytest.fixture
     def sample_content_upload(self):
-        """Create sample content upload for testing"""        # Create a temporary test file
+        """Create sample content upload for testing"""
+        # Create a temporary test file
         with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
             f.write("This is a test content file for AI processing.")
             temp_file_path = f.name
@@ -101,7 +108,8 @@ class TestBusinessLogicCore:
     
     @pytest.mark.asyncio
     async def test_complete_business_workflow(self, workflow_orchestrator, sample_content_upload):
-        """Test the complete business workflow from upload to monetization"""        
+        """Test the complete business workflow from upload to monetization"""
+        
         # Process content upload
         workflow_id = await workflow_orchestrator.process_content_upload(sample_content_upload)
         
@@ -121,7 +129,8 @@ class TestBusinessLogicCore:
     
     @pytest.mark.asyncio
     async def test_workflow_stages_progression(self, workflow_orchestrator, sample_content_upload):
-        """Test that workflow progresses through all required stages"""        
+        """Test that workflow progresses through all required stages"""
+        
         workflow_id = await workflow_orchestrator.process_content_upload(sample_content_upload)
         
         # Allow workflow to complete
@@ -138,7 +147,8 @@ class TestBusinessLogicCore:
     
     @pytest.mark.asyncio
     async def test_individual_agent_processing(self, workflow_orchestrator, sample_content_upload):
-        """Test individual agent processing capabilities"""        
+        """Test individual agent processing capabilities"""
+        
         # Test content validation
         validation_result = await workflow_orchestrator._validate_content(sample_content_upload)
         assert validation_result["valid"] is True
@@ -179,7 +189,8 @@ class TestBusinessLogicCore:
     
     @pytest.mark.asyncio
     async def test_workflow_error_handling(self, workflow_orchestrator):
-        """Test workflow error handling for invalid content"""        
+        """Test workflow error handling for invalid content"""
+        
         # Create invalid content upload
         invalid_upload = ContentUpload(
             content_id="invalid_content",
@@ -204,7 +215,8 @@ class TestBusinessLogicCore:
         
     @pytest.mark.asyncio
     async def test_different_creator_types(self, workflow_orchestrator):
-        """Test workflow processing for different creator types"""        
+        """Test workflow processing for different creator types"""
+        
         creator_types = [CreatorType.MUSICIAN, CreatorType.BLOGGER, CreatorType.PHOTOGRAPHER]
         content_types = ["audio", "text", "image"]
         

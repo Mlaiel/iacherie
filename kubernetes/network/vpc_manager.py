@@ -11,7 +11,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 import ipaddress
 from typing import Dict, List, Optional, Set, Union, Any, Tuple
@@ -38,20 +39,23 @@ logger = logging.getLogger(__name__)
 
 
 class CloudProvider(Enum):
-    """Supported cloud providers"""    AWS = "aws"
+    """Supported cloud providers"""
+    AWS = "aws"
     GCP = "gcp"
     AZURE = "azure"
     ON_PREMISE = "on_premise"
 
 
 class NetworkTier(Enum):
-    """Network performance tiers"""    STANDARD = "standard"
+    """Network performance tiers"""
+    STANDARD = "standard"
     PREMIUM = "premium"
     ULTRA = "ultra"
 
 
 class SubnetType(Enum):
-    """Subnet types and purposes"""    PUBLIC = "public"
+    """Subnet types and purposes"""
+    PUBLIC = "public"
     PRIVATE = "private"
     DATABASE = "database"
     KUBERNETES = "kubernetes"
@@ -63,7 +67,8 @@ class SubnetType(Enum):
 
 @dataclass
 class NetworkACL:
-    """Network Access Control List"""    name: str
+    """Network Access Control List"""
+    name: str
     rules: List[Dict[str, Any]]
     description: str = ""
     created_at: datetime = field(default_factory=datetime.now)
@@ -71,7 +76,8 @@ class NetworkACL:
 
 @dataclass
 class Subnet:
-    """VPC Subnet configuration"""    name: str
+    """VPC Subnet configuration"""
+    name: str
     cidr_block: str
     subnet_type: SubnetType
     availability_zone: str
@@ -93,7 +99,8 @@ class Subnet:
 
 @dataclass
 class VPCPeering:
-    """VPC Peering connection"""    name: str
+    """VPC Peering connection"""
+    name: str
     local_vpc_id: str
     peer_vpc_id: str
     peer_region: Optional[str] = None
@@ -106,7 +113,8 @@ class VPCPeering:
 
 @dataclass
 class NATGateway:
-    """NAT Gateway configuration"""    name: str
+    """NAT Gateway configuration"""
+    name: str
     subnet_id: str
     allocation_id: Optional[str] = None
     public_ip: Optional[str] = None
@@ -118,7 +126,8 @@ class NATGateway:
 
 @dataclass
 class VPCEndpoint:
-    """VPC Endpoint configuration"""    name: str
+    """VPC Endpoint configuration"""
+    name: str
     service_name: str
     vpc_id: str
     subnet_ids: List[str]
@@ -131,7 +140,8 @@ class VPCEndpoint:
 
 @dataclass
 class VPCConfiguration:
-    """Complete VPC configuration"""    name: str
+    """Complete VPC configuration"""
+    name: str
     cidr_block: str
     region: str
     cloud_provider: CloudProvider
@@ -148,9 +158,11 @@ class VPCConfiguration:
 
 
 class VPCManager:
-    """    Enterprise VPC manager for IA Influencer Agent Platform
+    """
+    Enterprise VPC manager for IA Influencer Agent Platform
     Manages multi-cloud VPC infrastructure with advanced networking
-    """    
+    """
+    
     def __init__(
         self,
         config_path: str = "/etc/vpc/config.yaml",
@@ -177,7 +189,8 @@ class VPCManager:
         self._initialize_cloud_clients()
     
     async def initialize(self) -> None:
-        """Initialize VPC manager"""        try:
+        """Initialize VPC manager"""
+        try:
             logger.info("Initializing VPC Manager...")
             
             # Load configuration
@@ -205,7 +218,8 @@ class VPCManager:
             raise
     
     async def create_vpc(self, vpc_config: VPCConfiguration) -> bool:
-        """Create new VPC infrastructure"""        try:
+        """Create new VPC infrastructure"""
+        try:
             logger.info(f"Creating VPC: {vpc_config.name}")
             
             # Validate configuration
@@ -243,7 +257,8 @@ class VPCManager:
             return False
     
     async def delete_vpc(self, vpc_name: str) -> bool:
-        """Delete VPC infrastructure"""        try:
+        """Delete VPC infrastructure"""
+        try:
             if vpc_name not in self.vpcs:
                 logger.error(f"VPC not found: {vpc_name}")
                 return False
@@ -278,7 +293,8 @@ class VPCManager:
             return False
     
     async def add_subnet(self, vpc_name: str, subnet: Subnet) -> bool:
-        """Add subnet to existing VPC"""        try:
+        """Add subnet to existing VPC"""
+        try:
             if vpc_name not in self.vpcs:
                 logger.error(f"VPC not found: {vpc_name}")
                 return False
@@ -317,7 +333,8 @@ class VPCManager:
             return False
     
     async def create_vpc_peering(self, peering: VPCPeering) -> bool:
-        """Create VPC peering connection"""        try:
+        """Create VPC peering connection"""
+        try:
             logger.info(f"Creating VPC peering: {peering.name}")
             
             # Find VPC configurations
@@ -355,7 +372,8 @@ class VPCManager:
             return False
     
     async def create_nat_gateway(self, vpc_name: str, nat_gateway: NATGateway) -> bool:
-        """Create NAT Gateway for private subnet internet access"""        try:
+        """Create NAT Gateway for private subnet internet access"""
+        try:
             if vpc_name not in self.vpcs:
                 logger.error(f"VPC not found: {vpc_name}")
                 return False
@@ -387,7 +405,8 @@ class VPCManager:
             return False
     
     async def create_vpc_endpoint(self, vpc_name: str, endpoint: VPCEndpoint) -> bool:
-        """Create VPC endpoint for private service access"""        try:
+        """Create VPC endpoint for private service access"""
+        try:
             if vpc_name not in self.vpcs:
                 logger.error(f"VPC not found: {vpc_name}")
                 return False
@@ -419,7 +438,8 @@ class VPCManager:
             return False
     
     async def get_vpc_status(self) -> Dict[str, Any]:
-        """Get comprehensive VPC status"""        try:
+        """Get comprehensive VPC status"""
+        try:
             status = {
                 'total_vpcs': len(self.vpcs),
                 'vpcs': {},
@@ -464,7 +484,8 @@ class VPCManager:
             return {}
     
     async def optimize_network_performance(self, vpc_name: str) -> bool:
-        """Optimize network performance for VPC"""        try:
+        """Optimize network performance for VPC"""
+        try:
             if vpc_name not in self.vpcs:
                 logger.error(f"VPC not found: {vpc_name}")
                 return False
@@ -504,7 +525,8 @@ class VPCManager:
     # Private methods
     
     def _initialize_cloud_clients(self) -> None:
-        """Initialize cloud provider clients"""        try:
+        """Initialize cloud provider clients"""
+        try:
             # AWS client
             if 'aws' in self.cloud_credentials:
                 self.cloud_clients['aws'] = boto3.Session(
@@ -535,7 +557,8 @@ class VPCManager:
             logger.error(f"Failed to initialize cloud clients: {e}")
     
     async def _load_configuration(self) -> None:
-        """Load VPC configuration"""        try:
+        """Load VPC configuration"""
+        try:
             with open(self.config_path, 'r') as f:
                 config_data = yaml.safe_load(f)
             
@@ -551,7 +574,8 @@ class VPCManager:
             logger.error(f"Failed to load configuration: {e}")
     
     async def _validate_vpc_configuration(self, vpc_config: VPCConfiguration) -> bool:
-        """Validate VPC configuration"""        try:
+        """Validate VPC configuration"""
+        try:
             # Validate CIDR block
             ipaddress.ip_network(vpc_config.cidr_block, strict=False)
             
@@ -577,7 +601,8 @@ class VPCManager:
             return False
     
     async def _validate_subnet(self, subnet: Subnet, vpc_config: VPCConfiguration) -> bool:
-        """Validate subnet configuration"""        try:
+        """Validate subnet configuration"""
+        try:
             # Check if subnet CIDR is within VPC CIDR
             vpc_network = ipaddress.ip_network(vpc_config.cidr_block, strict=False)
             subnet_network = ipaddress.ip_network(subnet.cidr_block, strict=False)
@@ -602,7 +627,8 @@ class VPCManager:
     # AWS-specific methods
     
     async def _create_aws_vpc(self, vpc_config: VPCConfiguration) -> bool:
-        """Create AWS VPC"""        try:
+        """Create AWS VPC"""
+        try:
             ec2 = self.cloud_clients['aws'].client('ec2')
             
             # Create VPC
@@ -653,7 +679,8 @@ class VPCManager:
             return False
     
     async def _create_aws_subnet(self, subnet: Subnet, vpc_config: VPCConfiguration) -> bool:
-        """Create AWS subnet"""        try:
+        """Create AWS subnet"""
+        try:
             ec2 = self.cloud_clients['aws'].client('ec2')
             vpc_id = self.active_resources[vpc_config.name]['vpc_id']
             

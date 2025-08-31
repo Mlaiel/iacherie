@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 import logging
 import hashlib
 import json
@@ -36,7 +37,8 @@ Base = declarative_base()
 
 
 class FingerprintType(Enum):
-    """Fingerprint algorithm types"""    CHROMAPRINT = "chromaprint"
+    """Fingerprint algorithm types"""
+    CHROMAPRINT = "chromaprint"
     SPECTRAL_HASH = "spectral_hash"
     MFCC_FEATURES = "mfcc_features"
     PERCEPTUAL_HASH = "perceptual_hash"
@@ -52,7 +54,8 @@ class FingerprintType(Enum):
 
 
 class ContentFormat(Enum):
-    """Content format types"""    AUDIO_MP3 = "audio_mp3"
+    """Content format types"""
+    AUDIO_MP3 = "audio_mp3"
     AUDIO_WAV = "audio_wav"
     AUDIO_FLAC = "audio_flac"
     AUDIO_AAC = "audio_aac"
@@ -77,7 +80,8 @@ class ContentFormat(Enum):
 
 
 class MatchingAlgorithm(Enum):
-    """Similarity matching algorithms"""    COSINE_SIMILARITY = "cosine_similarity"
+    """Similarity matching algorithms"""
+    COSINE_SIMILARITY = "cosine_similarity"
     EUCLIDEAN_DISTANCE = "euclidean_distance"
     HAMMING_DISTANCE = "hamming_distance"
     JACCARD_SIMILARITY = "jaccard_similarity"
@@ -88,7 +92,8 @@ class MatchingAlgorithm(Enum):
 
 
 class ProcessingStatus(Enum):
-    """Fingerprint processing status"""    PENDING = "pending"
+    """Fingerprint processing status"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -98,7 +103,8 @@ class ProcessingStatus(Enum):
 
 @dataclass
 class FingerprintCredentials:
-    """Fingerprint database authentication"""    database_url: str = os.getenv("FINGERPRINT_DATABASE_URL", "postgresql://user:pass@localhost:5432/fingerprints")
+    """Fingerprint database authentication"""
+    database_url: str = os.getenv("FINGERPRINT_DATABASE_URL", "postgresql://user:pass@localhost:5432/fingerprints")
     redis_url: str = os.getenv("FINGERPRINT_REDIS_URL", "redis://localhost:6379/4")
     elasticsearch_url: str = os.getenv("FINGERPRINT_ES_URL", "http://localhost:9200")
     vector_db_url: str = os.getenv("FINGERPRINT_VECTOR_URL", "http://localhost:8001")
@@ -115,7 +121,8 @@ class FingerprintCredentials:
 
 @dataclass
 class FingerprintQuality:
-    """Fingerprint quality metrics"""    distinctiveness: float = 0.0  # How unique is this fingerprint
+    """Fingerprint quality metrics"""
+    distinctiveness: float = 0.0  # How unique is this fingerprint
     robustness: float = 0.0       # Resistance to transformations
     compactness: float = 0.0      # Storage efficiency
     computation_time: float = 0.0  # Processing time in seconds
@@ -125,7 +132,8 @@ class FingerprintQuality:
 
 @dataclass
 class AudioFingerprintConfig:
-    """Audio fingerprinting configuration"""    sample_rate: int = 44100
+    """Audio fingerprinting configuration"""
+    sample_rate: int = 44100
     hop_length: int = 512
     n_fft: int = 2048
     n_mels: int = 128
@@ -148,7 +156,8 @@ class AudioFingerprintConfig:
 
 @dataclass
 class VideoFingerprintConfig:
-    """Video fingerprinting configuration"""    frame_rate: int = 1  # frames per second for analysis
+    """Video fingerprinting configuration"""
+    frame_rate: int = 1  # frames per second for analysis
     resize_width: int = 224
     resize_height: int = 224
     
@@ -171,7 +180,8 @@ class VideoFingerprintConfig:
 
 @dataclass
 class ImageFingerprintConfig:
-    """Image fingerprinting configuration"""    resize_dimensions: Tuple[int, int] = (256, 256)
+    """Image fingerprinting configuration"""
+    resize_dimensions: Tuple[int, int] = (256, 256)
     hash_size: int = 8
     
     # Feature extraction methods
@@ -193,7 +203,8 @@ class ImageFingerprintConfig:
 
 @dataclass
 class TextFingerprintConfig:
-    """Text fingerprinting configuration"""    max_length: int = 10000  # characters
+    """Text fingerprinting configuration"""
+    max_length: int = 10000  # characters
     min_length: int = 50
     
     # NLP models
@@ -213,7 +224,8 @@ class TextFingerprintConfig:
 
 
 class ContentFingerprint(Base):
-    """Master fingerprint table"""    __tablename__ = 'content_fingerprints_master'
+    """Master fingerprint table"""
+    __tablename__ = 'content_fingerprints_master'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, nullable=False, index=True)
@@ -248,7 +260,8 @@ class ContentFingerprint(Base):
 
 
 class AudioFingerprint(Base):
-    """Audio-specific fingerprints"""    __tablename__ = 'audio_fingerprints'
+    """Audio-specific fingerprints"""
+    __tablename__ = 'audio_fingerprints'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     master_fingerprint_id = Column(Integer, nullable=False, index=True)
@@ -279,7 +292,8 @@ class AudioFingerprint(Base):
 
 
 class VideoFingerprint(Base):
-    """Video-specific fingerprints"""    __tablename__ = 'video_fingerprints'
+    """Video-specific fingerprints"""
+    __tablename__ = 'video_fingerprints'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     master_fingerprint_id = Column(Integer, nullable=False, index=True)
@@ -315,7 +329,8 @@ class VideoFingerprint(Base):
 
 
 class ImageFingerprint(Base):
-    """Image-specific fingerprints"""    __tablename__ = 'image_fingerprints'
+    """Image-specific fingerprints"""
+    __tablename__ = 'image_fingerprints'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     master_fingerprint_id = Column(Integer, nullable=False, index=True)
@@ -351,7 +366,8 @@ class ImageFingerprint(Base):
 
 
 class TextFingerprint(Base):
-    """Text-specific fingerprints"""    __tablename__ = 'text_fingerprints'
+    """Text-specific fingerprints"""
+    __tablename__ = 'text_fingerprints'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     master_fingerprint_id = Column(Integer, nullable=False, index=True)
@@ -386,7 +402,8 @@ class TextFingerprint(Base):
 
 
 class SimilarityMatch(Base):
-    """Similarity matching results"""    __tablename__ = 'similarity_matches'
+    """Similarity matching results"""
+    __tablename__ = 'similarity_matches'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     source_fingerprint_id = Column(Integer, nullable=False, index=True)
@@ -419,7 +436,8 @@ class SimilarityMatch(Base):
 
 @dataclass
 class FingerprintConfig:
-    """Professional fingerprint configuration"""    
+    """Professional fingerprint configuration"""
+    
     # Database credentials
     credentials: FingerprintCredentials = field(default_factory=FingerprintCredentials)
     
@@ -451,7 +469,8 @@ class FingerprintConfig:
     match_history_retention_days: int = 365  # 1 year
     
     def get_content_config(self, content_type: str):
-        """Get configuration for specific content type"""        config_map = {
+        """Get configuration for specific content type"""
+        config_map = {
             "audio": self.audio_config,
             "video": self.video_config,
             "image": self.image_config,
@@ -461,7 +480,8 @@ class FingerprintConfig:
 
 
 class FingerprintManager:
-    """Professional fingerprint database manager"""    
+    """Professional fingerprint database manager"""
+    
     def __init__(self, config: FingerprintConfig):
         self.config = config
         self._engine = None
@@ -470,7 +490,8 @@ class FingerprintManager:
         self._is_initialized = False
         
     async def initialize(self) -> bool:
-        """Initialize fingerprint database connections"""        try:
+        """Initialize fingerprint database connections"""
+        try:
             # Initialize PostgreSQL connection
             self._engine = create_engine(
                 self.config.credentials.database_url,
@@ -505,13 +526,15 @@ class FingerprintManager:
             return False
     
     async def _test_connections(self):
-        """Test database connections"""        with self._engine.connect() as conn:
+        """Test database connections"""
+        with self._engine.connect() as conn:
             conn.execute("SELECT 1")
         
         await self._redis_pool.ping()
     
     async def generate_content_hash(self, content: bytes, algorithm: str = "sha256") -> str:
-        """Generate cryptographic hash of content"""        if algorithm == "sha256":
+        """Generate cryptographic hash of content"""
+        if algorithm == "sha256":
             return hashlib.sha256(content).hexdigest()
         elif algorithm == "md5":
             return hashlib.md5(content).hexdigest()
@@ -524,7 +547,8 @@ class FingerprintManager:
                                       content_type: str,
                                       content_format: ContentFormat,
                                       metadata: Optional[Dict] = None) -> int:
-        """Create master fingerprint record"""        try:
+        """Create master fingerprint record"""
+        try:
             with self._session_factory() as session:
                 fingerprint = ContentFingerprint(
                     user_id=user_id,
@@ -549,7 +573,8 @@ class FingerprintManager:
     async def store_audio_fingerprint(self,
                                     master_id: int,
                                     fingerprint_data: Dict[str, Any]) -> int:
-        """Store audio fingerprint data"""        try:
+        """Store audio fingerprint data"""
+        try:
             with self._session_factory() as session:
                 audio_fp = AudioFingerprint(
                     master_fingerprint_id=master_id,
@@ -589,7 +614,8 @@ class FingerprintManager:
                                  content_hash: str,
                                  content_type: str,
                                  threshold: float = None) -> List[Dict]:
-        """Find similar content using fingerprint matching"""        try:
+        """Find similar content using fingerprint matching"""
+        try:
             if threshold is None:
                 threshold = self.config.similarity_threshold
                 
@@ -629,7 +655,8 @@ class FingerprintManager:
             return []
     
     async def _calculate_similarity(self, hash1: str, hash2: str) -> float:
-        """Calculate similarity between two content hashes"""        # Simplified implementation - in production would use
+        """Calculate similarity between two content hashes"""
+        # Simplified implementation - in production would use
         # appropriate similarity algorithms based on content type
         if hash1 == hash2:
             return 1.0
@@ -648,7 +675,8 @@ class FingerprintManager:
                                     similarity: float,
                                     algorithm: MatchingAlgorithm,
                                     confidence: float) -> int:
-        """Record similarity match result"""        try:
+        """Record similarity match result"""
+        try:
             with self._session_factory() as session:
                 match = SimilarityMatch(
                     source_fingerprint_id=source_id,
@@ -672,7 +700,8 @@ class FingerprintManager:
             raise
     
     async def get_fingerprint_statistics(self, user_id: Optional[int] = None) -> Dict[str, Any]:
-        """Get fingerprint processing statistics"""        try:
+        """Get fingerprint processing statistics"""
+        try:
             with self._session_factory() as session:
                 base_query = session.query(ContentFingerprint)
                 if user_id:
@@ -709,7 +738,8 @@ class FingerprintManager:
             return {"error": str(e)}
     
     async def cleanup_old_fingerprints(self):
-        """Cleanup old fingerprint data"""        try:
+        """Cleanup old fingerprint data"""
+        try:
             cutoff_date = datetime.utcnow() - timedelta(days=self.config.fingerprint_retention_days)
             
             with self._session_factory() as session:
@@ -726,7 +756,8 @@ class FingerprintManager:
             logger.error(f"Failed to cleanup old fingerprints: {e}")
     
     async def shutdown(self):
-        """Shutdown fingerprint manager"""        try:
+        """Shutdown fingerprint manager"""
+        try:
             if self._redis_pool:
                 await self._redis_pool.close()
             
@@ -741,11 +772,13 @@ class FingerprintManager:
 
 
 def create_fingerprint_config() -> FingerprintConfig:
-    """Create default fingerprint configuration"""    return FingerprintConfig()
+    """Create default fingerprint configuration"""
+    return FingerprintConfig()
 
 
 def create_fingerprint_manager(config: Optional[FingerprintConfig] = None) -> FingerprintManager:
-    """Create fingerprint manager with configuration"""    if config is None:
+    """Create fingerprint manager with configuration"""
+    if config is None:
         config = create_fingerprint_config()
     return FingerprintManager(config)
 

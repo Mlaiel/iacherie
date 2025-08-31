@@ -11,7 +11,8 @@ This cutting-edge collaboration intelligence system is protected proprietary tec
 Any unauthorized use, copying, or distribution will trigger immediate legal action.
 
 Business Logic: Profile Analysis → Compatibility Assessment → Partnership Discovery → Collaboration Optimization → Synergy Maximization → Growth Amplification
-"""import asyncio
+"""
+import asyncio
 import json
 import uuid
 import hashlib
@@ -55,7 +56,8 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of collaborations"""    CONTENT_EXCHANGE = "content_exchange"
+    """Types of collaborations"""
+    CONTENT_EXCHANGE = "content_exchange"
     JOINT_PROJECT = "joint_project"
     CROSS_PROMOTION = "cross_promotion"
     GUEST_APPEARANCE = "guest_appearance"
@@ -70,7 +72,8 @@ class CollaborationType(Enum):
 
 
 class CreatorCategory(Enum):
-    """Creator categories for matching"""    MUSICIAN = "musician"
+    """Creator categories for matching"""
+    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -88,7 +91,8 @@ class CreatorCategory(Enum):
 
 
 class CompatibilityFactor(Enum):
-    """Factors for compatibility assessment"""    AUDIENCE_OVERLAP = "audience_overlap"
+    """Factors for compatibility assessment"""
+    AUDIENCE_OVERLAP = "audience_overlap"
     CONTENT_SYNERGY = "content_synergy"
     BRAND_ALIGNMENT = "brand_alignment"
     ENGAGEMENT_SIMILARITY = "engagement_similarity"
@@ -101,7 +105,8 @@ class CompatibilityFactor(Enum):
 
 
 class PartnershipStatus(Enum):
-    """Partnership status"""    DISCOVERED = "discovered"
+    """Partnership status"""
+    DISCOVERED = "discovered"
     CONTACTED = "contacted"
     NEGOTIATING = "negotiating"
     ACTIVE = "active"
@@ -112,7 +117,8 @@ class PartnershipStatus(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile for matching"""    creator_id: str
+    """Comprehensive creator profile for matching"""
+    creator_id: str
     name: str
     category: CreatorCategory
     platforms: List[Platform]
@@ -221,7 +227,8 @@ class CreatorProfile:
 
 @dataclass
 class CompatibilityScore:
-    """Compatibility assessment between creators"""    compatibility_id: str
+    """Compatibility assessment between creators"""
+    compatibility_id: str
     creator_1_id: str
     creator_2_id: str
     overall_score: float
@@ -278,7 +285,8 @@ class CompatibilityScore:
 
 @dataclass
 class CollaborationOpportunity:
-    """Identified collaboration opportunity"""    opportunity_id: str
+    """Identified collaboration opportunity"""
+    opportunity_id: str
     primary_creator_id: str
     partner_creator_ids: List[str]
     collaboration_type: CollaborationType
@@ -359,7 +367,8 @@ class CollaborationOpportunity:
 
 @dataclass
 class PartnershipTracker:
-    """Track active partnership performance"""    partnership_id: str
+    """Track active partnership performance"""
+    partnership_id: str
     opportunity_id: str
     creators: List[str]
     collaboration_type: CollaborationType
@@ -417,7 +426,8 @@ class PartnershipTracker:
 
 
 class CreatorCompatibilityEngine:
-    """Engine for assessing creator compatibility and synergy"""    
+    """Engine for assessing creator compatibility and synergy"""
+    
     def __init__(self):
         self.compatibility_cache = {}
         self.nlp_processor = None
@@ -425,7 +435,8 @@ class CreatorCompatibilityEngine:
         self._initialize_nlp()
     
     def _initialize_nlp(self):
-        """Initialize NLP processing capabilities"""        if NLP_SIMILARITY_AVAILABLE:
+        """Initialize NLP processing capabilities"""
+        if NLP_SIMILARITY_AVAILABLE:
             try:
                 # Initialize spaCy model for semantic analysis
                 self.nlp_processor = spacy.load("en_core_web_sm")
@@ -445,7 +456,8 @@ class CreatorCompatibilityEngine:
                                     creator1: CreatorProfile,
                                     creator2: CreatorProfile,
                                     collaboration_type: Optional[CollaborationType] = None) -> CompatibilityScore:
-        """Calculate comprehensive compatibility between creators"""        try:
+        """Calculate comprehensive compatibility between creators"""
+        try:
             # Check cache
             cache_key = f"{creator1.creator_id}_{creator2.creator_id}_{collaboration_type.value if collaboration_type else 'general'}"
             if cache_key in self.compatibility_cache:
@@ -521,7 +533,8 @@ class CreatorCompatibilityEngine:
             raise OptimizationError(f"Failed to calculate compatibility: {str(e)}")
     
     async def _calculate_audience_overlap(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate audience overlap score"""        try:
+        """Calculate audience overlap score"""
+        try:
             overlap_score = 0.0
             
             # Demographics overlap
@@ -569,7 +582,8 @@ class CreatorCompatibilityEngine:
             return 0.5
     
     async def _calculate_content_synergy(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate content synergy potential"""        try:
+        """Calculate content synergy potential"""
+        try:
             synergy_score = 0.0
             
             # Theme compatibility
@@ -620,7 +634,8 @@ class CreatorCompatibilityEngine:
             return 0.5
     
     async def _calculate_brand_alignment(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate brand alignment score"""        try:
+        """Calculate brand alignment score"""
+        try:
             alignment_score = 0.0
             
             # Keyword similarity
@@ -646,7 +661,8 @@ class CreatorCompatibilityEngine:
             return 0.5
     
     def _calculate_engagement_similarity(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate engagement rate similarity"""        try:
+        """Calculate engagement rate similarity"""
+        try:
             if creator1.engagement_rate == 0 and creator2.engagement_rate == 0:
                 return 1.0
             
@@ -664,7 +680,8 @@ class CreatorCompatibilityEngine:
             return 0.5
     
     def _calculate_platform_compatibility(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate platform compatibility"""        try:
+        """Calculate platform compatibility"""
+        try:
             platforms1 = set(creator1.platforms)
             platforms2 = set(creator2.platforms)
             
@@ -691,7 +708,8 @@ class CreatorCompatibilityEngine:
             return 0.5
     
     async def _calculate_value_alignment(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate value alignment using NLP"""        try:
+        """Calculate value alignment using NLP"""
+        try:
             values1 = creator1.values
             values2 = creator2.values
             
@@ -728,7 +746,8 @@ class CreatorCompatibilityEngine:
             return 0.5
     
     def _calculate_skill_complementarity(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate skill complementarity"""        try:
+        """Calculate skill complementarity"""
+        try:
             # Different categories often bring complementary skills
             if creator1.category != creator2.category:
                 base_complementarity = 0.7
@@ -750,7 +769,8 @@ class CreatorCompatibilityEngine:
             return 0.5
     
     def _calculate_geographic_compatibility(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate geographic compatibility"""        try:
+        """Calculate geographic compatibility"""
+        try:
             loc1 = creator1.location
             loc2 = creator2.location
             
@@ -772,7 +792,8 @@ class CreatorCompatibilityEngine:
             return 0.7
     
     def _calculate_language_compatibility(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate language compatibility"""        try:
+        """Calculate language compatibility"""
+        try:
             langs1 = set([lang.lower() for lang in creator1.languages])
             langs2 = set([lang.lower() for lang in creator2.languages])
             
@@ -793,7 +814,8 @@ class CreatorCompatibilityEngine:
     def _calculate_weighted_score(self, 
                                 factor_scores: Dict[CompatibilityFactor, float],
                                 collaboration_type: Optional[CollaborationType]) -> float:
-        """Calculate weighted overall compatibility score"""        try:
+        """Calculate weighted overall compatibility score"""
+        try:
             # Default weights
             weights = {
                 CompatibilityFactor.AUDIENCE_OVERLAP: 0.2,
@@ -841,7 +863,8 @@ class CreatorCompatibilityEngine:
                                       creator1: CreatorProfile,
                                       creator2: CreatorProfile,
                                       factor_scores: Dict[CompatibilityFactor, float]) -> Tuple[List[str], List[str], List[str]]:
-        """Analyze compatibility and generate insights"""        strengths = []
+        """Analyze compatibility and generate insights"""
+        strengths = []
         challenges = []
         opportunities = []
         
@@ -887,7 +910,8 @@ class CreatorCompatibilityEngine:
                                      creator1: CreatorProfile,
                                      creator2: CreatorProfile,
                                      factor_scores: Dict[CompatibilityFactor, float]) -> List[CollaborationType]:
-        """Recommend optimal collaboration types"""        recommendations = []
+        """Recommend optimal collaboration types"""
+        recommendations = []
         
         try:
             audience_overlap = factor_scores.get(CompatibilityFactor.AUDIENCE_OVERLAP, 0.5)
@@ -930,7 +954,8 @@ class CreatorCompatibilityEngine:
                                  creator1: CreatorProfile,
                                  creator2: CreatorProfile,
                                  factor_scores: Dict[CompatibilityFactor, float]) -> List[Platform]:
-        """Suggest optimal platforms for collaboration"""        try:
+        """Suggest optimal platforms for collaboration"""
+        try:
             shared_platforms = list(set(creator1.platforms).intersection(set(creator2.platforms)))
             
             # Sort by popularity and reach potential
@@ -964,7 +989,8 @@ class CreatorCompatibilityEngine:
                                      creator2: CreatorProfile,
                                      factor_scores: Dict[CompatibilityFactor, float],
                                      collaboration_type: Optional[CollaborationType]) -> Dict[str, Any]:
-        """Predict collaboration success probability"""        try:
+        """Predict collaboration success probability"""
+        try:
             # Base success rate from overall compatibility
             overall_score = sum(factor_scores.values()) / len(factor_scores)
             base_success_rate = overall_score * 0.8  # Conservative estimate
@@ -1007,7 +1033,8 @@ class CreatorCompatibilityEngine:
             }
     
     def _calculate_data_completeness(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate data completeness for confidence assessment"""        try:
+        """Calculate data completeness for confidence assessment"""
+        try:
             required_fields = [
                 'total_followers', 'engagement_rate', 'audience_demographics',
                 'content_themes', 'brand_keywords', 'platforms'
@@ -1024,7 +1051,8 @@ class CreatorCompatibilityEngine:
             return 0.5
     
     def _calculate_distribution_similarity(self, dist1: Dict, dist2: Dict) -> float:
-        """Calculate similarity between two distributions"""        try:
+        """Calculate similarity between two distributions"""
+        try:
             if not dist1 or not dist2:
                 return 0.5
             

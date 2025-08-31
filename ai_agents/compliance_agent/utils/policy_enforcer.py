@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import uuid
@@ -55,7 +56,8 @@ from ...utils.rate_limiter import RateLimiter
 logger = logging.getLogger(__name__)
 
 class PolicyType(Enum):
-    """Types of compliance policies"""    GDPR_POLICY = "gdpr_policy"
+    """Types of compliance policies"""
+    GDPR_POLICY = "gdpr_policy"
     DMCA_POLICY = "dmca_policy"
     PLATFORM_POLICY = "platform_policy"
     CONTENT_POLICY = "content_policy"
@@ -65,7 +67,8 @@ class PolicyType(Enum):
     ACCESS_CONTROL_POLICY = "access_control_policy"
 
 class EnforcementAction(Enum):
-    """Types of enforcement actions"""    WARN = "warn"
+    """Types of enforcement actions"""
+    WARN = "warn"
     BLOCK = "block"
     QUARANTINE = "quarantine"
     DELETE = "delete"
@@ -76,7 +79,8 @@ class EnforcementAction(Enum):
     REMEDIATE = "remediate"
 
 class ViolationSeverity(Enum):
-    """Violation severity levels"""    INFO = "info"
+    """Violation severity levels"""
+    INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -84,7 +88,8 @@ class ViolationSeverity(Enum):
     EMERGENCY = "emergency"
 
 class EnforcementContext(Enum):
-    """Context where enforcement occurs"""    USER_ACTION = "user_action"
+    """Context where enforcement occurs"""
+    USER_ACTION = "user_action"
     CONTENT_UPLOAD = "content_upload"
     DATA_ACCESS = "data_access"
     API_CALL = "api_call"
@@ -93,7 +98,8 @@ class EnforcementContext(Enum):
 
 @dataclass
 class PolicyRule:
-    """Individual policy rule definition"""    id: str
+    """Individual policy rule definition"""
+    id: str
     name: str
     policy_type: PolicyType
     description: str
@@ -108,7 +114,8 @@ class PolicyRule:
 
 @dataclass
 class PolicyViolation:
-    """Policy violation record"""    id: str
+    """Policy violation record"""
+    id: str
     rule_id: str
     entity_type: str
     entity_id: str
@@ -124,7 +131,8 @@ class PolicyViolation:
 
 @dataclass
 class EnforcementResult:
-    """Result of policy enforcement"""    success: bool
+    """Result of policy enforcement"""
+    success: bool
     violations: List[PolicyViolation]
     actions_taken: List[str]
     blocked_operations: List[str]
@@ -133,13 +141,16 @@ class EnforcementResult:
     execution_time: float
 
 class PolicyEnforcer:
-    """    Advanced policy enforcement engine with real-time compliance monitoring
+    """
+    Advanced policy enforcement engine with real-time compliance monitoring
     
     Enforces compliance policies across all platform operations with automated
     violation detection, remediation, and escalation capabilities.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize policy enforcer with comprehensive rule engine"""        self.config = config or {}
+        """Initialize policy enforcer with comprehensive rule engine"""
+        self.config = config or {}
         self.encryption = ContentEncryption()
         self.performance_monitor = PerformanceMonitor()
         self.audit_logger = AuditLogger()
@@ -168,7 +179,8 @@ class PolicyEnforcer:
         logger.info("PolicyEnforcer initialized successfully")
     
     async def initialize_enforcement_system(self):
-        """Initialize comprehensive policy enforcement system"""        try:
+        """Initialize comprehensive policy enforcement system"""
+        try:
             # Initialize policy rules
             await self._initialize_policy_rules()
             
@@ -185,7 +197,8 @@ class PolicyEnforcer:
             raise ComplianceError(f"Enforcement system initialization failed: {e}")
     
     async def _initialize_policy_rules(self):
-        """Initialize comprehensive policy rules"""        try:
+        """Initialize comprehensive policy rules"""
+        try:
             # GDPR Policy Rules
             gdpr_rules = [
                 PolicyRule(
@@ -351,7 +364,8 @@ class PolicyEnforcer:
             raise ComplianceError(f"Policy rule initialization failed: {e}")
     
     def _initialize_enforcement_handlers(self):
-        """Initialize enforcement action handlers"""        self.enforcement_handlers = {
+        """Initialize enforcement action handlers"""
+        self.enforcement_handlers = {
             EnforcementAction.WARN: self._handle_warn,
             EnforcementAction.BLOCK: self._handle_block,
             EnforcementAction.QUARANTINE: self._handle_quarantine,
@@ -364,7 +378,8 @@ class PolicyEnforcer:
         }
     
     def _initialize_context_validators(self):
-        """Initialize context-specific validators"""        self.context_validators = {
+        """Initialize context-specific validators"""
+        self.context_validators = {
             EnforcementContext.USER_ACTION: self._validate_user_action,
             EnforcementContext.CONTENT_UPLOAD: self._validate_content_upload,
             EnforcementContext.DATA_ACCESS: self._validate_data_access,
@@ -375,7 +390,8 @@ class PolicyEnforcer:
     
     async def enforce_policies(self, context: EnforcementContext, entity_type: str,
                              entity_id: str, operation_data: Dict[str, Any]) -> EnforcementResult:
-        """        Comprehensive policy enforcement for given context and operation
+        """
+        Comprehensive policy enforcement for given context and operation
         
         Args:
             context: Enforcement context
@@ -385,7 +401,8 @@ class PolicyEnforcer:
             
         Returns:
             EnforcementResult with violations and actions taken
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Rate limit enforcement calls
@@ -507,7 +524,8 @@ class PolicyEnforcer:
             )
     
     async def _evaluate_rule_condition(self, rule: PolicyRule, operation_data: Dict[str, Any]) -> bool:
-        """Evaluate if a rule condition is met"""        try:
+        """Evaluate if a rule condition is met"""
+        try:
             # Simple condition evaluation (would be more sophisticated in production)
             condition = rule.condition.lower()
             
@@ -541,7 +559,8 @@ class PolicyEnforcer:
             return False
     
     async def _check_consent_condition(self, rule: PolicyRule, data: Dict[str, Any]) -> bool:
-        """Check GDPR consent conditions"""        try:
+        """Check GDPR consent conditions"""
+        try:
             user_data = data.get('user', {})
             operation = data.get('operation', {})
             
@@ -556,7 +575,8 @@ class PolicyEnforcer:
             return False
     
     async def _check_retention_condition(self, rule: PolicyRule, data: Dict[str, Any]) -> bool:
-        """Check data retention conditions"""        try:
+        """Check data retention conditions"""
+        try:
             data_info = data.get('data', {})
             retention_days = data_info.get('retention_days', 0)
             max_retention = rule.parameters.get('max_retention_days', 730)
@@ -568,7 +588,8 @@ class PolicyEnforcer:
             return False
     
     async def _check_size_condition(self, rule: PolicyRule, data: Dict[str, Any]) -> bool:
-        """Check content size conditions"""        try:
+        """Check content size conditions"""
+        try:
             content = data.get('content', {})
             size_mb = content.get('size_mb', 0)
             max_size = rule.parameters.get('max_size_mb', 1024)
@@ -580,7 +601,8 @@ class PolicyEnforcer:
             return False
     
     async def _check_rate_limit_condition(self, rule: PolicyRule, data: Dict[str, Any]) -> bool:
-        """Check API rate limit conditions"""        try:
+        """Check API rate limit conditions"""
+        try:
             user_data = data.get('user', {})
             requests_per_hour = user_data.get('requests_per_hour', 0)
             rate_limit = rule.parameters.get('requests_per_hour', 1000)
@@ -592,7 +614,8 @@ class PolicyEnforcer:
             return False
     
     async def _check_security_condition(self, rule: PolicyRule, data: Dict[str, Any]) -> bool:
-        """Check security-related conditions"""        try:
+        """Check security-related conditions"""
+        try:
             login_data = data.get('login', {})
             failed_attempts = login_data.get('failed_attempts', 0)
             unusual_location = login_data.get('unusual_location', False)
@@ -605,7 +628,8 @@ class PolicyEnforcer:
             return False
     
     async def _check_content_condition(self, rule: PolicyRule, data: Dict[str, Any]) -> bool:
-        """Check content policy conditions"""        try:
+        """Check content policy conditions"""
+        try:
             content = data.get('content', {})
             return content.get('contains_prohibited_material', False)
             
@@ -614,7 +638,8 @@ class PolicyEnforcer:
             return False
     
     async def _check_dmca_condition(self, rule: PolicyRule, data: Dict[str, Any]) -> bool:
-        """Check DMCA-related conditions"""        try:
+        """Check DMCA-related conditions"""
+        try:
             content = data.get('content', {})
             dmca_notice = content.get('dmca_notice_received', False)
             content_status = content.get('status', 'active')
@@ -626,7 +651,8 @@ class PolicyEnforcer:
             return False
     
     async def _check_repeat_offender_condition(self, rule: PolicyRule, data: Dict[str, Any]) -> bool:
-        """Check repeat offender conditions"""        try:
+        """Check repeat offender conditions"""
+        try:
             user_data = data.get('user', {})
             violations = user_data.get('dmca_violations', 0)
             account_status = user_data.get('account_status', 'inactive')
@@ -639,7 +665,8 @@ class PolicyEnforcer:
             return False
     
     async def _check_encryption_condition(self, rule: PolicyRule, data: Dict[str, Any]) -> bool:
-        """Check encryption requirement conditions"""        try:
+        """Check encryption requirement conditions"""
+        try:
             data_info = data.get('data', {})
             contains_personal = data_info.get('contains_personal_info', False)
             is_encrypted = data_info.get('encrypted', True)
@@ -651,7 +678,8 @@ class PolicyEnforcer:
             return False
     
     async def _check_sharing_condition(self, rule: PolicyRule, data: Dict[str, Any]) -> bool:
-        """Check third-party sharing conditions"""        try:
+        """Check third-party sharing conditions"""
+        try:
             sharing_data = data.get('sharing', {})
             user_data = data.get('user', {})
             
@@ -667,7 +695,8 @@ class PolicyEnforcer:
     async def _execute_enforcement_action(self, action: EnforcementAction,
                                         violation: PolicyViolation,
                                         operation_data: Dict[str, Any]) -> bool:
-        """Execute the specified enforcement action"""        try:
+        """Execute the specified enforcement action"""
+        try:
             handler = self.enforcement_handlers.get(action)
             if handler:
                 result = await handler(violation, operation_data)
@@ -681,7 +710,8 @@ class PolicyEnforcer:
             return False
     
     async def _handle_warn(self, violation: PolicyViolation, data: Dict[str, Any]) -> bool:
-        """Handle warning enforcement action"""        try:
+        """Handle warning enforcement action"""
+        try:
             warning_message = f"Policy Warning: {violation.rule_id} - {data.get('operation', {}).get('description', 'Policy violation detected')}"
             
             # Log warning
@@ -697,7 +727,8 @@ class PolicyEnforcer:
             return False
     
     async def _handle_block(self, violation: PolicyViolation, data: Dict[str, Any]) -> bool:
-        """Handle blocking enforcement action"""        try:
+        """Handle blocking enforcement action"""
+        try:
             logger.warning(f"Blocking operation due to policy violation: {violation.id}")
             
             # Block the operation (implementation would integrate with access control)
@@ -713,7 +744,8 @@ class PolicyEnforcer:
             return False
     
     async def _handle_quarantine(self, violation: PolicyViolation, data: Dict[str, Any]) -> bool:
-        """Handle quarantine enforcement action"""        try:
+        """Handle quarantine enforcement action"""
+        try:
             logger.warning(f"Quarantining entity due to policy violation: {violation.id}")
             
             # Quarantine the entity (implementation would move to quarantine area)
@@ -729,7 +761,8 @@ class PolicyEnforcer:
             return False
     
     async def _handle_delete(self, violation: PolicyViolation, data: Dict[str, Any]) -> bool:
-        """Handle deletion enforcement action"""        try:
+        """Handle deletion enforcement action"""
+        try:
             logger.warning(f"Deleting entity due to policy violation: {violation.id}")
             
             # Delete the entity (implementation would perform actual deletion)
@@ -750,7 +783,8 @@ class PolicyEnforcer:
             return False
     
     async def _handle_suspend(self, violation: PolicyViolation, data: Dict[str, Any]) -> bool:
-        """Handle suspension enforcement action"""        try:
+        """Handle suspension enforcement action"""
+        try:
             logger.warning(f"Suspending entity due to policy violation: {violation.id}")
             
             # Suspend the entity (implementation would disable account/access)
@@ -766,7 +800,8 @@ class PolicyEnforcer:
             return False
     
     async def _handle_notify(self, violation: PolicyViolation, data: Dict[str, Any]) -> bool:
-        """Handle notification enforcement action"""        try:
+        """Handle notification enforcement action"""
+        try:
             # Send notification to relevant stakeholders
             await self._send_policy_notification(violation, "Policy violation detected - notification required")
             
@@ -777,7 +812,8 @@ class PolicyEnforcer:
             return False
     
     async def _handle_escalate(self, violation: PolicyViolation, data: Dict[str, Any]) -> bool:
-        """Handle escalation enforcement action"""        try:
+        """Handle escalation enforcement action"""
+        try:
             logger.critical(f"Escalating policy violation: {violation.id}")
             
             # Escalate to appropriate team (implementation would integrate with ticketing system)
@@ -790,7 +826,8 @@ class PolicyEnforcer:
             return False
     
     async def _handle_log_only(self, violation: PolicyViolation, data: Dict[str, Any]) -> bool:
-        """Handle log-only enforcement action"""        try:
+        """Handle log-only enforcement action"""
+        try:
             # Just log the violation without taking action
             logger.info(f"Policy violation logged (no action): {violation.id}")
             
@@ -801,7 +838,8 @@ class PolicyEnforcer:
             return False
     
     async def _handle_remediate(self, violation: PolicyViolation, data: Dict[str, Any]) -> bool:
-        """Handle automated remediation enforcement action"""        try:
+        """Handle automated remediation enforcement action"""
+        try:
             logger.info(f"Attempting automated remediation for violation: {violation.id}")
             
             # Attempt automated remediation based on violation type
@@ -821,7 +859,8 @@ class PolicyEnforcer:
     
     # Validation methods for different contexts
     async def _validate_user_action(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate user action context"""        try:
+        """Validate user action context"""
+        try:
             user = data.get('user', {})
             if not user.get('user_id'):
                 return {'valid': False, 'reason': 'Missing user ID'}
@@ -832,7 +871,8 @@ class PolicyEnforcer:
             return {'valid': False, 'reason': f'Validation error: {str(e)}'}
     
     async def _validate_content_upload(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate content upload context"""        try:
+        """Validate content upload context"""
+        try:
             content = data.get('content', {})
             if not content.get('content_type'):
                 return {'valid': False, 'reason': 'Missing content type'}
@@ -843,7 +883,8 @@ class PolicyEnforcer:
             return {'valid': False, 'reason': f'Validation error: {str(e)}'}
     
     async def _validate_data_access(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate data access context"""        try:
+        """Validate data access context"""
+        try:
             access_data = data.get('access', {})
             if not access_data.get('resource'):
                 return {'valid': False, 'reason': 'Missing access resource'}
@@ -854,7 +895,8 @@ class PolicyEnforcer:
             return {'valid': False, 'reason': f'Validation error: {str(e)}'}
     
     async def _validate_api_call(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate API call context"""        try:
+        """Validate API call context"""
+        try:
             api_data = data.get('api', {})
             if not api_data.get('endpoint'):
                 return {'valid': False, 'reason': 'Missing API endpoint'}
@@ -865,7 +907,8 @@ class PolicyEnforcer:
             return {'valid': False, 'reason': f'Validation error: {str(e)}'}
     
     async def _validate_system_operation(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate system operation context"""        try:
+        """Validate system operation context"""
+        try:
             operation = data.get('operation', {})
             if not operation.get('type'):
                 return {'valid': False, 'reason': 'Missing operation type'}
@@ -876,7 +919,8 @@ class PolicyEnforcer:
             return {'valid': False, 'reason': f'Validation error: {str(e)}'}
     
     async def _validate_external_request(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate external request context"""        try:
+        """Validate external request context"""
+        try:
             external_data = data.get('external', {})
             if not external_data.get('source'):
                 return {'valid': False, 'reason': 'Missing external source'}
@@ -888,43 +932,53 @@ class PolicyEnforcer:
     
     # Helper methods for enforcement actions
     async def _send_policy_warning(self, violation: PolicyViolation, message: str):
-        """Send policy warning notification"""        # Placeholder for notification system integration
+        """Send policy warning notification"""
+        # Placeholder for notification system integration
         logger.info(f"Sending policy warning for violation {violation.id}: {message}")
     
     async def _send_policy_notification(self, violation: PolicyViolation, message: str):
-        """Send policy notification"""        # Placeholder for notification system integration
+        """Send policy notification"""
+        # Placeholder for notification system integration
         logger.info(f"Sending policy notification for violation {violation.id}: {message}")
     
     async def _block_operation(self, violation: PolicyViolation, data: Dict[str, Any]):
-        """Block the operation that triggered the violation"""        # Placeholder for access control integration
+        """Block the operation that triggered the violation"""
+        # Placeholder for access control integration
         logger.info(f"Blocking operation for violation {violation.id}")
     
     async def _quarantine_entity(self, violation: PolicyViolation, data: Dict[str, Any]):
-        """Quarantine the entity that triggered the violation"""        # Placeholder for quarantine system integration
+        """Quarantine the entity that triggered the violation"""
+        # Placeholder for quarantine system integration
         logger.info(f"Quarantining entity for violation {violation.id}")
     
     async def _schedule_quarantine_review(self, violation: PolicyViolation):
-        """Schedule review for quarantined entity"""        # Placeholder for review scheduling system
+        """Schedule review for quarantined entity"""
+        # Placeholder for review scheduling system
         logger.info(f"Scheduling quarantine review for violation {violation.id}")
     
     async def _delete_entity(self, violation: PolicyViolation, data: Dict[str, Any]):
-        """Delete the entity that triggered the violation"""        # Placeholder for deletion system integration
+        """Delete the entity that triggered the violation"""
+        # Placeholder for deletion system integration
         logger.info(f"Deleting entity for violation {violation.id}")
     
     async def _suspend_entity(self, violation: PolicyViolation, data: Dict[str, Any]):
-        """Suspend the entity that triggered the violation"""        # Placeholder for suspension system integration
+        """Suspend the entity that triggered the violation"""
+        # Placeholder for suspension system integration
         logger.info(f"Suspending entity for violation {violation.id}")
     
     async def _send_suspension_notification(self, violation: PolicyViolation):
-        """Send suspension notification"""        # Placeholder for notification system integration
+        """Send suspension notification"""
+        # Placeholder for notification system integration
         logger.info(f"Sending suspension notification for violation {violation.id}")
     
     async def _escalate_violation(self, violation: PolicyViolation, data: Dict[str, Any]):
-        """Escalate violation to appropriate team"""        # Placeholder for escalation system integration
+        """Escalate violation to appropriate team"""
+        # Placeholder for escalation system integration
         logger.info(f"Escalating violation {violation.id}")
     
     async def _attempt_automated_remediation(self, violation: PolicyViolation, data: Dict[str, Any]) -> bool:
-        """Attempt automated remediation of the violation"""        try:
+        """Attempt automated remediation of the violation"""
+        try:
             # Simple remediation logic based on violation type
             rule = self.policy_rules.get(violation.rule_id)
             if not rule:
@@ -944,22 +998,26 @@ class PolicyEnforcer:
             return False
     
     async def _remediate_gdpr_violation(self, violation: PolicyViolation, data: Dict[str, Any]) -> bool:
-        """Remediate GDPR-related violations"""        # Placeholder for GDPR-specific remediation
+        """Remediate GDPR-related violations"""
+        # Placeholder for GDPR-specific remediation
         logger.info(f"Attempting GDPR remediation for violation {violation.id}")
         return True
     
     async def _remediate_security_violation(self, violation: PolicyViolation, data: Dict[str, Any]) -> bool:
-        """Remediate security-related violations"""        # Placeholder for security-specific remediation
+        """Remediate security-related violations"""
+        # Placeholder for security-specific remediation
         logger.info(f"Attempting security remediation for violation {violation.id}")
         return True
     
     async def _remediate_content_violation(self, violation: PolicyViolation, data: Dict[str, Any]) -> bool:
-        """Remediate content-related violations"""        # Placeholder for content-specific remediation
+        """Remediate content-related violations"""
+        # Placeholder for content-specific remediation
         logger.info(f"Attempting content remediation for violation {violation.id}")
         return True
     
     async def _cache_enforcement_result(self, entity_type: str, entity_id: str, violations: List[PolicyViolation]):
-        """Cache enforcement results in Redis"""        if not self.redis_client:
+        """Cache enforcement results in Redis"""
+        if not self.redis_client:
             return
         
         try:
@@ -979,7 +1037,8 @@ class PolicyEnforcer:
             logger.warning(f"Failed to cache enforcement result: {e}")
     
     async def get_enforcement_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive enforcement statistics"""        try:
+        """Get comprehensive enforcement statistics"""
+        try:
             # Calculate statistics
             total_violations = len(self.violations)
             
@@ -1025,15 +1084,18 @@ class PolicyEnforcer:
 
 
 class ViolationDetector:
-    """    Advanced violation detection system with machine learning capabilities
-    """    
+    """
+    Advanced violation detection system with machine learning capabilities
+    """
+    
     def __init__(self, policy_enforcer: PolicyEnforcer):
         self.enforcer = policy_enforcer
         self.anomaly_patterns = {}
         self.ml_models = {}
     
     async def detect_patterns(self, time_window_hours: int = 24) -> Dict[str, Any]:
-        """Detect violation patterns and anomalies"""        try:
+        """Detect violation patterns and anomalies"""
+        try:
             cutoff_time = datetime.now(timezone.utc) - timedelta(hours=time_window_hours)
             
             # Get recent violations
@@ -1057,7 +1119,8 @@ class ViolationDetector:
             return {'error': str(e)}
     
     def _analyze_temporal_patterns(self, violations: List[PolicyViolation]) -> Dict[str, Any]:
-        """Analyze temporal violation patterns"""        # Group violations by hour
+        """Analyze temporal violation patterns"""
+        # Group violations by hour
         hourly_counts = {}
         for violation in violations:
             hour = violation.timestamp.hour
@@ -1073,7 +1136,8 @@ class ViolationDetector:
         }
     
     def _analyze_entity_patterns(self, violations: List[PolicyViolation]) -> Dict[str, Any]:
-        """Analyze entity-based violation patterns"""        entity_counts = {}
+        """Analyze entity-based violation patterns"""
+        entity_counts = {}
         for violation in violations:
             entity_key = f"{violation.entity_type}:{violation.entity_id}"
             entity_counts[entity_key] = entity_counts.get(entity_key, 0) + 1
@@ -1089,7 +1153,8 @@ class ViolationDetector:
         }
     
     def _analyze_rule_patterns(self, violations: List[PolicyViolation]) -> Dict[str, Any]:
-        """Analyze rule-based violation patterns"""        rule_counts = {}
+        """Analyze rule-based violation patterns"""
+        rule_counts = {}
         for violation in violations:
             rule_counts[violation.rule_id] = rule_counts.get(violation.rule_id, 0) + 1
         
@@ -1103,7 +1168,8 @@ class ViolationDetector:
         }
     
     def _detect_anomalies(self, violations: List[PolicyViolation]) -> List[Dict[str, Any]]:
-        """Detect anomalous violation patterns"""        anomalies = []
+        """Detect anomalous violation patterns"""
+        anomalies = []
         
         # Simple anomaly detection (would use ML in production)
         

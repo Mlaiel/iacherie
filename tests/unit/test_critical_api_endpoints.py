@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -22,7 +23,8 @@ Focused unit tests for the most critical API endpoints:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -40,10 +42,12 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 
 class TestAuthenticationEndpoints:
-    """Unit tests for Authentication API endpoints - critical for security"""    
+    """Unit tests for Authentication API endpoints - critical for security"""
+    
     @pytest.fixture
     def mock_auth_service(self):
-        """Mock authentication service"""        service = Mock()
+        """Mock authentication service"""
+        service = Mock()
         service.register_user = AsyncMock()
         service.authenticate_user = AsyncMock()
         service.validate_token = AsyncMock()
@@ -54,7 +58,8 @@ class TestAuthenticationEndpoints:
     
     @pytest.fixture
     def valid_user_data(self):
-        """Valid user registration data"""        return {
+        """Valid user registration data"""
+        return {
             'email': 'test@example.com',
             'username': 'testuser',
             'password': 'SecurePassword123!',
@@ -66,14 +71,16 @@ class TestAuthenticationEndpoints:
     
     @pytest.fixture
     def valid_login_data(self):
-        """Valid login credentials"""        return {
+        """Valid login credentials"""
+        return {
             'email': 'test@example.com',
             'password': 'SecurePassword123!'
         }
     
     @pytest.mark.asyncio
     async def test_user_registration_success(self, mock_auth_service, valid_user_data):
-        """Test successful user registration"""        # Mock successful registration response
+        """Test successful user registration"""
+        # Mock successful registration response
         expected_response = {
             'user_id': 'user_123456789',
             'email': 'test@example.com',
@@ -98,7 +105,8 @@ class TestAuthenticationEndpoints:
     
     @pytest.mark.asyncio
     async def test_user_login_success(self, mock_auth_service, valid_login_data):
-        """Test successful user authentication"""        # Mock successful login response
+        """Test successful user authentication"""
+        # Mock successful login response
         expected_response = {
             'user_id': 'user_123456789',
             'access_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
@@ -129,7 +137,8 @@ class TestAuthenticationEndpoints:
     
     @pytest.mark.asyncio
     async def test_token_validation(self, mock_auth_service):
-        """Test JWT token validation"""        # Mock token validation
+        """Test JWT token validation"""
+        # Mock token validation
         test_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzEyMzQ1Njc4OSIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImV4cCI6MTczNzAyNzEwMH0.test_signature'
         
         expected_validation = {
@@ -154,7 +163,8 @@ class TestAuthenticationEndpoints:
     
     @pytest.mark.asyncio
     async def test_password_reset_flow(self, mock_auth_service):
-        """Test password reset functionality"""        # Mock password reset request
+        """Test password reset functionality"""
+        # Mock password reset request
         reset_request = {
             'email': 'test@example.com',
             'reset_method': 'email'
@@ -180,10 +190,12 @@ class TestAuthenticationEndpoints:
 
 
 class TestContentUploadEndpoints:
-    """Unit tests for Content Upload API endpoints - critical for content management"""    
+    """Unit tests for Content Upload API endpoints - critical for content management"""
+    
     @pytest.fixture
     def mock_upload_service(self):
-        """Mock content upload service"""        service = Mock()
+        """Mock content upload service"""
+        service = Mock()
         service.upload_content = AsyncMock()
         service.validate_content = AsyncMock()
         service.generate_fingerprint = AsyncMock()
@@ -194,7 +206,8 @@ class TestContentUploadEndpoints:
     
     @pytest.fixture
     def sample_content_upload(self):
-        """Sample content upload data"""        return {
+        """Sample content upload data"""
+        return {
             'file_data': b'fake_audio_file_content',
             'filename': 'test_song.mp3',
             'content_type': 'audio',
@@ -216,7 +229,8 @@ class TestContentUploadEndpoints:
     
     @pytest.mark.asyncio
     async def test_content_upload_success(self, mock_upload_service, sample_content_upload):
-        """Test successful content upload"""        # Mock successful upload response
+        """Test successful content upload"""
+        # Mock successful upload response
         expected_response = {
             'upload_id': 'upload_987654321',
             'content_id': 'content_123456789',
@@ -245,7 +259,8 @@ class TestContentUploadEndpoints:
     
     @pytest.mark.asyncio
     async def test_content_validation(self, mock_upload_service):
-        """Test content validation during upload"""        # Mock content validation
+        """Test content validation during upload"""
+        # Mock content validation
         content_data = {
             'file_path': '/tmp/uploaded_content.mp3',
             'content_type': 'audio',
@@ -279,7 +294,8 @@ class TestContentUploadEndpoints:
     
     @pytest.mark.asyncio
     async def test_duplicate_content_detection(self, mock_upload_service):
-        """Test duplicate content detection"""        # Mock duplicate check
+        """Test duplicate content detection"""
+        # Mock duplicate check
         content_fingerprint = 'AQAHxImYaAkSFZygJAq0JMlQg'
         
         expected_duplicate_check = {
@@ -320,10 +336,12 @@ class TestContentUploadEndpoints:
 
 
 class TestMonetizationEndpoints:
-    """Unit tests for Monetization API endpoints - critical for revenue management"""    
+    """Unit tests for Monetization API endpoints - critical for revenue management"""
+    
     @pytest.fixture
     def mock_monetization_service(self):
-        """Mock monetization service"""        service = Mock()
+        """Mock monetization service"""
+        service = Mock()
         service.enable_monetization = AsyncMock()
         service.calculate_revenue = AsyncMock()
         service.process_payment = AsyncMock()
@@ -334,7 +352,8 @@ class TestMonetizationEndpoints:
     
     @pytest.fixture
     def sample_monetization_setup(self):
-        """Sample monetization setup data"""        return {
+        """Sample monetization setup data"""
+        return {
             'content_id': 'content_123456789',
             'monetization_type': 'usage_based',
             'pricing_model': {
@@ -358,7 +377,8 @@ class TestMonetizationEndpoints:
     
     @pytest.mark.asyncio
     async def test_monetization_setup(self, mock_monetization_service, sample_monetization_setup):
-        """Test monetization setup for content"""        # Mock successful monetization setup
+        """Test monetization setup for content"""
+        # Mock successful monetization setup
         expected_response = {
             'monetization_id': 'mon_987654321',
             'content_id': 'content_123456789',
@@ -388,7 +408,8 @@ class TestMonetizationEndpoints:
     
     @pytest.mark.asyncio
     async def test_revenue_calculation(self, mock_monetization_service):
-        """Test revenue calculation and reporting"""        # Mock revenue calculation request
+        """Test revenue calculation and reporting"""
+        # Mock revenue calculation request
         calculation_request = {
             'content_id': 'content_123456789',
             'period': {
@@ -441,7 +462,8 @@ class TestMonetizationEndpoints:
     
     @pytest.mark.asyncio
     async def test_payment_processing(self, mock_monetization_service):
-        """Test payment processing functionality"""        # Mock payment processing request
+        """Test payment processing functionality"""
+        # Mock payment processing request
         payment_request = {
             'payout_id': 'payout_123456789',
             'creator_id': 'user_123456789',
@@ -486,7 +508,8 @@ class TestMonetizationEndpoints:
     
     @pytest.mark.asyncio
     async def test_usage_metrics_tracking(self, mock_monetization_service):
-        """Test usage metrics tracking for monetized content"""        # Mock usage tracking request
+        """Test usage metrics tracking for monetized content"""
+        # Mock usage tracking request
         tracking_request = {
             'content_id': 'content_123456789',
             'time_range': 'last_7_days',
@@ -540,7 +563,8 @@ class TestMonetizationEndpoints:
 if __name__ == "__main__":
     # Simple test runner for development
     async def run_simple_tests():
-        """Run basic tests without pytest for development"""        print("Running Critical API Endpoints Tests...")
+        """Run basic tests without pytest for development"""
+        print("Running Critical API Endpoints Tests...")
         
         print("✓ Authentication Endpoints test structure created")
         print("✓ Content Upload Endpoints test structure created")

@@ -4,7 +4,8 @@ Quick validation script for the secrets management module
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""import sys
+"""
+import sys
 import os
 import traceback
 from typing import Dict, Any
@@ -13,7 +14,8 @@ from typing import Dict, Any
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 def test_module_imports() -> Dict[str, Any]:
-    """Test importing all module components."""    test_results = {
+    """Test importing all module components."""
+    test_results = {
         'imports': {},
         'errors': [],
         'summary': {}
@@ -120,7 +122,8 @@ def test_module_imports() -> Dict[str, Any]:
     return test_results
 
 def test_module_info() -> Dict[str, Any]:
-    """Test module information functions."""    test_results = {
+    """Test module information functions."""
+    test_results = {
         'module_info': {},
         'environment_validation': {},
         'errors': []
@@ -169,7 +172,8 @@ def test_module_info() -> Dict[str, Any]:
     return test_results
 
 def test_basic_functionality() -> Dict[str, Any]:
-    """Test basic functionality without requiring external dependencies."""    test_results = {
+    """Test basic functionality without requiring external dependencies."""
+    test_results = {
         'config_test': {},
         'utils_test': {},
         'errors': []
@@ -237,7 +241,8 @@ def test_basic_functionality() -> Dict[str, Any]:
     return test_results
 
 def main():
-    """Main test function."""    print("🚀 IA Influencer Agent - Secrets Module Test")
+    """Main test function."""
+    print("🚀 IA Influencer Agent - Secrets Module Test")
     print("=" * 60)
     
     all_results = {}

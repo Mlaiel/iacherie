@@ -8,7 +8,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ LEGAL NOTICE: Configuration parameters are proprietary intellectual property.
 Unauthorized modification or redistribution is prohibited.
-"""from typing import Dict, Any
+"""
+from typing import Dict, Any
 
 """Enterprise Configuration Template for Recommendation Agent
 
@@ -20,7 +21,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ LEGAL NOTICE: Configuration parameters are proprietary intellectual property.
 Unauthorized modification or redistribution is prohibited.
-"""from typing import Dict, Any
+"""
+from typing import Dict, Any
 import os
 
 # Development Environment Configuration
@@ -526,14 +528,16 @@ ENTERPRISE_CONFIG: Dict[str, Any] = {
 }
 
 def get_config(environment: str = "development") -> Dict[str, Any]:
-    """    Get configuration based on environment
+    """
+    Get configuration based on environment
     
     Args:
         environment: Environment name ('development', 'production', 'enterprise')
         
     Returns:
         Configuration dictionary
-    """    configs = {
+    """
+    configs = {
         "development": DEVELOPMENT_CONFIG,
         "production": PRODUCTION_CONFIG,
         "enterprise": ENTERPRISE_CONFIG
@@ -545,7 +549,8 @@ def get_config(environment: str = "development") -> Dict[str, Any]:
     return configs[environment].copy()
 
 def validate_config(config: Dict[str, Any]) -> bool:
-    """    Validate configuration parameters
+    """
+    Validate configuration parameters
     
     Args:
         config: Configuration dictionary to validate
@@ -555,7 +560,8 @@ def validate_config(config: Dict[str, Any]) -> bool:
         
     Raises:
         ValueError: If configuration is invalid
-    """    required_sections = [
+    """
+    required_sections = [
         "recommendation_models",
         "embedding_configs", 
         "personalization_settings",
@@ -588,11 +594,13 @@ def validate_config(config: Dict[str, Any]) -> bool:
     return True
 
 def get_environment_config() -> Dict[str, Any]:
-    """    Get configuration based on environment variables
+    """
+    Get configuration based on environment variables
     
     Returns:
         Configuration dictionary based on environment
-    """    env = os.getenv("RECOMMENDATION_ENVIRONMENT", "development").lower()
+    """
+    env = os.getenv("RECOMMENDATION_ENVIRONMENT", "development").lower()
     config = get_config(env)
     
     # Override with environment-specific settings
@@ -863,14 +871,16 @@ ENTERPRISE_CONFIG: Dict[str, Any] = {
 
 # Configuration selector function
 def get_config(environment: str = "development") -> Dict[str, Any]:
-    """    Get configuration for specified environment
+    """
+    Get configuration for specified environment
     
     Args:
         environment: "development", "production", or "enterprise"
     
     Returns:
         Configuration dictionary
-    """    configs = {
+    """
+    configs = {
         "development": DEVELOPMENT_CONFIG,
         "production": PRODUCTION_CONFIG, 
         "enterprise": ENTERPRISE_CONFIG
@@ -883,7 +893,8 @@ def get_config(environment: str = "development") -> Dict[str, Any]:
 
 # Configuration validation
 def validate_config(config: Dict[str, Any]) -> bool:
-    """Validate configuration structure and values"""    required_sections = [
+    """Validate configuration structure and values"""
+    required_sections = [
         "recommendation_models",
         "embedding_configs", 
         "personalization_settings",

@@ -14,16 +14,23 @@ without explicit written permission is STRICTLY PROHIBITED and will be
 prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, List, Optional, Union, Any, Tuple
+"""
+
+from typing import Dict, List, Optional, Union, Any, Tuple
 from pydantic import BaseSettings, validator
 from enum import Enum
+
 from dataclasses import dataclass
+
 from decimal import Decimal
+
 import os
 
 
 class RevenueModel(str, Enum):
-    """Revenue generation models."""    
+    """
+Revenue generation models."""
+    
     SUBSCRIPTION = "subscription"
     PAY_PER_USE = "pay_per_use"
     REVENUE_SHARE = "revenue_share"
@@ -37,7 +44,8 @@ class RevenueModel(str, Enum):
 
 
 class PricingTier(str, Enum):
-    """Pricing tiers for content monetization."""    
+    """Pricing tiers for content monetization."""
+    
     FREE = "free"
     BASIC = "basic"
     PREMIUM = "premium"
@@ -46,7 +54,8 @@ class PricingTier(str, Enum):
 
 
 class PaymentMethod(str, Enum):
-    """Supported payment methods."""    
+    """Supported payment methods."""
+    
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -58,7 +67,8 @@ class PaymentMethod(str, Enum):
 
 
 class CurrencyCode(str, Enum):
-    """Supported currencies."""    
+    """Supported currencies."""
+    
     EUR = "EUR"
     USD = "USD"
     GBP = "GBP"
@@ -73,7 +83,8 @@ class CurrencyCode(str, Enum):
 
 @dataclass
 class MonetizationStrategy:
-    """Monetization strategy configuration."""    
+    """Monetization strategy configuration."""
+    
     strategy_id: str
     strategy_name: str
     revenue_model: RevenueModel
@@ -91,11 +102,13 @@ class MonetizationStrategy:
 
 
 class MonetizationConfig(BaseSettings):
-    """    Professional Monetization AI Configuration.
+    """
+    Professional Monetization AI Configuration.
     
     Manages revenue optimization, pricing strategies, payment processing,
     and financial analytics for content creators and influencers.
-    """    
+    """
+    
     # Core Monetization Configuration
     MONETIZATION_STORAGE_PATH: str = "/data/monetization"
     DEFAULT_CURRENCY: CurrencyCode = CurrencyCode.EUR
@@ -271,7 +284,8 @@ class MonetizationConfig(BaseSettings):
         audience_size: int,
         engagement_rate: float
     ) -> MonetizationStrategy:
-        """Get optimal monetization strategy based on content and metrics."""        
+        """Get optimal monetization strategy based on content and metrics."""
+        
         if audience_size >= 100000 and engagement_rate >= 0.05:
             # High-value creator strategy
             return MonetizationStrategy(
@@ -348,7 +362,8 @@ class MonetizationConfig(BaseSettings):
         conversion_rate: float,
         commission_rate: float
     ) -> Dict[str, Decimal]:
-        """Calculate revenue estimates."""        
+        """Calculate revenue estimates."""
+        
         gross_revenue = base_price * Decimal(str(audience_size)) * Decimal(str(conversion_rate))
         commission_amount = gross_revenue * Decimal(str(commission_rate))
         net_revenue = gross_revenue - commission_amount
@@ -362,7 +377,8 @@ class MonetizationConfig(BaseSettings):
         }
     
     def get_payment_processor_config(self, processor: PaymentMethod) -> Dict[str, Any]:
-        """Get payment processor configuration."""        
+        """Get payment processor configuration."""
+        
         configs = {
             PaymentMethod.STRIPE: {
                 "enabled": self.STRIPE_ENABLED,

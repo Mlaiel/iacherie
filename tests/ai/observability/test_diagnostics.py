@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -46,7 +47,8 @@ from Fahed Mlaiel will result in immediate legal action under German and interna
 copyright law, financial damages claims, and criminal prosecution where applicable.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import json
 import numpy as np
 import pandas as pd
@@ -80,10 +82,12 @@ from ai.observability.diagnostics import (
 
 
 class TestDiagnosticsEngine:
-    """Ultra-industrial tests for DiagnosticsEngine class"""    
+    """Ultra-industrial tests for DiagnosticsEngine class"""
+    
     @pytest.fixture
     def diagnostics_engine(self):
-        """Create DiagnosticsEngine instance for testing"""        config = {
+        """Create DiagnosticsEngine instance for testing"""
+        config = {
             "diagnostic_modules": [
                 "system", "performance", "security", "ai_models", "network", "database"
             ],
@@ -100,7 +104,8 @@ class TestDiagnosticsEngine:
     
     @pytest.fixture
     def system_symptoms(self):
-        """Generate various system symptoms for diagnostic testing"""        return {
+        """Generate various system symptoms for diagnostic testing"""
+        return {
             "performance_symptoms": [
                 {
                     "symptom_id": "perf_001",
@@ -150,14 +155,16 @@ class TestDiagnosticsEngine:
         }
     
     def test_initialization(self, diagnostics_engine):
-        """Test DiagnosticsEngine initialization"""        assert diagnostics_engine is not None
+        """Test DiagnosticsEngine initialization"""
+        assert diagnostics_engine is not None
         assert len(diagnostics_engine.config["diagnostic_modules"]) == 6
         assert hasattr(diagnostics_engine, 'diagnostic_modules')
         assert hasattr(diagnostics_engine, 'knowledge_base')
         assert hasattr(diagnostics_engine, 'troubleshooting_engine')
     
     def test_symptom_analysis(self, diagnostics_engine, system_symptoms):
-        """Test comprehensive symptom analysis"""        # Analyze performance symptoms
+        """Test comprehensive symptom analysis"""
+        # Analyze performance symptoms
         perf_analysis = diagnostics_engine.analyze_symptoms(
             symptoms=system_symptoms["performance_symptoms"],
             category=DiagnosticCategory.PERFORMANCE
@@ -179,7 +186,8 @@ class TestDiagnosticsEngine:
         assert "urgency_score" in error_analysis
     
     def test_pattern_recognition(self, diagnostics_engine, system_symptoms):
-        """Test diagnostic pattern recognition"""        # Combine all symptoms for pattern analysis
+        """Test diagnostic pattern recognition"""
+        # Combine all symptoms for pattern analysis
         all_symptoms = []
         for category_symptoms in system_symptoms.values():
             all_symptoms.extend(category_symptoms)
@@ -201,7 +209,8 @@ class TestDiagnosticsEngine:
         assert "periodic_patterns" in temporal_patterns
     
     def test_root_cause_analysis(self, diagnostics_engine, system_symptoms):
-        """Test advanced root cause analysis"""        # Perform root cause analysis on database connection failures
+        """Test advanced root cause analysis"""
+        # Perform root cause analysis on database connection failures
         db_symptoms = system_symptoms["error_symptoms"][:1]  # Database connection failure
         
         root_cause_result = diagnostics_engine.perform_root_cause_analysis(db_symptoms)
@@ -219,7 +228,8 @@ class TestDiagnosticsEngine:
             assert "remediation_suggestions" in root_cause
     
     def test_diagnostic_scoring(self, diagnostics_engine, system_symptoms):
-        """Test diagnostic confidence scoring"""        all_symptoms = []
+        """Test diagnostic confidence scoring"""
+        all_symptoms = []
         for category_symptoms in system_symptoms.values():
             all_symptoms.extend(category_symptoms)
         
@@ -237,7 +247,8 @@ class TestDiagnosticsEngine:
         assert "improvement_recommendations" in score_explanation
     
     def test_automated_remediation(self, diagnostics_engine, system_symptoms):
-        """Test automated remediation capabilities"""        # Test high CPU usage remediation
+        """Test automated remediation capabilities"""
+        # Test high CPU usage remediation
         cpu_symptom = system_symptoms["performance_symptoms"][1]  # High CPU usage
         
         remediation_result = diagnostics_engine.suggest_automated_remediation(cpu_symptom)
@@ -257,7 +268,8 @@ class TestDiagnosticsEngine:
         assert "rollback_plan" in execution_result
     
     def test_expert_system_integration(self, diagnostics_engine, system_symptoms):
-        """Test expert system integration"""        # Query expert system for complex scenarios
+        """Test expert system integration"""
+        # Query expert system for complex scenarios
         complex_scenario = {
             "symptoms": system_symptoms["performance_symptoms"] + system_symptoms["error_symptoms"],
             "context": {
@@ -286,10 +298,12 @@ class TestDiagnosticsEngine:
 
 
 class TestSystemDiagnostics:
-    """Ultra-industrial tests for SystemDiagnostics class"""    
+    """Ultra-industrial tests for SystemDiagnostics class"""
+    
     @pytest.fixture
     def system_diagnostics(self):
-        """Create SystemDiagnostics instance for testing"""        config = {
+        """Create SystemDiagnostics instance for testing"""
+        config = {
             "monitoring_components": [
                 "cpu", "memory", "disk", "network", "processes", "services"
             ],
@@ -300,13 +314,15 @@ class TestSystemDiagnostics:
         return SystemDiagnostics(config)
     
     def test_initialization(self, system_diagnostics):
-        """Test SystemDiagnostics initialization"""        assert system_diagnostics is not None
+        """Test SystemDiagnostics initialization"""
+        assert system_diagnostics is not None
         assert hasattr(system_diagnostics, 'baseline_collector')
         assert hasattr(system_diagnostics, 'anomaly_detector')
         assert hasattr(system_diagnostics, 'performance_profiler')
     
     def test_cpu_diagnostics(self, system_diagnostics):
-        """Test CPU diagnostic capabilities"""        # Collect CPU diagnostics
+        """Test CPU diagnostic capabilities"""
+        # Collect CPU diagnostics
         cpu_diagnostics = system_diagnostics.diagnose_cpu_performance()
         
         assert "cpu_usage_percentage" in cpu_diagnostics
@@ -323,7 +339,8 @@ class TestSystemDiagnostics:
         assert "optimization_recommendations" in stress_analysis
     
     def test_memory_diagnostics(self, system_diagnostics):
-        """Test memory diagnostic capabilities"""        # Collect memory diagnostics
+        """Test memory diagnostic capabilities"""
+        # Collect memory diagnostics
         memory_diagnostics = system_diagnostics.diagnose_memory_usage()
         
         assert "total_memory" in memory_diagnostics
@@ -340,7 +357,8 @@ class TestSystemDiagnostics:
         assert "leak_severity_assessment" in leak_analysis
     
     def test_disk_diagnostics(self, system_diagnostics):
-        """Test disk diagnostic capabilities"""        # Collect disk diagnostics
+        """Test disk diagnostic capabilities"""
+        # Collect disk diagnostics
         disk_diagnostics = system_diagnostics.diagnose_disk_performance()
         
         assert "disk_usage" in disk_diagnostics
@@ -357,7 +375,8 @@ class TestSystemDiagnostics:
         assert "performance_recommendations" in performance_analysis
     
     def test_network_diagnostics(self, system_diagnostics):
-        """Test network diagnostic capabilities"""        # Collect network diagnostics
+        """Test network diagnostic capabilities"""
+        # Collect network diagnostics
         network_diagnostics = system_diagnostics.diagnose_network_performance()
         
         assert "network_interfaces" in network_diagnostics
@@ -374,7 +393,8 @@ class TestSystemDiagnostics:
         assert "firewall_impact_analysis" in connectivity_analysis
     
     def test_process_diagnostics(self, system_diagnostics):
-        """Test process diagnostic capabilities"""        # Collect process diagnostics
+        """Test process diagnostic capabilities"""
+        # Collect process diagnostics
         process_diagnostics = system_diagnostics.diagnose_system_processes()
         
         assert "running_processes" in process_diagnostics
@@ -389,7 +409,8 @@ class TestSystemDiagnostics:
         assert "behavioral_anomalies" in anomaly_analysis
     
     def test_service_diagnostics(self, system_diagnostics):
-        """Test service diagnostic capabilities"""        # Mock service status for testing
+        """Test service diagnostic capabilities"""
+        # Mock service status for testing
         mock_services = [
             {"name": "postgresql", "status": "running", "cpu": 15.2, "memory": 512},
             {"name": "redis", "status": "running", "cpu": 5.1, "memory": 128},
@@ -412,7 +433,8 @@ class TestSystemDiagnostics:
         assert "failure_impact_assessment" in dependency_analysis
     
     def test_system_baseline(self, system_diagnostics):
-        """Test system baseline collection and comparison"""        # Collect baseline
+        """Test system baseline collection and comparison"""
+        # Collect baseline
         baseline_result = system_diagnostics.collect_system_baseline()
         
         assert baseline_result["baseline_collected"] is True
@@ -429,10 +451,12 @@ class TestSystemDiagnostics:
 
 
 class TestAIModelDiagnostics:
-    """Ultra-industrial tests for AIModelDiagnostics class"""    
+    """Ultra-industrial tests for AIModelDiagnostics class"""
+    
     @pytest.fixture
     def ai_model_diagnostics(self):
-        """Create AIModelDiagnostics instance for testing"""        config = {
+        """Create AIModelDiagnostics instance for testing"""
+        config = {
             "supported_frameworks": ["tensorflow", "pytorch", "scikit_learn", "hugging_face"],
             "model_health_checks": [
                 "accuracy_degradation", "bias_detection", "drift_analysis", 
@@ -445,7 +469,8 @@ class TestAIModelDiagnostics:
     
     @pytest.fixture
     def model_performance_data(self):
-        """Generate AI model performance data"""        return {
+        """Generate AI model performance data"""
+        return {
             "content_protection_model": {
                 "model_id": "cpm_v2.1",
                 "framework": "tensorflow",
@@ -485,14 +510,16 @@ class TestAIModelDiagnostics:
         }
     
     def test_initialization(self, ai_model_diagnostics):
-        """Test AIModelDiagnostics initialization"""        assert ai_model_diagnostics is not None
+        """Test AIModelDiagnostics initialization"""
+        assert ai_model_diagnostics is not None
         assert hasattr(ai_model_diagnostics, 'model_analyzers')
         assert hasattr(ai_model_diagnostics, 'drift_detector')
         assert hasattr(ai_model_diagnostics, 'bias_analyzer')
         assert hasattr(ai_model_diagnostics, 'explainability_engine')
     
     def test_model_performance_analysis(self, ai_model_diagnostics, model_performance_data):
-        """Test AI model performance analysis"""        # Analyze content protection model
+        """Test AI model performance analysis"""
+        # Analyze content protection model
         cpm_analysis = ai_model_diagnostics.analyze_model_performance(
             model_data=model_performance_data["content_protection_model"]
         )
@@ -511,7 +538,8 @@ class TestAIModelDiagnostics:
         assert "optimization_recommendations" in comparative_analysis
     
     def test_model_drift_detection(self, ai_model_diagnostics, model_performance_data):
-        """Test model drift detection"""        # Generate historical performance data to simulate drift
+        """Test model drift detection"""
+        # Generate historical performance data to simulate drift
         historical_data = []
         base_date = datetime.now() - timedelta(days=30)
         
@@ -551,7 +579,8 @@ class TestAIModelDiagnostics:
         assert "resource_drift" in performance_drift
     
     def test_model_bias_analysis(self, ai_model_diagnostics):
-        """Test model bias detection and analysis"""        # Generate test data with potential bias
+        """Test model bias detection and analysis"""
+        # Generate test data with potential bias
         biased_predictions = []
         
         # Simulate bias in content protection model
@@ -592,7 +621,8 @@ class TestAIModelDiagnostics:
         assert "true_positive_rate_differences" in equal_opportunity
     
     def test_model_explainability(self, ai_model_diagnostics, model_performance_data):
-        """Test model explainability analysis"""        # Generate sample prediction for explanation
+        """Test model explainability analysis"""
+        # Generate sample prediction for explanation
         sample_prediction = {
             "model_id": "cpm_v2.1",
             "input_features": {
@@ -625,7 +655,8 @@ class TestAIModelDiagnostics:
         assert "decision_boundaries" in global_explanation
     
     def test_model_health_monitoring(self, ai_model_diagnostics, model_performance_data):
-        """Test comprehensive model health monitoring"""        # Generate model health report
+        """Test comprehensive model health monitoring"""
+        # Generate model health report
         health_report = ai_model_diagnostics.generate_model_health_report(
             models=model_performance_data
         )
@@ -653,10 +684,12 @@ class TestAIModelDiagnostics:
 
 
 class TestPerformanceDiagnostics:
-    """Ultra-industrial tests for PerformanceDiagnostics class"""    
+    """Ultra-industrial tests for PerformanceDiagnostics class"""
+    
     @pytest.fixture
     def performance_diagnostics(self):
-        """Create PerformanceDiagnostics instance for testing"""        config = {
+        """Create PerformanceDiagnostics instance for testing"""
+        config = {
             "profiling_enabled": True,
             "bottleneck_detection_enabled": True,
             "optimization_suggestions_enabled": True,
@@ -667,7 +700,8 @@ class TestPerformanceDiagnostics:
     
     @pytest.fixture
     def performance_metrics(self):
-        """Generate performance metrics for testing"""        return {
+        """Generate performance metrics for testing"""
+        return {
             "application_metrics": {
                 "response_time_p50": 125,
                 "response_time_p95": 450,
@@ -697,13 +731,15 @@ class TestPerformanceDiagnostics:
         }
     
     def test_initialization(self, performance_diagnostics):
-        """Test PerformanceDiagnostics initialization"""        assert performance_diagnostics is not None
+        """Test PerformanceDiagnostics initialization"""
+        assert performance_diagnostics is not None
         assert hasattr(performance_diagnostics, 'profiler')
         assert hasattr(performance_diagnostics, 'bottleneck_detector')
         assert hasattr(performance_diagnostics, 'optimization_engine')
     
     def test_response_time_analysis(self, performance_diagnostics, performance_metrics):
-        """Test response time performance analysis"""        # Analyze response time patterns
+        """Test response time performance analysis"""
+        # Analyze response time patterns
         response_analysis = performance_diagnostics.analyze_response_times(
             metrics=performance_metrics["application_metrics"]
         )
@@ -724,7 +760,8 @@ class TestPerformanceDiagnostics:
         assert "performance_buffer" in sla_analysis
     
     def test_bottleneck_detection(self, performance_diagnostics, performance_metrics):
-        """Test performance bottleneck detection"""        # Detect system bottlenecks
+        """Test performance bottleneck detection"""
+        # Detect system bottlenecks
         bottleneck_analysis = performance_diagnostics.detect_bottlenecks(performance_metrics)
         
         assert "identified_bottlenecks" in bottleneck_analysis
@@ -746,7 +783,8 @@ class TestPerformanceDiagnostics:
         assert "index_optimization_suggestions" in database_bottleneck
     
     def test_throughput_analysis(self, performance_diagnostics, performance_metrics):
-        """Test throughput and capacity analysis"""        # Analyze current throughput
+        """Test throughput and capacity analysis"""
+        # Analyze current throughput
         throughput_analysis = performance_diagnostics.analyze_throughput(
             current_rps=performance_metrics["application_metrics"]["throughput_rps"]
         )
@@ -766,7 +804,8 @@ class TestPerformanceDiagnostics:
         assert "resource_recommendations" in capacity_planning
     
     def test_memory_analysis(self, performance_diagnostics, performance_metrics):
-        """Test memory usage and garbage collection analysis"""        # Simulate detailed memory metrics
+        """Test memory usage and garbage collection analysis"""
+        # Simulate detailed memory metrics
         memory_details = {
             "heap_usage": 67.8,
             "gc_frequency": 15,  # GC events per minute
@@ -790,7 +829,8 @@ class TestPerformanceDiagnostics:
         assert "gc_tuning_recommendations" in gc_analysis
     
     def test_ai_performance_analysis(self, performance_diagnostics, performance_metrics):
-        """Test AI-specific performance analysis"""        # Analyze AI processing performance
+        """Test AI-specific performance analysis"""
+        # Analyze AI processing performance
         ai_analysis = performance_diagnostics.analyze_ai_performance(
             ai_metrics=performance_metrics["ai_processing_metrics"]
         )
@@ -810,7 +850,8 @@ class TestPerformanceDiagnostics:
         assert "implementation_complexity" in serving_optimization
     
     def test_benchmark_comparison(self, performance_diagnostics, performance_metrics):
-        """Test performance benchmark comparison"""        # Define industry benchmarks
+        """Test performance benchmark comparison"""
+        # Define industry benchmarks
         benchmarks = {
             "web_application": {
                 "response_time_p95": 200,  # ms
@@ -836,7 +877,8 @@ class TestPerformanceDiagnostics:
         assert "benchmark_achievement_timeline" in benchmark_comparison
     
     def test_optimization_recommendations(self, performance_diagnostics, performance_metrics):
-        """Test performance optimization recommendations"""        # Generate optimization recommendations
+        """Test performance optimization recommendations"""
+        # Generate optimization recommendations
         optimization_recommendations = performance_diagnostics.generate_optimization_recommendations(
             performance_metrics
         )

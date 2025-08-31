@@ -14,7 +14,8 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Team Specialties: Lead AI Developer + Senior Backend Engineer + Database Administrator + 
 Security Specialist + Microservices Architect + ML Engineer + Content Optimization Expert
-"""import asyncio
+"""
+import asyncio
 import json
 import uuid
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -41,7 +42,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class SchedulingStrategy(str, Enum):
-    """Content scheduling strategies"""    IMMEDIATE = "immediate"
+    """Content scheduling strategies"""
+    IMMEDIATE = "immediate"
     OPTIMAL_TIMING = "optimal_timing"
     AUDIENCE_BASED = "audience_based"
     CAMPAIGN_SYNCHRONIZED = "campaign_synchronized"
@@ -50,7 +52,8 @@ class SchedulingStrategy(str, Enum):
     TIMEZONE_COORDINATED = "timezone_coordinated"
 
 class ScheduleStatus(str, Enum):
-    """Schedule execution status"""    PENDING = "pending"
+    """Schedule execution status"""
+    PENDING = "pending"
     QUEUED = "queued"
     EXECUTING = "executing"
     COMPLETED = "completed"
@@ -59,7 +62,8 @@ class ScheduleStatus(str, Enum):
     RESCHEDULED = "rescheduled"
 
 class TimingPriority(str, Enum):
-    """Timing optimization priority"""    ENGAGEMENT = "engagement"
+    """Timing optimization priority"""
+    ENGAGEMENT = "engagement"
     REACH = "reach"
     COST = "cost"
     REVENUE = "revenue"
@@ -68,14 +72,16 @@ class TimingPriority(str, Enum):
 
 @dataclass
 class TimezonePreferences:
-    """Timezone-specific scheduling preferences"""    primary_timezone: str = "UTC"
+    """Timezone-specific scheduling preferences"""
+    primary_timezone: str = "UTC"
     target_timezones: List[str] = field(default_factory=list)
     priority_timezones: Dict[str, float] = field(default_factory=dict)
     exclude_timezones: List[str] = field(default_factory=list)
     
 @dataclass
 class SchedulingConstraints:
-    """Content scheduling constraints and rules"""    min_interval_between_posts: int = 3600  # seconds
+    """Content scheduling constraints and rules"""
+    min_interval_between_posts: int = 3600  # seconds
     max_posts_per_day: int = 10
     max_posts_per_hour: int = 3
     blackout_periods: List[Dict[str, Any]] = field(default_factory=list)
@@ -85,14 +91,16 @@ class SchedulingConstraints:
 
 @dataclass
 class AudienceAnalytics:
-    """Audience behavior analytics for optimal timing"""    peak_activity_hours: List[int] = field(default_factory=list)
+    """Audience behavior analytics for optimal timing"""
+    peak_activity_hours: List[int] = field(default_factory=list)
     engagement_patterns: Dict[str, float] = field(default_factory=dict)
     demographic_timezones: Dict[str, float] = field(default_factory=dict)
     seasonal_trends: Dict[str, float] = field(default_factory=dict)
     platform_preferences: Dict[str, float] = field(default_factory=dict)
 
 class ContentSchedule(Base):
-    """Content scheduling database model"""    __tablename__ = "content_schedules"
+    """Content scheduling database model"""
+    __tablename__ = "content_schedules"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -144,7 +152,8 @@ class ContentSchedule(Base):
     recurrence_config = Column(JSONB, nullable=True)
 
 class SchedulingRule(Base):
-    """Scheduling rules and policies database model"""    __tablename__ = "scheduling_rules"
+    """Scheduling rules and policies database model"""
+    __tablename__ = "scheduling_rules"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -174,7 +183,8 @@ class SchedulingRule(Base):
     created_by = Column(String(100), nullable=True)
 
 class SchedulingConflict(Base):
-    """Content scheduling conflicts database model"""    __tablename__ = "scheduling_conflicts"
+    """Content scheduling conflicts database model"""
+    __tablename__ = "scheduling_conflicts"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     schedule_id_1 = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -196,7 +206,8 @@ class SchedulingConflict(Base):
     is_resolved = Column(Boolean, nullable=False, default=False)
 
 class OptimalTimingPrediction(Base):
-    """AI-powered optimal timing predictions database model"""    __tablename__ = "optimal_timing_predictions"
+    """AI-powered optimal timing predictions database model"""
+    __tablename__ = "optimal_timing_predictions"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -233,7 +244,8 @@ class OptimalTimingPrediction(Base):
 
 # Pydantic Models for API
 class ScheduleCreateRequest(BaseModel):
-    """Request model for creating content schedules"""    content_id: str
+    """Request model for creating content schedules"""
+    content_id: str
     campaign_id: Optional[str] = None
     scheduled_time: Optional[datetime] = None
     timezone: str = "UTC"
@@ -246,7 +258,8 @@ class ScheduleCreateRequest(BaseModel):
     cron_expression: Optional[str] = None
 
 class ScheduleUpdateRequest(BaseModel):
-    """Request model for updating content schedules"""    scheduled_time: Optional[datetime] = None
+    """Request model for updating content schedules"""
+    scheduled_time: Optional[datetime] = None
     timezone: Optional[str] = None
     strategy: Optional[SchedulingStrategy] = None
     priority: Optional[TimingPriority] = None
@@ -254,7 +267,8 @@ class ScheduleUpdateRequest(BaseModel):
     status: Optional[ScheduleStatus] = None
 
 class ScheduleResponse(BaseModel):
-    """Response model for content schedules"""    id: str
+    """Response model for content schedules"""
+    id: str
     content_id: str
     user_id: str
     campaign_id: Optional[str]
@@ -271,7 +285,8 @@ class ScheduleResponse(BaseModel):
     updated_at: datetime
 
 class ContentSchedulingManager:
-    """Enterprise content scheduling management system"""    
+    """Enterprise content scheduling management system"""
+    
     def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -282,7 +297,8 @@ class ContentSchedulingManager:
         user_id: str,
         schedule_request: ScheduleCreateRequest
     ) -> ContentSchedule:
-        """Create new content schedule with AI optimization"""        try:
+        """Create new content schedule with AI optimization"""
+        try:
             # Generate optimal timing if not provided
             if not schedule_request.scheduled_time:
                 optimal_time = await self._predict_optimal_timing(
@@ -345,7 +361,8 @@ class ContentSchedulingManager:
         platforms: List[str],
         strategy: SchedulingStrategy
     ) -> datetime:
-        """Predict optimal posting time using AI algorithms"""        try:
+        """Predict optimal posting time using AI algorithms"""
+        try:
             # Get user's audience analytics
             audience_data = await self._get_audience_analytics(user_id)
             
@@ -378,7 +395,8 @@ class ContentSchedulingManager:
         self,
         schedule: ContentSchedule
     ) -> Dict[str, Any]:
-        """Generate AI-powered scheduling predictions"""        try:
+        """Generate AI-powered scheduling predictions"""
+        try:
             predictions = {}
             
             # Engagement prediction
@@ -411,7 +429,8 @@ class ContentSchedulingManager:
         self,
         schedule: ContentSchedule
     ) -> List[Dict[str, Any]]:
-        """Detect potential scheduling conflicts"""        try:
+        """Detect potential scheduling conflicts"""
+        try:
             conflicts = []
             
             # Check timing conflicts (too many posts in timeframe)
@@ -441,7 +460,8 @@ class ContentSchedulingManager:
         schedule_id: str,
         update_request: ScheduleUpdateRequest
     ) -> ContentSchedule:
-        """Update existing content schedule"""        try:
+        """Update existing content schedule"""
+        try:
             # Get existing schedule
             schedule = await self._get_schedule_by_id(schedule_id)
             if not schedule:
@@ -499,7 +519,8 @@ class ContentSchedulingManager:
         limit: int = 50,
         offset: int = 0
     ) -> List[ContentSchedule]:
-        """Get user's content schedules with filtering"""        try:
+        """Get user's content schedules with filtering"""
+        try:
             # Build query
             query = self.db_session.query(ContentSchedule).filter(
                 ContentSchedule.user_id == uuid.UUID(user_id)
@@ -536,7 +557,8 @@ class ContentSchedulingManager:
         self,
         schedule_id: str
     ) -> Dict[str, Any]:
-        """Execute scheduled content distribution"""        try:
+        """Execute scheduled content distribution"""
+        try:
             schedule = await self._get_schedule_by_id(schedule_id)
             if not schedule:
                 raise ValueError(f"Schedule {schedule_id} not found")
@@ -584,7 +606,8 @@ class ContentSchedulingManager:
             raise
     
     async def _cache_schedule(self, schedule: ContentSchedule):
-        """Cache schedule data in Redis"""        try:
+        """Cache schedule data in Redis"""
+        try:
             cache_key = f"schedule:{schedule.id}"
             schedule_data = {
                 'id': str(schedule.id),
@@ -608,7 +631,8 @@ class ContentSchedulingManager:
             logger.warning(f"Error caching schedule: {str(e)}")
     
     async def _get_schedule_by_id(self, schedule_id: str) -> Optional[ContentSchedule]:
-        """Get schedule by ID with caching"""        try:
+        """Get schedule by ID with caching"""
+        try:
             # Try cache first
             cache_key = f"schedule:{schedule_id}"
             cached_data = await self.redis_client.get(cache_key)

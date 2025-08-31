@@ -34,7 +34,8 @@ Any use, copying, distribution, or exploitation without explicit written authori
 and will be prosecuted to the full extent of the law. Legal action will be taken against violators.
 
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
-"""import logging
+"""
+import logging
 import sys
 import os
 from typing import Dict, List, Optional, Any
@@ -125,18 +126,22 @@ MODULE_CONFIG = {
 }
 
 class PartitioningSystem:
-    """    Main partitioning system orchestrator
+    """
+    Main partitioning system orchestrator
     
     Coordinates all partitioning components and provides a unified interface
     for database partitioning operations in the IA Influencer Agent platform.
-    """    
+    """
+    
     def __init__(self, database_url: str, config: Dict[str, Any] = None):
-        """        Initialize the complete partitioning system
+        """
+        Initialize the complete partitioning system
         
         Args:
             database_url: Main database connection URL
             config: System configuration dictionary
-        """        self.database_url = database_url
+        """
+        self.database_url = database_url
         self.config = config or {}
         
         # Initialize core components
@@ -155,11 +160,13 @@ class PartitioningSystem:
         logger.info(f"PartitioningSystem initialized for database: {database_url}")
 
     def initialize(self) -> bool:
-        """        Initialize all partitioning system components
+        """
+        Initialize all partitioning system components
         
         Returns:
             bool: True if initialization successful
-        """        try:
+        """
+        try:
             logger.info("Initializing complete partitioning system...")
             
             # Initialize partition manager
@@ -223,7 +230,8 @@ class PartitioningSystem:
             return False
 
     def _create_platform_partitions(self):
-        """Create partitions for all platform tables"""        try:
+        """Create partitions for all platform tables"""
+        try:
             logger.info("Creating partitions for platform tables...")
             
             # Platform tables with their partitioning strategies
@@ -254,7 +262,8 @@ class PartitioningSystem:
             logger.error(f"Failed to create platform partitions: {e}")
 
     def start_monitoring(self):
-        """Start comprehensive system monitoring"""        try:
+        """Start comprehensive system monitoring"""
+        try:
             if self.monitoring_enabled:
                 logger.warning("Monitoring is already enabled")
                 return
@@ -282,7 +291,8 @@ class PartitioningSystem:
             logger.error(f"Failed to start monitoring: {e}")
 
     def stop_monitoring(self):
-        """Stop all monitoring activities"""        try:
+        """Stop all monitoring activities"""
+        try:
             if not self.monitoring_enabled:
                 logger.warning("Monitoring is not currently enabled")
                 return
@@ -307,11 +317,13 @@ class PartitioningSystem:
             logger.error(f"Error stopping monitoring: {e}")
 
     def get_system_status(self) -> Dict[str, Any]:
-        """        Get comprehensive system status
+        """
+        Get comprehensive system status
         
         Returns:
             Dict containing detailed system status
-        """        try:
+        """
+        try:
             status = {
                 'system': {
                     'version': __version__,
@@ -358,14 +370,16 @@ class PartitioningSystem:
             return {'error': str(e)}
 
     def optimize_all_partitions(self, strategy: OptimizationStrategy = None) -> Dict[str, Any]:
-        """        Optimize all partitions in the system
+        """
+        Optimize all partitions in the system
         
         Args:
             strategy: Optimization strategy to use
             
         Returns:
             Dict containing optimization results
-        """        try:
+        """
+        try:
             if not self.optimizer:
                 return {'error': 'Optimizer not initialized'}
             
@@ -406,11 +420,13 @@ class PartitioningSystem:
             return {'error': str(e)}
 
     def rebalance_system(self) -> bool:
-        """        Perform comprehensive system rebalancing
+        """
+        Perform comprehensive system rebalancing
         
         Returns:
             bool: True if rebalancing successful
-        """        try:
+        """
+        try:
             logger.info("Starting comprehensive system rebalancing...")
             
             success = True
@@ -441,11 +457,13 @@ class PartitioningSystem:
             return False
 
     def generate_comprehensive_report(self) -> Dict[str, Any]:
-        """        Generate comprehensive system performance and health report
+        """
+        Generate comprehensive system performance and health report
         
         Returns:
             Dict containing detailed system report
-        """        try:
+        """
+        try:
             report = {
                 'report_metadata': {
                     'generated_at': datetime.utcnow().isoformat(),
@@ -497,11 +515,13 @@ class PartitioningSystem:
             return {'error': str(e)}
 
     def emergency_maintenance(self) -> bool:
-        """        Execute emergency maintenance procedures
+        """
+        Execute emergency maintenance procedures
         
         Returns:
             bool: True if maintenance successful
-        """        try:
+        """
+        try:
             logger.warning("Executing emergency maintenance procedures...")
             
             # Stop all non-critical operations
@@ -525,7 +545,8 @@ class PartitioningSystem:
             return False
 
     def shutdown(self):
-        """Gracefully shutdown the partitioning system"""        try:
+        """Gracefully shutdown the partitioning system"""
+        try:
             logger.info("Shutting down partitioning system...")
             
             # Stop monitoring
@@ -557,13 +578,16 @@ class PartitioningSystem:
             logger.error(f"Error during shutdown: {e}")
 
     def __enter__(self):
-        """Context manager entry"""        return self
+        """Context manager entry"""
+        return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit"""        self.shutdown()
+        """Context manager exit"""
+        self.shutdown()
 
 def main():
-    """Main entry point for testing and demonstration"""    import argparse
+    """Main entry point for testing and demonstration"""
+    import argparse
     
     parser = argparse.ArgumentParser(description='Database Partitioning System')
     parser.add_argument('--database-url', required=True, help='Database connection URL')

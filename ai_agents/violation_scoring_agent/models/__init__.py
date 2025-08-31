@@ -1,4 +1,6 @@
-"""Scoring Models Package - Common data structures for violation scoring"""from .scoring_models import (
+"""Scoring Models Package - Common data structures for violation scoring"""
+
+from .scoring_models import (
     RiskLevel,
     SeverityLevel,
     ActionPriority,

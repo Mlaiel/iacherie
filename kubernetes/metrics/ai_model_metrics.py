@@ -30,7 +30,8 @@ Features:
 - A/B testing for model versions
 - Resource utilization for ML workloads
 - Bias and fairness metrics
-"""import asyncio
+"""
+import asyncio
 import json
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -52,7 +53,8 @@ metrics_config = get_metrics_config()
 
 
 class ModelType(Enum):
-    """AI model types"""    # Audio models
+    """AI model types"""
+    # Audio models
     AUDIO_FINGERPRINT = "audio_fingerprint"
     AUDIO_CLASSIFICATION = "audio_classification"
     SPEECH_RECOGNITION = "speech_recognition"
@@ -82,7 +84,8 @@ class ModelType(Enum):
 
 
 class ModelStage(Enum):
-    """Model development stages"""    DEVELOPMENT = "development"
+    """Model development stages"""
+    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -90,7 +93,8 @@ class ModelStage(Enum):
 
 
 class InferenceStatus(Enum):
-    """Inference status"""    SUCCESS = "success"
+    """Inference status"""
+    SUCCESS = "success"
     FAILED = "failed"
     TIMEOUT = "timeout"
     ERROR = "error"
@@ -98,7 +102,8 @@ class InferenceStatus(Enum):
 
 @dataclass
 class ModelMetrics:
-    """Core model performance metrics"""    model_id: str
+    """Core model performance metrics"""
+    model_id: str
     model_type: ModelType
     model_version: str
     stage: ModelStage
@@ -132,7 +137,8 @@ class ModelMetrics:
 
 @dataclass
 class InferenceRecord:
-    """Individual inference record"""    inference_id: str
+    """Individual inference record"""
+    inference_id: str
     model_id: str
     model_version: str
     tenant_id: str
@@ -159,7 +165,8 @@ class InferenceRecord:
 
 @dataclass
 class ModelTrainingMetrics:
-    """Model training performance metrics"""    training_id: str
+    """Model training performance metrics"""
+    training_id: str
     model_id: str
     model_version: str
     timestamp: datetime
@@ -191,11 +198,13 @@ class ModelTrainingMetrics:
 
 
 class AIModelMetricsCollector:
-    """    Advanced AI/ML model performance metrics collector
+    """
+    Advanced AI/ML model performance metrics collector
     
     Tracks model performance, inference metrics, training optimization,
     and provides insights for model improvement and resource optimization
-    """    
+    """
+    
     def __init__(self):
         self.redis_manager = RedisManager()
         self.logger = logger
@@ -226,7 +235,8 @@ class AIModelMetricsCollector:
         input_features: Optional[Dict[str, Any]] = None,
         resource_usage: Optional[Dict[str, float]] = None
     ) -> str:
-        """Track individual model inference"""        
+        """Track individual model inference"""
+        
         inference_id = f"inf_{int(datetime.now().timestamp())}_{model_id}"
         
         record = InferenceRecord(
@@ -282,7 +292,8 @@ class AIModelMetricsCollector:
         hyperparameters: Dict[str, Any],
         resource_usage: Optional[Dict[str, float]] = None
     ) -> str:
-        """Track model training session"""        
+        """Track model training session"""
+        
         training_id = f"train_{int(datetime.now().timestamp())}_{model_id}"
         
         # Calculate overfitting score
@@ -321,7 +332,8 @@ class AIModelMetricsCollector:
         model_version: str,
         time_range: str = "24h"
     ) -> ModelMetrics:
-        """Calculate comprehensive model performance metrics"""        
+        """Calculate comprehensive model performance metrics"""
+        
         try:
             # Parse time range
             if time_range == "1h":
@@ -338,7 +350,8 @@ class AIModelMetricsCollector:
             async with get_database_session() as session:
                 # Get inference metrics
                 inference_stats = await session.fetchrow(
-                    """                    SELECT 
+                    """
+                    SELECT 
                         COUNT(*) as inference_count,
                         AVG(inference_time_ms) as avg_inference_time,
                         PERCENTILE_CONT(0.95) WITHIN GROUP (ORDER BY inference_time_ms) as p95_inference_time,
@@ -356,7 +369,8 @@ class AIModelMetricsCollector:
                 
                 # Get latest training metrics
                 training_stats = await session.fetchrow(
-                    """                    SELECT 
+                    """
+                    SELECT 
                         final_accuracy,
                         validation_accuracy,
                         final_loss,
@@ -425,7 +439,8 @@ class AIModelMetricsCollector:
         metric_types: List[str] = None,
         time_range: str = "24h"
     ) -> Dict[str, Any]:
-        """Compare performance across multiple models"""        
+        """Compare performance across multiple models"""
+        
         if metric_types is None:
             metric_types = ["accuracy", "inference_time", "resource_usage"]
         
@@ -436,7 +451,8 @@ class AIModelMetricsCollector:
                 # Get latest version for each model
                 async with get_database_session() as session:
                     latest_version = await session.fetchval(
-                        """                        SELECT model_version 
+                        """
+                        SELECT model_version 
                         FROM inference_records 
                         WHERE model_id = $1
                         ORDER BY timestamp DESC
@@ -477,12 +493,14 @@ class AIModelMetricsCollector:
         model_id: str,
         limit: int = 10
     ) -> Dict[str, Any]:
-        """Get training performance insights for model optimization"""        
+        """Get training performance insights for model optimization"""
+        
         try:
             async with get_database_session() as session:
                 # Get training history
                 training_history = await session.fetch(
-                    """                    SELECT 
+                    """
+                    SELECT 
                         training_id,
                         model_version,
                         timestamp,
@@ -563,7 +581,8 @@ class AIModelMetricsCollector:
         model_id: Optional[str] = None,
         tenant_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Get real-time inference performance dashboard"""        
+        """Get real-time inference performance dashboard"""
+        
         try:
             # Get recent inference data from Redis
             dashboard_data = {
@@ -643,7 +662,8 @@ class AIModelMetricsCollector:
         model_version: str,
         start_time: datetime
     ) -> Optional[float]:
-        """Calculate model drift score (mock implementation)"""        # In production, this would compare current predictions with baseline
+        """Calculate model drift score (mock implementation)"""
+        # In production, this would compare current predictions with baseline
         # distributions to detect data drift
         return 0.05  # Mock low drift score
     
@@ -653,16 +673,19 @@ class AIModelMetricsCollector:
         model_version: str,
         start_time: datetime
     ) -> Optional[float]:
-        """Calculate model bias score (mock implementation)"""        # In production, this would analyze predictions across different
+        """Calculate model bias score (mock implementation)"""
+        # In production, this would analyze predictions across different
         # demographic groups to detect bias
         return 0.02  # Mock low bias score
     
     async def _get_model_stage(self, model_id: str, model_version: str) -> ModelStage:
-        """Get model deployment stage"""        # This would query model registry or deployment system
+        """Get model deployment stage"""
+        # This would query model registry or deployment system
         return ModelStage.PRODUCTION  # Mock
     
     async def _get_model_type(self, model_id: str) -> ModelType:
-        """Get model type from model registry"""        # This would query model registry
+        """Get model type from model registry"""
+        # This would query model registry
         if "audio" in model_id.lower():
             return ModelType.AUDIO_FINGERPRINT
         elif "video" in model_id.lower():
@@ -679,7 +702,8 @@ class AIModelMetricsCollector:
         model_comparisons: Dict[str, Any],
         metric_types: List[str]
     ) -> Dict[str, Any]:
-        """Analyze performance comparison across models"""        
+        """Analyze performance comparison across models"""
+        
         analysis = {
             "best_performers": {},
             "performance_rankings": {},
@@ -742,7 +766,8 @@ class AIModelMetricsCollector:
         self,
         training_history: List[Any]
     ) -> List[Dict[str, str]]:
-        """Generate optimization recommendations based on training history"""        
+        """Generate optimization recommendations based on training history"""
+        
         recommendations = []
         
         # Check for overfitting
@@ -786,10 +811,12 @@ class AIModelMetricsCollector:
         return recommendations
     
     async def _store_inference_record(self, record: InferenceRecord) -> None:
-        """Store inference record in database"""        try:
+        """Store inference record in database"""
+        try:
             async with get_database_session() as session:
                 await session.execute(
-                    """                    INSERT INTO inference_records 
+                    """
+                    INSERT INTO inference_records 
                     (inference_id, model_id, model_version, tenant_id, timestamp,
                      input_size_bytes, input_features, prediction, confidence_score,
                      inference_time_ms, status, error_message, cpu_usage_percent,
@@ -818,10 +845,12 @@ class AIModelMetricsCollector:
             self.logger.error(f"Error storing inference record: {e}")
     
     async def _store_training_metrics(self, metrics: ModelTrainingMetrics) -> None:
-        """Store training metrics in database"""        try:
+        """Store training metrics in database"""
+        try:
             async with get_database_session() as session:
                 await session.execute(
-                    """                    INSERT INTO training_metrics 
+                    """
+                    INSERT INTO training_metrics 
                     (training_id, model_id, model_version, timestamp, dataset_size,
                      training_samples, validation_samples, test_samples, training_time_hours,
                      epochs_completed, final_loss, final_accuracy, validation_accuracy,
@@ -855,7 +884,8 @@ class AIModelMetricsCollector:
             self.logger.error(f"Error storing training metrics: {e}")
     
     async def _update_realtime_inference_metrics(self, record: InferenceRecord) -> None:
-        """Update real-time inference metrics in Redis"""        try:
+        """Update real-time inference metrics in Redis"""
+        try:
             # Store individual inference record
             await self.redis_manager.list_push(
                 f"inference_metrics:{record.model_id}:{record.model_version}",
@@ -884,7 +914,8 @@ class AIModelMetricsCollector:
             self.logger.error(f"Error updating real-time inference metrics: {e}")
     
     async def _start_background_processing(self) -> None:
-        """Start background processing tasks"""        while True:
+        """Start background processing tasks"""
+        while True:
             try:
                 await asyncio.sleep(300)  # Run every 5 minutes
                 
@@ -900,7 +931,8 @@ class AIModelMetricsCollector:
                 await asyncio.sleep(60)
     
     async def _process_inference_analytics(self) -> None:
-        """Process inference analytics for insights"""        try:
+        """Process inference analytics for insights"""
+        try:
             # Group inferences by model for analysis
             model_groups = defaultdict(list)
             
@@ -921,14 +953,17 @@ class AIModelMetricsCollector:
             self.logger.error(f"Error processing inference analytics: {e}")
     
     async def _update_model_performance_cache(self) -> None:
-        """Update cached model performance metrics"""        try:
+        """Update cached model performance metrics"""
+        try:
             # Get list of active models
             async with get_database_session() as session:
                 active_models = await session.fetch(
-                    """                    SELECT DISTINCT model_id, model_version 
+                    """
+                    SELECT DISTINCT model_id, model_version 
                     FROM inference_records 
                     WHERE timestamp >= NOW() - INTERVAL '24 hours'
-                    """                )
+                    """
+                )
             
             # Update cache for each model
             for model_row in active_models:

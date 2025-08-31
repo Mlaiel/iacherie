@@ -17,7 +17,8 @@ Contact: mlaiel@live.de
 MISSION: Engine de fusion de genres musicaux ultra-avancé avec IA
 TECHNOLOGIES: Deep Learning, Neural Genre Classification, Spectral Analysis, Genre Morphing
 LOGIQUE MÉTIER: Genre analysis → Fusion algorithms → Style interpolation → Quality validation
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 import torch
@@ -37,7 +38,8 @@ import scipy.signal as signal
 logger = logging.getLogger(__name__)
 
 class MusicGenre(Enum):
-    """Music genre classifications"""    ROCK = "rock"
+    """Music genre classifications"""
+    ROCK = "rock"
     POP = "pop"
     JAZZ = "jazz"
     CLASSICAL = "classical"
@@ -54,7 +56,8 @@ class MusicGenre(Enum):
     DUBSTEP = "dubstep"
 
 class BlendingMethod(Enum):
-    """Genre blending methods"""    LINEAR_INTERPOLATION = "linear"
+    """Genre blending methods"""
+    LINEAR_INTERPOLATION = "linear"
     HARMONIC_MIXING = "harmonic"
     SPECTRAL_MORPHING = "spectral"
     NEURAL_SYNTHESIS = "neural"
@@ -63,7 +66,8 @@ class BlendingMethod(Enum):
 
 @dataclass
 class GenreCharacteristics:
-    """Music genre characteristics"""    genre: MusicGenre
+    """Music genre characteristics"""
+    genre: MusicGenre
     tempo_range: Tuple[int, int]
     key_signatures: List[str]
     time_signatures: List[str]
@@ -75,7 +79,8 @@ class GenreCharacteristics:
 
 @dataclass
 class BlendingParameters:
-    """Parameters for genre blending"""    primary_genre: MusicGenre
+    """Parameters for genre blending"""
+    primary_genre: MusicGenre
     secondary_genre: MusicGenre
     blend_ratio: float  # 0.0 to 1.0
     method: BlendingMethod
@@ -86,7 +91,8 @@ class BlendingParameters:
     quality_threshold: float
 
 class GenreClassificationNetwork(nn.Module):
-    """Deep learning model for genre classification"""    
+    """Deep learning model for genre classification"""
+    
     def __init__(self, input_features: int = 128, num_genres: int = 15):
         super(GenreClassificationNetwork, self).__init__()
         
@@ -123,7 +129,8 @@ class GenreClassificationNetwork(nn.Module):
         return classification, confidence
 
 class GenreBlendingNetwork(nn.Module):
-    """Neural network for intelligent genre blending"""    
+    """Neural network for intelligent genre blending"""
+    
     def __init__(self, feature_dim: int = 128):
         super(GenreBlendingNetwork, self).__init__()
         
@@ -164,7 +171,8 @@ class GenreBlendingNetwork(nn.Module):
         return output
 
 class GenreAnalyzer:
-    """Advanced genre analysis system"""    
+    """Advanced genre analysis system"""
+    
     def __init__(self):
         self.classification_model = GenreClassificationNetwork()
         self.scaler = StandardScaler()
@@ -172,7 +180,8 @@ class GenreAnalyzer:
         self.genre_database = self._initialize_genre_database()
     
     def _initialize_genre_database(self) -> Dict[MusicGenre, GenreCharacteristics]:
-        """Initialize comprehensive genre database"""        return {
+        """Initialize comprehensive genre database"""
+        return {
             MusicGenre.ROCK: GenreCharacteristics(
                 genre=MusicGenre.ROCK,
                 tempo_range=(120, 140),
@@ -210,7 +219,8 @@ class GenreAnalyzer:
     
     async def extract_spectral_features(self, audio_data: np.ndarray, 
                                       sample_rate: int = 44100) -> np.ndarray:
-        """Extract comprehensive spectral features"""        try:
+        """Extract comprehensive spectral features"""
+        try:
             # MFCC features
             mfccs = librosa.feature.mfcc(y=audio_data, sr=sample_rate, n_mfcc=13)
             
@@ -248,7 +258,8 @@ class GenreAnalyzer:
             raise
     
     async def classify_genre(self, audio_features: np.ndarray) -> Tuple[MusicGenre, float]:
-        """Classify music genre using neural network"""        try:
+        """Classify music genre using neural network"""
+        try:
             # Normalize features
             features_normalized = self.scaler.fit_transform(audio_features.reshape(1, -1))
             features_tensor = torch.FloatTensor(features_normalized)
@@ -271,7 +282,8 @@ class GenreAnalyzer:
             return MusicGenre.POP, 0.5
 
 class GenreFusionProcessor:
-    """Advanced genre fusion processing"""    
+    """Advanced genre fusion processing"""
+    
     def __init__(self):
         self.blending_network = GenreBlendingNetwork()
         self.fusion_algorithms = {
@@ -285,11 +297,13 @@ class GenreFusionProcessor:
     
     async def _linear_interpolation(self, audio1: np.ndarray, audio2: np.ndarray, 
                                   ratio: float) -> np.ndarray:
-        """Linear interpolation between two audio signals"""        return (1 - ratio) * audio1 + ratio * audio2
+        """Linear interpolation between two audio signals"""
+        return (1 - ratio) * audio1 + ratio * audio2
     
     async def _harmonic_mixing(self, audio1: np.ndarray, audio2: np.ndarray, 
                              ratio: float) -> np.ndarray:
-        """Harmonic mixing using spectral analysis"""        # Get spectrograms
+        """Harmonic mixing using spectral analysis"""
+        # Get spectrograms
         stft1 = librosa.stft(audio1)
         stft2 = librosa.stft(audio2)
         
@@ -307,7 +321,8 @@ class GenreFusionProcessor:
     
     async def _spectral_morphing(self, audio1: np.ndarray, audio2: np.ndarray, 
                                ratio: float) -> np.ndarray:
-        """Advanced spectral morphing"""        # Phase vocoder for time-stretching
+        """Advanced spectral morphing"""
+        # Phase vocoder for time-stretching
         stft1 = librosa.stft(audio1)
         stft2 = librosa.stft(audio2)
         
@@ -328,7 +343,8 @@ class GenreFusionProcessor:
     
     async def _neural_synthesis(self, audio1: np.ndarray, audio2: np.ndarray, 
                               ratio: float) -> np.ndarray:
-        """Neural network-based synthesis"""        # Extract features from both audio signals
+        """Neural network-based synthesis"""
+        # Extract features from both audio signals
         features1 = await self._extract_neural_features(audio1)
         features2 = await self._extract_neural_features(audio2)
         
@@ -345,7 +361,8 @@ class GenreFusionProcessor:
     
     async def _rhythmic_fusion(self, audio1: np.ndarray, audio2: np.ndarray, 
                              ratio: float) -> np.ndarray:
-        """Fusion focusing on rhythmic elements"""        # Beat tracking
+        """Fusion focusing on rhythmic elements"""
+        # Beat tracking
         tempo1, beats1 = librosa.beat.beat_track(y=audio1)
         tempo2, beats2 = librosa.beat.beat_track(y=audio2)
         
@@ -365,7 +382,8 @@ class GenreFusionProcessor:
     
     async def _timbral_blending(self, audio1: np.ndarray, audio2: np.ndarray, 
                               ratio: float) -> np.ndarray:
-        """Timbral characteristic blending"""        # Spectral envelope extraction
+        """Timbral characteristic blending"""
+        # Spectral envelope extraction
         spec1 = np.abs(librosa.stft(audio1))
         spec2 = np.abs(librosa.stft(audio2))
         
@@ -389,15 +407,18 @@ class GenreFusionProcessor:
         return librosa.istft(mixed_spec * np.exp(1j * np.angle(librosa.stft(audio1))))
     
     async def _extract_neural_features(self, audio: np.ndarray) -> np.ndarray:
-        """Extract features for neural processing"""        mfccs = librosa.feature.mfcc(y=audio, n_mfcc=13)
+        """Extract features for neural processing"""
+        mfccs = librosa.feature.mfcc(y=audio, n_mfcc=13)
         return np.mean(mfccs, axis=1)
     
     async def _features_to_audio(self, features: np.ndarray) -> np.ndarray:
-        """Convert features back to audio (simplified)"""        # This is a placeholder - real implementation would need a trained decoder
+        """Convert features back to audio (simplified)"""
+        # This is a placeholder - real implementation would need a trained decoder
         return np.random.normal(0, 0.1, 44100)  # 1 second of audio
 
 class GenreBlendingEngine:
-    """Main genre blending engine"""    
+    """Main genre blending engine"""
+    
     def __init__(self):
         self.analyzer = GenreAnalyzer()
         self.fusion_processor = GenreFusionProcessor()
@@ -408,7 +429,8 @@ class GenreBlendingEngine:
     
     async def analyze_genres(self, audio_data: np.ndarray, 
                            sample_rate: int = 44100) -> List[Tuple[MusicGenre, float]]:
-        """Analyze and identify genres in audio"""        try:
+        """Analyze and identify genres in audio"""
+        try:
             features = await self.analyzer.extract_spectral_features(audio_data, sample_rate)
             genre, confidence = await self.analyzer.classify_genre(features)
             
@@ -420,7 +442,8 @@ class GenreBlendingEngine:
     
     async def create_genre_blend(self, audio1: np.ndarray, audio2: np.ndarray,
                                parameters: BlendingParameters) -> Dict[str, Any]:
-        """Create a genre blend between two audio signals"""        try:
+        """Create a genre blend between two audio signals"""
+        try:
             start_time = datetime.now()
             
             # Analyze genres
@@ -474,7 +497,8 @@ class GenreBlendingEngine:
     
     async def optimize_blend_parameters(self, audio1: np.ndarray, audio2: np.ndarray,
                                       target_genre: MusicGenre) -> BlendingParameters:
-        """Optimize blending parameters for target genre"""        try:
+        """Optimize blending parameters for target genre"""
+        try:
             # Analyze source genres
             genres1 = await self.analyze_genres(audio1)
             genres2 = await self.analyze_genres(audio2)
@@ -515,7 +539,8 @@ class GenreBlendingEngine:
     def _calculate_optimal_ratio(self, char1: GenreCharacteristics, 
                                char2: GenreCharacteristics,
                                target: GenreCharacteristics) -> float:
-        """Calculate optimal blend ratio based on genre characteristics"""        # Simple distance-based calculation
+        """Calculate optimal blend ratio based on genre characteristics"""
+        # Simple distance-based calculation
         # In production, this would be more sophisticated
         
         # Calculate spectral distance
@@ -535,7 +560,8 @@ class GenreBlendingEngine:
     
     def _select_best_method(self, genre1: MusicGenre, genre2: MusicGenre, 
                            target: MusicGenre) -> BlendingMethod:
-        """Select the best blending method for genre combination"""        # Method selection logic based on genre characteristics
+        """Select the best blending method for genre combination"""
+        # Method selection logic based on genre characteristics
         electronic_genres = {MusicGenre.ELECTRONIC, MusicGenre.TECHNO, MusicGenre.HOUSE, MusicGenre.DUBSTEP}
         acoustic_genres = {MusicGenre.JAZZ, MusicGenre.CLASSICAL, MusicGenre.COUNTRY, MusicGenre.BLUES}
         
@@ -549,7 +575,8 @@ class GenreBlendingEngine:
             return BlendingMethod.LINEAR_INTERPOLATION
     
     async def get_blend_recommendations(self, source_genre: MusicGenre) -> List[Dict[str, Any]]:
-        """Get recommendations for genre blending"""        try:
+        """Get recommendations for genre blending"""
+        try:
             recommendations = []
             
             for target_genre in MusicGenre:
@@ -577,7 +604,8 @@ class GenreBlendingEngine:
             return []
     
     async def _calculate_compatibility(self, genre1: MusicGenre, genre2: MusicGenre) -> float:
-        """Calculate compatibility between two genres"""        # Simplified compatibility matrix
+        """Calculate compatibility between two genres"""
+        # Simplified compatibility matrix
         compatibility_matrix = {
             (MusicGenre.ROCK, MusicGenre.POP): 0.8,
             (MusicGenre.ROCK, MusicGenre.BLUES): 0.9,
@@ -608,7 +636,8 @@ class GenreBlendingEngine:
         return score
     
     def _get_difficulty_level(self, genre1: MusicGenre, genre2: MusicGenre) -> str:
-        """Get difficulty level for blending two genres"""        compatibility = asyncio.run(self._calculate_compatibility(genre1, genre2))
+        """Get difficulty level for blending two genres"""
+        compatibility = asyncio.run(self._calculate_compatibility(genre1, genre2))
         
         if compatibility >= 0.8:
             return "easy"
@@ -618,7 +647,8 @@ class GenreBlendingEngine:
             return "hard"
 
 class QualityValidator:
-    """Quality validation for genre blends"""    
+    """Quality validation for genre blends"""
+    
     def __init__(self):
         self.quality_metrics = [
             "spectral_coherence",
@@ -632,7 +662,8 @@ class QualityValidator:
     async def assess_blend_quality(self, blended_audio: np.ndarray,
                                  original1: np.ndarray, original2: np.ndarray,
                                  parameters: BlendingParameters) -> float:
-        """Assess the quality of a genre blend"""        try:
+        """Assess the quality of a genre blend"""
+        try:
             scores = {}
             
             # Spectral coherence
@@ -674,7 +705,8 @@ class QualityValidator:
             return 0.0
     
     async def _assess_spectral_coherence(self, audio: np.ndarray) -> float:
-        """Assess spectral coherence of blended audio"""        try:
+        """Assess spectral coherence of blended audio"""
+        try:
             # Spectral flux analysis
             stft = librosa.stft(audio)
             spec_flux = np.sum(np.diff(np.abs(stft), axis=1) ** 2, axis=0)
@@ -689,7 +721,8 @@ class QualityValidator:
             return 0.5
     
     async def _assess_harmonic_consistency(self, audio: np.ndarray) -> float:
-        """Assess harmonic consistency"""        try:
+        """Assess harmonic consistency"""
+        try:
             # Chroma analysis for harmonic content
             chroma = librosa.feature.chroma_stft(y=audio)
             
@@ -703,7 +736,8 @@ class QualityValidator:
             return 0.5
     
     async def _assess_rhythmic_stability(self, audio: np.ndarray) -> float:
-        """Assess rhythmic stability"""        try:
+        """Assess rhythmic stability"""
+        try:
             # Onset detection and tempo analysis
             tempo, beats = librosa.beat.beat_track(y=audio)
             
@@ -721,7 +755,8 @@ class QualityValidator:
     
     async def _assess_timbral_balance(self, blended: np.ndarray, orig1: np.ndarray,
                                    orig2: np.ndarray, ratio: float) -> float:
-        """Assess timbral balance between original sources"""        try:
+        """Assess timbral balance between original sources"""
+        try:
             # MFCC analysis for timbral characteristics
             mfcc_blended = librosa.feature.mfcc(y=blended, n_mfcc=13)
             mfcc_orig1 = librosa.feature.mfcc(y=orig1, n_mfcc=13)
@@ -740,7 +775,8 @@ class QualityValidator:
             return 0.5
     
     async def _assess_dynamic_range(self, audio: np.ndarray) -> float:
-        """Assess dynamic range of audio"""        try:
+        """Assess dynamic range of audio"""
+        try:
             # Calculate RMS energy
             rms = librosa.feature.rms(y=audio)[0]
             
@@ -756,7 +792,8 @@ class QualityValidator:
             return 0.5
     
     async def _assess_stereo_imaging(self, audio: np.ndarray) -> float:
-        """Assess stereo imaging quality"""        try:
+        """Assess stereo imaging quality"""
+        try:
             if audio.ndim == 1:
                 return 1.0  # Mono audio, no stereo issues
             

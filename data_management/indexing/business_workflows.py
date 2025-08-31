@@ -12,7 +12,8 @@ This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass, asdict
@@ -32,7 +33,8 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowStage(Enum):
-    """Stages in the content processing workflow"""    UPLOAD = "upload"
+    """Stages in the content processing workflow"""
+    UPLOAD = "upload"
     IA_PROCESSING = "ia_processing"
     PROTECTION = "protection"
     SEO_OPTIMIZATION = "seo_optimization"
@@ -43,7 +45,8 @@ class WorkflowStage(Enum):
 
 
 class WorkflowStatus(Enum):
-    """Status of workflow execution"""    PENDING = "pending"
+    """Status of workflow execution"""
+    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -52,7 +55,8 @@ class WorkflowStatus(Enum):
 
 @dataclass
 class WorkflowContext:
-    """Context for workflow execution"""    workflow_id: str
+    """Context for workflow execution"""
+    workflow_id: str
     creator_id: str
     creator_type: CreatorType
     content_id: Optional[str]
@@ -68,7 +72,8 @@ class WorkflowContext:
 
 @dataclass
 class WorkflowResult:
-    """Result of workflow execution"""    workflow_id: str
+    """Result of workflow execution"""
+    workflow_id: str
     status: WorkflowStatus
     completed_stages: List[WorkflowStage]
     failed_stages: List[WorkflowStage]
@@ -82,7 +87,8 @@ class WorkflowResult:
 
 @dataclass
 class StageResult:
-    """Result of individual workflow stage"""    stage: WorkflowStage
+    """Result of individual workflow stage"""
+    stage: WorkflowStage
     status: WorkflowStatus
     processing_time_ms: int
     result_data: Dict[str, Any]
@@ -91,7 +97,8 @@ class StageResult:
 
 
 class BusinessWorkflowOrchestrator:
-    """Main orchestrator for business workflows"""    
+    """Main orchestrator for business workflows"""
+    
     def __init__(
         self,
         indexing_service: IndexingService,
@@ -116,7 +123,8 @@ class BusinessWorkflowOrchestrator:
         }
     
     async def execute_complete_workflow(self, context: WorkflowContext) -> WorkflowResult:
-        """Execute the complete creator-to-platform workflow"""        start_time = datetime.now(timezone.utc)
+        """Execute the complete creator-to-platform workflow"""
+        start_time = datetime.now(timezone.utc)
         
         workflow_result = WorkflowResult(
             workflow_id=context.workflow_id,
@@ -214,7 +222,8 @@ class BusinessWorkflowOrchestrator:
         context: WorkflowContext, 
         workflow_result: WorkflowResult
     ) -> StageResult:
-        """Process content upload and validation"""        
+        """Process content upload and validation"""
+        
         stage_result = StageResult(
             stage=WorkflowStage.UPLOAD,
             status=WorkflowStatus.IN_PROGRESS,
@@ -269,7 +278,8 @@ class BusinessWorkflowOrchestrator:
         context: WorkflowContext, 
         workflow_result: WorkflowResult
     ) -> StageResult:
-        """Process IA content analysis and enhancement"""        
+        """Process IA content analysis and enhancement"""
+        
         stage_result = StageResult(
             stage=WorkflowStage.IA_PROCESSING,
             status=WorkflowStatus.IN_PROGRESS,
@@ -337,7 +347,8 @@ class BusinessWorkflowOrchestrator:
         context: WorkflowContext, 
         workflow_result: WorkflowResult
     ) -> StageResult:
-        """Process content protection and fingerprinting"""        
+        """Process content protection and fingerprinting"""
+        
         stage_result = StageResult(
             stage=WorkflowStage.PROTECTION,
             status=WorkflowStatus.IN_PROGRESS,
@@ -392,7 +403,8 @@ class BusinessWorkflowOrchestrator:
         context: WorkflowContext, 
         workflow_result: WorkflowResult
     ) -> StageResult:
-        """Process SEO optimization"""        
+        """Process SEO optimization"""
+        
         stage_result = StageResult(
             stage=WorkflowStage.SEO_OPTIMIZATION,
             status=WorkflowStatus.IN_PROGRESS,
@@ -447,7 +459,8 @@ class BusinessWorkflowOrchestrator:
         context: WorkflowContext, 
         workflow_result: WorkflowResult
     ) -> StageResult:
-        """Process monetization setup"""        
+        """Process monetization setup"""
+        
         stage_result = StageResult(
             stage=WorkflowStage.MONETIZATION,
             status=WorkflowStatus.IN_PROGRESS,
@@ -506,7 +519,8 @@ class BusinessWorkflowOrchestrator:
         context: WorkflowContext, 
         workflow_result: WorkflowResult
     ) -> StageResult:
-        """Process collaboration matching and opportunities"""        
+        """Process collaboration matching and opportunities"""
+        
         stage_result = StageResult(
             stage=WorkflowStage.COLLABORATION,
             status=WorkflowStatus.IN_PROGRESS,
@@ -570,7 +584,8 @@ class BusinessWorkflowOrchestrator:
         context: WorkflowContext, 
         workflow_result: WorkflowResult
     ) -> StageResult:
-        """Process multi-platform distribution"""        
+        """Process multi-platform distribution"""
+        
         stage_result = StageResult(
             stage=WorkflowStage.DISTRIBUTION,
             status=WorkflowStatus.IN_PROGRESS,
@@ -635,7 +650,8 @@ class BusinessWorkflowOrchestrator:
         context: WorkflowContext, 
         workflow_result: WorkflowResult
     ) -> StageResult:
-        """Process analytics and tracking setup"""        
+        """Process analytics and tracking setup"""
+        
         stage_result = StageResult(
             stage=WorkflowStage.ANALYTICS,
             status=WorkflowStatus.IN_PROGRESS,
@@ -684,7 +700,8 @@ class BusinessWorkflowOrchestrator:
 
 
 class WorkflowManager:
-    """Manager for workflow execution and tracking"""    
+    """Manager for workflow execution and tracking"""
+    
     def __init__(self, orchestrator: BusinessWorkflowOrchestrator):
         self.orchestrator = orchestrator
         self.active_workflows = {}
@@ -701,7 +718,8 @@ class WorkflowManager:
         target_platforms: List[str],
         options: Dict[str, Any] = None
     ) -> str:
-        """Start a complete creator workflow"""        
+        """Start a complete creator workflow"""
+        
         import uuid
         workflow_id = str(uuid.uuid4())
         
@@ -732,7 +750,8 @@ class WorkflowManager:
         return workflow_id
     
     async def _execute_workflow(self, context: WorkflowContext):
-        """Execute workflow asynchronously"""        try:
+        """Execute workflow asynchronously"""
+        try:
             result = await self.orchestrator.execute_complete_workflow(context)
             
             # Move to history
@@ -749,7 +768,8 @@ class WorkflowManager:
                 del self.active_workflows[context.workflow_id]
     
     async def get_workflow_status(self, workflow_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of a workflow"""        if workflow_id in self.active_workflows:
+        """Get status of a workflow"""
+        if workflow_id in self.active_workflows:
             return {
                 "status": "active",
                 "context": asdict(self.active_workflows[workflow_id])
@@ -763,7 +783,8 @@ class WorkflowManager:
             return None
     
     async def list_active_workflows(self, creator_id: Optional[str] = None) -> List[Dict[str, Any]]:
-        """List active workflows, optionally filtered by creator"""        workflows = []
+        """List active workflows, optionally filtered by creator"""
+        workflows = []
         
         for workflow_id, context in self.active_workflows.items():
             if creator_id is None or context.creator_id == creator_id:

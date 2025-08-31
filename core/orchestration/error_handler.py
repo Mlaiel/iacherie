@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 import traceback
 from datetime import datetime, timedelta
@@ -25,7 +26,8 @@ from backend.core.utils.event_dispatcher import EventDispatcher
 
 
 class ErrorSeverity(Enum):
-    """Error severity levels."""    DEBUG = "debug"
+    """Error severity levels."""
+    DEBUG = "debug"
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -34,7 +36,8 @@ class ErrorSeverity(Enum):
 
 
 class ErrorCategory(Enum):
-    """Error category classification."""    SYSTEM = "system"
+    """Error category classification."""
+    SYSTEM = "system"
     BUSINESS = "business"
     NETWORK = "network"
     DATABASE = "database"
@@ -47,7 +50,8 @@ class ErrorCategory(Enum):
 
 
 class RecoveryStrategy(Enum):
-    """Error recovery strategies."""    RETRY = "retry"
+    """Error recovery strategies."""
+    RETRY = "retry"
     FALLBACK = "fallback"
     CIRCUIT_BREAKER = "circuit_breaker"
     GRACEFUL_DEGRADATION = "graceful_degradation"
@@ -58,7 +62,8 @@ class RecoveryStrategy(Enum):
 
 
 class ErrorStatus(Enum):
-    """Error handling status."""    NEW = "new"
+    """Error handling status."""
+    NEW = "new"
     PROCESSING = "processing"
     RESOLVED = "resolved"
     FAILED = "failed"
@@ -68,7 +73,8 @@ class ErrorStatus(Enum):
 
 @dataclass
 class ErrorDefinition:
-    """Error type definition and handling rules."""    error_id: str
+    """Error type definition and handling rules."""
+    error_id: str
     name: str
     category: ErrorCategory
     severity: ErrorSeverity
@@ -82,7 +88,8 @@ class ErrorDefinition:
 
 @dataclass
 class ErrorInstance:
-    """Individual error occurrence."""    instance_id: str
+    """Individual error occurrence."""
+    instance_id: str
     error_id: str
     component_id: str
     message: str
@@ -102,7 +109,8 @@ class ErrorInstance:
 
 @dataclass
 class RecoveryAction:
-    """Error recovery action definition."""    action_id: str
+    """Error recovery action definition."""
+    action_id: str
     error_id: str
     strategy: RecoveryStrategy
     handler_function: Callable
@@ -114,7 +122,8 @@ class RecoveryAction:
 
 @dataclass
 class ErrorPattern:
-    """Error pattern for analysis and prediction."""    pattern_id: str
+    """Error pattern for analysis and prediction."""
+    pattern_id: str
     name: str
     conditions: Dict[str, Any]
     frequency_threshold: int
@@ -127,7 +136,8 @@ class ErrorPattern:
 
 @dataclass
 class ErrorAnalysis:
-    """Error analysis result."""    analysis_id: str
+    """Error analysis result."""
+    analysis_id: str
     component_id: str
     time_window: int
     total_errors: int
@@ -142,7 +152,8 @@ class ErrorAnalysis:
 
 
 class ErrorHandler:
-    """    Advanced error handling and recovery system for orchestration workflows.
+    """
+    Advanced error handling and recovery system for orchestration workflows.
     
     Provides comprehensive error management capabilities including:
     - Intelligent error categorization and severity assessment
@@ -151,7 +162,8 @@ class ErrorHandler:
     - Circuit breaker and bulkhead patterns
     - Error correlation and root cause analysis
     - Automated escalation and notification systems
-    """    
+    """
+    
     def __init__(self, max_retry_attempts: int = 3, error_retention_hours: int = 24):
         self.logger = logging.getLogger(__name__)
         self.metrics_collector = MetricsCollector()
@@ -193,20 +205,23 @@ class ErrorHandler:
         self.logger.info("ErrorHandler initialized")
     
     def _start_background_tasks(self) -> None:
-        """Start background error management tasks."""        asyncio.create_task(self._error_cleanup_task())
+        """Start background error management tasks."""
+        asyncio.create_task(self._error_cleanup_task())
         asyncio.create_task(self._pattern_detection_task())
         asyncio.create_task(self._circuit_breaker_monitor())
         asyncio.create_task(self._error_analysis_task())
     
     async def register_error_definition(self, definition: ErrorDefinition) -> bool:
-        """        Register error definition and handling rules.
+        """
+        Register error definition and handling rules.
         
         Args:
             definition: Error definition to register
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             # Validate definition
             if not await self._validate_error_definition(definition):
                 return False
@@ -240,14 +255,16 @@ class ErrorHandler:
             return False
     
     async def register_recovery_action(self, action: RecoveryAction) -> bool:
-        """        Register recovery action for error handling.
+        """
+        Register recovery action for error handling.
         
         Args:
             action: Recovery action to register
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             if not await self._validate_recovery_action(action):
                 return False
             
@@ -275,14 +292,16 @@ class ErrorHandler:
             return False
     
     async def register_error_pattern(self, pattern: ErrorPattern) -> bool:
-        """        Register error pattern for prediction and prevention.
+        """
+        Register error pattern for prediction and prevention.
         
         Args:
             pattern: Error pattern to register
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             if not await self._validate_error_pattern(pattern):
                 return False
             
@@ -305,14 +324,16 @@ class ErrorHandler:
             return False
     
     async def handle_error(self, error: ErrorInstance) -> str:
-        """        Handle error occurrence with recovery strategies.
+        """
+        Handle error occurrence with recovery strategies.
         
         Args:
             error: Error instance to handle
             
         Returns:
             str: Error handling ID
-        """        try:
+        """
+        try:
             # Validate error
             if not await self._validate_error_instance(error):
                 raise ValueError("Invalid error instance")
@@ -350,7 +371,8 @@ class ErrorHandler:
             raise
     
     async def _handle_error_async(self, error: ErrorInstance) -> None:
-        """Handle error asynchronously with recovery strategies."""        try:
+        """Handle error asynchronously with recovery strategies."""
+        try:
             error.status = ErrorStatus.PROCESSING
             start_time = datetime.now()
             
@@ -397,7 +419,8 @@ class ErrorHandler:
             })
     
     async def _execute_recovery_strategy(self, error: ErrorInstance, definition: ErrorDefinition) -> bool:
-        """Execute recovery strategy for error."""        strategy = definition.recovery_strategy
+        """Execute recovery strategy for error."""
+        strategy = definition.recovery_strategy
         
         try:
             if strategy == RecoveryStrategy.RETRY:
@@ -421,7 +444,8 @@ class ErrorHandler:
             return False
     
     async def _execute_retry_strategy(self, error: ErrorInstance, definition: ErrorDefinition) -> bool:
-        """Execute retry recovery strategy."""        retry_policy = definition.retry_policy
+        """Execute retry recovery strategy."""
+        retry_policy = definition.retry_policy
         max_retries = retry_policy.get('max_retries', self.max_retry_attempts)
         delay = retry_policy.get('delay', 1.0)
         backoff_factor = retry_policy.get('backoff_factor', 2.0)
@@ -443,7 +467,8 @@ class ErrorHandler:
         return False
     
     async def _execute_fallback_strategy(self, error: ErrorInstance, definition: ErrorDefinition) -> bool:
-        """Execute fallback recovery strategy."""        fallback_config = definition.fallback_config
+        """Execute fallback recovery strategy."""
+        fallback_config = definition.fallback_config
         
         # Try primary fallback
         if await self._execute_fallback_action(error, fallback_config.get('primary')):
@@ -457,7 +482,8 @@ class ErrorHandler:
         return await self._execute_fallback_action(error, fallback_config.get('default'))
     
     async def _execute_degradation_strategy(self, error: ErrorInstance, definition: ErrorDefinition) -> bool:
-        """Execute graceful degradation strategy."""        # Reduce service quality but maintain basic functionality
+        """Execute graceful degradation strategy."""
+        # Reduce service quality but maintain basic functionality
         degradation_config = definition.fallback_config.get('degradation', {})
         
         # Apply degradation settings
@@ -468,7 +494,8 @@ class ErrorHandler:
         return await self._execute_recovery_actions(error)
     
     async def _execute_compensation_strategy(self, error: ErrorInstance, definition: ErrorDefinition) -> bool:
-        """Execute compensation recovery strategy."""        compensation_config = definition.fallback_config.get('compensation', {})
+        """Execute compensation recovery strategy."""
+        compensation_config = definition.fallback_config.get('compensation', {})
         
         # Execute compensation actions
         for action in compensation_config.get('actions', []):
@@ -481,7 +508,8 @@ class ErrorHandler:
         return True
     
     async def _execute_custom_recovery(self, error: ErrorInstance, definition: ErrorDefinition) -> bool:
-        """Execute custom recovery actions."""        actions = self.recovery_actions.get(error.error_id, [])
+        """Execute custom recovery actions."""
+        actions = self.recovery_actions.get(error.error_id, [])
         
         for action in actions:
             try:
@@ -495,7 +523,8 @@ class ErrorHandler:
         return False
     
     async def _execute_recovery_actions(self, error: ErrorInstance) -> bool:
-        """Execute registered recovery actions for error."""        actions = self.recovery_actions.get(error.error_id, [])
+        """Execute registered recovery actions for error."""
+        actions = self.recovery_actions.get(error.error_id, [])
         
         for action in actions:
             try:
@@ -509,7 +538,8 @@ class ErrorHandler:
         return False
     
     async def _execute_recovery_action(self, action: RecoveryAction, error: ErrorInstance) -> bool:
-        """Execute individual recovery action."""        try:
+        """Execute individual recovery action."""
+        try:
             timeout = action.timeout or 30
             
             result = await asyncio.wait_for(
@@ -527,7 +557,8 @@ class ErrorHandler:
             return False
     
     async def _execute_fallback_action(self, error: ErrorInstance, fallback_config: Optional[Dict[str, Any]]) -> bool:
-        """Execute fallback action."""        if not fallback_config:
+        """Execute fallback action."""
+        if not fallback_config:
             return False
         
         try:
@@ -549,7 +580,8 @@ class ErrorHandler:
             return False
     
     async def _execute_compensation_action(self, error: ErrorInstance, action: Dict[str, Any]) -> None:
-        """Execute compensation action."""        action_type = action.get('type')
+        """Execute compensation action."""
+        action_type = action.get('type')
         
         if action_type == 'revert_transaction':
             # Simulate transaction reversal
@@ -562,7 +594,8 @@ class ErrorHandler:
             error.context['stakeholders_notified'] = True
     
     async def _check_action_conditions(self, action: RecoveryAction, error: ErrorInstance) -> bool:
-        """Check if recovery action conditions are met."""        conditions = action.conditions
+        """Check if recovery action conditions are met."""
+        conditions = action.conditions
         
         if not conditions:
             return True
@@ -587,7 +620,8 @@ class ErrorHandler:
         return True
     
     async def _should_retry(self, error: ErrorInstance, definition: ErrorDefinition, attempt: int) -> bool:
-        """Check if error should be retried."""        retry_policy = definition.retry_policy
+        """Check if error should be retried."""
+        retry_policy = definition.retry_policy
         
         # Check max retries
         max_retries = retry_policy.get('max_retries', self.max_retry_attempts)
@@ -606,7 +640,8 @@ class ErrorHandler:
         return True
     
     async def _should_escalate(self, error: ErrorInstance, definition: ErrorDefinition) -> bool:
-        """Check if error should be escalated."""        escalation_rules = definition.escalation_rules
+        """Check if error should be escalated."""
+        escalation_rules = definition.escalation_rules
         
         if not escalation_rules:
             return False
@@ -633,7 +668,8 @@ class ErrorHandler:
         return False
     
     async def _escalate_error(self, error: ErrorInstance, definition: ErrorDefinition) -> None:
-        """Escalate error to higher level handling."""        escalation_rules = definition.escalation_rules
+        """Escalate error to higher level handling."""
+        escalation_rules = definition.escalation_rules
         
         # Send notifications
         notification_config = definition.notification_config
@@ -655,7 +691,8 @@ class ErrorHandler:
         error.context['escalation_time'] = datetime.now().isoformat()
     
     async def _send_error_notifications(self, error: ErrorInstance, config: Dict[str, Any]) -> None:
-        """Send error notifications."""        # Simulate notification sending
+        """Send error notifications."""
+        # Simulate notification sending
         notification_types = config.get('types', [])
         
         for notification_type in notification_types:
@@ -667,7 +704,8 @@ class ErrorHandler:
                 self.logger.info(f"Webhook notification sent for error: {error.instance_id}")
     
     async def _check_error_patterns(self, error: ErrorInstance) -> None:
-        """Check error against registered patterns."""        for pattern_id, pattern in self.error_patterns.items():
+        """Check error against registered patterns."""
+        for pattern_id, pattern in self.error_patterns.items():
             if await self._matches_pattern(error, pattern):
                 self.pattern_matches[pattern_id].append(error.instance_id)
                 
@@ -681,7 +719,8 @@ class ErrorHandler:
                     await self._handle_pattern_detection(pattern, recent_matches)
     
     async def _matches_pattern(self, error: ErrorInstance, pattern: ErrorPattern) -> bool:
-        """Check if error matches pattern conditions."""        conditions = pattern.conditions
+        """Check if error matches pattern conditions."""
+        conditions = pattern.conditions
         
         # Check component condition
         if 'component_pattern' in conditions:
@@ -707,7 +746,8 @@ class ErrorHandler:
         return True
     
     def _is_recent_match(self, match_id: str, time_window: int) -> bool:
-        """Check if match is within time window."""        # Find error instance
+        """Check if match is within time window."""
+        # Find error instance
         error = self.active_errors.get(match_id)
         if not error:
             error = next((e for e in self.error_history if e.instance_id == match_id), None)
@@ -719,7 +759,8 @@ class ErrorHandler:
         return age <= time_window
     
     async def _handle_pattern_detection(self, pattern: ErrorPattern, matches: List[str]) -> None:
-        """Handle detected error pattern."""        await self.event_dispatcher.emit('error_pattern_detected', {
+        """Handle detected error pattern."""
+        await self.event_dispatcher.emit('error_pattern_detected', {
             'pattern_id': pattern.pattern_id,
             'pattern_name': pattern.name,
             'match_count': len(matches),
@@ -737,7 +778,8 @@ class ErrorHandler:
         self.error_stats['pattern_detection_rate'] += 1
     
     async def _execute_prevention_action(self, action: str, pattern: ErrorPattern, matches: List[str]) -> None:
-        """Execute error prevention action."""        if action == 'circuit_breaker':
+        """Execute error prevention action."""
+        if action == 'circuit_breaker':
             # Open circuit breaker for pattern components
             affected_components = set()
             for match_id in matches:
@@ -761,7 +803,8 @@ class ErrorHandler:
             })
     
     async def _check_circuit_breaker(self, error_id: str) -> bool:
-        """Check circuit breaker state for error type."""        cb = self.circuit_breakers.get(error_id, {})
+        """Check circuit breaker state for error type."""
+        cb = self.circuit_breakers.get(error_id, {})
         
         if cb.get('state') == 'open':
             # Check if timeout period has passed
@@ -777,7 +820,8 @@ class ErrorHandler:
         return True
     
     async def _record_circuit_breaker_failure(self, error_id: str) -> None:
-        """Record circuit breaker failure."""        if error_id not in self.circuit_breakers:
+        """Record circuit breaker failure."""
+        if error_id not in self.circuit_breakers:
             return
         
         cb = self.circuit_breakers[error_id]
@@ -795,20 +839,23 @@ class ErrorHandler:
             })
     
     async def _reset_circuit_breaker(self, error_id: str) -> None:
-        """Reset circuit breaker after successful recovery."""        if error_id in self.circuit_breakers:
+        """Reset circuit breaker after successful recovery."""
+        if error_id in self.circuit_breakers:
             cb = self.circuit_breakers[error_id]
             cb['state'] = 'closed'
             cb['failure_count'] = 0
             cb['last_failure_time'] = None
     
     async def _open_circuit_breaker(self, component_id: str) -> None:
-        """Open circuit breaker for component."""        # Find relevant circuit breakers
+        """Open circuit breaker for component."""
+        # Find relevant circuit breakers
         for error_id, cb in self.circuit_breakers.items():
             cb['state'] = 'open'
             cb['last_failure_time'] = datetime.now()
     
     async def _finalize_error_handling(self, error: ErrorInstance, start_time: datetime) -> None:
-        """Finalize error handling and update statistics."""        error.resolution_time = datetime.now()
+        """Finalize error handling and update statistics."""
+        error.resolution_time = datetime.now()
         resolution_duration = (error.resolution_time - start_time).total_seconds()
         
         # Update statistics
@@ -848,7 +895,8 @@ class ErrorHandler:
         self.error_history.append(error)
     
     async def _update_error_statistics(self, error: ErrorInstance) -> None:
-        """Update error rate statistics."""        # Update category statistics
+        """Update error rate statistics."""
+        # Update category statistics
         category = error.category.value
         if category not in self.error_stats['error_rate_by_category']:
             self.error_stats['error_rate_by_category'][category] = 0
@@ -861,7 +909,8 @@ class ErrorHandler:
         self.error_stats['error_rate_by_severity'][severity] += 1
     
     async def _create_default_error_definition(self, error: ErrorInstance) -> ErrorDefinition:
-        """Create default error definition for unregistered errors."""        return ErrorDefinition(
+        """Create default error definition for unregistered errors."""
+        return ErrorDefinition(
             error_id=error.error_id,
             name=f"Auto-generated for {error.error_id}",
             category=error.category,
@@ -871,7 +920,8 @@ class ErrorHandler:
         )
     
     async def analyze_errors(self, component_id: str, time_window: int = 3600) -> ErrorAnalysis:
-        """        Analyze errors for a component within time window.
+        """
+        Analyze errors for a component within time window.
         
         Args:
             component_id: Component identifier
@@ -879,7 +929,8 @@ class ErrorHandler:
             
         Returns:
             ErrorAnalysis: Analysis results
-        """        analysis_id = str(uuid.uuid4())
+        """
+        analysis_id = str(uuid.uuid4())
         cutoff_time = datetime.now() - timedelta(seconds=time_window)
         
         # Collect relevant errors
@@ -951,7 +1002,8 @@ class ErrorHandler:
         )
     
     async def _analyze_error_trends(self, errors: List[ErrorInstance], time_window: int) -> Dict[str, Any]:
-        """Analyze error trends."""        if len(errors) < 2:
+        """Analyze error trends."""
+        if len(errors) < 2:
             return {'trend': 'insufficient_data'}
         
         # Sort by timestamp
@@ -992,7 +1044,8 @@ class ErrorHandler:
         severity_dist: Dict[str, int],
         category_dist: Dict[str, int]
     ) -> List[str]:
-        """Generate error handling recommendations."""        recommendations = []
+        """Generate error handling recommendations."""
+        recommendations = []
         
         # High error rate
         if len(errors) > 50:
@@ -1020,7 +1073,8 @@ class ErrorHandler:
         return recommendations
     
     async def _error_cleanup_task(self) -> None:
-        """Background task to clean up old errors."""        while True:
+        """Background task to clean up old errors."""
+        while True:
             try:
                 cutoff_time = datetime.now() - timedelta(hours=self.error_retention_hours)
                 
@@ -1044,7 +1098,8 @@ class ErrorHandler:
                 await asyncio.sleep(300)
     
     async def _pattern_detection_task(self) -> None:
-        """Background task for pattern detection."""        while True:
+        """Background task for pattern detection."""
+        while True:
             try:
                 # Analyze error patterns across all components
                 for pattern_id, pattern in self.error_patterns.items():
@@ -1066,7 +1121,8 @@ class ErrorHandler:
                 await asyncio.sleep(60)
     
     async def _circuit_breaker_monitor(self) -> None:
-        """Monitor circuit breaker states."""        while True:
+        """Monitor circuit breaker states."""
+        while True:
             try:
                 for error_id, cb in self.circuit_breakers.items():
                     if cb.get('state') == 'half_open':
@@ -1085,7 +1141,8 @@ class ErrorHandler:
                 await asyncio.sleep(60)
     
     async def _error_analysis_task(self) -> None:
-        """Background task for periodic error analysis."""        while True:
+        """Background task for periodic error analysis."""
+        while True:
             try:
                 # Analyze errors for all active components
                 active_components = set()
@@ -1110,19 +1167,24 @@ class ErrorHandler:
                 await asyncio.sleep(300)
     
     async def _validate_error_definition(self, definition: ErrorDefinition) -> bool:
-        """Validate error definition."""        return bool(definition.error_id and definition.name)
+        """Validate error definition."""
+        return bool(definition.error_id and definition.name)
     
     async def _validate_recovery_action(self, action: RecoveryAction) -> bool:
-        """Validate recovery action."""        return bool(action.action_id and action.error_id and action.handler_function)
+        """Validate recovery action."""
+        return bool(action.action_id and action.error_id and action.handler_function)
     
     async def _validate_error_pattern(self, pattern: ErrorPattern) -> bool:
-        """Validate error pattern."""        return bool(pattern.pattern_id and pattern.name and pattern.conditions)
+        """Validate error pattern."""
+        return bool(pattern.pattern_id and pattern.name and pattern.conditions)
     
     async def _validate_error_instance(self, error: ErrorInstance) -> bool:
-        """Validate error instance."""        return bool(error.instance_id and error.error_id and error.component_id and error.message)
+        """Validate error instance."""
+        return bool(error.instance_id and error.error_id and error.component_id and error.message)
     
     async def get_error_status(self, instance_id: str) -> Optional[Dict[str, Any]]:
-        """Get error handling status."""        # Check active errors
+        """Get error handling status."""
+        # Check active errors
         if instance_id in self.active_errors:
             error = self.active_errors[instance_id]
         else:
@@ -1145,7 +1207,8 @@ class ErrorHandler:
         }
     
     async def get_component_errors(self, component_id: str, hours: int = 24) -> List[Dict[str, Any]]:
-        """Get recent errors for component."""        cutoff_time = datetime.now() - timedelta(hours=hours)
+        """Get recent errors for component."""
+        cutoff_time = datetime.now() - timedelta(hours=hours)
         
         errors = []
         
@@ -1185,7 +1248,8 @@ class ErrorHandler:
         return errors
     
     async def get_error_stats(self) -> Dict[str, Any]:
-        """Get error handling statistics."""        return {
+        """Get error handling statistics."""
+        return {
             **self.error_stats,
             'active_errors': len(self.active_errors),
             'error_history_size': len(self.error_history),

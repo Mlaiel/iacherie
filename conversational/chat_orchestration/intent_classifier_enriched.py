@@ -19,7 +19,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code and concept are proprietary intellectual property of Fahed Mlaiel.
 Unauthorized copying, modification, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 import uuid
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -39,7 +40,8 @@ from backend.utils.text_processor import TextProcessor
 
 
 class PrimaryIntentCategory(Enum):
-    """Primary intent categories for creator conversations"""    CONTENT_CREATION = "content_creation"
+    """Primary intent categories for creator conversations"""
+    CONTENT_CREATION = "content_creation"
     MONETIZATION = "monetization"
     PROTECTION = "protection"
     COLLABORATION = "collaboration"
@@ -54,7 +56,8 @@ class PrimaryIntentCategory(Enum):
 
 
 class CreatorSpecificIntent(Enum):
-    """Creator-specific intent subcategories"""    # Music-specific
+    """Creator-specific intent subcategories"""
+    # Music-specific
     MUSIC_PRODUCTION = "music_production"
     SONG_COLLABORATION = "song_collaboration"
     ROYALTY_MANAGEMENT = "royalty_management"
@@ -91,7 +94,8 @@ class CreatorSpecificIntent(Enum):
 
 
 class IntentUrgency(Enum):
-    """Intent urgency levels"""    LOW = "low"
+    """Intent urgency levels"""
+    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -99,7 +103,8 @@ class IntentUrgency(Enum):
 
 
 class IntentComplexity(Enum):
-    """Intent complexity levels"""    SIMPLE = "simple"
+    """Intent complexity levels"""
+    SIMPLE = "simple"
     MODERATE = "moderate"
     COMPLEX = "complex"
     MULTI_STEP = "multi_step"
@@ -108,7 +113,8 @@ class IntentComplexity(Enum):
 
 @dataclass
 class IntentContext:
-    """Contextual information for intent classification"""    conversation_history: List[Dict[str, Any]] = field(default_factory=list)
+    """Contextual information for intent classification"""
+    conversation_history: List[Dict[str, Any]] = field(default_factory=list)
     creator_specializations: List[str] = field(default_factory=list)
     current_projects: List[str] = field(default_factory=list)
     recent_activities: List[str] = field(default_factory=list)
@@ -119,7 +125,8 @@ class IntentContext:
 
 @dataclass
 class IntentClassificationResult:
-    """Comprehensive intent classification result"""    classification_id: str
+    """Comprehensive intent classification result"""
+    classification_id: str
     primary_intent: PrimaryIntentCategory
     secondary_intents: List[PrimaryIntentCategory] = field(default_factory=list)
     creator_specific_intent: Optional[CreatorSpecificIntent] = None
@@ -137,7 +144,8 @@ class IntentClassificationResult:
 
 
 class EnterpriseIntentClassifier:
-    """    Enterprise-grade intent classification system for creator conversations
+    """
+    Enterprise-grade intent classification system for creator conversations
     with advanced ML models, contextual understanding, and creator-specific
     optimizations.
     
@@ -148,7 +156,8 @@ class EnterpriseIntentClassifier:
     - Real-time learning and model improvement
     - Confidence scoring and uncertainty handling
     - Performance analytics and monitoring
-    """    
+    """
+    
     def __init__(
         self,
         ai_engine: ConversationalAI,
@@ -191,7 +200,8 @@ class EnterpriseIntentClassifier:
         creator_profile: Any,  # CreatorProfile object
         conversation_history: Optional[List[Dict[str, Any]]] = None
     ) -> IntentClassificationResult:
-        """        Classify user intent with comprehensive analysis and creator-specific optimization
+        """
+        Classify user intent with comprehensive analysis and creator-specific optimization
         
         Args:
             processed_message: Processed message object with content and metadata
@@ -201,7 +211,8 @@ class EnterpriseIntentClassifier:
             
         Returns:
             IntentClassificationResult with comprehensive classification details
-        """        classification_id = str(uuid.uuid4())
+        """
+        classification_id = str(uuid.uuid4())
         start_time = datetime.utcnow()
         
         try:
@@ -389,7 +400,8 @@ class EnterpriseIntentClassifier:
         context_analysis: Dict[str, Any],
         conversation_history: List[Dict[str, Any]]
     ) -> IntentContext:
-        """Build comprehensive intent context for classification"""        
+        """Build comprehensive intent context for classification"""
+        
         return IntentContext(
             conversation_history=conversation_history,
             creator_specializations=creator_profile.specializations,
@@ -410,7 +422,8 @@ class EnterpriseIntentClassifier:
         message_type: Any,
         creator_profile: Any
     ) -> str:
-        """Preprocess message content for intent classification"""        
+        """Preprocess message content for intent classification"""
+        
         # Basic text cleaning
         preprocessed = self.text_processor.clean_text(content)
         
@@ -438,7 +451,8 @@ class EnterpriseIntentClassifier:
         creator_profile: Any,
         context: IntentContext
     ) -> Dict[str, List[str]]:
-        """Extract entities relevant to creator workflows"""        
+        """Extract entities relevant to creator workflows"""
+        
         entities = defaultdict(list)
         
         # Use AI engine for general entity extraction
@@ -467,7 +481,8 @@ class EnterpriseIntentClassifier:
         creator_profile: Any,
         context: IntentContext
     ) -> List[str]:
-        """Extract intent-relevant keywords"""        
+        """Extract intent-relevant keywords"""
+        
         # Use text processor for general keyword extraction
         general_keywords = self.text_processor.extract_keywords(content)
         
@@ -491,7 +506,8 @@ class EnterpriseIntentClassifier:
         context: IntentContext,
         creator_profile: Any
     ) -> PrimaryIntentCategory:
-        """Classify primary intent using ML models and pattern matching"""        
+        """Classify primary intent using ML models and pattern matching"""
+        
         # Use ML model if available
         if self.intent_model:
             ml_prediction = await self.intent_model.predict_intent(
@@ -513,7 +529,8 @@ class EnterpriseIntentClassifier:
         context: IntentContext,
         creator_profile: Any
     ) -> PrimaryIntentCategory:
-        """Pattern-based intent classification as fallback"""        
+        """Pattern-based intent classification as fallback"""
+        
         content_lower = content.lower()
         
         # Monetization intent patterns
@@ -596,7 +613,8 @@ class EnterpriseIntentClassifier:
         context: IntentContext,
         creator_profile: Any
     ) -> List[PrimaryIntentCategory]:
-        """Classify secondary intents that might be present"""        
+        """Classify secondary intents that might be present"""
+        
         secondary_intents = []
         
         # Implementation would identify additional intents in the message
@@ -611,7 +629,8 @@ class EnterpriseIntentClassifier:
         creator_profile: Any,
         context: IntentContext
     ) -> Optional[CreatorSpecificIntent]:
-        """Classify creator-specific intent subcategories"""        
+        """Classify creator-specific intent subcategories"""
+        
         creator_type = creator_profile.creator_type.value
         content_lower = content.lower()
         
@@ -689,7 +708,8 @@ class EnterpriseIntentClassifier:
         context: IntentContext,
         processed_message: Any
     ) -> IntentUrgency:
-        """Determine the urgency level of the intent"""        
+        """Determine the urgency level of the intent"""
+        
         # Check for urgent keywords
         urgent_keywords = ["urgent", "asap", "immediately", "emergency", "critical", "deadline"]
         content = processed_message.processed_content.lower()
@@ -720,7 +740,8 @@ class EnterpriseIntentClassifier:
         entities: Dict[str, List[str]],
         context: IntentContext
     ) -> IntentComplexity:
-        """Assess the complexity level of the intent"""        
+        """Assess the complexity level of the intent"""
+        
         # Multiple intents increase complexity
         if len(secondary_intents) > 1:
             return IntentComplexity.COMPLEX
@@ -749,7 +770,8 @@ class EnterpriseIntentClassifier:
         creator_specific_intent: Optional[CreatorSpecificIntent],
         entities: Dict[str, List[str]]
     ) -> float:
-        """Calculate overall confidence score for the classification"""        
+        """Calculate overall confidence score for the classification"""
+        
         base_confidence = 0.8  # Base confidence for pattern matching
         
         # Boost confidence if creator-specific intent was found
@@ -773,7 +795,8 @@ class EnterpriseIntentClassifier:
     
     # Helper methods for entity extraction
     async def _extract_music_entities(self, content: str) -> Dict[str, List[str]]:
-        """Extract music-specific entities"""        entities = defaultdict(list)
+        """Extract music-specific entities"""
+        entities = defaultdict(list)
         
         # Music genres
         genres = re.findall(r'\\b(rock|pop|jazz|classical|hip.hop|rap|country|blues|electronic|folk)\\b', content.lower())
@@ -788,7 +811,8 @@ class EnterpriseIntentClassifier:
         return dict(entities)
     
     async def _extract_photography_entities(self, content: str) -> Dict[str, List[str]]:
-        """Extract photography-specific entities"""        entities = defaultdict(list)
+        """Extract photography-specific entities"""
+        entities = defaultdict(list)
         
         # Camera brands
         camera_brands = re.findall(r'\\b(canon|nikon|sony|fujifilm|olympus|pentax|leica)\\b', content.lower())
@@ -803,7 +827,8 @@ class EnterpriseIntentClassifier:
         return dict(entities)
     
     async def _extract_blogging_entities(self, content: str) -> Dict[str, List[str]]:
-        """Extract blogging-specific entities"""        entities = defaultdict(list)
+        """Extract blogging-specific entities"""
+        entities = defaultdict(list)
         
         # Content management systems
         cms = re.findall(r'\\b(wordpress|blogger|medium|ghost|squarespace|wix)\\b', content.lower())
@@ -818,7 +843,8 @@ class EnterpriseIntentClassifier:
         return dict(entities)
     
     async def _extract_influencer_entities(self, content: str) -> Dict[str, List[str]]:
-        """Extract influencer-specific entities"""        entities = defaultdict(list)
+        """Extract influencer-specific entities"""
+        entities = defaultdict(list)
         
         # Social platforms
         platforms = re.findall(r'\\b(instagram|tiktok|youtube|twitter|facebook|linkedin|pinterest)\\b', content.lower())
@@ -833,7 +859,8 @@ class EnterpriseIntentClassifier:
         return dict(entities)
     
     async def _extract_comedy_entities(self, content: str) -> Dict[str, List[str]]:
-        """Extract comedy-specific entities"""        entities = defaultdict(list)
+        """Extract comedy-specific entities"""
+        entities = defaultdict(list)
         
         # Comedy styles
         styles = re.findall(r'\\b(standup|improv|sketch|satire|observational|dark.comedy)\\b', content.lower())
@@ -849,7 +876,8 @@ class EnterpriseIntentClassifier:
     
     # Additional helper methods
     def _expand_music_terminology(self, content: str) -> str:
-        """Expand music-related abbreviations and terminology"""        expansions = {
+        """Expand music-related abbreviations and terminology"""
+        expansions = {
             "daw": "digital audio workstation",
             "bpm": "beats per minute",
             "eq": "equalizer",
@@ -862,7 +890,8 @@ class EnterpriseIntentClassifier:
         return content
     
     def _expand_photography_terminology(self, content: str) -> str:
-        """Expand photography-related terminology"""        expansions = {
+        """Expand photography-related terminology"""
+        expansions = {
             "iso": "international standards organization",
             "dslr": "digital single lens reflex",
             "hdr": "high dynamic range",
@@ -875,7 +904,8 @@ class EnterpriseIntentClassifier:
         return content
     
     def _expand_blogging_terminology(self, content: str) -> str:
-        """Expand blogging and SEO terminology"""        expansions = {
+        """Expand blogging and SEO terminology"""
+        expansions = {
             "seo": "search engine optimization",
             "cms": "content management system",
             "cta": "call to action",
@@ -888,7 +918,8 @@ class EnterpriseIntentClassifier:
         return content
     
     def _normalize_intent_phrases(self, content: str) -> str:
-        """Normalize common intent phrases for better matching"""        normalizations = {
+        """Normalize common intent phrases for better matching"""
+        normalizations = {
             r"how do i": "how to",
             r"what should i": "how to",
             r"can you help me": "help with",
@@ -902,7 +933,8 @@ class EnterpriseIntentClassifier:
         return content
     
     def _get_creator_specific_keywords(self, content: str, creator_type: str) -> List[str]:
-        """Get creator-specific keywords from content"""        
+        """Get creator-specific keywords from content"""
+        
         creator_keywords = {
             "musician": ["music", "song", "album", "band", "artist", "melody", "rhythm", "harmony"],
             "photographer": ["photo", "image", "camera", "lens", "shoot", "portfolio", "client"],
@@ -917,15 +949,18 @@ class EnterpriseIntentClassifier:
         return found_keywords
     
     def _load_intent_patterns(self) -> Dict[str, List[str]]:
-        """Load intent patterns from configuration"""        # Implementation would load from configuration files
+        """Load intent patterns from configuration"""
+        # Implementation would load from configuration files
         return {}
     
     def _load_creator_vocabularies(self) -> Dict[str, Dict[str, List[str]]]:
-        """Load creator-specific vocabularies"""        # Implementation would load from configuration files
+        """Load creator-specific vocabularies"""
+        # Implementation would load from configuration files
         return {}
     
     def _initialize_entity_extractors(self) -> Dict[str, Any]:
-        """Initialize entity extraction models"""        # Implementation would initialize NER models
+        """Initialize entity extraction models"""
+        # Implementation would initialize NER models
         return {}
     
     async def _generate_suggested_actions(
@@ -935,7 +970,8 @@ class EnterpriseIntentClassifier:
         creator_profile: Any,
         context: IntentContext
     ) -> List[str]:
-        """Generate suggested actions based on classified intent"""        
+        """Generate suggested actions based on classified intent"""
+        
         actions = []
         
         if primary_intent == PrimaryIntentCategory.MONETIZATION:
@@ -968,7 +1004,8 @@ class EnterpriseIntentClassifier:
         complexity: IntentComplexity,
         creator_profile: Any
     ) -> List[str]:
-        """Generate routing recommendations for conversation handling"""        
+        """Generate routing recommendations for conversation handling"""
+        
         recommendations = []
         
         if urgency in [IntentUrgency.URGENT, IntentUrgency.CRITICAL]:
@@ -989,7 +1026,8 @@ class EnterpriseIntentClassifier:
         context: IntentContext,
         creator_profile: Any
     ) -> List[Dict[str, Any]]:
-        """Generate alternative intent interpretations for low-confidence classifications"""        
+        """Generate alternative intent interpretations for low-confidence classifications"""
+        
         alternatives = []
         
         # Implementation would generate alternative interpretations
@@ -1003,7 +1041,8 @@ class EnterpriseIntentClassifier:
         context_analysis: Dict[str, Any],
         processed_message: Any
     ) -> Dict[str, Any]:
-        """Extract context factors that influenced classification"""        
+        """Extract context factors that influenced classification"""
+        
         return {
             "conversation_length": len(intent_context.conversation_history),
             "creator_specializations": intent_context.creator_specializations,
@@ -1018,7 +1057,8 @@ class EnterpriseIntentClassifier:
         result: IntentClassificationResult,
         creator_profile: Any
     ) -> None:
-        """Track intent classification analytics"""        
+        """Track intent classification analytics"""
+        
         await self.analytics.track_event(
             "intent_classified",
             {
@@ -1037,7 +1077,8 @@ class EnterpriseIntentClassifier:
         result: IntentClassificationResult,
         processing_time: float
     ) -> None:
-        """Update internal classification metrics"""        
+        """Update internal classification metrics"""
+        
         self.classification_metrics["total_classifications"] += 1
         
         # Update averages
@@ -1058,7 +1099,8 @@ class EnterpriseIntentClassifier:
         content: str,
         context: IntentContext
     ) -> None:
-        """Update learning models with classification result"""        
+        """Update learning models with classification result"""
+        
         if self.intent_model:
             await self.intent_model.update_with_feedback(
                 content=content,
@@ -1074,7 +1116,8 @@ class EnterpriseIntentClassifier:
         creator_profile: Any,
         error: str
     ) -> IntentClassificationResult:
-        """Create fallback classification result for errors"""        
+        """Create fallback classification result for errors"""
+        
         return IntentClassificationResult(
             classification_id=classification_id,
             primary_intent=PrimaryIntentCategory.TECHNICAL_SUPPORT,
@@ -1095,7 +1138,8 @@ class EnterpriseIntentClassifier:
         )
     
     def get_classification_metrics(self) -> Dict[str, Any]:
-        """Get current classification metrics"""        return self.classification_metrics.copy()
+        """Get current classification metrics"""
+        return self.classification_metrics.copy()
 
 
 # Maintain backward compatibility

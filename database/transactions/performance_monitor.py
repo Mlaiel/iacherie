@@ -11,7 +11,8 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
-"""import asyncio
+"""
+import asyncio
 import time
 import statistics
 import logging
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Metric type enumeration"""    COUNTER = "counter"
+    """Metric type enumeration"""
+    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     TIMER = "timer"
@@ -36,7 +38,8 @@ class MetricType(Enum):
 
 
 class AlertLevel(Enum):
-    """Alert severity levels"""    INFO = "info"
+    """Alert severity levels"""
+    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -44,7 +47,8 @@ class AlertLevel(Enum):
 
 @dataclass
 class TransactionMetrics:
-    """Comprehensive transaction performance metrics"""    transaction_id: str
+    """Comprehensive transaction performance metrics"""
+    transaction_id: str
     transaction_type: str = "unknown"
     start_time: float = field(default_factory=time.time)
     end_time: Optional[float] = None
@@ -65,12 +69,14 @@ class TransactionMetrics:
     custom_metrics: Dict[str, Any] = field(default_factory=dict)
     
     def mark_completed(self, success: bool = True) -> None:
-        """Mark transaction as completed"""        self.end_time = time.time()
+        """Mark transaction as completed"""
+        self.end_time = time.time()
         self.duration = self.end_time - self.start_time
         self.state = "completed" if success else "failed"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metrics to dictionary"""        return {
+        """Convert metrics to dictionary"""
+        return {
             "transaction_id": self.transaction_id,
             "transaction_type": self.transaction_type,
             "start_time": self.start_time,
@@ -95,7 +101,8 @@ class TransactionMetrics:
 
 @dataclass
 class AggregatedMetrics:
-    """Aggregated performance metrics over time period"""    period_start: datetime
+    """Aggregated performance metrics over time period"""
+    period_start: datetime
     period_end: datetime
     total_transactions: int = 0
     successful_transactions: int = 0
@@ -116,7 +123,8 @@ class AggregatedMetrics:
     cache_hit_rate: float = 0.0
     
     def calculate_percentiles(self, durations: List[float]) -> None:
-        """Calculate duration percentiles"""        if durations:
+        """Calculate duration percentiles"""
+        if durations:
             sorted_durations = sorted(durations)
             self.p50_duration = statistics.median(sorted_durations)
             self.p95_duration = sorted_durations[int(0.95 * len(sorted_durations))]
@@ -124,7 +132,8 @@ class AggregatedMetrics:
 
 
 class AlertRule:
-    """Performance alert rule definition"""    
+    """Performance alert rule definition"""
+    
     def __init__(
         self,
         name: str,
@@ -141,7 +150,8 @@ class AlertRule:
         self.last_triggered: Optional[datetime] = None
     
     def should_trigger(self, metrics: AggregatedMetrics) -> bool:
-        """Check if alert should be triggered"""        now = datetime.now(timezone.utc)
+        """Check if alert should be triggered"""
+        now = datetime.now(timezone.utc)
         
         # Check cooldown
         if (self.last_triggered and 
@@ -156,7 +166,8 @@ class AlertRule:
         return False
     
     def format_message(self, metrics: AggregatedMetrics) -> str:
-        """Format alert message"""        return self.message_template.format(
+        """Format alert message"""
+        return self.message_template.format(
             name=self.name,
             metrics=metrics,
             **metrics.__dict__
@@ -164,7 +175,8 @@ class AlertRule:
 
 
 class PerformanceMonitor:
-    """    Real-time transaction performance monitoring system
+    """
+    Real-time transaction performance monitoring system
     
     Features:
     - Real-time metrics collection
@@ -174,7 +186,8 @@ class PerformanceMonitor:
     - Custom metric support
     - Multi-dimensional analysis
     - Export capabilities
-    """    
+    """
+    
     def __init__(
         self,
         retention_hours: int = 24,
@@ -217,12 +230,14 @@ class PerformanceMonitor:
                    retention_hours, aggregation_interval_seconds)
     
     def start_monitoring(self) -> None:
-        """Start background monitoring tasks"""        if not self._monitor_task or self._monitor_task.done():
+        """Start background monitoring tasks"""
+        if not self._monitor_task or self._monitor_task.done():
             self._monitor_task = asyncio.create_task(self._background_monitor())
             logger.info("Performance monitoring started")
     
     def start_transaction(self, transaction_id: str, transaction_type: str = "unknown") -> TransactionMetrics:
-        """Start tracking a new transaction"""        
+        """Start tracking a new transaction"""
+        
         with self.lock:
             metrics = TransactionMetrics(
                 transaction_id=transaction_id,
@@ -236,7 +251,8 @@ class PerformanceMonitor:
             return metrics
     
     def end_transaction(self, transaction_id: str, success: bool = True) -> Optional[TransactionMetrics]:
-        """End transaction tracking"""        
+        """End transaction tracking"""
+        
         with self.lock:
             metrics = self.active_transactions.pop(transaction_id, None)
             
@@ -266,7 +282,8 @@ class PerformanceMonitor:
             return None
     
     def update_transaction_metric(self, transaction_id: str, metric_name: str, value: Any) -> bool:
-        """Update a specific metric for an active transaction"""        
+        """Update a specific metric for an active transaction"""
+        
         with self.lock:
             metrics = self.active_transactions.get(transaction_id)
             
@@ -282,15 +299,18 @@ class PerformanceMonitor:
             return False
     
     def increment_counter(self, name: str, value: int = 1) -> None:
-        """Increment a counter metric"""        with self.lock:
+        """Increment a counter metric"""
+        with self.lock:
             self.counters[name] += value
     
     def set_gauge(self, name: str, value: float) -> None:
-        """Set a gauge metric value"""        with self.lock:
+        """Set a gauge metric value"""
+        with self.lock:
             self.gauges[name] = value
     
     def record_histogram(self, name: str, value: float) -> None:
-        """Record a histogram value"""        with self.lock:
+        """Record a histogram value"""
+        with self.lock:
             self.histograms[name].append(value)
             
             # Limit histogram size
@@ -298,16 +318,19 @@ class PerformanceMonitor:
                 self.histograms[name] = self.histograms[name][-1000:]
     
     def add_alert_rule(self, alert_rule: AlertRule) -> None:
-        """Add performance alert rule"""        with self.lock:
+        """Add performance alert rule"""
+        with self.lock:
             self.alert_rules.append(alert_rule)
         
         logger.info("Added alert rule: %s", alert_rule.name)
     
     def add_alert_callback(self, callback: Callable[[str, AlertLevel, str], None]) -> None:
-        """Add alert notification callback"""        self.alert_callbacks.append(callback)
+        """Add alert notification callback"""
+        self.alert_callbacks.append(callback)
     
     def get_current_metrics(self) -> Dict[str, Any]:
-        """Get current real-time metrics"""        
+        """Get current real-time metrics"""
+        
         with self.lock:
             active_count = len(self.active_transactions)
             
@@ -332,7 +355,8 @@ class PerformanceMonitor:
             }
     
     def get_aggregated_metrics(self, period_minutes: int = 60) -> AggregatedMetrics:
-        """Get aggregated metrics for specified time period"""        
+        """Get aggregated metrics for specified time period"""
+        
         with self.lock:
             cutoff_time = time.time() - (period_minutes * 60)
             period_transactions = [
@@ -399,7 +423,8 @@ class PerformanceMonitor:
             return metrics
     
     def get_transaction_details(self, transaction_id: str) -> Optional[Dict[str, Any]]:
-        """Get detailed metrics for specific transaction"""        
+        """Get detailed metrics for specific transaction"""
+        
         with self.lock:
             # Check active transactions
             if transaction_id in self.active_transactions:
@@ -413,7 +438,8 @@ class PerformanceMonitor:
             return None
     
     def export_metrics(self, format_type: str = "json") -> str:
-        """Export metrics in specified format"""        
+        """Export metrics in specified format"""
+        
         current_metrics = self.get_current_metrics()
         aggregated_metrics = self.get_aggregated_metrics()
         
@@ -429,7 +455,8 @@ class PerformanceMonitor:
             raise ValueError(f"Unsupported export format: {format_type}")
     
     def _setup_default_alerts(self) -> None:
-        """Setup default performance alert rules"""        
+        """Setup default performance alert rules"""
+        
         # High error rate alert
         self.add_alert_rule(AlertRule(
             name="high_error_rate",
@@ -467,7 +494,8 @@ class PerformanceMonitor:
         ))
     
     async def _background_monitor(self) -> None:
-        """Background monitoring and aggregation task"""        
+        """Background monitoring and aggregation task"""
+        
         while not self._shutdown:
             try:
                 # Generate aggregated metrics
@@ -493,7 +521,8 @@ class PerformanceMonitor:
                 await asyncio.sleep(10)
     
     async def _check_alerts(self, metrics: AggregatedMetrics) -> None:
-        """Check alert rules and trigger notifications"""        
+        """Check alert rules and trigger notifications"""
+        
         for alert_rule in self.alert_rules:
             try:
                 if alert_rule.should_trigger(metrics):
@@ -515,7 +544,8 @@ class PerformanceMonitor:
                 logger.error("Error checking alert rule %s: %s", alert_rule.name, str(e))
     
     def _cleanup_histograms(self) -> None:
-        """Clean up old histogram data"""        
+        """Clean up old histogram data"""
+        
         with self.lock:
             for name, values in self.histograms.items():
                 if len(values) > 1000:
@@ -523,7 +553,8 @@ class PerformanceMonitor:
                     self.histograms[name] = values[-1000:]
     
     async def shutdown(self) -> None:
-        """Graceful shutdown of performance monitor"""        logger.info("Shutting down PerformanceMonitor...")
+        """Graceful shutdown of performance monitor"""
+        logger.info("Shutting down PerformanceMonitor...")
         
         self._shutdown = True
         

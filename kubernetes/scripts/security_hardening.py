@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Security Hardening Manager
 Automated security hardening and compliance for the IA Influencer Agent platform
-"""import os
+"""
+import os
 import sys
 import time
 import json
@@ -31,14 +32,16 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityLevel(Enum):
-    """Security level enumeration"""    BASIC = "basic"
+    """Security level enumeration"""
+    BASIC = "basic"
     STANDARD = "standard"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class ComplianceStandard(Enum):
-    """Compliance standard enumeration"""    GDPR = "gdpr"
+    """Compliance standard enumeration"""
+    GDPR = "gdpr"
     SOC2 = "soc2"
     ISO27001 = "iso27001"
     PCI_DSS = "pci_dss"
@@ -46,7 +49,8 @@ class ComplianceStandard(Enum):
 
 
 class VulnerabilityLevel(Enum):
-    """Vulnerability level enumeration"""    INFORMATIONAL = "informational"
+    """Vulnerability level enumeration"""
+    INFORMATIONAL = "informational"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -55,7 +59,8 @@ class VulnerabilityLevel(Enum):
 
 @dataclass
 class SecurityPolicy:
-    """Security policy data class"""    name: str
+    """Security policy data class"""
+    name: str
     description: str
     category: str
     level: SecurityLevel
@@ -66,7 +71,8 @@ class SecurityPolicy:
 
 @dataclass
 class Vulnerability:
-    """Vulnerability data class"""    id: str
+    """Vulnerability data class"""
+    id: str
     title: str
     description: str
     level: VulnerabilityLevel
@@ -80,7 +86,8 @@ class Vulnerability:
 
 @dataclass
 class SecurityAudit:
-    """Security audit data class"""    id: str
+    """Security audit data class"""
+    id: str
     audit_type: str
     started_at: datetime
     completed_at: Optional[datetime]
@@ -93,11 +100,14 @@ class SecurityAudit:
 
 
 class SecurityHardening:
-    """    Enterprise-grade security hardening manager
+    """
+    Enterprise-grade security hardening manager
     Automates security policies, vulnerability scanning, and compliance monitoring
-    """    
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize security hardening manager"""        self.config_path = config_path or "/etc/security/config.yaml"
+        """Initialize security hardening manager"""
+        self.config_path = config_path or "/etc/security/config.yaml"
         self.security_policies = {}
         self.vulnerabilities = {}
         self.audits = {}
@@ -109,7 +119,8 @@ class SecurityHardening:
         self._initialize_security_tools()
     
     def _load_configuration(self) -> None:
-        """Load security configuration"""        try:
+        """Load security configuration"""
+        try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r') as f:
                     self.config = yaml.safe_load(f)
@@ -122,7 +133,8 @@ class SecurityHardening:
             self.config = self._get_default_config()
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default security configuration"""        return {
+        """Get default security configuration"""
+        return {
             "security_level": "high",
             "compliance_standards": ["gdpr", "soc2"],
             "scanning": {
@@ -178,7 +190,8 @@ class SecurityHardening:
         }
     
     def _load_security_policies(self) -> None:
-        """Load security policies"""        try:
+        """Load security policies"""
+        try:
             policies_config = self.config.get("policies", {})
             compliance_standards = [
                 ComplianceStandard(std) for std in self.config.get("compliance_standards", [])
@@ -238,7 +251,8 @@ class SecurityHardening:
             logger.error(f"Failed to load security policies: {e}")
     
     def _initialize_security_tools(self) -> None:
-        """Initialize security tools and scanners"""        try:
+        """Initialize security tools and scanners"""
+        try:
             logger.info("Initializing security tools")
             
             # Initialize vulnerability scanner
@@ -256,7 +270,8 @@ class SecurityHardening:
             logger.error(f"Security tools initialization error: {e}")
     
     def start_security_hardening(self) -> None:
-        """Start security hardening process"""        try:
+        """Start security hardening process"""
+        try:
             logger.info("Starting security hardening")
             self.running = True
             
@@ -278,12 +293,14 @@ class SecurityHardening:
             logger.error(f"Security hardening startup error: {e}")
     
     def stop_security_hardening(self) -> None:
-        """Stop security hardening process"""        self.running = False
+        """Stop security hardening process"""
+        self.running = False
         self.executor.shutdown(wait=True)
         logger.info("Security hardening stopped")
     
     def _apply_security_hardening(self) -> None:
-        """Apply security hardening policies"""        try:
+        """Apply security hardening policies"""
+        try:
             logger.info("Applying security hardening policies")
             
             for policy_name, policy in self.security_policies.items():
@@ -300,7 +317,8 @@ class SecurityHardening:
             logger.error(f"Security hardening error: {e}")
     
     def _apply_security_policy(self, policy: SecurityPolicy) -> None:
-        """Apply specific security policy"""        try:
+        """Apply specific security policy"""
+        try:
             if policy.category == "authentication":
                 self._apply_authentication_policy(policy)
             elif policy.category == "authorization":
@@ -314,7 +332,8 @@ class SecurityHardening:
             logger.error(f"Security policy application error: {e}")
     
     def _apply_authentication_policy(self, policy: SecurityPolicy) -> None:
-        """Apply authentication security policy"""        try:
+        """Apply authentication security policy"""
+        try:
             params = policy.parameters
             
             # Configure password policy
@@ -333,7 +352,8 @@ class SecurityHardening:
             logger.error(f"Authentication policy error: {e}")
     
     def _apply_authorization_policy(self, policy: SecurityPolicy) -> None:
-        """Apply authorization security policy"""        try:
+        """Apply authorization security policy"""
+        try:
             params = policy.parameters
             
             # Configure MFA
@@ -357,7 +377,8 @@ class SecurityHardening:
             logger.error(f"Authorization policy error: {e}")
     
     def _apply_network_policy(self, policy: SecurityPolicy) -> None:
-        """Apply network security policy"""        try:
+        """Apply network security policy"""
+        try:
             params = policy.parameters
             
             # Configure firewall
@@ -382,7 +403,8 @@ class SecurityHardening:
             logger.error(f"Network security policy error: {e}")
     
     def _apply_data_protection_policy(self, policy: SecurityPolicy) -> None:
-        """Apply data protection security policy"""        try:
+        """Apply data protection security policy"""
+        try:
             params = policy.parameters
             
             # Configure encryption at rest
@@ -407,7 +429,8 @@ class SecurityHardening:
             logger.error(f"Data protection policy error: {e}")
     
     def _vulnerability_scanning_loop(self) -> None:
-        """Main vulnerability scanning loop"""        try:
+        """Main vulnerability scanning loop"""
+        try:
             interval_hours = self.config.get("scanning", {}).get("interval_hours", 24)
             
             while self.running:
@@ -442,7 +465,8 @@ class SecurityHardening:
             logger.error(f"Vulnerability scanning loop fatal error: {e}")
     
     def _compliance_monitoring_loop(self) -> None:
-        """Main compliance monitoring loop"""        try:
+        """Main compliance monitoring loop"""
+        try:
             while self.running:
                 try:
                     # Check compliance status
@@ -462,7 +486,8 @@ class SecurityHardening:
             logger.error(f"Compliance monitoring loop fatal error: {e}")
     
     def _security_monitoring_loop(self) -> None:
-        """Main security monitoring loop"""        try:
+        """Main security monitoring loop"""
+        try:
             while self.running:
                 try:
                     # Monitor security events
@@ -482,7 +507,8 @@ class SecurityHardening:
             logger.error(f"Security monitoring loop fatal error: {e}")
     
     def _run_security_audit(self) -> Optional[SecurityAudit]:
-        """Run comprehensive security audit"""        try:
+        """Run comprehensive security audit"""
+        try:
             audit_id = f"audit_{int(time.time())}"
             logger.info(f"Starting security audit: {audit_id}")
             
@@ -544,7 +570,8 @@ class SecurityHardening:
             return None
     
     def _run_system_security_checks(self) -> List[Dict[str, Any]]:
-        """Run system security checks"""        try:
+        """Run system security checks"""
+        try:
             checks = []
             
             # Check firewall status
@@ -594,7 +621,8 @@ class SecurityHardening:
             return []
     
     def _run_application_security_checks(self) -> List[Dict[str, Any]]:
-        """Run application security checks"""        try:
+        """Run application security checks"""
+        try:
             checks = []
             
             # Check authentication configuration
@@ -644,7 +672,8 @@ class SecurityHardening:
             return []
     
     def _run_database_security_checks(self) -> List[Dict[str, Any]]:
-        """Run database security checks"""        try:
+        """Run database security checks"""
+        try:
             checks = []
             
             # Check database encryption
@@ -686,7 +715,8 @@ class SecurityHardening:
             return []
     
     def _process_vulnerabilities(self, vulnerabilities: List[Vulnerability]) -> None:
-        """Process detected vulnerabilities"""        try:
+        """Process detected vulnerabilities"""
+        try:
             for vuln in vulnerabilities:
                 self.vulnerabilities[vuln.id] = vuln
                 
@@ -700,7 +730,8 @@ class SecurityHardening:
             logger.error(f"Vulnerability processing error: {e}")
     
     def _apply_automated_remediation(self, vulnerability: Vulnerability) -> None:
-        """Apply automated remediation for vulnerability"""        try:
+        """Apply automated remediation for vulnerability"""
+        try:
             logger.info(f"Applying automated remediation for: {vulnerability.id}")
             
             # Apply remediation based on vulnerability type
@@ -718,7 +749,8 @@ class SecurityHardening:
             logger.error(f"Automated remediation error: {e}")
     
     def _check_compliance(self) -> Dict[str, Any]:
-        """Check compliance status"""        try:
+        """Check compliance status"""
+        try:
             compliance_results = {}
             
             for standard in self.config.get("compliance_standards", []):
@@ -732,7 +764,8 @@ class SecurityHardening:
             return {}
     
     def _generate_compliance_report(self, compliance_results: Dict[str, Any]) -> None:
-        """Generate compliance report"""        try:
+        """Generate compliance report"""
+        try:
             report_path = f"/var/log/compliance/report_{int(time.time())}.json"
             os.makedirs(os.path.dirname(report_path), exist_ok=True)
             
@@ -752,14 +785,16 @@ class SecurityHardening:
             logger.error(f"Compliance report generation error: {e}")
     
     def _monitor_security_events(self) -> List[Dict[str, Any]]:
-        """Monitor security events"""        try:
+        """Monitor security events"""
+        try:
             return self.security_monitor.get_recent_events()
         except Exception as e:
             logger.error(f"Security event monitoring error: {e}")
             return []
     
     def _process_security_events(self, events: List[Dict[str, Any]]) -> None:
-        """Process security events"""        try:
+        """Process security events"""
+        try:
             for event in events:
                 if event.get("severity") == "critical":
                     self._send_security_alert(f"Critical security event: {event.get('description')}")
@@ -768,7 +803,8 @@ class SecurityHardening:
             logger.error(f"Security event processing error: {e}")
     
     def _send_security_alert(self, message: str) -> None:
-        """Send security alert"""        try:
+        """Send security alert"""
+        try:
             notifications = self.config.get("notifications", {})
             
             # Send Slack notification
@@ -787,120 +823,154 @@ class SecurityHardening:
     # Security configuration methods (simplified implementations)
     
     def _configure_password_length(self, min_length: int) -> None:
-        """Configure minimum password length"""        logger.info(f"Configured minimum password length: {min_length}")
+        """Configure minimum password length"""
+        logger.info(f"Configured minimum password length: {min_length}")
     
     def _configure_password_complexity(self) -> None:
-        """Configure password complexity requirements"""        logger.info("Configured password complexity requirements")
+        """Configure password complexity requirements"""
+        logger.info("Configured password complexity requirements")
     
     def _configure_password_expiry(self, max_age_days: int) -> None:
-        """Configure password expiry"""        logger.info(f"Configured password expiry: {max_age_days} days")
+        """Configure password expiry"""
+        logger.info(f"Configured password expiry: {max_age_days} days")
     
     def _configure_multi_factor_authentication(self) -> None:
-        """Configure multi-factor authentication"""        logger.info("Configured multi-factor authentication")
+        """Configure multi-factor authentication"""
+        logger.info("Configured multi-factor authentication")
     
     def _configure_session_timeout(self, timeout_minutes: int) -> None:
-        """Configure session timeout"""        logger.info(f"Configured session timeout: {timeout_minutes} minutes")
+        """Configure session timeout"""
+        logger.info(f"Configured session timeout: {timeout_minutes} minutes")
     
     def _configure_account_lockout(self, max_attempts: int, lockout_duration: int) -> None:
-        """Configure account lockout policy"""        logger.info(f"Configured account lockout: {max_attempts} attempts, {lockout_duration} minutes")
+        """Configure account lockout policy"""
+        logger.info(f"Configured account lockout: {max_attempts} attempts, {lockout_duration} minutes")
     
     def _configure_firewall(self) -> None:
-        """Configure firewall rules"""        logger.info("Configured firewall rules")
+        """Configure firewall rules"""
+        logger.info("Configured firewall rules")
     
     def _block_unused_ports(self) -> None:
-        """Block unused network ports"""        logger.info("Blocked unused network ports")
+        """Block unused network ports"""
+        logger.info("Blocked unused network ports")
     
     def _configure_intrusion_detection(self) -> None:
-        """Configure intrusion detection system"""        logger.info("Configured intrusion detection system")
+        """Configure intrusion detection system"""
+        logger.info("Configured intrusion detection system")
     
     def _enforce_ssl_tls(self) -> None:
-        """Enforce SSL/TLS encryption"""        logger.info("Enforced SSL/TLS encryption")
+        """Enforce SSL/TLS encryption"""
+        logger.info("Enforced SSL/TLS encryption")
     
     def _configure_data_encryption_at_rest(self) -> None:
-        """Configure data encryption at rest"""        logger.info("Configured data encryption at rest")
+        """Configure data encryption at rest"""
+        logger.info("Configured data encryption at rest")
     
     def _configure_data_encryption_in_transit(self) -> None:
-        """Configure data encryption in transit"""        logger.info("Configured data encryption in transit")
+        """Configure data encryption in transit"""
+        logger.info("Configured data encryption in transit")
     
     def _configure_data_masking(self) -> None:
-        """Configure data masking"""        logger.info("Configured data masking")
+        """Configure data masking"""
+        logger.info("Configured data masking")
     
     def _configure_backup_encryption(self) -> None:
-        """Configure backup encryption"""        logger.info("Configured backup encryption")
+        """Configure backup encryption"""
+        logger.info("Configured backup encryption")
     
     # Security check methods (simplified implementations)
     
     def _check_firewall_status(self) -> bool:
-        """Check firewall status"""        return True  # Simplified implementation
+        """Check firewall status"""
+        return True  # Simplified implementation
     
     def _check_unnecessary_services(self) -> bool:
-        """Check for unnecessary services"""        return True  # Simplified implementation
+        """Check for unnecessary services"""
+        return True  # Simplified implementation
     
     def _check_file_permissions(self) -> bool:
-        """Check file permissions"""        return True  # Simplified implementation
+        """Check file permissions"""
+        return True  # Simplified implementation
     
     def _check_ssl_certificates(self) -> bool:
-        """Check SSL certificate validity"""        return True  # Simplified implementation
+        """Check SSL certificate validity"""
+        return True  # Simplified implementation
     
     def _check_system_updates(self) -> bool:
-        """Check system updates"""        return True  # Simplified implementation
+        """Check system updates"""
+        return True  # Simplified implementation
     
     def _check_authentication_config(self) -> bool:
-        """Check authentication configuration"""        return True  # Simplified implementation
+        """Check authentication configuration"""
+        return True  # Simplified implementation
     
     def _check_authorization_config(self) -> bool:
-        """Check authorization configuration"""        return True  # Simplified implementation
+        """Check authorization configuration"""
+        return True  # Simplified implementation
     
     def _check_input_validation(self) -> bool:
-        """Check input validation"""        return True  # Simplified implementation
+        """Check input validation"""
+        return True  # Simplified implementation
     
     def _check_session_management(self) -> bool:
-        """Check session management"""        return True  # Simplified implementation
+        """Check session management"""
+        return True  # Simplified implementation
     
     def _check_error_handling(self) -> bool:
-        """Check error handling"""        return True  # Simplified implementation
+        """Check error handling"""
+        return True  # Simplified implementation
     
     def _check_database_encryption(self) -> bool:
-        """Check database encryption"""        return True  # Simplified implementation
+        """Check database encryption"""
+        return True  # Simplified implementation
     
     def _check_database_access_controls(self) -> bool:
-        """Check database access controls"""        return True  # Simplified implementation
+        """Check database access controls"""
+        return True  # Simplified implementation
     
     def _check_database_audit_logging(self) -> bool:
-        """Check database audit logging"""        return True  # Simplified implementation
+        """Check database audit logging"""
+        return True  # Simplified implementation
     
     def _check_database_backup_security(self) -> bool:
-        """Check database backup security"""        return True  # Simplified implementation
+        """Check database backup security"""
+        return True  # Simplified implementation
     
     # Remediation methods (simplified implementations)
     
     def _remediate_weak_ssl(self) -> None:
-        """Remediate weak SSL configuration"""        logger.info("Remediated weak SSL configuration")
+        """Remediate weak SSL configuration"""
+        logger.info("Remediated weak SSL configuration")
     
     def _remediate_outdated_packages(self) -> None:
-        """Remediate outdated packages"""        logger.info("Remediated outdated packages")
+        """Remediate outdated packages"""
+        logger.info("Remediated outdated packages")
     
     def _remediate_weak_passwords(self) -> None:
-        """Remediate weak passwords"""        logger.info("Remediated weak passwords")
+        """Remediate weak passwords"""
+        logger.info("Remediated weak passwords")
     
     # Notification methods (simplified implementations)
     
     def _send_slack_notification(self, webhook_url: str, message: str) -> None:
-        """Send Slack notification"""        try:
+        """Send Slack notification"""
+        try:
             payload = {"text": message}
             requests.post(webhook_url, json=payload)
         except Exception as e:
             logger.error(f"Slack notification error: {e}")
     
     def _send_email_notification(self, email: str, subject: str, message: str) -> None:
-        """Send email notification"""        try:
+        """Send email notification"""
+        try:
             # This would implement actual email sending
             logger.info(f"Email sent to {email}: {subject}")
         except Exception as e:
             logger.error(f"Email notification error: {e}")
     
     def _generate_security_recommendations(self, audit: SecurityAudit) -> List[str]:
-        """Generate security recommendations"""        recommendations = []
+        """Generate security recommendations"""
+        recommendations = []
         
         if audit.failed_checks > 0:
             recommendations.append("Address failed security checks")
@@ -933,7 +1003,8 @@ class SecurityHardening:
         return recommendations
     
     def _run_enhanced_vulnerability_scan(self) -> List[Dict[str, Any]]:
-        """Run enhanced vulnerability scanning"""        vulnerabilities = []
+        """Run enhanced vulnerability scanning"""
+        vulnerabilities = []
         
         try:
             # File system vulnerability scan
@@ -956,7 +1027,8 @@ class SecurityHardening:
             return []
     
     def _scan_file_permissions(self) -> List[Dict[str, Any]]:
-        """Scan file permissions for vulnerabilities"""        vulnerabilities = []
+        """Scan file permissions for vulnerabilities"""
+        vulnerabilities = []
         
         try:
             # Check for world-writable files
@@ -985,7 +1057,8 @@ class SecurityHardening:
         return vulnerabilities
     
     def _scan_network_vulnerabilities(self) -> List[Dict[str, Any]]:
-        """Scan network configuration for vulnerabilities"""        vulnerabilities = []
+        """Scan network configuration for vulnerabilities"""
+        vulnerabilities = []
         
         try:
             # Check for open ports
@@ -1020,7 +1093,8 @@ class SecurityHardening:
         return vulnerabilities
     
     def _scan_application_vulnerabilities(self) -> List[Dict[str, Any]]:
-        """Scan application for vulnerabilities"""        vulnerabilities = []
+        """Scan application for vulnerabilities"""
+        vulnerabilities = []
         
         try:
             # Check for debug mode in production
@@ -1057,7 +1131,8 @@ class SecurityHardening:
         return vulnerabilities
     
     def _scan_configuration_vulnerabilities(self) -> List[Dict[str, Any]]:
-        """Scan configuration for vulnerabilities"""        vulnerabilities = []
+        """Scan configuration for vulnerabilities"""
+        vulnerabilities = []
         
         try:
             # Check Docker configuration if Docker is installed
@@ -1079,7 +1154,8 @@ class SecurityHardening:
         return vulnerabilities
     
     def _run_container_security_checks(self) -> List[Dict[str, Any]]:
-        """Run container security checks"""        checks = []
+        """Run container security checks"""
+        checks = []
         
         try:
             # Check if running as root in container
@@ -1106,7 +1182,8 @@ class SecurityHardening:
         return checks
     
     def _run_compliance_checks(self) -> Dict[str, float]:
-        """Run compliance checks for various standards"""        compliance_scores = {}
+        """Run compliance checks for various standards"""
+        compliance_scores = {}
         
         try:
             # GDPR compliance check
@@ -1127,7 +1204,8 @@ class SecurityHardening:
         return compliance_scores
     
     def _check_gdpr_compliance(self) -> float:
-        """Check GDPR compliance"""        score = 0
+        """Check GDPR compliance"""
+        score = 0
         total_checks = 3
         
         try:
@@ -1149,7 +1227,8 @@ class SecurityHardening:
         return (score / total_checks) * 100
     
     def _check_soc2_compliance(self) -> float:
-        """Check SOC2 compliance"""        score = 0
+        """Check SOC2 compliance"""
+        score = 0
         total_checks = 2
         
         try:
@@ -1167,7 +1246,8 @@ class SecurityHardening:
         return (score / total_checks) * 100
     
     def _check_iso27001_compliance(self) -> float:
-        """Check ISO27001 compliance"""        score = 0
+        """Check ISO27001 compliance"""
+        score = 0
         total_checks = 2
         
         try:
@@ -1186,22 +1266,28 @@ class SecurityHardening:
     
     # Helper methods for compliance checks
     def _check_data_encryption(self) -> bool:
-        """Check if data encryption is implemented"""        return os.path.exists('/etc/ssl/certs') or os.path.exists('/etc/nginx/ssl')
+        """Check if data encryption is implemented"""
+        return os.path.exists('/etc/ssl/certs') or os.path.exists('/etc/nginx/ssl')
     
     def _check_access_logging(self) -> bool:
-        """Check if access logging is enabled"""        return os.path.exists('/var/log')
+        """Check if access logging is enabled"""
+        return os.path.exists('/var/log')
     
     def _check_data_retention_policies(self) -> bool:
-        """Check if data retention policies are implemented"""        return os.path.exists('/etc/logrotate.conf') or os.path.exists('/etc/logrotate.d')
+        """Check if data retention policies are implemented"""
+        return os.path.exists('/etc/logrotate.conf') or os.path.exists('/etc/logrotate.d')
     
     def _check_security_controls(self) -> bool:
-        """Check security controls"""        return self._check_firewall_status()
+        """Check security controls"""
+        return self._check_firewall_status()
     
     def _check_availability_controls(self) -> bool:
-        """Check availability controls"""        return os.path.exists('/var/log')  # Simplified check
+        """Check availability controls"""
+        return os.path.exists('/var/log')  # Simplified check
     
     def _check_security_policy(self) -> bool:
-        """Check if security policy exists"""        try:
+        """Check if security policy exists"""
+        try:
             result = subprocess.run(
                 ["find", ".", "-name", "*security*policy*", "-o", "-name", "*SECURITY*"],
                 capture_output=True, text=True, timeout=5
@@ -1211,7 +1297,8 @@ class SecurityHardening:
             return False
     
     def _get_compliance_recommendations(self, compliance_results: Dict[str, Any]) -> List[str]:
-        """Get compliance recommendations"""        recommendations = []
+        """Get compliance recommendations"""
+        recommendations = []
         
         for standard, score in compliance_results.items():
             if score < 80:
@@ -1220,7 +1307,8 @@ class SecurityHardening:
         return recommendations
     
     def get_security_status(self) -> Dict[str, Any]:
-        """Get overall security status"""        try:
+        """Get overall security status"""
+        try:
             # Get latest audit
             latest_audit = None
             if self.audits:
@@ -1253,9 +1341,11 @@ class SecurityHardening:
 
 # Helper classes
 class VulnerabilityScanner:
-    """Vulnerability scanner"""    
+    """Vulnerability scanner"""
+    
     def scan_all(self) -> List[Vulnerability]:
-        """Scan for all vulnerabilities"""        try:
+        """Scan for all vulnerabilities"""
+        try:
             vulnerabilities = []
             
             # System vulnerabilities
@@ -1274,25 +1364,30 @@ class VulnerabilityScanner:
             return []
     
     def _scan_system_vulnerabilities(self) -> List[Vulnerability]:
-        """Scan for system vulnerabilities"""        # This would implement actual vulnerability scanning
+        """Scan for system vulnerabilities"""
+        # This would implement actual vulnerability scanning
         return []
     
     def _scan_application_vulnerabilities(self) -> List[Vulnerability]:
-        """Scan for application vulnerabilities"""        # This would implement actual vulnerability scanning
+        """Scan for application vulnerabilities"""
+        # This would implement actual vulnerability scanning
         return []
     
     def _scan_network_vulnerabilities(self) -> List[Vulnerability]:
-        """Scan for network vulnerabilities"""        # This would implement actual vulnerability scanning
+        """Scan for network vulnerabilities"""
+        # This would implement actual vulnerability scanning
         return []
 
 
 class ComplianceChecker:
-    """Compliance checker"""    
+    """Compliance checker"""
+    
     def __init__(self, standards: List[str]):
         self.standards = standards
     
     def check_compliance(self, standard: str) -> float:
-        """Check compliance for specific standard"""        try:
+        """Check compliance for specific standard"""
+        try:
             # This would implement actual compliance checking
             return 85.0  # Example score
         except Exception as e:
@@ -1301,9 +1396,11 @@ class ComplianceChecker:
 
 
 class SecurityMonitor:
-    """Security event monitor"""    
+    """Security event monitor"""
+    
     def get_recent_events(self) -> List[Dict[str, Any]]:
-        """Get recent security events"""        try:
+        """Get recent security events"""
+        try:
             # This would implement actual security event monitoring
             return []
         except Exception as e:
@@ -1312,7 +1409,8 @@ class SecurityMonitor:
 
 
 def main():
-    """Main function for standalone execution"""    import argparse
+    """Main function for standalone execution"""
+    import argparse
     
     parser = argparse.ArgumentParser(description="Security Hardening Manager")
     parser.add_argument("--action", required=True, 

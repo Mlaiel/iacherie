@@ -6,7 +6,8 @@ and rights management.
 
 © 2025 Fahed Mlaiel (mlaiel@live.de) - IA-Influencer-Agent Platform
 Propriété Intellectuelle Exclusive - Tous Droits Réservés
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set
 from dataclasses import dataclass, field
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class ValidatorStatus(Enum):
-    """Validator status types"""    ACTIVE = "active"
+    """Validator status types"""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     SLASHED = "slashed"
     PENDING = "pending"
@@ -37,7 +39,8 @@ class ValidatorStatus(Enum):
 
 
 class TransactionStatus(Enum):
-    """Transaction status in pool"""    PENDING = "pending"
+    """Transaction status in pool"""
+    PENDING = "pending"
     INCLUDED = "included"
     REJECTED = "rejected"
     EXPIRED = "expired"
@@ -45,7 +48,8 @@ class TransactionStatus(Enum):
 
 @dataclass
 class ValidatorInfo:
-    """Validator information"""    validator_id: str
+    """Validator information"""
+    validator_id: str
     address: str
     stake_amount: Decimal
     status: ValidatorStatus
@@ -59,7 +63,8 @@ class ValidatorInfo:
 
 @dataclass
 class BlockProposal:
-    """Block proposal for consensus"""    block_hash: str
+    """Block proposal for consensus"""
+    block_hash: str
     proposer: str
     height: int
     timestamp: datetime
@@ -72,7 +77,8 @@ class BlockProposal:
 
 @dataclass
 class Vote:
-    """Consensus vote"""    validator: str
+    """Consensus vote"""
+    validator: str
     block_hash: str
     vote_type: str  # "prevote", "precommit"
     height: int
@@ -83,7 +89,8 @@ class Vote:
 
 @dataclass
 class TransactionInfo:
-    """Transaction information in pool"""    tx_hash: str
+    """Transaction information in pool"""
+    tx_hash: str
     from_address: str
     to_address: str
     amount: Decimal
@@ -98,11 +105,13 @@ class TransactionInfo:
 
 
 class ProofOfStakeConsensus:
-    """    Proof of Stake consensus mechanism for content rights validation
+    """
+    Proof of Stake consensus mechanism for content rights validation
     
     Implements a custom PoS algorithm optimized for content verification,
     validator selection, and reward distribution for the IA-Influencer platform.
-    """    
+    """
+    
     def __init__(self, config: BlockchainConfig, redis_client: redis.Redis):
         self.config = config
         self.redis = redis_client
@@ -128,7 +137,8 @@ class ProofOfStakeConsensus:
         self.current_proposal: Optional[BlockProposal] = None
     
     async def initialize(self) -> None:
-        """Initialize consensus engine"""        try:
+        """Initialize consensus engine"""
+        try:
             # Load current state from storage
             await self._load_consensus_state()
             
@@ -150,7 +160,8 @@ class ProofOfStakeConsensus:
         transactions: List[str],
         parent_hash: str
     ) -> BlockProposal:
-        """Propose new block for consensus"""        try:
+        """Propose new block for consensus"""
+        try:
             if not await self._is_valid_proposer(proposer_id, self.current_height):
                 raise ValidationError("Invalid proposer for current height")
             
@@ -189,7 +200,8 @@ class ProofOfStakeConsensus:
         block_hash: str,
         vote_type: str
     ) -> Vote:
-        """Cast consensus vote"""        try:
+        """Cast consensus vote"""
+        try:
             # Validate voter
             if not await self._is_active_validator(validator_id):
                 raise ValidationError("Validator is not active")
@@ -219,7 +231,8 @@ class ProofOfStakeConsensus:
             raise ConsensusError(f"Vote casting failed: {str(e)}")
     
     async def finalize_block(self, block_hash: str) -> bool:
-        """Finalize block after consensus"""        try:
+        """Finalize block after consensus"""
+        try:
             if block_hash in self.finalized_blocks:
                 return True
             
@@ -255,7 +268,8 @@ class ProofOfStakeConsensus:
             return False
     
     async def slash_validator(self, validator_id: str, reason: str) -> Decimal:
-        """Slash validator for misbehavior"""        try:
+        """Slash validator for misbehavior"""
+        try:
             validator = await self._get_validator(validator_id)
             if not validator:
                 raise ValidationError("Validator not found")
@@ -282,11 +296,13 @@ class ProofOfStakeConsensus:
             raise ConsensusError(f"Validator slashing failed: {str(e)}")
     
     async def get_validator_rewards(self, validator_id: str) -> Decimal:
-        """Get validator rewards"""        validator = await self._get_validator(validator_id)
+        """Get validator rewards"""
+        validator = await self._get_validator(validator_id)
         return validator.reward_balance if validator else Decimal("0")
     
     async def _consensus_loop(self) -> None:
-        """Main consensus loop"""        while True:
+        """Main consensus loop"""
+        while True:
             try:
                 # Check if we need a new block
                 if await self._should_propose_block():
@@ -310,7 +326,8 @@ class ProofOfStakeConsensus:
                 await asyncio.sleep(5)
     
     async def _is_valid_proposer(self, proposer_id: str, height: int) -> bool:
-        """Check if validator is valid proposer for height"""        try:
+        """Check if validator is valid proposer for height"""
+        try:
             # Check if validator is active
             if not await self._is_active_validator(proposer_id):
                 return False
@@ -324,11 +341,13 @@ class ProofOfStakeConsensus:
             return False
     
     async def _is_active_validator(self, validator_id: str) -> bool:
-        """Check if validator is active"""        validator = await self._get_validator(validator_id)
+        """Check if validator is active"""
+        validator = await self._get_validator(validator_id)
         return validator and validator.status == ValidatorStatus.ACTIVE
     
     async def _select_proposer_for_height(self, height: int) -> Optional[str]:
-        """Select proposer for specific height"""        if not self.active_validators:
+        """Select proposer for specific height"""
+        if not self.active_validators:
             return None
         
         # Use height as seed for deterministic selection
@@ -351,7 +370,8 @@ class ProofOfStakeConsensus:
         return self.active_validators[0].validator_id  # Fallback
     
     async def _check_vote_threshold(self, block_hash: str) -> None:
-        """Check if vote threshold is reached"""        votes = self.pending_votes[block_hash]
+        """Check if vote threshold is reached"""
+        votes = self.pending_votes[block_hash]
         
         # Count votes by type
         prevotes = [v for v in votes if v.vote_type == "prevote"]
@@ -380,7 +400,8 @@ class ProofOfStakeConsensus:
             await self.finalize_block(block_hash)
     
     async def _verify_consensus(self, block_hash: str) -> bool:
-        """Verify consensus was reached"""        votes = self.pending_votes.get(block_hash, [])
+        """Verify consensus was reached"""
+        votes = self.pending_votes.get(block_hash, [])
         precommits = [v for v in votes if v.vote_type == "precommit"]
         
         total_stake = sum(v.stake_amount for v in self.active_validators)
@@ -394,7 +415,8 @@ class ProofOfStakeConsensus:
         return precommit_stake >= threshold
     
     async def _apply_block(self, proposal: BlockProposal) -> None:
-        """Apply block to blockchain state"""        # This would contain the logic to apply transactions and update state
+        """Apply block to blockchain state"""
+        # This would contain the logic to apply transactions and update state
         # For content protection, this might include:
         # - Registering new content rights
         # - Processing license transactions
@@ -403,7 +425,8 @@ class ProofOfStakeConsensus:
         pass
     
     async def _distribute_block_rewards(self, proposer_id: str) -> None:
-        """Distribute block rewards to validators"""        try:
+        """Distribute block rewards to validators"""
+        try:
             # Calculate rewards
             base_reward = Decimal("10")  # Base block reward
             proposer_bonus = base_reward * Decimal("0.1")  # 10% bonus for proposer
@@ -428,7 +451,8 @@ class ProofOfStakeConsensus:
             self.logger.error(f"Failed to distribute rewards: {str(e)}")
     
     async def _handle_epoch_transition(self) -> None:
-        """Handle epoch transition"""        try:
+        """Handle epoch transition"""
+        try:
             self.current_epoch += 1
             
             # Update validator set
@@ -446,25 +470,30 @@ class ProofOfStakeConsensus:
             self.logger.error(f"Failed to handle epoch transition: {str(e)}")
     
     def _generate_block_hash(self, transactions: List[str], parent_hash: str) -> str:
-        """Generate deterministic block hash"""        content = f"{parent_hash}{''.join(sorted(transactions))}{datetime.utcnow().isoformat()}"
+        """Generate deterministic block hash"""
+        content = f"{parent_hash}{''.join(sorted(transactions))}{datetime.utcnow().isoformat()}"
         return hashlib.sha256(content.encode()).hexdigest()
     
     async def _calculate_state_root(self, transactions: List[str]) -> str:
-        """Calculate state root after applying transactions"""        # This would calculate the Merkle root of the state tree
+        """Calculate state root after applying transactions"""
+        # This would calculate the Merkle root of the state tree
         # For now, return a placeholder
         return hashlib.sha256(f"state_root_{len(transactions)}".encode()).hexdigest()
     
     async def _sign_proposal(self, proposer_id: str, transactions: List[str], parent_hash: str) -> str:
-        """Sign block proposal"""        # This would use the proposer's private key to sign the proposal
+        """Sign block proposal"""
+        # This would use the proposer's private key to sign the proposal
         # For now, return a mock signature
         return f"signature_{proposer_id}_{len(transactions)}"
     
     async def _sign_vote(self, validator_id: str, block_hash: str, vote_type: str) -> str:
-        """Sign consensus vote"""        # This would use the validator's private key to sign the vote
+        """Sign consensus vote"""
+        # This would use the validator's private key to sign the vote
         return f"vote_signature_{validator_id}_{vote_type}_{block_hash[:8]}"
     
     async def _broadcast_proposal(self, proposal: BlockProposal) -> None:
-        """Broadcast block proposal to validators"""        # Store proposal in cache for validators to access
+        """Broadcast block proposal to validators"""
+        # Store proposal in cache for validators to access
         key = f"block_proposal:{proposal.block_hash}"
         data = {
             "proposer": proposal.proposer,
@@ -489,7 +518,8 @@ class ProofOfStakeConsensus:
         }))
     
     async def _get_block_proposal(self, block_hash: str) -> Optional[BlockProposal]:
-        """Get block proposal by hash"""        key = f"block_proposal:{block_hash}"
+        """Get block proposal by hash"""
+        key = f"block_proposal:{block_hash}"
         data = await self.redis.hgetall(key)
         
         if not data:
@@ -508,7 +538,8 @@ class ProofOfStakeConsensus:
         )
     
     async def _load_consensus_state(self) -> None:
-        """Load consensus state from storage"""        state_data = await self.redis.hgetall("consensus_state")
+        """Load consensus state from storage"""
+        state_data = await self.redis.hgetall("consensus_state")
         
         if state_data:
             self.current_height = int(state_data.get("current_height", 0))
@@ -516,18 +547,21 @@ class ProofOfStakeConsensus:
             self.current_epoch = int(state_data.get("current_epoch", 0))
     
     async def _load_active_validators(self) -> None:
-        """Load active validators from storage"""        # This would load from database
+        """Load active validators from storage"""
+        # This would load from database
         # For now, using placeholder data
         self.active_validators = []
     
     async def _get_validator(self, validator_id: str) -> Optional[ValidatorInfo]:
-        """Get validator by ID"""        for validator in self.active_validators:
+        """Get validator by ID"""
+        for validator in self.active_validators:
             if validator.validator_id == validator_id:
                 return validator
         return None
     
     async def _update_validator(self, validator: ValidatorInfo) -> None:
-        """Update validator information"""        # Update in memory
+        """Update validator information"""
+        # Update in memory
         for i, v in enumerate(self.active_validators):
             if v.validator_id == validator.validator_id:
                 self.active_validators[i] = validator
@@ -548,16 +582,19 @@ class ProofOfStakeConsensus:
         await self.redis.hset(key, mapping=data)
     
     async def _should_propose_block(self) -> bool:
-        """Check if we should propose a new block"""        # Check if enough time has passed since last block
+        """Check if we should propose a new block"""
+        # Check if enough time has passed since last block
         # Check if there are pending transactions
         # Check if we're not already in proposal phase
         return not self.is_proposing and not self.current_proposal
     
     async def _select_block_proposer(self) -> Optional[str]:
-        """Select next block proposer"""        return await self._select_proposer_for_height(self.current_height + 1)
+        """Select next block proposer"""
+        return await self._select_proposer_for_height(self.current_height + 1)
     
     async def _trigger_block_proposal(self, proposer_id: str) -> None:
-        """Trigger block proposal process"""        # This would notify the proposer to create a block
+        """Trigger block proposal process"""
+        # This would notify the proposer to create a block
         await self.redis.publish("proposer_notifications", json.dumps({
             "action": "propose_block",
             "proposer": proposer_id,
@@ -565,26 +602,31 @@ class ProofOfStakeConsensus:
         }))
     
     async def _trigger_precommit_phase(self, block_hash: str) -> None:
-        """Trigger precommit phase"""        await self.redis.publish("consensus_events", json.dumps({
+        """Trigger precommit phase"""
+        await self.redis.publish("consensus_events", json.dumps({
             "action": "precommit_phase",
             "block_hash": block_hash,
             "height": self.current_height + 1
         }))
     
     async def _process_pending_votes(self) -> None:
-        """Process pending votes"""        # This would validate and count votes
+        """Process pending votes"""
+        # This would validate and count votes
         pass
     
     async def _check_finalization(self) -> None:
-        """Check for block finalization"""        # This would check if any blocks can be finalized
+        """Check for block finalization"""
+        # This would check if any blocks can be finalized
         pass
     
     async def _cleanup_expired_data(self) -> None:
-        """Cleanup expired consensus data"""        # Remove old votes, proposals, and other temporary data
+        """Cleanup expired consensus data"""
+        # Remove old votes, proposals, and other temporary data
         pass
     
     async def _record_slashing(self, validator_id: str, amount: Decimal, reason: str) -> None:
-        """Record validator slashing"""        key = f"slashing:{validator_id}:{datetime.utcnow().timestamp()}"
+        """Record validator slashing"""
+        key = f"slashing:{validator_id}:{datetime.utcnow().timestamp()}"
         data = {
             "validator_id": validator_id,
             "amount": str(amount),
@@ -596,7 +638,8 @@ class ProofOfStakeConsensus:
         await self.redis.expire(key, 86400 * 365)  # Keep for 1 year
     
     async def _redistribute_slashed_stake(self, amount: Decimal) -> None:
-        """Redistribute slashed stake to remaining validators"""        if not self.active_validators:
+        """Redistribute slashed stake to remaining validators"""
+        if not self.active_validators:
             return
         
         total_stake = sum(v.stake_amount for v in self.active_validators)
@@ -608,24 +651,29 @@ class ProofOfStakeConsensus:
                 await self._update_validator(validator)
     
     async def _update_validator_set(self) -> None:
-        """Update active validator set"""        # This would update the validator set based on stakes and performance
+        """Update active validator set"""
+        # This would update the validator set based on stakes and performance
         pass
     
     async def _process_validator_changes(self) -> None:
-        """Process validator joins and exits"""        # Handle pending validator changes
+        """Process validator joins and exits"""
+        # Handle pending validator changes
         pass
     
     async def _reset_epoch_data(self) -> None:
-        """Reset epoch-specific data"""        # Reset performance scores, temporary data, etc.
+        """Reset epoch-specific data"""
+        # Reset performance scores, temporary data, etc.
         pass
 
 
 class ValidatorNetwork:
-    """    Validator network management for IA-Influencer-Agent consensus
+    """
+    Validator network management for IA-Influencer-Agent consensus
     
     Manages validator registration, staking, performance tracking,
     and network health monitoring for decentralized content verification.
-    """    
+    """
+    
     def __init__(self, config: BlockchainConfig, redis_client: redis.Redis, db_session: AsyncSession):
         self.config = config
         self.redis = redis_client
@@ -638,7 +686,8 @@ class ValidatorNetwork:
         self.max_validators = 100
     
     async def initialize(self) -> None:
-        """Initialize validator network"""        try:
+        """Initialize validator network"""
+        try:
             await self._load_validators()
             await self._load_network_state()
             
@@ -657,7 +706,8 @@ class ValidatorNetwork:
         stake_amount: Decimal,
         metadata: Dict[str, Any]
     ) -> str:
-        """Register new validator"""        try:
+        """Register new validator"""
+        try:
             if stake_amount < self.min_stake:
                 raise ValidationError(f"Minimum stake required: {self.min_stake}")
             
@@ -692,7 +742,8 @@ class ValidatorNetwork:
             raise ConsensusError(f"Validator registration failed: {str(e)}")
     
     async def activate_validator(self, validator_id: str) -> bool:
-        """Activate pending validator"""        try:
+        """Activate pending validator"""
+        try:
             validator = self.validators.get(validator_id)
             if not validator:
                 return False
@@ -713,7 +764,8 @@ class ValidatorNetwork:
             return False
     
     async def deactivate_validator(self, validator_id: str, reason: str) -> bool:
-        """Deactivate validator"""        try:
+        """Deactivate validator"""
+        try:
             validator = self.validators.get(validator_id)
             if not validator:
                 return False
@@ -732,7 +784,8 @@ class ValidatorNetwork:
             return False
     
     async def increase_stake(self, validator_id: str, amount: Decimal) -> bool:
-        """Increase validator stake"""        try:
+        """Increase validator stake"""
+        try:
             validator = self.validators.get(validator_id)
             if not validator:
                 return False
@@ -750,7 +803,8 @@ class ValidatorNetwork:
             return False
     
     async def withdraw_stake(self, validator_id: str, amount: Decimal) -> bool:
-        """Withdraw validator stake"""        try:
+        """Withdraw validator stake"""
+        try:
             validator = self.validators.get(validator_id)
             if not validator:
                 return False
@@ -775,7 +829,8 @@ class ValidatorNetwork:
             return False
     
     async def update_validator_performance(self, validator_id: str, performance_metrics: Dict[str, Any]) -> None:
-        """Update validator performance metrics"""        try:
+        """Update validator performance metrics"""
+        try:
             validator = self.validators.get(validator_id)
             if not validator:
                 return
@@ -802,13 +857,16 @@ class ValidatorNetwork:
             self.logger.error(f"Failed to update validator performance: {str(e)}")
     
     async def get_active_validators(self) -> List[ValidatorInfo]:
-        """Get all active validators"""        return [v for v in self.validators.values() if v.status == ValidatorStatus.ACTIVE]
+        """Get all active validators"""
+        return [v for v in self.validators.values() if v.status == ValidatorStatus.ACTIVE]
     
     async def get_validator_info(self, validator_id: str) -> Optional[ValidatorInfo]:
-        """Get validator information"""        return self.validators.get(validator_id)
+        """Get validator information"""
+        return self.validators.get(validator_id)
     
     async def get_network_stats(self) -> Dict[str, Any]:
-        """Get validator network statistics"""        active_validators = await self.get_active_validators()
+        """Get validator network statistics"""
+        active_validators = await self.get_active_validators()
         
         return {
             "total_validators": len(self.validators),
@@ -822,10 +880,12 @@ class ValidatorNetwork:
         }
     
     def _generate_validator_id(self, address: str) -> str:
-        """Generate unique validator ID"""        return hashlib.sha256(f"validator_{address}_{datetime.utcnow().timestamp()}".encode()).hexdigest()[:16]
+        """Generate unique validator ID"""
+        return hashlib.sha256(f"validator_{address}_{datetime.utcnow().timestamp()}".encode()).hexdigest()[:16]
     
     def _calculate_network_security(self) -> str:
-        """Calculate network security level"""        active_validators = [v for v in self.validators.values() if v.status == ValidatorStatus.ACTIVE]
+        """Calculate network security level"""
+        active_validators = [v for v in self.validators.values() if v.status == ValidatorStatus.ACTIVE]
         
         if len(active_validators) < 10:
             return "LOW"
@@ -835,11 +895,13 @@ class ValidatorNetwork:
             return "HIGH"
     
     async def _load_validators(self) -> None:
-        """Load validators from storage"""        # This would load from database
+        """Load validators from storage"""
+        # This would load from database
         pass
     
     async def _load_network_state(self) -> None:
-        """Load network state from storage"""        network_data = await self.redis.hgetall("validator_network_state")
+        """Load network state from storage"""
+        network_data = await self.redis.hgetall("validator_network_state")
         
         if network_data:
             self.staking_pool = Decimal(network_data.get("staking_pool", "0"))
@@ -847,7 +909,8 @@ class ValidatorNetwork:
             self.max_validators = int(network_data.get("max_validators", "100"))
     
     async def _store_validator(self, validator: ValidatorInfo) -> None:
-        """Store validator information"""        key = f"validator_info:{validator.validator_id}"
+        """Store validator information"""
+        key = f"validator_info:{validator.validator_id}"
         data = {
             "address": validator.address,
             "stake_amount": str(validator.stake_amount),
@@ -863,7 +926,8 @@ class ValidatorNetwork:
         await self.redis.hset(key, mapping=data)
     
     async def _monitor_validators(self) -> None:
-        """Monitor validator health and performance"""        while True:
+        """Monitor validator health and performance"""
+        while True:
             try:
                 for validator in self.validators.values():
                     if validator.status == ValidatorStatus.ACTIVE:
@@ -886,11 +950,13 @@ class ValidatorNetwork:
 
 
 class ConsensusManager:
-    """    Main consensus manager that coordinates all consensus-related activities
+    """
+    Main consensus manager that coordinates all consensus-related activities
     
     Integrates proof-of-stake consensus, validator network, block validation,
     and transaction pool management for the IA-Influencer-Agent platform.
-    """    
+    """
+    
     def __init__(self, config: BlockchainConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -902,7 +968,8 @@ class ConsensusManager:
         self.transaction_pool = None
     
     async def initialize(self) -> None:
-        """Initialize consensus manager and all components"""        try:
+        """Initialize consensus manager and all components"""
+        try:
             # Initialize Redis connection (would be passed from main app)
             redis_client = redis.from_url(self.config.redis_url)
             
@@ -925,7 +992,8 @@ class ConsensusManager:
             raise ConsensusError(f"Consensus manager initialization failed: {str(e)}")
     
     async def cleanup(self) -> None:
-        """Cleanup consensus manager resources"""        try:
+        """Cleanup consensus manager resources"""
+        try:
             self.logger.info("Cleaning up consensus manager...")
             # Cleanup would be implemented here
             self.logger.info("Consensus manager cleanup completed")

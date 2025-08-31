@@ -6,7 +6,8 @@ processing parameters, and system settings.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -14,7 +15,8 @@ import yaml
 import json
 
 class ModelType(Enum):
-    """Supported NLP model types"""    BERT = "bert"
+    """Supported NLP model types"""
+    BERT = "bert"
     ROBERTA = "roberta"
     DISTILBERT = "distilbert"
     ALBERT = "albert"
@@ -25,7 +27,8 @@ class ModelType(Enum):
     BART = "bart"
 
 class LanguageCode(Enum):
-    """Supported language codes"""    ENGLISH = "en"
+    """Supported language codes"""
+    ENGLISH = "en"
     FRENCH = "fr"
     GERMAN = "de"
     SPANISH = "es"
@@ -40,14 +43,16 @@ class LanguageCode(Enum):
     MULTILINGUAL = "multilingual"
 
 class ProcessingMode(Enum):
-    """Text processing modes"""    FAST = "fast"
+    """Text processing modes"""
+    FAST = "fast"
     BALANCED = "balanced"
     ACCURATE = "accurate"
     CUSTOM = "custom"
 
 @dataclass
 class ModelConfig:
-    """Configuration for individual models"""    model_name: str
+    """Configuration for individual models"""
+    model_name: str
     model_type: ModelType
     tokenizer_name: Optional[str] = None
     max_sequence_length: int = 512
@@ -60,7 +65,8 @@ class ModelConfig:
 
 @dataclass
 class SentimentConfig:
-    """Sentiment analysis configuration"""    model_config: ModelConfig = field(default_factory=lambda: ModelConfig(
+    """Sentiment analysis configuration"""
+    model_config: ModelConfig = field(default_factory=lambda: ModelConfig(
         model_name="cardiffnlp/twitter-roberta-base-sentiment-latest",
         model_type=ModelType.ROBERTA
     ))
@@ -71,14 +77,16 @@ class SentimentConfig:
 
 @dataclass
 class LanguageDetectionConfig:
-    """Language detection configuration"""    model_name: str = "papluca/xlm-roberta-base-language-detection"
+    """Language detection configuration"""
+    model_name: str = "papluca/xlm-roberta-base-language-detection"
     confidence_threshold: float = 0.8
     max_languages: int = 3
     fallback_to_nltk: bool = True
 
 @dataclass
 class EntityExtractionConfig:
-    """Named Entity Recognition configuration"""    model_name: str = "dbmdz/bert-large-cased-finetuned-conll03-english"
+    """Named Entity Recognition configuration"""
+    model_name: str = "dbmdz/bert-large-cased-finetuned-conll03-english"
     aggregation_strategy: str = "simple"
     return_confidence: bool = True
     group_entities: bool = True
@@ -86,7 +94,8 @@ class EntityExtractionConfig:
 
 @dataclass
 class TopicModelingConfig:
-    """Topic modeling configuration"""    algorithm: str = "lda"  # lda, nmf, bertopic
+    """Topic modeling configuration"""
+    algorithm: str = "lda"  # lda, nmf, bertopic
     num_topics: int = 10
     max_features: int = 5000
     min_df: int = 2
@@ -96,7 +105,8 @@ class TopicModelingConfig:
 
 @dataclass
 class EmbeddingsConfig:
-    """Text embeddings configuration"""    model_name: str = "sentence-transformers/all-MiniLM-L6-v2"
+    """Text embeddings configuration"""
+    model_name: str = "sentence-transformers/all-MiniLM-L6-v2"
     normalize_embeddings: bool = True
     convert_to_numpy: bool = True
     batch_size: int = 32
@@ -105,7 +115,8 @@ class EmbeddingsConfig:
 
 @dataclass
 class TextFingerprintingConfig:
-    """Text fingerprinting configuration"""    similarity_threshold: float = 0.85
+    """Text fingerprinting configuration"""
+    similarity_threshold: float = 0.85
     embedding_model: str = "sentence-transformers/all-mpnet-base-v2"
     chunking_strategy: str = "sentence"
     chunk_size: int = 200
@@ -115,7 +126,8 @@ class TextFingerprintingConfig:
 
 @dataclass
 class CacheConfig:
-    """Caching configuration"""    enabled: bool = True
+    """Caching configuration"""
+    enabled: bool = True
     cache_type: str = "redis"  # redis, memory, disk
     redis_host: str = "localhost"
     redis_port: int = 6379
@@ -126,7 +138,8 @@ class CacheConfig:
 
 @dataclass
 class ProcessingConfig:
-    """General processing configuration"""    mode: ProcessingMode = ProcessingMode.BALANCED
+    """General processing configuration"""
+    mode: ProcessingMode = ProcessingMode.BALANCED
     max_text_length: int = 10000
     min_text_length: int = 10
     enable_preprocessing: bool = True
@@ -140,7 +153,8 @@ class ProcessingConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance optimization configuration"""    max_workers: int = 4
+    """Performance optimization configuration"""
+    max_workers: int = 4
     use_multiprocessing: bool = True
     enable_gpu: bool = True
     memory_efficient: bool = True
@@ -150,7 +164,8 @@ class PerformanceConfig:
 
 @dataclass
 class NLPAgentConfig:
-    """Main NLP Agent configuration"""    # Model configurations
+    """Main NLP Agent configuration"""
+    # Model configurations
     sentiment: SentimentConfig = field(default_factory=SentimentConfig)
     language_detection: LanguageDetectionConfig = field(default_factory=LanguageDetectionConfig)
     entity_extraction: EntityExtractionConfig = field(default_factory=EntityExtractionConfig)
@@ -185,7 +200,8 @@ class NLPAgentConfig:
     
     @classmethod
     def from_file(cls, config_path: str) -> "NLPAgentConfig":
-        """Load configuration from file"""        if not os.path.exists(config_path):
+        """Load configuration from file"""
+        if not os.path.exists(config_path):
             raise FileNotFoundError(f"Configuration file not found: {config_path}")
         
         with open(config_path, 'r', encoding='utf-8') as f:
@@ -199,7 +215,8 @@ class NLPAgentConfig:
         return cls(**config_data)
     
     def save_to_file(self, config_path: str) -> None:
-        """Save configuration to file"""        config_dict = self.__dict__.copy()
+        """Save configuration to file"""
+        config_dict = self.__dict__.copy()
         
         # Convert enums to strings
         for key, value in config_dict.items():
@@ -217,7 +234,8 @@ class NLPAgentConfig:
                 raise ValueError("Configuration file must be YAML or JSON")
     
     def validate(self) -> bool:
-        """Validate configuration settings"""        try:
+        """Validate configuration settings"""
+        try:
             # Validate model configurations
             if not self.sentiment.model_config.model_name:
                 raise ValueError("Sentiment model name cannot be empty")
@@ -278,7 +296,8 @@ MODEL_REGISTRY = {
 }
 
 def get_config_from_env() -> NLPAgentConfig:
-    """Create configuration from environment variables"""    config = NLPAgentConfig()
+    """Create configuration from environment variables"""
+    config = NLPAgentConfig()
     
     # Override with environment variables if present
     if os.getenv("NLP_SENTIMENT_MODEL"):

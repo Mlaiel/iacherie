@@ -22,7 +22,8 @@ PROJECT TEAM SPECIALTIES:
 - Audio/Video Specialist: Multimedia processing and codec optimization
 - Microservices Architect: Distributed systems and service orchestration
 - IA Prompt Engineer: AI model fine-tuning and content analysis
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import time
@@ -55,7 +56,8 @@ from ...core.config import get_settings
 
 
 class WorkflowStage(Enum):
-    """Workflow processing stages"""    INITIALIZATION = "initialization"
+    """Workflow processing stages"""
+    INITIALIZATION = "initialization"
     VALIDATION = "validation" 
     PREPROCESSING = "preprocessing"
     TRANSFORMATION = "transformation"
@@ -71,7 +73,8 @@ class WorkflowStage(Enum):
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status"""    PENDING = "pending"
+    """Workflow execution status"""
+    PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -81,7 +84,8 @@ class WorkflowStatus(Enum):
 
 
 class WorkflowPriority(IntEnum):
-    """Workflow execution priority"""    LOW = 1
+    """Workflow execution priority"""
+    LOW = 1
     NORMAL = 3
     HIGH = 5
     URGENT = 7
@@ -89,14 +93,16 @@ class WorkflowPriority(IntEnum):
 
 
 class ExecutionMode(Enum):
-    """Workflow execution modes"""    SEQUENTIAL = "sequential"      # Execute stages one by one
+    """Workflow execution modes"""
+    SEQUENTIAL = "sequential"      # Execute stages one by one
     PARALLEL = "parallel"         # Execute compatible stages in parallel
     ADAPTIVE = "adaptive"         # Adapt execution based on resources
     STREAMING = "streaming"       # Streaming execution with real-time updates
 
 
 class RetryStrategy(Enum):
-    """Retry strategies for failed stages"""    NONE = "none"               # No retry
+    """Retry strategies for failed stages"""
+    NONE = "none"               # No retry
     IMMEDIATE = "immediate"     # Immediate retry
     EXPONENTIAL = "exponential" # Exponential backoff
     LINEAR = "linear"          # Linear backoff
@@ -105,7 +111,8 @@ class RetryStrategy(Enum):
 
 @dataclass
 class WorkflowStageConfig:
-    """Configuration for individual workflow stage"""    stage: WorkflowStage
+    """Configuration for individual workflow stage"""
+    stage: WorkflowStage
     enabled: bool = True
     timeout: int = 300  # 5 minutes default
     retry_count: int = 3
@@ -117,7 +124,8 @@ class WorkflowStageConfig:
 
 @dataclass 
 class WorkflowStageResult:
-    """Result of workflow stage execution"""    stage: WorkflowStage
+    """Result of workflow stage execution"""
+    stage: WorkflowStage
     status: WorkflowStatus
     success: bool
     start_time: datetime
@@ -134,7 +142,8 @@ class WorkflowStageResult:
 
 @dataclass
 class WorkflowExecution:
-    """Workflow execution context and state"""    workflow_id: str
+    """Workflow execution context and state"""
+    workflow_id: str
     user_id: str
     content_info: Dict[str, Any]
     config: 'WorkflowConfiguration'
@@ -170,7 +179,8 @@ class WorkflowExecution:
 
 
 class WorkflowConfiguration(BaseModel):
-    """Comprehensive workflow configuration"""    
+    """Comprehensive workflow configuration"""
+    
     # Basic settings
     name: str = Field(..., description="Workflow name")
     description: str = Field(default="", description="Workflow description")
@@ -210,7 +220,8 @@ class WorkflowConfiguration(BaseModel):
 
 
 class WorkflowOrchestrator:
-    """    Professional workflow orchestration engine for content ingestion pipelines.
+    """
+    Professional workflow orchestration engine for content ingestion pipelines.
     
     Features:
     - Complex workflow definition and execution
@@ -221,7 +232,8 @@ class WorkflowOrchestrator:
     - Performance optimization
     - Resource management
     - Extensible stage framework
-    """    
+    """
+    
     def __init__(self,
                  db_session: AsyncSession,
                  redis_client: Redis,
@@ -230,7 +242,8 @@ class WorkflowOrchestrator:
                  streaming_engine: StreamingIngestionEngine,
                  validator: ContentValidator,
                  quality_manager: DataQualityManager):
-        """        Initialize workflow orchestrator.
+        """
+        Initialize workflow orchestrator.
         
         Args:
             db_session: Database session
@@ -240,7 +253,8 @@ class WorkflowOrchestrator:
             streaming_engine: Streaming ingestion engine
             validator: Content validator
             quality_manager: Quality manager
-        """        self.db_session = db_session
+        """
+        self.db_session = db_session
         self.redis = redis_client
         self.content_manager = content_manager
         self.transformer = transformer
@@ -283,7 +297,8 @@ class WorkflowOrchestrator:
         self._load_default_templates()
     
     def _initialize_stage_handlers(self):
-        """Initialize handlers for each workflow stage"""        self.stage_handlers = {
+        """Initialize handlers for each workflow stage"""
+        self.stage_handlers = {
             WorkflowStage.INITIALIZATION: self._handle_initialization,
             WorkflowStage.VALIDATION: self._handle_validation,
             WorkflowStage.PREPROCESSING: self._handle_preprocessing,
@@ -300,7 +315,8 @@ class WorkflowOrchestrator:
         }
     
     def _load_default_templates(self):
-        """Load default workflow templates"""        # Basic content ingestion workflow
+        """Load default workflow templates"""
+        # Basic content ingestion workflow
         basic_workflow = WorkflowConfiguration(
             name="basic_content_ingestion",
             description="Basic content ingestion with validation and processing",
@@ -363,7 +379,8 @@ class WorkflowOrchestrator:
                              content_info: Dict[str, Any],
                              user_id: str,
                              priority: WorkflowPriority = WorkflowPriority.NORMAL) -> str:
-        """        Execute workflow with specified configuration.
+        """
+        Execute workflow with specified configuration.
         
         Args:
             workflow_config: Workflow configuration
@@ -374,7 +391,8 @@ class WorkflowOrchestrator:
             
         Returns:
             Workflow ID for tracking
-        """        workflow_id = str(uuid.uuid4())
+        """
+        workflow_id = str(uuid.uuid4())
         
         try:
             self.logger.info(f"Starting workflow execution {workflow_id}")
@@ -409,7 +427,8 @@ class WorkflowOrchestrator:
             raise WorkflowError(f"Workflow startup failed: {e}")
     
     async def _execute_workflow_async(self, execution: WorkflowExecution):
-        """Execute workflow asynchronously"""        try:
+        """Execute workflow asynchronously"""
+        try:
             execution.status = WorkflowStatus.RUNNING
             execution.started_at = datetime.now(timezone.utc)
             
@@ -434,7 +453,8 @@ class WorkflowOrchestrator:
             await self._cleanup_workflow(execution)
     
     async def _execute_sequential(self, execution: WorkflowExecution):
-        """Execute workflow stages sequentially"""        try:
+        """Execute workflow stages sequentially"""
+        try:
             # Sort stages by dependencies
             sorted_stages = self._sort_stages_by_dependencies(execution.config.stages)
             
@@ -479,7 +499,8 @@ class WorkflowOrchestrator:
             raise
     
     async def _execute_parallel(self, execution: WorkflowExecution):
-        """Execute compatible workflow stages in parallel"""        try:
+        """Execute compatible workflow stages in parallel"""
+        try:
             # Build execution graph
             execution_graph = self._build_execution_graph(execution.config.stages)
             
@@ -545,7 +566,8 @@ class WorkflowOrchestrator:
             raise
     
     async def _execute_adaptive(self, execution: WorkflowExecution):
-        """Execute workflow with adaptive strategy"""        try:
+        """Execute workflow with adaptive strategy"""
+        try:
             # Start with parallel execution and adapt based on performance
             # Monitor resource usage and switch strategies as needed
             
@@ -558,7 +580,8 @@ class WorkflowOrchestrator:
             raise
     
     async def _execute_streaming(self, execution: WorkflowExecution):
-        """Execute workflow with streaming processing"""        try:
+        """Execute workflow with streaming processing"""
+        try:
             # Stream processing with real-time updates
             # Process content in chunks with immediate feedback
             
@@ -596,7 +619,8 @@ class WorkflowOrchestrator:
             raise
     
     async def _execute_stage(self, execution: WorkflowExecution, stage_config: WorkflowStageConfig) -> WorkflowStageResult:
-        """Execute individual workflow stage"""        stage_result = WorkflowStageResult(
+        """Execute individual workflow stage"""
+        stage_result = WorkflowStageResult(
             stage=stage_config.stage,
             status=WorkflowStatus.RUNNING,
             success=False,
@@ -638,7 +662,8 @@ class WorkflowOrchestrator:
     
     # Stage Handlers
     async def _handle_initialization(self, execution: WorkflowExecution, config: WorkflowStageConfig) -> Dict[str, Any]:
-        """Initialize workflow processing"""        try:
+        """Initialize workflow processing"""
+        try:
             # Prepare content for processing
             content_info = execution.content_info.copy()
             content_info['workflow_id'] = execution.workflow_id
@@ -666,7 +691,8 @@ class WorkflowOrchestrator:
             raise WorkflowError(f"Initialization failed: {e}")
     
     async def _handle_validation(self, execution: WorkflowExecution, config: WorkflowStageConfig) -> Dict[str, Any]:
-        """Validate content and configuration"""        try:
+        """Validate content and configuration"""
+        try:
             # Content validation
             validation_result = await self.validator.validate_content(
                 execution.input_data,
@@ -687,7 +713,8 @@ class WorkflowOrchestrator:
             raise WorkflowError(f"Validation failed: {e}")
     
     async def _handle_preprocessing(self, execution: WorkflowExecution, config: WorkflowStageConfig) -> Dict[str, Any]:
-        """Preprocess content for further processing"""        try:
+        """Preprocess content for further processing"""
+        try:
             # Basic preprocessing
             processed_data = execution.input_data
             
@@ -715,7 +742,8 @@ class WorkflowOrchestrator:
             raise WorkflowError(f"Preprocessing failed: {e}")
     
     async def _handle_transformation(self, execution: WorkflowExecution, config: WorkflowStageConfig) -> Dict[str, Any]:
-        """Transform content using advanced transformer"""        try:
+        """Transform content using advanced transformer"""
+        try:
             # Get transformation options from config
             transform_options = TransformationOptions(
                 **execution.config.transformation_options
@@ -742,7 +770,8 @@ class WorkflowOrchestrator:
             raise WorkflowError(f"Transformation failed: {e}")
     
     async def _handle_ai_analysis(self, execution: WorkflowExecution, config: WorkflowStageConfig) -> Dict[str, Any]:
-        """Perform AI analysis on content"""        try:
+        """Perform AI analysis on content"""
+        try:
             # Extract metadata with AI analysis
             metadata_result = await self.metadata_extractor.extract_metadata(
                 execution.input_data,
@@ -760,7 +789,8 @@ class WorkflowOrchestrator:
             raise WorkflowError(f"AI analysis failed: {e}")
     
     async def _handle_quality_check(self, execution: WorkflowExecution, config: WorkflowStageConfig) -> Dict[str, Any]:
-        """Perform quality assessment"""        try:
+        """Perform quality assessment"""
+        try:
             # Use quality manager for assessment
             quality_result = await self.quality_manager.assess_content_quality(
                 execution.input_data,
@@ -782,7 +812,8 @@ class WorkflowOrchestrator:
             raise WorkflowError(f"Quality check failed: {e}")
     
     async def _handle_security_scan(self, execution: WorkflowExecution, config: WorkflowStageConfig) -> Dict[str, Any]:
-        """Perform security scanning"""        try:
+        """Perform security scanning"""
+        try:
             # Security validation
             security_result = await self.validator.security_scan(
                 execution.input_data,
@@ -802,7 +833,8 @@ class WorkflowOrchestrator:
             raise WorkflowError(f"Security scan failed: {e}")
     
     async def _handle_metadata_enrichment(self, execution: WorkflowExecution, config: WorkflowStageConfig) -> Dict[str, Any]:
-        """Enrich content metadata"""        try:
+        """Enrich content metadata"""
+        try:
             # Get existing metadata
             existing_metadata = execution.intermediate_data.get('ai_analysis', {})
             
@@ -824,7 +856,8 @@ class WorkflowOrchestrator:
             raise WorkflowError(f"Metadata enrichment failed: {e}")
     
     async def _handle_content_protection(self, execution: WorkflowExecution, config: WorkflowStageConfig) -> Dict[str, Any]:
-        """Apply content protection measures"""        try:
+        """Apply content protection measures"""
+        try:
             # Content protection implementation
             # This would integrate with fingerprinting and protection systems
             
@@ -840,7 +873,8 @@ class WorkflowOrchestrator:
             raise WorkflowError(f"Content protection failed: {e}")
     
     async def _handle_optimization(self, execution: WorkflowExecution, config: WorkflowStageConfig) -> Dict[str, Any]:
-        """Optimize content for distribution"""        try:
+        """Optimize content for distribution"""
+        try:
             # Content optimization
             optimization_result = {
                 'optimized': True,
@@ -854,7 +888,8 @@ class WorkflowOrchestrator:
             raise WorkflowError(f"Optimization failed: {e}")
     
     async def _handle_distribution_prep(self, execution: WorkflowExecution, config: WorkflowStageConfig) -> Dict[str, Any]:
-        """Prepare content for distribution"""        try:
+        """Prepare content for distribution"""
+        try:
             # Distribution preparation
             distribution_result = {
                 'distribution_ready': True,
@@ -868,7 +903,8 @@ class WorkflowOrchestrator:
             raise WorkflowError(f"Distribution preparation failed: {e}")
     
     async def _handle_finalization(self, execution: WorkflowExecution, config: WorkflowStageConfig) -> Dict[str, Any]:
-        """Finalize workflow processing"""        try:
+        """Finalize workflow processing"""
+        try:
             # Create final ingestion request
             ingestion_request = IngestionRequest(
                 user_id=execution.user_id,
@@ -896,7 +932,8 @@ class WorkflowOrchestrator:
             raise WorkflowError(f"Finalization failed: {e}")
     
     async def _handle_cleanup(self, execution: WorkflowExecution, config: WorkflowStageConfig) -> Dict[str, Any]:
-        """Cleanup workflow resources"""        try:
+        """Cleanup workflow resources"""
+        try:
             # Cleanup temporary data
             cleanup_result = {
                 'cleanup_complete': True,
@@ -911,20 +948,24 @@ class WorkflowOrchestrator:
     
     # Helper methods for content preprocessing
     async def _preprocess_image(self, image_data: bytes) -> bytes:
-        """Preprocess image data"""        # Basic image preprocessing
+        """Preprocess image data"""
+        # Basic image preprocessing
         return image_data
     
     async def _preprocess_audio(self, audio_data: bytes) -> bytes:
-        """Preprocess audio data"""        # Basic audio preprocessing
+        """Preprocess audio data"""
+        # Basic audio preprocessing
         return audio_data
     
     async def _preprocess_video(self, video_data: bytes) -> bytes:
-        """Preprocess video data"""        # Basic video preprocessing
+        """Preprocess video data"""
+        # Basic video preprocessing
         return video_data
     
     # Helper methods
     def _sort_stages_by_dependencies(self, stages: List[WorkflowStageConfig]) -> List[WorkflowStageConfig]:
-        """Sort stages by dependency order"""        sorted_stages = []
+        """Sort stages by dependency order"""
+        sorted_stages = []
         remaining_stages = stages.copy()
         
         while remaining_stages:
@@ -946,16 +987,19 @@ class WorkflowOrchestrator:
         return sorted_stages
     
     def _check_dependencies(self, execution: WorkflowExecution, stage_config: WorkflowStageConfig) -> bool:
-        """Check if stage dependencies are met"""        for dependency in stage_config.dependencies:
+        """Check if stage dependencies are met"""
+        for dependency in stage_config.dependencies:
             if dependency not in execution.completed_stages:
                 return False
         return True
     
     def _check_dependencies_executed(self, stage_config: WorkflowStageConfig, executed_stages: set) -> bool:
-        """Check if dependencies have been executed"""        return all(dep in executed_stages for dep in stage_config.dependencies)
+        """Check if dependencies have been executed"""
+        return all(dep in executed_stages for dep in stage_config.dependencies)
     
     def _build_execution_graph(self, stages: List[WorkflowStageConfig]) -> Dict[WorkflowStage, List[WorkflowStage]]:
-        """Build execution dependency graph"""        graph = {}
+        """Build execution dependency graph"""
+        graph = {}
         for stage in stages:
             graph[stage.stage] = stage.dependencies
         return graph
@@ -963,7 +1007,8 @@ class WorkflowOrchestrator:
     async def _handle_stage_failure(self, execution: WorkflowExecution, 
                                   stage_config: WorkflowStageConfig, 
                                   stage_result: WorkflowStageResult) -> bool:
-        """Handle stage failure with retry logic"""        try:
+        """Handle stage failure with retry logic"""
+        try:
             # Check retry strategy
             if stage_result.retry_count >= stage_config.retry_count:
                 self.logger.error(f"Stage {stage_config.stage.value} failed after {stage_result.retry_count} retries")
@@ -992,7 +1037,8 @@ class WorkflowOrchestrator:
             return False
     
     async def _finalize_workflow(self, execution: WorkflowExecution):
-        """Finalize workflow execution"""        try:
+        """Finalize workflow execution"""
+        try:
             execution.completed_at = datetime.now(timezone.utc)
             execution.total_processing_time = (execution.completed_at - execution.started_at).total_seconds()
             
@@ -1017,7 +1063,8 @@ class WorkflowOrchestrator:
             self.logger.error(f"Error finalizing workflow: {e}")
     
     async def _cleanup_workflow(self, execution: WorkflowExecution):
-        """Cleanup workflow resources"""        try:
+        """Cleanup workflow resources"""
+        try:
             # Remove from active workflows after delay
             await asyncio.sleep(300)  # Keep for 5 minutes for status queries
             
@@ -1033,7 +1080,8 @@ class WorkflowOrchestrator:
             self.logger.error(f"Error cleaning up workflow: {e}")
     
     async def _store_workflow_in_redis(self, execution: WorkflowExecution):
-        """Store workflow state in Redis"""        try:
+        """Store workflow state in Redis"""
+        try:
             workflow_data = {
                 'workflow_id': execution.workflow_id,
                 'user_id': execution.user_id,
@@ -1052,13 +1100,15 @@ class WorkflowOrchestrator:
             self.logger.error(f"Error storing workflow in Redis: {e}")
     
     async def _remove_workflow_from_redis(self, workflow_id: str):
-        """Remove workflow from Redis"""        try:
+        """Remove workflow from Redis"""
+        try:
             await self.redis.delete(f"workflow:{workflow_id}")
         except Exception as e:
             self.logger.error(f"Error removing workflow from Redis: {e}")
     
     async def _update_workflow_progress(self, execution: WorkflowExecution):
-        """Update workflow progress"""        try:
+        """Update workflow progress"""
+        try:
             # Update in Redis
             await self._store_workflow_in_redis(execution)
             
@@ -1070,7 +1120,8 @@ class WorkflowOrchestrator:
             self.logger.error(f"Error updating workflow progress: {e}")
     
     async def _send_progress_update(self, execution: WorkflowExecution):
-        """Send real-time progress update"""        try:
+        """Send real-time progress update"""
+        try:
             # Implementation for real-time updates (WebSocket, SSE, etc.)
             progress_data = {
                 'workflow_id': execution.workflow_id,
@@ -1088,7 +1139,8 @@ class WorkflowOrchestrator:
             self.logger.error(f"Error sending progress update: {e}")
     
     async def _stream_progress_update(self, execution: WorkflowExecution, stage_result: WorkflowStageResult):
-        """Stream progress update for streaming mode"""        try:
+        """Stream progress update for streaming mode"""
+        try:
             # Stream update for real-time processing
             update_data = {
                 'workflow_id': execution.workflow_id,
@@ -1105,7 +1157,8 @@ class WorkflowOrchestrator:
             self.logger.error(f"Error streaming progress update: {e}")
     
     async def _send_workflow_notifications(self, execution: WorkflowExecution):
-        """Send workflow completion notifications"""        try:
+        """Send workflow completion notifications"""
+        try:
             if not execution.config.notification_webhooks:
                 return
             
@@ -1128,7 +1181,8 @@ class WorkflowOrchestrator:
             self.logger.error(f"Error sending notifications: {e}")
     
     async def _handle_workflow_error(self, execution: WorkflowExecution, error: Exception):
-        """Handle workflow-level errors"""        try:
+        """Handle workflow-level errors"""
+        try:
             execution.status = WorkflowStatus.FAILED
             execution.last_error = str(error)
             execution.error_count += 1
@@ -1143,7 +1197,8 @@ class WorkflowOrchestrator:
     
     # Public API methods
     async def get_workflow_status(self, workflow_id: str) -> Optional[Dict[str, Any]]:
-        """Get workflow execution status"""        try:
+        """Get workflow execution status"""
+        try:
             execution = self.active_workflows.get(workflow_id)
             if not execution:
                 return None
@@ -1168,7 +1223,8 @@ class WorkflowOrchestrator:
             return None
     
     async def get_active_workflows(self, user_id: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Get list of active workflows"""        try:
+        """Get list of active workflows"""
+        try:
             workflows = []
             
             async with self.workflow_lock:
@@ -1191,7 +1247,8 @@ class WorkflowOrchestrator:
             return []
     
     async def pause_workflow(self, workflow_id: str) -> bool:
-        """Pause workflow execution"""        try:
+        """Pause workflow execution"""
+        try:
             execution = self.active_workflows.get(workflow_id)
             if execution and execution.status == WorkflowStatus.RUNNING:
                 execution.status = WorkflowStatus.PAUSED
@@ -1203,7 +1260,8 @@ class WorkflowOrchestrator:
             return False
     
     async def resume_workflow(self, workflow_id: str) -> bool:
-        """Resume paused workflow"""        try:
+        """Resume paused workflow"""
+        try:
             execution = self.active_workflows.get(workflow_id)
             if execution and execution.status == WorkflowStatus.PAUSED:
                 execution.status = WorkflowStatus.RUNNING
@@ -1217,7 +1275,8 @@ class WorkflowOrchestrator:
             return False
     
     async def cancel_workflow(self, workflow_id: str) -> bool:
-        """Cancel workflow execution"""        try:
+        """Cancel workflow execution"""
+        try:
             execution = self.active_workflows.get(workflow_id)
             if execution and execution.status in [WorkflowStatus.RUNNING, WorkflowStatus.PAUSED]:
                 execution.status = WorkflowStatus.CANCELLED
@@ -1229,10 +1288,12 @@ class WorkflowOrchestrator:
             return False
     
     async def get_workflow_templates(self) -> Dict[str, WorkflowConfiguration]:
-        """Get available workflow templates"""        return self.workflow_templates.copy()
+        """Get available workflow templates"""
+        return self.workflow_templates.copy()
     
     async def get_orchestrator_metrics(self) -> Dict[str, Any]:
-        """Get orchestrator performance metrics"""        try:
+        """Get orchestrator performance metrics"""
+        try:
             return {
                 'total_workflows': self.metrics['total_workflows'],
                 'successful_workflows': self.metrics['successful_workflows'],
@@ -1250,7 +1311,8 @@ class WorkflowOrchestrator:
             return {}
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on workflow orchestrator"""        try:
+        """Perform health check on workflow orchestrator"""
+        try:
             health_status = {
                 'status': 'healthy',
                 'timestamp': datetime.now(timezone.utc).isoformat(),

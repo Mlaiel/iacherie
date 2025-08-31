@@ -6,13 +6,15 @@ This module provides basic content and creator recommendation functionality.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""from typing import Any, Dict, List, Optional
+"""
+from typing import Any, Dict, List, Optional
 from dataclasses import dataclass
 from enum import Enum
 
 
 class RecommendationType(Enum):
-    """Types of recommendations supported."""    CONTENT = "content"
+    """Types of recommendations supported."""
+    CONTENT = "content"
     CREATOR = "creator" 
     COLLABORATION = "collaboration"
     AUDIENCE = "audience"
@@ -21,7 +23,8 @@ class RecommendationType(Enum):
 
 @dataclass
 class RecommendationRequest:
-    """Request for recommendations."""    user_id: str
+    """Request for recommendations."""
+    user_id: str
     recommendation_type: RecommendationType
     parameters: Dict[str, Any] = None
     limit: int = 10
@@ -33,7 +36,8 @@ class RecommendationRequest:
 
 @dataclass 
 class RecommendationResult:
-    """Result of a recommendation request."""    request_id: str
+    """Result of a recommendation request."""
+    request_id: str
     recommendations: List[Dict[str, Any]]
     confidence_scores: List[float]
     metadata: Dict[str, Any] = None
@@ -44,17 +48,20 @@ class RecommendationResult:
 
 
 class BaseRecommendationEngine:
-    """Base class for recommendation engines."""    
+    """Base class for recommendation engines."""
+    
     def __init__(self, name: str):
         self.name = name
         self.is_initialized = False
     
     async def initialize(self) -> bool:
-        """Initialize the recommendation engine."""        self.is_initialized = True
+        """Initialize the recommendation engine."""
+        self.is_initialized = True
         return True
     
     async def get_recommendations(self, request: RecommendationRequest) -> RecommendationResult:
-        """Get recommendations for a request."""        # Minimal implementation
+        """Get recommendations for a request."""
+        # Minimal implementation
         return RecommendationResult(
             request_id=request.user_id,
             recommendations=[

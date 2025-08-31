@@ -13,7 +13,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 WARNING: Any attempt to steal, copy, or use the concept, idea, or code without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -37,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 
 class ExperimentType(str, Enum):
-    """Types of optimization experiments"""    AB_TEST = "ab_test"
+    """Types of optimization experiments"""
+    AB_TEST = "ab_test"
     MULTIVARIATE_TEST = "multivariate_test"
     BANDIT_OPTIMIZATION = "bandit_optimization"
     BAYESIAN_OPTIMIZATION = "bayesian_optimization"
@@ -46,7 +48,8 @@ class ExperimentType(str, Enum):
 
 
 class OptimizationMetric(str, Enum):
-    """Metrics for optimization"""    ENGAGEMENT_RATE = "engagement_rate"
+    """Metrics for optimization"""
+    ENGAGEMENT_RATE = "engagement_rate"
     CONVERSION_RATE = "conversion_rate"
     SESSION_DURATION = "session_duration"
     USER_SATISFACTION = "user_satisfaction"
@@ -59,7 +62,8 @@ class OptimizationMetric(str, Enum):
 
 
 class ExperimentStatus(str, Enum):
-    """Experiment status values"""    DRAFT = "draft"
+    """Experiment status values"""
+    DRAFT = "draft"
     RUNNING = "running"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -68,7 +72,8 @@ class ExperimentStatus(str, Enum):
 
 
 class OptimizationScope(str, Enum):
-    """Scope of optimization"""    UI_LAYOUT = "ui_layout"
+    """Scope of optimization"""
+    UI_LAYOUT = "ui_layout"
     CONTENT_RECOMMENDATION = "content_recommendation"
     FEATURE_CONFIGURATION = "feature_configuration"
     INTERACTION_FLOW = "interaction_flow"
@@ -80,7 +85,8 @@ class OptimizationScope(str, Enum):
 
 @dataclass
 class ExperimentVariant:
-    """Experiment variant configuration"""    variant_id: str
+    """Experiment variant configuration"""
+    variant_id: str
     variant_name: str
     variant_config: Dict[str, Any]
     traffic_allocation: float  # 0.0 to 1.0
@@ -91,7 +97,8 @@ class ExperimentVariant:
 
 @dataclass
 class ExperimentConfig:
-    """Experiment configuration"""    experiment_id: str
+    """Experiment configuration"""
+    experiment_id: str
     experiment_name: str
     experiment_type: ExperimentType
     optimization_scope: OptimizationScope
@@ -111,7 +118,8 @@ class ExperimentConfig:
 
 @dataclass
 class ExperimentResult:
-    """Experiment result data"""    experiment_id: str
+    """Experiment result data"""
+    experiment_id: str
     variant_id: str
     metric: OptimizationMetric
     value: float
@@ -125,7 +133,8 @@ class ExperimentResult:
 
 @dataclass
 class OptimizationRecommendation:
-    """Optimization recommendation"""    recommendation_id: str
+    """Optimization recommendation"""
+    recommendation_id: str
     experiment_id: str
     recommended_variant: str
     confidence: float
@@ -138,8 +147,10 @@ class OptimizationRecommendation:
 
 
 class ExperienceOptimizer(BaseService):
-    """    Advanced experience optimization engine with ML-powered experimentation
-    """    
+    """
+    Advanced experience optimization engine with ML-powered experimentation
+    """
+    
     def __init__(
         self,
         mongodb_handler: MongoDBHandler,
@@ -172,7 +183,8 @@ class ExperienceOptimizer(BaseService):
         logger.info("ExperienceOptimizer initialized successfully")
 
     async def initialize(self) -> None:
-        """Initialize experience optimizer"""        try:
+        """Initialize experience optimizer"""
+        try:
             # Initialize ML models
             await self.bayesian_model.initialize()
             await self.bandit_model.initialize()
@@ -194,14 +206,16 @@ class ExperienceOptimizer(BaseService):
         self,
         experiment_config: ExperimentConfig
     ) -> str:
-        """        Create new optimization experiment
+        """
+        Create new optimization experiment
         
         Args:
             experiment_config: Experiment configuration
             
         Returns:
             Experiment ID
-        """        try:
+        """
+        try:
             # Validate experiment config
             await self._validate_experiment_config(experiment_config)
             
@@ -244,7 +258,8 @@ class ExperienceOptimizer(BaseService):
         experiment_id: str,
         force_start: bool = False
     ) -> bool:
-        """        Start optimization experiment
+        """
+        Start optimization experiment
         
         Args:
             experiment_id: Experiment identifier
@@ -252,7 +267,8 @@ class ExperienceOptimizer(BaseService):
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             # Get experiment configuration
             experiment_data = await self.mongodb.find_one(
                 "optimization_experiments", {"experiment_id": experiment_id}
@@ -301,7 +317,8 @@ class ExperienceOptimizer(BaseService):
         experiment_id: str,
         context: Optional[Dict[str, Any]] = None
     ) -> Optional[str]:
-        """        Assign user to experiment variant
+        """
+        Assign user to experiment variant
         
         Args:
             user_id: User identifier
@@ -310,7 +327,8 @@ class ExperienceOptimizer(BaseService):
             
         Returns:
             Assigned variant ID or None if not eligible
-        """        try:
+        """
+        try:
             # Check if experiment is active
             if experiment_id not in self._active_experiments:
                 return None
@@ -367,7 +385,8 @@ class ExperienceOptimizer(BaseService):
         event_type: str,
         event_data: Dict[str, Any]
     ) -> bool:
-        """        Track experiment event for analysis
+        """
+        Track experiment event for analysis
         
         Args:
             user_id: User identifier
@@ -377,7 +396,8 @@ class ExperienceOptimizer(BaseService):
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             # Get user's variant assignment
             variant_id = await self._get_user_variant(user_id, experiment_id)
             if not variant_id:
@@ -413,7 +433,8 @@ class ExperienceOptimizer(BaseService):
         experiment_id: str,
         force_analysis: bool = False
     ) -> Dict[str, Any]:
-        """        Analyze experiment results
+        """
+        Analyze experiment results
         
         Args:
             experiment_id: Experiment identifier
@@ -421,7 +442,8 @@ class ExperienceOptimizer(BaseService):
             
         Returns:
             Experiment analysis results
-        """        try:
+        """
+        try:
             # Get experiment data
             experiment_data = await self.mongodb.find_one(
                 "optimization_experiments", {"experiment_id": experiment_id}
@@ -497,7 +519,8 @@ class ExperienceOptimizer(BaseService):
         user_segment: Optional[Dict[str, Any]] = None,
         time_horizon: int = 30  # days
     ) -> List[OptimizationRecommendation]:
-        """        Get optimization recommendations for specific scope
+        """
+        Get optimization recommendations for specific scope
         
         Args:
             scope: Optimization scope
@@ -506,7 +529,8 @@ class ExperienceOptimizer(BaseService):
             
         Returns:
             List of optimization recommendations
-        """        try:
+        """
+        try:
             # Analyze historical optimization data
             historical_data = await self._analyze_historical_optimizations(
                 scope, user_segment, time_horizon
@@ -541,7 +565,8 @@ class ExperienceOptimizer(BaseService):
     # Private helper methods
     
     async def _validate_experiment_config(self, config: ExperimentConfig) -> None:
-        """Validate experiment configuration"""        if not config.experiment_id:
+        """Validate experiment configuration"""
+        if not config.experiment_id:
             raise ValidationError("Experiment ID is required")
         
         if not config.variants or len(config.variants) < 2:
@@ -564,7 +589,8 @@ class ExperienceOptimizer(BaseService):
             raise ValidationError("Minimum sample size must be positive")
 
     async def _calculate_sample_size(self, config: ExperimentConfig) -> int:
-        """Calculate required sample size for experiment"""        try:
+        """Calculate required sample size for experiment"""
+        try:
             # Use statistical power analysis
             effect_size = config.expected_effect_size
             alpha = config.significance_threshold
@@ -590,7 +616,8 @@ class ExperienceOptimizer(BaseService):
         config: ExperimentConfig,
         context: Optional[Dict[str, Any]]
     ) -> str:
-        """Assign user to experiment variant"""        try:
+        """Assign user to experiment variant"""
+        try:
             # Use consistent hashing for assignment
             hash_input = f"{config.experiment_id}:{user_id}"
             hash_value = hash(hash_input) % 10000
@@ -615,7 +642,8 @@ class ExperienceOptimizer(BaseService):
         variant_data: List[Dict[str, Any]],
         config: ExperimentConfig
     ) -> Dict[str, Any]:
-        """Calculate metrics for experiment variant"""        try:
+        """Calculate metrics for experiment variant"""
+        try:
             if not variant_data:
                 return {}
             
@@ -657,7 +685,8 @@ class ExperienceOptimizer(BaseService):
         variant_results: Dict[str, Dict[str, Any]],
         config: ExperimentConfig
     ) -> Dict[str, Any]:
-        """Perform statistical analysis of experiment results"""        try:
+        """Perform statistical analysis of experiment results"""
+        try:
             analysis = {}
             
             # Get control variant results
@@ -728,7 +757,8 @@ def create_experience_optimizer(
     metrics_calculator: MetricsCalculator,
     experiment_analyzer: ExperimentAnalyzer
 ) -> ExperienceOptimizer:
-    """Create experience optimizer instance"""    return ExperienceOptimizer(
+    """Create experience optimizer instance"""
+    return ExperienceOptimizer(
         mongodb_handler=mongodb_handler,
         redis_cache=redis_cache,
         bayesian_model=bayesian_model,
@@ -739,7 +769,8 @@ def create_experience_optimizer(
 
 
 def validate_experiment_config(config: ExperimentConfig) -> bool:
-    """Validate experiment configuration"""    if not config.experiment_id or not isinstance(config.experiment_id, str):
+    """Validate experiment configuration"""
+    if not config.experiment_id or not isinstance(config.experiment_id, str):
         return False
     
     if not config.variants or len(config.variants) < 2:

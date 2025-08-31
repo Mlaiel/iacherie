@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import os
+"""
+import os
 import re
 import hashlib
 import mimetypes
@@ -158,10 +159,12 @@ PLATFORM_LIMITS = {
 
 
 class SecurityUtils:
-    """Security utilities for encryption, hashing, and token management"""    
+    """Security utilities for encryption, hashing, and token management"""
+    
     @staticmethod
     def generate_key_from_password(password: str, salt: bytes) -> bytes:
-        """Generate encryption key from password and salt"""        kdf = PBKDF2HMAC(
+        """Generate encryption key from password and salt"""
+        kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,
             salt=salt,
@@ -171,20 +174,23 @@ class SecurityUtils:
     
     @staticmethod
     def encrypt_data(data: str, key: bytes) -> str:
-        """Encrypt data using Fernet encryption"""        f = Fernet(key)
+        """Encrypt data using Fernet encryption"""
+        f = Fernet(key)
         encrypted_data = f.encrypt(data.encode())
         return base64.urlsafe_b64encode(encrypted_data).decode()
     
     @staticmethod
     def decrypt_data(encrypted_data: str, key: bytes) -> str:
-        """Decrypt data using Fernet encryption"""        f = Fernet(key)
+        """Decrypt data using Fernet encryption"""
+        f = Fernet(key)
         encrypted_bytes = base64.urlsafe_b64decode(encrypted_data.encode())
         decrypted_data = f.decrypt(encrypted_bytes)
         return decrypted_data.decode()
     
     @staticmethod
     def hash_password(password: str, salt: Optional[str] = None) -> Tuple[str, str]:
-        """Hash password with salt using SHA-256"""        if salt is None:
+        """Hash password with salt using SHA-256"""
+        if salt is None:
             salt = os.urandom(32).hex()
         
         password_hash = hashlib.pbkdf2_hmac('sha256', 
@@ -195,19 +201,22 @@ class SecurityUtils:
     
     @staticmethod
     def verify_password(password: str, password_hash: str, salt: str) -> bool:
-        """Verify password against hash"""        computed_hash, _ = SecurityUtils.hash_password(password, salt)
+        """Verify password against hash"""
+        computed_hash, _ = SecurityUtils.hash_password(password, salt)
         return computed_hash == password_hash
     
     @staticmethod
     def generate_jwt_token(payload: Dict[str, Any], secret_key: str, 
                           expires_in: int = 3600) -> str:
-        """Generate JWT token"""        payload['exp'] = datetime.utcnow() + timedelta(seconds=expires_in)
+        """Generate JWT token"""
+        payload['exp'] = datetime.utcnow() + timedelta(seconds=expires_in)
         payload['iat'] = datetime.utcnow()
         return jwt.encode(payload, secret_key, algorithm='HS256')
     
     @staticmethod
     def verify_jwt_token(token: str, secret_key: str) -> Optional[Dict[str, Any]]:
-        """Verify and decode JWT token"""        try:
+        """Verify and decode JWT token"""
+        try:
             payload = jwt.decode(token, secret_key, algorithms=['HS256'])
             return payload
         except jwt.ExpiredSignatureError:
@@ -217,7 +226,8 @@ class SecurityUtils:
     
     @staticmethod
     def generate_secure_filename(filename: str) -> str:
-        """Generate secure filename"""        # Remove path components
+        """Generate secure filename"""
+        # Remove path components
         filename = os.path.basename(filename)
         
         # Remove special characters
@@ -234,7 +244,8 @@ class SecurityUtils:
     
     @staticmethod
     def sanitize_input(input_str: str, max_length: int = 1000) -> str:
-        """Sanitize user input"""        if not isinstance(input_str, str):
+        """Sanitize user input"""
+        if not isinstance(input_str, str):
             input_str = str(input_str)
         
         # Remove potentially dangerous characters
@@ -248,19 +259,23 @@ class SecurityUtils:
 
 
 class FileUtils:
-    """File handling utilities"""    
+    """File handling utilities"""
+    
     @staticmethod
     def get_file_type(file_path: str) -> str:
-        """Get file type from extension"""        ext = Path(file_path).suffix.lower()
+        """Get file type from extension"""
+        ext = Path(file_path).suffix.lower()
         return CONTENT_TYPE_MAP.get(ext, 'application/octet-stream')
     
     @staticmethod
     def get_file_size(file_path: str) -> int:
-        """Get file size in bytes"""        return os.path.getsize(file_path)
+        """Get file size in bytes"""
+        return os.path.getsize(file_path)
     
     @staticmethod
     def is_supported_format(file_path: str, platform: str) -> bool:
-        """Check if file format is supported by platform"""        ext = Path(file_path).suffix.lower()[1:]  # Remove dot
+        """Check if file format is supported by platform"""
+        ext = Path(file_path).suffix.lower()[1:]  # Remove dot
         platform_config = PLATFORM_LIMITS.get(platform.lower(), {})
         
         supported_formats = []
@@ -275,7 +290,8 @@ class FileUtils:
     
     @staticmethod
     async def validate_file_size(file_path: str, platform: str) -> bool:
-        """Validate file size against platform limits"""        file_size = FileUtils.get_file_size(file_path)
+        """Validate file size against platform limits"""
+        file_size = FileUtils.get_file_size(file_path)
         platform_config = PLATFORM_LIMITS.get(platform.lower(), {})
         
         # Check different size limits based on file type
@@ -294,7 +310,8 @@ class FileUtils:
     
     @staticmethod
     def generate_file_hash(file_path: str) -> str:
-        """Generate SHA-256 hash of file"""        hash_sha256 = hashlib.sha256()
+        """Generate SHA-256 hash of file"""
+        hash_sha256 = hashlib.sha256()
         with open(file_path, "rb") as f:
             for chunk in iter(lambda: f.read(4096), b""):
                 hash_sha256.update(chunk)
@@ -302,7 +319,8 @@ class FileUtils:
     
     @staticmethod
     async def create_temp_file(content: bytes, suffix: str = None) -> str:
-        """Create temporary file with content"""        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=suffix)
+        """Create temporary file with content"""
+        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=suffix)
         try:
             temp_file.write(content)
             temp_file.flush()
@@ -312,7 +330,8 @@ class FileUtils:
     
     @staticmethod
     async def read_file_chunks(file_path: str, chunk_size: int = 8192):
-        """Read file in chunks (async generator)"""        async with aiofiles.open(file_path, 'rb') as f:
+        """Read file in chunks (async generator)"""
+        async with aiofiles.open(file_path, 'rb') as f:
             while True:
                 chunk = await f.read(chunk_size)
                 if not chunk:
@@ -321,7 +340,8 @@ class FileUtils:
     
     @staticmethod
     def cleanup_temp_files(file_paths: List[str]):
-        """Clean up temporary files"""        for file_path in file_paths:
+        """Clean up temporary files"""
+        for file_path in file_paths:
             try:
                 if os.path.exists(file_path):
                     os.unlink(file_path)
@@ -330,28 +350,33 @@ class FileUtils:
 
 
 class TextUtils:
-    """Text processing utilities"""    
+    """Text processing utilities"""
+    
     @staticmethod
     def truncate_text(text: str, max_length: int, suffix: str = "...") -> str:
-        """Truncate text to maximum length"""        if len(text) <= max_length:
+        """Truncate text to maximum length"""
+        if len(text) <= max_length:
             return text
         return text[:max_length - len(suffix)] + suffix
     
     @staticmethod
     def extract_hashtags(text: str) -> List[str]:
-        """Extract hashtags from text"""        hashtag_pattern = r'#\w+'
+        """Extract hashtags from text"""
+        hashtag_pattern = r'#\w+'
         hashtags = re.findall(hashtag_pattern, text)
         return [tag[1:] for tag in hashtags]  # Remove # symbol
     
     @staticmethod
     def extract_mentions(text: str) -> List[str]:
-        """Extract mentions from text"""        mention_pattern = r'@\w+'
+        """Extract mentions from text"""
+        mention_pattern = r'@\w+'
         mentions = re.findall(mention_pattern, text)
         return [mention[1:] for mention in mentions]  # Remove @ symbol
     
     @staticmethod
     def clean_text(text: str) -> str:
-        """Clean text for platform posting"""        # Remove extra whitespace
+        """Clean text for platform posting"""
+        # Remove extra whitespace
         text = re.sub(r'\s+', ' ', text).strip()
         
         # Remove or replace problematic characters
@@ -361,7 +386,8 @@ class TextUtils:
     
     @staticmethod
     def generate_seo_title(title: str, keywords: List[str], max_length: int = 60) -> str:
-        """Generate SEO-optimized title"""        if not keywords:
+        """Generate SEO-optimized title"""
+        if not keywords:
             return TextUtils.truncate_text(title, max_length)
         
         # Try to include keywords naturally
@@ -374,7 +400,8 @@ class TextUtils:
     @staticmethod
     def generate_description_with_hashtags(description: str, hashtags: List[str], 
                                          max_length: int = 1000) -> str:
-        """Generate description with hashtags"""        hashtag_text = ' '.join([f'#{tag}' for tag in hashtags])
+        """Generate description with hashtags"""
+        hashtag_text = ' '.join([f'#{tag}' for tag in hashtags])
         
         available_length = max_length - len(hashtag_text) - 2  # Space for hashtags and separator
         
@@ -385,7 +412,8 @@ class TextUtils:
     
     @staticmethod
     def validate_platform_text(text: str, platform: str, text_type: str = 'post') -> bool:
-        """Validate text against platform limits"""        platform_config = PLATFORM_LIMITS.get(platform.lower(), {})
+        """Validate text against platform limits"""
+        platform_config = PLATFORM_LIMITS.get(platform.lower(), {})
         
         if text_type == 'title':
             max_length = platform_config.get('max_title_length', float('inf'))
@@ -400,10 +428,12 @@ class TextUtils:
 
 
 class URLUtils:
-    """URL handling utilities"""    
+    """URL handling utilities"""
+    
     @staticmethod
     def is_valid_url(url: str) -> bool:
-        """Check if URL is valid"""        try:
+        """Check if URL is valid"""
+        try:
             result = urlparse(url)
             return all([result.scheme, result.netloc])
         except Exception:
@@ -411,14 +441,16 @@ class URLUtils:
     
     @staticmethod
     def extract_domain(url: str) -> Optional[str]:
-        """Extract domain from URL"""        try:
+        """Extract domain from URL"""
+        try:
             return urlparse(url).netloc
         except Exception:
             return None
     
     @staticmethod
     def build_callback_url(base_url: str, params: Dict[str, str]) -> str:
-        """Build callback URL with parameters"""        if not params:
+        """Build callback URL with parameters"""
+        if not params:
             return base_url
         
         param_string = '&'.join([f"{k}={v}" for k, v in params.items()])
@@ -427,16 +459,19 @@ class URLUtils:
     
     @staticmethod
     def parse_query_params(url: str) -> Dict[str, List[str]]:
-        """Parse query parameters from URL"""        parsed = urlparse(url)
+        """Parse query parameters from URL"""
+        parsed = urlparse(url)
         return parse_qs(parsed.query)
 
 
 class AsyncUtils:
-    """Asynchronous programming utilities"""    
+    """Asynchronous programming utilities"""
+    
     @staticmethod
     def retry_async(max_attempts: int = 3, delay: float = 1.0, 
                    exponential_backoff: bool = True):
-        """Decorator for async function retry with exponential backoff"""        def decorator(func: Callable):
+        """Decorator for async function retry with exponential backoff"""
+        def decorator(func: Callable):
             @wraps(func)
             async def wrapper(*args, **kwargs):
                 last_exception = None
@@ -459,14 +494,16 @@ class AsyncUtils:
     
     @staticmethod
     async def run_with_timeout(coro, timeout: float):
-        """Run coroutine with timeout"""        try:
+        """Run coroutine with timeout"""
+        try:
             return await asyncio.wait_for(coro, timeout=timeout)
         except asyncio.TimeoutError:
             raise TimeoutError(f"Operation timed out after {timeout} seconds")
     
     @staticmethod
     async def gather_with_concurrency(tasks: List, max_concurrency: int = 10):
-        """Run tasks with limited concurrency"""        semaphore = asyncio.Semaphore(max_concurrency)
+        """Run tasks with limited concurrency"""
+        semaphore = asyncio.Semaphore(max_concurrency)
         
         async def run_task(task):
             async with semaphore:
@@ -477,7 +514,8 @@ class AsyncUtils:
     @staticmethod
     @asynccontextmanager
     async def async_lock_with_timeout(lock: asyncio.Lock, timeout: float = 30.0):
-        """Acquire lock with timeout"""        try:
+        """Acquire lock with timeout"""
+        try:
             await asyncio.wait_for(lock.acquire(), timeout=timeout)
             yield
         except asyncio.TimeoutError:
@@ -488,14 +526,16 @@ class AsyncUtils:
 
 
 class RateLimiter:
-    """Rate limiting utility"""    
+    """Rate limiting utility"""
+    
     def __init__(self, max_requests: int, time_window: int):
         self.max_requests = max_requests
         self.time_window = time_window
         self.requests = {}
     
     async def is_allowed(self, identifier: str) -> bool:
-        """Check if request is allowed for identifier"""        now = time.time()
+        """Check if request is allowed for identifier"""
+        now = time.time()
         window_start = now - self.time_window
         
         # Clean old requests
@@ -515,7 +555,8 @@ class RateLimiter:
         return False
     
     def get_retry_after(self, identifier: str) -> int:
-        """Get seconds to wait before retry"""        if identifier not in self.requests or not self.requests[identifier]:
+        """Get seconds to wait before retry"""
+        if identifier not in self.requests or not self.requests[identifier]:
             return 0
         
         oldest_request = min(self.requests[identifier])
@@ -524,15 +565,18 @@ class RateLimiter:
 
 
 class CacheUtils:
-    """Caching utilities"""    
+    """Caching utilities"""
+    
     @staticmethod
     @lru_cache(maxsize=128)
     def cached_platform_limits(platform: str) -> Dict[str, Any]:
-        """Get cached platform limits"""        return PLATFORM_LIMITS.get(platform.lower(), {})
+        """Get cached platform limits"""
+        return PLATFORM_LIMITS.get(platform.lower(), {})
     
     @staticmethod
     def generate_cache_key(*args) -> str:
-        """Generate cache key from arguments"""        key_parts = []
+        """Generate cache key from arguments"""
+        key_parts = []
         for arg in args:
             if isinstance(arg, (dict, list)):
                 key_parts.append(json.dumps(arg, sort_keys=True))
@@ -543,25 +587,30 @@ class CacheUtils:
 
 
 class ValidationUtils:
-    """Data validation utilities"""    
+    """Data validation utilities"""
+    
     @staticmethod
     def validate_email(email: str) -> bool:
-        """Validate email format"""        pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        """Validate email format"""
+        pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         return re.match(pattern, email) is not None
     
     @staticmethod
     def validate_phone(phone: str) -> bool:
-        """Validate phone number format"""        pattern = r'^\+?1?[-.\s]?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$'
+        """Validate phone number format"""
+        pattern = r'^\+?1?[-.\s]?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$'
         return re.match(pattern, phone) is not None
     
     @staticmethod
     def validate_username(username: str) -> bool:
-        """Validate username format"""        pattern = r'^[a-zA-Z0-9_]{3,20}$'
+        """Validate username format"""
+        pattern = r'^[a-zA-Z0-9_]{3,20}$'
         return re.match(pattern, username) is not None
     
     @staticmethod
     def validate_content_metadata(metadata: Dict[str, Any]) -> List[str]:
-        """Validate content metadata and return errors"""        errors = []
+        """Validate content metadata and return errors"""
+        errors = []
         
         required_fields = ['title', 'description', 'content_type']
         for field in required_fields:
@@ -579,29 +628,35 @@ class ValidationUtils:
 
 
 class DateTimeUtils:
-    """Date and time utilities"""    
+    """Date and time utilities"""
+    
     @staticmethod
     def utc_now() -> datetime:
-        """Get current UTC datetime"""        return datetime.now(timezone.utc)
+        """Get current UTC datetime"""
+        return datetime.now(timezone.utc)
     
     @staticmethod
     def format_datetime(dt: datetime, format_str: str = '%Y-%m-%d %H:%M:%S UTC') -> str:
-        """Format datetime to string"""        if dt.tzinfo is None:
+        """Format datetime to string"""
+        if dt.tzinfo is None:
             dt = dt.replace(tzinfo=timezone.utc)
         return dt.strftime(format_str)
     
     @staticmethod
     def parse_datetime(date_str: str, format_str: str = '%Y-%m-%d %H:%M:%S') -> datetime:
-        """Parse datetime from string"""        return datetime.strptime(date_str, format_str).replace(tzinfo=timezone.utc)
+        """Parse datetime from string"""
+        return datetime.strptime(date_str, format_str).replace(tzinfo=timezone.utc)
     
     @staticmethod
     def is_business_hours(dt: datetime, timezone_offset: int = 0) -> bool:
-        """Check if datetime is in business hours (9 AM - 5 PM)"""        local_dt = dt + timedelta(hours=timezone_offset)
+        """Check if datetime is in business hours (9 AM - 5 PM)"""
+        local_dt = dt + timedelta(hours=timezone_offset)
         return 9 <= local_dt.hour < 17 and local_dt.weekday() < 5
     
     @staticmethod
     def get_optimal_posting_time(timezone_offset: int = 0) -> datetime:
-        """Get optimal posting time based on engagement data"""        now = DateTimeUtils.utc_now()
+        """Get optimal posting time based on engagement data"""
+        now = DateTimeUtils.utc_now()
         local_now = now + timedelta(hours=timezone_offset)
         
         # Peak engagement times: 9 AM, 1 PM, 5 PM
@@ -619,11 +674,13 @@ class DateTimeUtils:
 
 
 class MetricsUtils:
-    """Metrics and analytics utilities"""    
+    """Metrics and analytics utilities"""
+    
     @staticmethod
     def calculate_engagement_rate(likes: int, comments: int, shares: int, 
                                 views: int) -> float:
-        """Calculate engagement rate"""        if views == 0:
+        """Calculate engagement rate"""
+        if views == 0:
             return 0.0
         
         total_engagement = likes + comments + shares
@@ -631,7 +688,8 @@ class MetricsUtils:
     
     @staticmethod
     def calculate_virality_score(shares: int, views: int, time_hours: float) -> float:
-        """Calculate virality score"""        if views == 0 or time_hours == 0:
+        """Calculate virality score"""
+        if views == 0 or time_hours == 0:
             return 0.0
         
         share_rate = shares / views
@@ -641,7 +699,8 @@ class MetricsUtils:
     
     @staticmethod
     def calculate_quality_score(metrics: Dict[str, Any]) -> float:
-        """Calculate content quality score based on metrics"""        weights = {
+        """Calculate content quality score based on metrics"""
+        weights = {
             'engagement_rate': 0.4,
             'completion_rate': 0.3,
             'share_rate': 0.2,

@@ -3,7 +3,8 @@ Creator matching and collaboration management system.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 from dataclasses import dataclass, asdict
@@ -16,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationStatus(Enum):
-    """Collaboration status"""    PROPOSED = "proposed"
+    """Collaboration status"""
+    PROPOSED = "proposed"
     PENDING = "pending"
     ACCEPTED = "accepted"
     IN_PROGRESS = "in_progress"
@@ -27,7 +29,8 @@ class CollaborationStatus(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Creator profile for matching"""    user_id: str
+    """Creator profile for matching"""
+    user_id: str
     username: str
     creator_type: str
     genres: List[str]
@@ -44,7 +47,8 @@ class CreatorProfile:
 
 @dataclass
 class CollaborationProposal:
-    """Collaboration proposal structure"""    id: str
+    """Collaboration proposal structure"""
+    id: str
     proposer_id: str
     target_id: str
     collaboration_type: str
@@ -60,7 +64,8 @@ class CollaborationProposal:
 
 @dataclass
 class CompatibilityScore:
-    """Creator compatibility scoring"""    total_score: float
+    """Creator compatibility scoring"""
+    total_score: float
     genre_match: float
     skill_complement: float
     experience_balance: float
@@ -70,7 +75,8 @@ class CompatibilityScore:
 
 
 class CollaborationEngine:
-    """Advanced creator collaboration and matching system"""    
+    """Advanced creator collaboration and matching system"""
+    
     def __init__(self):
         self.creator_profiles = {}
         self.collaborations = {}
@@ -82,7 +88,8 @@ class CollaborationEngine:
         username: str,
         creator_data: Dict[str, Any]
     ) -> CreatorProfile:
-        """Register or update creator profile for collaboration matching"""        try:
+        """Register or update creator profile for collaboration matching"""
+        try:
             profile = CreatorProfile(
                 user_id=user_id,
                 username=username,
@@ -114,7 +121,8 @@ class CollaborationEngine:
         collaboration_type: str,
         preferences: Optional[Dict] = None
     ) -> List[Tuple[CreatorProfile, CompatibilityScore]]:
-        """Find potential collaboration matches for a creator"""        try:
+        """Find potential collaboration matches for a creator"""
+        try:
             requesting_creator = self.creator_profiles.get(creator_id)
             if not requesting_creator:
                 return []
@@ -158,7 +166,8 @@ class CollaborationEngine:
         target_id: str,
         collaboration_data: Dict[str, Any]
     ) -> CollaborationProposal:
-        """Create a collaboration proposal"""        try:
+        """Create a collaboration proposal"""
+        try:
             proposal_id = str(uuid.uuid4())
             
             # Validate revenue split
@@ -200,7 +209,8 @@ class CollaborationEngine:
         response: str,  # accept, reject, counter
         counter_terms: Optional[Dict] = None
     ) -> bool:
-        """Respond to a collaboration proposal"""        try:
+        """Respond to a collaboration proposal"""
+        try:
             proposal = self.collaborations.get(proposal_id)
             if not proposal:
                 return False
@@ -243,7 +253,8 @@ class CollaborationEngine:
         user_id: str,
         data: Optional[Dict] = None
     ) -> Dict[str, Any]:
-        """Manage collaboration workflow and milestones"""        try:
+        """Manage collaboration workflow and milestones"""
+        try:
             collaboration = self.collaborations.get(collaboration_id)
             if not collaboration:
                 return {"error": "Collaboration not found"}
@@ -310,7 +321,8 @@ class CollaborationEngine:
         self,
         creator_id: str
     ) -> Dict[str, Any]:
-        """Generate insights about collaboration opportunities and performance"""        try:
+        """Generate insights about collaboration opportunities and performance"""
+        try:
             creator = self.creator_profiles.get(creator_id)
             if not creator:
                 return {"error": "Creator not found"}
@@ -372,7 +384,8 @@ class CollaborationEngine:
         creator2: CreatorProfile,
         collaboration_type: str
     ) -> CompatibilityScore:
-        """Calculate compatibility score between two creators"""        try:
+        """Calculate compatibility score between two creators"""
+        try:
             scores = {}
             
             # Genre compatibility (25%)
@@ -425,7 +438,8 @@ class CollaborationEngine:
         creator: CreatorProfile,
         preferences: Dict
     ) -> bool:
-        """Apply preference filters to creator matching"""        try:
+        """Apply preference filters to creator matching"""
+        try:
             # Genre filter
             if "genres" in preferences:
                 required_genres = preferences["genres"]
@@ -462,7 +476,8 @@ class CollaborationEngine:
             return False
     
     async def _generate_collaboration_contract(self, proposal: CollaborationProposal):
-        """Generate automatic collaboration contract terms"""        try:
+        """Generate automatic collaboration contract terms"""
+        try:
             contract_terms = {
                 "proposal_id": proposal.id,
                 "parties": {
@@ -484,7 +499,8 @@ class CollaborationEngine:
             logger.error(f"Error generating collaboration contract: {str(e)}")
     
     async def _create_collaboration_workspace(self, proposal: CollaborationProposal):
-        """Create collaborative workspace for accepted proposal"""        try:
+        """Create collaborative workspace for accepted proposal"""
+        try:
             workspace = {
                 "collaboration_id": proposal.id,
                 "workspace_url": f"/workspace/{proposal.id}",
@@ -500,7 +516,8 @@ class CollaborationEngine:
             logger.error(f"Error creating collaboration workspace: {str(e)}")
     
     def _generate_project_milestones(self, proposal: CollaborationProposal) -> List[Dict]:
-        """Generate project milestones based on collaboration type"""        try:
+        """Generate project milestones based on collaboration type"""
+        try:
             milestones = []
             
             if proposal.collaboration_type == "feature":
@@ -538,7 +555,8 @@ class CollaborationEngine:
             return []
     
     async def _finalize_collaboration_revenue(self, collaboration: CollaborationProposal):
-        """Finalize revenue distribution for completed collaboration"""        try:
+        """Finalize revenue distribution for completed collaboration"""
+        try:
             # This would integrate with the revenue distribution engine
             # For now, just record the completion
             collaboration.metadata["revenue_finalized"] = True
@@ -553,7 +571,8 @@ class CollaborationEngine:
         disputing_user: str,
         dispute_data: Dict
     ):
-        """Initiate dispute resolution process"""        try:
+        """Initiate dispute resolution process"""
+        try:
             dispute_record = {
                 "disputing_user": disputing_user,
                 "dispute_reason": dispute_data.get("reason", ""),
@@ -573,7 +592,8 @@ class CollaborationEngine:
         creator: CreatorProfile,
         collaboration_history: List[CollaborationProposal]
     ) -> List[str]:
-        """Generate collaboration recommendations for creator"""        try:
+        """Generate collaboration recommendations for creator"""
+        try:
             recommendations = []
             
             if len(collaboration_history) == 0:
@@ -616,7 +636,8 @@ class CollaborationEngine:
         creator: CreatorProfile,
         collaboration_history: List[CollaborationProposal]
     ) -> float:
-        """Calculate networking score for creator"""        try:
+        """Calculate networking score for creator"""
+        try:
             # Base score from collaboration count
             collab_score = min(len(collaboration_history) / 10, 1.0) * 40
             

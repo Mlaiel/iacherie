@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import json
+"""
+import json
 import time
 import threading
 import queue
@@ -37,7 +38,8 @@ from kafka import KafkaProducer, KafkaConsumer
 
 
 class AggregationBackend(str, Enum):
-    """Supported log aggregation backends"""    ELASTICSEARCH = "elasticsearch"
+    """Supported log aggregation backends"""
+    ELASTICSEARCH = "elasticsearch"
     KAFKA = "kafka"
     REDIS_STREAMS = "redis_streams"
     FLUENTD = "fluentd"
@@ -49,14 +51,16 @@ class AggregationBackend(str, Enum):
 
 
 class StreamingMode(str, Enum):
-    """Log streaming modes"""    SYNCHRONOUS = "synchronous"
+    """Log streaming modes"""
+    SYNCHRONOUS = "synchronous"
     ASYNCHRONOUS = "asynchronous"
     BATCH = "batch"
     REAL_TIME = "real_time"
 
 
 class IndexingStrategy(str, Enum):
-    """Elasticsearch indexing strategies"""    DAILY = "daily"
+    """Elasticsearch indexing strategies"""
+    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     BY_SIZE = "by_size"
@@ -66,7 +70,8 @@ class IndexingStrategy(str, Enum):
 
 @dataclass
 class ElasticsearchConfig:
-    """Elasticsearch configuration"""    hosts: List[str] = field(default_factory=lambda: ["localhost:9200"])
+    """Elasticsearch configuration"""
+    hosts: List[str] = field(default_factory=lambda: ["localhost:9200"])
     username: Optional[str] = None
     password: Optional[str] = None
     api_key: Optional[str] = None
@@ -107,7 +112,8 @@ class ElasticsearchConfig:
 
 @dataclass
 class KafkaConfig:
-    """Kafka configuration"""    bootstrap_servers: List[str] = field(default_factory=lambda: ["localhost:9092"])
+    """Kafka configuration"""
+    bootstrap_servers: List[str] = field(default_factory=lambda: ["localhost:9092"])
     topic: str = "ia-influencer-logs"
     
     # Security settings
@@ -136,7 +142,8 @@ class KafkaConfig:
 
 @dataclass
 class RedisStreamsConfig:
-    """Redis Streams configuration"""    host: str = "localhost"
+    """Redis Streams configuration"""
+    host: str = "localhost"
     port: int = 6379
     db: int = 0
     password: Optional[str] = None
@@ -159,7 +166,8 @@ class RedisStreamsConfig:
 
 @dataclass
 class FluentdConfig:
-    """Fluentd configuration"""    host: str = "localhost"
+    """Fluentd configuration"""
+    host: str = "localhost"
     port: int = 24224
     tag: str = "ia-influencer.logs"
     
@@ -174,12 +182,14 @@ class FluentdConfig:
 
 
 class LogAggregationConfig:
-    """    Enterprise log aggregation configuration for IA-Influencer platform.
+    """
+    Enterprise log aggregation configuration for IA-Influencer platform.
     
     Provides centralized logging with multiple backends, real-time streaming,
     distributed tracing, and advanced search capabilities for multi-format
     content processing and protection operations.
-    """    
+    """
+    
     def __init__(
         self,
         backends: List[AggregationBackend] = None,
@@ -197,7 +207,8 @@ class LogAggregationConfig:
         enable_encryption: bool = False,
         custom_processors: Optional[List[Callable]] = None
     ):
-        """        Initialize log aggregation configuration.
+        """
+        Initialize log aggregation configuration.
         
         Args:
             backends: List of aggregation backends to use
@@ -214,7 +225,8 @@ class LogAggregationConfig:
             enable_compression: Enable log compression
             enable_encryption: Enable log encryption
             custom_processors: Custom log processors
-        """        self.backends = backends or [AggregationBackend.ELASTICSEARCH]
+        """
+        self.backends = backends or [AggregationBackend.ELASTICSEARCH]
         self.streaming_mode = streaming_mode
         self.enable_tracing = enable_tracing
         self.enable_metrics = enable_metrics
@@ -237,7 +249,8 @@ class LogAggregationConfig:
         self._start_background_processes()
     
     def _initialize_backends(self) -> None:
-        """Initialize aggregation backends"""        self._backend_clients = {}
+        """Initialize aggregation backends"""
+        self._backend_clients = {}
         
         for backend in self.backends:
             try:
@@ -256,7 +269,8 @@ class LogAggregationConfig:
                 logging.error(f"Failed to initialize backend {backend}: {e}")
     
     def _initialize_elasticsearch(self) -> None:
-        """Initialize Elasticsearch client"""        try:
+        """Initialize Elasticsearch client"""
+        try:
             es_config = self.elasticsearch_config
             
             # Build client configuration
@@ -303,7 +317,8 @@ class LogAggregationConfig:
             raise
     
     def _create_elasticsearch_template(self) -> None:
-        """Create Elasticsearch index template"""        try:
+        """Create Elasticsearch index template"""
+        try:
             es_client = self._backend_clients["elasticsearch"]
             es_config = self.elasticsearch_config
             
@@ -406,7 +421,8 @@ class LogAggregationConfig:
             logging.error(f"Failed to create Elasticsearch template: {e}")
     
     def _initialize_kafka(self) -> None:
-        """Initialize Kafka producer"""        try:
+        """Initialize Kafka producer"""
+        try:
             kafka_config = self.kafka_config
             
             producer_config = {
@@ -441,7 +457,8 @@ class LogAggregationConfig:
             raise
     
     def _initialize_redis_streams(self) -> None:
-        """Initialize Redis Streams client"""        try:
+        """Initialize Redis Streams client"""
+        try:
             redis_config = self.redis_config
             
             connection_config = {
@@ -475,7 +492,8 @@ class LogAggregationConfig:
             raise
     
     def _initialize_fluentd(self) -> None:
-        """Initialize Fluentd client"""        try:
+        """Initialize Fluentd client"""
+        try:
             from fluent import sender
             
             fluentd_config = self.fluentd_config
@@ -499,12 +517,14 @@ class LogAggregationConfig:
             raise
     
     def _initialize_buffers(self) -> None:
-        """Initialize internal log buffers"""        self._log_buffer = queue.Queue(maxsize=self.buffer_size)
+        """Initialize internal log buffers"""
+        self._log_buffer = queue.Queue(maxsize=self.buffer_size)
         self._metrics_buffer = queue.Queue(maxsize=1000)
         self._buffer_lock = threading.Lock()
     
     def _start_background_processes(self) -> None:
-        """Start background processing threads"""        self._stop_event = threading.Event()
+        """Start background processing threads"""
+        self._stop_event = threading.Event()
         
         # Start buffer flush thread
         self._flush_thread = threading.Thread(
@@ -522,7 +542,8 @@ class LogAggregationConfig:
             self._metrics_thread.start()
     
     def _flush_buffer_worker(self) -> None:
-        """Background worker to flush log buffer"""        while not self._stop_event.is_set():
+        """Background worker to flush log buffer"""
+        while not self._stop_event.is_set():
             try:
                 # Collect logs from buffer
                 logs_to_send = []
@@ -547,7 +568,8 @@ class LogAggregationConfig:
                 time.sleep(1)
     
     def _metrics_worker(self) -> None:
-        """Background worker for metrics collection"""        while not self._stop_event.is_set():
+        """Background worker for metrics collection"""
+        while not self._stop_event.is_set():
             try:
                 # Collect internal metrics
                 metrics = self._collect_internal_metrics()
@@ -564,7 +586,8 @@ class LogAggregationConfig:
                 time.sleep(60)
     
     def _collect_internal_metrics(self) -> Dict[str, Any]:
-        """Collect internal aggregation metrics"""        return {
+        """Collect internal aggregation metrics"""
+        return {
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "buffer_size": self._log_buffer.qsize(),
             "metrics_buffer_size": self._metrics_buffer.qsize(),
@@ -574,11 +597,13 @@ class LogAggregationConfig:
         }
     
     def send_log(self, log_entry: Dict[str, Any]) -> None:
-        """        Send a log entry to aggregation backends.
+        """
+        Send a log entry to aggregation backends.
         
         Args:
             log_entry: Log entry to send
-        """        try:
+        """
+        try:
             # Enrich log entry
             enriched_entry = self._enrich_log_entry(log_entry)
             
@@ -600,7 +625,8 @@ class LogAggregationConfig:
             logging.error(f"Failed to send log entry: {e}")
     
     def _enrich_log_entry(self, log_entry: Dict[str, Any]) -> Dict[str, Any]:
-        """Enrich log entry with additional metadata"""        enriched = log_entry.copy()
+        """Enrich log entry with additional metadata"""
+        enriched = log_entry.copy()
         
         # Add timestamp if not present
         if "@timestamp" not in enriched and "timestamp" not in enriched:
@@ -621,7 +647,8 @@ class LogAggregationConfig:
         return enriched
     
     def _send_logs_to_backends(self, log_entries: List[Dict[str, Any]]) -> None:
-        """Send log entries to all configured backends"""        for backend in self.backends:
+        """Send log entries to all configured backends"""
+        for backend in self.backends:
             try:
                 if backend == AggregationBackend.ELASTICSEARCH:
                     self._send_to_elasticsearch(log_entries)
@@ -636,7 +663,8 @@ class LogAggregationConfig:
                 logging.error(f"Failed to send logs to {backend}: {e}")
     
     def _send_to_elasticsearch(self, log_entries: List[Dict[str, Any]]) -> None:
-        """Send log entries to Elasticsearch"""        try:
+        """Send log entries to Elasticsearch"""
+        try:
             es_client = self._backend_clients["elasticsearch"]
             es_config = self.elasticsearch_config
             
@@ -670,7 +698,8 @@ class LogAggregationConfig:
             raise
     
     def _get_elasticsearch_index_name(self, log_entry: Dict[str, Any]) -> str:
-        """Generate Elasticsearch index name based on strategy"""        es_config = self.elasticsearch_config
+        """Generate Elasticsearch index name based on strategy"""
+        es_config = self.elasticsearch_config
         strategy = es_config.indexing_strategy
         
         # Get timestamp
@@ -702,7 +731,8 @@ class LogAggregationConfig:
         return es_config.index_pattern.replace("{date}", date_suffix)
     
     def _send_to_kafka(self, log_entries: List[Dict[str, Any]]) -> None:
-        """Send log entries to Kafka"""        try:
+        """Send log entries to Kafka"""
+        try:
             producer = self._backend_clients["kafka_producer"]
             topic = self.kafka_config.topic
             
@@ -722,7 +752,8 @@ class LogAggregationConfig:
             raise
     
     def _send_to_redis_streams(self, log_entries: List[Dict[str, Any]]) -> None:
-        """Send log entries to Redis Streams"""        try:
+        """Send log entries to Redis Streams"""
+        try:
             redis_client = self._backend_clients["redis"]
             redis_config = self.redis_config
             
@@ -743,7 +774,8 @@ class LogAggregationConfig:
             raise
     
     def _send_to_fluentd(self, log_entries: List[Dict[str, Any]]) -> None:
-        """Send log entries to Fluentd"""        try:
+        """Send log entries to Fluentd"""
+        try:
             fluentd_client = self._backend_clients["fluentd"]
             
             for entry in log_entries:
@@ -764,7 +796,8 @@ class LogAggregationConfig:
             raise
     
     def _send_metrics_to_elasticsearch(self, metrics: Dict[str, Any]) -> None:
-        """Send metrics to Elasticsearch"""        try:
+        """Send metrics to Elasticsearch"""
+        try:
             es_client = self._backend_clients["elasticsearch"]
             
             index_name = f"ia-influencer-metrics-{datetime.now().strftime('%Y.%m.%d')}"
@@ -778,11 +811,13 @@ class LogAggregationConfig:
             logging.error(f"Failed to send metrics to Elasticsearch: {e}")
     
     async def send_log_async(self, log_entry: Dict[str, Any]) -> None:
-        """        Send a log entry asynchronously.
+        """
+        Send a log entry asynchronously.
         
         Args:
             log_entry: Log entry to send
-        """        try:
+        """
+        try:
             # Enrich log entry
             enriched_entry = self._enrich_log_entry(log_entry)
             
@@ -797,7 +832,8 @@ class LogAggregationConfig:
             logging.error(f"Failed to send log entry async: {e}")
     
     async def _send_logs_to_backends_async(self, log_entries: List[Dict[str, Any]]) -> None:
-        """Send log entries to backends asynchronously"""        tasks = []
+        """Send log entries to backends asynchronously"""
+        tasks = []
         
         for backend in self.backends:
             if backend == AggregationBackend.ELASTICSEARCH:
@@ -808,7 +844,8 @@ class LogAggregationConfig:
             await asyncio.gather(*tasks, return_exceptions=True)
     
     async def _send_to_elasticsearch_async(self, log_entries: List[Dict[str, Any]]) -> None:
-        """Send log entries to Elasticsearch asynchronously"""        try:
+        """Send log entries to Elasticsearch asynchronously"""
+        try:
             es_client = self._backend_clients["elasticsearch_async"]
             es_config = self.elasticsearch_config
             
@@ -840,7 +877,8 @@ class LogAggregationConfig:
             raise
     
     def flush(self) -> None:
-        """Force flush all buffered logs"""        try:
+        """Force flush all buffered logs"""
+        try:
             # Get all remaining logs from buffer
             logs_to_send = []
             
@@ -864,7 +902,8 @@ class LogAggregationConfig:
             logging.error(f"Failed to flush logs: {e}")
     
     def stop(self) -> None:
-        """Stop log aggregation and cleanup resources"""        try:
+        """Stop log aggregation and cleanup resources"""
+        try:
             # Signal stop to background threads
             self._stop_event.set()
             
@@ -894,7 +933,8 @@ class LogAggregationConfig:
             logging.error(f"Error stopping log aggregation: {e}")
     
     def get_aggregation_status(self) -> Dict[str, Any]:
-        """Get current aggregation status"""        return {
+        """Get current aggregation status"""
+        return {
             "enabled": True,
             "backends": [backend.value for backend in self.backends],
             "streaming_mode": self.streaming_mode.value,
@@ -912,13 +952,15 @@ class LogAggregationConfig:
 
 
 class ElasticsearchHandler(logging.Handler):
-    """Custom logging handler for Elasticsearch integration"""    
+    """Custom logging handler for Elasticsearch integration"""
+    
     def __init__(self, aggregation_config: LogAggregationConfig):
         super().__init__()
         self.aggregation_config = aggregation_config
     
     def emit(self, record: logging.LogRecord) -> None:
-        """Emit a log record to Elasticsearch"""        try:
+        """Emit a log record to Elasticsearch"""
+        try:
             # Convert log record to dictionary
             log_entry = {
                 "timestamp": datetime.fromtimestamp(record.created, timezone.utc).isoformat(),
@@ -950,14 +992,16 @@ _aggregation_config: Optional[LogAggregationConfig] = None
 def initialize_log_aggregation(
     config: Optional[LogAggregationConfig] = None
 ) -> LogAggregationConfig:
-    """    Initialize global log aggregation configuration.
+    """
+    Initialize global log aggregation configuration.
     
     Args:
         config: Custom LogAggregationConfig instance
         
     Returns:
         Initialized log aggregation configuration
-    """    global _aggregation_config
+    """
+    global _aggregation_config
     
     if config:
         _aggregation_config = config
@@ -968,16 +1012,19 @@ def initialize_log_aggregation(
 
 
 def get_aggregation_config() -> LogAggregationConfig:
-    """Get the global log aggregation configuration"""    if not _aggregation_config:
+    """Get the global log aggregation configuration"""
+    if not _aggregation_config:
         initialize_log_aggregation()
     
     return _aggregation_config
 
 
 def send_log(log_entry: Dict[str, Any]) -> None:
-    """    Send a log entry using global aggregation configuration.
+    """
+    Send a log entry using global aggregation configuration.
     
     Args:
         log_entry: Log entry to send
-    """    config = get_aggregation_config()
+    """
+    config = get_aggregation_config()
     config.send_log(log_entry)

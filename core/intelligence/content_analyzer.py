@@ -13,7 +13,8 @@ Features:
 - Performance prediction analytics
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
 from dataclasses import dataclass
@@ -39,7 +40,8 @@ from ..storage.vector_storage import VectorStorage
 
 
 class ContentType(Enum):
-    """Content type enumeration"""    AUDIO = "audio"
+    """Content type enumeration"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -47,7 +49,8 @@ class ContentType(Enum):
 
 
 class QualityScore(Enum):
-    """Quality scoring levels"""    EXCELLENT = 90
+    """Quality scoring levels"""
+    EXCELLENT = 90
     GOOD = 75
     AVERAGE = 60
     POOR = 40
@@ -56,7 +59,8 @@ class QualityScore(Enum):
 
 @dataclass
 class ContentMetrics:
-    """Content analysis metrics"""    quality_score: float
+    """Content analysis metrics"""
+    quality_score: float
     engagement_potential: float
     monetization_score: float
     virality_prediction: float
@@ -68,7 +72,8 @@ class ContentMetrics:
 
 @dataclass
 class AnalysisResult:
-    """Comprehensive analysis result"""    content_id: str
+    """Comprehensive analysis result"""
+    content_id: str
     metrics: ContentMetrics
     recommendations: List[str]
     optimization_suggestions: List[str]
@@ -79,14 +84,18 @@ class AnalysisResult:
 
 
 class ContentAnalyzer:
-    """    Advanced content analyzer for multi-format content processing
-    """    
+    """
+    Advanced content analyzer for multi-format content processing
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialize the content analyzer
+        """
+        Initialize the content analyzer
         
         Args:
             config: Configuration dictionary containing model paths and settings
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize models and processors
@@ -103,7 +112,8 @@ class ContentAnalyzer:
         }
     
     def _initialize_models(self) -> None:
-        """Initialize AI models for content analysis"""        try:
+        """Initialize AI models for content analysis"""
+        try:
             # Text analysis models
             self.text_model = AutoModel.from_pretrained(
                 self.config.get("text_model", "sentence-transformers/all-MiniLM-L6-v2")
@@ -133,12 +143,14 @@ class ContentAnalyzer:
             raise
     
     def _initialize_processors(self) -> None:
-        """Initialize content processors"""        self.content_adapter = ContentAdapter(self.config)
+        """Initialize content processors"""
+        self.content_adapter = ContentAdapter(self.config)
         self.media_processor = MediaProcessor(self.config)
         self.ai_engine = AIEngine(self.config)
     
     def _initialize_storage(self) -> None:
-        """Initialize vector storage for similarity matching"""        self.vector_storage = VectorStorage(self.config)
+        """Initialize vector storage for similarity matching"""
+        self.vector_storage = VectorStorage(self.config)
     
     async def analyze_content(
         self, 
@@ -146,7 +158,8 @@ class ContentAnalyzer:
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]] = None
     ) -> AnalysisResult:
-        """        Perform comprehensive content analysis
+        """
+        Perform comprehensive content analysis
         
         Args:
             content_data: Raw content data (file path, bytes, or array)
@@ -155,7 +168,8 @@ class ContentAnalyzer:
             
         Returns:
             AnalysisResult: Comprehensive analysis results
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         content_id = self._generate_content_id(content_data, content_type)
         
         try:
@@ -199,7 +213,8 @@ class ContentAnalyzer:
         audio_data: Union[str, np.ndarray], 
         metadata: Optional[Dict[str, Any]] = None
     ) -> AnalysisResult:
-        """Analyze audio content"""        
+        """Analyze audio content"""
+        
         # Load audio if path provided
         if isinstance(audio_data, str):
             y, sr = librosa.load(audio_data, sr=self.audio_sample_rate)
@@ -261,7 +276,8 @@ class ContentAnalyzer:
         video_data: Union[str, np.ndarray], 
         metadata: Optional[Dict[str, Any]] = None
     ) -> AnalysisResult:
-        """Analyze video content"""        
+        """Analyze video content"""
+        
         # Extract video features
         features = await self._extract_video_features(video_data)
         
@@ -317,7 +333,8 @@ class ContentAnalyzer:
         image_data: Union[str, np.ndarray, Image.Image], 
         metadata: Optional[Dict[str, Any]] = None
     ) -> AnalysisResult:
-        """Analyze image content"""        
+        """Analyze image content"""
+        
         # Load and preprocess image
         image = self._preprocess_image(image_data)
         
@@ -376,7 +393,8 @@ class ContentAnalyzer:
         text_data: str, 
         metadata: Optional[Dict[str, Any]] = None
     ) -> AnalysisResult:
-        """Analyze text content"""        
+        """Analyze text content"""
+        
         # Extract text features
         features = self._extract_text_features(text_data)
         
@@ -432,7 +450,8 @@ class ContentAnalyzer:
         content_data: Any, 
         metadata: Optional[Dict[str, Any]] = None
     ) -> AnalysisResult:
-        """Analyze mixed/multi-modal content"""        
+        """Analyze mixed/multi-modal content"""
+        
         # This would handle complex multi-modal content analysis
         # For now, return a placeholder implementation
         features = {"mixed_content": True}
@@ -460,7 +479,8 @@ class ContentAnalyzer:
         )
     
     def _extract_audio_features(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract comprehensive audio features"""        features = {}
+        """Extract comprehensive audio features"""
+        features = {}
         
         # Basic features
         features["duration"] = len(y) / sr
@@ -483,7 +503,8 @@ class ContentAnalyzer:
         return features
     
     async def _extract_video_features(self, video_data: Union[str, np.ndarray]) -> Dict[str, Any]:
-        """Extract comprehensive video features"""        features = {}
+        """Extract comprehensive video features"""
+        features = {}
         
         if isinstance(video_data, str):
             # Load video file
@@ -514,7 +535,8 @@ class ContentAnalyzer:
         return features
     
     def _extract_image_features(self, image: Image.Image) -> Dict[str, Any]:
-        """Extract comprehensive image features"""        features = {}
+        """Extract comprehensive image features"""
+        features = {}
         
         # Basic properties
         features["width"], features["height"] = image.size
@@ -538,7 +560,8 @@ class ContentAnalyzer:
         return features
     
     def _extract_text_features(self, text: str) -> Dict[str, Any]:
-        """Extract comprehensive text features"""        features = {}
+        """Extract comprehensive text features"""
+        features = {}
         
         # Basic features
         features["length"] = len(text)
@@ -560,7 +583,8 @@ class ContentAnalyzer:
         return features
     
     def _assess_audio_quality(self, y: np.ndarray, sr: int, features: Dict[str, Any]) -> float:
-        """Assess audio quality score"""        score = 50.0  # Base score
+        """Assess audio quality score"""
+        score = 50.0  # Base score
         
         # Duration check
         if 30 <= features["duration"] <= 300:  # 30s to 5min optimal
@@ -579,7 +603,8 @@ class ContentAnalyzer:
         return min(100.0, max(0.0, score))
     
     def _assess_video_quality(self, features: Dict[str, Any]) -> float:
-        """Assess video quality score"""        score = 50.0  # Base score
+        """Assess video quality score"""
+        score = 50.0  # Base score
         
         # Resolution check
         if features.get("resolution"):
@@ -602,7 +627,8 @@ class ContentAnalyzer:
         return min(100.0, max(0.0, score))
     
     def _assess_image_quality(self, image: Image.Image, features: Dict[str, Any]) -> float:
-        """Assess image quality score"""        score = 50.0  # Base score
+        """Assess image quality score"""
+        score = 50.0  # Base score
         
         # Resolution check
         if features["resolution"] >= 1920 * 1080:  # HD+
@@ -624,7 +650,8 @@ class ContentAnalyzer:
         return min(100.0, max(0.0, score))
     
     def _assess_text_quality(self, text: str, features: Dict[str, Any]) -> float:
-        """Assess text quality score"""        score = 50.0  # Base score
+        """Assess text quality score"""
+        score = 50.0  # Base score
         
         # Length check
         if 100 <= features["word_count"] <= 1000:  # Optimal length
@@ -644,7 +671,8 @@ class ContentAnalyzer:
         return min(100.0, max(0.0, score))
     
     def _predict_audio_engagement(self, features: Dict[str, Any]) -> float:
-        """Predict audio engagement potential"""        engagement = 50.0  # Base engagement
+        """Predict audio engagement potential"""
+        engagement = 50.0  # Base engagement
         
         # Tempo impact
         tempo = features.get("tempo", 120)
@@ -663,7 +691,8 @@ class ContentAnalyzer:
         return min(100.0, max(0.0, engagement))
     
     def _predict_video_engagement(self, features: Dict[str, Any]) -> float:
-        """Predict video engagement potential"""        engagement = 50.0  # Base engagement
+        """Predict video engagement potential"""
+        engagement = 50.0  # Base engagement
         
         # Duration impact
         duration = features.get("duration", 0)
@@ -683,7 +712,8 @@ class ContentAnalyzer:
         return min(100.0, max(0.0, engagement))
     
     def _predict_image_engagement(self, features: Dict[str, Any]) -> float:
-        """Predict image engagement potential"""        engagement = 50.0  # Base engagement
+        """Predict image engagement potential"""
+        engagement = 50.0  # Base engagement
         
         # Resolution impact
         if features["resolution"] >= 1920 * 1080:
@@ -701,7 +731,8 @@ class ContentAnalyzer:
         return min(100.0, max(0.0, engagement))
     
     def _predict_text_engagement(self, features: Dict[str, Any]) -> float:
-        """Predict text engagement potential"""        engagement = 50.0  # Base engagement
+        """Predict text engagement potential"""
+        engagement = 50.0  # Base engagement
         
         # Word count impact
         word_count = features["word_count"]
@@ -725,7 +756,8 @@ class ContentAnalyzer:
         features: Dict[str, Any], 
         content_type: ContentType
     ) -> float:
-        """Calculate monetization potential score"""        monetization = 50.0  # Base score
+        """Calculate monetization potential score"""
+        monetization = 50.0  # Base score
         
         if content_type == ContentType.AUDIO:
             # Music industry standards
@@ -758,7 +790,8 @@ class ContentAnalyzer:
         return min(100.0, max(0.0, monetization))
     
     def _predict_virality(self, features: Dict[str, Any], content_type: ContentType) -> float:
-        """Predict content virality potential"""        virality = 30.0  # Base score (virality is rare)
+        """Predict content virality potential"""
+        virality = 30.0  # Base score (virality is rare)
         
         # Common virality factors across content types
         if content_type == ContentType.AUDIO:
@@ -794,7 +827,8 @@ class ContentAnalyzer:
         return min(100.0, max(0.0, virality))
     
     def _generate_audio_tags(self, features: Dict[str, Any]) -> List[str]:
-        """Generate tags for audio content"""        tags = ["audio", "music"]
+        """Generate tags for audio content"""
+        tags = ["audio", "music"]
         
         # Tempo-based tags
         tempo = features.get("tempo", 120)
@@ -821,7 +855,8 @@ class ContentAnalyzer:
         return tags
     
     def _generate_video_tags(self, features: Dict[str, Any]) -> List[str]:
-        """Generate tags for video content"""        tags = ["video"]
+        """Generate tags for video content"""
+        tags = ["video"]
         
         # Duration-based tags
         duration = features.get("duration", 0)
@@ -849,7 +884,8 @@ class ContentAnalyzer:
         return tags
     
     def _generate_image_tags(self, features: Dict[str, Any]) -> List[str]:
-        """Generate tags for image content"""        tags = ["image"]
+        """Generate tags for image content"""
+        tags = ["image"]
         
         # Resolution-based tags
         if features["resolution"] >= 1920 * 1080:
@@ -875,7 +911,8 @@ class ContentAnalyzer:
         return tags
     
     def _generate_text_tags(self, features: Dict[str, Any]) -> List[str]:
-        """Generate tags for text content"""        tags = ["text"]
+        """Generate tags for text content"""
+        tags = ["text"]
         
         # Length-based tags
         word_count = features["word_count"]
@@ -907,7 +944,8 @@ class ContentAnalyzer:
         return tags
     
     def _generate_audio_recommendations(self, metrics: ContentMetrics) -> List[str]:
-        """Generate audio-specific recommendations"""        recommendations = []
+        """Generate audio-specific recommendations"""
+        recommendations = []
         
         if metrics.quality_score < 70:
             recommendations.append("Consider improving audio quality through better recording equipment")
@@ -921,7 +959,8 @@ class ContentAnalyzer:
         return recommendations
     
     def _generate_video_recommendations(self, metrics: ContentMetrics) -> List[str]:
-        """Generate video-specific recommendations"""        recommendations = []
+        """Generate video-specific recommendations"""
+        recommendations = []
         
         if metrics.quality_score < 70:
             recommendations.append("Improve video resolution and visual quality")
@@ -935,7 +974,8 @@ class ContentAnalyzer:
         return recommendations
     
     def _generate_image_recommendations(self, metrics: ContentMetrics) -> List[str]:
-        """Generate image-specific recommendations"""        recommendations = []
+        """Generate image-specific recommendations"""
+        recommendations = []
         
         if metrics.quality_score < 70:
             recommendations.append("Enhance image resolution and visual appeal")
@@ -949,7 +989,8 @@ class ContentAnalyzer:
         return recommendations
     
     def _generate_text_recommendations(self, metrics: ContentMetrics) -> List[str]:
-        """Generate text-specific recommendations"""        recommendations = []
+        """Generate text-specific recommendations"""
+        recommendations = []
         
         if metrics.quality_score < 70:
             recommendations.append("Improve text structure and readability")
@@ -963,7 +1004,8 @@ class ContentAnalyzer:
         return recommendations
     
     def _generate_optimization_suggestions(self, metrics: ContentMetrics) -> List[str]:
-        """Generate general optimization suggestions"""        suggestions = []
+        """Generate general optimization suggestions"""
+        suggestions = []
         
         if metrics.quality_score < 80:
             suggestions.append("Focus on improving overall content quality")
@@ -980,7 +1022,8 @@ class ContentAnalyzer:
         return suggestions
     
     def _assess_content_risks(self, metrics: ContentMetrics) -> Dict[str, float]:
-        """Assess various content risks"""        risks = {}
+        """Assess various content risks"""
+        risks = {}
         
         # Quality risk
         if metrics.quality_score < 50:
@@ -1005,7 +1048,8 @@ class ContentAnalyzer:
         return risks
     
     def _predict_revenue(self, metrics: ContentMetrics) -> float:
-        """Predict potential revenue from content"""        base_revenue = 100.0  # Base revenue in euros
+        """Predict potential revenue from content"""
+        base_revenue = 100.0  # Base revenue in euros
         
         # Scale by quality and monetization scores
         revenue_multiplier = (
@@ -1042,7 +1086,8 @@ class ContentAnalyzer:
         features: Dict[str, Any], 
         content_type: ContentType
     ) -> List[str]:
-        """Find similar content using vector similarity"""        try:
+        """Find similar content using vector similarity"""
+        try:
             # Extract feature vector for similarity search
             if content_type == ContentType.AUDIO:
                 feature_vector = features.get("mfcc", [])
@@ -1072,7 +1117,8 @@ class ContentAnalyzer:
             return []
     
     def _preprocess_image(self, image_data: Union[str, np.ndarray, Image.Image]) -> Image.Image:
-        """Preprocess image for analysis"""        if isinstance(image_data, str):
+        """Preprocess image for analysis"""
+        if isinstance(image_data, str):
             return Image.open(image_data)
         elif isinstance(image_data, np.ndarray):
             return Image.fromarray(image_data)
@@ -1080,7 +1126,8 @@ class ContentAnalyzer:
             return image_data
     
     def _calculate_motion_intensity(self, frames: List[np.ndarray]) -> float:
-        """Calculate motion intensity in video frames"""        if len(frames) < 2:
+        """Calculate motion intensity in video frames"""
+        if len(frames) < 2:
             return 0.0
         
         motion_scores = []
@@ -1093,7 +1140,8 @@ class ContentAnalyzer:
         return np.mean(motion_scores)
     
     def _calculate_color_diversity(self, frames: List[np.ndarray]) -> float:
-        """Calculate color diversity in video frames"""        color_scores = []
+        """Calculate color diversity in video frames"""
+        color_scores = []
         
         for frame in frames:
             # Convert to HSV for better color analysis
@@ -1107,7 +1155,8 @@ class ContentAnalyzer:
         return np.mean(color_scores) / 5.0  # Normalize to 0-1 range
     
     def _detect_faces_in_frames(self, frames: List[np.ndarray]) -> int:
-        """Detect faces in video frames"""        try:
+        """Detect faces in video frames"""
+        try:
             face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
             total_faces = 0
             
@@ -1121,7 +1170,8 @@ class ContentAnalyzer:
             return 0
     
     def _generate_content_id(self, content_data: Any, content_type: ContentType) -> str:
-        """Generate unique content ID"""        import hashlib
+        """Generate unique content ID"""
+        import hashlib
         
         # Create hash from content data and timestamp
         content_str = str(content_data) + str(datetime.now().timestamp())
@@ -1130,7 +1180,8 @@ class ContentAnalyzer:
         return f"{content_type.value}_{content_hash[:12]}"
     
     def _update_performance_metrics(self, processing_time: float) -> None:
-        """Update performance tracking metrics"""        self.performance_metrics["total_analyses"] += 1
+        """Update performance tracking metrics"""
+        self.performance_metrics["total_analyses"] += 1
         total = self.performance_metrics["total_analyses"]
         current_avg = self.performance_metrics["average_processing_time"]
         
@@ -1144,17 +1195,20 @@ class ContentAnalyzer:
         self.performance_metrics["cache_hit_rate"] = cache_hits / total
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get current performance metrics"""        return self.performance_metrics.copy()
+        """Get current performance metrics"""
+        return self.performance_metrics.copy()
     
     async def clear_cache(self) -> None:
-        """Clear analysis cache"""        self.analysis_cache.clear()
+        """Clear analysis cache"""
+        self.analysis_cache.clear()
         self.logger.info("Analysis cache cleared")
     
     async def batch_analyze(
         self, 
         content_items: List[Tuple[Any, ContentType, Optional[Dict[str, Any]]]]
     ) -> List[AnalysisResult]:
-        """Analyze multiple content items in batch"""        results = []
+        """Analyze multiple content items in batch"""
+        results = []
         
         for content_data, content_type, metadata in content_items:
             try:

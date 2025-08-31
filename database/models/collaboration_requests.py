@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric
+"""
+from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID, ARRAY
@@ -36,7 +37,8 @@ Base = declarative_base()
 
 
 class CollaborationType(Enum):
-    """Collaboration type enumeration"""    REMIX = "remix"
+    """Collaboration type enumeration"""
+    REMIX = "remix"
     COVER = "cover"
     FEATURE = "feature"
     DUET = "duet"
@@ -59,7 +61,8 @@ class CollaborationType(Enum):
 
 
 class RequestStatus(Enum):
-    """Request status enumeration"""    PENDING = "pending"
+    """Request status enumeration"""
+    PENDING = "pending"
     SENT = "sent"
     RECEIVED = "received"
     ACCEPTED = "accepted"
@@ -77,14 +80,16 @@ class RequestStatus(Enum):
 
 
 class Priority(Enum):
-    """Request priority levels"""    URGENT = "urgent"
+    """Request priority levels"""
+    URGENT = "urgent"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
 
 
 class CollaborationScope(Enum):
-    """Scope of collaboration"""    SINGLE_TRACK = "single_track"
+    """Scope of collaboration"""
+    SINGLE_TRACK = "single_track"
     EP = "ep"
     ALBUM = "album"
     SERIES = "series"
@@ -97,7 +102,8 @@ class CollaborationScope(Enum):
 
 
 class RevenueShareType(Enum):
-    """Revenue sharing types"""    EQUAL_SPLIT = "equal_split"
+    """Revenue sharing types"""
+    EQUAL_SPLIT = "equal_split"
     PROPORTIONAL = "proportional"
     WEIGHTED = "weighted"
     FLAT_FEE = "flat_fee"
@@ -108,11 +114,13 @@ class RevenueShareType(Enum):
 
 
 class CollaborationRequest(Base):
-    """    Enterprise Collaboration Request Model
+    """
+    Enterprise Collaboration Request Model
     
     Comprehensive collaboration management system for content creators supporting
     complex workflows, revenue sharing, and multi-party agreements.
-    """    __tablename__ = "collaboration_requests"
+    """
+    __tablename__ = "collaboration_requests"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -337,7 +345,8 @@ class CollaborationRequest(Base):
         return f"<CollaborationRequest(id={self.id}, request_number='{self.request_number}', type={self.collaboration_type.value}, status={self.request_status.value})>"
     
     def to_dict(self, include_sensitive: bool = False, include_analytics: bool = True) -> Dict[str, Any]:
-        """Convert model to dictionary for API responses"""        base_dict = {
+        """Convert model to dictionary for API responses"""
+        base_dict = {
             "id": str(self.id),
             "requester_user_id": str(self.requester_user_id),
             "target_user_id": str(self.target_user_id),
@@ -449,31 +458,36 @@ class CollaborationRequest(Base):
         return base_dict
     
     def is_expired(self) -> bool:
-        """Check if request is expired"""        if not self.expires_at:
+        """Check if request is expired"""
+        if not self.expires_at:
             return False
         return datetime.now(timezone.utc) >= self.expires_at
     
     def is_pending_response(self) -> bool:
-        """Check if request is waiting for response"""        return (
+        """Check if request is waiting for response"""
+        return (
             self.request_status in [RequestStatus.SENT, RequestStatus.RECEIVED] and
             not self.is_expired() and
             self.is_active
         )
     
     def days_until_deadline(self) -> Optional[int]:
-        """Calculate days until deadline"""        if not self.deadline:
+        """Calculate days until deadline"""
+        if not self.deadline:
             return None
         
         delta = self.deadline - datetime.now(timezone.utc)
         return max(delta.days, 0)
     
     def is_overdue(self) -> bool:
-        """Check if request is overdue"""        if not self.deadline:
+        """Check if request is overdue"""
+        if not self.deadline:
             return False
         return datetime.now(timezone.utc) > self.deadline
     
     def calculate_compatibility_score(self, target_user_data: Dict[str, Any]) -> float:
-        """Calculate compatibility score with target user"""        score = 0.0
+        """Calculate compatibility score with target user"""
+        score = 0.0
         factors = 0
         
         # Genre compatibility
@@ -513,7 +527,8 @@ class CollaborationRequest(Base):
         return score / max(factors, 1) if factors > 0 else 0.0
     
     def get_next_milestone(self) -> Optional[Dict[str, Any]]:
-        """Get the next upcoming milestone"""        if not self.milestone_dates:
+        """Get the next upcoming milestone"""
+        if not self.milestone_dates:
             return None
         
         now = datetime.now(timezone.utc)
@@ -528,7 +543,8 @@ class CollaborationRequest(Base):
         return min(upcoming_milestones, key=lambda m: datetime.fromisoformat(m.get('date', '')))
     
     def can_accept(self, user_id: str) -> bool:
-        """Check if user can accept this request"""        return (
+        """Check if user can accept this request"""
+        return (
             str(self.target_user_id) == user_id and
             self.request_status in [RequestStatus.SENT, RequestStatus.RECEIVED] and
             not self.is_expired() and
@@ -536,7 +552,8 @@ class CollaborationRequest(Base):
         )
     
     def can_modify(self, user_id: str) -> bool:
-        """Check if user can modify this request"""        return (
+        """Check if user can modify this request"""
+        return (
             str(self.requester_user_id) == user_id and
             self.request_status in [RequestStatus.DRAFT, RequestStatus.PENDING, RequestStatus.NEGOTIATING] and
             self.is_active
@@ -544,7 +561,8 @@ class CollaborationRequest(Base):
     
     @classmethod
     def create_request(cls, request_data: Dict[str, Any], requester_user_id: str) -> 'CollaborationRequest':
-        """Create CollaborationRequest from request data"""        # Generate unique request number
+        """Create CollaborationRequest from request data"""
+        # Generate unique request number
         request_number = f"COLLAB-{datetime.now().strftime('%Y%m%d')}-{str(uuid.uuid4())[:8].upper()}"
         
         return cls(

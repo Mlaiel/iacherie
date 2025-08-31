@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 from enum import Enum
@@ -28,7 +29,8 @@ from .platform_agent import PlatformType
 
 
 class Environment(Enum):
-    """Deployment environments"""    DEVELOPMENT = "development"
+    """Deployment environments"""
+    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
@@ -36,7 +38,8 @@ class Environment(Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform-specific credentials configuration"""    client_id: Optional[str] = None
+    """Platform-specific credentials configuration"""
+    client_id: Optional[str] = None
     client_secret: Optional[str] = None
     api_key: Optional[str] = None
     access_token: Optional[str] = None
@@ -47,7 +50,8 @@ class PlatformCredentials:
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration"""    url: str = "postgresql://localhost:5432/ia_influencer"
+    """Database configuration"""
+    url: str = "postgresql://localhost:5432/ia_influencer"
     pool_size: int = 20
     max_overflow: int = 30
     pool_timeout: int = 30
@@ -58,7 +62,8 @@ class DatabaseConfig:
 
 @dataclass
 class RedisConfig:
-    """Redis configuration"""    url: str = "redis://localhost:6379/0"
+    """Redis configuration"""
+    url: str = "redis://localhost:6379/0"
     max_connections: int = 50
     socket_timeout: int = 5
     socket_connect_timeout: int = 5
@@ -68,7 +73,8 @@ class RedisConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration"""    secret_key: str = os.getenv("PLATFORM_AGENT_SECRET_KEY", "change-me-in-production")
+    """Security configuration"""
+    secret_key: str = os.getenv("PLATFORM_AGENT_SECRET_KEY", "change-me-in-production")
     encryption_key: str = os.getenv("PLATFORM_AGENT_ENCRYPTION_KEY", "change-me-in-production")
     jwt_expiration: int = 3600
     max_login_attempts: int = 5
@@ -85,7 +91,8 @@ class SecurityConfig:
 
 @dataclass
 class AIConfig:
-    """AI services configuration"""    enable_ai_optimization: bool = True
+    """AI services configuration"""
+    enable_ai_optimization: bool = True
     enable_content_enhancement: bool = True
     enable_auto_translation: bool = True
     model_cache_size: int = 10
@@ -97,7 +104,8 @@ class AIConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring and observability configuration"""    enable_metrics: bool = True
+    """Monitoring and observability configuration"""
+    enable_metrics: bool = True
     enable_tracing: bool = True
     enable_logging: bool = True
     metrics_port: int = 9090
@@ -110,7 +118,8 @@ class MonitoringConfig:
 
 @dataclass
 class PlatformAgentGlobalConfig:
-    """Global configuration for Platform Agent module"""    
+    """Global configuration for Platform Agent module"""
+    
     # Environment
     environment: Environment = Environment.DEVELOPMENT
     debug: bool = False
@@ -168,14 +177,16 @@ class PlatformAgentGlobalConfig:
 
 
 class ConfigManager:
-    """Configuration manager for Platform Agent"""    
+    """Configuration manager for Platform Agent"""
+    
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path or os.getenv("PLATFORM_AGENT_CONFIG_PATH", "config/platform_agent.json")
         self._config: Optional[PlatformAgentGlobalConfig] = None
         self._load_config()
     
     def _load_config(self):
-        """Load configuration from file and environment"""        # Start with defaults
+        """Load configuration from file and environment"""
+        # Start with defaults
         self._config = PlatformAgentGlobalConfig()
         
         # Load from file if exists
@@ -191,7 +202,8 @@ class ConfigManager:
         self._load_platform_credentials()
     
     def _update_config_from_dict(self, config_dict: Dict[str, Any]):
-        """Update configuration from dictionary"""        for key, value in config_dict.items():
+        """Update configuration from dictionary"""
+        for key, value in config_dict.items():
             if hasattr(self._config, key):
                 if isinstance(getattr(self._config, key), dict):
                     getattr(self._config, key).update(value)
@@ -199,7 +211,8 @@ class ConfigManager:
                     setattr(self._config, key, value)
     
     def _load_from_environment(self):
-        """Load configuration from environment variables"""        # Database
+        """Load configuration from environment variables"""
+        # Database
         if db_url := os.getenv("DATABASE_URL"):
             self._config.database.url = db_url
         
@@ -237,7 +250,8 @@ class ConfigManager:
             self._config.max_concurrent_uploads = int(max_uploads)
     
     def _load_platform_credentials(self):
-        """Load platform credentials from environment or secure store"""        for platform in PlatformType:
+        """Load platform credentials from environment or secure store"""
+        for platform in PlatformType:
             platform_name = platform.value.upper()
             
             credentials = PlatformCredentials(
@@ -256,13 +270,16 @@ class ConfigManager:
     
     @property
     def config(self) -> PlatformAgentGlobalConfig:
-        """Get current configuration"""        return self._config
+        """Get current configuration"""
+        return self._config
     
     def get_platform_credentials(self, platform: PlatformType) -> Optional[PlatformCredentials]:
-        """Get credentials for specific platform"""        return self._config.platform_credentials.get(platform.value)
+        """Get credentials for specific platform"""
+        return self._config.platform_credentials.get(platform.value)
     
     def save_config(self, path: Optional[str] = None):
-        """Save current configuration to file"""        save_path = path or self.config_path
+        """Save current configuration to file"""
+        save_path = path or self.config_path
         
         # Create directory if it doesn't exist
         Path(save_path).parent.mkdir(parents=True, exist_ok=True)
@@ -274,7 +291,8 @@ class ConfigManager:
             json.dump(config_dict, f, indent=2, default=str)
     
     def _config_to_dict(self, include_credentials: bool = False) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""        config_dict = {
+        """Convert configuration to dictionary"""
+        config_dict = {
             "environment": self._config.environment.value,
             "debug": self._config.debug,
             "database": {
@@ -361,7 +379,8 @@ class ConfigManager:
         return config_dict
     
     def validate_config(self) -> Dict[str, List[str]]:
-        """Validate configuration and return any errors"""        errors = {
+        """Validate configuration and return any errors"""
+        errors = {
             "critical": [],
             "warning": [],
             "info": []
@@ -392,7 +411,8 @@ class ConfigManager:
         return errors
     
     def get_environment_template(self) -> str:
-        """Generate environment variable template"""        return """# Platform Agent Environment Configuration Template
+        """Generate environment variable template"""
+        return """# Platform Agent Environment Configuration Template
 # Copy this file to .env and update values
 
 # Environment
@@ -456,13 +476,17 @@ config = config_manager.config
 
 # Helper functions for easy access
 def get_config() -> PlatformAgentGlobalConfig:
-    """Get global configuration"""    return config
+    """Get global configuration"""
+    return config
 
 def get_platform_credentials(platform: PlatformType) -> Optional[PlatformCredentials]:
-    """Get platform credentials"""    return config_manager.get_platform_credentials(platform)
+    """Get platform credentials"""
+    return config_manager.get_platform_credentials(platform)
 
 def is_production() -> bool:
-    """Check if running in production environment"""    return config.environment == Environment.PRODUCTION
+    """Check if running in production environment"""
+    return config.environment == Environment.PRODUCTION
 
 def is_development() -> bool:
-    """Check if running in development environment"""    return config.environment == Environment.DEVELOPMENT
+    """Check if running in development environment"""
+    return config.environment == Environment.DEVELOPMENT

@@ -11,7 +11,8 @@ Responsibility: Gestion intelligente de la rétention des sauvegardes
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import shutil
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 
 class RetentionStrategy(Enum):
-    """Stratégies de rétention"""    SIMPLE_TIME = "simple_time"           # Basé sur l'âge uniquement
+    """Stratégies de rétention"""
+    SIMPLE_TIME = "simple_time"           # Basé sur l'âge uniquement
     GRANDFATHER_FATHER_SON = "gfs"        # Stratégie GFS classique
     TOWER_OF_HANOI = "tower_of_hanoi"     # Algorithme Tour de Hanoï
     FIBONACCI = "fibonacci"               # Séquence de Fibonacci
@@ -39,7 +41,8 @@ class RetentionStrategy(Enum):
 
 
 class RetentionAction(Enum):
-    """Actions de rétention"""    KEEP = "keep"                # Conserver
+    """Actions de rétention"""
+    KEEP = "keep"                # Conserver
     DELETE = "delete"            # Supprimer
     ARCHIVE = "archive"          # Archiver
     COMPRESS = "compress"        # Compresser davantage
@@ -48,7 +51,8 @@ class RetentionAction(Enum):
 
 @dataclass
 class RetentionRule:
-    """Règle de rétention"""    rule_id: str
+    """Règle de rétention"""
+    rule_id: str
     name: str
     strategy: RetentionStrategy
     backup_types: List[BackupType] = field(default_factory=list)
@@ -78,7 +82,8 @@ class RetentionRule:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""        return {
+        """Convertit en dictionnaire"""
+        return {
             "rule_id": self.rule_id,
             "name": self.name,
             "strategy": self.strategy.value,
@@ -102,7 +107,8 @@ class RetentionRule:
 
 @dataclass
 class RetentionPlan:
-    """Plan d'exécution de rétention"""    plan_id: str
+    """Plan d'exécution de rétention"""
+    plan_id: str
     rule_id: str
     backups_to_process: List[BackupMetadata]
     actions: Dict[str, RetentionAction] = field(default_factory=dict)  # backup_id -> action
@@ -111,7 +117,8 @@ class RetentionPlan:
     executed: bool = False
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""        return {
+        """Convertit en dictionnaire"""
+        return {
             "plan_id": self.plan_id,
             "rule_id": self.rule_id,
             "backups_to_process": [b.to_dict() for b in self.backups_to_process],
@@ -124,7 +131,8 @@ class RetentionPlan:
 
 @dataclass
 class RetentionStats:
-    """Statistiques de rétention"""    total_backups: int = 0
+    """Statistiques de rétention"""
+    total_backups: int = 0
     backups_deleted: int = 0
     backups_archived: int = 0
     backups_compressed: int = 0
@@ -134,7 +142,8 @@ class RetentionStats:
     average_execution_time: float = 0.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""        return {
+        """Convertit en dictionnaire"""
+        return {
             "total_backups": self.total_backups,
             "backups_deleted": self.backups_deleted,
             "backups_archived": self.backups_archived,
@@ -147,7 +156,8 @@ class RetentionStats:
 
 
 class RetentionManager:
-    """    Gestionnaire intelligent de rétention des sauvegardes
+    """
+    Gestionnaire intelligent de rétention des sauvegardes
     
     Fonctionnalités:
     - Stratégies de rétention multiples
@@ -156,7 +166,8 @@ class RetentionManager:
     - Protection des sauvegardes critiques
     - Analytics et reporting
     - Actions graduelles (archive -> compression -> suppression)
-    """    
+    """
+    
     def __init__(self, storage: Optional[BackupStorage] = None):
         self.storage = storage
         
@@ -178,7 +189,8 @@ class RetentionManager:
         logger.info("RetentionManager initialized")
     
     def _setup_default_rules(self):
-        """Configure les règles de rétention par défaut"""        # Règle standard GFS
+        """Configure les règles de rétention par défaut"""
+        # Règle standard GFS
         gfs_rule = RetentionRule(
             rule_id="default_gfs",
             name="Default GFS Strategy",
@@ -205,22 +217,26 @@ class RetentionManager:
         self.retention_rules[simple_rule.rule_id] = simple_rule
     
     def add_retention_rule(self, rule: RetentionRule):
-        """        Ajoute une règle de rétention
+        """
+        Ajoute une règle de rétention
         
         Args:
             rule: Règle à ajouter
-        """        self.retention_rules[rule.rule_id] = rule
+        """
+        self.retention_rules[rule.rule_id] = rule
         logger.info(f"Added retention rule: {rule.name}")
     
     def remove_retention_rule(self, rule_id: str) -> bool:
-        """        Supprime une règle de rétention
+        """
+        Supprime une règle de rétention
         
         Args:
             rule_id: ID de la règle
             
         Returns:
             bool: True si suppression réussie
-        """        if rule_id in self.retention_rules:
+        """
+        if rule_id in self.retention_rules:
             del self.retention_rules[rule_id]
             logger.info(f"Removed retention rule: {rule_id}")
             return True
@@ -233,7 +249,8 @@ class RetentionManager:
         backups: List[BackupMetadata],
         dry_run: bool = False
     ) -> RetentionPlan:
-        """        Crée un plan de rétention
+        """
+        Crée un plan de rétention
         
         Args:
             rule_id: ID de la règle à appliquer
@@ -242,7 +259,8 @@ class RetentionManager:
             
         Returns:
             RetentionPlan: Plan de rétention
-        """        try:
+        """
+        try:
             if rule_id not in self.retention_rules:
                 raise RetentionException(f"Retention rule not found: {rule_id}")
             
@@ -278,7 +296,8 @@ class RetentionManager:
         backups: List[BackupMetadata],
         rule: RetentionRule
     ) -> List[BackupMetadata]:
-        """Filtre les sauvegardes applicables à une règle"""        applicable = []
+        """Filtre les sauvegardes applicables à une règle"""
+        applicable = []
         
         for backup in backups:
             # Filtre par type de sauvegarde
@@ -302,7 +321,8 @@ class RetentionManager:
         return applicable
     
     def _is_protected_backup(self, backup: BackupMetadata, patterns: List[str]) -> bool:
-        """Vérifie si une sauvegarde est protégée par un pattern"""        if not patterns:
+        """Vérifie si une sauvegarde est protégée par un pattern"""
+        if not patterns:
             return False
         
         import fnmatch
@@ -320,7 +340,8 @@ class RetentionManager:
         rule: RetentionRule,
         backups: List[BackupMetadata]
     ) -> RetentionPlan:
-        """Génère un plan selon la stratégie de rétention"""        plan_id = self._generate_plan_id()
+        """Génère un plan selon la stratégie de rétention"""
+        plan_id = self._generate_plan_id()
         
         plan = RetentionPlan(
             plan_id=plan_id,
@@ -344,12 +365,14 @@ class RetentionManager:
         return plan
     
     def _generate_plan_id(self) -> str:
-        """Génère un ID unique pour un plan"""        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        """Génère un ID unique pour un plan"""
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         import secrets
         return f"plan_{timestamp}_{secrets.token_hex(8)}"
     
     async def _apply_simple_time_strategy(self, plan: RetentionPlan, rule: RetentionRule):
-        """Applique la stratégie simple basée sur le temps"""        cutoff_date = datetime.now() - timedelta(days=rule.daily_keep)
+        """Applique la stratégie simple basée sur le temps"""
+        cutoff_date = datetime.now() - timedelta(days=rule.daily_keep)
         
         # Tri par date (plus ancien en premier)
         backups_sorted = sorted(plan.backups_to_process, key=lambda x: x.created_at)
@@ -370,7 +393,8 @@ class RetentionManager:
                     kept_count += 1
     
     async def _apply_gfs_strategy(self, plan: RetentionPlan, rule: RetentionRule):
-        """Applique la stratégie Grandfather-Father-Son"""        now = datetime.now()
+        """Applique la stratégie Grandfather-Father-Son"""
+        now = datetime.now()
         
         # Catégorisation des sauvegardes
         daily_backups = []
@@ -413,7 +437,8 @@ class RetentionManager:
         category: str,
         interval_days: int
     ):
-        """Applique les règles GFS pour une catégorie"""        if not backups:
+        """Applique les règles GFS pour une catégorie"""
+        if not backups:
             return
         
         # Tri par date
@@ -439,7 +464,8 @@ class RetentionManager:
                     plan.estimated_space_freed += backup.total_size
     
     async def _apply_tower_of_hanoi_strategy(self, plan: RetentionPlan, rule: RetentionRule):
-        """Applique la stratégie Tour de Hanoï"""        # Tri par date (plus récent en premier)
+        """Applique la stratégie Tour de Hanoï"""
+        # Tri par date (plus récent en premier)
         backups_sorted = sorted(plan.backups_to_process, key=lambda x: x.created_at, reverse=True)
         
         kept_count = 0
@@ -454,7 +480,8 @@ class RetentionManager:
                 plan.estimated_space_freed += backup.total_size
     
     async def _apply_fibonacci_strategy(self, plan: RetentionPlan, rule: RetentionRule):
-        """Applique la stratégie basée sur Fibonacci"""        # Génération séquence Fibonacci
+        """Applique la stratégie basée sur Fibonacci"""
+        # Génération séquence Fibonacci
         fib_sequence = [1, 1]
         while fib_sequence[-1] < len(plan.backups_to_process):
             fib_sequence.append(fib_sequence[-1] + fib_sequence[-2])
@@ -473,7 +500,8 @@ class RetentionManager:
                 plan.estimated_space_freed += backup.total_size
     
     async def _apply_smart_adaptive_strategy(self, plan: RetentionPlan, rule: RetentionRule):
-        """Applique la stratégie adaptative intelligente"""        # Analyse des patterns d'utilisation
+        """Applique la stratégie adaptative intelligente"""
+        # Analyse des patterns d'utilisation
         usage_patterns = await self._analyze_backup_usage_patterns(plan.backups_to_process)
         
         # Tri par score d'importance
@@ -515,7 +543,8 @@ class RetentionManager:
         self,
         backups: List[BackupMetadata]
     ) -> Dict[str, Any]:
-        """Analyse les patterns d'utilisation des sauvegardes"""        # En production: analyse des logs d'accès, restaurations, etc.
+        """Analyse les patterns d'utilisation des sauvegardes"""
+        # En production: analyse des logs d'accès, restaurations, etc.
         # Ici: simulation basique
         
         patterns = {
@@ -538,7 +567,8 @@ class RetentionManager:
         backup: BackupMetadata,
         usage_patterns: Dict[str, Any]
     ) -> float:
-        """Calcule un score d'importance pour une sauvegarde"""        score = 0.0
+        """Calcule un score d'importance pour une sauvegarde"""
+        score = 0.0
         
         # Facteur âge (plus récent = plus important)
         age_days = (datetime.now() - backup.created_at).days
@@ -565,7 +595,8 @@ class RetentionManager:
         return min(1.0, score)
     
     async def _optimize_retention_plan(self, plan: RetentionPlan, rule: RetentionRule):
-        """Optimise un plan de rétention"""        # Vérification limites de taille
+        """Optimise un plan de rétention"""
+        # Vérification limites de taille
         if rule.size_limit_gb:
             await self._enforce_size_limit(plan, rule)
         
@@ -576,7 +607,8 @@ class RetentionManager:
         await self._ensure_plan_coherence(plan, rule)
     
     async def _enforce_size_limit(self, plan: RetentionPlan, rule: RetentionRule):
-        """Applique les limites de taille"""        size_limit_bytes = rule.size_limit_gb * 1024**3
+        """Applique les limites de taille"""
+        size_limit_bytes = rule.size_limit_gb * 1024**3
         
         # Calcul taille actuelle des sauvegardes à garder
         current_size = 0
@@ -606,7 +638,8 @@ class RetentionManager:
                     plan.estimated_space_freed += backup.total_size
     
     async def _optimize_gradual_actions(self, plan: RetentionPlan, rule: RetentionRule):
-        """Optimise les actions graduelles"""        # Conversion DELETE -> ARCHIVE pour sauvegardes importantes
+        """Optimise les actions graduelles"""
+        # Conversion DELETE -> ARCHIVE pour sauvegardes importantes
         for backup in plan.backups_to_process:
             action = plan.actions.get(backup.backup_id, RetentionAction.KEEP)
             
@@ -619,7 +652,8 @@ class RetentionManager:
                     plan.estimated_space_freed -= backup.total_size
     
     async def _ensure_plan_coherence(self, plan: RetentionPlan, rule: RetentionRule):
-        """Assure la cohérence du plan"""        # Vérification minimum de sauvegardes
+        """Assure la cohérence du plan"""
+        # Vérification minimum de sauvegardes
         keep_count = sum(1 for action in plan.actions.values() if action == RetentionAction.KEEP)
         
         if keep_count < rule.min_backups:
@@ -648,7 +682,8 @@ class RetentionManager:
                     converted += 1
     
     async def _validate_retention_plan(self, plan: RetentionPlan, rule: RetentionRule):
-        """Valide un plan de rétention"""        # Vérification actions valides
+        """Valide un plan de rétention"""
+        # Vérification actions valides
         for backup_id, action in plan.actions.items():
             if not isinstance(action, RetentionAction):
                 raise RetentionException(f"Invalid retention action for {backup_id}: {action}")
@@ -668,7 +703,8 @@ class RetentionManager:
             )
     
     async def _save_retention_plan(self, plan: RetentionPlan):
-        """Sauvegarde un plan de rétention"""        # En production: sauvegarde en base de données
+        """Sauvegarde un plan de rétention"""
+        # En production: sauvegarde en base de données
         # Ici: sauvegarde fichier JSON
         plan_file = Path(f"/tmp/retention_plan_{plan.plan_id}.json")
         
@@ -682,14 +718,16 @@ class RetentionManager:
             logger.error(f"Failed to save retention plan: {e}")
     
     async def execute_retention_plan(self, plan: RetentionPlan) -> Dict[str, Any]:
-        """        Exécute un plan de rétention
+        """
+        Exécute un plan de rétention
         
         Args:
             plan: Plan à exécuter
             
         Returns:
             Dict[str, Any]: Résultats d'exécution
-        """        try:
+        """
+        try:
             if plan.executed:
                 raise RetentionException("Plan already executed")
             
@@ -749,7 +787,8 @@ class RetentionManager:
         backup_id: str,
         action: RetentionAction
     ) -> Dict[str, Any]:
-        """Exécute une action de rétention"""        try:
+        """Exécute une action de rétention"""
+        try:
             if action == RetentionAction.KEEP:
                 return {"success": True, "space_changed": 0}
             
@@ -777,7 +816,8 @@ class RetentionManager:
             return {"success": False, "error": str(e)}
     
     async def _delete_backup(self, backup_id: str) -> int:
-        """Supprime une sauvegarde"""        if self.storage:
+        """Supprime une sauvegarde"""
+        if self.storage:
             result = await self.storage.delete_backup(backup_id)
             return result.get("space_freed", 0)
         else:
@@ -787,7 +827,8 @@ class RetentionManager:
             return backup_size
     
     async def _archive_backup(self, backup_id: str) -> int:
-        """Archive une sauvegarde"""        if self.storage:
+        """Archive une sauvegarde"""
+        if self.storage:
             # Migration vers stockage d'archive
             result = await self.storage.move_to_archive(backup_id)
             return result.get("space_changed", 0)
@@ -797,7 +838,8 @@ class RetentionManager:
             return 0
     
     async def _compress_backup(self, backup_id: str) -> int:
-        """Compresse davantage une sauvegarde"""        if self.storage:
+        """Compresse davantage une sauvegarde"""
+        if self.storage:
             result = await self.storage.recompress_backup(backup_id)
             return result.get("space_saved", 0)
         else:
@@ -807,7 +849,8 @@ class RetentionManager:
             return space_saved
     
     async def _migrate_backup(self, backup_id: str) -> int:
-        """Migre une sauvegarde vers stockage froid"""        if self.storage:
+        """Migre une sauvegarde vers stockage froid"""
+        if self.storage:
             result = await self.storage.migrate_to_cold_storage(backup_id)
             return result.get("space_migrated", 0)
         else:
@@ -816,7 +859,8 @@ class RetentionManager:
             return 0
     
     def _update_retention_stats(self, execution_results: Dict[str, Any]):
-        """Met à jour les statistiques de rétention"""        self.retention_stats.last_execution = datetime.now()
+        """Met à jour les statistiques de rétention"""
+        self.retention_stats.last_execution = datetime.now()
         
         for backup_id, result in execution_results["actions_executed"].items():
             if not result["success"]:
@@ -843,20 +887,24 @@ class RetentionManager:
             self.retention_stats.average_execution_time = (current_avg + duration) / 2
     
     async def schedule_retention_cleanup(self, rule_id: str, cron_expression: str):
-        """        Programme le nettoyage automatique selon une règle
+        """
+        Programme le nettoyage automatique selon une règle
         
         Args:
             rule_id: ID de la règle de rétention
             cron_expression: Expression cron pour la planification
-        """        # En production: intégration avec scheduler (Celery, APScheduler, etc.)
+        """
+        # En production: intégration avec scheduler (Celery, APScheduler, etc.)
         logger.info(f"Scheduled retention cleanup for rule {rule_id}: {cron_expression}")
     
     def get_retention_stats(self) -> Dict[str, Any]:
-        """        Récupère les statistiques de rétention
+        """
+        Récupère les statistiques de rétention
         
         Returns:
             Dict[str, Any]: Statistiques détaillées
-        """        stats = self.retention_stats.to_dict()
+        """
+        stats = self.retention_stats.to_dict()
         
         # Statistiques additionnelles
         stats["total_rules"] = len(self.retention_rules)
@@ -866,21 +914,25 @@ class RetentionManager:
         return stats
     
     def list_retention_rules(self) -> List[RetentionRule]:
-        """        Liste toutes les règles de rétention
+        """
+        Liste toutes les règles de rétention
         
         Returns:
             List[RetentionRule]: Liste des règles
-        """        return list(self.retention_rules.values())
+        """
+        return list(self.retention_rules.values())
     
     def get_retention_rule(self, rule_id: str) -> Optional[RetentionRule]:
-        """        Récupère une règle de rétention spécifique
+        """
+        Récupère une règle de rétention spécifique
         
         Args:
             rule_id: ID de la règle
             
         Returns:
             Optional[RetentionRule]: Règle ou None
-        """        return self.retention_rules.get(rule_id)
+        """
+        return self.retention_rules.get(rule_id)
 
 
 # Export des classes principales

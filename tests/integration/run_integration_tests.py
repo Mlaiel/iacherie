@@ -9,7 +9,8 @@ Executes all high-priority integration tests for the Ainflue platform:
 5. Multilingual Interface Switching Tests
 
 Author: Integration Test Suite
-"""import asyncio
+"""
+import asyncio
 import sys
 import os
 import subprocess
@@ -30,7 +31,8 @@ except ImportError:
 
 
 class IntegrationTestRunner:
-    """Comprehensive integration test runner"""    
+    """Comprehensive integration test runner"""
+    
     def __init__(self):
         self.test_modules = [
             {
@@ -71,7 +73,8 @@ class IntegrationTestRunner:
 
 
     def print_header(self):
-        """Print test suite header"""        print("=" * 80)
+        """Print test suite header"""
+        print("=" * 80)
         print("🧪 AINFLUE PLATFORM - HIGH PRIORITY INTEGRATION TESTS")
         print("=" * 80)
         print("📋 Test Requirements from NOUVELLE_CHECKLIST_PROPRE.md:")
@@ -86,7 +89,8 @@ class IntegrationTestRunner:
         print("=" * 80)
     
     def run_single_test_module(self, module_info: Dict[str, str]) -> Dict[str, Any]:
-        """Run a single test module and return results"""        module_name = module_info["name"]
+        """Run a single test module and return results"""
+        module_name = module_info["name"]
         module_path = module_info["module"]
         
         print(f"🏃 Running {module_name} tests...")
@@ -137,7 +141,8 @@ class IntegrationTestRunner:
             }
     
     def run_all_tests(self) -> Dict[str, Any]:
-        """Run all integration test modules"""        self.start_time = time.time()
+        """Run all integration test modules"""
+        self.start_time = time.time()
         
         self.print_header()
         
@@ -159,7 +164,8 @@ class IntegrationTestRunner:
         return self.generate_final_report()
     
     def generate_final_report(self) -> Dict[str, Any]:
-        """Generate comprehensive test execution report"""        total_time = self.end_time - self.start_time
+        """Generate comprehensive test execution report"""
+        total_time = self.end_time - self.start_time
         total_tests = len(self.test_modules)
         passed_tests = sum(1 for result in self.results.values() if result["passed"])
         failed_tests = total_tests - passed_tests
@@ -215,7 +221,8 @@ class IntegrationTestRunner:
         }
     
     def generate_requirements_compliance_report(self):
-        """Generate compliance report against original requirements"""        print("\n" + "=" * 80)
+        """Generate compliance report against original requirements"""
+        print("\n" + "=" * 80)
         print("📋 REQUIREMENTS COMPLIANCE REPORT")
         print("=" * 80)
         print("Based on NOUVELLE_CHECKLIST_PROPRE.md - PRIORITÉ HAUTE - INTÉGRATION")
@@ -242,12 +249,14 @@ class IntegrationTestRunner:
 
 
 def run_all_integration_tests():
-    """Run all integration tests with proper configuration."""    runner = IntegrationTestRunner()
+    """Run all integration tests with proper configuration."""
+    runner = IntegrationTestRunner()
     final_report = runner.run_all_tests()
     return 0 if final_report["all_passed"] else 1
 
 def run_specific_test_category(category: str):
-    """Run tests for a specific category."""    
+    """Run tests for a specific category."""
+    
     category_paths = {
         "fastapi": "tests/integration/test_fastapi_startup.py",
         "database": "tests/integration/test_postgresql_connections.py",
@@ -284,7 +293,8 @@ def run_specific_test_category(category: str):
 
 
 def run_fast_integration_tests():
-    """Run only fast integration tests (exclude slow tests)."""    
+    """Run only fast integration tests (exclude slow tests)."""
+    
     pytest_args = [
         "tests/integration/",
         "--verbose",
@@ -308,7 +318,8 @@ def run_fast_integration_tests():
 
 
 def run_critical_integration_tests():
-    """Run only critical integration tests."""    
+    """Run only critical integration tests."""
+    
     pytest_args = [
         "tests/integration/",
         "--verbose",
@@ -332,7 +343,8 @@ def run_critical_integration_tests():
 
 
 def main():
-    """Main entry point for integration test execution"""    runner = IntegrationTestRunner()
+    """Main entry point for integration test execution"""
+    runner = IntegrationTestRunner()
     
     try:
         # Run all integration tests

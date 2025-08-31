@@ -21,7 +21,8 @@ Project Team Specialties:
 - Audio Engineer: Advanced audio processing and analysis
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator
 from datetime import datetime, timedelta
@@ -52,7 +53,8 @@ settings = get_settings()
 
 @dataclass
 class SoundCloudTrack:
-    """SoundCloud track data structure."""    track_id: str
+    """SoundCloud track data structure."""
+    track_id: str
     title: str
     description: str
     user_id: str
@@ -82,7 +84,8 @@ class SoundCloudTrack:
 
 @dataclass
 class SoundCloudPlaylist:
-    """SoundCloud playlist data structure."""    playlist_id: str
+    """SoundCloud playlist data structure."""
+    playlist_id: str
     title: str
     description: str
     user_id: str
@@ -100,7 +103,8 @@ class SoundCloudPlaylist:
 
 @dataclass
 class SoundCloudUser:
-    """SoundCloud user data structure."""    user_id: str
+    """SoundCloud user data structure."""
+    user_id: str
     username: str
     permalink: str
     permalink_url: str
@@ -122,7 +126,8 @@ class SoundCloudUser:
 
 @dataclass
 class SoundCloudComment:
-    """SoundCloud comment data structure."""    comment_id: str
+    """SoundCloud comment data structure."""
+    comment_id: str
     track_id: str
     user_id: str
     username: str
@@ -131,7 +136,8 @@ class SoundCloudComment:
     created_at: datetime
 
 class SoundCloudCrawler:
-    """    Professional SoundCloud crawler implementation.
+    """
+    Professional SoundCloud crawler implementation.
     
     Features:
     - SoundCloud API v2 integration
@@ -144,9 +150,11 @@ class SoundCloudCrawler:
     - Comment and engagement analysis
     - Music trend detection
     - Audio quality assessment
-    """    
+    """
+    
     def __init__(self):
-        """Initialize SoundCloud crawler."""        self.client_id = settings.SOUNDCLOUD_CLIENT_ID
+        """Initialize SoundCloud crawler."""
+        self.client_id = settings.SOUNDCLOUD_CLIENT_ID
         self.client_secret = settings.SOUNDCLOUD_CLIENT_SECRET
         self.access_token = settings.SOUNDCLOUD_ACCESS_TOKEN
         self.rate_limiter = SoundCloudRateLimiter()
@@ -185,7 +193,8 @@ class SoundCloudCrawler:
         duration_filter: Optional[tuple] = None,
         created_at_filter: Optional[tuple] = None
     ) -> AsyncGenerator[SoundCloudTrack, None]:
-        """        Search SoundCloud tracks with advanced filtering.
+        """
+        Search SoundCloud tracks with advanced filtering.
         
         Args:
             query: Search query string
@@ -196,7 +205,8 @@ class SoundCloudCrawler:
             
         Yields:
             SoundCloudTrack: Track data
-        """        await self.rate_limiter.wait_if_needed("search")
+        """
+        await self.rate_limiter.wait_if_needed("search")
         
         try:
             params = {
@@ -248,7 +258,8 @@ class SoundCloudCrawler:
         username: str,
         check_interval: int = 3600
     ) -> AsyncGenerator[SoundCloudTrack, None]:
-        """        Monitor SoundCloud user for new uploads.
+        """
+        Monitor SoundCloud user for new uploads.
         
         Args:
             username: SoundCloud username to monitor
@@ -256,7 +267,8 @@ class SoundCloudCrawler:
             
         Yields:
             SoundCloudTrack: New tracks from the user
-        """        user_id = await self._get_user_id(username)
+        """
+        user_id = await self._get_user_id(username)
         if not user_id:
             raise CrawlerError(f"User not found: {username}")
         
@@ -300,7 +312,8 @@ class SoundCloudCrawler:
         track_id: str,
         max_comments: int = 100
     ) -> List[SoundCloudComment]:
-        """        Get comments for a SoundCloud track.
+        """
+        Get comments for a SoundCloud track.
         
         Args:
             track_id: SoundCloud track ID
@@ -308,7 +321,8 @@ class SoundCloudCrawler:
             
         Returns:
             List[SoundCloudComment]: Track comments
-        """        await self.rate_limiter.wait_if_needed("comments")
+        """
+        await self.rate_limiter.wait_if_needed("comments")
         
         try:
             async with aiohttp.ClientSession() as session:
@@ -342,7 +356,8 @@ class SoundCloudCrawler:
         region: str = "all-music",
         max_results: int = 50
     ) -> List[SoundCloudTrack]:
-        """        Get trending tracks from SoundCloud.
+        """
+        Get trending tracks from SoundCloud.
         
         Args:
             genre: Filter by genre
@@ -351,7 +366,8 @@ class SoundCloudCrawler:
             
         Returns:
             List[SoundCloudTrack]: Trending tracks
-        """        await self.rate_limiter.wait_if_needed("trending")
+        """
+        await self.rate_limiter.wait_if_needed("trending")
         
         try:
             async with aiohttp.ClientSession() as session:
@@ -391,14 +407,16 @@ class SoundCloudCrawler:
         self,
         track_id: str
     ) -> Dict:
-        """        Analyze audio content for similarity detection.
+        """
+        Analyze audio content for similarity detection.
         
         Args:
             track_id: SoundCloud track ID
             
         Returns:
             Dict: Audio analysis results
-        """        try:
+        """
+        try:
             # Get track stream URL
             track = await self._get_track_by_id(track_id)
             if not track or not track.stream_url:
@@ -428,7 +446,8 @@ class SoundCloudCrawler:
         search_query: str,
         max_scroll: int = 3
     ) -> List[SoundCloudTrack]:
-        """        Scrape SoundCloud using Selenium as fallback.
+        """
+        Scrape SoundCloud using Selenium as fallback.
         
         Args:
             search_query: Search query
@@ -436,7 +455,8 @@ class SoundCloudCrawler:
             
         Returns:
             List[SoundCloudTrack]: Scraped tracks
-        """        chrome_options = Options()
+        """
+        chrome_options = Options()
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
@@ -489,7 +509,8 @@ class SoundCloudCrawler:
                 driver.quit()
     
     async def _get_user_id(self, username: str) -> Optional[str]:
-        """Get SoundCloud user ID from username."""        try:
+        """Get SoundCloud user ID from username."""
+        try:
             async with aiohttp.ClientSession() as session:
                 url = f"{self.base_api_url}/resolve"
                 params = {
@@ -509,7 +530,8 @@ class SoundCloudCrawler:
             return None
     
     async def _get_track_by_id(self, track_id: str) -> Optional[SoundCloudTrack]:
-        """Get track data by ID."""        try:
+        """Get track data by ID."""
+        try:
             async with aiohttp.ClientSession() as session:
                 url = f"{self.base_api_url}/tracks/{track_id}"
                 
@@ -525,7 +547,8 @@ class SoundCloudCrawler:
             return None
     
     def _parse_track_data(self, track_data: Dict) -> Optional[SoundCloudTrack]:
-        """Parse SoundCloud track data from API response."""        try:
+        """Parse SoundCloud track data from API response."""
+        try:
             user_data = track_data.get("user", {})
             
             # Parse tags
@@ -576,7 +599,8 @@ class SoundCloudCrawler:
             return None
     
     def _parse_comment_data(self, comment_data: Dict) -> Optional[SoundCloudComment]:
-        """Parse SoundCloud comment data from API response."""        try:
+        """Parse SoundCloud comment data from API response."""
+        try:
             user_data = comment_data.get("user", {})
             
             created_at = datetime.now()
@@ -606,7 +630,8 @@ class SoundCloudCrawler:
         duration_filter: Optional[tuple],
         created_at_filter: Optional[tuple]
     ) -> bool:
-        """Filter track based on criteria."""        try:
+        """Filter track based on criteria."""
+        try:
             # Duration filter
             if duration_filter:
                 min_duration, max_duration = duration_filter
@@ -625,7 +650,8 @@ class SoundCloudCrawler:
             return True
     
     def _extract_track_from_element(self, element) -> Optional[SoundCloudTrack]:
-        """Extract track data from Selenium web element."""        try:
+        """Extract track data from Selenium web element."""
+        try:
             # Extract title
             title_element = element.find_element(By.CSS_SELECTOR, ".soundTitle__title")
             title = title_element.text if title_element else ""
@@ -673,7 +699,8 @@ class SoundCloudCrawler:
             return None
     
     async def close(self):
-        """Clean up resources."""        if hasattr(self, 'session') and self.session:
+        """Clean up resources."""
+        if hasattr(self, 'session') and self.session:
             await self.session.close()
         
         logger.info("SoundCloud crawler closed")

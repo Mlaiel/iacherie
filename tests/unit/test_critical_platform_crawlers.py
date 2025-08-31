@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -19,7 +20,8 @@ Spotify, YouTube, and platform integration engine.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Address critical testing gap - "Tests Manquants: Pas de tests unitaires centralisés"
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -32,7 +34,8 @@ import uuid
 
 
 class MockSpotifyCrawler:
-    """Mock implementation of Spotify crawler for testing"""    
+    """Mock implementation of Spotify crawler for testing"""
+    
     def __init__(self, client_id: str, client_secret: str):
         self.client_id = client_id
         self.client_secret = client_secret
@@ -42,7 +45,8 @@ class MockSpotifyCrawler:
         self.crawled_artists = []
         
     async def authenticate(self) -> bool:
-        """Authenticate with Spotify API"""        if not self.client_id or not self.client_secret:
+        """Authenticate with Spotify API"""
+        if not self.client_id or not self.client_secret:
             return False
         
         # Simulate OAuth flow
@@ -50,7 +54,8 @@ class MockSpotifyCrawler:
         return True
     
     async def search_track(self, query: str, limit: int = 20) -> Dict[str, Any]:
-        """Search for tracks on Spotify"""        if not self.access_token:
+        """Search for tracks on Spotify"""
+        if not self.access_token:
             raise Exception("Not authenticated")
         
         # Simulate rate limiting
@@ -101,7 +106,8 @@ class MockSpotifyCrawler:
         return result
     
     async def get_artist_info(self, artist_id: str) -> Dict[str, Any]:
-        """Get detailed artist information"""        if not self.access_token:
+        """Get detailed artist information"""
+        if not self.access_token:
             raise Exception("Not authenticated")
         
         artist_info = {
@@ -128,7 +134,8 @@ class MockSpotifyCrawler:
         return artist_info
     
     async def get_track_features(self, track_id: str) -> Dict[str, Any]:
-        """Get audio features for a track"""        features = {
+        """Get audio features for a track"""
+        features = {
             "id": track_id,
             "acousticness": 0.2 + (hash(track_id) % 100) / 100 * 0.6,
             "danceability": 0.3 + (hash(track_id) % 100) / 100 * 0.5,
@@ -145,7 +152,8 @@ class MockSpotifyCrawler:
 
 
 class MockYouTubeCrawler:
-    """Mock implementation of YouTube crawler for testing"""    
+    """Mock implementation of YouTube crawler for testing"""
+    
     def __init__(self, api_key: str):
         self.api_key = api_key
         self.quota_used = 0
@@ -154,7 +162,8 @@ class MockYouTubeCrawler:
         self.crawled_channels = []
         
     async def search_videos(self, query: str, max_results: int = 25) -> Dict[str, Any]:
-        """Search for videos on YouTube"""        if not self.api_key:
+        """Search for videos on YouTube"""
+        if not self.api_key:
             raise Exception("API key required")
         
         # Simulate quota usage
@@ -204,7 +213,8 @@ class MockYouTubeCrawler:
         return result
     
     async def get_video_details(self, video_id: str) -> Dict[str, Any]:
-        """Get detailed video information"""        if not self.api_key:
+        """Get detailed video information"""
+        if not self.api_key:
             raise Exception("API key required")
         
         # Simulate quota usage
@@ -248,7 +258,8 @@ class MockYouTubeCrawler:
         return video_details
     
     async def get_channel_info(self, channel_id: str) -> Dict[str, Any]:
-        """Get channel information"""        channel_info = {
+        """Get channel information"""
+        channel_info = {
             "id": channel_id,
             "title": f"Channel {channel_id[-8:]}",
             "description": f"Test channel description for {channel_id}",
@@ -274,14 +285,16 @@ class MockYouTubeCrawler:
 
 
 class MockPlatformIntegrationEngine:
-    """Mock implementation of platform integration engine"""    
+    """Mock implementation of platform integration engine"""
+    
     def __init__(self):
         self.registered_platforms = {}
         self.active_connections = {}
         self.crawl_history = []
         
     async def register_platform(self, platform_name: str, crawler_instance: Any, credentials: Dict) -> bool:
-        """Register a platform crawler"""        if not platform_name or not crawler_instance:
+        """Register a platform crawler"""
+        if not platform_name or not crawler_instance:
             return False
         
         self.registered_platforms[platform_name] = {
@@ -293,7 +306,8 @@ class MockPlatformIntegrationEngine:
         return True
     
     async def test_platform_connection(self, platform_name: str) -> Dict[str, Any]:
-        """Test connection to a registered platform"""        if platform_name not in self.registered_platforms:
+        """Test connection to a registered platform"""
+        if platform_name not in self.registered_platforms:
             return {
                 "platform": platform_name,
                 "status": "error",
@@ -337,7 +351,8 @@ class MockPlatformIntegrationEngine:
             }
     
     async def cross_platform_search(self, query: str, platforms: List[str] = None) -> Dict[str, Any]:
-        """Perform search across multiple platforms"""        if platforms is None:
+        """Perform search across multiple platforms"""
+        if platforms is None:
             platforms = list(self.registered_platforms.keys())
         
         results = {}
@@ -389,7 +404,8 @@ class MockPlatformIntegrationEngine:
         }
     
     async def get_platform_statistics(self) -> Dict[str, Any]:
-        """Get statistics for all registered platforms"""        stats = {
+        """Get statistics for all registered platforms"""
+        stats = {
             "total_platforms": len(self.registered_platforms),
             "active_platforms": len([p for p in self.registered_platforms.values() if p["status"] == "active"]),
             "total_searches": len(self.crawl_history),
@@ -418,22 +434,27 @@ class MockPlatformIntegrationEngine:
 
 
 class TestCriticalCrawlers:
-    """Test suite for critical crawler functionality"""    
+    """Test suite for critical crawler functionality"""
+    
     @pytest.fixture
     def spotify_crawler(self):
-        """Create Spotify crawler fixture"""        return MockSpotifyCrawler("test_client_id", "test_client_secret")
+        """Create Spotify crawler fixture"""
+        return MockSpotifyCrawler("test_client_id", "test_client_secret")
     
     @pytest.fixture
     def youtube_crawler(self):
-        """Create YouTube crawler fixture"""        return MockYouTubeCrawler("test_api_key")
+        """Create YouTube crawler fixture"""
+        return MockYouTubeCrawler("test_api_key")
     
     @pytest.fixture
     def integration_engine(self):
-        """Create platform integration engine fixture"""        return MockPlatformIntegrationEngine()
+        """Create platform integration engine fixture"""
+        return MockPlatformIntegrationEngine()
     
     @pytest.mark.asyncio
     async def test_spotify_authentication(self, spotify_crawler):
-        """Test Spotify authentication"""        # Test successful authentication
+        """Test Spotify authentication"""
+        # Test successful authentication
         auth_result = await spotify_crawler.authenticate()
         assert auth_result is True
         assert spotify_crawler.access_token is not None
@@ -446,7 +467,8 @@ class TestCriticalCrawlers:
     
     @pytest.mark.asyncio
     async def test_spotify_track_search(self, spotify_crawler):
-        """Test Spotify track search functionality"""        # Authenticate first
+        """Test Spotify track search functionality"""
+        # Authenticate first
         await spotify_crawler.authenticate()
         
         # Search for tracks
@@ -481,7 +503,8 @@ class TestCriticalCrawlers:
     
     @pytest.mark.asyncio
     async def test_spotify_artist_info(self, spotify_crawler):
-        """Test Spotify artist information retrieval"""        await spotify_crawler.authenticate()
+        """Test Spotify artist information retrieval"""
+        await spotify_crawler.authenticate()
         
         artist_id = "test_artist_123"
         artist_info = await spotify_crawler.get_artist_info(artist_id)
@@ -505,7 +528,8 @@ class TestCriticalCrawlers:
     
     @pytest.mark.asyncio
     async def test_spotify_track_features(self, spotify_crawler):
-        """Test Spotify track audio features"""        await spotify_crawler.authenticate()
+        """Test Spotify track audio features"""
+        await spotify_crawler.authenticate()
         
         track_id = "test_track_456"
         features = await spotify_crawler.get_track_features(track_id)
@@ -528,7 +552,8 @@ class TestCriticalCrawlers:
     
     @pytest.mark.asyncio
     async def test_spotify_rate_limiting(self, spotify_crawler):
-        """Test Spotify rate limiting"""        await spotify_crawler.authenticate()
+        """Test Spotify rate limiting"""
+        await spotify_crawler.authenticate()
         
         # Set rate limit for testing - start with 2 so first call succeeds
         spotify_crawler.rate_limit_remaining = 2
@@ -543,7 +568,8 @@ class TestCriticalCrawlers:
     
     @pytest.mark.asyncio
     async def test_youtube_video_search(self, youtube_crawler):
-        """Test YouTube video search functionality"""        search_result = await youtube_crawler.search_videos("test video", max_results=5)
+        """Test YouTube video search functionality"""
+        search_result = await youtube_crawler.search_videos("test video", max_results=5)
         
         # Validate search results
         assert "videos" in search_result
@@ -575,7 +601,8 @@ class TestCriticalCrawlers:
     
     @pytest.mark.asyncio
     async def test_youtube_video_details(self, youtube_crawler):
-        """Test YouTube video details retrieval"""        video_id = "test_video_123"
+        """Test YouTube video details retrieval"""
+        video_id = "test_video_123"
         video_details = await youtube_crawler.get_video_details(video_id)
         
         # Validate video details
@@ -600,7 +627,8 @@ class TestCriticalCrawlers:
     
     @pytest.mark.asyncio
     async def test_youtube_channel_info(self, youtube_crawler):
-        """Test YouTube channel information retrieval"""        channel_id = "test_channel_789"
+        """Test YouTube channel information retrieval"""
+        channel_id = "test_channel_789"
         channel_info = await youtube_crawler.get_channel_info(channel_id)
         
         # Validate channel information
@@ -622,7 +650,8 @@ class TestCriticalCrawlers:
     
     @pytest.mark.asyncio
     async def test_youtube_quota_management(self, youtube_crawler):
-        """Test YouTube quota management"""        # Set low quota limit for testing
+        """Test YouTube quota management"""
+        # Set low quota limit for testing
         youtube_crawler.daily_quota_limit = 5
         youtube_crawler.quota_used = 0
         
@@ -640,7 +669,8 @@ class TestCriticalCrawlers:
     
     @pytest.mark.asyncio
     async def test_platform_registration(self, integration_engine, spotify_crawler, youtube_crawler):
-        """Test platform registration in integration engine"""        # Register Spotify
+        """Test platform registration in integration engine"""
+        # Register Spotify
         spotify_result = await integration_engine.register_platform(
             "spotify",
             spotify_crawler,
@@ -667,7 +697,8 @@ class TestCriticalCrawlers:
     
     @pytest.mark.asyncio
     async def test_platform_connection_testing(self, integration_engine, spotify_crawler):
-        """Test platform connection testing"""        # Register platform first
+        """Test platform connection testing"""
+        # Register platform first
         await integration_engine.register_platform("spotify", spotify_crawler, {})
         
         # Test connection
@@ -687,7 +718,8 @@ class TestCriticalCrawlers:
     
     @pytest.mark.asyncio
     async def test_cross_platform_search(self, integration_engine, spotify_crawler, youtube_crawler):
-        """Test cross-platform search functionality"""        # Register both platforms
+        """Test cross-platform search functionality"""
+        # Register both platforms
         await integration_engine.register_platform("spotify", spotify_crawler, {})
         await integration_engine.register_platform("youtube", youtube_crawler, {})
         
@@ -719,7 +751,8 @@ class TestCriticalCrawlers:
     
     @pytest.mark.asyncio
     async def test_platform_statistics(self, integration_engine, spotify_crawler, youtube_crawler):
-        """Test platform statistics generation"""        # Register platforms and perform some operations
+        """Test platform statistics generation"""
+        # Register platforms and perform some operations
         await integration_engine.register_platform("spotify", spotify_crawler, {})
         await integration_engine.register_platform("youtube", youtube_crawler, {})
         
@@ -754,7 +787,8 @@ class TestCriticalCrawlers:
     
     @pytest.mark.asyncio
     async def test_error_handling(self, integration_engine):
-        """Test error handling in crawlers"""        # Test unauthenticated requests
+        """Test error handling in crawlers"""
+        # Test unauthenticated requests
         unauth_spotify = MockSpotifyCrawler("test_id", "test_secret")
         
         with pytest.raises(Exception, match="Not authenticated"):
@@ -767,7 +801,8 @@ class TestCriticalCrawlers:
             await invalid_youtube.search_videos("test")
     
     def test_crawler_initialization(self):
-        """Test crawler initialization"""        # Test Spotify crawler
+        """Test crawler initialization"""
+        # Test Spotify crawler
         spotify = MockSpotifyCrawler("client_id", "client_secret")
         assert spotify.client_id == "client_id"
         assert spotify.client_secret == "client_secret"

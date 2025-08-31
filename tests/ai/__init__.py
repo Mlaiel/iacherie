@@ -298,7 +298,8 @@ def run_comprehensive_test_suite():
     
     Returns:
         dict: Test results summary with coverage metrics
-    """    results = {
+    """
+    results = {
         'total_tests': 0,
         'passed': 0,
         'failed': 0,
@@ -317,7 +318,8 @@ def validate_business_logic():
     
     Returns:
         dict: Business logic validation results
-    """    validation_results = {
+    """
+    validation_results = {
         'upload_flow': True,
         'protection_flow': True, 
         'seo_flow': True,

@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert: Fahed Mlaiel
 - Microservices Architect & DevOps Engineer: Fahed Mlaiel
 - AI Prompt Engineer & Content Protection Specialist: Fahed Mlaiel
-"""import asyncio
+"""
+import asyncio
 import logging
 import shutil
 import gzip
@@ -53,27 +54,31 @@ from ...utils.compression_utils import CompressionManager
 logger = logging.getLogger(__name__)
 
 class BackupType(str, Enum):
-    """Types of backups"""    FULL = "full"
+    """Types of backups"""
+    FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
     SNAPSHOT = "snapshot"
 
 class BackupStatus(str, Enum):
-    """Backup operation status"""    PENDING = "pending"
+    """Backup operation status"""
+    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
     EXPIRED = "expired"
 
 class RestoreStatus(str, Enum):
-    """Restore operation status"""    PENDING = "pending"
+    """Restore operation status"""
+    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
 
 @dataclass
 class BackupConfig:
-    """Backup configuration settings"""    enabled: bool = True
+    """Backup configuration settings"""
+    enabled: bool = True
     backup_type: BackupType = BackupType.INCREMENTAL
     schedule: str = "0 2 * * *"  # Daily at 2 AM (cron format)
     retention_days: int = 30
@@ -87,7 +92,8 @@ class BackupConfig:
 
 @dataclass
 class BackupMetadata:
-    """Backup metadata information"""    backup_id: str
+    """Backup metadata information"""
+    backup_id: str
     backup_type: BackupType
     source_path: str
     backup_path: str
@@ -103,7 +109,8 @@ class BackupMetadata:
 
 @dataclass
 class RestoreOperation:
-    """Restore operation tracking"""    restore_id: str
+    """Restore operation tracking"""
+    restore_id: str
     backup_id: str
     target_path: str
     created_at: datetime
@@ -112,9 +119,11 @@ class RestoreOperation:
     error_message: Optional[str] = None
 
 class BackupManager:
-    """    Enterprise backup management system with intelligent scheduling,
+    """
+    Enterprise backup management system with intelligent scheduling,
     versioning, encryption, and multi-backend redundancy.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = BackupConfig(**(config or {}))
         
@@ -155,10 +164,12 @@ class BackupManager:
         logger.info("BackupManager initialized successfully")
     
     def set_backend_manager(self, backend_manager: BackendManager):
-        """Inject backend manager dependency"""        self.backend_manager = backend_manager
+        """Inject backend manager dependency"""
+        self.backend_manager = backend_manager
     
     def _setup_backup_scheduler(self):
-        """Setup automatic backup scheduling"""        try:
+        """Setup automatic backup scheduling"""
+        try:
             @aiocron.crontab(self.config.schedule)
             async def scheduled_backup():
                 logger.info("Starting scheduled backup")
@@ -177,7 +188,8 @@ class BackupManager:
         backup_type: Optional[BackupType] = None,
         custom_config: Optional[Dict[str, Any]] = None
     ) -> BackupMetadata:
-        """        Create backup of specified source
+        """
+        Create backup of specified source
         
         Args:
             source_path: Path to backup source
@@ -187,7 +199,8 @@ class BackupManager:
             
         Returns:
             BackupMetadata with backup details
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         source_path = Path(source_path)
         
         try:
@@ -301,7 +314,8 @@ class BackupManager:
         target_path: Union[str, Path],
         restore_options: Optional[Dict[str, Any]] = None
     ) -> RestoreOperation:
-        """        Restore backup to specified location
+        """
+        Restore backup to specified location
         
         Args:
             backup_id: ID of backup to restore
@@ -310,7 +324,8 @@ class BackupManager:
             
         Returns:
             RestoreOperation tracking restoration progress
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         target_path = Path(target_path)
         
         try:
@@ -381,7 +396,8 @@ class BackupManager:
         backup_type: Optional[BackupType] = None,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> List[BackupMetadata]:
-        """        List available backups with optional filtering
+        """
+        List available backups with optional filtering
         
         Args:
             source_path: Filter by source path
@@ -390,7 +406,8 @@ class BackupManager:
             
         Returns:
             List of backup metadata matching filters
-        """        try:
+        """
+        try:
             filtered_backups = self.backup_history.copy()
             
             # Apply filters
@@ -423,14 +440,16 @@ class BackupManager:
             return []
     
     async def delete_backup(self, backup_id: str) -> bool:
-        """        Delete backup and clean up storage
+        """
+        Delete backup and clean up storage
         
         Args:
             backup_id: ID of backup to delete
             
         Returns:
             True if deletion successful
-        """        try:
+        """
+        try:
             # Find backup metadata
             backup_metadata = self._find_backup_metadata(backup_id)
             if not backup_metadata:
@@ -475,11 +494,13 @@ class BackupManager:
             return False
     
     async def cleanup_expired_backups(self) -> Dict[str, Any]:
-        """        Clean up backups that have exceeded retention period
+        """
+        Clean up backups that have exceeded retention period
         
         Returns:
             Cleanup statistics
-        """        try:
+        """
+        try:
             cutoff_date = datetime.utcnow() - timedelta(days=self.config.retention_days)
             
             expired_backups = [
@@ -520,7 +541,8 @@ class BackupManager:
             return {'error': str(e)}
     
     async def get_backup_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive backup statistics"""        try:
+        """Get comprehensive backup statistics"""
+        try:
             # Current backup statistics
             current_stats = self.stats.copy()
             
@@ -559,7 +581,8 @@ class BackupManager:
     # Backup creation methods
     
     async def _create_full_backup(self, source_path: Path, backup_id: str) -> Path:
-        """Create full backup of source"""        backup_path = self.backup_dir / f"{backup_id}.tar.gz"
+        """Create full backup of source"""
+        backup_path = self.backup_dir / f"{backup_id}.tar.gz"
         
         try:
             # Create compressed archive
@@ -587,7 +610,8 @@ class BackupManager:
             raise BackupError(f"Full backup creation failed: {e}")
     
     async def _create_incremental_backup(self, source_path: Path, backup_id: str) -> Path:
-        """Create incremental backup (changes since last backup)"""        backup_path = self.backup_dir / f"{backup_id}_incremental.tar.gz"
+        """Create incremental backup (changes since last backup)"""
+        backup_path = self.backup_dir / f"{backup_id}_incremental.tar.gz"
         
         try:
             # Find last backup for this source
@@ -635,7 +659,8 @@ class BackupManager:
             raise BackupError(f"Incremental backup creation failed: {e}")
     
     async def _create_differential_backup(self, source_path: Path, backup_id: str) -> Path:
-        """Create differential backup (changes since last full backup)"""        backup_path = self.backup_dir / f"{backup_id}_differential.tar.gz"
+        """Create differential backup (changes since last full backup)"""
+        backup_path = self.backup_dir / f"{backup_id}_differential.tar.gz"
         
         try:
             # Find last full backup for this source
@@ -682,7 +707,8 @@ class BackupManager:
             raise BackupError(f"Differential backup creation failed: {e}")
     
     async def _create_snapshot_backup(self, source_path: Path, backup_id: str) -> Path:
-        """Create snapshot backup (copy current state)"""        backup_path = self.backup_dir / f"{backup_id}_snapshot.tar.gz"
+        """Create snapshot backup (copy current state)"""
+        backup_path = self.backup_dir / f"{backup_id}_snapshot.tar.gz"
         
         try:
             # Create snapshot (similar to full backup but with different metadata)
@@ -716,7 +742,8 @@ class BackupManager:
         backup_id: str,
         metadata: BackupMetadata
     ) -> Dict[str, str]:
-        """Store backup in configured storage backends"""        backend_urls = {}
+        """Store backup in configured storage backends"""
+        backend_urls = {}
         
         if not self.backend_manager:
             logger.warning("No backend manager available for backup storage")
@@ -745,7 +772,8 @@ class BackupManager:
         return backend_urls
     
     async def _encrypt_backup(self, backup_path: Path, backup_id: str) -> Path:
-        """Encrypt backup file"""        try:
+        """Encrypt backup file"""
+        try:
             encrypted_path = backup_path.with_suffix(backup_path.suffix + '.enc')
             
             key_id = await self.encryption_manager.encrypt_file(
@@ -761,7 +789,8 @@ class BackupManager:
             raise BackupError(f"Backup encryption failed: {e}")
     
     async def _verify_backup(self, backup_path: Path, metadata: BackupMetadata) -> bool:
-        """Verify backup integrity"""        try:
+        """Verify backup integrity"""
+        try:
             # Calculate checksum
             calculated_checksum = await self._calculate_file_checksum(backup_path)
             
@@ -788,7 +817,8 @@ class BackupManager:
             return False
     
     async def _calculate_backup_stats(self, backup_path: Path) -> Dict[str, Any]:
-        """Calculate backup statistics"""        try:
+        """Calculate backup statistics"""
+        try:
             backup_size = backup_path.stat().st_size
             checksum = await self._calculate_file_checksum(backup_path)
             
@@ -822,7 +852,8 @@ class BackupManager:
             }
     
     async def _calculate_file_checksum(self, file_path: Path) -> str:
-        """Calculate SHA256 checksum of file"""        try:
+        """Calculate SHA256 checksum of file"""
+        try:
             hash_sha256 = hashlib.sha256()
             
             with open(file_path, 'rb') as f:
@@ -838,7 +869,8 @@ class BackupManager:
     # Restore methods
     
     async def _ensure_local_backup(self, backup_metadata: BackupMetadata) -> Path:
-        """Ensure backup is available locally for restoration"""        local_backup_path = Path(backup_metadata.backup_path)
+        """Ensure backup is available locally for restoration"""
+        local_backup_path = Path(backup_metadata.backup_path)
         
         # If backup is already local and exists
         if local_backup_path.exists():
@@ -871,7 +903,8 @@ class BackupManager:
         target_path: Path,
         restore_operation: RestoreOperation
     ):
-        """Extract backup to target location"""        try:
+        """Extract backup to target location"""
+        try:
             # Decrypt if necessary
             if backup_path.suffix == '.enc':
                 decrypted_path = backup_path.with_suffix('')
@@ -907,7 +940,8 @@ class BackupManager:
         backup_metadata: BackupMetadata,
         target_path: Path
     ) -> bool:
-        """Verify restoration integrity"""        try:
+        """Verify restoration integrity"""
+        try:
             # Basic existence check
             if not target_path.exists():
                 return False
@@ -923,7 +957,8 @@ class BackupManager:
     # Utility methods
     
     def _generate_backup_id(self, source_path: Path, backup_name: Optional[str] = None) -> str:
-        """Generate unique backup ID"""        if backup_name:
+        """Generate unique backup ID"""
+        if backup_name:
             base_name = backup_name
         else:
             base_name = source_path.name
@@ -934,11 +969,13 @@ class BackupManager:
         return f"{base_name}_{timestamp}_{source_hash}"
     
     def _generate_restore_id(self, backup_id: str) -> str:
-        """Generate unique restore operation ID"""        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+        """Generate unique restore operation ID"""
+        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
         return f"restore_{backup_id}_{timestamp}"
     
     def _should_include_file(self, file_path: Path) -> bool:
-        """Check if file should be included in backup"""        file_str = str(file_path)
+        """Check if file should be included in backup"""
+        file_str = str(file_path)
         
         # Check exclude patterns
         if self.config.exclude_patterns:
@@ -956,7 +993,8 @@ class BackupManager:
         return True
     
     def _find_backup_metadata(self, backup_id: str) -> Optional[BackupMetadata]:
-        """Find backup metadata by ID"""        for backup in self.backup_history:
+        """Find backup metadata by ID"""
+        for backup in self.backup_history:
             if backup.backup_id == backup_id:
                 return backup
         
@@ -964,7 +1002,8 @@ class BackupManager:
         return self.active_backups.get(backup_id)
     
     def _find_last_backup(self, source_path: str) -> Optional[BackupMetadata]:
-        """Find most recent backup for source path"""        source_backups = [
+        """Find most recent backup for source path"""
+        source_backups = [
             backup for backup in self.backup_history
             if backup.source_path == source_path and backup.status == BackupStatus.COMPLETED
         ]
@@ -975,7 +1014,8 @@ class BackupManager:
         return max(source_backups, key=lambda x: x.created_at)
     
     def _find_last_full_backup(self, source_path: str) -> Optional[BackupMetadata]:
-        """Find most recent full backup for source path"""        full_backups = [
+        """Find most recent full backup for source path"""
+        full_backups = [
             backup for backup in self.backup_history
             if (backup.source_path == source_path and 
                 backup.backup_type == BackupType.FULL and
@@ -993,7 +1033,8 @@ class BackupManager:
         processing_time: float,
         success: bool
     ):
-        """Update backup statistics"""        self.stats['total_backups'] += 1
+        """Update backup statistics"""
+        self.stats['total_backups'] += 1
         self.stats['backup_by_type'][metadata.backup_type] += 1
         
         if success:
@@ -1020,7 +1061,8 @@ class BackupManager:
             self.stats['failed_backups'] += 1
     
     async def create_automated_backup(self):
-        """Create automated backup based on configuration"""        try:
+        """Create automated backup based on configuration"""
+        try:
             logger.info("Starting automated backup process")
             
             # In a real implementation, this would backup configured sources
@@ -1032,7 +1074,8 @@ class BackupManager:
             logger.error(f"Automated backup failed: {e}")
     
     async def cleanup(self):
-        """Cleanup backup manager resources"""        try:
+        """Cleanup backup manager resources"""
+        try:
             # Cancel backup scheduler
             if self.backup_scheduler:
                 self.backup_scheduler.stop()
@@ -1046,7 +1089,8 @@ class BackupManager:
             logger.error(f"BackupManager cleanup failed: {e}")
     
     async def _save_backup_history(self):
-        """Save backup history to persistent storage"""        try:
+        """Save backup history to persistent storage"""
+        try:
             history_file = self.backup_dir / 'backup_history.json'
             
             # Convert metadata to dict format
@@ -1065,7 +1109,8 @@ class BackupManager:
             logger.error(f"Failed to save backup history: {e}")
     
     async def _load_backup_history(self):
-        """Load backup history from persistent storage"""        try:
+        """Load backup history from persistent storage"""
+        try:
             history_file = self.backup_dir / 'backup_history.json'
             
             if not history_file.exists():

@@ -10,7 +10,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is protected by copyright law. Unauthorized use, reproduction,
 or distribution without explicit written permission from Fahed Mlaiel is strictly
 prohibited and may result in legal action.
-"""from datetime import datetime, timedelta
+"""
+from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
 from enum import Enum
 from dataclasses import dataclass
@@ -28,7 +29,8 @@ from backend.utils.performance_monitor import PerformanceMonitor
 
 
 class OptimizationType(str, Enum):
-    """Types of optimization strategies"""    BUDGET_ALLOCATION = "budget_allocation"
+    """Types of optimization strategies"""
+    BUDGET_ALLOCATION = "budget_allocation"
     AUDIENCE_TARGETING = "audience_targeting"
     CONTENT_TIMING = "content_timing"
     BID_OPTIMIZATION = "bid_optimization"
@@ -39,7 +41,8 @@ class OptimizationType(str, Enum):
 
 
 class OptimizationStrategy(str, Enum):
-    """Available optimization strategies"""    MACHINE_LEARNING = "machine_learning"
+    """Available optimization strategies"""
+    MACHINE_LEARNING = "machine_learning"
     REINFORCEMENT_LEARNING = "reinforcement_learning"
     GENETIC_ALGORITHM = "genetic_algorithm"
     BAYESIAN_OPTIMIZATION = "bayesian_optimization"
@@ -49,7 +52,8 @@ class OptimizationStrategy(str, Enum):
 
 
 class OptimizationObjective(str, Enum):
-    """Optimization objectives"""    MAXIMIZE_REACH = "maximize_reach"
+    """Optimization objectives"""
+    MAXIMIZE_REACH = "maximize_reach"
     MAXIMIZE_ENGAGEMENT = "maximize_engagement"
     MAXIMIZE_CONVERSIONS = "maximize_conversions"
     MAXIMIZE_REVENUE = "maximize_revenue"
@@ -60,7 +64,8 @@ class OptimizationObjective(str, Enum):
 
 @dataclass
 class OptimizationConfiguration:
-    """Optimization configuration settings"""    campaign_id: str
+    """Optimization configuration settings"""
+    campaign_id: str
     optimization_type: OptimizationType
     strategy: OptimizationStrategy
     objective: OptimizationObjective
@@ -77,7 +82,8 @@ class OptimizationConfiguration:
 
 @dataclass
 class OptimizationResult:
-    """Optimization result data"""    campaign_id: str
+    """Optimization result data"""
+    campaign_id: str
     optimization_id: str
     configuration: OptimizationConfiguration
     initial_metrics: Dict[str, float]
@@ -93,7 +99,8 @@ class OptimizationResult:
 
 @dataclass
 class OptimizationRecommendation:
-    """AI-generated optimization recommendation"""    recommendation_id: str
+    """AI-generated optimization recommendation"""
+    recommendation_id: str
     optimization_type: OptimizationType
     title: str
     description: str
@@ -108,12 +115,14 @@ class OptimizationRecommendation:
 
 
 class CampaignOptimization:
-    """    Advanced AI-Powered Campaign Optimization Engine
+    """
+    Advanced AI-Powered Campaign Optimization Engine
     
     Provides comprehensive optimization capabilities using multiple AI strategies
     including machine learning, reinforcement learning, genetic algorithms,
     and Bayesian optimization for maximum campaign performance.
-    """    
+    """
+    
     def __init__(self):
         self.logger = get_logger(__name__)
         self.optimization_model = OptimizationModel()
@@ -136,7 +145,8 @@ class CampaignOptimization:
         config: OptimizationConfiguration,
         force_reoptimization: bool = False
     ) -> OptimizationResult:
-        """        Execute comprehensive campaign optimization
+        """
+        Execute comprehensive campaign optimization
         
         Args:
             campaign_id: Campaign unique identifier
@@ -145,7 +155,8 @@ class CampaignOptimization:
             
         Returns:
             Detailed optimization results
-        """        try:
+        """
+        try:
             start_time = datetime.utcnow()
             optimization_id = f"opt_{campaign_id}_{int(start_time.timestamp())}"
             
@@ -224,7 +235,8 @@ class CampaignOptimization:
         limit: int = 10,
         priority_threshold: int = 7
     ) -> List[OptimizationRecommendation]:
-        """        Generate AI-powered optimization recommendations
+        """
+        Generate AI-powered optimization recommendations
         
         Args:
             campaign_id: Campaign unique identifier
@@ -233,7 +245,8 @@ class CampaignOptimization:
             
         Returns:
             List of optimization recommendations
-        """        try:
+        """
+        try:
             # Get campaign data and performance metrics
             campaign_data = await self._get_comprehensive_campaign_data(campaign_id)
             current_metrics = await self._get_campaign_metrics(campaign_id)
@@ -289,7 +302,8 @@ class CampaignOptimization:
         recommendation_id: str,
         approval_required: bool = True
     ) -> Dict[str, Any]:
-        """        Implement a specific optimization recommendation
+        """
+        Implement a specific optimization recommendation
         
         Args:
             campaign_id: Campaign unique identifier
@@ -298,7 +312,8 @@ class CampaignOptimization:
             
         Returns:
             Implementation result
-        """        try:
+        """
+        try:
             # Get recommendation details
             recommendation = await self._get_recommendation(recommendation_id)
             if not recommendation:
@@ -360,7 +375,8 @@ class CampaignOptimization:
         platforms: List[str],
         objectives: List[OptimizationObjective]
     ) -> Dict[str, Any]:
-        """        Optimize budget allocation across platforms and objectives
+        """
+        Optimize budget allocation across platforms and objectives
         
         Args:
             campaign_id: Campaign unique identifier
@@ -370,7 +386,8 @@ class CampaignOptimization:
             
         Returns:
             Optimized budget allocation
-        """        try:
+        """
+        try:
             # Get historical performance data
             historical_data = await self._get_platform_performance_data(
                 campaign_id, platforms
@@ -425,7 +442,8 @@ class CampaignOptimization:
         current_targeting: Dict[str, Any],
         performance_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Optimize audience targeting parameters using AI
+        """
+        Optimize audience targeting parameters using AI
         
         Args:
             campaign_id: Campaign unique identifier
@@ -434,7 +452,8 @@ class CampaignOptimization:
             
         Returns:
             Optimized targeting configuration
-        """        try:
+        """
+        try:
             # Analyze current targeting performance
             targeting_analysis = await self._analyze_targeting_performance(
                 current_targeting, performance_data
@@ -489,7 +508,8 @@ class CampaignOptimization:
         content_schedule: Dict[str, Any],
         audience_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Optimize content posting timing for maximum engagement
+        """
+        Optimize content posting timing for maximum engagement
         
         Args:
             campaign_id: Campaign unique identifier
@@ -498,7 +518,8 @@ class CampaignOptimization:
             
         Returns:
             Optimized content timing schedule
-        """        try:
+        """
+        try:
             # Analyze audience engagement patterns
             engagement_patterns = await self._analyze_engagement_patterns(
                 campaign_id, audience_data
@@ -546,12 +567,14 @@ class CampaignOptimization:
         campaign_id: str,
         optimization_interval: int = 3600  # 1 hour
     ) -> None:
-        """        Run continuous optimization for a campaign
+        """
+        Run continuous optimization for a campaign
         
         Args:
             campaign_id: Campaign unique identifier
             optimization_interval: Optimization check interval in seconds
-        """        try:
+        """
+        try:
             self._active_optimizations[campaign_id] = {
                 "active": True,
                 "interval": optimization_interval,
@@ -583,7 +606,8 @@ class CampaignOptimization:
             raise
     
     async def stop_continuous_optimization(self, campaign_id: str) -> Dict[str, Any]:
-        """Stop continuous optimization for a campaign"""        if campaign_id in self._active_optimizations:
+        """Stop continuous optimization for a campaign"""
+        if campaign_id in self._active_optimizations:
             self._active_optimizations[campaign_id]["active"] = False
             
             optimization_stats = self._active_optimizations[campaign_id].copy()
@@ -600,7 +624,8 @@ class CampaignOptimization:
     # Private helper methods
     
     async def _continuous_optimization_loop(self) -> None:
-        """Background continuous optimization loop"""        while True:
+        """Background continuous optimization loop"""
+        while True:
             try:
                 # Check all active optimizations
                 active_campaigns = list(self._active_optimizations.keys())
@@ -619,7 +644,8 @@ class CampaignOptimization:
                 await asyncio.sleep(600)  # Back off on error
     
     async def _initialize_optimizer(self, config: OptimizationConfiguration) -> Any:
-        """Initialize appropriate optimizer based on strategy"""        if config.strategy == OptimizationStrategy.MACHINE_LEARNING:
+        """Initialize appropriate optimizer based on strategy"""
+        if config.strategy == OptimizationStrategy.MACHINE_LEARNING:
             return self.optimization_model
         elif config.strategy == OptimizationStrategy.REINFORCEMENT_LEARNING:
             return self.rl_agent
@@ -631,7 +657,8 @@ class CampaignOptimization:
             return self.optimization_model  # Default
     
     async def _get_campaign_metrics(self, campaign_id: str) -> Dict[str, float]:
-        """Get current campaign metrics"""        # Implementation for metrics retrieval
+        """Get current campaign metrics"""
+        # Implementation for metrics retrieval
         return {
             "reach": 25000.0,
             "impressions": 75000.0,
@@ -650,7 +677,8 @@ class CampaignOptimization:
         config: OptimizationConfiguration,
         initial_metrics: Dict[str, float]
     ) -> List[Dict[str, Any]]:
-        """Execute the optimization process"""        # Implementation for optimization execution
+        """Execute the optimization process"""
+        # Implementation for optimization execution
         return [
             {
                 "action_type": "budget_reallocation",
@@ -664,7 +692,8 @@ class CampaignOptimization:
         campaign_id: str,
         actions: List[Dict[str, Any]]
     ) -> None:
-        """Apply optimization actions to campaign"""        # Implementation for applying optimization actions
+        """Apply optimization actions to campaign"""
+        # Implementation for applying optimization actions
         pass
     
     async def _calculate_improvements(
@@ -672,7 +701,8 @@ class CampaignOptimization:
         initial_metrics: Dict[str, float],
         optimized_metrics: Dict[str, float]
     ) -> Dict[str, float]:
-        """Calculate improvement percentages"""        improvements = {}
+        """Calculate improvement percentages"""
+        improvements = {}
         for metric, initial_value in initial_metrics.items():
             if metric in optimized_metrics and initial_value > 0:
                 improvement = ((optimized_metrics[metric] - initial_value) / initial_value) * 100

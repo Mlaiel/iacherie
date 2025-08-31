@@ -11,7 +11,8 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Set, Union, Any, Tuple, Callable
@@ -32,7 +33,8 @@ logger = logging.getLogger(__name__)
 
 
 class RuleType(Enum):
-    """Automation rule types"""    CONDITION_BASED = "condition_based"
+    """Automation rule types"""
+    CONDITION_BASED = "condition_based"
     TIME_BASED = "time_based"
     EVENT_BASED = "event_based"
     PERFORMANCE_BASED = "performance_based"
@@ -41,7 +43,8 @@ class RuleType(Enum):
 
 
 class RuleStatus(Enum):
-    """Rule execution status"""    ACTIVE = "active"
+    """Rule execution status"""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     PAUSED = "paused"
     EXPIRED = "expired"
@@ -49,7 +52,8 @@ class RuleStatus(Enum):
 
 
 class ActionType(Enum):
-    """Automation action types"""    STATE_TRANSITION = "state_transition"
+    """Automation action types"""
+    STATE_TRANSITION = "state_transition"
     WORKFLOW_START = "workflow_start"
     NOTIFICATION = "notification"
     OPTIMIZATION = "optimization"
@@ -60,7 +64,8 @@ class ActionType(Enum):
 
 
 class TriggerOperator(Enum):
-    """Trigger condition operators"""    EQUALS = "equals"
+    """Trigger condition operators"""
+    EQUALS = "equals"
     NOT_EQUALS = "not_equals"
     GREATER_THAN = "greater_than"
     LESS_THAN = "less_than"
@@ -74,7 +79,8 @@ class TriggerOperator(Enum):
 
 @dataclass
 class TriggerCondition:
-    """Individual trigger condition"""    condition_id: str
+    """Individual trigger condition"""
+    condition_id: str
     field: str
     operator: TriggerOperator
     value: Any
@@ -85,7 +91,8 @@ class TriggerCondition:
 
 @dataclass
 class AutomationRule:
-    """Automation rule definition"""    rule_id: str
+    """Automation rule definition"""
+    rule_id: str
     name: str
     description: str
     rule_type: RuleType
@@ -109,7 +116,8 @@ class AutomationRule:
 
 @dataclass
 class RuleExecution:
-    """Rule execution instance"""    execution_id: str
+    """Rule execution instance"""
+    execution_id: str
     rule_id: str
     content_id: str
     trigger_event: str
@@ -127,7 +135,8 @@ class RuleExecution:
 
 @dataclass
 class PerformanceMetrics:
-    """Content performance metrics for rule evaluation"""    content_id: str
+    """Content performance metrics for rule evaluation"""
+    content_id: str
     views: int
     likes: int
     shares: int
@@ -145,7 +154,8 @@ class PerformanceMetrics:
 
 
 class AutomationRulesEngine:
-    """Advanced automation rules engine for content lifecycle management"""    
+    """Advanced automation rules engine for content lifecycle management"""
+    
     def __init__(self, cache_manager: CacheManager, event_emitter: EventEmitter):
         self.cache_manager = cache_manager
         self.event_emitter = event_emitter
@@ -157,7 +167,8 @@ class AutomationRulesEngine:
         self.rule_cache_ttl = 1800  # 30 minutes
         
     def _initialize_condition_evaluators(self) -> Dict[str, Callable]:
-        """Initialize condition evaluation functions"""        return {
+        """Initialize condition evaluation functions"""
+        return {
             TriggerOperator.EQUALS: lambda a, b: a == b,
             TriggerOperator.NOT_EQUALS: lambda a, b: a != b,
             TriggerOperator.GREATER_THAN: lambda a, b: float(a) > float(b),
@@ -171,7 +182,8 @@ class AutomationRulesEngine:
         }
     
     def _initialize_action_executors(self) -> Dict[str, Callable]:
-        """Initialize action execution functions"""        return {
+        """Initialize action execution functions"""
+        return {
             ActionType.STATE_TRANSITION: self._execute_state_transition,
             ActionType.WORKFLOW_START: self._execute_workflow_start,
             ActionType.NOTIFICATION: self._execute_notification,
@@ -183,7 +195,8 @@ class AutomationRulesEngine:
         }
     
     async def initialize(self) -> None:
-        """Initialize the automation rules engine"""        try:
+        """Initialize the automation rules engine"""
+        try:
             # Load predefined rules
             await self._load_predefined_rules()
             
@@ -219,7 +232,8 @@ class AutomationRulesEngine:
         target_content_types: Optional[List[str]] = None,
         target_states: Optional[List[ContentLifecycleState]] = None
     ) -> AutomationRule:
-        """Create a new automation rule"""        try:
+        """Create a new automation rule"""
+        try:
             rule_id = str(uuid.uuid4())
             
             rule = AutomationRule(
@@ -280,7 +294,8 @@ class AutomationRulesEngine:
         updates: Dict[str, Any],
         user_id: str
     ) -> AutomationRule:
-        """Update an existing automation rule"""        try:
+        """Update an existing automation rule"""
+        try:
             rule = await self.get_rule(rule_id)
             if not rule:
                 raise ValidationError(f"Rule {rule_id} not found")
@@ -320,7 +335,8 @@ class AutomationRulesEngine:
             raise
     
     async def delete_rule(self, rule_id: str, user_id: str) -> bool:
-        """Delete an automation rule"""        try:
+        """Delete an automation rule"""
+        try:
             rule = await self.get_rule(rule_id)
             if not rule:
                 return False
@@ -351,7 +367,8 @@ class AutomationRulesEngine:
             return False
     
     async def get_rule(self, rule_id: str) -> Optional[AutomationRule]:
-        """Get automation rule by ID"""        try:
+        """Get automation rule by ID"""
+        try:
             # Check cache first
             cached_rule = await self.cache_manager.get(f"automation_rule:{rule_id}")
             if cached_rule:
@@ -391,7 +408,8 @@ class AutomationRulesEngine:
         trigger_event: str,
         trigger_data: Optional[Dict[str, Any]] = None
     ) -> List[RuleExecution]:
-        """Evaluate content against all applicable automation rules"""        try:
+        """Evaluate content against all applicable automation rules"""
+        try:
             executions = []
             applicable_rules = await self._get_applicable_rules(
                 content_data, trigger_event
@@ -421,7 +439,8 @@ class AutomationRulesEngine:
         event: LifecycleEvent,
         content_data: Dict[str, Any]
     ) -> List[RuleExecution]:
-        """Process lifecycle event and trigger applicable rules"""        try:
+        """Process lifecycle event and trigger applicable rules"""
+        try:
             return await self.evaluate_content(
                 content_id=event.content_id,
                 content_data=content_data,
@@ -434,7 +453,8 @@ class AutomationRulesEngine:
             return []
     
     async def get_rule_statistics(self, rule_id: str) -> Dict[str, Any]:
-        """Get rule execution statistics"""        try:
+        """Get rule execution statistics"""
+        try:
             rule = await self.get_rule(rule_id)
             if not rule:
                 return {}
@@ -463,7 +483,8 @@ class AutomationRulesEngine:
         rule_type: Optional[RuleType] = None,
         limit: int = 50
     ) -> List[AutomationRule]:
-        """List automation rules for a user"""        try:
+        """List automation rules for a user"""
+        try:
             return await self._fetch_user_rules_from_db(user_id, status, rule_type, limit)
             
         except Exception as e:
@@ -471,7 +492,8 @@ class AutomationRulesEngine:
             return []
     
     async def _load_predefined_rules(self) -> None:
-        """Load predefined automation rules"""        predefined_rules = [
+        """Load predefined automation rules"""
+        predefined_rules = [
             # High Performance Content Promotion Rule
             {
                 "name": "High Performance Auto Promotion",
@@ -675,7 +697,8 @@ class AutomationRulesEngine:
         content_data: Dict[str, Any],
         trigger_event: str
     ) -> List[AutomationRule]:
-        """Get rules applicable to the content and event"""        applicable_rules = []
+        """Get rules applicable to the content and event"""
+        applicable_rules = []
         
         for rule in self.rules.values():
             if rule.status != RuleStatus.ACTIVE:
@@ -707,7 +730,8 @@ class AutomationRulesEngine:
         return applicable_rules
     
     async def _rule_matches_event(self, rule: AutomationRule, trigger_event: str) -> bool:
-        """Check if rule type matches the trigger event"""        if rule.rule_type == RuleType.EVENT_BASED:
+        """Check if rule type matches the trigger event"""
+        if rule.rule_type == RuleType.EVENT_BASED:
             return True  # Event-based rules can respond to any event
         elif rule.rule_type == RuleType.CONDITION_BASED:
             return True  # Condition-based rules evaluate on any event
@@ -723,7 +747,8 @@ class AutomationRulesEngine:
         return False
     
     async def _can_execute_rule(self, rule: AutomationRule, content_id: str) -> bool:
-        """Check if rule can be executed"""        try:
+        """Check if rule can be executed"""
+        try:
             # Check execution limit
             if rule.max_executions and rule.execution_count >= rule.max_executions:
                 return False
@@ -753,7 +778,8 @@ class AutomationRulesEngine:
         trigger_event: str,
         trigger_data: Dict[str, Any]
     ) -> Optional[RuleExecution]:
-        """Evaluate rule conditions and execute actions if met"""        try:
+        """Evaluate rule conditions and execute actions if met"""
+        try:
             execution_id = str(uuid.uuid4())
             execution = RuleExecution(
                 execution_id=execution_id,
@@ -856,7 +882,8 @@ class AutomationRulesEngine:
         content_data: Dict[str, Any],
         trigger_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate rule triggers"""        try:
+        """Evaluate rule triggers"""
+        try:
             for trigger in rule.triggers:
                 # Get field value from content data or trigger data
                 field_value = content_data.get(trigger.field) or trigger_data.get(trigger.field)
@@ -885,7 +912,8 @@ class AutomationRulesEngine:
         content_data: Dict[str, Any],
         trigger_data: Dict[str, Any]
     ) -> Dict[str, bool]:
-        """Evaluate additional rule conditions"""        conditions_met = {}
+        """Evaluate additional rule conditions"""
+        conditions_met = {}
         
         try:
             for condition_name, condition_value in rule.conditions.items():
@@ -907,7 +935,8 @@ class AutomationRulesEngine:
         content_data: Dict[str, Any],
         trigger_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate a single condition"""        try:
+        """Evaluate a single condition"""
+        try:
             if condition_name == "content_age":
                 content_created = content_data.get("created_at")
                 if not content_created:
@@ -979,7 +1008,8 @@ class AutomationRulesEngine:
         content_data: Dict[str, Any],
         trigger_data: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Execute rule actions"""        results = []
+        """Execute rule actions"""
+        results = []
         
         for action in rule.actions:
             try:
@@ -1012,7 +1042,8 @@ class AutomationRulesEngine:
         return results
     
     async def _scheduled_rule_processor(self) -> None:
-        """Process scheduled rules"""        while True:
+        """Process scheduled rules"""
+        while True:
             try:
                 await asyncio.sleep(60)  # Check every minute
                 
@@ -1031,7 +1062,8 @@ class AutomationRulesEngine:
                 logger.error(f"Error in scheduled rule processor: {e}")
     
     async def _should_execute_scheduled_rule(self, rule: AutomationRule, now: datetime) -> bool:
-        """Check if scheduled rule should be executed"""        try:
+        """Check if scheduled rule should be executed"""
+        try:
             if not rule.schedule:
                 return False
             
@@ -1046,7 +1078,8 @@ class AutomationRulesEngine:
             return False
     
     async def _execute_scheduled_rule(self, rule: AutomationRule) -> None:
-        """Execute a scheduled rule"""        try:
+        """Execute a scheduled rule"""
+        try:
             # Find content that matches rule criteria
             matching_content = await self._find_matching_content_for_rule(rule)
             
@@ -1063,35 +1096,43 @@ class AutomationRulesEngine:
     
     # Database and external system interaction methods (placeholders)
     async def _validate_rule(self, rule: AutomationRule) -> None:
-        """Validate automation rule"""        # Placeholder for rule validation logic
+        """Validate automation rule"""
+        # Placeholder for rule validation logic
         pass
     
     async def _store_rule_in_db(self, rule: AutomationRule) -> None:
-        """Store rule in database"""        # Placeholder implementation
+        """Store rule in database"""
+        # Placeholder implementation
         pass
     
     async def _update_rule_in_db(self, rule: AutomationRule) -> None:
-        """Update rule in database"""        # Placeholder implementation
+        """Update rule in database"""
+        # Placeholder implementation
         pass
     
     async def _delete_rule_from_db(self, rule_id: str) -> None:
-        """Delete rule from database"""        # Placeholder implementation
+        """Delete rule from database"""
+        # Placeholder implementation
         pass
     
     async def _load_rule_from_db(self, rule_id: str) -> Optional[AutomationRule]:
-        """Load rule from database"""        # Placeholder implementation
+        """Load rule from database"""
+        # Placeholder implementation
         return None
     
     async def _load_user_rules(self) -> None:
-        """Load user-defined rules from database"""        # Placeholder implementation
+        """Load user-defined rules from database"""
+        # Placeholder implementation
         pass
     
     async def _store_execution_in_db(self, execution: RuleExecution) -> None:
-        """Store rule execution in database"""        # Placeholder implementation
+        """Store rule execution in database"""
+        # Placeholder implementation
         pass
     
     async def _calculate_rule_statistics(self, rule_id: str) -> Dict[str, Any]:
-        """Calculate rule execution statistics"""        # Placeholder implementation
+        """Calculate rule execution statistics"""
+        # Placeholder implementation
         return {}
     
     async def _fetch_user_rules_from_db(
@@ -1101,23 +1142,28 @@ class AutomationRulesEngine:
         rule_type: Optional[RuleType], 
         limit: int
     ) -> List[AutomationRule]:
-        """Fetch user rules from database"""        # Placeholder implementation
+        """Fetch user rules from database"""
+        # Placeholder implementation
         return []
     
     async def _find_matching_content_for_rule(self, rule: AutomationRule) -> List[Dict[str, Any]]:
-        """Find content matching rule criteria"""        # Placeholder implementation
+        """Find content matching rule criteria"""
+        # Placeholder implementation
         return []
     
     async def _setup_scheduled_rule(self, rule: AutomationRule) -> None:
-        """Setup scheduled rule execution"""        # Placeholder implementation
+        """Setup scheduled rule execution"""
+        # Placeholder implementation
         pass
     
     async def _initialize_ml_models(self) -> None:
-        """Initialize machine learning models for intelligent automation"""        # Placeholder implementation
+        """Initialize machine learning models for intelligent automation"""
+        # Placeholder implementation
         pass
     
     def _regex_match(self, text: str, pattern: str) -> bool:
-        """Regex pattern matching"""        import re
+        """Regex pattern matching"""
+        import re
         try:
             return bool(re.search(pattern, str(text)))
         except Exception:
@@ -1131,7 +1177,8 @@ class AutomationRulesEngine:
         content_data: Dict[str, Any], 
         trigger_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute state transition action"""        return {"transitioned": True, "new_state": action.get("target_state")}
+        """Execute state transition action"""
+        return {"transitioned": True, "new_state": action.get("target_state")}
     
     async def _execute_workflow_start(
         self, 
@@ -1140,7 +1187,8 @@ class AutomationRulesEngine:
         content_data: Dict[str, Any], 
         trigger_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute workflow start action"""        return {"workflow_started": True, "workflow_id": action.get("workflow_id")}
+        """Execute workflow start action"""
+        return {"workflow_started": True, "workflow_id": action.get("workflow_id")}
     
     async def _execute_notification(
         self, 
@@ -1149,7 +1197,8 @@ class AutomationRulesEngine:
         content_data: Dict[str, Any], 
         trigger_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute notification action"""        return {"notification_sent": True, "recipient": action.get("recipient")}
+        """Execute notification action"""
+        return {"notification_sent": True, "recipient": action.get("recipient")}
     
     async def _execute_optimization(
         self, 
@@ -1158,7 +1207,8 @@ class AutomationRulesEngine:
         content_data: Dict[str, Any], 
         trigger_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute optimization action"""        return {"optimization_applied": True, "type": action.get("optimization_type")}
+        """Execute optimization action"""
+        return {"optimization_applied": True, "type": action.get("optimization_type")}
     
     async def _execute_protection(
         self, 
@@ -1167,7 +1217,8 @@ class AutomationRulesEngine:
         content_data: Dict[str, Any], 
         trigger_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute protection action"""        return {"protection_activated": True, "type": action.get("protection_type")}
+        """Execute protection action"""
+        return {"protection_activated": True, "type": action.get("protection_type")}
     
     async def _execute_monetization(
         self, 
@@ -1176,7 +1227,8 @@ class AutomationRulesEngine:
         content_data: Dict[str, Any], 
         trigger_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute monetization action"""        return {"monetization_enabled": True, "type": action.get("monetization_type")}
+        """Execute monetization action"""
+        return {"monetization_enabled": True, "type": action.get("monetization_type")}
     
     async def _execute_analytics(
         self, 
@@ -1185,7 +1237,8 @@ class AutomationRulesEngine:
         content_data: Dict[str, Any], 
         trigger_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute analytics action"""        return {"analytics_started": True, "metrics": action.get("metrics", [])}
+        """Execute analytics action"""
+        return {"analytics_started": True, "metrics": action.get("metrics", [])}
     
     async def _execute_custom_action(
         self, 
@@ -1194,4 +1247,5 @@ class AutomationRulesEngine:
         content_data: Dict[str, Any], 
         trigger_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute custom action"""        return {"custom_action_executed": True, "action": action.get("custom_type")}
+        """Execute custom action"""
+        return {"custom_action_executed": True, "action": action.get("custom_type")}

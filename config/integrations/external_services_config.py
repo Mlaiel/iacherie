@@ -13,7 +13,8 @@ Any unauthorized use, reproduction, or distribution without explicit written per
 is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from typing import Dict, Any, Optional, List, Union
 from pydantic import BaseSettings, Field, validator, HttpUrl
 from enum import Enum
@@ -21,7 +22,8 @@ from dataclasses import dataclass
 
 
 class ServiceCategory(str, Enum):
-    """External service categories."""    CLOUD_STORAGE = "cloud_storage"
+    """External service categories."""
+    CLOUD_STORAGE = "cloud_storage"
     VECTOR_DATABASE = "vector_database"
     SEARCH_ENGINE = "search_engine"
     CONTENT_PROTECTION = "content_protection"
@@ -36,7 +38,8 @@ class ServiceCategory(str, Enum):
 
 
 class ServiceProvider(str, Enum):
-    """External service providers."""    # Cloud Storage
+    """External service providers."""
+    # Cloud Storage
     AWS_S3 = "aws_s3"
     GOOGLE_CLOUD_STORAGE = "google_cloud_storage"
     AZURE_BLOB = "azure_blob"
@@ -92,7 +95,8 @@ class ServiceProvider(str, Enum):
 
 @dataclass
 class ServiceHealthConfig:
-    """Service health check configuration."""    enabled: bool = True
+    """Service health check configuration."""
+    enabled: bool = True
     check_interval: int = 60  # seconds
     timeout: float = 10.0
     retry_attempts: int = 3
@@ -102,14 +106,16 @@ class ServiceHealthConfig:
 
 @dataclass
 class ServiceLimits:
-    """Service usage limits configuration."""    max_requests_per_second: float = 10.0
+    """Service usage limits configuration."""
+    max_requests_per_second: float = 10.0
     max_requests_per_hour: int = 3600
     max_payload_size: int = 10485760  # 10MB
     max_concurrent_connections: int = 100
 
 
 class ExternalServicesConfig(BaseSettings):
-    """External services configuration for third-party integrations."""    
+    """External services configuration for third-party integrations."""
+    
     # === CLOUD STORAGE SERVICES ===
     
     # AWS S3
@@ -308,7 +314,8 @@ class ExternalServicesConfig(BaseSettings):
 
 
 class ExternalServiceManager:
-    """Manager for external service integrations with health monitoring."""    
+    """Manager for external service integrations with health monitoring."""
+    
     def __init__(self, config: ExternalServicesConfig):
         self.config = config
         self.service_status: Dict[str, bool] = {}
@@ -316,7 +323,8 @@ class ExternalServiceManager:
         self._initialize_service_configs()
     
     def _initialize_service_configs(self):
-        """Initialize service configurations."""        # Cloud Storage Services
+        """Initialize service configurations."""
+        # Cloud Storage Services
         if self.config.aws_s3_enabled:
             self.service_configs[ServiceProvider.AWS_S3] = {
                 "bucket_name": self.config.aws_s3_bucket_name,
@@ -380,13 +388,16 @@ class ExternalServiceManager:
             }
     
     def get_service_config(self, provider: ServiceProvider) -> Optional[Dict[str, Any]]:
-        """Get configuration for a specific service provider."""        return self.service_configs.get(provider)
+        """Get configuration for a specific service provider."""
+        return self.service_configs.get(provider)
     
     def is_service_enabled(self, provider: ServiceProvider) -> bool:
-        """Check if a service provider is enabled."""        return provider in self.service_configs
+        """Check if a service provider is enabled."""
+        return provider in self.service_configs
     
     def get_enabled_services(self, category: Optional[ServiceCategory] = None) -> List[ServiceProvider]:
-        """Get list of enabled services, optionally filtered by category."""        enabled_services = list(self.service_configs.keys())
+        """Get list of enabled services, optionally filtered by category."""
+        enabled_services = list(self.service_configs.keys())
         
         if category is None:
             return enabled_services
@@ -418,16 +429,19 @@ class ExternalServiceManager:
         return [service for service in enabled_services if service in category_services]
     
     async def check_service_health(self, provider: ServiceProvider) -> bool:
-        """Check health status of a specific service."""        # Implementation would include actual health checks
+        """Check health status of a specific service."""
+        # Implementation would include actual health checks
         # This is a placeholder that returns True for configured services
         return provider in self.service_configs
     
     def get_service_limits(self, provider: ServiceProvider) -> ServiceLimits:
-        """Get service limits for a specific provider."""        # Default limits - could be customized per provider
+        """Get service limits for a specific provider."""
+        # Default limits - could be customized per provider
         return ServiceLimits()
     
     def get_health_config(self, provider: ServiceProvider) -> ServiceHealthConfig:
-        """Get health check configuration for a specific provider."""        return ServiceHealthConfig()
+        """Get health check configuration for a specific provider."""
+        return ServiceHealthConfig()
 
 
 # Global external services configuration instance

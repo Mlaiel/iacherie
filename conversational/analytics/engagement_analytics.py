@@ -20,7 +20,8 @@ Development Team Specialties:
 - Audio Processing: Voice engagement analytics
 - DevOps Engineer: Engagement pipeline automation
 - IA Prompt Engineer: Conversational engagement optimization
-"""import asyncio
+"""
+import asyncio
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Set, Union, Any, Tuple
@@ -44,7 +45,8 @@ logger = logging.getLogger(__name__)
 
 
 class EngagementType(Enum):
-    """Professional engagement types for comprehensive content analysis."""    VIEWS = "views"
+    """Professional engagement types for comprehensive content analysis."""
+    VIEWS = "views"
     LIKES = "likes" 
     COMMENTS = "comments"
     SHARES = "shares"
@@ -61,7 +63,8 @@ class EngagementType(Enum):
 
 
 class EngagementPeriod(Enum):
-    """Engagement analysis time periods"""    REAL_TIME = "real_time"
+    """Engagement analysis time periods"""
+    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -72,7 +75,8 @@ class EngagementPeriod(Enum):
 
 @dataclass
 class EngagementMetrics:
-    """Comprehensive engagement metrics structure"""    content_id: str
+    """Comprehensive engagement metrics structure"""
+    content_id: str
     platform: str
     engagement_rate: float
     total_interactions: int
@@ -93,7 +97,8 @@ class EngagementMetrics:
 
 @dataclass
 class EngagementInsight:
-    """Engagement analysis insights"""    insight_id: str
+    """Engagement analysis insights"""
+    insight_id: str
     content_id: str
     insight_type: str
     description: str
@@ -107,7 +112,8 @@ class EngagementInsight:
 
 
 class EngagementAnalytics:
-    """    Enterprise-grade engagement analytics engine for content performance analysis
+    """
+    Enterprise-grade engagement analytics engine for content performance analysis
     
     Features:
     - Real-time engagement tracking
@@ -116,7 +122,8 @@ class EngagementAnalytics:
     - Engagement prediction and optimization
     - Viral content identification
     - Sentiment-driven engagement analysis
-    """    
+    """
+    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.engagement_predictor = EngagementPredictor()
@@ -129,7 +136,8 @@ class EngagementAnalytics:
         platform: str,
         period: EngagementPeriod = EngagementPeriod.DAILY
     ) -> EngagementMetrics:
-        """        Analyze comprehensive engagement metrics for specific content
+        """
+        Analyze comprehensive engagement metrics for specific content
         
         Args:
             content_id: Unique content identifier
@@ -138,7 +146,8 @@ class EngagementAnalytics:
             
         Returns:
             EngagementMetrics: Comprehensive engagement analysis
-        """        try:
+        """
+        try:
             cache_key = f"engagement:{content_id}:{platform}:{period.value}"
             cached_result = await self.cache_manager.get(cache_key)
             
@@ -186,7 +195,8 @@ class EngagementAnalytics:
         user_id: str,
         timeframe: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """        Analyze engagement patterns for specific audience segments
+        """
+        Analyze engagement patterns for specific audience segments
         
         Args:
             user_id: User identifier
@@ -194,7 +204,8 @@ class EngagementAnalytics:
             
         Returns:
             Dict containing audience engagement patterns
-        """        try:
+        """
+        try:
             async with get_db_session() as session:
                 # Get user engagement history
                 engagement_history = await self._fetch_user_engagement_history(
@@ -231,7 +242,8 @@ class EngagementAnalytics:
         target_platform: str,
         publish_time: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """        Predict engagement performance for content before publishing
+        """
+        Predict engagement performance for content before publishing
         
         Args:
             content_metadata: Content characteristics and metadata
@@ -240,7 +252,8 @@ class EngagementAnalytics:
             
         Returns:
             Dict containing engagement predictions
-        """        try:
+        """
+        try:
             # Prepare features for prediction
             features = await self._prepare_prediction_features(
                 content_metadata, target_platform, publish_time
@@ -280,7 +293,8 @@ class EngagementAnalytics:
         content_id: str,
         current_metrics: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Analyze viral potential of content based on current performance
+        """
+        Analyze viral potential of content based on current performance
         
         Args:
             content_id: Content identifier
@@ -288,7 +302,8 @@ class EngagementAnalytics:
             
         Returns:
             Dict containing viral potential analysis
-        """        try:
+        """
+        try:
             # Calculate viral indicators
             viral_indicators = await self._calculate_viral_indicators(current_metrics)
             
@@ -326,7 +341,8 @@ class EngagementAnalytics:
         content_ids: List[str],
         analysis_period: timedelta = timedelta(days=7)
     ) -> List[EngagementInsight]:
-        """        Generate actionable engagement insights for content portfolio
+        """
+        Generate actionable engagement insights for content portfolio
         
         Args:
             content_ids: List of content identifiers
@@ -334,7 +350,8 @@ class EngagementAnalytics:
             
         Returns:
             List of engagement insights
-        """        try:
+        """
+        try:
             insights = []
             
             async with get_db_session() as session:
@@ -369,14 +386,16 @@ class EngagementAnalytics:
         platform: str,
         period: EngagementPeriod
     ) -> Dict[str, Any]:
-        """Fetch engagement data from database"""        # Implementation for fetching engagement data
+        """Fetch engagement data from database"""
+        # Implementation for fetching engagement data
         pass
     
     async def _calculate_core_metrics(
         self,
         engagement_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate core engagement metrics"""        # Implementation for core metrics calculation
+        """Calculate core engagement metrics"""
+        # Implementation for core metrics calculation
         pass
     
     async def _calculate_advanced_metrics(
@@ -384,7 +403,8 @@ class EngagementAnalytics:
         engagement_data: Dict[str, Any],
         core_metrics: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate advanced engagement metrics"""        # Implementation for advanced metrics calculation
+        """Calculate advanced engagement metrics"""
+        # Implementation for advanced metrics calculation
         pass
     
     async def _fetch_user_engagement_history(
@@ -393,21 +413,24 @@ class EngagementAnalytics:
         user_id: str,
         timeframe: timedelta
     ) -> List[Dict[str, Any]]:
-        """Fetch user engagement history"""        # Implementation for fetching user engagement history
+        """Fetch user engagement history"""
+        # Implementation for fetching user engagement history
         pass
     
     async def _segment_audience_behavior(
         self,
         engagement_history: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Segment audience based on behavior patterns"""        # Implementation for audience segmentation
+        """Segment audience based on behavior patterns"""
+        # Implementation for audience segmentation
         pass
     
     async def _analyze_engagement_patterns(
         self,
         engagement_history: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze engagement patterns"""        # Implementation for pattern analysis
+        """Analyze engagement patterns"""
+        # Implementation for pattern analysis
         pass
     
     async def _generate_engagement_insights(
@@ -415,7 +438,8 @@ class EngagementAnalytics:
         behavior_segments: Dict[str, Any],
         patterns: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate engagement insights"""        # Implementation for insight generation
+        """Generate engagement insights"""
+        # Implementation for insight generation
         pass
     
     async def _prepare_prediction_features(
@@ -424,7 +448,8 @@ class EngagementAnalytics:
         target_platform: str,
         publish_time: Optional[datetime]
     ) -> Dict[str, Any]:
-        """Prepare features for engagement prediction"""        # Implementation for feature preparation
+        """Prepare features for engagement prediction"""
+        # Implementation for feature preparation
         pass
     
     async def _calculate_prediction_confidence(
@@ -432,7 +457,8 @@ class EngagementAnalytics:
         predictions: Dict[str, Any],
         features: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate confidence scores for predictions"""        # Implementation for confidence calculation
+        """Calculate confidence scores for predictions"""
+        # Implementation for confidence calculation
         pass
     
     async def _generate_optimization_recommendations(
@@ -440,28 +466,32 @@ class EngagementAnalytics:
         predictions: Dict[str, Any],
         content_metadata: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate optimization recommendations"""        # Implementation for recommendation generation
+        """Generate optimization recommendations"""
+        # Implementation for recommendation generation
         pass
     
     async def _find_optimal_publish_time(
         self,
         features: Dict[str, Any]
     ) -> datetime:
-        """Find optimal publish time"""        # Implementation for optimal timing
+        """Find optimal publish time"""
+        # Implementation for optimal timing
         pass
     
     async def _calculate_viral_indicators(
         self,
         current_metrics: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate viral indicators"""        # Implementation for viral indicators
+        """Calculate viral indicators"""
+        # Implementation for viral indicators
         pass
     
     async def _analyze_sharing_patterns(
         self,
         content_id: str
     ) -> Dict[str, Any]:
-        """Analyze content sharing patterns"""        # Implementation for sharing pattern analysis
+        """Analyze content sharing patterns"""
+        # Implementation for sharing pattern analysis
         pass
     
     async def _calculate_virality_score(
@@ -469,7 +499,8 @@ class EngagementAnalytics:
         viral_indicators: Dict[str, float],
         sharing_patterns: Dict[str, Any]
     ) -> float:
-        """Calculate overall virality score"""        # Implementation for virality score calculation
+        """Calculate overall virality score"""
+        # Implementation for virality score calculation
         pass
     
     async def _predict_viral_trajectory(
@@ -477,7 +508,8 @@ class EngagementAnalytics:
         virality_score: float,
         current_metrics: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Predict viral content trajectory"""        # Implementation for viral trajectory prediction
+        """Predict viral content trajectory"""
+        # Implementation for viral trajectory prediction
         pass
     
     async def _fetch_performance_data(
@@ -486,7 +518,8 @@ class EngagementAnalytics:
         content_id: str,
         analysis_period: timedelta
     ) -> Dict[str, Any]:
-        """Fetch performance data for content"""        # Implementation for performance data fetching
+        """Fetch performance data for content"""
+        # Implementation for performance data fetching
         pass
     
     async def _generate_content_insights(
@@ -494,27 +527,32 @@ class EngagementAnalytics:
         content_id: str,
         performance_data: Dict[str, Any]
     ) -> List[EngagementInsight]:
-        """Generate insights for individual content"""        # Implementation for content-specific insights
+        """Generate insights for individual content"""
+        # Implementation for content-specific insights
         pass
     
     async def _generate_portfolio_insights(
         self,
         individual_insights: List[EngagementInsight]
     ) -> List[EngagementInsight]:
-        """Generate portfolio-level insights"""        # Implementation for portfolio insights
+        """Generate portfolio-level insights"""
+        # Implementation for portfolio insights
         pass
 
 
 # Engagement Analytics Factory
 class EngagementAnalyticsFactory:
-    """Factory for creating engagement analytics instances"""    
+    """Factory for creating engagement analytics instances"""
+    
     @staticmethod
     def create_analytics_engine() -> EngagementAnalytics:
-        """Create a new engagement analytics engine"""        return EngagementAnalytics()
+        """Create a new engagement analytics engine"""
+        return EngagementAnalytics()
     
     @staticmethod
     def create_real_time_engine() -> 'RealTimeEngagementAnalytics':
-        """Create real-time engagement analytics engine"""        from .real_time_engagement_analytics import RealTimeEngagementAnalytics
+        """Create real-time engagement analytics engine"""
+        from .real_time_engagement_analytics import RealTimeEngagementAnalytics
         return RealTimeEngagementAnalytics()
 
 

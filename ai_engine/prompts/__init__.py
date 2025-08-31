@@ -8,7 +8,8 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
-"""from typing import Dict, List, Optional, Any, Union
+"""
+from typing import Dict, List, Optional, Any, Union
 from enum import Enum
 import logging
 
@@ -83,7 +84,8 @@ PROMPTS_REGISTRY = {
 PROMPTS_REGISTRY = {k: v for k, v in PROMPTS_REGISTRY.items() if v is not None}
 
 def get_prompts_info() -> Dict[str, Any]:
-    """Get comprehensive information about the prompts system"""    return {
+    """Get comprehensive information about the prompts system"""
+    return {
         "version": __version__,
         "author": __author__,
         "team": __team__,
@@ -113,7 +115,8 @@ def get_prompts_info() -> Dict[str, Any]:
     }
 
 def get_all_prompt_systems() -> Dict[str, Any]:
-    """Get all available prompt systems"""    systems = {
+    """Get all available prompt systems"""
+    systems = {
         "content_creator": get_content_creator_prompts(),
         "protection": get_protection_prompts(),
         "seo_monetization": get_seo_monetization_prompts(),
@@ -124,17 +127,21 @@ def get_all_prompt_systems() -> Dict[str, Any]:
     return systems
 
 class PromptSystemManager:
-    """Main manager for all prompt systems"""    
+    """Main manager for all prompt systems"""
+    
     def __init__(self):
-        """Initialize the prompt system manager"""        self.systems = get_all_prompt_systems()
+        """Initialize the prompt system manager"""
+        self.systems = get_all_prompt_systems()
         self.logger = logging.getLogger(__name__)
     
     def get_system(self, system_name: str) -> Any:
-        """Get a specific prompt system"""        return self.systems.get(system_name)
+        """Get a specific prompt system"""
+        return self.systems.get(system_name)
     
     def generate_content_creator_prompt(self, creator_type: str, content_format: str, 
                                       category: str, **kwargs) -> Dict[str, Any]:
-        """Generate content creator prompt"""        context = create_prompt_context(
+        """Generate content creator prompt"""
+        context = create_prompt_context(
             creator_type=creator_type,
             content_format=content_format,
             category=category,
@@ -150,7 +157,8 @@ class PromptSystemManager:
     def generate_protection_prompt(self, content_type: str, protection_level: str,
                                  fingerprinting_methods: List[str], 
                                  monitoring_platforms: List[str], **kwargs) -> Dict[str, Any]:
-        """Generate protection prompt"""        context = create_protection_context(
+        """Generate protection prompt"""
+        context = create_protection_context(
             content_type=content_type,
             protection_level=protection_level,
             fingerprinting_methods=fingerprinting_methods,
@@ -165,7 +173,8 @@ class PromptSystemManager:
     
     def generate_seo_prompt(self, content_category: str, seo_strategy: str,
                            target_platforms: List[str], **kwargs) -> Dict[str, Any]:
-        """Generate SEO optimization prompt"""        context = create_seo_monetization_context(
+        """Generate SEO optimization prompt"""
+        context = create_seo_monetization_context(
             content_category=content_category,
             seo_strategy=seo_strategy,
             monetization_models=kwargs.get("monetization_models", []),
@@ -181,7 +190,8 @@ class PromptSystemManager:
     
     def generate_collaboration_prompt(self, collaboration_type: str, stage: str,
                                     creator_profiles: List[Dict], **kwargs) -> Dict[str, Any]:
-        """Generate collaboration prompt"""        context = create_collaboration_context(
+        """Generate collaboration prompt"""
+        context = create_collaboration_context(
             collaboration_type=collaboration_type,
             stage=stage,
             creator_profiles=creator_profiles,
@@ -196,7 +206,8 @@ class PromptSystemManager:
     
     def generate_analytics_prompt(self, analytics_type: str, metric_categories: List[str],
                                  **kwargs) -> Dict[str, Any]:
-        """Generate analytics prompt"""        context = create_analytics_context(
+        """Generate analytics prompt"""
+        context = create_analytics_context(
             analytics_type=analytics_type,
             metric_categories=metric_categories,
             time_period=kwargs.get("time_period"),
@@ -211,7 +222,8 @@ class PromptSystemManager:
     def generate_distribution_prompt(self, content_type: str, target_platforms: List[str],
                                    distribution_strategy: str, content_adaptations: List[str],
                                    **kwargs) -> Dict[str, Any]:
-        """Generate distribution prompt"""        context = create_distribution_context(
+        """Generate distribution prompt"""
+        context = create_distribution_context(
             content_type=content_type,
             target_platforms=target_platforms,
             distribution_strategy=distribution_strategy,
@@ -455,16 +467,20 @@ QUALITY_CRITERIA = {
 }
 
 def get_prompt_categories() -> dict:
-    """Get available prompt categories"""    return PROMPT_CATEGORIES.copy()
+    """Get available prompt categories"""
+    return PROMPT_CATEGORIES.copy()
 
 def get_content_formats() -> dict:
-    """Get content format specifications"""    return CONTENT_FORMATS.copy()
+    """Get content format specifications"""
+    return CONTENT_FORMATS.copy()
 
 def get_tone_styles() -> dict:
-    """Get available tone and style options"""    return TONE_STYLES.copy()
+    """Get available tone and style options"""
+    return TONE_STYLES.copy()
 
 def get_platform_optimizations() -> dict:
-    """Get platform-specific optimization settings"""    return PLATFORM_OPTIMIZATIONS.copy()
+    """Get platform-specific optimization settings"""
+    return PLATFORM_OPTIMIZATIONS.copy()
 
 def create_prompt_template(
     category: str,
@@ -473,7 +489,8 @@ def create_prompt_template(
     tone: str = "professional",
     language: str = "en"
 ) -> dict:
-    """Factory function to create a prompt template"""    template = {
+    """Factory function to create a prompt template"""
+    template = {
         "category": category,
         "content_type": content_type,
         "platform": platform,
@@ -487,7 +504,8 @@ def create_prompt_template(
     return template
 
 def optimize_prompt_for_platform(prompt: str, platform: str) -> str:
-    """Optimize a prompt for a specific platform"""    optimization = PLATFORM_OPTIMIZATIONS.get(platform.lower(), {})
+    """Optimize a prompt for a specific platform"""
+    optimization = PLATFORM_OPTIMIZATIONS.get(platform.lower(), {})
     
     if not optimization:
         return prompt
@@ -507,7 +525,8 @@ def optimize_prompt_for_platform(prompt: str, platform: str) -> str:
     return optimized_prompt
 
 def validate_prompt_quality(prompt: str, criteria: list = None) -> dict:
-    """Validate prompt quality against criteria"""    if criteria is None:
+    """Validate prompt quality against criteria"""
+    if criteria is None:
         criteria = list(QUALITY_CRITERIA.keys())
     
     results = {}

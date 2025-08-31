@@ -11,7 +11,8 @@ WARNING: This code is proprietary intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, modification, or distribution is strictly
 prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import logging
+"""
+import logging
 import re
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -39,7 +40,8 @@ from ..integrations.social_platforms import SocialPlatformOptimizer
 logger = logging.getLogger(__name__)
 
 class SEOMetricType(Enum):
-    """SEO metric types for analysis."""    KEYWORD_DENSITY = "keyword_density"
+    """SEO metric types for analysis."""
+    KEYWORD_DENSITY = "keyword_density"
     READABILITY = "readability"
     META_OPTIMIZATION = "meta_optimization"
     CONTENT_LENGTH = "content_length"
@@ -48,7 +50,8 @@ class SEOMetricType(Enum):
     SOCIAL_SIGNALS = "social_signals"
 
 class ContentOptimizationType(Enum):
-    """Types of content optimization."""    TITLE_OPTIMIZATION = "title_optimization"
+    """Types of content optimization."""
+    TITLE_OPTIMIZATION = "title_optimization"
     DESCRIPTION_OPTIMIZATION = "description_optimization"
     KEYWORD_OPTIMIZATION = "keyword_optimization"
     HASHTAG_OPTIMIZATION = "hashtag_optimization"
@@ -57,7 +60,8 @@ class ContentOptimizationType(Enum):
 
 @dataclass
 class SEOScore:
-    """SEO score data structure."""    overall_score: float
+    """SEO score data structure."""
+    overall_score: float
     title_score: float
     description_score: float
     keyword_score: float
@@ -68,7 +72,8 @@ class SEOScore:
 
 @dataclass
 class KeywordAnalysis:
-    """Keyword analysis result."""    keyword: str
+    """Keyword analysis result."""
+    keyword: str
     search_volume: int
     competition_level: str
     difficulty_score: float
@@ -78,7 +83,8 @@ class KeywordAnalysis:
 
 @dataclass
 class ContentSEOOptimization:
-    """Content SEO optimization suggestions."""    content_id: str
+    """Content SEO optimization suggestions."""
+    content_id: str
     current_score: float
     optimized_title: str
     optimized_description: str
@@ -88,11 +94,13 @@ class ContentSEOOptimization:
     meta_improvements: Dict[str, str]
 
 class SEOService:
-    """    Comprehensive SEO optimization service for multi-format content creators.
+    """
+    Comprehensive SEO optimization service for multi-format content creators.
     
     Provides intelligent SEO analysis, keyword optimization, metadata enhancement,
     and search engine visibility improvements for all content types.
-    """    
+    """
+    
     def __init__(self):
         self.text_analyzer = TextAnalyzer()
         self.keyword_extractor = KeywordExtractor()
@@ -116,7 +124,8 @@ class SEOService:
         competitor_analysis: bool = False,
         db: Session = None
     ) -> SEOScore:
-        """        Perform comprehensive SEO analysis for content.
+        """
+        Perform comprehensive SEO analysis for content.
         
         Args:
             content_id: Content identifier
@@ -126,7 +135,8 @@ class SEOService:
             
         Returns:
             Comprehensive SEO score and recommendations
-        """        if db is None:
+        """
+        if db is None:
             db = next(get_db())
         
         try:
@@ -188,7 +198,8 @@ class SEOService:
         optimization_goals: List[str] = None,
         db: Session = None
     ) -> ContentSEOOptimization:
-        """        Optimize content metadata for multiple platforms.
+        """
+        Optimize content metadata for multiple platforms.
         
         Args:
             content_id: Content identifier
@@ -198,7 +209,8 @@ class SEOService:
             
         Returns:
             Optimized content metadata and suggestions
-        """        if db is None:
+        """
+        if db is None:
             db = next(get_db())
         
         try:
@@ -263,7 +275,8 @@ class SEOService:
         competition_level: str = "medium",
         db: Session = None
     ) -> List[KeywordAnalysis]:
-        """        Perform comprehensive keyword research and analysis.
+        """
+        Perform comprehensive keyword research and analysis.
         
         Args:
             seed_keywords: Initial keywords for research
@@ -274,7 +287,8 @@ class SEOService:
             
         Returns:
             List of keyword analysis results
-        """        try:
+        """
+        try:
             keyword_suggestions = []
             
             for seed_keyword in seed_keywords:
@@ -316,7 +330,8 @@ class SEOService:
         time_period: int = 30,
         db: Session = None
     ) -> Dict[str, Any]:
-        """        Track search engine performance for user's content.
+        """
+        Track search engine performance for user's content.
         
         Args:
             user_id: User identifier
@@ -326,7 +341,8 @@ class SEOService:
             
         Returns:
             Search performance analytics
-        """        if db is None:
+        """
+        if db is None:
             db = next(get_db())
         
         try:
@@ -441,7 +457,8 @@ class SEOService:
         priority_level: str = "high",
         db: Session = None
     ) -> List[Dict[str, Any]]:
-        """        Generate personalized SEO recommendations for user.
+        """
+        Generate personalized SEO recommendations for user.
         
         Args:
             user_id: User identifier
@@ -451,7 +468,8 @@ class SEOService:
             
         Returns:
             List of SEO recommendations with priorities
-        """        if db is None:
+        """
+        if db is None:
             db = next(get_db())
         
         try:
@@ -550,7 +568,8 @@ class SEOService:
     
     # Private helper methods
     async def _analyze_title_seo(self, content: Content) -> Dict[str, Any]:
-        """Analyze title SEO optimization."""        title = content.title or ""
+        """Analyze title SEO optimization."""
+        title = content.title or ""
         score = 0
         recommendations = []
         
@@ -589,7 +608,8 @@ class SEOService:
         }
     
     async def _analyze_description_seo(self, content: Content) -> Dict[str, Any]:
-        """Analyze description SEO optimization."""        description = content.description or ""
+        """Analyze description SEO optimization."""
+        description = content.description or ""
         score = 0
         recommendations = []
         
@@ -631,7 +651,8 @@ class SEOService:
         }
     
     async def _analyze_keyword_optimization(self, content: Content, target_keywords: Optional[List[str]]) -> Dict[str, Any]:
-        """Analyze keyword optimization."""        text_content = f"{content.title or ''} {content.description or ''}"
+        """Analyze keyword optimization."""
+        text_content = f"{content.title or ''} {content.description or ''}"
         score = 0
         recommendations = []
         
@@ -676,7 +697,8 @@ class SEOService:
         }
     
     async def _analyze_content_readability(self, content: Content) -> Dict[str, Any]:
-        """Analyze content readability."""        text_content = f"{content.title or ''} {content.description or ''}"
+        """Analyze content readability."""
+        text_content = f"{content.title or ''} {content.description or ''}"
         score = 0
         recommendations = []
         
@@ -730,7 +752,8 @@ class SEOService:
         }
     
     async def _calculate_overall_seo_score(self, scores: List[float]) -> float:
-        """Calculate overall SEO score from individual scores."""        if not scores:
+        """Calculate overall SEO score from individual scores."""
+        if not scores:
             return 0
         
         # Weighted average (title and keywords more important)

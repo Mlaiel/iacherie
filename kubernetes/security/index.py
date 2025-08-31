@@ -11,7 +11,8 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and
 will result in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, Any, Optional, List
 from datetime import datetime
@@ -28,11 +29,13 @@ logger = logging.getLogger(__name__)
 
 
 class DeploymentSecurityManager:
-    """    Unified security management interface for deployment environments
+    """
+    Unified security management interface for deployment environments
     
     This class provides a centralized interface to all security components,
     making it easy to configure and manage security for deployment environments.
-    """    
+    """
+    
     def __init__(
         self,
         config: Optional[Dict[str, Any]] = None,
@@ -41,7 +44,8 @@ class DeploymentSecurityManager:
         key_dir: str = "/etc/ssl/private",
         log_dir: str = "/var/log/ia-influencer/security"
     ):
-        """        Initialize deployment security manager
+        """
+        Initialize deployment security manager
         
         Args:
             config: Security configuration dictionary
@@ -49,7 +53,8 @@ class DeploymentSecurityManager:
             cert_dir: Certificate directory
             key_dir: Private key directory
             log_dir: Log directory
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         self.redis_url = redis_url
         self.cert_dir = cert_dir
         self.key_dir = key_dir
@@ -61,7 +66,8 @@ class DeploymentSecurityManager:
         logger.info("Deployment security manager initialized")
     
     def _initialize_components(self):
-        """Initialize all security components"""        try:
+        """Initialize all security components"""
+        try:
             # Certificate management
             self.certificate_manager = CertificateManager(
                 cert_dir=self.cert_dir,
@@ -120,7 +126,8 @@ class DeploymentSecurityManager:
         domain: str,
         services: List[str] = None
     ) -> Dict[str, Any]:
-        """        Setup comprehensive security for deployment environment
+        """
+        Setup comprehensive security for deployment environment
         
         Args:
             environment: Environment name (dev, staging, prod)
@@ -129,7 +136,8 @@ class DeploymentSecurityManager:
             
         Returns:
             Setup results and configuration
-        """        try:
+        """
+        try:
             logger.info(f"Setting up security for environment: {environment}")
             
             setup_results = {
@@ -255,7 +263,8 @@ class DeploymentSecurityManager:
         scan_dependencies: bool = True,
         scan_configurations: bool = True
     ) -> Dict[str, Any]:
-        """        Perform comprehensive security assessment
+        """
+        Perform comprehensive security assessment
         
         Args:
             environment: Environment to assess
@@ -265,7 +274,8 @@ class DeploymentSecurityManager:
             
         Returns:
             Assessment results
-        """        try:
+        """
+        try:
             logger.info(f"Starting security assessment for environment: {environment}")
             
             assessment_config = {
@@ -318,7 +328,8 @@ class DeploymentSecurityManager:
         environment: str,
         frameworks: List[str] = None
     ) -> Dict[str, Any]:
-        """        Monitor compliance for environment
+        """
+        Monitor compliance for environment
         
         Args:
             environment: Environment to monitor
@@ -326,7 +337,8 @@ class DeploymentSecurityManager:
             
         Returns:
             Compliance monitoring results
-        """        try:
+        """
+        try:
             from .compliance_monitor import ComplianceFramework
             
             if frameworks is None:
@@ -389,7 +401,8 @@ class DeploymentSecurityManager:
             raise
     
     async def cleanup_security_resources(self):
-        """Cleanup expired security resources"""        try:
+        """Cleanup expired security resources"""
+        try:
             logger.info("Starting security resources cleanup")
             
             cleanup_results = {
@@ -421,11 +434,13 @@ class DeploymentSecurityManager:
             return {'error': str(e)}
     
     def get_security_status(self) -> Dict[str, Any]:
-        """        Get overall security status
+        """
+        Get overall security status
         
         Returns:
             Security status summary
-        """        try:
+        """
+        try:
             status = {
                 'timestamp': datetime.utcnow().isoformat(),
                 'components': {
@@ -463,7 +478,8 @@ async def initialize_deployment_security(
     domain: str,
     config: Optional[Dict[str, Any]] = None
 ) -> DeploymentSecurityManager:
-    """    Initialize deployment security for a specific environment
+    """
+    Initialize deployment security for a specific environment
     
     Args:
         environment: Environment name
@@ -472,7 +488,8 @@ async def initialize_deployment_security(
         
     Returns:
         Configured security manager
-    """    try:
+    """
+    try:
         logger.info(f"Initializing deployment security for {environment}")
         
         # Create security manager
@@ -494,19 +511,23 @@ async def initialize_deployment_security(
 
 # Convenience functions for quick access
 def create_certificate_manager(**kwargs) -> CertificateManager:
-    """Create certificate manager with default settings"""    return CertificateManager(**kwargs)
+    """Create certificate manager with default settings"""
+    return CertificateManager(**kwargs)
 
 
 def create_access_control(**kwargs) -> DeploymentAccessControl:
-    """Create access control system with default settings"""    return DeploymentAccessControl(**kwargs)
+    """Create access control system with default settings"""
+    return DeploymentAccessControl(**kwargs)
 
 
 def create_vulnerability_scanner() -> SecurityAssessment:
-    """Create vulnerability scanner with default settings"""    return SecurityAssessment()
+    """Create vulnerability scanner with default settings"""
+    return SecurityAssessment()
 
 
 def create_compliance_checker(**kwargs) -> ComplianceChecker:
-    """Create compliance checker with default settings"""    audit_logger = SecurityAuditLogger(**kwargs)
+    """Create compliance checker with default settings"""
+    audit_logger = SecurityAuditLogger(**kwargs)
     return ComplianceChecker(audit_logger)
 
 
@@ -543,7 +564,8 @@ __all__ = [
 if __name__ == "__main__":
     # Example usage
     async def main():
-        """Example of how to use the deployment security module"""        
+        """Example of how to use the deployment security module"""
+        
         # Initialize security for production environment
         security_manager = await initialize_deployment_security(
             environment="production",

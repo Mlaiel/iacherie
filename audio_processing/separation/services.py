@@ -12,7 +12,8 @@ License: Proprietary - Contact for licensing
 Any unauthorized use, copying, distribution, or modification is strictly
 prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from pathlib import Path
 from typing import Dict, List, Optional, Union, Tuple, Any, Callable
@@ -36,7 +37,8 @@ logger = get_logger(__name__)
 
 @dataclass
 class SeparationRequest:
-    """Request object for separation operations."""    audio_path: Optional[Path] = None
+    """Request object for separation operations."""
+    audio_path: Optional[Path] = None
     audio_data: Optional[np.ndarray] = None
     sample_rate: Optional[int] = None
     separation_types: List[str] = field(default_factory=lambda: ["vocal"])
@@ -50,7 +52,8 @@ class SeparationRequest:
 
 @dataclass
 class SeparationResponse:
-    """Response object for separation operations."""    success: bool
+    """Response object for separation operations."""
+    success: bool
     request_id: str
     stems: Dict[str, np.ndarray] = field(default_factory=dict)
     output_files: Dict[str, Path] = field(default_factory=dict)
@@ -62,7 +65,8 @@ class SeparationResponse:
 
 
 class SeparationService:
-    """Main service for audio separation orchestration."""    
+    """Main service for audio separation orchestration."""
+    
     def __init__(self, config: Optional[SeparationConfig] = None,
                  processing_config: Optional[ProcessingConfig] = None):
         self.config = config or SeparationConfig()
@@ -84,7 +88,8 @@ class SeparationService:
         logger.info("SeparationService initialized")
     
     async def separate_audio(self, request: SeparationRequest) -> SeparationResponse:
-        """Main entry point for audio separation."""        # Generate unique request ID
+        """Main entry point for audio separation."""
+        # Generate unique request ID
         self.request_counter += 1
         request_id = f"sep_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{self.request_counter:04d}"
         
@@ -173,7 +178,8 @@ class SeparationService:
         return response
     
     async def separate_audio_async(self, request: SeparationRequest) -> str:
-        """Start asynchronous separation process."""        request_id = f"async_sep_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{self.request_counter:04d}"
+        """Start asynchronous separation process."""
+        request_id = f"async_sep_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{self.request_counter:04d}"
         self.request_counter += 1
         
         # Start separation task
@@ -184,7 +190,8 @@ class SeparationService:
         return request_id
     
     async def get_separation_status(self, request_id: str) -> Dict[str, Any]:
-        """Get status of separation request."""        if request_id not in self.active_requests:
+        """Get status of separation request."""
+        if request_id not in self.active_requests:
             return {"status": "not_found", "error": "Request ID not found"}
         
         task = self.active_requests[request_id]
@@ -211,7 +218,8 @@ class SeparationService:
             return {"status": "processing", "message": "Separation in progress"}
     
     async def _prepare_audio_input(self, request: SeparationRequest) -> Tuple[np.ndarray, int, Optional[ValidationResult]]:
-        """Prepare and validate audio input."""        validation_result = None
+        """Prepare and validate audio input."""
+        validation_result = None
         
         if request.audio_path:
             # Load from file
@@ -241,7 +249,8 @@ class SeparationService:
     
     async def _perform_separation(self, audio: np.ndarray, sample_rate: int,
                                  separation_types: List[str]) -> Dict[str, SeparationResult]:
-        """Perform the actual separation using specified types."""        results = {}
+        """Perform the actual separation using specified types."""
+        results = {}
         
         for sep_type in separation_types:
             try:
@@ -275,7 +284,8 @@ class SeparationService:
         return results
     
     async def cleanup_request(self, request_id: str) -> bool:
-        """Clean up resources for a specific request."""        if request_id in self.active_requests:
+        """Clean up resources for a specific request."""
+        if request_id in self.active_requests:
             task = self.active_requests[request_id]
             if not task.done():
                 task.cancel()
@@ -285,7 +295,8 @@ class SeparationService:
         return False
     
     async def get_service_status(self) -> Dict[str, Any]:
-        """Get service status and statistics."""        return {
+        """Get service status and statistics."""
+        return {
             "service": "SeparationService",
             "status": "running",
             "active_requests": len(self.active_requests),
@@ -298,7 +309,8 @@ class SeparationService:
 
 
 class BatchProcessor:
-    """Service for batch processing multiple audio files."""    
+    """Service for batch processing multiple audio files."""
+    
     def __init__(self, separation_service: SeparationService,
                  max_concurrent: int = 4):
         self.separation_service = separation_service
@@ -310,7 +322,8 @@ class BatchProcessor:
                           output_directory: Optional[Path] = None,
                           quality: SeparationQuality = SeparationQuality.HIGH,
                           output_format: OutputFormat = OutputFormat.WAV) -> Dict[str, SeparationResponse]:
-        """Process multiple files in batch."""        separation_types = separation_types or ["vocal"]
+        """Process multiple files in batch."""
+        separation_types = separation_types or ["vocal"]
         results = {}
         
         # Create tasks for all files
@@ -347,14 +360,16 @@ class BatchProcessor:
         return results
     
     async def _process_single_file(self, request: SeparationRequest, filename: str) -> SeparationResponse:
-        """Process a single file with semaphore control."""        async with self.semaphore:
+        """Process a single file with semaphore control."""
+        async with self.semaphore:
             logger.debug(f"Processing batch file: {filename}")
             return await self.separation_service.separate_audio(request)
     
     async def process_directory(self, directory_path: Path,
                                file_patterns: List[str] = None,
                                **kwargs) -> Dict[str, SeparationResponse]:
-        """Process all audio files in a directory."""        file_patterns = file_patterns or ["*.wav", "*.mp3", "*.flac", "*.aac", "*.ogg"]
+        """Process all audio files in a directory."""
+        file_patterns = file_patterns or ["*.wav", "*.mp3", "*.flac", "*.aac", "*.ogg"]
         
         # Find all matching files
         audio_files = []
@@ -371,7 +386,8 @@ class BatchProcessor:
 
 
 class RealtimeProcessor:
-    """Service for real-time audio separation processing."""    
+    """Service for real-time audio separation processing."""
+    
     def __init__(self, separation_service: SeparationService,
                  buffer_size: int = 4096,
                  overlap: float = 0.25):
@@ -390,7 +406,8 @@ class RealtimeProcessor:
     async def start_streaming(self, separation_types: List[str],
                             sample_rate: int = 44100,
                             callback: Optional[Callable] = None) -> None:
-        """Start real-time streaming separation."""        if self.is_streaming:
+        """Start real-time streaming separation."""
+        if self.is_streaming:
             raise ServiceError("Streaming already active")
         
         self.sample_rate = sample_rate
@@ -408,7 +425,8 @@ class RealtimeProcessor:
         logger.info(f"Started real-time streaming with {separation_types}")
     
     async def process_audio_chunk(self, audio_chunk: np.ndarray) -> Dict[str, np.ndarray]:
-        """Process a chunk of audio in real-time."""        if not self.is_streaming:
+        """Process a chunk of audio in real-time."""
+        if not self.is_streaming:
             raise ServiceError("Streaming not active")
         
         # Add to buffer
@@ -448,7 +466,8 @@ class RealtimeProcessor:
         return results
     
     async def stop_streaming(self) -> None:
-        """Stop real-time streaming."""        self.is_streaming = False
+        """Stop real-time streaming."""
+        self.is_streaming = False
         self.audio_buffer = np.array([])
         self.separators.clear()
         self.callbacks.clear()
@@ -456,14 +475,17 @@ class RealtimeProcessor:
         logger.info("Stopped real-time streaming")
     
     def add_callback(self, name: str, callback: Callable) -> None:
-        """Add callback for processed audio."""        self.callbacks[name] = callback
+        """Add callback for processed audio."""
+        self.callbacks[name] = callback
     
     def remove_callback(self, name: str) -> None:
-        """Remove callback."""        if name in self.callbacks:
+        """Remove callback."""
+        if name in self.callbacks:
             del self.callbacks[name]
     
     def get_streaming_status(self) -> Dict[str, Any]:
-        """Get real-time streaming status."""        return {
+        """Get real-time streaming status."""
+        return {
             "is_streaming": self.is_streaming,
             "buffer_size": self.buffer_size,
             "hop_size": self.hop_size,
@@ -476,7 +498,8 @@ class RealtimeProcessor:
 
 # Factory functions for service creation
 def create_separation_service(config: Optional[Dict[str, Any]] = None) -> SeparationService:
-    """Factory function to create configured separation service."""    if config:
+    """Factory function to create configured separation service."""
+    if config:
         separation_config = SeparationConfig(**config.get('separation', {}))
         processing_config = ProcessingConfig(**config.get('processing', {}))
     else:
@@ -488,7 +511,8 @@ def create_separation_service(config: Optional[Dict[str, Any]] = None) -> Separa
 
 def create_batch_processor(separation_service: Optional[SeparationService] = None,
                           max_concurrent: int = 4) -> BatchProcessor:
-    """Factory function to create batch processor."""    if separation_service is None:
+    """Factory function to create batch processor."""
+    if separation_service is None:
         separation_service = create_separation_service()
     
     return BatchProcessor(separation_service, max_concurrent)
@@ -497,7 +521,8 @@ def create_batch_processor(separation_service: Optional[SeparationService] = Non
 def create_realtime_processor(separation_service: Optional[SeparationService] = None,
                             buffer_size: int = 4096,
                             overlap: float = 0.25) -> RealtimeProcessor:
-    """Factory function to create real-time processor."""    if separation_service is None:
+    """Factory function to create real-time processor."""
+    if separation_service is None:
         separation_service = create_separation_service()
     
     return RealtimeProcessor(separation_service, buffer_size, overlap)
@@ -505,23 +530,27 @@ def create_realtime_processor(separation_service: Optional[SeparationService] = 
 
 # Service registry for dependency injection
 class ServiceRegistry:
-    """Registry for managing separation service instances."""    
+    """Registry for managing separation service instances."""
+    
     _instances = {}
     
     @classmethod
     def register(cls, name: str, service: Any) -> None:
-        """Register a service instance."""        cls._instances[name] = service
+        """Register a service instance."""
+        cls._instances[name] = service
         logger.debug(f"Registered service: {name}")
     
     @classmethod
     def get(cls, name: str) -> Any:
-        """Get a registered service instance."""        if name not in cls._instances:
+        """Get a registered service instance."""
+        if name not in cls._instances:
             raise ServiceError(f"Service not registered: {name}")
         return cls._instances[name]
     
     @classmethod
     def unregister(cls, name: str) -> bool:
-        """Unregister a service instance."""        if name in cls._instances:
+        """Unregister a service instance."""
+        if name in cls._instances:
             del cls._instances[name]
             logger.debug(f"Unregistered service: {name}")
             return True
@@ -529,17 +558,20 @@ class ServiceRegistry:
     
     @classmethod
     def list_services(cls) -> List[str]:
-        """List all registered services."""        return list(cls._instances.keys())
+        """List all registered services."""
+        return list(cls._instances.keys())
     
     @classmethod
     def clear(cls) -> None:
-        """Clear all registered services."""        cls._instances.clear()
+        """Clear all registered services."""
+        cls._instances.clear()
         logger.debug("Cleared all registered services")
 
 
 # Default service instances
 def setup_default_services() -> None:
-    """Setup default service instances in registry."""    # Main separation service
+    """Setup default service instances in registry."""
+    # Main separation service
     separation_service = create_separation_service()
     ServiceRegistry.register("separation", separation_service)
     

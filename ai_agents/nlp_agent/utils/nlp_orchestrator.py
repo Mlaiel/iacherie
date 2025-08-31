@@ -6,7 +6,8 @@ manages workflows, and provides unified interface for text processing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Union, Tuple
 from datetime import datetime
@@ -32,7 +33,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ProcessingRequest:
-    """Request object for text processing"""    text: Union[str, List[str]]
+    """Request object for text processing"""
+    text: Union[str, List[str]]
     request_id: Optional[str] = None
     language: Optional[str] = None
     processing_mode: ProcessingMode = ProcessingMode.BALANCED
@@ -50,7 +52,8 @@ class ProcessingRequest:
 
 @dataclass
 class ProcessingResult:
-    """Comprehensive result from NLP processing"""    request_id: str
+    """Comprehensive result from NLP processing"""
+    request_id: str
     text: str
     language: Optional[LanguageResult] = None
     sentiment: Optional[SentimentResult] = None
@@ -67,11 +70,14 @@ class ProcessingResult:
     errors: List[str] = field(default_factory=list)
 
 class NLPOrchestrator:
-    """    Main orchestration engine for coordinating NLP processing tasks.
+    """
+    Main orchestration engine for coordinating NLP processing tasks.
     Manages workflows and provides unified interface for text processing.
-    """    
+    """
+    
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize NLP Orchestrator"""        self.config = config or default_config
+        """Initialize NLP Orchestrator"""
+        self.config = config or default_config
         self.components = {}
         self.executor = ThreadPoolExecutor(max_workers=self.config.performance.max_workers)
         self.processing_stats = {
@@ -84,7 +90,8 @@ class NLPOrchestrator:
         self._initialize_components()
     
     def _initialize_components(self):
-        """Initialize all NLP components"""        try:
+        """Initialize all NLP components"""
+        try:
             # Core components
             self.components["text_analyzer"] = TextAnalyzer(self.config)
             self.components["embeddings_engine"] = EmbeddingsEngine(self.config)
@@ -122,7 +129,8 @@ class NLPOrchestrator:
         request_id: Optional[str] = None,
         **kwargs
     ) -> Union[ProcessingResult, List[ProcessingResult]]:
-        """        Process text through the NLP pipeline
+        """
+        Process text through the NLP pipeline
         
         Args:
             text: Text or list of texts to process
@@ -131,7 +139,8 @@ class NLPOrchestrator:
         
         Returns:
             ProcessingResult or list of results
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         # Handle single text vs batch
         is_batch = isinstance(text, list)
@@ -174,7 +183,8 @@ class NLPOrchestrator:
         request_id: str,
         request: ProcessingRequest
     ) -> ProcessingResult:
-        """Process a single text through the NLP pipeline"""        start_time = time.time()
+        """Process a single text through the NLP pipeline"""
+        start_time = time.time()
         result = ProcessingResult(request_id=request_id, text=text)
         
         try:
@@ -254,7 +264,8 @@ class NLPOrchestrator:
             return result
     
     async def _execute_tasks_concurrently(self, tasks: List[Tuple[str, Any]]) -> Dict[str, Any]:
-        """Execute processing tasks concurrently"""        results = {}
+        """Execute processing tasks concurrently"""
+        results = {}
         
         if self.config.performance.use_multiprocessing and len(tasks) > 1:
             # Use thread pool for concurrent execution
@@ -290,7 +301,8 @@ class NLPOrchestrator:
         return results
     
     async def _detect_language(self, text: str) -> Optional[LanguageResult]:
-        """Detect language of text"""        try:
+        """Detect language of text"""
+        try:
             detector = self.components.get("language_detector")
             if detector:
                 return await detector.detect_language(text)
@@ -299,7 +311,8 @@ class NLPOrchestrator:
             return None
     
     async def _analyze_text(self, text: str) -> Optional[TextAnalysisResult]:
-        """Perform basic text analysis"""        try:
+        """Perform basic text analysis"""
+        try:
             analyzer = self.components.get("text_analyzer")
             if analyzer:
                 return await analyzer.analyze(text)
@@ -308,7 +321,8 @@ class NLPOrchestrator:
             return None
     
     async def _analyze_sentiment(self, text: str, language: Optional[str] = None) -> Optional[SentimentResult]:
-        """Analyze sentiment of text"""        try:
+        """Analyze sentiment of text"""
+        try:
             sentiment_engine = self.components.get("sentiment_engine")
             if sentiment_engine:
                 return await sentiment_engine.analyze_sentiment(text, language)
@@ -317,7 +331,8 @@ class NLPOrchestrator:
             return None
     
     async def _extract_entities(self, text: str, language: Optional[str] = None) -> Optional[EntityResult]:
-        """Extract named entities from text"""        try:
+        """Extract named entities from text"""
+        try:
             entity_extractor = self.components.get("entity_extractor")
             if entity_extractor:
                 return await entity_extractor.extract_entities(text, language)
@@ -326,7 +341,8 @@ class NLPOrchestrator:
             return None
     
     async def _classify_content(self, text: str) -> Optional[ClassificationResult]:
-        """Classify content categories"""        try:
+        """Classify content categories"""
+        try:
             classifier = self.components.get("content_classifier")
             if classifier:
                 return await classifier.classify(text)
@@ -335,7 +351,8 @@ class NLPOrchestrator:
             return None
     
     async def _recognize_intent(self, text: str) -> Optional[IntentResult]:
-        """Recognize user intent"""        try:
+        """Recognize user intent"""
+        try:
             intent_recognizer = self.components.get("intent_recognizer")
             if intent_recognizer:
                 return await intent_recognizer.recognize_intent(text)
@@ -344,7 +361,8 @@ class NLPOrchestrator:
             return None
     
     async def _generate_embeddings(self, text: str) -> Optional[List[float]]:
-        """Generate text embeddings"""        try:
+        """Generate text embeddings"""
+        try:
             embeddings_engine = self.components.get("embeddings_engine")
             if embeddings_engine:
                 return await embeddings_engine.generate_embeddings(text)
@@ -353,7 +371,8 @@ class NLPOrchestrator:
             return None
     
     async def _process_semantics(self, text: str) -> Optional[SemanticResult]:
-        """Process semantic information"""        try:
+        """Process semantic information"""
+        try:
             semantic_processor = self.components.get("semantic_processor")
             if semantic_processor:
                 return await semantic_processor.process(text)
@@ -362,7 +381,8 @@ class NLPOrchestrator:
             return None
     
     async def _extract_topics(self, texts: List[str]) -> Optional[TopicResult]:
-        """Extract topics from texts"""        try:
+        """Extract topics from texts"""
+        try:
             topic_modeler = self.components.get("topic_modeler")
             if topic_modeler:
                 return await topic_modeler.extract_topics(texts)
@@ -371,7 +391,8 @@ class NLPOrchestrator:
             return None
     
     async def _generate_fingerprint(self, text: str) -> Optional[FingerprintResult]:
-        """Generate text fingerprint"""        try:
+        """Generate text fingerprint"""
+        try:
             fingerprinter = self.components.get("text_fingerprinter")
             if fingerprinter:
                 return await fingerprinter.generate_fingerprint(text)
@@ -380,7 +401,8 @@ class NLPOrchestrator:
             return None
     
     def _validate_text(self, text: str) -> bool:
-        """Validate input text"""        if not text or not isinstance(text, str):
+        """Validate input text"""
+        if not text or not isinstance(text, str):
             return False
         
         text_length = len(text.strip())
@@ -393,11 +415,13 @@ class NLPOrchestrator:
         return True
     
     def _generate_request_id(self) -> str:
-        """Generate unique request ID"""        import uuid
+        """Generate unique request ID"""
+        import uuid
         return f"nlp_{uuid.uuid4().hex[:8]}"
     
     def _update_stats(self, num_texts: int, processing_time: float, success: bool):
-        """Update processing statistics"""        self.processing_stats["total_requests"] += num_texts
+        """Update processing statistics"""
+        self.processing_stats["total_requests"] += num_texts
         self.processing_stats["total_processing_time"] += processing_time
         
         if success:
@@ -418,7 +442,8 @@ class NLPOrchestrator:
         batch_size: Optional[int] = None,
         **kwargs
     ) -> List[ProcessingResult]:
-        """        Process multiple texts in optimized batches
+        """
+        Process multiple texts in optimized batches
         
         Args:
             texts: List of texts to process
@@ -427,7 +452,8 @@ class NLPOrchestrator:
         
         Returns:
             List of processing results
-        """        if not texts:
+        """
+        if not texts:
             return []
         
         batch_size = batch_size or self.config.processing.batch_size
@@ -442,7 +468,8 @@ class NLPOrchestrator:
         return results
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get processing statistics"""        return {
+        """Get processing statistics"""
+        return {
             **self.processing_stats,
             "components_loaded": len(self.components),
             "config_mode": self.config.processing.mode.value,
@@ -450,7 +477,8 @@ class NLPOrchestrator:
         }
     
     def get_component_info(self) -> Dict[str, Dict[str, Any]]:
-        """Get information about loaded components"""        component_info = {}
+        """Get information about loaded components"""
+        component_info = {}
         
         for name, component in self.components.items():
             component_info[name] = {
@@ -462,7 +490,8 @@ class NLPOrchestrator:
         return component_info
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive health check"""        health = {
+        """Perform comprehensive health check"""
+        health = {
             "status": "healthy",
             "timestamp": datetime.now().isoformat(),
             "orchestrator": {
@@ -488,7 +517,8 @@ class NLPOrchestrator:
         return health
     
     def shutdown(self):
-        """Shutdown the orchestrator and all components"""        logger.info("Shutting down NLP Orchestrator")
+        """Shutdown the orchestrator and all components"""
+        logger.info("Shutting down NLP Orchestrator")
         
         # Shutdown components
         for name, component in self.components.items():
@@ -505,7 +535,8 @@ class NLPOrchestrator:
 
 # Async context manager support
 class AsyncNLPOrchestrator:
-    """Async context manager wrapper for NLP Orchestrator"""    
+    """Async context manager wrapper for NLP Orchestrator"""
+    
     def __init__(self, config: Optional[NLPAgentConfig] = None):
         self.config = config
         self.orchestrator = None

@@ -15,7 +15,8 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICT
 and will result in immediate legal action under German and International copyright laws.
 
 Contact mlaiel@live.de for licensing inquiries only.
-"""import asyncio
+"""
+import asyncio
 import logging
 import uuid
 import psutil
@@ -37,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 
 class PerformanceMetric(Enum):
-    """Performance metric types"""    EXECUTION_TIME = "execution_time"
+    """Performance metric types"""
+    EXECUTION_TIME = "execution_time"
     MEMORY_USAGE = "memory_usage"
     CPU_USAGE = "cpu_usage"
     THROUGHPUT = "throughput"
@@ -48,7 +50,8 @@ class PerformanceMetric(Enum):
 
 
 class OptimizationStrategy(Enum):
-    """Performance optimization strategies"""    AUTOSCALING = "autoscaling"
+    """Performance optimization strategies"""
+    AUTOSCALING = "autoscaling"
     LOAD_BALANCING = "load_balancing"
     CACHING = "caching"
     BATCHING = "batching"
@@ -58,7 +61,8 @@ class OptimizationStrategy(Enum):
 
 
 class ResourceType(Enum):
-    """System resource types"""    CPU = "cpu"
+    """System resource types"""
+    CPU = "cpu"
     MEMORY = "memory"
     NETWORK = "network"
     DISK = "disk"
@@ -69,7 +73,8 @@ class ResourceType(Enum):
 
 @dataclass
 class PerformanceData:
-    """Performance measurement data point"""    metric_type: PerformanceMetric
+    """Performance measurement data point"""
+    metric_type: PerformanceMetric
     value: float
     timestamp: datetime
     context: Dict[str, Any] = field(default_factory=dict)
@@ -78,7 +83,8 @@ class PerformanceData:
 
 @dataclass
 class ResourceMetrics:
-    """System resource metrics"""    cpu_percent: float
+    """System resource metrics"""
+    cpu_percent: float
     memory_percent: float
     memory_used_mb: float
     memory_available_mb: float
@@ -92,7 +98,8 @@ class ResourceMetrics:
 
 @dataclass
 class OptimizationRule:
-    """Performance optimization rule"""    rule_id: str
+    """Performance optimization rule"""
+    rule_id: str
     name: str
     strategy: OptimizationStrategy
     conditions: List[Dict[str, Any]]
@@ -105,7 +112,8 @@ class OptimizationRule:
 
 @dataclass
 class WorkflowProfile:
-    """Workflow performance profile"""    workflow_id: str
+    """Workflow performance profile"""
+    workflow_id: str
     avg_execution_time: float
     avg_memory_usage: float
     avg_cpu_usage: float
@@ -118,8 +126,10 @@ class WorkflowProfile:
 
 
 class WorkflowOptimizer:
-    """    Core workflow performance optimizer with intelligent optimization strategies
-    """    
+    """
+    Core workflow performance optimizer with intelligent optimization strategies
+    """
+    
     def __init__(self, max_history_size: int = 10000):
         self.performance_history: Dict[str, deque] = defaultdict(
             lambda: deque(maxlen=max_history_size)
@@ -133,7 +143,8 @@ class WorkflowOptimizer:
         self._initialize_resource_monitoring()
     
     def _setup_default_rules(self):
-        """Setup default optimization rules"""        default_rules = [
+        """Setup default optimization rules"""
+        default_rules = [
             OptimizationRule(
                 rule_id="high_memory_usage",
                 name="High Memory Usage Optimization",
@@ -189,7 +200,8 @@ class WorkflowOptimizer:
             self.optimization_rules[rule.rule_id] = rule
     
     def _initialize_resource_monitoring(self):
-        """Initialize system resource monitoring"""        self.resource_monitors = {
+        """Initialize system resource monitoring"""
+        self.resource_monitors = {
             ResourceType.CPU: self._monitor_cpu,
             ResourceType.MEMORY: self._monitor_memory,
             ResourceType.DISK: self._monitor_disk,
@@ -205,7 +217,8 @@ class WorkflowOptimizer:
         context: Optional[Dict[str, Any]] = None,
         tags: Optional[List[str]] = None
     ):
-        """Record performance metric for workflow"""        metric = PerformanceData(
+        """Record performance metric for workflow"""
+        metric = PerformanceData(
             metric_type=metric_type,
             value=value,
             timestamp=datetime.utcnow(),
@@ -223,7 +236,8 @@ class WorkflowOptimizer:
         asyncio.create_task(self._check_optimization_triggers(workflow_id))
     
     def _update_workflow_profile(self, workflow_id: str):
-        """Update workflow performance profile"""        try:
+        """Update workflow performance profile"""
+        try:
             # Collect recent metrics
             execution_times = self._get_recent_metrics(workflow_id, PerformanceMetric.EXECUTION_TIME)
             memory_usage = self._get_recent_metrics(workflow_id, PerformanceMetric.MEMORY_USAGE)
@@ -256,7 +270,8 @@ class WorkflowOptimizer:
         metric_type: PerformanceMetric,
         minutes: int = 10
     ) -> List[float]:
-        """Get recent metrics for workflow"""        key = f"{workflow_id}:{metric_type.value}"
+        """Get recent metrics for workflow"""
+        key = f"{workflow_id}:{metric_type.value}"
         cutoff_time = datetime.utcnow() - timedelta(minutes=minutes)
         
         metrics = self.performance_history.get(key, deque())
@@ -271,7 +286,8 @@ class WorkflowOptimizer:
         self,
         profile: WorkflowProfile
     ) -> List[str]:
-        """Identify optimization opportunities for workflow"""        opportunities = []
+        """Identify optimization opportunities for workflow"""
+        opportunities = []
         
         # High execution time
         if profile.avg_execution_time > 30.0:  # seconds
@@ -296,7 +312,8 @@ class WorkflowOptimizer:
         return opportunities
     
     async def _check_optimization_triggers(self, workflow_id: str):
-        """Check if any optimization rules should be triggered"""        try:
+        """Check if any optimization rules should be triggered"""
+        try:
             current_metrics = self._get_current_metrics(workflow_id)
             
             for rule in self.optimization_rules.values():
@@ -318,7 +335,8 @@ class WorkflowOptimizer:
             logger.error(f"Error checking optimization triggers for {workflow_id}: {e}")
     
     def _get_current_metrics(self, workflow_id: str) -> Dict[str, float]:
-        """Get current metric values for workflow"""        metrics = {}
+        """Get current metric values for workflow"""
+        metrics = {}
         
         for metric_type in PerformanceMetric:
             recent_values = self._get_recent_metrics(workflow_id, metric_type, minutes=5)
@@ -332,7 +350,8 @@ class WorkflowOptimizer:
         rule: OptimizationRule,
         current_metrics: Dict[str, float]
     ) -> bool:
-        """Evaluate if rule conditions are met"""        for condition in rule.conditions:
+        """Evaluate if rule conditions are met"""
+        for condition in rule.conditions:
             metric_name = condition["metric"]
             operator = condition["operator"]
             threshold = condition["threshold"]
@@ -357,7 +376,8 @@ class WorkflowOptimizer:
         workflow_id: str,
         rule: OptimizationRule
     ):
-        """Execute optimization actions for rule"""        try:
+        """Execute optimization actions for rule"""
+        try:
             logger.info(f"Executing optimization rule '{rule.name}' for workflow {workflow_id}")
             
             for action in rule.actions:
@@ -386,44 +406,52 @@ class WorkflowOptimizer:
             logger.error(f"Error executing optimization actions for rule '{rule.name}': {e}")
     
     async def _reduce_batch_size(self, workflow_id: str, factor: float):
-        """Reduce batch size for workflow"""        callback = self.optimization_callbacks.get("reduce_batch_size")
+        """Reduce batch size for workflow"""
+        callback = self.optimization_callbacks.get("reduce_batch_size")
         if callback:
             await callback(workflow_id, factor)
         logger.info(f"Reduced batch size for workflow {workflow_id} by factor {factor}")
     
     async def _increase_workers(self, workflow_id: str, factor: float):
-        """Increase worker count for workflow"""        callback = self.optimization_callbacks.get("increase_workers")
+        """Increase worker count for workflow"""
+        callback = self.optimization_callbacks.get("increase_workers")
         if callback:
             await callback(workflow_id, factor)
         logger.info(f"Increased workers for workflow {workflow_id} by factor {factor}")
     
     async def _enable_circuit_breaker(self, workflow_id: str):
-        """Enable circuit breaker for workflow"""        callback = self.optimization_callbacks.get("enable_circuit_breaker")
+        """Enable circuit breaker for workflow"""
+        callback = self.optimization_callbacks.get("enable_circuit_breaker")
         if callback:
             await callback(workflow_id)
         logger.info(f"Enabled circuit breaker for workflow {workflow_id}")
     
     async def _clear_caches(self, workflow_id: str):
-        """Clear caches for workflow"""        callback = self.optimization_callbacks.get("clear_caches")
+        """Clear caches for workflow"""
+        callback = self.optimization_callbacks.get("clear_caches")
         if callback:
             await callback(workflow_id)
         logger.info(f"Cleared caches for workflow {workflow_id}")
     
     async def _throttle_requests(self, workflow_id: str, factor: float):
-        """Throttle requests for workflow"""        callback = self.optimization_callbacks.get("throttle_requests")
+        """Throttle requests for workflow"""
+        callback = self.optimization_callbacks.get("throttle_requests")
         if callback:
             await callback(workflow_id, factor)
         logger.info(f"Throttled requests for workflow {workflow_id} by factor {factor}")
     
     def register_optimization_callback(self, action_type: str, callback: Callable):
-        """Register callback for optimization action"""        self.optimization_callbacks[action_type] = callback
+        """Register callback for optimization action"""
+        self.optimization_callbacks[action_type] = callback
         logger.info(f"Registered optimization callback for '{action_type}'")
     
     def get_workflow_profile(self, workflow_id: str) -> Optional[WorkflowProfile]:
-        """Get workflow performance profile"""        return self.workflow_profiles.get(workflow_id)
+        """Get workflow performance profile"""
+        return self.workflow_profiles.get(workflow_id)
     
     def get_performance_report(self, workflow_id: str) -> Dict[str, Any]:
-        """Get comprehensive performance report for workflow"""        profile = self.workflow_profiles.get(workflow_id)
+        """Get comprehensive performance report for workflow"""
+        profile = self.workflow_profiles.get(workflow_id)
         if not profile:
             return {"error": f"No profile found for workflow {workflow_id}"}
         
@@ -464,10 +492,12 @@ class WorkflowOptimizer:
         }
     
     def _monitor_cpu(self) -> float:
-        """Monitor CPU usage"""        return psutil.cpu_percent(interval=1)
+        """Monitor CPU usage"""
+        return psutil.cpu_percent(interval=1)
     
     def _monitor_memory(self) -> Dict[str, float]:
-        """Monitor memory usage"""        memory = psutil.virtual_memory()
+        """Monitor memory usage"""
+        memory = psutil.virtual_memory()
         return {
             "percent": memory.percent,
             "used_mb": memory.used / (1024 * 1024),
@@ -475,23 +505,28 @@ class WorkflowOptimizer:
         }
     
     def _monitor_disk(self) -> float:
-        """Monitor disk usage"""        disk = psutil.disk_usage('/')
+        """Monitor disk usage"""
+        disk = psutil.disk_usage('/')
         return disk.percent
     
     def _monitor_network(self) -> Dict[str, int]:
-        """Monitor network usage"""        network = psutil.net_io_counters()
+        """Monitor network usage"""
+        network = psutil.net_io_counters()
         return {
             "bytes_sent": network.bytes_sent,
             "bytes_recv": network.bytes_recv
         }
     
     def _monitor_threads(self) -> int:
-        """Monitor active threads"""        return threading.active_count()
+        """Monitor active threads"""
+        return threading.active_count()
 
 
 class PerformanceAnalytics:
-    """    Advanced performance analytics and insights
-    """    
+    """
+    Advanced performance analytics and insights
+    """
+    
     def __init__(self, optimizer: WorkflowOptimizer):
         self.optimizer = optimizer
         self.analytics_cache: Dict[str, Dict[str, Any]] = {}
@@ -504,7 +539,8 @@ class PerformanceAnalytics:
         workflow_id: str,
         time_window_hours: int = 24
     ) -> Dict[str, Any]:
-        """Analyze performance trends for workflow"""        try:
+        """Analyze performance trends for workflow"""
+        try:
             cache_key = f"{workflow_id}:{time_window_hours}h"
             
             # Check cache
@@ -568,7 +604,8 @@ class PerformanceAnalytics:
         values: List[float],
         timestamps: List[datetime]
     ) -> Dict[str, Any]:
-        """Calculate trend analysis for metric values"""        if len(values) < 2:
+        """Calculate trend analysis for metric values"""
+        if len(values) < 2:
             return {"trend": "insufficient_data"}
         
         # Convert timestamps to numeric values for regression
@@ -614,7 +651,8 @@ class PerformanceAnalytics:
         workflow_id: str,
         time_window_hours: int
     ) -> List[Dict[str, Any]]:
-        """Detect performance anomalies"""        anomalies = []
+        """Detect performance anomalies"""
+        anomalies = []
         
         for metric_type in PerformanceMetric:
             recent_values = self.optimizer._get_recent_metrics(
@@ -651,7 +689,8 @@ class PerformanceAnalytics:
         trends: Dict[str, Any],
         anomalies: List[Dict[str, Any]]
     ) -> List[str]:
-        """Generate performance insights and recommendations"""        insights = []
+        """Generate performance insights and recommendations"""
+        insights = []
         
         # Trend-based insights
         for metric, trend_data in trends.items():
@@ -685,7 +724,8 @@ class PerformanceAnalytics:
         workflow_id: str,
         prediction_horizon_hours: int = 24
     ) -> Dict[str, Any]:
-        """Predict potential performance issues"""        try:
+        """Predict potential performance issues"""
+        try:
             # Get historical data for prediction
             historical_data = {}
             
@@ -733,7 +773,8 @@ class PerformanceAnalytics:
         predicted_value: float,
         current_value: float
     ) -> str:
-        """Assess risk level for predicted metric value"""        # Define risk thresholds for different metrics
+        """Assess risk level for predicted metric value"""
+        # Define risk thresholds for different metrics
         risk_thresholds = {
             "execution_time": {"high": 60.0, "medium": 30.0},  # seconds
             "memory_usage": {"high": 90.0, "medium": 75.0},    # percent
@@ -753,8 +794,10 @@ class PerformanceAnalytics:
 
 
 class AutoscalingManager:
-    """    Intelligent autoscaling management for workflow resources
-    """    
+    """
+    Intelligent autoscaling management for workflow resources
+    """
+    
     def __init__(self, optimizer: WorkflowOptimizer):
         self.optimizer = optimizer
         self.scaling_policies: Dict[str, Dict[str, Any]] = {}
@@ -776,7 +819,8 @@ class AutoscalingManager:
         scale_down_threshold: float = 50.0,
         cooldown_seconds: int = 300
     ):
-        """Create autoscaling policy"""        self.scaling_policies[policy_id] = {
+        """Create autoscaling policy"""
+        self.scaling_policies[policy_id] = {
             "workflow_id": workflow_id,
             "resource_type": resource_type,
             "min_instances": min_instances,
@@ -794,7 +838,8 @@ class AutoscalingManager:
         logger.info(f"Created scaling policy '{policy_id}' for workflow {workflow_id}")
     
     async def evaluate_scaling_policies(self):
-        """Evaluate all scaling policies and trigger scaling if needed"""        for policy_id, policy in self.scaling_policies.items():
+        """Evaluate all scaling policies and trigger scaling if needed"""
+        for policy_id, policy in self.scaling_policies.items():
             if not policy["enabled"]:
                 continue
             
@@ -836,7 +881,8 @@ class AutoscalingManager:
         action: str,
         metric_value: float
     ):
-        """Execute scaling action"""        try:
+        """Execute scaling action"""
+        try:
             policy = self.scaling_policies[policy_id]
             current_instances = policy["current_instances"]
             
@@ -883,8 +929,10 @@ class AutoscalingManager:
 
 
 class ResourceManager:
-    """    Comprehensive resource management and allocation
-    """    
+    """
+    Comprehensive resource management and allocation
+    """
+    
     def __init__(self):
         self.resource_pools: Dict[str, Dict[str, Any]] = {}
         self.resource_allocations: Dict[str, Dict[str, Any]] = {}
@@ -899,7 +947,8 @@ class ResourceManager:
         total_capacity: float,
         allocation_strategy: str = "fair_share"
     ):
-        """Create resource pool"""        self.resource_pools[pool_id] = {
+        """Create resource pool"""
+        self.resource_pools[pool_id] = {
             "resource_type": resource_type,
             "total_capacity": total_capacity,
             "allocated_capacity": 0.0,
@@ -918,7 +967,8 @@ class ResourceManager:
         requested_amount: float,
         priority: int = 1
     ) -> Dict[str, Any]:
-        """Allocate resources from pool"""        try:
+        """Allocate resources from pool"""
+        try:
             with self.allocation_locks[pool_id]:
                 pool = self.resource_pools.get(pool_id)
                 if not pool:
@@ -975,7 +1025,8 @@ class ResourceManager:
             }
     
     def deallocate_resources(self, allocation_id: str) -> Dict[str, Any]:
-        """Deallocate resources"""        try:
+        """Deallocate resources"""
+        try:
             allocation = self.resource_allocations.get(allocation_id)
             if not allocation:
                 return {
@@ -1016,7 +1067,8 @@ class ResourceManager:
             }
     
     def get_resource_utilization(self) -> Dict[str, Any]:
-        """Get resource utilization across all pools"""        utilization = {}
+        """Get resource utilization across all pools"""
+        utilization = {}
         
         for pool_id, pool in self.resource_pools.items():
             total_capacity = pool["total_capacity"]
@@ -1039,8 +1091,10 @@ class ResourceManager:
 
 
 class EfficiencyEngine:
-    """    Workflow efficiency optimization and analysis engine
-    """    
+    """
+    Workflow efficiency optimization and analysis engine
+    """
+    
     def __init__(self, optimizer: WorkflowOptimizer):
         self.optimizer = optimizer
         self.efficiency_metrics: Dict[str, Dict[str, Any]] = {}
@@ -1048,7 +1102,8 @@ class EfficiencyEngine:
         self.benchmark_data: Dict[str, Dict[str, float]] = {}
     
     def calculate_efficiency_score(self, workflow_id: str) -> Dict[str, Any]:
-        """Calculate overall efficiency score for workflow"""        try:
+        """Calculate overall efficiency score for workflow"""
+        try:
             profile = self.optimizer.get_workflow_profile(workflow_id)
             if not profile:
                 return {"error": f"No profile found for workflow {workflow_id}"}
@@ -1126,7 +1181,8 @@ class EfficiencyEngine:
         self,
         factor_scores: Dict[str, Dict[str, Any]]
     ) -> List[str]:
-        """Generate efficiency optimization suggestions"""        suggestions = []
+        """Generate efficiency optimization suggestions"""
+        suggestions = []
         
         for factor, data in factor_scores.items():
             score = data["score"]
@@ -1156,7 +1212,8 @@ class EfficiencyEngine:
         workflow_id: str,
         benchmark_type: str = "industry_standard"
     ) -> Dict[str, Any]:
-        """Benchmark workflow against standards"""        try:
+        """Benchmark workflow against standards"""
+        try:
             profile = self.optimizer.get_workflow_profile(workflow_id)
             if not profile:
                 return {"error": f"No profile found for workflow {workflow_id}"}
@@ -1220,7 +1277,8 @@ class EfficiencyEngine:
 
 
 class AdvancedOptimization:
-    """Advanced optimization algorithms and machine learning-based optimization"""    
+    """Advanced optimization algorithms and machine learning-based optimization"""
+    
     def __init__(self):
         self.optimization_models: Dict[str, Dict[str, Any]] = {}
         self.optimization_history: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
@@ -1234,7 +1292,8 @@ class AdvancedOptimization:
         generations: int = 50,
         population_size: int = 30
     ) -> Dict[str, Any]:
-        """Optimize workflow parameters using genetic algorithm"""        optimization_id = str(uuid.uuid4())
+        """Optimize workflow parameters using genetic algorithm"""
+        optimization_id = str(uuid.uuid4())
         
         # Initialize population
         population = await self._initialize_population(parameters, population_size)
@@ -1295,7 +1354,8 @@ class AdvancedOptimization:
         cooling_rate: float = 0.95,
         min_temperature: float = 1.0
     ) -> Dict[str, Any]:
-        """Optimize workflow parameters using simulated annealing"""        optimization_id = str(uuid.uuid4())
+        """Optimize workflow parameters using simulated annealing"""
+        optimization_id = str(uuid.uuid4())
         
         # Initialize random solution
         current_solution = await self._generate_random_solution(parameters)
@@ -1360,7 +1420,8 @@ class AdvancedOptimization:
         num_particles: int = 30,
         iterations: int = 100
     ) -> Dict[str, Any]:
-        """Optimize workflow parameters using particle swarm optimization"""        optimization_id = str(uuid.uuid4())
+        """Optimize workflow parameters using particle swarm optimization"""
+        optimization_id = str(uuid.uuid4())
         
         # Initialize particle swarm
         particles = await self._initialize_particle_swarm(parameters, num_particles)
@@ -1422,7 +1483,8 @@ class AdvancedOptimization:
         parameters: Dict[str, Any],
         population_size: int
     ) -> List[Dict[str, Any]]:
-        """Initialize population for genetic algorithm"""        population = []
+        """Initialize population for genetic algorithm"""
+        population = []
         
         for _ in range(population_size):
             individual = await self._generate_random_solution(parameters)
@@ -1434,7 +1496,8 @@ class AdvancedOptimization:
         self,
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate random solution within parameter bounds"""        solution = {}
+        """Generate random solution within parameter bounds"""
+        solution = {}
         
         for param_name, param_config in parameters.items():
             param_type = param_config.get("type", "float")
@@ -1455,7 +1518,8 @@ class AdvancedOptimization:
 
 
 class EfficiencyOptimization:
-    """Efficiency optimization for workflow execution and resource utilization"""    
+    """Efficiency optimization for workflow execution and resource utilization"""
+    
     def __init__(self):
         self.efficiency_metrics: Dict[str, Dict[str, Any]] = {}
         self.optimization_strategies: Dict[str, Callable] = {}
@@ -1467,7 +1531,8 @@ class EfficiencyOptimization:
         current_metrics: Dict[str, Any],
         target_efficiency: float = 0.85
     ) -> Dict[str, Any]:
-        """Optimize workflow efficiency to meet target efficiency level"""        optimization_id = str(uuid.uuid4())
+        """Optimize workflow efficiency to meet target efficiency level"""
+        optimization_id = str(uuid.uuid4())
         
         # Calculate current efficiency
         current_efficiency = await self._calculate_efficiency_score(current_metrics)
@@ -1538,7 +1603,8 @@ class EfficiencyOptimization:
         self,
         metrics: Dict[str, Any]
     ) -> float:
-        """Calculate overall efficiency score from metrics"""        # Efficiency components with weights
+        """Calculate overall efficiency score from metrics"""
+        # Efficiency components with weights
         components = {
             "resource_utilization": 0.3,
             "execution_speed": 0.25,
@@ -1591,7 +1657,8 @@ class EfficiencyOptimization:
         self,
         metrics: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Identify efficiency bottlenecks in workflow execution"""        bottlenecks = []
+        """Identify efficiency bottlenecks in workflow execution"""
+        bottlenecks = []
         
         # High execution time
         execution_time = metrics.get("execution_time", 0)
@@ -1640,7 +1707,8 @@ class EfficiencyOptimization:
         bottlenecks: List[Dict[str, Any]],
         target_improvement: float
     ) -> List[Dict[str, Any]]:
-        """Generate optimization strategies based on identified bottlenecks"""        strategies = []
+        """Generate optimization strategies based on identified bottlenecks"""
+        strategies = []
         
         for bottleneck in bottlenecks:
             if bottleneck["type"] == "slow_execution":
@@ -1696,7 +1764,8 @@ class EfficiencyOptimization:
         metrics: Dict[str, Any],
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Default optimization strategy implementation"""        # Simulate optimization effect
+        """Default optimization strategy implementation"""
+        # Simulate optimization effect
         updated_metrics = metrics.copy()
         
         # Apply generic 10% improvement

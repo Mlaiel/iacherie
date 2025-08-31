@@ -37,7 +37,8 @@ Business Logic Flow:
 Creator Profile Analysis → AI Categorization → Skill Assessment → Portfolio Evaluation → 
 Market Positioning → Smart Matching → Opportunity Discovery → Collaboration Suggestions → 
 Performance Tracking → Revenue Optimization → Ecosystem Growth
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import numpy as np
@@ -83,7 +84,8 @@ settings = get_settings()
 
 
 class DiscoveryCategory(Enum):
-    """Creator discovery categories"""    RISING_STARS = "rising_stars"
+    """Creator discovery categories"""
+    RISING_STARS = "rising_stars"
     ESTABLISHED_TALENT = "established_talent"
     NICHE_SPECIALISTS = "niche_specialists"
     COLLABORATION_READY = "collaboration_ready"
@@ -96,7 +98,8 @@ class DiscoveryCategory(Enum):
 
 
 class MarketplaceSegment(Enum):
-    """Marketplace segments for categorization"""    MUSIC_PRODUCTION = "music_production"
+    """Marketplace segments for categorization"""
+    MUSIC_PRODUCTION = "music_production"
     CONTENT_CREATION = "content_creation"
     VISUAL_ARTS = "visual_arts"
     ENTERTAINMENT = "entertainment"
@@ -109,7 +112,8 @@ class MarketplaceSegment(Enum):
 
 
 class OpportunityType(Enum):
-    """Types of opportunities available"""    COLLABORATION = "collaboration"
+    """Types of opportunities available"""
+    COLLABORATION = "collaboration"
     BRAND_PARTNERSHIP = "brand_partnership"
     SPONSORED_CONTENT = "sponsored_content"
     SKILL_EXCHANGE = "skill_exchange"
@@ -123,7 +127,8 @@ class OpportunityType(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Enhanced creator profile for marketplace discovery"""    creator_id: str
+    """Enhanced creator profile for marketplace discovery"""
+    creator_id: str
     name: str
     creator_type: str
     specialties: List[str]
@@ -146,7 +151,8 @@ class CreatorProfile:
 
 @dataclass
 class DiscoveryResult:
-    """AI-generated discovery result"""    result_id: str
+    """AI-generated discovery result"""
+    result_id: str
     creator: CreatorProfile
     discovery_category: DiscoveryCategory
     relevance_score: float
@@ -164,7 +170,8 @@ class DiscoveryResult:
 
 @dataclass
 class MarketplaceOpportunity:
-    """Business opportunity in the marketplace"""    opportunity_id: str
+    """Business opportunity in the marketplace"""
+    opportunity_id: str
     opportunity_type: OpportunityType
     title: str
     description: str
@@ -184,9 +191,11 @@ class MarketplaceOpportunity:
 
 
 class IntelligentDiscoveryEngine:
-    """    Ultra-advanced discovery engine with AI-powered creator discovery,
+    """
+    Ultra-advanced discovery engine with AI-powered creator discovery,
     smart matching, and business opportunity creation capabilities.
-    """    
+    """
+    
     def __init__(self, 
                  redis_client: redis.Redis,
                  db_session: AsyncSession):
@@ -224,7 +233,8 @@ class IntelligentDiscoveryEngine:
         }
 
     async def initialize_discovery_models(self):
-        """Initialize AI models for intelligent discovery"""        
+        """Initialize AI models for intelligent discovery"""
+        
         try:
             logger.info("Initializing discovery AI models")
             
@@ -257,7 +267,8 @@ class IntelligentDiscoveryEngine:
                               search_criteria: Dict[str, Any],
                               discovery_categories: List[DiscoveryCategory] = None,
                               max_results: int = 20) -> List[DiscoveryResult]:
-        """        Discover creators using AI-powered intelligent search
+        """
+        Discover creators using AI-powered intelligent search
         
         Args:
             search_criteria: Search and filtering criteria
@@ -266,7 +277,8 @@ class IntelligentDiscoveryEngine:
             
         Returns:
             List[DiscoveryResult]: Ranked discovery results
-        """        try:
+        """
+        try:
             logger.info(f"Starting intelligent creator discovery with criteria: {search_criteria}")
             
             # Parse and validate search criteria
@@ -311,7 +323,8 @@ class IntelligentDiscoveryEngine:
     async def discover_trending_creators(self, 
                                        timeframe: timedelta = timedelta(days=7),
                                        category: str = None) -> List[DiscoveryResult]:
-        """Discover creators currently trending based on various signals"""        
+        """Discover creators currently trending based on various signals"""
+        
         try:
             # Analyze trending signals
             trending_signals = await self.trend_analyzer.analyze_creator_trends(
@@ -359,7 +372,8 @@ class IntelligentDiscoveryEngine:
                                   location: str,
                                   radius_km: float = 50.0,
                                   creator_types: List[str] = None) -> List[DiscoveryResult]:
-        """Discover local talent within specified geographic radius"""        
+        """Discover local talent within specified geographic radius"""
+        
         try:
             # Parse location
             base_coordinates = await self._geocode_location(location)
@@ -414,7 +428,8 @@ class IntelligentDiscoveryEngine:
     async def discover_collaboration_opportunities(self, 
                                                  creator_id: str,
                                                  collaboration_types: List[str] = None) -> List[DiscoveryResult]:
-        """Discover potential collaboration opportunities for a specific creator"""        
+        """Discover potential collaboration opportunities for a specific creator"""
+        
         try:
             # Get creator profile
             creator_profile = await self._get_creator_profile(creator_id)
@@ -470,7 +485,8 @@ class IntelligentDiscoveryEngine:
 
     async def create_marketplace_opportunity(self, 
                                            opportunity_data: Dict[str, Any]) -> MarketplaceOpportunity:
-        """Create a new marketplace opportunity with AI-powered targeting"""        
+        """Create a new marketplace opportunity with AI-powered targeting"""
+        
         try:
             # Validate opportunity data
             validated_data = self._validate_opportunity_data(opportunity_data)
@@ -525,11 +541,13 @@ class IntelligentDiscoveryEngine:
     # Helper methods for AI processing and analysis
 
     async def _load_creator_data(self) -> List[Dict[str, Any]]:
-        """Load creator data for AI model training"""        # Implementation to load from database
+        """Load creator data for AI model training"""
+        # Implementation to load from database
         return []
 
     async def _prepare_creator_features(self, creator_data: List[Dict[str, Any]]) -> np.ndarray:
-        """Prepare feature vectors for creator clustering"""        
+        """Prepare feature vectors for creator clustering"""
+        
         features = []
         for creator in creator_data:
             # Extract numeric features
@@ -555,7 +573,8 @@ class IntelligentDiscoveryEngine:
         return self.scaler.fit_transform(features)
 
     async def _build_creator_network(self, creator_data: List[Dict[str, Any]], cluster_labels: np.ndarray):
-        """Build creator collaboration network graph"""        
+        """Build creator collaboration network graph"""
+        
         # Add nodes
         for i, creator in enumerate(creator_data):
             self.creator_network.add_node(
@@ -575,11 +594,13 @@ class IntelligentDiscoveryEngine:
                     self.creator_network.add_edge(creator_id, collaborator_id, weight=1.0)
 
     async def _initialize_trend_predictor(self, creator_data: List[Dict[str, Any]]):
-        """Initialize trend prediction model"""        # Implementation for trend prediction model
+        """Initialize trend prediction model"""
+        # Implementation for trend prediction model
         pass
 
     def _parse_search_criteria(self, criteria: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse and validate search criteria"""        
+        """Parse and validate search criteria"""
+        
         parsed = {
             'creator_types': criteria.get('creator_types', []),
             'skills': criteria.get('skills', []),
@@ -596,14 +617,16 @@ class IntelligentDiscoveryEngine:
         return parsed
 
     async def _get_candidate_creators(self, criteria: Dict[str, Any]) -> List[CreatorProfile]:
-        """Get candidate creator pool based on basic criteria"""        # Implementation to query database with basic filters
+        """Get candidate creator pool based on basic criteria"""
+        # Implementation to query database with basic filters
         return []
 
     async def _apply_intelligent_filtering(self, 
                                          candidates: List[CreatorProfile],
                                          criteria: Dict[str, Any],
                                          categories: List[DiscoveryCategory]) -> List[CreatorProfile]:
-        """Apply AI-powered intelligent filtering"""        
+        """Apply AI-powered intelligent filtering"""
+        
         filtered_candidates = []
         
         for candidate in candidates:
@@ -627,7 +650,8 @@ class IntelligentDiscoveryEngine:
     async def _generate_discovery_result(self, 
                                        creator: CreatorProfile,
                                        criteria: Dict[str, Any]) -> DiscoveryResult:
-        """Generate detailed discovery result for a creator"""        
+        """Generate detailed discovery result for a creator"""
+        
         # Calculate comprehensive scores
         relevance_score = await self._calculate_relevance_score(creator, criteria)
         collaboration_compatibility = await self._assess_collaboration_readiness(creator)
@@ -667,7 +691,8 @@ class IntelligentDiscoveryEngine:
         )
 
     async def _calculate_relevance_score(self, creator: CreatorProfile, criteria: Dict[str, Any]) -> float:
-        """Calculate relevance score between creator and search criteria"""        
+        """Calculate relevance score between creator and search criteria"""
+        
         score_components = []
         
         # Creator type match
@@ -712,7 +737,8 @@ class IntelligentDiscoveryEngine:
             return 0.5  # Neutral score if no criteria
 
     async def _assess_creator_quality(self, creator: CreatorProfile) -> float:
-        """Assess overall creator quality using AI analysis"""        
+        """Assess overall creator quality using AI analysis"""
+        
         quality_factors = []
         
         # Portfolio quality
@@ -742,7 +768,8 @@ class IntelligentDiscoveryEngine:
         return sum(quality_factors) / len(quality_factors) if quality_factors else 0.5
 
     def _assess_social_presence_quality(self, social_presence: Dict[str, Any]) -> float:
-        """Assess social media presence quality"""        
+        """Assess social media presence quality"""
+        
         if not social_presence:
             return 0.3  # Low score for no social presence
         
@@ -771,7 +798,8 @@ class IntelligentDiscoveryEngine:
         return min(1.0, quality_score / platforms)
 
     async def _calculate_location_proximity(self, location1: str, location2: str) -> float:
-        """Calculate location proximity score"""        
+        """Calculate location proximity score"""
+        
         try:
             coords1 = await self._geocode_location(location1)
             coords2 = await self._geocode_location(location2)
@@ -788,7 +816,8 @@ class IntelligentDiscoveryEngine:
         return 0.5  # Neutral score if calculation fails
 
     async def _calculate_keyword_relevance(self, creator: CreatorProfile, keywords: List[str]) -> float:
-        """Calculate keyword relevance using semantic analysis"""        
+        """Calculate keyword relevance using semantic analysis"""
+        
         # Combine creator text data
         creator_text = f"{' '.join(creator.specialties)} {creator.name}"
         
@@ -814,7 +843,8 @@ class IntelligentDiscoveryEngine:
     # Additional helper methods would be implemented here...
 
     async def get_discovery_statistics(self) -> Dict[str, Any]:
-        """Get discovery engine statistics"""        stats = self.discovery_stats.copy()
+        """Get discovery engine statistics"""
+        stats = self.discovery_stats.copy()
         
         # Calculate success rates
         if stats['total_discoveries'] > 0:

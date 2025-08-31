@@ -22,18 +22,27 @@ Contact: mlaiel@live.de
 
 This module manages strategic partnerships, business relationships,
 contract management, and partnership monetization for creators.
-"""from .partnership_manager import PartnershipManager
+"""
+
+from .partnership_manager import PartnershipManager
+
 from .contract_engine import ContractEngine
+
 from .negotiation_engine import NegotiationEngine
+
 from .revenue_distribution import RevenueDistributionService
+
 from .partner_analytics import PartnerAnalyticsService
+
 from .partnership_models import (
     Partnership, PartnershipType, PartnershipStatus,
     Contract, ContractTerm, NegotiationStage,
     PartnershipRevenue, PartnershipMetrics
 )
 from .business_intelligence import BusinessIntelligenceEngine
+
 from .opportunity_finder import OpportunityFinderService
+
 from .partnership_lifecycle import PartnershipLifecycleManager
 
 __version__ = "1.0.0"

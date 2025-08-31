@@ -6,8 +6,10 @@ providing comprehensive multi-platform distribution capabilities with
 advanced optimization, analytics, and monitoring features.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""from .manager import DistributionManager, DistributionRequest, DistributionResult
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+"""
+
+from .manager import DistributionManager, DistributionRequest, DistributionResult
 from .publisher import ContentPublisher, PublishingRequest, PublishingResult
 from .scheduler import DistributionScheduler, SchedulingRequest, SchedulingResult
 from .adapter import PlatformAdapter, BasePlatformAdapter, YouTubeAdapter, InstagramAdapter
@@ -21,7 +23,7 @@ from .index import DistributionSystem, create_distribution_system, get_system_he
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 # Core distribution components
 __all__ = [
@@ -105,24 +107,43 @@ DISTRIBUTION_SYSTEM_INFO = {
 }
 
 from .manager import DistributionManager
+
 from .publisher import ContentPublisher
+
 from .scheduler import DistributionScheduler
+
 from .adapter import PlatformAdapter
+
 from .tracker import DistributionTracker
+
 from .optimizer import DistributionOptimizer
+
 from .validator import DistributionValidator
+
 from .analytics import DistributionAnalytics
+
 from .synchronizer import PlatformSynchronizer
+
 from .router import ContentRouter
+
 from .monitor import DistributionMonitor
+
 from .controller import DistributionController
+
 from .processor import DistributionProcessor
+
 from .orchestrator import DistributionOrchestrator
+
 from .gateway import PlatformGateway
+
 from .aggregator import DistributionAggregator
+
 from .coordinator import DistributionCoordinator
+
 from .engine import DistributionEngine
+
 from .handler import DistributionHandler
+
 from .bridge import PlatformBridge
 
 # Import the main system interface
@@ -158,4 +179,4 @@ __all__ = [
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."

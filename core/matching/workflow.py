@@ -37,7 +37,8 @@ Copyright: 2025 Fahed Mlaiel. All rights reserved.
 This workflow system contains proprietary algorithms and business logic
 developed by Fahed Mlaiel. Unauthorized use, reverse engineering, or distribution
 is strictly prohibited and subject to legal prosecution.
-"""import logging
+"""
+import logging
 import asyncio
 import json
 import numpy as np
@@ -64,7 +65,8 @@ from .processor import MatchProcessor, ProcessingResult, MatchStatus, Processing
 
 
 class WorkflowStage(Enum):
-    """Advanced workflow stage management with AI optimization"""    # Planning & Discovery
+    """Advanced workflow stage management with AI optimization"""
+    # Planning & Discovery
     WORKFLOW_PLANNING = "workflow_planning"
     RESOURCE_ALLOCATION = "resource_allocation"
     DEPENDENCY_ANALYSIS = "dependency_analysis"
@@ -93,7 +95,8 @@ class WorkflowStage(Enum):
 
 
 class WorkflowConfig(Enum):
-    """Intelligent workflow configuration strategies"""    # Performance Optimized
+    """Intelligent workflow configuration strategies"""
+    # Performance Optimized
     HIGH_THROUGHPUT = "high_throughput"      # Maximize processing speed
     HIGH_QUALITY = "high_quality"            # Maximize quality and accuracy
     BALANCED = "balanced"                     # Balance speed and quality
@@ -110,7 +113,8 @@ class WorkflowConfig(Enum):
 
 
 class ExecutionResult(Enum):
-    """Workflow execution results with business intelligence"""    SUCCESS = "success"                   # Successful completion
+    """Workflow execution results with business intelligence"""
+    SUCCESS = "success"                   # Successful completion
     PARTIAL_SUCCESS = "partial_success"   # Partially successful
     FAILURE = "failure"                   # Failed execution
     TIMEOUT = "timeout"                   # Execution timeout
@@ -121,7 +125,8 @@ class ExecutionResult(Enum):
 
 @dataclass
 class WorkflowConfiguration:
-    """Enterprise workflow configuration with AI optimization"""    # Basic Configuration
+    """Enterprise workflow configuration with AI optimization"""
+    # Basic Configuration
     workflow_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = "default_workflow"
     description: str = ""
@@ -158,7 +163,8 @@ class WorkflowConfiguration:
 
 @dataclass
 class ExecutionStatus:
-    """Real-time workflow execution status with comprehensive metrics"""    workflow_id: str
+    """Real-time workflow execution status with comprehensive metrics"""
+    workflow_id: str
     current_stage: WorkflowStage
     overall_progress: float = 0.0
     
@@ -196,7 +202,8 @@ class ExecutionStatus:
 
 @dataclass
 class WorkflowConfig:
-    """Configuration for workflow execution"""    workflow_type: WorkflowType
+    """Configuration for workflow execution"""
+    workflow_type: WorkflowType
     execution_mode: ExecutionMode
     priority: WorkflowPriority
     max_concurrent_matches: int
@@ -210,7 +217,8 @@ class WorkflowConfig:
 
 @dataclass
 class WorkflowTask:
-    """Individual workflow task"""    task_id: str
+    """Individual workflow task"""
+    task_id: str
     match_id: str
     creator_a_id: int
     creator_b_id: int
@@ -227,7 +235,8 @@ class WorkflowTask:
 
 @dataclass
 class WorkflowExecution:
-    """Workflow execution tracking"""    execution_id: str
+    """Workflow execution tracking"""
+    execution_id: str
     workflow_type: WorkflowType
     tasks: List[WorkflowTask]
     started_at: datetime
@@ -242,7 +251,8 @@ class WorkflowExecution:
 
 
 class WorkflowManager:
-    """    Advanced workflow manager for match processing orchestration
+    """
+    Advanced workflow manager for match processing orchestration
     
     This class handles complex workflow scenarios including:
     - Parallel processing of multiple matches
@@ -250,7 +260,8 @@ class WorkflowManager:
     - Priority-based execution
     - Adaptive workflow optimization
     - Resource management and throttling
-    """    
+    """
+    
     def __init__(
         self,
         db_session: Session,
@@ -283,7 +294,8 @@ class WorkflowManager:
         self.resource_monitor = ResourceMonitor()
     
     def _initialize_default_config(self) -> None:
-        """Initialize default workflow configuration"""        self.default_workflow_config = WorkflowConfig(
+        """Initialize default workflow configuration"""
+        self.default_workflow_config = WorkflowConfig(
             workflow_type=WorkflowType.PARALLEL,
             execution_mode=ExecutionMode.ASYNCHRONOUS,
             priority=WorkflowPriority.NORMAL,
@@ -309,7 +321,8 @@ class WorkflowManager:
         creator_pairs: List[Tuple[CreatorProfile, CreatorProfile]],
         workflow_config: Optional[WorkflowConfig] = None
     ) -> WorkflowExecution:
-        """        Execute match workflow for multiple creator pairs
+        """
+        Execute match workflow for multiple creator pairs
         
         Args:
             creator_pairs: List of creator pairs to process
@@ -317,7 +330,8 @@ class WorkflowManager:
             
         Returns:
             Workflow execution result with metrics
-        """        config = workflow_config or self.default_workflow_config
+        """
+        config = workflow_config or self.default_workflow_config
         execution_id = f"workflow_{int(datetime.utcnow().timestamp())}"
         
         try:
@@ -411,7 +425,8 @@ class WorkflowManager:
         creator_pairs: List[Tuple[CreatorProfile, CreatorProfile]],
         config: WorkflowConfig
     ) -> List[WorkflowTask]:
-        """Create workflow tasks from creator pairs"""        tasks = []
+        """Create workflow tasks from creator pairs"""
+        tasks = []
         
         for i, (creator_a, creator_b) in enumerate(creator_pairs):
             task_id = f"task_{creator_a.user_id}_{creator_b.user_id}_{i}"
@@ -450,7 +465,8 @@ class WorkflowManager:
         workflow_execution: WorkflowExecution,
         config: WorkflowConfig
     ) -> None:
-        """Execute workflow sequentially"""        self.logger.info(f"Starting sequential workflow with {len(workflow_execution.tasks)} tasks")
+        """Execute workflow sequentially"""
+        self.logger.info(f"Starting sequential workflow with {len(workflow_execution.tasks)} tasks")
         
         for task in workflow_execution.tasks:
             try:
@@ -475,7 +491,8 @@ class WorkflowManager:
         workflow_execution: WorkflowExecution,
         config: WorkflowConfig
     ) -> None:
-        """Execute workflow in parallel with concurrency control"""        self.logger.info(f"Starting parallel workflow with {len(workflow_execution.tasks)} tasks")
+        """Execute workflow in parallel with concurrency control"""
+        self.logger.info(f"Starting parallel workflow with {len(workflow_execution.tasks)} tasks")
         
         # Create semaphore for concurrency control
         semaphore = asyncio.Semaphore(config.max_concurrent_matches)
@@ -500,7 +517,8 @@ class WorkflowManager:
         workflow_execution: WorkflowExecution,
         config: WorkflowConfig
     ) -> None:
-        """Execute workflow in batches"""        self.logger.info(f"Starting batch workflow with {len(workflow_execution.tasks)} tasks")
+        """Execute workflow in batches"""
+        self.logger.info(f"Starting batch workflow with {len(workflow_execution.tasks)} tasks")
         
         tasks = workflow_execution.tasks
         batch_size = config.batch_size
@@ -535,7 +553,8 @@ class WorkflowManager:
         workflow_execution: WorkflowExecution,
         config: WorkflowConfig
     ) -> None:
-        """Execute workflow based on task priority"""        self.logger.info(f"Starting priority-based workflow with {len(workflow_execution.tasks)} tasks")
+        """Execute workflow based on task priority"""
+        self.logger.info(f"Starting priority-based workflow with {len(workflow_execution.tasks)} tasks")
         
         # Sort tasks by priority
         priority_order = {
@@ -588,7 +607,8 @@ class WorkflowManager:
         workflow_execution: WorkflowExecution,
         config: WorkflowConfig
     ) -> None:
-        """Execute workflow with adaptive optimization"""        self.logger.info(f"Starting adaptive workflow with {len(workflow_execution.tasks)} tasks")
+        """Execute workflow with adaptive optimization"""
+        self.logger.info(f"Starting adaptive workflow with {len(workflow_execution.tasks)} tasks")
         
         # Start with parallel execution
         current_strategy = "parallel"
@@ -640,7 +660,8 @@ class WorkflowManager:
         workflow_execution: WorkflowExecution,
         config: WorkflowConfig
     ) -> None:
-        """Execute a single workflow task"""        task.started_at = datetime.utcnow()
+        """Execute a single workflow task"""
+        task.started_at = datetime.utcnow()
         task.status = "running"
         
         try:
@@ -701,7 +722,8 @@ class WorkflowManager:
         config: WorkflowConfig,
         max_concurrent: int
     ) -> None:
-        """Execute a batch of tasks in parallel"""        semaphore = asyncio.Semaphore(max_concurrent)
+        """Execute a batch of tasks in parallel"""
+        semaphore = asyncio.Semaphore(max_concurrent)
         
         async def execute_with_semaphore(task: WorkflowTask) -> None:
             async with semaphore:
@@ -718,7 +740,8 @@ class WorkflowManager:
         workflow_execution: WorkflowExecution,
         config: WorkflowConfig
     ) -> None:
-        """Execute a batch of tasks sequentially"""        for task in batch:
+        """Execute a batch of tasks sequentially"""
+        for task in batch:
             await self._execute_single_task(task, workflow_execution, config)
             await asyncio.sleep(0.1)  # Small delay between tasks
     
@@ -730,7 +753,8 @@ class WorkflowManager:
         batch_time: float,
         workflow_execution: WorkflowExecution
     ) -> Dict[str, float]:
-        """Analyze performance of a batch execution"""        completed_tasks = [t for t in batch if t.status == "completed"]
+        """Analyze performance of a batch execution"""
+        completed_tasks = [t for t in batch if t.status == "completed"]
         failed_tasks = [t for t in batch if t.status == "failed"]
         
         success_rate = len(completed_tasks) / len(batch) if batch else 0
@@ -747,7 +771,8 @@ class WorkflowManager:
         self,
         workflow_execution: WorkflowExecution
     ) -> Dict[str, float]:
-        """Calculate comprehensive workflow performance metrics"""        total_tasks = len(workflow_execution.tasks)
+        """Calculate comprehensive workflow performance metrics"""
+        total_tasks = len(workflow_execution.tasks)
         
         if total_tasks == 0:
             return {}
@@ -783,30 +808,36 @@ class WorkflowManager:
         creator_b: CreatorProfile,
         config: WorkflowConfig
     ) -> WorkflowPriority:
-        """Calculate task priority based on creator profiles"""        # This would implement sophisticated priority calculation
+        """Calculate task priority based on creator profiles"""
+        # This would implement sophisticated priority calculation
         # For now, return normal priority
         return WorkflowPriority.NORMAL
     
     # Resource management methods
     
     async def _check_resource_availability(self, config: WorkflowConfig) -> bool:
-        """Check if resources are available for processing"""        # Implementation would check CPU, memory, database connections, etc.
+        """Check if resources are available for processing"""
+        # Implementation would check CPU, memory, database connections, etc.
         return True
     
     async def _get_creator_profile(self, creator_id: int) -> Optional[CreatorProfile]:
-        """Get creator profile by ID"""        # Implementation would fetch from database/cache
+        """Get creator profile by ID"""
+        # Implementation would fetch from database/cache
         return None
     
     # Monitoring and reporting methods
     
     async def get_workflow_status(self, execution_id: str) -> Optional[WorkflowExecution]:
-        """Get current status of a workflow execution"""        return self.active_workflows.get(execution_id)
+        """Get current status of a workflow execution"""
+        return self.active_workflows.get(execution_id)
     
     async def get_active_workflows(self) -> List[WorkflowExecution]:
-        """Get all currently active workflows"""        return list(self.active_workflows.values())
+        """Get all currently active workflows"""
+        return list(self.active_workflows.values())
     
     async def cancel_workflow(self, execution_id: str) -> bool:
-        """Cancel a running workflow"""        if execution_id in self.active_workflows:
+        """Cancel a running workflow"""
+        if execution_id in self.active_workflows:
             workflow = self.active_workflows[execution_id]
             workflow.status = "cancelled"
             workflow.completed_at = datetime.utcnow()
@@ -823,7 +854,8 @@ class WorkflowManager:
         return False
     
     async def generate_workflow_report(self, execution_id: str) -> Dict[str, Any]:
-        """Generate comprehensive workflow execution report"""        workflow = self.active_workflows.get(execution_id)
+        """Generate comprehensive workflow execution report"""
+        workflow = self.active_workflows.get(execution_id)
         if not workflow:
             return {}
         
@@ -866,7 +898,8 @@ class WorkflowManager:
 
 
 class ResourceMonitor:
-    """Monitor system resources during workflow execution"""    
+    """Monitor system resources during workflow execution"""
+    
     def __init__(self):
         self.start_time = datetime.utcnow()
         self.peak_memory = 0
@@ -875,19 +908,24 @@ class ResourceMonitor:
         self.cache_operations = 0
     
     def record_memory_usage(self, memory_mb: float) -> None:
-        """Record memory usage"""        self.peak_memory = max(self.peak_memory, memory_mb)
+        """Record memory usage"""
+        self.peak_memory = max(self.peak_memory, memory_mb)
     
     def record_cpu_usage(self, cpu_percent: float) -> None:
-        """Record CPU usage"""        self.peak_cpu = max(self.peak_cpu, cpu_percent)
+        """Record CPU usage"""
+        self.peak_cpu = max(self.peak_cpu, cpu_percent)
     
     def record_database_query(self) -> None:
-        """Record database query"""        self.database_queries += 1
+        """Record database query"""
+        self.database_queries += 1
     
     def record_cache_operation(self) -> None:
-        """Record cache operation"""        self.cache_operations += 1
+        """Record cache operation"""
+        self.cache_operations += 1
     
     def get_resource_summary(self) -> Dict[str, Any]:
-        """Get resource usage summary"""        uptime = (datetime.utcnow() - self.start_time).total_seconds()
+        """Get resource usage summary"""
+        uptime = (datetime.utcnow() - self.start_time).total_seconds()
         
         return {
             'uptime_seconds': uptime,

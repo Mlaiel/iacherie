@@ -23,7 +23,8 @@ Email: mlaiel@live.de pour autorisation d'utilisation.
 • Expert Audio Engineer - Traitement Audio & Fingerprinting
 • Expert DevOps - Infrastructure & Déploiement
 • Expert IA Prompt Engineer - Personnalisation & Recommandations
-"""from typing import List, Dict, Any, Optional
+"""
+from typing import List, Dict, Any, Optional
 import logging
 from datetime import datetime
 
@@ -116,11 +117,13 @@ __all__ = [
 
 
 def get_module_info() -> Dict[str, Any]:
-    """    Retourne les informations complètes du module User Management.
+    """
+    Retourne les informations complètes du module User Management.
     
     Returns:
         Dict[str, Any]: Informations détaillées du module
-    """    return {
+    """
+    return {
         "name": "IA Influencer Agent - User Management Database",
         "version": __version__,
         "author": "Fahed Mlaiel",
@@ -218,11 +221,13 @@ def get_module_info() -> Dict[str, Any]:
 
 
 def get_architecture_overview() -> Dict[str, Any]:
-    """    Retourne un aperçu de l'architecture du module.
+    """
+    Retourne un aperçu de l'architecture du module.
     
     Returns:
         Dict[str, Any]: Vue d'ensemble architecturale
-    """    return {
+    """
+    return {
         "architecture_pattern": "Repository Pattern avec ORM SQLAlchemy et moteur orchestration",
         "database_support": ["PostgreSQL", "MySQL", "SQLite"],
         "scalability": "Multi-tenant avec partitioning automatique",
@@ -260,7 +265,8 @@ def get_architecture_overview() -> Dict[str, Any]:
 
 
 def quick_setup(database_url: str = None, init_db: bool = True) -> UserManagementEngine:
-    """    Configuration rapide du module User Management.
+    """
+    Configuration rapide du module User Management.
     
     Args:
         database_url: URL de connexion à la base de données
@@ -278,7 +284,8 @@ def quick_setup(database_url: str = None, init_db: bool = True) -> UserManagemen
         ...         "username": "testuser",
         ...         "password": "securepass123"
         ...     })
-    """    engine = get_user_management_engine(database_url)
+    """
+    engine = get_user_management_engine(database_url)
     
     if init_db:
         engine.init_database()

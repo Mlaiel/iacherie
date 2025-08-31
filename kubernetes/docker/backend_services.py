@@ -12,7 +12,8 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Professional backend services Docker configuration for high-performance
 multi-format content processing and real-time protection systems.
-"""from typing import Dict, List, Optional, Any, Union
+"""
+from typing import Dict, List, Optional, Any, Union
 import logging
 from dataclasses import dataclass, field
 import yaml
@@ -22,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class BackendServicesDockerConfig:
-    """Enterprise Backend Services Docker configuration"""    
+    """Enterprise Backend Services Docker configuration"""
+    
     # Container Configuration
     image_name: str = "ia-influencer/backend-services"
     image_tag: str = "2.0.0"
@@ -93,7 +95,8 @@ class BackendServicesDockerConfig:
     })
     
     def generate_dockerfile(self) -> str:
-        """Generate production Dockerfile for Backend Services"""        return f"""# IA-Influencer Backend Services - Production Docker Image
+        """Generate production Dockerfile for Backend Services"""
+        return f"""# IA-Influencer Backend Services - Production Docker Image
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 # Professional high-performance Python backend with FastAPI
 
@@ -219,8 +222,10 @@ CMD ["gunicorn", \\
      "--access-logfile", "-", \\
      "--error-logfile", "-", \\
      "main:app"]
-"""    def generate_docker_compose_service(self) -> Dict[str, Any]:
-        """Generate docker-compose service configuration"""        return {
+"""
+    def generate_docker_compose_service(self) -> Dict[str, Any]:
+        """Generate docker-compose service configuration"""
+        return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": self.container_name,
             "restart": "unless-stopped",
@@ -302,7 +307,8 @@ CMD ["gunicorn", \\
         }
     
     def generate_celery_worker_service(self) -> Dict[str, Any]:
-        """Generate Celery worker service configuration"""        return {
+        """Generate Celery worker service configuration"""
+        return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": f"{self.container_name}-worker",
             "restart": "unless-stopped",
@@ -367,7 +373,8 @@ CMD ["gunicorn", \\
         }
     
     def generate_celery_beat_service(self) -> Dict[str, Any]:
-        """Generate Celery beat scheduler service configuration"""        return {
+        """Generate Celery beat scheduler service configuration"""
+        return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": f"{self.container_name}-scheduler",
             "restart": "unless-stopped",
@@ -417,7 +424,8 @@ CMD ["gunicorn", \\
         }
     
     def generate_flower_monitoring_service(self) -> Dict[str, Any]:
-        """Generate Flower monitoring service configuration"""        return {
+        """Generate Flower monitoring service configuration"""
+        return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": f"{self.container_name}-flower",
             "restart": "unless-stopped",
@@ -450,7 +458,8 @@ CMD ["gunicorn", \\
         }
     
     def generate_requirements_txt(self) -> str:
-        """Generate production requirements.txt"""        return """# IA-Influencer Backend Services - Production Dependencies
+        """Generate production requirements.txt"""
+        return """# IA-Influencer Backend Services - Production Dependencies
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
 # Core Framework
@@ -558,9 +567,11 @@ babel==2.13.1
 # Performance
 orjson==3.9.10
 msgpack==1.0.7
-"""    
+"""
+    
     def save_config_files(self, output_dir: str) -> List[str]:
-        """Save all configuration files to output directory"""        import os
+        """Save all configuration files to output directory"""
+        import os
         from pathlib import Path
         
         config_dir = Path(output_dir)

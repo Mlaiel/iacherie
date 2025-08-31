@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """System Maintenance Manager
 Automated system maintenance, updates, and housekeeping for the IA Influencer Agent platform
-"""import os
+"""
+import os
 import sys
 import time
 import json
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 
 class MaintenanceType(Enum):
-    """Maintenance type enumeration"""    SYSTEM_UPDATE = "system_update"
+    """Maintenance type enumeration"""
+    SYSTEM_UPDATE = "system_update"
     DATABASE_MAINTENANCE = "database_maintenance"
     LOG_ROTATION = "log_rotation"
     DISK_CLEANUP = "disk_cleanup"
@@ -41,7 +43,8 @@ class MaintenanceType(Enum):
 
 
 class MaintenanceStatus(Enum):
-    """Maintenance status enumeration"""    SCHEDULED = "scheduled"
+    """Maintenance status enumeration"""
+    SCHEDULED = "scheduled"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -49,7 +52,8 @@ class MaintenanceStatus(Enum):
 
 
 class Priority(Enum):
-    """Priority enumeration"""    LOW = "low"
+    """Priority enumeration"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -57,7 +61,8 @@ class Priority(Enum):
 
 @dataclass
 class MaintenanceWindow:
-    """Maintenance window data class"""    name: str
+    """Maintenance window data class"""
+    name: str
     start_time: str  # HH:MM format
     end_time: str    # HH:MM format
     days_of_week: List[int]  # 0=Monday, 6=Sunday
@@ -68,7 +73,8 @@ class MaintenanceWindow:
 
 @dataclass
 class MaintenanceTask:
-    """Maintenance task data class"""    id: str
+    """Maintenance task data class"""
+    id: str
     name: str
     description: str
     maintenance_type: MaintenanceType
@@ -87,7 +93,8 @@ class MaintenanceTask:
 
 @dataclass
 class SystemHealth:
-    """System health data class"""    timestamp: datetime
+    """System health data class"""
+    timestamp: datetime
     cpu_usage: float
     memory_usage: float
     disk_usage: float
@@ -99,11 +106,14 @@ class SystemHealth:
 
 
 class SystemMaintenance:
-    """    Enterprise-grade system maintenance manager
+    """
+    Enterprise-grade system maintenance manager
     Automates system updates, housekeeping, and preventive maintenance
-    """    
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize system maintenance manager"""        self.config_path = config_path or "/etc/maintenance/config.yaml"
+        """Initialize system maintenance manager"""
+        self.config_path = config_path or "/etc/maintenance/config.yaml"
         self.maintenance_windows = {}
         self.scheduled_tasks = {}
         self.task_history = {}
@@ -116,7 +126,8 @@ class SystemMaintenance:
         self._load_scheduled_tasks()
     
     def _load_configuration(self) -> None:
-        """Load maintenance configuration"""        try:
+        """Load maintenance configuration"""
+        try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r') as f:
                     self.config = yaml.safe_load(f)
@@ -129,7 +140,8 @@ class SystemMaintenance:
             self.config = self._get_default_config()
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default maintenance configuration"""        return {
+        """Get default maintenance configuration"""
+        return {
             "maintenance_windows": {
                 "weekly": {
                     "start_time": "02:00",
@@ -228,7 +240,8 @@ class SystemMaintenance:
         }
     
     def _initialize_maintenance_windows(self) -> None:
-        """Initialize maintenance windows"""        try:
+        """Initialize maintenance windows"""
+        try:
             windows_config = self.config.get("maintenance_windows", {})
             
             for window_name, window_config in windows_config.items():
@@ -248,7 +261,8 @@ class SystemMaintenance:
             logger.error(f"Maintenance windows initialization error: {e}")
     
     def _load_scheduled_tasks(self) -> None:
-        """Load scheduled maintenance tasks"""        try:
+        """Load scheduled maintenance tasks"""
+        try:
             tasks_config = self.config.get("maintenance_tasks", {})
             
             for task_type, task_config in tasks_config.items():
@@ -286,7 +300,8 @@ class SystemMaintenance:
             logger.error(f"Scheduled tasks loading error: {e}")
     
     def _calculate_next_execution_time(self, schedule: str) -> datetime:
-        """Calculate next execution time based on schedule"""        try:
+        """Calculate next execution time based on schedule"""
+        try:
             now = datetime.now()
             
             if schedule == "daily":
@@ -338,7 +353,8 @@ class SystemMaintenance:
             return datetime.now() + timedelta(hours=24)
     
     def start_maintenance(self) -> None:
-        """Start maintenance scheduler"""        try:
+        """Start maintenance scheduler"""
+        try:
             logger.info("Starting system maintenance scheduler")
             self.running = True
             
@@ -353,12 +369,14 @@ class SystemMaintenance:
             logger.error(f"Maintenance startup error: {e}")
     
     def stop_maintenance(self) -> None:
-        """Stop maintenance scheduler"""        self.running = False
+        """Stop maintenance scheduler"""
+        self.running = False
         self.executor.shutdown(wait=True)
         logger.info("System maintenance scheduler stopped")
     
     def _scheduler_loop(self) -> None:
-        """Main scheduler loop"""        try:
+        """Main scheduler loop"""
+        try:
             while self.running:
                 try:
                     current_time = datetime.now()
@@ -387,7 +405,8 @@ class SystemMaintenance:
             logger.error(f"Scheduler loop fatal error: {e}")
     
     def _health_monitoring_loop(self) -> None:
-        """Health monitoring loop"""        try:
+        """Health monitoring loop"""
+        try:
             interval = self.config.get("system_monitoring", {}).get("health_check_interval", 300)
             
             while self.running:
@@ -417,7 +436,8 @@ class SystemMaintenance:
             logger.error(f"Health monitoring loop fatal error: {e}")
     
     def _task_execution_loop(self) -> None:
-        """Task execution loop"""        try:
+        """Task execution loop"""
+        try:
             while self.running:
                 try:
                     # Execute queued tasks
@@ -441,7 +461,8 @@ class SystemMaintenance:
             logger.error(f"Task execution loop fatal error: {e}")
     
     def _is_in_maintenance_window(self, current_time: datetime) -> bool:
-        """Check if current time is in a maintenance window"""        try:
+        """Check if current time is in a maintenance window"""
+        try:
             current_weekday = current_time.weekday()
             current_time_str = current_time.strftime("%H:%M")
             
@@ -457,7 +478,8 @@ class SystemMaintenance:
             return False
     
     def _queue_task_for_execution(self, task: MaintenanceTask) -> None:
-        """Queue task for execution"""        try:
+        """Queue task for execution"""
+        try:
             # Check prerequisites
             if self._check_task_prerequisites(task):
                 task._queued_for_execution = True
@@ -471,7 +493,8 @@ class SystemMaintenance:
             logger.error(f"Task queueing error: {e}")
     
     def _check_task_prerequisites(self, task: MaintenanceTask) -> bool:
-        """Check if task prerequisites are met"""        try:
+        """Check if task prerequisites are met"""
+        try:
             # Check system health
             if self.system_health_history:
                 latest_health = self.system_health_history[-1]
@@ -497,7 +520,8 @@ class SystemMaintenance:
             return False
     
     def _execute_maintenance_task(self, task: MaintenanceTask) -> None:
-        """Execute maintenance task"""        try:
+        """Execute maintenance task"""
+        try:
             logger.info(f"Starting maintenance task: {task.name}")
             
             task.status = MaintenanceStatus.RUNNING
@@ -556,7 +580,8 @@ class SystemMaintenance:
             task.completed_time = datetime.now()
     
     def _execute_system_update(self, task: MaintenanceTask) -> bool:
-        """Execute system update maintenance"""        try:
+        """Execute system update maintenance"""
+        try:
             task.output_log.append("Starting system update...")
             
             # Create backup if requested
@@ -600,7 +625,8 @@ class SystemMaintenance:
             return False
     
     def _execute_database_maintenance(self, task: MaintenanceTask) -> bool:
-        """Execute database maintenance"""        try:
+        """Execute database maintenance"""
+        try:
             task.output_log.append("Starting database maintenance...")
             
             db_config = self.config.get("database", {})
@@ -634,7 +660,8 @@ class SystemMaintenance:
             return False
     
     def _execute_log_rotation(self, task: MaintenanceTask) -> bool:
-        """Execute log rotation"""        try:
+        """Execute log rotation"""
+        try:
             task.output_log.append("Starting log rotation...")
             
             log_dir = Path(self.config.get("paths", {}).get("log_directory", "/var/log"))
@@ -691,7 +718,8 @@ class SystemMaintenance:
             return False
     
     def _execute_disk_cleanup(self, task: MaintenanceTask) -> bool:
-        """Execute disk cleanup"""        try:
+        """Execute disk cleanup"""
+        try:
             task.output_log.append("Starting disk cleanup...")
             
             paths = self.config.get("paths", {})
@@ -736,7 +764,8 @@ class SystemMaintenance:
             return False
     
     def _execute_backup_cleanup(self, task: MaintenanceTask) -> bool:
-        """Execute backup cleanup"""        try:
+        """Execute backup cleanup"""
+        try:
             task.output_log.append("Starting backup cleanup...")
             
             backup_dir = Path(self.config.get("paths", {}).get("backup_directory", "/var/backups"))
@@ -760,7 +789,8 @@ class SystemMaintenance:
             return False
     
     def _execute_certificate_renewal(self, task: MaintenanceTask) -> bool:
-        """Execute certificate renewal"""        try:
+        """Execute certificate renewal"""
+        try:
             task.output_log.append("Starting certificate renewal check...")
             
             renewal_threshold_days = task.parameters.get("renewal_threshold_days", 30)
@@ -781,7 +811,8 @@ class SystemMaintenance:
             return False
     
     def _cleanup_directory(self, directory: Path, days: int, pattern: str = "*") -> int:
-        """Clean up files in directory older than specified days"""        try:
+        """Clean up files in directory older than specified days"""
+        try:
             if not directory.exists():
                 return 0
             
@@ -804,7 +835,8 @@ class SystemMaintenance:
             return 0
     
     def _execute_post_actions(self, task: MaintenanceTask) -> None:
-        """Execute post-maintenance actions"""        try:
+        """Execute post-maintenance actions"""
+        try:
             for action in task.post_actions:
                 if action == "restart_services":
                     # Restart specific services
@@ -820,7 +852,8 @@ class SystemMaintenance:
             logger.error(f"Post-actions execution error: {e}")
     
     def _schedule_next_execution(self, task: MaintenanceTask) -> None:
-        """Schedule next execution of the task"""        try:
+        """Schedule next execution of the task"""
+        try:
             schedule = task.parameters.get("schedule", "weekly")
             next_time = self._calculate_next_execution_time(schedule)
             
@@ -851,7 +884,8 @@ class SystemMaintenance:
             logger.error(f"Next execution scheduling error: {e}")
     
     def _collect_system_health(self) -> SystemHealth:
-        """Collect system health metrics"""        try:
+        """Collect system health metrics"""
+        try:
             return SystemHealth(
                 timestamp=datetime.now(),
                 cpu_usage=psutil.cpu_percent(interval=1),
@@ -879,14 +913,16 @@ class SystemMaintenance:
             )
     
     def _check_network_connectivity(self) -> bool:
-        """Check network connectivity"""        try:
+        """Check network connectivity"""
+        try:
             response = requests.get("http://www.google.com", timeout=5)
             return response.status_code == 200
         except Exception:
             return False
     
     def _check_database_connection(self) -> bool:
-        """Check database connection"""        try:
+        """Check database connection"""
+        try:
             db_config = self.config.get("database", {})
             conn = psycopg2.connect(**db_config)
             conn.close()
@@ -895,7 +931,8 @@ class SystemMaintenance:
             return False
     
     def _check_service_status(self) -> Dict[str, bool]:
-        """Check status of critical services"""        try:
+        """Check status of critical services"""
+        try:
             # This would check actual service status
             return {
                 "nginx": True,
@@ -906,7 +943,8 @@ class SystemMaintenance:
             return {}
     
     def _check_health_alerts(self, health: SystemHealth) -> None:
-        """Check health metrics against alert thresholds"""        try:
+        """Check health metrics against alert thresholds"""
+        try:
             thresholds = self.config.get("system_monitoring", {}).get("alert_thresholds", {})
             
             alerts = []
@@ -937,7 +975,8 @@ class SystemMaintenance:
             logger.error(f"Health alerts check error: {e}")
     
     def _send_health_alert(self, alerts: List[str]) -> None:
-        """Send health alert notifications"""        try:
+        """Send health alert notifications"""
+        try:
             message = "System health alerts:\n" + "\n".join(f"- {alert}" for alert in alerts)
             self._send_maintenance_notification("System Health Alert", message)
             
@@ -945,7 +984,8 @@ class SystemMaintenance:
             logger.error(f"Health alert sending error: {e}")
     
     def _send_maintenance_notification(self, subject: str, message: str) -> None:
-        """Send maintenance notification"""        try:
+        """Send maintenance notification"""
+        try:
             notifications = self.config.get("notifications", {})
             
             # Send email notifications
@@ -966,7 +1006,8 @@ class SystemMaintenance:
             logger.error(f"Notification sending error: {e}")
     
     def _send_maintenance_report(self, task: MaintenanceTask) -> None:
-        """Send maintenance task report"""        try:
+        """Send maintenance task report"""
+        try:
             report = {
                 "task_name": task.name,
                 "status": task.status.value,
@@ -985,7 +1026,8 @@ class SystemMaintenance:
             logger.error(f"Maintenance report sending error: {e}")
     
     def get_maintenance_status(self) -> Dict[str, Any]:
-        """Get maintenance status"""        try:
+        """Get maintenance status"""
+        try:
             scheduled_count = len([t for t in self.scheduled_tasks.values() if t.status == MaintenanceStatus.SCHEDULED])
             running_count = len([t for t in self.scheduled_tasks.values() if t.status == MaintenanceStatus.RUNNING])
             
@@ -1013,7 +1055,8 @@ class SystemMaintenance:
             return {"error": str(e)}
     
     def get_task_history(self, limit: int = 50) -> List[Dict[str, Any]]:
-        """Get maintenance task history"""        try:
+        """Get maintenance task history"""
+        try:
             recent_tasks = sorted(
                 self.task_history.values(),
                 key=lambda x: x.completed_time or x.created_time,
@@ -1041,7 +1084,8 @@ class SystemMaintenance:
 
 
 def main():
-    """Main function for standalone execution"""    import argparse
+    """Main function for standalone execution"""
+    import argparse
     
     parser = argparse.ArgumentParser(description="System Maintenance Manager")
     parser.add_argument("--action", required=True, 

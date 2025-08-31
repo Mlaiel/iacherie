@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -21,7 +22,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT LEGAL WARNING ⚠️
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -48,9 +50,11 @@ from ai.ml.recommendation import (
 
 
 class TestRecommendationConfig:
-    """Tests for recommendation system configuration"""    
+    """Tests for recommendation system configuration"""
+    
     def test_init_recommendation_config(self):
-        """Test recommendation configuration initialization"""        config = RecommendationConfig(
+        """Test recommendation configuration initialization"""
+        config = RecommendationConfig(
             model_type="hybrid",
             num_recommendations=10,
             min_score_threshold=0.5,
@@ -73,7 +77,8 @@ class TestRecommendationConfig:
         assert config.cold_start_strategy == "popular_items"
 
     def test_config_validation(self):
-        """Test configuration parameter validation"""        # Valid configuration
+        """Test configuration parameter validation"""
+        # Valid configuration
         valid_config = RecommendationConfig(
             num_recommendations=5,
             min_score_threshold=0.3,
@@ -85,7 +90,8 @@ class TestRecommendationConfig:
         assert 0 <= valid_config.diversity_weight <= 1
 
     def test_config_serialization(self):
-        """Test configuration serialization"""        config = RecommendationConfig(
+        """Test configuration serialization"""
+        config = RecommendationConfig(
             model_type="collaborative",
             num_recommendations=15,
             enable_diversity=True
@@ -103,9 +109,11 @@ class TestRecommendationConfig:
 
 
 class TestCollaborativeFilteringEngine:
-    """Tests for collaborative filtering recommendation engine"""    
+    """Tests for collaborative filtering recommendation engine"""
+    
     def test_init_collaborative_filtering(self):
-        """Test collaborative filtering engine initialization"""        config = RecommendationConfig(model_type="collaborative")
+        """Test collaborative filtering engine initialization"""
+        config = RecommendationConfig(model_type="collaborative")
         engine = CollaborativeFilteringEngine(config)
         
         assert engine.config.model_type == "collaborative"
@@ -114,7 +122,8 @@ class TestCollaborativeFilteringEngine:
         assert engine.item_similarity_matrix is None
 
     def test_build_user_item_matrix(self, sample_recommendation_data):
-        """Test user-item interaction matrix construction"""        config = RecommendationConfig()
+        """Test user-item interaction matrix construction"""
+        config = RecommendationConfig()
         engine = CollaborativeFilteringEngine(config)
         
         interactions = sample_recommendation_data["interactions"]
@@ -125,7 +134,8 @@ class TestCollaborativeFilteringEngine:
         assert user_item_matrix.shape[1] > 0  # Items
 
     def test_compute_user_similarity(self, sample_recommendation_data):
-        """Test user similarity computation"""        config = RecommendationConfig()
+        """Test user similarity computation"""
+        config = RecommendationConfig()
         engine = CollaborativeFilteringEngine(config)
         
         # Create sample user-item matrix
@@ -138,7 +148,8 @@ class TestCollaborativeFilteringEngine:
         assert np.allclose(user_similarity.diagonal(), 1.0)  # Self-similarity = 1
 
     def test_compute_item_similarity(self, sample_recommendation_data):
-        """Test item similarity computation"""        config = RecommendationConfig()
+        """Test item similarity computation"""
+        config = RecommendationConfig()
         engine = CollaborativeFilteringEngine(config)
         
         # Create sample user-item matrix
@@ -151,7 +162,8 @@ class TestCollaborativeFilteringEngine:
         assert np.allclose(item_similarity.diagonal(), 1.0)  # Self-similarity = 1
 
     def test_user_based_recommendations(self, sample_recommendation_data):
-        """Test user-based collaborative filtering"""        config = RecommendationConfig(num_recommendations=5)
+        """Test user-based collaborative filtering"""
+        config = RecommendationConfig(num_recommendations=5)
         engine = CollaborativeFilteringEngine(config)
         
         # Mock user-item matrix and similarity
@@ -168,7 +180,8 @@ class TestCollaborativeFilteringEngine:
         assert all("score" in rec for rec in recommendations)
 
     def test_item_based_recommendations(self, sample_recommendation_data):
-        """Test item-based collaborative filtering"""        config = RecommendationConfig(num_recommendations=5)
+        """Test item-based collaborative filtering"""
+        config = RecommendationConfig(num_recommendations=5)
         engine = CollaborativeFilteringEngine(config)
         
         # Mock user-item matrix and similarity
@@ -185,7 +198,8 @@ class TestCollaborativeFilteringEngine:
         assert all("score" in rec for rec in recommendations)
 
     def test_cold_start_user_handling(self):
-        """Test cold start problem handling for new users"""        config = RecommendationConfig(cold_start_strategy="popular_items")
+        """Test cold start problem handling for new users"""
+        config = RecommendationConfig(cold_start_strategy="popular_items")
         engine = CollaborativeFilteringEngine(config)
         
         # Mock popular items
@@ -200,7 +214,8 @@ class TestCollaborativeFilteringEngine:
         assert all(rec["item_id"] in popular_items for rec in recommendations)
 
     def test_matrix_factorization(self, sample_recommendation_data):
-        """Test matrix factorization for collaborative filtering"""        config = RecommendationConfig(embedding_dim=50, num_epochs=10)
+        """Test matrix factorization for collaborative filtering"""
+        config = RecommendationConfig(embedding_dim=50, num_epochs=10)
         engine = CollaborativeFilteringEngine(config)
         
         # Create sparse user-item matrix
@@ -218,9 +233,11 @@ class TestCollaborativeFilteringEngine:
 
 
 class TestContentBasedEngine:
-    """Tests for content-based recommendation engine"""    
+    """Tests for content-based recommendation engine"""
+    
     def test_init_content_based_engine(self):
-        """Test content-based engine initialization"""        config = RecommendationConfig(model_type="content_based")
+        """Test content-based engine initialization"""
+        config = RecommendationConfig(model_type="content_based")
         engine = ContentBasedEngine(config)
         
         assert engine.config.model_type == "content_based"
@@ -228,7 +245,8 @@ class TestContentBasedEngine:
         assert engine.item_similarity_matrix is None
 
     def test_extract_item_features(self, sample_recommendation_data):
-        """Test item feature extraction"""        config = RecommendationConfig()
+        """Test item feature extraction"""
+        config = RecommendationConfig()
         engine = ContentBasedEngine(config)
         
         items = sample_recommendation_data["features"]
@@ -239,7 +257,8 @@ class TestContentBasedEngine:
         assert all(isinstance(features, (list, np.ndarray)) for features in item_features.values())
 
     def test_compute_content_similarity(self, sample_recommendation_data):
-        """Test content-based similarity computation"""        config = RecommendationConfig()
+        """Test content-based similarity computation"""
+        config = RecommendationConfig()
         engine = ContentBasedEngine(config)
         
         # Mock item features
@@ -256,7 +275,8 @@ class TestContentBasedEngine:
         assert np.allclose(similarity_matrix.diagonal(), 1.0)
 
     def test_user_profile_building(self, sample_recommendation_data):
-        """Test user profile building from interaction history"""        config = RecommendationConfig()
+        """Test user profile building from interaction history"""
+        config = RecommendationConfig()
         engine = ContentBasedEngine(config)
         
         # Mock user interactions and item features
@@ -278,7 +298,8 @@ class TestContentBasedEngine:
         assert len(user_profile) == 3  # Feature dimension
 
     def test_content_based_recommendations(self, sample_recommendation_data):
-        """Test content-based recommendations generation"""        config = RecommendationConfig(num_recommendations=5)
+        """Test content-based recommendations generation"""
+        config = RecommendationConfig(num_recommendations=5)
         engine = ContentBasedEngine(config)
         
         # Mock user profile and item features
@@ -301,7 +322,8 @@ class TestContentBasedEngine:
         assert scores == sorted(scores, reverse=True)
 
     def test_tag_based_recommendations(self, sample_recommendation_data):
-        """Test tag-based content recommendations"""        config = RecommendationConfig()
+        """Test tag-based content recommendations"""
+        config = RecommendationConfig()
         engine = ContentBasedEngine(config)
         
         user_tags = ["technology", "AI", "music"]
@@ -319,7 +341,8 @@ class TestContentBasedEngine:
         assert all("score" in rec for rec in recommendations)
 
     def test_category_based_filtering(self, sample_recommendation_data):
-        """Test category-based content filtering"""        config = RecommendationConfig()
+        """Test category-based content filtering"""
+        config = RecommendationConfig()
         engine = ContentBasedEngine(config)
         
         user_preferences = {"music": 0.8, "blog": 0.6, "photo": 0.4}
@@ -341,9 +364,11 @@ class TestContentBasedEngine:
 
 
 class TestHybridRecommendationEngine:
-    """Tests for hybrid recommendation engine"""    
+    """Tests for hybrid recommendation engine"""
+    
     def test_init_hybrid_engine(self):
-        """Test hybrid recommendation engine initialization"""        config = RecommendationConfig(model_type="hybrid")
+        """Test hybrid recommendation engine initialization"""
+        config = RecommendationConfig(model_type="hybrid")
         engine = HybridRecommendationEngine(config)
         
         assert engine.config.model_type == "hybrid"
@@ -351,7 +376,8 @@ class TestHybridRecommendationEngine:
         assert engine.content_based_engine is not None
 
     def test_weighted_hybrid_recommendations(self, sample_recommendation_data):
-        """Test weighted hybrid recommendation fusion"""        config = RecommendationConfig(num_recommendations=10)
+        """Test weighted hybrid recommendation fusion"""
+        config = RecommendationConfig(num_recommendations=10)
         engine = HybridRecommendationEngine(config)
         
         # Mock individual recommendation results
@@ -378,7 +404,8 @@ class TestHybridRecommendationEngine:
         assert all("score" in rec for rec in hybrid_recs)
 
     def test_switching_hybrid_strategy(self, sample_recommendation_data):
-        """Test switching hybrid recommendation strategy"""        config = RecommendationConfig(hybrid_strategy="switching")
+        """Test switching hybrid recommendation strategy"""
+        config = RecommendationConfig(hybrid_strategy="switching")
         engine = HybridRecommendationEngine(config)
         
         # Mock user context for switching decision
@@ -394,7 +421,8 @@ class TestHybridRecommendationEngine:
         assert strategy in ["collaborative", "content_based", "hybrid"]
 
     def test_mixed_hybrid_recommendations(self, sample_recommendation_data):
-        """Test mixed hybrid recommendations"""        config = RecommendationConfig(
+        """Test mixed hybrid recommendations"""
+        config = RecommendationConfig(
             hybrid_strategy="mixed",
             num_recommendations=10,
             collaborative_ratio=0.7
@@ -418,9 +446,11 @@ class TestHybridRecommendationEngine:
 
 
 class TestDeepRecommendationModel:
-    """Tests for deep learning-based recommendation model"""    
+    """Tests for deep learning-based recommendation model"""
+    
     def test_init_deep_model(self):
-        """Test deep recommendation model initialization"""        config = RecommendationConfig(
+        """Test deep recommendation model initialization"""
+        config = RecommendationConfig(
             embedding_dim=128,
             hidden_dims=[256, 128, 64],
             dropout_rate=0.2
@@ -432,7 +462,8 @@ class TestDeepRecommendationModel:
         assert model.dropout_rate == 0.2
 
     def test_neural_collaborative_filtering(self):
-        """Test neural collaborative filtering architecture"""        config = RecommendationConfig(
+        """Test neural collaborative filtering architecture"""
+        config = RecommendationConfig(
             num_users=1000,
             num_items=2000,
             embedding_dim=64,
@@ -455,7 +486,8 @@ class TestDeepRecommendationModel:
         assert item_embeds.shape == (32, config.embedding_dim)
 
     def test_wide_and_deep_architecture(self):
-        """Test Wide & Deep model architecture"""        config = RecommendationConfig(
+        """Test Wide & Deep model architecture"""
+        config = RecommendationConfig(
             embedding_dim=32,
             wide_features_dim=100,
             deep_hidden_dims=[256, 128, 64]
@@ -475,7 +507,8 @@ class TestDeepRecommendationModel:
         assert combined_output.shape == (batch_size, 1)
 
     def test_autoencoder_recommendations(self):
-        """Test autoencoder-based collaborative filtering"""        config = RecommendationConfig(
+        """Test autoencoder-based collaborative filtering"""
+        config = RecommendationConfig(
             input_dim=1000,  # Number of items
             hidden_dims=[512, 256, 128, 256, 512],
             dropout_rate=0.5
@@ -508,7 +541,8 @@ class TestDeepRecommendationModel:
         assert reconstructed.shape == (batch_size, config.input_dim)
 
     def test_session_based_recommendations(self):
-        """Test session-based recommendation with RNNs"""        config = RecommendationConfig(
+        """Test session-based recommendation with RNNs"""
+        config = RecommendationConfig(
             num_items=5000,
             embedding_dim=64,
             hidden_size=128,
@@ -538,9 +572,11 @@ class TestDeepRecommendationModel:
 
 
 class TestCreatorMatchingEngine:
-    """Tests for creator collaboration matching engine"""    
+    """Tests for creator collaboration matching engine"""
+    
     def test_init_creator_matching(self):
-        """Test creator matching engine initialization"""        config = RecommendationConfig()
+        """Test creator matching engine initialization"""
+        config = RecommendationConfig()
         engine = CreatorMatchingEngine(config)
         
         assert engine.config == config
@@ -548,7 +584,8 @@ class TestCreatorMatchingEngine:
         assert hasattr(engine, 'collaboration_history')
 
     def test_creator_profile_analysis(self):
-        """Test creator profile analysis"""        engine = CreatorMatchingEngine(RecommendationConfig())
+        """Test creator profile analysis"""
+        engine = CreatorMatchingEngine(RecommendationConfig())
         
         creator_data = {
             "creator_id": "creator_001",
@@ -579,7 +616,8 @@ class TestCreatorMatchingEngine:
         assert "collaboration_compatibility" in profile_features
 
     def test_collaboration_matching(self):
-        """Test creator collaboration matching algorithm"""        engine = CreatorMatchingEngine(RecommendationConfig(num_recommendations=5))
+        """Test creator collaboration matching algorithm"""
+        engine = CreatorMatchingEngine(RecommendationConfig(num_recommendations=5))
         
         # Mock creator profiles
         target_creator = {
@@ -617,7 +655,8 @@ class TestCreatorMatchingEngine:
         assert all("match_reasons" in match for match in matches)
 
     def test_audience_overlap_calculation(self):
-        """Test audience overlap calculation between creators"""        engine = CreatorMatchingEngine(RecommendationConfig())
+        """Test audience overlap calculation between creators"""
+        engine = CreatorMatchingEngine(RecommendationConfig())
         
         creator_a_audience = {
             "demographics": {"18-24": 0.3, "25-34": 0.5, "35-44": 0.2},
@@ -639,7 +678,8 @@ class TestCreatorMatchingEngine:
         assert 0 <= overlap_score <= 1
 
     def test_collaboration_success_prediction(self):
-        """Test collaboration success prediction"""        engine = CreatorMatchingEngine(RecommendationConfig())
+        """Test collaboration success prediction"""
+        engine = CreatorMatchingEngine(RecommendationConfig())
         
         collaboration_features = {
             "content_similarity": 0.75,
@@ -657,9 +697,11 @@ class TestCreatorMatchingEngine:
 
 
 class TestPersonalizationEngine:
-    """Tests for personalization engine"""    
+    """Tests for personalization engine"""
+    
     def test_init_personalization_engine(self):
-        """Test personalization engine initialization"""        config = RecommendationConfig(
+        """Test personalization engine initialization"""
+        config = RecommendationConfig(
             personalization_level="high",
             context_awareness=True,
             real_time_adaptation=True
@@ -671,7 +713,8 @@ class TestPersonalizationEngine:
         assert engine.config.real_time_adaptation
 
     def test_user_context_analysis(self):
-        """Test user context analysis"""        engine = PersonalizationEngine(RecommendationConfig())
+        """Test user context analysis"""
+        engine = PersonalizationEngine(RecommendationConfig())
         
         user_context = {
             "timestamp": datetime.now().isoformat(),
@@ -696,7 +739,8 @@ class TestPersonalizationEngine:
         assert "contextual_preferences" in context_features
 
     def test_real_time_preference_adaptation(self):
-        """Test real-time preference adaptation"""        engine = PersonalizationEngine(
+        """Test real-time preference adaptation"""
+        engine = PersonalizationEngine(
             RecommendationConfig(real_time_adaptation=True)
         )
         
@@ -716,7 +760,8 @@ class TestPersonalizationEngine:
         assert all(isinstance(score, (int, float)) for score in adapted_preferences.values())
 
     def test_multi_armed_bandit_exploration(self):
-        """Test multi-armed bandit for exploration-exploitation balance"""        engine = PersonalizationEngine(
+        """Test multi-armed bandit for exploration-exploitation balance"""
+        engine = PersonalizationEngine(
             RecommendationConfig(exploration_strategy="epsilon_greedy")
         )
         
@@ -735,7 +780,8 @@ class TestPersonalizationEngine:
         assert selected_content in content_performance.keys()
 
     def test_dynamic_user_segmentation(self):
-        """Test dynamic user segmentation"""        engine = PersonalizationEngine(RecommendationConfig())
+        """Test dynamic user segmentation"""
+        engine = PersonalizationEngine(RecommendationConfig())
         
         user_features = {
             "age": 28,
@@ -759,9 +805,11 @@ class TestPersonalizationEngine:
 
 
 class TestRecommendationMetrics:
-    """Tests for recommendation system metrics and evaluation"""    
+    """Tests for recommendation system metrics and evaluation"""
+    
     def test_init_metrics(self):
-        """Test recommendation metrics initialization"""        metrics = RecommendationMetrics()
+        """Test recommendation metrics initialization"""
+        metrics = RecommendationMetrics()
         
         assert hasattr(metrics, 'precision_scores')
         assert hasattr(metrics, 'recall_scores')
@@ -769,7 +817,8 @@ class TestRecommendationMetrics:
         assert hasattr(metrics, 'diversity_scores')
 
     def test_precision_at_k(self):
-        """Test precision@k calculation"""        metrics = RecommendationMetrics()
+        """Test precision@k calculation"""
+        metrics = RecommendationMetrics()
         
         # Mock recommendations and ground truth
         recommendations = ["item_1", "item_2", "item_3", "item_4", "item_5"]
@@ -784,7 +833,8 @@ class TestRecommendationMetrics:
         assert precision_3 == 2/3  # 2 relevant items in top 3
 
     def test_recall_at_k(self):
-        """Test recall@k calculation"""        metrics = RecommendationMetrics()
+        """Test recall@k calculation"""
+        metrics = RecommendationMetrics()
         
         recommendations = ["item_1", "item_2", "item_3", "item_4", "item_5"]
         relevant_items = {"item_1", "item_3", "item_6", "item_7"}
@@ -795,7 +845,8 @@ class TestRecommendationMetrics:
         assert recall_5 == 2/4  # 2 found out of 4 relevant items
 
     def test_ndcg_calculation(self):
-        """Test NDCG (Normalized Discounted Cumulative Gain) calculation"""        metrics = RecommendationMetrics()
+        """Test NDCG (Normalized Discounted Cumulative Gain) calculation"""
+        metrics = RecommendationMetrics()
         
         # Mock relevance scores (higher is better)
         relevance_scores = [3, 2, 3, 0, 1, 2]  # For recommended items
@@ -805,7 +856,8 @@ class TestRecommendationMetrics:
         assert 0 <= ndcg_score <= 1
 
     def test_diversity_calculation(self):
-        """Test recommendation diversity calculation"""        metrics = RecommendationMetrics()
+        """Test recommendation diversity calculation"""
+        metrics = RecommendationMetrics()
         
         # Mock item features for diversity calculation
         item_features = {
@@ -823,7 +875,8 @@ class TestRecommendationMetrics:
         assert 0 <= diversity_score <= 1
 
     def test_novelty_calculation(self):
-        """Test recommendation novelty calculation"""        metrics = RecommendationMetrics()
+        """Test recommendation novelty calculation"""
+        metrics = RecommendationMetrics()
         
         # Mock item popularity (lower popularity = higher novelty)
         item_popularity = {
@@ -841,7 +894,8 @@ class TestRecommendationMetrics:
         assert 0 <= novelty_score <= 1
 
     def test_coverage_calculation(self):
-        """Test catalog coverage calculation"""        metrics = RecommendationMetrics()
+        """Test catalog coverage calculation"""
+        metrics = RecommendationMetrics()
         
         # Mock all recommendations made to all users
         all_recommendations = [
@@ -861,9 +915,11 @@ class TestRecommendationMetrics:
 
 
 class TestTrendAwareRecommendationEngine:
-    """Tests for trend-aware recommendation engine"""    
+    """Tests for trend-aware recommendation engine"""
+    
     def test_init_trend_aware_engine(self):
-        """Test trend-aware recommendation engine initialization"""        config = RecommendationConfig(
+        """Test trend-aware recommendation engine initialization"""
+        config = RecommendationConfig(
             enable_trend_analysis=True,
             trend_weight=0.3,
             trend_decay_rate=0.1
@@ -875,7 +931,8 @@ class TestTrendAwareRecommendationEngine:
         assert engine.config.trend_decay_rate == 0.1
 
     def test_trend_detection(self, sample_trend_data):
-        """Test trend detection in content popularity"""        engine = TrendAwareRecommendationEngine(RecommendationConfig())
+        """Test trend detection in content popularity"""
+        engine = TrendAwareRecommendationEngine(RecommendationConfig())
         
         # Use sample trend data
         trends = engine.detect_trends(sample_trend_data)
@@ -886,7 +943,8 @@ class TestTrendAwareRecommendationEngine:
         assert "trend_velocity" in trends
 
     def test_trend_incorporation_in_recommendations(self, sample_recommendation_data):
-        """Test incorporating trends into recommendations"""        config = RecommendationConfig(trend_weight=0.4)
+        """Test incorporating trends into recommendations"""
+        config = RecommendationConfig(trend_weight=0.4)
         engine = TrendAwareRecommendationEngine(config)
         
         # Mock base recommendations and trending items
@@ -912,7 +970,8 @@ class TestTrendAwareRecommendationEngine:
         assert all("score" in rec for rec in trend_adjusted_recs)
 
     def test_seasonal_trend_adjustment(self):
-        """Test seasonal trend adjustments"""        engine = TrendAwareRecommendationEngine(RecommendationConfig())
+        """Test seasonal trend adjustments"""
+        engine = TrendAwareRecommendationEngine(RecommendationConfig())
         
         # Mock seasonal patterns
         current_time = datetime.now()
@@ -928,10 +987,12 @@ class TestTrendAwareRecommendationEngine:
 
 @pytest.mark.integration
 class TestRecommendationIntegration:
-    """Integration tests for recommendation systems"""    
+    """Integration tests for recommendation systems"""
+    
     @pytest.mark.slow
     def test_end_to_end_recommendation_pipeline(self, sample_recommendation_data, temp_dir):
-        """Test complete recommendation pipeline"""        config = RecommendationConfig(
+        """Test complete recommendation pipeline"""
+        config = RecommendationConfig(
             model_type="hybrid",
             num_recommendations=10,
             enable_diversity=True,
@@ -970,7 +1031,8 @@ class TestRecommendationIntegration:
         assert 0 <= recall <= 1
 
     def test_real_time_recommendation_update(self, sample_recommendation_data):
-        """Test real-time recommendation updates"""        config = RecommendationConfig(real_time_adaptation=True)
+        """Test real-time recommendation updates"""
+        config = RecommendationConfig(real_time_adaptation=True)
         engine = PersonalizationEngine(config)
         
         # Initial recommendations
@@ -996,7 +1058,8 @@ class TestRecommendationIntegration:
         assert len(updated_recs) > 0
 
     def test_a_b_testing_recommendations(self, sample_recommendation_data):
-        """Test A/B testing for recommendation strategies"""        # Strategy A: Collaborative Filtering
+        """Test A/B testing for recommendation strategies"""
+        # Strategy A: Collaborative Filtering
         config_a = RecommendationConfig(model_type="collaborative")
         engine_a = CollaborativeFilteringEngine(config_a)
         

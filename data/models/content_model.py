@@ -6,7 +6,8 @@ Supports audio, video, image, and text content with comprehensive metadata.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""from datetime import datetime
+"""
+from datetime import datetime
 from typing import Optional, Dict, List, Any
 from decimal import Decimal
 from enum import Enum
@@ -21,7 +22,8 @@ Base = declarative_base()
 
 
 class ContentType(Enum):
-    """Content type enumeration"""    AUDIO = "audio"
+    """Content type enumeration"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -29,7 +31,8 @@ class ContentType(Enum):
 
 
 class ContentStatus(Enum):
-    """Content status enumeration"""    DRAFT = "draft"
+    """Content status enumeration"""
+    DRAFT = "draft"
     PROCESSING = "processing"
     ACTIVE = "active"
     SUSPENDED = "suspended"
@@ -38,18 +41,21 @@ class ContentStatus(Enum):
 
 
 class ContentVisibility(Enum):
-    """Content visibility settings"""    PUBLIC = "public"
+    """Content visibility settings"""
+    PUBLIC = "public"
     PRIVATE = "private"
     UNLISTED = "unlisted"
     RESTRICTED = "restricted"
 
 
 class ContentModel(Base):
-    """    Professional content data model for IA Influencer Agent platform.
+    """
+    Professional content data model for IA Influencer Agent platform.
     
     Handles comprehensive content metadata, versioning, and multi-format support
     with protection, monetization, and analytics integration.
-    """    
+    """
+    
     __tablename__ = "content"
     
     # Primary identification
@@ -193,7 +199,8 @@ class ContentModel(Base):
         return f"<ContentModel(id='{self.id}', title='{self.title}', type='{self.content_type}')>"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert model to dictionary representation"""        return {
+        """Convert model to dictionary representation"""
+        return {
             'id': self.id,
             'user_id': self.user_id,
             'title': self.title,
@@ -241,49 +248,59 @@ class ContentModel(Base):
     
     @property
     def is_audio(self) -> bool:
-        """Check if content is audio type"""        return self.content_type == ContentType.AUDIO.value
+        """Check if content is audio type"""
+        return self.content_type == ContentType.AUDIO.value
     
     @property
     def is_video(self) -> bool:
-        """Check if content is video type"""        return self.content_type == ContentType.VIDEO.value
+        """Check if content is video type"""
+        return self.content_type == ContentType.VIDEO.value
     
     @property
     def is_image(self) -> bool:
-        """Check if content is image type"""        return self.content_type == ContentType.IMAGE.value
+        """Check if content is image type"""
+        return self.content_type == ContentType.IMAGE.value
     
     @property
     def is_text(self) -> bool:
-        """Check if content is text type"""        return self.content_type == ContentType.TEXT.value
+        """Check if content is text type"""
+        return self.content_type == ContentType.TEXT.value
     
     @property
     def is_published(self) -> bool:
-        """Check if content is published"""        return self.status == ContentStatus.ACTIVE.value and self.published_at is not None
+        """Check if content is published"""
+        return self.status == ContentStatus.ACTIVE.value and self.published_at is not None
     
     @property
     def is_protected(self) -> bool:
-        """Check if content has protection enabled"""        return self.protection_enabled and not self.is_deleted
+        """Check if content has protection enabled"""
+        return self.protection_enabled and not self.is_deleted
     
     @property
     def is_monetizable(self) -> bool:
-        """Check if content can be monetized"""        return (self.monetization_enabled and 
+        """Check if content can be monetized"""
+        return (self.monetization_enabled and 
                 self.status == ContentStatus.ACTIVE.value and 
                 not self.is_deleted)
     
     @property
     def file_extension(self) -> str:
-        """Get file extension from filename"""        if self.original_filename and '.' in self.original_filename:
+        """Get file extension from filename"""
+        if self.original_filename and '.' in self.original_filename:
             return self.original_filename.split('.')[-1].lower()
         return ""
     
     @property
     def aspect_ratio(self) -> Optional[float]:
-        """Calculate aspect ratio for visual content"""        if self.width and self.height and self.height > 0:
+        """Calculate aspect ratio for visual content"""
+        if self.width and self.height and self.height > 0:
             return self.width / self.height
         return None
     
     @property
     def size_formatted(self) -> str:
-        """Get human-readable file size"""        if not self.file_size:
+        """Get human-readable file size"""
+        if not self.file_size:
             return "Unknown"
         
         size = self.file_size
@@ -298,7 +315,8 @@ class ContentModel(Base):
     
     @property
     def duration_formatted(self) -> str:
-        """Get human-readable duration"""        if not self.duration:
+        """Get human-readable duration"""
+        if not self.duration:
             return "00:00"
         
         hours = int(self.duration // 3600)
@@ -312,7 +330,8 @@ class ContentModel(Base):
     
     def update_engagement_metrics(self, views: int = 0, likes: int = 0, 
                                 shares: int = 0, comments: int = 0):
-        """Update engagement metrics"""        if views > 0:
+        """Update engagement metrics"""
+        if views > 0:
             self.view_count = max(self.view_count or 0, views)
         if likes > 0:
             self.like_count = max(self.like_count or 0, likes)
@@ -329,7 +348,8 @@ class ContentModel(Base):
         self.updated_at = datetime.utcnow()
     
     def add_revenue(self, amount: Decimal, currency: str = "EUR"):
-        """Add revenue to content"""        if not self.revenue_total:
+        """Add revenue to content"""
+        if not self.revenue_total:
             self.revenue_total = Decimal('0')
         
         # Convert currency if needed (simplified)
@@ -342,24 +362,28 @@ class ContentModel(Base):
         self.updated_at = datetime.utcnow()
     
     def set_quality_score(self, score: float):
-        """Set content quality score"""        self.quality_score = max(0.0, min(100.0, score))
+        """Set content quality score"""
+        self.quality_score = max(0.0, min(100.0, score))
         self.updated_at = datetime.utcnow()
     
     def mark_as_protected(self, fingerprint_hash: str = None):
-        """Mark content as protected"""        self.protection_enabled = True
+        """Mark content as protected"""
+        self.protection_enabled = True
         self.is_protected = True
         if fingerprint_hash:
             self.content_fingerprint = fingerprint_hash
         self.updated_at = datetime.utcnow()
     
     def soft_delete(self):
-        """Soft delete content"""        self.is_deleted = True
+        """Soft delete content"""
+        self.is_deleted = True
         self.deleted_at = datetime.utcnow()
         self.status = ContentStatus.DELETED.value
         self.updated_at = datetime.utcnow()
     
     def restore(self):
-        """Restore soft-deleted content"""        self.is_deleted = False
+        """Restore soft-deleted content"""
+        self.is_deleted = False
         self.deleted_at = None
         self.status = ContentStatus.ACTIVE.value
         self.updated_at = datetime.utcnow()

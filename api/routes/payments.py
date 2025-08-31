@@ -3,7 +3,8 @@ Payment processing and financial transaction endpoints.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from typing import List, Dict, Any, Optional
+"""
+from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
 from decimal import Decimal
 from enum import Enum
@@ -158,7 +159,8 @@ paypal_integration = PayPalIntegration()
 
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
-    """Get current authenticated user"""    if not credentials:
+    """Get current authenticated user"""
+    if not credentials:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Authentication required"
@@ -180,7 +182,8 @@ async def add_payment_method(
     method: PaymentMethodDetails,
     user: dict = Depends(get_current_user)
 ):
-    """Add a new payment method"""    try:
+    """Add a new payment method"""
+    try:
         # Validate payment method details
         validation_result = await payment_processor.validate_payment_method(method)
         if not validation_result['valid']:
@@ -196,11 +199,13 @@ async def add_payment_method(
         async with database_manager.get_postgres_session() as session:
             # If this is set as default, unset others
             if method.is_default:
-                await session.execute("""                    UPDATE payment_methods SET is_default = false
+                await session.execute("""
+                    UPDATE payment_methods SET is_default = false
                     WHERE user_id = %s
                 """, (user['user_id'],))
             
-            await session.execute("""                INSERT INTO payment_methods (method_id, user_id, method_type, display_name,
+            await session.execute("""
+                INSERT INTO payment_methods (method_id, user_id, method_type, display_name,
                                            encrypted_details, is_default, is_verified,
                                            billing_address, created_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -219,7 +224,8 @@ async def add_payment_method(
             
             # Update verification status
             async with database_manager.get_postgres_session() as session:
-                await session.execute("""                    UPDATE payment_methods 
+                await session.execute("""
+                    UPDATE payment_methods 
                     SET is_verified = %s, verification_data = %s
                     WHERE method_id = %s
                 """, (verification_result['verified'], verification_result, method.method_id))
@@ -245,9 +251,11 @@ async def add_payment_method(
 async def get_payment_methods(
     user: dict = Depends(get_current_user)
 ):
-    """Get user's payment methods"""    try:
+    """Get user's payment methods"""
+    try:
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT method_id, method_type, display_name, is_default, is_verified,
+            result = await session.execute("""
+                SELECT method_id, method_type, display_name, is_default, is_verified,
                        billing_address, created_at, last_used_at
                 FROM payment_methods
                 WHERE user_id = %s AND deleted_at IS NULL
@@ -285,10 +293,12 @@ async def process_payment(
     background_tasks: BackgroundTasks,
     user: dict = Depends(get_current_user)
 ):
-    """Process a payment"""    try:
+    """Process a payment"""
+    try:
         # Get payment method details
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT method_type, encrypted_details, is_verified
+            result = await session.execute("""
+                SELECT method_type, encrypted_details, is_verified
                 FROM payment_methods
                 WHERE method_id = %s AND user_id = %s AND deleted_at IS NULL
             """, (payment.payment_method_id, user['user_id']))
@@ -312,7 +322,8 @@ async def process_payment(
         # Create transaction record
         transaction_id = str(uuid.uuid4())
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                INSERT INTO transactions (transaction_id, user_id, payment_id, transaction_type,
+            await session.execute("""
+                INSERT INTO transactions (transaction_id, user_id, payment_id, transaction_type,
                                         amount, currency, payment_method, payment_method_id,
                                         status, description, metadata, created_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -352,7 +363,8 @@ async def process_payout(
     background_tasks: BackgroundTasks,
     user: dict = Depends(get_current_user)
 ):
-    """Process a payout to user"""    try:
+    """Process a payout to user"""
+    try:
         # Check user balance
         balance = await _get_user_balance(user['user_id'], payout.currency.value)
         if balance < payout.amount:
@@ -363,7 +375,8 @@ async def process_payout(
         
         # Get payout method details
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT method_type, encrypted_details, is_verified
+            result = await session.execute("""
+                SELECT method_type, encrypted_details, is_verified
                 FROM payment_methods
                 WHERE method_id = %s AND user_id = %s AND deleted_at IS NULL
             """, (payout.destination_method_id, user['user_id']))
@@ -387,7 +400,8 @@ async def process_payout(
         # Create payout transaction
         transaction_id = str(uuid.uuid4())
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                INSERT INTO transactions (transaction_id, user_id, payout_id, transaction_type,
+            await session.execute("""
+                INSERT INTO transactions (transaction_id, user_id, payout_id, transaction_type,
                                         amount, currency, payment_method, payment_method_id,
                                         status, description, metadata, created_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -427,10 +441,12 @@ async def process_refund(
     background_tasks: BackgroundTasks,
     user: dict = Depends(get_current_user)
 ):
-    """Process a refund"""    try:
+    """Process a refund"""
+    try:
         # Get original transaction
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT transaction_id, amount, currency, payment_method, external_id, status
+            result = await session.execute("""
+                SELECT transaction_id, amount, currency, payment_method, external_id, status
                 FROM transactions
                 WHERE transaction_id = %s AND user_id = %s AND transaction_type = %s
             """, (refund.transaction_id, user['user_id'], TransactionType.PAYMENT_IN.value))
@@ -461,7 +477,8 @@ async def process_refund(
         # Create refund transaction
         refund_transaction_id = str(uuid.uuid4())
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                INSERT INTO transactions (transaction_id, user_id, refund_id, transaction_type,
+            await session.execute("""
+                INSERT INTO transactions (transaction_id, user_id, refund_id, transaction_type,
                                         amount, currency, payment_method, original_transaction_id,
                                         status, description, metadata, created_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -504,15 +521,18 @@ async def get_transactions(
     limit: int = Field(default=50, ge=1, le=200),
     user: dict = Depends(get_current_user)
 ):
-    """Get user's transactions"""    try:
+    """Get user's transactions"""
+    try:
         start_date = datetime.utcnow() - timedelta(days=days)
         
-        query = """            SELECT transaction_id, user_id, transaction_type, amount, currency,
+        query = """
+            SELECT transaction_id, user_id, transaction_type, amount, currency,
                    payment_method, status, description, external_id, fees,
                    metadata, created_at, updated_at, completed_at
             FROM transactions
             WHERE user_id = %s AND created_at >= %s
-        """        params = [user['user_id'], start_date]
+        """
+        params = [user['user_id'], start_date]
         
         if transaction_type:
             query += " AND transaction_type = %s"
@@ -566,10 +586,12 @@ async def get_transactions(
 async def get_balance(
     user: dict = Depends(get_current_user)
 ):
-    """Get user's account balance"""    try:
+    """Get user's account balance"""
+    try:
         async with database_manager.get_postgres_session() as session:
             # Get balance by currency
-            result = await session.execute("""                SELECT currency, 
+            result = await session.execute("""
+                SELECT currency, 
                        SUM(CASE WHEN transaction_type IN ('payment_in', 'refund') THEN amount ELSE 0 END) -
                        SUM(CASE WHEN transaction_type IN ('payment_out', 'payout', 'fee') THEN amount ELSE 0 END) as balance
                 FROM transactions
@@ -580,7 +602,8 @@ async def get_balance(
             balances = {row[0]: float(row[1]) for row in result.fetchall()}
             
             # Get pending transactions
-            result = await session.execute("""                SELECT currency, transaction_type, SUM(amount) as total
+            result = await session.execute("""
+                SELECT currency, transaction_type, SUM(amount) as total
                 FROM transactions
                 WHERE user_id = %s AND status IN (%s, %s)
                 GROUP BY currency, transaction_type
@@ -612,12 +635,14 @@ async def get_payment_analytics(
     days: int = Field(default=30, ge=1, le=365),
     user: dict = Depends(get_current_user)
 ):
-    """Get payment analytics"""    try:
+    """Get payment analytics"""
+    try:
         start_date = datetime.utcnow() - timedelta(days=days)
         
         async with database_manager.get_postgres_session() as session:
             # Total volume and count
-            result = await session.execute("""                SELECT COUNT(*) as count, COALESCE(SUM(amount), 0) as volume
+            result = await session.execute("""
+                SELECT COUNT(*) as count, COALESCE(SUM(amount), 0) as volume
                 FROM transactions
                 WHERE user_id = %s AND created_at >= %s AND status = %s
             """, (user['user_id'], start_date, PaymentStatus.COMPLETED.value))
@@ -627,7 +652,8 @@ async def get_payment_analytics(
             total_volume = float(total_stats[1])
             
             # Payment methods breakdown
-            result = await session.execute("""                SELECT payment_method, COUNT(*) as count, COALESCE(SUM(amount), 0) as volume
+            result = await session.execute("""
+                SELECT payment_method, COUNT(*) as count, COALESCE(SUM(amount), 0) as volume
                 FROM transactions
                 WHERE user_id = %s AND created_at >= %s AND status = %s
                 GROUP BY payment_method
@@ -642,7 +668,8 @@ async def get_payment_analytics(
                 }
             
             # Currency breakdown
-            result = await session.execute("""                SELECT currency, COALESCE(SUM(amount), 0) as volume
+            result = await session.execute("""
+                SELECT currency, COALESCE(SUM(amount), 0) as volume
                 FROM transactions
                 WHERE user_id = %s AND created_at >= %s AND status = %s
                 GROUP BY currency
@@ -651,7 +678,8 @@ async def get_payment_analytics(
             currency_breakdown = {row[0]: float(row[1]) for row in result.fetchall()}
             
             # Status breakdown
-            result = await session.execute("""                SELECT status, COUNT(*) as count
+            result = await session.execute("""
+                SELECT status, COUNT(*) as count
                 FROM transactions
                 WHERE user_id = %s AND created_at >= %s
                 GROUP BY status
@@ -660,7 +688,8 @@ async def get_payment_analytics(
             status_breakdown = {row[0]: row[1] for row in result.fetchall()}
             
             # Fee summary
-            result = await session.execute("""                SELECT COALESCE(SUM((fees->>'processing_fee')::decimal), 0) as processing_fees,
+            result = await session.execute("""
+                SELECT COALESCE(SUM((fees->>'processing_fee')::decimal), 0) as processing_fees,
                        COALESCE(SUM((fees->>'platform_fee')::decimal), 0) as platform_fees
                 FROM transactions
                 WHERE user_id = %s AND created_at >= %s AND status = %s AND fees IS NOT NULL
@@ -674,7 +703,8 @@ async def get_payment_analytics(
             
             # Growth metrics (compare with previous period)
             prev_start = start_date - timedelta(days=days)
-            result = await session.execute("""                SELECT COUNT(*) as prev_count, COALESCE(SUM(amount), 0) as prev_volume
+            result = await session.execute("""
+                SELECT COUNT(*) as prev_count, COALESCE(SUM(amount), 0) as prev_volume
                 FROM transactions
                 WHERE user_id = %s AND created_at >= %s AND created_at < %s AND status = %s
             """, (user['user_id'], prev_start, start_date, PaymentStatus.COMPLETED.value))
@@ -715,10 +745,12 @@ async def delete_payment_method(
     method_id: str,
     user: dict = Depends(get_current_user)
 ):
-    """Delete a payment method"""    try:
+    """Delete a payment method"""
+    try:
         async with database_manager.get_postgres_session() as session:
             # Check if method exists and belongs to user
-            result = await session.execute("""                SELECT method_id, is_default FROM payment_methods
+            result = await session.execute("""
+                SELECT method_id, is_default FROM payment_methods
                 WHERE method_id = %s AND user_id = %s AND deleted_at IS NULL
             """, (method_id, user['user_id']))
             
@@ -730,7 +762,8 @@ async def delete_payment_method(
                 )
             
             # Check for pending transactions using this method
-            result = await session.execute("""                SELECT COUNT(*) FROM transactions
+            result = await session.execute("""
+                SELECT COUNT(*) FROM transactions
                 WHERE user_id = %s AND payment_method_id = %s 
                   AND status IN (%s, %s)
             """, (user['user_id'], method_id, PaymentStatus.PENDING.value, PaymentStatus.PROCESSING.value))
@@ -743,14 +776,16 @@ async def delete_payment_method(
                 )
             
             # Soft delete the payment method
-            await session.execute("""                UPDATE payment_methods 
+            await session.execute("""
+                UPDATE payment_methods 
                 SET deleted_at = %s, is_default = false
                 WHERE method_id = %s
             """, (datetime.utcnow(), method_id))
             
             # If this was the default method, set another as default if available
             if method_info[1]:  # was default
-                await session.execute("""                    UPDATE payment_methods 
+                await session.execute("""
+                    UPDATE payment_methods 
                     SET is_default = true
                     WHERE user_id = %s AND deleted_at IS NULL AND method_id != %s
                     ORDER BY created_at ASC
@@ -773,9 +808,11 @@ async def delete_payment_method(
 
 # Helper functions
 async def _get_user_balance(user_id: str, currency: str) -> Decimal:
-    """Get user balance for specific currency"""    try:
+    """Get user balance for specific currency"""
+    try:
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT 
+            result = await session.execute("""
+                SELECT 
                     SUM(CASE WHEN transaction_type IN ('payment_in', 'refund') THEN amount ELSE 0 END) -
                     SUM(CASE WHEN transaction_type IN ('payment_out', 'payout', 'fee') THEN amount ELSE 0 END) as balance
                 FROM transactions
@@ -792,7 +829,8 @@ async def _get_user_balance(user_id: str, currency: str) -> Decimal:
 # Background task functions
 async def _process_payment_async(transaction_id: str, payment: PaymentRequest, 
                                 method_type: str, payment_details: Dict[str, Any], user: dict):
-    """Process payment asynchronously"""    try:
+    """Process payment asynchronously"""
+    try:
         # Update status to processing
         await _update_transaction_status(transaction_id, PaymentStatus.PROCESSING)
         
@@ -827,7 +865,8 @@ async def _process_payment_async(transaction_id: str, payment: PaymentRequest,
 
 async def _process_payout_async(transaction_id: str, payout: PayoutRequest,
                                method_type: str, payout_details: Dict[str, Any], user: dict):
-    """Process payout asynchronously"""    try:
+    """Process payout asynchronously"""
+    try:
         # Update status to processing
         await _update_transaction_status(transaction_id, PaymentStatus.PROCESSING)
         
@@ -866,7 +905,8 @@ async def _process_payout_async(transaction_id: str, payout: PayoutRequest,
 
 async def _process_refund_async(transaction_id: str, refund: RefundRequest,
                                transaction_info: tuple, user: dict):
-    """Process refund asynchronously"""    try:
+    """Process refund asynchronously"""
+    try:
         # Update status to processing
         await _update_transaction_status(transaction_id, PaymentStatus.PROCESSING)
         
@@ -906,20 +946,24 @@ async def _update_transaction_status(transaction_id: str, status: PaymentStatus,
                                    external_id: Optional[str] = None,
                                    fees: Optional[Dict[str, Any]] = None,
                                    error_message: Optional[str] = None):
-    """Update transaction status"""    try:
+    """Update transaction status"""
+    try:
         async with database_manager.get_postgres_session() as session:
             if status == PaymentStatus.COMPLETED:
-                await session.execute("""                    UPDATE transactions 
+                await session.execute("""
+                    UPDATE transactions 
                     SET status = %s, external_id = %s, fees = %s, completed_at = %s, updated_at = %s
                     WHERE transaction_id = %s
                 """, (status.value, external_id, fees, datetime.utcnow(), datetime.utcnow(), transaction_id))
             elif status == PaymentStatus.FAILED:
-                await session.execute("""                    UPDATE transactions 
+                await session.execute("""
+                    UPDATE transactions 
                     SET status = %s, error_message = %s, updated_at = %s
                     WHERE transaction_id = %s
                 """, (status.value, error_message, datetime.utcnow(), transaction_id))
             else:
-                await session.execute("""                    UPDATE transactions 
+                await session.execute("""
+                    UPDATE transactions 
                     SET status = %s, updated_at = %s
                     WHERE transaction_id = %s
                 """, (status.value, datetime.utcnow(), transaction_id))

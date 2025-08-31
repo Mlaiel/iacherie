@@ -6,7 +6,8 @@ behavioral segmentation, and predictive audience growth modeling for content cre
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Set
@@ -26,7 +27,8 @@ from collections import defaultdict, Counter
 logger = logging.getLogger(__name__)
 
 class AudienceSegment(Enum):
-    """Predefined audience segments for targeted analysis"""    CORE_FANS = "core_fans"
+    """Predefined audience segments for targeted analysis"""
+    CORE_FANS = "core_fans"
     CASUAL_FOLLOWERS = "casual_followers"
     POTENTIAL_CONVERTS = "potential_converts"
     HIGH_VALUE = "high_value"
@@ -35,7 +37,8 @@ class AudienceSegment(Enum):
     INACTIVE = "inactive"
 
 class DemographicCategory(Enum):
-    """Demographic categories for audience analysis"""    AGE_GROUP = "age_group"
+    """Demographic categories for audience analysis"""
+    AGE_GROUP = "age_group"
     GENDER = "gender"
     LOCATION = "location"
     LANGUAGE = "language"
@@ -45,7 +48,8 @@ class DemographicCategory(Enum):
 
 @dataclass
 class AudienceProfile:
-    """Comprehensive audience profile with demographics and behavior"""    profile_id: str
+    """Comprehensive audience profile with demographics and behavior"""
+    profile_id: str
     creator_id: str
     platform: str
     total_followers: int
@@ -60,7 +64,8 @@ class AudienceProfile:
 
 @dataclass
 class AudienceInsight:
-    """AI-generated audience insight with actionable recommendations"""    insight_id: str
+    """AI-generated audience insight with actionable recommendations"""
+    insight_id: str
     creator_id: str
     insight_category: str
     audience_segment: AudienceSegment
@@ -72,9 +77,11 @@ class AudienceInsight:
     estimated_roi: float
 
 class AudienceIntelligenceSystem:
-    """    Enterprise-grade audience intelligence system providing comprehensive
+    """
+    Enterprise-grade audience intelligence system providing comprehensive
     audience analytics, segmentation, and growth optimization insights.
-    """    
+    """
+    
     def __init__(self, redis_client: redis.Redis, db_pool: asyncpg.Pool):
         self.redis = redis_client
         self.db_pool = db_pool
@@ -84,7 +91,8 @@ class AudienceIntelligenceSystem:
         self.behavioral_cache = {}
         
     async def initialize(self) -> None:
-        """Initialize audience intelligence system"""        try:
+        """Initialize audience intelligence system"""
+        try:
             await self._setup_database_tables()
             await self._load_audience_models()
             await self._initialize_segmentation_algorithms()
@@ -94,8 +102,10 @@ class AudienceIntelligenceSystem:
             raise
 
     async def _setup_database_tables(self) -> None:
-        """Setup required database tables for audience analytics"""        async with self.db_pool.acquire() as conn:
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS audience_profiles (
+        """Setup required database tables for audience analytics"""
+        async with self.db_pool.acquire() as conn:
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS audience_profiles (
                     id SERIAL PRIMARY KEY,
                     profile_id VARCHAR(255) UNIQUE NOT NULL,
                     creator_id VARCHAR(255) NOT NULL,
@@ -145,7 +155,8 @@ class AudienceIntelligenceSystem:
             """)
 
     async def _load_audience_models(self) -> None:
-        """Load pre-trained audience segmentation models"""        # In full implementation, this would load actual ML models
+        """Load pre-trained audience segmentation models"""
+        # In full implementation, this would load actual ML models
         self.segment_models = {
             'engagement_cluster': KMeans(n_clusters=7, random_state=42),
             'demographic_cluster': DBSCAN(eps=0.5, min_samples=5),
@@ -153,11 +164,13 @@ class AudienceIntelligenceSystem:
         }
 
     async def _initialize_segmentation_algorithms(self) -> None:
-        """Initialize audience segmentation algorithms"""        # Initialize clustering and segmentation algorithms
+        """Initialize audience segmentation algorithms"""
+        # Initialize clustering and segmentation algorithms
         pass
 
     async def analyze_audience_comprehensive(self, creator_id: str, platform: str) -> AudienceProfile:
-        """Perform comprehensive audience analysis with AI-powered insights"""        try:
+        """Perform comprehensive audience analysis with AI-powered insights"""
+        try:
             # Collect audience data from multiple sources
             demographic_data = await self._collect_demographic_data(creator_id, platform)
             behavioral_data = await self._collect_behavioral_data(creator_id, platform)
@@ -205,7 +218,8 @@ class AudienceIntelligenceSystem:
             raise HTTPException(status_code=500, detail="Audience analysis failed")
 
     async def _collect_demographic_data(self, creator_id: str, platform: str) -> Dict[str, Any]:
-        """Collect demographic data from platform APIs and internal data"""        try:
+        """Collect demographic data from platform APIs and internal data"""
+        try:
             # In full implementation, this would integrate with actual platform APIs
             # For now, return simulated realistic data
             return {
@@ -249,10 +263,12 @@ class AudienceIntelligenceSystem:
             return {}
 
     async def _collect_behavioral_data(self, creator_id: str, platform: str) -> Dict[str, float]:
-        """Collect behavioral metrics and patterns"""        try:
+        """Collect behavioral metrics and patterns"""
+        try:
             async with self.db_pool.acquire() as conn:
                 # Get interaction patterns from stored data
-                interactions = await conn.fetch("""                    SELECT interaction_type, COUNT(*) as count,
+                interactions = await conn.fetch("""
+                    SELECT interaction_type, COUNT(*) as count,
                            AVG(EXTRACT(EPOCH FROM (NOW() - timestamp))/3600) as avg_hours_since
                     FROM audience_interactions 
                     WHERE creator_id = $1 AND platform = $2 
@@ -286,7 +302,8 @@ class AudienceIntelligenceSystem:
             return {}
 
     async def _collect_engagement_data(self, creator_id: str, platform: str) -> Dict[str, Any]:
-        """Collect detailed engagement patterns and preferences"""        try:
+        """Collect detailed engagement patterns and preferences"""
+        try:
             return {
                 'peak_activity_hours': [9, 12, 15, 18, 20, 21],
                 'peak_activity_days': ['Monday', 'Wednesday', 'Friday', 'Sunday'],
@@ -323,7 +340,8 @@ class AudienceIntelligenceSystem:
             return {}
 
     async def _perform_audience_segmentation(self, creator_id: str, demographic_data: Dict, behavioral_data: Dict) -> Dict[AudienceSegment, float]:
-        """Perform AI-powered audience segmentation"""        try:
+        """Perform AI-powered audience segmentation"""
+        try:
             # Prepare features for clustering
             features = []
             
@@ -390,10 +408,12 @@ class AudienceIntelligenceSystem:
             }
 
     async def _calculate_growth_metrics(self, creator_id: str, platform: str) -> Dict[str, float]:
-        """Calculate audience growth and retention metrics"""        try:
+        """Calculate audience growth and retention metrics"""
+        try:
             async with self.db_pool.acquire() as conn:
                 # Get historical follower counts
-                growth_data = await conn.fetch("""                    SELECT DATE(created_at) as date, 
+                growth_data = await conn.fetch("""
+                    SELECT DATE(created_at) as date, 
                            MAX(total_followers) as followers,
                            MAX(active_followers) as active_followers
                     FROM audience_profiles 
@@ -440,7 +460,8 @@ class AudienceIntelligenceSystem:
             return {}
 
     def _calculate_growth_rate(self, series: List[float], periods: int = 7) -> float:
-        """Calculate growth rate over specified periods"""        if len(series) < periods + 1:
+        """Calculate growth rate over specified periods"""
+        if len(series) < periods + 1:
             return 0.0
         
         current = series[-1]
@@ -452,7 +473,8 @@ class AudienceIntelligenceSystem:
         return (current - previous) / previous
 
     def _calculate_acceleration(self, series: List[float]) -> float:
-        """Calculate growth acceleration"""        if len(series) < 14:  # Need at least 2 weeks
+        """Calculate growth acceleration"""
+        if len(series) < 14:  # Need at least 2 weeks
             return 0.0
         
         recent_growth = self._calculate_growth_rate(series[-7:], 3)
@@ -461,7 +483,8 @@ class AudienceIntelligenceSystem:
         return recent_growth - previous_growth
 
     async def _generate_audience_insights(self, creator_id: str, demographic_data: Dict, behavioral_data: Dict, segment_distribution: Dict) -> List[str]:
-        """Generate AI-powered audience insights and recommendations"""        insights = []
+        """Generate AI-powered audience insights and recommendations"""
+        insights = []
         
         try:
             # Demographic insights
@@ -506,9 +529,11 @@ class AudienceIntelligenceSystem:
             return ["Audience analysis complete - detailed insights available in dashboard"]
 
     async def _store_audience_profile(self, profile: AudienceProfile) -> None:
-        """Store audience profile in database"""        try:
+        """Store audience profile in database"""
+        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""                    INSERT INTO audience_profiles 
+                await conn.execute("""
+                    INSERT INTO audience_profiles 
                     (profile_id, creator_id, platform, total_followers, active_followers,
                      demographics, behavioral_metrics, segment_distribution, 
                      engagement_patterns, growth_metrics, insights)
@@ -540,7 +565,8 @@ class AudienceIntelligenceSystem:
             logger.error(f"Failed to store audience profile: {e}")
 
     async def generate_audience_insights(self, creator_id: str, platform: str) -> List[AudienceInsight]:
-        """Generate comprehensive AI-powered audience insights with recommendations"""        try:
+        """Generate comprehensive AI-powered audience insights with recommendations"""
+        try:
             # Get latest audience profile
             profile = await self._get_latest_audience_profile(creator_id, platform)
             if not profile:
@@ -576,9 +602,11 @@ class AudienceIntelligenceSystem:
             return []
 
     async def _get_latest_audience_profile(self, creator_id: str, platform: str) -> Optional[AudienceProfile]:
-        """Get the most recent audience profile"""        try:
+        """Get the most recent audience profile"""
+        try:
             async with self.db_pool.acquire() as conn:
-                record = await conn.fetchrow("""                    SELECT * FROM audience_profiles 
+                record = await conn.fetchrow("""
+                    SELECT * FROM audience_profiles 
                     WHERE creator_id = $1 AND platform = $2 
                     ORDER BY created_at DESC 
                     LIMIT 1
@@ -606,7 +634,8 @@ class AudienceIntelligenceSystem:
             return None
 
     async def _generate_segment_insight(self, creator_id: str, segment: AudienceSegment, percentage: float, profile: AudienceProfile) -> Optional[AudienceInsight]:
-        """Generate insights specific to audience segment"""        try:
+        """Generate insights specific to audience segment"""
+        try:
             insight_id = f"segment_{creator_id}_{segment.value}_{int(datetime.now().timestamp())}"
             
             if segment == AudienceSegment.CORE_FANS:
@@ -674,7 +703,8 @@ class AudienceIntelligenceSystem:
             return None
 
     async def _generate_demographic_insight(self, creator_id: str, profile: AudienceProfile) -> Optional[AudienceInsight]:
-        """Generate demographic-based insights"""        try:
+        """Generate demographic-based insights"""
+        try:
             demographics = profile.demographics
             age_dist = demographics.get('age_distribution', {})
             location_dist = demographics.get('location_distribution', {})
@@ -704,7 +734,8 @@ class AudienceIntelligenceSystem:
             return None
 
     async def _generate_growth_insight(self, creator_id: str, profile: AudienceProfile) -> Optional[AudienceInsight]:
-        """Generate growth-related insights"""        try:
+        """Generate growth-related insights"""
+        try:
             growth_metrics = profile.growth_metrics
             growth_rate = growth_metrics.get('follower_growth_rate', 0)
             retention_rate = growth_metrics.get('retention_rate', 0.75)
@@ -743,9 +774,11 @@ class AudienceIntelligenceSystem:
             return None
 
     async def _store_audience_insight(self, insight: AudienceInsight) -> None:
-        """Store audience insight in database"""        try:
+        """Store audience insight in database"""
+        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""                    INSERT INTO audience_insights 
+                await conn.execute("""
+                    INSERT INTO audience_insights 
                     (insight_id, creator_id, insight_category, audience_segment, key_finding,
                      recommendation, confidence_score, impact_potential, implementation_complexity, estimated_roi)
                     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
@@ -766,7 +799,8 @@ class AudienceIntelligenceSystem:
             logger.error(f"Failed to store audience insight: {e}")
 
     async def get_audience_dashboard_data(self, creator_id: str, platform: str) -> Dict[str, Any]:
-        """Get comprehensive audience data for dashboard"""        try:
+        """Get comprehensive audience data for dashboard"""
+        try:
             profile = await self._get_latest_audience_profile(creator_id, platform)
             if not profile:
                 raise HTTPException(status_code=404, detail="No audience data found")

@@ -21,7 +21,8 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -38,7 +39,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class OnlyFansCreator:
-    """OnlyFans creator information"""    creator_id: str
+    """OnlyFans creator information"""
+    creator_id: str
     username: str
     name: str
     bio: str
@@ -86,7 +88,8 @@ class OnlyFansCreator:
 
 @dataclass
 class OnlyFansPost:
-    """OnlyFans post information"""    post_id: str
+    """OnlyFans post information"""
+    post_id: str
     creator_id: str
     creator_username: str
     text: str
@@ -131,7 +134,8 @@ class OnlyFansPost:
 
 @dataclass
 class OnlyFansMessage:
-    """OnlyFans private message information"""    message_id: str
+    """OnlyFans private message information"""
+    message_id: str
     from_user_id: str
     to_user_id: str
     text: str
@@ -161,7 +165,8 @@ class OnlyFansMessage:
 
 @dataclass
 class OnlyFansSubscription:
-    """OnlyFans subscription information"""    subscription_id: str
+    """OnlyFans subscription information"""
+    subscription_id: str
     user_id: str
     creator_id: str
     creator_username: str
@@ -190,7 +195,8 @@ class OnlyFansSubscription:
 
 @dataclass
 class OnlyFansStream:
-    """OnlyFans live stream information"""    stream_id: str
+    """OnlyFans live stream information"""
+    stream_id: str
     creator_id: str
     creator_username: str
     title: str
@@ -221,7 +227,8 @@ class OnlyFansStream:
 
 
 class OnlyFansCrawler(PlatformCrawler):
-    """    Advanced OnlyFans crawler for creator economy and subscription content monitoring.
+    """
+    Advanced OnlyFans crawler for creator economy and subscription content monitoring.
     
     Features:
     - Creator profile tracking
@@ -234,7 +241,8 @@ class OnlyFansCrawler(PlatformCrawler):
     - Fan engagement metrics
     - Content performance analysis
     - Privacy-aware data collection
-    """    
+    """
+    
     def __init__(self, config: CrawlerConfig, vector_matcher=None):
         super().__init__(config, vector_matcher)
         self.platform_name = "onlyfans"
@@ -270,7 +278,8 @@ class OnlyFansCrawler(PlatformCrawler):
         self._setup_session_headers()
     
     def _setup_session_headers(self):
-        """Setup OnlyFans-specific headers"""        self.session_headers.update({
+        """Setup OnlyFans-specific headers"""
+        self.session_headers.update({
             'Accept': 'application/json, text/plain, */*',
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'en-US,en;q=0.9',
@@ -282,7 +291,8 @@ class OnlyFansCrawler(PlatformCrawler):
     
     async def search_content(self, query: str, content_type: str = "creators", 
                            max_results: int = 50, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """        Search for content on OnlyFans.
+        """
+        Search for content on OnlyFans.
         
         Args:
             query: Search query
@@ -292,7 +302,8 @@ class OnlyFansCrawler(PlatformCrawler):
             
         Returns:
             List of crawler results
-        """        try:
+        """
+        try:
             # Privacy check
             if not self._check_privacy_compliance():
                 self.logger.warning("Privacy compliance check failed - limiting data collection")
@@ -315,7 +326,8 @@ class OnlyFansCrawler(PlatformCrawler):
             return []
     
     async def _crawl_creators(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl OnlyFans creators"""        try:
+        """Crawl OnlyFans creators"""
+        try:
             results = []
             
             # Mock creator data (privacy-compliant)
@@ -362,7 +374,8 @@ class OnlyFansCrawler(PlatformCrawler):
             return []
     
     async def _crawl_posts(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl OnlyFans posts"""        try:
+        """Crawl OnlyFans posts"""
+        try:
             results = []
             
             # Privacy check for post content
@@ -414,7 +427,8 @@ class OnlyFansCrawler(PlatformCrawler):
             return []
     
     async def _crawl_messages(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl OnlyFans messages (requires special permissions)"""        try:
+        """Crawl OnlyFans messages (requires special permissions)"""
+        try:
             results = []
             
             # Strict privacy check for messages
@@ -461,7 +475,8 @@ class OnlyFansCrawler(PlatformCrawler):
             return []
     
     async def _crawl_subscriptions(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl OnlyFans subscriptions"""        try:
+        """Crawl OnlyFans subscriptions"""
+        try:
             results = []
             
             # Privacy check for subscription data
@@ -509,7 +524,8 @@ class OnlyFansCrawler(PlatformCrawler):
             return []
     
     async def _crawl_streams(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl OnlyFans streams"""        try:
+        """Crawl OnlyFans streams"""
+        try:
             results = []
             
             # Mock stream data
@@ -557,7 +573,8 @@ class OnlyFansCrawler(PlatformCrawler):
             return []
     
     async def _crawl_trending(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl trending OnlyFans content"""        try:
+        """Crawl trending OnlyFans content"""
+        try:
             results = []
             
             # Get trending content
@@ -588,7 +605,8 @@ class OnlyFansCrawler(PlatformCrawler):
             return []
     
     async def _crawl_featured(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl featured OnlyFans content"""        try:
+        """Crawl featured OnlyFans content"""
+        try:
             results = []
             
             # Get featured content
@@ -619,7 +637,8 @@ class OnlyFansCrawler(PlatformCrawler):
             return []
     
     async def _crawl_search(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """General OnlyFans search"""        try:
+        """General OnlyFans search"""
+        try:
             results = []
             
             # Search across different content types (privacy-compliant)
@@ -640,25 +659,30 @@ class OnlyFansCrawler(PlatformCrawler):
     # Privacy and permission checks
     
     def _check_privacy_compliance(self) -> bool:
-        """Check privacy compliance settings"""        # In real implementation, check user permissions and platform ToS
+        """Check privacy compliance settings"""
+        # In real implementation, check user permissions and platform ToS
         return True
     
     def _check_content_access_permissions(self) -> bool:
-        """Check permissions for content access"""        # In real implementation, verify subscription and access rights
+        """Check permissions for content access"""
+        # In real implementation, verify subscription and access rights
         return True
     
     def _check_message_access_permissions(self) -> bool:
-        """Check permissions for message access"""        # In real implementation, verify user owns the messages
+        """Check permissions for message access"""
+        # In real implementation, verify user owns the messages
         return False  # Default to restricted for privacy
     
     def _check_subscription_access_permissions(self) -> bool:
-        """Check permissions for subscription access"""        # In real implementation, verify user owns the subscription data
+        """Check permissions for subscription access"""
+        # In real implementation, verify user owns the subscription data
         return True
     
     # Mock data generators (privacy-compliant)
     
     async def _get_mock_creators(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock creator data"""        creators = []
+        """Generate mock creator data"""
+        creators = []
         
         for i in range(min(max_results, 15)):
             joined_at = datetime.utcnow() - timedelta(days=random.randint(30, 1095))
@@ -697,7 +721,8 @@ class OnlyFansCrawler(PlatformCrawler):
         return creators
     
     async def _get_mock_posts(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock post data"""        posts = []
+        """Generate mock post data"""
+        posts = []
         
         for i in range(min(max_results, 25)):
             created_at = datetime.utcnow() - timedelta(hours=random.randint(1, 168))
@@ -726,7 +751,8 @@ class OnlyFansCrawler(PlatformCrawler):
         return posts
     
     async def _get_mock_messages(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock message data (privacy-compliant)"""        messages = []
+        """Generate mock message data (privacy-compliant)"""
+        messages = []
         
         for i in range(min(max_results, 10)):  # Limited for privacy
             created_at = datetime.utcnow() - timedelta(hours=random.randint(1, 48))
@@ -749,7 +775,8 @@ class OnlyFansCrawler(PlatformCrawler):
         return messages
     
     async def _get_mock_subscriptions(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock subscription data"""        subscriptions = []
+        """Generate mock subscription data"""
+        subscriptions = []
         
         for i in range(min(max_results, 10)):
             started_at = datetime.utcnow() - timedelta(days=random.randint(1, 365))
@@ -775,7 +802,8 @@ class OnlyFansCrawler(PlatformCrawler):
         return subscriptions
     
     async def _get_mock_streams(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock stream data"""        streams = []
+        """Generate mock stream data"""
+        streams = []
         
         for i in range(min(max_results, 15)):
             started_at = datetime.utcnow() - timedelta(hours=random.randint(1, 24))
@@ -806,7 +834,8 @@ class OnlyFansCrawler(PlatformCrawler):
         return streams
     
     async def _get_trending_content(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get trending content"""        content = []
+        """Get trending content"""
+        content = []
         
         for i in range(min(max_results, 10)):
             content.append({
@@ -820,7 +849,8 @@ class OnlyFansCrawler(PlatformCrawler):
         return content
     
     async def _get_featured_content(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get featured content"""        content = []
+        """Get featured content"""
+        content = []
         
         for i in range(min(max_results, 10)):
             content.append({
@@ -836,7 +866,8 @@ class OnlyFansCrawler(PlatformCrawler):
     # Parser methods
     
     async def _parse_creator_data(self, creator_data: Dict[str, Any]) -> Optional[OnlyFansCreator]:
-        """Parse creator data"""        try:
+        """Parse creator data"""
+        try:
             joined_at = datetime.fromisoformat(creator_data.get('joined_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             creator = OnlyFansCreator(
@@ -893,7 +924,8 @@ class OnlyFansCrawler(PlatformCrawler):
             return None
     
     async def _parse_post_data(self, post_data: Dict[str, Any]) -> Optional[OnlyFansPost]:
-        """Parse post data"""        try:
+        """Parse post data"""
+        try:
             created_at = datetime.fromisoformat(post_data.get('created_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             post = OnlyFansPost(
@@ -947,7 +979,8 @@ class OnlyFansCrawler(PlatformCrawler):
             return None
     
     async def _parse_message_data(self, message_data: Dict[str, Any]) -> Optional[OnlyFansMessage]:
-        """Parse message data"""        try:
+        """Parse message data"""
+        try:
             created_at = datetime.fromisoformat(message_data.get('created_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             message = OnlyFansMessage(
@@ -986,7 +1019,8 @@ class OnlyFansCrawler(PlatformCrawler):
             return None
     
     async def _parse_subscription_data(self, subscription_data: Dict[str, Any]) -> Optional[OnlyFansSubscription]:
-        """Parse subscription data"""        try:
+        """Parse subscription data"""
+        try:
             started_at = datetime.fromisoformat(subscription_data.get('started_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             expires_at = None
             if subscription_data.get('expires_at'):
@@ -1027,7 +1061,8 @@ class OnlyFansCrawler(PlatformCrawler):
             return None
     
     async def _parse_stream_data(self, stream_data: Dict[str, Any]) -> Optional[OnlyFansStream]:
-        """Parse stream data"""        try:
+        """Parse stream data"""
+        try:
             started_at = datetime.fromisoformat(stream_data.get('started_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             ended_at = None
             if stream_data.get('ended_at'):
@@ -1071,7 +1106,8 @@ class OnlyFansCrawler(PlatformCrawler):
             return None
     
     async def _check_rate_limit(self):
-        """Check and enforce rate limiting"""        try:
+        """Check and enforce rate limiting"""
+        try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
             
@@ -1087,7 +1123,8 @@ class OnlyFansCrawler(PlatformCrawler):
             self.logger.error(f"Error in rate limiting: {str(e)}")
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Extract metadata from OnlyFans content"""        try:
+        """Extract metadata from OnlyFans content"""
+        try:
             # Parse OnlyFans URL
             parsed_url = urlparse(url)
             
@@ -1142,7 +1179,8 @@ class OnlyFansCrawler(PlatformCrawler):
             return {'error': str(e)}
     
     def get_platform_info(self) -> Dict[str, Any]:
-        """Get OnlyFans platform information"""        return {
+        """Get OnlyFans platform information"""
+        return {
             'platform_name': 'OnlyFans',
             'base_url': self.base_url,
             'api_base_url': self.api_base_url,

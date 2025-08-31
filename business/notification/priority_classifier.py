@@ -28,7 +28,8 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written
 permission from the author is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing and usage rights.
-"""from typing import Dict, List, Optional, Any, Tuple, Union
+"""
+from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
 from datetime import datetime, timezone, timedelta
@@ -47,7 +48,8 @@ logger = logging.getLogger(__name__)
 
 
 class PriorityLevel(Enum):
-    """Enhanced priority levels for notification classification."""    CRITICAL = "critical"          # System failures, security breaches, immediate threats
+    """Enhanced priority levels for notification classification."""
+    CRITICAL = "critical"          # System failures, security breaches, immediate threats
     URGENT = "urgent"              # Revenue opportunities, collaboration matches
     HIGH = "high"                  # Content protection alerts, performance issues
     MEDIUM = "medium"              # SEO recommendations, routine updates
@@ -56,7 +58,8 @@ class PriorityLevel(Enum):
 
 
 class UrgencyContext(Enum):
-    """Contextual urgency factors for enhanced classification."""    REVENUE_IMPACT = "revenue_impact"          # Direct revenue implications
+    """Contextual urgency factors for enhanced classification."""
+    REVENUE_IMPACT = "revenue_impact"          # Direct revenue implications
     LEGAL_COMPLIANCE = "legal_compliance"      # Legal or compliance requirements
     SECURITY_THREAT = "security_threat"        # Security-related notifications
     COLLABORATION = "collaboration"            # Partnership opportunities
@@ -68,7 +71,8 @@ class UrgencyContext(Enum):
 
 @dataclass
 class PriorityScore:
-    """Priority classification result with confidence metrics."""    level: PriorityLevel
+    """Priority classification result with confidence metrics."""
+    level: PriorityLevel
     score: float                    # Normalized score 0.0-1.0
     confidence: float              # Classification confidence 0.0-1.0
     urgency_context: List[UrgencyContext]
@@ -80,7 +84,8 @@ class PriorityScore:
 
 @dataclass
 class ClassificationFeatures:
-    """Feature vector for priority classification."""    content_importance: float      # Content business importance
+    """Feature vector for priority classification."""
+    content_importance: float      # Content business importance
     user_engagement_score: float   # User historical engagement
     temporal_urgency: float        # Time-sensitive factors
     business_impact: float         # Potential business impact
@@ -93,9 +98,11 @@ class ClassificationFeatures:
 
 
 class MLPriorityModel:
-    """Machine learning model for priority classification."""    
+    """Machine learning model for priority classification."""
+    
     def __init__(self, model_path: Optional[Path] = None):
-        """Initialize ML model for priority classification."""        self.model_path = model_path
+        """Initialize ML model for priority classification."""
+        self.model_path = model_path
         self.model = None
         self.scaler = None
         self.feature_importance = {}
@@ -117,7 +124,8 @@ class MLPriorityModel:
             self._load_model()
     
     def _load_model(self):
-        """Load pre-trained model from disk."""        try:
+        """Load pre-trained model from disk."""
+        try:
             with open(self.model_path, 'rb') as f:
                 model_data = pickle.load(f)
                 self.model = model_data['model']
@@ -132,7 +140,8 @@ class MLPriorityModel:
             self.is_trained = False
     
     def predict_priority(self, features: ClassificationFeatures) -> Tuple[PriorityLevel, float]:
-        """Predict priority level using ML model."""        try:
+        """Predict priority level using ML model."""
+        try:
             if not self.is_trained:
                 return self._fallback_classification(features)
             
@@ -170,7 +179,8 @@ class MLPriorityModel:
             return self._fallback_classification(features)
     
     def _fallback_classification(self, features: ClassificationFeatures) -> Tuple[PriorityLevel, float]:
-        """Fallback rule-based classification when ML model is unavailable."""        # Calculate weighted score
+        """Fallback rule-based classification when ML model is unavailable."""
+        # Calculate weighted score
         weights = {
             'content_importance': 0.2,
             'business_impact': 0.2,
@@ -205,13 +215,16 @@ class MLPriorityModel:
 
 
 class PriorityClassifier:
-    """    AI-powered notification priority classification engine.
+    """
+    AI-powered notification priority classification engine.
     
     Provides intelligent priority classification using machine learning models,
     business rule integration, temporal analysis, and user behavior patterns.
-    """    
+    """
+    
     def __init__(self, config: NotificationConfig):
-        """Initialize priority classifier with configuration."""        self.config = config
+        """Initialize priority classifier with configuration."""
+        self.config = config
         self.business_rules = BUSINESS_RULES
         self.urgency_factors = URGENCY_FACTORS
         
@@ -235,14 +248,16 @@ class PriorityClassifier:
         logger.info("Priority classifier initialized successfully")
     
     async def classify_priority(self, request: NotificationRequest) -> PriorityScore:
-        """        Classify notification priority using AI-powered analysis.
+        """
+        Classify notification priority using AI-powered analysis.
         
         Args:
             request: Notification request to classify
             
         Returns:
             PriorityScore with classification details
-        """        start_time = datetime.now(timezone.utc)
+        """
+        start_time = datetime.now(timezone.utc)
         
         try:
             # Check cache first
@@ -319,7 +334,8 @@ class PriorityClassifier:
             )
     
     async def _extract_classification_features(self, request: NotificationRequest) -> ClassificationFeatures:
-        """Extract features from notification request for classification."""        try:
+        """Extract features from notification request for classification."""
+        try:
             # Initialize features with defaults
             features = ClassificationFeatures(
                 content_importance=0.5,
@@ -383,7 +399,8 @@ class PriorityClassifier:
             )
     
     def _analyze_content_importance(self, request: NotificationRequest) -> float:
-        """Analyze content importance for priority classification."""        try:
+        """Analyze content importance for priority classification."""
+        try:
             importance_score = 0.5  # Base score
             
             # Check notification type importance
@@ -422,7 +439,8 @@ class PriorityClassifier:
             return 0.5
     
     async def _get_user_engagement_score(self, user_id: str) -> float:
-        """Get user engagement score for priority adjustment."""        try:
+        """Get user engagement score for priority adjustment."""
+        try:
             # Simulate user engagement analysis
             # In production, this would query user analytics data
             
@@ -451,7 +469,8 @@ class PriorityClassifier:
             return 0.5
     
     def _analyze_temporal_urgency(self, request: NotificationRequest) -> float:
-        """Analyze temporal urgency factors."""        try:
+        """Analyze temporal urgency factors."""
+        try:
             urgency_score = 0.5  # Base score
             current_time = datetime.now(timezone.utc)
             
@@ -487,7 +506,8 @@ class PriorityClassifier:
             return 0.5
     
     def _analyze_business_impact(self, request: NotificationRequest) -> float:
-        """Analyze potential business impact."""        try:
+        """Analyze potential business impact."""
+        try:
             impact_score = 0.5  # Base score
             
             # Business impact keywords and weights
@@ -543,7 +563,8 @@ class PriorityClassifier:
             return 0.5
     
     def _analyze_revenue_potential(self, request: NotificationRequest) -> float:
-        """Analyze revenue opportunity potential."""        try:
+        """Analyze revenue opportunity potential."""
+        try:
             revenue_score = 0.0  # Default no revenue potential
             
             # Revenue-related notification types
@@ -594,7 +615,8 @@ class PriorityClassifier:
             return 0.0
     
     def _analyze_collaboration_potential(self, request: NotificationRequest) -> float:
-        """Analyze collaboration opportunity potential."""        try:
+        """Analyze collaboration opportunity potential."""
+        try:
             collab_score = 0.0  # Default no collaboration potential
             
             # Collaboration notification types
@@ -631,7 +653,8 @@ class PriorityClassifier:
             return 0.0
     
     def _analyze_competition_urgency(self, request: NotificationRequest) -> float:
-        """Analyze competitive timing urgency."""        try:
+        """Analyze competitive timing urgency."""
+        try:
             competition_score = 0.5  # Base score
             
             # Competition-related keywords
@@ -662,7 +685,8 @@ class PriorityClassifier:
             return 0.5
     
     def _analyze_platform_priority(self, request: NotificationRequest) -> float:
-        """Analyze platform-specific priority."""        try:
+        """Analyze platform-specific priority."""
+        try:
             # Platform priority weights
             platform_weights = {
                 "youtube": 0.9,      # High revenue potential
@@ -696,7 +720,8 @@ class PriorityClassifier:
             return 0.5
     
     async def _get_historical_performance(self, request: NotificationRequest) -> float:
-        """Get historical performance for similar notifications."""        try:
+        """Get historical performance for similar notifications."""
+        try:
             # This would query historical notification performance data
             # For now, return a mock score based on notification type
             
@@ -718,7 +743,8 @@ class PriorityClassifier:
             return 0.5
     
     async def _get_user_preferences(self, user_id: str) -> float:
-        """Get user notification preferences for priority adjustment."""        try:
+        """Get user notification preferences for priority adjustment."""
+        try:
             # This would query user preference data
             # For now, return default preference score
             return 0.5
@@ -733,7 +759,8 @@ class PriorityClassifier:
         ml_priority: PriorityLevel,
         features: ClassificationFeatures
     ) -> Tuple[PriorityLevel, float]:
-        """Apply business rules to adjust ML classification."""        try:
+        """Apply business rules to adjust ML classification."""
+        try:
             adjusted_priority = ml_priority
             rule_confidence = 0.8
             
@@ -770,7 +797,8 @@ class PriorityClassifier:
             return ml_priority, 0.5
     
     def _is_security_critical(self, request: NotificationRequest) -> bool:
-        """Check if notification is security critical."""        security_keywords = [
+        """Check if notification is security critical."""
+        security_keywords = [
             "security breach", "hack", "unauthorized access", "data leak",
             "suspicious activity", "malware", "phishing", "fraud"
         ]
@@ -779,7 +807,8 @@ class PriorityClassifier:
         return any(keyword in content_text for keyword in security_keywords)
     
     def _is_legal_urgent(self, request: NotificationRequest) -> bool:
-        """Check if notification is legally urgent."""        legal_keywords = [
+        """Check if notification is legally urgent."""
+        legal_keywords = [
             "copyright infringement", "dmca", "takedown", "cease and desist",
             "legal action", "lawsuit", "compliance violation", "intellectual property"
         ]
@@ -788,13 +817,15 @@ class PriorityClassifier:
         return any(keyword in content_text for keyword in legal_keywords)
     
     def _is_revenue_critical(self, request: NotificationRequest, features: ClassificationFeatures) -> bool:
-        """Check if notification is revenue critical."""        return (
+        """Check if notification is revenue critical."""
+        return (
             features.revenue_potential > 0.8 or
             request.type in ["revenue_opportunity", "monetization_alert", "partnership_offer"]
         )
     
     def _is_time_critical(self, request: NotificationRequest) -> bool:
-        """Check if notification is time critical."""        if hasattr(request, 'deadline') and request.deadline:
+        """Check if notification is time critical."""
+        if hasattr(request, 'deadline') and request.deadline:
             time_to_deadline = (request.deadline - datetime.now(timezone.utc)).total_seconds()
             return time_to_deadline <= 3600  # 1 hour
         
@@ -803,7 +834,8 @@ class PriorityClassifier:
         return any(keyword in content_text for keyword in time_keywords)
     
     def _is_business_hours(self, timestamp: datetime) -> bool:
-        """Check if timestamp falls within business hours."""        # Assume business hours: Monday-Friday, 9 AM - 6 PM UTC
+        """Check if timestamp falls within business hours."""
+        # Assume business hours: Monday-Friday, 9 AM - 6 PM UTC
         return (
             timestamp.weekday() < 5 and
             9 <= timestamp.hour < 18
@@ -814,7 +846,8 @@ class PriorityClassifier:
         request: NotificationRequest,
         features: ClassificationFeatures
     ) -> List[UrgencyContext]:
-        """Analyze urgency context factors."""        contexts = []
+        """Analyze urgency context factors."""
+        contexts = []
         
         # Revenue impact
         if features.revenue_potential > 0.7:
@@ -851,7 +884,8 @@ class PriorityClassifier:
         return contexts
     
     def _priority_to_score(self, priority: PriorityLevel) -> float:
-        """Convert priority level to numerical score."""        priority_scores = {
+        """Convert priority level to numerical score."""
+        priority_scores = {
             PriorityLevel.CRITICAL: 1.0,
             PriorityLevel.URGENT: 0.8,
             PriorityLevel.HIGH: 0.6,
@@ -862,7 +896,8 @@ class PriorityClassifier:
         return priority_scores.get(priority, 0.4)
     
     def _extract_factor_scores(self, features: ClassificationFeatures) -> Dict[str, float]:
-        """Extract factor scores for transparency."""        return {
+        """Extract factor scores for transparency."""
+        return {
             "content_importance": features.content_importance,
             "user_engagement": features.user_engagement_score,
             "temporal_urgency": features.temporal_urgency,
@@ -881,7 +916,8 @@ class PriorityClassifier:
         features: ClassificationFeatures,
         urgency_context: List[UrgencyContext]
     ) -> str:
-        """Generate human-readable classification reasoning."""        try:
+        """Generate human-readable classification reasoning."""
+        try:
             reasoning_parts = []
             
             # Priority explanation
@@ -907,7 +943,8 @@ class PriorityClassifier:
             return f"Classified as {priority.value} priority based on automated analysis."
     
     def _generate_cache_key(self, request: NotificationRequest) -> str:
-        """Generate cache key for classification result."""        try:
+        """Generate cache key for classification result."""
+        try:
             key_components = [
                 request.type,
                 request.recipient_id,
@@ -926,11 +963,13 @@ class PriorityClassifier:
             return f"fallback_{hash(str(request))}"
     
     def _is_cache_valid(self, cached_result: PriorityScore) -> bool:
-        """Check if cached classification result is still valid."""        time_diff = datetime.now(timezone.utc) - cached_result.timestamp
+        """Check if cached classification result is still valid."""
+        time_diff = datetime.now(timezone.utc) - cached_result.timestamp
         return time_diff <= self._cache_ttl
     
     def _update_classification_stats(self, processing_time: float):
-        """Update classification performance statistics."""        self.classification_stats["total_classifications"] += 1
+        """Update classification performance statistics."""
+        self.classification_stats["total_classifications"] += 1
         
         # Update average processing time
         total_time = (
@@ -943,8 +982,10 @@ class PriorityClassifier:
         )
     
     def get_classification_stats(self) -> Dict[str, Any]:
-        """Get classification performance statistics."""        return self.classification_stats.copy()
+        """Get classification performance statistics."""
+        return self.classification_stats.copy()
     
     def clear_cache(self):
-        """Clear classification cache."""        self._classification_cache.clear()
+        """Clear classification cache."""
+        self._classification_cache.clear()
         logger.info("Priority classification cache cleared")

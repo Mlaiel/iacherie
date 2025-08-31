@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -21,7 +22,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -49,10 +51,12 @@ from ai.content_generation.generation_manager import (
 
 
 class TestGenerationManager:
-    """Test suite for GenerationManager"""    
+    """Test suite for GenerationManager"""
+    
     @pytest.fixture
     def manager(self):
-        """Create a generation manager instance"""        config = {
+        """Create a generation manager instance"""
+        config = {
             "max_concurrent_requests": 10,
             "queue_size_limit": 100,
             "default_timeout": 300,
@@ -67,7 +71,8 @@ class TestGenerationManager:
     
     @pytest.fixture
     def mock_pipeline(self):
-        """Create a mock pipeline"""        pipeline = AsyncMock()
+        """Create a mock pipeline"""
+        pipeline = AsyncMock()
         pipeline.execute_pipeline.return_value = Mock(
             status="completed",
             final_content="Generated content",
@@ -77,7 +82,8 @@ class TestGenerationManager:
     
     @pytest.fixture
     def sample_request(self):
-        """Create a sample generation request"""        return GenerationRequest(
+        """Create a sample generation request"""
+        return GenerationRequest(
             request_id=str(uuid.uuid4()),
             content_type="blog_post",
             topic="AI technology trends",
@@ -88,7 +94,8 @@ class TestGenerationManager:
     
     @pytest.fixture
     def high_priority_request(self):
-        """Create a high priority request"""        return GenerationRequest(
+        """Create a high priority request"""
+        return GenerationRequest(
             request_id=str(uuid.uuid4()),
             content_type="urgent_announcement",
             topic="Breaking news",
@@ -98,7 +105,8 @@ class TestGenerationManager:
         )
     
     def test_manager_initialization(self, manager):
-        """Test manager initialization"""        assert manager is not None
+        """Test manager initialization"""
+        assert manager is not None
         assert hasattr(manager, 'pipeline')
         assert hasattr(manager, 'queue_manager')
         assert hasattr(manager, 'resource_monitor')
@@ -108,7 +116,8 @@ class TestGenerationManager:
     
     @pytest.mark.asyncio
     async def test_manager_startup_shutdown(self, manager):
-        """Test manager startup and shutdown"""        # Test startup
+        """Test manager startup and shutdown"""
+        # Test startup
         await manager.start()
         assert manager.is_running is True
         
@@ -118,7 +127,8 @@ class TestGenerationManager:
     
     @pytest.mark.asyncio
     async def test_submit_generation_request(self, manager, sample_request, mock_pipeline):
-        """Test submitting a generation request"""        with patch.object(manager, 'pipeline', mock_pipeline):
+        """Test submitting a generation request"""
+        with patch.object(manager, 'pipeline', mock_pipeline):
             await manager.start()
             
             task_id = await manager.submit_generation_request(sample_request)
@@ -131,7 +141,8 @@ class TestGenerationManager:
     
     @pytest.mark.asyncio
     async def test_priority_queue_handling(self, manager, sample_request, high_priority_request, mock_pipeline):
-        """Test priority queue handling"""        with patch.object(manager, 'pipeline', mock_pipeline):
+        """Test priority queue handling"""
+        with patch.object(manager, 'pipeline', mock_pipeline):
             await manager.start()
             
             # Submit normal priority request first
@@ -151,7 +162,8 @@ class TestGenerationManager:
     
     @pytest.mark.asyncio
     async def test_task_status_tracking(self, manager, sample_request, mock_pipeline):
-        """Test task status tracking"""        with patch.object(manager, 'pipeline', mock_pipeline):
+        """Test task status tracking"""
+        with patch.object(manager, 'pipeline', mock_pipeline):
             await manager.start()
             
             task_id = await manager.submit_generation_request(sample_request)
@@ -171,7 +183,8 @@ class TestGenerationManager:
     
     @pytest.mark.asyncio
     async def test_task_result_retrieval(self, manager, sample_request, mock_pipeline):
-        """Test task result retrieval"""        with patch.object(manager, 'pipeline', mock_pipeline):
+        """Test task result retrieval"""
+        with patch.object(manager, 'pipeline', mock_pipeline):
             await manager.start()
             
             task_id = await manager.submit_generation_request(sample_request)
@@ -190,7 +203,8 @@ class TestGenerationManager:
     
     @pytest.mark.asyncio
     async def test_concurrent_request_handling(self, manager, mock_pipeline):
-        """Test handling of concurrent requests"""        with patch.object(manager, 'pipeline', mock_pipeline):
+        """Test handling of concurrent requests"""
+        with patch.object(manager, 'pipeline', mock_pipeline):
             await manager.start()
             
             # Submit multiple requests concurrently
@@ -222,7 +236,8 @@ class TestGenerationManager:
     
     @pytest.mark.asyncio
     async def test_resource_monitoring(self, manager):
-        """Test resource monitoring functionality"""        await manager.start()
+        """Test resource monitoring functionality"""
+        await manager.start()
         
         # Get initial resource status
         resource_status = manager.get_resource_status()
@@ -237,7 +252,8 @@ class TestGenerationManager:
     
     @pytest.mark.asyncio
     async def test_queue_size_limits(self, manager, mock_pipeline):
-        """Test queue size limits"""        with patch.object(manager, 'pipeline', mock_pipeline):
+        """Test queue size limits"""
+        with patch.object(manager, 'pipeline', mock_pipeline):
             # Set a small queue limit for testing
             manager.queue_manager.max_queue_size = 3
             
@@ -275,7 +291,8 @@ class TestGenerationManager:
     
     @pytest.mark.asyncio
     async def test_task_cancellation(self, manager, sample_request, mock_pipeline):
-        """Test task cancellation"""        # Make pipeline take longer to allow cancellation
+        """Test task cancellation"""
+        # Make pipeline take longer to allow cancellation
         async def slow_execution(*args, **kwargs):
             await asyncio.sleep(1.0)
             return Mock(status="completed", final_content="Should not complete")
@@ -298,7 +315,8 @@ class TestGenerationManager:
     
     @pytest.mark.asyncio
     async def test_error_handling_in_generation(self, manager, sample_request, mock_pipeline):
-        """Test error handling during generation"""        # Configure pipeline to raise an error
+        """Test error handling during generation"""
+        # Configure pipeline to raise an error
         mock_pipeline.execute_pipeline.side_effect = Exception("Generation failed")
         
         with patch.object(manager, 'pipeline', mock_pipeline):
@@ -317,7 +335,8 @@ class TestGenerationManager:
     
     @pytest.mark.asyncio
     async def test_retry_mechanism(self, manager, sample_request, mock_pipeline):
-        """Test retry mechanism for failed tasks"""        # Configure pipeline to fail first, then succeed
+        """Test retry mechanism for failed tasks"""
+        # Configure pipeline to fail first, then succeed
         call_count = 0
         
         async def failing_then_succeeding(*args, **kwargs):
@@ -352,7 +371,8 @@ class TestGenerationManager:
     
     @pytest.mark.asyncio
     async def test_batch_request_processing(self, manager, mock_pipeline):
-        """Test batch request processing"""        with patch.object(manager, 'pipeline', mock_pipeline):
+        """Test batch request processing"""
+        with patch.object(manager, 'pipeline', mock_pipeline):
             await manager.start()
             
             # Create batch requests
@@ -376,7 +396,8 @@ class TestGenerationManager:
             await manager.shutdown()
     
     def test_metrics_collection(self, manager):
-        """Test metrics collection"""        metrics = manager.get_metrics()
+        """Test metrics collection"""
+        metrics = manager.get_metrics()
         
         expected_keys = [
             'total_requests_processed',
@@ -393,7 +414,8 @@ class TestGenerationManager:
     
     @pytest.mark.asyncio
     async def test_health_check(self, manager):
-        """Test health check functionality"""        await manager.start()
+        """Test health check functionality"""
+        await manager.start()
         
         health_status = await manager.health_check()
         
@@ -407,7 +429,8 @@ class TestGenerationManager:
     
     @pytest.mark.asyncio
     async def test_graceful_shutdown_with_active_tasks(self, manager, mock_pipeline):
-        """Test graceful shutdown with active tasks"""        # Make pipeline take time to simulate active tasks
+        """Test graceful shutdown with active tasks"""
+        # Make pipeline take time to simulate active tasks
         async def long_running_task(*args, **kwargs):
             await asyncio.sleep(0.5)
             return Mock(status="completed", final_content="Long running result")
@@ -434,7 +457,8 @@ class TestGenerationManager:
     
     @pytest.mark.asyncio
     async def test_resource_exhaustion_handling(self, manager, mock_pipeline):
-        """Test handling of resource exhaustion"""        # Mock resource monitor to report high usage
+        """Test handling of resource exhaustion"""
+        # Mock resource monitor to report high usage
         mock_resource_monitor = Mock()
         mock_resource_monitor.is_resource_available.return_value = False
         mock_resource_monitor.get_cpu_usage.return_value = 95.0
@@ -464,14 +488,17 @@ class TestGenerationManager:
 
 
 class TestQueueManager:
-    """Test suite for QueueManager"""    
+    """Test suite for QueueManager"""
+    
     @pytest.fixture
     def queue_manager(self):
-        """Create a queue manager instance"""        return QueueManager(max_size=10)
+        """Create a queue manager instance"""
+        return QueueManager(max_size=10)
     
     @pytest.fixture
     def sample_task(self):
-        """Create a sample task"""        return GenerationTask(
+        """Create a sample task"""
+        return GenerationTask(
             task_id=str(uuid.uuid4()),
             request=GenerationRequest(
                 request_id=str(uuid.uuid4()),
@@ -483,13 +510,15 @@ class TestQueueManager:
         )
     
     def test_queue_initialization(self, queue_manager):
-        """Test queue manager initialization"""        assert queue_manager is not None
+        """Test queue manager initialization"""
+        assert queue_manager is not None
         assert queue_manager.max_size == 10
         assert queue_manager.size() == 0
         assert queue_manager.is_empty() is True
     
     def test_task_enqueue_dequeue(self, queue_manager, sample_task):
-        """Test basic enqueue and dequeue operations"""        # Enqueue task
+        """Test basic enqueue and dequeue operations"""
+        # Enqueue task
         queue_manager.enqueue(sample_task)
         assert queue_manager.size() == 1
         assert queue_manager.is_empty() is False
@@ -502,7 +531,8 @@ class TestQueueManager:
         assert queue_manager.is_empty() is True
     
     def test_priority_queue_ordering(self, queue_manager):
-        """Test priority queue ordering"""        # Create tasks with different priorities
+        """Test priority queue ordering"""
+        # Create tasks with different priorities
         low_priority_task = GenerationTask(
             task_id="low",
             request=GenerationRequest(
@@ -552,7 +582,8 @@ class TestQueueManager:
         assert third_task.priority == "low"
     
     def test_queue_size_limit(self, queue_manager):
-        """Test queue size limit enforcement"""        # Fill queue to capacity
+        """Test queue size limit enforcement"""
+        # Fill queue to capacity
         for i in range(10):
             task = GenerationTask(
                 task_id=str(i),
@@ -591,37 +622,44 @@ class TestQueueManager:
 
 
 class TestResourceMonitor:
-    """Test suite for ResourceMonitor"""    
+    """Test suite for ResourceMonitor"""
+    
     @pytest.fixture
     def resource_monitor(self):
-        """Create a resource monitor instance"""        return ResourceMonitor()
+        """Create a resource monitor instance"""
+        return ResourceMonitor()
     
     def test_resource_monitor_initialization(self, resource_monitor):
-        """Test resource monitor initialization"""        assert resource_monitor is not None
+        """Test resource monitor initialization"""
+        assert resource_monitor is not None
         assert hasattr(resource_monitor, 'cpu_threshold')
         assert hasattr(resource_monitor, 'memory_threshold')
     
     def test_cpu_usage_monitoring(self, resource_monitor):
-        """Test CPU usage monitoring"""        cpu_usage = resource_monitor.get_cpu_usage()
+        """Test CPU usage monitoring"""
+        cpu_usage = resource_monitor.get_cpu_usage()
         
         assert cpu_usage is not None
         assert isinstance(cpu_usage, (int, float))
         assert 0 <= cpu_usage <= 100
     
     def test_memory_usage_monitoring(self, resource_monitor):
-        """Test memory usage monitoring"""        memory_usage = resource_monitor.get_memory_usage()
+        """Test memory usage monitoring"""
+        memory_usage = resource_monitor.get_memory_usage()
         
         assert memory_usage is not None
         assert isinstance(memory_usage, (int, float))
         assert memory_usage >= 0
     
     def test_resource_availability_check(self, resource_monitor):
-        """Test resource availability check"""        is_available = resource_monitor.is_resource_available()
+        """Test resource availability check"""
+        is_available = resource_monitor.is_resource_available()
         
         assert isinstance(is_available, bool)
     
     def test_resource_threshold_configuration(self, resource_monitor):
-        """Test resource threshold configuration"""        # Set new thresholds
+        """Test resource threshold configuration"""
+        # Set new thresholds
         resource_monitor.set_cpu_threshold(80.0)
         resource_monitor.set_memory_threshold(85.0)
         
@@ -629,7 +667,8 @@ class TestResourceMonitor:
         assert resource_monitor.memory_threshold == 85.0
     
     def test_resource_alerts(self, resource_monitor):
-        """Test resource alert generation"""        # Mock high resource usage
+        """Test resource alert generation"""
+        # Mock high resource usage
         with patch.object(resource_monitor, 'get_cpu_usage', return_value=95.0):
             with patch.object(resource_monitor, 'get_memory_usage', return_value=90.0):
                 alerts = resource_monitor.get_resource_alerts()

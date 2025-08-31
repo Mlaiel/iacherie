@@ -14,7 +14,8 @@ is STRICTLY PROHIBITED and will be prosecuted under international copyright law.
 
 Business Logic: Content upload → Integrity verification → Corruption detection → 
 Metadata validation → Consistency checking → Data authenticity verification
-"""import logging
+"""
+import logging
 import hashlib
 import hmac
 import json
@@ -49,14 +50,16 @@ except ImportError:
 
 
 class IntegrityLevel(Enum):
-    """Integrity check levels"""    BASIC = "basic"
+    """Integrity check levels"""
+    BASIC = "basic"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
     CRYPTOGRAPHIC = "cryptographic"
 
 
 class IntegrityStatus(Enum):
-    """Integrity verification status"""    VERIFIED = "verified"
+    """Integrity verification status"""
+    VERIFIED = "verified"
     SUSPICIOUS = "suspicious"
     CORRUPTED = "corrupted"
     UNKNOWN = "unknown"
@@ -64,7 +67,8 @@ class IntegrityStatus(Enum):
 
 @dataclass
 class IntegrityResult:
-    """Data integrity check result"""    status: IntegrityStatus
+    """Data integrity check result"""
+    status: IntegrityStatus
     score: float
     checks_performed: List[str]
     issues_found: List[Dict[str, Any]]
@@ -79,11 +83,13 @@ class IntegrityResult:
 
 
 class IntegrityController:
-    """    Enterprise data integrity and consistency validation controller.
+    """
+    Enterprise data integrity and consistency validation controller.
     
     Provides comprehensive integrity checking including corruption detection,
     format verification, metadata validation, and authenticity verification.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -126,7 +132,8 @@ class IntegrityController:
         self.logger.info("IntegrityController initialized successfully")
     
     def _load_magic_signatures(self) -> Dict[str, bytes]:
-        """Load file magic signatures for format detection."""        return {
+        """Load file magic signatures for format detection."""
+        return {
             'jpeg': b'\xFF\xD8\xFF',
             'png': b'\x89PNG\r\n\x1a\n',
             'gif87': b'GIF87a',
@@ -145,7 +152,8 @@ class IntegrityController:
         }
     
     def _setup_metadata_validators(self) -> Dict[str, callable]:
-        """Setup metadata validation functions."""        return {
+        """Setup metadata validation functions."""
+        return {
             'exif': self._validate_exif_metadata,
             'id3': self._validate_id3_metadata,
             'xmp': self._validate_xmp_metadata,
@@ -159,7 +167,8 @@ class IntegrityController:
         metadata: Optional[Dict[str, Any]] = None,
         integrity_level: IntegrityLevel = IntegrityLevel.STANDARD
     ) -> IntegrityResult:
-        """        Perform comprehensive data integrity checking.
+        """
+        Perform comprehensive data integrity checking.
         
         Args:
             content_data: Content data to verify
@@ -169,7 +178,8 @@ class IntegrityController:
             
         Returns:
             IntegrityResult: Comprehensive integrity check results
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         
         try:
             self.logger.info(f"Starting integrity check - Type: {content_type}, Level: {integrity_level.value}")
@@ -282,7 +292,8 @@ class IntegrityController:
         content_data: Union[bytes, str, Dict[str, Any]],
         content_type: str
     ) -> Dict[str, Any]:
-        """Verify content format and structure."""        verification = {
+        """Verify content format and structure."""
+        verification = {
             'valid': True,
             'detected_format': None,
             'format_match': False,
@@ -352,7 +363,8 @@ class IntegrityController:
         return verification
     
     def _detect_format_signature(self, binary_data: bytes) -> Optional[str]:
-        """Detect format based on binary signature."""        for format_name, signature in self.magic_signatures.items():
+        """Detect format based on binary signature."""
+        for format_name, signature in self.magic_signatures.items():
             if binary_data.startswith(signature):
                 # Map detailed signatures to general formats
                 if format_name.startswith('mp3'):
@@ -373,14 +385,16 @@ class IntegrityController:
         return None
     
     def _validate_signature(self, binary_data: bytes, format_name: Optional[str]) -> bool:
-        """Validate binary signature matches format."""        if not format_name or format_name not in self.known_signatures:
+        """Validate binary signature matches format."""
+        if not format_name or format_name not in self.known_signatures:
             return False
         
         signatures = self.known_signatures[format_name]
         return any(binary_data.startswith(sig) for sig in signatures)
     
     async def _validate_structure(self, binary_data: bytes, format_name: Optional[str]) -> bool:
-        """Validate internal structure of content."""        if not format_name:
+        """Validate internal structure of content."""
+        if not format_name:
             return False
         
         try:
@@ -401,42 +415,48 @@ class IntegrityController:
             return False
     
     def _validate_jpeg_structure(self, data: bytes) -> bool:
-        """Validate JPEG file structure."""        if not data.startswith(b'\xFF\xD8\xFF'):
+        """Validate JPEG file structure."""
+        if not data.startswith(b'\xFF\xD8\xFF'):
             return False
         
         # Look for EOI marker
         return b'\xFF\xD9' in data
     
     def _validate_png_structure(self, data: bytes) -> bool:
-        """Validate PNG file structure."""        if not data.startswith(b'\x89PNG\r\n\x1a\n'):
+        """Validate PNG file structure."""
+        if not data.startswith(b'\x89PNG\r\n\x1a\n'):
             return False
         
         # Check for IHDR chunk
         return b'IHDR' in data[:100]
     
     def _validate_mp4_structure(self, data: bytes) -> bool:
-        """Validate MP4 file structure."""        if len(data) < 8:
+        """Validate MP4 file structure."""
+        if len(data) < 8:
             return False
         
         # Check for ftyp box
         return b'ftyp' in data[:20]
     
     def _validate_wav_structure(self, data: bytes) -> bool:
-        """Validate WAV file structure."""        if not data.startswith(b'RIFF'):
+        """Validate WAV file structure."""
+        if not data.startswith(b'RIFF'):
             return False
         
         # Check for WAVE format
         return b'WAVE' in data[:20]
     
     def _validate_pdf_structure(self, data: bytes) -> bool:
-        """Validate PDF file structure."""        if not data.startswith(b'%PDF-'):
+        """Validate PDF file structure."""
+        if not data.startswith(b'%PDF-'):
             return False
         
         # Look for EOF marker
         return b'%%EOF' in data or b'startxref' in data
     
     def _validate_size(self, size: int, content_type: str) -> bool:
-        """Validate content size is reasonable."""        size_limits = {
+        """Validate content size is reasonable."""
+        size_limits = {
             'audio': (1024, 500 * 1024 * 1024),     # 1KB - 500MB
             'video': (1024, 5 * 1024 * 1024 * 1024), # 1KB - 5GB
             'image': (100, 100 * 1024 * 1024),       # 100B - 100MB
@@ -452,7 +472,8 @@ class IntegrityController:
         content_data: Union[bytes, str, Dict[str, Any]],
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Verify content checksums and hashes."""        verification = {
+        """Verify content checksums and hashes."""
+        verification = {
             'checksums_calculated': {},
             'checksums_verified': {},
             'integrity_preserved': True
@@ -511,7 +532,8 @@ class IntegrityController:
         content_data: Union[bytes, str, Dict[str, Any]],
         content_type: str
     ) -> Dict[str, Any]:
-        """Analyze content structure for corruption detection."""        analysis = {
+        """Analyze content structure for corruption detection."""
+        analysis = {
             'corruption_detected': False,
             'corruption_indicators': [],
             'structure_analysis': {},
@@ -576,7 +598,8 @@ class IntegrityController:
         return analysis
     
     def _calculate_entropy(self, data: bytes) -> float:
-        """Calculate Shannon entropy of data."""        if not data:
+        """Calculate Shannon entropy of data."""
+        if not data:
             return 0.0
         
         # Count byte frequencies
@@ -596,7 +619,8 @@ class IntegrityController:
         return entropy
     
     def _find_null_sequences(self, data: bytes) -> Dict[str, Any]:
-        """Find null byte sequences in data."""        sequences = []
+        """Find null byte sequences in data."""
+        sequences = []
         current_length = 0
         max_length = 0
         total_nulls = 0
@@ -625,7 +649,8 @@ class IntegrityController:
         }
     
     def _find_repeated_patterns(self, data: bytes) -> Dict[str, Any]:
-        """Find repeated byte patterns in data."""        # Sample analysis on first 64KB for performance
+        """Find repeated byte patterns in data."""
+        # Sample analysis on first 64KB for performance
         sample_data = data[:65536]
         
         pattern_counts = {}
@@ -647,7 +672,8 @@ class IntegrityController:
         }
     
     async def _analyze_audio_structure(self, data: bytes) -> Dict[str, Any]:
-        """Analyze audio-specific structure."""        structure = {}
+        """Analyze audio-specific structure."""
+        structure = {}
         
         try:
             # Create temporary file for analysis
@@ -688,7 +714,8 @@ class IntegrityController:
         return structure
     
     async def _analyze_video_structure(self, data: bytes) -> Dict[str, Any]:
-        """Analyze video-specific structure."""        structure = {}
+        """Analyze video-specific structure."""
+        structure = {}
         
         try:
             # Create temporary file for analysis
@@ -734,7 +761,8 @@ class IntegrityController:
         return structure
     
     async def _analyze_image_structure(self, data: bytes) -> Dict[str, Any]:
-        """Analyze image-specific structure."""        structure = {}
+        """Analyze image-specific structure."""
+        structure = {}
         
         try:
             # Create temporary file for analysis
@@ -784,7 +812,8 @@ class IntegrityController:
         content_type: str,
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Verify content metadata integrity."""        verification = {
+        """Verify content metadata integrity."""
+        verification = {
             'metadata_present': False,
             'metadata_valid': True,
             'extracted_metadata': {},
@@ -825,7 +854,8 @@ class IntegrityController:
         content_data: Union[bytes, str, Dict[str, Any]],
         content_type: str
     ) -> Dict[str, Any]:
-        """Extract embedded metadata from content."""        metadata = {}
+        """Extract embedded metadata from content."""
+        metadata = {}
         
         try:
             if isinstance(content_data, str) and os.path.exists(content_data):
@@ -885,7 +915,8 @@ class IntegrityController:
         embedded_metadata: Dict[str, Any],
         provided_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Check consistency between embedded and provided metadata."""        consistency = {
+        """Check consistency between embedded and provided metadata."""
+        consistency = {
             'consistent': True,
             'inconsistencies': [],
             'matches': [],
@@ -915,7 +946,8 @@ class IntegrityController:
         metadata: Dict[str, Any],
         content_type: str
     ) -> List[str]:
-        """Detect potential metadata tampering indicators."""        indicators = []
+        """Detect potential metadata tampering indicators."""
+        indicators = []
         
         # Check for suspicious creation/modification times
         creation_time = metadata.get('creation_time')
@@ -946,7 +978,8 @@ class IntegrityController:
         content_data: Union[bytes, str, Dict[str, Any]],
         content_type: str
     ) -> Dict[str, Any]:
-        """Check content authenticity indicators."""        authenticity = {
+        """Check content authenticity indicators."""
+        authenticity = {
             'authentic_indicators': [],
             'suspicious_indicators': [],
             'manipulation_score': 0.0,
@@ -988,7 +1021,8 @@ class IntegrityController:
         content_data: Union[bytes, str, Dict[str, Any]],
         content_type: str
     ) -> bool:
-        """Detect presence of watermarks (basic implementation)."""        # This is a placeholder for watermark detection
+        """Detect presence of watermarks (basic implementation)."""
+        # This is a placeholder for watermark detection
         # In a real implementation, this would use specialized algorithms
         
         if content_type in ['image', 'video']:
@@ -1004,7 +1038,8 @@ class IntegrityController:
         content_data: Union[bytes, str, Dict[str, Any]],
         content_type: str
     ) -> List[str]:
-        """Detect content manipulation indicators."""        indicators = []
+        """Detect content manipulation indicators."""
+        indicators = []
         
         # This is a basic implementation
         # Advanced manipulation detection would require specialized algorithms
@@ -1032,7 +1067,8 @@ class IntegrityController:
         content_data: Union[bytes, str, Dict[str, Any]],
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Verify cryptographic signatures and integrity."""        verification = {
+        """Verify cryptographic signatures and integrity."""
+        verification = {
             'signature_valid': False,
             'certificate_valid': False,
             'chain_of_trust': False,
@@ -1068,7 +1104,8 @@ class IntegrityController:
         signature: str,
         public_key: str
     ) -> bool:
-        """Verify digital signature (simplified implementation)."""        try:
+        """Verify digital signature (simplified implementation)."""
+        try:
             # This is a placeholder - real implementation would use proper cryptographic verification
             # Load public key, verify signature against content hash
             
@@ -1091,11 +1128,13 @@ class IntegrityController:
             return False
     
     def _verify_certificate(self, certificate: str) -> bool:
-        """Verify digital certificate."""        # Placeholder for certificate verification
+        """Verify digital certificate."""
+        # Placeholder for certificate verification
         return bool(certificate and len(certificate) > 50)
     
     def _verify_timestamp(self, timestamp: str) -> bool:
-        """Verify timestamp validity."""        try:
+        """Verify timestamp validity."""
+        try:
             # Check if timestamp is reasonable (within last 10 years)
             ts = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
             now = datetime.now()
@@ -1114,7 +1153,8 @@ class IntegrityController:
         authenticity_indicators: Dict[str, Any],
         issues_found: List[Dict[str, Any]]
     ) -> float:
-        """Calculate overall integrity score."""        score_components = []
+        """Calculate overall integrity score."""
+        score_components = []
         
         # Format verification (30%)
         if format_verification.get('valid', False):
@@ -1169,7 +1209,8 @@ class IntegrityController:
         integrity_score: float,
         issues_found: List[Dict[str, Any]]
     ) -> IntegrityStatus:
-        """Determine overall integrity status."""        critical_issues = [issue for issue in issues_found if issue.get('severity') == 'critical']
+        """Determine overall integrity status."""
+        critical_issues = [issue for issue in issues_found if issue.get('severity') == 'critical']
         
         if critical_issues:
             if any('corruption' in issue.get('type', '') for issue in critical_issues):
@@ -1190,7 +1231,8 @@ class IntegrityController:
         format_verification: Dict[str, Any],
         content_analysis: Dict[str, Any]
     ) -> List[str]:
-        """Generate integrity improvement recommendations."""        recommendations = []
+        """Generate integrity improvement recommendations."""
+        recommendations = []
         
         # Format-based recommendations
         if not format_verification.get('valid', True):
@@ -1228,7 +1270,8 @@ class IntegrityController:
         integrity_score: float,
         issues_found: List[Dict[str, Any]]
     ) -> float:
-        """Calculate confidence level in integrity assessment."""        confidence_factors = []
+        """Calculate confidence level in integrity assessment."""
+        confidence_factors = []
         
         # Completeness of checks
         expected_checks = ['format_verification', 'checksum_verification', 'content_analysis', 'metadata_verification']
@@ -1246,28 +1289,34 @@ class IntegrityController:
         return round(np.mean(confidence_factors), 3)
     
     async def _validate_exif_metadata(self, metadata: Dict[str, Any]) -> bool:
-        """Validate EXIF metadata structure."""        # Placeholder for EXIF validation
+        """Validate EXIF metadata structure."""
+        # Placeholder for EXIF validation
         return True
     
     async def _validate_id3_metadata(self, metadata: Dict[str, Any]) -> bool:
-        """Validate ID3 metadata structure."""        # Placeholder for ID3 validation
+        """Validate ID3 metadata structure."""
+        # Placeholder for ID3 validation
         return True
     
     async def _validate_xmp_metadata(self, metadata: Dict[str, Any]) -> bool:
-        """Validate XMP metadata structure."""        # Placeholder for XMP validation
+        """Validate XMP metadata structure."""
+        # Placeholder for XMP validation
         return True
     
     async def _validate_iptc_metadata(self, metadata: Dict[str, Any]) -> bool:
-        """Validate IPTC metadata structure."""        # Placeholder for IPTC validation
+        """Validate IPTC metadata structure."""
+        # Placeholder for IPTC validation
         return True
 
 
 class ContentIntegrityVerifier:
-    """    Specialized content integrity verifier for IA Influencer platform.
+    """
+    Specialized content integrity verifier for IA Influencer platform.
     
     Provides advanced content authenticity verification, tamper detection,
     and digital fingerprinting for creator content protection.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.ContentIntegrityVerifier")
@@ -1307,7 +1356,8 @@ class ContentIntegrityVerifier:
         expected_hash: Optional[str] = None,
         digital_signature: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Perform comprehensive content authenticity verification."""        try:
+        """Perform comprehensive content authenticity verification."""
+        try:
             verification_result = {
                 'authenticity_score': 0.0,
                 'tamper_indicators': [],
@@ -1371,7 +1421,8 @@ class ContentIntegrityVerifier:
             }
     
     async def _calculate_content_hash(self, content_data: Union[bytes, str]) -> str:
-        """Calculate SHA-256 hash of content."""        if isinstance(content_data, str):
+        """Calculate SHA-256 hash of content."""
+        if isinstance(content_data, str):
             if os.path.exists(content_data):
                 with open(content_data, 'rb') as f:
                     content_bytes = f.read()
@@ -1383,7 +1434,8 @@ class ContentIntegrityVerifier:
         return hashlib.sha256(content_bytes).hexdigest()
     
     async def _verify_digital_signature(self, content_data: Union[bytes, str], signature: str) -> bool:
-        """Verify digital signature of content."""        try:
+        """Verify digital signature of content."""
+        try:
             # Simplified digital signature verification
             # In a real implementation, this would use proper cryptographic libraries
             
@@ -1403,7 +1455,8 @@ class ContentIntegrityVerifier:
         content_data: Union[bytes, str],
         content_type: str
     ) -> Dict[str, Any]:
-        """Analyze content for authenticity indicators."""        analysis = {
+        """Analyze content for authenticity indicators."""
+        analysis = {
             'entropy_analysis': {},
             'pattern_analysis': {},
             'compression_analysis': {},
@@ -1429,7 +1482,8 @@ class ContentIntegrityVerifier:
         return analysis
     
     async def _analyze_audio_authenticity(self, audio_data: Union[bytes, str]) -> Dict[str, Any]:
-        """Analyze audio content for authenticity indicators."""        analysis = {}
+        """Analyze audio content for authenticity indicators."""
+        analysis = {}
         
         try:
             # Load audio
@@ -1484,7 +1538,8 @@ class ContentIntegrityVerifier:
         return analysis
     
     async def _analyze_video_authenticity(self, video_data: Union[bytes, str]) -> Dict[str, Any]:
-        """Analyze video content for authenticity indicators."""        analysis = {}
+        """Analyze video content for authenticity indicators."""
+        analysis = {}
         
         try:
             # Load video
@@ -1549,7 +1604,8 @@ class ContentIntegrityVerifier:
         return analysis
     
     async def _analyze_image_authenticity(self, image_data: Union[bytes, str]) -> Dict[str, Any]:
-        """Analyze image content for authenticity indicators."""        analysis = {}
+        """Analyze image content for authenticity indicators."""
+        analysis = {}
         
         try:
             # Load image
@@ -1607,7 +1663,8 @@ class ContentIntegrityVerifier:
         return analysis
     
     async def _analyze_text_authenticity(self, text_data: Union[bytes, str]) -> Dict[str, Any]:
-        """Analyze text content for authenticity indicators."""        analysis = {}
+        """Analyze text content for authenticity indicators."""
+        analysis = {}
         
         try:
             if isinstance(text_data, bytes):
@@ -1662,7 +1719,8 @@ class ContentIntegrityVerifier:
         return analysis
     
     async def _analyze_generic_authenticity(self, content_data: Union[bytes, str]) -> Dict[str, Any]:
-        """Generic authenticity analysis for unknown content types."""        analysis = {}
+        """Generic authenticity analysis for unknown content types."""
+        analysis = {}
         
         try:
             if isinstance(content_data, str):
@@ -1710,7 +1768,8 @@ class ContentIntegrityVerifier:
         content_data: Union[bytes, str],
         content_type: str
     ) -> List[Dict[str, Any]]:
-        """Detect potential tampering indicators in content."""        indicators = []
+        """Detect potential tampering indicators in content."""
+        indicators = []
         
         try:
             # Check for metadata inconsistencies
@@ -1742,7 +1801,8 @@ class ContentIntegrityVerifier:
         content_data: Union[bytes, str],
         content_type: str
     ) -> List[Dict[str, Any]]:
-        """Check for metadata tampering indicators."""        indicators = []
+        """Check for metadata tampering indicators."""
+        indicators = []
         
         try:
             if content_type == 'image' and HAS_MEDIA_LIBS:
@@ -1789,7 +1849,8 @@ class ContentIntegrityVerifier:
         content_data: Union[bytes, str],
         content_type: str
     ) -> List[Dict[str, Any]]:
-        """Check for file format tampering indicators."""        indicators = []
+        """Check for file format tampering indicators."""
+        indicators = []
         
         try:
             if isinstance(content_data, str):
@@ -1832,7 +1893,8 @@ class ContentIntegrityVerifier:
         content_data: Union[bytes, str],
         content_type: str
     ) -> List[Dict[str, Any]]:
-        """Check for compression tampering indicators."""        indicators = []
+        """Check for compression tampering indicators."""
+        indicators = []
         
         try:
             # This would implement more sophisticated compression analysis
@@ -1845,7 +1907,8 @@ class ContentIntegrityVerifier:
         return indicators
     
     def _estimate_jpeg_quality(self, image: np.ndarray) -> int:
-        """Estimate JPEG quality from image analysis."""        # Simplified JPEG quality estimation
+        """Estimate JPEG quality from image analysis."""
+        # Simplified JPEG quality estimation
         # Real implementation would analyze DCT coefficients
         
         # Calculate image sharpness as proxy for quality
@@ -1865,7 +1928,8 @@ class ContentIntegrityVerifier:
             return 50
     
     def _calculate_authenticity_score(self, verification_result: Dict[str, Any]) -> float:
-        """Calculate overall authenticity score."""        score_factors = []
+        """Calculate overall authenticity score."""
+        score_factors = []
         
         # Hash verification (40% weight)
         if verification_result.get('hash_verification', False):
@@ -1906,7 +1970,8 @@ class ContentIntegrityVerifier:
         return round(final_score, 3)
     
     def _calculate_verification_confidence(self, verification_result: Dict[str, Any]) -> float:
-        """Calculate confidence in verification result."""        confidence_factors = []
+        """Calculate confidence in verification result."""
+        confidence_factors = []
         
         # Data availability
         if verification_result.get('hash_verification') is not None:
@@ -1928,7 +1993,8 @@ class ContentIntegrityVerifier:
         return round(sum(confidence_factors), 3)
     
     def _generate_authenticity_recommendations(self, verification_result: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on authenticity verification."""        recommendations = []
+        """Generate recommendations based on authenticity verification."""
+        recommendations = []
         
         if not verification_result.get('hash_verification', True):
             recommendations.append('Content hash verification failed - verify source authenticity')
@@ -1961,11 +2027,13 @@ class ContentIntegrityVerifier:
 
 
 class MetadataIntegrityChecker:
-    """    Specialized metadata integrity checker for comprehensive metadata validation.
+    """
+    Specialized metadata integrity checker for comprehensive metadata validation.
     
     Provides advanced metadata verification, consistency checking, and preservation
     validation for all content types in the IA Influencer platform.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.MetadataIntegrityChecker")
@@ -1992,7 +2060,8 @@ class MetadataIntegrityChecker:
         content_type: str,
         expected_metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Perform comprehensive metadata integrity checking."""        try:
+        """Perform comprehensive metadata integrity checking."""
+        try:
             integrity_result = {
                 'metadata_valid': False,
                 'missing_fields': [],
@@ -2051,7 +2120,8 @@ class MetadataIntegrityChecker:
         content_data: Union[bytes, str],
         content_type: str
     ) -> Dict[str, Any]:
-        """Extract metadata from content based on type."""        metadata = {}
+        """Extract metadata from content based on type."""
+        metadata = {}
         
         try:
             if content_type == 'audio' and HAS_MEDIA_LIBS:
@@ -2072,7 +2142,8 @@ class MetadataIntegrityChecker:
         return metadata
     
     async def _extract_audio_metadata(self, audio_data: Union[bytes, str]) -> Dict[str, Any]:
-        """Extract audio metadata."""        metadata = {}
+        """Extract audio metadata."""
+        metadata = {}
         
         try:
             if isinstance(audio_data, str):
@@ -2093,7 +2164,8 @@ class MetadataIntegrityChecker:
         return metadata
     
     async def _extract_video_metadata(self, video_data: Union[bytes, str]) -> Dict[str, Any]:
-        """Extract video metadata."""        metadata = {}
+        """Extract video metadata."""
+        metadata = {}
         
         try:
             if isinstance(video_data, str):
@@ -2123,7 +2195,8 @@ class MetadataIntegrityChecker:
         return metadata
     
     async def _extract_image_metadata(self, image_data: Union[bytes, str]) -> Dict[str, Any]:
-        """Extract image metadata."""        metadata = {}
+        """Extract image metadata."""
+        metadata = {}
         
         try:
             if isinstance(image_data, str):
@@ -2153,7 +2226,8 @@ class MetadataIntegrityChecker:
         return metadata
     
     async def _extract_text_metadata(self, text_data: Union[bytes, str]) -> Dict[str, Any]:
-        """Extract text metadata."""        metadata = {}
+        """Extract text metadata."""
+        metadata = {}
         
         try:
             if isinstance(text_data, bytes):
@@ -2187,7 +2261,8 @@ class MetadataIntegrityChecker:
         return metadata
     
     async def _extract_generic_metadata(self, content_data: Union[bytes, str]) -> Dict[str, Any]:
-        """Extract generic metadata."""        metadata = {}
+        """Extract generic metadata."""
+        metadata = {}
         
         try:
             if isinstance(content_data, str):
@@ -2221,7 +2296,8 @@ class MetadataIntegrityChecker:
         metadata: Dict[str, Any],
         content_type: str
     ) -> List[str]:
-        """Check for missing required metadata fields."""        missing_fields = []
+        """Check for missing required metadata fields."""
+        missing_fields = []
         
         required_fields = self.validation_rules['required_fields'].get(content_type, [])
         
@@ -2232,7 +2308,8 @@ class MetadataIntegrityChecker:
         return missing_fields
     
     async def _validate_field_formats(self, metadata: Dict[str, Any]) -> List[Dict[str, str]]:
-        """Validate metadata field formats."""        invalid_fields = []
+        """Validate metadata field formats."""
+        invalid_fields = []
         
         field_formats = self.validation_rules['field_formats']
         
@@ -2253,7 +2330,8 @@ class MetadataIntegrityChecker:
         metadata: Dict[str, Any],
         content_type: str
     ) -> float:
-        """Check internal metadata consistency."""        consistency_score = 1.0
+        """Check internal metadata consistency."""
+        consistency_score = 1.0
         
         try:
             # Content-specific consistency checks
@@ -2296,7 +2374,8 @@ class MetadataIntegrityChecker:
         extracted_metadata: Dict[str, Any],
         expected_metadata: Optional[Dict[str, Any]]
     ) -> float:
-        """Check metadata preservation quality."""        if not expected_metadata:
+        """Check metadata preservation quality."""
+        if not expected_metadata:
             return 0.8  # Default good preservation if no reference
         
         preservation_score = 1.0
@@ -2332,7 +2411,8 @@ class MetadataIntegrityChecker:
         self,
         integrity_result: Dict[str, Any]
     ) -> List[str]:
-        """Generate metadata integrity recommendations."""        recommendations = []
+        """Generate metadata integrity recommendations."""
+        recommendations = []
         
         # Missing fields recommendations
         missing_fields = integrity_result.get('missing_fields', [])

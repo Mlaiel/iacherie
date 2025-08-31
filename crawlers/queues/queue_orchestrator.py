@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Request reception → Queue routing → Priority analysis → Worker assignment → 
 Load balancing → Execution monitoring → Result processing → Performance optimization
-"""from typing import Any, Dict, List, Optional, Set, Callable, Tuple
+"""
+from typing import Any, Dict, List, Optional, Set, Callable, Tuple
 import logging
 import asyncio
 from datetime import datetime, timedelta
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 class OrchestrationStatus(Enum):
-    """Orchestrator status levels"""    INITIALIZING = "initializing"
+    """Orchestrator status levels"""
+    INITIALIZING = "initializing"
     ACTIVE = "active"
     OVERLOADED = "overloaded"
     DEGRADED = "degraded"
@@ -46,7 +48,8 @@ class OrchestrationStatus(Enum):
 
 @dataclass
 class OrchestrationMetrics:
-    """Comprehensive orchestration metrics"""    # Throughput metrics
+    """Comprehensive orchestration metrics"""
+    # Throughput metrics
     total_requests_received: int = 0
     total_tasks_processed: int = 0
     total_tasks_completed: int = 0
@@ -80,7 +83,8 @@ class OrchestrationMetrics:
 
 @dataclass
 class OrchestrationConfig:
-    """Orchestrator configuration"""    max_concurrent_requests: int = 1000
+    """Orchestrator configuration"""
+    max_concurrent_requests: int = 1000
     max_queue_size: int = 50000
     max_workers: int = 100
     
@@ -106,7 +110,8 @@ class OrchestrationConfig:
 
 
 class CrawlerQueueOrchestrator:
-    """    🎼 Advanced Crawler Queue Orchestrator - IA-Influencer-Agent
+    """
+    🎼 Advanced Crawler Queue Orchestrator - IA-Influencer-Agent
     
     Enterprise-grade queue orchestration system featuring:
     - Multi-queue coordination and management
@@ -116,7 +121,8 @@ class CrawlerQueueOrchestrator:
     - Advanced error handling and recovery
     - Integration with core queue systems
     - Comprehensive analytics and reporting
-    """    
+    """
+    
     def __init__(self, config: OrchestrationConfig = None):
         self.config = config or OrchestrationConfig()
         
@@ -155,7 +161,8 @@ class CrawlerQueueOrchestrator:
         self, 
         core_queue_manager: Optional[IntelligentQueueManager] = None
     ) -> bool:
-        """Initialize orchestrator and all components"""        try:
+        """Initialize orchestrator and all components"""
+        try:
             logger.info("🎼 Initializing Crawler Queue Orchestrator...")
             
             # Store core queue manager reference
@@ -210,7 +217,8 @@ class CrawlerQueueOrchestrator:
         priority_factors: Optional[PriorityFactors] = None,
         callback_url: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Submit crawler request for orchestrated processing"""        try:
+        """Submit crawler request for orchestrated processing"""
+        try:
             request_id = f"req_{uuid.uuid4().hex}"
             start_time = time.time()
             
@@ -292,7 +300,8 @@ class CrawlerQueueOrchestrator:
             }
     
     async def get_request_status(self, request_id: str) -> Dict[str, Any]:
-        """Get comprehensive status of submitted request"""        try:
+        """Get comprehensive status of submitted request"""
+        try:
             request_info = self.active_requests.get(request_id)
             if not request_info:
                 # Check history
@@ -346,7 +355,8 @@ class CrawlerQueueOrchestrator:
             }
     
     async def cancel_request(self, request_id: str) -> bool:
-        """Cancel active crawler request"""        try:
+        """Cancel active crawler request"""
+        try:
             request_info = self.active_requests.get(request_id)
             if not request_info:
                 return False
@@ -375,7 +385,8 @@ class CrawlerQueueOrchestrator:
             return False
     
     async def get_orchestration_status(self) -> Dict[str, Any]:
-        """Get comprehensive orchestration status"""        try:
+        """Get comprehensive orchestration status"""
+        try:
             # Update current metrics
             await self._update_current_metrics()
             
@@ -422,7 +433,8 @@ class CrawlerQueueOrchestrator:
             return {"error": str(e)}
     
     async def optimize_performance(self) -> Dict[str, Any]:
-        """Trigger performance optimization"""        try:
+        """Trigger performance optimization"""
+        try:
             optimization_results = {
                 "timestamp": datetime.now().isoformat(),
                 "optimizations_applied": []
@@ -459,16 +471,20 @@ class CrawlerQueueOrchestrator:
             return {"error": str(e)}
     
     async def register_status_callback(self, callback: Callable):
-        """Register callback for status changes"""        self._status_callbacks.append(callback)
+        """Register callback for status changes"""
+        self._status_callbacks.append(callback)
     
     async def register_metrics_callback(self, callback: Callable):
-        """Register callback for metrics updates"""        self._metrics_callbacks.append(callback)
+        """Register callback for metrics updates"""
+        self._metrics_callbacks.append(callback)
     
     async def add_webhook_url(self, webhook_url: str):
-        """Add webhook URL for notifications"""        self._webhook_urls.append(webhook_url)
+        """Add webhook URL for notifications"""
+        self._webhook_urls.append(webhook_url)
     
     async def shutdown(self):
-        """Gracefully shutdown orchestrator"""        try:
+        """Gracefully shutdown orchestrator"""
+        try:
             logger.info("🛑 Starting Crawler Queue Orchestrator shutdown...")
             
             self.status = OrchestrationStatus.SHUTDOWN
@@ -499,7 +515,8 @@ class CrawlerQueueOrchestrator:
     # Private helper methods
     
     async def _validate_request(self, task: CrawlerTask) -> bool:
-        """Validate incoming crawler request"""        if not task.target_urls and not task.search_keywords:
+        """Validate incoming crawler request"""
+        if not task.target_urls and not task.search_keywords:
             return False
         if not task.content_types:
             return False
@@ -508,7 +525,8 @@ class CrawlerQueueOrchestrator:
         return True
     
     async def _create_default_priority_factors(self, task: CrawlerTask) -> PriorityFactors:
-        """Create default priority factors for task"""        # Would integrate with user management and content analysis
+        """Create default priority factors for task"""
+        # Would integrate with user management and content analysis
         from .priority_manager import PriorityFactors, BusinessImpact, UrgencyLevel
         
         return PriorityFactors(
@@ -518,16 +536,19 @@ class CrawlerQueueOrchestrator:
         )
     
     async def _select_optimal_queue(self, task: CrawlerTask, priority_score) -> str:
-        """Select optimal queue for task"""        # Implement intelligent queue selection
+        """Select optimal queue for task"""
+        # Implement intelligent queue selection
         return task.task_type.value
     
     async def _assign_optimal_worker(self, task: CrawlerTask, priority_score) -> Optional[str]:
-        """Assign optimal worker for task"""        if self.workers_manager:
+        """Assign optimal worker for task"""
+        if self.workers_manager:
             return await self.workers_manager.assign_task_to_worker(task)
         return None
     
     async def _estimate_completion_time(self, task: Optional[CrawlerTask], priority_score) -> str:
-        """Estimate task completion time"""        # Implement ML-based time estimation
+        """Estimate task completion time"""
+        # Implement ML-based time estimation
         base_time = 300  # 5 minutes default
         
         # Adjust based on priority
@@ -540,11 +561,13 @@ class CrawlerQueueOrchestrator:
         return estimated_completion.isoformat()
     
     async def _get_queue_position(self, task: CrawlerTask) -> int:
-        """Get approximate queue position"""        # Implement queue position calculation
+        """Get approximate queue position"""
+        # Implement queue position calculation
         return 1  # Placeholder
     
     async def _update_submission_metrics(self, processing_time_ms: float, success: bool):
-        """Update metrics after request submission"""        self.metrics.total_requests_received += 1
+        """Update metrics after request submission"""
+        self.metrics.total_requests_received += 1
         
         if success:
             self.metrics.total_tasks_processed += 1
@@ -562,7 +585,8 @@ class CrawlerQueueOrchestrator:
         )
     
     async def _update_current_metrics(self):
-        """Update current performance metrics"""        try:
+        """Update current performance metrics"""
+        try:
             # Update queue sizes
             if self.queue_manager:
                 queue_metrics = await self.queue_manager.get_crawler_metrics()
@@ -594,14 +618,16 @@ class CrawlerQueueOrchestrator:
             logger.error(f"Metrics update error: {e}")
     
     async def _notify_status_change(self, new_status: OrchestrationStatus):
-        """Notify callbacks of status change"""        for callback in self._status_callbacks:
+        """Notify callbacks of status change"""
+        for callback in self._status_callbacks:
             try:
                 await callback(new_status)
             except Exception as e:
                 logger.error(f"Status callback error: {e}")
     
     async def _orchestration_monitor(self):
-        """Main orchestration monitoring loop"""        while self._is_running:
+        """Main orchestration monitoring loop"""
+        while self._is_running:
             try:
                 # Monitor overall system health
                 await self._check_system_health()
@@ -619,7 +645,8 @@ class CrawlerQueueOrchestrator:
                 await asyncio.sleep(10)
     
     async def _performance_optimizer(self):
-        """Background performance optimization"""        while self._is_running:
+        """Background performance optimization"""
+        while self._is_running:
             try:
                 await self.optimize_performance()
                 await asyncio.sleep(self.config.optimization_interval)
@@ -629,7 +656,8 @@ class CrawlerQueueOrchestrator:
                 await asyncio.sleep(self.config.optimization_interval)
     
     async def _load_balancer(self):
-        """Background load balancing"""        while self._is_running:
+        """Background load balancing"""
+        while self._is_running:
             try:
                 await self._balance_system_load()
                 await asyncio.sleep(30)  # Balance every 30 seconds
@@ -639,7 +667,8 @@ class CrawlerQueueOrchestrator:
                 await asyncio.sleep(30)
     
     async def _metrics_collector(self):
-        """Background metrics collection"""        while self._is_running:
+        """Background metrics collection"""
+        while self._is_running:
             try:
                 await self._update_current_metrics()
                 
@@ -657,7 +686,8 @@ class CrawlerQueueOrchestrator:
                 await asyncio.sleep(self.config.metrics_collection_interval)
     
     async def _health_monitor(self):
-        """Background health monitoring"""        while self._is_running:
+        """Background health monitoring"""
+        while self._is_running:
             try:
                 await self._check_component_health()
                 await asyncio.sleep(self.config.health_check_interval)
@@ -667,7 +697,8 @@ class CrawlerQueueOrchestrator:
                 await asyncio.sleep(self.config.health_check_interval)
     
     async def _auto_scaler(self):
-        """Background auto-scaling"""        while self._is_running:
+        """Background auto-scaling"""
+        while self._is_running:
             try:
                 if self.config.auto_scaling_enabled:
                     await self._perform_auto_scaling()
@@ -679,36 +710,45 @@ class CrawlerQueueOrchestrator:
                 await asyncio.sleep(60)
     
     async def _check_system_health(self):
-        """Check overall system health"""        # Implementation for system health checks
+        """Check overall system health"""
+        # Implementation for system health checks
         pass
     
     async def _process_completed_requests(self):
-        """Process and cleanup completed requests"""        # Implementation for processing completed requests
+        """Process and cleanup completed requests"""
+        # Implementation for processing completed requests
         pass
     
     async def _update_load_balancing(self):
-        """Update load balancing metrics"""        # Implementation for load balancing updates
+        """Update load balancing metrics"""
+        # Implementation for load balancing updates
         pass
     
     async def _balance_system_load(self):
-        """Balance load across system components"""        # Implementation for system load balancing
+        """Balance load across system components"""
+        # Implementation for system load balancing
         pass
     
     async def _check_component_health(self):
-        """Check health of all components"""        # Implementation for component health checks
+        """Check health of all components"""
+        # Implementation for component health checks
         pass
     
     async def _perform_auto_scaling(self):
-        """Perform auto-scaling operations"""        # Implementation for auto-scaling
+        """Perform auto-scaling operations"""
+        # Implementation for auto-scaling
         pass
     
     async def _optimize_load_balancing(self) -> Dict[str, Any]:
-        """Optimize load balancing algorithms"""        return {"optimized": True}
+        """Optimize load balancing algorithms"""
+        return {"optimized": True}
     
     async def _optimize_worker_allocation(self) -> Dict[str, Any]:
-        """Optimize worker allocation strategies"""        return {"optimized": True}
+        """Optimize worker allocation strategies"""
+        return {"optimized": True}
 
 
 # Factory function
 def create_queue_orchestrator(config: OrchestrationConfig = None) -> CrawlerQueueOrchestrator:
-    """Create and return configured queue orchestrator"""    return CrawlerQueueOrchestrator(config)
+    """Create and return configured queue orchestrator"""
+    return CrawlerQueueOrchestrator(config)

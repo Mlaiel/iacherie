@@ -4,7 +4,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive model versioning capabilities including
 version management, experiment tracking, and A/B testing infrastructure.
-"""import logging
+"""
+import logging
 import json
 import hashlib
 import os
@@ -19,21 +20,24 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class ModelStatus(Enum):
-    """Model version status"""    DEVELOPMENT = "development"
+    """Model version status"""
+    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     DEPRECATED = "deprecated"
     ARCHIVED = "archived"
 
 class ExperimentStatus(Enum):
-    """Experiment status"""    CREATED = "created"
+    """Experiment status"""
+    CREATED = "created"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
     CANCELLED = "cancelled"
 
 class ABTestStatus(Enum):
-    """A/B Test status"""    DRAFT = "draft"
+    """A/B Test status"""
+    DRAFT = "draft"
     ACTIVE = "active"
     COMPLETED = "completed"
     PAUSED = "paused"
@@ -41,7 +45,8 @@ class ABTestStatus(Enum):
 
 @dataclass
 class ModelVersion:
-    """Model version information"""    version_id: str
+    """Model version information"""
+    version_id: str
     model_name: str
     version_number: str
     status: ModelStatus
@@ -55,7 +60,8 @@ class ModelVersion:
 
 @dataclass
 class Experiment:
-    """Experiment information"""    experiment_id: str
+    """Experiment information"""
+    experiment_id: str
     name: str
     description: str
     status: ExperimentStatus
@@ -69,7 +75,8 @@ class Experiment:
 
 @dataclass
 class ABTest:
-    """A/B Test configuration and results"""    test_id: str
+    """A/B Test configuration and results"""
+    test_id: str
     name: str
     description: str
     status: ABTestStatus
@@ -84,7 +91,8 @@ class ABTest:
     statistical_significance: Optional[float]
 
 class ModelVersionManager:
-    """Manage model versions and lifecycle"""    
+    """Manage model versions and lifecycle"""
+    
     def __init__(self, storage_path: str = "./models"):
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(parents=True, exist_ok=True)
@@ -95,7 +103,8 @@ class ModelVersionManager:
         self.logger.info("ModelVersionManager initialized successfully")
     
     def _load_metadata(self):
-        """Load existing version metadata"""        try:
+        """Load existing version metadata"""
+        try:
             if self.metadata_file.exists():
                 with open(self.metadata_file, 'r') as f:
                     data = json.load(f)
@@ -108,7 +117,8 @@ class ModelVersionManager:
             self.logger.error(f"Failed to load metadata: {e}")
     
     def _save_metadata(self):
-        """Save version metadata to disk"""        try:
+        """Save version metadata to disk"""
+        try:
             data = {}
             for version_id, version in self.versions.items():
                 version_data = asdict(version)
@@ -124,7 +134,8 @@ class ModelVersionManager:
     def create_version(self, model_name: str, model_path: str, version_number: Optional[str] = None,
                       created_by: str = "system", description: str = "", 
                       metadata: Dict[str, Any] = None, tags: List[str] = None) -> str:
-        """Create a new model version"""        try:
+        """Create a new model version"""
+        try:
             if version_number is None:
                 version_number = self._generate_version_number(model_name)
             
@@ -166,7 +177,8 @@ class ModelVersionManager:
             raise
     
     def _generate_version_number(self, model_name: str) -> str:
-        """Generate next version number for a model"""        existing_versions = [
+        """Generate next version number for a model"""
+        existing_versions = [
             v for v in self.versions.values() 
             if v.model_name == model_name
         ]
@@ -184,15 +196,18 @@ class ModelVersionManager:
         return "1.0.0"
     
     def _generate_version_id(self, model_name: str, version_number: str) -> str:
-        """Generate unique version ID"""        unique_string = f"{model_name}:{version_number}:{int(datetime.utcnow().timestamp())}"
+        """Generate unique version ID"""
+        unique_string = f"{model_name}:{version_number}:{int(datetime.utcnow().timestamp())}"
         return hashlib.md5(unique_string.encode()).hexdigest()[:16]
     
     def get_version(self, version_id: str) -> Optional[ModelVersion]:
-        """Get version by ID"""        return self.versions.get(version_id)
+        """Get version by ID"""
+        return self.versions.get(version_id)
     
     def list_versions(self, model_name: Optional[str] = None, 
                      status: Optional[ModelStatus] = None) -> List[ModelVersion]:
-        """List model versions with optional filtering"""        versions = list(self.versions.values())
+        """List model versions with optional filtering"""
+        versions = list(self.versions.values())
         
         if model_name:
             versions = [v for v in versions if v.model_name == model_name]
@@ -203,7 +218,8 @@ class ModelVersionManager:
         return sorted(versions, key=lambda x: x.created_at, reverse=True)
     
     def promote_version(self, version_id: str, target_status: ModelStatus) -> bool:
-        """Promote version to target status"""        try:
+        """Promote version to target status"""
+        try:
             if version_id not in self.versions:
                 raise ValueError(f"Version not found: {version_id}")
             
@@ -221,7 +237,8 @@ class ModelVersionManager:
             return False
     
     def update_metrics(self, version_id: str, metrics: Dict[str, float]) -> bool:
-        """Update performance metrics for a version"""        try:
+        """Update performance metrics for a version"""
+        try:
             if version_id not in self.versions:
                 raise ValueError(f"Version not found: {version_id}")
             
@@ -238,7 +255,8 @@ class ModelVersionManager:
             return False
     
     def delete_version(self, version_id: str) -> bool:
-        """Delete a model version"""        try:
+        """Delete a model version"""
+        try:
             if version_id not in self.versions:
                 raise ValueError(f"Version not found: {version_id}")
             
@@ -265,7 +283,8 @@ class ModelVersionManager:
             return False
 
 class ExperimentTracker:
-    """Track ML experiments and their results"""    
+    """Track ML experiments and their results"""
+    
     def __init__(self, storage_path: str = "./experiments"):
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(parents=True, exist_ok=True)
@@ -276,7 +295,8 @@ class ExperimentTracker:
         self.logger.info("ExperimentTracker initialized successfully")
     
     def _load_metadata(self):
-        """Load existing experiment metadata"""        try:
+        """Load existing experiment metadata"""
+        try:
             if self.metadata_file.exists():
                 with open(self.metadata_file, 'r') as f:
                     data = json.load(f)
@@ -293,7 +313,8 @@ class ExperimentTracker:
             self.logger.error(f"Failed to load experiment metadata: {e}")
     
     def _save_metadata(self):
-        """Save experiment metadata to disk"""        try:
+        """Save experiment metadata to disk"""
+        try:
             data = {}
             for exp_id, experiment in self.experiments.items():
                 exp_data = asdict(experiment)
@@ -313,7 +334,8 @@ class ExperimentTracker:
     def create_experiment(self, name: str, description: str = "", 
                          parameters: Dict[str, Any] = None, 
                          tags: List[str] = None) -> str:
-        """Create a new experiment"""        try:
+        """Create a new experiment"""
+        try:
             experiment_id = str(uuid.uuid4())[:12]
             
             experiment = Experiment(
@@ -341,7 +363,8 @@ class ExperimentTracker:
             raise
     
     def start_experiment(self, experiment_id: str) -> bool:
-        """Start an experiment"""        try:
+        """Start an experiment"""
+        try:
             if experiment_id not in self.experiments:
                 raise ValueError(f"Experiment not found: {experiment_id}")
             
@@ -359,7 +382,8 @@ class ExperimentTracker:
             return False
     
     def log_metric(self, experiment_id: str, metric_name: str, value: float) -> bool:
-        """Log a metric for an experiment"""        try:
+        """Log a metric for an experiment"""
+        try:
             if experiment_id not in self.experiments:
                 raise ValueError(f"Experiment not found: {experiment_id}")
             
@@ -376,7 +400,8 @@ class ExperimentTracker:
             return False
     
     def log_artifact(self, experiment_id: str, artifact_name: str, artifact_path: str) -> bool:
-        """Log an artifact for an experiment"""        try:
+        """Log an artifact for an experiment"""
+        try:
             if experiment_id not in self.experiments:
                 raise ValueError(f"Experiment not found: {experiment_id}")
             
@@ -393,7 +418,8 @@ class ExperimentTracker:
             return False
     
     def complete_experiment(self, experiment_id: str) -> bool:
-        """Mark experiment as completed"""        try:
+        """Mark experiment as completed"""
+        try:
             if experiment_id not in self.experiments:
                 raise ValueError(f"Experiment not found: {experiment_id}")
             
@@ -411,10 +437,12 @@ class ExperimentTracker:
             return False
     
     def get_experiment(self, experiment_id: str) -> Optional[Experiment]:
-        """Get experiment by ID"""        return self.experiments.get(experiment_id)
+        """Get experiment by ID"""
+        return self.experiments.get(experiment_id)
     
     def list_experiments(self, status: Optional[ExperimentStatus] = None) -> List[Experiment]:
-        """List experiments with optional status filtering"""        experiments = list(self.experiments.values())
+        """List experiments with optional status filtering"""
+        experiments = list(self.experiments.values())
         
         if status:
             experiments = [e for e in experiments if e.status == status]
@@ -422,7 +450,8 @@ class ExperimentTracker:
         return sorted(experiments, key=lambda x: x.created_at, reverse=True)
 
 class ABTestManager:
-    """Manage A/B tests for model versions"""    
+    """Manage A/B tests for model versions"""
+    
     def __init__(self, storage_path: str = "./ab_tests"):
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(parents=True, exist_ok=True)
@@ -433,7 +462,8 @@ class ABTestManager:
         self.logger.info("ABTestManager initialized successfully")
     
     def _load_metadata(self):
-        """Load existing A/B test metadata"""        try:
+        """Load existing A/B test metadata"""
+        try:
             if self.metadata_file.exists():
                 with open(self.metadata_file, 'r') as f:
                     data = json.load(f)
@@ -450,7 +480,8 @@ class ABTestManager:
             self.logger.error(f"Failed to load A/B test metadata: {e}")
     
     def _save_metadata(self):
-        """Save A/B test metadata to disk"""        try:
+        """Save A/B test metadata to disk"""
+        try:
             data = {}
             for test_id, ab_test in self.tests.items():
                 test_data = asdict(ab_test)
@@ -470,7 +501,8 @@ class ABTestManager:
     def create_ab_test(self, name: str, description: str, control_version: str,
                       treatment_versions: List[str], traffic_split: Dict[str, float],
                       success_metrics: List[str]) -> str:
-        """Create a new A/B test"""        try:
+        """Create a new A/B test"""
+        try:
             # Validate traffic split
             total_traffic = sum(traffic_split.values())
             if abs(total_traffic - 1.0) > 0.01:
@@ -505,7 +537,8 @@ class ABTestManager:
             raise
     
     def start_ab_test(self, test_id: str) -> bool:
-        """Start an A/B test"""        try:
+        """Start an A/B test"""
+        try:
             if test_id not in self.tests:
                 raise ValueError(f"A/B test not found: {test_id}")
             
@@ -523,7 +556,8 @@ class ABTestManager:
             return False
     
     def record_result(self, test_id: str, version: str, metric: str, value: float) -> bool:
-        """Record a result for an A/B test"""        try:
+        """Record a result for an A/B test"""
+        try:
             if test_id not in self.tests:
                 raise ValueError(f"A/B test not found: {test_id}")
             
@@ -551,7 +585,8 @@ class ABTestManager:
             return False
     
     def analyze_results(self, test_id: str) -> Dict[str, Any]:
-        """Analyze A/B test results and calculate statistical significance"""        try:
+        """Analyze A/B test results and calculate statistical significance"""
+        try:
             if test_id not in self.tests:
                 raise ValueError(f"A/B test not found: {test_id}")
             
@@ -621,7 +656,8 @@ class ABTestManager:
             return {"error": str(e)}
     
     def end_ab_test(self, test_id: str) -> bool:
-        """End an A/B test"""        try:
+        """End an A/B test"""
+        try:
             if test_id not in self.tests:
                 raise ValueError(f"A/B test not found: {test_id}")
             
@@ -648,10 +684,12 @@ class ABTestManager:
             return False
     
     def get_ab_test(self, test_id: str) -> Optional[ABTest]:
-        """Get A/B test by ID"""        return self.tests.get(test_id)
+        """Get A/B test by ID"""
+        return self.tests.get(test_id)
     
     def list_ab_tests(self, status: Optional[ABTestStatus] = None) -> List[ABTest]:
-        """List A/B tests with optional status filtering"""        tests = list(self.tests.values())
+        """List A/B tests with optional status filtering"""
+        tests = list(self.tests.values())
         
         if status:
             tests = [t for t in tests if t.status == status]

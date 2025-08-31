@@ -14,7 +14,7 @@ written permission from Fahed Mlaiel (mlaiel@live.de) is **STRICTLY PROHIBITED**
 in immediate legal action under German and international copyright law.
 
 Contact for authorization: mlaiel@live.de
-ALL RIGHTS RESERVED - FAHED MLAIEL ©2025
+ALL RIGHTS RESERVED - FAHED MLAIEL (c)2025
 
 🎯 BUSINESS LOGIC FLOW:
 Content Upload → Multi-Format Analysis → AI Fingerprinting → Protection Setup → 
@@ -41,7 +41,9 @@ Automated Monetization → Rights Management → Performance Analytics
 - Audio Expert: Audio processing workflow coordination and optimization
 - DevOps Engineer: Infrastructure orchestration and deployment coordination
 - IA Prompt Engineer: AI-driven process optimization and intelligence
-"""from .workflow_coordinator import WorkflowCoordinator, WorkflowStatus, WorkflowPriority
+"""
+
+from .workflow_coordinator import WorkflowCoordinator, WorkflowStatus, WorkflowPriority
 from .process_manager import ProcessManager, ProcessType, ExecutionContext
 from .task_scheduler import TaskScheduler, ScheduleType, TaskPriority
 from .resource_coordinator import ResourceCoordinator, ResourceType, AllocationStrategy

@@ -22,7 +22,8 @@ TECHNOLOGIES IA INTÉGRÉES:
 🎬 Vidéo: OpenCV, YOLO, Frame Analysis, Motion Vectors (>90% précision)
 📸 Images: CLIP, ImageHash, Perceptual Hashing (>92% précision)
 📝 Texte: BERT, RoBERTa, Vector Similarity (>88% précision)
-"""from typing import Dict, List, Any, Optional, Union, Tuple, Set
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime, timedelta
@@ -57,7 +58,8 @@ __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Types de contenu supportés"""    AUDIO = "audio"
+    """Types de contenu supportés"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -65,7 +67,8 @@ class ContentType(Enum):
     MIXED_MEDIA = "mixed_media"
 
 class FingerprintAlgorithm(Enum):
-    """Algorithmes de fingerprinting disponibles"""    # Audio
+    """Algorithmes de fingerprinting disponibles"""
+    # Audio
     CHROMAPRINT = "chromaprint"
     SPECTRAL_HASH = "spectral_hash"
     MFCC_FEATURES = "mfcc_features"
@@ -87,7 +90,8 @@ class FingerprintAlgorithm(Enum):
 
 @dataclass
 class FingerprintFeatures:
-    """Caractéristiques extraites du contenu"""    content_id: str
+    """Caractéristiques extraites du contenu"""
+    content_id: str
     content_type: ContentType
     algorithm: FingerprintAlgorithm
     features: np.ndarray
@@ -98,7 +102,8 @@ class FingerprintFeatures:
 
 @dataclass
 class SimilarityResult:
-    """Résultat de comparaison de similarité"""    original_id: str
+    """Résultat de comparaison de similarité"""
+    original_id: str
     candidate_id: str
     similarity_score: float
     algorithm_used: FingerprintAlgorithm
@@ -107,7 +112,8 @@ class SimilarityResult:
     is_potential_copy: bool = False
 
 class MultiModalFingerprintEngine:
-    """    Moteur avancé de fingerprinting multi-modal avec IA
+    """
+    Moteur avancé de fingerprinting multi-modal avec IA
     
     Capacités:
     - Extraction de caractéristiques audio/vidéo/image/texte
@@ -115,7 +121,8 @@ class MultiModalFingerprintEngine:
     - Détection de similarité en temps réel
     - Protection juridique automatisée
     - Monitoring continu anti-piratage
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.fingerprint_repository = FingerprintRepository()
@@ -135,7 +142,8 @@ class MultiModalFingerprintEngine:
         }
         
     def _initialize_ai_models(self) -> Dict[str, Any]:
-        """Initialise les modèles IA pour chaque type de contenu"""        models = {}
+        """Initialise les modèles IA pour chaque type de contenu"""
+        models = {}
         
         try:
             # Modèle CLIP pour images
@@ -155,7 +163,8 @@ class MultiModalFingerprintEngine:
         return models
         
     def _initialize_processors(self) -> Dict[str, Any]:
-        """Initialise les processeurs pour chaque type de contenu"""        processors = {}
+        """Initialise les processeurs pour chaque type de contenu"""
+        processors = {}
         
         try:
             # Processeur CLIP
@@ -169,7 +178,8 @@ class MultiModalFingerprintEngine:
     
     async def create_fingerprint(self, content_path: str, content_type: ContentType,
                                 creator_id: str, metadata: Optional[Dict[str, Any]] = None) -> FingerprintModel:
-        """        Crée un fingerprint multi-modal pour protéger le contenu
+        """
+        Crée un fingerprint multi-modal pour protéger le contenu
         
         Args:
             content_path: Chemin vers le fichier de contenu
@@ -179,7 +189,8 @@ class MultiModalFingerprintEngine:
             
         Returns:
             FingerprintModel: Modèle de fingerprint créé
-        """        try:
+        """
+        try:
             content_id = str(uuid.uuid4())
             
             # Extraction des caractéristiques selon le type
@@ -237,7 +248,8 @@ class MultiModalFingerprintEngine:
             raise
     
     async def _extract_audio_features(self, audio_path: str, content_id: str) -> List[FingerprintFeatures]:
-        """Extrait les caractéristiques audio avec Chromaprint et Essentia"""        features_list = []
+        """Extrait les caractéristiques audio avec Chromaprint et Essentia"""
+        features_list = []
         
         try:
             # Chargement de l'audio
@@ -299,7 +311,8 @@ class MultiModalFingerprintEngine:
         return features_list
     
     async def _extract_video_features(self, video_path: str, content_id: str) -> List[FingerprintFeatures]:
-        """Extrait les caractéristiques vidéo avec OpenCV et analyse de frames"""        features_list = []
+        """Extrait les caractéristiques vidéo avec OpenCV et analyse de frames"""
+        features_list = []
         
         try:
             cap = cv2.VideoCapture(video_path)
@@ -380,7 +393,8 @@ class MultiModalFingerprintEngine:
         return features_list
     
     async def _extract_image_features(self, image_path: str, content_id: str) -> List[FingerprintFeatures]:
-        """Extrait les caractéristiques image avec CLIP et hashing perceptuel"""        features_list = []
+        """Extrait les caractéristiques image avec CLIP et hashing perceptuel"""
+        features_list = []
         
         try:
             # Chargement de l'image
@@ -458,7 +472,8 @@ class MultiModalFingerprintEngine:
         return features_list
     
     async def _extract_text_features(self, text_path: str, content_id: str) -> List[FingerprintFeatures]:
-        """Extrait les caractéristiques texte avec BERT et analyse sémantique"""        features_list = []
+        """Extrait les caractéristiques texte avec BERT et analyse sémantique"""
+        features_list = []
         
         try:
             # Lecture du texte
@@ -565,7 +580,8 @@ class MultiModalFingerprintEngine:
     
     async def find_similar_content(self, content_path: str, content_type: ContentType,
                                  max_results: int = 10) -> List[SimilarityResult]:
-        """        Recherche du contenu similaire dans la base de données
+        """
+        Recherche du contenu similaire dans la base de données
         
         Args:
             content_path: Chemin vers le contenu à analyser
@@ -574,7 +590,8 @@ class MultiModalFingerprintEngine:
             
         Returns:
             List[SimilarityResult]: Liste des contenus similaires trouvés
-        """        try:
+        """
+        try:
             # Extraction des caractéristiques du contenu candidat
             temp_id = str(uuid.uuid4())
             features_list = []
@@ -632,7 +649,8 @@ class MultiModalFingerprintEngine:
             raise
     
     def _get_confidence_level(self, similarity_score: float) -> str:
-        """Détermine le niveau de confiance basé sur le score de similarité"""        if similarity_score >= 0.95:
+        """Détermine le niveau de confiance basé sur le score de similarité"""
+        if similarity_score >= 0.95:
             return "very_high"
         elif similarity_score >= 0.85:
             return "high"
@@ -644,14 +662,16 @@ class MultiModalFingerprintEngine:
             return "very_low"
     
     async def monitor_content_usage(self, fingerprint_id: str) -> Dict[str, Any]:
-        """        Lance le monitoring continu d'un contenu protégé
+        """
+        Lance le monitoring continu d'un contenu protégé
         
         Args:
             fingerprint_id: ID du fingerprint à monitorer
             
         Returns:
             Dict contenant les informations de monitoring
-        """        try:
+        """
+        try:
             # Récupération du fingerprint
             fingerprint = await self.fingerprint_repository.get_by_id(fingerprint_id)
             if not fingerprint:
@@ -696,7 +716,8 @@ class MultiModalFingerprintEngine:
             raise
     
     async def _schedule_monitoring_task(self, config: Dict[str, Any]) -> str:
-        """Programme une tâche de monitoring périodique"""        task_id = str(uuid.uuid4())
+        """Programme une tâche de monitoring périodique"""
+        task_id = str(uuid.uuid4())
         
         # Ici, on intégrerait avec Celery ou un autre système de tâches
         # Pour l'instant, on simule
@@ -706,7 +727,8 @@ class MultiModalFingerprintEngine:
     
     async def generate_protection_report(self, creator_id: str, 
                                        period_days: int = 30) -> Dict[str, Any]:
-        """        Génère un rapport de protection pour un créateur
+        """
+        Génère un rapport de protection pour un créateur
         
         Args:
             creator_id: ID du créateur
@@ -714,7 +736,8 @@ class MultiModalFingerprintEngine:
             
         Returns:
             Dict contenant le rapport de protection
-        """        try:
+        """
+        try:
             # Récupération des fingerprints du créateur
             fingerprints = await self.fingerprint_repository.get_by_creator(creator_id)
             
@@ -754,7 +777,8 @@ class MultiModalFingerprintEngine:
     
     async def _analyze_violations(self, fingerprints: List[FingerprintModel], 
                                 period_days: int) -> List[Dict[str, Any]]:
-        """Analyse les violations détectées sur la période"""        violations = []
+        """Analyse les violations détectées sur la période"""
+        violations = []
         
         # Simulation de violations détectées
         for fingerprint in fingerprints[:3]:  # Limité pour l'exemple
@@ -773,7 +797,8 @@ class MultiModalFingerprintEngine:
     
     def _calculate_protection_metrics(self, fingerprints: List[FingerprintModel], 
                                     violations: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calcule les métriques de protection"""        total_content = len(fingerprints)
+        """Calcule les métriques de protection"""
+        total_content = len(fingerprints)
         total_violations = len(violations)
         
         # Score de protection (0-100)
@@ -801,14 +826,16 @@ class MultiModalFingerprintEngine:
         }
     
     def _group_by_content_type(self, fingerprints: List[FingerprintModel]) -> Dict[str, int]:
-        """Groupe les fingerprints par type de contenu"""        type_counts = {}
+        """Groupe les fingerprints par type de contenu"""
+        type_counts = {}
         for fp in fingerprints:
             content_type = fp.content_type
             type_counts[content_type] = type_counts.get(content_type, 0) + 1
         return type_counts
     
     def _group_by_algorithm(self, fingerprints: List[FingerprintModel]) -> Dict[str, int]:
-        """Groupe les fingerprints par algorithme"""        algo_counts = {}
+        """Groupe les fingerprints par algorithme"""
+        algo_counts = {}
         for fp in fingerprints:
             for algo in fp.fingerprint_algorithms:
                 algo_counts[algo] = algo_counts.get(algo, 0) + 1
@@ -817,7 +844,8 @@ class MultiModalFingerprintEngine:
     def _generate_protection_recommendations(self, fingerprints: List[FingerprintModel],
                                            violations: List[Dict[str, Any]],
                                            metrics: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Génère des recommandations pour améliorer la protection"""        recommendations = []
+        """Génère des recommandations pour améliorer la protection"""
+        recommendations = []
         
         # Recommandation basée sur le score de protection
         if metrics["overall_score"] < 80:

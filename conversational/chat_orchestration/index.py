@@ -19,7 +19,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code and concept are proprietary intellectual property of Fahed Mlaiel.
 Unauthorized copying, modification, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, Optional, Any, Type
 from dataclasses import dataclass
@@ -50,7 +51,8 @@ from backend.security.encryption import EncryptionService
 
 
 class OrchestrationComponentType(Enum):
-    """Types of orchestration components"""    CHAT_MANAGER = "chat_manager"
+    """Types of orchestration components"""
+    CHAT_MANAGER = "chat_manager"
     MESSAGE_PROCESSOR = "message_processor"
     RESPONSE_GENERATOR = "response_generator"
     INTENT_CLASSIFIER = "intent_classifier"
@@ -67,7 +69,8 @@ class OrchestrationComponentType(Enum):
 
 @dataclass
 class OrchestrationConfiguration:
-    """Configuration for orchestration components"""    enable_real_time_processing: bool = True
+    """Configuration for orchestration components"""
+    enable_real_time_processing: bool = True
     enable_content_protection: bool = True
     enable_monetization: bool = True
     enable_analytics: bool = True
@@ -88,7 +91,8 @@ class OrchestrationConfiguration:
     analytics_config: Dict[str, Any] = None
     
     def __post_init__(self):
-        """Initialize default configurations"""        if self.chat_manager_config is None:
+        """Initialize default configurations"""
+        if self.chat_manager_config is None:
             self.chat_manager_config = {}
         if self.message_processor_config is None:
             self.message_processor_config = {}
@@ -107,12 +111,14 @@ class OrchestrationConfiguration:
 
 
 class ChatOrchestrationFactory:
-    """    Factory class for creating and managing chat orchestration components.
+    """
+    Factory class for creating and managing chat orchestration components.
     
     This factory provides centralized creation and configuration of all
     orchestration components with proper dependency injection and
     lifecycle management.
-    """    
+    """
+    
     def __init__(
         self,
         config: Optional[OrchestrationConfiguration] = None,
@@ -134,7 +140,8 @@ class ChatOrchestrationFactory:
         self.logger.setLevel(logging.DEBUG if self.config.debug_mode else logging.INFO)
     
     async def initialize(self) -> None:
-        """Initialize the orchestration factory and core dependencies"""        
+        """Initialize the orchestration factory and core dependencies"""
+        
         if self._initialized:
             return
         
@@ -166,7 +173,8 @@ class ChatOrchestrationFactory:
         component_type: OrchestrationComponentType,
         **kwargs
     ) -> Any:
-        """        Get or create an orchestration component
+        """
+        Get or create an orchestration component
         
         Args:
             component_type: Type of component to get/create
@@ -174,7 +182,8 @@ class ChatOrchestrationFactory:
             
         Returns:
             Initialized component instance
-        """        
+        """
+        
         if not self._initialized:
             await self.initialize()
         
@@ -195,7 +204,8 @@ class ChatOrchestrationFactory:
         component_type: OrchestrationComponentType,
         **kwargs
     ) -> Any:
-        """Create a specific orchestration component"""        
+        """Create a specific orchestration component"""
+        
         try:
             if component_type == OrchestrationComponentType.CHAT_MANAGER:
                 return await self._create_chat_manager(**kwargs)
@@ -244,7 +254,8 @@ class ChatOrchestrationFactory:
             raise
     
     async def _create_chat_manager(self, **kwargs) -> EnterpriseConversationOrchestrator:
-        """Create chat manager component"""        
+        """Create chat manager component"""
+        
         # Get required dependencies
         message_processor = await self.get_component(OrchestrationComponentType.MESSAGE_PROCESSOR)
         response_generator = await self.get_component(OrchestrationComponentType.RESPONSE_GENERATOR)
@@ -263,7 +274,8 @@ class ChatOrchestrationFactory:
         )
     
     async def _create_message_processor(self, **kwargs) -> EnterpriseMessageProcessor:
-        """Create message processor component"""        
+        """Create message processor component"""
+        
         return EnterpriseMessageProcessor(
             redis_client=self.redis_client,
             **self.config.message_processor_config,
@@ -271,35 +283,40 @@ class ChatOrchestrationFactory:
         )
     
     async def _create_response_generator(self, **kwargs) -> EnterpriseResponseGenerator:
-        """Create response generator component"""        
+        """Create response generator component"""
+        
         return EnterpriseResponseGenerator(
             **self.config.response_generator_config,
             **kwargs
         )
     
     async def _create_intent_classifier(self, **kwargs) -> EnterpriseIntentClassifier:
-        """Create intent classifier component"""        
+        """Create intent classifier component"""
+        
         return EnterpriseIntentClassifier(
             **self.config.intent_classifier_config,
             **kwargs
         )
     
     async def _create_context_analyzer(self, **kwargs) -> EnterpriseContextAnalyzer:
-        """Create context analyzer component"""        
+        """Create context analyzer component"""
+        
         return EnterpriseContextAnalyzer(
             **self.config.context_analyzer_config,
             **kwargs
         )
     
     async def _create_conversation_router(self, **kwargs) -> EnterpriseConversationRouter:
-        """Create conversation router component"""        
+        """Create conversation router component"""
+        
         return EnterpriseConversationRouter(
             **self.config.router_config,
             **kwargs
         )
     
     async def _create_session_controller(self, **kwargs) -> EnterpriseSessionController:
-        """Create session controller component"""        
+        """Create session controller component"""
+        
         return EnterpriseSessionController(
             session_store=self.database_manager.get_session_store(),
             encryption_service=self.encryption_service,
@@ -309,7 +326,8 @@ class ChatOrchestrationFactory:
         )
     
     async def _create_chat_analytics(self, **kwargs) -> EnterpriseChatAnalytics:
-        """Create chat analytics component"""        
+        """Create chat analytics component"""
+        
         return EnterpriseChatAnalytics(
             analytics_store=self.database_manager.get_analytics_store(),
             **self.config.analytics_config,
@@ -317,7 +335,8 @@ class ChatOrchestrationFactory:
         )
     
     async def _create_content_fingerprinting(self, **kwargs) -> ContentFingerprintingEngine:
-        """Create content fingerprinting component"""        
+        """Create content fingerprinting component"""
+        
         return ContentFingerprintingEngine(
             database_manager=self.database_manager,
             redis_client=self.redis_client,
@@ -325,7 +344,8 @@ class ChatOrchestrationFactory:
         )
     
     async def _create_content_protection(self, **kwargs) -> ContentProtectionMonitor:
-        """Create content protection component"""        
+        """Create content protection component"""
+        
         fingerprinting_engine = await self.get_component(OrchestrationComponentType.CONTENT_FINGERPRINTING)
         
         return ContentProtectionMonitor(
@@ -335,7 +355,8 @@ class ChatOrchestrationFactory:
         )
     
     async def _create_monetization_orchestrator(self, **kwargs) -> MonetizationOrchestrator:
-        """Create monetization orchestrator component"""        
+        """Create monetization orchestrator component"""
+        
         return MonetizationOrchestrator(
             database_manager=self.database_manager,
             redis_client=self.redis_client,
@@ -343,7 +364,8 @@ class ChatOrchestrationFactory:
         )
     
     async def _create_surveillance_monitor(self, **kwargs) -> SurveillanceMonitor:
-        """Create surveillance monitor component"""        
+        """Create surveillance monitor component"""
+        
         return SurveillanceMonitor(
             database_manager=self.database_manager,
             redis_client=self.redis_client,
@@ -351,7 +373,8 @@ class ChatOrchestrationFactory:
         )
     
     async def _create_realtime_analytics(self, **kwargs) -> RealtimeCreatorAnalytics:
-        """Create realtime analytics component"""        
+        """Create realtime analytics component"""
+        
         return RealtimeCreatorAnalytics(
             database_manager=self.database_manager,
             redis_client=self.redis_client,
@@ -359,11 +382,13 @@ class ChatOrchestrationFactory:
         )
     
     async def get_complete_orchestration_suite(self) -> Dict[str, Any]:
-        """        Get a complete suite of all orchestration components
+        """
+        Get a complete suite of all orchestration components
         
         Returns:
             Dict containing all initialized orchestration components
-        """        
+        """
+        
         suite = {}
         
         # Core orchestration components
@@ -393,7 +418,8 @@ class ChatOrchestrationFactory:
         return suite
     
     async def shutdown(self) -> None:
-        """Shutdown all components and cleanup resources"""        
+        """Shutdown all components and cleanup resources"""
+        
         try:
             # Shutdown all components
             for component_type, component in self._components.items():
@@ -426,14 +452,16 @@ _orchestration_factory: Optional[ChatOrchestrationFactory] = None
 async def get_orchestration_factory(
     config: Optional[OrchestrationConfiguration] = None
 ) -> ChatOrchestrationFactory:
-    """    Get the global orchestration factory instance
+    """
+    Get the global orchestration factory instance
     
     Args:
         config: Optional configuration for factory initialization
         
     Returns:
         ChatOrchestrationFactory instance
-    """    
+    """
+    
     global _orchestration_factory
     
     if _orchestration_factory is None:
@@ -447,7 +475,8 @@ async def get_chat_manager(
     config: Optional[OrchestrationConfiguration] = None,
     **kwargs
 ) -> EnterpriseConversationOrchestrator:
-    """    Quick access to chat manager component
+    """
+    Quick access to chat manager component
     
     Args:
         config: Optional configuration
@@ -455,7 +484,8 @@ async def get_chat_manager(
         
     Returns:
         EnterpriseConversationOrchestrator instance
-    """    
+    """
+    
     factory = await get_orchestration_factory(config)
     return await factory.get_component(OrchestrationComponentType.CHAT_MANAGER, **kwargs)
 
@@ -464,7 +494,8 @@ async def get_message_processor(
     config: Optional[OrchestrationConfiguration] = None,
     **kwargs
 ) -> EnterpriseMessageProcessor:
-    """    Quick access to message processor component
+    """
+    Quick access to message processor component
     
     Args:
         config: Optional configuration
@@ -472,7 +503,8 @@ async def get_message_processor(
         
     Returns:
         EnterpriseMessageProcessor instance
-    """    
+    """
+    
     factory = await get_orchestration_factory(config)
     return await factory.get_component(OrchestrationComponentType.MESSAGE_PROCESSOR, **kwargs)
 
@@ -481,7 +513,8 @@ async def get_response_generator(
     config: Optional[OrchestrationConfiguration] = None,
     **kwargs
 ) -> EnterpriseResponseGenerator:
-    """    Quick access to response generator component
+    """
+    Quick access to response generator component
     
     Args:
         config: Optional configuration
@@ -489,7 +522,8 @@ async def get_response_generator(
         
     Returns:
         EnterpriseResponseGenerator instance
-    """    
+    """
+    
     factory = await get_orchestration_factory(config)
     return await factory.get_component(OrchestrationComponentType.RESPONSE_GENERATOR, **kwargs)
 
@@ -497,14 +531,16 @@ async def get_response_generator(
 async def get_complete_orchestration_suite(
     config: Optional[OrchestrationConfiguration] = None
 ) -> Dict[str, Any]:
-    """    Get complete orchestration suite with all components
+    """
+    Get complete orchestration suite with all components
     
     Args:
         config: Optional configuration
         
     Returns:
         Dict containing all orchestration components
-    """    
+    """
+    
     factory = await get_orchestration_factory(config)
     return await factory.get_complete_orchestration_suite()
 

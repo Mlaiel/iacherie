@@ -11,7 +11,8 @@ Unauthorized use, copying, distribution, or reverse engineering is strictly proh
 and will result in immediate legal action under German and international copyright law.
 
 This index provides quick access to all piracy detection system components.
-"""from typing import Dict, List, Optional, Any
+"""
+from typing import Dict, List, Optional, Any
 import logging
 
 # Import all system components
@@ -54,13 +55,16 @@ from . import (
 logger = logging.getLogger(__name__)
 
 class PiracyDetectionIndex:
-    """    Central index and factory for all piracy detection components.
+    """
+    Central index and factory for all piracy detection components.
     
     This class provides a unified interface to create, configure, and manage
     all components of the piracy detection system.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the piracy detection index."""        self.logger = logging.getLogger(__name__)
+        """Initialize the piracy detection index."""
+        self.logger = logging.getLogger(__name__)
         self.components = {}
         self.system_info = {
             'version': PIRACY_DETECTION_VERSION,
@@ -70,7 +74,8 @@ class PiracyDetectionIndex:
         }
     
     def get_system_info(self) -> Dict[str, Any]:
-        """Get comprehensive system information."""        return {
+        """Get comprehensive system information."""
+        return {
             **self.system_info,
             'available_components': self.list_components(),
             'documentation': {
@@ -83,7 +88,8 @@ class PiracyDetectionIndex:
         }
     
     def list_components(self) -> Dict[str, List[str]]:
-        """List all available components by category."""        return {
+        """List all available components by category."""
+        return {
             'core_detection': [
                 'PiracyDetector',
                 'PiracyMonitoringService',
@@ -115,7 +121,8 @@ class PiracyDetectionIndex:
         }
     
     def create_component(self, component_name: str, config: Optional[Dict[str, Any]] = None) -> Any:
-        """        Create and configure a specific component.
+        """
+        Create and configure a specific component.
         
         Args:
             component_name: Name of the component to create
@@ -123,7 +130,8 @@ class PiracyDetectionIndex:
             
         Returns:
             Configured component instance
-        """        try:
+        """
+        try:
             # Component factory mapping
             component_factory = {
                 'PiracyDetector': PiracyDetector,
@@ -166,14 +174,16 @@ class PiracyDetectionIndex:
             raise
     
     def create_complete_system(self, config: Optional[Dict[str, Any]] = None) -> PiracyDetectionSystem:
-        """        Create a complete, fully-configured piracy detection system.
+        """
+        Create a complete, fully-configured piracy detection system.
         
         Args:
             config: System configuration
             
         Returns:
             Configured PiracyDetectionSystem instance
-        """        try:
+        """
+        try:
             system_config = {**DEFAULT_CONFIG, **(config or {})}
             system = PiracyDetectionSystem(system_config)
             
@@ -187,13 +197,16 @@ class PiracyDetectionIndex:
             raise
     
     def get_component(self, component_name: str) -> Optional[Any]:
-        """Get a previously created component."""        return self.components.get(component_name)
+        """Get a previously created component."""
+        return self.components.get(component_name)
     
     def list_created_components(self) -> List[str]:
-        """List all currently created components."""        return list(self.components.keys())
+        """List all currently created components."""
+        return list(self.components.keys())
     
     def destroy_component(self, component_name: str) -> bool:
-        """Destroy and clean up a component."""        try:
+        """Destroy and clean up a component."""
+        try:
             if component_name in self.components:
                 component = self.components[component_name]
                 
@@ -213,7 +226,8 @@ class PiracyDetectionIndex:
             return False
     
     def get_configuration_template(self, component_name: str) -> Dict[str, Any]:
-        """Get configuration template for a specific component."""        # Base configuration templates
+        """Get configuration template for a specific component."""
+        # Base configuration templates
         templates = {
             'PiracyDetector': {
                 'detection_threshold': 0.85,
@@ -258,7 +272,8 @@ class PiracyDetectionIndex:
         return templates.get(component_name, DEFAULT_CONFIG)
     
     def validate_configuration(self, component_name: str, config: Dict[str, Any]) -> Dict[str, Any]:
-        """        Validate configuration for a specific component.
+        """
+        Validate configuration for a specific component.
         
         Args:
             component_name: Name of the component
@@ -266,7 +281,8 @@ class PiracyDetectionIndex:
             
         Returns:
             Validation result with errors and warnings
-        """        validation_result = {
+        """
+        validation_result = {
             'valid': True,
             'errors': [],
             'warnings': [],
@@ -312,22 +328,28 @@ detection_index = PiracyDetectionIndex()
 
 # Module-level convenience functions
 def create_system(config: Optional[Dict[str, Any]] = None) -> PiracyDetectionSystem:
-    """Create a complete piracy detection system."""    return detection_index.create_complete_system(config)
+    """Create a complete piracy detection system."""
+    return detection_index.create_complete_system(config)
 
 def create_component(component_name: str, config: Optional[Dict[str, Any]] = None) -> Any:
-    """Create a specific component."""    return detection_index.create_component(component_name, config)
+    """Create a specific component."""
+    return detection_index.create_component(component_name, config)
 
 def get_system_info() -> Dict[str, Any]:
-    """Get system information."""    return detection_index.get_system_info()
+    """Get system information."""
+    return detection_index.get_system_info()
 
 def list_components() -> Dict[str, List[str]]:
-    """List available components."""    return detection_index.list_components()
+    """List available components."""
+    return detection_index.list_components()
 
 def get_config_template(component_name: str) -> Dict[str, Any]:
-    """Get configuration template for component."""    return detection_index.get_configuration_template(component_name)
+    """Get configuration template for component."""
+    return detection_index.get_configuration_template(component_name)
 
 def validate_config(component_name: str, config: Dict[str, Any]) -> Dict[str, Any]:
-    """Validate component configuration."""    return detection_index.validate_configuration(component_name, config)
+    """Validate component configuration."""
+    return detection_index.validate_configuration(component_name, config)
 
 # Export index and convenience functions
 __all__ = [

@@ -21,7 +21,8 @@ Team Specialties:
 - Audio Engineer: Advanced audio processing and analysis
 - DevOps Engineer: CI/CD, deployment, and infrastructure automation
 - IA Prompt Engineer: AI prompt optimization and conversational systems
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 from typing import Dict, List, Optional, Any, Tuple, Set
@@ -57,7 +58,8 @@ from ...observability.metrics import MetricsCollector
 logger = logging.getLogger(__name__)
 
 class CollaborationStatus(Enum):
-    """Collaboration request and project status"""    PENDING = "pending"
+    """Collaboration request and project status"""
+    PENDING = "pending"
     ACCEPTED = "accepted" 
     REJECTED = "rejected"
     IN_PROGRESS = "in_progress"
@@ -66,7 +68,8 @@ class CollaborationStatus(Enum):
     DISPUTED = "disputed"
 
 class ProjectPhase(Enum):
-    """Project development phases"""    PLANNING = "planning"
+    """Project development phases"""
+    PLANNING = "planning"
     PRE_PRODUCTION = "pre_production"
     PRODUCTION = "production"
     POST_PRODUCTION = "post_production"
@@ -77,7 +80,8 @@ class ProjectPhase(Enum):
 
 @dataclass
 class CollaborationProposal:
-    """Collaboration proposal with AI recommendations"""    proposal_id: str
+    """Collaboration proposal with AI recommendations"""
+    proposal_id: str
     initiator_id: str
     target_creator_id: str
     collaboration_type: str
@@ -93,7 +97,8 @@ class CollaborationProposal:
 
 @dataclass
 class ProjectMilestone:
-    """Project milestone tracking"""    milestone_id: str
+    """Project milestone tracking"""
+    milestone_id: str
     project_id: str
     title: str
     description: str
@@ -107,7 +112,8 @@ class ProjectMilestone:
     created_at: datetime = field(default_factory=datetime.utcnow)
 
 class CollaborationAgentManager:
-    """    Ultra-advanced collaboration management system with AI-powered optimization.
+    """
+    Ultra-advanced collaboration management system with AI-powered optimization.
     
     Features:
     - Intelligent creator matching and compatibility analysis
@@ -116,7 +122,8 @@ class CollaborationAgentManager:
     - AI-driven success prediction and risk assessment
     - Multi-format content synchronization
     - Advanced analytics and performance monitoring
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -151,7 +158,8 @@ class CollaborationAgentManager:
         }
     
     async def initialize(self):
-        """Initialize all manager components"""        try:
+        """Initialize all manager components"""
+        try:
             # Initialize Redis connection
             self.redis_client = redis.Redis(
                 host=settings.REDIS_HOST,
@@ -182,7 +190,8 @@ class CollaborationAgentManager:
         target_creator_id: str,
         collaboration_details: Dict[str, Any]
     ) -> CollaborationProposal:
-        """        Create intelligent collaboration proposal with AI analysis.
+        """
+        Create intelligent collaboration proposal with AI analysis.
         
         Args:
             initiator_id: ID of creator initiating collaboration
@@ -191,7 +200,8 @@ class CollaborationAgentManager:
         
         Returns:
             CollaborationProposal with AI compatibility analysis
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Validate creators exist and are active
@@ -254,7 +264,8 @@ class CollaborationAgentManager:
         response: str,
         response_details: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """        Process response to collaboration proposal.
+        """
+        Process response to collaboration proposal.
         
         Args:
             proposal_id: Collaboration proposal ID
@@ -264,7 +275,8 @@ class CollaborationAgentManager:
         
         Returns:
             Dictionary with response processing results
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Retrieve proposal
@@ -306,7 +318,8 @@ class CollaborationAgentManager:
         proposal_id: str,
         project_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Create active collaboration project from accepted proposal.
+        """
+        Create active collaboration project from accepted proposal.
         
         Args:
             proposal_id: ID of accepted collaboration proposal
@@ -314,7 +327,8 @@ class CollaborationAgentManager:
         
         Returns:
             Dictionary with project creation results
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Retrieve and validate proposal
@@ -386,7 +400,8 @@ class CollaborationAgentManager:
         action: str,
         action_details: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """        Manage collaboration project workflow and progress.
+        """
+        Manage collaboration project workflow and progress.
         
         Args:
             project_id: Project identifier
@@ -395,7 +410,8 @@ class CollaborationAgentManager:
         
         Returns:
             Dictionary with workflow management results
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Validate project exists
@@ -441,7 +457,8 @@ class CollaborationAgentManager:
         project_id: str = None,
         time_range: Tuple[datetime, datetime] = None
     ) -> Dict[str, Any]:
-        """        Get comprehensive collaboration analytics and insights.
+        """
+        Get comprehensive collaboration analytics and insights.
         
         Args:
             creator_id: Specific creator ID for analytics
@@ -450,7 +467,8 @@ class CollaborationAgentManager:
         
         Returns:
             Dictionary with collaboration analytics
-        """        try:
+        """
+        try:
             analytics = {
                 'overview': await self._get_collaboration_overview(creator_id, time_range),
                 'performance_metrics': self._get_performance_metrics(),
@@ -471,7 +489,8 @@ class CollaborationAgentManager:
     # Private helper methods
     
     async def _validate_creators(self, creator_ids: List[str]):
-        """Validate that creators exist and are active"""        async with get_async_session() as session:
+        """Validate that creators exist and are active"""
+        async with get_async_session() as session:
             for creator_id in creator_ids:
                 creator = await session.get(Creator, creator_id)
                 if not creator or not creator.is_active:
@@ -483,7 +502,8 @@ class CollaborationAgentManager:
         target_id: str,
         collaboration_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze compatibility between creators using AI"""        # Implementation would include AI model inference
+        """Analyze compatibility between creators using AI"""
+        # Implementation would include AI model inference
         # Simplified version for structure
         return {
             'compatibility_score': 0.85,
@@ -501,7 +521,8 @@ class CollaborationAgentManager:
         }
     
     def _generate_timeline(self, collaboration_details: Dict[str, Any]) -> Dict[str, datetime]:
-        """Generate realistic project timeline"""        base_date = datetime.utcnow()
+        """Generate realistic project timeline"""
+        base_date = datetime.utcnow()
         duration_weeks = collaboration_details.get('estimated_duration_weeks', 8)
         
         return {
@@ -514,7 +535,8 @@ class CollaborationAgentManager:
         }
     
     async def _store_collaboration_proposal(self, proposal: CollaborationProposal):
-        """Store collaboration proposal in database"""        async with get_async_session() as session:
+        """Store collaboration proposal in database"""
+        async with get_async_session() as session:
             try:
                 collaboration_request = CollaborationRequest(
                     proposal_id=proposal.proposal_id,
@@ -541,7 +563,8 @@ class CollaborationAgentManager:
                 raise DatabaseError(f"Failed to store proposal: {e}")
     
     async def _send_collaboration_notification(self, proposal: CollaborationProposal):
-        """Send notification about new collaboration proposal"""        await self.notification_service.send_notification(
+        """Send notification about new collaboration proposal"""
+        await self.notification_service.send_notification(
             user_id=proposal.target_creator_id,
             notification_type="collaboration_proposal",
             title="New Collaboration Proposal",
@@ -558,7 +581,8 @@ class CollaborationAgentManager:
         proposal: CollaborationProposal,
         project_details: Dict[str, Any]
     ) -> List[ProjectMilestone]:
-        """Generate project milestones based on collaboration type"""        milestones = []
+        """Generate project milestones based on collaboration type"""
+        milestones = []
         
         # Standard milestones for all projects
         base_milestones = [
@@ -615,7 +639,8 @@ class CollaborationAgentManager:
         return milestones
     
     async def _setup_communication_channels(self, project_id: str) -> Dict[str, Any]:
-        """Setup communication channels for project"""        return {
+        """Setup communication channels for project"""
+        return {
             'primary_chat': f"chat_channel_{project_id}",
             'video_meeting_room': f"meeting_room_{project_id}",
             'file_sharing_space': f"files_{project_id}",
@@ -627,7 +652,8 @@ class CollaborationAgentManager:
         }
     
     async def _load_active_collaborations(self):
-        """Load active collaborations from database"""        async with get_async_session() as session:
+        """Load active collaborations from database"""
+        async with get_async_session() as session:
             try:
                 # Query active collaborations
                 active_projects = await session.execute(
@@ -649,7 +675,8 @@ class CollaborationAgentManager:
                 logger.error(f"Failed to load active collaborations: {e}")
     
     async def _start_monitoring_tasks(self):
-        """Start background monitoring tasks"""        while True:
+        """Start background monitoring tasks"""
+        while True:
             try:
                 # Monitor project progress
                 await self._monitor_project_deadlines()
@@ -668,7 +695,8 @@ class CollaborationAgentManager:
                 await asyncio.sleep(60)  # Retry after 1 minute
     
     def _get_performance_metrics(self) -> Dict[str, Any]:
-        """Get current performance metrics"""        return {
+        """Get current performance metrics"""
+        return {
             **self.performance_metrics,
             'cache_hit_rate': self.cache_manager.get_hit_rate(),
             'active_projects_count': len(self.active_collaborations),

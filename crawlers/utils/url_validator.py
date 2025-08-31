@@ -21,7 +21,8 @@ Project Team Specialties:
 - Audio Engineer: Advanced audio processing and analysis
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
-"""import re
+"""
+import re
 import logging
 from typing import Dict, List, Optional, Tuple, Set
 from urllib.parse import urlparse, urljoin, quote, unquote, parse_qs
@@ -35,7 +36,8 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class URLType(Enum):
-    """URL type classification."""    YOUTUBE_VIDEO = "youtube_video"
+    """URL type classification."""
+    YOUTUBE_VIDEO = "youtube_video"
     YOUTUBE_CHANNEL = "youtube_channel"
     YOUTUBE_PLAYLIST = "youtube_playlist"
     INSTAGRAM_POST = "instagram_post"
@@ -58,7 +60,8 @@ class URLType(Enum):
 
 @dataclass
 class URLValidationResult:
-    """URL validation result structure."""    is_valid: bool
+    """URL validation result structure."""
+    is_valid: bool
     normalized_url: str
     url_type: URLType
     platform: str
@@ -69,7 +72,8 @@ class URLValidationResult:
 
 @dataclass
 class URLMetadata:
-    """URL metadata extraction result."""    title: Optional[str]
+    """URL metadata extraction result."""
+    title: Optional[str]
     description: Optional[str]
     canonical_url: Optional[str]
     content_type: Optional[str]
@@ -80,7 +84,8 @@ class URLMetadata:
     thumbnail_url: Optional[str]
 
 class URLValidator:
-    """    Professional URL validator with comprehensive validation and normalization.
+    """
+    Professional URL validator with comprehensive validation and normalization.
     
     Features:
     - Platform-specific URL validation
@@ -90,9 +95,11 @@ class URLValidator:
     - Metadata extraction
     - Malicious URL detection
     - Content accessibility verification
-    """    
+    """
+    
     def __init__(self):
-        """Initialize URL validator."""        self.blocked_domains = set()
+        """Initialize URL validator."""
+        self.blocked_domains = set()
         self.allowed_domains = set()
         self.suspicious_patterns = []
         self._load_security_rules()
@@ -141,7 +148,8 @@ class URLValidator:
         }
     
     def _load_security_rules(self) -> None:
-        """Load security rules for URL validation."""        # Blocked domains (malware, phishing, etc.)
+        """Load security rules for URL validation."""
+        # Blocked domains (malware, phishing, etc.)
         self.blocked_domains.update([
             'malware-example.com',
             'phishing-site.net',
@@ -162,14 +170,16 @@ class URLValidator:
         ]
     
     async def validate_url(self, url: str) -> URLValidationResult:
-        """        Comprehensive URL validation.
+        """
+        Comprehensive URL validation.
         
         Args:
             url: URL to validate
             
         Returns:
             URLValidationResult with validation details
-        """        validation_errors = []
+        """
+        validation_errors = []
         metadata = {}
         
         try:
@@ -236,14 +246,16 @@ class URLValidator:
             )
     
     def _is_valid_url_structure(self, url: str) -> bool:
-        """Validate basic URL structure."""        try:
+        """Validate basic URL structure."""
+        try:
             result = urlparse(url)
             return all([result.scheme, result.netloc])
         except Exception:
             return False
     
     def _normalize_url(self, url: str) -> str:
-        """Normalize URL for consistent processing."""        try:
+        """Normalize URL for consistent processing."""
+        try:
             # Parse URL
             parsed = urlparse(url)
             
@@ -292,7 +304,8 @@ class URLValidator:
             return url
     
     def _assess_security(self, url: str) -> float:
-        """Assess URL security (0.0 = dangerous, 1.0 = safe)."""        score = 1.0
+        """Assess URL security (0.0 = dangerous, 1.0 = safe)."""
+        score = 1.0
         
         try:
             parsed = urlparse(url)
@@ -334,7 +347,8 @@ class URLValidator:
             return 0.5
     
     def _detect_platform_and_type(self, url: str) -> Tuple[URLType, str, Optional[str]]:
-        """Detect platform and content type from URL."""        try:
+        """Detect platform and content type from URL."""
+        try:
             for platform, patterns in self.platform_patterns.items():
                 domain_pattern = patterns['domain_pattern']
                 
@@ -360,7 +374,8 @@ class URLValidator:
             return URLType.UNKNOWN, "unknown", None
     
     def _get_url_type(self, platform: str, content_type: str) -> URLType:
-        """Map platform and content type to URLType enum."""        type_mapping = {
+        """Map platform and content type to URLType enum."""
+        type_mapping = {
             ('youtube', 'video_pattern'): URLType.YOUTUBE_VIDEO,
             ('youtube', 'channel_pattern'): URLType.YOUTUBE_CHANNEL,
             ('youtube', 'playlist_pattern'): URLType.YOUTUBE_PLAYLIST,
@@ -384,7 +399,8 @@ class URLValidator:
         return type_mapping.get((platform, content_type), URLType.GENERIC_WEB)
     
     async def _check_accessibility(self, url: str, timeout: int = 10) -> bool:
-        """Check if URL is accessible."""        try:
+        """Check if URL is accessible."""
+        try:
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=timeout)) as session:
                 async with session.head(url) as response:
                     return 200 <= response.status < 400
@@ -393,7 +409,8 @@ class URLValidator:
             return False
     
     async def _extract_metadata(self, url: str) -> Dict:
-        """Extract metadata from URL."""        metadata = {}
+        """Extract metadata from URL."""
+        metadata = {}
         
         try:
             async with aiohttp.ClientSession() as session:
@@ -408,7 +425,8 @@ class URLValidator:
         return metadata
     
     def _parse_html_metadata(self, html: str) -> Dict:
-        """Parse HTML metadata using regex patterns."""        metadata = {}
+        """Parse HTML metadata using regex patterns."""
+        metadata = {}
         
         try:
             # Title
@@ -460,7 +478,8 @@ class URLValidator:
         return metadata
     
     def validate_batch_urls(self, urls: List[str]) -> List[URLValidationResult]:
-        """Validate multiple URLs synchronously."""        results = []
+        """Validate multiple URLs synchronously."""
+        results = []
         
         for url in urls:
             try:
@@ -519,7 +538,8 @@ class URLValidator:
         return results
     
     def get_platform_from_url(self, url: str) -> str:
-        """Quick platform detection from URL."""        try:
+        """Quick platform detection from URL."""
+        try:
             for platform, patterns in self.platform_patterns.items():
                 if re.search(patterns['domain_pattern'], url, re.IGNORECASE):
                     return platform
@@ -528,7 +548,8 @@ class URLValidator:
             return "unknown"
     
     def extract_content_id(self, url: str, platform: str) -> Optional[str]:
-        """Extract content ID for specific platform."""        try:
+        """Extract content ID for specific platform."""
+        try:
             if platform not in self.platform_patterns:
                 return None
             
@@ -549,31 +570,37 @@ class URLValidator:
             return None
     
     def is_supported_platform(self, url: str) -> bool:
-        """Check if platform is supported for crawling."""        platform = self.get_platform_from_url(url)
+        """Check if platform is supported for crawling."""
+        platform = self.get_platform_from_url(url)
         return platform in self.platform_patterns
     
     def add_custom_pattern(self, platform: str, content_type: str, pattern: str) -> None:
-        """Add custom URL pattern for platform."""        if platform not in self.platform_patterns:
+        """Add custom URL pattern for platform."""
+        if platform not in self.platform_patterns:
             self.platform_patterns[platform] = {}
         
         self.platform_patterns[platform][content_type] = pattern
     
     def update_security_rules(self, blocked_domains: Set[str], suspicious_patterns: List[str]) -> None:
-        """Update security rules."""        self.blocked_domains.update(blocked_domains)
+        """Update security rules."""
+        self.blocked_domains.update(blocked_domains)
         self.suspicious_patterns.extend(suspicious_patterns)
 
 class URLNormalizer:
-    """    Advanced URL normalizer for consistent URL handling.
+    """
+    Advanced URL normalizer for consistent URL handling.
     
     Features:
     - Parameter cleanup
     - Canonical URL generation
     - Platform-specific normalization
     - Duplicate detection
-    """    
+    """
+    
     @staticmethod
     def normalize_youtube_url(url: str) -> str:
-        """Normalize YouTube URL."""        try:
+        """Normalize YouTube URL."""
+        try:
             # Extract video ID
             video_match = re.search(r'(?:v=|youtu\.be/)([a-zA-Z0-9_-]{11})', url)
             if video_match:
@@ -593,7 +620,8 @@ class URLNormalizer:
     
     @staticmethod
     def normalize_instagram_url(url: str) -> str:
-        """Normalize Instagram URL."""        try:
+        """Normalize Instagram URL."""
+        try:
             # Extract post ID
             post_match = re.search(r'/p/([a-zA-Z0-9_-]+)', url)
             if post_match:
@@ -614,7 +642,8 @@ class URLNormalizer:
     
     @staticmethod
     def get_canonical_url(url: str, platform: str) -> str:
-        """Get canonical URL for platform."""        normalizers = {
+        """Get canonical URL for platform."""
+        normalizers = {
             'youtube': URLNormalizer.normalize_youtube_url,
             'instagram': URLNormalizer.normalize_instagram_url,
         }
@@ -627,20 +656,23 @@ class URLNormalizer:
 
 # URL validation utilities
 def quick_validate_url(url: str) -> bool:
-    """Quick URL validation."""    try:
+    """Quick URL validation."""
+    try:
         result = urlparse(url)
         return all([result.scheme, result.netloc])
     except Exception:
         return False
 
 def extract_domain(url: str) -> str:
-    """Extract domain from URL."""    try:
+    """Extract domain from URL."""
+    try:
         return urlparse(url).netloc.lower()
     except Exception:
         return ""
 
 def is_same_domain(url1: str, url2: str) -> bool:
-    """Check if two URLs are from same domain."""    try:
+    """Check if two URLs are from same domain."""
+    try:
         domain1 = extract_domain(url1)
         domain2 = extract_domain(url2)
         return domain1 == domain2
@@ -648,7 +680,8 @@ def is_same_domain(url1: str, url2: str) -> bool:
         return False
 
 def clean_url_parameters(url: str, keep_params: Optional[List[str]] = None) -> str:
-    """Clean URL parameters keeping only specified ones."""    try:
+    """Clean URL parameters keeping only specified ones."""
+    try:
         parsed = urlparse(url)
         if not keep_params:
             return f"{parsed.scheme}://{parsed.netloc}{parsed.path}"

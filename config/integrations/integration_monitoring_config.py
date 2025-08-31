@@ -13,7 +13,8 @@ Any unauthorized use, reproduction, or distribution without explicit written per
 is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from typing import Dict, Any, Optional, List, Union, Callable
 from pydantic import BaseSettings, Field, validator
 from enum import Enum
@@ -22,14 +23,16 @@ from datetime import datetime, timedelta
 
 
 class MonitoringLevel(str, Enum):
-    """Monitoring intensity levels."""    BASIC = "basic"
+    """Monitoring intensity levels."""
+    BASIC = "basic"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
     CRITICAL = "critical"
 
 
 class AlertSeverity(str, Enum):
-    """Alert severity levels."""    INFO = "info"
+    """Alert severity levels."""
+    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -37,7 +40,8 @@ class AlertSeverity(str, Enum):
 
 
 class MetricType(str, Enum):
-    """Types of metrics to collect."""    COUNTER = "counter"
+    """Types of metrics to collect."""
+    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     TIMER = "timer"
@@ -45,7 +49,8 @@ class MetricType(str, Enum):
 
 
 class HealthStatus(str, Enum):
-    """Service health status."""    HEALTHY = "healthy"
+    """Service health status."""
+    HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
     UNKNOWN = "unknown"
@@ -54,7 +59,8 @@ class HealthStatus(str, Enum):
 
 @dataclass
 class HealthCheckConfig:
-    """Health check configuration for a service."""    service_name: str
+    """Health check configuration for a service."""
+    service_name: str
     endpoint: str
     method: str = "GET"
     timeout: float = 10.0
@@ -68,7 +74,8 @@ class HealthCheckConfig:
 
 @dataclass
 class MetricConfig:
-    """Metric collection configuration."""    name: str
+    """Metric collection configuration."""
+    name: str
     metric_type: MetricType
     description: str
     unit: Optional[str] = None
@@ -80,7 +87,8 @@ class MetricConfig:
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration."""    name: str
+    """Alert rule configuration."""
+    name: str
     description: str
     metric_name: str
     condition: str  # e.g., "value > 100", "value < 0.5"
@@ -92,7 +100,8 @@ class AlertRule:
 
 
 class IntegrationMonitoringConfig(BaseSettings):
-    """Integration monitoring configuration for external services."""    
+    """Integration monitoring configuration for external services."""
+    
     # === GENERAL MONITORING SETTINGS ===
     
     # Global monitoring settings
@@ -236,7 +245,8 @@ class IntegrationMonitoringConfig(BaseSettings):
 
 
 class MonitoringManager:
-    """Integration monitoring manager with comprehensive service monitoring."""    
+    """Integration monitoring manager with comprehensive service monitoring."""
+    
     def __init__(self, config: IntegrationMonitoringConfig):
         self.config = config
         self.health_checks: Dict[str, HealthCheckConfig] = {}
@@ -246,7 +256,8 @@ class MonitoringManager:
         self._initialize_default_monitoring()
     
     def _initialize_default_monitoring(self):
-        """Initialize default monitoring configurations."""        # Default health checks
+        """Initialize default monitoring configurations."""
+        # Default health checks
         if self.config.spotify_health_check_enabled:
             self.register_health_check(HealthCheckConfig(
                 service_name="spotify_api",
@@ -302,25 +313,32 @@ class MonitoringManager:
             ))
     
     def register_health_check(self, health_check: HealthCheckConfig):
-        """Register a health check configuration."""        self.health_checks[health_check.service_name] = health_check
+        """Register a health check configuration."""
+        self.health_checks[health_check.service_name] = health_check
     
     def register_metric(self, metric: MetricConfig):
-        """Register a metric configuration."""        self.metrics[metric.name] = metric
+        """Register a metric configuration."""
+        self.metrics[metric.name] = metric
     
     def register_alert_rule(self, alert_rule: AlertRule):
-        """Register an alert rule."""        self.alert_rules[alert_rule.name] = alert_rule
+        """Register an alert rule."""
+        self.alert_rules[alert_rule.name] = alert_rule
     
     def get_health_status(self, service_name: str) -> HealthStatus:
-        """Get health status for a service."""        return self.service_status.get(service_name, HealthStatus.UNKNOWN)
+        """Get health status for a service."""
+        return self.service_status.get(service_name, HealthStatus.UNKNOWN)
     
     def update_health_status(self, service_name: str, status: HealthStatus):
-        """Update health status for a service."""        self.service_status[service_name] = status
+        """Update health status for a service."""
+        self.service_status[service_name] = status
     
     def get_all_health_status(self) -> Dict[str, HealthStatus]:
-        """Get health status for all monitored services."""        return self.service_status.copy()
+        """Get health status for all monitored services."""
+        return self.service_status.copy()
     
     def get_service_config(self, service_name: str) -> Dict[str, Any]:
-        """Get monitoring configuration for a service."""        health_check = self.health_checks.get(service_name)
+        """Get monitoring configuration for a service."""
+        health_check = self.health_checks.get(service_name)
         related_metrics = [
             metric for metric in self.metrics.values()
             if service_name in metric.tags.get("service", "")
@@ -339,7 +357,8 @@ class MonitoringManager:
         }
     
     def get_platform_monitoring_config(self, platform: str) -> Dict[str, Any]:
-        """Get platform-specific monitoring configuration."""        monitor_enabled = getattr(self.config, f"monitor_{platform}_api", False)
+        """Get platform-specific monitoring configuration."""
+        monitor_enabled = getattr(self.config, f"monitor_{platform}_api", False)
         health_enabled = getattr(self.config, f"{platform}_health_check_enabled", False)
         
         config = {
@@ -364,7 +383,8 @@ class MonitoringManager:
         return config
     
     def get_alert_configuration(self) -> Dict[str, Any]:
-        """Get alerting configuration."""        return {
+        """Get alerting configuration."""
+        return {
             "enabled": self.config.alerting_enabled,
             "cooldown_period": self.config.alert_cooldown_period,
             "max_alerts_per_hour": self.config.max_alerts_per_hour,
@@ -388,7 +408,8 @@ class MonitoringManager:
         }
     
     def get_monitoring_statistics(self) -> Dict[str, Any]:
-        """Get monitoring system statistics."""        total_services = len(self.health_checks)
+        """Get monitoring system statistics."""
+        total_services = len(self.health_checks)
         healthy_services = sum(
             1 for status in self.service_status.values() 
             if status == HealthStatus.HEALTHY
@@ -414,7 +435,8 @@ class MonitoringManager:
         }
     
     def is_service_critical(self, service_name: str) -> bool:
-        """Check if a service is marked as critical."""        health_check = self.health_checks.get(service_name)
+        """Check if a service is marked as critical."""
+        health_check = self.health_checks.get(service_name)
         if not health_check:
             return False
         

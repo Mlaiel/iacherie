@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission from Fahed Mlaiel <mlaiel@live.de> is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import time
@@ -48,7 +49,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class WebhookEndpointModel(Base):
-    """Database model for webhook endpoints"""    __tablename__ = "webhook_endpoints"
+    """Database model for webhook endpoints"""
+    __tablename__ = "webhook_endpoints"
     
     endpoint_id = Column(String, primary_key=True)
     url = Column(String, nullable=False)
@@ -67,7 +69,8 @@ class WebhookEndpointModel(Base):
     last_error = Column(Text)
 
 class WebhookConfigurationModel(Base):
-    """Database model for webhook configurations"""    __tablename__ = "webhook_configurations"
+    """Database model for webhook configurations"""
+    __tablename__ = "webhook_configurations"
     
     config_id = Column(String, primary_key=True)
     user_id = Column(String, nullable=False)
@@ -78,7 +81,8 @@ class WebhookConfigurationModel(Base):
     active = Column(Boolean, default=True)
 
 class WebhookStatus(Enum):
-    """Webhook endpoint status"""    ACTIVE = "active"
+    """Webhook endpoint status"""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     ERROR = "error"
     TESTING = "testing"
@@ -86,7 +90,8 @@ class WebhookStatus(Enum):
 
 @dataclass
 class WebhookConfiguration:
-    """Webhook configuration data structure"""    config_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Webhook configuration data structure"""
+    config_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = None
     platform: str = None
     endpoint_url: str = None
@@ -103,7 +108,8 @@ class WebhookConfiguration:
 
 @dataclass
 class WebhookHealthStatus:
-    """Webhook endpoint health status"""    endpoint_id: str
+    """Webhook endpoint health status"""
+    endpoint_id: str
     status: WebhookStatus
     last_check: datetime
     response_time_ms: float
@@ -113,11 +119,13 @@ class WebhookHealthStatus:
     last_error: Optional[str] = None
 
 class WebhookManager:
-    """    Enterprise webhook configuration and endpoint management system
+    """
+    Enterprise webhook configuration and endpoint management system
     
     Provides comprehensive webhook lifecycle management including registration,
     monitoring, health checking, and performance analytics.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.db_session = get_db_session()
@@ -138,7 +146,8 @@ class WebhookManager:
         logger.info("WebhookManager initialized")
 
     async def initialize(self) -> None:
-        """Initialize webhook manager with required services"""        try:
+        """Initialize webhook manager with required services"""
+        try:
             # Initialize Redis connection
             self._redis_client = await aioredis.from_url(
                 self.config.get('redis_url', 'redis://localhost:6379'),
@@ -169,7 +178,8 @@ class WebhookManager:
         rate_limit: Dict[str, int] = None,
         filters: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """        Register new webhook endpoint
+        """
+        Register new webhook endpoint
         
         Args:
             user_id: User identifier
@@ -184,7 +194,8 @@ class WebhookManager:
             
         Returns:
             Registration result with configuration details
-        """        try:
+        """
+        try:
             # Validate endpoint URL
             validation_result = await self._validate_endpoint_url(endpoint_url)
             if not validation_result['valid']:
@@ -240,7 +251,8 @@ class WebhookManager:
         config_id: str,
         updates: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Update existing webhook endpoint configuration"""        try:
+        """Update existing webhook endpoint configuration"""
+        try:
             # Get existing configuration
             config = await self.get_webhook_configuration(config_id)
             if not config:
@@ -277,7 +289,8 @@ class WebhookManager:
             raise WebhookError(f"Update failed: {str(e)}")
 
     async def get_webhook_configuration(self, config_id: str) -> Optional[WebhookConfiguration]:
-        """Get webhook configuration by ID"""        try:
+        """Get webhook configuration by ID"""
+        try:
             # Check cache first
             if config_id in self._endpoint_cache:
                 return self._endpoint_cache[config_id]
@@ -306,7 +319,8 @@ class WebhookManager:
         platform: str = None,
         active_only: bool = True
     ) -> List[WebhookConfiguration]:
-        """Get all webhook configurations for a user"""        try:
+        """Get all webhook configurations for a user"""
+        try:
             configurations = []
             
             # Query database
@@ -336,7 +350,8 @@ class WebhookManager:
             return []
 
     async def delete_webhook_endpoint(self, config_id: str) -> Dict[str, Any]:
-        """Delete webhook endpoint configuration"""        try:
+        """Delete webhook endpoint configuration"""
+        try:
             # Get configuration
             config = await self.get_webhook_configuration(config_id)
             if not config:
@@ -367,7 +382,8 @@ class WebhookManager:
             raise WebhookError(f"Deletion failed: {str(e)}")
 
     async def test_webhook_endpoint(self, config_id: str) -> Dict[str, Any]:
-        """Test webhook endpoint connectivity and response"""        try:
+        """Test webhook endpoint connectivity and response"""
+        try:
             config = await self.get_webhook_configuration(config_id)
             if not config:
                 raise ValidationError(f"Configuration not found: {config_id}")
@@ -411,7 +427,8 @@ class WebhookManager:
         config_id: str = None,
         user_id: str = None
     ) -> Dict[str, Any]:
-        """Get health status for webhook endpoints"""        try:
+        """Get health status for webhook endpoints"""
+        try:
             if config_id:
                 # Get specific endpoint health
                 if config_id in self._health_status:
@@ -462,7 +479,8 @@ class WebhookManager:
         platform: str = None,
         time_range: str = "24h"
     ) -> Dict[str, Any]:
-        """Get webhook performance metrics"""        try:
+        """Get webhook performance metrics"""
+        try:
             metrics = {
                 'time_range': time_range,
                 'total_endpoints': len(self._endpoint_cache),
@@ -505,7 +523,8 @@ class WebhookManager:
             raise WebhookError(f"Metrics retrieval failed: {str(e)}")
 
     async def health_check(self) -> Dict[str, Any]:
-        """Comprehensive health check for webhook manager"""        return {
+        """Comprehensive health check for webhook manager"""
+        return {
             'status': 'healthy',
             'redis_connected': self._redis_client is not None,
             'cached_configurations': len(self._endpoint_cache),
@@ -514,7 +533,8 @@ class WebhookManager:
         }
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of webhook manager"""        try:
+        """Graceful shutdown of webhook manager"""
+        try:
             logger.info("Shutting down WebhookManager")
             
             # Cancel monitoring tasks
@@ -533,7 +553,8 @@ class WebhookManager:
     # Private methods
     
     async def _validate_endpoint_url(self, url: str) -> Dict[str, Any]:
-        """Validate webhook endpoint URL"""        try:
+        """Validate webhook endpoint URL"""
+        try:
             if not url.startswith(('http://', 'https://')):
                 return {
                     'valid': False,
@@ -550,7 +571,8 @@ class WebhookManager:
             }
 
     async def _test_endpoint_connectivity(self, config: WebhookConfiguration) -> Dict[str, Any]:
-        """Test basic connectivity to webhook endpoint"""        start_time = time.time()
+        """Test basic connectivity to webhook endpoint"""
+        start_time = time.time()
         
         try:
             timeout = aiohttp.ClientTimeout(total=config.timeout_seconds)
@@ -575,7 +597,8 @@ class WebhookManager:
             }
 
     async def _test_endpoint_with_payload(self, config: WebhookConfiguration) -> Dict[str, Any]:
-        """Test endpoint with sample payload"""        try:
+        """Test endpoint with sample payload"""
+        try:
             test_payload = {
                 'event_type': 'test',
                 'test_mode': True,
@@ -608,7 +631,8 @@ class WebhookManager:
             }
 
     async def _store_configuration_in_db(self, config: WebhookConfiguration) -> None:
-        """Store configuration in database"""        try:
+        """Store configuration in database"""
+        try:
             # Encrypt secret if provided
             secret_encrypted = None
             if config.secret:
@@ -640,7 +664,8 @@ class WebhookManager:
             raise
 
     async def _update_configuration_in_db(self, config: WebhookConfiguration) -> None:
-        """Update configuration in database"""        try:
+        """Update configuration in database"""
+        try:
             db_config = self.db_session.query(WebhookConfigurationModel).filter(
                 WebhookConfigurationModel.config_id == config.config_id
             ).first()
@@ -672,7 +697,8 @@ class WebhookManager:
             raise
 
     async def _load_configuration_from_db(self, config_id: str) -> Optional[WebhookConfiguration]:
-        """Load configuration from database"""        try:
+        """Load configuration from database"""
+        try:
             db_config = self.db_session.query(WebhookConfigurationModel).filter(
                 WebhookConfigurationModel.config_id == config_id
             ).first()
@@ -687,7 +713,8 @@ class WebhookManager:
             return None
 
     async def _load_configurations_from_db(self) -> None:
-        """Load all active configurations from database"""        try:
+        """Load all active configurations from database"""
+        try:
             db_configs = self.db_session.query(WebhookConfigurationModel).filter(
                 WebhookConfigurationModel.active == True
             ).all()
@@ -702,7 +729,8 @@ class WebhookManager:
             logger.error(f"Failed to load configurations from database: {e}")
 
     def _convert_db_to_config(self, db_config: WebhookConfigurationModel) -> WebhookConfiguration:
-        """Convert database model to configuration object"""        config_data = db_config.configuration
+        """Convert database model to configuration object"""
+        config_data = db_config.configuration
         
         # Decrypt secret if present
         secret = None
@@ -727,7 +755,8 @@ class WebhookManager:
         )
 
     async def _deactivate_configuration_in_db(self, config_id: str) -> None:
-        """Deactivate configuration in database"""        try:
+        """Deactivate configuration in database"""
+        try:
             db_config = self.db_session.query(WebhookConfigurationModel).filter(
                 WebhookConfigurationModel.config_id == config_id
             ).first()
@@ -743,7 +772,8 @@ class WebhookManager:
             raise
 
     async def _cache_configuration_in_redis(self, config: WebhookConfiguration) -> None:
-        """Cache configuration in Redis"""        try:
+        """Cache configuration in Redis"""
+        try:
             if self._redis_client:
                 config_data = {
                     'config_id': config.config_id,
@@ -772,7 +802,8 @@ class WebhookManager:
             logger.error(f"Failed to cache configuration in Redis: {e}")
 
     async def _get_configuration_from_redis(self, config_id: str) -> Optional[WebhookConfiguration]:
-        """Get configuration from Redis cache"""        try:
+        """Get configuration from Redis cache"""
+        try:
             if self._redis_client:
                 cache_key = f"webhook_config:{config_id}"
                 cached_data = await self._redis_client.get(cache_key)
@@ -807,7 +838,8 @@ class WebhookManager:
             return None
 
     async def _remove_configuration_from_redis(self, config_id: str) -> None:
-        """Remove configuration from Redis cache"""        try:
+        """Remove configuration from Redis cache"""
+        try:
             if self._redis_client:
                 cache_key = f"webhook_config:{config_id}"
                 await self._redis_client.delete(cache_key)
@@ -816,11 +848,13 @@ class WebhookManager:
             logger.error(f"Failed to remove configuration from Redis: {e}")
 
     async def _start_health_monitoring(self) -> None:
-        """Start health monitoring tasks"""        task = asyncio.create_task(self._health_monitoring_loop())
+        """Start health monitoring tasks"""
+        task = asyncio.create_task(self._health_monitoring_loop())
         self._monitoring_tasks.add(task)
 
     async def _health_monitoring_loop(self) -> None:
-        """Health monitoring background task"""        while True:
+        """Health monitoring background task"""
+        while True:
             try:
                 await self._check_all_endpoints_health()
                 await asyncio.sleep(self.health_check_interval)
@@ -830,7 +864,8 @@ class WebhookManager:
                 await asyncio.sleep(30)  # Wait before retrying
 
     async def _check_all_endpoints_health(self) -> None:
-        """Check health of all registered endpoints"""        try:
+        """Check health of all registered endpoints"""
+        try:
             # Create tasks for concurrent health checks
             check_tasks = []
             for config in list(self._endpoint_cache.values()):
@@ -851,7 +886,8 @@ class WebhookManager:
             logger.error(f"Error checking endpoints health: {e}")
 
     async def _check_endpoint_health(self, config: WebhookConfiguration) -> None:
-        """Check health of specific endpoint"""        try:
+        """Check health of specific endpoint"""
+        try:
             connectivity_result = await self._test_endpoint_connectivity(config)
             
             # Update or create health status
@@ -893,8 +929,10 @@ class WebhookManager:
             logger.error(f"Error checking endpoint health for {config.config_id}: {e}")
 
     async def _initialize_endpoint_monitoring(self, config: WebhookConfiguration) -> None:
-        """Initialize monitoring for new endpoint"""        await self._check_endpoint_health(config)
+        """Initialize monitoring for new endpoint"""
+        await self._check_endpoint_health(config)
 
     async def _stop_endpoint_monitoring(self, config_id: str) -> None:
-        """Stop monitoring for specific endpoint"""        if config_id in self._health_status:
+        """Stop monitoring for specific endpoint"""
+        if config_id in self._health_status:
             del self._health_status[config_id]

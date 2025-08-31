@@ -14,7 +14,8 @@ Features:
 - Data consistency validation
 - Quality scoring and benchmarking
 - Automated quality improvement suggestions
-"""import re
+"""
+import re
 import math
 import statistics
 from enum import Enum
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class QualityDimension(Enum):
-    """Quality assessment dimensions"""    COMPLETENESS = "completeness"
+    """Quality assessment dimensions"""
+    COMPLETENESS = "completeness"
     CONSISTENCY = "consistency"
     ACCURACY = "accuracy"
     VALIDITY = "validity"
@@ -40,7 +42,8 @@ class QualityDimension(Enum):
 
 
 class QualityLevel(Enum):
-    """Quality level classifications"""    EXCELLENT = "excellent"
+    """Quality level classifications"""
+    EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
     POOR = "poor"
@@ -49,7 +52,8 @@ class QualityLevel(Enum):
 
 @dataclass
 class QualityMetric:
-    """Individual quality metric"""    dimension: QualityDimension
+    """Individual quality metric"""
+    dimension: QualityDimension
     score: float  # 0.0 to 1.0
     weight: float = 1.0
     description: str = ""
@@ -61,7 +65,8 @@ class QualityMetric:
 
 @dataclass
 class QualityProfile:
-    """Comprehensive quality profile for content"""    overall_score: float
+    """Comprehensive quality profile for content"""
+    overall_score: float
     quality_level: QualityLevel
     metrics: Dict[QualityDimension, QualityMetric] = field(default_factory=dict)
     assessment_time: datetime = field(default_factory=datetime.utcnow)
@@ -77,17 +82,20 @@ class QualityProfile:
     
     @property
     def success_rate(self) -> float:
-        """Calculate metric success rate"""        if self.total_metrics == 0:
+        """Calculate metric success rate"""
+        if self.total_metrics == 0:
             return 0.0
         return self.passed_metrics / self.total_metrics
     
     @property
     def dimension_scores(self) -> Dict[str, float]:
-        """Get scores by dimension"""        return {dim.value: metric.score for dim, metric in self.metrics.items()}
+        """Get scores by dimension"""
+        return {dim.value: metric.score for dim, metric in self.metrics.items()}
     
     @property
     def critical_issues(self) -> List[str]:
-        """Get all critical issues across metrics"""        issues = []
+        """Get all critical issues across metrics"""
+        issues = []
         for metric in self.metrics.values():
             if metric.score < 0.5:  # Critical threshold
                 issues.extend(metric.issues)
@@ -95,14 +103,16 @@ class QualityProfile:
     
     @property
     def improvement_suggestions(self) -> List[str]:
-        """Get all improvement suggestions"""        suggestions = []
+        """Get all improvement suggestions"""
+        suggestions = []
         for metric in self.metrics.values():
             suggestions.extend(metric.suggestions)
         return list(set(suggestions))  # Remove duplicates
 
 
 class DataQualityValidator:
-    """    Enterprise-grade data quality validation engine for crawler systems.
+    """
+    Enterprise-grade data quality validation engine for crawler systems.
     
     Provides comprehensive quality assessment including:
     - Completeness analysis (missing data, null values)
@@ -113,7 +123,8 @@ class DataQualityValidator:
     - Timeliness evaluation (data freshness, update frequency)
     - Relevance scoring (business value, user needs)
     - Coherence assessment (logical consistency, relationships)
-    """    
+    """
+    
     def __init__(self, quality_thresholds: Optional[Dict[str, float]] = None):
         self.quality_thresholds = quality_thresholds or self._default_thresholds()
         self.benchmark_data = {}
@@ -133,7 +144,8 @@ class DataQualityValidator:
         benchmark_against: Optional[str] = None,
         custom_rules: Optional[Dict[str, Any]] = None
     ) -> QualityProfile:
-        """        Perform comprehensive quality assessment.
+        """
+        Perform comprehensive quality assessment.
         
         Args:
             data: Data to assess (single record or list of records)
@@ -143,7 +155,8 @@ class DataQualityValidator:
             
         Returns:
             QualityProfile: Comprehensive quality assessment
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         
         # Normalize data to list format
         if isinstance(data, dict):
@@ -240,7 +253,8 @@ class DataQualityValidator:
         rules: Dict[str, Any],
         single_record: bool
     ) -> QualityMetric:
-        """Assess data completeness"""        
+        """Assess data completeness"""
+        
         metric = QualityMetric(
             dimension=QualityDimension.COMPLETENESS,
             score=1.0,
@@ -317,7 +331,8 @@ class DataQualityValidator:
         rules: Dict[str, Any],
         single_record: bool
     ) -> QualityMetric:
-        """Assess data consistency"""        
+        """Assess data consistency"""
+        
         metric = QualityMetric(
             dimension=QualityDimension.CONSISTENCY,
             score=1.0,
@@ -418,7 +433,8 @@ class DataQualityValidator:
         rules: Dict[str, Any],
         single_record: bool
     ) -> QualityMetric:
-        """Assess data accuracy"""        
+        """Assess data accuracy"""
+        
         metric = QualityMetric(
             dimension=QualityDimension.ACCURACY,
             score=0.8,  # Default moderate score
@@ -489,7 +505,8 @@ class DataQualityValidator:
         rules: Dict[str, Any],
         single_record: bool
     ) -> QualityMetric:
-        """Assess data validity against business rules and constraints"""        
+        """Assess data validity against business rules and constraints"""
+        
         metric = QualityMetric(
             dimension=QualityDimension.VALIDITY,
             score=1.0,
@@ -560,7 +577,8 @@ class DataQualityValidator:
         rules: Dict[str, Any],
         single_record: bool
     ) -> QualityMetric:
-        """Assess data uniqueness and identify duplicates"""        
+        """Assess data uniqueness and identify duplicates"""
+        
         metric = QualityMetric(
             dimension=QualityDimension.UNIQUENESS,
             score=1.0,
@@ -634,7 +652,8 @@ class DataQualityValidator:
         rules: Dict[str, Any],
         single_record: bool
     ) -> QualityMetric:
-        """Assess data timeliness and freshness"""        
+        """Assess data timeliness and freshness"""
+        
         metric = QualityMetric(
             dimension=QualityDimension.TIMELINESS,
             score=0.8,  # Default moderate score
@@ -702,7 +721,8 @@ class DataQualityValidator:
         rules: Dict[str, Any],
         single_record: bool
     ) -> QualityMetric:
-        """Assess data relevance to business needs"""        
+        """Assess data relevance to business needs"""
+        
         metric = QualityMetric(
             dimension=QualityDimension.RELEVANCE,
             score=0.8,  # Default moderate score
@@ -760,7 +780,8 @@ class DataQualityValidator:
         rules: Dict[str, Any],
         single_record: bool
     ) -> QualityMetric:
-        """Assess logical coherence and relationship consistency"""        
+        """Assess logical coherence and relationship consistency"""
+        
         metric = QualityMetric(
             dimension=QualityDimension.COHERENCE,
             score=1.0,
@@ -816,7 +837,8 @@ class DataQualityValidator:
     # Helper methods
     
     def _calculate_overall_score(self, profile: QualityProfile) -> None:
-        """Calculate weighted overall quality score"""        total_score = 0.0
+        """Calculate weighted overall quality score"""
+        total_score = 0.0
         total_weight = 0.0
         
         for dimension, metric in profile.metrics.items():
@@ -830,7 +852,8 @@ class DataQualityValidator:
             profile.overall_score = 0.0
     
     def _calculate_statistics(self, profile: QualityProfile) -> None:
-        """Calculate quality statistics"""        profile.total_metrics = len(profile.metrics)
+        """Calculate quality statistics"""
+        profile.total_metrics = len(profile.metrics)
         profile.passed_metrics = sum(
             1 for metric in profile.metrics.values() 
             if metric.score >= self.quality_thresholds.get(metric.dimension.value, 0.7)
@@ -842,7 +865,8 @@ class DataQualityValidator:
         profile.improvement_potential = max_possible_score - profile.overall_score
     
     def _determine_quality_level(self, profile: QualityProfile) -> None:
-        """Determine overall quality level"""        score = profile.overall_score
+        """Determine overall quality level"""
+        score = profile.overall_score
         
         if score >= 0.9:
             profile.quality_level = QualityLevel.EXCELLENT
@@ -856,7 +880,8 @@ class DataQualityValidator:
             profile.quality_level = QualityLevel.UNACCEPTABLE
     
     def _apply_benchmarking(self, profile: QualityProfile, benchmark_name: str) -> None:
-        """Apply benchmarking against reference dataset"""        benchmark_scores = self.benchmark_data.get(benchmark_name, {})
+        """Apply benchmarking against reference dataset"""
+        benchmark_scores = self.benchmark_data.get(benchmark_name, {})
         
         for dimension, metric in profile.metrics.items():
             benchmark_score = benchmark_scores.get(dimension.value)
@@ -865,12 +890,14 @@ class DataQualityValidator:
                 metric.threshold_passed = metric.score >= benchmark_score
     
     def _generate_cache_key(self, data: Any, content_type: str) -> str:
-        """Generate cache key for quality assessment"""        import hashlib
+        """Generate cache key for quality assessment"""
+        import hashlib
         data_hash = hashlib.md5(str(data).encode()).hexdigest()[:16]
         return f"{content_type}_{data_hash}"
     
     def _parse_timestamp(self, timestamp_str: str) -> datetime:
-        """Parse timestamp string in various formats"""        formats = [
+        """Parse timestamp string in various formats"""
+        formats = [
             '%Y-%m-%d %H:%M:%S',
             '%Y-%m-%dT%H:%M:%S',
             '%Y-%m-%dT%H:%M:%SZ',
@@ -893,7 +920,8 @@ class DataQualityValidator:
             raise ValueError(f"Unable to parse timestamp: {timestamp_str}")
     
     def _check_internal_consistency(self, record: Dict[str, Any], rules: Dict[str, Any]) -> float:
-        """Check internal consistency of a single record"""        consistency_checks = rules.get('internal_consistency', [])
+        """Check internal consistency of a single record"""
+        consistency_checks = rules.get('internal_consistency', [])
         
         if not consistency_checks:
             return 1.0  # No consistency rules defined
@@ -916,7 +944,8 @@ class DataQualityValidator:
         return passed_checks / total_checks if total_checks > 0 else 1.0
     
     def _check_accuracy_patterns(self, data_list: List[Dict[str, Any]], metric: QualityMetric) -> None:
-        """Check for known accuracy patterns and anomalies"""        
+        """Check for known accuracy patterns and anomalies"""
+        
         # Check for suspicious patterns
         for record in data_list:
             # Check for placeholder values
@@ -937,7 +966,8 @@ class DataQualityValidator:
                         metric.score = max(0.0, metric.score - 0.05)
     
     def _check_constraint(self, value: Any, constraint: Dict[str, Any]) -> bool:
-        """Check if value satisfies constraint"""        constraint_type = constraint.get('type')
+        """Check if value satisfies constraint"""
+        constraint_type = constraint.get('type')
         constraint_value = constraint.get('value')
         
         if constraint_type == 'min_length' and isinstance(value, str):
@@ -958,7 +988,8 @@ class DataQualityValidator:
         return True  # Unknown constraint type, pass by default
     
     def _check_relationship_rule(self, record: Dict[str, Any], rule: Dict[str, Any]) -> bool:
-        """Check relationship rule between fields"""        rule_type = rule.get('type')
+        """Check relationship rule between fields"""
+        rule_type = rule.get('type')
         
         if rule_type == 'field_dependency':
             parent_field = rule.get('parent_field')
@@ -988,7 +1019,8 @@ class DataQualityValidator:
         return True
     
     def _check_logical_constraint(self, record: Dict[str, Any], constraint: Dict[str, Any]) -> bool:
-        """Check logical constraint"""        constraint_function = constraint.get('function')
+        """Check logical constraint"""
+        constraint_function = constraint.get('function')
         
         if callable(constraint_function):
             try:
@@ -999,7 +1031,8 @@ class DataQualityValidator:
         return True
     
     def _default_thresholds(self) -> Dict[str, float]:
-        """Default quality thresholds for each dimension"""        return {
+        """Default quality thresholds for each dimension"""
+        return {
             'completeness': 0.8,
             'consistency': 0.7,
             'accuracy': 0.8,
@@ -1011,7 +1044,8 @@ class DataQualityValidator:
         }
     
     def _load_quality_rules(self) -> Dict[str, Dict[str, Any]]:
-        """Load quality rules for different content types"""        return {
+        """Load quality rules for different content types"""
+        return {
             'user_profile': {
                 'completeness': {
                     'required_fields': ['username', 'email'],
@@ -1071,7 +1105,8 @@ class DataQualityValidator:
         }
     
     def _load_scoring_weights(self) -> Dict[str, float]:
-        """Load scoring weights for quality dimensions"""        return {
+        """Load scoring weights for quality dimensions"""
+        return {
             'completeness': 1.2,
             'consistency': 1.0,
             'accuracy': 1.3,
@@ -1083,11 +1118,13 @@ class DataQualityValidator:
         }
     
     def add_benchmark_data(self, benchmark_name: str, dimension_scores: Dict[str, float]) -> None:
-        """Add benchmark data for comparison"""        self.benchmark_data[benchmark_name] = dimension_scores
+        """Add benchmark data for comparison"""
+        self.benchmark_data[benchmark_name] = dimension_scores
         logger.debug(f"Added benchmark data: {benchmark_name}")
     
     def get_quality_summary(self, profile: QualityProfile) -> Dict[str, Any]:
-        """Get a summary of quality assessment"""        return {
+        """Get a summary of quality assessment"""
+        return {
             'overall_score': profile.overall_score,
             'quality_level': profile.quality_level.value,
             'success_rate': profile.success_rate,

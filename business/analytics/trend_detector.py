@@ -6,7 +6,8 @@ viral trends, hashtag analysis, and content opportunity detection for creators.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
@@ -21,7 +22,8 @@ from fastapi import HTTPException
 logger = logging.getLogger(__name__)
 
 class TrendCategory(Enum):
-    """Categories of trends"""    HASHTAG = "hashtag"
+    """Categories of trends"""
+    HASHTAG = "hashtag"
     TOPIC = "topic"
     FORMAT = "format"
     AUDIO = "audio"
@@ -30,7 +32,8 @@ class TrendCategory(Enum):
 
 @dataclass
 class TrendData:
-    """Trend data structure"""    trend_id: str
+    """Trend data structure"""
+    trend_id: str
     category: TrendCategory
     name: str
     growth_rate: float
@@ -42,15 +45,18 @@ class TrendData:
     expiry_prediction: datetime
 
 class TrendDetectionEngine:
-    """    AI-powered trend detection system for identifying viral opportunities
+    """
+    AI-powered trend detection system for identifying viral opportunities
     and content trends across multiple platforms.
-    """    
+    """
+    
     def __init__(self, redis_client: redis.Redis, db_pool: asyncpg.Pool):
         self.redis = redis_client
         self.db_pool = db_pool
         
     async def initialize(self) -> None:
-        """Initialize trend detection engine"""        try:
+        """Initialize trend detection engine"""
+        try:
             await self._setup_database_tables()
             logger.info("Trend Detection Engine initialized successfully")
         except Exception as e:
@@ -58,8 +64,10 @@ class TrendDetectionEngine:
             raise
 
     async def _setup_database_tables(self) -> None:
-        """Setup database tables for trend tracking"""        async with self.db_pool.acquire() as conn:
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS trends (
+        """Setup database tables for trend tracking"""
+        async with self.db_pool.acquire() as conn:
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS trends (
                     id SERIAL PRIMARY KEY,
                     trend_id VARCHAR(255) UNIQUE NOT NULL,
                     category VARCHAR(30) NOT NULL,
@@ -78,7 +86,8 @@ class TrendDetectionEngine:
             """)
 
     async def detect_trending_content(self) -> List[TrendData]:
-        """Detect currently trending content and topics"""        try:
+        """Detect currently trending content and topics"""
+        try:
             trends = []
             
             # Detect hashtag trends
@@ -104,7 +113,8 @@ class TrendDetectionEngine:
             return []
 
     async def _detect_hashtag_trends(self) -> List[TrendData]:
-        """Detect trending hashtags"""        try:
+        """Detect trending hashtags"""
+        try:
             # Simulate hashtag trend detection
             trending_hashtags = [
                 ('#AI', 0.85, 250000),
@@ -137,7 +147,8 @@ class TrendDetectionEngine:
             return []
 
     async def _detect_topic_trends(self) -> List[TrendData]:
-        """Detect trending topics"""        try:
+        """Detect trending topics"""
+        try:
             trending_topics = [
                 ('Sustainable Technology', 0.78, 320000),
                 ('Remote Work Tips', 0.71, 280000),
@@ -168,7 +179,8 @@ class TrendDetectionEngine:
             return []
 
     async def _detect_format_trends(self) -> List[TrendData]:
-        """Detect trending content formats"""        try:
+        """Detect trending content formats"""
+        try:
             trending_formats = [
                 ('Short-form Tutorial', 0.82, 420000),
                 ('Behind the Scenes', 0.74, 310000),
@@ -199,9 +211,11 @@ class TrendDetectionEngine:
             return []
 
     async def _store_trend(self, trend: TrendData) -> None:
-        """Store trend data in database"""        try:
+        """Store trend data in database"""
+        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""                    INSERT INTO trends 
+                await conn.execute("""
+                    INSERT INTO trends 
                     (trend_id, category, name, growth_rate, volume, virality_score,
                      platforms, demographics, opportunity_score, expiry_prediction)
                     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
@@ -226,7 +240,8 @@ class TrendDetectionEngine:
             logger.error(f"Failed to store trend: {e}")
 
     async def get_personalized_trends(self, creator_id: str) -> List[TrendData]:
-        """Get personalized trending opportunities for creator"""        try:
+        """Get personalized trending opportunities for creator"""
+        try:
             # Get creator's content themes and audience
             creator_profile = await self._get_creator_profile(creator_id)
             
@@ -252,10 +267,12 @@ class TrendDetectionEngine:
             return []
 
     async def _get_creator_profile(self, creator_id: str) -> Dict[str, Any]:
-        """Get creator profile for trend personalization"""        try:
+        """Get creator profile for trend personalization"""
+        try:
             async with self.db_pool.acquire() as conn:
                 # Get creator's content themes
-                themes = await conn.fetch("""                    SELECT content_theme, COUNT(*) as count
+                themes = await conn.fetch("""
+                    SELECT content_theme, COUNT(*) as count
                     FROM content_metrics 
                     WHERE creator_id = $1 
                     AND created_at >= NOW() - INTERVAL '3 months'
@@ -264,13 +281,15 @@ class TrendDetectionEngine:
                 """, creator_id)
                 
                 # Get creator's platforms
-                platforms = await conn.fetch("""                    SELECT DISTINCT platform
+                platforms = await conn.fetch("""
+                    SELECT DISTINCT platform
                     FROM content_metrics 
                     WHERE creator_id = $1
                 """, creator_id)
                 
                 # Get audience demographics
-                audience = await conn.fetchrow("""                    SELECT demographics
+                audience = await conn.fetchrow("""
+                    SELECT demographics
                     FROM audience_profiles 
                     WHERE creator_id = $1 
                     ORDER BY created_at DESC 
@@ -288,7 +307,8 @@ class TrendDetectionEngine:
             return {}
 
     def _calculate_trend_relevance(self, trend: TrendData, creator_profile: Dict[str, Any]) -> float:
-        """Calculate how relevant a trend is to a specific creator"""        try:
+        """Calculate how relevant a trend is to a specific creator"""
+        try:
             relevance_score = 0.0
             
             # Platform alignment (40% weight)
@@ -340,7 +360,8 @@ class TrendDetectionEngine:
             return 0.5  # Default relevance
 
     async def get_trend_dashboard_data(self, creator_id: str) -> Dict[str, Any]:
-        """Get comprehensive trend data for dashboard"""        try:
+        """Get comprehensive trend data for dashboard"""
+        try:
             # Get personalized trends
             personalized_trends = await self.get_personalized_trends(creator_id)
             

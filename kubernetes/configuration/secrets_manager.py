@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 Enterprise-grade secrets management for secure credential storage
 → encrypted storage → key rotation → access control → audit logging.
 ==================================================================
-"""import logging
+"""
+import logging
 import asyncio
 import hashlib
 import secrets
@@ -30,7 +31,8 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 import json
 
 class SecretType(Enum):
-    """Secret types"""    PASSWORD = "password"
+    """Secret types"""
+    PASSWORD = "password"
     API_KEY = "api_key"
     CERTIFICATE = "certificate"
     PRIVATE_KEY = "private_key"
@@ -41,14 +43,16 @@ class SecretType(Enum):
     WEBHOOK_SECRET = "webhook_secret"
 
 class RotationStrategy(Enum):
-    """Secret rotation strategies"""    MANUAL = "manual"
+    """Secret rotation strategies"""
+    MANUAL = "manual"
     AUTOMATIC = "automatic"
     ON_DEMAND = "on_demand"
     TIME_BASED = "time_based"
     USAGE_BASED = "usage_based"
 
 class StorageBackend(Enum):
-    """Secret storage backends"""    VAULT = "vault"
+    """Secret storage backends"""
+    VAULT = "vault"
     AWS_SECRETS_MANAGER = "aws_secrets_manager"
     AZURE_KEY_VAULT = "azure_key_vault"
     GCP_SECRET_MANAGER = "gcp_secret_manager"
@@ -56,14 +60,16 @@ class StorageBackend(Enum):
     ENCRYPTED_FILE = "encrypted_file"
 
 class AccessLevel(Enum):
-    """Access levels for secrets"""    READ_ONLY = "read_only"
+    """Access levels for secrets"""
+    READ_ONLY = "read_only"
     READ_WRITE = "read_write"
     ADMIN = "admin"
     ROTATE = "rotate"
 
 @dataclass
 class SecretPolicy:
-    """Secret policy configuration"""    min_length: int = 12
+    """Secret policy configuration"""
+    min_length: int = 12
     require_uppercase: bool = True
     require_lowercase: bool = True
     require_numbers: bool = True
@@ -76,7 +82,8 @@ class SecretPolicy:
 
 @dataclass
 class RotationConfig:
-    """Secret rotation configuration"""    strategy: RotationStrategy = RotationStrategy.TIME_BASED
+    """Secret rotation configuration"""
+    strategy: RotationStrategy = RotationStrategy.TIME_BASED
     interval_days: int = 90
     advance_notice_days: int = 7
     backup_versions: int = 3
@@ -86,7 +93,8 @@ class RotationConfig:
 
 @dataclass
 class AccessControl:
-    """Access control for secrets"""    users: List[str] = field(default_factory=list)
+    """Access control for secrets"""
+    users: List[str] = field(default_factory=list)
     groups: List[str] = field(default_factory=list)
     services: List[str] = field(default_factory=list)
     ip_whitelist: List[str] = field(default_factory=list)
@@ -95,7 +103,8 @@ class AccessControl:
 
 @dataclass
 class SecretMetadata:
-    """Secret metadata"""    name: str
+    """Secret metadata"""
+    name: str
     secret_type: SecretType
     description: str = ""
     tags: List[str] = field(default_factory=list)
@@ -110,7 +119,8 @@ class SecretMetadata:
 
 @dataclass
 class SecretEntry:
-    """Complete secret entry"""    metadata: SecretMetadata
+    """Complete secret entry"""
+    metadata: SecretMetadata
     value: str
     encrypted_value: str = ""
     policy: SecretPolicy = field(default_factory=SecretPolicy)
@@ -119,7 +129,8 @@ class SecretEntry:
     audit_log: List[Dict[str, Any]] = field(default_factory=list)
 
 class SecretsManager:
-    """    Enterprise secrets and credentials management.
+    """
+    Enterprise secrets and credentials management.
     
     Provides comprehensive secrets management:
     - Multi-backend storage (Vault, AWS, Azure, GCP, K8s)
@@ -132,9 +143,11 @@ class SecretsManager:
     - Compliance and governance
     - Real-time monitoring and alerting
     - Emergency access procedures
-    """    
+    """
+    
     def __init__(self, master_key: Optional[str] = None):
-        """Initialize secrets manager"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize secrets manager"""
+        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Encryption setup
         self.master_key = master_key or self._generate_master_key()
@@ -165,14 +178,17 @@ class SecretsManager:
         self.logger.info("Secrets manager initialized")
     
     def _generate_master_key(self) -> str:
-        """Generate a new master encryption key"""        return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
+        """Generate a new master encryption key"""
+        return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
     
     def _initialize_encryption(self) -> Fernet:
-        """Initialize encryption cipher"""        key_bytes = base64.urlsafe_b64decode(self.master_key.encode())
+        """Initialize encryption cipher"""
+        key_bytes = base64.urlsafe_b64decode(self.master_key.encode())
         return Fernet(base64.urlsafe_b64encode(key_bytes))
     
     async def initialize(self, backend: StorageBackend, backend_config: Dict[str, Any]) -> bool:
-        """        Initialize secrets manager with storage backend.
+        """
+        Initialize secrets manager with storage backend.
         
         Args:
             backend: Storage backend type
@@ -180,7 +196,8 @@ class SecretsManager:
             
         Returns:
             bool: True if initialization successful
-        """        try:
+        """
+        try:
             self.storage_backend = backend
             self.backend_config = backend_config
             
@@ -204,7 +221,8 @@ class SecretsManager:
             return False
     
     async def _initialize_backend(self) -> None:
-        """Initialize storage backend"""        if self.storage_backend == StorageBackend.VAULT:
+        """Initialize storage backend"""
+        if self.storage_backend == StorageBackend.VAULT:
             await self._initialize_vault()
         elif self.storage_backend == StorageBackend.AWS_SECRETS_MANAGER:
             await self._initialize_aws_secrets()
@@ -219,40 +237,49 @@ class SecretsManager:
             await self._initialize_file_backend()
     
     async def _initialize_vault(self) -> None:
-        """Initialize HashiCorp Vault backend"""        # Implementation would setup Vault client
+        """Initialize HashiCorp Vault backend"""
+        # Implementation would setup Vault client
         self.logger.info("Vault backend initialized")
     
     async def _initialize_aws_secrets(self) -> None:
-        """Initialize AWS Secrets Manager backend"""        # Implementation would setup AWS client
+        """Initialize AWS Secrets Manager backend"""
+        # Implementation would setup AWS client
         self.logger.info("AWS Secrets Manager backend initialized")
     
     async def _initialize_azure_vault(self) -> None:
-        """Initialize Azure Key Vault backend"""        # Implementation would setup Azure client
+        """Initialize Azure Key Vault backend"""
+        # Implementation would setup Azure client
         self.logger.info("Azure Key Vault backend initialized")
     
     async def _initialize_gcp_secrets(self) -> None:
-        """Initialize GCP Secret Manager backend"""        # Implementation would setup GCP client
+        """Initialize GCP Secret Manager backend"""
+        # Implementation would setup GCP client
         self.logger.info("GCP Secret Manager backend initialized")
     
     async def _initialize_k8s_secrets(self) -> None:
-        """Initialize Kubernetes Secrets backend"""        # Implementation would setup Kubernetes client
+        """Initialize Kubernetes Secrets backend"""
+        # Implementation would setup Kubernetes client
         self.logger.info("Kubernetes Secrets backend initialized")
     
     async def _initialize_file_backend(self) -> None:
-        """Initialize encrypted file backend"""        # Implementation would setup file-based storage
+        """Initialize encrypted file backend"""
+        # Implementation would setup file-based storage
         self.logger.info("Encrypted file backend initialized")
     
     async def _load_secrets(self) -> None:
-        """Load existing secrets from backend"""        # Implementation would load secrets from storage backend
+        """Load existing secrets from backend"""
+        # Implementation would load secrets from storage backend
         self.metrics["secrets_total"] = len(self.secrets)
         self.logger.info(f"Loaded {len(self.secrets)} secrets")
     
     async def _start_rotation_scheduler(self) -> None:
-        """Start automatic secret rotation scheduler"""        asyncio.create_task(self._rotation_scheduler())
+        """Start automatic secret rotation scheduler"""
+        asyncio.create_task(self._rotation_scheduler())
         self.logger.info("Secret rotation scheduler started")
     
     async def _rotation_scheduler(self) -> None:
-        """Secret rotation scheduler"""        while True:
+        """Secret rotation scheduler"""
+        while True:
             try:
                 await self._check_rotation_schedules()
                 await asyncio.sleep(3600)  # Check every hour
@@ -262,7 +289,8 @@ class SecretsManager:
                 await asyncio.sleep(3600)
     
     async def _check_rotation_schedules(self) -> None:
-        """Check and execute scheduled rotations"""        now = datetime.now()
+        """Check and execute scheduled rotations"""
+        now = datetime.now()
         
         for secret_name, secret_entry in self.secrets.items():
             rotation_config = secret_entry.rotation_config
@@ -277,11 +305,13 @@ class SecretsManager:
                     await self._send_rotation_notice(secret_name, next_rotation)
     
     async def _initialize_monitoring(self) -> None:
-        """Initialize secrets monitoring"""        asyncio.create_task(self._monitor_secret_usage())
+        """Initialize secrets monitoring"""
+        asyncio.create_task(self._monitor_secret_usage())
         self.logger.info("Secrets monitoring initialized")
     
     async def _monitor_secret_usage(self) -> None:
-        """Monitor secret usage and access patterns"""        while True:
+        """Monitor secret usage and access patterns"""
+        while True:
             try:
                 # Monitor for suspicious access patterns
                 await self._analyze_access_patterns()
@@ -296,11 +326,13 @@ class SecretsManager:
                 await asyncio.sleep(600)
     
     async def _analyze_access_patterns(self) -> None:
-        """Analyze access patterns for anomalies"""        # Implementation would analyze access logs for suspicious patterns
+        """Analyze access patterns for anomalies"""
+        # Implementation would analyze access logs for suspicious patterns
         pass
     
     async def _check_policy_violations(self) -> None:
-        """Check for policy violations"""        for secret_name, secret_entry in self.secrets.items():
+        """Check for policy violations"""
+        for secret_name, secret_entry in self.secrets.items():
             policy = secret_entry.policy
             metadata = secret_entry.metadata
             
@@ -318,7 +350,8 @@ class SecretsManager:
                 )
     
     async def _handle_policy_violation(self, secret_name: str, violation_type: str, message: str) -> None:
-        """Handle policy violation"""        self.metrics["policy_violations"] += 1
+        """Handle policy violation"""
+        self.metrics["policy_violations"] += 1
         self.logger.warning(f"Policy violation for secret {secret_name}: {violation_type} - {message}")
         
         # Implementation would trigger alerts and take remediation actions
@@ -334,7 +367,8 @@ class SecretsManager:
         rotation_config: Optional[RotationConfig] = None,
         access_control: Optional[AccessControl] = None
     ) -> bool:
-        """        Create a new secret.
+        """
+        Create a new secret.
         
         Args:
             name: Secret name
@@ -348,7 +382,8 @@ class SecretsManager:
             
         Returns:
             bool: True if successful
-        """        try:
+        """
+        try:
             # Validate secret policy
             if not await self._validate_secret(value, policy or SecretPolicy()):
                 raise ValueError("Secret does not meet policy requirements")
@@ -395,7 +430,8 @@ class SecretsManager:
             return False
     
     async def _validate_secret(self, value: str, policy: SecretPolicy) -> bool:
-        """Validate secret against policy"""        # Length check
+        """Validate secret against policy"""
+        # Length check
         if len(value) < policy.min_length:
             return False
         
@@ -417,7 +453,8 @@ class SecretsManager:
         return True
     
     async def _store_secret_in_backend(self, name: str, secret_entry: SecretEntry) -> None:
-        """Store secret in configured backend"""        # Implementation would store in actual backend
+        """Store secret in configured backend"""
+        # Implementation would store in actual backend
         pass
     
     async def get_secret(
@@ -426,7 +463,8 @@ class SecretsManager:
         requester: str = "",
         access_reason: str = ""
     ) -> Optional[str]:
-        """        Retrieve a secret.
+        """
+        Retrieve a secret.
         
         Args:
             name: Secret name
@@ -435,7 +473,8 @@ class SecretsManager:
             
         Returns:
             Secret value if authorized, None otherwise
-        """        try:
+        """
+        try:
             if name not in self.secrets:
                 self.metrics["failed_accesses"] += 1
                 return None
@@ -464,7 +503,8 @@ class SecretsManager:
             return None
     
     async def _check_access(self, secret_name: str, requester: str, access_control: AccessControl) -> bool:
-        """Check if requester has access to secret"""        # Implementation would check access control rules
+        """Check if requester has access to secret"""
+        # Implementation would check access control rules
         # For now, return True (in production, implement proper RBAC)
         return True
     
@@ -475,7 +515,8 @@ class SecretsManager:
         requester: str = "",
         reason: str = ""
     ) -> bool:
-        """        Update a secret value.
+        """
+        Update a secret value.
         
         Args:
             name: Secret name
@@ -485,7 +526,8 @@ class SecretsManager:
             
         Returns:
             bool: True if successful
-        """        try:
+        """
+        try:
             if name not in self.secrets:
                 raise ValueError(f"Secret not found: {name}")
             
@@ -552,7 +594,8 @@ class SecretsManager:
             return False
     
     async def delete_secret(self, name: str, requester: str = "") -> bool:
-        """        Delete a secret.
+        """
+        Delete a secret.
         
         Args:
             name: Secret name
@@ -560,7 +603,8 @@ class SecretsManager:
             
         Returns:
             bool: True if successful
-        """        try:
+        """
+        try:
             if name not in self.secrets:
                 raise ValueError(f"Secret not found: {name}")
             
@@ -592,11 +636,13 @@ class SecretsManager:
             return False
     
     async def _delete_secret_from_backend(self, name: str) -> None:
-        """Delete secret from backend storage"""        # Implementation would delete from actual backend
+        """Delete secret from backend storage"""
+        # Implementation would delete from actual backend
         pass
     
     async def rotate_secret(self, name: str, new_value: Optional[str] = None) -> bool:
-        """        Rotate a secret.
+        """
+        Rotate a secret.
         
         Args:
             name: Secret name
@@ -604,7 +650,8 @@ class SecretsManager:
             
         Returns:
             bool: True if successful
-        """        try:
+        """
+        try:
             if name not in self.secrets:
                 raise ValueError(f"Secret not found: {name}")
             
@@ -634,10 +681,12 @@ class SecretsManager:
             return False
     
     async def _rotate_secret(self, name: str) -> None:
-        """Internal method to rotate secret"""        await self.rotate_secret(name)
+        """Internal method to rotate secret"""
+        await self.rotate_secret(name)
     
     async def _generate_secret_value(self, secret_entry: SecretEntry) -> str:
-        """Generate new secret value based on type and policy"""        secret_type = secret_entry.metadata.secret_type
+        """Generate new secret value based on type and policy"""
+        secret_type = secret_entry.metadata.secret_type
         policy = secret_entry.policy
         
         if secret_type == SecretType.PASSWORD:
@@ -650,7 +699,8 @@ class SecretsManager:
             return self._generate_random_string(policy.min_length)
     
     def _generate_password(self, policy: SecretPolicy) -> str:
-        """Generate password according to policy"""        import string
+        """Generate password according to policy"""
+        import string
         
         chars = ""
         if policy.require_lowercase:
@@ -669,34 +719,41 @@ class SecretsManager:
         return password
     
     def _generate_api_key(self, length: int) -> str:
-        """Generate API key"""        return secrets.token_urlsafe(length)
+        """Generate API key"""
+        return secrets.token_urlsafe(length)
     
     def _generate_jwt_secret(self) -> str:
-        """Generate JWT secret"""        return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
+        """Generate JWT secret"""
+        return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
     
     def _generate_random_string(self, length: int) -> str:
-        """Generate random string"""        return secrets.token_hex(length // 2)
+        """Generate random string"""
+        return secrets.token_hex(length // 2)
     
     async def _deploy_rotated_secret(self, name: str) -> None:
-        """Deploy rotated secret to services"""        # Implementation would deploy secret to services/applications
+        """Deploy rotated secret to services"""
+        # Implementation would deploy secret to services/applications
         self.logger.info(f"Deployed rotated secret: {name}")
     
     async def _send_rotation_notice(self, name: str, rotation_date: datetime) -> None:
-        """Send rotation advance notice"""        secret_entry = self.secrets[name]
+        """Send rotation advance notice"""
+        secret_entry = self.secrets[name]
         channels = secret_entry.rotation_config.notification_channels
         
         # Implementation would send notifications
         self.logger.info(f"Rotation notice sent for secret: {name}")
     
     async def _send_rotation_notification(self, name: str, status: str) -> None:
-        """Send rotation completion notification"""        secret_entry = self.secrets[name]
+        """Send rotation completion notification"""
+        secret_entry = self.secrets[name]
         channels = secret_entry.rotation_config.notification_channels
         
         # Implementation would send notifications
         self.logger.info(f"Rotation notification sent for secret: {name} - {status}")
     
     async def _audit_log(self, secret_name: str, action: str, details: str) -> None:
-        """Add audit log entry"""        log_entry = {
+        """Add audit log entry"""
+        log_entry = {
             "timestamp": datetime.now(),
             "secret_name": secret_name,
             "action": action,
@@ -716,7 +773,8 @@ class SecretsManager:
         secret_type: Optional[SecretType] = None,
         include_metadata: bool = False
     ) -> List[Dict[str, Any]]:
-        """        List secrets with optional filtering.
+        """
+        List secrets with optional filtering.
         
         Args:
             environment: Filter by environment
@@ -725,7 +783,8 @@ class SecretsManager:
             
         Returns:
             List of secrets
-        """        results = []
+        """
+        results = []
         
         for name, secret_entry in self.secrets.items():
             # Apply filters
@@ -751,7 +810,8 @@ class SecretsManager:
         return results
     
     async def get_audit_log(self, secret_name: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Get audit log entries"""        if secret_name:
+        """Get audit log entries"""
+        if secret_name:
             if secret_name in self.secrets:
                 return self.secrets[secret_name].audit_log
             else:
@@ -760,7 +820,8 @@ class SecretsManager:
         return self.access_logs
     
     async def get_secrets_status(self) -> Dict[str, Any]:
-        """Get comprehensive secrets status"""        now = datetime.now()
+        """Get comprehensive secrets status"""
+        now = datetime.now()
         
         # Calculate secrets needing rotation
         rotation_due = 0
@@ -801,4 +862,5 @@ class SecretsManager:
         }
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get secrets manager status"""        return await self.get_secrets_status()
+        """Get secrets manager status"""
+        return await self.get_secrets_status()

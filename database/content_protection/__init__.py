@@ -6,7 +6,7 @@ analytics, and management for AI-powered content protection platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + DBA + DevOps
 Project: IA Influencer Agent + Content Protection Platform
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
 ==================================================================
@@ -93,4 +93,4 @@ __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __team__ = "Lead AI Developer + ML Engineer + Security Architect + DBA + DevOps + Microservices Architect + Audio Engineer + Prompt Engineer"
 __license__ = "Proprietary - All Rights Reserved"
-__copyright__ = "© 2025 Fahed Mlaiel"
+__copyright__ = "(c) 2025 Fahed Mlaiel"

@@ -12,7 +12,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""from typing import Dict, List, Any, Optional, Union, Tuple, Callable
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple, Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -37,7 +38,8 @@ from .content_fingerprinting import ContentFingerprint, FingerprintMatch
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Supported surveillance platforms"""    YOUTUBE = "youtube"
+    """Supported surveillance platforms"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     FACEBOOK = "facebook"
@@ -53,7 +55,8 @@ class PlatformType(Enum):
     GENERIC_WEB = "generic_web"
 
 class ViolationType(Enum):
-    """Types of content violations"""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Types of content violations"""
+    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_USE = "unauthorized_use"
     PIRACY = "piracy"
     COUNTERFEIT = "counterfeit"
@@ -63,7 +66,8 @@ class ViolationType(Enum):
     FAIR_USE_DISPUTE = "fair_use_dispute"
 
 class DetectionMethod(Enum):
-    """Content detection methods"""    FINGERPRINT_MATCH = "fingerprint_match"
+    """Content detection methods"""
+    FINGERPRINT_MATCH = "fingerprint_match"
     METADATA_MATCH = "metadata_match"
     VISUAL_RECOGNITION = "visual_recognition"
     AUDIO_RECOGNITION = "audio_recognition"
@@ -72,14 +76,16 @@ class DetectionMethod(Enum):
     BEHAVIORAL_ANALYSIS = "behavioral_analysis"
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    LOW = "low"
+    """Alert severity levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
     URGENT = "urgent"
 
 class ActionStatus(Enum):
-    """Action status for violations"""    PENDING = "pending"
+    """Action status for violations"""
+    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     TAKEDOWN_REQUESTED = "takedown_requested"
     RESOLVED = "resolved"
@@ -89,7 +95,8 @@ class ActionStatus(Enum):
 
 @dataclass
 class SurveillanceTarget:
-    """Configuration for surveillance targets"""    platform: PlatformType
+    """Configuration for surveillance targets"""
+    platform: PlatformType
     search_queries: List[str]
     content_types: List[ContentType]
     monitoring_frequency: timedelta
@@ -100,7 +107,8 @@ class SurveillanceTarget:
 
 @dataclass
 class DetectionResult:
-    """Result of content detection"""    url: str
+    """Result of content detection"""
+    url: str
     platform: PlatformType
     detection_method: DetectionMethod
     similarity_score: float
@@ -110,7 +118,8 @@ class DetectionResult:
     detected_at: datetime = field(default_factory=datetime.utcnow)
 
 class ContentViolation(Base):
-    """Database model for content violations"""    __tablename__ = "content_violations"
+    """Database model for content violations"""
+    __tablename__ = "content_violations"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     fingerprint_id = Column(UUID(as_uuid=True), ForeignKey('content_fingerprints.id'), nullable=False)
@@ -161,7 +170,8 @@ class ContentViolation(Base):
         return f"<ContentViolation(id={self.id}, platform={self.platform}, severity={self.alert_severity})>"
 
 class SurveillanceLog(Base):
-    """Database model for surveillance activity logs"""    __tablename__ = "surveillance_logs"
+    """Database model for surveillance activity logs"""
+    __tablename__ = "surveillance_logs"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -194,7 +204,8 @@ class SurveillanceLog(Base):
         return f"<SurveillanceLog(id={self.id}, platform={self.platform}, status={self.scan_status})>"
 
 class PlatformCrawler:
-    """Base class for platform-specific crawlers"""    
+    """Base class for platform-specific crawlers"""
+    
     def __init__(self, platform: PlatformType, config: Dict[str, Any] = None):
         self.platform = platform
         self.config = config or {}
@@ -205,7 +216,8 @@ class PlatformCrawler:
         self.request_timeout = self.config.get('request_timeout', 30)
     
     async def __aenter__(self):
-        """Async context manager entry"""        self.session = aiohttp.ClientSession(
+        """Async context manager entry"""
+        self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=self.request_timeout),
             headers={
                 'User-Agent': 'IA-Influencer-Agent-ContentProtection/1.0'
@@ -214,17 +226,20 @@ class PlatformCrawler:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""        if self.session:
+        """Async context manager exit"""
+        if self.session:
             await self.session.close()
     
     async def search_content(self, query: str, content_type: ContentType = None,
                            limit: int = 100) -> List[DetectionResult]:
-        """Search for content on platform"""        # Default implementation for platforms without specific search capabilities
+        """Search for content on platform"""
+        # Default implementation for platforms without specific search capabilities
         self.logger.warning(f"Generic search not implemented for {self.platform.value}")
         return []
     
     async def extract_content_info(self, url: str) -> Dict[str, Any]:
-        """Extract content information from URL"""        # Default implementation extracts basic URL information
+        """Extract content information from URL"""
+        # Default implementation extracts basic URL information
         try:
             parsed_url = urlparse(url)
             
@@ -283,7 +298,8 @@ class PlatformCrawler:
             }
     
     async def take_screenshot(self, url: str) -> Optional[str]:
-        """Take screenshot of content for evidence"""        try:
+        """Take screenshot of content for evidence"""
+        try:
             # This would integrate with a screenshot service
             # For now, return placeholder
             return f"screenshot_placeholder_{hashlib.md5(url.encode()).hexdigest()}"
@@ -292,7 +308,8 @@ class PlatformCrawler:
             return None
 
 class YouTubeCrawler(PlatformCrawler):
-    """YouTube-specific content crawler"""    
+    """YouTube-specific content crawler"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(PlatformType.YOUTUBE, config)
         self.api_key = self.config.get('youtube_api_key')
@@ -300,7 +317,8 @@ class YouTubeCrawler(PlatformCrawler):
     
     async def search_content(self, query: str, content_type: ContentType = None,
                            limit: int = 100) -> List[DetectionResult]:
-        """Search YouTube for content"""        if not self.api_key:
+        """Search YouTube for content"""
+        if not self.api_key:
             self.logger.error("YouTube API key not configured")
             return []
         
@@ -331,7 +349,8 @@ class YouTubeCrawler(PlatformCrawler):
     
     async def _process_youtube_results(self, data: Dict[str, Any], 
                                      query: str) -> List[DetectionResult]:
-        """Process YouTube search results"""        results = []
+        """Process YouTube search results"""
+        results = []
         
         for item in data.get('items', []):
             try:
@@ -378,7 +397,8 @@ class YouTubeCrawler(PlatformCrawler):
         return results
 
 class InstagramCrawler(PlatformCrawler):
-    """Instagram-specific content crawler"""    
+    """Instagram-specific content crawler"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(PlatformType.INSTAGRAM, config)
         self.access_token = self.config.get('instagram_access_token')
@@ -386,7 +406,8 @@ class InstagramCrawler(PlatformCrawler):
     
     async def search_content(self, query: str, content_type: ContentType = None,
                            limit: int = 100) -> List[DetectionResult]:
-        """Search Instagram for content"""        if not self.access_token:
+        """Search Instagram for content"""
+        if not self.access_token:
             self.logger.error("Instagram access token not configured")
             return []
         
@@ -396,27 +417,31 @@ class InstagramCrawler(PlatformCrawler):
         return []
 
 class TikTokCrawler(PlatformCrawler):
-    """TikTok-specific content crawler"""    
+    """TikTok-specific content crawler"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(PlatformType.TIKTOK, config)
         # TikTok requires special handling due to limited API access
     
     async def search_content(self, query: str, content_type: ContentType = None,
                            limit: int = 100) -> List[DetectionResult]:
-        """Search TikTok for content"""        # TikTok API access is very limited
+        """Search TikTok for content"""
+        # TikTok API access is very limited
         # Would require web scraping or special partnerships
         # For now, return empty list as placeholder
         return []
 
 class GenericWebCrawler(PlatformCrawler):
-    """Generic web crawler for any website"""    
+    """Generic web crawler for any website"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(PlatformType.GENERIC_WEB, config)
         self.search_engines = ['google', 'bing', 'duckduckgo']
     
     async def search_content(self, query: str, content_type: ContentType = None,
                            limit: int = 100) -> List[DetectionResult]:
-        """Search the web for content using search engines"""        results = []
+        """Search the web for content using search engines"""
+        results = []
         
         for engine in self.search_engines:
             try:
@@ -433,12 +458,14 @@ class GenericWebCrawler(PlatformCrawler):
         return results
     
     async def _search_with_engine(self, engine: str, query: str, limit: int) -> List[DetectionResult]:
-        """Search with specific search engine"""        # This would integrate with search engine APIs or web scraping
+        """Search with specific search engine"""
+        # This would integrate with search engine APIs or web scraping
         # For now, return empty list as placeholder
         return []
 
 class ContentSurveillanceManager:
-    """Main surveillance management system"""    
+    """Main surveillance management system"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -447,7 +474,8 @@ class ContentSurveillanceManager:
         self.active_scans = set()
     
     def _initialize_crawlers(self) -> Dict[PlatformType, PlatformCrawler]:
-        """Initialize platform-specific crawlers"""        return {
+        """Initialize platform-specific crawlers"""
+        return {
             PlatformType.YOUTUBE: YouTubeCrawler(self.config.get('youtube', {})),
             PlatformType.INSTAGRAM: InstagramCrawler(self.config.get('instagram', {})),
             PlatformType.TIKTOK: TikTokCrawler(self.config.get('tiktok', {})),
@@ -455,19 +483,22 @@ class ContentSurveillanceManager:
         }
     
     async def add_surveillance_target(self, user_id: str, target: SurveillanceTarget):
-        """Add content surveillance target"""        target_key = f"{user_id}:{target.platform.value}"
+        """Add content surveillance target"""
+        target_key = f"{user_id}:{target.platform.value}"
         self.surveillance_targets[target_key] = target
         self.logger.info(f"Added surveillance target for {target.platform.value}")
     
     async def remove_surveillance_target(self, user_id: str, platform: PlatformType):
-        """Remove surveillance target"""        target_key = f"{user_id}:{platform.value}"
+        """Remove surveillance target"""
+        target_key = f"{user_id}:{platform.value}"
         if target_key in self.surveillance_targets:
             del self.surveillance_targets[target_key]
             self.logger.info(f"Removed surveillance target for {platform.value}")
     
     async def scan_platform(self, user_id: str, platform: PlatformType,
                           fingerprints: List[ContentFingerprint]) -> List[ContentViolation]:
-        """Scan platform for content violations"""        scan_id = f"{user_id}:{platform.value}:{datetime.utcnow().isoformat()}"
+        """Scan platform for content violations"""
+        scan_id = f"{user_id}:{platform.value}:{datetime.utcnow().isoformat()}"
         
         if scan_id in self.active_scans:
             self.logger.warning(f"Scan already active: {scan_id}")
@@ -529,7 +560,8 @@ class ContentSurveillanceManager:
     async def _check_for_violation(self, detection_result: DetectionResult,
                                  fingerprints: List[ContentFingerprint],
                                  threshold: float) -> Optional[ContentViolation]:
-        """Check if detection result represents a violation"""        try:
+        """Check if detection result represents a violation"""
+        try:
             # This would implement actual fingerprint comparison
             # For now, use simple similarity threshold
             if detection_result.similarity_score >= threshold:
@@ -582,7 +614,8 @@ class ContentSurveillanceManager:
             return None
     
     def _determine_alert_severity(self, similarity_score: float) -> AlertSeverity:
-        """Determine alert severity based on similarity score"""        if similarity_score >= 0.95:
+        """Determine alert severity based on similarity score"""
+        if similarity_score >= 0.95:
             return AlertSeverity.CRITICAL
         elif similarity_score >= 0.90:
             return AlertSeverity.HIGH
@@ -592,7 +625,8 @@ class ContentSurveillanceManager:
             return AlertSeverity.LOW
     
     async def schedule_surveillance_scans(self):
-        """Schedule automatic surveillance scans"""        while True:
+        """Schedule automatic surveillance scans"""
+        while True:
             try:
                 current_time = datetime.utcnow()
                 

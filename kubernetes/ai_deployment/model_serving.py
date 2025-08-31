@@ -7,7 +7,8 @@ with auto-scaling, monitoring, and A/B testing support.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 
 class ModelFormat(Enum):
-    """Supported model formats"""    TENSORFLOW_SAVEDMODEL = "tensorflow_savedmodel"
+    """Supported model formats"""
+    TENSORFLOW_SAVEDMODEL = "tensorflow_savedmodel"
     TENSORFLOW_LITE = "tensorflow_lite"
     PYTORCH_TORCHSCRIPT = "pytorch_torchscript"
     PYTORCH_JIT = "pytorch_jit"
@@ -38,7 +40,8 @@ class ModelFormat(Enum):
 
 
 class ServingStrategy(Enum):
-    """Model serving strategies"""    BLUE_GREEN = "blue_green"
+    """Model serving strategies"""
+    BLUE_GREEN = "blue_green"
     ROLLING_UPDATE = "rolling_update"
     A_B_TESTING = "a_b_testing"
     CANARY = "canary"
@@ -46,7 +49,8 @@ class ServingStrategy(Enum):
 
 
 class ServingMode(Enum):
-    """Serving modes"""    REAL_TIME = "real_time"
+    """Serving modes"""
+    REAL_TIME = "real_time"
     BATCH = "batch"
     STREAMING = "streaming"
     EDGE = "edge"
@@ -54,7 +58,8 @@ class ServingMode(Enum):
 
 @dataclass
 class ModelServingConfig:
-    """Model serving configuration"""    model_name: str
+    """Model serving configuration"""
+    model_name: str
     model_version: str
     model_format: ModelFormat
     serving_strategy: ServingStrategy = ServingStrategy.ROLLING_UPDATE
@@ -83,7 +88,8 @@ class ModelServingConfig:
 
 
 class ModelServingDeployment:
-    """    Enterprise model serving deployment system
+    """
+    Enterprise model serving deployment system
     
     Provides comprehensive model serving infrastructure with:
     - Multi-framework support (TensorFlow, PyTorch, ONNX, etc.)
@@ -92,13 +98,16 @@ class ModelServingDeployment:
     - Real-time monitoring and observability
     - GPU acceleration and optimization
     - Edge computing support
-    """    
+    """
+    
     def __init__(self, namespace: str = "ia-influencer-serving"):
-        """        Initialize model serving deployment
+        """
+        Initialize model serving deployment
         
         Args:
             namespace: Kubernetes namespace for serving infrastructure
-        """        self.namespace = namespace
+        """
+        self.namespace = namespace
         self.deployed_models = {}
         self.serving_instances = {}
         self.traffic_manager = None
@@ -108,7 +117,8 @@ class ModelServingDeployment:
         self._initialize_clients()
     
     def _initialize_clients(self) -> None:
-        """Initialize Kubernetes, Docker, and Redis clients"""        try:
+        """Initialize Kubernetes, Docker, and Redis clients"""
+        try:
             # Kubernetes client
             config.load_incluster_config()
             self.k8s_apps_v1 = client.AppsV1Api()
@@ -135,11 +145,13 @@ class ModelServingDeployment:
             raise
     
     async def deploy_serving_infrastructure(self) -> Dict[str, Any]:
-        """        Deploy complete model serving infrastructure
+        """
+        Deploy complete model serving infrastructure
         
         Returns:
             Infrastructure deployment summary
-        """        try:
+        """
+        try:
             self.status = "deploying_infrastructure"
             logger.info("Deploying model serving infrastructure")
             
@@ -205,14 +217,16 @@ class ModelServingDeployment:
             raise
     
     async def deploy_model(self, config: ModelServingConfig) -> Dict[str, Any]:
-        """        Deploy a model for serving
+        """
+        Deploy a model for serving
         
         Args:
             config: Model serving configuration
             
         Returns:
             Model deployment result
-        """        try:
+        """
+        try:
             model_id = f"{config.model_name}-{config.model_version}"
             logger.info(f"Deploying model for serving: {model_id}")
             
@@ -279,7 +293,8 @@ class ModelServingDeployment:
             raise
     
     async def _ensure_serving_namespace(self) -> None:
-        """Create serving namespace"""        try:
+        """Create serving namespace"""
+        try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
             if e.status == 404:
@@ -298,7 +313,8 @@ class ModelServingDeployment:
                 logger.info(f"Created serving namespace: {self.namespace}")
     
     async def _deploy_serving_redis(self) -> Dict[str, Any]:
-        """Deploy Redis cluster for serving metadata"""        redis_cluster = {
+        """Deploy Redis cluster for serving metadata"""
+        redis_cluster = {
             "apiVersion": "apps/v1",
             "kind": "StatefulSet",
             "metadata": {
@@ -360,7 +376,8 @@ class ModelServingDeployment:
         }
     
     async def _deploy_load_balancer(self) -> Dict[str, Any]:
-        """Deploy intelligent load balancer"""        load_balancer = {
+        """Deploy intelligent load balancer"""
+        load_balancer = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -411,7 +428,8 @@ class ModelServingDeployment:
         }
     
     async def _deploy_serving_monitoring(self) -> Dict[str, Any]:
-        """Deploy serving-specific monitoring"""        serving_monitor = {
+        """Deploy serving-specific monitoring"""
+        serving_monitor = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -459,7 +477,8 @@ class ModelServingDeployment:
         }
     
     async def _deploy_autoscaler(self) -> Dict[str, Any]:
-        """Deploy intelligent autoscaler"""        autoscaler = {
+        """Deploy intelligent autoscaler"""
+        autoscaler = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -508,7 +527,8 @@ class ModelServingDeployment:
         }
     
     async def _deploy_traffic_manager(self) -> Dict[str, Any]:
-        """Deploy traffic management system"""        traffic_manager = {
+        """Deploy traffic management system"""
+        traffic_manager = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -558,7 +578,8 @@ class ModelServingDeployment:
         }
     
     async def _deploy_tensorflow_serving(self) -> Dict[str, Any]:
-        """Deploy TensorFlow Serving engine"""        tf_serving = {
+        """Deploy TensorFlow Serving engine"""
+        tf_serving = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -627,7 +648,8 @@ class ModelServingDeployment:
         }
     
     async def _deploy_pytorch_serving(self) -> Dict[str, Any]:
-        """Deploy PyTorch Serving engine (TorchServe)"""        torch_serving = {
+        """Deploy PyTorch Serving engine (TorchServe)"""
+        torch_serving = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -696,7 +718,8 @@ class ModelServingDeployment:
         }
     
     async def _deploy_onnx_serving(self) -> Dict[str, Any]:
-        """Deploy ONNX Runtime serving engine"""        onnx_serving = {
+        """Deploy ONNX Runtime serving engine"""
+        onnx_serving = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -753,7 +776,8 @@ class ModelServingDeployment:
         }
     
     async def _deploy_huggingface_serving(self) -> Dict[str, Any]:
-        """Deploy Hugging Face model serving"""        hf_serving = {
+        """Deploy Hugging Face model serving"""
+        hf_serving = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -810,7 +834,8 @@ class ModelServingDeployment:
         }
     
     async def _deploy_edge_serving(self) -> Dict[str, Any]:
-        """Deploy edge computing serving infrastructure"""        edge_serving = {
+        """Deploy edge computing serving infrastructure"""
+        edge_serving = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -859,7 +884,8 @@ class ModelServingDeployment:
         }
     
     async def _configure_serving_networking(self) -> None:
-        """Configure networking for serving infrastructure"""        # Serving network policy
+        """Configure networking for serving infrastructure"""
+        # Serving network policy
         network_policy = {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "NetworkPolicy",
@@ -895,7 +921,8 @@ class ModelServingDeployment:
         logger.info("Configured serving networking policies")
     
     async def _validate_serving_infrastructure(self) -> bool:
-        """Validate serving infrastructure deployment"""        try:
+        """Validate serving infrastructure deployment"""
+        try:
             # Check essential services
             essential_services = [
                 "serving-redis", "serving-load-balancer", "serving-monitor",
@@ -931,7 +958,8 @@ class ModelServingDeployment:
             return False
     
     async def _validate_model_config(self, config: ModelServingConfig) -> None:
-        """Validate model serving configuration"""        if not config.model_name or not config.model_version:
+        """Validate model serving configuration"""
+        if not config.model_name or not config.model_version:
             raise ValueError("Model name and version are required")
         
         if config.replicas < 1:
@@ -946,7 +974,8 @@ class ModelServingDeployment:
         logger.info(f"Model config validation passed for {config.model_name}")
     
     async def _create_model_deployment_spec(self, config: ModelServingConfig) -> Dict[str, Any]:
-        """Create Kubernetes deployment specification for model"""        model_id = f"{config.model_name}-{config.model_version}"
+        """Create Kubernetes deployment specification for model"""
+        model_id = f"{config.model_name}-{config.model_version}"
         
         deployment_spec = {
             "apiVersion": "apps/v1",
@@ -1026,7 +1055,8 @@ class ModelServingDeployment:
         return deployment_spec
     
     async def _deploy_tensorflow_model(self, config: ModelServingConfig, deployment_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy TensorFlow model"""        # Customize for TensorFlow
+        """Deploy TensorFlow model"""
+        # Customize for TensorFlow
         container = deployment_spec["spec"]["template"]["spec"]["containers"][0]
         container["image"] = "tensorflow/serving:latest-gpu" if config.gpu_acceleration else "tensorflow/serving:latest"
         container["ports"] = [
@@ -1055,7 +1085,8 @@ class ModelServingDeployment:
         }
     
     async def _deploy_pytorch_model(self, config: ModelServingConfig, deployment_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy PyTorch model"""        # Customize for PyTorch
+        """Deploy PyTorch model"""
+        # Customize for PyTorch
         container = deployment_spec["spec"]["template"]["spec"]["containers"][0]
         container["image"] = "pytorch/torchserve:latest-gpu" if config.gpu_acceleration else "pytorch/torchserve:latest"
         container["ports"] = [
@@ -1084,7 +1115,8 @@ class ModelServingDeployment:
         }
     
     async def _deploy_onnx_model(self, config: ModelServingConfig, deployment_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy ONNX model"""        # Customize for ONNX
+        """Deploy ONNX model"""
+        # Customize for ONNX
         container = deployment_spec["spec"]["template"]["spec"]["containers"][0]
         container["image"] = "ia-influencer/onnx-serving:v1.0"
         container["env"].extend([
@@ -1105,7 +1137,8 @@ class ModelServingDeployment:
         }
     
     async def _deploy_huggingface_model(self, config: ModelServingConfig, deployment_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy Hugging Face model"""        # Customize for Hugging Face
+        """Deploy Hugging Face model"""
+        # Customize for Hugging Face
         container = deployment_spec["spec"]["template"]["spec"]["containers"][0]
         container["image"] = "ia-influencer/hf-serving:v1.0"
         container["env"].extend([
@@ -1127,7 +1160,8 @@ class ModelServingDeployment:
         }
     
     async def _deploy_custom_model(self, config: ModelServingConfig, deployment_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy custom model format"""        # Deploy as-is for custom models
+        """Deploy custom model format"""
+        # Deploy as-is for custom models
         deployment = self.k8s_apps_v1.create_namespaced_deployment(
             namespace=self.namespace,
             body=deployment_spec
@@ -1140,7 +1174,8 @@ class ModelServingDeployment:
         }
     
     async def _configure_model_autoscaling(self, config: ModelServingConfig) -> None:
-        """Configure autoscaling for model"""        model_id = f"{config.model_name}-{config.model_version}"
+        """Configure autoscaling for model"""
+        model_id = f"{config.model_name}-{config.model_version}"
         
         hpa_spec = {
             "apiVersion": "autoscaling/v2",
@@ -1190,7 +1225,8 @@ class ModelServingDeployment:
         logger.info(f"Configured autoscaling for model {model_id}")
     
     async def _configure_traffic_routing(self, config: ModelServingConfig) -> None:
-        """Configure traffic routing for model"""        model_id = f"{config.model_name}-{config.model_version}"
+        """Configure traffic routing for model"""
+        model_id = f"{config.model_name}-{config.model_version}"
         
         # Create service for model
         service_spec = {
@@ -1219,7 +1255,8 @@ class ModelServingDeployment:
         logger.info(f"Configured traffic routing for model {model_id}")
     
     async def _setup_model_monitoring(self, config: ModelServingConfig) -> None:
-        """Set up monitoring for model"""        model_id = f"{config.model_name}-{config.model_version}"
+        """Set up monitoring for model"""
+        model_id = f"{config.model_name}-{config.model_version}"
         
         # Store monitoring configuration in Redis
         monitoring_config = {
@@ -1238,7 +1275,8 @@ class ModelServingDeployment:
         logger.info(f"Configured monitoring for model {model_id}")
     
     async def _setup_ab_testing(self, config: ModelServingConfig) -> None:
-        """Set up A/B testing for model"""        model_id = f"{config.model_name}-{config.model_version}"
+        """Set up A/B testing for model"""
+        model_id = f"{config.model_name}-{config.model_version}"
         
         # Store A/B testing configuration
         ab_config = {
@@ -1256,7 +1294,8 @@ class ModelServingDeployment:
         logger.info(f"Configured A/B testing for model {model_id}")
     
     async def _cleanup_failed_infrastructure(self) -> None:
-        """Clean up failed infrastructure deployment"""        try:
+        """Clean up failed infrastructure deployment"""
+        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             logger.info("Cleaned up failed serving infrastructure")
@@ -1264,7 +1303,8 @@ class ModelServingDeployment:
             logger.error(f"Infrastructure cleanup failed: {e}")
     
     async def _cleanup_failed_model_deployment(self, model_name: str, model_version: str) -> None:
-        """Clean up failed model deployment"""        try:
+        """Clean up failed model deployment"""
+        try:
             model_id = f"{model_name}-{model_version}"
             
             # Delete deployment
@@ -1300,7 +1340,8 @@ class ModelServingDeployment:
             logger.error(f"Model cleanup failed: {e}")
     
     async def get_serving_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive serving metrics"""        try:
+        """Get comprehensive serving metrics"""
+        try:
             metrics = {
                 "infrastructure_status": self.status,
                 "deployed_models": len(self.deployed_models),
@@ -1331,7 +1372,8 @@ class ModelServingDeployment:
             return {"error": str(e)}
     
     async def cleanup(self) -> None:
-        """Clean up entire serving infrastructure"""        try:
+        """Clean up entire serving infrastructure"""
+        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             

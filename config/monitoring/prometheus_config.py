@@ -14,14 +14,16 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from typing import Dict, List, Any
 from dataclasses import dataclass, field
 from enum import Enum
 
 
 class MetricType(Enum):
-    """Prometheus metric types"""    COUNTER = "counter"
+    """Prometheus metric types"""
+    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
@@ -29,7 +31,8 @@ class MetricType(Enum):
 
 @dataclass
 class PrometheusMetric:
-    """Prometheus metric configuration"""    name: str
+    """Prometheus metric configuration"""
+    name: str
     type: MetricType
     help: str
     labels: List[str] = field(default_factory=list)
@@ -39,7 +42,8 @@ class PrometheusMetric:
 
 @dataclass
 class PrometheusJobConfig:
-    """Prometheus scraping job configuration"""    job_name: str
+    """Prometheus scraping job configuration"""
+    job_name: str
     scrape_interval: str
     scrape_timeout: str
     metrics_path: str
@@ -48,7 +52,8 @@ class PrometheusJobConfig:
 
 
 class PrometheusConfig:
-    """Professional Prometheus configuration for IA-Influencer platform"""    
+    """Professional Prometheus configuration for IA-Influencer platform"""
+    
     def __init__(self):
         self.prometheus_port = int(os.getenv("PROMETHEUS_PORT", "9090"))
         self.metrics_port = int(os.getenv("METRICS_PORT", "8000"))
@@ -58,7 +63,8 @@ class PrometheusConfig:
         self.storage_path = os.getenv("PROMETHEUS_STORAGE_PATH", "/prometheus/data")
     
     def get_global_config(self) -> Dict[str, Any]:
-        """Get global Prometheus configuration"""        return {
+        """Get global Prometheus configuration"""
+        return {
             "scrape_interval": self.scrape_interval,
             "evaluation_interval": self.evaluation_interval,
             "external_labels": {
@@ -68,7 +74,8 @@ class PrometheusConfig:
         }
     
     def get_scrape_configs(self) -> List[Dict[str, Any]]:
-        """Get all scraping configurations"""        return [
+        """Get all scraping configurations"""
+        return [
             self._get_application_scrape_config(),
             self._get_ai_services_scrape_config(),
             self._get_content_protection_scrape_config(),
@@ -79,7 +86,8 @@ class PrometheusConfig:
         ]
     
     def _get_application_scrape_config(self) -> Dict[str, Any]:
-        """Application metrics scraping configuration"""        return {
+        """Application metrics scraping configuration"""
+        return {
             "job_name": "ia-influencer-app",
             "scrape_interval": "10s",
             "metrics_path": "/metrics",
@@ -102,7 +110,8 @@ class PrometheusConfig:
         }
     
     def _get_ai_services_scrape_config(self) -> Dict[str, Any]:
-        """AI services metrics scraping configuration"""        return {
+        """AI services metrics scraping configuration"""
+        return {
             "job_name": "ai-services",
             "scrape_interval": "30s",
             "metrics_path": "/ai/metrics",
@@ -125,7 +134,8 @@ class PrometheusConfig:
         }
     
     def _get_content_protection_scrape_config(self) -> Dict[str, Any]:
-        """Content protection metrics scraping configuration"""        return {
+        """Content protection metrics scraping configuration"""
+        return {
             "job_name": "content-protection",
             "scrape_interval": "20s",
             "metrics_path": "/protection/metrics",
@@ -147,7 +157,8 @@ class PrometheusConfig:
         }
     
     def _get_audio_processing_scrape_config(self) -> Dict[str, Any]:
-        """Audio processing metrics scraping configuration"""        return {
+        """Audio processing metrics scraping configuration"""
+        return {
             "job_name": "audio-processing",
             "scrape_interval": "15s",
             "metrics_path": "/audio/metrics",
@@ -162,7 +173,8 @@ class PrometheusConfig:
         }
     
     def _get_monetization_scrape_config(self) -> Dict[str, Any]:
-        """Monetization services metrics scraping configuration"""        return {
+        """Monetization services metrics scraping configuration"""
+        return {
             "job_name": "monetization",
             "scrape_interval": "60s",
             "metrics_path": "/monetization/metrics",
@@ -177,7 +189,8 @@ class PrometheusConfig:
         }
     
     def _get_infrastructure_scrape_config(self) -> Dict[str, Any]:
-        """Infrastructure metrics scraping configuration"""        return {
+        """Infrastructure metrics scraping configuration"""
+        return {
             "job_name": "infrastructure",
             "scrape_interval": "30s",
             "static_configs": [{
@@ -192,7 +205,8 @@ class PrometheusConfig:
         }
     
     def _get_security_scrape_config(self) -> Dict[str, Any]:
-        """Security monitoring metrics scraping configuration"""        return {
+        """Security monitoring metrics scraping configuration"""
+        return {
             "job_name": "security",
             "scrape_interval": "10s",
             "metrics_path": "/security/metrics",
@@ -206,7 +220,8 @@ class PrometheusConfig:
         }
     
     def get_alerting_rules(self) -> Dict[str, Any]:
-        """Get Prometheus alerting rules configuration"""        return {
+        """Get Prometheus alerting rules configuration"""
+        return {
             "groups": [
                 {
                     "name": "ia-influencer-alerts",
@@ -253,7 +268,8 @@ class PrometheusConfig:
         }
     
     def get_business_metrics(self) -> List[PrometheusMetric]:
-        """Get business-specific metrics configuration"""        return [
+        """Get business-specific metrics configuration"""
+        return [
             PrometheusMetric(
                 name="content_uploads_total",
                 type=MetricType.COUNTER,
@@ -288,7 +304,8 @@ class PrometheusConfig:
         ]
     
     def get_prometheus_yml_config(self) -> str:
-        """Generate complete prometheus.yml configuration"""        config = {
+        """Generate complete prometheus.yml configuration"""
+        config = {
             "global": self.get_global_config(),
             "alerting": {
                 "alertmanagers": [

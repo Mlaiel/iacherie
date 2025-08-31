@@ -25,7 +25,8 @@ strictly prohibited and may result in severe legal action under German
 and international copyright laws.
 
 Specialization: Web Scraping Architecture & Content Surveillance Systems
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import os
@@ -69,7 +70,8 @@ logger = logging.getLogger(__name__)
 
 
 class CrawlerType(Enum):
-    """Types of content crawlers."""    YOUTUBE_CRAWLER = "youtube"
+    """Types of content crawlers."""
+    YOUTUBE_CRAWLER = "youtube"
     INSTAGRAM_CRAWLER = "instagram"
     TIKTOK_CRAWLER = "tiktok"
     TWITTER_CRAWLER = "twitter"
@@ -84,7 +86,8 @@ class CrawlerType(Enum):
 
 
 class CrawlerStrategy(Enum):
-    """Crawler execution strategies."""    SELENIUM_HEADLESS = "selenium_headless"
+    """Crawler execution strategies."""
+    SELENIUM_HEADLESS = "selenium_headless"
     SELENIUM_FULL = "selenium_full"
     SCRAPY = "scrapy"
     API_BASED = "api_based"
@@ -93,7 +96,8 @@ class CrawlerStrategy(Enum):
 
 
 class ContentType(Enum):
-    """Content types to crawl."""    AUDIO = "audio"
+    """Content types to crawl."""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -102,7 +106,8 @@ class ContentType(Enum):
 
 
 class MonitoringMode(Enum):
-    """Content monitoring modes."""    REAL_TIME = "real_time"
+    """Content monitoring modes."""
+    REAL_TIME = "real_time"
     SCHEDULED = "scheduled"
     EVENT_DRIVEN = "event_driven"
     CONTINUOUS = "continuous"
@@ -110,7 +115,8 @@ class MonitoringMode(Enum):
 
 @dataclass
 class CrawlerConfig:
-    """Configuration for content crawler deployment."""    crawler_name: str
+    """Configuration for content crawler deployment."""
+    crawler_name: str
     crawler_type: CrawlerType
     strategy: CrawlerStrategy
     target_platforms: List[str]
@@ -129,7 +135,8 @@ class CrawlerConfig:
 
 @dataclass
 class CrawlTarget:
-    """Target configuration for crawling."""    target_id: str
+    """Target configuration for crawling."""
+    target_id: str
     platform: str
     urls: List[str]
     search_terms: List[str] = field(default_factory=list)
@@ -139,7 +146,8 @@ class CrawlTarget:
 
 
 class ContentCrawlerDeploymentManager:
-    """    Enterprise-grade content crawler deployment and management system.
+    """
+    Enterprise-grade content crawler deployment and management system.
     
     Features:
     - Multi-platform content crawling (YouTube, Instagram, TikTok, etc.)
@@ -151,8 +159,10 @@ class ContentCrawlerDeploymentManager:
     - Scalable deployment on Kubernetes
     - Compliance with platform ToS
     - Advanced content extraction and analysis
-    """    def __init__(self, config_path: Optional[str] = None):
-        """Initialize the content crawler deployment manager."""        self.config = self._load_config(config_path)
+    """
+    def __init__(self, config_path: Optional[str] = None):
+        """Initialize the content crawler deployment manager."""
+        self.config = self._load_config(config_path)
         self.docker_client = docker.from_env()
         self.k8s_client = self._initialize_kubernetes()
         self.redis_client = self._initialize_redis()
@@ -166,7 +176,8 @@ class ContentCrawlerDeploymentManager:
         logger.info("Content Crawler Deployment Manager initialized successfully")
 
     def _load_config(self, config_path: Optional[str]) -> Dict[str, Any]:
-        """Load crawler configuration."""        default_config = {
+        """Load crawler configuration."""
+        default_config = {
             "crawler_engines": {
                 "selenium": {
                     "headless": True,
@@ -233,7 +244,8 @@ class ContentCrawlerDeploymentManager:
         return default_config
 
     def _initialize_kubernetes(self) -> client.ApiClient:
-        """Initialize Kubernetes client."""        try:
+        """Initialize Kubernetes client."""
+        try:
             config.load_incluster_config()
         except:
             try:
@@ -245,7 +257,8 @@ class ContentCrawlerDeploymentManager:
         return client.ApiClient()
 
     def _initialize_redis(self) -> redis.Redis:
-        """Initialize Redis client for caching and queuing."""        try:
+        """Initialize Redis client for caching and queuing."""
+        try:
             return redis.Redis(
                 host=self.config['storage'].get('redis_host', 'localhost'),
                 port=self.config['storage'].get('redis_port', 6379),
@@ -256,7 +269,8 @@ class ContentCrawlerDeploymentManager:
             return None
 
     def _initialize_crawler_engines(self) -> None:
-        """Initialize crawler engines and drivers."""        # Initialize proxy pool
+        """Initialize crawler engines and drivers."""
+        # Initialize proxy pool
         self._load_proxy_pool()
         
         # Initialize user agents
@@ -265,7 +279,8 @@ class ContentCrawlerDeploymentManager:
         logger.info("Crawler engines initialized")
 
     def _load_proxy_pool(self) -> None:
-        """Load proxy pool for anti-detection."""        # Implementation for loading proxy pool
+        """Load proxy pool for anti-detection."""
+        # Implementation for loading proxy pool
         self.proxy_pool = [
             {"host": "proxy1.example.com", "port": 8080, "type": "http"},
             {"host": "proxy2.example.com", "port": 8080, "type": "socks5"}
@@ -273,7 +288,8 @@ class ContentCrawlerDeploymentManager:
         logger.info(f"Loaded {len(self.proxy_pool)} proxies")
 
     def _load_user_agents(self) -> None:
-        """Load user agent pool for anti-detection."""        self.user_agents = [
+        """Load user agent pool for anti-detection."""
+        self.user_agents = [
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
             "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
@@ -284,7 +300,8 @@ class ContentCrawlerDeploymentManager:
         crawler_config: CrawlerConfig,
         crawl_targets: List[CrawlTarget]
     ) -> str:
-        """        Deploy a content crawler with enterprise-grade configuration.
+        """
+        Deploy a content crawler with enterprise-grade configuration.
         
         Args:
             crawler_config: Crawler configuration
@@ -292,7 +309,8 @@ class ContentCrawlerDeploymentManager:
             
         Returns:
             Deployment ID
-        """        deployment_id = f"{crawler_config.crawler_name}-{datetime.now().strftime('%Y%m%d%H%M%S')}"
+        """
+        deployment_id = f"{crawler_config.crawler_name}-{datetime.now().strftime('%Y%m%d%H%M%S')}"
         
         try:
             logger.info(f"Starting content crawler deployment: {deployment_id}")
@@ -342,7 +360,8 @@ class ContentCrawlerDeploymentManager:
             raise
 
     async def _validate_crawler_config(self, crawler_config: CrawlerConfig) -> None:
-        """Validate crawler configuration."""        if not crawler_config.target_platforms:
+        """Validate crawler configuration."""
+        if not crawler_config.target_platforms:
             raise ValueError("At least one target platform is required")
         
         if not crawler_config.content_types:
@@ -358,7 +377,8 @@ class ContentCrawlerDeploymentManager:
         crawler_config: CrawlerConfig,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Deploy crawler infrastructure."""        if self.k8s_client:
+        """Deploy crawler infrastructure."""
+        if self.k8s_client:
             return await self._deploy_crawler_kubernetes(crawler_config, deployment_id)
         else:
             return await self._deploy_crawler_local(crawler_config, deployment_id)
@@ -368,7 +388,8 @@ class ContentCrawlerDeploymentManager:
         crawler_config: CrawlerConfig,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Deploy crawler on Kubernetes."""        # Create namespace for crawlers
+        """Deploy crawler on Kubernetes."""
+        # Create namespace for crawlers
         namespace_manifest = {
             "apiVersion": "v1",
             "kind": "Namespace",
@@ -581,7 +602,8 @@ class ContentCrawlerDeploymentManager:
         crawler_config: CrawlerConfig,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Deploy crawler locally using Docker."""        container_name = f"crawler-{deployment_id}"
+        """Deploy crawler locally using Docker."""
+        container_name = f"crawler-{deployment_id}"
         
         # Create Docker network
         try:
@@ -621,7 +643,8 @@ class ContentCrawlerDeploymentManager:
         }
 
     def _get_crawler_image(self, strategy: CrawlerStrategy) -> str:
-        """Get Docker image for crawler strategy."""        image_map = {
+        """Get Docker image for crawler strategy."""
+        image_map = {
             CrawlerStrategy.SELENIUM_HEADLESS: "ia-influencer/selenium-crawler:latest",
             CrawlerStrategy.SELENIUM_FULL: "ia-influencer/selenium-full-crawler:latest",
             CrawlerStrategy.SCRAPY: "ia-influencer/scrapy-crawler:latest",
@@ -637,7 +660,8 @@ class ContentCrawlerDeploymentManager:
         crawler_config: CrawlerConfig,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Configure crawler engines based on strategy."""        engine_config = {
+        """Configure crawler engines based on strategy."""
+        engine_config = {
             "strategy": crawler_config.strategy.value,
             "deployment_id": deployment_id
         }
@@ -659,7 +683,8 @@ class ContentCrawlerDeploymentManager:
         crawler_config: CrawlerConfig,
         headless: bool
     ) -> Dict[str, Any]:
-        """Configure Selenium WebDriver engine."""        selenium_config = {
+        """Configure Selenium WebDriver engine."""
+        selenium_config = {
             "headless": headless,
             "window_size": self.config['crawler_engines']['selenium']['window_size'],
             "disable_images": self.config['crawler_engines']['selenium']['disable_images'],
@@ -691,7 +716,8 @@ class ContentCrawlerDeploymentManager:
         return selenium_config
 
     async def _configure_scrapy_engine(self, crawler_config: CrawlerConfig) -> Dict[str, Any]:
-        """Configure Scrapy engine."""        scrapy_config = {
+        """Configure Scrapy engine."""
+        scrapy_config = {
             "download_delay": self.config['crawler_engines']['scrapy']['download_delay'],
             "concurrent_requests": self.config['crawler_engines']['scrapy']['concurrent_requests'],
             "concurrent_requests_per_domain": self.config['crawler_engines']['scrapy']['concurrent_requests_per_domain'],
@@ -709,7 +735,8 @@ class ContentCrawlerDeploymentManager:
         return scrapy_config
 
     async def _configure_api_engine(self, crawler_config: CrawlerConfig) -> Dict[str, Any]:
-        """Configure API-based crawler engine."""        api_config = {
+        """Configure API-based crawler engine."""
+        api_config = {
             "timeout": self.config['crawler_engines']['requests']['timeout'],
             "max_retries": self.config['crawler_engines']['requests']['max_retries'],
             "backoff_factor": self.config['crawler_engines']['requests']['backoff_factor']
@@ -740,7 +767,8 @@ class ContentCrawlerDeploymentManager:
         crawl_targets: List[CrawlTarget],
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Setup crawl targets and schedules."""        targets_config = {
+        """Setup crawl targets and schedules."""
+        targets_config = {
             "deployment_id": deployment_id,
             "total_targets": len(crawl_targets),
             "targets": []
@@ -775,7 +803,8 @@ class ContentCrawlerDeploymentManager:
         crawler_config: CrawlerConfig,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Setup monitoring for crawler deployment."""        monitoring_config = {
+        """Setup monitoring for crawler deployment."""
+        monitoring_config = {
             "deployment_id": deployment_id,
             "health_checks": self.config['monitoring']['health_checks'],
             "performance_metrics": self.config['monitoring']['performance_metrics'],
@@ -798,7 +827,8 @@ class ContentCrawlerDeploymentManager:
         crawler_config: CrawlerConfig,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Setup anti-detection measures."""        anti_detection_config = {
+        """Setup anti-detection measures."""
+        anti_detection_config = {
             "deployment_id": deployment_id,
             "user_agent_rotation": self.config['anti_detection']['user_agent_rotation'],
             "proxy_rotation": self.config['anti_detection']['proxy_rotation'],
@@ -827,7 +857,8 @@ class ContentCrawlerDeploymentManager:
         crawler_config: CrawlerConfig,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Configure data processing pipeline."""        pipeline_config = {
+        """Configure data processing pipeline."""
+        pipeline_config = {
             "deployment_id": deployment_id,
             "storage_backend": self.config['storage']['backend'],
             "cache_backend": self.config['storage']['cache_backend'],
@@ -848,7 +879,8 @@ class ContentCrawlerDeploymentManager:
         return pipeline_config
 
     async def _setup_crawler_prometheus(self, deployment_id: str) -> None:
-        """Setup Prometheus monitoring for crawler."""        # Create ServiceMonitor for Prometheus
+        """Setup Prometheus monitoring for crawler."""
+        # Create ServiceMonitor for Prometheus
         monitoring_manifest = {
             "apiVersion": "monitoring.coreos.com/v1",
             "kind": "ServiceMonitor",
@@ -881,15 +913,18 @@ class ContentCrawlerDeploymentManager:
         deployment_id: str,
         crawler_config: CrawlerConfig
     ) -> None:
-        """Configure alerting for crawler deployment."""        # Implementation for crawler alerts configuration
+        """Configure alerting for crawler deployment."""
+        # Implementation for crawler alerts configuration
         logger.info(f"Crawler alerts configured for: {deployment_id}")
 
     async def _configure_proxy_rotation(self, deployment_id: str) -> None:
-        """Configure proxy rotation for anti-detection."""        # Implementation for proxy rotation configuration
+        """Configure proxy rotation for anti-detection."""
+        # Implementation for proxy rotation configuration
         logger.info(f"Proxy rotation configured for: {deployment_id}")
 
     async def _configure_user_agent_rotation(self, deployment_id: str) -> None:
-        """Configure user agent rotation for anti-detection."""        # Implementation for user agent rotation configuration
+        """Configure user agent rotation for anti-detection."""
+        # Implementation for user agent rotation configuration
         logger.info(f"User agent rotation configured for: {deployment_id}")
 
     async def _configure_request_delays(
@@ -897,19 +932,23 @@ class ContentCrawlerDeploymentManager:
         deployment_id: str,
         crawler_config: CrawlerConfig
     ) -> None:
-        """Configure request delays for anti-detection."""        # Implementation for request delays configuration
+        """Configure request delays for anti-detection."""
+        # Implementation for request delays configuration
         logger.info(f"Request delays configured for: {deployment_id}")
 
     async def _deploy_data_processor(self, deployment_id: str) -> None:
-        """Deploy data processing pipeline."""        # Implementation for data processor deployment
+        """Deploy data processing pipeline."""
+        # Implementation for data processor deployment
         logger.info(f"Data processor deployed for: {deployment_id}")
 
     async def _configure_fingerprinting_integration(self, deployment_id: str) -> None:
-        """Configure integration with fingerprinting system."""        # Implementation for fingerprinting integration
+        """Configure integration with fingerprinting system."""
+        # Implementation for fingerprinting integration
         logger.info(f"Fingerprinting integration configured for: {deployment_id}")
 
     async def _configure_data_quality_checks(self, deployment_id: str) -> None:
-        """Configure data quality checks."""        # Implementation for data quality checks configuration
+        """Configure data quality checks."""
+        # Implementation for data quality checks configuration
         logger.info(f"Data quality checks configured for: {deployment_id}")
 
     def _record_crawler_deployment(
@@ -919,7 +958,8 @@ class ContentCrawlerDeploymentManager:
         crawl_targets: List[CrawlTarget],
         result: Dict[str, Any]
     ) -> None:
-        """Record crawler deployment information."""        deployment_record = {
+        """Record crawler deployment information."""
+        deployment_record = {
             "deployment_id": deployment_id,
             "crawler_config": crawler_config.__dict__,
             "crawl_targets": [target.__dict__ for target in crawl_targets],
@@ -932,7 +972,8 @@ class ContentCrawlerDeploymentManager:
         logger.info(f"Crawler deployment recorded: {deployment_id}")
 
     async def _cleanup_failed_crawler_deployment(self, deployment_id: str) -> None:
-        """Cleanup failed crawler deployment."""        try:
+        """Cleanup failed crawler deployment."""
+        try:
             if self.k8s_client:
                 apps_v1 = client.AppsV1Api(self.k8s_client)
                 core_v1 = client.CoreV1Api(self.k8s_client)
@@ -985,7 +1026,8 @@ class ContentCrawlerDeploymentManager:
             logger.error(f"Crawler deployment cleanup failed: {str(e)}")
 
     async def start_crawling(self, deployment_id: str) -> bool:
-        """Start crawling process for a deployment."""        try:
+        """Start crawling process for a deployment."""
+        try:
             if deployment_id not in self.active_crawlers:
                 raise ValueError(f"Crawler deployment not found: {deployment_id}")
             
@@ -1003,7 +1045,8 @@ class ContentCrawlerDeploymentManager:
             return False
 
     async def stop_crawling(self, deployment_id: str) -> bool:
-        """Stop crawling process for a deployment."""        try:
+        """Stop crawling process for a deployment."""
+        try:
             if deployment_id not in self.active_crawlers:
                 raise ValueError(f"Crawler deployment not found: {deployment_id}")
             
@@ -1021,22 +1064,26 @@ class ContentCrawlerDeploymentManager:
             return False
 
     def get_crawl_results(self, deployment_id: str) -> Dict[str, Any]:
-        """Get crawl results for a deployment."""        if deployment_id not in self.crawl_results:
+        """Get crawl results for a deployment."""
+        if deployment_id not in self.crawl_results:
             return {"deployment_id": deployment_id, "results": []}
         
         return self.crawl_results[deployment_id]
 
     def get_deployment_status(self, deployment_id: str) -> Dict[str, Any]:
-        """Get crawler deployment status."""        if deployment_id not in self.active_crawlers:
+        """Get crawler deployment status."""
+        if deployment_id not in self.active_crawlers:
             return {"status": "not_found"}
         
         return self.active_crawlers[deployment_id]
 
     def list_active_crawlers(self) -> List[Dict[str, Any]]:
-        """List all active crawler deployments."""        return list(self.active_crawlers.values())
+        """List all active crawler deployments."""
+        return list(self.active_crawlers.values())
 
     async def scale_crawler(self, deployment_id: str, replicas: int) -> bool:
-        """Scale crawler deployment."""        try:
+        """Scale crawler deployment."""
+        try:
             if deployment_id not in self.active_crawlers:
                 raise ValueError(f"Crawler deployment not found: {deployment_id}")
             
@@ -1057,7 +1104,8 @@ class ContentCrawlerDeploymentManager:
 
 # Factory functions for common crawler configurations
 def create_youtube_crawler_config() -> CrawlerConfig:
-    """Create YouTube crawler configuration."""    return CrawlerConfig(
+    """Create YouTube crawler configuration."""
+    return CrawlerConfig(
         crawler_name="youtube-content-crawler",
         crawler_type=CrawlerType.YOUTUBE_CRAWLER,
         strategy=CrawlerStrategy.API_BASED,
@@ -1075,7 +1123,8 @@ def create_youtube_crawler_config() -> CrawlerConfig:
 
 
 def create_instagram_crawler_config() -> CrawlerConfig:
-    """Create Instagram crawler configuration."""    return CrawlerConfig(
+    """Create Instagram crawler configuration."""
+    return CrawlerConfig(
         crawler_name="instagram-content-crawler",
         crawler_type=CrawlerType.INSTAGRAM_CRAWLER,
         strategy=CrawlerStrategy.SELENIUM_HEADLESS,
@@ -1094,7 +1143,8 @@ def create_instagram_crawler_config() -> CrawlerConfig:
 
 
 def create_tiktok_crawler_config() -> CrawlerConfig:
-    """Create TikTok crawler configuration."""    return CrawlerConfig(
+    """Create TikTok crawler configuration."""
+    return CrawlerConfig(
         crawler_name="tiktok-content-crawler",
         crawler_type=CrawlerType.TIKTOK_CRAWLER,
         strategy=CrawlerStrategy.SELENIUM_HEADLESS,
@@ -1109,7 +1159,8 @@ def create_tiktok_crawler_config() -> CrawlerConfig:
 
 
 def create_generic_web_crawler_config() -> CrawlerConfig:
-    """Create generic web crawler configuration."""    return CrawlerConfig(
+    """Create generic web crawler configuration."""
+    return CrawlerConfig(
         crawler_name="generic-web-crawler",
         crawler_type=CrawlerType.GENERIC_WEB_CRAWLER,
         strategy=CrawlerStrategy.SCRAPY,
@@ -1126,7 +1177,8 @@ def create_generic_web_crawler_config() -> CrawlerConfig:
 # Main execution
 if __name__ == "__main__":
     async def main():
-        """Main execution function."""        # Initialize content crawler deployment manager
+        """Main execution function."""
+        # Initialize content crawler deployment manager
         manager = ContentCrawlerDeploymentManager()
         
         # Example: Deploy YouTube crawler

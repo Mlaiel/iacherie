@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -39,7 +40,8 @@ logger = logging.getLogger(__name__)
 
 
 class DatabaseType(Enum):
-    """All supported database types in the platform"""    POSTGRESQL = "postgresql"
+    """All supported database types in the platform"""
+    POSTGRESQL = "postgresql"
     MONGODB = "mongodb"
     REDIS = "redis"
     ELASTICSEARCH = "elasticsearch"
@@ -50,7 +52,8 @@ class DatabaseType(Enum):
 
 
 class DatabaseStatus(Enum):
-    """Database connection status"""    CONNECTED = "connected"
+    """Database connection status"""
+    CONNECTED = "connected"
     DISCONNECTED = "disconnected"
     ERROR = "error"
     INITIALIZING = "initializing"
@@ -59,7 +62,8 @@ class DatabaseStatus(Enum):
 
 @dataclass
 class DatabaseHealth:
-    """Health information for database"""    database_type: DatabaseType
+    """Health information for database"""
+    database_type: DatabaseType
     status: DatabaseStatus
     last_check: datetime
     response_time_ms: Optional[float] = None
@@ -70,7 +74,8 @@ class DatabaseHealth:
 
 @dataclass
 class MasterDatabaseConfig:
-    """Master configuration for all database systems"""    # Environment configuration
+    """Master configuration for all database systems"""
+    # Environment configuration
     environment: str = "development"
     
     # Database configurations
@@ -108,7 +113,8 @@ class MasterDatabaseConfig:
 
 
 class MasterDatabaseManager:
-    """Professional master database manager orchestrating all database systems"""    
+    """Professional master database manager orchestrating all database systems"""
+    
     def __init__(self, config: MasterDatabaseConfig):
         self.config = config
         self.managers: Dict[str, Any] = {}
@@ -117,7 +123,8 @@ class MasterDatabaseManager:
         self._monitoring_task = None
         
     async def initialize_all_databases(self) -> Dict[str, bool]:
-        """Initialize all configured database systems"""        results = {}
+        """Initialize all configured database systems"""
+        results = {}
         
         try:
             logger.info("Starting master database initialization...")
@@ -178,7 +185,8 @@ class MasterDatabaseManager:
             return {"error": str(e)}
             
     async def _initialize_postgresql(self) -> bool:
-        """Initialize PostgreSQL database"""        try:
+        """Initialize PostgreSQL database"""
+        try:
             # PostgreSQL initialization logic would go here
             # For now, we'll create the configuration and mark as successful
             self.health_status[DatabaseType.POSTGRESQL] = DatabaseHealth(
@@ -200,7 +208,8 @@ class MasterDatabaseManager:
             return False
             
     async def _initialize_mongodb(self) -> bool:
-        """Initialize MongoDB database"""        try:
+        """Initialize MongoDB database"""
+        try:
             self.health_status[DatabaseType.MONGODB] = DatabaseHealth(
                 database_type=DatabaseType.MONGODB,
                 status=DatabaseStatus.CONNECTED,
@@ -220,7 +229,8 @@ class MasterDatabaseManager:
             return False
             
     async def _initialize_redis(self) -> bool:
-        """Initialize Redis database"""        try:
+        """Initialize Redis database"""
+        try:
             self.health_status[DatabaseType.REDIS] = DatabaseHealth(
                 database_type=DatabaseType.REDIS,
                 status=DatabaseStatus.CONNECTED,
@@ -240,7 +250,8 @@ class MasterDatabaseManager:
             return False
             
     async def _initialize_elasticsearch(self) -> bool:
-        """Initialize Elasticsearch database"""        try:
+        """Initialize Elasticsearch database"""
+        try:
             self.health_status[DatabaseType.ELASTICSEARCH] = DatabaseHealth(
                 database_type=DatabaseType.ELASTICSEARCH,
                 status=DatabaseStatus.CONNECTED,
@@ -260,7 +271,8 @@ class MasterDatabaseManager:
             return False
             
     async def _initialize_faiss(self) -> bool:
-        """Initialize FAISS vector search"""        try:
+        """Initialize FAISS vector search"""
+        try:
             self.health_status[DatabaseType.FAISS] = DatabaseHealth(
                 database_type=DatabaseType.FAISS,
                 status=DatabaseStatus.CONNECTED,
@@ -280,7 +292,8 @@ class MasterDatabaseManager:
             return False
             
     async def _initialize_vector_database(self) -> bool:
-        """Initialize Vector Database"""        try:
+        """Initialize Vector Database"""
+        try:
             manager = VectorDatabaseManager(self.config.vector_database_config)
             initialization_result = await manager.initialize_indexes()
             
@@ -308,7 +321,8 @@ class MasterDatabaseManager:
             return False
             
     async def _initialize_timeseries(self) -> bool:
-        """Initialize Time Series Database"""        try:
+        """Initialize Time Series Database"""
+        try:
             manager = TimeSeriesManager(self.config.timeseries_config)
             initialization_result = await manager.initialize()
             
@@ -336,7 +350,8 @@ class MasterDatabaseManager:
             return False
             
     async def _initialize_graph_database(self) -> bool:
-        """Initialize Graph Database"""        try:
+        """Initialize Graph Database"""
+        try:
             manager = GraphDatabaseManager(self.config.graph_database_config)
             initialization_result = await manager.initialize()
             
@@ -364,7 +379,8 @@ class MasterDatabaseManager:
             return False
             
     async def _initialize_sharding(self) -> bool:
-        """Initialize Sharding Manager"""        try:
+        """Initialize Sharding Manager"""
+        try:
             manager = ShardingManager(self.config.sharding_config)
             initialization_result = await manager.initialize()
             
@@ -380,7 +396,8 @@ class MasterDatabaseManager:
             return False
             
     async def _monitor_databases(self):
-        """Continuous database monitoring"""        while self.is_initialized:
+        """Continuous database monitoring"""
+        while self.is_initialized:
             try:
                 for db_type in DatabaseType:
                     if db_type in self.health_status:
@@ -393,7 +410,8 @@ class MasterDatabaseManager:
                 await asyncio.sleep(self.config.health_check_interval)
                 
     async def _check_database_health(self, db_type: DatabaseType):
-        """Check health of specific database"""        try:
+        """Check health of specific database"""
+        try:
             start_time = datetime.now()
             
             # Perform health check based on database type
@@ -441,7 +459,8 @@ class MasterDatabaseManager:
             )
             
     async def get_master_health_status(self) -> Dict[str, Any]:
-        """Get comprehensive health status of all databases"""        try:
+        """Get comprehensive health status of all databases"""
+        try:
             total_databases = len(self.health_status)
             connected_databases = sum(
                 1 for health in self.health_status.values()
@@ -476,7 +495,8 @@ class MasterDatabaseManager:
             return {"error": str(e)}
             
     async def get_business_metrics_summary(self) -> Dict[str, Any]:
-        """Get business metrics summary from all databases"""        try:
+        """Get business metrics summary from all databases"""
+        try:
             summary = {
                 "content_protection": {},
                 "revenue_analytics": {},
@@ -533,7 +553,8 @@ class MasterDatabaseManager:
             return {"error": str(e)}
             
     async def close_all_databases(self):
-        """Close all database connections"""        try:
+        """Close all database connections"""
+        try:
             logger.info("Closing all database connections...")
             
             # Stop monitoring
@@ -563,7 +584,8 @@ def create_master_database_config(
     environment: str = "development",
     custom_settings: Optional[Dict[str, Any]] = None
 ) -> MasterDatabaseConfig:
-    """Factory function to create master database configuration"""    
+    """Factory function to create master database configuration"""
+    
     config = MasterDatabaseConfig(environment=environment)
     
     # Create individual database configurations

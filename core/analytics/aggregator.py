@@ -22,7 +22,8 @@ Team Specialists:
 - Audio Processing Specialist: Advanced audio AI algorithms
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Union, Tuple
 from datetime import datetime, timedelta
@@ -43,7 +44,8 @@ logger = logging.getLogger(__name__)
 
 
 class TimeWindow(Enum):
-    """Time window for aggregation"""    MINUTE = "minute"
+    """Time window for aggregation"""
+    MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -53,7 +55,8 @@ class TimeWindow(Enum):
 
 
 class TrendDirection(Enum):
-    """Trend direction analysis"""    INCREASING = "increasing"
+    """Trend direction analysis"""
+    INCREASING = "increasing"
     DECREASING = "decreasing"
     STABLE = "stable"
     VOLATILE = "volatile"
@@ -61,7 +64,8 @@ class TrendDirection(Enum):
 
 @dataclass
 class AggregationConfig:
-    """Configuration for data aggregation"""    time_window: TimeWindow = TimeWindow.HOUR
+    """Configuration for data aggregation"""
+    time_window: TimeWindow = TimeWindow.HOUR
     aggregation_method: AggregationMethod = AggregationMethod.AVERAGE
     include_trends: bool = True
     include_anomalies: bool = True
@@ -71,12 +75,14 @@ class AggregationConfig:
 
 @dataclass
 class TimeSeriesPoint:
-    """Time series data point"""    timestamp: datetime
+    """Time series data point"""
+    timestamp: datetime
     value: float
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             'timestamp': self.timestamp.isoformat(),
             'value': self.value,
             'metadata': self.metadata
@@ -85,7 +91,8 @@ class TimeSeriesPoint:
 
 @dataclass
 class AggregationResult:
-    """Result of data aggregation operation"""    metric_name: str
+    """Result of data aggregation operation"""
+    metric_name: str
     time_window: TimeWindow
     aggregation_method: AggregationMethod
     period_start: datetime
@@ -96,7 +103,8 @@ class AggregationResult:
     anomalies: List[Dict[str, Any]]
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             'metric_name': self.metric_name,
             'time_window': self.time_window.value,
             'aggregation_method': self.aggregation_method.value,
@@ -110,11 +118,13 @@ class AggregationResult:
 
 
 class DataAggregator:
-    """    Advanced data aggregation engine for analytics processing.
+    """
+    Advanced data aggregation engine for analytics processing.
     
     Provides sophisticated time-series aggregation, statistical analysis,
     trend detection, and anomaly identification for business intelligence.
-    """    
+    """
+    
     def __init__(self, config: Optional[AggregationConfig] = None):
         self.config = config or AggregationConfig()
         self.logger = logging.getLogger(__name__)
@@ -138,7 +148,8 @@ class DataAggregator:
         self.calculation_cache = {}
     
     async def initialize(self) -> None:
-        """Initialize the data aggregator"""        try:
+        """Initialize the data aggregator"""
+        try:
             self.logger.info("Initializing DataAggregator...")
             
             # Initialize any required resources
@@ -151,7 +162,8 @@ class DataAggregator:
             raise AggregationError(f"Initialization failed: {str(e)}")
     
     async def shutdown(self) -> None:
-        """Shutdown the data aggregator"""        try:
+        """Shutdown the data aggregator"""
+        try:
             self.logger.info("Shutting down DataAggregator...")
             
             # Process any remaining data
@@ -172,7 +184,8 @@ class DataAggregator:
         time_window: Optional[TimeWindow] = None,
         aggregation_method: Optional[AggregationMethod] = None
     ) -> List[AggregationResult]:
-        """Aggregate metrics by time window"""        try:
+        """Aggregate metrics by time window"""
+        try:
             time_window = time_window or self.config.time_window
             aggregation_method = aggregation_method or self.config.aggregation_method
             
@@ -206,7 +219,8 @@ class DataAggregator:
         end_time: datetime,
         time_window: Optional[TimeWindow] = None
     ) -> List[TimeSeriesPoint]:
-        """Get time series data for a metric"""        try:
+        """Get time series data for a metric"""
+        try:
             time_window = time_window or self.config.time_window
             
             # Check cache first
@@ -241,7 +255,8 @@ class DataAggregator:
         metric_name: str,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """Analyze trends for a metric over specified period"""        try:
+        """Analyze trends for a metric over specified period"""
+        try:
             end_time = datetime.now()
             start_time = end_time - timedelta(days=period_days)
             
@@ -272,7 +287,8 @@ class DataAggregator:
         sensitivity: float = 2.0,
         period_days: int = 7
     ) -> List[Dict[str, Any]]:
-        """Detect anomalies in metric data"""        try:
+        """Detect anomalies in metric data"""
+        try:
             end_time = datetime.now()
             start_time = end_time - timedelta(days=period_days)
             
@@ -305,7 +321,8 @@ class DataAggregator:
         percentiles: Optional[List[float]] = None,
         period_days: int = 30
     ) -> Dict[str, float]:
-        """Calculate percentiles for a metric"""        try:
+        """Calculate percentiles for a metric"""
+        try:
             percentiles = percentiles or self.config.percentiles
             
             end_time = datetime.now()
@@ -333,7 +350,8 @@ class DataAggregator:
             raise AggregationError(f"Percentile calculation failed: {str(e)}")
     
     async def get_aggregation_summary(self) -> Dict[str, Any]:
-        """Get summary of aggregation operations"""        try:
+        """Get summary of aggregation operations"""
+        try:
             summary = {
                 'timestamp': datetime.now().isoformat(),
                 'processing_stats': self.processing_stats.copy(),
@@ -358,7 +376,8 @@ class DataAggregator:
             raise AggregationError(f"Summary generation failed: {str(e)}")
     
     async def process_batch(self) -> None:
-        """Process batch operations"""        try:
+        """Process batch operations"""
+        try:
             # Clean up old data
             await self._cleanup_old_data()
             
@@ -375,7 +394,8 @@ class DataAggregator:
     # Private Methods
     
     async def _initialize_storage(self) -> None:
-        """Initialize storage for aggregated data"""        # Initialize any required storage connections/setup
+        """Initialize storage for aggregated data"""
+        # Initialize any required storage connections/setup
         pass
     
     def _group_metrics_by_time_window(
@@ -383,7 +403,8 @@ class DataAggregator:
         metrics: List[MetricPoint],
         time_window: TimeWindow
     ) -> Dict[str, Dict[str, List[MetricPoint]]]:
-        """Group metrics by name and time window"""        grouped = defaultdict(lambda: defaultdict(list))
+        """Group metrics by name and time window"""
+        grouped = defaultdict(lambda: defaultdict(list))
         
         for metric in metrics:
             time_key = self._get_time_window_key(metric.timestamp, time_window)
@@ -392,7 +413,8 @@ class DataAggregator:
         return grouped
     
     def _get_time_window_key(self, timestamp: datetime, time_window: TimeWindow) -> str:
-        """Get time window key for grouping"""        if time_window == TimeWindow.MINUTE:
+        """Get time window key for grouping"""
+        if time_window == TimeWindow.MINUTE:
             return timestamp.strftime("%Y-%m-%d %H:%M")
         elif time_window == TimeWindow.HOUR:
             return timestamp.strftime("%Y-%m-%d %H")
@@ -418,7 +440,8 @@ class DataAggregator:
         time_window: TimeWindow,
         aggregation_method: AggregationMethod
     ) -> AggregationResult:
-        """Aggregate a group of metrics"""        if not metrics:
+        """Aggregate a group of metrics"""
+        if not metrics:
             raise ValueError("No metrics to aggregate")
         
         # Sort metrics by timestamp
@@ -505,7 +528,8 @@ class DataAggregator:
         return result
     
     def _perform_trend_analysis(self, time_series: List[TimeSeriesPoint]) -> Dict[str, Any]:
-        """Perform trend analysis on time series data"""        values = [point.value for point in time_series]
+        """Perform trend analysis on time series data"""
+        values = [point.value for point in time_series]
         timestamps = [point.timestamp for point in time_series]
         
         # Convert timestamps to numeric values for regression
@@ -539,7 +563,8 @@ class DataAggregator:
         }
     
     def _calculate_basic_trend(self, values: List[float]) -> Dict[str, Any]:
-        """Calculate basic trend information"""        if len(values) < 3:
+        """Calculate basic trend information"""
+        if len(values) < 3:
             return {'trend': 'insufficient_data'}
         
         # Calculate simple moving averages
@@ -571,7 +596,8 @@ class DataAggregator:
         time_series: List[TimeSeriesPoint],
         sensitivity: float
     ) -> List[Dict[str, Any]]:
-        """Detect anomalies using statistical methods"""        if len(time_series) < 10:
+        """Detect anomalies using statistical methods"""
+        if len(time_series) < 10:
             return []
         
         values = [point.value for point in time_series]
@@ -600,7 +626,8 @@ class DataAggregator:
         return anomalies
     
     async def _cleanup_old_data(self) -> None:
-        """Clean up old aggregated data"""        try:
+        """Clean up old aggregated data"""
+        try:
             cutoff_date = datetime.now() - timedelta(days=self.config.retention_days)
             
             for metric_name in list(self.aggregated_data.keys()):
@@ -621,9 +648,11 @@ class DataAggregator:
 
 
 class TimeSeriesAggregator(DataAggregator):
-    """    Specialized aggregator for time-series data with advanced forecasting
+    """
+    Specialized aggregator for time-series data with advanced forecasting
     and seasonal analysis capabilities.
-    """    
+    """
+    
     def __init__(self, config: Optional[AggregationConfig] = None):
         super().__init__(config)
         
@@ -637,7 +666,8 @@ class TimeSeriesAggregator(DataAggregator):
         metric_name: str,
         period_days: int = 90
     ) -> Dict[str, Any]:
-        """Analyze seasonal patterns in time series data"""        try:
+        """Analyze seasonal patterns in time series data"""
+        try:
             end_time = datetime.now()
             start_time = end_time - timedelta(days=period_days)
             
@@ -667,7 +697,8 @@ class TimeSeriesAggregator(DataAggregator):
         metric_name: str,
         forecast_days: Optional[int] = None
     ) -> Dict[str, Any]:
-        """Generate forecast for metric values"""        try:
+        """Generate forecast for metric values"""
+        try:
             forecast_days = forecast_days or self.forecast_horizon_days
             
             # Get historical data (at least 30 days for good forecast)
@@ -696,7 +727,8 @@ class TimeSeriesAggregator(DataAggregator):
             raise AggregationError(f"Forecast generation failed: {str(e)}")
     
     def _analyze_seasonal_patterns(self, time_series: List[TimeSeriesPoint]) -> Dict[str, Any]:
-        """Analyze seasonal patterns in time series"""        if len(time_series) < 168:  # Less than a week
+        """Analyze seasonal patterns in time series"""
+        if len(time_series) < 168:  # Less than a week
             return {'seasonality': 'insufficient_data'}
         
         # Group by hour of day
@@ -742,7 +774,8 @@ class TimeSeriesAggregator(DataAggregator):
         time_series: List[TimeSeriesPoint],
         forecast_days: int
     ) -> Dict[str, Any]:
-        """Generate simple forecast using trend analysis"""        values = [point.value for point in time_series]
+        """Generate simple forecast using trend analysis"""
+        values = [point.value for point in time_series]
         
         # Calculate trend
         if len(values) < 7:

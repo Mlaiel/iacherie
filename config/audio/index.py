@@ -17,7 +17,8 @@ explicit written permission from Fahed Mlaiel is strictly prohibited and will be
 to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import logging
+"""
+import logging
 from typing import Dict, List, Optional, Union, Any
 from dataclasses import dataclass
 from enum import Enum
@@ -41,7 +42,8 @@ logger = logging.getLogger(__name__)
 
 
 class ConfigurationProfile(Enum):
-    """Predefined configuration profiles for different use cases"""    MUSIC_PRODUCER = "music_producer"
+    """Predefined configuration profiles for different use cases"""
+    MUSIC_PRODUCER = "music_producer"
     PODCAST_CREATOR = "podcast_creator"
     LIVE_STREAMER = "live_streamer"
     CONTENT_CREATOR = "content_creator"
@@ -52,7 +54,8 @@ class ConfigurationProfile(Enum):
 
 @dataclass
 class MasterAudioConfiguration:
-    """Master configuration combining all audio processing modules"""    
+    """Master configuration combining all audio processing modules"""
+    
     # Core processing
     audio_processing: AudioProcessingConfig
     ai_processing: AIAudioProcessingConfig
@@ -76,10 +79,12 @@ class MasterAudioConfiguration:
     created_by: str = "Fahed Mlaiel"
     
     def validate(self) -> Dict[str, Any]:
-        """Validate the entire configuration"""        return validate_all_configurations()
+        """Validate the entire configuration"""
+        return validate_all_configurations()
     
     def get_summary(self) -> Dict[str, Any]:
-        """Get configuration summary"""        return {
+        """Get configuration summary"""
+        return {
             "profile": self.profile.value,
             "version": self.version,
             "created_by": self.created_by,
@@ -92,14 +97,16 @@ class MasterAudioConfiguration:
 
 
 def create_configuration_for_profile(profile: ConfigurationProfile) -> MasterAudioConfiguration:
-    """    Create optimized configuration for specific user profile
+    """
+    Create optimized configuration for specific user profile
     
     Args:
         profile: Target user profile
         
     Returns:
         Optimized master configuration
-    """    
+    """
+    
     # Initialize base configurations
     audio_processing = AudioProcessingConfig()
     ai_processing = AIAudioProcessingConfig()
@@ -177,14 +184,16 @@ def create_configuration_for_profile(profile: ConfigurationProfile) -> MasterAud
 
 
 def get_recommended_profile(user_requirements: Dict[str, Any]) -> ConfigurationProfile:
-    """    Recommend configuration profile based on user requirements
+    """
+    Recommend configuration profile based on user requirements
     
     Args:
         user_requirements: Dictionary of user requirements and preferences
         
     Returns:
         Recommended configuration profile
-    """    
+    """
+    
     content_type = user_requirements.get("primary_content_type", "")
     use_case = user_requirements.get("use_case", "")
     scale = user_requirements.get("scale", "individual")
@@ -217,7 +226,8 @@ def setup_audio_configuration(
     user_requirements: Optional[Dict[str, Any]] = None,
     custom_overrides: Optional[Dict[str, Any]] = None
 ) -> MasterAudioConfiguration:
-    """    Complete audio configuration setup
+    """
+    Complete audio configuration setup
     
     Args:
         profile: Target configuration profile
@@ -226,7 +236,8 @@ def setup_audio_configuration(
         
     Returns:
         Configured master audio configuration
-    """    
+    """
+    
     try:
         # Determine profile
         if profile is None and user_requirements:
@@ -259,7 +270,8 @@ def setup_audio_configuration(
 
 
 def get_configuration_info() -> Dict[str, Any]:
-    """Get comprehensive information about audio configuration system"""    
+    """Get comprehensive information about audio configuration system"""
+    
     base_info = get_audio_config_info()
     
     return {
@@ -321,7 +333,8 @@ For licensing, custom implementations, or enterprise solutions:
 Contact: mlaiel@live.de
 """
 def print_legal_notice():
-    """Print legal and copyright notice"""    print(LEGAL_NOTICE)
+    """Print legal and copyright notice"""
+    print(LEGAL_NOTICE)
 
 
 # Initialize logging for the module

@@ -13,7 +13,8 @@ LEGAL WARNING: This software and all associated intellectual property
 belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import time
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 
 class EnterpriseServiceStatus(Enum):
-    """Enterprise service status enumeration"""    INACTIVE = "inactive"
+    """Enterprise service status enumeration"""
+    INACTIVE = "inactive"
     INITIALIZING = "initializing"
     ACTIVE = "active"
     DEGRADED = "degraded"
@@ -39,7 +41,8 @@ class EnterpriseServiceStatus(Enum):
 
 
 class EnterpriseServiceType(Enum):
-    """Enterprise service type enumeration"""    WHITE_LABEL = "white_label"
+    """Enterprise service type enumeration"""
+    WHITE_LABEL = "white_label"
     BRANDING = "branding"
     SSO = "sso"
     AI_TRAINING = "ai_training"
@@ -50,7 +53,8 @@ class EnterpriseServiceType(Enum):
 
 @dataclass
 class EnterpriseServiceInfo:
-    """Enterprise service information"""    service_id: str
+    """Enterprise service information"""
+    service_id: str
     service_type: EnterpriseServiceType
     status: EnterpriseServiceStatus
     instance: Optional[Any] = None
@@ -63,7 +67,8 @@ class EnterpriseServiceInfo:
 
 
 class EnterpriseServiceRegistry:
-    """Registry for enterprise services with dependency management"""    
+    """Registry for enterprise services with dependency management"""
+    
     def __init__(self):
         self._services: Dict[str, EnterpriseServiceInfo] = {}
         self._lock = threading.RLock()
@@ -78,7 +83,8 @@ class EnterpriseServiceRegistry:
         dependencies: Optional[List[str]] = None,
         configuration: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Register an enterprise service"""        try:
+        """Register an enterprise service"""
+        try:
             with self._lock:
                 service_info = EnterpriseServiceInfo(
                     service_id=service_id,
@@ -100,18 +106,21 @@ class EnterpriseServiceRegistry:
             return False
     
     def get_service(self, service_id: str) -> Optional[EnterpriseServiceInfo]:
-        """Get service information"""        with self._lock:
+        """Get service information"""
+        with self._lock:
             return self._services.get(service_id)
     
     def get_services_by_type(self, service_type: EnterpriseServiceType) -> List[EnterpriseServiceInfo]:
-        """Get all services of specific type"""        with self._lock:
+        """Get all services of specific type"""
+        with self._lock:
             return [
                 service for service in self._services.values()
                 if service.service_type == service_type
             ]
     
     def update_service_status(self, service_id: str, status: EnterpriseServiceStatus) -> bool:
-        """Update service status"""        try:
+        """Update service status"""
+        try:
             with self._lock:
                 if service_id in self._services:
                     self._services[service_id].status = status
@@ -124,7 +133,8 @@ class EnterpriseServiceRegistry:
             return False
     
     def _notify_observers(self, event: str, service_info: EnterpriseServiceInfo):
-        """Notify registered observers"""        for observer in self._observers:
+        """Notify registered observers"""
+        for observer in self._observers:
             try:
                 observer(event, service_info)
             except Exception as e:
@@ -132,7 +142,8 @@ class EnterpriseServiceRegistry:
 
 
 class EnterpriseOrchestrator:
-    """Advanced orchestrator for enterprise service coordination"""    
+    """Advanced orchestrator for enterprise service coordination"""
+    
     def __init__(self):
         self.registry = EnterpriseServiceRegistry()
         self._executor = ThreadPoolExecutor(max_workers=10, thread_name_prefix="enterprise")
@@ -140,7 +151,8 @@ class EnterpriseOrchestrator:
         self._shutdown_event = asyncio.Event()
         
     async def initialize_services(self, service_configs: Dict[str, Dict[str, Any]]) -> Dict[str, bool]:
-        """Initialize enterprise services with dependency resolution"""        results = {}
+        """Initialize enterprise services with dependency resolution"""
+        results = {}
         
         try:
             # Resolve initialization order based on dependencies
@@ -161,7 +173,8 @@ class EnterpriseOrchestrator:
         return results
     
     def _resolve_dependency_order(self, service_configs: Dict[str, Dict[str, Any]]) -> List[str]:
-        """Resolve service initialization order based on dependencies"""        ordered_services = []
+        """Resolve service initialization order based on dependencies"""
+        ordered_services = []
         processed = set()
         
         def process_service(service_id: str):
@@ -185,7 +198,8 @@ class EnterpriseOrchestrator:
         return ordered_services
     
     async def _initialize_single_service(self, service_id: str, config: Dict[str, Any]) -> bool:
-        """Initialize a single enterprise service"""        try:
+        """Initialize a single enterprise service"""
+        try:
             service_type_str = config.get('type', '')
             service_type = EnterpriseServiceType(service_type_str)
             
@@ -212,7 +226,8 @@ class EnterpriseOrchestrator:
         return False
     
     async def _create_service_instance(self, service_type: EnterpriseServiceType, config: Dict[str, Any]) -> Optional[Any]:
-        """Create service instance based on type"""        try:
+        """Create service instance based on type"""
+        try:
             if service_type == EnterpriseServiceType.WHITE_LABEL:
                 from .white_label_manager import WhiteLabelManager
                 return WhiteLabelManager(config)
@@ -247,7 +262,8 @@ class EnterpriseOrchestrator:
         return None
     
     async def _start_service_monitoring(self, service_id: str):
-        """Start monitoring for a specific service"""        async def monitor_service():
+        """Start monitoring for a specific service"""
+        async def monitor_service():
             while not self._shutdown_event.is_set():
                 try:
                     service_info = self.registry.get_service(service_id)
@@ -276,7 +292,8 @@ class EnterpriseOrchestrator:
         task.add_done_callback(self._monitoring_tasks.discard)
     
     async def _check_service_health(self, service_instance: Any) -> float:
-        """Check health of a service instance"""        try:
+        """Check health of a service instance"""
+        try:
             if hasattr(service_instance, 'health_check'):
                 health_result = await service_instance.health_check()
                 return health_result.get('score', 0.0)
@@ -285,7 +302,8 @@ class EnterpriseOrchestrator:
             return 0.0  # Failed health check
     
     async def get_enterprise_status(self) -> Dict[str, Any]:
-        """Get comprehensive enterprise system status"""        services_status = {}
+        """Get comprehensive enterprise system status"""
+        services_status = {}
         
         for service_id, service_info in self.registry._services.items():
             services_status[service_id] = {
@@ -305,7 +323,8 @@ class EnterpriseOrchestrator:
         }
     
     async def shutdown(self):
-        """Graceful shutdown of enterprise services"""        logger.info("Shutting down enterprise orchestrator...")
+        """Graceful shutdown of enterprise services"""
+        logger.info("Shutting down enterprise orchestrator...")
         
         self._shutdown_event.set()
         
@@ -321,13 +340,15 @@ class EnterpriseOrchestrator:
 
 
 class EnterpriseIndex:
-    """Main enterprise index providing unified access to all enterprise features"""    
+    """Main enterprise index providing unified access to all enterprise features"""
+    
     def __init__(self):
         self.orchestrator = EnterpriseOrchestrator()
         self._initialized = False
         
     async def initialize(self, configuration: Optional[Dict[str, Any]] = None) -> bool:
-        """Initialize enterprise index with configuration"""        try:
+        """Initialize enterprise index with configuration"""
+        try:
             if configuration is None:
                 configuration = self._get_default_configuration()
             
@@ -348,7 +369,8 @@ class EnterpriseIndex:
             return False
     
     def _get_default_configuration(self) -> Dict[str, Dict[str, Any]]:
-        """Get default enterprise services configuration"""        return {
+        """Get default enterprise services configuration"""
+        return {
             'compliance': {
                 'type': 'compliance',
                 'dependencies': [],
@@ -387,7 +409,8 @@ class EnterpriseIndex:
         }
     
     async def get_service(self, service_type: str) -> Optional[Any]:
-        """Get enterprise service by type"""        if not self._initialized:
+        """Get enterprise service by type"""
+        if not self._initialized:
             logger.warning("Enterprise index not initialized")
             return None
             
@@ -408,13 +431,15 @@ class EnterpriseIndex:
         return None
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get enterprise system status"""        if not self._initialized:
+        """Get enterprise system status"""
+        if not self._initialized:
             return {'status': 'not_initialized'}
             
         return await self.orchestrator.get_enterprise_status()
     
     async def shutdown(self):
-        """Shutdown enterprise index"""        await self.orchestrator.shutdown()
+        """Shutdown enterprise index"""
+        await self.orchestrator.shutdown()
         self._initialized = False
 
 
@@ -422,7 +447,8 @@ class EnterpriseIndex:
 _enterprise_index = None
 
 def get_enterprise_index() -> EnterpriseIndex:
-    """Get global enterprise index instance"""    global _enterprise_index
+    """Get global enterprise index instance"""
+    global _enterprise_index
     if _enterprise_index is None:
         _enterprise_index = EnterpriseIndex()
     return _enterprise_index

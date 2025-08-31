@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import uuid
@@ -52,7 +53,8 @@ from ...models.legal_models import LegalDocument, DocumentTemplate
 logger = logging.getLogger(__name__)
 
 class DocumentType(Enum):
-    """Legal document types"""    TERMS_OF_SERVICE = "terms_of_service"
+    """Legal document types"""
+    TERMS_OF_SERVICE = "terms_of_service"
     PRIVACY_POLICY = "privacy_policy"
     COPYRIGHT_NOTICE = "copyright_notice"
     LICENSING_AGREEMENT = "licensing_agreement"
@@ -66,13 +68,15 @@ class DocumentType(Enum):
     DISTRIBUTION_AGREEMENT = "distribution_agreement"
 
 class DocumentComplexity(Enum):
-    """Document complexity levels"""    BASIC = "basic"          # Simple templates with minimal customization
+    """Document complexity levels"""
+    BASIC = "basic"          # Simple templates with minimal customization
     STANDARD = "standard"    # Standard legal documents with moderate complexity
     ADVANCED = "advanced"    # Complex documents with extensive customization
     ENTERPRISE = "enterprise" # Enterprise-grade with full legal review
 
 class DocumentJurisdiction(Enum):
-    """Document jurisdiction coverage"""    US_FEDERAL = "us_federal"
+    """Document jurisdiction coverage"""
+    US_FEDERAL = "us_federal"
     US_STATE = "us_state"
     EU_GDPR = "eu_gdpr"
     UK_LAW = "uk_law"
@@ -83,7 +87,8 @@ class DocumentJurisdiction(Enum):
 
 @dataclass
 class DocumentRequest:
-    """Document generation request structure"""    document_type: DocumentType
+    """Document generation request structure"""
+    document_type: DocumentType
     complexity_level: DocumentComplexity
     jurisdiction: DocumentJurisdiction
     parameters: Dict[str, Any]
@@ -93,7 +98,8 @@ class DocumentRequest:
 
 @dataclass
 class GeneratedDocument:
-    """Generated document result structure"""    document_id: str
+    """Generated document result structure"""
+    document_id: str
     document_type: DocumentType
     content: str
     metadata: Dict[str, Any]
@@ -109,11 +115,13 @@ class GeneratedDocument:
 
 
 class DocumentGenerator:
-    """    Professional Legal Document Generation System
+    """
+    Professional Legal Document Generation System
     
     Advanced AI-powered system for generating legally compliant documents
     with template management, automated assembly, and validation.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.ai_processor = AIProcessor(config.get('ai_config', {}))
@@ -137,7 +145,8 @@ class DocumentGenerator:
         logger.info("Document Generator initialized successfully")
     
     def _initialize_document_systems(self):
-        """Initialize document generation systems"""        try:
+        """Initialize document generation systems"""
+        try:
             # Load all document templates
             self.templates = self._load_document_templates()
             
@@ -157,7 +166,8 @@ class DocumentGenerator:
             raise DocumentError(f"Document system initialization error: {e}")
     
     def _load_document_templates(self) -> Dict[str, Dict[str, Any]]:
-        """Load all legal document templates"""        templates = {}
+        """Load all legal document templates"""
+        templates = {}
         
         # Define template structure for each document type
         template_definitions = {
@@ -245,7 +255,8 @@ class DocumentGenerator:
         return templates
     
     def _load_template_variants(self, template_config: Dict[str, Any]) -> Dict[str, str]:
-        """Load template variants for different complexity levels"""        variants = {}
+        """Load template variants for different complexity levels"""
+        variants = {}
         base_file = template_config["file"]
         
         for complexity in template_config["complexity_variants"]:
@@ -264,7 +275,8 @@ class DocumentGenerator:
         return variants
     
     def _load_template_file(self, filename: str) -> str:
-        """Load template file content"""        try:
+        """Load template file content"""
+        try:
             template_path = Path(self.config.get('templates_dir', 'templates')) / filename
             if template_path.exists():
                 return template_path.read_text(encoding='utf-8')
@@ -275,7 +287,8 @@ class DocumentGenerator:
             return self._get_fallback_template()
     
     def _get_builtin_template(self, filename: str) -> str:
-        """Get built-in template content"""        # Built-in templates for common document types
+        """Get built-in template content"""
+        # Built-in templates for common document types
         builtin_templates = {
             "terms_of_service_basic.j2": """TERMS OF SERVICE
 
@@ -377,12 +390,14 @@ Agreed on {{ current_date }}
 
 Licensor: ______________________
 Licensee: ______________________
-"""        }
+"""
+        }
         
         return builtin_templates.get(filename, self._get_fallback_template())
     
     def _get_fallback_template(self) -> str:
-        """Get basic fallback template"""        return """LEGAL DOCUMENT
+        """Get basic fallback template"""
+        return """LEGAL DOCUMENT
 
 Generated on: {{ current_date }}
 Document Type: {{ document_type }}
@@ -393,12 +408,15 @@ Please customize according to your specific needs.
 {% for key, value in parameters.items() %}
 {{ key }}: {{ value }}
 {% endfor %}
-"""    
+"""
+    
     def _load_default_template(self, template_config: Dict[str, Any]) -> str:
-        """Load default template for document type"""        return self._get_fallback_template()
+        """Load default template for document type"""
+        return self._get_fallback_template()
     
     def _load_jurisdiction_rules(self) -> Dict[str, Dict[str, Any]]:
-        """Load jurisdiction-specific document rules"""        return {
+        """Load jurisdiction-specific document rules"""
+        return {
             "us_federal": {
                 "required_disclaimers": [
                     "This document is governed by US federal law.",
@@ -479,7 +497,8 @@ Please customize according to your specific needs.
         }
     
     def _setup_document_validators(self):
-        """Setup document validation systems"""        self.validators = {
+        """Setup document validation systems"""
+        self.validators = {
             "legal_compliance": self._validate_legal_compliance,
             "format_compliance": self._validate_format_compliance,
             "content_completeness": self._validate_content_completeness,
@@ -487,7 +506,8 @@ Please customize according to your specific needs.
         }
     
     def _setup_ai_generation_models(self):
-        """Setup AI models for document generation enhancement"""        try:
+        """Setup AI models for document generation enhancement"""
+        try:
             # Legal document improvement model
             self.document_enhancer = self.ai_processor.load_model(
                 "legal_document_enhancer",
@@ -508,14 +528,16 @@ Please customize according to your specific needs.
             self.language_validator = None
     
     async def generate_document(self, request: DocumentRequest) -> GeneratedDocument:
-        """        Generate comprehensive legal document based on request
+        """
+        Generate comprehensive legal document based on request
         
         Args:
             request: Document generation request with all parameters
             
         Returns:
             Generated legal document with metadata and validation scores
-        """        try:
+        """
+        try:
             start_time = datetime.now(timezone.utc)
             
             # Validate document request
@@ -583,7 +605,8 @@ Please customize according to your specific needs.
             raise DocumentError(f"Document generation error: {e}")
     
     async def _get_document_template(self, request: DocumentRequest) -> str:
-        """Get appropriate template for document type and complexity"""        try:
+        """Get appropriate template for document type and complexity"""
+        try:
             doc_type_key = request.document_type.value
             complexity = request.complexity_level.value
             
@@ -609,7 +632,8 @@ Please customize according to your specific needs.
             raise DocumentError(f"Template error: {e}")
     
     async def _prepare_template_context(self, request: DocumentRequest) -> Dict[str, Any]:
-        """Prepare context data for template rendering"""        context = {
+        """Prepare context data for template rendering"""
+        context = {
             "current_date": datetime.now(timezone.utc).strftime("%B %d, %Y"),
             "document_type": request.document_type.value,
             "jurisdiction": request.jurisdiction.value,
@@ -634,13 +658,15 @@ Please customize according to your specific needs.
         return context
     
     def _get_jurisdiction_context(self, jurisdiction: DocumentJurisdiction) -> Dict[str, Any]:
-        """Get jurisdiction-specific context data"""        jurisdiction_key = jurisdiction.value
+        """Get jurisdiction-specific context data"""
+        jurisdiction_key = jurisdiction.value
         if jurisdiction_key in self.jurisdiction_rules:
             return self.jurisdiction_rules[jurisdiction_key]
         return {}
     
     def _get_document_type_context(self, document_type: DocumentType) -> Dict[str, Any]:
-        """Get document-type specific context data"""        # Add document type specific default values
+        """Get document-type specific context data"""
+        # Add document type specific default values
         type_contexts = {
             DocumentType.TERMS_OF_SERVICE: {
                 "acceptance_method": "By using our service",
@@ -661,7 +687,8 @@ Please customize according to your specific needs.
         return type_contexts.get(document_type, {})
     
     async def _generate_document_content(self, template_content: str, context: Dict[str, Any]) -> str:
-        """Generate document content from template and context"""        try:
+        """Generate document content from template and context"""
+        try:
             # Create Jinja2 template from content
             template = jinja2.Template(template_content)
             
@@ -678,7 +705,8 @@ Please customize according to your specific needs.
             raise DocumentError(f"Content generation error: {e}")
     
     def _clean_rendered_content(self, content: str) -> str:
-        """Clean up rendered template content"""        # Remove excessive whitespace
+        """Clean up rendered template content"""
+        # Remove excessive whitespace
         import re
         content = re.sub(r'\n\s*\n\s*\n', '\n\n', content)
         content = re.sub(r'[ \t]+\n', '\n', content)
@@ -687,7 +715,8 @@ Please customize according to your specific needs.
         return content
     
     async def _apply_jurisdiction_requirements(self, content: str, jurisdiction: DocumentJurisdiction) -> str:
-        """Apply jurisdiction-specific requirements to document"""        jurisdiction_key = jurisdiction.value
+        """Apply jurisdiction-specific requirements to document"""
+        jurisdiction_key = jurisdiction.value
         
         if jurisdiction_key not in self.jurisdiction_rules:
             return content
@@ -710,7 +739,8 @@ Please customize according to your specific needs.
         return content
     
     def _apply_formatting_requirements(self, content: str, formatting_rules: Dict[str, Any]) -> str:
-        """Apply formatting requirements to document"""        # Apply language-specific formatting
+        """Apply formatting requirements to document"""
+        # Apply language-specific formatting
         if formatting_rules.get("formal_address"):
             # Apply formal addressing conventions
             content = content.replace("you", "Sie")  # German example
@@ -722,7 +752,8 @@ Please customize according to your specific needs.
         return content
     
     def _simplify_language(self, content: str) -> str:
-        """Simplify legal language for better understanding"""        # Basic language simplification
+        """Simplify legal language for better understanding"""
+        # Basic language simplification
         simplifications = {
             "aforementioned": "mentioned above",
             "hereinafter": "from now on",
@@ -737,7 +768,8 @@ Please customize according to your specific needs.
         return content
     
     async def _add_required_clauses(self, content: str, required_clauses: Dict[str, str]) -> str:
-        """Add jurisdiction-required clauses to document"""        additional_clauses = []
+        """Add jurisdiction-required clauses to document"""
+        additional_clauses = []
         
         for clause_type, requirement in required_clauses.items():
             if requirement == "required":
@@ -752,7 +784,8 @@ Please customize according to your specific needs.
         return content
     
     async def _generate_required_clause(self, clause_type: str) -> str:
-        """Generate content for required legal clause"""        clause_templates = {
+        """Generate content for required legal clause"""
+        clause_templates = {
             "data_protection": "Your personal data is processed in accordance with applicable data protection laws.",
             "cookie_consent": "This service uses cookies. By continuing to use this service, you consent to our use of cookies.",
             "right_to_deletion": "You have the right to request deletion of your personal data.",
@@ -764,7 +797,8 @@ Please customize according to your specific needs.
         return clause_templates.get(clause_type, "")
     
     async def _enhance_with_ai(self, content: str, request: DocumentRequest) -> str:
-        """Enhance document content using AI models"""        try:
+        """Enhance document content using AI models"""
+        try:
             if not self.document_enhancer:
                 return content
             
@@ -794,7 +828,8 @@ Please customize according to your specific needs.
             return content  # Return original content on AI failure
     
     async def _validate_ai_enhancement(self, original: str, enhanced: str) -> bool:
-        """Validate that AI enhancement maintains legal integrity"""        # Basic validation checks
+        """Validate that AI enhancement maintains legal integrity"""
+        # Basic validation checks
         if len(enhanced) < len(original) * 0.8:
             return False  # Content too shortened
         
@@ -810,7 +845,8 @@ Please customize according to your specific needs.
         return True
     
     async def _validate_document(self, content: str, request: DocumentRequest) -> Dict[str, Any]:
-        """Validate generated document for legal compliance and completeness"""        validation_results = {
+        """Validate generated document for legal compliance and completeness"""
+        validation_results = {
             "legal_validity": 0.0,
             "compliance_score": 0.0,
             "review_required": False,
@@ -855,7 +891,8 @@ Please customize according to your specific needs.
         return validation_results
     
     async def _validate_legal_compliance(self, content: str, request: DocumentRequest) -> Dict[str, Any]:
-        """Validate legal compliance of document"""        result = {
+        """Validate legal compliance of document"""
+        result = {
             "score": 0.8,  # Default score
             "errors": [],
             "warnings": []
@@ -879,7 +916,8 @@ Please customize according to your specific needs.
         return result
     
     def _get_required_legal_elements(self, document_type: DocumentType) -> List[str]:
-        """Get required legal elements for document type"""        elements_map = {
+        """Get required legal elements for document type"""
+        elements_map = {
             DocumentType.TERMS_OF_SERVICE: ["acceptance", "modification", "termination", "limitation of liability"],
             DocumentType.PRIVACY_POLICY: ["data collection", "data usage", "data sharing", "contact information"],
             DocumentType.COPYRIGHT_NOTICE: ["copyright holder", "rights reserved", "creation date"],
@@ -890,7 +928,8 @@ Please customize according to your specific needs.
         return elements_map.get(document_type, [])
     
     def _validate_document_request(self, request: DocumentRequest):
-        """Validate document generation request"""        if not isinstance(request.document_type, DocumentType):
+        """Validate document generation request"""
+        if not isinstance(request.document_type, DocumentType):
             raise ValidationError("Valid document type is required")
         
         if not isinstance(request.complexity_level, DocumentComplexity):
@@ -912,8 +951,10 @@ Please customize according to your specific needs.
 
 
 class ContractBuilder:
-    """    Specialized contract building system for complex legal agreements
-    """    
+    """
+    Specialized contract building system for complex legal agreements
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.document_generator = DocumentGenerator(config)
@@ -922,7 +963,8 @@ class ContractBuilder:
         self._initialize_contract_systems()
     
     def _initialize_contract_systems(self):
-        """Initialize contract building systems"""        try:
+        """Initialize contract building systems"""
+        try:
             # Load contract-specific templates
             self.contract_templates = self._load_contract_templates()
             
@@ -935,7 +977,8 @@ class ContractBuilder:
             logger.error(f"Contract Builder initialization failed: {e}")
     
     def _load_contract_templates(self) -> Dict[str, Any]:
-        """Load specialized contract templates"""        return {
+        """Load specialized contract templates"""
+        return {
             "influencer_brand_partnership": {
                 "base_template": "partnership_agreement",
                 "required_clauses": ["deliverables", "compensation", "exclusivity", "content_approval"],
@@ -954,7 +997,8 @@ class ContractBuilder:
         }
     
     def _load_clause_library(self) -> Dict[str, Dict[str, str]]:
-        """Load library of legal clauses"""        return {
+        """Load library of legal clauses"""
+        return {
             "compensation": {
                 "fixed_fee": "The Client agrees to pay the Creator a fixed fee of [AMOUNT] for the services described herein.",
                 "revenue_share": "Compensation shall be based on [PERCENTAGE]% of net revenues generated from the content.",
@@ -978,7 +1022,8 @@ class ContractBuilder:
         }
     
     async def build_contract(self, contract_type: str, parameters: Dict[str, Any]) -> GeneratedDocument:
-        """        Build specialized contract with custom clauses
+        """
+        Build specialized contract with custom clauses
         
         Args:
             contract_type: Type of contract to build
@@ -986,7 +1031,8 @@ class ContractBuilder:
             
         Returns:
             Generated contract document
-        """        try:
+        """
+        try:
             if contract_type not in self.contract_templates:
                 raise DocumentError(f"Unknown contract type: {contract_type}")
             
@@ -1022,7 +1068,8 @@ class ContractBuilder:
             raise DocumentError(f"Contract building error: {e}")
     
     async def _add_contract_clauses(self, base_content: str, template_config: Dict[str, Any], parameters: Dict[str, Any]) -> str:
-        """Add specialized contract clauses"""        additional_clauses = []
+        """Add specialized contract clauses"""
+        additional_clauses = []
         
         # Add required clauses
         for clause_type in template_config['required_clauses']:
@@ -1047,7 +1094,8 @@ class ContractBuilder:
         return enhanced_content
     
     def _get_clause_content(self, clause_type: str, parameters: Dict[str, Any]) -> str:
-        """Get content for specific clause type"""        if clause_type in self.clause_library:
+        """Get content for specific clause type"""
+        if clause_type in self.clause_library:
             clause_options = self.clause_library[clause_type]
             
             # Select appropriate clause variant
@@ -1062,7 +1110,8 @@ class ContractBuilder:
         return ""
     
     def _replace_clause_placeholders(self, template: str, parameters: Dict[str, Any]) -> str:
-        """Replace placeholders in clause templates"""        import re
+        """Replace placeholders in clause templates"""
+        import re
         
         # Find all placeholders in [PLACEHOLDER] format
         placeholders = re.findall(r'\[([A-Z_]+)\]', template)
@@ -1081,14 +1130,16 @@ class ContractBuilder:
         return result
 
 class DocumentGenerator:
-    """    Advanced Legal Document Generator
+    """
+    Advanced Legal Document Generator
     
     Provides comprehensive document generation capabilities:
     - AI-powered content creation
     - Legal template management
     - Automated compliance checking
     - Multi-jurisdiction support
-    """    
+    """
+    
     def __init__(self):
         self.ai_processor = AIProcessor()
         self.template_manager = TemplateManager()
@@ -1112,14 +1163,16 @@ class DocumentGenerator:
         self,
         request: DocumentRequest
     ) -> GeneratedDocument:
-        """        Generate comprehensive legal document
+        """
+        Generate comprehensive legal document
         
         Args:
             request: Document generation request
             
         Returns:
             Complete generated legal document
-        """        start_time = datetime.now(timezone.utc)
+        """
+        start_time = datetime.now(timezone.utc)
         
         try:
             # Validate document request
@@ -1198,7 +1251,8 @@ class DocumentGenerator:
         terms: Dict[str, Any],
         jurisdiction: DocumentJurisdiction
     ) -> GeneratedDocument:
-        """        Generate specialized contracts for content creators
+        """
+        Generate specialized contracts for content creators
         
         Args:
             contract_type: Type of contract to generate
@@ -1208,7 +1262,8 @@ class DocumentGenerator:
             
         Returns:
             Generated contract document
-        """        try:
+        """
+        try:
             # Build contract request
             contract_request = DocumentRequest(
                 document_type=DocumentType(contract_type),
@@ -1267,7 +1322,8 @@ class DocumentGenerator:
         protection_type: str,
         jurisdiction: DocumentJurisdiction
     ) -> List[GeneratedDocument]:
-        """        Generate content protection document suite
+        """
+        Generate content protection document suite
         
         Args:
             content_info: Content information
@@ -1276,7 +1332,8 @@ class DocumentGenerator:
             
         Returns:
             List of protection documents
-        """        try:
+        """
+        try:
             protection_documents = []
             
             # Copyright notice
@@ -1328,7 +1385,8 @@ class DocumentGenerator:
 
     # Private helper methods
     async def _validate_document_request(self, request: DocumentRequest):
-        """Validate document generation request"""        if not request.document_type:
+        """Validate document generation request"""
+        if not request.document_type:
             raise ValidationError("Document type is required")
         if not request.jurisdiction:
             raise ValidationError("Jurisdiction is required")
@@ -1341,7 +1399,8 @@ class DocumentGenerator:
         complexity: DocumentComplexity,
         jurisdiction: DocumentJurisdiction
     ) -> Dict[str, Any]:
-        """Load appropriate document template"""        template_key = f"{doc_type.value}_{complexity.value}_{jurisdiction.value}"
+        """Load appropriate document template"""
+        template_key = f"{doc_type.value}_{complexity.value}_{jurisdiction.value}"
         
         try:
             template = await self.template_manager.get_template(template_key)
@@ -1357,7 +1416,8 @@ class DocumentGenerator:
         client_info: Dict[str, Any],
         doc_type: DocumentType
     ) -> Dict[str, Any]:
-        """Process and validate document parameters"""        processed_params = parameters.copy()
+        """Process and validate document parameters"""
+        processed_params = parameters.copy()
         
         # Add client information
         processed_params['client'] = client_info
@@ -1382,7 +1442,8 @@ class DocumentGenerator:
         template: Dict[str, Any],
         parameters: Dict[str, Any]
     ) -> str:
-        """Generate document content using AI"""        
+        """Generate document content using AI"""
+        
         # Build AI generation prompt
         generation_prompt = self._build_generation_prompt(
             request, template, parameters
@@ -1410,7 +1471,8 @@ class DocumentGenerator:
         content: str,
         metadata: Dict[str, Any]
     ) -> Optional[str]:
-        """Apply digital signature to document"""        try:
+        """Apply digital signature to document"""
+        try:
             # Create signature data
             signature_data = {
                 'content_hash': hashlib.sha256(content.encode()).hexdigest(),
@@ -1436,7 +1498,9 @@ class DocumentGenerator:
         template: Dict[str, Any],
         parameters: Dict[str, Any]
     ) -> str:
-        """Build AI generation prompt"""        return f"""        Generate a professional {request.document_type.value} document with the following specifications:
+        """Build AI generation prompt"""
+        return f"""
+        Generate a professional {request.document_type.value} document with the following specifications:
 
         Document Type: {request.document_type.value}
         Complexity Level: {request.complexity_level.value}
@@ -1456,8 +1520,10 @@ class DocumentGenerator:
         - Include all necessary legal clauses and disclaimers
         
         Generate complete, ready-to-use legal document content.
-        """    def _calculate_expiration_date(self, doc_type: DocumentType) -> Optional[datetime]:
-        """Calculate document expiration date"""        expiration_periods = {
+        """
+    def _calculate_expiration_date(self, doc_type: DocumentType) -> Optional[datetime]:
+        """Calculate document expiration date"""
+        expiration_periods = {
             DocumentType.TERMS_OF_SERVICE: 365,  # 1 year
             DocumentType.PRIVACY_POLICY: 365,    # 1 year
             DocumentType.COPYRIGHT_NOTICE: None, # No expiration
@@ -1471,10 +1537,12 @@ class DocumentGenerator:
         return None
 
 class ContractBuilder:
-    """    Specialized Contract Building System
+    """
+    Specialized Contract Building System
     
     Advanced contract creation with intelligent clause selection and optimization
-    """    
+    """
+    
     def __init__(self):
         self.document_generator = DocumentGenerator()
         self.clause_library = {}
@@ -1486,7 +1554,8 @@ class ContractBuilder:
         project_details: Dict[str, Any],
         revenue_terms: Dict[str, Any]
     ) -> GeneratedDocument:
-        """Build comprehensive collaboration contract"""        
+        """Build comprehensive collaboration contract"""
+        
         try:
             # Analyze collaboration requirements
             collab_analysis = await self._analyze_collaboration_requirements(
@@ -1535,7 +1604,8 @@ class ContractBuilder:
         project_details: Dict[str, Any],
         revenue_terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze collaboration requirements for contract building"""        
+        """Analyze collaboration requirements for contract building"""
+        
         return {
             'creator_count': len(creators),
             'project_type': project_details.get('type', 'general'),

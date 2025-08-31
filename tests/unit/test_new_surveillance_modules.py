@@ -4,39 +4,57 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+
+import sys
+
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Simple test for new surveillance modules
+"""
+Simple test for new surveillance modules
 =======================================
 
 Basic test to verify new surveillance modules work in isolation.
-"""import sys
+"""
+
+import sys
+
 import os
 
 # Add the project root to the path
 sys.path.insert(0, '/home/runner/work/Ainflue/Ainflue')
 
 import asyncio
+
 import logging
 
 # Direct imports from surveillance modules
 from crawlers.surveillance.youtube_monitor import YouTubeMonitor
+
 from crawlers.surveillance.tiktok_crawler import TikTokCrawler
+
 from crawlers.surveillance.instagram_detector import InstagramDetector
+
 from crawlers.surveillance.facebook_scanner import FacebookScanner
+
 from crawlers.surveillance.twitter_monitor import TwitterMonitor
+
 from crawlers.surveillance.spotify_tracker import SpotifyTracker
+
 from crawlers.surveillance.universal_web_crawler import UniversalWebCrawler
+
 from crawlers.surveillance.violation_alert_system import ViolationAlertSystem
+
 from crawlers.surveillance.content_matching_engine import ContentMatchingEngine
 
 async def test_surveillance_modules():
-    """Test basic functionality of surveillance modules."""    
+    """
+Test basic functionality of surveillance modules."""
+    
     print("Testing new surveillance modules...")
     
     # Test module instantiation

@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 import uuid
 from datetime import datetime, timezone, timedelta
@@ -26,7 +27,8 @@ from sklearn.preprocessing import StandardScaler
 logger = logging.getLogger(__name__)
 
 class ConsumerSegmentType(Enum):
-    """Types of consumer segments"""    DEMOGRAPHIC = "demographic"
+    """Types of consumer segments"""
+    DEMOGRAPHIC = "demographic"
     PSYCHOGRAPHIC = "psychographic"
     BEHAVIORAL = "behavioral"
     GEOGRAPHIC = "geographic"
@@ -36,7 +38,8 @@ class ConsumerSegmentType(Enum):
     LIFECYCLE_BASED = "lifecycle_based"
 
 class BehaviorPattern(Enum):
-    """Consumer behavior patterns"""    EARLY_ADOPTER = "early_adopter"
+    """Consumer behavior patterns"""
+    EARLY_ADOPTER = "early_adopter"
     MAINSTREAM_ADOPTER = "mainstream_adopter"
     LATE_ADOPTER = "late_adopter"
     TREND_FOLLOWER = "trend_follower"
@@ -46,7 +49,8 @@ class BehaviorPattern(Enum):
     CONVENIENCE_SEEKER = "convenience_seeker"
 
 class EngagementType(Enum):
-    """Types of consumer engagement"""    PASSIVE_CONSUMPTION = "passive_consumption"
+    """Types of consumer engagement"""
+    PASSIVE_CONSUMPTION = "passive_consumption"
     ACTIVE_ENGAGEMENT = "active_engagement"
     CONTENT_CREATION = "content_creation"
     COMMUNITY_PARTICIPATION = "community_participation"
@@ -55,7 +59,8 @@ class EngagementType(Enum):
 
 @dataclass
 class ConsumerBehavior:
-    """Consumer behavior analysis data"""    behavior_id: str
+    """Consumer behavior analysis data"""
+    behavior_id: str
     consumer_segment: str
     analysis_period: str
     
@@ -99,7 +104,8 @@ class ConsumerBehavior:
 
 @dataclass
 class AudienceSegmentation:
-    """Audience segmentation analysis results"""    segmentation_id: str
+    """Audience segmentation analysis results"""
+    segmentation_id: str
     segmentation_model: str
     market_segment: str
     
@@ -131,7 +137,8 @@ class AudienceSegmentation:
 
 @dataclass
 class PreferenceAnalysis:
-    """Consumer preference analysis results"""    analysis_id: str
+    """Consumer preference analysis results"""
+    analysis_id: str
     preference_category: str
     consumer_segment: str
     
@@ -172,7 +179,8 @@ class PreferenceAnalysis:
 
 @dataclass
 class PurchasingPattern:
-    """Consumer purchasing pattern analysis"""    pattern_id: str
+    """Consumer purchasing pattern analysis"""
+    pattern_id: str
     consumer_segment: str
     product_category: str
     
@@ -211,7 +219,8 @@ class PurchasingPattern:
 
 @dataclass
 class EngagementDriver:
-    """Consumer engagement driver analysis"""    driver_id: str
+    """Consumer engagement driver analysis"""
+    driver_id: str
     engagement_type: EngagementType
     consumer_segment: str
     
@@ -240,7 +249,8 @@ class EngagementDriver:
 
 @dataclass
 class ContentPreference:
-    """Consumer content preference analysis"""    preference_id: str
+    """Consumer content preference analysis"""
+    preference_id: str
     content_category: str
     consumer_segment: str
     
@@ -275,11 +285,13 @@ class ContentPreference:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class ConsumerInsightsEngine:
-    """    Ultra-Advanced Consumer Insights Engine
+    """
+    Ultra-Advanced Consumer Insights Engine
     
     Provides comprehensive consumer behavior analysis, audience segmentation,
     and strategic consumer intelligence for content optimization and targeting.
-    """    
+    """
+    
     def __init__(self):
         # ML Models
         self.segmentation_model = KMeans(n_clusters=8, random_state=42)
@@ -317,7 +329,8 @@ class ConsumerInsightsEngine:
         geographic_scope: str = "global",
         demographic_filters: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Analyze consumer behavior patterns
+        """
+        Analyze consumer behavior patterns
         
         Args:
             market_segment: Target market segment
@@ -326,7 +339,8 @@ class ConsumerInsightsEngine:
             
         Returns:
             Comprehensive consumer behavior analysis
-        """        try:
+        """
+        try:
             # Collect consumer data
             consumer_data = await self._collect_consumer_data(
                 market_segment, geographic_scope, demographic_filters
@@ -387,7 +401,8 @@ class ConsumerInsightsEngine:
         segmentation_method: str = "behavioral_clustering",
         target_segments: int = 8
     ) -> AudienceSegmentation:
-        """        Segment audience using advanced clustering techniques
+        """
+        Segment audience using advanced clustering techniques
         
         Args:
             consumer_data: Consumer data for segmentation
@@ -396,7 +411,8 @@ class ConsumerInsightsEngine:
             
         Returns:
             AudienceSegmentation: Comprehensive audience segmentation
-        """        try:
+        """
+        try:
             segmentation_id = str(uuid.uuid4())
             
             # Prepare data for segmentation
@@ -460,7 +476,8 @@ class ConsumerInsightsEngine:
         consumer_segment: str,
         preference_categories: List[str]
     ) -> List[PreferenceAnalysis]:
-        """        Analyze consumer preferences across categories
+        """
+        Analyze consumer preferences across categories
         
         Args:
             consumer_segment: Target consumer segment
@@ -468,7 +485,8 @@ class ConsumerInsightsEngine:
             
         Returns:
             List[PreferenceAnalysis]: Preference analyses by category
-        """        try:
+        """
+        try:
             preference_analyses = []
             
             for category in preference_categories:
@@ -547,7 +565,8 @@ class ConsumerInsightsEngine:
         consumer_segment: str,
         engagement_types: List[EngagementType]
     ) -> List[EngagementDriver]:
-        """        Identify key drivers of consumer engagement
+        """
+        Identify key drivers of consumer engagement
         
         Args:
             consumer_segment: Target consumer segment
@@ -555,7 +574,8 @@ class ConsumerInsightsEngine:
             
         Returns:
             List[EngagementDriver]: Engagement driver analyses
-        """        try:
+        """
+        try:
             engagement_drivers = []
             
             for engagement_type in engagement_types:
@@ -618,7 +638,8 @@ class ConsumerInsightsEngine:
         geographic_scope: str,
         demographic_filters: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Collect comprehensive consumer data"""        # Mock consumer data for demonstration
+        """Collect comprehensive consumer data"""
+        # Mock consumer data for demonstration
         return {
             'market_segment': market_segment,
             'consumers': [
@@ -647,7 +668,8 @@ class ConsumerInsightsEngine:
         }
     
     async def _analyze_behavior_patterns(self, consumer_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze consumer behavior patterns"""        consumers = consumer_data.get('consumers', [])
+        """Analyze consumer behavior patterns"""
+        consumers = consumer_data.get('consumers', [])
         
         # Calculate aggregate behavior metrics
         avg_engagement = np.mean([c['behavior']['engagement_rate'] for c in consumers])
@@ -670,7 +692,8 @@ class ConsumerInsightsEngine:
         }
     
     async def _identify_behavior_clusters(self, consumers: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Identify behavioral clusters within consumers"""        # Extract behavioral features
+        """Identify behavioral clusters within consumers"""
+        # Extract behavioral features
         features = []
         for consumer in consumers:
             behavior = consumer['behavior']
@@ -702,7 +725,8 @@ class ConsumerInsightsEngine:
         return cluster_analysis
     
     def _describe_cluster_characteristics(self, cluster_members: List[Dict[str, Any]]) -> List[str]:
-        """Describe characteristics of a behavioral cluster"""        characteristics = []
+        """Describe characteristics of a behavioral cluster"""
+        characteristics = []
         
         avg_age = np.mean([c['demographics']['age'] for c in cluster_members])
         if avg_age < 25:
@@ -724,7 +748,8 @@ class ConsumerInsightsEngine:
     
     # Placeholder methods for comprehensive analysis
     async def _identify_engagement_drivers(self, consumer_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Identify key engagement drivers"""        return {
+        """Identify key engagement drivers"""
+        return {
             'primary_drivers': ['content_quality', 'relevance', 'timeliness'],
             'secondary_drivers': ['social_proof', 'personalization', 'accessibility'],
             'inhibiting_factors': ['poor_quality', 'irrelevance', 'over_promotion'],
@@ -738,7 +763,8 @@ class ConsumerInsightsEngine:
         }
     
     async def _analyze_content_preferences(self, consumer_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze consumer content preferences"""        consumers = consumer_data.get('consumers', [])
+        """Analyze consumer content preferences"""
+        consumers = consumer_data.get('consumers', [])
         
         # Count content type preferences
         content_type_counts = {}
@@ -770,7 +796,8 @@ class ConsumerInsightsEngine:
         }
     
     async def _analyze_purchasing_patterns(self, consumer_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze consumer purchasing patterns"""        return {
+        """Analyze consumer purchasing patterns"""
+        return {
             'purchase_frequency': {
                 'daily': 0.15,
                 'weekly': 0.35,
@@ -797,7 +824,8 @@ class ConsumerInsightsEngine:
         }
     
     async def _generate_consumer_insights(self, *analysis_results) -> List[str]:
-        """Generate strategic consumer insights"""        return [
+        """Generate strategic consumer insights"""
+        return [
             'Consumers show strong preference for authentic, high-quality content',
             'Younger demographics drive majority of social sharing behavior',
             'Price sensitivity varies significantly across behavioral clusters',
@@ -807,7 +835,8 @@ class ConsumerInsightsEngine:
         ]
     
     async def _analyze_demographics(self, consumer_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze demographic patterns"""        consumers = consumer_data.get('consumers', [])
+        """Analyze demographic patterns"""
+        consumers = consumer_data.get('consumers', [])
         
         ages = [c['demographics']['age'] for c in consumers]
         genders = [c['demographics']['gender'] for c in consumers]
@@ -832,7 +861,8 @@ class ConsumerInsightsEngine:
         }
     
     async def _analyze_psychographics(self, consumer_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze psychographic patterns"""        return {
+        """Analyze psychographic patterns"""
+        return {
             'personality_traits': {
                 'openness_to_experience': 0.72,
                 'conscientiousness': 0.68,
@@ -855,7 +885,8 @@ class ConsumerInsightsEngine:
         }
     
     async def _analyze_tech_adoption(self, consumer_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze technology adoption patterns"""        return {
+        """Analyze technology adoption patterns"""
+        return {
             'adoption_speed': {
                 'early_adopters': 0.20,
                 'early_majority': 0.35,
@@ -876,7 +907,8 @@ class ConsumerInsightsEngine:
         }
     
     async def _analyze_social_influence(self, consumer_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze social influence patterns"""        return {
+        """Analyze social influence patterns"""
+        return {
             'influence_sources': {
                 'peer_recommendations': 0.75,
                 'influencer_endorsements': 0.60,
@@ -899,7 +931,8 @@ class ConsumerInsightsEngine:
         }
     
     async def _analyze_seasonal_patterns(self, consumer_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze seasonal behavior patterns"""        return {
+        """Analyze seasonal behavior patterns"""
+        return {
             'monthly_patterns': {
                 'peak_months': [11, 12, 1],  # Holiday season
                 'low_months': [2, 3],  # Post-holiday
@@ -918,7 +951,8 @@ class ConsumerInsightsEngine:
         }
     
     async def _identify_emerging_consumer_trends(self, consumer_data: Dict[str, Any]) -> List[str]:
-        """Identify emerging consumer trends"""        return [
+        """Identify emerging consumer trends"""
+        return [
             'Increased demand for personalized experiences',
             'Growing preference for authentic content over polished production',
             'Rising importance of community and social connection',
@@ -929,7 +963,8 @@ class ConsumerInsightsEngine:
         ]
     
     async def _generate_actionable_recommendations(self, insights: List[str]) -> List[str]:
-        """Generate actionable recommendations based on insights"""        return [
+        """Generate actionable recommendations based on insights"""
+        return [
             'Implement advanced personalization algorithms',
             'Develop authentic storytelling content strategy',
             'Build community engagement features',
@@ -940,13 +975,15 @@ class ConsumerInsightsEngine:
         ]
     
     async def _cache_consumer_analysis(self, analysis: Dict[str, Any]) -> None:
-        """Cache consumer analysis results"""        analysis_id = analysis['analysis_id']
+        """Cache consumer analysis results"""
+        analysis_id = analysis['analysis_id']
         self.insights_cache[analysis_id] = analysis
         self.analysis_history.append(analysis_id)
     
     # Segmentation methods (placeholder implementations)
     async def _prepare_segmentation_features(self, consumer_data: Dict[str, Any]) -> np.ndarray:
-        """Prepare features for segmentation"""        consumers = consumer_data.get('consumers', [])
+        """Prepare features for segmentation"""
+        consumers = consumer_data.get('consumers', [])
         features = []
         
         for consumer in consumers:
@@ -963,7 +1000,8 @@ class ConsumerInsightsEngine:
         return np.array(features)
     
     async def _apply_segmentation_algorithm(self, features: np.ndarray, method: str, n_segments: int) -> List[Dict[str, Any]]:
-        """Apply segmentation algorithm"""        # Scale features
+        """Apply segmentation algorithm"""
+        # Scale features
         features_scaled = self.scaler.fit_transform(features)
         
         # Apply clustering
@@ -986,7 +1024,8 @@ class ConsumerInsightsEngine:
         return segments
     
     async def _analyze_segment_characteristics(self, segments: List[Dict[str, Any]], features: np.ndarray) -> Dict[str, Dict[str, Any]]:
-        """Analyze characteristics of each segment"""        characteristics = {}
+        """Analyze characteristics of each segment"""
+        characteristics = {}
         
         for segment in segments:
             segment_id = segment['segment_id']
@@ -1005,7 +1044,8 @@ class ConsumerInsightsEngine:
         return characteristics
     
     def _generate_behavior_profile(self, segment_features: np.ndarray) -> str:
-        """Generate behavior profile for segment"""        avg_engagement = np.mean(segment_features[:, 2])
+        """Generate behavior profile for segment"""
+        avg_engagement = np.mean(segment_features[:, 2])
         avg_consumption = np.mean(segment_features[:, 4])
         
         if avg_engagement > 0.04 and avg_consumption > 3:
@@ -1016,7 +1056,8 @@ class ConsumerInsightsEngine:
             return 'low_engagement_casual_users'
     
     def _identify_segment_traits(self, segment_features: np.ndarray) -> List[str]:
-        """Identify key traits of segment"""        traits = []
+        """Identify key traits of segment"""
+        traits = []
         
         avg_age = np.mean(segment_features[:, 0])
         if avg_age < 30:
@@ -1037,10 +1078,12 @@ class ConsumerInsightsEngine:
         return traits
     
     def _calculate_segment_sizes(self, segments: List[Dict[str, Any]]) -> Dict[str, int]:
-        """Calculate segment sizes"""        return {segment['segment_id']: segment['size'] for segment in segments}
+        """Calculate segment sizes"""
+        return {segment['segment_id']: segment['size'] for segment in segments}
     
     async def _estimate_segment_growth_rates(self, segments: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Estimate growth rates for segments"""        # Mock growth rates based on segment characteristics
+        """Estimate growth rates for segments"""
+        # Mock growth rates based on segment characteristics
         growth_rates = {}
         for segment in segments:
             # Younger, more engaged segments typically grow faster
@@ -1050,7 +1093,8 @@ class ConsumerInsightsEngine:
         return growth_rates
     
     def _assess_segmentation_quality(self, segments: List[Dict[str, Any]], features: np.ndarray) -> Dict[str, float]:
-        """Assess quality of segmentation"""        return {
+        """Assess quality of segmentation"""
+        return {
             'distinctiveness': 0.75,
             'homogeneity': 0.68,
             'heterogeneity': 0.82,
@@ -1058,7 +1102,8 @@ class ConsumerInsightsEngine:
         }
     
     async def _calculate_segment_business_value(self, segments: List[Dict[str, Any]]) -> Dict[str, Dict[str, float]]:
-        """Calculate business value metrics for segments"""        return {
+        """Calculate business value metrics for segments"""
+        return {
             'revenue_potential': {segment['segment_id']: 1000 + segment['size'] * 10 for segment in segments},
             'marketing_efficiency': {segment['segment_id']: 0.6 + (hash(segment['segment_id']) % 30) / 100 for segment in segments},
             'acquisition_cost': {segment['segment_id']: 50 + (hash(segment['segment_id']) % 100) for segment in segments},
@@ -1066,7 +1111,8 @@ class ConsumerInsightsEngine:
         }
     
     async def _generate_segmentation_recommendations(self, segments: List[Dict[str, Any]], characteristics: Dict[str, Dict[str, Any]], business_metrics: Dict[str, Dict[str, float]]) -> Dict[str, Any]:
-        """Generate segmentation-based recommendations"""        # Identify highest value segments
+        """Generate segmentation-based recommendations"""
+        # Identify highest value segments
         revenue_potential = business_metrics['revenue_potential']
         top_segments = sorted(revenue_potential.items(), key=lambda x: x[1], reverse=True)[:3]
         

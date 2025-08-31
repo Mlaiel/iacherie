@@ -13,7 +13,8 @@ Business Intelligence Integration:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 import pandas as pd
@@ -37,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsModel(Enum):
-    """AI analytics model types"""    ANOMALY_DETECTION = "anomaly_detection"
+    """AI analytics model types"""
+    ANOMALY_DETECTION = "anomaly_detection"
     PERFORMANCE_PREDICTION = "performance_prediction"
     REVENUE_FORECASTING = "revenue_forecasting"
     USER_BEHAVIOR = "user_behavior"
@@ -47,7 +49,8 @@ class AnalyticsModel(Enum):
 
 @dataclass
 class AnalyticsInsight:
-    """Analytics insight data structure"""    type: str
+    """Analytics insight data structure"""
+    type: str
     title: str
     description: str
     confidence: float
@@ -60,7 +63,8 @@ class AnalyticsInsight:
 
 @dataclass
 class PredictionResult:
-    """Prediction result structure"""    model_type: AnalyticsModel
+    """Prediction result structure"""
+    model_type: AnalyticsModel
     predicted_values: List[float]
     confidence_intervals: List[Tuple[float, float]]
     accuracy_score: float
@@ -71,7 +75,8 @@ class PredictionResult:
 
 @dataclass
 class AnomalyDetection:
-    """Anomaly detection result"""    metric_name: str
+    """Anomaly detection result"""
+    metric_name: str
     anomaly_score: float
     is_anomaly: bool
     severity: str  # low, medium, high, critical
@@ -81,9 +86,11 @@ class AnomalyDetection:
 
 
 class AIAnalyticsEngine:
-    """    Advanced AI analytics engine for predictive monitoring,
+    """
+    Advanced AI analytics engine for predictive monitoring,
     business intelligence, and optimization recommendations.
-    """    
+    """
+    
     def __init__(
         self,
         redis_client: Optional[aioredis.Redis] = None,
@@ -119,7 +126,8 @@ class AIAnalyticsEngine:
         logger.info("AI Analytics Engine initialized")
         
     async def start(self):
-        """Start the AI analytics engine"""        if self._running:
+        """Start the AI analytics engine"""
+        if self._running:
             logger.warning("AI analytics engine already running")
             return
             
@@ -140,7 +148,8 @@ class AIAnalyticsEngine:
             raise
             
     async def stop(self):
-        """Stop the AI analytics engine"""        self._running = False
+        """Stop the AI analytics engine"""
+        self._running = False
         
         if self._analytics_task:
             self._analytics_task.cancel()
@@ -152,7 +161,8 @@ class AIAnalyticsEngine:
         logger.info("AI Analytics Engine stopped")
         
     async def _initialize_models(self):
-        """Initialize AI models for different analytics tasks"""        
+        """Initialize AI models for different analytics tasks"""
+        
         try:
             # Anomaly Detection Model
             self._models[AnalyticsModel.ANOMALY_DETECTION] = IsolationForest(
@@ -191,7 +201,8 @@ class AIAnalyticsEngine:
             raise
             
     def _build_lstm_model(self) -> tf.keras.Model:
-        """Build LSTM model for revenue forecasting"""        
+        """Build LSTM model for revenue forecasting"""
+        
         model = tf.keras.Sequential([
             tf.keras.layers.LSTM(50, return_sequences=True, input_shape=(30, 10)),
             tf.keras.layers.Dropout(0.2),
@@ -211,7 +222,8 @@ class AIAnalyticsEngine:
         return model
         
     async def _analytics_loop(self):
-        """Main analytics processing loop"""        
+        """Main analytics processing loop"""
+        
         while self._running:
             try:
                 # Collect data for analysis
@@ -241,14 +253,16 @@ class AIAnalyticsEngine:
                 await asyncio.sleep(60)  # Backoff on error
                 
     async def _collect_analytics_data(self):
-        """Collect data for analytics processing"""        
+        """Collect data for analytics processing"""
+        
         if not self.db_engine:
             return
             
         try:
             async with self.db_engine.begin() as conn:
                 # Collect system metrics
-                result = await conn.execute(text("""                    SELECT metric_name, value, timestamp, labels
+                result = await conn.execute(text("""
+                    SELECT metric_name, value, timestamp, labels
                     FROM system_metrics 
                     WHERE timestamp > NOW() - INTERVAL '1 hour'
                     ORDER BY timestamp DESC
@@ -263,7 +277,8 @@ class AIAnalyticsEngine:
                     })
                     
                 # Collect business metrics
-                result = await conn.execute(text("""                    SELECT 
+                result = await conn.execute(text("""
+                    SELECT 
                         'revenue' as metric_type,
                         platform,
                         SUM(revenue_amount) as value,
@@ -283,7 +298,8 @@ class AIAnalyticsEngine:
                     })
                     
                 # Collect content protection metrics
-                result = await conn.execute(text("""                    SELECT 
+                result = await conn.execute(text("""
+                    SELECT 
                         content_type,
                         COUNT(*) as fingerprints_created,
                         AVG(CASE WHEN status = 'success' THEN 1 ELSE 0 END) as success_rate,
@@ -306,7 +322,8 @@ class AIAnalyticsEngine:
             logger.error(f"Error collecting analytics data: {e}")
             
     async def _run_anomaly_detection(self):
-        """Run anomaly detection on collected metrics"""        
+        """Run anomaly detection on collected metrics"""
+        
         try:
             anomaly_model = self._models.get(AnalyticsModel.ANOMALY_DETECTION)
             if not anomaly_model:
@@ -352,7 +369,8 @@ class AIAnalyticsEngine:
             logger.error(f"Error in anomaly detection: {e}")
             
     def _calculate_anomaly_severity(self, score: float) -> str:
-        """Calculate anomaly severity based on score"""        
+        """Calculate anomaly severity based on score"""
+        
         if score < -0.5:
             return "critical"
         elif score < -0.3:
@@ -363,7 +381,8 @@ class AIAnalyticsEngine:
             return "low"
             
     def _get_anomaly_actions(self, metric_name: str, severity: str) -> List[str]:
-        """Get suggested actions for anomaly"""        
+        """Get suggested actions for anomaly"""
+        
         actions = []
         
         if "cpu" in metric_name.lower():
@@ -397,7 +416,8 @@ class AIAnalyticsEngine:
         return actions
         
     async def _generate_predictions(self):
-        """Generate predictions for key metrics"""        
+        """Generate predictions for key metrics"""
+        
         try:
             # Revenue prediction
             revenue_prediction = await self._predict_revenue()
@@ -418,7 +438,8 @@ class AIAnalyticsEngine:
             logger.error(f"Error generating predictions: {e}")
             
     async def _predict_revenue(self) -> Optional[PredictionResult]:
-        """Predict revenue using LSTM model"""        
+        """Predict revenue using LSTM model"""
+        
         try:
             # Collect revenue data
             revenue_data = []
@@ -472,7 +493,8 @@ class AIAnalyticsEngine:
             return None
             
     def _create_sequences(self, data: np.ndarray, sequence_length: int) -> Tuple[np.ndarray, np.ndarray]:
-        """Create sequences for time series prediction"""        
+        """Create sequences for time series prediction"""
+        
         X, y = [], []
         for i in range(len(data) - sequence_length):
             X.append(data[i:(i + sequence_length)])
@@ -481,7 +503,8 @@ class AIAnalyticsEngine:
         return np.array(X), np.array(y)
         
     async def _predict_performance(self) -> Optional[PredictionResult]:
-        """Predict system performance metrics"""        
+        """Predict system performance metrics"""
+        
         try:
             # Collect performance features
             features_data = []
@@ -532,7 +555,8 @@ class AIAnalyticsEngine:
             return None
             
     async def _predict_content_performance(self) -> Optional[PredictionResult]:
-        """Predict content protection performance"""        
+        """Predict content protection performance"""
+        
         try:
             # Collect content protection metrics
             protection_data = []
@@ -564,7 +588,8 @@ class AIAnalyticsEngine:
             return None
             
     async def _analyze_business_performance(self):
-        """Analyze overall business performance"""        
+        """Analyze overall business performance"""
+        
         try:
             # Revenue analysis
             revenue_insights = await self._revenue_analyzer.analyze(self._data_buffers)
@@ -592,7 +617,8 @@ class AIAnalyticsEngine:
             logger.error(f"Error in business performance analysis: {e}")
             
     async def _generate_insights(self):
-        """Generate actionable insights from analysis"""        
+        """Generate actionable insights from analysis"""
+        
         try:
             # System insights
             system_insights = await self._generate_system_insights()
@@ -614,7 +640,8 @@ class AIAnalyticsEngine:
             logger.error(f"Error generating insights: {e}")
             
     async def _generate_system_insights(self) -> List[AnalyticsInsight]:
-        """Generate system-level insights"""        
+        """Generate system-level insights"""
+        
         insights = []
         
         # CPU usage insights
@@ -642,7 +669,8 @@ class AIAnalyticsEngine:
         return insights
         
     async def _generate_business_insights(self) -> List[AnalyticsInsight]:
-        """Generate business-level insights"""        
+        """Generate business-level insights"""
+        
         insights = []
         
         # Revenue insights
@@ -687,7 +715,8 @@ class AIAnalyticsEngine:
         return insights
         
     async def _generate_optimization_insights(self) -> List[AnalyticsInsight]:
-        """Generate optimization insights"""        
+        """Generate optimization insights"""
+        
         insights = []
         
         # Content protection optimization
@@ -717,7 +746,8 @@ class AIAnalyticsEngine:
         return insights
         
     async def _update_models(self):
-        """Update AI models with new data"""        
+        """Update AI models with new data"""
+        
         # Check if enough time has passed
         current_time = datetime.utcnow()
         if hasattr(self, '_last_model_update'):
@@ -741,7 +771,8 @@ class AIAnalyticsEngine:
             logger.error(f"Error updating models: {e}")
             
     async def _update_anomaly_model(self):
-        """Update anomaly detection model"""        
+        """Update anomaly detection model"""
+        
         # Collect training data
         training_data = []
         for buffer in self._data_buffers.values():
@@ -761,7 +792,8 @@ class AIAnalyticsEngine:
         model.fit(X_scaled)
         
     async def _update_prediction_models(self):
-        """Update prediction models"""        
+        """Update prediction models"""
+        
         # Update performance prediction model
         features_data = []
         target_data = []
@@ -785,7 +817,8 @@ class AIAnalyticsEngine:
             model.fit(X_scaled, y)
             
     async def _store_anomaly_detection(self, anomaly: AnomalyDetection):
-        """Store anomaly detection result"""        
+        """Store anomaly detection result"""
+        
         if self.redis_client:
             try:
                 key = f"analytics:anomaly:{anomaly.metric_name}:{int(anomaly.timestamp.timestamp())}"
@@ -805,7 +838,8 @@ class AIAnalyticsEngine:
                 logger.error(f"Error storing anomaly detection: {e}")
                 
     async def _store_prediction(self, prediction: PredictionResult):
-        """Store prediction result"""        
+        """Store prediction result"""
+        
         if self.redis_client:
             try:
                 key = f"analytics:prediction:{prediction.model_type.value}:{int(prediction.timestamp.timestamp())}"
@@ -825,7 +859,8 @@ class AIAnalyticsEngine:
                 logger.error(f"Error storing prediction: {e}")
                 
     async def _store_insight(self, insight: AnalyticsInsight):
-        """Store analytics insight"""        
+        """Store analytics insight"""
+        
         if self.redis_client:
             try:
                 key = f"analytics:insight:{insight.type}:{int(insight.timestamp.timestamp())}"
@@ -851,21 +886,25 @@ class AIAnalyticsEngine:
                 logger.error(f"Error storing insight: {e}")
                 
     async def _load_trained_models(self):
-        """Load pre-trained models from storage"""        
+        """Load pre-trained models from storage"""
+        
         # Implementation for loading models from persistent storage
         pass
         
     async def _save_trained_models(self):
-        """Save trained models to storage"""        
+        """Save trained models to storage"""
+        
         # Implementation for saving models to persistent storage
         pass
         
     async def get_recent_insights(self, limit: int = 10) -> List[AnalyticsInsight]:
-        """Get recent analytics insights"""        
+        """Get recent analytics insights"""
+        
         return list(self._insights_queue)[-limit:]
         
     async def get_predictions(self, model_type: AnalyticsModel) -> Optional[PredictionResult]:
-        """Get latest predictions for a model type"""        
+        """Get latest predictions for a model type"""
+        
         if not self.redis_client:
             return None
             
@@ -898,7 +937,8 @@ class AIAnalyticsEngine:
         return None
         
     async def get_anomalies(self, metric_name: str = None, hours: int = 24) -> List[AnomalyDetection]:
-        """Get recent anomalies"""        
+        """Get recent anomalies"""
+        
         if not self.redis_client:
             return []
             
@@ -932,43 +972,52 @@ class AIAnalyticsEngine:
             return []
             
     async def generate_insights(self) -> List[AnalyticsInsight]:
-        """Generate current insights for external access"""        
+        """Generate current insights for external access"""
+        
         await self._generate_insights()
         return await self.get_recent_insights()
 
 
 # Business Intelligence Components
 class RevenueAnalyzer:
-    """Analyze revenue trends and patterns"""    
+    """Analyze revenue trends and patterns"""
+    
     async def analyze(self, data_buffers: Dict[str, deque]) -> List[AnalyticsInsight]:
-        """Analyze revenue data for insights"""        insights = []
+        """Analyze revenue data for insights"""
+        insights = []
         
         # Implementation for revenue analysis
         return insights
 
 
 class ContentOptimizer:
-    """Optimize content protection and performance"""    
+    """Optimize content protection and performance"""
+    
     async def analyze(self, data_buffers: Dict[str, deque]) -> List[AnalyticsInsight]:
-        """Analyze content performance for optimization"""        insights = []
+        """Analyze content performance for optimization"""
+        insights = []
         
         # Implementation for content optimization analysis
         return insights
 
 
 class CollaborationMatcher:
-    """Analyze collaboration patterns and success"""    
+    """Analyze collaboration patterns and success"""
+    
     async def analyze(self, data_buffers: Dict[str, deque]) -> List[AnalyticsInsight]:
-        """Analyze collaboration data for insights"""        insights = []
+        """Analyze collaboration data for insights"""
+        insights = []
         
         # Implementation for collaboration analysis
         return insights
 
 
 class PerformancePredictor:
-    """Predict system and application performance"""    
+    """Predict system and application performance"""
+    
     async def analyze(self, data_buffers: Dict[str, deque]) -> List[AnalyticsInsight]:
-        """Analyze performance data for predictions"""        insights = []
+        """Analyze performance data for predictions"""
+        insights = []
         
         # Implementation for performance analysis
         return insights

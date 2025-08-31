@@ -12,7 +12,8 @@ Team Expertise:
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized copying, distribution, or use without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""import logging
+"""
+import logging
 import sys
 from pathlib import Path
 from typing import Dict, Any, Optional, List
@@ -124,7 +125,8 @@ __all__ = [
 
 
 class SSLTLSManager:
-    """    Industrial-grade SSL/TLS Management System
+    """
+    Industrial-grade SSL/TLS Management System
     
     This is the main entry point for all SSL/TLS operations in the IA Influencer Agent.
     It provides a unified interface to all SSL/TLS functionality including:
@@ -148,13 +150,16 @@ class SSLTLSManager:
         >>> 
         >>> # Scan SSL configuration
         >>> scan_result = ssl_manager.scan_host("example.com", 443)
-    """    
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
-        """        Initialize SSL/TLS manager with configuration
+        """
+        Initialize SSL/TLS manager with configuration
         
         Args:
             config: SSL/TLS configuration dictionary
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         self.cert_manager = None
         self.letsencrypt_manager = None
         self.tls_config_manager = None
@@ -163,21 +168,25 @@ class SSLTLSManager:
         logger.info("SSL/TLS Manager initialized")
     
     def init_certificate_manager(self, cert_config: Dict[str, Any]) -> CertificateManager:
-        """Initialize certificate manager"""        self.cert_manager = create_certificate_manager(cert_config)
+        """Initialize certificate manager"""
+        self.cert_manager = create_certificate_manager(cert_config)
         return self.cert_manager
     
     def init_letsencrypt_manager(self, le_config: Dict[str, Any]) -> LetsEncryptManager:
-        """Initialize Let's Encrypt manager"""        from .letsencrypt_manager import LetsEncryptConfig
+        """Initialize Let's Encrypt manager"""
+        from .letsencrypt_manager import LetsEncryptConfig
         config_obj = LetsEncryptConfig(**le_config)
         self.letsencrypt_manager = LetsEncryptManager(config_obj)
         return self.letsencrypt_manager
     
     def init_tls_config_manager(self, config_path: Optional[Path] = None) -> TLSConfigManager:
-        """Initialize TLS configuration manager"""        self.tls_config_manager = create_tls_config_manager(config_path)
+        """Initialize TLS configuration manager"""
+        self.tls_config_manager = create_tls_config_manager(config_path)
         return self.tls_config_manager
     
     def init_monitor(self, monitor_config_path: Optional[Path] = None) -> CertificateMonitor:
-        """Initialize certificate monitor"""        self.monitor = create_certificate_monitor(monitor_config_path)
+        """Initialize certificate monitor"""
+        self.monitor = create_certificate_monitor(monitor_config_path)
         return self.monitor
     
     def validate_configuration(
@@ -186,10 +195,12 @@ class SSLTLSManager:
         key_path: Path, 
         key_password: Optional[bytes] = None
     ) -> Dict[str, Any]:
-        """Validate SSL configuration"""        return validate_ssl_configuration(cert_path, key_path, key_password)
+        """Validate SSL configuration"""
+        return validate_ssl_configuration(cert_path, key_path, key_password)
     
     def get_status(self) -> Dict[str, Any]:
-        """Get overall SSL/TLS management status"""        return {
+        """Get overall SSL/TLS management status"""
+        return {
             'certificate_manager': self.cert_manager is not None,
             'letsencrypt_manager': self.letsencrypt_manager is not None,
             'tls_config_manager': self.tls_config_manager is not None,
@@ -199,20 +210,24 @@ class SSLTLSManager:
 
 
 def create_ssl_manager(config: Optional[Dict[str, Any]] = None) -> SSLTLSManager:
-    """    Factory function to create SSL/TLS manager
+    """
+    Factory function to create SSL/TLS manager
     
     Args:
         config: SSL/TLS configuration
         
     Returns:
         SSL/TLS manager instance
-    """    return SSLTLSManager(config)
+    """
+    return SSLTLSManager(config)
 
 
 def main():
-    """    Main entry point for SSL/TLS operations
+    """
+    Main entry point for SSL/TLS operations
     Can be called directly or via CLI
-    """    if len(sys.argv) > 1 and sys.argv[1] == "cli":
+    """
+    if len(sys.argv) > 1 and sys.argv[1] == "cli":
         # Import and run CLI
         from .cli import main as cli_main
         sys.argv = sys.argv[1:]  # Remove 'cli' argument

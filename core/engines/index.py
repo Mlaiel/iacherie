@@ -14,7 +14,8 @@ COPYRIGHT WARNING: This code is proprietary. Unauthorized use, copying, or
 redistribution without explicit written permission from Fahed Mlaiel is 
 strictly prohibited and will result in legal action.
 ================================================================================
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Union
 from dataclasses import asdict
@@ -36,22 +37,26 @@ logger = logging.getLogger(__name__)
 
 
 class EngineIndexService:
-    """    🎯 ENTERPRISE ENGINE INDEX SERVICE
+    """
+    🎯 ENTERPRISE ENGINE INDEX SERVICE
     
     Central service for engine management, discovery, and monitoring
     with comprehensive configuration and health tracking capabilities.
-    """    
+    """
+    
     def __init__(self):
         self.startup_time = datetime.utcnow()
         self._engine_metadata = {}
         self._performance_metrics = {}
         
     def get_engine_catalog(self) -> Dict[str, Any]:
-        """        📋 Get comprehensive engine catalog
+        """
+        📋 Get comprehensive engine catalog
         
         Returns:
             Complete catalog of available engines with metadata
-        """        catalog = {
+        """
+        catalog = {
             "meta": {
                 "total_engines": sum(len(engines) for engines in ENGINES_INFO.values()),
                 "categories": len(ENGINES_INFO),
@@ -90,11 +95,13 @@ class EngineIndexService:
         return catalog
     
     def get_quick_start_guide(self) -> Dict[str, Any]:
-        """        🚀 Get quick start guide for engine usage
+        """
+        🚀 Get quick start guide for engine usage
         
         Returns:
             Step-by-step guide for getting started
-        """        return {
+        """
+        return {
             "title": "IA-Influencer-Agent Core Engines - Quick Start Guide",
             "overview": {
                 "description": "Enterprise-grade processing engines for content creators",
@@ -127,7 +134,8 @@ class EngineIndexService:
             "basic_setup": {
                 "step_1": {
                     "title": "Configure Engine Registry",
-                    "code": """from backend.core.engines import EngineConfig, engine_registry
+                    "code": """
+from backend.core.engines import EngineConfig, engine_registry
 
 config = EngineConfig(
     redis_url="redis://localhost:6379",
@@ -137,10 +145,12 @@ config = EngineConfig(
 )
 
 engine_registry.configure(config)
-"""                },
+"""
+                },
                 "step_2": {
                     "title": "Initialize Engines", 
-                    "code": """import asyncio
+                    "code": """
+import asyncio
 from backend.core.engines import initialize_engines
 
 async def setup():
@@ -159,10 +169,12 @@ async def setup():
 
 # Run setup
 results = asyncio.run(setup())
-"""                },
+"""
+                },
                 "step_3": {
                     "title": "Use Engines",
-                    "code": """from backend.core.engines import get_engine
+                    "code": """
+from backend.core.engines import get_engine
 
 # Get protection engine
 protection_engine = get_engine("content_protection_engine")
@@ -186,7 +198,8 @@ revenue_result = await monetization_engine.track_revenue({
     "amount": 125.50,
     "currency": "EUR"
 })
-"""                }
+"""
+                }
             },
             "advanced_usage": {
                 "content_protection": {
@@ -210,10 +223,12 @@ result = await protection_engine.protect_content({
     "protection_config": protection_config,
     "owner_id": "creator_456"
 })
-"""                },
+"""
+                },
                 "revenue_analytics": {
                     "description": "Comprehensive revenue analytics and forecasting",
-                    "example": """from datetime import datetime, timedelta
+                    "example": """
+from datetime import datetime, timedelta
 
 # Get revenue analytics
 analytics = await monetization_engine.get_revenue_analytics(
@@ -229,10 +244,12 @@ analytics = await monetization_engine.get_revenue_analytics(
 # - Top performing content
 # - AI-powered forecasts
 # - Market share analysis
-"""                }
+"""
+                }
             },
             "monitoring": {
-                "health_checks": """from backend.core.engines import health_check
+                "health_checks": """
+from backend.core.engines import health_check
 
 # Check engine health
 health_status = await health_check()
@@ -249,15 +266,18 @@ registry_status = engine_registry.health_check()
 # Monitor specific engines
 protection_engine = get_engine("content_protection_engine")
 engine_metrics = await protection_engine.get_metrics()
-"""            }
+"""
+            }
         }
     
     def get_configuration_reference(self) -> Dict[str, Any]:
-        """        ⚙️ Get complete configuration reference
+        """
+        ⚙️ Get complete configuration reference
         
         Returns:
             Comprehensive configuration documentation
-        """        return {
+        """
+        return {
             "engine_config": {
                 "description": "Main configuration class for all engines",
                 "parameters": {
@@ -358,11 +378,13 @@ engine_metrics = await protection_engine.get_metrics()
         }
     
     def get_api_examples(self) -> Dict[str, Any]:
-        """        📚 Get comprehensive API usage examples
+        """
+        📚 Get comprehensive API usage examples
         
         Returns:
             Code examples for all major engine operations
-        """        return {
+        """
+        return {
             "content_protection": {
                 "basic_protection": """# Protect audio content
 result = await protection_engine.protect_content({
@@ -384,7 +406,8 @@ takedown = await protection_engine.generate_takedown_request(
     match=detected_match,
     template_type="dmca"
 )
-"""            },
+"""
+            },
             "monetization": {
                 "track_revenue": """# Track revenue from Spotify
 result = await monetization_engine.track_revenue({
@@ -422,7 +445,8 @@ deal = await monetization_engine.create_licensing_deal({
     "total_amount": 15000.00,
     "currency": "EUR"
 })
-"""            },
+"""
+            },
             "ai_processing": {
                 "content_analysis": """# Analyze content with AI
 analysis = await ai_engine.analyze_content({
@@ -444,13 +468,15 @@ recommendations = await ai_engine.get_recommendations({
         "monetization_strategies"
     ]
 })
-"""            }
+"""
+            }
         }
     
     # Private helper methods
     
     def _get_category_description(self, category: str) -> str:
-        """Get description for engine category"""        descriptions = {
+        """Get description for engine category"""
+        descriptions = {
             "ai_processing": "Advanced AI engines for content analysis, recommendations, and intelligent processing",
             "content_processing": "Content manipulation engines for audio, video, and multimedia processing",
             "protection_security": "Security and protection engines for content rights management",
@@ -461,7 +487,8 @@ recommendations = await ai_engine.get_recommendations({
         return descriptions.get(category, "Specialized processing engines")
     
     def _get_engine_description(self, engine_name: str) -> str:
-        """Get description for specific engine"""        descriptions = {
+        """Get description for specific engine"""
+        descriptions = {
             "content_protection_engine": "Multi-modal AI fingerprinting and content protection",
             "monetization_engine": "Automated revenue tracking and monetization optimization",
             "ai_engine": "Core AI processing and analysis engine",
@@ -473,7 +500,8 @@ recommendations = await ai_engine.get_recommendations({
         return descriptions.get(engine_name, f"Specialized {engine_name.replace('_', ' ')} functionality")
     
     def _get_engine_capabilities(self, engine_name: str) -> List[str]:
-        """Get capabilities list for engine"""        capabilities = {
+        """Get capabilities list for engine"""
+        capabilities = {
             "content_protection_engine": [
                 "Multi-format fingerprinting (audio, video, image, text)",
                 "AI-powered similarity detection",
@@ -502,7 +530,8 @@ recommendations = await ai_engine.get_recommendations({
         return capabilities.get(engine_name, ["Advanced processing capabilities"])
     
     def _get_runtime_info(self, engine_name: str) -> Dict[str, Any]:
-        """Get runtime information for engine"""        try:
+        """Get runtime information for engine"""
+        try:
             engine = get_engine(engine_name)
             return {
                 "initialized": True,
@@ -520,19 +549,23 @@ index_service = EngineIndexService()
 
 # Convenience functions
 def get_engine_catalog() -> Dict[str, Any]:
-    """Get engine catalog"""    return index_service.get_engine_catalog()
+    """Get engine catalog"""
+    return index_service.get_engine_catalog()
 
 
 def get_quick_start_guide() -> Dict[str, Any]:
-    """Get quick start guide"""    return index_service.get_quick_start_guide()
+    """Get quick start guide"""
+    return index_service.get_quick_start_guide()
 
 
 def get_configuration_reference() -> Dict[str, Any]:
-    """Get configuration reference"""    return index_service.get_configuration_reference()
+    """Get configuration reference"""
+    return index_service.get_configuration_reference()
 
 
 def get_api_examples() -> Dict[str, Any]:
-    """Get API examples"""    return index_service.get_api_examples()
+    """Get API examples"""
+    return index_service.get_api_examples()
 
 
 # Export main functions

@@ -5,7 +5,8 @@ preferences, content settings, and platform customization for creators.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Advanced Content Protection
-"""from datetime import datetime, timedelta
+"""
+from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
 from uuid import UUID
 import logging
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationChannel(str, Enum):
-    """Available notification channels."""    EMAIL = "email"
+    """Available notification channels."""
+    EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
     IN_APP = "in_app"
@@ -42,21 +44,24 @@ class NotificationChannel(str, Enum):
 
 
 class PrivacyLevel(str, Enum):
-    """Privacy levels for various settings."""    PUBLIC = "public"
+    """Privacy levels for various settings."""
+    PUBLIC = "public"
     FOLLOWERS = "followers"
     VERIFIED_ONLY = "verified_only"
     PRIVATE = "private"
 
 
 class ContentVisibility(str, Enum):
-    """Content visibility options."""    PUBLIC = "public"
+    """Content visibility options."""
+    PUBLIC = "public"
     UNLISTED = "unlisted"
     FOLLOWERS_ONLY = "followers_only"
     PRIVATE = "private"
 
 
 class NotificationPreferenceData(BaseModel):
-    """Notification preference settings."""    email_enabled: bool = True
+    """Notification preference settings."""
+    email_enabled: bool = True
     sms_enabled: bool = False
     push_enabled: bool = True
     in_app_enabled: bool = True
@@ -86,7 +91,8 @@ class NotificationPreferenceData(BaseModel):
 
 
 class PrivacyPreferenceData(BaseModel):
-    """Privacy preference settings."""    profile_visibility: PrivacyLevel = PrivacyLevel.PUBLIC
+    """Privacy preference settings."""
+    profile_visibility: PrivacyLevel = PrivacyLevel.PUBLIC
     content_default_visibility: ContentVisibility = ContentVisibility.PUBLIC
     show_online_status: bool = True
     show_last_active: bool = True
@@ -112,7 +118,8 @@ class PrivacyPreferenceData(BaseModel):
 
 
 class ContentPreferenceData(BaseModel):
-    """Content preference settings."""    default_language: str = "en"
+    """Content preference settings."""
+    default_language: str = "en"
     content_quality: str = "high"  # low, medium, high, ultra
     auto_generate_thumbnails: bool = True
     auto_generate_captions: bool = True
@@ -143,7 +150,8 @@ class ContentPreferenceData(BaseModel):
 
 
 class InterfacePreferenceData(BaseModel):
-    """User interface preference settings."""    theme: str = "system"  # light, dark, system
+    """User interface preference settings."""
+    theme: str = "system"  # light, dark, system
     language: str = "en"
     timezone: str = "UTC"
     date_format: str = "YYYY-MM-DD"
@@ -175,7 +183,8 @@ class InterfacePreferenceData(BaseModel):
 
 
 class PreferenceManager:
-    """    Comprehensive preference management system for creators.
+    """
+    Comprehensive preference management system for creators.
     
     Features:
     - Multi-category preference management
@@ -186,7 +195,8 @@ class PreferenceManager:
     - Interface personalization
     - Preference validation and defaults
     - Caching for performance optimization
-    """    
+    """
+    
     def __init__(
         self,
         db: Session,
@@ -209,14 +219,16 @@ class PreferenceManager:
         }
         
     async def initialize_client_preferences(self, client_id: UUID) -> Dict[str, Any]:
-        """        Initialize default preferences for new client.
+        """
+        Initialize default preferences for new client.
         
         Args:
             client_id: Client identifier
             
         Returns:
             Initialized preferences
-        """        try:
+        """
+        try:
             preferences_created = {}
             
             for category, default_values in self.default_preferences.items():
@@ -249,7 +261,8 @@ class PreferenceManager:
         client_id: UUID,
         category: Optional[PreferenceCategory] = None
     ) -> Dict[str, Any]:
-        """        Get client preferences by category or all preferences.
+        """
+        Get client preferences by category or all preferences.
         
         Args:
             client_id: Client identifier
@@ -257,7 +270,8 @@ class PreferenceManager:
             
         Returns:
             Client preferences data
-        """        try:
+        """
+        try:
             # Try cache first
             cache_key = f"preferences:{client_id}"
             cached_preferences = await self.redis_cache.get(cache_key)
@@ -301,7 +315,8 @@ class PreferenceManager:
         client_id: UUID,
         notification_data: NotificationPreferenceData
     ) -> Dict[str, Any]:
-        """        Update notification preferences for client.
+        """
+        Update notification preferences for client.
         
         Args:
             client_id: Client identifier
@@ -309,7 +324,8 @@ class PreferenceManager:
             
         Returns:
             Updated preferences
-        """        try:
+        """
+        try:
             # Get existing preference record
             preference = self.db.query(ClientPreference).filter(
                 ClientPreference.client_id == client_id,
@@ -357,7 +373,8 @@ class PreferenceManager:
         client_id: UUID,
         privacy_data: PrivacyPreferenceData
     ) -> Dict[str, Any]:
-        """        Update privacy preferences for client.
+        """
+        Update privacy preferences for client.
         
         Args:
             client_id: Client identifier
@@ -365,7 +382,8 @@ class PreferenceManager:
             
         Returns:
             Updated preferences
-        """        try:
+        """
+        try:
             # Get existing preference record
             preference = self.db.query(ClientPreference).filter(
                 ClientPreference.client_id == client_id,
@@ -411,7 +429,8 @@ class PreferenceManager:
         client_id: UUID,
         content_data: ContentPreferenceData
     ) -> Dict[str, Any]:
-        """        Update content preferences for client.
+        """
+        Update content preferences for client.
         
         Args:
             client_id: Client identifier
@@ -419,7 +438,8 @@ class PreferenceManager:
             
         Returns:
             Updated preferences
-        """        try:
+        """
+        try:
             preference = self.db.query(ClientPreference).filter(
                 ClientPreference.client_id == client_id,
                 ClientPreference.category == PreferenceCategory.CONTENT,
@@ -459,7 +479,8 @@ class PreferenceManager:
         client_id: UUID,
         interface_data: InterfacePreferenceData
     ) -> Dict[str, Any]:
-        """        Update interface preferences for client.
+        """
+        Update interface preferences for client.
         
         Args:
             client_id: Client identifier
@@ -467,7 +488,8 @@ class PreferenceManager:
             
         Returns:
             Updated preferences
-        """        try:
+        """
+        try:
             preference = self.db.query(ClientPreference).filter(
                 ClientPreference.client_id == client_id,
                 ClientPreference.category == PreferenceCategory.INTERFACE,
@@ -509,7 +531,8 @@ class PreferenceManager:
         preference_key: str,
         preference_value: Any
     ) -> Dict[str, Any]:
-        """        Update a specific preference value.
+        """
+        Update a specific preference value.
         
         Args:
             client_id: Client identifier
@@ -519,7 +542,8 @@ class PreferenceManager:
             
         Returns:
             Updated preference data
-        """        try:
+        """
+        try:
             # Get current preferences
             current_preferences = await self.get_client_preferences(client_id, category)
             
@@ -561,7 +585,8 @@ class PreferenceManager:
         client_id: UUID,
         category: Optional[PreferenceCategory] = None
     ) -> Dict[str, Any]:
-        """        Reset preferences to defaults.
+        """
+        Reset preferences to defaults.
         
         Args:
             client_id: Client identifier
@@ -569,7 +594,8 @@ class PreferenceManager:
             
         Returns:
             Reset preferences
-        """        try:
+        """
+        try:
             if category:
                 # Reset specific category
                 preference = self.db.query(ClientPreference).filter(
@@ -615,14 +641,16 @@ class PreferenceManager:
             raise PreferenceServiceError("Failed to reset preferences") from e
             
     async def export_preferences(self, client_id: UUID) -> Dict[str, Any]:
-        """        Export all client preferences for backup/migration.
+        """
+        Export all client preferences for backup/migration.
         
         Args:
             client_id: Client identifier
             
         Returns:
             Exported preferences data
-        """        try:
+        """
+        try:
             preferences = await self.get_client_preferences(client_id)
             
             export_data = {
@@ -646,7 +674,8 @@ class PreferenceManager:
         preferences_data: Dict[str, Any],
         overwrite: bool = False
     ) -> Dict[str, Any]:
-        """        Import preferences from exported data.
+        """
+        Import preferences from exported data.
         
         Args:
             client_id: Client identifier
@@ -655,7 +684,8 @@ class PreferenceManager:
             
         Returns:
             Import result
-        """        try:
+        """
+        try:
             imported_categories = []
             
             for category_name, category_prefs in preferences_data.get("preferences", {}).items():
@@ -713,11 +743,13 @@ class PreferenceManager:
         client_id: UUID,
         preferences: Dict[str, Any]
     ) -> None:
-        """Cache client preferences for performance."""        cache_key = f"preferences:{client_id}"
+        """Cache client preferences for performance."""
+        cache_key = f"preferences:{client_id}"
         await self.redis_cache.set(
             cache_key, preferences, expire_seconds=3600  # 1 hour
         )
         
     async def _clear_preference_cache(self, client_id: UUID) -> None:
-        """Clear cached preferences for client."""        cache_key = f"preferences:{client_id}"
+        """Clear cached preferences for client."""
+        cache_key = f"preferences:{client_id}"
         await self.redis_cache.delete(cache_key)

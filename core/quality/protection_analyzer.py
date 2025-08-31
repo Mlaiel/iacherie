@@ -17,7 +17,8 @@ Unauthorized use, modification, or distribution by any individual or entity
 without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Violators will face immediate legal action under German and international law.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import hashlib
@@ -51,7 +52,8 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionMethod(Enum):
-    """Content protection methods"""    AUDIO_FINGERPRINTING = "audio_fingerprinting"
+    """Content protection methods"""
+    AUDIO_FINGERPRINTING = "audio_fingerprinting"
     VIDEO_FINGERPRINTING = "video_fingerprinting"
     IMAGE_FINGERPRINTING = "image_fingerprinting"
     TEXT_FINGERPRINTING = "text_fingerprinting"
@@ -62,14 +64,16 @@ class ProtectionMethod(Enum):
 
 
 class ProtectionLevel(Enum):
-    """Protection security levels"""    BASIC = "basic"        # 0-40 score
+    """Protection security levels"""
+    BASIC = "basic"        # 0-40 score
     STANDARD = "standard"  # 41-70 score
     ADVANCED = "advanced"  # 71-85 score
     MILITARY = "military"  # 86-100 score
 
 
 class ThreatType(Enum):
-    """Types of protection threats"""    UNAUTHORIZED_COPYING = "unauthorized_copying"
+    """Types of protection threats"""
+    UNAUTHORIZED_COPYING = "unauthorized_copying"
     CONTENT_PIRACY = "content_piracy"
     DEEPFAKE_MANIPULATION = "deepfake_manipulation"
     AI_GENERATION_MIMICRY = "ai_generation_mimicry"
@@ -81,7 +85,8 @@ class ThreatType(Enum):
 
 
 class VulnerabilityRisk(Enum):
-    """Vulnerability risk levels"""    CRITICAL = "critical"  # Immediate action required
+    """Vulnerability risk levels"""
+    CRITICAL = "critical"  # Immediate action required
     HIGH = "high"         # Action required within 24h
     MEDIUM = "medium"     # Action required within week
     LOW = "low"          # Monitor and review
@@ -90,7 +95,8 @@ class VulnerabilityRisk(Enum):
 
 @dataclass
 class FingerprintQuality:
-    """Quality assessment of content fingerprinting"""    method: ProtectionMethod
+    """Quality assessment of content fingerprinting"""
+    method: ProtectionMethod
     uniqueness_score: float = 0.0
     robustness_score: float = 0.0
     precision_score: float = 0.0
@@ -105,7 +111,8 @@ class FingerprintQuality:
     compression_resistance: float = 0.0
     
     def calculate_overall_score(self) -> float:
-        """Calculate overall fingerprint quality score"""        weights = {
+        """Calculate overall fingerprint quality score"""
+        weights = {
             'uniqueness': 0.30,
             'robustness': 0.25,
             'precision': 0.20,
@@ -144,7 +151,8 @@ class FingerprintQuality:
 
 @dataclass
 class ProtectionVulnerability:
-    """Identified protection vulnerability"""    vulnerability_id: str
+    """Identified protection vulnerability"""
+    vulnerability_id: str
     threat_type: ThreatType
     risk_level: VulnerabilityRisk
     title: str
@@ -164,7 +172,8 @@ class ProtectionVulnerability:
     priority_score: float = 0.0
     
     def calculate_priority_score(self):
-        """Calculate vulnerability priority score"""        risk_weights = {
+        """Calculate vulnerability priority score"""
+        risk_weights = {
             VulnerabilityRisk.CRITICAL: 100,
             VulnerabilityRisk.HIGH: 80,
             VulnerabilityRisk.MEDIUM: 60,
@@ -198,7 +207,8 @@ class ProtectionVulnerability:
 
 @dataclass
 class ProtectionRecommendation:
-    """Content protection optimization recommendation"""    recommendation_id: str
+    """Content protection optimization recommendation"""
+    recommendation_id: str
     category: str
     priority: str  # critical, high, medium, low
     title: str
@@ -236,7 +246,8 @@ class ProtectionRecommendation:
 
 @dataclass
 class ContentProtectionAnalysis:
-    """Comprehensive content protection quality analysis result"""    content_id: str
+    """Comprehensive content protection quality analysis result"""
+    content_id: str
     content_type: str
     analysis_timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
@@ -268,7 +279,8 @@ class ContentProtectionAnalysis:
     protection_metadata: Dict[str, Any] = field(default_factory=dict)
     
     def determine_protection_level(self):
-        """Determine overall protection level based on score"""        if self.protection_readiness_score >= 86:
+        """Determine overall protection level based on score"""
+        if self.protection_readiness_score >= 86:
             self.protection_level = ProtectionLevel.MILITARY
         elif self.protection_readiness_score >= 71:
             self.protection_level = ProtectionLevel.ADVANCED
@@ -278,7 +290,8 @@ class ContentProtectionAnalysis:
             self.protection_level = ProtectionLevel.BASIC
     
     def count_vulnerabilities_by_risk(self):
-        """Count vulnerabilities by risk level"""        self.critical_vulnerabilities = sum(
+        """Count vulnerabilities by risk level"""
+        self.critical_vulnerabilities = sum(
             1 for vuln in self.vulnerabilities 
             if vuln.risk_level == VulnerabilityRisk.CRITICAL
         )
@@ -311,8 +324,10 @@ class ContentProtectionAnalysis:
 
 
 class ContentProtectionQualityAnalyzer:
-    """    Ultra-advanced content protection quality analyzer with AI-powered assessment
-    """    
+    """
+    Ultra-advanced content protection quality analyzer with AI-powered assessment
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -386,7 +401,8 @@ class ContentProtectionQualityAnalyzer:
         content_metadata: Optional[Dict[str, Any]] = None,
         protection_requirements: Optional[Dict[str, Any]] = None
     ) -> ContentProtectionAnalysis:
-        """        Perform comprehensive content protection quality analysis
+        """
+        Perform comprehensive content protection quality analysis
         
         Args:
             content_path: Path to the content file
@@ -395,7 +411,8 @@ class ContentProtectionQualityAnalyzer:
             
         Returns:
             ContentProtectionAnalysis: Comprehensive protection analysis result
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         content_path = Path(content_path)
         content_id = content_metadata.get('content_id', str(content_path.stem)) if content_metadata else str(content_path.stem)
         
@@ -443,7 +460,8 @@ class ContentProtectionQualityAnalyzer:
             raise
     
     async def _determine_content_type(self, content_path: Path) -> str:
-        """Determine content type from file extension"""        extension = content_path.suffix.lower()
+        """Determine content type from file extension"""
+        extension = content_path.suffix.lower()
         
         audio_extensions = ['.mp3', '.wav', '.flac', '.aac', '.ogg']
         video_extensions = ['.mp4', '.avi', '.mov', '.mkv', '.webm']
@@ -466,7 +484,8 @@ class ContentProtectionQualityAnalyzer:
         content_path: Path,
         content_type: str
     ) -> Dict[str, Any]:
-        """Extract comprehensive content metadata"""        metadata = {
+        """Extract comprehensive content metadata"""
+        metadata = {
             'file_size': content_path.stat().st_size,
             'file_extension': content_path.suffix.lower(),
             'creation_time': datetime.now(timezone.utc).isoformat(),
@@ -518,7 +537,8 @@ class ContentProtectionQualityAnalyzer:
         return metadata
     
     async def _calculate_content_hash(self, content_path: Path) -> str:
-        """Calculate SHA-256 hash of content"""        hash_sha256 = hashlib.sha256()
+        """Calculate SHA-256 hash of content"""
+        hash_sha256 = hashlib.sha256()
         
         with open(content_path, 'rb') as f:
             for chunk in iter(lambda: f.read(4096), b""):
@@ -532,7 +552,8 @@ class ContentProtectionQualityAnalyzer:
         content_path: Path,
         content_type: str
     ):
-        """Analyze fingerprinting quality for applicable protection methods"""        
+        """Analyze fingerprinting quality for applicable protection methods"""
+        
         applicable_methods = []
         
         if content_type == 'audio':
@@ -567,7 +588,8 @@ class ContentProtectionQualityAnalyzer:
         method: ProtectionMethod,
         content_type: str
     ) -> FingerprintQuality:
-        """Analyze quality of specific protection method"""        
+        """Analyze quality of specific protection method"""
+        
         start_time = time.time()
         quality = FingerprintQuality(method=method)
         
@@ -608,7 +630,8 @@ class ContentProtectionQualityAnalyzer:
         return quality
     
     def _calculate_hash_entropy(self, hash_string: str) -> float:
-        """Calculate entropy of hash string"""        if not hash_string:
+        """Calculate entropy of hash string"""
+        if not hash_string:
             return 0.0
         
         # Count character frequencies
@@ -628,7 +651,8 @@ class ContentProtectionQualityAnalyzer:
         return entropy
     
     async def _analyze_audio_fingerprinting(self, content_path: Path) -> FingerprintQuality:
-        """Analyze audio fingerprinting quality"""        quality = FingerprintQuality(method=ProtectionMethod.AUDIO_FINGERPRINTING)
+        """Analyze audio fingerprinting quality"""
+        quality = FingerprintQuality(method=ProtectionMethod.AUDIO_FINGERPRINTING)
         
         if not MULTIMEDIA_AVAILABLE:
             return quality
@@ -674,7 +698,8 @@ class ContentProtectionQualityAnalyzer:
         return quality
     
     async def _analyze_video_fingerprinting(self, content_path: Path) -> FingerprintQuality:
-        """Analyze video fingerprinting quality"""        quality = FingerprintQuality(method=ProtectionMethod.VIDEO_FINGERPRINTING)
+        """Analyze video fingerprinting quality"""
+        quality = FingerprintQuality(method=ProtectionMethod.VIDEO_FINGERPRINTING)
         
         if not MULTIMEDIA_AVAILABLE:
             return quality
@@ -737,7 +762,8 @@ class ContentProtectionQualityAnalyzer:
         return quality
     
     async def _analyze_image_fingerprinting(self, content_path: Path) -> FingerprintQuality:
-        """Analyze image fingerprinting quality"""        quality = FingerprintQuality(method=ProtectionMethod.IMAGE_FINGERPRINTING)
+        """Analyze image fingerprinting quality"""
+        quality = FingerprintQuality(method=ProtectionMethod.IMAGE_FINGERPRINTING)
         
         if not MULTIMEDIA_AVAILABLE:
             return quality
@@ -784,7 +810,8 @@ class ContentProtectionQualityAnalyzer:
         return quality
     
     async def _analyze_text_fingerprinting(self, content_path: Path) -> FingerprintQuality:
-        """Analyze text fingerprinting quality"""        quality = FingerprintQuality(method=ProtectionMethod.TEXT_FINGERPRINTING)
+        """Analyze text fingerprinting quality"""
+        quality = FingerprintQuality(method=ProtectionMethod.TEXT_FINGERPRINTING)
         
         try:
             with open(content_path, 'r', encoding='utf-8') as f:
@@ -831,7 +858,8 @@ class ContentProtectionQualityAnalyzer:
         content_type: str,
         content_metadata: Optional[Dict[str, Any]]
     ):
-        """Assess content protection vulnerabilities"""        
+        """Assess content protection vulnerabilities"""
+        
         threat_likelihoods = self.threat_likelihoods.get(content_type, {})
         
         for threat_type, likelihood in threat_likelihoods.items():
@@ -853,7 +881,8 @@ class ContentProtectionQualityAnalyzer:
         content_type: str,
         content_metadata: Dict[str, Any]
     ) -> Optional[ProtectionVulnerability]:
-        """Create vulnerability assessment for specific threat"""        
+        """Create vulnerability assessment for specific threat"""
+        
         vulnerability_id = f"{threat_type.value}_{content_type}_{int(time.time())}"
         
         # Determine risk level based on likelihood and impact
@@ -930,7 +959,8 @@ class ContentProtectionQualityAnalyzer:
         vulnerability: ProtectionVulnerability,
         content_type: str
     ):
-        """Generate mitigation strategies for vulnerability"""        
+        """Generate mitigation strategies for vulnerability"""
+        
         threat_type = vulnerability.threat_type
         
         # Common mitigation strategies
@@ -994,7 +1024,8 @@ class ContentProtectionQualityAnalyzer:
         ]
     
     async def _check_metadata_vulnerabilities(self, analysis: ContentProtectionAnalysis):
-        """Check for metadata-related vulnerabilities"""        
+        """Check for metadata-related vulnerabilities"""
+        
         metadata = analysis.content_metadata
         
         # Missing metadata vulnerability
@@ -1022,7 +1053,8 @@ class ContentProtectionQualityAnalyzer:
         analysis: ContentProtectionAnalysis,
         content_type: str
     ):
-        """Check for technical vulnerabilities"""        
+        """Check for technical vulnerabilities"""
+        
         metadata = analysis.content_metadata
         
         # Low resolution vulnerability for images/videos
@@ -1071,7 +1103,8 @@ class ContentProtectionQualityAnalyzer:
             analysis.vulnerabilities.append(vulnerability)
     
     async def _calculate_protection_scores(self, analysis: ContentProtectionAnalysis):
-        """Calculate overall protection scores"""        
+        """Calculate overall protection scores"""
+        
         # Protection readiness score
         if analysis.fingerprint_qualities:
             fingerprint_scores = [
@@ -1121,7 +1154,8 @@ class ContentProtectionQualityAnalyzer:
         analysis: ContentProtectionAnalysis,
         protection_requirements: Optional[Dict[str, Any]]
     ):
-        """Generate protection optimization recommendations"""        
+        """Generate protection optimization recommendations"""
+        
         # Immediate actions for critical vulnerabilities
         critical_vulnerabilities = [
             vuln for vuln in analysis.vulnerabilities 

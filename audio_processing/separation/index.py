@@ -76,7 +76,8 @@ DOCUMENTATION = {
 
 # Usage Examples Index
 EXAMPLES = {
-    "basic_separation": """from backend.audio.separation import SeparationService, SeparationRequest
+    "basic_separation": """
+from backend.audio.separation import SeparationService, SeparationRequest
 
 service = SeparationService()
 request = SeparationRequest(
@@ -86,7 +87,8 @@ request = SeparationRequest(
 response = await service.separate_audio(request)
 """,
     
-    "batch_processing": """from backend.audio.separation import BatchProcessor
+    "batch_processing": """
+from backend.audio.separation import BatchProcessor
 
 processor = BatchProcessor()
 results = await processor.process_directory(
@@ -95,7 +97,8 @@ results = await processor.process_directory(
 )
 """,
     
-    "realtime_streaming": """from backend.audio.separation import RealtimeProcessor
+    "realtime_streaming": """
+from backend.audio.separation import RealtimeProcessor
 
 realtime = RealtimeProcessor()
 await realtime.start_streaming(separation_types=["vocal"])
@@ -124,7 +127,8 @@ Contact mlaiel@live.de for licensing inquiries.
 VIOLATIONS: Will be prosecuted under applicable copyright, 
 trade secret, and intellectual property laws.
 """def get_module_overview():
-    """Get comprehensive module overview."""    return {
+    """Get comprehensive module overview."""
+    return {
         "info": MODULE_INFO,
         "documentation": DOCUMENTATION,
         "examples": EXAMPLES,
@@ -132,7 +136,8 @@ trade secret, and intellectual property laws.
     }
 
 def display_team_credits():
-    """Display team expertise and credits."""    print("🏆 IA INFLUENCER AGENT - AUDIO SEPARATION MODULE 🏆")
+    """Display team expertise and credits."""
+    print("🏆 IA INFLUENCER AGENT - AUDIO SEPARATION MODULE 🏆")
     print("=" * 60)
     print(f"Lead Developer & Architect: {MODULE_INFO['author']}")
     print(f"Contact: {MODULE_INFO['email']}")

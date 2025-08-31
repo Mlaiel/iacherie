@@ -9,7 +9,8 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
 ATTENTION: Ce code est protégé par les droits d'auteur.
 Toute reproduction, distribution ou modification non autorisée est strictement interdite.
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 import torch
@@ -52,7 +53,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class EmbeddingResult:
-    """Result of embedding generation."""    content_id: str
+    """Result of embedding generation."""
+    content_id: str
     content_type: str
     embedding: np.ndarray
     features: Dict[str, Any]
@@ -63,7 +65,8 @@ class EmbeddingResult:
 
 @dataclass
 class AudioFeatures:
-    """Comprehensive audio feature extraction results."""    mfcc: np.ndarray
+    """Comprehensive audio feature extraction results."""
+    mfcc: np.ndarray
     chroma: np.ndarray
     spectral_centroid: np.ndarray
     spectral_bandwidth: np.ndarray
@@ -79,7 +82,8 @@ class AudioFeatures:
 
 @dataclass 
 class VideoFeatures:
-    """Comprehensive video feature extraction results."""    frame_features: List[np.ndarray]
+    """Comprehensive video feature extraction results."""
+    frame_features: List[np.ndarray]
     optical_flow: np.ndarray
     scene_changes: List[int]
     motion_vectors: np.ndarray
@@ -90,7 +94,8 @@ class VideoFeatures:
 
 @dataclass
 class ImageFeatures:
-    """Comprehensive image feature extraction results."""    visual_features: np.ndarray
+    """Comprehensive image feature extraction results."""
+    visual_features: np.ndarray
     color_histogram: np.ndarray
     edge_histogram: np.ndarray
     texture_features: np.ndarray
@@ -101,7 +106,8 @@ class ImageFeatures:
 
 
 class BaseEmbeddingGenerator(ABC):
-    """Base class for embedding generators."""    
+    """Base class for embedding generators."""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -109,28 +115,33 @@ class BaseEmbeddingGenerator(ABC):
     
     @abstractmethod
     async def generate_embedding(self, content: Any, metadata: Dict[str, Any]) -> EmbeddingResult:
-        """Generate embedding for content."""        pass
+        """Generate embedding for content."""
+        pass
     
     @abstractmethod
     def extract_features(self, content: Any) -> Dict[str, Any]:
-        """Extract content-specific features."""        pass
+        """Extract content-specific features."""
+        pass
     
     def normalize_embedding(self, embedding: np.ndarray) -> np.ndarray:
-        """Normalize embedding vector."""        norm = np.linalg.norm(embedding)
+        """Normalize embedding vector."""
+        norm = np.linalg.norm(embedding)
         if norm > 0:
             return embedding / norm
         return embedding
 
 
 class TextEmbeddingGenerator(BaseEmbeddingGenerator):
-    """    Advanced text embedding generator with multiple model support.
+    """
+    Advanced text embedding generator with multiple model support.
     
     Features:
     - Sentence transformers for semantic embeddings
     - BERT/RoBERTa for contextual embeddings
     - Multi-language support
     - Text preprocessing and cleaning
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.model_name = config.get('text_model', 'all-MiniLM-L6-v2')
@@ -150,7 +161,8 @@ class TextEmbeddingGenerator(BaseEmbeddingGenerator):
         logger.info(f"Text embedding generator initialized with model: {self.model_name}")
     
     def preprocess_text(self, text: str) -> str:
-        """Preprocess text for embedding generation."""        try:
+        """Preprocess text for embedding generation."""
+        try:
             # Basic cleaning
             text = text.strip()
             text = ' '.join(text.split())  # Normalize whitespace
@@ -166,7 +178,8 @@ class TextEmbeddingGenerator(BaseEmbeddingGenerator):
             return text
     
     def extract_features(self, text: str) -> Dict[str, Any]:
-        """Extract comprehensive text features."""        try:
+        """Extract comprehensive text features."""
+        try:
             features = {}
             
             # Basic text statistics
@@ -191,7 +204,8 @@ class TextEmbeddingGenerator(BaseEmbeddingGenerator):
             return {}
     
     async def generate_embedding(self, text: str, metadata: Dict[str, Any]) -> EmbeddingResult:
-        """Generate comprehensive text embedding."""        start_time = datetime.now()
+        """Generate comprehensive text embedding."""
+        start_time = datetime.now()
         
         try:
             # Preprocess text
@@ -236,7 +250,8 @@ class TextEmbeddingGenerator(BaseEmbeddingGenerator):
             raise
     
     async def _generate_bert_embedding(self, text: str) -> np.ndarray:
-        """Generate BERT contextual embedding."""        try:
+        """Generate BERT contextual embedding."""
+        try:
             # Tokenize
             inputs = self.bert_tokenizer(
                 text, 
@@ -261,7 +276,8 @@ class TextEmbeddingGenerator(BaseEmbeddingGenerator):
 
 
 class AudioEmbeddingGenerator(BaseEmbeddingGenerator):
-    """    Advanced audio embedding generator with comprehensive feature extraction.
+    """
+    Advanced audio embedding generator with comprehensive feature extraction.
     
     Features:
     - Spectral analysis (MFCC, chroma, spectral features)
@@ -269,7 +285,8 @@ class AudioEmbeddingGenerator(BaseEmbeddingGenerator):
     - Harmonic/percussive separation
     - Music-specific features
     - Audio fingerprinting
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.sample_rate = config.get('sample_rate', 22050)
@@ -286,7 +303,8 @@ class AudioEmbeddingGenerator(BaseEmbeddingGenerator):
         logger.info(f"Audio embedding generator initialized with sample rate: {self.sample_rate}")
     
     def preprocess_audio(self, audio_data: np.ndarray, sr: int) -> Tuple[np.ndarray, int]:
-        """Preprocess audio for feature extraction."""        try:
+        """Preprocess audio for feature extraction."""
+        try:
             # Resample if needed
             if sr != self.sample_rate:
                 audio_data = librosa.resample(audio_data, orig_sr=sr, target_sr=self.sample_rate)
@@ -313,7 +331,8 @@ class AudioEmbeddingGenerator(BaseEmbeddingGenerator):
             return audio_data, sr
     
     def extract_features(self, audio_data: np.ndarray, sr: int = None) -> AudioFeatures:
-        """Extract comprehensive audio features."""        try:
+        """Extract comprehensive audio features."""
+        try:
             if sr is None:
                 sr = self.sample_rate
             
@@ -381,7 +400,8 @@ class AudioEmbeddingGenerator(BaseEmbeddingGenerator):
             )
     
     def features_to_embedding(self, features: AudioFeatures) -> np.ndarray:
-        """Convert audio features to a fixed-size embedding vector."""        try:
+        """Convert audio features to a fixed-size embedding vector."""
+        try:
             embedding_parts = []
             
             # Statistical summaries of time-varying features
@@ -447,7 +467,8 @@ class AudioEmbeddingGenerator(BaseEmbeddingGenerator):
             return np.zeros(200, dtype=np.float32)  # Default size
     
     async def generate_embedding(self, audio_data: np.ndarray, metadata: Dict[str, Any]) -> EmbeddingResult:
-        """Generate comprehensive audio embedding."""        start_time = datetime.now()
+        """Generate comprehensive audio embedding."""
+        start_time = datetime.now()
         
         try:
             sr = metadata.get('sample_rate', self.sample_rate)
@@ -499,7 +520,8 @@ class AudioEmbeddingGenerator(BaseEmbeddingGenerator):
 
 
 class ImageEmbeddingGenerator(BaseEmbeddingGenerator):
-    """    Advanced image embedding generator with comprehensive visual analysis.
+    """
+    Advanced image embedding generator with comprehensive visual analysis.
     
     Features:
     - Deep CNN features (ResNet, CLIP)
@@ -507,7 +529,8 @@ class ImageEmbeddingGenerator(BaseEmbeddingGenerator):
     - Edge and texture analysis
     - Object detection
     - Perceptual hashing
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.image_size = config.get('image_size', 224)
@@ -530,7 +553,8 @@ class ImageEmbeddingGenerator(BaseEmbeddingGenerator):
         logger.info(f"Image embedding generator initialized with size: {self.image_size}")
     
     def preprocess_image(self, image: Image.Image) -> Image.Image:
-        """Preprocess image for feature extraction."""        try:
+        """Preprocess image for feature extraction."""
+        try:
             # Convert to RGB if needed
             if image.mode != 'RGB':
                 image = image.convert('RGB')
@@ -545,7 +569,8 @@ class ImageEmbeddingGenerator(BaseEmbeddingGenerator):
             return image
     
     def extract_color_features(self, image: Image.Image) -> Dict[str, np.ndarray]:
-        """Extract color-based features."""        try:
+        """Extract color-based features."""
+        try:
             # Convert to numpy array
             img_array = np.array(image)
             
@@ -573,7 +598,8 @@ class ImageEmbeddingGenerator(BaseEmbeddingGenerator):
             }
     
     def extract_texture_features(self, image: Image.Image) -> np.ndarray:
-        """Extract texture features using edge detection."""        try:
+        """Extract texture features using edge detection."""
+        try:
             # Convert to grayscale
             gray = np.array(image.convert('L'))
             
@@ -597,7 +623,8 @@ class ImageEmbeddingGenerator(BaseEmbeddingGenerator):
             return np.zeros(35, dtype=np.float32)
     
     def extract_perceptual_hashes(self, image: Image.Image) -> Dict[str, str]:
-        """Extract perceptual hashes for image fingerprinting."""        try:
+        """Extract perceptual hashes for image fingerprinting."""
+        try:
             import imagehash
             
             # Different hash types
@@ -620,7 +647,8 @@ class ImageEmbeddingGenerator(BaseEmbeddingGenerator):
             }
     
     def extract_features(self, image: Image.Image) -> ImageFeatures:
-        """Extract comprehensive image features."""        try:
+        """Extract comprehensive image features."""
+        try:
             # Preprocess image
             processed_image = self.preprocess_image(image)
             
@@ -663,7 +691,8 @@ class ImageEmbeddingGenerator(BaseEmbeddingGenerator):
             )
     
     async def generate_embedding(self, image: Image.Image, metadata: Dict[str, Any]) -> EmbeddingResult:
-        """Generate comprehensive image embedding."""        start_time = datetime.now()
+        """Generate comprehensive image embedding."""
+        start_time = datetime.now()
         
         try:
             # Extract features
@@ -721,7 +750,8 @@ class ImageEmbeddingGenerator(BaseEmbeddingGenerator):
 
 
 class VideoEmbeddingGenerator(BaseEmbeddingGenerator):
-    """    Advanced video embedding generator with temporal and spatial analysis.
+    """
+    Advanced video embedding generator with temporal and spatial analysis.
     
     Features:
     - Frame-level visual analysis
@@ -729,7 +759,8 @@ class VideoEmbeddingGenerator(BaseEmbeddingGenerator):
     - Scene change detection
     - Audio track processing
     - Video fingerprinting
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.max_frames = config.get('max_frames', 100)
@@ -740,7 +771,8 @@ class VideoEmbeddingGenerator(BaseEmbeddingGenerator):
         logger.info(f"Video embedding generator initialized with max frames: {self.max_frames}")
     
     def extract_frames(self, video_path: str) -> List[np.ndarray]:
-        """Extract frames from video."""        try:
+        """Extract frames from video."""
+        try:
             vr = VideoReader(video_path, ctx=decord.cpu(0))
             total_frames = len(vr)
             
@@ -758,7 +790,8 @@ class VideoEmbeddingGenerator(BaseEmbeddingGenerator):
             return []
     
     def detect_scene_changes(self, frames: List[np.ndarray]) -> List[int]:
-        """Detect scene changes in video frames."""        try:
+        """Detect scene changes in video frames."""
+        try:
             scene_changes = []
             
             if len(frames) < 2:
@@ -786,7 +819,8 @@ class VideoEmbeddingGenerator(BaseEmbeddingGenerator):
             return []
     
     def extract_motion_vectors(self, frames: List[np.ndarray]) -> np.ndarray:
-        """Extract motion vectors between frames."""        try:
+        """Extract motion vectors between frames."""
+        try:
             if len(frames) < 2:
                 return np.zeros((0, 2))
             
@@ -813,7 +847,8 @@ class VideoEmbeddingGenerator(BaseEmbeddingGenerator):
             return np.zeros((0, 2))
     
     def extract_features(self, video_path: str) -> VideoFeatures:
-        """Extract comprehensive video features."""        try:
+        """Extract comprehensive video features."""
+        try:
             # Extract frames
             frames = self.extract_frames(video_path)
             
@@ -885,7 +920,8 @@ class VideoEmbeddingGenerator(BaseEmbeddingGenerator):
             )
     
     async def generate_embedding(self, video_path: str, metadata: Dict[str, Any]) -> EmbeddingResult:
-        """Generate comprehensive video embedding."""        start_time = datetime.now()
+        """Generate comprehensive video embedding."""
+        start_time = datetime.now()
         
         try:
             # Extract features
@@ -940,11 +976,13 @@ class VideoEmbeddingGenerator(BaseEmbeddingGenerator):
 
 
 class MultiModalEmbeddingEngine:
-    """    Unified engine for multi-modal embedding generation.
+    """
+    Unified engine for multi-modal embedding generation.
     
     Coordinates different embedding generators and provides a unified interface
     for processing various content types.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         
@@ -958,7 +996,8 @@ class MultiModalEmbeddingEngine:
     
     async def generate_embedding(self, content: Any, content_type: str, 
                                metadata: Dict[str, Any]) -> EmbeddingResult:
-        """Generate embedding for any content type."""        try:
+        """Generate embedding for any content type."""
+        try:
             if content_type == 'text':
                 return await self.text_generator.generate_embedding(content, metadata)
             elif content_type == 'audio':
@@ -975,10 +1014,12 @@ class MultiModalEmbeddingEngine:
             raise
     
     def get_supported_types(self) -> List[str]:
-        """Get list of supported content types."""        return ['text', 'audio', 'image', 'video']
+        """Get list of supported content types."""
+        return ['text', 'audio', 'image', 'video']
     
     def get_embedding_dimensions(self) -> Dict[str, int]:
-        """Get embedding dimensions for each content type."""        return {
+        """Get embedding dimensions for each content type."""
+        return {
             'text': self.text_generator.sentence_model.get_sentence_embedding_dimension() + 768,  # Sentence + BERT
             'audio': 200,  # Estimated based on feature extraction
             'image': 1000 + 512 + 192 + 3,  # ResNet + CLIP + color + texture

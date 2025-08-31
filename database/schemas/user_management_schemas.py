@@ -6,7 +6,8 @@ and user preferences in the IA Influencer Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""from datetime import datetime, date
+"""
+from datetime import datetime, date
 from decimal import Decimal
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any
@@ -17,7 +18,8 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class UserRoleEnum(str, Enum):
-    """User roles in the platform"""    ARTIST = "artist"
+    """User roles in the platform"""
+    ARTIST = "artist"
     PRODUCER = "producer"
     SONGWRITER = "songwriter"
     VOCALIST = "vocalist"
@@ -40,7 +42,8 @@ class UserRoleEnum(str, Enum):
 
 
 class AccountStatusEnum(str, Enum):
-    """Account status"""    ACTIVE = "active"
+    """Account status"""
+    ACTIVE = "active"
     PENDING_VERIFICATION = "pending_verification"
     SUSPENDED = "suspended"
     DEACTIVATED = "deactivated"
@@ -50,7 +53,8 @@ class AccountStatusEnum(str, Enum):
 
 
 class SubscriptionTierEnum(str, Enum):
-    """Subscription tiers"""    FREE = "free"
+    """Subscription tiers"""
+    FREE = "free"
     BASIC = "basic"
     PROFESSIONAL = "professional"
     PREMIUM = "premium"
@@ -59,7 +63,8 @@ class SubscriptionTierEnum(str, Enum):
 
 
 class VerificationStatusEnum(str, Enum):
-    """Verification status types"""    UNVERIFIED = "unverified"
+    """Verification status types"""
+    UNVERIFIED = "unverified"
     PENDING = "pending"
     VERIFIED = "verified"
     REJECTED = "rejected"
@@ -67,7 +72,8 @@ class VerificationStatusEnum(str, Enum):
 
 
 class NotificationTypeEnum(str, Enum):
-    """Types of notifications"""    EMAIL = "email"
+    """Types of notifications"""
+    EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
     IN_APP = "in_app"
@@ -75,14 +81,16 @@ class NotificationTypeEnum(str, Enum):
 
 
 class PrivacyLevelEnum(str, Enum):
-    """Privacy levels"""    PUBLIC = "public"
+    """Privacy levels"""
+    PUBLIC = "public"
     FRIENDS = "friends"
     PRIVATE = "private"
     CUSTOM = "custom"
 
 
 class ContactInformationSchema(BaseModel):
-    """Schema for contact information"""    primary_email: EmailStr = Field(..., description="Primary email address")
+    """Schema for contact information"""
+    primary_email: EmailStr = Field(..., description="Primary email address")
     secondary_email: Optional[EmailStr] = Field(None, description="Secondary email address")
     phone_primary: Optional[str] = Field(None, description="Primary phone number")
     phone_secondary: Optional[str] = Field(None, description="Secondary phone number")
@@ -114,7 +122,8 @@ class ContactInformationSchema(BaseModel):
 
 
 class ProfessionalInformationSchema(BaseModel):
-    """Schema for professional information"""    # Basic professional details
+    """Schema for professional information"""
+    # Basic professional details
     stage_name: Optional[str] = Field(None, description="Stage/professional name")
     legal_name: Optional[str] = Field(None, description="Legal name")
     biography: Optional[str] = Field(None, max_length=2000, description="Professional biography")
@@ -155,7 +164,8 @@ class ProfessionalInformationSchema(BaseModel):
 
 
 class SocialMediaProfilesSchema(BaseModel):
-    """Schema for social media profiles"""    spotify_artist_id: Optional[str] = Field(None, description="Spotify artist ID")
+    """Schema for social media profiles"""
+    spotify_artist_id: Optional[str] = Field(None, description="Spotify artist ID")
     apple_music_id: Optional[str] = Field(None, description="Apple Music artist ID")
     youtube_channel_id: Optional[str] = Field(None, description="YouTube channel ID")
     soundcloud_username: Optional[str] = Field(None, description="SoundCloud username")
@@ -188,7 +198,8 @@ class SocialMediaProfilesSchema(BaseModel):
 
 
 class UserPreferencesSchema(BaseModel):
-    """Schema for user preferences and settings"""    # Notification preferences
+    """Schema for user preferences and settings"""
+    # Notification preferences
     email_notifications: bool = Field(True, description="Enable email notifications")
     sms_notifications: bool = Field(False, description="Enable SMS notifications")
     push_notifications: bool = Field(True, description="Enable push notifications")
@@ -239,7 +250,8 @@ class UserPreferencesSchema(BaseModel):
 
 
 class VerificationDocumentSchema(BaseModel):
-    """Schema for verification documents"""    document_id: str = Field(..., description="Unique document identifier")
+    """Schema for verification documents"""
+    document_id: str = Field(..., description="Unique document identifier")
     document_type: str = Field(..., description="Type of document")
     document_url: str = Field(..., description="Document file URL")
     file_hash: str = Field(..., description="Document file hash for integrity")
@@ -263,7 +275,8 @@ class VerificationDocumentSchema(BaseModel):
 
 
 class UserSubscriptionSchema(BaseModel):
-    """Schema for user subscription information"""    subscription_id: str = Field(..., description="Unique subscription identifier")
+    """Schema for user subscription information"""
+    subscription_id: str = Field(..., description="Unique subscription identifier")
     tier: SubscriptionTierEnum = Field(..., description="Subscription tier")
     status: str = Field(..., description="Subscription status")
     
@@ -304,7 +317,8 @@ class UserSubscriptionSchema(BaseModel):
 
 
 class UserBaseSchema(BaseModel):
-    """Base schema for user information"""    # Basic information
+    """Base schema for user information"""
+    # Basic information
     username: str = Field(..., min_length=3, max_length=50, description="Unique username")
     email: EmailStr = Field(..., description="Primary email address")
     first_name: str = Field(..., min_length=1, max_length=100, description="First name")
@@ -331,13 +345,15 @@ class UserBaseSchema(BaseModel):
     @field_validator('username')
     @classmethod
     def validate_username(cls, v):
-        """Validate username format"""        if not v.replace('_', '').replace('-', '').isalnum():
+        """Validate username format"""
+        if not v.replace('_', '').replace('-', '').isalnum():
             raise ValueError("Username can only contain letters, numbers, underscores, and hyphens")
         return v.lower()
 
 
 class UserCreateSchema(UserBaseSchema):
-    """Schema for creating users"""    password: str = Field(..., min_length=8, description="User password")
+    """Schema for creating users"""
+    password: str = Field(..., min_length=8, description="User password")
     confirm_password: str = Field(..., description="Password confirmation")
     
     # Registration options
@@ -353,7 +369,8 @@ class UserCreateSchema(UserBaseSchema):
     @field_validator('confirm_password')
     @classmethod
     def passwords_match(cls, v, values):
-        """Validate password confirmation"""        if 'password' in values and v != values['password']:
+        """Validate password confirmation"""
+        if 'password' in values and v != values['password']:
             raise ValueError('Passwords do not match')
         return v
     
@@ -375,7 +392,8 @@ class UserCreateSchema(UserBaseSchema):
 
 
 class UserUpdateSchema(BaseModel):
-    """Schema for updating user information"""    first_name: Optional[str] = Field(None, min_length=1, max_length=100, description="Updated first name")
+    """Schema for updating user information"""
+    first_name: Optional[str] = Field(None, min_length=1, max_length=100, description="Updated first name")
     last_name: Optional[str] = Field(None, min_length=1, max_length=100, description="Updated last name")
     avatar_url: Optional[str] = Field(None, description="Updated avatar URL")
     cover_image_url: Optional[str] = Field(None, description="Updated cover image URL")
@@ -402,7 +420,8 @@ class UserUpdateSchema(BaseModel):
 
 
 class UserResponseSchema(UserBaseSchema):
-    """Schema for user responses"""    id: PositiveInt = Field(..., description="Unique user ID")
+    """Schema for user responses"""
+    id: PositiveInt = Field(..., description="Unique user ID")
     user_reference: str = Field(..., description="Human-readable user reference")
     
     # Account status
@@ -468,7 +487,8 @@ class UserResponseSchema(UserBaseSchema):
 
 
 class UserListSchema(BaseModel):
-    """Schema for listing users"""    users: List[UserResponseSchema] = Field(..., description="List of users")
+    """Schema for listing users"""
+    users: List[UserResponseSchema] = Field(..., description="List of users")
     total_count: int = Field(..., description="Total number of users")
     page: int = Field(..., description="Current page number")
     per_page: int = Field(..., description="Items per page")
@@ -491,7 +511,8 @@ class UserListSchema(BaseModel):
 
 
 class UserSearchSchema(BaseModel):
-    """Schema for user search requests"""    query: Optional[str] = Field(None, description="Search query")
+    """Schema for user search requests"""
+    query: Optional[str] = Field(None, description="Search query")
     user_roles: Optional[List[UserRoleEnum]] = Field(None, description="Filter by user roles")
     verification_status: Optional[List[VerificationStatusEnum]] = Field(None, description="Filter by verification")
     account_status: Optional[List[AccountStatusEnum]] = Field(None, description="Filter by account status")

@@ -12,7 +12,8 @@ This module provides:
 - Evidence collection and validation
 - Risk assessment and prioritization
 - Legal compliance analysis
-"""import logging
+"""
+import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 from dataclasses import dataclass
@@ -22,19 +23,22 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 class AnalysisLevel(Enum):
-    """Analysis depth levels."""    BASIC = "basic"
+    """Analysis depth levels."""
+    BASIC = "basic"
     STANDARD = "standard"
     DEEP = "deep"
     FORENSIC = "forensic"
 
 class RiskLevel(Enum):
-    """Risk assessment levels."""    LOW = "low"
+    """Risk assessment levels."""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 class EvidenceType(Enum):
-    """Types of evidence collected."""    FINGERPRINT_MATCH = "fingerprint_match"
+    """Types of evidence collected."""
+    FINGERPRINT_MATCH = "fingerprint_match"
     VISUAL_SIMILARITY = "visual_similarity"
     AUDIO_SIMILARITY = "audio_similarity"
     METADATA_MATCH = "metadata_match"
@@ -43,7 +47,8 @@ class EvidenceType(Enum):
 
 @dataclass
 class AnalysisResult:
-    """Result of violation analysis."""    violation_id: str
+    """Result of violation analysis."""
+    violation_id: str
     analysis_level: AnalysisLevel
     confidence_score: float
     risk_level: RiskLevel
@@ -56,17 +61,21 @@ class AnalysisResult:
     processing_time_ms: int
 
 class ViolationAnalyzer:
-    """    Advanced violation analysis engine with AI-powered classification.
+    """
+    Advanced violation analysis engine with AI-powered classification.
     
     Provides comprehensive analysis of detected violations including
     similarity scoring, evidence validation, and risk assessment.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize the Violation Analyzer.
+        """
+        Initialize the Violation Analyzer.
         
         Args:
             config: Analyzer configuration parameters
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         self._initialized = False
         
         # Analysis parameters
@@ -98,11 +107,13 @@ class ViolationAnalyzer:
         logger.info("Violation Analyzer initialized")
     
     async def initialize(self) -> bool:
-        """        Initialize analyzer components and AI models.
+        """
+        Initialize analyzer components and AI models.
         
         Returns:
             bool: True if initialization successful
-        """        try:
+        """
+        try:
             logger.info("Initializing Violation Analyzer components...")
             
             # Initialize similarity analyzer
@@ -126,7 +137,8 @@ class ViolationAnalyzer:
             return False
     
     async def _initialize_similarity_analyzer(self) -> None:
-        """Initialize AI-powered similarity analysis."""        self.similarity_analyzer = {
+        """Initialize AI-powered similarity analysis."""
+        self.similarity_analyzer = {
             'model_version': '2.0.0',
             'algorithms': ['cosine', 'euclidean', 'hamming', 'perceptual'],
             'accuracy': 0.96,
@@ -135,7 +147,8 @@ class ViolationAnalyzer:
         logger.info("Similarity analyzer initialized")
     
     async def _initialize_evidence_collector(self) -> None:
-        """Initialize evidence collection system."""        self.evidence_collector = {
+        """Initialize evidence collection system."""
+        self.evidence_collector = {
             'collection_methods': [
                 'fingerprint_analysis',
                 'metadata_extraction',
@@ -148,7 +161,8 @@ class ViolationAnalyzer:
         logger.info("Evidence collector initialized")
     
     async def _initialize_risk_assessor(self) -> None:
-        """Initialize risk assessment engine."""        self.risk_assessor = {
+        """Initialize risk assessment engine."""
+        self.risk_assessor = {
             'assessment_factors': [
                 'confidence_score',
                 'similarity_score', 
@@ -162,7 +176,8 @@ class ViolationAnalyzer:
         logger.info("Risk assessor initialized")
     
     async def _initialize_legal_analyzer(self) -> None:
-        """Initialize legal compliance analyzer."""        self.legal_analyzer = {
+        """Initialize legal compliance analyzer."""
+        self.legal_analyzer = {
             'jurisdictions': ['US', 'EU', 'UK', 'CA', 'AU'],
             'compliance_frameworks': ['DMCA', 'GDPR', 'CCPA'],
             'legal_database': True,
@@ -172,7 +187,8 @@ class ViolationAnalyzer:
     
     async def analyze_violation(self, violation_data: Dict[str, Any], 
                               analysis_level: Optional[AnalysisLevel] = None) -> AnalysisResult:
-        """        Perform comprehensive analysis of a detected violation.
+        """
+        Perform comprehensive analysis of a detected violation.
         
         Args:
             violation_data: Violation detection data
@@ -180,7 +196,8 @@ class ViolationAnalyzer:
             
         Returns:
             Comprehensive analysis result
-        """        if not self._initialized:
+        """
+        if not self._initialized:
             raise RuntimeError("Analyzer not initialized")
         
         start_time = datetime.utcnow()
@@ -249,7 +266,8 @@ class ViolationAnalyzer:
     
     async def _analyze_similarity(self, violation_data: Dict[str, Any], 
                                 level: AnalysisLevel) -> Dict[str, float]:
-        """        Perform detailed similarity analysis.
+        """
+        Perform detailed similarity analysis.
         
         Args:
             violation_data: Violation data
@@ -257,7 +275,8 @@ class ViolationAnalyzer:
             
         Returns:
             Similarity breakdown by type
-        """        try:
+        """
+        try:
             # Base similarity scores from detection
             base_similarity = violation_data.get('similarity_score', 0.0)
             
@@ -308,31 +327,37 @@ class ViolationAnalyzer:
             return {'overall_similarity': 0.0}
     
     async def _analyze_audio_similarity(self, fingerprint_data: Dict[str, Any]) -> float:
-        """Analyze audio similarity using advanced algorithms."""        # Simulate advanced audio analysis
+        """Analyze audio similarity using advanced algorithms."""
+        # Simulate advanced audio analysis
         # In production, this would use spectral analysis, MFCC, chromaprint, etc.
         return min(1.0, fingerprint_data.get('audio_match_score', 0.5) + np.random.normal(0, 0.1))
     
     async def _analyze_visual_similarity(self, fingerprint_data: Dict[str, Any]) -> float:
-        """Analyze visual similarity using computer vision."""        # Simulate advanced visual analysis
+        """Analyze visual similarity using computer vision."""
+        # Simulate advanced visual analysis
         # In production, this would use SIFT, SURF, perceptual hashing, etc.
         return min(1.0, fingerprint_data.get('visual_match_score', 0.5) + np.random.normal(0, 0.1))
     
     async def _analyze_metadata_similarity(self, violation_data: Dict[str, Any]) -> float:
-        """Analyze metadata similarity."""        # Simulate metadata analysis
+        """Analyze metadata similarity."""
+        # Simulate metadata analysis
         # In production, this would compare titles, descriptions, tags, etc.
         return np.random.uniform(0.3, 0.9)
     
     async def _analyze_structural_similarity(self, fingerprint_data: Dict[str, Any]) -> float:
-        """Analyze structural similarity (deep analysis)."""        # Simulate structural analysis
+        """Analyze structural similarity (deep analysis)."""
+        # Simulate structural analysis
         return np.random.uniform(0.4, 0.8)
     
     async def _analyze_temporal_similarity(self, violation_data: Dict[str, Any]) -> float:
-        """Analyze temporal patterns (forensic analysis)."""        # Simulate temporal analysis
+        """Analyze temporal patterns (forensic analysis)."""
+        # Simulate temporal analysis
         return np.random.uniform(0.2, 0.7)
     
     async def _collect_evidence(self, violation_data: Dict[str, Any], 
                               level: AnalysisLevel) -> List[Dict[str, Any]]:
-        """        Collect and organize evidence for the violation.
+        """
+        Collect and organize evidence for the violation.
         
         Args:
             violation_data: Violation data
@@ -340,7 +365,8 @@ class ViolationAnalyzer:
             
         Returns:
             List of evidence items
-        """        evidence_items = []
+        """
+        evidence_items = []
         
         try:
             # Basic evidence (always collected)
@@ -392,7 +418,8 @@ class ViolationAnalyzer:
             return evidence_items
     
     async def _extract_metadata_evidence(self, violation_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract metadata evidence."""        # Simulate metadata extraction
+        """Extract metadata evidence."""
+        # Simulate metadata extraction
         return {
             'title_similarity': 0.8,
             'description_similarity': 0.6,
@@ -401,7 +428,8 @@ class ViolationAnalyzer:
         }
     
     async def _detect_watermarks(self, violation_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Detect digital watermarks in content."""        # Simulate watermark detection
+        """Detect digital watermarks in content."""
+        # Simulate watermark detection
         if np.random.random() > 0.7:  # 30% chance of watermark detection
             return {
                 'watermark_type': 'invisible_digital',
@@ -412,7 +440,8 @@ class ViolationAnalyzer:
         return None
     
     async def _perform_temporal_analysis(self, violation_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform temporal pattern analysis."""        # Simulate temporal analysis
+        """Perform temporal pattern analysis."""
+        # Simulate temporal analysis
         return {
             'upload_delay_hours': 2.5,
             'pattern_match': 'coordinated_piracy',
@@ -420,14 +449,16 @@ class ViolationAnalyzer:
         }
     
     async def _validate_evidence(self, evidence_items: List[Dict[str, Any]]) -> float:
-        """        Validate collected evidence and calculate evidence score.
+        """
+        Validate collected evidence and calculate evidence score.
         
         Args:
             evidence_items: List of evidence items
             
         Returns:
             Evidence validation score (0.0 to 1.0)
-        """        if not evidence_items:
+        """
+        if not evidence_items:
             return 0.0
         
         # Calculate weighted evidence score
@@ -458,7 +489,8 @@ class ViolationAnalyzer:
     async def _assess_risk(self, violation_data: Dict[str, Any], 
                          similarity_breakdown: Dict[str, float],
                          evidence_score: float) -> Dict[str, Any]:
-        """        Assess risk level and confidence for the violation.
+        """
+        Assess risk level and confidence for the violation.
         
         Args:
             violation_data: Violation data
@@ -467,7 +499,8 @@ class ViolationAnalyzer:
             
         Returns:
             Risk assessment results
-        """        # Calculate overall confidence score
+        """
+        # Calculate overall confidence score
         similarity_score = similarity_breakdown.get('overall_similarity', 0.0)
         platform_reach = self._get_platform_reach_factor(violation_data.get('platform', ''))
         
@@ -498,7 +531,8 @@ class ViolationAnalyzer:
         }
     
     def _get_platform_reach_factor(self, platform: str) -> float:
-        """Get platform reach factor for risk assessment."""        platform_factors = {
+        """Get platform reach factor for risk assessment."""
+        platform_factors = {
             'youtube': 1.0,
             'instagram': 0.9,
             'tiktok': 0.95,
@@ -511,7 +545,8 @@ class ViolationAnalyzer:
     
     async def _analyze_legal_implications(self, violation_data: Dict[str, Any],
                                         evidence_items: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """        Analyze legal implications and compliance requirements.
+        """
+        Analyze legal implications and compliance requirements.
         
         Args:
             violation_data: Violation data
@@ -519,7 +554,8 @@ class ViolationAnalyzer:
             
         Returns:
             Legal analysis results
-        """        platform = violation_data.get('platform', '').lower()
+        """
+        platform = violation_data.get('platform', '').lower()
         jurisdiction = self._determine_jurisdiction(platform)
         
         legal_analysis = {
@@ -534,7 +570,8 @@ class ViolationAnalyzer:
         return legal_analysis
     
     def _determine_jurisdiction(self, platform: str) -> str:
-        """Determine legal jurisdiction based on platform."""        platform_jurisdictions = {
+        """Determine legal jurisdiction based on platform."""
+        platform_jurisdictions = {
             'youtube': 'US',
             'instagram': 'US',
             'facebook': 'US',
@@ -545,7 +582,8 @@ class ViolationAnalyzer:
         return platform_jurisdictions.get(platform, 'US')
     
     def _get_applicable_laws(self, jurisdiction: str) -> List[str]:
-        """Get applicable laws for jurisdiction."""        laws_by_jurisdiction = {
+        """Get applicable laws for jurisdiction."""
+        laws_by_jurisdiction = {
             'US': ['DMCA', 'Copyright Act'],
             'EU': ['DSM Directive', 'GDPR'],
             'UK': ['Copyright Designs and Patents Act'],
@@ -554,7 +592,8 @@ class ViolationAnalyzer:
     
     def _is_dmca_eligible(self, violation_data: Dict[str, Any], 
                          evidence_items: List[Dict[str, Any]]) -> bool:
-        """Check if violation is eligible for DMCA takedown."""        # Check confidence threshold
+        """Check if violation is eligible for DMCA takedown."""
+        # Check confidence threshold
         confidence = violation_data.get('confidence_score', 0.0)
         if confidence < 0.8:
             return False
@@ -567,7 +606,8 @@ class ViolationAnalyzer:
         return has_strong_evidence
     
     def _assess_evidence_sufficiency(self, evidence_items: List[Dict[str, Any]]) -> str:
-        """Assess if evidence is sufficient for legal action."""        high_confidence_items = sum(
+        """Assess if evidence is sufficient for legal action."""
+        high_confidence_items = sum(
             1 for item in evidence_items if item.get('confidence', 0.0) > 0.8
         )
         
@@ -579,12 +619,14 @@ class ViolationAnalyzer:
             return 'insufficient'
     
     def _get_compliance_requirements(self, jurisdiction: str) -> List[str]:
-        """Get compliance requirements for jurisdiction."""        return ['proper_attribution', 'evidence_preservation', 'notification_procedures']
+        """Get compliance requirements for jurisdiction."""
+        return ['proper_attribution', 'evidence_preservation', 'notification_procedures']
     
     async def _generate_recommendations(self, risk_assessment: Dict[str, Any],
                                       legal_assessment: Dict[str, Any],
                                       similarity_breakdown: Dict[str, float]) -> List[str]:
-        """        Generate recommended actions based on analysis.
+        """
+        Generate recommended actions based on analysis.
         
         Args:
             risk_assessment: Risk assessment results
@@ -593,7 +635,8 @@ class ViolationAnalyzer:
             
         Returns:
             List of recommended actions
-        """        recommendations = []
+        """
+        recommendations = []
         
         risk_level = risk_assessment['risk_level']
         confidence_score = risk_assessment['confidence_score']
@@ -633,7 +676,8 @@ class ViolationAnalyzer:
         return recommendations
     
     def _update_analysis_stats(self, result: AnalysisResult) -> None:
-        """Update analysis statistics."""        self.analysis_stats['total_analyses'] += 1
+        """Update analysis statistics."""
+        self.analysis_stats['total_analyses'] += 1
         
         if result.confidence_score >= 0.85:
             self.analysis_stats['high_confidence_violations'] += 1
@@ -645,9 +689,11 @@ class ViolationAnalyzer:
         self.analysis_stats['average_processing_time_ms'] = new_avg
     
     async def get_analysis_stats(self) -> Dict[str, Any]:
-        """Get analysis performance statistics."""        return self.analysis_stats.copy()
+        """Get analysis performance statistics."""
+        return self.analysis_stats.copy()
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown the analyzer."""        logger.info("Shutting down Violation Analyzer...")
+        """Gracefully shutdown the analyzer."""
+        logger.info("Shutting down Violation Analyzer...")
         self.analysis_cache.clear()
         logger.info("Violation Analyzer shutdown complete")

@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -37,7 +38,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -60,7 +62,8 @@ from ai.neural_networks.base_networks import NetworkType
 
 @pytest.fixture
 def recommendation_config():
-    """Configuration for recommendation networks"""    return TransformerConfig(
+    """Configuration for recommendation networks"""
+    return TransformerConfig(
         input_dim=512,
         hidden_dims=[512, 256, 128],
         output_dim=128,
@@ -75,7 +78,8 @@ def recommendation_config():
 
 @pytest.fixture
 def creator_profiles():
-    """Sample creator profiles for testing"""    torch.manual_seed(42)
+    """Sample creator profiles for testing"""
+    torch.manual_seed(42)
     return {
         "creators": torch.randn(20, 512),  # 20 creators, 512-dim embeddings
         "content_history": torch.randn(20, 100, 512),  # Content history per creator
@@ -96,7 +100,8 @@ def creator_profiles():
 
 @pytest.fixture
 def audience_data():
-    """Sample audience data for testing"""    torch.manual_seed(42)
+    """Sample audience data for testing"""
+    torch.manual_seed(42)
     return {
         "audience_segments": torch.randn(50, 256),  # 50 audience segments
         "preferences": torch.randn(50, 128),  # Preference vectors
@@ -109,7 +114,8 @@ def audience_data():
 
 @pytest.fixture
 def content_data():
-    """Sample content data for testing"""    torch.manual_seed(42)
+    """Sample content data for testing"""
+    torch.manual_seed(42)
     return {
         "content_features": torch.randn(100, 512),  # 100 pieces of content
         "content_embeddings": torch.randn(100, 256),  # Semantic embeddings
@@ -129,7 +135,8 @@ def content_data():
 
 @pytest.fixture
 def trend_data():
-    """Sample trend data for testing"""    torch.manual_seed(42)
+    """Sample trend data for testing"""
+    torch.manual_seed(42)
     return {
         "trending_topics": torch.randn(30, 128),  # 30 trending topics
         "trend_trajectories": torch.randn(30, 30, 64),  # 30-day trend evolution
@@ -146,9 +153,11 @@ def trend_data():
 
 
 class TestCollaborationRecommendationNetwork:
-    """Test CollaborationRecommendationNetwork functionality"""    
+    """Test CollaborationRecommendationNetwork functionality"""
+    
     def test_collaboration_network_initialization(self, recommendation_config):
-        """Test CollaborationRecommendationNetwork initialization"""        network = CollaborationRecommendationNetwork(recommendation_config)
+        """Test CollaborationRecommendationNetwork initialization"""
+        network = CollaborationRecommendationNetwork(recommendation_config)
         
         assert hasattr(network, 'creator_encoder')
         assert hasattr(network, 'compatibility_matcher')
@@ -157,7 +166,8 @@ class TestCollaborationRecommendationNetwork:
         assert hasattr(network, 'success_predictor')
     
     def test_creator_compatibility_scoring(self, recommendation_config, creator_profiles):
-        """Test creator compatibility scoring"""        network = CollaborationRecommendationNetwork(recommendation_config)
+        """Test creator compatibility scoring"""
+        network = CollaborationRecommendationNetwork(recommendation_config)
         network.eval()
         
         creator1_features = creator_profiles["creators"][:5]  # First 5 creators
@@ -171,7 +181,8 @@ class TestCollaborationRecommendationNetwork:
         assert torch.isfinite(compatibility_scores).all()
     
     def test_collaboration_recommendations(self, recommendation_config, creator_profiles):
-        """Test collaboration recommendations"""        network = CollaborationRecommendationNetwork(recommendation_config)
+        """Test collaboration recommendations"""
+        network = CollaborationRecommendationNetwork(recommendation_config)
         network.eval()
         
         target_creator = creator_profiles["creators"][0:1]  # Single creator
@@ -196,7 +207,8 @@ class TestCollaborationRecommendationNetwork:
             assert 0 <= rec["synergy_potential"] <= 1
     
     def test_synergy_prediction(self, recommendation_config, creator_profiles):
-        """Test synergy prediction between creators"""        network = CollaborationRecommendationNetwork(recommendation_config)
+        """Test synergy prediction between creators"""
+        network = CollaborationRecommendationNetwork(recommendation_config)
         network.eval()
         
         creator1 = creator_profiles["creators"][0:1]
@@ -221,7 +233,8 @@ class TestCollaborationRecommendationNetwork:
                 assert 0 <= score <= 1
     
     def test_collaboration_success_prediction(self, recommendation_config, creator_profiles):
-        """Test collaboration success prediction"""        network = CollaborationRecommendationNetwork(recommendation_config)
+        """Test collaboration success prediction"""
+        network = CollaborationRecommendationNetwork(recommendation_config)
         network.eval()
         
         # Simulate collaboration data
@@ -238,7 +251,8 @@ class TestCollaborationRecommendationNetwork:
         assert torch.isfinite(success_predictions).all()
     
     def test_temporal_collaboration_patterns(self, recommendation_config, creator_profiles):
-        """Test temporal collaboration pattern analysis"""        network = CollaborationRecommendationNetwork(recommendation_config)
+        """Test temporal collaboration pattern analysis"""
+        network = CollaborationRecommendationNetwork(recommendation_config)
         network.eval()
         
         collaboration_history = creator_profiles["collaboration_history"]
@@ -256,9 +270,11 @@ class TestCollaborationRecommendationNetwork:
 
 
 class TestContentRecommendationNetwork:
-    """Test ContentRecommendationNetwork functionality"""    
+    """Test ContentRecommendationNetwork functionality"""
+    
     def test_content_network_initialization(self, recommendation_config):
-        """Test ContentRecommendationNetwork initialization"""        network = ContentRecommendationNetwork(recommendation_config)
+        """Test ContentRecommendationNetwork initialization"""
+        network = ContentRecommendationNetwork(recommendation_config)
         
         assert hasattr(network, 'content_encoder')
         assert hasattr(network, 'user_encoder')
@@ -267,7 +283,8 @@ class TestContentRecommendationNetwork:
         assert hasattr(network, 'freshness_scorer')
     
     def test_personalized_content_recommendations(self, recommendation_config, creator_profiles, content_data):
-        """Test personalized content recommendations"""        network = ContentRecommendationNetwork(recommendation_config)
+        """Test personalized content recommendations"""
+        network = ContentRecommendationNetwork(recommendation_config)
         network.eval()
         
         creator_profile = creator_profiles["creators"][0:1]  # Single creator
@@ -291,7 +308,8 @@ class TestContentRecommendationNetwork:
             assert 0 <= rec["relevance_score"] <= 1
     
     def test_content_similarity_computation(self, recommendation_config, content_data):
-        """Test content similarity computation"""        network = ContentRecommendationNetwork(recommendation_config)
+        """Test content similarity computation"""
+        network = ContentRecommendationNetwork(recommendation_config)
         network.eval()
         
         content1 = content_data["content_features"][:5]   # First 5 contents
@@ -310,7 +328,8 @@ class TestContentRecommendationNetwork:
             assert torch.all(diagonal > 0.8)  # High self-similarity
     
     def test_trending_content_identification(self, recommendation_config, content_data):
-        """Test trending content identification"""        network = ContentRecommendationNetwork(recommendation_config)
+        """Test trending content identification"""
+        network = ContentRecommendationNetwork(recommendation_config)
         network.eval()
         
         content_features = content_data["content_features"]
@@ -328,7 +347,8 @@ class TestContentRecommendationNetwork:
         assert torch.isfinite(trending_scores).all()
     
     def test_diversity_optimization(self, recommendation_config, content_data):
-        """Test diversity optimization in recommendations"""        network = ContentRecommendationNetwork(recommendation_config)
+        """Test diversity optimization in recommendations"""
+        network = ContentRecommendationNetwork(recommendation_config)
         network.eval()
         
         similar_content = content_data["content_features"][:10].repeat(1, 1)  # Similar content
@@ -357,7 +377,8 @@ class TestContentRecommendationNetwork:
             assert len(set(high_div_ids)) == len(high_div_ids)  # All unique
     
     def test_cold_start_recommendations(self, recommendation_config, content_data):
-        """Test cold start recommendations for new users"""        network = ContentRecommendationNetwork(recommendation_config)
+        """Test cold start recommendations for new users"""
+        network = ContentRecommendationNetwork(recommendation_config)
         network.eval()
         
         # New user with minimal profile
@@ -382,9 +403,11 @@ class TestContentRecommendationNetwork:
 
 
 class TestAudienceTargetingNetwork:
-    """Test AudienceTargetingNetwork functionality"""    
+    """Test AudienceTargetingNetwork functionality"""
+    
     def test_audience_network_initialization(self, recommendation_config):
-        """Test AudienceTargetingNetwork initialization"""        network = AudienceTargetingNetwork(recommendation_config)
+        """Test AudienceTargetingNetwork initialization"""
+        network = AudienceTargetingNetwork(recommendation_config)
         
         assert hasattr(network, 'audience_segmenter')
         assert hasattr(network, 'preference_predictor')
@@ -393,7 +416,8 @@ class TestAudienceTargetingNetwork:
         assert hasattr(network, 'personalization_engine')
     
     def test_audience_segmentation(self, recommendation_config, audience_data):
-        """Test audience segmentation"""        network = AudienceTargetingNetwork(recommendation_config)
+        """Test audience segmentation"""
+        network = AudienceTargetingNetwork(recommendation_config)
         network.eval()
         
         audience_features = audience_data["audience_segments"]
@@ -417,7 +441,8 @@ class TestAudienceTargetingNetwork:
         assert torch.all(segment_assignments >= 0) and torch.all(segment_assignments < 5)
     
     def test_engagement_prediction(self, recommendation_config, audience_data, content_data):
-        """Test engagement prediction for content-audience pairs"""        network = AudienceTargetingNetwork(recommendation_config)
+        """Test engagement prediction for content-audience pairs"""
+        network = AudienceTargetingNetwork(recommendation_config)
         network.eval()
         
         audience_features = audience_data["audience_segments"][:5]  # 5 audience segments
@@ -435,7 +460,8 @@ class TestAudienceTargetingNetwork:
         assert torch.isfinite(engagement_predictions).all()
     
     def test_optimal_posting_time_prediction(self, recommendation_config, audience_data):
-        """Test optimal posting time prediction"""        network = AudienceTargetingNetwork(recommendation_config)
+        """Test optimal posting time prediction"""
+        network = AudienceTargetingNetwork(recommendation_config)
         network.eval()
         
         temporal_patterns = audience_data["temporal_patterns"]
@@ -460,7 +486,8 @@ class TestAudienceTargetingNetwork:
         assert all(0 <= hour <= 23 for hour in peak_hours)
     
     def test_demographic_analysis(self, recommendation_config, audience_data):
-        """Test demographic analysis"""        network = AudienceTargetingNetwork(recommendation_config)
+        """Test demographic analysis"""
+        network = AudienceTargetingNetwork(recommendation_config)
         network.eval()
         
         demographic_features = audience_data["demographics"]
@@ -485,7 +512,8 @@ class TestAudienceTargetingNetwork:
                 assert demographic_insights[insight] is not None
     
     def test_personalization_recommendations(self, recommendation_config, audience_data, creator_profiles):
-        """Test personalized content recommendations"""        network = AudienceTargetingNetwork(recommendation_config)
+        """Test personalized content recommendations"""
+        network = AudienceTargetingNetwork(recommendation_config)
         network.eval()
         
         audience_profile = audience_data["audience_segments"][0:1]  # Single audience member
@@ -510,7 +538,8 @@ class TestAudienceTargetingNetwork:
                 assert personalization_strategy[component] is not None
     
     def test_audience_expansion_strategies(self, recommendation_config, audience_data):
-        """Test audience expansion strategies"""        network = AudienceTargetingNetwork(recommendation_config)
+        """Test audience expansion strategies"""
+        network = AudienceTargetingNetwork(recommendation_config)
         network.eval()
         
         current_audience = audience_data["audience_segments"][:10]  # Current audience
@@ -534,9 +563,11 @@ class TestAudienceTargetingNetwork:
 
 
 class TestTrendPredictionNetwork:
-    """Test TrendPredictionNetwork functionality"""    
+    """Test TrendPredictionNetwork functionality"""
+    
     def test_trend_network_initialization(self, recommendation_config):
-        """Test TrendPredictionNetwork initialization"""        network = TrendPredictionNetwork(recommendation_config)
+        """Test TrendPredictionNetwork initialization"""
+        network = TrendPredictionNetwork(recommendation_config)
         
         assert hasattr(network, 'trend_analyzer')
         assert hasattr(network, 'temporal_predictor')
@@ -545,7 +576,8 @@ class TestTrendPredictionNetwork:
         assert hasattr(network, 'seasonality_detector')
     
     def test_trend_detection(self, recommendation_config, trend_data):
-        """Test trend detection in content"""        network = TrendPredictionNetwork(recommendation_config)
+        """Test trend detection in content"""
+        network = TrendPredictionNetwork(recommendation_config)
         network.eval()
         
         trending_topics = trend_data["trending_topics"]
@@ -573,7 +605,8 @@ class TestTrendPredictionNetwork:
             assert trend["growth_rate"] > 0  # Should be growing
     
     def test_viral_potential_prediction(self, recommendation_config, content_data, trend_data):
-        """Test viral potential prediction"""        network = TrendPredictionNetwork(recommendation_config)
+        """Test viral potential prediction"""
+        network = TrendPredictionNetwork(recommendation_config)
         network.eval()
         
         content_features = content_data["content_features"][:10]
@@ -591,7 +624,8 @@ class TestTrendPredictionNetwork:
         assert torch.isfinite(viral_scores).all()
     
     def test_seasonal_trend_analysis(self, recommendation_config, trend_data):
-        """Test seasonal trend analysis"""        network = TrendPredictionNetwork(recommendation_config)
+        """Test seasonal trend analysis"""
+        network = TrendPredictionNetwork(recommendation_config)
         network.eval()
         
         seasonal_patterns = trend_data["seasonal_patterns"]
@@ -613,7 +647,8 @@ class TestTrendPredictionNetwork:
         assert all(1 <= month <= 12 for month in seasonal_peaks if isinstance(month, int))
     
     def test_platform_specific_trends(self, recommendation_config, trend_data):
-        """Test platform-specific trend analysis"""        network = TrendPredictionNetwork(recommendation_config)
+        """Test platform-specific trend analysis"""
+        network = TrendPredictionNetwork(recommendation_config)
         network.eval()
         
         platform_trends = trend_data["platform_trends"]
@@ -638,7 +673,8 @@ class TestTrendPredictionNetwork:
             assert "platform_dominance" in analysis
     
     def test_hashtag_trend_prediction(self, recommendation_config, trend_data):
-        """Test hashtag trend prediction"""        network = TrendPredictionNetwork(recommendation_config)
+        """Test hashtag trend prediction"""
+        network = TrendPredictionNetwork(recommendation_config)
         network.eval()
         
         hashtag_trends = trend_data["hashtag_trends"]
@@ -664,7 +700,8 @@ class TestTrendPredictionNetwork:
             assert "predicted_peak" in hashtag_info
     
     def test_trend_forecasting(self, recommendation_config, trend_data):
-        """Test multi-step trend forecasting"""        network = TrendPredictionNetwork(recommendation_config)
+        """Test multi-step trend forecasting"""
+        network = TrendPredictionNetwork(recommendation_config)
         network.eval()
         
         trend_trajectories = trend_data["trend_trajectories"]
@@ -691,9 +728,11 @@ class TestTrendPredictionNetwork:
 
 
 class TestRecommendationNetworksPerformance:
-    """Performance tests for recommendation networks"""    
+    """Performance tests for recommendation networks"""
+    
     def test_recommendation_speed(self, recommendation_config, creator_profiles, content_data):
-        """Test recommendation generation speed"""        network = ContentRecommendationNetwork(recommendation_config)
+        """Test recommendation generation speed"""
+        network = ContentRecommendationNetwork(recommendation_config)
         network.eval()
         
         creator_profile = creator_profiles["creators"][:1]
@@ -720,7 +759,8 @@ class TestRecommendationNetworksPerformance:
         assert avg_time < 500  # Less than 500ms
     
     def test_batch_recommendation_efficiency(self, recommendation_config, creator_profiles, content_data):
-        """Test batch recommendation efficiency"""        network = ContentRecommendationNetwork(recommendation_config)
+        """Test batch recommendation efficiency"""
+        network = ContentRecommendationNetwork(recommendation_config)
         network.eval()
         
         # Single recommendations
@@ -754,7 +794,8 @@ class TestRecommendationNetworksPerformance:
     
     @pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA not available")
     def test_gpu_acceleration(self, recommendation_config, creator_profiles, content_data):
-        """Test GPU acceleration for recommendations"""        network = ContentRecommendationNetwork(recommendation_config)
+        """Test GPU acceleration for recommendations"""
+        network = ContentRecommendationNetwork(recommendation_config)
         
         creator_profile = creator_profiles["creators"][:1]
         content_features = content_data["content_features"]
@@ -788,9 +829,11 @@ class TestRecommendationNetworksPerformance:
 
 
 class TestRecommendationNetworksRobustness:
-    """Robustness tests for recommendation networks"""    
+    """Robustness tests for recommendation networks"""
+    
     def test_missing_data_handling(self, recommendation_config, creator_profiles):
-        """Test handling of missing data"""        network = CollaborationRecommendationNetwork(recommendation_config)
+        """Test handling of missing data"""
+        network = CollaborationRecommendationNetwork(recommendation_config)
         network.eval()
         
         # Test with incomplete creator profiles
@@ -810,7 +853,8 @@ class TestRecommendationNetworksRobustness:
         assert len(recommendations) > 0  # Should still provide recommendations
     
     def test_cold_start_scenarios(self, recommendation_config, content_data):
-        """Test cold start scenarios"""        network = ContentRecommendationNetwork(recommendation_config)
+        """Test cold start scenarios"""
+        network = ContentRecommendationNetwork(recommendation_config)
         network.eval()
         
         # Brand new user with no history
@@ -833,7 +877,8 @@ class TestRecommendationNetworksRobustness:
             assert rec["popularity_score"] > 0
     
     def test_extreme_user_preferences(self, recommendation_config, creator_profiles, content_data):
-        """Test with extreme user preferences"""        network = ContentRecommendationNetwork(recommendation_config)
+        """Test with extreme user preferences"""
+        network = ContentRecommendationNetwork(recommendation_config)
         network.eval()
         
         # Create user with extreme preferences (all maximum values)
@@ -856,7 +901,8 @@ class TestRecommendationNetworksRobustness:
             assert torch.isfinite(torch.tensor(rec["relevance_score"]))
     
     def test_adversarial_inputs(self, recommendation_config, creator_profiles):
-        """Test with adversarial inputs"""        network = CollaborationRecommendationNetwork(recommendation_config)
+        """Test with adversarial inputs"""
+        network = CollaborationRecommendationNetwork(recommendation_config)
         network.eval()
         
         # Add noise to creator profiles
@@ -879,9 +925,11 @@ class TestRecommendationNetworksRobustness:
 
 
 class TestRecommendationNetworksIntegration:
-    """Integration tests for recommendation networks"""    
+    """Integration tests for recommendation networks"""
+    
     def test_complete_recommendation_pipeline(self, recommendation_config, creator_profiles, content_data, audience_data, trend_data):
-        """Test complete recommendation pipeline"""        # Initialize all networks
+        """Test complete recommendation pipeline"""
+        # Initialize all networks
         collaboration_net = CollaborationRecommendationNetwork(recommendation_config)
         content_net = ContentRecommendationNetwork(recommendation_config)
         audience_net = AudienceTargetingNetwork(recommendation_config)
@@ -940,7 +988,8 @@ class TestRecommendationNetworksIntegration:
         assert "emerging_trends" in trend_analysis
     
     def test_creator_growth_strategy_generation(self, recommendation_config, creator_profiles, content_data, audience_data):
-        """Test complete creator growth strategy generation"""        # Initialize networks
+        """Test complete creator growth strategy generation"""
+        # Initialize networks
         content_net = ContentRecommendationNetwork(recommendation_config)
         audience_net = AudienceTargetingNetwork(recommendation_config)
         collaboration_net = CollaborationRecommendationNetwork(recommendation_config)

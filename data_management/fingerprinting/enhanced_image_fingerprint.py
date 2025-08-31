@@ -28,7 +28,8 @@ IMAGE FINGERPRINTING TECHNOLOGIES:
 ├── 📐 Geometric Features (SIFT + ORB + SURF)
 ├── 🔬 Quality Assessment (BRISQUE + NIQE)
 └── 🛡️ Protection Pipeline (Multi-modal Matching)
-"""from typing import Dict, List, Optional, Any, Union, Tuple, Set
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
 from enum import Enum
@@ -98,7 +99,8 @@ __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 logger = logging.getLogger(__name__)
 
 class ImageFormat(Enum):
-    """Formats d'images supportés"""    JPEG = "jpeg"
+    """Formats d'images supportés"""
+    JPEG = "jpeg"
     PNG = "png"
     WEBP = "webp"
     TIFF = "tiff"
@@ -106,13 +108,15 @@ class ImageFormat(Enum):
     GIF = "gif"
 
 class ImageQuality(Enum):
-    """Niveaux de qualité d'image"""    LOW = "low"
+    """Niveaux de qualité d'image"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     ULTRA = "ultra"
 
 class ColorSpace(Enum):
-    """Espaces colorimétriques"""    RGB = "rgb"
+    """Espaces colorimétriques"""
+    RGB = "rgb"
     BGR = "bgr"
     HSV = "hsv"
     LAB = "lab"
@@ -120,7 +124,8 @@ class ColorSpace(Enum):
 
 @dataclass
 class ImageFingerprintConfig:
-    """Configuration avancée pour le fingerprinting d'images"""    
+    """Configuration avancée pour le fingerprinting d'images"""
+    
     # Image processing parameters
     max_dimension: int = 2048  # Maximum width/height
     min_dimension: int = 64   # Minimum width/height
@@ -188,7 +193,8 @@ class ImageFingerprintConfig:
 
 @dataclass
 class ColorAnalysis:
-    """Analyse colorimétrique d'une image"""    dominant_colors: List[Tuple[int, int, int]] = field(default_factory=list)
+    """Analyse colorimétrique d'une image"""
+    dominant_colors: List[Tuple[int, int, int]] = field(default_factory=list)
     color_histogram: Optional[np.ndarray] = None
     average_color: Tuple[int, int, int] = (0, 0, 0)
     color_variance: float = 0.0
@@ -198,7 +204,8 @@ class ColorAnalysis:
 
 @dataclass
 class TextureFeatures:
-    """Caractéristiques de texture"""    lbp_histogram: Optional[np.ndarray] = None
+    """Caractéristiques de texture"""
+    lbp_histogram: Optional[np.ndarray] = None
     glcm_properties: Dict[str, float] = field(default_factory=dict)
     gabor_responses: Optional[np.ndarray] = None
     texture_energy: float = 0.0
@@ -207,7 +214,8 @@ class TextureFeatures:
 
 @dataclass
 class GeometricFeatures:
-    """Caractéristiques géométriques"""    sift_keypoints: List[cv2.KeyPoint] = field(default_factory=list)
+    """Caractéristiques géométriques"""
+    sift_keypoints: List[cv2.KeyPoint] = field(default_factory=list)
     sift_descriptors: Optional[np.ndarray] = None
     orb_keypoints: List[cv2.KeyPoint] = field(default_factory=list)
     orb_descriptors: Optional[np.ndarray] = None
@@ -216,7 +224,8 @@ class GeometricFeatures:
 
 @dataclass
 class QualityMetrics:
-    """Métriques de qualité d'image"""    overall_score: float = 0.0
+    """Métriques de qualité d'image"""
+    overall_score: float = 0.0
     sharpness_score: float = 0.0
     noise_score: float = 0.0
     brightness_score: float = 0.0
@@ -227,7 +236,8 @@ class QualityMetrics:
 
 @dataclass
 class ImageFingerprint:
-    """Empreinte complète d'une image"""    image_id: str
+    """Empreinte complète d'une image"""
+    image_id: str
     filename: str
     dimensions: Tuple[int, int]
     file_size: int
@@ -268,7 +278,8 @@ class ImageFingerprint:
     pyramid_features: Dict[int, Dict[str, Any]] = field(default_factory=dict)
 
 class ImageFingerprintEngine:
-    """    Engine principal de fingerprinting d'images ultra-avancé
+    """
+    Engine principal de fingerprinting d'images ultra-avancé
     
     Features:
     - Multi-modal feature extraction
@@ -281,7 +292,8 @@ class ImageFingerprintEngine:
     - Geometric feature extraction
     - Multi-scale processing
     - GPU acceleration
-    """    
+    """
+    
     def __init__(self, config: ImageFingerprintConfig):
         self.config = config
         
@@ -305,13 +317,15 @@ class ImageFingerprintEngine:
         logger.info("ImageFingerprintEngine initialized")
     
     def _setup_device(self) -> str:
-        """Configure le device de traitement"""        if self.config.use_gpu:
+        """Configure le device de traitement"""
+        if self.config.use_gpu:
             if TORCH_AVAILABLE and torch.cuda.is_available():
                 return "cuda"
         return "cpu"
     
     async def generate_fingerprint(self, image_path: str) -> ImageFingerprint:
-        """Génère l'empreinte complète d'une image"""        start_time = time.time()
+        """Génère l'empreinte complète d'une image"""
+        start_time = time.time()
         
         try:
             # Validate and load image
@@ -405,7 +419,8 @@ class ImageFingerprintEngine:
     async def compare_fingerprints(self,
                                  fingerprint1: ImageFingerprint,
                                  fingerprint2: ImageFingerprint) -> Dict[str, float]:
-        """Compare deux empreintes d'images"""        try:
+        """Compare deux empreintes d'images"""
+        try:
             similarity_scores = {}
             
             # Perceptual hash similarity
@@ -468,7 +483,8 @@ class ImageFingerprintEngine:
             raise
     
     async def _load_and_validate_image(self, image_path: str) -> Tuple[Dict[str, Any], np.ndarray]:
-        """Charge et valide une image"""        path = Path(image_path)
+        """Charge et valide une image"""
+        path = Path(image_path)
         
         if not path.exists():
             raise FileNotFoundError(f"Image file not found: {image_path}")
@@ -512,12 +528,14 @@ class ImageFingerprintEngine:
         return image_info, image_data
     
     def _generate_image_id(self, image_path: str, image_info: Dict[str, Any]) -> str:
-        """Génère un ID unique pour l'image"""        path = Path(image_path)
+        """Génère un ID unique pour l'image"""
+        path = Path(image_path)
         content = f"{path.name}_{image_info['file_size']}_{path.stat().st_mtime}"
         return hashlib.sha256(content.encode()).hexdigest()[:16]
     
     async def _preprocess_image(self, image_data: np.ndarray) -> np.ndarray:
-        """Prétraite l'image"""        processed = image_data.copy()
+        """Prétraite l'image"""
+        processed = image_data.copy()
         
         if self.config.noise_reduction:
             # Apply noise reduction
@@ -538,7 +556,8 @@ class ImageFingerprintEngine:
         return processed
     
     async def _generate_perceptual_hashes(self, image_data: np.ndarray, fingerprint: ImageFingerprint):
-        """Génère les hashes perceptuels"""        if not IMAGEHASH_AVAILABLE or not PIL_AVAILABLE:
+        """Génère les hashes perceptuels"""
+        if not IMAGEHASH_AVAILABLE or not PIL_AVAILABLE:
             return
         
         # Convert OpenCV image to PIL
@@ -566,43 +585,51 @@ class ImageFingerprintEngine:
             fingerprint.colorhash = str(imagehash.colorhash(pil_image, binbits=3))
     
     async def _generate_clip_features(self, image_data: np.ndarray, fingerprint: ImageFingerprint):
-        """Génère les caractéristiques CLIP"""        if not self.clip_processor:
+        """Génère les caractéristiques CLIP"""
+        if not self.clip_processor:
             return
         
         features = await self.clip_processor.extract_features(image_data)
         fingerprint.clip_features = features
     
     async def _generate_cnn_features(self, image_data: np.ndarray, fingerprint: ImageFingerprint):
-        """Génère les caractéristiques CNN"""        for model_name in self.config.cnn_models:
+        """Génère les caractéristiques CNN"""
+        for model_name in self.config.cnn_models:
             features = await self.cnn_processor.extract_features(image_data, model_name)
             if features is not None:
                 fingerprint.cnn_features[model_name] = features
     
     async def _assess_image_quality(self, image_data: np.ndarray, fingerprint: ImageFingerprint):
-        """Évalue la qualité de l'image"""        quality_metrics = await self.quality_assessor.assess_quality(image_data)
+        """Évalue la qualité de l'image"""
+        quality_metrics = await self.quality_assessor.assess_quality(image_data)
         fingerprint.quality_metrics = quality_metrics
     
     async def _analyze_colors(self, image_data: np.ndarray, fingerprint: ImageFingerprint):
-        """Analyse les couleurs de l'image"""        color_analysis = await self.color_analyzer.analyze_colors(image_data)
+        """Analyse les couleurs de l'image"""
+        color_analysis = await self.color_analyzer.analyze_colors(image_data)
         fingerprint.color_analysis = color_analysis
     
     async def _analyze_texture(self, image_data: np.ndarray, fingerprint: ImageFingerprint):
-        """Analyse la texture de l'image"""        texture_features = await self.texture_analyzer.analyze_texture(image_data)
+        """Analyse la texture de l'image"""
+        texture_features = await self.texture_analyzer.analyze_texture(image_data)
         fingerprint.texture_features = texture_features
     
     async def _extract_geometric_features(self, image_data: np.ndarray, fingerprint: ImageFingerprint):
-        """Extrait les caractéristiques géométriques"""        geometric_features = await self.geometric_analyzer.extract_features(image_data)
+        """Extrait les caractéristiques géométriques"""
+        geometric_features = await self.geometric_analyzer.extract_features(image_data)
         fingerprint.geometric_features = geometric_features
     
     async def _detect_objects(self, image_data: np.ndarray, fingerprint: ImageFingerprint):
-        """Détecte les objets dans l'image"""        if not self.object_detector:
+        """Détecte les objets dans l'image"""
+        if not self.object_detector:
             return
         
         detected_objects = await self.object_detector.detect(image_data)
         fingerprint.detected_objects = detected_objects
     
     async def _generate_multiscale_features(self, image_data: np.ndarray, fingerprint: ImageFingerprint):
-        """Génère des caractéristiques multi-échelles"""        scales = [0.5, 0.75, 1.0, 1.25, 1.5]
+        """Génère des caractéristiques multi-échelles"""
+        scales = [0.5, 0.75, 1.0, 1.25, 1.5]
         
         for scale in scales:
             if scale == 1.0:
@@ -634,7 +661,8 @@ class ImageFingerprintEngine:
             fingerprint.pyramid_features[int(scale * 100)] = scale_features
     
     async def _classify_scene(self, fingerprint: ImageFingerprint):
-        """Classifie la scène de l'image"""        # Use CNN features or CLIP features for scene classification
+        """Classifie la scène de l'image"""
+        # Use CNN features or CLIP features for scene classification
         if fingerprint.clip_features is not None:
             # Scene classification based on CLIP features
             # This would use a trained classifier in production
@@ -651,7 +679,8 @@ class ImageFingerprintEngine:
     async def _compute_hash_similarity(self, 
                                      fp1: ImageFingerprint, 
                                      fp2: ImageFingerprint) -> Dict[str, float]:
-        """Calcule la similarité des hashes"""        similarities = {}
+        """Calcule la similarité des hashes"""
+        similarities = {}
         
         # pHash similarity
         if fp1.phash and fp2.phash:
@@ -676,7 +705,8 @@ class ImageFingerprintEngine:
         return similarities
     
     def _hamming_similarity(self, hash1: str, hash2: str) -> float:
-        """Calcule la similarité basée sur la distance de Hamming"""        if len(hash1) != len(hash2):
+        """Calcule la similarité basée sur la distance de Hamming"""
+        if len(hash1) != len(hash2):
             return 0.0
         
         # Convert hex hashes to binary
@@ -695,7 +725,8 @@ class ImageFingerprintEngine:
         return similarity
     
     async def _compute_clip_similarity(self, features1: np.ndarray, features2: np.ndarray) -> float:
-        """Calcule la similarité CLIP"""        # Cosine similarity
+        """Calcule la similarité CLIP"""
+        # Cosine similarity
         dot_product = np.dot(features1, features2)
         norm1 = np.linalg.norm(features1)
         norm2 = np.linalg.norm(features2)
@@ -708,7 +739,8 @@ class ImageFingerprintEngine:
     async def _compute_cnn_similarity(self, 
                                     features1: Dict[str, np.ndarray], 
                                     features2: Dict[str, np.ndarray]) -> Dict[str, float]:
-        """Calcule la similarité des caractéristiques CNN"""        similarities = {}
+        """Calcule la similarité des caractéristiques CNN"""
+        similarities = {}
         
         for model_name in features1:
             if model_name in features2:
@@ -729,7 +761,8 @@ class ImageFingerprintEngine:
     async def _compute_color_similarity(self, 
                                       color1: ColorAnalysis, 
                                       color2: ColorAnalysis) -> float:
-        """Calcule la similarité colorimétrique"""        similarities = []
+        """Calcule la similarité colorimétrique"""
+        similarities = []
         
         # Histogram similarity
         if color1.color_histogram is not None and color2.color_histogram is not None:
@@ -757,7 +790,8 @@ class ImageFingerprintEngine:
     async def _compute_texture_similarity(self, 
                                         texture1: TextureFeatures, 
                                         texture2: TextureFeatures) -> float:
-        """Calcule la similarité de texture"""        similarities = []
+        """Calcule la similarité de texture"""
+        similarities = []
         
         # LBP histogram similarity
         if texture1.lbp_histogram is not None and texture2.lbp_histogram is not None:
@@ -782,7 +816,8 @@ class ImageFingerprintEngine:
     async def _compute_geometric_similarity(self, 
                                           geo1: GeometricFeatures, 
                                           geo2: GeometricFeatures) -> float:
-        """Calcule la similarité géométrique"""        similarities = []
+        """Calcule la similarité géométrique"""
+        similarities = []
         
         # SIFT descriptor matching
         if (geo1.sift_descriptors is not None and geo2.sift_descriptors is not None and
@@ -815,7 +850,8 @@ class ImageFingerprintEngine:
     async def _compute_object_similarity(self, 
                                        objects1: List[Dict[str, Any]], 
                                        objects2: List[Dict[str, Any]]) -> float:
-        """Calcule la similarité d'objets détectés"""        # Extract object classes
+        """Calcule la similarité d'objets détectés"""
+        # Extract object classes
         classes1 = set(obj.get('class', '') for obj in objects1 if obj.get('confidence', 0) > 0.5)
         classes2 = set(obj.get('class', '') for obj in objects2 if obj.get('confidence', 0) > 0.5)
         
@@ -828,7 +864,8 @@ class ImageFingerprintEngine:
     async def _compute_multiscale_similarity(self, 
                                            pyramid1: Dict[int, Dict[str, Any]], 
                                            pyramid2: Dict[int, Dict[str, Any]]) -> float:
-        """Calcule la similarité multi-échelles"""        similarities = []
+        """Calcule la similarité multi-échelles"""
+        similarities = []
         
         for scale in pyramid1:
             if scale in pyramid2:
@@ -851,7 +888,8 @@ class ImageFingerprintEngine:
         return np.mean(similarities) if similarities else 0.0
     
     async def _compute_weighted_image_similarity(self, similarity_scores: Dict[str, float]) -> float:
-        """Calcule la similarité pondérée globale"""        weights = {
+        """Calcule la similarité pondérée globale"""
+        weights = {
             'phash': 0.2,
             'dhash': 0.15,
             'ahash': 0.1,
@@ -880,13 +918,15 @@ class ImageFingerprintEngine:
 # Processeurs spécialisés
 
 class PerceptualImageProcessor:
-    """Processeur de hashes perceptuels"""    
+    """Processeur de hashes perceptuels"""
+    
     def __init__(self, config: ImageFingerprintConfig):
         self.config = config
         logger.info("PerceptualImageProcessor initialized")
 
 class CLIPProcessor:
-    """Processeur CLIP pour caractéristiques visuelles-linguistiques"""    
+    """Processeur CLIP pour caractéristiques visuelles-linguistiques"""
+    
     def __init__(self, config: ImageFingerprintConfig):
         self.config = config
         self.model = None
@@ -899,7 +939,8 @@ class CLIPProcessor:
         logger.info("CLIPProcessor initialized")
     
     def _load_model(self):
-        """Charge le modèle CLIP"""        try:
+        """Charge le modèle CLIP"""
+        try:
             self.model, self.preprocess = clip.load(self.config.clip_model, device=self.device)
             self.model.eval()
         except Exception as e:
@@ -907,7 +948,8 @@ class CLIPProcessor:
             self.model = None
     
     async def extract_features(self, image_data: np.ndarray) -> Optional[np.ndarray]:
-        """Extrait les caractéristiques CLIP"""        if not self.model:
+        """Extrait les caractéristiques CLIP"""
+        if not self.model:
             return None
         
         try:
@@ -934,7 +976,8 @@ class CLIPProcessor:
             return None
 
 class CNNFeaturesProcessor:
-    """Processeur de caractéristiques CNN"""    
+    """Processeur de caractéristiques CNN"""
+    
     def __init__(self, config: ImageFingerprintConfig):
         self.config = config
         self.models = {}
@@ -946,7 +989,8 @@ class CNNFeaturesProcessor:
         logger.info("CNNFeaturesProcessor initialized")
     
     def _load_models(self):
-        """Charge les modèles CNN"""        try:
+        """Charge les modèles CNN"""
+        try:
             for model_name in self.config.cnn_models:
                 if model_name == "resnet50":
                     model = models.resnet50(pretrained=True)
@@ -965,7 +1009,8 @@ class CNNFeaturesProcessor:
             logger.error(f"Error loading CNN models: {e}")
     
     async def extract_features(self, image_data: np.ndarray, model_name: str) -> Optional[np.ndarray]:
-        """Extrait les caractéristiques CNN"""        if model_name not in self.models:
+        """Extrait les caractéristiques CNN"""
+        if model_name not in self.models:
             return None
         
         try:
@@ -998,7 +1043,8 @@ class CNNFeaturesProcessor:
             return None
 
 class ObjectDetector:
-    """Détecteur d'objets YOLO"""    
+    """Détecteur d'objets YOLO"""
+    
     def __init__(self, config: ImageFingerprintConfig):
         self.config = config
         
@@ -1010,7 +1056,8 @@ class ObjectDetector:
         logger.info("ObjectDetector initialized")
     
     async def detect(self, image_data: np.ndarray) -> List[Dict[str, Any]]:
-        """Détecte les objets dans l'image"""        if not self.model:
+        """Détecte les objets dans l'image"""
+        if not self.model:
             return []
         
         try:
@@ -1037,13 +1084,15 @@ class ObjectDetector:
             return []
 
 class QualityAssessor:
-    """Évaluateur de qualité d'image"""    
+    """Évaluateur de qualité d'image"""
+    
     def __init__(self, config: ImageFingerprintConfig):
         self.config = config
         logger.info("QualityAssessor initialized")
     
     async def assess_quality(self, image_data: np.ndarray) -> QualityMetrics:
-        """Évalue la qualité de l'image"""        metrics = QualityMetrics()
+        """Évalue la qualité de l'image"""
+        metrics = QualityMetrics()
         
         # Convert to grayscale for some metrics
         if len(image_data.shape) == 3:
@@ -1090,13 +1139,15 @@ class QualityAssessor:
         return metrics
 
 class ColorAnalyzer:
-    """Analyseur de couleurs"""    
+    """Analyseur de couleurs"""
+    
     def __init__(self, config: ImageFingerprintConfig):
         self.config = config
         logger.info("ColorAnalyzer initialized")
     
     async def analyze_colors(self, image_data: np.ndarray) -> ColorAnalysis:
-        """Analyse les couleurs de l'image"""        analysis = ColorAnalysis()
+        """Analyse les couleurs de l'image"""
+        analysis = ColorAnalysis()
         
         if len(image_data.shape) != 3:
             return analysis  # Skip grayscale images
@@ -1127,7 +1178,8 @@ class ColorAnalyzer:
         return analysis
     
     async def _extract_dominant_colors(self, image_data: np.ndarray) -> List[Tuple[int, int, int]]:
-        """Extrait les couleurs dominantes"""        try:
+        """Extrait les couleurs dominantes"""
+        try:
             # Reshape for k-means
             data = image_data.reshape((-1, 3))
             data = np.float32(data)
@@ -1148,13 +1200,15 @@ class ColorAnalyzer:
             return []
 
 class TextureAnalyzer:
-    """Analyseur de texture"""    
+    """Analyseur de texture"""
+    
     def __init__(self, config: ImageFingerprintConfig):
         self.config = config
         logger.info("TextureAnalyzer initialized")
     
     async def analyze_texture(self, image_data: np.ndarray) -> TextureFeatures:
-        """Analyse la texture de l'image"""        features = TextureFeatures()
+        """Analyse la texture de l'image"""
+        features = TextureFeatures()
         
         # Convert to grayscale
         if len(image_data.shape) == 3:
@@ -1198,13 +1252,15 @@ class TextureAnalyzer:
         return features
 
 class GeometricAnalyzer:
-    """Analyseur de caractéristiques géométriques"""    
+    """Analyseur de caractéristiques géométriques"""
+    
     def __init__(self, config: ImageFingerprintConfig):
         self.config = config
         logger.info("GeometricAnalyzer initialized")
     
     async def extract_features(self, image_data: np.ndarray) -> GeometricFeatures:
-        """Extrait les caractéristiques géométriques"""        features = GeometricFeatures()
+        """Extrait les caractéristiques géométriques"""
+        features = GeometricFeatures()
         
         # Convert to grayscale
         if len(image_data.shape) == 3:

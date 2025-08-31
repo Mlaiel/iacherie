@@ -5,7 +5,8 @@ for multi-format content creators on the IA Influencer platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Advanced Content Protection
-"""from datetime import datetime, timedelta
+"""
+from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
 from uuid import UUID
 import logging
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 
 class ClientType(str, Enum):
-    """Client creator types supported by the platform."""    MUSICIAN = "musician"
+    """Client creator types supported by the platform."""
+    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -45,7 +47,8 @@ class ClientType(str, Enum):
 
 
 class OnboardingStage(str, Enum):
-    """Client onboarding stages."""    REGISTRATION = "registration"
+    """Client onboarding stages."""
+    REGISTRATION = "registration"
     EMAIL_VERIFICATION = "email_verification"
     PROFILE_SETUP = "profile_setup"
     CONTENT_UPLOAD = "content_upload"
@@ -54,7 +57,8 @@ class OnboardingStage(str, Enum):
 
 
 class ClientRegistrationData(BaseModel):
-    """Client registration data validation model."""    email: EmailStr
+    """Client registration data validation model."""
+    email: EmailStr
     password: str
     first_name: str
     last_name: str
@@ -78,7 +82,8 @@ class ClientRegistrationData(BaseModel):
 
 
 class ClientUpdateData(BaseModel):
-    """Client profile update data validation model."""    first_name: Optional[str] = None
+    """Client profile update data validation model."""
+    first_name: Optional[str] = None
     last_name: Optional[str] = None
     display_name: Optional[str] = None
     bio: Optional[str] = None
@@ -91,7 +96,8 @@ class ClientUpdateData(BaseModel):
 
 
 class ClientManager:
-    """    Core client management system for IA Influencer platform.
+    """
+    Core client management system for IA Influencer platform.
     
     Provides comprehensive client lifecycle management including:
     - Registration and onboarding
@@ -99,7 +105,8 @@ class ClientManager:
     - Authentication and security
     - Subscription and billing integration
     - Analytics and tracking
-    """    
+    """
+    
     def __init__(
         self,
         db: Session,
@@ -118,7 +125,8 @@ class ClientManager:
         ip_address: str,
         user_agent: str
     ) -> Dict[str, Any]:
-        """        Register a new client on the platform.
+        """
+        Register a new client on the platform.
         
         Args:
             registration_data: Validated registration information
@@ -131,7 +139,8 @@ class ClientManager:
         Raises:
             DuplicateClientError: If email already exists
             InvalidClientDataError: If registration data is invalid
-        """        try:
+        """
+        try:
             # Check if email already exists
             existing_client = self.db.query(Client).filter(
                 Client.email == registration_data.email.lower()
@@ -204,7 +213,8 @@ class ClientManager:
             raise ClientServiceError("Failed to register client") from e
             
     async def verify_email(self, verification_token: str) -> Dict[str, Any]:
-        """        Verify client email address using verification token.
+        """
+        Verify client email address using verification token.
         
         Args:
             verification_token: JWT verification token
@@ -214,7 +224,8 @@ class ClientManager:
             
         Raises:
             ClientNotFoundError: If token is invalid or client not found
-        """        try:
+        """
+        try:
             # Decode and validate token
             payload = self.security_utils.decode_verification_token(verification_token)
             client_id = UUID(payload['client_id'])
@@ -257,14 +268,16 @@ class ClientManager:
             raise ClientServiceError("Email verification failed") from e
             
     async def get_client_by_id(self, client_id: UUID) -> Optional[Dict[str, Any]]:
-        """        Retrieve client information by ID.
+        """
+        Retrieve client information by ID.
         
         Args:
             client_id: Unique client identifier
             
         Returns:
             Client data dictionary or None if not found
-        """        try:
+        """
+        try:
             client = self.db.query(Client).filter(Client.id == client_id).first()
             if not client:
                 return None
@@ -280,7 +293,8 @@ class ClientManager:
         client_id: UUID,
         update_data: ClientUpdateData
     ) -> Dict[str, Any]:
-        """        Update client profile information.
+        """
+        Update client profile information.
         
         Args:
             client_id: Client identifier
@@ -291,7 +305,8 @@ class ClientManager:
             
         Raises:
             ClientNotFoundError: If client doesn't exist
-        """        try:
+        """
+        try:
             client = self.db.query(Client).filter(Client.id == client_id).first()
             if not client:
                 raise ClientNotFoundError(f"Client not found: {client_id}")
@@ -327,7 +342,8 @@ class ClientManager:
         reason: str,
         admin_id: Optional[UUID] = None
     ) -> bool:
-        """        Deactivate a client account.
+        """
+        Deactivate a client account.
         
         Args:
             client_id: Client identifier
@@ -336,7 +352,8 @@ class ClientManager:
             
         Returns:
             True if successful
-        """        try:
+        """
+        try:
             client = self.db.query(Client).filter(Client.id == client_id).first()
             if not client:
                 raise ClientNotFoundError(f"Client not found: {client_id}")
@@ -376,7 +393,8 @@ class ClientManager:
             return False
             
     def _format_client_data(self, client: Client) -> Dict[str, Any]:
-        """Format client data for API response."""        return {
+        """Format client data for API response."""
+        return {
             "id": str(client.id),
             "email": client.email,
             "first_name": client.first_name,
@@ -395,7 +413,8 @@ class ClientManager:
         }
         
     def _calculate_profile_completion(self, client: Client) -> int:
-        """Calculate profile completion percentage."""        completion_fields = [
+        """Calculate profile completion percentage."""
+        completion_fields = [
             client.first_name,
             client.last_name,
             client.display_name,

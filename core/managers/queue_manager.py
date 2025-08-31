@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Tâche créateur → Analyse priorité IA → Queue optimale → 
 Distribution workers → Monitoring execution → Retry intelligent → Résultat garanti
-"""from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set
+"""
+from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set
 import logging
 import asyncio
 from contextlib import asynccontextmanager
@@ -40,7 +41,8 @@ logger = logging.getLogger(__name__)
 
 
 class TaskPriority(Enum):
-    """Task priority levels"""    CRITICAL = 0  # Creator content upload/protection
+    """Task priority levels"""
+    CRITICAL = 0  # Creator content upload/protection
     HIGH = 1  # User requests, real-time features
     MEDIUM = 2  # Analytics, reports
     LOW = 3  # Cleanup, maintenance
@@ -48,7 +50,8 @@ class TaskPriority(Enum):
 
 
 class QueueType(Enum):
-    """Different queue types for different workloads"""    CONTENT_PROCESSING = "content_processing"  # Audio, video, image processing
+    """Different queue types for different workloads"""
+    CONTENT_PROCESSING = "content_processing"  # Audio, video, image processing
     AI_INFERENCE = "ai_inference"  # ML model inference
     PROTECTION_ANALYSIS = "protection_analysis"  # Fingerprinting, monitoring
     NOTIFICATION = "notification"  # Email, push notifications
@@ -59,7 +62,8 @@ class QueueType(Enum):
 
 
 class TaskStatus(Enum):
-    """Task execution status"""    PENDING = "pending"
+    """Task execution status"""
+    PENDING = "pending"
     PROCESSING = "processing"
     SUCCESS = "success"
     FAILED = "failed"
@@ -70,7 +74,8 @@ class TaskStatus(Enum):
 
 @dataclass
 class QueueConfig:
-    """Advanced queue system configuration"""    # Broker configuration
+    """Advanced queue system configuration"""
+    # Broker configuration
     broker_url: str = "redis://localhost:6379/0"
     result_backend: str = "redis://localhost:6379/1"
     
@@ -120,7 +125,8 @@ class QueueConfig:
 
 @dataclass
 class TaskMetrics:
-    """Task queue performance metrics"""    # Queue statistics
+    """Task queue performance metrics"""
+    # Queue statistics
     total_tasks_queued: int = 0
     total_tasks_completed: int = 0
     total_tasks_failed: int = 0
@@ -142,7 +148,8 @@ class TaskMetrics:
 
 @dataclass
 class TaskDefinition:
-    """Task definition with metadata"""    task_id: str
+    """Task definition with metadata"""
+    task_id: str
     task_name: str
     queue_type: QueueType
     priority: TaskPriority
@@ -156,7 +163,8 @@ class TaskDefinition:
 
 
 class IntelligentQueueManager(ABC):
-    """    🎯 Advanced Intelligent Queue Manager - IA-Influencer-Agent
+    """
+    🎯 Advanced Intelligent Queue Manager - IA-Influencer-Agent
     
     Enterprise-grade task queue management system featuring:
     - Multi-queue orchestration with intelligent routing
@@ -167,7 +175,8 @@ class IntelligentQueueManager(ABC):
     - Task dependency management and workflow orchestration
     - Intelligent retry strategies with exponential backoff
     - Geographic distribution for global task processing
-    """    
+    """
+    
     def __init__(self, config: QueueConfig = None):
         self.config = config or QueueConfig()
         
@@ -197,11 +206,13 @@ class IntelligentQueueManager(ABC):
     
     @abstractmethod
     async def initialize_queue_system(self) -> bool:
-        """        Initialize the queue system and all workers
+        """
+        Initialize the queue system and all workers
         
         Returns:
             bool: True if initialization successful
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def enqueue_task(
@@ -209,7 +220,8 @@ class IntelligentQueueManager(ABC):
         task_definition: TaskDefinition,
         immediate: bool = False,
     ) -> str:
-        """        Enqueue a task with intelligent prioritization
+        """
+        Enqueue a task with intelligent prioritization
         
         Args:
             task_definition: Task to enqueue
@@ -217,47 +229,56 @@ class IntelligentQueueManager(ABC):
             
         Returns:
             Task ID for tracking
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def get_task_status(self, task_id: str) -> Dict[str, Any]:
-        """        Get comprehensive task status and progress
+        """
+        Get comprehensive task status and progress
         
         Args:
             task_id: ID of the task to check
             
         Returns:
             Dict with task status and metadata
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def cancel_task(self, task_id: str) -> bool:
-        """        Cancel a pending or running task
+        """
+        Cancel a pending or running task
         
         Args:
             task_id: ID of the task to cancel
             
         Returns:
             bool: True if cancellation successful
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def retry_failed_task(self, task_id: str) -> str:
-        """        Retry a failed task with intelligent retry strategy
+        """
+        Retry a failed task with intelligent retry strategy
         
         Args:
             task_id: ID of the failed task
             
         Returns:
             New task ID for the retry
-        """        pass
+        """
+        pass
     
     async def optimize_queue_performance(self) -> Dict[str, Any]:
-        """        Analyze and optimize queue performance
+        """
+        Analyze and optimize queue performance
         
         Returns:
             Dict with optimization results
-        """        try:
+        """
+        try:
             optimization_results = {
                 "performance_improvements": {},
                 "worker_adjustments": {},
@@ -291,11 +312,13 @@ class IntelligentQueueManager(ABC):
             return {"error": str(e)}
     
     async def get_comprehensive_metrics(self) -> Dict[str, Any]:
-        """        Get comprehensive queue metrics and analytics
+        """
+        Get comprehensive queue metrics and analytics
         
         Returns:
             Dict with detailed queue analytics
-        """        try:
+        """
+        try:
             metrics = {
                 "overview": dict(self._metrics.__dict__),
                 "queue_status": await self._get_queue_status(),
@@ -321,7 +344,8 @@ class IntelligentQueueManager(ABC):
         cron_expression: str,
         metadata: Optional[Dict[str, Any]] = None,
     ) -> str:
-        """        Schedule a recurring task with cron-like scheduling
+        """
+        Schedule a recurring task with cron-like scheduling
         
         Args:
             task_name: Name of the task
@@ -333,7 +357,8 @@ class IntelligentQueueManager(ABC):
             
         Returns:
             Scheduled task ID
-        """        try:
+        """
+        try:
             scheduled_task_id = f"scheduled_{uuid.uuid4().hex}"
             
             # Create task definition
@@ -366,11 +391,13 @@ class IntelligentQueueManager(ABC):
             raise
     
     async def process_dead_letter_queue(self) -> Dict[str, Any]:
-        """        Process and analyze dead letter queue
+        """
+        Process and analyze dead letter queue
         
         Returns:
             Dict with DLQ processing results
-        """        try:
+        """
+        try:
             dlq_results = {
                 "processed_tasks": 0,
                 "recovered_tasks": 0,
@@ -416,47 +443,61 @@ class IntelligentQueueManager(ABC):
     
     # Helper methods for implementation
     async def _analyze_queue_performance(self) -> Dict[str, Any]:
-        """Analyze queue performance metrics"""        return {}
+        """Analyze queue performance metrics"""
+        return {}
     
     async def _optimize_worker_allocation(self) -> Dict[str, Any]:
-        """Optimize worker allocation based on workload"""        return {}
+        """Optimize worker allocation based on workload"""
+        return {}
     
     async def _rebalance_queues(self) -> Dict[str, Any]:
-        """Rebalance queues based on current load"""        return {}
+        """Rebalance queues based on current load"""
+        return {}
     
     async def _optimize_task_priorities(self) -> Dict[str, Any]:
-        """AI-powered task priority optimization"""        return {}
+        """AI-powered task priority optimization"""
+        return {}
     
     async def _get_queue_status(self) -> Dict[str, Any]:
-        """Get current status of all queues"""        return {}
+        """Get current status of all queues"""
+        return {}
     
     async def _get_worker_performance(self) -> Dict[str, Any]:
-        """Get worker performance metrics"""        return {}
+        """Get worker performance metrics"""
+        return {}
     
     async def _analyze_task_patterns(self) -> Dict[str, Any]:
-        """Analyze task execution patterns"""        return {}
+        """Analyze task execution patterns"""
+        return {}
     
     async def _analyze_errors(self) -> Dict[str, Any]:
-        """Analyze error patterns and trends"""        return {}
+        """Analyze error patterns and trends"""
+        return {}
     
     async def _get_workload_predictions(self) -> Dict[str, Any]:
-        """Get AI-powered workload predictions"""        return {}
+        """Get AI-powered workload predictions"""
+        return {}
     
     async def _get_dlq_items(self) -> List[Dict[str, Any]]:
-        """Get items from dead letter queue"""        return []
+        """Get items from dead letter queue"""
+        return []
     
     async def _attempt_task_recovery(self, task_id: str, error_info: Dict[str, Any]) -> bool:
-        """Attempt to recover a failed task"""        return False
+        """Attempt to recover a failed task"""
+        return False
     
     async def _generate_dlq_recommendations(self, error_patterns: Dict[str, int]) -> List[str]:
-        """Generate recommendations based on DLQ analysis"""        return []
+        """Generate recommendations based on DLQ analysis"""
+        return []
 
 
 # Concrete implementation
 class ProductionQueueManager(IntelligentQueueManager):
-    """Production implementation of the queue manager"""    
+    """Production implementation of the queue manager"""
+    
     async def initialize_queue_system(self) -> bool:
-        """Initialize Celery and queue system"""        try:
+        """Initialize Celery and queue system"""
+        try:
             # Initialize Celery app
             self._celery_app = Celery(
                 'ia_influencer_queues',
@@ -502,7 +543,8 @@ class ProductionQueueManager(IntelligentQueueManager):
         task_definition: TaskDefinition,
         immediate: bool = False,
     ) -> str:
-        """Enqueue task with intelligent routing"""        try:
+        """Enqueue task with intelligent routing"""
+        try:
             # Calculate dynamic priority if enabled
             if self.config.dynamic_priority_adjustment:
                 adjusted_priority = await self._calculate_dynamic_priority(task_definition)
@@ -560,7 +602,8 @@ class ProductionQueueManager(IntelligentQueueManager):
             raise
     
     async def get_task_status(self, task_id: str) -> Dict[str, Any]:
-        """Get comprehensive task status"""        try:
+        """Get comprehensive task status"""
+        try:
             task_def = self._active_tasks.get(task_id)
             if not task_def:
                 return {"error": "Task not found", "task_id": task_id}
@@ -601,7 +644,8 @@ class ProductionQueueManager(IntelligentQueueManager):
             return {"error": str(e), "task_id": task_id}
     
     async def cancel_task(self, task_id: str) -> bool:
-        """Cancel a task"""        try:
+        """Cancel a task"""
+        try:
             if self._celery_app:
                 self._celery_app.control.revoke(task_id, terminate=True)
             
@@ -617,7 +661,8 @@ class ProductionQueueManager(IntelligentQueueManager):
             return False
     
     async def retry_failed_task(self, task_id: str) -> str:
-        """Retry a failed task"""        try:
+        """Retry a failed task"""
+        try:
             original_task = self._active_tasks.get(task_id)
             if not original_task:
                 raise ValueError(f"Task {task_id} not found")
@@ -647,11 +692,13 @@ class ProductionQueueManager(IntelligentQueueManager):
     
     # Helper methods
     async def _calculate_dynamic_priority(self, task_def: TaskDefinition) -> TaskPriority:
-        """Calculate dynamic priority based on AI analysis"""        # Placeholder for AI-powered priority calculation
+        """Calculate dynamic priority based on AI analysis"""
+        # Placeholder for AI-powered priority calculation
         return task_def.priority
     
     async def _execute_task_immediately(self, task_def: TaskDefinition) -> Any:
-        """Execute task immediately without queueing"""        # Placeholder for immediate execution
+        """Execute task immediately without queueing"""
+        # Placeholder for immediate execution
         return None
 
 
@@ -660,11 +707,13 @@ _queue_manager: Optional[ProductionQueueManager] = None
 
 
 def get_queue_manager() -> ProductionQueueManager:
-    """    Get the global queue manager instance
+    """
+    Get the global queue manager instance
     
     Returns:
         ProductionQueueManager: Global queue manager instance
-    """    global _queue_manager
+    """
+    global _queue_manager
     if _queue_manager is None:
         _queue_manager = ProductionQueueManager()
     return _queue_manager
@@ -672,7 +721,8 @@ def get_queue_manager() -> ProductionQueueManager:
 
 # Alias for backward compatibility
 QueueManager = IntelligentQueueManager
-    """    🎯 Gestionnaire QueueManager - IA-Influencer-Agent
+    """
+    🎯 Gestionnaire QueueManager - IA-Influencer-Agent
     
     Responsabilité:
     Fonctionnalité spécialisée IA-Influencer-Agent
@@ -686,7 +736,8 @@ QueueManager = IntelligentQueueManager
     - Auto-scaling basé sur la charge
     - Gestion d'erreurs avec circuit breaker
     - Nettoyage automatique des ressources
-    """    
+    """
+    
     def __init__(self, config: QueueManagerConfig = None):
         self.config = config or QueueManagerConfig()
         self._pool = []
@@ -702,38 +753,46 @@ QueueManager = IntelligentQueueManager
     
     @abstractmethod
     async def initialize_pool(self) -> bool:
-        """        Initialise le pool de ressources
+        """
+        Initialise le pool de ressources
         
         Returns:
             bool: True si initialisation réussie
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def acquire_resource(self) -> Any:
-        """        Acquiert une ressource du pool
+        """
+        Acquiert une ressource du pool
         
         Returns:
             Any: Ressource acquise
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def release_resource(self, resource: Any) -> bool:
-        """        Libère une ressource vers le pool
+        """
+        Libère une ressource vers le pool
         
         Args:
             resource: Ressource à libérer
             
         Returns:
             bool: True si libération réussie
-        """        pass
+        """
+        pass
     
     @asynccontextmanager
     async def get_resource(self):
-        """        Context manager pour gestion automatique des ressources
+        """
+        Context manager pour gestion automatique des ressources
         
         Yields:
             Any: Ressource gérée automatiquement
-        """        resource = None
+        """
+        resource = None
         try:
             resource = await self.acquire_resource()
             yield resource
@@ -742,22 +801,26 @@ QueueManager = IntelligentQueueManager
                 await self.release_resource(resource)
     
     async def cleanup(self) -> bool:
-        """        Nettoyage des ressources
+        """
+        Nettoyage des ressources
         
         Returns:
             bool: True si nettoyage réussi
-        """        with self._lock:
+        """
+        with self._lock:
             self._pool.clear()
             self._active_connections = 0
         logger.info(f"🧹 Nettoyage {self.__class__.__name__} terminé")
         return True
     
     def get_stats(self) -> Dict[str, Any]:
-        """        Statistiques du gestionnaire
+        """
+        Statistiques du gestionnaire
         
         Returns:
             Dict: Métriques actuelles
-        """        with self._lock:
+        """
+        with self._lock:
             return {
                 "pool_size": len(self._pool),
                 "active_connections": self._active_connections,
@@ -771,11 +834,13 @@ queue_manager = None
 
 
 def get_queue_manager() -> QueueManager:
-    """    Obtient l'instance du gestionnaire
+    """
+    Obtient l'instance du gestionnaire
     
     Returns:
         QueueManager: Instance du gestionnaire
-    """    global queue_manager
+    """
+    global queue_manager
     if queue_manager is None:
         queue_manager = QueueManager()
     return queue_manager

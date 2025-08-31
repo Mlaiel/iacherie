@@ -15,7 +15,8 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 from datetime import datetime, timedelta, timezone
@@ -43,7 +44,8 @@ logger = logging.getLogger(__name__)
 
 
 class WhitelistType(Enum):
-    """Types of whitelist entries"""    USER = "user"
+    """Types of whitelist entries"""
+    USER = "user"
     CONTENT = "content"
     DOMAIN = "domain"
     IP_ADDRESS = "ip_address"
@@ -56,7 +58,8 @@ class WhitelistType(Enum):
 
 
 class WhitelistStatus(Enum):
-    """Whitelist entry status"""    PENDING = "pending"
+    """Whitelist entry status"""
+    PENDING = "pending"
     APPROVED = "approved"
     ACTIVE = "active"
     SUSPENDED = "suspended"
@@ -66,7 +69,8 @@ class WhitelistStatus(Enum):
 
 
 class TrustLevel(Enum):
-    """Trust levels for whitelist entries"""    UNKNOWN = "unknown"
+    """Trust levels for whitelist entries"""
+    UNKNOWN = "unknown"
     LOW = "low"
     MODERATE = "moderate"
     HIGH = "high"
@@ -76,7 +80,8 @@ class TrustLevel(Enum):
 
 
 class ApprovalType(Enum):
-    """Types of whitelist approvals"""    MANUAL = "manual"
+    """Types of whitelist approvals"""
+    MANUAL = "manual"
     AUTOMATIC = "automatic"
     AI_ASSISTED = "ai_assisted"
     BATCH_APPROVAL = "batch_approval"
@@ -85,7 +90,8 @@ class ApprovalType(Enum):
 
 
 class RiskCategory(Enum):
-    """Risk categories for assessment"""    CONTENT_VIOLATION = "content_violation"
+    """Risk categories for assessment"""
+    CONTENT_VIOLATION = "content_violation"
     IMPERSONATION = "impersonation"
     FRAUD = "fraud"
     SPAM = "spam"
@@ -96,18 +102,21 @@ class RiskCategory(Enum):
 
 
 class WhitelistManagerError(Exception):
-    """Custom exception for whitelist operations"""    pass
+    """Custom exception for whitelist operations"""
+    pass
 
 
 class WhitelistManager:
-    """    Ultra-advanced whitelist management system with enterprise features:
+    """
+    Ultra-advanced whitelist management system with enterprise features:
     - AI-powered risk assessment and trust scoring
     - Dynamic whitelist optimization and maintenance
     - Multi-level approval workflows
     - Real-time monitoring and threat detection
     - Automated whitelist lifecycle management
     - Compliance and audit trail tracking
-    """    
+    """
+    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -166,7 +175,8 @@ class WhitelistManager:
         expiration_date: Optional[datetime] = None,
         trust_level_override: Optional[TrustLevel] = None
     ) -> WhitelistEntry:
-        """        Add entity to whitelist with comprehensive validation and risk assessment
+        """
+        Add entity to whitelist with comprehensive validation and risk assessment
         
         Args:
             entity_type: Type of entity to whitelist
@@ -182,7 +192,8 @@ class WhitelistManager:
             
         Raises:
             WhitelistManagerError: If addition fails
-        """        try:
+        """
+        try:
             # Validate entity identifier
             await self._validate_entity_identifier(entity_type, entity_identifier)
             
@@ -284,7 +295,8 @@ class WhitelistManager:
         conditional_approval: bool = False,
         approval_conditions: Optional[List[str]] = None
     ) -> WhitelistEntry:
-        """        Approve pending whitelist entry with detailed audit trail
+        """
+        Approve pending whitelist entry with detailed audit trail
         
         Args:
             entry_id: Whitelist entry ID
@@ -295,7 +307,8 @@ class WhitelistManager:
             
         Returns:
             Approved WhitelistEntry record
-        """        try:
+        """
+        try:
             # Get pending entry
             entry = await self.db_session.query(WhitelistEntry).filter(
                 WhitelistEntry.id == entry_id
@@ -365,7 +378,8 @@ class WhitelistManager:
         entity_identifier: str,
         check_context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Check comprehensive whitelist status for entity
+        """
+        Check comprehensive whitelist status for entity
         
         Args:
             entity_type: Type of entity to check
@@ -374,7 +388,8 @@ class WhitelistManager:
             
         Returns:
             Detailed whitelist status information
-        """        try:
+        """
+        try:
             # Check cache first
             cache_key = f"whitelist_status_{entity_type.value}_{entity_identifier}"
             if cache_key in self.whitelist_cache:
@@ -462,7 +477,8 @@ class WhitelistManager:
         requester_id: str,
         operation_metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Perform bulk whitelist operations with batch processing
+        """
+        Perform bulk whitelist operations with batch processing
         
         Args:
             operation: Type of operation (add, approve, remove, suspend)
@@ -472,7 +488,8 @@ class WhitelistManager:
             
         Returns:
             Bulk operation results
-        """        try:
+        """
+        try:
             operation_id = uuid4()
             operation_start = datetime.now(timezone.utc)
             
@@ -536,14 +553,16 @@ class WhitelistManager:
         self,
         optimization_criteria: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Optimize whitelist performance using AI analysis
+        """
+        Optimize whitelist performance using AI analysis
         
         Args:
             optimization_criteria: Specific optimization criteria
             
         Returns:
             Optimization results and recommendations
-        """        try:
+        """
+        try:
             optimization_start = datetime.now(timezone.utc)
             
             # Get all whitelist entries for analysis
@@ -643,7 +662,8 @@ class WhitelistManager:
         analytics_period_days: int = 30,
         include_predictions: bool = True
     ) -> Dict[str, Any]:
-        """        Generate comprehensive whitelist analytics and insights
+        """
+        Generate comprehensive whitelist analytics and insights
         
         Args:
             analytics_period_days: Period for analytics calculation
@@ -651,7 +671,8 @@ class WhitelistManager:
             
         Returns:
             Comprehensive analytics report
-        """        try:
+        """
+        try:
             analysis_start = datetime.now(timezone.utc)
             period_start = analysis_start - timedelta(days=analytics_period_days)
             
@@ -750,7 +771,8 @@ class WhitelistManager:
         entity_type: WhitelistType,
         entity_identifier: str
     ) -> None:
-        """Validate entity identifier format and uniqueness"""        if not entity_identifier or len(entity_identifier.strip()) == 0:
+        """Validate entity identifier format and uniqueness"""
+        if not entity_identifier or len(entity_identifier.strip()) == 0:
             raise WhitelistManagerError("Entity identifier cannot be empty")
         
         # Type-specific validation
@@ -766,7 +788,8 @@ class WhitelistManager:
         entity_type: WhitelistType,
         entity_identifier: str
     ) -> Optional[WhitelistEntry]:
-        """Get existing whitelist entry if it exists"""        return await self.db_session.query(WhitelistEntry).filter(
+        """Get existing whitelist entry if it exists"""
+        return await self.db_session.query(WhitelistEntry).filter(
             and_(
                 WhitelistEntry.entity_type == entity_type.value,
                 WhitelistEntry.entity_identifier == entity_identifier
@@ -779,7 +802,8 @@ class WhitelistManager:
         entity_identifier: str,
         entity_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform comprehensive AI-powered risk assessment"""        try:
+        """Perform comprehensive AI-powered risk assessment"""
+        try:
             if not self.ai_risk_assessment_enabled:
                 return {
                     "overall_risk_score": 0.5,
@@ -822,7 +846,8 @@ class WhitelistManager:
         entity_metadata: Dict[str, Any],
         risk_assessment: Dict[str, Any]
     ) -> float:
-        """Calculate comprehensive trust score"""        try:
+        """Calculate comprehensive trust score"""
+        try:
             # Get trust factors from risk assessment
             trust_factors = risk_assessment.get("trust_factors", {})
             
@@ -859,7 +884,8 @@ class WhitelistManager:
             return 0.5  # Default neutral trust score
     
     async def _determine_trust_level(self, trust_score: float) -> TrustLevel:
-        """Determine trust level based on trust score"""        if trust_score >= 0.9:
+        """Determine trust level based on trust score"""
+        if trust_score >= 0.9:
             return TrustLevel.ENTERPRISE
         elif trust_score >= 0.8:
             return TrustLevel.PREMIUM
@@ -879,7 +905,8 @@ class WhitelistManager:
         entry: WhitelistEntry,
         risk_assessment: Dict[str, Any]
     ) -> None:
-        """Automatically approve low-risk, high-trust entries"""        entry.status = WhitelistStatus.APPROVED.value
+        """Automatically approve low-risk, high-trust entries"""
+        entry.status = WhitelistStatus.APPROVED.value
         entry.approved_at = datetime.now(timezone.utc)
         entry.approved_by = "system_auto_approval"
         
@@ -904,7 +931,8 @@ class WhitelistManager:
         self.whitelist_metrics["automated_approvals"] += 1
     
     async def _activate_whitelist_entry(self, entry: WhitelistEntry) -> None:
-        """Activate approved whitelist entry"""        entry.status = WhitelistStatus.ACTIVE.value
+        """Activate approved whitelist entry"""
+        entry.status = WhitelistStatus.ACTIVE.value
         entry.activated_at = datetime.now(timezone.utc)
         entry.updated_at = datetime.now(timezone.utc)
     
@@ -913,7 +941,8 @@ class WhitelistManager:
         approver_id: str,
         entry: WhitelistEntry
     ) -> None:
-        """Validate approver has permissions to approve entry"""        # Implementation would check user permissions
+        """Validate approver has permissions to approve entry"""
+        # Implementation would check user permissions
         # For now, assume all approvers are valid
         pass
     
@@ -921,7 +950,8 @@ class WhitelistManager:
         self,
         entry: WhitelistEntry
     ) -> Dict[str, Any]:
-        """Perform final risk check before approval"""        try:
+        """Perform final risk check before approval"""
+        try:
             # Get latest risk data
             entity_metadata = json.loads(
                 await self.encryption_manager.decrypt_data(entry.entity_metadata)
@@ -948,7 +978,8 @@ class WhitelistManager:
             return {"high_risk": False, "error": str(e)}
     
     async def _get_current_trust_score(self, entry: WhitelistEntry) -> float:
-        """Get current trust score (may be recalculated)"""        # Check if trust score needs recalculation
+        """Get current trust score (may be recalculated)"""
+        # Check if trust score needs recalculation
         if (not entry.trust_score or 
             entry.updated_at < datetime.now(timezone.utc) - timedelta(days=7)):
             
@@ -984,7 +1015,8 @@ class WhitelistManager:
         entry: WhitelistEntry,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform real-time risk check with current context"""        try:
+        """Perform real-time risk check with current context"""
+        try:
             # Combine entry data with current context
             entity_metadata = json.loads(
                 await self.encryption_manager.decrypt_data(entry.entity_metadata)
@@ -1013,7 +1045,8 @@ class WhitelistManager:
         entry: WhitelistEntry,
         risk_info: Dict[str, Any]
     ) -> None:
-        """Temporarily suspend entry due to high risk"""        entry.status = WhitelistStatus.SUSPENDED.value
+        """Temporarily suspend entry due to high risk"""
+        entry.status = WhitelistStatus.SUSPENDED.value
         entry.suspended_at = datetime.now(timezone.utc)
         entry.suspension_reason = f"High real-time risk detected: {risk_info.get('risk_score', 'unknown')}"
         entry.updated_at = datetime.now(timezone.utc)
@@ -1021,7 +1054,8 @@ class WhitelistManager:
         logger.warning(f"Whitelist entry temporarily suspended: {entry.entity_identifier} due to high risk")
     
     async def _handle_expired_entry(self, entry: WhitelistEntry) -> None:
-        """Handle expired whitelist entry"""        entry.status = WhitelistStatus.EXPIRED.value
+        """Handle expired whitelist entry"""
+        entry.status = WhitelistStatus.EXPIRED.value
         entry.updated_at = datetime.now(timezone.utc)
         
         # Update metrics
@@ -1035,7 +1069,8 @@ class WhitelistManager:
         requester_id: str,
         operation_metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Process batch of whitelist operations"""        batch_results = {
+        """Process batch of whitelist operations"""
+        batch_results = {
             "successful": 0,
             "failed": 0,
             "results": [],
@@ -1085,7 +1120,8 @@ class WhitelistManager:
         return batch_results
     
     async def _calculate_average_approval_time(self) -> float:
-        """Calculate average approval time in hours"""        try:
+        """Calculate average approval time in hours"""
+        try:
             # Get recent approvals
             recent_approvals = await self.db_session.query(WhitelistEntry).filter(
                 and_(
@@ -1113,7 +1149,8 @@ class WhitelistManager:
         self,
         entries: List[WhitelistEntry]
     ) -> List[Dict[str, Any]]:
-        """Generate AI-powered optimization recommendations"""        try:
+        """Generate AI-powered optimization recommendations"""
+        try:
             # Prepare data for AI analysis
             analysis_data = []
             for entry in entries:
@@ -1152,7 +1189,8 @@ class WhitelistManager:
         entries: List[WhitelistEntry],
         period_days: int
     ) -> Dict[str, Any]:
-        """Calculate whitelist trends over time"""        try:
+        """Calculate whitelist trends over time"""
+        try:
             # Group entries by day
             daily_stats = {}
             
@@ -1193,7 +1231,8 @@ class WhitelistManager:
         self,
         entries: List[WhitelistEntry]
     ) -> Dict[str, Any]:
-        """Generate ML predictions for whitelist management"""        try:
+        """Generate ML predictions for whitelist management"""
+        try:
             # Prepare prediction data
             prediction_data = {
                 "current_entries": len(entries),
@@ -1213,7 +1252,8 @@ class WhitelistManager:
             return {}
     
     async def _get_historical_data(self, entity_identifier: str) -> Dict[str, Any]:
-        """Get historical data for entity"""        # Implementation would gather historical violation, content, and behavior data
+        """Get historical data for entity"""
+        # Implementation would gather historical violation, content, and behavior data
         return {"placeholder": "historical_data"}
     
     async def _get_context_data(
@@ -1221,10 +1261,12 @@ class WhitelistManager:
         entity_type: WhitelistType,
         entity_identifier: str
     ) -> Dict[str, Any]:
-        """Get context data for entity assessment"""        # Implementation would gather contextual data from various sources
+        """Get context data for entity assessment"""
+        # Implementation would gather contextual data from various sources
         return {"placeholder": "context_data"}
     
     def _clear_whitelist_cache(self) -> None:
-        """Clear whitelist cache to force refresh"""        self.whitelist_cache.clear()
+        """Clear whitelist cache to force refresh"""
+        self.whitelist_cache.clear()
         self.trust_scores_cache.clear()
         logger.debug("Whitelist cache cleared")

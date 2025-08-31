@@ -21,7 +21,8 @@ Development Team Specialties:
 - Database Administrator: Performance optimization
 - Security Expert: Content protection and compliance
 - Microservices Architect: Scalable system design
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, Any, Optional, List
 from pathlib import Path
@@ -33,17 +34,21 @@ from .exceptions import ParserInitializationError
 
 
 class ParsersIndex:
-    """    Central index for parsers module initialization and management
-    """    
+    """
+    Central index for parsers module initialization and management
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize parsers index"""        self.logger = logging.getLogger(__name__)
+        """Initialize parsers index"""
+        self.logger = logging.getLogger(__name__)
         self.config = self._load_config(config_path)
         self.factory = ParserFactory(self.config)
         self.manager = ParserManager(self.factory, self.config)
         self._initialized = False
     
     def _load_config(self, config_path: Optional[str] = None) -> ParserConfig:
-        """Load parser configuration"""        try:
+        """Load parser configuration"""
+        try:
             if config_path:
                 return ParserConfig.from_file(config_path)
             else:
@@ -58,7 +63,8 @@ class ParsersIndex:
             raise ParserInitializationError(f"Configuration loading failed: {e}")
     
     async def initialize(self) -> None:
-        """Initialize all parser components"""        try:
+        """Initialize all parser components"""
+        try:
             self.logger.info("Initializing parsers module...")
             
             # Initialize factory
@@ -78,7 +84,8 @@ class ParsersIndex:
             raise ParserInitializationError(f"Initialization failed: {e}")
     
     async def _validate_parsers(self) -> None:
-        """Validate all available parsers"""        platform_parsers = await self.factory.get_available_platform_parsers()
+        """Validate all available parsers"""
+        platform_parsers = await self.factory.get_available_platform_parsers()
         media_parsers = await self.factory.get_available_media_parsers()
         
         self.logger.info(f"Validated {len(platform_parsers)} platform parsers")
@@ -88,7 +95,8 @@ class ParsersIndex:
             raise ParserInitializationError("Critical parsers missing")
     
     async def shutdown(self) -> None:
-        """Shutdown parsers module"""        try:
+        """Shutdown parsers module"""
+        try:
             self.logger.info("Shutting down parsers module...")
             
             await self.manager.shutdown()
@@ -101,20 +109,24 @@ class ParsersIndex:
             self.logger.error(f"Error during shutdown: {e}")
     
     def get_manager(self) -> ParserManager:
-        """Get parser manager instance"""        if not self._initialized:
+        """Get parser manager instance"""
+        if not self._initialized:
             raise ParserInitializationError("Module not initialized")
         return self.manager
     
     def get_factory(self) -> ParserFactory:
-        """Get parser factory instance"""        if not self._initialized:
+        """Get parser factory instance"""
+        if not self._initialized:
             raise ParserInitializationError("Module not initialized")
         return self.factory
     
     def get_config(self) -> ParserConfig:
-        """Get parser configuration"""        return self.config
+        """Get parser configuration"""
+        return self.config
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on all parsers"""        if not self._initialized:
+        """Perform health check on all parsers"""
+        if not self._initialized:
             return {"status": "not_initialized", "healthy": False}
         
         try:
@@ -142,7 +154,8 @@ _parsers_index: Optional[ParsersIndex] = None
 
 
 async def get_parsers_index(config_path: Optional[str] = None) -> ParsersIndex:
-    """Get or create global parsers index instance"""    global _parsers_index
+    """Get or create global parsers index instance"""
+    global _parsers_index
     
     if _parsers_index is None:
         _parsers_index = ParsersIndex(config_path)
@@ -152,11 +165,13 @@ async def get_parsers_index(config_path: Optional[str] = None) -> ParsersIndex:
 
 
 async def initialize_parsers(config_path: Optional[str] = None) -> ParsersIndex:
-    """Initialize parsers module"""    return await get_parsers_index(config_path)
+    """Initialize parsers module"""
+    return await get_parsers_index(config_path)
 
 
 async def shutdown_parsers() -> None:
-    """Shutdown parsers module"""    global _parsers_index
+    """Shutdown parsers module"""
+    global _parsers_index
     
     if _parsers_index:
         await _parsers_index.shutdown()

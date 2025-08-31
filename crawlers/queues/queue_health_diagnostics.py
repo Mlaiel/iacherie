@@ -37,7 +37,8 @@ logger = logging.getLogger(__name__)
 
 
 class HealthStatus(Enum):
-    """Health status levels"""    EXCELLENT = "excellent"        # 90-100%
+    """Health status levels"""
+    EXCELLENT = "excellent"        # 90-100%
     GOOD = "good"                 # 70-89%
     DEGRADED = "degraded"         # 50-69%
     CRITICAL = "critical"         # 30-49%
@@ -45,7 +46,8 @@ class HealthStatus(Enum):
 
 
 class DiagnosticCategory(Enum):
-    """Diagnostic categories"""    PERFORMANCE = "performance"
+    """Diagnostic categories"""
+    PERFORMANCE = "performance"
     RELIABILITY = "reliability"
     SCALABILITY = "scalability"
     SECURITY = "security"
@@ -56,14 +58,16 @@ class DiagnosticCategory(Enum):
 
 
 class RecoveryStrategy(Enum):
-    """Recovery strategy types"""    IMMEDIATE = "immediate"        # Emergency fixes
+    """Recovery strategy types"""
+    IMMEDIATE = "immediate"        # Emergency fixes
     SCHEDULED = "scheduled"        # Planned maintenance
     GRADUAL = "gradual"           # Phased improvements
     PREVENTIVE = "preventive"     # Proactive measures
 
 
 class DiagnosticSeverity(Enum):
-    """Diagnostic issue severity"""    INFO = "info"
+    """Diagnostic issue severity"""
+    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
@@ -71,7 +75,8 @@ class DiagnosticSeverity(Enum):
 
 @dataclass
 class HealthMetric:
-    """Individual health metric"""    metric_name: str
+    """Individual health metric"""
+    metric_name: str
     current_value: float
     target_value: float
     threshold_warning: float
@@ -84,7 +89,8 @@ class HealthMetric:
 
 @dataclass
 class DiagnosticIssue:
-    """Diagnostic issue identification"""    issue_id: str
+    """Diagnostic issue identification"""
+    issue_id: str
     category: DiagnosticCategory
     severity: DiagnosticSeverity
     title: str
@@ -100,7 +106,8 @@ class DiagnosticIssue:
 
 @dataclass
 class RecoveryAction:
-    """Recovery action specification"""    action_id: str
+    """Recovery action specification"""
+    action_id: str
     title: str
     description: str
     strategy: RecoveryStrategy
@@ -115,7 +122,8 @@ class RecoveryAction:
 
 @dataclass
 class RecoveryPlan:
-    """Complete recovery plan"""    plan_id: str
+    """Complete recovery plan"""
+    plan_id: str
     issue_id: str
     strategy: RecoveryStrategy
     total_estimated_duration: int
@@ -128,7 +136,8 @@ class RecoveryPlan:
 
 @dataclass
 class HealthReport:
-    """Comprehensive health report"""    report_id: str
+    """Comprehensive health report"""
+    report_id: str
     timestamp: datetime
     overall_health_score: float
     overall_status: HealthStatus
@@ -143,7 +152,8 @@ class HealthReport:
 
 @dataclass
 class DiagnosticConfig:
-    """Diagnostic system configuration"""    diagnostic_interval_seconds: int = 300  # 5 minutes
+    """Diagnostic system configuration"""
+    diagnostic_interval_seconds: int = 300  # 5 minutes
     health_check_interval_seconds: int = 60
     metric_collection_window_minutes: int = 30
     issue_detection_sensitivity: float = 0.8
@@ -155,7 +165,8 @@ class DiagnosticConfig:
 
 
 class ComponentHealthAnalyzer:
-    """Individual component health analyzer"""    
+    """Individual component health analyzer"""
+    
     def __init__(self, component_name: str):
         self.component_name = component_name
         self.metrics: Dict[str, HealthMetric] = {}
@@ -163,14 +174,16 @@ class ComponentHealthAnalyzer:
         self.baseline_performance: Dict[str, float] = {}
         
     async def add_metric(self, metric: HealthMetric):
-        """Add health metric for component"""        self.metrics[metric.metric_name] = metric
+        """Add health metric for component"""
+        self.metrics[metric.metric_name] = metric
         
         # Update baseline if this is a new metric
         if metric.metric_name not in self.baseline_performance:
             self.baseline_performance[metric.metric_name] = metric.current_value
     
     async def calculate_health_score(self) -> float:
-        """Calculate overall health score for component"""        
+        """Calculate overall health score for component"""
+        
         if not self.metrics:
             return 0.5  # Default neutral score
         
@@ -198,7 +211,8 @@ class ComponentHealthAnalyzer:
         return health_score
     
     async def _calculate_metric_score(self, metric: HealthMetric) -> float:
-        """Calculate score for individual metric"""        
+        """Calculate score for individual metric"""
+        
         current = metric.current_value
         target = metric.target_value
         warning = metric.threshold_warning
@@ -227,7 +241,8 @@ class ComponentHealthAnalyzer:
                 return max(0.1, 1.0 - (degradation * 0.5))
     
     async def detect_anomalies(self) -> List[str]:
-        """Detect anomalies in component behavior"""        
+        """Detect anomalies in component behavior"""
+        
         anomalies = []
         
         # Check recent trend
@@ -248,7 +263,8 @@ class ComponentHealthAnalyzer:
         return anomalies
     
     async def _analyze_trend(self, values: List[float]) -> str:
-        """Analyze trend direction"""        
+        """Analyze trend direction"""
+        
         if len(values) < 3:
             return "stable"
         
@@ -264,7 +280,8 @@ class ComponentHealthAnalyzer:
             return "stable"
     
     async def get_performance_insights(self) -> List[str]:
-        """Get performance insights for component"""        
+        """Get performance insights for component"""
+        
         insights = []
         
         # Analyze metric performance
@@ -295,7 +312,8 @@ class ComponentHealthAnalyzer:
 
 
 class RootCauseAnalyzer:
-    """Root cause analysis engine"""    
+    """Root cause analysis engine"""
+    
     def __init__(self):
         self.correlation_patterns: Dict[str, List[str]] = {
             "high_queue_size": [
@@ -348,7 +366,8 @@ class RootCauseAnalyzer:
     async def analyze_root_causes(self, 
                                 issues: List[DiagnosticIssue], 
                                 metrics: List[HealthMetric]) -> Dict[str, List[str]]:
-        """Analyze root causes for detected issues"""        
+        """Analyze root causes for detected issues"""
+        
         root_causes = {}
         
         for issue in issues:
@@ -360,7 +379,8 @@ class RootCauseAnalyzer:
     async def _identify_potential_causes(self, 
                                        issue: DiagnosticIssue, 
                                        metrics: List[HealthMetric]) -> List[str]:
-        """Identify potential root causes for an issue"""        
+        """Identify potential root causes for an issue"""
+        
         potential_causes = []
         
         # Look for correlation patterns
@@ -392,7 +412,8 @@ class RootCauseAnalyzer:
         return list(set(potential_causes))  # Remove duplicates
     
     def _classify_issue_type(self, issue: DiagnosticIssue) -> str:
-        """Classify issue type for correlation analysis"""        
+        """Classify issue type for correlation analysis"""
+        
         title_lower = issue.title.lower()
         
         if "queue" in title_lower and "size" in title_lower:
@@ -407,7 +428,8 @@ class RootCauseAnalyzer:
             return "unknown"
     
     def _classify_metric_type(self, metric: HealthMetric) -> str:
-        """Classify metric type for correlation analysis"""        
+        """Classify metric type for correlation analysis"""
+        
         name_lower = metric.metric_name.lower()
         
         if "queue" in name_lower and "size" in name_lower:
@@ -422,7 +444,8 @@ class RootCauseAnalyzer:
             return "unknown"
     
     async def _analyze_metric_patterns(self, metrics: List[HealthMetric]) -> List[str]:
-        """Analyze metric patterns for root cause hints"""        
+        """Analyze metric patterns for root cause hints"""
+        
         patterns = []
         
         # Look for resource exhaustion patterns
@@ -446,7 +469,8 @@ class RootCauseAnalyzer:
 
 
 class AutomatedRecoveryEngine:
-    """Automated recovery execution engine"""    
+    """Automated recovery execution engine"""
+    
     def __init__(self, max_concurrent_recoveries: int = 3):
         self.max_concurrent_recoveries = max_concurrent_recoveries
         self.active_recoveries: Dict[str, asyncio.Task] = {}
@@ -466,7 +490,8 @@ class AutomatedRecoveryEngine:
                                   plan: RecoveryPlan,
                                   queue_manager: Optional[IntelligentQueueManager] = None,
                                   distribution_engine: Optional[TaskDistributionEngine] = None) -> Dict[str, Any]:
-        """Execute recovery plan"""        
+        """Execute recovery plan"""
+        
         if len(self.active_recoveries) >= self.max_concurrent_recoveries:
             return {
                 'success': False,
@@ -492,7 +517,8 @@ class AutomatedRecoveryEngine:
                                     plan: RecoveryPlan,
                                     queue_manager: Optional[IntelligentQueueManager],
                                     distribution_engine: Optional[TaskDistributionEngine]):
-        """Execute individual recovery steps"""        
+        """Execute individual recovery steps"""
+        
         execution_log = {
             'plan_id': plan.plan_id,
             'started_at': datetime.utcnow(),
@@ -558,7 +584,8 @@ class AutomatedRecoveryEngine:
                                       action: RecoveryAction,
                                       queue_manager: Optional[IntelligentQueueManager],
                                       distribution_engine: Optional[TaskDistributionEngine]) -> Dict[str, Any]:
-        """Execute automated recovery action"""        
+        """Execute automated recovery action"""
+        
         if action.title in self.automated_actions:
             handler = self.automated_actions[action.title]
             return await handler(action, queue_manager, distribution_engine)
@@ -572,7 +599,8 @@ class AutomatedRecoveryEngine:
                                   action: RecoveryAction,
                                   queue_manager: Optional[IntelligentQueueManager],
                                   distribution_engine: Optional[TaskDistributionEngine]) -> Dict[str, Any]:
-        """Scale workers recovery action"""        
+        """Scale workers recovery action"""
+        
         try:
             # This would interface with actual scaling systems
             logger.info("Executing automated worker scaling")
@@ -597,7 +625,8 @@ class AutomatedRecoveryEngine:
                                               action: RecoveryAction,
                                               queue_manager: Optional[IntelligentQueueManager],
                                               distribution_engine: Optional[TaskDistributionEngine]) -> Dict[str, Any]:
-        """Restart unhealthy workers action"""        
+        """Restart unhealthy workers action"""
+        
         try:
             logger.info("Executing automated unhealthy worker restart")
             
@@ -621,7 +650,8 @@ class AutomatedRecoveryEngine:
                                           action: RecoveryAction,
                                           queue_manager: Optional[IntelligentQueueManager],
                                           distribution_engine: Optional[TaskDistributionEngine]) -> Dict[str, Any]:
-        """Optimize distribution strategy action"""        
+        """Optimize distribution strategy action"""
+        
         try:
             if distribution_engine:
                 logger.info("Executing distribution optimization")
@@ -652,7 +682,8 @@ class AutomatedRecoveryEngine:
                                         action: RecoveryAction,
                                         queue_manager: Optional[IntelligentQueueManager],
                                         distribution_engine: Optional[TaskDistributionEngine]) -> Dict[str, Any]:
-        """Clear queue backlog action"""        
+        """Clear queue backlog action"""
+        
         try:
             logger.info("Executing queue backlog clearing")
             
@@ -676,7 +707,8 @@ class AutomatedRecoveryEngine:
                                        action: RecoveryAction,
                                        queue_manager: Optional[IntelligentQueueManager],
                                        distribution_engine: Optional[TaskDistributionEngine]) -> Dict[str, Any]:
-        """Adjust rate limits action"""        
+        """Adjust rate limits action"""
+        
         try:
             logger.info("Executing rate limit adjustment")
             
@@ -700,7 +732,8 @@ class AutomatedRecoveryEngine:
                                        action: RecoveryAction,
                                        queue_manager: Optional[IntelligentQueueManager],
                                        distribution_engine: Optional[TaskDistributionEngine]) -> Dict[str, Any]:
-        """Emergency throttle action"""        
+        """Emergency throttle action"""
+        
         try:
             logger.info("Executing emergency throttling")
             
@@ -721,7 +754,8 @@ class AutomatedRecoveryEngine:
             }
     
     async def get_recovery_status(self) -> Dict[str, Any]:
-        """Get current recovery status"""        
+        """Get current recovery status"""
+        
         return {
             'active_recoveries': len(self.active_recoveries),
             'max_concurrent': self.max_concurrent_recoveries,
@@ -730,7 +764,8 @@ class AutomatedRecoveryEngine:
         }
     
     def _calculate_success_rate(self) -> float:
-        """Calculate recovery success rate"""        
+        """Calculate recovery success rate"""
+        
         if not self.recovery_history:
             return 0.0
         
@@ -739,7 +774,8 @@ class AutomatedRecoveryEngine:
 
 
 class QueueHealthDiagnostics:
-    """Main queue health diagnostics system"""    
+    """Main queue health diagnostics system"""
+    
     def __init__(self, 
                  config: DiagnosticConfig,
                  queue_manager: Optional[IntelligentQueueManager] = None,
@@ -771,7 +807,8 @@ class QueueHealthDiagnostics:
         logger.info("Queue Health Diagnostics system initialized")
     
     async def start_diagnostics(self):
-        """Start health diagnostics"""        
+        """Start health diagnostics"""
+        
         if self.is_diagnosing:
             logger.warning("Diagnostics already running")
             return
@@ -793,7 +830,8 @@ class QueueHealthDiagnostics:
         logger.info("Health diagnostics started")
     
     async def stop_diagnostics(self):
-        """Stop health diagnostics"""        
+        """Stop health diagnostics"""
+        
         self.is_diagnosing = False
         
         # Cancel diagnostic tasks
@@ -808,7 +846,8 @@ class QueueHealthDiagnostics:
         logger.info("Health diagnostics stopped")
     
     async def _health_monitoring_loop(self):
-        """Background health monitoring loop"""        
+        """Background health monitoring loop"""
+        
         while self.is_diagnosing:
             try:
                 await self._collect_health_metrics()
@@ -819,7 +858,8 @@ class QueueHealthDiagnostics:
                 await asyncio.sleep(self.config.health_check_interval_seconds)
     
     async def _collect_health_metrics(self):
-        """Collect health metrics from all components"""        
+        """Collect health metrics from all components"""
+        
         # Queue Manager metrics
         if self.queue_manager:
             await self._collect_queue_manager_metrics()
@@ -836,7 +876,8 @@ class QueueHealthDiagnostics:
         await self._collect_system_metrics()
     
     async def _collect_queue_manager_metrics(self):
-        """Collect queue manager health metrics"""        
+        """Collect queue manager health metrics"""
+        
         analyzer = self.component_analyzers['queue_manager']
         
         # Simulate metrics collection (in real implementation, these would come from actual queue manager)
@@ -877,7 +918,8 @@ class QueueHealthDiagnostics:
             await analyzer.add_metric(metric)
     
     async def _collect_distribution_engine_metrics(self):
-        """Collect distribution engine health metrics"""        
+        """Collect distribution engine health metrics"""
+        
         analyzer = self.component_analyzers['distribution_engine']
         
         try:
@@ -924,7 +966,8 @@ class QueueHealthDiagnostics:
             logger.error(f"Error collecting distribution engine metrics: {e}")
     
     async def _collect_monitor_metrics(self):
-        """Collect monitoring system metrics"""        
+        """Collect monitoring system metrics"""
+        
         try:
             if hasattr(self.monitor, 'get_monitoring_status'):
                 status = await self.monitor.get_monitoring_status()
@@ -962,7 +1005,8 @@ class QueueHealthDiagnostics:
             logger.error(f"Error collecting monitor metrics: {e}")
     
     async def _collect_system_metrics(self):
-        """Collect system-level metrics"""        
+        """Collect system-level metrics"""
+        
         # Storage metrics
         storage_analyzer = self.component_analyzers['storage']
         
@@ -994,7 +1038,8 @@ class QueueHealthDiagnostics:
             await storage_analyzer.add_metric(metric)
     
     async def _diagnostic_analysis_loop(self):
-        """Background diagnostic analysis loop"""        
+        """Background diagnostic analysis loop"""
+        
         while self.is_diagnosing:
             try:
                 await self._perform_diagnostic_analysis()
@@ -1005,7 +1050,8 @@ class QueueHealthDiagnostics:
                 await asyncio.sleep(self.config.diagnostic_interval_seconds)
     
     async def _perform_diagnostic_analysis(self):
-        """Perform comprehensive diagnostic analysis"""        
+        """Perform comprehensive diagnostic analysis"""
+        
         timestamp = datetime.utcnow()
         
         # Calculate component health scores
@@ -1075,7 +1121,8 @@ class QueueHealthDiagnostics:
         logger.info(f"Health analysis completed - Overall health: {overall_health_score:.2f} ({overall_status.value})")
     
     def _determine_health_status(self, score: float) -> HealthStatus:
-        """Determine health status from score"""        
+        """Determine health status from score"""
+        
         if score >= 0.9:
             return HealthStatus.EXCELLENT
         elif score >= 0.7:
@@ -1088,7 +1135,8 @@ class QueueHealthDiagnostics:
             return HealthStatus.EMERGENCY
     
     async def _detect_issues(self, metrics: List[HealthMetric]) -> List[DiagnosticIssue]:
-        """Detect diagnostic issues from metrics"""        
+        """Detect diagnostic issues from metrics"""
+        
         issues = []
         
         for metric in metrics:
@@ -1135,7 +1183,8 @@ class QueueHealthDiagnostics:
         return issues
     
     def _categorize_metric(self, metric: HealthMetric) -> DiagnosticCategory:
-        """Categorize metric into diagnostic category"""        
+        """Categorize metric into diagnostic category"""
+        
         name_lower = metric.metric_name.lower()
         
         if any(word in name_lower for word in ["rate", "time", "latency", "throughput"]):
@@ -1150,7 +1199,8 @@ class QueueHealthDiagnostics:
             return DiagnosticCategory.OPERATIONAL
     
     def _identify_component_from_metric(self, metric: HealthMetric) -> str:
-        """Identify component from metric name"""        
+        """Identify component from metric name"""
+        
         name_lower = metric.metric_name.lower()
         
         if any(word in name_lower for word in ["queue", "processing"]):
@@ -1167,7 +1217,8 @@ class QueueHealthDiagnostics:
             return "system"
     
     async def _detect_pattern_issues(self, metrics: List[HealthMetric]) -> List[DiagnosticIssue]:
-        """Detect issues based on metric patterns"""        
+        """Detect issues based on metric patterns"""
+        
         pattern_issues = []
         
         # Check for correlated degradation
@@ -1193,7 +1244,8 @@ class QueueHealthDiagnostics:
         return pattern_issues
     
     async def _generate_recovery_plans(self, issues: List[DiagnosticIssue]) -> List[RecoveryPlan]:
-        """Generate recovery plans for detected issues"""        
+        """Generate recovery plans for detected issues"""
+        
         recovery_plans = []
         
         for issue in issues:
@@ -1205,7 +1257,8 @@ class QueueHealthDiagnostics:
         return recovery_plans
     
     async def _create_recovery_plan(self, issue: DiagnosticIssue) -> Optional[RecoveryPlan]:
-        """Create recovery plan for specific issue"""        
+        """Create recovery plan for specific issue"""
+        
         actions = []
         
         # Define recovery actions based on issue category and affected components
@@ -1267,7 +1320,8 @@ class QueueHealthDiagnostics:
     async def _generate_recommendations(self, 
                                       metrics: List[HealthMetric], 
                                       issues: List[DiagnosticIssue]) -> List[str]:
-        """Generate optimization recommendations"""        
+        """Generate optimization recommendations"""
+        
         recommendations = []
         
         # Performance recommendations
@@ -1297,7 +1351,8 @@ class QueueHealthDiagnostics:
         return recommendations
     
     async def _analyze_trends(self) -> Dict[str, str]:
-        """Analyze health trends"""        
+        """Analyze health trends"""
+        
         trends = {}
         
         # Analyze component trends
@@ -1329,7 +1384,8 @@ class QueueHealthDiagnostics:
         return trends
     
     async def _execute_auto_recovery(self, recovery_plans: List[RecoveryPlan]):
-        """Execute automatic recovery plans"""        
+        """Execute automatic recovery plans"""
+        
         for plan in recovery_plans:
             if not plan.approval_required:
                 try:
@@ -1346,7 +1402,8 @@ class QueueHealthDiagnostics:
                     logger.error(f"Error executing auto-recovery plan {plan.plan_id}: {e}")
     
     async def _recovery_monitoring_loop(self):
-        """Background recovery monitoring loop"""        
+        """Background recovery monitoring loop"""
+        
         while self.is_diagnosing:
             try:
                 await self._monitor_recovery_progress()
@@ -1357,7 +1414,8 @@ class QueueHealthDiagnostics:
                 await asyncio.sleep(60)
     
     async def _monitor_recovery_progress(self):
-        """Monitor recovery progress and effectiveness"""        
+        """Monitor recovery progress and effectiveness"""
+        
         recovery_status = await self.recovery_engine.get_recovery_status()
         
         if recovery_status['active_recoveries'] > 0:
@@ -1369,7 +1427,8 @@ class QueueHealthDiagnostics:
             logger.info(f"Recovery success rate: {success_rate:.2%}")
     
     async def _predictive_diagnostics_loop(self):
-        """Background predictive diagnostics loop"""        
+        """Background predictive diagnostics loop"""
+        
         while self.is_diagnosing:
             try:
                 await self._perform_predictive_analysis()
@@ -1380,7 +1439,8 @@ class QueueHealthDiagnostics:
                 await asyncio.sleep(600)
     
     async def _perform_predictive_analysis(self):
-        """Perform predictive analysis for early issue detection"""        
+        """Perform predictive analysis for early issue detection"""
+        
         # Analyze trends in component health
         for component_name, analyzer in self.component_analyzers.items():
             if len(analyzer.historical_scores) >= 10:
@@ -1401,7 +1461,8 @@ class QueueHealthDiagnostics:
                             await self._trigger_predictive_recovery(component_name, current_score)
     
     async def _trigger_predictive_recovery(self, component_name: str, current_score: float):
-        """Trigger predictive recovery actions"""        
+        """Trigger predictive recovery actions"""
+        
         # Create predictive recovery action
         if component_name == "queue_manager" and current_score < 0.5:
             # Proactive queue management
@@ -1412,10 +1473,12 @@ class QueueHealthDiagnostics:
             logger.info("Triggering predictive distribution optimization")
     
     async def get_current_health_report(self) -> Optional[HealthReport]:
-        """Get current health report"""        return self.current_health_report
+        """Get current health report"""
+        return self.current_health_report
     
     async def get_diagnostic_status(self) -> Dict[str, Any]:
-        """Get diagnostic system status"""        
+        """Get diagnostic system status"""
+        
         component_health = {}
         for name, analyzer in self.component_analyzers.items():
             health_score = await analyzer.calculate_health_score()
@@ -1450,7 +1513,8 @@ def create_queue_health_diagnostics(
     distribution_engine: Optional[TaskDistributionEngine] = None,
     monitor: Optional[RealtimeQueueMonitor] = None
 ) -> QueueHealthDiagnostics:
-    """Create and configure queue health diagnostics system"""    
+    """Create and configure queue health diagnostics system"""
+    
     if config is None:
         config = DiagnosticConfig()
     

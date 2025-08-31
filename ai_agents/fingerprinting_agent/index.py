@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""from .fingerprinting_agent import FingerprintingAgent, FingerprintType, FingerprintQuality
+"""
+from .fingerprinting_agent import FingerprintingAgent, FingerprintType, FingerprintQuality
 from .audio_fingerprinter import AudioFingerprinter, AudioFingerprintQuality
 from .video_fingerprinter import VideoFingerprinter, VideoFingerprintQuality
 from .image_fingerprinter import ImageFingerprinter, ImageFingerprintQuality
@@ -133,7 +134,8 @@ DEFAULT_CONFIG = {
 }
 
 def get_module_info() -> dict:
-    """Get comprehensive module information"""    return {
+    """Get comprehensive module information"""
+    return {
         "name": "Fingerprinting Agent Module",
         "version": __version__,
         "author": __author__,
@@ -147,10 +149,12 @@ def get_module_info() -> dict:
     }
 
 def validate_content_type(content_type: str) -> bool:
-    """Validate if content type is supported"""    return content_type in SUPPORTED_CONTENT_TYPES
+    """Validate if content type is supported"""
+    return content_type in SUPPORTED_CONTENT_TYPES
 
 def get_recommended_quality(content_type: str, use_case: str) -> str:
-    """Get recommended quality level based on content type and use case"""    recommendations = {
+    """Get recommended quality level based on content type and use case"""
+    recommendations = {
         "audio": {
             "music_protection": "ultra",
             "podcast_matching": "advanced", 
@@ -180,7 +184,8 @@ def get_recommended_quality(content_type: str, use_case: str) -> str:
     return recommendations.get(content_type, {}).get(use_case, "standard")
 
 def estimate_processing_time(content_type: str, content_size: int, quality_level: str) -> float:
-    """Estimate processing time based on content characteristics"""    base_times = {
+    """Estimate processing time based on content characteristics"""
+    base_times = {
         "audio": 0.4,    # seconds per minute
         "video": 10.0,   # seconds per minute
         "image": 0.5,    # seconds per image

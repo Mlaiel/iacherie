@@ -15,7 +15,8 @@ WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Callable
@@ -44,7 +45,8 @@ from ..vector_db.vector_db_manager import VectorDBManager
 
 
 class IntegrationType(Enum):
-    """Platform integration types"""    OAUTH2 = "oauth2"
+    """Platform integration types"""
+    OAUTH2 = "oauth2"
     API_KEY = "api_key"
     WEBHOOK = "webhook"
     RSS_FEED = "rss_feed"
@@ -53,7 +55,8 @@ class IntegrationType(Enum):
 
 
 class DataSyncStatus(Enum):
-    """Data synchronization status"""    CONNECTED = "connected"
+    """Data synchronization status"""
+    CONNECTED = "connected"
     SYNCING = "syncing"
     ERROR = "error"
     DISCONNECTED = "disconnected"
@@ -62,7 +65,8 @@ class DataSyncStatus(Enum):
 
 
 class PlatformCapability(Enum):
-    """Platform capability types"""    READ_ANALYTICS = "read_analytics"
+    """Platform capability types"""
+    READ_ANALYTICS = "read_analytics"
     WRITE_CONTENT = "write_content"
     MANAGE_ACCOUNT = "manage_account"
     ACCESS_AUDIENCE = "access_audience"
@@ -72,7 +76,8 @@ class PlatformCapability(Enum):
 
 @dataclass
 class PlatformConnection:
-    """Platform connection configuration"""    platform: str
+    """Platform connection configuration"""
+    platform: str
     integration_type: IntegrationType
     status: DataSyncStatus
     capabilities: List[PlatformCapability]
@@ -87,7 +92,8 @@ class PlatformConnection:
 
 @dataclass
 class SyncResult:
-    """Data synchronization result"""    platform: str
+    """Data synchronization result"""
+    platform: str
     status: DataSyncStatus
     records_processed: int
     errors: List[str]
@@ -99,7 +105,8 @@ class SyncResult:
 
 @dataclass
 class PlatformHealthCheck:
-    """Platform health monitoring result"""    platform: str
+    """Platform health monitoring result"""
+    platform: str
     is_healthy: bool
     response_time: float
     api_quota_remaining: int
@@ -111,21 +118,25 @@ class PlatformHealthCheck:
 
 
 class PlatformIntegrationAnalytics:
-    """    Professional platform integration analytics engine for IA Influencer Agent platform.
+    """
+    Professional platform integration analytics engine for IA Influencer Agent platform.
     
     Manages seamless integration with all major content platforms, handles authentication,
     data synchronization, and provides unified analytics across platforms.
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession, redis_client: Redis,
                  storage_manager: StorageManager, vector_db: VectorDBManager):
-        """        Initialize Platform Integration Analytics engine.
+        """
+        Initialize Platform Integration Analytics engine.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
             storage_manager: Storage management service
             vector_db: Vector database manager
-        """        self.db_session = db_session
+        """
+        self.db_session = db_session
         self.redis_client = redis_client
         self.storage_manager = storage_manager
         self.vector_db = vector_db
@@ -155,7 +166,8 @@ class PlatformIntegrationAnalytics:
         self.connection_cache_ttl = 3600  # 1 hour for connections
         
     async def __aenter__(self):
-        """Async context manager entry"""        connector = aiohttp.TCPConnector(
+        """Async context manager entry"""
+        connector = aiohttp.TCPConnector(
             limit=100,
             limit_per_host=30,
             ssl=ssl.create_default_context()
@@ -169,13 +181,15 @@ class PlatformIntegrationAnalytics:
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""        if self.http_session:
+        """Async context manager exit"""
+        if self.http_session:
             await self.http_session.close()
     
     async def connect_platform(self, user_id: str, platform: str,
                              credentials: Dict[str, Any],
                              capabilities: List[PlatformCapability] = None) -> PlatformConnection:
-        """        Connect to a content platform with proper authentication.
+        """
+        Connect to a content platform with proper authentication.
         
         Args:
             user_id: User identifier
@@ -185,7 +199,8 @@ class PlatformIntegrationAnalytics:
             
         Returns:
             PlatformConnection object
-        """        try:
+        """
+        try:
             if capabilities is None:
                 capabilities = [PlatformCapability.READ_ANALYTICS]
             
@@ -227,7 +242,8 @@ class PlatformIntegrationAnalytics:
     
     async def sync_platform_data(self, user_id: str, platform: str,
                                force_sync: bool = False) -> SyncResult:
-        """        Synchronize data from a connected platform.
+        """
+        Synchronize data from a connected platform.
         
         Args:
             user_id: User identifier
@@ -236,7 +252,8 @@ class PlatformIntegrationAnalytics:
             
         Returns:
             SyncResult with synchronization details
-        """        try:
+        """
+        try:
             # Get platform connection
             connection = await self._get_platform_connection(user_id, platform)
             if not connection:
@@ -318,7 +335,8 @@ class PlatformIntegrationAnalytics:
             )
     
     async def get_platform_health(self, user_id: str, platform: str) -> PlatformHealthCheck:
-        """        Perform health check on platform connection.
+        """
+        Perform health check on platform connection.
         
         Args:
             user_id: User identifier
@@ -326,7 +344,8 @@ class PlatformIntegrationAnalytics:
             
         Returns:
             PlatformHealthCheck result
-        """        try:
+        """
+        try:
             connection = await self._get_platform_connection(user_id, platform)
             if not connection:
                 return PlatformHealthCheck(
@@ -396,7 +415,8 @@ class PlatformIntegrationAnalytics:
     
     async def setup_webhook_handler(self, platform: str, user_id: str,
                                   webhook_url: str, events: List[str]) -> Dict[str, Any]:
-        """        Setup webhook handler for real-time platform updates.
+        """
+        Setup webhook handler for real-time platform updates.
         
         Args:
             platform: Platform name
@@ -406,7 +426,8 @@ class PlatformIntegrationAnalytics:
             
         Returns:
             Webhook configuration details
-        """        try:
+        """
+        try:
             connection = await self._get_platform_connection(user_id, platform)
             if not connection:
                 raise ValueError(f"No active connection for platform {platform}")
@@ -450,7 +471,8 @@ class PlatformIntegrationAnalytics:
     
     async def get_unified_analytics(self, user_id: str, 
                                   timeframe_days: int = 30) -> Dict[str, Any]:
-        """        Get unified analytics across all connected platforms.
+        """
+        Get unified analytics across all connected platforms.
         
         Args:
             user_id: User identifier
@@ -458,7 +480,8 @@ class PlatformIntegrationAnalytics:
             
         Returns:
             Unified analytics data
-        """        try:
+        """
+        try:
             # Get all connected platforms
             connected_platforms = await self._get_connected_platforms(user_id)
             
@@ -509,7 +532,8 @@ class PlatformIntegrationAnalytics:
     
     async def migrate_platform_data(self, user_id: str, source_platform: str,
                                   target_platform: str, data_types: List[str]) -> Dict[str, Any]:
-        """        Migrate data between platforms.
+        """
+        Migrate data between platforms.
         
         Args:
             user_id: User identifier
@@ -519,7 +543,8 @@ class PlatformIntegrationAnalytics:
             
         Returns:
             Migration result
-        """        try:
+        """
+        try:
             # Validate connections
             source_conn = await self._get_platform_connection(user_id, source_platform)
             target_conn = await self._get_platform_connection(user_id, target_platform)
@@ -586,7 +611,8 @@ class PlatformIntegrationAnalytics:
     # Private helper methods
     
     def _initialize_platform_configurations(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize platform-specific configurations"""        return {
+        """Initialize platform-specific configurations"""
+        return {
             "spotify": {
                 "auth_url": "https://accounts.spotify.com/authorize",
                 "token_url": "https://accounts.spotify.com/api/token",
@@ -644,7 +670,8 @@ class PlatformIntegrationAnalytics:
         }
     
     def _get_encryption_key(self) -> bytes:
-        """Get or generate encryption key for credentials"""        # In production, this should come from secure key management
+        """Get or generate encryption key for credentials"""
+        # In production, this should come from secure key management
         import os
         key = os.environ.get("PLATFORM_ENCRYPTION_KEY")
         if not key:
@@ -654,7 +681,8 @@ class PlatformIntegrationAnalytics:
     
     async def _cache_result(self, cache_key: str, data: Dict[str, Any], 
                           ttl: int = None) -> None:
-        """Cache result in Redis"""        try:
+        """Cache result in Redis"""
+        try:
             if ttl is None:
                 ttl = self.cache_ttl
             serialized_data = json.dumps(data, default=str)

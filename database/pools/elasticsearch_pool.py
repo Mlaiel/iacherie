@@ -30,7 +30,8 @@ or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -52,7 +53,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ElasticsearchPoolConfig(PoolConfig):
-    """Extended Elasticsearch pool configuration"""    # Elasticsearch specific settings
+    """Extended Elasticsearch pool configuration"""
+    # Elasticsearch specific settings
     use_ssl: bool = True
     verify_certs: bool = True
     ca_certs: Optional[str] = None
@@ -261,7 +263,8 @@ INDEX_MAPPINGS = {
 # =============== ELASTICSEARCH CONNECTION POOL ===============
 
 class ElasticsearchConnectionPool(IConnectionPool):
-    """Elasticsearch connection pool with enterprise features"""    
+    """Elasticsearch connection pool with enterprise features"""
+    
     def __init__(self, config: ElasticsearchPoolConfig, connection_info: DatabaseConnectionInfo):
         self.config = config
         self.connection_info = connection_info
@@ -289,7 +292,8 @@ class ElasticsearchConnectionPool(IConnectionPool):
         self._bulk_processor_task: Optional[asyncio.Task] = None
     
     async def initialize(self) -> bool:
-        """Initialize Elasticsearch connection"""        try:
+        """Initialize Elasticsearch connection"""
+        try:
             # Build client configuration
             client_config = {
                 'hosts': [f"{self.connection_info.host}:{self.connection_info.port}"],
@@ -358,7 +362,8 @@ class ElasticsearchConnectionPool(IConnectionPool):
             return False
     
     async def _initialize_indices(self) -> None:
-        """Initialize all required indices"""        for index_name, index_config in INDEX_MAPPINGS.items():
+        """Initialize all required indices"""
+        for index_name, index_config in INDEX_MAPPINGS.items():
             try:
                 full_index_name = f"{self.config.index_prefix}_{index_name}"
                 
@@ -382,7 +387,8 @@ class ElasticsearchConnectionPool(IConnectionPool):
                 logger.error(f"Failed to initialize index {index_name}: {e}")
     
     async def _setup_lifecycle_policies(self) -> None:
-        """Setup index lifecycle management policies"""        if not self.config.enable_analytics:
+        """Setup index lifecycle management policies"""
+        if not self.config.enable_analytics:
             return
         
         # Analytics data retention policy
@@ -430,18 +436,21 @@ class ElasticsearchConnectionPool(IConnectionPool):
             logger.error(f"Failed to create lifecycle policy: {e}")
     
     async def acquire(self, timeout: Optional[float] = None) -> AsyncElasticsearch:
-        """Acquire Elasticsearch client"""        if not self.client:
+        """Acquire Elasticsearch client"""
+        if not self.client:
             raise Exception("Elasticsearch pool not initialized")
         
         self.stats["total_operations"] += 1
         return self.client
     
     async def release(self, connection: AsyncElasticsearch) -> None:
-        """Release Elasticsearch client (no-op)"""        pass
+        """Release Elasticsearch client (no-op)"""
+        pass
     
     async def search_content(self, query: Dict[str, Any], index_name: str = "content_fingerprints", 
                            size: int = 100) -> Dict[str, Any]:
-        """Search content with optimized performance"""        start_time = asyncio.get_event_loop().time()
+        """Search content with optimized performance"""
+        start_time = asyncio.get_event_loop().time()
         
         try:
             client = await self.acquire()
@@ -474,7 +483,8 @@ class ElasticsearchConnectionPool(IConnectionPool):
     
     async def index_document(self, document: Dict[str, Any], index_name: str, 
                            doc_id: Optional[str] = None, refresh: str = "false") -> Dict[str, Any]:
-        """Index single document"""        start_time = asyncio.get_event_loop().time()
+        """Index single document"""
+        start_time = asyncio.get_event_loop().time()
         
         try:
             client = await self.acquire()
@@ -508,7 +518,8 @@ class ElasticsearchConnectionPool(IConnectionPool):
     
     async def bulk_index_documents(self, documents: List[Dict[str, Any]], 
                                  index_name: str, refresh: str = "false") -> Dict[str, Any]:
-        """Bulk index documents with optimized performance"""        try:
+        """Bulk index documents with optimized performance"""
+        try:
             client = await self.acquire()
             full_index_name = f"{self.config.index_prefix}_{index_name}"
             
@@ -541,7 +552,8 @@ class ElasticsearchConnectionPool(IConnectionPool):
             raise
     
     async def queue_bulk_document(self, document: Dict[str, Any], index_name: str) -> None:
-        """Queue document for bulk processing"""        try:
+        """Queue document for bulk processing"""
+        try:
             await self._bulk_queue.put({
                 "document": document,
                 "index_name": index_name,
@@ -551,7 +563,8 @@ class ElasticsearchConnectionPool(IConnectionPool):
             logger.warning("Bulk queue is full, dropping document")
     
     async def _bulk_processor(self) -> None:
-        """Background bulk processor"""        batch = []
+        """Background bulk processor"""
+        batch = []
         last_flush = datetime.utcnow()
         
         while self.state == ConnectionState.ACTIVE:
@@ -601,7 +614,8 @@ class ElasticsearchConnectionPool(IConnectionPool):
     
     async def search_similar_content(self, vector_embedding: List[float], 
                                    content_type: str, threshold: float = 0.8) -> List[Dict]:
-        """Search for similar content using vector similarity"""        query = {
+        """Search for similar content using vector similarity"""
+        query = {
             "query": {
                 "bool": {
                     "must": [
@@ -629,7 +643,8 @@ class ElasticsearchConnectionPool(IConnectionPool):
     
     async def aggregate_analytics(self, aggregation_query: Dict[str, Any], 
                                 index_name: str = "analytics_events") -> Dict[str, Any]:
-        """Execute analytics aggregation query"""        try:
+        """Execute analytics aggregation query"""
+        try:
             client = await self.acquire()
             full_index_name = f"{self.config.index_prefix}_{index_name}"
             
@@ -647,7 +662,8 @@ class ElasticsearchConnectionPool(IConnectionPool):
     
     async def get_protection_alerts(self, user_id: str, status: Optional[str] = None, 
                                   limit: int = 100) -> List[Dict]:
-        """Get protection alerts for user"""        query = {
+        """Get protection alerts for user"""
+        query = {
             "query": {
                 "bool": {
                     "must": [
@@ -667,11 +683,13 @@ class ElasticsearchConnectionPool(IConnectionPool):
         return [hit["_source"] for hit in result.get("hits", {}).get("hits", [])]
     
     async def log_event(self, log_data: Dict[str, Any]) -> None:
-        """Log event to Elasticsearch"""        log_data["timestamp"] = datetime.utcnow().isoformat()
+        """Log event to Elasticsearch"""
+        log_data["timestamp"] = datetime.utcnow().isoformat()
         await self.queue_bulk_document(log_data, "search_logs")
     
     async def health_check(self) -> bool:
-        """Check Elasticsearch cluster health"""        try:
+        """Check Elasticsearch cluster health"""
+        try:
             client = await self.acquire()
             
             # Cluster health
@@ -692,7 +710,8 @@ class ElasticsearchConnectionPool(IConnectionPool):
             return False
     
     async def _health_monitor(self) -> None:
-        """Background health monitoring"""        while self.state == ConnectionState.ACTIVE:
+        """Background health monitoring"""
+        while self.state == ConnectionState.ACTIVE:
             try:
                 is_healthy = await self.health_check()
                 if not is_healthy:
@@ -707,7 +726,8 @@ class ElasticsearchConnectionPool(IConnectionPool):
                 await asyncio.sleep(5)
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get Elasticsearch pool statistics"""        pool_stats = {
+        """Get Elasticsearch pool statistics"""
+        pool_stats = {
             "client_info": str(self.client) if self.client else None,
             "state": self.state.value,
             "bulk_queue_size": self._bulk_queue.qsize(),
@@ -721,7 +741,8 @@ class ElasticsearchConnectionPool(IConnectionPool):
         return pool_stats
     
     async def close(self) -> None:
-        """Close Elasticsearch pool"""        try:
+        """Close Elasticsearch pool"""
+        try:
             self.state = ConnectionState.CLOSED
             
             # Cancel bulk processor

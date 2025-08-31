@@ -12,14 +12,16 @@ intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, re
 distribution, modification, or appropriation of this code, in whole or in part, without 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
-"""from typing import Dict, List, Optional, Any
+"""
+from typing import Dict, List, Optional, Any
 from enum import Enum
 import traceback
 from datetime import datetime
 
 
 class ErrorSeverity(Enum):
-    """Error severity levels"""    LOW = "low"
+    """Error severity levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -27,7 +29,8 @@ class ErrorSeverity(Enum):
 
 
 class ErrorCategory(Enum):
-    """Error category classifications"""    VALIDATION_ERROR = "validation_error"
+    """Error category classifications"""
+    VALIDATION_ERROR = "validation_error"
     PROCESSING_ERROR = "processing_error"
     CONFIGURATION_ERROR = "configuration_error"
     RESOURCE_ERROR = "resource_error"
@@ -40,10 +43,12 @@ class ErrorCategory(Enum):
 
 
 class QualityAssessmentBaseException(Exception):
-    """    Base exception class for Quality Assessment Module
+    """
+    Base exception class for Quality Assessment Module
     
     Provides common error handling functionality and structured error information.
-    """    
+    """
+    
     def __init__(
         self,
         message: str,
@@ -54,7 +59,8 @@ class QualityAssessmentBaseException(Exception):
         suggestions: Optional[List[str]] = None,
         context: Optional[Dict[str, Any]] = None
     ):
-        """        Initialize base exception
+        """
+        Initialize base exception
         
         Args:
             message: Human-readable error message
@@ -64,7 +70,8 @@ class QualityAssessmentBaseException(Exception):
             details: Additional error details and metadata
             suggestions: List of suggestions to resolve the error
             context: Context information when error occurred
-        """        super().__init__(message)
+        """
+        super().__init__(message)
         
         self.message = message
         self.error_code = error_code
@@ -77,7 +84,8 @@ class QualityAssessmentBaseException(Exception):
         self.traceback = traceback.format_exc()
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary format"""        return {
+        """Convert exception to dictionary format"""
+        return {
             'error_type': self.__class__.__name__,
             'message': self.message,
             'error_code': self.error_code,
@@ -91,14 +99,17 @@ class QualityAssessmentBaseException(Exception):
         }
     
     def __str__(self) -> str:
-        """String representation of the exception"""        return f"[{self.error_code}] {self.message} (Severity: {self.severity.value})"
+        """String representation of the exception"""
+        return f"[{self.error_code}] {self.message} (Severity: {self.severity.value})"
 
 
 class ContentValidationError(QualityAssessmentBaseException):
-    """    Raised when content validation fails
+    """
+    Raised when content validation fails
     
     This includes format validation, file integrity checks, and content structure validation.
-    """    
+    """
+    
     def __init__(
         self,
         message: str,
@@ -129,7 +140,8 @@ class ContentValidationError(QualityAssessmentBaseException):
 
 
 class UnsupportedFormatError(ContentValidationError):
-    """Raised when an unsupported file format is encountered"""    
+    """Raised when an unsupported file format is encountered"""
+    
     def __init__(
         self,
         message: str,
@@ -161,10 +173,12 @@ class UnsupportedFormatError(ContentValidationError):
 
 
 class QualityCheckError(QualityAssessmentBaseException):
-    """    Raised when quality assessment fails
+    """
+    Raised when quality assessment fails
     
     This includes analysis failures, metric calculation errors, and quality scoring issues.
-    """    
+    """
+    
     def __init__(
         self,
         message: str,
@@ -194,7 +208,8 @@ class QualityCheckError(QualityAssessmentBaseException):
 
 
 class AudioProcessingError(QualityCheckError):
-    """Raised when audio processing fails"""    
+    """Raised when audio processing fails"""
+    
     def __init__(
         self,
         message: str,
@@ -219,7 +234,8 @@ class AudioProcessingError(QualityCheckError):
 
 
 class VideoProcessingError(QualityCheckError):
-    """Raised when video processing fails"""    
+    """Raised when video processing fails"""
+    
     def __init__(
         self,
         message: str,
@@ -246,7 +262,8 @@ class VideoProcessingError(QualityCheckError):
 
 
 class ImageProcessingError(QualityCheckError):
-    """Raised when image processing fails"""    
+    """Raised when image processing fails"""
+    
     def __init__(
         self,
         message: str,
@@ -271,7 +288,8 @@ class ImageProcessingError(QualityCheckError):
 
 
 class TextProcessingError(QualityCheckError):
-    """Raised when text processing fails"""    
+    """Raised when text processing fails"""
+    
     def __init__(
         self,
         message: str,
@@ -294,10 +312,12 @@ class TextProcessingError(QualityCheckError):
 
 
 class ConfigurationError(QualityAssessmentBaseException):
-    """    Raised when configuration is invalid or missing
+    """
+    Raised when configuration is invalid or missing
     
     This includes missing configuration files, invalid settings, and initialization failures.
-    """    
+    """
+    
     def __init__(
         self,
         message: str,
@@ -327,10 +347,12 @@ class ConfigurationError(QualityAssessmentBaseException):
 
 
 class ResourceError(QualityAssessmentBaseException):
-    """    Raised when system resources are insufficient or unavailable
+    """
+    Raised when system resources are insufficient or unavailable
     
     This includes memory errors, disk space issues, and processing capacity limitations.
-    """    
+    """
+    
     def __init__(
         self,
         message: str,
@@ -367,10 +389,12 @@ class ResourceError(QualityAssessmentBaseException):
 
 
 class SecurityError(QualityAssessmentBaseException):
-    """    Raised when security violations are detected
+    """
+    Raised when security violations are detected
     
     This includes malware detection, unauthorized access attempts, and content security issues.
-    """    
+    """
+    
     def __init__(
         self,
         message: str,
@@ -397,10 +421,12 @@ class SecurityError(QualityAssessmentBaseException):
 
 
 class ComplianceViolationError(QualityAssessmentBaseException):
-    """    Raised when content violates platform or legal compliance rules
+    """
+    Raised when content violates platform or legal compliance rules
     
     This includes copyright violations, content policy violations, and regulatory non-compliance.
-    """    
+    """
+    
     def __init__(
         self,
         message: str,
@@ -430,10 +456,12 @@ class ComplianceViolationError(QualityAssessmentBaseException):
 
 
 class PerformanceError(QualityAssessmentBaseException):
-    """    Raised when performance thresholds are exceeded
+    """
+    Raised when performance thresholds are exceeded
     
     This includes timeout errors, slow processing, and performance degradation.
-    """    
+    """
+    
     def __init__(
         self,
         message: str,
@@ -463,10 +491,12 @@ class PerformanceError(QualityAssessmentBaseException):
 
 
 class BusinessMetricsError(QualityAssessmentBaseException):
-    """    Raised when business metrics calculation fails
+    """
+    Raised when business metrics calculation fails
     
     This includes ROI calculation errors, monetization analysis failures, and performance metric issues.
-    """    
+    """
+    
     def __init__(
         self,
         message: str,
@@ -493,10 +523,12 @@ class BusinessMetricsError(QualityAssessmentBaseException):
 
 
 class ReportingError(QualityAssessmentBaseException):
-    """    Raised when report generation fails
+    """
+    Raised when report generation fails
     
     This includes template errors, data formatting issues, and export failures.
-    """    
+    """
+    
     def __init__(
         self,
         message: str,
@@ -560,14 +592,16 @@ ERROR_CODES = {
 
 
 def get_exception_class(error_code: str) -> type:
-    """    Get exception class by error code
+    """
+    Get exception class by error code
     
     Args:
         error_code: Error code string
         
     Returns:
         Exception class for the error code
-    """    return ERROR_CODES.get(error_code, QualityAssessmentBaseException)
+    """
+    return ERROR_CODES.get(error_code, QualityAssessmentBaseException)
 
 
 def create_exception(
@@ -575,7 +609,8 @@ def create_exception(
     message: str,
     **kwargs
 ) -> QualityAssessmentBaseException:
-    """    Create exception instance by error code
+    """
+    Create exception instance by error code
     
     Args:
         error_code: Error code string
@@ -584,7 +619,8 @@ def create_exception(
         
     Returns:
         Exception instance
-    """    exception_class = get_exception_class(error_code)
+    """
+    exception_class = get_exception_class(error_code)
     return exception_class(message=message, error_code=error_code, **kwargs)
 
 

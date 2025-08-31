@@ -31,7 +31,7 @@ Technical Excellence Architecture:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + Legal Tech + DevOps + DBA
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  MAXIMUM LEGAL PROTECTION - CRIMINAL IP THEFT WARNING ⚠️
 ===========================================================

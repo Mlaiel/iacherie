@@ -13,7 +13,8 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 Professional Docker configuration for enterprise Nginx reverse proxy
 supporting high-performance load balancing, SSL termination, and
 advanced routing for IA-Influencer multi-service architecture.
-"""from typing import Dict, List, Optional, Any
+"""
+from typing import Dict, List, Optional, Any
 import logging
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -22,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class NginxProxyDockerConfig:
-    """Enterprise Nginx Proxy Docker Configuration"""    
+    """Enterprise Nginx Proxy Docker Configuration"""
+    
     # Image Configuration
     image_name: str = "nginx"
     image_tag: str = "alpine"
@@ -98,7 +100,8 @@ class NginxProxyDockerConfig:
     })
     
     def generate_dockerfile(self) -> str:
-        """Generate Dockerfile for Nginx proxy"""        return f"""FROM {self.image_name}:{self.image_tag}
+        """Generate Dockerfile for Nginx proxy"""
+        return f"""FROM {self.image_name}:{self.image_tag}
 
 # Install additional packages
 RUN apk add --no-cache \\
@@ -158,8 +161,10 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \\
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
-"""    def generate_docker_compose_service(self) -> Dict[str, Any]:
-        """Generate Docker Compose service configuration"""        return {
+"""
+    def generate_docker_compose_service(self) -> Dict[str, Any]:
+        """Generate Docker Compose service configuration"""
+        return {
             "build": {
                 "context": ".",
                 "dockerfile": "Dockerfile"
@@ -208,7 +213,8 @@ CMD ["nginx", "-g", "daemon off;"]
         }
     
     def generate_nginx_config(self) -> str:
-        """Generate main nginx.conf"""        return f"""# IA-Influencer Nginx Configuration
+        """Generate main nginx.conf"""
+        return f"""# IA-Influencer Nginx Configuration
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 # High-performance reverse proxy and load balancer
 
@@ -339,8 +345,10 @@ http {{
     # Include server configurations
     include /etc/nginx/sites-enabled/*.conf;
 }}
-"""    def generate_upstream_config(self) -> str:
-        """Generate upstream configuration"""        upstream_blocks = []
+"""
+    def generate_upstream_config(self) -> str:
+        """Generate upstream configuration"""
+        upstream_blocks = []
         
         for service_name, config in self.upstream_services.items():
             servers = "\n        ".join([f"server {server};" for server in config["servers"]])
@@ -359,14 +367,17 @@ http {{
     keepalive 32;
     keepalive_requests 100;
     keepalive_timeout 60s;
-}}"""            upstream_blocks.append(upstream_block)
+}}"""
+            upstream_blocks.append(upstream_block)
         
         return f"""# IA-Influencer Upstream Configuration
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
 {"".join(upstream_blocks)}
-"""    def generate_server_config(self) -> str:
-        """Generate main server configuration"""        return f"""# IA-Influencer Main Server Configuration
+"""
+    def generate_server_config(self) -> str:
+        """Generate main server configuration"""
+        return f"""# IA-Influencer Main Server Configuration
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
 # Redirect HTTP to HTTPS
@@ -580,8 +591,10 @@ server {{
         proxy_set_header X-Forwarded-Proto $scheme;
     }}
 }}
-"""    def generate_security_config(self) -> str:
-        """Generate security configuration"""        return """# IA-Influencer Nginx Security Configuration
+"""
+    def generate_security_config(self) -> str:
+        """Generate security configuration"""
+        return """# IA-Influencer Nginx Security Configuration
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
 # Map for blocking malicious requests
@@ -692,8 +705,10 @@ server {
         log_not_found off;
     }
 }
-"""    def generate_monitoring_config(self) -> str:
-        """Generate monitoring configuration"""        return """# IA-Influencer Nginx Monitoring Configuration
+"""
+    def generate_monitoring_config(self) -> str:
+        """Generate monitoring configuration"""
+        return """# IA-Influencer Nginx Monitoring Configuration
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
 # Nginx status for monitoring
@@ -725,8 +740,10 @@ server {
         add_header Content-Type text/plain;
     }
 }
-"""    def generate_scripts(self) -> Dict[str, str]:
-        """Generate Nginx scripts"""        scripts = {}
+"""
+    def generate_scripts(self) -> Dict[str, str]:
+        """Generate Nginx scripts"""
+        scripts = {}
         
         # SSL certificate generator
         scripts["generate-ssl.sh"] = """#!/bin/bash
@@ -765,7 +782,8 @@ echo "✅ SSL certificates generated successfully!"
 echo "Certificate: $CERT_DIR/ia-influencer.crt"
 echo "Private key: $KEY_DIR/ia-influencer.key"
 echo "DH params: $CERT_DIR/dhparam.pem"
-"""        # Configuration validator
+"""
+        # Configuration validator
         scripts["validate-config.sh"] = """#!/bin/bash
 # Nginx Configuration Validator
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -806,7 +824,8 @@ for service in api-gateway backend-services ai-engines fingerprinting-engine con
 done
 
 echo "🏁 Configuration validation completed"
-"""        # Log analyzer
+"""
+        # Log analyzer
         scripts["analyze-logs.sh"] = """#!/bin/bash
 # Nginx Log Analyzer
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -861,10 +880,12 @@ END {
 echo ""
 echo "🚨 4xx and 5xx errors:"
 tail -n "$LINES" "$LOG_FILE" | awk '$9 >= 400 {print $0}' | tail -20
-"""        return scripts
+"""
+        return scripts
     
     def save_config_files(self, output_dir: str) -> List[str]:
-        """Save all Nginx configuration files"""        output_path = Path(output_dir)
+        """Save all Nginx configuration files"""
+        output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
         
         files_created = []

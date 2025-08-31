@@ -21,7 +21,8 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 from datetime import datetime, timedelta
@@ -41,7 +42,8 @@ logger = logging.getLogger(__name__)
 
 
 class LegalJurisdiction(Enum):
-    """Legal jurisdictions supported"""    US = "us"  # United States
+    """Legal jurisdictions supported"""
+    US = "us"  # United States
     EU = "eu"  # European Union
     UK = "uk"  # United Kingdom
     DE = "de"  # Germany
@@ -53,7 +55,8 @@ class LegalJurisdiction(Enum):
 
 
 class ComplianceFramework(Enum):
-    """Compliance frameworks"""    GDPR = "gdpr"              # General Data Protection Regulation
+    """Compliance frameworks"""
+    GDPR = "gdpr"              # General Data Protection Regulation
     CCPA = "ccpa"              # California Consumer Privacy Act
     DMCA = "dmca"              # Digital Millennium Copyright Act
     EU_COPYRIGHT = "eu_copyright"  # EU Copyright Directive
@@ -64,7 +67,8 @@ class ComplianceFramework(Enum):
 
 
 class LegalDocumentType(Enum):
-    """Types of legal documents"""    DMCA_TAKEDOWN = "dmca_takedown"
+    """Types of legal documents"""
+    DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     COPYRIGHT_NOTICE = "copyright_notice"
     LEGAL_DEMAND = "legal_demand"
@@ -76,7 +80,8 @@ class LegalDocumentType(Enum):
 
 
 class ViolationType(Enum):
-    """Types of legal violations"""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Types of legal violations"""
+    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
     PATENT_INFRINGEMENT = "patent_infringement"
     PRIVACY_VIOLATION = "privacy_violation"
@@ -87,7 +92,8 @@ class ViolationType(Enum):
 
 
 class LegalRisk(Enum):
-    """Legal risk levels"""    LOW = "low"
+    """Legal risk levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -96,7 +102,8 @@ class LegalRisk(Enum):
 
 @dataclass
 class LegalEntity:
-    """Legal entity information"""    entity_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Legal entity information"""
+    entity_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     legal_name: str = ""
     entity_type: str = "individual"  # individual, corporation, llc, partnership
@@ -128,7 +135,8 @@ class LegalEntity:
 
 @dataclass
 class LegalCase:
-    """Legal case tracking"""    case_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Legal case tracking"""
+    case_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     case_number: Optional[str] = None
     title: str = ""
     description: str = ""
@@ -170,7 +178,8 @@ class LegalCase:
 
 @dataclass
 class ComplianceAssessment:
-    """Legal compliance assessment"""    assessment_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Legal compliance assessment"""
+    assessment_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = ""
     fingerprint_id: str = ""
     
@@ -204,7 +213,8 @@ class ComplianceAssessment:
 
 @dataclass
 class LegalDocument:
-    """Legal document management"""    document_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Legal document management"""
+    document_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     document_type: LegalDocumentType = LegalDocumentType.COPYRIGHT_NOTICE
     title: str = ""
     content: str = ""
@@ -247,7 +257,8 @@ class LegalDocument:
 
 
 class LegalComplianceManager:
-    """Advanced legal compliance management system"""    
+    """Advanced legal compliance management system"""
+    
     def __init__(self, config: FingerprintingSystemConfig):
         self.config = config
         
@@ -275,7 +286,8 @@ class LegalComplianceManager:
         logger.info("Legal Compliance Manager initialized")
     
     def _initialize_templates(self):
-        """Initialize legal document templates"""        # DMCA Takedown Notice Template
+        """Initialize legal document templates"""
+        # DMCA Takedown Notice Template
         dmca_template = """DMCA TAKEDOWN NOTICE
 
 To: {platform_name}
@@ -310,7 +322,8 @@ Please remove or disable access to the infringing material described above.
 
 Signature: {digital_signature}
 Date: {signature_date}
-        """        
+        """
+        
         self.document_templates["dmca_takedown"] = dmca_template
         
         # Cease and Desist Template
@@ -344,7 +357,8 @@ Sincerely,
 {attorney_name}
 {attorney_title}
 {attorney_contact}
-        """        
+        """
+        
         self.document_templates["cease_desist"] = cease_desist_template
         
         # Copyright Notice Template
@@ -360,11 +374,13 @@ Jurisdiction: {jurisdiction}
 
 For licensing inquiries, contact: {licensing_contact}
 For legal matters, contact: {legal_contact}
-        """        
+        """
+        
         self.document_templates["copyright_notice"] = copyright_notice_template
     
     def _initialize_compliance_rules(self):
-        """Initialize compliance framework rules"""        # GDPR Compliance Rules
+        """Initialize compliance framework rules"""
+        # GDPR Compliance Rules
         self.compliance_rules[ComplianceFramework.GDPR] = {
             "data_processing_legal_basis": ["consent", "contract", "legal_obligation", "vital_interests", "public_task", "legitimate_interests"],
             "data_retention_periods": {"personal_data": 365, "biometric_data": 30, "special_category": 90},
@@ -396,7 +412,8 @@ For legal matters, contact: {legal_contact}
         }
     
     def _initialize_legal_knowledge(self):
-        """Initialize legal knowledge base"""        # Key copyright statutes
+        """Initialize legal knowledge base"""
+        # Key copyright statutes
         self.statute_database = {
             "17_usc_101": {
                 "title": "Copyright Act - Definitions",
@@ -447,7 +464,8 @@ For legal matters, contact: {legal_contact}
         violation_data: Dict[str, Any],
         jurisdiction: LegalJurisdiction = LegalJurisdiction.US
     ) -> ComplianceAssessment:
-        """Perform comprehensive legal compliance assessment"""        try:
+        """Perform comprehensive legal compliance assessment"""
+        try:
             assessment = ComplianceAssessment(
                 content_id=content_id,
                 fingerprint_id=fingerprint_id,
@@ -512,7 +530,8 @@ For legal matters, contact: {legal_contact}
         framework: ComplianceFramework,
         violation_data: Dict[str, Any]
     ) -> float:
-        """Assess compliance for specific framework"""        if framework == ComplianceFramework.DMCA:
+        """Assess compliance for specific framework"""
+        if framework == ComplianceFramework.DMCA:
             return await self._assess_dmca_compliance(violation_data)
         elif framework == ComplianceFramework.FAIR_USE:
             return await self._assess_fair_use(violation_data)
@@ -522,7 +541,8 @@ For legal matters, contact: {legal_contact}
             return 0.5  # Default neutral score
     
     async def _assess_dmca_compliance(self, violation_data: Dict[str, Any]) -> float:
-        """Assess DMCA compliance"""        score = 0.0
+        """Assess DMCA compliance"""
+        score = 0.0
         max_score = 0.0
         
         # Check if violation meets DMCA requirements
@@ -558,7 +578,8 @@ For legal matters, contact: {legal_contact}
         return score / max_score if max_score > 0 else 0.0
     
     async def _assess_fair_use(self, violation_data: Dict[str, Any]) -> float:
-        """Assess fair use defense strength"""        fair_use_rules = self.compliance_rules[ComplianceFramework.FAIR_USE]
+        """Assess fair use defense strength"""
+        fair_use_rules = self.compliance_rules[ComplianceFramework.FAIR_USE]
         
         # Four factor analysis
         factor_scores = {}
@@ -614,7 +635,8 @@ For legal matters, contact: {legal_contact}
         return 1.0 - fair_use_score
     
     async def _assess_gdpr_compliance(self, violation_data: Dict[str, Any]) -> float:
-        """Assess GDPR compliance"""        # This would implement GDPR-specific compliance checks
+        """Assess GDPR compliance"""
+        # This would implement GDPR-specific compliance checks
         return 0.5  # Placeholder
     
     def _calculate_risk_level(
@@ -622,7 +644,8 @@ For legal matters, contact: {legal_contact}
         compliance_score: float,
         violation_data: Dict[str, Any]
     ) -> LegalRisk:
-        """Calculate legal risk level"""        # Adjust score based on additional risk factors
+        """Calculate legal risk level"""
+        # Adjust score based on additional risk factors
         adjusted_score = compliance_score
         
         # High-profile target increases risk
@@ -654,7 +677,8 @@ For legal matters, contact: {legal_contact}
             return LegalRisk.LOW
     
     async def _analyze_evidence_strength(self, violation_data: Dict[str, Any]) -> float:
-        """Analyze strength of evidence"""        evidence_score = 0.0
+        """Analyze strength of evidence"""
+        evidence_score = 0.0
         max_evidence_score = 0.0
         
         # Screenshot evidence
@@ -694,7 +718,8 @@ For legal matters, contact: {legal_contact}
         assessment: ComplianceAssessment,
         violation_data: Dict[str, Any]
     ) -> List[str]:
-        """Generate legal recommendations based on assessment"""        recommendations = []
+        """Generate legal recommendations based on assessment"""
+        recommendations = []
         
         if assessment.risk_level in [LegalRisk.HIGH, LegalRisk.CRITICAL]:
             recommendations.extend([
@@ -733,7 +758,8 @@ For legal matters, contact: {legal_contact}
         violation_data: Dict[str, Any],
         jurisdiction: LegalJurisdiction
     ) -> List[str]:
-        """Identify applicable legal grounds"""        legal_grounds = []
+        """Identify applicable legal grounds"""
+        legal_grounds = []
         
         # Copyright infringement
         if assessment.compliance_score >= 0.6:
@@ -763,7 +789,8 @@ For legal matters, contact: {legal_contact}
         violation_data: Dict[str, Any],
         jurisdiction: LegalJurisdiction
     ) -> List[str]:
-        """Find applicable laws and regulations"""        applicable_laws = []
+        """Find applicable laws and regulations"""
+        applicable_laws = []
         
         # Copyright laws
         if jurisdiction == LegalJurisdiction.US:
@@ -798,7 +825,8 @@ For legal matters, contact: {legal_contact}
         case_data: Dict[str, Any],
         template_variables: Dict[str, Any]
     ) -> LegalDocument:
-        """Generate legal document from template"""        try:
+        """Generate legal document from template"""
+        try:
             # Get template
             template_key = document_type.value
             if template_key not in self.document_templates:
@@ -846,7 +874,8 @@ For legal matters, contact: {legal_contact}
         document: LegalDocument,
         case_data: Dict[str, Any]
     ) -> float:
-        """Calculate legal weight of document"""        weight = 0.5  # Base weight
+        """Calculate legal weight of document"""
+        weight = 0.5  # Base weight
         
         # DMCA notices have statutory weight
         if document.document_type == LegalDocumentType.DMCA_TAKEDOWN:
@@ -871,7 +900,8 @@ For legal matters, contact: {legal_contact}
         document: LegalDocument,
         case_data: Dict[str, Any]
     ) -> float:
-        """Calculate enforceability of document"""        enforceability = 0.5  # Base enforceability
+        """Calculate enforceability of document"""
+        enforceability = 0.5  # Base enforceability
         
         # Proper legal format increases enforceability
         if self._validate_legal_format(document):
@@ -892,11 +922,13 @@ For legal matters, contact: {legal_contact}
         document: LegalDocument,
         case_data: Dict[str, Any]
     ) -> float:
-        """Calculate precedent support for document"""        # This would analyze case law database for supporting precedents
+        """Calculate precedent support for document"""
+        # This would analyze case law database for supporting precedents
         return 0.7  # Placeholder
     
     def _validate_legal_format(self, document: LegalDocument) -> bool:
-        """Validate legal document format"""        required_elements = {
+        """Validate legal document format"""
+        required_elements = {
             LegalDocumentType.DMCA_TAKEDOWN: [
                 "identification of work",
                 "identification of material",
@@ -928,7 +960,8 @@ For legal matters, contact: {legal_contact}
         document: LegalDocument,
         case_data: Dict[str, Any]
     ) -> bool:
-        """Check jurisdiction compatibility"""        # Simplified check - would be more complex in practice
+        """Check jurisdiction compatibility"""
+        # Simplified check - would be more complex in practice
         return True
     
     async def create_legal_case(
@@ -936,7 +969,8 @@ For legal matters, contact: {legal_contact}
         violation_data: Dict[str, Any],
         assessment: ComplianceAssessment
     ) -> LegalCase:
-        """Create new legal case"""        try:
+        """Create new legal case"""
+        try:
             case = LegalCase(
                 title=f"Copyright Infringement - {violation_data.get('content_id', 'Unknown')}",
                 description=f"Alleged copyright infringement with {assessment.compliance_score:.1%} confidence",
@@ -961,7 +995,8 @@ For legal matters, contact: {legal_contact}
             raise
     
     def get_compliance_statistics(self) -> Dict[str, Any]:
-        """Get compliance system statistics"""        current_time = datetime.utcnow()
+        """Get compliance system statistics"""
+        current_time = datetime.utcnow()
         
         # Count assessments by risk level
         risk_counts = {}
@@ -1001,7 +1036,8 @@ _legal_compliance_manager: Optional[LegalComplianceManager] = None
 
 
 def get_legal_compliance_manager(config: Optional[FingerprintingSystemConfig] = None) -> LegalComplianceManager:
-    """Get or create legal compliance manager instance"""    global _legal_compliance_manager
+    """Get or create legal compliance manager instance"""
+    global _legal_compliance_manager
     
     if _legal_compliance_manager is None:
         if config is None:
@@ -1013,7 +1049,8 @@ def get_legal_compliance_manager(config: Optional[FingerprintingSystemConfig] = 
 
 
 def reset_legal_compliance_manager():
-    """Reset legal compliance manager (for testing)"""    global _legal_compliance_manager
+    """Reset legal compliance manager (for testing)"""
+    global _legal_compliance_manager
     _legal_compliance_manager = None
 
 
@@ -1024,7 +1061,8 @@ async def assess_violation_legality(
     violation_data: Dict[str, Any],
     jurisdiction: LegalJurisdiction = LegalJurisdiction.US
 ) -> ComplianceAssessment:
-    """Assess violation legality convenience function"""    manager = get_legal_compliance_manager()
+    """Assess violation legality convenience function"""
+    manager = get_legal_compliance_manager()
     return await manager.assess_legal_compliance(
         content_id, fingerprint_id, violation_data, jurisdiction
     )
@@ -1035,7 +1073,8 @@ async def generate_dmca_notice(
     copyright_holder_info: Dict[str, str],
     content_info: Dict[str, str]
 ) -> LegalDocument:
-    """Generate DMCA takedown notice convenience function"""    manager = get_legal_compliance_manager()
+    """Generate DMCA takedown notice convenience function"""
+    manager = get_legal_compliance_manager()
     
     template_variables = {
         'current_date': datetime.utcnow().strftime('%Y-%m-%d'),

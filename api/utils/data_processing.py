@@ -5,7 +5,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""import pandas as pd
+"""
+import pandas as pd
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Callable, Type
 from dataclasses import dataclass, field
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 
 class DataFormat(Enum):
-    """Data format enumeration"""    JSON = "json"
+    """Data format enumeration"""
+    JSON = "json"
     CSV = "csv"
     PARQUET = "parquet"
     EXCEL = "excel"
@@ -36,13 +38,15 @@ class DataFormat(Enum):
 
 
 class ProcessingMode(Enum):
-    """Data processing mode"""    BATCH = "batch"
+    """Data processing mode"""
+    BATCH = "batch"
     STREAM = "stream"
     REAL_TIME = "real_time"
 
 
 class ValidationLevel(Enum):
-    """Data validation level"""    BASIC = "basic"
+    """Data validation level"""
+    BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
     ENTERPRISE = "enterprise"
@@ -50,7 +54,8 @@ class ValidationLevel(Enum):
 
 @dataclass
 class ProcessingStats:
-    """Data processing statistics"""    records_processed: int = 0
+    """Data processing statistics"""
+    records_processed: int = 0
     records_validated: int = 0
     records_rejected: int = 0
     processing_time: float = 0.0
@@ -61,20 +66,23 @@ class ProcessingStats:
     
     @property
     def success_rate(self) -> float:
-        """Calculate processing success rate"""        total = self.records_processed
+        """Calculate processing success rate"""
+        total = self.records_processed
         return (self.records_validated / total) if total > 0 else 0.0
 
 
 @dataclass
 class DataSchema:
-    """Data schema definition"""    fields: Dict[str, Dict[str, Any]] = field(default_factory=dict)
+    """Data schema definition"""
+    fields: Dict[str, Dict[str, Any]] = field(default_factory=dict)
     required_fields: List[str] = field(default_factory=list)
     validation_rules: Dict[str, List[Callable]] = field(default_factory=dict)
     transformations: Dict[str, Callable] = field(default_factory=dict)
     
     def add_field(self, name: str, field_type: Type, required: bool = False, 
                   validators: Optional[List[Callable]] = None):
-        """Add field definition to schema"""        self.fields[name] = {
+        """Add field definition to schema"""
+        self.fields[name] = {
             'type': field_type,
             'required': required,
             'validators': validators or []
@@ -88,7 +96,8 @@ class DataSchema:
 
 
 class DataTransformer:
-    """Advanced data transformation engine"""    
+    """Advanced data transformation engine"""
+    
     def __init__(self):
         self.transformation_cache = {}
         self.scalers = {}
@@ -97,7 +106,8 @@ class DataTransformer:
         
     async def transform_dataset(self, data: pd.DataFrame, 
                               transformations: Dict[str, Any]) -> pd.DataFrame:
-        """Apply comprehensive data transformations"""        try:
+        """Apply comprehensive data transformations"""
+        try:
             transformed_data = data.copy()
             
             for transform_name, config in transformations.items():
@@ -115,7 +125,8 @@ class DataTransformer:
             raise DataProcessingError(f"Transformation failed: {str(e)}")
     
     async def _apply_normalization(self, data: pd.DataFrame, config: Dict[str, Any]) -> pd.DataFrame:
-        """Apply data normalization"""        method = config.get('method', 'standard')
+        """Apply data normalization"""
+        method = config.get('method', 'standard')
         columns = config.get('columns', data.select_dtypes(include=[np.number]).columns.tolist())
         
         if method == 'standard':
@@ -139,7 +150,8 @@ class DataTransformer:
         return data
     
     async def _apply_encoding(self, data: pd.DataFrame, config: Dict[str, Any]) -> pd.DataFrame:
-        """Apply categorical encoding"""        method = config.get('method', 'label')
+        """Apply categorical encoding"""
+        method = config.get('method', 'label')
         columns = config.get('columns', data.select_dtypes(include=['object']).columns.tolist())
         
         for column in columns:
@@ -172,7 +184,8 @@ class DataTransformer:
         return data
     
     async def _apply_feature_selection(self, data: pd.DataFrame, config: Dict[str, Any]) -> pd.DataFrame:
-        """Apply feature selection"""        method = config.get('method', 'k_best')
+        """Apply feature selection"""
+        method = config.get('method', 'k_best')
         k_features = config.get('k', 10)
         target_column = config.get('target_column')
         
@@ -204,7 +217,8 @@ class DataTransformer:
         return data
     
     async def _apply_outlier_removal(self, data: pd.DataFrame, config: Dict[str, Any]) -> pd.DataFrame:
-        """Remove outliers from dataset"""        method = config.get('method', 'iqr')
+        """Remove outliers from dataset"""
+        method = config.get('method', 'iqr')
         columns = config.get('columns', data.select_dtypes(include=[np.number]).columns.tolist())
         
         if method == 'iqr':
@@ -233,7 +247,8 @@ class DataTransformer:
         return data
     
     def save_transformers(self, filepath: str):
-        """Save trained transformers to disk"""        transformers = {
+        """Save trained transformers to disk"""
+        transformers = {
             'scalers': self.scalers,
             'encoders': self.encoders,
             'feature_selectors': self.feature_selectors
@@ -243,7 +258,8 @@ class DataTransformer:
         logger.info(f"Transformers saved to {filepath}")
     
     def load_transformers(self, filepath: str):
-        """Load trained transformers from disk"""        if Path(filepath).exists():
+        """Load trained transformers from disk"""
+        if Path(filepath).exists():
             transformers = joblib.load(filepath)
             self.scalers = transformers.get('scalers', {})
             self.encoders = transformers.get('encoders', {})
@@ -254,17 +270,20 @@ class DataTransformer:
 
 
 class DataValidator:
-    """Comprehensive data validation engine"""    
+    """Comprehensive data validation engine"""
+    
     def __init__(self):
         self.validation_rules = {}
         self.custom_validators = {}
         
     def register_validator(self, name: str, validator_func: Callable):
-        """Register custom validator function"""        self.custom_validators[name] = validator_func
+        """Register custom validator function"""
+        self.custom_validators[name] = validator_func
     
     async def validate_dataset(self, data: pd.DataFrame, schema: DataSchema, 
                              level: ValidationLevel = ValidationLevel.STANDARD) -> Dict[str, Any]:
-        """Validate dataset against schema"""        try:
+        """Validate dataset against schema"""
+        try:
             validation_result = {
                 'valid': True,
                 'errors': [],
@@ -317,7 +336,8 @@ class DataValidator:
     
     async def _validate_field(self, series: pd.Series, field_config: Dict[str, Any], 
                             level: ValidationLevel) -> Dict[str, Any]:
-        """Validate individual field"""        field_result = {
+        """Validate individual field"""
+        field_result = {
             'valid': True,
             'errors': [],
             'warnings': [],
@@ -351,7 +371,8 @@ class DataValidator:
         return field_result
     
     def _validate_type(self, series: pd.Series, expected_type: Type) -> Dict[str, Any]:
-        """Validate data types"""        if expected_type == str:
+        """Validate data types"""
+        if expected_type == str:
             valid_mask = series.astype(str).notna()
             dtype_name = "string"
         elif expected_type == int:
@@ -388,7 +409,8 @@ class DataValidator:
         }
     
     def create_email_validator(self) -> Callable:
-        """Create email validation function"""        import re
+        """Create email validation function"""
+        import re
         email_pattern = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
         
         def validate_email(series: pd.Series) -> Dict[str, Any]:
@@ -405,7 +427,8 @@ class DataValidator:
     
     def create_range_validator(self, min_val: Optional[float] = None, 
                              max_val: Optional[float] = None) -> Callable:
-        """Create numeric range validation function"""        def validate_range(series: pd.Series) -> Dict[str, Any]:
+        """Create numeric range validation function"""
+        def validate_range(series: pd.Series) -> Dict[str, Any]:
             valid_mask = pd.Series(True, index=series.index)
             
             if min_val is not None:
@@ -426,12 +449,14 @@ class DataValidator:
 
 
 class DataNormalizer:
-    """Advanced data normalization and standardization"""    
+    """Advanced data normalization and standardization"""
+    
     def __init__(self):
         self.normalization_stats = {}
         
     async def normalize_influencer_data(self, data: pd.DataFrame) -> pd.DataFrame:
-        """Normalize influencer-specific data"""        normalized_data = data.copy()
+        """Normalize influencer-specific data"""
+        normalized_data = data.copy()
         
         # Normalize follower counts (log transformation)
         follower_columns = [col for col in data.columns if 'follower' in col.lower()]
@@ -461,7 +486,8 @@ class DataNormalizer:
         return normalized_data
     
     async def normalize_content_metrics(self, metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Normalize content performance metrics"""        normalized_metrics = metrics.copy()
+        """Normalize content performance metrics"""
+        normalized_metrics = metrics.copy()
         
         # Normalize engagement rate
         if 'engagement_rate' in metrics:
@@ -487,7 +513,8 @@ class DataNormalizer:
 
 
 class BatchProcessor:
-    """High-performance batch data processing"""    
+    """High-performance batch data processing"""
+    
     def __init__(self, batch_size: int = 1000, max_workers: int = 4):
         self.batch_size = batch_size
         self.max_workers = max_workers
@@ -496,7 +523,8 @@ class BatchProcessor:
     async def process_large_dataset(self, data: pd.DataFrame, 
                                   processing_func: Callable,
                                   **kwargs) -> pd.DataFrame:
-        """Process large dataset in batches"""        try:
+        """Process large dataset in batches"""
+        try:
             num_batches = (len(data) + self.batch_size - 1) // self.batch_size
             processed_batches = []
             
@@ -529,7 +557,8 @@ class BatchProcessor:
     
     async def _process_batch(self, batch: pd.DataFrame, 
                            processing_func: Callable, **kwargs) -> pd.DataFrame:
-        """Process individual batch"""        try:
+        """Process individual batch"""
+        try:
             if asyncio.iscoroutinefunction(processing_func):
                 result = await processing_func(batch, **kwargs)
             else:
@@ -547,7 +576,8 @@ class BatchProcessor:
 
 
 class StreamProcessor:
-    """Real-time stream data processing"""    
+    """Real-time stream data processing"""
+    
     def __init__(self, buffer_size: int = 100):
         self.buffer_size = buffer_size
         self.data_buffer = []
@@ -555,7 +585,8 @@ class StreamProcessor:
         
     async def process_stream_record(self, record: Dict[str, Any], 
                                   processing_func: Callable) -> Dict[str, Any]:
-        """Process individual stream record"""        try:
+        """Process individual stream record"""
+        try:
             self.data_buffer.append(record)
             self.processing_stats.records_processed += 1
             
@@ -581,7 +612,8 @@ class StreamProcessor:
             return {'valid': False, 'error': str(e)}
     
     async def _flush_buffer(self, processing_func: Callable):
-        """Flush and process buffer contents"""        if not self.data_buffer:
+        """Flush and process buffer contents"""
+        if not self.data_buffer:
             return
         
         try:
@@ -602,7 +634,8 @@ class StreamProcessor:
             self.processing_stats.errors.append(f"Buffer flush error: {str(e)}")
     
     async def _validate_stream_record(self, record: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate individual stream record"""        validation_result = {
+        """Validate individual stream record"""
+        validation_result = {
             'valid': True,
             'errors': [],
             'record': record
@@ -625,7 +658,8 @@ class StreamProcessor:
         return validation_result
     
     def get_processing_stats(self) -> ProcessingStats:
-        """Get current processing statistics"""        self.processing_stats.processing_time = (
+        """Get current processing statistics"""
+        self.processing_stats.processing_time = (
             datetime.utcnow() - self.processing_stats.start_time
         ).total_seconds()
         
@@ -633,7 +667,8 @@ class StreamProcessor:
 
 
 class DataAggregator:
-    """Advanced data aggregation and summarization"""    
+    """Advanced data aggregation and summarization"""
+    
     def __init__(self):
         self.aggregation_functions = {
             'sum': np.sum,
@@ -649,7 +684,8 @@ class DataAggregator:
     async def aggregate_influencer_metrics(self, data: pd.DataFrame, 
                                          group_by: List[str],
                                          metrics: List[str]) -> pd.DataFrame:
-        """Aggregate influencer metrics by specified dimensions"""        try:
+        """Aggregate influencer metrics by specified dimensions"""
+        try:
             aggregation_dict = {}
             
             for metric in metrics:
@@ -672,7 +708,8 @@ class DataAggregator:
                                            timestamp_column: str,
                                            metrics: List[str],
                                            frequency: str = 'D') -> pd.DataFrame:
-        """Create time series aggregation"""        try:
+        """Create time series aggregation"""
+        try:
             # Ensure timestamp column is datetime
             data[timestamp_column] = pd.to_datetime(data[timestamp_column])
             
@@ -696,7 +733,8 @@ class DataAggregator:
 
 
 class DataExporter:
-    """Flexible data export with multiple format support"""    
+    """Flexible data export with multiple format support"""
+    
     def __init__(self):
         self.supported_formats = [DataFormat.JSON, DataFormat.CSV, DataFormat.PARQUET, DataFormat.EXCEL]
     
@@ -704,7 +742,8 @@ class DataExporter:
                         filepath: str, 
                         format_type: DataFormat,
                         **kwargs) -> Dict[str, Any]:
-        """Export data to specified format"""        try:
+        """Export data to specified format"""
+        try:
             export_path = Path(filepath)
             export_path.parent.mkdir(parents=True, exist_ok=True)
             
@@ -749,7 +788,8 @@ class DataExporter:
     async def export_multiple_formats(self, data: pd.DataFrame, 
                                     base_filepath: str,
                                     formats: List[DataFormat]) -> List[Dict[str, Any]]:
-        """Export data to multiple formats"""        export_results = []
+        """Export data to multiple formats"""
+        export_results = []
         base_path = Path(base_filepath)
         
         for format_type in formats:
@@ -771,4 +811,5 @@ class DataExporter:
 
 
 class DataProcessingError(Exception):
-    """Custom exception for data processing errors"""    pass
+    """Custom exception for data processing errors"""
+    pass

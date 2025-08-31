@@ -4,7 +4,8 @@ Advanced AI-powered system for identifying optimal creator collaboration
 opportunities with compatibility analysis, project matching, and networking.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Any, Tuple, Set
@@ -33,7 +34,8 @@ from ...business.networking import NetworkingManager
 logger = logging.getLogger(__name__)
 
 class CollaborationType(Enum):
-    """Types of creator collaborations"""    CONTENT_COLLABORATION = "content_collaboration"
+    """Types of creator collaborations"""
+    CONTENT_COLLABORATION = "content_collaboration"
     CROSS_PROMOTION = "cross_promotion"
     JOINT_PROJECT = "joint_project"
     SKILL_EXCHANGE = "skill_exchange"
@@ -43,7 +45,8 @@ class CollaborationType(Enum):
     TECHNICAL_SUPPORT = "technical_support"
 
 class CompatibilityFactor(Enum):
-    """Factors influencing collaboration compatibility"""    CONTENT_STYLE = "content_style"
+    """Factors influencing collaboration compatibility"""
+    CONTENT_STYLE = "content_style"
     AUDIENCE_OVERLAP = "audience_overlap"
     SKILL_COMPLEMENTARITY = "skill_complementarity"
     SCHEDULE_COMPATIBILITY = "schedule_compatibility"
@@ -54,7 +57,8 @@ class CompatibilityFactor(Enum):
     PLATFORM_SYNERGY = "platform_synergy"
 
 class MatchingPriority(Enum):
-    """Priority levels for collaboration matching"""    URGENT = "urgent"       # Immediate opportunities
+    """Priority levels for collaboration matching"""
+    URGENT = "urgent"       # Immediate opportunities
     HIGH = "high"          # Strong potential matches
     MEDIUM = "medium"      # Good potential matches
     LOW = "low"           # Possible matches
@@ -62,7 +66,8 @@ class MatchingPriority(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile for matching"""    user_id: str
+    """Comprehensive creator profile for matching"""
+    user_id: str
     creator_type: str
     
     # Basic Information
@@ -109,7 +114,8 @@ class CreatorProfile:
 
 @dataclass
 class CollaborationMatch:
-    """Detailed collaboration match result"""    primary_creator_id: str
+    """Detailed collaboration match result"""
+    primary_creator_id: str
     matched_creator_id: str
     
     # Match Quality
@@ -151,7 +157,8 @@ class CollaborationMatch:
     expiry_date: datetime = field(default_factory=lambda: datetime.utcnow() + timedelta(days=30))
 
 class CollaborationMatcher:
-    """    Advanced AI-powered creator collaboration matching system.
+    """
+    Advanced AI-powered creator collaboration matching system.
     
     Core Capabilities:
     - Multi-dimensional compatibility analysis
@@ -165,7 +172,8 @@ class CollaborationMatcher:
     - Collaboration opportunity identification
     - Risk assessment and mitigation
     - Personalized recommendation generation
-    """    
+    """
+    
     def __init__(self):
         # Initialize AI matching models
         self.creator_similarity_analyzer = CreatorSimilarityAnalyzer()
@@ -186,7 +194,8 @@ class CollaborationMatcher:
         logger.info("CollaborationMatcher initialized successfully")
     
     def _initialize_matching_weights(self) -> Dict[str, Dict[CompatibilityFactor, float]]:
-        """Initialize compatibility factor weights by collaboration type."""        return {
+        """Initialize compatibility factor weights by collaboration type."""
+        return {
             CollaborationType.CONTENT_COLLABORATION.value: {
                 CompatibilityFactor.CONTENT_STYLE: 0.25,
                 CompatibilityFactor.AUDIENCE_OVERLAP: 0.20,
@@ -225,7 +234,8 @@ class CollaborationMatcher:
         }
     
     def _initialize_collaboration_templates(self) -> Dict[CollaborationType, Dict[str, Any]]:
-        """Initialize collaboration project templates."""        return {
+        """Initialize collaboration project templates."""
+        return {
             CollaborationType.CONTENT_COLLABORATION: {
                 'typical_duration': '2-4 weeks',
                 'required_interactions': 'high',
@@ -256,8 +266,10 @@ class CollaborationMatcher:
                                        collaboration_types: List[CollaborationType] = None,
                                        max_matches: int = 10,
                                        min_compatibility_score: float = 0.6) -> List[CollaborationMatch]:
-        """        Find optimal collaboration matches for a creator.
-        """        try:
+        """
+        Find optimal collaboration matches for a creator.
+        """
+        try:
             # Get creator profile
             creator_profile = await self._get_creator_profile(creator_id)
             
@@ -298,8 +310,10 @@ class CollaborationMatcher:
     async def batch_match_creators(self, creator_ids: List[str],
                                  collaboration_types: List[CollaborationType] = None,
                                  concurrent_limit: int = 3) -> Dict[str, List[CollaborationMatch]]:
-        """        Perform batch collaboration matching for multiple creators.
-        """        try:
+        """
+        Perform batch collaboration matching for multiple creators.
+        """
+        try:
             semaphore = asyncio.Semaphore(concurrent_limit)
             
             async def match_single(creator_id):
@@ -329,7 +343,8 @@ class CollaborationMatcher:
             raise CollaborationMatchingError(f"Batch matching failed: {str(e)}")
     
     async def _get_creator_profile(self, creator_id: str) -> Optional[CreatorProfile]:
-        """Retrieve comprehensive creator profile."""        try:
+        """Retrieve comprehensive creator profile."""
+        try:
             # This would typically fetch from database and AI analysis
             # Simulated implementation
             
@@ -361,7 +376,8 @@ class CollaborationMatcher:
     
     async def _get_match_candidates(self, creator_profile: CreatorProfile,
                                   collaboration_types: List[CollaborationType] = None) -> List[CreatorProfile]:
-        """Get potential collaboration candidates."""        try:
+        """Get potential collaboration candidates."""
+        try:
             # This would typically query database with intelligent filtering
             # Simulated implementation with various candidate profiles
             
@@ -428,7 +444,8 @@ class CollaborationMatcher:
     async def _analyze_collaboration_compatibility(self, creator_profile: CreatorProfile,
                                                  candidate_profile: CreatorProfile,
                                                  collaboration_types: List[CollaborationType] = None) -> Optional[CollaborationMatch]:
-        """Perform detailed compatibility analysis between two creators."""        try:
+        """Perform detailed compatibility analysis between two creators."""
+        try:
             match = CollaborationMatch(
                 primary_creator_id=creator_profile.user_id,
                 matched_creator_id=candidate_profile.user_id
@@ -466,7 +483,8 @@ class CollaborationMatcher:
     async def _analyze_content_style_compatibility(self, match: CollaborationMatch,
                                                  creator: CreatorProfile,
                                                  candidate: CreatorProfile) -> None:
-        """Analyze content style compatibility."""        try:
+        """Analyze content style compatibility."""
+        try:
             # Content category overlap
             creator_categories = set(creator.content_categories)
             candidate_categories = set(candidate.content_categories)
@@ -515,7 +533,8 @@ class CollaborationMatcher:
     async def _analyze_audience_overlap(self, match: CollaborationMatch,
                                       creator: CreatorProfile,
                                       candidate: CreatorProfile) -> None:
-        """Analyze audience overlap and cross-pollination potential."""        try:
+        """Analyze audience overlap and cross-pollination potential."""
+        try:
             # Platform audience overlap
             creator_platforms = set(creator.platforms)
             candidate_platforms = set(candidate.platforms)
@@ -557,7 +576,8 @@ class CollaborationMatcher:
     async def _analyze_skill_complementarity(self, match: CollaborationMatch,
                                            creator: CreatorProfile,
                                            candidate: CreatorProfile) -> None:
-        """Analyze skill complementarity and learning opportunities."""        try:
+        """Analyze skill complementarity and learning opportunities."""
+        try:
             creator_skills = set(creator.skills)
             candidate_skills = set(candidate.skills)
             
@@ -601,7 +621,8 @@ class CollaborationMatcher:
     async def _analyze_schedule_compatibility(self, match: CollaborationMatch,
                                             creator: CreatorProfile,
                                             candidate: CreatorProfile) -> None:
-        """Analyze schedule and timezone compatibility."""        try:
+        """Analyze schedule and timezone compatibility."""
+        try:
             # Timezone compatibility
             if creator.timezone and candidate.timezone:
                 # Simplified timezone analysis
@@ -656,7 +677,8 @@ class CollaborationMatcher:
     async def _analyze_communication_compatibility(self, match: CollaborationMatch,
                                                  creator: CreatorProfile,
                                                  candidate: CreatorProfile) -> None:
-        """Analyze communication style and preference compatibility."""        try:
+        """Analyze communication style and preference compatibility."""
+        try:
             # Language compatibility
             creator_languages = set(creator.language_preferences) if creator.language_preferences else {'english'}
             candidate_languages = set(candidate.language_preferences) if candidate.language_preferences else {'english'}
@@ -696,7 +718,8 @@ class CollaborationMatcher:
     async def _analyze_professional_level_compatibility(self, match: CollaborationMatch,
                                                       creator: CreatorProfile,
                                                       candidate: CreatorProfile) -> None:
-        """Analyze professional level and career stage compatibility."""        try:
+        """Analyze professional level and career stage compatibility."""
+        try:
             experience_levels = ['beginner', 'intermediate', 'advanced', 'expert']
             creator_level = experience_levels.index(creator.experience_level) if creator.experience_level in experience_levels else 1
             candidate_level = experience_levels.index(candidate.experience_level) if candidate.experience_level in experience_levels else 1
@@ -735,7 +758,8 @@ class CollaborationMatcher:
     async def _analyze_geographic_compatibility(self, match: CollaborationMatch,
                                               creator: CreatorProfile,
                                               candidate: CreatorProfile) -> None:
-        """Analyze geographic proximity and cultural compatibility."""        try:
+        """Analyze geographic proximity and cultural compatibility."""
+        try:
             creator_location = creator.location
             candidate_location = candidate.location
             
@@ -769,7 +793,8 @@ class CollaborationMatcher:
     async def _analyze_brand_alignment(self, match: CollaborationMatch,
                                      creator: CreatorProfile,
                                      candidate: CreatorProfile) -> None:
-        """Analyze brand values and aesthetic alignment."""        try:
+        """Analyze brand values and aesthetic alignment."""
+        try:
             # Analyze content categories for brand alignment
             creator_categories = set(creator.content_categories)
             candidate_categories = set(candidate.content_categories)
@@ -803,7 +828,8 @@ class CollaborationMatcher:
     async def _analyze_platform_synergy(self, match: CollaborationMatch,
                                       creator: CreatorProfile,
                                       candidate: CreatorProfile) -> None:
-        """Analyze platform synergy and cross-promotion potential."""        try:
+        """Analyze platform synergy and cross-promotion potential."""
+        try:
             creator_platforms = set(creator.platforms)
             candidate_platforms = set(candidate.platforms)
             
@@ -849,7 +875,8 @@ class CollaborationMatcher:
     
     def _calculate_overall_compatibility(self, match: CollaborationMatch,
                                        collaboration_types: List[CollaborationType] = None) -> None:
-        """Calculate overall compatibility score with appropriate weighting."""        # Determine which weighting scheme to use
+        """Calculate overall compatibility score with appropriate weighting."""
+        # Determine which weighting scheme to use
         if collaboration_types and len(collaboration_types) == 1:
             weights = self.matching_weights.get(collaboration_types[0].value, {})
         else:
@@ -887,7 +914,8 @@ class CollaborationMatcher:
         match.match_confidence = available_factors / total_factors
     
     def _determine_match_priority(self, match: CollaborationMatch) -> None:
-        """Determine match priority based on compatibility and potential."""        score = match.overall_compatibility_score
+        """Determine match priority based on compatibility and potential."""
+        score = match.overall_compatibility_score
         confidence = match.match_confidence
         
         # Adjust score by confidence
@@ -907,7 +935,8 @@ class CollaborationMatcher:
     async def _generate_collaboration_recommendations(self, match: CollaborationMatch,
                                                     creator: CreatorProfile,
                                                     candidate: CreatorProfile) -> None:
-        """Generate specific collaboration type recommendations."""        recommendations = []
+        """Generate specific collaboration type recommendations."""
+        recommendations = []
         
         # Content Collaboration
         content_style_score = match.compatibility_scores.get(CompatibilityFactor.CONTENT_STYLE, 0)
@@ -943,7 +972,8 @@ class CollaborationMatcher:
     async def _assess_collaboration_risks_benefits(self, match: CollaborationMatch,
                                                  creator: CreatorProfile,
                                                  candidate: CreatorProfile) -> None:
-        """Assess potential risks and benefits of collaboration."""        # Benefits for primary creator
+        """Assess potential risks and benefits of collaboration."""
+        # Benefits for primary creator
         benefits_primary = []
         if match.compatibility_scores.get(CompatibilityFactor.SKILL_COMPLEMENTARITY, 0) >= 0.7:
             benefits_primary.append("Skill development opportunities")
@@ -1002,7 +1032,8 @@ class CollaborationMatcher:
     
     # Helper methods
     def _same_region(self, country1: str, country2: str) -> bool:
-        """Check if two countries are in the same region."""        european_countries = {'germany', 'france', 'italy', 'spain', 'uk', 'netherlands', 'belgium', 'austria', 'switzerland'}
+        """Check if two countries are in the same region."""
+        european_countries = {'germany', 'france', 'italy', 'spain', 'uk', 'netherlands', 'belgium', 'austria', 'switzerland'}
         north_american_countries = {'usa', 'canada', 'mexico'}
         asian_countries = {'japan', 'china', 'korea', 'india', 'singapore', 'thailand'}
         
@@ -1019,7 +1050,8 @@ class CollaborationMatcher:
         return False
     
     def _get_proximity_level(self, location1: Dict[str, Any], location2: Dict[str, Any]) -> str:
-        """Get proximity level description."""        if not location1 or not location2:
+        """Get proximity level description."""
+        if not location1 or not location2:
             return "unknown"
         
         city1 = location1.get('city', '')

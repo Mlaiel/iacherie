@@ -12,7 +12,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team Specialties: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + 
                  Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: All rights reserved
-"""from typing import Dict, List, Optional, Any, Union, Tuple
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, asc, func, text
@@ -33,7 +34,8 @@ from ..core.exceptions import (
 
 
 class PlatformType(Enum):
-    """Supported platform types for specialized crawling."""    YOUTUBE = "youtube"
+    """Supported platform types for specialized crawling."""
+    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
@@ -44,7 +46,8 @@ class PlatformType(Enum):
 
 
 class CrawlerCapability(Enum):
-    """Crawler capabilities and features."""    CONTENT_DISCOVERY = "content_discovery"
+    """Crawler capabilities and features."""
+    CONTENT_DISCOVERY = "content_discovery"
     METADATA_EXTRACTION = "metadata_extraction"
     ENGAGEMENT_TRACKING = "engagement_tracking"
     USER_PROFILING = "user_profiling"
@@ -55,7 +58,8 @@ class CrawlerCapability(Enum):
 
 
 class CrawlerStatus(Enum):
-    """Crawler operational status."""    ACTIVE = "active"
+    """Crawler operational status."""
+    ACTIVE = "active"
     PAUSED = "paused"
     DISABLED = "disabled"
     MAINTENANCE = "maintenance"
@@ -64,7 +68,8 @@ class CrawlerStatus(Enum):
 
 
 class PlatformCrawlerManager(DatabaseManager):
-    """    Enterprise platform crawler database manager for multi-platform
+    """
+    Enterprise platform crawler database manager for multi-platform
     content discovery and surveillance operations.
     
     Manages specialized crawlers for:
@@ -75,9 +80,11 @@ class PlatformCrawlerManager(DatabaseManager):
     - Spotify: Music tracks, artist profiles, playlist analysis
     - SoundCloud: Independent music, emerging artists
     - Generic Web: Custom website surveillance
-    """    
+    """
+    
     def __init__(self, db_session: Session):
-        """Initialize platform crawler manager."""        super().__init__(db_session)
+        """Initialize platform crawler manager."""
+        super().__init__(db_session)
         self.platform_configs = {}
         self._load_platform_configurations()
         
@@ -88,7 +95,8 @@ class PlatformCrawlerManager(DatabaseManager):
         capabilities: List[CrawlerCapability],
         user_id: str
     ) -> str:
-        """        Register a new platform-specific crawler configuration.
+        """
+        Register a new platform-specific crawler configuration.
         
         Args:
             platform_type: Target platform type
@@ -101,7 +109,8 @@ class PlatformCrawlerManager(DatabaseManager):
             
         Raises:
             CrawlerConfigurationError: If configuration is invalid
-        """        try:
+        """
+        try:
             crawler_id = str(uuid4())
             
             # Validate platform configuration
@@ -141,7 +150,8 @@ class PlatformCrawlerManager(DatabaseManager):
         content_types: List[str],
         user_id: str
     ) -> str:
-        """        Configure specialized YouTube crawler for content discovery.
+        """
+        Configure specialized YouTube crawler for content discovery.
         
         Args:
             api_key: YouTube Data API key
@@ -152,7 +162,8 @@ class PlatformCrawlerManager(DatabaseManager):
             
         Returns:
             Crawler ID for YouTube operations
-        """        try:
+        """
+        try:
             crawler_config = {
                 "api_key": api_key,
                 "base_url": "https://www.googleapis.com/youtube/v3",
@@ -205,7 +216,8 @@ class PlatformCrawlerManager(DatabaseManager):
         trend_categories: List[str],
         user_id: str
     ) -> str:
-        """        Configure specialized TikTok crawler for viral content discovery.
+        """
+        Configure specialized TikTok crawler for viral content discovery.
         
         Args:
             auth_token: TikTok API authentication token
@@ -216,7 +228,8 @@ class PlatformCrawlerManager(DatabaseManager):
             
         Returns:
             Crawler ID for TikTok operations
-        """        try:
+        """
+        try:
             crawler_config = {
                 "auth_token": auth_token,
                 "base_url": "https://open-api.tiktok.com/platform/",
@@ -269,7 +282,8 @@ class PlatformCrawlerManager(DatabaseManager):
         location_targets: List[str],
         user_id: str
     ) -> str:
-        """        Configure specialized Instagram crawler for visual content discovery.
+        """
+        Configure specialized Instagram crawler for visual content discovery.
         
         Args:
             access_token: Instagram Graph API access token
@@ -280,7 +294,8 @@ class PlatformCrawlerManager(DatabaseManager):
             
         Returns:
             Crawler ID for Instagram operations
-        """        try:
+        """
+        try:
             crawler_config = {
                 "access_token": access_token,
                 "base_url": "https://graph.instagram.com",
@@ -334,7 +349,8 @@ class PlatformCrawlerManager(DatabaseManager):
         hashtag_targets: List[str],
         user_id: str
     ) -> str:
-        """        Configure specialized Twitter/X crawler for real-time content monitoring.
+        """
+        Configure specialized Twitter/X crawler for real-time content monitoring.
         
         Args:
             bearer_token: Twitter API v2 bearer token
@@ -345,7 +361,8 @@ class PlatformCrawlerManager(DatabaseManager):
             
         Returns:
             Crawler ID for Twitter operations
-        """        try:
+        """
+        try:
             crawler_config = {
                 "bearer_token": bearer_token,
                 "base_url": "https://api.twitter.com/2",
@@ -400,7 +417,8 @@ class PlatformCrawlerManager(DatabaseManager):
         genre_targets: List[str],
         user_id: str
     ) -> str:
-        """        Configure specialized Spotify crawler for music content discovery.
+        """
+        Configure specialized Spotify crawler for music content discovery.
         
         Args:
             client_id: Spotify API client ID
@@ -412,7 +430,8 @@ class PlatformCrawlerManager(DatabaseManager):
             
         Returns:
             Crawler ID for Spotify operations
-        """        try:
+        """
+        try:
             crawler_config = {
                 "client_id": client_id,
                 "client_secret": client_secret,
@@ -460,14 +479,16 @@ class PlatformCrawlerManager(DatabaseManager):
             raise PlatformAPIError(f"Spotify crawler configuration failed: {str(e)}")
     
     async def get_crawler_status(self, crawler_id: str) -> Dict[str, Any]:
-        """        Get comprehensive status information for a crawler.
+        """
+        Get comprehensive status information for a crawler.
         
         Args:
             crawler_id: Crawler identifier
             
         Returns:
             Dictionary containing crawler status and metrics
-        """        try:
+        """
+        try:
             crawler = await self.db_session.query(PlatformCrawler).filter(
                 PlatformCrawler.crawler_id == crawler_id
             ).first()
@@ -507,7 +528,8 @@ class PlatformCrawlerManager(DatabaseManager):
         new_status: CrawlerStatus,
         status_message: Optional[str] = None
     ) -> bool:
-        """        Update crawler operational status.
+        """
+        Update crawler operational status.
         
         Args:
             crawler_id: Crawler identifier
@@ -516,7 +538,8 @@ class PlatformCrawlerManager(DatabaseManager):
             
         Returns:
             True if update successful
-        """        try:
+        """
+        try:
             crawler = await self.db_session.query(PlatformCrawler).filter(
                 PlatformCrawler.crawler_id == crawler_id
             ).first()
@@ -542,7 +565,8 @@ class PlatformCrawlerManager(DatabaseManager):
         platform_type: PlatformType,
         config: Dict[str, Any]
     ) -> bool:
-        """Validate platform-specific configuration."""        required_fields = {
+        """Validate platform-specific configuration."""
+        required_fields = {
             PlatformType.YOUTUBE: ["api_key", "rate_limit"],
             PlatformType.TIKTOK: ["auth_token", "rate_limit"],
             PlatformType.INSTAGRAM: ["access_token", "rate_limit"],
@@ -566,7 +590,8 @@ class PlatformCrawlerManager(DatabaseManager):
         platform_type: PlatformType,
         config: Dict[str, Any]
     ) -> None:
-        """Initialize platform-specific settings and defaults."""        # Store platform configuration in cache
+        """Initialize platform-specific settings and defaults."""
+        # Store platform configuration in cache
         self.platform_configs[crawler_id] = {
             "platform": platform_type.value,
             "config": config,
@@ -574,7 +599,8 @@ class PlatformCrawlerManager(DatabaseManager):
         }
     
     async def _get_recent_sessions(self, crawler_id: str, hours: int = 24) -> List[Dict]:
-        """Get recent crawling sessions for a crawler."""        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
+        """Get recent crawling sessions for a crawler."""
+        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         
         sessions = await self.db_session.query(CrawlerSession).filter(
             and_(
@@ -595,7 +621,8 @@ class PlatformCrawlerManager(DatabaseManager):
         ]
     
     async def _calculate_session_statistics(self, sessions: List[Dict]) -> Dict[str, Any]:
-        """Calculate statistics from recent sessions."""        if not sessions:
+        """Calculate statistics from recent sessions."""
+        if not sessions:
             return {
                 "total_sessions": 0,
                 "successful_sessions": 0,
@@ -620,7 +647,8 @@ class PlatformCrawlerManager(DatabaseManager):
         }
     
     async def _get_error_statistics(self, crawler_id: str, hours: int = 24) -> Dict[str, Any]:
-        """Get error statistics for a crawler."""        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
+        """Get error statistics for a crawler."""
+        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         
         errors = await self.db_session.query(CrawlerError).filter(
             and_(
@@ -643,7 +671,8 @@ class PlatformCrawlerManager(DatabaseManager):
         }
     
     async def _get_performance_metrics(self, crawler_id: str) -> Dict[str, Any]:
-        """Get performance metrics for a crawler."""        # This would integrate with monitoring systems
+        """Get performance metrics for a crawler."""
+        # This would integrate with monitoring systems
         return {
             "average_response_time": 1.2,  # seconds
             "throughput_per_minute": 45,   # items processed
@@ -653,7 +682,8 @@ class PlatformCrawlerManager(DatabaseManager):
         }
     
     def _load_platform_configurations(self) -> None:
-        """Load default platform configurations."""        self.platform_configs = {
+        """Load default platform configurations."""
+        self.platform_configs = {
             "default_youtube": {
                 "max_concurrent_requests": 5,
                 "retry_attempts": 3,

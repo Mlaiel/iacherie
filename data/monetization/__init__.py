@@ -6,7 +6,7 @@ Comprehensive solution for multi-platform revenue optimization, payment processi
 analytics, compliance, and automated distribution management.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: Unauthorized use, copying, or distribution of this code is strictly 
 prohibited and subject to legal action under German and international copyright law.
@@ -78,7 +78,7 @@ from .reporting_engine import (
 # Module metadata
 __version__ = "2.1.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
-__copyright__ = "© 2025 Fahed Mlaiel - All Rights Reserved"
+__copyright__ = "(c) 2025 Fahed Mlaiel - All Rights Reserved"
 __license__ = "Proprietary - Unauthorized use prohibited"
 
 # Public API exports

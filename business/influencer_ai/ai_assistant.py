@@ -24,7 +24,8 @@ Advanced AI Assistant for multi-format content creators implementing:
 - Professional SEO recommendations
 - Revenue optimization insights
 ================================================================
-"""from typing import Dict, List, Optional, Any, Union, Tuple, AsyncIterator
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple, AsyncIterator
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum, auto
@@ -47,7 +48,8 @@ logger = logging.getLogger(__name__)
 # =============== CONFIGURATION & ENUMS ===============
 
 class AiAssistantType(Enum):
-    """Types d'assistants IA spécialisés"""    CONTENT_CREATOR = "content_creator"
+    """Types d'assistants IA spécialisés"""
+    CONTENT_CREATOR = "content_creator"
     MUSIC_PRODUCER = "music_producer" 
     SEO_OPTIMIZER = "seo_optimizer"
     COLLABORATION_MATCHER = "collaboration_matcher"
@@ -55,14 +57,16 @@ class AiAssistantType(Enum):
     BRAND_MANAGER = "brand_manager"
 
 class ConversationLanguage(Enum):
-    """Langues supportées pour les conversations"""    ENGLISH = "en"
+    """Langues supportées pour les conversations"""
+    ENGLISH = "en"
     FRENCH = "fr" 
     GERMAN = "de"
     SPANISH = "es"
     ITALIAN = "it"
 
 class ContentType(Enum):
-    """Types de contenu supportés"""    MUSIC = auto()
+    """Types de contenu supportés"""
+    MUSIC = auto()
     BLOG = auto()
     PHOTO = auto()
     VIDEO = auto()
@@ -70,7 +74,8 @@ class ContentType(Enum):
     SOCIAL_POST = auto()
 
 class AssistantStatus(Enum):
-    """Statuts du module AI Assistant"""    ACTIVE = "active"
+    """Statuts du module AI Assistant"""
+    ACTIVE = "active"
     INACTIVE = "inactive" 
     PROCESSING = "processing"
     LEARNING = "learning"
@@ -79,7 +84,8 @@ class AssistantStatus(Enum):
 
 @dataclass
 class AiAssistantConfig:
-    """Configuration avancée du module AI Assistant"""    enabled: bool = True
+    """Configuration avancée du module AI Assistant"""
+    enabled: bool = True
     max_concurrent_conversations: int = 50
     max_conversation_length: int = 1000
     timeout_seconds: int = 30
@@ -94,7 +100,8 @@ class AiAssistantConfig:
 
 @dataclass 
 class CreatorProfile:
-    """Profil de créateur pour personnalisation IA"""    creator_id: str
+    """Profil de créateur pour personnalisation IA"""
+    creator_id: str
     creator_type: str  # musician, blogger, photographer, influencer, comedian
     specialization: List[str]
     experience_level: str  # beginner, intermediate, advanced, expert
@@ -110,7 +117,8 @@ class CreatorProfile:
 
 @dataclass
 class ConversationContext:
-    """Contexte de conversation pour IA personnalisée"""    conversation_id: str
+    """Contexte de conversation pour IA personnalisée"""
+    conversation_id: str
     creator_profile: CreatorProfile
     current_topic: str
     conversation_history: List[Dict[str, Any]] = field(default_factory=list)
@@ -123,38 +131,47 @@ class ConversationContext:
 # =============== INTERFACES BUSINESS ===============
 
 class IAiAssistantService(ABC):
-    """Interface du service AI Assistant"""    
+    """Interface du service AI Assistant"""
+    
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialisation du service"""        pass
+        """Initialisation du service"""
+        pass
     
     @abstractmethod
     async def start_conversation(self, creator_id: str, language: ConversationLanguage) -> str:
-        """Démarrer nouvelle conversation"""        pass
+        """Démarrer nouvelle conversation"""
+        pass
     
     @abstractmethod
     async def process_message(self, conversation_id: str, message: str) -> Dict[str, Any]:
-        """Traiter message utilisateur"""        pass
+        """Traiter message utilisateur"""
+        pass
     
     @abstractmethod
     async def get_content_recommendations(self, creator_profile: CreatorProfile) -> List[Dict[str, Any]]:
-        """Obtenir recommandations personnalisées"""        pass
+        """Obtenir recommandations personnalisées"""
+        pass
     
     @abstractmethod
     async def analyze_content_performance(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyser performance du contenu"""        pass
+        """Analyser performance du contenu"""
+        pass
 
 # =============== CLASSES BUSINESS PRINCIPALES ===============
 
 class PromptEngineering:
-    """Système avancé d'ingénierie des prompts"""    
+    """Système avancé d'ingénierie des prompts"""
+    
     def __init__(self):
         self.prompt_templates = self._initialize_prompt_templates()
         self.optimization_strategies = self._initialize_optimization_strategies()
     
     def _initialize_prompt_templates(self) -> Dict[str, str]:
-        """Initialiser les templates de prompts professionnels"""        return {
-            "content_analysis": """            Analyze this {content_type} content for a {creator_type} creator:
+        """Initialiser les templates de prompts professionnels"""
+        return {
+            "content_analysis": """
+            Analyze this {content_type} content for a {creator_type} creator:
             Content: {content}
             
             Provide detailed insights on:
@@ -167,7 +184,8 @@ class PromptEngineering:
             Response must be professional, actionable, and creator-focused.
             """,
             
-            "collaboration_matching": """            Find collaboration opportunities for this creator profile:
+            "collaboration_matching": """
+            Find collaboration opportunities for this creator profile:
             Type: {creator_type}
             Specialization: {specialization}
             Goals: {goals}
@@ -179,7 +197,8 @@ class PromptEngineering:
             4. Success metrics to track
             """,
             
-            "revenue_optimization": """            Analyze revenue optimization for {creator_type}:
+            "revenue_optimization": """
+            Analyze revenue optimization for {creator_type}:
             Current metrics: {metrics}
             Platform performance: {platform_data}
             
@@ -191,7 +210,8 @@ class PromptEngineering:
             5. Partnership revenue streams
             """,
             
-            "seo_enhancement": """            Optimize SEO strategy for {content_type} content:
+            "seo_enhancement": """
+            Optimize SEO strategy for {content_type} content:
             Current content: {content}
             Target keywords: {keywords}
             Platform: {platform}
@@ -202,10 +222,12 @@ class PromptEngineering:
             3. Hashtag strategies
             4. Content structure recommendations
             5. Link building opportunities
-            """        }
+            """
+        }
     
     def _initialize_optimization_strategies(self) -> Dict[str, Dict[str, Any]]:
-        """Initialiser les stratégies d'optimisation par type de créateur"""        return {
+        """Initialiser les stratégies d'optimisation par type de créateur"""
+        return {
             "musician": {
                 "content_focus": ["audio_quality", "streaming_optimization", "fan_engagement"],
                 "monetization": ["streaming", "merchandise", "live_shows", "licensing"],
@@ -240,7 +262,8 @@ class PromptEngineering:
     
     def generate_optimized_prompt(self, template_key: str, creator_profile: CreatorProfile, 
                                  context: Dict[str, Any]) -> str:
-        """Générer un prompt optimisé basé sur le profil créateur"""        try:
+        """Générer un prompt optimisé basé sur le profil créateur"""
+        try:
             template = self.prompt_templates.get(template_key, "")
             creator_strategy = self.optimization_strategies.get(creator_profile.creator_type, {})
             
@@ -261,14 +284,16 @@ class PromptEngineering:
             return template_key  # Fallback basique
 
 class ConversationMemory:
-    """Système de mémoire conversationnelle avancé"""    
+    """Système de mémoire conversationnelle avancé"""
+    
     def __init__(self):
         self.conversations: Dict[str, ConversationContext] = {}
         self.vectorizer = TfidfVectorizer(max_features=1000, stop_words='english')
         self.conversation_embeddings: Dict[str, np.ndarray] = {}
     
     async def store_conversation(self, context: ConversationContext) -> bool:
-        """Stocker contexte de conversation"""        try:
+        """Stocker contexte de conversation"""
+        try:
             self.conversations[context.conversation_id] = context
             
             # Générer embeddings pour la recherche sémantique
@@ -284,7 +309,8 @@ class ConversationMemory:
             return False
     
     def _generate_embedding(self, text: str) -> np.ndarray:
-        """Générer embedding vectoriel pour le texte"""        try:
+        """Générer embedding vectoriel pour le texte"""
+        try:
             # Utiliser TF-IDF pour créer des embeddings simples
             vectors = self.vectorizer.fit_transform([text])
             return vectors.toarray()[0]
@@ -293,7 +319,8 @@ class ConversationMemory:
             return np.array([])
     
     async def find_similar_conversations(self, query: str, limit: int = 5) -> List[str]:
-        """Trouver conversations similaires"""        try:
+        """Trouver conversations similaires"""
+        try:
             if not self.conversation_embeddings:
                 return []
             
@@ -316,12 +343,14 @@ class ConversationMemory:
             return []
 
 class ContentAnalyzer:
-    """Analyseur de contenu IA avancé"""    
+    """Analyseur de contenu IA avancé"""
+    
     def __init__(self):
         self.analysis_models = self._initialize_analysis_models()
     
     def _initialize_analysis_models(self) -> Dict[str, Any]:
-        """Initialiser les modèles d'analyse"""        return {
+        """Initialiser les modèles d'analyse"""
+        return {
             "sentiment_analyzer": None,  # Placeholder pour futur modèle
             "quality_scorer": None,
             "engagement_predictor": None,
@@ -329,7 +358,8 @@ class ContentAnalyzer:
         }
     
     async def analyze_content_quality(self, content: str, content_type: ContentType) -> Dict[str, Any]:
-        """Analyser qualité du contenu"""        try:
+        """Analyser qualité du contenu"""
+        try:
             analysis = {
                 "overall_score": 0.0,
                 "readability_score": 0.0,
@@ -373,7 +403,8 @@ class ContentAnalyzer:
             return {"error": str(e), "analyzed_at": datetime.now().isoformat()}
     
     def _calculate_seo_score(self, content: str) -> float:
-        """Calculer score SEO basique"""        try:
+        """Calculer score SEO basique"""
+        try:
             score = 0.0
             content_lower = content.lower()
             
@@ -394,7 +425,8 @@ class ContentAnalyzer:
             return 0.0
 
 class AiAssistantManager:
-    """Gestionnaire principal AI Assistant"""    
+    """Gestionnaire principal AI Assistant"""
+    
     def __init__(self, config: AiAssistantConfig):
         self.config = config
         self.status = AssistantStatus.INACTIVE
@@ -406,7 +438,8 @@ class AiAssistantManager:
         self.creator_profiles: Dict[str, CreatorProfile] = {}
         
     async def start(self) -> bool:
-        """Démarrage du gestionnaire"""        try:
+        """Démarrage du gestionnaire"""
+        try:
             self.status = AssistantStatus.ACTIVE
             self.logger.info("🚀 AI Assistant Manager démarré avec succès")
             
@@ -420,7 +453,8 @@ class AiAssistantManager:
             return False
     
     async def _initialize_components(self):
-        """Initialiser tous les composants système"""        # Charger profils créateurs existants (simulation)
+        """Initialiser tous les composants système"""
+        # Charger profils créateurs existants (simulation)
         await self._load_creator_profiles()
         
         # Initialiser conversations actives
@@ -429,7 +463,8 @@ class AiAssistantManager:
         self.logger.info("✅ Composants AI Assistant initialisés")
     
     async def _load_creator_profiles(self):
-        """Charger les profils créateurs (simulation)"""        # Dans un vrai système, ceci viendrait de la base de données
+        """Charger les profils créateurs (simulation)"""
+        # Dans un vrai système, ceci viendrait de la base de données
         sample_profiles = [
             CreatorProfile(
                 creator_id="musician_001",
@@ -452,7 +487,8 @@ class AiAssistantManager:
         self.logger.info(f"📊 {len(sample_profiles)} profils créateurs chargés")
     
     async def stop(self) -> bool:
-        """Arrêt du gestionnaire"""        self.status = AssistantStatus.INACTIVE
+        """Arrêt du gestionnaire"""
+        self.status = AssistantStatus.INACTIVE
         
         # Sauvegarder conversations actives
         await self._save_active_conversations()
@@ -461,13 +497,15 @@ class AiAssistantManager:
         return True
     
     async def _save_active_conversations(self):
-        """Sauvegarder les conversations actives"""        for conv_id, context in self.active_conversations.items():
+        """Sauvegarder les conversations actives"""
+        for conv_id, context in self.active_conversations.items():
             await self.conversation_memory.store_conversation(context)
         
         self.logger.info(f"💾 {len(self.active_conversations)} conversations sauvegardées")
 
 class AiAssistantService(IAiAssistantService):
-    """Service principal AI Assistant"""    
+    """Service principal AI Assistant"""
+    
     def __init__(self, manager: AiAssistantManager):
         self.manager = manager
         self.logger = logging.getLogger(f"{__name__}.AiAssistantService")
@@ -479,7 +517,8 @@ class AiAssistantService(IAiAssistantService):
         }
     
     async def initialize(self) -> bool:
-        """Initialisation du service"""        try:
+        """Initialisation du service"""
+        try:
             self.logger.info("🔧 Initialisation AI Assistant Service")
             
             # Vérifier que le manager est actif
@@ -492,7 +531,8 @@ class AiAssistantService(IAiAssistantService):
             return False
     
     async def start_conversation(self, creator_id: str, language: ConversationLanguage) -> str:
-        """Démarrer nouvelle conversation personnalisée"""        try:
+        """Démarrer nouvelle conversation personnalisée"""
+        try:
             conversation_id = str(uuid.uuid4())
             
             # Récupérer profil créateur
@@ -543,7 +583,8 @@ class AiAssistantService(IAiAssistantService):
             raise
     
     async def _generate_welcome_message(self, profile: CreatorProfile, language: ConversationLanguage) -> str:
-        """Générer message d'accueil personnalisé"""        welcome_templates = {
+        """Générer message d'accueil personnalisé"""
+        welcome_templates = {
             ConversationLanguage.ENGLISH: f"Welcome to your AI Assistant! I see you're a {profile.creator_type} specializing in {', '.join(profile.specialization)}. I'm here to help you optimize your content, grow your audience, and maximize your revenue. What would you like to work on today?",
             ConversationLanguage.FRENCH: f"Bienvenue dans votre Assistant IA ! Je vois que vous êtes {profile.creator_type} spécialisé(e) en {', '.join(profile.specialization)}. Je suis là pour vous aider à optimiser votre contenu, développer votre audience et maximiser vos revenus. Sur quoi souhaitez-vous travailler aujourd'hui ?",
             ConversationLanguage.GERMAN: f"Willkommen bei Ihrem KI-Assistenten! Ich sehe, Sie sind {profile.creator_type} und spezialisiert auf {', '.join(profile.specialization)}. Ich bin hier, um Ihnen bei der Optimierung Ihrer Inhalte, dem Wachstum Ihres Publikums und der Maximierung Ihrer Einnahmen zu helfen. Woran möchten Sie heute arbeiten?"
@@ -552,7 +593,8 @@ class AiAssistantService(IAiAssistantService):
         return welcome_templates.get(language, welcome_templates[ConversationLanguage.ENGLISH])
     
     async def process_message(self, conversation_id: str, message: str) -> Dict[str, Any]:
-        """Traiter message utilisateur avec IA avancée"""        try:
+        """Traiter message utilisateur avec IA avancée"""
+        try:
             context = self.manager.active_conversations.get(conversation_id)
             if not context:
                 raise ValueError(f"Conversation {conversation_id} non trouvée")
@@ -599,7 +641,8 @@ class AiAssistantService(IAiAssistantService):
             }
     
     async def _generate_intelligent_response(self, context: ConversationContext, message: str) -> Dict[str, Any]:
-        """Générer réponse IA intelligente basée sur le contexte"""        try:
+        """Générer réponse IA intelligente basée sur le contexte"""
+        try:
             # Analyser intention du message
             intent = await self._analyze_message_intent(message, context)
             
@@ -623,7 +666,8 @@ class AiAssistantService(IAiAssistantService):
             }
     
     async def _analyze_message_intent(self, message: str, context: ConversationContext) -> str:
-        """Analyser l'intention du message utilisateur"""        message_lower = message.lower()
+        """Analyser l'intention du message utilisateur"""
+        message_lower = message.lower()
         
         # Détection d'intention basique (à améliorer avec ML)
         if any(word in message_lower for word in ["analyze", "review", "feedback", "improve"]):
@@ -638,7 +682,8 @@ class AiAssistantService(IAiAssistantService):
             return "general"
     
     async def _handle_content_analysis_request(self, context: ConversationContext, message: str) -> Dict[str, Any]:
-        """Gérer demande d'analyse de contenu"""        try:
+        """Gérer demande d'analyse de contenu"""
+        try:
             # Extraire contenu à analyser du message (simulation)
             content_type = ContentType.BLOG  # Default
             
@@ -675,7 +720,8 @@ Would you like me to provide specific optimization strategies for any of these a
             }
     
     async def _handle_seo_optimization_request(self, context: ConversationContext, message: str) -> Dict[str, Any]:
-        """Gérer demande d'optimisation SEO"""        creator_type = context.creator_profile.creator_type
+        """Gérer demande d'optimisation SEO"""
+        creator_type = context.creator_profile.creator_type
         
         seo_tips = {
             "musician": [
@@ -726,7 +772,8 @@ Would you like me to analyze specific content for SEO optimization?
         }
     
     async def _handle_collaboration_request(self, context: ConversationContext, message: str) -> Dict[str, Any]:
-        """Gérer demande de matching collaboratif"""        profile = context.creator_profile
+        """Gérer demande de matching collaboratif"""
+        profile = context.creator_profile
         
         # Logique de matching basée sur le profil
         collaboration_suggestions = []
@@ -763,7 +810,8 @@ I can help you find creators who match your collaboration goals. Would you like 
         }
     
     async def _handle_revenue_optimization_request(self, context: ConversationContext, message: str) -> Dict[str, Any]:
-        """Gérer demande d'optimisation revenue"""        profile = context.creator_profile
+        """Gérer demande d'optimisation revenue"""
+        profile = context.creator_profile
         metrics = profile.performance_metrics
         
         revenue_strategies = self.manager.prompt_engineer.optimization_strategies[profile.creator_type]["monetization"]
@@ -793,7 +841,8 @@ Would you like detailed strategies for any specific revenue stream?
         }
     
     async def _handle_general_conversation(self, context: ConversationContext, message: str) -> Dict[str, Any]:
-        """Gérer conversation générale"""        profile = context.creator_profile
+        """Gérer conversation générale"""
+        profile = context.creator_profile
         
         response_content = f"""As your AI assistant for {profile.creator_type} content creation, I'm here to help you with:
 
@@ -814,7 +863,8 @@ Based on your specialization in {', '.join(profile.specialization)}, what specif
         }
     
     async def _update_conversation_context(self, context: ConversationContext, user_message: str, ai_response: Dict[str, Any]):
-        """Mettre à jour le contexte de conversation"""        # Analyser sentiment (basique)
+        """Mettre à jour le contexte de conversation"""
+        # Analyser sentiment (basique)
         context.sentiment_score = await self._analyze_sentiment(user_message)
         
         # Déterminer engagement level
@@ -828,7 +878,8 @@ Based on your specialization in {', '.join(profile.specialization)}, what specif
         await self.manager.conversation_memory.store_conversation(context)
     
     async def _analyze_sentiment(self, message: str) -> float:
-        """Analyser sentiment basique du message"""        # Implémentation basique (à améliorer avec ML)
+        """Analyser sentiment basique du message"""
+        # Implémentation basique (à améliorer avec ML)
         positive_words = ["great", "excellent", "love", "amazing", "awesome", "good", "perfect"]
         negative_words = ["bad", "terrible", "hate", "awful", "horrible", "poor", "worst"]
         
@@ -842,7 +893,8 @@ Based on your specialization in {', '.join(profile.specialization)}, what specif
         return (positive_count - negative_count) / (positive_count + negative_count)
     
     async def get_content_recommendations(self, creator_profile: CreatorProfile) -> List[Dict[str, Any]]:
-        """Obtenir recommandations personnalisées"""        try:
+        """Obtenir recommandations personnalisées"""
+        try:
             recommendations = []
             creator_type = creator_profile.creator_type
             specializations = creator_profile.specialization
@@ -903,7 +955,8 @@ Based on your specialization in {', '.join(profile.specialization)}, what specif
             return []
     
     async def analyze_content_performance(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyser performance du contenu"""        try:
+        """Analyser performance du contenu"""
+        try:
             # Analyse de performance basique
             performance_analysis = {
                 "overall_performance": "good",
@@ -937,7 +990,8 @@ Based on your specialization in {', '.join(profile.specialization)}, what specif
             return {"error": str(e), "analyzed_at": datetime.now().isoformat()}
     
     def get_session_stats(self) -> Dict[str, Any]:
-        """Obtenir statistiques de session"""        return {
+        """Obtenir statistiques de session"""
+        return {
             **self.session_stats,
             "active_conversations": len(self.manager.active_conversations),
             "total_creator_profiles": len(self.manager.creator_profiles),
@@ -948,7 +1002,8 @@ Based on your specialization in {', '.join(profile.specialization)}, what specif
 # =============== FONCTIONS UTILITAIRES ===============
 
 async def create_aiassistant_service(config: Optional[AiAssistantConfig] = None) -> AiAssistantService:
-    """Factory pour créer le service AI Assistant avec configuration avancée"""    try:
+    """Factory pour créer le service AI Assistant avec configuration avancée"""
+    try:
         if config is None:
             config = AiAssistantConfig()
         
@@ -968,7 +1023,8 @@ async def create_aiassistant_service(config: Optional[AiAssistantConfig] = None)
         raise
 
 def get_aiassistant_status() -> Dict[str, Any]:
-    """Récupération du statut détaillé du module"""    return {
+    """Récupération du statut détaillé du module"""
+    return {
         "module": "AI Assistant",
         "version": "2.1.0",
         "author": "Fahed Mlaiel",
@@ -995,13 +1051,15 @@ def get_aiassistant_status() -> Dict[str, Any]:
 # =============== POINTS D'ENTRÉE API ===============
 
 class AiAssistantAPI:
-    """Points d'entrée API pour AI Assistant"""    
+    """Points d'entrée API pour AI Assistant"""
+    
     def __init__(self, service: AiAssistantService):
         self.service = service
         self.logger = logging.getLogger(f"{__name__}.AiAssistantAPI")
     
     async def health_check(self) -> Dict[str, Any]:
-        """Vérification de santé complète du module"""        try:
+        """Vérification de santé complète du module"""
+        try:
             health_status = {
                 "status": "healthy",
                 "module": "AI Assistant",
@@ -1030,7 +1088,8 @@ class AiAssistantAPI:
             }
     
     async def get_creator_insights(self, creator_id: str) -> Dict[str, Any]:
-        """Obtenir insights complets pour un créateur"""        try:
+        """Obtenir insights complets pour un créateur"""
+        try:
             profile = self.service.manager.creator_profiles.get(creator_id)
             if not profile:
                 return {"error": "Creator profile not found"}
@@ -1087,7 +1146,8 @@ __all__ = [
             return False
     
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traitement principal des données"""        try:
+        """Traitement principal des données"""
+        try:
             self.logger.info(f"⚡ Traitement Ai Assistant")
             
             # Validation des données
@@ -1112,14 +1172,16 @@ __all__ = [
             }
     
     async def validate(self, input_data: Any) -> bool:
-        """Validation des données d'entrée"""        if not input_data:
+        """Validation des données d'entrée"""
+        if not input_data:
             return False
         
         # Validation spécifique au module
         return True
     
     async def _execute_business_logic(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Exécution de la logique métier spécifique"""        # Implement consolidated business logic for AI assistant
+        """Exécution de la logique métier spécifique"""
+        # Implement consolidated business logic for AI assistant
         logger.info("Executing AI assistant business logic")
         
         # AI assistant workflow implementation
@@ -1201,7 +1263,8 @@ __all__ = [
 # =============== FONCTIONS UTILITAIRES ===============
 
 async def create_aiassistant_service(config: Optional[AiAssistantConfig] = None) -> AiAssistantService:
-    """Factory pour créer le service Ai Assistant"""    if config is None:
+    """Factory pour créer le service Ai Assistant"""
+    if config is None:
         config = AiAssistantConfig()
     
     manager = AiAssistantManager(config)
@@ -1213,7 +1276,8 @@ async def create_aiassistant_service(config: Optional[AiAssistantConfig] = None)
     return service
 
 def get_aiassistant_status() -> Dict[str, Any]:
-    """Récupération du statut du module"""    return {
+    """Récupération du statut du module"""
+    return {
         "module": "Ai Assistant",
         "version": "1.0.0",
         "expert": "AI_SPECIALIST + ML_ENGINEER",
@@ -1224,12 +1288,14 @@ def get_aiassistant_status() -> Dict[str, Any]:
 # =============== POINTS D'ENTRÉE API ===============
 
 class AiAssistantAPI:
-    """Points d'entrée API pour Ai Assistant"""    
+    """Points d'entrée API pour Ai Assistant"""
+    
     def __init__(self, service: AiAssistantService):
         self.service = service
     
     async def health_check(self) -> Dict[str, Any]:
-        """Vérification de santé du module"""        return {
+        """Vérification de santé du module"""
+        return {
             "status": "healthy",
             "module": "Ai Assistant",
             "timestamp": datetime.now().isoformat()

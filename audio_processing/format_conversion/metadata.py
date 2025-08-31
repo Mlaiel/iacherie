@@ -5,7 +5,8 @@ Provides comprehensive metadata handling with support for all major tagging form
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from pathlib import Path
@@ -37,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioMetadata:
-    """Comprehensive audio metadata structure"""    # Basic metadata
+    """Comprehensive audio metadata structure"""
+    # Basic metadata
     title: Optional[str] = None
     artist: Optional[str] = None
     album: Optional[str] = None
@@ -96,21 +98,25 @@ class AudioMetadata:
 
 
 class MetadataManager:
-    """    Professional Audio Metadata Manager
+    """
+    Professional Audio Metadata Manager
     
     Advanced metadata handling system providing:
     - Universal metadata extraction from all major formats
     - Intelligent metadata preservation during conversion
     - Comprehensive metadata injection and validation
     - Content protection and rights management integration
-    """    
+    """
+    
     def __init__(self, config: Optional[MetadataConfig] = None):
-        """Initialize metadata manager"""        self.config = config or MetadataConfig()
+        """Initialize metadata manager"""
+        self.config = config or MetadataConfig()
         self.supported_formats = self._init_supported_formats()
         self.tag_mappings = self._init_tag_mappings()
         
     def _init_supported_formats(self) -> Dict[str, type]:
-        """Initialize supported format handlers"""        return {
+        """Initialize supported format handlers"""
+        return {
             '.mp3': ID3,
             '.flac': FLAC,
             '.m4a': MP4,
@@ -121,7 +127,8 @@ class MetadataManager:
         }
     
     def _init_tag_mappings(self) -> Dict[str, Dict[str, str]]:
-        """Initialize tag mapping for different formats"""        return {
+        """Initialize tag mapping for different formats"""
+        return {
             'id3v2': {
                 'title': 'TIT2',
                 'artist': 'TPE1',
@@ -170,14 +177,16 @@ class MetadataManager:
         }
     
     async def extract_metadata(self, file_path: Path) -> AudioMetadata:
-        """        Extract comprehensive metadata from audio file
+        """
+        Extract comprehensive metadata from audio file
         
         Args:
             file_path: Path to audio file
             
         Returns:
             AudioMetadata object with extracted information
-        """        try:
+        """
+        try:
             metadata = AudioMetadata()
             
             # Load file with mutagen
@@ -216,7 +225,8 @@ class MetadataManager:
                             file_path: Path, 
                             metadata: AudioMetadata,
                             preserve_existing: bool = True) -> bool:
-        """        Inject metadata into audio file
+        """
+        Inject metadata into audio file
         
         Args:
             file_path: Path to target audio file
@@ -225,7 +235,8 @@ class MetadataManager:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             # Load existing file
             audio_file = mutagen.File(str(file_path))
             if not audio_file:
@@ -259,7 +270,8 @@ class MetadataManager:
                               source_path: Path,
                               target_path: Path,
                               enhance: bool = True) -> bool:
-        """        Preserve metadata from source to target file with optional enhancement
+        """
+        Preserve metadata from source to target file with optional enhancement
         
         Args:
             source_path: Source audio file
@@ -268,7 +280,8 @@ class MetadataManager:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             # Extract metadata from source
             source_metadata = await self.extract_metadata(source_path)
             
@@ -292,14 +305,16 @@ class MetadataManager:
             return False
     
     async def validate_metadata(self, metadata: AudioMetadata) -> Dict[str, List[str]]:
-        """        Validate metadata completeness and accuracy
+        """
+        Validate metadata completeness and accuracy
         
         Args:
             metadata: Metadata to validate
             
         Returns:
             Dictionary with validation results
-        """        validation_results = {
+        """
+        validation_results = {
             'errors': [],
             'warnings': [],
             'suggestions': []
@@ -342,7 +357,8 @@ class MetadataManager:
                            primary: AudioMetadata,
                            secondary: AudioMetadata,
                            strategy: str = "primary_priority") -> AudioMetadata:
-        """        Merge metadata from two sources with specified strategy
+        """
+        Merge metadata from two sources with specified strategy
         
         Args:
             primary: Primary metadata source
@@ -351,7 +367,8 @@ class MetadataManager:
             
         Returns:
             Merged metadata
-        """        merged = AudioMetadata()
+        """
+        merged = AudioMetadata()
         
         # Get all metadata fields
         fields = [f for f in AudioMetadata.__dataclass_fields__.keys() 
@@ -387,7 +404,8 @@ class MetadataManager:
     # Private methods for format-specific handling
     
     async def _extract_basic_metadata(self, audio_file: mutagen.FileType, metadata: AudioMetadata):
-        """Extract basic metadata fields"""        # Title
+        """Extract basic metadata fields"""
+        # Title
         metadata.title = self._get_tag_value(audio_file, ['TIT2', 'TITLE', '\xa9nam'])
         
         # Artist
@@ -462,7 +480,8 @@ class MetadataManager:
                                         audio_file: mutagen.FileType, 
                                         metadata: AudioMetadata, 
                                         file_path: Path):
-        """Extract technical metadata"""        if hasattr(audio_file, 'info'):
+        """Extract technical metadata"""
+        if hasattr(audio_file, 'info'):
             info = audio_file.info
             metadata.bitrate = getattr(info, 'bitrate', None)
             metadata.sample_rate = getattr(info, 'sample_rate', None)
@@ -481,7 +500,8 @@ class MetadataManager:
         metadata.codec = self._detect_codec(audio_file, file_path)
     
     async def _extract_cover_art(self, audio_file: mutagen.FileType, metadata: AudioMetadata):
-        """Extract cover art from audio file"""        try:
+        """Extract cover art from audio file"""
+        try:
             cover_data = None
             mime_type = None
             
@@ -523,7 +543,8 @@ class MetadataManager:
             logger.warning(f"Cover art extraction failed: {e}")
     
     async def _extract_custom_fields(self, audio_file: mutagen.FileType, metadata: AudioMetadata):
-        """Extract custom/proprietary fields"""        custom_fields = {}
+        """Extract custom/proprietary fields"""
+        custom_fields = {}
         
         try:
             # ID3v2 TXXX frames (user-defined text)
@@ -545,7 +566,8 @@ class MetadataManager:
             logger.warning(f"Custom fields extraction failed: {e}")
     
     async def _generate_fingerprints(self, file_path: Path, metadata: AudioMetadata):
-        """Generate content fingerprints for protection"""        try:
+        """Generate content fingerprints for protection"""
+        try:
             # Generate file hash
             with open(file_path, 'rb') as f:
                 file_content = f.read()
@@ -559,7 +581,8 @@ class MetadataManager:
             logger.warning(f"Fingerprint generation failed: {e}")
     
     def _get_tag_value(self, audio_file: mutagen.FileType, possible_keys: List[str]) -> Optional[str]:
-        """Get tag value trying multiple possible keys"""        if not hasattr(audio_file, 'tags') or not audio_file.tags:
+        """Get tag value trying multiple possible keys"""
+        if not hasattr(audio_file, 'tags') or not audio_file.tags:
             return None
         
         for key in possible_keys:
@@ -576,7 +599,8 @@ class MetadataManager:
         return None
     
     def _detect_format(self, file_path: Path, audio_file: mutagen.FileType) -> str:
-        """Detect metadata format type"""        if hasattr(audio_file, 'tags'):
+        """Detect metadata format type"""
+        if hasattr(audio_file, 'tags'):
             if hasattr(audio_file.tags, 'version'):  # ID3
                 return 'id3v2'
             elif any(key.startswith('\xa9') for key in audio_file.tags.keys()):  # MP4
@@ -596,7 +620,8 @@ class MetadataManager:
         return 'unknown'
     
     def _detect_codec(self, audio_file: mutagen.FileType, file_path: Path) -> Optional[str]:
-        """Detect audio codec"""        if hasattr(audio_file, 'info'):
+        """Detect audio codec"""
+        if hasattr(audio_file, 'info'):
             if hasattr(audio_file.info, 'codec'):
                 return audio_file.info.codec
         
@@ -615,12 +640,14 @@ class MetadataManager:
         return codec_map.get(ext, None)
     
     def _validate_isrc(self, isrc: str) -> bool:
-        """Validate ISRC format (CC-XXX-YY-NNNNN)"""        import re
+        """Validate ISRC format (CC-XXX-YY-NNNNN)"""
+        import re
         pattern = r'^[A-Z]{2}-[A-Z0-9]{3}-\d{2}-\d{5}$'
         return bool(re.match(pattern, isrc))
     
     async def _optimize_cover_art(self, metadata: AudioMetadata):
-        """Optimize cover art size and quality"""        if not metadata.cover_art:
+        """Optimize cover art size and quality"""
+        if not metadata.cover_art:
             return
         
         try:
@@ -641,7 +668,8 @@ class MetadataManager:
             logger.warning(f"Cover art optimization failed: {e}")
     
     async def _enhance_metadata(self, metadata: AudioMetadata, target_path: Path) -> AudioMetadata:
-        """Enhance metadata with additional information"""        # Add processing information
+        """Enhance metadata with additional information"""
+        # Add processing information
         metadata.processed_by = "IA Influencer Agent v2.0"
         metadata.processing_date = datetime.now().isoformat()
         
@@ -668,7 +696,8 @@ class MetadataManager:
                                    audio_file: mutagen.FileType, 
                                    metadata: AudioMetadata, 
                                    preserve_existing: bool):
-        """Inject ID3v2 metadata"""        if not hasattr(audio_file, 'tags') or audio_file.tags is None:
+        """Inject ID3v2 metadata"""
+        if not hasattr(audio_file, 'tags') or audio_file.tags is None:
             audio_file.add_tags()
         
         tags = audio_file.tags
@@ -712,7 +741,8 @@ class MetadataManager:
                                     audio_file: mutagen.FileType, 
                                     metadata: AudioMetadata, 
                                     preserve_existing: bool):
-        """Inject Vorbis comment metadata"""        if not preserve_existing:
+        """Inject Vorbis comment metadata"""
+        if not preserve_existing:
             audio_file.tags.clear()
         
         tags = audio_file.tags
@@ -743,7 +773,8 @@ class MetadataManager:
                                  audio_file: mutagen.FileType, 
                                  metadata: AudioMetadata, 
                                  preserve_existing: bool):
-        """Inject MP4 metadata"""        if not preserve_existing:
+        """Inject MP4 metadata"""
+        if not preserve_existing:
             audio_file.tags.clear()
         
         tags = audio_file.tags
@@ -777,16 +808,20 @@ class MetadataManager:
 
 
 class MetadataExtractor:
-    """    Specialized Metadata Extractor
+    """
+    Specialized Metadata Extractor
     
     High-performance metadata extraction with caching and batch processing.
-    """    
+    """
+    
     def __init__(self, manager: MetadataManager):
-        """Initialize extractor"""        self.manager = manager
+        """Initialize extractor"""
+        self.manager = manager
         self.cache: Dict[str, AudioMetadata] = {}
         
     async def extract_batch(self, file_paths: List[Path]) -> Dict[Path, AudioMetadata]:
-        """Extract metadata from multiple files"""        results = {}
+        """Extract metadata from multiple files"""
+        results = {}
         
         # Process files in parallel
         tasks = [self.manager.extract_metadata(path) for path in file_paths]
@@ -803,17 +838,21 @@ class MetadataExtractor:
 
 
 class MetadataInjector:
-    """    Specialized Metadata Injector
+    """
+    Specialized Metadata Injector
     
     High-performance metadata injection with validation and error handling.
-    """    
+    """
+    
     def __init__(self, manager: MetadataManager):
-        """Initialize injector"""        self.manager = manager
+        """Initialize injector"""
+        self.manager = manager
         
     async def inject_batch(self, 
                          file_paths: List[Path], 
                          metadata_list: List[AudioMetadata]) -> Dict[Path, bool]:
-        """Inject metadata into multiple files"""        results = {}
+        """Inject metadata into multiple files"""
+        results = {}
         
         # Process files in parallel
         tasks = [

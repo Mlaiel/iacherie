@@ -11,7 +11,8 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
-"""from typing import Dict, List, Optional, Any
+"""
+from typing import Dict, List, Optional, Any
 from datetime import datetime
 import logging
 
@@ -24,17 +25,20 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborativeFeaturesRegistry:
-    """    Central registry for all collaborative features and services
+    """
+    Central registry for all collaborative features and services
     
     This class provides a unified interface to access and manage
     all collaboration-related functionality in the platform.
-    """    
+    """
+    
     def __init__(self):
         self._services = {}
         self._initialized = False
     
     async def initialize_services(self, config: Dict[str, Any]) -> None:
-        """Initialize all collaborative services"""        try:
+        """Initialize all collaborative services"""
+        try:
             if self._initialized:
                 return
             
@@ -60,21 +64,25 @@ class CollaborativeFeaturesRegistry:
             raise
     
     def get_service(self, service_name: str) -> Any:
-        """Get a specific collaborative service"""        if not self._initialized:
+        """Get a specific collaborative service"""
+        if not self._initialized:
             raise RuntimeError("Services not initialized. Call initialize_services() first.")
         
         return self._services.get(service_name)
     
     def list_available_services(self) -> List[str]:
-        """List all available collaborative services"""        return list(self._services.keys())
+        """List all available collaborative services"""
+        return list(self._services.keys())
 
 
 class CollaborationWorkflowManager:
-    """    High-level workflow manager for collaboration processes
+    """
+    High-level workflow manager for collaboration processes
     
     This class orchestrates complex collaboration workflows by
     coordinating multiple services and ensuring proper execution order.
-    """    
+    """
+    
     def __init__(self, registry: CollaborativeFeaturesRegistry):
         self.registry = registry
         self.active_workflows = {}
@@ -85,7 +93,8 @@ class CollaborationWorkflowManager:
         participants: List[str],
         project_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Start a comprehensive collaboration workflow"""        try:
+        """Start a comprehensive collaboration workflow"""
+        try:
             workflow_id = f"workflow_{workflow_type}_{len(self.active_workflows)}"
             
             # Get required services
@@ -156,15 +165,18 @@ collaboration_registry = CollaborativeFeaturesRegistry()
 
 
 async def get_collaboration_service(service_name: str) -> Any:
-    """Get a collaboration service from the global registry"""    return collaboration_registry.get_service(service_name)
+    """Get a collaboration service from the global registry"""
+    return collaboration_registry.get_service(service_name)
 
 
 async def initialize_collaboration_features(config: Dict[str, Any] = None) -> None:
-    """Initialize all collaboration features"""    await collaboration_registry.initialize_services(config or {})
+    """Initialize all collaboration features"""
+    await collaboration_registry.initialize_services(config or {})
 
 
 def get_feature_summary() -> Dict[str, Any]:
-    """Get summary of all collaborative features"""    return {
+    """Get summary of all collaborative features"""
+    return {
         "module_name": "collaborative_features",
         "version": "1.0.0",
         "total_services": len(collaboration_registry.list_available_services()),

@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 import numpy as np
@@ -49,7 +50,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioProcessingConfig:
-    """Comprehensive audio processing configuration"""    target_sample_rate: int = 44100
+    """Comprehensive audio processing configuration"""
+    target_sample_rate: int = 44100
     frame_length: int = 2048
     hop_length: int = 512
     n_mels: int = 128
@@ -65,7 +67,8 @@ class AudioProcessingConfig:
     
 @dataclass
 class AudioFeatures:
-    """Complete audio feature set for ML and analysis"""    # Basic features
+    """Complete audio feature set for ML and analysis"""
+    # Basic features
     duration_seconds: float
     sample_rate: int
     channels: int
@@ -106,7 +109,8 @@ class AudioFeatures:
     audio_fingerprint: Optional[str] = None
 
 class AudioProcessor:
-    """    Advanced audio processing engine with industrial-grade capabilities
+    """
+    Advanced audio processing engine with industrial-grade capabilities
     
     Features:
     - Real-time and batch audio processing
@@ -115,7 +119,8 @@ class AudioProcessor:
     - Multi-threaded processing for performance
     - Audio fingerprinting and protection
     - Format conversion and optimization
-    """    
+    """
+    
     def __init__(self, config: Optional[AudioProcessingConfig] = None):
         self.config = config or AudioProcessingConfig()
         self.settings = get_settings()
@@ -135,7 +140,8 @@ class AudioProcessor:
         logger.info(f"AudioProcessor initialized with device: {self.device}")
     
     def _initialize_models(self):
-        """Initialize ML models for audio processing"""        try:
+        """Initialize ML models for audio processing"""
+        try:
             # Load pre-trained models for audio analysis
             self.feature_extraction_model = self._load_feature_model()
             self.quality_assessment_model = self._load_quality_model()
@@ -149,7 +155,8 @@ class AudioProcessor:
             self.genre_classification_model = None
     
     def _load_feature_model(self) -> Optional[nn.Module]:
-        """Load feature extraction neural network model"""        # In production, this would load a pre-trained model
+        """Load feature extraction neural network model"""
+        # In production, this would load a pre-trained model
         # For now, return a simple CNN-based feature extractor
         class AudioFeatureNet(nn.Module):
             def __init__(self):
@@ -174,7 +181,8 @@ class AudioProcessor:
         return model
     
     def _load_quality_model(self) -> Optional[nn.Module]:
-        """Load audio quality assessment model"""        class QualityAssessmentNet(nn.Module):
+        """Load audio quality assessment model"""
+        class QualityAssessmentNet(nn.Module):
             def __init__(self):
                 super().__init__()
                 self.fc1 = nn.Linear(128, 64)
@@ -193,7 +201,8 @@ class AudioProcessor:
         return QualityAssessmentNet().to(self.device)
     
     def _load_genre_model(self) -> Optional[nn.Module]:
-        """Load genre classification model"""        class GenreClassifier(nn.Module):
+        """Load genre classification model"""
+        class GenreClassifier(nn.Module):
             def __init__(self, num_genres=10):
                 super().__init__()
                 self.fc1 = nn.Linear(128, 64)
@@ -217,7 +226,8 @@ class AudioProcessor:
                                         extract_features: bool = True,
                                         analyze_quality: bool = True,
                                         create_fingerprint: bool = True) -> AudioFeatures:
-        """        Comprehensive audio processing and analysis
+        """
+        Comprehensive audio processing and analysis
         
         Args:
             audio_data: Raw audio data
@@ -228,7 +238,8 @@ class AudioProcessor:
             
         Returns:
             Complete AudioFeatures object
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             # Normalize audio data
@@ -345,7 +356,8 @@ class AudioProcessor:
             raise
     
     async def _extract_spectral_features_async(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract spectral features asynchronously"""        def extract_spectral():
+        """Extract spectral features asynchronously"""
+        def extract_spectral():
             # Spectral centroid
             centroid = librosa.feature.spectral_centroid(y=audio_data, sr=sample_rate)[0]
             
@@ -373,7 +385,8 @@ class AudioProcessor:
         return await loop.run_in_executor(self.executor, extract_spectral)
     
     async def _extract_rhythmic_features_async(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract rhythmic features asynchronously"""        def extract_rhythmic():
+        """Extract rhythmic features asynchronously"""
+        def extract_rhythmic():
             try:
                 # Tempo and beat tracking
                 tempo, beats = librosa.beat.beat_track(y=audio_data, sr=sample_rate)
@@ -407,7 +420,8 @@ class AudioProcessor:
         return await loop.run_in_executor(self.executor, extract_rhythmic)
     
     async def _extract_harmonic_features_async(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract harmonic features asynchronously"""        def extract_harmonic():
+        """Extract harmonic features asynchronously"""
+        def extract_harmonic():
             try:
                 # Chroma features
                 chroma = librosa.feature.chroma_stft(y=audio_data, sr=sample_rate)
@@ -437,7 +451,8 @@ class AudioProcessor:
         return await loop.run_in_executor(self.executor, extract_harmonic)
     
     async def _extract_advanced_features_async(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract advanced features asynchronously"""        def extract_advanced():
+        """Extract advanced features asynchronously"""
+        def extract_advanced():
             try:
                 # MFCC features
                 mfcc = librosa.feature.mfcc(
@@ -490,7 +505,8 @@ class AudioProcessor:
         return await loop.run_in_executor(self.executor, extract_advanced)
     
     async def _analyze_quality_comprehensive_async(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Comprehensive audio quality analysis"""        def analyze_quality():
+        """Comprehensive audio quality analysis"""
+        def analyze_quality():
             # Dynamic range
             dynamic_range = np.max(audio_data) - np.min(audio_data)
             
@@ -535,7 +551,8 @@ class AudioProcessor:
         return await loop.run_in_executor(self.executor, analyze_quality)
     
     async def _extract_ml_embeddings(self, audio_data: np.ndarray) -> Optional[np.ndarray]:
-        """Extract ML embeddings using neural network"""        try:
+        """Extract ML embeddings using neural network"""
+        try:
             if self.feature_extraction_model is None:
                 return None
             
@@ -553,13 +570,15 @@ class AudioProcessor:
             return None
     
     def _normalize_audio(self, audio_data: np.ndarray) -> np.ndarray:
-        """Normalize audio data to prevent clipping"""        max_val = np.max(np.abs(audio_data))
+        """Normalize audio data to prevent clipping"""
+        max_val = np.max(np.abs(audio_data))
         if max_val > 0:
             return audio_data / max_val * 0.95  # Leave some headroom
         return audio_data
     
     def _generate_cache_key(self, audio_data: np.ndarray, sample_rate: int) -> str:
-        """Generate cache key for audio data"""        # Create hash of audio data and parameters
+        """Generate cache key for audio data"""
+        # Create hash of audio data and parameters
         audio_hash = hashlib.md5(audio_data.tobytes()).hexdigest()
         return f"{audio_hash}_{sample_rate}_{self.config.n_fft}_{self.config.hop_length}"
     
@@ -568,7 +587,8 @@ class AudioProcessor:
                                         sample_rate: int,
                                         target_format: str,
                                         quality_level: str = "high") -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Professional audio format conversion with quality optimization"""        try:
+        """Professional audio format conversion with quality optimization"""
+        try:
             converted_audio = audio_data.copy()
             conversion_info = {
                 "original_format": "float32",
@@ -609,7 +629,8 @@ class AudioProcessor:
             raise
     
     async def _apply_mastering_chain(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Apply professional mastering chain"""        processed = audio_data.copy()
+        """Apply professional mastering chain"""
+        processed = audio_data.copy()
         
         # 1. High-pass filter (remove DC and low-frequency rumble)
         nyquist = sample_rate // 2
@@ -628,7 +649,8 @@ class AudioProcessor:
         return processed
     
     def _apply_multiband_compression(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Apply multiband compression"""        # Split into frequency bands
+        """Apply multiband compression"""
+        # Split into frequency bands
         nyquist = sample_rate // 2
         
         # Low band (20-200 Hz)
@@ -652,7 +674,8 @@ class AudioProcessor:
         return low_compressed + mid_compressed + high_compressed
     
     def _apply_compression(self, audio_data: np.ndarray, threshold: float = 0.7, ratio: float = 4.0) -> np.ndarray:
-        """Apply dynamic range compression"""        compressed = audio_data.copy()
+        """Apply dynamic range compression"""
+        compressed = audio_data.copy()
         
         # Simple compression algorithm
         for i in range(len(compressed)):
@@ -663,7 +686,8 @@ class AudioProcessor:
         return compressed
     
     def _apply_mastering_eq(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Apply mastering EQ"""        processed = audio_data.copy()
+        """Apply mastering EQ"""
+        processed = audio_data.copy()
         nyquist = sample_rate // 2
         
         # Slight high-frequency enhancement (presence boost)
@@ -678,7 +702,8 @@ class AudioProcessor:
         return processed
     
     def _apply_limiter(self, audio_data: np.ndarray, threshold: float = -0.1, ratio: float = 10.0) -> np.ndarray:
-        """Apply peak limiting"""        limited = audio_data.copy()
+        """Apply peak limiting"""
+        limited = audio_data.copy()
         threshold_linear = 10**(threshold/20)  # Convert dB to linear
         
         peaks = np.abs(limited) > threshold_linear
@@ -691,7 +716,8 @@ class AudioProcessor:
     async def batch_process_audio(self, 
                                 audio_files: List[str],
                                 processing_config: Dict[str, Any]) -> List[AudioFeatures]:
-        """Process multiple audio files in parallel"""        async def process_single_file(file_path: str) -> AudioFeatures:
+        """Process multiple audio files in parallel"""
+        async def process_single_file(file_path: str) -> AudioFeatures:
             try:
                 # Load audio file
                 audio_data, sample_rate = librosa.load(file_path, sr=None)
@@ -724,7 +750,8 @@ class AudioProcessor:
     async def real_time_process_stream(self, 
                                      audio_stream: asyncio.Queue,
                                      callback: callable) -> None:
-        """Process real-time audio stream"""        if not self.config.real_time_processing:
+        """Process real-time audio stream"""
+        if not self.config.real_time_processing:
             raise ValueError("Real-time processing not enabled")
         
         buffer = []
@@ -762,7 +789,8 @@ class AudioProcessor:
                 break
 
 class AudioAnalyzer:
-    """    Advanced audio analyzer for comprehensive audio content analysis
+    """
+    Advanced audio analyzer for comprehensive audio content analysis
     
     Features:
     - Genre classification
@@ -771,7 +799,8 @@ class AudioAnalyzer:
     - Audio quality assessment
     - Similarity matching
     - Audio fingerprinting
-    """    
+    """
+    
     def __init__(self, processor: Optional[AudioProcessor] = None):
         self.processor = processor or AudioProcessor()
         self.settings = get_settings()
@@ -788,7 +817,8 @@ class AudioAnalyzer:
         ]
     
     async def analyze_audio_content(self, features: AudioFeatures) -> Dict[str, Any]:
-        """Comprehensive audio content analysis"""        analysis_results = {
+        """Comprehensive audio content analysis"""
+        analysis_results = {
             "genre_prediction": await self._classify_genre(features),
             "mood_prediction": await self._detect_mood(features),
             "content_analysis": await self._analyze_content_structure(features),
@@ -800,7 +830,8 @@ class AudioAnalyzer:
         return analysis_results
     
     async def _classify_genre(self, features: AudioFeatures) -> Dict[str, float]:
-        """Classify audio genre using ML features"""        try:
+        """Classify audio genre using ML features"""
+        try:
             if self.processor.genre_classification_model and features.embeddings is not None:
                 # Use ML model for classification
                 embeddings_tensor = torch.FloatTensor(features.embeddings).unsqueeze(0).to(self.processor.device)
@@ -825,7 +856,8 @@ class AudioAnalyzer:
             return {genre: 0.1 for genre in self.genre_classes}
     
     async def _rule_based_genre_classification(self, features: AudioFeatures) -> Dict[str, float]:
-        """Rule-based genre classification as fallback"""        genre_scores = {genre: 0.0 for genre in self.genre_classes}
+        """Rule-based genre classification as fallback"""
+        genre_scores = {genre: 0.0 for genre in self.genre_classes}
         
         # Tempo-based heuristics
         tempo = features.tempo
@@ -862,7 +894,8 @@ class AudioAnalyzer:
         return dict(sorted(genre_scores.items(), key=lambda x: x[1], reverse=True))
     
     async def _detect_mood(self, features: AudioFeatures) -> Dict[str, float]:
-        """Detect mood from audio features"""        mood_scores = {mood: 0.0 for mood in self.mood_classes}
+        """Detect mood from audio features"""
+        mood_scores = {mood: 0.0 for mood in self.mood_classes}
         
         # Tempo-based mood inference
         tempo = features.tempo
@@ -893,7 +926,8 @@ class AudioAnalyzer:
         return dict(sorted(mood_scores.items(), key=lambda x: x[1], reverse=True))
     
     async def _analyze_content_structure(self, features: AudioFeatures) -> Dict[str, Any]:
-        """Analyze the structure and content of the audio"""        structure_analysis = {
+        """Analyze the structure and content of the audio"""
+        structure_analysis = {
             "has_vocals": False,
             "instrument_presence": {},
             "structure_segments": [],
@@ -934,7 +968,8 @@ class AudioAnalyzer:
         return structure_analysis
     
     async def _assess_audio_quality(self, features: AudioFeatures) -> Dict[str, Any]:
-        """Assess overall audio quality"""        quality_assessment = {
+        """Assess overall audio quality"""
+        quality_assessment = {
             "overall_score": 0.0,
             "quality_factors": {},
             "issues_detected": [],
@@ -990,7 +1025,8 @@ class AudioAnalyzer:
         return quality_assessment
     
     async def _technical_analysis(self, features: AudioFeatures) -> Dict[str, Any]:
-        """Technical analysis of audio properties"""        return {
+        """Technical analysis of audio properties"""
+        return {
             "format_info": {
                 "duration_seconds": features.duration_seconds,
                 "sample_rate": features.sample_rate,
@@ -1014,7 +1050,8 @@ class AudioAnalyzer:
         }
     
     async def _generate_recommendations(self, features: AudioFeatures) -> List[str]:
-        """Generate recommendations for audio improvement"""        recommendations = []
+        """Generate recommendations for audio improvement"""
+        recommendations = []
         
         # Quality-based recommendations
         if features.dynamic_range < 0.5:
@@ -1046,7 +1083,8 @@ class AudioAnalyzer:
     async def compare_audio_similarity(self, 
                                      features1: AudioFeatures, 
                                      features2: AudioFeatures) -> Dict[str, float]:
-        """Compare similarity between two audio tracks"""        similarity_metrics = {}
+        """Compare similarity between two audio tracks"""
+        similarity_metrics = {}
         
         try:
             # Tempo similarity

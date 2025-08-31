@@ -13,7 +13,8 @@ Contact: mlaiel@live.de
 
 Configuration environnement développement avec debugging avancé.
 ==================================================================
-"""import os
+"""
+import os
 from typing import Dict, Any, List, Optional
 from .base import (
     BaseEnvironmentConfigManager, 
@@ -29,9 +30,11 @@ from .base import (
 
 
 class DevelopmentConfigManager(BaseEnvironmentConfigManager):
-    """    Configuration manager pour l'environnement de développement.
+    """
+    Configuration manager pour l'environnement de développement.
     Optimisé pour développement local avec debugging avancé.
-    """    
+    """
+    
     def __init__(self):
         super().__init__(
             environment=EnvironmentType.DEVELOPMENT,
@@ -48,7 +51,8 @@ class DevelopmentConfigManager(BaseEnvironmentConfigManager):
         )
         
     def load_environment_specific_config(self) -> None:
-        """Charge la configuration spécifique au développement"""        
+        """Charge la configuration spécifique au développement"""
+        
         # Configuration Base de Données Développement
         self.database_config = DatabaseConfig(
             host=os.getenv("DEV_DB_HOST", "localhost"),
@@ -125,7 +129,8 @@ class DevelopmentConfigManager(BaseEnvironmentConfigManager):
         )
         
     def validate_configuration(self) -> bool:
-        """Valide la configuration développement"""        try:
+        """Valide la configuration développement"""
+        try:
             # Vérifications minimales pour développement
             assert self.database_config is not None, "Configuration base de données requise"
             assert self.redis_config is not None, "Configuration Redis requise"
@@ -148,7 +153,8 @@ class DevelopmentConfigManager(BaseEnvironmentConfigManager):
             return False
             
     def get_development_features(self) -> Dict[str, Any]:
-        """Retourne les fonctionnalités spécifiques au développement"""        return {
+        """Retourne les fonctionnalités spécifiques au développement"""
+        return {
             "hot_reload": True,
             "debug_mode": True,
             "detailed_logging": True,
@@ -160,7 +166,8 @@ class DevelopmentConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_debug_settings(self) -> Dict[str, Any]:
-        """Paramètres de debugging avancés"""        return {
+        """Paramètres de debugging avancés"""
+        return {
             "sql_echo": True,
             "log_sql_queries": True,
             "trace_exceptions": True,
@@ -170,7 +177,8 @@ class DevelopmentConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_development_urls(self) -> Dict[str, str]:
-        """URLs utiles pour développement"""        return {
+        """URLs utiles pour développement"""
+        return {
             "api_docs": f"http://{self.host}:{self.port}/docs",
             "redoc": f"http://{self.host}:{self.port}/redoc",
             "admin_panel": f"http://{self.host}:{self.port}/admin",
@@ -179,7 +187,8 @@ class DevelopmentConfigManager(BaseEnvironmentConfigManager):
         }
         
     def create_dev_directories(self) -> None:
-        """Crée les répertoires nécessaires au développement"""        import os
+        """Crée les répertoires nécessaires au développement"""
+        import os
         from pathlib import Path
         
         directories = [
@@ -195,7 +204,8 @@ class DevelopmentConfigManager(BaseEnvironmentConfigManager):
             Path(directory).mkdir(parents=True, exist_ok=True)
             
     def export_to_dict(self) -> Dict[str, Any]:
-        """Exporte la configuration développement complète"""        base_config = super().export_to_dict()
+        """Exporte la configuration développement complète"""
+        base_config = super().export_to_dict()
         base_config.update({
             "development_features": self.get_development_features(),
             "debug_settings": self.get_debug_settings(),
@@ -207,7 +217,8 @@ class DevelopmentConfigManager(BaseEnvironmentConfigManager):
 
 # Fonction utilitaire pour configuration rapide développement
 def create_development_config() -> DevelopmentConfigManager:
-    """Crée et initialise la configuration développement"""    config = DevelopmentConfigManager()
+    """Crée et initialise la configuration développement"""
+    config = DevelopmentConfigManager()
     config.initialize_configuration()
     config.create_dev_directories()
     return config

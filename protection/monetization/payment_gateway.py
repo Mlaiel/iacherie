@@ -3,7 +3,8 @@ Handles all payment processing, validation, and gateway integrations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from typing import Dict, List, Optional, Any, Union
+"""
+from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from decimal import Decimal
 from datetime import datetime, timedelta
@@ -19,7 +20,8 @@ logger = logging.getLogger(__name__)
 
 
 class PaymentMethod(Enum):
-    """Supported payment methods."""    CREDIT_CARD = "credit_card"
+    """Supported payment methods."""
+    CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     PAYPAL = "paypal"
     STRIPE = "stripe"
@@ -32,7 +34,8 @@ class PaymentMethod(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment processing status."""    PENDING = "pending"
+    """Payment processing status."""
+    PENDING = "pending"
     PROCESSING = "processing"
     AUTHORIZED = "authorized"
     CAPTURED = "captured"
@@ -45,7 +48,8 @@ class PaymentStatus(Enum):
 
 
 class GatewayType(Enum):
-    """Payment gateway types."""    STRIPE = "stripe"
+    """Payment gateway types."""
+    STRIPE = "stripe"
     PAYPAL = "paypal"
     SQUARE = "square"
     ADYEN = "adyen"
@@ -56,7 +60,8 @@ class GatewayType(Enum):
 
 @dataclass
 class PaymentRequest:
-    """Payment processing request data."""    request_id: str
+    """Payment processing request data."""
+    request_id: str
     user_id: str
     amount: Decimal
     currency: str = "EUR"
@@ -71,7 +76,8 @@ class PaymentRequest:
     created_at: datetime = field(default_factory=datetime.utcnow)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert request to dictionary."""        return {
+        """Convert request to dictionary."""
+        return {
             "request_id": self.request_id,
             "user_id": self.user_id,
             "amount": float(self.amount),
@@ -90,7 +96,8 @@ class PaymentRequest:
 
 @dataclass
 class PaymentResponse:
-    """Payment processing response data."""    response_id: str
+    """Payment processing response data."""
+    response_id: str
     request_id: str
     status: PaymentStatus
     gateway_transaction_id: str = ""
@@ -103,7 +110,8 @@ class PaymentResponse:
     processed_at: datetime = field(default_factory=datetime.utcnow)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert response to dictionary."""        return {
+        """Convert response to dictionary."""
+        return {
             "response_id": self.response_id,
             "request_id": self.request_id,
             "status": self.status.value,
@@ -119,26 +127,32 @@ class PaymentResponse:
 
 
 class PaymentGateway(ABC):
-    """Abstract base class for payment gateways."""    
+    """Abstract base class for payment gateways."""
+    
     @abstractmethod
     async def process_payment(self, request: PaymentRequest) -> PaymentResponse:
-        """Process a payment request."""        pass
+        """Process a payment request."""
+        pass
     
     @abstractmethod
     async def verify_payment(self, transaction_id: str) -> PaymentResponse:
-        """Verify payment status."""        pass
+        """Verify payment status."""
+        pass
     
     @abstractmethod
     async def refund_payment(self, transaction_id: str, amount: Optional[Decimal] = None) -> PaymentResponse:
-        """Process payment refund."""        pass
+        """Process payment refund."""
+        pass
     
     @abstractmethod
     async def validate_webhook(self, payload: str, signature: str) -> bool:
-        """Validate webhook signature."""        pass
+        """Validate webhook signature."""
+        pass
 
 
 class StripeGateway(PaymentGateway):
-    """Stripe payment gateway implementation."""    
+    """Stripe payment gateway implementation."""
+    
     def __init__(self, api_key: str, webhook_secret: str):
         self.api_key = api_key
         self.webhook_secret = webhook_secret
@@ -147,7 +161,8 @@ class StripeGateway(PaymentGateway):
         self.fixed_fee = Decimal("0.30")
     
     async def process_payment(self, request: PaymentRequest) -> PaymentResponse:
-        """Process payment through Stripe."""        try:
+        """Process payment through Stripe."""
+        try:
             # Simulate Stripe API call
             fees = (request.amount * self.fee_rate) + self.fixed_fee
             net_amount = request.amount - fees
@@ -191,7 +206,8 @@ class StripeGateway(PaymentGateway):
             )
     
     async def verify_payment(self, transaction_id: str) -> PaymentResponse:
-        """Verify Stripe payment status."""        # Simulate Stripe payment verification
+        """Verify Stripe payment status."""
+        # Simulate Stripe payment verification
         return PaymentResponse(
             response_id=f"verify_{transaction_id}",
             request_id=transaction_id,
@@ -200,7 +216,8 @@ class StripeGateway(PaymentGateway):
         )
     
     async def refund_payment(self, transaction_id: str, amount: Optional[Decimal] = None) -> PaymentResponse:
-        """Process Stripe refund."""        # Simulate Stripe refund
+        """Process Stripe refund."""
+        # Simulate Stripe refund
         return PaymentResponse(
             response_id=f"refund_{transaction_id}",
             request_id=transaction_id,
@@ -209,7 +226,8 @@ class StripeGateway(PaymentGateway):
         )
     
     async def validate_webhook(self, payload: str, signature: str) -> bool:
-        """Validate Stripe webhook signature."""        try:
+        """Validate Stripe webhook signature."""
+        try:
             expected_signature = hmac.new(
                 self.webhook_secret.encode(),
                 payload.encode(),
@@ -224,7 +242,8 @@ class StripeGateway(PaymentGateway):
 
 
 class PayPalGateway(PaymentGateway):
-    """PayPal payment gateway implementation."""    
+    """PayPal payment gateway implementation."""
+    
     def __init__(self, client_id: str, client_secret: str, sandbox: bool = True):
         self.client_id = client_id
         self.client_secret = client_secret
@@ -234,7 +253,8 @@ class PayPalGateway(PaymentGateway):
         self.fixed_fee = Decimal("0.35")
     
     async def process_payment(self, request: PaymentRequest) -> PaymentResponse:
-        """Process payment through PayPal."""        try:
+        """Process payment through PayPal."""
+        try:
             fees = (request.amount * self.fee_rate) + self.fixed_fee
             net_amount = request.amount - fees
             
@@ -274,7 +294,8 @@ class PayPalGateway(PaymentGateway):
             )
     
     async def verify_payment(self, transaction_id: str) -> PaymentResponse:
-        """Verify PayPal payment status."""        return PaymentResponse(
+        """Verify PayPal payment status."""
+        return PaymentResponse(
             response_id=f"verify_{transaction_id}",
             request_id=transaction_id,
             status=PaymentStatus.COMPLETED,
@@ -282,7 +303,8 @@ class PayPalGateway(PaymentGateway):
         )
     
     async def refund_payment(self, transaction_id: str, amount: Optional[Decimal] = None) -> PaymentResponse:
-        """Process PayPal refund."""        return PaymentResponse(
+        """Process PayPal refund."""
+        return PaymentResponse(
             response_id=f"refund_{transaction_id}",
             request_id=transaction_id,
             status=PaymentStatus.REFUNDED,
@@ -290,14 +312,17 @@ class PayPalGateway(PaymentGateway):
         )
     
     async def validate_webhook(self, payload: str, signature: str) -> bool:
-        """Validate PayPal webhook signature."""        # Implement PayPal webhook validation
+        """Validate PayPal webhook signature."""
+        # Implement PayPal webhook validation
         return True
 
 
 class PaymentGatewayManager:
-    """    Professional payment gateway manager.
+    """
+    Professional payment gateway manager.
     Handles multiple payment gateways and intelligent routing.
-    """    
+    """
+    
     def __init__(self):
         self.gateways: Dict[GatewayType, PaymentGateway] = {}
         self.gateway_preferences: Dict[str, List[GatewayType]] = {
@@ -310,7 +335,8 @@ class PaymentGatewayManager:
         self.is_initialized = False
     
     async def initialize(self, gateway_configs: Dict[GatewayType, Dict[str, str]]) -> bool:
-        """Initialize payment gateways."""        try:
+        """Initialize payment gateways."""
+        try:
             for gateway_type, config in gateway_configs.items():
                 if gateway_type == GatewayType.STRIPE:
                     self.gateways[gateway_type] = StripeGateway(
@@ -333,7 +359,8 @@ class PaymentGatewayManager:
             return False
     
     async def process_payment(self, request: PaymentRequest) -> PaymentResponse:
-        """Process payment with intelligent gateway routing."""        if not self.is_initialized:
+        """Process payment with intelligent gateway routing."""
+        if not self.is_initialized:
             raise RuntimeError("Payment gateway manager not initialized")
         
         # Fraud detection
@@ -367,7 +394,8 @@ class PaymentGatewayManager:
         return response
     
     async def verify_payment(self, transaction_id: str, gateway_type: GatewayType) -> PaymentResponse:
-        """Verify payment status."""        gateway = self.gateways.get(gateway_type)
+        """Verify payment status."""
+        gateway = self.gateways.get(gateway_type)
         if not gateway:
             raise ValueError(f"Gateway {gateway_type} not available")
         
@@ -380,7 +408,8 @@ class PaymentGatewayManager:
         amount: Optional[Decimal] = None,
         reason: str = ""
     ) -> PaymentResponse:
-        """Process payment refund."""        gateway = self.gateways.get(gateway_type)
+        """Process payment refund."""
+        gateway = self.gateways.get(gateway_type)
         if not gateway:
             raise ValueError(f"Gateway {gateway_type} not available")
         
@@ -397,7 +426,8 @@ class PaymentGatewayManager:
         payload: str, 
         signature: str
     ) -> Dict[str, Any]:
-        """Handle payment gateway webhooks."""        gateway = self.gateways.get(gateway_type)
+        """Handle payment gateway webhooks."""
+        gateway = self.gateways.get(gateway_type)
         if not gateway:
             return {"status": "error", "message": "Gateway not found"}
         
@@ -421,7 +451,8 @@ class PaymentGatewayManager:
             return {"status": "error", "message": str(e)}
     
     async def get_payment_statistics(self, days: int = 30) -> Dict[str, Any]:
-        """Get payment processing statistics."""        cutoff_date = datetime.utcnow() - timedelta(days=days)
+        """Get payment processing statistics."""
+        cutoff_date = datetime.utcnow() - timedelta(days=days)
         recent_payments = [
             p for p in self.payment_history 
             if p.processed_at >= cutoff_date
@@ -444,7 +475,8 @@ class PaymentGatewayManager:
         }
     
     async def _select_gateway(self, request: PaymentRequest) -> Optional[PaymentGateway]:
-        """Select optimal payment gateway."""        preferred_gateways = self.gateway_preferences.get(request.currency, [])
+        """Select optimal payment gateway."""
+        preferred_gateways = self.gateway_preferences.get(request.currency, [])
         
         # If specific gateway requested
         if request.gateway in self.gateways and request.gateway in preferred_gateways:
@@ -459,7 +491,8 @@ class PaymentGatewayManager:
         return next(iter(self.gateways.values())) if self.gateways else None
     
     async def _detect_fraud(self, request: PaymentRequest) -> float:
-        """Simple fraud detection algorithm."""        fraud_score = 0.0
+        """Simple fraud detection algorithm."""
+        fraud_score = 0.0
         
         # Check amount threshold
         if request.amount > Decimal("1000"):
@@ -478,7 +511,8 @@ class PaymentGatewayManager:
         return min(fraud_score, 1.0)
     
     async def _log_transaction(self, request: PaymentRequest, response: PaymentResponse) -> None:
-        """Log transaction details."""        log_data = {
+        """Log transaction details."""
+        log_data = {
             "request": request.to_dict(),
             "response": response.to_dict(),
             "timestamp": datetime.utcnow().isoformat()
@@ -487,7 +521,8 @@ class PaymentGatewayManager:
         logger.info(f"Payment transaction logged: {request.request_id}")
     
     async def _process_payment_webhook(self, webhook_data: Dict[str, Any]) -> None:
-        """Process payment-related webhook."""        event_type = webhook_data.get("type", "")
+        """Process payment-related webhook."""
+        event_type = webhook_data.get("type", "")
         
         if "succeeded" in event_type:
             logger.info("Payment succeeded webhook processed")
@@ -497,7 +532,8 @@ class PaymentGatewayManager:
             logger.info("Refund webhook processed")
     
     def _calculate_gateway_usage(self, payments: List[PaymentResponse]) -> Dict[str, int]:
-        """Calculate gateway usage statistics."""        usage = {}
+        """Calculate gateway usage statistics."""
+        usage = {}
         for payment in payments:
             gateway = payment.gateway_response.get("gateway", "unknown")
             usage[gateway] = usage.get(gateway, 0) + 1

@@ -7,7 +7,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 This module contains AI agents specialized in brand consulting, personal brand development,
 brand positioning, and brand strategy optimization for content creators.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -20,7 +21,8 @@ from .base_agent import BaseAIAgent
 
 @dataclass
 class BrandAnalysis:
-    """Brand analysis results"""    brand_strength: float
+    """Brand analysis results"""
+    brand_strength: float
     brand_consistency: float
     brand_positioning: str
     unique_value_proposition: str
@@ -32,7 +34,8 @@ class BrandAnalysis:
 
 @dataclass
 class BrandStrategy:
-    """Brand strategy structure"""    brand_vision: str
+    """Brand strategy structure"""
+    brand_vision: str
     brand_mission: str
     brand_values: List[str]
     brand_personality: Dict[str, float]
@@ -43,11 +46,13 @@ class BrandStrategy:
 
 
 class BrandConsultantAgent(BaseAIAgent):
-    """    AI agent specialized in brand consulting and development.
+    """
+    AI agent specialized in brand consulting and development.
     
     Provides comprehensive brand analysis, strategy development, positioning advice,
     and brand optimization recommendations for content creators.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(agent_id="brand_consultant", config=config)
         
@@ -78,14 +83,16 @@ class BrandConsultantAgent(BaseAIAgent):
         logging.info(f"BrandConsultantAgent initialized with {len(self.brand_dimensions)} brand dimensions")
 
     async def analyze_personal_brand(self, creator_profile: Dict[str, Any]) -> BrandAnalysis:
-        """        Analyze creator's personal brand strength and positioning.
+        """
+        Analyze creator's personal brand strength and positioning.
         
         Args:
             creator_profile: Creator's profile, content, and audience data
             
         Returns:
             Comprehensive brand analysis
-        """        try:
+        """
+        try:
             # Analyze brand consistency across content
             brand_consistency = self._analyze_brand_consistency(creator_profile)
             
@@ -138,7 +145,8 @@ class BrandConsultantAgent(BaseAIAgent):
 
     async def develop_brand_strategy(self, creator_profile: Dict[str, Any],
                                    brand_goals: Dict[str, Any]) -> BrandStrategy:
-        """        Develop comprehensive brand strategy for creator.
+        """
+        Develop comprehensive brand strategy for creator.
         
         Args:
             creator_profile: Creator's current profile and content
@@ -146,7 +154,8 @@ class BrandConsultantAgent(BaseAIAgent):
             
         Returns:
             Complete brand strategy framework
-        """        try:
+        """
+        try:
             niche = creator_profile.get('niche', 'general')
             target_audience = creator_profile.get('target_audience', {})
             brand_aspirations = brand_goals.get('brand_aspirations', {})
@@ -201,7 +210,8 @@ class BrandConsultantAgent(BaseAIAgent):
 
     async def optimize_brand_positioning(self, creator_profile: Dict[str, Any],
                                        competitive_landscape: Dict[str, Any]) -> Dict[str, Any]:
-        """        Optimize brand positioning in competitive landscape.
+        """
+        Optimize brand positioning in competitive landscape.
         
         Args:
             creator_profile: Creator's current brand and content
@@ -209,7 +219,8 @@ class BrandConsultantAgent(BaseAIAgent):
             
         Returns:
             Brand positioning optimization strategy
-        """        try:
+        """
+        try:
             current_positioning = self._analyze_current_positioning(creator_profile)
             competitor_positions = competitive_landscape.get('competitor_positions', [])
             market_gaps = competitive_landscape.get('market_gaps', [])
@@ -242,7 +253,8 @@ class BrandConsultantAgent(BaseAIAgent):
 
     async def create_brand_guidelines(self, brand_strategy: BrandStrategy,
                                     creator_profile: Dict[str, Any]) -> Dict[str, Any]:
-        """        Create comprehensive brand guidelines document.
+        """
+        Create comprehensive brand guidelines document.
         
         Args:
             brand_strategy: Developed brand strategy
@@ -250,7 +262,8 @@ class BrandConsultantAgent(BaseAIAgent):
             
         Returns:
             Complete brand guidelines
-        """        try:
+        """
+        try:
             guidelines = {
                 "brand_overview": {
                     "brand_vision": brand_strategy.brand_vision,
@@ -296,7 +309,8 @@ class BrandConsultantAgent(BaseAIAgent):
             }
 
     def _analyze_brand_consistency(self, creator_profile: Dict[str, Any]) -> float:
-        """Analyze brand consistency across content and platforms"""        content_portfolio = creator_profile.get('content_portfolio', [])
+        """Analyze brand consistency across content and platforms"""
+        content_portfolio = creator_profile.get('content_portfolio', [])
         
         if not content_portfolio:
             return 0.5  # Default score
@@ -333,7 +347,8 @@ class BrandConsultantAgent(BaseAIAgent):
             return 0.5
 
     def _calculate_brand_strength(self, creator_profile: Dict[str, Any]) -> float:
-        """Calculate overall brand strength"""        strength_factors = []
+        """Calculate overall brand strength"""
+        strength_factors = []
         
         # Audience size factor
         followers = creator_profile.get('total_followers', 0)
@@ -362,7 +377,8 @@ class BrandConsultantAgent(BaseAIAgent):
         return sum(strength_factors)
 
     def _determine_brand_positioning(self, creator_profile: Dict[str, Any]) -> str:
-        """Determine current brand positioning"""        niche = creator_profile.get('niche', 'general')
+        """Determine current brand positioning"""
+        niche = creator_profile.get('niche', 'general')
         content_style = creator_profile.get('content_style', 'mixed')
         audience_size = creator_profile.get('total_followers', 0)
         expertise_level = creator_profile.get('expertise_level', 'intermediate')
@@ -382,7 +398,8 @@ class BrandConsultantAgent(BaseAIAgent):
             return "emerging_creator"
 
     def _identify_unique_value_proposition(self, creator_profile: Dict[str, Any]) -> str:
-        """Identify creator's unique value proposition"""        niche = creator_profile.get('niche', 'general')
+        """Identify creator's unique value proposition"""
+        niche = creator_profile.get('niche', 'general')
         unique_skills = creator_profile.get('unique_skills', [])
         content_style = creator_profile.get('content_style', 'mixed')
         audience_demographics = creator_profile.get('audience_demographics', {})
@@ -399,7 +416,8 @@ class BrandConsultantAgent(BaseAIAgent):
             return f"Authentic {niche} content that connects and inspires communities"
 
     def _identify_brand_gaps(self, creator_profile: Dict[str, Any]) -> List[str]:
-        """Identify gaps in brand development"""        gaps = []
+        """Identify gaps in brand development"""
+        gaps = []
         
         # Check for missing brand elements
         if not creator_profile.get('brand_colors'):
@@ -433,7 +451,8 @@ class BrandConsultantAgent(BaseAIAgent):
         return gaps[:6]  # Return top 6 gaps
 
     def _identify_competitive_advantages(self, creator_profile: Dict[str, Any]) -> List[str]:
-        """Identify creator's competitive advantages"""        advantages = []
+        """Identify creator's competitive advantages"""
+        advantages = []
         
         # Unique skills and expertise
         unique_skills = creator_profile.get('unique_skills', [])
@@ -476,7 +495,8 @@ class BrandConsultantAgent(BaseAIAgent):
     def _generate_brand_recommendations(self, creator_profile: Dict[str, Any],
                                       brand_strength: float, brand_consistency: float,
                                       brand_gaps: List[str]) -> List[str]:
-        """Generate specific brand improvement recommendations"""        recommendations = []
+        """Generate specific brand improvement recommendations"""
+        recommendations = []
         
         # Strength-based recommendations
         if brand_strength < 0.5:
@@ -514,7 +534,8 @@ class BrandConsultantAgent(BaseAIAgent):
         return recommendations[:8]  # Return top 8 recommendations
 
     def _analyze_audience_alignment(self, creator_profile: Dict[str, Any]) -> float:
-        """Analyze how well brand aligns with target audience"""        target_audience = creator_profile.get('target_audience', {})
+        """Analyze how well brand aligns with target audience"""
+        target_audience = creator_profile.get('target_audience', {})
         actual_audience = creator_profile.get('audience_demographics', {})
         content_style = creator_profile.get('content_style', 'mixed')
         
@@ -550,7 +571,8 @@ class BrandConsultantAgent(BaseAIAgent):
 
     def _develop_brand_vision(self, creator_profile: Dict[str, Any], 
                             brand_goals: Dict[str, Any]) -> str:
-        """Develop brand vision statement"""        niche = creator_profile.get('niche', 'content creation')
+        """Develop brand vision statement"""
+        niche = creator_profile.get('niche', 'content creation')
         impact_goal = brand_goals.get('impact_goal', 'inspire and educate')
         audience_scope = brand_goals.get('audience_scope', 'community')
         
@@ -570,7 +592,8 @@ class BrandConsultantAgent(BaseAIAgent):
 
     def _develop_brand_mission(self, creator_profile: Dict[str, Any],
                              brand_goals: Dict[str, Any]) -> str:
-        """Develop brand mission statement"""        niche = creator_profile.get('niche', 'content creation')
+        """Develop brand mission statement"""
+        niche = creator_profile.get('niche', 'content creation')
         value_delivery = creator_profile.get('primary_value', 'entertainment and education')
         audience = creator_profile.get('target_audience', {}).get('description', 'our community')
         
@@ -578,7 +601,8 @@ class BrandConsultantAgent(BaseAIAgent):
 
     def _define_brand_values(self, creator_profile: Dict[str, Any],
                            brand_aspirations: Dict[str, Any]) -> List[str]:
-        """Define core brand values"""        niche = creator_profile.get('niche', 'general')
+        """Define core brand values"""
+        niche = creator_profile.get('niche', 'general')
         personality_traits = creator_profile.get('personality_traits', [])
         
         # Core values based on creator characteristics
@@ -606,7 +630,8 @@ class BrandConsultantAgent(BaseAIAgent):
 
     def _develop_brand_personality(self, creator_profile: Dict[str, Any],
                                  target_audience: Dict[str, Any]) -> Dict[str, float]:
-        """Develop brand personality traits"""        niche = creator_profile.get('niche', 'general')
+        """Develop brand personality traits"""
+        niche = creator_profile.get('niche', 'general')
         content_style = creator_profile.get('content_style', 'mixed')
         audience_age = target_audience.get('age_group', 'all')
         
@@ -661,7 +686,8 @@ class BrandConsultantAgent(BaseAIAgent):
 
     def _define_content_pillars(self, niche: str, brand_personality: Dict[str, float],
                               brand_goals: Dict[str, Any]) -> List[str]:
-        """Define content pillars for brand"""        pillars = []
+        """Define content pillars for brand"""
+        pillars = []
         
         # Niche-based pillars
         niche_pillars = {
@@ -696,7 +722,8 @@ class BrandConsultantAgent(BaseAIAgent):
 
     def _create_visual_identity_guidelines(self, creator_profile: Dict[str, Any],
                                          brand_personality: Dict[str, float]) -> Dict[str, Any]:
-        """Create visual identity guidelines"""        return {
+        """Create visual identity guidelines"""
+        return {
             "color_scheme": self._recommend_color_scheme(brand_personality),
             "typography_style": self._recommend_typography(brand_personality),
             "imagery_style": self._recommend_imagery_style(brand_personality),
@@ -706,7 +733,8 @@ class BrandConsultantAgent(BaseAIAgent):
 
     def _define_voice_and_tone(self, brand_personality: Dict[str, float],
                              target_audience: Dict[str, Any]) -> Dict[str, str]:
-        """Define brand voice and tone"""        # Determine primary voice characteristics
+        """Define brand voice and tone"""
+        # Determine primary voice characteristics
         top_traits = sorted(brand_personality.items(), key=lambda x: x[1], reverse=True)[:3]
         
         voice_mapping = {
@@ -742,7 +770,8 @@ class BrandConsultantAgent(BaseAIAgent):
 
     def _develop_differentiation_strategy(self, creator_profile: Dict[str, Any],
                                         brand_goals: Dict[str, Any]) -> List[str]:
-        """Develop brand differentiation strategy"""        unique_skills = creator_profile.get('unique_skills', [])
+        """Develop brand differentiation strategy"""
+        unique_skills = creator_profile.get('unique_skills', [])
         niche = creator_profile.get('niche', 'general')
         content_style = creator_profile.get('content_style', 'mixed')
         
@@ -776,7 +805,8 @@ class BrandConsultantAgent(BaseAIAgent):
     # Additional helper methods for brand guidelines creation
     
     def _recommend_color_scheme(self, brand_personality: Dict[str, float]) -> Dict[str, str]:
-        """Recommend color scheme based on brand personality"""        top_trait = max(brand_personality.items(), key=lambda x: x[1])[0]
+        """Recommend color scheme based on brand personality"""
+        top_trait = max(brand_personality.items(), key=lambda x: x[1])[0]
         
         color_schemes = {
             'professional': {'primary': '#2C3E50', 'secondary': '#3498DB', 'accent': '#E74C3C'},
@@ -790,7 +820,8 @@ class BrandConsultantAgent(BaseAIAgent):
         return color_schemes.get(top_trait, color_schemes['professional'])
 
     def _recommend_typography(self, brand_personality: Dict[str, float]) -> Dict[str, str]:
-        """Recommend typography based on brand personality"""        top_trait = max(brand_personality.items(), key=lambda x: x[1])[0]
+        """Recommend typography based on brand personality"""
+        top_trait = max(brand_personality.items(), key=lambda x: x[1])[0]
         
         typography_styles = {
             'professional': {'heading': 'Modern Sans-serif (Helvetica, Arial)', 'body': 'Clean Sans-serif'},
@@ -804,7 +835,8 @@ class BrandConsultantAgent(BaseAIAgent):
         return typography_styles.get(top_trait, typography_styles['professional'])
 
     def _recommend_imagery_style(self, brand_personality: Dict[str, float]) -> List[str]:
-        """Recommend imagery style based on brand personality"""        top_traits = sorted(brand_personality.items(), key=lambda x: x[1], reverse=True)[:2]
+        """Recommend imagery style based on brand personality"""
+        top_traits = sorted(brand_personality.items(), key=lambda x: x[1], reverse=True)[:2]
         
         style_recommendations = []
         
@@ -827,7 +859,8 @@ class BrandConsultantAgent(BaseAIAgent):
 
     def _recommend_logo_style(self, creator_profile: Dict[str, Any],
                             brand_personality: Dict[str, float]) -> Dict[str, str]:
-        """Recommend logo style"""        creator_name = creator_profile.get('name', 'Creator')
+        """Recommend logo style"""
+        creator_name = creator_profile.get('name', 'Creator')
         top_trait = max(brand_personality.items(), key=lambda x: x[1])[0]
         
         logo_styles = {
@@ -846,7 +879,8 @@ class BrandConsultantAgent(BaseAIAgent):
         }
 
     def _define_layout_principles(self, brand_personality: Dict[str, float]) -> List[str]:
-        """Define layout design principles"""        top_trait = max(brand_personality.items(), key=lambda x: x[1])[0]
+        """Define layout design principles"""
+        top_trait = max(brand_personality.items(), key=lambda x: x[1])[0]
         
         layout_principles = {
             'professional': [
@@ -871,7 +905,8 @@ class BrandConsultantAgent(BaseAIAgent):
     # Additional brand guidelines methods continue...
     
     def _analyze_current_positioning(self, creator_profile: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze current brand positioning"""        return {
+        """Analyze current brand positioning"""
+        return {
             "current_category": creator_profile.get('niche', 'general'),
             "perceived_expertise_level": creator_profile.get('expertise_level', 'intermediate'),
             "audience_perception": self._analyze_audience_perception(creator_profile),
@@ -881,7 +916,8 @@ class BrandConsultantAgent(BaseAIAgent):
         }
 
     def _analyze_audience_perception(self, creator_profile: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze how audience perceives the brand"""        # Simulate audience perception analysis
+        """Analyze how audience perceives the brand"""
+        # Simulate audience perception analysis
         engagement_rate = creator_profile.get('engagement_rate', 0.03)
         content_quality = np.mean([content.get('quality_score', 0.5) 
                                  for content in creator_profile.get('content_portfolio', [])])
@@ -894,7 +930,8 @@ class BrandConsultantAgent(BaseAIAgent):
         }
 
     def _assess_competitive_position(self, creator_profile: Dict[str, Any]) -> str:
-        """Assess position relative to competitors"""        followers = creator_profile.get('total_followers', 0)
+        """Assess position relative to competitors"""
+        followers = creator_profile.get('total_followers', 0)
         engagement = creator_profile.get('engagement_rate', 0.03)
         
         if followers > 1000000 and engagement > 0.05:
@@ -907,7 +944,8 @@ class BrandConsultantAgent(BaseAIAgent):
             return "new_entrant"
 
     def _identify_positioning_strengths(self, creator_profile: Dict[str, Any]) -> List[str]:
-        """Identify positioning strengths"""        strengths = []
+        """Identify positioning strengths"""
+        strengths = []
         
         if creator_profile.get('niche_expertise_score', 0.5) > 0.8:
             strengths.append("Deep niche expertise and authority")
@@ -924,7 +962,8 @@ class BrandConsultantAgent(BaseAIAgent):
         return strengths
 
     def _identify_positioning_weaknesses(self, creator_profile: Dict[str, Any]) -> List[str]:
-        """Identify positioning weaknesses"""        weaknesses = []
+        """Identify positioning weaknesses"""
+        weaknesses = []
         
         if creator_profile.get('brand_awareness', 0.5) < 0.4:
             weaknesses.append("Limited brand awareness and recognition")
@@ -940,7 +979,8 @@ class BrandConsultantAgent(BaseAIAgent):
     def _recommend_optimal_positioning(self, creator_profile: Dict[str, Any],
                                      competitor_positions: List[Dict],
                                      market_gaps: List[Dict]) -> Dict[str, Any]:
-        """Recommend optimal positioning strategy"""        # Analyze market gaps and competitive landscape
+        """Recommend optimal positioning strategy"""
+        # Analyze market gaps and competitive landscape
         recommended_position = {
             "target_position": "niche_expert",  # Default
             "positioning_statement": "",
@@ -959,7 +999,8 @@ class BrandConsultantAgent(BaseAIAgent):
 
     def _develop_positioning_strategy(self, creator_profile: Dict[str, Any],
                                     market_gaps: List[Dict]) -> List[str]:
-        """Develop positioning strategy steps"""        return [
+        """Develop positioning strategy steps"""
+        return [
             "Conduct comprehensive competitive analysis",
             "Define clear unique value proposition",
             "Develop consistent messaging across all touchpoints",
@@ -970,7 +1011,8 @@ class BrandConsultantAgent(BaseAIAgent):
 
     def _identify_differentiation_opportunities(self, creator_profile: Dict[str, Any],
                                              competitor_positions: List[Dict]) -> List[str]:
-        """Identify opportunities for differentiation"""        opportunities = [
+        """Identify opportunities for differentiation"""
+        opportunities = [
             "Develop signature content formats unique to your brand",
             "Focus on underserved audience segments",
             "Combine multiple niches for unique positioning",
@@ -982,7 +1024,8 @@ class BrandConsultantAgent(BaseAIAgent):
         return opportunities[:5]
 
     def _create_messaging_framework(self, creator_profile: Dict[str, Any]) -> Dict[str, Any]:
-        """Create comprehensive messaging framework"""        return {
+        """Create comprehensive messaging framework"""
+        return {
             "core_message": f"Expert {creator_profile.get('niche', 'content')} insights that inspire and educate",
             "supporting_messages": [
                 "Authentic expertise backed by real experience",
@@ -1002,7 +1045,8 @@ class BrandConsultantAgent(BaseAIAgent):
         }
 
     def _define_positioning_metrics(self) -> List[str]:
-        """Define metrics to measure positioning success"""        return [
+        """Define metrics to measure positioning success"""
+        return [
             "Brand awareness and recognition metrics",
             "Share of voice in niche category",
             "Audience perception and sentiment analysis",
@@ -1012,7 +1056,8 @@ class BrandConsultantAgent(BaseAIAgent):
         ]
 
     def _create_positioning_roadmap(self, creator_profile: Dict[str, Any]) -> Dict[str, List[str]]:
-        """Create implementation roadmap for positioning strategy"""        return {
+        """Create implementation roadmap for positioning strategy"""
+        return {
             "month_1": [
                 "Complete competitive analysis",
                 "Define positioning statement",
@@ -1037,7 +1082,8 @@ class BrandConsultantAgent(BaseAIAgent):
 
     def _assess_positioning_risks(self, creator_profile: Dict[str, Any],
                                 market_gaps: List[Dict]) -> List[str]:
-        """Assess risks in positioning strategy"""        risks = [
+        """Assess risks in positioning strategy"""
+        risks = [
             "Market saturation in chosen positioning",
             "Audience confusion during transition",
             "Competitor response and counter-positioning",
@@ -1053,7 +1099,8 @@ class BrandConsultantAgent(BaseAIAgent):
     # Brand guidelines helper methods
 
     def _define_logo_usage_guidelines(self) -> Dict[str, Any]:
-        """Define logo usage guidelines"""        return {
+        """Define logo usage guidelines"""
+        return {
             "minimum_size": "24px digital, 0.5 inch print",
             "clear_space": "Maintain clear space equal to logo height on all sides",
             "backgrounds": "Use high contrast, avoid busy backgrounds",
@@ -1066,7 +1113,8 @@ class BrandConsultantAgent(BaseAIAgent):
         }
 
     def _define_color_palette(self, brand_personality: Dict[str, float]) -> Dict[str, Any]:
-        """Define comprehensive color palette"""        base_colors = self._recommend_color_scheme(brand_personality)
+        """Define comprehensive color palette"""
+        base_colors = self._recommend_color_scheme(brand_personality)
         
         return {
             "primary_colors": base_colors,
@@ -1086,7 +1134,8 @@ class BrandConsultantAgent(BaseAIAgent):
         }
 
     def _define_typography_guidelines(self) -> Dict[str, Any]:
-        """Define typography guidelines"""        return {
+        """Define typography guidelines"""
+        return {
             "font_hierarchy": {
                 "h1": "32px, Bold, Line height 1.2",
                 "h2": "24px, Semi-bold, Line height 1.3",
@@ -1107,7 +1156,8 @@ class BrandConsultantAgent(BaseAIAgent):
         }
 
     def _define_imagery_guidelines(self, brand_personality: Dict[str, float]) -> Dict[str, Any]:
-        """Define imagery style guidelines"""        style_recs = self._recommend_imagery_style(brand_personality)
+        """Define imagery style guidelines"""
+        style_recs = self._recommend_imagery_style(brand_personality)
         
         return {
             "style_direction": style_recs,
@@ -1127,7 +1177,8 @@ class BrandConsultantAgent(BaseAIAgent):
     # Additional helper methods for comprehensive brand guidelines...
 
     def _define_communication_principles(self, brand_strategy: BrandStrategy) -> List[str]:
-        """Define communication principles"""        return [
+        """Define communication principles"""
+        return [
             f"Always communicate with {brand_strategy.voice_and_tone.get('primary_voice', 'authentic')} voice",
             "Prioritize value delivery in every interaction",
             "Maintain consistency across all platforms and touchpoints",
@@ -1136,7 +1187,8 @@ class BrandConsultantAgent(BaseAIAgent):
         ]
 
     def _create_content_guidelines(self, brand_strategy: BrandStrategy) -> Dict[str, Any]:
-        """Create content creation guidelines"""        return {
+        """Create content creation guidelines"""
+        return {
             "content_pillars_breakdown": {
                 pillar: f"Create content that {pillar.lower().replace('_', ' ')} and provides value"
                 for pillar in brand_strategy.content_pillars
@@ -1156,7 +1208,8 @@ class BrandConsultantAgent(BaseAIAgent):
         }
 
     def _create_social_media_guidelines(self, brand_strategy: BrandStrategy) -> Dict[str, Any]:
-        """Create social media specific guidelines"""        return {
+        """Create social media specific guidelines"""
+        return {
             "platform_adaptations": {
                 "instagram": "Visual-first, use brand colors, maintain aesthetic consistency",
                 "youtube": "Thumbnail consistency, branded intro/outro, clear value props",
@@ -1177,7 +1230,8 @@ class BrandConsultantAgent(BaseAIAgent):
         }
 
     def _define_content_creation_guidelines(self, brand_strategy: BrandStrategy) -> List[str]:
-        """Define content creation guidelines"""        return [
+        """Define content creation guidelines"""
+        return [
             f"Align all content with brand pillars: {', '.join(brand_strategy.content_pillars)}",
             "Include brand colors and visual elements in all content",
             "Maintain consistent voice and tone as defined in brand strategy",
@@ -1187,7 +1241,8 @@ class BrandConsultantAgent(BaseAIAgent):
         ]
 
     def _define_collaboration_guidelines(self, brand_strategy: BrandStrategy) -> List[str]:
-        """Define collaboration guidelines"""        return [
+        """Define collaboration guidelines"""
+        return [
             f"Ensure collaborator values align with brand values: {', '.join(brand_strategy.brand_values)}",
             "Maintain creative control over brand representation",
             "Include brand guidelines in collaboration agreements",
@@ -1196,7 +1251,8 @@ class BrandConsultantAgent(BaseAIAgent):
         ]
 
     def _define_sponsorship_guidelines(self, brand_strategy: BrandStrategy) -> List[str]:
-        """Define sponsorship guidelines"""        return [
+        """Define sponsorship guidelines"""
+        return [
             "Only partner with brands that align with personal values",
             "Maintain authentic voice even in sponsored content",
             "Clearly disclose all sponsored partnerships",
@@ -1205,7 +1261,8 @@ class BrandConsultantAgent(BaseAIAgent):
         ]
 
     def _define_merchandise_guidelines(self, brand_strategy: BrandStrategy) -> List[str]:
-        """Define merchandise guidelines"""        return [
+        """Define merchandise guidelines"""
+        return [
             "Use brand colors and visual identity consistently",
             "Ensure high quality standards for all branded merchandise",
             "Include brand messaging that resonates with community",
@@ -1214,7 +1271,8 @@ class BrandConsultantAgent(BaseAIAgent):
         ]
 
     def _create_brand_do_donts(self, brand_strategy: BrandStrategy) -> Dict[str, List[str]]:
-        """Create brand do's and don'ts"""        return {
+        """Create brand do's and don'ts"""
+        return {
             "do": [
                 "Maintain authentic voice in all communications",
                 "Consistently use brand visual elements",
@@ -1232,7 +1290,8 @@ class BrandConsultantAgent(BaseAIAgent):
         }
 
     def _define_crisis_communication_guidelines(self) -> List[str]:
-        """Define crisis communication guidelines"""        return [
+        """Define crisis communication guidelines"""
+        return [
             "Respond quickly but thoughtfully to crisis situations",
             "Maintain transparency while protecting stakeholder interests",
             "Use authentic, empathetic tone in all crisis communications",
@@ -1242,7 +1301,8 @@ class BrandConsultantAgent(BaseAIAgent):
         ]
 
     def _define_brand_monitoring_guidelines(self) -> List[str]:
-        """Define brand monitoring guidelines"""        return [
+        """Define brand monitoring guidelines"""
+        return [
             "Monitor brand mentions across all platforms daily",
             "Track brand sentiment and engagement metrics weekly",
             "Analyze competitor brand activities monthly",
@@ -1251,7 +1311,8 @@ class BrandConsultantAgent(BaseAIAgent):
         ]
 
     def _define_legal_brand_guidelines(self) -> List[str]:
-        """Define legal brand considerations"""        return [
+        """Define legal brand considerations"""
+        return [
             "Trademark brand name and logo where applicable",
             "Protect brand intellectual property rights",
             "Include proper disclaimers in sponsored content",

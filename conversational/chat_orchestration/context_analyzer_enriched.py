@@ -19,7 +19,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code and concept are proprietary intellectual property of Fahed Mlaiel.
 Unauthorized copying, modification, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 import uuid
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -38,7 +39,8 @@ from backend.utils.sentiment_analyzer import SentimentAnalyzer
 
 
 class ContextDimension(Enum):
-    """Different dimensions of conversation context"""    TEMPORAL = "temporal"
+    """Different dimensions of conversation context"""
+    TEMPORAL = "temporal"
     EMOTIONAL = "emotional"
     TOPICAL = "topical"
     CREATOR_WORKFLOW = "creator_workflow"
@@ -51,7 +53,8 @@ class ContextDimension(Enum):
 
 
 class ContextRelevance(Enum):
-    """Context relevance levels"""    CRITICAL = "critical"
+    """Context relevance levels"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -59,7 +62,8 @@ class ContextRelevance(Enum):
 
 
 class CreatorWorkflowStage(Enum):
-    """Creator workflow stages"""    IDEATION = "ideation"
+    """Creator workflow stages"""
+    IDEATION = "ideation"
     PLANNING = "planning"
     CREATION = "creation"
     EDITING = "editing"
@@ -74,7 +78,8 @@ class CreatorWorkflowStage(Enum):
 
 @dataclass
 class ContextualMemory:
-    """Contextual memory item with decay and relevance"""    memory_id: str
+    """Contextual memory item with decay and relevance"""
+    memory_id: str
     content: Dict[str, Any]
     context_type: str
     relevance: float
@@ -87,7 +92,8 @@ class ContextualMemory:
 
 @dataclass
 class ConversationState:
-    """Current conversation state tracking"""    session_id: str
+    """Current conversation state tracking"""
+    session_id: str
     creator_workflow_stage: CreatorWorkflowStage
     active_topics: List[str] = field(default_factory=list)
     context_switches: int = 0
@@ -102,7 +108,8 @@ class ConversationState:
 
 @dataclass
 class ContextualInsight:
-    """Contextual insight derived from analysis"""    insight_type: str
+    """Contextual insight derived from analysis"""
+    insight_type: str
     description: str
     confidence: float
     relevance: ContextRelevance
@@ -113,7 +120,8 @@ class ContextualInsight:
 
 @dataclass
 class ContextAnalysisResult:
-    """Comprehensive context analysis result"""    analysis_id: str
+    """Comprehensive context analysis result"""
+    analysis_id: str
     session_id: str
     conversation_state: ConversationState
     contextual_insights: List[ContextualInsight] = field(default_factory=list)
@@ -131,7 +139,8 @@ class ContextAnalysisResult:
 
 
 class EnterpriseContextAnalyzer:
-    """    Enterprise-grade conversation context analyzer providing deep understanding
+    """
+    Enterprise-grade conversation context analyzer providing deep understanding
     of creator workflows, content lifecycles, and multi-dimensional conversation
     context for optimized AI interactions.
     
@@ -142,7 +151,8 @@ class EnterpriseContextAnalyzer:
     - Pattern recognition for monetization opportunities
     - Cross-platform context integration
     - Real-time context updates and optimization
-    """    
+    """
+    
     def __init__(
         self,
         ai_engine: ConversationalAI,
@@ -189,7 +199,8 @@ class EnterpriseContextAnalyzer:
         creator_profile: Any,  # CreatorProfile object
         protection_analysis: Optional[Dict[str, Any]] = None
     ) -> ContextAnalysisResult:
-        """        Perform comprehensive context analysis with creator-specific optimization
+        """
+        Perform comprehensive context analysis with creator-specific optimization
         
         Args:
             message_history: Recent conversation history
@@ -199,7 +210,8 @@ class EnterpriseContextAnalyzer:
             
         Returns:
             ContextAnalysisResult with comprehensive context understanding
-        """        analysis_id = str(uuid.uuid4())
+        """
+        analysis_id = str(uuid.uuid4())
         start_time = datetime.utcnow()
         
         try:
@@ -365,7 +377,8 @@ class EnterpriseContextAnalyzer:
         session_id: str,
         creator_profile: Any
     ) -> ConversationState:
-        """Get existing or create new conversation state"""        
+        """Get existing or create new conversation state"""
+        
         if session_id in self.conversation_states:
             return self.conversation_states[session_id]
         
@@ -394,7 +407,8 @@ class EnterpriseContextAnalyzer:
         message_history: List[Dict[str, Any]],
         creator_profile: Any
     ) -> None:
-        """Update contextual memory with new information"""        
+        """Update contextual memory with new information"""
+        
         # Create memory item for current message
         memory_item = ContextualMemory(
             memory_id=str(uuid.uuid4()),
@@ -433,7 +447,8 @@ class EnterpriseContextAnalyzer:
         conversation_state: ConversationState,
         protection_analysis: Optional[Dict[str, Any]]
     ) -> Dict[ContextDimension, Dict[str, Any]]:
-        """Analyze different dimensions of conversation context"""        
+        """Analyze different dimensions of conversation context"""
+        
         dimensions = {}
         
         # Temporal dimension analysis
@@ -501,7 +516,8 @@ class EnterpriseContextAnalyzer:
         processed_message: Any,
         conversation_state: ConversationState
     ) -> Dict[str, Any]:
-        """Analyze temporal aspects of the conversation"""        
+        """Analyze temporal aspects of the conversation"""
+        
         current_time = datetime.utcnow()
         
         # Calculate conversation pace
@@ -546,7 +562,8 @@ class EnterpriseContextAnalyzer:
         processed_message: Any,
         conversation_state: ConversationState
     ) -> Dict[str, Any]:
-        """Analyze emotional dimension of conversation"""        
+        """Analyze emotional dimension of conversation"""
+        
         # Analyze current message sentiment
         current_sentiment = await self.sentiment_analyzer.analyze_comprehensive(
             processed_message.processed_content
@@ -579,7 +596,8 @@ class EnterpriseContextAnalyzer:
         processed_message: Any,
         creator_profile: Any
     ) -> Dict[str, Any]:
-        """Analyze topical dimension of conversation"""        
+        """Analyze topical dimension of conversation"""
+        
         # Extract topics from current message
         current_topics = await self._extract_topics(processed_message.processed_content)
         
@@ -614,7 +632,8 @@ class EnterpriseContextAnalyzer:
         creator_profile: Any,
         conversation_state: ConversationState
     ) -> Dict[str, Any]:
-        """Analyze creator workflow context"""        
+        """Analyze creator workflow context"""
+        
         # Detect current workflow stage
         detected_stage = await self._detect_workflow_stage(
             processed_message.processed_content,
@@ -647,7 +666,8 @@ class EnterpriseContextAnalyzer:
         creator_profile: Any,
         conversation_state: ConversationState
     ) -> List[Dict[str, Any]]:
-        """Detect patterns in conversation flow"""        
+        """Detect patterns in conversation flow"""
+        
         patterns = []
         
         # Pattern: Recurring questions
@@ -676,7 +696,8 @@ class EnterpriseContextAnalyzer:
     
     # Helper methods for specific analysis tasks
     async def _detect_workflow_stage(self, content: str, creator_type: str) -> CreatorWorkflowStage:
-        """Detect current creator workflow stage from content"""        
+        """Detect current creator workflow stage from content"""
+        
         content_lower = content.lower()
         
         # Stage detection patterns by creator type
@@ -714,12 +735,14 @@ class EnterpriseContextAnalyzer:
         return CreatorWorkflowStage.PLANNING  # Default fallback
     
     async def _extract_topics(self, content: str) -> List[str]:
-        """Extract topics from content"""        # Use AI engine for topic extraction
+        """Extract topics from content"""
+        # Use AI engine for topic extraction
         topics = await self.ai_engine.extract_topics(content)
         return topics[:10]  # Limit to top 10 topics
     
     async def _calculate_message_importance(self, processed_message: Any) -> float:
-        """Calculate importance score for a message"""        importance = 0.5  # Base importance
+        """Calculate importance score for a message"""
+        importance = 0.5  # Base importance
         
         # Boost importance based on content analysis
         if hasattr(processed_message, 'content_analysis'):
@@ -742,7 +765,8 @@ class EnterpriseContextAnalyzer:
         return min(1.0, importance)
     
     async def _update_memory_relevance(self, session_id: str) -> None:
-        """Update relevance scores for existing memories"""        current_time = datetime.utcnow()
+        """Update relevance scores for existing memories"""
+        current_time = datetime.utcnow()
         
         for memory in self.contextual_memory[session_id]:
             # Apply time-based decay
@@ -753,7 +777,8 @@ class EnterpriseContextAnalyzer:
             memory.relevance = time_decay * memory.importance_score
     
     async def _cleanup_old_memories(self, session_id: str) -> None:
-        """Remove old or irrelevant memories"""        cutoff_date = datetime.utcnow() - timedelta(days=self.memory_retention_days)
+        """Remove old or irrelevant memories"""
+        cutoff_date = datetime.utcnow() - timedelta(days=self.memory_retention_days)
         
         memories = self.contextual_memory[session_id]
         # Remove memories that are too old or have very low relevance
@@ -764,21 +789,25 @@ class EnterpriseContextAnalyzer:
     
     # Additional helper methods (simplified implementations)
     async def _detect_urgency_indicators(self, processed_message: Any) -> List[str]:
-        """Detect urgency indicators in message"""        urgent_words = ["urgent", "asap", "immediately", "deadline", "quickly"]
+        """Detect urgency indicators in message"""
+        urgent_words = ["urgent", "asap", "immediately", "deadline", "quickly"]
         content = processed_message.processed_content.lower()
         return [word for word in urgent_words if word in content]
     
     async def _detect_temporal_patterns(self, message_history: List[Dict[str, Any]]) -> List[str]:
-        """Detect temporal patterns in conversation"""        # Simplified implementation
+        """Detect temporal patterns in conversation"""
+        # Simplified implementation
         return ["consistent_timing"] if len(message_history) > 5 else []
     
     async def _detect_frustration_indicators(self, processed_message: Any) -> List[str]:
-        """Detect frustration indicators"""        frustration_words = ["frustrated", "annoying", "difficult", "not working", "problem"]
+        """Detect frustration indicators"""
+        frustration_words = ["frustrated", "annoying", "difficult", "not working", "problem"]
         content = processed_message.processed_content.lower()
         return [word for word in frustration_words if word in content]
     
     async def _identify_emotional_needs(self, current_sentiment: Dict[str, Any], trajectory: List[str]) -> List[str]:
-        """Identify emotional needs based on sentiment analysis"""        needs = []
+        """Identify emotional needs based on sentiment analysis"""
+        needs = []
         
         if current_sentiment.get("primary") == "negative":
             needs.append("reassurance")
@@ -872,7 +901,8 @@ class EnterpriseContextAnalyzer:
     
     # State management
     async def _update_conversation_state(self, conversation_state: ConversationState, processed_message: Any, context_dimensions: Dict[ContextDimension, Dict[str, Any]], workflow_analysis: Dict[str, Any]) -> None:
-        """Update conversation state with new analysis"""        
+        """Update conversation state with new analysis"""
+        
         # Update workflow stage if detected
         workflow_context = context_dimensions.get(ContextDimension.CREATOR_WORKFLOW, {})
         if "current_stage" in workflow_context:
@@ -895,7 +925,8 @@ class EnterpriseContextAnalyzer:
             conversation_state.monetization_interest = monetization_context["interest_level"]
     
     async def _prepare_updated_context(self, context_dimensions: Dict[ContextDimension, Dict[str, Any]], conversation_state: ConversationState, monetization_context: Dict[str, Any], collaboration_opportunities: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Prepare updated context for session"""        
+        """Prepare updated context for session"""
+        
         return {
             "workflow_stage": conversation_state.creator_workflow_stage.value,
             "emotional_state": conversation_state.emotional_trajectory[-1] if conversation_state.emotional_trajectory else "neutral",
@@ -909,7 +940,8 @@ class EnterpriseContextAnalyzer:
         }
     
     def _calculate_context_quality(self, context_dimensions: Dict[ContextDimension, Dict[str, Any]]) -> float:
-        """Calculate overall context quality score"""        if not context_dimensions:
+        """Calculate overall context quality score"""
+        if not context_dimensions:
             return 0.0
         
         # Simple quality metric based on number of analyzed dimensions
@@ -919,7 +951,8 @@ class EnterpriseContextAnalyzer:
         return min(1.0, analyzed_dimensions / max_dimensions)
     
     async def _get_recent_memory_updates(self, session_id: str) -> List[ContextualMemory]:
-        """Get recent memory updates for the session"""        recent_memories = []
+        """Get recent memory updates for the session"""
+        recent_memories = []
         cutoff_time = datetime.utcnow() - timedelta(hours=1)
         
         for memory in self.contextual_memory[session_id]:
@@ -929,7 +962,8 @@ class EnterpriseContextAnalyzer:
         return recent_memories[-5:]  # Return last 5 recent memories
     
     def _update_analysis_metrics(self, processing_time: float, result: ContextAnalysisResult) -> None:
-        """Update internal analysis metrics"""        self.analysis_metrics["total_analyses"] += 1
+        """Update internal analysis metrics"""
+        self.analysis_metrics["total_analyses"] += 1
         
         # Update averages
         total = self.analysis_metrics["total_analyses"]
@@ -946,7 +980,8 @@ class EnterpriseContextAnalyzer:
         )
     
     def _create_fallback_analysis(self, analysis_id: str, session_id: str, creator_profile: Any, error: str) -> ContextAnalysisResult:
-        """Create fallback analysis result for errors"""        
+        """Create fallback analysis result for errors"""
+        
         fallback_state = ConversationState(
             session_id=session_id,
             creator_workflow_stage=CreatorWorkflowStage.PLANNING,
@@ -970,19 +1005,23 @@ class EnterpriseContextAnalyzer:
         )
     
     def _load_workflow_patterns(self) -> Dict[str, Any]:
-        """Load workflow patterns from configuration"""        # Implementation would load from configuration files
+        """Load workflow patterns from configuration"""
+        # Implementation would load from configuration files
         return {}
     
     def _load_monetization_patterns(self) -> Dict[str, Any]:
-        """Load monetization patterns from configuration"""        # Implementation would load from configuration files
+        """Load monetization patterns from configuration"""
+        # Implementation would load from configuration files
         return {}
     
     def _load_collaboration_patterns(self) -> Dict[str, Any]:
-        """Load collaboration patterns from configuration"""        # Implementation would load from configuration files
+        """Load collaboration patterns from configuration"""
+        # Implementation would load from configuration files
         return {}
     
     def get_analysis_metrics(self) -> Dict[str, Any]:
-        """Get current analysis metrics"""        return self.analysis_metrics.copy()
+        """Get current analysis metrics"""
+        return self.analysis_metrics.copy()
 
 
 # Maintain backward compatibility

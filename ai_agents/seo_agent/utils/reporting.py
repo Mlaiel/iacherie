@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -30,7 +31,8 @@ from io import BytesIO, StringIO
 logger = logging.getLogger(__name__)
 
 class ReportType(Enum):
-    """Types of SEO reports"""    COMPREHENSIVE = "comprehensive"
+    """Types of SEO reports"""
+    COMPREHENSIVE = "comprehensive"
     KEYWORD_ANALYSIS = "keyword_analysis"
     TECHNICAL_AUDIT = "technical_audit"
     CONTENT_PERFORMANCE = "content_performance"
@@ -40,7 +42,8 @@ class ReportType(Enum):
     TREND_ANALYSIS = "trend_analysis"
 
 class ReportFormat(Enum):
-    """Output formats for reports"""    HTML = "html"
+    """Output formats for reports"""
+    HTML = "html"
     PDF = "pdf"
     JSON = "json"
     CSV = "csv"
@@ -48,7 +51,8 @@ class ReportFormat(Enum):
 
 @dataclass
 class ReportSection:
-    """Individual report section"""    title: str
+    """Individual report section"""
+    title: str
     content: Dict[str, Any]
     visualizations: List[str] = field(default_factory=list)
     priority: int = 1
@@ -56,7 +60,8 @@ class ReportSection:
 
 @dataclass
 class ReportConfig:
-    """Report generation configuration"""    report_type: ReportType
+    """Report generation configuration"""
+    report_type: ReportType
     format: ReportFormat
     time_period: timedelta
     include_visualizations: bool = True
@@ -65,7 +70,8 @@ class ReportConfig:
     custom_sections: List[str] = field(default_factory=list)
 
 class SEOReportGenerator:
-    """    Advanced SEO report generation system.
+    """
+    Advanced SEO report generation system.
     
     Features:
     - Multiple report types and formats
@@ -78,7 +84,8 @@ class SEOReportGenerator:
     - Historical trend analysis
     - Competitor benchmarking
     - ROI analysis and projections
-    """    
+    """
+    
     def __init__(self, metrics_collector, config: Dict[str, Any] = None):
         self.metrics_collector = metrics_collector
         self.config = config or {}
@@ -102,7 +109,8 @@ class SEOReportGenerator:
         self.scheduled_reports = []
         
     async def initialize(self):
-        """Initialize report generator"""        try:
+        """Initialize report generator"""
+        try:
             # Load report templates
             await self._load_report_templates()
             
@@ -119,7 +127,8 @@ class SEOReportGenerator:
             raise
     
     async def _load_report_templates(self):
-        """Load report templates from files or create default ones"""        try:
+        """Load report templates from files or create default ones"""
+        try:
             # Default HTML template for comprehensive reports
             self.report_templates['comprehensive_html'] = """<!DOCTYPE html>
 <html lang="en">
@@ -212,12 +221,14 @@ class SEOReportGenerator:
     </div>
 </body>
 </html>
-            """            
+            """
+            
         except Exception as e:
             logger.error(f"Error loading report templates: {e}")
     
     def _setup_visualization_styles(self):
-        """Setup matplotlib and seaborn visualization styles"""        # Custom color palette
+        """Setup matplotlib and seaborn visualization styles"""
+        # Custom color palette
         colors = ['#667eea', '#764ba2', '#f093fb', '#f5576c', '#4facfe', '#00f2fe']
         plt.rcParams['axes.prop_cycle'] = plt.cycler(color=colors)
         
@@ -239,7 +250,8 @@ class SEOReportGenerator:
         data_sources: Dict[str, Any] = None,
         output_path: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Generate a comprehensive SEO report"""        try:
+        """Generate a comprehensive SEO report"""
+        try:
             logger.info(f"Generating {report_config.report_type.value} report in {report_config.format.value} format")
             
             # Collect data for report
@@ -287,7 +299,8 @@ class SEOReportGenerator:
         report_config: ReportConfig, 
         data_sources: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Collect all necessary data for report generation"""        try:
+        """Collect all necessary data for report generation"""
+        try:
             # Calculate time period
             end_time = datetime.utcnow()
             start_time = end_time - report_config.time_period
@@ -324,7 +337,8 @@ class SEOReportGenerator:
         report_config: ReportConfig, 
         report_data: Dict[str, Any]
     ) -> List[ReportSection]:
-        """Generate individual report sections based on report type"""        sections = []
+        """Generate individual report sections based on report type"""
+        sections = []
         
         try:
             if report_config.report_type == ReportType.COMPREHENSIVE:
@@ -370,7 +384,8 @@ class SEOReportGenerator:
             return []
     
     async def _create_performance_overview_section(self, data: Dict[str, Any]) -> ReportSection:
-        """Create performance overview section"""        content = {
+        """Create performance overview section"""
+        content = {
             'overview_metrics': data.get('overview', {}),
             'key_improvements': [],
             'performance_summary': "Performance analysis for the reporting period."
@@ -383,7 +398,8 @@ class SEOReportGenerator:
         )
     
     async def _create_content_analysis_section(self, data: Dict[str, Any]) -> ReportSection:
-        """Create content analysis section"""        content_metrics = data.get('content_metrics', {})
+        """Create content analysis section"""
+        content_metrics = data.get('content_metrics', {})
         
         content = {
             'seo_scores': content_metrics.get('seo_score', {}),
@@ -399,7 +415,8 @@ class SEOReportGenerator:
         )
     
     async def _create_keyword_performance_section(self, data: Dict[str, Any]) -> ReportSection:
-        """Create keyword performance section"""        keyword_metrics = data.get('keyword_metrics', {})
+        """Create keyword performance section"""
+        keyword_metrics = data.get('keyword_metrics', {})
         
         content = {
             'ranking_positions': keyword_metrics.get('ranking_positions', {}),
@@ -415,7 +432,8 @@ class SEOReportGenerator:
         )
     
     async def _create_technical_audit_section(self, data: Dict[str, Any]) -> ReportSection:
-        """Create technical audit section"""        technical_metrics = data.get('technical_metrics', {})
+        """Create technical audit section"""
+        technical_metrics = data.get('technical_metrics', {})
         
         content = {
             'page_speed': technical_metrics.get('page_load_time', {}),
@@ -431,7 +449,8 @@ class SEOReportGenerator:
         )
     
     async def _create_traffic_analysis_section(self, data: Dict[str, Any]) -> ReportSection:
-        """Create traffic analysis section"""        traffic_metrics = data.get('traffic_metrics', {})
+        """Create traffic analysis section"""
+        traffic_metrics = data.get('traffic_metrics', {})
         
         content = {
             'organic_traffic': traffic_metrics.get('organic_traffic', {}),
@@ -447,7 +466,8 @@ class SEOReportGenerator:
         )
     
     async def _create_custom_section(self, section_name: str, data: Dict[str, Any]) -> Optional[ReportSection]:
-        """Create a custom report section"""        # Implementation for custom sections
+        """Create a custom report section"""
+        # Implementation for custom sections
         return None
     
     async def _generate_visualizations(
@@ -455,7 +475,8 @@ class SEOReportGenerator:
         report_config: ReportConfig, 
         report_data: Dict[str, Any]
     ) -> Dict[str, str]:
-        """Generate charts and visualizations for the report"""        visualizations = {}
+        """Generate charts and visualizations for the report"""
+        visualizations = {}
         
         try:
             # SEO Score Trend Chart
@@ -484,7 +505,8 @@ class SEOReportGenerator:
         return visualizations
     
     async def _create_seo_score_trend_chart(self, data: Dict[str, Any]) -> Optional[str]:
-        """Create SEO score trend chart"""        try:
+        """Create SEO score trend chart"""
+        try:
             # Mock data for demonstration
             dates = pd.date_range('2024-01-01', periods=30, freq='D')
             scores = np.random.normal(0.75, 0.1, 30).clip(0, 1)
@@ -516,7 +538,8 @@ class SEOReportGenerator:
             return None
     
     async def _create_keyword_ranking_chart(self, data: Dict[str, Any]) -> Optional[str]:
-        """Create keyword ranking chart"""        try:
+        """Create keyword ranking chart"""
+        try:
             # Mock data for demonstration
             keywords = ['music production', 'beat making', 'audio mixing', 'sound design', 'music marketing']
             positions = [3, 7, 12, 18, 25]
@@ -552,7 +575,8 @@ class SEOReportGenerator:
             return None
     
     async def _create_traffic_analysis_chart(self, data: Dict[str, Any]) -> Optional[str]:
-        """Create traffic analysis chart"""        try:
+        """Create traffic analysis chart"""
+        try:
             # Mock data for demonstration
             dates = pd.date_range('2024-01-01', periods=30, freq='D')
             organic_traffic = np.random.poisson(500, 30) + 200
@@ -585,7 +609,8 @@ class SEOReportGenerator:
             return None
     
     async def _create_performance_metrics_chart(self, data: Dict[str, Any]) -> Optional[str]:
-        """Create performance metrics comparison chart"""        try:
+        """Create performance metrics comparison chart"""
+        try:
             # Mock data for demonstration
             metrics = ['Page Speed', 'Mobile Score', 'SEO Score', 'Content Quality', 'User Experience']
             current = [0.78, 0.92, 0.85, 0.76, 0.81]
@@ -629,7 +654,8 @@ class SEOReportGenerator:
             return None
     
     async def _generate_recommendations(self, report_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate SEO recommendations based on report data"""        recommendations = {
+        """Generate SEO recommendations based on report data"""
+        recommendations = {
             'high_priority': [],
             'medium_priority': [],
             'low_priority': []
@@ -705,7 +731,8 @@ class SEOReportGenerator:
         visualizations: Dict[str, str],
         recommendations: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Compile all report components into final report"""        try:
+        """Compile all report components into final report"""
+        try:
             # Calculate executive summary
             executive_summary = await self._generate_executive_summary(report_data)
             
@@ -754,11 +781,13 @@ class SEOReportGenerator:
             raise
     
     async def _generate_executive_summary(self, report_data: Dict[str, Any]) -> str:
-        """Generate executive summary based on report data"""        overview = report_data.get('overview', {})
+        """Generate executive summary based on report data"""
+        overview = report_data.get('overview', {})
         avg_seo_score = overview.get('avg_seo_score', 0)
         total_content = overview.get('total_content_analyzed', 0)
         
-        summary = f"""        During this reporting period, we analyzed {total_content} pieces of content with an average SEO score of {avg_seo_score:.2f}. 
+        summary = f"""
+        During this reporting period, we analyzed {total_content} pieces of content with an average SEO score of {avg_seo_score:.2f}. 
         Our SEO optimization efforts have focused on improving content quality, keyword targeting, and technical performance. 
         The data shows {'positive' if avg_seo_score > 0.75 else 'areas for improvement in'} trends in overall SEO performance.
         Key focus areas include content optimization, technical SEO improvements, and strategic keyword targeting.
@@ -767,7 +796,8 @@ class SEOReportGenerator:
         return summary
     
     async def _extract_key_metrics(self, report_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Extract key metrics for dashboard display"""        overview = report_data.get('overview', {})
+        """Extract key metrics for dashboard display"""
+        overview = report_data.get('overview', {})
         
         metrics = [
             {
@@ -795,7 +825,8 @@ class SEOReportGenerator:
         return metrics
     
     async def _render_html_report(self, context: Dict[str, Any]) -> str:
-        """Render HTML report using template"""        try:
+        """Render HTML report using template"""
+        try:
             template = Template(self.report_templates['comprehensive_html'])
             return template.render(**context)
         except Exception as e:
@@ -803,7 +834,8 @@ class SEOReportGenerator:
             return f"<html><body><h1>Report Generation Error</h1><p>{str(e)}</p></body></html>"
     
     async def _render_markdown_report(self, context: Dict[str, Any]) -> str:
-        """Render Markdown report"""        try:
+        """Render Markdown report"""
+        try:
             markdown_content = f"""# {context['report_title']}
 
 **Period:** {context['report_period']}  
@@ -815,7 +847,8 @@ class SEOReportGenerator:
 
 ## Key Metrics
 
-"""            for metric in context['key_metrics']:
+"""
+            for metric in context['key_metrics']:
                 markdown_content += f"- **{metric['label']}:** {metric['value']}\n"
             
             markdown_content += "\n## Report Sections\n\n"
@@ -836,7 +869,8 @@ class SEOReportGenerator:
             return f"# Report Generation Error\n\n{str(e)}"
     
     async def _save_report(self, report: Dict[str, Any], output_path: str, format: ReportFormat):
-        """Save report to file"""        try:
+        """Save report to file"""
+        try:
             output_file = Path(output_path)
             output_file.parent.mkdir(parents=True, exist_ok=True)
             
@@ -849,7 +883,8 @@ class SEOReportGenerator:
             logger.error(f"Error saving report to {output_path}: {e}")
     
     async def _scheduled_reports_loop(self):
-        """Background task for scheduled report generation"""        while True:
+        """Background task for scheduled report generation"""
+        while True:
             try:
                 # Check for scheduled reports
                 current_time = datetime.utcnow()
@@ -866,11 +901,13 @@ class SEOReportGenerator:
                 await asyncio.sleep(3600)
     
     def _should_generate_report(self, scheduled_report: Dict[str, Any], current_time: datetime) -> bool:
-        """Check if scheduled report should be generated"""        # Implementation for schedule checking
+        """Check if scheduled report should be generated"""
+        # Implementation for schedule checking
         return False
     
     async def _generate_scheduled_report(self, scheduled_report: Dict[str, Any]):
-        """Generate a scheduled report"""        try:
+        """Generate a scheduled report"""
+        try:
             report_config = ReportConfig(
                 report_type=ReportType(scheduled_report['report_type']),
                 format=ReportFormat(scheduled_report['format']),

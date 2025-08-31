@@ -7,7 +7,8 @@ for creators' audio content workflows.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
-"""import asyncio
+"""
+import asyncio
 import logging
 import os
 import tempfile
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 class AudioFormat(Enum):
-    """Supported audio formats."""    MP3 = "mp3"
+    """Supported audio formats."""
+    MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
     AAC = "aac"
@@ -45,7 +47,8 @@ class AudioFormat(Enum):
 
 
 class AudioQuality(Enum):
-    """Audio quality presets."""    LOW = "low"          # 128 kbps
+    """Audio quality presets."""
+    LOW = "low"          # 128 kbps
     MEDIUM = "medium"    # 192 kbps
     HIGH = "high"        # 256 kbps
     LOSSLESS = "lossless"  # Original quality
@@ -53,7 +56,8 @@ class AudioQuality(Enum):
 
 
 class AudioCodec(Enum):
-    """Audio codecs."""    MP3_LAME = "libmp3lame"
+    """Audio codecs."""
+    MP3_LAME = "libmp3lame"
     AAC = "aac"
     FLAC = "flac"
     VORBIS = "libvorbis"
@@ -62,7 +66,8 @@ class AudioCodec(Enum):
 
 @dataclass
 class AudioSettings:
-    """Audio processing settings."""    format: AudioFormat = AudioFormat.MP3
+    """Audio processing settings."""
+    format: AudioFormat = AudioFormat.MP3
     quality: AudioQuality = AudioQuality.HIGH
     sample_rate: Optional[int] = None
     channels: Optional[int] = None
@@ -79,7 +84,8 @@ class AudioSettings:
 
 @dataclass
 class AudioMetadata:
-    """Audio file metadata."""    title: Optional[str] = None
+    """Audio file metadata."""
+    title: Optional[str] = None
     artist: Optional[str] = None
     album: Optional[str] = None
     genre: Optional[str] = None
@@ -95,24 +101,28 @@ class AudioMetadata:
 
 
 class AudioTransformer:
-    """    Professional audio transformation engine for the IA Influencer Agent Platform.
+    """
+    Professional audio transformation engine for the IA Influencer Agent Platform.
     
     Provides advanced audio processing, conversion, and enhancement capabilities
     optimized for creator content workflows.
-    """    
+    """
+    
     def __init__(
         self,
         enable_gpu: bool = True,
         config: Optional[Dict[str, Any]] = None,
         temp_dir: Optional[str] = None
     ):
-        """        Initialize audio transformer.
+        """
+        Initialize audio transformer.
         
         Args:
             enable_gpu: Enable GPU acceleration if available
             config: Configuration options
             temp_dir: Temporary directory for processing
-        """        self.enable_gpu = enable_gpu
+        """
+        self.enable_gpu = enable_gpu
         self.config = config or {}
         self.temp_dir = Path(temp_dir) if temp_dir else Path(tempfile.gettempdir()) / "audio_transform"
         
@@ -141,7 +151,8 @@ class AudioTransformer:
         logger.info(f"AudioTransformer initialized (GPU: {enable_gpu}, FFmpeg: {self.ffmpeg_available})")
     
     def _check_ffmpeg(self) -> bool:
-        """Check if FFmpeg is available."""        try:
+        """Check if FFmpeg is available."""
+        try:
             subprocess.run(["ffmpeg", "-version"], capture_output=True, check=True)
             return True
         except (subprocess.CalledProcessError, FileNotFoundError):
@@ -149,14 +160,16 @@ class AudioTransformer:
             return False
     
     async def transform(self, request) -> Any:
-        """        Transform audio based on request configuration.
+        """
+        Transform audio based on request configuration.
         
         Args:
             request: Transformation request with audio settings
             
         Returns:
             TransformationResult with processing metrics
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Parse request
@@ -219,7 +232,8 @@ class AudioTransformer:
         quality: Union[str, AudioQuality] = AudioQuality.HIGH,
         **kwargs
     ) -> bool:
-        """        Convert audio file to specified format and quality.
+        """
+        Convert audio file to specified format and quality.
         
         Args:
             input_path: Input audio file path
@@ -230,7 +244,8 @@ class AudioTransformer:
             
         Returns:
             Success status
-        """        settings = AudioSettings(
+        """
+        settings = AudioSettings(
             format=format if isinstance(format, AudioFormat) else AudioFormat(format),
             quality=quality if isinstance(quality, AudioQuality) else AudioQuality(quality),
             **kwargs
@@ -257,7 +272,8 @@ class AudioTransformer:
         output_path: str,
         enhancement_options: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """        Enhance audio quality using AI and signal processing.
+        """
+        Enhance audio quality using AI and signal processing.
         
         Args:
             input_path: Input audio file path
@@ -266,7 +282,8 @@ class AudioTransformer:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             if not AUDIO_LIBS_AVAILABLE:
                 logger.warning("Audio enhancement requires librosa and essentia")
                 return False
@@ -287,14 +304,16 @@ class AudioTransformer:
             return False
     
     async def get_metadata(self, file_path: str) -> AudioMetadata:
-        """        Extract comprehensive audio metadata.
+        """
+        Extract comprehensive audio metadata.
         
         Args:
             file_path: Audio file path
             
         Returns:
             AudioMetadata object
-        """        try:
+        """
+        try:
             metadata = AudioMetadata()
             file_path_obj = Path(file_path)
             
@@ -361,7 +380,8 @@ class AudioTransformer:
         output_path: Path,
         settings: AudioSettings
     ) -> Path:
-        """Convert audio with lossless quality."""        if not self.ffmpeg_available:
+        """Convert audio with lossless quality."""
+        if not self.ffmpeg_available:
             raise RuntimeError("FFmpeg required for lossless conversion")
         
         cmd = [
@@ -395,7 +415,8 @@ class AudioTransformer:
         output_path: Path,
         settings: AudioSettings
     ) -> Path:
-        """Convert audio with lossy compression."""        if not self.ffmpeg_available:
+        """Convert audio with lossy compression."""
+        if not self.ffmpeg_available:
             raise RuntimeError("FFmpeg required for audio conversion")
         
         # Get quality settings
@@ -449,7 +470,8 @@ class AudioTransformer:
         audio_path: Path,
         settings: AudioSettings
     ) -> Path:
-        """Enhance audio quality using advanced processing."""        if not AUDIO_LIBS_AVAILABLE:
+        """Enhance audio quality using advanced processing."""
+        if not AUDIO_LIBS_AVAILABLE:
             logger.warning("Audio enhancement requires additional libraries")
             return audio_path
         
@@ -483,7 +505,8 @@ class AudioTransformer:
         sample_rate: int,
         options: Dict[str, Any]
     ) -> np.ndarray:
-        """Apply audio enhancements."""        enhanced = audio.copy()
+        """Apply audio enhancements."""
+        enhanced = audio.copy()
         
         try:
             # Noise reduction
@@ -509,7 +532,8 @@ class AudioTransformer:
         return enhanced
     
     def _reduce_noise(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Apply noise reduction."""        try:
+        """Apply noise reduction."""
+        try:
             # Simple spectral gating approach
             stft = librosa.stft(audio)
             magnitude = np.abs(stft)
@@ -531,7 +555,8 @@ class AudioTransformer:
             return audio
     
     def _enhance_bass(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Enhance bass frequencies."""        try:
+        """Enhance bass frequencies."""
+        try:
             # Low-shelf filter for bass enhancement
             from scipy.signal import butter, filtfilt
             
@@ -549,7 +574,8 @@ class AudioTransformer:
             return audio
     
     def _enhance_treble(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Enhance treble frequencies."""        try:
+        """Enhance treble frequencies."""
+        try:
             # High-shelf filter for treble enhancement
             from scipy.signal import butter, filtfilt
             
@@ -567,7 +593,8 @@ class AudioTransformer:
             return audio
     
     async def _calculate_quality_score(self, input_path: str, output_path: str) -> Optional[float]:
-        """Calculate audio quality score comparing input and output."""        try:
+        """Calculate audio quality score comparing input and output."""
+        try:
             if not AUDIO_LIBS_AVAILABLE:
                 return None
             
@@ -605,7 +632,8 @@ class AudioTransformer:
             return None
     
     def _parse_audio_settings(self, request) -> AudioSettings:
-        """Parse transformation request into audio settings."""        settings = AudioSettings()
+        """Parse transformation request into audio settings."""
+        settings = AudioSettings()
         
         if hasattr(request, 'target_format') and request.target_format:
             settings.format = AudioFormat(request.target_format)
@@ -637,7 +665,8 @@ class AudioTransformer:
         settings: AudioSettings,
         requested_output: Optional[str] = None
     ) -> Path:
-        """Generate output file path."""        if requested_output:
+        """Generate output file path."""
+        if requested_output:
             return Path(requested_output)
         
         # Generate based on input and settings
@@ -645,7 +674,8 @@ class AudioTransformer:
         return input_path.parent / output_name
     
     async def cleanup(self):
-        """Cleanup temporary files and resources."""        try:
+        """Cleanup temporary files and resources."""
+        try:
             # Clean temp directory
             if self.temp_dir.exists():
                 import shutil
@@ -658,7 +688,8 @@ class AudioTransformer:
 
 
 class AudioConverter:
-    """Simplified audio converter interface."""    
+    """Simplified audio converter interface."""
+    
     def __init__(self, transformer: Optional[AudioTransformer] = None):
         self.transformer = transformer or AudioTransformer()
     
@@ -669,11 +700,13 @@ class AudioConverter:
         format: str = "mp3",
         quality: str = "high"
     ) -> bool:
-        """Convert audio file."""        return await self.transformer.convert(input_path, output_path, format, quality)
+        """Convert audio file."""
+        return await self.transformer.convert(input_path, output_path, format, quality)
 
 
 class AudioEnhancer:
-    """Simplified audio enhancer interface."""    
+    """Simplified audio enhancer interface."""
+    
     def __init__(self, transformer: Optional[AudioTransformer] = None):
         self.transformer = transformer or AudioTransformer()
     
@@ -683,4 +716,5 @@ class AudioEnhancer:
         output_path: str,
         options: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Enhance audio quality."""        return await self.transformer.enhance(input_path, output_path, options)
+        """Enhance audio quality."""
+        return await self.transformer.enhance(input_path, output_path, options)

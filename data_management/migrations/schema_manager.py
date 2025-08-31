@@ -15,7 +15,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This schema management system is protected intellectual property.
 Contact mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timezone
 from enum import Enum
@@ -42,7 +43,8 @@ Base = declarative_base()
 
 
 class SchemaVersion(Enum):
-    """Schema version management"""    V1_0_0 = "1.0.0"    # Initial schema
+    """Schema version management"""
+    V1_0_0 = "1.0.0"    # Initial schema
     V1_1_0 = "1.1.0"    # Content protection additions
     V1_2_0 = "1.2.0"    # Fingerprinting enhancements
     V1_3_0 = "1.3.0"    # Monetization features
@@ -53,7 +55,8 @@ class SchemaVersion(Enum):
 
 
 class SchemaComponent(Enum):
-    """Schema component categories"""    CORE = "core"                      # Core user and content tables
+    """Schema component categories"""
+    CORE = "core"                      # Core user and content tables
     PROTECTION = "protection"          # Content protection tables
     FINGERPRINT = "fingerprint"        # Fingerprinting system
     MONETIZATION = "monetization"      # Revenue tracking
@@ -65,7 +68,8 @@ class SchemaComponent(Enum):
 
 @dataclass
 class SchemaChange:
-    """Schema change specification"""    change_id: str
+    """Schema change specification"""
+    change_id: str
     version: SchemaVersion
     component: SchemaComponent
     operation: str  # CREATE, ALTER, DROP, INDEX
@@ -78,7 +82,8 @@ class SchemaChange:
 
 @dataclass
 class SchemaState:
-    """Current schema state information"""    current_version: SchemaVersion
+    """Current schema state information"""
+    current_version: SchemaVersion
     installed_components: Set[SchemaComponent]
     pending_changes: List[SchemaChange]
     last_update: datetime
@@ -87,7 +92,8 @@ class SchemaState:
 
 
 class SchemaManager:
-    """    Enterprise-grade database schema management system
+    """
+    Enterprise-grade database schema management system
     
     Manages complete database schema evolution for IA Influencer Agent:
     - Content protection and fingerprinting tables
@@ -95,7 +101,8 @@ class SchemaManager:
     - Multi-tenant data isolation structures
     - Performance optimization indices
     - Security and audit logging tables
-    """    
+    """
+    
     def __init__(self, database_url: str, tenant_id: Optional[str] = None):
         self.database_url = database_url
         self.tenant_id = tenant_id
@@ -105,14 +112,16 @@ class SchemaManager:
         self.schema_changes: List[SchemaChange] = []
         
     async def initialize_schema(self, target_version: SchemaVersion = SchemaVersion.LATEST) -> SchemaState:
-        """        Initialize complete database schema
+        """
+        Initialize complete database schema
         
         Args:
             target_version: Target schema version to achieve
             
         Returns:
             Current schema state after initialization
-        """        logger.info(f"Initializing schema to version {target_version.value}")
+        """
+        logger.info(f"Initializing schema to version {target_version.value}")
         
         try:
             # Create migration tracking table
@@ -137,10 +146,12 @@ class SchemaManager:
             raise
             
     async def get_schema_state(self) -> SchemaState:
-        """Get current database schema state"""        async with self._get_session() as session:
+        """Get current database schema state"""
+        async with self._get_session() as session:
             try:
                 # Get current version
-                version_query = text("""                    SELECT version FROM schema_version 
+                version_query = text("""
+                    SELECT version FROM schema_version 
                     WHERE is_current = true
                     ORDER BY applied_at DESC LIMIT 1
                 """)
@@ -149,14 +160,16 @@ class SchemaManager:
                 current_version = SchemaVersion(current_version_row[0]) if current_version_row else SchemaVersion.V1_0_0
                 
                 # Get installed components
-                components_query = text("""                    SELECT DISTINCT component FROM schema_changes 
+                components_query = text("""
+                    SELECT DISTINCT component FROM schema_changes 
                     WHERE status = 'applied'
                 """)
                 components_result = await session.execute(components_query)
                 installed_components = {SchemaComponent(row[0]) for row in components_result.fetchall()}
                 
                 # Get pending changes
-                pending_query = text("""                    SELECT change_id, version, component, operation, target, sql_statement, rollback_statement
+                pending_query = text("""
+                    SELECT change_id, version, component, operation, target, sql_statement, rollback_statement
                     FROM schema_changes 
                     WHERE status = 'pending'
                     ORDER BY created_at
@@ -191,7 +204,8 @@ class SchemaManager:
                 raise
                 
     async def create_content_protection_schema(self) -> None:
-        """Create content protection related tables"""        schema_changes = [
+        """Create content protection related tables"""
+        schema_changes = [
             # Content fingerprints table
             SchemaChange(
                 change_id="content_fingerprints_v1",
@@ -199,7 +213,8 @@ class SchemaManager:
                 component=SchemaComponent.FINGERPRINT,
                 operation="CREATE",
                 target="content_fingerprints",
-                sql_statement="""                    CREATE TABLE IF NOT EXISTS content_fingerprints (
+                sql_statement="""
+                    CREATE TABLE IF NOT EXISTS content_fingerprints (
                         fingerprint_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                         content_id UUID NOT NULL,
                         user_id UUID NOT NULL,
@@ -231,7 +246,8 @@ class SchemaManager:
                 component=SchemaComponent.PROTECTION,
                 operation="CREATE",
                 target="protection_alerts",
-                sql_statement="""                    CREATE TABLE IF NOT EXISTS protection_alerts (
+                sql_statement="""
+                    CREATE TABLE IF NOT EXISTS protection_alerts (
                         alert_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                         fingerprint_id UUID NOT NULL REFERENCES content_fingerprints(fingerprint_id),
                         detected_url TEXT NOT NULL,
@@ -257,7 +273,8 @@ class SchemaManager:
                 component=SchemaComponent.MONETIZATION,
                 operation="CREATE",
                 target="revenue_tracking",
-                sql_statement="""                    CREATE TABLE IF NOT EXISTS revenue_tracking (
+                sql_statement="""
+                    CREATE TABLE IF NOT EXISTS revenue_tracking (
                         revenue_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                         user_id UUID NOT NULL,
                         content_id UUID REFERENCES content_fingerprints(content_id),
@@ -283,7 +300,8 @@ class SchemaManager:
                 component=SchemaComponent.COLLABORATION,
                 operation="CREATE",
                 target="collaboration_requests",
-                sql_statement="""                    CREATE TABLE IF NOT EXISTS collaboration_requests (
+                sql_statement="""
+                    CREATE TABLE IF NOT EXISTS collaboration_requests (
                         request_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                         requester_id UUID NOT NULL,
                         target_creator_id UUID NOT NULL,
@@ -305,7 +323,8 @@ class SchemaManager:
         await self._apply_schema_changes(schema_changes)
         
     async def create_performance_indices(self) -> None:
-        """Create performance optimization indices"""        index_changes = [
+        """Create performance optimization indices"""
+        index_changes = [
             # Fingerprints indices
             SchemaChange(
                 change_id="idx_fingerprints_content_type",
@@ -388,7 +407,8 @@ class SchemaManager:
         await self._apply_schema_changes(index_changes)
         
     async def create_security_schema(self) -> None:
-        """Create security and audit tables"""        security_changes = [
+        """Create security and audit tables"""
+        security_changes = [
             # Audit log table
             SchemaChange(
                 change_id="audit_logs_v1",
@@ -396,7 +416,8 @@ class SchemaManager:
                 component=SchemaComponent.SECURITY,
                 operation="CREATE",
                 target="audit_logs",
-                sql_statement="""                    CREATE TABLE IF NOT EXISTS audit_logs (
+                sql_statement="""
+                    CREATE TABLE IF NOT EXISTS audit_logs (
                         log_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                         user_id UUID,
                         tenant_id UUID,
@@ -423,7 +444,8 @@ class SchemaManager:
                 component=SchemaComponent.SECURITY,
                 operation="CREATE",
                 target="api_access_logs",
-                sql_statement="""                    CREATE TABLE IF NOT EXISTS api_access_logs (
+                sql_statement="""
+                    CREATE TABLE IF NOT EXISTS api_access_logs (
                         access_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                         user_id UUID,
                         tenant_id UUID,
@@ -447,10 +469,12 @@ class SchemaManager:
         await self._apply_schema_changes(security_changes)
         
     async def _create_migration_tracking_tables(self) -> None:
-        """Create migration and schema tracking tables"""        async with self._get_session() as session:
+        """Create migration and schema tracking tables"""
+        async with self._get_session() as session:
             try:
                 # Schema version table
-                await session.execute(text("""                    CREATE TABLE IF NOT EXISTS schema_version (
+                await session.execute(text("""
+                    CREATE TABLE IF NOT EXISTS schema_version (
                         version_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                         version VARCHAR(20) NOT NULL,
                         description TEXT,
@@ -461,7 +485,8 @@ class SchemaManager:
                 """))
                 
                 # Schema changes table
-                await session.execute(text("""                    CREATE TABLE IF NOT EXISTS schema_changes (
+                await session.execute(text("""
+                    CREATE TABLE IF NOT EXISTS schema_changes (
                         change_id VARCHAR(100) PRIMARY KEY,
                         version VARCHAR(20) NOT NULL,
                         component VARCHAR(50) NOT NULL,
@@ -476,7 +501,8 @@ class SchemaManager:
                 """))
                 
                 # Migration history table
-                await session.execute(text("""                    CREATE TABLE IF NOT EXISTS migration_history (
+                await session.execute(text("""
+                    CREATE TABLE IF NOT EXISTS migration_history (
                         history_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                         migration_id VARCHAR(100) NOT NULL,
                         version VARCHAR(20) NOT NULL,
@@ -501,7 +527,8 @@ class SchemaManager:
                 raise
                 
     async def _apply_schema_evolution(self, current_version: SchemaVersion, target_version: SchemaVersion) -> None:
-        """Apply schema evolution from current to target version"""        version_order = [v for v in SchemaVersion if v != SchemaVersion.LATEST]
+        """Apply schema evolution from current to target version"""
+        version_order = [v for v in SchemaVersion if v != SchemaVersion.LATEST]
         
         current_idx = version_order.index(current_version)
         target_idx = version_order.index(target_version)
@@ -516,7 +543,8 @@ class SchemaManager:
                 await self._rollback_version_changes(version_order[i])
                 
     async def _apply_version_changes(self, version: SchemaVersion) -> None:
-        """Apply all changes for a specific version"""        if version == SchemaVersion.V1_1_0:
+        """Apply all changes for a specific version"""
+        if version == SchemaVersion.V1_1_0:
             await self.create_content_protection_schema()
             await self.create_performance_indices()
         elif version == SchemaVersion.V1_3_0:
@@ -527,14 +555,16 @@ class SchemaManager:
             pass
             
     async def _apply_schema_changes(self, changes: List[SchemaChange]) -> None:
-        """Apply list of schema changes"""        async with self._get_session() as session:
+        """Apply list of schema changes"""
+        async with self._get_session() as session:
             try:
                 for change in changes:
                     # Execute the change
                     await session.execute(text(change.sql_statement))
                     
                     # Record the change
-                    await session.execute(text("""                        INSERT INTO schema_changes 
+                    await session.execute(text("""
+                        INSERT INTO schema_changes 
                         (change_id, version, component, operation, target, sql_statement, rollback_statement, status, applied_at)
                         VALUES (:change_id, :version, :component, :operation, :target, :sql_statement, :rollback_statement, 'applied', NOW())
                         ON CONFLICT (change_id) DO UPDATE SET status = 'applied', applied_at = NOW()
@@ -557,7 +587,8 @@ class SchemaManager:
                 raise
                 
     async def _validate_schema_integrity(self, schema_state: SchemaState) -> None:
-        """Validate schema integrity and consistency"""        async with self._get_session() as session:
+        """Validate schema integrity and consistency"""
+        async with self._get_session() as session:
             # Check table existence
             inspector = inspect(self.engine)
             tables = inspector.get_table_names()
@@ -577,11 +608,13 @@ class SchemaManager:
             logger.info("Schema integrity validation passed")
             
     async def _validate_foreign_keys(self) -> None:
-        """Validate foreign key constraints"""        # Override in subclasses for specific validation
+        """Validate foreign key constraints"""
+        # Override in subclasses for specific validation
         pass
         
     async def _calculate_schema_hash(self) -> str:
-        """Calculate hash of current schema structure"""        inspector = inspect(self.engine)
+        """Calculate hash of current schema structure"""
+        inspector = inspect(self.engine)
         
         schema_info = {
             'tables': {},
@@ -598,8 +631,10 @@ class SchemaManager:
         return hashlib.sha256(schema_json.encode()).hexdigest()
         
     async def _get_session(self) -> Session:
-        """Get database session"""        return self.session_maker()
+        """Get database session"""
+        return self.session_maker()
         
     async def _rollback_version_changes(self, version: SchemaVersion) -> None:
-        """Rollback changes for a specific version"""        # Implementation for rollback logic
+        """Rollback changes for a specific version"""
+        # Implementation for rollback logic
         pass

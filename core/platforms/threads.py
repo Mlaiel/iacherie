@@ -5,7 +5,8 @@ Meta Threads API integration for text-based conversations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
@@ -22,21 +23,25 @@ logger = logging.getLogger(__name__)
 
 
 class ThreadsPlatform(PlatformBase):
-    """Meta Threads platform integration"""    
+    """Meta Threads platform integration"""
+    
     def __init__(self, config: PlatformConfig):
-        """Initialize Threads platform"""        super().__init__(config)
+        """Initialize Threads platform"""
+        super().__init__(config)
         self.api_base = "https://graph.threads.net/v1.0"
         self.session: Optional[aiohttp.ClientSession] = None
         
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""        if not self.session or self.session.closed:
+        """Get or create HTTP session"""
+        if not self.session or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             )
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Threads API"""        try:
+        """Authenticate with Threads API"""
+        try:
             access_token = self.config.credentials.get('access_token')
             
             if access_token:
@@ -69,7 +74,8 @@ class ThreadsPlatform(PlatformBase):
             return False
     
     async def refresh_token(self) -> bool:
-        """Refresh Threads token"""        try:
+        """Refresh Threads token"""
+        try:
             access_token = self.config.credentials.get('access_token')
             if not access_token:
                 return False
@@ -94,7 +100,8 @@ class ThreadsPlatform(PlatformBase):
             return False
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to Threads API"""        try:
+        """Make authenticated request to Threads API"""
+        try:
             session = await self._get_session()
             
             # Add access token to params for Threads API
@@ -139,7 +146,8 @@ class ThreadsPlatform(PlatformBase):
             return None
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Create Threads post"""        try:
+        """Create Threads post"""
+        try:
             user_id = self.config.credentials.get('user_id')
             if not user_id:
                 return UploadResult(
@@ -232,7 +240,8 @@ class ThreadsPlatform(PlatformBase):
             )
     
     async def _upload_media(self, file_path: str) -> Optional[str]:
-        """Upload media file and return URL"""        try:
+        """Upload media file and return URL"""
+        try:
             # For Threads, we need to upload to a hosting service first
             # This is a placeholder - in real implementation, you'd upload to
             # a service like AWS S3, Cloudinary, etc.
@@ -247,7 +256,8 @@ class ThreadsPlatform(PlatformBase):
     
     async def get_analytics(self, content_id: str, start_date: datetime, 
                            end_date: datetime) -> AnalyticsData:
-        """Get Threads post analytics"""        try:
+        """Get Threads post analytics"""
+        try:
             params = {
                 'fields': 'id,media_product_type,media_type,media_url,permalink,username,text,timestamp,shortcode,thumbnail_url,children,is_quote_post'
             }
@@ -313,7 +323,8 @@ class ThreadsPlatform(PlatformBase):
             raise
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on Threads (limited API support)"""        try:
+        """Search content on Threads (limited API support)"""
+        try:
             # Threads search API is limited - placeholder implementation
             logger.warning("Threads search API has limited public access")
             return []
@@ -323,7 +334,8 @@ class ThreadsPlatform(PlatformBase):
             return []
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's Threads posts"""        try:
+        """Get user's Threads posts"""
+        try:
             target_user_id = user_id or self.config.credentials.get('user_id')
             if not target_user_id:
                 return []
@@ -359,7 +371,8 @@ class ThreadsPlatform(PlatformBase):
             return []
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete Threads post (not supported via API)"""        try:
+        """Delete Threads post (not supported via API)"""
+        try:
             logger.warning("Threads doesn't support post deletion via API")
             return False
                 
@@ -368,7 +381,8 @@ class ThreadsPlatform(PlatformBase):
             return False
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
-        """Update Threads post (not supported via API)"""        try:
+        """Update Threads post (not supported via API)"""
+        try:
             logger.warning("Threads doesn't support post editing via API")
             return False
                 
@@ -377,7 +391,8 @@ class ThreadsPlatform(PlatformBase):
             return False
     
     async def reply_to_thread(self, thread_id: str, text: str, media_path: str = None) -> Optional[str]:
-        """Reply to a thread"""        try:
+        """Reply to a thread"""
+        try:
             user_id = self.config.credentials.get('user_id')
             if not user_id:
                 return None
@@ -422,7 +437,8 @@ class ThreadsPlatform(PlatformBase):
             return None
     
     async def get_thread_conversation(self, thread_id: str) -> List[Dict[str, Any]]:
-        """Get thread conversation/replies"""        try:
+        """Get thread conversation/replies"""
+        try:
             params = {
                 'fields': 'id,text,timestamp,username,media_type,media_url,children'
             }
@@ -450,7 +466,8 @@ class ThreadsPlatform(PlatformBase):
             return []
     
     async def get_user_profile(self, user_id: str = None) -> Optional[Dict[str, Any]]:
-        """Get user profile information"""        try:
+        """Get user profile information"""
+        try:
             target_user_id = user_id or self.config.credentials.get('user_id')
             if not target_user_id:
                 return None
@@ -480,5 +497,6 @@ class ThreadsPlatform(PlatformBase):
             return None
     
     async def close(self):
-        """Close HTTP session"""        if self.session and not self.session.closed:
+        """Close HTTP session"""
+        if self.session and not self.session.closed:
             await self.session.close()

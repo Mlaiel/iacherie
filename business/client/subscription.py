@@ -5,7 +5,8 @@ and feature access control for IA Influencer platform creators.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Advanced Content Protection
-"""from datetime import datetime, timedelta
+"""
+from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
 from uuid import UUID, uuid4
 import logging
@@ -36,20 +37,23 @@ logger = logging.getLogger(__name__)
 
 
 class SubscriptionPlan(str, Enum):
-    """Available subscription plans."""    FREE = "free"
+    """Available subscription plans."""
+    FREE = "free"
     CREATOR = "creator"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
 
 
 class PaymentProvider(str, Enum):
-    """Supported payment providers."""    STRIPE = "stripe"
+    """Supported payment providers."""
+    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
 
 
 class SubscriptionCreateData(BaseModel):
-    """Subscription creation data."""    plan: SubscriptionPlan
+    """Subscription creation data."""
+    plan: SubscriptionPlan
     billing_cycle: BillingCycle
     payment_method_id: Optional[str] = None
     coupon_code: Optional[str] = None
@@ -64,14 +68,16 @@ class SubscriptionCreateData(BaseModel):
 
 
 class PaymentMethodData(BaseModel):
-    """Payment method data for subscription."""    provider: PaymentProvider
+    """Payment method data for subscription."""
+    provider: PaymentProvider
     token: str  # Payment provider token
     billing_address: Dict[str, str]
     is_default: bool = True
 
 
 class UsageMetrics(BaseModel):
-    """Current period usage metrics."""    content_uploads: int = 0
+    """Current period usage metrics."""
+    content_uploads: int = 0
     storage_used_gb: Decimal = Decimal('0')
     fingerprints_created: int = 0
     api_calls: int = 0
@@ -79,7 +85,8 @@ class UsageMetrics(BaseModel):
 
 
 class SubscriptionManager:
-    """    Comprehensive subscription management system.
+    """
+    Comprehensive subscription management system.
     
     Features:
     - Multi-tier subscription plans
@@ -90,7 +97,8 @@ class SubscriptionManager:
     - Automatic renewals
     - Upgrade/downgrade handling
     - Billing analytics integration
-    """    
+    """
+    
     def __init__(
         self,
         db: Session,
@@ -187,7 +195,8 @@ class SubscriptionManager:
         client_id: UUID,
         subscription_data: SubscriptionCreateData
     ) -> Dict[str, Any]:
-        """        Create new subscription for client.
+        """
+        Create new subscription for client.
         
         Args:
             client_id: Client identifier
@@ -198,7 +207,8 @@ class SubscriptionManager:
             
         Raises:
             PaymentError: If payment setup fails
-        """        try:
+        """
+        try:
             # Check if client already has active subscription
             existing_subscription = self.db.query(Subscription).filter(
                 Subscription.client_id == client_id,
@@ -284,14 +294,16 @@ class SubscriptionManager:
             raise SubscriptionServiceError("Failed to create subscription") from e
             
     async def get_subscription(self, client_id: UUID) -> Optional[Dict[str, Any]]:
-        """        Get current subscription for client.
+        """
+        Get current subscription for client.
         
         Args:
             client_id: Client identifier
             
         Returns:
             Current subscription data or None
-        """        try:
+        """
+        try:
             subscription = self.db.query(Subscription).filter(
                 Subscription.client_id == client_id,
                 Subscription.status.in_([
@@ -316,7 +328,8 @@ class SubscriptionManager:
         new_plan: SubscriptionPlan,
         payment_method_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """        Upgrade client subscription to higher tier.
+        """
+        Upgrade client subscription to higher tier.
         
         Args:
             client_id: Client identifier
@@ -325,7 +338,8 @@ class SubscriptionManager:
             
         Returns:
             Updated subscription information
-        """        try:
+        """
+        try:
             current_subscription = self.db.query(Subscription).filter(
                 Subscription.client_id == client_id,
                 Subscription.status == SubscriptionStatus.ACTIVE
@@ -401,7 +415,8 @@ class SubscriptionManager:
         immediate: bool = False,
         reason: Optional[str] = None
     ) -> Dict[str, Any]:
-        """        Cancel client subscription.
+        """
+        Cancel client subscription.
         
         Args:
             client_id: Client identifier
@@ -410,7 +425,8 @@ class SubscriptionManager:
             
         Returns:
             Cancellation result
-        """        try:
+        """
+        try:
             subscription = self.db.query(Subscription).filter(
                 Subscription.client_id == client_id,
                 Subscription.status == SubscriptionStatus.ACTIVE
@@ -466,7 +482,8 @@ class SubscriptionManager:
         client_id: UUID,
         usage_type: str
     ) -> Dict[str, Any]:
-        """        Check if client has exceeded usage limits.
+        """
+        Check if client has exceeded usage limits.
         
         Args:
             client_id: Client identifier
@@ -474,7 +491,8 @@ class SubscriptionManager:
             
         Returns:
             Usage status and limits information
-        """        try:
+        """
+        try:
             subscription = await self.get_subscription(client_id)
             if not subscription:
                 return {"allowed": False, "reason": "No active subscription"}
@@ -508,14 +526,16 @@ class SubscriptionManager:
             return {"allowed": False, "reason": "Error checking limits"}
             
     async def process_renewal(self, subscription_id: UUID) -> Dict[str, Any]:
-        """        Process subscription renewal payment.
+        """
+        Process subscription renewal payment.
         
         Args:
             subscription_id: Subscription identifier
             
         Returns:
             Renewal processing result
-        """        try:
+        """
+        try:
             subscription = self.db.query(Subscription).filter(
                 Subscription.id == subscription_id
             ).first()
@@ -582,7 +602,8 @@ class SubscriptionManager:
             return {"success": False, "error": str(e)}
             
     def _calculate_period_end(self, start_date: datetime, billing_cycle: BillingCycle) -> datetime:
-        """Calculate subscription period end date."""        if billing_cycle == BillingCycle.MONTHLY:
+        """Calculate subscription period end date."""
+        if billing_cycle == BillingCycle.MONTHLY:
             return start_date + timedelta(days=30)
         elif billing_cycle == BillingCycle.YEARLY:
             return start_date + timedelta(days=365)
@@ -590,7 +611,8 @@ class SubscriptionManager:
             return start_date + timedelta(days=30)
             
     def _is_valid_upgrade(self, current_plan: SubscriptionPlan, new_plan: SubscriptionPlan) -> bool:
-        """Check if upgrade path is valid."""        plan_hierarchy = [
+        """Check if upgrade path is valid."""
+        plan_hierarchy = [
             SubscriptionPlan.FREE,
             SubscriptionPlan.CREATOR,
             SubscriptionPlan.PROFESSIONAL,
@@ -603,7 +625,8 @@ class SubscriptionManager:
         return new_index > current_index
         
     def _extend_subscription_period(self, subscription: Subscription) -> None:
-        """Extend subscription period for renewal."""        subscription.current_period_start = subscription.current_period_end
+        """Extend subscription period for renewal."""
+        subscription.current_period_start = subscription.current_period_end
         subscription.current_period_end = self._calculate_period_end(
             subscription.current_period_end,
             subscription.billing_cycle
@@ -613,7 +636,8 @@ class SubscriptionManager:
         self.db.commit()
         
     async def _get_current_usage(self, client_id: UUID) -> Dict[str, int]:
-        """Get current period usage metrics for client."""        # Implementation would query usage from various services
+        """Get current period usage metrics for client."""
+        # Implementation would query usage from various services
         return {
             "content_uploads": 0,
             "storage_used_gb": 0,
@@ -623,7 +647,8 @@ class SubscriptionManager:
         }
         
     async def _format_subscription_data(self, subscription: Subscription) -> Dict[str, Any]:
-        """Format subscription data for API response."""        return {
+        """Format subscription data for API response."""
+        return {
             "id": str(subscription.id),
             "plan": subscription.plan.value,
             "billing_cycle": subscription.billing_cycle.value,
@@ -646,7 +671,8 @@ class SubscriptionManager:
         subscription: Subscription,
         payment_method_id: str
     ) -> Dict[str, Any]:
-        """Process initial subscription payment."""        # Implementation would handle payment processing
+        """Process initial subscription payment."""
+        # Implementation would handle payment processing
         return {"success": True}
         
     async def _process_upgrade_payment(
@@ -655,7 +681,8 @@ class SubscriptionManager:
         amount: Decimal,
         payment_method_id: str
     ) -> Dict[str, Any]:
-        """Process upgrade prorated payment."""        # Implementation would handle upgrade payment
+        """Process upgrade prorated payment."""
+        # Implementation would handle upgrade payment
         return {"success": True}
         
     async def _process_renewal_payment(
@@ -663,7 +690,8 @@ class SubscriptionManager:
         subscription: Subscription,
         payment_method: PaymentMethod
     ) -> Dict[str, Any]:
-        """Process subscription renewal payment."""        # Implementation would handle renewal payment
+        """Process subscription renewal payment."""
+        # Implementation would handle renewal payment
         return {"success": True}
         
     async def _calculate_prorated_amount(
@@ -671,13 +699,16 @@ class SubscriptionManager:
         subscription: Subscription,
         new_price: Decimal
     ) -> Decimal:
-        """Calculate prorated amount for subscription change."""        # Implementation would calculate prorated amount
+        """Calculate prorated amount for subscription change."""
+        # Implementation would calculate prorated amount
         return Decimal('0.00')
         
     async def _calculate_refund_amount(self, subscription: Subscription) -> Decimal:
-        """Calculate refund amount for cancelled subscription."""        # Implementation would calculate refund amount
+        """Calculate refund amount for cancelled subscription."""
+        # Implementation would calculate refund amount
         return Decimal('0.00')
         
     async def _process_refund(self, subscription: Subscription, amount: Decimal) -> Dict[str, Any]:
-        """Process subscription refund."""        # Implementation would handle refund processing
+        """Process subscription refund."""
+        # Implementation would handle refund processing
         return {"success": True}

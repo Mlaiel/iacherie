@@ -10,7 +10,8 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: Unauthorized use, copying, or distribution of this code is strictly 
 prohibited and subject to legal action under German and international copyright law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -32,7 +33,8 @@ from .payment_processor import PaymentProcessor, PaymentRequest, PaymentGateway
 
 
 class DistributionType(Enum):
-    """Revenue distribution types"""    EQUAL_SPLIT = "equal_split"
+    """Revenue distribution types"""
+    EQUAL_SPLIT = "equal_split"
     PERFORMANCE_BASED = "performance_based"
     CUSTOM_PERCENTAGE = "custom_percentage"
     HYBRID = "hybrid"
@@ -40,7 +42,8 @@ class DistributionType(Enum):
 
 
 class StakeholderType(Enum):
-    """Types of revenue stakeholders"""    CREATOR = "creator"
+    """Types of revenue stakeholders"""
+    CREATOR = "creator"
     COLLABORATOR = "collaborator"
     PRODUCER = "producer"
     LABEL = "label"
@@ -51,7 +54,8 @@ class StakeholderType(Enum):
 
 
 class DistributionStatus(Enum):
-    """Distribution processing status"""    PENDING = "pending"
+    """Distribution processing status"""
+    PENDING = "pending"
     CALCULATING = "calculating"
     APPROVED = "approved"
     PROCESSING = "processing"
@@ -62,7 +66,8 @@ class DistributionStatus(Enum):
 
 @dataclass
 class Stakeholder:
-    """Revenue stakeholder definition"""    stakeholder_id: str
+    """Revenue stakeholder definition"""
+    stakeholder_id: str
     name: str
     type: StakeholderType
     percentage: Decimal
@@ -73,7 +78,8 @@ class Stakeholder:
 
 @dataclass
 class DistributionRule:
-    """Revenue distribution rule"""    rule_id: str
+    """Revenue distribution rule"""
+    rule_id: str
     content_id: str
     distribution_type: DistributionType
     stakeholders: List[Stakeholder]
@@ -86,7 +92,8 @@ class DistributionRule:
 
 @dataclass
 class DistributionCalculation:
-    """Revenue distribution calculation result"""    distribution_id: str
+    """Revenue distribution calculation result"""
+    distribution_id: str
     content_id: str
     total_revenue: Decimal
     currency: Currency
@@ -100,7 +107,8 @@ class DistributionCalculation:
 
 @dataclass
 class DistributionResult:
-    """Distribution execution result"""    distribution_id: str
+    """Distribution execution result"""
+    distribution_id: str
     status: DistributionStatus
     total_distributed: Decimal
     successful_payments: int
@@ -111,22 +119,26 @@ class DistributionResult:
 
 
 class DistributionEngine:
-    """    Professional revenue distribution engine for IA Influencer Agent platform.
+    """
+    Professional revenue distribution engine for IA Influencer Agent platform.
     
     Provides automated revenue distribution, stakeholder management,
     performance-based allocation, and comprehensive payout processing
     for content creator monetization.
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession, redis_client: Redis,
                  revenue_calculator: RevenueCalculator, payment_processor: PaymentProcessor):
-        """        Initialize DistributionEngine.
+        """
+        Initialize DistributionEngine.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
             revenue_calculator: Revenue calculation service
             payment_processor: Payment processing service
-        """        self.db_session = db_session
+        """
+        self.db_session = db_session
         self.redis = redis_client
         self.revenue_calculator = revenue_calculator
         self.payment_processor = payment_processor
@@ -148,14 +160,16 @@ class DistributionEngine:
         }
     
     async def create_distribution_rule(self, rule: DistributionRule) -> str:
-        """        Create a new revenue distribution rule.
+        """
+        Create a new revenue distribution rule.
         
         Args:
             rule: Distribution rule configuration
             
         Returns:
             Rule identifier
-        """        try:
+        """
+        try:
             # Validate rule
             await self._validate_distribution_rule(rule)
             
@@ -173,7 +187,8 @@ class DistributionEngine:
             raise
     
     async def calculate_distribution(self, content_id: str, period_days: int = 30) -> DistributionCalculation:
-        """        Calculate revenue distribution for content.
+        """
+        Calculate revenue distribution for content.
         
         Args:
             content_id: Content identifier
@@ -181,7 +196,8 @@ class DistributionEngine:
             
         Returns:
             Distribution calculation result
-        """        try:
+        """
+        try:
             # Get distribution rule for content
             rule = await self._get_distribution_rule(content_id)
             if not rule:
@@ -237,7 +253,8 @@ class DistributionEngine:
     
     async def execute_distribution(self, distribution_id: str, 
                                  auto_approve: bool = False) -> DistributionResult:
-        """        Execute revenue distribution and process payments.
+        """
+        Execute revenue distribution and process payments.
         
         Args:
             distribution_id: Distribution calculation identifier
@@ -245,7 +262,8 @@ class DistributionEngine:
             
         Returns:
             Distribution execution result
-        """        try:
+        """
+        try:
             # Get distribution calculation
             calculation = await self._get_distribution_calculation(distribution_id)
             if not calculation:
@@ -374,7 +392,8 @@ class DistributionEngine:
             raise
     
     async def get_distribution_history(self, content_id: str, limit: int = 50) -> List[Dict]:
-        """        Get distribution history for content.
+        """
+        Get distribution history for content.
         
         Args:
             content_id: Content identifier
@@ -382,7 +401,8 @@ class DistributionEngine:
             
         Returns:
             Distribution history records
-        """        try:
+        """
+        try:
             query = select(DistributionModel).where(
                 DistributionModel.content_id == content_id
             ).order_by(DistributionModel.created_at.desc()).limit(limit)
@@ -412,14 +432,16 @@ class DistributionEngine:
             return []
     
     async def optimize_distribution_strategy(self, content_id: str) -> Dict[str, Any]:
-        """        Analyze and optimize distribution strategy for content.
+        """
+        Analyze and optimize distribution strategy for content.
         
         Args:
             content_id: Content identifier
             
         Returns:
             Optimization recommendations and analysis
-        """        try:
+        """
+        try:
             # Get current distribution rule
             current_rule = await self._get_distribution_rule(content_id)
             if not current_rule:
@@ -502,14 +524,16 @@ class DistributionEngine:
             return {}
     
     async def process_bulk_distributions(self, content_ids: List[str]) -> List[DistributionResult]:
-        """        Process distributions for multiple content items.
+        """
+        Process distributions for multiple content items.
         
         Args:
             content_ids: List of content identifiers
             
         Returns:
             List of distribution results
-        """        try:
+        """
+        try:
             results = []
             
             for content_id in content_ids:
@@ -551,7 +575,8 @@ class DistributionEngine:
     # Private helper methods
     
     async def _validate_distribution_rule(self, rule: DistributionRule):
-        """Validate distribution rule"""        # Check stakeholder percentages sum to 100%
+        """Validate distribution rule"""
+        # Check stakeholder percentages sum to 100%
         total_percentage = sum(s.percentage for s in rule.stakeholders)
         if abs(total_percentage - Decimal('100.0')) > Decimal('0.01'):
             raise ValueError(f"Stakeholder percentages must sum to 100%, got {total_percentage}")
@@ -565,7 +590,8 @@ class DistributionEngine:
                 raise ValueError(f"Payment info required for stakeholder: {stakeholder.stakeholder_id}")
     
     async def _get_distribution_rule(self, content_id: str) -> Optional[DistributionRule]:
-        """Get distribution rule for content"""        # Check cache first
+        """Get distribution rule for content"""
+        # Check cache first
         cache_key = f"distribution_rule:{content_id}"
         cached_rule = await self._get_from_cache(cache_key)
         if cached_rule:
@@ -577,13 +603,15 @@ class DistributionEngine:
     
     async def _calculate_period_revenue(self, content_id: str, start_date: datetime,
                                       end_date: datetime) -> Decimal:
-        """Calculate total revenue for period"""        # Use revenue calculator to get period revenue
+        """Calculate total revenue for period"""
+        # Use revenue calculator to get period revenue
         # Placeholder implementation
         return Decimal('1000.00')  # Sample revenue
     
     async def _get_performance_metrics(self, content_id: str, start_date: datetime,
                                      end_date: datetime) -> Dict[str, Any]:
-        """Get performance metrics for content"""        # Get performance data from analytics
+        """Get performance metrics for content"""
+        # Get performance data from analytics
         # Placeholder implementation
         return {
             'views': 50000,
@@ -596,7 +624,8 @@ class DistributionEngine:
     async def _calculate_stakeholder_amounts(self, rule: DistributionRule, 
                                            total_revenue: Decimal,
                                            performance_metrics: Dict) -> Dict[str, Decimal]:
-        """Calculate distribution amounts for stakeholders"""        amounts = {}
+        """Calculate distribution amounts for stakeholders"""
+        amounts = {}
         
         if rule.distribution_type == DistributionType.EQUAL_SPLIT:
             # Equal distribution
@@ -628,7 +657,8 @@ class DistributionEngine:
     async def _calculate_performance_based_distribution(self, rule: DistributionRule,
                                                       total_revenue: Decimal,
                                                       performance_metrics: Dict) -> Dict[str, Decimal]:
-        """Calculate performance-based distribution"""        amounts = {}
+        """Calculate performance-based distribution"""
+        amounts = {}
         
         # Calculate performance scores for each stakeholder
         stakeholder_scores = {}
@@ -655,7 +685,8 @@ class DistributionEngine:
     
     async def _calculate_stakeholder_contribution(self, stakeholder: Stakeholder,
                                                 performance_metrics: Dict) -> Decimal:
-        """Calculate stakeholder contribution score"""        # Base contribution based on stakeholder type
+        """Calculate stakeholder contribution score"""
+        # Base contribution based on stakeholder type
         type_weights = {
             StakeholderType.CREATOR: Decimal('1.0'),
             StakeholderType.COLLABORATOR: Decimal('0.8'),
@@ -680,22 +711,26 @@ class DistributionEngine:
         return base_score * performance_multiplier
     
     async def _store_distribution_rule(self, rule: DistributionRule) -> str:
-        """Store distribution rule in database"""        # Implementation would store in database
+        """Store distribution rule in database"""
+        # Implementation would store in database
         return rule.rule_id
     
     async def _cache_distribution_rule(self, rule_id: str, rule: DistributionRule):
-        """Cache distribution rule"""        cache_key = f"distribution_rule:{rule.content_id}"
+        """Cache distribution rule"""
+        cache_key = f"distribution_rule:{rule.content_id}"
         await self._save_to_cache(cache_key, rule.__dict__)
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
-        """Get data from cache"""        try:
+        """Get data from cache"""
+        try:
             cached_data = await self.redis.get(key)
             return json.loads(cached_data) if cached_data else None
         except:
             return None
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
-        """Save data to cache"""        try:
+        """Save data to cache"""
+        try:
             ttl = ttl or self.cache_ttl
             await self.redis.setex(key, ttl, json.dumps(data, default=str))
         except Exception as e:
@@ -704,16 +739,20 @@ class DistributionEngine:
     # Additional helper methods would be implemented here...
     
     async def _store_distribution_calculation(self, calculation: DistributionCalculation):
-        """Store distribution calculation in database"""        pass
+        """Store distribution calculation in database"""
+        pass
     
     async def _get_distribution_calculation(self, distribution_id: str) -> Optional[DistributionCalculation]:
-        """Get distribution calculation from database"""        return None
+        """Get distribution calculation from database"""
+        return None
     
     async def _update_distribution_status(self, distribution_id: str, status: DistributionStatus):
-        """Update distribution status"""        pass
+        """Update distribution status"""
+        pass
     
     async def _get_stakeholder_info(self, stakeholder_id: str) -> Stakeholder:
-        """Get stakeholder information"""        # Placeholder implementation
+        """Get stakeholder information"""
+        # Placeholder implementation
         return Stakeholder(
             stakeholder_id=stakeholder_id,
             name="Sample Stakeholder",
@@ -725,13 +764,17 @@ class DistributionEngine:
         )
     
     async def _analyze_historical_distributions(self, content_id: str) -> Dict:
-        """Analyze historical distribution performance"""        return {'average_amount': 500.0, 'distribution_count': 12}
+        """Analyze historical distribution performance"""
+        return {'average_amount': 500.0, 'distribution_count': 12}
     
     async def _calculate_performance_impact(self, content_id: str) -> Dict:
-        """Calculate potential performance impact"""        return {'potential_increase': 0.15}
+        """Calculate potential performance impact"""
+        return {'potential_increase': 0.15}
     
     async def _analyze_stakeholder_performance(self, content_id: str) -> Dict:
-        """Analyze stakeholder performance"""        return {'underperforming_count': 1}
+        """Analyze stakeholder performance"""
+        return {'underperforming_count': 1}
     
     async def _analyze_distribution_frequency(self, content_id: str) -> Dict:
-        """Analyze optimal distribution frequency"""        return {'optimal_frequency': 'weekly'}
+        """Analyze optimal distribution frequency"""
+        return {'optimal_frequency': 'weekly'}

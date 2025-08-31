@@ -13,7 +13,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -22,7 +23,8 @@ import re
 
 
 class AuthenticationType(str, Enum):
-    """Authentication types supported by the gateway."""    NONE = "none"
+    """Authentication types supported by the gateway."""
+    NONE = "none"
     JWT = "jwt"
     OAUTH2 = "oauth2"
     API_KEY = "api_key"
@@ -31,14 +33,16 @@ class AuthenticationType(str, Enum):
 
 
 class RateLimitType(str, Enum):
-    """Rate limiting types."""    FIXED_WINDOW = "fixed_window"
+    """Rate limiting types."""
+    FIXED_WINDOW = "fixed_window"
     SLIDING_WINDOW = "sliding_window"
     TOKEN_BUCKET = "token_bucket"
     LEAKY_BUCKET = "leaky_bucket"
 
 
 class LoadBalancingMethod(str, Enum):
-    """Load balancing methods."""    ROUND_ROBIN = "round_robin"
+    """Load balancing methods."""
+    ROUND_ROBIN = "round_robin"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     LEAST_CONNECTIONS = "least_connections"
     IP_HASH = "ip_hash"
@@ -46,7 +50,8 @@ class LoadBalancingMethod(str, Enum):
 
 
 class CacheStrategy(str, Enum):
-    """Cache strategies."""    NO_CACHE = "no_cache"
+    """Cache strategies."""
+    NO_CACHE = "no_cache"
     CACHE_ALL = "cache_all"
     CACHE_GET_ONLY = "cache_get_only"
     SMART_CACHE = "smart_cache"
@@ -54,7 +59,8 @@ class CacheStrategy(str, Enum):
 
 @dataclass
 class RouteConfig:
-    """Route configuration for API gateway."""    path: str
+    """Route configuration for API gateway."""
+    path: str
     methods: List[str] = field(default_factory=lambda: ["GET"])
     upstream: str = ""
     timeout: int = 30
@@ -74,7 +80,8 @@ class RouteConfig:
 
 @dataclass
 class UpstreamConfig:
-    """Upstream service configuration."""    name: str
+    """Upstream service configuration."""
+    name: str
     servers: List[Dict[str, Any]]
     load_balancing: LoadBalancingMethod = LoadBalancingMethod.ROUND_ROBIN
     health_check: Optional[Dict[str, Any]] = None
@@ -88,7 +95,8 @@ class UpstreamConfig:
 
 @dataclass
 class RateLimitConfig:
-    """Rate limiting configuration."""    type: RateLimitType = RateLimitType.SLIDING_WINDOW
+    """Rate limiting configuration."""
+    type: RateLimitType = RateLimitType.SLIDING_WINDOW
     requests: int = 1000
     window: int = 60  # seconds
     burst: int = 100
@@ -100,7 +108,8 @@ class RateLimitConfig:
 
 @dataclass
 class CacheConfig:
-    """Cache configuration."""    strategy: CacheStrategy = CacheStrategy.SMART_CACHE
+    """Cache configuration."""
+    strategy: CacheStrategy = CacheStrategy.SMART_CACHE
     ttl: int = 300  # seconds
     max_size: int = 10000
     key_pattern: str = "{method}:{path}:{query_hash}"
@@ -112,7 +121,8 @@ class CacheConfig:
 
 @dataclass
 class CORSConfig:
-    """CORS configuration."""    allowed_origins: List[str] = field(default_factory=lambda: ["*"])
+    """CORS configuration."""
+    allowed_origins: List[str] = field(default_factory=lambda: ["*"])
     allowed_methods: List[str] = field(default_factory=lambda: ["GET", "POST", "PUT", "DELETE", "OPTIONS"])
     allowed_headers: List[str] = field(default_factory=lambda: ["*"])
     exposed_headers: List[str] = field(default_factory=list)
@@ -123,7 +133,8 @@ class CORSConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration."""    jwt_secret: Optional[str] = None
+    """Security configuration."""
+    jwt_secret: Optional[str] = None
     jwt_algorithm: str = "HS256"
     jwt_expiration: int = 3600
     api_key_header: str = "X-API-Key"
@@ -140,9 +151,11 @@ class SecurityConfig:
 
 
 class APIGatewayConfig(BaseSettings):
-    """    Centralized API gateway configuration for microservices architecture.
+    """
+    Centralized API gateway configuration for microservices architecture.
     Supports routing, load balancing, authentication, rate limiting, and more.
-    """    
+    """
+    
     # Server settings
     host: str = Field("0.0.0.0", env="API_GATEWAY_HOST")
     port: int = Field(8000, env="API_GATEWAY_PORT")
@@ -229,7 +242,8 @@ class APIGatewayConfig(BaseSettings):
         case_sensitive = False
         
     def get_global_rate_limit_config(self) -> RateLimitConfig:
-        """Get global rate limiting configuration."""        return RateLimitConfig(
+        """Get global rate limiting configuration."""
+        return RateLimitConfig(
             requests=self.default_rate_limit_requests,
             window=self.default_rate_limit_window,
             redis_host=self.cache_redis_host,
@@ -238,7 +252,8 @@ class APIGatewayConfig(BaseSettings):
         )
     
     def get_global_cache_config(self) -> CacheConfig:
-        """Get global cache configuration."""        return CacheConfig(
+        """Get global cache configuration."""
+        return CacheConfig(
             ttl=self.default_cache_ttl,
             redis_host=self.cache_redis_host,
             redis_port=self.cache_redis_port,
@@ -246,14 +261,16 @@ class APIGatewayConfig(BaseSettings):
         )
     
     def get_global_cors_config(self) -> CORSConfig:
-        """Get global CORS configuration."""        return CORSConfig(
+        """Get global CORS configuration."""
+        return CORSConfig(
             allowed_origins=self.cors_allowed_origins,
             allowed_methods=self.cors_allowed_methods,
             enabled=self.cors_enabled
         )
     
     def get_security_config(self) -> SecurityConfig:
-        """Get security configuration."""        return SecurityConfig(
+        """Get security configuration."""
+        return SecurityConfig(
             jwt_secret=self.jwt_secret_key,
             jwt_algorithm=self.jwt_algorithm,
             jwt_expiration=self.jwt_expiration

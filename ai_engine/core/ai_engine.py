@@ -7,7 +7,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
-"""import asyncio
+"""
+import asyncio
 import threading
 import time
 import gc
@@ -48,7 +49,8 @@ logger = logging.getLogger(__name__)
 
 
 class AIModelType(Enum):
-    """Supported AI model types"""    TRANSFORMER = "transformer"
+    """Supported AI model types"""
+    TRANSFORMER = "transformer"
     CNN = "cnn"
     RNN = "rnn"
     DIFFUSION = "diffusion"
@@ -64,7 +66,8 @@ class AIModelType(Enum):
 
 
 class ModelStatus(Enum):
-    """AI model status states"""    UNLOADED = "unloaded"
+    """AI model status states"""
+    UNLOADED = "unloaded"
     LOADING = "loading"
     LOADED = "loaded"
     READY = "ready"
@@ -74,7 +77,8 @@ class ModelStatus(Enum):
 
 
 class DeviceType(Enum):
-    """Device types for model execution"""    CPU = "cpu"
+    """Device types for model execution"""
+    CPU = "cpu"
     CUDA = "cuda"
     MPS = "mps"  # Apple Metal
     AUTO = "auto"
@@ -82,7 +86,8 @@ class DeviceType(Enum):
 
 @dataclass
 class ModelConfig:
-    """Configuration for AI model"""    name: str
+    """Configuration for AI model"""
+    name: str
     model_type: AIModelType
     model_path: str
     device: DeviceType = DeviceType.AUTO
@@ -98,7 +103,8 @@ class ModelConfig:
     custom_config: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             "name": self.name,
             "model_type": self.model_type.value,
             "model_path": self.model_path,
@@ -118,7 +124,8 @@ class ModelConfig:
 
 @dataclass
 class ModelMetrics:
-    """Metrics for AI model performance"""    model_name: str
+    """Metrics for AI model performance"""
+    model_name: str
     load_time: float = 0.0
     inference_count: int = 0
     total_inference_time: float = 0.0
@@ -130,25 +137,29 @@ class ModelMetrics:
     cache_misses: int = 0
     
     def update_inference_stats(self, inference_time: float):
-        """Update inference statistics"""        self.inference_count += 1
+        """Update inference statistics"""
+        self.inference_count += 1
         self.total_inference_time += inference_time
         self.average_inference_time = self.total_inference_time / self.inference_count
         self.last_used = datetime.utcnow()
         
     def update_cache_stats(self, hit: bool):
-        """Update cache statistics"""        if hit:
+        """Update cache statistics"""
+        if hit:
             self.cache_hits += 1
         else:
             self.cache_misses += 1
             
     @property
     def cache_hit_rate(self) -> float:
-        """Calculate cache hit rate"""        total = self.cache_hits + self.cache_misses
+        """Calculate cache hit rate"""
+        total = self.cache_hits + self.cache_misses
         return self.cache_hits / total if total > 0 else 0.0
 
 
 class ModelCache:
-    """Advanced caching system for AI model results"""    
+    """Advanced caching system for AI model results"""
+    
     def __init__(self, max_size: int = 1000, ttl_seconds: int = 3600):
         self.max_size = max_size
         self.ttl_seconds = ttl_seconds
@@ -156,7 +167,8 @@ class ModelCache:
         self._lock = threading.RLock()
         
     def _generate_key(self, input_data: Any, model_config: Dict[str, Any]) -> str:
-        """Generate cache key for input and configuration"""        # Create deterministic hash from input and config
+        """Generate cache key for input and configuration"""
+        # Create deterministic hash from input and config
         content = json.dumps({
             "input": str(input_data),
             "config": model_config
@@ -164,7 +176,8 @@ class ModelCache:
         return hashlib.sha256(content).hexdigest()
         
     def get(self, input_data: Any, model_config: Dict[str, Any]) -> Optional[Any]:
-        """Get cached result"""        key = self._generate_key(input_data, model_config)
+        """Get cached result"""
+        key = self._generate_key(input_data, model_config)
         
         with self._lock:
             if key in self.cache:
@@ -182,7 +195,8 @@ class ModelCache:
         return None
         
     def put(self, input_data: Any, model_config: Dict[str, Any], result: Any):
-        """Cache result"""        key = self._generate_key(input_data, model_config)
+        """Cache result"""
+        key = self._generate_key(input_data, model_config)
         
         with self._lock:
             # Remove oldest entries if cache is full
@@ -201,11 +215,13 @@ class ModelCache:
             }
             
     def clear(self):
-        """Clear all cached entries"""        with self._lock:
+        """Clear all cached entries"""
+        with self._lock:
             self.cache.clear()
             
     def get_stats(self) -> Dict[str, Any]:
-        """Get cache statistics"""        with self._lock:
+        """Get cache statistics"""
+        with self._lock:
             total_access = sum(entry["access_count"] for entry in self.cache.values())
             return {
                 "size": len(self.cache),
@@ -216,7 +232,8 @@ class ModelCache:
 
 
 class AIModel:
-    """Wrapper for AI model with advanced lifecycle management"""    
+    """Wrapper for AI model with advanced lifecycle management"""
+    
     def __init__(self, config: ModelConfig):
         self.config = config
         self.status = ModelStatus.UNLOADED
@@ -232,7 +249,8 @@ class AIModel:
         logger.info(f"AI model '{config.name}' initialized with config: {config.model_type.value}")
         
     def load(self) -> bool:
-        """Load the AI model"""        if self.status in [ModelStatus.LOADED, ModelStatus.READY, ModelStatus.LOADING]:
+        """Load the AI model"""
+        if self.status in [ModelStatus.LOADED, ModelStatus.READY, ModelStatus.LOADING]:
             return True
             
         with self._lock:
@@ -285,7 +303,8 @@ class AIModel:
                 )
                 
     def _determine_device(self) -> str:
-        """Determine the best device for model execution"""        if self.config.device == DeviceType.AUTO:
+        """Determine the best device for model execution"""
+        if self.config.device == DeviceType.AUTO:
             if PYTORCH_AVAILABLE and torch.cuda.is_available():
                 return "cuda"
             elif PYTORCH_AVAILABLE and hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
@@ -296,7 +315,8 @@ class AIModel:
             return self.config.device.value
             
     def _load_transformer_model(self):
-        """Load transformer model"""        if not PYTORCH_AVAILABLE:
+        """Load transformer model"""
+        if not PYTORCH_AVAILABLE:
             raise ConfigurationError("PyTorch not available for transformer model")
             
         from transformers import AutoModel, AutoTokenizer
@@ -310,7 +330,8 @@ class AIModel:
         self.model.eval()  # Set to evaluation mode
         
     def _load_cnn_model(self):
-        """Load CNN model"""        if not PYTORCH_AVAILABLE:
+        """Load CNN model"""
+        if not PYTORCH_AVAILABLE:
             raise ConfigurationError("PyTorch not available for CNN model")
             
         # Load custom CNN model
@@ -321,7 +342,8 @@ class AIModel:
             raise ConfigurationError(f"Unsupported CNN model format: {model_path.suffix}")
             
     def _load_audio_model(self):
-        """Load audio processing model"""        try:
+        """Load audio processing model"""
+        try:
             from transformers import pipeline
             self.pipeline = pipeline(
                 "audio-classification",
@@ -332,7 +354,8 @@ class AIModel:
             raise ModelConnectionError(f"Failed to load audio model: {e}")
             
     def _load_image_model(self):
-        """Load image processing model"""        try:
+        """Load image processing model"""
+        try:
             from transformers import pipeline
             self.pipeline = pipeline(
                 "image-classification",
@@ -343,11 +366,13 @@ class AIModel:
             raise ModelConnectionError(f"Failed to load image model: {e}")
             
     def _load_generic_model(self):
-        """Load generic model"""        # Implement generic model loading logic
+        """Load generic model"""
+        # Implement generic model loading logic
         logger.warning(f"Generic model loading for type {self.config.model_type.value}")
         
     def unload(self):
-        """Unload the AI model to free memory"""        with self._lock:
+        """Unload the AI model to free memory"""
+        with self._lock:
             if self.status == ModelStatus.UNLOADED:
                 return
                 
@@ -376,7 +401,8 @@ class AIModel:
                 self.status = ModelStatus.ERROR
                 
     def predict(self, input_data: Any, use_cache: bool = True, **kwargs) -> Any:
-        """Make prediction with the model"""        if self.status != ModelStatus.READY:
+        """Make prediction with the model"""
+        if self.status != ModelStatus.READY:
             if not self.load():
                 raise ModelConnectionError(f"Model '{self.config.name}' is not ready")
                 
@@ -431,10 +457,12 @@ class AIModel:
                 raise
                 
     def _predict_with_pipeline(self, input_data: Any, **kwargs) -> Any:
-        """Predict using Hugging Face pipeline"""        return self.pipeline(input_data, **kwargs)
+        """Predict using Hugging Face pipeline"""
+        return self.pipeline(input_data, **kwargs)
         
     def _predict_with_transformer(self, input_data: str, **kwargs) -> Any:
-        """Predict using transformer model"""        # Tokenize input
+        """Predict using transformer model"""
+        # Tokenize input
         inputs = self.tokenizer(
             input_data,
             return_tensors="pt",
@@ -453,7 +481,8 @@ class AIModel:
         return outputs
         
     def _predict_with_model(self, input_data: Any, **kwargs) -> Any:
-        """Predict using generic model"""        # Implement generic prediction logic
+        """Predict using generic model"""
+        # Implement generic prediction logic
         if hasattr(self.model, 'predict'):
             return self.model.predict(input_data)
         elif hasattr(self.model, '__call__'):
@@ -463,11 +492,13 @@ class AIModel:
             
     @property
     def is_idle(self) -> bool:
-        """Check if model has been idle for auto-unload threshold"""        idle_time = (datetime.utcnow() - self._last_activity).total_seconds()
+        """Check if model has been idle for auto-unload threshold"""
+        idle_time = (datetime.utcnow() - self._last_activity).total_seconds()
         return idle_time > self.config.auto_unload_after_seconds
         
     def get_metrics(self) -> Dict[str, Any]:
-        """Get model performance metrics"""        return {
+        """Get model performance metrics"""
+        return {
             "model_name": self.config.name,
             "model_type": self.config.model_type.value,
             "status": self.status.value,
@@ -483,7 +514,8 @@ class AIModel:
 
 
 class AIEngineManager:
-    """    Enterprise-grade AI engine orchestration and lifecycle management
+    """
+    Enterprise-grade AI engine orchestration and lifecycle management
     
     Features:
     - Dynamic model loading/unloading
@@ -492,7 +524,8 @@ class AIEngineManager:
     - Performance monitoring
     - Error recovery and failover
     - Memory management and caching
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.models: Dict[str, AIModel] = {}
@@ -512,7 +545,8 @@ class AIEngineManager:
         logger.info("AI Engine Manager initialized with advanced orchestration capabilities")
         
     def _start_cleanup_thread(self):
-        """Start background cleanup thread"""        if self._cleanup_thread is None:
+        """Start background cleanup thread"""
+        if self._cleanup_thread is None:
             self._cleanup_thread = threading.Thread(
                 target=self._cleanup_loop,
                 daemon=True
@@ -520,14 +554,16 @@ class AIEngineManager:
             self._cleanup_thread.start()
             
     def _cleanup_loop(self):
-        """Background cleanup loop for idle models"""        while not self._stop_cleanup.wait(self.auto_cleanup_interval):
+        """Background cleanup loop for idle models"""
+        while not self._stop_cleanup.wait(self.auto_cleanup_interval):
             try:
                 self._cleanup_idle_models()
             except Exception as e:
                 logger.error(f"Error in cleanup loop: {e}")
                 
     def _cleanup_idle_models(self):
-        """Unload idle models to free resources"""        with self._lock:
+        """Unload idle models to free resources"""
+        with self._lock:
             idle_models = [
                 name for name, model in self.models.items()
                 if model.is_idle and model.status == ModelStatus.READY
@@ -541,7 +577,8 @@ class AIEngineManager:
                     logger.error(f"Error auto-unloading model {model_name}: {e}")
                     
     def register_model(self, config: ModelConfig) -> bool:
-        """Register a new AI model"""        with self._lock:
+        """Register a new AI model"""
+        with self._lock:
             if config.name in self.models:
                 logger.warning(f"Model '{config.name}' already registered")
                 return False
@@ -553,7 +590,8 @@ class AIEngineManager:
             return True
             
     def unregister_model(self, model_name: str) -> bool:
-        """Unregister and cleanup AI model"""        with self._lock:
+        """Unregister and cleanup AI model"""
+        with self._lock:
             if model_name not in self.models:
                 logger.warning(f"Model '{model_name}' not found")
                 return False
@@ -566,13 +604,15 @@ class AIEngineManager:
             return True
             
     def load_model(self, model_name: str) -> bool:
-        """Load a specific model"""        if model_name not in self.models:
+        """Load a specific model"""
+        if model_name not in self.models:
             raise ModelConnectionError(f"Model '{model_name}' not registered")
             
         return self.models[model_name].load()
         
     def unload_model(self, model_name: str) -> bool:
-        """Unload a specific model"""        if model_name not in self.models:
+        """Unload a specific model"""
+        if model_name not in self.models:
             logger.warning(f"Model '{model_name}' not found")
             return False
             
@@ -587,7 +627,8 @@ class AIEngineManager:
         timeout: Optional[float] = None,
         **kwargs
     ) -> Any:
-        """Make prediction with specified model"""        if model_name not in self.models:
+        """Make prediction with specified model"""
+        if model_name not in self.models:
             raise ModelConnectionError(f"Model '{model_name}' not registered")
             
         model = self.models[model_name]
@@ -609,7 +650,8 @@ class AIEngineManager:
         use_cache: bool = True,
         **kwargs
     ) -> Any:
-        """Asynchronous prediction"""        loop = asyncio.get_event_loop()
+        """Asynchronous prediction"""
+        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.model_pool,
             self.predict,
@@ -626,7 +668,8 @@ class AIEngineManager:
         use_cache: bool = True,
         max_workers: Optional[int] = None
     ) -> List[Any]:
-        """Batch prediction with parallel processing"""        if model_name not in self.models:
+        """Batch prediction with parallel processing"""
+        if model_name not in self.models:
             raise ModelConnectionError(f"Model '{model_name}' not registered")
             
         max_workers = max_workers or min(len(input_batch), 4)
@@ -649,13 +692,15 @@ class AIEngineManager:
         return results
         
     def get_model_status(self, model_name: str) -> Optional[Dict[str, Any]]:
-        """Get detailed model status and metrics"""        if model_name not in self.models:
+        """Get detailed model status and metrics"""
+        if model_name not in self.models:
             return None
             
         return self.models[model_name].get_metrics()
         
     def get_engine_status(self) -> Dict[str, Any]:
-        """Get comprehensive engine status"""        with self._lock:
+        """Get comprehensive engine status"""
+        with self._lock:
             model_statuses = {}
             total_inference_count = 0
             total_error_count = 0
@@ -686,7 +731,8 @@ class AIEngineManager:
             }
             
     def optimize_memory(self) -> Dict[str, Any]:
-        """Optimize memory usage by unloading least used models"""        with self._lock:
+        """Optimize memory usage by unloading least used models"""
+        with self._lock:
             optimization_results = {
                 "models_unloaded": [],
                 "memory_freed_estimate": 0,
@@ -719,7 +765,8 @@ class AIEngineManager:
             return optimization_results
             
     def health_check(self) -> Dict[str, Any]:
-        """Comprehensive health check of AI engine"""        health_status = {
+        """Comprehensive health check of AI engine"""
+        health_status = {
             "status": "healthy",
             "issues": [],
             "recommendations": [],
@@ -758,7 +805,8 @@ class AIEngineManager:
         return health_status
         
     def shutdown(self):
-        """Graceful shutdown of AI engine"""        logger.info("Shutting down AI Engine Manager...")
+        """Graceful shutdown of AI engine"""
+        logger.info("Shutting down AI Engine Manager...")
         
         # Stop cleanup thread
         self._stop_cleanup.set()
@@ -785,7 +833,8 @@ ai_engine = AIEngineManager()
 
 @contextmanager
 def ai_model_context(model_name: str, auto_unload: bool = False):
-    """Context manager for AI model usage"""    try:
+    """Context manager for AI model usage"""
+    try:
         # Ensure model is loaded
         ai_engine.load_model(model_name)
         yield ai_engine.models[model_name]
@@ -800,14 +849,16 @@ def ai_inference_decorator(
     cache_results: bool = True,
     timeout: Optional[float] = None
 ):
-    """    Decorator for automatic AI inference
+    """
+    Decorator for automatic AI inference
     
     Args:
         model_name: Name of the AI model to use
         input_key: Key in kwargs to use as model input
         cache_results: Whether to cache inference results
         timeout: Inference timeout in seconds
-    """    def decorator(func: Callable) -> Callable:
+    """
+    def decorator(func: Callable) -> Callable:
         @wraps(func)
         def wrapper(*args, **kwargs):
             # Extract input data

@@ -22,7 +22,8 @@ This code is proprietary and belongs to Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit 
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, Any, Optional, Union
+"""
+from typing import Dict, Any, Optional, Union
 from dataclasses import dataclass, field
 from enum import Enum
 
@@ -41,7 +42,8 @@ from .platform_integration import PlatformIntegrationSecurityConfig, get_platfor
 
 
 class SecurityProfile(Enum):
-    """Security profile presets for different deployment scenarios."""    DEVELOPMENT = "development"
+    """Security profile presets for different deployment scenarios."""
+    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     HIGH_SECURITY = "high_security"
@@ -49,14 +51,16 @@ class SecurityProfile(Enum):
 
 
 class CreatorTier(Enum):
-    """Creator subscription tiers affecting security configurations."""    FREE = "free"
+    """Creator subscription tiers affecting security configurations."""
+    FREE = "free"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
 
 
 @dataclass
 class SecurityConfigurationManager:
-    """Central security configuration manager."""    
+    """Central security configuration manager."""
+    
     # Core security configurations
     authentication: AuthenticationConfig = field(default_factory=get_authentication_config)
     authorization: AuthorizationConfig = field(default_factory=get_authorization_config)
@@ -79,7 +83,8 @@ class SecurityConfigurationManager:
     strict_mode: bool = True
     
     def get_config_by_name(self, config_name: str) -> Optional[Any]:
-        """Get configuration by name."""        config_mapping = {
+        """Get configuration by name."""
+        config_mapping = {
             "authentication": self.authentication,
             "authorization": self.authorization,
             "encryption": self.encryption,
@@ -96,7 +101,8 @@ class SecurityConfigurationManager:
         return config_mapping.get(config_name)
     
     def apply_security_profile(self, profile: SecurityProfile) -> None:
-        """Apply security profile configurations."""        profile_configs = self._get_profile_configurations(profile)
+        """Apply security profile configurations."""
+        profile_configs = self._get_profile_configurations(profile)
         
         for config_name, overrides in profile_configs.items():
             config = self.get_config_by_name(config_name)
@@ -104,7 +110,8 @@ class SecurityConfigurationManager:
                 self._apply_config_overrides(config, overrides)
     
     def apply_creator_tier_config(self, tier: CreatorTier) -> None:
-        """Apply creator tier-specific security configurations."""        tier_configs = self._get_tier_configurations(tier)
+        """Apply creator tier-specific security configurations."""
+        tier_configs = self._get_tier_configurations(tier)
         
         for config_name, overrides in tier_configs.items():
             config = self.get_config_by_name(config_name)
@@ -112,7 +119,8 @@ class SecurityConfigurationManager:
                 self._apply_config_overrides(config, overrides)
     
     def validate_all_configurations(self) -> Dict[str, bool]:
-        """Validate all security configurations."""        validation_results = {}
+        """Validate all security configurations."""
+        validation_results = {}
         
         # Import validation functions
         from .authentication import validate_authentication_config
@@ -156,7 +164,8 @@ class SecurityConfigurationManager:
         return validation_results
     
     def get_security_summary(self) -> Dict[str, Any]:
-        """Get a summary of current security configuration."""        return {
+        """Get a summary of current security configuration."""
+        return {
             "profile": self.security_profile.value,
             "strict_mode": self.strict_mode,
             "debug_mode": self.debug_mode,
@@ -185,7 +194,8 @@ class SecurityConfigurationManager:
         }
     
     def _get_profile_configurations(self, profile: SecurityProfile) -> Dict[str, Dict[str, Any]]:
-        """Get configuration overrides for security profiles."""        profile_configs = {
+        """Get configuration overrides for security profiles."""
+        profile_configs = {
             SecurityProfile.DEVELOPMENT: {
                 "authentication": {
                     "jwt.access_token_expire_minutes": 60,
@@ -261,7 +271,8 @@ class SecurityConfigurationManager:
         return profile_configs.get(profile, {})
     
     def _get_tier_configurations(self, tier: CreatorTier) -> Dict[str, Dict[str, Any]]:
-        """Get configuration overrides for creator tiers."""        tier_configs = {
+        """Get configuration overrides for creator tiers."""
+        tier_configs = {
             CreatorTier.FREE: {
                 "rate_limiting": {
                     "requests_per_minute": 50,
@@ -311,7 +322,8 @@ class SecurityConfigurationManager:
         return tier_configs.get(tier, {})
     
     def _apply_config_overrides(self, config: Any, overrides: Dict[str, Any]) -> None:
-        """Apply configuration overrides to a config object."""        for key, value in overrides.items():
+        """Apply configuration overrides to a config object."""
+        for key, value in overrides.items():
             if "." in key:
                 # Handle nested attributes
                 parts = key.split(".")
@@ -329,7 +341,8 @@ security_manager = SecurityConfigurationManager()
 
 
 def get_security_manager() -> SecurityConfigurationManager:
-    """Get the global security configuration manager instance."""    return security_manager
+    """Get the global security configuration manager instance."""
+    return security_manager
 
 
 def initialize_security_config(
@@ -337,7 +350,8 @@ def initialize_security_config(
     creator_tier: Optional[CreatorTier] = None,
     custom_overrides: Optional[Dict[str, Any]] = None
 ) -> SecurityConfigurationManager:
-    """Initialize security configuration with profile and tier settings."""    manager = get_security_manager()
+    """Initialize security configuration with profile and tier settings."""
+    manager = get_security_manager()
     
     # Apply security profile
     manager.apply_security_profile(profile)
@@ -365,7 +379,8 @@ def initialize_security_config(
 
 
 def get_config_for_creator(creator_id: str, creator_tier: CreatorTier) -> SecurityConfigurationManager:
-    """Get security configuration customized for a specific creator."""    manager = SecurityConfigurationManager()
+    """Get security configuration customized for a specific creator."""
+    manager = SecurityConfigurationManager()
     manager.apply_creator_tier_config(creator_tier)
     
     # Add creator-specific customizations here if needed

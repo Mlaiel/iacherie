@@ -6,7 +6,8 @@ and security monitoring in the IA Influencer Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""from datetime import datetime
+"""
+from datetime import datetime
 from decimal import Decimal
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any
@@ -17,7 +18,8 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class AlertSeverityEnum(str, Enum):
-    """Alert severity levels"""    LOW = "low"
+    """Alert severity levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -25,7 +27,8 @@ class AlertSeverityEnum(str, Enum):
 
 
 class AlertStatusEnum(str, Enum):
-    """Alert processing status"""    PENDING = "pending"
+    """Alert processing status"""
+    PENDING = "pending"
     INVESTIGATING = "investigating"
     CONFIRMED = "confirmed"
     FALSE_POSITIVE = "false_positive"
@@ -35,7 +38,8 @@ class AlertStatusEnum(str, Enum):
 
 
 class ThreatTypeEnum(str, Enum):
-    """Types of detected threats"""    UNAUTHORIZED_USE = "unauthorized_use"
+    """Types of detected threats"""
+    UNAUTHORIZED_USE = "unauthorized_use"
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
     CONTENT_THEFT = "content_theft"
@@ -48,7 +52,8 @@ class ThreatTypeEnum(str, Enum):
 
 
 class PlatformEnum(str, Enum):
-    """Supported platforms for monitoring"""    YOUTUBE = "youtube"
+    """Supported platforms for monitoring"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -66,7 +71,8 @@ class PlatformEnum(str, Enum):
 
 
 class ActionTypeEnum(str, Enum):
-    """Actions that can be taken on threats"""    TAKEDOWN_REQUEST = "takedown_request"
+    """Actions that can be taken on threats"""
+    TAKEDOWN_REQUEST = "takedown_request"
     DMCA_NOTICE = "dmca_notice"
     COPYRIGHT_CLAIM = "copyright_claim"
     LEGAL_ACTION = "legal_action"
@@ -79,7 +85,8 @@ class ActionTypeEnum(str, Enum):
 
 
 class EvidenceTypeEnum(str, Enum):
-    """Types of evidence collected"""    SCREENSHOT = "screenshot"
+    """Types of evidence collected"""
+    SCREENSHOT = "screenshot"
     VIDEO_RECORDING = "video_recording"
     METADATA_CAPTURE = "metadata_capture"
     HTML_SOURCE = "html_source"
@@ -90,7 +97,8 @@ class EvidenceTypeEnum(str, Enum):
 
 
 class ProtectionLevelEnum(str, Enum):
-    """Protection monitoring levels"""    BASIC = "basic"
+    """Protection monitoring levels"""
+    BASIC = "basic"
     STANDARD = "standard"
     ENHANCED = "enhanced"
     PREMIUM = "premium"
@@ -98,7 +106,8 @@ class ProtectionLevelEnum(str, Enum):
 
 
 class ThreatIntelligenceSchema(BaseModel):
-    """Schema for threat intelligence data"""    threat_id: str = Field(..., description="Unique threat identifier")
+    """Schema for threat intelligence data"""
+    threat_id: str = Field(..., description="Unique threat identifier")
     threat_type: ThreatTypeEnum = Field(..., description="Type of threat detected")
     confidence_score: float = Field(..., ge=0.0, le=1.0, description="Threat confidence score")
     risk_level: AlertSeverityEnum = Field(..., description="Risk level assessment")
@@ -124,7 +133,8 @@ class ThreatIntelligenceSchema(BaseModel):
 
 
 class EvidenceCollectionSchema(BaseModel):
-    """Schema for evidence collection"""    evidence_id: str = Field(..., description="Unique evidence identifier")
+    """Schema for evidence collection"""
+    evidence_id: str = Field(..., description="Unique evidence identifier")
     evidence_type: EvidenceTypeEnum = Field(..., description="Type of evidence")
     file_path: Optional[str] = Field(None, description="Path to evidence file")
     file_size: Optional[PositiveInt] = Field(None, description="Evidence file size")
@@ -150,7 +160,8 @@ class EvidenceCollectionSchema(BaseModel):
 
 
 class ProtectionAlertBaseSchema(BaseModel):
-    """Base schema for protection alerts"""    fingerprint_id: PositiveInt = Field(..., description="Associated content fingerprint ID")
+    """Base schema for protection alerts"""
+    fingerprint_id: PositiveInt = Field(..., description="Associated content fingerprint ID")
     detected_url: HttpUrl = Field(..., description="URL where violation was detected")
     platform: PlatformEnum = Field(..., description="Platform where violation occurred")
     threat_type: ThreatTypeEnum = Field(..., description="Type of threat detected")
@@ -181,13 +192,15 @@ class ProtectionAlertBaseSchema(BaseModel):
     @field_validator('similarity_score')
     @classmethod
     def validate_similarity_score(cls, v):
-        """Validate similarity score is within acceptable range"""        if v < 0.5:
+        """Validate similarity score is within acceptable range"""
+        if v < 0.5:
             raise ValueError("Similarity score must be at least 0.5 for valid alerts")
         return v
 
 
 class ProtectionAlertCreateSchema(ProtectionAlertBaseSchema):
-    """Schema for creating protection alerts"""    user_id: PositiveInt = Field(..., description="User ID who owns the content")
+    """Schema for creating protection alerts"""
+    user_id: PositiveInt = Field(..., description="User ID who owns the content")
     auto_action_enabled: bool = Field(False, description="Enable automatic actions")
     notification_enabled: bool = Field(True, description="Enable notifications")
     priority_level: int = Field(5, ge=1, le=10, description="Priority level (1-10)")
@@ -216,7 +229,8 @@ class ProtectionAlertCreateSchema(ProtectionAlertBaseSchema):
 
 
 class ProtectionAlertUpdateSchema(BaseModel):
-    """Schema for updating protection alerts"""    status: Optional[AlertStatusEnum] = Field(None, description="Updated alert status")
+    """Schema for updating protection alerts"""
+    status: Optional[AlertStatusEnum] = Field(None, description="Updated alert status")
     severity: Optional[AlertSeverityEnum] = Field(None, description="Updated severity")
     assigned_to: Optional[PositiveInt] = Field(None, description="User ID of assignee")
     notes: Optional[str] = Field(None, description="Investigation notes")
@@ -239,7 +253,8 @@ class ProtectionAlertUpdateSchema(BaseModel):
 
 
 class ProtectionActionSchema(BaseModel):
-    """Schema for protection actions taken"""    action_id: str = Field(..., description="Unique action identifier")
+    """Schema for protection actions taken"""
+    action_id: str = Field(..., description="Unique action identifier")
     action_type: ActionTypeEnum = Field(..., description="Type of action taken")
     platform: PlatformEnum = Field(..., description="Platform where action was taken")
     action_timestamp: datetime = Field(..., description="When action was executed")
@@ -264,7 +279,8 @@ class ProtectionActionSchema(BaseModel):
 
 
 class ProtectionAlertResponseSchema(ProtectionAlertBaseSchema):
-    """Schema for protection alert responses"""    id: PositiveInt = Field(..., description="Unique alert ID")
+    """Schema for protection alert responses"""
+    id: PositiveInt = Field(..., description="Unique alert ID")
     user_id: PositiveInt = Field(..., description="Owner user ID")
     alert_reference: str = Field(..., description="Human-readable alert reference")
     
@@ -317,7 +333,8 @@ class ProtectionAlertResponseSchema(ProtectionAlertBaseSchema):
 
 
 class ProtectionDashboardSchema(BaseModel):
-    """Schema for protection dashboard metrics"""    total_alerts: int = Field(..., description="Total number of alerts")
+    """Schema for protection dashboard metrics"""
+    total_alerts: int = Field(..., description="Total number of alerts")
     active_alerts: int = Field(..., description="Number of active alerts")
     resolved_alerts: int = Field(..., description="Number of resolved alerts")
     false_positives: int = Field(..., description="Number of false positives")
@@ -357,7 +374,8 @@ class ProtectionDashboardSchema(BaseModel):
 
 
 class ThreatDetectionConfigSchema(BaseModel):
-    """Schema for threat detection configuration"""    user_id: PositiveInt = Field(..., description="User ID")
+    """Schema for threat detection configuration"""
+    user_id: PositiveInt = Field(..., description="User ID")
     protection_level: ProtectionLevelEnum = Field(..., description="Protection level")
     
     # Detection settings
@@ -398,7 +416,8 @@ class ThreatDetectionConfigSchema(BaseModel):
 
 
 class SecurityAuditSchema(BaseModel):
-    """Schema for security audit logs"""    audit_id: str = Field(..., description="Unique audit identifier")
+    """Schema for security audit logs"""
+    audit_id: str = Field(..., description="Unique audit identifier")
     user_id: PositiveInt = Field(..., description="User ID")
     action: str = Field(..., description="Action performed")
     resource: str = Field(..., description="Resource affected")

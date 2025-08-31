@@ -6,7 +6,8 @@ format conversion, enhancement, and real-time processing pipelines.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from dataclasses import dataclass, field
+"""
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Tuple
 from uuid import UUID
@@ -16,7 +17,8 @@ from ...core.events.base_event import BaseEvent, EventPriority, EventCategory
 
 
 class ProcessingStage(Enum):
-    """Audio processing pipeline stages"""    INITIALIZATION = "initialization"
+    """Audio processing pipeline stages"""
+    INITIALIZATION = "initialization"
     FORMAT_CONVERSION = "format_conversion"
     QUALITY_ANALYSIS = "quality_analysis"
     ENHANCEMENT = "enhancement"
@@ -27,7 +29,8 @@ class ProcessingStage(Enum):
 
 
 class ProcessingQuality(Enum):
-    """Audio processing quality levels"""    LOSSLESS = "lossless"
+    """Audio processing quality levels"""
+    LOSSLESS = "lossless"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -36,11 +39,13 @@ class ProcessingQuality(Enum):
 
 @dataclass
 class AudioProcessingStartedEvent(BaseEvent):
-    """    Event triggered when audio processing pipeline begins.
+    """
+    Event triggered when audio processing pipeline begins.
     
     Initializes comprehensive audio processing including analysis,
     enhancement, and optimization workflows.
-    """    user_id: UUID
+    """
+    user_id: UUID
     file_id: UUID
     processing_id: UUID
     filename: str
@@ -78,10 +83,12 @@ class AudioProcessingStartedEvent(BaseEvent):
 
 @dataclass
 class AudioProcessingProgressEvent(BaseEvent):
-    """    Event triggered during audio processing progress updates.
+    """
+    Event triggered during audio processing progress updates.
     
     Provides real-time feedback about processing pipeline progress.
-    """    user_id: UUID
+    """
+    user_id: UUID
     file_id: UUID
     processing_id: UUID
     current_stage: ProcessingStage
@@ -115,10 +122,12 @@ class AudioProcessingProgressEvent(BaseEvent):
 
 @dataclass
 class AudioProcessingCompletedEvent(BaseEvent):
-    """    Event triggered when audio processing is successfully completed.
+    """
+    Event triggered when audio processing is successfully completed.
     
     Contains comprehensive results and metrics from the processing pipeline.
-    """    user_id: UUID
+    """
+    user_id: UUID
     file_id: UUID
     processing_id: UUID
     processed_file_id: UUID
@@ -158,10 +167,12 @@ class AudioProcessingCompletedEvent(BaseEvent):
 
 @dataclass
 class AudioProcessingFailedEvent(BaseEvent):
-    """    Event triggered when audio processing fails.
+    """
+    Event triggered when audio processing fails.
     
     Contains detailed error information and recovery options.
-    """    user_id: UUID
+    """
+    user_id: UUID
     file_id: UUID
     processing_id: UUID
     failed_stage: ProcessingStage
@@ -197,10 +208,12 @@ class AudioProcessingFailedEvent(BaseEvent):
 
 @dataclass
 class AudioQualityAnalysisEvent(BaseEvent):
-    """    Event triggered when audio quality analysis is completed.
+    """
+    Event triggered when audio quality analysis is completed.
     
     Contains comprehensive quality metrics and recommendations.
-    """    user_id: UUID
+    """
+    user_id: UUID
     file_id: UUID
     analysis_id: UUID
     quality_score: float  # 0.0 to 1.0
@@ -241,10 +254,12 @@ class AudioQualityAnalysisEvent(BaseEvent):
 
 @dataclass
 class AudioFormatConversionEvent(BaseEvent):
-    """    Event triggered during audio format conversion process.
+    """
+    Event triggered during audio format conversion process.
     
     Handles conversion between different audio formats and quality levels.
-    """    user_id: UUID
+    """
+    user_id: UUID
     file_id: UUID
     conversion_id: UUID
     source_format: str
@@ -282,10 +297,12 @@ class AudioFormatConversionEvent(BaseEvent):
 
 @dataclass
 class AudioNormalizationEvent(BaseEvent):
-    """    Event triggered during audio normalization process.
+    """
+    Event triggered during audio normalization process.
     
     Handles loudness normalization and level optimization.
-    """    user_id: UUID
+    """
+    user_id: UUID
     file_id: UUID
     normalization_id: UUID
     normalization_type: str  # peak, rms, lufs, ebu_r128
@@ -320,10 +337,12 @@ class AudioNormalizationEvent(BaseEvent):
 
 @dataclass
 class AudioCompressionEvent(BaseEvent):
-    """    Event triggered during audio compression process.
+    """
+    Event triggered during audio compression process.
     
     Handles dynamic range compression and limiting.
-    """    user_id: UUID
+    """
+    user_id: UUID
     file_id: UUID
     compression_id: UUID
     compressor_type: str  # vca, optical, tube, digital
@@ -358,10 +377,12 @@ class AudioCompressionEvent(BaseEvent):
 
 @dataclass
 class AudioSpectrumAnalysisEvent(BaseEvent):
-    """    Event triggered when spectral analysis is completed.
+    """
+    Event triggered when spectral analysis is completed.
     
     Contains detailed frequency domain analysis results.
-    """    user_id: UUID
+    """
+    user_id: UUID
     file_id: UUID
     analysis_id: UUID
     spectrum_data: Dict[str, List[float]]

@@ -3,7 +3,8 @@ Device authentication, biometric auth, and mobile-specific security
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Business Logic: Secure mobile access and content protection for creators
-"""import asyncio
+"""
+import asyncio
 import hashlib
 import hmac
 import base64
@@ -40,14 +41,16 @@ except ImportError:
 
 
 class SecurityLevel(Enum):
-    """Mobile security levels."""    LOW = "low"
+    """Mobile security levels."""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class BiometricType(Enum):
-    """Biometric authentication types."""    FINGERPRINT = "fingerprint"
+    """Biometric authentication types."""
+    FINGERPRINT = "fingerprint"
     FACE_ID = "face_id"
     VOICE_PRINT = "voice_print"
     TOUCH_ID = "touch_id"
@@ -55,7 +58,8 @@ class BiometricType(Enum):
 
 @dataclass
 class DeviceSecurityProfile:
-    """Mobile device security profile."""    device_id: str
+    """Mobile device security profile."""
+    device_id: str
     platform: str  # android, ios
     security_level: SecurityLevel
     biometric_enabled: bool
@@ -75,7 +79,8 @@ class DeviceSecurityProfile:
 
 @dataclass
 class BiometricData:
-    """Biometric authentication data."""    biometric_id: str
+    """Biometric authentication data."""
+    biometric_id: str
     user_id: str
     device_id: str
     biometric_type: BiometricType
@@ -92,7 +97,8 @@ class BiometricData:
 
 @dataclass
 class SecurityEvent:
-    """Security event logging."""    event_id: str
+    """Security event logging."""
+    event_id: str
     device_id: str
     user_id: Optional[str]
     event_type: str  # login_attempt, security_violation, biometric_auth, etc.
@@ -108,13 +114,15 @@ class SecurityEvent:
 
 
 class MobileEncryptionManager:
-    """Professional mobile encryption management."""    
+    """Professional mobile encryption management."""
+    
     def __init__(self):
         self.logger = get_logger("mobile.encryption_manager")
         self.settings = get_settings()
     
     def generate_device_key(self, device_id: str, user_id: str) -> bytes:
-        """Generate device-specific encryption key."""        
+        """Generate device-specific encryption key."""
+        
         # Combine device and user data for key derivation
         key_material = f"{device_id}:{user_id}:{self.settings.get('secret_key')}"
         
@@ -133,7 +141,8 @@ class MobileEncryptionManager:
         return key
     
     def encrypt_mobile_data(self, data: Union[str, bytes], key: bytes) -> str:
-        """Encrypt data for mobile storage."""        
+        """Encrypt data for mobile storage."""
+        
         if isinstance(data, str):
             data = data.encode('utf-8')
         
@@ -147,7 +156,8 @@ class MobileEncryptionManager:
         return base64.urlsafe_b64encode(encrypted_data).decode('utf-8')
     
     def decrypt_mobile_data(self, encrypted_data: str, key: bytes) -> bytes:
-        """Decrypt mobile data."""        
+        """Decrypt mobile data."""
+        
         # Decode from base64
         encrypted_bytes = base64.urlsafe_b64decode(encrypted_data)
         
@@ -160,7 +170,8 @@ class MobileEncryptionManager:
         return decrypted_data
     
     def generate_secure_hash(self, data: str, salt: Optional[str] = None) -> str:
-        """Generate secure hash for mobile data."""        
+        """Generate secure hash for mobile data."""
+        
         if salt is None:
             salt = secrets.token_hex(16)
         
@@ -172,7 +183,8 @@ class MobileEncryptionManager:
         return f"{salt}:{hash_object.hexdigest()}"
     
     def verify_secure_hash(self, data: str, stored_hash: str) -> bool:
-        """Verify secure hash."""        
+        """Verify secure hash."""
+        
         try:
             salt, expected_hash = stored_hash.split(':', 1)
             computed_hash = self.generate_secure_hash(data, salt)
@@ -182,7 +194,8 @@ class MobileEncryptionManager:
 
 
 class BiometricAuthManager:
-    """Professional biometric authentication management."""    
+    """Professional biometric authentication management."""
+    
     def __init__(self, encryption_manager: MobileEncryptionManager):
         self.logger = get_logger("mobile.biometric_auth")
         self.encryption_manager = encryption_manager
@@ -195,7 +208,8 @@ class BiometricAuthManager:
         biometric_type: BiometricType,
         biometric_template: str  # Raw biometric data (should be hashed immediately)
     ) -> BiometricData:
-        """Register biometric authentication."""        
+        """Register biometric authentication."""
+        
         # Hash the biometric template immediately for security
         template_hash = self.encryption_manager.generate_secure_hash(biometric_template)
         
@@ -225,7 +239,8 @@ class BiometricAuthManager:
         biometric_type: BiometricType,
         biometric_template: str
     ) -> Optional[Dict[str, Any]]:
-        """Authenticate using biometric data."""        
+        """Authenticate using biometric data."""
+        
         # Find matching biometric data for device and type
         for biometric in self.biometric_data.values():
             if (biometric.device_id == device_id and 
@@ -258,7 +273,8 @@ class BiometricAuthManager:
         return None
     
     async def deactivate_biometric(self, biometric_id: str) -> bool:
-        """Deactivate biometric authentication."""        
+        """Deactivate biometric authentication."""
+        
         if biometric_id in self.biometric_data:
             self.biometric_data[biometric_id].is_active = False
             self.logger.info(f"Biometric deactivated: {biometric_id}")
@@ -267,7 +283,8 @@ class BiometricAuthManager:
         return False
     
     async def get_user_biometrics(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get all biometric registrations for user."""        
+        """Get all biometric registrations for user."""
+        
         user_biometrics = []
         
         for biometric in self.biometric_data.values():
@@ -285,7 +302,8 @@ class BiometricAuthManager:
 
 
 class DeviceIntegrityChecker:
-    """Professional device integrity and security validation."""    
+    """Professional device integrity and security validation."""
+    
     def __init__(self):
         self.logger = get_logger("mobile.device_integrity")
         self.known_rooting_indicators = [
@@ -307,7 +325,8 @@ class DeviceIntegrityChecker:
         platform: str,
         device_info: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Comprehensive device integrity check."""        
+        """Comprehensive device integrity check."""
+        
         integrity_result = {
             "device_id": device_id,
             "platform": platform,
@@ -347,7 +366,8 @@ class DeviceIntegrityChecker:
         return integrity_result
     
     async def _check_android_integrity(self, device_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Check Android-specific integrity."""        
+        """Check Android-specific integrity."""
+        
         result = {
             "is_rooted": False,
             "bootloader_unlocked": False,
@@ -370,7 +390,8 @@ class DeviceIntegrityChecker:
         return result
     
     async def _check_ios_integrity(self, device_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Check iOS-specific integrity."""        
+        """Check iOS-specific integrity."""
+        
         result = {
             "is_jailbroken": False,
             "ios_version": device_info.get("ios_version", "unknown")
@@ -385,7 +406,8 @@ class DeviceIntegrityChecker:
         return result
     
     async def _check_app_integrity(self, device_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Check application integrity."""        
+        """Check application integrity."""
+        
         return {
             "signature_valid": True,  # Would check actual app signature
             "tampered": False,
@@ -395,7 +417,8 @@ class DeviceIntegrityChecker:
 
 
 class MobileSecurityManager:
-    """Comprehensive mobile security management system."""    
+    """Comprehensive mobile security management system."""
+    
     def __init__(self):
         self.logger = get_logger("mobile.security_manager")
         self.encryption_manager = MobileEncryptionManager()
@@ -410,7 +433,8 @@ class MobileSecurityManager:
         platform: str,
         device_info: Dict[str, Any]
     ) -> DeviceSecurityProfile:
-        """Create comprehensive security profile for device."""        
+        """Create comprehensive security profile for device."""
+        
         # Check device integrity
         integrity_result = await self.integrity_checker.check_device_integrity(
             device_id, platform, device_info
@@ -467,7 +491,8 @@ class MobileSecurityManager:
         user_id: str,
         requested_operation: str
     ) -> Dict[str, Any]:
-        """Validate device access for specific operation."""        
+        """Validate device access for specific operation."""
+        
         if device_id not in self.security_profiles:
             return {
                 "allowed": False,
@@ -526,7 +551,8 @@ class MobileSecurityManager:
         }
     
     async def update_security_check(self, device_id: str) -> Dict[str, Any]:
-        """Update security check for device."""        
+        """Update security check for device."""
+        
         if device_id not in self.security_profiles:
             raise ValueError(f"Security profile not found for device {device_id}")
         
@@ -548,7 +574,8 @@ class MobileSecurityManager:
         device_id: str,
         device_info: Dict[str, Any]
     ) -> str:
-        """Generate unique device fingerprint."""        
+        """Generate unique device fingerprint."""
+        
         fingerprint_data = {
             "device_id": device_id,
             "platform": device_info.get("platform"),
@@ -573,7 +600,8 @@ class MobileSecurityManager:
         description: str,
         metadata: Dict[str, Any]
     ):
-        """Log security event."""        
+        """Log security event."""
+        
         event = SecurityEvent(
             event_id=str(uuid.uuid4()),
             device_id=device_id,
@@ -596,7 +624,8 @@ class MobileSecurityManager:
 
 # Security utility functions
 def generate_mobile_token(payload: Dict[str, Any], expiry_hours: int = 1) -> str:
-    """Generate mobile-specific JWT token."""    
+    """Generate mobile-specific JWT token."""
+    
     settings = get_settings()
     
     # Add mobile-specific claims
@@ -617,7 +646,8 @@ def generate_mobile_token(payload: Dict[str, Any], expiry_hours: int = 1) -> str
 
 
 def verify_mobile_token(token: str) -> Dict[str, Any]:
-    """Verify mobile JWT token."""    
+    """Verify mobile JWT token."""
+    
     settings = get_settings()
     
     try:
@@ -641,7 +671,8 @@ def verify_mobile_token(token: str) -> Dict[str, Any]:
 
 # Dependency injection functions
 def get_mobile_security_manager() -> MobileSecurityManager:
-    """Get mobile security manager instance."""    return MobileSecurityManager()
+    """Get mobile security manager instance."""
+    return MobileSecurityManager()
 
 
 def get_encryption_manager() -> MobileEncryptionManager:
@@ -652,7 +683,8 @@ def get_encryption_manager() -> MobileEncryptionManager:
 def get_biometric_manager(
     encryption_manager: MobileEncryptionManager = None
 ) -> BiometricAuthManager:
-    """Get biometric auth manager instance."""    if encryption_manager is None:
+    """Get biometric auth manager instance."""
+    if encryption_manager is None:
         encryption_manager = get_encryption_manager()
     return BiometricAuthManager(encryption_manager)
 
@@ -662,7 +694,8 @@ if __name__ == "__main__":
     import asyncio
     
     async def test_mobile_security():
-        """Test mobile security functionality."""        
+        """Test mobile security functionality."""
+        
         # Test security manager
         security_manager = get_mobile_security_manager()
         

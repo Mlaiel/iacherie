@@ -6,7 +6,8 @@ Provides intelligent data fixing, optimization, and quality enhancement.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""from typing import Dict, Any, List, Optional, Union, Tuple
+"""
+from typing import Dict, Any, List, Optional, Union, Tuple
 import asyncio
 import logging
 from datetime import datetime
@@ -17,7 +18,8 @@ import re
 logger = logging.getLogger(__name__)
 
 class CleaningOperation(Enum):
-    """Types of cleaning operations"""    FORMAT_CONVERSION = "format_conversion"
+    """Types of cleaning operations"""
+    FORMAT_CONVERSION = "format_conversion"
     METADATA_ENHANCEMENT = "metadata_enhancement"
     QUALITY_IMPROVEMENT = "quality_improvement"
     ENCODING_FIX = "encoding_fix"
@@ -26,13 +28,15 @@ class CleaningOperation(Enum):
     CONTENT_NORMALIZATION = "content_normalization"
 
 class CleaningPriority(Enum):
-    """Cleaning operation priorities"""    CRITICAL = "critical"
+    """Cleaning operation priorities"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
 
 class CleaningResult:
-    """Container for cleaning operation results"""    
+    """Container for cleaning operation results"""
+    
     def __init__(self):
         self.success = False
         self.operations_applied: List[CleaningOperation] = []
@@ -42,17 +46,21 @@ class CleaningResult:
         self.quality_improvement: float = 0.0
 
 class AutomatedDataCleaner:
-    """    Intelligent automated data cleaning and repair system.
+    """
+    Intelligent automated data cleaning and repair system.
     
     Provides comprehensive data cleaning capabilities including format conversion,
     quality enhancement, metadata enrichment, and intelligent content optimization.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialize the automated data cleaner.
+        """
+        Initialize the automated data cleaner.
         
         Args:
             config: Cleaner configuration
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logger
         
         # Cleaning strategies by content type
@@ -95,7 +103,8 @@ class AutomatedDataCleaner:
         issues: List[Dict[str, Any]],
         metadata: Optional[Dict[str, Any]] = None
     ) -> Optional[Any]:
-        """        Clean and repair content based on identified issues.
+        """
+        Clean and repair content based on identified issues.
         
         Args:
             content_data: Content to clean
@@ -105,7 +114,8 @@ class AutomatedDataCleaner:
             
         Returns:
             Cleaned content or None if cleaning failed
-        """        if not self.auto_fix_enabled:
+        """
+        if not self.auto_fix_enabled:
             self.logger.info("Auto-fix is disabled, skipping cleaning")
             return None
         
@@ -142,7 +152,8 @@ class AutomatedDataCleaner:
         issues: List[Dict[str, Any]],
         content_type: str
     ) -> List[Tuple[CleaningOperation, CleaningPriority, Dict[str, Any]]]:
-        """Plan cleaning operations based on identified issues"""        
+        """Plan cleaning operations based on identified issues"""
+        
         operations = []
         
         for issue in issues:
@@ -198,7 +209,8 @@ class AutomatedDataCleaner:
         return operations[:self.max_cleaning_operations]
     
     def _priority_weight(self, priority: CleaningPriority) -> int:
-        """Get numeric weight for priority sorting"""        weights = {
+        """Get numeric weight for priority sorting"""
+        weights = {
             CleaningPriority.CRITICAL: 4,
             CleaningPriority.HIGH: 3,
             CleaningPriority.MEDIUM: 2,
@@ -207,7 +219,8 @@ class AutomatedDataCleaner:
         return weights.get(priority, 0)
     
     def _get_optimal_format(self, content_type: str) -> str:
-        """Get optimal format for content type"""        optimal_formats = {
+        """Get optimal format for content type"""
+        optimal_formats = {
             'audio': 'mp3',
             'video': 'mp4',
             'image': 'jpg',
@@ -222,7 +235,8 @@ class AutomatedDataCleaner:
         cleaning_plan: List[Tuple[CleaningOperation, CleaningPriority, Dict[str, Any]]],
         metadata: Optional[Dict[str, Any]]
     ) -> Optional[Any]:
-        """Clean audio content"""        
+        """Clean audio content"""
+        
         cleaned_content = content_data
         result = CleaningResult()
         
@@ -254,7 +268,8 @@ class AutomatedDataCleaner:
         cleaning_plan: List[Tuple[CleaningOperation, CleaningPriority, Dict[str, Any]]],
         metadata: Optional[Dict[str, Any]]
     ) -> Optional[Any]:
-        """Clean video content"""        
+        """Clean video content"""
+        
         cleaned_content = content_data
         result = CleaningResult()
         
@@ -286,7 +301,8 @@ class AutomatedDataCleaner:
         cleaning_plan: List[Tuple[CleaningOperation, CleaningPriority, Dict[str, Any]]],
         metadata: Optional[Dict[str, Any]]
     ) -> Optional[Any]:
-        """Clean image content"""        
+        """Clean image content"""
+        
         cleaned_content = content_data
         result = CleaningResult()
         
@@ -318,7 +334,8 @@ class AutomatedDataCleaner:
         cleaning_plan: List[Tuple[CleaningOperation, CleaningPriority, Dict[str, Any]]],
         metadata: Optional[Dict[str, Any]]
     ) -> Optional[Any]:
-        """Clean text content"""        
+        """Clean text content"""
+        
         cleaned_content = content_data
         result = CleaningResult()
         
@@ -351,7 +368,8 @@ class AutomatedDataCleaner:
         content_type: str,
         params: Dict[str, Any]
     ) -> Any:
-        """Apply format conversion"""        
+        """Apply format conversion"""
+        
         target_format = params.get('target_format')
         self.logger.info(f"Converting {content_type} to {target_format}")
         
@@ -367,7 +385,8 @@ class AutomatedDataCleaner:
         content_type: str,
         params: Dict[str, Any]
     ) -> Any:
-        """Apply metadata enhancement"""        
+        """Apply metadata enhancement"""
+        
         self.logger.info(f"Enhancing metadata for {content_type}")
         
         # Placeholder implementation
@@ -381,7 +400,8 @@ class AutomatedDataCleaner:
         content_type: str,
         params: Dict[str, Any]
     ) -> Any:
-        """Apply quality improvement"""        
+        """Apply quality improvement"""
+        
         self.logger.info(f"Improving quality for {content_type}")
         
         if content_type == 'audio':
@@ -408,7 +428,8 @@ class AutomatedDataCleaner:
         content_type: str,
         params: Dict[str, Any]
     ) -> Any:
-        """Apply encoding fixes"""        
+        """Apply encoding fixes"""
+        
         self.logger.info(f"Fixing encoding for {content_type}")
         
         if content_type == 'text' and isinstance(content_data, (str, bytes)):
@@ -439,7 +460,8 @@ class AutomatedDataCleaner:
         content_type: str,
         params: Dict[str, Any]
     ) -> Any:
-        """Apply structure repair"""        
+        """Apply structure repair"""
+        
         self.logger.info(f"Repairing structure for {content_type}")
         
         # Placeholder implementation
@@ -453,7 +475,8 @@ class AutomatedDataCleaner:
         content_type: str,
         params: Dict[str, Any]
     ) -> Any:
-        """Apply compression optimization"""        
+        """Apply compression optimization"""
+        
         self.logger.info(f"Optimizing compression for {content_type}")
         
         # Placeholder implementation
@@ -467,7 +490,8 @@ class AutomatedDataCleaner:
         content_type: str,
         params: Dict[str, Any]
     ) -> Any:
-        """Apply content normalization"""        
+        """Apply content normalization"""
+        
         self.logger.info(f"Normalizing content for {content_type}")
         
         if content_type == 'text' and isinstance(content_data, str):
@@ -478,7 +502,8 @@ class AutomatedDataCleaner:
         return content_data
     
     def _clean_text_content_simple(self, text: str) -> str:
-        """Simple text cleaning operations"""        
+        """Simple text cleaning operations"""
+        
         # Remove excessive whitespace
         cleaned = re.sub(r'\s+', ' ', text.strip())
         
@@ -492,7 +517,8 @@ class AutomatedDataCleaner:
         return cleaned
     
     def _normalize_text_content(self, text: str) -> str:
-        """Normalize text content"""        
+        """Normalize text content"""
+        
         # Convert to lowercase for certain operations
         # Standardize line endings
         normalized = text.replace('\r\n', '\n').replace('\r', '\n')
@@ -508,7 +534,8 @@ class AutomatedDataCleaner:
         return normalized
     
     async def get_cleaning_statistics(self) -> Dict[str, Any]:
-        """Get cleaning operation statistics"""        
+        """Get cleaning operation statistics"""
+        
         # Placeholder implementation
         # Would track cleaning operations, success rates, etc.
         
@@ -521,7 +548,8 @@ class AutomatedDataCleaner:
         }
     
     def configure_cleaning_rules(self, rules: Dict[str, Any]):
-        """Configure custom cleaning rules"""        
+        """Configure custom cleaning rules"""
+        
         if 'auto_fix_enabled' in rules:
             self.auto_fix_enabled = rules['auto_fix_enabled']
         
@@ -534,9 +562,11 @@ class AutomatedDataCleaner:
         self.logger.info("Updated cleaning configuration")
     
     def enable_operation(self, operation: CleaningOperation):
-        """Enable a specific cleaning operation"""        # Implementation would enable specific operations
+        """Enable a specific cleaning operation"""
+        # Implementation would enable specific operations
         self.logger.info(f"Enabled cleaning operation: {operation.value}")
     
     def disable_operation(self, operation: CleaningOperation):
-        """Disable a specific cleaning operation"""        # Implementation would disable specific operations
+        """Disable a specific cleaning operation"""
+        # Implementation would disable specific operations
         self.logger.info(f"Disabled cleaning operation: {operation.value}")

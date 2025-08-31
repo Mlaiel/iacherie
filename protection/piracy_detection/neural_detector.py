@@ -29,7 +29,8 @@ This module provides:
 - Real-time similarity scoring with 95%+ accuracy
 - Advanced deep learning violation classification
 - Contextual understanding of content modifications
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
 from datetime import datetime, timedelta
@@ -49,7 +50,8 @@ from transformers import (
 logger = logging.getLogger(__name__)
 
 class NeuralModelType(Enum):
-    """Types of neural models for detection."""    TRANSFORMER_TEXT = "transformer_text"
+    """Types of neural models for detection."""
+    TRANSFORMER_TEXT = "transformer_text"
     VISION_TRANSFORMER = "vision_transformer"
     AUDIO_TRANSFORMER = "audio_transformer"
     MULTIMODAL_FUSION = "multimodal_fusion"
@@ -57,7 +59,8 @@ class NeuralModelType(Enum):
 
 @dataclass
 class NeuralDetectionResult:
-    """Result from neural detection analysis."""    content_id: str
+    """Result from neural detection analysis."""
+    content_id: str
     model_type: NeuralModelType
     confidence_score: float
     similarity_vector: np.ndarray
@@ -70,11 +73,13 @@ class NeuralDetectionResult:
     processing_time_ms: float
 
 class MultiModalNeuralNetwork(nn.Module):
-    """    Advanced multi-modal neural network for content analysis.
+    """
+    Advanced multi-modal neural network for content analysis.
     
     Combines text, image, and audio processing for comprehensive
     piracy detection with state-of-the-art accuracy.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__()
         self.config = config
@@ -110,7 +115,8 @@ class MultiModalNeuralNetwork(nn.Module):
                 text_input: Optional[torch.Tensor] = None,
                 image_input: Optional[torch.Tensor] = None,
                 audio_input: Optional[torch.Tensor] = None) -> Dict[str, torch.Tensor]:
-        """        Forward pass through multi-modal network.
+        """
+        Forward pass through multi-modal network.
         
         Args:
             text_input: Tokenized text input
@@ -119,7 +125,8 @@ class MultiModalNeuralNetwork(nn.Module):
             
         Returns:
             Dictionary containing embeddings and predictions
-        """        embeddings = []
+        """
+        embeddings = []
         
         # Process text modality
         if text_input is not None:
@@ -161,17 +168,21 @@ class MultiModalNeuralNetwork(nn.Module):
         }
 
 class NeuralPiracyDetector:
-    """    Advanced neural piracy detection system.
+    """
+    Advanced neural piracy detection system.
     
     Utilizes state-of-the-art deep learning models for accurate
     content analysis and violation detection across multiple modalities.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize the Neural Piracy Detector.
+        """
+        Initialize the Neural Piracy Detector.
         
         Args:
             config: Detection configuration parameters
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         self._initialized = False
         
         # Model configuration
@@ -197,11 +208,13 @@ class NeuralPiracyDetector:
         logger.info(f"Neural Piracy Detector initialized on {self.device}")
     
     async def initialize(self) -> bool:
-        """        Initialize neural models and processors.
+        """
+        Initialize neural models and processors.
         
         Returns:
             bool: True if initialization successful
-        """        try:
+        """
+        try:
             # Initialize neural network
             model_config = {
                 'text_model': 'sentence-transformers/all-MiniLM-L6-v2',
@@ -238,7 +251,8 @@ class NeuralPiracyDetector:
     async def detect_violations(self, 
                               content_data: Dict[str, Any],
                               reference_data: Dict[str, Any]) -> NeuralDetectionResult:
-        """        Detect piracy violations using neural analysis.
+        """
+        Detect piracy violations using neural analysis.
         
         Args:
             content_data: Content to analyze
@@ -246,7 +260,8 @@ class NeuralPiracyDetector:
             
         Returns:
             Neural detection result
-        """        if not self._initialized:
+        """
+        if not self._initialized:
             await self.initialize()
         
         start_time = datetime.now()
@@ -296,7 +311,8 @@ class NeuralPiracyDetector:
             raise
     
     async def _extract_neural_features(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract neural features from multi-modal content."""        features = {}
+        """Extract neural features from multi-modal content."""
+        features = {}
         
         with torch.no_grad():
             # Process text content
@@ -340,7 +356,8 @@ class NeuralPiracyDetector:
     async def _compute_similarity_scores(self, 
                                        content_features: Dict[str, Any],
                                        reference_features: Dict[str, Any]) -> Dict[str, np.ndarray]:
-        """Compute comprehensive similarity scores."""        
+        """Compute comprehensive similarity scores."""
+        
         # Semantic similarity (cosine similarity of embeddings)
         content_emb = content_features['embeddings']
         reference_emb = reference_features['embeddings']
@@ -374,7 +391,8 @@ class NeuralPiracyDetector:
                                 content_features: Dict[str, Any],
                                 reference_features: Dict[str, Any],
                                 similarity_scores: Dict[str, Any]) -> float:
-        """Classify potential violation using neural analysis."""        
+        """Classify potential violation using neural analysis."""
+        
         # Use pre-trained violation probability
         content_violation_prob = content_features['violation_probability'][0]
         
@@ -390,7 +408,8 @@ class NeuralPiracyDetector:
         return float(np.clip(final_probability, 0.0, 1.0))
     
     async def _load_pretrained_weights(self):
-        """Load pre-trained weights if available."""        try:
+        """Load pre-trained weights if available."""
+        try:
             # Implementation for loading custom trained weights
             weights_path = self.config.get('pretrained_weights_path')
             if weights_path:
@@ -401,7 +420,8 @@ class NeuralPiracyDetector:
             logger.warning(f"Could not load pre-trained weights: {e}")
     
     async def _update_detection_stats(self, result: NeuralDetectionResult):
-        """Update detection statistics."""        self.detection_stats['total_processed'] += 1
+        """Update detection statistics."""
+        self.detection_stats['total_processed'] += 1
         
         if result.violation_probability > self.similarity_threshold:
             self.detection_stats['violations_detected'] += 1
@@ -415,7 +435,8 @@ class NeuralPiracyDetector:
     async def fine_tune_model(self, 
                             training_data: List[Dict[str, Any]],
                             validation_data: List[Dict[str, Any]]) -> Dict[str, float]:
-        """        Fine-tune the neural model on domain-specific data.
+        """
+        Fine-tune the neural model on domain-specific data.
         
         Args:
             training_data: Training dataset
@@ -423,7 +444,8 @@ class NeuralPiracyDetector:
             
         Returns:
             Training metrics
-        """        if not self._initialized:
+        """
+        if not self._initialized:
             await self.initialize()
         
         # Implementation for fine-tuning
@@ -439,7 +461,8 @@ class NeuralPiracyDetector:
         }
     
     def get_detection_statistics(self) -> Dict[str, Any]:
-        """Get current detection statistics."""        return {
+        """Get current detection statistics."""
+        return {
             **self.detection_stats,
             'model_type': 'neural_multimodal',
             'device': str(self.device),

@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, ARRAY
+"""
+from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID, JSONB
@@ -35,7 +36,8 @@ Base = declarative_base()
 
 
 class PermissionType(Enum):
-    """Permission type enumeration"""    READ = "read"
+    """Permission type enumeration"""
+    READ = "read"
     WRITE = "write"
     DELETE = "delete"
     CREATE = "create"
@@ -53,7 +55,8 @@ class PermissionType(Enum):
 
 
 class ResourceType(Enum):
-    """Resource type enumeration"""    CONTENT = "content"
+    """Resource type enumeration"""
+    CONTENT = "content"
     USER_PROFILE = "user_profile"
     CREATOR_PROFILE = "creator_profile"
     COLLABORATION = "collaboration"
@@ -76,7 +79,8 @@ class ResourceType(Enum):
 
 
 class RoleType(Enum):
-    """Role type enumeration"""    SUPER_ADMIN = "super_admin"
+    """Role type enumeration"""
+    SUPER_ADMIN = "super_admin"
     ADMIN = "admin"
     MODERATOR = "moderator"
     CREATOR = "creator"
@@ -94,7 +98,8 @@ class RoleType(Enum):
 
 
 class PermissionScope(Enum):
-    """Permission scope enumeration"""    GLOBAL = "global"
+    """Permission scope enumeration"""
+    GLOBAL = "global"
     ORGANIZATION = "organization"
     TEAM = "team"
     PROJECT = "project"
@@ -106,7 +111,8 @@ class PermissionScope(Enum):
 
 
 class AccessLevel(Enum):
-    """Access level enumeration"""    NONE = "none"
+    """Access level enumeration"""
+    NONE = "none"
     LIMITED = "limited"
     STANDARD = "standard"
     ELEVATED = "elevated"
@@ -115,7 +121,8 @@ class AccessLevel(Enum):
 
 
 class PermissionStatus(Enum):
-    """Permission status enumeration"""    ACTIVE = "active"
+    """Permission status enumeration"""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     SUSPENDED = "suspended"
     EXPIRED = "expired"
@@ -125,11 +132,13 @@ class PermissionStatus(Enum):
 
 
 class UserPermissions(Base):
-    """    Enterprise User Permissions Model
+    """
+    Enterprise User Permissions Model
     
     Comprehensive permission management with role-based access control,
     resource-level permissions, and temporal access management.
-    """    __tablename__ = 'user_permissions'
+    """
+    __tablename__ = 'user_permissions'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -300,7 +309,8 @@ class UserPermissions(Base):
         resource_id: str = None,
         **kwargs
     ) -> 'UserPermissions':
-        """Grant a permission to a user"""        return cls(
+        """Grant a permission to a user"""
+        return cls(
             user_id=user_id,
             permission_type=permission_type,
             resource_type=resource_type,
@@ -321,7 +331,8 @@ class UserPermissions(Base):
         granted_by: str,
         **kwargs
     ) -> 'UserPermissions':
-        """Grant a role to a user"""        return cls(
+        """Grant a role to a user"""
+        return cls(
             user_id=user_id,
             role_type=role_type,
             permission_type=PermissionType.ADMIN,  # Roles typically have admin-level permissions
@@ -335,19 +346,22 @@ class UserPermissions(Base):
         )
     
     def is_expired(self) -> bool:
-        """Check if permission is expired"""        if not self.expires_at:
+        """Check if permission is expired"""
+        if not self.expires_at:
             return False
         return datetime.now(timezone.utc) >= self.expires_at
     
     def is_active(self) -> bool:
-        """Check if permission is currently active"""        return (
+        """Check if permission is currently active"""
+        return (
             self.status == PermissionStatus.ACTIVE and
             not self.is_expired() and
             not self.is_usage_limit_exceeded()
         )
     
     def is_usage_limit_exceeded(self) -> bool:
-        """Check if usage limit is exceeded"""        if self.usage_limit and self.usage_count >= self.usage_limit:
+        """Check if usage limit is exceeded"""
+        if self.usage_limit and self.usage_count >= self.usage_limit:
             return True
         
         if self.daily_usage_limit:
@@ -361,7 +375,8 @@ class UserPermissions(Base):
         return False
     
     def can_access_from_ip(self, ip_address: str) -> bool:
-        """Check if access is allowed from given IP address"""        if self.ip_blacklist and ip_address in self.ip_blacklist:
+        """Check if access is allowed from given IP address"""
+        if self.ip_blacklist and ip_address in self.ip_blacklist:
             return False
         
         if self.ip_whitelist and ip_address not in self.ip_whitelist:
@@ -370,7 +385,8 @@ class UserPermissions(Base):
         return True
     
     def can_access_at_time(self, check_time: datetime = None) -> bool:
-        """Check if access is allowed at given time"""        if not self.time_restrictions:
+        """Check if access is allowed at given time"""
+        if not self.time_restrictions:
             return True
         
         if check_time is None:
@@ -388,7 +404,8 @@ class UserPermissions(Base):
         return True
     
     def record_usage(self, context: Dict[str, Any] = None) -> None:
-        """Record permission usage"""        self.usage_count += 1
+        """Record permission usage"""
+        self.usage_count += 1
         self.current_usage_count += 1
         self.last_used_at = datetime.now(timezone.utc)
         
@@ -408,7 +425,8 @@ class UserPermissions(Base):
             }
     
     def check_rate_limit(self) -> bool:
-        """Check if rate limit allows current request"""        now = datetime.now(timezone.utc)
+        """Check if rate limit allows current request"""
+        now = datetime.now(timezone.utc)
         
         # Reset counter if time window has passed
         if self.rate_limit_reset_at and now >= self.rate_limit_reset_at:
@@ -427,7 +445,8 @@ class UserPermissions(Base):
         return True
     
     def extend_expiration(self, additional_days: int, extended_by: str) -> None:
-        """Extend permission expiration"""        if self.expires_at:
+        """Extend permission expiration"""
+        if self.expires_at:
             self.expires_at += timedelta(days=additional_days)
         else:
             self.expires_at = datetime.now(timezone.utc) + timedelta(days=additional_days)
@@ -450,7 +469,8 @@ class UserPermissions(Base):
         })
     
     def revoke_permission(self, revoked_by: str, reason: str = None) -> None:
-        """Revoke the permission"""        self.status = PermissionStatus.REVOKED
+        """Revoke the permission"""
+        self.status = PermissionStatus.REVOKED
         self.revoked_by = revoked_by
         self.revoked_at = datetime.now(timezone.utc)
         self.revocation_reason = reason
@@ -458,7 +478,8 @@ class UserPermissions(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def delegate_permission(self, to_user_id: str, delegated_by: str, expires_in_hours: int = 24) -> 'UserPermissions':
-        """Delegate permission to another user"""        if not self.can_delegate:
+        """Delegate permission to another user"""
+        if not self.can_delegate:
             raise ValueError("This permission cannot be delegated")
         
         delegated_permission = UserPermissions(
@@ -481,7 +502,8 @@ class UserPermissions(Base):
         return delegated_permission
     
     def get_effective_permissions(self) -> Set[str]:
-        """Get all effective permissions including inherited ones"""        permissions = {f"{self.permission_type.value}:{self.resource_type.value}"}
+        """Get all effective permissions including inherited ones"""
+        permissions = {f"{self.permission_type.value}:{self.resource_type.value}"}
         
         # Add inherited permissions
         if self.inherited_permissions:
@@ -496,7 +518,8 @@ class UserPermissions(Base):
         return permissions
     
     def _get_role_permissions(self, role: RoleType) -> Set[str]:
-        """Get permissions associated with a role"""        role_permissions = {
+        """Get permissions associated with a role"""
+        role_permissions = {
             RoleType.SUPER_ADMIN: {
                 "admin:platform_admin", "read:*", "write:*", "delete:*", "create:*"
             },
@@ -514,7 +537,8 @@ class UserPermissions(Base):
         return role_permissions.get(role, set())
     
     def get_permission_summary(self) -> Dict[str, Any]:
-        """Get comprehensive permission summary"""        return {
+        """Get comprehensive permission summary"""
+        return {
             'permission_info': {
                 'id': str(self.id),
                 'permission_type': self.permission_type.value,

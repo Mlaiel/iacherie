@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -16,7 +17,8 @@ Module de test complet pour la validation de conformité plateforme et légale.
 
 Créé par : Fahed Mlaiel (mlaiel@live.de)
 Développement de Systèmes IA Professionnels
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -95,14 +97,17 @@ except ImportError:
 
 
 class TestComplianceValidator:
-    """Tests complets pour le validateur de compliance principal."""    
+    """Tests complets pour le validateur de compliance principal."""
+    
     @pytest.fixture
     def compliance_validator(self):
-        """Fixture pour le validateur de compliance."""        return ComplianceValidator()
+        """Fixture pour le validateur de compliance."""
+        return ComplianceValidator()
     
     @pytest.fixture
     def sample_compliant_content(self):
-        """Génère du contenu conforme pour les tests."""        return {
+        """Génère du contenu conforme pour les tests."""
+        return {
             'content_type': 'image',
             'platform': 'instagram',
             'media_file': '/tmp/test_image.jpg',
@@ -131,7 +136,8 @@ class TestComplianceValidator:
     
     @pytest.fixture
     def sample_violating_content(self):
-        """Génère du contenu avec violations pour les tests."""        return {
+        """Génère du contenu avec violations pour les tests."""
+        return {
             'content_type': 'video',
             'platform': 'youtube',
             'media_file': '/tmp/test_video.mp4',
@@ -155,7 +161,8 @@ class TestComplianceValidator:
         }
     
     def test_validate_compliant_content(self, compliance_validator, sample_compliant_content):
-        """Test de validation de contenu conforme."""        result = compliance_validator.validate_content(sample_compliant_content)
+        """Test de validation de contenu conforme."""
+        result = compliance_validator.validate_content(sample_compliant_content)
         
         # Vérification de la structure de résultat
         assert isinstance(result, dict)
@@ -171,7 +178,8 @@ class TestComplianceValidator:
         assert isinstance(result['violations'], list)
     
     def test_validate_violating_content(self, compliance_validator, sample_violating_content):
-        """Test de validation de contenu avec violations."""        result = compliance_validator.validate_content(sample_violating_content)
+        """Test de validation de contenu avec violations."""
+        result = compliance_validator.validate_content(sample_violating_content)
         
         # Vérification de la détection de violations
         assert isinstance(result, dict)
@@ -194,7 +202,8 @@ class TestComplianceValidator:
                         assert violation[key] is not None
     
     def test_platform_specific_validation(self, compliance_validator):
-        """Test de validation spécifique aux plateformes."""        platforms = ['instagram', 'youtube', 'tiktok', 'facebook', 'linkedin', 'twitter']
+        """Test de validation spécifique aux plateformes."""
+        platforms = ['instagram', 'youtube', 'tiktok', 'facebook', 'linkedin', 'twitter']
         
         for platform in platforms:
             platform_content = {
@@ -216,21 +225,26 @@ class TestComplianceValidator:
 
 
 class TestPlatformPolicyChecker:
-    """Tests pour le vérificateur de politiques de plateforme."""    
+    """Tests pour le vérificateur de politiques de plateforme."""
+    
     @pytest.fixture
     def instagram_checker(self):
-        """Fixture pour le vérificateur Instagram."""        return PlatformPolicyChecker('instagram')
+        """Fixture pour le vérificateur Instagram."""
+        return PlatformPolicyChecker('instagram')
     
     @pytest.fixture
     def youtube_checker(self):
-        """Fixture pour le vérificateur YouTube."""        return PlatformPolicyChecker('youtube')
+        """Fixture pour le vérificateur YouTube."""
+        return PlatformPolicyChecker('youtube')
     
     @pytest.fixture
     def tiktok_checker(self):
-        """Fixture pour le vérificateur TikTok."""        return PlatformPolicyChecker('tiktok')
+        """Fixture pour le vérificateur TikTok."""
+        return PlatformPolicyChecker('tiktok')
     
     def test_instagram_policy_validation(self, instagram_checker):
-        """Test des politiques Instagram."""        instagram_content = {
+        """Test des politiques Instagram."""
+        instagram_content = {
             'content_type': 'image',
             'text_content': {
                 'caption': 'Belle photo de vacances ! #travel #vacation #instagram',
@@ -258,7 +272,8 @@ class TestPlatformPolicyChecker:
             assert instagram_checker.platform == 'instagram'
     
     def test_youtube_policy_validation(self, youtube_checker):
-        """Test des politiques YouTube."""        youtube_content = {
+        """Test des politiques YouTube."""
+        youtube_content = {
             'content_type': 'video',
             'text_content': {
                 'title': 'Tutorial: Apprendre la Programmation Python',
@@ -287,7 +302,8 @@ class TestPlatformPolicyChecker:
             assert youtube_checker.platform == 'youtube'
     
     def test_tiktok_policy_validation(self, tiktok_checker):
-        """Test des politiques TikTok."""        tiktok_content = {
+        """Test des politiques TikTok."""
+        tiktok_content = {
             'content_type': 'video',
             'text_content': {
                 'caption': 'Danse tendance 2025 ! #dance #trending #fyp',
@@ -316,13 +332,16 @@ class TestPlatformPolicyChecker:
 
 
 class TestLegalComplianceAnalyzer:
-    """Tests pour l'analyseur de conformité légale."""    
+    """Tests pour l'analyseur de conformité légale."""
+    
     @pytest.fixture
     def legal_analyzer(self):
-        """Fixture pour l'analyseur légal."""        return LegalComplianceAnalyzer()
+        """Fixture pour l'analyseur légal."""
+        return LegalComplianceAnalyzer()
     
     def test_gdpr_compliance_check(self, legal_analyzer):
-        """Test de conformité RGPD."""        user_data = {
+        """Test de conformité RGPD."""
+        user_data = {
             'personal_data': {
                 'email': 'user@example.com',
                 'location': 'France',
@@ -358,7 +377,8 @@ class TestLegalComplianceAnalyzer:
             assert user_data['user_rights']['right_to_deletion'] is True
     
     def test_copyright_compliance_check(self, legal_analyzer):
-        """Test de conformité copyright."""        content_data = {
+        """Test de conformité copyright."""
+        content_data = {
             'media_files': ['/tmp/test_image.jpg', '/tmp/test_audio.mp3'],
             'copyright_info': {
                 'original_content': True,
@@ -394,7 +414,8 @@ class TestLegalComplianceAnalyzer:
             assert content_data['creator_info']['creator_name'] is not None
     
     def test_accessibility_compliance_check(self, legal_analyzer):
-        """Test de conformité accessibilité."""        accessibility_data = {
+        """Test de conformité accessibilité."""
+        accessibility_data = {
             'content_type': 'video',
             'accessibility_features': {
                 'subtitles': True,
@@ -432,13 +453,16 @@ class TestLegalComplianceAnalyzer:
 
 
 class TestContentModerationEngine:
-    """Tests pour le moteur de modération de contenu."""    
+    """Tests pour le moteur de modération de contenu."""
+    
     @pytest.fixture
     def moderation_engine(self):
-        """Fixture pour le moteur de modération."""        return ContentModerationEngine()
+        """Fixture pour le moteur de modération."""
+        return ContentModerationEngine()
     
     def test_text_content_moderation(self, moderation_engine):
-        """Test de modération de contenu textuel."""        text_samples = [
+        """Test de modération de contenu textuel."""
+        text_samples = [
             {
                 'text': 'Voici un contenu parfaitement acceptable et positif !',
                 'language': 'fr',
@@ -473,7 +497,8 @@ class TestContentModerationEngine:
                 assert sample['language'] == 'fr'
     
     def test_image_content_moderation(self, moderation_engine):
-        """Test de modération de contenu visuel."""        # Création d'une image de test
+        """Test de modération de contenu visuel."""
+        # Création d'une image de test
         from PIL import Image
         
         with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as tmp_file:
@@ -510,7 +535,8 @@ class TestContentModerationEngine:
                 os.unlink(tmp_file.name)
     
     def test_automated_flagging_system(self, moderation_engine):
-        """Test du système de signalement automatique."""        flagging_scenarios = [
+        """Test du système de signalement automatique."""
+        flagging_scenarios = [
             {
                 'content': {'type': 'text', 'text': 'Contenu spam répétitif'},
                 'expected_flags': ['spam']
@@ -542,13 +568,16 @@ class TestContentModerationEngine:
 
 
 class TestPrivacyComplianceChecker:
-    """Tests pour le vérificateur de conformité vie privée."""    
+    """Tests pour le vérificateur de conformité vie privée."""
+    
     @pytest.fixture
     def privacy_checker(self):
-        """Fixture pour le vérificateur de vie privée."""        return PrivacyComplianceChecker()
+        """Fixture pour le vérificateur de vie privée."""
+        return PrivacyComplianceChecker()
     
     def test_personal_data_detection(self, privacy_checker):
-        """Test de détection de données personnelles."""        content_with_pii = {
+        """Test de détection de données personnelles."""
+        content_with_pii = {
             'text_content': 'Mon email est john.doe@email.com et mon téléphone 06.12.34.56.78',
             'image_metadata': {
                 'gps_coordinates': {'lat': 48.8566, 'lon': 2.3522},
@@ -578,7 +607,8 @@ class TestPrivacyComplianceChecker:
             assert content_with_pii['image_metadata']['gps_coordinates'] is not None
     
     def test_data_anonymization_check(self, privacy_checker):
-        """Test de vérification d'anonymisation."""        data_before_anonymization = {
+        """Test de vérification d'anonymisation."""
+        data_before_anonymization = {
             'user_name': 'Jean Dupont',
             'email': 'jean.dupont@email.com',
             'phone': '06.12.34.56.78',
@@ -611,13 +641,16 @@ class TestPrivacyComplianceChecker:
 
 
 class TestComplianceReporting:
-    """Tests pour le système de reporting de compliance."""    
+    """Tests pour le système de reporting de compliance."""
+    
     @pytest.fixture
     def compliance_report(self):
-        """Fixture pour le rapport de compliance."""        return ComplianceReport() if 'ComplianceReport' in globals() else None
+        """Fixture pour le rapport de compliance."""
+        return ComplianceReport() if 'ComplianceReport' in globals() else None
     
     def test_generate_compliance_report(self, compliance_report):
-        """Test de génération de rapport de compliance."""        if compliance_report is None:
+        """Test de génération de rapport de compliance."""
+        if compliance_report is None:
             pytest.skip("ComplianceReport class not available")
         
         compliance_data = {
@@ -656,7 +689,8 @@ class TestComplianceReporting:
     
     @pytest.mark.integration
     def test_end_to_end_compliance_validation(self):
-        """Test de validation de compliance de bout en bout."""        # Contenu de test complet
+        """Test de validation de compliance de bout en bout."""
+        # Contenu de test complet
         test_content = {
             'content_id': 'e2e_test_content',
             'content_type': 'image',

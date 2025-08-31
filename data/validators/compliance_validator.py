@@ -7,7 +7,8 @@ platform policy validation, and legal compliance assessment for creator content.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Set
 from pathlib import Path
@@ -22,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(Enum):
-    """Regulatory compliance frameworks."""    GDPR = "gdpr"  # General Data Protection Regulation
+    """Regulatory compliance frameworks."""
+    GDPR = "gdpr"  # General Data Protection Regulation
     CCPA = "ccpa"  # California Consumer Privacy Act
     COPPA = "coppa"  # Children's Online Privacy Protection Act
     DMCA = "dmca"  # Digital Millennium Copyright Act
@@ -35,7 +37,8 @@ class ComplianceFramework(Enum):
 
 
 class PlatformPolicy(Enum):
-    """Platform-specific policies."""    YOUTUBE_COMMUNITY = "youtube_community"
+    """Platform-specific policies."""
+    YOUTUBE_COMMUNITY = "youtube_community"
     INSTAGRAM_TERMS = "instagram_terms"
     TIKTOK_COMMUNITY = "tiktok_community"
     FACEBOOK_STANDARDS = "facebook_standards"
@@ -46,7 +49,8 @@ class PlatformPolicy(Enum):
 
 
 class ComplianceCategory(Enum):
-    """Compliance assessment categories."""    CONTENT_POLICY = "content_policy"
+    """Compliance assessment categories."""
+    CONTENT_POLICY = "content_policy"
     DATA_PROTECTION = "data_protection"
     COPYRIGHT = "copyright"
     PRIVACY = "privacy"
@@ -59,7 +63,8 @@ class ComplianceCategory(Enum):
 
 
 class ViolationSeverity(Enum):
-    """Compliance violation severity levels."""    CRITICAL = "critical"
+    """Compliance violation severity levels."""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -68,7 +73,8 @@ class ViolationSeverity(Enum):
 
 @dataclass
 class ComplianceRule:
-    """Individual compliance rule definition."""    rule_id: str
+    """Individual compliance rule definition."""
+    rule_id: str
     name: str
     description: str
     category: ComplianceCategory
@@ -97,7 +103,8 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceViolation:
-    """Individual compliance violation."""    rule_id: str
+    """Individual compliance violation."""
+    rule_id: str
     rule_name: str
     violation_type: str
     severity: ViolationSeverity
@@ -128,7 +135,8 @@ class ComplianceViolation:
 
 @dataclass
 class ComplianceValidationResult:
-    """Comprehensive compliance validation result."""    is_compliant: bool
+    """Comprehensive compliance validation result."""
+    is_compliant: bool
     overall_risk_level: str  # low, medium, high, critical
     compliance_score: float  # 0-100
     
@@ -172,32 +180,38 @@ class ComplianceValidationResult:
     
     @property
     def critical_violations(self) -> List[ComplianceViolation]:
-        """Get critical violations."""        return [v for v in self.violations if v.severity == ViolationSeverity.CRITICAL]
+        """Get critical violations."""
+        return [v for v in self.violations if v.severity == ViolationSeverity.CRITICAL]
     
     @property
     def high_violations(self) -> List[ComplianceViolation]:
-        """Get high severity violations."""        return [v for v in self.violations if v.severity == ViolationSeverity.HIGH]
+        """Get high severity violations."""
+        return [v for v in self.violations if v.severity == ViolationSeverity.HIGH]
 
 
 class ComplianceValidator:
-    """    Comprehensive compliance validator for the IA Influencer Agent Platform.
+    """
+    Comprehensive compliance validator for the IA Influencer Agent Platform.
     
     Provides regulatory compliance checking, platform policy validation,
     and legal compliance assessment for creator content workflows.
-    """    
+    """
+    
     def __init__(
         self,
         config: Optional[Dict[str, Any]] = None,
         enabled_frameworks: Optional[List[ComplianceFramework]] = None,
         enabled_platforms: Optional[List[PlatformPolicy]] = None
     ):
-        """        Initialize compliance validator.
+        """
+        Initialize compliance validator.
         
         Args:
             config: Validator configuration
             enabled_frameworks: Enabled compliance frameworks
             enabled_platforms: Enabled platform policies
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         self.enabled_frameworks = enabled_frameworks or list(ComplianceFramework)
         self.enabled_platforms = enabled_platforms or []
         
@@ -232,7 +246,8 @@ class ComplianceValidator:
         target_platforms: Optional[List[str]] = None,
         geographical_scope: Optional[List[str]] = None
     ) -> ComplianceValidationResult:
-        """        Perform comprehensive compliance validation.
+        """
+        Perform comprehensive compliance validation.
         
         Args:
             content_data: Content data bytes
@@ -245,7 +260,8 @@ class ComplianceValidator:
             
         Returns:
             Compliance validation result
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Prepare content data
@@ -324,7 +340,8 @@ class ComplianceValidator:
         metadata: Optional[Dict[str, Any]] = None,
         user_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Validate compliance with specific regulatory framework.
+        """
+        Validate compliance with specific regulatory framework.
         
         Args:
             framework: Compliance framework to validate against
@@ -334,7 +351,8 @@ class ComplianceValidator:
             
         Returns:
             Framework compliance result
-        """        try:
+        """
+        try:
             result = {
                 "framework": framework.value,
                 "is_compliant": True,
@@ -392,7 +410,8 @@ class ComplianceValidator:
         content_data: Optional[bytes] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Validate compliance with platform-specific policies.
+        """
+        Validate compliance with platform-specific policies.
         
         Args:
             platform: Platform policy to validate against
@@ -401,7 +420,8 @@ class ComplianceValidator:
             
         Returns:
             Platform compliance result
-        """        try:
+        """
+        try:
             result = {
                 "platform": platform.value,
                 "is_compliant": True,
@@ -455,7 +475,8 @@ class ComplianceValidator:
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Check content against policy violations.
+        """
+        Check content against policy violations.
         
         Args:
             content_data: Content data
@@ -464,7 +485,8 @@ class ComplianceValidator:
             
         Returns:
             Content policy check result
-        """        try:
+        """
+        try:
             result = {
                 "content_appropriate": True,
                 "policy_violations": [],
@@ -523,7 +545,8 @@ class ComplianceValidator:
         data_retention: Optional[int] = None,
         geographical_scope: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """        Assess privacy compliance for user data processing.
+        """
+        Assess privacy compliance for user data processing.
         
         Args:
             user_data: User data to be processed
@@ -533,7 +556,8 @@ class ComplianceValidator:
             
         Returns:
             Privacy compliance assessment
-        """        try:
+        """
+        try:
             result = {
                 "privacy_compliant": True,
                 "gdpr_compliant": True,
@@ -593,7 +617,8 @@ class ComplianceValidator:
         metadata: Optional[Dict[str, Any]],
         user_data: Optional[Dict[str, Any]]
     ) -> Optional[ComplianceViolation]:
-        """Validate individual compliance rule."""        try:
+        """Validate individual compliance rule."""
+        try:
             # Skip if rule not applicable
             if content_type and rule.applicable_content_types:
                 if content_type not in rule.applicable_content_types:
@@ -677,7 +702,8 @@ class ComplianceValidator:
         metadata: Optional[Dict[str, Any]],
         user_data: Optional[Dict[str, Any]]
     ):
-        """Validate against enabled frameworks."""        try:
+        """Validate against enabled frameworks."""
+        try:
             for framework in self.enabled_frameworks:
                 framework_result = await self.validate_framework_compliance(
                     framework, content_data, metadata, user_data
@@ -711,7 +737,8 @@ class ComplianceValidator:
         metadata: Optional[Dict[str, Any]],
         target_platforms: List[str]
     ):
-        """Validate against platform policies."""        try:
+        """Validate against platform policies."""
+        try:
             for platform_name in target_platforms:
                 try:
                     platform = PlatformPolicy(platform_name.lower())
@@ -733,7 +760,8 @@ class ComplianceValidator:
             logger.error(f"Platform validation failed: {str(e)}")
     
     async def _calculate_compliance_score(self, result: ComplianceValidationResult) -> float:
-        """Calculate overall compliance score."""        try:
+        """Calculate overall compliance score."""
+        try:
             if not result.violations:
                 return 100.0
             
@@ -756,7 +784,8 @@ class ComplianceValidator:
             return 0.0
     
     async def _assess_overall_risk(self, result: ComplianceValidationResult) -> str:
-        """Assess overall compliance risk level."""        try:
+        """Assess overall compliance risk level."""
+        try:
             if result.critical_violations:
                 return "critical"
             elif result.high_violations:
@@ -774,13 +803,15 @@ class ComplianceValidator:
             return "unknown"
     
     def _categorize_by_severity(self, violations: List[ComplianceViolation]) -> Dict[str, int]:
-        """Categorize violations by severity."""        categories = {severity.value: 0 for severity in ViolationSeverity}
+        """Categorize violations by severity."""
+        categories = {severity.value: 0 for severity in ViolationSeverity}
         for violation in violations:
             categories[violation.severity.value] += 1
         return categories
     
     def _categorize_by_category(self, violations: List[ComplianceViolation]) -> Dict[str, int]:
-        """Categorize violations by category."""        categories = {category.value: 0 for category in ComplianceCategory}
+        """Categorize violations by category."""
+        categories = {category.value: 0 for category in ComplianceCategory}
         for violation in violations:
             categories[violation.category.value] += 1
         return categories
@@ -791,7 +822,8 @@ class ComplianceValidator:
         target_platforms: Optional[List[str]],
         geographical_scope: Optional[List[str]]
     ) -> List[ComplianceRule]:
-        """Get applicable compliance rules."""        applicable_rules = []
+        """Get applicable compliance rules."""
+        applicable_rules = []
         
         for rule in self.compliance_rules:
             # Check content type applicability
@@ -828,7 +860,8 @@ class ComplianceValidator:
         return applicable_rules
     
     def _create_error_result(self, error_message: str) -> ComplianceValidationResult:
-        """Create error validation result."""        return ComplianceValidationResult(
+        """Create error validation result."""
+        return ComplianceValidationResult(
             is_compliant=False,
             overall_risk_level="critical",
             compliance_score=0.0,
@@ -844,7 +877,8 @@ class ComplianceValidator:
         )
     
     def _init_compliance_rules(self) -> List[ComplianceRule]:
-        """Initialize compliance rules database."""        rules = []
+        """Initialize compliance rules database."""
+        rules = []
         
         # GDPR Rules
         rules.append(ComplianceRule(
@@ -910,7 +944,8 @@ class ComplianceValidator:
         return rules
     
     def _init_pattern_validators(self) -> Dict[str, str]:
-        """Initialize pattern validators."""        return {
+        """Initialize pattern validators."""
+        return {
             "hate_speech": r"(hate|attack|threaten|harass|discriminate|racist|sexist)",
             "personal_data": r"(ssn|social security|passport|driver.*license|credit card)",
             "inappropriate_content": r"(explicit|adult|nsfw|18\+|sexual)",
@@ -919,7 +954,8 @@ class ComplianceValidator:
         }
     
     def _init_content_analyzers(self) -> Dict[str, Any]:
-        """Initialize content analyzers."""        return {
+        """Initialize content analyzers."""
+        return {
             "text_analyzer": "text_content_analyzer_v1",
             "image_analyzer": "image_content_analyzer_v1",
             "video_analyzer": "video_content_analyzer_v1",
@@ -927,7 +963,8 @@ class ComplianceValidator:
         }
     
     def _init_risk_weights(self) -> Dict[str, float]:
-        """Initialize risk assessment weights."""        return {
+        """Initialize risk assessment weights."""
+        return {
             "critical": 1.0,
             "high": 0.7,
             "medium": 0.4,
@@ -936,7 +973,8 @@ class ComplianceValidator:
         }
     
     def _init_framework_validators(self) -> Dict[ComplianceFramework, Any]:
-        """Initialize framework-specific validators."""        return {
+        """Initialize framework-specific validators."""
+        return {
             ComplianceFramework.GDPR: "gdpr_validator_v1",
             ComplianceFramework.CCPA: "ccpa_validator_v1",
             ComplianceFramework.COPPA: "coppa_validator_v1",
@@ -954,17 +992,21 @@ class ComplianceValidator:
 
 
 class ComplianceValidator:
-    """    Comprehensive compliance validation engine for IA Influencer Agent Platform.
+    """
+    Comprehensive compliance validation engine for IA Influencer Agent Platform.
     
     Provides complete compliance validation across regulatory frameworks,
     platform policies, and legal requirements with advanced risk assessment.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize compliance validator.
+        """
+        Initialize compliance validator.
         
         Args:
             config: Validator configuration
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         
         # Initialize core validator
         self.core_validator = CoreComplianceValidator()
@@ -985,7 +1027,8 @@ class ComplianceValidator:
         content: Dict[str, Any],
         context: Optional[Dict[str, Any]] = None
     ) -> ComplianceAssessment:
-        """        Perform comprehensive compliance validation.
+        """
+        Perform comprehensive compliance validation.
         
         Args:
             content: Content to validate
@@ -993,7 +1036,8 @@ class ComplianceValidator:
             
         Returns:
             Complete compliance assessment
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             logger.info("Starting comprehensive compliance validation")
@@ -1043,7 +1087,8 @@ class ComplianceValidator:
         platforms: Optional[List[PlatformPolicy]] = None,
         context: Optional[Dict[str, Any]] = None
     ) -> ComplianceAssessment:
-        """        Validate compliance for specific frameworks and platforms.
+        """
+        Validate compliance for specific frameworks and platforms.
         
         Args:
             content: Content to validate
@@ -1053,7 +1098,8 @@ class ComplianceValidator:
             
         Returns:
             Targeted compliance assessment
-        """        try:
+        """
+        try:
             logger.info(f"Validating specific compliance: frameworks={frameworks}, platforms={platforms}")
             
             framework_results = {}
@@ -1101,7 +1147,8 @@ class ComplianceValidator:
         content_items: List[Dict[str, Any]],
         context: Optional[Dict[str, Any]] = None
     ) -> List[ComplianceAssessment]:
-        """        Validate compliance for multiple content items.
+        """
+        Validate compliance for multiple content items.
         
         Args:
             content_items: Content items to validate
@@ -1109,7 +1156,8 @@ class ComplianceValidator:
             
         Returns:
             List of compliance assessments
-        """        try:
+        """
+        try:
             logger.info(f"Starting batch compliance validation for {len(content_items)} items")
             
             # Process items in parallel
@@ -1147,7 +1195,8 @@ class ComplianceValidator:
         content: Dict[str, Any],
         context: Optional[Dict[str, Any]]
     ) -> Dict[ComplianceFramework, ComplianceResult]:
-        """Validate against regulatory frameworks."""        framework_results = {}
+        """Validate against regulatory frameworks."""
+        framework_results = {}
         
         try:
             for framework in self.active_frameworks:
@@ -1175,7 +1224,8 @@ class ComplianceValidator:
         content: Dict[str, Any],
         context: Optional[Dict[str, Any]]
     ) -> Dict[PlatformPolicy, ComplianceResult]:
-        """Validate against platform policies."""        platform_results = {}
+        """Validate against platform policies."""
+        platform_results = {}
         
         try:
             for platform in self.active_platforms:
@@ -1204,7 +1254,8 @@ class ComplianceValidator:
         framework_results: Dict[ComplianceFramework, ComplianceResult],
         platform_results: Dict[PlatformPolicy, ComplianceResult]
     ) -> RiskAssessment:
-        """Assess overall compliance risk."""        try:
+        """Assess overall compliance risk."""
+        try:
             # Calculate risk scores
             framework_risk = self._calculate_framework_risk(framework_results)
             platform_risk = self._calculate_platform_risk(platform_results)
@@ -1247,7 +1298,8 @@ class ComplianceValidator:
         risk_assessment: RiskAssessment,
         duration: float
     ) -> ComplianceAssessment:
-        """Generate comprehensive compliance assessment."""        try:
+        """Generate comprehensive compliance assessment."""
+        try:
             # Calculate overall compliance score
             overall_score = self._calculate_overall_compliance_score(
                 framework_results, platform_results
@@ -1297,7 +1349,8 @@ class ComplianceValidator:
         self,
         framework_results: Dict[ComplianceFramework, ComplianceResult]
     ) -> float:
-        """Calculate risk score from framework results."""        try:
+        """Calculate risk score from framework results."""
+        try:
             if not framework_results:
                 return 0.0
             
@@ -1320,7 +1373,8 @@ class ComplianceValidator:
         self,
         platform_results: Dict[PlatformPolicy, ComplianceResult]
     ) -> float:
-        """Calculate risk score from platform results."""        try:
+        """Calculate risk score from platform results."""
+        try:
             if not platform_results:
                 return 0.0
             
@@ -1340,7 +1394,8 @@ class ComplianceValidator:
             return 100.0
     
     async def _calculate_content_risk(self, content: Dict[str, Any]) -> float:
-        """Calculate risk score from content analysis."""        try:
+        """Calculate risk score from content analysis."""
+        try:
             risk_score = 0.0
             
             # Analyze text content
@@ -1364,7 +1419,8 @@ class ComplianceValidator:
             return 50.0
     
     def _analyze_text_risk(self, text: str) -> float:
-        """Analyze risk in text content."""        try:
+        """Analyze risk in text content."""
+        try:
             risk_score = 0.0
             text_lower = text.lower()
             
@@ -1393,7 +1449,8 @@ class ComplianceValidator:
             return 25.0
     
     def _analyze_metadata_risk(self, content: Dict[str, Any]) -> float:
-        """Analyze risk in content metadata."""        try:
+        """Analyze risk in content metadata."""
+        try:
             risk_score = 0.0
             
             # Check for sensitive metadata
@@ -1417,7 +1474,8 @@ class ComplianceValidator:
             return 20.0
     
     def _analyze_content_type_risk(self, content: Dict[str, Any]) -> float:
-        """Analyze risk based on content type."""        try:
+        """Analyze risk based on content type."""
+        try:
             content_type = content.get("type", "").lower()
             
             # Risk levels by content type
@@ -1437,7 +1495,8 @@ class ComplianceValidator:
             return 15.0
     
     def _determine_risk_level(self, risk_score: float) -> RiskLevel:
-        """Determine risk level from score."""        try:
+        """Determine risk level from score."""
+        try:
             if risk_score >= 80:
                 return RiskLevel.CRITICAL
             elif risk_score >= 60:
@@ -1457,7 +1516,8 @@ class ComplianceValidator:
         platform_results: Dict[PlatformPolicy, ComplianceResult],
         content: Dict[str, Any]
     ) -> List[str]:
-        """Identify specific risk factors."""        risk_factors = []
+        """Identify specific risk factors."""
+        risk_factors = []
         
         try:
             # Framework-based risk factors
@@ -1491,7 +1551,8 @@ class ComplianceValidator:
         framework_results: Dict[ComplianceFramework, ComplianceResult],
         platform_results: Dict[PlatformPolicy, ComplianceResult]
     ) -> float:
-        """Calculate overall compliance score."""        try:
+        """Calculate overall compliance score."""
+        try:
             total_score = 0.0
             total_weight = 0.0
             
@@ -1517,7 +1578,8 @@ class ComplianceValidator:
             return 0.0
     
     def _determine_compliance_status(self, score: float) -> ComplianceStatus:
-        """Determine compliance status from score."""        try:
+        """Determine compliance status from score."""
+        try:
             if score >= 95:
                 return ComplianceStatus.FULLY_COMPLIANT
             elif score >= 80:
@@ -1535,7 +1597,8 @@ class ComplianceValidator:
         platform_results: Dict[PlatformPolicy, ComplianceResult],
         risk_assessment: RiskAssessment
     ) -> List[str]:
-        """Generate compliance recommendations."""        recommendations = []
+        """Generate compliance recommendations."""
+        recommendations = []
         
         try:
             # Framework-based recommendations
@@ -1567,7 +1630,8 @@ class ComplianceValidator:
             return ["Review compliance assessment results"]
     
     def _get_framework_weight(self, framework: ComplianceFramework) -> float:
-        """Get weight for framework importance."""        weights = {
+        """Get weight for framework importance."""
+        weights = {
             ComplianceFramework.GDPR: 1.0,
             ComplianceFramework.CCPA: 0.8,
             ComplianceFramework.COPPA: 0.9,
@@ -1577,7 +1641,8 @@ class ComplianceValidator:
         return weights.get(framework, 0.5)
     
     def _get_platform_weight(self, platform: PlatformPolicy) -> float:
-        """Get weight for platform importance."""        weights = {
+        """Get weight for platform importance."""
+        weights = {
             PlatformPolicy.YOUTUBE_COMMUNITY: 1.0,
             PlatformPolicy.INSTAGRAM_TERMS: 0.9,
             PlatformPolicy.TIKTOK_COMMUNITY: 0.8,
@@ -1587,7 +1652,8 @@ class ComplianceValidator:
         return weights.get(platform, 0.5)
     
     def _init_active_frameworks(self) -> List[ComplianceFramework]:
-        """Initialize active compliance frameworks."""        return [
+        """Initialize active compliance frameworks."""
+        return [
             ComplianceFramework.GDPR,
             ComplianceFramework.CCPA,
             ComplianceFramework.COPPA,
@@ -1595,7 +1661,8 @@ class ComplianceValidator:
         ]
     
     def _init_active_platforms(self) -> List[PlatformPolicy]:
-        """Initialize active platform policies."""        return [
+        """Initialize active platform policies."""
+        return [
             PlatformPolicy.YOUTUBE_COMMUNITY,
             PlatformPolicy.INSTAGRAM_TERMS,
             PlatformPolicy.TIKTOK_COMMUNITY,
@@ -1603,7 +1670,8 @@ class ComplianceValidator:
         ]
     
     def _init_risk_thresholds(self) -> Dict[str, float]:
-        """Initialize risk assessment thresholds."""        return {
+        """Initialize risk assessment thresholds."""
+        return {
             "critical": 20.0,
             "high": 40.0,
             "medium": 60.0,

@@ -4,7 +4,8 @@ Enterprise-grade content quality assessment with AI-powered scoring,
 multi-dimensional quality metrics, and optimization recommendations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Any, Tuple
@@ -32,7 +33,8 @@ from ...utils.performance_metrics import PerformanceMetrics
 logger = logging.getLogger(__name__)
 
 class QualityDimension(Enum):
-    """Quality assessment dimensions"""    TECHNICAL = "technical"
+    """Quality assessment dimensions"""
+    TECHNICAL = "technical"
     AESTHETIC = "aesthetic"
     CONTENT = "content"
     ENGAGEMENT = "engagement"
@@ -40,7 +42,8 @@ class QualityDimension(Enum):
     COMMERCIAL = "commercial"
 
 class QualityLevel(Enum):
-    """Content quality levels"""    POOR = "poor"           # 0.0 - 0.3
+    """Content quality levels"""
+    POOR = "poor"           # 0.0 - 0.3
     FAIR = "fair"           # 0.3 - 0.5
     GOOD = "good"           # 0.5 - 0.7
     EXCELLENT = "excellent" # 0.7 - 0.9
@@ -48,7 +51,8 @@ class QualityLevel(Enum):
 
 @dataclass
 class QualityAssessment:
-    """Comprehensive quality assessment results"""    content_id: str
+    """Comprehensive quality assessment results"""
+    content_id: str
     user_id: str
     content_type: str
     
@@ -89,7 +93,8 @@ class QualityAssessment:
     processing_time: float = 0.0
 
 class QualityAssessor:
-    """    Advanced content quality assessment system with AI-powered analysis.
+    """
+    Advanced content quality assessment system with AI-powered analysis.
     
     Core Capabilities:
     - Multi-dimensional quality scoring
@@ -100,7 +105,8 @@ class QualityAssessor:
     - Commercial viability scoring
     - Industry-standard comparison
     - Detailed improvement recommendations
-    """    
+    """
+    
     def __init__(self):
         # Initialize AI quality models
         self.quality_analyzer = QualityAnalyzer()
@@ -119,7 +125,8 @@ class QualityAssessor:
         logger.info("QualityAssessor initialized successfully")
     
     def _initialize_benchmarks(self) -> Dict[str, Dict[str, float]]:
-        """Initialize quality benchmarks by content type."""        return {
+        """Initialize quality benchmarks by content type."""
+        return {
             'audio': {
                 'minimum_bitrate': 128,  # kbps
                 'recommended_bitrate': 320,
@@ -153,7 +160,8 @@ class QualityAssessor:
         }
     
     def _initialize_industry_standards(self) -> Dict[str, Dict[str, float]]:
-        """Initialize industry quality standards."""        return {
+        """Initialize industry quality standards."""
+        return {
             'musician': {
                 'audio_quality_weight': 0.4,
                 'production_quality_weight': 0.3,
@@ -183,8 +191,10 @@ class QualityAssessor:
     async def assess_quality(self, content: Dict[str, Any], 
                            analysis: Dict[str, Any] = None,
                            creator_type: str = None) -> QualityAssessment:
-        """        Perform comprehensive quality assessment of content.
-        """        start_time = datetime.utcnow()
+        """
+        Perform comprehensive quality assessment of content.
+        """
+        start_time = datetime.utcnow()
         
         try:
             content_id = content.get('id', 'unknown')
@@ -238,8 +248,10 @@ class QualityAssessor:
     async def batch_assess_quality(self, content_items: List[Dict[str, Any]],
                                  creator_type: str = None,
                                  concurrent_limit: int = 5) -> List[QualityAssessment]:
-        """        Perform batch quality assessment with concurrency control.
-        """        try:
+        """
+        Perform batch quality assessment with concurrency control.
+        """
+        try:
             semaphore = asyncio.Semaphore(concurrent_limit)
             
             async def assess_single(content_item):
@@ -268,7 +280,8 @@ class QualityAssessor:
     async def _assess_technical_quality(self, assessment: QualityAssessment,
                                       content: Dict[str, Any],
                                       analysis: Dict[str, Any] = None) -> None:
-        """Assess technical quality aspects of content."""        try:
+        """Assess technical quality aspects of content."""
+        try:
             technical_metrics = {}
             content_type = assessment.content_type
             benchmarks = self.quality_benchmarks.get(content_type, {})
@@ -346,7 +359,8 @@ class QualityAssessor:
     async def _assess_aesthetic_quality(self, assessment: QualityAssessment,
                                       content: Dict[str, Any],
                                       analysis: Dict[str, Any] = None) -> None:
-        """Assess aesthetic and visual quality aspects."""        try:
+        """Assess aesthetic and visual quality aspects."""
+        try:
             aesthetic_metrics = {}
             content_type = assessment.content_type
             
@@ -399,7 +413,8 @@ class QualityAssessor:
     async def _assess_content_quality(self, assessment: QualityAssessment,
                                     content: Dict[str, Any],
                                     analysis: Dict[str, Any] = None) -> None:
-        """Assess content relevance, originality, and value."""        try:
+        """Assess content relevance, originality, and value."""
+        try:
             content_factors = []
             
             # Originality assessment
@@ -440,7 +455,8 @@ class QualityAssessor:
     async def _assess_engagement_potential(self, assessment: QualityAssessment,
                                          content: Dict[str, Any],
                                          analysis: Dict[str, Any] = None) -> None:
-        """Assess potential for audience engagement."""        try:
+        """Assess potential for audience engagement."""
+        try:
             engagement_factors = []
             
             # Sentiment analysis impact
@@ -500,7 +516,8 @@ class QualityAssessor:
                                          content: Dict[str, Any],
                                          analysis: Dict[str, Any] = None,
                                          creator_type: str = None) -> None:
-        """Assess professional production quality standards."""        try:
+        """Assess professional production quality standards."""
+        try:
             professional_factors = []
             
             # Technical professionalism
@@ -548,7 +565,8 @@ class QualityAssessor:
                                          content: Dict[str, Any],
                                          analysis: Dict[str, Any] = None,
                                          creator_type: str = None) -> None:
-        """Assess commercial potential and marketability."""        try:
+        """Assess commercial potential and marketability."""
+        try:
             commercial_factors = []
             
             # Quality threshold for commercial viability
@@ -600,7 +618,8 @@ class QualityAssessor:
             assessment.commercial_score = 0.5
     
     def _calculate_overall_score(self, assessment: QualityAssessment, creator_type: str = None) -> None:
-        """Calculate overall quality score with appropriate weighting."""        # Default weights
+        """Calculate overall quality score with appropriate weighting."""
+        # Default weights
         weights = {
             'technical': 0.25,
             'aesthetic': 0.20,
@@ -632,7 +651,8 @@ class QualityAssessor:
         assessment.overall_score = sum(weighted_scores)
     
     def _determine_quality_level(self, overall_score: float) -> QualityLevel:
-        """Determine quality level based on overall score."""        if overall_score >= 0.9:
+        """Determine quality level based on overall score."""
+        if overall_score >= 0.9:
             return QualityLevel.EXCEPTIONAL
         elif overall_score >= 0.7:
             return QualityLevel.EXCELLENT
@@ -645,7 +665,8 @@ class QualityAssessor:
     
     async def _generate_quality_recommendations(self, assessment: QualityAssessment,
                                               creator_type: str = None) -> None:
-        """Generate specific quality improvement recommendations."""        recommendations = []
+        """Generate specific quality improvement recommendations."""
+        recommendations = []
         technical_improvements = []
         aesthetic_improvements = []
         
@@ -715,7 +736,8 @@ class QualityAssessor:
     
     async def _calculate_industry_percentiles(self, assessment: QualityAssessment,
                                             creator_type: str = None) -> None:
-        """Calculate industry and creator type percentiles."""        # Simulate industry percentile calculation
+        """Calculate industry and creator type percentiles."""
+        # Simulate industry percentile calculation
         # In production, this would compare against actual industry data
         
         # Industry percentile (simplified calculation)
@@ -743,7 +765,8 @@ class QualityAssessor:
         assessment.improvement_potential = (1.0 - assessment.overall_score) * 100
     
     def _identify_strengths_weaknesses(self, assessment: QualityAssessment) -> None:
-        """Identify content strengths and weaknesses."""        scores = {
+        """Identify content strengths and weaknesses."""
+        scores = {
             'technical': assessment.technical_score,
             'aesthetic': assessment.aesthetic_score,
             'content': assessment.content_score,
@@ -769,7 +792,8 @@ class QualityAssessor:
     
     # Helper methods for scoring
     def _score_against_benchmark(self, value: float, minimum: float, optimal: float) -> float:
-        """Score a value against minimum and optimal benchmarks."""        if value >= optimal:
+        """Score a value against minimum and optimal benchmarks."""
+        if value >= optimal:
             return 1.0
         elif value >= minimum:
             return 0.5 + 0.5 * (value - minimum) / (optimal - minimum)
@@ -777,7 +801,8 @@ class QualityAssessor:
             return max(0.1, value / minimum * 0.5)
     
     def _score_frame_rate(self, fps: float) -> float:
-        """Score frame rate for video content."""        if fps >= 60:
+        """Score frame rate for video content."""
+        if fps >= 60:
             return 1.0
         elif fps >= 30:
             return 0.9
@@ -787,7 +812,8 @@ class QualityAssessor:
             return 0.4
     
     def _generate_default_technical_scores(self, content_type: str) -> Dict[str, float]:
-        """Generate default technical scores when analysis is not available."""        defaults = {
+        """Generate default technical scores when analysis is not available."""
+        defaults = {
             'audio': {
                 'bitrate_score': 0.6,
                 'sample_rate_score': 0.7,
@@ -822,7 +848,8 @@ class QualityAssessor:
         return defaults.get(content_type, {'overall': 0.6})
     
     def _generate_default_aesthetic_scores(self, content_type: str) -> Dict[str, float]:
-        """Generate default aesthetic scores when analysis is not available."""        defaults = {
+        """Generate default aesthetic scores when analysis is not available."""
+        defaults = {
             'image': {
                 'composition_score': 0.6,
                 'color_harmony_score': 0.6,

@@ -13,7 +13,8 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 This module provides comprehensive backup and recovery solutions for the IA
 Influencer Agent platform across multiple cloud providers, including automated
 backup scheduling, versioning, encryption, and cross-cloud replication.
-"""import logging
+"""
+import logging
 import asyncio
 import json
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -31,14 +32,16 @@ from cryptography.fernet import Fernet
 logger = logging.getLogger(__name__)
 
 class BackupType(Enum):
-    """Backup types supported"""    FULL = "full"
+    """Backup types supported"""
+    FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
     SNAPSHOT = "snapshot"
     CONTINUOUS = "continuous"
 
 class BackupStatus(Enum):
-    """Backup operation status"""    SCHEDULED = "scheduled"
+    """Backup operation status"""
+    SCHEDULED = "scheduled"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -46,14 +49,16 @@ class BackupStatus(Enum):
     RESTORED = "restored"
 
 class CloudProvider(Enum):
-    """Supported cloud providers for backup"""    AWS = "aws"
+    """Supported cloud providers for backup"""
+    AWS = "aws"
     AZURE = "azure"
     GCP = "gcp"
     MULTI_CLOUD = "multi_cloud"
 
 @dataclass
 class BackupConfiguration:
-    """Backup configuration settings"""    name: str
+    """Backup configuration settings"""
+    name: str
     source_path: str
     destination: Dict[str, Any]
     backup_type: BackupType
@@ -68,7 +73,8 @@ class BackupConfiguration:
 
 @dataclass
 class BackupJob:
-    """Backup job representation"""    job_id: str
+    """Backup job representation"""
+    job_id: str
     configuration: BackupConfiguration
     status: BackupStatus
     started_at: Optional[datetime] = None
@@ -81,7 +87,8 @@ class BackupJob:
 
 @dataclass
 class RestorePoint:
-    """Restore point information"""    restore_id: str
+    """Restore point information"""
+    restore_id: str
     backup_job_id: str
     created_at: datetime
     size_bytes: int
@@ -91,12 +98,14 @@ class RestorePoint:
     verified: bool = False
 
 class CloudBackupManager:
-    """Enterprise cloud backup and recovery manager"""    
+    """Enterprise cloud backup and recovery manager"""
+    
     def __init__(self, 
                  aws_credentials: Optional[Dict[str, str]] = None,
                  azure_credentials: Optional[Dict[str, str]] = None,
                  gcp_credentials: Optional[Dict[str, str]] = None):
-        """Initialize cloud backup manager"""        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize cloud backup manager"""
+        self.logger = logging.getLogger(self.__class__.__name__)
         self.aws_credentials = aws_credentials
         self.azure_credentials = azure_credentials
         self.gcp_credentials = gcp_credentials
@@ -118,7 +127,8 @@ class CloudBackupManager:
         self.logger.info("Cloud Backup Manager initialized")
 
     async def initialize_providers(self) -> None:
-        """Initialize cloud provider clients"""        try:
+        """Initialize cloud provider clients"""
+        try:
             # Initialize AWS S3 client
             if self.aws_credentials:
                 self._aws_client = boto3.client(
@@ -148,7 +158,8 @@ class CloudBackupManager:
             raise
 
     async def create_backup_job(self, config: BackupConfiguration) -> str:
-        """Create and schedule a backup job"""        try:
+        """Create and schedule a backup job"""
+        try:
             job_id = f"backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{hash(config.name) % 1000}"
             
             backup_job = BackupJob(
@@ -174,7 +185,8 @@ class CloudBackupManager:
             raise
 
     async def _execute_backup(self, job: BackupJob) -> None:
-        """Execute backup operation"""        try:
+        """Execute backup operation"""
+        try:
             job.status = BackupStatus.RUNNING
             job.started_at = datetime.now()
             
@@ -235,7 +247,8 @@ class CloudBackupManager:
             raise
 
     async def _prepare_backup_data(self, config: BackupConfiguration) -> bytes:
-        """Prepare data for backup"""        try:
+        """Prepare data for backup"""
+        try:
             source_path = Path(config.source_path)
             backup_data = b""
             files_count = 0
@@ -264,7 +277,8 @@ class CloudBackupManager:
             raise
 
     async def _compress_data(self, data: bytes) -> bytes:
-        """Compress backup data"""        try:
+        """Compress backup data"""
+        try:
             compressed_data = zlib.compress(data, level=9)
             compression_ratio = len(compressed_data) / len(data)
             self.logger.info(f"Data compressed with ratio: {compression_ratio:.2f}")
@@ -274,7 +288,8 @@ class CloudBackupManager:
             raise
 
     async def _encrypt_data(self, data: bytes) -> bytes:
-        """Encrypt backup data"""        try:
+        """Encrypt backup data"""
+        try:
             encrypted_data = self._cipher_suite.encrypt(data)
             self.logger.info("Data encrypted successfully")
             return encrypted_data
@@ -283,7 +298,8 @@ class CloudBackupManager:
             raise
 
     async def _upload_backup(self, job: BackupJob, data: bytes) -> Dict[str, str]:
-        """Upload backup to cloud providers"""        locations = {}
+        """Upload backup to cloud providers"""
+        locations = {}
         
         try:
             destination = job.configuration.destination
@@ -346,7 +362,8 @@ class CloudBackupManager:
             raise
 
     async def _verify_backup(self, job: BackupJob) -> bool:
-        """Verify backup integrity"""        try:
+        """Verify backup integrity"""
+        try:
             locations = json.loads(job.backup_location)
             
             for provider, location in locations.items():
@@ -375,7 +392,8 @@ class CloudBackupManager:
             return False
 
     async def restore_from_backup(self, restore_id: str, destination_path: str) -> bool:
-        """Restore data from backup"""        try:
+        """Restore data from backup"""
+        try:
             if restore_id not in self.restore_points:
                 raise ValueError(f"Restore point not found: {restore_id}")
             
@@ -437,7 +455,8 @@ class CloudBackupManager:
             raise
 
     async def _download_backup_data(self, provider: str, location: str) -> bytes:
-        """Download backup data from cloud provider"""        try:
+        """Download backup data from cloud provider"""
+        try:
             if provider == 'aws':
                 # Parse S3 location: s3://bucket/key
                 bucket, key = location.replace('s3://', '').split('/', 1)
@@ -467,7 +486,8 @@ class CloudBackupManager:
             raise
 
     async def cleanup_old_backups(self, retention_days: int = 30) -> int:
-        """Clean up old backups based on retention policy"""        try:
+        """Clean up old backups based on retention policy"""
+        try:
             cutoff_date = datetime.now() - timedelta(days=retention_days)
             deleted_count = 0
             
@@ -491,7 +511,8 @@ class CloudBackupManager:
             raise
 
     async def _delete_backup_from_cloud(self, provider: str, location: str) -> None:
-        """Delete backup from cloud storage"""        try:
+        """Delete backup from cloud storage"""
+        try:
             if provider == 'aws':
                 bucket, key = location.replace('s3://', '').split('/', 1)
                 self._aws_client.delete_object(Bucket=bucket, Key=key)
@@ -514,12 +535,14 @@ class CloudBackupManager:
             raise
 
     async def _schedule_backup(self, job: BackupJob) -> None:
-        """Schedule backup using cron expression"""        # This would integrate with a job scheduler like Celery or APScheduler
+        """Schedule backup using cron expression"""
+        # This would integrate with a job scheduler like Celery or APScheduler
         # For now, we'll just log the scheduling
         self.logger.info(f"Backup scheduled: {job.job_id} with schedule: {job.configuration.schedule}")
 
     async def _send_backup_notification(self, job: BackupJob, message: str) -> None:
-        """Send backup completion notification"""        try:
+        """Send backup completion notification"""
+        try:
             notification_settings = job.configuration.notification_settings
             
             if notification_settings.get('email_enabled'):
@@ -534,15 +557,18 @@ class CloudBackupManager:
             self.logger.error(f"Failed to send notification: {e}")
 
     async def get_backup_status(self, job_id: str) -> Optional[BackupJob]:
-        """Get backup job status"""        return self.active_jobs.get(job_id) or next(
+        """Get backup job status"""
+        return self.active_jobs.get(job_id) or next(
             (job for job in self.backup_history if job.job_id == job_id), None
         )
 
     async def list_restore_points(self) -> List[RestorePoint]:
-        """List all available restore points"""        return list(self.restore_points.values())
+        """List all available restore points"""
+        return list(self.restore_points.values())
 
     async def get_backup_statistics(self) -> Dict[str, Any]:
-        """Get backup statistics and metrics"""        total_jobs = len(self.backup_history)
+        """Get backup statistics and metrics"""
+        total_jobs = len(self.backup_history)
         successful_jobs = len([j for j in self.backup_history if j.status == BackupStatus.COMPLETED])
         failed_jobs = len([j for j in self.backup_history if j.status == BackupStatus.FAILED])
         

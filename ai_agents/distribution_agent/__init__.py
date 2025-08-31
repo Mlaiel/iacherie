@@ -440,7 +440,8 @@ refer to the comprehensive README files and technical documentation.
 international intellectual property law.
 """# Initialization Function
 def get_distribution_agent(config: dict = None) -> DistributionAgent:
-    """    Factory function to create and initialize a Distribution Agent instance.
+    """
+    Factory function to create and initialize a Distribution Agent instance.
     
     Args:
         config (dict, optional): Configuration parameters for the agent
@@ -451,14 +452,16 @@ def get_distribution_agent(config: dict = None) -> DistributionAgent:
     Raises:
         ValueError: If configuration is invalid
         DistributionError: If initialization fails
-    """    try:
+    """
+    try:
         agent = DistributionAgent(config=config)
         return agent
     except Exception as e:
         raise ValueError(f"Failed to create Distribution Agent: {e}")
 
 def get_distribution_manager(config: dict = None) -> DistributionAgentManager:
-    """    Factory function to create and initialize a Distribution Agent Manager.
+    """
+    Factory function to create and initialize a Distribution Agent Manager.
     
     Args:
         config (dict, optional): Configuration parameters for the manager
@@ -469,7 +472,8 @@ def get_distribution_manager(config: dict = None) -> DistributionAgentManager:
     Raises:
         ValueError: If configuration is invalid
         DistributionError: If initialization fails
-    """    try:
+    """
+    try:
         manager = DistributionAgentManager(config=config)
         return manager
     except Exception as e:
@@ -477,11 +481,13 @@ def get_distribution_manager(config: dict = None) -> DistributionAgentManager:
 
 # Module Health Check
 def health_check() -> dict:
-    """    Perform a basic health check of the distribution agent module.
+    """
+    Perform a basic health check of the distribution agent module.
     
     Returns:
         dict: Health status information
-    """    return {
+    """
+    return {
         "module": "distribution_agent",
         "version": __version__,
         "status": "healthy",
@@ -498,11 +504,13 @@ def health_check() -> dict:
 
 # Version Information
 def get_version_info() -> dict:
-    """    Get detailed version and module information.
+    """
+    Get detailed version and module information.
     
     Returns:
         dict: Version and module details
-    """    return {
+    """
+    return {
         "version": __version__,
         "author": __author__,
         "email": __email__, 

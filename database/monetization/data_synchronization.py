@@ -24,7 +24,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import hashlib
@@ -55,7 +56,8 @@ logger = logging.getLogger(__name__)
 
 
 class SyncConflictType(Enum):
-    """Types of data synchronization conflicts"""    DUPLICATE_RECORD = "duplicate_record"
+    """Types of data synchronization conflicts"""
+    DUPLICATE_RECORD = "duplicate_record"
     VERSION_MISMATCH = "version_mismatch"
     DATA_INCONSISTENCY = "data_inconsistency"
     CURRENCY_MISMATCH = "currency_mismatch"
@@ -64,7 +66,8 @@ class SyncConflictType(Enum):
 
 
 class SyncStrategy(Enum):
-    """Data synchronization strategies"""    MERGE_LATEST = "merge_latest"
+    """Data synchronization strategies"""
+    MERGE_LATEST = "merge_latest"
     PLATFORM_PRIORITY = "platform_priority"
     MANUAL_REVIEW = "manual_review"
     HIGHEST_VALUE = "highest_value"
@@ -74,7 +77,8 @@ class SyncStrategy(Enum):
 
 @dataclass
 class SyncConflict:
-    """Data synchronization conflict representation"""    conflict_id: str
+    """Data synchronization conflict representation"""
+    conflict_id: str
     conflict_type: SyncConflictType
     platform_source: Platform
     affected_records: List[str]
@@ -86,7 +90,8 @@ class SyncConflict:
 
 @dataclass
 class SyncResult:
-    """Synchronization operation result"""    success: bool
+    """Synchronization operation result"""
+    success: bool
     records_processed: int
     records_created: int
     records_updated: int
@@ -99,9 +104,11 @@ class SyncResult:
 
 
 class DataSynchronizationEngine:
-    """    Ultra-advanced data synchronization engine with intelligent conflict resolution,
+    """
+    Ultra-advanced data synchronization engine with intelligent conflict resolution,
     real-time data validation, and comprehensive audit trails
-    """    
+    """
+    
     def __init__(self):
         self.redis_client = None
         self.conflict_resolvers = {}
@@ -113,14 +120,16 @@ class DataSynchronizationEngine:
         self._initialize_data_validators()
     
     async def initialize(self):
-        """Initialize Redis connection and other async resources"""        self.redis_client = redis.from_url(
+        """Initialize Redis connection and other async resources"""
+        self.redis_client = redis.from_url(
             settings.REDIS_URL,
             encoding="utf-8",
             decode_responses=True
         )
     
     def _initialize_conflict_resolvers(self):
-        """Initialize conflict resolution strategies"""        self.conflict_resolvers = {
+        """Initialize conflict resolution strategies"""
+        self.conflict_resolvers = {
             SyncConflictType.DUPLICATE_RECORD: self._resolve_duplicate_record,
             SyncConflictType.VERSION_MISMATCH: self._resolve_version_mismatch,
             SyncConflictType.DATA_INCONSISTENCY: self._resolve_data_inconsistency,
@@ -130,7 +139,8 @@ class DataSynchronizationEngine:
         }
     
     def _initialize_data_validators(self):
-        """Initialize data validation rules"""        self.data_validators = {
+        """Initialize data validation rules"""
+        self.data_validators = {
             "analytics": self._validate_analytics_data,
             "revenue": self._validate_revenue_data,
             "content": self._validate_content_data
@@ -143,8 +153,10 @@ class DataSynchronizationEngine:
         platform_data: Dict[str, List[Dict[str, Any]]],
         sync_strategy: SyncStrategy = SyncStrategy.MERGE_LATEST
     ) -> SyncResult:
-        """        Synchronize data from multiple platforms with intelligent conflict resolution
-        """        start_time = datetime.now(timezone.utc)
+        """
+        Synchronize data from multiple platforms with intelligent conflict resolution
+        """
+        start_time = datetime.now(timezone.utc)
         
         result = SyncResult(
             success=True,
@@ -211,7 +223,8 @@ class DataSynchronizationEngine:
         records: List[Dict[str, Any]],
         sync_strategy: SyncStrategy
     ) -> SyncResult:
-        """Synchronize a specific data type with conflict resolution"""        
+        """Synchronize a specific data type with conflict resolution"""
+        
         result = SyncResult(
             success=True,
             records_processed=0,
@@ -266,7 +279,8 @@ class DataSynchronizationEngine:
         data_type: str,
         records: List[Dict[str, Any]]
     ) -> Dict[str, List[Dict[str, Any]]]:
-        """Group records by their unique identity for conflict detection"""        
+        """Group records by their unique identity for conflict detection"""
+        
         groups = defaultdict(list)
         
         for record in records:
@@ -293,7 +307,8 @@ class DataSynchronizationEngine:
         records: List[Dict[str, Any]],
         sync_strategy: SyncStrategy
     ) -> Dict[str, int]:
-        """Process a group of potentially conflicting records"""        
+        """Process a group of potentially conflicting records"""
+        
         result = {"created": 0, "updated": 0, "conflicts": 0, "resolved": 0}
         
         if len(records) == 1:
@@ -347,7 +362,8 @@ class DataSynchronizationEngine:
         new_records: List[Dict[str, Any]],
         existing_records: List[Any]
     ) -> SyncConflictType:
-        """Detect the type of conflict between records"""        
+        """Detect the type of conflict between records"""
+        
         if len(existing_records) > 0 and len(new_records) > 1:
             return SyncConflictType.DUPLICATE_RECORD
         
@@ -389,7 +405,8 @@ class DataSynchronizationEngine:
         data_type: str,
         conflict: SyncConflict
     ) -> Dict[str, Any]:
-        """Resolve a data synchronization conflict"""        
+        """Resolve a data synchronization conflict"""
+        
         resolver = self.conflict_resolvers.get(conflict.conflict_type)
         if not resolver:
             logger.error(f"No resolver for conflict type: {conflict.conflict_type}")
@@ -414,7 +431,8 @@ class DataSynchronizationEngine:
         data_type: str,
         conflict: SyncConflict
     ) -> Dict[str, Any]:
-        """Resolve duplicate record conflicts"""        
+        """Resolve duplicate record conflicts"""
+        
         new_records = conflict.conflict_data["new_records"]
         existing_records = conflict.conflict_data["existing_records"]
         
@@ -442,7 +460,8 @@ class DataSynchronizationEngine:
         data_type: str,
         conflict: SyncConflict
     ) -> Dict[str, Any]:
-        """Resolve version mismatch conflicts"""        
+        """Resolve version mismatch conflicts"""
+        
         new_records = conflict.conflict_data["new_records"]
         
         # Merge data from all records
@@ -465,7 +484,8 @@ class DataSynchronizationEngine:
         data_type: str,
         conflict: SyncConflict
     ) -> Dict[str, Any]:
-        """Resolve data inconsistency conflicts"""        
+        """Resolve data inconsistency conflicts"""
+        
         new_records = conflict.conflict_data["new_records"]
         
         # Use highest confidence/quality record
@@ -491,7 +511,8 @@ class DataSynchronizationEngine:
         data_type: str,
         conflict: SyncConflict
     ) -> Dict[str, Any]:
-        """Resolve currency mismatch conflicts"""        
+        """Resolve currency mismatch conflicts"""
+        
         new_records = conflict.conflict_data["new_records"]
         
         # Convert all to EUR (default currency)
@@ -530,7 +551,8 @@ class DataSynchronizationEngine:
         data_type: str,
         conflict: SyncConflict
     ) -> Dict[str, Any]:
-        """Resolve timestamp conflict conflicts"""        
+        """Resolve timestamp conflict conflicts"""
+        
         new_records = conflict.conflict_data["new_records"]
         
         # Use the most recent record
@@ -556,7 +578,8 @@ class DataSynchronizationEngine:
         data_type: str,
         conflict: SyncConflict
     ) -> Dict[str, Any]:
-        """Resolve platform discrepancy conflicts"""        
+        """Resolve platform discrepancy conflicts"""
+        
         new_records = conflict.conflict_data["new_records"]
         
         # Create separate records for each platform
@@ -575,7 +598,8 @@ class DataSynchronizationEngine:
         }
     
     async def _merge_record_data(self, records: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Merge data from multiple records intelligently"""        
+        """Merge data from multiple records intelligently"""
+        
         if not records:
             return {}
         
@@ -607,7 +631,8 @@ class DataSynchronizationEngine:
         data_type: str,
         record_data: Dict[str, Any]
     ) -> bool:
-        """Create or update a record in the database"""        
+        """Create or update a record in the database"""
+        
         try:
             if data_type == "analytics":
                 return await self._upsert_analytics_record(session, user_id, record_data)
@@ -628,7 +653,8 @@ class DataSynchronizationEngine:
         user_id: str,
         record_data: Dict[str, Any]
     ) -> bool:
-        """Insert or update analytics record"""        
+        """Insert or update analytics record"""
+        
         try:
             # Create upsert statement
             stmt = insert(PlatformAnalytics).values(
@@ -673,7 +699,8 @@ class DataSynchronizationEngine:
         user_id: str,
         record_data: Dict[str, Any]
     ) -> bool:
-        """Insert or update revenue record"""        
+        """Insert or update revenue record"""
+        
         try:
             # Create upsert statement
             stmt = insert(PlatformRevenue).values(
@@ -709,7 +736,8 @@ class DataSynchronizationEngine:
             return False
     
     async def _validate_analytics_data(self, record: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate analytics data record"""        
+        """Validate analytics data record"""
+        
         required_fields = ["platform", "metric_type", "date"]
         missing_fields = [field for field in required_fields if field not in record]
         
@@ -740,7 +768,8 @@ class DataSynchronizationEngine:
         return {"valid": True}
     
     async def _validate_revenue_data(self, record: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate revenue data record"""        
+        """Validate revenue data record"""
+        
         required_fields = ["platform", "revenue_stream", "date", "gross_revenue", "net_revenue"]
         missing_fields = [field for field in required_fields if field not in record]
         
@@ -785,7 +814,8 @@ class DataSynchronizationEngine:
         return {"valid": True}
     
     async def _validate_content_data(self, record: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate content metadata record"""        
+        """Validate content metadata record"""
+        
         required_fields = ["platform", "content_id", "content_type"]
         missing_fields = [field for field in required_fields if field not in record]
         
@@ -807,7 +837,8 @@ class DataSynchronizationEngine:
         return {"valid": True}
     
     async def _acquire_sync_lock(self, lock_key: str, timeout: int = 300):
-        """Acquire distributed lock for synchronization"""        
+        """Acquire distributed lock for synchronization"""
+        
         class AsyncLock:
             def __init__(self, redis_client, key, timeout):
                 self.redis_client = redis_client
@@ -832,7 +863,8 @@ class DataSynchronizationEngine:
         return AsyncLock(self.redis_client, lock_key, timeout)
     
     async def _update_sync_cache(self, user_id: str, result: SyncResult):
-        """Update synchronization cache with latest results"""        
+        """Update synchronization cache with latest results"""
+        
         cache_key = f"sync_result:{user_id}"
         cache_data = {
             "last_sync": datetime.now(timezone.utc).isoformat(),
@@ -849,7 +881,8 @@ class DataSynchronizationEngine:
         )
     
     async def get_sync_status(self, user_id: str) -> Dict[str, Any]:
-        """Get synchronization status for a user"""        
+        """Get synchronization status for a user"""
+        
         cache_key = f"sync_result:{user_id}"
         cached_data = await self.redis_client.get(cache_key)
         
@@ -865,7 +898,8 @@ class DataSynchronizationEngine:
         }
     
     def _record_to_dict(self, record) -> Dict[str, Any]:
-        """Convert SQLAlchemy record to dictionary"""        
+        """Convert SQLAlchemy record to dictionary"""
+        
         if hasattr(record, '__dict__'):
             result = {}
             for key, value in record.__dict__.items():

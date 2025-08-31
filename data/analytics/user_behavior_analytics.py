@@ -10,7 +10,8 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -32,7 +33,8 @@ import networkx as nx
 
 
 class UserAction(Enum):
-    """User action types"""    VIEW = "view"
+    """User action types"""
+    VIEW = "view"
     LIKE = "like"
     COMMENT = "comment"
     SHARE = "share"
@@ -47,7 +49,8 @@ class UserAction(Enum):
 
 
 class UserSegment(Enum):
-    """User segment categories"""    CASUAL_VIEWER = "casual_viewer"
+    """User segment categories"""
+    CASUAL_VIEWER = "casual_viewer"
     ENGAGED_FAN = "engaged_fan"
     SUPER_FAN = "super_fan"
     POTENTIAL_CUSTOMER = "potential_customer"
@@ -58,7 +61,8 @@ class UserSegment(Enum):
 
 
 class ContentCategory(Enum):
-    """Content category types"""    MUSIC = "music"
+    """Content category types"""
+    MUSIC = "music"
     VIDEO = "video"
     PHOTO = "photo"
     BLOG = "blog"
@@ -70,7 +74,8 @@ class ContentCategory(Enum):
 
 @dataclass
 class UserProfile:
-    """Comprehensive user profile"""    user_id: str
+    """Comprehensive user profile"""
+    user_id: str
     segment: UserSegment
     engagement_score: float
     lifetime_value: float
@@ -84,7 +89,8 @@ class UserProfile:
 
 @dataclass
 class BehaviorPattern:
-    """User behavior pattern"""    pattern_id: str
+    """User behavior pattern"""
+    pattern_id: str
     pattern_type: str
     frequency: float
     typical_sequence: List[str]
@@ -96,7 +102,8 @@ class BehaviorPattern:
 
 @dataclass
 class EngagementInsight:
-    """Engagement insight data"""    insight_type: str
+    """Engagement insight data"""
+    insight_type: str
     description: str
     affected_segments: List[UserSegment]
     impact_score: float
@@ -107,7 +114,8 @@ class EngagementInsight:
 
 @dataclass
 class UserJourney:
-    """User journey mapping"""    journey_id: str
+    """User journey mapping"""
+    journey_id: str
     user_segment: UserSegment
     typical_path: List[Dict]
     conversion_points: List[Dict]
@@ -118,18 +126,22 @@ class UserJourney:
 
 
 class UserBehaviorAnalytics:
-    """    Professional user behavior analytics engine for content optimization.
+    """
+    Professional user behavior analytics engine for content optimization.
     
     Analyzes user interactions, identifies behavior patterns, segments audiences,
     and provides actionable insights for content strategy and user experience optimization.
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession, redis_client: Redis):
-        """        Initialize UserBehaviorAnalytics engine.
+        """
+        Initialize UserBehaviorAnalytics engine.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
-        """        self.db_session = db_session
+        """
+        self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
         self.cache_ttl = 3600  # 1 hour cache
@@ -137,7 +149,8 @@ class UserBehaviorAnalytics:
     async def analyze_user_segments(self, creator_id: str,
                                   time_period: timedelta = timedelta(days=90)
                                   ) -> Dict[UserSegment, List[UserProfile]]:
-        """        Analyze and segment users based on behavior patterns.
+        """
+        Analyze and segment users based on behavior patterns.
         
         Args:
             creator_id: Creator/influencer identifier
@@ -145,7 +158,8 @@ class UserBehaviorAnalytics:
             
         Returns:
             Dictionary mapping segments to user profiles
-        """        try:
+        """
+        try:
             cache_key = f"user_segments:{creator_id}:{time_period.days}"
             cached_result = await self._get_cached_result(cache_key)
             
@@ -161,7 +175,8 @@ class UserBehaviorAnalytics:
             start_date = end_date - time_period
             
             # Get user interaction data
-            query = text("""                SELECT 
+            query = text("""
+                SELECT 
                     ui.user_id,
                     COUNT(DISTINCT ui.action_type) as action_variety,
                     COUNT(*) as total_interactions,
@@ -292,7 +307,8 @@ class UserBehaviorAnalytics:
                                        segment: Optional[UserSegment] = None,
                                        time_period: timedelta = timedelta(days=30)
                                        ) -> List[BehaviorPattern]:
-        """        Identify common behavior patterns among users.
+        """
+        Identify common behavior patterns among users.
         
         Args:
             creator_id: Creator identifier
@@ -301,7 +317,8 @@ class UserBehaviorAnalytics:
             
         Returns:
             List of identified behavior patterns
-        """        try:
+        """
+        try:
             cache_key = f"behavior_patterns:{creator_id}:{segment.value if segment else 'all'}:{time_period.days}"
             cached_result = await self._get_cached_result(cache_key)
             
@@ -328,7 +345,8 @@ class UserBehaviorAnalytics:
                 else:
                     return []
             
-            query = text(f"""                SELECT 
+            query = text(f"""
+                SELECT 
                     ui.user_id,
                     ui.session_id,
                     ui.action_type,
@@ -420,7 +438,8 @@ class UserBehaviorAnalytics:
     async def generate_engagement_insights(self, creator_id: str,
                                          time_period: timedelta = timedelta(days=30)
                                          ) -> List[EngagementInsight]:
-        """        Generate actionable engagement insights.
+        """
+        Generate actionable engagement insights.
         
         Args:
             creator_id: Creator identifier
@@ -428,7 +447,8 @@ class UserBehaviorAnalytics:
             
         Returns:
             List of engagement insights
-        """        try:
+        """
+        try:
             cache_key = f"engagement_insights:{creator_id}:{time_period.days}"
             cached_result = await self._get_cached_result(cache_key)
             
@@ -477,7 +497,8 @@ class UserBehaviorAnalytics:
                               segment: Optional[UserSegment] = None,
                               time_period: timedelta = timedelta(days=60)
                               ) -> List[UserJourney]:
-        """        Map typical user journeys for different segments.
+        """
+        Map typical user journeys for different segments.
         
         Args:
             creator_id: Creator identifier
@@ -486,7 +507,8 @@ class UserBehaviorAnalytics:
             
         Returns:
             List of user journey mappings
-        """        try:
+        """
+        try:
             cache_key = f"user_journeys:{creator_id}:{segment.value if segment else 'all'}:{time_period.days}"
             cached_result = await self._get_cached_result(cache_key)
             
@@ -532,7 +554,8 @@ class UserBehaviorAnalytics:
     
     def _calculate_engagement_score(self, interactions: int, variety: int, 
                                   session_duration: float, active_days: int) -> float:
-        """Calculate user engagement score."""        try:
+        """Calculate user engagement score."""
+        try:
             # Weighted score calculation
             interaction_score = min(interactions / 100, 1.0) * 30  # Max 30 points
             variety_score = min(variety / 8, 1.0) * 20  # Max 20 points for 8 different actions
@@ -548,7 +571,8 @@ class UserBehaviorAnalytics:
     
     def _determine_user_segment(self, features: List[float], cluster: int, 
                               cluster_center: np.ndarray) -> UserSegment:
-        """Determine user segment based on features and cluster."""        try:
+        """Determine user segment based on features and cluster."""
+        try:
             engagement_score, lifetime_value, activity_freq, view_ratio, engagement_ratio, total_interactions, session_duration = features
             
             # High engagement and high value
@@ -588,7 +612,8 @@ class UserBehaviorAnalytics:
             return UserSegment.CASUAL_VIEWER
     
     def _calculate_churn_probability(self, user_row: Any, time_period: timedelta) -> float:
-        """Calculate probability of user churn."""        try:
+        """Calculate probability of user churn."""
+        try:
             # Days since last activity
             days_inactive = (datetime.utcnow() - user_row.last_activity).days
             
@@ -619,8 +644,10 @@ class UserBehaviorAnalytics:
             return 0.5
     
     async def _get_preferred_content_types(self, user_id: str, creator_id: str) -> List[str]:
-        """Get user's preferred content types."""        try:
-            query = text("""                SELECT 
+        """Get user's preferred content types."""
+        try:
+            query = text("""
+                SELECT 
                     c.content_type,
                     COUNT(*) as interaction_count,
                     AVG(ui.session_duration) as avg_duration
@@ -647,8 +674,10 @@ class UserBehaviorAnalytics:
             return ["music"]
     
     async def _get_peak_activity_hours(self, user_id: str, creator_id: str) -> List[int]:
-        """Get user's peak activity hours."""        try:
-            query = text("""                SELECT 
+        """Get user's peak activity hours."""
+        try:
+            query = text("""
+                SELECT 
                     EXTRACT(HOUR FROM ui.created_at) as hour,
                     COUNT(*) as activity_count
                 FROM user_interactions ui
@@ -674,7 +703,8 @@ class UserBehaviorAnalytics:
             return [12, 18, 21]
     
     def _analyze_interaction_patterns(self, user_row: Any) -> Dict[str, float]:
-        """Analyze user interaction patterns."""        try:
+        """Analyze user interaction patterns."""
+        try:
             total = user_row.total_interactions
             if total == 0:
                 return {}
@@ -692,10 +722,12 @@ class UserBehaviorAnalytics:
             return {}
     
     async def _calculate_social_influence_score(self, user_id: str, creator_id: str) -> float:
-        """Calculate user's social influence score."""        try:
+        """Calculate user's social influence score."""
+        try:
             # This is a simplified calculation
             # In practice, this would consider follower count, share rates, etc.
-            query = text("""                SELECT 
+            query = text("""
+                SELECT 
                     COUNT(CASE WHEN ui.action_type = 'share' THEN 1 END) as shares,
                     COUNT(CASE WHEN ui.action_type = 'comment' THEN 1 END) as comments,
                     AVG(CHAR_LENGTH(ui.comment_text)) as avg_comment_length
@@ -728,7 +760,8 @@ class UserBehaviorAnalytics:
     
     async def _get_segment_users(self, creator_id: str, segment: UserSegment, 
                                time_period: timedelta) -> List[str]:
-        """Get list of users in a specific segment."""        try:
+        """Get list of users in a specific segment."""
+        try:
             # This would require segment data to be stored or calculated
             # For now, return empty list to avoid errors
             return []
@@ -738,7 +771,8 @@ class UserBehaviorAnalytics:
             return []
     
     def _analyze_action_sequences(self, sessions: Dict) -> Dict:
-        """Analyze common action sequences in user sessions."""        try:
+        """Analyze common action sequences in user sessions."""
+        try:
             sequences = {}
             
             for session_interactions in sessions.values():
@@ -790,7 +824,8 @@ class UserBehaviorAnalytics:
             return {}
     
     def _analyze_content_consumption_patterns(self, sessions: Dict) -> List[Dict]:
-        """Analyze content consumption patterns."""        try:
+        """Analyze content consumption patterns."""
+        try:
             patterns = []
             content_sequences = {}
             
@@ -831,7 +866,8 @@ class UserBehaviorAnalytics:
             return []
     
     def _analyze_time_based_patterns(self, sessions: Dict) -> List[Dict]:
-        """Analyze time-based usage patterns."""        try:
+        """Analyze time-based usage patterns."""
+        try:
             patterns = []
             hourly_activity = {}
             
@@ -870,7 +906,8 @@ class UserBehaviorAnalytics:
             return []
     
     async def _analyze_engagement_trends(self, creator_id: str, time_period: timedelta) -> List[Dict]:
-        """Analyze engagement trends over time."""        try:
+        """Analyze engagement trends over time."""
+        try:
             # This is a simplified implementation
             return [
                 {
@@ -888,7 +925,8 @@ class UserBehaviorAnalytics:
             return []
     
     async def _analyze_content_performance_insights(self, creator_id: str, time_period: timedelta) -> List[EngagementInsight]:
-        """Analyze content performance insights."""        try:
+        """Analyze content performance insights."""
+        try:
             # Simplified implementation
             insights = [
                 EngagementInsight(
@@ -909,7 +947,8 @@ class UserBehaviorAnalytics:
             return []
     
     async def _analyze_retention_insights(self, creator_id: str, time_period: timedelta) -> List[EngagementInsight]:
-        """Analyze user retention insights."""        try:
+        """Analyze user retention insights."""
+        try:
             # Simplified implementation
             insights = [
                 EngagementInsight(
@@ -930,7 +969,8 @@ class UserBehaviorAnalytics:
             return []
     
     async def _analyze_conversion_insights(self, creator_id: str, time_period: timedelta) -> List[EngagementInsight]:
-        """Analyze conversion opportunities."""        try:
+        """Analyze conversion opportunities."""
+        try:
             # Simplified implementation
             insights = [
                 EngagementInsight(
@@ -952,7 +992,8 @@ class UserBehaviorAnalytics:
     
     async def _analyze_user_journey_for_segment(self, creator_id: str, segment: UserSegment, 
                                               time_period: timedelta) -> Optional[Dict]:
-        """Analyze user journey for specific segment."""        try:
+        """Analyze user journey for specific segment."""
+        try:
             # Simplified implementation
             return {
                 'typical_path': [
@@ -983,7 +1024,8 @@ class UserBehaviorAnalytics:
             return None
     
     async def _get_cached_result(self, cache_key: str) -> Optional[Dict]:
-        """Get cached result from Redis."""        try:
+        """Get cached result from Redis."""
+        try:
             cached_data = self.redis_client.get(cache_key)
             if cached_data:
                 return json.loads(cached_data)
@@ -993,7 +1035,8 @@ class UserBehaviorAnalytics:
             return None
     
     async def _cache_result(self, cache_key: str, data: Any, ttl: int = None) -> None:
-        """Cache result in Redis."""        try:
+        """Cache result in Redis."""
+        try:
             cache_ttl = ttl or self.cache_ttl
             self.redis_client.setex(
                 cache_key,

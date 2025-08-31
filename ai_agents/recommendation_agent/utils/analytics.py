@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import numpy as np
 import pandas as pd
 from typing import Dict, List, Optional, Any, Tuple
@@ -29,9 +30,11 @@ from .models import (
 
 
 class AnalyticsProcessor:
-    """    Enterprise-grade analytics processor providing comprehensive
+    """
+    Enterprise-grade analytics processor providing comprehensive
     data analysis, trend detection, and performance optimization insights.
-    """    
+    """
+    
     def __init__(
         self,
         redis_client: redis.Redis,
@@ -68,9 +71,11 @@ class AnalyticsProcessor:
         interactions: List[InteractionEvent],
         time_window: str = "24h"
     ) -> Dict[str, Any]:
-        """        Process interaction events to generate comprehensive analytics
+        """
+        Process interaction events to generate comprehensive analytics
         including engagement patterns, user behavior, and content performance.
-        """        try:
+        """
+        try:
             self.logger.info(f"Processing {len(interactions)} interaction events")
             
             if not interactions:
@@ -129,9 +134,11 @@ class AnalyticsProcessor:
         interaction_data: List[InteractionEvent],
         time_window: str = "24h"
     ) -> List[TrendData]:
-        """        Analyze trending patterns in content and interactions to identify
+        """
+        Analyze trending patterns in content and interactions to identify
         emerging trends, viral content, and market opportunities.
-        """        try:
+        """
+        try:
             self.logger.info(f"Analyzing trending patterns for {len(content_data)} content items")
             
             trends = []
@@ -199,9 +206,11 @@ class AnalyticsProcessor:
         entity_id: str,
         time_range: str = "30d"
     ) -> Dict[str, Any]:
-        """        Generate comprehensive performance insights for users, creators, or content
+        """
+        Generate comprehensive performance insights for users, creators, or content
         including benchmarks, recommendations, and optimization opportunities.
-        """        try:
+        """
+        try:
             self.logger.info(f"Generating performance insights for {entity_type} {entity_id}")
             
             insights = {}
@@ -244,9 +253,11 @@ class AnalyticsProcessor:
         category: Optional[str] = None,
         creator_tier: Optional[str] = None
     ) -> List[Dict[str, Any]]:
-        """        Detect market opportunities based on content gaps, audience demand,
+        """
+        Detect market opportunities based on content gaps, audience demand,
         and competitive landscape analysis.
-        """        try:
+        """
+        try:
             self.logger.info(f"Detecting market opportunities for category: {category}")
             
             opportunities = []
@@ -326,9 +337,11 @@ class AnalyticsProcessor:
         user_feedback: List[InteractionEvent],
         time_window: str = "7d"
     ) -> Dict[str, float]:
-        """        Calculate comprehensive metrics for recommendation system performance
+        """
+        Calculate comprehensive metrics for recommendation system performance
         including accuracy, diversity, novelty, and business impact.
-        """        try:
+        """
+        try:
             if not recommendations or not user_feedback:
                 return {}
             
@@ -385,7 +398,8 @@ class AnalyticsProcessor:
         self,
         interactions: List[InteractionEvent]
     ) -> pd.DataFrame:
-        """Convert interaction events to pandas DataFrame for analysis"""        try:
+        """Convert interaction events to pandas DataFrame for analysis"""
+        try:
             data = []
             for interaction in interactions:
                 data.append({
@@ -409,7 +423,8 @@ class AnalyticsProcessor:
             return pd.DataFrame()
     
     async def _analyze_engagement_patterns(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze engagement patterns from interaction data"""        try:
+        """Analyze engagement patterns from interaction data"""
+        try:
             if df.empty:
                 return {}
             
@@ -453,7 +468,8 @@ class AnalyticsProcessor:
             return {}
     
     async def _analyze_user_behavior(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze user behavior patterns"""        try:
+        """Analyze user behavior patterns"""
+        try:
             if df.empty:
                 return {}
             
@@ -495,7 +511,8 @@ class AnalyticsProcessor:
         engagement_matrix: pd.DataFrame,
         time_window: str
     ) -> Dict[str, float]:
-        """Calculate velocity metrics for trend detection"""        try:
+        """Calculate velocity metrics for trend detection"""
+        try:
             velocity_metrics = {}
             
             # Calculate time windows
@@ -525,7 +542,8 @@ class AnalyticsProcessor:
             return {}
     
     def _parse_time_window(self, time_window: str) -> timedelta:
-        """Parse time window string to timedelta object"""        try:
+        """Parse time window string to timedelta object"""
+        try:
             if time_window.endswith('h'):
                 hours = int(time_window[:-1])
                 return timedelta(hours=hours)

@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. Any unauthorized use, modification,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, Any, Optional, List
 from datetime import datetime
@@ -36,18 +37,22 @@ from .utils import ReplicationUtils
 
 
 class ReplicationOrchestrator:
-    """    Main orchestrator for the database replication system.
+    """
+    Main orchestrator for the database replication system.
     
     Coordinates all replication components, provides unified API,
     and manages the complete lifecycle of the replication infrastructure
     for the IA Influencer Agent platform.
-    """    
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
-        """        Initialize the replication orchestrator.
+        """
+        Initialize the replication orchestrator.
         
         Args:
             config_path: Path to configuration file (optional)
-        """        self.logger = logging.getLogger(f"{__name__}.ReplicationOrchestrator")
+        """
+        self.logger = logging.getLogger(f"{__name__}.ReplicationOrchestrator")
         
         # Core configuration
         self.config = ReplicationConfig.from_file(config_path) if config_path else ReplicationConfig()
@@ -77,7 +82,8 @@ class ReplicationOrchestrator:
         self.logger.info("ReplicationOrchestrator initialized")
     
     def _setup_signal_handlers(self) -> None:
-        """Setup signal handlers for graceful shutdown"""        def signal_handler(signum, frame):
+        """Setup signal handlers for graceful shutdown"""
+        def signal_handler(signum, frame):
             self.logger.info(f"Received signal {signum}, initiating graceful shutdown...")
             asyncio.create_task(self.shutdown())
         
@@ -85,11 +91,13 @@ class ReplicationOrchestrator:
         signal.signal(signal.SIGTERM, signal_handler)
     
     async def initialize(self) -> bool:
-        """        Initialize all replication components.
+        """
+        Initialize all replication components.
         
         Returns:
             bool: True if initialization successful
-        """        try:
+        """
+        try:
             self.logger.info("Initializing replication orchestrator...")
             
             # Initialize metrics first
@@ -122,7 +130,8 @@ class ReplicationOrchestrator:
             return False
     
     async def _initialize_metrics(self) -> None:
-        """Initialize metrics collection system"""        try:
+        """Initialize metrics collection system"""
+        try:
             self.metrics = ReplicationMetrics(self.config)
             await self.metrics.initialize()
             self.logger.info("Metrics system initialized")
@@ -132,7 +141,8 @@ class ReplicationOrchestrator:
             raise
     
     async def _initialize_topology_manager(self) -> None:
-        """Initialize topology manager"""        try:
+        """Initialize topology manager"""
+        try:
             self.topology_manager = TopologyManager(self.config)
             await self.topology_manager.initialize()
             self.logger.info("Topology manager initialized")
@@ -142,7 +152,8 @@ class ReplicationOrchestrator:
             raise
     
     async def _initialize_conflict_resolver(self) -> None:
-        """Initialize conflict resolver"""        try:
+        """Initialize conflict resolver"""
+        try:
             self.conflict_resolver = ConflictResolver(self.config)
             await self.conflict_resolver.initialize()
             self.logger.info("Conflict resolver initialized")
@@ -152,7 +163,8 @@ class ReplicationOrchestrator:
             raise
     
     async def _initialize_health_monitor(self) -> None:
-        """Initialize health monitoring system"""        try:
+        """Initialize health monitoring system"""
+        try:
             self.health_monitor = ReplicationHealthMonitor(
                 self.config, 
                 topology_manager=self.topology_manager
@@ -165,7 +177,8 @@ class ReplicationOrchestrator:
             raise
     
     async def _initialize_failover_manager(self) -> None:
-        """Initialize failover management system"""        try:
+        """Initialize failover management system"""
+        try:
             self.failover_manager = FailoverManager(
                 self.config, 
                 topology_manager=self.topology_manager
@@ -178,7 +191,8 @@ class ReplicationOrchestrator:
             raise
     
     async def _initialize_database_handlers(self) -> None:
-        """Initialize database-specific replication handlers"""        try:
+        """Initialize database-specific replication handlers"""
+        try:
             enabled_databases = self.config.get_enabled_databases()
             
             for db_type in enabled_databases:
@@ -194,7 +208,8 @@ class ReplicationOrchestrator:
             raise
     
     async def _create_database_handler(self, db_type: str) -> Optional[Any]:
-        """Create handler for specific database type"""        try:
+        """Create handler for specific database type"""
+        try:
             if db_type == "postgresql":
                 handler = PostgreSQLReplicationHandler(
                     self.config, 
@@ -238,7 +253,8 @@ class ReplicationOrchestrator:
             return None
     
     async def _initialize_coordinator(self) -> None:
-        """Initialize replication coordinator"""        try:
+        """Initialize replication coordinator"""
+        try:
             self.coordinator = ReplicationCoordinator(
                 self.config,
                 database_handlers=self.database_handlers,
@@ -254,7 +270,8 @@ class ReplicationOrchestrator:
             raise
     
     async def _initialize_manager(self) -> None:
-        """Initialize replication manager"""        try:
+        """Initialize replication manager"""
+        try:
             self.manager = ReplicationManager(
                 self.config,
                 coordinator=self.coordinator,
@@ -270,7 +287,8 @@ class ReplicationOrchestrator:
             raise
     
     async def _initialize_master(self) -> None:
-        """Initialize replication master"""        try:
+        """Initialize replication master"""
+        try:
             self.master = ReplicationMaster(
                 self.config,
                 manager=self.manager,
@@ -286,7 +304,8 @@ class ReplicationOrchestrator:
             raise
     
     async def _validate_initialization(self) -> None:
-        """Validate that all components are properly initialized"""        try:
+        """Validate that all components are properly initialized"""
+        try:
             components = {
                 "master": self.master,
                 "manager": self.manager,
@@ -316,7 +335,8 @@ class ReplicationOrchestrator:
             raise
     
     async def _test_component_connectivity(self) -> None:
-        """Test connectivity between components"""        try:
+        """Test connectivity between components"""
+        try:
             # Test topology manager
             topology_status = await self.topology_manager.get_topology_status()
             if not topology_status.get("healthy", False):
@@ -335,7 +355,8 @@ class ReplicationOrchestrator:
             raise
     
     async def _cleanup_failed_initialization(self) -> None:
-        """Cleanup after failed initialization"""        try:
+        """Cleanup after failed initialization"""
+        try:
             self.logger.info("Cleaning up after failed initialization...")
             
             # Shutdown components in reverse order
@@ -370,11 +391,13 @@ class ReplicationOrchestrator:
             self.logger.error(f"Error during cleanup: {e}")
     
     async def start(self) -> bool:
-        """        Start the replication system.
+        """
+        Start the replication system.
         
         Returns:
             bool: True if started successfully
-        """        try:
+        """
+        try:
             if not self.is_initialized:
                 self.logger.error("Cannot start: system not initialized")
                 return False
@@ -422,11 +445,13 @@ class ReplicationOrchestrator:
             return False
     
     async def stop(self) -> bool:
-        """        Stop the replication system gracefully.
+        """
+        Stop the replication system gracefully.
         
         Returns:
             bool: True if stopped successfully
-        """        try:
+        """
+        try:
             if not self.is_running:
                 self.logger.warning("Replication system not running")
                 return True
@@ -460,7 +485,8 @@ class ReplicationOrchestrator:
             return False
     
     async def shutdown(self) -> None:
-        """Shutdown the replication system completely"""        try:
+        """Shutdown the replication system completely"""
+        try:
             self.logger.info("Shutting down replication system...")
             
             # Stop if running
@@ -479,7 +505,8 @@ class ReplicationOrchestrator:
             self.logger.error(f"Error during shutdown: {e}")
     
     async def _emergency_shutdown(self) -> None:
-        """Emergency shutdown in case of critical errors"""        try:
+        """Emergency shutdown in case of critical errors"""
+        try:
             self.logger.critical("Performing emergency shutdown...")
             
             self.is_running = False
@@ -514,11 +541,13 @@ class ReplicationOrchestrator:
             self.logger.critical(f"Emergency shutdown failed: {e}")
     
     async def get_status(self) -> Dict[str, Any]:
-        """        Get comprehensive system status.
+        """
+        Get comprehensive system status.
         
         Returns:
             Dict containing system status information
-        """        try:
+        """
+        try:
             status = {
                 "orchestrator": {
                     "initialized": self.is_initialized,
@@ -559,7 +588,8 @@ class ReplicationOrchestrator:
             return {"error": str(e)}
     
     def _calculate_overall_health(self, status: Dict[str, Any]) -> str:
-        """Calculate overall system health"""        try:
+        """Calculate overall system health"""
+        try:
             if not self.is_running:
                 return "stopped"
             
@@ -599,11 +629,13 @@ class ReplicationOrchestrator:
             return "error"
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """        Get comprehensive system metrics.
+        """
+        Get comprehensive system metrics.
         
         Returns:
             Dict containing system metrics
-        """        try:
+        """
+        try:
             if not self.metrics:
                 return {}
             
@@ -614,14 +646,16 @@ class ReplicationOrchestrator:
             return {"error": str(e)}
     
     async def trigger_manual_failover(self, node_id: str) -> bool:
-        """        Trigger manual failover for a specific node.
+        """
+        Trigger manual failover for a specific node.
         
         Args:
             node_id: ID of the node to failover
             
         Returns:
             bool: True if failover initiated successfully
-        """        try:
+        """
+        try:
             if not self.failover_manager:
                 self.logger.error("Failover manager not available")
                 return False
@@ -633,10 +667,12 @@ class ReplicationOrchestrator:
             return False
     
     async def run(self) -> None:
-        """        Run the replication system (main entry point).
+        """
+        Run the replication system (main entry point).
         
         This method will run until shutdown is requested.
-        """        try:
+        """
+        try:
             # Initialize system
             if not await self.initialize():
                 self.logger.error("Failed to initialize replication system")
@@ -662,28 +698,33 @@ class ReplicationOrchestrator:
 
 # Factory functions for easy instantiation
 def create_replication_orchestrator(config_path: Optional[str] = None) -> ReplicationOrchestrator:
-    """    Factory function to create a replication orchestrator.
+    """
+    Factory function to create a replication orchestrator.
     
     Args:
         config_path: Path to configuration file
         
     Returns:
         ReplicationOrchestrator instance
-    """    return ReplicationOrchestrator(config_path)
+    """
+    return ReplicationOrchestrator(config_path)
 
 
 async def run_replication_system(config_path: Optional[str] = None) -> None:
-    """    Convenience function to run the complete replication system.
+    """
+    Convenience function to run the complete replication system.
     
     Args:
         config_path: Path to configuration file
-    """    orchestrator = create_replication_orchestrator(config_path)
+    """
+    orchestrator = create_replication_orchestrator(config_path)
     await orchestrator.run()
 
 
 # CLI entry point
 async def main():
-    """Main CLI entry point"""    import argparse
+    """Main CLI entry point"""
+    import argparse
     
     parser = argparse.ArgumentParser(description="IA Influencer Agent Database Replication System")
     parser.add_argument(

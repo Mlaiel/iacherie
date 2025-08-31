@@ -9,7 +9,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass, asdict
@@ -40,7 +41,8 @@ settings = get_settings()
 
 
 class TrendType(Enum):
-    """Types of trends that can be detected."""    VIRAL_CONTENT = "viral_content"
+    """Types of trends that can be detected."""
+    VIRAL_CONTENT = "viral_content"
     HASHTAG_TREND = "hashtag_trend"
     MUSIC_TREND = "music_trend"
     CHALLENGE_TREND = "challenge_trend"
@@ -51,7 +53,8 @@ class TrendType(Enum):
 
 
 class TrendStage(Enum):
-    """Lifecycle stages of trends."""    EMERGING = "emerging"
+    """Lifecycle stages of trends."""
+    EMERGING = "emerging"
     GROWING = "growing"
     PEAK = "peak"
     DECLINING = "declining"
@@ -59,7 +62,8 @@ class TrendStage(Enum):
 
 
 class TrendSource(Enum):
-    """Sources where trends are detected."""    TIKTOK = "tiktok"
+    """Sources where trends are detected."""
+    TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     YOUTUBE = "youtube"
     TWITTER = "twitter"
@@ -71,7 +75,8 @@ class TrendSource(Enum):
 
 @dataclass
 class TrendMetrics:
-    """Metrics for trend analysis."""    engagement_velocity: float
+    """Metrics for trend analysis."""
+    engagement_velocity: float
     reach_acceleration: float
     mention_frequency: int
     sentiment_score: float
@@ -85,7 +90,8 @@ class TrendMetrics:
 
 @dataclass
 class TrendData:
-    """Comprehensive trend data structure."""    trend_id: str
+    """Comprehensive trend data structure."""
+    trend_id: str
     trend_type: TrendType
     trend_stage: TrendStage
     title: str
@@ -104,7 +110,8 @@ class TrendData:
 
 @dataclass
 class TrendRecommendation:
-    """Trend-based content recommendation."""    recommendation_id: str
+    """Trend-based content recommendation."""
+    recommendation_id: str
     trend_data: TrendData
     recommended_action: str
     content_idea: str
@@ -119,7 +126,8 @@ class TrendRecommendation:
 
 @dataclass
 class TrendAnalysisReport:
-    """Comprehensive trend analysis report."""    report_id: str
+    """Comprehensive trend analysis report."""
+    report_id: str
     analysis_period: Dict[str, datetime]
     trending_topics: List[TrendData]
     emerging_trends: List[TrendData]
@@ -132,11 +140,14 @@ class TrendAnalysisReport:
 
 
 class TrendAnalyzer:
-    """    Advanced AI-powered trend analyzer that monitors, detects, and analyzes
+    """
+    Advanced AI-powered trend analyzer that monitors, detects, and analyzes
     content trends across multiple platforms and sources.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the trend analyzer with AI models and data sources."""        self.logger = get_logger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize the trend analyzer with AI models and data sources."""
+        self.logger = get_logger(f"{__name__}.{self.__class__.__name__}")
         self.analytics_service = TrendAnalyticsService()
         self.social_media_apis = SocialMediaAPIManager()
         self.text_processor = TextProcessor()
@@ -161,7 +172,8 @@ class TrendAnalyzer:
         self.trend_cache = {}
         
     def _initialize_trend_thresholds(self) -> Dict[str, Any]:
-        """Initialize thresholds for trend detection."""        
+        """Initialize thresholds for trend detection."""
+        
         return {
             "viral_threshold": {
                 "engagement_rate": 0.15,  # 15% engagement rate
@@ -209,7 +221,8 @@ class TrendAnalyzer:
         }
     
     def _initialize_platform_patterns(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize platform-specific trend patterns."""        
+        """Initialize platform-specific trend patterns."""
+        
         return {
             "tiktok": {
                 "trend_types": [TrendType.MUSIC_TREND, TrendType.CHALLENGE_TREND, TrendType.VIRAL_CONTENT],
@@ -263,7 +276,8 @@ class TrendAnalyzer:
         time_window: timedelta = timedelta(hours=24),
         trend_types: Optional[List[TrendType]] = None
     ) -> List[TrendData]:
-        """Detect trending content across specified platforms."""        
+        """Detect trending content across specified platforms."""
+        
         detected_trends = []
         
         for platform in platforms:
@@ -294,7 +308,8 @@ class TrendAnalyzer:
         time_window: timedelta,
         trend_types: Optional[List[TrendType]] = None
     ) -> List[TrendData]:
-        """Analyze trends for a specific platform."""        
+        """Analyze trends for a specific platform."""
+        
         platform_trends = []
         
         # Fetch platform data
@@ -325,7 +340,8 @@ class TrendAnalyzer:
         platform: TrendSource, 
         time_window: timedelta
     ) -> Dict[str, Any]:
-        """Fetch data from platform APIs."""        
+        """Fetch data from platform APIs."""
+        
         try:
             if platform == TrendSource.TIKTOK:
                 return await self.social_media_apis.fetch_tiktok_trending_data(time_window)
@@ -349,7 +365,8 @@ class TrendAnalyzer:
         platform: TrendSource, 
         platform_data: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Extract trend signals from platform data."""        
+        """Extract trend signals from platform data."""
+        
         signals = []
         pattern_config = self.platform_patterns.get(platform.value, {})
         discovery_signals = pattern_config.get("discovery_signals", [])
@@ -437,7 +454,8 @@ class TrendAnalyzer:
         return signals
     
     def _extract_tiktok_sound_metrics(self, sound_data: Dict[str, Any]) -> Dict[str, float]:
-        """Extract metrics for TikTok sound trends."""        
+        """Extract metrics for TikTok sound trends."""
+        
         return {
             "usage_count": sound_data.get("video_count", 0),
             "growth_rate": sound_data.get("growth_24h", 0),
@@ -450,7 +468,8 @@ class TrendAnalyzer:
         hashtag_data: Dict[str, Any], 
         platform_data: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Extract metrics for hashtag trends."""        
+        """Extract metrics for hashtag trends."""
+        
         return {
             "post_count": hashtag_data.get("post_count", 0),
             "reach": hashtag_data.get("total_reach", 0),
@@ -464,7 +483,8 @@ class TrendAnalyzer:
         effect_data: Dict[str, Any], 
         platform_data: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Extract metrics for effect trends."""        
+        """Extract metrics for effect trends."""
+        
         return {
             "usage_count": effect_data.get("usage_count", 0),
             "adoption_rate": effect_data.get("adoption_rate", 0),
@@ -473,7 +493,8 @@ class TrendAnalyzer:
         }
     
     def _extract_reel_metrics(self, reel_data: Dict[str, Any]) -> Dict[str, float]:
-        """Extract metrics for Instagram reel trends."""        
+        """Extract metrics for Instagram reel trends."""
+        
         return {
             "views": reel_data.get("views", 0),
             "likes": reel_data.get("likes", 0),
@@ -484,7 +505,8 @@ class TrendAnalyzer:
         }
     
     def _extract_video_metrics(self, video_data: Dict[str, Any]) -> Dict[str, float]:
-        """Extract metrics for YouTube video trends."""        
+        """Extract metrics for YouTube video trends."""
+        
         return {
             "views": video_data.get("views", 0),
             "likes": video_data.get("likes", 0),
@@ -499,7 +521,8 @@ class TrendAnalyzer:
         search_data: Dict[str, Any], 
         platform_data: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Extract metrics for search trends."""        
+        """Extract metrics for search trends."""
+        
         return {
             "search_volume": search_data.get("volume", 0),
             "growth_rate": search_data.get("growth", 0),
@@ -512,7 +535,8 @@ class TrendAnalyzer:
         topic_data: Dict[str, Any], 
         platform_data: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Extract metrics for topic trends."""        
+        """Extract metrics for topic trends."""
+        
         return {
             "mention_count": topic_data.get("mentions", 0),
             "sentiment_score": topic_data.get("sentiment", 0),
@@ -521,7 +545,8 @@ class TrendAnalyzer:
         }
     
     def _detect_anomalies(self, trend_signals: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Detect anomalies in trend signals using machine learning."""        
+        """Detect anomalies in trend signals using machine learning."""
+        
         if not trend_signals:
             return []
         
@@ -577,7 +602,8 @@ class TrendAnalyzer:
         platform_data: Dict[str, Any],
         trend_types: Optional[List[TrendType]] = None
     ) -> Optional[TrendData]:
-        """Classify and structure trend data."""        
+        """Classify and structure trend data."""
+        
         try:
             # Determine trend type
             trend_type = self._classify_trend_type(trend_signal, platform)
@@ -638,7 +664,8 @@ class TrendAnalyzer:
         trend_signal: Dict[str, Any], 
         platform: TrendSource
     ) -> TrendType:
-        """Classify the type of trend based on signal characteristics."""        
+        """Classify the type of trend based on signal characteristics."""
+        
         signal_type = trend_signal.get("type", "")
         content = trend_signal.get("content", {})
         
@@ -662,7 +689,8 @@ class TrendAnalyzer:
         trend_signal: Dict[str, Any], 
         platform_data: Dict[str, Any]
     ) -> TrendMetrics:
-        """Calculate comprehensive trend metrics."""        
+        """Calculate comprehensive trend metrics."""
+        
         signal_metrics = trend_signal.get("metrics", {})
         
         # Calculate engagement velocity
@@ -730,7 +758,8 @@ class TrendAnalyzer:
         metrics: TrendMetrics, 
         platform: TrendSource
     ) -> TrendStage:
-        """Determine the current stage of the trend lifecycle."""        
+        """Determine the current stage of the trend lifecycle."""
+        
         engagement_velocity = metrics.engagement_velocity
         virality_coefficient = metrics.virality_coefficient
         
@@ -754,7 +783,8 @@ class TrendAnalyzer:
         self, 
         trend_signal: Dict[str, Any]
     ) -> Tuple[List[str], List[str]]:
-        """Extract keywords and hashtags from trend signal."""        
+        """Extract keywords and hashtags from trend signal."""
+        
         content = trend_signal.get("content", {})
         
         # Extract hashtags
@@ -780,7 +810,8 @@ class TrendAnalyzer:
         trend_signal: Dict[str, Any], 
         trend_type: TrendType
     ) -> str:
-        """Generate a descriptive summary of the trend."""        
+        """Generate a descriptive summary of the trend."""
+        
         content = trend_signal.get("content", {})
         metrics = trend_signal.get("metrics", {})
         
@@ -804,7 +835,8 @@ class TrendAnalyzer:
         trend_signal: Dict[str, Any], 
         platform_data: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Find content related to the trend."""        
+        """Find content related to the trend."""
+        
         related_content = []
         
         # This would involve more sophisticated content matching
@@ -826,7 +858,8 @@ class TrendAnalyzer:
         trend_signal: Dict[str, Any], 
         trend_type: TrendType
     ) -> List[str]:
-        """Generate specific opportunities for creators based on the trend."""        
+        """Generate specific opportunities for creators based on the trend."""
+        
         opportunities = []
         
         if trend_type == TrendType.MUSIC_TREND:
@@ -876,7 +909,8 @@ class TrendAnalyzer:
         trend_type: TrendType, 
         metrics: TrendMetrics
     ) -> str:
-        """Calculate the difficulty of implementing trend-based content."""        
+        """Calculate the difficulty of implementing trend-based content."""
+        
         difficulty_scores = {
             TrendType.HASHTAG_TREND: 1,      # Easy - just use hashtag
             TrendType.MUSIC_TREND: 2,        # Medium - need to create content with audio
@@ -903,7 +937,8 @@ class TrendAnalyzer:
         metrics: TrendMetrics, 
         trend_stage: TrendStage
     ) -> float:
-        """Calculate the probability of success when participating in the trend."""        
+        """Calculate the probability of success when participating in the trend."""
+        
         base_probability = 0.5
         
         # Adjust based on trend stage
@@ -930,7 +965,8 @@ class TrendAnalyzer:
         return min(1.0, max(0.0, probability))
     
     def _merge_cross_platform_trends(self, trends: List[TrendData]) -> List[TrendData]:
-        """Merge similar trends detected across multiple platforms."""        
+        """Merge similar trends detected across multiple platforms."""
+        
         if not trends:
             return trends
         
@@ -960,7 +996,8 @@ class TrendAnalyzer:
         return merged_trends
     
     def _calculate_trend_similarity(self, trend1: TrendData, trend2: TrendData) -> float:
-        """Calculate similarity between two trends."""        
+        """Calculate similarity between two trends."""
+        
         similarity_score = 0.0
         
         # Type similarity
@@ -984,7 +1021,8 @@ class TrendAnalyzer:
         return similarity_score
     
     def _merge_similar_trends(self, trends: List[TrendData]) -> TrendData:
-        """Merge a list of similar trends into one comprehensive trend."""        
+        """Merge a list of similar trends into one comprehensive trend."""
+        
         if len(trends) == 1:
             return trends[0]
         
@@ -1049,7 +1087,8 @@ class TrendAnalyzer:
         )
         
         return merged_trend
-        """Initialize the trend analyzer."""        self.text_processor = TextProcessor()
+        """Initialize the trend analyzer."""
+        self.text_processor = TextProcessor()
         self.social_media_apis = SocialMediaAPIManager()
         self.analytics_service = TrendAnalyticsService()
         
@@ -1083,7 +1122,8 @@ class TrendAnalyzer:
         logger.info("Trend analyzer initialized successfully")
     
     def _initialize_platform_characteristics(self) -> Dict[TrendSource, Dict[str, Any]]:
-        """Initialize platform-specific trend characteristics."""        
+        """Initialize platform-specific trend characteristics."""
+        
         return {
             TrendSource.TIKTOK: {
                 'trend_duration': {'min': 3, 'max': 14},  # days
@@ -1133,7 +1173,8 @@ class TrendAnalyzer:
         }
     
     def _load_and_train_models(self):
-        """Load historical data and train ML models for trend detection."""        try:
+        """Load historical data and train ML models for trend detection."""
+        try:
             # Generate synthetic training data for trend detection
             n_samples = 20000
             
@@ -1166,7 +1207,8 @@ class TrendAnalyzer:
         timeframe: timedelta = timedelta(hours=24),
         min_engagement: float = 0.02
     ) -> List[TrendData]:
-        """        Detect trending content across specified platforms.
+        """
+        Detect trending content across specified platforms.
         
         Args:
             platforms: List of platforms to monitor
@@ -1175,7 +1217,8 @@ class TrendAnalyzer:
             
         Returns:
             List of detected trends
-        """        
+        """
+        
         detected_trends = []
         
         try:
@@ -1216,7 +1259,8 @@ class TrendAnalyzer:
     async def _collect_platform_data(
         self, platform: TrendSource, timeframe: timedelta
     ) -> List[Dict[str, Any]]:
-        """Collect data from a specific platform for trend analysis."""        
+        """Collect data from a specific platform for trend analysis."""
+        
         try:
             end_time = datetime.now(timezone.utc)
             start_time = end_time - timeframe
@@ -1257,7 +1301,8 @@ class TrendAnalyzer:
         data: List[Dict[str, Any]],
         min_engagement: float
     ) -> List[TrendData]:
-        """Analyze platform-specific data to identify trends."""        
+        """Analyze platform-specific data to identify trends."""
+        
         trends = []
         platform_chars = self.platform_characteristics.get(platform, {})
         
@@ -1309,7 +1354,8 @@ class TrendAnalyzer:
     def _extract_trend_features(
         self, item: Dict[str, Any], platform_chars: Dict[str, Any]
     ) -> Optional[np.ndarray]:
-        """Extract features from content item for trend detection."""        
+        """Extract features from content item for trend detection."""
+        
         try:
             features = []
             
@@ -1383,7 +1429,8 @@ class TrendAnalyzer:
     def _calculate_engagement_rate(
         self, item: Dict[str, Any], platform: TrendSource
     ) -> float:
-        """Calculate engagement rate for content item."""        
+        """Calculate engagement rate for content item."""
+        
         likes = item.get('likes', 0)
         shares = item.get('shares', 0)
         comments = item.get('comments', 0)
@@ -1421,7 +1468,8 @@ class TrendAnalyzer:
         platform: TrendSource,
         features: np.ndarray
     ) -> Optional[TrendData]:
-        """Create comprehensive trend data from content item."""        
+        """Create comprehensive trend data from content item."""
+        
         try:
             # Extract trend characteristics
             trend_type = self._classify_trend_type(item, platform)
@@ -1472,7 +1520,8 @@ class TrendAnalyzer:
     def _classify_trend_type(
         self, item: Dict[str, Any], platform: TrendSource
     ) -> TrendType:
-        """Classify the type of trend based on content analysis."""        
+        """Classify the type of trend based on content analysis."""
+        
         # Analyze content characteristics
         has_music = item.get('has_audio', False) or 'music' in item.get('tags', [])
         has_challenge = any(word in item.get('caption', '').lower() 
@@ -1500,7 +1549,8 @@ class TrendAnalyzer:
     def _determine_trend_stage(
         self, item: Dict[str, Any], features: np.ndarray
     ) -> TrendStage:
-        """Determine the current stage of the trend lifecycle."""        
+        """Determine the current stage of the trend lifecycle."""
+        
         # Analyze temporal patterns
         created_at = item.get('created_at')
         if not created_at:
@@ -1523,7 +1573,8 @@ class TrendAnalyzer:
             return TrendStage.EXPIRED
     
     async def _extract_keywords(self, text: str) -> List[str]:
-        """Extract relevant keywords from text content."""        
+        """Extract relevant keywords from text content."""
+        
         if not text.strip():
             return []
         
@@ -1549,7 +1600,8 @@ class TrendAnalyzer:
         platform: TrendSource,
         features: np.ndarray
     ) -> TrendMetrics:
-        """Calculate comprehensive metrics for the trend."""        
+        """Calculate comprehensive metrics for the trend."""
+        
         # Basic metrics from item
         views = item.get('views', 0)
         likes = item.get('likes', 0)
@@ -1596,7 +1648,8 @@ class TrendAnalyzer:
     def _predict_trend_peak(
         self, item: Dict[str, Any], features: np.ndarray
     ) -> Optional[datetime]:
-        """Predict when the trend will reach its peak."""        
+        """Predict when the trend will reach its peak."""
+        
         try:
             created_at = item.get('created_at')
             if not created_at:
@@ -1626,7 +1679,8 @@ class TrendAnalyzer:
     def _estimate_trend_longevity(
         self, platform: TrendSource, features: np.ndarray
     ) -> int:
-        """Estimate how long the trend will remain relevant."""        
+        """Estimate how long the trend will remain relevant."""
+        
         platform_chars = self.platform_characteristics.get(platform, {})
         base_duration = platform_chars.get('trend_duration', {'min': 7, 'max': 30})
         
@@ -1646,7 +1700,8 @@ class TrendAnalyzer:
         return longevity
     
     def _analyze_demographic_spread(self, item: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze demographic distribution of trend engagement."""        
+        """Analyze demographic distribution of trend engagement."""
+        
         # This would typically analyze actual demographic data
         # For now, return default distribution
         return {
@@ -1660,7 +1715,8 @@ class TrendAnalyzer:
     async def _find_cross_platform_trends(
         self, trends: List[TrendData]
     ) -> List[TrendData]:
-        """Identify trends that appear across multiple platforms."""        
+        """Identify trends that appear across multiple platforms."""
+        
         # Group trends by similar keywords and hashtags
         trend_groups = defaultdict(list)
         
@@ -1694,7 +1750,8 @@ class TrendAnalyzer:
         return merged_trends
     
     async def _merge_platform_trends(self, trends: List[TrendData]) -> TrendData:
-        """Merge trends from multiple platforms into a single trend."""        
+        """Merge trends from multiple platforms into a single trend."""
+        
         # Use the trend with highest engagement as base
         base_trend = max(trends, key=lambda t: t.metrics.engagement_velocity)
         
@@ -1757,11 +1814,14 @@ class TrendAnalyzer:
 
 
 class ContentTrendEngine:
-    """    Content trend engine that provides trend-based recommendations
+    """
+    Content trend engine that provides trend-based recommendations
     and content strategy guidance for creators.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the content trend engine."""        self.trend_analyzer = TrendAnalyzer()
+        """Initialize the content trend engine."""
+        self.trend_analyzer = TrendAnalyzer()
         self.recommendation_history = {}
         logger.info("Content trend engine initialized")
     
@@ -1772,7 +1832,8 @@ class ContentTrendEngine:
         platforms: List[TrendSource],
         content_goals: List[str]
     ) -> List[TrendRecommendation]:
-        """        Generate trend-based content recommendations for creator.
+        """
+        Generate trend-based content recommendations for creator.
         
         Args:
             creator_id: Creator identifier
@@ -1782,7 +1843,8 @@ class ContentTrendEngine:
             
         Returns:
             List of trend-based recommendations
-        """        
+        """
+        
         try:
             # Detect current trends
             current_trends = await self.trend_analyzer.detect_trending_content(platforms)
@@ -1820,7 +1882,8 @@ class ContentTrendEngine:
         creator_niche: str,
         platforms: List[TrendSource]
     ) -> List[TrendData]:
-        """Filter trends relevant to creator's niche and platforms."""        
+        """Filter trends relevant to creator's niche and platforms."""
+        
         relevant_trends = []
         
         for trend in trends:
@@ -1842,7 +1905,8 @@ class ContentTrendEngine:
     async def _calculate_niche_relevance(
         self, trend: TrendData, creator_niche: str
     ) -> float:
-        """Calculate how relevant a trend is to creator's niche."""        
+        """Calculate how relevant a trend is to creator's niche."""
+        
         # Define niche keywords
         niche_keywords = {
             'music': ['music', 'song', 'artist', 'album', 'concert', 'performance'],
@@ -1874,7 +1938,8 @@ class ContentTrendEngine:
         platforms: List[TrendSource],
         content_goals: List[str]
     ) -> Optional[TrendRecommendation]:
-        """Create a trend-based content recommendation."""        
+        """Create a trend-based content recommendation."""
+        
         try:
             # Generate content idea based on trend
             content_idea = await self._generate_content_idea(trend, platforms)
@@ -1927,7 +1992,8 @@ class ContentTrendEngine:
     async def _generate_content_idea(
         self, trend: TrendData, platforms: List[TrendSource]
     ) -> str:
-        """Generate specific content idea based on trend."""        
+        """Generate specific content idea based on trend."""
+        
         trend_type = trend.trend_type
         keywords = trend.keywords[:3]  # Top 3 keywords
         hashtags = trend.hashtags[:5]  # Top 5 hashtags
@@ -1953,7 +2019,8 @@ class ContentTrendEngine:
     async def _create_platform_strategy(
         self, trend: TrendData, platforms: List[TrendSource]
     ) -> Dict[str, Any]:
-        """Create platform-specific strategy for trend participation."""        
+        """Create platform-specific strategy for trend participation."""
+        
         strategy = {}
         
         for platform in platforms:
@@ -1971,7 +2038,8 @@ class ContentTrendEngine:
         return strategy
     
     def _get_optimal_format(self, trend: TrendData, platform: TrendSource) -> str:
-        """Get optimal content format for trend on specific platform."""        
+        """Get optimal content format for trend on specific platform."""
+        
         platform_chars = self.trend_analyzer.platform_characteristics.get(platform, {})
         formats = platform_chars.get('content_formats', ['video'])
         
@@ -1993,7 +2061,8 @@ class ContentTrendEngine:
         return formats[0] if formats else 'video'
     
     def _create_hashtag_strategy(self, trend: TrendData, platform: TrendSource) -> Dict[str, Any]:
-        """Create hashtag strategy for platform."""        
+        """Create hashtag strategy for platform."""
+        
         platform_chars = self.trend_analyzer.platform_characteristics.get(platform, {})
         
         # Get trending hashtags from trend
@@ -2017,7 +2086,8 @@ class ContentTrendEngine:
         }
     
     def _determine_optimal_timing(self, trend: TrendData) -> str:
-        """Determine optimal timing for trend participation."""        
+        """Determine optimal timing for trend participation."""
+        
         if trend.trend_stage == TrendStage.EMERGING:
             return "Act immediately - trend is just starting to gain momentum"
         elif trend.trend_stage == TrendStage.GROWING:

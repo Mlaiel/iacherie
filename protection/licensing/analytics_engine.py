@@ -20,7 +20,8 @@ and may result in severe civil and criminal penalties. Users must comply with al
 applicable intellectual property laws and license agreements.
 
 Contact: mlaiel@live.de for licensing and authorization requests.
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Tuple
 from datetime import datetime, timedelta, date
@@ -49,7 +50,8 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class ReportType(Enum):
-    """Available report types"""    EXECUTIVE_DASHBOARD = "executive_dashboard"
+    """Available report types"""
+    EXECUTIVE_DASHBOARD = "executive_dashboard"
     REVENUE_ANALYSIS = "revenue_analysis"
     TERRITORY_PERFORMANCE = "territory_performance"
     RIGHTS_HOLDER_SUMMARY = "rights_holder_summary"
@@ -61,7 +63,8 @@ class ReportType(Enum):
     CUSTOM_ANALYTICS = "custom_analytics"
 
 class ReportFormat(Enum):
-    """Report output formats"""    JSON = "json"
+    """Report output formats"""
+    JSON = "json"
     PDF = "pdf"
     EXCEL = "excel"
     CSV = "csv"
@@ -69,7 +72,8 @@ class ReportFormat(Enum):
     INTERACTIVE_DASHBOARD = "dashboard"
 
 class AnalyticsPeriod(Enum):
-    """Analytics time periods"""    REAL_TIME = "real_time"
+    """Analytics time periods"""
+    REAL_TIME = "real_time"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -78,7 +82,8 @@ class AnalyticsPeriod(Enum):
     CUSTOM = "custom"
 
 class MetricType(Enum):
-    """Key performance indicator types"""    REVENUE = "revenue"
+    """Key performance indicator types"""
+    REVENUE = "revenue"
     USAGE = "usage"
     GROWTH = "growth"
     EFFICIENCY = "efficiency"
@@ -87,7 +92,8 @@ class MetricType(Enum):
 
 @dataclass
 class ReportConfig:
-    """Report configuration settings"""    report_id: str
+    """Report configuration settings"""
+    report_id: str
     report_type: ReportType
     title: str
     description: str
@@ -119,7 +125,8 @@ class ReportConfig:
 
 @dataclass
 class KPIMetric:
-    """Key Performance Indicator metric"""    metric_id: str
+    """Key Performance Indicator metric"""
+    metric_id: str
     name: str
     value: Union[float, int, str]
     metric_type: MetricType
@@ -141,7 +148,8 @@ class KPIMetric:
 
 @dataclass
 class AnalyticsInsight:
-    """AI-generated analytics insight"""    insight_id: str
+    """AI-generated analytics insight"""
+    insight_id: str
     title: str
     description: str
     insight_type: str  # trend, anomaly, opportunity, warning
@@ -159,7 +167,8 @@ class AnalyticsInsight:
 
 @dataclass
 class ReportResult:
-    """Complete report result"""    report_id: str
+    """Complete report result"""
+    report_id: str
     config: ReportConfig
     generated_at: datetime
     
@@ -179,13 +188,16 @@ class ReportResult:
     export_urls: Dict[str, str] = field(default_factory=dict)
 
 class LicensingAnalyticsEngine:
-    """    🚀 Advanced licensing analytics and reporting engine
+    """
+    🚀 Advanced licensing analytics and reporting engine
     
     Comprehensive system for generating business intelligence reports,
     KPI tracking, and predictive analytics for licensing operations.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize analytics engine with configuration."""        self.config = config
+        """Initialize analytics engine with configuration."""
+        self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Data sources (would connect to actual databases in production)
@@ -215,7 +227,8 @@ class LicensingAnalyticsEngine:
         self.logger.info("Licensing Analytics Engine initialized successfully")
 
     def _initialize_ai_models(self):
-        """Initialize AI models for analytics insights."""        try:
+        """Initialize AI models for analytics insights."""
+        try:
             # Trend detection model
             self.trend_detector = None  # Would initialize with actual ML model
             
@@ -234,7 +247,8 @@ class LicensingAnalyticsEngine:
             self.logger.warning(f"AI models initialization failed: {e}")
 
     async def generate_report(self, report_config: ReportConfig) -> ReportResult:
-        """Generate comprehensive analytics report."""        start_time = datetime.now()
+        """Generate comprehensive analytics report."""
+        start_time = datetime.now()
         
         try:
             self.logger.info(f"Generating report: {report_config.title}")
@@ -302,7 +316,8 @@ class LicensingAnalyticsEngine:
             raise
 
     def _generate_cache_key(self, config: ReportConfig) -> str:
-        """Generate cache key for report configuration."""        key_data = {
+        """Generate cache key for report configuration."""
+        key_data = {
             'type': config.report_type.value,
             'period': config.period.value,
             'start_date': config.start_date.isoformat() if config.start_date else None,
@@ -319,7 +334,8 @@ class LicensingAnalyticsEngine:
         return hashlib.md5(key_string.encode()).hexdigest()
 
     async def _gather_report_data(self, config: ReportConfig) -> Dict[str, Any]:
-        """Gather all necessary data for report generation."""        
+        """Gather all necessary data for report generation."""
+        
         # Apply date filters
         start_date = config.start_date
         end_date = config.end_date or date.today()
@@ -363,7 +379,8 @@ class LicensingAnalyticsEngine:
         }
 
     def _get_period_dates(self, period: AnalyticsPeriod) -> Tuple[date, date]:
-        """Get start and end dates for analytics period."""        end_date = date.today()
+        """Get start and end dates for analytics period."""
+        end_date = date.today()
         
         if period == AnalyticsPeriod.DAILY:
             start_date = end_date - timedelta(days=1)
@@ -389,7 +406,8 @@ class LicensingAnalyticsEngine:
         end_date: date,
         config: ReportConfig
     ) -> List[Dict[str, Any]]:
-        """Get licensing data for the specified period."""        # In production, this would query actual database
+        """Get licensing data for the specified period."""
+        # In production, this would query actual database
         # Returning mock data for demonstration
         
         mock_data = []
@@ -417,7 +435,8 @@ class LicensingAnalyticsEngine:
         end_date: date,
         config: ReportConfig
     ) -> List[Dict[str, Any]]:
-        """Get royalty data for the specified period."""        # Mock royalty data
+        """Get royalty data for the specified period."""
+        # Mock royalty data
         mock_data = []
         for i in range(200):  # Mock 200 royalty records
             record_date = start_date + timedelta(
@@ -443,7 +462,8 @@ class LicensingAnalyticsEngine:
         end_date: date,
         config: ReportConfig
     ) -> List[Dict[str, Any]]:
-        """Get usage data for the specified period."""        # Mock usage data
+        """Get usage data for the specified period."""
+        # Mock usage data
         mock_data = []
         for i in range(500):  # Mock 500 usage records
             record_date = start_date + timedelta(
@@ -468,7 +488,8 @@ class LicensingAnalyticsEngine:
         end_date: date,
         config: ReportConfig
     ) -> List[Dict[str, Any]]:
-        """Get contracts data for the specified period."""        # Mock contracts data
+        """Get contracts data for the specified period."""
+        # Mock contracts data
         mock_data = []
         for i in range(50):  # Mock 50 contracts
             mock_data.append({
@@ -485,7 +506,8 @@ class LicensingAnalyticsEngine:
         return mock_data
 
     async def _get_rights_holders_data(self, config: ReportConfig) -> List[Dict[str, Any]]:
-        """Get rights holders data."""        # Mock rights holders data
+        """Get rights holders data."""
+        # Mock rights holders data
         mock_data = []
         for i in range(20):  # Mock 20 rights holders
             mock_data.append({
@@ -504,7 +526,8 @@ class LicensingAnalyticsEngine:
         report_data: Dict[str, Any],
         config: ReportConfig
     ) -> List[KPIMetric]:
-        """Calculate key performance indicators."""        
+        """Calculate key performance indicators."""
+        
         metrics = []
         
         # Revenue metrics
@@ -617,7 +640,8 @@ class LicensingAnalyticsEngine:
         key_metrics: List[KPIMetric],
         config: ReportConfig
     ) -> List[AnalyticsInsight]:
-        """Generate AI-powered analytics insights."""        
+        """Generate AI-powered analytics insights."""
+        
         insights = []
         
         # Revenue trend insight
@@ -749,7 +773,8 @@ class LicensingAnalyticsEngine:
         report_data: Dict[str, Any],
         config: ReportConfig
     ) -> Dict[str, pd.DataFrame]:
-        """Create data tables for the report."""        
+        """Create data tables for the report."""
+        
         tables = {}
         
         # Revenue summary table
@@ -817,7 +842,8 @@ class LicensingAnalyticsEngine:
         report_data: Dict[str, Any],
         config: ReportConfig
     ) -> Dict[str, Any]:
-        """Generate visualization charts for the report."""        
+        """Generate visualization charts for the report."""
+        
         charts = {}
         
         if not PLOTTING_AVAILABLE:
@@ -896,7 +922,8 @@ class LicensingAnalyticsEngine:
         insights: List[AnalyticsInsight],
         config: ReportConfig
     ) -> str:
-        """Generate executive summary for the report."""        
+        """Generate executive summary for the report."""
+        
         # Extract key information
         revenue_metric = next((m for m in key_metrics if m.metric_id == "total_revenue"), None)
         plays_metric = next((m for m in key_metrics if m.metric_id == "total_plays"), None)
@@ -959,7 +986,8 @@ class LicensingAnalyticsEngine:
         report_data: Dict[str, Any],
         key_metrics: List[KPIMetric]
     ) -> float:
-        """Calculate report quality score based on data completeness."""        
+        """Calculate report quality score based on data completeness."""
+        
         score = 0.0
         total_checks = 0
         
@@ -981,7 +1009,8 @@ class LicensingAnalyticsEngine:
         return final_score
 
     def _update_analytics_metrics(self, generation_time: float):
-        """Update analytics engine performance metrics."""        self.analytics_metrics['reports_generated'] += 1
+        """Update analytics engine performance metrics."""
+        self.analytics_metrics['reports_generated'] += 1
         
         # Update average generation time
         current_avg = self.analytics_metrics['average_generation_time']
@@ -995,7 +1024,8 @@ class LicensingAnalyticsEngine:
         dashboard_name: str,
         widgets: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Create configuration for interactive dashboard."""        
+        """Create configuration for interactive dashboard."""
+        
         dashboard_config = {
             'dashboard_id': str(uuid.uuid4()),
             'name': dashboard_name,
@@ -1017,7 +1047,8 @@ class LicensingAnalyticsEngine:
         format: ReportFormat,
         output_path: Optional[str] = None
     ) -> str:
-        """Export report in specified format."""        
+        """Export report in specified format."""
+        
         try:
             if format == ReportFormat.JSON:
                 return await self._export_json(report_result, output_path)
@@ -1037,7 +1068,8 @@ class LicensingAnalyticsEngine:
             raise
 
     async def _export_json(self, report_result: ReportResult, output_path: Optional[str]) -> str:
-        """Export report as JSON."""        
+        """Export report as JSON."""
+        
         # Convert DataFrames to dictionaries for JSON serialization
         json_data = {
             'report_id': report_result.report_id,
@@ -1071,7 +1103,8 @@ class LicensingAnalyticsEngine:
             return json_str
 
     async def _export_excel(self, report_result: ReportResult, output_path: Optional[str]) -> str:
-        """Export report as Excel file."""        
+        """Export report as Excel file."""
+        
         if not output_path:
             output_path = f"report_{report_result.report_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
         
@@ -1128,7 +1161,8 @@ class LicensingAnalyticsEngine:
         return output_path
 
     async def _export_csv(self, report_result: ReportResult, output_path: Optional[str]) -> str:
-        """Export report data as CSV files."""        
+        """Export report data as CSV files."""
+        
         if not output_path:
             output_path = f"report_{report_result.report_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         
@@ -1159,12 +1193,14 @@ class LicensingAnalyticsEngine:
         return output_path
 
     async def _export_html(self, report_result: ReportResult, output_path: Optional[str]) -> str:
-        """Export report as HTML."""        
+        """Export report as HTML."""
+        
         if not output_path:
             output_path = f"report_{report_result.report_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.html"
         
         # Generate HTML content
-        html_content = f"""        <!DOCTYPE html>
+        html_content = f"""
+        <!DOCTYPE html>
         <html>
         <head>
             <title>Licensing Analytics Report - {report_result.report_id}</title>
@@ -1187,7 +1223,8 @@ class LicensingAnalyticsEngine:
             <p>{report_result.executive_summary}</p>
             
             <h2>Key Metrics</h2>
-        """        
+        """
+        
         # Add key metrics
         for metric in report_result.key_metrics:
             change_indicator = ""
@@ -1195,22 +1232,26 @@ class LicensingAnalyticsEngine:
                 direction = "↑" if metric.change_percentage > 0 else "↓"
                 change_indicator = f" ({direction} {abs(metric.change_percentage):.1f}%)"
             
-            html_content += f"""            <div class="metric">
+            html_content += f"""
+            <div class="metric">
                 <strong>{metric.name}:</strong> {metric.value} {metric.unit}{change_indicator}
                 <br><small>{metric.description}</small>
             </div>
-            """        
+            """
+        
         # Add insights
         html_content += "<h2>Key Insights</h2>"
         for insight in report_result.insights:
-            html_content += f"""            <div class="insight">
+            html_content += f"""
+            <div class="insight">
                 <h3>{insight.title}</h3>
                 <p>{insight.description}</p>
                 <p><strong>Impact Level:</strong> {insight.impact_level}</p>
                 <p><strong>Confidence:</strong> {insight.confidence_score:.0%}</p>
                 <p><strong>Recommended Actions:</strong></p>
                 <ul>
-            """            for action in insight.recommended_actions:
+            """
+            for action in insight.recommended_actions:
                 html_content += f"<li>{action}</li>"
             html_content += "</ul></div>"
         
@@ -1219,22 +1260,26 @@ class LicensingAnalyticsEngine:
             html_content += f"<h2>{table_name.replace('_', ' ').title()}</h2>"
             html_content += df.to_html(classes='table', escape=False)
         
-        html_content += """        </body>
+        html_content += """
+        </body>
         </html>
-        """        
+        """
+        
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(html_content)
         
         return output_path
 
     async def _export_pdf(self, report_result: ReportResult, output_path: Optional[str]) -> str:
-        """Export report as PDF (placeholder implementation)."""        # In production, would use libraries like reportlab or weasyprint
+        """Export report as PDF (placeholder implementation)."""
+        # In production, would use libraries like reportlab or weasyprint
         # For now, export as HTML and suggest conversion
         html_path = await self._export_html(report_result, output_path)
         return f"HTML report generated: {html_path} (convert to PDF using external tool)"
 
     def get_analytics_metrics(self) -> Dict[str, Any]:
-        """Get analytics engine performance metrics."""        return {
+        """Get analytics engine performance metrics."""
+        return {
             **self.analytics_metrics,
             'cache_size': len(self.report_cache),
             'supported_formats': [fmt.value for fmt in ReportFormat],

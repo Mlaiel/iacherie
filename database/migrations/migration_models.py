@@ -8,7 +8,7 @@ Responsibility: Comprehensive data models for content protection and monetizatio
 ===========================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -22,15 +22,20 @@ Advanced data models supporting:
 DATA MODEL ARCHITECTURE:
 Entity Definition → Relationship Mapping → Validation Rules → 
 Performance Optimization → Audit Trail → Business Logic Integration
-"""import uuid
+"""
+
+import uuid
+
 from typing import Dict, List, Optional, Union, Any, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
+
 import json
 
 from sqlalchemy import Column, String, Integer, Float, Boolean, DateTime, Text, JSON, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
+
 from sqlalchemy.dialects.postgresql import UUID, JSONB, ARRAY
 from sqlalchemy.orm import relationship
 
@@ -47,7 +52,9 @@ Base = declarative_base()
 
 @dataclass
 class MigrationRecord:
-    """Core migration record with comprehensive tracking"""    
+    """
+Core migration record with comprehensive tracking"""
+    
     migration_id: str
     execution_id: str
     migration_type: MigrationType
@@ -108,7 +115,8 @@ class MigrationRecord:
 
 @dataclass
 class SchemaVersion:
-    """Schema version tracking with evolution history"""    
+    """Schema version tracking with evolution history"""
+    
     version_number: str
     version_type: str  # major, minor, patch, hotfix
     description: str = ""
@@ -154,7 +162,8 @@ class SchemaVersion:
 
 @dataclass
 class DependencyGraph:
-    """Migration dependency graph for execution ordering"""    
+    """Migration dependency graph for execution ordering"""
+    
     graph_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     
     # Graph structure
@@ -182,7 +191,9 @@ class DependencyGraph:
 
 @dataclass
 class MigrationExecution:
-    """Detailed migration execution tracking"""    
+    """
+Detailed migration execution tracking"""
+    
     execution_id: str
     migration_id: str
     plan_id: Optional[str] = None
@@ -244,7 +255,8 @@ class MigrationExecution:
 
 @dataclass
 class ValidationResult:
-    """Comprehensive migration validation results"""    
+    """Comprehensive migration validation results"""
+    
     validation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     migration_id: str = ""
     
@@ -303,7 +315,8 @@ class ValidationResult:
 
 @dataclass
 class SecurityAssessment:
-    """Security-specific assessment for migrations"""    
+    """Security-specific assessment for migrations"""
+    
     assessment_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     migration_id: str = ""
     
@@ -338,7 +351,8 @@ class SecurityAssessment:
 
 @dataclass
 class PerformanceImpact:
-    """Performance impact assessment for migrations"""    
+    """Performance impact assessment for migrations"""
+    
     assessment_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     migration_id: str = ""
     
@@ -376,7 +390,8 @@ class PerformanceImpact:
 
 @dataclass
 class RollbackPlan:
-    """Comprehensive rollback execution plan"""    
+    """Comprehensive rollback execution plan"""
+    
     plan_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     rollback_context: Any = None  # RollbackContext from rollback_manager
     
@@ -415,7 +430,8 @@ class RollbackPlan:
 
 @dataclass
 class RollbackExecution:
-    """Rollback execution tracking and monitoring"""    
+    """Rollback execution tracking and monitoring"""
+    
     execution_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     plan: Optional[RollbackPlan] = None
     
@@ -461,7 +477,8 @@ class RollbackExecution:
 
 @dataclass
 class BackupSnapshot:
-    """Database backup snapshot for rollback operations"""    
+    """Database backup snapshot for rollback operations"""
+    
     snapshot_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     backup_type: str = "full"  # full, incremental, differential
     
@@ -508,7 +525,8 @@ class BackupSnapshot:
 
 @dataclass
 class RecoveryPoint:
-    """Point-in-time recovery point for database restoration"""    
+    """Point-in-time recovery point for database restoration"""
+    
     recovery_point_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     
     # Recovery point metadata
@@ -550,7 +568,8 @@ class RecoveryPoint:
 
 @dataclass
 class PerformanceMetrics:
-    """Real-time performance metrics during migration execution"""    
+    """Real-time performance metrics during migration execution"""
+    
     measurement_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     execution_id: str = ""
     timestamp: datetime = field(default_factory=datetime.utcnow)
@@ -591,7 +610,8 @@ class PerformanceMetrics:
 
 @dataclass
 class ResourceUsage:
-    """System resource usage tracking"""    
+    """System resource usage tracking"""
+    
     measurement_time: datetime = field(default_factory=datetime.utcnow)
     
     # CPU metrics
@@ -623,7 +643,9 @@ class ResourceUsage:
 
 @dataclass
 class ContentProtectionMigration:
-    """Content protection specific migration data"""    
+    """
+Content protection specific migration data"""
+    
     migration_id: str = ""
     
     # Content classification
@@ -650,7 +672,8 @@ class ContentProtectionMigration:
 
 @dataclass
 class MonetizationMigration:
-    """Monetization specific migration data"""    
+    """Monetization specific migration data"""
+    
     migration_id: str = ""
     
     # Revenue models
@@ -678,7 +701,8 @@ class MonetizationMigration:
 
 @dataclass
 class VersionCompatibility:
-    """Version compatibility tracking between schema versions"""    
+    """Version compatibility tracking between schema versions"""
+    
     compatibility_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     
     # Version relationship
@@ -711,7 +735,8 @@ class VersionCompatibility:
 
 @dataclass
 class VersionEvolution:
-    """Schema version evolution tracking"""    
+    """Schema version evolution tracking"""
+    
     evolution_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     
     # Evolution path

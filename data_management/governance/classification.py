@@ -11,7 +11,8 @@ WARNING: This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
-"""import logging
+"""
+import logging
 import re
 import json
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
@@ -27,7 +28,8 @@ from ...ai.models import ContentClassifier, SentimentAnalyzer, TopicExtractor
 
 
 class ClassificationLevel(Enum):
-    """Data classification levels"""    PUBLIC = "public"
+    """Data classification levels"""
+    PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
@@ -35,7 +37,8 @@ class ClassificationLevel(Enum):
 
 
 class ContentCategory(Enum):
-    """Content category types"""    PERSONAL_DATA = "personal_data"
+    """Content category types"""
+    PERSONAL_DATA = "personal_data"
     FINANCIAL_DATA = "financial_data"
     HEALTH_DATA = "health_data"
     INTELLECTUAL_PROPERTY = "intellectual_property"
@@ -48,7 +51,8 @@ class ContentCategory(Enum):
 
 
 class SensitivityLabel(Enum):
-    """Sensitivity labels for content"""    NON_SENSITIVE = "non_sensitive"
+    """Sensitivity labels for content"""
+    NON_SENSITIVE = "non_sensitive"
     LOW_SENSITIVITY = "low_sensitivity"
     MEDIUM_SENSITIVITY = "medium_sensitivity"
     HIGH_SENSITIVITY = "high_sensitivity"
@@ -56,7 +60,8 @@ class SensitivityLabel(Enum):
 
 
 class ComplianceTag(Enum):
-    """Compliance requirement tags"""    GDPR_APPLICABLE = "gdpr_applicable"
+    """Compliance requirement tags"""
+    GDPR_APPLICABLE = "gdpr_applicable"
     CCPA_APPLICABLE = "ccpa_applicable"
     HIPAA_APPLICABLE = "hipaa_applicable"
     PCI_DSS_APPLICABLE = "pci_dss_applicable"
@@ -69,7 +74,8 @@ class ComplianceTag(Enum):
 
 @dataclass
 class ClassificationRule:
-    """Data classification rule definition"""    rule_id: str
+    """Data classification rule definition"""
+    rule_id: str
     name: str
     description: str
     conditions: List[Dict[str, Any]]
@@ -86,7 +92,8 @@ class ClassificationRule:
 
 @dataclass
 class ClassificationResult:
-    """Result of data classification"""    content_id: str
+    """Result of data classification"""
+    content_id: str
     classification_level: ClassificationLevel
     content_category: ContentCategory
     sensitivity_label: SensitivityLabel
@@ -102,7 +109,8 @@ class ClassificationResult:
 
 @dataclass
 class ContentFeatures:
-    """Extracted content features for classification"""    content_id: str
+    """Extracted content features for classification"""
+    content_id: str
     text_features: Dict[str, Any] = field(default_factory=dict)
     metadata_features: Dict[str, Any] = field(default_factory=dict)
     pattern_matches: List[str] = field(default_factory=list)
@@ -114,7 +122,8 @@ class ContentFeatures:
 
 
 class BaseClassifier(ABC):
-    """Base class for content classifiers"""    
+    """Base class for content classifiers"""
+    
     @abstractmethod
     async def classify(
         self,
@@ -122,7 +131,8 @@ class BaseClassifier(ABC):
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Classify content and return predictions"""        try:
+        """Classify content and return predictions"""
+        try:
             self.logger.info(f"Starting classification for content type: {content_type}")
             
             if content_type not in self.get_supported_types():
@@ -175,7 +185,8 @@ class BaseClassifier(ABC):
     
     @abstractmethod
     def get_supported_types(self) -> List[str]:
-        """Get supported content types"""        return [
+        """Get supported content types"""
+        return [
             "text",
             "document", 
             "json",
@@ -188,7 +199,8 @@ class BaseClassifier(ABC):
         ]
     
     def _extract_text_content(self, content: Any, content_type: str, metadata: Optional[Dict[str, Any]]) -> str:
-        """Extract text content for pattern matching"""        try:
+        """Extract text content for pattern matching"""
+        try:
             text_content = ""
             
             if content_type == "text" or isinstance(content, str):
@@ -214,7 +226,8 @@ class BaseClassifier(ABC):
             return str(content)[:1000] if content else ""
     
     def _calculate_pattern_confidence(self, text: str, patterns: List) -> float:
-        """Calculate confidence score based on pattern matches"""        if not text or not patterns:
+        """Calculate confidence score based on pattern matches"""
+        if not text or not patterns:
             return 0.0
         
         total_matches = 0
@@ -237,7 +250,8 @@ class BaseClassifier(ABC):
 
 
 class PatternClassifier(BaseClassifier):
-    """Pattern-based content classifier"""    
+    """Pattern-based content classifier"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -287,7 +301,8 @@ class PatternClassifier(BaseClassifier):
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Classify content using pattern matching"""        try:
+        """Classify content using pattern matching"""
+        try:
             if content_type != "text":
                 return {"error": "Pattern classifier only supports text content"}
             
@@ -346,7 +361,8 @@ class PatternClassifier(BaseClassifier):
 
 
 class AIClassifier(BaseClassifier):
-    """AI-powered content classifier"""    
+    """AI-powered content classifier"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -362,7 +378,8 @@ class AIClassifier(BaseClassifier):
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Classify content using AI models"""        try:
+        """Classify content using AI models"""
+        try:
             predictions = {
                 "content_categories": {},
                 "sensitivity_labels": {},
@@ -413,7 +430,8 @@ class AIClassifier(BaseClassifier):
         self,
         categories: Dict[str, float]
     ) -> Dict[str, float]:
-        """Infer sensitivity labels from content categories"""        sensitivity_mapping = {
+        """Infer sensitivity labels from content categories"""
+        sensitivity_mapping = {
             ContentCategory.PERSONAL_DATA.value: SensitivityLabel.HIGH_SENSITIVITY,
             ContentCategory.FINANCIAL_DATA.value: SensitivityLabel.CRITICAL_SENSITIVITY,
             ContentCategory.HEALTH_DATA.value: SensitivityLabel.CRITICAL_SENSITIVITY,
@@ -439,11 +457,13 @@ class AIClassifier(BaseClassifier):
 
 
 class ComplianceTaggingEngine:
-    """    Engine for applying compliance tags based on content classification
+    """
+    Engine for applying compliance tags based on content classification
     
     Automatically applies compliance tags based on detected content
     categories, sensitivity levels, and regulatory requirements.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -490,14 +510,16 @@ class ComplianceTaggingEngine:
         self,
         classification_result: ClassificationResult
     ) -> List[ComplianceTag]:
-        """        Apply compliance tags based on classification result
+        """
+        Apply compliance tags based on classification result
         
         Args:
             classification_result: Classification result
             
         Returns:
             List of applicable compliance tags
-        """        try:
+        """
+        try:
             tags = set()
             
             # Apply category-based tags
@@ -525,11 +547,13 @@ class ComplianceTaggingEngine:
 
 
 class ClassificationEngine:
-    """    Main classification engine
+    """
+    Main classification engine
     
     Coordinates multiple classifiers and applies business rules
     to produce comprehensive classification results.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -557,7 +581,8 @@ class ClassificationEngine:
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ClassificationResult:
-        """        Classify content using multiple approaches
+        """
+        Classify content using multiple approaches
         
         Args:
             content_id: Content identifier
@@ -567,7 +592,8 @@ class ClassificationEngine:
             
         Returns:
             ClassificationResult: Comprehensive classification result
-        """        try:
+        """
+        try:
             # Extract features
             features = await self._extract_features(content_id, content, content_type, metadata)
             
@@ -597,7 +623,8 @@ class ClassificationEngine:
             raise ClassificationError(f"Content classification failed: {e}")
     
     async def add_classification_rule(self, rule: ClassificationRule) -> None:
-        """Add a new classification rule"""        try:
+        """Add a new classification rule"""
+        try:
             # Validate rule
             await self._validate_classification_rule(rule)
             
@@ -615,7 +642,8 @@ class ClassificationEngine:
         rule_id: str,
         updates: Dict[str, Any]
     ) -> ClassificationRule:
-        """Update an existing classification rule"""        try:
+        """Update an existing classification rule"""
+        try:
             rule = self.rules.get(rule_id)
             if not rule:
                 raise ClassificationError(f"Rule {rule_id} not found")
@@ -644,7 +672,8 @@ class ClassificationEngine:
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ContentFeatures:
-        """Extract features from content"""        features = ContentFeatures(content_id=content_id)
+        """Extract features from content"""
+        features = ContentFeatures(content_id=content_id)
         
         # Extract type-specific features
         extractor = self.feature_extractors.get(content_type)
@@ -670,7 +699,8 @@ class ClassificationEngine:
         content: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Extract features from text content"""        features = {
+        """Extract features from text content"""
+        features = {
             "text_features": {
                 "length": len(content),
                 "word_count": len(content.split()),
@@ -699,7 +729,8 @@ class ClassificationEngine:
         content: Any,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Extract features from audio content"""        return {
+        """Extract features from audio content"""
+        return {
             "text_features": {},
             "pattern_matches": [],
             "metadata_features": {
@@ -714,7 +745,8 @@ class ClassificationEngine:
         content: Any,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Extract features from video content"""        return {
+        """Extract features from video content"""
+        return {
             "text_features": {},
             "pattern_matches": [],
             "metadata_features": {
@@ -729,7 +761,8 @@ class ClassificationEngine:
         content: Any,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Extract features from image content"""        return {
+        """Extract features from image content"""
+        return {
             "text_features": {},
             "pattern_matches": [],
             "metadata_features": {
@@ -745,7 +778,8 @@ class ClassificationEngine:
         pattern_results: Dict[str, Any],
         ai_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply business classification rules"""        rule_results = {
+        """Apply business classification rules"""
+        rule_results = {
             "applied_rules": [],
             "classification_level": None,
             "content_category": None,
@@ -787,7 +821,8 @@ class ClassificationEngine:
         pattern_results: Dict[str, Any],
         ai_results: Dict[str, Any]
     ) -> bool:
-        """Evaluate if rule conditions are met"""        for condition in rule.conditions:
+        """Evaluate if rule conditions are met"""
+        for condition in rule.conditions:
             condition_type = condition.get("type")
             
             if condition_type == "pattern_match":
@@ -818,7 +853,8 @@ class ClassificationEngine:
         rule_results: Dict[str, Any],
         features: ContentFeatures
     ) -> ClassificationResult:
-        """Combine results from all classification approaches"""        # Determine final classification with priority: rules > AI > patterns
+        """Combine results from all classification approaches"""
+        # Determine final classification with priority: rules > AI > patterns
         classification_level = (
             rule_results.get("classification_level") or
             self._get_highest_confidence_classification_level(ai_results, pattern_results) or
@@ -876,7 +912,8 @@ class ClassificationEngine:
         ai_results: Dict[str, Any],
         pattern_results: Dict[str, Any]
     ) -> Optional[ClassificationLevel]:
-        """Get classification level with highest confidence"""        # Simplified logic - real implementation would be more sophisticated
+        """Get classification level with highest confidence"""
+        # Simplified logic - real implementation would be more sophisticated
         if pattern_results.get("confidence_score", 0) > 0.7:
             return ClassificationLevel.CONFIDENTIAL
         elif ai_results.get("confidence_score", 0) > 0.8:
@@ -888,7 +925,8 @@ class ClassificationEngine:
         ai_results: Dict[str, Any],
         pattern_results: Dict[str, Any]
     ) -> Optional[ContentCategory]:
-        """Get content category with highest confidence"""        # Combine categories from both sources
+        """Get content category with highest confidence"""
+        # Combine categories from both sources
         all_categories = {}
         all_categories.update(ai_results.get("content_categories", {}))
         all_categories.update(pattern_results.get("content_categories", {}))
@@ -908,7 +946,8 @@ class ClassificationEngine:
         ai_results: Dict[str, Any],
         pattern_results: Dict[str, Any]
     ) -> Optional[SensitivityLabel]:
-        """Get sensitivity label with highest confidence"""        # Combine sensitivity labels from both sources
+        """Get sensitivity label with highest confidence"""
+        # Combine sensitivity labels from both sources
         all_labels = {}
         all_labels.update(ai_results.get("sensitivity_labels", {}))
         all_labels.update(pattern_results.get("sensitivity_labels", {}))
@@ -924,7 +963,8 @@ class ClassificationEngine:
         return None
     
     async def _validate_classification_rule(self, rule: ClassificationRule) -> None:
-        """Validate classification rule configuration"""        if not rule.rule_id or not rule.name:
+        """Validate classification rule configuration"""
+        if not rule.rule_id or not rule.name:
             raise ValidationError("Rule ID and name are required")
         
         if not rule.conditions:
@@ -936,13 +976,16 @@ class ClassificationEngine:
 
 
 class DataClassificationManager(BaseManager):
-    """    Central data classification management system
+    """
+    Central data classification management system
     
     Coordinates content classification, manages classification rules,
     and provides comprehensive labeling and tagging services.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the data classification manager"""        super().__init__(config)
+        """Initialize the data classification manager"""
+        super().__init__(config)
         self.logger = logging.getLogger(__name__)
         
         # Initialize classification engine
@@ -963,7 +1006,8 @@ class DataClassificationManager(BaseManager):
         }
     
     async def initialize(self) -> None:
-        """Initialize the data classification manager"""        try:
+        """Initialize the data classification manager"""
+        try:
             # Create default classification rules
             await self._create_default_classification_rules()
             
@@ -980,7 +1024,8 @@ class DataClassificationManager(BaseManager):
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ClassificationResult:
-        """        Classify content and store results
+        """
+        Classify content and store results
         
         Args:
             content_id: Content identifier
@@ -990,7 +1035,8 @@ class DataClassificationManager(BaseManager):
             
         Returns:
             ClassificationResult: Classification result
-        """        try:
+        """
+        try:
             # Perform classification
             result = await self.classification_engine.classify_content(
                 content_id, content, content_type, metadata
@@ -1011,7 +1057,8 @@ class DataClassificationManager(BaseManager):
             raise ClassificationError(f"Content classification failed: {e}")
     
     async def get_classification_result(self, content_id: str) -> Optional[ClassificationResult]:
-        """Get classification result for content"""        return self.classification_results.get(content_id)
+        """Get classification result for content"""
+        return self.classification_results.get(content_id)
     
     async def reclassify_content(
         self,
@@ -1020,13 +1067,16 @@ class DataClassificationManager(BaseManager):
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ClassificationResult:
-        """Reclassify existing content"""        return await self.classify_content(content_id, content, content_type, metadata)
+        """Reclassify existing content"""
+        return await self.classify_content(content_id, content, content_type, metadata)
     
     async def add_classification_rule(self, rule: ClassificationRule) -> None:
-        """Add a new classification rule"""        await self.classification_engine.add_classification_rule(rule)
+        """Add a new classification rule"""
+        await self.classification_engine.add_classification_rule(rule)
     
     async def get_classification_statistics(self) -> Dict[str, Any]:
-        """Get classification statistics"""        total_results = len(self.classification_results)
+        """Get classification statistics"""
+        total_results = len(self.classification_results)
         
         # Calculate statistics
         if total_results > 0:
@@ -1075,7 +1125,8 @@ class DataClassificationManager(BaseManager):
         compliance_tags: Optional[List[ComplianceTag]] = None,
         min_confidence: float = 0.0
     ) -> List[ClassificationResult]:
-        """        Search classified content by criteria
+        """
+        Search classified content by criteria
         
         Args:
             classification_level: Filter by classification level
@@ -1086,7 +1137,8 @@ class DataClassificationManager(BaseManager):
             
         Returns:
             List of matching classification results
-        """        results = list(self.classification_results.values())
+        """
+        results = list(self.classification_results.values())
         
         # Apply filters
         if classification_level:
@@ -1113,7 +1165,8 @@ class DataClassificationManager(BaseManager):
         return results
     
     def _update_metrics(self, result: ClassificationResult) -> None:
-        """Update performance metrics"""        self.metrics["total_classifications"] += 1
+        """Update performance metrics"""
+        self.metrics["total_classifications"] += 1
         self.metrics["successful_classifications"] += 1
         
         # Update average confidence
@@ -1139,7 +1192,8 @@ class DataClassificationManager(BaseManager):
         self.metrics["compliance_tags_applied"] += len(result.compliance_tags)
     
     async def _create_default_classification_rules(self) -> None:
-        """Create default classification rules"""        # Personal data rule
+        """Create default classification rules"""
+        # Personal data rule
         personal_data_rule = ClassificationRule(
             rule_id="personal_data_high_sensitivity",
             name="Personal Data High Sensitivity",

@@ -6,7 +6,8 @@ Integrates with existing revenue tracking and extends monitoring capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 
 class BusinessMetric(Enum):
-    """Business metrics for monitoring"""    REVENUE = "revenue"
+    """Business metrics for monitoring"""
+    REVENUE = "revenue"
     USER_ENGAGEMENT = "user_engagement"
     CONVERSION_RATE = "conversion_rate"
     CUSTOMER_SATISFACTION = "customer_satisfaction"
@@ -34,7 +36,8 @@ class BusinessMetric(Enum):
 
 @dataclass
 class BusinessMetrics:
-    """Business metrics data structure"""    timestamp: datetime
+    """Business metrics data structure"""
+    timestamp: datetime
     current_revenue: float
     previous_revenue: float
     daily_revenue: List[float]
@@ -53,7 +56,8 @@ class BusinessMetrics:
 
 
 class BusinessAlertManager:
-    """    Advanced business alert management for revenue and user experience monitoring
+    """
+    Advanced business alert management for revenue and user experience monitoring
     
     Features:
     - Revenue anomaly detection with trend analysis
@@ -62,9 +66,11 @@ class BusinessAlertManager:
     - Payment processing alerts
     - User engagement tracking
     - Business KPI thresholds
-    """    
+    """
+    
     def __init__(self, alert_manager: IntelligentAlertManager):
-        """Initialize business alert manager"""        self.alert_manager = alert_manager
+        """Initialize business alert manager"""
+        self.alert_manager = alert_manager
         self.business_metrics_history: List[BusinessMetrics] = []
         self.revenue_baselines: Dict[str, float] = {}
         self.engagement_baselines: Dict[str, float] = {}
@@ -87,7 +93,8 @@ class BusinessAlertManager:
         logger.info("BusinessAlertManager initialized")
     
     def _initialize_business_rules(self):
-        """Initialize business-specific alert rules"""        
+        """Initialize business-specific alert rules"""
+        
         # Revenue Drop Alert - Critical
         self.alert_manager.add_alert_rule(AlertRule(
             rule_id="business_revenue_drop_critical",
@@ -192,7 +199,8 @@ class BusinessAlertManager:
         logger.info("Business alert rules initialized")
     
     async def evaluate_business_metrics(self, metrics: BusinessMetrics) -> List[IntelligentAlert]:
-        """Evaluate business metrics and trigger alerts"""        triggered_alerts = []
+        """Evaluate business metrics and trigger alerts"""
+        triggered_alerts = []
         
         # Store metrics for trend analysis
         self.business_metrics_history.append(metrics)
@@ -229,7 +237,8 @@ class BusinessAlertManager:
         return triggered_alerts
     
     async def _evaluate_revenue_alerts(self, metrics: BusinessMetrics) -> List[IntelligentAlert]:
-        """Evaluate revenue-related alerts"""        alerts = []
+        """Evaluate revenue-related alerts"""
+        alerts = []
         
         try:
             # Calculate revenue drop percentage
@@ -274,7 +283,8 @@ class BusinessAlertManager:
         return alerts
     
     async def _evaluate_user_experience_alerts(self, metrics: BusinessMetrics) -> List[IntelligentAlert]:
-        """Evaluate user experience alerts"""        alerts = []
+        """Evaluate user experience alerts"""
+        alerts = []
         
         try:
             # Calculate UX degradation score
@@ -301,7 +311,8 @@ class BusinessAlertManager:
         return alerts
     
     async def _evaluate_payment_alerts(self, metrics: BusinessMetrics) -> List[IntelligentAlert]:
-        """Evaluate payment processing alerts"""        alerts = []
+        """Evaluate payment processing alerts"""
+        alerts = []
         
         try:
             # Check payment failure rate
@@ -326,7 +337,8 @@ class BusinessAlertManager:
         return alerts
     
     async def _evaluate_engagement_alerts(self, metrics: BusinessMetrics) -> List[IntelligentAlert]:
-        """Evaluate user engagement alerts"""        alerts = []
+        """Evaluate user engagement alerts"""
+        alerts = []
         
         try:
             # Calculate engagement drop
@@ -353,7 +365,8 @@ class BusinessAlertManager:
         return alerts
     
     async def _calculate_revenue_anomaly_score(self, metrics: BusinessMetrics) -> float:
-        """Calculate revenue anomaly score using statistical analysis"""        try:
+        """Calculate revenue anomaly score using statistical analysis"""
+        try:
             if len(self.business_metrics_history) < 7:
                 return 0.0  # Not enough data for anomaly detection
             
@@ -383,7 +396,8 @@ class BusinessAlertManager:
             return 0.0
     
     async def _calculate_ux_degradation_score(self, metrics: BusinessMetrics) -> float:
-        """Calculate user experience degradation score"""        try:
+        """Calculate user experience degradation score"""
+        try:
             if len(self.business_metrics_history) < 3:
                 return 0.0  # Not enough data
             
@@ -417,7 +431,8 @@ class BusinessAlertManager:
             return 0.0
     
     async def _calculate_engagement_drop(self, metrics: BusinessMetrics) -> float:
-        """Calculate user engagement drop percentage"""        try:
+        """Calculate user engagement drop percentage"""
+        try:
             if len(self.business_metrics_history) < 2:
                 return 0.0
             
@@ -439,7 +454,8 @@ class BusinessAlertManager:
             return 0.0
     
     async def _get_expected_revenue(self, timestamp: datetime) -> float:
-        """Get expected revenue based on historical trends"""        try:
+        """Get expected revenue based on historical trends"""
+        try:
             if len(self.business_metrics_history) < 7:
                 return 0.0
             
@@ -452,7 +468,8 @@ class BusinessAlertManager:
             return 0.0
     
     async def get_business_alert_summary(self) -> Dict[str, Any]:
-        """Get business alert summary and insights"""        try:
+        """Get business alert summary and insights"""
+        try:
             if not self.business_metrics_history:
                 return {"error": "No business metrics available"}
             
@@ -484,7 +501,8 @@ class BusinessAlertManager:
             return {"error": str(e)}
     
     async def _calculate_revenue_trend(self) -> str:
-        """Calculate revenue trend direction"""        try:
+        """Calculate revenue trend direction"""
+        try:
             if len(self.business_metrics_history) < 3:
                 return "insufficient_data"
             
@@ -502,7 +520,8 @@ class BusinessAlertManager:
             return "unknown"
     
     async def _calculate_engagement_trend(self) -> str:
-        """Calculate engagement trend direction"""        try:
+        """Calculate engagement trend direction"""
+        try:
             if len(self.business_metrics_history) < 3:
                 return "insufficient_data"
             

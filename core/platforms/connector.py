@@ -5,7 +5,8 @@ Connection management and pooling for platform integrations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any, Type, Union
 from datetime import datetime, timedelta
@@ -39,7 +40,8 @@ logger = logging.getLogger(__name__)
 
 
 class ConnectionState(Enum):
-    """Connection state enumeration"""    DISCONNECTED = "disconnected"
+    """Connection state enumeration"""
+    DISCONNECTED = "disconnected"
     CONNECTING = "connecting"
     CONNECTED = "connected"
     RECONNECTING = "reconnecting"
@@ -48,7 +50,8 @@ class ConnectionState(Enum):
 
 @dataclass
 class ConnectionMetrics:
-    """Connection performance metrics"""    platform_id: str
+    """Connection performance metrics"""
+    platform_id: str
     connection_time: float
     last_activity: datetime
     requests_count: int
@@ -59,14 +62,17 @@ class ConnectionMetrics:
 
 
 class PlatformConnectionPool:
-    """Connection pool for platform instances"""    
+    """Connection pool for platform instances"""
+    
     def __init__(self, max_connections: int = 10, idle_timeout: int = 300):
-        """        Initialize connection pool
+        """
+        Initialize connection pool
         
         Args:
             max_connections: Maximum concurrent connections per platform
             idle_timeout: Idle timeout in seconds before closing connections
-        """        self.max_connections = max_connections
+        """
+        self.max_connections = max_connections
         self.idle_timeout = idle_timeout
         self.connections: Dict[str, List[PlatformBase]] = {}
         self.active_connections: Dict[str, set] = {}
@@ -75,7 +81,8 @@ class PlatformConnectionPool:
         
     async def get_connection(self, platform_type: PlatformType, 
                            config: PlatformConfig) -> PlatformBase:
-        """Get connection from pool or create new one"""        platform_key = f"{platform_type.value}_{config.user_id}"
+        """Get connection from pool or create new one"""
+        platform_key = f"{platform_type.value}_{config.user_id}"
         
         async with self.lock:
             # Check for available idle connections
@@ -117,7 +124,8 @@ class PlatformConnectionPool:
     
     async def _create_connection(self, platform_type: PlatformType, 
                                config: PlatformConfig) -> PlatformBase:
-        """Create new platform connection"""        platform_classes = {
+        """Create new platform connection"""
+        platform_classes = {
             PlatformType.SPOTIFY: SpotifyPlatform,
             PlatformType.YOUTUBE: YouTubePlatform,
             PlatformType.INSTAGRAM: InstagramPlatform,
@@ -149,7 +157,8 @@ class PlatformConnectionPool:
         return platform
     
     async def release_connection(self, connection: PlatformBase):
-        """Release connection back to pool"""        platform_key = f"{connection.config.platform_type.value}_{connection.config.user_id}"
+        """Release connection back to pool"""
+        platform_key = f"{connection.config.platform_type.value}_{connection.config.user_id}"
         connection_id = id(connection)
         
         async with self.lock:
@@ -174,7 +183,8 @@ class PlatformConnectionPool:
         logger.debug(f"Released connection for {platform_key}")
     
     async def cleanup_idle_connections(self):
-        """Clean up idle connections that have timed out"""        async with self.lock:
+        """Clean up idle connections that have timed out"""
+        async with self.lock:
             current_time = datetime.utcnow()
             
             for platform_key, connections in list(self.connections.items()):
@@ -206,7 +216,8 @@ class PlatformConnectionPool:
                 self.connections[platform_key] = cleaned_connections
     
     def get_pool_stats(self) -> Dict[str, Any]:
-        """Get connection pool statistics"""        stats = {
+        """Get connection pool statistics"""
+        stats = {
             'total_platforms': len(self.connections),
             'active_connections': sum(len(active) for active in self.active_connections.values()),
             'idle_connections': sum(len(idle) for idle in self.connections.values()),
@@ -231,25 +242,30 @@ class PlatformConnectionPool:
 
 
 class PlatformConnector:
-    """Main connector for managing platform connections"""    
+    """Main connector for managing platform connections"""
+    
     def __init__(self, pool_size: int = 10, cleanup_interval: int = 300):
-        """        Initialize platform connector
+        """
+        Initialize platform connector
         
         Args:
             pool_size: Maximum connections per platform
             cleanup_interval: Cleanup interval in seconds
-        """        self.pool = PlatformConnectionPool(max_connections=pool_size)
+        """
+        self.pool = PlatformConnectionPool(max_connections=pool_size)
         self.cleanup_interval = cleanup_interval
         self.cleanup_task: Optional[asyncio.Task] = None
         self.connection_cache: Dict[str, weakref.ReferenceType] = {}
         self.active_sessions: Dict[str, aiohttp.ClientSession] = {}
         
     async def start(self):
-        """Start the connector and cleanup tasks"""        self.cleanup_task = asyncio.create_task(self._cleanup_loop())
+        """Start the connector and cleanup tasks"""
+        self.cleanup_task = asyncio.create_task(self._cleanup_loop())
         logger.info("Platform connector started")
     
     async def stop(self):
-        """Stop the connector and cleanup resources"""        if self.cleanup_task:
+        """Stop the connector and cleanup resources"""
+        if self.cleanup_task:
             self.cleanup_task.cancel()
             try:
                 await self.cleanup_task
@@ -271,7 +287,8 @@ class PlatformConnector:
     
     @asynccontextmanager
     async def get_platform(self, platform_type: PlatformType, config: PlatformConfig):
-        """Context manager for getting platform connections"""        connection = None
+        """Context manager for getting platform connections"""
+        connection = None
         try:
             connection = await self.pool.get_connection(platform_type, config)
             yield connection
@@ -281,11 +298,13 @@ class PlatformConnector:
     
     async def create_platform(self, platform_type: PlatformType, 
                             config: PlatformConfig) -> PlatformBase:
-        """Create a new platform instance (not pooled)"""        return await self.pool._create_connection(platform_type, config)
+        """Create a new platform instance (not pooled)"""
+        return await self.pool._create_connection(platform_type, config)
     
     async def test_connection(self, platform_type: PlatformType, 
                             config: PlatformConfig) -> bool:
-        """Test platform connection without using pool"""        try:
+        """Test platform connection without using pool"""
+        try:
             async with self.get_platform(platform_type, config) as platform:
                 return await platform.authenticate()
         except Exception as e:
@@ -293,7 +312,8 @@ class PlatformConnector:
             return False
     
     async def test_all_platforms(self, configs: Dict[PlatformType, PlatformConfig]) -> Dict[PlatformType, bool]:
-        """Test connections to all configured platforms"""        results = {}
+        """Test connections to all configured platforms"""
+        results = {}
         
         # Test connections concurrently
         tasks = []
@@ -316,7 +336,8 @@ class PlatformConnector:
     
     async def get_platform_health(self, platform_type: PlatformType, 
                                 config: PlatformConfig) -> Dict[str, Any]:
-        """Get detailed health information for a platform"""        try:
+        """Get detailed health information for a platform"""
+        try:
             start_time = time.time()
             
             async with self.get_platform(platform_type, config) as platform:
@@ -356,7 +377,8 @@ class PlatformConnector:
             }
     
     async def bulk_platform_health(self, configs: Dict[PlatformType, PlatformConfig]) -> Dict[str, Any]:
-        """Get health information for multiple platforms"""        results = {}
+        """Get health information for multiple platforms"""
+        results = {}
         
         # Check health concurrently
         tasks = []
@@ -386,7 +408,8 @@ class PlatformConnector:
         }
     
     async def refresh_all_tokens(self, configs: Dict[PlatformType, PlatformConfig]) -> Dict[str, bool]:
-        """Refresh tokens for all platforms"""        results = {}
+        """Refresh tokens for all platforms"""
+        results = {}
         
         for platform_type, config in configs.items():
             try:
@@ -406,7 +429,8 @@ class PlatformConnector:
         return results
     
     async def get_session(self, session_key: str) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""        if session_key not in self.active_sessions or self.active_sessions[session_key].closed:
+        """Get or create HTTP session"""
+        if session_key not in self.active_sessions or self.active_sessions[session_key].closed:
             self.active_sessions[session_key] = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=30),
                 connector=aiohttp.TCPConnector(limit=100, limit_per_host=10)
@@ -415,13 +439,15 @@ class PlatformConnector:
         return self.active_sessions[session_key]
     
     async def close_session(self, session_key: str):
-        """Close specific HTTP session"""        if session_key in self.active_sessions:
+        """Close specific HTTP session"""
+        if session_key in self.active_sessions:
             session = self.active_sessions.pop(session_key)
             if not session.closed:
                 await session.close()
     
     async def _cleanup_loop(self):
-        """Background cleanup task"""        try:
+        """Background cleanup task"""
+        try:
             while True:
                 await asyncio.sleep(self.cleanup_interval)
                 
@@ -447,7 +473,8 @@ class PlatformConnector:
             logger.error(f"Cleanup loop error: {e}")
     
     def get_connector_stats(self) -> Dict[str, Any]:
-        """Get connector statistics"""        return {
+        """Get connector statistics"""
+        return {
             'pool_stats': self.pool.get_pool_stats(),
             'active_sessions': len(self.active_sessions),
             'cleanup_interval': self.cleanup_interval,
@@ -460,7 +487,8 @@ _global_connector: Optional[PlatformConnector] = None
 
 
 async def get_connector() -> PlatformConnector:
-    """Get global connector instance"""    global _global_connector
+    """Get global connector instance"""
+    global _global_connector
     
     if _global_connector is None:
         _global_connector = PlatformConnector()
@@ -470,7 +498,8 @@ async def get_connector() -> PlatformConnector:
 
 
 async def cleanup_connector():
-    """Cleanup global connector"""    global _global_connector
+    """Cleanup global connector"""
+    global _global_connector
     
     if _global_connector:
         await _global_connector.stop()

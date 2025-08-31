@@ -6,7 +6,8 @@ royalty distribution, and usage tracking across platforms.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""from .licensing_manager import LicensingManager
+"""
+from .licensing_manager import LicensingManager
 from .royalty_engine import RoyaltyEngine
 from .usage_tracker import UsageTracker
 from .contract_generator import ContractGenerator
@@ -67,19 +68,23 @@ LICENSING_CONFIG = {
 _licensing_manager = None
 
 def get_licensing_manager():
-    """Get global licensing manager instance."""    global _licensing_manager
+    """Get global licensing manager instance."""
+    global _licensing_manager
     if _licensing_manager is None:
         _licensing_manager = LicensingManager()
     return _licensing_manager
 
 def create_license(content_id: int, licensee_id: int, license_type: str, terms: dict):
-    """Create new content license."""    manager = get_licensing_manager()
+    """Create new content license."""
+    manager = get_licensing_manager()
     return manager.create_license(content_id, licensee_id, license_type, terms)
 
 def track_usage(license_id: int, usage_type: str, usage_data: dict):
-    """Track license usage."""    manager = get_licensing_manager()
+    """Track license usage."""
+    manager = get_licensing_manager()
     return manager.track_usage(license_id, usage_type, usage_data)
 
 def calculate_royalties(license_id: int, period_start: str, period_end: str):
-    """Calculate royalties for license period."""    manager = get_licensing_manager()
+    """Calculate royalties for license period."""
+    manager = get_licensing_manager()
     return manager.calculate_royalties(license_id, period_start, period_end)

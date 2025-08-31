@@ -5,7 +5,8 @@ including dynamic scaling, health monitoring, and intelligent routing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""import asyncio
+"""
+import asyncio
 import time
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional, Union, Callable, Awaitable
@@ -27,7 +28,8 @@ logger = get_logger(__name__)
 
 
 class PoolStrategy(Enum):
-    """Connection pool strategies"""    STATIC = "static"
+    """Connection pool strategies"""
+    STATIC = "static"
     DYNAMIC = "dynamic"
     QUEUE = "queue"
     NULL = "null"
@@ -35,7 +37,8 @@ class PoolStrategy(Enum):
 
 
 class ConnectionState(Enum):
-    """Connection states"""    IDLE = "idle"
+    """Connection states"""
+    IDLE = "idle"
     ACTIVE = "active"
     IN_TRANSACTION = "in_transaction"
     INVALID = "invalid"
@@ -44,7 +47,8 @@ class ConnectionState(Enum):
 
 @dataclass
 class ConnectionPoolConfig:
-    """Connection pool configuration"""    # Basic settings
+    """Connection pool configuration"""
+    # Basic settings
     min_connections: int = 5
     max_connections: int = 20
     pool_strategy: PoolStrategy = PoolStrategy.QUEUE
@@ -80,7 +84,8 @@ class ConnectionPoolConfig:
 
 @dataclass
 class ConnectionMetrics:
-    """Connection pool metrics"""    total_connections: int = 0
+    """Connection pool metrics"""
+    total_connections: int = 0
     active_connections: int = 0
     idle_connections: int = 0
     invalid_connections: int = 0
@@ -95,19 +100,22 @@ class ConnectionMetrics:
     
     @property
     def error_rate(self) -> float:
-        """Calculate connection error rate"""        if self.connection_requests == 0:
+        """Calculate connection error rate"""
+        if self.connection_requests == 0:
             return 0.0
         return self.connection_errors / self.connection_requests
     
     @property
     def pool_utilization(self) -> float:
-        """Calculate pool utilization rate"""        if self.total_connections == 0:
+        """Calculate pool utilization rate"""
+        if self.total_connections == 0:
             return 0.0
         return self.active_connections / self.total_connections
 
 
 class ConnectionInfo:
-    """Connection information and metadata"""    
+    """Connection information and metadata"""
+    
     def __init__(self, connection_id: str, created_at: datetime = None):
         self.connection_id = connection_id
         self.created_at = created_at or datetime.now()
@@ -120,12 +128,14 @@ class ConnectionInfo:
         self.transaction_count = 0
         
     def start_query(self, query: str) -> None:
-        """Mark query start"""        self.current_query = query
+        """Mark query start"""
+        self.current_query = query
         self.state = ConnectionState.ACTIVE
         self.last_used = datetime.now()
     
     def end_query(self, execution_time: float, error: bool = False) -> None:
-        """Mark query end"""        self.current_query = None
+        """Mark query end"""
+        self.current_query = None
         self.state = ConnectionState.IDLE
         self.query_count += 1
         self.total_time += execution_time
@@ -134,26 +144,31 @@ class ConnectionInfo:
     
     @property
     def avg_query_time(self) -> float:
-        """Calculate average query time"""        return self.total_time / self.query_count if self.query_count > 0 else 0.0
+        """Calculate average query time"""
+        return self.total_time / self.query_count if self.query_count > 0 else 0.0
     
     @property
     def age(self) -> timedelta:
-        """Get connection age"""        return datetime.now() - self.created_at
+        """Get connection age"""
+        return datetime.now() - self.created_at
     
     @property
     def idle_time(self) -> timedelta:
-        """Get idle time"""        return datetime.now() - self.last_used
+        """Get idle time"""
+        return datetime.now() - self.last_used
 
 
 class HealthChecker:
-    """Database connection health checker"""    
+    """Database connection health checker"""
+    
     def __init__(self, config: ConnectionPoolConfig):
         self.config = config
         self._last_check = datetime.now()
         self._healthy = True
         
     async def check_connection(self, engine: AsyncEngine) -> bool:
-        """Check if connection is healthy"""        try:
+        """Check if connection is healthy"""
+        try:
             async with engine.begin() as conn:
                 result = await conn.execute(text("SELECT 1"))
                 await result.fetchone()
@@ -163,7 +178,8 @@ class HealthChecker:
             return False
     
     async def ping_connection(self, connection) -> bool:
-        """Ping a specific connection"""        try:
+        """Ping a specific connection"""
+        try:
             if hasattr(connection, 'ping'):
                 return await connection.ping()
             else:
@@ -175,19 +191,23 @@ class HealthChecker:
             return False
     
     def should_check(self) -> bool:
-        """Check if health check is due"""        return (datetime.now() - self._last_check).total_seconds() >= self.config.health_check_interval
+        """Check if health check is due"""
+        return (datetime.now() - self._last_check).total_seconds() >= self.config.health_check_interval
     
     def mark_checked(self, healthy: bool) -> None:
-        """Mark health check as completed"""        self._last_check = datetime.now()
+        """Mark health check as completed"""
+        self._last_check = datetime.now()
         self._healthy = healthy
     
     @property
     def is_healthy(self) -> bool:
-        """Get current health status"""        return self._healthy
+        """Get current health status"""
+        return self._healthy
 
 
 class ConnectionOptimizer:
-    """Advanced database connection optimizer"""    
+    """Advanced database connection optimizer"""
+    
     def __init__(self, config: ConnectionPoolConfig):
         self.config = config
         self.metrics = ConnectionMetrics()
@@ -208,7 +228,8 @@ class ConnectionOptimizer:
         self._query_patterns: Dict[str, int] = {}
         
     async def initialize(self, database_url: Optional[str] = None) -> None:
-        """Initialize connection optimizer"""        try:
+        """Initialize connection optimizer"""
+        try:
             url = database_url or self.config.database_url or settings.DATABASE_URL
             
             # Create engine with optimized settings
@@ -237,7 +258,8 @@ class ConnectionOptimizer:
             raise
     
     def _get_engine_kwargs(self) -> Dict[str, Any]:
-        """Get engine configuration parameters"""        pool_class = self._get_pool_class()
+        """Get engine configuration parameters"""
+        pool_class = self._get_pool_class()
         
         kwargs = {
             "echo": self.config.echo,
@@ -263,7 +285,8 @@ class ConnectionOptimizer:
         return kwargs
     
     def _get_pool_class(self):
-        """Get appropriate pool class based on strategy"""        pool_classes = {
+        """Get appropriate pool class based on strategy"""
+        pool_classes = {
             PoolStrategy.STATIC: StaticPool,
             PoolStrategy.QUEUE: QueuePool,
             PoolStrategy.NULL: NullPool,
@@ -271,10 +294,12 @@ class ConnectionOptimizer:
         return pool_classes.get(self.config.pool_strategy, QueuePool)
     
     def _setup_event_listeners(self) -> None:
-        """Setup SQLAlchemy event listeners for monitoring"""        
+        """Setup SQLAlchemy event listeners for monitoring"""
+        
         @event.listens_for(self._engine.sync_engine, "connect")
         def on_connect(dbapi_connection, connection_record):
-            """Handle new connection creation"""            connection_id = str(id(dbapi_connection))
+            """Handle new connection creation"""
+            connection_id = str(id(dbapi_connection))
             self._connections[connection_id] = ConnectionInfo(connection_id)
             self.metrics.total_connections += 1
             self.metrics.connection_requests += 1
@@ -284,21 +309,24 @@ class ConnectionOptimizer:
         
         @event.listens_for(self._engine.sync_engine, "checkout")
         def on_checkout(dbapi_connection, connection_record, connection_proxy):
-            """Handle connection checkout from pool"""            connection_id = str(id(dbapi_connection))
+            """Handle connection checkout from pool"""
+            connection_id = str(id(dbapi_connection))
             if connection_id in self._connections:
                 self._connections[connection_id].state = ConnectionState.ACTIVE
                 self.metrics.active_connections += 1
         
         @event.listens_for(self._engine.sync_engine, "checkin")
         def on_checkin(dbapi_connection, connection_record):
-            """Handle connection checkin to pool"""            connection_id = str(id(dbapi_connection))
+            """Handle connection checkin to pool"""
+            connection_id = str(id(dbapi_connection))
             if connection_id in self._connections:
                 self._connections[connection_id].state = ConnectionState.IDLE
                 self.metrics.active_connections = max(0, self.metrics.active_connections - 1)
         
         @event.listens_for(self._engine.sync_engine, "close")
         def on_close(dbapi_connection, connection_record):
-            """Handle connection close"""            connection_id = str(id(dbapi_connection))
+            """Handle connection close"""
+            connection_id = str(id(dbapi_connection))
             if connection_id in self._connections:
                 self._connections[connection_id].state = ConnectionState.CLOSED
                 del self._connections[connection_id]
@@ -306,7 +334,8 @@ class ConnectionOptimizer:
         
         @event.listens_for(self._engine.sync_engine, "invalid")
         def on_invalid(dbapi_connection, connection_record, exception):
-            """Handle connection invalidation"""            connection_id = str(id(dbapi_connection))
+            """Handle connection invalidation"""
+            connection_id = str(id(dbapi_connection))
             if connection_id in self._connections:
                 self._connections[connection_id].state = ConnectionState.INVALID
                 self.metrics.invalid_connections += 1
@@ -316,7 +345,8 @@ class ConnectionOptimizer:
     
     @asynccontextmanager
     async def get_session(self):
-        """Get database session with automatic management"""        if not self._session_factory:
+        """Get database session with automatic management"""
+        if not self._session_factory:
             raise RuntimeError("Connection optimizer not initialized")
         
         session = self._session_factory()
@@ -342,7 +372,8 @@ class ConnectionOptimizer:
         parameters: Optional[Dict[str, Any]] = None,
         timeout: Optional[float] = None
     ) -> Any:
-        """Execute query with optimization and monitoring"""        start_time = time.time()
+        """Execute query with optimization and monitoring"""
+        start_time = time.time()
         
         try:
             async with self.get_session() as session:
@@ -378,7 +409,8 @@ class ConnectionOptimizer:
             raise
     
     async def optimize_pool(self) -> None:
-        """Optimize connection pool based on metrics and performance"""        try:
+        """Optimize connection pool based on metrics and performance"""
+        try:
             current_time = datetime.now()
             if (current_time - self._last_optimization).total_seconds() < 300:  # 5 minutes
                 return
@@ -408,7 +440,8 @@ class ConnectionOptimizer:
             logger.error(f"Pool optimization error: {e}")
     
     async def _scale_up_pool(self) -> None:
-        """Scale up connection pool"""        # This would require engine reconfiguration
+        """Scale up connection pool"""
+        # This would require engine reconfiguration
         # For now, log the recommendation
         logger.info("Recommending pool scale-up due to high utilization")
         
@@ -420,7 +453,8 @@ class ConnectionOptimizer:
             )
     
     async def _scale_down_pool(self) -> None:
-        """Scale down connection pool"""        # Close idle connections
+        """Scale down connection pool"""
+        # Close idle connections
         idle_connections = [
             conn for conn in self._connections.values()
             if conn.state == ConnectionState.IDLE
@@ -441,7 +475,8 @@ class ConnectionOptimizer:
             )
     
     async def _cleanup_invalid_connections(self) -> None:
-        """Clean up invalid connections"""        invalid_connections = [
+        """Clean up invalid connections"""
+        invalid_connections = [
             conn_id for conn_id, conn in self._connections.items()
             if conn.state == ConnectionState.INVALID
         ]
@@ -454,7 +489,8 @@ class ConnectionOptimizer:
             logger.info(f"Cleaned up {len(invalid_connections)} invalid connections")
     
     async def _optimize_slow_queries(self) -> None:
-        """Analyze and provide recommendations for slow queries"""        if not self._slow_queries:
+        """Analyze and provide recommendations for slow queries"""
+        if not self._slow_queries:
             return
         
         # Group by query pattern
@@ -469,18 +505,21 @@ class ConnectionOptimizer:
             # Here you could implement automatic index suggestions
     
     def _track_query_pattern(self, query: str) -> None:
-        """Track query patterns for analysis"""        pattern = self._extract_query_pattern(query)
+        """Track query patterns for analysis"""
+        pattern = self._extract_query_pattern(query)
         self._query_patterns[pattern] = self._query_patterns.get(pattern, 0) + 1
     
     def _extract_query_pattern(self, query: str) -> str:
-        """Extract pattern from query (remove literals)"""        import re
+        """Extract pattern from query (remove literals)"""
+        import re
         # Simple pattern extraction - replace literals with placeholders
         pattern = re.sub(r"'[^']*'", "?", query)
         pattern = re.sub(r"\b\d+\b", "?", pattern)
         return pattern.strip()
     
     def _record_slow_query(self, query: str, execution_time: float, parameters: Optional[Dict] = None) -> None:
-        """Record slow query for analysis"""        slow_query = {
+        """Record slow query for analysis"""
+        slow_query = {
             "query": query,
             "execution_time": execution_time,
             "parameters": parameters,
@@ -506,7 +545,8 @@ class ConnectionOptimizer:
             )
     
     def _update_connection_metrics(self, connection_time: float) -> None:
-        """Update connection metrics"""        self.metrics.connection_requests += 1
+        """Update connection metrics"""
+        self.metrics.connection_requests += 1
         
         # Update average connection time
         if self.metrics.connection_requests == 1:
@@ -526,7 +566,8 @@ class ConnectionOptimizer:
             )
     
     def _update_query_metrics(self, execution_time: float) -> None:
-        """Update query metrics"""        self.metrics.query_count += 1
+        """Update query metrics"""
+        self.metrics.query_count += 1
         
         # Update average query time
         if self.metrics.query_count == 1:
@@ -544,7 +585,8 @@ class ConnectionOptimizer:
             )
     
     async def _monitor_connections(self) -> None:
-        """Background task for connection monitoring"""        while True:
+        """Background task for connection monitoring"""
+        while True:
             try:
                 await asyncio.sleep(self.config.health_check_interval)
                 
@@ -578,7 +620,8 @@ class ConnectionOptimizer:
                 logger.error(f"Connection monitoring error: {e}")
     
     async def _send_metrics(self) -> None:
-        """Send metrics to monitoring system"""        self.metrics_collector.gauge(
+        """Send metrics to monitoring system"""
+        self.metrics_collector.gauge(
             "database_connections_total",
             self.metrics.total_connections
         )
@@ -604,7 +647,8 @@ class ConnectionOptimizer:
         )
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get comprehensive connection statistics"""        return {
+        """Get comprehensive connection statistics"""
+        return {
             "total_connections": self.metrics.total_connections,
             "active_connections": self.metrics.active_connections,
             "idle_connections": self.metrics.idle_connections,
@@ -623,7 +667,8 @@ class ConnectionOptimizer:
         }
     
     async def close(self) -> None:
-        """Close connection optimizer"""        if self._monitoring_task:
+        """Close connection optimizer"""
+        if self._monitoring_task:
             self._monitoring_task.cancel()
             try:
                 await self._monitoring_task
@@ -640,7 +685,8 @@ _connection_optimizer: Optional[ConnectionOptimizer] = None
 
 
 def get_connection_optimizer(config: Optional[ConnectionPoolConfig] = None) -> ConnectionOptimizer:
-    """Get global connection optimizer instance"""    global _connection_optimizer
+    """Get global connection optimizer instance"""
+    global _connection_optimizer
     
     if _connection_optimizer is None:
         _connection_optimizer = ConnectionOptimizer(config or ConnectionPoolConfig())
@@ -649,12 +695,14 @@ def get_connection_optimizer(config: Optional[ConnectionPoolConfig] = None) -> C
 
 
 async def initialize_connections(config: Optional[ConnectionPoolConfig] = None) -> None:
-    """Initialize global connection optimizer"""    optimizer = get_connection_optimizer(config)
+    """Initialize global connection optimizer"""
+    optimizer = get_connection_optimizer(config)
     await optimizer.initialize()
 
 
 async def close_connections() -> None:
-    """Close global connection optimizer"""    global _connection_optimizer
+    """Close global connection optimizer"""
+    global _connection_optimizer
     
     if _connection_optimizer:
         await _connection_optimizer.close()
@@ -662,7 +710,8 @@ async def close_connections() -> None:
 
 
 class ContentProtectionConnectionManager:
-    """Specialized connection manager for content protection operations"""    
+    """Specialized connection manager for content protection operations"""
+    
     def __init__(self, base_optimizer: ConnectionOptimizer):
         self.base_optimizer = base_optimizer
         self.fingerprint_pool_config = ConnectionPoolConfig(
@@ -681,17 +730,20 @@ class ContentProtectionConnectionManager:
         )
     
     async def get_fingerprint_connection(self) -> AsyncSession:
-        """Get optimized connection for fingerprint operations"""        return await self.base_optimizer.get_connection(
+        """Get optimized connection for fingerprint operations"""
+        return await self.base_optimizer.get_connection(
             pool_config=self.fingerprint_pool_config
         )
     
     async def get_vector_search_connection(self) -> AsyncSession:
-        """Get optimized connection for vector similarity search"""        return await self.base_optimizer.get_connection(
+        """Get optimized connection for vector similarity search"""
+        return await self.base_optimizer.get_connection(
             pool_config=self.vector_pool_config
         )
     
     async def get_bulk_content_connection(self) -> AsyncSession:
-        """Get connection optimized for bulk content operations"""        bulk_config = ConnectionPoolConfig(
+        """Get connection optimized for bulk content operations"""
+        bulk_config = ConnectionPoolConfig(
             pool_size=25,
             max_overflow=40,
             pool_timeout=60,
@@ -702,7 +754,8 @@ class ContentProtectionConnectionManager:
 
 
 class MonetizationConnectionManager:
-    """Specialized connection manager for monetization and analytics operations"""    
+    """Specialized connection manager for monetization and analytics operations"""
+    
     def __init__(self, base_optimizer: ConnectionOptimizer):
         self.base_optimizer = base_optimizer
         self.analytics_pool_config = ConnectionPoolConfig(
@@ -721,17 +774,20 @@ class MonetizationConnectionManager:
         )
     
     async def get_analytics_connection(self) -> AsyncSession:
-        """Get optimized connection for analytics operations"""        return await self.base_optimizer.get_connection(
+        """Get optimized connection for analytics operations"""
+        return await self.base_optimizer.get_connection(
             pool_config=self.analytics_pool_config
         )
     
     async def get_revenue_connection(self) -> AsyncSession:
-        """Get optimized connection for revenue tracking"""        return await self.base_optimizer.get_connection(
+        """Get optimized connection for revenue tracking"""
+        return await self.base_optimizer.get_connection(
             pool_config=self.revenue_pool_config
         )
     
     async def get_reporting_connection(self) -> AsyncSession:
-        """Get read-only connection optimized for reporting"""        reporting_config = ConnectionPoolConfig(
+        """Get read-only connection optimized for reporting"""
+        reporting_config = ConnectionPoolConfig(
             pool_size=6,
             max_overflow=10,
             pool_timeout=15,
@@ -743,7 +799,8 @@ class MonetizationConnectionManager:
 
 
 class MultimediaConnectionManager:
-    """Specialized connection manager for multimedia content operations"""    
+    """Specialized connection manager for multimedia content operations"""
+    
     def __init__(self, base_optimizer: ConnectionOptimizer):
         self.base_optimizer = base_optimizer
         self.audio_pool_config = ConnectionPoolConfig(
@@ -769,22 +826,26 @@ class MultimediaConnectionManager:
         )
     
     async def get_audio_connection(self) -> AsyncSession:
-        """Get optimized connection for audio content operations"""        return await self.base_optimizer.get_connection(
+        """Get optimized connection for audio content operations"""
+        return await self.base_optimizer.get_connection(
             pool_config=self.audio_pool_config
         )
     
     async def get_video_connection(self) -> AsyncSession:
-        """Get optimized connection for video content operations"""        return await self.base_optimizer.get_connection(
+        """Get optimized connection for video content operations"""
+        return await self.base_optimizer.get_connection(
             pool_config=self.video_pool_config
         )
     
     async def get_image_connection(self) -> AsyncSession:
-        """Get optimized connection for image content operations"""        return await self.base_optimizer.get_connection(
+        """Get optimized connection for image content operations"""
+        return await self.base_optimizer.get_connection(
             pool_config=self.image_pool_config
         )
     
     async def get_metadata_connection(self) -> AsyncSession:
-        """Get optimized connection for multimedia metadata operations"""        metadata_config = ConnectionPoolConfig(
+        """Get optimized connection for multimedia metadata operations"""
+        metadata_config = ConnectionPoolConfig(
             pool_size=10,
             max_overflow=15,
             pool_timeout=20,
@@ -795,7 +856,8 @@ class MultimediaConnectionManager:
 
 
 class AIProcessingConnectionManager:
-    """Specialized connection manager for AI processing operations"""    
+    """Specialized connection manager for AI processing operations"""
+    
     def __init__(self, base_optimizer: ConnectionOptimizer):
         self.base_optimizer = base_optimizer
         self.ml_pool_config = ConnectionPoolConfig(
@@ -814,17 +876,20 @@ class AIProcessingConnectionManager:
         )
     
     async def get_ml_connection(self) -> AsyncSession:
-        """Get optimized connection for ML training operations"""        return await self.base_optimizer.get_connection(
+        """Get optimized connection for ML training operations"""
+        return await self.base_optimizer.get_connection(
             pool_config=self.ml_pool_config
         )
     
     async def get_inference_connection(self) -> AsyncSession:
-        """Get optimized connection for AI inference operations"""        return await self.base_optimizer.get_connection(
+        """Get optimized connection for AI inference operations"""
+        return await self.base_optimizer.get_connection(
             pool_config=self.inference_pool_config
         )
     
     async def get_model_storage_connection(self) -> AsyncSession:
-        """Get optimized connection for model metadata storage"""        model_config = ConnectionPoolConfig(
+        """Get optimized connection for model metadata storage"""
+        model_config = ConnectionPoolConfig(
             pool_size=8,
             max_overflow=12,
             pool_timeout=30,

@@ -3,7 +3,8 @@ AI-powered content and collaboration recommendations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 from dataclasses import dataclass
@@ -15,7 +16,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentRecommendation:
-    """Content recommendation structure"""    content_id: str
+    """Content recommendation structure"""
+    content_id: str
     title: str
     creator: str
     similarity_score: float
@@ -26,7 +28,8 @@ class ContentRecommendation:
 
 @dataclass
 class CollaborationRecommendation:
-    """Collaboration recommendation structure"""    target_user_id: str
+    """Collaboration recommendation structure"""
+    target_user_id: str
     username: str
     compatibility_score: float
     shared_interests: List[str]
@@ -36,7 +39,8 @@ class CollaborationRecommendation:
 
 @dataclass
 class TrendRecommendation:
-    """Trend recommendation structure"""    trend_id: str
+    """Trend recommendation structure"""
+    trend_id: str
     trend_name: str
     category: str
     growth_rate: float
@@ -46,7 +50,8 @@ class TrendRecommendation:
 
 
 class RecommendationEngine:
-    """AI-powered recommendation system for content and collaborations"""    
+    """AI-powered recommendation system for content and collaborations"""
+    
     def __init__(self):
         self.user_profiles = {}
         self.content_database = {}
@@ -58,7 +63,8 @@ class RecommendationEngine:
         user_id: str,
         interaction_data: Dict[str, Any]
     ):
-        """Update user profile based on interactions"""        try:
+        """Update user profile based on interactions"""
+        try:
             if user_id not in self.user_profiles:
                 self.user_profiles[user_id] = {
                     "preferences": {},
@@ -103,7 +109,8 @@ class RecommendationEngine:
         limit: int = 10,
         content_type: Optional[str] = None
     ) -> List[ContentRecommendation]:
-        """Get personalized content recommendations"""        try:
+        """Get personalized content recommendations"""
+        try:
             user_profile = self.user_profiles.get(user_id, {})
             recommendations = []
             
@@ -148,7 +155,8 @@ class RecommendationEngine:
         collaboration_type: str = "any",
         limit: int = 5
     ) -> List[CollaborationRecommendation]:
-        """Get collaboration partner recommendations"""        try:
+        """Get collaboration partner recommendations"""
+        try:
             user_profile = self.user_profiles.get(user_id, {})
             recommendations = []
             
@@ -192,7 +200,8 @@ class RecommendationEngine:
         user_id: str,
         category: Optional[str] = None
     ) -> List[TrendRecommendation]:
-        """Get trending topic and opportunity recommendations"""        try:
+        """Get trending topic and opportunity recommendations"""
+        try:
             user_profile = self.user_profiles.get(user_id, {})
             recommendations = []
             
@@ -230,7 +239,8 @@ class RecommendationEngine:
         self,
         user_id: str
     ) -> Dict[str, List[str]]:
-        """Get platform-specific optimization recommendations"""        try:
+        """Get platform-specific optimization recommendations"""
+        try:
             user_profile = self.user_profiles.get(user_id, {})
             platform_usage = user_profile.get("platform_usage", {})
             
@@ -297,7 +307,8 @@ class RecommendationEngine:
         content_type: str = "music",
         count: int = 5
     ) -> List[Dict[str, Any]]:
-        """Generate personalized content ideas"""        try:
+        """Generate personalized content ideas"""
+        try:
             user_profile = self.user_profiles.get(user_id, {})
             genre_preferences = user_profile.get("genre_preferences", [])
             trending_topics = await self._get_trending_topics()
@@ -342,7 +353,8 @@ class RecommendationEngine:
         content_id: str,
         interaction_type: str
     ):
-        """Analyze content to update user preferences"""        try:
+        """Analyze content to update user preferences"""
+        try:
             # Simulate content analysis
             content_data = {
                 "genre": "electronic",
@@ -374,7 +386,8 @@ class RecommendationEngine:
             logger.error(f"Error analyzing content preferences: {str(e)}")
     
     async def _get_available_content(self, content_type: Optional[str]) -> List[Dict]:
-        """Get available content for recommendations"""        try:
+        """Get available content for recommendations"""
+        try:
             # Simulate content database
             sample_content = [
                 {
@@ -420,7 +433,8 @@ class RecommendationEngine:
         user_profile: Dict,
         content: Dict
     ) -> float:
-        """Calculate similarity between user preferences and content"""        try:
+        """Calculate similarity between user preferences and content"""
+        try:
             similarity_score = 0.0
             
             # Genre similarity
@@ -457,7 +471,8 @@ class RecommendationEngine:
         profile1: Dict,
         profile2: Dict
     ) -> float:
-        """Calculate collaboration compatibility between two users"""        try:
+        """Calculate collaboration compatibility between two users"""
+        try:
             compatibility = 0.0
             
             # Genre overlap
@@ -491,7 +506,8 @@ class RecommendationEngine:
             return 0.0
     
     def _find_shared_interests(self, profile1: Dict, profile2: Dict) -> List[str]:
-        """Find shared interests between two user profiles"""        try:
+        """Find shared interests between two user profiles"""
+        try:
             shared = []
             
             # Shared genres
@@ -511,7 +527,8 @@ class RecommendationEngine:
             return []
     
     async def _get_trending_topics(self, category: Optional[str] = None) -> List[Dict]:
-        """Get current trending topics"""        try:
+        """Get current trending topics"""
+        try:
             # Simulate trending topics
             trending = [
                 {
@@ -551,7 +568,8 @@ class RecommendationEngine:
         user_profile: Dict,
         trend: Dict
     ) -> float:
-        """Calculate opportunity score for user to participate in trend"""        try:
+        """Calculate opportunity score for user to participate in trend"""
+        try:
             opportunity = 0.0
             
             # Genre alignment
@@ -582,7 +600,8 @@ class RecommendationEngine:
         content: Dict,
         similarity_score: float
     ) -> str:
-        """Generate human-readable recommendation reason"""        try:
+        """Generate human-readable recommendation reason"""
+        try:
             reasons = []
             
             user_genres = user_profile.get("genre_preferences", [])
@@ -611,7 +630,8 @@ class RecommendationEngine:
         compatibility_score: float,
         shared_interests: List[str]
     ) -> str:
-        """Generate collaboration recommendation reason"""        try:
+        """Generate collaboration recommendation reason"""
+        try:
             if compatibility_score > 0.8:
                 level = "highly compatible"
             elif compatibility_score > 0.6:
@@ -630,7 +650,8 @@ class RecommendationEngine:
             return "Potential collaboration partner"
     
     def _assess_collaboration_potential(self, compatibility_score: float) -> str:
-        """Assess collaboration potential level"""        if compatibility_score > 0.8:
+        """Assess collaboration potential level"""
+        if compatibility_score > 0.8:
             return "Very High"
         elif compatibility_score > 0.6:
             return "High"
@@ -644,7 +665,8 @@ class RecommendationEngine:
         trend: Dict,
         user_profile: Dict
     ) -> List[str]:
-        """Generate suggested actions for trending opportunity"""        try:
+        """Generate suggested actions for trending opportunity"""
+        try:
             actions = []
             
             trend_name = trend["name"]
@@ -681,7 +703,8 @@ class RecommendationEngine:
             return ["Explore this trending opportunity"]
     
     def _suggest_platforms_for_content(self, content_type: str, genre: str) -> List[str]:
-        """Suggest optimal platforms for content type and genre"""        try:
+        """Suggest optimal platforms for content type and genre"""
+        try:
             platforms = []
             
             if content_type == "music":

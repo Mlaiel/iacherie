@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -22,7 +23,8 @@ Tests the complete multilingual interface switching system including:
 - Dynamic language switching
 
 Author: Integration Test Suite
-"""import asyncio
+"""
+import asyncio
 import pytest
 import sys
 import os
@@ -39,10 +41,12 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 
 class TestMultilingualInterfaceSwitching:
-    """Integration tests for multilingual interface switching"""    
+    """Integration tests for multilingual interface switching"""
+    
     @pytest.fixture
     def supported_languages(self):
-        """List of supported languages for testing"""        return [
+        """List of supported languages for testing"""
+        return [
             {"code": "en", "name": "English", "native_name": "English", "region": "US"},
             {"code": "fr", "name": "French", "native_name": "Français", "region": "FR"},
             {"code": "es", "name": "Spanish", "native_name": "Español", "region": "ES"},
@@ -54,7 +58,8 @@ class TestMultilingualInterfaceSwitching:
     
     @pytest.fixture
     def sample_translations(self):
-        """Sample translation data for testing"""        return {
+        """Sample translation data for testing"""
+        return {
             "en": {
                 "welcome": "Welcome to Ainflue",
                 "dashboard": "Dashboard",
@@ -89,7 +94,8 @@ class TestMultilingualInterfaceSwitching:
     
     @pytest.fixture
     def mock_translation_manager(self):
-        """Mock translation management system"""        try:
+        """Mock translation management system"""
+        try:
             from core.i18n.translation_manager import TranslationManager
             return TranslationManager()
         except ImportError:
@@ -102,7 +108,8 @@ class TestMultilingualInterfaceSwitching:
     
     @pytest.fixture
     def mock_language_detector(self):
-        """Mock language detection system"""        try:
+        """Mock language detection system"""
+        try:
             from core.i18n.language_detector import LanguageDetector
             return LanguageDetector()
         except ImportError:
@@ -112,7 +119,8 @@ class TestMultilingualInterfaceSwitching:
     
     @pytest.mark.asyncio
     async def test_language_detection_workflow(self, mock_language_detector):
-        """Test automatic language detection from various sources"""        print("🔍 Testing language detection workflow...")
+        """Test automatic language detection from various sources"""
+        print("🔍 Testing language detection workflow...")
         
         # Test browser language detection
         with patch.object(mock_language_detector, 'detect_from_browser', new_callable=AsyncMock) as mock_browser:
@@ -167,7 +175,8 @@ class TestMultilingualInterfaceSwitching:
     
     @pytest.mark.asyncio
     async def test_translation_loading_workflow(self, mock_translation_manager, sample_translations):
-        """Test translation loading and caching mechanisms"""        print("📚 Testing translation loading workflow...")
+        """Test translation loading and caching mechanisms"""
+        print("📚 Testing translation loading workflow...")
         
         # Test initial translation loading
         with patch.object(mock_translation_manager, 'load_translations', new_callable=AsyncMock) as mock_load:
@@ -226,7 +235,8 @@ class TestMultilingualInterfaceSwitching:
     
     @pytest.mark.asyncio
     async def test_dynamic_language_switching(self, mock_translation_manager, sample_translations):
-        """Test dynamic language switching during user session"""        print("🔄 Testing dynamic language switching...")
+        """Test dynamic language switching during user session"""
+        print("🔄 Testing dynamic language switching...")
         
         # Test language switch request
         with patch.object(mock_translation_manager, 'switch_language', new_callable=AsyncMock) as mock_switch:
@@ -273,7 +283,8 @@ class TestMultilingualInterfaceSwitching:
     
     @pytest.mark.asyncio
     async def test_rtl_language_support(self, mock_translation_manager):
-        """Test Right-to-Left (RTL) language support"""        print("📖 Testing RTL language support...")
+        """Test Right-to-Left (RTL) language support"""
+        print("📖 Testing RTL language support...")
         
         # Test RTL layout adjustments
         with patch.object(mock_translation_manager, 'apply_rtl_layout', new_callable=AsyncMock) as mock_rtl:
@@ -306,7 +317,8 @@ class TestMultilingualInterfaceSwitching:
     
     @pytest.mark.asyncio
     async def test_translation_key_resolution(self, mock_translation_manager, sample_translations):
-        """Test translation key resolution and interpolation"""        print("🔑 Testing translation key resolution...")
+        """Test translation key resolution and interpolation"""
+        print("🔑 Testing translation key resolution...")
         
         # Test simple key resolution
         with patch.object(mock_translation_manager, 'translate', new_callable=AsyncMock) as mock_translate:
@@ -354,7 +366,8 @@ class TestMultilingualInterfaceSwitching:
     
     @pytest.mark.asyncio
     async def test_language_specific_formatting(self, mock_translation_manager):
-        """Test language-specific formatting (dates, numbers, currencies)"""        print("🔢 Testing language-specific formatting...")
+        """Test language-specific formatting (dates, numbers, currencies)"""
+        print("🔢 Testing language-specific formatting...")
         
         # Test date formatting
         with patch.object(mock_translation_manager, 'format_date', new_callable=AsyncMock) as mock_date:
@@ -396,7 +409,8 @@ class TestMultilingualInterfaceSwitching:
     
     @pytest.mark.asyncio
     async def test_multilingual_search_functionality(self, mock_translation_manager):
-        """Test multilingual search and content filtering"""        print("🔍 Testing multilingual search functionality...")
+        """Test multilingual search and content filtering"""
+        print("🔍 Testing multilingual search functionality...")
         
         # Test multilingual search
         with patch.object(mock_translation_manager, 'search_multilingual', new_callable=AsyncMock) as mock_search:
@@ -427,7 +441,8 @@ class TestMultilingualInterfaceSwitching:
     
     @pytest.mark.asyncio
     async def test_language_performance_metrics(self, mock_translation_manager):
-        """Test language switching performance and metrics"""        print("📊 Testing language performance metrics...")
+        """Test language switching performance and metrics"""
+        print("📊 Testing language performance metrics...")
         
         # Test performance monitoring
         with patch.object(mock_translation_manager, 'get_performance_metrics', new_callable=AsyncMock) as mock_metrics:

@@ -20,7 +20,8 @@ Les contrevenants seront poursuivis selon la loi allemande et internationale.
 • Security Expert : Cybersécurité & protection contenu
 • DevOps Engineer : Infrastructure cloud & déploiement
 • Audio/Video Specialist : Traitement multimédia avancé
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Union
 from dataclasses import dataclass, asdict
@@ -59,7 +60,8 @@ settings = get_settings()
 
 @dataclass
 class TwitchStreamData:
-    """Twitch stream data structure"""    stream_id: str
+    """Twitch stream data structure"""
+    stream_id: str
     user_id: str
     user_login: str
     user_name: str
@@ -88,7 +90,8 @@ class TwitchStreamData:
 
 @dataclass
 class TwitchChannelData:
-    """Twitch channel data structure"""    user_id: str
+    """Twitch channel data structure"""
+    user_id: str
     user_login: str
     user_name: str
     display_name: str
@@ -120,7 +123,8 @@ class TwitchChannelData:
 
 @dataclass
 class TwitchClipData:
-    """Twitch clip data structure"""    clip_id: str
+    """Twitch clip data structure"""
+    clip_id: str
     url: str
     embed_url: str
     broadcaster_id: str
@@ -147,7 +151,8 @@ class TwitchClipData:
 
 @dataclass
 class TwitchAnalyticsData:
-    """Twitch analytics data structure"""    channel_id: str
+    """Twitch analytics data structure"""
+    channel_id: str
     date_range: Dict[str, datetime]
     total_view_time: int
     unique_viewers: int
@@ -169,7 +174,8 @@ class TwitchAnalyticsData:
 
 
 class TwitchCrawlerEngine(BaseCrawlerEngine):
-    """    Advanced Twitch crawler engine with comprehensive API integration.
+    """
+    Advanced Twitch crawler engine with comprehensive API integration.
     
     Features:
     - Official Twitch API integration
@@ -180,7 +186,8 @@ class TwitchCrawlerEngine(BaseCrawlerEngine):
     - VOD content analysis
     - Subscriber and follower tracking
     - Revenue and monetization data
-    """    def __init__(self, 
+    """
+    def __init__(self, 
                  client_id: Optional[str] = None,
                  client_secret: Optional[str] = None,
                  access_token: Optional[str] = None,
@@ -188,7 +195,8 @@ class TwitchCrawlerEngine(BaseCrawlerEngine):
                  monitor_chat: bool = False,
                  proxy_config: Optional[Dict] = None,
                  rate_limit_config: Optional[Dict] = None):
-        """        Initialize Twitch crawler engine.
+        """
+        Initialize Twitch crawler engine.
         
         Args:
             client_id: Twitch API client ID
@@ -198,7 +206,8 @@ class TwitchCrawlerEngine(BaseCrawlerEngine):
             monitor_chat: Whether to monitor chat messages
             proxy_config: Proxy configuration
             rate_limit_config: Rate limiting configuration
-        """        super().__init__()
+        """
+        super().__init__()
         
         # API Configuration
         self.client_id = client_id or settings.TWITCH_CLIENT_ID
@@ -233,7 +242,8 @@ class TwitchCrawlerEngine(BaseCrawlerEngine):
             self.proxy_manager = None
 
     async def authenticate(self) -> bool:
-        """Authenticate with Twitch API"""        try:
+        """Authenticate with Twitch API"""
+        try:
             # Initialize Twitch API client
             self.twitch = await Twitch(self.client_id, self.client_secret)
             
@@ -271,14 +281,16 @@ class TwitchCrawlerEngine(BaseCrawlerEngine):
             return False
 
     async def get_channel_info(self, channel_login: str) -> TwitchChannelData:
-        """        Get Twitch channel information.
+        """
+        Get Twitch channel information.
         
         Args:
             channel_login: Channel login name
         
         Returns:
             TwitchChannelData object
-        """        cache_key = f"channel_info_{channel_login}"
+        """
+        cache_key = f"channel_info_{channel_login}"
         cached_result = await self.cache_manager.get(cache_key)
         if cached_result:
             return TwitchChannelData(**cached_result)
@@ -371,7 +383,8 @@ class TwitchCrawlerEngine(BaseCrawlerEngine):
                               ended_at: Optional[datetime] = None,
                               is_featured: Optional[bool] = None,
                               limit: int = 100) -> List[TwitchClipData]:
-        """        Get clips from a Twitch channel.
+        """
+        Get clips from a Twitch channel.
         
         Args:
             channel_login: Channel login name
@@ -382,7 +395,8 @@ class TwitchCrawlerEngine(BaseCrawlerEngine):
         
         Returns:
             List of TwitchClipData objects
-        """        cache_key = f"channel_clips_{channel_login}_{started_at}_{ended_at}_{limit}"
+        """
+        cache_key = f"channel_clips_{channel_login}_{started_at}_{ended_at}_{limit}"
         cached_result = await self.cache_manager.get(cache_key)
         if cached_result:
             return [TwitchClipData(**clip) for clip in cached_result]
@@ -449,7 +463,8 @@ class TwitchCrawlerEngine(BaseCrawlerEngine):
                             query: str,
                             live_only: bool = False,
                             limit: int = 100) -> List[TwitchChannelData]:
-        """        Search for Twitch channels.
+        """
+        Search for Twitch channels.
         
         Args:
             query: Search query
@@ -458,7 +473,8 @@ class TwitchCrawlerEngine(BaseCrawlerEngine):
         
         Returns:
             List of TwitchChannelData objects
-        """        cache_key = f"search_channels_{hashlib.md5(query.encode()).hexdigest()}_{live_only}_{limit}"
+        """
+        cache_key = f"search_channels_{hashlib.md5(query.encode()).hexdigest()}_{live_only}_{limit}"
         cached_result = await self.cache_manager.get(cache_key)
         if cached_result:
             return [TwitchChannelData(**channel) for channel in cached_result]
@@ -520,14 +536,16 @@ class TwitchCrawlerEngine(BaseCrawlerEngine):
         return channels
 
     async def get_top_games(self, limit: int = 100) -> List[Dict[str, Any]]:
-        """        Get top games on Twitch.
+        """
+        Get top games on Twitch.
         
         Args:
             limit: Maximum number of games to return
         
         Returns:
             List of game dictionaries
-        """        cache_key = f"top_games_{limit}"
+        """
+        cache_key = f"top_games_{limit}"
         cached_result = await self.cache_manager.get(cache_key)
         if cached_result:
             return cached_result
@@ -559,7 +577,8 @@ class TwitchCrawlerEngine(BaseCrawlerEngine):
                             channel_logins: List[str],
                             keywords: List[str],
                             check_interval: int = 300) -> AsyncGenerator[Dict[str, Any], None]:
-        """        Monitor Twitch streams for content matches.
+        """
+        Monitor Twitch streams for content matches.
         
         Args:
             channel_logins: List of channel login names to monitor
@@ -568,7 +587,8 @@ class TwitchCrawlerEngine(BaseCrawlerEngine):
         
         Yields:
             Dictionary containing monitoring results
-        """        logger.info(f"Starting Twitch stream monitoring for {len(channel_logins)} channels")
+        """
+        logger.info(f"Starting Twitch stream monitoring for {len(channel_logins)} channels")
         
         while True:
             for channel_login in channel_logins:
@@ -615,7 +635,8 @@ class TwitchCrawlerEngine(BaseCrawlerEngine):
                           channel_logins: List[str],
                           keywords: List[str],
                           check_interval: int = 600) -> AsyncGenerator[Dict[str, Any], None]:
-        """        Monitor Twitch clips for content matches.
+        """
+        Monitor Twitch clips for content matches.
         
         Args:
             channel_logins: List of channel login names to monitor
@@ -624,7 +645,8 @@ class TwitchCrawlerEngine(BaseCrawlerEngine):
         
         Yields:
             Dictionary containing monitoring results
-        """        logger.info(f"Starting Twitch clip monitoring for {len(channel_logins)} channels")
+        """
+        logger.info(f"Starting Twitch clip monitoring for {len(channel_logins)} channels")
         
         last_check = {}
         
@@ -680,7 +702,8 @@ class TwitchCrawlerEngine(BaseCrawlerEngine):
                                   channel_login: str,
                                   started_at: datetime,
                                   ended_at: datetime) -> TwitchAnalyticsData:
-        """        Get analytics data for a Twitch channel.
+        """
+        Get analytics data for a Twitch channel.
         
         Args:
             channel_login: Channel login name
@@ -689,7 +712,8 @@ class TwitchCrawlerEngine(BaseCrawlerEngine):
         
         Returns:
             TwitchAnalyticsData object
-        """        if not self.user_token:
+        """
+        if not self.user_token:
             raise AuthenticationError("User token required for analytics")
 
         try:
@@ -733,13 +757,15 @@ class TwitchCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Twitch analytics retrieval failed: {e}")
 
     async def close(self):
-        """Close Twitch API connections"""        if self.chat:
+        """Close Twitch API connections"""
+        if self.chat:
             await self.chat.stop()
         if self.twitch:
             await self.twitch.close()
 
     def __del__(self):
-        """Cleanup resources"""        try:
+        """Cleanup resources"""
+        try:
             if self.twitch or self.chat:
                 asyncio.create_task(self.close())
         except:

@@ -21,7 +21,8 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -38,7 +39,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class SnapchatStory:
-    """Snapchat story information"""    story_id: str
+    """Snapchat story information"""
+    story_id: str
     username: str
     display_name: str
     user_id: str
@@ -66,7 +68,8 @@ class SnapchatStory:
 
 @dataclass
 class SnapchatUser:
-    """Snapchat user information"""    user_id: str
+    """Snapchat user information"""
+    user_id: str
     username: str
     display_name: str
     bitmoji_url: Optional[str]
@@ -96,7 +99,8 @@ class SnapchatUser:
 
 @dataclass
 class SnapchatDiscover:
-    """Snapchat Discover content information"""    discover_id: str
+    """Snapchat Discover content information"""
+    discover_id: str
     publisher: str
     publisher_id: str
     title: str
@@ -123,7 +127,8 @@ class SnapchatDiscover:
 
 @dataclass
 class SnapchatSnapMap:
-    """Snapchat Snap Map location data"""    snap_id: str
+    """Snapchat Snap Map location data"""
+    snap_id: str
     location: Dict[str, float]  # lat, lng
     address: Optional[str]
     city: str
@@ -144,7 +149,8 @@ class SnapchatSnapMap:
 
 
 class SnapchatCrawler(PlatformCrawler):
-    """    Advanced Snapchat crawler for ephemeral content monitoring.
+    """
+    Advanced Snapchat crawler for ephemeral content monitoring.
     
     Features:
     - Story content tracking
@@ -157,7 +163,8 @@ class SnapchatCrawler(PlatformCrawler):
     - Location-based discovery
     - Real-time content monitoring
     - Creator and publisher tracking
-    """    
+    """
+    
     def __init__(self, config: CrawlerConfig, vector_matcher=None, 
                  username: str = None, password: str = None):
         super().__init__(config, vector_matcher)
@@ -198,7 +205,8 @@ class SnapchatCrawler(PlatformCrawler):
         self._setup_session_headers()
     
     def _setup_session_headers(self):
-        """Setup Snapchat-specific headers"""        self.session_headers.update({
+        """Setup Snapchat-specific headers"""
+        self.session_headers.update({
             'Accept': 'application/json, text/plain, */*',
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'en-US,en;q=0.9',
@@ -212,7 +220,8 @@ class SnapchatCrawler(PlatformCrawler):
     
     async def search_content(self, query: str, content_type: str = "stories", 
                            max_results: int = 50, location: Dict[str, float] = None) -> List[CrawlerResult]:
-        """        Search for content on Snapchat.
+        """
+        Search for content on Snapchat.
         
         Args:
             query: Search query
@@ -222,7 +231,8 @@ class SnapchatCrawler(PlatformCrawler):
             
         Returns:
             List of crawler results
-        """        try:
+        """
+        try:
             await self._check_rate_limit()
             
             if content_type not in self.content_types:
@@ -240,7 +250,8 @@ class SnapchatCrawler(PlatformCrawler):
             return []
     
     async def _crawl_stories(self, query: str, max_results: int, location: Dict[str, float] = None) -> List[CrawlerResult]:
-        """Crawl Snapchat stories"""        try:
+        """Crawl Snapchat stories"""
+        try:
             results = []
             
             # Note: Real Snapchat API access requires authentication and approval
@@ -302,7 +313,8 @@ class SnapchatCrawler(PlatformCrawler):
             return []
     
     async def _crawl_discover(self, query: str, max_results: int, location: Dict[str, float] = None) -> List[CrawlerResult]:
-        """Crawl Snapchat Discover content"""        try:
+        """Crawl Snapchat Discover content"""
+        try:
             results = []
             
             # Discover content is more accessible
@@ -355,7 +367,8 @@ class SnapchatCrawler(PlatformCrawler):
             return []
     
     async def _crawl_snapmap(self, query: str, max_results: int, location: Dict[str, float] = None) -> List[CrawlerResult]:
-        """Crawl Snapchat Snap Map content"""        try:
+        """Crawl Snapchat Snap Map content"""
+        try:
             results = []
             
             if not location:
@@ -412,7 +425,8 @@ class SnapchatCrawler(PlatformCrawler):
             return []
     
     async def _crawl_users(self, query: str, max_results: int, location: Dict[str, float] = None) -> List[CrawlerResult]:
-        """Crawl Snapchat users"""        try:
+        """Crawl Snapchat users"""
+        try:
             results = []
             
             # User search (limited without authentication)
@@ -458,7 +472,8 @@ class SnapchatCrawler(PlatformCrawler):
             return []
     
     async def _crawl_search(self, query: str, max_results: int, location: Dict[str, float] = None) -> List[CrawlerResult]:
-        """General Snapchat search"""        try:
+        """General Snapchat search"""
+        try:
             results = []
             
             # Search across different content types
@@ -477,7 +492,8 @@ class SnapchatCrawler(PlatformCrawler):
             return []
     
     async def _crawl_trending(self, query: str, max_results: int, location: Dict[str, float] = None) -> List[CrawlerResult]:
-        """Crawl trending content"""        try:
+        """Crawl trending content"""
+        try:
             results = []
             
             # Get trending Discover content
@@ -513,7 +529,8 @@ class SnapchatCrawler(PlatformCrawler):
             return []
     
     async def _crawl_publishers(self, query: str, max_results: int, location: Dict[str, float] = None) -> List[CrawlerResult]:
-        """Crawl Snapchat publishers"""        try:
+        """Crawl Snapchat publishers"""
+        try:
             results = []
             
             # Get publisher content
@@ -545,7 +562,8 @@ class SnapchatCrawler(PlatformCrawler):
             return []
     
     async def _crawl_events(self, query: str, max_results: int, location: Dict[str, float] = None) -> List[CrawlerResult]:
-        """Crawl Snapchat events"""        try:
+        """Crawl Snapchat events"""
+        try:
             results = []
             
             # Events are location-based
@@ -587,7 +605,8 @@ class SnapchatCrawler(PlatformCrawler):
     # Mock data generators (for demonstration - real implementation would use actual API)
     
     async def _get_mock_stories(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock story data"""        stories = []
+        """Generate mock story data"""
+        stories = []
         for i in range(min(max_results, 10)):
             stories.append({
                 'id': f'story_{i}',
@@ -605,7 +624,8 @@ class SnapchatCrawler(PlatformCrawler):
         return stories
     
     async def _get_mock_discover(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock Discover data"""        publishers = ['CNN', 'BuzzFeed', 'ESPN', 'Cosmopolitan', 'National Geographic']
+        """Generate mock Discover data"""
+        publishers = ['CNN', 'BuzzFeed', 'ESPN', 'Cosmopolitan', 'National Geographic']
         discover_content = []
         
         for i in range(min(max_results, 20)):
@@ -625,7 +645,8 @@ class SnapchatCrawler(PlatformCrawler):
         return discover_content
     
     async def _get_mock_snapmap(self, location: Dict[str, float], max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock Snap Map data"""        snaps = []
+        """Generate mock Snap Map data"""
+        snaps = []
         base_lat = location['lat']
         base_lng = location['lng']
         
@@ -650,7 +671,8 @@ class SnapchatCrawler(PlatformCrawler):
         return snaps
     
     async def _get_mock_users(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock user data"""        users = []
+        """Generate mock user data"""
+        users = []
         for i in range(min(max_results, 10)):
             users.append({
                 'id': f'user_{i}',
@@ -665,10 +687,12 @@ class SnapchatCrawler(PlatformCrawler):
         return users
     
     async def _get_trending_discover(self, max_results: int) -> List[Dict[str, Any]]:
-        """Get trending Discover content"""        return await self._get_mock_discover('trending', max_results)
+        """Get trending Discover content"""
+        return await self._get_mock_discover('trending', max_results)
     
     async def _get_mock_publishers(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock publisher data"""        publishers = []
+        """Generate mock publisher data"""
+        publishers = []
         publisher_names = ['CNN', 'BBC', 'ESPN', 'BuzzFeed', 'Vogue', 'NatGeo']
         
         for i, name in enumerate(publisher_names[:max_results]):
@@ -687,7 +711,8 @@ class SnapchatCrawler(PlatformCrawler):
         return publishers
     
     async def _get_mock_events(self, location: Dict[str, float], max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock event data"""        events = []
+        """Generate mock event data"""
+        events = []
         event_names = ['Music Festival', 'Sports Game', 'Art Exhibition', 'Food Fair', 'Tech Conference']
         
         for i, name in enumerate(event_names[:max_results]):
@@ -710,7 +735,8 @@ class SnapchatCrawler(PlatformCrawler):
     # Parser methods
     
     async def _parse_story_data(self, story_data: Dict[str, Any]) -> Optional[SnapchatStory]:
-        """Parse story data"""        try:
+        """Parse story data"""
+        try:
             timestamp = story_data.get('timestamp')
             if isinstance(timestamp, str):
                 timestamp = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
@@ -755,7 +781,8 @@ class SnapchatCrawler(PlatformCrawler):
             return None
     
     async def _parse_discover_data(self, discover_data: Dict[str, Any]) -> Optional[SnapchatDiscover]:
-        """Parse Discover data"""        try:
+        """Parse Discover data"""
+        try:
             published_at = discover_data.get('published_at')
             if isinstance(published_at, str):
                 published_at = datetime.fromisoformat(published_at.replace('Z', '+00:00'))
@@ -797,7 +824,8 @@ class SnapchatCrawler(PlatformCrawler):
             return None
     
     async def _parse_snapmap_data(self, snap_data: Dict[str, Any]) -> Optional[SnapchatSnapMap]:
-        """Parse Snap Map data"""        try:
+        """Parse Snap Map data"""
+        try:
             timestamp = snap_data.get('timestamp')
             if isinstance(timestamp, str):
                 timestamp = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
@@ -834,7 +862,8 @@ class SnapchatCrawler(PlatformCrawler):
             return None
     
     async def _parse_user_data(self, user_data: Dict[str, Any]) -> Optional[SnapchatUser]:
-        """Parse user data"""        try:
+        """Parse user data"""
+        try:
             created_at = user_data.get('created_at')
             if isinstance(created_at, str):
                 created_at = datetime.fromisoformat(created_at.replace('Z', '+00:00'))
@@ -879,7 +908,8 @@ class SnapchatCrawler(PlatformCrawler):
             return None
     
     def _get_region_from_location(self, location: Dict[str, float]) -> str:
-        """Get region code from location coordinates"""        # Simplified region detection
+        """Get region code from location coordinates"""
+        # Simplified region detection
         lat = location.get('lat', 0)
         lng = location.get('lng', 0)
         
@@ -893,7 +923,8 @@ class SnapchatCrawler(PlatformCrawler):
             return 'GLOBAL'
     
     async def _check_rate_limit(self):
-        """Check and enforce rate limiting"""        try:
+        """Check and enforce rate limiting"""
+        try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
             
@@ -909,7 +940,8 @@ class SnapchatCrawler(PlatformCrawler):
             self.logger.error(f"Error in rate limiting: {str(e)}")
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Extract metadata from Snapchat content"""        try:
+        """Extract metadata from Snapchat content"""
+        try:
             # Parse Snapchat URL
             parsed_url = urlparse(url)
             path_parts = parsed_url.path.strip('/').split('/')
@@ -956,7 +988,8 @@ class SnapchatCrawler(PlatformCrawler):
             return {'error': str(e)}
     
     def get_platform_info(self) -> Dict[str, Any]:
-        """Get Snapchat platform information"""        return {
+        """Get Snapchat platform information"""
+        return {
             'platform_name': 'Snapchat',
             'base_url': self.base_url,
             'api_base_url': self.api_base_url,

@@ -11,7 +11,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import json
 import time
 import psutil
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 
 class HealthStatus(Enum):
-    """Health status levels"""    HEALTHY = "healthy"
+    """Health status levels"""
+    HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
     UNKNOWN = "unknown"
@@ -39,7 +41,8 @@ class HealthStatus(Enum):
 
 
 class ComponentType(Enum):
-    """System component types"""    DATABASE = "database"
+    """System component types"""
+    DATABASE = "database"
     CACHE = "cache"
     MESSAGE_QUEUE = "message_queue"
     STORAGE = "storage"
@@ -52,7 +55,8 @@ class ComponentType(Enum):
 
 @dataclass
 class HealthCheckResult:
-    """Health check result"""    component_name: str
+    """Health check result"""
+    component_name: str
     component_type: ComponentType
     status: HealthStatus
     response_time_ms: float
@@ -62,7 +66,8 @@ class HealthCheckResult:
     error: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             'component_name': self.component_name,
             'component_type': self.component_type.value,
             'status': self.status.value,
@@ -76,7 +81,8 @@ class HealthCheckResult:
 
 @dataclass
 class SystemHealthSummary:
-    """System health summary"""    overall_status: HealthStatus
+    """System health summary"""
+    overall_status: HealthStatus
     healthy_components: int
     warning_components: int
     critical_components: int
@@ -91,7 +97,8 @@ class SystemHealthSummary:
     details: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             'overall_status': self.overall_status.value,
             'healthy_components': self.healthy_components,
             'warning_components': self.warning_components,
@@ -109,9 +116,11 @@ class SystemHealthSummary:
 
 
 class BaseHealthCheck:
-    """Base class for health checks"""    
+    """Base class for health checks"""
+    
     def __init__(self, name: str, component_type: ComponentType, config: Optional[Dict[str, Any]] = None):
-        """Initialize health check"""        self.name = name
+        """Initialize health check"""
+        self.name = name
         self.component_type = component_type
         self.config = config or {}
         
@@ -121,7 +130,8 @@ class BaseHealthCheck:
         self.retry_delay = self.config.get('retry_delay', 1.0)
     
     async def check(self) -> HealthCheckResult:
-        """Perform health check"""        start_time = time.time()
+        """Perform health check"""
+        start_time = time.time()
         
         try:
             # Perform the actual health check
@@ -153,7 +163,8 @@ class BaseHealthCheck:
             )
     
     async def _perform_check(self) -> Dict[str, Any]:
-        """Perform the actual health check - basic implementation"""        # Default implementation for basic health checks
+        """Perform the actual health check - basic implementation"""
+        # Default implementation for basic health checks
         return {
             'status': HealthStatus.HEALTHY,
             'message': f'Health check completed for {self.name}',
@@ -168,16 +179,19 @@ class BaseHealthCheck:
 
 
 class DatabaseHealthCheck(BaseHealthCheck):
-    """Database health check"""    
+    """Database health check"""
+    
     def __init__(self, name: str, config: Dict[str, Any]):
-        """Initialize database health check"""        super().__init__(name, ComponentType.DATABASE, config)
+        """Initialize database health check"""
+        super().__init__(name, ComponentType.DATABASE, config)
         
         self.connection_string = config.get('connection_string')
         self.database_type = config.get('database_type', 'postgresql')
         self.test_query = config.get('test_query', 'SELECT 1')
     
     async def _perform_check(self) -> Dict[str, Any]:
-        """Check database connectivity and performance"""        try:
+        """Check database connectivity and performance"""
+        try:
             # Simulate database connection check
             # In production, this would use actual database drivers
             
@@ -225,16 +239,19 @@ class DatabaseHealthCheck(BaseHealthCheck):
 
 
 class CacheHealthCheck(BaseHealthCheck):
-    """Cache health check (Redis/Memcached)"""    
+    """Cache health check (Redis/Memcached)"""
+    
     def __init__(self, name: str, config: Dict[str, Any]):
-        """Initialize cache health check"""        super().__init__(name, ComponentType.CACHE, config)
+        """Initialize cache health check"""
+        super().__init__(name, ComponentType.CACHE, config)
         
         self.host = config.get('host', 'localhost')
         self.port = config.get('port', 6379)
         self.cache_type = config.get('cache_type', 'redis')
     
     async def _perform_check(self) -> Dict[str, Any]:
-        """Check cache connectivity and performance"""        try:
+        """Check cache connectivity and performance"""
+        try:
             # Simulate cache connection check
             connection_start = time.time()
             await asyncio.sleep(0.02)  # Simulate connection time
@@ -285,16 +302,19 @@ class CacheHealthCheck(BaseHealthCheck):
 
 
 class StorageHealthCheck(BaseHealthCheck):
-    """Storage health check"""    
+    """Storage health check"""
+    
     def __init__(self, name: str, config: Dict[str, Any]):
-        """Initialize storage health check"""        super().__init__(name, ComponentType.STORAGE, config)
+        """Initialize storage health check"""
+        super().__init__(name, ComponentType.STORAGE, config)
         
         self.storage_path = config.get('storage_path', '/')
         self.warning_threshold = config.get('warning_threshold', 80)  # 80% usage
         self.critical_threshold = config.get('critical_threshold', 90)  # 90% usage
     
     async def _perform_check(self) -> Dict[str, Any]:
-        """Check storage capacity and performance"""        try:
+        """Check storage capacity and performance"""
+        try:
             # Get disk usage statistics
             try:
                 disk_usage = psutil.disk_usage(self.storage_path)
@@ -351,9 +371,11 @@ class StorageHealthCheck(BaseHealthCheck):
 
 
 class APIServiceHealthCheck(BaseHealthCheck):
-    """API service health check"""    
+    """API service health check"""
+    
     def __init__(self, name: str, config: Dict[str, Any]):
-        """Initialize API service health check"""        super().__init__(name, ComponentType.API_SERVICE, config)
+        """Initialize API service health check"""
+        super().__init__(name, ComponentType.API_SERVICE, config)
         
         self.endpoint_url = config.get('endpoint_url')
         self.expected_status = config.get('expected_status', 200)
@@ -361,7 +383,8 @@ class APIServiceHealthCheck(BaseHealthCheck):
         self.headers = config.get('headers', {})
     
     async def _perform_check(self) -> Dict[str, Any]:
-        """Check API service availability and response"""        try:
+        """Check API service availability and response"""
+        try:
             if not self.endpoint_url:
                 return {
                     'status': HealthStatus.CRITICAL,
@@ -420,9 +443,11 @@ class APIServiceHealthCheck(BaseHealthCheck):
 
 
 class AIModelHealthCheck(BaseHealthCheck):
-    """AI model health check"""    
+    """AI model health check"""
+    
     def __init__(self, name: str, config: Dict[str, Any]):
-        """Initialize AI model health check"""        super().__init__(name, ComponentType.AI_MODEL, config)
+        """Initialize AI model health check"""
+        super().__init__(name, ComponentType.AI_MODEL, config)
         
         self.model_name = config.get('model_name')
         self.model_endpoint = config.get('model_endpoint')
@@ -430,7 +455,8 @@ class AIModelHealthCheck(BaseHealthCheck):
         self.expected_accuracy = config.get('expected_accuracy', 0.9)
     
     async def _perform_check(self) -> Dict[str, Any]:
-        """Check AI model availability and performance"""        try:
+        """Check AI model availability and performance"""
+        try:
             if not self.model_endpoint:
                 return {
                     'status': HealthStatus.CRITICAL,
@@ -481,9 +507,11 @@ class AIModelHealthCheck(BaseHealthCheck):
 
 
 class SystemResourceHealthCheck(BaseHealthCheck):
-    """System resource health check"""    
+    """System resource health check"""
+    
     def __init__(self, name: str, config: Dict[str, Any]):
-        """Initialize system resource health check"""        super().__init__(name, ComponentType.SYSTEM_RESOURCE, config)
+        """Initialize system resource health check"""
+        super().__init__(name, ComponentType.SYSTEM_RESOURCE, config)
         
         self.cpu_warning_threshold = config.get('cpu_warning', 70)
         self.cpu_critical_threshold = config.get('cpu_critical', 90)
@@ -491,7 +519,8 @@ class SystemResourceHealthCheck(BaseHealthCheck):
         self.memory_critical_threshold = config.get('memory_critical', 95)
     
     async def _perform_check(self) -> Dict[str, Any]:
-        """Check system resources (CPU, Memory, etc.)"""        try:
+        """Check system resources (CPU, Memory, etc.)"""
+        try:
             # Get system metrics
             try:
                 cpu_percent = psutil.cpu_percent(interval=1)
@@ -560,15 +589,18 @@ class SystemResourceHealthCheck(BaseHealthCheck):
 
 
 class NetworkHealthCheck(BaseHealthCheck):
-    """Network connectivity health check"""    
+    """Network connectivity health check"""
+    
     def __init__(self, name: str, config: Dict[str, Any]):
-        """Initialize network health check"""        super().__init__(name, ComponentType.NETWORK, config)
+        """Initialize network health check"""
+        super().__init__(name, ComponentType.NETWORK, config)
         
         self.test_hosts = config.get('test_hosts', ['google.com', '8.8.8.8'])
         self.ping_timeout = config.get('ping_timeout', 3.0)
     
     async def _perform_check(self) -> Dict[str, Any]:
-        """Check network connectivity"""        try:
+        """Check network connectivity"""
+        try:
             connectivity_results = []
             total_tests = len(self.test_hosts)
             successful_tests = 0
@@ -627,7 +659,8 @@ class NetworkHealthCheck(BaseHealthCheck):
 
 
 class HealthMonitor:
-    """    Main health monitoring system
+    """
+    Main health monitoring system
     
     Features:
     - Multiple health check types
@@ -636,9 +669,11 @@ class HealthMonitor:
     - Alert integration
     - Health history tracking
     - Custom health checks
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize health monitor"""        self.config = config or {}
+        """Initialize health monitor"""
+        self.config = config or {}
         
         # Health checks
         self.health_checks: Dict[str, BaseHealthCheck] = {}
@@ -664,7 +699,8 @@ class HealthMonitor:
         self._lock = threading.Lock()
     
     def _get_system_info(self) -> Dict[str, Any]:
-        """Get system information"""        try:
+        """Get system information"""
+        try:
             return {
                 'platform': platform.system(),
                 'platform_release': platform.release(),
@@ -680,7 +716,8 @@ class HealthMonitor:
             return {'error': str(e)}
     
     def register_health_check(self, health_check: BaseHealthCheck):
-        """Register a health check"""        try:
+        """Register a health check"""
+        try:
             with self._lock:
                 self.health_checks[health_check.name] = health_check
                 logger.info(f"Registered health check: {health_check.name}")
@@ -689,7 +726,8 @@ class HealthMonitor:
             logger.error(f"Failed to register health check {health_check.name}: {str(e)}")
     
     def unregister_health_check(self, name: str):
-        """Unregister a health check"""        try:
+        """Unregister a health check"""
+        try:
             with self._lock:
                 if name in self.health_checks:
                     del self.health_checks[name]
@@ -701,7 +739,8 @@ class HealthMonitor:
             logger.error(f"Failed to unregister health check {name}: {str(e)}")
     
     async def start_monitoring(self):
-        """Start health monitoring"""        try:
+        """Start health monitoring"""
+        try:
             logger.info("Starting health monitoring")
             self.is_monitoring = True
             self.monitoring_task = asyncio.create_task(self._monitoring_loop())
@@ -710,7 +749,8 @@ class HealthMonitor:
             logger.error(f"Failed to start health monitoring: {str(e)}")
     
     async def stop_monitoring(self):
-        """Stop health monitoring"""        try:
+        """Stop health monitoring"""
+        try:
             logger.info("Stopping health monitoring")
             self.is_monitoring = False
             
@@ -725,7 +765,8 @@ class HealthMonitor:
             logger.error(f"Failed to stop health monitoring: {str(e)}")
     
     async def _monitoring_loop(self):
-        """Main monitoring loop"""        while self.is_monitoring:
+        """Main monitoring loop"""
+        while self.is_monitoring:
             try:
                 # Perform health checks
                 await self.perform_health_checks()
@@ -740,7 +781,8 @@ class HealthMonitor:
                 await asyncio.sleep(10)  # Brief pause on error
     
     async def perform_health_checks(self) -> SystemHealthSummary:
-        """Perform all registered health checks"""        try:
+        """Perform all registered health checks"""
+        try:
             check_start_time = datetime.now(timezone.utc)
             results = []
             
@@ -833,7 +875,8 @@ class HealthMonitor:
     
     def _create_health_summary(self, results: List[HealthCheckResult], 
                               check_time: datetime) -> SystemHealthSummary:
-        """Create system health summary from check results"""        try:
+        """Create system health summary from check results"""
+        try:
             # Count status types
             status_counts = {
                 HealthStatus.HEALTHY: 0,
@@ -922,7 +965,8 @@ class HealthMonitor:
             )
     
     async def get_health_status(self) -> Optional[SystemHealthSummary]:
-        """Get current health status"""        try:
+        """Get current health status"""
+        try:
             if not self.health_history:
                 # Perform one-time health check
                 return await self.perform_health_checks()
@@ -934,7 +978,8 @@ class HealthMonitor:
             return None
     
     def get_component_health(self, component_name: str) -> Optional[HealthCheckResult]:
-        """Get health status for specific component"""        try:
+        """Get health status for specific component"""
+        try:
             if component_name in self.component_history:
                 history = self.component_history[component_name]
                 if history:
@@ -947,7 +992,8 @@ class HealthMonitor:
             return None
     
     def get_health_history(self, limit: int = 50) -> List[SystemHealthSummary]:
-        """Get health check history"""        try:
+        """Get health check history"""
+        try:
             history_list = list(self.health_history)
             return history_list[-limit:] if limit else history_list
             
@@ -956,7 +1002,8 @@ class HealthMonitor:
             return []
     
     def get_component_history(self, component_name: str, limit: int = 20) -> List[HealthCheckResult]:
-        """Get health history for specific component"""        try:
+        """Get health history for specific component"""
+        try:
             if component_name in self.component_history:
                 history_list = list(self.component_history[component_name])
                 return history_list[-limit:] if limit else history_list
@@ -968,7 +1015,8 @@ class HealthMonitor:
             return []
     
     def get_monitoring_stats(self) -> Dict[str, Any]:
-        """Get monitoring statistics"""        try:
+        """Get monitoring statistics"""
+        try:
             current_time = datetime.now(timezone.utc)
             
             stats = {
@@ -1010,7 +1058,8 @@ class HealthMonitor:
             return {'error': str(e)}
     
     def create_standard_health_checks(self) -> Dict[str, BaseHealthCheck]:
-        """Create standard health checks for common components"""        try:
+        """Create standard health checks for common components"""
+        try:
             standard_checks = {}
             
             # Database health check
@@ -1054,11 +1103,13 @@ class HealthMonitor:
 
 # Health check factory for easy setup
 class HealthCheckFactory:
-    """Factory for creating health checks"""    
+    """Factory for creating health checks"""
+    
     @staticmethod
     def create_database_check(name: str, connection_string: str, 
                             database_type: str = 'postgresql') -> DatabaseHealthCheck:
-        """Create database health check"""        config = {
+        """Create database health check"""
+        config = {
             'connection_string': connection_string,
             'database_type': database_type
         }
@@ -1067,7 +1118,8 @@ class HealthCheckFactory:
     @staticmethod
     def create_cache_check(name: str, host: str, port: int, 
                          cache_type: str = 'redis') -> CacheHealthCheck:
-        """Create cache health check"""        config = {
+        """Create cache health check"""
+        config = {
             'host': host,
             'port': port,
             'cache_type': cache_type
@@ -1077,7 +1129,8 @@ class HealthCheckFactory:
     @staticmethod
     def create_api_check(name: str, endpoint_url: str, 
                         expected_status: int = 200) -> APIServiceHealthCheck:
-        """Create API service health check"""        config = {
+        """Create API service health check"""
+        config = {
             'endpoint_url': endpoint_url,
             'expected_status': expected_status
         }
@@ -1087,7 +1140,8 @@ class HealthCheckFactory:
     def create_storage_check(name: str, storage_path: str,
                            warning_threshold: int = 80,
                            critical_threshold: int = 90) -> StorageHealthCheck:
-        """Create storage health check"""        config = {
+        """Create storage health check"""
+        config = {
             'storage_path': storage_path,
             'warning_threshold': warning_threshold,
             'critical_threshold': critical_threshold
@@ -1097,7 +1151,8 @@ class HealthCheckFactory:
     @staticmethod
     def create_ai_model_check(name: str, model_endpoint: str,
                             expected_accuracy: float = 0.9) -> AIModelHealthCheck:
-        """Create AI model health check"""        config = {
+        """Create AI model health check"""
+        config = {
             'model_name': name,
             'model_endpoint': model_endpoint,
             'expected_accuracy': expected_accuracy
@@ -1110,7 +1165,8 @@ class HealthCheckFactory:
                                     cpu_critical: int = 90,
                                     memory_warning: int = 80,
                                     memory_critical: int = 95) -> SystemResourceHealthCheck:
-        """Create system resources health check"""        config = {
+        """Create system resources health check"""
+        config = {
             'cpu_warning': cpu_warning,
             'cpu_critical': cpu_critical,
             'memory_warning': memory_warning,
@@ -1121,7 +1177,8 @@ class HealthCheckFactory:
     @staticmethod
     def create_network_check(name: str = 'network',
                            test_hosts: Optional[List[str]] = None) -> NetworkHealthCheck:
-        """Create network health check"""        if test_hosts is None:
+        """Create network health check"""
+        if test_hosts is None:
             test_hosts = ['google.com', '8.8.8.8']
         
         config = {

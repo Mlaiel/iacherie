@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -22,7 +23,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -51,9 +53,11 @@ logger = logging.getLogger(__name__)
 
 
 class TestWorkflowDefinition:
-    """Test workflow definition and structure"""    
+    """Test workflow definition and structure"""
+    
     def test_workflow_creation(self):
-        """Test creating workflow definitions"""        workflow = WorkflowDefinition(
+        """Test creating workflow definitions"""
+        workflow = WorkflowDefinition(
             workflow_id="test_workflow_001",
             name="Test Content Creation Workflow",
             description="Complete content creation and publishing pipeline",
@@ -67,7 +71,8 @@ class TestWorkflowDefinition:
         assert len(workflow.tasks) == 0
     
     def test_task_node_creation(self):
-        """Test creating task nodes"""        task = TaskNode(
+        """Test creating task nodes"""
+        task = TaskNode(
             task_id="generate_content",
             task_type="content_generation",
             agent_type="ContentCreatorAgent",
@@ -87,7 +92,8 @@ class TestWorkflowDefinition:
         assert task.status == TaskStatus.PENDING
     
     def test_workflow_task_addition(self):
-        """Test adding tasks to workflow"""        workflow = WorkflowDefinition(
+        """Test adding tasks to workflow"""
+        workflow = WorkflowDefinition(
             workflow_id="content_workflow",
             name="Content Workflow"
         )
@@ -123,7 +129,8 @@ class TestWorkflowDefinition:
         assert workflow.get_task("publish_content").dependencies == ["optimize_content"]
     
     def test_conditional_branching(self):
-        """Test conditional workflow branching"""        workflow = WorkflowDefinition(
+        """Test conditional workflow branching"""
+        workflow = WorkflowDefinition(
             workflow_id="conditional_workflow",
             name="Conditional Workflow"
         )
@@ -172,7 +179,8 @@ class TestWorkflowDefinition:
         assert len(workflow.conditional_branches["analyze_content"]) == 2
     
     def test_parallel_execution(self):
-        """Test parallel task execution definition"""        workflow = WorkflowDefinition(
+        """Test parallel task execution definition"""
+        workflow = WorkflowDefinition(
             workflow_id="parallel_workflow",
             name="Parallel Workflow"
         )
@@ -226,7 +234,8 @@ class TestWorkflowDefinition:
         assert len(workflow.parallel_executions["parallel_optimization"].tasks) == 3
     
     def test_workflow_validation(self):
-        """Test workflow definition validation"""        workflow = WorkflowDefinition(
+        """Test workflow definition validation"""
+        workflow = WorkflowDefinition(
             workflow_id="validation_workflow",
             name="Validation Test Workflow"
         )
@@ -255,10 +264,12 @@ class TestWorkflowDefinition:
 
 
 class TestWorkflowEngine:
-    """Test workflow engine functionality"""    
+    """Test workflow engine functionality"""
+    
     @pytest.fixture
     async def workflow_engine(self) -> WorkflowEngine:
-        """Create workflow engine for testing"""        config = WorkflowConfig(
+        """Create workflow engine for testing"""
+        config = WorkflowConfig(
             max_concurrent_workflows=10,
             max_concurrent_tasks=20,
             default_timeout=300,
@@ -274,7 +285,8 @@ class TestWorkflowEngine:
     
     @pytest.fixture
     def sample_content_workflow(self) -> WorkflowDefinition:
-        """Create sample content creation workflow"""        workflow = WorkflowDefinition(
+        """Create sample content creation workflow"""
+        workflow = WorkflowDefinition(
             workflow_id="sample_content_workflow",
             name="Sample Content Creation Workflow",
             description="End-to-end content creation and publishing"
@@ -322,7 +334,8 @@ class TestWorkflowEngine:
         return workflow
     
     async def test_engine_initialization(self):
-        """Test workflow engine initialization"""        config = WorkflowConfig()
+        """Test workflow engine initialization"""
+        config = WorkflowConfig()
         engine = WorkflowEngine(config)
         
         assert not engine.initialized
@@ -335,7 +348,8 @@ class TestWorkflowEngine:
         assert not engine.initialized
     
     async def test_workflow_registration(self, workflow_engine, sample_content_workflow):
-        """Test workflow registration"""        # Register workflow
+        """Test workflow registration"""
+        # Register workflow
         registration_result = await workflow_engine.register_workflow(sample_content_workflow)
         
         assert registration_result["success"] is True
@@ -351,7 +365,8 @@ class TestWorkflowEngine:
         assert workflow_details.name == sample_content_workflow.name
     
     async def test_workflow_execution(self, workflow_engine, sample_content_workflow):
-        """Test workflow execution"""        # Register workflow
+        """Test workflow execution"""
+        # Register workflow
         await workflow_engine.register_workflow(sample_content_workflow)
         
         # Start execution
@@ -396,7 +411,8 @@ class TestWorkflowEngine:
             assert final_status["progress"] == 100
     
     async def test_parallel_task_execution(self, workflow_engine):
-        """Test parallel task execution"""        # Create workflow with parallel tasks
+        """Test parallel task execution"""
+        # Create workflow with parallel tasks
         workflow = WorkflowDefinition(
             workflow_id="parallel_test_workflow",
             name="Parallel Execution Test"
@@ -484,7 +500,8 @@ class TestWorkflowEngine:
         assert parallel_tasks_started
     
     async def test_conditional_workflow_execution(self, workflow_engine):
-        """Test conditional workflow execution"""        # Create workflow with conditional branches
+        """Test conditional workflow execution"""
+        # Create workflow with conditional branches
         workflow = WorkflowDefinition(
             workflow_id="conditional_test_workflow",
             name="Conditional Execution Test"
@@ -563,7 +580,8 @@ class TestWorkflowEngine:
         assert condition_evaluated
     
     async def test_workflow_error_handling(self, workflow_engine):
-        """Test workflow error handling and recovery"""        # Create workflow with failing task
+        """Test workflow error handling and recovery"""
+        # Create workflow with failing task
         workflow = WorkflowDefinition(
             workflow_id="error_test_workflow",
             name="Error Handling Test"
@@ -637,7 +655,8 @@ class TestWorkflowEngine:
         assert recovery_attempted
     
     async def test_workflow_pause_resume(self, workflow_engine, sample_content_workflow):
-        """Test workflow pause and resume functionality"""        # Register and start workflow
+        """Test workflow pause and resume functionality"""
+        # Register and start workflow
         await workflow_engine.register_workflow(sample_content_workflow)
         
         execution_result = await workflow_engine.start_workflow_execution({
@@ -667,7 +686,8 @@ class TestWorkflowEngine:
         assert status["status"] in [WorkflowStatus.RUNNING, WorkflowStatus.COMPLETED]
     
     async def test_workflow_cancellation(self, workflow_engine, sample_content_workflow):
-        """Test workflow cancellation"""        # Register and start workflow
+        """Test workflow cancellation"""
+        # Register and start workflow
         await workflow_engine.register_workflow(sample_content_workflow)
         
         execution_result = await workflow_engine.start_workflow_execution({
@@ -692,7 +712,8 @@ class TestWorkflowEngine:
         assert "cancellation_reason" in status
     
     async def test_concurrent_workflow_executions(self, workflow_engine, sample_content_workflow):
-        """Test concurrent workflow executions"""        # Register workflow
+        """Test concurrent workflow executions"""
+        # Register workflow
         await workflow_engine.register_workflow(sample_content_workflow)
         
         # Start multiple concurrent executions
@@ -737,7 +758,8 @@ class TestWorkflowEngine:
         assert completed_executions >= len(execution_ids) * 0.8  # Allow for some failures
     
     async def test_workflow_metrics(self, workflow_engine, sample_content_workflow):
-        """Test workflow execution metrics"""        # Register and execute workflow
+        """Test workflow execution metrics"""
+        # Register and execute workflow
         await workflow_engine.register_workflow(sample_content_workflow)
         
         execution_result = await workflow_engine.start_workflow_execution({
@@ -774,7 +796,8 @@ class TestWorkflowEngine:
     
     @pytest.mark.performance
     async def test_workflow_performance(self, workflow_engine, sample_content_workflow, assert_performance):
-        """Test workflow execution performance"""        # Register workflow
+        """Test workflow execution performance"""
+        # Register workflow
         await workflow_engine.register_workflow(sample_content_workflow)
         
         # Test workflow startup performance
@@ -793,7 +816,8 @@ class TestWorkflowEngine:
         assert_performance("workflow_startup", max_time=5.0)
     
     async def test_workflow_persistence(self, workflow_engine):
-        """Test workflow state persistence"""        # Create engine with persistence enabled
+        """Test workflow state persistence"""
+        # Create engine with persistence enabled
         persistent_config = WorkflowConfig(enable_persistence=True)
         persistent_engine = WorkflowEngine(persistent_config)
         await persistent_engine.initialize()
@@ -838,10 +862,12 @@ class TestWorkflowEngine:
 
 
 class TestWorkflowIntegration:
-    """Integration tests for complete workflow system"""    
+    """Integration tests for complete workflow system"""
+    
     @pytest.fixture
     async def integrated_workflow_system(self):
-        """Create integrated workflow system with all components"""        config = WorkflowConfig(
+        """Create integrated workflow system with all components"""
+        config = WorkflowConfig(
             max_concurrent_workflows=20,
             max_concurrent_tasks=50,
             enable_persistence=True,
@@ -857,7 +883,8 @@ class TestWorkflowIntegration:
         await engine.shutdown()
     
     async def test_end_to_end_content_workflow(self, integrated_workflow_system):
-        """Test complete end-to-end content creation workflow"""        engine = integrated_workflow_system["engine"]
+        """Test complete end-to-end content creation workflow"""
+        engine = integrated_workflow_system["engine"]
         
         # Create comprehensive content workflow
         workflow = WorkflowDefinition(

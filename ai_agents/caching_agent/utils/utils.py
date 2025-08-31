@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ATTENTION: Ce code fait partie de la propriété intellectuelle de Fahed Mlaiel.
 Toute reproduction, distribution, ou utilisation non autorisée est strictement interdite.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import hashlib
 import json
 import time
@@ -29,7 +30,8 @@ from .exceptions import CacheSerializationError, CacheCompressionError
 
 @dataclass
 class CacheKey:
-    """Structured cache key with metadata."""    
+    """Structured cache key with metadata."""
+    
     namespace: str
     identifier: str
     version: Optional[str] = None
@@ -37,13 +39,15 @@ class CacheKey:
     content_type: Optional[str] = None
     
     def __post_init__(self):
-        """Validate key components."""        if not self.namespace:
+        """Validate key components."""
+        if not self.namespace:
             raise ValueError("Namespace cannot be empty")
         if not self.identifier:
             raise ValueError("Identifier cannot be empty")
     
     def to_string(self) -> str:
-        """Convert cache key to string representation."""        parts = [self.namespace, self.identifier]
+        """Convert cache key to string representation."""
+        parts = [self.namespace, self.identifier]
         
         if self.tenant_id:
             parts.append(f"tenant:{self.tenant_id}")
@@ -55,11 +59,13 @@ class CacheKey:
         return ":".join(parts)
     
     def to_hash(self) -> str:
-        """Convert cache key to hash for consistent key generation."""        return hashlib.sha256(self.to_string().encode('utf-8')).hexdigest()[:16]
+        """Convert cache key to hash for consistent key generation."""
+        return hashlib.sha256(self.to_string().encode('utf-8')).hexdigest()[:16]
     
     @classmethod
     def from_string(cls, key_string: str) -> 'CacheKey':
-        """Parse cache key from string representation."""        parts = key_string.split(':')
+        """Parse cache key from string representation."""
+        parts = key_string.split(':')
         if len(parts) < 2:
             raise ValueError("Invalid key string format")
         
@@ -89,7 +95,8 @@ class CacheKey:
 
 
 class SerializationManager:
-    """Handles serialization and deserialization of cache data."""    
+    """Handles serialization and deserialization of cache data."""
+    
     SUPPORTED_FORMATS = {
         'json': {'serialize': json.dumps, 'deserialize': json.loads},
         'pickle': None,  # Implemented separately for security
@@ -98,7 +105,8 @@ class SerializationManager:
     
     @staticmethod
     def serialize(data: Any, format_type: str = 'json') -> bytes:
-        """        Serialize data to bytes.
+        """
+        Serialize data to bytes.
         
         Args:
             data: Data to serialize
@@ -106,7 +114,8 @@ class SerializationManager:
             
         Returns:
             Serialized data as bytes
-        """        try:
+        """
+        try:
             if format_type == 'json':
                 json_str = json.dumps(data, default=str, ensure_ascii=False)
                 return json_str.encode('utf-8')
@@ -127,7 +136,8 @@ class SerializationManager:
     
     @staticmethod
     def deserialize(data: bytes, format_type: str = 'json') -> Any:
-        """        Deserialize data from bytes.
+        """
+        Deserialize data from bytes.
         
         Args:
             data: Serialized data
@@ -135,7 +145,8 @@ class SerializationManager:
             
         Returns:
             Deserialized data
-        """        try:
+        """
+        try:
             if format_type == 'json':
                 json_str = data.decode('utf-8')
                 return json.loads(json_str)
@@ -155,10 +166,12 @@ class SerializationManager:
 
 
 class CompressionManager:
-    """Handles compression and decompression of cache data."""    
+    """Handles compression and decompression of cache data."""
+    
     @staticmethod
     def compress(data: bytes, compression_type: str = 'gzip') -> bytes:
-        """        Compress data using specified algorithm.
+        """
+        Compress data using specified algorithm.
         
         Args:
             data: Data to compress
@@ -166,7 +179,8 @@ class CompressionManager:
             
         Returns:
             Compressed data
-        """        try:
+        """
+        try:
             if compression_type == 'gzip':
                 return gzip.compress(data)
             elif compression_type == 'zlib':
@@ -192,7 +206,8 @@ class CompressionManager:
     
     @staticmethod
     def decompress(data: bytes, compression_type: str = 'gzip') -> bytes:
-        """        Decompress data using specified algorithm.
+        """
+        Decompress data using specified algorithm.
         
         Args:
             data: Compressed data
@@ -200,7 +215,8 @@ class CompressionManager:
             
         Returns:
             Decompressed data
-        """        try:
+        """
+        try:
             if compression_type == 'gzip':
                 return gzip.decompress(data)
             elif compression_type == 'zlib':
@@ -226,33 +242,40 @@ class CompressionManager:
     
     @staticmethod
     def get_compression_ratio(original_size: int, compressed_size: int) -> float:
-        """Calculate compression ratio."""        if original_size == 0:
+        """Calculate compression ratio."""
+        if original_size == 0:
             return 0.0
         return (original_size - compressed_size) / original_size
 
 
 class TimingUtilities:
-    """Utilities for time-based operations."""    
+    """Utilities for time-based operations."""
+    
     @staticmethod
     def get_current_timestamp() -> float:
-        """Get current timestamp in seconds."""        return time.time()
+        """Get current timestamp in seconds."""
+        return time.time()
     
     @staticmethod
     def get_ttl_expiry(ttl_seconds: int) -> float:
-        """Get expiry timestamp from TTL."""        return time.time() + ttl_seconds
+        """Get expiry timestamp from TTL."""
+        return time.time() + ttl_seconds
     
     @staticmethod
     def is_expired(expiry_timestamp: float) -> bool:
-        """Check if timestamp is expired."""        return time.time() > expiry_timestamp
+        """Check if timestamp is expired."""
+        return time.time() > expiry_timestamp
     
     @staticmethod
     def get_remaining_ttl(expiry_timestamp: float) -> int:
-        """Get remaining TTL in seconds."""        remaining = expiry_timestamp - time.time()
+        """Get remaining TTL in seconds."""
+        remaining = expiry_timestamp - time.time()
         return max(0, int(remaining))
     
     @staticmethod
     def format_duration(seconds: float) -> str:
-        """Format duration in human-readable format."""        if seconds < 60:
+        """Format duration in human-readable format."""
+        if seconds < 60:
             return f"{seconds:.1f}s"
         elif seconds < 3600:
             minutes = seconds / 60
@@ -266,10 +289,12 @@ class TimingUtilities:
 
 
 class SizeUtilities:
-    """Utilities for size calculations and formatting."""    
+    """Utilities for size calculations and formatting."""
+    
     @staticmethod
     def format_bytes(size_bytes: int) -> str:
-        """Format byte size in human-readable format."""        if size_bytes == 0:
+        """Format byte size in human-readable format."""
+        if size_bytes == 0:
             return "0B"
         
         size_names = ["B", "KB", "MB", "GB", "TB", "PB"]
@@ -284,7 +309,8 @@ class SizeUtilities:
     
     @staticmethod
     def parse_size_string(size_string: str) -> int:
-        """Parse size string to bytes."""        size_string = size_string.upper().strip()
+        """Parse size string to bytes."""
+        size_string = size_string.upper().strip()
         
         multipliers = {
             'B': 1,
@@ -310,10 +336,12 @@ class SizeUtilities:
 
 
 class HashUtilities:
-    """Utilities for hashing operations."""    
+    """Utilities for hashing operations."""
+    
     @staticmethod
     def hash_data(data: Union[str, bytes], algorithm: str = 'sha256') -> str:
-        """        Hash data using specified algorithm.
+        """
+        Hash data using specified algorithm.
         
         Args:
             data: Data to hash
@@ -321,7 +349,8 @@ class HashUtilities:
             
         Returns:
             Hex digest of hash
-        """        if isinstance(data, str):
+        """
+        if isinstance(data, str):
             data = data.encode('utf-8')
         
         if algorithm == 'sha256':
@@ -335,7 +364,8 @@ class HashUtilities:
     
     @staticmethod
     def consistent_hash(key: str, num_slots: int) -> int:
-        """        Generate consistent hash for key distribution.
+        """
+        Generate consistent hash for key distribution.
         
         Args:
             key: Key to hash
@@ -343,15 +373,18 @@ class HashUtilities:
             
         Returns:
             Hash slot number
-        """        hash_value = hashlib.sha256(key.encode('utf-8')).hexdigest()
+        """
+        hash_value = hashlib.sha256(key.encode('utf-8')).hexdigest()
         return int(hash_value, 16) % num_slots
 
 
 class ValidationUtilities:
-    """Utilities for data validation."""    
+    """Utilities for data validation."""
+    
     @staticmethod
     def validate_key(key: str) -> bool:
-        """Validate cache key format."""        if not key or not isinstance(key, str):
+        """Validate cache key format."""
+        if not key or not isinstance(key, str):
             return False
         
         # Basic validation - can be extended
@@ -368,25 +401,30 @@ class ValidationUtilities:
     
     @staticmethod
     def validate_ttl(ttl: int) -> bool:
-        """Validate TTL value."""        return isinstance(ttl, int) and ttl >= 0
+        """Validate TTL value."""
+        return isinstance(ttl, int) and ttl >= 0
     
     @staticmethod
     def validate_size(size: int, max_size: int) -> bool:
-        """Validate data size."""        return isinstance(size, int) and 0 <= size <= max_size
+        """Validate data size."""
+        return isinstance(size, int) and 0 <= size <= max_size
 
 
 class AsyncUtilities:
-    """Utilities for async operations."""    
+    """Utilities for async operations."""
+    
     @staticmethod
     async def run_with_timeout(coroutine, timeout_seconds: float):
-        """Run coroutine with timeout."""        try:
+        """Run coroutine with timeout."""
+        try:
             return await asyncio.wait_for(coroutine, timeout=timeout_seconds)
         except asyncio.TimeoutError:
             raise asyncio.TimeoutError(f"Operation timed out after {timeout_seconds}s")
     
     @staticmethod
     async def batch_execute(coroutines: List, batch_size: int = 10):
-        """Execute coroutines in batches."""        results = []
+        """Execute coroutines in batches."""
+        results = []
         
         for i in range(0, len(coroutines), batch_size):
             batch = coroutines[i:i + batch_size]
@@ -397,48 +435,57 @@ class AsyncUtilities:
 
 
 class ThreadUtilities:
-    """Utilities for thread operations."""    
+    """Utilities for thread operations."""
+    
     _thread_pool = ThreadPoolExecutor(max_workers=4)
     _lock = threading.RLock()
     
     @classmethod
     def run_in_thread(cls, func, *args, **kwargs):
-        """Run function in thread pool."""        return cls._thread_pool.submit(func, *args, **kwargs)
+        """Run function in thread pool."""
+        return cls._thread_pool.submit(func, *args, **kwargs)
     
     @classmethod
     def get_thread_safe_counter(cls):
-        """Get thread-safe counter."""        return ThreadSafeCounter()
+        """Get thread-safe counter."""
+        return ThreadSafeCounter()
 
 
 class ThreadSafeCounter:
-    """Thread-safe counter implementation."""    
+    """Thread-safe counter implementation."""
+    
     def __init__(self, initial_value: int = 0):
         self._value = initial_value
         self._lock = threading.RLock()
     
     def increment(self, amount: int = 1) -> int:
-        """Increment counter and return new value."""        with self._lock:
+        """Increment counter and return new value."""
+        with self._lock:
             self._value += amount
             return self._value
     
     def decrement(self, amount: int = 1) -> int:
-        """Decrement counter and return new value."""        with self._lock:
+        """Decrement counter and return new value."""
+        with self._lock:
             self._value -= amount
             return self._value
     
     def get_value(self) -> int:
-        """Get current counter value."""        with self._lock:
+        """Get current counter value."""
+        with self._lock:
             return self._value
     
     def reset(self, value: int = 0) -> int:
-        """Reset counter to specified value."""        with self._lock:
+        """Reset counter to specified value."""
+        with self._lock:
             old_value = self._value
             self._value = value
             return old_value
 
 
 class PerformanceTimer:
-    """Context manager for performance timing."""    
+    """Context manager for performance timing."""
+    
     def __init__(self, operation_name: str = "Operation"):
         self.operation_name = operation_name
         self.start_time = None
@@ -454,21 +501,26 @@ class PerformanceTimer:
         self.duration = self.end_time - self.start_time
     
     def get_duration_ms(self) -> float:
-        """Get duration in milliseconds."""        return self.duration * 1000 if self.duration else 0
+        """Get duration in milliseconds."""
+        return self.duration * 1000 if self.duration else 0
     
     def get_duration_seconds(self) -> float:
-        """Get duration in seconds."""        return self.duration if self.duration else 0
+        """Get duration in seconds."""
+        return self.duration if self.duration else 0
 
 
 class ConfigurationValidator:
-    """Validates cache configuration parameters."""    
+    """Validates cache configuration parameters."""
+    
     @staticmethod
     def validate_cache_config(config: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """        Validate cache configuration.
+        """
+        Validate cache configuration.
         
         Returns:
             Tuple of (is_valid, error_messages)
-        """        errors = []
+        """
+        errors = []
         
         # Required fields
         required_fields = ['max_memory_size', 'max_entries', 'default_ttl']

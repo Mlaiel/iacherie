@@ -11,7 +11,8 @@ Features:
 - Multi-tenant processing isolation
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""import asyncio
+"""
+import asyncio
 import logging
 import os
 from dataclasses import dataclass
@@ -40,7 +41,8 @@ logger = logging.getLogger(__name__)
 
 
 class ProcessingStatus(Enum):
-    """Processing task status enumeration."""    PENDING = "pending"
+    """Processing task status enumeration."""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -48,7 +50,8 @@ class ProcessingStatus(Enum):
 
 
 class AIModelType(Enum):
-    """AI model types for content processing."""    AUDIO_FINGERPRINT = "audio_fingerprint"
+    """AI model types for content processing."""
+    AUDIO_FINGERPRINT = "audio_fingerprint"
     VIDEO_FINGERPRINT = "video_fingerprint"
     IMAGE_FINGERPRINT = "image_fingerprint"
     TEXT_FINGERPRINT = "text_fingerprint"
@@ -58,7 +61,8 @@ class AIModelType(Enum):
 
 @dataclass
 class ProcessingConfig:
-    """Configuration for AI processing deployment."""    max_workers: int = 10
+    """Configuration for AI processing deployment."""
+    max_workers: int = 10
     gpu_enabled: bool = True
     memory_limit: str = "16Gi"
     cpu_limit: str = "8"
@@ -70,7 +74,8 @@ class ProcessingConfig:
 
 @dataclass
 class ProcessingTask:
-    """AI processing task definition."""    task_id: str
+    """AI processing task definition."""
+    task_id: str
     tenant_id: str
     content_type: str
     model_type: AIModelType
@@ -84,13 +89,16 @@ class ProcessingTask:
 
 
 class AIProcessingDeployment:
-    """    Enterprise AI Processing Deployment Manager
+    """
+    Enterprise AI Processing Deployment Manager
     
     Manages deployment, scaling, and orchestration of AI models
     for multi-format content processing with enterprise features.
-    """    
+    """
+    
     def __init__(self, config: ProcessingConfig):
-        """Initialize AI processing deployment."""        self.config = config
+        """Initialize AI processing deployment."""
+        self.config = config
         self.redis_client = None
         self.db_engine = None
         self.k8s_client = None
@@ -101,7 +109,8 @@ class AIProcessingDeployment:
         self._initialize_infrastructure()
     
     def _initialize_infrastructure(self):
-        """Initialize infrastructure components."""        try:
+        """Initialize infrastructure components."""
+        try:
             # Redis connection for caching and queuing
             self.redis_client = redis.Redis(
                 host=os.getenv('REDIS_HOST', 'localhost'),
@@ -137,7 +146,8 @@ class AIProcessingDeployment:
             raise
     
     async def load_model(self, model_type: AIModelType, model_config: Dict[str, Any]) -> bool:
-        """        Load AI model into deployment registry.
+        """
+        Load AI model into deployment registry.
         
         Args:
             model_type: Type of AI model
@@ -145,7 +155,8 @@ class AIProcessingDeployment:
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             model_name = model_config.get('name')
             model_path = model_config.get('path')
             
@@ -179,7 +190,8 @@ class AIProcessingDeployment:
             return False
     
     def _load_audio_model(self, model_path: str, config: Dict[str, Any]):
-        """Load audio fingerprinting model."""        import librosa
+        """Load audio fingerprinting model."""
+        import librosa
         import essentia.standard as es
         
         # Initialize Essentia extractors
@@ -196,7 +208,8 @@ class AIProcessingDeployment:
         }
     
     def _load_video_model(self, model_path: str, config: Dict[str, Any]):
-        """Load video fingerprinting model."""        import cv2
+        """Load video fingerprinting model."""
+        import cv2
         import numpy as np
         
         # Initialize video processing components
@@ -208,7 +221,8 @@ class AIProcessingDeployment:
         }
     
     def _load_image_model(self, model_path: str, config: Dict[str, Any]):
-        """Load image fingerprinting model."""        from transformers import CLIPProcessor, CLIPModel
+        """Load image fingerprinting model."""
+        from transformers import CLIPProcessor, CLIPModel
         import imagehash
         from PIL import Image
         
@@ -224,7 +238,8 @@ class AIProcessingDeployment:
         }
     
     def _load_text_model(self, model_path: str, config: Dict[str, Any]):
-        """Load text fingerprinting model."""        from transformers import AutoModel, AutoTokenizer
+        """Load text fingerprinting model."""
+        from transformers import AutoModel, AutoTokenizer
         from sentence_transformers import SentenceTransformer
         
         # Load sentence transformer for text embeddings
@@ -237,14 +252,16 @@ class AIProcessingDeployment:
         }
     
     async def submit_processing_task(self, task: ProcessingTask) -> str:
-        """        Submit AI processing task for execution.
+        """
+        Submit AI processing task for execution.
         
         Args:
             task: Processing task to execute
             
         Returns:
             str: Task ID
-        """        try:
+        """
+        try:
             processing_requests_total.inc()
             
             # Validate tenant permissions
@@ -278,19 +295,22 @@ class AIProcessingDeployment:
             raise
     
     def _validate_tenant_access(self, tenant_id: str, model_type: AIModelType) -> bool:
-        """Validate tenant access to model type."""        # Implementation would check tenant permissions from database
+        """Validate tenant access to model type."""
+        # Implementation would check tenant permissions from database
         # For now, return True for all tenants
         return True
     
     async def get_task_status(self, task_id: str) -> Optional[ProcessingTask]:
-        """        Get processing task status.
+        """
+        Get processing task status.
         
         Args:
             task_id: Task identifier
             
         Returns:
             ProcessingTask: Task object or None
-        """        try:
+        """
+        try:
             # Check active tasks first
             if task_id in self.active_tasks:
                 return self.active_tasks[task_id]
@@ -315,14 +335,16 @@ class AIProcessingDeployment:
             return None
     
     async def scale_deployment(self, replicas: int) -> bool:
-        """        Scale AI processing deployment.
+        """
+        Scale AI processing deployment.
         
         Args:
             replicas: Number of replicas
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             if not self.k8s_client or not self.config.scaling_enabled:
                 logger.warning("Scaling not enabled or Kubernetes client not available")
                 return False
@@ -351,11 +373,13 @@ class AIProcessingDeployment:
             return False
     
     async def get_deployment_metrics(self) -> Dict[str, Any]:
-        """        Get deployment metrics and statistics.
+        """
+        Get deployment metrics and statistics.
         
         Returns:
             Dict[str, Any]: Metrics data
-        """        try:
+        """
+        try:
             metrics = {
                 'active_tasks': len(self.active_tasks),
                 'queue_size': self.processing_queue.qsize(),
@@ -388,7 +412,8 @@ class AIProcessingDeployment:
             return {}
     
     async def shutdown(self):
-        """Gracefully shutdown AI processing deployment."""        try:
+        """Gracefully shutdown AI processing deployment."""
+        try:
             logger.info("Shutting down AI processing deployment")
             
             # Cancel all active tasks
@@ -414,7 +439,8 @@ class AIProcessingDeployment:
 
 
 def create_deployment_config() -> ProcessingConfig:
-    """Create deployment configuration from environment variables."""    return ProcessingConfig(
+    """Create deployment configuration from environment variables."""
+    return ProcessingConfig(
         max_workers=int(os.getenv('AI_MAX_WORKERS', 10)),
         gpu_enabled=os.getenv('AI_GPU_ENABLED', 'true').lower() == 'true',
         memory_limit=os.getenv('AI_MEMORY_LIMIT', '16Gi'),

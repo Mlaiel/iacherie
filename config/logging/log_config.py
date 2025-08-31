@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import logging
+"""
+import logging
 import logging.config
 import os
 import sys
@@ -31,7 +32,8 @@ from logging_tree import printout
 
 
 class LogLevel(str, Enum):
-    """Standardized logging levels for the platform"""    CRITICAL = "CRITICAL"
+    """Standardized logging levels for the platform"""
+    CRITICAL = "CRITICAL"
     ERROR = "ERROR"
     WARNING = "WARNING"
     INFO = "INFO"
@@ -40,7 +42,8 @@ class LogLevel(str, Enum):
 
 
 class LoggerName(str, Enum):
-    """Standard logger names for different platform components"""    # Core Platform Loggers
+    """Standard logger names for different platform components"""
+    # Core Platform Loggers
     PLATFORM = "ia_influencer_platform"
     API = "ia_influencer_api"
     AUTH = "ia_influencer_auth"
@@ -88,7 +91,8 @@ class LoggerName(str, Enum):
 
 @dataclass
 class LogFormatConfig:
-    """Configuration for log formatting"""    use_json: bool = True
+    """Configuration for log formatting"""
+    use_json: bool = True
     use_colors: bool = True
     include_timestamp: bool = True
     include_level: bool = True
@@ -107,7 +111,8 @@ class LogFormatConfig:
 
 @dataclass
 class LogFileConfig:
-    """Configuration for log file handling"""    enabled: bool = True
+    """Configuration for log file handling"""
+    enabled: bool = True
     base_path: str = "/var/log/ia_influencer"
     filename_pattern: str = "{logger_name}_{date}.log"
     max_file_size: str = "100MB"
@@ -121,7 +126,8 @@ class LogFileConfig:
 
 @dataclass
 class LogElasticConfig:
-    """Configuration for Elasticsearch integration"""    enabled: bool = True
+    """Configuration for Elasticsearch integration"""
+    enabled: bool = True
     hosts: List[str] = field(default_factory=lambda: ["localhost:9200"])
     index_pattern: str = "ia-influencer-logs-{date}"
     buffer_size: int = 1000
@@ -133,12 +139,14 @@ class LogElasticConfig:
 
 
 class LogConfig:
-    """    Enterprise-grade logging configuration manager for IA-Influencer platform.
+    """
+    Enterprise-grade logging configuration manager for IA-Influencer platform.
     
     Handles multi-tenant, multi-format content processing logging with
     advanced features like structured logging, audit trails, performance monitoring,
     and security event tracking.
-    """    
+    """
+    
     def __init__(
         self,
         environment: str = "development",
@@ -150,7 +158,8 @@ class LogConfig:
         enable_sentry: bool = False,
         sentry_dsn: Optional[str] = None
     ):
-        """        Initialize logging configuration.
+        """
+        Initialize logging configuration.
         
         Args:
             environment: Deployment environment (development, staging, production)
@@ -161,7 +170,8 @@ class LogConfig:
             enable_console: Enable console output
             enable_sentry: Enable Sentry error tracking
             sentry_dsn: Sentry DSN for error reporting
-        """        self.environment = environment
+        """
+        self.environment = environment
         self.log_level = log_level
         self.format_config = format_config or LogFormatConfig()
         self.file_config = file_config or LogFileConfig()
@@ -183,7 +193,8 @@ class LogConfig:
         self._apply_configuration()
     
     def _configure_structlog(self) -> None:
-        """Configure structlog for structured logging"""        processors = [
+        """Configure structlog for structured logging"""
+        processors = [
             structlog.stdlib.filter_by_level,
             structlog.stdlib.add_logger_name,
             structlog.stdlib.add_log_level,
@@ -207,7 +218,8 @@ class LogConfig:
         )
     
     def _build_logging_config(self) -> Dict[str, Any]:
-        """Build comprehensive logging configuration"""        config = {
+        """Build comprehensive logging configuration"""
+        config = {
             'version': 1,
             'disable_existing_loggers': False,
             'formatters': self._build_formatters(),
@@ -223,7 +235,8 @@ class LogConfig:
         return config
     
     def _build_formatters(self) -> Dict[str, Any]:
-        """Build formatter configurations"""        formatters = {}
+        """Build formatter configurations"""
+        formatters = {}
         
         # JSON Formatter for structured logging
         json_format = {
@@ -283,7 +296,8 @@ class LogConfig:
         return formatters
     
     def _build_filters(self) -> Dict[str, Any]:
-        """Build filter configurations"""        return {
+        """Build filter configurations"""
+        return {
             'security_filter': {
                 '()': 'backend.config.logging.log_filtering_config.SecurityLogFilter'
             },
@@ -296,7 +310,8 @@ class LogConfig:
         }
     
     def _build_handlers(self) -> Dict[str, Any]:
-        """Build handler configurations"""        handlers = {}
+        """Build handler configurations"""
+        handlers = {}
         
         # Console handler
         if self.enable_console:
@@ -404,7 +419,8 @@ class LogConfig:
         return handlers
     
     def _build_loggers(self) -> Dict[str, Any]:
-        """Build logger configurations for all platform components"""        loggers = {}
+        """Build logger configurations for all platform components"""
+        loggers = {}
         
         # Default handlers for all loggers
         default_handlers = ['console', 'file'] if self.enable_console else ['file']
@@ -451,7 +467,8 @@ class LogConfig:
         return loggers
     
     def _parse_file_size(self, size_str: str) -> int:
-        """Parse file size string to bytes"""        size_str = size_str.upper()
+        """Parse file size string to bytes"""
+        size_str = size_str.upper()
         multipliers = {'B': 1, 'KB': 1024, 'MB': 1024**2, 'GB': 1024**3}
         
         for suffix, multiplier in multipliers.items():
@@ -462,7 +479,8 @@ class LogConfig:
         return int(size_str)
     
     def _apply_configuration(self) -> None:
-        """Apply the logging configuration"""        # Ensure log directory exists
+        """Apply the logging configuration"""
+        # Ensure log directory exists
         if self.file_config.enabled:
             Path(self.file_config.base_path).mkdir(parents=True, exist_ok=True)
         
@@ -475,71 +493,86 @@ class LogConfig:
             sentry_sdk.init(dsn=self.sentry_dsn)
     
     def get_logger(self, name: Union[str, LoggerName]) -> logging.Logger:
-        """        Get a configured logger instance.
+        """
+        Get a configured logger instance.
         
         Args:
             name: Logger name (string or LoggerName enum)
             
         Returns:
             Configured logger instance
-        """        logger_name = name.value if isinstance(name, LoggerName) else name
+        """
+        logger_name = name.value if isinstance(name, LoggerName) else name
         return logging.getLogger(logger_name)
     
     def get_structured_logger(self, name: Union[str, LoggerName]) -> structlog.BoundLogger:
-        """        Get a structured logger instance.
+        """
+        Get a structured logger instance.
         
         Args:
             name: Logger name (string or LoggerName enum)
             
         Returns:
             Structured logger instance
-        """        logger_name = name.value if isinstance(name, LoggerName) else name
+        """
+        logger_name = name.value if isinstance(name, LoggerName) else name
         return structlog.get_logger(logger_name)
     
     def set_context(self, **kwargs) -> None:
-        """        Set global logging context (request ID, user ID, etc.)
+        """
+        Set global logging context (request ID, user ID, etc.)
         
         Args:
             **kwargs: Context key-value pairs
-        """        for key, value in kwargs.items():
+        """
+        for key, value in kwargs.items():
             structlog.contextvars.bind_contextvars(**{key: value})
     
     def clear_context(self) -> None:
-        """Clear global logging context"""        structlog.contextvars.clear_contextvars()
+        """Clear global logging context"""
+        structlog.contextvars.clear_contextvars()
     
     def print_logger_tree(self) -> None:
-        """Print the current logger configuration tree for debugging"""        print("Current Logger Configuration Tree:")
+        """Print the current logger configuration tree for debugging"""
+        print("Current Logger Configuration Tree:")
         print("=" * 50)
         printout()
     
     def get_config_dict(self) -> Dict[str, Any]:
-        """Get the current logging configuration as dictionary"""        return self._config.copy()
+        """Get the current logging configuration as dictionary"""
+        return self._config.copy()
     
     def update_log_level(self, logger_name: str, level: Union[str, int]) -> None:
-        """        Update log level for a specific logger.
+        """
+        Update log level for a specific logger.
         
         Args:
             logger_name: Name of the logger to update
             level: New log level
-        """        logger = logging.getLogger(logger_name)
+        """
+        logger = logging.getLogger(logger_name)
         logger.setLevel(level)
     
     def add_custom_handler(self, name: str, handler_config: Dict[str, Any]) -> None:
-        """        Add a custom handler to the logging configuration.
+        """
+        Add a custom handler to the logging configuration.
         
         Args:
             name: Handler name
             handler_config: Handler configuration dictionary
-        """        self._config['handlers'][name] = handler_config
+        """
+        self._config['handlers'][name] = handler_config
         logging.config.dictConfig(self._config)
     
     def remove_handler(self, logger_name: str, handler_name: str) -> None:
-        """        Remove a handler from a specific logger.
+        """
+        Remove a handler from a specific logger.
         
         Args:
             logger_name: Name of the logger
             handler_name: Name of the handler to remove
-        """        logger = logging.getLogger(logger_name)
+        """
+        logger = logging.getLogger(logger_name)
         handlers_to_remove = [h for h in logger.handlers if h.name == handler_name]
         
         for handler in handlers_to_remove:
@@ -550,7 +583,8 @@ def create_default_log_config(
     environment: str = "development",
     log_level: str = LogLevel.INFO
 ) -> LogConfig:
-    """    Create a default logging configuration for the platform.
+    """
+    Create a default logging configuration for the platform.
     
     Args:
         environment: Deployment environment
@@ -558,7 +592,8 @@ def create_default_log_config(
         
     Returns:
         Configured LogConfig instance
-    """    # Environment-specific configurations
+    """
+    # Environment-specific configurations
     if environment == "production":
         format_config = LogFormatConfig(
             use_json=True,
@@ -674,7 +709,8 @@ def initialize_logging(
     log_level: str = None,
     config: Optional[LogConfig] = None
 ) -> LogConfig:
-    """    Initialize global logging configuration for the platform.
+    """
+    Initialize global logging configuration for the platform.
     
     Args:
         environment: Deployment environment
@@ -683,7 +719,8 @@ def initialize_logging(
         
     Returns:
         Initialized LogConfig instance
-    """    global _log_config
+    """
+    global _log_config
     
     if config:
         _log_config = config
@@ -696,28 +733,32 @@ def initialize_logging(
 
 
 def get_logger(name: Union[str, LoggerName]) -> logging.Logger:
-    """    Get a logger instance using the global configuration.
+    """
+    Get a logger instance using the global configuration.
     
     Args:
         name: Logger name
         
     Returns:
         Logger instance
-    """    if not _log_config:
+    """
+    if not _log_config:
         initialize_logging()
     
     return _log_config.get_logger(name)
 
 
 def get_structured_logger(name: Union[str, LoggerName]) -> structlog.BoundLogger:
-    """    Get a structured logger instance using the global configuration.
+    """
+    Get a structured logger instance using the global configuration.
     
     Args:
         name: Logger name
         
     Returns:
         Structured logger instance
-    """    if not _log_config:
+    """
+    if not _log_config:
         initialize_logging()
     
     return _log_config.get_structured_logger(name)

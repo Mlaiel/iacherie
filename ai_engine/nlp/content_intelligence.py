@@ -8,7 +8,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from dataclasses import dataclass, field
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content type enumeration for specialized processing."""    MUSIC_LYRICS = "music_lyrics"
+    """Content type enumeration for specialized processing."""
+    MUSIC_LYRICS = "music_lyrics"
     VIDEO_SCRIPT = "video_script"
     BLOG_POST = "blog_post"
     SOCIAL_MEDIA = "social_media"
@@ -39,7 +41,8 @@ class ContentType(Enum):
 
 
 class ContentCategory(Enum):
-    """Content category classification."""    ENTERTAINMENT = "entertainment"
+    """Content category classification."""
+    ENTERTAINMENT = "entertainment"
     EDUCATIONAL = "educational"
     PROMOTIONAL = "promotional"
     PERSONAL = "personal"
@@ -50,7 +53,8 @@ class ContentCategory(Enum):
 
 @dataclass
 class ContentMetrics:
-    """Content quality and engagement metrics."""    readability_score: float
+    """Content quality and engagement metrics."""
+    readability_score: float
     engagement_potential: float
     viral_probability: float
     monetization_score: float
@@ -64,7 +68,8 @@ class ContentMetrics:
 
 @dataclass
 class ContentInsight:
-    """Deep content analysis insights."""    content_id: str
+    """Deep content analysis insights."""
+    content_id: str
     content_type: ContentType
     category: ContentCategory
     metrics: ContentMetrics
@@ -81,13 +86,16 @@ class ContentInsight:
 
 
 class ContentIntelligenceEngine:
-    """    Advanced content intelligence engine for creator content analysis.
+    """
+    Advanced content intelligence engine for creator content analysis.
     
     Provides comprehensive analysis of textual content across multiple formats,
     extracting insights for optimization, monetization, and collaboration.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the content intelligence engine."""        self.nlp = None
+        """Initialize the content intelligence engine."""
+        self.nlp = None
         self.sentiment_analyzer = None
         self.tokenizer = None
         self.model = None
@@ -118,7 +126,8 @@ class ContentIntelligenceEngine:
         }
     
     def _load_models(self):
-        """Load NLP models and tools."""        try:
+        """Load NLP models and tools."""
+        try:
             # Load spaCy model
             self.nlp = spacy.load("en_core_web_sm")
             
@@ -142,7 +151,8 @@ class ContentIntelligenceEngine:
         content_type: ContentType,
         creator_profile: Optional[Dict[str, Any]] = None
     ) -> ContentInsight:
-        """        Perform comprehensive content analysis.
+        """
+        Perform comprehensive content analysis.
         
         Args:
             content: Text content to analyze
@@ -151,7 +161,8 @@ class ContentIntelligenceEngine:
             
         Returns:
             ContentInsight: Comprehensive analysis results
-        """        try:
+        """
+        try:
             # Generate content ID
             content_id = hashlib.md5(content.encode()).hexdigest()[:12]
             
@@ -197,7 +208,8 @@ class ContentIntelligenceEngine:
             raise
     
     async def _analyze_metrics(self, content: str, content_type: ContentType) -> ContentMetrics:
-        """Analyze content quality and engagement metrics."""        try:
+        """Analyze content quality and engagement metrics."""
+        try:
             # Readability analysis
             readability = self._calculate_readability(content)
             
@@ -246,7 +258,8 @@ class ContentIntelligenceEngine:
             raise
     
     def _calculate_readability(self, content: str) -> float:
-        """Calculate content readability score."""        try:
+        """Calculate content readability score."""
+        try:
             # Simplified readability calculation
             sentences = len(re.findall(r'[.!?]+', content))
             words = len(content.split())
@@ -264,7 +277,8 @@ class ContentIntelligenceEngine:
             return 0.5
     
     def _calculate_engagement_potential(self, content: str, content_type: ContentType) -> float:
-        """Calculate potential for audience engagement."""        try:
+        """Calculate potential for audience engagement."""
+        try:
             engagement_indicators = [
                 r'\b(amazing|incredible|wow|awesome)\b',
                 r'\b(question|what|how|why)\b',
@@ -294,7 +308,8 @@ class ContentIntelligenceEngine:
             return 0.5
     
     def _calculate_viral_probability(self, content: str, content_type: ContentType) -> float:
-        """Calculate probability of content going viral."""        try:
+        """Calculate probability of content going viral."""
+        try:
             viral_indicators = [
                 r'\b(trending|viral|breaking|exclusive)\b',
                 r'\b(shocking|unbelievable|must-see)\b',
@@ -323,7 +338,8 @@ class ContentIntelligenceEngine:
             return 0.3
     
     def _calculate_monetization_score(self, content: str, content_type: ContentType) -> float:
-        """Calculate monetization potential."""        try:
+        """Calculate monetization potential."""
+        try:
             monetization_indicators = [
                 r'\b(buy|purchase|sale|discount|offer)\b',
                 r'\b(product|service|brand|sponsor)\b',
@@ -353,7 +369,8 @@ class ContentIntelligenceEngine:
             return 0.4
     
     def _calculate_seo_strength(self, content: str) -> float:
-        """Calculate SEO optimization strength."""        try:
+        """Calculate SEO optimization strength."""
+        try:
             seo_factors = {
                 'title_keywords': len(re.findall(r'\b[A-Z][a-z]+\b', content[:100])) * 0.1,
                 'keyword_density': min(len(set(content.lower().split())) / len(content.split()) * 2, 0.3),
@@ -368,7 +385,8 @@ class ContentIntelligenceEngine:
             return 0.5
     
     def _calculate_authenticity_score(self, content: str) -> float:
-        """Calculate content authenticity and originality."""        try:
+        """Calculate content authenticity and originality."""
+        try:
             authenticity_indicators = [
                 r'\b(I|my|me|personal|experience)\b',
                 r'\b(honest|genuine|real|truth)\b',
@@ -394,7 +412,8 @@ class ContentIntelligenceEngine:
             return 0.6
     
     def _calculate_creativity_index(self, content: str, content_type: ContentType) -> float:
-        """Calculate creativity and uniqueness index."""        try:
+        """Calculate creativity and uniqueness index."""
+        try:
             creativity_indicators = [
                 r'\b(creative|unique|original|innovative)\b',
                 r'\b(imagine|visualize|picture|dream)\b',
@@ -423,7 +442,8 @@ class ContentIntelligenceEngine:
             return 0.5
     
     def _assess_technical_quality(self, content: str) -> float:
-        """Assess technical quality of content."""        try:
+        """Assess technical quality of content."""
+        try:
             # Grammar and spelling approximation
             sentences = re.split(r'[.!?]+', content)
             well_formed_sentences = sum(1 for s in sentences if len(s.strip()) > 10 and s.strip()[0].isupper())
@@ -445,7 +465,8 @@ class ContentIntelligenceEngine:
             return 0.7
     
     def _assess_market_relevance(self, content: str, content_type: ContentType) -> float:
-        """Assess market relevance and timeliness."""        try:
+        """Assess market relevance and timeliness."""
+        try:
             trending_terms = [
                 r'\b(2025|latest|new|current|today)\b',
                 r'\b(trending|popular|viral|hot)\b',
@@ -467,7 +488,8 @@ class ContentIntelligenceEngine:
             return 0.6
     
     async def _extract_keywords(self, content: str, content_type: ContentType) -> List[str]:
-        """Extract relevant keywords from content."""        try:
+        """Extract relevant keywords from content."""
+        try:
             # Process with spaCy
             doc = self.nlp(content)
             
@@ -498,7 +520,8 @@ class ContentIntelligenceEngine:
             return []
     
     def _extract_hashtags(self, content: str) -> List[str]:
-        """Extract hashtags from content."""        try:
+        """Extract hashtags from content."""
+        try:
             hashtag_pattern = r'#(\w+)'
             hashtags = re.findall(hashtag_pattern, content)
             return list(set(hashtags))
@@ -507,7 +530,8 @@ class ContentIntelligenceEngine:
             return []
     
     async def _extract_entities(self, content: str) -> List[Dict[str, Any]]:
-        """Extract named entities from content."""        try:
+        """Extract named entities from content."""
+        try:
             doc = self.nlp(content)
             entities = []
             
@@ -527,7 +551,8 @@ class ContentIntelligenceEngine:
             return []
     
     async def _analyze_sentiment(self, content: str) -> Dict[str, float]:
-        """Analyze sentiment profile of content."""        try:
+        """Analyze sentiment profile of content."""
+        try:
             # Use transformer-based sentiment analysis
             results = self.sentiment_analyzer(content)
             
@@ -560,7 +585,8 @@ class ContentIntelligenceEngine:
             return {'positive': 0.33, 'negative': 0.33, 'neutral': 0.34}
     
     async def _detect_topics(self, content: str) -> List[str]:
-        """Detect main topics in content."""        try:
+        """Detect main topics in content."""
+        try:
             doc = self.nlp(content)
             
             # Extract topics based on noun phrases and entities
@@ -583,7 +609,8 @@ class ContentIntelligenceEngine:
             return []
     
     async def _analyze_language_patterns(self, content: str) -> Dict[str, Any]:
-        """Analyze language patterns and style."""        try:
+        """Analyze language patterns and style."""
+        try:
             doc = self.nlp(content)
             
             patterns = {
@@ -605,7 +632,8 @@ class ContentIntelligenceEngine:
             return {}
     
     def _get_readability_level(self, content: str) -> str:
-        """Determine readability level."""        try:
+        """Determine readability level."""
+        try:
             readability = self._calculate_readability(content)
             
             if readability >= 0.8:
@@ -629,7 +657,8 @@ class ContentIntelligenceEngine:
         content: str, 
         content_type: ContentType
     ) -> List[str]:
-        """Generate content optimization suggestions."""        try:
+        """Generate content optimization suggestions."""
+        try:
             suggestions = []
             content_lower = content.lower()
             
@@ -677,7 +706,8 @@ class ContentIntelligenceEngine:
         content: str, 
         creator_profile: Optional[Dict[str, Any]]
     ) -> List[str]:
-        """Find potential collaboration matches."""        try:
+        """Find potential collaboration matches."""
+        try:
             matches = []
             content_lower = content.lower()
             
@@ -716,7 +746,8 @@ class ContentIntelligenceEngine:
         content: str, 
         content_type: ContentType
     ) -> List[str]:
-        """Identify monetization opportunities."""        try:
+        """Identify monetization opportunities."""
+        try:
             opportunities = []
             content_lower = content.lower()
             
@@ -750,7 +781,8 @@ class ContentIntelligenceEngine:
             return []
     
     def _classify_category(self, content: str, content_type: ContentType) -> ContentCategory:
-        """Classify content into categories."""        try:
+        """Classify content into categories."""
+        try:
             content_lower = content.lower()
             
             # Educational indicators
@@ -781,16 +813,19 @@ class ContentIntelligenceEngine:
 
 
 class ContentBatchProcessor:
-    """Batch processor for multiple content pieces."""    
+    """Batch processor for multiple content pieces."""
+    
     def __init__(self, engine: ContentIntelligenceEngine):
-        """Initialize batch processor."""        self.engine = engine
+        """Initialize batch processor."""
+        self.engine = engine
         self.batch_size = 10
     
     async def process_batch(
         self, 
         content_batch: List[Dict[str, Any]]
     ) -> List[ContentInsight]:
-        """Process multiple content pieces in batches."""        try:
+        """Process multiple content pieces in batches."""
+        try:
             results = []
             
             for i in range(0, len(content_batch), self.batch_size):

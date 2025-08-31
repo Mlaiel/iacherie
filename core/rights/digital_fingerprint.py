@@ -10,7 +10,8 @@ Enterprise Content Protection Platform - Digital Fingerprinting Core
 ⚠️  COPYRIGHT NOTICE ⚠️
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import struct
@@ -41,7 +42,8 @@ settings = get_settings()
 
 
 class FingerprintType(str, Enum):
-    """Supported fingerprint types."""    PERCEPTUAL_HASH = "perceptual_hash"
+    """Supported fingerprint types."""
+    PERCEPTUAL_HASH = "perceptual_hash"
     SEMANTIC_VECTOR = "semantic_vector"
     ACOUSTIC_FINGERPRINT = "acoustic_fingerprint"
     VISUAL_DESCRIPTOR = "visual_descriptor"
@@ -51,7 +53,8 @@ class FingerprintType(str, Enum):
 
 @dataclass
 class FingerprintResult:
-    """Comprehensive fingerprint result structure."""    fingerprint_hash: str
+    """Comprehensive fingerprint result structure."""
+    fingerprint_hash: str
     fingerprint_vector: np.ndarray
     fingerprint_type: FingerprintType
     content_type: str
@@ -63,20 +66,24 @@ class FingerprintResult:
 
 
 class BaseFingerprintEngine(ABC):
-    """Abstract base class for content fingerprinting engines."""    
+    """Abstract base class for content fingerprinting engines."""
+    
     @abstractmethod
     async def generate_fingerprint(self, content_data: bytes) -> FingerprintResult:
-        """Generate fingerprint for content."""        pass
+        """Generate fingerprint for content."""
+        pass
     
     @abstractmethod
     async def compare_fingerprints(
         self, fingerprint1: FingerprintResult, fingerprint2: FingerprintResult
     ) -> float:
-        """Compare two fingerprints and return similarity score."""        pass
+        """Compare two fingerprints and return similarity score."""
+        pass
 
 
 class AudioFingerprintEngine(BaseFingerprintEngine):
-    """High-precision audio fingerprinting using Chromaprint and spectral analysis."""    
+    """High-precision audio fingerprinting using Chromaprint and spectral analysis."""
+    
     def __init__(self):
         self.sample_rate = 22050
         self.algorithm_version = "chromaprint_v1.5.1_custom"
@@ -84,14 +91,16 @@ class AudioFingerprintEngine(BaseFingerprintEngine):
         
     @performance_monitor
     async def generate_fingerprint(self, audio_data: bytes) -> FingerprintResult:
-        """        Generate comprehensive audio fingerprint using multiple algorithms.
+        """
+        Generate comprehensive audio fingerprint using multiple algorithms.
         
         Args:
             audio_data: Raw audio binary data
             
         Returns:
             FingerprintResult with acoustic fingerprint and spectral features
-        """        try:
+        """
+        try:
             # Convert bytes to audio array
             audio_array = np.frombuffer(audio_data, dtype=np.float32)
             
@@ -161,7 +170,8 @@ class AudioFingerprintEngine(BaseFingerprintEngine):
     async def compare_fingerprints(
         self, fingerprint1: FingerprintResult, fingerprint2: FingerprintResult
     ) -> float:
-        """Compare two audio fingerprints using multiple similarity metrics."""        try:
+        """Compare two audio fingerprints using multiple similarity metrics."""
+        try:
             # Compare Chromaprint hashes
             chromaprint_similarity = await self._compare_chromaprint(
                 fingerprint1.metadata["chromaprint_hash"],
@@ -187,7 +197,8 @@ class AudioFingerprintEngine(BaseFingerprintEngine):
             return 0.0
     
     async def _extract_spectral_features(self, audio_data: np.ndarray) -> np.ndarray:
-        """Extract spectral features from audio."""        spectral_centroid = librosa.feature.spectral_centroid(
+        """Extract spectral features from audio."""
+        spectral_centroid = librosa.feature.spectral_centroid(
             y=audio_data, sr=self.sample_rate
         )
         spectral_rolloff = librosa.feature.spectral_rolloff(
@@ -204,7 +215,8 @@ class AudioFingerprintEngine(BaseFingerprintEngine):
     async def _calculate_audio_confidence(
         self, audio_data: np.ndarray, spectral_features: np.ndarray
     ) -> float:
-        """Calculate confidence score based on audio quality."""        # Signal-to-noise ratio estimation
+        """Calculate confidence score based on audio quality."""
+        # Signal-to-noise ratio estimation
         signal_power = np.mean(audio_data ** 2)
         noise_floor = np.percentile(np.abs(audio_data), 10)
         snr = signal_power / (noise_floor ** 2) if noise_floor > 0 else 1.0
@@ -225,7 +237,8 @@ class AudioFingerprintEngine(BaseFingerprintEngine):
         return confidence
     
     async def _compare_chromaprint(self, hash1: str, hash2: str) -> float:
-        """Compare Chromaprint hashes for similarity."""        # Implementation of Chromaprint similarity calculation
+        """Compare Chromaprint hashes for similarity."""
+        # Implementation of Chromaprint similarity calculation
         # This is a simplified version - real implementation would use
         # proper Chromaprint comparison algorithms
         if hash1 == hash2:
@@ -241,7 +254,8 @@ class AudioFingerprintEngine(BaseFingerprintEngine):
 
 
 class VideoFingerprintEngine(BaseFingerprintEngine):
-    """Advanced video fingerprinting using frame analysis and motion vectors."""    
+    """Advanced video fingerprinting using frame analysis and motion vectors."""
+    
     def __init__(self):
         self.algorithm_version = "opencv_v4.8_yolo_v8"
         self.similarity_threshold = 0.88
@@ -249,14 +263,16 @@ class VideoFingerprintEngine(BaseFingerprintEngine):
         
     @performance_monitor
     async def generate_fingerprint(self, video_data: bytes) -> FingerprintResult:
-        """        Generate comprehensive video fingerprint using frame analysis.
+        """
+        Generate comprehensive video fingerprint using frame analysis.
         
         Args:
             video_data: Raw video binary data
             
         Returns:
             FingerprintResult with visual descriptors and motion features
-        """        try:
+        """
+        try:
             # Save video data to temporary file for OpenCV
             temp_path = f"/tmp/temp_video_{datetime.utcnow().timestamp()}.mp4"
             with open(temp_path, 'wb') as f:
@@ -378,7 +394,8 @@ class VideoFingerprintEngine(BaseFingerprintEngine):
     async def compare_fingerprints(
         self, fingerprint1: FingerprintResult, fingerprint2: FingerprintResult
     ) -> float:
-        """Compare two video fingerprints."""        try:
+        """Compare two video fingerprints."""
+        try:
             # Compare feature vectors
             vector_similarity = cosine_similarity(
                 fingerprint1.fingerprint_vector.reshape(1, -1),
@@ -412,7 +429,8 @@ class VideoFingerprintEngine(BaseFingerprintEngine):
     async def _calculate_motion_vector(
         self, frame1: np.ndarray, frame2: np.ndarray
     ) -> np.ndarray:
-        """Calculate motion vector between two frames."""        # Calculate optical flow
+        """Calculate motion vector between two frames."""
+        # Calculate optical flow
         flow = cv2.calcOpticalFlowPyrLK(
             frame1, frame2, None, None
         )
@@ -429,7 +447,8 @@ class VideoFingerprintEngine(BaseFingerprintEngine):
         motion_vectors: List[np.ndarray], 
         duration: float
     ) -> float:
-        """Calculate confidence score for video fingerprint."""        # Descriptor quality
+        """Calculate confidence score for video fingerprint."""
+        # Descriptor quality
         descriptor_quality = len(frame_descriptors) / max(1, duration * self.frame_sample_rate)
         
         # Motion consistency
@@ -452,7 +471,8 @@ class VideoFingerprintEngine(BaseFingerprintEngine):
     async def _compare_frame_hashes(
         self, hashes1: List[str], hashes2: List[str]
     ) -> float:
-        """Compare lists of frame hashes."""        if not hashes1 or not hashes2:
+        """Compare lists of frame hashes."""
+        if not hashes1 or not hashes2:
             return 0.0
         
         # Compare overlapping hashes
@@ -475,7 +495,8 @@ class VideoFingerprintEngine(BaseFingerprintEngine):
 
 
 class ImageFingerprintEngine(BaseFingerprintEngine):
-    """High-precision image fingerprinting using CLIP and perceptual hashing."""    
+    """High-precision image fingerprinting using CLIP and perceptual hashing."""
+    
     def __init__(self):
         self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
         self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -484,14 +505,16 @@ class ImageFingerprintEngine(BaseFingerprintEngine):
         
     @performance_monitor
     async def generate_fingerprint(self, image_data: bytes) -> FingerprintResult:
-        """        Generate comprehensive image fingerprint using CLIP and perceptual hashing.
+        """
+        Generate comprehensive image fingerprint using CLIP and perceptual hashing.
         
         Args:
             image_data: Raw image binary data
             
         Returns:
             FingerprintResult with visual embeddings and perceptual hash
-        """        try:
+        """
+        try:
             # Load image
             image = Image.open(BytesIO(image_data))
             
@@ -570,7 +593,8 @@ class ImageFingerprintEngine(BaseFingerprintEngine):
     async def compare_fingerprints(
         self, fingerprint1: FingerprintResult, fingerprint2: FingerprintResult
     ) -> float:
-        """Compare two image fingerprints."""        try:
+        """Compare two image fingerprints."""
+        try:
             # Compare CLIP embeddings (first part of feature vector)
             clip_dim = 512  # CLIP embedding dimension
             clip1 = fingerprint1.fingerprint_vector[:clip_dim]
@@ -605,7 +629,8 @@ class ImageFingerprintEngine(BaseFingerprintEngine):
     async def _calculate_image_confidence(
         self, image: Image.Image, clip_embedding: np.ndarray, color_features: np.ndarray
     ) -> float:
-        """Calculate confidence score for image fingerprint."""        # Image quality factors
+        """Calculate confidence score for image fingerprint."""
+        # Image quality factors
         width, height = image.size
         resolution_factor = min(1.0, (width * height) / (512 * 512))  # Optimal at 512x512+
         
@@ -626,7 +651,8 @@ class ImageFingerprintEngine(BaseFingerprintEngine):
 
 
 class TextFingerprintEngine(BaseFingerprintEngine):
-    """Advanced text fingerprinting using BERT embeddings and n-gram analysis."""    
+    """Advanced text fingerprinting using BERT embeddings and n-gram analysis."""
+    
     def __init__(self):
         self.tokenizer = AutoTokenizer.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
         self.model = AutoModel.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
@@ -635,14 +661,16 @@ class TextFingerprintEngine(BaseFingerprintEngine):
         
     @performance_monitor
     async def generate_fingerprint(self, text_data: bytes) -> FingerprintResult:
-        """        Generate comprehensive text fingerprint using BERT and n-gram analysis.
+        """
+        Generate comprehensive text fingerprint using BERT and n-gram analysis.
         
         Args:
             text_data: Raw text binary data
             
         Returns:
             FingerprintResult with semantic embeddings and structural features
-        """        try:
+        """
+        try:
             # Decode text
             text = text_data.decode('utf-8', errors='ignore')
             
@@ -713,7 +741,8 @@ class TextFingerprintEngine(BaseFingerprintEngine):
     async def compare_fingerprints(
         self, fingerprint1: FingerprintResult, fingerprint2: FingerprintResult
     ) -> float:
-        """Compare two text fingerprints."""        try:
+        """Compare two text fingerprints."""
+        try:
             # Compare BERT embeddings
             embedding_dim = 384  # MiniLM embedding dimension
             emb1 = fingerprint1.fingerprint_vector[:embedding_dim]
@@ -754,7 +783,8 @@ class TextFingerprintEngine(BaseFingerprintEngine):
             return 0.0
     
     async def _extract_text_features(self, text: str) -> np.ndarray:
-        """Extract structural features from text."""        # Character frequency distribution
+        """Extract structural features from text."""
+        # Character frequency distribution
         char_freq = np.zeros(26)
         for char in text.lower():
             if 'a' <= char <= 'z':
@@ -784,7 +814,8 @@ class TextFingerprintEngine(BaseFingerprintEngine):
         return np.concatenate([char_freq, additional_features])
     
     async def _generate_ngram_hashes(self, text: str, n: int = 3) -> List[str]:
-        """Generate n-gram hashes for text similarity comparison."""        words = text.lower().split()
+        """Generate n-gram hashes for text similarity comparison."""
+        words = text.lower().split()
         ngrams = []
         
         for i in range(len(words) - n + 1):
@@ -797,7 +828,8 @@ class TextFingerprintEngine(BaseFingerprintEngine):
     async def _calculate_text_confidence(
         self, text: str, embeddings: np.ndarray, structural_features: np.ndarray
     ) -> float:
-        """Calculate confidence score for text fingerprint."""        # Text length factor
+        """Calculate confidence score for text fingerprint."""
+        # Text length factor
         length_factor = min(1.0, len(text) / 1000.0)  # Optimal at 1000+ chars
         
         # Vocabulary richness
@@ -824,11 +856,14 @@ class TextFingerprintEngine(BaseFingerprintEngine):
 
 
 class DigitalFingerprintEngine:
-    """    Master fingerprinting engine that orchestrates all content type engines.
+    """
+    Master fingerprinting engine that orchestrates all content type engines.
     Provides unified interface for multi-modal content fingerprinting.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize all fingerprinting engines."""        self.audio_engine = AudioFingerprintEngine()
+        """Initialize all fingerprinting engines."""
+        self.audio_engine = AudioFingerprintEngine()
         self.video_engine = VideoFingerprintEngine()
         self.image_engine = ImageFingerprintEngine()
         self.text_engine = TextFingerprintEngine()
@@ -846,7 +881,8 @@ class DigitalFingerprintEngine:
     async def generate_fingerprint(
         self, content_data: bytes, content_type: str
     ) -> FingerprintResult:
-        """        Generate fingerprint for any supported content type.
+        """
+        Generate fingerprint for any supported content type.
         
         Args:
             content_data: Raw content binary data
@@ -854,7 +890,8 @@ class DigitalFingerprintEngine:
             
         Returns:
             FingerprintResult for the content
-        """        if content_type not in self.supported_types:
+        """
+        if content_type not in self.supported_types:
             raise ValueError(f"Unsupported content type: {content_type}")
         
         engine = self.supported_types[content_type]
@@ -864,7 +901,8 @@ class DigitalFingerprintEngine:
     async def compare_fingerprints(
         self, fingerprint1: FingerprintResult, fingerprint2: FingerprintResult
     ) -> float:
-        """        Compare two fingerprints of the same type.
+        """
+        Compare two fingerprints of the same type.
         
         Args:
             fingerprint1: First fingerprint
@@ -872,7 +910,8 @@ class DigitalFingerprintEngine:
             
         Returns:
             Similarity score (0.0 to 1.0)
-        """        if fingerprint1.content_type != fingerprint2.content_type:
+        """
+        if fingerprint1.content_type != fingerprint2.content_type:
             return 0.0  # Different content types are not similar
         
         engine = self.supported_types[fingerprint1.content_type]
@@ -881,14 +920,16 @@ class DigitalFingerprintEngine:
     async def batch_generate_fingerprints(
         self, content_list: List[Tuple[bytes, str]]
     ) -> List[FingerprintResult]:
-        """        Generate fingerprints for multiple content items in batch.
+        """
+        Generate fingerprints for multiple content items in batch.
         
         Args:
             content_list: List of (content_data, content_type) tuples
             
         Returns:
             List of FingerprintResults
-        """        tasks = [
+        """
+        tasks = [
             self.generate_fingerprint(content_data, content_type)
             for content_data, content_type in content_list
         ]
@@ -910,7 +951,8 @@ class DigitalFingerprintEngine:
         candidate_fingerprints: List[FingerprintResult],
         threshold: float = 0.85
     ) -> List[Tuple[FingerprintResult, float]]:
-        """        Find similar content from a list of candidates.
+        """
+        Find similar content from a list of candidates.
         
         Args:
             target_fingerprint: Target fingerprint to match against
@@ -919,7 +961,8 @@ class DigitalFingerprintEngine:
             
         Returns:
             List of (fingerprint, similarity_score) tuples above threshold
-        """        similar_content = []
+        """
+        similar_content = []
         
         for candidate in candidate_fingerprints:
             if candidate.content_type == target_fingerprint.content_type:
@@ -936,7 +979,8 @@ class DigitalFingerprintEngine:
         return similar_content
     
     def get_engine_info(self) -> Dict[str, Dict[str, Any]]:
-        """Get information about all available engines."""        return {
+        """Get information about all available engines."""
+        return {
             content_type: {
                 "algorithm_version": engine.algorithm_version,
                 "similarity_threshold": engine.similarity_threshold,

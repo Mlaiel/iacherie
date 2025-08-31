@@ -3,7 +3,8 @@ Creator challenges, achievements, and engagement gamification.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
 from dataclasses import dataclass
@@ -15,7 +16,8 @@ logger = logging.getLogger(__name__)
 
 
 class ChallengeType(Enum):
-    """Challenge types"""    DAILY = "daily"
+    """Challenge types"""
+    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     SEASONAL = "seasonal"
@@ -23,7 +25,8 @@ class ChallengeType(Enum):
 
 
 class AchievementTier(Enum):
-    """Achievement tiers"""    BRONZE = "bronze"
+    """Achievement tiers"""
+    BRONZE = "bronze"
     SILVER = "silver"
     GOLD = "gold"
     PLATINUM = "platinum"
@@ -32,7 +35,8 @@ class AchievementTier(Enum):
 
 @dataclass
 class Challenge:
-    """Challenge definition"""    id: str
+    """Challenge definition"""
+    id: str
     title: str
     description: str
     challenge_type: ChallengeType
@@ -46,7 +50,8 @@ class Challenge:
 
 @dataclass
 class Achievement:
-    """Achievement definition"""    id: str
+    """Achievement definition"""
+    id: str
     title: str
     description: str
     tier: AchievementTier
@@ -58,7 +63,8 @@ class Achievement:
 
 @dataclass
 class UserProgress:
-    """User progress tracking"""    user_id: str
+    """User progress tracking"""
+    user_id: str
     level: int
     experience_points: int
     achievements_unlocked: List[str]
@@ -69,7 +75,8 @@ class UserProgress:
 
 
 class GamificationSystem:
-    """Creator gamification and engagement system"""    
+    """Creator gamification and engagement system"""
+    
     def __init__(self):
         self.challenges = {}
         self.achievements = {}
@@ -88,7 +95,8 @@ class GamificationSystem:
         rewards: Dict[str, Any],
         duration_days: int = 7
     ) -> str:
-        """Create a new challenge"""        try:
+        """Create a new challenge"""
+        try:
             challenge_id = f"challenge_{int(datetime.now().timestamp())}"
             
             start_date = datetime.now()
@@ -116,7 +124,8 @@ class GamificationSystem:
             raise
     
     async def join_challenge(self, user_id: str, challenge_id: str) -> bool:
-        """Join a challenge"""        try:
+        """Join a challenge"""
+        try:
             challenge = self.challenges.get(challenge_id)
             if not challenge or not challenge.is_active:
                 return False
@@ -153,7 +162,8 @@ class GamificationSystem:
         user_id: str,
         activity_data: Dict[str, Any]
     ) -> List[str]:
-        """Check and update challenge progress for user"""        try:
+        """Check and update challenge progress for user"""
+        try:
             completed_challenges = []
             user_progress = self.user_progress.get(user_id)
             
@@ -186,7 +196,8 @@ class GamificationSystem:
         user_id: str,
         user_stats: Dict[str, Any]
     ) -> List[str]:
-        """Check and unlock achievements for user"""        try:
+        """Check and unlock achievements for user"""
+        try:
             unlocked_achievements = []
             user_progress = self.user_progress.get(user_id)
             
@@ -212,7 +223,8 @@ class GamificationSystem:
             return []
     
     async def update_leaderboards(self):
-        """Update global and category leaderboards"""        try:
+        """Update global and category leaderboards"""
+        try:
             # Global leaderboard by experience points
             global_ranking = sorted(
                 self.user_progress.values(),
@@ -262,7 +274,8 @@ class GamificationSystem:
             logger.error(f"Error updating leaderboards: {str(e)}")
     
     async def get_user_dashboard(self, user_id: str) -> Dict[str, Any]:
-        """Get gamification dashboard for user"""        try:
+        """Get gamification dashboard for user"""
+        try:
             user_progress = self.user_progress.get(user_id)
             if not user_progress:
                 return {"error": "User not found"}
@@ -320,7 +333,8 @@ class GamificationSystem:
             return {"error": str(e)}
     
     def _initialize_default_content(self):
-        """Initialize default achievements and challenges"""        try:
+        """Initialize default achievements and challenges"""
+        try:
             # Default achievements
             default_achievements = [
                 {
@@ -384,7 +398,8 @@ class GamificationSystem:
         challenge: Challenge,
         activity_data: Dict[str, Any]
     ) -> bool:
-        """Check if challenge requirements are met"""        try:
+        """Check if challenge requirements are met"""
+        try:
             requirements = challenge.requirements
             
             for req_key, req_value in requirements.items():
@@ -410,7 +425,8 @@ class GamificationSystem:
         user_stats: Dict[str, Any],
         user_progress: UserProgress
     ) -> bool:
-        """Check if achievement requirements are met"""        try:
+        """Check if achievement requirements are met"""
+        try:
             requirements = achievement.requirements
             
             for req_key, req_value in requirements.items():
@@ -438,7 +454,8 @@ class GamificationSystem:
         user_id: str,
         rewards: Dict[str, Any]
     ):
-        """Award challenge completion rewards"""        try:
+        """Award challenge completion rewards"""
+        try:
             user_progress = self.user_progress[user_id]
             
             if "xp" in rewards:
@@ -464,7 +481,8 @@ class GamificationSystem:
         user_id: str,
         rewards: Dict[str, Any]
     ):
-        """Award achievement unlock rewards"""        try:
+        """Award achievement unlock rewards"""
+        try:
             user_progress = self.user_progress[user_id]
             
             if "xp" in rewards:

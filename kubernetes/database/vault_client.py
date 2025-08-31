@@ -62,7 +62,8 @@ FONCTIONNALITÉS ENTERPRISE:
 - Secret usage analytics
 - Error rate monitoring
 - Alert integration
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import json
 import os
@@ -82,7 +83,8 @@ from backend.core.logging import get_logger
 
 
 class AuthMethod(Enum):
-    """Méthodes d'authentification Vault"""    TOKEN = "token"
+    """Méthodes d'authentification Vault"""
+    TOKEN = "token"
     AWS_IAM = "aws"
     KUBERNETES = "kubernetes"
     LDAP = "ldap"
@@ -92,7 +94,8 @@ class AuthMethod(Enum):
 
 
 class SecretEngine(Enum):
-    """Types de secret engines"""    KV_V2 = "kv-v2"
+    """Types de secret engines"""
+    KV_V2 = "kv-v2"
     TRANSIT = "transit"
     PKI = "pki"
     DATABASE = "database"
@@ -104,7 +107,8 @@ class SecretEngine(Enum):
 
 @dataclass
 class VaultSecret:
-    """Représentation d'un secret Vault"""    path: str
+    """Représentation d'un secret Vault"""
+    path: str
     data: Dict[str, Any]
     metadata: Dict[str, Any]
     version: int
@@ -115,7 +119,8 @@ class VaultSecret:
 
 @dataclass
 class VaultToken:
-    """Token d'authentification Vault"""    token: str
+    """Token d'authentification Vault"""
+    token: str
     accessor: str
     policies: List[str]
     renewable: bool
@@ -126,9 +131,11 @@ class VaultToken:
 
 
 class VaultClient:
-    """    Client enterprise pour HashiCorp Vault
+    """
+    Client enterprise pour HashiCorp Vault
     Gère l'authentification, les secrets et les opérations sécurisées
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or get_settings()
         self.logger = get_logger(f"{__name__}.VaultClient")
@@ -159,7 +166,8 @@ class VaultClient:
         self._initialize_session()
     
     def _setup_ssl_context(self):
-        """Configure le contexte SSL pour Vault"""        try:
+        """Configure le contexte SSL pour Vault"""
+        try:
             if not self.verify_ssl:
                 self.ssl_context = False
                 return
@@ -182,7 +190,8 @@ class VaultClient:
             raise
     
     async def _initialize_session(self):
-        """Initialise la session HTTP asynchrone"""        try:
+        """Initialise la session HTTP asynchrone"""
+        try:
             connector = aiohttp.TCPConnector(
                 ssl=self.ssl_context,
                 limit=100,
@@ -212,7 +221,8 @@ class VaultClient:
             raise
     
     async def _authenticate(self):
-        """Authentification automatique selon la méthode configurée"""        try:
+        """Authentification automatique selon la méthode configurée"""
+        try:
             if self.auth_method == AuthMethod.TOKEN:
                 await self._auth_with_token()
             elif self.auth_method == AuthMethod.APPROLE:
@@ -231,7 +241,8 @@ class VaultClient:
             raise
     
     async def _auth_with_token(self):
-        """Authentification par token"""        try:
+        """Authentification par token"""
+        try:
             token = self.config.get('vault_token', os.getenv('VAULT_TOKEN'))
             if not token:
                 raise ValueError("Vault token not provided")
@@ -263,7 +274,8 @@ class VaultClient:
             raise
     
     async def _auth_with_approle(self):
-        """Authentification par AppRole"""        try:
+        """Authentification par AppRole"""
+        try:
             if not self.role_id or not self.secret_id:
                 raise ValueError("AppRole credentials not provided")
             
@@ -302,7 +314,8 @@ class VaultClient:
             raise
     
     async def _auth_with_aws(self):
-        """Authentification AWS IAM"""        try:
+        """Authentification AWS IAM"""
+        try:
             # Récupération métadonnées EC2
             import boto3
             
@@ -365,7 +378,8 @@ class VaultClient:
             raise
     
     async def _auth_with_kubernetes(self):
-        """Authentification Kubernetes service account"""        try:
+        """Authentification Kubernetes service account"""
+        try:
             # Lecture du token de service account
             token_path = '/var/run/secrets/kubernetes.io/serviceaccount/token'
             if not os.path.exists(token_path):
@@ -410,7 +424,8 @@ class VaultClient:
             raise
     
     async def _ensure_authenticated(self):
-        """S'assure que l'authentification est valide"""        try:
+        """S'assure que l'authentification est valide"""
+        try:
             if not self.vault_token:
                 await self._authenticate()
                 return
@@ -445,7 +460,8 @@ class VaultClient:
         data: Optional[Dict[str, Any]] = None,
         params: Optional[Dict[str, Any]] = None
     ) -> aiohttp.ClientResponse:
-        """Effectue une requête authentifiée vers Vault"""        try:
+        """Effectue une requête authentifiée vers Vault"""
+        try:
             await self._ensure_authenticated()
             
             headers = {'X-Vault-Token': self.vault_token}
@@ -470,7 +486,8 @@ class VaultClient:
             raise
     
     async def get_secret(self, path: str, version: Optional[int] = None) -> Optional[Dict[str, Any]]:
-        """        Récupère un secret depuis Vault
+        """
+        Récupère un secret depuis Vault
         
         Args:
             path: Chemin du secret
@@ -478,7 +495,8 @@ class VaultClient:
             
         Returns:
             Données du secret ou None si non trouvé
-        """        try:
+        """
+        try:
             # Construction du chemin pour KV v2
             if not path.startswith('/'):
                 path = f'/v1/secret/data/{path}'
@@ -510,7 +528,8 @@ class VaultClient:
         secret_data: Union[str, Dict[str, Any]],
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """        Stocke un secret dans Vault
+        """
+        Stocke un secret dans Vault
         
         Args:
             path: Chemin du secret
@@ -519,7 +538,8 @@ class VaultClient:
             
         Returns:
             True si succès, False sinon
-        """        try:
+        """
+        try:
             # Construction du chemin pour KV v2
             if not path.startswith('/'):
                 path = f'/v1/secret/data/{path}'
@@ -552,7 +572,8 @@ class VaultClient:
             return False
     
     async def delete_secret(self, path: str, versions: Optional[List[int]] = None) -> bool:
-        """        Supprime un secret de Vault
+        """
+        Supprime un secret de Vault
         
         Args:
             path: Chemin du secret
@@ -560,7 +581,8 @@ class VaultClient:
             
         Returns:
             True si succès, False sinon
-        """        try:
+        """
+        try:
             if versions:
                 # Suppression de versions spécifiques
                 delete_path = f'/v1/secret/delete/{path.lstrip("/")}'
@@ -588,14 +610,16 @@ class VaultClient:
             return False
     
     async def list_secrets(self, path: str = "") -> List[str]:
-        """        Liste les secrets dans un chemin
+        """
+        Liste les secrets dans un chemin
         
         Args:
             path: Chemin à lister
             
         Returns:
             Liste des noms de secrets
-        """        try:
+        """
+        try:
             if not path.startswith('/'):
                 list_path = f'/v1/secret/metadata/{path}'
             elif not path.startswith('/v1/'):
@@ -619,14 +643,16 @@ class VaultClient:
             return []
     
     async def get_secret_metadata(self, path: str) -> Optional[Dict[str, Any]]:
-        """        Récupère les métadonnées d'un secret
+        """
+        Récupère les métadonnées d'un secret
         
         Args:
             path: Chemin du secret
             
         Returns:
             Métadonnées du secret ou None
-        """        try:
+        """
+        try:
             if not path.startswith('/'):
                 metadata_path = f'/v1/secret/metadata/{path}'
             elif not path.startswith('/v1/'):
@@ -655,7 +681,8 @@ class VaultClient:
         plaintext: Union[str, bytes],
         context: Optional[Dict[str, str]] = None
     ) -> Optional[str]:
-        """        Chiffre des données avec Vault Transit
+        """
+        Chiffre des données avec Vault Transit
         
         Args:
             key_name: Nom de la clé de chiffrement
@@ -664,7 +691,8 @@ class VaultClient:
             
         Returns:
             Données chiffrées ou None
-        """        try:
+        """
+        try:
             if isinstance(plaintext, str):
                 plaintext = plaintext.encode('utf-8')
             
@@ -701,7 +729,8 @@ class VaultClient:
         ciphertext: str,
         context: Optional[Dict[str, str]] = None
     ) -> Optional[bytes]:
-        """        Déchiffre des données avec Vault Transit
+        """
+        Déchiffre des données avec Vault Transit
         
         Args:
             key_name: Nom de la clé de chiffrement
@@ -710,7 +739,8 @@ class VaultClient:
             
         Returns:
             Données déchiffrées ou None
-        """        try:
+        """
+        try:
             data = {'ciphertext': ciphertext}
             
             if context:
@@ -738,11 +768,13 @@ class VaultClient:
             return None
     
     async def health_check(self) -> Dict[str, Any]:
-        """        Vérification de santé de Vault
+        """
+        Vérification de santé de Vault
         
         Returns:
             Statut de santé de Vault
-        """        try:
+        """
+        try:
             response = await self._make_request('GET', '/v1/sys/health')
             
             if response.status == 200:
@@ -769,11 +801,13 @@ class VaultClient:
             }
     
     async def get_token_info(self) -> Optional[Dict[str, Any]]:
-        """        Récupère les informations du token actuel
+        """
+        Récupère les informations du token actuel
         
         Returns:
             Informations du token ou None
-        """        try:
+        """
+        try:
             await self._ensure_authenticated()
             
             response = await self._make_request('GET', '/v1/auth/token/lookup-self')
@@ -789,14 +823,16 @@ class VaultClient:
             return None
     
     async def renew_token(self, increment: Optional[int] = None) -> bool:
-        """        Renouvelle le token actuel
+        """
+        Renouvelle le token actuel
         
         Args:
             increment: Durée supplémentaire en secondes
             
         Returns:
             True si succès, False sinon
-        """        try:
+        """
+        try:
             await self._ensure_authenticated()
             
             data = {}
@@ -826,7 +862,8 @@ class VaultClient:
             return False
     
     async def close(self):
-        """Ferme proprement la connexion Vault"""        try:
+        """Ferme proprement la connexion Vault"""
+        try:
             if self.session:
                 await self.session.close()
                 self.session = None
@@ -842,7 +879,8 @@ _vault_client: Optional[VaultClient] = None
 
 
 def get_vault_client(config: Optional[Dict[str, Any]] = None) -> VaultClient:
-    """Récupère ou crée l'instance du client Vault"""    global _vault_client
+    """Récupère ou crée l'instance du client Vault"""
+    global _vault_client
     
     if _vault_client is None:
         _vault_client = VaultClient(config)

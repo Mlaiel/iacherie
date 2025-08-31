@@ -119,11 +119,13 @@ __all__ = [
 
 # Module initialization
 def initialize_core_remix() -> bool:
-    """    Initialize core remix module with enterprise configuration.
+    """
+    Initialize core remix module with enterprise configuration.
     
     Returns:
         bool: True if initialization successful, False otherwise
-    """    try:
+    """
+    try:
         logger.info("Initializing IA-Influencer-Agent Core Remix Module v%s", __version__)
         logger.info("Team: %s", ", ".join(__team_specialities__))
         

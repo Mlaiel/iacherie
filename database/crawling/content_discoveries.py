@@ -10,7 +10,8 @@ Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security Expert
 Copyright: All rights reserved
-"""from typing import Dict, List, Optional, Any, Union
+"""
+from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, asc, func, text
@@ -34,7 +35,8 @@ from ..core.exceptions import (
 
 
 class DiscoveryCategory(Enum):
-    """Content discovery categories."""    ORIGINAL_CONTENT = 'original_content'
+    """Content discovery categories."""
+    ORIGINAL_CONTENT = 'original_content'
     DERIVATIVE_CONTENT = 'derivative_content'
     POTENTIAL_INFRINGEMENT = 'potential_infringement'
     COLLABORATION_OPPORTUNITY = 'collaboration_opportunity'
@@ -43,7 +45,8 @@ class DiscoveryCategory(Enum):
 
 
 class ConfidenceLevel(Enum):
-    """Confidence levels for content matching."""    VERY_LOW = 'very_low'      # 0-20%
+    """Confidence levels for content matching."""
+    VERY_LOW = 'very_low'      # 0-20%
     LOW = 'low'                # 21-40%
     MEDIUM = 'medium'          # 41-60%
     HIGH = 'high'              # 61-80%
@@ -51,7 +54,8 @@ class ConfidenceLevel(Enum):
 
 
 class ContentDiscoveryManager(DatabaseManager):
-    """    Enterprise-grade content discovery manager for crawling operations.
+    """
+    Enterprise-grade content discovery manager for crawling operations.
     
     Handles:
     - Content discovery storage and indexing
@@ -59,13 +63,16 @@ class ContentDiscoveryManager(DatabaseManager):
     - Duplicate detection and deduplication
     - Content analysis and metadata extraction
     - Discovery analytics and reporting
-    """    
+    """
+    
     def __init__(self, db_session: Session):
-        """        Initialize content discovery manager.
+        """
+        Initialize content discovery manager.
         
         Args:
             db_session: SQLAlchemy database session
-        """        super().__init__(db_session)
+        """
+        super().__init__(db_session)
         self.table = ContentDiscovery
     
     async def store_discovery(
@@ -77,7 +84,8 @@ class ContentDiscoveryManager(DatabaseManager):
         source_url: Optional[str] = None,
         discovery_source: str = DiscoverySource.CRAWLER.value
     ) -> Dict[str, Any]:
-        """        Store discovered content with comprehensive metadata analysis.
+        """
+        Store discovered content with comprehensive metadata analysis.
         
         Args:
             session_id: Crawling session identifier
@@ -93,7 +101,8 @@ class ContentDiscoveryManager(DatabaseManager):
         Raises:
             ContentDiscoveryError: If storage fails
             ValidationError: If content data invalid
-        """        try:
+        """
+        try:
             # Generate unique discovery ID
             discovery_id = str(uuid4())
             
@@ -180,7 +189,8 @@ class ContentDiscoveryManager(DatabaseManager):
         content_data: Dict[str, Any],
         platform: str
     ) -> Dict[str, Any]:
-        """        Extract standardized metadata from raw content data.
+        """
+        Extract standardized metadata from raw content data.
         
         Args:
             content_data: Raw content data
@@ -188,7 +198,8 @@ class ContentDiscoveryManager(DatabaseManager):
             
         Returns:
             Dict containing extracted metadata
-        """        try:
+        """
+        try:
             metadata = {}
             
             # Extract common fields
@@ -258,7 +269,8 @@ class ContentDiscoveryManager(DatabaseManager):
             raise ContentDiscoveryError(f"Failed to extract metadata: {str(e)}")
     
     def _safe_int(self, value: Any) -> int:
-        """Safely convert value to integer."""        try:
+        """Safely convert value to integer."""
+        try:
             if isinstance(value, str):
                 # Handle values like "1.2K", "3.5M"
                 value = value.replace(',', '').strip()
@@ -271,14 +283,16 @@ class ContentDiscoveryManager(DatabaseManager):
             return 0
     
     async def _calculate_content_hash(self, content_data: Dict[str, Any]) -> str:
-        """        Calculate unique hash for content to detect duplicates.
+        """
+        Calculate unique hash for content to detect duplicates.
         
         Args:
             content_data: Content data
             
         Returns:
             Content hash string
-        """        try:
+        """
+        try:
             # Create normalized content for hashing
             hash_content = {
                 'title': content_data.get('title', '').strip().lower(),
@@ -306,7 +320,8 @@ class ContentDiscoveryManager(DatabaseManager):
         content_hash: str,
         platform: str
     ) -> Optional[Dict[str, Any]]:
-        """        Check if content already exists based on hash.
+        """
+        Check if content already exists based on hash.
         
         Args:
             content_hash: Content hash to check
@@ -314,9 +329,11 @@ class ContentDiscoveryManager(DatabaseManager):
             
         Returns:
             Existing discovery data or None
-        """        try:
+        """
+        try:
             result = await self.db.execute(
-                text("""                SELECT discovery_id, session_id, job_id, discovered_at, confidence_score
+                text("""
+                SELECT discovery_id, session_id, job_id, discovered_at, confidence_score
                 FROM content_discoveries
                 WHERE content_hash = :content_hash
                   AND platform = :platform
@@ -354,7 +371,8 @@ class ContentDiscoveryManager(DatabaseManager):
         job_id: str,
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Handle duplicate content discovery by updating existing record.
+        """
+        Handle duplicate content discovery by updating existing record.
         
         Args:
             existing_discovery: Existing discovery data
@@ -364,12 +382,14 @@ class ContentDiscoveryManager(DatabaseManager):
             
         Returns:
             Updated discovery information
-        """        try:
+        """
+        try:
             discovery_id = existing_discovery['discovery_id']
             
             # Update duplicate count and last seen
             await self.db.execute(
-                text("""                UPDATE content_discoveries 
+                text("""
+                UPDATE content_discoveries 
                 SET duplicate_count = COALESCE(duplicate_count, 0) + 1,
                     last_seen_at = :now,
                     updated_at = :now
@@ -406,7 +426,8 @@ class ContentDiscoveryManager(DatabaseManager):
         content_data: Dict[str, Any],
         platform: str
     ) -> Dict[str, Any]:
-        """        Analyze content to determine category and characteristics.
+        """
+        Analyze content to determine category and characteristics.
         
         Args:
             content_data: Content data to analyze
@@ -414,7 +435,8 @@ class ContentDiscoveryManager(DatabaseManager):
             
         Returns:
             Dict containing analysis results
-        """        try:
+        """
+        try:
             analysis = {
                 'category': DiscoveryCategory.ORIGINAL_CONTENT.value,
                 'characteristics': [],
@@ -491,7 +513,8 @@ class ContentDiscoveryManager(DatabaseManager):
         content_data: Dict[str, Any],
         analysis_result: Dict[str, Any]
     ) -> float:
-        """        Calculate confidence score for content discovery.
+        """
+        Calculate confidence score for content discovery.
         
         Args:
             content_data: Content data
@@ -499,7 +522,8 @@ class ContentDiscoveryManager(DatabaseManager):
             
         Returns:
             Confidence score (0.0 - 100.0)
-        """        try:
+        """
+        try:
             base_score = 50.0  # Start with medium confidence
             
             # Boost score for complete metadata
@@ -541,14 +565,16 @@ class ContentDiscoveryManager(DatabaseManager):
             return 50.0  # Default medium confidence
     
     async def _determine_content_type(self, content_data: Dict[str, Any]) -> str:
-        """        Determine content type from content data.
+        """
+        Determine content type from content data.
         
         Args:
             content_data: Content data
             
         Returns:
             Content type string
-        """        # Check explicit type first
+        """
+        # Check explicit type first
         if 'type' in content_data:
             return content_data['type']
         
@@ -565,7 +591,8 @@ class ContentDiscoveryManager(DatabaseManager):
             return ContentType.MIXED.value
     
     def _extract_keywords(self, title: str, description: str) -> List[str]:
-        """        Extract keywords from title and description.
+        """
+        Extract keywords from title and description.
         
         Args:
             title: Content title
@@ -573,7 +600,8 @@ class ContentDiscoveryManager(DatabaseManager):
             
         Returns:
             List of extracted keywords
-        """        try:
+        """
+        try:
             import re
             
             # Combine text
@@ -606,14 +634,16 @@ class ContentDiscoveryManager(DatabaseManager):
             return []
     
     async def _detect_language(self, text: str) -> str:
-        """        Detect language of content text.
+        """
+        Detect language of content text.
         
         Args:
             text: Text to analyze
             
         Returns:
             Language code (e.g., 'en', 'fr', 'de')
-        """        try:
+        """
+        try:
             # Simple language detection based on common words
             # In production, use a proper language detection library
             
@@ -652,12 +682,14 @@ class ContentDiscoveryManager(DatabaseManager):
         discovery_id: str,
         metadata: Dict[str, Any]
     ) -> None:
-        """        Index discovery for search functionality.
+        """
+        Index discovery for search functionality.
         
         Args:
             discovery_id: Discovery identifier
             metadata: Content metadata
-        """        try:
+        """
+        try:
             # In production, this would index to Elasticsearch or similar
             # For now, we'll create a simple search index record
             
@@ -683,13 +715,15 @@ class ContentDiscoveryManager(DatabaseManager):
         session_id: str,
         job_id: str
     ) -> None:
-        """        Log duplicate discovery event.
+        """
+        Log duplicate discovery event.
         
         Args:
             discovery_id: Original discovery ID
             session_id: Session that found duplicate
             job_id: Job that found duplicate
-        """        try:
+        """
+        try:
             # Log duplicate discovery for analytics
             duplicate_log = {
                 'original_discovery_id': discovery_id,
@@ -713,7 +747,8 @@ class ContentDiscoveryManager(DatabaseManager):
         platform: Optional[str] = None,
         content_type: Optional[str] = None
     ) -> List[Dict[str, Any]]:
-        """        Get discoveries for a specific user with filters.
+        """
+        Get discoveries for a specific user with filters.
         
         Args:
             user_id: User identifier
@@ -724,7 +759,8 @@ class ContentDiscoveryManager(DatabaseManager):
             
         Returns:
             List of discovery dictionaries
-        """        try:
+        """
+        try:
             # Build query conditions
             conditions = ["cs.user_id = :user_id"]
             params = {'user_id': user_id, 'limit': limit}
@@ -741,7 +777,8 @@ class ContentDiscoveryManager(DatabaseManager):
                 conditions.append("cd.content_type = :content_type")
                 params['content_type'] = content_type
             
-            query = f"""            SELECT 
+            query = f"""
+            SELECT 
                 cd.discovery_id, cd.platform, cd.content_type, cd.category,
                 cd.confidence_score, cd.discovered_at, cd.views_count,
                 cd.likes_count, cd.shares_count, cd.comments_count,
@@ -751,7 +788,8 @@ class ContentDiscoveryManager(DatabaseManager):
             WHERE {' AND '.join(conditions)}
             ORDER BY cd.discovered_at DESC
             LIMIT :limit
-            """            
+            """
+            
             result = await self.db.execute(text(query), params)
             
             discoveries = []
@@ -782,16 +820,19 @@ class ContentDiscoveryManager(DatabaseManager):
             raise DatabaseError(f"Failed to get user discoveries: {str(e)}")
     
     async def archive_session_discoveries(self, session_id: str) -> int:
-        """        Archive discoveries for a specific session.
+        """
+        Archive discoveries for a specific session.
         
         Args:
             session_id: Session identifier
             
         Returns:
             Number of discoveries archived
-        """        try:
+        """
+        try:
             result = await self.db.execute(
-                text("""                UPDATE content_discoveries 
+                text("""
+                UPDATE content_discoveries 
                 SET status = :archived_status,
                     updated_at = :now
                 WHERE session_id = :session_id
@@ -812,11 +853,13 @@ class ContentDiscoveryManager(DatabaseManager):
             raise DatabaseError(f"Failed to archive session discoveries: {str(e)}")
     
     async def health_check(self) -> Dict[str, Any]:
-        """        Perform health check of content discovery system.
+        """
+        Perform health check of content discovery system.
         
         Returns:
             Dict containing health status
-        """        try:
+        """
+        try:
             # Check recent discoveries
             recent_discoveries = await self.db.query(func.count(ContentDiscovery.discovery_id)).filter(
                 ContentDiscovery.discovered_at >= datetime.utcnow() - timedelta(hours=24)

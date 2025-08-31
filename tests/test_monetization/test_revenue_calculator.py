@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -16,7 +17,8 @@ Tests for automated revenue calculation functionality.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -28,14 +30,17 @@ from monetization.revenue_calculator import RevenueCalculator, RevenueData
 
 
 class TestRevenueCalculator:
-    """Test suite for RevenueCalculator class"""    
+    """Test suite for RevenueCalculator class"""
+    
     @pytest.fixture
     def calculator(self):
-        """Create RevenueCalculator instance for testing"""        return RevenueCalculator()
+        """Create RevenueCalculator instance for testing"""
+        return RevenueCalculator()
     
     @pytest.fixture
     def sample_revenue_data(self):
-        """Sample revenue data for testing"""        return [
+        """Sample revenue data for testing"""
+        return [
             RevenueData(
                 platform="youtube",
                 content_id="test_123",
@@ -59,7 +64,8 @@ class TestRevenueCalculator:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_youtube_revenue_calculation_basic(self, calculator):
-        """Test basic YouTube revenue calculation"""        revenue = await calculator.calculate_youtube_revenue(
+        """Test basic YouTube revenue calculation"""
+        revenue = await calculator.calculate_youtube_revenue(
             views=10000,
             watch_time_hours=5000,
             engagement_rate=0.05,
@@ -74,7 +80,8 @@ class TestRevenueCalculator:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_youtube_revenue_below_threshold(self, calculator):
-        """Test YouTube revenue when below monetization threshold"""        revenue = await calculator.calculate_youtube_revenue(
+        """Test YouTube revenue when below monetization threshold"""
+        revenue = await calculator.calculate_youtube_revenue(
             views=10000,
             watch_time_hours=5000,
             engagement_rate=0.05,
@@ -87,7 +94,8 @@ class TestRevenueCalculator:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_youtube_revenue_high_engagement_bonus(self, calculator):
-        """Test YouTube revenue with high engagement bonus"""        base_revenue = await calculator.calculate_youtube_revenue(
+        """Test YouTube revenue with high engagement bonus"""
+        base_revenue = await calculator.calculate_youtube_revenue(
             views=10000,
             watch_time_hours=5000,
             engagement_rate=0.03,  # Below bonus threshold
@@ -108,7 +116,8 @@ class TestRevenueCalculator:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_instagram_revenue_calculation(self, calculator):
-        """Test Instagram revenue calculation"""        revenue = await calculator.calculate_instagram_revenue(
+        """Test Instagram revenue calculation"""
+        revenue = await calculator.calculate_instagram_revenue(
             impressions=50000,
             reach=35000,
             engagement_rate=0.04,
@@ -122,7 +131,8 @@ class TestRevenueCalculator:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_instagram_revenue_below_threshold(self, calculator):
-        """Test Instagram revenue below follower threshold"""        revenue = await calculator.calculate_instagram_revenue(
+        """Test Instagram revenue below follower threshold"""
+        revenue = await calculator.calculate_instagram_revenue(
             impressions=50000,
             reach=35000,
             engagement_rate=0.04,
@@ -135,7 +145,8 @@ class TestRevenueCalculator:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_tiktok_revenue_calculation(self, calculator):
-        """Test TikTok revenue calculation"""        revenue = await calculator.calculate_tiktok_revenue(
+        """Test TikTok revenue calculation"""
+        revenue = await calculator.calculate_tiktok_revenue(
             views=100000,
             shares=5000,
             likes=8000,
@@ -149,7 +160,8 @@ class TestRevenueCalculator:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_tiktok_revenue_below_threshold(self, calculator):
-        """Test TikTok revenue below follower threshold"""        revenue = await calculator.calculate_tiktok_revenue(
+        """Test TikTok revenue below follower threshold"""
+        revenue = await calculator.calculate_tiktok_revenue(
             views=100000,
             shares=5000,
             likes=8000,
@@ -162,7 +174,8 @@ class TestRevenueCalculator:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_spotify_revenue_calculation(self, calculator):
-        """Test Spotify revenue calculation"""        revenue = await calculator.calculate_spotify_revenue(
+        """Test Spotify revenue calculation"""
+        revenue = await calculator.calculate_spotify_revenue(
             streams=50000,
             premium_streams=30000,
             country_distribution={"US": 20000, "CA": 15000, "GB": 15000}
@@ -177,7 +190,8 @@ class TestRevenueCalculator:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_spotify_premium_bonus(self, calculator):
-        """Test Spotify premium streams earn more"""        base_revenue = await calculator.calculate_spotify_revenue(
+        """Test Spotify premium streams earn more"""
+        base_revenue = await calculator.calculate_spotify_revenue(
             streams=50000,
             premium_streams=10000,  # Low premium ratio
             country_distribution={"US": 50000}
@@ -194,7 +208,8 @@ class TestRevenueCalculator:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_total_revenue_calculation(self, calculator):
-        """Test total revenue calculation across platforms"""        platform_data = {
+        """Test total revenue calculation across platforms"""
+        platform_data = {
             "youtube": {
                 "views": 10000,
                 "watch_time_hours": 5000,
@@ -232,7 +247,8 @@ class TestRevenueCalculator:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_ml_revenue_prediction(self, calculator, sample_revenue_data):
-        """Test ML-based revenue prediction"""        predictions = await calculator.predict_revenue_ml(
+        """Test ML-based revenue prediction"""
+        predictions = await calculator.predict_revenue_ml(
             platform="youtube",
             historical_data=sample_revenue_data,
             forecast_days=7
@@ -245,7 +261,8 @@ class TestRevenueCalculator:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_ml_prediction_insufficient_data(self, calculator):
-        """Test ML prediction with insufficient historical data"""        limited_data = [
+        """Test ML prediction with insufficient historical data"""
+        limited_data = [
             RevenueData("youtube", "test", 1000, 0.05, 10.0)
         ]
         
@@ -261,7 +278,8 @@ class TestRevenueCalculator:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_ml_prediction_no_data(self, calculator):
-        """Test ML prediction with no historical data"""        predictions = await calculator.predict_revenue_ml(
+        """Test ML prediction with no historical data"""
+        predictions = await calculator.predict_revenue_ml(
             platform="youtube",
             historical_data=[],
             forecast_days=3
@@ -273,7 +291,8 @@ class TestRevenueCalculator:
     @pytest.mark.unit
     @pytest.mark.monetization
     def test_country_cpm_multiplier(self, calculator):
-        """Test country-based CPM multipliers"""        assert calculator._get_country_cpm_multiplier("US") == 1.0
+        """Test country-based CPM multipliers"""
+        assert calculator._get_country_cpm_multiplier("US") == 1.0
         assert calculator._get_country_cpm_multiplier("DE") == 0.7
         assert calculator._get_country_cpm_multiplier("IN") == 0.1
         assert calculator._get_country_cpm_multiplier("UNKNOWN") == 0.5
@@ -281,7 +300,8 @@ class TestRevenueCalculator:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_real_time_revenue_caching(self, calculator):
-        """Test real-time revenue caching mechanism"""        content_id = "test_content_123"
+        """Test real-time revenue caching mechanism"""
+        content_id = "test_content_123"
         
         # First call should calculate
         revenue1 = await calculator.get_real_time_revenue(content_id)
@@ -296,7 +316,8 @@ class TestRevenueCalculator:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_error_handling_youtube(self, calculator):
-        """Test error handling in YouTube revenue calculation"""        # Test with invalid data types
+        """Test error handling in YouTube revenue calculation"""
+        # Test with invalid data types
         revenue = await calculator.calculate_youtube_revenue(
             views="invalid",  # Should be int
             watch_time_hours=5000,
@@ -310,7 +331,8 @@ class TestRevenueCalculator:
     @pytest.mark.unit
     @pytest.mark.monetization
     async def test_revenue_data_structure(self):
-        """Test RevenueData dataclass structure"""        revenue_data = RevenueData(
+        """Test RevenueData dataclass structure"""
+        revenue_data = RevenueData(
             platform="youtube",
             content_id="test_123",
             views=10000,
@@ -328,7 +350,8 @@ class TestRevenueCalculator:
     @pytest.mark.slow
     @pytest.mark.monetization
     async def test_large_scale_calculation(self, calculator):
-        """Test revenue calculation with large numbers"""        # Test with very large view counts
+        """Test revenue calculation with large numbers"""
+        # Test with very large view counts
         revenue = await calculator.calculate_youtube_revenue(
             views=10_000_000,  # 10 million views
             watch_time_hours=50_000,
@@ -343,7 +366,8 @@ class TestRevenueCalculator:
     @pytest.mark.unit
     @pytest.mark.monetization
     def test_platform_rates_configuration(self, calculator):
-        """Test platform rates configuration"""        rates = calculator.PLATFORM_RATES
+        """Test platform rates configuration"""
+        rates = calculator.PLATFORM_RATES
         
         # Verify all expected platforms are configured
         expected_platforms = ["youtube", "instagram", "tiktok", "spotify", "twitter"]

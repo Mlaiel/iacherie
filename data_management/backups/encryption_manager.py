@@ -11,7 +11,8 @@ Responsibility: Chiffrement bout-en-bout pour sauvegardes avec gestion clés ava
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 import os
 import hashlib
@@ -36,7 +37,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class EncryptionKey:
-    """Clé de chiffrement avec métadonnées"""    key_id: str
+    """Clé de chiffrement avec métadonnées"""
+    key_id: str
     algorithm: str
     key_data: bytes
     created_at: datetime
@@ -49,12 +51,14 @@ class EncryptionKey:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def is_expired(self) -> bool:
-        """Vérifie si la clé a expiré"""        if not self.expires_at:
+        """Vérifie si la clé a expiré"""
+        if not self.expires_at:
             return False
         return datetime.now() > self.expires_at
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire pour stockage"""        return {
+        """Convertit en dictionnaire pour stockage"""
+        return {
             "key_id": self.key_id,
             "algorithm": self.algorithm,
             "created_at": self.created_at.isoformat(),
@@ -70,7 +74,8 @@ class EncryptionKey:
 
 @dataclass
 class EncryptionConfig:
-    """Configuration de chiffrement"""    algorithm: str = "AES-256-GCM"
+    """Configuration de chiffrement"""
+    algorithm: str = "AES-256-GCM"
     key_derivation: str = "PBKDF2"
     iterations: int = 100000
     key_rotation_days: int = 90
@@ -79,7 +84,8 @@ class EncryptionConfig:
     verify_decryption: bool = True
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""        return {
+        """Convertit en dictionnaire"""
+        return {
             "algorithm": self.algorithm,
             "key_derivation": self.key_derivation,
             "iterations": self.iterations,
@@ -91,7 +97,8 @@ class EncryptionConfig:
 
 
 class EncryptionManager:
-    """    Gestionnaire de chiffrement avancé pour sauvegardes
+    """
+    Gestionnaire de chiffrement avancé pour sauvegardes
     
     Fonctionnalités:
     - Chiffrement AES-256-GCM bout-en-bout
@@ -101,7 +108,8 @@ class EncryptionManager:
     - Chiffrement asymétrique RSA
     - Vérification intégrité
     - Audit et logging sécurisé
-    """    
+    """
+    
     def __init__(self, config: Optional[EncryptionConfig] = None):
         self.config = config or EncryptionConfig()
         self.key_store: Dict[str, EncryptionKey] = {}
@@ -127,7 +135,8 @@ class EncryptionManager:
         user_id: Optional[str] = None,
         config: Optional[Dict[str, Any]] = None
     ) -> EncryptionKey:
-        """        Génère une nouvelle clé de chiffrement
+        """
+        Génère une nouvelle clé de chiffrement
         
         Args:
             user_id: ID utilisateur pour isolation
@@ -135,7 +144,8 @@ class EncryptionManager:
             
         Returns:
             EncryptionKey: Clé générée
-        """        try:
+        """
+        try:
             key_config = config or {}
             algorithm = key_config.get("algorithm", self.config.algorithm)
             key_size = key_config.get("key_size", 256)
@@ -187,7 +197,8 @@ class EncryptionManager:
         backup_id: str,
         content_type: str = "mixed"
     ) -> EncryptionKey:
-        """        Génère une clé spécifique pour une sauvegarde
+        """
+        Génère une clé spécifique pour une sauvegarde
         
         Args:
             user_id: ID utilisateur
@@ -196,7 +207,8 @@ class EncryptionManager:
             
         Returns:
             EncryptionKey: Clé de sauvegarde
-        """        metadata = {
+        """
+        metadata = {
             "backup_id": backup_id,
             "content_type": content_type,
             "purpose": "backup_encryption"
@@ -208,7 +220,8 @@ class EncryptionManager:
         return key
     
     def _generate_key_id(self, user_id: Optional[str] = None) -> str:
-        """Génère un ID unique pour une clé"""        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        """Génère un ID unique pour une clé"""
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         random_suffix = secrets.token_hex(8)
         
         if user_id:
@@ -222,7 +235,8 @@ class EncryptionManager:
         encryption_key: EncryptionKey,
         output_path: Optional[Path] = None
     ) -> Path:
-        """        Chiffre un fichier avec la clé spécifiée
+        """
+        Chiffre un fichier avec la clé spécifiée
         
         Args:
             input_path: Fichier à chiffrer
@@ -231,7 +245,8 @@ class EncryptionManager:
             
         Returns:
             Path: Chemin du fichier chiffré
-        """        try:
+        """
+        try:
             if not input_path.exists():
                 raise EncryptionException(f"Input file not found: {input_path}")
             
@@ -268,7 +283,8 @@ class EncryptionManager:
         encryption_key: EncryptionKey,
         output_path: Path
     ) -> Path:
-        """        Chiffrement AES-256-GCM avec authentification
+        """
+        Chiffrement AES-256-GCM avec authentification
         
         Args:
             input_path: Fichier source
@@ -277,7 +293,8 @@ class EncryptionManager:
             
         Returns:
             Path: Fichier chiffré
-        """        # Génération IV (Initialization Vector)
+        """
+        # Génération IV (Initialization Vector)
         iv = os.urandom(12)  # 96 bits pour GCM
         
         # Configuration cipher
@@ -320,7 +337,8 @@ class EncryptionManager:
         encryption_key: EncryptionKey,
         output_path: Path
     ) -> Path:
-        """        Chiffrement AES-256-CBC avec padding
+        """
+        Chiffrement AES-256-CBC avec padding
         
         Args:
             input_path: Fichier source
@@ -329,7 +347,8 @@ class EncryptionManager:
             
         Returns:
             Path: Fichier chiffré
-        """        from cryptography.hazmat.primitives import padding as sym_padding
+        """
+        from cryptography.hazmat.primitives import padding as sym_padding
         
         # Génération IV
         iv = os.urandom(16)  # 128 bits pour CBC
@@ -377,7 +396,8 @@ class EncryptionManager:
         return output_path
     
     def _create_encryption_header(self, encryption_key: EncryptionKey, iv: bytes) -> bytes:
-        """        Crée un header avec métadonnées de chiffrement
+        """
+        Crée un header avec métadonnées de chiffrement
         
         Args:
             encryption_key: Clé utilisée
@@ -385,7 +405,8 @@ class EncryptionManager:
             
         Returns:
             bytes: Header structuré
-        """        import struct
+        """
+        import struct
         
         header_data = {
             "version": 1,
@@ -407,7 +428,8 @@ class EncryptionManager:
         output_path: Path,
         key_id: Optional[str] = None
     ) -> bool:
-        """        Déchiffre un fichier
+        """
+        Déchiffre un fichier
         
         Args:
             input_path: Fichier chiffré
@@ -416,7 +438,8 @@ class EncryptionManager:
             
         Returns:
             bool: True si déchiffrement réussi
-        """        try:
+        """
+        try:
             if not input_path.exists():
                 logger.error(f"Encrypted file not found: {input_path}")
                 return False
@@ -462,14 +485,16 @@ class EncryptionManager:
             return False
     
     def _read_encryption_header(self, file_path: Path) -> Optional[Dict[str, Any]]:
-        """        Lit le header de chiffrement d'un fichier
+        """
+        Lit le header de chiffrement d'un fichier
         
         Args:
             file_path: Fichier chiffré
             
         Returns:
             Optional[Dict[str, Any]]: Métadonnées du header
-        """        try:
+        """
+        try:
             import struct
             
             with open(file_path, 'rb') as f:
@@ -498,7 +523,8 @@ class EncryptionManager:
         output_path: Path,
         header_data: Dict[str, Any]
     ) -> bool:
-        """        Déchiffrement AES-256-GCM avec vérification authentification
+        """
+        Déchiffrement AES-256-GCM avec vérification authentification
         
         Args:
             input_path: Fichier chiffré
@@ -508,7 +534,8 @@ class EncryptionManager:
             
         Returns:
             bool: True si déchiffrement réussi
-        """        try:
+        """
+        try:
             iv = base64.b64decode(header_data["iv"])
             
             # Calcul position données chiffrées
@@ -554,7 +581,8 @@ class EncryptionManager:
         output_path: Path,
         header_data: Dict[str, Any]
     ) -> bool:
-        """        Déchiffrement AES-256-CBC avec suppression padding
+        """
+        Déchiffrement AES-256-CBC avec suppression padding
         
         Args:
             input_path: Fichier chiffré
@@ -564,7 +592,8 @@ class EncryptionManager:
             
         Returns:
             bool: True si déchiffrement réussi
-        """        try:
+        """
+        try:
             from cryptography.hazmat.primitives import padding as sym_padding
             
             iv = base64.b64decode(header_data["iv"])
@@ -619,7 +648,8 @@ class EncryptionManager:
             return False
     
     async def rotate_key(self, old_key_id: str, user_id: Optional[str] = None) -> EncryptionKey:
-        """        Effectue la rotation d'une clé de chiffrement
+        """
+        Effectue la rotation d'une clé de chiffrement
         
         Args:
             old_key_id: ID de l'ancienne clé
@@ -627,7 +657,8 @@ class EncryptionManager:
             
         Returns:
             EncryptionKey: Nouvelle clé générée
-        """        try:
+        """
+        try:
             if old_key_id not in self.key_store:
                 raise KeyManagementException(f"Key {old_key_id} not found for rotation")
             
@@ -657,11 +688,13 @@ class EncryptionManager:
             raise KeyManagementException(f"Key rotation failed: {e}")
     
     async def _backup_key(self, encryption_key: EncryptionKey):
-        """        Sauvegarde sécurisée d'une clé de chiffrement
+        """
+        Sauvegarde sécurisée d'une clé de chiffrement
         
         Args:
             encryption_key: Clé à sauvegarder
-        """        try:
+        """
+        try:
             # En production, sauvegarder dans HSM ou vault sécurisé
             # Ici, simulation avec chiffrement par clé maître
             
@@ -688,14 +721,16 @@ class EncryptionManager:
             logger.error(f"Key backup failed for {encryption_key.key_id}: {e}")
     
     def _get_or_create_master_key(self, user_id: Optional[str]) -> bytes:
-        """        Récupère ou crée une clé maître pour un utilisateur
+        """
+        Récupère ou crée une clé maître pour un utilisateur
         
         Args:
             user_id: ID utilisateur
             
         Returns:
             bytes: Clé maître
-        """        key_identifier = user_id or "global"
+        """
+        key_identifier = user_id or "global"
         
         if key_identifier not in self.master_keys:
             # Génération nouvelle clé maître
@@ -712,7 +747,8 @@ class EncryptionManager:
         encrypted_path: Path,
         encryption_key: EncryptionKey
     ) -> bool:
-        """        Vérifie la validité d'un chiffrement via test de déchiffrement
+        """
+        Vérifie la validité d'un chiffrement via test de déchiffrement
         
         Args:
             original_path: Fichier original
@@ -721,7 +757,8 @@ class EncryptionManager:
             
         Returns:
             bool: True si chiffrement valide
-        """        try:
+        """
+        try:
             import tempfile
             
             # Déchiffrement test dans fichier temporaire
@@ -747,7 +784,8 @@ class EncryptionManager:
             return False
     
     async def _calculate_file_checksum(self, file_path: Path) -> str:
-        """Calcule le checksum SHA-256 d'un fichier"""        hash_sha256 = hashlib.sha256()
+        """Calcule le checksum SHA-256 d'un fichier"""
+        hash_sha256 = hashlib.sha256()
         
         with open(file_path, 'rb') as f:
             while chunk := f.read(8192):
@@ -760,7 +798,8 @@ class EncryptionManager:
         user_id: Optional[str] = None,
         include_expired: bool = False
     ) -> List[EncryptionKey]:
-        """        Liste les clés de chiffrement
+        """
+        Liste les clés de chiffrement
         
         Args:
             user_id: Filtrer par utilisateur
@@ -768,7 +807,8 @@ class EncryptionManager:
             
         Returns:
             List[EncryptionKey]: Liste des clés
-        """        keys = list(self.key_store.values())
+        """
+        keys = list(self.key_store.values())
         
         # Filtrage par utilisateur
         if user_id:
@@ -784,11 +824,13 @@ class EncryptionManager:
         return keys
     
     def get_encryption_stats(self) -> Dict[str, Any]:
-        """        Récupère les statistiques de chiffrement
+        """
+        Récupère les statistiques de chiffrement
         
         Returns:
             Dict[str, Any]: Statistiques détaillées
-        """        stats = self.encryption_stats.copy()
+        """
+        stats = self.encryption_stats.copy()
         
         # Calculs additionnels
         total_operations = stats["total_files_encrypted"] + stats["total_files_decrypted"]
@@ -806,11 +848,13 @@ class EncryptionManager:
         return stats
     
     async def cleanup_expired_keys(self) -> int:
-        """        Nettoie les clés expirées
+        """
+        Nettoie les clés expirées
         
         Returns:
             int: Nombre de clés supprimées
-        """        expired_keys = [key_id for key_id, key in self.key_store.items() if key.is_expired()]
+        """
+        expired_keys = [key_id for key_id, key in self.key_store.items() if key.is_expired()]
         
         for key_id in expired_keys:
             del self.key_store[key_id]
@@ -823,14 +867,16 @@ class EncryptionManager:
 
 
 class AESEncryption:
-    """    Implémentation spécialisée AES avec optimisations
+    """
+    Implémentation spécialisée AES avec optimisations
     
     Fonctionnalités:
     - AES-256-GCM/CBC optimisé
     - Streaming pour gros fichiers
     - Parallélisation
     - Cache de performance
-    """    
+    """
+    
     def __init__(self):
         self.chunk_size = 64 * 1024  # 64KB
         self.backend = default_backend()
@@ -844,7 +890,8 @@ class AESEncryption:
         key: bytes,
         mode: str = "GCM"
     ) -> bool:
-        """        Chiffrement optimisé pour gros fichiers avec streaming
+        """
+        Chiffrement optimisé pour gros fichiers avec streaming
         
         Args:
             input_path: Fichier source
@@ -854,7 +901,8 @@ class AESEncryption:
             
         Returns:
             bool: True si réussi
-        """        try:
+        """
+        try:
             file_size = input_path.stat().st_size
             
             if mode == "GCM":
@@ -874,7 +922,8 @@ class AESEncryption:
         output_path: Path,
         key: bytes
     ) -> bool:
-        """Chiffrement GCM streaming pour gros fichiers"""        iv = os.urandom(12)
+        """Chiffrement GCM streaming pour gros fichiers"""
+        iv = os.urandom(12)
         
         cipher = Cipher(
             algorithms.AES(key),
@@ -910,7 +959,8 @@ class AESEncryption:
         output_path: Path,
         key: bytes
     ) -> bool:
-        """Chiffrement CBC streaming pour gros fichiers"""        from cryptography.hazmat.primitives import padding as sym_padding
+        """Chiffrement CBC streaming pour gros fichiers"""
+        from cryptography.hazmat.primitives import padding as sym_padding
         
         iv = os.urandom(16)
         
@@ -952,14 +1002,16 @@ class AESEncryption:
 
 
 class RSAEncryption:
-    """    Chiffrement asymétrique RSA pour clés et métadonnées
+    """
+    Chiffrement asymétrique RSA pour clés et métadonnées
     
     Fonctionnalités:
     - Génération paires clés RSA
     - Chiffrement/déchiffrement asymétrique
     - Signature digitale
     - Échange sécurisé de clés
-    """    
+    """
+    
     def __init__(self, key_size: int = 2048):
         self.key_size = key_size
         self.backend = default_backend()
@@ -968,14 +1020,16 @@ class RSAEncryption:
         logger.info(f"RSAEncryption initialized with {key_size}-bit keys")
     
     def generate_key_pair(self, identifier: str) -> Dict[str, bytes]:
-        """        Génère une paire de clés RSA
+        """
+        Génère une paire de clés RSA
         
         Args:
             identifier: Identifiant de la paire
             
         Returns:
             Dict[str, bytes]: Clés publique et privée
-        """        try:
+        """
+        try:
             # Génération clé privée
             private_key = rsa.generate_private_key(
                 public_exponent=65537,
@@ -1018,7 +1072,8 @@ class RSAEncryption:
             raise KeyManagementException(f"RSA key generation failed: {e}")
     
     def encrypt_data(self, data: bytes, public_key_identifier: str) -> bytes:
-        """        Chiffre des données avec clé publique RSA
+        """
+        Chiffre des données avec clé publique RSA
         
         Args:
             data: Données à chiffrer
@@ -1026,7 +1081,8 @@ class RSAEncryption:
             
         Returns:
             bytes: Données chiffrées
-        """        try:
+        """
+        try:
             if public_key_identifier not in self.key_pairs:
                 raise KeyManagementException(f"Public key not found: {public_key_identifier}")
             
@@ -1049,7 +1105,8 @@ class RSAEncryption:
             raise EncryptionException(f"RSA encryption failed: {e}")
     
     def decrypt_data(self, encrypted_data: bytes, private_key_identifier: str) -> bytes:
-        """        Déchiffre des données avec clé privée RSA
+        """
+        Déchiffre des données avec clé privée RSA
         
         Args:
             encrypted_data: Données chiffrées
@@ -1057,7 +1114,8 @@ class RSAEncryption:
             
         Returns:
             bytes: Données déchiffrées
-        """        try:
+        """
+        try:
             if private_key_identifier not in self.key_pairs:
                 raise KeyManagementException(f"Private key not found: {private_key_identifier}")
             

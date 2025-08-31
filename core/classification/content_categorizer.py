@@ -15,7 +15,8 @@ Contact: mlaiel@live.de for licensing and collaboration.
 Any unauthorized use, copying, or distribution without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted
 to the full extent of the law.
-"""import numpy as np
+"""
+import numpy as np
 from typing import Dict, List, Optional, Tuple, Any, Union
 import logging
 from collections import Counter
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentCategorizer:
-    """    Enterprise-grade content categorization system.
+    """
+    Enterprise-grade content categorization system.
     
     Features:
     - Multi-dimensional categorization (genre, theme, style, purpose)
@@ -39,9 +41,11 @@ class ContentCategorizer:
     - Custom category definitions
     - Cross-modal category consistency
     - Content tagging and labeling
-    """    
+    """
+    
     def __init__(self):
-        """Initialize content categorizer."""        self.settings = get_settings()
+        """Initialize content categorizer."""
+        self.settings = get_settings()
         
         # Initialize category hierarchies
         self._init_category_hierarchies()
@@ -55,7 +59,8 @@ class ContentCategorizer:
         }
 
     def _init_category_hierarchies(self):
-        """Initialize hierarchical category structures."""        
+        """Initialize hierarchical category structures."""
+        
         # Music genre hierarchy
         self.music_genres = {
             'electronic': {
@@ -156,7 +161,8 @@ class ContentCategorizer:
         content_type: str,
         options: Optional[Dict] = None
     ) -> Dict[str, Any]:
-        """        Categorize content based on classification results.
+        """
+        Categorize content based on classification results.
         
         Args:
             classification_results: Results from content classification
@@ -165,7 +171,8 @@ class ContentCategorizer:
             
         Returns:
             Comprehensive categorization results
-        """        try:
+        """
+        try:
             if not classification_results:
                 raise ClassificationError("No classification results provided")
             
@@ -236,7 +243,8 @@ class ContentCategorizer:
             raise ClassificationError(f"Content categorization failed: {e}")
 
     def _categorize_genre(self, classifications: Dict[str, Any], content_type: str) -> Optional[Dict[str, Any]]:
-        """Categorize content genre."""        try:
+        """Categorize content genre."""
+        try:
             # Extract genre information from classifications
             genre_data = classifications.get('genre_detection', {})
             
@@ -287,7 +295,8 @@ class ContentCategorizer:
         features: Dict[str, Any], 
         content_type: str
     ) -> Optional[Dict[str, Any]]:
-        """Categorize content theme."""        try:
+        """Categorize content theme."""
+        try:
             # Extract theme-related information
             theme_scores = {}
             
@@ -356,7 +365,8 @@ class ContentCategorizer:
         features: Dict[str, Any], 
         content_type: str
     ) -> Optional[Dict[str, Any]]:
-        """Categorize content style."""        try:
+        """Categorize content style."""
+        try:
             style_info = None
             confidence = 0
             
@@ -424,7 +434,8 @@ class ContentCategorizer:
             return None
 
     def _categorize_purpose(self, classifications: Dict[str, Any], features: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Categorize content purpose."""        try:
+        """Categorize content purpose."""
+        try:
             purpose_scores = {}
             
             # Analyze content type for purpose indicators
@@ -475,7 +486,8 @@ class ContentCategorizer:
             return None
 
     def _generate_hierarchical_paths(self, primary_categories: Dict[str, Any]) -> Dict[str, List[str]]:
-        """Generate hierarchical paths for categories."""        paths = {}
+        """Generate hierarchical paths for categories."""
+        paths = {}
         
         try:
             # Genre hierarchy
@@ -519,7 +531,8 @@ class ContentCategorizer:
         features: Dict[str, Any], 
         primary_categories: Dict[str, Any]
     ) -> List[str]:
-        """Extract relevant tags for content."""        tags = set()
+        """Extract relevant tags for content."""
+        tags = set()
         
         try:
             # Add primary category values as tags
@@ -575,7 +588,8 @@ class ContentCategorizer:
         primary_categories: Dict[str, Any], 
         classifications: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate confidence scores for categories."""        confidence_scores = {}
+        """Calculate confidence scores for categories."""
+        confidence_scores = {}
         
         try:
             for category_name, category_data in primary_categories.items():
@@ -600,7 +614,8 @@ class ContentCategorizer:
         return confidence_scores
 
     def _generate_cross_references(self, primary_categories: Dict[str, Any]) -> Dict[str, List[str]]:
-        """Generate cross-references between categories."""        cross_refs = {}
+        """Generate cross-references between categories."""
+        cross_refs = {}
         
         try:
             # Genre-Theme correlations
@@ -645,7 +660,8 @@ class ContentCategorizer:
         categorization: Dict[str, Any], 
         classifications: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate and refine categories using cross-validation."""        try:
+        """Validate and refine categories using cross-validation."""
+        try:
             primary_categories = categorization['primary_categories']
             
             # Check for inconsistencies
@@ -703,22 +719,26 @@ class ContentCategorizer:
 
     # Helper methods
     def _get_genre_characteristics(self, genre: str) -> List[str]:
-        """Get characteristics for a genre."""        if genre in self.music_genres:
+        """Get characteristics for a genre."""
+        if genre in self.music_genres:
             return self.music_genres[genre]['characteristics']
         return []
 
     def _get_related_genres(self, genre: str) -> List[str]:
-        """Get related genres."""        if genre in self.music_genres:
+        """Get related genres."""
+        if genre in self.music_genres:
             return self.music_genres[genre]['subgenres'][:3]  # Top 3 subgenres
         return []
 
     def _get_related_themes(self, theme_category: str) -> List[str]:
-        """Get related themes."""        if theme_category in self.content_themes:
+        """Get related themes."""
+        if theme_category in self.content_themes:
             return self.content_themes[theme_category]['categories'][:3]  # Top 3
         return []
 
     def _calculate_theme_intensity(self, theme_scores: Dict[str, float]) -> float:
-        """Calculate theme intensity based on scores."""        if not theme_scores:
+        """Calculate theme intensity based on scores."""
+        if not theme_scores:
             return 0.0
         
         max_score = max(theme_scores.values())
@@ -729,7 +749,8 @@ class ContentCategorizer:
         return min(intensity, 1.0)
 
     def _map_to_style_category(self, style_info: str, content_type: str) -> str:
-        """Map specific style to category."""        style_mappings = {
+        """Map specific style to category."""
+        style_mappings = {
             'audio': {
                 'polished': 'polished', 'raw': 'raw', 'ambient': 'ambient',
                 'aggressive': 'aggressive', 'smooth': 'smooth', 'experimental': 'experimental'
@@ -748,7 +769,8 @@ class ContentCategorizer:
         return content_style_map.get(style_info.lower(), style_info)
 
     def _get_style_characteristics(self, style_category: str, content_type: str) -> List[str]:
-        """Get characteristics for a style category."""        if content_type == 'image' or content_type == 'video':
+        """Get characteristics for a style category."""
+        if content_type == 'image' or content_type == 'video':
             category_data = self.content_styles['visual']
         elif content_type == 'audio':
             category_data = self.content_styles['audio']
@@ -760,7 +782,8 @@ class ContentCategorizer:
         return category_data.get('characteristics', [])
 
     def _calculate_style_intensity(self, classifications: Dict[str, Any], content_type: str) -> float:
-        """Calculate style intensity."""        # Simplified intensity calculation
+        """Calculate style intensity."""
+        # Simplified intensity calculation
         if content_type == 'audio':
             mood_data = classifications.get('mood_analysis', {})
             return mood_data.get('confidence', 0.5)
@@ -771,7 +794,8 @@ class ContentCategorizer:
             return 0.5
 
     def _extract_purpose_indicators(self, purpose: str, features: Dict[str, Any]) -> List[str]:
-        """Extract specific indicators for a purpose."""        indicators = []
+        """Extract specific indicators for a purpose."""
+        indicators = []
         
         purpose_data = self.content_purposes.get(purpose, {})
         expected_indicators = purpose_data.get('indicators', [])
@@ -787,7 +811,8 @@ class ContentCategorizer:
         return indicators[:5]  # Top 5 indicators
 
     def _is_genre_mood_consistent(self, genre: str, mood: str) -> bool:
-        """Check if genre and mood are consistent."""        if not mood:
+        """Check if genre and mood are consistent."""
+        if not mood:
             return True
         
         # Define genre-mood consistency rules
@@ -803,7 +828,8 @@ class ContentCategorizer:
         return not consistent_moods or mood.lower() in consistent_moods
 
     def _calculate_confidence_adjustment(self, inconsistencies: List[str]) -> float:
-        """Calculate confidence adjustment based on inconsistencies."""        if not inconsistencies:
+        """Calculate confidence adjustment based on inconsistencies."""
+        if not inconsistencies:
             return 1.0
         
         # Reduce confidence by 10% for each inconsistency, minimum 0.5
@@ -811,11 +837,13 @@ class ContentCategorizer:
         return adjustment
 
     def _get_timestamp(self) -> str:
-        """Get current timestamp."""        from datetime import datetime
+        """Get current timestamp."""
+        from datetime import datetime
         return datetime.now().isoformat()
 
     def get_category_hierarchy(self, category_type: str) -> Dict[str, Any]:
-        """Get the hierarchy for a specific category type."""        hierarchies = {
+        """Get the hierarchy for a specific category type."""
+        hierarchies = {
             'music_genres': self.music_genres,
             'content_themes': self.content_themes,
             'content_styles': self.content_styles,
@@ -830,7 +858,8 @@ class ContentCategorizer:
         category_name: str, 
         category_data: Dict[str, Any]
     ) -> bool:
-        """Add a custom category to the system."""        try:
+        """Add a custom category to the system."""
+        try:
             if category_type == 'music_genres':
                 self.music_genres[category_name] = category_data
             elif category_type == 'content_themes':
@@ -854,7 +883,8 @@ class ContentCategorizer:
             return False
 
     def get_categorization_summary(self, categorization: Dict[str, Any]) -> str:
-        """Generate a human-readable summary of categorization results."""        try:
+        """Generate a human-readable summary of categorization results."""
+        try:
             summary_parts = []
             
             primary_categories = categorization.get('primary_categories', {})

@@ -12,7 +12,8 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 
 Advanced Instagram detection system for content monitoring and violation identification.
 Provides sophisticated analysis of Instagram posts, stories, reels, and user activities.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Union
 from datetime import datetime, timedelta
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class InstagramPost:
-    """Instagram post data."""    post_id: str
+    """Instagram post data."""
+    post_id: str
     user_id: str
     username: str
     caption: str
@@ -47,7 +49,8 @@ class InstagramPost:
 
 @dataclass
 class InstagramStory:
-    """Instagram story data."""    story_id: str
+    """Instagram story data."""
+    story_id: str
     user_id: str
     username: str
     media_type: str  # photo, video
@@ -64,7 +67,8 @@ class InstagramStory:
 
 @dataclass
 class InstagramUser:
-    """Instagram user profile data."""    user_id: str
+    """Instagram user profile data."""
+    user_id: str
     username: str
     full_name: str
     bio: str
@@ -82,7 +86,8 @@ class InstagramUser:
 
 @dataclass
 class InstagramReel:
-    """Instagram reel data."""    reel_id: str
+    """Instagram reel data."""
+    reel_id: str
     user_id: str
     username: str
     caption: str
@@ -104,7 +109,8 @@ class InstagramReel:
 
 @dataclass
 class InstagramViolation:
-    """Instagram content violation detection result."""    violation_id: str
+    """Instagram content violation detection result."""
+    violation_id: str
     content_type: str  # post, story, reel, user
     content_id: str
     user_id: str
@@ -119,7 +125,8 @@ class InstagramViolation:
 
 @dataclass
 class InstagramDetectionMetrics:
-    """Instagram detection system metrics."""    posts_analyzed: int = 0
+    """Instagram detection system metrics."""
+    posts_analyzed: int = 0
     stories_analyzed: int = 0
     reels_analyzed: int = 0
     users_analyzed: int = 0
@@ -131,7 +138,8 @@ class InstagramDetectionMetrics:
 
 
 class InstagramDetector:
-    """    Advanced Instagram detection and analysis system.
+    """
+    Advanced Instagram detection and analysis system.
     
     Features:
     - Real-time content monitoring
@@ -142,9 +150,11 @@ class InstagramDetector:
     - Trend detection
     - Automated reporting
     - Machine learning integration
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Instagram detector."""        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize Instagram detector."""
+        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
         self.config = config or {}
@@ -198,7 +208,8 @@ class InstagramDetector:
         self._logger.info("Instagram Detector initialized")
     
     async def initialize(self) -> None:
-        """Initialize the Instagram detector."""        try:
+        """Initialize the Instagram detector."""
+        try:
             self._logger.info("Initializing Instagram detector...")
             
             # Initialize detection models
@@ -214,7 +225,8 @@ class InstagramDetector:
             raise
     
     async def _initialize_detection_models(self) -> None:
-        """Initialize AI detection models."""        try:
+        """Initialize AI detection models."""
+        try:
             # This would load actual ML models for content analysis
             # For now, implement placeholder
             self._logger.debug("Detection models initialized")
@@ -224,7 +236,8 @@ class InstagramDetector:
             raise
     
     async def _setup_analysis_pipelines(self) -> None:
-        """Setup content analysis pipelines."""        try:
+        """Setup content analysis pipelines."""
+        try:
             # This would setup actual analysis pipelines
             # For now, implement placeholder
             self._logger.debug("Analysis pipelines setup complete")
@@ -234,7 +247,8 @@ class InstagramDetector:
             raise
     
     async def start_detection(self) -> None:
-        """Start Instagram detection operations."""        try:
+        """Start Instagram detection operations."""
+        try:
             if self._detection_active:
                 self._logger.warning("Instagram detection is already active")
                 return
@@ -251,7 +265,8 @@ class InstagramDetector:
             raise
     
     async def stop_detection(self) -> None:
-        """Stop Instagram detection operations."""        try:
+        """Stop Instagram detection operations."""
+        try:
             if not self._detection_active:
                 self._logger.warning("Instagram detection is not active")
                 return
@@ -267,7 +282,8 @@ class InstagramDetector:
             raise
     
     async def analyze_post(self, post: InstagramPost) -> List[InstagramViolation]:
-        """Analyze Instagram post for violations."""        try:
+        """Analyze Instagram post for violations."""
+        try:
             self._logger.debug(f"Analyzing post: {post.post_id}")
             analysis_start = datetime.now()
             
@@ -316,7 +332,8 @@ class InstagramDetector:
             return []
     
     async def analyze_story(self, story: InstagramStory) -> List[InstagramViolation]:
-        """Analyze Instagram story for violations."""        try:
+        """Analyze Instagram story for violations."""
+        try:
             self._logger.debug(f"Analyzing story: {story.story_id}")
             analysis_start = datetime.now()
             
@@ -361,7 +378,8 @@ class InstagramDetector:
             return []
     
     async def analyze_reel(self, reel: InstagramReel) -> List[InstagramViolation]:
-        """Analyze Instagram reel for violations."""        try:
+        """Analyze Instagram reel for violations."""
+        try:
             self._logger.debug(f"Analyzing reel: {reel.reel_id}")
             analysis_start = datetime.now()
             
@@ -407,7 +425,8 @@ class InstagramDetector:
             return []
     
     async def analyze_user(self, user: InstagramUser) -> List[InstagramViolation]:
-        """Analyze Instagram user for violations."""        try:
+        """Analyze Instagram user for violations."""
+        try:
             self._logger.debug(f"Analyzing user: {user.username}")
             analysis_start = datetime.now()
             
@@ -447,7 +466,8 @@ class InstagramDetector:
         mentions: List[str],
         content: Union[InstagramPost, InstagramStory, InstagramReel]
     ) -> List[InstagramViolation]:
-        """Analyze text content for violations."""        violations = []
+        """Analyze text content for violations."""
+        violations = []
         
         try:
             # Combine all text
@@ -491,7 +511,8 @@ class InstagramDetector:
         image_urls: List[str],
         content: Union[InstagramPost, InstagramStory]
     ) -> List[InstagramViolation]:
-        """Analyze images for violations."""        violations = []
+        """Analyze images for violations."""
+        violations = []
         
         try:
             # Simulate image analysis
@@ -543,7 +564,8 @@ class InstagramDetector:
         video_urls: List[str],
         content: Union[InstagramPost, InstagramReel]
     ) -> List[InstagramViolation]:
-        """Analyze videos for violations."""        violations = []
+        """Analyze videos for violations."""
+        violations = []
         
         try:
             # Simulate video analysis
@@ -596,7 +618,8 @@ class InstagramDetector:
         audio_title: str,
         content: InstagramReel
     ) -> List[InstagramViolation]:
-        """Analyze audio for violations."""        violations = []
+        """Analyze audio for violations."""
+        violations = []
         
         try:
             # Simulate audio analysis
@@ -641,7 +664,8 @@ class InstagramDetector:
         username: str,
         content: Union[InstagramPost, InstagramStory, InstagramReel]
     ) -> List[InstagramViolation]:
-        """Analyze user behavior patterns for violations."""        violations = []
+        """Analyze user behavior patterns for violations."""
+        violations = []
         
         try:
             # Analyze posting patterns, content similarity, etc.
@@ -686,7 +710,8 @@ class InstagramDetector:
         return violations
     
     async def _analyze_user_profile(self, user: InstagramUser) -> List[InstagramViolation]:
-        """Analyze user profile for violations."""        violations = []
+        """Analyze user profile for violations."""
+        violations = []
         
         try:
             # Analyze bio and profile information
@@ -726,7 +751,8 @@ class InstagramDetector:
         return violations
     
     def _calculate_severity(self, violation_type: str, confidence: float) -> str:
-        """Calculate violation severity based on type and confidence."""        if confidence >= 0.9:
+        """Calculate violation severity based on type and confidence."""
+        if confidence >= 0.9:
             return "critical"
         elif confidence >= 0.8:
             return "high"
@@ -736,7 +762,8 @@ class InstagramDetector:
             return "low"
     
     def get_detection_status(self) -> Dict[str, Any]:
-        """Get current detection status."""        return {
+        """Get current detection status."""
+        return {
             'detection_active': self._detection_active,
             'metrics': {
                 'posts_analyzed': self.metrics.posts_analyzed,
@@ -758,7 +785,8 @@ class InstagramDetector:
         }
     
     def get_recent_violations(self, limit: int = 100) -> List[Dict[str, Any]]:
-        """Get recent violations."""        recent_violations = sorted(
+        """Get recent violations."""
+        recent_violations = sorted(
             self.violations,
             key=lambda v: v.detected_at,
             reverse=True
@@ -782,7 +810,8 @@ class InstagramDetector:
         ]
     
     async def shutdown(self) -> None:
-        """Shutdown the Instagram detector."""        try:
+        """Shutdown the Instagram detector."""
+        try:
             self._logger.info("Shutting down Instagram detector...")
             
             await self.stop_detection()

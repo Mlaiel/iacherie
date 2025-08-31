@@ -8,7 +8,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
-"""import os
+"""
+import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union
 from enum import Enum
@@ -18,14 +19,16 @@ from backend.core.config import get_settings
 
 
 class ServiceTier(Enum):
-    """Service tier levels for different quality/performance requirements."""    BASIC = "basic"
+    """Service tier levels for different quality/performance requirements."""
+    BASIC = "basic"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
     ULTRA = "ultra"
 
 
 class ProcessingMode(Enum):
-    """Processing modes for different performance characteristics."""    FAST = "fast"              # Quick processing, lower accuracy
+    """Processing modes for different performance characteristics."""
+    FAST = "fast"              # Quick processing, lower accuracy
     BALANCED = "balanced"      # Balanced speed and accuracy
     ACCURATE = "accurate"      # High accuracy, slower processing
     COMPREHENSIVE = "comprehensive"  # Maximum analysis depth
@@ -33,7 +36,8 @@ class ProcessingMode(Enum):
 
 @dataclass
 class ServiceConfiguration:
-    """Configuration for individual content guidance services."""    
+    """Configuration for individual content guidance services."""
+    
     enabled: bool = True
     service_tier: ServiceTier = ServiceTier.PROFESSIONAL
     processing_mode: ProcessingMode = ProcessingMode.BALANCED
@@ -51,7 +55,8 @@ class ServiceConfiguration:
 
 @dataclass
 class ContentGuidanceConfig:
-    """Main configuration for the content guidance system."""    
+    """Main configuration for the content guidance system."""
+    
     # Global settings
     environment: str = os.getenv("ENVIRONMENT", "development")
     debug_mode: bool = os.getenv("DEBUG", "false").lower() == "true"
@@ -113,12 +118,14 @@ class ContentGuidanceConfig:
     performance_tracker: ServiceConfiguration = field(default_factory=ServiceConfiguration)
     
     def __post_init__(self):
-        """Post-initialization configuration adjustments."""        self._apply_environment_overrides()
+        """Post-initialization configuration adjustments."""
+        self._apply_environment_overrides()
         self._configure_service_parameters()
         self._validate_configuration()
     
     def _apply_environment_overrides(self):
-        """Apply environment-specific configuration overrides."""        
+        """Apply environment-specific configuration overrides."""
+        
         if self.environment == "production":
             # Production settings
             self.debug_mode = False
@@ -163,7 +170,8 @@ class ContentGuidanceConfig:
                 service_config.rate_limit_per_minute = 50
     
     def _configure_service_parameters(self):
-        """Configure service-specific parameters based on requirements."""        
+        """Configure service-specific parameters based on requirements."""
+        
         # Content Optimizer specific settings
         self.content_optimizer.custom_parameters.update({
             "seo_analysis_depth": "comprehensive" if self.content_optimizer.service_tier in [
@@ -290,7 +298,8 @@ class ContentGuidanceConfig:
         })
     
     def _get_all_service_configs(self) -> List[ServiceConfiguration]:
-        """Get all service configurations for bulk operations."""        return [
+        """Get all service configurations for bulk operations."""
+        return [
             self.content_optimizer,
             self.platform_recommendations,
             self.monetization_guidance,
@@ -304,7 +313,8 @@ class ContentGuidanceConfig:
         ]
     
     def _validate_configuration(self):
-        """Validate configuration settings for consistency and requirements."""        
+        """Validate configuration settings for consistency and requirements."""
+        
         # Validate timeouts
         if self.default_timeout <= 0:
             raise ValueError("Default timeout must be positive")
@@ -348,7 +358,8 @@ class ContentGuidanceConfig:
             raise ValueError("At least one content type must be supported")
     
     def get_service_config(self, service_name: str) -> ServiceConfiguration:
-        """Get configuration for a specific service."""        
+        """Get configuration for a specific service."""
+        
         service_mapping = {
             "content_optimizer": self.content_optimizer,
             "platform_recommendations": self.platform_recommendations,
@@ -368,7 +379,8 @@ class ContentGuidanceConfig:
         return service_mapping[service_name]
     
     def update_service_config(self, service_name: str, **kwargs):
-        """Update configuration for a specific service."""        
+        """Update configuration for a specific service."""
+        
         service_config = self.get_service_config(service_name)
         
         for key, value in kwargs.items():
@@ -378,7 +390,8 @@ class ContentGuidanceConfig:
                 service_config.custom_parameters[key] = value
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary format."""        
+        """Convert configuration to dictionary format."""
+        
         result = {}
         
         # Add main configuration fields
@@ -403,7 +416,8 @@ class ContentGuidanceConfig:
         return result
     
     def export_config(self, file_path: Union[str, Path]):
-        """Export configuration to file."""        
+        """Export configuration to file."""
+        
         import json
         
         config_dict = self.to_dict()
@@ -413,7 +427,8 @@ class ContentGuidanceConfig:
     
     @classmethod
     def load_from_file(cls, file_path: Union[str, Path]) -> 'ContentGuidanceConfig':
-        """Load configuration from file."""        
+        """Load configuration from file."""
+        
         import json
         
         with open(file_path, 'r') as f:
@@ -429,7 +444,8 @@ _config_instance: Optional[ContentGuidanceConfig] = None
 
 
 def get_content_guidance_config() -> ContentGuidanceConfig:
-    """Get the global content guidance configuration instance."""    
+    """Get the global content guidance configuration instance."""
+    
     global _config_instance
     
     if _config_instance is None:
@@ -439,7 +455,8 @@ def get_content_guidance_config() -> ContentGuidanceConfig:
 
 
 def update_config(**kwargs):
-    """Update the global configuration with new values."""    
+    """Update the global configuration with new values."""
+    
     config = get_content_guidance_config()
     
     for key, value in kwargs.items():
@@ -450,7 +467,8 @@ def update_config(**kwargs):
 
 
 def reset_config():
-    """Reset the global configuration to default values."""    
+    """Reset the global configuration to default values."""
+    
     global _config_instance
     _config_instance = ContentGuidanceConfig()
 
@@ -504,7 +522,8 @@ ENVIRONMENT_PRESETS = {
 
 
 def apply_environment_preset(environment: str):
-    """Apply a predefined environment configuration preset."""    
+    """Apply a predefined environment configuration preset."""
+    
     if environment not in ENVIRONMENT_PRESETS:
         raise ValueError(f"Unknown environment preset: {environment}")
     

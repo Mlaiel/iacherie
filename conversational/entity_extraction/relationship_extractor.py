@@ -12,7 +12,8 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import re
 from typing import Dict, List, Set, Tuple, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -38,7 +39,8 @@ from .entity_extractor import ExtractedEntity, EntityCategory
 
 
 class RelationType(Enum):
-    """Types of relationships in creative industry context"""    # Collaboration relationships
+    """Types of relationships in creative industry context"""
+    # Collaboration relationships
     COLLABORATION = "collaboration"
     FEATURING = "featuring"
     REMIX = "remix"
@@ -91,7 +93,8 @@ class RelationType(Enum):
 
 
 class ConfidenceLevel(Enum):
-    """Confidence levels for relationship extraction"""    VERY_HIGH = 0.95
+    """Confidence levels for relationship extraction"""
+    VERY_HIGH = 0.95
     HIGH = 0.85
     MEDIUM = 0.70
     LOW = 0.50
@@ -100,7 +103,8 @@ class ConfidenceLevel(Enum):
 
 @dataclass
 class ExtractedRelationship:
-    """Extracted relationship with metadata"""    source_entity: ExtractedEntity
+    """Extracted relationship with metadata"""
+    source_entity: ExtractedEntity
     target_entity: ExtractedEntity
     relation_type: RelationType
     confidence: float
@@ -112,7 +116,8 @@ class ExtractedRelationship:
     temporal_info: Optional[str] = None
     
     def __post_init__(self):
-        """Post-initialization validation"""        if self.confidence > 1.0:
+        """Post-initialization validation"""
+        if self.confidence > 1.0:
             self.confidence = 1.0
         elif self.confidence < 0.0:
             self.confidence = 0.0
@@ -120,7 +125,8 @@ class ExtractedRelationship:
 
 @dataclass
 class RelationshipPattern:
-    """Pattern for relationship extraction"""    pattern_id: str
+    """Pattern for relationship extraction"""
+    pattern_id: str
     relation_type: RelationType
     pattern_text: str
     entity_positions: List[str]  # ["ENTITY1", "ENTITY2"]
@@ -130,7 +136,8 @@ class RelationshipPattern:
 
 
 class RelationshipExtractor(BaseService):
-    """    Advanced Relationship Extraction engine with creative industry specialization.
+    """
+    Advanced Relationship Extraction engine with creative industry specialization.
     
     Features:
     - Pattern-based relationship extraction with domain-specific patterns
@@ -141,7 +148,8 @@ class RelationshipExtractor(BaseService):
     - Context-aware relationship disambiguation
     - Relationship confidence scoring and validation
     - Graph-based relationship inference and completion
-    """    
+    """
+    
     def __init__(self):
         super().__init__()
         self.logger = logging.getLogger(__name__)
@@ -174,7 +182,8 @@ class RelationshipExtractor(BaseService):
         }
         
     async def initialize(self):
-        """Initialize comprehensive relationship extraction resources and models"""        try:
+        """Initialize comprehensive relationship extraction resources and models"""
+        try:
             self.logger.info("Initializing advanced RelationshipExtractor...")
             
             # Load advanced spaCy model with relationship parsing capabilities
@@ -214,7 +223,8 @@ class RelationshipExtractor(BaseService):
             raise
     
     async def _load_advanced_spacy_model(self):
-        """Load advanced spaCy model with custom relationship components"""        try:
+        """Load advanced spaCy model with custom relationship components"""
+        try:
             # Load the most capable spaCy model available
             try:
                 self.nlp = spacy.load("en_core_web_trf")  # Transformer-based model
@@ -259,7 +269,8 @@ class RelationshipExtractor(BaseService):
             raise
     
     async def _load_relationship_classifiers(self):
-        """Load ensemble of relationship classification models"""        try:
+        """Load ensemble of relationship classification models"""
+        try:
             # Primary relationship classifier
             self.primary_relation_classifier = pipeline(
                 "text-classification",
@@ -303,7 +314,8 @@ class RelationshipExtractor(BaseService):
             await self._load_fallback_classifiers()
     
     def _initialize_creative_classifier(self):
-        """Initialize custom classifier for creative industry relationships"""        import torch.nn as nn
+        """Initialize custom classifier for creative industry relationships"""
+        import torch.nn as nn
         
         class CreativeRelationshipClassifier(nn.Module):
             def __init__(self, vocab_size=50000, embedding_dim=300, hidden_dim=512, num_classes=25):
@@ -342,7 +354,8 @@ class RelationshipExtractor(BaseService):
         return model
     
     def _initialize_business_relationship_classifier(self):
-        """Initialize classifier for business and commercial relationships"""        import torch.nn as nn
+        """Initialize classifier for business and commercial relationships"""
+        import torch.nn as nn
         
         class BusinessRelationshipClassifier(nn.Module):
             def __init__(self, input_dim=768, hidden_dims=[512, 256, 128], num_classes=15):
@@ -382,7 +395,8 @@ class RelationshipExtractor(BaseService):
         return model
     
     async def _load_comprehensive_patterns(self):
-        """Load comprehensive relationship patterns for creative industry"""        self.relationship_patterns = {
+        """Load comprehensive relationship patterns for creative industry"""
+        self.relationship_patterns = {
             RelationType.COLLABORATION: [
                 # Musical collaboration patterns
                 {"pattern": [{"LOWER": "ft"}, {"LOWER": "."}, {"ENT_TYPE": "PERSON"}], "label": "FEATURING"},
@@ -440,7 +454,8 @@ class RelationshipExtractor(BaseService):
         }
     
     async def _initialize_pattern_matchers(self):
-        """Initialize sophisticated pattern matchers for relationship extraction"""        try:
+        """Initialize sophisticated pattern matchers for relationship extraction"""
+        try:
             # Add patterns to spaCy matcher
             for relation_type, patterns in self.relationship_patterns.items():
                 for i, pattern in enumerate(patterns):
@@ -479,7 +494,8 @@ class RelationshipExtractor(BaseService):
             self.logger.error(f"Failed to initialize pattern matchers: {e}")
     
     async def _load_fallback_classifiers(self):
-        """Load simplified fallback classifiers if advanced models fail"""        try:
+        """Load simplified fallback classifiers if advanced models fail"""
+        try:
             self.primary_relation_classifier = pipeline(
                 "text-classification",
                 model="distilbert-base-uncased-finetuned-sst-2-english"
@@ -501,7 +517,8 @@ class RelationshipExtractor(BaseService):
             raise
     
     async def _load_spacy_model(self):
-        """Load spaCy model for dependency parsing"""        try:
+        """Load spaCy model for dependency parsing"""
+        try:
             self.nlp = spacy.load("en_core_web_sm")
             self.logger.info("Loaded spaCy model for relationship extraction")
             
@@ -510,7 +527,8 @@ class RelationshipExtractor(BaseService):
             self.nlp = None
     
     async def _load_relation_classifier(self):
-        """Load machine learning model for relationship classification"""        try:
+        """Load machine learning model for relationship classification"""
+        try:
             # Use a pre-trained model fine-tuned for relationship classification
             model_name = "microsoft/DialoGPT-medium"  # Would be replaced with actual relation classifier
             
@@ -526,7 +544,8 @@ class RelationshipExtractor(BaseService):
             self.logger.warning(f"Failed to load relationship classifier: {str(e)}")
     
     async def _load_relationship_patterns(self):
-        """Load predefined relationship patterns for creative industry"""        self.relationship_patterns = [
+        """Load predefined relationship patterns for creative industry"""
+        self.relationship_patterns = [
             # Collaboration patterns
             RelationshipPattern(
                 pattern_id="feat_collaboration",
@@ -692,7 +711,8 @@ class RelationshipExtractor(BaseService):
         ]
     
     async def _initialize_matchers(self):
-        """Initialize spaCy matchers for pattern-based extraction"""        if not self.nlp:
+        """Initialize spaCy matchers for pattern-based extraction"""
+        if not self.nlp:
             return
             
         self.matcher = Matcher(self.nlp.vocab)
@@ -718,14 +738,16 @@ class RelationshipExtractor(BaseService):
         self._add_dependency_patterns()
     
     def _convert_regex_to_spacy_pattern(self, regex_pattern: str) -> Optional[List[Dict[str, Any]]]:
-        """Convert regex pattern to spaCy token pattern (simplified implementation)"""        # This is a very basic conversion - in practice, we'd need a more sophisticated
+        """Convert regex pattern to spaCy token pattern (simplified implementation)"""
+        # This is a very basic conversion - in practice, we'd need a more sophisticated
         # system to convert regex patterns to spaCy token patterns
         
         # For now, return None to use regex-based matching instead
         return None
     
     def _add_dependency_patterns(self):
-        """Add dependency patterns for grammatical relationship extraction"""        if not self.dependency_matcher:
+        """Add dependency patterns for grammatical relationship extraction"""
+        if not self.dependency_matcher:
             return
             
         # Pattern for "X created by Y"
@@ -746,7 +768,8 @@ class RelationshipExtractor(BaseService):
         self.dependency_matcher.add("FEATURING", [featuring_pattern])
     
     async def _load_relationship_graph(self):
-        """Load existing relationship graph"""        try:
+        """Load existing relationship graph"""
+        try:
             # In production, this would load from a persistent graph database
             self.relationship_graph = nx.DiGraph()
             
@@ -766,7 +789,8 @@ class RelationshipExtractor(BaseService):
         text: str,
         context: Optional[str] = None
     ) -> List[ExtractedRelationship]:
-        """        Extract relationships between entities in text.
+        """
+        Extract relationships between entities in text.
         
         Args:
             entities: List of extracted entities
@@ -775,7 +799,8 @@ class RelationshipExtractor(BaseService):
             
         Returns:
             List of extracted relationships
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             self.logger.debug(f"Extracting relationships from {len(entities)} entities")
@@ -835,7 +860,8 @@ class RelationshipExtractor(BaseService):
         entities: List[ExtractedEntity],
         text: str
     ) -> List[ExtractedRelationship]:
-        """Extract relationships using predefined patterns"""        relationships = []
+        """Extract relationships using predefined patterns"""
+        relationships = []
         
         for pattern in self.relationship_patterns:
             try:
@@ -879,7 +905,8 @@ class RelationshipExtractor(BaseService):
         entities: List[ExtractedEntity],
         text: str
     ) -> List[ExtractedRelationship]:
-        """Extract relationships using dependency parsing"""        relationships = []
+        """Extract relationships using dependency parsing"""
+        relationships = []
         
         if not self.nlp or not self.dependency_matcher:
             return relationships
@@ -930,7 +957,8 @@ class RelationshipExtractor(BaseService):
         text: str,
         context: Optional[str]
     ) -> List[ExtractedRelationship]:
-        """Extract relationships using machine learning classifier"""        relationships = []
+        """Extract relationships using machine learning classifier"""
+        relationships = []
         
         if not self.relation_classifier:
             return relationships
@@ -988,7 +1016,8 @@ class RelationshipExtractor(BaseService):
         entities: List[ExtractedEntity],
         text: str
     ) -> List[ExtractedRelationship]:
-        """Extract relationships based on entity proximity and common patterns"""        relationships = []
+        """Extract relationships based on entity proximity and common patterns"""
+        relationships = []
         
         # Define proximity-based relationship patterns
         proximity_patterns = {
@@ -1040,7 +1069,8 @@ class RelationshipExtractor(BaseService):
         return relationships
     
     def _find_entity_by_text(self, entities: List[ExtractedEntity], text: str) -> Optional[ExtractedEntity]:
-        """Find entity by matching text"""        text_lower = text.lower().strip()
+        """Find entity by matching text"""
+        text_lower = text.lower().strip()
         
         for entity in entities:
             if entity.text.lower().strip() == text_lower:
@@ -1059,7 +1089,8 @@ class RelationshipExtractor(BaseService):
         start_pos: int,
         end_pos: int
     ) -> Optional[ExtractedEntity]:
-        """Find entity by position overlap"""        for entity in entities:
+        """Find entity by position overlap"""
+        for entity in entities:
             # Check for position overlap
             if (start_pos < entity.end_pos and end_pos > entity.start_pos):
                 return entity
@@ -1071,7 +1102,8 @@ class RelationshipExtractor(BaseService):
         entity2: ExtractedEntity,
         pattern: RelationshipPattern
     ) -> bool:
-        """Validate that entities match pattern constraints"""        constraints = pattern.entity_type_constraints
+        """Validate that entities match pattern constraints"""
+        constraints = pattern.entity_type_constraints
         
         if "ENTITY1" in constraints:
             if entity1.entity_type not in constraints["ENTITY1"]:
@@ -1089,7 +1121,8 @@ class RelationshipExtractor(BaseService):
         entity2: ExtractedEntity,
         relation_type: RelationType
     ) -> bool:
-        """Check if entity pair is valid for specific relation type"""        # Define valid entity type combinations for each relation type
+        """Check if entity pair is valid for specific relation type"""
+        # Define valid entity type combinations for each relation type
         valid_combinations = {
             RelationType.COLLABORATION: [
                 (EntityCategory.PERSON, EntityCategory.PERSON),
@@ -1121,12 +1154,14 @@ class RelationshipExtractor(BaseService):
         return entity_pair in combinations or (entity_pair[1], entity_pair[0]) in combinations
     
     def _extract_relationship_context(self, text: str, start_pos: int, end_pos: int, context_size: int = 30) -> str:
-        """Extract context around relationship mention"""        context_start = max(0, start_pos - context_size)
+        """Extract context around relationship mention"""
+        context_start = max(0, start_pos - context_size)
         context_end = min(len(text), end_pos + context_size)
         return text[context_start:context_end].strip()
     
     def _calculate_proximity_confidence(self, distance: int, indicator: str, between_text: str) -> float:
-        """Calculate confidence for proximity-based relationships"""        base_confidence = 0.5
+        """Calculate confidence for proximity-based relationships"""
+        base_confidence = 0.5
         
         # Closer entities get higher confidence
         distance_factor = max(0, 1 - (distance / 100))
@@ -1150,7 +1185,8 @@ class RelationshipExtractor(BaseService):
         return min(final_confidence, 1.0)
     
     def _map_dependency_to_relation_type(self, dependency_label: str) -> Optional[RelationType]:
-        """Map dependency parsing label to relation type"""        mapping = {
+        """Map dependency parsing label to relation type"""
+        mapping = {
             'CREATED_BY': RelationType.CREATED_BY,
             'FEATURING': RelationType.FEATURING,
             'PRODUCED_BY': RelationType.PRODUCED_BY
@@ -1158,7 +1194,8 @@ class RelationshipExtractor(BaseService):
         return mapping.get(dependency_label)
     
     def _map_classifier_label_to_relation_type(self, classifier_label: str) -> Optional[RelationType]:
-        """Map ML classifier label to relation type"""        # This would depend on the specific classifier being used
+        """Map ML classifier label to relation type"""
+        # This would depend on the specific classifier being used
         # For now, return a default mapping
         label_mapping = {
             'collaboration': RelationType.COLLABORATION,
@@ -1174,7 +1211,8 @@ class RelationshipExtractor(BaseService):
         self,
         relationships: List[ExtractedRelationship]
     ) -> List[ExtractedRelationship]:
-        """Filter and deduplicate extracted relationships"""        if not relationships:
+        """Filter and deduplicate extracted relationships"""
+        if not relationships:
             return []
         
         # Remove low confidence relationships
@@ -1219,7 +1257,8 @@ class RelationshipExtractor(BaseService):
         return deduplicated
     
     def _add_relationships_to_graph(self, relationships: List[ExtractedRelationship]):
-        """Add extracted relationships to the relationship graph"""        for rel in relationships:
+        """Add extracted relationships to the relationship graph"""
+        for rel in relationships:
             try:
                 # Add entity nodes if they don't exist
                 source_id = f"{rel.source_entity.entity_type.value}:{rel.source_entity.text}"
@@ -1251,7 +1290,8 @@ class RelationshipExtractor(BaseService):
         text: str,
         context: Optional[str]
     ) -> str:
-        """Generate cache key for relationship extraction"""        import hashlib
+        """Generate cache key for relationship extraction"""
+        import hashlib
         
         entity_key = "|".join(f"{e.text}:{e.entity_type.value}" for e in entities)
         text_hash = hashlib.md5(text.encode()).hexdigest()[:8]
@@ -1261,7 +1301,8 @@ class RelationshipExtractor(BaseService):
         return hashlib.md5(full_key.encode()).hexdigest()
     
     def _update_extraction_stats(self, relationships: List[ExtractedRelationship], processing_time: float):
-        """Update extraction statistics"""        self.extraction_stats['total_extractions'] += 1
+        """Update extraction statistics"""
+        self.extraction_stats['total_extractions'] += 1
         self.extraction_stats['successful_extractions'] += len(relationships)
         
         # Update average processing time
@@ -1286,7 +1327,8 @@ class RelationshipExtractor(BaseService):
         self,
         relationships: List[ExtractedRelationship]
     ) -> List[ExtractedRelationship]:
-        """Infer implicit relationships from explicit ones using graph reasoning"""        inferred_relationships = []
+        """Infer implicit relationships from explicit ones using graph reasoning"""
+        inferred_relationships = []
         
         # Build temporary graph from relationships
         temp_graph = nx.DiGraph()
@@ -1322,7 +1364,8 @@ class RelationshipExtractor(BaseService):
         graph: nx.DiGraph,
         relationships: List[ExtractedRelationship]
     ) -> List[ExtractedRelationship]:
-        """Infer transitive relationships (A -> B, B -> C implies A -> C)"""        inferred = []
+        """Infer transitive relationships (A -> B, B -> C implies A -> C)"""
+        inferred = []
         
         # Define transitive relation types
         transitive_relations = {
@@ -1356,7 +1399,8 @@ class RelationshipExtractor(BaseService):
         graph: nx.DiGraph,
         relationships: List[ExtractedRelationship]
     ) -> List[ExtractedRelationship]:
-        """Infer symmetric relationships (A -> B implies B -> A)"""        inferred = []
+        """Infer symmetric relationships (A -> B implies B -> A)"""
+        inferred = []
         
         # Define symmetric relation types
         symmetric_relations = {
@@ -1394,7 +1438,8 @@ class RelationshipExtractor(BaseService):
         graph: nx.DiGraph,
         relationships: List[ExtractedRelationship]
     ) -> List[ExtractedRelationship]:
-        """Infer inverse relationships"""        inferred = []
+        """Infer inverse relationships"""
+        inferred = []
         
         # Define inverse relation pairs
         inverse_relations = {
@@ -1422,7 +1467,8 @@ class RelationshipExtractor(BaseService):
         return inferred
     
     async def get_relationship_statistics(self) -> Dict[str, Any]:
-        """Get relationship extraction statistics"""        return {
+        """Get relationship extraction statistics"""
+        return {
             **self.extraction_stats,
             'graph_stats': {
                 'nodes': len(self.relationship_graph.nodes),
@@ -1435,7 +1481,8 @@ class RelationshipExtractor(BaseService):
         }
     
     async def export_relationship_graph(self, format: str = "json") -> Dict[str, Any]:
-        """Export relationship graph in specified format"""        if format == "json":
+        """Export relationship graph in specified format"""
+        if format == "json":
             return {
                 'nodes': [
                     {'id': node, **data}
@@ -1450,7 +1497,8 @@ class RelationshipExtractor(BaseService):
             raise ValueError(f"Unsupported export format: {format}")
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for relationship extractor"""        return {
+        """Health check for relationship extractor"""
+        return {
             'status': 'healthy',
             'spacy_available': self.nlp is not None,
             'classifier_available': self.relation_classifier is not None,

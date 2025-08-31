@@ -4,7 +4,9 @@ Security-related constants and configurations for IA Influencer Agent
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 License: Proprietary - Contact author for licensing terms
-"""from typing import Dict, List, Set, Tuple
+"""
+
+from typing import Dict, List, Set, Tuple
 import re
 
 # =============================================================================

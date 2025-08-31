@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Set
 from datetime import datetime, timedelta
@@ -45,28 +46,32 @@ from ...ml.keyword_models import KeywordSimilarityModel, TrendPredictionModel
 logger = logging.getLogger(__name__)
 
 class KeywordDifficulty(Enum):
-    """Keyword difficulty levels"""    VERY_EASY = "very_easy"
+    """Keyword difficulty levels"""
+    VERY_EASY = "very_easy"
     EASY = "easy"
     MEDIUM = "medium"
     HARD = "hard"
     VERY_HARD = "very_hard"
 
 class KeywordIntent(Enum):
-    """Search intent types"""    INFORMATIONAL = "informational"
+    """Search intent types"""
+    INFORMATIONAL = "informational"
     NAVIGATIONAL = "navigational"
     COMMERCIAL = "commercial"
     TRANSACTIONAL = "transactional"
     LOCAL = "local"
 
 class TrendDirection(Enum):
-    """Trend direction"""    RISING = "rising"
+    """Trend direction"""
+    RISING = "rising"
     STABLE = "stable"
     DECLINING = "declining"
     SEASONAL = "seasonal"
 
 @dataclass
 class KeywordMetrics:
-    """Comprehensive keyword metrics"""    keyword: str
+    """Comprehensive keyword metrics"""
+    keyword: str
     search_volume: int
     competition: float
     cpc: float
@@ -84,7 +89,8 @@ class KeywordMetrics:
 
 @dataclass
 class TrendData:
-    """Keyword trend analysis data"""    keyword: str
+    """Keyword trend analysis data"""
+    keyword: str
     trend_direction: TrendDirection
     growth_rate: float
     seasonality_score: float
@@ -95,7 +101,8 @@ class TrendData:
 
 @dataclass
 class CompetitorKeywords:
-    """Competitor keyword analysis"""    competitor_url: str
+    """Competitor keyword analysis"""
+    competitor_url: str
     domain_authority: float
     top_keywords: List[KeywordMetrics]
     keyword_gaps: List[str]
@@ -105,7 +112,8 @@ class CompetitorKeywords:
     competitive_advantage: float
 
 class KeywordAnalyzer:
-    """    Advanced keyword analysis and research engine.
+    """
+    Advanced keyword analysis and research engine.
     
     Features:
     - Multi-source keyword research
@@ -116,7 +124,8 @@ class KeywordAnalyzer:
     - Commercial value estimation
     - Keyword clustering and grouping
     - Localization and multilingual support
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -145,7 +154,8 @@ class KeywordAnalyzer:
         self.cache_ttl = timedelta(hours=24)
         
     async def initialize(self):
-        """Initialize keyword analyzer components"""        try:
+        """Initialize keyword analyzer components"""
+        try:
             # Initialize AI models
             self.similarity_model = KeywordSimilarityModel()
             await self.similarity_model.load_model()
@@ -176,7 +186,8 @@ class KeywordAnalyzer:
         include_questions: bool = True,
         max_results: int = 100
     ) -> List[KeywordMetrics]:
-        """        Comprehensive keyword research from multiple sources.
+        """
+        Comprehensive keyword research from multiple sources.
         
         Args:
             seed_keywords: Initial keywords to expand from
@@ -189,7 +200,8 @@ class KeywordAnalyzer:
         
         Returns:
             List of keyword metrics
-        """        try:
+        """
+        try:
             if not seed_keywords and not topic:
                 raise ValidationError("Either seed keywords or topic is required")
             
@@ -250,7 +262,8 @@ class KeywordAnalyzer:
         keywords: List[str],
         num_clusters: int = 10
     ) -> Dict[str, List[str]]:
-        """        Cluster keywords by semantic similarity and search intent.
+        """
+        Cluster keywords by semantic similarity and search intent.
         
         Args:
             keywords: List of keywords to cluster
@@ -258,7 +271,8 @@ class KeywordAnalyzer:
         
         Returns:
             Dictionary mapping cluster names to keyword lists
-        """        try:
+        """
+        try:
             if len(keywords) < num_clusters:
                 num_clusters = len(keywords)
             
@@ -307,7 +321,8 @@ class KeywordAnalyzer:
         keywords: List[str],
         language: str = 'en'
     ) -> Dict[str, KeywordDifficulty]:
-        """        Analyze keyword ranking difficulty using multiple factors.
+        """
+        Analyze keyword ranking difficulty using multiple factors.
         
         Args:
             keywords: List of keywords to analyze
@@ -315,7 +330,8 @@ class KeywordAnalyzer:
         
         Returns:
             Dictionary mapping keywords to difficulty levels
-        """        try:
+        """
+        try:
             difficulty_scores = {}
             
             for keyword in keywords:
@@ -351,7 +367,8 @@ class KeywordAnalyzer:
         industry: str,
         language: str = 'en'
     ) -> Dict[str, Any]:
-        """        Identify keyword opportunities by analyzing gaps and trends.
+        """
+        Identify keyword opportunities by analyzing gaps and trends.
         
         Args:
             current_keywords: Currently targeted keywords
@@ -361,7 +378,8 @@ class KeywordAnalyzer:
         
         Returns:
             Keyword opportunities analysis
-        """        try:
+        """
+        try:
             opportunities = {
                 'keyword_gaps': [],
                 'trending_keywords': [],
@@ -450,7 +468,8 @@ class KeywordAnalyzer:
         language: str,
         location: str = 'US'
     ) -> Optional[KeywordMetrics]:
-        """Analyze a single keyword comprehensively"""        try:
+        """Analyze a single keyword comprehensively"""
+        try:
             # Check cache first
             cache_key = f"{keyword}_{language}_{location}"
             if cache_key in self.keyword_cache:
@@ -515,7 +534,8 @@ class KeywordAnalyzer:
         language: str,
         location: str
     ) -> List[str]:
-        """Expand a seed keyword into related keywords"""        try:
+        """Expand a seed keyword into related keywords"""
+        try:
             expanded_keywords = set()
             
             # Use search API suggestions
@@ -541,7 +561,8 @@ class KeywordAnalyzer:
             return []
     
     def _generate_keyword_variations(self, keyword: str) -> List[str]:
-        """Generate variations of a keyword"""        variations = []
+        """Generate variations of a keyword"""
+        variations = []
         
         # Plurals/singulars
         if keyword.endswith('s'):
@@ -563,7 +584,8 @@ class KeywordAnalyzer:
 
 
 class TrendAnalyzer:
-    """    Advanced trend analysis for keywords and search patterns.
+    """
+    Advanced trend analysis for keywords and search patterns.
     
     Features:
     - Real-time trend detection
@@ -572,7 +594,8 @@ class TrendAnalyzer:
     - Social media trend correlation
     - Industry-specific trend tracking
     - Geographic trend variations
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -592,7 +615,8 @@ class TrendAnalyzer:
         self.prediction_horizon = timedelta(days=90)
         
     async def initialize(self):
-        """Initialize trend analyzer"""        try:
+        """Initialize trend analyzer"""
+        try:
             # Initialize prediction model
             self.trend_prediction_model = TrendPredictionModel()
             await self.trend_prediction_model.load_model()
@@ -614,7 +638,8 @@ class TrendAnalyzer:
         language: str = 'en',
         location: str = 'US'
     ) -> Dict[str, TrendData]:
-        """        Analyze trends for a list of keywords.
+        """
+        Analyze trends for a list of keywords.
         
         Args:
             keywords: Keywords to analyze
@@ -624,7 +649,8 @@ class TrendAnalyzer:
         
         Returns:
             Dictionary mapping keywords to trend data
-        """        try:
+        """
+        try:
             if not time_range:
                 time_range = {
                     'start': datetime.utcnow() - self.trend_window,
@@ -685,7 +711,8 @@ class TrendAnalyzer:
         language: str = 'en',
         min_growth_rate: float = 0.5
     ) -> List[Dict[str, Any]]:
-        """        Detect emerging trends in an industry.
+        """
+        Detect emerging trends in an industry.
         
         Args:
             industry: Industry or topic area
@@ -694,7 +721,8 @@ class TrendAnalyzer:
         
         Returns:
             List of emerging trends with data
-        """        try:
+        """
+        try:
             emerging_trends = []
             
             # Get industry-related keywords
@@ -740,7 +768,8 @@ class TrendAnalyzer:
         keywords: List[str],
         years_of_data: int = 2
     ) -> Dict[str, Dict[str, float]]:
-        """        Analyze seasonal patterns for keywords.
+        """
+        Analyze seasonal patterns for keywords.
         
         Args:
             keywords: Keywords to analyze
@@ -748,7 +777,8 @@ class TrendAnalyzer:
         
         Returns:
             Dictionary mapping keywords to seasonal patterns
-        """        try:
+        """
+        try:
             seasonal_patterns = {}
             
             for keyword in keywords:
@@ -786,7 +816,8 @@ class TrendAnalyzer:
         self,
         historical_data: List[Dict[str, Any]]
     ) -> Tuple[TrendDirection, float]:
-        """Analyze trend direction and calculate growth rate"""        if len(historical_data) < 2:
+        """Analyze trend direction and calculate growth rate"""
+        if len(historical_data) < 2:
             return TrendDirection.STABLE, 0.0
         
         # Calculate linear regression
@@ -817,7 +848,8 @@ class TrendAnalyzer:
 
 
 class CompetitorAnalyzer:
-    """    Advanced competitor analysis for SEO intelligence.
+    """
+    Advanced competitor analysis for SEO intelligence.
     
     Features:
     - Comprehensive competitor keyword analysis
@@ -826,7 +858,8 @@ class CompetitorAnalyzer:
     - Ranking position tracking
     - Competitive advantage assessment
     - Market share analysis
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -839,7 +872,8 @@ class CompetitorAnalyzer:
         self.market_intelligence: Dict[str, Dict[str, Any]] = {}
         
     async def initialize(self):
-        """Initialize competitor analyzer"""        try:
+        """Initialize competitor analyzer"""
+        try:
             await self.search_apis.initialize()
             await self.keyword_analyzer.initialize()
             
@@ -855,7 +889,8 @@ class CompetitorAnalyzer:
         target_keywords: List[str],
         language: str = 'en'
     ) -> Dict[str, CompetitorKeywords]:
-        """        Comprehensive competitor analysis.
+        """
+        Comprehensive competitor analysis.
         
         Args:
             competitor_urls: URLs of competitors to analyze
@@ -864,7 +899,8 @@ class CompetitorAnalyzer:
         
         Returns:
             Dictionary mapping competitor URLs to analysis data
-        """        try:
+        """
+        try:
             competitor_analysis = {}
             
             for competitor_url in competitor_urls:

@@ -11,13 +11,15 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""from typing import Dict, List, Any, Optional
+"""
+from typing import Dict, List, Any, Optional
 from dataclasses import dataclass
 import json
 
 @dataclass
 class ModuleDocumentation:
-    """Documentation structure for modules."""    name: str
+    """Documentation structure for modules."""
+    name: str
     description: str
     purpose: str
     key_features: List[str]
@@ -27,11 +29,14 @@ class ModuleDocumentation:
     performance_metrics: Dict[str, Any]
 
 class CrawlerTechnicalDocs:
-    """    Comprehensive technical documentation for the crawlers module.
-    """    
+    """
+    Comprehensive technical documentation for the crawlers module.
+    """
+    
     @staticmethod
     def get_content_intelligence_docs() -> ModuleDocumentation:
-        """Get documentation for Content Intelligence Engine."""        return ModuleDocumentation(
+        """Get documentation for Content Intelligence Engine."""
+        return ModuleDocumentation(
             name="Content Intelligence Engine",
             description="Advanced AI-powered content analysis and intelligence system",
             purpose="Analyze multi-format content (audio, video, image, text) to extract insights, predict engagement, and identify collaboration opportunities",
@@ -74,7 +79,8 @@ features = await engine.analyze_content(
 insights = await engine.generate_insights(features)
 print(f"Engagement prediction: {insights.engagement_prediction}")
 print(f"Viral potential: {insights.viral_potential}")
-                    """                }
+                    """
+                }
             ],
             dependencies=[
                 "torch", "transformers", "librosa", "cv2", "PIL", 
@@ -89,7 +95,8 @@ print(f"Viral potential: {insights.viral_potential}")
     
     @staticmethod
     def get_trend_detection_docs() -> ModuleDocumentation:
-        """Get documentation for Trend Detection Engine."""        return ModuleDocumentation(
+        """Get documentation for Trend Detection Engine."""
+        return ModuleDocumentation(
             name="Trend Detection Engine",
             description="Real-time trend detection and market intelligence system",
             purpose="Identify emerging trends, predict viral patterns, and discover market opportunities across platforms",
@@ -144,7 +151,8 @@ trends = await engine.analyze_real_time_trends(
 for trend in trends:
     if trend.trend_type == TrendType.VIRAL:
         print(f"Viral trend detected: {trend.keywords}")
-                    """                }
+                    """
+                }
             ],
             dependencies=[
                 "pandas", "sklearn", "networkx", "pytrends", 
@@ -159,7 +167,8 @@ for trend in trends:
     
     @staticmethod
     def get_collaboration_matching_docs() -> ModuleDocumentation:
-        """Get documentation for Collaboration Matching Engine."""        return ModuleDocumentation(
+        """Get documentation for Collaboration Matching Engine."""
+        return ModuleDocumentation(
             name="Collaboration Matching Engine",
             description="AI-powered creator collaboration matching and optimization system",
             purpose="Find optimal collaboration opportunities, calculate compatibility scores, and predict collaboration success",
@@ -217,7 +226,8 @@ opportunities = await engine.find_collaboration_opportunities(
 best_match = opportunities[0]
 print(f"Best partner: {best_match.potential_partners[0]}")
 print(f"Success probability: {best_match.success_probability}")
-                    """                }
+                    """
+                }
             ],
             dependencies=[
                 "sklearn", "networkx", "sentence-transformers", 
@@ -232,7 +242,8 @@ print(f"Success probability: {best_match.success_probability}")
     
     @staticmethod
     def get_architecture_overview() -> Dict[str, Any]:
-        """Get overall architecture documentation."""        return {
+        """Get overall architecture documentation."""
+        return {
             "system_architecture": {
                 "design_pattern": "Microservices with Event-Driven Architecture",
                 "scalability": "Horizontal scaling with load balancing",
@@ -279,7 +290,8 @@ print(f"Success probability: {best_match.success_probability}")
     
     @staticmethod
     def get_deployment_guide() -> Dict[str, Any]:
-        """Get deployment and operations guide."""        return {
+        """Get deployment and operations guide."""
+        return {
             "deployment_options": {
                 "docker_containers": {
                     "description": "Containerized deployment with Docker",
@@ -347,7 +359,8 @@ print(f"Success probability: {best_match.success_probability}")
     
     @staticmethod
     def get_api_documentation() -> Dict[str, Any]:
-        """Get comprehensive API documentation."""        return {
+        """Get comprehensive API documentation."""
+        return {
             "authentication": {
                 "type": "OAuth2 with JWT tokens",
                 "flows": ["Authorization Code", "Client Credentials"],
@@ -396,7 +409,8 @@ print(f"Success probability: {best_match.success_probability}")
     
     @staticmethod
     def get_security_documentation() -> Dict[str, Any]:
-        """Get security implementation documentation."""        return {
+        """Get security implementation documentation."""
+        return {
             "data_protection": {
                 "encryption": {
                     "at_rest": "AES-256 encryption for all stored data",
@@ -442,7 +456,8 @@ print(f"Success probability: {best_match.success_probability}")
     
     @staticmethod
     def generate_complete_documentation() -> str:
-        """Generate complete technical documentation as formatted string."""        docs = CrawlerTechnicalDocs()
+        """Generate complete technical documentation as formatted string."""
+        docs = CrawlerTechnicalDocs()
         
         content_intel_docs = docs.get_content_intelligence_docs()
         trend_docs = docs.get_trend_detection_docs()
@@ -545,7 +560,8 @@ For technical support or licensing inquiries:
 
 ---
 *This documentation is proprietary and confidential. Unauthorized access or distribution is prohibited.*
-        """        
+        """
+        
         return documentation
 
 # Export main documentation class

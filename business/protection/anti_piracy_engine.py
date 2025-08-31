@@ -13,7 +13,8 @@ This module provides comprehensive anti-piracy protection including:
 
 Business Logic: Content Upload → AI Analysis → Piracy Detection → 
 Enforcement → Revenue Recovery → Legal Documentation
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import json
@@ -58,7 +59,8 @@ logger = logging.getLogger(__name__)
 # =============== ENUMS & CONFIGURATION ===============
 
 class PiracyDetectionStatus(Enum):
-    """Status of piracy detection operations"""    PENDING = "pending"
+    """Status of piracy detection operations"""
+    PENDING = "pending"
     SCANNING = "scanning"
     DETECTED = "detected"
     CONFIRMED = "confirmed"
@@ -69,7 +71,8 @@ class PiracyDetectionStatus(Enum):
 
 
 class ContentType(Enum):
-    """Supported content types for piracy detection"""    AUDIO = "audio"
+    """Supported content types for piracy detection"""
+    AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
     TEXT = "text"
@@ -77,7 +80,8 @@ class ContentType(Enum):
 
 
 class PiracyThreatLevel(Enum):
-    """Threat level classification for piracy"""    LOW = "low"
+    """Threat level classification for piracy"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -85,7 +89,8 @@ class PiracyThreatLevel(Enum):
 
 
 class PlatformType(Enum):
-    """Supported platforms for monitoring"""    YOUTUBE = "youtube"
+    """Supported platforms for monitoring"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -98,7 +103,8 @@ class PlatformType(Enum):
 
 
 class EnforcementAction(Enum):
-    """Types of enforcement actions"""    DMCA_TAKEDOWN = "dmca_takedown"
+    """Types of enforcement actions"""
+    DMCA_TAKEDOWN = "dmca_takedown"
     PLATFORM_REPORT = "platform_report"
     CEASE_DESIST = "cease_desist"
     LEGAL_NOTICE = "legal_notice"
@@ -109,7 +115,8 @@ class EnforcementAction(Enum):
 
 @dataclass
 class PiracyAlert:
-    """Piracy detection alert data structure"""    alert_id: str
+    """Piracy detection alert data structure"""
+    alert_id: str
     original_content_id: str
     detected_url: str
     platform: PlatformType
@@ -128,7 +135,8 @@ class PiracyAlert:
 
 @dataclass
 class ContentFingerprint:
-    """Multi-modal content fingerprint"""    content_id: str
+    """Multi-modal content fingerprint"""
+    content_id: str
     content_type: ContentType
     audio_signature: Optional[Dict[str, Any]] = None
     visual_signature: Optional[Dict[str, Any]] = None
@@ -141,7 +149,8 @@ class ContentFingerprint:
 
 @dataclass
 class PiracyEnforcementResult:
-    """Result of piracy enforcement action"""    action_id: str
+    """Result of piracy enforcement action"""
+    action_id: str
     alert_id: str
     action_type: EnforcementAction
     platform: PlatformType
@@ -155,7 +164,8 @@ class PiracyEnforcementResult:
 
 
 class ContentFingerprintGenerator:
-    """Advanced content fingerprinting for piracy detection"""    
+    """Advanced content fingerprinting for piracy detection"""
+    
     def __init__(self):
         self.audio_sample_rate = 22050
         self.image_hash_size = 16
@@ -164,7 +174,8 @@ class ContentFingerprintGenerator:
         self.initialize_models()
     
     def initialize_models(self):
-        """Initialize ML models for content analysis"""        try:
+        """Initialize ML models for content analysis"""
+        try:
             # Initialize text embedding model
             self.text_tokenizer = AutoTokenizer.from_pretrained('sentence-transformers/all-MiniLM-L6-v2')
             self.text_model = AutoModel.from_pretrained('sentence-transformers/all-MiniLM-L6-v2')
@@ -176,7 +187,8 @@ class ContentFingerprintGenerator:
     
     async def generate_fingerprint(self, content_path: str, content_type: ContentType, 
                                  owner_id: str, copyright_info: Dict[str, Any] = None) -> ContentFingerprint:
-        """Generate comprehensive content fingerprint"""        try:
+        """Generate comprehensive content fingerprint"""
+        try:
             content_id = f"{owner_id}_{hashlib.sha256(str(content_path).encode()).hexdigest()[:16]}"
             
             fingerprint = ContentFingerprint(
@@ -207,7 +219,8 @@ class ContentFingerprintGenerator:
             raise
     
     async def _generate_audio_signature(self, audio_path: str) -> Dict[str, Any]:
-        """Generate advanced audio signature"""        try:
+        """Generate advanced audio signature"""
+        try:
             # Load audio
             y, sr = librosa.load(audio_path, sr=self.audio_sample_rate, duration=60)
             
@@ -250,7 +263,8 @@ class ContentFingerprintGenerator:
             return {}
     
     async def _generate_video_signature(self, video_path: str) -> Dict[str, Any]:
-        """Generate advanced video signature"""        try:
+        """Generate advanced video signature"""
+        try:
             cap = cv2.VideoCapture(video_path)
             
             # Video metadata
@@ -337,7 +351,8 @@ class ContentFingerprintGenerator:
             return {}
     
     async def _generate_image_signature(self, image_path: str) -> Dict[str, Any]:
-        """Generate advanced image signature"""        try:
+        """Generate advanced image signature"""
+        try:
             # Load image
             image = Image.open(image_path)
             cv_image = cv2.imread(image_path)
@@ -393,7 +408,8 @@ class ContentFingerprintGenerator:
             return {}
     
     async def _generate_text_signature(self, text_content: str) -> Dict[str, Any]:
-        """Generate advanced text signature"""        try:
+        """Generate advanced text signature"""
+        try:
             # Basic text metrics
             word_count = len(text_content.split())
             char_count = len(text_content)
@@ -451,7 +467,8 @@ class ContentFingerprintGenerator:
             return {}
     
     async def _generate_metadata_signature(self, file_path: str) -> Dict[str, Any]:
-        """Generate file metadata signature"""        try:
+        """Generate file metadata signature"""
+        try:
             from pathlib import Path
             import os
             
@@ -475,14 +492,16 @@ class ContentFingerprintGenerator:
             return {}
     
     def _calculate_file_hash(self, file_path: str, algorithm: str) -> str:
-        """Calculate file hash"""        hash_func = getattr(hashlib, algorithm)()
+        """Calculate file hash"""
+        hash_func = getattr(hashlib, algorithm)()
         with open(file_path, 'rb') as f:
             for chunk in iter(lambda: f.read(4096), b""):
                 hash_func.update(chunk)
         return hash_func.hexdigest()
     
     def _calculate_temporal_consistency(self, frame_hashes: List[str]) -> float:
-        """Calculate temporal consistency of video frames"""        if len(frame_hashes) < 2:
+        """Calculate temporal consistency of video frames"""
+        if len(frame_hashes) < 2:
             return 0.0
         
         differences = []
@@ -494,7 +513,8 @@ class ContentFingerprintGenerator:
         return float(np.std(differences)) if differences else 0.0
     
     def _calculate_visual_complexity(self, color_histograms: List[List[float]]) -> float:
-        """Calculate average visual complexity"""        if not color_histograms:
+        """Calculate average visual complexity"""
+        if not color_histograms:
             return 0.0
         
         complexities = []
@@ -508,7 +528,8 @@ class ContentFingerprintGenerator:
         return float(np.mean(complexities))
     
     def _calculate_glcm_features(self, gray_image: np.ndarray) -> float:
-        """Calculate texture contrast using simplified GLCM"""        try:
+        """Calculate texture contrast using simplified GLCM"""
+        try:
             # Simple texture measure using gradients
             grad_x = cv2.Sobel(gray_image, cv2.CV_64F, 1, 0, ksize=3)
             grad_y = cv2.Sobel(gray_image, cv2.CV_64F, 0, 1, ksize=3)
@@ -518,7 +539,8 @@ class ContentFingerprintGenerator:
             return 0.0
     
     def _extract_sift_features(self, gray_image: np.ndarray) -> Optional[List]:
-        """Extract SIFT features if available"""        try:
+        """Extract SIFT features if available"""
+        try:
             sift = cv2.SIFT_create()
             keypoints, descriptors = sift.detectAndCompute(gray_image, None)
             if descriptors is not None:
@@ -528,7 +550,8 @@ class ContentFingerprintGenerator:
         return None
     
     def _extract_dominant_colors(self, image: np.ndarray, k: int = 5) -> List[List[int]]:
-        """Extract dominant colors using k-means clustering"""        try:
+        """Extract dominant colors using k-means clustering"""
+        try:
             data = image.reshape((-1, 3))
             data = np.float32(data)
             
@@ -540,7 +563,8 @@ class ContentFingerprintGenerator:
             return []
     
     async def _extract_audio_from_video(self, video_path: str) -> Optional[Dict[str, Any]]:
-        """Extract and analyze audio track from video"""        try:
+        """Extract and analyze audio track from video"""
+        try:
             # This would typically use ffmpeg to extract audio
             # For now, return placeholder that could be implemented
             return {
@@ -552,14 +576,16 @@ class ContentFingerprintGenerator:
             return None
 
 class PiracyThreatLevel(IntEnum):
-    """Piracy threat severity levels"""    LOW = 1
+    """Piracy threat severity levels"""
+    LOW = 1
     MEDIUM = 2
     HIGH = 3
     CRITICAL = 4
     EMERGENCY = 5
 
 class PiracyDetectionMethod(Enum):
-    """Methods used for piracy detection"""    FINGERPRINT_MATCHING = "fingerprint_matching"
+    """Methods used for piracy detection"""
+    FINGERPRINT_MATCHING = "fingerprint_matching"
     VISUAL_HASH = "visual_hash" 
     AUDIO_SIGNATURE = "audio_signature"
     TEXT_SIMILARITY = "text_similarity"
@@ -568,7 +594,8 @@ class PiracyDetectionMethod(Enum):
     ML_CLASSIFIER = "ml_classifier"
 
 class EnforcementActionType(Enum):
-    """Types of enforcement actions"""    DMCA_TAKEDOWN = "dmca_takedown"
+    """Types of enforcement actions"""
+    DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     LEGAL_NOTICE = "legal_notice"
     PLATFORM_REPORT = "platform_report"
@@ -578,7 +605,8 @@ class EnforcementActionType(Enum):
 
 @dataclass
 class AntiPiracyEngineConfig:
-    """Configuration for anti-piracy engine"""    enabled: bool = True
+    """Configuration for anti-piracy engine"""
+    enabled: bool = True
     max_concurrent_scans: int = 50
     scan_interval_hours: int = 6
     threat_threshold: float = 0.85
@@ -592,7 +620,8 @@ class AntiPiracyEngineConfig:
 
 @dataclass
 class PiracyDetectionResult:
-    """Result of piracy detection scan"""    detection_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Result of piracy detection scan"""
+    detection_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = ""
     detected_url: str = ""
     platform: str = ""
@@ -607,7 +636,8 @@ class PiracyDetectionResult:
 
 @dataclass 
 class PiracyEnforcementAction:
-    """Enforcement action taken against piracy"""    action_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Enforcement action taken against piracy"""
+    action_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     detection_id: str = ""
     action_type: EnforcementActionType = EnforcementActionType.PLATFORM_REPORT
     target_platform: str = ""
@@ -622,31 +652,38 @@ class PiracyEnforcementAction:
 # =============== CORE INTERFACES ===============
 
 class IAntiPiracyEngineService(ABC):
-    """Interface for anti-piracy engine service"""    
+    """Interface for anti-piracy engine service"""
+    
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialize the anti-piracy engine"""        pass
+        """Initialize the anti-piracy engine"""
+        pass
     
     @abstractmethod
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traitement principal"""        pass
+        """Traitement principal"""
+        pass
     
     @abstractmethod
     async def scan_for_piracy(self, content_ids: List[str]) -> List[PiracyDetectionResult]:
-        """Scan for piracy across platforms"""        pass
+        """Scan for piracy across platforms"""
+        pass
     
     @abstractmethod
     async def enforce_takedown(self, detection: PiracyDetectionResult) -> PiracyEnforcementAction:
-        """Execute enforcement action"""        pass
+        """Execute enforcement action"""
+        pass
     
     @abstractmethod
     async def validate_content(self, content_data: Dict[str, Any]) -> bool:
-        """Validate content for protection"""        pass
+        """Validate content for protection"""
+        pass
 
 # =============== ADVANCED ML DETECTION ENGINE ===============
 
 class PiracyDetectionEngine:
-    """Advanced ML-powered piracy detection engine"""    
+    """Advanced ML-powered piracy detection engine"""
+    
     def __init__(self, config: AntiPiracyEngineConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.DetectionEngine")
@@ -654,7 +691,8 @@ class PiracyDetectionEngine:
         self.active_scans: Dict[str, asyncio.Task] = {}
         
     async def detect_audio_piracy(self, audio_fingerprint: str, search_platforms: List[str]) -> List[PiracyDetectionResult]:
-        """Detect audio content piracy using fingerprint matching"""        results = []
+        """Detect audio content piracy using fingerprint matching"""
+        results = []
         
         try:
             # Parallel platform scanning
@@ -678,7 +716,8 @@ class PiracyDetectionEngine:
         return results
     
     async def detect_video_piracy(self, video_hash: str, frames_hash: List[str], search_platforms: List[str]) -> List[PiracyDetectionResult]:
-        """Detect video content piracy using visual hashing"""        results = []
+        """Detect video content piracy using visual hashing"""
+        results = []
         
         try:
             scan_tasks = []
@@ -698,7 +737,8 @@ class PiracyDetectionEngine:
         return results
     
     async def detect_text_piracy(self, text_embedding: np.ndarray, search_platforms: List[str]) -> List[PiracyDetectionResult]:
-        """Detect text content piracy using semantic similarity"""        results = []
+        """Detect text content piracy using semantic similarity"""
+        results = []
         
         try:
             scan_tasks = []
@@ -718,7 +758,8 @@ class PiracyDetectionEngine:
         return results
     
     async def _scan_platform_audio(self, fingerprint: str, platform: str) -> List[PiracyDetectionResult]:
-        """Scan specific platform for audio piracy"""        results = []
+        """Scan specific platform for audio piracy"""
+        results = []
         
         try:
             # Platform-specific audio scanning logic
@@ -737,7 +778,8 @@ class PiracyDetectionEngine:
         return results
     
     async def _scan_platform_video(self, video_hash: str, frames_hash: List[str], platform: str) -> List[PiracyDetectionResult]:
-        """Scan specific platform for video piracy"""        results = []
+        """Scan specific platform for video piracy"""
+        results = []
         
         try:
             if platform == "youtube":
@@ -755,7 +797,8 @@ class PiracyDetectionEngine:
         return results
     
     async def _scan_platform_text(self, text_embedding: np.ndarray, platform: str) -> List[PiracyDetectionResult]:
-        """Scan specific platform for text piracy"""        results = []
+        """Scan specific platform for text piracy"""
+        results = []
         
         try:
             if platform == "medium":
@@ -773,7 +816,8 @@ class PiracyDetectionEngine:
         return results
 
     async def _scan_youtube_audio(self, fingerprint: str) -> List[PiracyDetectionResult]:
-        """Scan YouTube for audio piracy"""        results = []
+        """Scan YouTube for audio piracy"""
+        results = []
         # YouTube Content ID API integration would go here
         return results
     
@@ -784,37 +828,44 @@ class PiracyDetectionEngine:
         return results
     
     async def _scan_soundcloud_audio(self, fingerprint: str) -> List[PiracyDetectionResult]:
-        """Scan SoundCloud for audio piracy"""        results = []
+        """Scan SoundCloud for audio piracy"""
+        results = []
         # SoundCloud API integration would go here
         return results
     
     async def _scan_youtube_video(self, video_hash: str, frames_hash: List[str]) -> List[PiracyDetectionResult]:
-        """Scan YouTube for video piracy"""        results = []
+        """Scan YouTube for video piracy"""
+        results = []
         # YouTube Data API v3 integration would go here
         return results
     
     async def _scan_tiktok_video(self, video_hash: str, frames_hash: List[str]) -> List[PiracyDetectionResult]:
-        """Scan TikTok for video piracy"""        results = []
+        """Scan TikTok for video piracy"""
+        results = []
         # TikTok API integration would go here
         return results
     
     async def _scan_instagram_video(self, video_hash: str, frames_hash: List[str]) -> List[PiracyDetectionResult]:
-        """Scan Instagram for video piracy"""        results = []
+        """Scan Instagram for video piracy"""
+        results = []
         # Instagram Basic Display API integration would go here
         return results
     
     async def _scan_medium_text(self, text_embedding: np.ndarray) -> List[PiracyDetectionResult]:
-        """Scan Medium for text piracy"""        results = []
+        """Scan Medium for text piracy"""
+        results = []
         # Medium API integration would go here
         return results
     
     async def _scan_wordpress_text(self, text_embedding: np.ndarray) -> List[PiracyDetectionResult]:
-        """Scan WordPress sites for text piracy"""        results = []
+        """Scan WordPress sites for text piracy"""
+        results = []
         # WordPress REST API integration would go here
         return results
     
     async def _scan_blogger_text(self, text_embedding: np.ndarray) -> List[PiracyDetectionResult]:
-        """Scan Blogger for text piracy"""        results = []
+        """Scan Blogger for text piracy"""
+        results = []
         # Blogger API integration would go here
         return results
                 results.extend(await self._scan_wordpress_text(text_embedding))
@@ -831,14 +882,16 @@ class PiracyDetectionEngine:
 # =============== ENFORCEMENT ENGINE ===============
 
 class PiracyEnforcementEngine:
-    """Advanced enforcement engine for piracy takedowns"""    
+    """Advanced enforcement engine for piracy takedowns"""
+    
     def __init__(self, config: AntiPiracyEngineConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.EnforcementEngine")
         self.enforcement_templates = self._load_enforcement_templates()
         
     async def execute_dmca_takedown(self, detection: PiracyDetectionResult) -> PiracyEnforcementAction:
-        """Execute DMCA takedown notice"""        action = PiracyEnforcementAction(
+        """Execute DMCA takedown notice"""
+        action = PiracyEnforcementAction(
             detection_id=detection.detection_id,
             action_type=EnforcementActionType.DMCA_TAKEDOWN,
             target_platform=detection.platform,
@@ -868,7 +921,8 @@ class PiracyEnforcementEngine:
         return action
     
     async def execute_platform_report(self, detection: PiracyDetectionResult) -> PiracyEnforcementAction:
-        """Submit platform-specific copyright report"""        action = PiracyEnforcementAction(
+        """Submit platform-specific copyright report"""
+        action = PiracyEnforcementAction(
             detection_id=detection.detection_id,
             action_type=EnforcementActionType.PLATFORM_REPORT,
             target_platform=detection.platform,
@@ -895,7 +949,8 @@ class PiracyEnforcementEngine:
         return action
     
     async def execute_revenue_claim(self, detection: PiracyDetectionResult) -> PiracyEnforcementAction:
-        """Execute revenue claim for monetized pirated content"""        action = PiracyEnforcementAction(
+        """Execute revenue claim for monetized pirated content"""
+        action = PiracyEnforcementAction(
             detection_id=detection.detection_id,
             action_type=EnforcementActionType.REVENUE_CLAIM,
             target_platform=detection.platform,
@@ -924,7 +979,8 @@ class PiracyEnforcementEngine:
 # =============== MAIN SERVICE IMPLEMENTATION ===============
 
 class AntiPiracyEngineService(IAntiPiracyEngineService):
-    """Professional anti-piracy engine service implementation"""    
+    """Professional anti-piracy engine service implementation"""
+    
     def __init__(self, config: AntiPiracyEngineConfig):
         self.config = config
         self.status = AntiPiracyEngineStatus.INACTIVE
@@ -939,7 +995,8 @@ class AntiPiracyEngineService(IAntiPiracyEngineService):
         self.scan_results: Dict[str, List[PiracyDetectionResult]] = {}
         
     async def initialize(self) -> bool:
-        """Initialize anti-piracy engine service"""        try:
+        """Initialize anti-piracy engine service"""
+        try:
             self.logger.info("� Initializing Anti-Piracy Engine Service")
             
             # Load platform configurations
@@ -961,7 +1018,8 @@ class AntiPiracyEngineService(IAntiPiracyEngineService):
             return False
     
     async def scan_for_piracy(self, content_ids: List[str]) -> List[PiracyDetectionResult]:
-        """Scan multiple content items for piracy across platforms"""        all_results = []
+        """Scan multiple content items for piracy across platforms"""
+        all_results = []
         
         try:
             self.status = AntiPiracyEngineStatus.SCANNING
@@ -1005,7 +1063,8 @@ class AntiPiracyEngineService(IAntiPiracyEngineService):
         return all_results
     
     async def enforce_takedown(self, detection: PiracyDetectionResult) -> PiracyEnforcementAction:
-        """Execute enforcement action for detected piracy"""        try:
+        """Execute enforcement action for detected piracy"""
+        try:
             self.status = AntiPiracyEngineStatus.ENFORCING
             self.logger.info(f"⚖️ Executing enforcement for detection: {detection.detection_id}")
             
@@ -1034,14 +1093,16 @@ class AntiPiracyEngineService(IAntiPiracyEngineService):
             raise
     
     async def validate_content(self, content_data: Dict[str, Any]) -> bool:
-        """Validate content data for protection eligibility"""                raise ValueError("Données invalides")
+        """Validate content data for protection eligibility"""
+                raise ValueError("Données invalides")
         except Exception as e:
             logger.error(f"Error extracting audio from video: {str(e)}")
             return None
 
 
 class PiracySimilarityEngine:
-    """Advanced similarity detection for piracy identification"""    
+    """Advanced similarity detection for piracy identification"""
+    
     def __init__(self, similarity_threshold: float = 0.85):
         self.similarity_threshold = similarity_threshold
         self.weights = {
@@ -1052,7 +1113,8 @@ class PiracySimilarityEngine:
         }
     
     async def compare_fingerprints(self, original: ContentFingerprint, suspected: ContentFingerprint) -> float:
-        """Compare two fingerprints and return similarity score"""        try:
+        """Compare two fingerprints and return similarity score"""
+        try:
             if original.content_type != suspected.content_type:
                 return 0.0  # Different content types
             
@@ -1095,7 +1157,8 @@ class PiracySimilarityEngine:
             return 0.0
     
     def _compare_audio_signatures(self, sig1: Dict[str, Any], sig2: Dict[str, Any]) -> float:
-        """Compare audio signatures"""        try:
+        """Compare audio signatures"""
+        try:
             similarities = []
             
             # MFCC comparison
@@ -1132,7 +1195,8 @@ class PiracySimilarityEngine:
             return 0.0
     
     def _compare_visual_signatures(self, sig1: Dict[str, Any], sig2: Dict[str, Any]) -> float:
-        """Compare visual signatures"""        try:
+        """Compare visual signatures"""
+        try:
             similarities = []
             
             # Perceptual hash comparison
@@ -1179,7 +1243,8 @@ class PiracySimilarityEngine:
             return 0.0
     
     def _compare_text_signatures(self, sig1: Dict[str, Any], sig2: Dict[str, Any]) -> float:
-        """Compare text signatures"""        try:
+        """Compare text signatures"""
+        try:
             similarities = []
             
             # Exact content hash
@@ -1221,7 +1286,8 @@ class PiracySimilarityEngine:
             return 0.0
     
     def _compare_metadata_signatures(self, sig1: Dict[str, Any], sig2: Dict[str, Any]) -> float:
-        """Compare metadata signatures"""        try:
+        """Compare metadata signatures"""
+        try:
             similarities = []
             
             # File extension
@@ -1249,7 +1315,8 @@ class PiracySimilarityEngine:
 
 
 class WebCrawlerEngine:
-    """Web crawling engine for piracy detection"""    
+    """Web crawling engine for piracy detection"""
+    
     def __init__(self, max_concurrent_crawls: int = 5):
         self.max_concurrent_crawls = max_concurrent_crawls
         self.session = None
@@ -1257,7 +1324,8 @@ class WebCrawlerEngine:
         self.crawl_results = []
         
     async def initialize(self):
-        """Initialize crawling resources"""        try:
+        """Initialize crawling resources"""
+        try:
             # Initialize aiohttp session
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=30),
@@ -1287,7 +1355,8 @@ class WebCrawlerEngine:
     
     async def search_for_pirated_content(self, fingerprint: ContentFingerprint, 
                                        platforms: List[PlatformType] = None) -> List[PiracyAlert]:
-        """Search for potential pirated content across platforms"""        try:
+        """Search for potential pirated content across platforms"""
+        try:
             if platforms is None:
                 platforms = [PlatformType.YOUTUBE, PlatformType.INSTAGRAM, PlatformType.TIKTOK]
             
@@ -1317,7 +1386,8 @@ class WebCrawlerEngine:
     
     async def _search_platform(self, semaphore: asyncio.Semaphore, 
                              fingerprint: ContentFingerprint, platform: PlatformType) -> List[PiracyAlert]:
-        """Search specific platform for pirated content"""        async with semaphore:
+        """Search specific platform for pirated content"""
+        async with semaphore:
             try:
                 if platform == PlatformType.YOUTUBE:
                     return await self._search_youtube(fingerprint)
@@ -1336,7 +1406,8 @@ class WebCrawlerEngine:
                 return []
     
     async def _search_youtube(self, fingerprint: ContentFingerprint) -> List[PiracyAlert]:
-        """Search YouTube for potential piracy"""        try:
+        """Search YouTube for potential piracy"""
+        try:
             alerts = []
             
             # Use YouTube API if available
@@ -1377,22 +1448,26 @@ class WebCrawlerEngine:
             return []
     
     async def _search_instagram(self, fingerprint: ContentFingerprint) -> List[PiracyAlert]:
-        """Search Instagram for potential piracy"""        # Placeholder implementation
+        """Search Instagram for potential piracy"""
+        # Placeholder implementation
         logger.info("Instagram search not yet fully implemented")
         return []
     
     async def _search_tiktok(self, fingerprint: ContentFingerprint) -> List[PiracyAlert]:
-        """Search TikTok for potential piracy"""        # Placeholder implementation
+        """Search TikTok for potential piracy"""
+        # Placeholder implementation
         logger.info("TikTok search not yet fully implemented")
         return []
     
     async def _search_generic_web(self, fingerprint: ContentFingerprint) -> List[PiracyAlert]:
-        """Search generic web for potential piracy"""        # Placeholder implementation
+        """Search generic web for potential piracy"""
+        # Placeholder implementation
         logger.info("Generic web search not yet fully implemented")
         return []
     
     def _generate_search_queries(self, fingerprint: ContentFingerprint) -> List[str]:
-        """Generate search queries based on content fingerprint"""        queries = []
+        """Generate search queries based on content fingerprint"""
+        queries = []
         
         # Use filename if available
         if fingerprint.metadata_signature and 'filename' in fingerprint.metadata_signature:
@@ -1414,7 +1489,8 @@ class WebCrawlerEngine:
         return queries[:10]  # Limit to 10 queries
     
     def _extract_youtube_urls(self, html_content: str) -> List[str]:
-        """Extract YouTube video URLs from search results"""        try:
+        """Extract YouTube video URLs from search results"""
+        try:
             soup = BeautifulSoup(html_content, 'html.parser')
             urls = []
             
@@ -1433,7 +1509,8 @@ class WebCrawlerEngine:
             return []
     
     async def cleanup(self):
-        """Clean up crawling resources"""        try:
+        """Clean up crawling resources"""
+        try:
             if self.session:
                 await self.session.close()
             
@@ -1447,7 +1524,8 @@ class WebCrawlerEngine:
 
 
 class PiracyEnforcementEngine:
-    """Automated piracy enforcement system"""    
+    """Automated piracy enforcement system"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.enforcement_queue = asyncio.Queue()
@@ -1455,7 +1533,8 @@ class PiracyEnforcementEngine:
         self.smtp_config = config.get('smtp_config', {})
         
     async def process_piracy_alert(self, alert: PiracyAlert) -> List[PiracyEnforcementResult]:
-        """Process piracy alert and execute appropriate enforcement actions"""        try:
+        """Process piracy alert and execute appropriate enforcement actions"""
+        try:
             # Determine enforcement actions based on threat level and platform
             actions = self._determine_enforcement_actions(alert)
             
@@ -1475,7 +1554,8 @@ class PiracyEnforcementEngine:
             return []
     
     def _determine_enforcement_actions(self, alert: PiracyAlert) -> List[EnforcementAction]:
-        """Determine appropriate enforcement actions"""        actions = []
+        """Determine appropriate enforcement actions"""
+        actions = []
         
         # High similarity or high threat = immediate action
         if alert.similarity_score >= 0.9 or alert.threat_level in [PiracyThreatLevel.HIGH, PiracyThreatLevel.CRITICAL]:
@@ -1500,7 +1580,8 @@ class PiracyEnforcementEngine:
     
     async def _execute_enforcement_action(self, alert: PiracyAlert, 
                                        action: EnforcementAction) -> PiracyEnforcementResult:
-        """Execute specific enforcement action"""        action_id = str(uuid.uuid4())
+        """Execute specific enforcement action"""
+        action_id = str(uuid.uuid4())
         
         result = PiracyEnforcementResult(
             action_id=action_id,
@@ -1534,7 +1615,8 @@ class PiracyEnforcementEngine:
         return result
     
     async def _send_dmca_takedown(self, alert: PiracyAlert, result: PiracyEnforcementResult):
-        """Send DMCA takedown notice"""        try:
+        """Send DMCA takedown notice"""
+        try:
             dmca_content = self._generate_dmca_notice(alert)
             recipient_email = self._get_platform_dmca_email(alert.platform)
             
@@ -1559,7 +1641,8 @@ class PiracyEnforcementEngine:
             result.error_message = str(e)
     
     async def _submit_platform_report(self, alert: PiracyAlert, result: PiracyEnforcementResult):
-        """Submit report to platform"""        try:
+        """Submit report to platform"""
+        try:
             # This would integrate with platform APIs
             # For now, simulate submission
             result.success = True
@@ -1574,7 +1657,8 @@ class PiracyEnforcementEngine:
             result.error_message = str(e)
     
     async def _send_cease_desist(self, alert: PiracyAlert, result: PiracyEnforcementResult):
-        """Send cease and desist letter"""        try:
+        """Send cease and desist letter"""
+        try:
             letter_content = self._generate_cease_desist_letter(alert)
             
             # Would determine recipient from violator info
@@ -1592,7 +1676,8 @@ class PiracyEnforcementEngine:
             result.error_message = str(e)
     
     async def _submit_revenue_claim(self, alert: PiracyAlert, result: PiracyEnforcementResult):
-        """Submit revenue claim"""        try:
+        """Submit revenue claim"""
+        try:
             # Calculate potential recovery
             recovery_amount = alert.estimated_revenue_impact * 0.7  # 70% recovery rate
             
@@ -1609,7 +1694,8 @@ class PiracyEnforcementEngine:
             result.error_message = str(e)
     
     def _generate_dmca_notice(self, alert: PiracyAlert) -> str:
-        """Generate DMCA takedown notice"""        template = f"""DMCA TAKEDOWN NOTICE
+        """Generate DMCA takedown notice"""
+        template = f"""DMCA TAKEDOWN NOTICE
 
 Date: {datetime.now().strftime('%B %d, %Y')}
 Alert ID: {alert.alert_id}
@@ -1646,10 +1732,12 @@ Email: mlaiel@live.de
 Date: {datetime.now().strftime('%Y-%m-%d')}
 
 Please remove or disable access to the infringing material immediately.
-"""        return template
+"""
+        return template
     
     def _generate_cease_desist_letter(self, alert: PiracyAlert) -> str:
-        """Generate cease and desist letter"""        template = f"""CEASE AND DESIST LETTER
+        """Generate cease and desist letter"""
+        template = f"""CEASE AND DESIST LETTER
 
 Date: {datetime.now().strftime('%B %d, %Y')}
 Alert ID: {alert.alert_id}
@@ -1680,10 +1768,12 @@ Sincerely,
 Fahed Mlaiel
 Copyright Owner
 mlaiel@live.de
-"""        return template
+"""
+        return template
     
     def _get_platform_dmca_email(self, platform: PlatformType) -> Optional[str]:
-        """Get DMCA email for platform"""        emails = {
+        """Get DMCA email for platform"""
+        emails = {
             PlatformType.YOUTUBE: 'copyright@youtube.com',
             PlatformType.INSTAGRAM: 'copyright@instagram.com',
             PlatformType.FACEBOOK: 'copyright@facebook.com',
@@ -1693,7 +1783,8 @@ mlaiel@live.de
         return emails.get(platform)
     
     async def _send_email(self, recipient: str, subject: str, content: str) -> bool:
-        """Send email using SMTP"""        try:
+        """Send email using SMTP"""
+        try:
             # This would use actual SMTP implementation
             # For now, simulate sending
             logger.info(f"Email would be sent to {recipient} with subject: {subject}")
@@ -1705,7 +1796,8 @@ mlaiel@live.de
 
 
 class AntiPiracyEngine:
-    """Main anti-piracy engine coordinating all piracy detection and enforcement"""    
+    """Main anti-piracy engine coordinating all piracy detection and enforcement"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.fingerprint_generator = ContentFingerprintGenerator()
@@ -1726,7 +1818,8 @@ class AntiPiracyEngine:
         self.monitoring_tasks = []
     
     async def initialize(self):
-        """Initialize the anti-piracy engine"""        try:
+        """Initialize the anti-piracy engine"""
+        try:
             await self.crawler_engine.initialize()
             logger.info("Anti-piracy engine initialized successfully")
             
@@ -1736,7 +1829,8 @@ class AntiPiracyEngine:
     
     async def register_content(self, content_path: str, content_type: ContentType, 
                              owner_id: str, copyright_info: Dict[str, Any] = None) -> str:
-        """Register content for protection"""        try:
+        """Register content for protection"""
+        try:
             fingerprint = await self.fingerprint_generator.generate_fingerprint(
                 content_path, content_type, owner_id, copyright_info
             )
@@ -1751,7 +1845,8 @@ class AntiPiracyEngine:
             raise
     
     async def start_monitoring(self, check_interval_hours: int = 6):
-        """Start continuous monitoring for piracy"""        try:
+        """Start continuous monitoring for piracy"""
+        try:
             if self.is_running:
                 logger.warning("Monitoring already running")
                 return
@@ -1773,7 +1868,8 @@ class AntiPiracyEngine:
             raise
     
     async def stop_monitoring(self):
-        """Stop all monitoring activities"""        try:
+        """Stop all monitoring activities"""
+        try:
             self.is_running = False
             
             # Cancel all monitoring tasks
@@ -1795,7 +1891,8 @@ class AntiPiracyEngine:
             logger.error(f"Error stopping monitoring: {str(e)}")
     
     async def _monitor_content(self, content_id: str, check_interval_hours: int):
-        """Monitor specific content for piracy"""        while self.is_running:
+        """Monitor specific content for piracy"""
+        while self.is_running:
             try:
                 fingerprint = self.registered_fingerprints[content_id]
                 
@@ -1826,7 +1923,8 @@ class AntiPiracyEngine:
                 await asyncio.sleep(600)  # Wait 10 minutes before retry
     
     async def get_protection_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive protection statistics"""        try:
+        """Get comprehensive protection statistics"""
+        try:
             total_registered = len(self.registered_fingerprints)
             total_alerts = len(self.active_alerts)
             total_enforcements = len(self.enforcement_history)
@@ -1862,7 +1960,8 @@ class AntiPiracyEngine:
             return {}
     
     async def manual_check_url(self, suspicious_url: str, original_content_id: str) -> Optional[PiracyAlert]:
-        """Manually check a specific URL for piracy"""        try:
+        """Manually check a specific URL for piracy"""
+        try:
             if original_content_id not in self.registered_fingerprints:
                 logger.error(f"Content ID {original_content_id} not registered")
                 return None

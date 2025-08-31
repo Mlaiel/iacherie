@@ -12,9 +12,12 @@ will result in legal action.
 
 Contact: mlaiel@live.de
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from datetime import datetime, timezone
+"""
+
+from datetime import datetime, timezone
 from typing import Optional, Dict, Any, List
 from decimal import Decimal
+
 from sqlalchemy import (
     String, Text, Boolean, DateTime, Integer, Numeric,
     ForeignKey, UniqueConstraint, Index, CheckConstraint
@@ -29,7 +32,9 @@ from .base import (
 
 
 class Content(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixin, StatusMixin, PerformanceMetricsMixin):
-    """Core content model for multi-format media management"""    
+    """
+Core content model for multi-format media management"""
+    
     __tablename__ = 'contents'
     
     creator_id: Mapped[UUID] = mapped_column(
@@ -238,7 +243,8 @@ class Content(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixin,
 
 
 class ContentMetadata(BaseModel, UUIDMixin, TimestampMixin):
-    """Extended metadata for content with technical and business information"""    
+    """Extended metadata for content with technical and business information"""
+    
     __tablename__ = 'content_metadata'
     
     content_id: Mapped[UUID] = mapped_column(
@@ -420,7 +426,8 @@ class ContentMetadata(BaseModel, UUIDMixin, TimestampMixin):
 
 
 class ContentVersion(BaseModel, UUIDMixin, TimestampMixin, AuditMixin):
-    """Version control for content changes and updates"""    
+    """Version control for content changes and updates"""
+    
     __tablename__ = 'content_versions'
     
     content_id: Mapped[UUID] = mapped_column(
@@ -504,7 +511,8 @@ class ContentVersion(BaseModel, UUIDMixin, TimestampMixin, AuditMixin):
 
 
 class ContentTag(BaseModel, UUIDMixin, TimestampMixin):
-    """Flexible tagging system for content organization"""    
+    """Flexible tagging system for content organization"""
+    
     __tablename__ = 'content_tags'
     
     content_id: Mapped[UUID] = mapped_column(

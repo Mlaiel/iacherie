@@ -13,7 +13,8 @@ Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: Content Registration → Rights Verification → License Generation → Royalty Tracking
 ==================================================================
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
 from dataclasses import dataclass, field
@@ -36,7 +37,8 @@ logger = logging.getLogger(__name__)
 
 
 class LicenseType(Enum):
-    """Types of content licenses"""    SYNC_LICENSING = "sync_licensing"          # Music for media
+    """Types of content licenses"""
+    SYNC_LICENSING = "sync_licensing"          # Music for media
     MECHANICAL_LICENSING = "mechanical_licensing"  # Reproduction rights
     PERFORMANCE_LICENSING = "performance_licensing"  # Public performance
     MASTER_LICENSING = "master_licensing"      # Recording rights
@@ -52,7 +54,8 @@ class LicenseType(Enum):
 
 
 class RightsType(Enum):
-    """Types of intellectual property rights"""    COPYRIGHT = "copyright"
+    """Types of intellectual property rights"""
+    COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PATENT = "patent"
     TRADE_SECRET = "trade_secret"
@@ -62,7 +65,8 @@ class RightsType(Enum):
 
 
 class RoyaltyModel(Enum):
-    """Royalty calculation models"""    PERCENTAGE_OF_REVENUE = "percentage_of_revenue"
+    """Royalty calculation models"""
+    PERCENTAGE_OF_REVENUE = "percentage_of_revenue"
     FLAT_FEE = "flat_fee"
     TIERED_PERCENTAGE = "tiered_percentage"
     HYBRID_MODEL = "hybrid_model"
@@ -72,7 +76,8 @@ class RoyaltyModel(Enum):
 
 
 class LicenseStatus(Enum):
-    """License agreement status"""    DRAFT = "draft"
+    """License agreement status"""
+    DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
     EXPIRED = "expired"
@@ -84,7 +89,8 @@ class LicenseStatus(Enum):
 
 @dataclass
 class LicenseAgreement:
-    """Comprehensive license agreement structure"""    license_id: str
+    """Comprehensive license agreement structure"""
+    license_id: str
     content_id: str
     licensor_id: str  # Content creator/owner
     licensee_id: str  # License purchaser
@@ -113,7 +119,8 @@ class LicenseAgreement:
 
 @dataclass
 class RoyaltyCalculation:
-    """Royalty payment calculation details"""    calculation_id: str
+    """Royalty payment calculation details"""
+    calculation_id: str
     license_id: str
     period_start: datetime
     period_end: datetime
@@ -130,7 +137,8 @@ class RoyaltyCalculation:
 
 @dataclass
 class ContentRights:
-    """Content rights and ownership information"""    content_id: str
+    """Content rights and ownership information"""
+    content_id: str
     owner_id: str
     rights_type: RightsType
     ownership_percentage: Decimal
@@ -146,7 +154,8 @@ class ContentRights:
 
 
 class RoyaltyCalculator:
-    """Advanced royalty calculation engine"""    
+    """Advanced royalty calculation engine"""
+    
     def __init__(self, database: DatabaseManager):
         self.database = database
         self.logger = logging.getLogger(f"{__name__}.RoyaltyCalculator")
@@ -158,7 +167,8 @@ class RoyaltyCalculator:
         period_start: datetime,
         period_end: datetime
     ) -> RoyaltyCalculation:
-        """Calculate royalty payment for license agreement"""        try:
+        """Calculate royalty payment for license agreement"""
+        try:
             calculation_id = str(uuid.uuid4())
             
             # Extract revenue information
@@ -219,7 +229,8 @@ class RoyaltyCalculator:
         gross_revenue: Decimal,
         license_agreement: LicenseAgreement
     ) -> Decimal:
-        """Calculate tiered percentage royalty"""        try:
+        """Calculate tiered percentage royalty"""
+        try:
             # Define default tiers - could be configurable
             tiers = [
                 {'threshold': Decimal('10000'), 'rate': Decimal('0.15')},   # 15% for first $10k
@@ -255,7 +266,8 @@ class RoyaltyCalculator:
         usage_data: Dict[str, Any],
         license_agreement: LicenseAgreement
     ) -> Decimal:
-        """Calculate usage-based royalty"""        try:
+        """Calculate usage-based royalty"""
+        try:
             # Example usage metrics
             plays = usage_data.get('plays', 0)
             downloads = usage_data.get('downloads', 0)
@@ -286,7 +298,8 @@ class RoyaltyCalculator:
         calculated_royalty: Decimal,
         usage_data: Dict[str, Any]
     ) -> Dict[str, Decimal]:
-        """Calculate applicable deductions"""        try:
+        """Calculate applicable deductions"""
+        try:
             deductions = {}
             
             # Platform fees (if applicable)
@@ -316,7 +329,8 @@ class RoyaltyCalculator:
 
 
 class RightsManager:
-    """Content rights and ownership management"""    
+    """Content rights and ownership management"""
+    
     def __init__(self, database: DatabaseManager, security: SecurityManager):
         self.database = database
         self.security = security
@@ -330,7 +344,8 @@ class RightsManager:
         ownership_percentage: Decimal = Decimal('100'),
         registration_documents: List[str] = None
     ) -> Dict[str, Any]:
-        """Register content rights with verification"""        try:
+        """Register content rights with verification"""
+        try:
             # Validate ownership percentage
             if ownership_percentage <= 0 or ownership_percentage > 100:
                 return {
@@ -389,7 +404,8 @@ class RightsManager:
         licensor_id: str,
         license_type: LicenseType
     ) -> Dict[str, Any]:
-        """Verify that licensor has rights to license content"""        try:
+        """Verify that licensor has rights to license content"""
+        try:
             # Get content rights
             rights = await self._get_content_rights(content_id)
             
@@ -440,7 +456,8 @@ class RightsManager:
             }
     
     def _get_required_ownership_for_license(self, license_type: LicenseType) -> Decimal:
-        """Get minimum ownership percentage required for license type"""        ownership_requirements = {
+        """Get minimum ownership percentage required for license type"""
+        ownership_requirements = {
             LicenseType.EXCLUSIVE_LICENSING: Decimal('100'),      # Need full ownership
             LicenseType.SYNC_LICENSING: Decimal('51'),            # Need majority
             LicenseType.COMMERCIAL_LICENSING: Decimal('51'),      # Need majority
@@ -453,7 +470,8 @@ class RightsManager:
     # Private helper methods
     
     async def _get_content_rights(self, content_id: str) -> List[ContentRights]:
-        """Fetch content rights from database"""        try:
+        """Fetch content rights from database"""
+        try:
             # This would query the database
             return []  # Placeholder
         except Exception as e:
@@ -461,7 +479,8 @@ class RightsManager:
             return []
     
     async def _store_content_rights(self, rights: ContentRights):
-        """Store content rights in database"""        try:
+        """Store content rights in database"""
+        try:
             # This would store in the database
             pass
         except Exception as e:
@@ -469,14 +488,16 @@ class RightsManager:
             raise
     
     async def _update_content_rights(self, rights: ContentRights):
-        """Update content rights in database"""        try:
+        """Update content rights in database"""
+        try:
             # This would update in the database
             pass
         except Exception as e:
             self.logger.error(f"Rights update error: {e}")
     
     async def _blockchain_verify_rights(self, rights: ContentRights) -> Optional[str]:
-        """Verify rights on blockchain"""        try:
+        """Verify rights on blockchain"""
+        try:
             # This would interact with blockchain
             # Return placeholder hash for now
             content_hash = hashlib.sha256(
@@ -489,7 +510,8 @@ class RightsManager:
 
 
 class ContractManager:
-    """Automated contract generation and management"""    
+    """Automated contract generation and management"""
+    
     def __init__(self, database: DatabaseManager, security: SecurityManager):
         self.database = database
         self.security = security
@@ -501,7 +523,8 @@ class ContractManager:
         license_agreement: LicenseAgreement,
         template_type: str = "standard"
     ) -> Dict[str, Any]:
-        """Generate legal license contract from agreement"""        try:
+        """Generate legal license contract from agreement"""
+        try:
             # Prepare contract data
             contract_data = {
                 'license_agreement': license_agreement,
@@ -541,7 +564,8 @@ class ContractManager:
         self,
         license_agreement: LicenseAgreement
     ) -> Dict[str, Any]:
-        """Generate human-readable contract terms summary"""        try:
+        """Generate human-readable contract terms summary"""
+        try:
             summary = {
                 'license_type': license_agreement.license_type.value,
                 'territory': ', '.join(license_agreement.territory),
@@ -570,7 +594,8 @@ class ContractManager:
             }
     
     def _determine_jurisdiction(self, license_agreement: LicenseAgreement) -> str:
-        """Determine legal jurisdiction for contract"""        # This would use more sophisticated logic
+        """Determine legal jurisdiction for contract"""
+        # This would use more sophisticated logic
         if 'US' in license_agreement.territory:
             return 'United States'
         elif 'GB' in license_agreement.territory:
@@ -585,7 +610,8 @@ class ContractManager:
         start_date: datetime,
         end_date: Optional[datetime]
     ) -> str:
-        """Format license duration for display"""        if end_date is None:
+        """Format license duration for display"""
+        if end_date is None:
             return f"From {start_date.strftime('%Y-%m-%d')} (Perpetual)"
         else:
             duration_days = (end_date - start_date).days
@@ -596,7 +622,8 @@ class ContractManager:
                 return f"{duration_years:.1f} years ({start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')})"
     
     def _format_royalty_terms(self, license_agreement: LicenseAgreement) -> str:
-        """Format royalty terms for display"""        if license_agreement.royalty_model == RoyaltyModel.PERCENTAGE_OF_REVENUE:
+        """Format royalty terms for display"""
+        if license_agreement.royalty_model == RoyaltyModel.PERCENTAGE_OF_REVENUE:
             return f"{float(license_agreement.royalty_rate * 100):.1f}% of gross revenue"
         elif license_agreement.royalty_model == RoyaltyModel.FLAT_FEE:
             return f"Flat fee of ${license_agreement.flat_fee}"
@@ -610,7 +637,8 @@ class ContractManager:
         contract_text: str,
         contract_hash: str
     ):
-        """Store generated contract"""        try:
+        """Store generated contract"""
+        try:
             # This would store in the database with encryption
             pass
         except Exception as e:
@@ -619,7 +647,8 @@ class ContractManager:
 
 
 class LicensingAnalytics:
-    """Licensing performance analytics and reporting"""    
+    """Licensing performance analytics and reporting"""
+    
     def __init__(self, database: DatabaseManager):
         self.database = database
         self.logger = logging.getLogger(f"{__name__}.LicensingAnalytics")
@@ -630,7 +659,8 @@ class LicensingAnalytics:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Generate comprehensive licensing report"""        try:
+        """Generate comprehensive licensing report"""
+        try:
             # Fetch licensing data
             licenses = await self._fetch_user_licenses(user_id, period_start, period_end)
             royalty_data = await self._fetch_royalty_data(user_id, period_start, period_end)
@@ -689,7 +719,8 @@ class LicensingAnalytics:
         period_start: datetime,
         period_end: datetime
     ) -> List[LicenseAgreement]:
-        """Fetch user's license agreements"""        try:
+        """Fetch user's license agreements"""
+        try:
             # This would query the database
             return []  # Placeholder
         except Exception as e:
@@ -702,7 +733,8 @@ class LicensingAnalytics:
         period_start: datetime,
         period_end: datetime
     ) -> List[RoyaltyCalculation]:
-        """Fetch royalty calculation data"""        try:
+        """Fetch royalty calculation data"""
+        try:
             # This would query the database
             return []  # Placeholder
         except Exception as e:
@@ -714,7 +746,8 @@ class LicensingAnalytics:
         licenses: List[LicenseAgreement],
         royalty_data: List[RoyaltyCalculation]
     ) -> Dict[str, Any]:
-        """Analyze performance by territory"""        try:
+        """Analyze performance by territory"""
+        try:
             territory_performance = {}
             
             for license in licenses:
@@ -749,7 +782,8 @@ class LicensingAnalytics:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Calculate licensing growth metrics"""        try:
+        """Calculate licensing growth metrics"""
+        try:
             # This would calculate actual growth metrics
             return {
                 'license_count_growth': 0.15,  # 15% growth
@@ -766,7 +800,8 @@ class LicensingAnalytics:
         licenses: List[LicenseAgreement],
         royalty_data: List[RoyaltyCalculation]
     ) -> List[str]:
-        """Generate licensing optimization recommendations"""        try:
+        """Generate licensing optimization recommendations"""
+        try:
             recommendations = []
             
             # Analyze license performance
@@ -795,7 +830,8 @@ class LicensingAnalytics:
 
 
 class LicensingEngine:
-    """Main licensing engine orchestrator"""    
+    """Main licensing engine orchestrator"""
+    
     def __init__(
         self,
         database: DatabaseManager,
@@ -812,7 +848,8 @@ class LicensingEngine:
         self.logger = logging.getLogger(f"{__name__}.LicensingEngine")
     
     async def initialize(self) -> bool:
-        """Initialize licensing engine"""        try:
+        """Initialize licensing engine"""
+        try:
             self.logger.info("🚀 Initializing Licensing Engine...")
             
             # Initialize components
@@ -834,7 +871,8 @@ class LicensingEngine:
         license_type: LicenseType,
         terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create new license agreement"""        try:
+        """Create new license agreement"""
+        try:
             # Verify licensing rights
             rights_verification = await self.rights_manager.verify_licensing_rights(
                 content_id, licensor_id, license_type
@@ -898,7 +936,8 @@ class LicensingEngine:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Calculate royalty payment for license"""        try:
+        """Calculate royalty payment for license"""
+        try:
             # Fetch license agreement
             license_agreement = await self._fetch_license_agreement(license_id)
             if not license_agreement:
@@ -937,14 +976,16 @@ class LicensingEngine:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Get licensing analytics for user"""        return await self.analytics.generate_licensing_report(
+        """Get licensing analytics for user"""
+        return await self.analytics.generate_licensing_report(
             user_id, period_start, period_end
         )
     
     # Private helper methods
     
     async def _store_license_agreement(self, agreement: LicenseAgreement):
-        """Store license agreement in database"""        try:
+        """Store license agreement in database"""
+        try:
             # This would store in the database
             pass
         except Exception as e:
@@ -955,7 +996,8 @@ class LicensingEngine:
         self,
         license_id: str
     ) -> Optional[LicenseAgreement]:
-        """Fetch license agreement from database"""        try:
+        """Fetch license agreement from database"""
+        try:
             # This would query the database
             return None  # Placeholder
         except Exception as e:
@@ -963,7 +1005,8 @@ class LicensingEngine:
             return None
     
     async def _store_royalty_calculation(self, calculation: RoyaltyCalculation):
-        """Store royalty calculation in database"""        try:
+        """Store royalty calculation in database"""
+        try:
             # This would store in the database
             pass
         except Exception as e:

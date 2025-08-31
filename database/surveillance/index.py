@@ -10,7 +10,8 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 WARNING: This code and concept are protected intellectual property.
 Any unauthorized use, copying, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, Any, Optional, List
 from datetime import datetime
@@ -26,11 +27,13 @@ logger = logging.getLogger(__name__)
 
 
 class SurveillanceSystemFactory:
-    """    Factory class for creating and managing surveillance system components.
+    """
+    Factory class for creating and managing surveillance system components.
     
     Provides centralized configuration and initialization of all surveillance
     modules with proper dependency management.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.components: Dict[str, Any] = {}
@@ -51,7 +54,8 @@ class SurveillanceSystemFactory:
         logger.info("SurveillanceSystemFactory initialized")
     
     async def initialize(self) -> bool:
-        """Initialize all surveillance components with proper dependency management."""        try:
+        """Initialize all surveillance components with proper dependency management."""
+        try:
             if self.initialized:
                 logger.warning("Surveillance system already initialized")
                 return True
@@ -83,7 +87,8 @@ class SurveillanceSystemFactory:
             return False
     
     async def _initialize_detection_engines(self):
-        """Initialize all content detection engines."""        engines_config = self.config.get('detection_engines', {})
+        """Initialize all content detection engines."""
+        engines_config = self.config.get('detection_engines', {})
         
         # Audio detection engine
         if engines_config.get('audio', {}).get('enabled', True):
@@ -114,7 +119,8 @@ class SurveillanceSystemFactory:
             logger.info("Text detection engine initialized")
     
     async def _initialize_platform_connectors(self):
-        """Initialize platform-specific connectors."""        connectors_config = self.config.get('platform_connectors', {})
+        """Initialize platform-specific connectors."""
+        connectors_config = self.config.get('platform_connectors', {})
         
         # YouTube connector
         if connectors_config.get('youtube', {}).get('enabled', False):
@@ -145,7 +151,8 @@ class SurveillanceSystemFactory:
             logger.info("Twitter connector initialized")
     
     async def _initialize_core_systems(self):
-        """Initialize core monitoring and analytics systems."""        core_config = self.config.get('core_systems', {})
+        """Initialize core monitoring and analytics systems."""
+        core_config = self.config.get('core_systems', {})
         
         # Content monitoring engine
         monitoring_config = core_config.get('monitoring', {})
@@ -170,7 +177,8 @@ class SurveillanceSystemFactory:
         logger.info("Evidence collector initialized")
     
     async def _initialize_alert_systems(self):
-        """Initialize alert and notification systems."""        alert_config = self.config.get('alert_systems', {})
+        """Initialize alert and notification systems."""
+        alert_config = self.config.get('alert_systems', {})
         
         self.alert_manager = AlertManager(
             alert_config,
@@ -181,12 +189,14 @@ class SurveillanceSystemFactory:
         logger.info("Alert manager initialized")
     
     async def _start_monitoring(self):
-        """Start active monitoring processes."""        if self.monitoring_engine:
+        """Start active monitoring processes."""
+        if self.monitoring_engine:
             await self.monitoring_engine.start_monitoring()
             logger.info("Active monitoring started")
     
     async def cleanup(self):
-        """Cleanup all surveillance components."""        logger.info("Cleaning up surveillance system...")
+        """Cleanup all surveillance components."""
+        logger.info("Cleaning up surveillance system...")
         
         # Stop monitoring
         if self.monitoring_engine:
@@ -226,7 +236,8 @@ class SurveillanceSystemFactory:
         logger.info("Surveillance system cleanup completed")
     
     def get_component(self, component_type: str, name: Optional[str] = None) -> Any:
-        """Get a specific surveillance component."""        if component_type == "detection_engines":
+        """Get a specific surveillance component."""
+        if component_type == "detection_engines":
             if name:
                 return self.detection_engines.get(name)
             return self.detection_engines
@@ -253,7 +264,8 @@ class SurveillanceSystemFactory:
             return None
     
     def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status."""        status = {
+        """Get comprehensive system status."""
+        status = {
             'initialized': self.initialized,
             'timestamp': datetime.utcnow().isoformat(),
             'detection_engines': {},
@@ -309,40 +321,47 @@ _surveillance_factory: Optional[SurveillanceSystemFactory] = None
 
 
 def create_surveillance_system(config: Dict[str, Any]) -> SurveillanceSystemFactory:
-    """    Create a new surveillance system factory with the given configuration.
+    """
+    Create a new surveillance system factory with the given configuration.
     
     Args:
         config: Configuration dictionary for the surveillance system
         
     Returns:
         SurveillanceSystemFactory instance
-    """    global _surveillance_factory
+    """
+    global _surveillance_factory
     _surveillance_factory = SurveillanceSystemFactory(config)
     return _surveillance_factory
 
 
 def get_surveillance_system() -> Optional[SurveillanceSystemFactory]:
-    """    Get the current surveillance system factory instance.
+    """
+    Get the current surveillance system factory instance.
     
     Returns:
         Current SurveillanceSystemFactory instance or None if not created
-    """    return _surveillance_factory
+    """
+    return _surveillance_factory
 
 
 async def initialize_surveillance_system(config: Dict[str, Any]) -> bool:
-    """    Create and initialize the surveillance system with the given configuration.
+    """
+    Create and initialize the surveillance system with the given configuration.
     
     Args:
         config: Configuration dictionary for the surveillance system
         
     Returns:
         True if initialization successful, False otherwise
-    """    factory = create_surveillance_system(config)
+    """
+    factory = create_surveillance_system(config)
     return await factory.initialize()
 
 
 async def shutdown_surveillance_system():
-    """Shutdown and cleanup the surveillance system."""    global _surveillance_factory
+    """Shutdown and cleanup the surveillance system."""
+    global _surveillance_factory
     if _surveillance_factory:
         await _surveillance_factory.cleanup()
         _surveillance_factory = None
@@ -378,7 +397,8 @@ async def shutdown_surveillance_system():
             return False
     
     async def _initialize_platform_connectors(self) -> None:
-        """Initialize platform-specific connectors."""        connectors_config = self.config.get("platform_connectors", {})
+        """Initialize platform-specific connectors."""
+        connectors_config = self.config.get("platform_connectors", {})
         
         # YouTube connector
         if connectors_config.get("youtube", {}).get("enabled", False):
@@ -418,7 +438,8 @@ async def shutdown_surveillance_system():
         logger.info(f"Initialized {len(self.platform_connectors)} platform connectors")
     
     async def _initialize_reporting_systems(self) -> None:
-        """Initialize reporting systems."""        reporting_config = self.config.get("reporting", {})
+        """Initialize reporting systems."""
+        reporting_config = self.config.get("reporting", {})
         
         # Compliance reporter
         if reporting_config.get("compliance", {}).get("enabled", False):
@@ -437,7 +458,8 @@ async def shutdown_surveillance_system():
         logger.info(f"Initialized {len(self.reporting_systems)} reporting systems")
     
     async def start_monitoring(self, user_id: str, content_fingerprints: List[Dict[str, Any]]) -> bool:
-        """Start surveillance monitoring for user content."""        if not self.initialized:
+        """Start surveillance monitoring for user content."""
+        if not self.initialized:
             logger.error("Surveillance system not initialized")
             return False
         
@@ -459,7 +481,8 @@ async def shutdown_surveillance_system():
             return False
     
     async def stop_monitoring(self, user_id: str) -> bool:
-        """Stop surveillance monitoring for user."""        if not self.initialized:
+        """Stop surveillance monitoring for user."""
+        if not self.initialized:
             logger.error("Surveillance system not initialized")
             return False
         
@@ -473,7 +496,8 @@ async def shutdown_surveillance_system():
             return False
     
     async def get_surveillance_status(self, user_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get current surveillance status."""        if not self.initialized:
+        """Get current surveillance status."""
+        if not self.initialized:
             return {"error": "Surveillance system not initialized"}
         
         try:
@@ -498,7 +522,8 @@ async def shutdown_surveillance_system():
                                          user_id: str, 
                                          report_type: str = "summary",
                                          date_range: Optional[Dict[str, str]] = None) -> Dict[str, Any]:
-        """Generate surveillance report for user."""        if not self.initialized:
+        """Generate surveillance report for user."""
+        if not self.initialized:
             return {"error": "Surveillance system not initialized"}
         
         try:
@@ -531,7 +556,8 @@ async def shutdown_surveillance_system():
             return {"error": str(e)}
     
     async def _generate_summary_report(self, user_id: str, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate summary report from analytics data."""        return {
+        """Generate summary report from analytics data."""
+        return {
             "total_violations_detected": analytics_data.get("violations_count", 0),
             "platforms_monitored": analytics_data.get("platforms_count", 0),
             "evidence_collected": analytics_data.get("evidence_count", 0),
@@ -540,7 +566,8 @@ async def shutdown_surveillance_system():
         }
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown surveillance system."""        logger.info("Shutting down surveillance database system...")
+        """Gracefully shutdown surveillance system."""
+        logger.info("Shutting down surveillance database system...")
         
         try:
             # Shutdown monitoring engine
@@ -575,10 +602,12 @@ _surveillance_index: Optional[SurveillanceDatabaseIndex] = None
 
 
 def get_surveillance_index() -> Optional[SurveillanceDatabaseIndex]:
-    """Get global surveillance database index instance."""    return _surveillance_index
+    """Get global surveillance database index instance."""
+    return _surveillance_index
 
 
 def initialize_surveillance_index(config: Dict[str, Any]) -> SurveillanceDatabaseIndex:
-    """Initialize global surveillance database index."""    global _surveillance_index
+    """Initialize global surveillance database index."""
+    global _surveillance_index
     _surveillance_index = SurveillanceDatabaseIndex(config)
     return _surveillance_index

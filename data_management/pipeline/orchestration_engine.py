@@ -27,7 +27,8 @@ ARCHITECTURE PIPELINE:
 ├── 📈 Performance Metrics (Throughput tracking)
 ├── 🎮 Resource Management (Auto-scaling)
 └── 🚀 Optimization Engine (Dynamic tuning)
-"""from typing import Dict, List, Any, Optional, Union, Tuple, Callable
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple, Callable
 from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime, timedelta
@@ -55,7 +56,8 @@ __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 logger = logging.getLogger(__name__)
 
 class PipelineStage(Enum):
-    """Étapes de la pipeline de traitement"""    INITIALIZATION = "initialization"
+    """Étapes de la pipeline de traitement"""
+    INITIALIZATION = "initialization"
     VALIDATION = "validation"
     PREPROCESSING = "preprocessing"
     FEATURE_EXTRACTION = "feature_extraction"
@@ -71,7 +73,8 @@ class PipelineStage(Enum):
     COMPLETION = "completion"
 
 class TaskStatus(Enum):
-    """Statuts des tâches"""    PENDING = "pending"
+    """Statuts des tâches"""
+    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -80,14 +83,16 @@ class TaskStatus(Enum):
     SKIPPED = "skipped"
 
 class PipelineMode(Enum):
-    """Modes de traitement de pipeline"""    REAL_TIME = "real_time"          # Traitement immédiat
+    """Modes de traitement de pipeline"""
+    REAL_TIME = "real_time"          # Traitement immédiat
     BATCH = "batch"                  # Traitement par lots
     STREAMING = "streaming"          # Traitement en flux
     HYBRID = "hybrid"               # Combinaison adaptative
 
 @dataclass
 class TaskDefinition:
-    """Définition d'une tâche de pipeline"""    task_id: str
+    """Définition d'une tâche de pipeline"""
+    task_id: str
     stage: PipelineStage
     processor_class: str
     config: Dict[str, Any]
@@ -99,7 +104,8 @@ class TaskDefinition:
 
 @dataclass
 class TaskExecution:
-    """Exécution d'une tâche"""    task_id: str
+    """Exécution d'une tâche"""
+    task_id: str
     execution_id: str
     status: TaskStatus
     start_time: Optional[datetime] = None
@@ -112,7 +118,8 @@ class TaskExecution:
 
 @dataclass
 class PipelineExecution:
-    """Exécution complète d'une pipeline"""    pipeline_id: str
+    """Exécution complète d'une pipeline"""
+    pipeline_id: str
     execution_id: str
     content_id: str
     creator_id: str
@@ -125,7 +132,8 @@ class PipelineExecution:
     errors: List[str] = field(default_factory=list)
 
 class DataPipelineOrchestrator:
-    """    Orchestrateur avancé de pipeline de données
+    """
+    Orchestrateur avancé de pipeline de données
     
     Capacités:
     - Orchestration workflows complexes DAG
@@ -134,7 +142,8 @@ class DataPipelineOrchestrator:
     - Optimisation performance dynamique
     - Monitoring complet et alertes
     - Scaling automatique des ressources
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.performance_monitor = PerformanceMonitor()
@@ -155,7 +164,8 @@ class DataPipelineOrchestrator:
         self.executor = ThreadPoolExecutor(max_workers=self.max_concurrent_pipelines)
         
     def _initialize_processors(self) -> Dict[str, BaseProcessor]:
-        """Initialise tous les processeurs disponibles"""        processors = {}
+        """Initialise tous les processeurs disponibles"""
+        processors = {}
         
         # Import dynamique des processeurs
         processor_classes = [
@@ -175,7 +185,8 @@ class DataPipelineOrchestrator:
         return processors
         
     def _initialize_validators(self) -> Dict[str, ContentValidator]:
-        """Initialise tous les validateurs"""        validators = {}
+        """Initialise tous les validateurs"""
+        validators = {}
         
         validator_types = ["content", "format", "business", "security"]
         for validator_type in validator_types:
@@ -187,7 +198,8 @@ class DataPipelineOrchestrator:
         return validators
         
     def _load_pipeline_templates(self) -> Dict[str, List[TaskDefinition]]:
-        """Charge les templates de pipeline prédéfinis"""        templates = {}
+        """Charge les templates de pipeline prédéfinis"""
+        templates = {}
         
         # Template pour contenu audio (musiciens)
         templates["audio_content"] = [
@@ -355,7 +367,8 @@ class DataPipelineOrchestrator:
     async def execute_pipeline(self, content_path: str, content_type: str,
                              creator_id: str, mode: PipelineMode = PipelineMode.REAL_TIME,
                              custom_config: Optional[Dict[str, Any]] = None) -> PipelineExecution:
-        """        Exécute une pipeline complète de traitement de contenu
+        """
+        Exécute une pipeline complète de traitement de contenu
         
         Args:
             content_path: Chemin vers le fichier de contenu
@@ -366,7 +379,8 @@ class DataPipelineOrchestrator:
             
         Returns:
             PipelineExecution: Résultat de l'exécution
-        """        try:
+        """
+        try:
             # Création de l'exécution de pipeline
             execution_id = str(uuid.uuid4())
             pipeline_id = f"{content_type}_pipeline"
@@ -427,7 +441,8 @@ class DataPipelineOrchestrator:
     
     def _apply_custom_config(self, tasks: List[TaskDefinition], 
                            custom_config: Dict[str, Any]) -> List[TaskDefinition]:
-        """Applique une configuration personnalisée aux tâches"""        modified_tasks = []
+        """Applique une configuration personnalisée aux tâches"""
+        modified_tasks = []
         
         for task in tasks:
             # Mise à jour de la configuration de la tâche
@@ -449,7 +464,8 @@ class DataPipelineOrchestrator:
     
     async def _execute_real_time_pipeline(self, execution: PipelineExecution,
                                         tasks: List[TaskDefinition], content_path: str):
-        """Exécute la pipeline en mode temps réel (séquentiel optimisé)"""        logger.info(f"Executing real-time pipeline: {execution.execution_id}")
+        """Exécute la pipeline en mode temps réel (séquentiel optimisé)"""
+        logger.info(f"Executing real-time pipeline: {execution.execution_id}")
         
         # Tri topologique des tâches selon les dépendances
         sorted_tasks = self._topological_sort(tasks)
@@ -474,7 +490,8 @@ class DataPipelineOrchestrator:
     
     async def _execute_batch_pipeline(self, execution: PipelineExecution,
                                     tasks: List[TaskDefinition], content_path: str):
-        """Exécute la pipeline en mode batch (optimisé pour le débit)"""        logger.info(f"Executing batch pipeline: {execution.execution_id}")
+        """Exécute la pipeline en mode batch (optimisé pour le débit)"""
+        logger.info(f"Executing batch pipeline: {execution.execution_id}")
         
         # Regroupement des tâches par niveau de dépendance
         task_levels = self._group_tasks_by_dependency_level(tasks)
@@ -505,7 +522,8 @@ class DataPipelineOrchestrator:
     
     async def _execute_streaming_pipeline(self, execution: PipelineExecution,
                                         tasks: List[TaskDefinition], content_path: str):
-        """Exécute la pipeline en mode streaming (traitement continu)"""        logger.info(f"Executing streaming pipeline: {execution.execution_id}")
+        """Exécute la pipeline en mode streaming (traitement continu)"""
+        logger.info(f"Executing streaming pipeline: {execution.execution_id}")
         
         # Configuration des flux de données
         data_streams = self._setup_data_streams(tasks)
@@ -524,7 +542,8 @@ class DataPipelineOrchestrator:
     
     async def _execute_hybrid_pipeline(self, execution: PipelineExecution,
                                      tasks: List[TaskDefinition], content_path: str):
-        """Exécute la pipeline en mode hybride (adaptatif)"""        logger.info(f"Executing hybrid pipeline: {execution.execution_id}")
+        """Exécute la pipeline en mode hybride (adaptatif)"""
+        logger.info(f"Executing hybrid pipeline: {execution.execution_id}")
         
         # Classification des tâches selon les caractéristiques
         real_time_tasks, batch_tasks, streaming_tasks = self._classify_tasks_for_hybrid(tasks)
@@ -540,7 +559,8 @@ class DataPipelineOrchestrator:
             await self._execute_streaming_pipeline(execution, streaming_tasks, content_path)
     
     def _topological_sort(self, tasks: List[TaskDefinition]) -> List[TaskDefinition]:
-        """Tri topologique des tâches selon les dépendances"""        # Création du graphe de dépendances
+        """Tri topologique des tâches selon les dépendances"""
+        # Création du graphe de dépendances
         graph = {task.task_id: task for task in tasks}
         in_degree = {task.task_id: 0 for task in tasks}
         
@@ -568,7 +588,8 @@ class DataPipelineOrchestrator:
         return sorted_tasks
     
     def _group_tasks_by_dependency_level(self, tasks: List[TaskDefinition]) -> Dict[int, List[TaskDefinition]]:
-        """Groupe les tâches par niveau de dépendance pour parallélisation"""        levels = {}
+        """Groupe les tâches par niveau de dépendance pour parallélisation"""
+        levels = {}
         task_levels = {}
         
         def calculate_level(task_id: str, visited: set) -> int:
@@ -599,7 +620,8 @@ class DataPipelineOrchestrator:
     
     async def _execute_task(self, task: TaskDefinition, execution: PipelineExecution,
                           content_path: str) -> TaskExecution:
-        """Exécute une tâche individuelle avec monitoring et retry"""        task_execution = TaskExecution(
+        """Exécute une tâche individuelle avec monitoring et retry"""
+        task_execution = TaskExecution(
             task_id=task.task_id,
             execution_id=str(uuid.uuid4()),
             status=TaskStatus.PENDING,
@@ -655,7 +677,8 @@ class DataPipelineOrchestrator:
         return task_execution
     
     async def _run_task_processor(self, task: TaskDefinition, content_path: str) -> Dict[str, Any]:
-        """Exécute le processeur spécifique à la tâche"""        processor_class = task.processor_class
+        """Exécute le processeur spécifique à la tâche"""
+        processor_class = task.processor_class
         
         if processor_class in self.processors:
             processor = self.processors[processor_class]
@@ -685,7 +708,8 @@ class DataPipelineOrchestrator:
             }
     
     async def _check_resource_availability(self, requirements: Dict[str, Any]) -> bool:
-        """Vérifie la disponibilité des ressources requises"""        if not requirements:
+        """Vérifie la disponibilité des ressources requises"""
+        if not requirements:
             return True
             
         # Vérification CPU
@@ -709,7 +733,8 @@ class DataPipelineOrchestrator:
     
     @asynccontextmanager
     async def _allocate_resources(self, requirements: Dict[str, Any]):
-        """Alloue les ressources pour une tâche"""        allocated = []
+        """Alloue les ressources pour une tâche"""
+        allocated = []
         
         try:
             # Allocation selon les besoins
@@ -733,7 +758,8 @@ class DataPipelineOrchestrator:
                 await self.resource_manager.release_resource(resource_type, allocation)
     
     def _setup_data_streams(self, tasks: List[TaskDefinition]) -> Dict[str, Any]:
-        """Configure les flux de données pour le mode streaming"""        return {
+        """Configure les flux de données pour le mode streaming"""
+        return {
             "input_stream": "content_input_queue",
             "processing_streams": {task.task_id: f"{task.task_id}_stream" for task in tasks},
             "output_stream": "processed_content_queue"
@@ -741,7 +767,8 @@ class DataPipelineOrchestrator:
     
     @asynccontextmanager
     async def _create_streaming_context(self, streams: Dict[str, Any]):
-        """Crée le contexte de streaming"""        # Configuration des flux
+        """Crée le contexte de streaming"""
+        # Configuration des flux
         streaming_context = {
             "streams": streams,
             "active": True,
@@ -756,7 +783,8 @@ class DataPipelineOrchestrator:
     
     async def _execute_streaming_task(self, task: TaskDefinition, execution: PipelineExecution,
                                     streams: Dict[str, Any]) -> TaskExecution:
-        """Exécute une tâche en mode streaming"""        # Simulation de l'exécution streaming
+        """Exécute une tâche en mode streaming"""
+        # Simulation de l'exécution streaming
         task_execution = TaskExecution(
             task_id=task.task_id,
             execution_id=str(uuid.uuid4()),
@@ -777,7 +805,8 @@ class DataPipelineOrchestrator:
     def _classify_tasks_for_hybrid(self, tasks: List[TaskDefinition]) -> Tuple[List[TaskDefinition], 
                                                                               List[TaskDefinition], 
                                                                               List[TaskDefinition]]:
-        """Classifie les tâches pour l'exécution hybride"""        real_time_tasks = []
+        """Classifie les tâches pour l'exécution hybride"""
+        real_time_tasks = []
         batch_tasks = []
         streaming_tasks = []
         
@@ -795,7 +824,8 @@ class DataPipelineOrchestrator:
         return real_time_tasks, batch_tasks, streaming_tasks
     
     def _calculate_pipeline_metrics(self, execution: PipelineExecution) -> Dict[str, float]:
-        """Calcule les métriques de performance de la pipeline"""        if not execution.tasks:
+        """Calcule les métriques de performance de la pipeline"""
+        if not execution.tasks:
             return {}
         
         # Durée totale
@@ -821,10 +851,12 @@ class DataPipelineOrchestrator:
         return metrics
     
     async def get_pipeline_status(self, execution_id: str) -> Optional[PipelineExecution]:
-        """Récupère le statut d'une pipeline"""        return self.active_pipelines.get(execution_id)
+        """Récupère le statut d'une pipeline"""
+        return self.active_pipelines.get(execution_id)
     
     async def cancel_pipeline(self, execution_id: str) -> bool:
-        """Annule une pipeline en cours d'exécution"""        if execution_id in self.active_pipelines:
+        """Annule une pipeline en cours d'exécution"""
+        if execution_id in self.active_pipelines:
             execution = self.active_pipelines[execution_id]
             execution.status = TaskStatus.CANCELLED
             
@@ -839,7 +871,8 @@ class DataPipelineOrchestrator:
         return False
     
     async def optimize_pipeline_performance(self, pipeline_id: str) -> Dict[str, Any]:
-        """Optimise la performance d'une pipeline basée sur l'historique"""        # Analyse des exécutions passées
+        """Optimise la performance d'une pipeline basée sur l'historique"""
+        # Analyse des exécutions passées
         historical_data = await self._get_pipeline_history(pipeline_id)
         
         # Identification des goulots d'étranglement
@@ -857,7 +890,8 @@ class DataPipelineOrchestrator:
         }
     
     async def _get_pipeline_history(self, pipeline_id: str) -> List[Dict[str, Any]]:
-        """Récupère l'historique d'exécution d'une pipeline"""        # Simulation de données historiques
+        """Récupère l'historique d'exécution d'une pipeline"""
+        # Simulation de données historiques
         return [
             {
                 "execution_id": f"exec_{i}",
@@ -869,7 +903,8 @@ class DataPipelineOrchestrator:
         ]
     
     def _identify_bottlenecks(self, historical_data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Identifie les goulots d'étranglement"""        return [
+        """Identifie les goulots d'étranglement"""
+        return [
             {
                 "task": "fingerprinting",
                 "avg_duration": 15.8,
@@ -885,7 +920,8 @@ class DataPipelineOrchestrator:
         ]
     
     def _generate_optimization_recommendations(self, bottlenecks: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Génère des recommandations d'optimisation"""        recommendations = []
+        """Génère des recommandations d'optimisation"""
+        recommendations = []
         
         for bottleneck in bottlenecks:
             if bottleneck["task"] == "fingerprinting":
@@ -906,7 +942,8 @@ class DataPipelineOrchestrator:
         return recommendations
     
     def _calculate_current_performance(self, historical_data: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Calcule la performance actuelle"""        if not historical_data:
+        """Calcule la performance actuelle"""
+        if not historical_data:
             return {}
         
         avg_duration = sum(d["duration"] for d in historical_data) / len(historical_data)
@@ -919,7 +956,8 @@ class DataPipelineOrchestrator:
         }
     
     def _estimate_performance_improvement(self, optimizations: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Estime l'amélioration de performance"""        total_improvement = sum(
+        """Estime l'amélioration de performance"""
+        total_improvement = sum(
             float(opt["estimated_improvement"].rstrip('%').split('-')[0]) / 100
             for opt in optimizations
             if "estimated_improvement" in opt

@@ -24,7 +24,8 @@ This innovative revenue management system represents months of research, develop
 intellectual investment by Fahed Mlaiel. Any unauthorized use will be prosecuted to the 
 full extent of the law. We maintain comprehensive monitoring and will pursue legal action 
 against any individual or organization attempting to steal or replicate this work.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 from datetime import datetime, timezone
@@ -279,7 +280,8 @@ SUPPORTED_PAYMENT_GATEWAYS = {
 # ==================== QUICK START EXAMPLES ====================
 
 def get_quick_start_example() -> str:
-    """Get basic quick start example for Revenue Agent"""    return '''
+    """Get basic quick start example for Revenue Agent"""
+    return '''
 # Revenue Agent - Quick Start Example
 
 ## 1. Basic Setup and Initialization
@@ -509,7 +511,8 @@ For production deployments, refer to the comprehensive documentation and enterpr
     '''
 
 def get_all_examples() -> Dict[str, str]:
-    """Get all available code examples"""    return {
+    """Get all available code examples"""
+    return {
         "quick_start": get_quick_start_example(),
         "enterprise_setup": get_enterprise_setup_example(),
         "advanced_analytics": get_advanced_analytics_example(),
@@ -519,7 +522,8 @@ def get_all_examples() -> Dict[str, str]:
     }
 
 def get_enterprise_setup_example() -> str:
-    """Get enterprise deployment example"""    return '''
+    """Get enterprise deployment example"""
+    return '''
 # Enterprise Revenue Agent Setup
 
 ## Docker Deployment
@@ -609,7 +613,8 @@ export ENTERPRISE_FEATURES="true"
     '''
 
 def get_advanced_analytics_example() -> str:
-    """Get advanced analytics example"""    return '''
+    """Get advanced analytics example"""
+    return '''
 # Advanced Analytics Examples
 
 ## Custom Revenue Metrics
@@ -676,7 +681,8 @@ plt.show()
     '''
 
 def get_platform_integration_example() -> str:
-    """Get platform integration example"""    return '''
+    """Get platform integration example"""
+    return '''
 # Platform Integration Examples
 
 ## Custom API Integration
@@ -746,7 +752,8 @@ async def spotify_revenue_webhook(request: Request):
     '''
 
 def get_blockchain_example() -> str:
-    """Get blockchain integration example"""    return '''
+    """Get blockchain integration example"""
+    return '''
 # Blockchain Integration Examples
 
 ## Smart Contract Revenue Sharing
@@ -815,7 +822,8 @@ print(f"DeFi Revenue: {defi_revenue['total_yield']}")
     '''
 
 def get_monitoring_example() -> str:
-    """Get monitoring and alerting example"""    return '''
+    """Get monitoring and alerting example"""
+    return '''
 # Monitoring and Alerting Setup
 
 ## Prometheus Metrics
@@ -889,7 +897,8 @@ groups:
     '''
 
 def get_config_template() -> Dict[str, Any]:
-    """Get comprehensive configuration template"""    return {
+    """Get comprehensive configuration template"""
+    return {
         "agent_config": {
             "version": "2.1.0",
             "environment": "production",
@@ -1006,11 +1015,13 @@ def get_config_template() -> Dict[str, Any]:
 # ==================== HEALTH CHECK AND STATUS ====================
 
 async def health_check() -> Dict[str, Any]:
-    """    Comprehensive health check for Revenue Agent module
+    """
+    Comprehensive health check for Revenue Agent module
     
     Returns:
         Health status with detailed component checks
-    """    health_status = {
+    """
+    health_status = {
         "module": "revenue_agent",
         "version": MODULE_INFO["version"],
         "status": "healthy",
@@ -1083,18 +1094,22 @@ async def health_check() -> Dict[str, Any]:
 # ==================== MAIN INTERFACE FUNCTIONS ====================
 
 def get_module_info() -> Dict[str, Any]:
-    """Get comprehensive module information"""    return MODULE_INFO
+    """Get comprehensive module information"""
+    return MODULE_INFO
 
 def get_component_info(component_name: str = None) -> Dict[str, Any]:
-    """Get information about specific component or all components"""    if component_name:
+    """Get information about specific component or all components"""
+    if component_name:
         return COMPONENT_DESCRIPTIONS.get(component_name, {})
     return COMPONENT_DESCRIPTIONS
 
 def get_supported_platforms() -> Dict[str, Any]:
-    """Get detailed information about supported platforms"""    return SUPPORTED_PLATFORMS
+    """Get detailed information about supported platforms"""
+    return SUPPORTED_PLATFORMS
 
 def get_supported_payment_gateways() -> Dict[str, Any]:
-    """Get information about supported payment gateways"""    return SUPPORTED_PAYMENT_GATEWAYS
+    """Get information about supported payment gateways"""
+    return SUPPORTED_PAYMENT_GATEWAYS
 
 # ==================== MODULE EXPORTS ====================
 
@@ -1339,23 +1354,29 @@ CONFIG_TEMPLATES = {
 }
 
 def get_module_info() -> Dict[str, Any]:
-    """Get comprehensive module information"""    return MODULE_INFO
+    """Get comprehensive module information"""
+    return MODULE_INFO
 
 def get_component_info(component_name: str) -> Dict[str, Any]:
-    """Get detailed information about a specific component"""    return COMPONENT_DESCRIPTIONS.get(component_name, {})
+    """Get detailed information about a specific component"""
+    return COMPONENT_DESCRIPTIONS.get(component_name, {})
 
 def get_quick_start_example(example_type: str) -> str:
-    """Get quick start code example"""    return QUICK_START_EXAMPLES.get(example_type, "Example not found")
+    """Get quick start code example"""
+    return QUICK_START_EXAMPLES.get(example_type, "Example not found")
 
 def get_all_examples() -> Dict[str, str]:
-    """Get all available quick start examples"""    return QUICK_START_EXAMPLES
+    """Get all available quick start examples"""
+    return QUICK_START_EXAMPLES
 
 def get_config_template(template_type: str = "basic_setup") -> Dict[str, Any]:
-    """Get configuration template"""    return CONFIG_TEMPLATES.get(template_type, CONFIG_TEMPLATES['basic_setup'])
+    """Get configuration template"""
+    return CONFIG_TEMPLATES.get(template_type, CONFIG_TEMPLATES['basic_setup'])
 
 # Module health check
 async def health_check() -> Dict[str, Any]:
-    """Perform module health check"""    try:
+    """Perform module health check"""
+    try:
         # Initialize core components for health check
         revenue_agent = RevenueAgent()
         revenue_tracker = RevenueTracker()

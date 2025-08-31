@@ -52,7 +52,8 @@ UNAUTHORIZED ACCESS IS CONSTITUTIONAL VIOLATION:
 
 Contact mlaiel@live.de for MANDATORY constitutional authorization.
 Unauthorized access triggers automatic Supreme Court legal protocols.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
 from dataclasses import dataclass, field
@@ -69,7 +70,8 @@ logger = logging.getLogger(__name__)
 
 
 class RightType(Enum):
-    """Types de droits d'auteur"""    COPYRIGHT = "copyright"
+    """Types de droits d'auteur"""
+    COPYRIGHT = "copyright"
     PERFORMANCE_RIGHT = "performance_right"
     MECHANICAL_RIGHT = "mechanical_right"
     SYNCHRONIZATION_RIGHT = "synchronization_right"
@@ -83,7 +85,8 @@ class RightType(Enum):
 
 
 class RightStatus(Enum):
-    """Statuts des droits"""    ACTIVE = "active"
+    """Statuts des droits"""
+    ACTIVE = "active"
     EXPIRED = "expired"
     SUSPENDED = "suspended"
     TRANSFERRED = "transferred"
@@ -93,7 +96,8 @@ class RightStatus(Enum):
 
 
 class LicenseType(Enum):
-    """Types de licences"""    EXCLUSIVE = "exclusive"
+    """Types de licences"""
+    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     SOLE = "sole"
     COMPULSORY = "compulsory"
@@ -103,7 +107,8 @@ class LicenseType(Enum):
 
 
 class TerritorialScope(Enum):
-    """Portée territoriale des droits"""    WORLDWIDE = "worldwide"
+    """Portée territoriale des droits"""
+    WORLDWIDE = "worldwide"
     NATIONAL = "national"
     REGIONAL = "regional"
     CONTINENTAL = "continental"
@@ -112,7 +117,8 @@ class TerritorialScope(Enum):
 
 @dataclass
 class RightsHolder:
-    """Détenteur de droits"""    holder_id: str
+    """Détenteur de droits"""
+    holder_id: str
     name: str
     type: str  # individual, company, organization
     email: str
@@ -138,7 +144,8 @@ class RightsHolder:
 
 @dataclass
 class Territory:
-    """Territoire de droits"""    territory_id: str
+    """Territoire de droits"""
+    territory_id: str
     name: str
     iso_code: str
     scope: TerritorialScope
@@ -148,7 +155,8 @@ class Territory:
 
 
 class RightsRecord(BaseModel):
-    """Enregistrement de droits d'auteur"""    record_id: str = Field(..., description="ID unique de l'enregistrement")
+    """Enregistrement de droits d'auteur"""
+    record_id: str = Field(..., description="ID unique de l'enregistrement")
     content_id: str = Field(..., description="ID du contenu protégé")
     
     # Informations de base
@@ -190,7 +198,8 @@ class RightsRecord(BaseModel):
 
 
 class LicenseAgreement(BaseModel):
-    """Accord de licence"""    license_id: str = Field(..., description="ID unique de la licence")
+    """Accord de licence"""
+    license_id: str = Field(..., description="ID unique de la licence")
     rights_record_id: str = Field(..., description="ID de l'enregistrement de droits")
     
     # Parties
@@ -239,7 +248,8 @@ class LicenseAgreement(BaseModel):
 
 
 class UsageReport(BaseModel):
-    """Rapport d'utilisation"""    report_id: str = Field(..., description="ID unique du rapport")
+    """Rapport d'utilisation"""
+    report_id: str = Field(..., description="ID unique du rapport")
     license_id: str = Field(..., description="ID de la licence")
     licensee_id: str
     
@@ -272,7 +282,8 @@ class UsageReport(BaseModel):
 
 
 class RightsTransfer(BaseModel):
-    """Transfert de droits"""    transfer_id: str = Field(..., description="ID unique du transfert")
+    """Transfert de droits"""
+    transfer_id: str = Field(..., description="ID unique du transfert")
     rights_record_id: str
     
     # Parties
@@ -306,7 +317,8 @@ class RightsTransfer(BaseModel):
 
 
 class RightsTrackingService:
-    """Service professionnel de suivi des droits"""    
+    """Service professionnel de suivi des droits"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.rights_records: Dict[str, RightsRecord] = {}
@@ -329,7 +341,8 @@ class RightsTrackingService:
         self._setup_default_territories()
     
     def _setup_default_territories(self):
-        """Configure les territoires par défaut"""        default_territories = [
+        """Configure les territoires par défaut"""
+        default_territories = [
             Territory("WW", "Worldwide", "WW", TerritorialScope.WORLDWIDE),
             Territory("EU", "European Union", "EU", TerritorialScope.REGIONAL),
             Territory("US", "United States", "US", TerritorialScope.NATIONAL),
@@ -345,7 +358,8 @@ class RightsTrackingService:
             self.territories[territory.territory_id] = territory
     
     async def initialize(self) -> bool:
-        """Initialise le service de suivi des droits"""        try:
+        """Initialise le service de suivi des droits"""
+        try:
             logger.info("Initialisation du service de suivi des droits...")
             
             # Chargement des données existantes
@@ -382,7 +396,8 @@ class RightsTrackingService:
         territories: Optional[List[str]] = None,
         creation_date: Optional[datetime] = None
     ) -> str:
-        """Enregistre de nouveaux droits d'auteur"""        try:
+        """Enregistre de nouveaux droits d'auteur"""
+        try:
             record_id = self._generate_record_id()
             
             # Enregistrement du détenteur principal
@@ -452,7 +467,8 @@ class RightsTrackingService:
         royalty_rate: float = 0.0,
         terms: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Crée un accord de licence"""        try:
+        """Crée un accord de licence"""
+        try:
             # Vérification de l'existence de l'enregistrement de droits
             if rights_record_id not in self.rights_records:
                 raise ValueError(f"Enregistrement de droits {rights_record_id} non trouvé")
@@ -525,7 +541,8 @@ class RightsTrackingService:
         consideration: float = 0.0,
         transfer_type: str = "assignment"
     ) -> str:
-        """Transfère des droits d'auteur"""        try:
+        """Transfère des droits d'auteur"""
+        try:
             # Vérification de l'enregistrement de droits
             if rights_record_id not in self.rights_records:
                 raise ValueError(f"Enregistrement de droits {rights_record_id} non trouvé")
@@ -613,7 +630,8 @@ class RightsTrackingService:
         usage_data: Dict[str, Any],
         revenue_generated: float = 0.0
     ) -> str:
-        """Soumet un rapport d'utilisation"""        try:
+        """Soumet un rapport d'utilisation"""
+        try:
             # Vérification de la licence
             if license_id not in self.licenses:
                 raise ValueError(f"Licence {license_id} non trouvée")
@@ -658,7 +676,8 @@ class RightsTrackingService:
             raise
     
     async def verify_usage_report(self, report_id: str, verified: bool = True) -> bool:
-        """Vérifie un rapport d'utilisation"""        try:
+        """Vérifie un rapport d'utilisation"""
+        try:
             if report_id not in self.usage_reports:
                 raise ValueError(f"Rapport {report_id} non trouvé")
             
@@ -682,7 +701,8 @@ class RightsTrackingService:
         revenue: float,
         deductions: Optional[Dict[str, float]] = None
     ) -> Dict[str, float]:
-        """Calcule les royalties dues"""        try:
+        """Calcule les royalties dues"""
+        try:
             if license_id not in self.licenses:
                 raise ValueError(f"Licence {license_id} non trouvée")
             
@@ -715,7 +735,8 @@ class RightsTrackingService:
             return {}
     
     async def get_rights_ownership(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Récupère les informations de propriété d'un contenu"""        try:
+        """Récupère les informations de propriété d'un contenu"""
+        try:
             # Recherche de l'enregistrement par content_id
             rights_record = None
             for record in self.rights_records.values():
@@ -767,7 +788,8 @@ class RightsTrackingService:
         territory: Optional[str] = None,
         status: Optional[RightStatus] = None
     ) -> List[Dict[str, Any]]:
-        """Recherche des enregistrements de droits"""        try:
+        """Recherche des enregistrements de droits"""
+        try:
             results = []
             
             for record in self.rights_records.values():
@@ -795,7 +817,8 @@ class RightsTrackingService:
             return []
     
     async def get_license_status(self, license_id: str) -> Optional[Dict[str, Any]]:
-        """Récupère le statut d'une licence"""        try:
+        """Récupère le statut d'une licence"""
+        try:
             if license_id not in self.licenses:
                 return None
             
@@ -842,7 +865,8 @@ class RightsTrackingService:
             return None
     
     async def _expiration_monitor(self):
-        """Surveille les expirations de droits et licences"""        while self.running:
+        """Surveille les expirations de droits et licences"""
+        while self.running:
             try:
                 now = datetime.utcnow()
                 notification_days = self.config.get('expiration_notification_days', self.default_config['expiration_notification_days'])
@@ -878,7 +902,8 @@ class RightsTrackingService:
                 await asyncio.sleep(86400)
     
     async def _renewal_monitor(self):
-        """Surveille les renouvellements automatiques"""        while self.running:
+        """Surveille les renouvellements automatiques"""
+        while self.running:
             try:
                 now = datetime.utcnow()
                 
@@ -902,7 +927,8 @@ class RightsTrackingService:
                 await asyncio.sleep(86400)
     
     async def _reporting_reminder(self):
-        """Envoie des rappels de reporting"""        while self.running:
+        """Envoie des rappels de reporting"""
+        while self.running:
             try:
                 reminder_days = self.config.get('reporting_reminder_days', self.default_config['reporting_reminder_days'])
                 
@@ -951,7 +977,8 @@ class RightsTrackingService:
                 await asyncio.sleep(86400)
     
     async def _auto_backup(self):
-        """Sauvegarde automatique des données"""        while self.running:
+        """Sauvegarde automatique des données"""
+        while self.running:
             try:
                 backup_hours = self.config.get('backup_frequency_hours', self.default_config['backup_frequency_hours'])
                 
@@ -965,7 +992,8 @@ class RightsTrackingService:
                 await asyncio.sleep(3600)
     
     async def _send_expiration_notification(self, item_type: str, item_id: str, days_remaining: int):
-        """Envoie une notification d'expiration"""        try:
+        """Envoie une notification d'expiration"""
+        try:
             # Implementation for sending expiration notifications
             notification_data = {
                 'type': 'expiration_warning',
@@ -990,19 +1018,24 @@ class RightsTrackingService:
             logger.error(f"Erreur notification expiration: {e}")
     
     def _generate_record_id(self) -> str:
-        """Génère un ID unique pour les enregistrements de droits"""        return f"RR-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
+        """Génère un ID unique pour les enregistrements de droits"""
+        return f"RR-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
     
     def _generate_license_id(self) -> str:
-        """Génère un ID unique pour les licences"""        return f"LIC-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
+        """Génère un ID unique pour les licences"""
+        return f"LIC-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
     
     def _generate_transfer_id(self) -> str:
-        """Génère un ID unique pour les transferts"""        return f"TRF-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
+        """Génère un ID unique pour les transferts"""
+        return f"TRF-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
     
     def _generate_report_id(self) -> str:
-        """Génère un ID unique pour les rapports"""        return f"RPT-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
+        """Génère un ID unique pour les rapports"""
+        return f"RPT-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
     
     async def _load_data(self):
-        """Charge les données depuis le stockage persistant"""        try:
+        """Charge les données depuis le stockage persistant"""
+        try:
             # Implementation for loading data from persistent storage
             
             # Load rights records
@@ -1043,7 +1076,8 @@ class RightsTrackingService:
             self.usage_tracking = {}
     
     async def _save_data(self):
-        """Sauvegarde les données"""        try:
+        """Sauvegarde les données"""
+        try:
             # Implementation for saving data to persistent storage
             
             # Save rights records
@@ -1084,7 +1118,8 @@ class RightsTrackingService:
         date_range: Tuple[datetime, datetime],
         holder_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Génère un rapport de droits"""        try:
+        """Génère un rapport de droits"""
+        try:
             start_date, end_date = date_range
             
             # Filtrage des enregistrements
@@ -1141,7 +1176,8 @@ class RightsTrackingService:
             return {}
     
     async def _send_reporting_reminder_notification(self, license_id: str, licensee_id: str, days_until_due: int):
-        """Envoie une notification de rappel de reporting"""        try:
+        """Envoie une notification de rappel de reporting"""
+        try:
             notification_data = {
                 'type': 'reporting_reminder',
                 'license_id': license_id,
@@ -1158,7 +1194,8 @@ class RightsTrackingService:
             logger.error(f"Erreur envoi rappel reporting: {e}")
     
     async def _send_notification(self, notification_data: Dict):
-        """Envoie une notification via le système de notifications"""        try:
+        """Envoie une notification via le système de notifications"""
+        try:
             # In production, this would integrate with notification service
             # For now, just log the notification
             logger.info(f"Notification envoyée: {notification_data['type']} pour {notification_data.get('license_id', 'N/A')}")
@@ -1173,7 +1210,8 @@ class RightsTrackingService:
             logger.error(f"Erreur envoi notification: {e}")
     
     async def _fetch_from_database(self, table_name: str) -> Dict:
-        """Récupère les données depuis la base de données"""        try:
+        """Récupère les données depuis la base de données"""
+        try:
             # In production, this would connect to actual database
             # For now, return empty dict to simulate no data
             logger.debug(f"Simulation chargement depuis table: {table_name}")
@@ -1184,7 +1222,8 @@ class RightsTrackingService:
             return {}
     
     async def _save_to_database(self, table_name: str, data: Dict):
-        """Sauvegarde les données vers la base de données"""        try:
+        """Sauvegarde les données vers la base de données"""
+        try:
             # In production, this would save to actual database
             # For now, just log the operation
             logger.debug(f"Simulation sauvegarde vers table {table_name}: {len(data)} enregistrements")
@@ -1193,7 +1232,8 @@ class RightsTrackingService:
             logger.error(f"Erreur sauvegarde vers {table_name}: {e}")
     
     async def shutdown(self):
-        """Arrêt propre du service"""        try:
+        """Arrêt propre du service"""
+        try:
             logger.info("Arrêt du service de suivi des droits...")
             self.running = False
             
@@ -1211,7 +1251,8 @@ rights_tracking_service = RightsTrackingService()
 
 
 async def get_rights_tracking_service() -> RightsTrackingService:
-    """Récupère l'instance du service de suivi des droits"""    return rights_tracking_service
+    """Récupère l'instance du service de suivi des droits"""
+    return rights_tracking_service
 
 
 __all__ = [

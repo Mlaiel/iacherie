@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 """Data collection integration module to connect crawlers with data harvester
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
 
 class DataCollectionIntegrator:
-    """    Integrates crawler manager with data harvester for complete data collection pipeline
-    """    
+    """
+    Integrates crawler manager with data harvester for complete data collection pipeline
+    """
+    
     def __init__(self, crawler_manager=None, data_harvester=None, logger=None):
         self.crawler_manager = crawler_manager
         self.data_harvester = data_harvester
@@ -22,7 +25,8 @@ class DataCollectionIntegrator:
         fingerprint_data: Dict[str, Any],
         collection_config: Dict[str, Any] = None
     ) -> str:
-        """        Starts integrated collection across platforms using both crawlers and harvester
+        """
+        Starts integrated collection across platforms using both crawlers and harvester
         
         Args:
             platforms: List of platforms to collect from
@@ -32,7 +36,8 @@ class DataCollectionIntegrator:
             
         Returns:
             Task ID for the collection session
-        """        task_id = f"integrated_collection_{int(datetime.now().timestamp())}"
+        """
+        task_id = f"integrated_collection_{int(datetime.now().timestamp())}"
         
         try:
             self.logger.info(f"Starting integrated collection {task_id}")
@@ -95,14 +100,16 @@ class DataCollectionIntegrator:
             raise
     
     async def get_collection_results(self, task_id: str) -> Dict[str, Any]:
-        """        Retrieves aggregated results from both crawlers and harvester
+        """
+        Retrieves aggregated results from both crawlers and harvester
         
         Args:
             task_id: Collection task ID
             
         Returns:
             Aggregated results from all collection sources
-        """        if task_id not in self.collection_tasks:
+        """
+        if task_id not in self.collection_tasks:
             raise ValueError(f"Collection task {task_id} not found")
         
         task_info = self.collection_tasks[task_id]
@@ -149,7 +156,8 @@ class DataCollectionIntegrator:
             raise
     
     def _generate_results_summary(self, results: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate summary statistics from collected results"""        summary = {
+        """Generate summary statistics from collected results"""
+        summary = {
             'total_matches': 0,
             'total_data_points': 0,
             'platforms_covered': len(results['platforms']),
@@ -180,14 +188,16 @@ class DataCollectionIntegrator:
         return summary
     
     async def stop_collection(self, task_id: str) -> bool:
-        """        Stops all collection activities for a task
+        """
+        Stops all collection activities for a task
         
         Args:
             task_id: Collection task ID
             
         Returns:
             True if successfully stopped
-        """        if task_id not in self.collection_tasks:
+        """
+        if task_id not in self.collection_tasks:
             return False
         
         try:
@@ -217,7 +227,8 @@ class DataCollectionIntegrator:
             return False
     
     async def get_all_collection_status(self) -> Dict[str, Any]:
-        """Get status of all collection tasks"""        status = {
+        """Get status of all collection tasks"""
+        status = {
             'total_tasks': len(self.collection_tasks),
             'active_tasks': len([t for t in self.collection_tasks.values() if t['status'] == 'running']),
             'tasks': []
@@ -247,7 +258,8 @@ class DataCollectionIntegrator:
         fingerprint_data: Dict[str, Any],
         monitoring_config: Dict[str, Any] = None
     ) -> str:
-        """        Sets up continuous monitoring across multiple platforms
+        """
+        Sets up continuous monitoring across multiple platforms
         
         Args:
             platforms: Platforms to monitor
@@ -257,7 +269,8 @@ class DataCollectionIntegrator:
             
         Returns:
             Monitoring session ID
-        """        config = monitoring_config or {}
+        """
+        config = monitoring_config or {}
         
         # Set up continuous collection with shorter intervals
         collection_config = {

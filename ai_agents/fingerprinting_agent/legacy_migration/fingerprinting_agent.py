@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import hashlib
@@ -66,20 +67,23 @@ from .similarity_matcher import SimilarityMatcher
 logger = logging.getLogger(__name__)
 
 class FingerprintType(Enum):
-    """Types of fingerprints supported"""    AUDIO = "audio"
+    """Types of fingerprints supported"""
+    AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
     TEXT = "text"
     COMPOSITE = "composite"  # Multi-modal content
 
 class FingerprintQuality(Enum):
-    """Fingerprint quality levels"""    LOW = "low"          # Basic hash-based
+    """Fingerprint quality levels"""
+    LOW = "low"          # Basic hash-based
     MEDIUM = "medium"    # Feature extraction
     HIGH = "high"        # Deep learning embeddings
     ULTRA = "ultra"      # Multi-model ensemble
 
 class SimilarityThreshold(Enum):
-    """Similarity matching thresholds"""    EXACT_MATCH = 0.98
+    """Similarity matching thresholds"""
+    EXACT_MATCH = 0.98
     NEAR_DUPLICATE = 0.90
     SIMILAR_CONTENT = 0.75
     RELATED_CONTENT = 0.60
@@ -87,7 +91,8 @@ class SimilarityThreshold(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Advanced content fingerprint structure"""    fingerprint_id: str
+    """Advanced content fingerprint structure"""
+    fingerprint_id: str
     content_id: str
     content_type: str
     fingerprint_type: FingerprintType
@@ -114,7 +119,8 @@ class ContentFingerprint:
 
 @dataclass 
 class SimilarityMatch:
-    """Similarity match result"""    query_fingerprint_id: str
+    """Similarity match result"""
+    query_fingerprint_id: str
     matched_fingerprint_id: str
     similarity_score: float
     similarity_type: str
@@ -123,7 +129,8 @@ class SimilarityMatch:
     detected_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
 class FingerprintingAgent(BaseAgent):
-    """    Ultra-advanced multi-format content fingerprinting agent with enterprise-grade capabilities.
+    """
+    Ultra-advanced multi-format content fingerprinting agent with enterprise-grade capabilities.
     
     Features:
     - Multi-modal fingerprinting (audio, video, image, text)
@@ -134,7 +141,8 @@ class FingerprintingAgent(BaseAgent):
     - Quality assessment and optimization
     - Batch processing capabilities
     - Cross-format content analysis
-    """    
+    """
+    
     def __init__(self, agent_id: str = "fingerprinting_agent", config: Dict[str, Any] = None):
         super().__init__(agent_id, config)
         
@@ -168,7 +176,8 @@ class FingerprintingAgent(BaseAgent):
         }
         
     async def initialize(self):
-        """Initialize fingerprinting agent with all specialized components"""        try:
+        """Initialize fingerprinting agent with all specialized components"""
+        try:
             start_time = time.time()
             
             # Initialize specialized fingerprinters
@@ -198,8 +207,10 @@ class FingerprintingAgent(BaseAgent):
             raise FingerprintingError(f"Initialization failed: {e}")
     
     async def process(self, request: AgentRequest) -> AgentResponse:
-        """        Process fingerprinting request with advanced multi-format support
-        """        start_time = time.time()
+        """
+        Process fingerprinting request with advanced multi-format support
+        """
+        start_time = time.time()
         
         try:
             # Validate request
@@ -251,7 +262,8 @@ class FingerprintingAgent(BaseAgent):
             )
     
     async def _generate_fingerprint(self, request: AgentRequest) -> Dict[str, Any]:
-        """Generate comprehensive fingerprint for content"""        content_data = request.data.get('content_data')
+        """Generate comprehensive fingerprint for content"""
+        content_data = request.data.get('content_data')
         content_type = request.data.get('content_type')
         quality_level = FingerprintQuality(request.data.get('quality_level', 'high'))
         
@@ -309,7 +321,8 @@ class FingerprintingAgent(BaseAgent):
         }
     
     async def _find_similar_content(self, request: AgentRequest) -> Dict[str, Any]:
-        """Find similar content using advanced similarity matching"""        query_data = request.data.get('query_data')
+        """Find similar content using advanced similarity matching"""
+        query_data = request.data.get('query_data')
         content_type = request.data.get('content_type')
         similarity_threshold = request.data.get('threshold', self.similarity_threshold)
         max_results = request.data.get('max_results', 10)
@@ -353,7 +366,8 @@ class FingerprintingAgent(BaseAgent):
         }
     
     async def _batch_fingerprint(self, request: AgentRequest) -> Dict[str, Any]:
-        """Process multiple content items in batch"""        content_batch = request.data.get('content_batch', [])
+        """Process multiple content items in batch"""
+        content_batch = request.data.get('content_batch', [])
         quality_level = FingerprintQuality(request.data.get('quality_level', 'high'))
         
         if not content_batch:
@@ -393,7 +407,8 @@ class FingerprintingAgent(BaseAgent):
         }
     
     async def _generate_composite_fingerprint(self, request: AgentRequest) -> Dict[str, Any]:
-        """Generate composite fingerprint for multi-modal content"""        content_components = request.data.get('content_components', [])
+        """Generate composite fingerprint for multi-modal content"""
+        content_components = request.data.get('content_components', [])
         
         if not content_components:
             raise ValidationError("Content components are required for composite fingerprint")
@@ -436,7 +451,8 @@ class FingerprintingAgent(BaseAgent):
         }
     
     async def _initialize_faiss_indexes(self):
-        """Initialize FAISS indexes for different content types"""        index_configs = {
+        """Initialize FAISS indexes for different content types"""
+        index_configs = {
             'audio': {'dimension': 512, 'index_type': 'IVF'},
             'video': {'dimension': 1024, 'index_type': 'IVF'},
             'image': {'dimension': 768, 'index_type': 'IVF'}, 
@@ -460,7 +476,8 @@ class FingerprintingAgent(BaseAgent):
             logger.info(f"Initialized FAISS index for {content_type}: {config}")
     
     async def _store_fingerprint(self, fingerprint: ContentFingerprint):
-        """Store fingerprint in database and cache"""        try:
+        """Store fingerprint in database and cache"""
+        try:
             # Store in database
             async with get_db_session() as db:
                 fingerprint_data = {
@@ -492,7 +509,8 @@ class FingerprintingAgent(BaseAgent):
             raise ProcessingError(f"Storage failed: {e}")
     
     async def _add_to_faiss_index(self, fingerprint: ContentFingerprint):
-        """Add fingerprint to appropriate FAISS index"""        content_type = fingerprint.content_type
+        """Add fingerprint to appropriate FAISS index"""
+        content_type = fingerprint.content_type
         
         if content_type not in self.faiss_indexes:
             logger.warning(f"No FAISS index for content type: {content_type}")
@@ -511,7 +529,8 @@ class FingerprintingAgent(BaseAgent):
         logger.debug(f"Added fingerprint {fingerprint.fingerprint_id} to FAISS index")
     
     def _get_performance_summary(self) -> Dict[str, Any]:
-        """Get performance metrics summary"""        metrics = self.processing_metrics
+        """Get performance metrics summary"""
+        metrics = self.processing_metrics
         
         avg_processing_time = (
             sum(metrics['processing_time']) / len(metrics['processing_time'])
@@ -537,7 +556,8 @@ class FingerprintingAgent(BaseAgent):
         }
     
     async def _validate_request(self, request: AgentRequest):
-        """Validate fingerprinting request"""        if not request.data:
+        """Validate fingerprinting request"""
+        if not request.data:
             raise ValidationError("Request data is required")
         
         action = request.data.get('action')
@@ -550,7 +570,8 @@ class FingerprintingAgent(BaseAgent):
                 raise ValidationError("Content type is required")
     
     async def cleanup(self):
-        """Clean up resources"""        try:
+        """Clean up resources"""
+        try:
             # Save FAISS indexes
             for content_type, index in self.faiss_indexes.items():
                 index_path = f"/tmp/faiss_{content_type}.index"

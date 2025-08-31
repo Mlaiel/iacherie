@@ -10,7 +10,8 @@ This watermark metadata system, concept, and all associated code are the exclusi
 property of Fahed Mlaiel. Any unauthorized use, copying, modification, or distribution 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly 
 prohibited and will result in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import hashlib
@@ -36,7 +37,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentCategory(Enum):
-    """Content categories for watermarking"""    MUSIC_TRACK = "music_track"
+    """Content categories for watermarking"""
+    MUSIC_TRACK = "music_track"
     PODCAST_EPISODE = "podcast_episode"
     VOICE_RECORDING = "voice_recording"
     SOUND_EFFECT = "sound_effect"
@@ -54,7 +56,8 @@ class ContentCategory(Enum):
 
 
 class LicenseType(Enum):
-    """License types for content"""    ALL_RIGHTS_RESERVED = "all_rights_reserved"
+    """License types for content"""
+    ALL_RIGHTS_RESERVED = "all_rights_reserved"
     CREATIVE_COMMONS_BY = "cc_by"
     CREATIVE_COMMONS_SA = "cc_sa"
     CREATIVE_COMMONS_NC = "cc_nc"
@@ -66,7 +69,8 @@ class LicenseType(Enum):
 
 
 class WatermarkPurpose(Enum):
-    """Purpose of watermarking"""    COPYRIGHT_PROTECTION = "copyright_protection"
+    """Purpose of watermarking"""
+    COPYRIGHT_PROTECTION = "copyright_protection"
     OWNERSHIP_VERIFICATION = "ownership_verification"
     USAGE_TRACKING = "usage_tracking"
     ANTI_PIRACY = "anti_piracy"
@@ -77,7 +81,8 @@ class WatermarkPurpose(Enum):
 
 
 class WatermarkStatus(Enum):
-    """Watermark processing status"""    PENDING = "pending"
+    """Watermark processing status"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -88,7 +93,8 @@ class WatermarkStatus(Enum):
 
 @dataclass
 class ContentIdentification:
-    """Content identification information"""    content_id: str
+    """Content identification information"""
+    content_id: str
     title: str
     category: ContentCategory
     mime_type: str
@@ -101,18 +107,21 @@ class ContentIdentification:
     language: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return asdict(self)
+        """Convert to dictionary"""
+        return asdict(self)
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ContentIdentification':
-        """Create from dictionary"""        if 'category' in data and isinstance(data['category'], str):
+        """Create from dictionary"""
+        if 'category' in data and isinstance(data['category'], str):
             data['category'] = ContentCategory(data['category'])
         return cls(**data)
 
 
 @dataclass
 class OwnershipInfo:
-    """Content ownership information"""    owner_id: str
+    """Content ownership information"""
+    owner_id: str
     owner_name: str
     owner_email: str
     organization: Optional[str] = None
@@ -121,16 +130,19 @@ class OwnershipInfo:
     copyright_year: Optional[int] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return asdict(self)
+        """Convert to dictionary"""
+        return asdict(self)
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'OwnershipInfo':
-        """Create from dictionary"""        return cls(**data)
+        """Create from dictionary"""
+        return cls(**data)
 
 
 @dataclass
 class LicensingInfo:
-    """Content licensing information"""    license_type: LicenseType
+    """Content licensing information"""
+    license_type: LicenseType
     license_url: Optional[str] = None
     usage_restrictions: List[str] = None
     commercial_use_allowed: bool = False
@@ -145,7 +157,8 @@ class LicensingInfo:
             self.usage_restrictions = []
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        data = asdict(self)
+        """Convert to dictionary"""
+        data = asdict(self)
         data['license_type'] = self.license_type.value
         if self.license_expiry:
             data['license_expiry'] = self.license_expiry.isoformat()
@@ -153,7 +166,8 @@ class LicensingInfo:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'LicensingInfo':
-        """Create from dictionary"""        if 'license_type' in data and isinstance(data['license_type'], str):
+        """Create from dictionary"""
+        if 'license_type' in data and isinstance(data['license_type'], str):
             data['license_type'] = LicenseType(data['license_type'])
         if 'license_expiry' in data and isinstance(data['license_expiry'], str):
             data['license_expiry'] = datetime.fromisoformat(data['license_expiry'])
@@ -162,7 +176,8 @@ class LicensingInfo:
 
 @dataclass
 class WatermarkTechnicalInfo:
-    """Technical watermarking information"""    watermark_id: str
+    """Technical watermarking information"""
+    watermark_id: str
     technique_used: str
     strength_level: str
     embedding_timestamp: datetime
@@ -176,20 +191,23 @@ class WatermarkTechnicalInfo:
     quality_metrics: Optional[Dict[str, float]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        data = asdict(self)
+        """Convert to dictionary"""
+        data = asdict(self)
         data['embedding_timestamp'] = self.embedding_timestamp.isoformat()
         return data
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'WatermarkTechnicalInfo':
-        """Create from dictionary"""        if 'embedding_timestamp' in data and isinstance(data['embedding_timestamp'], str):
+        """Create from dictionary"""
+        if 'embedding_timestamp' in data and isinstance(data['embedding_timestamp'], str):
             data['embedding_timestamp'] = datetime.fromisoformat(data['embedding_timestamp'])
         return cls(**data)
 
 
 @dataclass
 class TrackingInfo:
-    """Content tracking and monitoring information"""    tracking_id: str
+    """Content tracking and monitoring information"""
+    tracking_id: str
     monitoring_enabled: bool
     last_detection: Optional[datetime] = None
     detection_count: int = 0
@@ -206,7 +224,8 @@ class TrackingInfo:
             self.geographic_usage = {}
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        data = asdict(self)
+        """Convert to dictionary"""
+        data = asdict(self)
         if self.last_detection:
             data['last_detection'] = self.last_detection.isoformat()
         if self.last_verification:
@@ -215,7 +234,8 @@ class TrackingInfo:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'TrackingInfo':
-        """Create from dictionary"""        if 'last_detection' in data and isinstance(data['last_detection'], str):
+        """Create from dictionary"""
+        if 'last_detection' in data and isinstance(data['last_detection'], str):
             data['last_detection'] = datetime.fromisoformat(data['last_detection'])
         if 'last_verification' in data and isinstance(data['last_verification'], str):
             data['last_verification'] = datetime.fromisoformat(data['last_verification'])
@@ -224,7 +244,8 @@ class TrackingInfo:
 
 @dataclass
 class WatermarkMetadata:
-    """Complete watermark metadata package"""    
+    """Complete watermark metadata package"""
+    
     # Core identification
     metadata_id: str
     version: str
@@ -259,7 +280,8 @@ class WatermarkMetadata:
             self.custom_fields = {}
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert complete metadata to dictionary"""        return {
+        """Convert complete metadata to dictionary"""
+        return {
             'metadata_id': self.metadata_id,
             'version': self.version,
             'created_at': self.created_at.isoformat(),
@@ -281,7 +303,8 @@ class WatermarkMetadata:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'WatermarkMetadata':
-        """Create metadata from dictionary"""        # Convert enum fields
+        """Create metadata from dictionary"""
+        # Convert enum fields
         if 'status' in data and isinstance(data['status'], str):
             data['status'] = WatermarkStatus(data['status'])
         if 'purpose' in data and isinstance(data['purpose'], str):
@@ -308,7 +331,8 @@ class WatermarkMetadata:
         return cls(**data)
     
     def update_status(self, new_status: WatermarkStatus, notes: Optional[str] = None):
-        """Update status with timestamp"""        self.status = new_status
+        """Update status with timestamp"""
+        self.status = new_status
         self.updated_at = datetime.now(timezone.utc)
         if notes:
             if self.notes:
@@ -317,7 +341,8 @@ class WatermarkMetadata:
                 self.notes = f"{datetime.now().isoformat()}: {notes}"
     
     def add_detection(self, platform: str, location: Optional[str] = None):
-        """Add detection event"""        self.tracking_info.detection_count += 1
+        """Add detection event"""
+        self.tracking_info.detection_count += 1
         self.tracking_info.last_detection = datetime.now(timezone.utc)
         
         if platform not in self.tracking_info.platforms_detected:
@@ -332,7 +357,8 @@ class WatermarkMetadata:
         self.updated_at = datetime.now(timezone.utc)
     
     def add_revenue(self, amount: float, currency: str = "USD"):
-        """Add revenue tracking"""        self.tracking_info.revenue_tracked += amount
+        """Add revenue tracking"""
+        self.tracking_info.revenue_tracked += amount
         self.updated_at = datetime.now(timezone.utc)
         
         # Add to custom fields if currency tracking needed
@@ -345,7 +371,8 @@ class WatermarkMetadata:
             self.custom_fields['revenue_by_currency'][currency] = amount
     
     def get_summary(self) -> Dict[str, Any]:
-        """Get metadata summary"""        return {
+        """Get metadata summary"""
+        return {
             'metadata_id': self.metadata_id,
             'content_title': self.content_info.title,
             'owner_name': self.ownership_info.owner_name,
@@ -359,7 +386,8 @@ class WatermarkMetadata:
 
 
 class MetadataEncryption:
-    """Encryption service for sensitive metadata"""    
+    """Encryption service for sensitive metadata"""
+    
     def __init__(self, encryption_key: Optional[bytes] = None):
         if not CRYPTO_AVAILABLE:
             logger.warning("Cryptography library not available - encryption disabled")
@@ -376,7 +404,8 @@ class MetadataEncryption:
         self.cipher = Fernet(self.key)
     
     def encrypt_metadata(self, metadata_dict: Dict[str, Any]) -> bytes:
-        """Encrypt metadata dictionary"""        if not self.encryption_enabled:
+        """Encrypt metadata dictionary"""
+        if not self.encryption_enabled:
             return json.dumps(metadata_dict).encode('utf-8')
         
         try:
@@ -388,7 +417,8 @@ class MetadataEncryption:
             raise
     
     def decrypt_metadata(self, encrypted_data: bytes) -> Dict[str, Any]:
-        """Decrypt metadata"""        if not self.encryption_enabled:
+        """Decrypt metadata"""
+        if not self.encryption_enabled:
             return json.loads(encrypted_data.decode('utf-8'))
         
         try:
@@ -400,15 +430,18 @@ class MetadataEncryption:
             raise
     
     def get_key(self) -> bytes:
-        """Get encryption key"""        return self.key if self.encryption_enabled else b''
+        """Get encryption key"""
+        return self.key if self.encryption_enabled else b''
 
 
 class WatermarkMetadataManager:
-    """    Professional Watermark Metadata Management System
+    """
+    Professional Watermark Metadata Management System
     
     Handles creation, storage, retrieval, and management of watermark metadata
     with encryption, versioning, and comprehensive tracking capabilities.
-    """    
+    """
+    
     def __init__(self, 
                  storage_path: Optional[str] = None,
                  encryption_enabled: bool = True,
@@ -424,7 +457,8 @@ class WatermarkMetadataManager:
         self._load_index()
     
     def _load_index(self):
-        """Load metadata index"""        try:
+        """Load metadata index"""
+        try:
             if self.index_file.exists():
                 with open(self.index_file, 'r', encoding='utf-8') as f:
                     self.index = json.load(f)
@@ -435,7 +469,8 @@ class WatermarkMetadataManager:
             self.index = {}
     
     def _save_index(self):
-        """Save metadata index"""        try:
+        """Save metadata index"""
+        try:
             with open(self.index_file, 'w', encoding='utf-8') as f:
                 json.dump(self.index, f, indent=2, ensure_ascii=False)
         except Exception as e:
@@ -449,7 +484,8 @@ class WatermarkMetadataManager:
                             purpose: WatermarkPurpose,
                             tags: Optional[List[str]] = None,
                             notes: Optional[str] = None) -> WatermarkMetadata:
-        """Create new watermark metadata"""        try:
+        """Create new watermark metadata"""
+        try:
             # Generate unique ID
             metadata_id = str(uuid.uuid4())
             tracking_id = str(uuid.uuid4())
@@ -488,7 +524,8 @@ class WatermarkMetadataManager:
             raise
     
     async def save_metadata(self, metadata: WatermarkMetadata) -> bool:
-        """Save metadata to storage"""        try:
+        """Save metadata to storage"""
+        try:
             # Update timestamp
             metadata.updated_at = datetime.now(timezone.utc)
             
@@ -532,7 +569,8 @@ class WatermarkMetadataManager:
             return False
     
     async def load_metadata(self, metadata_id: str) -> Optional[WatermarkMetadata]:
-        """Load metadata from storage"""        try:
+        """Load metadata from storage"""
+        try:
             # Check cache first
             if metadata_id in self.metadata_cache:
                 return self.metadata_cache[metadata_id]
@@ -573,7 +611,8 @@ class WatermarkMetadataManager:
             return None
     
     async def update_metadata(self, metadata_id: str, updates: Dict[str, Any]) -> bool:
-        """Update existing metadata"""        try:
+        """Update existing metadata"""
+        try:
             metadata = await self.load_metadata(metadata_id)
             if not metadata:
                 return False
@@ -594,7 +633,8 @@ class WatermarkMetadataManager:
             return False
     
     async def delete_metadata(self, metadata_id: str) -> bool:
-        """Delete metadata"""        try:
+        """Delete metadata"""
+        try:
             # Check if exists
             if metadata_id not in self.index:
                 return False
@@ -629,7 +669,8 @@ class WatermarkMetadataManager:
                             tags: Optional[List[str]] = None,
                             date_from: Optional[datetime] = None,
                             date_to: Optional[datetime] = None) -> List[WatermarkMetadata]:
-        """Search metadata with various filters"""        try:
+        """Search metadata with various filters"""
+        try:
             results = []
             
             for metadata_id, index_info in self.index.items():
@@ -684,7 +725,8 @@ class WatermarkMetadataManager:
             return []
     
     async def get_metadata_summary(self) -> Dict[str, Any]:
-        """Get overall metadata statistics"""        try:
+        """Get overall metadata statistics"""
+        try:
             total_records = len(self.index)
             status_counts = {}
             category_counts = {}
@@ -722,7 +764,8 @@ class WatermarkMetadataManager:
                             metadata_ids: Optional[List[str]] = None,
                             export_format: str = 'json',
                             include_sensitive: bool = False) -> Optional[bytes]:
-        """Export metadata to various formats"""        try:
+        """Export metadata to various formats"""
+        try:
             # Determine which metadata to export
             if metadata_ids:
                 metadatas = []
@@ -770,7 +813,8 @@ class WatermarkMetadataManager:
             return None
     
     async def backup_metadata(self, backup_path: Optional[str] = None) -> bool:
-        """Create backup of all metadata"""        try:
+        """Create backup of all metadata"""
+        try:
             if not backup_path:
                 backup_path = self.storage_path.parent / f"watermark_metadata_backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
@@ -796,7 +840,8 @@ class WatermarkMetadataManager:
             return False
     
     def get_encryption_key(self) -> Optional[bytes]:
-        """Get encryption key for backup purposes"""        if self.encryption:
+        """Get encryption key for backup purposes"""
+        if self.encryption:
             return self.encryption.get_key()
         return None
 
@@ -806,7 +851,8 @@ class WatermarkMetadataManager:
 def create_content_info_from_file(file_path: str, 
                                 title: Optional[str] = None,
                                 category: Optional[ContentCategory] = None) -> ContentIdentification:
-    """Create content identification from file"""    file_path = Path(file_path)
+    """Create content identification from file"""
+    file_path = Path(file_path)
     
     # Auto-detect MIME type
     mime_type, _ = mimetypes.guess_type(str(file_path))
@@ -841,7 +887,8 @@ def create_content_info_from_file(file_path: str,
 def create_basic_ownership_info(owner_name: str, 
                               owner_email: str,
                               organization: Optional[str] = None) -> OwnershipInfo:
-    """Create basic ownership information"""    return OwnershipInfo(
+    """Create basic ownership information"""
+    return OwnershipInfo(
         owner_id=str(uuid.uuid4()),
         owner_name=owner_name,
         owner_email=owner_email,
@@ -851,7 +898,8 @@ def create_basic_ownership_info(owner_name: str,
 
 
 def create_standard_licensing_info(license_type: LicenseType = LicenseType.ALL_RIGHTS_RESERVED) -> LicensingInfo:
-    """Create standard licensing information"""    return LicensingInfo(
+    """Create standard licensing information"""
+    return LicensingInfo(
         license_type=license_type,
         commercial_use_allowed=(license_type != LicenseType.ALL_RIGHTS_RESERVED),
         modification_allowed=(license_type in [LicenseType.CREATIVE_COMMONS_BY, LicenseType.CREATIVE_COMMONS_SA]),
@@ -863,7 +911,8 @@ def create_standard_licensing_info(license_type: LicenseType = LicenseType.ALL_R
 # Factory function
 def create_metadata_manager(storage_path: Optional[str] = None,
                           encryption_enabled: bool = True) -> WatermarkMetadataManager:
-    """Create metadata manager with standard configuration"""    return WatermarkMetadataManager(
+    """Create metadata manager with standard configuration"""
+    return WatermarkMetadataManager(
         storage_path=storage_path,
         encryption_enabled=encryption_enabled
     )

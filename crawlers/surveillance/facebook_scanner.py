@@ -12,7 +12,8 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 
 Sophisticated Facebook scanning system for comprehensive content monitoring.
 Provides advanced analysis of Facebook posts, pages, groups, and user activities.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Union
 from datetime import datetime, timedelta
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class FacebookPost:
-    """Facebook post data."""    post_id: str
+    """Facebook post data."""
+    post_id: str
     user_id: str
     user_name: str
     page_id: Optional[str] = None
@@ -53,7 +55,8 @@ class FacebookPost:
 
 @dataclass
 class FacebookPage:
-    """Facebook page data."""    page_id: str
+    """Facebook page data."""
+    page_id: str
     name: str
     username: Optional[str] = None
     category: str = ""
@@ -76,7 +79,8 @@ class FacebookPage:
 
 @dataclass
 class FacebookGroup:
-    """Facebook group data."""    group_id: str
+    """Facebook group data."""
+    group_id: str
     name: str
     description: str = ""
     privacy: str = "public"  # public, closed, secret
@@ -91,7 +95,8 @@ class FacebookGroup:
 
 @dataclass
 class FacebookUser:
-    """Facebook user profile data."""    user_id: str
+    """Facebook user profile data."""
+    user_id: str
     name: str
     first_name: str = ""
     last_name: str = ""
@@ -113,7 +118,8 @@ class FacebookUser:
 
 @dataclass
 class FacebookComment:
-    """Facebook comment data."""    comment_id: str
+    """Facebook comment data."""
+    comment_id: str
     post_id: str
     parent_id: Optional[str] = None  # For replies
     user_id: str
@@ -128,7 +134,8 @@ class FacebookComment:
 
 @dataclass
 class FacebookViolation:
-    """Facebook content violation detection result."""    violation_id: str
+    """Facebook content violation detection result."""
+    violation_id: str
     content_type: str  # post, page, group, user, comment
     content_id: str
     violation_type: str
@@ -142,7 +149,8 @@ class FacebookViolation:
 
 @dataclass
 class FacebookScanMetrics:
-    """Facebook scanning system metrics."""    posts_scanned: int = 0
+    """Facebook scanning system metrics."""
+    posts_scanned: int = 0
     pages_scanned: int = 0
     groups_scanned: int = 0
     users_scanned: int = 0
@@ -155,7 +163,8 @@ class FacebookScanMetrics:
 
 
 class FacebookScanner:
-    """    Sophisticated Facebook scanning and monitoring system.
+    """
+    Sophisticated Facebook scanning and monitoring system.
     
     Features:
     - Page and group monitoring
@@ -166,9 +175,11 @@ class FacebookScanner:
     - Advanced pattern recognition
     - Graph API integration
     - Automated reporting
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Facebook scanner."""        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize Facebook scanner."""
+        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
         self.config = config or {}
@@ -233,7 +244,8 @@ class FacebookScanner:
         self._logger.info("Facebook Scanner initialized")
     
     async def initialize(self) -> None:
-        """Initialize the Facebook scanner."""        try:
+        """Initialize the Facebook scanner."""
+        try:
             self._logger.info("Initializing Facebook scanner...")
             
             # Validate configuration
@@ -253,7 +265,8 @@ class FacebookScanner:
             raise
     
     async def _initialize_graph_api(self) -> None:
-        """Initialize Facebook Graph API client."""        try:
+        """Initialize Facebook Graph API client."""
+        try:
             # This would initialize the actual Facebook Graph API client
             # For now, implement placeholder
             self._logger.debug("Graph API client initialized")
@@ -263,7 +276,8 @@ class FacebookScanner:
             raise
     
     async def _setup_violation_detection(self) -> None:
-        """Setup violation detection systems."""        try:
+        """Setup violation detection systems."""
+        try:
             # This would setup actual ML models for violation detection
             # For now, implement placeholder
             self._logger.debug("Violation detection setup complete")
@@ -273,7 +287,8 @@ class FacebookScanner:
             raise
     
     async def start_scanning(self) -> None:
-        """Start Facebook scanning operations."""        try:
+        """Start Facebook scanning operations."""
+        try:
             if self._scanning_active:
                 self._logger.warning("Facebook scanning is already active")
                 return
@@ -291,7 +306,8 @@ class FacebookScanner:
             raise
     
     async def stop_scanning(self) -> None:
-        """Stop Facebook scanning operations."""        try:
+        """Stop Facebook scanning operations."""
+        try:
             if not self._scanning_active:
                 self._logger.warning("Facebook scanning is not active")
                 return
@@ -314,7 +330,8 @@ class FacebookScanner:
             raise
     
     async def add_page_monitoring(self, page_id: str) -> bool:
-        """Add Facebook page to monitoring."""        try:
+        """Add Facebook page to monitoring."""
+        try:
             self.monitored_pages.add(page_id)
             self._logger.info(f"Added page monitoring: {page_id}")
             return True
@@ -324,7 +341,8 @@ class FacebookScanner:
             return False
     
     async def add_group_monitoring(self, group_id: str) -> bool:
-        """Add Facebook group to monitoring."""        try:
+        """Add Facebook group to monitoring."""
+        try:
             self.monitored_groups.add(group_id)
             self._logger.info(f"Added group monitoring: {group_id}")
             return True
@@ -334,7 +352,8 @@ class FacebookScanner:
             return False
     
     async def add_user_monitoring(self, user_id: str) -> bool:
-        """Add Facebook user to monitoring."""        try:
+        """Add Facebook user to monitoring."""
+        try:
             self.monitored_users.add(user_id)
             self._logger.info(f"Added user monitoring: {user_id}")
             return True
@@ -344,7 +363,8 @@ class FacebookScanner:
             return False
     
     async def scan_page(self, page_id: str, scan_posts: bool = True) -> Optional[FacebookPage]:
-        """Scan Facebook page."""        try:
+        """Scan Facebook page."""
+        try:
             self._logger.debug(f"Scanning page: {page_id}")
             
             # Rate limiting
@@ -384,7 +404,8 @@ class FacebookScanner:
         return None
     
     async def scan_group(self, group_id: str, scan_posts: bool = True) -> Optional[FacebookGroup]:
-        """Scan Facebook group."""        try:
+        """Scan Facebook group."""
+        try:
             self._logger.debug(f"Scanning group: {group_id}")
             
             # Rate limiting
@@ -424,7 +445,8 @@ class FacebookScanner:
         return None
     
     async def scan_user(self, user_id: str, scan_posts: bool = True) -> Optional[FacebookUser]:
-        """Scan Facebook user."""        try:
+        """Scan Facebook user."""
+        try:
             self._logger.debug(f"Scanning user: {user_id}")
             
             # Rate limiting
@@ -464,7 +486,8 @@ class FacebookScanner:
         return None
     
     async def _scanning_loop(self) -> None:
-        """Main scanning loop."""        self._logger.info("Facebook scanning loop started")
+        """Main scanning loop."""
+        self._logger.info("Facebook scanning loop started")
         
         try:
             while self._scanning_active:
@@ -512,7 +535,8 @@ class FacebookScanner:
         self._logger.info("Facebook scanning loop stopped")
     
     async def _fetch_page_data(self, page_id: str) -> Optional[Dict[str, Any]]:
-        """Fetch Facebook page data."""        try:
+        """Fetch Facebook page data."""
+        try:
             # Simulate Graph API call
             await asyncio.sleep(0.2)
             
@@ -541,7 +565,8 @@ class FacebookScanner:
             return None
     
     async def _fetch_group_data(self, group_id: str) -> Optional[Dict[str, Any]]:
-        """Fetch Facebook group data."""        try:
+        """Fetch Facebook group data."""
+        try:
             # Simulate Graph API call
             await asyncio.sleep(0.2)
             
@@ -564,7 +589,8 @@ class FacebookScanner:
             return None
     
     async def _fetch_user_data(self, user_id: str) -> Optional[Dict[str, Any]]:
-        """Fetch Facebook user data."""        try:
+        """Fetch Facebook user data."""
+        try:
             # Simulate Graph API call
             await asyncio.sleep(0.2)
             
@@ -587,7 +613,8 @@ class FacebookScanner:
             return None
     
     async def _fetch_page_posts(self, page_id: str, limit: int = 50) -> List[FacebookPost]:
-        """Fetch recent posts from a page."""        try:
+        """Fetch recent posts from a page."""
+        try:
             # Simulate Graph API call
             await asyncio.sleep(0.3)
             
@@ -622,7 +649,8 @@ class FacebookScanner:
             return []
     
     async def _fetch_group_posts(self, group_id: str, limit: int = 50) -> List[FacebookPost]:
-        """Fetch recent posts from a group."""        try:
+        """Fetch recent posts from a group."""
+        try:
             # Simulate Graph API call
             await asyncio.sleep(0.3)
             
@@ -655,7 +683,8 @@ class FacebookScanner:
             return []
     
     async def _fetch_user_posts(self, user_id: str, limit: int = 50) -> List[FacebookPost]:
-        """Fetch recent posts from a user."""        try:
+        """Fetch recent posts from a user."""
+        try:
             # Simulate Graph API call
             await asyncio.sleep(0.3)
             
@@ -688,7 +717,8 @@ class FacebookScanner:
             return []
     
     async def _analyze_page_for_violations(self, page: FacebookPage) -> List[FacebookViolation]:
-        """Analyze Facebook page for violations."""        violations = []
+        """Analyze Facebook page for violations."""
+        violations = []
         
         try:
             # Analyze page content
@@ -726,7 +756,8 @@ class FacebookScanner:
         return violations
     
     async def _analyze_group_for_violations(self, group: FacebookGroup) -> List[FacebookViolation]:
-        """Analyze Facebook group for violations."""        violations = []
+        """Analyze Facebook group for violations."""
+        violations = []
         
         try:
             # Analyze group content
@@ -764,7 +795,8 @@ class FacebookScanner:
         return violations
     
     async def _analyze_user_for_violations(self, user: FacebookUser) -> List[FacebookViolation]:
-        """Analyze Facebook user for violations."""        violations = []
+        """Analyze Facebook user for violations."""
+        violations = []
         
         try:
             # Analyze user content
@@ -802,7 +834,8 @@ class FacebookScanner:
         return violations
     
     async def _analyze_post_for_violations(self, post: FacebookPost) -> List[FacebookViolation]:
-        """Analyze Facebook post for violations."""        violations = []
+        """Analyze Facebook post for violations."""
+        violations = []
         
         try:
             # Analyze post content
@@ -840,7 +873,8 @@ class FacebookScanner:
         return violations
     
     def _calculate_severity(self, violation_type: str, confidence: float) -> str:
-        """Calculate violation severity."""        high_risk_types = ['violence', 'harassment', 'misinformation']
+        """Calculate violation severity."""
+        high_risk_types = ['violence', 'harassment', 'misinformation']
         
         if violation_type in high_risk_types:
             if confidence >= 0.8:
@@ -858,7 +892,8 @@ class FacebookScanner:
                 return "low"
     
     async def _enforce_rate_limit(self) -> None:
-        """Enforce rate limiting for API requests."""        current_time = asyncio.get_event_loop().time()
+        """Enforce rate limiting for API requests."""
+        current_time = asyncio.get_event_loop().time()
         time_since_last_request = current_time - self._last_request_time
         
         if time_since_last_request < self._request_delay:
@@ -868,7 +903,8 @@ class FacebookScanner:
         self._last_request_time = asyncio.get_event_loop().time()
     
     def get_scanner_status(self) -> Dict[str, Any]:
-        """Get current scanner status."""        return {
+        """Get current scanner status."""
+        return {
             'scanning_active': self._scanning_active,
             'monitored_targets': {
                 'pages': len(self.monitored_pages),
@@ -895,7 +931,8 @@ class FacebookScanner:
         }
     
     def get_recent_violations(self, limit: int = 100) -> List[Dict[str, Any]]:
-        """Get recent violations."""        recent_violations = sorted(
+        """Get recent violations."""
+        recent_violations = sorted(
             self.violations,
             key=lambda v: v.detected_at,
             reverse=True
@@ -918,7 +955,8 @@ class FacebookScanner:
         ]
     
     async def shutdown(self) -> None:
-        """Shutdown the Facebook scanner."""        try:
+        """Shutdown the Facebook scanner."""
+        try:
             self._logger.info("Shutting down Facebook scanner...")
             
             await self.stop_scanning()

@@ -10,7 +10,8 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 ⚠️  AVERTISSEMENT STRICT ⚠️
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
-"""import asyncio
+"""
+import asyncio
 import hashlib
 import re
 from datetime import datetime, timedelta
@@ -34,14 +35,16 @@ from ...ai.analysis.query_optimization_ai import QueryOptimizationAI
 
 
 class QueryImpact(Enum):
-    """Query performance impact levels"""    LOW = "low"
+    """Query performance impact levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class QueryCategory(Enum):
-    """Query categorization for analysis"""    OLTP = "oltp"          # Online Transaction Processing
+    """Query categorization for analysis"""
+    OLTP = "oltp"          # Online Transaction Processing
     OLAP = "olap"          # Online Analytical Processing
     BATCH = "batch"        # Batch processing
     MAINTENANCE = "maintenance"  # Database maintenance
@@ -51,7 +54,8 @@ class QueryCategory(Enum):
 
 @dataclass
 class SlowQueryInstance:
-    """Individual slow query execution instance"""    query_id: str
+    """Individual slow query execution instance"""
+    query_id: str
     normalized_query: str
     original_query: str
     execution_time_ms: float
@@ -70,7 +74,8 @@ class SlowQueryInstance:
     memory_usage_mb: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        data = asdict(self)
+        """Convert to dictionary"""
+        data = asdict(self)
         data['query_start'] = self.query_start.isoformat()
         data['query_end'] = self.query_end.isoformat()
         return data
@@ -78,7 +83,8 @@ class SlowQueryInstance:
 
 @dataclass
 class SlowQueryPattern:
-    """Aggregated slow query pattern analysis"""    pattern_id: str
+    """Aggregated slow query pattern analysis"""
+    pattern_id: str
     normalized_query: str
     query_category: QueryCategory
     impact_level: QueryImpact
@@ -97,7 +103,8 @@ class SlowQueryPattern:
     optimization_priority: int  # 1-10 scale
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        data = asdict(self)
+        """Convert to dictionary"""
+        data = asdict(self)
         data['query_category'] = self.query_category.value
         data['impact_level'] = self.impact_level.value
         data['first_seen'] = self.first_seen.isoformat()
@@ -107,7 +114,8 @@ class SlowQueryPattern:
 
 @dataclass
 class OptimizationSuggestion:
-    """Query optimization suggestion"""    suggestion_id: str
+    """Query optimization suggestion"""
+    suggestion_id: str
     query_pattern_id: str
     suggestion_type: str
     title: str
@@ -121,13 +129,15 @@ class OptimizationSuggestion:
     created_at: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        data = asdict(self)
+        """Convert to dictionary"""
+        data = asdict(self)
         data['created_at'] = self.created_at.isoformat()
         return data
 
 
 class SlowQueryDetector:
-    """    Advanced slow query detection and analysis system.
+    """
+    Advanced slow query detection and analysis system.
     
     Features:
     - Real-time slow query capture
@@ -136,7 +146,8 @@ class SlowQueryDetector:
     - Automated optimization suggestions
     - Trend analysis and alerting
     - Query categorization and prioritization
-    """    
+    """
+    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
@@ -169,7 +180,8 @@ class SlowQueryDetector:
         self.logger.info("Slow Query Detector initialized")
     
     async def start_detection(self, check_interval: int = 30) -> None:
-        """Start slow query detection"""        if self.detecting_active:
+        """Start slow query detection"""
+        if self.detecting_active:
             self.logger.warning("Slow query detection already active")
             return
         
@@ -190,11 +202,13 @@ class SlowQueryDetector:
             raise
     
     async def stop_detection(self) -> None:
-        """Stop slow query detection"""        self.detecting_active = False
+        """Stop slow query detection"""
+        self.detecting_active = False
         self.logger.info("Slow query detection stopped")
     
     async def _detect_slow_queries_loop(self, interval: int) -> None:
-        """Main detection loop for slow queries"""        while self.detecting_active:
+        """Main detection loop for slow queries"""
+        while self.detecting_active:
             try:
                 await self._capture_slow_queries()
                 await asyncio.sleep(interval)
@@ -203,7 +217,8 @@ class SlowQueryDetector:
                 await asyncio.sleep(interval)
     
     async def _analyze_patterns_loop(self, interval: int) -> None:
-        """Pattern analysis loop"""        while self.detecting_active:
+        """Pattern analysis loop"""
+        while self.detecting_active:
             try:
                 await self._analyze_query_patterns()
                 await asyncio.sleep(interval)
@@ -212,7 +227,8 @@ class SlowQueryDetector:
                 await asyncio.sleep(interval)
     
     async def _generate_suggestions_loop(self, interval: int) -> None:
-        """Optimization suggestions generation loop"""        while self.detecting_active:
+        """Optimization suggestions generation loop"""
+        while self.detecting_active:
             try:
                 await self._generate_optimization_suggestions()
                 await asyncio.sleep(interval)
@@ -221,10 +237,12 @@ class SlowQueryDetector:
                 await asyncio.sleep(interval)
     
     async def _capture_slow_queries(self) -> None:
-        """Capture slow queries from database"""        try:
+        """Capture slow queries from database"""
+        try:
             async with get_database_session() as session:
                 # Get slow queries from pg_stat_activity
-                result = await session.execute(text("""                    SELECT 
+                result = await session.execute(text("""
+                    SELECT 
                         pid,
                         query,
                         query_start,
@@ -257,7 +275,8 @@ class SlowQueryDetector:
             self.logger.error(f"Error capturing slow queries: {e}")
     
     async def _process_slow_query_row(self, row) -> None:
-        """Process a single slow query row"""        try:
+        """Process a single slow query row"""
+        try:
             # Clean and normalize query
             original_query = row.query[:self.max_query_length] if row.query else ""
             normalized_query = self._normalize_query(original_query)
@@ -304,9 +323,11 @@ class SlowQueryDetector:
             self.logger.error(f"Error processing slow query row: {e}")
     
     async def _capture_from_pg_stat_statements(self, session: AsyncSession) -> None:
-        """Capture slow queries from pg_stat_statements"""        try:
+        """Capture slow queries from pg_stat_statements"""
+        try:
             # Check if pg_stat_statements is available
-            result = await session.execute(text("""                SELECT EXISTS (
+            result = await session.execute(text("""
+                SELECT EXISTS (
                     SELECT 1 FROM pg_extension WHERE extname = 'pg_stat_statements'
                 )
             """))
@@ -315,7 +336,8 @@ class SlowQueryDetector:
                 return
             
             # Get slow queries from pg_stat_statements
-            result = await session.execute(text("""                SELECT 
+            result = await session.execute(text("""
+                SELECT 
                     queryid,
                     query,
                     calls,
@@ -344,7 +366,8 @@ class SlowQueryDetector:
             self.logger.debug(f"pg_stat_statements not available or error: {e}")
     
     async def _process_pg_stat_statements_row(self, row) -> None:
-        """Process row from pg_stat_statements"""        try:
+        """Process row from pg_stat_statements"""
+        try:
             original_query = row.query[:self.max_query_length] if row.query else ""
             normalized_query = self._normalize_query(original_query)
             query_id = self._generate_query_id(normalized_query)
@@ -380,7 +403,8 @@ class SlowQueryDetector:
             self.logger.error(f"Error processing pg_stat_statements row: {e}")
     
     def _normalize_query(self, query: str) -> str:
-        """Normalize SQL query for pattern matching"""        if not query:
+        """Normalize SQL query for pattern matching"""
+        if not query:
             return ""
         
         # Basic cleanup
@@ -403,10 +427,12 @@ class SlowQueryDetector:
         return normalized
     
     def _generate_query_id(self, normalized_query: str) -> str:
-        """Generate unique ID for query pattern"""        return hashlib.md5(normalized_query.encode()).hexdigest()[:16]
+        """Generate unique ID for query pattern"""
+        return hashlib.md5(normalized_query.encode()).hexdigest()[:16]
     
     async def _analyze_query_patterns(self) -> None:
-        """Analyze slow query patterns and trends"""        try:
+        """Analyze slow query patterns and trends"""
+        try:
             # Group slow queries by pattern
             pattern_groups = defaultdict(list)
             
@@ -440,7 +466,8 @@ class SlowQueryDetector:
         query_id: str, 
         queries: List[SlowQueryInstance]
     ) -> Optional[SlowQueryPattern]:
-        """Create query pattern from slow query instances"""        try:
+        """Create query pattern from slow query instances"""
+        try:
             if not queries:
                 return None
             
@@ -503,7 +530,8 @@ class SlowQueryDetector:
             return None
     
     def _categorize_query(self, normalized_query: str) -> QueryCategory:
-        """Categorize query based on its pattern"""        query_upper = normalized_query.upper()
+        """Categorize query based on its pattern"""
+        query_upper = normalized_query.upper()
         
         # OLTP patterns
         if any(pattern in query_upper for pattern in [
@@ -544,7 +572,8 @@ class SlowQueryDetector:
             return QueryCategory.UNKNOWN
     
     def _calculate_impact_level(self, queries: List[SlowQueryInstance]) -> QueryImpact:
-        """Calculate performance impact level"""        # Consider frequency and duration
+        """Calculate performance impact level"""
+        # Consider frequency and duration
         frequency = len(queries)
         avg_duration = statistics.mean(q.execution_time_ms for q in queries)
         total_time = sum(q.execution_time_ms for q in queries)
@@ -585,7 +614,8 @@ class SlowQueryDetector:
             return QueryImpact.LOW
     
     def _extract_table_names(self, normalized_query: str) -> List[str]:
-        """Extract table names from normalized query"""        table_names = []
+        """Extract table names from normalized query"""
+        table_names = []
         
         # Simple regex patterns for table extraction
         patterns = [
@@ -603,7 +633,8 @@ class SlowQueryDetector:
         return list(set(table_names))  # Remove duplicates
     
     def _analyze_performance_trend(self, execution_times: List[float]) -> str:
-        """Analyze performance trend over time"""        if len(execution_times) < 3:
+        """Analyze performance trend over time"""
+        if len(execution_times) < 3:
             return "stable"
         
         # Simple trend analysis using first/last quartiles
@@ -631,7 +662,8 @@ class SlowQueryDetector:
         avg_duration: float, 
         impact_level: QueryImpact
     ) -> int:
-        """Calculate optimization priority (1-10 scale)"""        priority = 1
+        """Calculate optimization priority (1-10 scale)"""
+        priority = 1
         
         # Frequency contribution
         if frequency >= 100:
@@ -661,7 +693,8 @@ class SlowQueryDetector:
         return min(priority, 10)  # Cap at 10
     
     async def _generate_optimization_suggestions(self) -> None:
-        """Generate optimization suggestions for slow query patterns"""        try:
+        """Generate optimization suggestions for slow query patterns"""
+        try:
             for pattern_id, pattern in self.query_patterns.items():
                 if pattern.optimization_priority >= 5:  # Only high-priority patterns
                     suggestions = await self._generate_pattern_suggestions(pattern)
@@ -682,7 +715,8 @@ class SlowQueryDetector:
         self, 
         pattern: SlowQueryPattern
     ) -> List[OptimizationSuggestion]:
-        """Generate optimization suggestions for a specific pattern"""        suggestions = []
+        """Generate optimization suggestions for a specific pattern"""
+        suggestions = []
         
         try:
             query = pattern.normalized_query
@@ -777,7 +811,8 @@ class SlowQueryDetector:
         return suggestions
     
     def _suggest_indexes(self, query: str, tables: List[str]) -> List[str]:
-        """Suggest specific indexes based on query analysis"""        suggestions = []
+        """Suggest specific indexes based on query analysis"""
+        suggestions = []
         
         # Extract WHERE conditions
         where_match = re.search(r'WHERE\s+(.*?)(?:\s+ORDER\s+BY|\s+GROUP\s+BY|\s+LIMIT|$)', 
@@ -800,7 +835,8 @@ class SlowQueryDetector:
         return suggestions
     
     async def get_slow_query_summary(self) -> Dict[str, Any]:
-        """Get slow query detection summary"""        try:
+        """Get slow query detection summary"""
+        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=self.analysis_window_hours)
             recent_queries = [q for q in self.slow_queries if q.query_start >= cutoff_time]
             
@@ -834,7 +870,8 @@ class SlowQueryDetector:
         limit: int = 20, 
         min_priority: int = 1
     ) -> List[Dict[str, Any]]:
-        """Get slow query patterns sorted by priority"""        try:
+        """Get slow query patterns sorted by priority"""
+        try:
             # Filter and sort patterns
             filtered_patterns = [
                 pattern for pattern in self.query_patterns.values()
@@ -861,7 +898,8 @@ class SlowQueryDetector:
             return []
     
     async def get_optimization_suggestions(self, pattern_id: str = None) -> List[Dict[str, Any]]:
-        """Get optimization suggestions"""        try:
+        """Get optimization suggestions"""
+        try:
             if pattern_id:
                 # Get suggestions for specific pattern
                 suggestions = self.optimization_suggestions.get(pattern_id, [])
@@ -885,7 +923,8 @@ class SlowQueryDetector:
             return []
     
     async def get_recent_slow_queries(self, limit: int = 50) -> List[Dict[str, Any]]:
-        """Get recent slow query instances"""        try:
+        """Get recent slow query instances"""
+        try:
             recent_queries = list(self.slow_queries)[-limit:]
             return [q.to_dict() for q in reversed(recent_queries)]
         except Exception as e:
@@ -893,7 +932,8 @@ class SlowQueryDetector:
             return []
     
     async def analyze_query_now(self, query: str) -> Dict[str, Any]:
-        """Analyze a specific query immediately"""        try:
+        """Analyze a specific query immediately"""
+        try:
             normalized = self._normalize_query(query)
             query_id = self._generate_query_id(normalized)
             

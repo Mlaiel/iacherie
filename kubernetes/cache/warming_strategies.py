@@ -35,7 +35,8 @@ Key Warming Features:
 - Revenue-optimized warming for monetization opportunities
 - Real-time adaptation to viral content patterns
 - Cross-platform warming for seamless content distribution
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import statistics
@@ -57,7 +58,8 @@ import asyncpg
 
 
 class WarmingStrategy(Enum):
-    """Advanced cache warming strategies for content creators"""    POPULARITY_BASED = "popularity_based"           # Based on content popularity trends
+    """Advanced cache warming strategies for content creators"""
+    POPULARITY_BASED = "popularity_based"           # Based on content popularity trends
     TIME_BASED = "time_based"                      # Time-sensitive content warming
     USER_BEHAVIOR = "user_behavior"                # Creator and fan behavior patterns
     CONTENT_SIMILARITY = "content_similarity"      # Similar content warming
@@ -71,7 +73,8 @@ class WarmingStrategy(Enum):
 
 
 class WarmingPriority(Enum):
-    """Cache warming priority levels based on business impact"""    CRITICAL = "critical"      # Revenue-generating content, verified creators
+    """Cache warming priority levels based on business impact"""
+    CRITICAL = "critical"      # Revenue-generating content, verified creators
     HIGH = "high"             # Popular content, premium creators
     MEDIUM = "medium"         # Standard content, regular creators
     LOW = "low"              # Background content, new creators
@@ -79,7 +82,8 @@ class WarmingPriority(Enum):
 
 
 class ContentTrendLevel(Enum):
-    """Content trending levels for warming decisions"""    VIRAL = "viral"           # Rapidly spreading content
+    """Content trending levels for warming decisions"""
+    VIRAL = "viral"           # Rapidly spreading content
     TRENDING = "trending"     # Growing in popularity
     POPULAR = "popular"       # Consistently accessed
     STABLE = "stable"         # Regular access patterns
@@ -87,7 +91,8 @@ class ContentTrendLevel(Enum):
 
 
 class CreatorTier(Enum):
-    """Creator tier levels for warming prioritization"""    PLATINUM = "platinum"     # Top-tier creators with massive following
+    """Creator tier levels for warming prioritization"""
+    PLATINUM = "platinum"     # Top-tier creators with massive following
     GOLD = "gold"            # Verified creators with large audience
     SILVER = "silver"        # Growing creators with engaged audience
     BRONZE = "bronze"        # New creators building their presence
@@ -96,7 +101,8 @@ class CreatorTier(Enum):
 
 @dataclass
 class WarmingTarget:
-    """Cache warming target definition"""    content_id: str
+    """Cache warming target definition"""
+    content_id: str
     content_type: str
     creator_id: str
     creator_tier: CreatorTier
@@ -113,7 +119,8 @@ class WarmingTarget:
 
 @dataclass
 class WarmingResult:
-    """Result of cache warming operation"""    target: WarmingTarget
+    """Result of cache warming operation"""
+    target: WarmingTarget
     success: bool
     warming_time_seconds: float
     cache_size_bytes: int
@@ -125,7 +132,8 @@ class WarmingResult:
 
 @dataclass
 class CreatorBehaviorPattern:
-    """Creator behavior pattern analysis"""    creator_id: str
+    """Creator behavior pattern analysis"""
+    creator_id: str
     creator_tier: CreatorTier
     upload_frequency: float
     peak_upload_hours: List[int]
@@ -139,7 +147,8 @@ class CreatorBehaviorPattern:
 
 
 class AITrendPredictor:
-    """AI-powered trend prediction for cache warming"""    
+    """AI-powered trend prediction for cache warming"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.models: Dict[str, RandomForestRegressor] = {}
@@ -150,7 +159,8 @@ class AITrendPredictor:
         self._initialize_prediction_models()
     
     def _initialize_prediction_models(self):
-        """Initialize machine learning models for trend prediction"""        
+        """Initialize machine learning models for trend prediction"""
+        
         # Content popularity prediction model
         self.models["popularity"] = RandomForestRegressor(
             n_estimators=200,
@@ -189,7 +199,8 @@ class AITrendPredictor:
         creator_pattern: CreatorBehaviorPattern,
         historical_data: List[Dict]
     ) -> Dict[str, float]:
-        """Predict content trends for warming decisions"""        
+        """Predict content trends for warming decisions"""
+        
         try:
             # Extract features for prediction
             features = self._extract_trend_features(content_metadata, creator_pattern, historical_data)
@@ -232,7 +243,8 @@ class AITrendPredictor:
         creator_pattern: CreatorBehaviorPattern,
         historical_data: List[Dict]
     ) -> Dict[str, Any]:
-        """Extract features for trend prediction"""        
+        """Extract features for trend prediction"""
+        
         current_time = datetime.utcnow()
         
         features = {
@@ -264,7 +276,8 @@ class AITrendPredictor:
         return features
     
     def _prepare_popularity_features(self, features: Dict[str, Any]) -> List[float]:
-        """Prepare features for popularity prediction"""        
+        """Prepare features for popularity prediction"""
+        
         return [
             float(features.get("creator_avg_popularity", 0)),
             float(features.get("creator_upload_frequency", 0)),
@@ -279,7 +292,8 @@ class AITrendPredictor:
         ]
     
     def _prepare_timing_features(self, features: Dict[str, Any]) -> List[float]:
-        """Prepare features for timing prediction"""        
+        """Prepare features for timing prediction"""
+        
         return [
             float(features.get("creator_upload_frequency", 0)),
             float(features.get("upload_hour", 0)),
@@ -291,7 +305,8 @@ class AITrendPredictor:
         ]
     
     def _prepare_revenue_features(self, features: Dict[str, Any]) -> List[float]:
-        """Prepare features for revenue prediction"""        
+        """Prepare features for revenue prediction"""
+        
         return [
             float(features.get("creator_monetization_rate", 0)),
             float(features.get("creator_avg_popularity", 0)),
@@ -303,7 +318,8 @@ class AITrendPredictor:
         ]
     
     def _prepare_viral_features(self, features: Dict[str, Any]) -> List[float]:
-        """Prepare features for viral content prediction"""        
+        """Prepare features for viral content prediction"""
+        
         return [
             float(features.get("creator_avg_popularity", 0)),
             float(features.get("platform_momentum", 0)),
@@ -317,7 +333,8 @@ class AITrendPredictor:
         ]
     
     def _calculate_historical_trend(self, historical_data: List[Dict]) -> float:
-        """Calculate historical trend from data"""        
+        """Calculate historical trend from data"""
+        
         if len(historical_data) < 2:
             return 0.0
         
@@ -347,7 +364,8 @@ class AITrendPredictor:
         return slope
     
     def _calculate_seasonal_factor(self, current_time: datetime) -> float:
-        """Calculate seasonal factor based on time of year"""        
+        """Calculate seasonal factor based on time of year"""
+        
         # Simple seasonal calculation
         day_of_year = current_time.timetuple().tm_yday
         
@@ -360,7 +378,8 @@ class AITrendPredictor:
             return 1.0
     
     def _calculate_platform_momentum(self, historical_data: List[Dict]) -> float:
-        """Calculate platform momentum based on recent activity"""        
+        """Calculate platform momentum based on recent activity"""
+        
         if not historical_data:
             return 0.0
         
@@ -368,7 +387,8 @@ class AITrendPredictor:
         return recent_activity / 5.0 if len(historical_data) >= 5 else recent_activity / len(historical_data)
     
     def _calculate_days_since_last_upload(self, creator_pattern: CreatorBehaviorPattern) -> float:
-        """Calculate days since creator's last upload"""        
+        """Calculate days since creator's last upload"""
+        
         # This would be calculated from actual data
         # For now, return based on upload frequency
         if creator_pattern.upload_frequency > 0:
@@ -377,7 +397,8 @@ class AITrendPredictor:
 
 
 class CollaborationNetworkAnalyzer:
-    """Analyze creator collaboration networks for warming optimization"""    
+    """Analyze creator collaboration networks for warming optimization"""
+    
     def __init__(self, redis_client: redis.Redis):
         self.redis_client = redis_client
         self.collaboration_graph = nx.Graph()
@@ -389,7 +410,8 @@ class CollaborationNetworkAnalyzer:
         creator_id: str,
         content_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze collaboration patterns for warming decisions"""        
+        """Analyze collaboration patterns for warming decisions"""
+        
         try:
             # Update collaboration graph if needed
             if datetime.utcnow() - self.last_updated > self.update_interval:
@@ -431,7 +453,8 @@ class CollaborationNetworkAnalyzer:
             return {}
     
     async def _update_collaboration_graph(self):
-        """Update collaboration graph from recent data"""        
+        """Update collaboration graph from recent data"""
+        
         try:
             # This would fetch collaboration data from database
             # For now, simulate with Redis data
@@ -464,7 +487,8 @@ class CollaborationNetworkAnalyzer:
         creator_id: str,
         content_metadata: Dict[str, Any]
     ) -> float:
-        """Calculate potential for collaboration based on content and network"""        
+        """Calculate potential for collaboration based on content and network"""
+        
         try:
             if creator_id not in self.collaboration_graph:
                 return 0.0
@@ -497,7 +521,8 @@ class CollaborationNetworkAnalyzer:
         creator_id: str,
         collaborators: List[str]
     ) -> List[str]:
-        """Generate warming recommendations based on collaboration network"""        
+        """Generate warming recommendations based on collaboration network"""
+        
         recommendations = []
         
         try:
@@ -521,7 +546,8 @@ class CollaborationNetworkAnalyzer:
 
 
 class GeographicWarmingOptimizer:
-    """Geographic optimization for global content distribution warming"""    
+    """Geographic optimization for global content distribution warming"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.regional_preferences: Dict[str, Dict] = {}
@@ -531,7 +557,8 @@ class GeographicWarmingOptimizer:
         self._initialize_geographic_data()
     
     def _initialize_geographic_data(self):
-        """Initialize geographic preferences and timezone patterns"""        
+        """Initialize geographic preferences and timezone patterns"""
+        
         # Regional content preferences (example data)
         self.regional_preferences = {
             "north_america": {
@@ -567,7 +594,8 @@ class GeographicWarmingOptimizer:
         creator_location: str,
         target_regions: List[str]
     ) -> Dict[str, Any]:
-        """Optimize warming strategy based on geographic factors"""        
+        """Optimize warming strategy based on geographic factors"""
+        
         try:
             optimization_plan = {
                 "priority_regions": [],
@@ -630,7 +658,8 @@ class GeographicWarmingOptimizer:
             return {}
     
     async def _calculate_proximity_bonus(self, creator_location: str, target_region: str) -> float:
-        """Calculate proximity bonus for geographic warming"""        
+        """Calculate proximity bonus for geographic warming"""
+        
         try:
             # Simplified proximity calculation
             # In practice, this would use geolocation data
@@ -661,7 +690,8 @@ class CacheWarmingStrategies:
 
 
 class ContentCategory(Enum):
-    """Content categories for warming strategies"""    TRENDING = "trending"
+    """Content categories for warming strategies"""
+    TRENDING = "trending"
     POPULAR = "popular"
     NEW_RELEASE = "new_release"
     SEASONAL = "seasonal"
@@ -672,7 +702,8 @@ class ContentCategory(Enum):
 
 @dataclass
 class WarmingTarget:
-    """Cache warming target specification"""    content_id: str
+    """Cache warming target specification"""
+    content_id: str
     content_type: ContentType
     priority: WarmingPriority
     category: ContentCategory
@@ -686,7 +717,8 @@ class WarmingTarget:
 
 @dataclass
 class WarmingSession:
-    """Cache warming session information"""    session_id: str
+    """Cache warming session information"""
+    session_id: str
     strategy: WarmingStrategy
     started_at: datetime
     completed_at: Optional[datetime] = None
@@ -701,7 +733,8 @@ class WarmingSession:
 
 @dataclass
 class UserAccessPattern:
-    """User access pattern analysis"""    user_id: str
+    """User access pattern analysis"""
+    user_id: str
     content_preferences: Dict[ContentType, float]
     access_times: List[datetime]
     geographic_location: Optional[str] = None
@@ -711,19 +744,23 @@ class UserAccessPattern:
 
 
 class CacheWarmingStrategies:
-    """    Enterprise cache warming strategies manager with AI-driven optimization,
+    """
+    Enterprise cache warming strategies manager with AI-driven optimization,
     predictive analytics, and intelligent resource management.
-    """    def __init__(
+    """
+    def __init__(
         self,
         config: CacheConfiguration,
         metrics_collector: CacheMetricsCollector
     ):
-        """        Initialize cache warming strategies manager.
+        """
+        Initialize cache warming strategies manager.
         
         Args:
             config: Cache configuration instance
             metrics_collector: Metrics collection service
-        """        self.config = config
+        """
+        self.config = config
         self.metrics = metrics_collector
         self.logger = logging.getLogger(__name__)
         
@@ -773,7 +810,8 @@ class CacheWarmingStrategies:
         }
 
     async def initialize(self) -> None:
-        """Initialize cache warming strategies manager"""        try:
+        """Initialize cache warming strategies manager"""
+        try:
             # Start background tasks
             self._warming_task = asyncio.create_task(self._warming_processor())
             self._analysis_task = asyncio.create_task(self._analysis_processor())
@@ -785,7 +823,8 @@ class CacheWarmingStrategies:
             raise
 
     async def shutdown(self) -> None:
-        """Shutdown cache warming strategies manager"""        try:
+        """Shutdown cache warming strategies manager"""
+        try:
             self._shutdown_event.set()
             
             # Stop background tasks
@@ -811,7 +850,8 @@ class CacheWarmingStrategies:
         max_targets: int = 1000,
         strategy: WarmingStrategy = WarmingStrategy.AI_PREDICTIVE
     ) -> str:
-        """        Start predictive cache warming session.
+        """
+        Start predictive cache warming session.
         
         Args:
             time_horizon_hours: Hours to predict into future
@@ -820,7 +860,8 @@ class CacheWarmingStrategies:
             
         Returns:
             str: Session ID for tracking
-        """        try:
+        """
+        try:
             session_id = f"warming_{int(time.time())}_{strategy.value}"
             
             # Generate warming targets based on strategy
@@ -864,7 +905,8 @@ class CacheWarmingStrategies:
         content_types: Optional[Set[ContentType]] = None,
         min_access_count: int = 10
     ) -> str:
-        """        Warm cache based on content popularity.
+        """
+        Warm cache based on content popularity.
         
         Args:
             top_percentage: Percentage of top content to warm
@@ -873,7 +915,8 @@ class CacheWarmingStrategies:
             
         Returns:
             str: Session ID for tracking
-        """        try:
+        """
+        try:
             # Analyze content popularity
             popular_content = await self._analyze_content_popularity(
                 top_percentage=top_percentage,
@@ -912,7 +955,8 @@ class CacheWarmingStrategies:
         user_ids: Optional[List[str]] = None,
         prediction_accuracy_threshold: float = 0.7
     ) -> str:
-        """        Warm cache based on user behavior patterns.
+        """
+        Warm cache based on user behavior patterns.
         
         Args:
             user_ids: Specific users to analyze, None for all users
@@ -920,7 +964,8 @@ class CacheWarmingStrategies:
             
         Returns:
             str: Session ID for tracking
-        """        try:
+        """
+        try:
             # Analyze user behavior patterns
             behavior_predictions = await self._analyze_user_behavior_patterns(
                 user_ids=user_ids,
@@ -960,7 +1005,8 @@ class CacheWarmingStrategies:
         time_windows: Optional[List[Tuple[int, int]]] = None,
         seasonal_adjustment: bool = True
     ) -> str:
-        """        Warm cache based on time-based access patterns.
+        """
+        Warm cache based on time-based access patterns.
         
         Args:
             time_windows: Specific time windows (hour ranges) to focus on
@@ -968,7 +1014,8 @@ class CacheWarmingStrategies:
             
         Returns:
             str: Session ID for tracking
-        """        try:
+        """
+        try:
             # Analyze time-based patterns
             time_patterns = await self._analyze_time_based_patterns(
                 time_windows=time_windows,
@@ -1008,7 +1055,8 @@ class CacheWarmingStrategies:
         priority_rules: Dict[str, float],
         content_filters: Optional[Dict[str, Any]] = None
     ) -> str:
-        """        Warm cache based on business priority rules.
+        """
+        Warm cache based on business priority rules.
         
         Args:
             priority_rules: Business rules for content prioritization
@@ -1016,7 +1064,8 @@ class CacheWarmingStrategies:
             
         Returns:
             str: Session ID for tracking
-        """        try:
+        """
+        try:
             # Apply business priority rules
             prioritized_content = await self._apply_business_priority_rules(
                 priority_rules=priority_rules,
@@ -1052,14 +1101,16 @@ class CacheWarmingStrategies:
             return ""
 
     async def get_warming_session_status(self, session_id: str) -> Optional[Dict[str, Any]]:
-        """        Get status of warming session.
+        """
+        Get status of warming session.
         
         Args:
             session_id: Session ID to check
             
         Returns:
             Dict containing session status or None if not found
-        """        try:
+        """
+        try:
             session = self._active_sessions.get(session_id)
             if not session:
                 # Check history
@@ -1108,14 +1159,16 @@ class CacheWarmingStrategies:
             return None
 
     async def cancel_warming_session(self, session_id: str) -> bool:
-        """        Cancel active warming session.
+        """
+        Cancel active warming session.
         
         Args:
             session_id: Session ID to cancel
             
         Returns:
             bool: True if session cancelled successfully
-        """        try:
+        """
+        try:
             if session_id not in self._active_sessions:
                 self.logger.warning(f"Warming session not found: {session_id}")
                 return False
@@ -1149,7 +1202,8 @@ class CacheWarmingStrategies:
         time_horizon_hours: int = 24,
         max_recommendations: int = 100
     ) -> List[Dict[str, Any]]:
-        """        Get AI-driven warming recommendations.
+        """
+        Get AI-driven warming recommendations.
         
         Args:
             time_horizon_hours: Hours to analyze for recommendations
@@ -1157,7 +1211,8 @@ class CacheWarmingStrategies:
             
         Returns:
             List of warming recommendations
-        """        try:
+        """
+        try:
             recommendations = []
             
             # Analyze different warming strategies
@@ -1188,11 +1243,13 @@ class CacheWarmingStrategies:
             return []
 
     async def get_warming_statistics(self) -> Dict[str, Any]:
-        """        Get comprehensive warming statistics.
+        """
+        Get comprehensive warming statistics.
         
         Returns:
             Dict containing warming statistics
-        """        try:
+        """
+        try:
             # Calculate overall success rate
             total_sessions = len(self._warming_history) + len(self._active_sessions)
             if total_sessions > 0:
@@ -1246,7 +1303,8 @@ class CacheWarmingStrategies:
         time_horizon_hours: int,
         max_targets: int
     ) -> List[WarmingTarget]:
-        """Generate warming targets based on strategy"""        targets = []
+        """Generate warming targets based on strategy"""
+        targets = []
         
         try:
             if strategy == WarmingStrategy.AI_PREDICTIVE:
@@ -1271,7 +1329,8 @@ class CacheWarmingStrategies:
         time_horizon_hours: int,
         max_targets: int
     ) -> List[WarmingTarget]:
-        """Generate AI-driven predictive warming targets"""        targets = []
+        """Generate AI-driven predictive warming targets"""
+        targets = []
         
         try:
             # Simulate AI prediction logic
@@ -1312,7 +1371,8 @@ class CacheWarmingStrategies:
         targets: List[WarmingTarget],
         strategy: WarmingStrategy
     ) -> str:
-        """Start a new warming session"""        try:
+        """Start a new warming session"""
+        try:
             session_id = f"warming_{int(time.time())}_{strategy.value}"
             
             session = WarmingSession(
@@ -1341,7 +1401,8 @@ class CacheWarmingStrategies:
             return ""
 
     async def _warming_processor(self) -> None:
-        """Background task for processing warming queue"""        while not self._shutdown_event.is_set():
+        """Background task for processing warming queue"""
+        while not self._shutdown_event.is_set():
             try:
                 if (self._warming_queue and 
                     self._current_warming_count < self._max_concurrent_warmings):
@@ -1359,7 +1420,8 @@ class CacheWarmingStrategies:
                 await asyncio.sleep(30)
 
     async def _process_warming_target(self, target: WarmingTarget) -> None:
-        """Process individual warming target"""        try:
+        """Process individual warming target"""
+        try:
             self._current_warming_count += 1
             start_time = time.time()
             
@@ -1408,7 +1470,8 @@ class CacheWarmingStrategies:
             self._current_warming_count -= 1
 
     async def _analysis_processor(self) -> None:
-        """Background task for analyzing patterns and updating models"""        while not self._shutdown_event.is_set():
+        """Background task for analyzing patterns and updating models"""
+        while not self._shutdown_event.is_set():
             try:
                 # Update content popularity scores
                 await self._update_content_popularity()
@@ -1426,7 +1489,8 @@ class CacheWarmingStrategies:
                 await asyncio.sleep(600)
 
     async def _update_content_popularity(self) -> None:
-        """Update content popularity scores"""        try:
+        """Update content popularity scores"""
+        try:
             # Simulate popularity calculation
             # In real implementation, this would analyze access logs
             for content_id in list(self._content_popularity.keys()):
@@ -1441,7 +1505,8 @@ class CacheWarmingStrategies:
             self.logger.error(f"Error updating content popularity: {str(e)}")
 
     def record_content_access(self, content_id: str, user_id: Optional[str] = None) -> None:
-        """Record content access for analysis"""        try:
+        """Record content access for analysis"""
+        try:
             # Update access patterns
             self._access_patterns[content_id].append(datetime.now())
             

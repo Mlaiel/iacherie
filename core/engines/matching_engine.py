@@ -5,7 +5,8 @@ Type: Engine Core - IA-Influencer-Agent
 Responsabilité: Fonctionnalité spécialisée IA-Influencer-Agent
 Technologies: Python, FastAPI, AsyncIO
 ================================================================================
-"""from abc import ABC, abstractmethod
+"""
+from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional, Union, Tuple
 import logging
 import asyncio
@@ -16,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 
 class MatchingEngineStatus(Enum):
-    """États du moteur MatchingEngine"""    IDLE = "idle"
+    """États du moteur MatchingEngine"""
+    IDLE = "idle"
     PROCESSING = "processing"
     ERROR = "error"
     READY = "ready"
@@ -24,7 +26,8 @@ class MatchingEngineStatus(Enum):
 
 @dataclass
 class MatchingEngineConfig:
-    """Configuration du moteur MatchingEngine"""    enabled: bool = True
+    """Configuration du moteur MatchingEngine"""
+    enabled: bool = True
     max_workers: int = 4
     timeout_seconds: int = 30
     retry_attempts: int = 3
@@ -32,7 +35,8 @@ class MatchingEngineConfig:
 
 
 class MatchingEngine(ABC):
-    """    🚀 Moteur MatchingEngine - IA-Influencer-Agent
+    """
+    🚀 Moteur MatchingEngine - IA-Influencer-Agent
     
     Responsabilité:
     Fonctionnalité spécialisée IA-Influencer-Agent
@@ -46,7 +50,8 @@ class MatchingEngine(ABC):
     - Monitoring intégré des performances
     - Configuration flexible par environnement
     - Logging structuré pour observabilité
-    """    
+    """
+    
     def __init__(self, config: MatchingEngineConfig = None):
         self.config = config or MatchingEngineConfig()
         self.status = MatchingEngineStatus.IDLE
@@ -55,37 +60,45 @@ class MatchingEngine(ABC):
     
     @abstractmethod
     async def initialize(self) -> bool:
-        """        Initialise le moteur avec ses dépendances
+        """
+        Initialise le moteur avec ses dépendances
         
         Returns:
             bool: True si initialisation réussie
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def process(self, data: Any) -> Any:
-        """        Traite les données selon la logique métier du moteur
+        """
+        Traite les données selon la logique métier du moteur
         
         Args:
             data: Données à traiter
             
         Returns:
             Any: Résultat du traitement
-        """        pass
+        """
+        pass
     
     @abstractmethod
     async def shutdown(self) -> bool:
-        """        Arrêt propre du moteur
+        """
+        Arrêt propre du moteur
         
         Returns:
             bool: True si arrêt réussi
-        """        pass
+        """
+        pass
     
     async def health_check(self) -> Dict[str, Any]:
-        """        Vérifie l'état de santé du moteur
+        """
+        Vérifie l'état de santé du moteur
         
         Returns:
             Dict: Métriques de santé
-        """        return {
+        """
+        return {
             "status": self.status.value,
             "config": self.config.__dict__,
             "metrics": self._performance_metrics,
@@ -93,11 +106,13 @@ class MatchingEngine(ABC):
         }
     
     def get_metrics(self) -> Dict[str, Any]:
-        """        Retourne les métriques de performance
+        """
+        Retourne les métriques de performance
         
         Returns:
             Dict: Métriques actuelles
-        """        return self._performance_metrics.copy()
+        """
+        return self._performance_metrics.copy()
 
 
 # Instance globale pour l'injection de dépendances
@@ -105,11 +120,13 @@ matching_engine = None
 
 
 def get_matching_engine() -> MatchingEngine:
-    """    Factory function pour obtenir l'instance du moteur
+    """
+    Factory function pour obtenir l'instance du moteur
     
     Returns:
         MatchingEngine: Instance du moteur
-    """    global matching_engine
+    """
+    global matching_engine
     if matching_engine is None:
         # Ici vous devrez implémenter la logique d'instanciation
         # selon vos besoins spécifiques

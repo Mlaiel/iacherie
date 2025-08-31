@@ -6,7 +6,8 @@ and monetization services.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Callable
@@ -29,14 +30,16 @@ from .deployment_recorder import DeploymentRecorder
 
 
 class DeploymentStrategy(Enum):
-    """Deployment strategy types"""    BLUE_GREEN = "blue_green"
+    """Deployment strategy types"""
+    BLUE_GREEN = "blue_green"
     ROLLING = "rolling"
     CANARY = "canary"
     RECREATE = "recreate"
 
 
 class DeploymentPhase(Enum):
-    """Deployment phase status"""    PENDING = "pending"
+    """Deployment phase status"""
+    PENDING = "pending"
     PREPARING = "preparing"
     DEPLOYING = "deploying"
     VALIDATING = "validating"
@@ -48,7 +51,8 @@ class DeploymentPhase(Enum):
 
 @dataclass
 class WorkflowStep:
-    """Individual workflow step configuration"""    name: str
+    """Individual workflow step configuration"""
+    name: str
     action: Callable
     dependencies: List[str] = field(default_factory=list)
     timeout: int = 300
@@ -61,7 +65,8 @@ class WorkflowStep:
 
 @dataclass
 class DeploymentWorkflow:
-    """Complete deployment workflow definition"""    workflow_id: str
+    """Complete deployment workflow definition"""
+    workflow_id: str
     name: str
     strategy: DeploymentStrategy
     environment: str
@@ -76,11 +81,13 @@ class DeploymentWorkflow:
 
 
 class WorkflowOrchestrator(BaseComponent):
-    """    Enterprise-grade workflow orchestrator for deployment automation.
+    """
+    Enterprise-grade workflow orchestrator for deployment automation.
     
     Manages complex deployment workflows with support for multiple strategies,
     parallel execution, dependency management, and automated rollbacks.
-    """    def __init__(self, config: Dict[str, Any]):
+    """
+    def __init__(self, config: Dict[str, Any]):
         super().__init__()
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -116,7 +123,8 @@ class WorkflowOrchestrator(BaseComponent):
         workflow: DeploymentWorkflow,
         context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Execute a complete deployment workflow.
+        """
+        Execute a complete deployment workflow.
         
         Args:
             workflow: Deployment workflow definition
@@ -124,7 +132,8 @@ class WorkflowOrchestrator(BaseComponent):
             
         Returns:
             Workflow execution results
-        """        workflow_id = workflow.workflow_id
+        """
+        workflow_id = workflow.workflow_id
         self.active_workflows[workflow_id] = workflow
         
         execution_context = {
@@ -218,7 +227,8 @@ class WorkflowOrchestrator(BaseComponent):
         workflow: DeploymentWorkflow, 
         context: Dict[str, Any]
     ) -> None:
-        """Prepare deployment environment"""        self.logger.info(f"Preparing environment for workflow: {workflow.workflow_id}")
+        """Prepare deployment environment"""
+        self.logger.info(f"Preparing environment for workflow: {workflow.workflow_id}")
         
         # Provision infrastructure resources
         provisioning_result = await self.environment_provisioner.provision_environment(
@@ -252,7 +262,8 @@ class WorkflowOrchestrator(BaseComponent):
         workflow: DeploymentWorkflow, 
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute deployment using specified strategy"""        strategy_handler = self.strategy_handlers.get(workflow.strategy)
+        """Execute deployment using specified strategy"""
+        strategy_handler = self.strategy_handlers.get(workflow.strategy)
         
         if not strategy_handler:
             raise ValueError(f"Unsupported deployment strategy: {workflow.strategy}")
@@ -266,7 +277,8 @@ class WorkflowOrchestrator(BaseComponent):
         workflow: DeploymentWorkflow, 
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Handle blue-green deployment strategy"""        results = {}
+        """Handle blue-green deployment strategy"""
+        results = {}
         
         # Deploy to green environment
         green_deployment = await self.service_deployer.deploy_services(
@@ -311,7 +323,8 @@ class WorkflowOrchestrator(BaseComponent):
         workflow: DeploymentWorkflow, 
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Handle rolling deployment strategy"""        results = {}
+        """Handle rolling deployment strategy"""
+        results = {}
         
         # Get current service instances
         instances = await self.cluster_manager.get_service_instances(
@@ -353,7 +366,8 @@ class WorkflowOrchestrator(BaseComponent):
         workflow: DeploymentWorkflow, 
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Handle canary deployment strategy"""        results = {}
+        """Handle canary deployment strategy"""
+        results = {}
         
         # Deploy canary version
         canary_deployment = await self.service_deployer.deploy_canary_services(
@@ -397,7 +411,8 @@ class WorkflowOrchestrator(BaseComponent):
         workflow: DeploymentWorkflow, 
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Handle recreate deployment strategy"""        results = {}
+        """Handle recreate deployment strategy"""
+        results = {}
         
         # Create rollback point before destruction
         await self.rollback_manager.create_rollback_point(
@@ -431,7 +446,8 @@ class WorkflowOrchestrator(BaseComponent):
         workflow: DeploymentWorkflow, 
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate deployment success"""        validation_results = {}
+        """Validate deployment success"""
+        validation_results = {}
         
         # Health validation
         health_validation = await self.health_validator.validate_services(
@@ -474,7 +490,8 @@ class WorkflowOrchestrator(BaseComponent):
         workflow: DeploymentWorkflow, 
         context: Dict[str, Any]
     ) -> None:
-        """Promote deployment to production traffic"""        if workflow.strategy == DeploymentStrategy.BLUE_GREEN:
+        """Promote deployment to production traffic"""
+        if workflow.strategy == DeploymentStrategy.BLUE_GREEN:
             # Update load balancer configuration
             await self.cluster_manager.update_load_balancer(
                 workflow.environment,
@@ -495,7 +512,8 @@ class WorkflowOrchestrator(BaseComponent):
         context: Dict[str, Any],
         reason: str
     ) -> None:
-        """Trigger automated rollback"""        self.logger.warning(f"Triggering rollback for workflow {workflow.workflow_id}: {reason}")
+        """Trigger automated rollback"""
+        self.logger.warning(f"Triggering rollback for workflow {workflow.workflow_id}: {reason}")
         
         context['phase'] = DeploymentPhase.ROLLED_BACK
         context['rollback_reason'] = reason
@@ -526,7 +544,8 @@ class WorkflowOrchestrator(BaseComponent):
         context: Dict[str, Any],
         hook_type: str
     ) -> None:
-        """Execute workflow hooks"""        if not hooks:
+        """Execute workflow hooks"""
+        if not hooks:
             return
             
         self.logger.info(f"Executing {len(hooks)} {hook_type}s")
@@ -544,7 +563,8 @@ class WorkflowOrchestrator(BaseComponent):
         metrics: Dict[str, Any], 
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze canary deployment performance"""        analysis = {
+        """Analyze canary deployment performance"""
+        analysis = {
             'successful': True,
             'issues': []
         }
@@ -570,10 +590,12 @@ class WorkflowOrchestrator(BaseComponent):
         return analysis
 
     async def get_workflow_status(self, workflow_id: str) -> Optional[Dict[str, Any]]:
-        """Get current workflow status"""        return self.workflow_states.get(workflow_id)
+        """Get current workflow status"""
+        return self.workflow_states.get(workflow_id)
 
     async def cancel_workflow(self, workflow_id: str, reason: str = "") -> bool:
-        """Cancel active workflow"""        if workflow_id not in self.active_workflows:
+        """Cancel active workflow"""
+        if workflow_id not in self.active_workflows:
             return False
             
         workflow = self.active_workflows[workflow_id]
@@ -597,7 +619,8 @@ class WorkflowOrchestrator(BaseComponent):
         return True
 
     async def list_active_workflows(self) -> List[Dict[str, Any]]:
-        """List all active workflows"""        return [
+        """List all active workflows"""
+        return [
             {
                 'workflow_id': workflow.workflow_id,
                 'name': workflow.name,
@@ -615,11 +638,13 @@ class WorkflowOrchestrator(BaseComponent):
         environment: str,
         creator_tier: str = "standard"
     ) -> str:
-        """        Create specialized workflow for creator onboarding.
+        """
+        Create specialized workflow for creator onboarding.
         
         This workflow orchestrates the deployment of all services needed
         for a specific type of creator (musician, video creator, photographer, etc.)
-        """        workflow_id = f"creator_onboarding_{creator_type}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
+        """
+        workflow_id = f"creator_onboarding_{creator_type}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
         # Define services based on creator type
         creator_services = self._get_creator_services(creator_type, creator_tier)
@@ -707,7 +732,8 @@ class WorkflowOrchestrator(BaseComponent):
         return await self.execute_workflow(workflow)
 
     def _get_creator_services(self, creator_type: str, creator_tier: str) -> List[str]:
-        """Get required services for specific creator type"""        base_services = [
+        """Get required services for specific creator type"""
+        base_services = [
             "api_gateway",
             "ai_agent", 
             "content_protection",
@@ -744,10 +770,12 @@ class WorkflowOrchestrator(BaseComponent):
         environment: str,
         urgency: str = "normal"
     ) -> str:
-        """        Create workflow for deploying content protection systems.
+        """
+        Create workflow for deploying content protection systems.
         
         Optimized for rapid deployment when copyright infringement is detected.
-        """        workflow_id = f"content_protection_{urgency}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
+        """
+        workflow_id = f"content_protection_{urgency}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
         # Adjust timeouts based on urgency
         timeouts = {
@@ -808,8 +836,10 @@ class WorkflowOrchestrator(BaseComponent):
         environment: str,
         payment_providers: List[str] = None
     ) -> str:
-        """        Create workflow for deploying monetization and revenue tracking systems.
-        """        workflow_id = f"monetization_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
+        """
+        Create workflow for deploying monetization and revenue tracking systems.
+        """
+        workflow_id = f"monetization_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
         payment_providers = payment_providers or ["stripe", "wise", "paypal"]
         
@@ -864,7 +894,8 @@ class WorkflowOrchestrator(BaseComponent):
         return await self.execute_workflow(workflow)
 
     async def cleanup_completed_workflows(self, max_age_hours: int = 24) -> int:
-        """Cleanup old completed workflow states"""        cutoff_time = datetime.utcnow() - timedelta(hours=max_age_hours)
+        """Cleanup old completed workflow states"""
+        cutoff_time = datetime.utcnow() - timedelta(hours=max_age_hours)
         cleaned_count = 0
         
         workflows_to_remove = []

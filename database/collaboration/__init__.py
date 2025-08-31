@@ -9,7 +9,8 @@ Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Micros
 
 Copyright © 2024 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use is strictly prohibited.
-"""from .collaboration_projects import (
+"""
+from .collaboration_projects import (
     CollaborationProject,
     ProjectStatus,
     ProjectType,
@@ -409,11 +410,13 @@ ENTERPRISE_FEATURES = [
 ]
 
 def get_module_info() -> dict:
-    """    Get comprehensive module information.
+    """
+    Get comprehensive module information.
     
     Returns:
         Module information dictionary
-    """    return {
+    """
+    return {
         'name': 'Collaboration Database Module',
         'version': __version__,
         'author': __author__,
@@ -428,11 +431,13 @@ def get_module_info() -> dict:
     }
 
 def get_collaboration_statistics() -> dict:
-    """    Get collaboration module statistics.
+    """
+    Get collaboration module statistics.
     
     Returns:
         Module statistics
-    """    return {
+    """
+    return {
         'total_database_models': 25,
         'total_manager_classes': 12,
         'total_enum_types': 20,

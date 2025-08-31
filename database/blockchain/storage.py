@@ -22,7 +22,8 @@ Copyright: All rights reserved. Unauthorized use prohibited.
 WARNING: This code is proprietary and confidential. Any unauthorized use, modification,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, List, Any, Optional, Union, Tuple, AsyncGenerator
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple, AsyncGenerator
 from dataclasses import dataclass, field
 from enum import Enum
 import json
@@ -48,14 +49,16 @@ from PIL import Image
 logger = logging.getLogger(__name__)
 
 class StorageProvider(Enum):
-    """Supported decentralized storage providers."""    IPFS = "ipfs"
+    """Supported decentralized storage providers."""
+    IPFS = "ipfs"
     FILECOIN = "filecoin"
     ARWEAVE = "arweave"
     STORJ = "storj"
     SIA = "sia"
 
 class ContentType(Enum):
-    """Types of content stored in decentralized storage."""    FINGERPRINT = "fingerprint"
+    """Types of content stored in decentralized storage."""
+    FINGERPRINT = "fingerprint"
     METADATA = "metadata"
     EVIDENCE = "evidence"
     ORIGINAL_CONTENT = "original_content"
@@ -63,7 +66,8 @@ class ContentType(Enum):
     PREVIEW = "preview"
 
 class StorageStatus(Enum):
-    """Status of storage operations."""    UPLOADING = "uploading"
+    """Status of storage operations."""
+    UPLOADING = "uploading"
     STORED = "stored"
     PINNED = "pinned"
     REPLICATED = "replicated"
@@ -72,7 +76,8 @@ class StorageStatus(Enum):
 
 @dataclass
 class StorageMetadata:
-    """Metadata for stored content."""    content_id: str
+    """Metadata for stored content."""
+    content_id: str
     original_filename: str
     content_type: ContentType
     mime_type: str
@@ -92,7 +97,8 @@ class StorageMetadata:
 
 @dataclass
 class StorageConfig:
-    """Configuration for storage providers."""    provider: StorageProvider
+    """Configuration for storage providers."""
+    provider: StorageProvider
     api_endpoint: str
     gateway_url: str
     api_key: Optional[str] = None
@@ -103,16 +109,20 @@ class StorageConfig:
     replication_factor: int = 3
 
 class EncryptionManager:
-    """Manager for content encryption and decryption."""    
+    """Manager for content encryption and decryption."""
+    
     def __init__(self):
-        """Initialize encryption manager."""        self.keys = {}
+        """Initialize encryption manager."""
+        self.keys = {}
         
     def generate_key(self) -> str:
-        """Generate a new encryption key."""        key = Fernet.generate_key()
+        """Generate a new encryption key."""
+        key = Fernet.generate_key()
         return key.decode('utf-8')
         
     def encrypt_content(self, content: bytes, key: str) -> bytes:
-        """        Encrypt content with the provided key.
+        """
+        Encrypt content with the provided key.
         
         Args:
             content: Raw content bytes
@@ -120,7 +130,8 @@ class EncryptionManager:
             
         Returns:
             Encrypted content bytes
-        """        try:
+        """
+        try:
             f = Fernet(key.encode('utf-8'))
             encrypted_content = f.encrypt(content)
             return encrypted_content
@@ -130,7 +141,8 @@ class EncryptionManager:
             raise
             
     def decrypt_content(self, encrypted_content: bytes, key: str) -> bytes:
-        """        Decrypt content with the provided key.
+        """
+        Decrypt content with the provided key.
         
         Args:
             encrypted_content: Encrypted content bytes
@@ -138,7 +150,8 @@ class EncryptionManager:
             
         Returns:
             Decrypted content bytes
-        """        try:
+        """
+        try:
             f = Fernet(key.encode('utf-8'))
             decrypted_content = f.decrypt(encrypted_content)
             return decrypted_content
@@ -148,13 +161,16 @@ class EncryptionManager:
             raise
 
 class IPFSConnector:
-    """IPFS connector for decentralized storage operations."""    
+    """IPFS connector for decentralized storage operations."""
+    
     def __init__(self, config: StorageConfig):
-        """        Initialize IPFS connector.
+        """
+        Initialize IPFS connector.
         
         Args:
             config: IPFS configuration
-        """        self.config = config
+        """
+        self.config = config
         self.api_base = config.api_endpoint
         self.gateway_base = config.gateway_url
         
@@ -164,7 +180,8 @@ class IPFSConnector:
         filename: str,
         pin: bool = True
     ) -> Tuple[str, str]:
-        """        Upload content to IPFS.
+        """
+        Upload content to IPFS.
         
         Args:
             content: Content bytes to upload
@@ -173,7 +190,8 @@ class IPFSConnector:
             
         Returns:
             Tuple of (IPFS hash, gateway URL)
-        """        try:
+        """
+        try:
             # Prepare multipart form data
             data = aiohttp.FormData()
             data.add_field('file', content, filename=filename)
@@ -201,14 +219,16 @@ class IPFSConnector:
             raise
             
     async def download_content(self, ipfs_hash: str) -> bytes:
-        """        Download content from IPFS.
+        """
+        Download content from IPFS.
         
         Args:
             ipfs_hash: IPFS hash of the content
             
         Returns:
             Content bytes
-        """        try:
+        """
+        try:
             url = urljoin(self.gateway_base, ipfs_hash)
             
             async with aiohttp.ClientSession() as session:
@@ -223,14 +243,16 @@ class IPFSConnector:
             raise
             
     async def pin_content(self, ipfs_hash: str) -> bool:
-        """        Pin content to prevent garbage collection.
+        """
+        Pin content to prevent garbage collection.
         
         Args:
             ipfs_hash: IPFS hash to pin
             
         Returns:
             True if pinning successful
-        """        try:
+        """
+        try:
             async with aiohttp.ClientSession() as session:
                 async with session.post(
                     f"{self.api_base}/api/v0/pin/add",
@@ -246,14 +268,16 @@ class IPFSConnector:
             return False
             
     async def unpin_content(self, ipfs_hash: str) -> bool:
-        """        Unpin content to allow garbage collection.
+        """
+        Unpin content to allow garbage collection.
         
         Args:
             ipfs_hash: IPFS hash to unpin
             
         Returns:
             True if unpinning successful
-        """        try:
+        """
+        try:
             async with aiohttp.ClientSession() as session:
                 async with session.post(
                     f"{self.api_base}/api/v0/pin/rm",
@@ -269,24 +293,29 @@ class IPFSConnector:
             return False
 
 class DecentralizedStorageManager:
-    """    Enterprise decentralized storage manager for the IA Influencer Agent platform.
+    """
+    Enterprise decentralized storage manager for the IA Influencer Agent platform.
     
     Handles content upload, storage, retrieval, and lifecycle management across
     multiple decentralized storage providers with encryption and redundancy.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialize decentralized storage manager.
+        """
+        Initialize decentralized storage manager.
         
         Args:
             config: Configuration for storage providers and settings
-        """        self.config = config
+        """
+        self.config = config
         self.encryption_manager = EncryptionManager()
         self.storage_metadata = {}  # In production, this would be in database
         self.connectors = {}
         self._initialize_connectors()
         
     def _initialize_connectors(self) -> None:
-        """Initialize connectors for configured storage providers."""        storage_configs = self.config.get('storage_providers', {})
+        """Initialize connectors for configured storage providers."""
+        storage_configs = self.config.get('storage_providers', {})
         
         for provider_name, provider_config in storage_configs.items():
             try:
@@ -312,7 +341,8 @@ class DecentralizedStorageManager:
         encrypt: bool = True,
         pin: bool = True
     ) -> StorageMetadata:
-        """        Store content in decentralized storage.
+        """
+        Store content in decentralized storage.
         
         Args:
             content: Content bytes to store
@@ -325,7 +355,8 @@ class DecentralizedStorageManager:
             
         Returns:
             Storage metadata with access information
-        """        try:
+        """
+        try:
             if not provider:
                 provider = StorageProvider.IPFS
                 
@@ -385,7 +416,8 @@ class DecentralizedStorageManager:
         content_id: str,
         requester_address: str
     ) -> Tuple[bytes, StorageMetadata]:
-        """        Retrieve content from decentralized storage.
+        """
+        Retrieve content from decentralized storage.
         
         Args:
             content_id: Unique content identifier
@@ -393,7 +425,8 @@ class DecentralizedStorageManager:
             
         Returns:
             Tuple of (content bytes, storage metadata)
-        """        try:
+        """
+        try:
             metadata = self.storage_metadata.get(content_id)
             if not metadata:
                 raise ValueError(f"Content {content_id} not found")
@@ -434,7 +467,8 @@ class DecentralizedStorageManager:
         content_hash: str,
         creator_address: str
     ) -> StorageMetadata:
-        """        Store content fingerprint in decentralized storage.
+        """
+        Store content fingerprint in decentralized storage.
         
         Args:
             fingerprint_data: Fingerprint data dictionary
@@ -443,7 +477,8 @@ class DecentralizedStorageManager:
             
         Returns:
             Storage metadata for the fingerprint
-        """        try:
+        """
+        try:
             # Serialize fingerprint data
             fingerprint_json = json.dumps(fingerprint_data, indent=2)
             fingerprint_bytes = fingerprint_json.encode('utf-8')
@@ -470,7 +505,8 @@ class DecentralizedStorageManager:
         content_id: str,
         creator_address: str
     ) -> StorageMetadata:
-        """        Store content metadata in decentralized storage.
+        """
+        Store content metadata in decentralized storage.
         
         Args:
             metadata_dict: Metadata dictionary
@@ -479,7 +515,8 @@ class DecentralizedStorageManager:
             
         Returns:
             Storage metadata for the metadata file
-        """        try:
+        """
+        try:
             # Serialize metadata
             metadata_json = json.dumps(metadata_dict, indent=2)
             metadata_bytes = metadata_json.encode('utf-8')
@@ -504,14 +541,16 @@ class DecentralizedStorageManager:
         self,
         content_list: List[Tuple[bytes, str, ContentType, str]]
     ) -> List[StorageMetadata]:
-        """        Store multiple content items in batch.
+        """
+        Store multiple content items in batch.
         
         Args:
             content_list: List of (content_bytes, filename, content_type, creator_address) tuples
             
         Returns:
             List of storage metadata for each item
-        """        try:
+        """
+        try:
             tasks = []
             for content, filename, content_type, creator_address in content_list:
                 task = self.store_content(
@@ -543,7 +582,8 @@ class DecentralizedStorageManager:
         content_id: str,
         target_providers: List[StorageProvider]
     ) -> Dict[StorageProvider, StorageMetadata]:
-        """        Replicate content across multiple storage providers.
+        """
+        Replicate content across multiple storage providers.
         
         Args:
             content_id: Content to replicate
@@ -551,7 +591,8 @@ class DecentralizedStorageManager:
             
         Returns:
             Dictionary mapping providers to storage metadata
-        """        try:
+        """
+        try:
             # Get original content
             original_metadata = self.storage_metadata.get(content_id)
             if not original_metadata:
@@ -591,7 +632,8 @@ class DecentralizedStorageManager:
             raise
 
     def grant_access(self, content_id: str, user_address: str) -> bool:
-        """        Grant access permission to content.
+        """
+        Grant access permission to content.
         
         Args:
             content_id: Content identifier
@@ -599,7 +641,8 @@ class DecentralizedStorageManager:
             
         Returns:
             True if permission granted successfully
-        """        try:
+        """
+        try:
             metadata = self.storage_metadata.get(content_id)
             if not metadata:
                 return False
@@ -614,7 +657,8 @@ class DecentralizedStorageManager:
             return False
 
     def revoke_access(self, content_id: str, user_address: str) -> bool:
-        """        Revoke access permission to content.
+        """
+        Revoke access permission to content.
         
         Args:
             content_id: Content identifier
@@ -622,7 +666,8 @@ class DecentralizedStorageManager:
             
         Returns:
             True if permission revoked successfully
-        """        try:
+        """
+        try:
             metadata = self.storage_metadata.get(content_id)
             if not metadata:
                 return False
@@ -637,13 +682,15 @@ class DecentralizedStorageManager:
             return False
 
     def list_content_by_creator(self, creator_address: str) -> List[StorageMetadata]:
-        """List all content stored by a specific creator."""        return [
+        """List all content stored by a specific creator."""
+        return [
             metadata for metadata in self.storage_metadata.values()
             if metadata.creator_address == creator_address
         ]
 
     def get_storage_stats(self) -> Dict[str, Any]:
-        """Get storage statistics."""        total_files = len(self.storage_metadata)
+        """Get storage statistics."""
+        total_files = len(self.storage_metadata)
         total_size = sum(metadata.file_size for metadata in self.storage_metadata.values())
         
         provider_stats = {}

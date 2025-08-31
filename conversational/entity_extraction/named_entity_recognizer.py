@@ -12,7 +12,8 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import pickle
 from typing import Dict, List, Set, Tuple, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -44,7 +45,8 @@ from .entity_extractor import EntityCategory, ExtractedEntity
 
 
 class NERModelType(Enum):
-    """Types of NER models available"""    BERT_BASE = "bert_base"
+    """Types of NER models available"""
+    BERT_BASE = "bert_base"
     BERT_CREATIVE = "bert_creative"
     SPACY_CUSTOM = "spacy_custom"
     TRANSFORMER_ENSEMBLE = "transformer_ensemble"
@@ -52,7 +54,8 @@ class NERModelType(Enum):
 
 
 class LanguageSupport(Enum):
-    """Supported languages for NER"""    ENGLISH = "en"
+    """Supported languages for NER"""
+    ENGLISH = "en"
     GERMAN = "de"
     FRENCH = "fr"
     SPANISH = "es"
@@ -61,7 +64,8 @@ class LanguageSupport(Enum):
 
 @dataclass
 class NERPrediction:
-    """Single NER prediction with confidence and metadata"""    token: str
+    """Single NER prediction with confidence and metadata"""
+    token: str
     label: str
     confidence: float
     start_pos: int
@@ -73,7 +77,8 @@ class NERPrediction:
 
 @dataclass
 class NERModelMetrics:
-    """Performance metrics for NER model"""    precision: float
+    """Performance metrics for NER model"""
+    precision: float
     recall: float
     f1_score: float
     accuracy: float
@@ -84,7 +89,8 @@ class NERModelMetrics:
 
 
 class NamedEntityRecognizer(BaseService):
-    """    Advanced Named Entity Recognition engine with creative industry specialization.
+    """
+    Advanced Named Entity Recognition engine with creative industry specialization.
     
     Features:
     - Multi-model ensemble for maximum accuracy
@@ -94,7 +100,8 @@ class NamedEntityRecognizer(BaseService):
     - Custom entity type training
     - Active learning for continuous improvement
     - Model performance monitoring and A/B testing
-    """    
+    """
+    
     def __init__(self):
         super().__init__()
         self.logger = logging.getLogger(__name__)
@@ -128,7 +135,8 @@ class NamedEntityRecognizer(BaseService):
         self.language_models = {}
         
     async def initialize(self):
-        """Initialize all NER models and resources"""        try:
+        """Initialize all NER models and resources"""
+        try:
             self.logger.info("Initializing NamedEntityRecognizer...")
             
             # Load pre-trained models
@@ -138,7 +146,8 @@ class NamedEntityRecognizer(BaseService):
             await self._load_custom_models()
             
     async def _initialize_ensemble(self):
-        """Initialize ensemble of NER models for maximum accuracy"""        try:
+        """Initialize ensemble of NER models for maximum accuracy"""
+        try:
             self.ensemble_models = {}
             self.model_weights = {}
             
@@ -169,7 +178,8 @@ class NamedEntityRecognizer(BaseService):
             raise
     
     async def _load_bert_creative_model(self):
-        """Load fine-tuned BERT model for creative industry entities"""        try:
+        """Load fine-tuned BERT model for creative industry entities"""
+        try:
             model_name = "bert-base-multilingual-cased"
             
             # Load pre-trained tokenizer and model
@@ -214,7 +224,8 @@ class NamedEntityRecognizer(BaseService):
             raise
     
     async def _load_spacy_custom_model(self):
-        """Load custom spaCy model trained on creative content"""        try:
+        """Load custom spaCy model trained on creative content"""
+        try:
             # Load base spaCy model
             try:
                 self.spacy_model = spacy.load("en_core_web_trf")
@@ -255,7 +266,8 @@ class NamedEntityRecognizer(BaseService):
             raise
     
     async def _load_transformer_ensemble(self):
-        """Load ensemble of transformer models for enhanced accuracy"""        try:
+        """Load ensemble of transformer models for enhanced accuracy"""
+        try:
             self.transformer_models = []
             
             # Load multiple transformer models for ensemble
@@ -307,7 +319,8 @@ class NamedEntityRecognizer(BaseService):
             raise
     
     async def _load_hybrid_model(self):
-        """Load hybrid model combining rule-based and ML approaches"""        try:
+        """Load hybrid model combining rule-based and ML approaches"""
+        try:
             # Initialize rule-based patterns for creative entities
             self.creative_patterns = self._create_creative_patterns()
             
@@ -332,7 +345,8 @@ class NamedEntityRecognizer(BaseService):
             raise
     
     def _create_creative_patterns(self) -> Dict[str, List[Dict]]:
-        """Create rule-based patterns for creative entity recognition"""        return {
+        """Create rule-based patterns for creative entity recognition"""
+        return {
             'music_patterns': [
                 {'pattern': [{'LOWER': 'ft'}, {'LOWER': '.'}, {'ENT_TYPE': 'PERSON'}], 'label': 'ARTIST'},
                 {'pattern': [{'LOWER': 'featuring'}, {'ENT_TYPE': 'PERSON'}], 'label': 'ARTIST'},
@@ -359,7 +373,8 @@ class NamedEntityRecognizer(BaseService):
         }
     
     def _create_regex_patterns(self) -> Dict[str, str]:
-        """Create regex patterns for entity extraction"""        import re
+        """Create regex patterns for entity extraction"""
+        import re
         return {
             'social_handle': r'@[a-zA-Z0-9_]{1,50}',
             'hashtag': r'#[a-zA-Z0-9_]{1,100}',
@@ -374,7 +389,8 @@ class NamedEntityRecognizer(BaseService):
         }
     
     async def _load_gazetteers(self) -> Dict[str, Set[str]]:
-        """Load gazetteer lists for known entities"""        gazetteers = {
+        """Load gazetteer lists for known entities"""
+        gazetteers = {
             'music_genres': set([
                 'rock', 'pop', 'hip-hop', 'jazz', 'classical', 'electronic', 'country',
                 'r&b', 'soul', 'funk', 'reggae', 'blues', 'folk', 'indie', 'alternative',
@@ -415,7 +431,8 @@ class NamedEntityRecognizer(BaseService):
         return gazetteers
     
     def _create_hybrid_neural_network(self) -> nn.Module:
-        """Create custom neural network for hybrid NER processing"""        class HybridNERNetwork(nn.Module):
+        """Create custom neural network for hybrid NER processing"""
+        class HybridNERNetwork(nn.Module):
             def __init__(self, vocab_size, embedding_dim, hidden_dim, num_labels):
                 super(HybridNERNetwork, self).__init__()
                 self.embedding = nn.Embedding(vocab_size, embedding_dim)
@@ -451,7 +468,8 @@ class NamedEntityRecognizer(BaseService):
         return network
     
     def _initialize_creative_labels(self) -> Dict[str, List[str]]:
-        """Initialize entity labels specific to creative industries"""        return {
+        """Initialize entity labels specific to creative industries"""
+        return {
             'music': [
                 'B-ARTIST', 'I-ARTIST',          # Musical artists
                 'B-SONG', 'I-SONG',              # Song titles
@@ -486,7 +504,8 @@ class NamedEntityRecognizer(BaseService):
         }
     
     async def _load_pretrained_models(self):
-        """Load pre-trained NER models"""        model_configs = {
+        """Load pre-trained NER models"""
+        model_configs = {
             'bert_base_ner': {
                 'model_name': 'dbmdz/bert-large-cased-finetuned-conll03-english',
                 'type': NERModelType.BERT_BASE,
@@ -535,7 +554,8 @@ class NamedEntityRecognizer(BaseService):
                 self.logger.warning(f"Failed to load model {model_id}: {str(e)}")
     
     async def _load_custom_models(self):
-        """Load custom fine-tuned models for creative industry"""        custom_model_paths = {
+        """Load custom fine-tuned models for creative industry"""
+        custom_model_paths = {
             'music_specialist': '/models/ner/music_specialist',
             'influencer_specialist': '/models/ner/influencer_specialist',
             'business_specialist': '/models/ner/business_specialist'
@@ -566,7 +586,8 @@ class NamedEntityRecognizer(BaseService):
                 self.logger.warning(f"Failed to load custom model {model_id}: {str(e)}")
     
     async def _initialize_ensemble(self):
-        """Initialize ensemble model combining multiple NER models"""        try:
+        """Initialize ensemble model combining multiple NER models"""
+        try:
             # Create ensemble pipeline that combines predictions from multiple models
             ensemble_models = [
                 model_id for model_id in self.pipelines.keys()
@@ -595,7 +616,8 @@ class NamedEntityRecognizer(BaseService):
             self.logger.warning(f"Failed to initialize ensemble model: {str(e)}")
     
     async def _load_language_models(self):
-        """Load language-specific models"""        language_configs = {
+        """Load language-specific models"""
+        language_configs = {
             'de': 'dbmdz/bert-base-german-cased',
             'fr': 'camembert-base',
             'es': 'dccuchile/bert-base-spanish-wwm-cased'
@@ -619,7 +641,8 @@ class NamedEntityRecognizer(BaseService):
                 self.logger.warning(f"Failed to load language model for {lang_code}: {str(e)}")
     
     async def _load_prediction_cache(self):
-        """Load cached predictions for faster inference"""        try:
+        """Load cached predictions for faster inference"""
+        try:
             cache_path = '/cache/ner_predictions.pkl'
             if await self.model_manager.model_exists(cache_path):
                 with open(cache_path, 'rb') as f:
@@ -638,7 +661,8 @@ class NamedEntityRecognizer(BaseService):
         language: Optional[LanguageSupport] = None,
         confidence_threshold: float = 0.5
     ) -> List[NERPrediction]:
-        """        Recognize named entities in text using specified or ensemble models.
+        """
+        Recognize named entities in text using specified or ensemble models.
         
         Args:
             text: Input text for entity recognition
@@ -648,7 +672,8 @@ class NamedEntityRecognizer(BaseService):
             
         Returns:
             List of NER predictions with confidence scores
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             self.logger.debug(f"Starting NER for text length: {len(text)}")
@@ -698,7 +723,8 @@ class NamedEntityRecognizer(BaseService):
             raise
     
     async def _detect_language(self, text: str) -> LanguageSupport:
-        """Detect language of input text"""        try:
+        """Detect language of input text"""
+        try:
             # Simple language detection based on character patterns
             # In production, use a proper language detection library
             if any(char in text for char in 'äöüß'):
@@ -720,7 +746,8 @@ class NamedEntityRecognizer(BaseService):
         language: LanguageSupport,
         confidence_threshold: float
     ) -> List[NERPrediction]:
-        """Run NER with a single model"""        predictions = []
+        """Run NER with a single model"""
+        predictions = []
         
         # Find appropriate model
         model_id = self._select_model_for_type_and_language(model_type, language)
@@ -761,7 +788,8 @@ class NamedEntityRecognizer(BaseService):
         language: LanguageSupport,
         confidence_threshold: float
     ) -> List[NERPrediction]:
-        """Run ensemble of models and combine predictions"""        all_predictions = []
+        """Run ensemble of models and combine predictions"""
+        all_predictions = []
         
         # Run each available model
         for model_id, pipeline_obj in self.pipelines.items():
@@ -806,7 +834,8 @@ class NamedEntityRecognizer(BaseService):
         return combined_predictions
     
     async def _combine_ensemble_predictions(self, predictions: List[NERPrediction]) -> List[NERPrediction]:
-        """Combine predictions from multiple models using voting"""        if not predictions:
+        """Combine predictions from multiple models using voting"""
+        if not predictions:
             return []
         
         # Group overlapping predictions
@@ -825,7 +854,8 @@ class NamedEntityRecognizer(BaseService):
         return combined
     
     def _group_overlapping_predictions(self, predictions: List[NERPrediction]) -> List[List[NERPrediction]]:
-        """Group predictions that overlap in position"""        if not predictions:
+        """Group predictions that overlap in position"""
+        if not predictions:
             return []
         
         # Sort by start position
@@ -846,7 +876,8 @@ class NamedEntityRecognizer(BaseService):
         return groups
     
     def _vote_on_predictions(self, predictions: List[NERPrediction]) -> NERPrediction:
-        """Vote on overlapping predictions to select best one"""        if len(predictions) == 1:
+        """Vote on overlapping predictions to select best one"""
+        if len(predictions) == 1:
             return predictions[0]
         
         # Weight predictions based on model type and confidence
@@ -887,7 +918,8 @@ class NamedEntityRecognizer(BaseService):
         return best_pred
     
     def _get_model_weight(self, model_source: str) -> float:
-        """Get weight for model in ensemble voting"""        weights = {
+        """Get weight for model in ensemble voting"""
+        weights = {
             'bert_base_ner': 0.3,
             'bert_creative_ner': 0.4,
             'multilingual_ner': 0.2,
@@ -902,7 +934,8 @@ class NamedEntityRecognizer(BaseService):
         model_type: NERModelType,
         language: LanguageSupport
     ) -> Optional[str]:
-        """Select appropriate model based on type and language"""        for model_id, config in self.model_configs.items():
+        """Select appropriate model based on type and language"""
+        for model_id, config in self.model_configs.items():
             if config.get('type') == model_type:
                 model_language = config.get('language', LanguageSupport.ENGLISH)
                 if model_language in [language, LanguageSupport.MULTILINGUAL]:
@@ -914,7 +947,8 @@ class NamedEntityRecognizer(BaseService):
         predictions: List[NERPrediction],
         original_text: str
     ) -> List[NERPrediction]:
-        """Post-process predictions for consistency and accuracy"""        if not predictions:
+        """Post-process predictions for consistency and accuracy"""
+        if not predictions:
             return predictions
         
         # Sort by position
@@ -950,7 +984,8 @@ class NamedEntityRecognizer(BaseService):
         return corrected_predictions
     
     async def _apply_creative_corrections(self, predictions: List[NERPrediction]) -> List[NERPrediction]:
-        """Apply creative industry specific corrections to predictions"""        corrected = []
+        """Apply creative industry specific corrections to predictions"""
+        corrected = []
         
         for pred in predictions:
             # Correct common misclassifications in creative content
@@ -960,7 +995,8 @@ class NamedEntityRecognizer(BaseService):
         return corrected
     
     def _correct_creative_entity(self, prediction: NERPrediction) -> NERPrediction:
-        """Correct entity based on creative industry knowledge"""        token_lower = prediction.token.lower()
+        """Correct entity based on creative industry knowledge"""
+        token_lower = prediction.token.lower()
         
         # Music platform corrections
         music_platforms = {'spotify', 'apple music', 'youtube music', 'soundcloud', 'bandcamp'}
@@ -988,7 +1024,8 @@ class NamedEntityRecognizer(BaseService):
         model_name: str,
         base_model: str = "bert-base-uncased"
     ) -> NERModelMetrics:
-        """        Train a custom NER model for specific entity types.
+        """
+        Train a custom NER model for specific entity types.
         
         Args:
             training_data: List of training examples with labels
@@ -997,7 +1034,8 @@ class NamedEntityRecognizer(BaseService):
             
         Returns:
             Training metrics and performance
-        """        try:
+        """
+        try:
             self.logger.info(f"Starting training of custom model: {model_name}")
             start_time = datetime.now()
             
@@ -1071,19 +1109,22 @@ class NamedEntityRecognizer(BaseService):
             raise
     
     def _prepare_training_data(self, training_data: List[TrainingExample]) -> Tuple[Any, Any]:
-        """Prepare training data for model training"""        # Convert training examples to format expected by transformers
+        """Prepare training data for model training"""
+        # Convert training examples to format expected by transformers
         # This would involve tokenization and label alignment
         # Implementation depends on specific training data format
         pass
     
     def _get_all_labels(self) -> List[str]:
-        """Get all possible entity labels"""        all_labels = ['O']  # Outside label
+        """Get all possible entity labels"""
+        all_labels = ['O']  # Outside label
         for category_labels in self.creative_labels.values():
             all_labels.extend(category_labels)
         return list(set(all_labels))
     
     def _compute_metrics(self, eval_pred):
-        """Compute evaluation metrics during training"""        predictions, labels = eval_pred
+        """Compute evaluation metrics during training"""
+        predictions, labels = eval_pred
         predictions = np.argmax(predictions, axis=2)
         
         # Remove padding
@@ -1111,7 +1152,8 @@ class NamedEntityRecognizer(BaseService):
         }
     
     def _get_model_size(self, model_path: str) -> int:
-        """Get model size in bytes"""        import os
+        """Get model size in bytes"""
+        import os
         total_size = 0
         for dirpath, dirnames, filenames in os.walk(model_path):
             for filename in filenames:
@@ -1120,10 +1162,12 @@ class NamedEntityRecognizer(BaseService):
         return total_size
     
     async def get_model_performance(self, model_name: str) -> Optional[NERModelMetrics]:
-        """Get performance metrics for a specific model"""        return self.model_metrics.get(model_name)
+        """Get performance metrics for a specific model"""
+        return self.model_metrics.get(model_name)
     
     async def list_available_models(self) -> Dict[str, Dict[str, Any]]:
-        """List all available NER models with their configurations"""        models_info = {}
+        """List all available NER models with their configurations"""
+        models_info = {}
         
         for model_id, config in self.model_configs.items():
             models_info[model_id] = {
@@ -1135,7 +1179,8 @@ class NamedEntityRecognizer(BaseService):
         return models_info
     
     async def save_prediction_cache(self):
-        """Save prediction cache to disk"""        try:
+        """Save prediction cache to disk"""
+        try:
             cache_path = '/cache/ner_predictions.pkl'
             with open(cache_path, 'wb') as f:
                 pickle.dump(self.prediction_cache, f)
@@ -1145,7 +1190,8 @@ class NamedEntityRecognizer(BaseService):
             self.logger.error(f"Failed to save prediction cache: {str(e)}")
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for NER service"""        return {
+        """Health check for NER service"""
+        return {
             'status': 'healthy',
             'loaded_models': len(self.models),
             'available_pipelines': len(self.pipelines),

@@ -46,7 +46,8 @@ UNAUTHORIZED ACCESS, USE, OR APPROPRIATION IS CRIMINAL OFFENSE:
 
 Contact mlaiel@live.de for MANDATORY authorization before any interaction.
 All access attempts are logged, monitored, and legally documented.
-"""import logging
+"""
+import logging
 from typing import Optional, Dict, Any
 from datetime import datetime
 
@@ -97,20 +98,24 @@ Unauthorized use, copying, distribution, or reverse engineering is strictly proh
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """class MonitoringService:
-    """    Main monitoring service orchestrator that coordinates all monitoring components.
+    """
+    Main monitoring service orchestrator that coordinates all monitoring components.
     
     This service integrates:
     - Real-time content monitoring and violation detection
     - Performance analytics and optimization
     - Dashboard and reporting capabilities
     - Multi-platform surveillance coordination
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize the monitoring service.
+        """
+        Initialize the monitoring service.
         
         Args:
             config: Optional configuration dictionary
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         self._initialized = False
         self._start_time = datetime.utcnow()
         
@@ -125,11 +130,13 @@ Contact mlaiel@live.de for licensing inquiries.
         logger.warning(__legal_notice__)
     
     async def initialize(self) -> bool:
-        """        Initialize all monitoring service components.
+        """
+        Initialize all monitoring service components.
         
         Returns:
             bool: True if initialization successful, False otherwise
-        """        try:
+        """
+        try:
             logger.info("Initializing Content Protection Monitoring Service...")
             
             # Initialize analytics engine
@@ -188,7 +195,8 @@ Contact mlaiel@live.de for licensing inquiries.
         priority: str = "medium",
         custom_config: Optional[Dict[str, Any]] = None
     ) -> str:
-        """        Start monitoring for a content fingerprint.
+        """
+        Start monitoring for a content fingerprint.
         
         Args:
             fingerprint_id: Content fingerprint to monitor
@@ -199,7 +207,8 @@ Contact mlaiel@live.de for licensing inquiries.
             
         Returns:
             str: Monitoring session ID
-        """        if not self._initialized or not self.realtime_monitor:
+        """
+        if not self._initialized or not self.realtime_monitor:
             raise RuntimeError("Service not initialized")
         
         from .realtime_monitor import MonitoringPriority
@@ -226,14 +235,16 @@ Contact mlaiel@live.de for licensing inquiries.
         return session_id
     
     async def stop_content_monitoring(self, session_id: str) -> bool:
-        """        Stop monitoring for a session.
+        """
+        Stop monitoring for a session.
         
         Args:
             session_id: Monitoring session ID to stop
             
         Returns:
             bool: True if successful, False otherwise
-        """        if not self._initialized or not self.realtime_monitor:
+        """
+        if not self._initialized or not self.realtime_monitor:
             return False
         
         result = await self.realtime_monitor.stop_realtime_monitoring(session_id)
@@ -244,14 +255,16 @@ Contact mlaiel@live.de for licensing inquiries.
         return result
     
     async def get_monitoring_dashboard_data(self, user_id: int) -> Dict[str, Any]:
-        """        Get comprehensive dashboard data for a user.
+        """
+        Get comprehensive dashboard data for a user.
         
         Args:
             user_id: User ID to get dashboard data for
             
         Returns:
             Dict containing dashboard metrics and data
-        """        if not self._initialized or not self.dashboard:
+        """
+        if not self._initialized or not self.dashboard:
             return {}
         
         return await self.dashboard.get_dashboard_metrics(user_id)
@@ -262,7 +275,8 @@ Contact mlaiel@live.de for licensing inquiries.
         time_range: str = "last_7_days",
         output_formats: Optional[list] = None
     ) -> Dict[str, Any]:
-        """        Generate a monitoring report.
+        """
+        Generate a monitoring report.
         
         Args:
             report_type: Type of report to generate
@@ -271,7 +285,8 @@ Contact mlaiel@live.de for licensing inquiries.
             
         Returns:
             Dict containing report information
-        """        if not self._initialized or not self.report_generator:
+        """
+        if not self._initialized or not self.report_generator:
             return {}
         
         from .reports import ReportFormat
@@ -293,21 +308,25 @@ Contact mlaiel@live.de for licensing inquiries.
         return generated_report.dict()
     
     async def optimize_system_performance(self) -> Dict[str, Any]:
-        """        Run system performance optimization.
+        """
+        Run system performance optimization.
         
         Returns:
             Dict containing optimization results
-        """        if not self._initialized or not self.performance_optimizer:
+        """
+        if not self._initialized or not self.performance_optimizer:
             return {}
         
         return await self.performance_optimizer.auto_optimize_system()
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """        Get comprehensive system status.
+        """
+        Get comprehensive system status.
         
         Returns:
             Dict containing system status information
-        """        uptime = (datetime.utcnow() - self._start_time).total_seconds()
+        """
+        uptime = (datetime.utcnow() - self._start_time).total_seconds()
         
         status = {
             "version": __version__,
@@ -348,7 +367,8 @@ Contact mlaiel@live.de for licensing inquiries.
         return status
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown all monitoring service components."""        logger.info("Shutting down Content Protection Monitoring Service...")
+        """Gracefully shutdown all monitoring service components."""
+        logger.info("Shutting down Content Protection Monitoring Service...")
         
         # Shutdown in reverse order of initialization
         if self.report_generator:
@@ -404,7 +424,8 @@ For licensing inquiries, contact: mlaiel@live.de
 
 © 2025 Fahed Mlaiel. All rights reserved.
 """def print_legal_notice():
-    """Print the legal notice and copyright information."""    print(LEGAL_NOTICE)
+    """Print the legal notice and copyright information."""
+    print(LEGAL_NOTICE)
 
 # Automatic legal notice display (can be disabled in production)
 import os
@@ -449,20 +470,24 @@ Unauthorized use, copying, distribution, or reverse engineering is strictly proh
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """class MonitoringService:
-    """    Main monitoring service orchestrator that coordinates all monitoring components.
+    """
+    Main monitoring service orchestrator that coordinates all monitoring components.
     
     This service integrates:
     - Real-time content monitoring and violation detection
     - Performance analytics and optimization
     - Dashboard and reporting capabilities
     - Multi-platform surveillance coordination
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize the monitoring service.
+        """
+        Initialize the monitoring service.
         
         Args:
             config: Optional configuration dictionary
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         self._initialized = False
         self._start_time = datetime.utcnow()
         
@@ -477,11 +502,13 @@ Contact mlaiel@live.de for licensing inquiries.
         logger.warning(__legal_notice__)
     
     async def initialize(self) -> bool:
-        """        Initialize all monitoring service components.
+        """
+        Initialize all monitoring service components.
         
         Returns:
             bool: True if initialization successful, False otherwise
-        """        try:
+        """
+        try:
             logger.info("Initializing Content Protection Monitoring Service...")
             
             # Initialize analytics engine
@@ -540,7 +567,8 @@ Contact mlaiel@live.de for licensing inquiries.
         priority: str = "medium",
         custom_config: Optional[Dict[str, Any]] = None
     ) -> str:
-        """        Start monitoring for a content fingerprint.
+        """
+        Start monitoring for a content fingerprint.
         
         Args:
             fingerprint_id: Content fingerprint to monitor
@@ -551,7 +579,8 @@ Contact mlaiel@live.de for licensing inquiries.
             
         Returns:
             str: Monitoring session ID
-        """        if not self._initialized or not self.realtime_monitor:
+        """
+        if not self._initialized or not self.realtime_monitor:
             raise RuntimeError("Service not initialized")
         
         from .realtime_monitor import MonitoringPriority
@@ -578,14 +607,16 @@ Contact mlaiel@live.de for licensing inquiries.
         return session_id
     
     async def stop_content_monitoring(self, session_id: str) -> bool:
-        """        Stop monitoring for a session.
+        """
+        Stop monitoring for a session.
         
         Args:
             session_id: Monitoring session ID to stop
             
         Returns:
             bool: True if successful, False otherwise
-        """        if not self._initialized or not self.realtime_monitor:
+        """
+        if not self._initialized or not self.realtime_monitor:
             return False
         
         result = await self.realtime_monitor.stop_realtime_monitoring(session_id)
@@ -596,14 +627,16 @@ Contact mlaiel@live.de for licensing inquiries.
         return result
     
     async def get_monitoring_dashboard_data(self, user_id: int) -> Dict[str, Any]:
-        """        Get comprehensive dashboard data for a user.
+        """
+        Get comprehensive dashboard data for a user.
         
         Args:
             user_id: User ID to get dashboard data for
             
         Returns:
             Dict containing dashboard metrics and data
-        """        if not self._initialized or not self.dashboard:
+        """
+        if not self._initialized or not self.dashboard:
             return {}
         
         return await self.dashboard.get_dashboard_metrics(user_id)
@@ -614,7 +647,8 @@ Contact mlaiel@live.de for licensing inquiries.
         time_range: str = "last_7_days",
         output_formats: Optional[list] = None
     ) -> Dict[str, Any]:
-        """        Generate a monitoring report.
+        """
+        Generate a monitoring report.
         
         Args:
             report_type: Type of report to generate
@@ -623,7 +657,8 @@ Contact mlaiel@live.de for licensing inquiries.
             
         Returns:
             Dict containing report information
-        """        if not self._initialized or not self.report_generator:
+        """
+        if not self._initialized or not self.report_generator:
             return {}
         
         from .reports import ReportFormat
@@ -645,21 +680,25 @@ Contact mlaiel@live.de for licensing inquiries.
         return generated_report.dict()
     
     async def optimize_system_performance(self) -> Dict[str, Any]:
-        """        Run system performance optimization.
+        """
+        Run system performance optimization.
         
         Returns:
             Dict containing optimization results
-        """        if not self._initialized or not self.performance_optimizer:
+        """
+        if not self._initialized or not self.performance_optimizer:
             return {}
         
         return await self.performance_optimizer.auto_optimize_system()
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """        Get comprehensive system status.
+        """
+        Get comprehensive system status.
         
         Returns:
             Dict containing system status information
-        """        uptime = (datetime.utcnow() - self._start_time).total_seconds()
+        """
+        uptime = (datetime.utcnow() - self._start_time).total_seconds()
         
         status = {
             "version": __version__,
@@ -700,7 +739,8 @@ Contact mlaiel@live.de for licensing inquiries.
         return status
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown all monitoring service components."""        logger.info("Shutting down Content Protection Monitoring Service...")
+        """Gracefully shutdown all monitoring service components."""
+        logger.info("Shutting down Content Protection Monitoring Service...")
         
         # Shutdown in reverse order of initialization
         if self.report_generator:

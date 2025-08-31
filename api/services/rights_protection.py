@@ -8,7 +8,8 @@ Team: Lead Dev IA + Backend Senior + Security Expert + Legal Tech + ML Engineer
 This code and concept are proprietary to Fahed Mlaiel.
 Unauthorized copying, distribution, or use without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import hashlib
 import logging
 from datetime import datetime, timedelta
@@ -106,9 +107,11 @@ class ProtectionReport:
 
 
 class EnterpriseRightsProtectionService:
-    """    Professional rights protection service providing multi-layered content security,
+    """
+    Professional rights protection service providing multi-layered content security,
     AI-powered violation detection, and automated legal enforcement
-    """    
+    """
+    
     # Similarity thresholds for different violation types
     SIMILARITY_THRESHOLDS = {
         ViolationType.EXACT_COPY: 0.95,
@@ -158,8 +161,10 @@ class EnterpriseRightsProtectionService:
         asset: ContentAsset,
         protection_methods: List[ProtectionMethod] = None
     ) -> ProtectionReport:
-        """        Create comprehensive protection for content asset using multiple methods
-        """        try:
+        """
+        Create comprehensive protection for content asset using multiple methods
+        """
+        try:
             if not protection_methods:
                 protection_methods = [
                     ProtectionMethod.DIGITAL_FINGERPRINT,
@@ -208,7 +213,8 @@ class EnterpriseRightsProtectionService:
             raise ProtectionError(f"Failed to create protection: {str(e)}")
 
     async def _generate_multi_layered_fingerprint(self, asset: ContentAsset) -> FingerprintResult:
-        """Generate comprehensive fingerprint using multiple techniques"""        try:
+        """Generate comprehensive fingerprint using multiple techniques"""
+        try:
             # Generate content-specific fingerprints
             if asset.media_type == 'audio':
                 primary_hash = await self.audio_engine.generate_fingerprint(asset.storage_uri)
@@ -252,7 +258,8 @@ class EnterpriseRightsProtectionService:
             raise FingerprintingError(f"Failed to generate fingerprint: {str(e)}")
 
     async def _generate_perceptual_hash(self, asset: ContentAsset) -> str:
-        """Generate perceptual hash for content similarity detection"""        try:
+        """Generate perceptual hash for content similarity detection"""
+        try:
             if asset.media_type == 'image':
                 # Use PIL for image perceptual hashing
                 with Image.open(asset.storage_uri) as img:
@@ -313,7 +320,8 @@ class EnterpriseRightsProtectionService:
             return hashlib.sha256(f"fallback_{asset.id}".encode()).hexdigest()
 
     async def _generate_metadata_signature(self, asset: ContentAsset) -> str:
-        """Generate metadata signature for integrity verification"""        metadata = asset.metadata or {}
+        """Generate metadata signature for integrity verification"""
+        metadata = asset.metadata or {}
         
         # Include critical metadata fields
         signature_data = {
@@ -335,7 +343,8 @@ class EnterpriseRightsProtectionService:
         method: ProtectionMethod,
         fingerprint_data: FingerprintResult
     ) -> ProtectionRecord:
-        """Apply specific protection method to asset"""        try:
+        """Apply specific protection method to asset"""
+        try:
             details = {}
             
             if method == ProtectionMethod.DIGITAL_FINGERPRINT:
@@ -409,7 +418,8 @@ class EnterpriseRightsProtectionService:
         asset: ContentAsset,
         fingerprint_data: FingerprintResult
     ) -> Dict[str, Any]:
-        """Create blockchain anchor for immutable proof of ownership"""        try:
+        """Create blockchain anchor for immutable proof of ownership"""
+        try:
             # This would implement actual blockchain integration
             # For now, simulate blockchain anchoring
             
@@ -438,7 +448,8 @@ class EnterpriseRightsProtectionService:
             return {'error': str(e)}
 
     async def _embed_watermark(self, asset: ContentAsset) -> Dict[str, Any]:
-        """Embed invisible watermark in content"""        try:
+        """Embed invisible watermark in content"""
+        try:
             if asset.media_type == 'image':
                 # Implement image watermarking using LSB or frequency domain
                 return {
@@ -483,8 +494,10 @@ class EnterpriseRightsProtectionService:
         asset_id: Optional[int] = None,
         platform: Optional[str] = None
     ) -> List[ViolationDetection]:
-        """        Monitor platforms for content violations using AI detection
-        """        try:
+        """
+        Monitor platforms for content violations using AI detection
+        """
+        try:
             violations = []
             
             # Get assets to monitor
@@ -529,7 +542,8 @@ class EnterpriseRightsProtectionService:
         protection_records: List[ProtectionRecord],
         platform: str
     ) -> List[ViolationDetection]:
-        """Scan specific platform for violations of protected content"""        violations = []
+        """Scan specific platform for violations of protected content"""
+        violations = []
         
         try:
             # Get platform-specific search parameters
@@ -590,7 +604,8 @@ class EnterpriseRightsProtectionService:
             return []
 
     async def _build_search_parameters(self, asset: ContentAsset, platform: str) -> Dict[str, Any]:
-        """Build platform-specific search parameters"""        params = {
+        """Build platform-specific search parameters"""
+        params = {
             'title_keywords': asset.title.split() if asset.title else [],
             'content_type': asset.media_type,
             'duration': asset.metadata.get('duration') if asset.metadata else None,
@@ -613,7 +628,8 @@ class EnterpriseRightsProtectionService:
         return params
 
     async def _search_platform_content(self, platform: str, search_params: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Search platform for potential violations (would use actual APIs)"""        # This would implement actual platform API calls
+        """Search platform for potential violations (would use actual APIs)"""
+        # This would implement actual platform API calls
         # For now, simulate search results
         
         simulated_results = [
@@ -637,7 +653,8 @@ class EnterpriseRightsProtectionService:
         return simulated_results
 
     async def _compare_digital_fingerprints(self, original_hash: str, suspect_data: str) -> float:
-        """Compare digital fingerprints for similarity"""        if not original_hash or not suspect_data:
+        """Compare digital fingerprints for similarity"""
+        if not original_hash or not suspect_data:
             return 0.0
         
         # Would implement actual fingerprint comparison
@@ -645,7 +662,8 @@ class EnterpriseRightsProtectionService:
         return 0.85 if hashlib.sha256(suspect_data.encode()).hexdigest() == original_hash else 0.3
 
     async def _compare_perceptual_hashes(self, original_hash: str, suspect_data: str) -> float:
-        """Compare perceptual hashes for similarity"""        if not original_hash or not suspect_data:
+        """Compare perceptual hashes for similarity"""
+        if not original_hash or not suspect_data:
             return 0.0
         
         # Hamming distance for perceptual hash comparison
@@ -657,7 +675,8 @@ class EnterpriseRightsProtectionService:
         return 0.0
 
     async def _classify_violation_type(self, similarity_score: float, result_data: Dict[str, Any]) -> ViolationType:
-        """Classify the type of violation based on similarity and context"""        if similarity_score >= 0.95:
+        """Classify the type of violation based on similarity and context"""
+        if similarity_score >= 0.95:
             return ViolationType.EXACT_COPY
         elif similarity_score >= 0.85:
             return ViolationType.PARTIAL_COPY
@@ -669,7 +688,8 @@ class EnterpriseRightsProtectionService:
             return ViolationType.COMMERCIAL_USE  # Default assumption
 
     async def _determine_automated_actions(self, violation_type: ViolationType, similarity: float) -> List[str]:
-        """Determine automated enforcement actions based on violation"""        actions = []
+        """Determine automated enforcement actions based on violation"""
+        actions = []
         
         if similarity >= 0.90 and self.auto_dmca_enabled:
             actions.append("dmca_takedown_notice")
@@ -685,7 +705,8 @@ class EnterpriseRightsProtectionService:
         return actions
 
     async def _process_violation(self, db: Session, violation: ViolationDetection) -> None:
-        """Process detected violation with automated actions"""        try:
+        """Process detected violation with automated actions"""
+        try:
             # Create violation alert record
             alert = ProtectionAlert(
                 fingerprint_id=violation.original_asset_id,
@@ -718,35 +739,40 @@ class EnterpriseRightsProtectionService:
             logger.error(f"Violation processing failed: {str(e)}")
 
     async def _send_dmca_takedown(self, violation: ViolationDetection) -> None:
-        """Send automated DMCA takedown notice"""        try:
+        """Send automated DMCA takedown notice"""
+        try:
             # This would implement actual DMCA notice sending
             logger.info(f"DMCA takedown notice sent for violation: {violation.violation_id}")
         except Exception as e:
             logger.error(f"DMCA takedown failed: {str(e)}")
 
     async def _report_to_platform(self, violation: ViolationDetection) -> None:
-        """Report violation to platform"""        try:
+        """Report violation to platform"""
+        try:
             # This would use platform-specific reporting APIs
             logger.info(f"Platform report submitted for violation: {violation.violation_id}")
         except Exception as e:
             logger.error(f"Platform reporting failed: {str(e)}")
 
     async def _submit_monetization_claim(self, violation: ViolationDetection) -> None:
-        """Submit monetization claim for commercial violations"""        try:
+        """Submit monetization claim for commercial violations"""
+        try:
             # This would implement Content ID or similar systems
             logger.info(f"Monetization claim submitted for violation: {violation.violation_id}")
         except Exception as e:
             logger.error(f"Monetization claim failed: {str(e)}")
 
     async def _collect_violation_evidence(self, violation: ViolationDetection) -> None:
-        """Collect additional evidence for violation"""        try:
+        """Collect additional evidence for violation"""
+        try:
             # This would capture screenshots, download content, etc.
             logger.info(f"Evidence collected for violation: {violation.violation_id}")
         except Exception as e:
             logger.error(f"Evidence collection failed: {str(e)}")
 
     async def _calculate_protection_level(self, asset: ContentAsset) -> float:
-        """Calculate overall protection level for asset"""        factors = []
+        """Calculate overall protection level for asset"""
+        factors = []
         
         # File characteristics
         if asset.file_size and asset.file_size > 1024 * 1024:  # >1MB
@@ -770,7 +796,8 @@ class EnterpriseRightsProtectionService:
         return sum(factors) / len(factors) if factors else 0.5
 
     async def _assess_vulnerability(self, asset: ContentAsset) -> float:
-        """Assess vulnerability score (higher = more vulnerable)"""        vulnerability_factors = []
+        """Assess vulnerability score (higher = more vulnerable)"""
+        vulnerability_factors = []
         
         # Public accessibility
         if asset.metadata and asset.metadata.get('public', True):
@@ -793,7 +820,8 @@ class EnterpriseRightsProtectionService:
         return sum(vulnerability_factors) / len(vulnerability_factors)
 
     async def _generate_protection_recommendations(self, asset: ContentAsset, protection_score: float) -> List[str]:
-        """Generate protection improvement recommendations"""        recommendations = []
+        """Generate protection improvement recommendations"""
+        recommendations = []
         
         if protection_score < 0.7:
             recommendations.append("Enable blockchain anchoring for immutable proof of ownership")
@@ -817,7 +845,8 @@ class EnterpriseRightsProtectionService:
         methods: List[ProtectionMethod],
         fingerprint_data: FingerprintResult
     ) -> float:
-        """Calculate comprehensive protection score"""        method_scores = {
+        """Calculate comprehensive protection score"""
+        method_scores = {
             ProtectionMethod.DIGITAL_FINGERPRINT: 0.2,
             ProtectionMethod.BLOCKCHAIN_ANCHOR: 0.25,
             ProtectionMethod.WATERMARK_EMBED: 0.15,
@@ -837,7 +866,8 @@ class EnterpriseRightsProtectionService:
         return min(1.0, max(0.0, final_score))
 
     async def _cache_protection_data(self, asset_id: int, report: ProtectionReport) -> None:
-        """Cache protection data for quick access"""        try:
+        """Cache protection data for quick access"""
+        try:
             cache_key = f"protection:report:{asset_id}"
             self.redis_client.setex(
                 cache_key,
@@ -849,7 +879,8 @@ class EnterpriseRightsProtectionService:
 
     # Legacy methods for backward compatibility
     def fingerprint(self, asset: ContentAsset) -> str:
-        """Legacy fingerprint method - deprecated"""        logger.warning("Using deprecated fingerprint method. Switch to create_comprehensive_protection")
+        """Legacy fingerprint method - deprecated"""
+        logger.warning("Using deprecated fingerprint method. Switch to create_comprehensive_protection")
         
         # Simple robust fingerprint: sha256(content path + title)
         h = hashlib.sha256()
@@ -858,7 +889,8 @@ class EnterpriseRightsProtectionService:
         return h.hexdigest()
 
     def protect(self, db: Session, asset: ContentAsset, method: str) -> ProtectionRecord:
-        """Legacy protect method - deprecated"""        logger.warning("Using deprecated protect method. Switch to create_comprehensive_protection")
+        """Legacy protect method - deprecated"""
+        logger.warning("Using deprecated protect method. Switch to create_comprehensive_protection")
         
         fp = self.fingerprint(asset)
         record = ProtectionRecord(

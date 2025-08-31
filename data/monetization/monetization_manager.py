@@ -10,7 +10,8 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: Unauthorized use, copying, or distribution of this code is strictly 
 prohibited and subject to legal action under German and international copyright law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -47,7 +48,8 @@ from ..analytics.content_analytics import ContentAnalytics
 
 
 class MonetizationStatus(Enum):
-    """Overall monetization status"""    INACTIVE = "inactive"
+    """Overall monetization status"""
+    INACTIVE = "inactive"
     ACTIVE = "active"
     OPTIMIZING = "optimizing"
     PAUSED = "paused"
@@ -55,7 +57,8 @@ class MonetizationStatus(Enum):
 
 
 class OptimizationMode(Enum):
-    """Revenue optimization modes"""    CONSERVATIVE = "conservative"
+    """Revenue optimization modes"""
+    CONSERVATIVE = "conservative"
     BALANCED = "balanced"
     AGGRESSIVE = "aggressive"
     CUSTOM = "custom"
@@ -63,7 +66,8 @@ class OptimizationMode(Enum):
 
 @dataclass
 class MonetizationConfig:
-    """User monetization configuration"""    user_id: str
+    """User monetization configuration"""
+    user_id: str
     enabled_platforms: List[PlatformType]
     primary_currency: Currency
     optimization_mode: OptimizationMode
@@ -76,7 +80,8 @@ class MonetizationConfig:
 
 @dataclass
 class MonetizationDashboard:
-    """Comprehensive monetization dashboard data"""    user_id: str
+    """Comprehensive monetization dashboard data"""
+    user_id: str
     total_revenue_30d: Decimal
     total_revenue_7d: Decimal
     total_revenue_24h: Decimal
@@ -92,7 +97,8 @@ class MonetizationDashboard:
 
 @dataclass
 class MonetizationInsights:
-    """Advanced monetization insights and analytics"""    user_id: str
+    """Advanced monetization insights and analytics"""
+    user_id: str
     revenue_trends: Dict[str, List[float]]
     performance_analysis: Dict[str, Any]
     optimization_impact: Dict[str, float]
@@ -103,21 +109,25 @@ class MonetizationInsights:
 
 
 class MonetizationManager:
-    """    Central monetization management engine for IA Influencer Agent platform.
+    """
+    Central monetization management engine for IA Influencer Agent platform.
     
     Orchestrates all monetization processes including revenue calculation,
     payment processing, distribution management, and platform integrations
     to provide comprehensive monetization solutions for content creators.
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession, redis_client: Redis,
                  content_analytics: ContentAnalytics):
-        """        Initialize MonetizationManager.
+        """
+        Initialize MonetizationManager.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
             content_analytics: Content analytics service
-        """        self.db_session = db_session
+        """
+        self.db_session = db_session
         self.redis = redis_client
         self.content_analytics = content_analytics
         self.logger = logging.getLogger(__name__)
@@ -172,7 +182,8 @@ class MonetizationManager:
     
     async def setup_user_monetization(self, user_id: str, 
                                     config: Optional[MonetizationConfig] = None) -> bool:
-        """        Setup monetization for a new user.
+        """
+        Setup monetization for a new user.
         
         Args:
             user_id: User identifier
@@ -180,7 +191,8 @@ class MonetizationManager:
             
         Returns:
             Setup success status
-        """        try:
+        """
+        try:
             # Use provided config or defaults
             user_config = config or self.default_config
             user_config.user_id = user_id
@@ -217,14 +229,16 @@ class MonetizationManager:
             return False
     
     async def get_monetization_dashboard(self, user_id: str) -> MonetizationDashboard:
-        """        Get comprehensive monetization dashboard for user.
+        """
+        Get comprehensive monetization dashboard for user.
         
         Args:
             user_id: User identifier
             
         Returns:
             Complete dashboard data
-        """        try:
+        """
+        try:
             # Check cache first
             cache_key = f"monetization_dashboard:{user_id}"
             cached_dashboard = await self._get_from_cache(cache_key)
@@ -299,7 +313,8 @@ class MonetizationManager:
     
     async def process_content_monetization(self, content_id: str, 
                                          auto_optimize: bool = True) -> Dict[str, Any]:
-        """        Process monetization for specific content.
+        """
+        Process monetization for specific content.
         
         Args:
             content_id: Content identifier
@@ -307,7 +322,8 @@ class MonetizationManager:
             
         Returns:
             Monetization processing results
-        """        try:
+        """
+        try:
             results = {
                 'content_id': content_id,
                 'revenue_calculated': False,
@@ -366,14 +382,16 @@ class MonetizationManager:
             }
     
     async def sync_all_platforms(self, user_id: str) -> Dict[str, bool]:
-        """        Synchronize data from all connected platforms.
+        """
+        Synchronize data from all connected platforms.
         
         Args:
             user_id: User identifier
             
         Returns:
             Sync results for each platform
-        """        try:
+        """
+        try:
             sync_results = {}
             
             # Get user's enabled platforms
@@ -411,14 +429,16 @@ class MonetizationManager:
             return {}
     
     async def generate_monetization_insights(self, user_id: str) -> MonetizationInsights:
-        """        Generate advanced monetization insights and analytics.
+        """
+        Generate advanced monetization insights and analytics.
         
         Args:
             user_id: User identifier
             
         Returns:
             Comprehensive monetization insights
-        """        try:
+        """
+        try:
             # Get revenue trends
             revenue_trends = await self._analyze_revenue_trends(user_id)
             
@@ -471,11 +491,13 @@ class MonetizationManager:
             )
     
     async def process_automated_monetization(self) -> Dict[str, Any]:
-        """        Process automated monetization tasks for all users.
+        """
+        Process automated monetization tasks for all users.
         
         Returns:
             Summary of automated processing results
-        """        try:
+        """
+        try:
             results = {
                 'users_processed': 0,
                 'revenue_calculated': 0,
@@ -525,12 +547,14 @@ class MonetizationManager:
     # Private helper methods
     
     async def _store_monetization_config(self, config: MonetizationConfig):
-        """Store user monetization configuration"""        # Implementation would store config in database
+        """Store user monetization configuration"""
+        # Implementation would store config in database
         cache_key = f"monetization_config:{config.user_id}"
         await self._save_to_cache(cache_key, config.__dict__)
     
     async def _get_monetization_config(self, user_id: str) -> Optional[MonetizationConfig]:
-        """Get user monetization configuration"""        cache_key = f"monetization_config:{user_id}"
+        """Get user monetization configuration"""
+        cache_key = f"monetization_config:{user_id}"
         cached_config = await self._get_from_cache(cache_key)
         if cached_config:
             return MonetizationConfig(**cached_config)
@@ -540,12 +564,14 @@ class MonetizationManager:
         return self.default_config
     
     async def _calculate_total_revenue(self, user_id: str, days: int) -> Decimal:
-        """Calculate total revenue for user over period"""        # Implementation would aggregate revenue from all sources
+        """Calculate total revenue for user over period"""
+        # Implementation would aggregate revenue from all sources
         # Placeholder implementation
         return Decimal('1500.00')  # Sample revenue
     
     async def _get_platform_revenue_breakdown(self, user_id: str, days: int) -> Dict[str, Decimal]:
-        """Get revenue breakdown by platform"""        # Implementation would query revenue by platform
+        """Get revenue breakdown by platform"""
+        # Implementation would query revenue by platform
         return {
             'youtube': Decimal('800.00'),
             'instagram': Decimal('450.00'),
@@ -553,7 +579,8 @@ class MonetizationManager:
         }
     
     async def _get_top_performing_content(self, user_id: str, limit: int) -> List[Dict]:
-        """Get top performing content by revenue"""        # Implementation would query top content
+        """Get top performing content by revenue"""
+        # Implementation would query top content
         return [
             {
                 'content_id': 'content_1',
@@ -565,15 +592,18 @@ class MonetizationManager:
         ]
     
     async def _get_pending_payouts(self, user_id: str) -> List[Dict]:
-        """Get pending payouts for user"""        # Implementation would query pending payouts
+        """Get pending payouts for user"""
+        # Implementation would query pending payouts
         return []
     
     async def _get_recent_distributions(self, user_id: str, limit: int) -> List[Dict]:
-        """Get recent revenue distributions"""        # Implementation would query recent distributions
+        """Get recent revenue distributions"""
+        # Implementation would query recent distributions
         return []
     
     async def _get_optimization_recommendations(self, user_id: str) -> List[str]:
-        """Get optimization recommendations for user"""        # Implementation would generate recommendations
+        """Get optimization recommendations for user"""
+        # Implementation would generate recommendations
         return [
             "Consider optimizing posting schedule for better engagement",
             "Explore collaboration opportunities for revenue growth",
@@ -581,7 +611,8 @@ class MonetizationManager:
         ]
     
     async def _calculate_growth_metrics(self, user_id: str) -> Dict[str, float]:
-        """Calculate growth metrics"""        # Implementation would calculate various growth metrics
+        """Calculate growth metrics"""
+        # Implementation would calculate various growth metrics
         return {
             'revenue_growth_rate': 15.5,
             'audience_growth_rate': 12.3,
@@ -589,7 +620,8 @@ class MonetizationManager:
         }
     
     async def _get_revenue_projections(self, user_id: str) -> Dict[str, Decimal]:
-        """Get revenue projections"""        # Implementation would calculate projections
+        """Get revenue projections"""
+        # Implementation would calculate projections
         return {
             'next_7_days': Decimal('350.00'),
             'next_30_days': Decimal('1200.00'),
@@ -597,14 +629,16 @@ class MonetizationManager:
         }
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
-        """Get data from cache"""        try:
+        """Get data from cache"""
+        try:
             cached_data = await self.redis.get(key)
             return json.loads(cached_data) if cached_data else None
         except:
             return None
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
-        """Save data to cache"""        try:
+        """Save data to cache"""
+        try:
             ttl = ttl or self.cache_ttl
             await self.redis.setex(key, ttl, json.dumps(data, default=str))
         except Exception as e:
@@ -613,58 +647,74 @@ class MonetizationManager:
     # Additional helper methods would be implemented here...
     
     async def _initialize_analytics_tracking(self, user_id: str, config: MonetizationConfig):
-        """Initialize analytics tracking for user"""        pass
+        """Initialize analytics tracking for user"""
+        pass
     
     async def _send_monetization_welcome(self, user_id: str):
-        """Send welcome notification for monetization setup"""        pass
+        """Send welcome notification for monetization setup"""
+        pass
     
     async def _apply_optimization(self, content_id: str, optimization: Dict):
-        """Apply specific optimization to content"""        pass
+        """Apply specific optimization to content"""
+        pass
     
     async def _update_content_monetization_status(self, content_id: str, results: Dict):
-        """Update content monetization status"""        pass
+        """Update content monetization status"""
+        pass
     
     async def _process_synced_revenue_data(self, user_id: str, revenue_data: List[RevenueData]):
-        """Process synced revenue data from platforms"""        pass
+        """Process synced revenue data from platforms"""
+        pass
     
     async def _process_synced_analytics_data(self, user_id: str, analytics_data: List[AnalyticsData]):
-        """Process synced analytics data from platforms"""        pass
+        """Process synced analytics data from platforms"""
+        pass
     
     async def _update_last_sync_timestamp(self, user_id: str):
-        """Update last sync timestamp for user"""        pass
+        """Update last sync timestamp for user"""
+        pass
     
     async def _analyze_revenue_trends(self, user_id: str) -> Dict[str, List[float]]:
-        """Analyze revenue trends"""        return {'daily': [100, 120, 90, 150, 180], 'weekly': [800, 950, 1100]}
+        """Analyze revenue trends"""
+        return {'daily': [100, 120, 90, 150, 180], 'weekly': [800, 950, 1100]}
     
     async def _analyze_platform_performance(self, user_id: str) -> Dict[str, Any]:
-        """Analyze performance across platforms"""        return {'best_platform': 'youtube', 'growth_leader': 'tiktok'}
+        """Analyze performance across platforms"""
+        return {'best_platform': 'youtube', 'growth_leader': 'tiktok'}
     
     async def _calculate_optimization_impact(self, user_id: str) -> Dict[str, float]:
-        """Calculate optimization impact"""        return {'revenue_increase': 25.5, 'efficiency_gain': 15.2}
+        """Calculate optimization impact"""
+        return {'revenue_increase': 25.5, 'efficiency_gain': 15.2}
     
     async def _compare_with_benchmarks(self, user_id: str) -> Dict[str, Any]:
-        """Compare performance with industry benchmarks"""        return {'percentile': 75, 'above_average': True}
+        """Compare performance with industry benchmarks"""
+        return {'percentile': 75, 'above_average': True}
     
     async def _identify_growth_opportunities(self, user_id: str) -> List[Dict]:
-        """Identify growth opportunities"""        return [{'type': 'platform_expansion', 'potential': 'high'}]
+        """Identify growth opportunities"""
+        return [{'type': 'platform_expansion', 'potential': 'high'}]
     
     async def _analyze_monetization_risks(self, user_id: str) -> Dict[str, Any]:
-        """Analyze monetization risks"""        return {'platform_dependency': 'medium', 'compliance_risk': 'low'}
+        """Analyze monetization risks"""
+        return {'platform_dependency': 'medium', 'compliance_risk': 'low'}
     
     async def _generate_personalized_recommendations(self, user_id: str) -> List[Dict]:
-        """Generate personalized recommendations"""        return [{'category': 'content_optimization', 'action': 'improve_thumbnails'}]
+        """Generate personalized recommendations"""
+        return [{'category': 'content_optimization', 'action': 'improve_thumbnails'}]
 
     # Advanced Monetization Methods
 
     async def create_comprehensive_monetization_strategy(self, user_id: str) -> Dict[str, Any]:
-        """        Create a comprehensive monetization strategy based on user data and market analysis.
+        """
+        Create a comprehensive monetization strategy based on user data and market analysis.
         
         Args:
             user_id: User identifier
             
         Returns:
             Complete monetization strategy with action plans
-        """        try:
+        """
+        try:
             # Analyze current performance
             current_metrics = await self.analytics_engine.calculate_revenue_analytics(user_id, 90)
             
@@ -709,7 +759,8 @@ class MonetizationManager:
 
     async def implement_automated_optimization(self, user_id: str, 
                                              optimization_rules: Dict[str, Any]) -> Dict[str, Any]:
-        """        Implement automated optimization rules for continuous revenue improvement.
+        """
+        Implement automated optimization rules for continuous revenue improvement.
         
         Args:
             user_id: User identifier
@@ -717,7 +768,8 @@ class MonetizationManager:
             
         Returns:
             Automation setup results
-        """        try:
+        """
+        try:
             # Create optimization automation
             automation_config = {
                 "user_id": user_id,
@@ -760,7 +812,8 @@ class MonetizationManager:
 
     async def generate_executive_revenue_report(self, user_id: str, 
                                               period_days: int = 90) -> Dict[str, Any]:
-        """        Generate comprehensive executive revenue report with insights and projections.
+        """
+        Generate comprehensive executive revenue report with insights and projections.
         
         Args:
             user_id: User identifier
@@ -768,7 +821,8 @@ class MonetizationManager:
             
         Returns:
             Executive revenue report
-        """        try:
+        """
+        try:
             # Configure report
             config = ReportConfiguration(
                 report_id=str(uuid.uuid4()),
@@ -817,14 +871,16 @@ class MonetizationManager:
             raise
 
     async def optimize_multi_platform_revenue(self, user_id: str) -> Dict[str, Any]:
-        """        Optimize revenue across multiple platforms with cross-platform synergies.
+        """
+        Optimize revenue across multiple platforms with cross-platform synergies.
         
         Args:
             user_id: User identifier
             
         Returns:
             Multi-platform optimization results
-        """        try:
+        """
+        try:
             # Analyze current platform performance
             platform_performance = await self._analyze_multi_platform_performance(user_id)
             
@@ -867,14 +923,16 @@ class MonetizationManager:
             raise
 
     async def create_revenue_protection_strategy(self, user_id: str) -> Dict[str, Any]:
-        """        Create comprehensive revenue protection strategy against content theft and misuse.
+        """
+        Create comprehensive revenue protection strategy against content theft and misuse.
         
         Args:
             user_id: User identifier
             
         Returns:
             Revenue protection strategy
-        """        try:
+        """
+        try:
             # Analyze revenue vulnerabilities
             vulnerabilities = await self._analyze_revenue_vulnerabilities(user_id)
             
@@ -911,7 +969,8 @@ class MonetizationManager:
 
     async def implement_dynamic_pricing_optimization(self, user_id: str, 
                                                    content_id: str) -> Dict[str, Any]:
-        """        Implement dynamic pricing optimization for content monetization.
+        """
+        Implement dynamic pricing optimization for content monetization.
         
         Args:
             user_id: User identifier
@@ -919,7 +978,8 @@ class MonetizationManager:
             
         Returns:
             Dynamic pricing configuration
-        """        try:
+        """
+        try:
             # Analyze market conditions
             market_analysis = await self._analyze_market_conditions(user_id, content_id)
             
@@ -963,7 +1023,8 @@ class MonetizationManager:
     # Helper methods for advanced functionality
 
     async def _analyze_platform_expansion_opportunities(self, user_id: str) -> Dict[str, Any]:
-        """Analyze opportunities for platform expansion"""        return {
+        """Analyze opportunities for platform expansion"""
+        return {
             "recommended_platforms": ["tiktok", "twitch"],
             "potential_revenue": {"tiktok": 500, "twitch": 800},
             "investment_required": {"tiktok": 200, "twitch": 400},
@@ -971,7 +1032,8 @@ class MonetizationManager:
         }
 
     async def _create_revenue_diversification_plan(self, user_id: str) -> Dict[str, Any]:
-        """Create revenue stream diversification plan"""        return {
+        """Create revenue stream diversification plan"""
+        return {
             "current_streams": ["ad_revenue", "sponsorships"],
             "recommended_additions": ["merchandise", "courses", "subscriptions"],
             "diversification_score": 65,
@@ -979,7 +1041,8 @@ class MonetizationManager:
         }
 
     async def _calculate_strategy_impact(self, user_id: str) -> Dict[str, float]:
-        """Calculate expected impact of monetization strategy"""        return {
+        """Calculate expected impact of monetization strategy"""
+        return {
             "revenue_increase_percent": 35.5,
             "revenue_increase_amount": 2500.0,
             "efficiency_improvement": 25.0,
@@ -987,21 +1050,24 @@ class MonetizationManager:
         }
 
     async def _create_implementation_timeline(self, user_id: str) -> Dict[str, Any]:
-        """Create implementation timeline for strategy"""        return {
+        """Create implementation timeline for strategy"""
+        return {
             "phase_1": {"duration": "4 weeks", "focus": "platform_optimization"},
             "phase_2": {"duration": "6 weeks", "focus": "content_diversification"},
             "phase_3": {"duration": "8 weeks", "focus": "revenue_automation"}
         }
 
     async def _define_success_metrics(self, user_id: str) -> Dict[str, Any]:
-        """Define success metrics for strategy"""        return {
+        """Define success metrics for strategy"""
+        return {
             "primary_kpis": ["monthly_revenue", "revenue_growth_rate"],
             "secondary_kpis": ["platform_diversification", "content_efficiency"],
             "targets": {"monthly_revenue": 5000, "growth_rate": 15}
         }
 
     async def _create_risk_mitigation_plan(self, user_id: str) -> Dict[str, Any]:
-        """Create risk mitigation plan"""        return {
+        """Create risk mitigation plan"""
+        return {
             "identified_risks": ["platform_dependency", "content_saturation"],
             "mitigation_strategies": ["platform_diversification", "niche_focus"],
             "contingency_plans": ["backup_revenue_streams", "emergency_fund"]

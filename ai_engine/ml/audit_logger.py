@@ -10,7 +10,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import uuid
@@ -32,7 +33,8 @@ logger = logging.getLogger(__name__)
 
 
 class AuditLevel(Enum):
-    """Audit severity levels"""    TRACE = "trace"
+    """Audit severity levels"""
+    TRACE = "trace"
     DEBUG = "debug"
     INFO = "info"
     WARNING = "warning"
@@ -44,7 +46,8 @@ class AuditLevel(Enum):
 
 
 class AuditCategory(Enum):
-    """Audit event categories"""    # Security events
+    """Audit event categories"""
+    # Security events
     AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     DATA_ACCESS = "data_access"
@@ -83,7 +86,8 @@ class AuditCategory(Enum):
 
 
 class ComplianceStandard(Enum):
-    """Compliance standards"""    GDPR = "gdpr"
+    """Compliance standards"""
+    GDPR = "gdpr"
     CCPA = "ccpa"
     HIPAA = "hipaa"
     SOX = "sox"
@@ -94,7 +98,8 @@ class ComplianceStandard(Enum):
 
 @dataclass
 class AuditContext:
-    """Context information for audit events"""    user_id: Optional[str] = None
+    """Context information for audit events"""
+    user_id: Optional[str] = None
     session_id: Optional[str] = None
     request_id: Optional[str] = None
     client_ip: Optional[str] = None
@@ -126,7 +131,8 @@ class AuditContext:
 
 @dataclass
 class AuditEvent:
-    """Complete audit event record"""    # Event identification
+    """Complete audit event record"""
+    # Event identification
     event_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     level: AuditLevel = AuditLevel.INFO
@@ -172,7 +178,8 @@ class AuditEvent:
     event_hash: str = field(default="")
     
     def __post_init__(self):
-        """Generate event hash for integrity"""        if not self.event_hash:
+        """Generate event hash for integrity"""
+        if not self.event_hash:
             hash_data = {
                 'event_id': self.event_id,
                 'timestamp': self.timestamp.isoformat(),
@@ -187,9 +194,11 @@ class AuditEvent:
 
 
 class AuditStorage:
-    """Abstract audit storage interface"""    
+    """Abstract audit storage interface"""
+    
     async def store_event(self, event: AuditEvent) -> bool:
-        """Store audit event - base implementation"""        try:
+        """Store audit event - base implementation"""
+        try:
             logger.info(f"Storing audit event: {event.event_type.value} for {event.user_id}")
             
             # Basic validation
@@ -213,7 +222,8 @@ class AuditStorage:
             return False
     
     async def query_events(self, filters: Dict[str, Any]) -> List[AuditEvent]:
-        """Query audit events - base implementation"""        try:
+        """Query audit events - base implementation"""
+        try:
             logger.info(f"Querying audit events with filters: {filters}")
             
             # Basic implementation returns empty list
@@ -241,7 +251,8 @@ class AuditStorage:
     
     async def get_compliance_report(self, standard: ComplianceStandard, 
                                   start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Generate compliance report - base implementation"""        try:
+        """Generate compliance report - base implementation"""
+        try:
             logger.info(f"Generating compliance report for {standard.value} from {start_date} to {end_date}")
             
             # Basic compliance report structure
@@ -309,7 +320,8 @@ class AuditStorage:
 
 
 class FileAuditStorage(AuditStorage):
-    """File-based audit storage with rotation"""    
+    """File-based audit storage with rotation"""
+    
     def __init__(self, log_directory: str = "/var/log/ia-influencer/audit", 
                  max_file_size: int = 100 * 1024 * 1024):  # 100MB
         self.log_directory = Path(log_directory)
@@ -319,7 +331,8 @@ class FileAuditStorage(AuditStorage):
         self.executor = ThreadPoolExecutor(max_workers=2)
     
     async def store_event(self, event: AuditEvent) -> bool:
-        """Store event to file"""        try:
+        """Store event to file"""
+        try:
             file_path = await self._get_current_log_file()
             
             # Convert event to JSON
@@ -346,7 +359,8 @@ class FileAuditStorage(AuditStorage):
             return False
     
     async def _get_current_log_file(self) -> Path:
-        """Get current log file with rotation"""        today = datetime.now().strftime('%Y-%m-%d')
+        """Get current log file with rotation"""
+        today = datetime.now().strftime('%Y-%m-%d')
         log_file = self.log_directory / f"audit-{today}.jsonl"
         
         # Check if rotation needed
@@ -364,7 +378,8 @@ class FileAuditStorage(AuditStorage):
         return log_file
     
     async def query_events(self, filters: Dict[str, Any]) -> List[AuditEvent]:
-        """Query events from files (simplified implementation)"""        events = []
+        """Query events from files (simplified implementation)"""
+        events = []
         
         try:
             # Find relevant log files
@@ -408,7 +423,8 @@ class FileAuditStorage(AuditStorage):
         return events
     
     def _matches_filters(self, event_dict: Dict[str, Any], filters: Dict[str, Any]) -> bool:
-        """Check if event matches filters"""        for key, value in filters.items():
+        """Check if event matches filters"""
+        for key, value in filters.items():
             if key in event_dict:
                 if event_dict[key] != value:
                     return False
@@ -419,13 +435,15 @@ class FileAuditStorage(AuditStorage):
 
 
 class DatabaseAuditStorage(AuditStorage):
-    """Database-based audit storage (placeholder for SQLAlchemy integration)"""    
+    """Database-based audit storage (placeholder for SQLAlchemy integration)"""
+    
     def __init__(self, database_url: str):
         self.database_url = database_url
         # In production, initialize SQLAlchemy session here
     
     async def store_event(self, event: AuditEvent) -> bool:
-        """Store event to database"""        try:
+        """Store event to database"""
+        try:
             # Simulated database storage with in-memory fallback
             # In production, this would use SQLAlchemy async session
             
@@ -470,7 +488,8 @@ class DatabaseAuditStorage(AuditStorage):
             return False
     
     async def query_events(self, filters: Dict[str, Any]) -> List[AuditEvent]:
-        """Query events from database"""        try:
+        """Query events from database"""
+        try:
             # In production, this would use SQLAlchemy queries with proper filtering
             events = []
             
@@ -529,7 +548,8 @@ class DatabaseAuditStorage(AuditStorage):
     
     async def get_compliance_report(self, standard: ComplianceStandard, 
                                   start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Generate compliance report from database"""        try:
+        """Generate compliance report from database"""
+        try:
             # Query events for the compliance standard and date range
             filters = {
                 'start_date': start_date,
@@ -599,7 +619,8 @@ class DatabaseAuditStorage(AuditStorage):
             }
     
     def _generate_compliance_recommendations(self, standard: ComplianceStandard, events: List[AuditEvent]) -> List[str]:
-        """Generate compliance recommendations based on audit events"""        recommendations = []
+        """Generate compliance recommendations based on audit events"""
+        recommendations = []
         
         # Count critical issues
         critical_count = len([e for e in events if e.level == AuditLevel.CRITICAL])
@@ -632,8 +653,10 @@ class DatabaseAuditStorage(AuditStorage):
 
 
 class AuditLogger:
-    """    Comprehensive audit logging system for the IA Influencer platform
-    """    
+    """
+    Comprehensive audit logging system for the IA Influencer platform
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.storage_backends = []
@@ -651,7 +674,8 @@ class AuditLogger:
         self.compliance_events = {standard: 0 for standard in ComplianceStandard}
         
     def _initialize_storage(self):
-        """Initialize configured storage backends"""        storage_config = self.config.get('storage', {})
+        """Initialize configured storage backends"""
+        storage_config = self.config.get('storage', {})
         
         # File storage
         if storage_config.get('file_enabled', True):
@@ -669,14 +693,16 @@ class AuditLogger:
             self.storage_backends.append(db_storage)
     
     def set_global_context(self, **kwargs):
-        """Set global audit context"""        for key, value in kwargs.items():
+        """Set global audit context"""
+        for key, value in kwargs.items():
             if hasattr(self.global_context, key):
                 setattr(self.global_context, key, value)
             else:
                 self.global_context.custom_data[key] = value
     
     def push_context(self, **kwargs) -> AuditContext:
-        """Push new audit context (context manager support)"""        context = AuditContext()
+        """Push new audit context (context manager support)"""
+        context = AuditContext()
         
         # Inherit from global context
         context.__dict__.update(self.global_context.__dict__)
@@ -692,11 +718,13 @@ class AuditLogger:
         return context
     
     def pop_context(self):
-        """Pop audit context"""        if self.context_stack:
+        """Pop audit context"""
+        if self.context_stack:
             self.context_stack.pop()
     
     def get_current_context(self) -> AuditContext:
-        """Get current audit context"""        if self.context_stack:
+        """Get current audit context"""
+        if self.context_stack:
             return self.context_stack[-1]
         return self.global_context
     
@@ -709,7 +737,8 @@ class AuditLogger:
                        outcome: str = "success",
                        context: Optional[AuditContext] = None,
                        **kwargs) -> AuditEvent:
-        """Log an audit event"""        
+        """Log an audit event"""
+        
         # Use current context if none provided
         if context is None:
             context = self.get_current_context()
@@ -747,41 +776,51 @@ class AuditLogger:
     
     # Convenience methods for different log levels
     async def trace(self, category: AuditCategory, message: str, **kwargs):
-        """Log trace event"""        return await self.log_event(AuditLevel.TRACE, category, message, **kwargs)
+        """Log trace event"""
+        return await self.log_event(AuditLevel.TRACE, category, message, **kwargs)
     
     async def debug(self, category: AuditCategory, message: str, **kwargs):
-        """Log debug event"""        return await self.log_event(AuditLevel.DEBUG, category, message, **kwargs)
+        """Log debug event"""
+        return await self.log_event(AuditLevel.DEBUG, category, message, **kwargs)
     
     async def info(self, category: AuditCategory, message: str, **kwargs):
-        """Log info event"""        return await self.log_event(AuditLevel.INFO, category, message, **kwargs)
+        """Log info event"""
+        return await self.log_event(AuditLevel.INFO, category, message, **kwargs)
     
     async def warning(self, category: AuditCategory, message: str, **kwargs):
-        """Log warning event"""        return await self.log_event(AuditLevel.WARNING, category, message, **kwargs)
+        """Log warning event"""
+        return await self.log_event(AuditLevel.WARNING, category, message, **kwargs)
     
     async def error(self, category: AuditCategory, message: str, **kwargs):
-        """Log error event"""        return await self.log_event(AuditLevel.ERROR, category, message, **kwargs)
+        """Log error event"""
+        return await self.log_event(AuditLevel.ERROR, category, message, **kwargs)
     
     async def critical(self, category: AuditCategory, message: str, **kwargs):
-        """Log critical event"""        return await self.log_event(AuditLevel.CRITICAL, category, message, **kwargs)
+        """Log critical event"""
+        return await self.log_event(AuditLevel.CRITICAL, category, message, **kwargs)
     
     async def security(self, category: AuditCategory, message: str, **kwargs):
-        """Log security event"""        kwargs.setdefault('risk_level', 'medium')
+        """Log security event"""
+        kwargs.setdefault('risk_level', 'medium')
         return await self.log_event(AuditLevel.SECURITY, category, message, **kwargs)
     
     async def compliance(self, category: AuditCategory, message: str, 
                         standards: List[ComplianceStandard], **kwargs):
-        """Log compliance event"""        kwargs['compliance_standards'] = standards
+        """Log compliance event"""
+        kwargs['compliance_standards'] = standards
         kwargs.setdefault('retention_period_days', 2557)  # 7 years
         return await self.log_event(AuditLevel.COMPLIANCE, category, message, **kwargs)
     
     async def business(self, category: AuditCategory, message: str, **kwargs):
-        """Log business event"""        kwargs.setdefault('business_impact', 'low')
+        """Log business event"""
+        kwargs.setdefault('business_impact', 'low')
         return await self.log_event(AuditLevel.BUSINESS, category, message, **kwargs)
     
     # Specialized audit methods
     async def log_authentication(self, user_id: str, success: bool, 
                                method: str = "password", **kwargs):
-        """Log authentication event"""        outcome = "success" if success else "failure"
+        """Log authentication event"""
+        outcome = "success" if success else "failure"
         risk_level = "low" if success else "high"
         
         return await self.log_event(
@@ -798,7 +837,8 @@ class AuditLogger:
     
     async def log_data_access(self, user_id: str, resource: str, action: str, 
                              pii_present: bool = False, **kwargs):
-        """Log data access event"""        level = AuditLevel.COMPLIANCE if pii_present else AuditLevel.INFO
+        """Log data access event"""
+        level = AuditLevel.COMPLIANCE if pii_present else AuditLevel.INFO
         standards = [ComplianceStandard.GDPR] if pii_present else []
         
         return await self.log_event(
@@ -815,7 +855,8 @@ class AuditLogger:
     
     async def log_content_processing(self, content_id: str, creator_id: str, 
                                    processing_type: str, model_id: str = "", **kwargs):
-        """Log content processing event"""        return await self.log_event(
+        """Log content processing event"""
+        return await self.log_event(
             level=AuditLevel.BUSINESS,
             category=AuditCategory.CONTENT_PROCESSING,
             message=f"Content processing: {processing_type}",
@@ -833,7 +874,8 @@ class AuditLogger:
     async def log_ai_decision(self, model_id: str, decision: str, confidence: float, 
                              input_data: Optional[Dict[str, Any]] = None,
                              sensitive_data: bool = False, **kwargs):
-        """Log AI/ML decision for explainability"""        return await self.log_event(
+        """Log AI/ML decision for explainability"""
+        return await self.log_event(
             level=AuditLevel.BUSINESS,
             category=AuditCategory.AI_DECISION,
             message=f"AI decision: {decision} (confidence: {confidence:.2f})",
@@ -847,7 +889,8 @@ class AuditLogger:
     
     async def log_copyright_check(self, content_id: str, matches_found: int, 
                                  confidence: float, **kwargs):
-        """Log copyright protection check"""        risk_level = "high" if matches_found > 0 else "low"
+        """Log copyright protection check"""
+        risk_level = "high" if matches_found > 0 else "low"
         
         return await self.log_event(
             level=AuditLevel.SECURITY if matches_found > 0 else AuditLevel.INFO,
@@ -863,7 +906,8 @@ class AuditLogger:
     
     async def log_gdpr_request(self, user_id: str, request_type: str, 
                               data_categories: List[str], **kwargs):
-        """Log GDPR data subject request"""        return await self.log_event(
+        """Log GDPR data subject request"""
+        return await self.log_event(
             level=AuditLevel.COMPLIANCE,
             category=AuditCategory.GDPR_REQUEST,
             message=f"GDPR request: {request_type}",
@@ -878,7 +922,8 @@ class AuditLogger:
     
     # Performance and metrics
     def get_audit_stats(self) -> Dict[str, Any]:
-        """Get audit logging statistics"""        return {
+        """Get audit logging statistics"""
+        return {
             "events_logged": self.events_logged,
             "events_failed": self.events_failed,
             "success_rate": self.events_logged / max(self.events_logged + self.events_failed, 1),
@@ -888,7 +933,8 @@ class AuditLogger:
     
     async def generate_compliance_report(self, standard: ComplianceStandard,
                                        start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Generate compliance report"""        report = {
+        """Generate compliance report"""
+        report = {
             "standard": standard.value,
             "period": {"start": start_date.isoformat(), "end": end_date.isoformat()},
             "summary": {},
@@ -953,8 +999,10 @@ def audit_decorator(category: AuditCategory,
                    log_args: bool = False,
                    log_result: bool = False,
                    sensitive_args: List[str] = None):
-    """    Decorator for automatic audit logging of function calls
-    """    def decorator(func: Callable) -> Callable:
+    """
+    Decorator for automatic audit logging of function calls
+    """
+    def decorator(func: Callable) -> Callable:
         @wraps(func)
         async def async_wrapper(*args, **kwargs):
             # Get audit logger from context or create default
@@ -1059,7 +1107,8 @@ def audit_decorator(category: AuditCategory,
 
 # Context manager for audit context
 class AuditContextManager:
-    """Context manager for audit logging"""    
+    """Context manager for audit logging"""
+    
     def __init__(self, audit_logger: AuditLogger, **context_kwargs):
         self.audit_logger = audit_logger
         self.context_kwargs = context_kwargs
@@ -1086,20 +1135,23 @@ class AuditContextManager:
 _global_audit_logger: Optional[AuditLogger] = None
 
 def get_audit_logger() -> AuditLogger:
-    """Get global audit logger instance"""    global _global_audit_logger
+    """Get global audit logger instance"""
+    global _global_audit_logger
     if _global_audit_logger is None:
         _global_audit_logger = AuditLogger()
     return _global_audit_logger
 
 def set_audit_logger(audit_logger: AuditLogger):
-    """Set global audit logger instance"""    global _global_audit_logger
+    """Set global audit logger instance"""
+    global _global_audit_logger
     _global_audit_logger = audit_logger
 
 
 # Specialized audit functions for common use cases
 async def audit_api_request(method: str, endpoint: str, user_id: str = None, 
                            status_code: int = 200, duration_ms: float = 0, **kwargs):
-    """Audit API request"""    logger = get_audit_logger()
+    """Audit API request"""
+    logger = get_audit_logger()
     outcome = "success" if 200 <= status_code < 300 else "failure"
     level = AuditLevel.INFO if outcome == "success" else AuditLevel.WARNING
     
@@ -1119,7 +1171,8 @@ async def audit_api_request(method: str, endpoint: str, user_id: str = None,
 
 async def audit_model_prediction(model_id: str, input_size: int, prediction: Any,
                                confidence: float, processing_time_ms: float, **kwargs):
-    """Audit ML model prediction"""    logger = get_audit_logger()
+    """Audit ML model prediction"""
+    logger = get_audit_logger()
     
     return await logger.log_event(
         level=AuditLevel.BUSINESS,
@@ -1141,7 +1194,8 @@ async def audit_model_prediction(model_id: str, input_size: int, prediction: Any
 
 async def audit_content_upload(content_id: str, creator_id: str, file_size: int,
                              content_type: str, **kwargs):
-    """Audit content upload"""    logger = get_audit_logger()
+    """Audit content upload"""
+    logger = get_audit_logger()
     
     return await logger.log_event(
         level=AuditLevel.BUSINESS,

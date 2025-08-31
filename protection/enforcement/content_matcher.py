@@ -1,6 +1,7 @@
 """Advanced Content Matching Engine for Copyright Enforcement
 Sophisticated algorithms for detecting content violations across multiple media types
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Set
 from dataclasses import dataclass, field
@@ -20,7 +21,8 @@ logger = logging.getLogger(__name__)
 
 
 class MatchingAlgorithm(Enum):
-    """Content matching algorithms"""    EXACT_HASH = "exact_hash"
+    """Content matching algorithms"""
+    EXACT_HASH = "exact_hash"
     PERCEPTUAL_HASH = "perceptual_hash"
     AUDIO_FINGERPRINT = "audio_fingerprint"
     VIDEO_FINGERPRINT = "video_fingerprint"
@@ -30,7 +32,8 @@ class MatchingAlgorithm(Enum):
 
 
 class MatchConfidence(Enum):
-    """Confidence levels for content matches"""    VERY_LOW = "very_low"      # 0.0 - 0.3
+    """Confidence levels for content matches"""
+    VERY_LOW = "very_low"      # 0.0 - 0.3
     LOW = "low"                # 0.3 - 0.5
     MEDIUM = "medium"          # 0.5 - 0.7
     HIGH = "high"              # 0.7 - 0.9
@@ -39,7 +42,8 @@ class MatchConfidence(Enum):
 
 @dataclass
 class ContentSignature:
-    """Digital signature of content for matching"""    content_id: str
+    """Digital signature of content for matching"""
+    content_id: str
     content_type: str  # audio, video, image, text
     signature_hash: str
     perceptual_hash: Optional[str] = None
@@ -69,7 +73,8 @@ class ContentSignature:
 
 @dataclass
 class MatchResult:
-    """Result of content matching operation"""    original_signature: ContentSignature
+    """Result of content matching operation"""
+    original_signature: ContentSignature
     matched_signature: ContentSignature
     algorithm_used: MatchingAlgorithm
     similarity_score: float
@@ -80,7 +85,8 @@ class MatchResult:
 
 
 class AudioMatcher:
-    """Advanced audio content matching using multiple algorithms"""    
+    """Advanced audio content matching using multiple algorithms"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.chromaprint_enabled = self.config.get('chromaprint_enabled', True)
@@ -88,7 +94,8 @@ class AudioMatcher:
         self.ml_enabled = self.config.get('ml_enabled', False)
         
     async def generate_signature(self, audio_data: bytes, metadata: Dict[str, Any]) -> ContentSignature:
-        """Generate comprehensive audio signature"""        try:
+        """Generate comprehensive audio signature"""
+        try:
             # Basic hash
             content_hash = hashlib.sha256(audio_data).hexdigest()
             
@@ -117,7 +124,8 @@ class AudioMatcher:
             raise
     
     def _generate_audio_perceptual_hash(self, audio_data: bytes) -> str:
-        """Generate perceptual hash for audio content"""        try:
+        """Generate perceptual hash for audio content"""
+        try:
             # Simulate advanced audio fingerprinting
             # In real implementation, would use Chromaprint or similar
             hash_input = str(len(audio_data)) + str(hash(audio_data[:1024]))
@@ -128,7 +136,8 @@ class AudioMatcher:
             return ""
     
     async def _extract_audio_features(self, audio_data: bytes) -> List[float]:
-        """Extract ML features from audio"""        try:
+        """Extract ML features from audio"""
+        try:
             # Simulate feature extraction
             # In real implementation, would use librosa, essentia, or similar
             features = [float(i % 128) / 128.0 for i in range(128)]
@@ -143,7 +152,8 @@ class AudioMatcher:
         signature1: ContentSignature,
         signature2: ContentSignature
     ) -> MatchResult:
-        """Match two audio signatures"""        try:
+        """Match two audio signatures"""
+        try:
             start_time = datetime.utcnow()
             
             # Exact hash comparison
@@ -196,7 +206,8 @@ class AudioMatcher:
             raise
     
     def _compare_perceptual_hashes(self, hash1: Optional[str], hash2: Optional[str]) -> float:
-        """Compare perceptual hashes"""        if not hash1 or not hash2:
+        """Compare perceptual hashes"""
+        if not hash1 or not hash2:
             return 0.0
         
         if hash1 == hash2:
@@ -211,7 +222,8 @@ class AudioMatcher:
             return 0.0
     
     def _compare_feature_vectors(self, vec1: List[float], vec2: List[float]) -> float:
-        """Compare feature vectors using cosine similarity"""        try:
+        """Compare feature vectors using cosine similarity"""
+        try:
             if len(vec1) != len(vec2):
                 return 0.0
             
@@ -231,7 +243,8 @@ class AudioMatcher:
             return 0.0
     
     def _determine_confidence(self, similarity_score: float) -> MatchConfidence:
-        """Determine confidence level based on similarity score"""        if similarity_score >= 0.9:
+        """Determine confidence level based on similarity score"""
+        if similarity_score >= 0.9:
             return MatchConfidence.VERY_HIGH
         elif similarity_score >= 0.7:
             return MatchConfidence.HIGH
@@ -244,7 +257,8 @@ class AudioMatcher:
 
 
 class VideoMatcher:
-    """Advanced video content matching"""    
+    """Advanced video content matching"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.frame_sampling_rate = self.config.get('frame_sampling_rate', 1.0)  # frames per second
@@ -252,7 +266,8 @@ class VideoMatcher:
         self.object_detection_enabled = self.config.get('object_detection_enabled', False)
     
     async def generate_signature(self, video_data: bytes, metadata: Dict[str, Any]) -> ContentSignature:
-        """Generate comprehensive video signature"""        try:
+        """Generate comprehensive video signature"""
+        try:
             content_hash = hashlib.sha256(video_data).hexdigest()
             
             # Video-specific processing
@@ -279,7 +294,8 @@ class VideoMatcher:
             raise
     
     async def _generate_video_perceptual_hash(self, video_data: bytes) -> str:
-        """Generate perceptual hash for video content"""        try:
+        """Generate perceptual hash for video content"""
+        try:
             # Simulate video frame hashing
             # In real implementation, would extract key frames and hash them
             hash_input = str(len(video_data)) + str(hash(video_data[:2048]))
@@ -290,7 +306,8 @@ class VideoMatcher:
             return ""
     
     async def _extract_video_features(self, video_data: bytes) -> List[float]:
-        """Extract ML features from video"""        try:
+        """Extract ML features from video"""
+        try:
             # Simulate video feature extraction
             # In real implementation, would use OpenCV, YOLO, or similar
             features = [float(i % 256) / 256.0 for i in range(256)]
@@ -305,7 +322,8 @@ class VideoMatcher:
         signature1: ContentSignature,
         signature2: ContentSignature
     ) -> MatchResult:
-        """Match two video signatures"""        try:
+        """Match two video signatures"""
+        try:
             start_time = datetime.utcnow()
             
             # Exact hash comparison
@@ -356,7 +374,8 @@ class VideoMatcher:
             raise
     
     def _compare_perceptual_hashes(self, hash1: Optional[str], hash2: Optional[str]) -> float:
-        """Compare video perceptual hashes"""        if not hash1 or not hash2:
+        """Compare video perceptual hashes"""
+        if not hash1 or not hash2:
             return 0.0
         
         if hash1 == hash2:
@@ -371,7 +390,8 @@ class VideoMatcher:
             return 0.0
     
     def _compare_feature_vectors(self, vec1: List[float], vec2: List[float]) -> float:
-        """Compare video feature vectors"""        try:
+        """Compare video feature vectors"""
+        try:
             if len(vec1) != len(vec2):
                 return 0.0
             
@@ -391,7 +411,8 @@ class VideoMatcher:
             return 0.0
     
     def _determine_confidence(self, similarity_score: float) -> MatchConfidence:
-        """Determine confidence level for video matches"""        if similarity_score >= 0.9:
+        """Determine confidence level for video matches"""
+        if similarity_score >= 0.9:
             return MatchConfidence.VERY_HIGH
         elif similarity_score >= 0.7:
             return MatchConfidence.HIGH
@@ -404,14 +425,16 @@ class VideoMatcher:
 
 
 class TextMatcher:
-    """Advanced text content matching"""    
+    """Advanced text content matching"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.semantic_enabled = self.config.get('semantic_enabled', True)
         self.language_detection_enabled = self.config.get('language_detection_enabled', True)
     
     async def generate_signature(self, text_content: str, metadata: Dict[str, Any]) -> ContentSignature:
-        """Generate comprehensive text signature"""        try:
+        """Generate comprehensive text signature"""
+        try:
             content_hash = hashlib.sha256(text_content.encode()).hexdigest()
             
             # Text-specific processing
@@ -439,7 +462,8 @@ class TextMatcher:
             raise
     
     def _generate_text_semantic_hash(self, text: str) -> str:
-        """Generate semantic hash for text content"""        try:
+        """Generate semantic hash for text content"""
+        try:
             # Simulate semantic hashing
             # In real implementation, would use word embeddings or similar
             normalized_text = text.lower().strip()
@@ -452,7 +476,8 @@ class TextMatcher:
             return ""
     
     async def _extract_text_features(self, text: str) -> List[float]:
-        """Extract ML features from text"""        try:
+        """Extract ML features from text"""
+        try:
             # Simulate text feature extraction
             # In real implementation, would use BERT, RoBERTa, or similar
             features = []
@@ -484,7 +509,8 @@ class TextMatcher:
             return [0.0] * 128
     
     def _extract_keywords(self, text: str) -> List[str]:
-        """Extract keywords from text"""        try:
+        """Extract keywords from text"""
+        try:
             # Simple keyword extraction
             # In real implementation, would use NLP libraries like spaCy or NLTK
             words = text.lower().split()
@@ -511,7 +537,8 @@ class TextMatcher:
         signature1: ContentSignature,
         signature2: ContentSignature
     ) -> MatchResult:
-        """Match two text signatures"""        try:
+        """Match two text signatures"""
+        try:
             start_time = datetime.utcnow()
             
             # Exact hash comparison
@@ -570,7 +597,8 @@ class TextMatcher:
             raise
     
     def _compare_semantic_hashes(self, hash1: Optional[str], hash2: Optional[str]) -> float:
-        """Compare semantic hashes"""        if not hash1 or not hash2:
+        """Compare semantic hashes"""
+        if not hash1 or not hash2:
             return 0.0
         
         if hash1 == hash2:
@@ -585,7 +613,8 @@ class TextMatcher:
             return 0.0
     
     def _compare_feature_vectors(self, vec1: List[float], vec2: List[float]) -> float:
-        """Compare text feature vectors"""        try:
+        """Compare text feature vectors"""
+        try:
             if len(vec1) != len(vec2):
                 return 0.0
             
@@ -605,7 +634,8 @@ class TextMatcher:
             return 0.0
     
     def _compare_keywords(self, keywords1: List[str], keywords2: List[str]) -> float:
-        """Compare keyword lists using Jaccard similarity"""        try:
+        """Compare keyword lists using Jaccard similarity"""
+        try:
             if not keywords1 or not keywords2:
                 return 0.0
             
@@ -622,7 +652,8 @@ class TextMatcher:
             return 0.0
     
     def _determine_confidence(self, similarity_score: float) -> MatchConfidence:
-        """Determine confidence level for text matches"""        if similarity_score >= 0.9:
+        """Determine confidence level for text matches"""
+        if similarity_score >= 0.9:
             return MatchConfidence.VERY_HIGH
         elif similarity_score >= 0.7:
             return MatchConfidence.HIGH
@@ -635,7 +666,8 @@ class TextMatcher:
 
 
 class ContentMatchingEngine:
-    """Central engine for content matching across all media types"""    
+    """Central engine for content matching across all media types"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.audio_matcher = AudioMatcher(self.config.get('audio', {}))
@@ -658,7 +690,8 @@ class ContentMatchingEngine:
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ContentSignature:
-        """Generate content signature based on type"""        try:
+        """Generate content signature based on type"""
+        try:
             metadata = metadata or {}
             
             if content_type == 'audio':
@@ -686,7 +719,8 @@ class ContentMatchingEngine:
         signature1: ContentSignature,
         signature2: ContentSignature
     ) -> MatchResult:
-        """Match two content signatures"""        try:
+        """Match two content signatures"""
+        try:
             if signature1.content_type != signature2.content_type:
                 raise ValueError("Cannot match signatures of different content types")
             
@@ -714,7 +748,8 @@ class ContentMatchingEngine:
         candidate_signatures: List[ContentSignature],
         min_similarity: Optional[float] = None
     ) -> List[MatchResult]:
-        """Batch match target against multiple candidates"""        try:
+        """Batch match target against multiple candidates"""
+        try:
             min_similarity = min_similarity or self.similarity_threshold
             
             # Filter by content type
@@ -759,7 +794,8 @@ class ContentMatchingEngine:
         signatures: List[ContentSignature],
         similarity_threshold: Optional[float] = None
     ) -> List[Tuple[ContentSignature, ContentSignature, float]]:
-        """Find duplicate content within a set of signatures"""        try:
+        """Find duplicate content within a set of signatures"""
+        try:
             threshold = similarity_threshold or self.similarity_threshold
             duplicates = []
             
@@ -793,7 +829,8 @@ class ContentMatchingEngine:
             return []
     
     def _cache_signature(self, signature: ContentSignature):
-        """Cache signature for performance"""        try:
+        """Cache signature for performance"""
+        try:
             # Implement LRU cache behavior
             if len(self.signature_cache) >= self.cache_max_size:
                 # Remove oldest signature
@@ -806,14 +843,17 @@ class ContentMatchingEngine:
             logger.error(f"Error caching signature: {e}")
     
     def get_cached_signature(self, content_id: str) -> Optional[ContentSignature]:
-        """Retrieve signature from cache"""        return self.signature_cache.get(content_id)
+        """Retrieve signature from cache"""
+        return self.signature_cache.get(content_id)
     
     def clear_cache(self):
-        """Clear signature cache"""        self.signature_cache.clear()
+        """Clear signature cache"""
+        self.signature_cache.clear()
         logger.info("Signature cache cleared")
     
     async def get_matching_statistics(self) -> Dict[str, Any]:
-        """Get matching engine statistics"""        try:
+        """Get matching engine statistics"""
+        try:
             stats = {
                 'cache_size': len(self.signature_cache),
                 'cache_max_size': self.cache_max_size,
@@ -832,7 +872,8 @@ class ContentMatchingEngine:
             return {}
     
     async def shutdown(self):
-        """Shutdown matching engine"""        try:
+        """Shutdown matching engine"""
+        try:
             self.executor.shutdown(wait=True)
             self.clear_cache()
             logger.info("Content matching engine shutdown complete")
@@ -846,7 +887,8 @@ matching_engine = ContentMatchingEngine()
 
 
 async def get_matching_engine() -> ContentMatchingEngine:
-    """Get the global content matching engine instance"""    return matching_engine
+    """Get the global content matching engine instance"""
+    return matching_engine
 
 
 __all__ = [

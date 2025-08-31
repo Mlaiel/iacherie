@@ -13,7 +13,8 @@ Project Team Specialists: Lead AI Dev, Backend Senior, ML Engineer, DBA, Securit
 This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be pursued against any infringement.
-"""from typing import Dict, Any, List, Optional, Union
+"""
+from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
@@ -26,7 +27,8 @@ import logging
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Supported content types"""    AUDIO = "audio"
+    """Supported content types"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -37,7 +39,8 @@ class ContentType(Enum):
     INTERACTIVE = "interactive"
 
 class ContentStatus(Enum):
-    """Content processing status"""    UPLOADED = "uploaded"
+    """Content processing status"""
+    UPLOADED = "uploaded"
     PROCESSING = "processing"
     PROTECTED = "protected"
     PUBLISHED = "published"
@@ -46,7 +49,8 @@ class ContentStatus(Enum):
 
 @dataclass
 class ContentMetadata:
-    """Comprehensive content metadata"""    content_id: str
+    """Comprehensive content metadata"""
+    content_id: str
     creator_id: str
     title: str
     description: str
@@ -71,9 +75,11 @@ class ContentMetadata:
     fingerprint: str = ""
 
 class ContentManager:
-    """    Advanced content management system handling all content types
+    """
+    Advanced content management system handling all content types
     with AI-powered processing, protection, and optimization.
-    """    
+    """
+    
     def __init__(self):
         self.supported_formats = {
             ContentType.AUDIO: ['.mp3', '.wav', '.flac', '.aac', '.ogg'],
@@ -87,7 +93,8 @@ class ContentManager:
         }
         
     async def process_content(self, content_data: Dict[str, Any], creator_id: str) -> ContentMetadata:
-        """Process uploaded content with full AI analysis"""        try:
+        """Process uploaded content with full AI analysis"""
+        try:
             # Generate unique content ID
             content_id = str(uuid.uuid4())
             
@@ -132,11 +139,13 @@ class ContentManager:
             raise
     
     async def _generate_fingerprint(self, metadata: ContentMetadata) -> str:
-        """Generate unique content fingerprint for protection"""        content_string = f"{metadata.title}_{metadata.creator_id}_{metadata.file_path}_{datetime.utcnow().isoformat()}"
+        """Generate unique content fingerprint for protection"""
+        content_string = f"{metadata.title}_{metadata.creator_id}_{metadata.file_path}_{datetime.utcnow().isoformat()}"
         return hashlib.sha256(content_string.encode()).hexdigest()
     
     async def _analyze_content_ai(self, metadata: ContentMetadata) -> Dict[str, Any]:
-        """AI-powered content analysis"""        analysis = {
+        """AI-powered content analysis"""
+        analysis = {
             "sentiment_score": 0.75,
             "engagement_potential": 0.82,
             "viral_probability": 0.65,
@@ -173,7 +182,8 @@ class ContentManager:
         return analysis
     
     async def _generate_seo_keywords(self, metadata: ContentMetadata) -> List[str]:
-        """Generate SEO-optimized keywords"""        base_keywords = metadata.tags + metadata.categories
+        """Generate SEO-optimized keywords"""
+        base_keywords = metadata.tags + metadata.categories
         
         # AI-enhanced keyword generation based on content analysis
         enhanced_keywords = [
@@ -192,7 +202,8 @@ class ContentManager:
         return list(set(base_keywords + enhanced_keywords))
     
     async def _assess_quality(self, metadata: ContentMetadata) -> float:
-        """Assess content quality using multiple criteria"""        quality_factors = {
+        """Assess content quality using multiple criteria"""
+        quality_factors = {
             "technical_quality": metadata.ai_analysis.get("technical_quality", 0.5),
             "originality": metadata.ai_analysis.get("originality_score", 0.5),
             "engagement_potential": metadata.ai_analysis.get("engagement_potential", 0.5),
@@ -217,7 +228,8 @@ class ContentManager:
         return min(quality_score, 1.0)  # Cap at 1.0
     
     def _calculate_metadata_completeness(self, metadata: ContentMetadata) -> float:
-        """Calculate how complete the metadata is"""        required_fields = ['title', 'description', 'tags', 'categories']
+        """Calculate how complete the metadata is"""
+        required_fields = ['title', 'description', 'tags', 'categories']
         completed_fields = 0
         
         for field in required_fields:
@@ -229,7 +241,8 @@ class ContentManager:
         return completed_fields / len(required_fields)
     
     async def _apply_copyright_protection(self, metadata: ContentMetadata) -> Dict[str, Any]:
-        """Apply comprehensive copyright protection"""        return {
+        """Apply comprehensive copyright protection"""
+        return {
             "protection_id": str(uuid.uuid4()),
             "protection_level": "ultra_industrial",
             "watermark_applied": True,
@@ -242,12 +255,14 @@ class ContentManager:
         }
     
     async def get_content(self, content_id: str) -> Optional[ContentMetadata]:
-        """Retrieve content metadata by ID"""        # This would typically query a database
+        """Retrieve content metadata by ID"""
+        # This would typically query a database
         # For now, returning None - integrate with actual storage
         return None
     
     async def update_content(self, content_id: str, updates: Dict[str, Any]) -> ContentMetadata:
-        """Update content metadata"""        try:
+        """Update content metadata"""
+        try:
             self.logger.info(f"Updating content {content_id} with {len(updates)} fields")
             
             # Get existing content
@@ -313,7 +328,8 @@ class ContentManager:
             raise
     
     async def delete_content(self, content_id: str, creator_id: str) -> bool:
-        """Securely delete content and all associated data"""        try:
+        """Securely delete content and all associated data"""
+        try:
             # Verify ownership
             content = await self.get_content(content_id)
             if not content or content.creator_id != creator_id:
@@ -334,24 +350,28 @@ class ContentManager:
             return False
     
     async def search_content(self, criteria: Dict[str, Any]) -> List[ContentMetadata]:
-        """Advanced content search with multiple criteria"""        # This would typically implement complex database queries
+        """Advanced content search with multiple criteria"""
+        # This would typically implement complex database queries
         # Placeholder implementation
         return []
     
     async def get_creator_content(self, creator_id: str) -> List[ContentMetadata]:
-        """Get all content for a specific creator"""        # This would typically query database
+        """Get all content for a specific creator"""
+        # This would typically query database
         # Placeholder implementation
         return []
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for content manager"""        return {
+        """Health check for content manager"""
+        return {
             "status": "healthy",
             "supported_formats": len(self.supported_formats),
             "timestamp": datetime.utcnow().isoformat()
         }
 
     async def _update_content_in_database(self, content_id: str, updates: Dict[str, Any]) -> Dict[str, Any]:
-        """Update content in database"""        try:
+        """Update content in database"""
+        try:
             # In a real implementation, this would use SQLAlchemy/AsyncPG or similar
             # For now, simulate database operation
             
@@ -389,7 +409,8 @@ class ContentManager:
             }
 
     async def _update_content_cache(self, content_id: str, metadata: ContentMetadata) -> None:
-        """Update content in cache"""        try:
+        """Update content in cache"""
+        try:
             # In a real implementation, this would use Redis or similar
             # For now, simulate cache operation
             
@@ -419,7 +440,8 @@ class ContentManager:
             # Cache failures shouldn't break the main operation
 
     async def _get_content_from_database(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Retrieve content from database"""        try:
+        """Retrieve content from database"""
+        try:
             # In a real implementation:
             # async with self.db_pool.acquire() as conn:
             #     row = await conn.fetchrow(
@@ -437,7 +459,8 @@ class ContentManager:
             return None
 
     async def _ensure_database_connection(self) -> bool:
-        """Ensure database connection is available"""        try:
+        """Ensure database connection is available"""
+        try:
             # In a real implementation, this would test the database connection
             # For now, simulate connection check
             
@@ -451,4 +474,5 @@ class ContentManager:
             return False
     
     async def shutdown(self):
-        """Graceful shutdown"""        logger.info("ContentManager shutting down...")
+        """Graceful shutdown"""
+        logger.info("ContentManager shutting down...")

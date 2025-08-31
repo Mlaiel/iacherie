@@ -4,22 +4,30 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+
+import sys
+
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""Security Audit Trail Integration Test
+"""
+Security Audit Trail Integration Test
 Simplified test focusing on the new audit trail features without heavy dependencies.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use prohibited
-"""import asyncio
+"""
+
+import asyncio
+
 import json
 import sys
+
 import os
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Any
@@ -30,13 +38,17 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
 
 
 import pytest
+
 import sys
 import os
+
 from pathlib import Path
 
 @pytest.mark.asyncio
 async def test_security_audit_trail():
-    """Test the security audit trail functionality"""    
+    """
+Test the security audit trail functionality"""
+    
     print("Testing Security Audit Trail...")
     
     # Mock the dependencies to avoid import errors
@@ -116,7 +128,8 @@ async def test_security_audit_trail():
 
 @pytest.mark.asyncio 
 async def test_security_monitoring():
-    """Test security monitoring dashboard functionality"""    
+    """Test security monitoring dashboard functionality"""
+    
     print("\nTesting Security Monitoring Dashboard...")
     
     # Mock dependencies
@@ -171,7 +184,8 @@ async def test_security_monitoring():
 
 @pytest.mark.asyncio
 async def test_security_policies():
-    """Test security policies and procedures"""    
+    """Test security policies and procedures"""
+    
     print("\nTesting Security Policies...")
     
     # Mock dependencies
@@ -223,7 +237,8 @@ async def test_security_policies():
 
 @pytest.mark.asyncio
 async def test_vulnerability_scanner():
-    """Test vulnerability scanner functionality"""    
+    """Test vulnerability scanner functionality"""
+    
     print("\nTesting Vulnerability Scanner...")
     
     from security.vulnerability_scanner import SecurityScanner, VulnerabilitySeverity
@@ -257,7 +272,8 @@ async def test_vulnerability_scanner():
 
 @pytest.mark.asyncio
 async def test_integration():
-    """Test integration between all security components"""    
+    """Test integration between all security components"""
+    
     print("\nTesting Security Integration...")
     
     # Mock heavy dependencies
@@ -323,7 +339,8 @@ async def test_integration():
 
 
 async def run_all_tests():
-    """Run all security audit and compliance tests"""    
+    """Run all security audit and compliance tests"""
+    
     print("=" * 60)
     print("SECURITY AUDIT & COMPLIANCE TESTING")
     print("=" * 60)

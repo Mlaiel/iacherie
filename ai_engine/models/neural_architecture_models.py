@@ -11,7 +11,8 @@ Development Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security
 - Microservices + Audio + DevOps + IA Prompt Engineer
 Email: mlaiel@live.de
-"""import torch
+"""
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.nn import TransformerEncoder, TransformerEncoderLayer
@@ -30,7 +31,8 @@ from ..core.exceptions import ModelError, ValidationError
 
 
 class ArchitectureType(Enum):
-    """Neural architecture types"""    TRANSFORMER = "transformer"
+    """Neural architecture types"""
+    TRANSFORMER = "transformer"
     CNN = "cnn"
     RNN = "rnn"
     GAN = "gan"
@@ -41,7 +43,8 @@ class ArchitectureType(Enum):
 
 
 class OptimizationType(Enum):
-    """Model optimization techniques"""    QUANTIZATION = "quantization"
+    """Model optimization techniques"""
+    QUANTIZATION = "quantization"
     PRUNING = "pruning"
     DISTILLATION = "distillation"
     MIXED_PRECISION = "mixed_precision"
@@ -51,7 +54,8 @@ class OptimizationType(Enum):
 
 @dataclass
 class NeuralArchitectureConfig:
-    """Configuration for neural architecture models"""    architecture_type: ArchitectureType
+    """Configuration for neural architecture models"""
+    architecture_type: ArchitectureType
     input_dim: int
     output_dim: int
     hidden_dims: List[int]
@@ -69,7 +73,8 @@ class NeuralArchitectureConfig:
 
 @dataclass
 class ModelPerformanceMetrics:
-    """Performance metrics for model evaluation"""    accuracy: float
+    """Performance metrics for model evaluation"""
+    accuracy: float
     precision: float
     recall: float
     f1_score: float
@@ -83,9 +88,11 @@ class ModelPerformanceMetrics:
 
 
 class MultiModalTransformerArchitecture(nn.Module):
-    """    Advanced multi-modal transformer architecture for content processing
+    """
+    Advanced multi-modal transformer architecture for content processing
     Supports audio, video, image, and text modalities
-    """    
+    """
+    
     def __init__(self, config: NeuralArchitectureConfig):
         super().__init__()
         self.config = config
@@ -117,7 +124,8 @@ class MultiModalTransformerArchitecture(nn.Module):
         self.dropout = nn.Dropout(config.dropout_rate)
         
     def _create_modality_encoder(self, modality: str) -> nn.Module:
-        """Create modality-specific encoder"""        if modality == "audio":
+        """Create modality-specific encoder"""
+        if modality == "audio":
             return nn.Sequential(
                 nn.Conv1d(1, 64, kernel_size=3, padding=1),
                 nn.BatchNorm1d(64),
@@ -164,7 +172,8 @@ class MultiModalTransformerArchitecture(nn.Module):
             )
     
     def _create_fusion_network(self) -> nn.Module:
-        """Create fusion network for multi-modal features"""        layers = []
+        """Create fusion network for multi-modal features"""
+        layers = []
         
         input_dim = self.config.hidden_dims[0] * 4  # 4 modalities
         
@@ -183,7 +192,8 @@ class MultiModalTransformerArchitecture(nn.Module):
         return nn.Sequential(*layers)
     
     def _get_activation(self) -> nn.Module:
-        """Get activation function"""        activations = {
+        """Get activation function"""
+        activations = {
             "relu": nn.ReLU(),
             "gelu": nn.GELU(),
             "swish": nn.SiLU(),
@@ -192,7 +202,8 @@ class MultiModalTransformerArchitecture(nn.Module):
         return activations.get(self.config.activation, nn.ReLU())
     
     def forward(self, inputs: Dict[str, torch.Tensor]) -> torch.Tensor:
-        """Forward pass through multi-modal transformer"""        modality_features = []
+        """Forward pass through multi-modal transformer"""
+        modality_features = []
         
         # Extract features from each modality
         if "audio" in inputs:
@@ -235,9 +246,11 @@ class MultiModalTransformerArchitecture(nn.Module):
 
 
 class AdaptiveNeuralArchitectureSearch(BaseAIModel):
-    """    Adaptive Neural Architecture Search (ANAS) system
+    """
+    Adaptive Neural Architecture Search (ANAS) system
     Automatically discovers optimal architectures for specific tasks
-    """    
+    """
+    
     def __init__(self, config: ModelConfig):
         super().__init__(config)
         self.search_space = self._define_search_space()
@@ -246,7 +259,8 @@ class AdaptiveNeuralArchitectureSearch(BaseAIModel):
         self.executor = ThreadPoolExecutor(max_workers=4)
         
     def _define_search_space(self) -> Dict[str, List]:
-        """Define neural architecture search space"""        return {
+        """Define neural architecture search space"""
+        return {
             "num_layers": [2, 4, 6, 8, 12, 16],
             "hidden_dims": [
                 [128, 64], [256, 128], [512, 256], 
@@ -266,7 +280,8 @@ class AdaptiveNeuralArchitectureSearch(BaseAIModel):
         data_sample: Dict[str, torch.Tensor],
         performance_target: float = 0.95
     ) -> Dict[str, Any]:
-        """        Search for optimal architecture for specific task
+        """
+        Search for optimal architecture for specific task
         
         Args:
             task_type: Type of task (classification, generation, etc.)
@@ -275,7 +290,8 @@ class AdaptiveNeuralArchitectureSearch(BaseAIModel):
             
         Returns:
             Best architecture configuration and performance metrics
-        """        try:
+        """
+        try:
             search_results = []
             
             # Generate architecture candidates
@@ -314,7 +330,8 @@ class AdaptiveNeuralArchitectureSearch(BaseAIModel):
             raise ModelError(f"Architecture search error: {e}")
     
     def _generate_architecture_candidates(self) -> List[NeuralArchitectureConfig]:
-        """Generate architecture candidates from search space"""        candidates = []
+        """Generate architecture candidates from search space"""
+        candidates = []
         
         for _ in range(20):  # Generate 20 random candidates
             config = NeuralArchitectureConfig(
@@ -338,7 +355,8 @@ class AdaptiveNeuralArchitectureSearch(BaseAIModel):
         data_sample: Dict[str, torch.Tensor],
         task_type: str
     ) -> Dict[str, Any]:
-        """Evaluate single architecture candidate"""        try:
+        """Evaluate single architecture candidate"""
+        try:
             start_time = time.time()
             
             # Create model with configuration
@@ -367,7 +385,8 @@ class AdaptiveNeuralArchitectureSearch(BaseAIModel):
             return {"config": config, "performance": 0.0, "eval_time": 0.0}
     
     def _calculate_quick_performance(self, output: torch.Tensor, task_type: str) -> float:
-        """Quick performance estimation"""        # Simplified performance calculation
+        """Quick performance estimation"""
+        # Simplified performance calculation
         if task_type == "classification":
             # Check output distribution
             prob_dist = torch.softmax(output, dim=-1)
@@ -382,18 +401,22 @@ class AdaptiveNeuralArchitectureSearch(BaseAIModel):
             return torch.sigmoid(output.mean()).item()
     
     def _estimate_model_size(self, model: nn.Module) -> int:
-        """Estimate model size in parameters"""        return sum(p.numel() for p in model.parameters())
+        """Estimate model size in parameters"""
+        return sum(p.numel() for p in model.parameters())
     
     def _estimate_memory_usage(self, model: nn.Module) -> float:
-        """Estimate memory usage in MB"""        param_size = sum(p.numel() * p.element_size() for p in model.parameters())
+        """Estimate memory usage in MB"""
+        param_size = sum(p.numel() * p.element_size() for p in model.parameters())
         buffer_size = sum(b.numel() * b.element_size() for b in model.buffers())
         return (param_size + buffer_size) / (1024 ** 2)  # Convert to MB
 
 
 class ModelOptimizationEngine(BaseAIModel):
-    """    Advanced model optimization engine
+    """
+    Advanced model optimization engine
     Provides quantization, pruning, distillation, and other optimization techniques
-    """    
+    """
+    
     def __init__(self, config: ModelConfig):
         super().__init__(config)
         self.optimization_techniques = {
@@ -410,7 +433,8 @@ class ModelOptimizationEngine(BaseAIModel):
         target_speedup: float = 2.0,
         target_compression: float = 0.5
     ) -> Dict[str, Any]:
-        """        Apply multiple optimization techniques to model
+        """
+        Apply multiple optimization techniques to model
         
         Args:
             model: PyTorch model to optimize
@@ -420,7 +444,8 @@ class ModelOptimizationEngine(BaseAIModel):
             
         Returns:
             Optimization results and optimized model
-        """        try:
+        """
+        try:
             optimization_results = {
                 "original_size": self._get_model_size(model),
                 "original_flops": self._estimate_flops(model),
@@ -469,7 +494,8 @@ class ModelOptimizationEngine(BaseAIModel):
         target_speedup: float,
         target_compression: float
     ) -> Dict[str, Any]:
-        """Apply quantization optimization"""        try:
+        """Apply quantization optimization"""
+        try:
             # Dynamic quantization
             quantized_model = torch.quantization.quantize_dynamic(
                 model, {nn.Linear, nn.Conv2d, nn.Conv1d}, dtype=torch.qint8
@@ -493,7 +519,8 @@ class ModelOptimizationEngine(BaseAIModel):
         target_speedup: float,
         target_compression: float
     ) -> Dict[str, Any]:
-        """Apply pruning optimization"""        try:
+        """Apply pruning optimization"""
+        try:
             import torch.nn.utils.prune as prune
             
             # Unstructured magnitude pruning
@@ -527,7 +554,8 @@ class ModelOptimizationEngine(BaseAIModel):
         target_speedup: float,
         target_compression: float
     ) -> Dict[str, Any]:
-        """Apply knowledge distillation"""        try:
+        """Apply knowledge distillation"""
+        try:
             # Create smaller student model (simplified)
             student_model = self._create_student_model(model, target_compression)
             
@@ -549,7 +577,8 @@ class ModelOptimizationEngine(BaseAIModel):
         target_speedup: float,
         target_compression: float
     ) -> Dict[str, Any]:
-        """Apply mixed precision optimization"""        try:
+        """Apply mixed precision optimization"""
+        try:
             # Convert model to half precision for supported layers
             model.half()
             
@@ -566,17 +595,20 @@ class ModelOptimizationEngine(BaseAIModel):
             return {"model": model, "metrics": {"error": str(e)}}
     
     def _create_student_model(self, teacher_model: nn.Module, compression_ratio: float) -> nn.Module:
-        """Create smaller student model for knowledge distillation"""        # Simplified student model creation
+        """Create smaller student model for knowledge distillation"""
+        # Simplified student model creation
         # In production, this would involve architectural search or predefined architectures
         return teacher_model  # Placeholder
     
     def _get_model_size(self, model: nn.Module) -> int:
-        """Get model size in bytes"""        param_size = sum(p.numel() * p.element_size() for p in model.parameters())
+        """Get model size in bytes"""
+        param_size = sum(p.numel() * p.element_size() for p in model.parameters())
         buffer_size = sum(b.numel() * b.element_size() for b in model.buffers())
         return param_size + buffer_size
     
     def _estimate_flops(self, model: nn.Module) -> int:
-        """Estimate FLOPs for model (simplified)"""        # Simplified FLOP estimation
+        """Estimate FLOPs for model (simplified)"""
+        # Simplified FLOP estimation
         total_params = sum(p.numel() for p in model.parameters())
         return total_params * 2  # Rough estimate
     
@@ -585,7 +617,8 @@ class ModelOptimizationEngine(BaseAIModel):
         original_model: nn.Module, 
         optimized_model: nn.Module
     ) -> Dict[str, float]:
-        """Evaluate optimized model performance"""        return {
+        """Evaluate optimized model performance"""
+        return {
             "size_reduction": self._get_model_size(original_model) / self._get_model_size(optimized_model),
             "parameter_reduction": sum(p.numel() for p in original_model.parameters()) / 
                                  sum(p.numel() for p in optimized_model.parameters()),

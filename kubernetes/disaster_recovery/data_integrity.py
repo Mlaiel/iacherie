@@ -10,7 +10,8 @@ This module provides advanced data integrity validation:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -30,7 +31,8 @@ from backend.security.encryption import EncryptionManager
 
 
 class IntegrityCheckType(Enum):
-    """Types of integrity checks"""    CHECKSUM_VALIDATION = "checksum_validation"
+    """Types of integrity checks"""
+    CHECKSUM_VALIDATION = "checksum_validation"
     HASH_VERIFICATION = "hash_verification"
     STRUCTURE_VALIDATION = "structure_validation"
     CONTENT_VERIFICATION = "content_verification"
@@ -40,7 +42,8 @@ class IntegrityCheckType(Enum):
 
 
 class IntegrityStatus(Enum):
-    """Data integrity status"""    VALID = "valid"
+    """Data integrity status"""
+    VALID = "valid"
     CORRUPTED = "corrupted"
     SUSPICIOUS = "suspicious"
     UNVERIFIABLE = "unverifiable"
@@ -49,7 +52,8 @@ class IntegrityStatus(Enum):
 
 
 class CorruptionSeverity(Enum):
-    """Corruption severity levels"""    MINOR = "minor"          # Recoverable, non-critical
+    """Corruption severity levels"""
+    MINOR = "minor"          # Recoverable, non-critical
     MODERATE = "moderate"    # Important data affected
     SEVERE = "severe"        # Critical data compromised
     CRITICAL = "critical"    # System integrity at risk
@@ -57,7 +61,8 @@ class CorruptionSeverity(Enum):
 
 @dataclass
 class IntegrityRule:
-    """Data integrity rule definition"""    rule_id: str
+    """Data integrity rule definition"""
+    rule_id: str
     name: str
     description: str
     data_type: str
@@ -72,7 +77,8 @@ class IntegrityRule:
 
 @dataclass
 class IntegrityViolation:
-    """Data integrity violation record"""    violation_id: str
+    """Data integrity violation record"""
+    violation_id: str
     rule_id: str
     data_identifier: str
     violation_type: str
@@ -89,7 +95,8 @@ class IntegrityViolation:
 
 @dataclass
 class IntegrityReport:
-    """Comprehensive integrity validation report"""    report_id: str
+    """Comprehensive integrity validation report"""
+    report_id: str
     scan_start: datetime
     scan_end: Optional[datetime]
     total_records_checked: int
@@ -102,7 +109,8 @@ class IntegrityReport:
 
 
 class DataIntegrityValidator:
-    """    Advanced data integrity validation and corruption detection system
+    """
+    Advanced data integrity validation and corruption detection system
     
     Features:
     - Multi-algorithm integrity validation (MD5, SHA256, xxHash, CRC32)
@@ -111,7 +119,8 @@ class DataIntegrityValidator:
     - Blockchain-based tamper detection
     - Cross-system consistency validation
     - Performance-optimized batch processing
-    """    def __init__(self, config: Config):
+    """
+    def __init__(self, config: Config):
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.db_manager = DatabaseManager(config)
@@ -148,7 +157,8 @@ class DataIntegrityValidator:
         self._initialize_core_integrity_rules()
 
     def _initialize_core_integrity_rules(self):
-        """Initialize core data integrity rules for content protection platform"""        core_rules = [
+        """Initialize core data integrity rules for content protection platform"""
+        core_rules = [
             {
                 'rule_id': 'content_fingerprint_integrity',
                 'name': 'Content Fingerprint Integrity',
@@ -226,14 +236,16 @@ class DataIntegrityValidator:
             self.integrity_rules[rule_config['rule_id']] = integrity_rule
 
     async def register_integrity_rule(self, rule_config: Dict[str, Any]) -> str:
-        """        Register new data integrity rule
+        """
+        Register new data integrity rule
         
         Args:
             rule_config: Integrity rule configuration
             
         Returns:
             str: Rule ID
-        """        try:
+        """
+        try:
             rule_id = rule_config['rule_id']
             
             integrity_rule = IntegrityRule(
@@ -266,7 +278,8 @@ class DataIntegrityValidator:
             raise
 
     async def _run_periodic_validation(self, rule: IntegrityRule):
-        """Run periodic validation for an integrity rule"""        rule_id = rule.rule_id
+        """Run periodic validation for an integrity rule"""
+        rule_id = rule.rule_id
         
         while rule_id in self.integrity_rules and rule.enabled:
             try:
@@ -289,7 +302,8 @@ class DataIntegrityValidator:
                 await asyncio.sleep(rule.check_frequency)
 
     async def _execute_validation_rule(self, rule: IntegrityRule) -> Dict[str, Any]:
-        """Execute validation for a specific integrity rule"""        validation_start = datetime.utcnow()
+        """Execute validation for a specific integrity rule"""
+        validation_start = datetime.utcnow()
         
         try:
             # Route to appropriate validation function
@@ -330,7 +344,8 @@ class DataIntegrityValidator:
             }
 
     async def _validate_fingerprint_hash(self) -> Dict[str, Any]:
-        """Validate integrity of content fingerprints"""        violations = []
+        """Validate integrity of content fingerprints"""
+        violations = []
         records_checked = 0
         
         try:
@@ -378,7 +393,8 @@ class DataIntegrityValidator:
             raise Exception(f"Fingerprint hash validation failed: {e}")
 
     async def _validate_user_consistency(self) -> Dict[str, Any]:
-        """Validate user data consistency across services"""        violations = []
+        """Validate user data consistency across services"""
+        violations = []
         records_checked = 0
         
         try:
@@ -421,7 +437,8 @@ class DataIntegrityValidator:
             raise Exception(f"User consistency validation failed: {e}")
 
     async def _validate_revenue_calculations(self) -> Dict[str, Any]:
-        """Validate accuracy of revenue calculations"""        violations = []
+        """Validate accuracy of revenue calculations"""
+        violations = []
         records_checked = 0
         
         try:
@@ -461,14 +478,16 @@ class DataIntegrityValidator:
             raise Exception(f"Revenue validation failed: {e}")
 
     async def start_integrity_scan(self, scan_config: Dict[str, Any]) -> str:
-        """        Start comprehensive integrity scan
+        """
+        Start comprehensive integrity scan
         
         Args:
             scan_config: Scan configuration parameters
             
         Returns:
             str: Scan report ID
-        """        try:
+        """
+        try:
             report_id = f"integrity_scan_{int(datetime.utcnow().timestamp())}"
             
             integrity_report = IntegrityReport(
@@ -496,7 +515,8 @@ class DataIntegrityValidator:
             raise
 
     async def _execute_integrity_scan(self, report: IntegrityReport, config: Dict[str, Any]):
-        """Execute comprehensive integrity scan"""        try:
+        """Execute comprehensive integrity scan"""
+        try:
             # Select rules to run
             rules_to_run = config.get('rules', list(self.integrity_rules.keys()))
             
@@ -537,7 +557,8 @@ class DataIntegrityValidator:
             report.scan_end = datetime.utcnow()
 
     async def get_integrity_status(self, report_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get integrity validation status"""        if report_id:
+        """Get integrity validation status"""
+        if report_id:
             # Get specific scan report
             if report_id not in self.active_scans:
                 return {'error': 'Report not found'}
@@ -573,7 +594,8 @@ class DataIntegrityValidator:
             }
 
     def _generate_integrity_recommendations(self, report: IntegrityReport) -> List[str]:
-        """Generate integrity improvement recommendations"""        recommendations = []
+        """Generate integrity improvement recommendations"""
+        recommendations = []
         
         # Analyze violation patterns
         violation_types = defaultdict(int)
@@ -602,7 +624,8 @@ class DataIntegrityValidator:
         return recommendations
 
     def _update_integrity_metrics(self, rule: IntegrityRule, validation_result: Dict[str, Any]):
-        """Update integrity performance metrics"""        self.integrity_metrics['total_checks_performed'] += 1
+        """Update integrity performance metrics"""
+        self.integrity_metrics['total_checks_performed'] += 1
         
         if validation_result.get('violations'):
             self.integrity_metrics['violations_detected'] += len(validation_result['violations'])
@@ -618,7 +641,8 @@ class DataIntegrityValidator:
             )
 
     async def execute_emergency_validation(self) -> Dict[str, Any]:
-        """Execute emergency data integrity validation"""        try:
+        """Execute emergency data integrity validation"""
+        try:
             emergency_id = f"emergency_validation_{int(datetime.utcnow().timestamp())}"
             
             self.logger.warning(f"Executing emergency data integrity validation: {emergency_id}")
@@ -678,7 +702,8 @@ class DataIntegrityValidator:
             }
 
     async def get_health_status(self) -> Dict[str, Any]:
-        """Get data integrity validator health status for disaster recovery coordinator"""        try:
+        """Get data integrity validator health status for disaster recovery coordinator"""
+        try:
             # Calculate integrity metrics
             total_checks = self.integrity_metrics['total_checks_performed']
             passed_checks = self.integrity_metrics['checks_passed']
@@ -723,7 +748,8 @@ class DataIntegrityValidator:
             }
 
     async def _validate_database_integrity(self) -> Dict[str, Any]:
-        """Validate database integrity"""        try:
+        """Validate database integrity"""
+        try:
             violations = []
             
             # Check foreign key constraints
@@ -767,7 +793,8 @@ class DataIntegrityValidator:
             }
 
     async def _validate_fingerprint_integrity(self) -> Dict[str, Any]:
-        """Validate fingerprint data integrity"""        try:
+        """Validate fingerprint data integrity"""
+        try:
             violations = []
             
             # Check fingerprint checksums
@@ -795,7 +822,8 @@ class DataIntegrityValidator:
             }
 
     async def _validate_content_files_integrity(self) -> Dict[str, Any]:
-        """Validate content file integrity"""        try:
+        """Validate content file integrity"""
+        try:
             violations = []
             
             # Check file checksums
@@ -819,7 +847,8 @@ class DataIntegrityValidator:
             }
 
     async def _validate_backup_integrity(self) -> Dict[str, Any]:
-        """Validate backup integrity"""        try:
+        """Validate backup integrity"""
+        try:
             violations = []
             
             # Check backup checksums
@@ -843,17 +872,21 @@ class DataIntegrityValidator:
             }
 
     async def _check_fingerprint_checksums(self) -> List[Dict[str, Any]]:
-        """Check fingerprint data checksums"""        # Placeholder implementation
+        """Check fingerprint data checksums"""
+        # Placeholder implementation
         return []
 
     async def _check_vector_index_consistency(self) -> List[Dict[str, Any]]:
-        """Check vector index consistency"""        # Placeholder implementation
+        """Check vector index consistency"""
+        # Placeholder implementation
         return []
 
     async def _check_content_file_checksums(self) -> List[Dict[str, Any]]:
-        """Check content file checksums"""        # Placeholder implementation
+        """Check content file checksums"""
+        # Placeholder implementation
         return []
 
     async def _check_backup_checksums(self) -> List[Dict[str, Any]]:
-        """Check backup checksums"""        # Placeholder implementation
+        """Check backup checksums"""
+        # Placeholder implementation
         return []

@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from decimal import Decimal
 from typing import Dict, List, Optional, Any, Set, Union
 from dataclasses import dataclass, field
@@ -23,7 +24,8 @@ from datetime import datetime, timedelta
 
 
 class MetricType(str, Enum):
-    """Types of revenue and business metrics."""    # Core Revenue Metrics
+    """Types of revenue and business metrics."""
+    # Core Revenue Metrics
     TOTAL_REVENUE = "total_revenue"
     MONTHLY_RECURRING_REVENUE = "monthly_recurring_revenue"
     ANNUAL_RECURRING_REVENUE = "annual_recurring_revenue"
@@ -69,7 +71,8 @@ class MetricType(str, Enum):
 
 
 class TimeGranularity(str, Enum):
-    """Time granularity for analytics aggregation."""    HOURLY = "hourly"
+    """Time granularity for analytics aggregation."""
+    HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -79,7 +82,8 @@ class TimeGranularity(str, Enum):
 
 
 class ReportType(str, Enum):
-    """Types of analytical reports."""    EXECUTIVE_DASHBOARD = "executive_dashboard"
+    """Types of analytical reports."""
+    EXECUTIVE_DASHBOARD = "executive_dashboard"
     REVENUE_REPORT = "revenue_report"
     USER_ANALYTICS = "user_analytics"
     CHURN_ANALYSIS = "churn_analysis"
@@ -95,7 +99,8 @@ class ReportType(str, Enum):
 
 
 class AlertType(str, Enum):
-    """Types of revenue and business alerts."""    REVENUE_DROP = "revenue_drop"
+    """Types of revenue and business alerts."""
+    REVENUE_DROP = "revenue_drop"
     CHURN_SPIKE = "churn_spike"
     CONVERSION_DROP = "conversion_drop"
     HIGH_VALUE_CUSTOMER_CHURN = "high_value_customer_churn"
@@ -108,7 +113,8 @@ class AlertType(str, Enum):
 
 @dataclass
 class MetricConfiguration:
-    """Configuration for individual metrics."""    metric_type: MetricType
+    """Configuration for individual metrics."""
+    metric_type: MetricType
     enabled: bool = True
     
     # Data collection
@@ -137,7 +143,8 @@ class MetricConfiguration:
 
 @dataclass
 class DashboardWidget:
-    """Configuration for dashboard widgets."""    widget_id: str
+    """Configuration for dashboard widgets."""
+    widget_id: str
     widget_type: str  # chart, table, kpi, gauge, funnel
     title: str
     description: Optional[str] = None
@@ -165,7 +172,8 @@ class DashboardWidget:
 
 @dataclass
 class CohortAnalysisConfig:
-    """Configuration for cohort analysis."""    enabled: bool = True
+    """Configuration for cohort analysis."""
+    enabled: bool = True
     
     # Cohort definition
     cohort_type: str = "acquisition"  # acquisition, behavior, revenue
@@ -192,7 +200,8 @@ class CohortAnalysisConfig:
 
 @dataclass
 class ForecastingConfig:
-    """Configuration for predictive analytics and forecasting."""    enabled: bool = True
+    """Configuration for predictive analytics and forecasting."""
+    enabled: bool = True
     
     # Forecasting models
     models: List[str] = field(default_factory=lambda: [
@@ -225,7 +234,8 @@ class ForecastingConfig:
 
 @dataclass
 class AlertConfiguration:
-    """Configuration for automated alerts and notifications."""    alert_type: AlertType
+    """Configuration for automated alerts and notifications."""
+    alert_type: AlertType
     enabled: bool = True
     
     # Trigger conditions
@@ -256,7 +266,8 @@ class AlertConfiguration:
 
 @dataclass
 class ExportConfiguration:
-    """Configuration for data export and API access."""    enabled: bool = True
+    """Configuration for data export and API access."""
+    enabled: bool = True
     
     # Export formats
     supported_formats: List[str] = field(default_factory=lambda: [
@@ -285,7 +296,8 @@ class ExportConfiguration:
 
 @dataclass
 class RevenueAnalyticsConfig:
-    """Professional revenue analytics configuration."""    
+    """Professional revenue analytics configuration."""
+    
     # Global Analytics Settings
     ENABLE_ANALYTICS: bool = True
     DEFAULT_CURRENCY: str = "EUR"
@@ -570,32 +582,38 @@ class RevenueAnalyticsConfig:
     })
     
     def get_metric_config(self, metric_type: MetricType) -> Optional[MetricConfiguration]:
-        """Get configuration for a specific metric."""        return self.METRICS.get(metric_type)
+        """Get configuration for a specific metric."""
+        return self.METRICS.get(metric_type)
     
     def get_enabled_metrics(self) -> List[MetricType]:
-        """Get list of enabled metrics."""        return [
+        """Get list of enabled metrics."""
+        return [
             metric_type for metric_type, config in self.METRICS.items()
             if config.enabled
         ]
     
     def get_dashboard_widgets(self, dashboard_type: str = "executive") -> List[DashboardWidget]:
-        """Get widgets for a specific dashboard."""        if dashboard_type == "executive":
+        """Get widgets for a specific dashboard."""
+        if dashboard_type == "executive":
             return self.EXECUTIVE_DASHBOARD
         return []
     
     def get_alert_config(self, alert_type: AlertType) -> Optional[AlertConfiguration]:
-        """Get configuration for a specific alert type."""        for alert in self.ALERTS:
+        """Get configuration for a specific alert type."""
+        for alert in self.ALERTS:
             if alert.alert_type == alert_type:
                 return alert
         return None
     
     def calculate_ltv_cac_ratio(self, ltv: Decimal, cac: Decimal) -> Optional[Decimal]:
-        """Calculate LTV:CAC ratio with proper error handling."""        if cac == Decimal("0.00"):
+        """Calculate LTV:CAC ratio with proper error handling."""
+        if cac == Decimal("0.00"):
             return None
         return (ltv / cac).quantize(Decimal("0.01"))
     
     def get_recommended_metrics_for_tier(self, subscription_tier: str) -> List[MetricType]:
-        """Get recommended metrics based on subscription tier."""        tier_metrics = {
+        """Get recommended metrics based on subscription tier."""
+        tier_metrics = {
             "freemium": [
                 MetricType.CONVERSION_RATE,
                 MetricType.FREEMIUM_CONVERSION_RATE,
@@ -629,7 +647,8 @@ from enum import Enum
 
 
 class AnalyticsMetric(str, Enum):
-    """Available analytics metrics."""    TOTAL_REVENUE = "total_revenue"
+    """Available analytics metrics."""
+    TOTAL_REVENUE = "total_revenue"
     RECURRING_REVENUE = "recurring_revenue"
     MONTHLY_RECURRING_REVENUE = "monthly_recurring_revenue"
     ANNUAL_RECURRING_REVENUE = "annual_recurring_revenue"
@@ -647,7 +666,8 @@ class AnalyticsMetric(str, Enum):
 
 
 class ReportType(str, Enum):
-    """Types of revenue reports."""    DAILY_SUMMARY = "daily_summary"
+    """Types of revenue reports."""
+    DAILY_SUMMARY = "daily_summary"
     WEEKLY_REPORT = "weekly_report"
     MONTHLY_REPORT = "monthly_report"
     QUARTERLY_REPORT = "quarterly_report"
@@ -662,7 +682,8 @@ class ReportType(str, Enum):
 
 
 class AggregationPeriod(str, Enum):
-    """Data aggregation periods."""    HOUR = "hour"
+    """Data aggregation periods."""
+    HOUR = "hour"
     DAY = "day"
     WEEK = "week"
     MONTH = "month"
@@ -672,7 +693,8 @@ class AggregationPeriod(str, Enum):
 
 
 class ChartType(str, Enum):
-    """Chart types for visualization."""    LINE_CHART = "line_chart"
+    """Chart types for visualization."""
+    LINE_CHART = "line_chart"
     BAR_CHART = "bar_chart"
     PIE_CHART = "pie_chart"
     AREA_CHART = "area_chart"
@@ -686,7 +708,8 @@ class ChartType(str, Enum):
 
 @dataclass
 class MetricConfiguration:
-    """Configuration for individual metrics."""    metric: AnalyticsMetric
+    """Configuration for individual metrics."""
+    metric: AnalyticsMetric
     name: str
     description: str
     unit: str
@@ -701,7 +724,8 @@ class MetricConfiguration:
 
 @dataclass
 class ReportConfiguration:
-    """Configuration for analytics reports."""    report_type: ReportType
+    """Configuration for analytics reports."""
+    report_type: ReportType
     name: str
     description: str
     metrics: List[AnalyticsMetric]
@@ -716,7 +740,8 @@ class ReportConfiguration:
 
 @dataclass
 class DashboardConfiguration:
-    """Dashboard configuration."""    dashboard_id: str
+    """Dashboard configuration."""
+    dashboard_id: str
     name: str
     description: str
     widgets: List[Dict[str, Any]]
@@ -730,7 +755,8 @@ class DashboardConfiguration:
 
 @dataclass
 class RevenueAnalyticsConfig:
-    """Main revenue analytics configuration class."""    
+    """Main revenue analytics configuration class."""
+    
     # Database Configuration
     ANALYTICS_DB_URL: str = os.getenv(
         "ANALYTICS_DB_URL", 
@@ -1136,22 +1162,28 @@ class RevenueAnalyticsConfig:
     })
     
     def get_metric_config(self, metric: AnalyticsMetric) -> Optional[MetricConfiguration]:
-        """Get configuration for a specific metric."""        return self.METRICS_CONFIG.get(metric)
+        """Get configuration for a specific metric."""
+        return self.METRICS_CONFIG.get(metric)
     
     def get_report_config(self, report_type: ReportType) -> Optional[ReportConfiguration]:
-        """Get configuration for a specific report type."""        return self.REPORT_CONFIGS.get(report_type)
+        """Get configuration for a specific report type."""
+        return self.REPORT_CONFIGS.get(report_type)
     
     def get_dashboard_config(self, dashboard_id: str) -> Optional[DashboardConfiguration]:
-        """Get configuration for a specific dashboard."""        return self.DASHBOARD_CONFIGS.get(dashboard_id)
+        """Get configuration for a specific dashboard."""
+        return self.DASHBOARD_CONFIGS.get(dashboard_id)
     
     def get_available_metrics(self) -> List[AnalyticsMetric]:
-        """Get list of available metrics."""        return list(self.METRICS_CONFIG.keys())
+        """Get list of available metrics."""
+        return list(self.METRICS_CONFIG.keys())
     
     def get_available_reports(self) -> List[ReportType]:
-        """Get list of available report types."""        return list(self.REPORT_CONFIGS.keys())
+        """Get list of available report types."""
+        return list(self.REPORT_CONFIGS.keys())
     
     def get_available_dashboards(self) -> List[str]:
-        """Get list of available dashboard IDs."""        return list(self.DASHBOARD_CONFIGS.keys())
+        """Get list of available dashboard IDs."""
+        return list(self.DASHBOARD_CONFIGS.keys())
 
 
 # Global configuration instance

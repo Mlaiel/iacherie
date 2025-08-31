@@ -6,7 +6,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
-"""from datetime import datetime
+"""
+from datetime import datetime
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Set
 from uuid import UUID
@@ -17,7 +18,8 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class RevenueCreate(BaseSchema):
-    """Revenue creation/tracking request schema."""    
+    """Revenue creation/tracking request schema."""
+    
     creator_id: UUID = Field(description="Creator receiving revenue")
     content_id: Optional[UUID] = Field(None, description="Associated content")
     revenue_source: str = Field(description="Source of revenue")
@@ -45,7 +47,8 @@ class RevenueCreate(BaseSchema):
     
     @validator('revenue_source')
     def validate_revenue_source(cls, v):
-        """Validate revenue source."""        allowed_sources = {
+        """Validate revenue source."""
+        allowed_sources = {
             "streaming", "downloads", "licensing", "synchronization", "performance",
             "merchandise", "live_events", "sponsorship", "advertising", "subscription",
             "crowdfunding", "grants", "royalties", "collaboration", "nft_sales"
@@ -56,7 +59,8 @@ class RevenueCreate(BaseSchema):
 
 
 class RevenueOut(UUIDSchema, TimestampSchema):
-    """Revenue information schema."""    
+    """Revenue information schema."""
+    
     creator_id: UUID
     content_id: Optional[UUID]
     revenue_source: str
@@ -93,13 +97,15 @@ class RevenueOut(UUIDSchema, TimestampSchema):
     
     @property
     def fee_percentage(self) -> float:
-        """Calculate fee percentage."""        if self.gross_amount == 0:
+        """Calculate fee percentage."""
+        if self.gross_amount == 0:
             return 0.0
         return float((self.fees_deducted / self.gross_amount) * 100)
 
 
 class RevenueStream(UUIDSchema, TimestampSchema):
-    """Revenue stream configuration schema."""    
+    """Revenue stream configuration schema."""
+    
     creator_id: UUID
     stream_name: str = Field(description="Revenue stream name")
     stream_type: str = Field(description="Type of revenue stream")
@@ -134,7 +140,8 @@ class RevenueStream(UUIDSchema, TimestampSchema):
     
     @validator('stream_type')
     def validate_stream_type(cls, v):
-        """Validate stream type."""        allowed_types = {
+        """Validate stream type."""
+        allowed_types = {
             "direct_sales", "subscription", "advertising", "licensing", "royalties",
             "commission", "affiliate", "sponsorship", "crowdfunding", "merchandise"
         }
@@ -144,7 +151,8 @@ class RevenueStream(UUIDSchema, TimestampSchema):
 
 
 class RevenueShare(UUIDSchema, TimestampSchema, AuditSchema):
-    """Revenue sharing agreement schema."""    
+    """Revenue sharing agreement schema."""
+    
     primary_creator_id: UUID = Field(description="Primary revenue recipient")
     collaboration_id: Optional[UUID] = Field(None, description="Associated collaboration")
     sharing_agreement_name: str = Field(description="Revenue sharing agreement name")
@@ -186,7 +194,8 @@ class RevenueShare(UUIDSchema, TimestampSchema, AuditSchema):
 
 
 class PaymentRecord(UUIDSchema, TimestampSchema):
-    """Payment transaction record schema."""    
+    """Payment transaction record schema."""
+    
     creator_id: UUID = Field(description="Payment recipient")
     revenue_id: Optional[UUID] = Field(None, description="Associated revenue record")
     payment_type: str = Field(description="Type of payment")
@@ -228,7 +237,8 @@ class PaymentRecord(UUIDSchema, TimestampSchema):
     
     @validator('payment_type')
     def validate_payment_type(cls, v):
-        """Validate payment type."""        allowed_types = {
+        """Validate payment type."""
+        allowed_types = {
             "royalty_payment", "revenue_share", "licensing_fee", "advance_payment",
             "bonus_payment", "refund", "adjustment", "settlement", "commission"
         }
@@ -238,7 +248,8 @@ class PaymentRecord(UUIDSchema, TimestampSchema):
 
 
 class RoyaltyCalculation(UUIDSchema, TimestampSchema):
-    """Royalty calculation schema."""    
+    """Royalty calculation schema."""
+    
     content_id: UUID = Field(description="Content generating royalties")
     rights_holder_id: UUID = Field(description="Rights holder receiving royalties")
     calculation_period_start: datetime
@@ -279,7 +290,8 @@ class RoyaltyCalculation(UUIDSchema, TimestampSchema):
     
     @validator('calculation_method')
     def validate_calculation_method(cls, v):
-        """Validate calculation method."""        allowed_methods = {
+        """Validate calculation method."""
+        allowed_methods = {
             "percentage_of_revenue", "per_unit", "tiered_percentage", "minimum_guarantee",
             "advance_recoupment", "pro_rata", "weighted_average", "custom_formula"
         }
@@ -289,7 +301,8 @@ class RoyaltyCalculation(UUIDSchema, TimestampSchema):
 
 
 class MonetizationReport(UUIDSchema, TimestampSchema):
-    """Comprehensive monetization report schema."""    
+    """Comprehensive monetization report schema."""
+    
     creator_id: UUID
     report_type: str = Field(description="Type of monetization report")
     report_period_start: datetime
@@ -332,7 +345,8 @@ class MonetizationReport(UUIDSchema, TimestampSchema):
     
     @validator('report_type')
     def validate_report_type(cls, v):
-        """Validate report type."""        allowed_types = {
+        """Validate report type."""
+        allowed_types = {
             "monthly_summary", "quarterly_analysis", "annual_report", "performance_dashboard",
             "comparative_analysis", "forecasting_report", "audit_report", "tax_report"
         }
@@ -342,7 +356,8 @@ class MonetizationReport(UUIDSchema, TimestampSchema):
 
 
 class FinancialAnalytics(UUIDSchema, TimestampSchema):
-    """Advanced financial analytics schema."""    
+    """Advanced financial analytics schema."""
+    
     creator_id: UUID
     analytics_type: str = Field(description="Type of financial analysis")
     analysis_period_start: datetime
@@ -394,7 +409,8 @@ class FinancialAnalytics(UUIDSchema, TimestampSchema):
     
     @validator('analytics_type')
     def validate_analytics_type(cls, v):
-        """Validate analytics type."""        allowed_types = {
+        """Validate analytics type."""
+        allowed_types = {
             "revenue_analysis", "profitability_analysis", "portfolio_analysis",
             "market_analysis", "risk_assessment", "investment_analysis",
             "predictive_modeling", "comparative_benchmarking"

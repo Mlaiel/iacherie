@@ -24,20 +24,30 @@ Core Components:
 - Notification Handler: Multi-channel notification and alerting system
 - Deployment Recorder: Comprehensive deployment tracking and audit trails
 - Pipeline Executor: Advanced pipeline orchestration and execution engine
-"""__version__ = "2.0.0"
+"""
+__version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __license__ = "Proprietary"
 
 from .workflow_orchestrator import WorkflowOrchestrator
+
 from .environment_provisioner import EnvironmentProvisioner
+
 from .service_deployer import ServiceDeployer
+
 from .configuration_manager import ConfigurationManager
+
 from .health_validator import HealthValidator
+
 from .rollback_manager import RollbackManager
+
 from .scaling_controller import ScalingController
+
 from .notification_handler import NotificationHandler
+
 from .deployment_recorder import DeploymentRecorder
+
 from .pipeline_executor import PipelineExecutor
 
 __all__ = [

@@ -11,7 +11,8 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Set, Union, Any, Tuple
@@ -32,7 +33,8 @@ logger = logging.getLogger(__name__)
 
 
 class ProjectStatus(Enum):
-    """Professional project status tracking"""    PLANNING = "planning"
+    """Professional project status tracking"""
+    PLANNING = "planning"
     IN_PROGRESS = "in_progress"
     REVIEW = "review"
     REVISION = "revision"
@@ -44,7 +46,8 @@ class ProjectStatus(Enum):
 
 
 class TaskPriority(Enum):
-    """Task priority levels for efficient workflow management"""    CRITICAL = "critical"
+    """Task priority levels for efficient workflow management"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -52,7 +55,8 @@ class TaskPriority(Enum):
 
 
 class TaskStatus(Enum):
-    """Comprehensive task status tracking"""    TODO = "todo"
+    """Comprehensive task status tracking"""
+    TODO = "todo"
     IN_PROGRESS = "in_progress"
     BLOCKED = "blocked"
     REVIEW = "review"
@@ -61,7 +65,8 @@ class TaskStatus(Enum):
 
 
 class ContentType(Enum):
-    """Multi-format content types for project classification"""    MUSIC = "music"
+    """Multi-format content types for project classification"""
+    MUSIC = "music"
     VIDEO = "video"
     PODCAST = "podcast"
     BLOG = "blog"
@@ -75,7 +80,8 @@ class ContentType(Enum):
 
 @dataclass
 class ProjectTask:
-    """Professional task representation with comprehensive metadata"""    task_id: str
+    """Professional task representation with comprehensive metadata"""
+    task_id: str
     project_id: str
     title: str
     description: str
@@ -99,7 +105,8 @@ class ProjectTask:
     updated_at: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert task to dictionary representation"""        return {
+        """Convert task to dictionary representation"""
+        return {
             "task_id": self.task_id,
             "project_id": self.project_id,
             "title": self.title,
@@ -127,7 +134,8 @@ class ProjectTask:
 
 @dataclass
 class ProjectMilestone:
-    """Project milestone with delivery tracking"""    milestone_id: str
+    """Project milestone with delivery tracking"""
+    milestone_id: str
     project_id: str
     title: str
     description: str
@@ -147,7 +155,8 @@ class ProjectMilestone:
 
 @dataclass
 class ResourceAllocation:
-    """Resource allocation tracking for team members"""    allocation_id: str
+    """Resource allocation tracking for team members"""
+    allocation_id: str
     project_id: str
     team_member_id: str
     role: str
@@ -165,7 +174,8 @@ class ResourceAllocation:
 
 
 class ProjectCoordinator:
-    """Advanced project coordination for collaborative content creation"""    
+    """Advanced project coordination for collaborative content creation"""
+    
     def __init__(self, db_session: AsyncSession, cache_manager: CacheManager):
         self.db = db_session
         self.cache = cache_manager
@@ -185,7 +195,8 @@ class ProjectCoordinator:
         created_by: str,
         client_info: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Create comprehensive collaborative project"""        try:
+        """Create comprehensive collaborative project"""
+        try:
             project_id = str(uuid.uuid4())
             start_date = datetime.utcnow()
             estimated_end_date = start_date + timedelta(days=estimated_duration_days)
@@ -250,7 +261,8 @@ class ProjectCoordinator:
         updated_by: str,
         notes: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Update project status with comprehensive tracking"""        try:
+        """Update project status with comprehensive tracking"""
+        try:
             project_data = await self.cache.get(f"project:{project_id}")
             if not project_data:
                 raise ValidationError("Project not found")
@@ -299,7 +311,8 @@ class ProjectCoordinator:
             raise BusinessLogicError(f"Failed to update project status: {str(e)}")
     
     async def get_project_overview(self, project_id: str) -> Dict[str, Any]:
-        """Get comprehensive project overview with analytics"""        try:
+        """Get comprehensive project overview with analytics"""
+        try:
             project_data = await self.cache.get(f"project:{project_id}")
             if not project_data:
                 raise ValidationError("Project not found")
@@ -331,7 +344,8 @@ class ProjectCoordinator:
         deliverables: List[Dict[str, Any]],
         duration_days: int
     ) -> Dict[str, Any]:
-        """Initialize project timeline with AI-powered scheduling"""        try:
+        """Initialize project timeline with AI-powered scheduling"""
+        try:
             timeline_data = {
                 "project_id": project_id,
                 "total_duration_days": duration_days,
@@ -374,7 +388,8 @@ class ProjectCoordinator:
         project_id: str,
         project_data: Dict[str, Any]
     ):
-        """Handle project completion procedures"""        try:
+        """Handle project completion procedures"""
+        try:
             # Generate completion report
             completion_report = await self._generate_completion_report(project_id, project_data)
             
@@ -396,7 +411,8 @@ class ProjectCoordinator:
         project_id: str,
         project_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate comprehensive project analytics"""        return {
+        """Calculate comprehensive project analytics"""
+        return {
             "progress_percentage": project_data.get("progress_percentage", 0.0),
             "budget_utilization": (
                 project_data.get("budget_spent", 0) / 
@@ -409,7 +425,8 @@ class ProjectCoordinator:
         }
     
     async def _calculate_timeline_adherence(self, project_id: str) -> float:
-        """Calculate how well project adheres to timeline"""        timeline_data = await self.cache.get(f"timeline:{project_id}")
+        """Calculate how well project adheres to timeline"""
+        timeline_data = await self.cache.get(f"timeline:{project_id}")
         if not timeline_data:
             return 0.0
         
@@ -417,7 +434,8 @@ class ProjectCoordinator:
         return 85.0  # Placeholder
     
     async def _calculate_team_productivity(self, project_id: str) -> Dict[str, Any]:
-        """Calculate team productivity metrics"""        return {
+        """Calculate team productivity metrics"""
+        return {
             "tasks_completed_per_day": 3.2,
             "average_task_completion_time": 2.5,
             "team_utilization_rate": 78.5,
@@ -425,7 +443,8 @@ class ProjectCoordinator:
         }
     
     async def _calculate_quality_metrics(self, project_id: str) -> Dict[str, Any]:
-        """Calculate project quality metrics"""        return {
+        """Calculate project quality metrics"""
+        return {
             "deliverable_quality_score": 9.1,
             "client_satisfaction_score": 8.8,
             "review_iteration_average": 1.3,
@@ -437,7 +456,8 @@ class ProjectCoordinator:
         project_id: str,
         project_data: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Assess current project risks"""        risks = []
+        """Assess current project risks"""
+        risks = []
         
         # Budget risk assessment
         budget_utilization = (
@@ -471,11 +491,13 @@ class ProjectCoordinator:
         return risks
     
     async def _get_recent_project_activities(self, project_id: str) -> List[Dict[str, Any]]:
-        """Get recent project activities"""        # Implementation would fetch recent activities from activity log
+        """Get recent project activities"""
+        # Implementation would fetch recent activities from activity log
         return []
     
     async def _get_team_performance_metrics(self, project_id: str) -> Dict[str, Any]:
-        """Get team performance metrics for project"""        return {
+        """Get team performance metrics for project"""
+        return {
             "total_team_members": 5,
             "active_contributors": 4,
             "average_daily_hours": 6.5,
@@ -488,7 +510,8 @@ class ProjectCoordinator:
         project_id: str,
         project_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate comprehensive project completion report"""        return {
+        """Generate comprehensive project completion report"""
+        return {
             "project_id": project_id,
             "completion_date": datetime.utcnow().isoformat(),
             "final_budget_utilization": 0.0,
@@ -504,7 +527,8 @@ class ProjectCoordinator:
         project_id: str,
         project_data: Dict[str, Any]
     ):
-        """Trigger revenue distribution for completed project"""        try:
+        """Trigger revenue distribution for completed project"""
+        try:
             logger.info(f"🔄 Triggering revenue distribution for project {project_id}")
             
             # Calculate revenue shares based on contribution
@@ -552,7 +576,8 @@ class ProjectCoordinator:
         project_id: str,
         project_data: Dict[str, Any]
     ):
-        """Update team member contribution scores based on project completion"""        try:
+        """Update team member contribution scores based on project completion"""
+        try:
             logger.info(f"🔄 Updating contribution scores for project {project_id}")
             
             team_members = project_data.get("team_members", [])
@@ -609,7 +634,8 @@ class ProjectCoordinator:
         project_data: Dict[str, Any],
         completion_report: Dict[str, Any]
     ):
-        """Archive completed project data for future reference"""        archive_data = {
+        """Archive completed project data for future reference"""
+        archive_data = {
             "project_data": project_data,
             "completion_report": completion_report,
             "archived_at": datetime.utcnow().isoformat()
@@ -619,7 +645,8 @@ class ProjectCoordinator:
 
 
 class TaskDistributionEngine:
-    """Intelligent task distribution system for collaborative teams"""    
+    """Intelligent task distribution system for collaborative teams"""
+    
     def __init__(self, db_session: AsyncSession, cache_manager: CacheManager):
         self.db = db_session
         self.cache = cache_manager
@@ -638,7 +665,8 @@ class TaskDistributionEngine:
         tags: List[str] = None,
         required_skills: List[str] = None
     ) -> Dict[str, Any]:
-        """Create new project task with intelligent assignment suggestions"""        try:
+        """Create new project task with intelligent assignment suggestions"""
+        try:
             task_id = str(uuid.uuid4())
             
             # AI-powered effort estimation
@@ -704,7 +732,8 @@ class TaskDistributionEngine:
         assigned_by: str,
         start_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """Assign task to team member with validation"""        try:
+        """Assign task to team member with validation"""
+        try:
             task_data = await self.cache.get(f"task:{task_id}")
             if not task_data:
                 raise ValidationError("Task not found")
@@ -758,7 +787,8 @@ class TaskDistributionEngine:
         updated_by: str,
         notes: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Update task progress with time tracking"""        try:
+        """Update task progress with time tracking"""
+        try:
             task_data = await self.cache.get(f"task:{task_id}")
             if not task_data:
                 raise ValidationError("Task not found")
@@ -815,7 +845,8 @@ class TaskDistributionEngine:
         project_id: str,
         task_data: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate intelligent task assignment suggestions"""        try:
+        """Generate intelligent task assignment suggestions"""
+        try:
             # Get project team members
             project_data = await self.cache.get(f"project:{project_id}")
             if not project_data:
@@ -857,7 +888,8 @@ class TaskDistributionEngine:
         member_id: str,
         task_data: Dict[str, Any]
     ) -> float:
-        """Calculate how well a team member fits a task"""        try:
+        """Calculate how well a team member fits a task"""
+        try:
             member_info = await self._get_team_member_info(member_id)
             
             # Skill matching (40% weight)
@@ -896,7 +928,8 @@ class TaskDistributionEngine:
         member_skills: List[str],
         required_skills: List[str]
     ) -> float:
-        """Calculate skill matching score"""        if not required_skills:
+        """Calculate skill matching score"""
+        if not required_skills:
             return 0.8  # Default score if no specific skills required
         
         matching_skills = set(member_skills) & set(required_skills)
@@ -907,7 +940,8 @@ class TaskDistributionEngine:
         member_id: str,
         estimated_hours: float
     ) -> float:
-        """Calculate availability score for team member"""        availability_data = await self.cache.get(f"availability:{member_id}")
+        """Calculate availability score for team member"""
+        availability_data = await self.cache.get(f"availability:{member_id}")
         if not availability_data:
             return 0.7  # Default availability
         
@@ -920,7 +954,8 @@ class TaskDistributionEngine:
         return 1.0 - (current_workload / max_capacity)
     
     async def _calculate_workload_score(self, member_id: str) -> float:
-        """Calculate workload balance score"""        workload_data = await self.cache.get(f"workload:{member_id}")
+        """Calculate workload balance score"""
+        workload_data = await self.cache.get(f"workload:{member_id}")
         if not workload_data:
             return 1.0
         
@@ -938,7 +973,8 @@ class TaskDistributionEngine:
         estimated_hours: float,
         start_date: Optional[datetime]
     ) -> Dict[str, Any]:
-        """Check if team member is available for task"""        availability_data = await self.cache.get(f"availability:{member_id}")
+        """Check if team member is available for task"""
+        availability_data = await self.cache.get(f"availability:{member_id}")
         if not availability_data:
             return {
                 "available": True,
@@ -966,7 +1002,8 @@ class TaskDistributionEngine:
         }
     
     async def _update_team_member_workload(self, member_id: str, additional_hours: float):
-        """Update team member workload tracking"""        workload_data = await self.cache.get(f"workload:{member_id}")
+        """Update team member workload tracking"""
+        workload_data = await self.cache.get(f"workload:{member_id}")
         if not workload_data:
             workload_data = {
                 "member_id": member_id,
@@ -982,13 +1019,15 @@ class TaskDistributionEngine:
         await self.cache.set(f"workload:{member_id}", workload_data, ttl=86400)
     
     async def _update_project_task_count(self, project_id: str, increment: int):
-        """Update project task count"""        project_data = await self.cache.get(f"project:{project_id}")
+        """Update project task count"""
+        project_data = await self.cache.get(f"project:{project_id}")
         if project_data:
             project_data["total_tasks"] = project_data.get("total_tasks", 0) + increment
             await self.cache.set(f"project:{project_id}", project_data, ttl=86400)
     
     async def _update_project_progress(self, project_id: str):
-        """Update overall project progress based on task completion"""        try:
+        """Update overall project progress based on task completion"""
+        try:
             logger.debug(f"🔄 Updating progress for project {project_id}")
             
             # Get project data
@@ -1044,7 +1083,8 @@ class TaskDistributionEngine:
             logger.error(f"❌ Error updating progress for project {project_id}: {e}")
     
     async def _handle_task_completion(self, task_id: str, task_data: Dict[str, Any]):
-        """Handle task completion procedures"""        # Update project completed tasks count
+        """Handle task completion procedures"""
+        # Update project completed tasks count
         await self._update_project_completed_tasks(task_data["project_id"])
         
         # Update assignee workload
@@ -1057,7 +1097,8 @@ class TaskDistributionEngine:
         await self._check_dependent_tasks(task_id, task_data["project_id"])
     
     async def _update_project_completed_tasks(self, project_id: str):
-        """Update project completed tasks count"""        project_data = await self.cache.get(f"project:{project_id}")
+        """Update project completed tasks count"""
+        project_data = await self.cache.get(f"project:{project_id}")
         if project_data:
             project_data["completed_tasks"] = project_data.get("completed_tasks", 0) + 1
             
@@ -1073,7 +1114,8 @@ class TaskDistributionEngine:
         assignee_id: str,
         task_data: Dict[str, Any]
     ):
-        """Update assignee completion statistics"""        workload_data = await self.cache.get(f"workload:{assignee_id}")
+        """Update assignee completion statistics"""
+        workload_data = await self.cache.get(f"workload:{assignee_id}")
         if workload_data:
             workload_data["active_tasks"] -= 1
             workload_data["completed_tasks"] += 1
@@ -1081,7 +1123,8 @@ class TaskDistributionEngine:
             await self.cache.set(f"workload:{assignee_id}", workload_data, ttl=86400)
     
     async def _check_dependent_tasks(self, completed_task_id: str, project_id: str):
-        """Check and unblock dependent tasks"""        try:
+        """Check and unblock dependent tasks"""
+        try:
             logger.debug(f"🔄 Checking dependent tasks for completed task {completed_task_id}")
             
             # Get all tasks for the project
@@ -1119,7 +1162,8 @@ class TaskDistributionEngine:
             logger.error(f"❌ Error checking dependent tasks for {completed_task_id}: {e}")
     
     async def _notify_task_unblocked(self, assignee_id: str, task_id: str):
-        """Notify assignee that their task has been unblocked"""        try:
+        """Notify assignee that their task has been unblocked"""
+        try:
             notification = {
                 "type": "task_unblocked",
                 "assignee_id": assignee_id,
@@ -1139,7 +1183,8 @@ class TaskDistributionEngine:
             logger.error(f"❌ Error notifying assignee {assignee_id} about unblocked task {task_id}: {e}")
     
     async def _get_team_member_info(self, member_id: str) -> Dict[str, Any]:
-        """Get team member information"""        member_info = await self.cache.get(f"member_info:{member_id}")
+        """Get team member information"""
+        member_info = await self.cache.get(f"member_info:{member_id}")
         if not member_info:
             return {
                 "name": f"Member {member_id}",
@@ -1155,7 +1200,8 @@ class TaskDistributionEngine:
         member_id: str,
         estimated_hours: float
     ) -> str:
-        """Estimate task completion date for team member"""        workload_data = await self.cache.get(f"workload:{member_id}")
+        """Estimate task completion date for team member"""
+        workload_data = await self.cache.get(f"workload:{member_id}")
         if not workload_data:
             # Default to 1 week if no workload data
             return (datetime.utcnow() + timedelta(weeks=1)).isoformat()
@@ -1172,7 +1218,8 @@ class TaskDistributionEngine:
 
 
 class MilestoneTracker:
-    """Advanced milestone tracking and management system"""    
+    """Advanced milestone tracking and management system"""
+    
     def __init__(self, db_session: AsyncSession, cache_manager: CacheManager):
         self.db = db_session
         self.cache = cache_manager
@@ -1189,7 +1236,8 @@ class MilestoneTracker:
         budget_allocation: float,
         created_by: str
     ) -> Dict[str, Any]:
-        """Create project milestone with comprehensive tracking"""        try:
+        """Create project milestone with comprehensive tracking"""
+        try:
             milestone_id = str(uuid.uuid4())
             
             milestone = ProjectMilestone(
@@ -1255,7 +1303,8 @@ class MilestoneTracker:
         updated_by: str,
         notes: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Update milestone progress with validation"""        try:
+        """Update milestone progress with validation"""
+        try:
             milestone_data = await self.cache.get(f"milestone:{milestone_id}")
             if not milestone_data:
                 raise ValidationError("Milestone not found")
@@ -1297,7 +1346,8 @@ class MilestoneTracker:
             raise BusinessLogicError(f"Failed to update milestone progress: {str(e)}")
     
     async def _add_milestone_to_project(self, project_id: str, milestone_id: str):
-        """Add milestone to project tracking"""        project_data = await self.cache.get(f"project:{project_id}")
+        """Add milestone to project tracking"""
+        project_data = await self.cache.get(f"project:{project_id}")
         if project_data:
             if "milestones" not in project_data:
                 project_data["milestones"] = []
@@ -1309,7 +1359,8 @@ class MilestoneTracker:
         milestone_id: str,
         milestone_data: Dict[str, Any]
     ):
-        """Handle milestone completion procedures"""        # Notify responsible team members
+        """Handle milestone completion procedures"""
+        # Notify responsible team members
         await self.notification_service.send_milestone_completion_notification(
             milestone_data["responsible_team_members"],
             milestone_data
@@ -1319,7 +1370,8 @@ class MilestoneTracker:
         await self._update_project_milestone_progress(milestone_data["project_id"])
     
     async def _update_project_milestone_progress(self, project_id: str):
-        """Update project progress based on milestone completion"""        project_data = await self.cache.get(f"project:{project_id}")
+        """Update project progress based on milestone completion"""
+        project_data = await self.cache.get(f"project:{project_id}")
         if not project_data:
             return
         
@@ -1343,7 +1395,8 @@ class MilestoneTracker:
 
 
 class ResourceAllocationManager:
-    """Advanced resource allocation and optimization system"""    
+    """Advanced resource allocation and optimization system"""
+    
     def __init__(self, db_session: AsyncSession, cache_manager: CacheManager):
         self.db = db_session
         self.cache = cache_manager
@@ -1359,7 +1412,8 @@ class ResourceAllocationManager:
         hourly_rate: float,
         allocated_by: str
     ) -> Dict[str, Any]:
-        """Allocate team member resources to project"""        try:
+        """Allocate team member resources to project"""
+        try:
             allocation_id = str(uuid.uuid4())
             
             # Calculate total budget allocation
@@ -1424,7 +1478,8 @@ class ResourceAllocationManager:
             raise BusinessLogicError(f"Failed to allocate resources: {str(e)}")
     
     async def _add_allocation_to_project(self, project_id: str, allocation_id: str):
-        """Add resource allocation to project tracking"""        project_data = await self.cache.get(f"project:{project_id}")
+        """Add resource allocation to project tracking"""
+        project_data = await self.cache.get(f"project:{project_id}")
         if project_data:
             if "resource_allocations" not in project_data:
                 project_data["resource_allocations"] = {}
@@ -1433,7 +1488,8 @@ class ResourceAllocationManager:
 
 
 class ProjectTimelineManager:
-    """Advanced project timeline management with critical path analysis"""    
+    """Advanced project timeline management with critical path analysis"""
+    
     def __init__(self, db_session: AsyncSession, cache_manager: CacheManager):
         self.db = db_session
         self.cache = cache_manager
@@ -1444,7 +1500,8 @@ class ProjectTimelineManager:
         constraints: Dict[str, Any],
         optimization_goals: List[str]
     ) -> Dict[str, Any]:
-        """Optimize project timeline using AI algorithms"""        try:
+        """Optimize project timeline using AI algorithms"""
+        try:
             project_data = await self.cache.get(f"project:{project_id}")
             if not project_data:
                 raise ValidationError("Project not found")
@@ -1483,7 +1540,8 @@ class ProjectTimelineManager:
             raise BusinessLogicError(f"Failed to optimize timeline: {str(e)}")
     
     async def _get_project_tasks(self, project_id: str) -> List[Dict[str, Any]]:
-        """Get all tasks for project"""        try:
+        """Get all tasks for project"""
+        try:
             # Get cached project tasks
             project_tasks = await self.cache.get(f"project_tasks:{project_id}")
             if project_tasks:
@@ -1512,7 +1570,8 @@ class ProjectTimelineManager:
             return []
     
     async def _calculate_critical_path(self, tasks: List[Dict[str, Any]]) -> List[str]:
-        """Calculate critical path for project tasks using CPM algorithm"""        try:
+        """Calculate critical path for project tasks using CPM algorithm"""
+        try:
             if not tasks:
                 return []
             
@@ -1627,7 +1686,8 @@ class ProjectTimelineManager:
         constraints: Dict[str, Any],
         optimization_goals: List[str]
     ) -> Dict[str, Any]:
-        """Optimize project timeline based on goals and constraints"""        try:
+        """Optimize project timeline based on goals and constraints"""
+        try:
             if not tasks:
                 return {
                     "completion_date": datetime.utcnow().isoformat(),
@@ -1714,7 +1774,8 @@ class ProjectTimelineManager:
             }
     
     async def _optimize_parallel_execution(self, tasks: List[Dict[str, Any]], critical_path: List[str]) -> float:
-        """Optimize parallel execution of independent tasks"""        try:
+        """Optimize parallel execution of independent tasks"""
+        try:
             # Identify tasks that can be parallelized (no dependencies between them)
             independent_groups = []
             processed_tasks = set()
@@ -1766,7 +1827,8 @@ class ProjectTimelineManager:
             return 0.0
     
     async def _optimize_resource_allocation(self, tasks: List[Dict[str, Any]], critical_path: List[str], constraints: Dict[str, Any]) -> Dict[str, float]:
-        """Optimize resource allocation to critical path"""        try:
+        """Optimize resource allocation to critical path"""
+        try:
             # Identify available resources and current allocation
             total_resources = constraints.get("max_team_members", 5)
             critical_path_tasks = [t for t in tasks if t.get("task_id") in critical_path]
@@ -1802,7 +1864,8 @@ class ProjectTimelineManager:
             return {"time_saved": 0.0, "efficiency_gain": 1.0}
     
     async def _optimize_buffer_times(self, tasks: List[Dict[str, Any]], constraints: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize buffer times in project schedule"""        try:
+        """Optimize buffer times in project schedule"""
+        try:
             total_duration = sum(task.get("estimated_hours", 8) / 8 for task in tasks)
             current_buffer_ratio = constraints.get("buffer_ratio", 0.2)  # 20% default buffer
             
@@ -1833,7 +1896,8 @@ class ProjectTimelineManager:
             return {"time_saved": 0.0, "description": "Buffer optimization failed"}
     
     async def _optimize_task_dependencies(self, tasks: List[Dict[str, Any]]) -> float:
-        """Optimize task dependencies to reduce blocking"""        try:
+        """Optimize task dependencies to reduce blocking"""
+        try:
             # Identify unnecessary dependencies that could be removed
             time_saved = 0
             dependency_graph = {}

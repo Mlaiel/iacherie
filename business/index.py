@@ -25,7 +25,8 @@ For licensing inquiries ONLY: mlaiel@live.de
 Business Logic Flow:
 Creator (Multi-format) → Upload → AI Protection & Rights → SEO Pro → 
 Collaboration Matching → Multi-platform Distribution → Revenue Optimization → Analytics
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -70,7 +71,8 @@ __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
 
 @dataclass
 class BusinessServiceConfig:
-    """Configuration for business services"""    redis_url: str = "redis://localhost:6379"
+    """Configuration for business services"""
+    redis_url: str = "redis://localhost:6379"
     postgres_url: str = "postgresql://user:pass@localhost/iainfluencer"
     cache_ttl: int = 3600
     max_connections: int = 100
@@ -96,7 +98,8 @@ class BusinessServiceConfig:
 
 @dataclass 
 class CreatorJourneyRequest:
-    """Request structure for creator journey processing"""    creator_id: str
+    """Request structure for creator journey processing"""
+    creator_id: str
     creator_type: str
     content_data: Dict[str, Any]
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -106,7 +109,8 @@ class CreatorJourneyRequest:
 
 @dataclass
 class CreatorJourneyResponse:
-    """Response structure for creator journey processing"""    journey_id: str
+    """Response structure for creator journey processing"""
+    journey_id: str
     creator_id: str
     success: bool
     stages_completed: List[str]
@@ -120,9 +124,11 @@ class CreatorJourneyResponse:
 
 
 class BusinessOrchestrator:
-    """    Central orchestrator managing all business modules and services
+    """
+    Central orchestrator managing all business modules and services
     providing unified access to the complete IA Influencer Agent ecosystem.
-    """    
+    """
+    
     def __init__(self, config: BusinessServiceConfig):
         self.config = config
         self.redis_client = None
@@ -165,7 +171,8 @@ class BusinessOrchestrator:
         self.last_health_check = None
     
     async def initialize(self) -> bool:
-        """Initialize all business services and connections"""        try:
+        """Initialize all business services and connections"""
+        try:
             # Initialize Redis connection
             self.redis_client = redis.from_url(
                 self.config.redis_url,
@@ -199,7 +206,8 @@ class BusinessOrchestrator:
             return False
     
     async def _initialize_services(self) -> None:
-        """Initialize all business service modules"""        try:
+        """Initialize all business service modules"""
+        try:
             # Initialize analytics service
             if hasattr(analytics, 'initialize_service'):
                 self.services['analytics'] = await analytics.initialize_service(
@@ -333,7 +341,8 @@ class BusinessOrchestrator:
             raise
     
     async def process_creator_journey(self, request: CreatorJourneyRequest) -> CreatorJourneyResponse:
-        """        Process complete creator journey through all business stages
+        """
+        Process complete creator journey through all business stages
         
         Business Flow:
         1. Content Upload & Processing
@@ -343,7 +352,8 @@ class BusinessOrchestrator:
         5. Multi-Platform Distribution
         6. Revenue Optimization
         7. Analytics & Insights
-        """        if not self.initialized:
+        """
+        if not self.initialized:
             raise RuntimeError("Business Service Orchestrator not initialized")
         
         start_time = asyncio.get_event_loop().time()
@@ -427,7 +437,8 @@ class BusinessOrchestrator:
         return response
     
     async def _process_content_stage(self, request: CreatorJourneyRequest) -> Dict[str, Any]:
-        """Process content upload and management stage"""        content_service = self.services.get('content')
+        """Process content upload and management stage"""
+        content_service = self.services.get('content')
         if content_service and hasattr(content_service, 'process_content'):
             return await content_service.process_content(
                 creator_id=request.creator_id,
@@ -437,7 +448,8 @@ class BusinessOrchestrator:
         return {"status": "processed", "method": "fallback"}
     
     async def _process_protection_stage(self, request: CreatorJourneyRequest) -> Dict[str, Any]:
-        """Process AI protection and rights management stage"""        protection_service = self.services.get('protection')
+        """Process AI protection and rights management stage"""
+        protection_service = self.services.get('protection')
         if protection_service and hasattr(protection_service, 'protect_content'):
             return await protection_service.protect_content(
                 creator_id=request.creator_id,
@@ -446,7 +458,8 @@ class BusinessOrchestrator:
         return {"status": "protected", "method": "fallback"}
     
     async def _process_seo_stage(self, request: CreatorJourneyRequest) -> Dict[str, Any]:
-        """Process SEO optimization stage"""        # SEO optimization logic
+        """Process SEO optimization stage"""
+        # SEO optimization logic
         return {
             "status": "optimized",
             "seo_score": 95,
@@ -455,7 +468,8 @@ class BusinessOrchestrator:
         }
     
     async def _process_matching_stage(self, request: CreatorJourneyRequest) -> Dict[str, Any]:
-        """Process collaboration matching stage"""        matching_service = self.services.get('matching')
+        """Process collaboration matching stage"""
+        matching_service = self.services.get('matching')
         if matching_service and hasattr(matching_service, 'find_matches'):
             return await matching_service.find_matches(
                 creator_id=request.creator_id,
@@ -464,7 +478,8 @@ class BusinessOrchestrator:
         return {"status": "matched", "matches_found": 5, "method": "fallback"}
     
     async def _process_distribution_stage(self, request: CreatorJourneyRequest) -> Dict[str, Any]:
-        """Process multi-platform distribution stage"""        platform_service = self.services.get('platform')
+        """Process multi-platform distribution stage"""
+        platform_service = self.services.get('platform')
         if platform_service and hasattr(platform_service, 'distribute_content'):
             return await platform_service.distribute_content(
                 creator_id=request.creator_id,
@@ -478,7 +493,8 @@ class BusinessOrchestrator:
         }
     
     async def _process_monetization_stage(self, request: CreatorJourneyRequest) -> Dict[str, Any]:
-        """Process revenue optimization stage"""        monetization_service = self.services.get('monetization')
+        """Process revenue optimization stage"""
+        monetization_service = self.services.get('monetization')
         if monetization_service and hasattr(monetization_service, 'optimize_revenue'):
             return await monetization_service.optimize_revenue(
                 creator_id=request.creator_id,
@@ -493,7 +509,8 @@ class BusinessOrchestrator:
         }
     
     async def _process_analytics_stage(self, request: CreatorJourneyRequest) -> Dict[str, Any]:
-        """Process analytics and insights stage"""        analytics_service = self.services.get('analytics')
+        """Process analytics and insights stage"""
+        analytics_service = self.services.get('analytics')
         if analytics_service and hasattr(analytics_service, 'generate_insights'):
             return await analytics_service.generate_insights(
                 creator_id=request.creator_id,
@@ -512,7 +529,8 @@ class BusinessOrchestrator:
         request: CreatorJourneyRequest, 
         response: CreatorJourneyResponse
     ) -> List[str]:
-        """Generate personalized recommendations based on journey results"""        recommendations = []
+        """Generate personalized recommendations based on journey results"""
+        recommendations = []
         
         # Content-based recommendations
         if request.creator_type == "musician":
@@ -553,7 +571,8 @@ class BusinessOrchestrator:
         request: CreatorJourneyRequest, 
         response: CreatorJourneyResponse
     ) -> List[str]:
-        """Generate actionable next steps based on journey results"""        next_steps = [
+        """Generate actionable next steps based on journey results"""
+        next_steps = [
             "Review your creator dashboard for detailed insights",
             "Set up automated content scheduling",
             "Enable real-time performance monitoring"
@@ -572,10 +591,12 @@ class BusinessOrchestrator:
         return next_steps
     
     async def get_service(self, service_name: str) -> Optional[Any]:
-        """Get a specific business service by name"""        return self.services.get(service_name)
+        """Get a specific business service by name"""
+        return self.services.get(service_name)
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on all business services"""        health_status = {
+        """Perform health check on all business services"""
+        health_status = {
             "orchestrator": "healthy" if self.initialized else "unhealthy",
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "services": {}
@@ -594,7 +615,8 @@ class BusinessOrchestrator:
         return health_status
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown all business services"""        logger.info("Shutting down Business Service Orchestrator")
+        """Gracefully shutdown all business services"""
+        logger.info("Shutting down Business Service Orchestrator")
         
         # Shutdown all services
         for service_name, service in self.services.items():
@@ -625,7 +647,8 @@ _orchestrator: Optional[BusinessServiceOrchestrator] = None
 async def get_business_orchestrator(
     config: Optional[BusinessServiceConfig] = None
 ) -> BusinessServiceOrchestrator:
-    """Get or create the global business service orchestrator"""    global _orchestrator
+    """Get or create the global business service orchestrator"""
+    global _orchestrator
     
     if _orchestrator is None:
         if config is None:
@@ -639,12 +662,14 @@ async def get_business_orchestrator(
 async def initialize_business_system(
     config: Optional[BusinessServiceConfig] = None
 ) -> BusinessServiceOrchestrator:
-    """Initialize the complete business system"""    return await get_business_orchestrator(config)
+    """Initialize the complete business system"""
+    return await get_business_orchestrator(config)
 
 
 @asynccontextmanager
 async def business_context(config: Optional[BusinessServiceConfig] = None):
-    """Async context manager for business services"""    orchestrator = await get_business_orchestrator(config)
+    """Async context manager for business services"""
+    orchestrator = await get_business_orchestrator(config)
     try:
         yield orchestrator
     finally:
@@ -659,7 +684,8 @@ async def process_creator_journey(
     metadata: Optional[Dict[str, Any]] = None,
     preferences: Optional[Dict[str, Any]] = None
 ) -> CreatorJourneyResponse:
-    """Convenience function to process creator journey"""    orchestrator = await get_business_orchestrator()
+    """Convenience function to process creator journey"""
+    orchestrator = await get_business_orchestrator()
     
     request = CreatorJourneyRequest(
         creator_id=creator_id,

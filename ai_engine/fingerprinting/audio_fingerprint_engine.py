@@ -3,7 +3,8 @@ Multi-algorithm audio fingerprinting with Chromaprint, Essentia, and spectral an
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import hashlib
 from typing import Dict, Any, List, Optional, Tuple
 from dataclasses import dataclass
@@ -33,7 +34,8 @@ from ...config import settings
 
 @dataclass
 class AudioFingerprint:
-    """Audio fingerprint data structure"""    file_id: str
+    """Audio fingerprint data structure"""
+    file_id: str
     chromaprint_hash: str
     spectral_features: Dict[str, Any]
     melody_pattern: List[float]
@@ -47,13 +49,15 @@ class AudioFingerprint:
 
 
 class AudioFingerprintEngine:
-    """    Advanced audio fingerprinting engine supporting multiple algorithms:
+    """
+    Advanced audio fingerprinting engine supporting multiple algorithms:
     - Chromaprint (industry standard)
     - Spectral analysis
     - Melody pattern extraction
     - Rhythm pattern detection
     - Harmonic feature analysis
-    """    
+    """
+    
     def __init__(self):
         self.sample_rate = 22050
         self.hop_length = 512
@@ -64,7 +68,8 @@ class AudioFingerprintEngine:
         logger.info("AudioFingerprintEngine initialized with multi-algorithm support")
     
     async def generate_fingerprint(self, audio_file_path: str, metadata: Optional[Dict] = None) -> AudioFingerprint:
-        """        Generate comprehensive audio fingerprint using multiple algorithms
+        """
+        Generate comprehensive audio fingerprint using multiple algorithms
         
         Args:
             audio_file_path: Path to audio file
@@ -72,7 +77,8 @@ class AudioFingerprintEngine:
             
         Returns:
             AudioFingerprint: Complete fingerprint data
-        """        try:
+        """
+        try:
             logger.info(f"Generating audio fingerprint for: {audio_file_path}")
             
             # Load audio file
@@ -123,11 +129,13 @@ class AudioFingerprintEngine:
             raise
     
     async def _generate_file_id(self, file_path: str, audio_data: np.ndarray) -> str:
-        """Generate unique file ID based on content"""        content_hash = hashlib.sha256(audio_data.tobytes()).hexdigest()
+        """Generate unique file ID based on content"""
+        content_hash = hashlib.sha256(audio_data.tobytes()).hexdigest()
         return f"audio_{content_hash[:16]}"
     
     async def _generate_chromaprint(self, audio_data: np.ndarray, sr: int) -> str:
-        """Generate Chromaprint fingerprint hash"""        try:
+        """Generate Chromaprint fingerprint hash"""
+        try:
             # Convert to 16-bit PCM for chromaprint
             audio_16bit = (audio_data * 32767).astype(np.int16)
             
@@ -148,7 +156,8 @@ class AudioFingerprintEngine:
             return "error_chromaprint"
     
     async def _extract_spectral_features(self, audio_data: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract comprehensive spectral features"""        try:
+        """Extract comprehensive spectral features"""
+        try:
             # Basic spectral features
             spectral_centroid = librosa.feature.spectral_centroid(y=audio_data, sr=sr)
             spectral_rolloff = librosa.feature.spectral_rolloff(y=audio_data, sr=sr)
@@ -178,7 +187,8 @@ class AudioFingerprintEngine:
             return {}
     
     async def _extract_melody_pattern(self, audio_data: np.ndarray, sr: int) -> List[float]:
-        """Extract melody pattern using pitch tracking"""        try:
+        """Extract melody pattern using pitch tracking"""
+        try:
             # Estimate pitch using piptrack
             pitches, magnitudes = librosa.piptrack(y=audio_data, sr=sr, threshold=0.1)
             
@@ -202,7 +212,8 @@ class AudioFingerprintEngine:
             return []
     
     async def _extract_rhythm_pattern(self, audio_data: np.ndarray, sr: int) -> List[float]:
-        """Extract rhythm pattern using onset detection"""        try:
+        """Extract rhythm pattern using onset detection"""
+        try:
             # Onset detection
             onset_frames = librosa.onset.onset_detect(y=audio_data, sr=sr, units='frames')
             onset_times = librosa.frames_to_time(onset_frames, sr=sr)
@@ -224,7 +235,8 @@ class AudioFingerprintEngine:
             return []
     
     async def _extract_harmonic_features(self, audio_data: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract harmonic and percussive components"""        try:
+        """Extract harmonic and percussive components"""
+        try:
             # Harmonic-percussive separation
             y_harmonic, y_percussive = librosa.effects.hpss(audio_data)
             
@@ -249,7 +261,8 @@ class AudioFingerprintEngine:
             return {}
     
     async def _detect_tempo(self, audio_data: np.ndarray, sr: int) -> float:
-        """Detect tempo using beat tracking"""        try:
+        """Detect tempo using beat tracking"""
+        try:
             tempo, _ = librosa.beat.beat_track(y=audio_data, sr=sr)
             return float(tempo)
             
@@ -258,7 +271,8 @@ class AudioFingerprintEngine:
             return 0.0
     
     async def _detect_key(self, audio_data: np.ndarray, sr: int) -> str:
-        """Detect musical key using chroma analysis"""        try:
+        """Detect musical key using chroma analysis"""
+        try:
             # Chroma features
             chroma = librosa.feature.chroma_stft(y=audio_data, sr=sr)
             chroma_mean = np.mean(chroma, axis=1)
@@ -295,7 +309,8 @@ class AudioFingerprintEngine:
             return 'Unknown'
     
     async def _calculate_confidence_score(self, results: List[Any]) -> float:
-        """Calculate overall confidence score based on fingerprint quality"""        try:
+        """Calculate overall confidence score based on fingerprint quality"""
+        try:
             confidence_factors = []
             
             # Check chromaprint quality
@@ -334,7 +349,8 @@ class AudioFingerprintEngine:
             return 0.5
     
     async def compare_fingerprints(self, fp1: AudioFingerprint, fp2: AudioFingerprint) -> float:
-        """        Compare two audio fingerprints and return similarity score (0-1)
+        """
+        Compare two audio fingerprints and return similarity score (0-1)
         
         Args:
             fp1: First fingerprint
@@ -342,7 +358,8 @@ class AudioFingerprintEngine:
             
         Returns:
             float: Similarity score between 0 and 1
-        """        try:
+        """
+        try:
             similarities = []
             
             # Compare chromaprint hashes
@@ -386,7 +403,8 @@ class AudioFingerprintEngine:
             return 0.0
     
     async def _compare_spectral_features(self, features1: Dict, features2: Dict) -> float:
-        """Compare spectral features between two fingerprints"""        try:
+        """Compare spectral features between two fingerprints"""
+        try:
             similarity_scores = []
             
             # Compare MFCC features
@@ -406,7 +424,8 @@ class AudioFingerprintEngine:
             return 0.0
     
     async def _compare_sequences(self, seq1: List[float], seq2: List[float]) -> float:
-        """Compare two sequences using correlation"""        try:
+        """Compare two sequences using correlation"""
+        try:
             if not seq1 or not seq2:
                 return 0.0
             

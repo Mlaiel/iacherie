@@ -11,7 +11,8 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Set, Union, Any, Tuple
@@ -38,7 +39,8 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""    BASIC = "basic"
+    """Content protection levels"""
+    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
@@ -46,7 +48,8 @@ class ProtectionLevel(Enum):
 
 
 class RightsType(Enum):
-    """Content rights types"""    COPYRIGHT = "copyright"
+    """Content rights types"""
+    COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     LICENSING = "licensing"
     DISTRIBUTION = "distribution"
@@ -56,7 +59,8 @@ class RightsType(Enum):
 
 
 class ThreatLevel(Enum):
-    """Threat detection levels"""    LOW = "low"
+    """Threat detection levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -64,7 +68,8 @@ class ThreatLevel(Enum):
 
 
 class ProtectionAction(Enum):
-    """Protection action types"""    MONITOR = "monitor"
+    """Protection action types"""
+    MONITOR = "monitor"
     ALERT = "alert"
     TAKEDOWN = "takedown"
     LEGAL_ACTION = "legal_action"
@@ -74,7 +79,8 @@ class ProtectionAction(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint data structure"""    fingerprint_id: str
+    """Content fingerprint data structure"""
+    fingerprint_id: str
     content_id: str
     fingerprint_type: str  # audio, video, image, text
     hash_values: Dict[str, str]  # Multiple hash algorithms
@@ -87,7 +93,8 @@ class ContentFingerprint:
 
 @dataclass
 class DigitalWatermark:
-    """Digital watermark configuration"""    watermark_id: str
+    """Digital watermark configuration"""
+    watermark_id: str
     content_id: str
     watermark_type: str  # visible, invisible, audio, steganographic
     watermark_data: bytes
@@ -99,7 +106,8 @@ class DigitalWatermark:
 
 @dataclass
 class RightsManifest:
-    """Content rights manifest"""    manifest_id: str
+    """Content rights manifest"""
+    manifest_id: str
     content_id: str
     owner_id: str
     rights_holder: str
@@ -114,7 +122,8 @@ class RightsManifest:
 
 @dataclass
 class ThreatDetection:
-    """Threat detection result"""    detection_id: str
+    """Threat detection result"""
+    detection_id: str
     content_id: str
     threat_type: str
     threat_level: ThreatLevel
@@ -129,7 +138,8 @@ class ThreatDetection:
 
 @dataclass
 class ProtectionPolicy:
-    """Content protection policy"""    policy_id: str
+    """Content protection policy"""
+    policy_id: str
     policy_name: str
     protection_level: ProtectionLevel
     monitored_platforms: List[str]
@@ -143,9 +153,11 @@ class ProtectionPolicy:
 
 
 class ContentProtectionManager:
-    """    Enterprise-grade content protection system for creator economy,
+    """
+    Enterprise-grade content protection system for creator economy,
     implementing comprehensive protection workflow integration.
-    """    
+    """
+    
     def __init__(self, cache_manager: CacheManager, event_emitter: EventEmitter):
         self.cache_manager = cache_manager
         self.event_emitter = event_emitter
@@ -158,7 +170,8 @@ class ContentProtectionManager:
         self.encryption_key = self._generate_encryption_key()
         
     def _generate_encryption_key(self) -> bytes:
-        """Generate encryption key for sensitive data"""        return Fernet.generate_key()
+        """Generate encryption key for sensitive data"""
+        return Fernet.generate_key()
     
     async def activate_content_protection(
         self,
@@ -167,11 +180,13 @@ class ContentProtectionManager:
         protection_level: ProtectionLevel = ProtectionLevel.STANDARD,
         custom_policy_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """        Activate comprehensive content protection for uploaded content
+        """
+        Activate comprehensive content protection for uploaded content
         
         Business Logic Integration:
         Content Upload → AI Processing → PROTECTION ACTIVATION → SEO → Distribution
-        """        try:
+        """
+        try:
             # Get or create protection policy
             if custom_policy_id:
                 protection_policy = await self._get_protection_policy(custom_policy_id)
@@ -255,7 +270,8 @@ class ContentProtectionManager:
         content_id: str,
         user_id: str
     ) -> Dict[str, Any]:
-        """Generate comprehensive content fingerprints for protection"""        try:
+        """Generate comprehensive content fingerprints for protection"""
+        try:
             # Get content file information
             content_info = await self._get_content_info(content_id)
             
@@ -328,7 +344,8 @@ class ContentProtectionManager:
         user_id: str,
         protection_policy: ProtectionPolicy
     ) -> Dict[str, Any]:
-        """Apply digital watermarking based on content type and protection level"""        try:
+        """Apply digital watermarking based on content type and protection level"""
+        try:
             content_info = await self._get_content_info(content_id)
             
             # Determine watermarking strategy based on content type
@@ -388,7 +405,8 @@ class ContentProtectionManager:
         user_id: str,
         protection_policy: ProtectionPolicy
     ) -> Dict[str, Any]:
-        """Create comprehensive rights manifest for content"""        try:
+        """Create comprehensive rights manifest for content"""
+        try:
             # Get user information for rights assignment
             user_info = await self._get_user_info(user_id)
             
@@ -463,7 +481,8 @@ class ContentProtectionManager:
         content_id: str,
         protection_policy: ProtectionPolicy
     ) -> Dict[str, Any]:
-        """Setup comprehensive content monitoring infrastructure"""        try:
+        """Setup comprehensive content monitoring infrastructure"""
+        try:
             # Configure monitoring parameters
             monitoring_config = {
                 "content_id": content_id,
@@ -516,7 +535,8 @@ class ContentProtectionManager:
         fingerprint_result: Dict[str, Any],
         rights_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Register content with external protection services"""        try:
+        """Register content with external protection services"""
+        try:
             registration_services = [
                 "content_id_registry",
                 "copyright_database",
@@ -556,7 +576,8 @@ class ContentProtectionManager:
         content_id: str,
         protection_policy: ProtectionPolicy
     ) -> Dict[str, Any]:
-        """Activate real-time monitoring for content protection"""        try:
+        """Activate real-time monitoring for content protection"""
+        try:
             # Start monitoring tasks
             monitoring_tasks = []
             
@@ -596,7 +617,8 @@ class ContentProtectionManager:
         suspected_url: str,
         user_id: str
     ) -> Dict[str, Any]:
-        """Detect potential content theft and initiate response"""        try:
+        """Detect potential content theft and initiate response"""
+        try:
             # Get content fingerprints
             fingerprints = await self._get_content_fingerprints(content_id)
             
@@ -656,7 +678,8 @@ class ContentProtectionManager:
         user_id: str,
         takedown_type: str = "dmca"
     ) -> Dict[str, Any]:
-        """Initiate automated takedown request for detected theft"""        try:
+        """Initiate automated takedown request for detected theft"""
+        try:
             # Get threat detection details
             threat_detection = await self._get_threat_detection(detection_id)
             
@@ -698,7 +721,8 @@ class ContentProtectionManager:
             }
     
     def _get_default_protection_policy(self, protection_level: ProtectionLevel) -> ProtectionPolicy:
-        """Get default protection policy for given protection level"""        policy_configs = {
+        """Get default protection policy for given protection level"""
+        policy_configs = {
             ProtectionLevel.BASIC: {
                 "monitored_platforms": ["youtube", "instagram"],
                 "detection_sensitivity": 0.8,
@@ -758,7 +782,8 @@ class ContentProtectionManager:
         watermark_result: Dict[str, Any],
         rights_result: Dict[str, Any]
     ) -> float:
-        """Calculate overall protection score"""        scores = []
+        """Calculate overall protection score"""
+        scores = []
         
         if fingerprint_result.get("fingerprint_generated"):
             scores.append(0.4)  # 40% for fingerprinting
@@ -772,7 +797,8 @@ class ContentProtectionManager:
         return sum(scores)
     
     async def get_protection_status(self, content_id: str) -> Dict[str, Any]:
-        """Get comprehensive protection status for content"""        try:
+        """Get comprehensive protection status for content"""
+        try:
             # Get protection components status
             fingerprint_status = await self._get_fingerprint_status(content_id)
             watermark_status = await self._get_watermark_status(content_id)
@@ -804,27 +830,33 @@ class ContentProtectionManager:
     
     # Helper methods (implementation details)
     async def _get_content_info(self, content_id: str) -> Dict[str, Any]:
-        """Get content information from database"""        # Implementation for retrieving content info
+        """Get content information from database"""
+        # Implementation for retrieving content info
         pass
     
     async def _get_user_info(self, user_id: str) -> Dict[str, Any]:
-        """Get user information from database"""        # Implementation for retrieving user info
+        """Get user information from database"""
+        # Implementation for retrieving user info
         pass
     
     async def _store_fingerprint_securely(self, fingerprint: ContentFingerprint):
-        """Store fingerprint data securely"""        # Implementation for secure storage
+        """Store fingerprint data securely"""
+        # Implementation for secure storage
         pass
     
     async def _store_watermark_securely(self, watermark: DigitalWatermark):
-        """Store watermark data securely"""        # Implementation for secure storage
+        """Store watermark data securely"""
+        # Implementation for secure storage
         pass
     
     async def _store_rights_manifest_securely(self, rights_manifest: RightsManifest):
-        """Store rights manifest securely"""        # Implementation for secure storage
+        """Store rights manifest securely"""
+        # Implementation for secure storage
         pass
     
     def _get_watermark_config(self, content_format: str, protection_level: ProtectionLevel) -> Dict[str, Any]:
-        """Get watermark configuration for content format and protection level"""        # Implementation for watermark configuration
+        """Get watermark configuration for content format and protection level"""
+        # Implementation for watermark configuration
         return {
             "type": "invisible",
             "strength": 0.8,
@@ -832,11 +864,13 @@ class ContentProtectionManager:
         }
     
     async def _generate_watermark_data(self, user_id: str, content_id: str) -> bytes:
-        """Generate watermark data for content"""        # Implementation for watermark data generation
+        """Generate watermark data for content"""
+        # Implementation for watermark data generation
         return b"watermark_data"
     
     def _assess_threat_level(self, analysis_result: Dict[str, Any]) -> ThreatLevel:
-        """Assess threat level based on analysis result"""        similarity_score = analysis_result.get("similarity_score", 0.0)
+        """Assess threat level based on analysis result"""
+        similarity_score = analysis_result.get("similarity_score", 0.0)
         
         if similarity_score >= 0.95:
             return ThreatLevel.CRITICAL
@@ -855,4 +889,5 @@ def create_content_protection_manager(
     cache_manager: CacheManager,
     event_emitter: EventEmitter
 ) -> ContentProtectionManager:
-    """Factory function to create content protection manager instance"""    return ContentProtectionManager(cache_manager, event_emitter)
+    """Factory function to create content protection manager instance"""
+    return ContentProtectionManager(cache_manager, event_emitter)

@@ -11,7 +11,8 @@ Professional multi-jurisdiction legal compliance system:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + International Legal Specialist + Compliance Officer + Policy Analyst
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union
 from datetime import datetime, timedelta
@@ -23,21 +24,24 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class LegalFramework(Enum):
-    """Legal framework types"""    COMMON_LAW = "common_law"
+    """Legal framework types"""
+    COMMON_LAW = "common_law"
     CIVIL_LAW = "civil_law"
     MIXED_LAW = "mixed_law"
     RELIGIOUS_LAW = "religious_law"
     SOCIALIST_LAW = "socialist_law"
 
 class CopyrightRegime(Enum):
-    """Copyright protection regimes"""    BERNE_CONVENTION = "berne_convention"
+    """Copyright protection regimes"""
+    BERNE_CONVENTION = "berne_convention"
     UNIVERSAL_COPYRIGHT = "universal_copyright"
     BILATERAL_TREATIES = "bilateral_treaties"
     WTO_TRIPS = "wto_trips"
     NATIONAL_ONLY = "national_only"
 
 class DataProtectionRegime(Enum):
-    """Data protection frameworks"""    GDPR = "gdpr"
+    """Data protection frameworks"""
+    GDPR = "gdpr"
     CCPA = "ccpa"
     PIPEDA = "pipeda"
     LGPD = "lgpd"
@@ -46,7 +50,8 @@ class DataProtectionRegime(Enum):
 
 @dataclass
 class JurisdictionProfile:
-    """Comprehensive jurisdiction legal profile"""    jurisdiction_code: str
+    """Comprehensive jurisdiction legal profile"""
+    jurisdiction_code: str
     jurisdiction_name: str
     legal_framework: LegalFramework
     copyright_regime: CopyrightRegime
@@ -63,7 +68,8 @@ class JurisdictionProfile:
 
 @dataclass
 class ComplianceRequirement:
-    """Individual compliance requirement"""    requirement_id: str
+    """Individual compliance requirement"""
+    requirement_id: str
     jurisdiction: str
     category: str
     description: str
@@ -74,7 +80,8 @@ class ComplianceRequirement:
 
 @dataclass
 class CrossBorderRule:
-    """Cross-border legal rule"""    rule_id: str
+    """Cross-border legal rule"""
+    rule_id: str
     source_jurisdiction: str
     target_jurisdiction: str
     applicable_treaties: List[str]
@@ -82,13 +89,16 @@ class CrossBorderRule:
     conflict_resolution_mechanism: str
 
 class JurisdictionHandler:
-    """    🚀 Professional multi-jurisdiction legal compliance engine
+    """
+    🚀 Professional multi-jurisdiction legal compliance engine
     
     Advanced system for managing legal compliance across multiple
     jurisdictions with automated rule application and conflict resolution.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize jurisdiction handler with configuration."""        self.config = config
+        """Initialize jurisdiction handler with configuration."""
+        self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Jurisdiction data
@@ -115,7 +125,8 @@ class JurisdictionHandler:
         self._load_treaty_frameworks()
     
     def _load_jurisdiction_profiles(self):
-        """Load comprehensive jurisdiction legal profiles."""        jurisdictions_data = {
+        """Load comprehensive jurisdiction legal profiles."""
+        jurisdictions_data = {
             'international': JurisdictionProfile(
                 jurisdiction_code='INT',
                 jurisdiction_name='International Treaties',
@@ -258,7 +269,8 @@ class JurisdictionHandler:
         self.logger.info(f"Loaded {len(jurisdictions_data)} jurisdiction profiles")
     
     def _load_compliance_requirements(self):
-        """Load jurisdiction-specific compliance requirements."""        requirements_data = {
+        """Load jurisdiction-specific compliance requirements."""
+        requirements_data = {
             # US Requirements
             'us_dmca_compliance': ComplianceRequirement(
                 requirement_id='us_dmca_compliance',
@@ -333,7 +345,8 @@ class JurisdictionHandler:
         self.logger.info(f"Loaded {len(requirements_data)} compliance requirements")
     
     def _load_cross_border_rules(self):
-        """Load cross-border legal recognition rules."""        cross_border_data = {
+        """Load cross-border legal recognition rules."""
+        cross_border_data = {
             'us_eu_recognition': CrossBorderRule(
                 rule_id='us_eu_recognition',
                 source_jurisdiction='us',
@@ -357,7 +370,8 @@ class JurisdictionHandler:
         self.logger.info(f"Loaded {len(cross_border_data)} cross-border rules")
     
     def _load_treaty_frameworks(self):
-        """Load international treaty frameworks."""        treaty_data = {
+        """Load international treaty frameworks."""
+        treaty_data = {
             'berne_convention': {
                 'name': 'Berne Convention for the Protection of Literary and Artistic Works',
                 'members': 179,
@@ -399,14 +413,16 @@ class JurisdictionHandler:
         self.logger.info(f"Loaded {len(treaty_data)} treaty frameworks")
     
     async def get_compliance_requirements(self, jurisdiction: str) -> Dict[str, Any]:
-        """        📋 Get comprehensive compliance requirements for a jurisdiction
+        """
+        📋 Get comprehensive compliance requirements for a jurisdiction
         
         Args:
             jurisdiction: Target jurisdiction code
             
         Returns:
             compliance_requirements: Complete compliance requirement set
-        """        try:
+        """
+        try:
             self.logger.info(f"Getting compliance requirements for jurisdiction: {jurisdiction}")
             
             # Get jurisdiction profile
@@ -453,7 +469,8 @@ class JurisdictionHandler:
             raise
     
     async def _get_cross_border_considerations(self, jurisdiction: str) -> List[Dict[str, Any]]:
-        """Get cross-border legal considerations for a jurisdiction."""        considerations = []
+        """Get cross-border legal considerations for a jurisdiction."""
+        considerations = []
         
         # Find rules where this jurisdiction is involved
         for rule in self.cross_border_rules.values():
@@ -472,7 +489,8 @@ class JurisdictionHandler:
         return considerations
     
     async def _get_applicable_treaties(self, jurisdiction: str) -> List[Dict[str, Any]]:
-        """Get treaties applicable to a jurisdiction."""        jurisdiction_profile = self.jurisdictions.get(jurisdiction)
+        """Get treaties applicable to a jurisdiction."""
+        jurisdiction_profile = self.jurisdictions.get(jurisdiction)
         if not jurisdiction_profile:
             return []
         
@@ -493,7 +511,8 @@ class JurisdictionHandler:
         return applicable_treaties
     
     async def _get_regulatory_alerts(self, jurisdiction: str) -> List[Dict[str, Any]]:
-        """Get recent regulatory updates and alerts for a jurisdiction."""        # This would typically connect to legal update services
+        """Get recent regulatory updates and alerts for a jurisdiction."""
+        # This would typically connect to legal update services
         # For now, return sample alerts
         sample_alerts = [
             {
@@ -524,7 +543,8 @@ class JurisdictionHandler:
         target_jurisdiction: str,
         license_terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        🌐 Validate cross-border licensing compliance
+        """
+        🌐 Validate cross-border licensing compliance
         
         Args:
             source_jurisdiction: Origin jurisdiction
@@ -533,7 +553,8 @@ class JurisdictionHandler:
             
         Returns:
             validation_result: Cross-border validation result
-        """        try:
+        """
+        try:
             self.logger.info(f"Validating cross-border licensing: {source_jurisdiction} → {target_jurisdiction}")
             
             # Get jurisdiction profiles
@@ -616,7 +637,8 @@ class JurisdictionHandler:
         target_markets: List[str],
         business_model: str
     ) -> Dict[str, Any]:
-        """        🎯 Get jurisdiction recommendations for content licensing
+        """
+        🎯 Get jurisdiction recommendations for content licensing
         
         Args:
             content_type: Type of content (audio, video, image, text)
@@ -625,7 +647,8 @@ class JurisdictionHandler:
             
         Returns:
             recommendations: Jurisdiction-specific recommendations
-        """        try:
+        """
+        try:
             recommendations = {}
             
             for jurisdiction in target_markets:
@@ -717,7 +740,8 @@ class JurisdictionHandler:
             raise
     
     async def _generate_overall_recommendations(self, jurisdiction_recommendations: Dict[str, Any]) -> List[str]:
-        """Generate overall strategic recommendations."""        recommendations = []
+        """Generate overall strategic recommendations."""
+        recommendations = []
         
         # Analyze compatibility scores
         scores = [rec['compatibility_score'] for rec in jurisdiction_recommendations.values()]
@@ -754,7 +778,8 @@ class JurisdictionHandler:
         return recommendations
     
     def get_supported_jurisdictions(self) -> List[Dict[str, Any]]:
-        """Get list of all supported jurisdictions with basic info."""        return [
+        """Get list of all supported jurisdictions with basic info."""
+        return [
             {
                 'code': profile.jurisdiction_code,
                 'name': profile.jurisdiction_name,
@@ -766,7 +791,8 @@ class JurisdictionHandler:
         ]
     
     def get_jurisdiction_metrics(self) -> Dict[str, Any]:
-        """Get jurisdiction handler performance metrics."""        return {
+        """Get jurisdiction handler performance metrics."""
+        return {
             **self.metrics,
             'total_requirements': len(self.compliance_requirements),
             'cross_border_rules': len(self.cross_border_rules),

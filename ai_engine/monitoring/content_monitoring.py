@@ -7,7 +7,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
-"""import asyncio
+"""
+import asyncio
 import time
 import json
 from typing import Dict, Any, List, Optional, Callable, Union, Set
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Types of content supported by the platform"""    AUDIO = "audio"
+    """Types of content supported by the platform"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -46,7 +48,8 @@ class ContentType(Enum):
 
 
 class ContentStatus(Enum):
-    """Content processing status"""    UPLOADED = "uploaded"
+    """Content processing status"""
+    UPLOADED = "uploaded"
     VALIDATING = "validating"
     ANALYZING = "analyzing"
     PROTECTING = "protecting"
@@ -60,7 +63,8 @@ class ContentStatus(Enum):
 
 
 class QualityLevel(Enum):
-    """Content quality assessment levels"""    EXCELLENT = "excellent"
+    """Content quality assessment levels"""
+    EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
     POOR = "poor"
@@ -69,7 +73,8 @@ class QualityLevel(Enum):
 
 @dataclass
 class ContentMetrics:
-    """Comprehensive content processing metrics"""    content_id: str
+    """Comprehensive content processing metrics"""
+    content_id: str
     user_id: str
     content_type: ContentType
     file_size: int
@@ -90,7 +95,8 @@ class ContentMetrics:
 
 @dataclass
 class PipelineFlow:
-    """Complete pipeline flow tracking"""    flow_id: str
+    """Complete pipeline flow tracking"""
+    flow_id: str
     user_id: str
     content_id: str
     content_type: ContentType
@@ -107,7 +113,8 @@ class PipelineFlow:
 
 @dataclass
 class UserJourney:
-    """User journey and engagement tracking"""    user_id: str
+    """User journey and engagement tracking"""
+    user_id: str
     session_id: str
     journey_start: datetime
     content_uploads: int = 0
@@ -121,11 +128,13 @@ class UserJourney:
 
 
 class ContentProcessingMonitor:
-    """    Advanced Content Processing Monitor
+    """
+    Advanced Content Processing Monitor
     
     Monitors the complete content processing pipeline from upload to monetization,
     tracking performance, quality, and user experience.
-    """    
+    """
+    
     def __init__(
         self,
         metrics_collector: Optional[MetricsCollector] = None,
@@ -160,7 +169,8 @@ class ContentProcessingMonitor:
         self._monitor_task: Optional[asyncio.Task] = None
         
     async def start_monitoring(self) -> None:
-        """Start content processing monitoring"""        if self.is_monitoring:
+        """Start content processing monitoring"""
+        if self.is_monitoring:
             logger.warning("Content processing monitoring is already running")
             return
             
@@ -170,7 +180,8 @@ class ContentProcessingMonitor:
         logger.info("Content processing monitoring started successfully")
         
     async def stop_monitoring(self) -> None:
-        """Stop content processing monitoring"""        if not self.is_monitoring:
+        """Stop content processing monitoring"""
+        if not self.is_monitoring:
             return
             
         self.is_monitoring = False
@@ -192,11 +203,13 @@ class ContentProcessingMonitor:
         file_size: int,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """        Start tracking a new content upload
+        """
+        Start tracking a new content upload
         
         Returns:
             flow_id: Unique identifier for this processing flow
-        """        flow_id = self._generate_flow_id(user_id, content_id)
+        """
+        flow_id = self._generate_flow_id(user_id, content_id)
         
         # Create new pipeline flow
         flow = PipelineFlow(
@@ -260,7 +273,8 @@ class ContentProcessingMonitor:
         stage_metrics: Optional[Dict[str, Any]] = None,
         ai_models_used: Optional[List[str]] = None
     ) -> None:
-        """Update the processing stage for a content flow"""        if flow_id not in self.active_flows:
+        """Update the processing stage for a content flow"""
+        if flow_id not in self.active_flows:
             raise MonitoringError(f"Flow {flow_id} not found")
             
         flow = self.active_flows[flow_id]
@@ -329,7 +343,8 @@ class ContentProcessingMonitor:
         final_metrics: Optional[Dict[str, Any]] = None,
         error_message: Optional[str] = None
     ) -> PipelineFlow:
-        """Complete the content processing flow"""        if flow_id not in self.active_flows:
+        """Complete the content processing flow"""
+        if flow_id not in self.active_flows:
             raise MonitoringError(f"Flow {flow_id} not found")
             
         flow = self.active_flows[flow_id]
@@ -408,7 +423,8 @@ class ContentProcessingMonitor:
         matching_criteria: Dict[str, Any],
         matching_duration: float
     ) -> None:
-        """Track collaboration matching performance"""        if flow_id not in self.active_flows:
+        """Track collaboration matching performance"""
+        if flow_id not in self.active_flows:
             return
             
         flow = self.active_flows[flow_id]
@@ -447,7 +463,8 @@ class ContentProcessingMonitor:
         revenue_amount: float,
         revenue_source: str
     ) -> None:
-        """Track revenue generation from content"""        self.revenue_tracking[user_id] += revenue_amount
+        """Track revenue generation from content"""
+        self.revenue_tracking[user_id] += revenue_amount
         
         await self.metrics_collector.collect_metric(
             MetricEntry(
@@ -470,7 +487,8 @@ class ContentProcessingMonitor:
         self,
         time_window: timedelta = timedelta(hours=24)
     ) -> Dict[str, Any]:
-        """Get comprehensive processing analytics"""        cutoff_time = datetime.utcnow() - time_window
+        """Get comprehensive processing analytics"""
+        cutoff_time = datetime.utcnow() - time_window
         
         # Active flows analysis
         active_count = len(self.active_flows)
@@ -537,7 +555,8 @@ class ContentProcessingMonitor:
         self,
         user_id: str
     ) -> Optional[Dict[str, Any]]:
-        """Get analytics for a specific user's journey"""        if user_id not in self.user_journeys:
+        """Get analytics for a specific user's journey"""
+        if user_id not in self.user_journeys:
             return None
             
         journey = self.user_journeys[user_id]
@@ -560,12 +579,14 @@ class ContentProcessingMonitor:
         }
         
     def _generate_flow_id(self, user_id: str, content_id: str) -> str:
-        """Generate unique flow ID"""        timestamp = str(int(time.time() * 1000))
+        """Generate unique flow ID"""
+        timestamp = str(int(time.time() * 1000))
         data = f"{user_id}:{content_id}:{timestamp}"
         return hashlib.sha256(data.encode()).hexdigest()[:16]
         
     def _stage_to_status(self, stage: ProcessingStage) -> ContentStatus:
-        """Convert processing stage to content status"""        stage_status_map = {
+        """Convert processing stage to content status"""
+        stage_status_map = {
             ProcessingStage.UPLOAD: ContentStatus.UPLOADED,
             ProcessingStage.VALIDATION: ContentStatus.VALIDATING,
             ProcessingStage.AI_ANALYSIS: ContentStatus.ANALYZING,
@@ -578,7 +599,8 @@ class ContentProcessingMonitor:
         return stage_status_map.get(stage, ContentStatus.UPLOADED)
         
     async def _store_content_metrics(self, metrics: ContentMetrics) -> None:
-        """Store content metrics"""        # Store in memory
+        """Store content metrics"""
+        # Store in memory
         self.content_metrics[metrics.content_id].append(metrics)
         
         # Update quality trends
@@ -610,7 +632,8 @@ class ContentProcessingMonitor:
         event_type: str,
         value: float = 1.0
     ) -> None:
-        """Update user journey tracking"""        if user_id not in self.user_journeys:
+        """Update user journey tracking"""
+        if user_id not in self.user_journeys:
             self.user_journeys[user_id] = UserJourney(
                 user_id=user_id,
                 session_id=f"session_{int(time.time())}",
@@ -642,7 +665,8 @@ class ContentProcessingMonitor:
         stage_duration: float,
         stage: ProcessingStage
     ) -> None:
-        """Detect processing bottlenecks"""        # Calculate average duration for this stage
+        """Detect processing bottlenecks"""
+        # Calculate average duration for this stage
         avg_duration = statistics.mean(self.stage_performance[stage][-10:]) if self.stage_performance[stage] else 0
         
         # If current duration is significantly higher than average, it's a bottleneck
@@ -654,7 +678,8 @@ class ContentProcessingMonitor:
             logger.warning(f"Bottleneck detected in flow {flow_id}: {bottleneck_msg}")
             
     async def _identify_current_bottlenecks(self) -> List[str]:
-        """Identify current system bottlenecks"""        bottlenecks = []
+        """Identify current system bottlenecks"""
+        bottlenecks = []
         
         # Check queue sizes
         for stage, flows in self.processing_queues.items():
@@ -671,14 +696,16 @@ class ContentProcessingMonitor:
         return bottlenecks
         
     def _calculate_average_satisfaction(self) -> float:
-        """Calculate average user satisfaction score"""        if not self.user_journeys:
+        """Calculate average user satisfaction score"""
+        if not self.user_journeys:
             return 0.0
             
         total_satisfaction = sum(journey.satisfaction_score for journey in self.user_journeys.values())
         return total_satisfaction / len(self.user_journeys)
         
     async def _identify_common_pain_points(self) -> List[str]:
-        """Identify common user pain points"""        pain_point_counts = defaultdict(int)
+        """Identify common user pain points"""
+        pain_point_counts = defaultdict(int)
         
         for journey in self.user_journeys.values():
             for pain_point in journey.pain_points:
@@ -688,7 +715,8 @@ class ContentProcessingMonitor:
         return sorted(pain_point_counts.items(), key=lambda x: x[1], reverse=True)[:5]
         
     async def _archive_flow(self, flow: PipelineFlow) -> None:
-        """Archive completed flow to storage"""        try:
+        """Archive completed flow to storage"""
+        try:
             archive_file = self.storage_path / f"flow_{flow.flow_id}.json"
             
             flow_data = {
@@ -713,7 +741,8 @@ class ContentProcessingMonitor:
             logger.error(f"Failed to archive flow {flow.flow_id}: {e}")
             
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop"""        while self.is_monitoring:
+        """Main monitoring loop"""
+        while self.is_monitoring:
             try:
                 # Update platform health score
                 self.platform_health_score = await self._calculate_platform_health()
@@ -732,7 +761,8 @@ class ContentProcessingMonitor:
                 await asyncio.sleep(60)  # Wait longer on error
                 
     async def _calculate_platform_health(self) -> float:
-        """Calculate overall platform health score"""        health_factors = []
+        """Calculate overall platform health score"""
+        health_factors = []
         
         # Processing success rate
         total_flows = len(self.active_flows)
@@ -762,7 +792,8 @@ class ContentProcessingMonitor:
         return sum(health_factors) if health_factors else 0.0
         
     async def _cleanup_old_data(self) -> None:
-        """Clean up old tracking data"""        cutoff_time = datetime.utcnow() - timedelta(hours=24)
+        """Clean up old tracking data"""
+        cutoff_time = datetime.utcnow() - timedelta(hours=24)
         
         # Clean up user journeys
         expired_journeys = [
@@ -779,7 +810,8 @@ class ContentProcessingMonitor:
                 metrics_queue.popleft()
                 
     async def _generate_optimization_suggestions(self) -> None:
-        """Generate optimization suggestions for active flows"""        for flow_id, flow in self.active_flows.items():
+        """Generate optimization suggestions for active flows"""
+        for flow_id, flow in self.active_flows.items():
             suggestions = []
             
             # Check for long-running flows

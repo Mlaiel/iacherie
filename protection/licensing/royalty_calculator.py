@@ -11,7 +11,8 @@ Professional royalty and revenue calculation system:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Financial Engineer + Music Business Analyst + Tax Specialist
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Tuple
 from datetime import datetime, timedelta
@@ -24,14 +25,16 @@ import math
 logger = logging.getLogger(__name__)
 
 class RoyaltyType(Enum):
-    """Types of royalty structures"""    FLAT_PERCENTAGE = "flat_percentage"
+    """Types of royalty structures"""
+    FLAT_PERCENTAGE = "flat_percentage"
     TIERED_PERCENTAGE = "tiered_percentage"
     PERFORMANCE_BASED = "performance_based"
     HYBRID = "hybrid"
     RECOUPABLE_ADVANCE = "recoupable_advance"
 
 class RevenueSource(Enum):
-    """Sources of revenue"""    STREAMING = "streaming"
+    """Sources of revenue"""
+    STREAMING = "streaming"
     DOWNLOADS = "downloads"
     PHYSICAL_SALES = "physical_sales"
     PERFORMANCE_ROYALTIES = "performance_royalties"
@@ -41,14 +44,16 @@ class RevenueSource(Enum):
     LIVE_PERFORMANCES = "live_performances"
 
 class CalculationMethod(Enum):
-    """Calculation methodologies"""    NET_RECEIPTS = "net_receipts"
+    """Calculation methodologies"""
+    NET_RECEIPTS = "net_receipts"
     GROSS_RECEIPTS = "gross_receipts"
     PUBLISHED_PRICE_TO_DEALER = "ppd"
     STATUTORY_RATE = "statutory_rate"
 
 @dataclass
 class RoyaltyTier:
-    """Individual royalty tier definition"""    tier_id: str
+    """Individual royalty tier definition"""
+    tier_id: str
     threshold_start: Decimal
     threshold_end: Optional[Decimal]
     rate: Decimal
@@ -57,7 +62,8 @@ class RoyaltyTier:
 
 @dataclass
 class DeductionRule:
-    """Revenue deduction rule"""    deduction_id: str
+    """Revenue deduction rule"""
+    deduction_id: str
     name: str
     deduction_type: str  # percentage, fixed, tiered
     value: Decimal
@@ -67,7 +73,8 @@ class DeductionRule:
 
 @dataclass
 class RoyaltyStructure:
-    """Complete royalty structure definition"""    structure_id: str
+    """Complete royalty structure definition"""
+    structure_id: str
     license_id: str
     royalty_type: RoyaltyType
     calculation_method: CalculationMethod
@@ -84,7 +91,8 @@ class RoyaltyStructure:
 
 @dataclass
 class CalculationResult:
-    """Royalty calculation result"""    calculation_id: str
+    """Royalty calculation result"""
+    calculation_id: str
     license_id: str
     period_start: datetime
     period_end: datetime
@@ -99,13 +107,16 @@ class CalculationResult:
     calculation_date: datetime
 
 class RoyaltyCalculator:
-    """    🚀 Professional royalty calculation engine
+    """
+    🚀 Professional royalty calculation engine
     
     Advanced system for calculating royalties with support for complex
     structures, multi-tier rates, and international compliance.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize royalty calculator with configuration."""        self.config = config
+        """Initialize royalty calculator with configuration."""
+        self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Calculation engines
@@ -132,7 +143,8 @@ class RoyaltyCalculator:
         self._initialize_currency_converter()
     
     def _load_statutory_rates(self):
-        """Load statutory royalty rates by jurisdiction."""        statutory_data = {
+        """Load statutory royalty rates by jurisdiction."""
+        statutory_data = {
             'us': {
                 'mechanical_rate_per_track': Decimal('0.091'),  # 2023 rate
                 'performance_rate_radio': Decimal('0.0021'),
@@ -164,7 +176,8 @@ class RoyaltyCalculator:
         self.logger.info(f"Loaded statutory rates for {len(statutory_data)} jurisdictions")
     
     def _load_territory_data(self):
-        """Load territory-specific multipliers and adjustments."""        territory_data = {
+        """Load territory-specific multipliers and adjustments."""
+        territory_data = {
             'north_america': {'multiplier': Decimal('1.0'), 'currencies': ['USD', 'CAD']},
             'europe': {'multiplier': Decimal('0.95'), 'currencies': ['EUR', 'GBP']},
             'asia_pacific': {'multiplier': Decimal('0.85'), 'currencies': ['JPY', 'AUD', 'SGD']},
@@ -177,7 +190,8 @@ class RoyaltyCalculator:
         self.logger.info(f"Loaded territory data for {len(territory_data)} regions")
     
     def _load_platform_rates(self):
-        """Load platform-specific royalty rates."""        platform_data = {
+        """Load platform-specific royalty rates."""
+        platform_data = {
             'spotify': {
                 'rate_per_stream': Decimal('0.003'),
                 'territory_adjustments': {
@@ -211,7 +225,8 @@ class RoyaltyCalculator:
         self.logger.info(f"Loaded rates for {len(platform_data)} platforms")
     
     def _initialize_currency_converter(self):
-        """Initialize currency conversion service."""        try:
+        """Initialize currency conversion service."""
+        try:
             # This would integrate with a real currency service
             # For now, using static rates
             self.currency_converter = {
@@ -233,7 +248,8 @@ class RoyaltyCalculator:
         jurisdiction: str,
         custom_terms: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        💰 Calculate comprehensive royalty structure
+        """
+        💰 Calculate comprehensive royalty structure
         
         Args:
             content_info: Information about the content
@@ -243,7 +259,8 @@ class RoyaltyCalculator:
             
         Returns:
             royalty_structure: Complete royalty calculation structure
-        """        try:
+        """
+        try:
             self.logger.info(f"Calculating royalty structure for {license_type} in {jurisdiction}")
             
             # Determine base royalty type and rates
@@ -317,7 +334,8 @@ class RoyaltyCalculator:
         jurisdiction: str,
         content_info: Dict[str, Any]
     ) -> Tuple[RoyaltyType, Decimal]:
-        """Determine appropriate royalty type and base rate."""        # Default rates by license type
+        """Determine appropriate royalty type and base rate."""
+        # Default rates by license type
         license_type_rates = {
             'commercial': (RoyaltyType.FLAT_PERCENTAGE, Decimal('0.70')),
             'sync_licensing': (RoyaltyType.PERFORMANCE_BASED, Decimal('0.50')),
@@ -350,7 +368,8 @@ class RoyaltyCalculator:
         license_type: str,
         custom_terms: Dict[str, Any]
     ) -> List[RoyaltyTier]:
-        """Create royalty tier structure."""        tiers = []
+        """Create royalty tier structure."""
+        tiers = []
         
         if royalty_type == RoyaltyType.FLAT_PERCENTAGE:
             # Single tier for flat percentage
@@ -406,7 +425,8 @@ class RoyaltyCalculator:
         jurisdiction: str,
         license_type: str
     ) -> List[DeductionRule]:
-        """Create applicable deduction rules."""        deductions = []
+        """Create applicable deduction rules."""
+        deductions = []
         
         # Platform fees (universal)
         deductions.append(DeductionRule(
@@ -471,7 +491,8 @@ class RoyaltyCalculator:
         base_rate: Decimal,
         jurisdiction: str
     ) -> Dict[str, Decimal]:
-        """Calculate territory-specific royalty rates."""        territory_rates = {}
+        """Calculate territory-specific royalty rates."""
+        territory_rates = {}
         
         # Base jurisdiction rate
         territory_rates[jurisdiction] = base_rate
@@ -490,7 +511,8 @@ class RoyaltyCalculator:
         base_rate: Decimal,
         custom_terms: Dict[str, Any]
     ) -> Dict[str, Optional[Decimal]]:
-        """Calculate financial terms like advances and minimum guarantees."""        financial_terms = {}
+        """Calculate financial terms like advances and minimum guarantees."""
+        financial_terms = {}
         
         # Minimum guarantee calculation
         if custom_terms.get('include_minimum_guarantee', False):
@@ -519,7 +541,8 @@ class RoyaltyCalculator:
         return financial_terms
     
     async def _generate_calculation_methodology(self, royalty_structure: RoyaltyStructure) -> Dict[str, Any]:
-        """Generate explanation of calculation methodology."""        methodology = {
+        """Generate explanation of calculation methodology."""
+        methodology = {
             'calculation_method': royalty_structure.calculation_method.value,
             'royalty_type': royalty_structure.royalty_type.value,
             'base_rate': float(royalty_structure.base_rate),
@@ -552,7 +575,8 @@ class RoyaltyCalculator:
         return methodology
     
     async def _generate_revenue_projections(self, royalty_structure: RoyaltyStructure) -> Dict[str, Any]:
-        """Generate revenue projections based on royalty structure."""        # Sample scenarios for projection
+        """Generate revenue projections based on royalty structure."""
+        # Sample scenarios for projection
         scenarios = {
             'conservative': {'monthly_streams': 100000, 'avg_revenue_per_stream': 0.003},
             'moderate': {'monthly_streams': 500000, 'avg_revenue_per_stream': 0.004},
@@ -594,7 +618,8 @@ class RoyaltyCalculator:
         revenue_amount: Decimal,
         royalty_structure: RoyaltyStructure
     ) -> Decimal:
-        """Calculate royalties for a specific revenue amount."""        if royalty_structure.royalty_type == RoyaltyType.FLAT_PERCENTAGE:
+        """Calculate royalties for a specific revenue amount."""
+        if royalty_structure.royalty_type == RoyaltyType.FLAT_PERCENTAGE:
             return revenue_amount * royalty_structure.base_rate
         
         elif royalty_structure.royalty_type == RoyaltyType.TIERED_PERCENTAGE:
@@ -624,7 +649,8 @@ class RoyaltyCalculator:
             return revenue_amount * royalty_structure.base_rate
     
     async def _generate_compliance_notes(self, jurisdiction: str, license_type: str) -> List[str]:
-        """Generate compliance notes for the royalty structure."""        notes = []
+        """Generate compliance notes for the royalty structure."""
+        notes = []
         
         # General compliance
         notes.append("Royalty calculations comply with industry standard practices")
@@ -652,7 +678,8 @@ class RoyaltyCalculator:
         return notes
     
     def get_calculator_metrics(self) -> Dict[str, Any]:
-        """Get royalty calculator performance metrics."""        return {
+        """Get royalty calculator performance metrics."""
+        return {
             **{k: float(v) if isinstance(v, Decimal) else v for k, v in self.metrics.items()},
             'supported_jurisdictions': len(self.statutory_rates),
             'supported_platforms': len(self.platform_rates),

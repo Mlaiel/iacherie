@@ -24,7 +24,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
-"""from sqlalchemy import (
+"""
+from sqlalchemy import (
     Column, Integer, String, DateTime, Float, Boolean, ForeignKey,
     Text, DECIMAL, JSON, BigInteger, Index, UniqueConstraint
 )
@@ -41,14 +42,16 @@ from dataclasses import dataclass
 Base = declarative_base()
 
 class SubscriptionTier(Enum):
-    """Subscription tier levels"""    BASIC = "basic"
+    """Subscription tier levels"""
+    BASIC = "basic"
     PREMIUM = "premium"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
     CUSTOM = "custom"
 
 class SubscriptionStatus(Enum):
-    """Subscription status types"""    ACTIVE = "active"
+    """Subscription status types"""
+    ACTIVE = "active"
     PENDING = "pending"
     SUSPENDED = "suspended"
     CANCELLED = "cancelled"
@@ -57,7 +60,8 @@ class SubscriptionStatus(Enum):
     PAUSED = "paused"
 
 class BillingCycle(Enum):
-    """Billing cycle types"""    MONTHLY = "monthly"
+    """Billing cycle types"""
+    MONTHLY = "monthly"
     QUARTERLY = "quarterly"
     ANNUALLY = "annually"
     WEEKLY = "weekly"
@@ -65,7 +69,8 @@ class BillingCycle(Enum):
     CUSTOM = "custom"
 
 class PaymentStatus(Enum):
-    """Payment status for subscriptions"""    PENDING = "pending"
+    """Payment status for subscriptions"""
+    PENDING = "pending"
     PAID = "paid"
     FAILED = "failed"
     REFUNDED = "refunded"
@@ -73,7 +78,8 @@ class PaymentStatus(Enum):
     DISPUTED = "disputed"
 
 class ChurnReason(Enum):
-    """Reasons for subscription cancellation"""    PRICE_TOO_HIGH = "price_too_high"
+    """Reasons for subscription cancellation"""
+    PRICE_TOO_HIGH = "price_too_high"
     LACK_OF_FEATURES = "lack_of_features"
     POOR_PERFORMANCE = "poor_performance"
     COMPETITOR = "competitor"
@@ -84,7 +90,8 @@ class ChurnReason(Enum):
     OTHER = "other"
 
 class SubscriptionPlan(Base):
-    """Subscription plan definitions"""    __tablename__ = 'subscription_plans'
+    """Subscription plan definitions"""
+    __tablename__ = 'subscription_plans'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -141,7 +148,8 @@ class SubscriptionPlan(Base):
     )
 
 class Subscription(Base):
-    """Customer subscription records"""    __tablename__ = 'subscriptions'
+    """Customer subscription records"""
+    __tablename__ = 'subscriptions'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -218,7 +226,8 @@ class Subscription(Base):
     )
 
 class SubscriptionInvoice(Base):
-    """Subscription billing invoices"""    __tablename__ = 'subscription_invoices'
+    """Subscription billing invoices"""
+    __tablename__ = 'subscription_invoices'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -282,7 +291,8 @@ class SubscriptionInvoice(Base):
     )
 
 class SubscriptionUsage(Base):
-    """Detailed subscription usage tracking"""    __tablename__ = 'subscription_usage'
+    """Detailed subscription usage tracking"""
+    __tablename__ = 'subscription_usage'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -341,7 +351,8 @@ class SubscriptionUsage(Base):
     )
 
 class SubscriptionMetrics(Base):
-    """Subscription business metrics and analytics"""    __tablename__ = 'subscription_metrics'
+    """Subscription business metrics and analytics"""
+    __tablename__ = 'subscription_metrics'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -402,7 +413,8 @@ class SubscriptionMetrics(Base):
     )
 
 class ChurnPrediction(Base):
-    """ML-powered churn prediction for subscribers"""    __tablename__ = 'churn_predictions'
+    """ML-powered churn prediction for subscribers"""
+    __tablename__ = 'churn_predictions'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -454,7 +466,8 @@ class ChurnPrediction(Base):
 
 @dataclass
 class SubscriptionAnalytics:
-    """Subscription analytics data structure"""    total_revenue: float
+    """Subscription analytics data structure"""
+    total_revenue: float
     mrr: float
     arr: float
     churn_rate: float
@@ -468,7 +481,8 @@ class SubscriptionAnalytics:
     geographic_breakdown: Dict[str, float]
 
 class SubscriptionEvent(Base):
-    """Subscription lifecycle events tracking"""    __tablename__ = 'subscription_events'
+    """Subscription lifecycle events tracking"""
+    __tablename__ = 'subscription_events'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

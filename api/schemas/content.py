@@ -8,7 +8,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
-"""from datetime import datetime
+"""
+from datetime import datetime
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Set, Union
 from uuid import UUID
@@ -19,7 +20,8 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema, FileUplo
 
 
 class ContentUpload(BaseSchema):
-    """Professional multi-format content upload schema."""    
+    """Professional multi-format content upload schema."""
+    
     creator_id: UUID = Field(description="Content creator ID")
     title: str = Field(min_length=1, max_length=200, description="Content title")
     description: Optional[str] = Field(None, max_length=5000, description="Content description")
@@ -56,7 +58,8 @@ class ContentUpload(BaseSchema):
     
     @validator('content_type')
     def validate_content_type(cls, v):
-        """Validate content type."""        allowed_types = {
+        """Validate content type."""
+        allowed_types = {
             'audio', 'video', 'image', 'text', 'multimodal',
             'music', 'podcast', 'document', 'animation'
         }
@@ -66,14 +69,16 @@ class ContentUpload(BaseSchema):
     
     @validator('privacy_level')
     def validate_privacy_level(cls, v):
-        """Validate privacy level."""        allowed_levels = {'public', 'unlisted', 'private', 'collaborators_only'}
+        """Validate privacy level."""
+        allowed_levels = {'public', 'unlisted', 'private', 'collaborators_only'}
         if v not in allowed_levels:
             raise ValueError(f'Privacy level must be one of: {", ".join(allowed_levels)}')
         return v
 
 
 class ContentUpdate(BaseSchema):
-    """Schema for updating content information."""    
+    """Schema for updating content information."""
+    
     title: Optional[str] = Field(None, min_length=1, max_length=200)
     description: Optional[str] = Field(None, max_length=5000)
     genres: Optional[List[str]] = None
@@ -86,7 +91,8 @@ class ContentUpdate(BaseSchema):
 
 
 class ContentOut(UUIDSchema, TimestampSchema):
-    """Public content information schema."""    
+    """Public content information schema."""
+    
     creator_id: UUID
     title: str
     description: Optional[str]
@@ -133,14 +139,16 @@ class ContentOut(UUIDSchema, TimestampSchema):
     
     @property
     def engagement_rate(self) -> float:
-        """Calculate engagement rate."""        if self.view_count == 0:
+        """Calculate engagement rate."""
+        if self.view_count == 0:
             return 0.0
         total_engagement = self.like_count + self.comment_count + self.share_count
         return min(1.0, total_engagement / self.view_count)
 
 
 class ContentMetadata(UUIDSchema, TimestampSchema):
-    """Extended content metadata schema."""    
+    """Extended content metadata schema."""
+    
     content_id: UUID
     
     # Technical metadata
@@ -174,7 +182,8 @@ class ContentMetadata(UUIDSchema, TimestampSchema):
 
 
 class ContentVersion(UUIDSchema, TimestampSchema, AuditSchema):
-    """Content version control schema."""    
+    """Content version control schema."""
+    
     content_id: UUID
     version_number: str = Field(description="Semantic version number")
     version_type: str = Field(description="Version type (major, minor, patch, revision)")
@@ -201,14 +210,16 @@ class ContentVersion(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('version_type')
     def validate_version_type(cls, v):
-        """Validate version type."""        allowed_types = {'major', 'minor', 'patch', 'revision', 'hotfix'}
+        """Validate version type."""
+        allowed_types = {'major', 'minor', 'patch', 'revision', 'hotfix'}
         if v not in allowed_types:
             raise ValueError(f'Version type must be one of: {", ".join(allowed_types)}')
         return v
 
 
 class ContentTag(UUIDSchema, TimestampSchema):
-    """Content tagging system schema."""    
+    """Content tagging system schema."""
+    
     name: str = Field(min_length=1, max_length=50, description="Tag name")
     category: str = Field(description="Tag category")
     description: Optional[str] = Field(None, max_length=200)
@@ -229,12 +240,14 @@ class ContentTag(UUIDSchema, TimestampSchema):
     
     @validator('name')
     def validate_tag_name(cls, v):
-        """Validate tag name format."""        # Remove extra whitespace and convert to lowercase
+        """Validate tag name format."""
+        # Remove extra whitespace and convert to lowercase
         return v.strip().lower()
 
 
 class ContentSearch(BaseSchema):
-    """Advanced content search schema."""    
+    """Advanced content search schema."""
+    
     query: Optional[str] = Field(None, description="Search query string")
     creator_id: Optional[UUID] = Field(None, description="Filter by creator")
     content_types: Optional[List[str]] = Field(None, description="Filter by content types")
@@ -282,7 +295,8 @@ class ContentSearch(BaseSchema):
 
 
 class ContentBulkOperation(BaseSchema):
-    """Bulk content operations schema."""    
+    """Bulk content operations schema."""
+    
     content_ids: List[UUID] = Field(description="List of content IDs to process")
     operation_type: str = Field(description="Type of bulk operation")
     parameters: Dict[str, Any] = Field(default_factory=dict, description="Operation parameters")
@@ -294,7 +308,8 @@ class ContentBulkOperation(BaseSchema):
     
     @validator('operation_type')
     def validate_operation_type(cls, v):
-        """Validate bulk operation type."""        allowed_operations = {
+        """Validate bulk operation type."""
+        allowed_operations = {
             'update_metadata', 'change_privacy', 'add_tags', 'remove_tags',
             'enable_protection', 'disable_protection', 'export', 'delete',
             'optimize_seo', 'distribute', 'monetize'
@@ -305,7 +320,8 @@ class ContentBulkOperation(BaseSchema):
 
 
 class ContentAnalysis(UUIDSchema, TimestampSchema):
-    """AI content analysis results schema."""    
+    """AI content analysis results schema."""
+    
     content_id: UUID
     analysis_type: str = Field(description="Type of analysis performed")
     analysis_version: str = Field(description="Analysis algorithm version")
@@ -326,7 +342,8 @@ class ContentAnalysis(UUIDSchema, TimestampSchema):
     
     @validator('analysis_type')
     def validate_analysis_type(cls, v):
-        """Validate analysis type."""        allowed_types = {
+        """Validate analysis type."""
+        allowed_types = {
             'content_classification', 'quality_assessment', 'sentiment_analysis',
             'copyright_detection', 'seo_analysis', 'performance_prediction',
             'audience_targeting', 'monetization_potential'
@@ -337,7 +354,8 @@ class ContentAnalysis(UUIDSchema, TimestampSchema):
 
 
 class ContentExport(BaseSchema):
-    """Content export configuration schema."""    
+    """Content export configuration schema."""
+    
     content_ids: List[UUID] = Field(description="Content to export")
     export_format: str = Field(description="Export format")
     export_quality: str = Field(default="original", description="Export quality")
@@ -351,7 +369,8 @@ class ContentExport(BaseSchema):
     
     @validator('export_format')
     def validate_export_format(cls, v):
-        """Validate export format."""        allowed_formats = {
+        """Validate export format."""
+        allowed_formats = {
             'original', 'mp3', 'wav', 'flac', 'mp4', 'webm', 'jpg', 'png', 
             'pdf', 'json', 'xml', 'csv'
         }

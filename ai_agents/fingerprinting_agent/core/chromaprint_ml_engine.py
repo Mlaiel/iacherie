@@ -6,7 +6,8 @@ with machine learning for improved accuracy and intelligent audio analysis.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import numpy as np
@@ -50,7 +51,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioFingerprint:
-    """Container for audio fingerprint data"""    content_id: str
+    """Container for audio fingerprint data"""
+    content_id: str
     chromaprint_hash: str
     acoustic_features: List[float]
     spectral_features: List[float]
@@ -63,7 +65,8 @@ class AudioFingerprint:
 
 @dataclass
 class FingerprintMatch:
-    """Result of fingerprint matching"""    source_id: str
+    """Result of fingerprint matching"""
+    source_id: str
     target_id: str
     similarity_score: float
     match_type: str  # 'exact', 'near_duplicate', 'similar'
@@ -72,7 +75,8 @@ class FingerprintMatch:
     detected_at: datetime = None
 
 class ChromaprintMLEngine:
-    """    Enhanced Chromaprint + ML Audio Fingerprinting Engine
+    """
+    Enhanced Chromaprint + ML Audio Fingerprinting Engine
     
     Combines traditional acoustic fingerprinting with machine learning for:
     - High-accuracy duplicate detection
@@ -80,7 +84,8 @@ class ChromaprintMLEngine:
     - Music similarity analysis
     - Copyright infringement detection
     - Real-time audio monitoring
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.sample_rate = self.config.get('sample_rate', 22050)
@@ -108,7 +113,8 @@ class ChromaprintMLEngine:
         self._initialize_ml_components()
     
     def _initialize_ml_components(self):
-        """Initialize machine learning components"""        try:
+        """Initialize machine learning components"""
+        try:
             if HAS_SKLEARN:
                 # Initialize dimensionality reduction
                 self.pca_reducer = PCA(n_components=min(128, self.config.get('pca_components', 64)))
@@ -131,7 +137,8 @@ class ChromaprintMLEngine:
         content_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> AudioFingerprint:
-        """        Generate comprehensive audio fingerprint combining Chromaprint and ML features
+        """
+        Generate comprehensive audio fingerprint combining Chromaprint and ML features
         
         Args:
             audio_data: Raw audio bytes
@@ -140,7 +147,8 @@ class ChromaprintMLEngine:
             
         Returns:
             AudioFingerprint with combined fingerprint data
-        """        start_time = asyncio.get_event_loop().time()
+        """
+        start_time = asyncio.get_event_loop().time()
         
         try:
             # Load and preprocess audio
@@ -192,7 +200,8 @@ class ChromaprintMLEngine:
         fingerprint: AudioFingerprint,
         max_results: int = 10
     ) -> List[FingerprintMatch]:
-        """        Find matching or similar content using combined fingerprinting approaches
+        """
+        Find matching or similar content using combined fingerprinting approaches
         
         Args:
             fingerprint: AudioFingerprint to search for
@@ -200,7 +209,8 @@ class ChromaprintMLEngine:
             
         Returns:
             List of FingerprintMatch results
-        """        try:
+        """
+        try:
             matches = []
             
             # 1. Exact Chromaprint matching
@@ -234,14 +244,16 @@ class ChromaprintMLEngine:
         self, 
         audio_files: List[Dict[str, Any]]
     ) -> List[AudioFingerprint]:
-        """        Generate fingerprints for multiple audio files in batch
+        """
+        Generate fingerprints for multiple audio files in batch
         
         Args:
             audio_files: List of dictionaries with 'data', 'content_id', and optional 'metadata'
             
         Returns:
             List of AudioFingerprint objects
-        """        fingerprints = []
+        """
+        fingerprints = []
         
         for audio_file in audio_files:
             try:
@@ -263,11 +275,13 @@ class ChromaprintMLEngine:
         audio_data: bytes,
         reference_database: Optional[List[AudioFingerprint]] = None
     ) -> Dict[str, Any]:
-        """        Detect potential copyright infringement using advanced matching
+        """
+        Detect potential copyright infringement using advanced matching
         
         Returns:
             Dictionary with infringement analysis results
-        """        try:
+        """
+        try:
             # Generate fingerprint for input audio
             temp_id = f"temp_{int(datetime.utcnow().timestamp())}"
             input_fingerprint = await self.generate_fingerprint(audio_data, temp_id)
@@ -314,7 +328,8 @@ class ChromaprintMLEngine:
     # Private helper methods
     
     async def _load_audio(self, audio_data: bytes) -> Tuple[np.ndarray, int, float]:
-        """Load audio data from bytes"""        try:
+        """Load audio data from bytes"""
+        try:
             if HAS_LIBROSA:
                 # Use librosa for professional audio loading
                 with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as temp_file:
@@ -336,7 +351,8 @@ class ChromaprintMLEngine:
             raise
     
     async def _generate_chromaprint(self, audio_array: np.ndarray, sr: int) -> Tuple[str, Optional[str]]:
-        """Generate Chromaprint acoustic fingerprint"""        try:
+        """Generate Chromaprint acoustic fingerprint"""
+        try:
             if HAS_CHROMAPRINT:
                 # Convert to format expected by chromaprint
                 audio_int16 = (audio_array * 32767).astype(np.int16)
@@ -358,7 +374,8 @@ class ChromaprintMLEngine:
             raise
     
     async def _extract_acoustic_features(self, audio_array: np.ndarray, sr: int) -> List[float]:
-        """Extract acoustic features for ML-based matching"""        try:
+        """Extract acoustic features for ML-based matching"""
+        try:
             if HAS_LIBROSA:
                 # Extract comprehensive acoustic features
                 features = []
@@ -400,7 +417,8 @@ class ChromaprintMLEngine:
             return []
     
     async def _extract_spectral_features(self, audio_array: np.ndarray, sr: int) -> List[float]:
-        """Extract spectral features for advanced analysis"""        try:
+        """Extract spectral features for advanced analysis"""
+        try:
             if HAS_LIBROSA:
                 # Chroma features
                 chroma = librosa.feature.chroma_stft(y=audio_array, sr=sr)
@@ -430,7 +448,8 @@ class ChromaprintMLEngine:
             return []
     
     def _calculate_confidence(self, audio_array: np.ndarray, duration: float) -> float:
-        """Calculate confidence score for the fingerprint"""        try:
+        """Calculate confidence score for the fingerprint"""
+        try:
             confidence = 1.0
             
             # Reduce confidence for very short audio
@@ -453,7 +472,8 @@ class ChromaprintMLEngine:
             return 0.5  # Default confidence
     
     async def _store_fingerprint(self, fingerprint: AudioFingerprint):
-        """Store fingerprint in database and update ML components"""        try:
+        """Store fingerprint in database and update ML components"""
+        try:
             # Store in fingerprint database
             self.fingerprint_db[fingerprint.content_id] = fingerprint
             
@@ -478,7 +498,8 @@ class ChromaprintMLEngine:
             logger.error(f"Fingerprint storage failed: {e}")
     
     async def _update_ml_models(self):
-        """Update ML models with new data"""        try:
+        """Update ML models with new data"""
+        try:
             if HAS_SKLEARN and len(self.feature_vectors) > 1:
                 # Update feature scaler
                 self.feature_scaler.fit(self.feature_vectors)
@@ -491,7 +512,8 @@ class ChromaprintMLEngine:
             logger.warning(f"ML model update failed: {e}")
     
     async def _find_chromaprint_matches(self, fingerprint: AudioFingerprint) -> List[FingerprintMatch]:
-        """Find exact Chromaprint matches"""        matches = []
+        """Find exact Chromaprint matches"""
+        matches = []
         
         for content_id, stored_fingerprint in self.fingerprint_db.items():
             if content_id != fingerprint.content_id:
@@ -510,7 +532,8 @@ class ChromaprintMLEngine:
         return matches
     
     async def _find_ml_matches(self, fingerprint: AudioFingerprint) -> List[FingerprintMatch]:
-        """Find matches using ML-based similarity"""        matches = []
+        """Find matches using ML-based similarity"""
+        matches = []
         
         if not HAS_SKLEARN or not fingerprint.acoustic_features:
             return matches
@@ -544,7 +567,8 @@ class ChromaprintMLEngine:
         return matches
     
     async def _find_faiss_matches(self, fingerprint: AudioFingerprint) -> List[FingerprintMatch]:
-        """Find matches using FAISS similarity search"""        matches = []
+        """Find matches using FAISS similarity search"""
+        matches = []
         
         if not HAS_FAISS or not self.similarity_index or not fingerprint.acoustic_features:
             return matches
@@ -579,7 +603,8 @@ class ChromaprintMLEngine:
         return matches
     
     def _deduplicate_matches(self, matches: List[FingerprintMatch]) -> List[FingerprintMatch]:
-        """Remove duplicate matches and keep the best score for each target"""        unique_matches = {}
+        """Remove duplicate matches and keep the best score for each target"""
+        unique_matches = {}
         
         for match in matches:
             key = (match.source_id, match.target_id)
@@ -589,7 +614,8 @@ class ChromaprintMLEngine:
         return list(unique_matches.values())
     
     def get_engine_stats(self) -> Dict[str, Any]:
-        """Get engine statistics and configuration"""        return {
+        """Get engine statistics and configuration"""
+        return {
             'fingerprints_stored': len(self.fingerprint_db),
             'feature_vectors': len(self.feature_vectors),
             'has_chromaprint': HAS_CHROMAPRINT,

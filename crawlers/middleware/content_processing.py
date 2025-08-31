@@ -6,7 +6,8 @@ Implements multi-format processing, transformation, and enrichment.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""import asyncio
+"""
+import asyncio
 import json
 import time
 import hashlib
@@ -37,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(str, Enum):
-    """Supported content types"""    AUDIO = "audio"
+    """Supported content types"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -46,7 +48,8 @@ class ContentType(str, Enum):
 
 
 class ProcessingStage(str, Enum):
-    """Processing pipeline stages"""    VALIDATION = "validation"
+    """Processing pipeline stages"""
+    VALIDATION = "validation"
     EXTRACTION = "extraction"
     TRANSFORMATION = "transformation"
     ENRICHMENT = "enrichment"
@@ -55,7 +58,8 @@ class ProcessingStage(str, Enum):
 
 
 class ProcessingStatus(str, Enum):
-    """Processing status"""    PENDING = "pending"
+    """Processing status"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -63,7 +67,8 @@ class ProcessingStatus(str, Enum):
 
 
 class ContentProcessingRequest(BaseModel):
-    """Content processing request model"""    content_id: str = Field(description="Unique content identifier")
+    """Content processing request model"""
+    content_id: str = Field(description="Unique content identifier")
     content_type: ContentType = Field(description="Type of content")
     content_data: Union[str, bytes, Dict[str, Any]] = Field(description="Content data")
     metadata: Dict[str, Any] = Field(default_factory=dict, description="Content metadata")
@@ -73,7 +78,8 @@ class ContentProcessingRequest(BaseModel):
 
 
 class ProcessingResult(BaseModel):
-    """Content processing result model"""    content_id: str = Field(description="Content identifier")
+    """Content processing result model"""
+    content_id: str = Field(description="Content identifier")
     status: ProcessingStatus = Field(description="Processing status")
     processed_content: Optional[Dict[str, Any]] = Field(None, description="Processed content")
     fingerprint: Optional[str] = Field(None, description="Content fingerprint")
@@ -85,12 +91,14 @@ class ProcessingResult(BaseModel):
 
 
 class AudioProcessor:
-    """Advanced audio content processor"""    
+    """Advanced audio content processor"""
+    
     def __init__(self):
         self.supported_formats = ['.mp3', '.wav', '.flac', '.m4a', '.ogg']
         
     async def process(self, content_data: bytes, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Process audio content"""        try:
+        """Process audio content"""
+        try:
             # Load audio data
             audio_array, sample_rate = await self.load_audio(content_data)
             
@@ -115,7 +123,8 @@ class AudioProcessor:
             raise
     
     async def load_audio(self, content_data: bytes) -> Tuple[np.ndarray, int]:
-        """Load audio from bytes"""        import io
+        """Load audio from bytes"""
+        import io
         import tempfile
         
         # Save to temporary file
@@ -131,7 +140,8 @@ class AudioProcessor:
             Path(temp_path).unlink(missing_ok=True)
     
     async def extract_audio_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract comprehensive audio features"""        features = {}
+        """Extract comprehensive audio features"""
+        features = {}
         
         # Basic features
         features['duration'] = len(audio) / sr
@@ -157,7 +167,8 @@ class AudioProcessor:
         return features
     
     async def enhance_audio_metadata(self, features: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Enhance audio metadata with extracted features"""        enhanced = metadata.copy()
+        """Enhance audio metadata with extracted features"""
+        enhanced = metadata.copy()
         
         # Add technical metadata
         enhanced.update({
@@ -175,7 +186,8 @@ class AudioProcessor:
         return enhanced
     
     async def classify_audio_genre(self, features: Dict[str, Any]) -> Dict[str, float]:
-        """Simple genre classification based on features"""        # Simplified genre classification logic
+        """Simple genre classification based on features"""
+        # Simplified genre classification logic
         tempo = features.get('tempo', 120)
         
         scores = {}
@@ -192,7 +204,8 @@ class AudioProcessor:
         return scores
     
     async def generate_audio_fingerprint(self, audio: np.ndarray, sr: int) -> str:
-        """Generate audio fingerprint"""        # Use chromaprint for audio fingerprinting
+        """Generate audio fingerprint"""
+        # Use chromaprint for audio fingerprinting
         import chromaprint
         
         # Convert to int16 format expected by chromaprint
@@ -204,7 +217,8 @@ class AudioProcessor:
         return fingerprint
     
     async def calculate_audio_quality(self, audio: np.ndarray, sr: int) -> Dict[str, float]:
-        """Calculate audio quality metrics"""        metrics = {}
+        """Calculate audio quality metrics"""
+        metrics = {}
         
         # Signal-to-noise ratio estimation
         signal_power = np.mean(audio ** 2)
@@ -228,12 +242,14 @@ class AudioProcessor:
 
 
 class VideoProcessor:
-    """Advanced video content processor"""    
+    """Advanced video content processor"""
+    
     def __init__(self):
         self.supported_formats = ['.mp4', '.avi', '.mov', '.mkv', '.webm']
         
     async def process(self, content_data: bytes, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Process video content"""        try:
+        """Process video content"""
+        try:
             # Load video
             frames, fps, duration = await self.load_video(content_data)
             
@@ -258,7 +274,8 @@ class VideoProcessor:
             raise
     
     async def load_video(self, content_data: bytes) -> Tuple[List[np.ndarray], float, float]:
-        """Load video from bytes"""        import tempfile
+        """Load video from bytes"""
+        import tempfile
         
         with tempfile.NamedTemporaryFile(suffix='.mp4', delete=False) as temp_file:
             temp_file.write(content_data)
@@ -289,7 +306,8 @@ class VideoProcessor:
             Path(temp_path).unlink(missing_ok=True)
     
     async def extract_video_features(self, frames: List[np.ndarray], fps: float) -> Dict[str, Any]:
-        """Extract comprehensive video features"""        features = {}
+        """Extract comprehensive video features"""
+        features = {}
         
         if not frames:
             return features
@@ -316,7 +334,8 @@ class VideoProcessor:
         return features
     
     async def analyze_colors(self, frames: List[np.ndarray]) -> Dict[str, Any]:
-        """Analyze color characteristics"""        color_features = {}
+        """Analyze color characteristics"""
+        color_features = {}
         
         all_pixels = []
         for frame in frames[:10]:  # Analyze first 10 frames
@@ -339,7 +358,8 @@ class VideoProcessor:
         return color_features
     
     async def analyze_motion(self, frames: List[np.ndarray]) -> Dict[str, Any]:
-        """Analyze motion characteristics"""        motion_features = {}
+        """Analyze motion characteristics"""
+        motion_features = {}
         
         if len(frames) < 2:
             return motion_features
@@ -364,7 +384,8 @@ class VideoProcessor:
         return motion_features
     
     async def detect_scenes(self, frames: List[np.ndarray]) -> Dict[str, Any]:
-        """Detect scene changes"""        scene_features = {}
+        """Detect scene changes"""
+        scene_features = {}
         
         if len(frames) < 2:
             return scene_features
@@ -386,7 +407,8 @@ class VideoProcessor:
         return scene_features
     
     async def enhance_video_metadata(self, features: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Enhance video metadata"""        enhanced = metadata.copy()
+        """Enhance video metadata"""
+        enhanced = metadata.copy()
         
         enhanced.update({
             'video_width': features.get('width'),
@@ -400,7 +422,8 @@ class VideoProcessor:
         return enhanced
     
     async def generate_video_fingerprint(self, frames: List[np.ndarray]) -> str:
-        """Generate video fingerprint"""        if not frames:
+        """Generate video fingerprint"""
+        if not frames:
             return ""
         
         # Use perceptual hashing for key frames
@@ -418,7 +441,8 @@ class VideoProcessor:
         return hashlib.sha256(combined.encode()).hexdigest()
     
     async def calculate_video_quality(self, frames: List[np.ndarray]) -> Dict[str, float]:
-        """Calculate video quality metrics"""        metrics = {}
+        """Calculate video quality metrics"""
+        metrics = {}
         
         if not frames:
             return metrics
@@ -451,12 +475,14 @@ class VideoProcessor:
 
 
 class ImageProcessor:
-    """Advanced image content processor"""    
+    """Advanced image content processor"""
+    
     def __init__(self):
         self.supported_formats = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp']
         
     async def process(self, content_data: bytes, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Process image content"""        try:
+        """Process image content"""
+        try:
             # Load image
             image = await self.load_image(content_data)
             
@@ -481,11 +507,13 @@ class ImageProcessor:
             raise
     
     async def load_image(self, content_data: bytes) -> Image.Image:
-        """Load image from bytes"""        from io import BytesIO
+        """Load image from bytes"""
+        from io import BytesIO
         return Image.open(BytesIO(content_data))
     
     async def extract_image_features(self, image: Image.Image) -> Dict[str, Any]:
-        """Extract comprehensive image features"""        features = {}
+        """Extract comprehensive image features"""
+        features = {}
         
         # Basic properties
         features['width'], features['height'] = image.size
@@ -516,7 +544,8 @@ class ImageProcessor:
         return features
     
     async def analyze_texture(self, img_array: np.ndarray) -> Dict[str, Any]:
-        """Analyze image texture characteristics"""        texture_features = {}
+        """Analyze image texture characteristics"""
+        texture_features = {}
         
         # Convert to grayscale if needed
         if len(img_array.shape) == 3:
@@ -535,7 +564,8 @@ class ImageProcessor:
         return texture_features
     
     async def analyze_edges(self, img_array: np.ndarray) -> Dict[str, Any]:
-        """Analyze edge characteristics"""        edge_features = {}
+        """Analyze edge characteristics"""
+        edge_features = {}
         
         # Convert to grayscale if needed
         if len(img_array.shape) == 3:
@@ -551,7 +581,8 @@ class ImageProcessor:
         return edge_features
     
     async def enhance_image_metadata(self, features: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Enhance image metadata"""        enhanced = metadata.copy()
+        """Enhance image metadata"""
+        enhanced = metadata.copy()
         
         enhanced.update({
             'image_width': features.get('width'),
@@ -566,7 +597,8 @@ class ImageProcessor:
         return enhanced
     
     async def generate_image_fingerprint(self, image: Image.Image) -> str:
-        """Generate image fingerprint using perceptual hash"""        import imagehash
+        """Generate image fingerprint using perceptual hash"""
+        import imagehash
         
         # Generate multiple hash types for robustness
         phash = str(imagehash.phash(image))
@@ -578,7 +610,8 @@ class ImageProcessor:
         return hashlib.sha256(combined.encode()).hexdigest()
     
     async def calculate_image_quality(self, image: Image.Image) -> Dict[str, float]:
-        """Calculate image quality metrics"""        metrics = {}
+        """Calculate image quality metrics"""
+        metrics = {}
         
         img_array = np.array(image)
         
@@ -605,7 +638,8 @@ class ImageProcessor:
 
 
 class TextProcessor:
-    """Advanced text content processor"""    
+    """Advanced text content processor"""
+    
     def __init__(self):
         self.supported_formats = ['.txt', '.md', '.html', '.xml', '.json']
         
@@ -614,7 +648,8 @@ class TextProcessor:
         self.summarizer = pipeline("summarization")
         
     async def process(self, content_data: Union[str, bytes], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Process text content"""        try:
+        """Process text content"""
+        try:
             # Convert to string if bytes
             if isinstance(content_data, bytes):
                 text = content_data.decode('utf-8', errors='ignore')
@@ -642,7 +677,8 @@ class TextProcessor:
             raise
     
     async def extract_text_features(self, text: str) -> Dict[str, Any]:
-        """Extract comprehensive text features"""        features = {}
+        """Extract comprehensive text features"""
+        features = {}
         
         # Basic statistics
         features['character_count'] = len(text)
@@ -669,14 +705,16 @@ class TextProcessor:
         return features
     
     async def detect_language(self, text: str) -> str:
-        """Detect text language"""        try:
+        """Detect text language"""
+        try:
             from langdetect import detect
             return detect(text)
         except:
             return "unknown"
     
     async def analyze_sentiment(self, text: str) -> Dict[str, Any]:
-        """Analyze text sentiment"""        try:
+        """Analyze text sentiment"""
+        try:
             # Truncate text for efficiency
             truncated_text = text[:512]
             result = self.sentiment_analyzer(truncated_text)
@@ -685,7 +723,8 @@ class TextProcessor:
             return {"label": "NEUTRAL", "score": 0.5}
     
     async def extract_keywords(self, text: str) -> List[str]:
-        """Extract keywords from text"""        try:
+        """Extract keywords from text"""
+        try:
             from sklearn.feature_extraction.text import TfidfVectorizer
             from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
             
@@ -715,7 +754,8 @@ class TextProcessor:
             return []
     
     async def calculate_readability(self, text: str) -> Dict[str, float]:
-        """Calculate readability metrics"""        readability = {}
+        """Calculate readability metrics"""
+        readability = {}
         
         words = text.split()
         sentences = text.count('.') + text.count('!') + text.count('?')
@@ -739,7 +779,8 @@ class TextProcessor:
         return readability
     
     def count_syllables(self, word: str) -> int:
-        """Simple syllable counting"""        vowels = 'aeiouy'
+        """Simple syllable counting"""
+        vowels = 'aeiouy'
         count = 0
         previous_was_vowel = False
         
@@ -756,7 +797,8 @@ class TextProcessor:
         return max(1, count)
     
     async def enhance_text_metadata(self, features: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Enhance text metadata"""        enhanced = metadata.copy()
+        """Enhance text metadata"""
+        enhanced = metadata.copy()
         
         enhanced.update({
             'text_word_count': features.get('word_count'),
@@ -771,7 +813,8 @@ class TextProcessor:
         return enhanced
     
     async def generate_text_fingerprint(self, text: str) -> str:
-        """Generate text fingerprint using semantic analysis"""        # Simple semantic hash based on word frequencies
+        """Generate text fingerprint using semantic analysis"""
+        # Simple semantic hash based on word frequencies
         words = text.lower().split()
         word_freq = {}
         
@@ -786,7 +829,8 @@ class TextProcessor:
         return hashlib.sha256(fingerprint_string.encode()).hexdigest()
     
     async def calculate_text_quality(self, text: str) -> Dict[str, float]:
-        """Calculate text quality metrics"""        metrics = {}
+        """Calculate text quality metrics"""
+        metrics = {}
         
         # Basic completeness check
         word_count = len(text.split())
@@ -825,7 +869,8 @@ class TextProcessor:
 
 
 class ContentProcessingMiddleware:
-    """Main content processing middleware orchestrator"""    
+    """Main content processing middleware orchestrator"""
+    
     def __init__(self):
         self.cache = CacheManager()
         self.fingerprint_engine = UniversalFingerprintEngine()
@@ -839,7 +884,8 @@ class ContentProcessingMiddleware:
         }
         
     async def process_content(self, request: ContentProcessingRequest) -> ProcessingResult:
-        """Main content processing method"""        start_time = time.time()
+        """Main content processing method"""
+        start_time = time.time()
         stages_completed = []
         
         try:
@@ -898,7 +944,8 @@ class ContentProcessingMiddleware:
             )
     
     async def validate_content(self, request: ContentProcessingRequest):
-        """Validate content before processing"""        # Check content size
+        """Validate content before processing"""
+        # Check content size
         if isinstance(request.content_data, bytes):
             size = len(request.content_data)
         elif isinstance(request.content_data, str):
@@ -924,7 +971,8 @@ class ContentProcessingMiddleware:
             raise ValueError(f"Unsupported content type: {request.content_type}")
     
     async def detect_content_type(self, request: ContentProcessingRequest) -> ContentType:
-        """Detect actual content type"""        if isinstance(request.content_data, bytes):
+        """Detect actual content type"""
+        if isinstance(request.content_data, bytes):
             # Use python-magic for MIME type detection
             mime_type = magic.from_buffer(request.content_data, mime=True)
             
@@ -942,7 +990,8 @@ class ContentProcessingMiddleware:
     
     async def enrich_metadata(self, processing_result: Dict[str, Any], 
                             request: ContentProcessingRequest) -> Dict[str, Any]:
-        """Enrich metadata with additional information"""        enriched = processing_result.get('metadata', {}).copy()
+        """Enrich metadata with additional information"""
+        enriched = processing_result.get('metadata', {}).copy()
         
         # Add processing metadata
         enriched.update({
@@ -957,7 +1006,8 @@ class ContentProcessingMiddleware:
     
     async def enhance_fingerprint(self, processing_result: Dict[str, Any], 
                                 request: ContentProcessingRequest) -> str:
-        """Enhance fingerprint with additional security measures"""        original_fingerprint = processing_result.get('fingerprint', '')
+        """Enhance fingerprint with additional security measures"""
+        original_fingerprint = processing_result.get('fingerprint', '')
         
         # Add content ID and timestamp for uniqueness
         enhanced_data = {
@@ -972,7 +1022,8 @@ class ContentProcessingMiddleware:
     
     async def optimize_result(self, processing_result: Dict[str, Any], 
                             request: ContentProcessingRequest) -> Dict[str, Any]:
-        """Optimize processing result for storage and transmission"""        optimized = processing_result.copy()
+        """Optimize processing result for storage and transmission"""
+        optimized = processing_result.copy()
         
         # Convert numpy arrays to lists for JSON serialization
         def convert_numpy(obj):
@@ -1000,13 +1051,15 @@ class ContentProcessingMiddleware:
 
 # Factory function for dependency injection
 def get_content_processing_middleware() -> ContentProcessingMiddleware:
-    """Get content processing middleware instance"""    return ContentProcessingMiddleware()
+    """Get content processing middleware instance"""
+    return ContentProcessingMiddleware()
 
 
 # Utility functions
 async def process_content(content_data: Union[str, bytes], content_type: ContentType, 
                          content_id: str = None, metadata: Dict[str, Any] = None) -> ProcessingResult:
-    """Convenience function for content processing"""    if content_id is None:
+    """Convenience function for content processing"""
+    if content_id is None:
         content_id = hashlib.md5(str(content_data).encode()).hexdigest()
     
     if metadata is None:

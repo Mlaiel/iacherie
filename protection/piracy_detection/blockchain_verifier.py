@@ -29,7 +29,8 @@ This module provides:
 - Smart contract-based licensing and royalty distribution
 - Cross-chain verification for maximum security
 - Integration with IPFS for decentralized storage
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -47,7 +48,8 @@ from cryptography.hazmat.primitives.asymmetric import rsa, padding
 logger = logging.getLogger(__name__)
 
 class BlockchainNetwork(Enum):
-    """Supported blockchain networks."""    ETHEREUM = "ethereum"
+    """Supported blockchain networks."""
+    ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BINANCE_SMART_CHAIN = "bsc"
     AVALANCHE = "avalanche"
@@ -55,7 +57,8 @@ class BlockchainNetwork(Enum):
     CARDANO = "cardano"
 
 class VerificationStatus(Enum):
-    """Content verification status."""    VERIFIED = "verified"
+    """Content verification status."""
+    VERIFIED = "verified"
     PENDING = "pending"
     FAILED = "failed"
     DISPUTED = "disputed"
@@ -63,7 +66,8 @@ class VerificationStatus(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Cryptographic fingerprint of content."""    content_id: str
+    """Cryptographic fingerprint of content."""
+    content_id: str
     hash_algorithm: str
     content_hash: str
     perceptual_hash: str
@@ -74,7 +78,8 @@ class ContentFingerprint:
 
 @dataclass
 class BlockchainRecord:
-    """Blockchain registration record."""    transaction_hash: str
+    """Blockchain registration record."""
+    transaction_hash: str
     block_number: int
     network: BlockchainNetwork
     contract_address: str
@@ -85,7 +90,8 @@ class BlockchainRecord:
 
 @dataclass
 class OwnershipProof:
-    """Proof of content ownership."""    content_id: str
+    """Proof of content ownership."""
+    content_id: str
     owner_address: str
     creation_timestamp: datetime
     registration_timestamp: datetime
@@ -96,7 +102,8 @@ class OwnershipProof:
     verification_score: float
 
 class SmartContractManager:
-    """Manages smart contract interactions for content verification."""    
+    """Manages smart contract interactions for content verification."""
+    
     def __init__(self, network_configs: Dict[str, Dict[str, Any]]):
         self.network_configs = network_configs
         self.web3_instances = {}
@@ -104,7 +111,8 @@ class SmartContractManager:
         self._initialize_connections()
     
     def _initialize_connections(self):
-        """Initialize blockchain connections."""        for network, config in self.network_configs.items():
+        """Initialize blockchain connections."""
+        for network, config in self.network_configs.items():
             try:
                 w3 = Web3(Web3.HTTPProvider(config['rpc_url']))
                 if w3.isConnected():
@@ -116,8 +124,10 @@ class SmartContractManager:
                 logger.error(f"Error connecting to {network}: {e}")
     
     async def deploy_verification_contract(self, network: str) -> str:
-        """Deploy content verification smart contract."""        # Smart contract source code (Solidity)
-        contract_source = """        pragma solidity ^0.8.0;
+        """Deploy content verification smart contract."""
+        # Smart contract source code (Solidity)
+        contract_source = """
+        pragma solidity ^0.8.0;
         
         contract ContentVerification {
             struct ContentRecord {
@@ -164,20 +174,23 @@ class SmartContractManager:
                 return contentRegistry[contentId];
             }
         }
-        """        
+        """
+        
         # This would compile and deploy the contract
         # Implementation depends on the specific blockchain
         return "0x1234567890abcdef"  # Placeholder contract address
 
 class IPFSManager:
-    """Manages IPFS storage for content metadata."""    
+    """Manages IPFS storage for content metadata."""
+    
     def __init__(self, ipfs_config: Dict[str, Any]):
         self.config = ipfs_config
         self.client = None
         self._initialize_client()
     
     def _initialize_client(self):
-        """Initialize IPFS client."""        try:
+        """Initialize IPFS client."""
+        try:
             self.client = ipfshttpclient.connect(
                 addr=self.config.get('api_address', '/ip4/127.0.0.1/tcp/5001'),
                 timeout=30
@@ -187,7 +200,8 @@ class IPFSManager:
             logger.error(f"Failed to initialize IPFS client: {e}")
     
     async def store_content_metadata(self, metadata: Dict[str, Any]) -> str:
-        """Store content metadata on IPFS."""        try:
+        """Store content metadata on IPFS."""
+        try:
             if not self.client:
                 raise Exception("IPFS client not initialized")
             
@@ -206,7 +220,8 @@ class IPFSManager:
             raise
     
     async def retrieve_content_metadata(self, ipfs_hash: str) -> Dict[str, Any]:
-        """Retrieve content metadata from IPFS."""        try:
+        """Retrieve content metadata from IPFS."""
+        try:
             if not self.client:
                 raise Exception("IPFS client not initialized")
             
@@ -218,7 +233,8 @@ class IPFSManager:
             raise
 
 class CryptographicProcessor:
-    """Handles cryptographic operations for content verification."""    
+    """Handles cryptographic operations for content verification."""
+    
     def __init__(self):
         self.private_key = rsa.generate_private_key(
             public_exponent=65537,
@@ -227,12 +243,14 @@ class CryptographicProcessor:
         self.public_key = self.private_key.public_key()
     
     def generate_content_hash(self, content_data: bytes) -> str:
-        """Generate cryptographic hash of content."""        sha256_hash = hashlib.sha256()
+        """Generate cryptographic hash of content."""
+        sha256_hash = hashlib.sha256()
         sha256_hash.update(content_data)
         return sha256_hash.hexdigest()
     
     def generate_perceptual_hash(self, content_data: bytes, content_type: str) -> str:
-        """Generate perceptual hash for similarity detection."""        # Implementation would depend on content type
+        """Generate perceptual hash for similarity detection."""
+        # Implementation would depend on content type
         # For audio: chromaprint or similar
         # For images: pHash or similar
         # For video: temporal hash
@@ -248,19 +266,23 @@ class CryptographicProcessor:
             return self.generate_content_hash(content_data)
     
     def _generate_audio_perceptual_hash(self, audio_data: bytes) -> str:
-        """Generate perceptual hash for audio content."""        # Placeholder - would use actual audio fingerprinting
+        """Generate perceptual hash for audio content."""
+        # Placeholder - would use actual audio fingerprinting
         return hashlib.md5(audio_data[:1024]).hexdigest()
     
     def _generate_image_perceptual_hash(self, image_data: bytes) -> str:
-        """Generate perceptual hash for image content."""        # Placeholder - would use actual image hashing like pHash
+        """Generate perceptual hash for image content."""
+        # Placeholder - would use actual image hashing like pHash
         return hashlib.md5(image_data[:1024]).hexdigest()
     
     def _generate_video_perceptual_hash(self, video_data: bytes) -> str:
-        """Generate perceptual hash for video content."""        # Placeholder - would use actual video fingerprinting
+        """Generate perceptual hash for video content."""
+        # Placeholder - would use actual video fingerprinting
         return hashlib.md5(video_data[:1024]).hexdigest()
     
     def sign_content(self, content_hash: str) -> str:
-        """Create digital signature for content."""        message = content_hash.encode('utf-8')
+        """Create digital signature for content."""
+        message = content_hash.encode('utf-8')
         signature = self.private_key.sign(
             message,
             padding.PSS(
@@ -272,7 +294,8 @@ class CryptographicProcessor:
         return signature.hex()
     
     def verify_signature(self, content_hash: str, signature: str, public_key_pem: str) -> bool:
-        """Verify digital signature."""        try:
+        """Verify digital signature."""
+        try:
             public_key = serialization.load_pem_public_key(public_key_pem.encode())
             message = content_hash.encode('utf-8')
             signature_bytes = bytes.fromhex(signature)
@@ -292,17 +315,21 @@ class CryptographicProcessor:
             return False
 
 class BlockchainContentVerifier:
-    """    Advanced blockchain-based content verification system.
+    """
+    Advanced blockchain-based content verification system.
     
     Provides immutable proof of content ownership and authenticity
     using distributed ledger technology and cryptographic verification.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize the Blockchain Content Verifier.
+        """
+        Initialize the Blockchain Content Verifier.
         
         Args:
             config: Blockchain configuration parameters
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         self._initialized = False
         
         # Blockchain configuration
@@ -332,11 +359,13 @@ class BlockchainContentVerifier:
         logger.info("Blockchain Content Verifier initialized")
     
     async def initialize(self) -> bool:
-        """        Initialize blockchain connections and services.
+        """
+        Initialize blockchain connections and services.
         
         Returns:
             bool: True if initialization successful
-        """        try:
+        """
+        try:
             # Initialize smart contract manager
             network_configs = self.config.get('blockchain_networks', {})
             self.smart_contract_manager = SmartContractManager(network_configs)
@@ -358,7 +387,8 @@ class BlockchainContentVerifier:
                              content_metadata: Dict[str, Any],
                              creator_address: str,
                              licensing_terms: Dict[str, Any]) -> OwnershipProof:
-        """        Register content on blockchain with cryptographic proof.
+        """
+        Register content on blockchain with cryptographic proof.
         
         Args:
             content_data: Raw content data
@@ -368,7 +398,8 @@ class BlockchainContentVerifier:
             
         Returns:
             Ownership proof with blockchain records
-        """        if not self._initialized:
+        """
+        if not self._initialized:
             await self.initialize()
         
         try:
@@ -423,7 +454,8 @@ class BlockchainContentVerifier:
     async def verify_content_authenticity(self, 
                                         content_id: str,
                                         content_data: Optional[bytes] = None) -> Tuple[bool, OwnershipProof]:
-        """        Verify content authenticity against blockchain records.
+        """
+        Verify content authenticity against blockchain records.
         
         Args:
             content_id: Content identifier
@@ -431,7 +463,8 @@ class BlockchainContentVerifier:
             
         Returns:
             Tuple of (is_authentic, ownership_proof)
-        """        try:
+        """
+        try:
             # Check cache first
             if content_id in self.verification_cache:
                 cached_proof = self.verification_cache[content_id]
@@ -471,7 +504,8 @@ class BlockchainContentVerifier:
     async def check_ownership_conflicts(self, 
                                       content_hash: str,
                                       perceptual_hash: str) -> List[OwnershipProof]:
-        """        Check for ownership conflicts based on content similarity.
+        """
+        Check for ownership conflicts based on content similarity.
         
         Args:
             content_hash: Exact content hash
@@ -479,7 +513,8 @@ class BlockchainContentVerifier:
             
         Returns:
             List of conflicting ownership proofs
-        """        conflicts = []
+        """
+        conflicts = []
         
         try:
             # Check for exact hash matches
@@ -506,7 +541,8 @@ class BlockchainContentVerifier:
                                           content_data: bytes,
                                           metadata: Dict[str, Any],
                                           creator_address: str) -> ContentFingerprint:
-        """Generate cryptographic fingerprint for content."""        
+        """Generate cryptographic fingerprint for content."""
+        
         content_hash = self.crypto_processor.generate_content_hash(content_data)
         perceptual_hash = self.crypto_processor.generate_perceptual_hash(
             content_data, metadata.get('content_type', 'application/octet-stream')
@@ -533,7 +569,8 @@ class BlockchainContentVerifier:
                                     fingerprint: ContentFingerprint,
                                     ipfs_hash: str,
                                     licensing_terms: Dict[str, Any]) -> List[BlockchainRecord]:
-        """Register content on multiple blockchain networks."""        
+        """Register content on multiple blockchain networks."""
+        
         records = []
         
         for network in self.supported_networks:
@@ -560,26 +597,31 @@ class BlockchainContentVerifier:
         return records
     
     async def _query_blockchain_records(self, content_id: str) -> Optional[OwnershipProof]:
-        """Query blockchain for content ownership records."""        # Placeholder implementation
+        """Query blockchain for content ownership records."""
+        # Placeholder implementation
         # Would query actual blockchain networks
         return None
     
     async def _verify_blockchain_signatures(self, ownership_proof: OwnershipProof) -> bool:
-        """Verify blockchain transaction signatures."""        # Placeholder implementation
+        """Verify blockchain transaction signatures."""
+        # Placeholder implementation
         # Would verify actual blockchain signatures
         return True
     
     async def _query_by_hash(self, content_hash: str, exact: bool = True) -> List[OwnershipProof]:
-        """Query blockchain records by content hash."""        # Placeholder implementation
+        """Query blockchain records by content hash."""
+        # Placeholder implementation
         # Would perform actual blockchain queries
         return []
     
     async def _get_stored_hash(self, content_id: str) -> Optional[str]:
-        """Get stored content hash from blockchain."""        # Placeholder implementation
+        """Get stored content hash from blockchain."""
+        # Placeholder implementation
         return None
     
     def get_verification_statistics(self) -> Dict[str, Any]:
-        """Get verification statistics."""        return {
+        """Get verification statistics."""
+        return {
             **self.verification_stats,
             'cache_size': len(self.verification_cache),
             'pending_verifications': len(self.pending_verifications),

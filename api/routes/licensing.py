@@ -3,7 +3,8 @@ Advanced licensing and rights management endpoints.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from typing import List, Dict, Any, Optional
+"""
+from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
 from decimal import Decimal
 from enum import Enum
@@ -135,7 +136,8 @@ licensing_engine = LicensingEngine()
 
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
-    """Get current authenticated user"""    if not credentials:
+    """Get current authenticated user"""
+    if not credentials:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Authentication required"
@@ -158,10 +160,12 @@ async def create_license_agreement(
     background_tasks: BackgroundTasks,
     user: dict = Depends(get_current_user)
 ):
-    """Create a new licensing agreement"""    try:
+    """Create a new licensing agreement"""
+    try:
         # Verify content ownership
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT content_id, metadata
+            result = await session.execute("""
+                SELECT content_id, metadata
                 FROM uploaded_files
                 WHERE file_id = %s AND user_id = %s
             """, (agreement.content_id, user['user_id']))
@@ -188,7 +192,8 @@ async def create_license_agreement(
         
         # Create license agreement
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                INSERT INTO license_agreements (license_id, user_id, content_id, licensee_name,
+            await session.execute("""
+                INSERT INTO license_agreements (license_id, user_id, content_id, licensee_name,
                                               licensee_email, licensee_company, license_type,
                                               territory, duration_months, total_amount,
                                               advance_amount, royalty_rate, usage_rights,
@@ -235,15 +240,18 @@ async def get_license_agreements(
     limit: int = Field(default=50, ge=1, le=100),
     user: dict = Depends(get_current_user)
 ):
-    """Get user's license agreements"""    try:
-        query = """            SELECT la.license_id, la.content_id, la.licensee_name, la.licensee_email,
+    """Get user's license agreements"""
+    try:
+        query = """
+            SELECT la.license_id, la.content_id, la.licensee_name, la.licensee_email,
                    la.license_type, la.territory, la.duration_months, la.total_amount,
                    la.royalty_rate, la.status, la.created_at, la.expires_at,
                    uf.original_filename, uf.metadata
             FROM license_agreements la
             JOIN uploaded_files uf ON la.content_id = uf.file_id
             WHERE la.user_id = %s
-        """        params = [user['user_id']]
+        """
+        params = [user['user_id']]
         
         if status:
             query += " AND la.status = %s"
@@ -294,10 +302,12 @@ async def create_license_template(
     template: LicenseTemplate,
     user: dict = Depends(get_current_user)
 ):
-    """Create a license template"""    try:
+    """Create a license template"""
+    try:
         # Create license template
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                INSERT INTO license_templates (template_id, user_id, name, description,
+            await session.execute("""
+                INSERT INTO license_templates (template_id, user_id, name, description,
                                              license_type, default_territory, default_duration_months,
                                              default_royalty_rate, standard_usage_rights,
                                              standard_restrictions, template_terms, is_public,
@@ -332,10 +342,12 @@ async def record_royalty_payment(
     payment: RoyaltyPayment,
     user: dict = Depends(get_current_user)
 ):
-    """Record a royalty payment"""    try:
+    """Record a royalty payment"""
+    try:
         # Verify license ownership
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT license_id, royalty_rate, status
+            result = await session.execute("""
+                SELECT license_id, royalty_rate, status
                 FROM license_agreements
                 WHERE license_id = %s AND user_id = %s
             """, (payment.license_id, user['user_id']))
@@ -363,7 +375,8 @@ async def record_royalty_payment(
         
         # Record royalty payment
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                INSERT INTO royalty_payments (payment_id, license_id, user_id, period_start,
+            await session.execute("""
+                INSERT INTO royalty_payments (payment_id, license_id, user_id, period_start,
                                             period_end, units_sold, gross_revenue, royalty_amount,
                                             deductions, net_payment, payment_date, payment_reference,
                                             created_at)
@@ -396,10 +409,12 @@ async def track_usage(
     usage: UsageTracking,
     user: dict = Depends(get_current_user)
 ):
-    """Track content usage for licensing"""    try:
+    """Track content usage for licensing"""
+    try:
         # Verify license exists and is active
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT la.license_id, la.licensee_name
+            result = await session.execute("""
+                SELECT la.license_id, la.licensee_name
                 FROM license_agreements la
                 WHERE la.license_id = %s AND la.user_id = %s AND la.status = %s
             """, (usage.license_id, user['user_id'], LicenseStatus.ACTIVE.value))
@@ -413,7 +428,8 @@ async def track_usage(
         
         # Record usage tracking
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                INSERT INTO usage_tracking (tracking_id, license_id, user_id, usage_date,
+            await session.execute("""
+                INSERT INTO usage_tracking (tracking_id, license_id, user_id, usage_date,
                                           platform, usage_type, quantity, revenue_generated,
                                           location, metadata, created_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -446,10 +462,12 @@ async def generate_license_report(
     period_end: datetime,
     user: dict = Depends(get_current_user)
 ):
-    """Generate license usage and compliance report"""    try:
+    """Generate license usage and compliance report"""
+    try:
         # Verify license ownership
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT license_id, licensee_name, license_type, usage_rights, restrictions
+            result = await session.execute("""
+                SELECT license_id, licensee_name, license_type, usage_rights, restrictions
                 FROM license_agreements
                 WHERE license_id = %s AND user_id = %s
             """, (license_id, user['user_id']))
@@ -466,7 +484,8 @@ async def generate_license_report(
         # Gather usage data
         async with database_manager.get_postgres_session() as session:
             # Usage statistics
-            result = await session.execute("""                SELECT platform, usage_type, SUM(quantity) as total_usage,
+            result = await session.execute("""
+                SELECT platform, usage_type, SUM(quantity) as total_usage,
                        COALESCE(SUM(revenue_generated), 0) as total_revenue
                 FROM usage_tracking
                 WHERE license_id = %s AND usage_date >= %s AND usage_date <= %s
@@ -484,7 +503,8 @@ async def generate_license_report(
             ]
             
             # Revenue data
-            result = await session.execute("""                SELECT SUM(gross_revenue) as total_gross,
+            result = await session.execute("""
+                SELECT SUM(gross_revenue) as total_gross,
                        SUM(royalty_amount) as total_royalties,
                        SUM(net_payment) as total_net
                 FROM royalty_payments
@@ -528,7 +548,8 @@ async def generate_license_report(
         
         # Store report
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                INSERT INTO license_reports (report_id, license_id, user_id, report_data,
+            await session.execute("""
+                INSERT INTO license_reports (report_id, license_id, user_id, report_data,
                                            period_start, period_end, generated_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s)
             """, (
@@ -556,10 +577,12 @@ async def update_license_status(
     reason: Optional[str] = None,
     user: dict = Depends(get_current_user)
 ):
-    """Update license agreement status"""    try:
+    """Update license agreement status"""
+    try:
         async with database_manager.get_postgres_session() as session:
             # Verify ownership
-            result = await session.execute("""                SELECT status FROM license_agreements
+            result = await session.execute("""
+                SELECT status FROM license_agreements
                 WHERE license_id = %s AND user_id = %s
             """, (license_id, user['user_id']))
             
@@ -578,13 +601,15 @@ async def update_license_status(
                 )
             
             # Update status
-            await session.execute("""                UPDATE license_agreements 
+            await session.execute("""
+                UPDATE license_agreements 
                 SET status = %s, status_updated_at = %s, status_reason = %s
                 WHERE license_id = %s
             """, (new_status.value, datetime.utcnow(), reason, license_id))
             
             # Log status change
-            await session.execute("""                INSERT INTO license_status_history (license_id, old_status, new_status,
+            await session.execute("""
+                INSERT INTO license_status_history (license_id, old_status, new_status,
                                                    reason, changed_by, changed_at)
                 VALUES (%s, %s, %s, %s, %s, %s)
             """, (
@@ -615,38 +640,44 @@ async def get_licensing_dashboard(
     days: int = Field(default=30, ge=1, le=365),
     user: dict = Depends(get_current_user)
 ):
-    """Get licensing analytics dashboard"""    try:
+    """Get licensing analytics dashboard"""
+    try:
         start_date = datetime.utcnow() - timedelta(days=days)
         
         async with database_manager.get_postgres_session() as session:
             # Active licenses count
-            result = await session.execute("""                SELECT COUNT(*) FROM license_agreements
+            result = await session.execute("""
+                SELECT COUNT(*) FROM license_agreements
                 WHERE user_id = %s AND status = %s
             """, (user['user_id'], LicenseStatus.ACTIVE.value))
             active_licenses = result.fetchone()[0]
             
             # Total revenue
-            result = await session.execute("""                SELECT COALESCE(SUM(net_payment), 0) FROM royalty_payments
+            result = await session.execute("""
+                SELECT COALESCE(SUM(net_payment), 0) FROM royalty_payments
                 WHERE user_id = %s AND created_at >= %s
             """, (user['user_id'], start_date))
             total_revenue = float(result.fetchone()[0])
             
             # License types distribution
-            result = await session.execute("""                SELECT license_type, COUNT(*) FROM license_agreements
+            result = await session.execute("""
+                SELECT license_type, COUNT(*) FROM license_agreements
                 WHERE user_id = %s AND created_at >= %s
                 GROUP BY license_type
             """, (user['user_id'], start_date))
             license_types = {row[0]: row[1] for row in result.fetchall()}
             
             # Territory distribution
-            result = await session.execute("""                SELECT territory, COUNT(*) FROM license_agreements
+            result = await session.execute("""
+                SELECT territory, COUNT(*) FROM license_agreements
                 WHERE user_id = %s AND created_at >= %s
                 GROUP BY territory
             """, (user['user_id'], start_date))
             territories = {row[0]: row[1] for row in result.fetchall()}
             
             # Recent activity
-            result = await session.execute("""                SELECT la.license_id, la.licensee_name, la.license_type,
+            result = await session.execute("""
+                SELECT la.license_id, la.licensee_name, la.license_type,
                        la.total_amount, la.created_at
                 FROM license_agreements la
                 WHERE la.user_id = %s
@@ -696,10 +727,12 @@ async def delete_license_agreement(
     license_id: str,
     user: dict = Depends(get_current_user)
 ):
-    """Delete a license agreement (only if draft status)"""    try:
+    """Delete a license agreement (only if draft status)"""
+    try:
         async with database_manager.get_postgres_session() as session:
             # Check status
-            result = await session.execute("""                SELECT status FROM license_agreements
+            result = await session.execute("""
+                SELECT status FROM license_agreements
                 WHERE license_id = %s AND user_id = %s
             """, (license_id, user['user_id']))
             
@@ -717,7 +750,8 @@ async def delete_license_agreement(
                 )
             
             # Delete license
-            await session.execute("""                DELETE FROM license_agreements WHERE license_id = %s
+            await session.execute("""
+                DELETE FROM license_agreements WHERE license_id = %s
             """, (license_id,))
             await session.commit()
         
@@ -735,7 +769,8 @@ async def delete_license_agreement(
 
 # Helper functions
 def _validate_status_transition(current_status: str, new_status: str) -> bool:
-    """Validate license status transitions"""    valid_transitions = {
+    """Validate license status transitions"""
+    valid_transitions = {
         LicenseStatus.DRAFT.value: [LicenseStatus.PENDING.value],
         LicenseStatus.PENDING.value: [LicenseStatus.ACTIVE.value, LicenseStatus.TERMINATED.value],
         LicenseStatus.ACTIVE.value: [LicenseStatus.SUSPENDED.value, LicenseStatus.TERMINATED.value, LicenseStatus.EXPIRED.value],
@@ -749,13 +784,15 @@ def _validate_status_transition(current_status: str, new_status: str) -> bool:
 
 # Background task functions
 async def _generate_license_contract(license_id: str, agreement: LicenseAgreement, user: dict):
-    """Generate license contract document"""    try:
+    """Generate license contract document"""
+    try:
         # Generate contract using licensing engine
         contract_data = await licensing_engine.generate_contract(agreement, user)
         
         # Store contract
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                UPDATE license_agreements 
+            await session.execute("""
+                UPDATE license_agreements 
                 SET contract_url = %s, contract_generated_at = %s
                 WHERE license_id = %s
             """, (contract_data['url'], datetime.utcnow(), license_id))
@@ -768,7 +805,8 @@ async def _generate_license_contract(license_id: str, agreement: LicenseAgreemen
         
         # Mark as failed
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                UPDATE license_agreements 
+            await session.execute("""
+                UPDATE license_agreements 
                 SET contract_generation_error = %s
                 WHERE license_id = %s
             """, (str(e), license_id))

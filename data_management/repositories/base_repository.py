@@ -19,7 +19,8 @@ IA protection rights → Professional SEO → Collaboration matching → Multi-p
 BASE REPOSITORY ARCHITECTURE:
 CRUD Operations → Cache Layer → Query Optimization → 
 Batch Operations → Transaction Management → Audit Trail → Performance Monitoring
-"""from typing import Dict, List, Optional, Any, Union, TypeVar, Generic, Callable
+"""
+from typing import Dict, List, Optional, Any, Union, TypeVar, Generic, Callable
 from abc import ABC, abstractmethod
 import asyncio
 import logging
@@ -35,7 +36,8 @@ import traceback
 T = TypeVar('T')
 
 class OperationType(Enum):
-    """Types d'opérations pour l'audit"""    CREATE = "create"
+    """Types d'opérations pour l'audit"""
+    CREATE = "create"
     READ = "read"
     UPDATE = "update"
     DELETE = "delete"
@@ -45,7 +47,8 @@ class OperationType(Enum):
 
 @dataclass
 class AuditEntry:
-    """Entrée d'audit pour traçabilité"""    operation_type: OperationType
+    """Entrée d'audit pour traçabilité"""
+    operation_type: OperationType
     entity_type: str
     entity_id: Optional[str]
     user_id: Optional[str]
@@ -56,13 +59,15 @@ class AuditEntry:
 
 @dataclass
 class QueryMetrics:
-    """Métriques de performance des requêtes"""    query_time: float
+    """Métriques de performance des requêtes"""
+    query_time: float
     cache_hit: bool
     records_count: int
     query_hash: str
 
 class BaseRepository(Generic[T], ABC):
-    """    Advanced base repository with enterprise features
+    """
+    Advanced base repository with enterprise features
     
     Features:
     - CRUD operations with validation
@@ -72,7 +77,8 @@ class BaseRepository(Generic[T], ABC):
     - Transaction management
     - Query performance metrics
     - Error handling and retry logic
-    """    
+    """
+    
     def __init__(self, 
                  db_connection=None, 
                  cache_manager=None, 
@@ -92,13 +98,15 @@ class BaseRepository(Generic[T], ABC):
         self._performance_threshold = 1.0  # seconds
     
     def _generate_cache_key(self, operation: str, **kwargs) -> str:
-        """Generate cache key for operation"""        key_data = f"{self.__class__.__name__}:{operation}:{kwargs}"
+        """Generate cache key for operation"""
+        key_data = f"{self.__class__.__name__}:{operation}:{kwargs}"
         return hashlib.md5(key_data.encode()).hexdigest()
     
     def _log_audit(self, operation: OperationType, entity_id: Optional[str] = None,
                    old_values: Optional[Dict] = None, new_values: Optional[Dict] = None,
                    metadata: Optional[Dict] = None):
-        """Log audit entry for operation"""        if not self._audit_enabled or not self.audit_service:
+        """Log audit entry for operation"""
+        if not self._audit_enabled or not self.audit_service:
             return
         
         audit_entry = AuditEntry(
@@ -116,7 +124,8 @@ class BaseRepository(Generic[T], ABC):
     
     def _collect_metrics(self, operation: str, execution_time: float, 
                         cache_hit: bool, records_count: int):
-        """Collect performance metrics"""        if not self.metrics_collector:
+        """Collect performance metrics"""
+        if not self.metrics_collector:
             return
         
         metrics = QueryMetrics(
@@ -133,7 +142,8 @@ class BaseRepository(Generic[T], ABC):
     
     @contextmanager
     def _performance_monitor(self, operation: str):
-        """Context manager for performance monitoring"""        start_time = time.time()
+        """Context manager for performance monitoring"""
+        start_time = time.time()
         try:
             yield
         finally:
@@ -141,52 +151,64 @@ class BaseRepository(Generic[T], ABC):
             self._collect_metrics(operation, execution_time, False, 0)
     
     def _validate_entity(self, entity: T) -> bool:
-        """Validate entity before operations"""        if entity is None:
+        """Validate entity before operations"""
+        if entity is None:
             raise ValueError("Entity cannot be None")
         return True
     
     def _apply_filters(self, query, filters: Dict[str, Any]) -> Any:
-        """Apply filters to query - to be implemented by subclasses"""        return query
+        """Apply filters to query - to be implemented by subclasses"""
+        return query
     
     def _paginate_query(self, query, limit: int, offset: int) -> Any:
-        """Apply pagination to query - to be implemented by subclasses"""        return query
+        """Apply pagination to query - to be implemented by subclasses"""
+        return query
     
     def with_cache(self, enabled: bool = True, ttl: int = 3600) -> 'BaseRepository':
-        """Configure cache settings"""        self._cache_enabled = enabled
+        """Configure cache settings"""
+        self._cache_enabled = enabled
         self._cache_ttl = ttl
         return self
     
     def with_audit(self, enabled: bool = True) -> 'BaseRepository':
-        """Configure audit settings"""        self._audit_enabled = enabled
+        """Configure audit settings"""
+        self._audit_enabled = enabled
         return self
     
     def with_batch_size(self, size: int = 1000) -> 'BaseRepository':
-        """Configure batch size for bulk operations"""        self._batch_size = size
+        """Configure batch size for bulk operations"""
+        self._batch_size = size
         return self
     
     @abstractmethod
     def create(self, entity: T, **kwargs) -> T:
-        """Create new entity with validation and audit"""        pass
+        """Create new entity with validation and audit"""
+        pass
     
     @abstractmethod
     def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[T]:
-        """Get entity by ID with cache support"""        pass
+        """Get entity by ID with cache support"""
+        pass
     
     @abstractmethod
     def update(self, entity: T, **kwargs) -> T:
-        """Update entity with validation and audit"""        pass
+        """Update entity with validation and audit"""
+        pass
     
     @abstractmethod
     def delete(self, entity_id: str, soft_delete: bool = False) -> bool:
-        """Delete entity with soft delete option"""        pass
+        """Delete entity with soft delete option"""
+        pass
     
     @abstractmethod
     def list(self, filters: Dict[str, Any] = None, limit: int = 100, 
              offset: int = 0, order_by: str = None) -> List[T]:
-        """List entities with advanced filtering and ordering"""        pass
+        """List entities with advanced filtering and ordering"""
+        pass
     
     def bulk_create(self, entities: List[T], batch_size: Optional[int] = None) -> List[T]:
-        """Optimized bulk creation with batching"""        if not entities:
+        """Optimized bulk creation with batching"""
+        if not entities:
             return []
         
         batch_size = batch_size or self._batch_size
@@ -212,7 +234,8 @@ class BaseRepository(Generic[T], ABC):
         return results
     
     def bulk_update(self, entities: List[T], batch_size: Optional[int] = None) -> List[T]:
-        """Optimized bulk update with batching"""        if not entities:
+        """Optimized bulk update with batching"""
+        if not entities:
             return []
         
         batch_size = batch_size or self._batch_size
@@ -239,7 +262,8 @@ class BaseRepository(Generic[T], ABC):
     
     def bulk_delete(self, entity_ids: List[str], soft_delete: bool = False,
                    batch_size: Optional[int] = None) -> bool:
-        """Optimized bulk deletion with batching"""        if not entity_ids:
+        """Optimized bulk deletion with batching"""
+        if not entity_ids:
             return True
         
         batch_size = batch_size or self._batch_size
@@ -259,7 +283,8 @@ class BaseRepository(Generic[T], ABC):
         return True
     
     def exists(self, entity_id: str, use_cache: bool = True) -> bool:
-        """Check entity existence with cache support"""        if use_cache and self._cache_enabled and self.cache:
+        """Check entity existence with cache support"""
+        if use_cache and self._cache_enabled and self.cache:
             cache_key = self._generate_cache_key("exists", entity_id=entity_id)
             cached_result = self.cache.get(cache_key)
             if cached_result is not None:
@@ -274,7 +299,8 @@ class BaseRepository(Generic[T], ABC):
         return exists
     
     def count(self, filters: Dict[str, Any] = None, use_cache: bool = True) -> int:
-        """Count entities with cache support"""        if use_cache and self._cache_enabled and self.cache:
+        """Count entities with cache support"""
+        if use_cache and self._cache_enabled and self.cache:
             cache_key = self._generate_cache_key("count", filters=filters)
             cached_result = self.cache.get(cache_key)
             if cached_result is not None:
@@ -289,7 +315,8 @@ class BaseRepository(Generic[T], ABC):
         return count
     
     def search(self, query: str, fields: List[str] = None, limit: int = 100) -> List[T]:
-        """Full-text search across specified fields"""        # Default implementation using basic filtering
+        """Full-text search across specified fields"""
+        # Default implementation using basic filtering
         # Subclasses should override for proper search capabilities
         try:
             if not query or not query.strip():
@@ -321,7 +348,8 @@ class BaseRepository(Generic[T], ABC):
             return []
     
     def get_or_create(self, defaults: Dict[str, Any] = None, **kwargs) -> tuple[T, bool]:
-        """Get existing entity or create new one"""        # Default implementation - subclasses should override for efficiency
+        """Get existing entity or create new one"""
+        # Default implementation - subclasses should override for efficiency
         try:
             # Try to find existing entity
             entities = self.filter(**kwargs)
@@ -354,7 +382,8 @@ class BaseRepository(Generic[T], ABC):
             raise
     
     def get_multiple(self, entity_ids: List[str], use_cache: bool = True) -> List[T]:
-        """Get multiple entities by IDs efficiently"""        if not entity_ids:
+        """Get multiple entities by IDs efficiently"""
+        if not entity_ids:
             return []
         
         results = []
@@ -386,7 +415,8 @@ class BaseRepository(Generic[T], ABC):
         return results
     
     def invalidate_cache(self, pattern: str = None):
-        """Invalidate cache entries"""        if not self.cache:
+        """Invalidate cache entries"""
+        if not self.cache:
             return
         
         if pattern:
@@ -397,7 +427,8 @@ class BaseRepository(Generic[T], ABC):
             self.cache.delete_pattern(pattern)
 
 class AsyncBaseRepository(Generic[T], ABC):
-    """    Advanced asynchronous base repository with enterprise features
+    """
+    Advanced asynchronous base repository with enterprise features
     
     Features:
     - Async CRUD operations with validation
@@ -407,7 +438,8 @@ class AsyncBaseRepository(Generic[T], ABC):
     - Connection pooling and transaction management
     - Real-time performance monitoring
     - Automatic retry logic with backoff
-    """    
+    """
+    
     def __init__(self, 
                  db_connection=None, 
                  cache_manager=None, 
@@ -429,13 +461,15 @@ class AsyncBaseRepository(Generic[T], ABC):
         self._max_concurrent_operations = 10
     
     def _generate_cache_key(self, operation: str, **kwargs) -> str:
-        """Generate cache key for operation"""        key_data = f"{self.__class__.__name__}:{operation}:{kwargs}"
+        """Generate cache key for operation"""
+        key_data = f"{self.__class__.__name__}:{operation}:{kwargs}"
         return hashlib.md5(key_data.encode()).hexdigest()
     
     async def _log_audit(self, operation: OperationType, entity_id: Optional[str] = None,
                         old_values: Optional[Dict] = None, new_values: Optional[Dict] = None,
                         metadata: Optional[Dict] = None):
-        """Log audit entry for operation asynchronously"""        if not self._audit_enabled or not self.audit_service:
+        """Log audit entry for operation asynchronously"""
+        if not self._audit_enabled or not self.audit_service:
             return
         
         audit_entry = AuditEntry(
@@ -453,7 +487,8 @@ class AsyncBaseRepository(Generic[T], ABC):
     
     async def _collect_metrics(self, operation: str, execution_time: float, 
                               cache_hit: bool, records_count: int):
-        """Collect performance metrics asynchronously"""        if not self.metrics_collector:
+        """Collect performance metrics asynchronously"""
+        if not self.metrics_collector:
             return
         
         metrics = QueryMetrics(
@@ -470,7 +505,8 @@ class AsyncBaseRepository(Generic[T], ABC):
     
     @asynccontextmanager
     async def _performance_monitor(self, operation: str):
-        """Async context manager for performance monitoring"""        start_time = time.time()
+        """Async context manager for performance monitoring"""
+        start_time = time.time()
         try:
             yield
         finally:
@@ -478,12 +514,14 @@ class AsyncBaseRepository(Generic[T], ABC):
             await self._collect_metrics(operation, execution_time, False, 0)
     
     async def _validate_entity(self, entity: T) -> bool:
-        """Validate entity before operations"""        if entity is None:
+        """Validate entity before operations"""
+        if entity is None:
             raise ValueError("Entity cannot be None")
         return True
     
     async def _retry_operation(self, operation: Callable, *args, **kwargs):
-        """Retry operation with exponential backoff"""        last_exception = None
+        """Retry operation with exponential backoff"""
+        last_exception = None
         
         for attempt in range(self._retry_attempts):
             try:
@@ -500,45 +538,55 @@ class AsyncBaseRepository(Generic[T], ABC):
         raise last_exception
     
     def with_cache(self, enabled: bool = True, ttl: int = 3600) -> 'AsyncBaseRepository':
-        """Configure cache settings"""        self._cache_enabled = enabled
+        """Configure cache settings"""
+        self._cache_enabled = enabled
         self._cache_ttl = ttl
         return self
     
     def with_audit(self, enabled: bool = True) -> 'AsyncBaseRepository':
-        """Configure audit settings"""        self._audit_enabled = enabled
+        """Configure audit settings"""
+        self._audit_enabled = enabled
         return self
     
     def with_batch_size(self, size: int = 1000) -> 'AsyncBaseRepository':
-        """Configure batch size for bulk operations"""        self._batch_size = size
+        """Configure batch size for bulk operations"""
+        self._batch_size = size
         return self
     
     def with_concurrency(self, max_concurrent: int = 10) -> 'AsyncBaseRepository':
-        """Configure maximum concurrent operations"""        self._max_concurrent_operations = max_concurrent
+        """Configure maximum concurrent operations"""
+        self._max_concurrent_operations = max_concurrent
         return self
     
     @abstractmethod
     async def create(self, entity: T, **kwargs) -> T:
-        """Create new entity asynchronously with validation and audit"""        pass
+        """Create new entity asynchronously with validation and audit"""
+        pass
     
     @abstractmethod
     async def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[T]:
-        """Get entity by ID asynchronously with cache support"""        pass
+        """Get entity by ID asynchronously with cache support"""
+        pass
     
     @abstractmethod
     async def update(self, entity: T, **kwargs) -> T:
-        """Update entity asynchronously with validation and audit"""        pass
+        """Update entity asynchronously with validation and audit"""
+        pass
     
     @abstractmethod
     async def delete(self, entity_id: str, soft_delete: bool = False) -> bool:
-        """Delete entity asynchronously with soft delete option"""        pass
+        """Delete entity asynchronously with soft delete option"""
+        pass
     
     @abstractmethod
     async def list(self, filters: Dict[str, Any] = None, limit: int = 100, 
                   offset: int = 0, order_by: str = None) -> List[T]:
-        """List entities asynchronously with advanced filtering and ordering"""        pass
+        """List entities asynchronously with advanced filtering and ordering"""
+        pass
     
     async def bulk_create(self, entities: List[T], batch_size: Optional[int] = None) -> List[T]:
-        """Optimized async bulk creation with concurrency control"""        if not entities:
+        """Optimized async bulk creation with concurrency control"""
+        if not entities:
             return []
         
         batch_size = batch_size or self._batch_size
@@ -569,7 +617,8 @@ class AsyncBaseRepository(Generic[T], ABC):
         return results
     
     async def bulk_update(self, entities: List[T], batch_size: Optional[int] = None) -> List[T]:
-        """Optimized async bulk update with concurrency control"""        if not entities:
+        """Optimized async bulk update with concurrency control"""
+        if not entities:
             return []
         
         batch_size = batch_size or self._batch_size
@@ -599,7 +648,8 @@ class AsyncBaseRepository(Generic[T], ABC):
     
     async def bulk_delete(self, entity_ids: List[str], soft_delete: bool = False,
                          batch_size: Optional[int] = None) -> bool:
-        """Optimized async bulk deletion with concurrency control"""        if not entity_ids:
+        """Optimized async bulk deletion with concurrency control"""
+        if not entity_ids:
             return True
         
         batch_size = batch_size or self._batch_size
@@ -625,7 +675,8 @@ class AsyncBaseRepository(Generic[T], ABC):
         return True
     
     async def exists(self, entity_id: str, use_cache: bool = True) -> bool:
-        """Check entity existence asynchronously with cache support"""        if use_cache and self._cache_enabled and self.cache:
+        """Check entity existence asynchronously with cache support"""
+        if use_cache and self._cache_enabled and self.cache:
             cache_key = self._generate_cache_key("exists", entity_id=entity_id)
             cached_result = await self.cache.get_async(cache_key)
             if cached_result is not None:
@@ -640,7 +691,8 @@ class AsyncBaseRepository(Generic[T], ABC):
         return exists
     
     async def count(self, filters: Dict[str, Any] = None, use_cache: bool = True) -> int:
-        """Count entities asynchronously with cache support"""        if use_cache and self._cache_enabled and self.cache:
+        """Count entities asynchronously with cache support"""
+        if use_cache and self._cache_enabled and self.cache:
             cache_key = self._generate_cache_key("count", filters=filters)
             cached_result = await self.cache.get_async(cache_key)
             if cached_result is not None:
@@ -655,7 +707,8 @@ class AsyncBaseRepository(Generic[T], ABC):
         return count
     
     async def search(self, query: str, fields: List[str] = None, limit: int = 100) -> List[T]:
-        """Async full-text search across specified fields"""        # Default async implementation using basic filtering
+        """Async full-text search across specified fields"""
+        # Default async implementation using basic filtering
         # Subclasses should override for proper search capabilities
         try:
             if not query or not query.strip():
@@ -687,7 +740,8 @@ class AsyncBaseRepository(Generic[T], ABC):
             return []
     
     async def get_or_create(self, defaults: Dict[str, Any] = None, **kwargs) -> tuple[T, bool]:
-        """Get existing entity or create new one asynchronously"""        # Default async implementation - subclasses should override for efficiency
+        """Get existing entity or create new one asynchronously"""
+        # Default async implementation - subclasses should override for efficiency
         try:
             # Try to find existing entity asynchronously
             entities = await self.filter(**kwargs)
@@ -720,7 +774,8 @@ class AsyncBaseRepository(Generic[T], ABC):
             raise
     
     async def get_multiple(self, entity_ids: List[str], use_cache: bool = True) -> List[T]:
-        """Get multiple entities by IDs efficiently with async processing"""        if not entity_ids:
+        """Get multiple entities by IDs efficiently with async processing"""
+        if not entity_ids:
             return []
         
         results = []
@@ -770,7 +825,8 @@ class AsyncBaseRepository(Generic[T], ABC):
         return results
     
     async def invalidate_cache(self, pattern: str = None):
-        """Invalidate cache entries asynchronously"""        if not self.cache:
+        """Invalidate cache entries asynchronously"""
+        if not self.cache:
             return
         
         if pattern:
@@ -781,7 +837,8 @@ class AsyncBaseRepository(Generic[T], ABC):
             await self.cache.delete_pattern_async(pattern)
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on repository components"""        health_status = {
+        """Perform health check on repository components"""
+        health_status = {
             'repository': self.__class__.__name__,
             'timestamp': datetime.now(timezone.utc).isoformat(),
             'status': 'healthy',

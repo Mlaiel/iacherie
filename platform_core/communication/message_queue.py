@@ -14,7 +14,8 @@ Message queue enterprise avec traitement distribué
 - Dead Letter Queue pour gestion d'erreurs
 - Priority queues avec backpressure
 - Monitoring temps réel et métriques avancées
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import time
@@ -33,13 +34,15 @@ from pydantic import BaseModel, Field
 logger = logging.getLogger(__name__)
 
 class MessagePriority(Enum):
-    """Priorités des messages"""    LOW = 1
+    """Priorités des messages"""
+    LOW = 1
     NORMAL = 3
     HIGH = 5
     CRITICAL = 10
 
 class MessageStatus(Enum):
-    """États des messages"""    PENDING = "pending"
+    """États des messages"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -48,7 +51,8 @@ class MessageStatus(Enum):
 
 @dataclass
 class QueueMessage:
-    """Structure d'un message de queue"""    message_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Structure d'un message de queue"""
+    message_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     queue_name: str = ""
     data: Dict[str, Any] = field(default_factory=dict)
     priority: MessagePriority = MessagePriority.NORMAL
@@ -67,7 +71,8 @@ class QueueMessage:
     headers: Dict[str, str] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit le message en dictionnaire sérializable"""        data = asdict(self)
+        """Convertit le message en dictionnaire sérializable"""
+        data = asdict(self)
         # Convertir les dates en ISO format
         for key, value in data.items():
             if isinstance(value, datetime):
@@ -80,7 +85,8 @@ class QueueMessage:
         
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'QueueMessage':
-        """Crée un message depuis un dictionnaire"""        # Convertir les dates depuis ISO format
+        """Crée un message depuis un dictionnaire"""
+        # Convertir les dates depuis ISO format
         for date_field in ['created_at', 'scheduled_at', 'expires_at', 'processed_at']:
             if data.get(date_field):
                 data[date_field] = datetime.fromisoformat(data[date_field])
@@ -95,7 +101,8 @@ class QueueMessage:
 
 @dataclass
 class QueueStats:
-    """Statistiques d'une queue"""    total_messages: int = 0
+    """Statistiques d'une queue"""
+    total_messages: int = 0
     pending_messages: int = 0
     processing_messages: int = 0
     completed_messages: int = 0
@@ -106,7 +113,8 @@ class QueueStats:
     last_message_time: Optional[datetime] = None
 
 class MessageQueue:
-    """File d'attente de messages avec Redis Streams"""    
+    """File d'attente de messages avec Redis Streams"""
+    
     def __init__(self, 
                  redis_client: aioredis.Redis,
                  queue_name: str,
@@ -132,7 +140,8 @@ class MessageQueue:
                   correlation_id: Optional[str] = None,
                   reply_to: Optional[str] = None,
                   headers: Optional[Dict[str, str]] = None) -> str:
-        """Ajoute un message à la queue"""        
+        """Ajoute un message à la queue"""
+        
         message = QueueMessage(
             queue_name=self.queue_name,
             data=data,
@@ -172,7 +181,8 @@ class MessageQueue:
     async def get(self, 
                   timeout: Optional[float] = None,
                   consumer_name: Optional[str] = None) -> Optional[QueueMessage]:
-        """Récupère un message de la queue (par priorité)"""        
+        """Récupère un message de la queue (par priorité)"""
+        
         consumer_name = consumer_name or f"consumer-{uuid.uuid4().hex[:8]}"
         group_name = f"{self.queue_name}:group"
         
@@ -267,7 +277,8 @@ class MessageQueue:
         return None
         
     async def ack(self, message: QueueMessage, success: bool = True, error: Optional[str] = None):
-        """Accuse réception d'un message traité"""        
+        """Accuse réception d'un message traité"""
+        
         # Récupérer les infos de traitement
         processing_data_raw = await self.redis_client.hget(
             self.processing_key, message.message_id
@@ -324,13 +335,15 @@ class MessageQueue:
         await self._update_stats("ack", message)
         
     async def _ack_message(self, stream_key: str, group_name: str, message_id: str):
-        """Acknowledge un message dans Redis Stream"""        try:
+        """Acknowledge un message dans Redis Stream"""
+        try:
             await self.redis_client.xack(stream_key, group_name, message_id)
         except Exception as e:
             logger.error(f"Erreur lors de l'ack du message {message_id}: {e}")
             
     async def _send_to_dlq(self, message: QueueMessage):
-        """Envoie un message vers la Dead Letter Queue"""        dlq_data = message.to_dict()
+        """Envoie un message vers la Dead Letter Queue"""
+        dlq_data = message.to_dict()
         dlq_data["original_queue"] = self.queue_name
         dlq_data["dlq_timestamp"] = datetime.utcnow().isoformat()
         
@@ -342,7 +355,8 @@ class MessageQueue:
         )
         
     async def _reschedule_message(self, message: QueueMessage):
-        """Replanifie un message pour plus tard"""        delay_seconds = (message.scheduled_at - datetime.utcnow()).total_seconds()
+        """Replanifie un message pour plus tard"""
+        delay_seconds = (message.scheduled_at - datetime.utcnow()).total_seconds()
         if delay_seconds > 0:
             await self.put(
                 data=message.data,
@@ -354,7 +368,8 @@ class MessageQueue:
             )
             
     async def _update_stats(self, operation: str, message: QueueMessage):
-        """Met à jour les statistiques de la queue"""        now = datetime.utcnow()
+        """Met à jour les statistiques de la queue"""
+        now = datetime.utcnow()
         
         if operation == "put":
             self.stats.total_messages += 1
@@ -393,7 +408,8 @@ class MessageQueue:
             self._last_stats_update = now
             
     async def _persist_stats(self):
-        """Persiste les statistiques dans Redis"""        stats_data = asdict(self.stats)
+        """Persiste les statistiques dans Redis"""
+        stats_data = asdict(self.stats)
         # Convertir les dates
         for key, value in stats_data.items():
             if isinstance(value, datetime):
@@ -406,7 +422,8 @@ class MessageQueue:
         )
         
     async def get_queue_info(self) -> Dict[str, Any]:
-        """Retourne les informations détaillées de la queue"""        info = {
+        """Retourne les informations détaillées de la queue"""
+        info = {
             "queue_name": self.queue_name,
             "stats": asdict(self.stats),
             "streams": {}
@@ -428,7 +445,8 @@ class MessageQueue:
         return info
         
     async def purge(self, priority: Optional[MessagePriority] = None):
-        """Vide la queue (optionnellement par priorité)"""        if priority:
+        """Vide la queue (optionnellement par priorité)"""
+        if priority:
             stream_key = f"{self.queue_name}:p{priority.value}"
             await self.redis_client.delete(stream_key)
         else:
@@ -444,7 +462,8 @@ class MessageQueue:
         logger.info(f"Queue {self.queue_name} vidée")
 
 class QueueManager:
-    """Gestionnaire de multiples queues avec load balancing"""    
+    """Gestionnaire de multiples queues avec load balancing"""
+    
     def __init__(self, redis_client: aioredis.Redis):
         self.redis_client = redis_client
         self.queues: Dict[str, MessageQueue] = {}
@@ -456,7 +475,8 @@ class QueueManager:
                           queue_name: str,
                           max_length: int = 10000,
                           dead_letter_queue: bool = True) -> MessageQueue:
-        """Crée une nouvelle queue"""        if queue_name in self.queues:
+        """Crée une nouvelle queue"""
+        if queue_name in self.queues:
             return self.queues[queue_name]
             
         queue = MessageQueue(
@@ -471,14 +491,16 @@ class QueueManager:
         return queue
         
     async def register_handler(self, queue_name: str, handler: Callable):
-        """Enregistre un handler pour une queue"""        self.handlers[queue_name] = handler
+        """Enregistre un handler pour une queue"""
+        self.handlers[queue_name] = handler
         
         # Démarrer un consumer si pas déjà fait
         if queue_name not in self.consumers and self._running:
             await self._start_consumer(queue_name)
             
     async def start(self):
-        """Démarre le gestionnaire de queues"""        self._running = True
+        """Démarre le gestionnaire de queues"""
+        self._running = True
         
         # Démarrer les consumers pour les handlers enregistrés
         for queue_name in self.handlers:
@@ -487,7 +509,8 @@ class QueueManager:
         logger.info("QueueManager démarré")
         
     async def stop(self):
-        """Arrête le gestionnaire de queues"""        self._running = False
+        """Arrête le gestionnaire de queues"""
+        self._running = False
         
         # Arrêter tous les consumers
         for queue_name, task in self.consumers.items():
@@ -501,7 +524,8 @@ class QueueManager:
         logger.info("QueueManager arrêté")
         
     async def _start_consumer(self, queue_name: str):
-        """Démarre un consumer pour une queue"""        if queue_name in self.consumers:
+        """Démarre un consumer pour une queue"""
+        if queue_name in self.consumers:
             return
             
         task = asyncio.create_task(self._consumer_loop(queue_name))
@@ -509,7 +533,8 @@ class QueueManager:
         logger.info(f"Consumer démarré pour {queue_name}")
         
     async def _consumer_loop(self, queue_name: str):
-        """Boucle principale du consumer"""        queue = self.queues.get(queue_name)
+        """Boucle principale du consumer"""
+        queue = self.queues.get(queue_name)
         handler = self.handlers.get(queue_name)
         
         if not queue or not handler:
@@ -547,14 +572,16 @@ class QueueManager:
                           queue_name: str,
                           data: Dict[str, Any],
                           **kwargs) -> str:
-        """Envoie un message vers une queue"""        queue = self.queues.get(queue_name)
+        """Envoie un message vers une queue"""
+        queue = self.queues.get(queue_name)
         if not queue:
             raise ValueError(f"Queue non trouvée: {queue_name}")
             
         return await queue.put(data, **kwargs)
         
     async def get_global_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques globales"""        total_stats = {
+        """Retourne les statistiques globales"""
+        total_stats = {
             "total_queues": len(self.queues),
             "active_consumers": len(self.consumers),
             "queue_details": {}

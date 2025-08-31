@@ -12,7 +12,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code and concept are proprietary intellectual property of Fahed Mlaiel.
 Unauthorized copying, modification, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 import uuid
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -42,7 +43,8 @@ from .chat_analytics import ChatAnalytics
 
 
 class ChatStatus(Enum):
-    """Chat session status enumeration with extended states"""    ACTIVE = "active"
+    """Chat session status enumeration with extended states"""
+    ACTIVE = "active"
     PAUSED = "paused" 
     ENDED = "ended"
     ERROR = "error"
@@ -55,7 +57,8 @@ class ChatStatus(Enum):
 
 
 class CreatorType(Enum):
-    """Supported creator types with specialized handling"""    MUSICIAN = "musician"
+    """Supported creator types with specialized handling"""
+    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -66,7 +69,8 @@ class CreatorType(Enum):
 
 
 class ConversationPriority(Enum):
-    """Conversation priority levels for resource allocation"""    LOW = "low"
+    """Conversation priority levels for resource allocation"""
+    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -74,7 +78,8 @@ class ConversationPriority(Enum):
 
 
 class MessageSentiment(Enum):
-    """Message sentiment classification"""    POSITIVE = "positive"
+    """Message sentiment classification"""
+    POSITIVE = "positive"
     NEUTRAL = "neutral"
     NEGATIVE = "negative"
     FRUSTRATED = "frustrated"
@@ -84,7 +89,8 @@ class MessageSentiment(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Extended creator profile with specialized attributes"""    creator_type: CreatorType
+    """Extended creator profile with specialized attributes"""
+    creator_type: CreatorType
     specializations: List[str] = field(default_factory=list)
     platforms: List[str] = field(default_factory=list)
     content_categories: List[str] = field(default_factory=list)
@@ -98,7 +104,8 @@ class CreatorProfile:
 
 @dataclass
 class ConversationMetrics:
-    """Real-time conversation performance metrics"""    message_count: int = 0
+    """Real-time conversation performance metrics"""
+    message_count: int = 0
     avg_response_time: float = 0.0
     sentiment_scores: Dict[str, float] = field(default_factory=dict)
     intent_distribution: Dict[str, int] = field(default_factory=dict)
@@ -110,7 +117,8 @@ class ConversationMetrics:
 
 @dataclass
 class ChatSession:
-    """Enhanced chat session data structure with comprehensive tracking"""    session_id: str
+    """Enhanced chat session data structure with comprehensive tracking"""
+    session_id: str
     user_id: str
     creator_profile: CreatorProfile
     status: ChatStatus
@@ -129,7 +137,8 @@ class ChatSession:
 
 
 class ChatManager:
-    """    Enterprise-grade chat orchestration manager handling multi-format creator conversations
+    """
+    Enterprise-grade chat orchestration manager handling multi-format creator conversations
     with integrated AI protection, monetization, and advanced analytics capabilities.
     
     Features:
@@ -140,7 +149,8 @@ class ChatManager:
     - Creator-specific AI response optimization
     - Cross-platform collaboration matching
     - Comprehensive analytics and performance monitoring
-    """    
+    """
+    
     def __init__(
         self,
         db_manager: DatabaseManager,
@@ -200,12 +210,14 @@ class ChatManager:
         self._setup_background_tasks()
     
     def _setup_background_tasks(self) -> None:
-        """Setup background tasks for session cleanup and monitoring"""        asyncio.create_task(self._session_cleanup_task())
+        """Setup background tasks for session cleanup and monitoring"""
+        asyncio.create_task(self._session_cleanup_task())
         asyncio.create_task(self._performance_monitoring_task())
         asyncio.create_task(self._protection_monitoring_task())
     
     async def _session_cleanup_task(self) -> None:
-        """Background task to cleanup expired sessions"""        while True:
+        """Background task to cleanup expired sessions"""
+        while True:
             try:
                 current_time = datetime.utcnow()
                 expired_sessions = []
@@ -225,7 +237,8 @@ class ChatManager:
                 await asyncio.sleep(60)
     
     async def _performance_monitoring_task(self) -> None:
-        """Background task to monitor and update performance metrics"""        while True:
+        """Background task to monitor and update performance metrics"""
+        while True:
             try:
                 self.performance_metrics["active_sessions"] = len(self.active_sessions)
                 
@@ -250,7 +263,8 @@ class ChatManager:
                 await asyncio.sleep(60)
     
     async def _protection_monitoring_task(self) -> None:
-        """Background task to monitor content protection across all sessions"""        while True:
+        """Background task to monitor content protection across all sessions"""
+        while True:
             try:
                 for session in self.active_sessions.values():
                     if session.status == ChatStatus.ACTIVE:
@@ -290,7 +304,8 @@ class ChatManager:
         creator_type: CreatorType,
         initial_context: Optional[Dict[str, Any]] = None
     ) -> ChatSession:
-        """        Create new chat session with creator-specific configuration
+        """
+        Create new chat session with creator-specific configuration
         
         Args:
             user_id: Authenticated user identifier
@@ -299,7 +314,8 @@ class ChatManager:
             
         Returns:
             ChatSession: New chat session instance
-        """        try:
+        """
+        try:
             # Validate user and get profile
             user_profile = await self.security.get_user_profile(user_id)
             if not user_profile:
@@ -357,7 +373,8 @@ class ChatManager:
         message_type: str = "text",
         attachments: Optional[List[Dict[str, Any]]] = None
     ) -> Dict[str, Any]:
-        """        Process incoming message and generate AI response
+        """
+        Process incoming message and generate AI response
         
         Args:
             session_id: Active session identifier
@@ -367,7 +384,8 @@ class ChatManager:
             
         Returns:
             Dict containing AI response and session updates
-        """        try:
+        """
+        try:
             # Get active session
             session = await self._get_active_session(session_id)
             if not session:
@@ -469,7 +487,8 @@ class ChatManager:
             raise
     
     async def end_session(self, session_id: str, reason: str = "user_requested") -> bool:
-        """        End chat session and cleanup resources
+        """
+        End chat session and cleanup resources
         
         Args:
             session_id: Session to terminate
@@ -477,7 +496,8 @@ class ChatManager:
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             session = await self._get_active_session(session_id)
             if not session:
                 return False
@@ -513,7 +533,8 @@ class ChatManager:
         limit: int = 50,
         offset: int = 0
     ) -> Dict[str, Any]:
-        """        Retrieve session conversation history
+        """
+        Retrieve session conversation history
         
         Args:
             session_id: Target session
@@ -522,7 +543,8 @@ class ChatManager:
             
         Returns:
             Dict containing session history and metadata
-        """        try:
+        """
+        try:
             session = await self.session_controller.get_session(session_id)
             if not session:
                 raise ValueError(f"Session not found: {session_id}")
@@ -559,14 +581,16 @@ class ChatManager:
         self,
         user_id: Optional[str] = None
     ) -> List[Dict[str, Any]]:
-        """        Get list of active chat sessions
+        """
+        Get list of active chat sessions
         
         Args:
             user_id: Optional filter by user
             
         Returns:
             List of active session summaries
-        """        try:
+        """
+        try:
             sessions = []
             for session in self.active_sessions.values():
                 if user_id and session.user_id != user_id:
@@ -590,13 +614,15 @@ class ChatManager:
             raise
     
     async def _generate_session_id(self, user_id: str) -> str:
-        """Generate unique session identifier"""        import uuid
+        """Generate unique session identifier"""
+        import uuid
         timestamp = int(datetime.utcnow().timestamp())
         unique_id = str(uuid.uuid4())[:8]
         return f"chat_{user_id}_{timestamp}_{unique_id}"
     
     async def _get_active_session(self, session_id: str) -> Optional[ChatSession]:
-        """Get active session from cache or database"""        # Check active sessions first
+        """Get active session from cache or database"""
+        # Check active sessions first
         if session_id in self.active_sessions:
             session = self.active_sessions[session_id]
             # Check if session is still valid
@@ -619,7 +645,8 @@ class ChatManager:
         user_profile: Dict[str, Any],
         initial_context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Initialize creator-specific session context"""        base_context = {
+        """Initialize creator-specific session context"""
+        base_context = {
             "creator_type": creator_type.value,
             "user_preferences": user_profile.get("preferences", {}),
             "content_categories": user_profile.get("content_categories", []),
@@ -671,11 +698,13 @@ class ChatManager:
         return base_context
     
     def _calculate_session_duration(self, session: ChatSession) -> float:
-        """Calculate session duration in minutes"""        duration = session.updated_at - session.created_at
+        """Calculate session duration in minutes"""
+        duration = session.updated_at - session.created_at
         return round(duration.total_seconds() / 60, 2)
     
     async def cleanup_expired_sessions(self) -> int:
-        """Cleanup expired sessions - called by background task"""        cleaned_count = 0
+        """Cleanup expired sessions - called by background task"""
+        cleaned_count = 0
         expired_sessions = []
         
         for session_id, session in self.active_sessions.items():

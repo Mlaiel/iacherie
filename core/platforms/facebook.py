@@ -5,7 +5,8 @@ Facebook Graph API integration for content sharing and analytics.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import aiofiles
 from typing import Dict, List, Optional, Any
@@ -24,21 +25,25 @@ logger = logging.getLogger(__name__)
 
 
 class FacebookPlatform(PlatformBase):
-    """Facebook platform integration"""    
+    """Facebook platform integration"""
+    
     def __init__(self, config: PlatformConfig):
-        """Initialize Facebook platform"""        super().__init__(config)
+        """Initialize Facebook platform"""
+        super().__init__(config)
         self.api_base = "https://graph.facebook.com/v18.0"
         self.session: Optional[aiohttp.ClientSession] = None
         
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""        if not self.session or self.session.closed:
+        """Get or create HTTP session"""
+        if not self.session or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             )
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Facebook using OAuth2"""        try:
+        """Authenticate with Facebook using OAuth2"""
+        try:
             if self.config.credentials.access_token:
                 if await self._validate_token():
                     self.status = PlatformStatus.ACTIVE
@@ -54,7 +59,8 @@ class FacebookPlatform(PlatformBase):
             return False
     
     async def refresh_token(self) -> bool:
-        """Refresh Facebook long-lived access token"""        if not self.config.credentials.access_token:
+        """Refresh Facebook long-lived access token"""
+        if not self.config.credentials.access_token:
             logger.error("No access token available for Facebook")
             return False
         
@@ -88,7 +94,8 @@ class FacebookPlatform(PlatformBase):
             return False
     
     async def _validate_token(self) -> bool:
-        """Validate Facebook access token"""        try:
+        """Validate Facebook access token"""
+        try:
             params = {
                 'fields': 'id,name',
                 'access_token': self.config.credentials.access_token
@@ -102,7 +109,8 @@ class FacebookPlatform(PlatformBase):
             return False
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to Facebook API"""        if not self.is_authenticated:
+        """Make authenticated request to Facebook API"""
+        if not self.is_authenticated:
             if not await self.authenticate():
                 return None
         
@@ -143,7 +151,8 @@ class FacebookPlatform(PlatformBase):
             return None
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Upload content to Facebook"""        try:
+        """Upload content to Facebook"""
+        try:
             if not os.path.exists(content_path):
                 return UploadResult(
                     success=False,
@@ -172,7 +181,8 @@ class FacebookPlatform(PlatformBase):
             )
     
     async def _upload_photo(self, file_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Upload photo to Facebook"""        try:
+        """Upload photo to Facebook"""
+        try:
             session = await self._get_session()
             
             async with aiofiles.open(file_path, 'rb') as photo_file:
@@ -216,7 +226,8 @@ class FacebookPlatform(PlatformBase):
             )
     
     async def _upload_video(self, file_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Upload video to Facebook"""        try:
+        """Upload video to Facebook"""
+        try:
             session = await self._get_session()
             
             async with aiofiles.open(file_path, 'rb') as video_file:
@@ -259,7 +270,8 @@ class FacebookPlatform(PlatformBase):
             )
     
     async def _create_text_post(self, metadata: ContentMetadata) -> UploadResult:
-        """Create text post on Facebook"""        try:
+        """Create text post on Facebook"""
+        try:
             data = {
                 'message': f"{metadata.title}\n\n{metadata.description}",
                 'access_token': self.config.credentials.access_token
@@ -293,7 +305,8 @@ class FacebookPlatform(PlatformBase):
             )
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get Facebook analytics for a post"""        try:
+        """Get Facebook analytics for a post"""
+        try:
             params = {
                 'fields': 'insights.metric(post_impressions,post_engaged_users,post_clicks,post_reactions_like_total,post_reactions_love_total,post_reactions_wow_total,post_reactions_haha_total,post_reactions_sorry_total,post_reactions_anger_total),message,created_time,shares'
             }
@@ -350,7 +363,8 @@ class FacebookPlatform(PlatformBase):
             raise
     
     def _calculate_engagement_rate(self, insights_data: Dict[str, Any], total_reactions: int) -> float:
-        """Calculate engagement rate"""        impressions = insights_data.get('post_impressions', 0)
+        """Calculate engagement rate"""
+        impressions = insights_data.get('post_impressions', 0)
         engaged_users = insights_data.get('post_engaged_users', 0)
         
         if impressions == 0:
@@ -359,12 +373,14 @@ class FacebookPlatform(PlatformBase):
         return (engaged_users / impressions) * 100
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on Facebook (limited by API)"""        # Facebook Graph API doesn't support public content search
+        """Search content on Facebook (limited by API)"""
+        # Facebook Graph API doesn't support public content search
         logger.warning("Facebook content search not available with Graph API")
         return []
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's posts from Facebook"""        try:
+        """Get user's posts from Facebook"""
+        try:
             params = {
                 'fields': 'id,message,created_time,type,status_type,shares,reactions.summary(true)'
             }
@@ -397,7 +413,8 @@ class FacebookPlatform(PlatformBase):
             return []
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete post from Facebook"""        try:
+        """Delete post from Facebook"""
+        try:
             result = await self._make_request('DELETE', content_id)
             return result is not None and result.get('success') is True
         except Exception as e:
@@ -405,7 +422,8 @@ class FacebookPlatform(PlatformBase):
             return False
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
-        """Update post metadata on Facebook"""        try:
+        """Update post metadata on Facebook"""
+        try:
             data = {
                 'message': f"{metadata.title}\n\n{metadata.description}"
             }
@@ -418,7 +436,8 @@ class FacebookPlatform(PlatformBase):
             return False
     
     async def get_page_info(self, page_id: str = None) -> Optional[Dict[str, Any]]:
-        """Get page information"""        try:
+        """Get page information"""
+        try:
             params = {
                 'fields': 'id,name,about,category,fan_count,followers_count,engagement'
             }
@@ -431,7 +450,8 @@ class FacebookPlatform(PlatformBase):
             return None
     
     async def get_post_comments(self, post_id: str) -> List[Dict[str, Any]]:
-        """Get comments for a post"""        try:
+        """Get comments for a post"""
+        try:
             params = {
                 'fields': 'id,message,created_time,from,like_count'
             }
@@ -448,7 +468,8 @@ class FacebookPlatform(PlatformBase):
             return []
     
     async def like_post(self, post_id: str) -> bool:
-        """Like a post"""        try:
+        """Like a post"""
+        try:
             result = await self._make_request('POST', f"{post_id}/likes")
             return result is not None and result.get('success') is True
         except Exception as e:
@@ -456,5 +477,6 @@ class FacebookPlatform(PlatformBase):
             return False
     
     async def close(self):
-        """Close HTTP session"""        if self.session and not self.session.closed:
+        """Close HTTP session"""
+        if self.session and not self.session.closed:
             await self.session.close()

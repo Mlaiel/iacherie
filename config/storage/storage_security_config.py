@@ -13,7 +13,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Any, Set
 from dataclasses import dataclass
 from enum import Enum
@@ -22,20 +23,23 @@ import secrets
 from datetime import datetime, timedelta
 
 class EncryptionAlgorithm(Enum):
-    """Supported encryption algorithms."""    AES_256_GCM = "AES-256-GCM"
+    """Supported encryption algorithms."""
+    AES_256_GCM = "AES-256-GCM"
     AES_256_CBC = "AES-256-CBC"
     CHACHA20_POLY1305 = "ChaCha20-Poly1305"
     AES_128_GCM = "AES-128-GCM"
 
 class AccessLevel(Enum):
-    """Storage access levels."""    PUBLIC_READ = "public_read"
+    """Storage access levels."""
+    PUBLIC_READ = "public_read"
     AUTHENTICATED_READ = "authenticated_read"
     PRIVATE = "private"
     RESTRICTED = "restricted"
     CONFIDENTIAL = "confidential"
 
 class SecurityThreat(Enum):
-    """Types of security threats to monitor."""    UNAUTHORIZED_ACCESS = "unauthorized_access"
+    """Types of security threats to monitor."""
+    UNAUTHORIZED_ACCESS = "unauthorized_access"
     DATA_BREACH = "data_breach"
     MALWARE_UPLOAD = "malware_upload"
     DDoS_ATTACK = "ddos_attack"
@@ -44,7 +48,8 @@ class SecurityThreat(Enum):
 
 @dataclass
 class EncryptionConfig:
-    """Encryption configuration for storage security."""    
+    """Encryption configuration for storage security."""
+    
     algorithm: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM
     key_size_bits: int = 256
     key_rotation_days: int = 90
@@ -69,7 +74,8 @@ class EncryptionConfig:
 
 @dataclass
 class AccessControl:
-    """Access control configuration for storage resources."""    
+    """Access control configuration for storage resources."""
+    
     # Permission settings
     default_access_level: AccessLevel = AccessLevel.PRIVATE
     require_authentication: bool = True
@@ -116,7 +122,8 @@ class AccessControl:
 
 @dataclass
 class ContentScanningConfig:
-    """Content scanning and malware detection configuration."""    
+    """Content scanning and malware detection configuration."""
+    
     # Virus scanning
     enable_virus_scanning: bool = True
     virus_scanner_engine: str = 'clamav'  # clamav, windows_defender, custom
@@ -165,7 +172,8 @@ class ContentScanningConfig:
 
 @dataclass
 class AuditingConfig:
-    """Security auditing and logging configuration."""    
+    """Security auditing and logging configuration."""
+    
     # Audit logging
     enable_audit_logging: bool = True
     log_level: str = 'INFO'  # DEBUG, INFO, WARNING, ERROR, CRITICAL
@@ -196,9 +204,11 @@ class AuditingConfig:
 
 @dataclass
 class StorageSecurityConfig:
-    """    Comprehensive storage security configuration for IA-Influencer Agent platform.
+    """
+    Comprehensive storage security configuration for IA-Influencer Agent platform.
     Provides enterprise-grade security for content storage and access control.
-    """    
+    """
+    
     # Security components
     encryption_config: EncryptionConfig = None
     access_control: AccessControl = None
@@ -235,7 +245,8 @@ class StorageSecurityConfig:
     security_cache_ttl_seconds: int = 300
     
     def __post_init__(self):
-        """Initialize security configurations if not provided."""        if self.encryption_config is None:
+        """Initialize security configurations if not provided."""
+        if self.encryption_config is None:
             self.encryption_config = EncryptionConfig()
         
         if self.access_control is None:
@@ -259,7 +270,8 @@ class StorageSecurityConfig:
             self.compliance_standards = ['GDPR', 'SOC2', 'ISO27001']
     
     def generate_encryption_key(self, key_type: str = 'file') -> str:
-        """Generate a new encryption key for specified purpose."""        key_lengths = {
+        """Generate a new encryption key for specified purpose."""
+        key_lengths = {
             'file': 32,      # 256 bits for file encryption
             'database': 32,  # 256 bits for database encryption
             'session': 16,   # 128 bits for session keys
@@ -270,7 +282,8 @@ class StorageSecurityConfig:
         return secrets.token_hex(key_length)
     
     def hash_sensitive_data(self, data: str, salt: Optional[str] = None) -> str:
-        """Hash sensitive data with salt for secure storage."""        if salt is None:
+        """Hash sensitive data with salt for secure storage."""
+        if salt is None:
             salt = secrets.token_hex(16)
         
         # Use PBKDF2 with SHA-256
@@ -285,7 +298,8 @@ class StorageSecurityConfig:
     
     def validate_file_permissions(self, user_id: str, file_path: str, 
                                  operation: str) -> bool:
-        """Validate user permissions for file operation."""        # Check user-specific permissions
+        """Validate user permissions for file operation."""
+        # Check user-specific permissions
         user_perms = self.access_control.user_permissions.get(user_id, [])
         if operation in user_perms:
             return True
@@ -295,7 +309,8 @@ class StorageSecurityConfig:
         return operation in ['read']  # Default to read-only
     
     def scan_file_for_threats(self, file_path: str) -> Dict[str, Any]:
-        """Scan file for security threats (simulated)."""        results = {
+        """Scan file for security threats (simulated)."""
+        results = {
             'clean': True,
             'threats_found': [],
             'scan_time': datetime.now().isoformat(),
@@ -334,7 +349,8 @@ class StorageSecurityConfig:
     
     def generate_access_token(self, user_id: str, permissions: List[str], 
                             duration_hours: int = 24) -> Dict[str, Any]:
-        """Generate secure access token for storage operations."""        token_data = {
+        """Generate secure access token for storage operations."""
+        token_data = {
             'user_id': user_id,
             'permissions': permissions,
             'issued_at': datetime.now().isoformat(),
@@ -354,7 +370,8 @@ class StorageSecurityConfig:
         }
     
     def validate_ip_access(self, client_ip: str) -> bool:
-        """Validate IP address against allow/block lists."""        # Check blocked IPs first
+        """Validate IP address against allow/block lists."""
+        # Check blocked IPs first
         for blocked_range in self.access_control.blocked_ip_ranges:
             if self._ip_in_range(client_ip, blocked_range):
                 return False
@@ -371,7 +388,8 @@ class StorageSecurityConfig:
         return False
     
     def _ip_in_range(self, ip: str, ip_range: str) -> bool:
-        """Check if IP is in specified range (simplified implementation)."""        # This is a simplified implementation
+        """Check if IP is in specified range (simplified implementation)."""
+        # This is a simplified implementation
         # In production, use proper IP address libraries
         if '/' in ip_range:
             # CIDR notation
@@ -381,7 +399,8 @@ class StorageSecurityConfig:
             return ip == ip_range
     
     def log_security_event(self, event_type: str, details: Dict[str, Any]):
-        """Log security event for auditing."""        if not self.auditing_config.enable_audit_logging:
+        """Log security event for auditing."""
+        if not self.auditing_config.enable_audit_logging:
             return
         
         log_entry = {
@@ -396,7 +415,8 @@ class StorageSecurityConfig:
         print(f"SECURITY EVENT: {log_entry}")
     
     def get_security_policy_for_content(self, content_type: str) -> Dict[str, Any]:
-        """Get security policy for specific content type."""        policies = {
+        """Get security policy for specific content type."""
+        policies = {
             'audio': {
                 'access_level': AccessLevel.AUTHENTICATED_READ,
                 'encryption_required': True,
@@ -438,7 +458,8 @@ class StorageSecurityConfig:
         return policies.get(content_type, policies['document'])  # Default to document policy
     
     def validate_configuration(self) -> bool:
-        """Validate storage security configuration."""        try:
+        """Validate storage security configuration."""
+        try:
             # Check encryption configuration
             if self.encryption_config.encrypt_at_rest and not self.encryption_config.master_key:
                 print("Encryption at rest enabled but no master key provided")
@@ -460,7 +481,8 @@ class StorageSecurityConfig:
             return False
     
     def export_configuration(self) -> Dict[str, Any]:
-        """Export security configuration to JSON-serializable format."""        return {
+        """Export security configuration to JSON-serializable format."""
+        return {
             'security_level': self.security_level,
             'enable_zero_trust': self.enable_zero_trust,
             'require_multi_factor_auth': self.require_multi_factor_auth,

@@ -22,7 +22,8 @@ Features:
 - Quality assurance validation
 - Production readiness assessment
 - Comprehensive test reporting and analytics
-"""import re
+"""
+import re
 import json
 import hashlib
 import time
@@ -80,7 +81,8 @@ logger = logging.getLogger(__name__)
 
 
 class TestCategory(Enum):
-    """Test categories for organized testing"""    UNIT_TESTS = "unit_tests"
+    """Test categories for organized testing"""
+    UNIT_TESTS = "unit_tests"
     INTEGRATION_TESTS = "integration_tests"
     PERFORMANCE_TESTS = "performance_tests"
     LOAD_TESTS = "load_tests"
@@ -92,7 +94,8 @@ class TestCategory(Enum):
 
 
 class TestSeverity(Enum):
-    """Test result severity levels"""    CRITICAL = "critical"
+    """Test result severity levels"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -100,7 +103,8 @@ class TestSeverity(Enum):
 
 
 class TestStatus(Enum):
-    """Test execution status"""    PASSED = "passed"
+    """Test execution status"""
+    PASSED = "passed"
     FAILED = "failed"
     SKIPPED = "skipped"
     ERROR = "error"
@@ -108,7 +112,8 @@ class TestStatus(Enum):
 
 
 class ValidatorType(Enum):
-    """Types of validators for testing"""    CONTENT_VALIDATOR = "content_validator"
+    """Types of validators for testing"""
+    CONTENT_VALIDATOR = "content_validator"
     SCHEMA_VALIDATOR = "schema_validator"
     QUALITY_VALIDATOR = "quality_validator"
     BUSINESS_VALIDATOR = "business_validator"
@@ -125,7 +130,8 @@ class ValidatorType(Enum):
 
 @dataclass
 class TestCase:
-    """Individual test case definition"""    test_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Individual test case definition"""
+    test_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     test_name: str = ""
     test_category: TestCategory = TestCategory.UNIT_TESTS
     validator_type: ValidatorType = ValidatorType.CONTENT_VALIDATOR
@@ -140,7 +146,8 @@ class TestCase:
 
 @dataclass
 class TestResult:
-    """Test execution result"""    test_case: TestCase
+    """Test execution result"""
+    test_case: TestCase
     status: TestStatus = TestStatus.FAILED
     execution_time_ms: float = 0.0
     memory_usage_mb: float = 0.0
@@ -154,7 +161,8 @@ class TestResult:
 
 @dataclass
 class IntegrationTestSuite:
-    """Integration test suite definition"""    suite_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Integration test suite definition"""
+    suite_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     suite_name: str = ""
     test_cases: List[TestCase] = field(default_factory=list)
     setup_procedures: List[Callable] = field(default_factory=list)
@@ -166,7 +174,8 @@ class IntegrationTestSuite:
 
 @dataclass
 class IntegrationTestReport:
-    """Comprehensive integration test report"""    report_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive integration test report"""
+    report_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     test_suite: IntegrationTestSuite
     execution_timestamp: datetime = field(default_factory=datetime.utcnow)
     total_tests: int = 0
@@ -188,11 +197,13 @@ class IntegrationTestReport:
 
 
 class IntegrationTestValidator:
-    """    Comprehensive integration test validator for the entire validation ecosystem.
+    """
+    Comprehensive integration test validator for the entire validation ecosystem.
     
     Provides end-to-end testing, performance validation, and quality assurance
     for all validation components in the IA Influencer Agent platform.
-    """    
+    """
+    
     def __init__(
         self,
         enable_performance_testing: bool = True,
@@ -201,7 +212,8 @@ class IntegrationTestValidator:
         parallel_test_execution: bool = True,
         test_data_cache_size: int = 1000
     ):
-        """        Initialize integration test validator.
+        """
+        Initialize integration test validator.
         
         Args:
             enable_performance_testing: Enable performance benchmarking
@@ -209,7 +221,8 @@ class IntegrationTestValidator:
             max_test_duration_minutes: Maximum test suite duration
             parallel_test_execution: Enable parallel test execution
             test_data_cache_size: Size of test data cache
-        """        self.enable_performance_testing = enable_performance_testing and HAS_PERFORMANCE_DEPENDENCIES
+        """
+        self.enable_performance_testing = enable_performance_testing and HAS_PERFORMANCE_DEPENDENCIES
         self.enable_stress_testing = enable_stress_testing
         self.max_test_duration_minutes = max_test_duration_minutes
         self.parallel_test_execution = parallel_test_execution
@@ -237,7 +250,8 @@ class IntegrationTestValidator:
         logger.info("IntegrationTestValidator initialized successfully")
     
     def _initialize_test_fixtures(self) -> Dict[str, Any]:
-        """Initialize test fixtures and sample data"""        return {
+        """Initialize test fixtures and sample data"""
+        return {
             "sample_text_content": "This is a sample text content for testing purposes.",
             "sample_json_data": {"name": "Test User", "age": 30, "email": "test@example.com"},
             "sample_image_data": b"fake_image_data_for_testing",
@@ -258,7 +272,8 @@ class IntegrationTestValidator:
         }
     
     def _initialize_validators(self) -> Dict[ValidatorType, Any]:
-        """Initialize all validators for testing"""        validators = {}
+        """Initialize all validators for testing"""
+        validators = {}
         
         try:
             # Content Validator
@@ -322,7 +337,8 @@ class IntegrationTestValidator:
         return validators
     
     def _load_performance_baselines(self) -> Dict[str, Dict[str, float]]:
-        """Load performance baselines for comparison"""        return {
+        """Load performance baselines for comparison"""
+        return {
             "content_validation": {
                 "max_response_time_ms": 500,
                 "max_memory_usage_mb": 100,
@@ -352,7 +368,8 @@ class IntegrationTestValidator:
         include_stress_tests: bool = False,
         generate_detailed_report: bool = True
     ) -> IntegrationTestReport:
-        """        Run comprehensive integration tests across all validators.
+        """
+        Run comprehensive integration tests across all validators.
         
         Args:
             test_categories: Categories of tests to run
@@ -362,7 +379,8 @@ class IntegrationTestValidator:
             
         Returns:
             IntegrationTestReport with comprehensive results
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         
         try:
             # Create test suite
@@ -405,7 +423,8 @@ class IntegrationTestValidator:
         include_performance_tests: bool,
         include_stress_tests: bool
     ) -> IntegrationTestSuite:
-        """Create comprehensive test suite"""        test_suite = IntegrationTestSuite(
+        """Create comprehensive test suite"""
+        test_suite = IntegrationTestSuite(
             suite_name="Comprehensive Validator Integration Test Suite",
             parallel_execution=self.parallel_test_execution
         )
@@ -441,7 +460,8 @@ class IntegrationTestValidator:
         return test_suite
     
     def _create_unit_tests(self) -> List[TestCase]:
-        """Create unit tests for individual validators"""        tests = []
+        """Create unit tests for individual validators"""
+        tests = []
         
         # Content Validator tests
         tests.append(TestCase(
@@ -507,7 +527,8 @@ class IntegrationTestValidator:
         return tests
     
     def _create_integration_tests(self) -> List[TestCase]:
-        """Create integration tests between validators"""        tests = []
+        """Create integration tests between validators"""
+        tests = []
         
         # Cross-validator integration test
         tests.append(TestCase(
@@ -541,7 +562,8 @@ class IntegrationTestValidator:
         return tests
     
     def _create_performance_tests(self) -> List[TestCase]:
-        """Create performance benchmark tests"""        tests = []
+        """Create performance benchmark tests"""
+        tests = []
         
         # Response time tests
         tests.append(TestCase(
@@ -572,7 +594,8 @@ class IntegrationTestValidator:
         return tests
     
     def _create_load_tests(self) -> List[TestCase]:
-        """Create load testing scenarios"""        tests = []
+        """Create load testing scenarios"""
+        tests = []
         
         # Concurrent validation test
         tests.append(TestCase(
@@ -591,7 +614,8 @@ class IntegrationTestValidator:
         return tests
     
     def _create_stress_tests(self) -> List[TestCase]:
-        """Create stress testing scenarios"""        tests = []
+        """Create stress testing scenarios"""
+        tests = []
         
         # High load stress test
         tests.append(TestCase(
@@ -610,7 +634,8 @@ class IntegrationTestValidator:
         return tests
     
     def _create_compatibility_tests(self) -> List[TestCase]:
-        """Create compatibility tests between validators"""        tests = []
+        """Create compatibility tests between validators"""
+        tests = []
         
         # Validator compatibility matrix test
         tests.append(TestCase(
@@ -628,7 +653,8 @@ class IntegrationTestValidator:
         return tests
     
     def _create_security_tests(self) -> List[TestCase]:
-        """Create security validation tests"""        tests = []
+        """Create security validation tests"""
+        tests = []
         
         # Security vulnerability test
         tests.append(TestCase(
@@ -646,7 +672,8 @@ class IntegrationTestValidator:
         return tests
     
     def _execute_test_suite(self, test_suite: IntegrationTestSuite) -> List[TestResult]:
-        """Execute the test suite"""        results = []
+        """Execute the test suite"""
+        results = []
         
         try:
             if test_suite.parallel_execution and self.parallel_test_execution:
@@ -669,7 +696,8 @@ class IntegrationTestValidator:
         return results
     
     def _execute_tests_sequential(self, test_cases: List[TestCase]) -> List[TestResult]:
-        """Execute tests sequentially"""        results = []
+        """Execute tests sequentially"""
+        results = []
         
         for test_case in test_cases:
             result = self._execute_single_test(test_case)
@@ -682,12 +710,14 @@ class IntegrationTestValidator:
         return results
     
     def _execute_tests_parallel(self, test_cases: List[TestCase]) -> List[TestResult]:
-        """Execute tests in parallel"""        # For now, implement sequential execution
+        """Execute tests in parallel"""
+        # For now, implement sequential execution
         # In production, would use asyncio or threading
         return self._execute_tests_sequential(test_cases)
     
     def _execute_single_test(self, test_case: TestCase) -> TestResult:
-        """Execute a single test case"""        start_time = time.time()
+        """Execute a single test case"""
+        start_time = time.time()
         initial_memory = 0
         initial_cpu = 0
         
@@ -744,7 +774,8 @@ class IntegrationTestValidator:
         return result
     
     def _test_content_validator(self, test_case: TestCase, result: TestResult) -> TestResult:
-        """Test content validator"""        try:
+        """Test content validator"""
+        try:
             validator = self.validators.get(ValidatorType.CONTENT_VALIDATOR)
             if not validator:
                 result.status = TestStatus.ERROR
@@ -776,7 +807,8 @@ class IntegrationTestValidator:
         return result
     
     def _test_schema_validator(self, test_case: TestCase, result: TestResult) -> TestResult:
-        """Test schema validator"""        try:
+        """Test schema validator"""
+        try:
             validator = self.validators.get(ValidatorType.SCHEMA_VALIDATOR)
             if not validator:
                 result.status = TestStatus.ERROR
@@ -802,7 +834,8 @@ class IntegrationTestValidator:
         return result
     
     def _test_quality_validator(self, test_case: TestCase, result: TestResult) -> TestResult:
-        """Test quality validator"""        try:
+        """Test quality validator"""
+        try:
             validator = self.validators.get(ValidatorType.QUALITY_VALIDATOR)
             if not validator:
                 result.status = TestStatus.ERROR
@@ -829,7 +862,8 @@ class IntegrationTestValidator:
         return result
     
     def _test_fingerprint_validator(self, test_case: TestCase, result: TestResult) -> TestResult:
-        """Test fingerprint validator"""        try:
+        """Test fingerprint validator"""
+        try:
             validator = self.validators.get(ValidatorType.FINGERPRINT_VALIDATOR)
             if not validator:
                 result.status = TestStatus.ERROR
@@ -860,7 +894,8 @@ class IntegrationTestValidator:
         return result
     
     def _test_compliance_validator(self, test_case: TestCase, result: TestResult) -> TestResult:
-        """Test compliance validator"""        try:
+        """Test compliance validator"""
+        try:
             validator = self.validators.get(ValidatorType.COMPLIANCE_VALIDATOR)
             if not validator:
                 result.status = TestStatus.ERROR
@@ -882,7 +917,8 @@ class IntegrationTestValidator:
         return result
     
     def _test_security_validator(self, test_case: TestCase, result: TestResult) -> TestResult:
-        """Test security validator"""        try:
+        """Test security validator"""
+        try:
             validator = self.validators.get(ValidatorType.SECURITY_VALIDATOR)
             if not validator:
                 result.status = TestStatus.ERROR
@@ -910,7 +946,8 @@ class IntegrationTestValidator:
         return result
     
     def _test_revenue_validator(self, test_case: TestCase, result: TestResult) -> TestResult:
-        """Test revenue validator"""        try:
+        """Test revenue validator"""
+        try:
             validator = self.validators.get(ValidatorType.REVENUE_VALIDATOR)
             if not validator:
                 result.status = TestStatus.ERROR
@@ -933,7 +970,8 @@ class IntegrationTestValidator:
         return result
     
     def _test_multimedia_validator(self, test_case: TestCase, result: TestResult) -> TestResult:
-        """Test multimedia validator"""        try:
+        """Test multimedia validator"""
+        try:
             validator = self.validators.get(ValidatorType.MULTIMEDIA_VALIDATOR)
             if not validator:
                 result.status = TestStatus.ERROR
@@ -956,7 +994,8 @@ class IntegrationTestValidator:
         return result
     
     def _validate_test_result(self, test_case: TestCase, result: TestResult) -> TestResult:
-        """Validate test result against expected outcomes"""        expected = test_case.expected_result
+        """Validate test result against expected outcomes"""
+        expected = test_case.expected_result
         actual = result.actual_result
         
         try:
@@ -1001,7 +1040,8 @@ class IntegrationTestValidator:
         test_results: List[TestResult],
         start_time: datetime
     ) -> IntegrationTestReport:
-        """Generate comprehensive test report"""        report = IntegrationTestReport(test_suite=test_suite)
+        """Generate comprehensive test report"""
+        report = IntegrationTestReport(test_suite=test_suite)
         
         # Basic statistics
         report.total_tests = len(test_results)
@@ -1052,7 +1092,8 @@ class IntegrationTestValidator:
         return report
     
     def _generate_performance_summary(self, test_results: List[TestResult]) -> Dict[str, Any]:
-        """Generate performance summary from test results"""        summary = {
+        """Generate performance summary from test results"""
+        summary = {
             "total_execution_time_ms": sum(r.execution_time_ms for r in test_results),
             "average_execution_time_ms": statistics.mean([r.execution_time_ms for r in test_results]) if test_results else 0,
             "slowest_test": None,
@@ -1088,7 +1129,8 @@ class IntegrationTestValidator:
         return summary
     
     def _generate_test_recommendations(self, test_results: List[TestResult]) -> List[str]:
-        """Generate recommendations based on test results"""        recommendations = []
+        """Generate recommendations based on test results"""
+        recommendations = []
         
         # Analyze test failures
         failed_tests = [r for r in test_results if r.status == TestStatus.FAILED]
@@ -1113,7 +1155,8 @@ class IntegrationTestValidator:
         return recommendations
     
     def _identify_critical_issues(self, test_results: List[TestResult]) -> List[str]:
-        """Identify critical issues from test results"""        critical_issues = []
+        """Identify critical issues from test results"""
+        critical_issues = []
         
         # Security test failures
         security_failures = [
@@ -1136,7 +1179,8 @@ class IntegrationTestValidator:
         return critical_issues
     
     def get_testing_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive testing metrics"""        return {
+        """Get comprehensive testing metrics"""
+        return {
             "total_test_suites_run": self.execution_metrics["total_test_suites_run"],
             "total_tests_executed": self.execution_metrics["total_tests_executed"],
             "total_execution_time_seconds": self.execution_metrics["total_execution_time"],
@@ -1157,7 +1201,8 @@ def create_integration_test_validator(
     enable_stress_testing: bool = False,
     parallel_execution: bool = True
 ) -> IntegrationTestValidator:
-    """Create configured integration test validator"""    return IntegrationTestValidator(
+    """Create configured integration test validator"""
+    return IntegrationTestValidator(
         enable_performance_testing=enable_performance_testing,
         enable_stress_testing=enable_stress_testing,
         parallel_test_execution=parallel_execution
@@ -1169,7 +1214,8 @@ def run_validator_integration_tests(
     include_performance: bool = True,
     include_stress: bool = False
 ) -> IntegrationTestReport:
-    """    Run comprehensive validator integration tests.
+    """
+    Run comprehensive validator integration tests.
     
     Args:
         test_categories: Categories of tests to run
@@ -1178,7 +1224,8 @@ def run_validator_integration_tests(
         
     Returns:
         IntegrationTestReport with test results
-    """    if test_categories is None:
+    """
+    if test_categories is None:
         test_categories = [
             TestCategory.UNIT_TESTS,
             TestCategory.INTEGRATION_TESTS,
@@ -1201,4 +1248,5 @@ def run_validator_integration_tests(
 
 # Custom exceptions
 class IntegrationTestException(ValidationException):
-    """Integration testing specific exception"""    pass
+    """Integration testing specific exception"""
+    pass

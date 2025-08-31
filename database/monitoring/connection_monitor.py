@@ -10,7 +10,8 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 ⚠️  AVERTISSEMENT STRICT ⚠️
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
-"""import asyncio
+"""
+import asyncio
 import time
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Callable
@@ -35,7 +36,8 @@ from ...utils.alerting import AlertManager
 
 
 class ConnectionState(Enum):
-    """Database connection states"""    ACTIVE = "active"
+    """Database connection states"""
+    ACTIVE = "active"
     IDLE = "idle"
     IDLE_IN_TRANSACTION = "idle_in_transaction"
     IDLE_IN_TRANSACTION_ABORTED = "idle_in_transaction_aborted"
@@ -45,7 +47,8 @@ class ConnectionState(Enum):
 
 
 class PoolHealth(Enum):
-    """Connection pool health status"""    HEALTHY = "healthy"
+    """Connection pool health status"""
+    HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
@@ -53,7 +56,8 @@ class PoolHealth(Enum):
 
 @dataclass
 class ConnectionInfo:
-    """Individual connection information"""    connection_id: str
+    """Individual connection information"""
+    connection_id: str
     client_addr: str
     client_hostname: Optional[str]
     client_port: int
@@ -70,7 +74,8 @@ class ConnectionInfo:
     duration_ms: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        data = asdict(self)
+        """Convert to dictionary"""
+        data = asdict(self)
         data['backend_start'] = self.backend_start.isoformat()
         data['query_start'] = self.query_start.isoformat() if self.query_start else None
         data['state_change'] = self.state_change.isoformat()
@@ -80,7 +85,8 @@ class ConnectionInfo:
 
 @dataclass
 class PoolMetrics:
-    """Connection pool metrics"""    pool_name: str
+    """Connection pool metrics"""
+    pool_name: str
     total_connections: int
     active_connections: int
     idle_connections: int
@@ -100,7 +106,8 @@ class PoolMetrics:
     timestamp: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        data = asdict(self)
+        """Convert to dictionary"""
+        data = asdict(self)
         data['health_status'] = self.health_status.value
         data['timestamp'] = self.timestamp.isoformat()
         return data
@@ -108,7 +115,8 @@ class PoolMetrics:
 
 @dataclass
 class ConnectionLeak:
-    """Connection leak detection"""    connection_id: str
+    """Connection leak detection"""
+    connection_id: str
     duration_hours: float
     last_query: Optional[str]
     client_info: str
@@ -117,13 +125,15 @@ class ConnectionLeak:
     detected_at: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        data = asdict(self)
+        """Convert to dictionary"""
+        data = asdict(self)
         data['detected_at'] = self.detected_at.isoformat()
         return data
 
 
 class ConnectionMonitor:
-    """    Advanced database connection monitoring system.
+    """
+    Advanced database connection monitoring system.
     
     Features:
     - Real-time connection tracking
@@ -132,7 +142,8 @@ class ConnectionMonitor:
     - Automated pool optimization
     - Performance analytics
     - Alerting and notifications
-    """    
+    """
+    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
@@ -162,11 +173,13 @@ class ConnectionMonitor:
         self.logger.info("Connection Monitor initialized")
     
     async def start_monitoring(self, interval: int = 30) -> None:
-        """        Start connection monitoring
+        """
+        Start connection monitoring
         
         Args:
             interval: Monitoring interval in seconds
-        """        if self.monitoring_active:
+        """
+        if self.monitoring_active:
             self.logger.warning("Connection monitoring already active")
             return
         
@@ -187,11 +200,13 @@ class ConnectionMonitor:
             raise
     
     async def stop_monitoring(self) -> None:
-        """Stop connection monitoring"""        self.monitoring_active = False
+        """Stop connection monitoring"""
+        self.monitoring_active = False
         self.logger.info("Connection monitoring stopped")
     
     async def _monitor_connections(self, interval: int) -> None:
-        """Monitor individual database connections"""        while self.monitoring_active:
+        """Monitor individual database connections"""
+        while self.monitoring_active:
             try:
                 await self._collect_connection_data()
                 await asyncio.sleep(interval)
@@ -200,7 +215,8 @@ class ConnectionMonitor:
                 await asyncio.sleep(interval)
     
     async def _monitor_pool_metrics(self, interval: int) -> None:
-        """Monitor connection pool metrics"""        while self.monitoring_active:
+        """Monitor connection pool metrics"""
+        while self.monitoring_active:
             try:
                 metrics = await self._collect_pool_metrics()
                 if metrics:
@@ -213,7 +229,8 @@ class ConnectionMonitor:
                 await asyncio.sleep(interval)
     
     async def _detect_connection_leaks(self, interval: int) -> None:
-        """Detect and report connection leaks"""        while self.monitoring_active:
+        """Detect and report connection leaks"""
+        while self.monitoring_active:
             try:
                 await self._check_for_leaks()
                 await asyncio.sleep(interval)
@@ -222,10 +239,12 @@ class ConnectionMonitor:
                 await asyncio.sleep(interval)
     
     async def _collect_connection_data(self) -> None:
-        """Collect current connection information"""        try:
+        """Collect current connection information"""
+        try:
             async with get_database_session() as session:
                 # Get active connections
-                result = await session.execute(text("""                    SELECT 
+                result = await session.execute(text("""
+                    SELECT 
                         pid as connection_id,
                         client_addr,
                         client_hostname,
@@ -294,7 +313,8 @@ class ConnectionMonitor:
             self.logger.error(f"Error collecting connection data: {e}")
     
     async def _collect_pool_metrics(self) -> Optional[PoolMetrics]:
-        """Collect connection pool metrics"""        try:
+        """Collect connection pool metrics"""
+        try:
             # Get pool instance
             pool = get_connection_pool()
             if not pool:
@@ -309,7 +329,8 @@ class ConnectionMonitor:
             
             # Calculate connection statistics
             async with get_database_session() as session:
-                result = await session.execute(text("""                    SELECT 
+                result = await session.execute(text("""
+                    SELECT 
                         count(*) as total_connections,
                         count(*) filter (where state = 'active') as active_connections,
                         count(*) filter (where state = 'idle') as idle_connections,
@@ -363,7 +384,8 @@ class ConnectionMonitor:
             return None
     
     def _calculate_request_rate(self) -> float:
-        """Calculate connection requests per second"""        if len(self.connection_requests) < 2:
+        """Calculate connection requests per second"""
+        if len(self.connection_requests) < 2:
             return 0.0
         
         # Calculate rate over last minute
@@ -376,19 +398,22 @@ class ConnectionMonitor:
         return len(recent_requests) / 60.0
     
     def _calculate_average_checkout_time(self) -> float:
-        """Calculate average connection checkout time"""        if not self.checkout_times:
+        """Calculate average connection checkout time"""
+        if not self.checkout_times:
             return 0.0
         
         return sum(self.checkout_times) / len(self.checkout_times)
     
     def _calculate_max_checkout_time(self) -> float:
-        """Calculate maximum connection checkout time"""        if not self.checkout_times:
+        """Calculate maximum connection checkout time"""
+        if not self.checkout_times:
             return 0.0
         
         return max(self.checkout_times)
     
     def _determine_pool_health(self, utilization_percent: float, active_connections: int) -> PoolHealth:
-        """Determine connection pool health status"""        if utilization_percent >= self.critical_utilization_threshold * 100:
+        """Determine connection pool health status"""
+        if utilization_percent >= self.critical_utilization_threshold * 100:
             return PoolHealth.EMERGENCY
         elif utilization_percent >= self.high_utilization_threshold * 100:
             return PoolHealth.CRITICAL
@@ -398,7 +423,8 @@ class ConnectionMonitor:
             return PoolHealth.HEALTHY
     
     async def _process_pool_metrics(self, metrics: PoolMetrics) -> None:
-        """Process pool metrics and generate alerts"""        try:
+        """Process pool metrics and generate alerts"""
+        try:
             # Cache metrics
             await self.cache.set(
                 "pool:metrics",
@@ -413,7 +439,8 @@ class ConnectionMonitor:
             self.logger.error(f"Error processing pool metrics: {e}")
     
     async def _check_pool_alerts(self, metrics: PoolMetrics) -> None:
-        """Check for pool-related alerts"""        alerts = []
+        """Check for pool-related alerts"""
+        alerts = []
         
         # High utilization alert
         if metrics.pool_utilization_percent >= self.critical_utilization_threshold * 100:
@@ -458,7 +485,8 @@ class ConnectionMonitor:
             await self._send_alert(alert)
     
     async def _check_for_leaks(self) -> None:
-        """Check for connection leaks"""        try:
+        """Check for connection leaks"""
+        try:
             current_time = datetime.utcnow()
             potential_leaks = []
             
@@ -503,7 +531,8 @@ class ConnectionMonitor:
             self.logger.error(f"Error checking for leaks: {e}")
     
     async def _send_alert(self, alert: Dict[str, Any]) -> None:
-        """Send connection pool alert"""        try:
+        """Send connection pool alert"""
+        try:
             # Store alert
             await self.cache.lpush(
                 "connections:alerts",
@@ -523,7 +552,8 @@ class ConnectionMonitor:
             self.logger.error(f"Error sending alert: {e}")
     
     async def _send_leak_alert(self, leak: ConnectionLeak) -> None:
-        """Send connection leak alert"""        try:
+        """Send connection leak alert"""
+        try:
             alert = {
                 "type": "connection_leak",
                 "severity": leak.severity,
@@ -542,7 +572,8 @@ class ConnectionMonitor:
             self.logger.error(f"Error sending leak alert: {e}")
     
     async def get_connection_summary(self) -> Dict[str, Any]:
-        """Get connection summary"""        try:
+        """Get connection summary"""
+        try:
             total_connections = len(self.active_connections)
             state_counts = defaultdict(int)
             
@@ -570,7 +601,8 @@ class ConnectionMonitor:
             return {"error": str(e)}
     
     async def get_connection_details(self, connection_id: str = None) -> Dict[str, Any]:
-        """Get detailed connection information"""        try:
+        """Get detailed connection information"""
+        try:
             if connection_id:
                 # Get specific connection
                 if connection_id in self.active_connections:
@@ -589,7 +621,8 @@ class ConnectionMonitor:
             return {"error": str(e)}
     
     async def get_pool_metrics_history(self, hours: int = 24) -> List[Dict[str, Any]]:
-        """Get pool metrics history"""        try:
+        """Get pool metrics history"""
+        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             
             recent_metrics = [
@@ -604,7 +637,8 @@ class ConnectionMonitor:
             return []
     
     async def get_leak_report(self) -> Dict[str, Any]:
-        """Get connection leak report"""        try:
+        """Get connection leak report"""
+        try:
             report = {
                 "total_leaks": len(self.leaked_connections),
                 "leaks_by_severity": defaultdict(int),
@@ -626,16 +660,20 @@ class ConnectionMonitor:
             return {"error": str(e)}
     
     def add_alert_callback(self, callback: Callable) -> None:
-        """Add alert callback function"""        self.alert_callbacks.append(callback)
+        """Add alert callback function"""
+        self.alert_callbacks.append(callback)
     
     def track_connection_request(self) -> None:
-        """Track a connection request"""        self.connection_requests.append(time.time())
+        """Track a connection request"""
+        self.connection_requests.append(time.time())
     
     def track_checkout_time(self, checkout_time_ms: float) -> None:
-        """Track connection checkout time"""        self.checkout_times.append(checkout_time_ms)
+        """Track connection checkout time"""
+        self.checkout_times.append(checkout_time_ms)
     
     async def kill_connection(self, connection_id: str, reason: str = "Manual termination") -> bool:
-        """Kill a specific database connection"""        try:
+        """Kill a specific database connection"""
+        try:
             async with get_database_session() as session:
                 result = await session.execute(text(f"SELECT pg_terminate_backend({connection_id})"))
                 success = result.scalar()
@@ -657,7 +695,8 @@ class ConnectionMonitor:
             return False
     
     async def kill_idle_connections(self, idle_threshold_minutes: int = 30) -> int:
-        """Kill idle connections older than threshold"""        try:
+        """Kill idle connections older than threshold"""
+        try:
             killed_count = 0
             current_time = datetime.utcnow()
             

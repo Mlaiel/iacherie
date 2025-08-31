@@ -24,7 +24,8 @@ Enterprise Features:
 - Comprehensive business intelligence with KPI dashboards
 - Performance monitoring with auto-scaling recommendations
 - Collaboration insights and monetization opportunity discovery
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import redis
@@ -68,11 +69,13 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsError(Exception):
-    """Custom exception for analytics operations"""    pass
+    """Custom exception for analytics operations"""
+    pass
 
 
 class AnalyticsType(Enum):
-    """Enterprise analytics processing types with industrial capabilities"""    CONTENT_PERFORMANCE = "content_performance"
+    """Enterprise analytics processing types with industrial capabilities"""
+    CONTENT_PERFORMANCE = "content_performance"
     USER_ENGAGEMENT = "user_engagement"
     BUSINESS_INTELLIGENCE = "business_intelligence"
     PREDICTIVE_ANALYTICS = "predictive_analytics"
@@ -92,14 +95,16 @@ class AnalyticsType(Enum):
     PERSONALIZATION_ANALYTICS = "personalization_analytics"
 
 class AnalyticsPriority(IntEnum):
-    """Analytics processing priority levels"""    CRITICAL = 1
+    """Analytics processing priority levels"""
+    CRITICAL = 1
     HIGH = 2
     NORMAL = 3
     LOW = 4
     BACKGROUND = 5
 
 class AnalyticsStatus(Enum):
-    """Analytics processing status"""    QUEUED = "queued"
+    """Analytics processing status"""
+    QUEUED = "queued"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -108,7 +113,8 @@ class AnalyticsStatus(Enum):
 
 @dataclass
 class AnalyticsConfig:
-    """Enterprise analytics configuration"""    cache_ttl: int = 3600  # seconds
+    """Enterprise analytics configuration"""
+    cache_ttl: int = 3600  # seconds
     max_concurrent_requests: int = 100
     enable_real_time: bool = True
     enable_ml_predictions: bool = True
@@ -123,7 +129,8 @@ class AnalyticsConfig:
 
 @dataclass
 class AnalyticsRequest:
-    """Enhanced analytics request data model with enterprise features"""    request_id: str
+    """Enhanced analytics request data model with enterprise features"""
+    request_id: str
     analytics_type: AnalyticsType
     user_id: str
     priority: AnalyticsPriority = AnalyticsPriority.NORMAL
@@ -142,7 +149,8 @@ class AnalyticsRequest:
 
 @dataclass
 class AnalyticsResult:
-    """Enterprise analytics result data model with comprehensive information"""    request_id: str
+    """Enterprise analytics result data model with comprehensive information"""
+    request_id: str
     analytics_type: AnalyticsType
     status: AnalyticsStatus
     data: Dict[str, Any]
@@ -162,7 +170,8 @@ class AnalyticsResult:
 
 @dataclass
 class RealTimeMetric:
-    """Real-time metric data model"""    metric_id: str
+    """Real-time metric data model"""
+    metric_id: str
     metric_name: str
     value: Union[int, float, str]
     timestamp: datetime
@@ -171,7 +180,8 @@ class RealTimeMetric:
     alert_thresholds: Dict[str, float] = field(default_factory=dict)
 
 class MLPredictionEngine:
-    """Machine Learning prediction engine for analytics"""    
+    """Machine Learning prediction engine for analytics"""
+    
     def __init__(self, model_path: str = "/tmp/analytics_models"):
         self.model_path = Path(model_path)
         self.model_path.mkdir(exist_ok=True)
@@ -180,7 +190,8 @@ class MLPredictionEngine:
         self._load_models()
     
     def _load_models(self):
-        """Load pre-trained ML models"""        try:
+        """Load pre-trained ML models"""
+        try:
             # Load engagement prediction model
             self.models['engagement'] = RandomForestRegressor(n_estimators=100, random_state=42)
             self.scalers['engagement'] = StandardScaler()
@@ -197,7 +208,8 @@ class MLPredictionEngine:
             logger.error(f"Error loading ML models: {e}")
     
     def predict_engagement(self, features: np.ndarray) -> Dict[str, float]:
-        """Predict content engagement using ML model"""        try:
+        """Predict content engagement using ML model"""
+        try:
             if 'engagement' in self.models:
                 # Scale features
                 scaled_features = self.scalers['engagement'].fit_transform(features.reshape(1, -1))
@@ -217,7 +229,8 @@ class MLPredictionEngine:
         return {'predicted_engagement': 0.0, 'confidence': 0.0, 'model_version': '1.0.0'}
     
     def detect_anomalies(self, data: np.ndarray) -> List[Dict[str, Any]]:
-        """Detect anomalies in analytics data"""        try:
+        """Detect anomalies in analytics data"""
+        try:
             if 'anomaly' in self.models:
                 # Fit and predict anomalies
                 anomaly_scores = self.models['anomaly'].fit_predict(data)
@@ -240,7 +253,8 @@ class MLPredictionEngine:
         return []
     
     def segment_audience(self, features: np.ndarray) -> Dict[str, Any]:
-        """Segment audience using clustering algorithms"""        try:
+        """Segment audience using clustering algorithms"""
+        try:
             if 'clustering' in self.models:
                 # Scale features
                 scaled_features = self.scalers['clustering'].fit_transform(features)
@@ -263,12 +277,14 @@ class MLPredictionEngine:
         return {'clusters': [], 'cluster_counts': {}, 'total_clusters': 0, 'silhouette_score': 0.0}
 
 class VisualizationEngine:
-    """Enterprise data visualization engine"""    
+    """Enterprise data visualization engine"""
+    
     def __init__(self):
         self.chart_cache: Dict[str, str] = {}
     
     def create_dashboard(self, data: Dict[str, Any], chart_type: str = "comprehensive") -> str:
-        """Create interactive dashboard with Plotly"""        try:
+        """Create interactive dashboard with Plotly"""
+        try:
             if chart_type == "comprehensive":
                 return self._create_comprehensive_dashboard(data)
             elif chart_type == "performance":
@@ -282,7 +298,8 @@ class VisualizationEngine:
             return ""
     
     def _create_comprehensive_dashboard(self, data: Dict[str, Any]) -> str:
-        """Create comprehensive analytics dashboard"""        # Create subplots
+        """Create comprehensive analytics dashboard"""
+        # Create subplots
         fig = make_subplots(
             rows=2, cols=2,
             subplot_titles=('Performance Metrics', 'Engagement Trends', 'Revenue Analysis', 'User Segments'),
@@ -337,7 +354,8 @@ class VisualizationEngine:
         return fig.to_html(include_plotlyjs='cdn')
     
     def _create_performance_dashboard(self, data: Dict[str, Any]) -> str:
-        """Create performance-focused dashboard"""        fig = go.Figure()
+        """Create performance-focused dashboard"""
+        fig = go.Figure()
         
         if 'metrics' in data:
             metrics = data['metrics']
@@ -359,7 +377,8 @@ class VisualizationEngine:
         return fig.to_html(include_plotlyjs='cdn')
     
     def _create_engagement_dashboard(self, data: Dict[str, Any]) -> str:
-        """Create engagement-focused dashboard"""        fig = make_subplots(rows=1, cols=2, subplot_titles=('Engagement Over Time', 'Content Type Performance'))
+        """Create engagement-focused dashboard"""
+        fig = make_subplots(rows=1, cols=2, subplot_titles=('Engagement Over Time', 'Content Type Performance'))
         
         # Time series engagement
         if 'engagement_timeline' in data:
@@ -383,7 +402,8 @@ class VisualizationEngine:
         return fig.to_html(include_plotlyjs='cdn')
     
     def _create_standard_chart(self, data: Dict[str, Any]) -> str:
-        """Create standard chart visualization"""        fig = go.Figure()
+        """Create standard chart visualization"""
+        fig = go.Figure()
         
         # Default line chart
         if 'values' in data and 'labels' in data:
@@ -398,7 +418,8 @@ class VisualizationEngine:
         return fig.to_html(include_plotlyjs='cdn')
 
 class AnalyticsAgent:
-    """    Enterprise Analytics Agent for IA Influencer Platform - Production Edition
+    """
+    Enterprise Analytics Agent for IA Influencer Platform - Production Edition
     
     Industrial-grade analytics system providing comprehensive intelligence capabilities:
     
@@ -437,9 +458,11 @@ class AnalyticsAgent:
     - Computer vision for image and video content analysis
     - Recommendation systems for content optimization
     - Automated insights generation and reporting
-    """    
+    """
+    
     def __init__(self, config: Optional[AnalyticsConfig] = None):
-        """Initialize enterprise analytics agent with production configuration"""        self.config = config or AnalyticsConfig()
+        """Initialize enterprise analytics agent with production configuration"""
+        self.config = config or AnalyticsConfig()
         self.agent_id = f"analytics_agent_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
         
         # Core data structures
@@ -484,7 +507,8 @@ class AnalyticsAgent:
         logger.info("Enterprise features enabled: ML Predictions, Real-time Analytics, Professional Visualizations")
     
     async def _initialize_async_services(self):
-        """Initialize asynchronous services and connections"""        try:
+        """Initialize asynchronous services and connections"""
+        try:
             # Initialize Redis connection for caching
             if self.config.enable_real_time:
                 self.redis_client = await aioredis.create_redis_pool(
@@ -516,7 +540,8 @@ class AnalyticsAgent:
             logger.error(f"Error initializing analytics services: {e}")
     
     async def process_analytics_request(self, request: AnalyticsRequest) -> AnalyticsResult:
-        """Process analytics request with enterprise features and ML capabilities"""        start_time = datetime.now()
+        """Process analytics request with enterprise features and ML capabilities"""
+        start_time = datetime.now()
         
         try:
             # Generate cache key
@@ -605,7 +630,8 @@ class AnalyticsAgent:
             )
     
     async def _route_analytics_request(self, request: AnalyticsRequest) -> Dict[str, Any]:
-        """Route analytics request to appropriate processing method"""        routing_map = {
+        """Route analytics request to appropriate processing method"""
+        routing_map = {
             AnalyticsType.CONTENT_PERFORMANCE: self._process_content_performance,
             AnalyticsType.USER_ENGAGEMENT: self._process_user_engagement,
             AnalyticsType.BUSINESS_INTELLIGENCE: self._process_business_intelligence,
@@ -633,7 +659,8 @@ class AnalyticsAgent:
             raise ValueError(f"Unknown analytics type: {request.analytics_type}")
     
     async def _process_content_performance(self, request: AnalyticsRequest) -> Dict[str, Any]:
-        """Process enterprise content performance analytics"""        try:
+        """Process enterprise content performance analytics"""
+        try:
             # Get content metrics from various sources
             content_metrics = await self._get_content_metrics(request.content_id, request.time_range)
             
@@ -704,7 +731,8 @@ class AnalyticsAgent:
             return {'error': str(e), 'content_id': request.content_id}
     
     async def _process_user_engagement(self, request: AnalyticsRequest) -> Dict[str, Any]:
-        """Process enterprise user engagement analytics"""        try:
+        """Process enterprise user engagement analytics"""
+        try:
             # User behavior analysis
             user_behavior = await self._analyze_user_behavior(request.user_id, request.time_range)
             
@@ -760,7 +788,8 @@ class AnalyticsAgent:
             return {'error': str(e), 'user_id': request.user_id}
     
     async def _process_business_intelligence(self, request: AnalyticsRequest) -> Dict[str, Any]:
-        """Process comprehensive business intelligence analytics"""        try:
+        """Process comprehensive business intelligence analytics"""
+        try:
             # KPI analysis
             kpis = await self.business_intelligence.analyze_kpis(request.time_range)
             
@@ -817,7 +846,8 @@ class AnalyticsAgent:
             return {'error': str(e)}
     
     async def _process_predictive_analytics(self, request: AnalyticsRequest) -> Dict[str, Any]:
-        """Process AI-powered predictive analytics"""        try:
+        """Process AI-powered predictive analytics"""
+        try:
             # Content performance prediction
             content_predictions = await self._predict_content_performance(request)
             
@@ -873,7 +903,8 @@ class AnalyticsAgent:
             return {'error': str(e)}
     
     async def _process_real_time_monitoring(self, request: AnalyticsRequest) -> Dict[str, Any]:
-        """Process real-time monitoring analytics"""        try:
+        """Process real-time monitoring analytics"""
+        try:
             current_timestamp = datetime.now()
             
             # Real-time metrics collection
@@ -917,7 +948,8 @@ class AnalyticsAgent:
             return {'error': str(e), 'timestamp': datetime.now().isoformat()}
     
     async def _generate_ml_predictions(self, request: AnalyticsRequest, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate ML-based predictions for analytics data"""        try:
+        """Generate ML-based predictions for analytics data"""
+        try:
             predictions = {}
             
             # Extract features for ML models
@@ -957,7 +989,8 @@ class AnalyticsAgent:
             return {'error': str(e)}
     
     def _generate_cache_key(self, request: AnalyticsRequest) -> str:
-        """Generate cache key for analytics request"""        key_data = {
+        """Generate cache key for analytics request"""
+        key_data = {
             'analytics_type': request.analytics_type.value,
             'user_id': request.user_id,
             'content_id': request.content_id,
@@ -970,7 +1003,8 @@ class AnalyticsAgent:
         return hashlib.sha256(key_string.encode()).hexdigest()
     
     async def _get_cached_result(self, cache_key: str) -> Optional[AnalyticsResult]:
-        """Get cached analytics result"""        try:
+        """Get cached analytics result"""
+        try:
             if self.redis_client:
                 cached_data = await self.redis_client.get(f"analytics:{cache_key}")
                 if cached_data:
@@ -981,7 +1015,8 @@ class AnalyticsAgent:
         return None
     
     async def _cache_result(self, cache_key: str, result: AnalyticsResult):
-        """Cache analytics result"""        try:
+        """Cache analytics result"""
+        try:
             if self.redis_client:
                 serialized_result = pickle.dumps(result)
                 await self.redis_client.setex(
@@ -993,17 +1028,20 @@ class AnalyticsAgent:
             logger.error(f"Error caching result: {e}")
     
     async def get_analytics_history(self, user_id: str, limit: int = 100) -> List[AnalyticsResult]:
-        """Get analytics processing history for a user"""        user_history = [
+        """Get analytics processing history for a user"""
+        user_history = [
             result for result in self.analytics_history
             if result.request_id.startswith(user_id)
         ]
         return sorted(user_history, key=lambda x: x.timestamp, reverse=True)[:limit]
     
     async def get_real_time_metrics(self) -> Dict[str, RealTimeMetric]:
-        """Get current real-time metrics"""        return dict(self.real_time_metrics)
+        """Get current real-time metrics"""
+        return dict(self.real_time_metrics)
     
     async def get_processing_stats(self) -> Dict[str, Any]:
-        """Get analytics processing statistics"""        return {
+        """Get analytics processing statistics"""
+        return {
             **self.processing_stats,
             'agent_id': self.agent_id,
             'uptime_seconds': (datetime.now() - datetime.now()).total_seconds(),
@@ -1014,7 +1052,8 @@ class AnalyticsAgent:
         }
     
     async def create_custom_dashboard(self, request: AnalyticsRequest) -> str:
-        """Create custom analytics dashboard"""        try:
+        """Create custom analytics dashboard"""
+        try:
             # Process analytics data
             result = await self.process_analytics_request(request)
             
@@ -1031,7 +1070,8 @@ class AnalyticsAgent:
             return f"<html><body><h1>Dashboard Error</h1><p>{e}</p></body></html>"
     
     async def export_analytics_data(self, request: AnalyticsRequest, format: str = "json") -> Union[str, bytes]:
-        """Export analytics data in various formats"""        try:
+        """Export analytics data in various formats"""
+        try:
             # Process analytics request
             result = await self.process_analytics_request(request)
             
@@ -1055,7 +1095,8 @@ class AnalyticsAgent:
             return json.dumps({'error': str(e)})
     
     async def shutdown(self):
-        """Gracefully shutdown analytics agent"""        logger.info(f"Shutting down Analytics Agent: {self.agent_id}")
+        """Gracefully shutdown analytics agent"""
+        logger.info(f"Shutting down Analytics Agent: {self.agent_id}")
         
         self.is_running = False
         
@@ -1075,7 +1116,8 @@ class AnalyticsAgent:
     
     # Helper methods for sample data and testing
     async def _initialize_sample_data(self):
-        """Initialize sample analytics data for testing purposes"""        try:
+        """Initialize sample analytics data for testing purposes"""
+        try:
             # Sample content metrics
             sample_content_metrics = [
                 ContentMetrics(
@@ -1123,7 +1165,8 @@ class AnalyticsAgent:
             logger.error(f"Error initializing sample data: {e}")
     
     def _extract_features_from_data(self, data: Dict[str, Any]) -> Optional[np.ndarray]:
-        """Extract numerical features from analytics data for ML processing"""        try:
+        """Extract numerical features from analytics data for ML processing"""
+        try:
             features = []
             
             # Extract numerical values from nested data structure
@@ -1149,7 +1192,8 @@ class AnalyticsAgent:
     # Additional helper methods for comprehensive analytics processing
     
     async def _process_fraud_detection(self, request: AnalyticsRequest) -> Dict[str, Any]:
-        """Enterprise fraud detection analytics"""        try:
+        """Enterprise fraud detection analytics"""
+        try:
             user_id = request.user_id
             time_range = request.time_range
             
@@ -1185,7 +1229,8 @@ class AnalyticsAgent:
             return {'error': str(e)}
     
     async def _process_revenue_optimization(self, request: AnalyticsRequest) -> Dict[str, Any]:
-        """Revenue optimization analytics and recommendations"""        try:
+        """Revenue optimization analytics and recommendations"""
+        try:
             user_id = request.user_id
             
             # Revenue optimization analysis
@@ -1230,7 +1275,8 @@ class AnalyticsAgent:
             return {'error': str(e)}
     
     async def _process_competitor_analysis(self, request: AnalyticsRequest) -> Dict[str, Any]:
-        """Comprehensive competitor analysis"""        try:
+        """Comprehensive competitor analysis"""
+        try:
             # Competitor intelligence data
             competitor_data = {
                 'market_overview': {
@@ -1282,7 +1328,8 @@ class AnalyticsAgent:
             return {'error': str(e)}
     
     async def _process_trend_forecasting(self, request: AnalyticsRequest) -> Dict[str, Any]:
-        """Advanced trend forecasting using AI and market analysis"""        try:
+        """Advanced trend forecasting using AI and market analysis"""
+        try:
             forecast_data = {
                 'content_trends': {
                     'trending_formats': [
@@ -1329,7 +1376,8 @@ class AnalyticsAgent:
             return {'error': str(e)}
     
     async def _process_audience_segmentation(self, request: AnalyticsRequest) -> Dict[str, Any]:
-        """Advanced audience segmentation using ML clustering"""        try:
+        """Advanced audience segmentation using ML clustering"""
+        try:
             # Generate audience segments using ML
             segmentation_data = {
                 'total_audience_size': np.random.randint(10000, 100000),
@@ -1412,7 +1460,8 @@ class AnalyticsAgent:
             return {'error': str(e)}
     
     async def _process_content_protection(self, request: AnalyticsRequest) -> Dict[str, Any]:
-        """AI-powered content protection analytics"""        try:
+        """AI-powered content protection analytics"""
+        try:
             protection_data = {
                 'protection_status': {
                     'total_protected_content': np.random.randint(1000, 10000),
@@ -1457,7 +1506,8 @@ class AnalyticsAgent:
             return {'error': str(e)}
     
     async def _process_collaboration_insights(self, request: AnalyticsRequest) -> Dict[str, Any]:
-        """Collaboration and networking analytics"""        try:
+        """Collaboration and networking analytics"""
+        try:
             collaboration_data = {
                 'collaboration_overview': {
                     'active_collaborations': np.random.randint(50, 500),
@@ -1502,7 +1552,8 @@ class AnalyticsAgent:
             return {'error': str(e)}
     
     async def _process_market_intelligence(self, request: AnalyticsRequest) -> Dict[str, Any]:
-        """Comprehensive market intelligence analysis"""        try:
+        """Comprehensive market intelligence analysis"""
+        try:
             market_data = {
                 'market_size': {
                     'total_addressable_market': '12.5B USD',
@@ -1558,7 +1609,8 @@ class AnalyticsAgent:
             return {'error': str(e)}
     
     async def _process_user_journey_analysis(self, request: AnalyticsRequest) -> Dict[str, Any]:
-        """Detailed user journey and experience analytics"""        try:
+        """Detailed user journey and experience analytics"""
+        try:
             journey_data = {
                 'journey_overview': {
                     'total_touchpoints': 15,
@@ -1628,7 +1680,8 @@ class AnalyticsAgent:
             return {'error': str(e)}
     
     async def _process_conversion_optimization(self, request: AnalyticsRequest) -> Dict[str, Any]:
-        """Conversion rate optimization analytics"""        try:
+        """Conversion rate optimization analytics"""
+        try:
             conversion_data = {
                 'conversion_funnel': {
                     'visitors': np.random.randint(10000, 100000),
@@ -1687,7 +1740,8 @@ class AnalyticsAgent:
             return {'error': str(e)}
     
     async def _process_personalization_analytics(self, request: AnalyticsRequest) -> Dict[str, Any]:
-        """AI-powered personalization analytics"""        try:
+        """AI-powered personalization analytics"""
+        try:
             personalization_data = {
                 'personalization_effectiveness': {
                     'overall_score': 0.72,
@@ -1741,7 +1795,8 @@ class AnalyticsAgent:
     # Additional helper methods for data processing and analysis
     
     async def _get_content_metrics(self, content_id: str, time_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Retrieve comprehensive content metrics"""        # Simulate content metrics retrieval
+        """Retrieve comprehensive content metrics"""
+        # Simulate content metrics retrieval
         return {
             'content_id': content_id,
             'views': np.random.randint(1000, 50000),
@@ -1752,7 +1807,8 @@ class AnalyticsAgent:
         }
     
     async def _get_platform_performance(self, platform: str, content_id: str, time_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Get performance metrics for specific platform"""        return {
+        """Get performance metrics for specific platform"""
+        return {
             'platform': platform,
             'engagement': np.random.randint(100, 1000),
             'revenue': np.random.uniform(10.0, 500.0),
@@ -1761,7 +1817,8 @@ class AnalyticsAgent:
         }
     
     async def _analyze_audio_content(self, content_id: str) -> Dict[str, Any]:
-        """Analyze audio content performance and characteristics"""        return {
+        """Analyze audio content performance and characteristics"""
+        return {
             'audio_quality_score': np.random.uniform(0.7, 1.0),
             'duration': f"{np.random.randint(120, 3600)} seconds",
             'genre_classification': 'Music',
@@ -1771,7 +1828,8 @@ class AnalyticsAgent:
         }
     
     async def _analyze_video_content(self, content_id: str) -> Dict[str, Any]:
-        """Analyze video content performance and characteristics"""        return {
+        """Analyze video content performance and characteristics"""
+        return {
             'video_quality_score': np.random.uniform(0.7, 1.0),
             'duration': f"{np.random.randint(30, 1800)} seconds",
             'resolution': '1080p',
@@ -1781,7 +1839,8 @@ class AnalyticsAgent:
         }
     
     async def _analyze_image_content(self, content_id: str) -> Dict[str, Any]:
-        """Analyze image content performance and characteristics"""        return {
+        """Analyze image content performance and characteristics"""
+        return {
             'image_quality_score': np.random.uniform(0.8, 1.0),
             'resolution': '4K',
             'aesthetic_score': np.random.uniform(0.6, 1.0),
@@ -1791,7 +1850,8 @@ class AnalyticsAgent:
         }
     
     async def _analyze_text_content(self, content_id: str) -> Dict[str, Any]:
-        """Analyze text content performance and characteristics"""        return {
+        """Analyze text content performance and characteristics"""
+        return {
             'readability_score': np.random.uniform(0.7, 1.0),
             'word_count': np.random.randint(500, 5000),
             'sentiment_score': np.random.uniform(-1.0, 1.0),
@@ -1801,7 +1861,8 @@ class AnalyticsAgent:
         }
     
     async def _analyze_blog_content(self, content_id: str) -> Dict[str, Any]:
-        """Analyze blog content performance and characteristics"""        return {
+        """Analyze blog content performance and characteristics"""
+        return {
             'blog_performance_score': np.random.uniform(0.6, 1.0),
             'word_count': np.random.randint(800, 8000),
             'time_on_page': f"{np.random.randint(120, 600)} seconds",
@@ -1811,27 +1872,32 @@ class AnalyticsAgent:
         }
     
     def _calculate_engagement_rate(self, metrics: Dict[str, Any]) -> float:
-        """Calculate comprehensive engagement rate"""        views = metrics.get('views', 1)
+        """Calculate comprehensive engagement rate"""
+        views = metrics.get('views', 1)
         engagement_actions = metrics.get('engagement', 0)
         return min(engagement_actions / views, 1.0) if views > 0 else 0.0
     
     def _calculate_conversion_rate(self, metrics: Dict[str, Any]) -> float:
-        """Calculate conversion rate from metrics"""        total_interactions = metrics.get('views', 1)
+        """Calculate conversion rate from metrics"""
+        total_interactions = metrics.get('views', 1)
         conversions = metrics.get('revenue', 0) / 10  # Simplified conversion calculation
         return min(conversions / total_interactions, 1.0) if total_interactions > 0 else 0.0
     
     def _calculate_roi(self, metrics: Dict[str, Any]) -> float:
-        """Calculate return on investment"""        revenue = metrics.get('revenue', 0)
+        """Calculate return on investment"""
+        revenue = metrics.get('revenue', 0)
         cost = revenue * 0.3  # Assume 30% cost ratio
         return (revenue - cost) / cost if cost > 0 else 0.0
     
     def _calculate_virality_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate content virality score"""        shares = metrics.get('collaboration_requests', 0)
+        """Calculate content virality score"""
+        shares = metrics.get('collaboration_requests', 0)
         views = metrics.get('views', 1)
         return min(shares / views * 100, 100.0) if views > 0 else 0.0
     
     def _calculate_overall_performance_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate overall performance score"""        engagement = self._calculate_engagement_rate(metrics)
+        """Calculate overall performance score"""
+        engagement = self._calculate_engagement_rate(metrics)
         conversion = self._calculate_conversion_rate(metrics)
         roi = self._calculate_roi(metrics)
         virality = self._calculate_virality_score(metrics) / 100
@@ -1840,7 +1906,8 @@ class AnalyticsAgent:
         return (engagement * 0.3 + conversion * 0.3 + roi * 0.2 + virality * 0.2)
     
     async def _identify_optimization_opportunities(self, metrics: Dict[str, Any]) -> List[str]:
-        """Identify optimization opportunities based on metrics"""        opportunities = []
+        """Identify optimization opportunities based on metrics"""
+        opportunities = []
         
         if metrics.get('engagement', 0) < 500:
             opportunities.append("Improve content engagement through better thumbnails and titles")
@@ -1860,7 +1927,8 @@ class AnalyticsAgent:
         return opportunities
     
     def _identify_data_sources(self, request: AnalyticsRequest) -> List[str]:
-        """Identify data sources used for analytics"""        sources = ['platform_database', 'real_time_metrics', 'user_interactions']
+        """Identify data sources used for analytics"""
+        sources = ['platform_database', 'real_time_metrics', 'user_interactions']
         
         if request.analytics_type == AnalyticsType.CONTENT_PERFORMANCE:
             sources.extend(['content_metadata', 'engagement_tracking', 'revenue_data'])
@@ -1872,13 +1940,15 @@ class AnalyticsAgent:
         return sources
     
     async def _calculate_confidence_score(self, data: Dict[str, Any]) -> float:
-        """Calculate confidence score for analytics results"""        # Simplified confidence calculation based on data completeness and quality
+        """Calculate confidence score for analytics results"""
+        # Simplified confidence calculation based on data completeness and quality
         data_completeness = len([v for v in data.values() if v is not None and v != '']) / len(data)
         base_confidence = 0.8  # Base confidence for analytics
         return min(base_confidence * data_completeness, 1.0)
     
     async def _calculate_data_quality_score(self, data: Dict[str, Any]) -> float:
-        """Calculate data quality score"""        # Simplified data quality assessment
+        """Calculate data quality score"""
+        # Simplified data quality assessment
         quality_factors = []
         
         # Check for missing data
@@ -1894,7 +1964,8 @@ class AnalyticsAgent:
         return sum(quality_factors) / len(quality_factors)
     
     async def _generate_insights(self, request: AnalyticsRequest, data: Dict[str, Any]) -> List[str]:
-        """Generate AI-powered insights from analytics data"""        insights = []
+        """Generate AI-powered insights from analytics data"""
+        insights = []
         
         # Content performance insights
         if request.analytics_type == AnalyticsType.CONTENT_PERFORMANCE:
@@ -1930,7 +2001,8 @@ class AnalyticsAgent:
         return insights[:5]  # Return top 5 insights
     
     async def _generate_recommendations(self, request: AnalyticsRequest, data: Dict[str, Any]) -> List[str]:
-        """Generate actionable recommendations"""        recommendations = []
+        """Generate actionable recommendations"""
+        recommendations = []
         
         # Content-specific recommendations
         if request.analytics_type == AnalyticsType.CONTENT_PERFORMANCE:
@@ -1959,7 +2031,8 @@ class AnalyticsAgent:
         return recommendations[:5]  # Return top 5 recommendations
     
     async def _detect_anomalies(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect anomalies in analytics data"""        anomalies = []
+        """Detect anomalies in analytics data"""
+        anomalies = []
         
         # Simple anomaly detection based on statistical thresholds
         for key, value in data.items():
@@ -1977,7 +2050,8 @@ class AnalyticsAgent:
         return anomalies
     
     async def _generate_visualizations(self, request: AnalyticsRequest, data: Dict[str, Any]) -> Dict[str, str]:
-        """Generate visualization URLs or HTML"""        visualizations = {}
+        """Generate visualization URLs or HTML"""
+        visualizations = {}
         
         if request.analytics_type == AnalyticsType.CONTENT_PERFORMANCE:
             visualizations['performance_chart'] = self.visualization_engine.create_dashboard(
@@ -1997,7 +2071,8 @@ class AnalyticsAgent:
         return visualizations
     
     async def _send_webhook(self, url: str, result: AnalyticsResult, headers: Dict[str, str]):
-        """Send webhook notification with analytics result"""        try:
+        """Send webhook notification with analytics result"""
+        try:
             import aiohttp
             
             payload = {
@@ -2019,7 +2094,8 @@ class AnalyticsAgent:
             logger.error(f"Error sending webhook: {e}")
     
     async def _process_request_queue(self):
-        """Background task to process queued analytics requests"""        while self.is_running:
+        """Background task to process queued analytics requests"""
+        while self.is_running:
             try:
                 if not self.request_queue.empty():
                     priority, request = self.request_queue.get_nowait()
@@ -2033,7 +2109,8 @@ class AnalyticsAgent:
                 await asyncio.sleep(5)  # Wait longer on error
     
     async def _monitor_real_time_metrics(self):
-        """Background task to update real-time metrics"""        while self.is_running:
+        """Background task to update real-time metrics"""
+        while self.is_running:
             try:
                 current_time = datetime.now()
                 
@@ -2066,7 +2143,8 @@ class AnalyticsAgent:
                 await asyncio.sleep(60)  # Wait longer on error
     
     async def _cleanup_expired_cache(self):
-        """Background task to cleanup expired cache entries"""        while self.is_running:
+        """Background task to cleanup expired cache entries"""
+        while self.is_running:
             try:
                 # Cleanup local cache (simplified)
                 current_time = datetime.now()
@@ -2093,7 +2171,8 @@ class AnalyticsAgent:
     # Additional prediction and helper methods
     
     async def _predict_content_performance(self, request: AnalyticsRequest, time_horizon: int) -> Dict[str, Any]:
-        """Predict content performance using ML models"""        return {
+        """Predict content performance using ML models"""
+        return {
             'prediction_type': 'content_performance',
             'time_horizon_days': time_horizon,
             'predicted_metrics': {
@@ -2112,7 +2191,8 @@ class AnalyticsAgent:
         }
     
     async def _predict_user_growth(self, request: AnalyticsRequest, time_horizon: int) -> Dict[str, Any]:
-        """Predict user growth patterns"""        return {
+        """Predict user growth patterns"""
+        return {
             'prediction_type': 'user_growth',
             'time_horizon_days': time_horizon,
             'growth_forecast': {
@@ -2131,7 +2211,8 @@ class AnalyticsAgent:
         }
     
     async def _predict_revenue_trends(self, request: AnalyticsRequest, time_horizon: int) -> Dict[str, Any]:
-        """Predict revenue trends and opportunities"""        return {
+        """Predict revenue trends and opportunities"""
+        return {
             'prediction_type': 'revenue',
             'time_horizon_days': time_horizon,
             'revenue_forecast': {
@@ -2150,7 +2231,8 @@ class AnalyticsAgent:
         }
     
     async def _predict_market_trends(self, request: AnalyticsRequest, time_horizon: int) -> Dict[str, Any]:
-        """Predict market trends and opportunities"""        return {
+        """Predict market trends and opportunities"""
+        return {
             'prediction_type': 'market_trends',
             'time_horizon_days': time_horizon,
             'market_predictions': {
@@ -2180,7 +2262,8 @@ class AnalyticsAgent:
         }
     
     async def _forecast_performance(self, historical_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Forecast performance based on historical data"""        if not historical_data:
+        """Forecast performance based on historical data"""
+        if not historical_data:
             return {'forecast': [], 'confidence': 0.0}
         
         # Simple forecasting simulation
@@ -2215,7 +2298,8 @@ class AnalyticsAgent:
         }
     
     async def _generate_content_optimization(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate AI-powered content optimization suggestions"""        return {
+        """Generate AI-powered content optimization suggestions"""
+        return {
             'optimization_score': np.random.uniform(0.6, 0.9),
             'suggestions': [
                 {
@@ -2252,7 +2336,8 @@ class AnalyticsAgent:
         }
     
     async def _analyze_performance_trends(self, content_id: str, time_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Analyze performance trends over time"""        return {
+        """Analyze performance trends over time"""
+        return {
             'trend_analysis': {
                 'overall_trend': 'increasing',
                 'growth_rate': np.random.uniform(0.05, 0.25),
@@ -2283,7 +2368,8 @@ class AnalyticsAgent:
         }
     
     async def _perform_competitive_analysis(self, content_id: str) -> Dict[str, Any]:
-        """Perform competitive benchmarking analysis"""        return {
+        """Perform competitive benchmarking analysis"""
+        return {
             'competitive_position': {
                 'market_rank': np.random.randint(5, 50),
                 'performance_percentile': np.random.uniform(0.6, 0.9),
@@ -2310,7 +2396,8 @@ class AnalyticsAgent:
         }
     
     async def _analyze_geographic_performance(self, content_id: str) -> Dict[str, Any]:
-        """Analyze content performance by geographic regions"""        return {
+        """Analyze content performance by geographic regions"""
+        return {
             'geographic_distribution': {
                 'North America': {
                     'percentage': 0.45,
@@ -2353,7 +2440,8 @@ class AnalyticsAgent:
         }
     
     async def _analyze_device_performance(self, content_id: str) -> Dict[str, Any]:
-        """Analyze content performance across different devices"""        return {
+        """Analyze content performance across different devices"""
+        return {
             'device_breakdown': {
                 'mobile': {
                     'percentage': 0.65,
@@ -2389,7 +2477,8 @@ class AnalyticsAgent:
         }
     
     async def _analyze_content_lifecycle(self, content_id: str) -> Dict[str, Any]:
-        """Analyze content lifecycle and longevity"""        return {
+        """Analyze content lifecycle and longevity"""
+        return {
             'lifecycle_stage': 'mature',
             'content_age_days': np.random.randint(30, 365),
             'lifecycle_metrics': {
@@ -2429,7 +2518,8 @@ class AnalyticsAgent:
         }
     
     def _get_user_content_history(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get user's content history for analysis"""        # Simulate content history data
+        """Get user's content history for analysis"""
+        # Simulate content history data
         return [
             {
                 'content_id': f"content_{i}",
@@ -2442,7 +2532,8 @@ class AnalyticsAgent:
         ]
     
     def _categorize_activity_level(self, user_behavior: Dict[str, Any]) -> str:
-        """Categorize user activity level"""        total_interactions = user_behavior.get('total_interactions', 0)
+        """Categorize user activity level"""
+        total_interactions = user_behavior.get('total_interactions', 0)
         
         if total_interactions > 2000:
             return 'very_high'
@@ -2456,7 +2547,8 @@ class AnalyticsAgent:
             return 'very_low'
     
     def _extract_content_preferences(self, consumption_analytics: Dict[str, Any]) -> List[str]:
-        """Extract content preferences from consumption data"""        preferences = []
+        """Extract content preferences from consumption data"""
+        preferences = []
         
         # Simulate preference extraction
         content_types = ['audio', 'video', 'image', 'text', 'blog']
@@ -2467,7 +2559,8 @@ class AnalyticsAgent:
         return preferences
     
     def _identify_peak_activity_times(self, user_behavior: Dict[str, Any]) -> List[int]:
-        """Identify peak activity hours"""        # Simulate peak hours based on common patterns
+        """Identify peak activity hours"""
+        # Simulate peak hours based on common patterns
         peak_hours = []
         
         # Morning peak
@@ -2485,7 +2578,8 @@ class AnalyticsAgent:
         return sorted(list(set(peak_hours)))
     
     def _prioritize_predictions(self, predictions: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Prioritize predictions by impact and confidence"""        priorities = []
+        """Prioritize predictions by impact and confidence"""
+        priorities = []
         
         for category, prediction_data in predictions.items():
             if isinstance(prediction_data, dict):
@@ -2507,19 +2601,24 @@ class AnalyticsAgent:
     # System monitoring helper methods
     
     async def _get_active_users_count(self) -> int:
-        """Get current active users count"""        return np.random.randint(1000, 5000)
+        """Get current active users count"""
+        return np.random.randint(1000, 5000)
     
     async def _get_real_time_views(self) -> int:
-        """Get real-time content views"""        return np.random.randint(100, 1000)
+        """Get real-time content views"""
+        return np.random.randint(100, 1000)
     
     async def _get_real_time_engagement(self) -> float:
-        """Get real-time engagement rate"""        return np.random.uniform(0.08, 0.20)
+        """Get real-time engagement rate"""
+        return np.random.uniform(0.08, 0.20)
     
     async def _get_real_time_revenue(self) -> float:
-        """Get real-time revenue rate"""        return np.random.uniform(50.0, 500.0)
+        """Get real-time revenue rate"""
+        return np.random.uniform(50.0, 500.0)
     
     async def _get_system_metrics(self) -> Dict[str, float]:
-        """Get current system performance metrics"""        return {
+        """Get current system performance metrics"""
+        return {
             'cpu_usage': np.random.uniform(0.3, 0.8),
             'memory_usage': np.random.uniform(0.4, 0.9),
             'disk_usage': np.random.uniform(0.2, 0.7),
@@ -2527,13 +2626,16 @@ class AnalyticsAgent:
         }
     
     async def _get_real_time_uploads(self) -> int:
-        """Get real-time content upload count"""        return np.random.randint(5, 50)
+        """Get real-time content upload count"""
+        return np.random.randint(5, 50)
     
     async def _get_social_mentions(self) -> int:
-        """Get social media mentions count"""        return np.random.randint(10, 200)
+        """Get social media mentions count"""
+        return np.random.randint(10, 200)
     
     async def _get_trending_content(self) -> List[Dict[str, Any]]:
-        """Get currently trending content"""        return [
+        """Get currently trending content"""
+        return [
             {
                 'content_id': f"trending_{i}",
                 'title': f"Trending Content {i}",
@@ -2544,7 +2646,8 @@ class AnalyticsAgent:
         ]
     
     async def _check_real_time_alerts(self) -> List[Dict[str, Any]]:
-        """Check for real-time system alerts"""        alerts = []
+        """Check for real-time system alerts"""
+        alerts = []
         
         # Simulate alert generation
         alert_types = ['performance', 'security', 'content_protection', 'user_activity']
@@ -2563,7 +2666,8 @@ class AnalyticsAgent:
         return alerts
     
     async def _check_performance_thresholds(self) -> Dict[str, str]:
-        """Check performance against defined thresholds"""        return {
+        """Check performance against defined thresholds"""
+        return {
             'cpu_usage': 'normal',
             'memory_usage': 'normal',
             'response_time': 'normal',
@@ -2572,7 +2676,8 @@ class AnalyticsAgent:
         }
     
     async def _detect_real_time_anomalies(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect anomalies in real-time data"""        anomalies = []
+        """Detect anomalies in real-time data"""
+        anomalies = []
         
         # Simple anomaly detection for real-time data
         for metric, value in data.items():
@@ -2591,7 +2696,8 @@ class AnalyticsAgent:
         return anomalies
     
     async def _prepare_live_dashboard_data(self, real_time_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Prepare data for live dashboard display"""        return {
+        """Prepare data for live dashboard display"""
+        return {
             'summary_cards': {
                 'active_users': {
                     'value': real_time_data.get('active_users', 0),
@@ -2622,7 +2728,8 @@ class AnalyticsAgent:
     # Additional business intelligence helper methods
     
     async def _analyze_revenue_streams(self, time_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Analyze different revenue streams"""        return {
+        """Analyze different revenue streams"""
+        return {
             'total_revenue': np.random.uniform(50000.0, 200000.0),
             'revenue_streams': {
                 'subscription_fees': {
@@ -2654,7 +2761,8 @@ class AnalyticsAgent:
         }
     
     async def _calculate_growth_metrics(self, time_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Calculate comprehensive growth metrics"""        return {
+        """Calculate comprehensive growth metrics"""
+        return {
             'user_growth': {
                 'new_users': np.random.randint(1000, 5000),
                 'growth_rate': np.random.uniform(0.15, 0.35),
@@ -2678,7 +2786,8 @@ class AnalyticsAgent:
         }
     
     async def _analyze_market_position(self, time_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Analyze current market position"""        return {
+        """Analyze current market position"""
+        return {
             'market_share': np.random.uniform(0.10, 0.25),
             'competitive_ranking': np.random.randint(3, 8),
             'brand_recognition': np.random.uniform(0.60, 0.85),
@@ -2707,7 +2816,8 @@ class AnalyticsAgent:
         }
     
     async def _analyze_operational_efficiency(self, time_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Analyze operational efficiency metrics"""        return {
+        """Analyze operational efficiency metrics"""
+        return {
             'efficiency_metrics': {
                 'cost_per_acquisition': np.random.uniform(15.0, 45.0),
                 'lifetime_value': np.random.uniform(200.0, 800.0),
@@ -2730,7 +2840,8 @@ class AnalyticsAgent:
         }
     
     async def _generate_financial_forecast(self, time_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Generate comprehensive financial forecast"""        return {
+        """Generate comprehensive financial forecast"""
+        return {
             'forecast_period': '12 months',
             'revenue_projection': {
                 'q1': np.random.uniform(150000.0, 250000.0),
@@ -2758,7 +2869,8 @@ class AnalyticsAgent:
         }
     
     async def _analyze_competitive_positioning(self) -> Dict[str, Any]:
-        """Analyze competitive positioning in the market"""        return {
+        """Analyze competitive positioning in the market"""
+        return {
             'positioning_matrix': {
                 'innovation_leader': True,
                 'cost_leader': False,
@@ -2786,7 +2898,8 @@ class AnalyticsAgent:
         }
     
     async def _analyze_customer_acquisition(self, time_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Analyze customer acquisition metrics and channels"""        return {
+        """Analyze customer acquisition metrics and channels"""
+        return {
             'acquisition_metrics': {
                 'new_customers': np.random.randint(500, 2000),
                 'cost_per_acquisition': np.random.uniform(25.0, 75.0),
@@ -2829,7 +2942,8 @@ class AnalyticsAgent:
         }
     
     async def _analyze_content_portfolio(self, time_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Analyze overall content portfolio performance"""        return {
+        """Analyze overall content portfolio performance"""
+        return {
             'portfolio_overview': {
                 'total_content_pieces': np.random.randint(10000, 50000),
                 'active_creators': np.random.randint(1000, 5000),
@@ -2860,7 +2974,8 @@ class AnalyticsAgent:
         }
     
     async def _generate_strategic_insights(self, kpis: Dict[str, Any], revenue_analysis: Dict[str, Any], growth_metrics: Dict[str, Any]) -> List[str]:
-        """Generate strategic insights from business data"""        insights = []
+        """Generate strategic insights from business data"""
+        insights = []
         
         # Revenue insights
         if revenue_analysis.get('total_revenue', 0) > 100000:
@@ -2887,7 +3002,8 @@ class AnalyticsAgent:
 
 # Factory function for creating AnalyticsAgent instances
 def create_analytics_agent(config: Optional[AnalyticsConfig] = None) -> AnalyticsAgent:
-    """Factory function to create and initialize Analytics Agent"""    return AnalyticsAgent(config)
+    """Factory function to create and initialize Analytics Agent"""
+    return AnalyticsAgent(config)
 
 
 # Export main classes and functions
@@ -2917,7 +3033,8 @@ __all__ = [
         return real_time_data
     
     async def _analyze_system_performance(self, request: AnalyticsRequest) -> Dict[str, Any]:
-        """Analyze comprehensive system performance"""        analysis_type = request.parameters.get("analysis_type", "overview")
+        """Analyze comprehensive system performance"""
+        analysis_type = request.parameters.get("analysis_type", "overview")
         time_window = request.parameters.get("time_window_hours", 24)
         
         if analysis_type == "trends":
@@ -2949,7 +3066,8 @@ __all__ = [
             }
     
     async def _predict_content_performance(self, request: AnalyticsRequest, time_horizon: int) -> Dict[str, Any]:
-        """Predict content performance trends"""        content_id = request.content_id
+        """Predict content performance trends"""
+        content_id = request.content_id
         
         return {
             "content_id": content_id,
@@ -2978,7 +3096,8 @@ __all__ = [
         }
     
     async def _predict_user_growth(self, request: AnalyticsRequest, time_horizon: int) -> Dict[str, Any]:
-        """Predict user growth patterns"""        return {
+        """Predict user growth patterns"""
+        return {
             "prediction_horizon_days": time_horizon,
             "user_growth_forecast": {
                 "new_users": np.random.randint(100, 1000),
@@ -2999,7 +3118,8 @@ __all__ = [
         }
     
     async def _predict_revenue_trends(self, request: AnalyticsRequest, time_horizon: int) -> Dict[str, Any]:
-        """Predict revenue trends and opportunities"""        return {
+        """Predict revenue trends and opportunities"""
+        return {
             "prediction_horizon_days": time_horizon,
             "revenue_forecast": {
                 "total_revenue": np.random.uniform(10000, 100000),
@@ -3020,7 +3140,8 @@ __all__ = [
         }
     
     async def _predict_market_trends(self, request: AnalyticsRequest, time_horizon: int) -> Dict[str, Any]:
-        """Predict market trends and opportunities"""        return {
+        """Predict market trends and opportunities"""
+        return {
             "prediction_horizon_days": time_horizon,
             "market_trends": {
                 "creator_economy_growth": 0.35,
@@ -3049,7 +3170,8 @@ __all__ = [
         }
     
     def _initialize_sample_data(self):
-        """Initialize sample data for testing and demonstration"""        # Sample content metrics
+        """Initialize sample data for testing and demonstration"""
+        # Sample content metrics
         sample_content = [
             ContentMetrics(
                 content_id="content_001",
@@ -3116,7 +3238,8 @@ __all__ = [
         self.business_intelligence.engagement_history.append(sample_engagement)
     
     def _get_user_content_history(self, user_id: str) -> List[ContentMetrics]:
-        """Get user's content history (simulated for demonstration)"""        # Return sample content history for the user
+        """Get user's content history (simulated for demonstration)"""
+        # Return sample content history for the user
         return [
             ContentMetrics(
                 content_id=f"content_{user_id}_{i}",
@@ -3133,7 +3256,8 @@ __all__ = [
         ]
     
     def _get_active_alerts(self) -> List[Dict[str, Any]]:
-        """Get current active alerts"""        return [
+        """Get current active alerts"""
+        return [
             {
                 "alert_id": "alert_001",
                 "type": "performance",
@@ -3151,7 +3275,8 @@ __all__ = [
         ]
     
     def _get_trending_content(self) -> List[Dict[str, Any]]:
-        """Get currently trending content"""        return [
+        """Get currently trending content"""
+        return [
             {
                 "content_id": "trending_001",
                 "type": "audio",
@@ -3171,7 +3296,8 @@ __all__ = [
         ]
     
     def get_agent_status(self) -> Dict[str, Any]:
-        """Get current agent status and statistics"""        return {
+        """Get current agent status and statistics"""
+        return {
             "agent_id": self.agent_id,
             "status": "active",
             "uptime": str(datetime.now() - datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)),
@@ -3202,7 +3328,8 @@ __all__ = [
         }
     
     async def generate_comprehensive_report(self, user_id: str, report_type: str = "full") -> Dict[str, Any]:
-        """Generate comprehensive analytics report for user"""        logger.info(f"Generating comprehensive analytics report for user: {user_id}")
+        """Generate comprehensive analytics report for user"""
+        logger.info(f"Generating comprehensive analytics report for user: {user_id}")
         
         # Content performance analysis
         content_request = AnalyticsRequest(
@@ -3335,7 +3462,8 @@ from ...integrations.platform_apis import (
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Types of analytics metrics"""    ENGAGEMENT = "engagement"
+    """Types of analytics metrics"""
+    ENGAGEMENT = "engagement"
     REVENUE = "revenue"
     AUDIENCE = "audience"
     CONTENT_PERFORMANCE = "content_performance"
@@ -3346,7 +3474,8 @@ class MetricType(Enum):
     ANOMALY = "anomaly"
 
 class TimeGranularity(Enum):
-    """Time granularity for analytics"""    HOURLY = "hourly"
+    """Time granularity for analytics"""
+    HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -3354,7 +3483,8 @@ class TimeGranularity(Enum):
     YEARLY = "yearly"
 
 class AnalyticsScope(Enum):
-    """Scope of analytics analysis"""    USER_SPECIFIC = "user_specific"
+    """Scope of analytics analysis"""
+    USER_SPECIFIC = "user_specific"
     CONTENT_SPECIFIC = "content_specific" 
     PLATFORM_SPECIFIC = "platform_specific"
     CROSS_PLATFORM = "cross_platform"
@@ -3363,7 +3493,8 @@ class AnalyticsScope(Enum):
 
 @dataclass
 class MetricDefinition:
-    """Definition of an analytics metric"""    name: str
+    """Definition of an analytics metric"""
+    name: str
     metric_type: MetricType
     description: str
     calculation_method: str
@@ -3374,7 +3505,8 @@ class MetricDefinition:
 
 @dataclass
 class AnalyticsInsight:
-    """AI-generated analytics insight"""    insight_id: str
+    """AI-generated analytics insight"""
+    insight_id: str
     title: str
     description: str
     confidence_score: float  # 0.0-1.0
@@ -3386,7 +3518,8 @@ class AnalyticsInsight:
 
 @dataclass
 class PredictiveModel:
-    """Predictive model configuration"""    model_id: str
+    """Predictive model configuration"""
+    model_id: str
     model_type: str  # prophet, arima, lstm, etc.
     target_metric: str
     features: List[str]
@@ -3396,7 +3529,8 @@ class PredictiveModel:
     last_trained: Optional[datetime] = None
 
 class AnalyticsAgent(BaseAgent):
-    """    Enterprise analytics agent with comprehensive intelligence capabilities:
+    """
+    Enterprise analytics agent with comprehensive intelligence capabilities:
     
     Core Features:
     - Real-time multi-platform analytics aggregation
@@ -3409,7 +3543,8 @@ class AnalyticsAgent(BaseAgent):
     - Content performance prediction
     - Collaboration opportunity identification
     - Trend analysis and market intelligence
-    """    
+    """
+    
     def __init__(self, agent_id: str, config: Dict[str, Any] = None):
         super().__init__(
             agent_id=agent_id,
@@ -3459,7 +3594,8 @@ class AnalyticsAgent(BaseAgent):
         ]
     
     async def _load_models_and_resources(self):
-        """Load AI models and analytics resources"""        try:
+        """Load AI models and analytics resources"""
+        try:
             # Load pre-trained models for insight generation
             await self._load_insight_generation_model()
             await self._load_text_analysis_model()
@@ -3477,7 +3613,8 @@ class AnalyticsAgent(BaseAgent):
             raise
     
     async def _load_insight_generation_model(self):
-        """Load AI model for generating business insights"""        try:
+        """Load AI model for generating business insights"""
+        try:
             # Load transformer model for insight generation
             from transformers import pipeline
             self.insight_model = pipeline(
@@ -3490,7 +3627,8 @@ class AnalyticsAgent(BaseAgent):
             logger.error(f"Failed to load insight model: {e}")
     
     async def _load_text_analysis_model(self):
-        """Load NLP model for text analysis"""        try:
+        """Load NLP model for text analysis"""
+        try:
             from transformers import pipeline
             self.text_analyzer = pipeline(
                 "sentiment-analysis",
@@ -3501,7 +3639,8 @@ class AnalyticsAgent(BaseAgent):
             logger.error(f"Failed to load text analysis model: {e}")
     
     async def process(self, request: AgentRequest) -> AgentResponse:
-        """Main analytics processing pipeline"""        action = request.action
+        """Main analytics processing pipeline"""
+        action = request.action
         data = request.data
         
         try:
@@ -3547,7 +3686,8 @@ class AnalyticsAgent(BaseAgent):
             )
     
     async def _generate_analytics_report(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate comprehensive analytics report"""        user_id = data.get('user_id')
+        """Generate comprehensive analytics report"""
+        user_id = data.get('user_id')
         date_range = data.get('date_range', {})
         platforms = data.get('platforms', ['all'])
         metrics = data.get('metrics', ['all'])
@@ -3604,7 +3744,8 @@ class AnalyticsAgent(BaseAgent):
         return report
     
     async def _predict_performance(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict future performance using ML models"""        user_id = data.get('user_id')
+        """Predict future performance using ML models"""
+        user_id = data.get('user_id')
         content_id = data.get('content_id')
         prediction_horizon = data.get('horizon_days', 30)
         metrics_to_predict = data.get('metrics', ['views', 'engagement', 'revenue'])
@@ -3660,7 +3801,8 @@ class AnalyticsAgent(BaseAgent):
         }
     
     async def _detect_anomalies(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Detect anomalies in performance data"""        user_id = data.get('user_id')
+        """Detect anomalies in performance data"""
+        user_id = data.get('user_id')
         metrics_to_check = data.get('metrics', ['views', 'engagement', 'revenue'])
         sensitivity = data.get('sensitivity', 0.95)  # Higher = more sensitive
         
@@ -3711,7 +3853,8 @@ class AnalyticsAgent(BaseAgent):
         }
     
     async def _analyze_trends(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Comprehensive trend analysis across multiple dimensions"""        user_id = data.get('user_id')
+        """Comprehensive trend analysis across multiple dimensions"""
+        user_id = data.get('user_id')
         analysis_period = data.get('period_days', 90)
         trend_types = data.get('trend_types', ['engagement', 'growth', 'seasonal', 'competitive'])
         
@@ -3748,7 +3891,8 @@ class AnalyticsAgent(BaseAgent):
         }
     
     async def _generate_insights(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate AI-powered business insights"""        user_id = data.get('user_id')
+        """Generate AI-powered business insights"""
+        user_id = data.get('user_id')
         insight_types = data.get('types', ['performance', 'opportunities', 'risks', 'optimization'])
         
         # Gather comprehensive data for insight generation
@@ -3779,7 +3923,8 @@ class AnalyticsAgent(BaseAgent):
         }
     
     async def _competitive_analysis(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform competitive intelligence analysis"""        user_id = data.get('user_id')
+        """Perform competitive intelligence analysis"""
+        user_id = data.get('user_id')
         competitors = data.get('competitors', [])
         analysis_metrics = data.get('metrics', ['engagement', 'growth', 'content_strategy'])
         
@@ -3828,7 +3973,8 @@ class AnalyticsAgent(BaseAgent):
         return competitive_analysis
     
     async def _audience_segmentation(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Advanced audience segmentation and behavior analysis"""        user_id = data.get('user_id')
+        """Advanced audience segmentation and behavior analysis"""
+        user_id = data.get('user_id')
         segmentation_methods = data.get('methods', ['demographic', 'behavioral', 'engagement', 'value'])
         
         # Get comprehensive audience data
@@ -3866,7 +4012,8 @@ class AnalyticsAgent(BaseAgent):
     
     # Helper methods for metric definitions
     def _initialize_metric_definitions(self) -> Dict[str, MetricDefinition]:
-        """Initialize standard metric definitions"""        metrics = {}
+        """Initialize standard metric definitions"""
+        metrics = {}
         
         # Engagement metrics
         metrics['engagement_rate'] = MetricDefinition(
@@ -3914,7 +4061,8 @@ class AnalyticsAgent(BaseAgent):
         start_date: datetime, 
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Aggregate data from multiple platforms"""        aggregated = {}
+        """Aggregate data from multiple platforms"""
+        aggregated = {}
         
         for platform in platforms:
             if platform == 'all':
@@ -3939,7 +4087,8 @@ class AnalyticsAgent(BaseAgent):
     # (Due to length constraints, I'm showing the structure and key methods)
     
     async def _setup_data_streams(self):
-        """Setup real-time data streaming"""        try:
+        """Setup real-time data streaming"""
+        try:
             self.logger.info("Setting up real-time data streaming")
             
             # Initialize Redis streaming
@@ -3965,7 +4114,8 @@ class AnalyticsAgent(BaseAgent):
             raise AnalyticsError(f"Data stream setup failed: {str(e)}")
     
     async def _consume_analytics_stream(self):
-        """Consume real-time analytics data"""        try:
+        """Consume real-time analytics data"""
+        try:
             while self.data_pipeline_active:
                 # Read from analytics stream
                 messages = await self.redis_client.xreadgroup(
@@ -3988,7 +4138,8 @@ class AnalyticsAgent(BaseAgent):
             self.logger.error(f"Analytics stream consumer error: {str(e)}")
     
     async def _consume_metrics_stream(self):
-        """Consume real-time metrics data"""        try:
+        """Consume real-time metrics data"""
+        try:
             while self.data_pipeline_active:
                 # Read from metrics stream
                 messages = await self.redis_client.xreadgroup(
@@ -4011,7 +4162,8 @@ class AnalyticsAgent(BaseAgent):
             self.logger.error(f"Metrics stream consumer error: {str(e)}")
     
     async def _process_analytics_message(self, fields: Dict[str, str]):
-        """Process individual analytics message"""        try:
+        """Process individual analytics message"""
+        try:
             # Extract data from message fields
             data_type = fields.get('type', 'unknown')
             payload = json.loads(fields.get('payload', '{}'))
@@ -4029,7 +4181,8 @@ class AnalyticsAgent(BaseAgent):
             self.logger.error(f"Failed to process analytics message: {str(e)}")
     
     async def _process_metrics_message(self, fields: Dict[str, str]):
-        """Process individual metrics message"""        try:
+        """Process individual metrics message"""
+        try:
             # Extract metrics data
             metric_name = fields.get('metric', 'unknown')
             metric_value = float(fields.get('value', 0))
@@ -4054,7 +4207,8 @@ class AnalyticsAgent(BaseAgent):
             self.logger.error(f"Failed to process metrics message: {str(e)}")
     
     async def _initialize_predictive_models(self):
-        """Initialize predictive models for various metrics"""        try:
+        """Initialize predictive models for various metrics"""
+        try:
             self.logger.info("Initializing predictive models")
             
             # Initialize model storage
@@ -4115,7 +4269,8 @@ class AnalyticsAgent(BaseAgent):
             raise AnalyticsError(f"Model initialization failed: {str(e)}")
     
     async def _load_pretrained_models(self):
-        """Load pre-trained models from storage"""        try:
+        """Load pre-trained models from storage"""
+        try:
             # Check for saved models in Redis or file system
             model_cache_key = "analytics:pretrained_models"
             
@@ -4135,7 +4290,8 @@ class AnalyticsAgent(BaseAgent):
             self.logger.error(f"Failed to load pre-trained models: {str(e)}")
     
     async def _periodic_model_retraining(self):
-        """Periodically retrain models with new data"""        try:
+        """Periodically retrain models with new data"""
+        try:
             while True:
                 await asyncio.sleep(3600)  # Retrain every hour
                 
@@ -4153,7 +4309,8 @@ class AnalyticsAgent(BaseAgent):
             self.logger.error(f"Periodic retraining error: {str(e)}")
     
     async def _retrain_model(self, model_name: str):
-        """Retrain a specific model with fresh data"""        try:
+        """Retrain a specific model with fresh data"""
+        try:
             self.logger.info(f"Retraining model: {model_name}")
             
             # Get fresh training data
@@ -4188,7 +4345,8 @@ class AnalyticsAgent(BaseAgent):
             self.logger.error(f"Failed to retrain model '{model_name}': {str(e)}")
     
     async def _get_training_data(self, model_name: str) -> List[Dict[str, Any]]:
-        """Get training data for a specific model"""        try:
+        """Get training data for a specific model"""
+        try:
             # In production, this would fetch real data from database
             # For now, return simulated training data
             
@@ -4212,7 +4370,8 @@ class AnalyticsAgent(BaseAgent):
             return []
     
     async def _train_content_performance_model(self, model_config: Dict, training_data: List[Dict]):
-        """Train content performance prediction model"""        try:
+        """Train content performance prediction model"""
+        try:
             # Prepare features and labels
             features = []
             labels = []
@@ -4242,7 +4401,8 @@ class AnalyticsAgent(BaseAgent):
             self.logger.error(f"Failed to train content performance model: {str(e)}")
     
     async def _save_trained_model(self, model_name: str, model_config: Dict):
-        """Save trained model to storage"""        try:
+        """Save trained model to storage"""
+        try:
             # In production, this would serialize and save the actual model
             # For now, just log the action
             self.logger.info(f"Saved trained model: {model_name}")
@@ -4251,21 +4411,25 @@ class AnalyticsAgent(BaseAgent):
             self.logger.error(f"Failed to save model '{model_name}': {str(e)}")
 
 class AnalyticsAgentManager:
-    """Manager for analytics agent instances and configuration"""    
+    """Manager for analytics agent instances and configuration"""
+    
     def __init__(self):
         self.agents: Dict[str, AnalyticsAgent] = {}
         self.global_config = {}
     
     async def create_agent(self, agent_id: str, config: Dict[str, Any] = None) -> AnalyticsAgent:
-        """Create and initialize a new analytics agent"""        agent = AnalyticsAgent(agent_id, config)
+        """Create and initialize a new analytics agent"""
+        agent = AnalyticsAgent(agent_id, config)
         await agent.initialize()
         self.agents[agent_id] = agent
         return agent
     
     async def get_agent(self, agent_id: str) -> Optional[AnalyticsAgent]:
-        """Get existing analytics agent"""        return self.agents.get(agent_id)
+        """Get existing analytics agent"""
+        return self.agents.get(agent_id)
     
     async def remove_agent(self, agent_id: str):
-        """Remove analytics agent"""        if agent_id in self.agents:
+        """Remove analytics agent"""
+        if agent_id in self.agents:
             await self.agents[agent_id].shutdown()
             del self.agents[agent_id]

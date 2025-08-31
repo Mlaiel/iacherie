@@ -5,7 +5,8 @@ Advanced automation workflows for platform operations and content management.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 from typing import Dict, List, Optional, Any, Callable, Union
 from datetime import datetime, timedelta
 from enum import Enum
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 
 class AutomationTrigger(Enum):
-    """Types of automation triggers"""    TIME_BASED = "time_based"
+    """Types of automation triggers"""
+    TIME_BASED = "time_based"
     METRIC_THRESHOLD = "metric_threshold"
     PLATFORM_STATUS = "platform_status"
     CONTENT_PERFORMANCE = "content_performance"
@@ -35,7 +37,8 @@ class AutomationTrigger(Enum):
 
 
 class AutomationAction(Enum):
-    """Types of automation actions"""    DISTRIBUTE_CONTENT = "distribute_content"
+    """Types of automation actions"""
+    DISTRIBUTE_CONTENT = "distribute_content"
     SEND_NOTIFICATION = "send_notification"
     UPDATE_SETTINGS = "update_settings"
     TRIGGER_BACKUP = "trigger_backup"
@@ -46,7 +49,8 @@ class AutomationAction(Enum):
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status"""    INACTIVE = "inactive"
+    """Workflow execution status"""
+    INACTIVE = "inactive"
     ACTIVE = "active"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -56,14 +60,16 @@ class WorkflowStatus(Enum):
 
 @dataclass
 class AutomationCondition:
-    """Condition for automation trigger"""    condition_type: str
+    """Condition for automation trigger"""
+    condition_type: str
     parameter: str
     operator: str  # eq, gt, lt, gte, lte, contains, regex
     value: Any
     platform_id: Optional[str] = None
     
     def evaluate(self, context: Dict[str, Any]) -> bool:
-        """Evaluate condition against context"""        try:
+        """Evaluate condition against context"""
+        try:
             # Get value from context
             if self.platform_id:
                 platform_context = context.get('platforms', {}).get(self.platform_id, {})
@@ -100,7 +106,8 @@ class AutomationCondition:
 
 @dataclass
 class AutomationRule:
-    """Automation rule definition"""    rule_id: str
+    """Automation rule definition"""
+    rule_id: str
     name: str
     description: str
     trigger: AutomationTrigger
@@ -116,7 +123,8 @@ class AutomationRule:
     last_result: Optional[Dict[str, Any]] = None
     
     def should_execute(self, context: Dict[str, Any]) -> bool:
-        """Check if rule should execute based on conditions"""        if not self.enabled:
+        """Check if rule should execute based on conditions"""
+        if not self.enabled:
             return False
         
         if not self.conditions:
@@ -126,7 +134,8 @@ class AutomationRule:
         return all(condition.evaluate(context) for condition in self.conditions)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             'rule_id': self.rule_id,
             'name': self.name,
             'description': self.description,
@@ -153,7 +162,8 @@ class AutomationRule:
 
 @dataclass
 class WorkflowStep:
-    """Single step in automation workflow"""    step_id: str
+    """Single step in automation workflow"""
+    step_id: str
     name: str
     action_type: AutomationAction
     parameters: Dict[str, Any]
@@ -171,7 +181,8 @@ class WorkflowStep:
 
 @dataclass
 class AutomationWorkflow:
-    """Complex automation workflow"""    workflow_id: str
+    """Complex automation workflow"""
+    workflow_id: str
     name: str
     description: str
     steps: List[WorkflowStep]
@@ -187,7 +198,8 @@ class AutomationWorkflow:
     execution_count: int = 0
     
     def get_next_steps(self) -> List[WorkflowStep]:
-        """Get steps ready for execution"""        ready_steps = []
+        """Get steps ready for execution"""
+        ready_steps = []
         completed_step_ids = {
             step.step_id for step in self.steps 
             if step.status == WorkflowStatus.COMPLETED
@@ -202,16 +214,20 @@ class AutomationWorkflow:
         return ready_steps
     
     def is_complete(self) -> bool:
-        """Check if workflow is complete"""        return all(step.status == WorkflowStatus.COMPLETED for step in self.steps)
+        """Check if workflow is complete"""
+        return all(step.status == WorkflowStatus.COMPLETED for step in self.steps)
     
     def has_failed(self) -> bool:
-        """Check if workflow has failed"""        return any(step.status == WorkflowStatus.FAILED for step in self.steps)
+        """Check if workflow has failed"""
+        return any(step.status == WorkflowStatus.FAILED for step in self.steps)
 
 
 class AutomationEngine:
-    """Core automation engine for platform operations"""    
+    """Core automation engine for platform operations"""
+    
     def __init__(self):
-        """Initialize automation engine"""        self.rules: Dict[str, AutomationRule] = {}
+        """Initialize automation engine"""
+        self.rules: Dict[str, AutomationRule] = {}
         self.workflows: Dict[str, AutomationWorkflow] = {}
         self.running_workflows: Dict[str, asyncio.Task] = {}
         self.context_providers: List[Callable[[], Dict[str, Any]]] = []
@@ -234,13 +250,15 @@ class AutomationEngine:
         monitor: PlatformMonitor = None,
         scheduler: PlatformScheduler = None
     ):
-        """Set system dependencies"""        self.distributor = distributor
+        """Set system dependencies"""
+        self.distributor = distributor
         self.aggregator = aggregator
         self.monitor = monitor
         self.scheduler = scheduler
     
     def _setup_default_handlers(self):
-        """Setup default action handlers"""        self.action_handlers.update({
+        """Setup default action handlers"""
+        self.action_handlers.update({
             AutomationAction.DISTRIBUTE_CONTENT: self._handle_distribute_content,
             AutomationAction.SEND_NOTIFICATION: self._handle_send_notification,
             AutomationAction.UPDATE_SETTINGS: self._handle_update_settings,
@@ -260,7 +278,8 @@ class AutomationEngine:
         actions: List[Dict[str, Any]],
         priority: int = 1
     ) -> str:
-        """Add automation rule"""        rule_id = str(uuid.uuid4())
+        """Add automation rule"""
+        rule_id = str(uuid.uuid4())
         
         rule = AutomationRule(
             rule_id=rule_id,
@@ -284,7 +303,8 @@ class AutomationEngine:
         steps: List[WorkflowStep],
         trigger_rules: List[str] = None
     ) -> str:
-        """Add automation workflow"""        workflow_id = str(uuid.uuid4())
+        """Add automation workflow"""
+        workflow_id = str(uuid.uuid4())
         
         workflow = AutomationWorkflow(
             workflow_id=workflow_id,
@@ -300,13 +320,16 @@ class AutomationEngine:
         return workflow_id
     
     def add_context_provider(self, provider: Callable[[], Dict[str, Any]]):
-        """Add context provider function"""        self.context_providers.append(provider)
+        """Add context provider function"""
+        self.context_providers.append(provider)
     
     def register_action_handler(self, action: AutomationAction, handler: Callable):
-        """Register custom action handler"""        self.action_handlers[action] = handler
+        """Register custom action handler"""
+        self.action_handlers[action] = handler
     
     async def get_automation_context(self) -> Dict[str, Any]:
-        """Gather context from all providers"""        context = {
+        """Gather context from all providers"""
+        context = {
             'timestamp': datetime.utcnow().isoformat(),
             'platforms': {},
             'system': {}
@@ -332,7 +355,8 @@ class AutomationEngine:
         return context
     
     async def evaluate_rules(self, trigger_type: AutomationTrigger = None) -> List[AutomationRule]:
-        """Evaluate rules and return those that should execute"""        context = await self.get_automation_context()
+        """Evaluate rules and return those that should execute"""
+        context = await self.get_automation_context()
         triggered_rules = []
         
         for rule in self.rules.values():
@@ -350,7 +374,8 @@ class AutomationEngine:
         return triggered_rules
     
     async def execute_rule(self, rule: AutomationRule) -> Dict[str, Any]:
-        """Execute automation rule"""        rule.execution_count += 1
+        """Execute automation rule"""
+        rule.execution_count += 1
         rule.last_execution = datetime.utcnow()
         
         results = []
@@ -392,7 +417,8 @@ class AutomationEngine:
             return rule.last_result
     
     async def execute_workflow(self, workflow: AutomationWorkflow) -> Dict[str, Any]:
-        """Execute automation workflow"""        workflow.status = WorkflowStatus.ACTIVE
+        """Execute automation workflow"""
+        workflow.status = WorkflowStatus.ACTIVE
         workflow.started_at = datetime.utcnow()
         workflow.execution_count += 1
         
@@ -462,7 +488,8 @@ class AutomationEngine:
             }
     
     async def _execute_workflow_step(self, step: WorkflowStep) -> Any:
-        """Execute single workflow step"""        handler = self.action_handlers.get(step.action_type)
+        """Execute single workflow step"""
+        handler = self.action_handlers.get(step.action_type)
         if not handler:
             raise Exception(f"No handler for action type: {step.action_type}")
         
@@ -470,7 +497,8 @@ class AutomationEngine:
     
     # Default action handlers
     async def _handle_distribute_content(self, parameters: Dict[str, Any]) -> Any:
-        """Handle content distribution action"""        if not self.distributor:
+        """Handle content distribution action"""
+        if not self.distributor:
             raise Exception("Content distributor not available")
         
         # Extract parameters
@@ -500,7 +528,8 @@ class AutomationEngine:
         return result
     
     async def _handle_send_notification(self, parameters: Dict[str, Any]) -> Any:
-        """Handle send notification action"""        message = parameters.get('message', 'Automation notification')
+        """Handle send notification action"""
+        message = parameters.get('message', 'Automation notification')
         recipients = parameters.get('recipients', [])
         
         # This would integrate with notification system
@@ -509,7 +538,8 @@ class AutomationEngine:
         return {'message': message, 'recipients_count': len(recipients)}
     
     async def _handle_update_settings(self, parameters: Dict[str, Any]) -> Any:
-        """Handle update settings action"""        settings = parameters.get('settings', {})
+        """Handle update settings action"""
+        settings = parameters.get('settings', {})
         platform_id = parameters.get('platform_id')
         
         # This would update platform or system settings
@@ -518,7 +548,8 @@ class AutomationEngine:
         return {'platform_id': platform_id, 'updated_settings': settings}
     
     async def _handle_trigger_backup(self, parameters: Dict[str, Any]) -> Any:
-        """Handle trigger backup action"""        backup_type = parameters.get('backup_type', 'full')
+        """Handle trigger backup action"""
+        backup_type = parameters.get('backup_type', 'full')
         platforms = parameters.get('platforms', [])
         
         # This would trigger backup process
@@ -527,7 +558,8 @@ class AutomationEngine:
         return {'backup_type': backup_type, 'platforms_count': len(platforms)}
     
     async def _handle_scale_resources(self, parameters: Dict[str, Any]) -> Any:
-        """Handle scale resources action"""        scale_direction = parameters.get('direction', 'up')  # up/down
+        """Handle scale resources action"""
+        scale_direction = parameters.get('direction', 'up')  # up/down
         resource_type = parameters.get('resource_type', 'compute')
         
         # This would scale system resources
@@ -536,7 +568,8 @@ class AutomationEngine:
         return {'direction': scale_direction, 'resource_type': resource_type}
     
     async def _handle_execute_function(self, parameters: Dict[str, Any]) -> Any:
-        """Handle execute function action"""        function_name = parameters.get('function_name')
+        """Handle execute function action"""
+        function_name = parameters.get('function_name')
         function_args = parameters.get('args', [])
         function_kwargs = parameters.get('kwargs', {})
         
@@ -549,7 +582,8 @@ class AutomationEngine:
         return {'function_name': function_name, 'executed': True}
     
     async def _handle_send_alert(self, parameters: Dict[str, Any]) -> Any:
-        """Handle send alert action"""        alert_type = parameters.get('alert_type', 'info')
+        """Handle send alert action"""
+        alert_type = parameters.get('alert_type', 'info')
         message = parameters.get('message', 'Automation alert')
         
         if self.monitor:
@@ -561,7 +595,8 @@ class AutomationEngine:
         return {'alert_type': alert_type, 'message': message}
     
     async def _handle_pause_operations(self, parameters: Dict[str, Any]) -> Any:
-        """Handle pause operations action"""        platform_ids = parameters.get('platform_ids', [])
+        """Handle pause operations action"""
+        platform_ids = parameters.get('platform_ids', [])
         duration_minutes = parameters.get('duration_minutes', 30)
         
         # This would pause platform operations
@@ -570,7 +605,8 @@ class AutomationEngine:
         return {'paused_platforms': len(platform_ids), 'duration_minutes': duration_minutes}
     
     async def start(self):
-        """Start automation engine"""        if self.engine_active:
+        """Start automation engine"""
+        if self.engine_active:
             logger.warning("Automation engine already active")
             return
         
@@ -579,7 +615,8 @@ class AutomationEngine:
         logger.info("Automation engine started")
     
     async def stop(self):
-        """Stop automation engine"""        if not self.engine_active:
+        """Stop automation engine"""
+        if not self.engine_active:
             return
         
         self.engine_active = False
@@ -599,7 +636,8 @@ class AutomationEngine:
         logger.info("Automation engine stopped")
     
     async def _automation_loop(self):
-        """Main automation monitoring loop"""        try:
+        """Main automation monitoring loop"""
+        try:
             while self.engine_active:
                 try:
                     # Evaluate time-based triggers
@@ -648,7 +686,8 @@ class AutomationEngine:
             self.engine_active = False
     
     def get_automation_stats(self) -> Dict[str, Any]:
-        """Get automation engine statistics"""        return {
+        """Get automation engine statistics"""
+        return {
             'engine_active': self.engine_active,
             'total_rules': len(self.rules),
             'enabled_rules': len([r for r in self.rules.values() if r.enabled]),
@@ -666,7 +705,8 @@ _global_engine: Optional[AutomationEngine] = None
 
 
 def get_automation_engine() -> AutomationEngine:
-    """Get global automation engine instance"""    global _global_engine
+    """Get global automation engine instance"""
+    global _global_engine
     
     if _global_engine is None:
         _global_engine = AutomationEngine()
@@ -675,12 +715,14 @@ def get_automation_engine() -> AutomationEngine:
 
 
 async def start_automation():
-    """Start global automation engine"""    engine = get_automation_engine()
+    """Start global automation engine"""
+    engine = get_automation_engine()
     await engine.start()
 
 
 async def stop_automation():
-    """Stop global automation engine"""    global _global_engine
+    """Stop global automation engine"""
+    global _global_engine
     
     if _global_engine:
         await _global_engine.stop()

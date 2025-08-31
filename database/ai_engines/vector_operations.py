@@ -19,7 +19,8 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 WARNING: This code is proprietary and confidential. Any unauthorized use, modification,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, List, Any, Optional, Union, Tuple, Generator
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple, Generator
 import json
 import logging
 import asyncio
@@ -42,7 +43,8 @@ from pydantic import BaseModel, Field, validator
 logger = logging.getLogger(__name__)
 
 class VectorStorageBackend(str, Enum):
-    """Vector storage backend enumeration."""    FAISS = "faiss"
+    """Vector storage backend enumeration."""
+    FAISS = "faiss"
     PINECONE = "pinecone"
     ELASTICSEARCH = "elasticsearch"
     WEAVIATE = "weaviate"
@@ -50,14 +52,16 @@ class VectorStorageBackend(str, Enum):
     CHROMA = "chroma"
 
 class IndexType(str, Enum):
-    """Vector index type enumeration."""    FLAT = "flat"
+    """Vector index type enumeration."""
+    FLAT = "flat"
     HNSW = "hnsw"
     IVF = "ivf"
     LSH = "lsh"
     ANNOY = "annoy"
 
 class DistanceMetric(str, Enum):
-    """Distance metric enumeration."""    COSINE = "cosine"
+    """Distance metric enumeration."""
+    COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     DOT_PRODUCT = "dot_product"
     MANHATTAN = "manhattan"
@@ -65,7 +69,8 @@ class DistanceMetric(str, Enum):
 
 @dataclass
 class VectorEmbedding:
-    """Vector embedding structure."""    embedding_id: str
+    """Vector embedding structure."""
+    embedding_id: str
     content_id: str
     content_type: str  # audio, video, image, text
     vector: np.ndarray
@@ -77,7 +82,8 @@ class VectorEmbedding:
 
 @dataclass
 class SimilarityResult:
-    """Similarity search result structure."""    content_id: str
+    """Similarity search result structure."""
+    content_id: str
     similarity_score: float
     distance: float
     metadata: Dict[str, Any]
@@ -86,14 +92,16 @@ class SimilarityResult:
 
 @dataclass
 class SearchQuery:
-    """Vector search query structure."""    query_vector: np.ndarray
+    """Vector search query structure."""
+    query_vector: np.ndarray
     top_k: int = 10
     distance_metric: DistanceMetric = DistanceMetric.COSINE
     filters: Optional[Dict[str, Any]] = None
     threshold: Optional[float] = None
 
 class VectorIndexConfig(BaseModel):
-    """Vector index configuration."""    index_name: str = Field(..., min_length=1)
+    """Vector index configuration."""
+    index_name: str = Field(..., min_length=1)
     dimension: int = Field(..., ge=1, le=4096)
     index_type: IndexType = IndexType.HNSW
     distance_metric: DistanceMetric = DistanceMetric.COSINE
@@ -103,13 +111,16 @@ class VectorIndexConfig(BaseModel):
     search_parameters: Dict[str, Any] = Field(default_factory=dict)
 
 class VectorDatabaseManager:
-    """    Central vector database manager.
+    """
+    Central vector database manager.
     
     Manages vector storage, indexing, and retrieval across multiple
     backends with high performance and scalability.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the vector database manager."""        self.vector_stores = {}
+        """Initialize the vector database manager."""
+        self.vector_stores = {}
         self.indexes = {}
         self.embedding_cache = {}
         self.search_cache = {}
@@ -117,11 +128,13 @@ class VectorDatabaseManager:
         self.initialized = False
         
     async def initialize(self) -> Dict[str, Any]:
-        """        Initialize the vector database manager.
+        """
+        Initialize the vector database manager.
         
         Returns:
             Dict[str, Any]: Initialization status
-        """        try:
+        """
+        try:
             # Initialize vector storage backends
             await self._initialize_storage_backends()
             
@@ -153,14 +166,16 @@ class VectorDatabaseManager:
             }
     
     async def create_index(self, config: VectorIndexConfig) -> Dict[str, Any]:
-        """        Create a new vector index.
+        """
+        Create a new vector index.
         
         Args:
             config: Index configuration
             
         Returns:
             Dict[str, Any]: Index creation result
-        """        try:
+        """
+        try:
             # Check if index already exists
             if config.index_name in self.indexes:
                 return {
@@ -211,7 +226,8 @@ class VectorDatabaseManager:
     
     async def add_vectors(self, index_name: str, 
                          embeddings: List[VectorEmbedding]) -> Dict[str, Any]:
-        """        Add vectors to an index.
+        """
+        Add vectors to an index.
         
         Args:
             index_name: Index name
@@ -219,7 +235,8 @@ class VectorDatabaseManager:
             
         Returns:
             Dict[str, Any]: Addition result
-        """        try:
+        """
+        try:
             if index_name not in self.indexes:
                 return {
                     "status": "error",
@@ -274,7 +291,8 @@ class VectorDatabaseManager:
     
     async def search_similar(self, index_name: str, 
                            query: SearchQuery) -> Dict[str, Any]:
-        """        Search for similar vectors.
+        """
+        Search for similar vectors.
         
         Args:
             index_name: Index name
@@ -282,7 +300,8 @@ class VectorDatabaseManager:
             
         Returns:
             Dict[str, Any]: Search results
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             if index_name not in self.indexes:
@@ -369,14 +388,16 @@ class VectorDatabaseManager:
             }
     
     async def get_index_stats(self, index_name: str) -> Dict[str, Any]:
-        """        Get index statistics.
+        """
+        Get index statistics.
         
         Args:
             index_name: Index name
             
         Returns:
             Dict[str, Any]: Index statistics
-        """        try:
+        """
+        try:
             if index_name not in self.indexes:
                 return {
                     "status": "error",
@@ -420,14 +441,17 @@ class VectorDatabaseManager:
             }
     
     async def get_total_vectors_count(self) -> int:
-        """Get total number of vectors across all indexes."""        return sum(index_record["vector_count"] for index_record in self.indexes.values())
+        """Get total number of vectors across all indexes."""
+        return sum(index_record["vector_count"] for index_record in self.indexes.values())
     
     async def health_check(self) -> Dict[str, Any]:
-        """        Perform health check on vector database.
+        """
+        Perform health check on vector database.
         
         Returns:
             Dict[str, Any]: Health status
-        """        try:
+        """
+        try:
             if not self.initialized:
                 return {
                     "status": "unhealthy",
@@ -477,7 +501,8 @@ class VectorDatabaseManager:
     # Private helper methods
     
     async def _initialize_storage_backends(self):
-        """Initialize vector storage backends."""        # Initialize FAISS
+        """Initialize vector storage backends."""
+        # Initialize FAISS
         self.vector_stores[VectorStorageBackend.FAISS] = {
             "initialized": True,
             "version": faiss.version,
@@ -496,15 +521,18 @@ class VectorDatabaseManager:
         logger.info("Vector storage backends initialized")
     
     async def _load_existing_indexes(self):
-        """Load existing vector indexes."""        # In production, this would load from persistent storage
+        """Load existing vector indexes."""
+        # In production, this would load from persistent storage
         logger.info("Loading existing vector indexes")
     
     async def _initialize_embedding_models(self):
-        """Initialize embedding models."""        # Initialize default embedding models
+        """Initialize embedding models."""
+        # Initialize default embedding models
         logger.info("Embedding models initialized")
     
     async def _create_faiss_index(self, config: VectorIndexConfig):
-        """Create FAISS vector index."""        dimension = config.dimension
+        """Create FAISS vector index."""
+        dimension = config.dimension
         
         if config.index_type == IndexType.FLAT:
             if config.distance_metric == DistanceMetric.COSINE:
@@ -531,7 +559,8 @@ class VectorDatabaseManager:
         return index
     
     async def _create_pinecone_index(self, config: VectorIndexConfig):
-        """Create Pinecone vector index."""        # Mock Pinecone index creation
+        """Create Pinecone vector index."""
+        # Mock Pinecone index creation
         return {
             "type": "pinecone",
             "dimension": config.dimension,
@@ -540,14 +569,16 @@ class VectorDatabaseManager:
         }
     
     async def _create_generic_index(self, config: VectorIndexConfig):
-        """Create generic vector index."""        return {
+        """Create generic vector index."""
+        return {
             "type": "generic",
             "dimension": config.dimension,
             "backend": config.storage_backend.value
         }
     
     async def _add_vectors_faiss(self, index, embeddings: List[VectorEmbedding]):
-        """Add vectors to FAISS index."""        # Prepare vectors
+        """Add vectors to FAISS index."""
+        # Prepare vectors
         vectors = np.vstack([emb.vector for emb in embeddings]).astype('float32')
         
         # Normalize vectors for cosine similarity if needed
@@ -559,14 +590,17 @@ class VectorDatabaseManager:
         return {"vectors_added": len(embeddings)}
     
     async def _add_vectors_pinecone(self, index, embeddings: List[VectorEmbedding]):
-        """Add vectors to Pinecone index."""        # Mock Pinecone vector addition
+        """Add vectors to Pinecone index."""
+        # Mock Pinecone vector addition
         return {"vectors_added": len(embeddings)}
     
     async def _add_vectors_generic(self, index, embeddings: List[VectorEmbedding]):
-        """Add vectors to generic index."""        return {"vectors_added": len(embeddings)}
+        """Add vectors to generic index."""
+        return {"vectors_added": len(embeddings)}
     
     async def _search_faiss(self, index, query: SearchQuery) -> List[SimilarityResult]:
-        """Search FAISS index."""        # Prepare query vector
+        """Search FAISS index."""
+        # Prepare query vector
         query_vector = query.query_vector.reshape(1, -1).astype('float32')
         faiss.normalize_L2(query_vector)
         
@@ -596,7 +630,8 @@ class VectorDatabaseManager:
         return results
     
     async def _search_pinecone(self, index, query: SearchQuery) -> List[SimilarityResult]:
-        """Search Pinecone index."""        # Mock Pinecone search
+        """Search Pinecone index."""
+        # Mock Pinecone search
         results = []
         for i in range(min(query.top_k, 5)):  # Mock 5 results max
             result = SimilarityResult(
@@ -611,7 +646,8 @@ class VectorDatabaseManager:
         return results
     
     async def _search_generic(self, index, query: SearchQuery) -> List[SimilarityResult]:
-        """Search generic index."""        # Mock generic search
+        """Search generic index."""
+        # Mock generic search
         results = []
         for i in range(min(query.top_k, 3)):
             result = SimilarityResult(
@@ -627,7 +663,8 @@ class VectorDatabaseManager:
     
     def _apply_filters(self, results: List[SimilarityResult], 
                       filters: Dict[str, Any]) -> List[SimilarityResult]:
-        """Apply filters to search results."""        filtered_results = []
+        """Apply filters to search results."""
+        filtered_results = []
         
         for result in results:
             include = True
@@ -648,7 +685,8 @@ class VectorDatabaseManager:
         return filtered_results
     
     def _generate_query_hash(self, query: SearchQuery) -> str:
-        """Generate hash for query caching."""        query_data = {
+        """Generate hash for query caching."""
+        query_data = {
             "vector_hash": hashlib.sha256(query.query_vector.tobytes()).hexdigest()[:16],
             "top_k": query.top_k,
             "metric": query.distance_metric.value,
@@ -660,11 +698,13 @@ class VectorDatabaseManager:
         return hashlib.sha256(query_string.encode()).hexdigest()[:16]
     
     def _calculate_cache_hit_rate(self, index_name: str) -> float:
-        """Calculate cache hit rate for an index."""        # Mock cache hit rate calculation
+        """Calculate cache hit rate for an index."""
+        # Mock cache hit rate calculation
         return 0.75  # 75% hit rate
     
     def _estimate_memory_usage(self, index_name: str) -> float:
-        """Estimate memory usage for an index."""        if index_name in self.indexes:
+        """Estimate memory usage for an index."""
+        if index_name in self.indexes:
             vector_count = self.indexes[index_name]["vector_count"]
             dimension = self.indexes[index_name]["config"].dimension
             # Estimate 4 bytes per float32 + overhead
@@ -672,7 +712,8 @@ class VectorDatabaseManager:
         return 0.0
     
     async def _background_maintenance(self):
-        """Background maintenance tasks."""        while True:
+        """Background maintenance tasks."""
+        while True:
             try:
                 # Clean up old cache entries
                 await self._cleanup_search_cache()
@@ -687,7 +728,8 @@ class VectorDatabaseManager:
                 await asyncio.sleep(300)
     
     async def _cleanup_search_cache(self):
-        """Clean up old search cache entries."""        cutoff_time = datetime.utcnow() - timedelta(hours=1)
+        """Clean up old search cache entries."""
+        cutoff_time = datetime.utcnow() - timedelta(hours=1)
         
         keys_to_remove = []
         for key, cache_entry in self.search_cache.items():
@@ -701,7 +743,8 @@ class VectorDatabaseManager:
             logger.info(f"Cleaned up {len(keys_to_remove)} cache entries")
     
     async def _optimize_indexes(self):
-        """Optimize vector indexes."""        for index_name, index_record in self.indexes.items():
+        """Optimize vector indexes."""
+        for index_name, index_record in self.indexes.items():
             try:
                 # Check if optimization is needed
                 if index_record["vector_count"] > 10000 and index_record["statistics"]["total_searches"] > 1000:
@@ -711,25 +754,30 @@ class VectorDatabaseManager:
                 logger.warning(f"Failed to optimize index {index_name}: {str(e)}")
 
 class EmbeddingStorage:
-    """    High-performance embedding storage system.
+    """
+    High-performance embedding storage system.
     
     Provides efficient storage and retrieval of vector embeddings
     with metadata and content association.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the embedding storage."""        self.embeddings_store = {}
+        """Initialize the embedding storage."""
+        self.embeddings_store = {}
         self.content_to_embedding = {}
         self.embedding_models = {}
         
     async def store_embedding(self, embedding: VectorEmbedding) -> Dict[str, Any]:
-        """        Store a vector embedding.
+        """
+        Store a vector embedding.
         
         Args:
             embedding: Vector embedding to store
             
         Returns:
             Dict[str, Any]: Storage result
-        """        try:
+        """
+        try:
             # Generate fingerprint hash
             if not embedding.fingerprint_hash:
                 embedding.fingerprint_hash = self._generate_fingerprint_hash(embedding)
@@ -757,30 +805,35 @@ class EmbeddingStorage:
             }
     
     async def retrieve_embedding(self, embedding_id: str) -> Optional[VectorEmbedding]:
-        """        Retrieve a vector embedding.
+        """
+        Retrieve a vector embedding.
         
         Args:
             embedding_id: Embedding identifier
             
         Returns:
             Optional[VectorEmbedding]: Embedding if found
-        """        return self.embeddings_store.get(embedding_id)
+        """
+        return self.embeddings_store.get(embedding_id)
     
     async def find_by_content(self, content_id: str) -> Optional[VectorEmbedding]:
-        """        Find embedding by content ID.
+        """
+        Find embedding by content ID.
         
         Args:
             content_id: Content identifier
             
         Returns:
             Optional[VectorEmbedding]: Embedding if found
-        """        embedding_id = self.content_to_embedding.get(content_id)
+        """
+        embedding_id = self.content_to_embedding.get(content_id)
         if embedding_id:
             return await self.retrieve_embedding(embedding_id)
         return None
     
     def _generate_fingerprint_hash(self, embedding: VectorEmbedding) -> str:
-        """Generate fingerprint hash for embedding."""        # Combine vector data and metadata
+        """Generate fingerprint hash for embedding."""
+        # Combine vector data and metadata
         vector_bytes = embedding.vector.tobytes()
         metadata_bytes = json.dumps(embedding.metadata, sort_keys=True).encode()
         
@@ -788,20 +841,24 @@ class EmbeddingStorage:
         return hashlib.sha256(combined).hexdigest()
 
 class SimilaritySearchEngine:
-    """    Fast similarity search engine.
+    """
+    Fast similarity search engine.
     
     Provides optimized similarity search across multiple vector indexes
     with advanced filtering and ranking capabilities.
-    """    
+    """
+    
     def __init__(self, vector_manager: VectorDatabaseManager):
-        """Initialize the similarity search engine."""        self.vector_manager = vector_manager
+        """Initialize the similarity search engine."""
+        self.vector_manager = vector_manager
         self.search_history = []
         self.performance_cache = {}
         
     async def multi_index_search(self, query_vector: np.ndarray,
                                 indexes: List[str],
                                 top_k: int = 10) -> Dict[str, Any]:
-        """        Search across multiple indexes simultaneously.
+        """
+        Search across multiple indexes simultaneously.
         
         Args:
             query_vector: Query vector
@@ -810,7 +867,8 @@ class SimilaritySearchEngine:
             
         Returns:
             Dict[str, Any]: Multi-index search results
-        """        try:
+        """
+        try:
             search_tasks = []
             
             # Create search tasks for each index
@@ -857,7 +915,8 @@ class SimilaritySearchEngine:
     async def content_similarity_search(self, content_id: str,
                                       content_type: str,
                                       top_k: int = 10) -> Dict[str, Any]:
-        """        Search for similar content based on content ID.
+        """
+        Search for similar content based on content ID.
         
         Args:
             content_id: Content identifier
@@ -866,7 +925,8 @@ class SimilaritySearchEngine:
             
         Returns:
             Dict[str, Any]: Content similarity results
-        """        try:
+        """
+        try:
             # Find embedding for content
             embedding_storage = EmbeddingStorage()
             embedding = await embedding_storage.find_by_content(content_id)
@@ -917,7 +977,8 @@ class SimilaritySearchEngine:
             }
     
     def _combine_search_results(self, results: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Combine and rank results from multiple indexes."""        combined = []
+        """Combine and rank results from multiple indexes."""
+        combined = []
         
         for index_name, result in results.items():
             if result["status"] == "success":
@@ -931,17 +992,21 @@ class SimilaritySearchEngine:
         return combined
 
 class VectorIndexManager:
-    """    Vector index optimization and management.
+    """
+    Vector index optimization and management.
     
     Manages vector index lifecycle, optimization, and performance tuning.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the vector index manager."""        self.index_metrics = {}
+        """Initialize the vector index manager."""
+        self.index_metrics = {}
         self.optimization_history = {}
         
     async def optimize_index(self, index_name: str, 
                            optimization_config: Dict[str, Any]) -> Dict[str, Any]:
-        """        Optimize a vector index.
+        """
+        Optimize a vector index.
         
         Args:
             index_name: Index name
@@ -949,7 +1014,8 @@ class VectorIndexManager:
             
         Returns:
             Dict[str, Any]: Optimization result
-        """        try:
+        """
+        try:
             start_time = time.time()
             
             # Perform optimization based on configuration
@@ -1000,7 +1066,8 @@ class VectorIndexManager:
             }
     
     async def _rebuild_index(self, index_name: str, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Rebuild index for optimal performance."""        # Mock index rebuild
+        """Rebuild index for optimal performance."""
+        # Mock index rebuild
         return {
             "operation": "rebuild",
             "vectors_processed": 10000,
@@ -1008,7 +1075,8 @@ class VectorIndexManager:
         }
     
     async def _compress_index(self, index_name: str, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Compress index to reduce memory usage."""        # Mock index compression
+        """Compress index to reduce memory usage."""
+        # Mock index compression
         return {
             "operation": "compress",
             "size_reduction": "30%",
@@ -1016,7 +1084,8 @@ class VectorIndexManager:
         }
     
     async def _rebalance_index(self, index_name: str, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Rebalance index for better distribution."""        # Mock index rebalancing
+        """Rebalance index for better distribution."""
+        # Mock index rebalancing
         return {
             "operation": "rebalance",
             "clusters_optimized": 50,
@@ -1024,19 +1093,23 @@ class VectorIndexManager:
         }
 
 class SemanticSearchOptimizer:
-    """    Semantic search performance optimizer.
+    """
+    Semantic search performance optimizer.
     
     Optimizes semantic search performance through query analysis,
     caching strategies, and index selection.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the semantic search optimizer."""        self.query_patterns = {}
+        """Initialize the semantic search optimizer."""
+        self.query_patterns = {}
         self.performance_stats = {}
         self.optimization_rules = []
         
     async def optimize_query(self, query: SearchQuery, 
                            context: Dict[str, Any]) -> SearchQuery:
-        """        Optimize a search query.
+        """
+        Optimize a search query.
         
         Args:
             query: Original search query
@@ -1044,7 +1117,8 @@ class SemanticSearchOptimizer:
             
         Returns:
             SearchQuery: Optimized query
-        """        try:
+        """
+        try:
             optimized_query = SearchQuery(
                 query_vector=query.query_vector,
                 top_k=query.top_k,
@@ -1066,5 +1140,6 @@ class SemanticSearchOptimizer:
     async def _apply_optimization_rule(self, query: SearchQuery, 
                                      rule: Dict[str, Any], 
                                      context: Dict[str, Any]) -> SearchQuery:
-        """Apply an optimization rule to a query."""        # Mock optimization rule application
+        """Apply an optimization rule to a query."""
+        # Mock optimization rule application
         return query

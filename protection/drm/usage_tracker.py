@@ -22,7 +22,8 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - Audio Engineer: Professional audio processing and analysis
 - DevOps Engineer: Advanced deployment and infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt engineering and optimization
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -38,7 +39,8 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class UsageEventType(str, Enum):
-    """Types of content usage events."""    VIEW = "view"
+    """Types of content usage events."""
+    VIEW = "view"
     DOWNLOAD = "download"
     STREAM = "stream"
     SHARE = "share"
@@ -52,7 +54,8 @@ class UsageEventType(str, Enum):
     LICENSE = "license"
 
 class DeviceType(str, Enum):
-    """Types of devices used for content access."""    DESKTOP = "desktop"
+    """Types of devices used for content access."""
+    DESKTOP = "desktop"
     MOBILE = "mobile"
     TABLET = "tablet"
     TV = "tv"
@@ -61,7 +64,8 @@ class DeviceType(str, Enum):
     OTHER = "other"
 
 class Platform(str, Enum):
-    """Platforms where content is accessed."""    WEB = "web"
+    """Platforms where content is accessed."""
+    WEB = "web"
     MOBILE_APP = "mobile_app"
     DESKTOP_APP = "desktop_app"
     API = "api"
@@ -69,7 +73,8 @@ class Platform(str, Enum):
     THIRD_PARTY = "third_party"
 
 class MetricType(str, Enum):
-    """Types of analytics metrics."""    ENGAGEMENT = "engagement"
+    """Types of analytics metrics."""
+    ENGAGEMENT = "engagement"
     PERFORMANCE = "performance"
     REVENUE = "revenue"
     REACH = "reach"
@@ -78,7 +83,8 @@ class MetricType(str, Enum):
 
 @dataclass
 class UsageEvent:
-    """Individual usage event record."""    event_id: str
+    """Individual usage event record."""
+    event_id: str
     license_id: str
     content_id: str
     user_id: int
@@ -99,7 +105,8 @@ class UsageEvent:
 
 @dataclass
 class UsageSession:
-    """User session tracking."""    session_id: str
+    """User session tracking."""
+    session_id: str
     user_id: int
     start_time: datetime
     end_time: Optional[datetime] = None
@@ -113,7 +120,8 @@ class UsageSession:
 
 @dataclass
 class ContentMetrics:
-    """Metrics for individual content."""    content_id: str
+    """Metrics for individual content."""
+    content_id: str
     total_views: int = 0
     unique_viewers: int = 0
     total_downloads: int = 0
@@ -133,7 +141,8 @@ class ContentMetrics:
 
 @dataclass
 class UserMetrics:
-    """Metrics for individual user."""    user_id: int
+    """Metrics for individual user."""
+    user_id: int
     total_sessions: int = 0
     total_session_time: int = 0  # seconds
     content_consumed: int = 0
@@ -149,7 +158,8 @@ class UserMetrics:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class UsageTracker:
-    """    Ultra-Advanced Usage Tracker for DRM System
+    """
+    Ultra-Advanced Usage Tracker for DRM System
     
     Features:
     - Real-time usage event tracking and processing
@@ -162,9 +172,11 @@ class UsageTracker:
     - A/B testing and experimentation support
     - Revenue attribution and optimization
     - Compliance and audit trail maintenance
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the Usage Tracker."""        self.config = config
+        """Initialize the Usage Tracker."""
+        self.config = config
         self._initialized = False
         
         # Storage
@@ -189,7 +201,8 @@ class UsageTracker:
         logger.info("Usage Tracker initialized")
 
     async def initialize(self) -> bool:
-        """Initialize the Usage Tracker."""        try:
+        """Initialize the Usage Tracker."""
+        try:
             # Load existing data
             await self._load_existing_data()
             
@@ -212,11 +225,13 @@ class UsageTracker:
             return False
 
     async def _load_existing_data(self) -> None:
-        """Load existing usage data."""        # Placeholder for database loading
+        """Load existing usage data."""
+        # Placeholder for database loading
         logger.debug("Loading existing usage data")
 
     async def _initialize_ml_models(self) -> None:
-        """Initialize machine learning models."""        # Placeholder for ML model initialization
+        """Initialize machine learning models."""
+        # Placeholder for ML model initialization
         self.ml_models = {
             "engagement_prediction": None,
             "churn_prediction": None,
@@ -226,11 +241,13 @@ class UsageTracker:
         logger.debug("Initialized ML models for usage analytics")
 
     async def _start_real_time_processing(self) -> None:
-        """Start real-time event processing."""        # Placeholder for real-time processing
+        """Start real-time event processing."""
+        # Placeholder for real-time processing
         logger.debug("Started real-time usage processing")
 
     async def _start_metrics_calculation(self) -> None:
-        """Start periodic metrics calculation."""        # Placeholder for metrics calculation scheduler
+        """Start periodic metrics calculation."""
+        # Placeholder for metrics calculation scheduler
         logger.debug("Started metrics calculation scheduler")
 
     async def track_usage_event(
@@ -241,7 +258,8 @@ class UsageTracker:
         event_type: UsageEventType,
         context: Optional[Dict[str, Any]] = None
     ) -> str:
-        """        Track a usage event.
+        """
+        Track a usage event.
         
         Args:
             license_id: License being used
@@ -252,7 +270,8 @@ class UsageTracker:
             
         Returns:
             str: Event ID
-        """        if not self._initialized:
+        """
+        if not self._initialized:
             raise RuntimeError("Usage Tracker not initialized")
         
         # Generate event ID
@@ -299,7 +318,8 @@ class UsageTracker:
         return event_id
 
     async def _update_session(self, event: UsageEvent) -> None:
-        """Update or create user session."""        session_id = event.session_id
+        """Update or create user session."""
+        session_id = event.session_id
         
         if not session_id:
             # Generate session ID if not provided
@@ -335,7 +355,8 @@ class UsageTracker:
         })
 
     async def _create_new_session(self, event: UsageEvent, session_id: str) -> UsageSession:
-        """Create a new user session."""        session = UsageSession(
+        """Create a new user session."""
+        session = UsageSession(
             session_id=session_id,
             user_id=event.user_id,
             start_time=event.timestamp,
@@ -351,7 +372,8 @@ class UsageTracker:
         return session
 
     async def _finalize_session(self, session_id: str) -> None:
-        """Finalize and archive a user session."""        if session_id not in self.active_sessions:
+        """Finalize and archive a user session."""
+        if session_id not in self.active_sessions:
             return
         
         session = self.active_sessions[session_id]
@@ -366,7 +388,8 @@ class UsageTracker:
         logger.debug(f"Finalized session {session_id} for user {session.user_id}")
 
     async def _update_real_time_stats(self, event: UsageEvent) -> None:
-        """Update real-time statistics."""        current_minute = event.timestamp.replace(second=0, microsecond=0)
+        """Update real-time statistics."""
+        current_minute = event.timestamp.replace(second=0, microsecond=0)
         minute_key = current_minute.isoformat()
         
         if minute_key not in self.real_time_stats:
@@ -396,7 +419,8 @@ class UsageTracker:
             del self.real_time_stats[key]
 
     async def _update_metrics_async(self, event: UsageEvent) -> None:
-        """Update metrics asynchronously."""        # Update content metrics
+        """Update metrics asynchronously."""
+        # Update content metrics
         await self._update_content_metrics(event)
         
         # Update user metrics
@@ -406,7 +430,8 @@ class UsageTracker:
         self._invalidate_cache(event.content_id, event.user_id)
 
     async def _update_content_metrics(self, event: UsageEvent) -> None:
-        """Update content-specific metrics."""        content_id = event.content_id
+        """Update content-specific metrics."""
+        content_id = event.content_id
         
         if content_id not in self.content_metrics:
             self.content_metrics[content_id] = ContentMetrics(content_id=content_id)
@@ -455,7 +480,8 @@ class UsageTracker:
         metrics.last_updated = datetime.utcnow()
 
     async def _update_user_metrics(self, event: UsageEvent) -> None:
-        """Update user-specific metrics."""        user_id = event.user_id
+        """Update user-specific metrics."""
+        user_id = event.user_id
         
         if user_id not in self.user_metrics:
             self.user_metrics[user_id] = UserMetrics(
@@ -481,7 +507,8 @@ class UsageTracker:
         metrics.loyalty_score = await self._calculate_user_loyalty_score(user_id)
 
     async def _update_user_session_metrics(self, session: UsageSession) -> None:
-        """Update user metrics from completed session."""        user_id = session.user_id
+        """Update user metrics from completed session."""
+        user_id = session.user_id
         
         if user_id not in self.user_metrics:
             self.user_metrics[user_id] = UserMetrics(user_id=user_id)
@@ -492,7 +519,8 @@ class UsageTracker:
         metrics.content_consumed += len(session.content_accessed)
 
     async def _update_user_preferences(self, metrics: UserMetrics, event: UsageEvent) -> None:
-        """Update user preferences based on usage patterns."""        # Update preferred platforms
+        """Update user preferences based on usage patterns."""
+        # Update preferred platforms
         platform_counts = Counter()
         device_counts = Counter()
         
@@ -513,7 +541,8 @@ class UsageTracker:
         metrics.preferred_devices = [device for device, _ in device_counts.most_common(3)]
 
     async def _calculate_content_engagement_score(self, content_id: str) -> float:
-        """Calculate engagement score for content."""        if content_id not in self.content_metrics:
+        """Calculate engagement score for content."""
+        if content_id not in self.content_metrics:
             return 0.0
         
         metrics = self.content_metrics[content_id]
@@ -538,7 +567,8 @@ class UsageTracker:
         return float(engagement_score)
 
     async def _calculate_user_engagement_score(self, user_id: int) -> float:
-        """Calculate engagement score for user."""        user_events = [e for e in self.usage_events.values() if e.user_id == user_id]
+        """Calculate engagement score for user."""
+        user_events = [e for e in self.usage_events.values() if e.user_id == user_id]
         
         if not user_events:
             return 0.0
@@ -565,7 +595,8 @@ class UsageTracker:
         return min(engagement_score, 100)
 
     async def _calculate_user_loyalty_score(self, user_id: int) -> float:
-        """Calculate loyalty score for user."""        if user_id not in self.user_metrics:
+        """Calculate loyalty score for user."""
+        if user_id not in self.user_metrics:
             return 0.0
         
         metrics = self.user_metrics[user_id]
@@ -597,7 +628,8 @@ class UsageTracker:
         return min(loyalty_score, 100)
 
     def _invalidate_cache(self, content_id: str, user_id: int) -> None:
-        """Invalidate relevant cache entries."""        keys_to_remove = []
+        """Invalidate relevant cache entries."""
+        keys_to_remove = []
         
         for cache_key in self.metrics_cache:
             if content_id in cache_key or str(user_id) in cache_key:
@@ -611,7 +643,8 @@ class UsageTracker:
         content_id: str,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive analytics for content."""        cache_key = f"content_analytics_{content_id}_{date_range}"
+        """Get comprehensive analytics for content."""
+        cache_key = f"content_analytics_{content_id}_{date_range}"
         
         if cache_key in self.metrics_cache:
             return self.metrics_cache[cache_key]
@@ -686,7 +719,8 @@ class UsageTracker:
         user_id: int,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive analytics for user."""        cache_key = f"user_analytics_{user_id}_{date_range}"
+        """Get comprehensive analytics for user."""
+        cache_key = f"user_analytics_{user_id}_{date_range}"
         
         if cache_key in self.metrics_cache:
             return self.metrics_cache[cache_key]
@@ -753,7 +787,8 @@ class UsageTracker:
         events: List[UsageEvent],
         event_type: UsageEventType
     ) -> Dict[str, int]:
-        """Calculate daily time series for specific event type."""        daily_counts = defaultdict(int)
+        """Calculate daily time series for specific event type."""
+        daily_counts = defaultdict(int)
         
         filtered_events = [e for e in events if e.event_type == event_type]
         
@@ -764,7 +799,8 @@ class UsageTracker:
         return dict(daily_counts)
 
     async def _calculate_audience_insights(self, events: List[UsageEvent]) -> Dict[str, Any]:
-        """Calculate audience insights from events."""        if not events:
+        """Calculate audience insights from events."""
+        if not events:
             return {}
         
         # Unique users
@@ -792,7 +828,8 @@ class UsageTracker:
         }
 
     async def _calculate_user_activity_patterns(self, events: List[UsageEvent]) -> Dict[str, Any]:
-        """Calculate user activity patterns."""        if not events:
+        """Calculate user activity patterns."""
+        if not events:
             return {}
         
         # Activity by hour
@@ -816,7 +853,8 @@ class UsageTracker:
         }
 
     async def _calculate_content_preferences(self, events: List[UsageEvent]) -> List[str]:
-        """Calculate user content preferences."""        content_interactions = Counter(e.content_id for e in events)
+        """Calculate user content preferences."""
+        content_interactions = Counter(e.content_id for e in events)
         
         # Return top 10 most accessed content
         return [content_id for content_id, _ in content_interactions.most_common(10)]
@@ -826,7 +864,8 @@ class UsageTracker:
         content_id: str,
         events: List[UsageEvent]
     ) -> Dict[str, Any]:
-        """Generate predictions for content performance."""        # Placeholder for ML predictions
+        """Generate predictions for content performance."""
+        # Placeholder for ML predictions
         # In production, this would use trained models
         
         if not events:
@@ -860,7 +899,8 @@ class UsageTracker:
         user_id: int,
         events: List[UsageEvent]
     ) -> Dict[str, Any]:
-        """Generate predictions for user behavior."""        # Placeholder for ML predictions
+        """Generate predictions for user behavior."""
+        # Placeholder for ML predictions
         
         if not events:
             return {"error": "Insufficient data for predictions"}
@@ -888,7 +928,8 @@ class UsageTracker:
         }
 
     async def get_real_time_dashboard(self) -> Dict[str, Any]:
-        """Get real-time dashboard data."""        current_time = datetime.utcnow()
+        """Get real-time dashboard data."""
+        current_time = datetime.utcnow()
         
         # Current active sessions
         active_session_count = len(self.active_sessions)
@@ -931,7 +972,8 @@ class UsageTracker:
         date_range: Optional[Tuple[datetime, datetime]] = None,
         filters: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Generate comprehensive usage report."""        filters = filters or {}
+        """Generate comprehensive usage report."""
+        filters = filters or {}
         
         # Filter events
         filtered_events = list(self.usage_events.values())
@@ -970,7 +1012,8 @@ class UsageTracker:
         events: List[UsageEvent],
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
-        """Generate summary usage report."""        if not events:
+        """Generate summary usage report."""
+        if not events:
             return {"error": "No data available for report"}
         
         # Basic statistics
@@ -1020,7 +1063,8 @@ class UsageTracker:
         events: List[UsageEvent],
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
-        """Generate detailed usage report."""        summary = await self._generate_summary_report(events, date_range)
+        """Generate detailed usage report."""
+        summary = await self._generate_summary_report(events, date_range)
         
         # Additional detailed metrics
         # Geographic analysis
@@ -1083,7 +1127,8 @@ class UsageTracker:
         events: List[UsageEvent],
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
-        """Generate performance-focused report."""        # Performance metrics
+        """Generate performance-focused report."""
+        # Performance metrics
         content_performance = {}
         
         for content_id in set(e.content_id for e in events):
@@ -1134,7 +1179,8 @@ class UsageTracker:
         }
 
     async def cleanup_old_data(self) -> int:
-        """Clean up old usage data."""        cutoff_date = datetime.utcnow() - timedelta(days=self.data_retention_days)
+        """Clean up old usage data."""
+        cutoff_date = datetime.utcnow() - timedelta(days=self.data_retention_days)
         
         # Clean old events
         old_event_ids = [
@@ -1149,7 +1195,8 @@ class UsageTracker:
         return len(old_event_ids)
 
     async def shutdown(self) -> None:
-        """Shutdown the Usage Tracker."""        logger.info("Shutting down Usage Tracker...")
+        """Shutdown the Usage Tracker."""
+        logger.info("Shutting down Usage Tracker...")
         
         # Finalize all active sessions
         for session_id in list(self.active_sessions.keys()):
@@ -1165,5 +1212,6 @@ class UsageTracker:
         logger.info("Usage Tracker shutdown complete")
 
     async def _save_state(self) -> None:
-        """Save tracker state to persistent storage."""        # Placeholder for database persistence
+        """Save tracker state to persistent storage."""
+        # Placeholder for database persistence
         logger.debug("Saving Usage Tracker state")

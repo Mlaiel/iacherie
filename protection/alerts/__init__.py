@@ -30,7 +30,7 @@ Technical Excellence Architecture:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + Legal Tech + DevOps + DBA
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  CRITICAL THREAT INTELLIGENCE IP PROTECTION ⚠️
 =================================================
@@ -49,7 +49,9 @@ UNAUTHORIZED ACCESS IS HOMELAND SECURITY VIOLATION:
 
 Contact mlaiel@live.de for MANDATORY threat intelligence authorization.
 Unauthorized access triggers automatic homeland security protocols.
-"""from .alert_models import (
+"""
+
+from .alert_models import (
     ContentProtectionAlert,
     AlertSeverity,
     AlertStatus,

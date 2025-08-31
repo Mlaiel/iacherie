@@ -19,14 +19,16 @@ This code is proprietary and belongs to Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit 
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Set, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
 
 
 class SecurityHeaderType(Enum):
-    """Types of security headers."""    CONTENT_SECURITY_POLICY = "content_security_policy"
+    """Types of security headers."""
+    CONTENT_SECURITY_POLICY = "content_security_policy"
     STRICT_TRANSPORT_SECURITY = "strict_transport_security"
     X_CONTENT_TYPE_OPTIONS = "x_content_type_options"
     X_FRAME_OPTIONS = "x_frame_options"
@@ -39,7 +41,8 @@ class SecurityHeaderType(Enum):
 
 
 class InputValidationType(Enum):
-    """Types of input validation."""    SCHEMA_VALIDATION = "schema_validation"
+    """Types of input validation."""
+    SCHEMA_VALIDATION = "schema_validation"
     TYPE_VALIDATION = "type_validation"
     RANGE_VALIDATION = "range_validation"
     FORMAT_VALIDATION = "format_validation"
@@ -50,7 +53,8 @@ class InputValidationType(Enum):
 
 
 class ApiEndpointSecurity(Enum):
-    """API endpoint security levels."""    PUBLIC = "public"
+    """API endpoint security levels."""
+    PUBLIC = "public"
     AUTHENTICATED = "authenticated"
     AUTHORIZED = "authorized"
     ELEVATED = "elevated"
@@ -59,7 +63,8 @@ class ApiEndpointSecurity(Enum):
 
 @dataclass
 class SecurityHeaders:
-    """Security headers configuration."""    
+    """Security headers configuration."""
+    
     # Content Security Policy
     content_security_policy: Dict[str, List[str]] = field(default_factory=lambda: {
         "default-src": ["'self'"],
@@ -122,7 +127,8 @@ class SecurityHeaders:
 
 @dataclass
 class CorsConfiguration:
-    """Cross-Origin Resource Sharing (CORS) configuration."""    
+    """Cross-Origin Resource Sharing (CORS) configuration."""
+    
     # Allowed origins
     allowed_origins: List[str] = field(default_factory=lambda: [
         "https://app.ia-influencer.com",
@@ -165,7 +171,8 @@ class CorsConfiguration:
 
 @dataclass
 class InputValidationRules:
-    """Input validation rules configuration."""    
+    """Input validation rules configuration."""
+    
     # String validation
     string_validation: Dict[str, Any] = field(default_factory=lambda: {
         "max_length": 10000,
@@ -222,7 +229,8 @@ class InputValidationRules:
 
 @dataclass
 class ApiAuthenticationSecurity:
-    """API authentication security configuration."""    
+    """API authentication security configuration."""
+    
     # JWT security
     jwt_security: Dict[str, Any] = field(default_factory=lambda: {
         "algorithm": "RS256",
@@ -278,7 +286,8 @@ class ApiAuthenticationSecurity:
 
 @dataclass
 class ApiEndpointProtection:
-    """API endpoint protection configuration."""    
+    """API endpoint protection configuration."""
+    
     # Endpoint security levels
     endpoint_security_levels: Dict[str, ApiEndpointSecurity] = field(default_factory=lambda: {
         "/api/v1/auth/login": ApiEndpointSecurity.PUBLIC,
@@ -354,7 +363,8 @@ class ApiEndpointProtection:
 
 @dataclass
 class ApiGatewaySecurity:
-    """API Gateway security configuration."""    
+    """API Gateway security configuration."""
+    
     # Request filtering
     request_filtering: Dict[str, Any] = field(default_factory=lambda: {
         "sql_injection_protection": True,
@@ -409,7 +419,8 @@ class ApiGatewaySecurity:
 
 @dataclass
 class ApiMonitoringSecurity:
-    """API monitoring and security analytics configuration."""    
+    """API monitoring and security analytics configuration."""
+    
     # Request monitoring
     request_monitoring: Dict[str, Any] = field(default_factory=lambda: {
         "all_requests_logged": True,
@@ -456,7 +467,8 @@ class ApiMonitoringSecurity:
 
 @dataclass
 class ApiDocumentationSecurity:
-    """API documentation and disclosure security."""    
+    """API documentation and disclosure security."""
+    
     # Documentation access
     documentation_access: Dict[str, Any] = field(default_factory=lambda: {
         "public_documentation": True,
@@ -487,7 +499,8 @@ class ApiDocumentationSecurity:
 
 @dataclass
 class ApiSecurityConfig:
-    """Main API security configuration container."""    
+    """Main API security configuration container."""
+    
     # Core security configurations
     security_headers: SecurityHeaders = field(default_factory=SecurityHeaders)
     cors: CorsConfiguration = field(default_factory=CorsConfiguration)
@@ -547,11 +560,13 @@ api_security_config = ApiSecurityConfig()
 
 
 def get_api_security_config() -> ApiSecurityConfig:
-    """Get the API security configuration instance."""    return api_security_config
+    """Get the API security configuration instance."""
+    return api_security_config
 
 
 def get_endpoint_security_level(endpoint: str) -> ApiEndpointSecurity:
-    """Get security level for a specific endpoint."""    config = get_api_security_config()
+    """Get security level for a specific endpoint."""
+    config = get_api_security_config()
     
     # Check exact match first
     if endpoint in config.endpoint_protection.endpoint_security_levels:
@@ -567,7 +582,8 @@ def get_endpoint_security_level(endpoint: str) -> ApiEndpointSecurity:
 
 
 def get_endpoint_rate_limit(endpoint: str) -> Dict[str, Any]:
-    """Get rate limit configuration for a specific endpoint."""    config = get_api_security_config()
+    """Get rate limit configuration for a specific endpoint."""
+    config = get_api_security_config()
     
     # Check exact match first
     if endpoint in config.endpoint_protection.endpoint_rate_limits:
@@ -587,7 +603,8 @@ def get_endpoint_rate_limit(endpoint: str) -> Dict[str, Any]:
 
 
 def generate_csp_header(csp_config: Dict[str, List[str]]) -> str:
-    """Generate Content Security Policy header string."""    directives = []
+    """Generate Content Security Policy header string."""
+    directives = []
     for directive, sources in csp_config.items():
         if sources:
             directives.append(f"{directive} {' '.join(sources)}")
@@ -597,7 +614,8 @@ def generate_csp_header(csp_config: Dict[str, List[str]]) -> str:
 
 
 def validate_api_security_config(config: ApiSecurityConfig) -> bool:
-    """Validate API security configuration settings."""    # Validate CORS origins
+    """Validate API security configuration settings."""
+    # Validate CORS origins
     for origin in config.cors.allowed_origins:
         if not origin.startswith(("http://", "https://")):
             raise ValueError(f"Invalid CORS origin: {origin}")

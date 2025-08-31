@@ -4,7 +4,8 @@ Blockchain-powered creator collaboration and revenue sharing
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -23,7 +24,8 @@ from .copyright_registry import CopyrightRegistryManager
 
 
 class CollaborationType(Enum):
-    """Types of creative collaborations"""    MUSIC_COLLAB = "music_collaboration"
+    """Types of creative collaborations"""
+    MUSIC_COLLAB = "music_collaboration"
     CONTENT_REMIX = "content_remix"
     JOINT_CREATION = "joint_creation"
     FEATURE_COLLABORATION = "feature_collaboration"
@@ -35,7 +37,8 @@ class CollaborationType(Enum):
 
 
 class CollaborationStatus(Enum):
-    """Collaboration project status"""    PROPOSED = "proposed"
+    """Collaboration project status"""
+    PROPOSED = "proposed"
     NEGOTIATING = "negotiating"
     ACCEPTED = "accepted"
     IN_PROGRESS = "in_progress"
@@ -46,7 +49,8 @@ class CollaborationStatus(Enum):
 
 
 class RevenueDistributionModel(Enum):
-    """Revenue sharing models"""    EQUAL_SPLIT = "equal_split"
+    """Revenue sharing models"""
+    EQUAL_SPLIT = "equal_split"
     PERCENTAGE_BASED = "percentage_based"
     CONTRIBUTION_WEIGHTED = "contribution_weighted"
     MILESTONE_BASED = "milestone_based"
@@ -56,7 +60,8 @@ class RevenueDistributionModel(Enum):
 
 @dataclass
 class CollaborationProposal:
-    """Collaboration proposal representation"""    proposal_id: str
+    """Collaboration proposal representation"""
+    proposal_id: str
     initiator_id: str
     target_creator_id: str
     collaboration_type: CollaborationType
@@ -83,7 +88,8 @@ class CollaborationProposal:
 
 @dataclass
 class CollaborationProject:
-    """Active collaboration project"""    project_id: str
+    """Active collaboration project"""
+    project_id: str
     proposal_id: str
     collaborators: List[str]
     project_lead: str
@@ -113,7 +119,8 @@ class CollaborationProject:
 
 @dataclass
 class RevenueDistribution:
-    """Revenue distribution event"""    distribution_id: str
+    """Revenue distribution event"""
+    distribution_id: str
     project_id: str
     total_amount: Decimal
     currency: str
@@ -128,7 +135,8 @@ class RevenueDistribution:
 
 @dataclass
 class CollaboratorProfile:
-    """Enhanced collaborator profile"""    creator_id: str
+    """Enhanced collaborator profile"""
+    creator_id: str
     display_name: str
     specializations: List[str]
     collaboration_preferences: Dict[str, Any]
@@ -146,9 +154,11 @@ class CollaboratorProfile:
 
 
 class CollaborationManager:
-    """    Advanced collaboration management system
+    """
+    Advanced collaboration management system
     Facilitates creator partnerships with blockchain-secured agreements
-    """    
+    """
+    
     def __init__(self, transaction_manager: TransactionManager,
                  smart_contract_manager: SmartContractManager,
                  copyright_registry: CopyrightRegistryManager,
@@ -168,7 +178,8 @@ class CollaborationManager:
     async def create_collaboration_proposal(self, initiator_id: str,
                                           target_creator_id: str,
                                           proposal_config: Dict[str, Any]) -> CollaborationProposal:
-        """        Create collaboration proposal with blockchain verification
+        """
+        Create collaboration proposal with blockchain verification
         
         Args:
             initiator_id: Proposal initiator ID
@@ -180,7 +191,8 @@ class CollaborationManager:
             
         Raises:
             CollaborationError: If proposal creation fails
-        """        try:
+        """
+        try:
             # Validate creators exist
             initiator_profile = await self.get_collaborator_profile(initiator_id)
             target_profile = await self.get_collaborator_profile(target_creator_id)
@@ -261,7 +273,8 @@ class CollaborationManager:
     
     async def respond_to_proposal(self, proposal_id: str, responder_id: str,
                                 response: str, counter_terms: Dict[str, Any] = None) -> CollaborationProposal:
-        """        Respond to collaboration proposal
+        """
+        Respond to collaboration proposal
         
         Args:
             proposal_id: Proposal identifier
@@ -271,7 +284,8 @@ class CollaborationManager:
             
         Returns:
             CollaborationProposal: Updated proposal
-        """        try:
+        """
+        try:
             # Get proposal
             proposal = await self.get_collaboration_proposal(proposal_id)
             if not proposal:
@@ -328,14 +342,16 @@ class CollaborationManager:
             raise CollaborationError(f"Failed to respond to proposal: {str(e)}")
     
     async def create_collaboration_project(self, proposal_id: str) -> CollaborationProject:
-        """        Create active collaboration project from accepted proposal
+        """
+        Create active collaboration project from accepted proposal
         
         Args:
             proposal_id: Accepted proposal ID
             
         Returns:
             CollaborationProject: Created project
-        """        try:
+        """
+        try:
             proposal = await self.get_collaboration_proposal(proposal_id)
             if not proposal or proposal.status != CollaborationStatus.ACCEPTED:
                 raise CollaborationError("Invalid or unaccepted proposal")
@@ -347,7 +363,8 @@ class CollaborationManager:
             raise CollaborationError(f"Failed to create collaboration project: {str(e)}")
     
     async def _create_collaboration_project(self, proposal: CollaborationProposal) -> CollaborationProject:
-        """Internal method to create collaboration project"""        project_id = f"proj_{proposal.proposal_id}_{int(datetime.now().timestamp())}"
+        """Internal method to create collaboration project"""
+        project_id = f"proj_{proposal.proposal_id}_{int(datetime.now().timestamp())}"
         
         # Determine project lead (usually initiator)
         project_lead = proposal.initiator_id
@@ -413,7 +430,8 @@ class CollaborationManager:
     
     async def submit_deliverable(self, project_id: str, creator_id: str,
                                deliverable_id: str, content_data: Dict[str, Any]) -> bool:
-        """        Submit project deliverable
+        """
+        Submit project deliverable
         
         Args:
             project_id: Project identifier
@@ -423,7 +441,8 @@ class CollaborationManager:
             
         Returns:
             bool: True if submission successful
-        """        try:
+        """
+        try:
             # Get project
             project = await self.get_collaboration_project(project_id)
             if not project:
@@ -495,7 +514,8 @@ class CollaborationManager:
     
     async def distribute_revenue(self, project_id: str, revenue_amount: Decimal,
                                currency: str, distribution_reason: str) -> RevenueDistribution:
-        """        Distribute revenue among collaborators
+        """
+        Distribute revenue among collaborators
         
         Args:
             project_id: Project identifier
@@ -505,7 +525,8 @@ class CollaborationManager:
             
         Returns:
             RevenueDistribution: Distribution record
-        """        try:
+        """
+        try:
             # Get project
             project = await self.get_collaboration_project(project_id)
             if not project:
@@ -587,7 +608,8 @@ class CollaborationManager:
             raise CollaborationError(f"Failed to distribute revenue: {str(e)}")
     
     async def get_collaboration_proposal(self, proposal_id: str) -> Optional[CollaborationProposal]:
-        """Get collaboration proposal by ID"""        if proposal_id in self._proposals_cache:
+        """Get collaboration proposal by ID"""
+        if proposal_id in self._proposals_cache:
             return self._proposals_cache[proposal_id]
         
         # Query blockchain if not in cache
@@ -600,7 +622,8 @@ class CollaborationManager:
         return None
     
     async def get_collaboration_project(self, project_id: str) -> Optional[CollaborationProject]:
-        """Get collaboration project by ID"""        if project_id in self._projects_cache:
+        """Get collaboration project by ID"""
+        if project_id in self._projects_cache:
             return self._projects_cache[project_id]
         
         # Query blockchain if not in cache
@@ -613,7 +636,8 @@ class CollaborationManager:
         return None
     
     async def get_collaborator_profile(self, creator_id: str) -> Optional[CollaboratorProfile]:
-        """Get collaborator profile"""        if creator_id in self._profiles_cache:
+        """Get collaborator profile"""
+        if creator_id in self._profiles_cache:
             return self._profiles_cache[creator_id]
         
         # Create basic profile if not exists
@@ -639,20 +663,23 @@ class CollaborationManager:
         return profile
     
     def _generate_proposal_id(self, initiator_id: str, target_id: str) -> str:
-        """Generate unique proposal identifier"""        timestamp = str(int(datetime.now().timestamp()))
+        """Generate unique proposal identifier"""
+        timestamp = str(int(datetime.now().timestamp()))
         hash_input = f"{initiator_id}_{target_id}_{timestamp}"
         hash_suffix = hashlib.md5(hash_input.encode()).hexdigest()[:8]
         return f"proposal_{hash_suffix}"
     
     def _validate_revenue_splits(self, splits: Dict[str, float]) -> bool:
-        """Validate revenue split percentages"""        if not splits:
+        """Validate revenue split percentages"""
+        if not splits:
             return False
         
         total = sum(splits.values())
         return 99.9 <= total <= 100.1  # Allow small floating-point errors
     
     def _parse_timeline(self, timeline_config: Dict[str, Any]) -> Dict[str, datetime]:
-        """Parse timeline configuration"""        parsed = {}
+        """Parse timeline configuration"""
+        parsed = {}
         for key, value in timeline_config.items():
             if isinstance(value, str):
                 parsed[key] = datetime.fromisoformat(value)
@@ -661,7 +688,8 @@ class CollaborationManager:
         return parsed
     
     def _create_project_milestones(self, proposal: CollaborationProposal) -> List[Dict[str, Any]]:
-        """Create project milestones from proposal"""        milestones = []
+        """Create project milestones from proposal"""
+        milestones = []
         
         # Default milestones based on collaboration type
         if proposal.collaboration_type == CollaborationType.MUSIC_COLLAB:
@@ -684,34 +712,42 @@ class CollaborationManager:
         return milestones
     
     def _generate_content_hash(self, content_data: bytes) -> str:
-        """Generate content hash"""        return hashlib.sha3_256(content_data).hexdigest()
+        """Generate content hash"""
+        return hashlib.sha3_256(content_data).hexdigest()
     
     async def _upload_deliverable_content(self, project_id: str, deliverable_id: str, content: bytes) -> str:
-        """Upload deliverable content to secure storage"""        # Implementation would integrate with cloud storage
+        """Upload deliverable content to secure storage"""
+        # Implementation would integrate with cloud storage
         filename = f"deliverables/{project_id}/{deliverable_id}/{int(datetime.now().timestamp())}"
         # Return mock URL for now
         return f"https://secure-storage.platform.com/{filename}"
     
     async def _send_proposal_notification(self, target_id: str, proposal: CollaborationProposal):
-        """Send proposal notification"""        # Implementation would integrate with notification system
+        """Send proposal notification"""
+        # Implementation would integrate with notification system
         pass
     
     async def _send_response_notification(self, initiator_id: str, proposal: CollaborationProposal, response: str):
-        """Send response notification"""        # Implementation would integrate with notification system
+        """Send response notification"""
+        # Implementation would integrate with notification system
         pass
     
     async def _notify_deliverable_submission(self, project: CollaborationProject, deliverable_id: str, submitter_id: str):
-        """Notify collaborators of deliverable submission"""        # Implementation would integrate with notification system
+        """Notify collaborators of deliverable submission"""
+        # Implementation would integrate with notification system
         pass
     
     async def _notify_revenue_distribution(self, project: CollaborationProject, distribution: RevenueDistribution):
-        """Notify collaborators of revenue distribution"""        # Implementation would integrate with notification system
+        """Notify collaborators of revenue distribution"""
+        # Implementation would integrate with notification system
         pass
     
     def _reconstruct_proposal_from_blockchain(self, blockchain_data: Dict[str, Any]) -> CollaborationProposal:
-        """Reconstruct proposal from blockchain data"""        # Implementation would parse blockchain data back to proposal object
+        """Reconstruct proposal from blockchain data"""
+        # Implementation would parse blockchain data back to proposal object
         pass
     
     def _reconstruct_project_from_blockchain(self, blockchain_data: Dict[str, Any]) -> CollaborationProject:
-        """Reconstruct project from blockchain data"""        # Implementation would parse blockchain data back to project object
+        """Reconstruct project from blockchain data"""
+        # Implementation would parse blockchain data back to project object
         pass

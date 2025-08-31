@@ -16,7 +16,8 @@ Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Revenue Forecasting
 =============================================================================================
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -45,13 +46,15 @@ logger = logging.getLogger(__name__)
 
 
 class ForecastHorizon(Enum):
-    """Forecast time horizons"""    SHORT_TERM = "short_term"  # 1-7 days
+    """Forecast time horizons"""
+    SHORT_TERM = "short_term"  # 1-7 days
     MEDIUM_TERM = "medium_term"  # 1-4 weeks
     LONG_TERM = "long_term"  # 1-12 months
 
 
 class ForecastModel(Enum):
-    """Available forecasting models"""    ARIMA = "arima"
+    """Available forecasting models"""
+    ARIMA = "arima"
     RANDOM_FOREST = "random_forest"
     GRADIENT_BOOSTING = "gradient_boosting"
     XGBOOST = "xgboost"
@@ -61,7 +64,8 @@ class ForecastModel(Enum):
 
 @dataclass
 class ForecastResult:
-    """Revenue forecast result"""    forecast_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Revenue forecast result"""
+    forecast_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
     model_used: ForecastModel = ForecastModel.ENSEMBLE
     horizon: ForecastHorizon = ForecastHorizon.MEDIUM_TERM
@@ -76,7 +80,8 @@ class ForecastResult:
 
 @dataclass
 class ModelPerformance:
-    """Model performance metrics"""    model_name: str
+    """Model performance metrics"""
+    model_name: str
     mae: float  # Mean Absolute Error
     rmse: float  # Root Mean Square Error
     mape: float  # Mean Absolute Percentage Error
@@ -86,7 +91,8 @@ class ModelPerformance:
 
 
 class RevenueForecaster:
-    """    Ultra-advanced AI-powered revenue forecasting system
+    """
+    Ultra-advanced AI-powered revenue forecasting system
     
     Features:
     - Multiple ML models (ARIMA, Random Forest, XGBoost, etc.)
@@ -97,7 +103,8 @@ class RevenueForecaster:
     - Model performance monitoring and retraining
     - Real-time prediction updates
     - Multi-horizon forecasting
-    """    
+    """
+    
     def __init__(self,
                  db_manager: DatabaseManager,
                  security_manager: SecurityManager,
@@ -130,7 +137,8 @@ class RevenueForecaster:
         self._forecast_cache = {}
         
     async def initialize(self):
-        """Initialize the revenue forecaster"""        try:
+        """Initialize the revenue forecaster"""
+        try:
             # Initialize ML pipeline
             await self.ml_pipeline.initialize()
             
@@ -155,7 +163,8 @@ class RevenueForecaster:
                               model: ForecastModel = ForecastModel.ENSEMBLE,
                               include_scenarios: bool = True,
                               confidence_level: float = 0.95) -> ForecastResult:
-        """        Generate revenue forecast for a creator
+        """
+        Generate revenue forecast for a creator
         
         Args:
             creator_id: Creator ID
@@ -166,7 +175,8 @@ class RevenueForecaster:
             
         Returns:
             Comprehensive forecast results
-        """        try:
+        """
+        try:
             # Validate inputs
             await self._validate_forecast_request(creator_id, horizon, model)
             
@@ -249,7 +259,8 @@ class RevenueForecaster:
     async def _prepare_historical_data(self,
                                      creator_id: str,
                                      horizon: ForecastHorizon) -> pd.DataFrame:
-        """Prepare historical revenue data for modeling"""        try:
+        """Prepare historical revenue data for modeling"""
+        try:
             # Determine lookback period based on horizon
             if horizon == ForecastHorizon.SHORT_TERM:
                 lookback_days = 90  # 3 months
@@ -262,7 +273,8 @@ class RevenueForecaster:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=lookback_days)
             
-            query = """                SELECT 
+            query = """
+                SELECT 
                     DATE(calculation_date) as date,
                     platform,
                     revenue_type,
@@ -275,7 +287,8 @@ class RevenueForecaster:
                 AND calculation_date BETWEEN %s AND %s
                 GROUP BY DATE(calculation_date), platform, revenue_type
                 ORDER BY date ASC
-            """            
+            """
+            
             data = await self.db.fetch_all(query, (creator_id, start_date, end_date))
             
             # Convert to DataFrame
@@ -320,7 +333,8 @@ class RevenueForecaster:
                                creator_id: str,
                                historical_data: pd.DataFrame,
                                horizon: ForecastHorizon) -> pd.DataFrame:
-        """Engineer features for forecasting models"""        try:
+        """Engineer features for forecasting models"""
+        try:
             df = historical_data.copy()
             df['date'] = pd.to_datetime(df['date'])
             df = df.set_index('date')
@@ -389,7 +403,8 @@ class RevenueForecaster:
             raise
 
     async def _train_ensemble_model(self, train_data: pd.DataFrame, validation_data: pd.DataFrame) -> Dict[str, Any]:
-        """Train ensemble model combining multiple algorithms"""        try:
+        """Train ensemble model combining multiple algorithms"""
+        try:
             # Prepare training data
             feature_cols = [col for col in train_data.columns if col not in ['date', 'net_revenue']]
             X_train = train_data[feature_cols]
@@ -465,7 +480,8 @@ class RevenueForecaster:
                                   model_info: Dict[str, Any],
                                   features_df: pd.DataFrame,
                                   horizon: ForecastHorizon) -> List[Dict[str, Any]]:
-        """Generate revenue predictions using trained model"""        try:
+        """Generate revenue predictions using trained model"""
+        try:
             predictions = []
             
             # Determine prediction periods
@@ -508,7 +524,8 @@ class RevenueForecaster:
             raise
 
     async def _predict_ensemble(self, model_info: Dict[str, Any], features: np.ndarray) -> float:
-        """Make prediction using ensemble model"""        try:
+        """Make prediction using ensemble model"""
+        try:
             weighted_predictions = []
             
             for model_name, model_data in model_info['models'].items():
@@ -536,7 +553,8 @@ class RevenueForecaster:
                                 model_info: Dict[str, Any],
                                 features_df: pd.DataFrame,
                                 horizon: ForecastHorizon) -> Dict[str, List[float]]:
-        """Generate optimistic, pessimistic, and realistic scenarios"""        try:
+        """Generate optimistic, pessimistic, and realistic scenarios"""
+        try:
             # Get baseline predictions
             baseline_predictions = await self._generate_predictions(model_info, features_df, horizon)
             baseline_values = [pred['predicted_revenue'] for pred in baseline_predictions]
@@ -568,9 +586,11 @@ class RevenueForecaster:
             return {}
 
     async def get_forecast_accuracy(self, creator_id: str) -> Dict[str, Any]:
-        """Get forecast accuracy metrics for a creator"""        try:
+        """Get forecast accuracy metrics for a creator"""
+        try:
             # Get recent forecasts and actual results
-            query = """                SELECT 
+            query = """
+                SELECT 
                     f.forecast_id,
                     f.model_used,
                     f.horizon,
@@ -589,7 +609,8 @@ class RevenueForecaster:
                 WHERE f.creator_id = %s 
                 AND f.created_at >= NOW() - INTERVAL '90 days'
                 ORDER BY f.created_at DESC
-            """            
+            """
+            
             forecast_data = await self.db.fetch_all(query, (creator_id,))
             
             # Calculate accuracy metrics
@@ -613,7 +634,8 @@ class RevenueForecaster:
             return {}
 
     async def cleanup(self):
-        """Cleanup forecaster resources"""        try:
+        """Cleanup forecaster resources"""
+        try:
             # Clear model cache
             self._forecast_cache.clear()
             

@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import logging
+"""
+import logging
 import json
 import hashlib
 import pickle
@@ -34,13 +35,15 @@ T = TypeVar('T')
 
 
 class CacheLevel(str, Enum):
-    """Cache level priorities"""    L1_MEMORY = "l1_memory"      # In-process memory cache
+    """Cache level priorities"""
+    L1_MEMORY = "l1_memory"      # In-process memory cache
     L2_REDIS = "l2_redis"        # Redis distributed cache
     L3_DATABASE = "l3_database"   # Database query cache
 
 
 class CacheStrategy(str, Enum):
-    """Caching strategies"""    WRITE_THROUGH = "write_through"      # Write to cache and storage
+    """Caching strategies"""
+    WRITE_THROUGH = "write_through"      # Write to cache and storage
     WRITE_BACK = "write_back"            # Write to cache, delayed storage
     WRITE_AROUND = "write_around"        # Write to storage, bypass cache
     READ_THROUGH = "read_through"        # Read from cache, fallback to storage
@@ -48,7 +51,8 @@ class CacheStrategy(str, Enum):
 
 
 class CacheEvictionPolicy(str, Enum):
-    """Cache eviction policies"""    LRU = "lru"          # Least Recently Used
+    """Cache eviction policies"""
+    LRU = "lru"          # Least Recently Used
     LFU = "lfu"          # Least Frequently Used
     FIFO = "fifo"        # First In, First Out
     TTL = "ttl"          # Time To Live based
@@ -57,7 +61,8 @@ class CacheEvictionPolicy(str, Enum):
 
 @dataclass
 class CacheMetrics:
-    """Cache performance metrics"""    hit_count: int = 0
+    """Cache performance metrics"""
+    hit_count: int = 0
     miss_count: int = 0
     write_count: int = 0
     eviction_count: int = 0
@@ -67,18 +72,21 @@ class CacheMetrics:
     
     @property
     def hit_rate(self) -> float:
-        """Calculate cache hit rate"""        total_reads = self.hit_count + self.miss_count
+        """Calculate cache hit rate"""
+        total_reads = self.hit_count + self.miss_count
         return self.hit_count / total_reads if total_reads > 0 else 0.0
     
     @property
     def avg_latency(self) -> float:
-        """Calculate average operation latency"""        total_ops = self.hit_count + self.miss_count + self.write_count
+        """Calculate average operation latency"""
+        total_ops = self.hit_count + self.miss_count + self.write_count
         return self.total_latency / total_ops if total_ops > 0 else 0.0
 
 
 @dataclass
 class CacheEntry:
-    """Cache entry with metadata"""    key: str
+    """Cache entry with metadata"""
+    key: str
     value: Any
     created_at: datetime = field(default_factory=datetime.utcnow)
     last_accessed: datetime = field(default_factory=datetime.utcnow)
@@ -88,17 +96,20 @@ class CacheEntry:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def is_expired(self) -> bool:
-        """Check if cache entry is expired"""        if self.ttl is None:
+        """Check if cache entry is expired"""
+        if self.ttl is None:
             return False
         return datetime.utcnow() > self.created_at + timedelta(seconds=self.ttl)
     
     def touch(self):
-        """Update access metadata"""        self.last_accessed = datetime.utcnow()
+        """Update access metadata"""
+        self.last_accessed = datetime.utcnow()
         self.access_count += 1
 
 
 class MemoryCache(Generic[T]):
-    """In-memory L1 cache with LRU eviction"""    
+    """In-memory L1 cache with LRU eviction"""
+    
     def __init__(
         self,
         max_size: int = 1000,
@@ -113,7 +124,8 @@ class MemoryCache(Generic[T]):
         self.metrics = CacheMetrics()
     
     async def get(self, key: str) -> Optional[T]:
-        """Get value from memory cache"""        start_time = time.time()
+        """Get value from memory cache"""
+        start_time = time.time()
         
         try:
             if key in self._cache:
@@ -143,7 +155,8 @@ class MemoryCache(Generic[T]):
             return None
     
     async def set(self, key: str, value: T, ttl: Optional[int] = None) -> bool:
-        """Set value in memory cache"""        start_time = time.time()
+        """Set value in memory cache"""
+        start_time = time.time()
         
         try:
             # Evict if at capacity
@@ -170,7 +183,8 @@ class MemoryCache(Generic[T]):
             return False
     
     async def delete(self, key: str) -> bool:
-        """Delete value from memory cache"""        try:
+        """Delete value from memory cache"""
+        try:
             if key in self._cache:
                 del self._cache[key]
                 if key in self._access_order:
@@ -182,16 +196,19 @@ class MemoryCache(Generic[T]):
             return False
     
     async def clear(self):
-        """Clear all cache entries"""        self._cache.clear()
+        """Clear all cache entries"""
+        self._cache.clear()
         self._access_order.clear()
     
     def _update_access_order(self, key: str):
-        """Update LRU access order"""        if key in self._access_order:
+        """Update LRU access order"""
+        if key in self._access_order:
             self._access_order.remove(key)
         self._access_order.append(key)
     
     async def _evict(self):
-        """Evict entries based on policy"""        if not self._cache:
+        """Evict entries based on policy"""
+        if not self._cache:
             return
         
         if self.eviction_policy == CacheEvictionPolicy.LRU:
@@ -218,7 +235,8 @@ class MemoryCache(Generic[T]):
 
 
 class RedisCache:
-    """Redis-based L2 distributed cache"""    
+    """Redis-based L2 distributed cache"""
+    
     def __init__(
         self,
         redis_url: str = "redis://localhost:6379",
@@ -234,7 +252,8 @@ class RedisCache:
         self.metrics = CacheMetrics()
     
     async def connect(self):
-        """Connect to Redis"""        try:
+        """Connect to Redis"""
+        try:
             self.redis_client = await aioredis.from_url(
                 self.redis_url,
                 encoding="utf-8",
@@ -254,12 +273,14 @@ class RedisCache:
             raise PaymentProcessingError(f"Cache connection failed: {str(e)}")
     
     async def disconnect(self):
-        """Disconnect from Redis"""        if self.redis_client:
+        """Disconnect from Redis"""
+        if self.redis_client:
             await self.redis_client.close()
             self.redis_client = None
     
     async def get(self, key: str) -> Optional[Any]:
-        """Get value from Redis cache"""        if not self.redis_client:
+        """Get value from Redis cache"""
+        if not self.redis_client:
             await self.connect()
         
         start_time = time.time()
@@ -292,7 +313,8 @@ class RedisCache:
         ttl: Optional[int] = None,
         tags: Optional[List[str]] = None
     ) -> bool:
-        """Set value in Redis cache"""        if not self.redis_client:
+        """Set value in Redis cache"""
+        if not self.redis_client:
             await self.connect()
         
         start_time = time.time()
@@ -322,7 +344,8 @@ class RedisCache:
             return False
     
     async def delete(self, key: str) -> bool:
-        """Delete value from Redis cache"""        if not self.redis_client:
+        """Delete value from Redis cache"""
+        if not self.redis_client:
             return False
         
         cache_key = f"{self.key_prefix}{key}"
@@ -336,7 +359,8 @@ class RedisCache:
             return False
     
     async def delete_by_tag(self, tag: str) -> int:
-        """Delete all cached values with specific tag"""        if not self.redis_client:
+        """Delete all cached values with specific tag"""
+        if not self.redis_client:
             return 0
         
         try:
@@ -362,7 +386,8 @@ class RedisCache:
             return 0
     
     async def clear_all(self) -> bool:
-        """Clear all cache entries with our prefix"""        if not self.redis_client:
+        """Clear all cache entries with our prefix"""
+        if not self.redis_client:
             return False
         
         try:
@@ -383,7 +408,8 @@ class RedisCache:
             return False
     
     def _serialize(self, value: Any) -> bytes:
-        """Serialize value for storage"""        try:
+        """Serialize value for storage"""
+        try:
             if self.serializer == "json":
                 # Handle Decimal serialization
                 json_str = json.dumps(
@@ -399,7 +425,8 @@ class RedisCache:
             raise
     
     def _deserialize(self, raw_value: bytes) -> Any:
-        """Deserialize value from storage"""        try:
+        """Deserialize value from storage"""
+        try:
             if self.serializer == "json":
                 json_str = raw_value.decode('utf-8')
                 return json.loads(json_str, object_hook=self._json_deserializer)
@@ -410,7 +437,8 @@ class RedisCache:
             raise
     
     def _json_serializer(self, obj: Any) -> Any:
-        """Custom JSON serializer for complex types"""        if isinstance(obj, Decimal):
+        """Custom JSON serializer for complex types"""
+        if isinstance(obj, Decimal):
             return {"__decimal__": str(obj)}
         elif isinstance(obj, datetime):
             return {"__datetime__": obj.isoformat()}
@@ -419,7 +447,8 @@ class RedisCache:
         raise TypeError(f"Object {obj} is not JSON serializable")
     
     def _json_deserializer(self, obj: Dict[str, Any]) -> Any:
-        """Custom JSON deserializer for complex types"""        if "__decimal__" in obj:
+        """Custom JSON deserializer for complex types"""
+        if "__decimal__" in obj:
             return Decimal(obj["__decimal__"])
         elif "__datetime__" in obj:
             return datetime.fromisoformat(obj["__datetime__"])
@@ -429,11 +458,13 @@ class RedisCache:
 
 
 class PerformanceCache:
-    """    Multi-level performance cache system with intelligent routing.
+    """
+    Multi-level performance cache system with intelligent routing.
     
     Implements L1 (memory) + L2 (Redis) caching with automatic
     promotion/demotion and cache warming strategies.
-    """    
+    """
+    
     def __init__(
         self,
         config: Optional[PaymentConfig] = None,
@@ -462,7 +493,8 @@ class PerformanceCache:
         self.warming_task: Optional[asyncio.Task] = None
     
     async def initialize(self):
-        """Initialize cache system"""        if self.l2_cache:
+        """Initialize cache system"""
+        if self.l2_cache:
             await self.l2_cache.connect()
         
         # Start cache warming background task
@@ -472,7 +504,8 @@ class PerformanceCache:
         logger.info("Performance cache system initialized")
     
     async def shutdown(self):
-        """Shutdown cache system"""        if self.warming_task:
+        """Shutdown cache system"""
+        if self.warming_task:
             self.warming_task.cancel()
             try:
                 await self.warming_task
@@ -485,7 +518,8 @@ class PerformanceCache:
         logger.info("Performance cache system shutdown")
     
     async def get(self, key: str, fetch_func: Optional[Callable] = None) -> Optional[Any]:
-        """        Get value from multi-level cache with read-through strategy.
+        """
+        Get value from multi-level cache with read-through strategy.
         
         Args:
             key: Cache key
@@ -493,7 +527,8 @@ class PerformanceCache:
             
         Returns:
             Cached or fetched value
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Try L1 cache first
@@ -547,7 +582,8 @@ class PerformanceCache:
         level: Optional[CacheLevel] = None,
         tags: Optional[List[str]] = None
     ) -> bool:
-        """        Set value in multi-level cache.
+        """
+        Set value in multi-level cache.
         
         Args:
             key: Cache key
@@ -558,7 +594,8 @@ class PerformanceCache:
             
         Returns:
             Success status
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         success = False
         
         try:
@@ -581,7 +618,8 @@ class PerformanceCache:
             return False
     
     async def delete(self, key: str, level: Optional[CacheLevel] = None) -> bool:
-        """Delete value from cache"""        success = False
+        """Delete value from cache"""
+        success = False
         
         try:
             if level == CacheLevel.L1_MEMORY or level is None:
@@ -603,7 +641,8 @@ class PerformanceCache:
             return False
     
     async def invalidate_by_tag(self, tag: str) -> int:
-        """Invalidate all cache entries with specific tag"""        total_deleted = 0
+        """Invalidate all cache entries with specific tag"""
+        total_deleted = 0
         
         if self.l2_cache:
             deleted = await self.l2_cache.delete_by_tag(tag)
@@ -615,7 +654,8 @@ class PerformanceCache:
         return total_deleted
     
     async def warm_cache(self, key: str, fetch_func: Callable, ttl: Optional[int] = None):
-        """Add cache warming request to queue"""        try:
+        """Add cache warming request to queue"""
+        try:
             await self.warming_queue.put({
                 "key": key,
                 "fetch_func": fetch_func,
@@ -625,7 +665,8 @@ class PerformanceCache:
             logger.error(f"Cache warming queue error: {str(e)}")
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive cache metrics"""        metrics = {
+        """Get comprehensive cache metrics"""
+        metrics = {
             "total": self.total_metrics.__dict__,
             "l1": None,
             "l2": None
@@ -640,7 +681,8 @@ class PerformanceCache:
         return metrics
     
     def _update_total_metrics(self, operation: str, latency: float):
-        """Update total cache metrics"""        if operation == "hit":
+        """Update total cache metrics"""
+        if operation == "hit":
             self.total_metrics.hit_count += 1
         elif operation in ("miss", "miss_fetch"):
             self.total_metrics.miss_count += 1
@@ -652,7 +694,8 @@ class PerformanceCache:
         self.total_metrics.total_latency += latency
     
     async def _cache_warming_worker(self):
-        """Background worker for cache warming"""        logger.info("Cache warming worker started")
+        """Background worker for cache warming"""
+        logger.info("Cache warming worker started")
         
         try:
             while True:
@@ -692,7 +735,8 @@ class PerformanceCache:
 
 # Utility functions for cache key generation
 def generate_cache_key(prefix: str, *args: Any, **kwargs: Any) -> str:
-    """Generate consistent cache key from arguments"""    # Create key components
+    """Generate consistent cache key from arguments"""
+    # Create key components
     key_parts = [prefix]
     
     # Add positional arguments
@@ -714,12 +758,15 @@ def generate_cache_key(prefix: str, *args: Any, **kwargs: Any) -> str:
 
 
 def cache_key_for_transaction(transaction_id: str) -> str:
-    """Generate cache key for transaction data"""    return generate_cache_key("transaction", transaction_id)
+    """Generate cache key for transaction data"""
+    return generate_cache_key("transaction", transaction_id)
 
 
 def cache_key_for_user_payments(user_id: str, limit: int = 10) -> str:
-    """Generate cache key for user payment history"""    return generate_cache_key("user_payments", user_id, limit=limit)
+    """Generate cache key for user payment history"""
+    return generate_cache_key("user_payments", user_id, limit=limit)
 
 
 def cache_key_for_revenue_stats(creator_id: str, period: str) -> str:
-    """Generate cache key for revenue statistics"""    return generate_cache_key("revenue_stats", creator_id, period)
+    """Generate cache key for revenue statistics"""
+    return generate_cache_key("revenue_stats", creator_id, period)

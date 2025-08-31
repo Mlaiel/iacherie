@@ -3,7 +3,8 @@ Professional business logic services for collaboration management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""from typing import Dict, List, Optional, Any, Tuple
+"""
+from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 import asyncio
 import logging
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceResponse:
-    """Standardized service response"""    def __init__(
+    """Standardized service response"""
+    def __init__(
         self, 
         success: bool, 
         data: Any = None, 
@@ -45,7 +47,8 @@ class ServiceResponse:
 
 
 class CollaborationDiscoveryService:
-    """Service for discovering and managing collaboration opportunities"""    
+    """Service for discovering and managing collaboration opportunities"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.matching_processor = CollaborationMatchingProcessor(config)
@@ -58,7 +61,8 @@ class CollaborationDiscoveryService:
         creator_profile: Dict[str, Any],
         preferences: Dict[str, Any] = None
     ) -> ServiceResponse:
-        """Discover collaboration opportunities for a creator"""        try:
+        """Discover collaboration opportunities for a creator"""
+        try:
             preferences = preferences or {}
             
             # Check cache first
@@ -170,7 +174,8 @@ class CollaborationDiscoveryService:
         collaboration_history: List[Dict[str, Any]],
         success_patterns: Dict[str, Any] = None
     ) -> ServiceResponse:
-        """Get personalized collaboration recommendations based on history"""        try:
+        """Get personalized collaboration recommendations based on history"""
+        try:
             if not collaboration_history:
                 return await self.discover_opportunities(creator_id, {})
             
@@ -220,7 +225,8 @@ class CollaborationDiscoveryService:
             )
     
     def _analyze_success_patterns(self, history: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze collaboration history for success patterns"""        successful_collaborations = [
+        """Analyze collaboration history for success patterns"""
+        successful_collaborations = [
             collab for collab in history 
             if collab.get('status') == 'completed' and 
                collab.get('satisfaction_score', 0) >= 0.7
@@ -265,7 +271,8 @@ class CollaborationDiscoveryService:
 
 
 class CollaborationMatchingService:
-    """Service for advanced collaboration matching and pairing"""    
+    """Service for advanced collaboration matching and pairing"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.matching_processor = CollaborationMatchingProcessor(config)
@@ -278,7 +285,8 @@ class CollaborationMatchingService:
         candidate_pool: List[Dict[str, Any]],
         matching_options: Dict[str, Any] = None
     ) -> ServiceResponse:
-        """Find and rank collaboration matches"""        try:
+        """Find and rank collaboration matches"""
+        try:
             matching_options = matching_options or {}
             
             # Create collaboration request object
@@ -342,7 +350,8 @@ class CollaborationMatchingService:
         collaboration_data: Dict[str, Any],
         participants: List[Dict[str, Any]]
     ) -> ServiceResponse:
-        """Validate if a collaboration is feasible"""        try:
+        """Validate if a collaboration is feasible"""
+        try:
             feasibility_score = 0.0
             issues = []
             recommendations = []
@@ -418,7 +427,8 @@ class CollaborationMatchingService:
 
 
 class CollaborationManagementService:
-    """Service for managing active collaborations and contracts"""    
+    """Service for managing active collaborations and contracts"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.workflow_processor = CollaborationWorkflowProcessor(config)
@@ -430,7 +440,8 @@ class CollaborationManagementService:
         selected_matches: List[str],
         contract_terms: Dict[str, Any]
     ) -> ServiceResponse:
-        """Create a new collaboration from matches"""        try:
+        """Create a new collaboration from matches"""
+        try:
             # Create collaboration request
             request = CollaborationRequest(**request_data)
             
@@ -502,7 +513,8 @@ class CollaborationManagementService:
         new_status: str,
         update_data: Dict[str, Any] = None
     ) -> ServiceResponse:
-        """Update collaboration status and related data"""        try:
+        """Update collaboration status and related data"""
+        try:
             update_data = update_data or {}
             
             # Get current collaboration (simulate database fetch)
@@ -569,7 +581,8 @@ class CollaborationManagementService:
         milestone_data: Dict[str, Any],
         action: str = "update"
     ) -> ServiceResponse:
-        """Manage collaboration milestones and progress tracking"""        try:
+        """Manage collaboration milestones and progress tracking"""
+        try:
             # Get collaboration contract
             contract = await self._get_contract_by_collaboration_id(collaboration_id)
             if not contract:
@@ -623,7 +636,8 @@ class CollaborationManagementService:
 
 
 class CollaborationAnalyticsService:
-    """Service for collaboration analytics and reporting"""    
+    """Service for collaboration analytics and reporting"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -632,7 +646,8 @@ class CollaborationAnalyticsService:
         collaboration_id: str,
         analytics_type: str = "comprehensive"
     ) -> ServiceResponse:
-        """Generate comprehensive analytics for a collaboration"""        try:
+        """Generate comprehensive analytics for a collaboration"""
+        try:
             # Get collaboration data
             collaboration_data = await self._get_collaboration_analytics_data(collaboration_id)
             
@@ -676,7 +691,8 @@ class CollaborationAnalyticsService:
         creator_id: str,
         time_period: Dict[str, datetime] = None
     ) -> ServiceResponse:
-        """Get insights and trends for creator's collaborations"""        try:
+        """Get insights and trends for creator's collaborations"""
+        try:
             time_period = time_period or {
                 'start': datetime.utcnow() - timedelta(days=90),
                 'end': datetime.utcnow()

@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, List, Optional, Any, Callable, Union
+"""
+from typing import Dict, List, Optional, Any, Callable, Union
 from dataclasses import dataclass, field
 from enum import Enum
 import asyncio
@@ -26,7 +27,8 @@ import crontab
 
 
 class WarmingStrategy(str, Enum):
-    """Cache warming strategies"""    PROACTIVE = "proactive"  # Pre-load based on predictions
+    """Cache warming strategies"""
+    PROACTIVE = "proactive"  # Pre-load based on predictions
     SCHEDULED = "scheduled"  # Time-based warming
     ACCESS_PATTERN = "access_pattern"  # Based on historical access patterns
     DEPENDENCY_DRIVEN = "dependency_driven"  # Warm dependent data
@@ -36,7 +38,8 @@ class WarmingStrategy(str, Enum):
 
 
 class WarmingTrigger(str, Enum):
-    """Events that can trigger cache warming"""    APPLICATION_START = "application_start"
+    """Events that can trigger cache warming"""
+    APPLICATION_START = "application_start"
     SCHEDULED_TIME = "scheduled_time"
     LOW_HIT_RATIO = "low_hit_ratio"
     CACHE_MISS_SPIKE = "cache_miss_spike"
@@ -49,7 +52,8 @@ class WarmingTrigger(str, Enum):
 
 
 class WarmingPriority(int, Enum):
-    """Priority levels for warming operations"""    CRITICAL = 1
+    """Priority levels for warming operations"""
+    CRITICAL = 1
     HIGH = 2
     MEDIUM = 3
     LOW = 4
@@ -58,7 +62,8 @@ class WarmingPriority(int, Enum):
 
 @dataclass
 class WarmingRule:
-    """Cache warming rule definition"""    name: str
+    """Cache warming rule definition"""
+    name: str
     strategy: WarmingStrategy
     triggers: List[WarmingTrigger] = field(default_factory=list)
     priority: WarmingPriority = WarmingPriority.MEDIUM
@@ -94,10 +99,12 @@ class WarmingRule:
     dry_run: bool = False
     
     def matches_trigger(self, trigger: WarmingTrigger) -> bool:
-        """Check if rule applies to given trigger"""        return trigger in self.triggers
+        """Check if rule applies to given trigger"""
+        return trigger in self.triggers
     
     def matches_conditions(self, context: Dict[str, Any]) -> bool:
-        """Check if rule conditions are met"""        if not self.conditions:
+        """Check if rule conditions are met"""
+        if not self.conditions:
             return True
         
         for key, expected_value in self.conditions.items():
@@ -114,7 +121,8 @@ class WarmingRule:
         return True
     
     def _evaluate_condition(self, actual: Any, condition: Dict[str, Any]) -> bool:
-        """Evaluate complex conditions"""        operator = condition["operator"]
+        """Evaluate complex conditions"""
+        operator = condition["operator"]
         expected = condition["value"]
         
         if operator == "eq":
@@ -141,7 +149,8 @@ class WarmingRule:
 
 @dataclass
 class WarmingMetrics:
-    """Cache warming performance metrics"""    total_warming_runs: int = 0
+    """Cache warming performance metrics"""
+    total_warming_runs: int = 0
     successful_runs: int = 0
     failed_runs: int = 0
     keys_warmed: int = 0
@@ -155,7 +164,8 @@ class WarmingMetrics:
 
 @dataclass
 class AccessPattern:
-    """Data access pattern analysis"""    key: str
+    """Data access pattern analysis"""
+    key: str
     access_count: int = 0
     last_access: Optional[datetime] = None
     access_frequency_per_hour: float = 0.0
@@ -165,7 +175,8 @@ class AccessPattern:
     tenant_id: Optional[str] = None
     
     def calculate_warming_score(self) -> float:
-        """Calculate score for warming priority"""        frequency_score = min(self.access_frequency_per_hour / 10.0, 1.0)
+        """Calculate score for warming priority"""
+        frequency_score = min(self.access_frequency_per_hour / 10.0, 1.0)
         hit_ratio_penalty = (1.0 - self.cache_hit_ratio) * 0.5
         recency_bonus = 0.2 if self.last_access and \
                        (datetime.utcnow() - self.last_access).total_seconds() < 3600 else 0.0
@@ -174,8 +185,10 @@ class AccessPattern:
 
 
 class CacheWarmingConfig(BaseModel):
-    """    Comprehensive cache warming configuration
-    """    
+    """
+    Comprehensive cache warming configuration
+    """
+    
     # General settings
     enabled: bool = True
     warming_on_startup: bool = True
@@ -249,20 +262,23 @@ class CacheWarmingConfig(BaseModel):
         return v
     
     def add_rule(self, rule: WarmingRule):
-        """Add warming rule"""        if any(r.name == rule.name for r in self.rules):
+        """Add warming rule"""
+        if any(r.name == rule.name for r in self.rules):
             raise ValueError(f"Rule with name '{rule.name}' already exists")
         
         self.rules.append(rule)
     
     def remove_rule(self, rule_name: str) -> bool:
-        """Remove warming rule"""        for i, rule in enumerate(self.rules):
+        """Remove warming rule"""
+        for i, rule in enumerate(self.rules):
             if rule.name == rule_name:
                 del self.rules[i]
                 return True
         return False
     
     def get_rules_for_trigger(self, trigger: WarmingTrigger) -> List[WarmingRule]:
-        """Get rules that apply to specific trigger"""        matching_rules = []
+        """Get rules that apply to specific trigger"""
+        matching_rules = []
         
         for rule in self.rules:
             if rule.enabled and rule.matches_trigger(trigger):
@@ -272,11 +288,13 @@ class CacheWarmingConfig(BaseModel):
         return sorted(matching_rules, key=lambda r: r.priority.value)
     
     def get_scheduled_rules(self) -> List[WarmingRule]:
-        """Get rules with schedule configuration"""        return [rule for rule in self.rules 
+        """Get rules with schedule configuration"""
+        return [rule for rule in self.rules 
                 if rule.enabled and rule.schedule and rule.strategy == WarmingStrategy.SCHEDULED]
     
     def should_warm_key(self, pattern: AccessPattern) -> bool:
-        """Determine if key should be warmed based on access pattern"""        if not self.access_pattern_tracking:
+        """Determine if key should be warmed based on access pattern"""
+        if not self.access_pattern_tracking:
             return False
         
         warming_score = pattern.calculate_warming_score()
@@ -284,10 +302,12 @@ class CacheWarmingConfig(BaseModel):
                 pattern.access_frequency_per_hour >= self.min_access_frequency)
     
     def get_tenant_weight(self, tenant_id: str) -> float:
-        """Get warming priority weight for tenant"""        return self.tenant_priority_weights.get(tenant_id, 1.0)
+        """Get warming priority weight for tenant"""
+        return self.tenant_priority_weights.get(tenant_id, 1.0)
     
     def get_configuration_summary(self) -> Dict[str, Any]:
-        """Get configuration summary for monitoring"""        return {
+        """Get configuration summary for monitoring"""
+        return {
             "enabled": self.enabled,
             "total_rules": len(self.rules),
             "active_rules": len([r for r in self.rules if r.enabled]),
@@ -301,8 +321,10 @@ class CacheWarmingConfig(BaseModel):
 
 
 class CacheWarmingEngine:
-    """    Cache warming execution engine
-    """    
+    """
+    Cache warming execution engine
+    """
+    
     def __init__(self, config: CacheWarmingConfig):
         self.config = config
         self.metrics = WarmingMetrics()
@@ -314,7 +336,8 @@ class CacheWarmingEngine:
         self.running = False
     
     async def start(self):
-        """Start cache warming engine"""        if self.running:
+        """Start cache warming engine"""
+        if self.running:
             return
         
         self.running = True
@@ -337,7 +360,8 @@ class CacheWarmingEngine:
             await self._trigger_startup_warming()
     
     async def stop(self):
-        """Stop cache warming engine"""        if not self.running:
+        """Stop cache warming engine"""
+        if not self.running:
             return
         
         self.running = False
@@ -367,7 +391,8 @@ class CacheWarmingEngine:
         self.workers.clear()
     
     async def trigger_warming(self, trigger: WarmingTrigger, context: Dict[str, Any] = None):
-        """Trigger cache warming for specific event"""        if not self.config.enabled or not self.running:
+        """Trigger cache warming for specific event"""
+        if not self.config.enabled or not self.running:
             return
         
         if context is None:
@@ -385,7 +410,8 @@ class CacheWarmingEngine:
     
     async def warm_key(self, key: str, value_loader: Callable, cache_client: Any, 
                       ttl: Optional[int] = None) -> bool:
-        """Warm specific cache key"""        try:
+        """Warm specific cache key"""
+        try:
             # Load value
             if asyncio.iscoroutinefunction(value_loader):
                 value = await value_loader(key)
@@ -416,7 +442,8 @@ class CacheWarmingEngine:
     
     def track_access(self, key: str, tenant_id: Optional[str] = None, 
                     response_time: float = 0.0, hit: bool = True):
-        """Track key access for pattern analysis"""        if not self.config.access_pattern_tracking:
+        """Track key access for pattern analysis"""
+        if not self.config.access_pattern_tracking:
             return
         
         if key not in self.access_patterns:
@@ -443,7 +470,8 @@ class CacheWarmingEngine:
             pattern.cache_hit_ratio = (pattern.cache_hit_ratio * 0.9 + hit_value * 0.1)
     
     def get_warming_recommendations(self, limit: int = 100) -> List[AccessPattern]:
-        """Get recommendations for keys to warm"""        if not self.access_patterns:
+        """Get recommendations for keys to warm"""
+        if not self.access_patterns:
             return []
         
         # Calculate warming scores and filter
@@ -458,7 +486,8 @@ class CacheWarmingEngine:
         return candidates[:limit]
     
     async def _scheduler_loop(self):
-        """Main scheduler loop for time-based warming"""        while self.running:
+        """Main scheduler loop for time-based warming"""
+        while self.running:
             try:
                 current_time = datetime.utcnow()
                 scheduled_rules = self.config.get_scheduled_rules()
@@ -476,7 +505,8 @@ class CacheWarmingEngine:
                 await asyncio.sleep(self.config.scheduler_interval)
     
     async def _pattern_analysis_loop(self):
-        """Pattern analysis and predictive warming loop"""        while self.running:
+        """Pattern analysis and predictive warming loop"""
+        while self.running:
             try:
                 await self._update_access_frequencies()
                 
@@ -490,7 +520,8 @@ class CacheWarmingEngine:
                 await asyncio.sleep(self.config.pattern_update_interval)
     
     async def _worker_loop(self, worker_id: str):
-        """Worker loop for processing warming jobs"""        while self.running:
+        """Worker loop for processing warming jobs"""
+        while self.running:
             try:
                 # Get job from queue
                 job = await asyncio.wait_for(self.warming_queue.get(), timeout=1.0)
@@ -509,11 +540,13 @@ class CacheWarmingEngine:
                 continue
     
     async def _trigger_startup_warming(self):
-        """Trigger warming on application startup"""        context = {"trigger": WarmingTrigger.APPLICATION_START}
+        """Trigger warming on application startup"""
+        context = {"trigger": WarmingTrigger.APPLICATION_START}
         await self.trigger_warming(WarmingTrigger.APPLICATION_START, context)
     
     async def _queue_warming_job(self, rule: WarmingRule, context: Dict[str, Any]):
-        """Queue warming job for execution"""        job = {
+        """Queue warming job for execution"""
+        job = {
             "rule": rule,
             "context": context,
             "queued_at": datetime.utcnow()
@@ -526,7 +559,8 @@ class CacheWarmingEngine:
             pass
     
     async def _execute_warming_job(self, job: Dict[str, Any], worker_id: str):
-        """Execute a warming job"""        rule = job["rule"]
+        """Execute a warming job"""
+        rule = job["rule"]
         context = job["context"]
         start_time = time.time()
         
@@ -562,7 +596,8 @@ class CacheWarmingEngine:
             self.metrics.last_warming_run = datetime.utcnow()
     
     def _should_run_scheduled_rule(self, rule: WarmingRule, current_time: datetime) -> bool:
-        """Check if scheduled rule should run"""        if not rule.schedule:
+        """Check if scheduled rule should run"""
+        if not rule.schedule:
             return False
         
         try:
@@ -572,7 +607,8 @@ class CacheWarmingEngine:
             return False
     
     async def _warm_by_access_pattern(self, rule: WarmingRule, context: Dict[str, Any]):
-        """Warm cache based on access patterns"""        recommendations = self.get_warming_recommendations(rule.batch_size)
+        """Warm cache based on access patterns"""
+        recommendations = self.get_warming_recommendations(rule.batch_size)
         
         for pattern in recommendations:
             if rule.value_loader:
@@ -580,7 +616,8 @@ class CacheWarmingEngine:
                 pass
     
     async def _warm_by_popularity(self, rule: WarmingRule, context: Dict[str, Any]):
-        """Warm cache based on data popularity"""        # Get popular keys based on access frequency
+        """Warm cache based on data popularity"""
+        # Get popular keys based on access frequency
         popular_patterns = sorted(
             self.access_patterns.values(),
             key=lambda p: p.access_frequency_per_hour,
@@ -593,15 +630,18 @@ class CacheWarmingEngine:
                 pass
     
     async def _warm_scheduled(self, rule: WarmingRule, context: Dict[str, Any]):
-        """Execute scheduled warming"""        # Implementation would execute the scheduled warming logic
+        """Execute scheduled warming"""
+        # Implementation would execute the scheduled warming logic
         pass
     
     async def _warm_default(self, rule: WarmingRule, context: Dict[str, Any]):
-        """Default warming implementation"""        # Implementation would execute generic warming logic
+        """Default warming implementation"""
+        # Implementation would execute generic warming logic
         pass
     
     async def _update_access_frequencies(self):
-        """Update access frequencies for all patterns"""        current_time = datetime.utcnow()
+        """Update access frequencies for all patterns"""
+        current_time = datetime.utcnow()
         window_start = current_time - timedelta(hours=self.config.pattern_analysis_window_hours)
         
         for pattern in self.access_patterns.values():
@@ -613,7 +653,8 @@ class CacheWarmingEngine:
                 pattern.access_frequency_per_hour = 0.0
     
     async def _perform_predictive_warming(self):
-        """Perform ML-based predictive warming"""        if not self.config.ml_model_path:
+        """Perform ML-based predictive warming"""
+        if not self.config.ml_model_path:
             return
         
         # This would integrate with ML models to predict future cache needs
@@ -621,7 +662,8 @@ class CacheWarmingEngine:
         pass
     
     def _check_resource_constraints(self) -> bool:
-        """Check if system resources allow warming"""        if self.config.pause_on_high_load:
+        """Check if system resources allow warming"""
+        if self.config.pause_on_high_load:
             # Check CPU and memory usage
             # This would integrate with system monitoring
             # Placeholder implementation

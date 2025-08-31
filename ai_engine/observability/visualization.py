@@ -11,7 +11,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import json
 import base64
 import io
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 
 class ChartType(Enum):
-    """Chart types for visualization"""    LINE = "line"
+    """Chart types for visualization"""
+    LINE = "line"
     BAR = "bar"
     PIE = "pie"
     SCATTER = "scatter"
@@ -52,7 +54,8 @@ class ChartType(Enum):
 
 
 class OutputFormat(Enum):
-    """Output formats for visualizations"""    PNG = "png"
+    """Output formats for visualizations"""
+    PNG = "png"
     JPEG = "jpeg"
     SVG = "svg"
     PDF = "pdf"
@@ -62,7 +65,8 @@ class OutputFormat(Enum):
 
 
 class ColorScheme(Enum):
-    """Color schemes for visualizations"""    DEFAULT = "default"
+    """Color schemes for visualizations"""
+    DEFAULT = "default"
     VIRIDIS = "viridis"
     PLASMA = "plasma"
     INFERNO = "inferno"
@@ -79,7 +83,8 @@ class ColorScheme(Enum):
 
 @dataclass
 class ChartConfig:
-    """Chart configuration settings"""    title: str
+    """Chart configuration settings"""
+    title: str
     chart_type: ChartType
     width: int = 800
     height: int = 600
@@ -98,7 +103,8 @@ class ChartConfig:
     responsive: bool = True
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             'title': self.title,
             'chart_type': self.chart_type.value,
             'width': self.width,
@@ -121,12 +127,14 @@ class ChartConfig:
 
 @dataclass
 class ChartData:
-    """Chart data structure"""    labels: List[str]
+    """Chart data structure"""
+    labels: List[str]
     datasets: List[Dict[str, Any]]
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             'labels': self.labels,
             'datasets': self.datasets,
             'metadata': self.metadata
@@ -135,7 +143,8 @@ class ChartData:
 
 @dataclass
 class VisualizationResult:
-    """Visualization generation result"""    chart_id: str
+    """Visualization generation result"""
+    chart_id: str
     config: ChartConfig
     data: ChartData
     output_format: OutputFormat
@@ -145,7 +154,8 @@ class VisualizationResult:
     generated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             'chart_id': self.chart_id,
             'config': self.config.to_dict(),
             'data': self.data.to_dict(),
@@ -158,17 +168,21 @@ class VisualizationResult:
 
 
 class BaseChartGenerator:
-    """Base class for chart generators"""    
+    """Base class for chart generators"""
+    
     def __init__(self, name: str):
-        """Initialize chart generator"""        self.name = name
+        """Initialize chart generator"""
+        self.name = name
         self.supported_types = set()
     
     def supports_chart_type(self, chart_type: ChartType) -> bool:
-        """Check if this generator supports the chart type"""        return chart_type in self.supported_types
+        """Check if this generator supports the chart type"""
+        return chart_type in self.supported_types
     
     async def generate(self, config: ChartConfig, data: ChartData, 
                       output_format: OutputFormat) -> VisualizationResult:
-        """Generate chart visualization - base implementation"""        try:
+        """Generate chart visualization - base implementation"""
+        try:
             chart_id = f"base_{int(datetime.now(timezone.utc).timestamp())}"
             
             # Basic text-based chart representation
@@ -199,7 +213,8 @@ class BaseChartGenerator:
             )
     
     def _generate_text_chart(self, config: ChartConfig, data: ChartData) -> str:
-        """Generate basic text representation of chart"""        lines = [
+        """Generate basic text representation of chart"""
+        lines = [
             f"Chart: {config.title}",
             f"Type: {config.chart_type.value}",
             f"Dimensions: {config.width}x{config.height}",
@@ -220,7 +235,8 @@ class BaseChartGenerator:
         return "\n".join(lines)
     
     def _prepare_color_palette(self, color_scheme: ColorScheme, num_colors: int) -> List[str]:
-        """Prepare color palette based on scheme"""        color_palettes = {
+        """Prepare color palette based on scheme"""
+        color_palettes = {
             ColorScheme.DEFAULT: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"],
             ColorScheme.VIRIDIS: ["#440154", "#404387", "#2a788e", "#22a884", "#7ad151", "#fde725"],
             ColorScheme.PLASMA: ["#0d0887", "#6a00a8", "#b12a90", "#e16462", "#fca636", "#f0f921"],
@@ -241,9 +257,11 @@ class BaseChartGenerator:
 
 
 class MatplotlibGenerator(BaseChartGenerator):
-    """Matplotlib-based chart generator"""    
+    """Matplotlib-based chart generator"""
+    
     def __init__(self):
-        """Initialize matplotlib generator"""        super().__init__("matplotlib")
+        """Initialize matplotlib generator"""
+        super().__init__("matplotlib")
         self.supported_types = {
             ChartType.LINE, ChartType.BAR, ChartType.PIE, ChartType.SCATTER,
             ChartType.HISTOGRAM, ChartType.AREA, ChartType.BOXPLOT
@@ -251,7 +269,8 @@ class MatplotlibGenerator(BaseChartGenerator):
     
     async def generate(self, config: ChartConfig, data: ChartData, 
                       output_format: OutputFormat) -> VisualizationResult:
-        """Generate chart using matplotlib"""        try:
+        """Generate chart using matplotlib"""
+        try:
             chart_id = f"mpl_{int(datetime.now(timezone.utc).timestamp())}"
             
             # For demo purposes, we'll simulate chart generation
@@ -295,8 +314,10 @@ class MatplotlibGenerator(BaseChartGenerator):
     
     async def _generate_line_chart(self, config: ChartConfig, data: ChartData, 
                                  output_format: OutputFormat) -> str:
-        """Generate line chart"""        # Simulate matplotlib line chart generation
-        chart_svg = f"""        <svg width="{config.width}" height="{config.height}" xmlns="http://www.w3.org/2000/svg">
+        """Generate line chart"""
+        # Simulate matplotlib line chart generation
+        chart_svg = f"""
+        <svg width="{config.width}" height="{config.height}" xmlns="http://www.w3.org/2000/svg">
             <rect width="100%" height="100%" fill="{config.background_color}"/>
             <text x="50%" y="30" text-anchor="middle" font-size="{config.title_font_size}" fill="{config.text_color}">
                 {config.title}
@@ -313,7 +334,8 @@ class MatplotlibGenerator(BaseChartGenerator):
                       stroke="#1f77b4" stroke-width="2" fill="none"/>
             </g>
         </svg>
-        """        
+        """
+        
         if output_format == OutputFormat.SVG:
             return chart_svg
         elif output_format == OutputFormat.HTML:
@@ -323,7 +345,8 @@ class MatplotlibGenerator(BaseChartGenerator):
     
     async def _generate_bar_chart(self, config: ChartConfig, data: ChartData, 
                                 output_format: OutputFormat) -> str:
-        """Generate bar chart"""        # Simulate bar chart generation
+        """Generate bar chart"""
+        # Simulate bar chart generation
         colors = self._prepare_color_palette(config.color_scheme, len(data.datasets))
         
         bars_svg = ""
@@ -341,7 +364,8 @@ class MatplotlibGenerator(BaseChartGenerator):
                           fill="{colors[i % len(colors)]}" opacity="0.8"/>
                     '''
         
-        chart_svg = f"""        <svg width="{config.width}" height="{config.height}" xmlns="http://www.w3.org/2000/svg">
+        chart_svg = f"""
+        <svg width="{config.width}" height="{config.height}" xmlns="http://www.w3.org/2000/svg">
             <rect width="100%" height="100%" fill="{config.background_color}"/>
             <text x="50%" y="30" text-anchor="middle" font-size="{config.title_font_size}" fill="{config.text_color}">
                 {config.title}
@@ -350,7 +374,8 @@ class MatplotlibGenerator(BaseChartGenerator):
                 {bars_svg}
             </g>
         </svg>
-        """        
+        """
+        
         if output_format == OutputFormat.SVG:
             return chart_svg
         elif output_format == OutputFormat.HTML:
@@ -360,10 +385,12 @@ class MatplotlibGenerator(BaseChartGenerator):
     
     async def _generate_pie_chart(self, config: ChartConfig, data: ChartData, 
                                 output_format: OutputFormat) -> str:
-        """Generate pie chart"""        # Simulate pie chart generation
+        """Generate pie chart"""
+        # Simulate pie chart generation
         colors = self._prepare_color_palette(config.color_scheme, len(data.datasets))
         
-        chart_svg = f"""        <svg width="{config.width}" height="{config.height}" xmlns="http://www.w3.org/2000/svg">
+        chart_svg = f"""
+        <svg width="{config.width}" height="{config.height}" xmlns="http://www.w3.org/2000/svg">
             <rect width="100%" height="100%" fill="{config.background_color}"/>
             <text x="50%" y="30" text-anchor="middle" font-size="{config.title_font_size}" fill="{config.text_color}">
                 {config.title}
@@ -374,7 +401,8 @@ class MatplotlibGenerator(BaseChartGenerator):
             <path d="M {config.width//2},{config.height//2} L {config.width//2},{config.height//2-100} A 100,100 0 0,1 {config.width//2+70},{config.height//2-70} Z" 
                   fill="#ff7f0e" opacity="0.8"/>
         </svg>
-        """        
+        """
+        
         if output_format == OutputFormat.SVG:
             return chart_svg
         elif output_format == OutputFormat.HTML:
@@ -384,21 +412,26 @@ class MatplotlibGenerator(BaseChartGenerator):
     
     async def _generate_scatter_chart(self, config: ChartConfig, data: ChartData, 
                                     output_format: OutputFormat) -> str:
-        """Generate scatter chart"""        return await self._generate_default_chart(config, data, output_format)
+        """Generate scatter chart"""
+        return await self._generate_default_chart(config, data, output_format)
     
     async def _generate_histogram(self, config: ChartConfig, data: ChartData, 
                                 output_format: OutputFormat) -> str:
-        """Generate histogram"""        return await self._generate_default_chart(config, data, output_format)
+        """Generate histogram"""
+        return await self._generate_default_chart(config, data, output_format)
     
     async def _generate_default_chart(self, config: ChartConfig, data: ChartData, 
                                     output_format: OutputFormat) -> str:
-        """Generate default chart visualization"""        return f"Simulated {config.chart_type.value} chart - Generated with {self.name}"
+        """Generate default chart visualization"""
+        return f"Simulated {config.chart_type.value} chart - Generated with {self.name}"
 
 
 class PlotlyGenerator(BaseChartGenerator):
-    """Plotly-based chart generator"""    
+    """Plotly-based chart generator"""
+    
     def __init__(self):
-        """Initialize plotly generator"""        super().__init__("plotly")
+        """Initialize plotly generator"""
+        super().__init__("plotly")
         self.supported_types = {
             ChartType.LINE, ChartType.BAR, ChartType.PIE, ChartType.SCATTER,
             ChartType.HEATMAP, ChartType.CANDLESTICK, ChartType.TREEMAP,
@@ -407,7 +440,8 @@ class PlotlyGenerator(BaseChartGenerator):
     
     async def generate(self, config: ChartConfig, data: ChartData, 
                       output_format: OutputFormat) -> VisualizationResult:
-        """Generate chart using plotly"""        try:
+        """Generate chart using plotly"""
+        try:
             chart_id = f"plotly_{int(datetime.now(timezone.utc).timestamp())}"
             
             # Generate interactive HTML content
@@ -439,11 +473,13 @@ class PlotlyGenerator(BaseChartGenerator):
     
     async def _generate_interactive_chart(self, config: ChartConfig, data: ChartData, 
                                         output_format: OutputFormat) -> str:
-        """Generate interactive chart"""        # Simulate plotly chart generation
+        """Generate interactive chart"""
+        # Simulate plotly chart generation
         chart_data_json = json.dumps(data.to_dict())
         config_json = json.dumps(config.to_dict())
         
-        html_content = f"""        <!DOCTYPE html>
+        html_content = f"""
+        <!DOCTYPE html>
         <html>
         <head>
             <title>{config.title}</title>
@@ -500,7 +536,8 @@ class PlotlyGenerator(BaseChartGenerator):
             </script>
         </body>
         </html>
-        """        
+        """
+        
         if output_format == OutputFormat.HTML:
             return html_content
         elif output_format == OutputFormat.JSON:
@@ -514,9 +551,11 @@ class PlotlyGenerator(BaseChartGenerator):
 
 
 class D3Generator(BaseChartGenerator):
-    """D3.js-based chart generator"""    
+    """D3.js-based chart generator"""
+    
     def __init__(self):
-        """Initialize D3 generator"""        super().__init__("d3")
+        """Initialize D3 generator"""
+        super().__init__("d3")
         self.supported_types = {
             ChartType.LINE, ChartType.BAR, ChartType.PIE, ChartType.SCATTER,
             ChartType.HEATMAP, ChartType.TREEMAP, ChartType.SANKEY,
@@ -525,7 +564,8 @@ class D3Generator(BaseChartGenerator):
     
     async def generate(self, config: ChartConfig, data: ChartData, 
                       output_format: OutputFormat) -> VisualizationResult:
-        """Generate chart using D3.js"""        try:
+        """Generate chart using D3.js"""
+        try:
             chart_id = f"d3_{int(datetime.now(timezone.utc).timestamp())}"
             
             content = await self._generate_d3_chart(config, data, output_format)
@@ -556,10 +596,12 @@ class D3Generator(BaseChartGenerator):
     
     async def _generate_d3_chart(self, config: ChartConfig, data: ChartData, 
                                output_format: OutputFormat) -> str:
-        """Generate D3.js chart"""        chart_data_json = json.dumps(data.to_dict())
+        """Generate D3.js chart"""
+        chart_data_json = json.dumps(data.to_dict())
         config_json = json.dumps(config.to_dict())
         
-        html_content = f"""        <!DOCTYPE html>
+        html_content = f"""
+        <!DOCTYPE html>
         <html>
         <head>
             <title>{config.title}</title>
@@ -689,12 +731,14 @@ class D3Generator(BaseChartGenerator):
             </script>
         </body>
         </html>
-        """        
+        """
+        
         return html_content
 
 
 class VisualizationEngine:
-    """    Main visualization engine managing chart generation and rendering
+    """
+    Main visualization engine managing chart generation and rendering
     
     Features:
     - Multiple chart generators (Matplotlib, Plotly, D3.js)
@@ -703,9 +747,11 @@ class VisualizationEngine:
     - Batch chart generation
     - Custom chart templates
     - Export capabilities
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize visualization engine"""        self.config = config or {}
+        """Initialize visualization engine"""
+        self.config = config or {}
         
         # Chart generators
         self.generators: Dict[str, BaseChartGenerator] = {}
@@ -728,7 +774,8 @@ class VisualizationEngine:
         self._initialize_templates()
     
     def _initialize_generators(self):
-        """Initialize chart generators"""        try:
+        """Initialize chart generators"""
+        try:
             # Register available generators
             self.generators['matplotlib'] = MatplotlibGenerator()
             self.generators['plotly'] = PlotlyGenerator()
@@ -740,7 +787,8 @@ class VisualizationEngine:
             logger.error(f"Failed to initialize generators: {str(e)}")
     
     def _initialize_templates(self):
-        """Initialize chart templates"""        try:
+        """Initialize chart templates"""
+        try:
             # System performance dashboard charts
             self.chart_templates['system_performance'] = ChartConfig(
                 title="System Performance",
@@ -790,7 +838,8 @@ class VisualizationEngine:
     async def generate_chart(self, config: ChartConfig, data: ChartData, 
                            output_format: OutputFormat = OutputFormat.HTML,
                            generator_preference: Optional[str] = None) -> VisualizationResult:
-        """Generate a chart visualization"""        try:
+        """Generate a chart visualization"""
+        try:
             start_time = datetime.now(timezone.utc)
             
             # Check cache first
@@ -852,7 +901,8 @@ class VisualizationEngine:
     
     def _generate_cache_key(self, config: ChartConfig, data: ChartData, 
                           output_format: OutputFormat) -> str:
-        """Generate cache key for chart configuration and data"""        try:
+        """Generate cache key for chart configuration and data"""
+        try:
             # Create a hash of the key components
             key_components = {
                 'config': config.to_dict(),
@@ -868,7 +918,8 @@ class VisualizationEngine:
     
     def _select_generator(self, chart_type: ChartType, 
                          preference: Optional[str] = None) -> Optional[BaseChartGenerator]:
-        """Select appropriate generator for chart type"""        try:
+        """Select appropriate generator for chart type"""
+        try:
             # Use preference if specified and available
             if preference and preference in self.generators:
                 generator = self.generators[preference]
@@ -900,7 +951,8 @@ class VisualizationEngine:
             return None
     
     async def generate_dashboard_charts(self, chart_configs: List[Dict[str, Any]]) -> List[VisualizationResult]:
-        """Generate multiple charts for dashboard"""        try:
+        """Generate multiple charts for dashboard"""
+        try:
             results = []
             tasks = []
             
@@ -942,7 +994,8 @@ class VisualizationEngine:
             return []
     
     def _parse_chart_config(self, config_dict: Dict[str, Any]) -> ChartConfig:
-        """Parse chart configuration from dictionary"""        try:
+        """Parse chart configuration from dictionary"""
+        try:
             return ChartConfig(
                 title=config_dict.get('title', 'Untitled Chart'),
                 chart_type=ChartType(config_dict.get('chart_type', 'line')),
@@ -959,7 +1012,8 @@ class VisualizationEngine:
             return ChartConfig("Error Chart", ChartType.LINE)
     
     def _parse_chart_data(self, data_dict: Dict[str, Any]) -> ChartData:
-        """Parse chart data from dictionary"""        try:
+        """Parse chart data from dictionary"""
+        try:
             return ChartData(
                 labels=data_dict.get('labels', []),
                 datasets=data_dict.get('datasets', []),
@@ -971,10 +1025,12 @@ class VisualizationEngine:
             return ChartData([], [])
     
     def get_chart_template(self, template_name: str) -> Optional[ChartConfig]:
-        """Get chart template by name"""        return self.chart_templates.get(template_name)
+        """Get chart template by name"""
+        return self.chart_templates.get(template_name)
     
     def register_chart_template(self, name: str, config: ChartConfig):
-        """Register new chart template"""        try:
+        """Register new chart template"""
+        try:
             self.chart_templates[name] = config
             logger.info(f"Registered chart template: {name}")
             
@@ -982,7 +1038,8 @@ class VisualizationEngine:
             logger.error(f"Failed to register chart template {name}: {str(e)}")
     
     def list_supported_chart_types(self, generator_name: Optional[str] = None) -> Dict[str, List[str]]:
-        """List supported chart types by generator"""        try:
+        """List supported chart types by generator"""
+        try:
             supported_types = {}
             
             if generator_name and generator_name in self.generators:
@@ -999,7 +1056,8 @@ class VisualizationEngine:
             return {}
     
     def get_generation_stats(self) -> Dict[str, Any]:
-        """Get chart generation statistics"""        try:
+        """Get chart generation statistics"""
+        try:
             stats = self.generation_stats.copy()
             
             # Calculate additional metrics
@@ -1019,7 +1077,8 @@ class VisualizationEngine:
             return {}
     
     async def export_chart(self, chart_id: str, export_format: OutputFormat) -> Optional[VisualizationResult]:
-        """Export existing chart to different format"""        try:
+        """Export existing chart to different format"""
+        try:
             # Find chart in cache
             cached_chart = None
             for cached_result in self.chart_cache.values():
@@ -1043,7 +1102,8 @@ class VisualizationEngine:
             return None
     
     def clear_cache(self):
-        """Clear chart cache"""        try:
+        """Clear chart cache"""
+        try:
             self.chart_cache.clear()
             logger.info("Chart cache cleared")
             
@@ -1053,12 +1113,15 @@ class VisualizationEngine:
 
 # Specialized visualization classes for domain-specific charts
 class BusinessVisualization:
-    """Business-specific visualization utilities"""    
+    """Business-specific visualization utilities"""
+    
     def __init__(self, visualization_engine: VisualizationEngine):
-        """Initialize business visualization"""        self.viz_engine = visualization_engine
+        """Initialize business visualization"""
+        self.viz_engine = visualization_engine
     
     async def create_revenue_dashboard(self, revenue_data: Dict[str, Any]) -> List[VisualizationResult]:
-        """Create revenue dashboard charts"""        charts = []
+        """Create revenue dashboard charts"""
+        charts = []
         
         # Revenue trend chart
         revenue_config = ChartConfig(
@@ -1102,7 +1165,8 @@ class BusinessVisualization:
         return charts
     
     async def create_user_analytics(self, user_data: Dict[str, Any]) -> List[VisualizationResult]:
-        """Create user analytics charts"""        charts = []
+        """Create user analytics charts"""
+        charts = []
         
         # User growth chart
         growth_config = ChartConfig(
@@ -1130,12 +1194,15 @@ class BusinessVisualization:
 
 
 class TechnicalVisualization:
-    """Technical monitoring visualization utilities"""    
+    """Technical monitoring visualization utilities"""
+    
     def __init__(self, visualization_engine: VisualizationEngine):
-        """Initialize technical visualization"""        self.viz_engine = visualization_engine
+        """Initialize technical visualization"""
+        self.viz_engine = visualization_engine
     
     async def create_performance_charts(self, performance_data: Dict[str, Any]) -> List[VisualizationResult]:
-        """Create performance monitoring charts"""        charts = []
+        """Create performance monitoring charts"""
+        charts = []
         
         # Response time chart
         response_config = ChartConfig(

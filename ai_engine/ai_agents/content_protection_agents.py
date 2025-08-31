@@ -7,7 +7,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 This module contains AI agents specialized in content protection, copyright
 management, plagiarism detection, and intellectual property security.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -22,7 +23,8 @@ from ..neural_networks.protection_networks import ContentFingerprintingNetwork
 
 @dataclass
 class ProtectionAnalysis:
-    """Content protection analysis results"""    risk_level: str  # low, medium, high, critical
+    """Content protection analysis results"""
+    risk_level: str  # low, medium, high, critical
     vulnerability_score: float
     threats_detected: List[str]
     protection_recommendations: List[str]
@@ -33,7 +35,8 @@ class ProtectionAnalysis:
 
 @dataclass
 class CopyrightClaim:
-    """Copyright claim structure"""    claim_id: str
+    """Copyright claim structure"""
+    claim_id: str
     content_id: str
     claimant: str
     claim_type: str  # full, partial, audio, visual
@@ -43,11 +46,13 @@ class CopyrightClaim:
 
 
 class ContentProtectionAgent(BaseAIAgent):
-    """    AI agent specialized in content protection and copyright management.
+    """
+    AI agent specialized in content protection and copyright management.
     
     Provides comprehensive analysis of content security, copyright compliance,
     plagiarism detection, and intellectual property protection.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(agent_id="content_protection", config=config)
         self.fingerprinting_network = ContentFingerprintingNetwork()
@@ -77,14 +82,16 @@ class ContentProtectionAgent(BaseAIAgent):
         logging.info(f"ContentProtectionAgent initialized with {len(self.protection_methods)} protection methods")
 
     async def analyze_content_security(self, content_data: Dict[str, Any]) -> ProtectionAnalysis:
-        """        Analyze content for security vulnerabilities and protection needs.
+        """
+        Analyze content for security vulnerabilities and protection needs.
         
         Args:
             content_data: Content metadata and binary data
             
         Returns:
             Comprehensive protection analysis
-        """        try:
+        """
+        try:
             threats_detected = []
             protection_recommendations = []
             vulnerability_score = 0.0
@@ -174,14 +181,16 @@ class ContentProtectionAgent(BaseAIAgent):
             )
 
     async def monitor_copyright_infringement(self, creator_profile: Dict[str, Any]) -> Dict[str, Any]:
-        """        Monitor for copyright infringement across platforms.
+        """
+        Monitor for copyright infringement across platforms.
         
         Args:
             creator_profile: Creator's content portfolio and monitoring preferences
             
         Returns:
             Copyright monitoring results and alerts
-        """        try:
+        """
+        try:
             content_portfolio = creator_profile.get('content_portfolio', [])
             monitoring_results = {
                 "total_content_monitored": len(content_portfolio),
@@ -253,7 +262,8 @@ class ContentProtectionAgent(BaseAIAgent):
     async def generate_protection_strategy(self, content_type: str, 
                                          value_tier: str, 
                                          distribution_channels: List[str]) -> Dict[str, Any]:
-        """        Generate comprehensive content protection strategy.
+        """
+        Generate comprehensive content protection strategy.
         
         Args:
             content_type: Type of content (video, audio, image, text)
@@ -262,7 +272,8 @@ class ContentProtectionAgent(BaseAIAgent):
             
         Returns:
             Detailed protection strategy
-        """        try:
+        """
+        try:
             strategy = {
                 "protection_level": value_tier,
                 "recommended_methods": [],
@@ -367,7 +378,8 @@ class ContentProtectionAgent(BaseAIAgent):
             }
 
     async def _check_copyright_database(self, fingerprint: str) -> List[Dict[str, Any]]:
-        """Check content fingerprint against copyright database"""        # Simulate copyright database check
+        """Check content fingerprint against copyright database"""
+        # Simulate copyright database check
         # In production, this would query actual copyright databases
         
         # Mock some potential matches for demonstration
@@ -384,7 +396,8 @@ class ContentProtectionAgent(BaseAIAgent):
         return mock_matches
 
     async def _analyze_plagiarism(self, content_data: Dict[str, Any]) -> float:
-        """Analyze content for plagiarism using AI models"""        try:
+        """Analyze content for plagiarism using AI models"""
+        try:
             # Extract text content for analysis
             text_content = content_data.get('transcript', '') + content_data.get('description', '')
             
@@ -408,7 +421,8 @@ class ContentProtectionAgent(BaseAIAgent):
             return 0.0
 
     async def _detect_deepfake(self, content_data: Dict[str, Any]) -> float:
-        """Detect deep fake probability in video content"""        try:
+        """Detect deep fake probability in video content"""
+        try:
             # Simulate deep fake detection
             # In production, this would use specialized deep fake detection models
             
@@ -441,7 +455,8 @@ class ContentProtectionAgent(BaseAIAgent):
             return 0.0
 
     def _analyze_metadata_risks(self, metadata: Dict[str, Any]) -> List[str]:
-        """Analyze metadata for security risks"""        risks = []
+        """Analyze metadata for security risks"""
+        risks = []
         
         # Check for personal information exposure
         if metadata.get('gps_coordinates'):
@@ -462,7 +477,8 @@ class ContentProtectionAgent(BaseAIAgent):
         return risks
 
     async def _analyze_usage_patterns(self, content_id: str) -> Dict[str, Any]:
-        """Analyze content usage patterns for unauthorized access"""        # Simulate usage pattern analysis
+        """Analyze content usage patterns for unauthorized access"""
+        # Simulate usage pattern analysis
         # In production, this would analyze actual usage logs
         
         return {
@@ -474,7 +490,8 @@ class ContentProtectionAgent(BaseAIAgent):
         }
 
     async def _search_unauthorized_copies(self, content_item: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Search for unauthorized copies across platforms"""        # Simulate reverse search for unauthorized copies
+        """Search for unauthorized copies across platforms"""
+        # Simulate reverse search for unauthorized copies
         # In production, this would use actual reverse search APIs
         
         content_title = content_item.get('title', '')
@@ -495,7 +512,8 @@ class ContentProtectionAgent(BaseAIAgent):
 
     async def _generate_dmca_takedown(self, original_content: Dict[str, Any], 
                                     infringing_copy: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate DMCA takedown notice"""        return {
+        """Generate DMCA takedown notice"""
+        return {
             "takedown_id": f"dmca_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
             "original_content_id": original_content.get('content_id'),
             "infringing_url": infringing_copy['url'],
@@ -507,7 +525,8 @@ class ContentProtectionAgent(BaseAIAgent):
         }
 
     def _determine_security_measures(self, risk_level: str, threats: List[str]) -> List[str]:
-        """Determine required security measures based on risk assessment"""        measures = ["basic_monitoring"]
+        """Determine required security measures based on risk assessment"""
+        measures = ["basic_monitoring"]
         
         if risk_level == "critical":
             measures.extend([
@@ -538,7 +557,8 @@ class ContentProtectionAgent(BaseAIAgent):
         return list(set(measures))  # Remove duplicates
 
     def _calculate_setup_cost(self, methods: List[str]) -> float:
-        """Calculate estimated setup cost for protection methods"""        cost_map = {
+        """Calculate estimated setup cost for protection methods"""
+        cost_map = {
             "basic_watermarking": 50,
             "digital_watermarking": 200,
             "content_fingerprinting": 300,
@@ -551,7 +571,8 @@ class ContentProtectionAgent(BaseAIAgent):
         return sum(cost_map.get(method, 100) for method in methods)
 
     def _calculate_monthly_cost(self, monitoring_plan: Dict[str, Any]) -> float:
-        """Calculate estimated monthly cost for monitoring"""        base_cost = 20
+        """Calculate estimated monthly cost for monitoring"""
+        base_cost = 20
         
         frequency_multiplier = {
             "real_time": 5.0,

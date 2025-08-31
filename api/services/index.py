@@ -19,7 +19,8 @@ from .coordinator import PlatformCoordinator, ServiceOrchestrator
 
 
 def initialize_platform_services(business_services, core_services):
-    """    Initialize all platform services
+    """
+    Initialize all platform services
     
     Args:
         business_services: Business logic services
@@ -27,7 +28,8 @@ def initialize_platform_services(business_services, core_services):
         
     Returns:
         dict: Initialized platform services
-    """    services = {
+    """
+    services = {
         'analytics': AnalyticsService(core_services),
         'collaboration_matching': CollaborationMatchingService(business_services, core_services),
         'content_ingestion': ContentIngestionService(business_services, core_services),
@@ -45,36 +47,44 @@ def initialize_platform_services(business_services, core_services):
 
 
 def get_platform_coordinator(business_services, core_services):
-    """Get platform coordinator with all services initialized"""    services = initialize_platform_services(business_services, core_services)
+    """Get platform coordinator with all services initialized"""
+    services = initialize_platform_services(business_services, core_services)
     return services['coordinator']
 
 
 def get_analytics_service(core_services):
-    """Get standalone analytics service"""    return AnalyticsService(core_services)
+    """Get standalone analytics service"""
+    return AnalyticsService(core_services)
 
 
 def get_collaboration_matching_service(business_services, core_services):
-    """Get standalone collaboration matching service"""    return CollaborationMatchingService(business_services, core_services)
+    """Get standalone collaboration matching service"""
+    return CollaborationMatchingService(business_services, core_services)
 
 
 def get_content_ingestion_service(business_services, core_services):
-    """Get standalone content ingestion service"""    return ContentIngestionService(business_services, core_services)
+    """Get standalone content ingestion service"""
+    return ContentIngestionService(business_services, core_services)
 
 
 def get_distribution_service(business_services, core_services):
-    """Get standalone distribution service"""    return DistributionService(business_services, core_services)
+    """Get standalone distribution service"""
+    return DistributionService(business_services, core_services)
 
 
 def get_monetization_service(business_services, core_services):
-    """Get standalone monetization service"""    return MonetizationService(business_services, core_services)
+    """Get standalone monetization service"""
+    return MonetizationService(business_services, core_services)
 
 
 def get_rights_protection_service(business_services, core_services):
-    """Get standalone rights protection service"""    return RightsProtectionService(business_services, core_services)
+    """Get standalone rights protection service"""
+    return RightsProtectionService(business_services, core_services)
 
 
 def get_seo_optimizer_service(business_services, core_services):
-    """Get standalone SEO optimizer service"""    return SEOOptimizerService(business_services, core_services)
+    """Get standalone SEO optimizer service"""
+    return SEOOptimizerService(business_services, core_services)
 
 
 # Service factory aliases

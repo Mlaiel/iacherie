@@ -38,7 +38,8 @@ This module provides:
 - Revenue impact assessment
 - Legal action preparation and filing
 - Settlement negotiation automation
-"""import asyncio
+"""
+import asyncio
 import logging
 import secrets
 import uuid
@@ -66,7 +67,8 @@ Base = declarative_base()
 
 
 class EscalationLevel(Enum):
-    """Escalation progression levels"""    INITIAL_NOTICE = "initial_notice"
+    """Escalation progression levels"""
+    INITIAL_NOTICE = "initial_notice"
     FORMAL_REMINDER = "formal_reminder"
     ESCALATION_WARNING = "escalation_warning"
     LEGAL_THREAT = "legal_threat"
@@ -76,7 +78,8 @@ class EscalationLevel(Enum):
 
 
 class EscalationReason(Enum):
-    """Reasons for escalation"""    NO_RESPONSE = "no_response"
+    """Reasons for escalation"""
+    NO_RESPONSE = "no_response"
     INADEQUATE_RESPONSE = "inadequate_response"
     PARTIAL_COMPLIANCE = "partial_compliance"
     COUNTER_NOTICE_ABUSE = "counter_notice_abuse"
@@ -87,7 +90,8 @@ class EscalationReason(Enum):
 
 
 class EscalationStatus(Enum):
-    """Current escalation status"""    PENDING = "pending"
+    """Current escalation status"""
+    PENDING = "pending"
     ACTIVE = "active"
     SCHEDULED = "scheduled"
     SENT = "sent"
@@ -99,7 +103,8 @@ class EscalationStatus(Enum):
 
 
 class EscalationUrgency(Enum):
-    """Urgency levels for escalation"""    LOW = "low"
+    """Urgency levels for escalation"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -108,7 +113,8 @@ class EscalationUrgency(Enum):
 
 @dataclass
 class EscalationTrigger:
-    """Escalation trigger configuration"""    reason: EscalationReason
+    """Escalation trigger configuration"""
+    reason: EscalationReason
     threshold_hours: int
     next_level: EscalationLevel
     urgency: EscalationUrgency
@@ -120,7 +126,8 @@ class EscalationTrigger:
 
 @dataclass
 class LegalAction:
-    """Legal action details"""    action_type: str
+    """Legal action details"""
+    action_type: str
     jurisdiction: str
     court_name: Optional[str] = None
     case_number: Optional[str] = None
@@ -135,7 +142,8 @@ class LegalAction:
 
 @dataclass
 class EscalationRecord:
-    """Complete escalation record"""    escalation_id: str
+    """Complete escalation record"""
+    escalation_id: str
     notice_id: str
     platform: str
     level: EscalationLevel
@@ -179,14 +187,16 @@ class EscalationRecord:
 
 
 class EscalationWorkflow:
-    """Escalation workflow definition and management"""    
+    """Escalation workflow definition and management"""
+    
     def __init__(self):
         self.workflow_steps = self._define_default_workflow()
         self.trigger_rules = self._define_trigger_rules()
         self.legal_templates = self._load_legal_templates()
     
     def _define_default_workflow(self) -> Dict[EscalationLevel, Dict[str, Any]]:
-        """Define the default escalation workflow"""        return {
+        """Define the default escalation workflow"""
+        return {
             EscalationLevel.INITIAL_NOTICE: {
                 'description': 'Initial DMCA takedown notice',
                 'wait_hours': 72,
@@ -232,7 +242,8 @@ class EscalationWorkflow:
         }
     
     def _define_trigger_rules(self) -> List[EscalationTrigger]:
-        """Define escalation trigger rules"""        return [
+        """Define escalation trigger rules"""
+        return [
             EscalationTrigger(
                 reason=EscalationReason.NO_RESPONSE,
                 threshold_hours=72,
@@ -274,7 +285,8 @@ class EscalationWorkflow:
         ]
     
     def _load_legal_templates(self) -> Dict[str, str]:
-        """Load legal escalation templates"""        return {
+        """Load legal escalation templates"""
+        return {
             'formal_reminder': """Subject: FORMAL REMINDER - DMCA Compliance Required
 
 Dear Platform Representative,
@@ -402,11 +414,13 @@ This represents the final 72-hour window for settlement negotiation. After this 
 {{ signature_block }}
 
 **URGENT: Contact our litigation team immediately if you wish to discuss resolution.**
-            """        }
+            """
+        }
     
     def get_next_escalation_level(self, current_level: EscalationLevel, 
                                  reason: EscalationReason) -> Optional[EscalationLevel]:
-        """Determine next escalation level"""        
+        """Determine next escalation level"""
+        
         # Check trigger rules first
         for trigger in self.trigger_rules:
             if trigger.reason == reason:
@@ -421,7 +435,8 @@ This represents the final 72-hour window for settlement negotiation. After this 
     
     def should_auto_escalate(self, current_level: EscalationLevel, 
                            reason: EscalationReason) -> bool:
-        """Check if escalation should be automatic"""        
+        """Check if escalation should be automatic"""
+        
         # Check trigger rules
         for trigger in self.trigger_rules:
             if trigger.reason == reason:
@@ -435,7 +450,8 @@ This represents the final 72-hour window for settlement negotiation. After this 
         return False
     
     def get_escalation_template(self, level: EscalationLevel) -> str:
-        """Get template for escalation level"""        
+        """Get template for escalation level"""
+        
         workflow_step = self.workflow_steps.get(level)
         if workflow_step:
             template_name = workflow_step.get('template')
@@ -445,7 +461,8 @@ This represents the final 72-hour window for settlement negotiation. After this 
 
 
 class EscalationManager:
-    """Main escalation management system"""    
+    """Main escalation management system"""
+    
     def __init__(self, redis_url: str = None):
         self.redis_url = redis_url or "redis://localhost:6379"
         self.redis_client: Optional[aioredis.Redis] = None
@@ -469,7 +486,8 @@ class EscalationManager:
         }
     
     async def initialize(self) -> bool:
-        """Initialize escalation manager"""        try:
+        """Initialize escalation manager"""
+        try:
             # Initialize Redis
             self.redis_client = aioredis.from_url(
                 self.redis_url,
@@ -498,7 +516,8 @@ class EscalationManager:
                               current_level: EscalationLevel = None,
                               urgency: EscalationUrgency = None,
                               evidence: Dict[str, Any] = None) -> EscalationRecord:
-        """Create new escalation record"""        
+        """Create new escalation record"""
+        
         try:
             # Determine escalation level
             if current_level is None:
@@ -562,7 +581,8 @@ class EscalationManager:
     
     async def execute_escalation(self, escalation_id: str, 
                                approved_by: str = None) -> bool:
-        """Execute escalation (send notice)"""        
+        """Execute escalation (send notice)"""
+        
         try:
             escalation = self.active_escalations.get(escalation_id)
             if not escalation:
@@ -608,7 +628,8 @@ class EscalationManager:
     
     async def resolve_escalation(self, escalation_id: str, 
                                resolution_type: str = "compliance") -> bool:
-        """Resolve escalation (mark as resolved)"""        
+        """Resolve escalation (mark as resolved)"""
+        
         try:
             escalation = self.active_escalations.get(escalation_id)
             if not escalation:
@@ -633,7 +654,8 @@ class EscalationManager:
             return False
     
     async def get_escalation_status(self, escalation_id: str) -> Optional[Dict[str, Any]]:
-        """Get escalation status and details"""        
+        """Get escalation status and details"""
+        
         escalation = self.active_escalations.get(escalation_id)
         if not escalation:
             return None
@@ -654,7 +676,8 @@ class EscalationManager:
         }
     
     async def get_notice_escalations(self, notice_id: str) -> List[Dict[str, Any]]:
-        """Get all escalations for a notice"""        
+        """Get all escalations for a notice"""
+        
         escalations = [
             esc for esc in self.active_escalations.values()
             if esc.notice_id == notice_id
@@ -666,7 +689,8 @@ class EscalationManager:
         return [await self.get_escalation_status(esc.escalation_id) for esc in escalations]
     
     async def _generate_escalation_content(self, escalation: EscalationRecord) -> str:
-        """Generate escalation notice content"""        
+        """Generate escalation notice content"""
+        
         template = self.workflow.get_escalation_template(escalation.level)
         if not template:
             return f"Escalation notice for {escalation.level.value}"
@@ -701,7 +725,8 @@ class EscalationManager:
         return content
     
     async def _generate_legal_analysis(self, escalation: EscalationRecord) -> str:
-        """Generate legal analysis for escalation"""        
+        """Generate legal analysis for escalation"""
+        
         analysis_parts = []
         
         # Infringement analysis
@@ -727,7 +752,8 @@ class EscalationManager:
         return "\n".join(analysis_parts)
     
     def _format_evidence_summary(self, evidence: Dict[str, Any]) -> str:
-        """Format evidence summary for escalation"""        
+        """Format evidence summary for escalation"""
+        
         summary_parts = []
         
         # Technical evidence
@@ -752,7 +778,8 @@ class EscalationManager:
     
     def _determine_urgency(self, reason: EscalationReason, 
                           level: EscalationLevel) -> EscalationUrgency:
-        """Determine urgency level for escalation"""        
+        """Determine urgency level for escalation"""
+        
         # High urgency reasons
         if reason in [EscalationReason.COUNTER_NOTICE_ABUSE, 
                      EscalationReason.REPEAT_INFRINGEMENT]:
@@ -770,7 +797,8 @@ class EscalationManager:
         return EscalationUrgency.MEDIUM
     
     async def _schedule_escalation(self, escalation: EscalationRecord):
-        """Schedule automatic escalation"""        
+        """Schedule automatic escalation"""
+        
         if not escalation.deadline:
             return
         
@@ -792,7 +820,8 @@ class EscalationManager:
     
     async def _delayed_escalation_execution(self, escalation: EscalationRecord, 
                                           delay_seconds: float):
-        """Execute escalation after delay"""        
+        """Execute escalation after delay"""
+        
         try:
             await asyncio.sleep(delay_seconds)
             
@@ -806,7 +835,8 @@ class EscalationManager:
             logger.error(f"Error in delayed escalation {escalation.escalation_id}: {e}")
     
     async def _schedule_next_escalation(self, current_escalation: EscalationRecord):
-        """Schedule next escalation level"""        
+        """Schedule next escalation level"""
+        
         try:
             # Wait for deadline
             if current_escalation.deadline:
@@ -842,7 +872,8 @@ class EscalationManager:
             logger.error(f"Error scheduling next escalation: {e}")
     
     async def _send_escalation_notice(self, escalation: EscalationRecord) -> bool:
-        """Send escalation notice to platform"""        
+        """Send escalation notice to platform"""
+        
         try:
             # Here you would integrate with the platform integration system
             # For now, we'll simulate sending
@@ -866,7 +897,8 @@ class EscalationManager:
             return False
     
     async def _send_legal_notice(self, escalation: EscalationRecord) -> bool:
-        """Send legal-level escalation notice"""        
+        """Send legal-level escalation notice"""
+        
         # This would integrate with legal email service, certified mail, etc.
         logger.info(f"Sending legal notice for escalation {escalation.escalation_id}")
         
@@ -875,7 +907,8 @@ class EscalationManager:
         return True
     
     async def _send_standard_notice(self, escalation: EscalationRecord) -> bool:
-        """Send standard escalation notice"""        
+        """Send standard escalation notice"""
+        
         # This would integrate with platform integration system
         logger.info(f"Sending standard notice for escalation {escalation.escalation_id}")
         
@@ -884,7 +917,8 @@ class EscalationManager:
         return True
     
     async def _log_escalation_sent(self, escalation: EscalationRecord):
-        """Log escalation sending for audit trail"""        
+        """Log escalation sending for audit trail"""
+        
         log_entry = {
             'escalation_id': escalation.escalation_id,
             'notice_id': escalation.notice_id,
@@ -901,7 +935,8 @@ class EscalationManager:
         )
     
     async def _escalation_monitor_task(self):
-        """Background task to monitor escalations"""        
+        """Background task to monitor escalations"""
+        
         while True:
             try:
                 # Check for overdue escalations
@@ -923,7 +958,8 @@ class EscalationManager:
                 await asyncio.sleep(3600)
     
     async def _deadline_checker_task(self):
-        """Background task to check approaching deadlines"""        
+        """Background task to check approaching deadlines"""
+        
         while True:
             try:
                 current_time = datetime.utcnow()
@@ -944,7 +980,8 @@ class EscalationManager:
                 await asyncio.sleep(3600)
     
     async def _handle_overdue_escalation(self, escalation: EscalationRecord):
-        """Handle overdue escalation"""        
+        """Handle overdue escalation"""
+        
         try:
             logger.warning(f"Escalation {escalation.escalation_id} is overdue")
             
@@ -969,7 +1006,8 @@ class EscalationManager:
             logger.error(f"Error handling overdue escalation {escalation.escalation_id}: {e}")
     
     async def _send_deadline_warning(self, escalation: EscalationRecord):
-        """Send deadline warning notification"""        
+        """Send deadline warning notification"""
+        
         try:
             warning_key = f"deadline_warning:{escalation.escalation_id}"
             
@@ -987,7 +1025,8 @@ class EscalationManager:
             logger.error(f"Error sending deadline warning: {e}")
     
     async def _persist_escalation(self, escalation: EscalationRecord):
-        """Persist escalation to storage"""        
+        """Persist escalation to storage"""
+        
         try:
             key = f"escalation:{escalation.escalation_id}"
             data = asdict(escalation)
@@ -1011,7 +1050,8 @@ class EscalationManager:
             logger.error(f"Error persisting escalation {escalation.escalation_id}: {e}")
     
     async def _load_active_escalations(self):
-        """Load active escalations from storage"""        
+        """Load active escalations from storage"""
+        
         try:
             keys = await self.redis_client.keys("escalation:*")
             
@@ -1044,7 +1084,8 @@ class EscalationManager:
             logger.error(f"Error loading active escalations: {e}")
     
     async def get_escalation_analytics(self, date_range: Tuple[datetime, datetime] = None) -> Dict[str, Any]:
-        """Get escalation analytics and statistics"""        
+        """Get escalation analytics and statistics"""
+        
         if date_range:
             start_date, end_date = date_range
             filtered_escalations = [
@@ -1100,7 +1141,8 @@ class EscalationManager:
         }
     
     async def cleanup(self):
-        """Clean up escalation manager resources"""        
+        """Clean up escalation manager resources"""
+        
         # Cancel all active tasks
         for task in self.escalation_tasks.values():
             task.cancel()
@@ -1114,7 +1156,8 @@ class EscalationManager:
 
 # Factory function
 def create_escalation_manager(redis_url: str = None) -> EscalationManager:
-    """Create new escalation manager instance"""    return EscalationManager(redis_url)
+    """Create new escalation manager instance"""
+    return EscalationManager(redis_url)
 
 
 __all__ = [

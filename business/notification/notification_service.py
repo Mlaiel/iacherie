@@ -26,7 +26,8 @@ Architecture:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from typing import Dict, List, Optional, Any, Union, Tuple
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple
 import logging
 import asyncio
 from datetime import datetime, timezone
@@ -55,28 +56,33 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationServiceError(Exception):
-    """Custom exception for notification service errors."""    pass
+    """Custom exception for notification service errors."""
+    pass
 
 
 class NotificationService:
-    """    Core notification service for IA Influencer Agent business logic.
+    """
+    Core notification service for IA Influencer Agent business logic.
     
     Provides enterprise-grade notification management with AI-powered features,
     multi-channel delivery, workflow orchestration, and comprehensive analytics.
-    """    
+    """
+    
     def __init__(
         self,
         engine: NotificationEngine,
         processors: Dict[str, Any],
         config: NotificationConfig
     ):
-        """        Initialize notification service with business logic components.
+        """
+        Initialize notification service with business logic components.
         
         Args:
             engine: Core notification processing engine
             processors: Business-specific notification processors
             config: Notification configuration
-        """        self.engine = engine
+        """
+        self.engine = engine
         self.processors = processors
         self.config = config
         self.business_rules = BUSINESS_RULES
@@ -99,7 +105,8 @@ class NotificationService:
         request: NotificationRequest,
         business_context: Optional[Dict[str, Any]] = None
     ) -> NotificationResponse:
-        """        Send notification with business logic processing.
+        """
+        Send notification with business logic processing.
         
         Args:
             request: Notification request with recipient, content, and metadata
@@ -110,7 +117,8 @@ class NotificationService:
         
         Raises:
             NotificationServiceError: If notification processing fails
-        """        try:
+        """
+        try:
             start_time = datetime.now(timezone.utc)
             
             # Validate request
@@ -148,7 +156,8 @@ class NotificationService:
         business_context: Optional[Dict[str, Any]] = None,
         batch_size: int = 100
     ) -> List[NotificationResponse]:
-        """        Send multiple notifications with intelligent batching and optimization.
+        """
+        Send multiple notifications with intelligent batching and optimization.
         
         Args:
             requests: List of notification requests
@@ -157,7 +166,8 @@ class NotificationService:
         
         Returns:
             List of notification responses
-        """        try:
+        """
+        try:
             responses = []
             
             # Process in batches
@@ -198,7 +208,8 @@ class NotificationService:
         steps: List[Dict[str, Any]],
         business_context: Optional[Dict[str, Any]] = None
     ) -> str:
-        """        Create and start a notification workflow for complex business processes.
+        """
+        Create and start a notification workflow for complex business processes.
         
         Args:
             workflow_type: Type of workflow (onboarding, protection, collaboration, etc.)
@@ -207,7 +218,8 @@ class NotificationService:
         
         Returns:
             Workflow ID for tracking
-        """        try:
+        """
+        try:
             workflow_id = f"{workflow_type}_{datetime.now(timezone.utc).timestamp()}"
             
             # Create workflow configuration
@@ -237,14 +249,16 @@ class NotificationService:
             raise NotificationServiceError(f"Workflow creation failed: {e}")
     
     async def get_workflow_status(self, workflow_id: str) -> Dict[str, Any]:
-        """        Get status of active notification workflow.
+        """
+        Get status of active notification workflow.
         
         Args:
             workflow_id: Workflow identifier
         
         Returns:
             Workflow status information
-        """        try:
+        """
+        try:
             if workflow_id not in self._active_workflows:
                 raise NotificationServiceError(f"Workflow not found: {workflow_id}")
             
@@ -266,7 +280,8 @@ class NotificationService:
         notification_type: Optional[str] = None,
         time_period: Optional[str] = "24h"
     ) -> NotificationMetrics:
-        """        Get comprehensive notification metrics and analytics.
+        """
+        Get comprehensive notification metrics and analytics.
         
         Args:
             notification_type: Optional filter by notification type
@@ -274,7 +289,8 @@ class NotificationService:
         
         Returns:
             Notification metrics and analytics
-        """        try:
+        """
+        try:
             # Get metrics from analytics engine
             if hasattr(self.engine, 'analytics_engine') and self.engine.analytics_engine:
                 metrics = await self.engine.analytics_engine.get_metrics(
@@ -305,7 +321,8 @@ class NotificationService:
         user_id: str,
         preferences: Dict[str, Any]
     ) -> bool:
-        """        Update user notification preferences with business rule validation.
+        """
+        Update user notification preferences with business rule validation.
         
         Args:
             user_id: User identifier
@@ -313,7 +330,8 @@ class NotificationService:
         
         Returns:
             True if update successful, False otherwise
-        """        try:
+        """
+        try:
             # Validate preferences against business rules
             validated_preferences = self._validate_user_preferences(preferences)
             
@@ -339,11 +357,13 @@ class NotificationService:
             return False
     
     async def get_service_health(self) -> Dict[str, Any]:
-        """        Get comprehensive service health status and diagnostics.
+        """
+        Get comprehensive service health status and diagnostics.
         
         Returns:
             Service health information
-        """        try:
+        """
+        try:
             # Update health metrics
             self._service_health["last_check"] = datetime.now(timezone.utc)
             
@@ -392,7 +412,8 @@ class NotificationService:
     # Private methods
     
     def _validate_request(self, request: NotificationRequest) -> bool:
-        """Validate notification request."""        try:
+        """Validate notification request."""
+        try:
             # Check required fields
             if not request.recipient or not request.notification_type:
                 return False
@@ -416,7 +437,8 @@ class NotificationService:
         request: NotificationRequest,
         business_context: Optional[Dict[str, Any]]
     ) -> NotificationRequest:
-        """Apply business rules to notification request."""        try:
+        """Apply business rules to notification request."""
+        try:
             # Get business rules for notification type
             rules = self.business_rules.get(request.notification_type, {})
             
@@ -449,7 +471,8 @@ class NotificationService:
             return request
     
     async def _process_business_logic(self, request: NotificationRequest) -> NotificationRequest:
-        """Process notification through appropriate business processor."""        try:
+        """Process notification through appropriate business processor."""
+        try:
             # Determine processor based on notification type
             processor_map = {
                 "content_protection": "content_protection",
@@ -482,7 +505,8 @@ class NotificationService:
         processing_time: float,
         status: DeliveryStatus
     ):
-        """Update notification metrics."""        try:
+        """Update notification metrics."""
+        try:
             # Update service health
             if status == DeliveryStatus.DELIVERED:
                 self._service_health["processed_notifications"] += 1
@@ -511,7 +535,8 @@ class NotificationService:
             logger.error(f"Failed to update metrics: {e}")
     
     def _validate_user_preferences(self, preferences: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate user preferences against business rules."""        try:
+        """Validate user preferences against business rules."""
+        try:
             validated = {}
             
             # Validate channel preferences

@@ -22,7 +22,9 @@ Project Team Specialties:
 - Database Administrator: PostgreSQL/Redis/Vector DB
 - Security Engineer: Enterprise Security/Compliance
 - Microservices Architect: Distributed Systems
-"""from .team_coordination import (
+"""
+
+from .team_coordination import (
     TeamManager,
     CollaboratorInviteService,
     RolePermissionManager,

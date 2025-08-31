@@ -8,7 +8,8 @@ Copyright: All rights reserved - Unauthorized use strictly prohibited
 WARNING: This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Legal action will be taken against violators.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Set
@@ -27,7 +28,8 @@ from ...ml.matching_algorithms import MatchingEngine
 
 
 class MatchingStrategy(Enum):
-    """Matching strategy enumeration."""    CONTENT_BASED = "content_based"
+    """Matching strategy enumeration."""
+    CONTENT_BASED = "content_based"
     COLLABORATIVE = "collaborative"
     HYBRID = "hybrid"
     AI_POWERED = "ai_powered"
@@ -35,7 +37,8 @@ class MatchingStrategy(Enum):
 
 
 class CollaborationType(Enum):
-    """Collaboration type enumeration."""    JOINT_CONTENT = "joint_content"
+    """Collaboration type enumeration."""
+    JOINT_CONTENT = "joint_content"
     CROSS_PROMOTION = "cross_promotion"
     SKILL_EXCHANGE = "skill_exchange"
     BRAND_PARTNERSHIP = "brand_partnership"
@@ -45,7 +48,8 @@ class CollaborationType(Enum):
 
 @dataclass
 class MatchingCriteria:
-    """Matching criteria configuration."""    strategy: MatchingStrategy
+    """Matching criteria configuration."""
+    strategy: MatchingStrategy
     weights: Dict[str, float]
     filters: Dict[str, Any]
     minimum_score: float
@@ -55,7 +59,8 @@ class MatchingCriteria:
 
 @dataclass
 class CollaborationRequest:
-    """Collaboration request structure."""    requester_id: str
+    """Collaboration request structure."""
+    requester_id: str
     collaboration_type: CollaborationType
     project_description: str
     required_skills: List[str]
@@ -66,9 +71,11 @@ class CollaborationRequest:
 
 
 class CollaborationMatcher:
-    """    Enterprise collaboration matching system.
+    """
+    Enterprise collaboration matching system.
     Matches creators for various types of collaborations using advanced AI algorithms.
-    """    
+    """
+    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -87,7 +94,8 @@ class CollaborationMatcher:
         request: CollaborationRequest,
         criteria: MatchingCriteria
     ) -> Dict[str, Any]:
-        """        Find collaboration matches based on request and criteria.
+        """
+        Find collaboration matches based on request and criteria.
         
         Args:
             request: Collaboration request details
@@ -95,7 +103,8 @@ class CollaborationMatcher:
             
         Returns:
             Matching results with scores and explanations
-        """        try:
+        """
+        try:
             cache_key = f"collab_matches:{hash(str(request))}:{hash(str(criteria))}"
             
             # Check cache
@@ -157,7 +166,8 @@ class CollaborationMatcher:
         creator_b_id: str,
         collaboration_type: CollaborationType
     ) -> Dict[str, Any]:
-        """        Evaluate collaboration potential between two specific creators.
+        """
+        Evaluate collaboration potential between two specific creators.
         
         Args:
             creator_a_id: First creator ID
@@ -166,7 +176,8 @@ class CollaborationMatcher:
             
         Returns:
             Collaboration potential analysis
-        """        try:
+        """
+        try:
             cache_key = f"collab_eval:{creator_a_id}:{creator_b_id}:{collaboration_type.value}"
             
             # Check cache
@@ -225,7 +236,8 @@ class CollaborationMatcher:
         creator_id: str,
         target_creator_ids: List[str]
     ) -> Dict[str, List[Dict[str, Any]]]:
-        """        Suggest optimal collaboration types for creator pairs.
+        """
+        Suggest optimal collaboration types for creator pairs.
         
         Args:
             creator_id: Source creator ID
@@ -233,7 +245,8 @@ class CollaborationMatcher:
             
         Returns:
             Collaboration type suggestions for each pair
-        """        try:
+        """
+        try:
             suggestions = {}
             
             # Get source creator profile
@@ -284,7 +297,8 @@ class CollaborationMatcher:
         criteria: MatchingCriteria,
         requester_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Find potential collaboration matches based on strategy."""        if criteria.strategy == MatchingStrategy.CONTENT_BASED:
+        """Find potential collaboration matches based on strategy."""
+        if criteria.strategy == MatchingStrategy.CONTENT_BASED:
             return await self._content_based_matching(request, requester_profile)
         elif criteria.strategy == MatchingStrategy.COLLABORATIVE:
             return await self._collaborative_filtering_matching(request, requester_profile)
@@ -300,7 +314,8 @@ class CollaborationMatcher:
         request: CollaborationRequest,
         requester_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Content-based matching using content similarity."""        # Analyze requester's content characteristics
+        """Content-based matching using content similarity."""
+        # Analyze requester's content characteristics
         content_profile = await self._analyze_creator_content(request.requester_id)
         
         # Find creators with complementary content
@@ -315,7 +330,8 @@ class CollaborationMatcher:
         request: CollaborationRequest,
         requester_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Collaborative filtering based on past collaborations."""        # Get collaboration history
+        """Collaborative filtering based on past collaborations."""
+        # Get collaboration history
         collaboration_history = await self._get_collaboration_history(request.requester_id)
         
         # Find creators who collaborated with similar creators
@@ -330,7 +346,8 @@ class CollaborationMatcher:
         request: CollaborationRequest,
         requester_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """AI-powered matching using machine learning models."""        # Use ML model for matching
+        """AI-powered matching using machine learning models."""
+        # Use ML model for matching
         ml_matches = await self.matching_engine.predict_matches(
             requester_profile=requester_profile,
             collaboration_request=request.__dict__
@@ -343,7 +360,8 @@ class CollaborationMatcher:
         request: CollaborationRequest,
         requester_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Personality-based matching using creator personality profiles."""        # Get personality profile
+        """Personality-based matching using creator personality profiles."""
+        # Get personality profile
         personality_profile = await self._get_personality_profile(request.requester_id)
         
         # Find compatible personalities
@@ -358,7 +376,8 @@ class CollaborationMatcher:
         request: CollaborationRequest,
         requester_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Hybrid matching combining multiple strategies."""        # Run multiple matching strategies
+        """Hybrid matching combining multiple strategies."""
+        # Run multiple matching strategies
         matching_results = await asyncio.gather(
             self._content_based_matching(request, requester_profile),
             self._collaborative_filtering_matching(request, requester_profile),
@@ -379,7 +398,8 @@ class CollaborationMatcher:
         potential_matches: List[Dict[str, Any]],
         requester_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Calculate detailed compatibility scores for matches."""        scored_matches = []
+        """Calculate detailed compatibility scores for matches."""
+        scored_matches = []
         
         for match in potential_matches:
             # Calculate multiple compatibility dimensions
@@ -432,7 +452,8 @@ class CollaborationMatcher:
         scored_matches: List[Dict[str, Any]],
         criteria: MatchingCriteria
     ) -> List[Dict[str, Any]]:
-        """Apply filters to matching results."""        filtered_matches = []
+        """Apply filters to matching results."""
+        filtered_matches = []
         
         for match in scored_matches:
             # Apply minimum score filter
@@ -464,7 +485,8 @@ class CollaborationMatcher:
         request: CollaborationRequest,
         requester_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Add explanations for why matches were suggested."""        for match in matches:
+        """Add explanations for why matches were suggested."""
+        for match in matches:
             explanations = []
             
             # Skill-based explanations
@@ -493,7 +515,8 @@ class CollaborationMatcher:
         creator_b: Dict[str, Any],
         collaboration_type: CollaborationType
     ) -> Dict[str, Any]:
-        """Calculate detailed compatibility metrics between two creators."""        # Calculate various compatibility dimensions
+        """Calculate detailed compatibility metrics between two creators."""
+        # Calculate various compatibility dimensions
         content_compatibility = await self._calculate_content_compatibility(creator_a, creator_b)
         brand_compatibility = await self._calculate_brand_compatibility(creator_a, creator_b)
         communication_compatibility = await self._calculate_communication_compatibility(creator_a, creator_b)
@@ -523,7 +546,8 @@ class CollaborationMatcher:
         self, 
         collaboration_type: CollaborationType
     ) -> Dict[str, float]:
-        """Get weights for different collaboration types."""        weights_map = {
+        """Get weights for different collaboration types."""
+        weights_map = {
             CollaborationType.JOINT_CONTENT: {
                 'content': 0.4, 'brand': 0.3, 'communication': 0.2, 'workflow': 0.1
             },
@@ -550,9 +574,11 @@ class CollaborationMatcher:
 
 
 class ContentMatcher:
-    """    Enterprise content matching system.
+    """
+    Enterprise content matching system.
     Matches content with creators, audiences, and distribution opportunities.
-    """    
+    """
+    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -570,7 +596,8 @@ class ContentMatcher:
         matching_criteria: Dict[str, Any] = None,
         limit: int = 50
     ) -> Dict[str, Any]:
-        """        Match content to suitable creators for promotion or collaboration.
+        """
+        Match content to suitable creators for promotion or collaboration.
         
         Args:
             content_id: Content identifier
@@ -579,7 +606,8 @@ class ContentMatcher:
             
         Returns:
             Creator matches for content
-        """        try:
+        """
+        try:
             cache_key = f"content_creator_matches:{content_id}:{hash(str(matching_criteria))}"
             
             # Check cache
@@ -625,7 +653,8 @@ class ContentMatcher:
         demographic_filters: Dict[str, Any] = None,
         limit: int = 100
     ) -> Dict[str, Any]:
-        """        Match content to target audiences based on demographics and interests.
+        """
+        Match content to target audiences based on demographics and interests.
         
         Args:
             content_id: Content identifier
@@ -634,7 +663,8 @@ class ContentMatcher:
             
         Returns:
             Audience matches for content
-        """        try:
+        """
+        try:
             cache_key = f"content_audience_matches:{content_id}:{hash(str(demographic_filters))}"
             
             # Check cache
@@ -682,7 +712,8 @@ class ContentMatcher:
         content_id: str,
         target_audience: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Recommend improvements to content for better audience matching.
+        """
+        Recommend improvements to content for better audience matching.
         
         Args:
             content_id: Content identifier
@@ -690,7 +721,8 @@ class ContentMatcher:
             
         Returns:
             Content improvement recommendations
-        """        try:
+        """
+        try:
             # Get content analysis
             content_data = await self._get_content_analysis(content_id)
             
@@ -723,9 +755,11 @@ class ContentMatcher:
 
 
 class InfluencerMatcher:
-    """    Enterprise influencer matching system.
+    """
+    Enterprise influencer matching system.
     Matches brands with suitable influencers for campaigns and partnerships.
-    """    
+    """
+    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -744,7 +778,8 @@ class InfluencerMatcher:
         matching_criteria: MatchingCriteria,
         limit: int = 100
     ) -> Dict[str, Any]:
-        """        Match brand with suitable influencers for campaigns.
+        """
+        Match brand with suitable influencers for campaigns.
         
         Args:
             brand_profile: Brand profile and characteristics
@@ -754,7 +789,8 @@ class InfluencerMatcher:
             
         Returns:
             Influencer matches for brand campaign
-        """        try:
+        """
+        try:
             cache_key = f"brand_influencer_matches:{hash(str(brand_profile))}:{hash(str(campaign_requirements))}"
             
             # Check cache
@@ -805,7 +841,8 @@ class InfluencerMatcher:
         brand_profile: Dict[str, Any],
         campaign_type: str
     ) -> Dict[str, Any]:
-        """        Evaluate fit between specific influencer and brand for campaign.
+        """
+        Evaluate fit between specific influencer and brand for campaign.
         
         Args:
             influencer_id: Influencer identifier
@@ -814,7 +851,8 @@ class InfluencerMatcher:
             
         Returns:
             Detailed fit evaluation
-        """        try:
+        """
+        try:
             # Get influencer profile
             influencer_profile = await self._get_creator_profile(influencer_id)
             

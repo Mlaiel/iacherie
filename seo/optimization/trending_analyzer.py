@@ -5,7 +5,8 @@ across different platforms and industries with real-time trend detection and pre
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import re
+"""
+import re
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass
@@ -18,7 +19,8 @@ logger = logging.getLogger(__name__)
 
 
 class TrendType(Enum):
-    """Types of trends"""    VIRAL = "viral"
+    """Types of trends"""
+    VIRAL = "viral"
     EMERGING = "emerging"
     SEASONAL = "seasonal"
     SUSTAINED = "sustained"
@@ -27,7 +29,8 @@ class TrendType(Enum):
 
 
 class Platform(Enum):
-    """Platforms for trend analysis"""    INSTAGRAM = "instagram"
+    """Platforms for trend analysis"""
+    INSTAGRAM = "instagram"
     TWITTER = "twitter"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
@@ -38,7 +41,8 @@ class Platform(Enum):
 
 
 class TimeFrame(Enum):
-    """Time frames for trend analysis"""    HOUR = "1h"
+    """Time frames for trend analysis"""
+    HOUR = "1h"
     DAY = "24h"
     WEEK = "7d"
     MONTH = "30d"
@@ -48,7 +52,8 @@ class TimeFrame(Enum):
 
 @dataclass
 class TrendMetrics:
-    """Metrics for a trending topic"""    volume: int
+    """Metrics for a trending topic"""
+    volume: int
     growth_rate: float  # Percentage growth
     velocity: float  # Rate of change
     engagement_rate: float
@@ -59,7 +64,8 @@ class TrendMetrics:
 
 @dataclass
 class TrendingTopic:
-    """Individual trending topic"""    topic: str
+    """Individual trending topic"""
+    topic: str
     trend_type: TrendType
     platforms: List[Platform]
     metrics: TrendMetrics
@@ -72,7 +78,8 @@ class TrendingTopic:
 
 @dataclass
 class TrendAnalysis:
-    """Complete trend analysis result"""    trending_topics: List[TrendingTopic]
+    """Complete trend analysis result"""
+    trending_topics: List[TrendingTopic]
     emerging_trends: List[TrendingTopic]
     declining_trends: List[TrendingTopic]
     seasonal_predictions: List[TrendingTopic]
@@ -83,15 +90,19 @@ class TrendAnalysis:
 
 
 class TrendingAnalyzer:
-    """    AI-powered trending content analyzer that identifies, analyzes, and predicts
+    """
+    AI-powered trending content analyzer that identifies, analyzes, and predicts
     trending topics and content patterns across multiple platforms and industries.
-    """    def __init__(self, region: str = "US", industry: str = "general"):
-        """        Initialize the trending analyzer.
+    """
+    def __init__(self, region: str = "US", industry: str = "general"):
+        """
+        Initialize the trending analyzer.
         
         Args:
             region: Target region for trend analysis
             industry: Primary industry focus
-        """        self.region = region
+        """
+        self.region = region
         self.industry = industry
         self.trend_data = self._initialize_trend_data()
         self.seasonal_patterns = self._initialize_seasonal_patterns()
@@ -106,7 +117,8 @@ class TrendingAnalyzer:
         include_predictions: bool = True,
         min_confidence: float = 0.6
     ) -> TrendAnalysis:
-        """        Analyze trending content and identify opportunities.
+        """
+        Analyze trending content and identify opportunities.
         
         Args:
             content: Content to analyze against trends
@@ -118,7 +130,8 @@ class TrendingAnalyzer:
             
         Returns:
             TrendAnalysis with comprehensive trend insights
-        """        try:
+        """
+        try:
             logger.info(f"Starting trend analysis for {time_frame.value} timeframe")
             
             if target_platforms is None:
@@ -172,7 +185,8 @@ class TrendingAnalyzer:
             raise
 
     def _extract_keywords_from_content(self, content: str) -> List[str]:
-        """Extract keywords from content for trend analysis"""        if not content:
+        """Extract keywords from content for trend analysis"""
+        if not content:
             return []
         
         # Extract meaningful words
@@ -199,7 +213,8 @@ class TrendingAnalyzer:
         platforms: List[Platform], 
         time_frame: TimeFrame
     ) -> List[TrendingTopic]:
-        """Identify currently trending topics"""        
+        """Identify currently trending topics"""
+        
         trending_topics = []
         
         # Get current trending topics from our trend data
@@ -264,7 +279,8 @@ class TrendingAnalyzer:
         keywords: List[str], 
         platforms: List[Platform]
     ) -> List[TrendingTopic]:
-        """Analyze emerging trends that are just starting to gain momentum"""        
+        """Analyze emerging trends that are just starting to gain momentum"""
+        
         emerging_trends = []
         
         # Get emerging trends data
@@ -320,7 +336,8 @@ class TrendingAnalyzer:
         keywords: List[str], 
         platforms: List[Platform]
     ) -> List[TrendingTopic]:
-        """Identify trends that are declining"""        
+        """Identify trends that are declining"""
+        
         declining_trends = []
         
         # Get declining trends data
@@ -349,7 +366,8 @@ class TrendingAnalyzer:
         return declining_trends
 
     def _generate_seasonal_predictions(self, keywords: List[str]) -> List[TrendingTopic]:
-        """Generate seasonal trend predictions"""        
+        """Generate seasonal trend predictions"""
+        
         seasonal_predictions = []
         current_month = datetime.now().month
         
@@ -384,7 +402,8 @@ class TrendingAnalyzer:
         platforms: List[Platform], 
         keywords: List[str]
     ) -> Dict[Platform, List[str]]:
-        """Analyze trends specific to each platform"""        
+        """Analyze trends specific to each platform"""
+        
         platform_trends = {}
         
         platform_specific_trends = {
@@ -429,7 +448,8 @@ class TrendingAnalyzer:
         return platform_trends
 
     def _analyze_industry_trends(self, industry: str, keywords: List[str]) -> Dict[str, List[str]]:
-        """Analyze industry-specific trends"""        
+        """Analyze industry-specific trends"""
+        
         industry_specific_trends = {
             "technology": [
                 "artificial intelligence", "machine learning", "blockchain", "web3",
@@ -488,7 +508,8 @@ class TrendingAnalyzer:
         platforms: List[Platform], 
         time_frame: TimeFrame
     ) -> TrendMetrics:
-        """Calculate metrics for a trending topic (simulated data)"""        
+        """Calculate metrics for a trending topic (simulated data)"""
+        
         # Simulate metrics based on topic characteristics
         topic_length = len(topic.split())
         
@@ -533,7 +554,8 @@ class TrendingAnalyzer:
         )
 
     def _classify_trend_type(self, metrics: TrendMetrics) -> TrendType:
-        """Classify the type of trend based on metrics"""        
+        """Classify the type of trend based on metrics"""
+        
         if metrics.virality_index > 80 and metrics.growth_rate > 100:
             return TrendType.VIRAL
         elif metrics.growth_rate > 50 and metrics.volume < 50000:
@@ -546,7 +568,8 @@ class TrendingAnalyzer:
             return TrendType.CYCLICAL
 
     def _calculate_confidence_score(self, metrics: TrendMetrics, keyword: str, topic: str) -> float:
-        """Calculate confidence score for trend prediction"""        
+        """Calculate confidence score for trend prediction"""
+        
         # Keyword relevance factor
         keyword_match = 1.0 if keyword.lower() in topic.lower() else 0.5
         
@@ -562,7 +585,8 @@ class TrendingAnalyzer:
         return round(min(1.0, confidence), 2)
 
     def _calculate_keyword_relevance(self, topic: str, keywords: List[str]) -> float:
-        """Calculate relevance of a topic to given keywords"""        
+        """Calculate relevance of a topic to given keywords"""
+        
         if not keywords:
             return 0.0
         
@@ -579,7 +603,8 @@ class TrendingAnalyzer:
         return intersection / union if union > 0 else 0.0
 
     def _is_emerging_keyword(self, keyword: str) -> bool:
-        """Check if a keyword shows signs of emerging trend"""        
+        """Check if a keyword shows signs of emerging trend"""
+        
         # Simple heuristics for emerging keywords
         emerging_indicators = [
             "new", "latest", "2025", "trending", "viral", "breaking",
@@ -589,7 +614,8 @@ class TrendingAnalyzer:
         return any(indicator in keyword.lower() for indicator in emerging_indicators)
 
     def _get_related_keywords(self, topic: str) -> List[str]:
-        """Get related keywords for a topic"""        
+        """Get related keywords for a topic"""
+        
         # Simplified related keywords generation
         topic_lower = topic.lower()
         
@@ -616,7 +642,8 @@ class TrendingAnalyzer:
         return related_keywords[:5]
 
     def _generate_hashtags_for_topic(self, topic: str) -> List[str]:
-        """Generate hashtags for a topic"""        
+        """Generate hashtags for a topic"""
+        
         # Convert topic to hashtag format
         main_hashtag = f"#{topic.replace(' ', '').lower()}"
         hashtags = [main_hashtag]
@@ -644,7 +671,8 @@ class TrendingAnalyzer:
         content: str, 
         keywords: List[str]
     ) -> float:
-        """Calculate overall recommendation score"""        
+        """Calculate overall recommendation score"""
+        
         score = 0.0
         
         # Trending topics alignment (40 points)
@@ -679,7 +707,8 @@ class TrendingAnalyzer:
         return min(100.0, score)
 
     def _initialize_trend_data(self) -> Dict[str, Any]:
-        """Initialize trend database"""        
+        """Initialize trend database"""
+        
         return {
             "current_trends": {
                 "artificial intelligence": {
@@ -731,7 +760,8 @@ class TrendingAnalyzer:
         }
 
     def _initialize_seasonal_patterns(self) -> Dict[int, List[str]]:
-        """Initialize seasonal trend patterns by month"""        
+        """Initialize seasonal trend patterns by month"""
+        
         return {
             1: ["new year goals", "fitness", "detox", "organizing", "self-improvement"],
             2: ["valentine's day", "love", "relationships", "romantic", "dating"],
@@ -748,7 +778,8 @@ class TrendingAnalyzer:
         }
 
     def _initialize_platform_weights(self) -> Dict[Platform, float]:
-        """Initialize platform weights for trend analysis"""        
+        """Initialize platform weights for trend analysis"""
+        
         return {
             Platform.TIKTOK: 1.5,  # High viral potential
             Platform.TWITTER: 1.3,  # Real-time trends
@@ -761,7 +792,8 @@ class TrendingAnalyzer:
         }
 
     def get_trend_recommendations(self, analysis: TrendAnalysis) -> List[str]:
-        """Get actionable recommendations based on trend analysis"""        
+        """Get actionable recommendations based on trend analysis"""
+        
         recommendations = []
         
         # Trending topic recommendations
@@ -795,7 +827,8 @@ class TrendingAnalyzer:
         return recommendations
 
     def export_trend_analysis(self, analysis: TrendAnalysis, format: str = "json") -> str:
-        """Export trend analysis in specified format"""        
+        """Export trend analysis in specified format"""
+        
         if format == "json":
             return self._export_to_json(analysis)
         elif format == "csv":
@@ -804,7 +837,8 @@ class TrendingAnalyzer:
             raise ValueError(f"Unsupported export format: {format}")
 
     def _export_to_json(self, analysis: TrendAnalysis) -> str:
-        """Export analysis to JSON format"""        
+        """Export analysis to JSON format"""
+        
         export_data = {
             "recommendation_score": analysis.recommendation_score,
             "analysis_timestamp": analysis.analysis_timestamp,
@@ -819,7 +853,8 @@ class TrendingAnalyzer:
         return json.dumps(export_data, indent=2)
 
     def _topic_to_dict(self, topic: TrendingTopic) -> Dict[str, Any]:
-        """Convert TrendingTopic to dictionary"""        
+        """Convert TrendingTopic to dictionary"""
+        
         return {
             "topic": topic.topic,
             "trend_type": topic.trend_type.value,
@@ -836,7 +871,8 @@ class TrendingAnalyzer:
         }
 
     def _export_to_csv(self, analysis: TrendAnalysis) -> str:
-        """Export analysis to CSV format"""        
+        """Export analysis to CSV format"""
+        
         csv_lines = ["Topic,Type,Volume,Growth Rate,Engagement Rate,Virality Index,Confidence"]
         
         all_topics = (

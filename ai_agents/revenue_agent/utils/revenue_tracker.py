@@ -24,7 +24,8 @@ This innovative revenue tracking system represents months of research, developme
 intellectual investment by Fahed Mlaiel. Any unauthorized use will be prosecuted to the 
 full extent of the law. We maintain comprehensive monitoring and will pursue legal action 
 against any individual or organization attempting to steal or replicate this work.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import uuid
@@ -75,7 +76,8 @@ from ...integrations.platforms import PlatformAPIManager
 logger = logging.getLogger(__name__)
 
 class TrackingStatus(Enum):
-    """Revenue tracking session status"""    INITIALIZING = "initializing"
+    """Revenue tracking session status"""
+    INITIALIZING = "initializing"
     ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
@@ -83,7 +85,8 @@ class TrackingStatus(Enum):
     COMPLETED = "completed"
 
 class AlertType(Enum):
-    """Types of revenue alerts"""    REVENUE_SPIKE = "revenue_spike"
+    """Types of revenue alerts"""
+    REVENUE_SPIKE = "revenue_spike"
     REVENUE_DROP = "revenue_drop"
     ANOMALY_DETECTED = "anomaly_detected"
     FRAUD_RISK = "fraud_risk"
@@ -95,7 +98,8 @@ class AlertType(Enum):
     OPPORTUNITY_IDENTIFIED = "opportunity_identified"
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    INFO = "info"
+    """Alert severity levels"""
+    INFO = "info"
     LOW = "low" 
     MEDIUM = "medium"
     HIGH = "high"
@@ -103,7 +107,8 @@ class AlertSeverity(Enum):
 
 @dataclass
 class TrackingConfiguration:
-    """Comprehensive tracking session configuration"""    session_id: str = field(default_factory=lambda: f"track_{uuid.uuid4().hex[:12]}")
+    """Comprehensive tracking session configuration"""
+    session_id: str = field(default_factory=lambda: f"track_{uuid.uuid4().hex[:12]}")
     user_id: str = ""
     creator_profile_id: str = ""
     
@@ -143,7 +148,8 @@ class TrackingConfiguration:
 
 @dataclass
 class RevenueSnapshot:
-    """Real-time revenue snapshot data"""    timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    """Real-time revenue snapshot data"""
+    timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     session_id: str = ""
     user_id: str = ""
     
@@ -175,7 +181,8 @@ class RevenueSnapshot:
 
 @dataclass
 class RevenueAlert:
-    """Revenue alert with comprehensive context"""    alert_id: str = field(default_factory=lambda: f"alert_{uuid.uuid4().hex[:8]}")
+    """Revenue alert with comprehensive context"""
+    alert_id: str = field(default_factory=lambda: f"alert_{uuid.uuid4().hex[:8]}")
     session_id: str = ""
     user_id: str = ""
     
@@ -214,7 +221,8 @@ class RevenueAlert:
     expires_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc) + timedelta(hours=24))
 
 class RevenueTracker:
-    """    Ultra-Advanced Real-Time Revenue Tracking System
+    """
+    Ultra-Advanced Real-Time Revenue Tracking System
     
     Features:
     - Multi-platform real-time revenue aggregation
@@ -224,7 +232,8 @@ class RevenueTracker:
     - WebSocket streaming for real-time dashboards
     - Enterprise-grade performance and scalability
     - Comprehensive monitoring and observability
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.tracking_sessions: Dict[str, TrackingConfiguration] = {}
@@ -285,7 +294,8 @@ class RevenueTracker:
         logger.info("RevenueTracker initialized with enterprise features")
 
     async def initialize(self):
-        """Initialize the revenue tracker with dependencies"""        try:
+        """Initialize the revenue tracker with dependencies"""
+        try:
             # Initialize platform APIs
             await self.platform_apis.initialize_all()
             
@@ -315,7 +325,8 @@ class RevenueTracker:
         enable_ai_features: bool = True,
         streaming_enabled: bool = False
     ) -> str:
-        """        Start comprehensive real-time revenue tracking session
+        """
+        Start comprehensive real-time revenue tracking session
         
         Args:
             user_id: Creator identifier
@@ -328,7 +339,8 @@ class RevenueTracker:
             
         Returns:
             Tracking session ID
-        """        try:
+        """
+        try:
             # Create tracking configuration
             config = TrackingConfiguration(
                 user_id=user_id,
@@ -371,7 +383,8 @@ class RevenueTracker:
             raise TrackingError(f"Session start failed: {str(e)}")
 
     async def _execute_tracking_session(self, config: TrackingConfiguration):
-        """Execute the main tracking session loop"""        session_id = config.session_id
+        """Execute the main tracking session loop"""
+        session_id = config.session_id
         end_time = config.created_at + timedelta(hours=config.tracking_duration_hours)
         
         try:
@@ -413,7 +426,8 @@ class RevenueTracker:
             await self._finalize_tracking_session(config)
 
     async def _collect_revenue_snapshot(self, config: TrackingConfiguration) -> RevenueSnapshot:
-        """Collect comprehensive revenue snapshot from all platforms"""        snapshot = RevenueSnapshot(
+        """Collect comprehensive revenue snapshot from all platforms"""
+        snapshot = RevenueSnapshot(
             session_id=config.session_id,
             user_id=config.user_id
         )
@@ -471,7 +485,8 @@ class RevenueTracker:
         return snapshot
 
     async def _analyze_snapshot_real_time(self, config: TrackingConfiguration, snapshot: RevenueSnapshot):
-        """Perform real-time analysis on revenue snapshot"""        if not config.trend_analysis:
+        """Perform real-time analysis on revenue snapshot"""
+        if not config.trend_analysis:
             return
         
         session_snapshots = self.active_snapshots[config.session_id]
@@ -508,7 +523,8 @@ class RevenueTracker:
             snapshot.predicted_hourly_revenue = predicted_revenue
 
     async def _check_alert_conditions(self, config: TrackingConfiguration, snapshot: RevenueSnapshot):
-        """Check for alert conditions and trigger notifications"""        if not config.alerts_enabled:
+        """Check for alert conditions and trigger notifications"""
+        if not config.alerts_enabled:
             return
         
         alerts_to_send = []
@@ -572,7 +588,8 @@ class RevenueTracker:
             ).inc()
 
     async def stop_tracking_session(self, session_id: str, reason: str = "manual_stop") -> Dict[str, Any]:
-        """        Stop active tracking session and generate summary report
+        """
+        Stop active tracking session and generate summary report
         
         Args:
             session_id: Session identifier
@@ -580,7 +597,8 @@ class RevenueTracker:
             
         Returns:
             Session summary report
-        """        try:
+        """
+        try:
             config = self.tracking_sessions.get(session_id)
             if not config:
                 raise ValidationError(f"Session {session_id} not found")
@@ -606,7 +624,8 @@ class RevenueTracker:
             raise TrackingError(f"Session stop failed: {str(e)}")
 
     async def get_session_analytics(self, session_id: str) -> Dict[str, Any]:
-        """Get comprehensive analytics for tracking session"""        try:
+        """Get comprehensive analytics for tracking session"""
+        try:
             config = self.tracking_sessions.get(session_id)
             snapshots = self.active_snapshots.get(session_id, [])
             
@@ -676,18 +695,21 @@ class RevenueTracker:
     # ==================== PLATFORM ANALYZER ====================
 
 class PlatformAnalyzer:
-    """    Advanced platform-specific revenue analysis and optimization
+    """
+    Advanced platform-specific revenue analysis and optimization
     
     Provides deep insights into individual platform performance with
     AI-powered recommendations for optimization strategies.
-    """    
+    """
+    
     def __init__(self, platform: str):
         self.platform = platform.lower()
         self.api = None
         self.metrics_history: List[Dict[str, Any]] = []
         
     async def initialize(self):
-        """Initialize platform-specific API connection"""        platform_apis = {
+        """Initialize platform-specific API connection"""
+        platform_apis = {
             'spotify': 'SpotifyAPI',
             'youtube': 'YouTubeAPI',
             'instagram': 'InstagramAPI',
@@ -707,7 +729,8 @@ class PlatformAnalyzer:
         period_days: int = 30,
         include_competitors: bool = False
     ) -> Dict[str, Any]:
-        """        Comprehensive platform revenue performance analysis
+        """
+        Comprehensive platform revenue performance analysis
         
         Args:
             user_id: Creator identifier
@@ -716,7 +739,8 @@ class PlatformAnalyzer:
             
         Returns:
             Detailed platform performance analysis
-        """        end_date = datetime.now(timezone.utc)
+        """
+        end_date = datetime.now(timezone.utc)
         start_date = end_date - timedelta(days=period_days)
         
         # Collect platform-specific data
@@ -748,7 +772,8 @@ class PlatformAnalyzer:
         }
 
     async def _collect_platform_data(self, user_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Collect comprehensive platform-specific data"""        # Platform-specific data collection logic
+        """Collect comprehensive platform-specific data"""
+        # Platform-specific data collection logic
         return {
             'revenue_data': [],
             'engagement_data': [],
@@ -824,20 +849,23 @@ from ...services.notification import NotificationService
 logger = logging.getLogger(__name__)
 
 class TrackingMode(Enum):
-    """Revenue tracking operation modes"""    REAL_TIME = "real_time"
+    """Revenue tracking operation modes"""
+    REAL_TIME = "real_time"
     BATCH = "batch"
     SCHEDULED = "scheduled"
     MANUAL = "manual"
 
 class TrackingStatus(Enum):
-    """Revenue tracking session status"""    ACTIVE = "active"
+    """Revenue tracking session status"""
+    ACTIVE = "active"
     PAUSED = "paused"
     COMPLETED = "completed"
     FAILED = "failed"
     CANCELLED = "cancelled"
 
 class MetricType(Enum):
-    """Revenue metric calculation types"""    GROSS_REVENUE = "gross_revenue"
+    """Revenue metric calculation types"""
+    GROSS_REVENUE = "gross_revenue"
     NET_REVENUE = "net_revenue"
     REVENUE_PER_VIEW = "revenue_per_view"
     REVENUE_PER_CLICK = "revenue_per_click"
@@ -848,7 +876,8 @@ class MetricType(Enum):
 
 @dataclass
 class RevenueDataPoint:
-    """Individual revenue data point for tracking"""    timestamp: datetime
+    """Individual revenue data point for tracking"""
+    timestamp: datetime
     platform: str
     content_id: str
     revenue_amount: Decimal
@@ -862,7 +891,8 @@ class RevenueDataPoint:
 
 @dataclass
 class PlatformMetrics:
-    """Comprehensive platform performance metrics"""    platform: str
+    """Comprehensive platform performance metrics"""
+    platform: str
     period_start: datetime
     period_end: datetime
     total_revenue: Decimal
@@ -876,11 +906,13 @@ class PlatformMetrics:
     trending_metrics: Dict[str, Any]
 
 class RevenueTracker:
-    """    Advanced Revenue Tracking System - Real-Time Multi-Platform Monitoring
+    """
+    Advanced Revenue Tracking System - Real-Time Multi-Platform Monitoring
     
     Provides comprehensive revenue tracking across all monetization platforms
     with real-time analytics, performance monitoring, and intelligent insights.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.platform_api_manager = PlatformAPIManager()
@@ -927,7 +959,8 @@ class RevenueTracker:
         tracking_interval: int = 60,  # seconds
         alert_thresholds: Optional[Dict[str, float]] = None
     ) -> str:
-        """        Start real-time revenue tracking session
+        """
+        Start real-time revenue tracking session
         
         Args:
             user_id: User identifier
@@ -938,7 +971,8 @@ class RevenueTracker:
             
         Returns:
             Tracking session identifier
-        """        try:
+        """
+        try:
             session_id = str(uuid.uuid4())
             
             # Validate platforms
@@ -990,7 +1024,8 @@ class RevenueTracker:
         session_id: str,
         tracking_session: TrackingSession
     ) -> None:
-        """Real-time tracking loop for continuous monitoring"""        try:
+        """Real-time tracking loop for continuous monitoring"""
+        try:
             while (
                 session_id in self.active_sessions and 
                 self.active_sessions[session_id].status == TrackingStatus.ACTIVE.value
@@ -1047,7 +1082,8 @@ class RevenueTracker:
         end_date: datetime,
         granularity: str = "daily"  # hourly, daily, weekly
     ) -> Dict[str, Any]:
-        """        Perform batch revenue tracking for historical analysis
+        """
+        Perform batch revenue tracking for historical analysis
         
         Args:
             user_id: User identifier
@@ -1058,7 +1094,8 @@ class RevenueTracker:
             
         Returns:
             Comprehensive batch tracking results
-        """        try:
+        """
+        try:
             self.tracking_requests_counter.labels(
                 platform='multi',
                 mode='batch'
@@ -1139,7 +1176,8 @@ class RevenueTracker:
         period_days: int = 30,
         include_predictions: bool = True
     ) -> PlatformMetrics:
-        """        Get comprehensive analytics for a specific platform
+        """
+        Get comprehensive analytics for a specific platform
         
         Args:
             user_id: User identifier
@@ -1149,7 +1187,8 @@ class RevenueTracker:
             
         Returns:
             Detailed platform performance metrics
-        """        try:
+        """
+        try:
             period_end = datetime.now(timezone.utc)
             period_start = period_end - timedelta(days=period_days)
             
@@ -1226,14 +1265,16 @@ class RevenueTracker:
             raise RevenueError(f"Failed to get platform analytics: {str(e)}")
 
     async def stop_tracking_session(self, session_id: str) -> Dict[str, Any]:
-        """        Stop an active tracking session and return final results
+        """
+        Stop an active tracking session and return final results
         
         Args:
             session_id: Tracking session identifier
             
         Returns:
             Final session results and statistics
-        """        try:
+        """
+        try:
             if session_id not in self.active_sessions:
                 raise ValidationError(f"Tracking session {session_id} not found")
             
@@ -1290,7 +1331,8 @@ class RevenueTracker:
     # Private helper methods
 
     async def _validate_platforms(self, platforms: List[str]) -> List[str]:
-        """Validate and filter supported platforms"""        supported_platforms = [
+        """Validate and filter supported platforms"""
+        supported_platforms = [
             'spotify', 'youtube', 'instagram', 'tiktok', 
             'apple_music', 'soundcloud', 'twitch'
         ]
@@ -1302,7 +1344,8 @@ class RevenueTracker:
         platforms: List[str],
         content_ids: List[str]
     ) -> List[RevenueDataPoint]:
-        """Collect revenue data from all specified platforms"""        data_points = []
+        """Collect revenue data from all specified platforms"""
+        data_points = []
         
         for platform in platforms:
             try:
@@ -1338,7 +1381,8 @@ class RevenueTracker:
         session_id: str,
         data_points: List[RevenueDataPoint]
     ) -> Dict[str, Any]:
-        """Analyze collected revenue data for insights"""        if not data_points:
+        """Analyze collected revenue data for insights"""
+        if not data_points:
             return {'total_revenue': 0, 'data_points': 0}
         
         total_revenue = sum(dp.revenue_amount for dp in data_points)
@@ -1368,7 +1412,8 @@ class RevenueTracker:
         tracking_session: TrackingSession,
         analysis_results: Dict[str, Any]
     ) -> None:
-        """Check if any alert thresholds have been exceeded"""        alert_thresholds = tracking_session.alert_thresholds
+        """Check if any alert thresholds have been exceeded"""
+        alert_thresholds = tracking_session.alert_thresholds
         
         if not alert_thresholds:
             return
@@ -1420,7 +1465,8 @@ class RevenueTracker:
         session_id: str,
         data_points: List[RevenueDataPoint]
     ) -> None:
-        """Store revenue data points in database"""        if not data_points:
+        """Store revenue data points in database"""
+        if not data_points:
             return
         
         try:
@@ -1455,7 +1501,8 @@ class RevenueTracker:
         session_id: str,
         analysis_results: Dict[str, Any]
     ) -> None:
-        """Update metrics for tracking session"""        if session_id not in self.session_metrics:
+        """Update metrics for tracking session"""
+        if session_id not in self.session_metrics:
             self.session_metrics[session_id] = {
                 'data_points_collected': 0,
                 'total_revenue_tracked': 0,
@@ -1473,7 +1520,8 @@ class RevenueTracker:
         session_id: str,
         data_points: List[RevenueDataPoint]
     ) -> None:
-        """Cache recent revenue data for quick access"""        if not data_points:
+        """Cache recent revenue data for quick access"""
+        if not data_points:
             return
         
         # Cache last 100 data points
@@ -1504,7 +1552,8 @@ class RevenueTracker:
         end_date: datetime,
         granularity: str
     ) -> List[Tuple[datetime, datetime]]:
-        """Generate date intervals based on granularity"""        intervals = []
+        """Generate date intervals based on granularity"""
+        intervals = []
         current = start_date
         
         if granularity == "hourly":
@@ -1530,7 +1579,8 @@ class RevenueTracker:
         interval_start: datetime,
         interval_end: datetime
     ) -> Dict[str, Any]:
-        """Process a single batch interval"""        interval_data = {
+        """Process a single batch interval"""
+        interval_data = {
             'start': interval_start.isoformat(),
             'end': interval_end.isoformat(),
             'platforms': {},
@@ -1581,7 +1631,8 @@ class RevenueTracker:
         self,
         intervals: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate aggregated metrics from all intervals"""        if not intervals:
+        """Calculate aggregated metrics from all intervals"""
+        if not intervals:
             return {}
         
         total_revenue = sum(interval.get('total_revenue', 0) for interval in intervals)
@@ -1616,7 +1667,8 @@ class RevenueTracker:
         intervals: List[Dict[str, Any]],
         granularity: str
     ) -> Dict[str, Any]:
-        """Analyze trends and patterns in revenue data"""        if len(intervals) < 2:
+        """Analyze trends and patterns in revenue data"""
+        if len(intervals) < 2:
             return {'trend_analysis': 'insufficient_data'}
         
         # Extract revenue values for trend analysis
@@ -1654,7 +1706,8 @@ class RevenueTracker:
         user_id: str,
         batch_results: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate insights and recommendations from batch analysis"""        insights = []
+        """Generate insights and recommendations from batch analysis"""
+        insights = []
         
         aggregated = batch_results.get('aggregated_metrics', {})
         trends = batch_results.get('trends', {})
@@ -1706,11 +1759,13 @@ class RevenueTracker:
 
 
 class PlatformAnalyzer:
-    """    Platform-Specific Revenue Analytics and Optimization
+    """
+    Platform-Specific Revenue Analytics and Optimization
     
     Advanced analytics engine for individual platform performance analysis,
     optimization recommendations, and competitive benchmarking.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.analytics_calculator = AnalyticsCalculator()
@@ -1724,7 +1779,8 @@ class PlatformAnalyzer:
         platform: str,
         analysis_depth: str = "comprehensive"  # basic, standard, comprehensive
     ) -> Dict[str, Any]:
-        """        Comprehensive platform performance analysis
+        """
+        Comprehensive platform performance analysis
         
         Args:
             user_id: User identifier
@@ -1733,7 +1789,8 @@ class PlatformAnalyzer:
             
         Returns:
             Detailed platform performance analysis
-        """        try:
+        """
+        try:
             # Implementation for platform-specific analysis
             analysis_result = {
                 'platform': platform,
@@ -1770,7 +1827,8 @@ class PlatformAnalyzer:
         user_id: str,
         platform: str
     ) -> Dict[str, Any]:
-        """Calculate platform-specific performance metrics"""        # Implementation placeholder
+        """Calculate platform-specific performance metrics"""
+        # Implementation placeholder
         return {
             'revenue_metrics': {},
             'engagement_metrics': {},
@@ -1782,7 +1840,8 @@ class PlatformAnalyzer:
         user_id: str,
         platform: str
     ) -> List[Dict[str, Any]]:
-        """Identify platform-specific optimization opportunities"""        # Implementation placeholder
+        """Identify platform-specific optimization opportunities"""
+        # Implementation placeholder
         return []
 
     async def _perform_competitive_analysis(
@@ -1790,7 +1849,8 @@ class PlatformAnalyzer:
         user_id: str,
         platform: str
     ) -> Dict[str, Any]:
-        """Perform competitive analysis for platform"""        # Implementation placeholder
+        """Perform competitive analysis for platform"""
+        # Implementation placeholder
         return {
             'market_position': 'unknown',
             'benchmarks': {}

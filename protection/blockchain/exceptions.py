@@ -18,12 +18,14 @@ without explicit written authorization from Fahed Mlaiel is strictly
 prohibited and will result in legal action.
 
 Contact: mlaiel@live.de
-"""from typing import Optional, Dict, Any
+"""
+from typing import Optional, Dict, Any
 from enum import Enum
 
 
 class ErrorCode(Enum):
-    """Blockchain error codes for standardized error handling"""    
+    """Blockchain error codes for standardized error handling"""
+    
     # General blockchain errors
     NETWORK_CONNECTION_FAILED = "BLOCKCHAIN_001"
     INVALID_NETWORK_CONFIG = "BLOCKCHAIN_002"
@@ -71,7 +73,8 @@ class ErrorCode(Enum):
 
 
 class BlockchainError(Exception):
-    """Base exception for all blockchain operations"""    
+    """Base exception for all blockchain operations"""
+    
     def __init__(
         self,
         message: str,
@@ -88,7 +91,8 @@ class BlockchainError(Exception):
         super().__init__(self.message)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary for logging/API responses"""        return {
+        """Convert exception to dictionary for logging/API responses"""
+        return {
             "error_type": self.__class__.__name__,
             "message": self.message,
             "error_code": self.error_code.value,
@@ -99,7 +103,8 @@ class BlockchainError(Exception):
 
 
 class NetworkError(BlockchainError):
-    """Network connection and configuration errors"""    
+    """Network connection and configuration errors"""
+    
     def __init__(
         self,
         message: str,
@@ -111,7 +116,8 @@ class NetworkError(BlockchainError):
 
 
 class TransactionError(BlockchainError):
-    """Transaction execution errors"""    
+    """Transaction execution errors"""
+    
     def __init__(
         self,
         message: str,
@@ -124,7 +130,8 @@ class TransactionError(BlockchainError):
 
 
 class InsufficientFundsError(TransactionError):
-    """Insufficient funds for transaction"""    
+    """Insufficient funds for transaction"""
+    
     def __init__(
         self,
         required_amount: str,
@@ -147,7 +154,8 @@ class InsufficientFundsError(TransactionError):
 
 
 class GasEstimationError(TransactionError):
-    """Gas estimation failed"""    
+    """Gas estimation failed"""
+    
     def __init__(
         self,
         message: str = "Failed to estimate gas for transaction",
@@ -163,7 +171,8 @@ class GasEstimationError(TransactionError):
 
 
 class ContractError(BlockchainError):
-    """Smart contract related errors"""    
+    """Smart contract related errors"""
+    
     def __init__(
         self,
         message: str,
@@ -181,7 +190,8 @@ class ContractError(BlockchainError):
 
 
 class ContractDeploymentError(ContractError):
-    """Contract deployment specific errors"""    
+    """Contract deployment specific errors"""
+    
     def __init__(
         self,
         message: str,
@@ -200,7 +210,8 @@ class ContractDeploymentError(ContractError):
 
 
 class ContractExecutionError(ContractError):
-    """Contract method execution errors"""    
+    """Contract method execution errors"""
+    
     def __init__(
         self,
         message: str,
@@ -225,7 +236,8 @@ class ContractExecutionError(ContractError):
 
 
 class NFTError(BlockchainError):
-    """NFT operation errors"""    
+    """NFT operation errors"""
+    
     def __init__(
         self,
         message: str,
@@ -243,7 +255,8 @@ class NFTError(BlockchainError):
 
 
 class NFTMintError(NFTError):
-    """NFT minting specific errors"""    
+    """NFT minting specific errors"""
+    
     def __init__(
         self,
         message: str,
@@ -263,7 +276,8 @@ class NFTMintError(NFTError):
 
 
 class SecurityError(BlockchainError):
-    """Security and authentication errors"""    
+    """Security and authentication errors"""
+    
     def __init__(
         self,
         message: str,
@@ -274,7 +288,8 @@ class SecurityError(BlockchainError):
 
 
 class SignatureValidationError(SecurityError):
-    """Digital signature validation errors"""    
+    """Digital signature validation errors"""
+    
     def __init__(
         self,
         message: str = "Invalid signature",
@@ -295,7 +310,8 @@ class SignatureValidationError(SecurityError):
 
 
 class StorageError(BlockchainError):
-    """Decentralized storage errors"""    
+    """Decentralized storage errors"""
+    
     def __init__(
         self,
         message: str,
@@ -309,7 +325,8 @@ class StorageError(BlockchainError):
 
 
 class IPFSError(StorageError):
-    """IPFS specific errors"""    
+    """IPFS specific errors"""
+    
     def __init__(
         self,
         message: str,
@@ -324,7 +341,8 @@ class IPFSError(StorageError):
 
 
 class DeFiError(BlockchainError):
-    """DeFi operation errors"""    
+    """DeFi operation errors"""
+    
     def __init__(
         self,
         message: str,
@@ -359,7 +377,8 @@ def create_exception(
     message: str,
     **kwargs
 ) -> BlockchainError:
-    """Factory function to create appropriate exception based on error code"""    exception_class = EXCEPTION_MAP.get(error_code, BlockchainError)
+    """Factory function to create appropriate exception based on error code"""
+    exception_class = EXCEPTION_MAP.get(error_code, BlockchainError)
     return exception_class(message, error_code=error_code, **kwargs)
 
 from typing import Dict, Any, Optional
@@ -369,7 +388,8 @@ logger = logging.getLogger(__name__)
 
 
 class BlockchainError(Exception):
-    """Base exception for all blockchain-related errors"""    
+    """Base exception for all blockchain-related errors"""
+    
     def __init__(
         self, 
         message: str, 
@@ -393,11 +413,13 @@ class BlockchainError(Exception):
         super().__init__(self.message)
     
     def _get_timestamp(self) -> str:
-        """Get current timestamp for error tracking"""        from datetime import datetime
+        """Get current timestamp for error tracking"""
+        from datetime import datetime
         return datetime.utcnow().isoformat()
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary for API responses"""        return {
+        """Convert exception to dictionary for API responses"""
+        return {
             'error': self.__class__.__name__,
             'message': self.message,
             'error_code': self.error_code,
@@ -408,7 +430,8 @@ class BlockchainError(Exception):
 
 
 class BlockchainConnectionError(BlockchainError):
-    """Raised when blockchain network connection fails"""    
+    """Raised when blockchain network connection fails"""
+    
     def __init__(self, network: str, endpoint: str, **kwargs):
         message = f"Failed to connect to {network} blockchain at {endpoint}"
         super().__init__(message, error_code="BLOCKCHAIN_CONNECTION_FAILED", **kwargs)
@@ -417,7 +440,8 @@ class BlockchainConnectionError(BlockchainError):
 
 
 class ContractDeploymentError(BlockchainError):
-    """Raised when smart contract deployment fails"""    
+    """Raised when smart contract deployment fails"""
+    
     def __init__(self, contract_name: str, reason: str, **kwargs):
         message = f"Failed to deploy {contract_name} contract: {reason}"
         super().__init__(message, error_code="CONTRACT_DEPLOYMENT_FAILED", **kwargs)
@@ -426,7 +450,8 @@ class ContractDeploymentError(BlockchainError):
 
 
 class ContractExecutionError(BlockchainError):
-    """Raised when smart contract execution fails"""    
+    """Raised when smart contract execution fails"""
+    
     def __init__(self, contract_address: str, method: str, reason: str, **kwargs):
         message = f"Failed to execute {method} on contract {contract_address}: {reason}"
         super().__init__(message, error_code="CONTRACT_EXECUTION_FAILED", **kwargs)
@@ -436,7 +461,8 @@ class ContractExecutionError(BlockchainError):
 
 
 class TransactionError(BlockchainError):
-    """Raised when blockchain transaction fails"""    
+    """Raised when blockchain transaction fails"""
+    
     def __init__(self, transaction_type: str, reason: str, gas_used: int = None, **kwargs):
         message = f"Transaction {transaction_type} failed: {reason}"
         super().__init__(message, error_code="TRANSACTION_FAILED", **kwargs)
@@ -446,7 +472,8 @@ class TransactionError(BlockchainError):
 
 
 class InsufficientFundsError(BlockchainError):
-    """Raised when wallet has insufficient funds for transaction"""    
+    """Raised when wallet has insufficient funds for transaction"""
+    
     def __init__(self, required_amount: str, available_amount: str, currency: str = "ETH", **kwargs):
         message = f"Insufficient {currency}: required {required_amount}, available {available_amount}"
         super().__init__(message, error_code="INSUFFICIENT_FUNDS", **kwargs)
@@ -456,7 +483,8 @@ class InsufficientFundsError(BlockchainError):
 
 
 class NFTMintingError(BlockchainError):
-    """Raised when NFT minting operation fails"""    
+    """Raised when NFT minting operation fails"""
+    
     def __init__(self, token_id: str, collection: str, reason: str, **kwargs):
         message = f"Failed to mint NFT {token_id} in collection {collection}: {reason}"
         super().__init__(message, error_code="NFT_MINTING_FAILED", **kwargs)
@@ -466,7 +494,8 @@ class NFTMintingError(BlockchainError):
 
 
 class NFTTransferError(BlockchainError):
-    """Raised when NFT transfer fails"""    
+    """Raised when NFT transfer fails"""
+    
     def __init__(self, token_id: str, from_address: str, to_address: str, reason: str, **kwargs):
         message = f"Failed to transfer NFT {token_id} from {from_address} to {to_address}: {reason}"
         super().__init__(message, error_code="NFT_TRANSFER_FAILED", **kwargs)
@@ -477,7 +506,8 @@ class NFTTransferError(BlockchainError):
 
 
 class DLTStorageError(BlockchainError):
-    """Raised when distributed ledger storage operation fails"""    
+    """Raised when distributed ledger storage operation fails"""
+    
     def __init__(self, operation: str, data_hash: str, reason: str, **kwargs):
         message = f"DLT storage {operation} failed for data {data_hash}: {reason}"
         super().__init__(message, error_code="DLT_STORAGE_FAILED", **kwargs)
@@ -487,7 +517,8 @@ class DLTStorageError(BlockchainError):
 
 
 class CryptoPaymentError(BlockchainError):
-    """Raised when cryptocurrency payment processing fails"""    
+    """Raised when cryptocurrency payment processing fails"""
+    
     def __init__(self, payment_id: str, amount: str, currency: str, reason: str, **kwargs):
         message = f"Crypto payment {payment_id} of {amount} {currency} failed: {reason}"
         super().__init__(message, error_code="CRYPTO_PAYMENT_FAILED", **kwargs)
@@ -498,7 +529,8 @@ class CryptoPaymentError(BlockchainError):
 
 
 class DeFiIntegrationError(BlockchainError):
-    """Raised when DeFi protocol integration fails"""    
+    """Raised when DeFi protocol integration fails"""
+    
     def __init__(self, protocol: str, operation: str, reason: str, **kwargs):
         message = f"DeFi integration with {protocol} failed during {operation}: {reason}"
         super().__init__(message, error_code="DEFI_INTEGRATION_FAILED", **kwargs)
@@ -508,7 +540,8 @@ class DeFiIntegrationError(BlockchainError):
 
 
 class Web3ProviderError(BlockchainError):
-    """Raised when Web3 provider connection or operation fails"""    
+    """Raised when Web3 provider connection or operation fails"""
+    
     def __init__(self, provider_url: str, operation: str, reason: str, **kwargs):
         message = f"Web3 provider {provider_url} failed during {operation}: {reason}"
         super().__init__(message, error_code="WEB3_PROVIDER_FAILED", **kwargs)
@@ -518,7 +551,8 @@ class Web3ProviderError(BlockchainError):
 
 
 class GasEstimationError(BlockchainError):
-    """Raised when gas estimation for transaction fails"""    
+    """Raised when gas estimation for transaction fails"""
+    
     def __init__(self, transaction_data: str, reason: str, **kwargs):
         message = f"Gas estimation failed for transaction: {reason}"
         super().__init__(message, error_code="GAS_ESTIMATION_FAILED", **kwargs)
@@ -527,7 +561,8 @@ class GasEstimationError(BlockchainError):
 
 
 class SignatureValidationError(BlockchainError):
-    """Raised when cryptographic signature validation fails"""    
+    """Raised when cryptographic signature validation fails"""
+    
     def __init__(self, signature: str, signer_address: str, reason: str, **kwargs):
         message = f"Signature validation failed for {signer_address}: {reason}"
         super().__init__(message, error_code="SIGNATURE_VALIDATION_FAILED", **kwargs)
@@ -537,7 +572,8 @@ class SignatureValidationError(BlockchainError):
 
 
 class BlockchainSyncError(BlockchainError):
-    """Raised when blockchain synchronization fails"""    
+    """Raised when blockchain synchronization fails"""
+    
     def __init__(self, current_block: int, target_block: int, reason: str, **kwargs):
         message = f"Blockchain sync failed at block {current_block}/{target_block}: {reason}"
         super().__init__(message, error_code="BLOCKCHAIN_SYNC_FAILED", **kwargs)

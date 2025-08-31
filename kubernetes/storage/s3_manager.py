@@ -24,7 +24,8 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Créateur upload → S3 validation → Multi-région replication → 
 Lifecycle policies → Cost optimization → Backup strategy → CDN integration
-"""import logging
+"""
+import logging
 import asyncio
 import boto3
 import json
@@ -42,7 +43,8 @@ logger = logging.getLogger(__name__)
 
 
 class S3StorageClass(Enum):
-    """S3 storage classes for cost optimization"""    STANDARD = "STANDARD"
+    """S3 storage classes for cost optimization"""
+    STANDARD = "STANDARD"
     REDUCED_REDUNDANCY = "REDUCED_REDUNDANCY"
     STANDARD_IA = "STANDARD_IA"
     ONEZONE_IA = "ONEZONE_IA"
@@ -53,7 +55,8 @@ class S3StorageClass(Enum):
 
 
 class S3Region(Enum):
-    """AWS regions for S3 deployment"""    US_EAST_1 = "us-east-1"
+    """AWS regions for S3 deployment"""
+    US_EAST_1 = "us-east-1"
     US_WEST_2 = "us-west-2"
     EU_WEST_1 = "eu-west-1"
     EU_CENTRAL_1 = "eu-central-1"
@@ -62,7 +65,8 @@ class S3Region(Enum):
 
 
 class ReplicationStatus(Enum):
-    """Replication status tracking"""    PENDING = "PENDING"
+    """Replication status tracking"""
+    PENDING = "PENDING"
     COMPLETED = "COMPLETED"
     FAILED = "FAILED"
     REPLICA = "REPLICA"
@@ -70,7 +74,8 @@ class ReplicationStatus(Enum):
 
 @dataclass
 class S3BucketConfig:
-    """S3 bucket configuration settings"""    bucket_name: str
+    """S3 bucket configuration settings"""
+    bucket_name: str
     region: S3Region
     storage_class: S3StorageClass = S3StorageClass.INTELLIGENT_TIERING
     versioning_enabled: bool = True
@@ -102,7 +107,8 @@ class S3BucketConfig:
 
 @dataclass
 class S3DeploymentMetrics:
-    """S3 deployment performance metrics"""    bucket_count: int = 0
+    """S3 deployment performance metrics"""
+    bucket_count: int = 0
     total_objects: int = 0
     total_size_bytes: int = 0
     monthly_cost_usd: float = 0.0
@@ -122,7 +128,8 @@ class S3DeploymentMetrics:
 
 
 class S3Manager:
-    """    🎯 Industrial S3 Storage Manager - IA-Influencer-Agent
+    """
+    🎯 Industrial S3 Storage Manager - IA-Influencer-Agent
     
     Production-grade AWS S3 storage deployment and management with:
     - Multi-region bucket orchestration and replication
@@ -133,7 +140,8 @@ class S3Manager:
     - CDN integration and transfer acceleration
     - Compliance management (GDPR, CCPA, SOX)
     - Advanced analytics and usage tracking
-    """    
+    """
+    
     def __init__(self, config: S3BucketConfig):
         self.config = config
         self.metrics = S3DeploymentMetrics()
@@ -148,7 +156,8 @@ class S3Manager:
         logger.info(f"🚀 S3Manager initialized for bucket: {config.bucket_name}")
     
     def _initialize_clients(self):
-        """Initialize S3 and CloudFormation clients for all regions"""        try:
+        """Initialize S3 and CloudFormation clients for all regions"""
+        try:
             regions = [self.config.region] + self.config.backup_regions
             
             for region in regions:
@@ -177,7 +186,8 @@ class S3Manager:
             raise
     
     async def deploy_s3_infrastructure(self) -> Dict[str, Any]:
-        """Deploy complete S3 infrastructure with CloudFormation"""        try:
+        """Deploy complete S3 infrastructure with CloudFormation"""
+        try:
             logger.info(f"🚀 Starting S3 infrastructure deployment...")
             
             # Generate CloudFormation template
@@ -224,7 +234,8 @@ class S3Manager:
             return {"success": False, "error": str(e)}
     
     def _generate_cloudformation_template(self) -> Dict[str, Any]:
-        """Generate CloudFormation template for S3 infrastructure"""        template = {
+        """Generate CloudFormation template for S3 infrastructure"""
+        template = {
             "AWSTemplateFormatVersion": "2010-09-09",
             "Description": f"IA-Influencer-Agent S3 Storage Infrastructure - {self.config.bucket_name}",
             "Parameters": {
@@ -329,7 +340,8 @@ class S3Manager:
         return template
     
     def _generate_lifecycle_rules(self) -> List[Dict[str, Any]]:
-        """Generate S3 lifecycle rules for cost optimization"""        rules = []
+        """Generate S3 lifecycle rules for cost optimization"""
+        rules = []
         
         # Standard lifecycle rule
         standard_rule = {
@@ -399,7 +411,8 @@ class S3Manager:
         return rules
     
     def _generate_bucket_policy(self) -> Dict[str, Any]:
-        """Generate S3 bucket policy for security"""        policy = {
+        """Generate S3 bucket policy for security"""
+        policy = {
             "Version": "2012-10-17",
             "Statement": [
                 {
@@ -433,7 +446,8 @@ class S3Manager:
         return policy
     
     async def _deploy_to_region(self, region: str, template: Dict[str, Any], is_primary: bool = False) -> Dict[str, Any]:
-        """Deploy CloudFormation stack to specific region"""        try:
+        """Deploy CloudFormation stack to specific region"""
+        try:
             cf_client = self._cloudformation_clients[region]
             stack_name = f"ia-influencer-s3-{self.config.bucket_name}-{region}"
             
@@ -499,7 +513,8 @@ class S3Manager:
             return {"success": False, "region": region, "error": str(e)}
     
     async def _setup_cross_region_replication(self) -> Dict[str, Any]:
-        """Setup cross-region replication between buckets"""        try:
+        """Setup cross-region replication between buckets"""
+        try:
             primary_client = self._s3_clients[self.config.region.value]
             
             # Create replication configuration
@@ -538,7 +553,8 @@ class S3Manager:
             return {"success": False, "error": str(e)}
     
     async def _setup_monitoring(self) -> Dict[str, Any]:
-        """Setup CloudWatch monitoring and alerting"""        try:
+        """Setup CloudWatch monitoring and alerting"""
+        try:
             # This would typically involve setting up CloudWatch alarms
             # and metrics for S3 bucket monitoring
             monitoring_config = {
@@ -561,14 +577,16 @@ class S3Manager:
             return {"success": False, "error": str(e)}
     
     def _get_account_id(self) -> str:
-        """Get AWS account ID"""        try:
+        """Get AWS account ID"""
+        try:
             sts_client = self._session.client('sts')
             return sts_client.get_caller_identity()['Account']
         except Exception:
             return "123456789012"  # Fallback for development
     
     async def get_bucket_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive S3 bucket metrics"""        try:
+        """Get comprehensive S3 bucket metrics"""
+        try:
             primary_client = self._s3_clients[self.config.region.value]
             
             # Get bucket size and object count
@@ -639,7 +657,8 @@ class S3Manager:
             return {"error": str(e)}
     
     async def optimize_storage_costs(self) -> Dict[str, Any]:
-        """Analyze and optimize S3 storage costs"""        try:
+        """Analyze and optimize S3 storage costs"""
+        try:
             logger.info("💰 Starting S3 cost optimization analysis...")
             
             primary_client = self._s3_clients[self.config.region.value]
@@ -734,7 +753,8 @@ class S3Manager:
             return {"success": False, "error": str(e)}
     
     async def cleanup_resources(self) -> Dict[str, Any]:
-        """Cleanup and delete S3 resources"""        try:
+        """Cleanup and delete S3 resources"""
+        try:
             logger.info(f"🗑️ Starting cleanup of S3 resources...")
             
             cleanup_results = []
@@ -787,7 +807,8 @@ class S3Manager:
             return {"success": False, "error": str(e)}
     
     async def _empty_bucket(self, bucket_name: str, region: str):
-        """Empty S3 bucket before deletion"""        try:
+        """Empty S3 bucket before deletion"""
+        try:
             s3_client = self._s3_clients[region]
             
             # Delete all objects
@@ -830,10 +851,12 @@ class S3Manager:
 
 # Industrial Configuration Manager
 class S3ConfigurationManager:
-    """Advanced S3 configuration management"""    
+    """Advanced S3 configuration management"""
+    
     @staticmethod
     def load_config_from_file(config_path: Path) -> S3BucketConfig:
-        """Load S3 configuration from YAML file"""        try:
+        """Load S3 configuration from YAML file"""
+        try:
             with open(config_path, 'r') as file:
                 config_data = yaml.safe_load(file)
             
@@ -854,7 +877,8 @@ class S3ConfigurationManager:
     
     @staticmethod
     def save_config_to_file(config: S3BucketConfig, config_path: Path):
-        """Save S3 configuration to YAML file"""        try:
+        """Save S3 configuration to YAML file"""
+        try:
             config_data = {
                 'bucket_name': config.bucket_name,
                 'region': config.region.value,
@@ -884,7 +908,8 @@ def create_s3_manager(
     enable_replication: bool = True,
     backup_regions: Optional[List[S3Region]] = None
 ) -> S3Manager:
-    """Factory function to create S3Manager instance"""    
+    """Factory function to create S3Manager instance"""
+    
     if backup_regions is None:
         backup_regions = [S3Region.US_EAST_1, S3Region.AP_SOUTHEAST_1]
     
@@ -900,7 +925,8 @@ def create_s3_manager(
 
 # Usage Example
 async def main():
-    """Example usage of S3Manager"""    try:
+    """Example usage of S3Manager"""
+    try:
         # Create S3 manager
         s3_manager = create_s3_manager(
             bucket_name="ia-influencer-content-storage",

@@ -23,7 +23,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 from typing import Dict, List, Any, Optional, Union, Callable
@@ -42,7 +43,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TransactionConfig:
-    """Transaction configuration settings"""    coordinator_max_concurrent: int = 1000
+    """Transaction configuration settings"""
+    coordinator_max_concurrent: int = 1000
     distributed_redis_url: str = "redis://localhost:6379"
     atomicity_max_operations: int = 100
     security_level: SecurityLevel = SecurityLevel.MEDIUM
@@ -54,7 +56,8 @@ class TransactionConfig:
 
 
 class TransactionManager:
-    """    Unified transaction management system providing enterprise-grade transaction
+    """
+    Unified transaction management system providing enterprise-grade transaction
     coordination, security, monitoring, and compliance for the IA Influencer platform.
     
     Features:
@@ -66,7 +69,8 @@ class TransactionManager:
     - Multi-database coordination
     - Microservices transaction support
     - Creator economy business logic integration
-    """    
+    """
+    
     def __init__(self, config: Optional[TransactionConfig] = None):
         self.config = config or TransactionConfig()
         
@@ -89,7 +93,8 @@ class TransactionManager:
         logger.info("TransactionManager created with config: %s", self.config)
     
     async def initialize(self) -> None:
-        """Initialize all transaction components"""        if self._initialized:
+        """Initialize all transaction components"""
+        if self._initialized:
             return
         
         try:
@@ -122,7 +127,8 @@ class TransactionManager:
         priority: TransactionPriority = TransactionPriority.NORMAL,
         timeout: int = 300
     ) -> str:
-        """        Begin a new creator-specific transaction for content operations
+        """
+        Begin a new creator-specific transaction for content operations
         
         This is the main entry point for creator economy transactions including:
         - Content upload and processing
@@ -130,7 +136,8 @@ class TransactionManager:
         - Monetization setup
         - Revenue tracking
         - Collaboration matching
-        """        
+        """
+        
         if not self._initialized:
             await self.initialize()
         
@@ -188,10 +195,12 @@ class TransactionManager:
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Execute complete content protection workflow
+        """
+        Execute complete content protection workflow
         
         Workflow: Upload → Fingerprint → Vector Storage → Protection Registration
-        """        
+        """
+        
         transaction_info = self.active_transactions.get(transaction_id)
         if not transaction_info:
             raise ValueError(f"Transaction not found: {transaction_id}")
@@ -264,10 +273,12 @@ class TransactionManager:
         revenue_settings: Dict[str, Any],
         platform_integrations: List[str]
     ) -> Dict[str, Any]:
-        """        Execute monetization setup workflow
+        """
+        Execute monetization setup workflow
         
         Workflow: Revenue Config → Platform Setup → Payment Integration → Analytics Setup
-        """        
+        """
+        
         transaction_info = self.active_transactions.get(transaction_id)
         if not transaction_info:
             raise ValueError(f"Transaction not found: {transaction_id}")
@@ -328,7 +339,8 @@ class TransactionManager:
             raise
     
     async def commit_creator_transaction(self, transaction_id: str) -> bool:
-        """Commit creator transaction with full workflow completion"""        
+        """Commit creator transaction with full workflow completion"""
+        
         transaction_info = self.active_transactions.get(transaction_id)
         if not transaction_info:
             raise ValueError(f"Transaction not found: {transaction_id}")
@@ -367,7 +379,8 @@ class TransactionManager:
             self.active_transactions.pop(transaction_id, None)
     
     async def rollback_creator_transaction(self, transaction_id: str) -> bool:
-        """Rollback creator transaction with cleanup"""        
+        """Rollback creator transaction with cleanup"""
+        
         transaction_info = self.active_transactions.get(transaction_id)
         if not transaction_info:
             logger.warning("Transaction not found for rollback: %s", transaction_id)
@@ -406,7 +419,8 @@ class TransactionManager:
         security_context: Optional[SecurityContext] = None,
         priority: TransactionPriority = TransactionPriority.NORMAL
     ):
-        """Context manager for creator transactions with automatic commit/rollback"""        
+        """Context manager for creator transactions with automatic commit/rollback"""
+        
         transaction_id = await self.begin_creator_transaction(
             creator_id=creator_id,
             transaction_type=transaction_type,
@@ -429,7 +443,8 @@ class TransactionManager:
             raise e
     
     async def get_transaction_status(self, transaction_id: str) -> Optional[Dict[str, Any]]:
-        """Get comprehensive transaction status"""        
+        """Get comprehensive transaction status"""
+        
         transaction_info = self.active_transactions.get(transaction_id)
         if not transaction_info:
             return None
@@ -455,7 +470,8 @@ class TransactionManager:
         }
     
     async def get_system_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive system performance metrics"""        
+        """Get comprehensive system performance metrics"""
+        
         metrics = {
             'active_transactions': len(self.active_transactions),
             'timestamp': datetime.now(timezone.utc).isoformat()
@@ -474,7 +490,8 @@ class TransactionManager:
         return metrics
     
     def _validate_creator_access(self, creator_id: str, security_context: SecurityContext) -> bool:
-        """Validate creator access permissions"""        
+        """Validate creator access permissions"""
+        
         # Check if user has access to this creator account
         if security_context.user_id != creator_id:
             # Check if user has admin permissions or is authorized for this creator
@@ -485,7 +502,8 @@ class TransactionManager:
         return True
     
     async def _generate_content_fingerprint(self, content_file: bytes, content_type: str) -> Dict[str, Any]:
-        """Generate content fingerprint (placeholder for actual implementation)"""        # This would integrate with the actual fingerprinting engines
+        """Generate content fingerprint (placeholder for actual implementation)"""
+        # This would integrate with the actual fingerprinting engines
         await asyncio.sleep(0.1)  # Simulate processing
         return {
             'fingerprint_hash': f'fp_{hash(content_file)}',
@@ -494,24 +512,30 @@ class TransactionManager:
         }
     
     async def _store_content_vectors(self, transaction_id: str) -> bool:
-        """Store content vectors in vector database (placeholder)"""        await asyncio.sleep(0.05)  # Simulate storage
+        """Store content vectors in vector database (placeholder)"""
+        await asyncio.sleep(0.05)  # Simulate storage
         return True
     
     async def _register_content_protection(self, transaction_id: str, metadata: Optional[Dict[str, Any]]) -> bool:
-        """Register content for protection monitoring (placeholder)"""        await asyncio.sleep(0.05)  # Simulate registration
+        """Register content for protection monitoring (placeholder)"""
+        await asyncio.sleep(0.05)  # Simulate registration
         return True
     
     async def _cleanup_fingerprint_data(self, transaction_id: str) -> None:
-        """Cleanup fingerprint data on rollback"""        logger.debug("Cleaning up fingerprint data for transaction: %s", transaction_id)
+        """Cleanup fingerprint data on rollback"""
+        logger.debug("Cleaning up fingerprint data for transaction: %s", transaction_id)
     
     async def _cleanup_vector_data(self, transaction_id: str) -> None:
-        """Cleanup vector data on rollback"""        logger.debug("Cleaning up vector data for transaction: %s", transaction_id)
+        """Cleanup vector data on rollback"""
+        logger.debug("Cleaning up vector data for transaction: %s", transaction_id)
     
     async def _cleanup_protection_registration(self, transaction_id: str) -> None:
-        """Cleanup protection registration on rollback"""        logger.debug("Cleaning up protection registration for transaction: %s", transaction_id)
+        """Cleanup protection registration on rollback"""
+        logger.debug("Cleaning up protection registration for transaction: %s", transaction_id)
     
     def _register_default_handlers(self) -> None:
-        """Register default business logic handlers"""        
+        """Register default business logic handlers"""
+        
         self.business_handlers.update({
             'content_upload': self._handle_content_upload,
             'monetization_setup': self._handle_monetization_setup,
@@ -520,23 +544,28 @@ class TransactionManager:
         })
     
     async def _handle_content_upload(self, transaction_info: Dict[str, Any]) -> None:
-        """Handle content upload completion"""        logger.info("Content upload completed for transaction: %s", 
+        """Handle content upload completion"""
+        logger.info("Content upload completed for transaction: %s", 
                    transaction_info['context'].transaction_id)
     
     async def _handle_monetization_setup(self, transaction_info: Dict[str, Any]) -> None:
-        """Handle monetization setup completion"""        logger.info("Monetization setup completed for transaction: %s", 
+        """Handle monetization setup completion"""
+        logger.info("Monetization setup completed for transaction: %s", 
                    transaction_info['context'].transaction_id)
     
     async def _handle_collaboration_request(self, transaction_info: Dict[str, Any]) -> None:
-        """Handle collaboration request completion"""        logger.info("Collaboration request completed for transaction: %s", 
+        """Handle collaboration request completion"""
+        logger.info("Collaboration request completed for transaction: %s", 
                    transaction_info['context'].transaction_id)
     
     async def _handle_revenue_distribution(self, transaction_info: Dict[str, Any]) -> None:
-        """Handle revenue distribution completion"""        logger.info("Revenue distribution completed for transaction: %s", 
+        """Handle revenue distribution completion"""
+        logger.info("Revenue distribution completed for transaction: %s", 
                    transaction_info['context'].transaction_id)
     
     async def _execute_completion_handlers(self, transaction_info: Dict[str, Any]) -> None:
-        """Execute business logic completion handlers"""        
+        """Execute business logic completion handlers"""
+        
         transaction_type = transaction_info['transaction_type']
         handler = self.business_handlers.get(transaction_type)
         
@@ -547,7 +576,8 @@ class TransactionManager:
                 logger.error("Completion handler failed for %s: %s", transaction_type, str(e))
     
     async def _execute_rollback_handlers(self, transaction_info: Dict[str, Any]) -> None:
-        """Execute rollback cleanup handlers"""        
+        """Execute rollback cleanup handlers"""
+        
         logger.info("Executing rollback handlers for transaction: %s", 
                    transaction_info['context'].transaction_id)
         
@@ -560,15 +590,18 @@ class TransactionManager:
             await self._cleanup_monetization_setup(transaction_info)
     
     async def _cleanup_content_upload(self, transaction_info: Dict[str, Any]) -> None:
-        """Cleanup content upload on rollback"""        logger.debug("Cleaning up content upload for transaction: %s", 
+        """Cleanup content upload on rollback"""
+        logger.debug("Cleaning up content upload for transaction: %s", 
                     transaction_info['context'].transaction_id)
     
     async def _cleanup_monetization_setup(self, transaction_info: Dict[str, Any]) -> None:
-        """Cleanup monetization setup on rollback"""        logger.debug("Cleaning up monetization setup for transaction: %s", 
+        """Cleanup monetization setup on rollback"""
+        logger.debug("Cleaning up monetization setup for transaction: %s", 
                     transaction_info['context'].transaction_id)
     
     async def _cleanup_completed_transactions(self) -> None:
-        """Background task to cleanup completed transactions"""        
+        """Background task to cleanup completed transactions"""
+        
         while not self._shutdown:
             try:
                 cutoff_time = datetime.now(timezone.utc).timestamp() - 3600  # 1 hour ago
@@ -591,7 +624,8 @@ class TransactionManager:
                 await asyncio.sleep(60)
     
     async def shutdown(self) -> None:
-        """Graceful shutdown of transaction manager"""        logger.info("Shutting down TransactionManager...")
+        """Graceful shutdown of transaction manager"""
+        logger.info("Shutting down TransactionManager...")
         
         self._shutdown = True
         
@@ -619,7 +653,8 @@ class TransactionManager:
 
 # Convenience functions for common operations
 async def create_transaction_manager(config: Optional[TransactionConfig] = None) -> TransactionManager:
-    """Create and initialize transaction manager"""    manager = TransactionManager(config)
+    """Create and initialize transaction manager"""
+    manager = TransactionManager(config)
     await manager.initialize()
     return manager
 
@@ -629,7 +664,8 @@ _global_transaction_manager: Optional[TransactionManager] = None
 
 
 async def get_transaction_manager() -> TransactionManager:
-    """Get global transaction manager instance"""    global _global_transaction_manager
+    """Get global transaction manager instance"""
+    global _global_transaction_manager
     
     if _global_transaction_manager is None:
         _global_transaction_manager = await create_transaction_manager()

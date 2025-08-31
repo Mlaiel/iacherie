@@ -12,7 +12,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""from typing import Dict, List, Any, Optional, Union, Tuple
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -33,7 +34,8 @@ from .text_content import TextContentManager, TextMetadata, TextFingerprint
 logger = logging.getLogger(__name__)
 
 class MultimediaFormat(Enum):
-    """Supported multimedia container formats"""    ZIP = {"ext": ".zip", "compression": True, "structured": True, "metadata": False}
+    """Supported multimedia container formats"""
+    ZIP = {"ext": ".zip", "compression": True, "structured": True, "metadata": False}
     TAR = {"ext": ".tar", "compression": False, "structured": True, "metadata": False}
     TAR_GZ = {"ext": ".tar.gz", "compression": True, "structured": True, "metadata": False}
     BUNDLE = {"ext": ".bundle", "compression": True, "structured": True, "metadata": True}
@@ -41,7 +43,8 @@ class MultimediaFormat(Enum):
     ARCHIVE = {"ext": ".archive", "compression": True, "structured": True, "metadata": True}
 
 class MultimediaContentType(Enum):
-    """Multimedia content classification types"""    PRESENTATION = "presentation"  # Slides with text, images, videos
+    """Multimedia content classification types"""
+    PRESENTATION = "presentation"  # Slides with text, images, videos
     INTERACTIVE_MEDIA = "interactive_media"  # Games, apps with multimedia
     DOCUMENTARY_PACKAGE = "documentary_package"  # Video + transcripts + images
     MUSIC_ALBUM = "music_album"  # Audio tracks + artwork + metadata
@@ -57,7 +60,8 @@ class MultimediaContentType(Enum):
     RESEARCH_DATA = "research_data"  # Data + visualizations + reports
 
 class SynchronizationType(Enum):
-    """Types of synchronization between multimedia components"""    TEMPORAL = "temporal"  # Time-based synchronization
+    """Types of synchronization between multimedia components"""
+    TEMPORAL = "temporal"  # Time-based synchronization
     SPATIAL = "spatial"  # Layout-based synchronization
     SEMANTIC = "semantic"  # Content-based relationships
     INTERACTIVE = "interactive"  # User-triggered relationships
@@ -65,7 +69,8 @@ class SynchronizationType(Enum):
 
 @dataclass
 class MultimediaComponent:
-    """Individual component within multimedia content"""    component_id: str
+    """Individual component within multimedia content"""
+    component_id: str
     component_type: str  # audio, video, image, text
     file_path: str
     file_size: int
@@ -79,7 +84,8 @@ class MultimediaComponent:
 
 @dataclass
 class MultimediaMetadata:
-    """Comprehensive multimedia metadata structure"""    # Package information
+    """Comprehensive multimedia metadata structure"""
+    # Package information
     total_components: int
     component_types: Dict[str, int]  # Count by type
     total_size: int
@@ -146,7 +152,8 @@ class MultimediaMetadata:
 
 @dataclass
 class MultimediaFingerprint:
-    """Multimedia fingerprint for content identification and protection"""    content_id: str
+    """Multimedia fingerprint for content identification and protection"""
+    content_id: str
     package_hash: str
     component_hashes: Dict[str, str]  # Component ID -> hash
     cross_modal_hash: str
@@ -161,14 +168,18 @@ class MultimediaFingerprint:
     quality_indicators: Dict[str, float] = field(default_factory=dict)
 
 class MultimediaContentManager:
-    """    Professional multimedia content management system with cross-modal analysis
-    """    
+    """
+    Professional multimedia content management system with cross-modal analysis
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize the Multimedia Content Manager
+        """
+        Initialize the Multimedia Content Manager
         
         Args:
             config: Configuration dictionary for multimedia processing
-        """        self.config = config or self._get_default_config()
+        """
+        self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.MultimediaContentManager")
         self.supported_formats = [fmt.value["ext"] for fmt in MultimediaFormat]
         
@@ -179,7 +190,8 @@ class MultimediaContentManager:
         self._init_components()
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration for multimedia processing"""        return {
+        """Get default configuration for multimedia processing"""
+        return {
             "max_file_size_mb": 2000,  # 2GB max
             "max_components": 1000,
             "enable_fingerprinting": True,
@@ -203,13 +215,15 @@ class MultimediaContentManager:
         }
     
     def _init_content_managers(self):
-        """Initialize individual content type managers"""        self.audio_manager = AudioContentManager(self.config.get("audio_config", {}))
+        """Initialize individual content type managers"""
+        self.audio_manager = AudioContentManager(self.config.get("audio_config", {}))
         self.video_manager = VideoContentManager(self.config.get("video_config", {}))
         self.image_manager = ImageContentManager(self.config.get("image_config", {}))
         self.text_manager = TextContentManager(self.config.get("text_config", {}))
         
     def _init_components(self):
-        """Initialize multimedia processing components"""        self.logger.info("Initializing Multimedia Content Manager components...")
+        """Initialize multimedia processing components"""
+        self.logger.info("Initializing Multimedia Content Manager components...")
         
         # Create temporary extraction directory
         self.temp_dir = Path(self.config["temp_extraction_dir"])
@@ -246,7 +260,8 @@ class MultimediaContentManager:
         synchronization_analysis: bool = True,
         quality_analysis: bool = True
     ) -> Dict[str, Any]:
-        """        Process multimedia package with comprehensive cross-modal analysis
+        """
+        Process multimedia package with comprehensive cross-modal analysis
         
         Args:
             package_path: Path to multimedia package
@@ -258,7 +273,8 @@ class MultimediaContentManager:
             
         Returns:
             Dict containing processed multimedia information
-        """        try:
+        """
+        try:
             package_path = Path(package_path)
             self.logger.info(f"Processing multimedia package: {package_path}")
             
@@ -337,7 +353,8 @@ class MultimediaContentManager:
             raise
     
     async def _validate_multimedia_package(self, package_path: Path) -> bool:
-        """Validate multimedia package format and accessibility"""        try:
+        """Validate multimedia package format and accessibility"""
+        try:
             # Check file existence and size
             if not package_path.exists():
                 return False
@@ -373,7 +390,8 @@ class MultimediaContentManager:
             return False
     
     async def _extract_package(self, package_path: Path) -> Path:
-        """Extract multimedia package to temporary directory"""        try:
+        """Extract multimedia package to temporary directory"""
+        try:
             # Create unique extraction directory
             import uuid
             extract_id = str(uuid.uuid4())[:8]
@@ -400,7 +418,8 @@ class MultimediaContentManager:
             raise
     
     async def _discover_components(self, extraction_dir: Path) -> List[MultimediaComponent]:
-        """Discover multimedia components in extracted directory"""        try:
+        """Discover multimedia components in extracted directory"""
+        try:
             components = []
             component_id_counter = 0
             
@@ -438,7 +457,8 @@ class MultimediaContentManager:
             return []
     
     async def _process_components(self, components: List[MultimediaComponent]) -> List[MultimediaComponent]:
-        """Process individual multimedia components"""        try:
+        """Process individual multimedia components"""
+        try:
             processed_components = []
             
             for component in components:
@@ -491,7 +511,8 @@ class MultimediaContentManager:
         package_path: Path, 
         components: List[MultimediaComponent]
     ) -> MultimediaMetadata:
-        """Extract comprehensive multimedia metadata"""        try:
+        """Extract comprehensive multimedia metadata"""
+        try:
             # Count components by type
             component_types = {}
             total_size = 0
@@ -547,7 +568,8 @@ class MultimediaContentManager:
         metadata: MultimediaMetadata, 
         components: List[MultimediaComponent]
     ):
-        """Extract package-level metadata from manifest files"""        try:
+        """Extract package-level metadata from manifest files"""
+        try:
             # Look for common metadata files
             manifest_files = [
                 "manifest.json", "metadata.json", "package.json",
@@ -601,7 +623,8 @@ class MultimediaContentManager:
         components: List[MultimediaComponent], 
         content_id: str
     ) -> MultimediaFingerprint:
-        """Generate comprehensive multimedia fingerprint"""        try:
+        """Generate comprehensive multimedia fingerprint"""
+        try:
             # Package-level hash
             package_data = {
                 "component_count": len(components),
@@ -680,7 +703,8 @@ class MultimediaContentManager:
             raise
     
     async def _generate_cross_modal_hash(self, components: List[MultimediaComponent]) -> str:
-        """Generate hash representing cross-modal content relationships"""        try:
+        """Generate hash representing cross-modal content relationships"""
+        try:
             modal_features = {}
             
             for component in components:
@@ -717,7 +741,8 @@ class MultimediaContentManager:
             return hashlib.sha256(str(np.random.random()).encode()).hexdigest()[:32]
     
     async def _generate_synchronization_hash(self, components: List[MultimediaComponent]) -> str:
-        """Generate hash representing synchronization between components"""        try:
+        """Generate hash representing synchronization between components"""
+        try:
             sync_features = []
             
             # Look for temporal synchronization patterns
@@ -763,7 +788,8 @@ class MultimediaContentManager:
             return hashlib.sha256(str(np.random.random()).encode()).hexdigest()[:32]
     
     async def _generate_structural_hash(self, components: List[MultimediaComponent]) -> str:
-        """Generate hash representing package structure"""        try:
+        """Generate hash representing package structure"""
+        try:
             # Extract directory structure
             directories = set()
             file_patterns = []
@@ -797,7 +823,8 @@ class MultimediaContentManager:
             return hashlib.sha256(str(np.random.random()).encode()).hexdigest()[:32]
     
     async def _generate_semantic_hash(self, components: List[MultimediaComponent]) -> str:
-        """Generate hash representing semantic content across modalities"""        try:
+        """Generate hash representing semantic content across modalities"""
+        try:
             semantic_features = []
             
             # Extract semantic information from each component
@@ -823,7 +850,8 @@ class MultimediaContentManager:
             return hashlib.sha256(str(np.random.random()).encode()).hexdigest()[:32]
     
     async def _build_relationship_graph(self, components: List[MultimediaComponent]) -> Dict[str, List[str]]:
-        """Build relationship graph between components"""        try:
+        """Build relationship graph between components"""
+        try:
             relationships = {}
             
             # Initialize empty relationships for all components
@@ -860,7 +888,8 @@ class MultimediaContentManager:
             return {}
     
     async def _generate_temporal_signature(self, components: List[MultimediaComponent]) -> Optional[str]:
-        """Generate temporal signature for time-based components"""        try:
+        """Generate temporal signature for time-based components"""
+        try:
             temporal_components = [c for c in components if c.component_type in ["audio", "video"]]
             
             if not temporal_components:
@@ -886,7 +915,8 @@ class MultimediaContentManager:
             return None
     
     async def _perform_cross_modal_analysis(self, components: List[MultimediaComponent]) -> Dict[str, Any]:
-        """Perform cross-modal content analysis"""        try:
+        """Perform cross-modal content analysis"""
+        try:
             analysis_results = {
                 "modality_distribution": {},
                 "content_alignment": {},
@@ -943,7 +973,8 @@ class MultimediaContentManager:
             return {}
     
     async def _analyze_synchronization(self, components: List[MultimediaComponent]) -> Dict[str, Any]:
-        """Analyze synchronization between multimedia components"""        try:
+        """Analyze synchronization between multimedia components"""
+        try:
             sync_analysis = {
                 "temporal_sync": {},
                 "spatial_coherence": {},
@@ -1013,7 +1044,8 @@ class MultimediaContentManager:
             return {}
     
     async def _analyze_multimedia_quality(self, components: List[MultimediaComponent]) -> Dict[str, float]:
-        """Analyze overall multimedia quality"""        try:
+        """Analyze overall multimedia quality"""
+        try:
             quality_metrics = {
                 "component_quality_scores": {},
                 "consistency_score": 0.0,
@@ -1078,7 +1110,8 @@ class MultimediaContentManager:
         components: List[MultimediaComponent], 
         metadata: Optional[MultimediaMetadata] = None
     ) -> MultimediaContentType:
-        """Classify multimedia content type based on components and structure"""        try:
+        """Classify multimedia content type based on components and structure"""
+        try:
             # Count components by type
             component_counts = {}
             for component in components:
@@ -1171,7 +1204,8 @@ class MultimediaContentManager:
             return MultimediaContentType.INTERACTIVE_MEDIA  # Default fallback
     
     async def _cleanup_extraction_dir(self, extraction_dir: Path):
-        """Clean up temporary extraction directory"""        try:
+        """Clean up temporary extraction directory"""
+        try:
             import shutil
             if extraction_dir.exists():
                 shutil.rmtree(extraction_dir)
@@ -1180,7 +1214,8 @@ class MultimediaContentManager:
             self.logger.warning(f"Failed to cleanup extraction directory: {e}")
     
     async def store_content(self, multimedia_content: Dict[str, Any]) -> str:
-        """Store processed multimedia content in database"""        try:
+        """Store processed multimedia content in database"""
+        try:
             # Generate unique content ID
             content_id = hashlib.sha256(
                 f"{multimedia_content['package_path']}{datetime.now().isoformat()}".encode()
@@ -1197,10 +1232,12 @@ class MultimediaContentManager:
             raise
     
     def get_supported_formats(self) -> List[str]:
-        """Get list of supported multimedia formats"""        return [fmt.value["ext"] for fmt in MultimediaFormat]
+        """Get list of supported multimedia formats"""
+        return [fmt.value["ext"] for fmt in MultimediaFormat]
     
     def get_format_info(self, format_name: str) -> Optional[Dict[str, Any]]:
-        """Get information about a specific multimedia format"""        for fmt in MultimediaFormat:
+        """Get information about a specific multimedia format"""
+        for fmt in MultimediaFormat:
             if fmt.value["ext"] == f".{format_name.lower()}" or fmt.name.lower() == format_name.lower():
                 return fmt.value
         return None

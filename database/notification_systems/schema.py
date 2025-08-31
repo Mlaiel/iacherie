@@ -411,7 +411,8 @@ NOTIFICATION_AI_INSIGHTS_TABLE = """CREATE TABLE IF NOT EXISTS notification_ai_i
     INDEX idx_cross_platform_sync_status (sync_status),
     INDEX idx_cross_platform_sync_next (next_sync_at)
 );
-"""    similarity_score FLOAT NOT NULL,
+"""
+    similarity_score FLOAT NOT NULL,
     content_segment JSONB DEFAULT '{}',
     evidence_data JSONB DEFAULT '{}',
     legal_action_required BOOLEAN DEFAULT false,
@@ -830,7 +831,8 @@ ALL_NOTIFICATION_TABLES = [
 ]
 
 def create_notification_schema_sql() -> str:
-    """Génère le script SQL complet pour créer le schéma de notifications"""    sql_parts = [
+    """Génère le script SQL complet pour créer le schéma de notifications"""
+    sql_parts = [
         "-- Enterprise Notification Systems Database Schema",
         "-- Auteur: Fahed Mlaiel <mlaiel@live.de>",
         "-- Copyright © 2025 Fahed Mlaiel. Tous droits réservés.",
@@ -891,7 +893,8 @@ SELECT
 FROM revenue_transactions 
 WHERE transaction_date >= CURRENT_DATE - INTERVAL '30 days'
 GROUP BY user_id;
-"""    ])
+"""
+    ])
     
     return "\n".join(sql_parts)
     provider_message_id VARCHAR(255),
@@ -1365,7 +1368,8 @@ INSERT INTO escalation_policies (name, description, alert_types, severity_levels
 ]');
 """# Database initialization script
 async def initialize_notification_database(db_pool):
-    """Initialize the notification systems database"""    async with db_pool.acquire() as conn:
+    """Initialize the notification systems database"""
+    async with db_pool.acquire() as conn:
         try:
             # Create tables
             for table_sql in ALL_TABLES:

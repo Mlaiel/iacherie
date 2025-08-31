@@ -27,7 +27,8 @@ Technical Team Expertise:
 - IA Prompt Engineer: Prompt optimization and AI interaction
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import hashlib
@@ -42,9 +43,11 @@ from .filter_engine import FilterResponse, FilterResult, FilterType, ContentItem
 
 
 class MalwareDetector:
-    """Malware and virus detection system."""    
+    """Malware and virus detection system."""
+    
     def __init__(self):
-        """Initialize malware detector."""        self.logger = logging.getLogger(__name__)
+        """Initialize malware detector."""
+        self.logger = logging.getLogger(__name__)
         
         # Known malicious file signatures (simplified for demo)
         self.malicious_signatures = {
@@ -76,7 +79,8 @@ class MalwareDetector:
         ]
     
     def scan_content(self, content: ContentItem) -> Dict[str, Any]:
-        """Scan content for malware signatures."""        try:
+        """Scan content for malware signatures."""
+        try:
             scan_results = {
                 'is_malicious': False,
                 'threat_level': 'none',
@@ -112,7 +116,8 @@ class MalwareDetector:
             }
     
     def _scan_binary_signatures(self, data: bytes) -> Dict[str, Any]:
-        """Scan binary data for malicious signatures."""        try:
+        """Scan binary data for malicious signatures."""
+        try:
             threats = []
             confidence_scores = []
             
@@ -158,7 +163,8 @@ class MalwareDetector:
             return {'binary_threats': [], 'binary_confidence': 0.0}
     
     def _scan_text_patterns(self, text: str) -> Dict[str, Any]:
-        """Scan text content for suspicious patterns."""        try:
+        """Scan text content for suspicious patterns."""
+        try:
             threats = []
             confidence_scores = []
             
@@ -220,7 +226,8 @@ class MalwareDetector:
             return {'text_threats': [], 'text_confidence': 0.0}
     
     def _check_file_extension(self, file_path: str) -> Dict[str, Any]:
-        """Check file extension for security risks."""        try:
+        """Check file extension for security risks."""
+        try:
             path = Path(file_path)
             extension = path.suffix.lower()
             
@@ -272,7 +279,8 @@ class MalwareDetector:
             return {'extension_threats': [], 'extension_confidence': 0.0}
     
     def _calculate_entropy(self, data: bytes) -> float:
-        """Calculate Shannon entropy of binary data."""        try:
+        """Calculate Shannon entropy of binary data."""
+        try:
             if not data:
                 return 0.0
             
@@ -297,7 +305,8 @@ class MalwareDetector:
             return 0.0
     
     def _assess_threat_level(self, scan_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess overall threat level based on scan results."""        try:
+        """Assess overall threat level based on scan results."""
+        try:
             all_threats = []
             
             # Collect all threats
@@ -350,9 +359,11 @@ class MalwareDetector:
 
 
 class PhishingDetector:
-    """Phishing and social engineering detection."""    
+    """Phishing and social engineering detection."""
+    
     def __init__(self):
-        """Initialize phishing detector."""        self.logger = logging.getLogger(__name__)
+        """Initialize phishing detector."""
+        self.logger = logging.getLogger(__name__)
         
         # Common phishing keywords
         self.phishing_keywords = {
@@ -372,7 +383,8 @@ class PhishingDetector:
         ]
     
     def detect_phishing(self, content: ContentItem) -> Dict[str, Any]:
-        """Detect phishing attempts in content."""        try:
+        """Detect phishing attempts in content."""
+        try:
             phishing_results = {
                 'is_phishing': False,
                 'phishing_score': 0.0,
@@ -410,7 +422,8 @@ class PhishingDetector:
             }
     
     def _analyze_text_content(self, text: str) -> Dict[str, Any]:
-        """Analyze text content for phishing indicators."""        try:
+        """Analyze text content for phishing indicators."""
+        try:
             text_lower = text.lower()
             indicators = []
             score = 0.0
@@ -491,7 +504,8 @@ class PhishingDetector:
             return {'phishing_score': 0.0, 'indicators': []}
     
     def _extract_urls(self, content: ContentItem) -> List[str]:
-        """Extract URLs from content."""        try:
+        """Extract URLs from content."""
+        try:
             urls = []
             
             if isinstance(content.content_data, str):
@@ -506,7 +520,8 @@ class PhishingDetector:
             return []
     
     def _analyze_urls(self, urls: List[str]) -> Dict[str, Any]:
-        """Analyze URLs for suspicious characteristics."""        try:
+        """Analyze URLs for suspicious characteristics."""
+        try:
             url_analysis = {
                 'total_urls': len(urls),
                 'suspicious_urls': [],
@@ -533,7 +548,8 @@ class PhishingDetector:
             return {'url_risk_score': 0.0}
     
     def _analyze_single_url(self, url: str) -> Dict[str, Any]:
-        """Analyze a single URL for suspicious characteristics."""        try:
+        """Analyze a single URL for suspicious characteristics."""
+        try:
             url_analysis = {
                 'url': url,
                 'risk_score': 0.0,
@@ -599,9 +615,11 @@ class PhishingDetector:
 
 
 class SecurityContentFilter:
-    """Enterprise-grade security content filter."""    
+    """Enterprise-grade security content filter."""
+    
     def __init__(self, config: SecurityFilterConfig):
-        """Initialize security content filter."""        self.config = config
+        """Initialize security content filter."""
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize security components
@@ -616,7 +634,8 @@ class SecurityContentFilter:
         ai_validation: bool = True,
         strict_mode: bool = False
     ) -> FilterResponse:
-        """Asynchronously filter content for security threats."""        return await asyncio.get_event_loop().run_in_executor(
+        """Asynchronously filter content for security threats."""
+        return await asyncio.get_event_loop().run_in_executor(
             None, self.filter, content, ai_validation, strict_mode
         )
     
@@ -626,7 +645,8 @@ class SecurityContentFilter:
         ai_validation: bool = True,
         strict_mode: bool = False
     ) -> FilterResponse:
-        """Filter content for security threats."""        start_time = time.time()
+        """Filter content for security threats."""
+        start_time = time.time()
         
         try:
             # Perform comprehensive security analysis
@@ -669,7 +689,8 @@ class SecurityContentFilter:
             )
     
     def _analyze_security_threats(self, content: ContentItem, strict_mode: bool) -> Dict[str, Any]:
-        """Perform comprehensive security threat analysis."""        analysis_results = {
+        """Perform comprehensive security threat analysis."""
+        analysis_results = {
             'warnings': [],
             'errors': [],
             'confidence': 0.85
@@ -700,7 +721,8 @@ class SecurityContentFilter:
             return analysis_results
     
     def _validate_file_security(self, content: ContentItem) -> Dict[str, Any]:
-        """Validate file for security compliance."""        try:
+        """Validate file for security compliance."""
+        try:
             validation_results = {
                 'is_valid': True,
                 'violations': [],
@@ -750,7 +772,8 @@ class SecurityContentFilter:
             }
     
     def _is_suspicious_mime_type(self, mime_type: str) -> bool:
-        """Check if MIME type is suspicious."""        suspicious_types = [
+        """Check if MIME type is suspicious."""
+        suspicious_types = [
             'application/x-executable',
             'application/x-msdownload',
             'application/x-dosexec',
@@ -764,7 +787,8 @@ class SecurityContentFilter:
         return mime_type.lower() in suspicious_types
     
     def _perform_hash_analysis(self, content: ContentItem) -> Dict[str, Any]:
-        """Perform hash-based security analysis."""        try:
+        """Perform hash-based security analysis."""
+        try:
             hash_results = {
                 'hashes': {},
                 'is_known_threat': False,
@@ -812,7 +836,8 @@ class SecurityContentFilter:
             return {'error': str(e), 'is_known_threat': False}
     
     def _calculate_security_score(self, analysis_results: Dict[str, Any], strict_mode: bool) -> float:
-        """Calculate overall security score."""        try:
+        """Calculate overall security score."""
+        try:
             # Start with perfect security score
             score = 1.0
             
@@ -868,7 +893,8 @@ class SecurityContentFilter:
         analysis_results: Dict[str, Any],
         strict_mode: bool
     ) -> FilterResult:
-        """Determine security filter result."""        try:
+        """Determine security filter result."""
+        try:
             # Check for immediate blocking conditions
             malware_data = analysis_results.get('malware', {})
             if malware_data.get('is_malicious') and malware_data.get('threat_level') == 'high':
@@ -918,7 +944,8 @@ class SecurityContentFilter:
             return FilterResult.FAILED
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on security filter."""        health_status = {
+        """Perform health check on security filter."""
+        health_status = {
             'status': 'healthy',
             'components': {
                 'malware_detector': True,

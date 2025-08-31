@@ -19,7 +19,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 This code is proprietary and confidential. Any unauthorized copying, modification, 
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and may result in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import uuid
@@ -46,14 +47,16 @@ logger = logging.getLogger(__name__)
 
 
 class PoolStrategy(Enum):
-    """Session pool management strategies"""    ROUND_ROBIN = "round_robin"
+    """Session pool management strategies"""
+    ROUND_ROBIN = "round_robin"
     LEAST_USED = "least_used"
     PERFORMANCE_BASED = "performance_based"
     RANDOM = "random"
 
 
 class SessionPriority(Enum):
-    """Session priority levels"""    LOW = 1
+    """Session priority levels"""
+    LOW = 1
     NORMAL = 2
     HIGH = 3
     CRITICAL = 4
@@ -61,7 +64,8 @@ class SessionPriority(Enum):
 
 @dataclass
 class PoolConfiguration:
-    """Session pool configuration"""    min_size: int = 5
+    """Session pool configuration"""
+    min_size: int = 5
     max_size: int = 20
     initial_size: int = 10
     max_idle_time: int = 300  # 5 minutes
@@ -76,7 +80,8 @@ class PoolConfiguration:
 
 @dataclass
 class SessionMetrics:
-    """Session performance and usage metrics"""    total_requests: int = 0
+    """Session performance and usage metrics"""
+    total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
     average_response_time: float = 0.0
@@ -89,7 +94,8 @@ class SessionMetrics:
 
 @dataclass
 class PooledSession:
-    """Enhanced session container for pool management"""    session: BrowserSession
+    """Enhanced session container for pool management"""
+    session: BrowserSession
     metrics: SessionMetrics = field(default_factory=SessionMetrics)
     priority: SessionPriority = SessionPriority.NORMAL
     pool_id: str = ""
@@ -101,11 +107,13 @@ class PooledSession:
 
 
 class SessionPool:
-    """    Enterprise Session Pool Management
+    """
+    Enterprise Session Pool Management
     
     Manages a pool of browser sessions with intelligent allocation,
     health monitoring, and performance optimization.
-    """    
+    """
+    
     def __init__(self, pool_id: str, config: PoolConfiguration,
                  browser_config: BrowserConfiguration):
         self.pool_id = pool_id
@@ -144,7 +152,8 @@ class SessionPool:
         logger.info(f"SessionPool {pool_id} initialized with config: {config}")
     
     async def initialize(self) -> None:
-        """Initialize session pool with initial sessions"""        try:
+        """Initialize session pool with initial sessions"""
+        try:
             # Create initial sessions
             for i in range(self.config.initial_size):
                 await self._create_session()
@@ -161,7 +170,8 @@ class SessionPool:
     
     async def checkout_session(self, priority: SessionPriority = SessionPriority.NORMAL,
                              timeout: float = 30.0) -> Optional[PooledSession]:
-        """Checkout a session from the pool"""        start_time = time.time()
+        """Checkout a session from the pool"""
+        start_time = time.time()
         
         try:
             # Wait for available session
@@ -208,7 +218,8 @@ class SessionPool:
             raise SessionError(f"Session checkout failed: {str(e)}")
     
     async def checkin_session(self, session: PooledSession) -> bool:
-        """Return a session to the pool"""        try:
+        """Return a session to the pool"""
+        try:
             with self.pool_lock:
                 session_id = session.session.session_id
                 
@@ -241,7 +252,8 @@ class SessionPool:
     
     @asynccontextmanager
     async def get_session(self, priority: SessionPriority = SessionPriority.NORMAL):
-        """Context manager for automatic session checkout/checkin"""        session = None
+        """Context manager for automatic session checkout/checkin"""
+        session = None
         try:
             session = await self.checkout_session(priority)
             if session:
@@ -253,7 +265,8 @@ class SessionPool:
                 await self.checkin_session(session)
     
     async def _create_session(self) -> Optional[PooledSession]:
-        """Create a new session and add to pool"""        try:
+        """Create a new session and add to pool"""
+        try:
             # Create WebDriver instance
             driver = self.factory.create_driver(self.browser_config)
             
@@ -288,7 +301,8 @@ class SessionPool:
             return None
     
     async def _destroy_session(self, session_id: str) -> bool:
-        """Destroy a session and cleanup resources"""        try:
+        """Destroy a session and cleanup resources"""
+        try:
             with self.pool_lock:
                 pooled_session = self.sessions.get(session_id)
                 if not pooled_session:
@@ -315,7 +329,8 @@ class SessionPool:
             return False
     
     def _select_session(self, priority: SessionPriority) -> Optional[PooledSession]:
-        """Select best available session based on strategy"""        if not self.available_sessions:
+        """Select best available session based on strategy"""
+        if not self.available_sessions:
             return None
         
         available_pooled_sessions = [
@@ -342,14 +357,16 @@ class SessionPool:
         return available_pooled_sessions[0]
     
     def _should_scale_up(self) -> bool:
-        """Check if pool should scale up"""        if not self.config.enable_auto_scaling:
+        """Check if pool should scale up"""
+        if not self.config.enable_auto_scaling:
             return False
         
         utilization = len(self.in_use_sessions) / len(self.sessions) if self.sessions else 1.0
         return utilization >= self.config.scale_up_threshold
     
     def _should_scale_down(self) -> bool:
-        """Check if pool should scale down"""        if not self.config.enable_auto_scaling:
+        """Check if pool should scale down"""
+        if not self.config.enable_auto_scaling:
             return False
         
         if len(self.sessions) <= self.config.min_size:
@@ -359,7 +376,8 @@ class SessionPool:
         return utilization <= self.config.scale_down_threshold
     
     async def _monitor_pool(self) -> None:
-        """Monitor pool health and performance"""        while self.monitoring_active:
+        """Monitor pool health and performance"""
+        while self.monitoring_active:
             try:
                 # Health checks
                 await self._perform_health_checks()
@@ -378,7 +396,8 @@ class SessionPool:
                 await asyncio.sleep(self.config.health_check_interval)
     
     async def _cleanup_sessions(self) -> None:
-        """Cleanup expired and unhealthy sessions"""        while self.monitoring_active:
+        """Cleanup expired and unhealthy sessions"""
+        while self.monitoring_active:
             try:
                 current_time = time.time()
                 sessions_to_remove = []
@@ -419,7 +438,8 @@ class SessionPool:
                 await asyncio.sleep(self.config.cleanup_interval)
     
     async def _perform_health_checks(self) -> None:
-        """Perform health checks on all sessions"""        for session_id, pooled_session in list(self.sessions.items()):
+        """Perform health checks on all sessions"""
+        for session_id, pooled_session in list(self.sessions.items()):
             if pooled_session.in_use:
                 continue
             
@@ -439,7 +459,8 @@ class SessionPool:
                 logger.warning(f"Health check failed for session {session_id}: {str(e)}")
     
     async def _auto_scale(self) -> None:
-        """Perform auto-scaling based on utilization"""        if self._should_scale_up() and len(self.sessions) < self.config.max_size:
+        """Perform auto-scaling based on utilization"""
+        if self._should_scale_up() and len(self.sessions) < self.config.max_size:
             await self._create_session()
             logger.info(f"Scaled up pool {self.pool_id} to {len(self.sessions)} sessions")
         
@@ -456,7 +477,8 @@ class SessionPool:
                 logger.info(f"Scaled down pool {self.pool_id} to {len(self.sessions)} sessions")
     
     async def _update_session_metrics(self) -> None:
-        """Update performance metrics for all sessions"""        for pooled_session in self.sessions.values():
+        """Update performance metrics for all sessions"""
+        for pooled_session in self.sessions.values():
             try:
                 # Update system metrics if session has driver
                 if hasattr(pooled_session.session.driver, 'service'):
@@ -470,7 +492,8 @@ class SessionPool:
                 logger.debug(f"Failed to update metrics for session: {str(e)}")
     
     def _update_average_wait_time(self, wait_time: float) -> None:
-        """Update average wait time statistic"""        total_checkouts = self.stats['total_checkouts']
+        """Update average wait time statistic"""
+        total_checkouts = self.stats['total_checkouts']
         if total_checkouts > 0:
             current_avg = self.stats['average_wait_time']
             self.stats['average_wait_time'] = (
@@ -478,7 +501,8 @@ class SessionPool:
             )
     
     async def get_pool_status(self) -> Dict[str, Any]:
-        """Get comprehensive pool status information"""        with self.pool_lock:
+        """Get comprehensive pool status information"""
+        with self.pool_lock:
             available_count = len(self.available_sessions)
             in_use_count = len(self.in_use_sessions)
             total_count = len(self.sessions)
@@ -512,7 +536,8 @@ class SessionPool:
             }
     
     async def shutdown(self) -> None:
-        """Shutdown pool and cleanup all resources"""        logger.info(f"Shutting down SessionPool {self.pool_id}")
+        """Shutdown pool and cleanup all resources"""
+        logger.info(f"Shutting down SessionPool {self.pool_id}")
         
         # Stop monitoring
         self.monitoring_active = False
@@ -534,11 +559,13 @@ class SessionPool:
 
 
 class SessionPoolManager:
-    """    Enterprise Session Pool Manager
+    """
+    Enterprise Session Pool Manager
     
     Manages multiple session pools for different browser configurations
     and use cases. Provides load balancing and failover capabilities.
-    """    
+    """
+    
     def __init__(self):
         self.pools: Dict[str, SessionPool] = {}
         self.pool_configs: Dict[str, Tuple[PoolConfiguration, BrowserConfiguration]] = {}
@@ -547,7 +574,8 @@ class SessionPoolManager:
     
     async def create_pool(self, pool_id: str, pool_config: PoolConfiguration,
                          browser_config: BrowserConfiguration) -> None:
-        """Create and initialize a new session pool"""        if pool_id in self.pools:
+        """Create and initialize a new session pool"""
+        if pool_id in self.pools:
             raise SessionError(f"Pool {pool_id} already exists")
         
         try:
@@ -565,14 +593,16 @@ class SessionPoolManager:
     
     async def get_session(self, pool_id: str, 
                          priority: SessionPriority = SessionPriority.NORMAL) -> Optional[PooledSession]:
-        """Get session from specified pool"""        pool = self.pools.get(pool_id)
+        """Get session from specified pool"""
+        pool = self.pools.get(pool_id)
         if not pool:
             raise SessionError(f"Pool {pool_id} not found")
         
         return await pool.checkout_session(priority)
     
     async def return_session(self, pool_id: str, session: PooledSession) -> bool:
-        """Return session to specified pool"""        pool = self.pools.get(pool_id)
+        """Return session to specified pool"""
+        pool = self.pools.get(pool_id)
         if not pool:
             return False
         
@@ -581,7 +611,8 @@ class SessionPoolManager:
     @asynccontextmanager
     async def session_from_pool(self, pool_id: str, 
                                priority: SessionPriority = SessionPriority.NORMAL):
-        """Context manager for pool session usage"""        pool = self.pools.get(pool_id)
+        """Context manager for pool session usage"""
+        pool = self.pools.get(pool_id)
         if not pool:
             raise SessionError(f"Pool {pool_id} not found")
         
@@ -589,7 +620,8 @@ class SessionPoolManager:
             yield session
     
     async def destroy_pool(self, pool_id: str) -> bool:
-        """Destroy session pool and cleanup resources"""        pool = self.pools.get(pool_id)
+        """Destroy session pool and cleanup resources"""
+        pool = self.pools.get(pool_id)
         if not pool:
             return False
         
@@ -606,7 +638,8 @@ class SessionPoolManager:
             return False
     
     async def get_all_pool_status(self) -> Dict[str, Any]:
-        """Get status for all managed pools"""        pool_statuses = {}
+        """Get status for all managed pools"""
+        pool_statuses = {}
         
         for pool_id, pool in self.pools.items():
             pool_statuses[pool_id] = await pool.get_pool_status()
@@ -617,7 +650,8 @@ class SessionPoolManager:
         }
     
     async def shutdown_all(self) -> None:
-        """Shutdown all pools and cleanup resources"""        logger.info("Shutting down all session pools")
+        """Shutdown all pools and cleanup resources"""
+        logger.info("Shutting down all session pools")
         
         pool_ids = list(self.pools.keys())
         for pool_id in pool_ids:
@@ -628,7 +662,8 @@ class SessionPoolManager:
 
 # Factory functions for common pool configurations
 def create_stealth_pool_config() -> PoolConfiguration:
-    """Create configuration for stealth crawling pool"""    return PoolConfiguration(
+    """Create configuration for stealth crawling pool"""
+    return PoolConfiguration(
         min_size=3,
         max_size=10,
         initial_size=5,
@@ -639,7 +674,8 @@ def create_stealth_pool_config() -> PoolConfiguration:
 
 
 def create_performance_pool_config() -> PoolConfiguration:
-    """Create configuration for high-performance pool"""    return PoolConfiguration(
+    """Create configuration for high-performance pool"""
+    return PoolConfiguration(
         min_size=10,
         max_size=50,
         initial_size=20,

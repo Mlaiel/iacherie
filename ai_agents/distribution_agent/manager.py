@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -43,7 +44,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class DistributionSystemStatus:
-    """Overall distribution system status"""    is_healthy: bool = True
+    """Overall distribution system status"""
+    is_healthy: bool = True
     active_jobs: int = 0
     active_campaigns: int = 0
     processing_engines: int = 0
@@ -55,7 +57,8 @@ class DistributionSystemStatus:
     last_updated: datetime = field(default_factory=datetime.now)
 
 class DistributionManager(BaseAgent):
-    """    Master Distribution Manager
+    """
+    Master Distribution Manager
     
     Unified interface for the entire distribution system providing:
     - Single point of control for all distribution operations
@@ -65,7 +68,8 @@ class DistributionManager(BaseAgent):
     - Performance analytics and reporting
     - Resource management and scaling
     - Error handling and recovery
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         
@@ -95,7 +99,8 @@ class DistributionManager(BaseAgent):
         logger.info("DistributionManager initialized")
 
     async def start(self) -> None:
-        """Start the complete distribution system"""        if self.is_running:
+        """Start the complete distribution system"""
+        if self.is_running:
             logger.warning("Distribution system is already running")
             return
         
@@ -131,7 +136,8 @@ class DistributionManager(BaseAgent):
                                job: DistributionJob, 
                                priority: JobPriority = JobPriority.NORMAL,
                                intelligence_analysis: bool = True) -> Tuple[str, Optional[IntelligenceReport]]:
-        """        Distribute content with full system integration
+        """
+        Distribute content with full system integration
         
         Args:
             job: Distribution job configuration
@@ -140,7 +146,8 @@ class DistributionManager(BaseAgent):
             
         Returns:
             Tuple of (execution_id, intelligence_report)
-        """        try:
+        """
+        try:
             # Validate system readiness
             if not self.is_running:
                 await self.start()
@@ -170,7 +177,8 @@ class DistributionManager(BaseAgent):
             raise DistributionError(f"Failed to distribute content: {e}")
 
     async def _apply_intelligence_insights(self, job: DistributionJob, report: IntelligenceReport) -> DistributionJob:
-        """Apply intelligence insights to optimize the distribution job"""        try:
+        """Apply intelligence insights to optimize the distribution job"""
+        try:
             # Optimize platform selection based on predictions
             if report.optimal_platform_ranking:
                 # Reorder target platforms based on AI recommendations
@@ -205,14 +213,16 @@ class DistributionManager(BaseAgent):
             return job  # Return original job if optimization fails
 
     async def create_campaign(self, campaign_config: CampaignConfig) -> str:
-        """        Create and manage a distribution campaign
+        """
+        Create and manage a distribution campaign
         
         Args:
             campaign_config: Complete campaign configuration
             
         Returns:
             Campaign execution ID
-        """        try:
+        """
+        try:
             # Validate system readiness
             if not self.is_running:
                 await self.start()
@@ -231,14 +241,16 @@ class DistributionManager(BaseAgent):
             raise DistributionError(f"Failed to create campaign: {e}")
 
     async def execute_campaign(self, execution_id: str) -> bool:
-        """        Execute a created campaign
+        """
+        Execute a created campaign
         
         Args:
             execution_id: Campaign execution ID
             
         Returns:
             True if campaign started successfully
-        """        try:
+        """
+        try:
             success = await self.campaign_coordinator.execute_campaign(execution_id)
             
             if success:
@@ -253,7 +265,8 @@ class DistributionManager(BaseAgent):
             raise DistributionError(f"Failed to execute campaign: {e}")
 
     async def get_content_analytics(self, content_id: str, platforms: Optional[List[str]] = None) -> Dict[str, Any]:
-        """        Get comprehensive analytics for distributed content
+        """
+        Get comprehensive analytics for distributed content
         
         Args:
             content_id: Content identifier
@@ -261,7 +274,8 @@ class DistributionManager(BaseAgent):
             
         Returns:
             Comprehensive analytics data
-        """        try:
+        """
+        try:
             # Implementation would aggregate analytics from all platforms
             analytics_data = {
                 'content_id': content_id,
@@ -285,7 +299,8 @@ class DistributionManager(BaseAgent):
             raise DistributionError(f"Failed to get analytics: {e}")
 
     async def get_system_status(self) -> DistributionSystemStatus:
-        """Get comprehensive system status"""        try:
+        """Get comprehensive system status"""
+        try:
             orchestrator_status = await self.orchestrator.get_system_status()
             
             status = DistributionSystemStatus(
@@ -303,7 +318,8 @@ class DistributionManager(BaseAgent):
             return DistributionSystemStatus(is_healthy=False)
 
     async def get_performance_analytics(self) -> Dict[str, Any]:
-        """Get detailed performance analytics"""        try:
+        """Get detailed performance analytics"""
+        try:
             orchestrator_analytics = await self.orchestrator.get_performance_analytics()
             
             analytics = {
@@ -325,7 +341,8 @@ class DistributionManager(BaseAgent):
             return {'error': str(e)}
 
     async def optimize_system_performance(self) -> Dict[str, Any]:
-        """Trigger system-wide performance optimization"""        try:
+        """Trigger system-wide performance optimization"""
+        try:
             optimizations_applied = []
             
             # Get current system status
@@ -359,7 +376,8 @@ class DistributionManager(BaseAgent):
             return {'success': False, 'error': str(e)}
 
     async def _system_health_monitor(self) -> None:
-        """Continuous system health monitoring"""        logger.info("System health monitor started")
+        """Continuous system health monitoring"""
+        logger.info("System health monitor started")
         
         while self.is_running:
             try:
@@ -399,7 +417,8 @@ class DistributionManager(BaseAgent):
                 await asyncio.sleep(60)
 
     async def _performance_monitor(self) -> None:
-        """Continuous performance monitoring and optimization"""        logger.info("Performance monitor started")
+        """Continuous performance monitoring and optimization"""
+        logger.info("Performance monitor started")
         
         while self.is_running:
             try:
@@ -425,7 +444,8 @@ class DistributionManager(BaseAgent):
                 await asyncio.sleep(300)
 
     async def _metrics_aggregator(self) -> None:
-        """Aggregate and cache system metrics"""        logger.info("Metrics aggregator started")
+        """Aggregate and cache system metrics"""
+        logger.info("Metrics aggregator started")
         
         while self.is_running:
             try:
@@ -449,7 +469,8 @@ class DistributionManager(BaseAgent):
                 await asyncio.sleep(60)
 
     async def _aggregate_system_metrics(self) -> Dict[str, Any]:
-        """Aggregate metrics from all system components"""        orchestrator_metrics = await self.orchestrator.get_performance_analytics()
+        """Aggregate metrics from all system components"""
+        orchestrator_metrics = await self.orchestrator.get_performance_analytics()
         coordinator_analytics = {}  # Would get from coordinator
         
         return {
@@ -465,19 +486,23 @@ class DistributionManager(BaseAgent):
         }
 
     async def _handle_high_load(self) -> None:
-        """Handle high system load situations"""        logger.info("Handling high system load")
+        """Handle high system load situations"""
+        logger.info("Handling high system load")
         # Implementation would scale up resources, optimize queues, etc.
 
     async def _handle_high_error_rate(self) -> None:
-        """Handle high error rate situations"""        logger.info("Handling high error rate")
+        """Handle high error rate situations"""
+        logger.info("Handling high error rate")
         # Implementation would investigate errors, restart components, etc.
 
     async def _optimize_processing_performance(self) -> None:
-        """Optimize processing performance"""        logger.info("Optimizing processing performance")
+        """Optimize processing performance"""
+        logger.info("Optimizing processing performance")
         # Implementation would optimize worker allocation, caching, etc.
 
     async def _get_resource_utilization(self) -> Dict[str, Any]:
-        """Get current resource utilization"""        return {
+        """Get current resource utilization"""
+        return {
             'cpu_usage': 0.0,
             'memory_usage': 0.0,
             'network_usage': 0.0,
@@ -485,14 +510,16 @@ class DistributionManager(BaseAgent):
         }
 
     async def _get_recent_performance_metrics(self) -> Dict[str, Any]:
-        """Get recent performance metrics"""        return {
+        """Get recent performance metrics"""
+        return {
             'last_hour_jobs': 0,
             'last_hour_success_rate': 0.0,
             'last_hour_avg_time': 0.0
         }
 
     async def _optimize_cache_usage(self) -> None:
-        """Optimize cache usage and cleanup"""        try:
+        """Optimize cache usage and cleanup"""
+        try:
             logger.info("Starting cache optimization...")
             
             # Nettoyer les entrées de cache expirées
@@ -520,7 +547,8 @@ class DistributionManager(BaseAgent):
             logger.error(f"Erreur lors de l'optimisation du cache: {e}")
 
     async def _optimize_metrics_cache(self) -> None:
-        """Optimise le cache des métriques"""        try:
+        """Optimise le cache des métriques"""
+        try:
             # Compresser les métriques anciennes (>7 jours) en résumés agrégés
             cutoff_date = datetime.now() - timedelta(days=7)
             
@@ -538,7 +566,8 @@ class DistributionManager(BaseAgent):
             logger.error(f"Erreur optimisation métriques: {e}")
 
     async def _cleanup_old_data(self) -> None:
-        """Clean up old system data"""        try:
+        """Clean up old system data"""
+        try:
             logger.info("Starting old data cleanup...")
             
             # Nettoyer les logs anciens (>30 jours)
@@ -568,7 +597,8 @@ class DistributionManager(BaseAgent):
             logger.error(f"Erreur lors du nettoyage: {e}")
 
     async def _cleanup_old_metrics(self) -> None:
-        """Nettoie les anciennes métriques"""        try:
+        """Nettoie les anciennes métriques"""
+        try:
             cutoff_date = datetime.now() - timedelta(days=90)  # Garder 90 jours de métriques détaillées
             
             # Dans un vrai environnement, ceci ferait des requêtes de suppression
@@ -586,7 +616,8 @@ class DistributionManager(BaseAgent):
             logger.error(f"Erreur nettoyage métriques: {e}")
 
     async def _cleanup_old_logs(self) -> None:
-        """Nettoie les anciens logs de distribution"""        try:
+        """Nettoie les anciens logs de distribution"""
+        try:
             cutoff_date = datetime.now() - timedelta(days=60)  # Garder 60 jours de logs
             
             # Dans un vrai environnement, ceci archiverait ou supprimerait
@@ -606,7 +637,8 @@ class DistributionManager(BaseAgent):
             logger.error(f"Erreur archivage logs: {e}")
 
     async def _cleanup_temp_data(self) -> None:
-        """Nettoie les données temporaires"""        try:
+        """Nettoie les données temporaires"""
+        try:
             # Nettoyer les fichiers temporaires de distribution
             temp_files_cleaned = 0
             
@@ -622,7 +654,8 @@ class DistributionManager(BaseAgent):
             logger.error(f"Erreur nettoyage données temporaires: {e}")
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the entire distribution system"""        logger.info("Shutting down Distribution System...")
+        """Graceful shutdown of the entire distribution system"""
+        logger.info("Shutting down Distribution System...")
         
         self.is_running = False
         
@@ -648,7 +681,8 @@ class DistributionManager(BaseAgent):
         logger.info("Distribution System shutdown complete")
 
     async def process(self, data: Dict[str, Any]) -> AgentResponse:
-        """Base agent interface implementation"""        try:
+        """Base agent interface implementation"""
+        try:
             action = data.get('action', 'distribute')
             
             if action == 'distribute':

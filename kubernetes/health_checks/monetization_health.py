@@ -16,7 +16,8 @@ Copyright: IA Influencer Agent Platform - All Rights Reserved
 WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
-"""import asyncio
+"""
+import asyncio
 import time
 import json
 from datetime import datetime, timedelta
@@ -33,7 +34,8 @@ from .core_health import HealthStatus, HealthCheckResult
 
 @dataclass
 class PaymentProcessorMetrics:
-    """Payment processor performance metrics"""    processor_name: str
+    """Payment processor performance metrics"""
+    processor_name: str
     api_status: str
     response_time_ms: float
     transactions_24h: int
@@ -45,7 +47,8 @@ class PaymentProcessorMetrics:
 
 @dataclass
 class PlatformAPIMetrics:
-    """Platform API integration metrics"""    platform_name: str
+    """Platform API integration metrics"""
+    platform_name: str
     api_version: str
     rate_limit_status: str
     requests_remaining: int
@@ -56,16 +59,20 @@ class PlatformAPIMetrics:
 
 
 class MonetizationHealthChecker:
-    """    Monetization services health monitoring system
+    """
+    Monetization services health monitoring system
     
     Monitors all revenue tracking, payment processing, and platform
     integration components for the monetization pipeline.
-    """    def __init__(self, config: Dict[str, Any]):
-        """        Initialize monetization health checker
+    """
+    def __init__(self, config: Dict[str, Any]):
+        """
+        Initialize monetization health checker
         
         Args:
             config: Monetization configuration dictionary
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Monetization configurations
@@ -83,11 +90,13 @@ class MonetizationHealthChecker:
         self._api_credentials = {}
 
     async def check_stripe_integration(self) -> HealthCheckResult:
-        """        Check Stripe payment processor health and connectivity
+        """
+        Check Stripe payment processor health and connectivity
         
         Returns:
             HealthCheckResult: Stripe integration health status
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             details = {
@@ -203,11 +212,13 @@ class MonetizationHealthChecker:
             )
 
     async def check_paypal_integration(self) -> HealthCheckResult:
-        """        Check PayPal payment processor health and connectivity
+        """
+        Check PayPal payment processor health and connectivity
         
         Returns:
             HealthCheckResult: PayPal integration health status
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             details = {
@@ -335,11 +346,13 @@ class MonetizationHealthChecker:
             )
 
     async def check_platform_apis(self) -> HealthCheckResult:
-        """        Check platform API integrations for revenue data
+        """
+        Check platform API integrations for revenue data
         
         Returns:
             HealthCheckResult: Platform APIs health status
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             details = {
@@ -515,11 +528,13 @@ class MonetizationHealthChecker:
             )
 
     async def check_revenue_engine(self) -> HealthCheckResult:
-        """        Check revenue tracking and calculation engine health
+        """
+        Check revenue tracking and calculation engine health
         
         Returns:
             HealthCheckResult: Revenue engine health status
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             details = {
@@ -688,11 +703,13 @@ class MonetizationHealthChecker:
             )
 
     async def perform_comprehensive_check(self) -> List[HealthCheckResult]:
-        """        Perform all monetization service health checks concurrently
+        """
+        Perform all monetization service health checks concurrently
         
         Returns:
             List[HealthCheckResult]: All monetization service health check results
-        """        checks = await asyncio.gather(
+        """
+        checks = await asyncio.gather(
             self.check_stripe_integration(),
             self.check_paypal_integration(),
             self.check_platform_apis(),
@@ -718,11 +735,13 @@ class MonetizationHealthChecker:
         return results
 
     async def get_monetization_health_summary(self) -> Dict[str, Any]:
-        """        Get comprehensive monetization services health summary
+        """
+        Get comprehensive monetization services health summary
         
         Returns:
             Dict[str, Any]: Monetization services health summary with overall status
-        """        results = await self.perform_comprehensive_check()
+        """
+        results = await self.perform_comprehensive_check()
         
         # Calculate overall monetization services health
         status_weights = {

@@ -11,7 +11,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 
 class FeatureType(Enum):
-    """Feature data types"""    NUMERIC = "numeric"
+    """Feature data types"""
+    NUMERIC = "numeric"
     CATEGORICAL = "categorical"
     TEXT = "text"
     EMBEDDING = "embedding"
@@ -42,7 +44,8 @@ class FeatureType(Enum):
 
 
 class StorageBackend(Enum):
-    """Feature storage backends"""    REDIS = "redis"
+    """Feature storage backends"""
+    REDIS = "redis"
     POSTGRES = "postgres"
     CLICKHOUSE = "clickhouse"
     ELASTICSEARCH = "elasticsearch"
@@ -51,7 +54,8 @@ class StorageBackend(Enum):
 
 
 class ServingMode(Enum):
-    """Feature serving modes"""    ONLINE = "online"
+    """Feature serving modes"""
+    ONLINE = "online"
     OFFLINE = "offline"
     BATCH = "batch"
     STREAMING = "streaming"
@@ -60,7 +64,8 @@ class ServingMode(Enum):
 
 @dataclass
 class FeatureStoreConfig:
-    """Feature store configuration"""    store_name: str = "ia-influencer-features"
+    """Feature store configuration"""
+    store_name: str = "ia-influencer-features"
     online_store: StorageBackend = StorageBackend.REDIS
     offline_store: StorageBackend = StorageBackend.POSTGRES
     streaming_enabled: bool = True
@@ -78,7 +83,8 @@ class FeatureStoreConfig:
 
 
 class FeatureStoreDeployment:
-    """    Enterprise feature store deployment system
+    """
+    Enterprise feature store deployment system
     
     Provides comprehensive feature management with:
     - Multi-backend feature storage (online/offline)
@@ -88,13 +94,16 @@ class FeatureStoreDeployment:
     - Feature lineage and governance
     - Point-in-time correctness
     - Schema evolution and versioning
-    """    
+    """
+    
     def __init__(self, namespace: str = "ia-influencer-features"):
-        """        Initialize feature store deployment
+        """
+        Initialize feature store deployment
         
         Args:
             namespace: Kubernetes namespace for feature store infrastructure
-        """        self.namespace = namespace
+        """
+        self.namespace = namespace
         self.config = FeatureStoreConfig()
         self.feature_definitions = {}
         self.feature_groups = {}
@@ -105,7 +114,8 @@ class FeatureStoreDeployment:
         self._initialize_clients()
     
     def _initialize_clients(self) -> None:
-        """Initialize Kubernetes, Docker, and database clients"""        try:
+        """Initialize Kubernetes, Docker, and database clients"""
+        try:
             # Kubernetes client
             config.load_incluster_config()
             self.k8s_apps_v1 = client.AppsV1Api()
@@ -136,11 +146,13 @@ class FeatureStoreDeployment:
             raise
     
     async def deploy_feature_store_infrastructure(self) -> Dict[str, Any]:
-        """        Deploy complete feature store infrastructure
+        """
+        Deploy complete feature store infrastructure
         
         Returns:
             Infrastructure deployment summary
-        """        try:
+        """
+        try:
             self.status = "deploying_infrastructure"
             logger.info("Deploying feature store infrastructure")
             
@@ -227,14 +239,16 @@ class FeatureStoreDeployment:
             raise
     
     async def create_feature_group(self, group_config: Dict[str, Any]) -> Dict[str, Any]:
-        """        Create a new feature group
+        """
+        Create a new feature group
         
         Args:
             group_config: Feature group configuration
             
         Returns:
             Feature group creation result
-        """        try:
+        """
+        try:
             group_name = group_config.get("name")
             logger.info(f"Creating feature group: {group_name}")
             
@@ -297,7 +311,8 @@ class FeatureStoreDeployment:
             raise
     
     async def ingest_features(self, group_name: str, features_data: Dict[str, Any]) -> Dict[str, Any]:
-        """        Ingest features into feature store
+        """
+        Ingest features into feature store
         
         Args:
             group_name: Name of feature group
@@ -305,7 +320,8 @@ class FeatureStoreDeployment:
             
         Returns:
             Ingestion result
-        """        try:
+        """
+        try:
             logger.info(f"Ingesting features into group: {group_name}")
             
             # Get feature group metadata
@@ -359,7 +375,8 @@ class FeatureStoreDeployment:
             raise
     
     async def get_online_features(self, group_name: str, entity_keys: List[str]) -> Dict[str, Any]:
-        """        Get features for online serving
+        """
+        Get features for online serving
         
         Args:
             group_name: Name of feature group
@@ -367,7 +384,8 @@ class FeatureStoreDeployment:
             
         Returns:
             Online features
-        """        try:
+        """
+        try:
             logger.info(f"Getting online features from group: {group_name}")
             
             # Get feature group metadata
@@ -401,14 +419,16 @@ class FeatureStoreDeployment:
             raise
     
     async def get_offline_features(self, feature_query: Dict[str, Any]) -> Dict[str, Any]:
-        """        Get features for offline training
+        """
+        Get features for offline training
         
         Args:
             feature_query: Feature query specification
             
         Returns:
             Offline features dataset
-        """        try:
+        """
+        try:
             logger.info("Getting offline features for training")
             
             # Parse feature query
@@ -438,7 +458,8 @@ class FeatureStoreDeployment:
             raise
     
     async def _ensure_feature_store_namespace(self) -> None:
-        """Create feature store namespace"""        try:
+        """Create feature store namespace"""
+        try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
             if e.status == 404:
@@ -457,7 +478,8 @@ class FeatureStoreDeployment:
                 logger.info(f"Created feature store namespace: {self.namespace}")
     
     async def _deploy_online_store(self) -> Dict[str, Any]:
-        """Deploy online feature store (Redis)"""        redis_cluster = {
+        """Deploy online feature store (Redis)"""
+        redis_cluster = {
             "apiVersion": "apps/v1",
             "kind": "StatefulSet",
             "metadata": {
@@ -524,7 +546,8 @@ class FeatureStoreDeployment:
         }
     
     async def _deploy_offline_store(self) -> Dict[str, Any]:
-        """Deploy offline feature store (PostgreSQL)"""        postgres_deployment = {
+        """Deploy offline feature store (PostgreSQL)"""
+        postgres_deployment = {
             "apiVersion": "apps/v1",
             "kind": "StatefulSet",
             "metadata": {
@@ -585,7 +608,8 @@ class FeatureStoreDeployment:
         }
     
     async def _deploy_feature_serving_api(self) -> Dict[str, Any]:
-        """Deploy feature serving API"""        serving_api = {
+        """Deploy feature serving API"""
+        serving_api = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -644,7 +668,8 @@ class FeatureStoreDeployment:
         }
     
     async def _deploy_feature_engineering(self) -> Dict[str, Any]:
-        """Deploy feature engineering pipeline"""        engineering_pipeline = {
+        """Deploy feature engineering pipeline"""
+        engineering_pipeline = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -691,7 +716,8 @@ class FeatureStoreDeployment:
         }
     
     async def _deploy_streaming_infrastructure(self) -> Dict[str, Any]:
-        """Deploy streaming infrastructure (Kafka)"""        kafka_deployment = {
+        """Deploy streaming infrastructure (Kafka)"""
+        kafka_deployment = {
             "apiVersion": "apps/v1",
             "kind": "StatefulSet",
             "metadata": {
@@ -753,7 +779,8 @@ class FeatureStoreDeployment:
         }
     
     async def _deploy_data_quality_monitor(self) -> Dict[str, Any]:
-        """Deploy data quality monitoring service"""        quality_monitor = {
+        """Deploy data quality monitoring service"""
+        quality_monitor = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -800,7 +827,8 @@ class FeatureStoreDeployment:
         }
     
     async def _deploy_lineage_tracker(self) -> Dict[str, Any]:
-        """Deploy feature lineage tracking service"""        lineage_tracker = {
+        """Deploy feature lineage tracking service"""
+        lineage_tracker = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -847,7 +875,8 @@ class FeatureStoreDeployment:
         }
     
     async def _deploy_feature_discovery(self) -> Dict[str, Any]:
-        """Deploy automated feature discovery service"""        discovery_service = {
+        """Deploy automated feature discovery service"""
+        discovery_service = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -894,7 +923,8 @@ class FeatureStoreDeployment:
         }
     
     async def _deploy_schema_registry(self) -> Dict[str, Any]:
-        """Deploy schema registry for feature schemas"""        schema_registry = {
+        """Deploy schema registry for feature schemas"""
+        schema_registry = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -941,7 +971,8 @@ class FeatureStoreDeployment:
         }
     
     async def _configure_feature_store_networking(self) -> None:
-        """Configure networking for feature store infrastructure"""        # Feature store network policy
+        """Configure networking for feature store infrastructure"""
+        # Feature store network policy
         network_policy = {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "NetworkPolicy",
@@ -977,7 +1008,8 @@ class FeatureStoreDeployment:
         logger.info("Configured feature store networking policies")
     
     async def _validate_feature_store_infrastructure(self) -> bool:
-        """Validate feature store infrastructure deployment"""        try:
+        """Validate feature store infrastructure deployment"""
+        try:
             # Check essential services
             essential_services = [
                 "features-redis", "features-postgres", "feature-serving-api",
@@ -1013,7 +1045,8 @@ class FeatureStoreDeployment:
             return False
     
     async def _validate_feature_group_config(self, config: Dict[str, Any]) -> None:
-        """Validate feature group configuration"""        required_fields = ["name", "features"]
+        """Validate feature group configuration"""
+        required_fields = ["name", "features"]
         for field in required_fields:
             if field not in config:
                 raise ValueError(f"Required field '{field}' missing from feature group config")
@@ -1026,7 +1059,8 @@ class FeatureStoreDeployment:
         logger.info("Feature group configuration validation passed")
     
     async def _create_feature_group_schema(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Create schema for feature group"""        schema = {
+        """Create schema for feature group"""
+        schema = {
             "features": {},
             "primary_key": config.get("primary_key", []),
             "event_timestamp": config.get("event_timestamp")
@@ -1042,22 +1076,26 @@ class FeatureStoreDeployment:
         return schema
     
     async def _create_offline_table(self, group_name: str, schema: Dict[str, Any]) -> None:
-        """Create offline storage table"""        # Placeholder for table creation logic
+        """Create offline storage table"""
+        # Placeholder for table creation logic
         logger.info(f"Created offline table for feature group: {group_name}")
     
     async def _setup_online_storage(self, group_name: str, schema: Dict[str, Any]) -> None:
-        """Set up online storage structure"""        # Placeholder for Redis setup logic
+        """Set up online storage structure"""
+        # Placeholder for Redis setup logic
         logger.info(f"Set up online storage for feature group: {group_name}")
     
     async def _store_feature_group_metadata(self, metadata: Dict[str, Any]) -> None:
-        """Store feature group metadata"""        self._redis_client.hset(
+        """Store feature group metadata"""
+        self._redis_client.hset(
             f"feature_group:{metadata['name']}",
             mapping=metadata
         )
         logger.info(f"Stored metadata for feature group: {metadata['name']}")
     
     async def _get_feature_group_metadata(self, group_name: str) -> Optional[Dict[str, Any]]:
-        """Get feature group metadata"""        try:
+        """Get feature group metadata"""
+        try:
             metadata = self._redis_client.hgetall(f"feature_group:{group_name}")
             return metadata if metadata else None
         except Exception as e:
@@ -1065,33 +1103,39 @@ class FeatureStoreDeployment:
             return None
     
     async def _validate_feature_data(self, group_metadata: Dict[str, Any], data: Dict[str, Any]) -> None:
-        """Validate feature data against schema"""        # Placeholder for data validation logic
+        """Validate feature data against schema"""
+        # Placeholder for data validation logic
         logger.info("Feature data validation passed")
     
     async def _transform_features(self, group_metadata: Dict[str, Any], data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Transform features according to schema"""        # Placeholder for feature transformation logic
+        """Transform features according to schema"""
+        # Placeholder for feature transformation logic
         return [data]  # Return transformed data
     
     async def _ingest_to_offline_store(self, group_name: str, data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Ingest features to offline store"""        # Placeholder for offline ingestion logic
+        """Ingest features to offline store"""
+        # Placeholder for offline ingestion logic
         return {
             "status": "success",
             "records_written": len(data)
         }
     
     async def _ingest_to_online_store(self, group_name: str, data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Ingest features to online store"""        # Placeholder for online ingestion logic
+        """Ingest features to online store"""
+        # Placeholder for online ingestion logic
         return {
             "status": "success",
             "records_written": len(data)
         }
     
     async def _update_feature_lineage(self, group_name: str, data: Dict[str, Any]) -> None:
-        """Update feature lineage information"""        # Placeholder for lineage tracking logic
+        """Update feature lineage information"""
+        # Placeholder for lineage tracking logic
         logger.info(f"Updated lineage for feature group: {group_name}")
     
     async def _run_data_quality_checks(self, group_name: str, data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Run data quality checks"""        # Placeholder for quality checks logic
+        """Run data quality checks"""
+        # Placeholder for quality checks logic
         return {
             "status": "passed",
             "checks": ["completeness", "accuracy", "consistency"],
@@ -1099,7 +1143,8 @@ class FeatureStoreDeployment:
         }
     
     async def _get_entity_features_from_online_store(self, group_name: str, entity_key: str) -> Optional[Dict[str, Any]]:
-        """Get entity features from online store"""        try:
+        """Get entity features from online store"""
+        try:
             features = self._redis_client.hgetall(f"features:{group_name}:{entity_key}")
             return features if features else None
         except Exception as e:
@@ -1107,15 +1152,18 @@ class FeatureStoreDeployment:
             return None
     
     async def _get_point_in_time_features(self, feature_groups: List[str], entity_df: pd.DataFrame, event_timestamp_column: str) -> pd.DataFrame:
-        """Get point-in-time correct features"""        # Placeholder for point-in-time logic
+        """Get point-in-time correct features"""
+        # Placeholder for point-in-time logic
         return entity_df  # Return enhanced dataframe
     
     async def _get_latest_features(self, feature_groups: List[str], entity_df: pd.DataFrame) -> pd.DataFrame:
-        """Get latest features for entities"""        # Placeholder for latest features logic
+        """Get latest features for entities"""
+        # Placeholder for latest features logic
         return entity_df  # Return enhanced dataframe
     
     async def _cleanup_failed_feature_group(self, group_name: str) -> None:
-        """Clean up failed feature group creation"""        try:
+        """Clean up failed feature group creation"""
+        try:
             # Remove metadata
             self._redis_client.delete(f"feature_group:{group_name}")
             logger.info(f"Cleaned up failed feature group: {group_name}")
@@ -1123,7 +1171,8 @@ class FeatureStoreDeployment:
             logger.error(f"Feature group cleanup failed: {e}")
     
     async def get_feature_store_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive feature store metrics"""        try:
+        """Get comprehensive feature store metrics"""
+        try:
             metrics = {
                 "infrastructure_status": self.status,
                 "feature_groups": len(self.feature_groups),
@@ -1144,7 +1193,8 @@ class FeatureStoreDeployment:
             return {"error": str(e)}
     
     async def _cleanup_failed_infrastructure(self) -> None:
-        """Clean up failed feature store infrastructure"""        try:
+        """Clean up failed feature store infrastructure"""
+        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             logger.info("Cleaned up failed feature store infrastructure")
@@ -1152,7 +1202,8 @@ class FeatureStoreDeployment:
             logger.error(f"Feature store infrastructure cleanup failed: {e}")
     
     async def cleanup(self) -> None:
-        """Clean up entire feature store infrastructure"""        try:
+        """Clean up entire feature store infrastructure"""
+        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             

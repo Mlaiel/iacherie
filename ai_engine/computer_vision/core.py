@@ -35,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class VisualMetadata:
-    """Comprehensive visual content metadata structure"""    file_path: str
+    """Comprehensive visual content metadata structure"""
+    file_path: str
     file_size: int
     dimensions: Tuple[int, int]
     format: str
@@ -53,7 +54,8 @@ class VisualMetadata:
 
 @dataclass
 class VisualFeatures:
-    """Advanced visual features extracted from content"""    histogram: np.ndarray
+    """Advanced visual features extracted from content"""
+    histogram: np.ndarray
     color_moments: Dict[str, float]
     texture_features: Dict[str, float]
     edge_density: float
@@ -68,7 +70,8 @@ class VisualFeatures:
 
 @dataclass
 class ProcessingResult:
-    """Result structure for vision processing operations"""    success: bool
+    """Result structure for vision processing operations"""
+    success: bool
     message: str
     processed_content: Optional[np.ndarray] = None
     metadata: Optional[VisualMetadata] = None
@@ -80,7 +83,8 @@ class ProcessingResult:
 
 @dataclass
 class AnalysisMetrics:
-    """Comprehensive analysis metrics for performance tracking"""    processing_time: float
+    """Comprehensive analysis metrics for performance tracking"""
+    processing_time: float
     memory_usage: float
     cpu_usage: float
     accuracy_scores: Dict[str, float]
@@ -90,24 +94,28 @@ class AnalysisMetrics:
     latency: float
 
 class VisionProcessor:
-    """    Advanced computer vision processing engine for the IA Influencer Agent platform.
+    """
+    Advanced computer vision processing engine for the IA Influencer Agent platform.
     
     Provides enterprise-grade visual content analysis, processing, and enhancement
     capabilities for content creators across multiple formats and platforms.
-    """    
+    """
+    
     def __init__(self, 
                  gpu_enabled: bool = True,
                  batch_size: int = 32,
                  cache_size: int = 1000,
                  quality_threshold: float = 0.8):
-        """        Initialize the VisionProcessor with advanced configuration.
+        """
+        Initialize the VisionProcessor with advanced configuration.
         
         Args:
             gpu_enabled: Enable GPU acceleration for processing
             batch_size: Batch size for ML model inference
             cache_size: Size of the processing cache
             quality_threshold: Minimum quality threshold for content
-        """        self.gpu_enabled = gpu_enabled and torch.cuda.is_available()
+        """
+        self.gpu_enabled = gpu_enabled and torch.cuda.is_available()
         self.device = torch.device("cuda" if self.gpu_enabled else "cpu")
         self.batch_size = batch_size
         self.cache_size = cache_size
@@ -126,7 +134,8 @@ class VisionProcessor:
         logger.info(f"VisionProcessor initialized - Device: {self.device}, GPU: {self.gpu_enabled}")
     
     def _init_transforms(self):
-        """Initialize image transformation pipelines"""        self.standard_transform = transforms.Compose([
+        """Initialize image transformation pipelines"""
+        self.standard_transform = transforms.Compose([
             transforms.Resize((224, 224)),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406], 
@@ -145,7 +154,8 @@ class VisionProcessor:
                      enhancement_level: str = "standard",
                      extract_features: bool = True,
                      generate_metadata: bool = True) -> ProcessingResult:
-        """        Process a single image with comprehensive analysis and enhancement.
+        """
+        Process a single image with comprehensive analysis and enhancement.
         
         Args:
             image_input: Image file path, numpy array, or PIL Image
@@ -155,7 +165,8 @@ class VisionProcessor:
             
         Returns:
             ProcessingResult: Comprehensive processing results
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             # Load and validate image
@@ -222,7 +233,8 @@ class VisionProcessor:
                            enhancement_level: str = "standard",
                            extract_features: bool = True,
                            generate_metadata: bool = True) -> List[ProcessingResult]:
-        """        Process multiple images asynchronously in batches.
+        """
+        Process multiple images asynchronously in batches.
         
         Args:
             image_inputs: List of image inputs
@@ -232,7 +244,8 @@ class VisionProcessor:
             
         Returns:
             List[ProcessingResult]: Results for each processed image
-        """        results = []
+        """
+        results = []
         
         # Process in batches
         for i in range(0, len(image_inputs), self.batch_size):
@@ -258,7 +271,8 @@ class VisionProcessor:
                                   enhancement_level: str,
                                   extract_features: bool,
                                   generate_metadata: bool) -> ProcessingResult:
-        """Async wrapper for image processing"""        loop = asyncio.get_event_loop()
+        """Async wrapper for image processing"""
+        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor,
             self.process_image,
@@ -269,7 +283,8 @@ class VisionProcessor:
         )
     
     def _load_image(self, image_input: Union[str, np.ndarray, Image.Image]) -> Optional[np.ndarray]:
-        """Load image from various input formats"""        try:
+        """Load image from various input formats"""
+        try:
             if isinstance(image_input, str):
                 # Load from file path
                 if Path(image_input).exists():
@@ -297,7 +312,8 @@ class VisionProcessor:
             return None
     
     def _enhance_image(self, image: np.ndarray, enhancement_level: str) -> np.ndarray:
-        """Apply image enhancement based on specified level"""        enhanced = image.copy()
+        """Apply image enhancement based on specified level"""
+        enhanced = image.copy()
         
         if enhancement_level == "basic":
             # Basic enhancement: brightness and contrast
@@ -337,7 +353,8 @@ class VisionProcessor:
         return np.clip(enhanced, 0, 255).astype(np.uint8)
     
     def _apply_multiscale_retinex(self, image: np.ndarray) -> np.ndarray:
-        """Apply multi-scale retinex for dynamic range compression"""        image_float = image.astype(np.float64) + 1.0
+        """Apply multi-scale retinex for dynamic range compression"""
+        image_float = image.astype(np.float64) + 1.0
         
         retinex = np.zeros_like(image_float)
         scales = [15, 80, 250]
@@ -355,7 +372,8 @@ class VisionProcessor:
         return retinex.astype(np.uint8)
     
     def _apply_color_balance(self, image: np.ndarray) -> np.ndarray:
-        """Apply automatic color balance"""        result = image.copy()
+        """Apply automatic color balance"""
+        result = image.copy()
         
         for i in range(3):  # RGB channels
             hist = cv2.calcHist([result], [i], None, [256], [0, 256])
@@ -381,12 +399,14 @@ class VisionProcessor:
     
     def _apply_unsharp_mask(self, image: np.ndarray, radius: float = 2.0, 
                            amount: float = 1.5) -> np.ndarray:
-        """Apply unsharp mask for detail enhancement"""        blurred = cv2.GaussianBlur(image, (0, 0), radius)
+        """Apply unsharp mask for detail enhancement"""
+        blurred = cv2.GaussianBlur(image, (0, 0), radius)
         sharpened = cv2.addWeighted(image, 1.0 + amount, blurred, -amount, 0)
         return sharpened
     
     def _extract_visual_features(self, image: np.ndarray) -> VisualFeatures:
-        """Extract comprehensive visual features from image"""        
+        """Extract comprehensive visual features from image"""
+        
         # Color histogram
         hist_r = cv2.calcHist([image], [0], None, [256], [0, 256])
         hist_g = cv2.calcHist([image], [1], None, [256], [0, 256])
@@ -461,7 +481,8 @@ class VisionProcessor:
         )
     
     def _calculate_skewness(self, data: np.ndarray) -> float:
-        """Calculate skewness of data distribution"""        mean = np.mean(data)
+        """Calculate skewness of data distribution"""
+        mean = np.mean(data)
         std = np.std(data)
         if std == 0:
             return 0
@@ -469,7 +490,8 @@ class VisionProcessor:
         return float(skewness)
     
     def _calculate_glcm_features(self, gray: np.ndarray) -> Dict[str, float]:
-        """Calculate Gray-Level Co-occurrence Matrix features"""        # Simplified GLCM features calculation
+        """Calculate Gray-Level Co-occurrence Matrix features"""
+        # Simplified GLCM features calculation
         # In production, use skimage.feature.greycomatrix
         
         # Calculate basic texture measures
@@ -491,7 +513,8 @@ class VisionProcessor:
         return texture_features
     
     def _extract_dominant_colors(self, image: np.ndarray, k: int = 5) -> List[Tuple[int, int, int]]:
-        """Extract dominant colors using K-means clustering"""        data = image.reshape((-1, 3))
+        """Extract dominant colors using K-means clustering"""
+        data = image.reshape((-1, 3))
         data = np.float32(data)
         
         criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 20, 1.0)
@@ -503,7 +526,8 @@ class VisionProcessor:
         return dominant_colors
     
     def _calculate_aesthetic_score(self, image: np.ndarray) -> float:
-        """Calculate aesthetic score based on photographic principles"""        
+        """Calculate aesthetic score based on photographic principles"""
+        
         # Rule of thirds score
         height, width = image.shape[:2]
         thirds_h = [height // 3, 2 * height // 3]
@@ -542,18 +566,21 @@ class VisionProcessor:
         return min(1.0, aesthetic_score)
     
     def _calculate_sharpness(self, gray: np.ndarray) -> float:
-        """Calculate image sharpness using Laplacian variance"""        laplacian_var = cv2.Laplacian(gray, cv2.CV_64F).var()
+        """Calculate image sharpness using Laplacian variance"""
+        laplacian_var = cv2.Laplacian(gray, cv2.CV_64F).var()
         return float(laplacian_var)
     
     def _estimate_noise_level(self, gray: np.ndarray) -> float:
-        """Estimate noise level in image"""        # Use median filter to estimate noise
+        """Estimate noise level in image"""
+        # Use median filter to estimate noise
         median_filtered = cv2.medianBlur(gray, 5)
         noise = np.abs(gray.astype(float) - median_filtered.astype(float))
         noise_level = np.mean(noise)
         return float(noise_level)
     
     def _assess_exposure_quality(self, gray: np.ndarray) -> float:
-        """Assess exposure quality based on histogram distribution"""        hist = cv2.calcHist([gray], [0], None, [256], [0, 256])
+        """Assess exposure quality based on histogram distribution"""
+        hist = cv2.calcHist([gray], [0], None, [256], [0, 256])
         hist = hist.flatten() / hist.sum()
         
         # Check for under/over exposure
@@ -566,7 +593,8 @@ class VisionProcessor:
         return max(0.0, exposure_quality)
     
     def _assess_color_accuracy(self, image: np.ndarray) -> float:
-        """Assess color accuracy based on color distribution"""        # Simple color accuracy measure based on color balance
+        """Assess color accuracy based on color distribution"""
+        # Simple color accuracy measure based on color balance
         r_mean = np.mean(image[:, :, 0])
         g_mean = np.mean(image[:, :, 1])
         b_mean = np.mean(image[:, :, 2])
@@ -580,7 +608,8 @@ class VisionProcessor:
                           image_input: Union[str, np.ndarray, Image.Image],
                           processed_image: np.ndarray,
                           content_hash: str) -> VisualMetadata:
-        """Generate comprehensive metadata for processed image"""        
+        """Generate comprehensive metadata for processed image"""
+        
         file_path = str(image_input) if isinstance(image_input, str) else "memory"
         file_size = processed_image.nbytes
         dimensions = (processed_image.shape[1], processed_image.shape[0])
@@ -606,7 +635,8 @@ class VisionProcessor:
         return metadata
     
     def _calculate_overall_quality(self, image: np.ndarray) -> float:
-        """Calculate overall quality score for image"""        gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+        """Calculate overall quality score for image"""
+        gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         
         # Multiple quality metrics
         sharpness = self._calculate_sharpness(gray)
@@ -633,7 +663,8 @@ class VisionProcessor:
     def _calculate_quality_improvement(self, 
                                      original: np.ndarray, 
                                      enhanced: np.ndarray) -> float:
-        """Calculate quality improvement percentage"""        original_quality = self._calculate_overall_quality(original)
+        """Calculate quality improvement percentage"""
+        original_quality = self._calculate_overall_quality(original)
         enhanced_quality = self._calculate_overall_quality(enhanced)
         
         if original_quality == 0:
@@ -643,13 +674,15 @@ class VisionProcessor:
         return max(0.0, improvement)
     
     def _generate_content_hash(self, image: np.ndarray) -> str:
-        """Generate unique hash for image content"""        # Create hash based on image content
+        """Generate unique hash for image content"""
+        # Create hash based on image content
         image_bytes = image.tobytes()
         hash_object = hashlib.sha256(image_bytes)
         return hash_object.hexdigest()
     
     def _update_cache(self, content_hash: str, result: ProcessingResult):
-        """Update processing cache with result"""        if len(self._cache) >= self.cache_size:
+        """Update processing cache with result"""
+        if len(self._cache) >= self.cache_size:
             # Remove oldest entry
             oldest_hash = self._cache_order.pop(0)
             del self._cache[oldest_hash]
@@ -658,29 +691,35 @@ class VisionProcessor:
         self._cache_order.append(content_hash)
     
     def clear_cache(self):
-        """Clear processing cache"""        self._cache.clear()
+        """Clear processing cache"""
+        self._cache.clear()
         self._cache_order.clear()
     
     def get_cache_stats(self) -> Dict[str, Any]:
-        """Get cache statistics"""        return {
+        """Get cache statistics"""
+        return {
             "cache_size": len(self._cache),
             "cache_capacity": self.cache_size,
             "cache_hit_ratio": getattr(self, '_cache_hits', 0) / max(getattr(self, '_cache_requests', 1), 1)
         }
 
 class ImageAnalyzer:
-    """    Specialized image analysis engine for content recognition and classification.
+    """
+    Specialized image analysis engine for content recognition and classification.
     
     Provides advanced analysis capabilities for the IA Influencer Agent platform,
     supporting content creators with automated image understanding and tagging.
-    """    
+    """
+    
     def __init__(self, model_path: Optional[str] = None):
-        """Initialize ImageAnalyzer with pre-trained models"""        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        """Initialize ImageAnalyzer with pre-trained models"""
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model_path = model_path
         self._init_models()
     
     def _init_models(self):
-        """Initialize analysis models"""        # In production, load actual pre-trained models
+        """Initialize analysis models"""
+        # In production, load actual pre-trained models
         # For now, use placeholder architectures
         
         self.scene_classifier = self._create_scene_classifier()
@@ -689,7 +728,8 @@ class ImageAnalyzer:
         logger.info("ImageAnalyzer models initialized")
     
     def _create_scene_classifier(self) -> nn.Module:
-        """Create scene classification model"""        model = nn.Sequential(
+        """Create scene classification model"""
+        model = nn.Sequential(
             nn.Conv2d(3, 64, 3, padding=1),
             nn.ReLU(),
             nn.MaxPool2d(2),
@@ -705,7 +745,8 @@ class ImageAnalyzer:
         return model.to(self.device)
     
     def _create_content_classifier(self) -> nn.Module:
-        """Create content classification model"""        model = nn.Sequential(
+        """Create content classification model"""
+        model = nn.Sequential(
             nn.Conv2d(3, 32, 3, padding=1),
             nn.ReLU(),
             nn.MaxPool2d(2),
@@ -721,7 +762,8 @@ class ImageAnalyzer:
         return model.to(self.device)
     
     def analyze_scene(self, image: np.ndarray) -> Dict[str, float]:
-        """Analyze scene content and return confidence scores"""        # Convert to tensor and normalize
+        """Analyze scene content and return confidence scores"""
+        # Convert to tensor and normalize
         if image.max() > 1:
             image = image.astype(np.float32) / 255.0
         
@@ -749,7 +791,8 @@ class ImageAnalyzer:
         return results
     
     def analyze_content(self, image: np.ndarray) -> Dict[str, Any]:
-        """Comprehensive content analysis"""        scene_analysis = self.analyze_scene(image)
+        """Comprehensive content analysis"""
+        scene_analysis = self.analyze_scene(image)
         
         # Additional content analysis
         content_analysis = {
@@ -763,7 +806,8 @@ class ImageAnalyzer:
         return content_analysis
     
     def _detect_objects_simple(self, image: np.ndarray) -> List[Dict[str, Any]]:
-        """Simple object detection using traditional CV methods"""        gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+        """Simple object detection using traditional CV methods"""
+        gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         
         # Use Haar cascades for basic object detection
         # In production, use YOLO or other advanced models
@@ -784,7 +828,8 @@ class ImageAnalyzer:
         return objects
     
     def _analyze_color_palette(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze color palette of image"""        # Extract dominant colors
+        """Analyze color palette of image"""
+        # Extract dominant colors
         data = image.reshape((-1, 3))
         data = np.float32(data)
         
@@ -813,7 +858,8 @@ class ImageAnalyzer:
         }
     
     def _calculate_color_temperature(self, image: np.ndarray) -> str:
-        """Calculate approximate color temperature"""        r_mean = np.mean(image[:, :, 0])
+        """Calculate approximate color temperature"""
+        r_mean = np.mean(image[:, :, 0])
         g_mean = np.mean(image[:, :, 1])
         b_mean = np.mean(image[:, :, 2])
         
@@ -825,7 +871,8 @@ class ImageAnalyzer:
             return "neutral"
     
     def _analyze_composition(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze image composition"""        height, width = image.shape[:2]
+        """Analyze image composition"""
+        height, width = image.shape[:2]
         
         # Rule of thirds analysis
         thirds_h = [height // 3, 2 * height // 3]
@@ -854,7 +901,8 @@ class ImageAnalyzer:
         }
     
     def _calculate_symmetry(self, image: np.ndarray) -> float:
-        """Calculate symmetry score"""        height, width = image.shape[:2]
+        """Calculate symmetry score"""
+        height, width = image.shape[:2]
         
         # Vertical symmetry
         left_half = image[:, :width//2]
@@ -869,11 +917,13 @@ class ImageAnalyzer:
         return max(0.0, vertical_symmetry)
     
     def _detect_leading_lines(self, edges: np.ndarray) -> int:
-        """Detect leading lines in image"""        lines = cv2.HoughLines(edges, 1, np.pi/180, threshold=100)
+        """Detect leading lines in image"""
+        lines = cv2.HoughLines(edges, 1, np.pi/180, threshold=100)
         return len(lines) if lines is not None else 0
     
     def _calculate_balance(self, image: np.ndarray) -> float:
-        """Calculate visual balance of image"""        height, width = image.shape[:2]
+        """Calculate visual balance of image"""
+        height, width = image.shape[:2]
         
         # Convert to grayscale for weight calculation
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
@@ -900,7 +950,8 @@ class ImageAnalyzer:
         return max(0.0, balance_score)
     
     def _analyze_style(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze artistic style of image"""        
+        """Analyze artistic style of image"""
+        
         # Simple style analysis based on statistical features
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         
@@ -924,7 +975,8 @@ class ImageAnalyzer:
         return style_analysis
     
     def _classify_style(self, texture: float, saturation: float, contrast: float) -> str:
-        """Classify artistic style based on features"""        
+        """Classify artistic style based on features"""
+        
         if texture > 100 and contrast > 50:
             return "high_detail"
         elif saturation > 150:
@@ -937,24 +989,29 @@ class ImageAnalyzer:
             return "balanced"
 
 class VideoAnalyzer:
-    """    Advanced video analysis engine for temporal visual content processing.
+    """
+    Advanced video analysis engine for temporal visual content processing.
     
     Specialized for analyzing video content for the IA Influencer Agent platform,
     supporting content creators with automated video understanding and optimization.
-    """    
+    """
+    
     def __init__(self, frame_sampling_rate: float = 1.0):
-        """        Initialize VideoAnalyzer.
+        """
+        Initialize VideoAnalyzer.
         
         Args:
             frame_sampling_rate: Rate of frame sampling (frames per second)
-        """        self.frame_sampling_rate = frame_sampling_rate
+        """
+        self.frame_sampling_rate = frame_sampling_rate
         self.image_analyzer = ImageAnalyzer()
         
         logger.info("VideoAnalyzer initialized")
     
     def analyze_video(self, video_path: str, 
                      max_frames: int = 100) -> Dict[str, Any]:
-        """        Comprehensive video analysis.
+        """
+        Comprehensive video analysis.
         
         Args:
             video_path: Path to video file
@@ -962,7 +1019,8 @@ class VideoAnalyzer:
             
         Returns:
             Dict: Comprehensive video analysis results
-        """        try:
+        """
+        try:
             cap = cv2.VideoCapture(video_path)
             
             if not cap.isOpened():
@@ -1020,7 +1078,8 @@ class VideoAnalyzer:
             raise
     
     def _aggregate_video_analysis(self, frame_analyses: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Aggregate frame-level analyses into video-level insights"""        
+        """Aggregate frame-level analyses into video-level insights"""
+        
         if not frame_analyses:
             return {}
         
@@ -1060,7 +1119,8 @@ class VideoAnalyzer:
         }
     
     def _analyze_color_consistency(self, frame_analyses: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Analyze color consistency across video"""        
+        """Analyze color consistency across video"""
+        
         color_temperatures = []
         saturation_levels = []
         
@@ -1085,7 +1145,8 @@ class VideoAnalyzer:
         return consistency
     
     def _analyze_motion_patterns(self, frame_analyses: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze motion patterns in video"""        
+        """Analyze motion patterns in video"""
+        
         # Simple motion analysis based on composition changes
         composition_scores = []
         
@@ -1102,7 +1163,8 @@ class VideoAnalyzer:
         return motion_analysis
     
     def _analyze_quality_consistency(self, frame_analyses: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Analyze quality consistency across video"""        
+        """Analyze quality consistency across video"""
+        
         # Extract quality metrics from composition and style analyses
         sharpness_indicators = []
         balance_scores = []
@@ -1128,7 +1190,8 @@ class VideoAnalyzer:
         return consistency
     
     def _detect_scene_transitions(self, frame_analyses: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Detect scene transitions in video"""        
+        """Detect scene transitions in video"""
+        
         transitions = []
         
         for i in range(1, len(frame_analyses)):
@@ -1155,7 +1218,8 @@ class VideoAnalyzer:
     
     def _calculate_scene_similarity(self, scenes1: Dict[str, float], 
                                    scenes2: Dict[str, float]) -> float:
-        """Calculate similarity between two scene classifications"""        
+        """Calculate similarity between two scene classifications"""
+        
         if not scenes1 or not scenes2:
             return 0.0
         
@@ -1178,7 +1242,8 @@ class VideoAnalyzer:
         return total_similarity / total_weight if total_weight > 0 else 0.0
     
     def _extract_temporal_features(self, frame_analyses: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Extract temporal features from video analysis"""        
+        """Extract temporal features from video analysis"""
+        
         if not frame_analyses:
             return {}
         

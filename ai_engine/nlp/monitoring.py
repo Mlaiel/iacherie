@@ -8,7 +8,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set, Callable
 from dataclasses import dataclass, field
@@ -23,13 +24,15 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class AlertLevel(Enum):
-    """Alert severity levels"""    INFO = "info"
+    """Alert severity levels"""
+    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 class MetricType(Enum):
-    """Types of metrics to monitor"""    ENGAGEMENT = "engagement"
+    """Types of metrics to monitor"""
+    ENGAGEMENT = "engagement"
     SENTIMENT = "sentiment"
     PERFORMANCE = "performance"
     CONTENT_QUALITY = "content_quality"
@@ -39,7 +42,8 @@ class MetricType(Enum):
 
 @dataclass
 class MonitoringAlert:
-    """Monitoring alert structure"""    alert_id: str
+    """Monitoring alert structure"""
+    alert_id: str
     level: AlertLevel
     metric_type: MetricType
     title: str
@@ -54,7 +58,8 @@ class MonitoringAlert:
 
 @dataclass
 class MetricSnapshot:
-    """Snapshot of a metric at a point in time"""    metric_name: str
+    """Snapshot of a metric at a point in time"""
+    metric_name: str
     value: float
     timestamp: datetime
     tags: Dict[str, str] = field(default_factory=dict)
@@ -62,7 +67,8 @@ class MetricSnapshot:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis result"""    metric_name: str
+    """Trend analysis result"""
+    metric_name: str
     trend_direction: str  # rising, falling, stable, volatile
     trend_strength: float  # 0-1, how strong the trend is
     change_rate: float  # percentage change
@@ -73,7 +79,8 @@ class TrendAnalysis:
 
 @dataclass
 class PerformanceReport:
-    """Performance monitoring report"""    report_id: str
+    """Performance monitoring report"""
+    report_id: str
     time_period: str
     metrics_summary: Dict[str, Any]
     trends: List[TrendAnalysis]
@@ -84,29 +91,35 @@ class PerformanceReport:
 
 @dataclass
 class RealTimeMetrics:
-    """Real-time metrics dashboard"""    current_metrics: Dict[str, float]
+    """Real-time metrics dashboard"""
+    current_metrics: Dict[str, float]
     recent_changes: Dict[str, float]
     active_alerts: List[MonitoringAlert]
     trend_indicators: Dict[str, str]
     last_updated: datetime
 
 class MetricCollector(ABC):
-    """Abstract base class for metric collectors"""    
+    """Abstract base class for metric collectors"""
+    
     @abstractmethod
     async def collect_metrics(self) -> List[MetricSnapshot]:
-        """Collect metrics from source"""        pass
+        """Collect metrics from source"""
+        pass
     
     @abstractmethod
     def get_collector_name(self) -> str:
-        """Get collector name"""        pass
+        """Get collector name"""
+        pass
 
 class EngagementMetricCollector(MetricCollector):
-    """Collector for engagement metrics"""    
+    """Collector for engagement metrics"""
+    
     def __init__(self, platform_apis: Dict[str, Any]):
         self.platform_apis = platform_apis
     
     async def collect_metrics(self) -> List[MetricSnapshot]:
-        """Collect engagement metrics from platforms"""        metrics = []
+        """Collect engagement metrics from platforms"""
+        metrics = []
         timestamp = datetime.utcnow()
         
         # Simulate collecting metrics from different platforms
@@ -148,12 +161,14 @@ class EngagementMetricCollector(MetricCollector):
         return "engagement_collector"
 
 class SentimentMetricCollector(MetricCollector):
-    """Collector for sentiment metrics"""    
+    """Collector for sentiment metrics"""
+    
     def __init__(self, nlp_analyzer):
         self.nlp_analyzer = nlp_analyzer
     
     async def collect_metrics(self) -> List[MetricSnapshot]:
-        """Collect sentiment metrics"""        metrics = []
+        """Collect sentiment metrics"""
+        metrics = []
         timestamp = datetime.utcnow()
         
         # Simulate sentiment data collection
@@ -182,9 +197,11 @@ class SentimentMetricCollector(MetricCollector):
         return "sentiment_collector"
 
 class PerformanceMetricCollector(MetricCollector):
-    """Collector for performance metrics"""    
+    """Collector for performance metrics"""
+    
     def __init__(self):
-        """Initialize performance metric collector with monitoring capabilities"""        self.logger = logging.getLogger(f"{__name__}.PerformanceMetricCollector")
+        """Initialize performance metric collector with monitoring capabilities"""
+        self.logger = logging.getLogger(f"{__name__}.PerformanceMetricCollector")
         self.collection_interval = 30  # seconds
         self.metric_history = deque(maxlen=1000)
         self.performance_thresholds = {
@@ -196,7 +213,8 @@ class PerformanceMetricCollector(MetricCollector):
         self.logger.info("PerformanceMetricCollector initialized successfully")
     
     async def collect_metrics(self) -> List[MetricSnapshot]:
-        """Collect performance metrics"""        metrics = []
+        """Collect performance metrics"""
+        metrics = []
         timestamp = datetime.utcnow()
         
         # Simulate performance data
@@ -225,7 +243,8 @@ class PerformanceMetricCollector(MetricCollector):
         return "performance_collector"
 
 class AdvancedNLPMonitor:
-    """    Advanced NLP monitoring system
+    """
+    Advanced NLP monitoring system
     
     Features:
     - Real-time metric collection
@@ -235,7 +254,8 @@ class AdvancedNLPMonitor:
     - Anomaly detection
     - Custom dashboards
     - Automated insights
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or self._get_default_config()
         self.collectors: List[MetricCollector] = []
@@ -252,7 +272,8 @@ class AdvancedNLPMonitor:
         self._initialize_collectors()
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default monitoring configuration"""        return {
+        """Get default monitoring configuration"""
+        return {
             'collection_interval': 60,  # seconds
             'metrics_retention_days': 30,
             'trend_analysis_window': 24,  # hours
@@ -269,20 +290,24 @@ class AdvancedNLPMonitor:
         }
     
     def _initialize_collectors(self):
-        """Initialize metric collectors"""        # Add default collectors
+        """Initialize metric collectors"""
+        # Add default collectors
         self.add_collector(EngagementMetricCollector({}))
         self.add_collector(SentimentMetricCollector(None))
         self.add_collector(PerformanceMetricCollector())
     
     def add_collector(self, collector: MetricCollector):
-        """Add a metric collector"""        self.collectors.append(collector)
+        """Add a metric collector"""
+        self.collectors.append(collector)
         logger.info(f"Added collector: {collector.get_collector_name()}")
     
     def add_alert_handler(self, handler: Callable[[MonitoringAlert], None]):
-        """Add an alert handler function"""        self.alert_handlers.append(handler)
+        """Add an alert handler function"""
+        self.alert_handlers.append(handler)
     
     async def start_monitoring(self):
-        """Start the monitoring system"""        if self.is_monitoring:
+        """Start the monitoring system"""
+        if self.is_monitoring:
             logger.warning("Monitoring is already running")
             return
         
@@ -291,7 +316,8 @@ class AdvancedNLPMonitor:
         logger.info("NLP monitoring started")
     
     async def stop_monitoring(self):
-        """Stop the monitoring system"""        if not self.is_monitoring:
+        """Stop the monitoring system"""
+        if not self.is_monitoring:
             return
         
         self.is_monitoring = False
@@ -305,7 +331,8 @@ class AdvancedNLPMonitor:
         logger.info("NLP monitoring stopped")
     
     async def _monitoring_loop(self):
-        """Main monitoring loop"""        last_report_time = datetime.utcnow()
+        """Main monitoring loop"""
+        last_report_time = datetime.utcnow()
         
         while self.is_monitoring:
             try:
@@ -340,7 +367,8 @@ class AdvancedNLPMonitor:
                 await asyncio.sleep(self.config['collection_interval'])
     
     async def _collect_all_metrics(self):
-        """Collect metrics from all collectors"""        for collector in self.collectors:
+        """Collect metrics from all collectors"""
+        for collector in self.collectors:
             try:
                 metrics = await collector.collect_metrics()
                 
@@ -358,7 +386,8 @@ class AdvancedNLPMonitor:
                 logger.error(f"Error collecting metrics from {collector.get_collector_name()}: {str(e)}")
     
     async def _analyze_trends(self):
-        """Analyze trends in collected metrics"""        for metric_name, metric_history in self.metrics_store.items():
+        """Analyze trends in collected metrics"""
+        for metric_name, metric_history in self.metrics_store.items():
             if len(metric_history) >= 10:  # Need minimum data points
                 try:
                     trend_analysis = await self.trend_analyzer.analyze_trend(
@@ -373,7 +402,8 @@ class AdvancedNLPMonitor:
                     logger.error(f"Error analyzing trend for {metric_name}: {str(e)}")
     
     async def _detect_anomalies(self):
-        """Detect anomalies in metrics"""        for metric_name, metric_history in self.metrics_store.items():
+        """Detect anomalies in metrics"""
+        for metric_name, metric_history in self.metrics_store.items():
             if len(metric_history) >= 20:  # Need sufficient history
                 try:
                     is_anomaly, anomaly_score = await self.anomaly_detector.detect_anomaly(
@@ -387,7 +417,8 @@ class AdvancedNLPMonitor:
                     logger.error(f"Error detecting anomalies for {metric_name}: {str(e)}")
     
     async def _check_alert_conditions(self):
-        """Check for alert conditions"""        thresholds = self.config['alert_thresholds']
+        """Check for alert conditions"""
+        thresholds = self.config['alert_thresholds']
         
         for metric_name, metric_history in self.metrics_store.items():
             if len(metric_history) < 2:
@@ -434,7 +465,8 @@ class AdvancedNLPMonitor:
                 logger.error(f"Error checking alert conditions for {metric_name}: {str(e)}")
     
     async def _create_anomaly_alert(self, metric_name: str, anomaly_score: float, metric: MetricSnapshot):
-        """Create an anomaly alert"""        alert = MonitoringAlert(
+        """Create an anomaly alert"""
+        alert = MonitoringAlert(
             alert_id=self._generate_alert_id(),
             level=AlertLevel.WARNING if anomaly_score < 0.8 else AlertLevel.ERROR,
             metric_type=MetricType.PERFORMANCE,
@@ -455,7 +487,8 @@ class AdvancedNLPMonitor:
     
     async def _create_threshold_alert(self, metric_name: str, value: float, threshold: float,
                                     level: AlertLevel, description: str):
-        """Create a threshold-based alert"""        alert = MonitoringAlert(
+        """Create a threshold-based alert"""
+        alert = MonitoringAlert(
             alert_id=self._generate_alert_id(),
             level=level,
             metric_type=self._get_metric_type_from_name(metric_name),
@@ -471,7 +504,8 @@ class AdvancedNLPMonitor:
         await self._trigger_alert(alert)
     
     async def _trigger_alert(self, alert: MonitoringAlert):
-        """Trigger an alert"""        self.active_alerts.append(alert)
+        """Trigger an alert"""
+        self.active_alerts.append(alert)
         
         # Call alert handlers
         for handler in self.alert_handlers:
@@ -483,7 +517,8 @@ class AdvancedNLPMonitor:
         logger.warning(f"Alert triggered: {alert.title}")
     
     async def _generate_periodic_report(self):
-        """Generate periodic performance report"""        try:
+        """Generate periodic performance report"""
+        try:
             report = await self.report_generator.generate_report(
                 self.metrics_store, self.active_alerts
             )
@@ -495,7 +530,8 @@ class AdvancedNLPMonitor:
             logger.error(f"Error generating periodic report: {str(e)}")
     
     async def _cleanup_old_metrics(self):
-        """Clean up old metrics beyond retention period"""        cutoff_time = datetime.utcnow() - timedelta(days=self.config['metrics_retention_days'])
+        """Clean up old metrics beyond retention period"""
+        cutoff_time = datetime.utcnow() - timedelta(days=self.config['metrics_retention_days'])
         
         for metric_name in self.metrics_store:
             # Remove old metrics
@@ -504,7 +540,8 @@ class AdvancedNLPMonitor:
                 self.metrics_store[metric_name].popleft()
     
     def _get_metric_type_from_name(self, metric_name: str) -> MetricType:
-        """Determine metric type from name"""        if 'engagement' in metric_name:
+        """Determine metric type from name"""
+        if 'engagement' in metric_name:
             return MetricType.ENGAGEMENT
         elif 'sentiment' in metric_name:
             return MetricType.SENTIMENT
@@ -516,12 +553,14 @@ class AdvancedNLPMonitor:
             return MetricType.PERFORMANCE
     
     def _generate_alert_id(self) -> str:
-        """Generate unique alert ID"""        import hashlib
+        """Generate unique alert ID"""
+        import hashlib
         timestamp = str(time.time())
         return hashlib.md5(timestamp.encode()).hexdigest()[:12]
     
     async def get_real_time_metrics(self) -> RealTimeMetrics:
-        """Get current real-time metrics"""        current_metrics = {}
+        """Get current real-time metrics"""
+        current_metrics = {}
         recent_changes = {}
         trend_indicators = {}
         
@@ -553,7 +592,8 @@ class AdvancedNLPMonitor:
         )
     
     async def get_metric_history(self, metric_name: str, hours: int = 24) -> List[MetricSnapshot]:
-        """Get metric history for specified time period"""        if metric_name not in self.metrics_store:
+        """Get metric history for specified time period"""
+        if metric_name not in self.metrics_store:
             return []
         
         cutoff_time = datetime.utcnow() - timedelta(hours=hours)
@@ -564,7 +604,8 @@ class AdvancedNLPMonitor:
         ]
     
     async def resolve_alert(self, alert_id: str):
-        """Resolve an active alert"""        for alert in self.active_alerts:
+        """Resolve an active alert"""
+        for alert in self.active_alerts:
             if alert.alert_id == alert_id:
                 alert.resolved = True
                 alert.resolution_timestamp = datetime.utcnow()
@@ -574,9 +615,11 @@ class AdvancedNLPMonitor:
         logger.warning(f"Alert not found: {alert_id}")
 
 class TrendAnalyzer:
-    """Analyzes trends in metric data"""    
+    """Analyzes trends in metric data"""
+    
     async def analyze_trend(self, metric_name: str, metric_history: List[MetricSnapshot]) -> TrendAnalysis:
-        """Analyze trend in metric data"""        if len(metric_history) < 10:
+        """Analyze trend in metric data"""
+        if len(metric_history) < 10:
             return TrendAnalysis(
                 metric_name=metric_name,
                 trend_direction="insufficient_data",
@@ -633,9 +676,11 @@ class TrendAnalyzer:
         )
 
 class AnomalyDetector:
-    """Detects anomalies in metric data"""    
+    """Detects anomalies in metric data"""
+    
     async def detect_anomaly(self, metric_name: str, metric_history: List[MetricSnapshot]) -> Tuple[bool, float]:
-        """Detect if latest metric value is anomalous"""        if len(metric_history) < 20:
+        """Detect if latest metric value is anomalous"""
+        if len(metric_history) < 20:
             return False, 0.0
         
         # Get recent values (excluding the latest one for comparison)
@@ -661,10 +706,12 @@ class AnomalyDetector:
         return is_anomaly, anomaly_score
 
 class ReportGenerator:
-    """Generates monitoring reports"""    
+    """Generates monitoring reports"""
+    
     async def generate_report(self, metrics_store: Dict[str, deque], 
                             active_alerts: List[MonitoringAlert]) -> PerformanceReport:
-        """Generate comprehensive performance report"""        
+        """Generate comprehensive performance report"""
+        
         report_id = self._generate_report_id()
         current_time = datetime.utcnow()
         
@@ -689,7 +736,8 @@ class ReportGenerator:
         )
     
     async def _calculate_metrics_summary(self, metrics_store: Dict[str, deque]) -> Dict[str, Any]:
-        """Calculate summary statistics for metrics"""        summary = {}
+        """Calculate summary statistics for metrics"""
+        summary = {}
         
         for metric_name, metric_history in metrics_store.items():
             if metric_history:
@@ -707,7 +755,8 @@ class ReportGenerator:
         return summary
     
     async def _analyze_key_trends(self, metrics_store: Dict[str, deque]) -> List[TrendAnalysis]:
-        """Analyze trends for key metrics"""        key_metrics = [
+        """Analyze trends for key metrics"""
+        key_metrics = [
             'engagement_rate', 'overall_sentiment', 'follower_growth_rate',
             'brand_safety_score', 'content_reach'
         ]
@@ -729,7 +778,8 @@ class ReportGenerator:
     async def _generate_recommendations(self, metrics_summary: Dict[str, Any],
                                       trends: List[TrendAnalysis],
                                       active_alerts: List[MonitoringAlert]) -> List[str]:
-        """Generate actionable recommendations"""        recommendations = []
+        """Generate actionable recommendations"""
+        recommendations = []
         
         # Analyze engagement trends
         engagement_trends = [t for t in trends if 'engagement' in t.metric_name]
@@ -781,13 +831,15 @@ class ReportGenerator:
         return recommendations
     
     def _generate_report_id(self) -> str:
-        """Generate unique report ID"""        import hashlib
+        """Generate unique report ID"""
+        import hashlib
         timestamp = str(time.time())
         return f"report_{hashlib.md5(timestamp.encode()).hexdigest()[:8]}"
 
 # Utility functions for monitoring
 async def setup_basic_monitoring() -> AdvancedNLPMonitor:
-    """Set up basic monitoring with default configuration"""    monitor = AdvancedNLPMonitor()
+    """Set up basic monitoring with default configuration"""
+    monitor = AdvancedNLPMonitor()
     
     # Add basic alert handler
     async def console_alert_handler(alert: MonitoringAlert):
@@ -801,7 +853,8 @@ async def setup_basic_monitoring() -> AdvancedNLPMonitor:
     return monitor
 
 async def get_monitoring_dashboard(monitor: AdvancedNLPMonitor) -> Dict[str, Any]:
-    """Get monitoring dashboard data"""    real_time_metrics = await monitor.get_real_time_metrics()
+    """Get monitoring dashboard data"""
+    real_time_metrics = await monitor.get_real_time_metrics()
     
     return {
         'current_metrics': real_time_metrics.current_metrics,

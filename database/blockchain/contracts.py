@@ -5,7 +5,8 @@ for the IA Influencer Agent blockchain ecosystem.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""from typing import Dict, List, Any, Optional, Union
+"""
+from typing import Dict, List, Any, Optional, Union
 from dataclasses import dataclass
 from enum import Enum
 import json
@@ -20,7 +21,8 @@ from eth_typing import Address, HexStr
 logger = logging.getLogger(__name__)
 
 class ContractType(Enum):
-    """Smart contract types supported by the platform."""    COPYRIGHT_REGISTRY = "copyright_registry"
+    """Smart contract types supported by the platform."""
+    COPYRIGHT_REGISTRY = "copyright_registry"
     NFT_CREATOR = "nft_creator"
     ROYALTY_DISTRIBUTOR = "royalty_distributor"
     CONTENT_LICENSING = "content_licensing"
@@ -28,7 +30,8 @@ class ContractType(Enum):
     AUTHENTICITY_VALIDATOR = "authenticity_validator"
 
 class ChainNetwork(Enum):
-    """Supported blockchain networks."""    ETHEREUM_MAINNET = "ethereum_mainnet"
+    """Supported blockchain networks."""
+    ETHEREUM_MAINNET = "ethereum_mainnet"
     ETHEREUM_SEPOLIA = "ethereum_sepolia"
     POLYGON_MAINNET = "polygon_mainnet"
     POLYGON_MUMBAI = "polygon_mumbai"
@@ -37,7 +40,8 @@ class ChainNetwork(Enum):
 
 @dataclass
 class ContractMetadata:
-    """Metadata for deployed smart contracts."""    contract_type: ContractType
+    """Metadata for deployed smart contracts."""
+    contract_type: ContractType
     address: str
     chain_network: ChainNetwork
     deployment_date: datetime
@@ -54,23 +58,28 @@ class ContractMetadata:
     proxy_contract: Optional[str] = None
 
 class SmartContractManager:
-    """    Enterprise smart contract management system for IA Influencer Agent platform.
+    """
+    Enterprise smart contract management system for IA Influencer Agent platform.
     
     Handles deployment, interaction, upgrading, and monitoring of smart contracts
     across multiple blockchain networks.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialize the smart contract manager.
+        """
+        Initialize the smart contract manager.
         
         Args:
             config: Configuration including network settings, private keys, gas settings
-        """        self.config = config
+        """
+        self.config = config
         self.contracts: Dict[str, ContractMetadata] = {}
         self.web3_instances: Dict[ChainNetwork, Web3] = {}
         self._initialize_networks()
         
     def _initialize_networks(self) -> None:
-        """Initialize Web3 instances for all supported networks."""        network_configs = {
+        """Initialize Web3 instances for all supported networks."""
+        network_configs = {
             ChainNetwork.ETHEREUM_MAINNET: {
                 "rpc_url": self.config.get("ethereum_mainnet_rpc"),
                 "chain_id": 1
@@ -116,7 +125,8 @@ class SmartContractManager:
         constructor_args: List[Any] = None,
         gas_limit: Optional[int] = None
     ) -> ContractMetadata:
-        """        Deploy a smart contract to the specified network.
+        """
+        Deploy a smart contract to the specified network.
         
         Args:
             contract_type: Type of contract to deploy
@@ -126,7 +136,8 @@ class SmartContractManager:
             
         Returns:
             ContractMetadata object with deployment information
-        """        try:
+        """
+        try:
             w3 = self.web3_instances.get(network)
             if not w3:
                 raise ValueError(f"Network {network.value} not available")
@@ -211,7 +222,8 @@ class SmartContractManager:
             raise
 
     def _load_contract_artifacts(self, contract_type: ContractType) -> Dict[str, Any]:
-        """Load compiled contract artifacts for the specified contract type."""        artifacts_map = {
+        """Load compiled contract artifacts for the specified contract type."""
+        artifacts_map = {
             ContractType.COPYRIGHT_REGISTRY: "CopyrightRegistry.json",
             ContractType.NFT_CREATOR: "NFTCreator.json",
             ContractType.ROYALTY_DISTRIBUTOR: "RoyaltyDistributor.json",
@@ -245,7 +257,8 @@ class SmartContractManager:
         value: int = 0,
         gas_limit: Optional[int] = None
     ) -> Dict[str, Any]:
-        """        Interact with a deployed smart contract.
+        """
+        Interact with a deployed smart contract.
         
         Args:
             contract_key: Key identifying the contract
@@ -256,7 +269,8 @@ class SmartContractManager:
             
         Returns:
             Transaction result with receipt and logs
-        """        try:
+        """
+        try:
             metadata = self.contracts.get(contract_key)
             if not metadata:
                 raise ValueError(f"Contract {contract_key} not found")
@@ -340,7 +354,8 @@ class SmartContractManager:
         contract_key: str,
         new_implementation_address: str
     ) -> Dict[str, Any]:
-        """        Upgrade a proxy contract to a new implementation.
+        """
+        Upgrade a proxy contract to a new implementation.
         
         Args:
             contract_key: Key identifying the proxy contract
@@ -348,7 +363,8 @@ class SmartContractManager:
             
         Returns:
             Upgrade transaction result
-        """        try:
+        """
+        try:
             metadata = self.contracts.get(contract_key)
             if not metadata:
                 raise ValueError(f"Contract {contract_key} not found")
@@ -377,7 +393,8 @@ class SmartContractManager:
         from_block: int = 0,
         to_block: str = "latest"
     ) -> List[Dict[str, Any]]:
-        """        Get events from a smart contract.
+        """
+        Get events from a smart contract.
         
         Args:
             contract_key: Key identifying the contract
@@ -387,7 +404,8 @@ class SmartContractManager:
             
         Returns:
             List of event logs
-        """        try:
+        """
+        try:
             metadata = self.contracts.get(contract_key)
             if not metadata:
                 raise ValueError(f"Contract {contract_key} not found")
@@ -422,17 +440,20 @@ class SmartContractManager:
             raise
 
     def get_contract_info(self, contract_key: str) -> Optional[ContractMetadata]:
-        """Get metadata for a deployed contract."""        return self.contracts.get(contract_key)
+        """Get metadata for a deployed contract."""
+        return self.contracts.get(contract_key)
 
     def list_contracts(self) -> Dict[str, ContractMetadata]:
-        """List all managed contracts."""        return self.contracts.copy()
+        """List all managed contracts."""
+        return self.contracts.copy()
 
     def verify_contract_on_explorer(
         self,
         contract_key: str,
         explorer_api_key: str
     ) -> bool:
-        """        Verify contract source code on blockchain explorer.
+        """
+        Verify contract source code on blockchain explorer.
         
         Args:
             contract_key: Key identifying the contract
@@ -440,7 +461,8 @@ class SmartContractManager:
             
         Returns:
             True if verification successful
-        """        try:
+        """
+        try:
             metadata = self.contracts.get(contract_key)
             if not metadata:
                 raise ValueError(f"Contract {contract_key} not found")

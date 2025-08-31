@@ -19,7 +19,8 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 🚨 INTELLECTUAL PROPERTY WARNING 🚨
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
-"""import logging
+"""
+import logging
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -39,21 +40,26 @@ from .partition_manager import (
 logger = logging.getLogger(__name__)
 
 class PartitioningError(Exception):
-    """Custom exception for partitioning operations"""    pass
+    """Custom exception for partitioning operations"""
+    pass
 
 class TablePartitioner(ABC):
-    """    Abstract base class for table-specific partitioners
+    """
+    Abstract base class for table-specific partitioners
     
     Provides common functionality and interface for specialized partitioners
-    """    
+    """
+    
     def __init__(self, session_factory, table_name: str, config: PartitionConfig):
-        """        Initialize table partitioner
+        """
+        Initialize table partitioner
         
         Args:
             session_factory: SQLAlchemy session factory
             table_name: Name of the table to partition
             config: Partition configuration
-        """        self.session_factory = session_factory
+        """
+        self.session_factory = session_factory
         self.table_name = table_name
         self.config = config
         self.partitions_created = []
@@ -62,25 +68,31 @@ class TablePartitioner(ABC):
 
     @abstractmethod
     def create_partitions(self) -> bool:
-        """Create partitions for the table"""        pass
+        """Create partitions for the table"""
+        pass
 
     @abstractmethod
     def get_partition_name(self, **kwargs) -> str:
-        """Get partition name for given parameters"""        pass
+        """Get partition name for given parameters"""
+        pass
 
     @abstractmethod
     def get_partition_for_data(self, **kwargs) -> str:
-        """Determine which partition should contain specific data"""        pass
+        """Determine which partition should contain specific data"""
+        pass
 
     def _create_base_indexes(self, session: Session, partition_name: str):
-        """Create base indexes common to all partitions"""        try:
+        """Create base indexes common to all partitions"""
+        try:
             # Primary key index (usually exists by default)
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_id 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_id 
                 ON {partition_name} (id)
             """))
             
             # Created at index for temporal queries
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_created_at 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_created_at 
                 ON {partition_name} (created_at)
             """))
             
@@ -90,14 +102,17 @@ class TablePartitioner(ABC):
             logger.warning(f"Failed to create base indexes for {partition_name}: {e}")
 
     def _create_specialized_indexes(self, session: Session, partition_name: str):
-        """Create specialized indexes for the partition"""        # To be overridden by subclasses
+        """Create specialized indexes for the partition"""
+        # To be overridden by subclasses
         pass
 
     def validate_partition_health(self, partition_name: str) -> bool:
-        """Validate partition health and integrity"""        try:
+        """Validate partition health and integrity"""
+        try:
             with self.session_factory() as session:
                 # Check if partition exists
-                exists_query = text("""                    SELECT EXISTS (
+                exists_query = text("""
+                    SELECT EXISTS (
                         SELECT FROM information_schema.tables 
                         WHERE table_name = :partition_name
                     )
@@ -109,7 +124,8 @@ class TablePartitioner(ABC):
                     return False
                 
                 # Check partition constraints
-                constraints_query = text("""                    SELECT conname, pg_get_constraintdef(oid) as definition
+                constraints_query = text("""
+                    SELECT conname, pg_get_constraintdef(oid) as definition
                     FROM pg_constraint 
                     WHERE conrelid = :partition_name::regclass
                 """)
@@ -119,7 +135,8 @@ class TablePartitioner(ABC):
                     logger.warning(f"No constraints found for partition: {partition_name}")
                 
                 # Check indexes
-                indexes_query = text("""                    SELECT indexname, indexdef 
+                indexes_query = text("""
+                    SELECT indexname, indexdef 
                     FROM pg_indexes 
                     WHERE tablename = :partition_name
                 """)
@@ -133,9 +150,11 @@ class TablePartitioner(ABC):
             return False
 
     def get_partition_statistics(self, partition_name: str) -> Dict[str, Any]:
-        """Get comprehensive statistics for a partition"""        try:
+        """Get comprehensive statistics for a partition"""
+        try:
             with self.session_factory() as session:
-                stats_query = text(f"""                    SELECT 
+                stats_query = text(f"""
+                    SELECT 
                         COUNT(*) as row_count,
                         pg_total_relation_size('{partition_name}') as total_size_bytes,
                         pg_relation_size('{partition_name}') as table_size_bytes,
@@ -168,7 +187,8 @@ class TablePartitioner(ABC):
             return {'partition_name': partition_name, 'error': str(e)}
 
 class ContentFingerprintPartitioner(TablePartitioner):
-    """    Specialized partitioner for content_fingerprints table
+    """
+    Specialized partitioner for content_fingerprints table
     
     Uses composite partitioning strategy:
     - Primary: Time-based (monthly) for efficient querying and archival
@@ -179,7 +199,8 @@ class ContentFingerprintPartitioner(TablePartitioner):
     - Fast similarity searches
     - User isolation and privacy
     - Efficient archival and compression
-    """    
+    """
+    
     def __init__(self, session_factory, config: PartitionConfig = None):
         if not config:
             config = PartitionConfig(
@@ -201,7 +222,8 @@ class ContentFingerprintPartitioner(TablePartitioner):
         super().__init__(session_factory, 'content_fingerprints', config)
 
     def create_partitions(self) -> bool:
-        """Create time+user composite partitions for content fingerprints"""        try:
+        """Create time+user composite partitions for content fingerprints"""
+        try:
             with self.session_factory() as session:
                 current_date = datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
                 
@@ -214,21 +236,25 @@ class ContentFingerprintPartitioner(TablePartitioner):
                     month_partition_name = f"content_fingerprints_{partition_date.strftime('%Y_%m')}"
                     
                     # Create monthly partition with user sub-partitioning
-                    create_partition_sql = f"""                    CREATE TABLE IF NOT EXISTS {month_partition_name} 
+                    create_partition_sql = f"""
+                    CREATE TABLE IF NOT EXISTS {month_partition_name} 
                     PARTITION OF content_fingerprints
                     FOR VALUES FROM ('{partition_date.isoformat()}') TO ('{next_month.isoformat()}')
                     PARTITION BY HASH (user_id)
-                    """                    
+                    """
+                    
                     session.execute(text(create_partition_sql))
                     
                     # Create user sub-partitions (8 per month for load distribution)
                     for user_idx in range(8):
                         user_partition_name = f"{month_partition_name}_user_{user_idx:02d}"
                         
-                        create_user_partition_sql = f"""                        CREATE TABLE IF NOT EXISTS {user_partition_name}
+                        create_user_partition_sql = f"""
+                        CREATE TABLE IF NOT EXISTS {user_partition_name}
                         PARTITION OF {month_partition_name}
                         FOR VALUES WITH (modulus 8, remainder {user_idx})
-                        """                        
+                        """
+                        
                         session.execute(text(create_user_partition_sql))
                         self.partitions_created.append(user_partition_name)
                         
@@ -244,32 +270,38 @@ class ContentFingerprintPartitioner(TablePartitioner):
             return False
 
     def _create_fingerprint_indexes(self, session: Session, partition_name: str):
-        """Create specialized indexes for fingerprint operations"""        try:
+        """Create specialized indexes for fingerprint operations"""
+        try:
             # Base indexes
             self._create_base_indexes(session, partition_name)
             
             # Fingerprint hash index for exact matches
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_fingerprint_hash 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_fingerprint_hash 
                 ON {partition_name} USING HASH (fingerprint_hash)
             """))
             
             # Content type + user index for filtering
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_user_content_type 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_user_content_type 
                 ON {partition_name} (user_id, content_type)
             """))
             
             # Vector embedding index for similarity search (GiST for geometric operations)
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_vector_embedding 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_vector_embedding 
                 ON {partition_name} USING GiST (vector_embedding)
             """))
             
             # Metadata JSON index for flexible queries
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_metadata_gin 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_metadata_gin 
                 ON {partition_name} USING GIN (metadata)
             """))
             
             # Quality level index for filtering
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_quality_level 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_quality_level 
                 ON {partition_name} (quality_level) 
                 WHERE quality_level IS NOT NULL
             """))
@@ -280,12 +312,14 @@ class ContentFingerprintPartitioner(TablePartitioner):
             logger.warning(f"Failed to create fingerprint indexes for {partition_name}: {e}")
 
     def get_partition_name(self, created_at: datetime, user_id: int) -> str:
-        """Get partition name for given timestamp and user ID"""        month_str = created_at.strftime('%Y_%m')
+        """Get partition name for given timestamp and user ID"""
+        month_str = created_at.strftime('%Y_%m')
         user_partition = user_id % 8
         return f"content_fingerprints_{month_str}_user_{user_partition:02d}"
 
     def get_partition_for_data(self, created_at: datetime = None, user_id: int = None) -> str:
-        """Determine partition for fingerprint data"""        if not created_at:
+        """Determine partition for fingerprint data"""
+        if not created_at:
             created_at = datetime.utcnow()
         if not user_id:
             raise ValueError("user_id is required for content fingerprint partitioning")
@@ -293,7 +327,8 @@ class ContentFingerprintPartitioner(TablePartitioner):
         return self.get_partition_name(created_at, user_id)
 
 class RevenueTrackingPartitioner(TablePartitioner):
-    """    Specialized partitioner for revenue_tracking table
+    """
+    Specialized partitioner for revenue_tracking table
     
     Uses temporal partitioning strategy optimized for financial compliance:
     - Monthly partitions for current data
@@ -306,7 +341,8 @@ class RevenueTrackingPartitioner(TablePartitioner):
     - Audit trail maintenance
     - Performance analytics
     - Automated tax reporting
-    """    
+    """
+    
     def __init__(self, session_factory, config: PartitionConfig = None):
         if not config:
             config = PartitionConfig(
@@ -330,7 +366,8 @@ class RevenueTrackingPartitioner(TablePartitioner):
         super().__init__(session_factory, 'revenue_tracking', config)
 
     def create_partitions(self) -> bool:
-        """Create temporal partitions for revenue tracking"""        try:
+        """Create temporal partitions for revenue tracking"""
+        try:
             with self.session_factory() as session:
                 current_date = datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
                 
@@ -343,10 +380,12 @@ class RevenueTrackingPartitioner(TablePartitioner):
                     partition_name = f"revenue_tracking_{partition_date.strftime('%Y_%m')}"
                     
                     # Create monthly partition
-                    create_partition_sql = f"""                    CREATE TABLE IF NOT EXISTS {partition_name} 
+                    create_partition_sql = f"""
+                    CREATE TABLE IF NOT EXISTS {partition_name} 
                     PARTITION OF revenue_tracking
                     FOR VALUES FROM ('{partition_date.isoformat()}') TO ('{next_month.isoformat()}')
-                    """                    
+                    """
+                    
                     session.execute(text(create_partition_sql))
                     self.partitions_created.append(partition_name)
                     
@@ -362,37 +401,44 @@ class RevenueTrackingPartitioner(TablePartitioner):
             return False
 
     def _create_revenue_indexes(self, session: Session, partition_name: str):
-        """Create specialized indexes for revenue operations"""        try:
+        """Create specialized indexes for revenue operations"""
+        try:
             # Base indexes
             self._create_base_indexes(session, partition_name)
             
             # User + platform index for user revenue queries
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_user_platform 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_user_platform 
                 ON {partition_name} (user_id, platform)
             """))
             
             # Revenue amount index for analytics
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_revenue_amount 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_revenue_amount 
                 ON {partition_name} (revenue_amount DESC)
             """))
             
             # Currency index for multi-currency support
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_currency 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_currency 
                 ON {partition_name} (currency)
             """))
             
             # Revenue type + status for filtering
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_type_status 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_type_status 
                 ON {partition_name} (revenue_type, revenue_status)
             """))
             
             # Tax reporting index
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_tax_period 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_tax_period 
                 ON {partition_name} (period_start, period_end)
             """))
             
             # Content ID index for content-based revenue tracking
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_content_id 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_content_id 
                 ON {partition_name} (content_id) 
                 WHERE content_id IS NOT NULL
             """))
@@ -403,16 +449,19 @@ class RevenueTrackingPartitioner(TablePartitioner):
             logger.warning(f"Failed to create revenue indexes for {partition_name}: {e}")
 
     def get_partition_name(self, created_at: datetime) -> str:
-        """Get partition name for given timestamp"""        return f"revenue_tracking_{created_at.strftime('%Y_%m')}"
+        """Get partition name for given timestamp"""
+        return f"revenue_tracking_{created_at.strftime('%Y_%m')}"
 
     def get_partition_for_data(self, created_at: datetime = None, **kwargs) -> str:
-        """Determine partition for revenue data"""        if not created_at:
+        """Determine partition for revenue data"""
+        if not created_at:
             created_at = datetime.utcnow()
         
         return self.get_partition_name(created_at)
 
 class ProtectionAlertPartitioner(TablePartitioner):
-    """    Specialized partitioner for protection_alerts table
+    """
+    Specialized partitioner for protection_alerts table
     
     Uses composite partitioning strategy for real-time alerting:
     - Primary: Time-based (daily) for recent high-volume alerts
@@ -423,7 +472,8 @@ class ProtectionAlertPartitioner(TablePartitioner):
     - Severity-based queries
     - Fast incident response
     - Alert analytics and reporting
-    """    
+    """
+    
     def __init__(self, session_factory, config: PartitionConfig = None):
         if not config:
             config = PartitionConfig(
@@ -445,7 +495,8 @@ class ProtectionAlertPartitioner(TablePartitioner):
         super().__init__(session_factory, 'protection_alerts', config)
 
     def create_partitions(self) -> bool:
-        """Create time+severity composite partitions for protection alerts"""        try:
+        """Create time+severity composite partitions for protection alerts"""
+        try:
             with self.session_factory() as session:
                 current_date = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
                 
@@ -457,11 +508,13 @@ class ProtectionAlertPartitioner(TablePartitioner):
                     day_partition_name = f"protection_alerts_{partition_date.strftime('%Y_%m_%d')}"
                     
                     # Create daily partition with severity sub-partitioning
-                    create_partition_sql = f"""                    CREATE TABLE IF NOT EXISTS {day_partition_name} 
+                    create_partition_sql = f"""
+                    CREATE TABLE IF NOT EXISTS {day_partition_name} 
                     PARTITION OF protection_alerts
                     FOR VALUES FROM ('{partition_date.isoformat()}') TO ('{next_day.isoformat()}')
                     PARTITION BY LIST (severity)
-                    """                    
+                    """
+                    
                     session.execute(text(create_partition_sql))
                     
                     # Create severity-based sub-partitions
@@ -469,10 +522,12 @@ class ProtectionAlertPartitioner(TablePartitioner):
                     for severity in severities:
                         severity_partition_name = f"{day_partition_name}_sev_{severity.lower()}"
                         
-                        create_severity_partition_sql = f"""                        CREATE TABLE IF NOT EXISTS {severity_partition_name}
+                        create_severity_partition_sql = f"""
+                        CREATE TABLE IF NOT EXISTS {severity_partition_name}
                         PARTITION OF {day_partition_name}
                         FOR VALUES IN ('{severity}')
-                        """                        
+                        """
+                        
                         session.execute(text(create_severity_partition_sql))
                         self.partitions_created.append(severity_partition_name)
                         
@@ -488,41 +543,48 @@ class ProtectionAlertPartitioner(TablePartitioner):
             return False
 
     def _create_alert_indexes(self, session: Session, partition_name: str):
-        """Create specialized indexes for alert operations"""        try:
+        """Create specialized indexes for alert operations"""
+        try:
             # Base indexes
             self._create_base_indexes(session, partition_name)
             
             # Status index for alert management
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_status 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_status 
                 ON {partition_name} (status)
             """))
             
             # Platform index for platform-specific alerts
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_platform 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_platform 
                 ON {partition_name} (platform) 
                 WHERE platform IS NOT NULL
             """))
             
             # Fingerprint ID index for content correlation
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_fingerprint_id 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_fingerprint_id 
                 ON {partition_name} (fingerprint_id) 
                 WHERE fingerprint_id IS NOT NULL
             """))
             
             # Similarity score index for duplicate detection
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_similarity_score 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_similarity_score 
                 ON {partition_name} (similarity_score DESC) 
                 WHERE similarity_score IS NOT NULL
             """))
             
             # Detection method index for analytics
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_detection_method 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_detection_method 
                 ON {partition_name} (detection_method) 
                 WHERE detection_method IS NOT NULL
             """))
             
             # Evidence URL index for investigation
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_detected_url_hash 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_detected_url_hash 
                 ON {partition_name} USING HASH (detected_url)
             """))
             
@@ -532,11 +594,13 @@ class ProtectionAlertPartitioner(TablePartitioner):
             logger.warning(f"Failed to create alert indexes for {partition_name}: {e}")
 
     def get_partition_name(self, created_at: datetime, severity: str) -> str:
-        """Get partition name for given timestamp and severity"""        day_str = created_at.strftime('%Y_%m_%d')
+        """Get partition name for given timestamp and severity"""
+        day_str = created_at.strftime('%Y_%m_%d')
         return f"protection_alerts_{day_str}_sev_{severity.lower()}"
 
     def get_partition_for_data(self, created_at: datetime = None, severity: str = None, **kwargs) -> str:
-        """Determine partition for alert data"""        if not created_at:
+        """Determine partition for alert data"""
+        if not created_at:
             created_at = datetime.utcnow()
         if not severity:
             severity = 'MEDIUM'  # Default severity
@@ -544,7 +608,8 @@ class ProtectionAlertPartitioner(TablePartitioner):
         return self.get_partition_name(created_at, severity)
 
 class UserContentPartitioner(TablePartitioner):
-    """    Specialized partitioner for user_content table
+    """
+    Specialized partitioner for user_content table
     
     Uses user-based hash partitioning for multi-tenant isolation:
     - Hash partitioning by user_id for perfect tenant isolation
@@ -555,7 +620,8 @@ class UserContentPartitioner(TablePartitioner):
     - User privacy and security
     - Content type filtering
     - Scalable user growth
-    """    
+    """
+    
     def __init__(self, session_factory, config: PartitionConfig = None):
         if not config:
             config = PartitionConfig(
@@ -577,17 +643,20 @@ class UserContentPartitioner(TablePartitioner):
         super().__init__(session_factory, 'user_content', config)
 
     def create_partitions(self) -> bool:
-        """Create user-based hash partitions for user content"""        try:
+        """Create user-based hash partitions for user content"""
+        try:
             with self.session_factory() as session:
                 # Create hash partitions based on user_id
                 for partition_idx in range(self.config.partition_count):
                     partition_name = f"user_content_user_{partition_idx:03d}"
                     
                     # Create user-based hash partition
-                    create_partition_sql = f"""                    CREATE TABLE IF NOT EXISTS {partition_name}
+                    create_partition_sql = f"""
+                    CREATE TABLE IF NOT EXISTS {partition_name}
                     PARTITION OF user_content
                     FOR VALUES WITH (modulus {self.config.partition_count}, remainder {partition_idx})
-                    """                    
+                    """
+                    
                     session.execute(text(create_partition_sql))
                     self.partitions_created.append(partition_name)
                     
@@ -603,45 +672,53 @@ class UserContentPartitioner(TablePartitioner):
             return False
 
     def _create_user_content_indexes(self, session: Session, partition_name: str):
-        """Create specialized indexes for user content operations"""        try:
+        """Create specialized indexes for user content operations"""
+        try:
             # Base indexes
             self._create_base_indexes(session, partition_name)
             
             # User ID index (primary access pattern)
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_user_id 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_user_id 
                 ON {partition_name} (user_id)
             """))
             
             # Content type + user index for filtering
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_user_content_type 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_user_content_type 
                 ON {partition_name} (user_id, content_type)
             """))
             
             # Content status for workflow management
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_content_status 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_content_status 
                 ON {partition_name} (content_status)
             """))
             
             # Privacy level for access control
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_privacy_level 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_privacy_level 
                 ON {partition_name} (privacy_level) 
                 WHERE privacy_level IS NOT NULL
             """))
             
             # Original filename for file management
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_original_filename 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_original_filename 
                 ON {partition_name} USING HASH (original_filename) 
                 WHERE original_filename IS NOT NULL
             """))
             
             # File size for storage analytics
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_file_size 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_file_size 
                 ON {partition_name} (file_size_bytes) 
                 WHERE file_size_bytes IS NOT NULL
             """))
             
             # Content genre and mood for recommendation systems
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_genre_mood 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_genre_mood 
                 ON {partition_name} (content_genre, content_mood) 
                 WHERE content_genre IS NOT NULL
             """))
@@ -652,17 +729,20 @@ class UserContentPartitioner(TablePartitioner):
             logger.warning(f"Failed to create user content indexes for {partition_name}: {e}")
 
     def get_partition_name(self, user_id: int) -> str:
-        """Get partition name for given user ID"""        partition_idx = user_id % self.config.partition_count
+        """Get partition name for given user ID"""
+        partition_idx = user_id % self.config.partition_count
         return f"user_content_user_{partition_idx:03d}"
 
     def get_partition_for_data(self, user_id: int = None, **kwargs) -> str:
-        """Determine partition for user content data"""        if not user_id:
+        """Determine partition for user content data"""
+        if not user_id:
             raise ValueError("user_id is required for user content partitioning")
         
         return self.get_partition_name(user_id)
 
 class AnalyticsPartitioner(TablePartitioner):
-    """    Specialized partitioner for analytics tables (engagement_metrics, etc.)
+    """
+    Specialized partitioner for analytics tables (engagement_metrics, etc.)
     
     Uses temporal partitioning with aggressive compression:
     - Monthly partitions for recent data
@@ -674,7 +754,8 @@ class AnalyticsPartitioner(TablePartitioner):
     - Time-series analysis
     - Compressed historical storage
     - Fast aggregation queries
-    """    
+    """
+    
     def __init__(self, session_factory, table_name: str = 'engagement_metrics', config: PartitionConfig = None):
         if not config:
             config = PartitionConfig(
@@ -696,7 +777,8 @@ class AnalyticsPartitioner(TablePartitioner):
         super().__init__(session_factory, table_name, config)
 
     def create_partitions(self) -> bool:
-        """Create temporal partitions for analytics data"""        try:
+        """Create temporal partitions for analytics data"""
+        try:
             with self.session_factory() as session:
                 current_date = datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
                 
@@ -709,10 +791,12 @@ class AnalyticsPartitioner(TablePartitioner):
                     partition_name = f"{self.table_name}_{partition_date.strftime('%Y_%m')}"
                     
                     # Create monthly partition
-                    create_partition_sql = f"""                    CREATE TABLE IF NOT EXISTS {partition_name} 
+                    create_partition_sql = f"""
+                    CREATE TABLE IF NOT EXISTS {partition_name} 
                     PARTITION OF {self.table_name}
                     FOR VALUES FROM ('{partition_date.isoformat()}') TO ('{next_month.isoformat()}')
-                    """                    
+                    """
+                    
                     session.execute(text(create_partition_sql))
                     self.partitions_created.append(partition_name)
                     
@@ -728,39 +812,46 @@ class AnalyticsPartitioner(TablePartitioner):
             return False
 
     def _create_analytics_indexes(self, session: Session, partition_name: str):
-        """Create specialized indexes for analytics operations"""        try:
+        """Create specialized indexes for analytics operations"""
+        try:
             # Base indexes
             self._create_base_indexes(session, partition_name)
             
             # User ID for user-specific analytics
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_user_id 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_user_id 
                 ON {partition_name} (user_id)
             """))
             
             # Platform for platform-specific analytics
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_platform 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_platform 
                 ON {partition_name} (platform)
             """))
             
             # Metric type for filtering specific metrics
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_metric_type 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_metric_type 
                 ON {partition_name} (metric_type)
             """))
             
             # Content ID for content performance analysis
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_content_id 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_content_id 
                 ON {partition_name} (content_id) 
                 WHERE content_id IS NOT NULL
             """))
             
             # Metric value for aggregation queries
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_metric_value 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_metric_value 
                 ON {partition_name} (metric_value) 
                 WHERE metric_value IS NOT NULL
             """))
             
             # Composite index for time-series queries
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_time_series 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_time_series 
                 ON {partition_name} (user_id, metric_type, created_at)
             """))
             
@@ -770,16 +861,19 @@ class AnalyticsPartitioner(TablePartitioner):
             logger.warning(f"Failed to create analytics indexes for {partition_name}: {e}")
 
     def get_partition_name(self, created_at: datetime) -> str:
-        """Get partition name for given timestamp"""        return f"{self.table_name}_{created_at.strftime('%Y_%m')}"
+        """Get partition name for given timestamp"""
+        return f"{self.table_name}_{created_at.strftime('%Y_%m')}"
 
     def get_partition_for_data(self, created_at: datetime = None, **kwargs) -> str:
-        """Determine partition for analytics data"""        if not created_at:
+        """Determine partition for analytics data"""
+        if not created_at:
             created_at = datetime.utcnow()
         
         return self.get_partition_name(created_at)
 
 class AuditLogPartitioner(TablePartitioner):
-    """    Specialized partitioner for audit_logs table
+    """
+    Specialized partitioner for audit_logs table
     
     Uses temporal partitioning with long-term retention:
     - Monthly partitions for active logs
@@ -792,7 +886,8 @@ class AuditLogPartitioner(TablePartitioner):
     - Immutable log storage
     - Long-term data retention
     - Security and forensics
-    """    
+    """
+    
     def __init__(self, session_factory, config: PartitionConfig = None):
         if not config:
             config = PartitionConfig(
@@ -816,7 +911,8 @@ class AuditLogPartitioner(TablePartitioner):
         super().__init__(session_factory, 'audit_logs', config)
 
     def create_partitions(self) -> bool:
-        """Create temporal partitions for audit logs"""        try:
+        """Create temporal partitions for audit logs"""
+        try:
             with self.session_factory() as session:
                 current_date = datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
                 
@@ -829,10 +925,12 @@ class AuditLogPartitioner(TablePartitioner):
                     partition_name = f"audit_logs_{partition_date.strftime('%Y_%m')}"
                     
                     # Create monthly partition
-                    create_partition_sql = f"""                    CREATE TABLE IF NOT EXISTS {partition_name} 
+                    create_partition_sql = f"""
+                    CREATE TABLE IF NOT EXISTS {partition_name} 
                     PARTITION OF audit_logs
                     FOR VALUES FROM ('{partition_date.isoformat()}') TO ('{next_month.isoformat()}')
-                    """                    
+                    """
+                    
                     session.execute(text(create_partition_sql))
                     self.partitions_created.append(partition_name)
                     
@@ -848,50 +946,59 @@ class AuditLogPartitioner(TablePartitioner):
             return False
 
     def _create_audit_indexes(self, session: Session, partition_name: str):
-        """Create specialized indexes for audit operations"""        try:
+        """Create specialized indexes for audit operations"""
+        try:
             # Base indexes
             self._create_base_indexes(session, partition_name)
             
             # User ID for user activity tracking
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_user_id 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_user_id 
                 ON {partition_name} (user_id) 
                 WHERE user_id IS NOT NULL
             """))
             
             # Action type for filtering specific actions
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_action_type 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_action_type 
                 ON {partition_name} (action_type)
             """))
             
             # Entity type and ID for resource tracking
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_entity 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_entity 
                 ON {partition_name} (entity_type, entity_id)
             """))
             
             # Security classification for access control
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_security_classification 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_security_classification 
                 ON {partition_name} (security_classification)
             """))
             
             # IP address for security analysis
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_ip_address 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_ip_address 
                 ON {partition_name} USING HASH (ip_address) 
                 WHERE ip_address IS NOT NULL
             """))
             
             # Session ID for session tracking
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_session_id 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_session_id 
                 ON {partition_name} USING HASH (session_id) 
                 WHERE session_id IS NOT NULL
             """))
             
             # Log level for filtering by severity
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_log_level 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_log_level 
                 ON {partition_name} (log_level)
             """))
             
             # Compliance category for audit requirements
-            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition_name}_compliance_category 
+            session.execute(text(f"""
+                CREATE INDEX IF NOT EXISTS idx_{partition_name}_compliance_category 
                 ON {partition_name} (compliance_category) 
                 WHERE compliance_category IS NOT NULL
             """))
@@ -902,17 +1009,20 @@ class AuditLogPartitioner(TablePartitioner):
             logger.warning(f"Failed to create audit indexes for {partition_name}: {e}")
 
     def get_partition_name(self, created_at: datetime) -> str:
-        """Get partition name for given timestamp"""        return f"audit_logs_{created_at.strftime('%Y_%m')}"
+        """Get partition name for given timestamp"""
+        return f"audit_logs_{created_at.strftime('%Y_%m')}"
 
     def get_partition_for_data(self, created_at: datetime = None, **kwargs) -> str:
-        """Determine partition for audit log data"""        if not created_at:
+        """Determine partition for audit log data"""
+        if not created_at:
             created_at = datetime.utcnow()
         
         return self.get_partition_name(created_at)
 
 # Factory function for creating appropriate partitioner
 def create_partitioner(table_name: str, session_factory, config: PartitionConfig = None) -> TablePartitioner:
-    """    Factory function to create appropriate partitioner for table
+    """
+    Factory function to create appropriate partitioner for table
     
     Args:
         table_name: Name of the table to partition
@@ -921,7 +1031,8 @@ def create_partitioner(table_name: str, session_factory, config: PartitionConfig
         
     Returns:
         TablePartitioner: Appropriate partitioner instance
-    """    partitioner_map = {
+    """
+    partitioner_map = {
         'content_fingerprints': ContentFingerprintPartitioner,
         'revenue_tracking': RevenueTrackingPartitioner,
         'protection_alerts': ProtectionAlertPartitioner,

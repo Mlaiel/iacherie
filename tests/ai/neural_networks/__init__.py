@@ -27,7 +27,8 @@ Les violations seront poursuivies dans toute la mesure du droit applicable.
 Violations will be prosecuted to the fullest extent of applicable law.
 
 For licensing and usage permissions, contact: mlaiel@live.de
-"""import pytest
+"""
+import pytest
 import torch
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any
@@ -90,41 +91,56 @@ __all__ = [
 import unittest
 
 class CNNTests(unittest.TestCase):
-    """Tests for Convolutional Neural Networks"""    
+    """Tests for Convolutional Neural Networks"""
+    
     def setUp(self):
-        """Set up test fixtures"""        self.cnn = None  # Will be implemented
+        """Set up test fixtures"""
+        self.cnn = None  # Will be implemented
     
     def test_cnn_training(self):
-        """Test CNN training functionality"""        pass
+        """Test CNN training functionality"""
+        pass
 
 class RNNTests(unittest.TestCase):
-    """Tests for Recurrent Neural Networks"""    
+    """Tests for Recurrent Neural Networks"""
+    
     def setUp(self):
-        """Set up test fixtures"""        self.rnn = None  # Will be implemented
+        """Set up test fixtures"""
+        self.rnn = None  # Will be implemented
     
     def test_rnn_training(self):
-        """Test RNN training functionality"""        pass
+        """Test RNN training functionality"""
+        pass
 
 class TransformerTests(unittest.TestCase):
-    """Tests for Transformer Networks"""    
+    """Tests for Transformer Networks"""
+    
     def setUp(self):
-        """Set up test fixtures"""        self.transformer = None  # Will be implemented
+        """Set up test fixtures"""
+        self.transformer = None  # Will be implemented
     
     def test_transformer_training(self):
-        """Test transformer training functionality"""        pass
+        """Test transformer training functionality"""
+        pass
 
 class GANTests(unittest.TestCase):
-    """Tests for Generative Adversarial Networks"""    
+    """Tests for Generative Adversarial Networks"""
+    
     def setUp(self):
-        """Set up test fixtures"""        self.gan = None  # Will be implemented
+        """Set up test fixtures"""
+        self.gan = None  # Will be implemented
     
     def test_gan_training(self):
-        """Test GAN training functionality"""        pass
+        """Test GAN training functionality"""
+        pass
 
 class AutoencoderTests(unittest.TestCase):
-    """Tests for Autoencoders"""    
+    """Tests for Autoencoders"""
+    
     def setUp(self):
-        """Set up test fixtures"""        self.autoencoder = None  # Will be implemented
+        """Set up test fixtures"""
+        self.autoencoder = None  # Will be implemented
     
     def test_autoencoder_training(self):
-        """Test autoencoder training functionality"""        pass
+        """Test autoencoder training functionality"""
+        pass

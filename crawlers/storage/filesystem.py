@@ -21,7 +21,8 @@ Expertise combinée:
 - Audio/Vidéo: Traitement multimédia et analyse de contenu
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
-"""import asyncio
+"""
+import asyncio
 import logging
 import os
 import json
@@ -50,7 +51,8 @@ from .interfaces import (
 logger = logging.getLogger(__name__)
 
 class FileSystemStorageProvider(BaseStorageProvider):
-    """    Professional file system storage provider.
+    """
+    Professional file system storage provider.
     
     Features:
     - Hierarchical directory organization
@@ -60,13 +62,15 @@ class FileSystemStorageProvider(BaseStorageProvider):
     - Atomic operations
     - Automatic cleanup and archiving
     - Performance optimization
-    """    
+    """
+    
     def __init__(
         self,
         provider_id: str,
         config: Dict[str, Any]
     ):
-        """Initialize file system storage provider."""        super().__init__(provider_id, StorageBackendType.FILE_SYSTEM, config)
+        """Initialize file system storage provider."""
+        super().__init__(provider_id, StorageBackendType.FILE_SYSTEM, config)
         
         self.base_path = Path(config['base_path'])
         self.enable_compression = config.get('enable_compression', True)
@@ -103,7 +107,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
         logger.info(f"File system storage provider initialized: {provider_id}")
     
     async def connect(self) -> None:
-        """Initialize file system storage."""        try:
+        """Initialize file system storage."""
+        try:
             # Create directory structure
             for directory in [self.data_dir, self.metadata_dir, self.index_dir, self.backup_dir, self.temp_dir]:
                 directory.mkdir(parents=True, exist_ok=True)
@@ -120,7 +125,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
             raise
     
     async def disconnect(self) -> None:
-        """Close file system storage."""        try:
+        """Close file system storage."""
+        try:
             # Close index database
             if self.index_db:
                 await self.index_db.close()
@@ -136,7 +142,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
             logger.error(f"Error disconnecting file system storage {self.provider_id}: {e}")
     
     async def health_check(self) -> bool:
-        """Check file system health."""        try:
+        """Check file system health."""
+        try:
             if not self.is_connected:
                 return False
             
@@ -172,11 +179,13 @@ class FileSystemStorageProvider(BaseStorageProvider):
             return False
     
     async def _initialize_index_database(self) -> None:
-        """Initialize SQLite index database."""        try:
+        """Initialize SQLite index database."""
+        try:
             self.index_db = await aiosqlite.connect(str(self.index_db_path))
             
             # Create index tables
-            await self.index_db.execute("""                CREATE TABLE IF NOT EXISTS file_index (
+            await self.index_db.execute("""
+                CREATE TABLE IF NOT EXISTS file_index (
                     record_id TEXT PRIMARY KEY,
                     file_path TEXT NOT NULL,
                     metadata_path TEXT,
@@ -193,15 +202,18 @@ class FileSystemStorageProvider(BaseStorageProvider):
                 )
             """)
             
-            await self.index_db.execute("""                CREATE INDEX IF NOT EXISTS idx_record_platform 
+            await self.index_db.execute("""
+                CREATE INDEX IF NOT EXISTS idx_record_platform 
                 ON file_index(platform)
             """)
             
-            await self.index_db.execute("""                CREATE INDEX IF NOT EXISTS idx_record_created 
+            await self.index_db.execute("""
+                CREATE INDEX IF NOT EXISTS idx_record_created 
                 ON file_index(created_at)
             """)
             
-            await self.index_db.execute("""                CREATE INDEX IF NOT EXISTS idx_record_type 
+            await self.index_db.execute("""
+                CREATE INDEX IF NOT EXISTS idx_record_type 
                 ON file_index(content_type)
             """)
             
@@ -214,7 +226,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
             raise
     
     def _get_file_path(self, record_id: str) -> Path:
-        """Get file path for record ID using hierarchical directory structure."""        # Create hierarchical path from record ID hash
+        """Get file path for record ID using hierarchical directory structure."""
+        # Create hierarchical path from record ID hash
         record_hash = hashlib.sha256(record_id.encode()).hexdigest()
         
         # Create 3-level hierarchy using first 6 characters
@@ -226,7 +239,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
         return directory / f"{record_id}.data"
     
     def _get_metadata_path(self, record_id: str) -> Path:
-        """Get metadata file path for record ID."""        record_hash = hashlib.sha256(record_id.encode()).hexdigest()
+        """Get metadata file path for record ID."""
+        record_hash = hashlib.sha256(record_id.encode()).hexdigest()
         
         level1 = record_hash[:2]
         level2 = record_hash[2:4]
@@ -236,7 +250,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
         return directory / f"{record_id}.meta"
     
     def _compress_data(self, data: bytes) -> bytes:
-        """Compress data using configured compression."""        if not self.enable_compression:
+        """Compress data using configured compression."""
+        if not self.enable_compression:
             return data
         
         if self.compression_type == CompressionType.GZIP:
@@ -247,7 +262,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
             return data
     
     def _decompress_data(self, compressed_data: bytes) -> bytes:
-        """Decompress data using configured compression."""        if not self.enable_compression:
+        """Decompress data using configured compression."""
+        if not self.enable_compression:
             return compressed_data
         
         if self.compression_type == CompressionType.GZIP:
@@ -258,10 +274,12 @@ class FileSystemStorageProvider(BaseStorageProvider):
             return compressed_data
     
     def _calculate_checksum(self, data: bytes) -> str:
-        """Calculate SHA-256 checksum of data."""        return hashlib.sha256(data).hexdigest()
+        """Calculate SHA-256 checksum of data."""
+        return hashlib.sha256(data).hexdigest()
     
     async def _get_file_lock(self, record_id: str) -> asyncio.Lock:
-        """Get or create file lock for record."""        if record_id not in self.file_locks:
+        """Get or create file lock for record."""
+        if record_id not in self.file_locks:
             self.file_locks[record_id] = asyncio.Lock()
         return self.file_locks[record_id]
     
@@ -273,7 +291,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
         metadata: Optional[StorageMetadata] = None,
         operation: str = "insert"
     ) -> None:
-        """Update file index database."""        if not self.enable_indexing or not self.index_db:
+        """Update file index database."""
+        if not self.enable_indexing or not self.index_db:
             return
         
         try:
@@ -303,7 +322,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
                     except:
                         pass
                 
-                await self.index_db.execute("""                    INSERT OR REPLACE INTO file_index (
+                await self.index_db.execute("""
+                    INSERT OR REPLACE INTO file_index (
                         record_id, file_path, metadata_path, data_type, platform, content_type,
                         created_at, updated_at, size_bytes, compression_type, format_type, checksum, tags
                     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -330,7 +350,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
         data: Any,
         metadata: Optional[StorageMetadata] = None
     ) -> bool:
-        """Store a record to file system."""        start_time = asyncio.get_event_loop().time()
+        """Store a record to file system."""
+        start_time = asyncio.get_event_loop().time()
         
         try:
             # Get file lock if enabled
@@ -356,7 +377,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
         data: Any,
         metadata: Optional[StorageMetadata] = None
     ) -> bool:
-        """Internal method to store record."""        file_path = self._get_file_path(record_id)
+        """Internal method to store record."""
+        file_path = self._get_file_path(record_id)
         metadata_path = self._get_metadata_path(record_id)
         
         # Create directories if they don't exist
@@ -442,7 +464,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
         record_id: str,
         include_metadata: bool = True
     ) -> Optional[Tuple[Any, Optional[StorageMetadata]]]:
-        """Retrieve a record from file system."""        start_time = asyncio.get_event_loop().time()
+        """Retrieve a record from file system."""
+        start_time = asyncio.get_event_loop().time()
         
         try:
             # Get file lock if enabled
@@ -467,7 +490,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
         record_id: str,
         include_metadata: bool = True
     ) -> Optional[Tuple[Any, Optional[StorageMetadata]]]:
-        """Internal method to retrieve record."""        file_path = self._get_file_path(record_id)
+        """Internal method to retrieve record."""
+        file_path = self._get_file_path(record_id)
         metadata_path = self._get_metadata_path(record_id)
         
         # Check if file exists
@@ -524,7 +548,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
         self,
         records: List[Tuple[str, Any, Optional[StorageMetadata]]]
     ) -> Dict[str, bool]:
-        """Store multiple records in batch."""        results = {}
+        """Store multiple records in batch."""
+        results = {}
         
         # Process records in parallel (with reasonable concurrency limit)
         semaphore = asyncio.Semaphore(10)  # Limit concurrent file operations
@@ -548,7 +573,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
         record_ids: List[str],
         include_metadata: bool = True
     ) -> Dict[str, Optional[Tuple[Any, Optional[StorageMetadata]]]]:
-        """Retrieve multiple records in batch."""        results = {}
+        """Retrieve multiple records in batch."""
+        results = {}
         
         # Process records in parallel (with reasonable concurrency limit)
         semaphore = asyncio.Semaphore(20)  # Higher limit for reads
@@ -571,7 +597,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
         self,
         options: QueryOptions
     ) -> AsyncIterator[Tuple[str, Any, Optional[StorageMetadata]]]:
-        """Query records using index database."""        if not self.enable_indexing or not self.index_db:
+        """Query records using index database."""
+        if not self.enable_indexing or not self.index_db:
             logger.warning("Indexing disabled, cannot perform efficient queries")
             return
         
@@ -625,7 +652,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
         self,
         filters: Optional[List[QueryFilter]] = None
     ) -> int:
-        """Count records matching filters."""        if not self.enable_indexing or not self.index_db:
+        """Count records matching filters."""
+        if not self.enable_indexing or not self.index_db:
             # Fallback: count files in data directory
             try:
                 count = 0
@@ -661,11 +689,13 @@ class FileSystemStorageProvider(BaseStorageProvider):
         data: Any,
         metadata: Optional[StorageMetadata] = None
     ) -> bool:
-        """Update an existing record."""        # For file system, update is the same as store
+        """Update an existing record."""
+        # For file system, update is the same as store
         return await self.store_record(record_id, data, metadata)
     
     async def delete_record(self, record_id: str) -> bool:
-        """Delete a record from file system."""        start_time = asyncio.get_event_loop().time()
+        """Delete a record from file system."""
+        start_time = asyncio.get_event_loop().time()
         
         try:
             # Get file lock if enabled
@@ -692,7 +722,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
             self.operation_stats['total_time'] += operation_time
     
     async def _delete_record_internal(self, record_id: str) -> bool:
-        """Internal method to delete record."""        file_path = self._get_file_path(record_id)
+        """Internal method to delete record."""
+        file_path = self._get_file_path(record_id)
         metadata_path = self._get_metadata_path(record_id)
         
         success = True
@@ -718,7 +749,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
         return success
     
     async def delete_batch(self, record_ids: List[str]) -> Dict[str, bool]:
-        """Delete multiple records in batch."""        results = {}
+        """Delete multiple records in batch."""
+        results = {}
         
         # Process deletions in parallel
         semaphore = asyncio.Semaphore(10)
@@ -738,11 +770,13 @@ class FileSystemStorageProvider(BaseStorageProvider):
         return results
     
     async def exists(self, record_id: str) -> bool:
-        """Check if record exists."""        file_path = self._get_file_path(record_id)
+        """Check if record exists."""
+        file_path = self._get_file_path(record_id)
         return file_path.exists()
     
     async def get_statistics(self) -> StorageStats:
-        """Get storage statistics."""        try:
+        """Get storage statistics."""
+        try:
             if self.enable_indexing and self.index_db:
                 # Get statistics from index database
                 async with self.index_db.execute("SELECT COUNT(*) FROM file_index") as cursor:
@@ -823,7 +857,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
         older_than: datetime,
         batch_size: int = 1000
     ) -> int:
-        """Remove records older than specified date."""        total_deleted = 0
+        """Remove records older than specified date."""
+        total_deleted = 0
         
         try:
             if self.enable_indexing and self.index_db:
@@ -889,7 +924,8 @@ class FileSystemStorageProvider(BaseStorageProvider):
             return total_deleted
     
     async def get_operation_statistics(self) -> Dict[str, Any]:
-        """Get operation statistics."""        total_operations = self.operation_stats['reads'] + self.operation_stats['writes'] + self.operation_stats['deletes']
+        """Get operation statistics."""
+        total_operations = self.operation_stats['reads'] + self.operation_stats['writes'] + self.operation_stats['deletes']
         
         return {
             'total_operations': total_operations,
@@ -909,15 +945,18 @@ class FileSystemStorageProvider(BaseStorageProvider):
         }
 
 class FileSystemTransaction(StorageTransaction):
-    """File system transaction implementation using temporary directory."""    
+    """File system transaction implementation using temporary directory."""
+    
     def __init__(self, transaction_id: str, storage_provider: FileSystemStorageProvider):
-        """Initialize file system transaction."""        super().__init__(transaction_id)
+        """Initialize file system transaction."""
+        super().__init__(transaction_id)
         self.storage_provider = storage_provider
         self.transaction_dir = storage_provider.temp_dir / f"transaction_{transaction_id}"
         self.operations_log = []
     
     async def begin(self) -> None:
-        """Begin transaction by creating transaction directory."""        try:
+        """Begin transaction by creating transaction directory."""
+        try:
             self.transaction_dir.mkdir(exist_ok=True)
             logger.debug(f"File system transaction {self.transaction_id} started")
         except Exception as e:
@@ -925,7 +964,8 @@ class FileSystemTransaction(StorageTransaction):
             raise
     
     async def commit(self) -> bool:
-        """Commit transaction by applying all operations."""        try:
+        """Commit transaction by applying all operations."""
+        try:
             # Apply all logged operations
             for operation in self.operations_log:
                 operation_type = operation['type']
@@ -961,7 +1001,8 @@ class FileSystemTransaction(StorageTransaction):
             self.is_active = False
     
     async def rollback(self) -> bool:
-        """Rollback transaction by cleaning up transaction directory."""        try:
+        """Rollback transaction by cleaning up transaction directory."""
+        try:
             # Clean up transaction directory
             if self.transaction_dir.exists():
                 shutil.rmtree(self.transaction_dir)
@@ -980,7 +1021,8 @@ class FileSystemTransaction(StorageTransaction):
         operation_type: str,
         operation_data: Dict[str, Any]
     ) -> None:
-        """Add operation to transaction log."""        if not self.is_active:
+        """Add operation to transaction log."""
+        if not self.is_active:
             raise RuntimeError("Transaction is not active")
         
         self.operations_log.append({

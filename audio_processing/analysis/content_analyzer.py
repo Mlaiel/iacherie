@@ -33,7 +33,8 @@ Unauthorized access, use, copying, or reverse engineering is strictly
 prohibited and will result in immediate legal action.
 
 Contact: mlaiel@live.de
-"""import numpy as np
+"""
+import numpy as np
 import logging
 import asyncio
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -50,7 +51,8 @@ import json
 
 
 class ContentType(Enum):
-    """Audio content types"""    MUSIC = "music"
+    """Audio content types"""
+    MUSIC = "music"
     SPEECH = "speech"  
     PODCAST = "podcast"
     AUDIOBOOK = "audiobook"
@@ -64,7 +66,8 @@ class ContentType(Enum):
 
 
 class ContentCategory(Enum):
-    """Content categories for classification"""    ENTERTAINMENT = "entertainment"
+    """Content categories for classification"""
+    ENTERTAINMENT = "entertainment"
     EDUCATIONAL = "educational"
     NEWS = "news"
     BUSINESS = "business"
@@ -79,7 +82,8 @@ class ContentCategory(Enum):
 
 
 class SafetyRating(Enum):
-    """Content safety ratings"""    FAMILY_FRIENDLY = "family_friendly"
+    """Content safety ratings"""
+    FAMILY_FRIENDLY = "family_friendly"
     ADVERTISER_FRIENDLY = "advertiser_friendly"
     MATURE_AUDIENCES = "mature_audiences"
     RESTRICTED = "restricted"
@@ -88,7 +92,8 @@ class SafetyRating(Enum):
 
 
 class ProductionQuality(Enum):
-    """Audio production quality levels"""    PROFESSIONAL = "professional"
+    """Audio production quality levels"""
+    PROFESSIONAL = "professional"
     SEMI_PROFESSIONAL = "semi_professional"
     AMATEUR = "amateur"
     LOW_QUALITY = "low_quality"
@@ -97,7 +102,8 @@ class ProductionQuality(Enum):
 
 @dataclass
 class SpeechTranscription:
-    """Speech transcription result"""    text: str
+    """Speech transcription result"""
+    text: str
     confidence: float
     language: str
     timestamps: List[Tuple[float, float, str]]
@@ -107,7 +113,8 @@ class SpeechTranscription:
 
 @dataclass
 class EmotionAnalysis:
-    """Emotion analysis result"""    primary_emotion: str
+    """Emotion analysis result"""
+    primary_emotion: str
     emotion_scores: Dict[str, float]
     valence: float  # -1 (negative) to +1 (positive)
     arousal: float  # 0 (calm) to +1 (excited)
@@ -116,7 +123,8 @@ class EmotionAnalysis:
 
 @dataclass
 class ContentSafety:
-    """Content safety analysis result"""    safety_rating: SafetyRating
+    """Content safety analysis result"""
+    safety_rating: SafetyRating
     explicit_content_detected: bool
     profanity_score: float
     violence_indicators: List[str]
@@ -127,7 +135,8 @@ class ContentSafety:
 
 @dataclass
 class ProductionAnalysis:
-    """Production quality analysis result"""    quality_rating: ProductionQuality
+    """Production quality analysis result"""
+    quality_rating: ProductionQuality
     technical_score: float
     mastering_quality: float
     noise_level: float
@@ -138,7 +147,8 @@ class ProductionAnalysis:
 
 @dataclass
 class ContentAnalysisResult:
-    """Complete content analysis result"""    content_type: ContentType
+    """Complete content analysis result"""
+    content_type: ContentType
     content_category: Optional[ContentCategory]
     confidence: float
     
@@ -173,18 +183,22 @@ class ContentAnalysisResult:
 
 
 class ContentAnalyzer:
-    """    🎵 Ultra-Advanced Audio Content Analysis Engine
+    """
+    🎵 Ultra-Advanced Audio Content Analysis Engine
     
     Professional AI-powered content understanding system providing comprehensive
     audio content analysis, semantic understanding, and intelligent classification
     for content creators and platform operators.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize advanced content analyzer
+        """
+        Initialize advanced content analyzer
         
         Args:
             config: Configuration parameters
-        """        self.logger = logging.getLogger(self.__class__.__name__)
+        """
+        self.logger = logging.getLogger(self.__class__.__name__)
         self.config = config or {}
         
         # Processing parameters
@@ -229,7 +243,8 @@ class ContentAnalyzer:
                             audio_data: np.ndarray,
                             sample_rate: int = 44100,
                             detailed_analysis: bool = True) -> ContentAnalysisResult:
-        """        Perform comprehensive content analysis
+        """
+        Perform comprehensive content analysis
         
         Args:
             audio_data: Input audio signal
@@ -238,7 +253,8 @@ class ContentAnalyzer:
             
         Returns:
             Complete content analysis result
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             self.logger.info("Starting comprehensive content analysis")
@@ -341,7 +357,8 @@ class ContentAnalyzer:
             raise
     
     async def _classify_content_type(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Classify the primary content type"""        def classify():
+        """Classify the primary content type"""
+        def classify():
             try:
                 # Extract features for classification
                 features = {}
@@ -433,7 +450,8 @@ class ContentAnalyzer:
         return await asyncio.get_event_loop().run_in_executor(self.executor, classify)
     
     async def _analyze_speech_content(self, audio_data: np.ndarray, sample_rate: int) -> Optional[Dict[str, Any]]:
-        """Analyze speech content if present"""        def analyze_speech():
+        """Analyze speech content if present"""
+        def analyze_speech():
             try:
                 # Convert numpy array to audio format for speech recognition
                 audio_int16 = (audio_data * 32767).astype(np.int16)
@@ -518,7 +536,8 @@ class ContentAnalyzer:
         return await asyncio.get_event_loop().run_in_executor(self.executor, analyze_speech)
     
     async def _analyze_music_content(self, audio_data: np.ndarray, sample_rate: int) -> Optional[Dict[str, Any]]:
-        """Analyze music content if present"""        def analyze_music():
+        """Analyze music content if present"""
+        def analyze_music():
             try:
                 # Extract musical features
                 features = {}
@@ -577,7 +596,8 @@ class ContentAnalyzer:
         return await asyncio.get_event_loop().run_in_executor(self.executor, analyze_music)
     
     async def _analyze_emotions(self, audio_data: np.ndarray, sample_rate: int) -> EmotionAnalysis:
-        """Analyze emotional content of audio"""        def analyze():
+        """Analyze emotional content of audio"""
+        def analyze():
             try:
                 # Extract emotional features
                 features = {}
@@ -687,7 +707,8 @@ class ContentAnalyzer:
         return await asyncio.get_event_loop().run_in_executor(self.executor, analyze)
     
     async def _analyze_content_safety(self, audio_data: np.ndarray, sample_rate: int) -> ContentSafety:
-        """Analyze content safety and moderation aspects"""        def analyze():
+        """Analyze content safety and moderation aspects"""
+        def analyze():
             try:
                 # Initialize safety metrics
                 explicit_content_detected = False
@@ -764,7 +785,8 @@ class ContentAnalyzer:
         return await asyncio.get_event_loop().run_in_executor(self.executor, analyze)
     
     async def _analyze_production_quality(self, audio_data: np.ndarray, sample_rate: int) -> ProductionAnalysis:
-        """Analyze production quality and technical aspects"""        def analyze():
+        """Analyze production quality and technical aspects"""
+        def analyze():
             try:
                 # Technical quality metrics
                 metrics = {}
@@ -829,7 +851,8 @@ class ContentAnalyzer:
         return await asyncio.get_event_loop().run_in_executor(self.executor, analyze)
     
     async def _extract_semantic_tags(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, List[str]]:
-        """Extract semantic tags and topics from audio content"""        def extract():
+        """Extract semantic tags and topics from audio content"""
+        def extract():
             try:
                 tags = []
                 topics = []
@@ -885,7 +908,8 @@ class ContentAnalyzer:
     
     # Helper methods
     def _estimate_speech_clarity(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Estimate speech clarity score"""        try:
+        """Estimate speech clarity score"""
+        try:
             # Speech clarity indicators
             zcr = librosa.feature.zero_crossing_rate(audio_data)[0]
             spectral_centroid = librosa.feature.spectral_centroid(y=audio_data, sr=sample_rate)[0]
@@ -901,7 +925,8 @@ class ContentAnalyzer:
             return 0.5
     
     def _calculate_rhythm_regularity(self, beats: np.ndarray, sample_rate: int) -> float:
-        """Calculate rhythm regularity score"""        if len(beats) < 3:
+        """Calculate rhythm regularity score"""
+        if len(beats) < 3:
             return 0.0
         
         # Calculate inter-beat intervals
@@ -915,7 +940,8 @@ class ContentAnalyzer:
         return 0.5
     
     def _get_key_profiles(self) -> Dict[str, np.ndarray]:
-        """Get major and minor key profiles"""        # Simplified key profiles (Krumhansl-Schmuckler)
+        """Get major and minor key profiles"""
+        # Simplified key profiles (Krumhansl-Schmuckler)
         major_profile = np.array([6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88])
         minor_profile = np.array([6.33, 2.68, 3.52, 5.38, 2.60, 3.53, 2.54, 4.75, 3.98, 2.69, 3.34, 3.17])
         
@@ -929,7 +955,8 @@ class ContentAnalyzer:
         return keys
     
     def _calculate_spectral_complexity(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Calculate spectral complexity measure"""        try:
+        """Calculate spectral complexity measure"""
+        try:
             # Compute spectrogram
             stft = librosa.stft(audio_data)
             magnitude = np.abs(stft)
@@ -954,21 +981,24 @@ class ContentAnalyzer:
             return 0.5
     
     def _load_profanity_patterns(self) -> List[str]:
-        """Load profanity detection patterns"""        # Basic profanity patterns - in a real system, this would be more comprehensive
+        """Load profanity detection patterns"""
+        # Basic profanity patterns - in a real system, this would be more comprehensive
         return [
             r'\b(f\*ck|f\*\*k|fuck|sh\*t|shit|damn|hell|ass|bitch)\b',
             r'\b(bastard|whore|slut|piss|cock|dick)\b'
         ]
     
     def _load_explicit_indicators(self) -> List[str]:
-        """Load explicit content indicators"""        return [
+        """Load explicit content indicators"""
+        return [
             'sex', 'sexual', 'nude', 'naked', 'porn', 'erotic',
             'drug', 'cocaine', 'heroin', 'marijuana', 'weed',
             'violence', 'kill', 'murder', 'death', 'blood'
         ]
     
     def _calculate_profanity_score(self, text: str) -> float:
-        """Calculate profanity score from text"""        if not text:
+        """Calculate profanity score from text"""
+        if not text:
             return 0.0
         
         text_lower = text.lower()
@@ -982,21 +1012,25 @@ class ContentAnalyzer:
         return min(1.0, profanity_count / max(1, word_count))
     
     def _contains_explicit_content(self, text: str) -> bool:
-        """Check if text contains explicit content"""        text_lower = text.lower()
+        """Check if text contains explicit content"""
+        text_lower = text.lower()
         return any(indicator in text_lower for indicator in self.explicit_indicators)
     
     def _detect_violence_indicators(self, text: str) -> List[str]:
-        """Detect violence-related content in text"""        violence_words = ['violence', 'kill', 'murder', 'death', 'blood', 'fight', 'war', 'weapon']
+        """Detect violence-related content in text"""
+        violence_words = ['violence', 'kill', 'murder', 'death', 'blood', 'fight', 'war', 'weapon']
         text_lower = text.lower()
         return [word for word in violence_words if word in text_lower]
     
     def _analyze_audio_safety_indicators(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Analyze audio-only safety indicators"""        # Placeholder for audio-based safety analysis
+        """Analyze audio-only safety indicators"""
+        # Placeholder for audio-based safety analysis
         # Could include volume spike detection, aggressive frequency patterns, etc.
         return 0.8  # Default safe score
     
     def _estimate_noise_level(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Estimate background noise level"""        try:
+        """Estimate background noise level"""
+        try:
             # Use quieter segments to estimate noise
             rms = librosa.feature.rms(y=audio_data)[0]
             noise_threshold = np.percentile(rms, 10)  # Bottom 10% as noise estimate
@@ -1008,7 +1042,8 @@ class ContentAnalyzer:
             return 0.1  # Default low noise
     
     def _calculate_dynamic_range(self, audio_data: np.ndarray) -> float:
-        """Calculate dynamic range in dB"""        try:
+        """Calculate dynamic range in dB"""
+        try:
             rms = librosa.feature.rms(y=audio_data)[0]
             if len(rms) > 0:
                 max_rms = np.max(rms)
@@ -1023,7 +1058,8 @@ class ContentAnalyzer:
             return 20.0
     
     def _analyze_frequency_balance(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Analyze frequency balance across spectrum"""        try:
+        """Analyze frequency balance across spectrum"""
+        try:
             # Compute power spectral density
             freqs, psd = scipy.signal.welch(audio_data, fs=sample_rate)
             
@@ -1048,7 +1084,8 @@ class ContentAnalyzer:
             return {'low': 0.25, 'low_mid': 0.25, 'high_mid': 0.25, 'high': 0.25}
     
     def _detect_clipping(self, audio_data: np.ndarray) -> float:
-        """Detect audio clipping"""        # Find samples at or near maximum amplitude
+        """Detect audio clipping"""
+        # Find samples at or near maximum amplitude
         threshold = 0.99
         clipped_samples = np.sum(np.abs(audio_data) >= threshold)
         clipping_ratio = clipped_samples / len(audio_data)
@@ -1056,7 +1093,8 @@ class ContentAnalyzer:
         return float(clipping_ratio)
     
     def _assess_mastering_quality(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Assess mastering quality"""        try:
+        """Assess mastering quality"""
+        try:
             quality_factors = []
             
             # Loudness consistency
@@ -1079,7 +1117,8 @@ class ContentAnalyzer:
             return 0.7
     
     def _generate_production_recommendations(self, metrics: Dict[str, Any]) -> List[str]:
-        """Generate production improvement recommendations"""        recommendations = []
+        """Generate production improvement recommendations"""
+        recommendations = []
         
         if metrics.get('noise_level', 0) > 0.3:
             recommendations.append("Consider noise reduction to improve audio clarity")
@@ -1100,7 +1139,8 @@ class ContentAnalyzer:
         return recommendations
     
     def _extract_semantic_audio_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, bool]:
-        """Extract semantic features from audio characteristics"""        try:
+        """Extract semantic features from audio characteristics"""
+        try:
             features = {}
             
             # Rhythm detection
@@ -1121,7 +1161,8 @@ class ContentAnalyzer:
             return {'has_rhythm': False, 'has_melody': False, 'is_energetic': False, 'is_calm': True}
     
     def _extract_topics_from_text(self, text: str) -> List[str]:
-        """Extract topics from transcribed text"""        # Simple topic extraction based on keywords
+        """Extract topics from transcribed text"""
+        # Simple topic extraction based on keywords
         topic_keywords = {
             'music': ['song', 'music', 'melody', 'rhythm', 'beat', 'album'],
             'technology': ['tech', 'computer', 'software', 'digital', 'ai', 'algorithm'],
@@ -1141,7 +1182,8 @@ class ContentAnalyzer:
         return detected_topics[:5]  # Limit to top 5 topics
     
     def _generate_tags_from_text(self, text: str) -> List[str]:
-        """Generate tags from text content"""        # Simple tag generation
+        """Generate tags from text content"""
+        # Simple tag generation
         tags = []
         text_lower = text.lower()
         
@@ -1161,7 +1203,8 @@ class ContentAnalyzer:
         return tags
     
     def _determine_content_category(self, content_type_result: Any, speech_result: Any, semantic_result: Dict) -> Optional[ContentCategory]:
-        """Determine content category based on analysis results"""        # Extract content type
+        """Determine content category based on analysis results"""
+        # Extract content type
         if isinstance(content_type_result, dict):
             content_type = content_type_result.get('type', ContentType.UNKNOWN)
         else:
@@ -1193,7 +1236,8 @@ class ContentAnalyzer:
         return None
     
     def _calculate_analysis_confidence(self, content_type_result: Any, speech_result: Any, music_result: Any) -> float:
-        """Calculate overall analysis confidence"""        confidence_factors = []
+        """Calculate overall analysis confidence"""
+        confidence_factors = []
         
         # Content type confidence
         if isinstance(content_type_result, dict):
@@ -1214,7 +1258,8 @@ class ContentAnalyzer:
     
     # Default analysis results for error cases
     def _default_emotion_analysis(self) -> EmotionAnalysis:
-        """Default emotion analysis result"""        return EmotionAnalysis(
+        """Default emotion analysis result"""
+        return EmotionAnalysis(
             primary_emotion='neutral',
             emotion_scores={'neutral': 1.0},
             valence=0.0,
@@ -1223,7 +1268,8 @@ class ContentAnalyzer:
         )
     
     def _default_safety_analysis(self) -> ContentSafety:
-        """Default content safety analysis result"""        return ContentSafety(
+        """Default content safety analysis result"""
+        return ContentSafety(
             safety_rating=SafetyRating.FAMILY_FRIENDLY,
             explicit_content_detected=False,
             profanity_score=0.0,
@@ -1234,7 +1280,8 @@ class ContentAnalyzer:
         )
     
     def _default_production_analysis(self) -> ProductionAnalysis:
-        """Default production analysis result"""        return ProductionAnalysis(
+        """Default production analysis result"""
+        return ProductionAnalysis(
             quality_rating=ProductionQuality.AMATEUR,
             technical_score=0.7,
             mastering_quality=0.7,
@@ -1245,17 +1292,20 @@ class ContentAnalyzer:
         )
     
     def _generate_cache_key(self, audio_data: np.ndarray) -> str:
-        """Generate cache key for audio analysis"""        import hashlib
+        """Generate cache key for audio analysis"""
+        import hashlib
         audio_hash = hashlib.sha256(audio_data.tobytes()).hexdigest()[:16]
         return f"content_analysis_{audio_hash}"
     
     def clear_cache(self):
-        """Clear analysis cache"""        with self.cache_lock:
+        """Clear analysis cache"""
+        with self.cache_lock:
             self.analysis_cache.clear()
         self.logger.info("Content analysis cache cleared")
     
     def get_analysis_stats(self) -> Dict[str, Any]:
-        """Get content analyzer statistics"""        with self.cache_lock:
+        """Get content analyzer statistics"""
+        with self.cache_lock:
             cache_size = len(self.analysis_cache)
         
         return {
@@ -1267,7 +1317,8 @@ class ContentAnalyzer:
         }
     
     def __del__(self):
-        """Cleanup resources"""        try:
+        """Cleanup resources"""
+        try:
             if hasattr(self, 'executor'):
                 self.executor.shutdown(wait=False)
         except:

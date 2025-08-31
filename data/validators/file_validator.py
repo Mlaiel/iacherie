@@ -7,7 +7,8 @@ and corruption detection for creator content workflows.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, BinaryIO
 from pathlib import Path
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 
 class FileValidationType(Enum):
-    """Types of file validation."""    INTEGRITY = "integrity"
+    """Types of file validation."""
+    INTEGRITY = "integrity"
     FORMAT = "format"
     SIGNATURE = "signature"
     CORRUPTION = "corruption"
@@ -37,14 +39,16 @@ class FileValidationType(Enum):
 
 
 class ValidationSeverity(Enum):
-    """File validation issue severity."""    INFO = "info"
+    """File validation issue severity."""
+    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 
 class FileStatus(Enum):
-    """File validation status."""    VALID = "valid"
+    """File validation status."""
+    VALID = "valid"
     CORRUPTED = "corrupted"
     INVALID_FORMAT = "invalid_format"
     UNSUPPORTED = "unsupported"
@@ -54,7 +58,8 @@ class FileStatus(Enum):
 
 @dataclass
 class FileIssue:
-    """Individual file validation issue."""    issue_type: FileValidationType
+    """Individual file validation issue."""
+    issue_type: FileValidationType
     severity: ValidationSeverity
     message: str
     
@@ -73,7 +78,8 @@ class FileIssue:
 
 @dataclass
 class FileSignature:
-    """File signature information."""    magic_bytes: bytes
+    """File signature information."""
+    magic_bytes: bytes
     offset: int = 0
     description: str = ""
     file_extensions: List[str] = field(default_factory=list)
@@ -82,7 +88,8 @@ class FileSignature:
 
 @dataclass
 class FileValidationResult:
-    """Comprehensive file validation result."""    is_valid: bool
+    """Comprehensive file validation result."""
+    is_valid: bool
     file_status: FileStatus
     
     # File information
@@ -126,22 +133,26 @@ class FileValidationResult:
 
 
 class FileValidator:
-    """    Comprehensive file validator for the IA Influencer Agent Platform.
+    """
+    Comprehensive file validator for the IA Influencer Agent Platform.
     
     Provides file integrity checks, format validation, corruption detection,
     and metadata extraction for creator content files.
-    """    
+    """
+    
     def __init__(
         self,
         config: Optional[Dict[str, Any]] = None,
         enable_deep_scan: bool = False
     ):
-        """        Initialize file validator.
+        """
+        Initialize file validator.
         
         Args:
             config: Validator configuration
             enable_deep_scan: Enable deep file analysis
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         self.enable_deep_scan = enable_deep_scan
         
         # File signatures database
@@ -169,7 +180,8 @@ class FileValidator:
         filename: Optional[str] = None,
         validation_types: Optional[List[FileValidationType]] = None
     ) -> FileValidationResult:
-        """        Validate file integrity and format.
+        """
+        Validate file integrity and format.
         
         Args:
             file_path: Path to file
@@ -179,7 +191,8 @@ class FileValidator:
             
         Returns:
             File validation result
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Prepare file data
@@ -260,7 +273,8 @@ class FileValidator:
         validation_types: Optional[List[FileValidationType]] = None,
         max_workers: int = 4
     ) -> List[FileValidationResult]:
-        """        Validate multiple files in batch.
+        """
+        Validate multiple files in batch.
         
         Args:
             file_items: List of file items to validate
@@ -269,7 +283,8 @@ class FileValidator:
             
         Returns:
             List of file validation results
-        """        try:
+        """
+        try:
             semaphore = asyncio.Semaphore(max_workers)
             
             async def validate_item(item):
@@ -303,7 +318,8 @@ class FileValidator:
         file_path: str,
         backup: bool = True
     ) -> Dict[str, Any]:
-        """        Attempt to repair corrupted file.
+        """
+        Attempt to repair corrupted file.
         
         Args:
             file_path: Path to file to repair
@@ -311,7 +327,8 @@ class FileValidator:
             
         Returns:
             Repair result information
-        """        try:
+        """
+        try:
             file_path = Path(file_path)
             if not file_path.exists():
                 return {"success": False, "error": "File not found"}
@@ -359,7 +376,8 @@ class FileValidator:
         file_data: Optional[bytes] = None,
         filename: Optional[str] = None
     ) -> Dict[str, Any]:
-        """        Extract comprehensive file metadata.
+        """
+        Extract comprehensive file metadata.
         
         Args:
             file_path: Path to file
@@ -368,7 +386,8 @@ class FileValidator:
             
         Returns:
             Extracted metadata
-        """        try:
+        """
+        try:
             # Prepare file data
             if file_path:
                 file_path = Path(file_path)
@@ -432,7 +451,8 @@ class FileValidator:
         validation_type: FileValidationType,
         result: FileValidationResult
     ):
-        """Perform specific type of validation."""        try:
+        """Perform specific type of validation."""
+        try:
             if validation_type == FileValidationType.INTEGRITY:
                 await self._validate_integrity(file_data, filename, result)
             elif validation_type == FileValidationType.FORMAT:
@@ -457,7 +477,8 @@ class FileValidator:
             ))
     
     async def _validate_integrity(self, file_data: bytes, filename: str, result: FileValidationResult):
-        """Validate file integrity."""        try:
+        """Validate file integrity."""
+        try:
             # Check for empty file
             if len(file_data) == 0:
                 result.issues.append(FileIssue(
@@ -492,7 +513,8 @@ class FileValidator:
             logger.error(f"Integrity validation failed: {str(e)}")
     
     async def _validate_format(self, file_data: bytes, filename: str, result: FileValidationResult):
-        """Validate file format."""        try:
+        """Validate file format."""
+        try:
             # Detect format
             detected_format = await self._detect_file_format(file_data, filename)
             result.detected_format = detected_format
@@ -526,7 +548,8 @@ class FileValidator:
             logger.error(f"Format validation failed: {str(e)}")
     
     async def _validate_signature(self, file_data: bytes, filename: str, result: FileValidationResult):
-        """Validate file signature."""        try:
+        """Validate file signature."""
+        try:
             # Analyze file signature
             signature_info = await self._analyze_file_signature(file_data)
             result.has_signature = signature_info.get("has_signature", False)
@@ -553,7 +576,8 @@ class FileValidator:
             logger.error(f"Signature validation failed: {str(e)}")
     
     async def _validate_corruption(self, file_data: bytes, filename: str, result: FileValidationResult):
-        """Validate file for corruption."""        try:
+        """Validate file for corruption."""
+        try:
             corruption_indicators = []
             
             # Check file-specific corruption patterns
@@ -595,7 +619,8 @@ class FileValidator:
             logger.error(f"Corruption validation failed: {str(e)}")
     
     async def _validate_metadata(self, file_data: bytes, filename: str, result: FileValidationResult):
-        """Validate file metadata."""        try:
+        """Validate file metadata."""
+        try:
             metadata = await self.extract_metadata(file_data=file_data, filename=filename)
             result.file_metadata = metadata
             
@@ -624,7 +649,8 @@ class FileValidator:
             logger.error(f"Metadata validation failed: {str(e)}")
     
     async def _validate_size(self, file_data: bytes, filename: str, result: FileValidationResult):
-        """Validate file size."""        try:
+        """Validate file size."""
+        try:
             file_size = len(file_data)
             
             # Check against configured limits
@@ -671,7 +697,8 @@ class FileValidator:
             logger.error(f"Size validation failed: {str(e)}")
     
     async def _validate_encoding(self, file_data: bytes, filename: str, result: FileValidationResult):
-        """Validate file encoding."""        try:
+        """Validate file encoding."""
+        try:
             file_ext = Path(filename).suffix.lower()
             
             # Text file encoding validation
@@ -712,7 +739,8 @@ class FileValidator:
             logger.error(f"Encoding validation failed: {str(e)}")
     
     async def _perform_deep_scan(self, file_data: bytes, filename: str, result: FileValidationResult):
-        """Perform deep file analysis."""        try:
+        """Perform deep file analysis."""
+        try:
             # Entropy analysis
             entropy = self._calculate_entropy(file_data)
             result.validation_metadata["entropy"] = entropy
@@ -749,7 +777,8 @@ class FileValidator:
             logger.error(f"Deep scan failed: {str(e)}")
     
     async def _detect_file_format(self, file_data: bytes, filename: str) -> Optional[str]:
-        """Detect file format from data and filename."""        try:
+        """Detect file format from data and filename."""
+        try:
             # Check magic bytes first
             for signature in self.file_signatures:
                 if file_data.startswith(signature.magic_bytes):
@@ -777,7 +806,8 @@ class FileValidator:
             return None
     
     async def _analyze_file_signature(self, file_data: bytes) -> Dict[str, Any]:
-        """Analyze file signature."""        try:
+        """Analyze file signature."""
+        try:
             if len(file_data) < 16:
                 return {"has_signature": False, "is_valid": False}
             
@@ -799,7 +829,8 @@ class FileValidator:
             return {"has_signature": False, "is_valid": False, "error": str(e)}
     
     async def _is_file_truncated(self, file_data: bytes, filename: str) -> bool:
-        """Check if file appears to be truncated."""        try:
+        """Check if file appears to be truncated."""
+        try:
             file_ext = Path(filename).suffix.lower()
             
             # Check format-specific end markers
@@ -817,7 +848,8 @@ class FileValidator:
             return False
     
     async def _has_malicious_signature(self, file_data: bytes) -> bool:
-        """Check for known malicious signatures."""        try:
+        """Check for known malicious signatures."""
+        try:
             # Known malicious patterns
             malicious_patterns = [
                 b'X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR',  # EICAR test signature
@@ -834,7 +866,8 @@ class FileValidator:
             return False
     
     async def _validate_jpeg_structure(self, file_data: bytes) -> bool:
-        """Validate JPEG file structure."""        try:
+        """Validate JPEG file structure."""
+        try:
             # Check JPEG markers
             if not file_data.startswith(b'\xff\xd8'):
                 return False
@@ -872,7 +905,8 @@ class FileValidator:
             return False
     
     async def _validate_png_structure(self, file_data: bytes) -> bool:
-        """Validate PNG file structure."""        try:
+        """Validate PNG file structure."""
+        try:
             # Check PNG signature
             if not file_data.startswith(b'\x89PNG\r\n\x1a\n'):
                 return False
@@ -891,7 +925,8 @@ class FileValidator:
             return False
     
     async def _validate_mp3_structure(self, file_data: bytes) -> bool:
-        """Validate MP3 file structure."""        try:
+        """Validate MP3 file structure."""
+        try:
             # Check for ID3 tag or frame sync
             if file_data.startswith(b'ID3') or file_data.startswith(b'\xff\xfb'):
                 return True
@@ -907,7 +942,8 @@ class FileValidator:
             return False
     
     async def _validate_mp4_structure(self, file_data: bytes) -> bool:
-        """Validate MP4 file structure."""        try:
+        """Validate MP4 file structure."""
+        try:
             # Check for ftyp box
             if len(file_data) < 8:
                 return False
@@ -922,7 +958,8 @@ class FileValidator:
             return False
     
     async def _has_corruption_patterns(self, file_data: bytes) -> bool:
-        """Check for general corruption patterns."""        try:
+        """Check for general corruption patterns."""
+        try:
             # Check for repeated patterns that might indicate corruption
             chunk_size = 1024
             repeated_chunks = 0
@@ -943,7 +980,8 @@ class FileValidator:
             return False
     
     def _calculate_entropy(self, data: bytes) -> float:
-        """Calculate Shannon entropy of data."""        try:
+        """Calculate Shannon entropy of data."""
+        try:
             if len(data) == 0:
                 return 0.0
             
@@ -967,7 +1005,8 @@ class FileValidator:
             return 0.0
     
     async def _detect_suspicious_patterns(self, file_data: bytes) -> List[str]:
-        """Detect suspicious data patterns."""        try:
+        """Detect suspicious data patterns."""
+        try:
             patterns = []
             
             # Check for long runs of the same byte
@@ -997,7 +1036,8 @@ class FileValidator:
             return []
     
     async def _detect_embedded_content(self, file_data: bytes) -> List[str]:
-        """Detect embedded content in file."""        try:
+        """Detect embedded content in file."""
+        try:
             embedded = []
             
             # Look for embedded file signatures
@@ -1022,7 +1062,8 @@ class FileValidator:
             return []
     
     async def _extract_jpeg_metadata(self, file_data: bytes) -> Dict[str, Any]:
-        """Extract JPEG-specific metadata."""        try:
+        """Extract JPEG-specific metadata."""
+        try:
             metadata = {}
             
             # Look for EXIF data
@@ -1040,7 +1081,8 @@ class FileValidator:
             return {}
     
     async def _extract_png_metadata(self, file_data: bytes) -> Dict[str, Any]:
-        """Extract PNG-specific metadata."""        try:
+        """Extract PNG-specific metadata."""
+        try:
             metadata = {}
             
             # Parse PNG chunks for metadata
@@ -1066,7 +1108,8 @@ class FileValidator:
             return {}
     
     async def _extract_mp3_metadata(self, file_data: bytes) -> Dict[str, Any]:
-        """Extract MP3-specific metadata."""        try:
+        """Extract MP3-specific metadata."""
+        try:
             metadata = {}
             
             # Check for ID3 tag
@@ -1082,7 +1125,8 @@ class FileValidator:
             return {}
     
     async def _extract_mp4_metadata(self, file_data: bytes) -> Dict[str, Any]:
-        """Extract MP4-specific metadata."""        try:
+        """Extract MP4-specific metadata."""
+        try:
             metadata = {}
             
             # Look for moov atom
@@ -1098,7 +1142,8 @@ class FileValidator:
             return {}
     
     async def _analyze_compression(self, file_data: bytes) -> Dict[str, Any]:
-        """Analyze file compression."""        try:
+        """Analyze file compression."""
+        try:
             # Estimate compression ratio
             try:
                 compressed = zlib.compress(file_data)
@@ -1115,7 +1160,8 @@ class FileValidator:
             return {}
     
     async def _attempt_repair(self, file_path: Path, issue: FileIssue) -> bool:
-        """Attempt to repair specific file issue."""        try:
+        """Attempt to repair specific file issue."""
+        try:
             # This would implement actual repair logic
             # For now, just return False (no repair attempted)
             return False
@@ -1124,7 +1170,8 @@ class FileValidator:
             return False
     
     async def _generate_file_recommendations(self, result: FileValidationResult):
-        """Generate file validation recommendations."""        try:
+        """Generate file validation recommendations."""
+        try:
             recommendations = []
             
             # Corruption recommendations
@@ -1155,7 +1202,8 @@ class FileValidator:
             logger.error(f"Failed to generate recommendations: {str(e)}")
     
     def _get_extensions_for_format(self, format_name: str) -> List[str]:
-        """Get file extensions for format."""        format_extensions = {
+        """Get file extensions for format."""
+        format_extensions = {
             'JPEG Image': ['.jpg', '.jpeg'],
             'PNG Image': ['.png'],
             'GIF Image': ['.gif'],
@@ -1169,7 +1217,8 @@ class FileValidator:
         return format_extensions.get(format_name, [])
     
     def _create_error_result(self, error_message: str) -> FileValidationResult:
-        """Create error validation result."""        return FileValidationResult(
+        """Create error validation result."""
+        return FileValidationResult(
             is_valid=False,
             file_status=FileStatus.ERROR,
             issues=[FileIssue(
@@ -1180,7 +1229,8 @@ class FileValidator:
         )
     
     def _init_file_signatures(self) -> List[FileSignature]:
-        """Initialize file signatures database."""        return [
+        """Initialize file signatures database."""
+        return [
             FileSignature(b'\xff\xd8\xff', 0, 'JPEG Image', ['.jpg', '.jpeg'], ['image/jpeg']),
             FileSignature(b'\x89PNG\r\n\x1a\n', 0, 'PNG Image', ['.png'], ['image/png']),
             FileSignature(b'GIF87a', 0, 'GIF Image', ['.gif'], ['image/gif']),
@@ -1194,14 +1244,16 @@ class FileValidator:
         ]
     
     def _init_supported_formats(self) -> Set[str]:
-        """Initialize supported file formats."""        return {
+        """Initialize supported file formats."""
+        return {
             'JPEG Image', 'PNG Image', 'GIF Image',
             'MP3 Audio', 'MP4 Video', 'WAV Audio',
             'Text File', 'JSON Data', 'XML Document'
         }
     
     def _init_validation_rules(self) -> Dict[str, Any]:
-        """Initialize validation rules."""        return {
+        """Initialize validation rules."""
+        return {
             "max_file_size": 100 * 1024 * 1024,  # 100MB
             "min_file_size": 1,  # 1 byte
             "allowed_extensions": ['.jpg', '.jpeg', '.png', '.gif', '.mp3', '.mp4', '.wav', '.txt', '.json'],

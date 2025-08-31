@@ -3,7 +3,8 @@ Automated content licensing and contract management.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
 from dataclasses import dataclass, asdict
@@ -16,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 
 class LicenseType(Enum):
-    """License types"""    ROYALTY_FREE = "royalty_free"
+    """License types"""
+    ROYALTY_FREE = "royalty_free"
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     SYNC = "sync"
@@ -26,7 +28,8 @@ class LicenseType(Enum):
 
 
 class LicenseStatus(Enum):
-    """License status"""    DRAFT = "draft"
+    """License status"""
+    DRAFT = "draft"
     PENDING = "pending"
     ACTIVE = "active"
     EXPIRED = "expired"
@@ -36,7 +39,8 @@ class LicenseStatus(Enum):
 
 @dataclass
 class LicenseTerms:
-    """License terms and conditions"""    license_type: LicenseType
+    """License terms and conditions"""
+    license_type: LicenseType
     usage_rights: List[str]
     territory: str
     duration_months: int
@@ -53,7 +57,8 @@ class LicenseTerms:
 
 @dataclass
 class LicensingAgreement:
-    """Licensing agreement structure"""    id: str
+    """Licensing agreement structure"""
+    id: str
     content_id: str
     licensor_id: str
     licensee_id: str
@@ -67,7 +72,8 @@ class LicensingAgreement:
 
 
 class LicensingEngine:
-    """Automated licensing and contract management engine"""    
+    """Automated licensing and contract management engine"""
+    
     # Default pricing models
     PRICING_MODELS = {
         LicenseType.ROYALTY_FREE: {
@@ -164,7 +170,8 @@ class LicensingEngine:
         commercial_use: bool = True,
         exclusivity: bool = False
     ) -> float:
-        """Calculate automated license pricing"""        try:
+        """Calculate automated license pricing"""
+        try:
             pricing_model = self.PRICING_MODELS.get(license_type)
             if not pricing_model:
                 logger.warning(f"No pricing model for license type: {license_type}")
@@ -211,7 +218,8 @@ class LicensingEngine:
         licensee_id: str,
         terms: LicenseTerms
     ) -> LicensingAgreement:
-        """Generate a new licensing agreement"""        try:
+        """Generate a new licensing agreement"""
+        try:
             agreement_id = str(uuid.uuid4())
             
             agreement = LicensingAgreement(
@@ -244,7 +252,8 @@ class LicensingEngine:
         counter_offer: float,
         licensee_budget: Optional[float] = None
     ) -> Dict[str, Any]:
-        """Automated price negotiation"""        try:
+        """Automated price negotiation"""
+        try:
             agreement = self.agreements.get(agreement_id)
             if not agreement:
                 return {"success": False, "error": "Agreement not found"}
@@ -285,7 +294,8 @@ class LicensingEngine:
         agreement_id: str,
         usage_data: Dict[str, Any]
     ) -> bool:
-        """Track licensed content usage"""        try:
+        """Track licensed content usage"""
+        try:
             agreement = self.agreements.get(agreement_id)
             if not agreement:
                 logger.error(f"Agreement not found: {agreement_id}")
@@ -330,7 +340,8 @@ class LicensingEngine:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, float]:
-        """Calculate royalties for a period"""        try:
+        """Calculate royalties for a period"""
+        try:
             agreement = self.agreements.get(agreement_id)
             if not agreement:
                 return {"error": "Agreement not found"}
@@ -368,7 +379,8 @@ class LicensingEngine:
         license_type: LicenseType,
         jurisdiction: str = "EU"
     ) -> Dict[str, str]:
-        """Generate legal contract templates"""        try:
+        """Generate legal contract templates"""
+        try:
             if license_type == LicenseType.EXCLUSIVE:
                 template_key = "exclusive_license"
             elif license_type == LicenseType.SYNC:
@@ -398,7 +410,8 @@ class LicensingEngine:
         self,
         agreement_id: str
     ) -> Dict[str, Any]:
-        """Check license compliance and violations"""        try:
+        """Check license compliance and violations"""
+        try:
             agreement = self.agreements.get(agreement_id)
             if not agreement:
                 return {"error": "Agreement not found"}
@@ -434,7 +447,8 @@ class LicensingEngine:
             return {"error": str(e)}
     
     async def get_active_licenses(self, content_id: str) -> List[LicensingAgreement]:
-        """Get all active licenses for content"""        try:
+        """Get all active licenses for content"""
+        try:
             active_licenses = []
             
             for agreement in self.agreements.values():
@@ -450,7 +464,8 @@ class LicensingEngine:
             return []
     
     def _normalize_territory(self, territory: str) -> str:
-        """Normalize territory string for pricing"""        territory_lower = territory.lower()
+        """Normalize territory string for pricing"""
+        territory_lower = territory.lower()
         
         if "worldwide" in territory_lower or "global" in territory_lower:
             return "worldwide"
@@ -464,7 +479,8 @@ class LicensingEngine:
             return "single_country"
     
     def _is_territory_allowed(self, location: str, allowed_territory: str) -> bool:
-        """Check if location is within allowed territory"""        # Simplified territory checking
+        """Check if location is within allowed territory"""
+        # Simplified territory checking
         if "worldwide" in allowed_territory.lower():
             return True
         
@@ -474,7 +490,8 @@ class LicensingEngine:
         return location_lower in territory_lower or territory_lower in location_lower
     
     async def _generate_contract_document(self, agreement: LicensingAgreement) -> Dict[str, Any]:
-        """Generate contract document content"""        try:
+        """Generate contract document content"""
+        try:
             return {
                 "agreement_id": agreement.id,
                 "title": f"Content License Agreement - {agreement.content_id}",
@@ -493,7 +510,8 @@ class LicensingEngine:
             return {}
     
     async def _generate_clause(self, clause_name: str, jurisdiction: str) -> str:
-        """Generate legal clause text"""        # Simplified clause generation
+        """Generate legal clause text"""
+        # Simplified clause generation
         clauses = {
             "grant_of_rights": f"The Licensor hereby grants to the Licensee a license to use the Content under the laws of {jurisdiction}.",
             "license_scope": "The scope of this license is limited to the specific rights and territories outlined in this agreement.",

@@ -12,7 +12,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CrawlerMetrics:
-    """Performance metrics for crawler operations."""    
+    """Performance metrics for crawler operations."""
+    
     crawler_type: CrawlerType
     total_jobs: int
     successful_jobs: int
@@ -52,7 +54,8 @@ class CrawlerMetrics:
 
 @dataclass
 class ViolationTrend:
-    """Trend analysis for violation detection."""    
+    """Trend analysis for violation detection."""
+    
     platform: str
     date: datetime
     violation_count: int
@@ -63,7 +66,8 @@ class ViolationTrend:
 
 @dataclass
 class SystemHealth:
-    """Overall system health indicators."""    
+    """Overall system health indicators."""
+    
     overall_status: str  # healthy, warning, critical
     cpu_usage: float
     memory_usage: float
@@ -82,9 +86,11 @@ class SystemHealth:
     error_rates: Dict[str, float]
 
 class RealTimeMonitor:
-    """Real-time monitoring system for crawler operations."""    
+    """Real-time monitoring system for crawler operations."""
+    
     def __init__(self, orchestrator: CrawlerOrchestrator):
-        """Initialize real-time monitor."""        self.orchestrator = orchestrator
+        """Initialize real-time monitor."""
+        self.orchestrator = orchestrator
         self.metrics_collector = MetricsCollector()
         self.alert_manager = AlertManager()
         
@@ -107,7 +113,8 @@ class RealTimeMonitor:
         self.monitoring_interval = 30  # seconds
     
     async def start_monitoring(self):
-        """Start real-time monitoring."""        self.is_monitoring = True
+        """Start real-time monitoring."""
+        self.is_monitoring = True
         logger.info("Real-time monitor started")
         
         # Start monitoring tasks
@@ -119,11 +126,13 @@ class RealTimeMonitor:
         )
     
     def stop_monitoring(self):
-        """Stop real-time monitoring."""        self.is_monitoring = False
+        """Stop real-time monitoring."""
+        self.is_monitoring = False
         logger.info("Real-time monitor stopped")
     
     async def _monitor_crawler_performance(self):
-        """Monitor crawler performance metrics."""        while self.is_monitoring:
+        """Monitor crawler performance metrics."""
+        while self.is_monitoring:
             try:
                 # Collect metrics for each crawler type
                 for crawler_type in CrawlerType:
@@ -141,7 +150,8 @@ class RealTimeMonitor:
                 await asyncio.sleep(self.monitoring_interval)
     
     async def _monitor_system_health(self):
-        """Monitor overall system health."""        while self.is_monitoring:
+        """Monitor overall system health."""
+        while self.is_monitoring:
             try:
                 health_data = await self._collect_system_health()
                 self.system_health_history.append({
@@ -156,7 +166,8 @@ class RealTimeMonitor:
                 await asyncio.sleep(self.monitoring_interval)
     
     async def _analyze_violation_trends(self):
-        """Analyze violation detection trends."""        while self.is_monitoring:
+        """Analyze violation detection trends."""
+        while self.is_monitoring:
             try:
                 # Analyze trends for each platform
                 platforms = ['youtube', 'tiktok', 'instagram', 'twitter', 'web']
@@ -173,7 +184,8 @@ class RealTimeMonitor:
                 await asyncio.sleep(self.monitoring_interval * 2)
     
     async def _check_alert_conditions(self):
-        """Check for alert conditions."""        while self.is_monitoring:
+        """Check for alert conditions."""
+        while self.is_monitoring:
             try:
                 await self._check_performance_alerts()
                 await self._check_violation_alerts()
@@ -186,7 +198,8 @@ class RealTimeMonitor:
                 await asyncio.sleep(60)
     
     async def _calculate_crawler_metrics(self, crawler_type: CrawlerType) -> Optional[CrawlerMetrics]:
-        """Calculate performance metrics for a specific crawler type."""        try:
+        """Calculate performance metrics for a specific crawler type."""
+        try:
             # Get recent job results for this crawler type
             recent_jobs = [
                 job for job in self.orchestrator.job_results
@@ -244,7 +257,8 @@ class RealTimeMonitor:
             return None
     
     async def _collect_system_health(self) -> SystemHealth:
-        """Collect system health metrics."""        try:
+        """Collect system health metrics."""
+        try:
             # Get system metrics from metrics collector
             system_metrics = await self.metrics_collector.get_system_metrics()
             
@@ -286,7 +300,8 @@ class RealTimeMonitor:
             )
     
     async def _calculate_violation_trend(self, platform: str) -> Optional[ViolationTrend]:
-        """Calculate violation trends for a platform."""        try:
+        """Calculate violation trends for a platform."""
+        try:
             # Get recent job results for this platform
             recent_jobs = [
                 job for job in self.orchestrator.job_results
@@ -317,7 +332,8 @@ class RealTimeMonitor:
             return None
     
     async def _check_performance_alerts(self):
-        """Check for performance-related alerts."""        try:
+        """Check for performance-related alerts."""
+        try:
             for crawler_type, history in self.metrics_history.items():
                 if not history:
                     continue
@@ -346,7 +362,8 @@ class RealTimeMonitor:
             logger.error(f"Performance alert check error: {e}")
     
     async def _check_violation_alerts(self):
-        """Check for violation-related alerts."""        try:
+        """Check for violation-related alerts."""
+        try:
             if not self.violation_trends:
                 return
             
@@ -373,7 +390,8 @@ class RealTimeMonitor:
             logger.error(f"Violation alert check error: {e}")
     
     async def _check_system_alerts(self):
-        """Check for system-related alerts."""        try:
+        """Check for system-related alerts."""
+        try:
             if not self.system_health_history:
                 return
             
@@ -401,7 +419,8 @@ class RealTimeMonitor:
             logger.error(f"System alert check error: {e}")
     
     def get_real_time_dashboard_data(self) -> Dict[str, Any]:
-        """Get comprehensive dashboard data for real-time display."""        try:
+        """Get comprehensive dashboard data for real-time display."""
+        try:
             # Current metrics for each crawler
             crawler_metrics = {}
             for crawler_type, history in self.metrics_history.items():
@@ -448,7 +467,8 @@ class RealTimeMonitor:
         crawler_type: Optional[CrawlerType] = None,
         time_range: timedelta = timedelta(hours=24)
     ) -> Dict[str, Any]:
-        """Get historical metrics for analysis."""        try:
+        """Get historical metrics for analysis."""
+        try:
             cutoff_time = datetime.now() - time_range
             
             if crawler_type:
@@ -485,7 +505,8 @@ class RealTimeMonitor:
             return {}
     
     def get_violation_analytics(self, time_range: timedelta = timedelta(days=7)) -> Dict[str, Any]:
-        """Get comprehensive violation analytics."""        try:
+        """Get comprehensive violation analytics."""
+        try:
             cutoff_time = datetime.now() - time_range
             
             # Filter recent violation trends
@@ -531,7 +552,8 @@ class RealTimeMonitor:
             return {}
     
     async def cleanup(self):
-        """Clean up monitoring resources."""        try:
+        """Clean up monitoring resources."""
+        try:
             self.stop_monitoring()
             
             if hasattr(self.metrics_collector, 'cleanup'):

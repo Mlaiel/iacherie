@@ -9,7 +9,8 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ⚠️ PROPRIÉTÉ EXCLUSIVE DE FAHED MLAIEL
 Toute tentative de copie, vol ou réutilisation sans autorisation écrite
 de Fahed Mlaiel (mlaiel@live.de) sera poursuivie en justice selon la loi allemande.
-"""from typing import Dict, List, Optional, Any
+"""
+from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
 from enum import Enum
 import os
@@ -17,7 +18,8 @@ from decimal import Decimal
 
 
 class CDNProvider(Enum):
-    """Content Delivery Network providers enumeration."""    CLOUDFLARE = "cloudflare"
+    """Content Delivery Network providers enumeration."""
+    CLOUDFLARE = "cloudflare"
     AWS_CLOUDFRONT = "aws_cloudfront"
     AZURE_CDN = "azure_cdn"
     GOOGLE_CDN = "google_cdn"
@@ -26,7 +28,8 @@ class CDNProvider(Enum):
 
 
 class ContentType(Enum):
-    """Content types for delivery optimization."""    AUDIO = "audio"
+    """Content types for delivery optimization."""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     DOCUMENT = "document"
@@ -36,7 +39,8 @@ class ContentType(Enum):
 
 @dataclass
 class CDNEndpointConfig:
-    """CDN endpoint configuration."""    provider: CDNProvider
+    """CDN endpoint configuration."""
+    provider: CDNProvider
     endpoint_url: str
     distribution_id: str
     cache_policies: Dict[str, Any]
@@ -55,7 +59,8 @@ class CDNEndpointConfig:
 
 @dataclass
 class StreamingConfig:
-    """Streaming configuration for audio/video content."""    adaptive_bitrate: bool
+    """Streaming configuration for audio/video content."""
+    adaptive_bitrate: bool
     protocols: List[str]  # HLS, DASH, WebRTC
     quality_levels: List[Dict[str, Any]]
     buffer_size: int
@@ -68,9 +73,11 @@ class StreamingConfig:
 
 
 class ContentDeliveryAPIsConfig:
-    """Professional content delivery APIs configuration."""    
+    """Professional content delivery APIs configuration."""
+    
     def __init__(self):
-        """Initialize content delivery configuration."""        self.environments = {
+        """Initialize content delivery configuration."""
+        self.environments = {
             'development': self._get_development_config(),
             'staging': self._get_staging_config(),
             'production': self._get_production_config()
@@ -82,7 +89,8 @@ class ContentDeliveryAPIsConfig:
         self.optimization_settings = self._get_optimization_settings()
     
     def _get_development_config(self) -> Dict[str, Any]:
-        """Development environment CDN configuration."""        return {
+        """Development environment CDN configuration."""
+        return {
             'primary_cdn': CDNProvider.CLOUDFLARE,
             'fallback_cdn': CDNProvider.AWS_CLOUDFRONT,
             'cache_ttl': 300,  # 5 minutes
@@ -93,7 +101,8 @@ class ContentDeliveryAPIsConfig:
         }
     
     def _get_staging_config(self) -> Dict[str, Any]:
-        """Staging environment CDN configuration."""        return {
+        """Staging environment CDN configuration."""
+        return {
             'primary_cdn': CDNProvider.AWS_CLOUDFRONT,
             'fallback_cdn': CDNProvider.AZURE_CDN,
             'cache_ttl': 3600,  # 1 hour
@@ -104,7 +113,8 @@ class ContentDeliveryAPIsConfig:
         }
     
     def _get_production_config(self) -> Dict[str, Any]:
-        """Production environment CDN configuration."""        return {
+        """Production environment CDN configuration."""
+        return {
             'primary_cdn': CDNProvider.CLOUDFLARE,
             'fallback_cdn': CDNProvider.FASTLY,
             'backup_cdn': CDNProvider.AWS_CLOUDFRONT,
@@ -118,7 +128,8 @@ class ContentDeliveryAPIsConfig:
         }
     
     def _get_cdn_configurations(self) -> Dict[CDNProvider, CDNEndpointConfig]:
-        """Get CDN provider configurations."""        return {
+        """Get CDN provider configurations."""
+        return {
             CDNProvider.CLOUDFLARE: CDNEndpointConfig(
                 provider=CDNProvider.CLOUDFLARE,
                 endpoint_url=os.getenv("CLOUDFLARE_CDN_URL", ""),
@@ -182,7 +193,8 @@ class ContentDeliveryAPIsConfig:
         }
     
     def _get_streaming_configurations(self) -> Dict[str, StreamingConfig]:
-        """Get streaming configurations for different content types."""        return {
+        """Get streaming configurations for different content types."""
+        return {
             'audio_stream': StreamingConfig(
                 adaptive_bitrate=True,
                 protocols=['HLS', 'DASH'],
@@ -228,7 +240,8 @@ class ContentDeliveryAPIsConfig:
         }
     
     def _get_caching_strategies(self) -> Dict[str, Dict[str, Any]]:
-        """Get caching strategies for different content types."""        return {
+        """Get caching strategies for different content types."""
+        return {
             'static_assets': {
                 'strategy': 'aggressive',
                 'ttl': 2592000,  # 30 days
@@ -263,7 +276,8 @@ class ContentDeliveryAPIsConfig:
         }
     
     def _get_optimization_settings(self) -> Dict[str, Any]:
-        """Get CDN optimization settings."""        return {
+        """Get CDN optimization settings."""
+        return {
             'image_optimization': {
                 'webp_conversion': True,
                 'avif_conversion': True,
@@ -299,13 +313,16 @@ class ContentDeliveryAPIsConfig:
         }
     
     def get_cdn_config(self, provider: CDNProvider) -> Optional[CDNEndpointConfig]:
-        """Get CDN configuration for specific provider."""        return self.cdn_configs.get(provider)
+        """Get CDN configuration for specific provider."""
+        return self.cdn_configs.get(provider)
     
     def get_streaming_config(self, content_type: str) -> Optional[StreamingConfig]:
-        """Get streaming configuration for content type."""        return self.streaming_configs.get(content_type)
+        """Get streaming configuration for content type."""
+        return self.streaming_configs.get(content_type)
     
     def get_cache_strategy(self, content_category: str) -> Optional[Dict[str, Any]]:
-        """Get caching strategy for content category."""        return self.caching_strategies.get(content_category)
+        """Get caching strategy for content category."""
+        return self.caching_strategies.get(content_category)
 
 
 # Global configuration instance
@@ -313,12 +330,15 @@ content_delivery_apis_config = ContentDeliveryAPIsConfig()
 
 
 def get_content_delivery_config(environment: str = 'production') -> Dict[str, Any]:
-    """Get content delivery configuration for environment."""    return content_delivery_apis_config.environments.get(environment, {})
+    """Get content delivery configuration for environment."""
+    return content_delivery_apis_config.environments.get(environment, {})
 
 
 def get_cdn_endpoint(provider: CDNProvider) -> Optional[CDNEndpointConfig]:
-    """Get CDN endpoint configuration."""    return content_delivery_apis_config.get_cdn_config(provider)
+    """Get CDN endpoint configuration."""
+    return content_delivery_apis_config.get_cdn_config(provider)
 
 
 def get_streaming_settings(content_type: str) -> Optional[StreamingConfig]:
-    """Get streaming settings for content type."""    return content_delivery_apis_config.get_streaming_config(content_type)
+    """Get streaming settings for content type."""
+    return content_delivery_apis_config.get_streaming_config(content_type)

@@ -9,7 +9,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  LEGAL WARNING ⚠️
 Unauthorized use prohibited. Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import json
 import pickle
 import logging
@@ -41,14 +42,16 @@ logger = get_logger(__name__)
 
 
 class StorageBackend(Enum):
-    """Storage backend types"""    REDIS = "redis"
+    """Storage backend types"""
+    REDIS = "redis"
     POSTGRESQL = "postgresql"
     MEMORY = "memory"
     DISTRIBUTED = "distributed"
 
 
 class CompressionType(Enum):
-    """Compression algorithms"""    NONE = "none"
+    """Compression algorithms"""
+    NONE = "none"
     GZIP = "gzip"
     LZ4 = "lz4"
     ZSTD = "zstd"
@@ -56,7 +59,8 @@ class CompressionType(Enum):
 
 @dataclass
 class SessionStoreConfig:
-    """Session store configuration"""    primary_backend: StorageBackend = StorageBackend.REDIS
+    """Session store configuration"""
+    primary_backend: StorageBackend = StorageBackend.REDIS
     secondary_backend: Optional[StorageBackend] = StorageBackend.POSTGRESQL
     cache_ttl: int = 3600  # seconds
     compression: CompressionType = CompressionType.LZ4
@@ -69,7 +73,8 @@ class SessionStoreConfig:
 
 
 class SessionData(BaseModel):
-    """Session data structure"""    session_id: str
+    """Session data structure"""
+    session_id: str
     user_id: str
     conversation_history: List[Dict[str, Any]] = Field(default_factory=list)
     context_stack: List[Dict[str, Any]] = Field(default_factory=list)
@@ -94,7 +99,8 @@ class SessionData(BaseModel):
 
 
 class SessionCacheManager:
-    """Advanced session caching with intelligent eviction"""    
+    """Advanced session caching with intelligent eviction"""
+    
     def __init__(self, config: SessionStoreConfig):
         self.config = config
         self.redis_manager = RedisManager()
@@ -112,7 +118,8 @@ class SessionCacheManager:
         }
     
     async def get_session(self, session_id: str) -> Optional[SessionData]:
-        """Get session from cache with intelligent loading"""        
+        """Get session from cache with intelligent loading"""
+        
         try:
             # Try primary cache first
             cache_key = f"session_data:{session_id}"
@@ -144,7 +151,8 @@ class SessionCacheManager:
             return None
     
     async def store_session(self, session_data: SessionData) -> bool:
-        """Store session in cache with optimization"""        
+        """Store session in cache with optimization"""
+        
         try:
             # Update metadata
             session_data.updated_at = datetime.utcnow()
@@ -166,7 +174,8 @@ class SessionCacheManager:
             return False
     
     async def _store_session_in_cache(self, session_id: str, session_data: SessionData) -> bool:
-        """Internal method to store session in cache"""        
+        """Internal method to store session in cache"""
+        
         try:
             # Serialize, compress, and encrypt
             serialized_data = await self._serialize_session_data(session_data)
@@ -189,7 +198,8 @@ class SessionCacheManager:
             return False
     
     async def _serialize_session_data(self, session_data: SessionData) -> bytes:
-        """Serialize session data with compression and encryption"""        
+        """Serialize session data with compression and encryption"""
+        
         # Convert to dict
         data_dict = session_data.dict()
         
@@ -210,7 +220,8 @@ class SessionCacheManager:
         return json_data
     
     async def _deserialize_session_data(self, serialized_data: bytes) -> SessionData:
-        """Deserialize session data with decompression and decryption"""        
+        """Deserialize session data with decompression and decryption"""
+        
         # Decrypt if enabled
         if self.config.encryption_enabled:
             serialized_data = await self.encryption_manager.decrypt_data(serialized_data)
@@ -233,7 +244,8 @@ class SessionCacheManager:
         return SessionData(**data_dict)
     
     async def _calculate_data_size(self, session_data: SessionData) -> int:
-        """Calculate session data size in bytes"""        
+        """Calculate session data size in bytes"""
+        
         try:
             serialized_data = await self._serialize_session_data(session_data)
             return len(serialized_data)
@@ -241,7 +253,8 @@ class SessionCacheManager:
             return 0
     
     async def _calculate_checksum(self, session_data: SessionData) -> str:
-        """Calculate session data checksum for integrity verification"""        
+        """Calculate session data checksum for integrity verification"""
+        
         import hashlib
         
         try:
@@ -252,7 +265,8 @@ class SessionCacheManager:
             return ""
     
     async def _update_cache_indexes(self, session_id: str, session_data: SessionData):
-        """Update cache indexes for efficient lookups"""        
+        """Update cache indexes for efficient lookups"""
+        
         try:
             # User sessions index
             user_sessions_key = f"user_sessions:{session_data.user_id}"
@@ -278,7 +292,8 @@ class SessionCacheManager:
             self.logger.error(f"Index update failed: {str(e)}")
     
     async def _get_cache_size(self) -> int:
-        """Get current cache size"""        
+        """Get current cache size"""
+        
         try:
             active_sessions = await self.redis_manager.set_members("active_sessions")
             return len(active_sessions) if active_sessions else 0
@@ -286,7 +301,8 @@ class SessionCacheManager:
             return 0
     
     async def evict_session(self, session_id: str) -> bool:
-        """Evict session from cache"""        
+        """Evict session from cache"""
+        
         try:
             # Remove session data
             cache_key = f"session_data:{session_id}"
@@ -305,7 +321,8 @@ class SessionCacheManager:
             return False
     
     async def _remove_from_indexes(self, session_id: str):
-        """Remove session from cache indexes"""        
+        """Remove session from cache indexes"""
+        
         try:
             # Get session metadata to find user_id
             metadata_key = f"session_metadata:{session_id}"
@@ -329,7 +346,8 @@ class SessionCacheManager:
             self.logger.error(f"Index removal failed: {str(e)}")
     
     async def get_cache_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive cache statistics"""        
+        """Get comprehensive cache statistics"""
+        
         try:
             active_sessions_count = await self._get_cache_size()
             memory_usage = await self.redis_manager.get_memory_usage()
@@ -350,14 +368,16 @@ class SessionCacheManager:
 
 
 class SessionDataPersistence:
-    """Persistent storage for session data"""    
+    """Persistent storage for session data"""
+    
     def __init__(self, config: SessionStoreConfig):
         self.config = config
         self.metrics_collector = MetricsCollector()
         self.logger = get_logger(self.__class__.__name__)
     
     async def save_session(self, session_data: SessionData) -> bool:
-        """Save session to persistent storage"""        
+        """Save session to persistent storage"""
+        
         try:
             async with get_async_session() as session:
                 # Check if session exists
@@ -413,7 +433,8 @@ class SessionDataPersistence:
             return False
     
     async def load_session(self, session_id: str) -> Optional[SessionData]:
-        """Load session from persistent storage"""        
+        """Load session from persistent storage"""
+        
         try:
             async with get_async_session() as session:
                 query = select(SessionModel).where(SessionModel.session_id == session_id)
@@ -448,7 +469,8 @@ class SessionDataPersistence:
             return None
     
     async def delete_session(self, session_id: str) -> bool:
-        """Delete session from persistent storage"""        
+        """Delete session from persistent storage"""
+        
         try:
             async with get_async_session() as session:
                 await session.execute(
@@ -465,7 +487,8 @@ class SessionDataPersistence:
             return False
     
     async def get_user_sessions(self, user_id: str) -> List[SessionData]:
-        """Get all sessions for a user"""        
+        """Get all sessions for a user"""
+        
         try:
             async with get_async_session() as session:
                 query = select(SessionModel).where(SessionModel.user_id == user_id)
@@ -498,7 +521,8 @@ class SessionDataPersistence:
             return []
     
     async def cleanup_old_sessions(self, max_age_days: int = 30) -> int:
-        """Clean up old sessions from persistent storage"""        
+        """Clean up old sessions from persistent storage"""
+        
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=max_age_days)
             
@@ -528,7 +552,8 @@ class SessionDataPersistence:
 
 
 class DistributedSessionStorage:
-    """Distributed session storage with replication and consistency"""    
+    """Distributed session storage with replication and consistency"""
+    
     def __init__(self, config: SessionStoreConfig):
         self.config = config
         self.cache_manager = SessionCacheManager(config)
@@ -541,7 +566,8 @@ class DistributedSessionStorage:
         self.cleanup_task: Optional[asyncio.Task] = None
     
     async def start_background_tasks(self):
-        """Start background maintenance tasks"""        
+        """Start background maintenance tasks"""
+        
         if self.config.auto_backup:
             self.backup_task = asyncio.create_task(self._backup_loop())
         
@@ -550,7 +576,8 @@ class DistributedSessionStorage:
         self.logger.info("Background tasks started")
     
     async def stop_background_tasks(self):
-        """Stop background maintenance tasks"""        
+        """Stop background maintenance tasks"""
+        
         if self.backup_task:
             self.backup_task.cancel()
             try:
@@ -568,7 +595,8 @@ class DistributedSessionStorage:
         self.logger.info("Background tasks stopped")
     
     async def get_session(self, session_id: str) -> Optional[SessionData]:
-        """Get session with cache and persistence fallback"""        
+        """Get session with cache and persistence fallback"""
+        
         # Try cache first
         session_data = await self.cache_manager.get_session(session_id)
         
@@ -585,7 +613,8 @@ class DistributedSessionStorage:
         return session_data
     
     async def store_session(self, session_data: SessionData) -> bool:
-        """Store session in both cache and persistence"""        
+        """Store session in both cache and persistence"""
+        
         try:
             # Store in cache first (fast)
             cache_success = await self.cache_manager.store_session(session_data)
@@ -608,7 +637,8 @@ class DistributedSessionStorage:
             return False
     
     async def delete_session(self, session_id: str) -> bool:
-        """Delete session from both cache and persistence"""        
+        """Delete session from both cache and persistence"""
+        
         try:
             # Remove from cache
             cache_success = await self.cache_manager.evict_session(session_id)
@@ -628,11 +658,13 @@ class DistributedSessionStorage:
             return False
     
     async def get_user_sessions(self, user_id: str) -> List[SessionData]:
-        """Get all sessions for a user"""        
+        """Get all sessions for a user"""
+        
         return await self.persistence.get_user_sessions(user_id)
     
     async def _backup_loop(self):
-        """Background backup task"""        
+        """Background backup task"""
+        
         try:
             while True:
                 await asyncio.sleep(self.config.backup_interval)
@@ -644,7 +676,8 @@ class DistributedSessionStorage:
             self.logger.error(f"Backup loop error: {str(e)}")
     
     async def _cleanup_loop(self):
-        """Background cleanup task"""        
+        """Background cleanup task"""
+        
         try:
             while True:
                 await asyncio.sleep(self.config.cleanup_interval)
@@ -656,7 +689,8 @@ class DistributedSessionStorage:
             self.logger.error(f"Cleanup loop error: {str(e)}")
     
     async def _perform_backup(self):
-        """Perform periodic backup of cache to persistence"""        
+        """Perform periodic backup of cache to persistence"""
+        
         try:
             # Get all active sessions from cache
             active_sessions = await self.cache_manager.redis_manager.set_members("active_sessions")
@@ -680,7 +714,8 @@ class DistributedSessionStorage:
             self.logger.error(f"Backup failed: {str(e)}")
     
     async def _perform_cleanup(self):
-        """Perform periodic cleanup"""        
+        """Perform periodic cleanup"""
+        
         try:
             # Clean up old persistent sessions
             deleted_count = await self.persistence.cleanup_old_sessions()
@@ -699,7 +734,8 @@ class DistributedSessionStorage:
             self.logger.error(f"Cleanup failed: {str(e)}")
     
     async def _evict_lru_sessions(self, count_to_evict: int) -> int:
-        """Evict least recently used sessions"""        
+        """Evict least recently used sessions"""
+        
         try:
             # Get session metadata sorted by last access time
             active_sessions = await self.cache_manager.redis_manager.set_members("active_sessions")
@@ -732,7 +768,8 @@ class DistributedSessionStorage:
             return 0
     
     async def get_storage_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive storage statistics"""        
+        """Get comprehensive storage statistics"""
+        
         try:
             cache_stats = await self.cache_manager.get_cache_statistics()
             
@@ -767,24 +804,28 @@ class DistributedSessionStorage:
 
 
 class ConversationSessionStore:
-    """Main conversation session store facade"""    
+    """Main conversation session store facade"""
+    
     def __init__(self, config: Optional[SessionStoreConfig] = None):
         self.config = config or SessionStoreConfig()
         self.distributed_storage = DistributedSessionStorage(self.config)
         self.logger = get_logger(self.__class__.__name__)
     
     async def initialize(self):
-        """Initialize the session store"""        
+        """Initialize the session store"""
+        
         await self.distributed_storage.start_background_tasks()
         self.logger.info("Conversation session store initialized")
     
     async def shutdown(self):
-        """Shutdown the session store"""        
+        """Shutdown the session store"""
+        
         await self.distributed_storage.stop_background_tasks()
         self.logger.info("Conversation session store shutdown")
     
     async def create_session(self, session_id: str, user_id: str) -> SessionData:
-        """Create new session"""        
+        """Create new session"""
+        
         session_data = SessionData(
             session_id=session_id,
             user_id=user_id
@@ -794,19 +835,23 @@ class ConversationSessionStore:
         return session_data
     
     async def get_session(self, session_id: str) -> Optional[SessionData]:
-        """Get session by ID"""        
+        """Get session by ID"""
+        
         return await self.distributed_storage.get_session(session_id)
     
     async def update_session(self, session_data: SessionData) -> bool:
-        """Update session data"""        
+        """Update session data"""
+        
         return await self.distributed_storage.store_session(session_data)
     
     async def delete_session(self, session_id: str) -> bool:
-        """Delete session"""        
+        """Delete session"""
+        
         return await self.distributed_storage.delete_session(session_id)
     
     async def get_user_sessions(self, user_id: str) -> List[SessionData]:
-        """Get all sessions for user"""        
+        """Get all sessions for user"""
+        
         return await self.distributed_storage.get_user_sessions(user_id)
     
     async def add_conversation_message(
@@ -814,7 +859,8 @@ class ConversationSessionStore:
         session_id: str,
         message: Dict[str, Any]
     ) -> bool:
-        """Add message to conversation history"""        
+        """Add message to conversation history"""
+        
         try:
             session_data = await self.get_session(session_id)
             
@@ -839,7 +885,8 @@ class ConversationSessionStore:
         session_id: str,
         context_update: Dict[str, Any]
     ) -> bool:
-        """Update session context"""        
+        """Update session context"""
+        
         try:
             session_data = await self.get_session(session_id)
             
@@ -867,7 +914,8 @@ class ConversationSessionStore:
         session_id: str,
         limit: Optional[int] = None
     ) -> List[Dict[str, Any]]:
-        """Get conversation history for session"""        
+        """Get conversation history for session"""
+        
         try:
             session_data = await self.get_session(session_id)
             
@@ -886,5 +934,6 @@ class ConversationSessionStore:
             return []
     
     async def get_storage_statistics(self) -> Dict[str, Any]:
-        """Get storage system statistics"""        
+        """Get storage system statistics"""
+        
         return await self.distributed_storage.get_storage_statistics()

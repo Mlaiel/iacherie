@@ -3,7 +3,8 @@ AI-Powered Content Compliance and Regulatory Monitoring System
 
 This module provides comprehensive compliance monitoring including
 content policy enforcement, regulatory compliance, risk assessment, and audit trails.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import json
 import logging
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceType(str, Enum):
-    """Types of compliance monitoring"""    CONTENT_POLICY = "content_policy"
+    """Types of compliance monitoring"""
+    CONTENT_POLICY = "content_policy"
     PRIVACY_REGULATION = "privacy_regulation"
     COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
@@ -44,7 +46,8 @@ class ComplianceType(str, Enum):
 
 
 class ViolationType(str, Enum):
-    """Types of compliance violations"""    MINOR = "minor"
+    """Types of compliance violations"""
+    MINOR = "minor"
     MODERATE = "moderate"
     MAJOR = "major"
     CRITICAL = "critical"
@@ -55,7 +58,8 @@ class ViolationType(str, Enum):
 
 
 class RiskLevel(str, Enum):
-    """Risk levels for compliance issues"""    LOW = "low"
+    """Risk levels for compliance issues"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -63,7 +67,8 @@ class RiskLevel(str, Enum):
 
 
 class ComplianceStatus(str, Enum):
-    """Status of compliance checks"""    COMPLIANT = "compliant"
+    """Status of compliance checks"""
+    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     UNDER_REVIEW = "under_review"
     REQUIRES_ACTION = "requires_action"
@@ -73,7 +78,8 @@ class ComplianceStatus(str, Enum):
 
 
 class RegulationType(str, Enum):
-    """Types of regulations"""    GDPR = "gdpr"
+    """Types of regulations"""
+    GDPR = "gdpr"
     CCPA = "ccpa"
     COPPA = "coppa"
     HIPAA = "hipaa"
@@ -87,7 +93,8 @@ class RegulationType(str, Enum):
 
 
 class ComplianceRule(BaseModel):
-    """Compliance rule definition"""    rule_id: str
+    """Compliance rule definition"""
+    rule_id: str
     rule_name: str
     compliance_type: ComplianceType
     regulation_type: Optional[RegulationType] = None
@@ -126,7 +133,8 @@ class ComplianceRule(BaseModel):
 
 
 class ComplianceViolation(BaseModel):
-    """Detected compliance violation"""    violation_id: str
+    """Detected compliance violation"""
+    violation_id: str
     rule_id: str
     content_id: str
     platform: str
@@ -170,7 +178,8 @@ class ComplianceViolation(BaseModel):
 
 
 class ComplianceReport(BaseModel):
-    """Compliance monitoring report"""    report_id: str
+    """Compliance monitoring report"""
+    report_id: str
     report_type: str = "periodic"  # "periodic", "incident", "audit"
     reporting_period: str
     
@@ -212,7 +221,8 @@ class ComplianceReport(BaseModel):
 
 
 class AuditTrail(BaseModel):
-    """Audit trail entry for compliance actions"""    audit_id: str
+    """Audit trail entry for compliance actions"""
+    audit_id: str
     event_type: str
     event_description: str
     
@@ -243,7 +253,8 @@ class AuditTrail(BaseModel):
 
 
 class ComplianceMetrics(BaseModel):
-    """Compliance monitoring metrics"""    metrics_period: str
+    """Compliance monitoring metrics"""
+    metrics_period: str
     collection_timestamp: datetime
     
     # Volume metrics
@@ -273,11 +284,13 @@ class ComplianceMetrics(BaseModel):
 
 
 class AdvancedComplianceMonitor(BaseCrawler):
-    """    Ultra-Advanced Compliance Monitor
+    """
+    Ultra-Advanced Compliance Monitor
     
     Provides comprehensive compliance monitoring with AI-powered content analysis,
     regulatory compliance checking, risk assessment, and automated enforcement.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         
@@ -359,7 +372,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
         risk_level: RiskLevel,
         **kwargs
     ) -> str:
-        """        Add new compliance rule
+        """
+        Add new compliance rule
         
         Args:
             rule_name: Name of the rule
@@ -372,7 +386,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
             
         Returns:
             str: Rule ID
-        """        try:
+        """
+        try:
             rule_id = str(uuid.uuid4())
             
             compliance_rule = ComplianceRule(
@@ -413,7 +428,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
         platform: str,
         content_metadata: Dict[str, Any] = None
     ) -> List[ComplianceViolation]:
-        """        Monitor content for compliance violations
+        """
+        Monitor content for compliance violations
         
         Args:
             content_id: Unique content identifier
@@ -424,7 +440,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
             
         Returns:
             List[ComplianceViolation]: Detected violations
-        """        try:
+        """
+        try:
             await self.rate_limiter.acquire()
             
             violations = []
@@ -492,7 +509,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
         content_batch: List[Dict[str, Any]],
         risk_context: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """        Assess compliance risk for batch of content
+        """
+        Assess compliance risk for batch of content
         
         Args:
             content_batch: Batch of content to assess
@@ -500,7 +518,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
             
         Returns:
             Dict[str, Any]: Risk assessment results
-        """        try:
+        """
+        try:
             risk_assessment = {
                 'overall_risk_score': 0.0,
                 'risk_level': RiskLevel.LOW,
@@ -586,7 +605,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
         period_start: datetime = None,
         period_end: datetime = None
     ) -> ComplianceReport:
-        """        Generate compliance monitoring report
+        """
+        Generate compliance monitoring report
         
         Args:
             report_type: Type of report
@@ -595,7 +615,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
             
         Returns:
             ComplianceReport: Generated report
-        """        try:
+        """
+        try:
             period_end = period_end or datetime.utcnow()
             period_start = period_start or (period_end - timedelta(days=30))
             
@@ -717,7 +738,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
         resolver_id: str,
         resolution_notes: str = ""
     ) -> bool:
-        """        Resolve compliance violation
+        """
+        Resolve compliance violation
         
         Args:
             violation_id: Violation identifier
@@ -727,7 +749,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             if violation_id not in self.active_violations:
                 return False
             
@@ -774,7 +797,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
         content_id: str = None,
         platform: str = None
     ) -> Dict[str, Any]:
-        """        Get current compliance status
+        """
+        Get current compliance status
         
         Args:
             content_id: Specific content ID to check
@@ -782,7 +806,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
             
         Returns:
             Dict[str, Any]: Compliance status
-        """        try:
+        """
+        try:
             status = {
                 'overall_compliance': True,
                 'active_violations': 0,
@@ -858,7 +883,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
         platform: str,
         content_metadata: Dict[str, Any]
     ) -> Optional[ComplianceViolation]:
-        """Check content against a specific compliance rule"""        try:
+        """Check content against a specific compliance rule"""
+        try:
             # Pattern matching
             matches = re.findall(rule.rule_pattern, content_text, re.IGNORECASE)
             
@@ -938,7 +964,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
         content_text: str,
         content_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform AI-powered compliance checking"""        try:
+        """Perform AI-powered compliance checking"""
+        try:
             if not self.content_analysis_endpoint:
                 return {'violation_detected': False, 'confidence': 0.0}
             
@@ -977,7 +1004,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
         content_text: str,
         content_metadata: Dict[str, Any]
     ):
-        """Enhance violation with AI analysis"""        try:
+        """Enhance violation with AI analysis"""
+        try:
             if not self.risk_assessment_endpoint:
                 return
             
@@ -1010,7 +1038,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
             logger.error(f"Error enhancing with AI analysis: {str(e)}")
 
     async def _execute_automatic_actions(self, violation: ComplianceViolation, rule: ComplianceRule):
-        """Execute automatic enforcement actions"""        try:
+        """Execute automatic enforcement actions"""
+        try:
             for action in rule.automatic_actions:
                 if action == "flag_content":
                     # Flag content for review
@@ -1044,7 +1073,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
             logger.error(f"Error executing automatic actions: {str(e)}")
 
     async def _send_compliance_alert(self, violation: ComplianceViolation):
-        """Send compliance alert for high-risk violations"""        try:
+        """Send compliance alert for high-risk violations"""
+        try:
             alert_data = {
                 'violation_id': violation.violation_id,
                 'risk_level': violation.risk_level.value,
@@ -1072,11 +1102,13 @@ class AdvancedComplianceMonitor(BaseCrawler):
             logger.error(f"Error sending compliance alert: {str(e)}")
 
     async def _notify_content_creator(self, violation: ComplianceViolation):
-        """Notify content creator about violation"""        # Simplified notification - would integrate with actual notification system
+        """Notify content creator about violation"""
+        # Simplified notification - would integrate with actual notification system
         pass
 
     async def _calculate_risk_value(self, violation: ComplianceViolation) -> float:
-        """Calculate numeric risk value for violation"""        risk_values = {
+        """Calculate numeric risk value for violation"""
+        risk_values = {
             RiskLevel.LOW: 0.2,
             RiskLevel.MEDIUM: 0.5,
             RiskLevel.HIGH: 0.8,
@@ -1094,7 +1126,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
         risk_assessment: Dict[str, Any],
         risk_factors: Counter
     ) -> List[str]:
-        """Generate risk mitigation recommendations"""        recommendations = []
+        """Generate risk mitigation recommendations"""
+        recommendations = []
         
         if risk_assessment['overall_risk_score'] > 0.7:
             recommendations.append("Implement immediate content review process")
@@ -1113,7 +1146,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
         content_batch: List[Dict[str, Any]],
         risk_context: Dict[str, Any]
     ) -> List[str]:
-        """Identify compliance gaps"""        gaps = []
+        """Identify compliance gaps"""
+        gaps = []
         
         # Check coverage of compliance rules
         content_types = set(item.get('content_type', 'text') for item in content_batch)
@@ -1142,7 +1176,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
     # Analysis and reporting helper methods
     
     async def _analyze_violation_trends(self, violations: List[ComplianceViolation]) -> List[Dict[str, Any]]:
-        """Analyze violation trends over time"""        trends = []
+        """Analyze violation trends over time"""
+        trends = []
         
         # Group by day
         daily_counts = defaultdict(int)
@@ -1167,7 +1202,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
         return trends
 
     async def _identify_emerging_risks(self, violations: List[ComplianceViolation]) -> List[str]:
-        """Identify emerging compliance risks"""        risks = []
+        """Identify emerging compliance risks"""
+        risks = []
         
         # Analyze recent violation patterns
         recent_violations = [
@@ -1192,7 +1228,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
         return risks
 
     async def _identify_improvement_areas(self, violations: List[ComplianceViolation]) -> List[str]:
-        """Identify areas for improvement"""        improvements = []
+        """Identify areas for improvement"""
+        improvements = []
         
         # Analyze resolution times
         resolved_violations = [v for v in violations if v.status == ComplianceStatus.RESOLVED]
@@ -1221,7 +1258,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
         return improvements
 
     async def _assess_overall_risk(self, violations: List[ComplianceViolation]) -> RiskLevel:
-        """Assess overall risk level"""        if not violations:
+        """Assess overall risk level"""
+        if not violations:
             return RiskLevel.LOW
         
         # Count violations by risk level
@@ -1239,7 +1277,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
             return RiskLevel.LOW
 
     async def _identify_critical_issues(self, violations: List[ComplianceViolation]) -> List[str]:
-        """Identify critical compliance issues"""        issues = []
+        """Identify critical compliance issues"""
+        issues = []
         
         # High-risk unresolved violations
         critical_violations = [
@@ -1264,7 +1303,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
         return issues
 
     async def _generate_recommended_actions(self, violations: List[ComplianceViolation]) -> List[str]:
-        """Generate recommended actions"""        actions = []
+        """Generate recommended actions"""
+        actions = []
         
         # Priority actions for critical violations
         critical_count = len([v for v in violations if v.risk_level == RiskLevel.CRITICAL])
@@ -1284,15 +1324,18 @@ class AdvancedComplianceMonitor(BaseCrawler):
         return actions
 
     async def _get_regulation_changes(self, start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
-        """Get regulation changes during period"""        # Simplified - would integrate with regulatory update services
+        """Get regulation changes during period"""
+        # Simplified - would integrate with regulatory update services
         return []
 
     async def _get_policy_updates(self, start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
-        """Get policy updates during period"""        # Simplified - would track internal policy changes
+        """Get policy updates during period"""
+        # Simplified - would track internal policy changes
         return []
 
     async def _load_default_rules(self):
-        """Load default compliance rules"""        try:
+        """Load default compliance rules"""
+        try:
             # GDPR compliance rule
             await self.add_compliance_rule(
                 rule_name="GDPR Personal Data Detection",
@@ -1340,7 +1383,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
         event_description: str,
         **kwargs
     ):
-        """Log audit trail event"""        try:
+        """Log audit trail event"""
+        try:
             audit_entry = AuditTrail(
                 audit_id=str(uuid.uuid4()),
                 event_type=event_type,
@@ -1359,7 +1403,8 @@ class AdvancedComplianceMonitor(BaseCrawler):
             logger.error(f"Error logging audit event: {str(e)}")
 
     async def close(self):
-        """Close compliance monitor and cleanup resources"""        try:
+        """Close compliance monitor and cleanup resources"""
+        try:
             await self.cache_manager.close()
             await super().close()
             logger.info("Advanced Compliance Monitor closed successfully")

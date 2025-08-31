@@ -7,7 +7,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Comprehensive metrics collection, monitoring, and alerting system with
 real-time analytics, performance tracking, and business intelligence.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import json
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(str, Enum):
-    """Types of metrics collected."""    COUNTER = "counter"
+    """Types of metrics collected."""
+    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
@@ -43,7 +45,8 @@ class MetricType(str, Enum):
 
 
 class MetricScope(str, Enum):
-    """Scope of metric collection."""    SYSTEM = "system"
+    """Scope of metric collection."""
+    SYSTEM = "system"
     APPLICATION = "application"
     BUSINESS = "business"
     SECURITY = "security"
@@ -52,7 +55,8 @@ class MetricScope(str, Enum):
 
 @dataclass
 class MetricDefinition:
-    """Definition of a metric to be collected."""    name: str
+    """Definition of a metric to be collected."""
+    name: str
     metric_type: MetricType
     description: str
     labels: List[str] = field(default_factory=list)
@@ -65,7 +69,8 @@ class MetricDefinition:
 
 @dataclass
 class AlertMetric:
-    """Container for alert-related metrics."""    timestamp: datetime
+    """Container for alert-related metrics."""
+    timestamp: datetime
     alert_id: str
     metric_name: str
     value: Union[int, float]
@@ -74,7 +79,8 @@ class AlertMetric:
 
 
 class BusinessMetrics(BaseModel):
-    """Business intelligence metrics."""    
+    """Business intelligence metrics."""
+    
     # Volume metrics
     total_alerts_created: int = 0
     total_alerts_resolved: int = 0
@@ -103,7 +109,8 @@ class BusinessMetrics(BaseModel):
 
 
 class SystemPerformanceMetrics(BaseModel):
-    """System performance metrics."""    
+    """System performance metrics."""
+    
     # Processing metrics
     alert_processing_latency_ms: float = 0.0
     notification_delivery_latency_ms: float = 0.0
@@ -132,7 +139,8 @@ class SystemPerformanceMetrics(BaseModel):
 
 
 class SecurityMetrics(BaseModel):
-    """Security-related metrics."""    
+    """Security-related metrics."""
+    
     # Threat detection
     suspicious_activities_detected: int = 0
     blocked_ip_addresses: int = 0
@@ -155,9 +163,11 @@ class SecurityMetrics(BaseModel):
 
 
 class AlertMetricsCollector:
-    """    Advanced metrics collection system for alert operations.
+    """
+    Advanced metrics collection system for alert operations.
     Provides real-time metrics, historical analysis, and business intelligence.
-    """    
+    """
+    
     def __init__(
         self,
         cache_manager: CacheManager,
@@ -191,7 +201,8 @@ class AlertMetricsCollector:
         logger.info("Alert Metrics Collector initialized")
 
     async def initialize(self):
-        """Initialize the metrics collector."""        try:
+        """Initialize the metrics collector."""
+        try:
             # Load historical metrics
             await self._load_historical_metrics()
             
@@ -209,7 +220,8 @@ class AlertMetricsCollector:
 
     @asynccontextmanager
     async def timer(self, operation_name: str):
-        """Context manager for timing operations."""        start_time = time.time()
+        """Context manager for timing operations."""
+        start_time = time.time()
         try:
             yield
         finally:
@@ -217,7 +229,8 @@ class AlertMetricsCollector:
             await self.record_timing(operation_name, duration)
 
     async def record_alert_created(self, alert: ContentProtectionAlert):
-        """Record metrics for alert creation."""        try:
+        """Record metrics for alert creation."""
+        try:
             # Basic counters
             await self._increment_prometheus_counter("alerts_created_total", {
                 "severity": alert.severity.value,
@@ -254,7 +267,8 @@ class AlertMetricsCollector:
             logger.error(f"Failed to record alert creation metrics: {e}")
 
     async def record_alert_resolved(self, alert: ContentProtectionAlert, resolution_time_seconds: float):
-        """Record metrics for alert resolution."""        try:
+        """Record metrics for alert resolution."""
+        try:
             # Resolution counter
             await self._increment_prometheus_counter("alerts_resolved_total", {
                 "severity": alert.severity.value,
@@ -297,7 +311,8 @@ class AlertMetricsCollector:
             logger.error(f"Failed to record alert resolution metrics: {e}")
 
     async def record_notification_sent(self, channel: str, success: bool, latency_ms: float):
-        """Record notification delivery metrics."""        try:
+        """Record notification delivery metrics."""
+        try:
             # Notification counter
             await self._increment_prometheus_counter("notifications_sent_total", {
                 "channel": channel,
@@ -324,7 +339,8 @@ class AlertMetricsCollector:
             logger.error(f"Failed to record notification metrics: {e}")
 
     async def record_escalation(self, alert_id: str, from_level: str, to_level: str, reason: str):
-        """Record escalation metrics."""        try:
+        """Record escalation metrics."""
+        try:
             await self._increment_prometheus_counter("alert_escalations_total", {
                 "from_level": from_level,
                 "to_level": to_level,
@@ -349,7 +365,8 @@ class AlertMetricsCollector:
             logger.error(f"Failed to record escalation metrics: {e}")
 
     async def record_evidence_collected(self, alert_id: str, evidence_type: str, collection_time_ms: float, success: bool):
-        """Record evidence collection metrics."""        try:
+        """Record evidence collection metrics."""
+        try:
             await self._increment_prometheus_counter("evidence_collection_total", {
                 "type": evidence_type,
                 "status": "success" if success else "failure"
@@ -381,7 +398,8 @@ class AlertMetricsCollector:
             logger.error(f"Failed to record evidence collection metrics: {e}")
 
     async def record_timing(self, operation: str, duration_seconds: float):
-        """Record operation timing."""        try:
+        """Record operation timing."""
+        try:
             await self._record_prometheus_histogram(f"{operation}_duration_seconds", duration_seconds)
             
             # Update system metrics based on operation type
@@ -394,7 +412,8 @@ class AlertMetricsCollector:
             logger.error(f"Failed to record timing for {operation}: {e}")
 
     async def record_error(self, error_type: str, error_details: Dict[str, Any] = None):
-        """Record error metrics."""        try:
+        """Record error metrics."""
+        try:
             await self._increment_prometheus_counter("errors_total", {
                 "type": error_type
             })
@@ -412,7 +431,8 @@ class AlertMetricsCollector:
             logger.error(f"Failed to record error metrics: {e}")
 
     async def record_security_event(self, event_type: str, severity: str, details: Dict[str, Any] = None):
-        """Record security-related metrics."""        try:
+        """Record security-related metrics."""
+        try:
             await self._increment_prometheus_counter("security_events_total", {
                 "type": event_type,
                 "severity": severity
@@ -430,7 +450,8 @@ class AlertMetricsCollector:
             logger.error(f"Failed to record security event metrics: {e}")
 
     async def get_real_time_metrics(self) -> Dict[str, Any]:
-        """Get current real-time metrics."""        try:
+        """Get current real-time metrics."""
+        try:
             return {
                 "business_metrics": self._business_metrics.dict(),
                 "system_metrics": self._system_metrics.dict(),
@@ -452,7 +473,8 @@ class AlertMetricsCollector:
         end_time: datetime,
         aggregation_interval: int = 300  # 5 minutes
     ) -> List[Dict[str, Any]]:
-        """Get historical metrics with aggregation."""        try:
+        """Get historical metrics with aggregation."""
+        try:
             # Get metrics from Redis
             metrics_key = f"alert_metrics:{metric_name}"
             
@@ -511,7 +533,8 @@ class AlertMetricsCollector:
             return []
 
     async def get_performance_summary(self, hours: int = 24) -> Dict[str, Any]:
-        """Get performance summary for the last N hours."""        try:
+        """Get performance summary for the last N hours."""
+        try:
             end_time = datetime.now(timezone.utc)
             start_time = end_time - timedelta(hours=hours)
             
@@ -550,14 +573,16 @@ class AlertMetricsCollector:
             return {}
 
     async def export_prometheus_metrics(self) -> str:
-        """Export metrics in Prometheus format."""        try:
+        """Export metrics in Prometheus format."""
+        try:
             return generate_latest(self.prometheus_registry).decode('utf-8')
         except Exception as e:
             logger.error(f"Failed to export Prometheus metrics: {e}")
             return ""
 
     def _initialize_metrics(self):
-        """Initialize Prometheus metrics."""        # Alert metrics
+        """Initialize Prometheus metrics."""
+        # Alert metrics
         self._prometheus_metrics["alerts_created_total"] = Counter(
             "alerts_created_total", 
             "Total number of alerts created",
@@ -610,27 +635,31 @@ class AlertMetricsCollector:
         )
 
     async def _increment_prometheus_counter(self, metric_name: str, labels: Dict[str, str] = None):
-        """Increment Prometheus counter."""        if metric_name in self._prometheus_metrics:
+        """Increment Prometheus counter."""
+        if metric_name in self._prometheus_metrics:
             if labels:
                 self._prometheus_metrics[metric_name].labels(**labels).inc()
             else:
                 self._prometheus_metrics[metric_name].inc()
 
     async def _record_prometheus_histogram(self, metric_name: str, value: float, labels: Dict[str, str] = None):
-        """Record value in Prometheus histogram."""        if metric_name in self._prometheus_metrics:
+        """Record value in Prometheus histogram."""
+        if metric_name in self._prometheus_metrics:
             if labels:
                 self._prometheus_metrics[metric_name].labels(**labels).observe(value)
             else:
                 self._prometheus_metrics[metric_name].observe(value)
 
     async def _update_real_time_metrics(self, metric_name: str, value: Union[int, float]):
-        """Update real-time metrics."""        if metric_name not in self._real_time_metrics:
+        """Update real-time metrics."""
+        if metric_name not in self._real_time_metrics:
             self._real_time_metrics[metric_name] = 0
         
         self._real_time_metrics[metric_name] += value
 
     async def _get_counter_value(self, metric_name: str, labels: Dict[str, str] = None) -> float:
-        """Get current value of a Prometheus counter."""        try:
+        """Get current value of a Prometheus counter."""
+        try:
             if metric_name in self._prometheus_metrics:
                 if labels:
                     return self._prometheus_metrics[metric_name].labels(**labels)._value._value
@@ -641,7 +670,8 @@ class AlertMetricsCollector:
             return 0.0
 
     async def _load_historical_metrics(self):
-        """Load historical metrics from storage."""        try:
+        """Load historical metrics from storage."""
+        try:
             # Load from Redis
             keys = await self.redis_client.keys("alert_metrics:*")
             
@@ -661,7 +691,8 @@ class AlertMetricsCollector:
             logger.error(f"Failed to load historical metrics: {e}")
 
     async def _metrics_aggregation_loop(self):
-        """Background loop for metrics aggregation."""        while True:
+        """Background loop for metrics aggregation."""
+        while True:
             try:
                 await asyncio.sleep(60)  # Run every minute
                 
@@ -678,7 +709,8 @@ class AlertMetricsCollector:
                 logger.error(f"Metrics aggregation loop error: {e}")
 
     async def _metrics_cleanup_loop(self):
-        """Background loop for metrics cleanup."""        while True:
+        """Background loop for metrics cleanup."""
+        while True:
             try:
                 await asyncio.sleep(3600)  # Run every hour
                 
@@ -689,7 +721,8 @@ class AlertMetricsCollector:
                 logger.error(f"Metrics cleanup loop error: {e}")
 
     async def _process_metric_buffer(self):
-        """Process metrics from buffer to persistent storage."""        if not self._metric_buffer:
+        """Process metrics from buffer to persistent storage."""
+        if not self._metric_buffer:
             return
         
         try:
@@ -706,7 +739,8 @@ class AlertMetricsCollector:
             logger.error(f"Failed to process metric buffer: {e}")
 
     async def _store_metric_in_redis(self, metric: AlertMetric):
-        """Store individual metric in Redis time series."""        try:
+        """Store individual metric in Redis time series."""
+        try:
             metrics_key = f"alert_metrics:{metric.metric_name}"
             timestamp = int(metric.timestamp.timestamp())
             
@@ -729,7 +763,8 @@ class AlertMetricsCollector:
             logger.error(f"Failed to store metric in Redis: {e}")
 
     async def _aggregate_metrics(self):
-        """Aggregate metrics for different time periods."""        try:
+        """Aggregate metrics for different time periods."""
+        try:
             # Aggregate hourly, daily, weekly metrics
             now = datetime.now(timezone.utc)
             
@@ -748,7 +783,8 @@ class AlertMetricsCollector:
             logger.error(f"Failed to aggregate metrics: {e}")
 
     async def _aggregate_time_period(self, period: str, end_time: datetime, duration: timedelta):
-        """Aggregate metrics for a specific time period."""        start_time = end_time - duration
+        """Aggregate metrics for a specific time period."""
+        start_time = end_time - duration
         
         # Get all metric types
         metric_keys = await self.redis_client.keys("alert_metrics:*")
@@ -798,7 +834,8 @@ class AlertMetricsCollector:
                     )
 
     async def _update_derived_metrics(self):
-        """Update derived and calculated metrics."""        try:
+        """Update derived and calculated metrics."""
+        try:
             # Update business metrics calculations
             await self._update_business_metrics()
             
@@ -810,7 +847,8 @@ class AlertMetricsCollector:
             logger.error(f"Failed to update derived metrics: {e}")
 
     async def _update_business_metrics(self):
-        """Update business-related metrics."""        try:
+        """Update business-related metrics."""
+        try:
             # Calculate automation rate
             total_alerts = self._business_metrics.total_alerts_created
             manual_interventions = self._business_metrics.manual_intervention_required
@@ -832,7 +870,8 @@ class AlertMetricsCollector:
             logger.error(f"Failed to update business metrics: {e}")
 
     async def _cleanup_old_metrics(self):
-        """Clean up old metrics to manage storage."""        try:
+        """Clean up old metrics to manage storage."""
+        try:
             cutoff_time = datetime.now(timezone.utc) - timedelta(days=30)
             cutoff_timestamp = int(cutoff_time.timestamp())
             
@@ -846,7 +885,8 @@ class AlertMetricsCollector:
             logger.error(f"Failed to cleanup old metrics: {e}")
 
     def _calculate_health_score(self) -> float:
-        """Calculate overall system health score (0-100)."""        try:
+        """Calculate overall system health score (0-100)."""
+        try:
             scores = []
             
             # Error rate score (lower is better)
@@ -881,7 +921,8 @@ class AlertMetricsCollector:
             return 0.0
 
     async def _generate_performance_recommendations(self) -> List[str]:
-        """Generate performance improvement recommendations."""        recommendations = []
+        """Generate performance improvement recommendations."""
+        recommendations = []
         
         try:
             # Check error rates
@@ -917,16 +958,19 @@ class AlertMetricsCollector:
         return recommendations if recommendations else ["System is performing well - no immediate recommendations"]
 
     async def _get_false_positive_count(self) -> int:
-        """Get count of false positive alerts."""        # This would integrate with your alert data to count false positives
+        """Get count of false positive alerts."""
+        # This would integrate with your alert data to count false positives
         # Implementation depends on how false positives are marked
         return 0
 
     async def _get_system_cpu_usage(self) -> float:
-        """Get current system CPU usage."""        # Implementation would use system monitoring tools
+        """Get current system CPU usage."""
+        # Implementation would use system monitoring tools
         return 0.0
 
     async def _get_system_memory_usage(self) -> float:
-        """Get current system memory usage."""        # Implementation would use system monitoring tools
+        """Get current system memory usage."""
+        # Implementation would use system monitoring tools
         return 0.0
 
 

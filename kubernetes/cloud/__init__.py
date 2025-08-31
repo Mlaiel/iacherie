@@ -14,7 +14,8 @@ This module provides enterprise-grade cloud deployment capabilities for the
 IA Influencer Agent platform, supporting multi-cloud strategies, automated
 provisioning, scaling, and optimization for creator content protection and
 monetization systems.
-"""from .aws_deployment import AWSDeploymentManager
+"""
+from .aws_deployment import AWSDeploymentManager
 from .azure_deployment import AzureDeploymentManager
 from .gcp_deployment import GCPDeploymentManager
 from .multi_cloud_orchestrator import MultiCloudOrchestrator

@@ -16,7 +16,8 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICT
 and will result in immediate legal action under German and International copyright laws.
 
 Contact: mlaiel@live.de for licensing inquiries only.
-"""import logging
+"""
+import logging
 import json
 from datetime import datetime
 from typing import Dict, Any, Optional, List, Union
@@ -28,7 +29,8 @@ from pythonjsonlogger import jsonlogger
 
 
 class ContentFormat(str, Enum):
-    """Supported content formats"""    # Audio formats
+    """Supported content formats"""
+    # Audio formats
     MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
@@ -81,7 +83,8 @@ class ContentFormat(str, Enum):
 
 
 class ProcessingOperation(str, Enum):
-    """Content processing operations"""    UPLOAD = "upload"
+    """Content processing operations"""
+    UPLOAD = "upload"
     CONVERSION = "conversion"
     COMPRESSION = "compression"
     OPTIMIZATION = "optimization"
@@ -98,7 +101,8 @@ class ProcessingOperation(str, Enum):
 
 
 class QualityLevel(str, Enum):
-    """Content quality levels"""    ULTRA_HIGH = "ultra_high"  # 4K+, Lossless audio
+    """Content quality levels"""
+    ULTRA_HIGH = "ultra_high"  # 4K+, Lossless audio
     HIGH = "high"              # 1080p, High bitrate
     MEDIUM = "medium"          # 720p, Standard quality
     LOW = "low"                # 480p, Compressed
@@ -108,7 +112,8 @@ class QualityLevel(str, Enum):
 
 @dataclass
 class MultiFormatLogConfig:
-    """Configuration for multi-format content logging"""    enable_format_conversion_logging: bool = True
+    """Configuration for multi-format content logging"""
+    enable_format_conversion_logging: bool = True
     enable_quality_tracking: bool = True
     enable_performance_monitoring: bool = True
     enable_error_tracking: bool = True
@@ -149,13 +154,15 @@ class MultiFormatLogConfig:
 
 
 class MultiFormatLogger:
-    """Specialized logger for multi-format content operations"""    
+    """Specialized logger for multi-format content operations"""
+    
     def __init__(self, config: MultiFormatLogConfig):
         self.config = config
         self.logger = self._setup_logger()
         
     def _setup_logger(self) -> structlog.BoundLogger:
-        """Setup structured logger for multi-format content"""        structlog.configure(
+        """Setup structured logger for multi-format content"""
+        structlog.configure(
             processors=[
                 structlog.threadlocal.merge_threadlocal_context,
                 structlog.processors.TimeStamper(fmt="iso"),
@@ -183,7 +190,8 @@ class MultiFormatLogger:
         upload_time: float = 0.0,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Log content upload operations"""        log_data = {
+        """Log content upload operations"""
+        log_data = {
             "event_type": "content_upload",
             "upload_id": upload_id,
             "creator_id": creator_id,
@@ -221,7 +229,8 @@ class MultiFormatLogger:
         success: bool,
         error_message: Optional[str] = None
     ) -> None:
-        """Log format conversion operations"""        if not self.config.enable_format_conversion_logging:
+        """Log format conversion operations"""
+        if not self.config.enable_format_conversion_logging:
             return
             
         log_data = {
@@ -261,7 +270,8 @@ class MultiFormatLogger:
         analysis_time: float,
         recommendations: List[str]
     ) -> None:
-        """Log content quality analysis"""        if not self.config.enable_quality_tracking:
+        """Log content quality analysis"""
+        if not self.config.enable_quality_tracking:
             return
             
         log_data = {
@@ -297,7 +307,8 @@ class MultiFormatLogger:
         processing_time: float,
         audio_metrics: Dict[str, Any]
     ) -> None:
-        """Log audio-specific processing operations"""        if not self.config.audio_processing_logging:
+        """Log audio-specific processing operations"""
+        if not self.config.audio_processing_logging:
             return
             
         log_data = {
@@ -331,7 +342,8 @@ class MultiFormatLogger:
         processing_time: float,
         video_metrics: Dict[str, Any]
     ) -> None:
-        """Log video-specific processing operations"""        if not self.config.video_processing_logging:
+        """Log video-specific processing operations"""
+        if not self.config.video_processing_logging:
             return
             
         log_data = {
@@ -369,7 +381,8 @@ class MultiFormatLogger:
         processing_time: float,
         image_metrics: Dict[str, Any]
     ) -> None:
-        """Log image-specific processing operations"""        if not self.config.image_processing_logging:
+        """Log image-specific processing operations"""
+        if not self.config.image_processing_logging:
             return
             
         log_data = {
@@ -405,7 +418,8 @@ class MultiFormatLogger:
         processing_time: float,
         text_metrics: Dict[str, Any]
     ) -> None:
-        """Log text-specific processing operations"""        if not self.config.text_processing_logging:
+        """Log text-specific processing operations"""
+        if not self.config.text_processing_logging:
             return
             
         log_data = {
@@ -441,7 +455,8 @@ class MultiFormatLogger:
         bandwidth_usage: float,
         stream_health: Dict[str, Any]
     ) -> None:
-        """Log live streaming operations"""        if not self.config.live_streaming_logging:
+        """Log live streaming operations"""
+        if not self.config.live_streaming_logging:
             return
             
         log_data = {
@@ -477,7 +492,8 @@ class MultiFormatLogger:
         average_file_size: float,
         total_bandwidth_used: float
     ) -> None:
-        """Log batch processing operations"""        log_data = {
+        """Log batch processing operations"""
+        log_data = {
             "event_type": "batch_processing",
             "batch_id": batch_id,
             "operation_type": operation_type,
@@ -503,7 +519,8 @@ class MultiFormatLogger:
         average_file_size: float,
         storage_growth_rate: float
     ) -> None:
-        """Log storage utilization metrics"""        if not self.config.monitor_storage_usage:
+        """Log storage utilization metrics"""
+        if not self.config.monitor_storage_usage:
             return
             
         log_data = {
@@ -525,7 +542,8 @@ class MultiFormatLogger:
         self.logger.info("Storage metrics recorded", **log_data)
     
     def _get_content_category(self, format: ContentFormat) -> str:
-        """Get content category based on format"""        audio_formats = [ContentFormat.MP3, ContentFormat.WAV, ContentFormat.FLAC, ContentFormat.AAC, ContentFormat.OGG]
+        """Get content category based on format"""
+        audio_formats = [ContentFormat.MP3, ContentFormat.WAV, ContentFormat.FLAC, ContentFormat.AAC, ContentFormat.OGG]
         video_formats = [ContentFormat.MP4, ContentFormat.AVI, ContentFormat.MOV, ContentFormat.WMV, ContentFormat.WEBM]
         image_formats = [ContentFormat.JPEG, ContentFormat.PNG, ContentFormat.GIF, ContentFormat.WEBP, ContentFormat.TIFF]
         text_formats = [ContentFormat.TXT, ContentFormat.MD, ContentFormat.HTML, ContentFormat.PDF]
@@ -542,7 +560,8 @@ class MultiFormatLogger:
             return "document"
     
     def get_multi_format_metrics(self) -> Dict[str, Any]:
-        """Get multi-format processing system metrics"""        return {
+        """Get multi-format processing system metrics"""
+        return {
             "format_conversion_logging": self.config.enable_format_conversion_logging,
             "quality_tracking": self.config.enable_quality_tracking,
             "performance_monitoring": self.config.enable_performance_monitoring,
@@ -558,14 +577,17 @@ class MultiFormatLogger:
 
 
 class MultiFormatLoggingConfig:
-    """Main configuration class for multi-format content logging"""    
+    """Main configuration class for multi-format content logging"""
+    
     @staticmethod
     def create_default_config() -> MultiFormatLogConfig:
-        """Create default multi-format logging configuration"""        return MultiFormatLogConfig()
+        """Create default multi-format logging configuration"""
+        return MultiFormatLogConfig()
     
     @staticmethod
     def create_high_performance_config() -> MultiFormatLogConfig:
-        """Create high-performance multi-format logging configuration"""        return MultiFormatLogConfig(
+        """Create high-performance multi-format logging configuration"""
+        return MultiFormatLogConfig(
             enable_format_conversion_logging=True,
             enable_quality_tracking=True,
             enable_performance_monitoring=True,

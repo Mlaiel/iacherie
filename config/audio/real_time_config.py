@@ -17,7 +17,8 @@ explicit written permission from Fahed Mlaiel is strictly prohibited and will be
 to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import logging
+"""
+import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
 from dataclasses import dataclass, field
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class StreamingProtocol(Enum):
-    """Supported streaming protocols"""    RTMP = "rtmp"
+    """Supported streaming protocols"""
+    RTMP = "rtmp"
     RTMPS = "rtmps"
     WEBRTC = "webrtc"
     HLS = "hls"
@@ -41,7 +43,8 @@ class StreamingProtocol(Enum):
 
 
 class AudioCodec(Enum):
-    """Real-time audio codecs"""    OPUS = "opus"
+    """Real-time audio codecs"""
+    OPUS = "opus"
     AAC = "aac"
     MP3 = "mp3"
     FLAC = "flac"
@@ -52,7 +55,8 @@ class AudioCodec(Enum):
 
 
 class LatencyProfile(Enum):
-    """Latency optimization profiles"""    ULTRA_LOW_LATENCY = "ultra_low_latency"      # <20ms
+    """Latency optimization profiles"""
+    ULTRA_LOW_LATENCY = "ultra_low_latency"      # <20ms
     LOW_LATENCY = "low_latency"                  # 20-50ms
     STANDARD_LATENCY = "standard_latency"        # 50-150ms
     HIGH_QUALITY = "high_quality"                # 150-500ms
@@ -60,7 +64,8 @@ class LatencyProfile(Enum):
 
 
 class InteractionMode(Enum):
-    """Real-time interaction modes"""    LIVE_CHAT = "live_chat"
+    """Real-time interaction modes"""
+    LIVE_CHAT = "live_chat"
     VOICE_CHAT = "voice_chat"
     COLLABORATIVE_MIXING = "collaborative_mixing"
     LIVE_VOTING = "live_voting"
@@ -71,7 +76,8 @@ class InteractionMode(Enum):
 
 
 class BroadcastQuality(Enum):
-    """Broadcasting quality levels"""    MOBILE_OPTIMIZED = "mobile_optimized"
+    """Broadcasting quality levels"""
+    MOBILE_OPTIMIZED = "mobile_optimized"
     STANDARD_DEFINITION = "standard_definition"
     HIGH_DEFINITION = "high_definition"
     ULTRA_HIGH_DEFINITION = "ultra_high_definition"
@@ -80,7 +86,8 @@ class BroadcastQuality(Enum):
 
 @dataclass
 class StreamingConfig:
-    """Configuration for audio streaming"""    enabled_protocols: List[StreamingProtocol] = field(
+    """Configuration for audio streaming"""
+    enabled_protocols: List[StreamingProtocol] = field(
         default_factory=lambda: [
             StreamingProtocol.WEBRTC,
             StreamingProtocol.HLS,
@@ -133,7 +140,8 @@ class StreamingConfig:
 
 @dataclass
 class LiveProcessingConfig:
-    """Configuration for live audio processing"""    
+    """Configuration for live audio processing"""
+    
     # Real-time processing
     real_time_processing_enabled: bool = True
     processing_latency_target_ms: float = 10.0
@@ -192,7 +200,8 @@ class LiveProcessingConfig:
 
 @dataclass
 class BroadcastConfig:
-    """Configuration for broadcasting features"""    
+    """Configuration for broadcasting features"""
+    
     # Broadcast targets
     broadcast_platforms: List[str] = field(default_factory=lambda: [
         "youtube_live",
@@ -254,7 +263,8 @@ class BroadcastConfig:
 
 @dataclass
 class InteractiveConfig:
-    """Configuration for interactive features"""    enabled_interactions: List[InteractionMode] = field(
+    """Configuration for interactive features"""
+    enabled_interactions: List[InteractionMode] = field(
         default_factory=lambda: [
             InteractionMode.LIVE_CHAT,
             InteractionMode.LIVE_VOTING,
@@ -310,7 +320,8 @@ class InteractiveConfig:
 
 @dataclass
 class LatencyOptimizationConfig:
-    """Configuration for latency optimization"""    target_latency_profile: LatencyProfile = LatencyProfile.LOW_LATENCY
+    """Configuration for latency optimization"""
+    target_latency_profile: LatencyProfile = LatencyProfile.LOW_LATENCY
     
     # Latency targets
     latency_targets: Dict[LatencyProfile, Dict[str, float]] = field(default_factory=lambda: {
@@ -373,7 +384,8 @@ class LatencyOptimizationConfig:
 
 @dataclass
 class RealTimeConfig:
-    """Master configuration for real-time audio features"""    
+    """Master configuration for real-time audio features"""
+    
     # Core configurations
     streaming_config: StreamingConfig = field(default_factory=StreamingConfig)
     live_processing_config: LiveProcessingConfig = field(default_factory=LiveProcessingConfig)
@@ -436,14 +448,16 @@ class RealTimeConfig:
 
 
 def validate_real_time_config(config: RealTimeConfig) -> bool:
-    """    Validate real-time configuration
+    """
+    Validate real-time configuration
     
     Args:
         config: Configuration to validate
         
     Returns:
         True if configuration is valid, False otherwise
-    """    try:
+    """
+    try:
         # Validate latency targets
         for profile, targets in config.latency_optimization_config.latency_targets.items():
             total_latency = sum(targets.values())
@@ -469,7 +483,8 @@ def validate_real_time_config(config: RealTimeConfig) -> bool:
 
 
 def optimize_for_latency_profile(config: RealTimeConfig, profile: LatencyProfile) -> RealTimeConfig:
-    """    Optimize configuration for specific latency profile
+    """
+    Optimize configuration for specific latency profile
     
     Args:
         config: Base configuration
@@ -477,7 +492,8 @@ def optimize_for_latency_profile(config: RealTimeConfig, profile: LatencyProfile
         
     Returns:
         Optimized configuration
-    """    optimized_config = config
+    """
+    optimized_config = config
     optimized_config.latency_optimization_config.target_latency_profile = profile
     
     if profile == LatencyProfile.ULTRA_LOW_LATENCY:
@@ -499,4 +515,5 @@ DEFAULT_REAL_TIME_CONFIG = RealTimeConfig()
 
 
 def get_real_time_config() -> RealTimeConfig:
-    """Get default real-time configuration"""    return DEFAULT_REAL_TIME_CONFIG
+    """Get default real-time configuration"""
+    return DEFAULT_REAL_TIME_CONFIG

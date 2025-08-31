@@ -9,7 +9,8 @@ prohibited and will result in severe legal consequences.
 
 Automated profit distribution for multi-format content creators, with advanced commission
 calculation, real-time payout scheduling, and compliance with international financial regulations.
-"""import logging
+"""
+import logging
 from typing import Dict, List, Any, Optional, Tuple
 from decimal import Decimal
 from datetime import datetime, timedelta
@@ -19,7 +20,8 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class DistributionStatus(Enum):
-    """Status of profit distribution"""    SCHEDULED = "scheduled"
+    """Status of profit distribution"""
+    SCHEDULED = "scheduled"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -27,7 +29,8 @@ class DistributionStatus(Enum):
 
 @dataclass
 class ProfitDistributionRecord:
-    """Record of a profit distribution event"""    distribution_id: str
+    """Record of a profit distribution event"""
+    distribution_id: str
     creator_id: str
     amount: Decimal
     commission: Decimal
@@ -36,12 +39,14 @@ class ProfitDistributionRecord:
     details: Dict[str, Any] = field(default_factory=dict)
 
 class ProfitDistributionEngine:
-    """Automated profit distribution engine"""    def __init__(self, creator_id: str):
+    """Automated profit distribution engine"""
+    def __init__(self, creator_id: str):
         self.creator_id = creator_id
         self.logger = logging.getLogger(f"ProfitDistributionEngine:{creator_id}")
 
     def schedule_distribution(self, amount: Decimal, commission_rate: float, payout_date: datetime) -> ProfitDistributionRecord:
-        """Schedule a profit distribution event"""        commission = (amount * Decimal(str(commission_rate))).quantize(Decimal('0.01'))
+        """Schedule a profit distribution event"""
+        commission = (amount * Decimal(str(commission_rate))).quantize(Decimal('0.01'))
         net_amount = amount - commission
         record = ProfitDistributionRecord(
             distribution_id=f"dist_{self.creator_id}_{int(datetime.utcnow().timestamp())}",
@@ -55,7 +60,8 @@ class ProfitDistributionEngine:
         return record
 
     def process_distribution(self, record: ProfitDistributionRecord) -> ProfitDistributionRecord:
-        """Process a scheduled profit distribution"""        # ...existing code...
+        """Process a scheduled profit distribution"""
+        # ...existing code...
         record.status = DistributionStatus.PROCESSING
         # Simulate payout logic
         # ...existing code...
@@ -64,7 +70,8 @@ class ProfitDistributionEngine:
         return record
 
     def cancel_distribution(self, record: ProfitDistributionRecord) -> ProfitDistributionRecord:
-        """Cancel a scheduled profit distribution"""        record.status = DistributionStatus.CANCELLED
+        """Cancel a scheduled profit distribution"""
+        record.status = DistributionStatus.CANCELLED
         self.logger.info(f"Cancelled profit distribution: {record}")
         return record
 

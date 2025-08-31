@@ -15,7 +15,8 @@ Any unauthorized use is strictly prohibited.
 
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + 
 Microservices + Audio + DevOps + IA Prompt Engineer
-"""import asyncio
+"""
+import asyncio
 import logging
 import zlib
 import lzma
@@ -36,7 +37,8 @@ logger = logging.getLogger(__name__)
 
 
 class CompressionMethod(Enum):
-    """Supported compression methods"""    GZIP = "gzip"
+    """Supported compression methods"""
+    GZIP = "gzip"
     ZLIB = "zlib"
     LZMA = "lzma"
     BZIP2 = "bzip2"
@@ -45,14 +47,16 @@ class CompressionMethod(Enum):
 
 
 class CompressionLevel(Enum):
-    """Compression level settings"""    FAST = 1
+    """Compression level settings"""
+    FAST = 1
     BALANCED = 6
     BEST = 9
     ADAPTIVE = -1
 
 
 class ContentType(Enum):
-    """Content types for compression optimization"""    AUDIO = "audio"
+    """Content types for compression optimization"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -62,7 +66,8 @@ class ContentType(Enum):
 
 @dataclass
 class CompressionMetrics:
-    """Compression performance metrics"""    method: CompressionMethod
+    """Compression performance metrics"""
+    method: CompressionMethod
     level: int
     
     # Size metrics
@@ -85,7 +90,8 @@ class CompressionMetrics:
     timestamp: datetime = field(default_factory=datetime.utcnow)
     
     def __post_init__(self):
-        """Calculate derived metrics"""        if self.original_size > 0:
+        """Calculate derived metrics"""
+        if self.original_size > 0:
             self.compression_ratio = self.compressed_size / self.original_size
             self.space_saved_bytes = self.original_size - self.compressed_size
             self.space_saved_percentage = (self.space_saved_bytes / self.original_size) * 100
@@ -96,7 +102,8 @@ class CompressionMetrics:
 
 @dataclass
 class CompressionProfile:
-    """Compression profile for specific content types"""    profile_id: str
+    """Compression profile for specific content types"""
+    profile_id: str
     name: str
     content_type: ContentType
     
@@ -122,30 +129,38 @@ class CompressionProfile:
 
 
 class CompressionAlgorithm(ABC):
-    """Abstract base for compression algorithms"""    
+    """Abstract base for compression algorithms"""
+    
     @abstractmethod
     async def compress(self, data: bytes, level: int = 6) -> bytes:
-        """Compress data"""        pass
+        """Compress data"""
+        pass
     
     @abstractmethod
     async def decompress(self, data: bytes) -> bytes:
-        """Decompress data"""        pass
+        """Decompress data"""
+        pass
     
     @abstractmethod
     def get_optimal_level(self, content_type: ContentType, size: int) -> int:
-        """Get optimal compression level for content"""        pass
+        """Get optimal compression level for content"""
+        pass
 
 
 class GzipCompressionAlgorithm(CompressionAlgorithm):
-    """GZIP compression implementation"""    
+    """GZIP compression implementation"""
+    
     async def compress(self, data: bytes, level: int = 6) -> bytes:
-        """Compress using GZIP"""        return gzip.compress(data, compresslevel=level)
+        """Compress using GZIP"""
+        return gzip.compress(data, compresslevel=level)
     
     async def decompress(self, data: bytes) -> bytes:
-        """Decompress GZIP data"""        return gzip.decompress(data)
+        """Decompress GZIP data"""
+        return gzip.decompress(data)
     
     def get_optimal_level(self, content_type: ContentType, size: int) -> int:
-        """Get optimal GZIP level"""        if content_type == ContentType.TEXT:
+        """Get optimal GZIP level"""
+        if content_type == ContentType.TEXT:
             return 9  # Best compression for text
         elif content_type in [ContentType.AUDIO, ContentType.VIDEO]:
             return 1  # Fast compression for media
@@ -154,15 +169,19 @@ class GzipCompressionAlgorithm(CompressionAlgorithm):
 
 
 class ZlibCompressionAlgorithm(CompressionAlgorithm):
-    """ZLIB compression implementation"""    
+    """ZLIB compression implementation"""
+    
     async def compress(self, data: bytes, level: int = 6) -> bytes:
-        """Compress using ZLIB"""        return zlib.compress(data, level=level)
+        """Compress using ZLIB"""
+        return zlib.compress(data, level=level)
     
     async def decompress(self, data: bytes) -> bytes:
-        """Decompress ZLIB data"""        return zlib.decompress(data)
+        """Decompress ZLIB data"""
+        return zlib.decompress(data)
     
     def get_optimal_level(self, content_type: ContentType, size: int) -> int:
-        """Get optimal ZLIB level"""        if size < 1024:  # Small files
+        """Get optimal ZLIB level"""
+        if size < 1024:  # Small files
             return 1
         elif size > 100 * 1024**2:  # Large files
             return 3
@@ -171,41 +190,51 @@ class ZlibCompressionAlgorithm(CompressionAlgorithm):
 
 
 class LzmaCompressionAlgorithm(CompressionAlgorithm):
-    """LZMA compression implementation"""    
+    """LZMA compression implementation"""
+    
     async def compress(self, data: bytes, level: int = 6) -> bytes:
-        """Compress using LZMA"""        return lzma.compress(data, preset=level)
+        """Compress using LZMA"""
+        return lzma.compress(data, preset=level)
     
     async def decompress(self, data: bytes) -> bytes:
-        """Decompress LZMA data"""        return lzma.decompress(data)
+        """Decompress LZMA data"""
+        return lzma.decompress(data)
     
     def get_optimal_level(self, content_type: ContentType, size: int) -> int:
-        """Get optimal LZMA level"""        if content_type == ContentType.TEXT:
+        """Get optimal LZMA level"""
+        if content_type == ContentType.TEXT:
             return 9  # Best compression for text
         else:
             return 6
 
 
 class Bzip2CompressionAlgorithm(CompressionAlgorithm):
-    """BZIP2 compression implementation"""    
+    """BZIP2 compression implementation"""
+    
     async def compress(self, data: bytes, level: int = 6) -> bytes:
-        """Compress using BZIP2"""        return bz2.compress(data, compresslevel=level)
+        """Compress using BZIP2"""
+        return bz2.compress(data, compresslevel=level)
     
     async def decompress(self, data: bytes) -> bytes:
-        """Decompress BZIP2 data"""        return bz2.decompress(data)
+        """Decompress BZIP2 data"""
+        return bz2.decompress(data)
     
     def get_optimal_level(self, content_type: ContentType, size: int) -> int:
-        """Get optimal BZIP2 level"""        return 9  # BZIP2 is best at highest level
+        """Get optimal BZIP2 level"""
+        return 9  # BZIP2 is best at highest level
 
 
 class AdaptiveCompressionStrategy:
-    """Adaptive compression strategy selector"""    
+    """Adaptive compression strategy selector"""
+    
     def __init__(self):
         self.performance_history: Dict[str, List[CompressionMetrics]] = {}
         self.content_profiles: Dict[ContentType, CompressionProfile] = {}
         self._initialize_default_profiles()
     
     def _initialize_default_profiles(self):
-        """Initialize default compression profiles"""        self.content_profiles = {
+        """Initialize default compression profiles"""
+        self.content_profiles = {
             ContentType.TEXT: CompressionProfile(
                 profile_id="text_default",
                 name="Text Optimized",
@@ -244,7 +273,8 @@ class AdaptiveCompressionStrategy:
         }
     
     async def select_method(self, content_type: ContentType, data_size: int) -> Tuple[CompressionMethod, int]:
-        """Select optimal compression method and level"""        profile = self.content_profiles.get(content_type, self.content_profiles[ContentType.BINARY])
+        """Select optimal compression method and level"""
+        profile = self.content_profiles.get(content_type, self.content_profiles[ContentType.BINARY])
         
         # Check performance history for this content type
         if profile.adaptive_enabled and content_type.value in self.performance_history:
@@ -257,7 +287,8 @@ class AdaptiveCompressionStrategy:
         return method, level
     
     async def _select_adaptive_method(self, content_type: ContentType, data_size: int) -> Tuple[CompressionMethod, int]:
-        """Select method based on performance history"""        history = self.performance_history[content_type.value]
+        """Select method based on performance history"""
+        history = self.performance_history[content_type.value]
         
         # Find best performing method for similar data sizes
         size_tolerance = 0.2  # 20% size tolerance
@@ -303,7 +334,8 @@ class AdaptiveCompressionStrategy:
         return best_method or CompressionMethod.GZIP, 6
     
     def _get_level_value(self, level: CompressionLevel) -> int:
-        """Convert compression level enum to integer"""        if level == CompressionLevel.FAST:
+        """Convert compression level enum to integer"""
+        if level == CompressionLevel.FAST:
             return 1
         elif level == CompressionLevel.BALANCED:
             return 6
@@ -313,7 +345,8 @@ class AdaptiveCompressionStrategy:
             return 6
     
     async def record_performance(self, metrics: CompressionMetrics):
-        """Record compression performance for future optimization"""        content_key = "unknown"  # In real implementation, derive from context
+        """Record compression performance for future optimization"""
+        content_key = "unknown"  # In real implementation, derive from context
         
         if content_key not in self.performance_history:
             self.performance_history[content_key] = []
@@ -326,11 +359,13 @@ class AdaptiveCompressionStrategy:
 
 
 class ArchivalCompressionManager:
-    """    Advanced compression management for archival content.
+    """
+    Advanced compression management for archival content.
     
     Provides intelligent compression with adaptive algorithm selection,
     performance optimization, and content-type specific strategies.
-    """    
+    """
+    
     def __init__(self):
         self.algorithms = {
             CompressionMethod.GZIP: GzipCompressionAlgorithm(),
@@ -356,7 +391,8 @@ class ArchivalCompressionManager:
         method: Optional[CompressionMethod] = None,
         level: Optional[int] = None
     ) -> Tuple[bytes, CompressionMetrics]:
-        """        Compress content with optimal settings.
+        """
+        Compress content with optimal settings.
         
         Args:
             data: Raw content data
@@ -366,7 +402,8 @@ class ArchivalCompressionManager:
             
         Returns:
             Tuple of compressed data and metrics
-        """        try:
+        """
+        try:
             start_time = datetime.utcnow()
             
             # Generate cache key
@@ -440,7 +477,8 @@ class ArchivalCompressionManager:
         verify_integrity: bool = True,
         expected_hash: Optional[str] = None
     ) -> Tuple[bytes, float]:
-        """        Decompress content and verify integrity.
+        """
+        Decompress content and verify integrity.
         
         Args:
             compressed_data: Compressed content data
@@ -450,7 +488,8 @@ class ArchivalCompressionManager:
             
         Returns:
             Tuple of decompressed data and decompression time
-        """        try:
+        """
+        try:
             start_time = datetime.utcnow()
             
             # Decompress data
@@ -487,7 +526,8 @@ class ArchivalCompressionManager:
         data: bytes,
         content_type: ContentType = ContentType.BINARY
     ) -> Dict[CompressionMethod, CompressionMetrics]:
-        """        Analyze compression efficiency across all methods.
+        """
+        Analyze compression efficiency across all methods.
         
         Args:
             data: Content to analyze
@@ -495,7 +535,8 @@ class ArchivalCompressionManager:
             
         Returns:
             Dictionary mapping methods to their metrics
-        """        try:
+        """
+        try:
             results = {}
             
             for method in CompressionMethod:
@@ -531,7 +572,8 @@ class ArchivalCompressionManager:
         content_type: ContentType,
         sample_data: List[bytes]
     ) -> CompressionProfile:
-        """        Optimize compression profile for a content type using sample data.
+        """
+        Optimize compression profile for a content type using sample data.
         
         Args:
             content_type: Content type to optimize
@@ -539,7 +581,8 @@ class ArchivalCompressionManager:
             
         Returns:
             Optimized compression profile
-        """        try:
+        """
+        try:
             method_performance = {}
             
             # Test each method on sample data
@@ -610,7 +653,8 @@ class ArchivalCompressionManager:
             )
     
     async def get_compression_stats(self) -> Dict[str, Any]:
-        """Get comprehensive compression statistics"""        try:
+        """Get comprehensive compression statistics"""
+        try:
             total_compressions = 0
             total_original_size = 0
             total_compressed_size = 0
@@ -654,7 +698,8 @@ class ArchivalCompressionManager:
         content_type: ContentType,
         level: int
     ) -> Tuple[bytes, CompressionMethod]:
-        """Compress using adaptive method selection"""        # Test multiple methods and select the best one
+        """Compress using adaptive method selection"""
+        # Test multiple methods and select the best one
         best_compressed = data
         best_method = CompressionMethod.NONE
         best_ratio = 1.0
@@ -684,14 +729,16 @@ class ArchivalCompressionManager:
         method: Optional[CompressionMethod],
         level: Optional[int]
     ) -> str:
-        """Generate cache key for compression result"""        content_hash = hashlib.sha256(data).hexdigest()
+        """Generate cache key for compression result"""
+        content_hash = hashlib.sha256(data).hexdigest()
         method_str = method.value if method else "auto"
         level_str = str(level) if level else "auto"
         
         return f"{content_hash}_{content_type.value}_{method_str}_{level_str}"
     
     def _should_cache(self, metrics: CompressionMetrics) -> bool:
-        """Determine if compression result should be cached"""        # Cache if good compression ratio and reasonable size
+        """Determine if compression result should be cached"""
+        # Cache if good compression ratio and reasonable size
         return (
             metrics.compression_ratio < 0.8 and  # Good compression
             metrics.compressed_size < 10 * 1024**2 and  # Not too large (10MB)
@@ -699,7 +746,8 @@ class ArchivalCompressionManager:
         )
     
     async def _cache_result(self, cache_key: str, compressed_data: bytes):
-        """Cache compression result"""        if cache_key not in self.compression_cache:
+        """Cache compression result"""
+        if cache_key not in self.compression_cache:
             self.compression_cache[cache_key] = compressed_data
             self.current_cache_size += len(compressed_data)
             

@@ -10,7 +10,8 @@ Manages Redis connections for caching, sessions, and real-time operations:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Union, Set
 from dataclasses import dataclass
@@ -24,7 +25,8 @@ from redis.asyncio.sentinel import Sentinel
 
 @dataclass
 class RedisConfig:
-    """Redis connection configuration"""    host: str = "localhost"
+    """Redis connection configuration"""
+    host: str = "localhost"
     port: int = 6379
     database: int = 0
     password: Optional[str] = None
@@ -42,7 +44,8 @@ class RedisConfig:
 
 
 class RedisConnectionHandler:
-    """    Redis connection handler for IA Influencer platform.
+    """
+    Redis connection handler for IA Influencer platform.
     
     Manages Redis for:
     - Session management and authentication
@@ -52,7 +55,8 @@ class RedisConnectionHandler:
     - Queue management for AI processing
     - Revenue tracking cache
     - Collaboration matching cache
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = RedisConfig(**config)
         self.logger = logging.getLogger(__name__)
@@ -71,7 +75,8 @@ class RedisConnectionHandler:
         self.last_health_check = None
     
     async def initialize(self) -> None:
-        """Initialize Redis connection"""        try:
+        """Initialize Redis connection"""
+        try:
             self.logger.info("Initializing Redis connection...")
             
             if self.config.sentinel_hosts:
@@ -89,7 +94,8 @@ class RedisConnectionHandler:
             raise
     
     async def _initialize_direct(self) -> None:
-        """Initialize direct Redis connection"""        self.connection_pool = ConnectionPool(
+        """Initialize direct Redis connection"""
+        self.connection_pool = ConnectionPool(
             host=self.config.host,
             port=self.config.port,
             db=self.config.database,
@@ -105,7 +111,8 @@ class RedisConnectionHandler:
         self.redis_client = Redis(connection_pool=self.connection_pool)
     
     async def _initialize_sentinel(self) -> None:
-        """Initialize Redis Sentinel for high availability"""        if not self.config.sentinel_hosts or not self.config.sentinel_service_name:
+        """Initialize Redis Sentinel for high availability"""
+        if not self.config.sentinel_hosts or not self.config.sentinel_service_name:
             raise ValueError("Sentinel configuration incomplete")
         
         sentinel_list = [(host['host'], host['port']) for host in self.config.sentinel_hosts]
@@ -124,20 +131,23 @@ class RedisConnectionHandler:
         )
     
     async def get_connection(self) -> Redis:
-        """Get Redis connection"""        if not self.redis_client:
+        """Get Redis connection"""
+        if not self.redis_client:
             raise RuntimeError("Redis client not initialized")
         
         self.connection_count += 1
         return self.redis_client
     
     async def get_tenant_connection(self, tenant_id: str) -> Redis:
-        """Get tenant-specific Redis connection"""        if tenant_id not in self.tenant_clients:
+        """Get tenant-specific Redis connection"""
+        if tenant_id not in self.tenant_clients:
             await self._create_tenant_client(tenant_id)
         
         return self.tenant_clients[tenant_id]
     
     async def _create_tenant_client(self, tenant_id: str) -> None:
-        """Create Redis client for specific tenant"""        # Calculate tenant database number
+        """Create Redis client for specific tenant"""
+        # Calculate tenant database number
         tenant_db = self.config.tenant_database_offset + hash(tenant_id) % 14  # Redis has 16 DBs by default
         
         if self.sentinel:
@@ -165,7 +175,8 @@ class RedisConnectionHandler:
     
     # Core Redis operations
     async def get(self, key: str, tenant_id: Optional[str] = None) -> Optional[str]:
-        """Get value by key"""        try:
+        """Get value by key"""
+        try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.get(key)
             self.command_count += 1
@@ -184,7 +195,8 @@ class RedisConnectionHandler:
                  nx: bool = False,
                  xx: bool = False,
                  tenant_id: Optional[str] = None) -> bool:
-        """Set value with optional expiration"""        try:
+        """Set value with optional expiration"""
+        try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.set(key, value, ex=ex, px=px, nx=nx, xx=xx)
             self.command_count += 1
@@ -196,7 +208,8 @@ class RedisConnectionHandler:
             raise
     
     async def delete(self, *keys: str, tenant_id: Optional[str] = None) -> int:
-        """Delete keys"""        try:
+        """Delete keys"""
+        try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.delete(*keys)
             self.command_count += 1
@@ -208,7 +221,8 @@ class RedisConnectionHandler:
             raise
     
     async def exists(self, *keys: str, tenant_id: Optional[str] = None) -> int:
-        """Check if keys exist"""        try:
+        """Check if keys exist"""
+        try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.exists(*keys)
             self.command_count += 1
@@ -220,7 +234,8 @@ class RedisConnectionHandler:
             raise
     
     async def expire(self, key: str, seconds: int, tenant_id: Optional[str] = None) -> bool:
-        """Set expiration on key"""        try:
+        """Set expiration on key"""
+        try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.expire(key, seconds)
             self.command_count += 1
@@ -237,11 +252,13 @@ class RedisConnectionHandler:
                       value: Dict[str, Any], 
                       ex: Optional[int] = None,
                       tenant_id: Optional[str] = None) -> bool:
-        """Set JSON value"""        json_value = json.dumps(value)
+        """Set JSON value"""
+        json_value = json.dumps(value)
         return await self.set(key, json_value, ex=ex, tenant_id=tenant_id)
     
     async def get_json(self, key: str, tenant_id: Optional[str] = None) -> Optional[Dict[str, Any]]:
-        """Get JSON value"""        value = await self.get(key, tenant_id)
+        """Get JSON value"""
+        value = await self.get(key, tenant_id)
         if value:
             try:
                 return json.loads(value)
@@ -254,7 +271,8 @@ class RedisConnectionHandler:
                   name: str, 
                   mapping: Dict[str, Any], 
                   tenant_id: Optional[str] = None) -> int:
-        """Set hash field(s)"""        try:
+        """Set hash field(s)"""
+        try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.hset(name, mapping=mapping)
             self.command_count += 1
@@ -266,7 +284,8 @@ class RedisConnectionHandler:
             raise
     
     async def hget(self, name: str, key: str, tenant_id: Optional[str] = None) -> Optional[str]:
-        """Get hash field value"""        try:
+        """Get hash field value"""
+        try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.hget(name, key)
             self.command_count += 1
@@ -278,7 +297,8 @@ class RedisConnectionHandler:
             raise
     
     async def hgetall(self, name: str, tenant_id: Optional[str] = None) -> Dict[str, str]:
-        """Get all hash fields"""        try:
+        """Get all hash fields"""
+        try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.hgetall(name)
             self.command_count += 1
@@ -291,7 +311,8 @@ class RedisConnectionHandler:
     
     # List operations
     async def lpush(self, name: str, *values, tenant_id: Optional[str] = None) -> int:
-        """Push values to left of list"""        try:
+        """Push values to left of list"""
+        try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.lpush(name, *values)
             self.command_count += 1
@@ -303,7 +324,8 @@ class RedisConnectionHandler:
             raise
     
     async def rpop(self, name: str, tenant_id: Optional[str] = None) -> Optional[str]:
-        """Pop value from right of list"""        try:
+        """Pop value from right of list"""
+        try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.rpop(name)
             self.command_count += 1
@@ -315,7 +337,8 @@ class RedisConnectionHandler:
             raise
     
     async def llen(self, name: str, tenant_id: Optional[str] = None) -> int:
-        """Get list length"""        try:
+        """Get list length"""
+        try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.llen(name)
             self.command_count += 1
@@ -328,7 +351,8 @@ class RedisConnectionHandler:
     
     # Set operations
     async def sadd(self, name: str, *values, tenant_id: Optional[str] = None) -> int:
-        """Add values to set"""        try:
+        """Add values to set"""
+        try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.sadd(name, *values)
             self.command_count += 1
@@ -340,7 +364,8 @@ class RedisConnectionHandler:
             raise
     
     async def smembers(self, name: str, tenant_id: Optional[str] = None) -> Set[str]:
-        """Get all set members"""        try:
+        """Get all set members"""
+        try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.smembers(name)
             self.command_count += 1
@@ -353,7 +378,8 @@ class RedisConnectionHandler:
     
     # Pub/Sub operations
     async def publish(self, channel: str, message: str, tenant_id: Optional[str] = None) -> int:
-        """Publish message to channel"""        try:
+        """Publish message to channel"""
+        try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.publish(channel, message)
             self.command_count += 1
@@ -365,7 +391,8 @@ class RedisConnectionHandler:
             raise
     
     async def health_check(self) -> Dict[str, Any]:
-        """Check Redis connection health"""        try:
+        """Check Redis connection health"""
+        try:
             start_time = datetime.utcnow()
             
             client = await self.get_connection()
@@ -405,7 +432,8 @@ class RedisConnectionHandler:
             }
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get detailed Redis metrics"""        try:
+        """Get detailed Redis metrics"""
+        try:
             client = await self.get_connection()
             info = await client.info()
             
@@ -449,7 +477,8 @@ class RedisConnectionHandler:
             return {"error": str(e)}
     
     async def shutdown(self) -> None:
-        """Shutdown Redis connections"""        self.logger.info("Shutting down Redis connections...")
+        """Shutdown Redis connections"""
+        self.logger.info("Shutting down Redis connections...")
         
         # Close tenant clients
         for tenant_id, client in self.tenant_clients.items():

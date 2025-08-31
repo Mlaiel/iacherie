@@ -20,7 +20,8 @@ Any unauthorized use, copying, modification, or distribution without explicit wr
 permission from the author is strictly prohibited and will result in immediate legal action.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -49,7 +50,8 @@ __email__ = "mlaiel@live.de"
 
 
 class DisasterRecoveryStatus(Enum):
-    """System disaster recovery status enumeration"""    HEALTHY = "healthy"
+    """System disaster recovery status enumeration"""
+    HEALTHY = "healthy"
     DEGRADED = "degraded"
     AT_RISK = "at_risk"
     CRITICAL = "critical"
@@ -58,7 +60,8 @@ class DisasterRecoveryStatus(Enum):
 
 
 class RecoveryMode(Enum):
-    """Recovery operation mode enumeration"""    PREVENTIVE = "preventive"
+    """Recovery operation mode enumeration"""
+    PREVENTIVE = "preventive"
     REACTIVE = "reactive"
     EMERGENCY = "emergency"
     FULL_RESTORE = "full_restore"
@@ -67,7 +70,8 @@ class RecoveryMode(Enum):
 
 @dataclass
 class DisasterRecoveryMetrics:
-    """Comprehensive disaster recovery metrics"""    availability_percentage: float
+    """Comprehensive disaster recovery metrics"""
+    availability_percentage: float
     current_rto_seconds: float
     current_rpo_seconds: float
     backup_success_rate: float
@@ -80,7 +84,8 @@ class DisasterRecoveryMetrics:
 
 @dataclass
 class SystemHealthReport:
-    """System health and disaster recovery readiness report"""    overall_status: DisasterRecoveryStatus
+    """System health and disaster recovery readiness report"""
+    overall_status: DisasterRecoveryStatus
     component_health: Dict[str, str]
     risk_factors: List[str]
     recommendations: List[str]
@@ -89,7 +94,8 @@ class SystemHealthReport:
 
 
 class DisasterRecoveryCoordinator:
-    """    Master coordinator for all disaster recovery operations
+    """
+    Master coordinator for all disaster recovery operations
     
     Provides unified interface for:
     - System health monitoring and reporting
@@ -97,9 +103,11 @@ class DisasterRecoveryCoordinator:
     - Multi-cloud failover orchestration
     - Business continuity planning
     - SLA compliance monitoring
-    """    
+    """
+    
     def __init__(self, config: Config):
-        """Initialize disaster recovery coordinator"""        self.config = config
+        """Initialize disaster recovery coordinator"""
+        self.config = config
         self.logger = get_logger(__name__)
         
         # Initialize core components
@@ -122,11 +130,13 @@ class DisasterRecoveryCoordinator:
         self.last_health_check = None
         
     async def initialize(self) -> bool:
-        """        Initialize all disaster recovery components
+        """
+        Initialize all disaster recovery components
         
         Returns:
             bool: True if initialization successful
-        """        try:
+        """
+        try:
             self.logger.info("Initializing IA Influencer Agent Disaster Recovery System")
             
             # Initialize all components in dependency order
@@ -161,11 +171,13 @@ class DisasterRecoveryCoordinator:
             return False
     
     async def get_system_status(self) -> SystemHealthReport:
-        """        Get comprehensive system health report
+        """
+        Get comprehensive system health report
         
         Returns:
             SystemHealthReport: Complete system status
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             await self.initialize()
             
         try:
@@ -234,11 +246,13 @@ class DisasterRecoveryCoordinator:
             )
     
     async def get_recovery_metrics(self) -> DisasterRecoveryMetrics:
-        """        Get comprehensive disaster recovery metrics
+        """
+        Get comprehensive disaster recovery metrics
         
         Returns:
             DisasterRecoveryMetrics: Current system metrics
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             await self.initialize()
             
         metrics = await self.metrics_collector.get_comprehensive_metrics()
@@ -257,14 +271,16 @@ class DisasterRecoveryCoordinator:
     
     async def execute_emergency_recovery(self, 
                                        recovery_mode: RecoveryMode = RecoveryMode.EMERGENCY) -> Dict[str, Any]:
-        """        Execute emergency recovery procedures
+        """
+        Execute emergency recovery procedures
         
         Args:
             recovery_mode: Type of recovery to perform
             
         Returns:
             Dict containing recovery operation results
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             await self.initialize()
             
         self.logger.warning(f"Executing emergency recovery in {recovery_mode.value} mode")
@@ -323,11 +339,13 @@ class DisasterRecoveryCoordinator:
             }
     
     async def perform_health_check(self) -> bool:
-        """        Perform comprehensive system health check
+        """
+        Perform comprehensive system health check
         
         Returns:
             bool: True if system is healthy
-        """        try:
+        """
+        try:
             status_report = await self.get_system_status()
             self.system_status = status_report.overall_status
             self.last_health_check = asyncio.get_event_loop().time()
@@ -354,7 +372,8 @@ class DisasterRecoveryCoordinator:
             return False
     
     def _calculate_overall_status(self, component_health: Dict[str, str]) -> DisasterRecoveryStatus:
-        """Calculate overall system status from component health"""        if not component_health:
+        """Calculate overall system status from component health"""
+        if not component_health:
             return DisasterRecoveryStatus.FAILED
             
         health_counts = {}
@@ -377,7 +396,8 @@ class DisasterRecoveryCoordinator:
     async def _generate_recommendations(self, 
                                       component_health: Dict[str, str],
                                       risk_assessment: Dict[str, Any]) -> List[str]:
-        """Generate system recommendations based on health and risk assessment"""        recommendations = []
+        """Generate system recommendations based on health and risk assessment"""
+        recommendations = []
         
         # Check for failed components
         failed_components = [
@@ -429,21 +449,25 @@ __all__ = [
 
 # Convenience function for quick system initialization
 async def initialize_disaster_recovery(config: Config) -> DisasterRecoveryCoordinator:
-    """    Convenience function to initialize disaster recovery system
+    """
+    Convenience function to initialize disaster recovery system
     
     Args:
         config: System configuration
         
     Returns:
         Initialized DisasterRecoveryCoordinator
-    """    coordinator = DisasterRecoveryCoordinator(config)
+    """
+    coordinator = DisasterRecoveryCoordinator(config)
     await coordinator.initialize()
     return coordinator
 
 
 if __name__ == "__main__":
-    """    Direct execution for testing and debugging
-    """    import sys
+    """
+    Direct execution for testing and debugging
+    """
+    import sys
     from backend.core.config import Config
     
     async def main():

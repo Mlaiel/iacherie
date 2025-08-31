@@ -21,7 +21,8 @@ Project Team Specialties:
 - Audio Engineer: Advanced audio processing and analysis
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
-"""from .rate_limiter import (
+"""
+from .rate_limiter import (
     RateLimiter,
     YouTubeRateLimiter,
     InstagramRateLimiter,
@@ -314,7 +315,8 @@ PLATFORM_CONFIGS = {
 }
 
 def get_platform_config(platform: str) -> dict:
-    """Get configuration for specific platform."""    return PLATFORM_CONFIGS.get(platform, {
+    """Get configuration for specific platform."""
+    return PLATFORM_CONFIGS.get(platform, {
         "base_delay": 1.0,
         "max_requests_per_minute": 60,
         "burst_limit": 5,
@@ -322,7 +324,8 @@ def get_platform_config(platform: str) -> dict:
     })
 
 def create_rate_limiter(platform: str):
-    """Factory function to create appropriate rate limiter."""    rate_limiter_map = {
+    """Factory function to create appropriate rate limiter."""
+    rate_limiter_map = {
         "youtube": YouTubeRateLimiter,
         "instagram": InstagramRateLimiter,
         "tiktok": TikTokRateLimiter,
@@ -338,7 +341,8 @@ def create_rate_limiter(platform: str):
     return limiter_class()
 
 def validate_crawler_config(config: dict) -> bool:
-    """Validate crawler configuration."""    required_fields = ['platform', 'max_results', 'check_interval']
+    """Validate crawler configuration."""
+    required_fields = ['platform', 'max_results', 'check_interval']
     
     for field in required_fields:
         if field not in config:
@@ -354,7 +358,8 @@ def validate_crawler_config(config: dict) -> bool:
     return True
 
 async def test_platform_connectivity(platform: str) -> bool:
-    """Test connectivity to specific platform."""    test_urls = {
+    """Test connectivity to specific platform."""
+    test_urls = {
         "youtube": "https://www.youtube.com",
         "instagram": "https://www.instagram.com",
         "tiktok": "https://www.tiktok.com",

@@ -9,7 +9,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import uuid
@@ -27,18 +28,21 @@ from .base_agent import BaseAIAgent, AgentCapability, AgentConfiguration, AgentT
 # Mock engines for testing - would be replaced with actual implementations
 class CreativeVisionGenerator:
     async def initialize(self): 
-        """Initialize creative vision generator"""        logger.info("CreativeVisionGenerator initialized")
+        """Initialize creative vision generator"""
+        logger.info("CreativeVisionGenerator initialized")
         self.vision_models_loaded = True
         self.creativity_algorithms_ready = True
 
 class StyleAnalyzer:
     async def initialize(self): 
-        """Initialize style analyzer"""        logger.info("StyleAnalyzer initialized")
+        """Initialize style analyzer"""
+        logger.info("StyleAnalyzer initialized")
         self.style_models_loaded = True
         self.analysis_ready = True
     
     async def recommend_optimal_style(self, **kwargs): 
-        """Recommend optimal style based on analysis"""        return {
+        """Recommend optimal style based on analysis"""
+        return {
             'recommended_style': 'modern', 
             'recommended_mood': 'energetic', 
             'confidence': 0.9,
@@ -48,12 +52,14 @@ class StyleAnalyzer:
 
 class ColorHarmonyEngine:
     async def initialize(self): 
-        """Initialize color harmony engine"""        logger.info("ColorHarmonyEngine initialized")
+        """Initialize color harmony engine"""
+        logger.info("ColorHarmonyEngine initialized")
         self.color_theory_loaded = True
         self.harmony_algorithms_ready = True
     
     async def generate_base_palette(self, colors, scheme): 
-        """Generate base color palette"""        # Mock palette generation
+        """Generate base color palette"""
+        # Mock palette generation
         base_palettes = {
             'complementary': ['#FF6B6B', '#4ECDC4'],
             'triadic': ['#FF6B6B', '#4ECDC4', '#45B7D1'],
@@ -64,18 +70,21 @@ class ColorHarmonyEngine:
 
 class CompositionAnalyzer:
     async def initialize(self): 
-        """Initialize composition analyzer"""        logger.info("CompositionAnalyzer initialized")
+        """Initialize composition analyzer"""
+        logger.info("CompositionAnalyzer initialized")
         self.composition_models_loaded = True
         self.layout_analysis_ready = True
 
 class CreativePredictionEngine:
     async def initialize(self): 
-        """Initialize creative prediction engine"""        logger.info("CreativePredictionEngine initialized")
+        """Initialize creative prediction engine"""
+        logger.info("CreativePredictionEngine initialized")
         self.prediction_models_loaded = True
         self.success_algorithms_ready = True
     
     async def predict_creative_success(self, asset, vision, alignment): 
-        """Predict creative success probability"""        # Mock success prediction
+        """Predict creative success probability"""
+        # Mock success prediction
         base_score = 0.8
         if alignment and alignment > 0.7:
             base_score += 0.1
@@ -93,7 +102,8 @@ logger = logging.getLogger(__name__)
 
 
 class CreativeStyle(Enum):
-    """Creative style categories"""    MINIMALIST = "minimalist"
+    """Creative style categories"""
+    MINIMALIST = "minimalist"
     MAXIMALIST = "maximalist"
     VINTAGE = "vintage"
     MODERN = "modern"
@@ -108,7 +118,8 @@ class CreativeStyle(Enum):
 
 
 class ColorScheme(Enum):
-    """Color scheme types"""    MONOCHROMATIC = "monochromatic"
+    """Color scheme types"""
+    MONOCHROMATIC = "monochromatic"
     ANALOGOUS = "analogous"
     COMPLEMENTARY = "complementary"
     TRIADIC = "triadic"
@@ -118,7 +129,8 @@ class ColorScheme(Enum):
 
 
 class CreativeMood(Enum):
-    """Creative mood categories"""    ENERGETIC = "energetic"
+    """Creative mood categories"""
+    ENERGETIC = "energetic"
     CALM = "calm"
     DRAMATIC = "dramatic"
     PLAYFUL = "playful"
@@ -133,7 +145,8 @@ class CreativeMood(Enum):
 
 
 class ContentFormat(Enum):
-    """Content format types"""    IMAGE = "image"
+    """Content format types"""
+    IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
     TEXT = "text"
@@ -143,7 +156,8 @@ class ContentFormat(Enum):
 
 @dataclass
 class ColorPalette:
-    """Advanced color palette structure"""    palette_id: str
+    """Advanced color palette structure"""
+    palette_id: str
     name: str
     scheme: ColorScheme
     primary_colors: List[str]  # Hex codes
@@ -159,7 +173,8 @@ class ColorPalette:
 
 @dataclass
 class CreativeVision:
-    """Comprehensive creative vision structure"""    vision_id: str
+    """Comprehensive creative vision structure"""
+    vision_id: str
     project_title: str
     creative_brief: str
     target_audience: Dict[str, Any]
@@ -183,7 +198,8 @@ class CreativeVision:
 
 @dataclass
 class CreativeReview:
-    """Creative review and feedback"""    review_id: str
+    """Creative review and feedback"""
+    review_id: str
     vision_id: str
     reviewer: str
     review_score: float  # 0-1 scale
@@ -197,7 +213,8 @@ class CreativeReview:
 
 @dataclass
 class CreativeAsset:
-    """Creative asset structure"""    asset_id: str
+    """Creative asset structure"""
+    asset_id: str
     vision_id: str
     asset_type: str
     file_path: str
@@ -210,7 +227,8 @@ class CreativeAsset:
 
 
 class CreativeDirectorAgent(BaseAIAgent):
-    """    Advanced AI agent for comprehensive creative direction and artistic guidance.
+    """
+    Advanced AI agent for comprehensive creative direction and artistic guidance.
     
     Capabilities:
     - Creative vision development and strategy
@@ -221,7 +239,8 @@ class CreativeDirectorAgent(BaseAIAgent):
     - Brand-aligned creative guidance
     - Trend-aware creative recommendations
     - Creative workflow optimization
-    """    
+    """
+    
     def __init__(self, config: AgentConfiguration):
         # Ensure required capabilities
         required_capabilities = {
@@ -279,7 +298,8 @@ class CreativeDirectorAgent(BaseAIAgent):
         logger.info("CreativeDirectorAgent initialized successfully")
 
     async def initialize(self) -> bool:
-        """Initialize creative director"""        try:
+        """Initialize creative director"""
+        try:
             await super().initialize()
             
             # Initialize creative engines
@@ -306,7 +326,8 @@ class CreativeDirectorAgent(BaseAIAgent):
         creative_brief: Dict[str, Any],
         constraints: Optional[Dict[str, Any]] = None
     ) -> CreativeVision:
-        """        Develop comprehensive creative vision from brief
+        """
+        Develop comprehensive creative vision from brief
         
         Args:
             creative_brief: Project creative brief
@@ -314,7 +335,8 @@ class CreativeDirectorAgent(BaseAIAgent):
             
         Returns:
             Complete creative vision
-        """        try:
+        """
+        try:
             logger.info(f"Developing creative vision for project: {creative_brief.get('project_title')}")
             
             constraints = constraints or {}
@@ -404,7 +426,8 @@ class CreativeDirectorAgent(BaseAIAgent):
         asset_data: Dict[str, Any],
         vision_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """        Analyze creative quality of assets
+        """
+        Analyze creative quality of assets
         
         Args:
             asset_data: Asset to analyze
@@ -412,7 +435,8 @@ class CreativeDirectorAgent(BaseAIAgent):
             
         Returns:
             Comprehensive quality analysis
-        """        try:
+        """
+        try:
             logger.info(f"Analyzing creative quality for asset: {asset_data.get('id')}")
             
             quality_scores = {}
@@ -492,7 +516,8 @@ class CreativeDirectorAgent(BaseAIAgent):
         inspiration: Dict[str, Any],
         scheme_type: Optional[ColorScheme] = None
     ) -> ColorPalette:
-        """        Generate sophisticated color palette
+        """
+        Generate sophisticated color palette
         
         Args:
             inspiration: Inspiration sources and mood requirements
@@ -500,7 +525,8 @@ class CreativeDirectorAgent(BaseAIAgent):
             
         Returns:
             Generated color palette
-        """        try:
+        """
+        try:
             logger.info("Generating sophisticated color palette")
             
             # Analyze inspiration sources
@@ -562,7 +588,8 @@ class CreativeDirectorAgent(BaseAIAgent):
         vision_id: str,
         guidance_type: str = "comprehensive"
     ) -> Dict[str, Any]:
-        """        Provide detailed creative guidance for asset development
+        """
+        Provide detailed creative guidance for asset development
         
         Args:
             asset_draft: Current asset draft
@@ -571,7 +598,8 @@ class CreativeDirectorAgent(BaseAIAgent):
             
         Returns:
             Comprehensive creative guidance
-        """        try:
+        """
+        try:
             logger.info(f"Providing creative guidance for vision: {vision_id}")
             
             if vision_id not in self.creative_visions:
@@ -640,7 +668,8 @@ class CreativeDirectorAgent(BaseAIAgent):
     # Private helper methods for creative analysis
 
     async def _analyze_creative_requirements(self, creative_brief: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze creative brief to extract key requirements"""        requirements = {
+        """Analyze creative brief to extract key requirements"""
+        requirements = {
             'objectives': creative_brief.get('objectives', []),
             'target_audience': creative_brief.get('target_audience', {}),
             'brand_guidelines': creative_brief.get('brand_guidelines', {}),
@@ -659,7 +688,8 @@ class CreativeDirectorAgent(BaseAIAgent):
         requirements: Dict[str, Any], 
         constraints: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate style recommendations based on requirements"""        
+        """Generate style recommendations based on requirements"""
+        
         # Analyze target audience preferences
         audience_style_preferences = await self._analyze_audience_style_preferences(
             requirements['target_audience']
@@ -688,7 +718,8 @@ class CreativeDirectorAgent(BaseAIAgent):
         }
 
     async def can_handle_task(self, task_type: str, context: Dict[str, Any]) -> bool:
-        """Check if agent can handle creative direction task"""        supported_tasks = [
+        """Check if agent can handle creative direction task"""
+        supported_tasks = [
             "develop_creative_vision",
             "analyze_creative_quality", 
             "generate_color_palette",

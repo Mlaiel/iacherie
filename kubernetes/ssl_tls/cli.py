@@ -12,7 +12,8 @@ Team Expertise:
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized copying, distribution, or use without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""import sys
+"""
+import sys
 import json
 import argparse
 import logging
@@ -42,7 +43,8 @@ logger = logging.getLogger(__name__)
 
 
 class SSLCLIManager:
-    """Industrial-grade SSL/TLS Command Line Interface Manager"""    
+    """Industrial-grade SSL/TLS Command Line Interface Manager"""
+    
     def __init__(self):
         self.cert_manager = None
         self.letsencrypt_manager = None
@@ -55,7 +57,8 @@ class SSLCLIManager:
         self._setup_components()
     
     def _setup_components(self):
-        """Initialize all SSL/TLS components"""        try:
+        """Initialize all SSL/TLS components"""
+        try:
             self.cert_manager = create_certificate_manager()
             self.tls_config_manager = create_tls_config_manager()
             self.cert_monitor = create_certificate_monitor()
@@ -67,7 +70,8 @@ class SSLCLIManager:
 @click.argument('config_file')
 @click.pass_context
 def create(ctx, config_file):
-    """Create TLS configuration file"""    ssl_manager = ctx.obj['ssl_manager']
+    """Create TLS configuration file"""
+    ssl_manager = ctx.obj['ssl_manager']
     config_path = Path(config_file)
     
     try:
@@ -104,7 +108,8 @@ def create(ctx, config_file):
 
 
 def setup_logging(level: str = "INFO", log_file: Optional[str] = None) -> None:
-    """Setup industrial-grade logging configuration"""    log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    """Setup industrial-grade logging configuration"""
+    log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     handlers = [logging.StreamHandler(sys.stdout)]
     
     if log_file:
@@ -124,39 +129,46 @@ def setup_logging(level: str = "INFO", log_file: Optional[str] = None) -> None:
 @click.option('--log-file', default=None, help='Log file path')
 @click.pass_context
 def cli(ctx, log_level, log_file):
-    """IA Influencer Agent SSL/TLS Management CLI"""    ctx.ensure_object(dict)
+    """IA Influencer Agent SSL/TLS Management CLI"""
+    ctx.ensure_object(dict)
     setup_logging(log_level, log_file)
     ctx.obj['ssl_manager'] = SSLCLIManager()
 
 
 @cli.group()
 def certificate():
-    """Certificate management commands"""    pass
+    """Certificate management commands"""
+    pass
 
 
 @cli.group()
 def scan():
-    """SSL/TLS security scanning commands"""    pass
+    """SSL/TLS security scanning commands"""
+    pass
 
 
 @cli.group()
 def config():
-    """TLS configuration management commands"""    pass
+    """TLS configuration management commands"""
+    pass
 
 
 @cli.group()
 def monitor():
-    """Certificate monitoring commands"""    pass
+    """Certificate monitoring commands"""
+    pass
 
 
 @cli.group()
 def convert():
-    """Certificate conversion commands"""    pass
+    """Certificate conversion commands"""
+    pass
 
 
 @cli.group()
 def test():
-    """SSL/TLS testing commands"""    pass
+    """SSL/TLS testing commands"""
+    pass
 
 
 @certificate.command()
@@ -167,7 +179,8 @@ def test():
 @click.option('--staging', is_flag=True, help='Use staging environment')
 @click.pass_context
 def issue(ctx, domain, provider, challenge, email, staging):
-    """Issue a new SSL certificate"""    ssl_manager = ctx.obj['ssl_manager']
+    """Issue a new SSL certificate"""
+    ssl_manager = ctx.obj['ssl_manager']
     
     with Progress(
         SpinnerColumn(),
@@ -210,7 +223,8 @@ def issue(ctx, domain, provider, challenge, email, staging):
 @click.option('--days', default=30, help='Days until expiry to renew')
 @click.pass_context
 def renew(ctx, domain, days):
-    """Renew SSL certificate"""    ssl_manager = ctx.obj['ssl_manager']
+    """Renew SSL certificate"""
+    ssl_manager = ctx.obj['ssl_manager']
     
     with Progress(
         SpinnerColumn(),
@@ -237,7 +251,8 @@ def renew(ctx, domain, days):
 @click.argument('domain')
 @click.pass_context
 def revoke(ctx, domain):
-    """Revoke SSL certificate"""    ssl_manager = ctx.obj['ssl_manager']
+    """Revoke SSL certificate"""
+    ssl_manager = ctx.obj['ssl_manager']
     
     if not click.confirm(f"Are you sure you want to revoke the certificate for {domain}?"):
         return
@@ -259,7 +274,8 @@ def revoke(ctx, domain):
 @certificate.command()
 @click.pass_context
 def list_certs(ctx):
-    """List all managed certificates"""    ssl_manager = ctx.obj['ssl_manager']
+    """List all managed certificates"""
+    ssl_manager = ctx.obj['ssl_manager']
     
     try:
         certificates = ssl_manager.cert_manager.list_certificates()
@@ -305,7 +321,8 @@ def list_certs(ctx):
 @click.option('--unit', default='IT Department', help='Organizational unit')
 @click.pass_context
 def self_signed(ctx, domain, key_size, validity_days, country, state, city, organization, unit):
-    """Create self-signed certificate"""    ssl_manager = ctx.obj['ssl_manager']
+    """Create self-signed certificate"""
+    ssl_manager = ctx.obj['ssl_manager']
     
     with Progress(
         SpinnerColumn(),
@@ -352,7 +369,8 @@ def self_signed(ctx, domain, key_size, validity_days, country, state, city, orga
 @click.option('--timeout', default=10, help='Connection timeout')
 @click.pass_context
 def host(ctx, host, port, timeout):
-    """Scan SSL/TLS configuration of a host"""    ssl_manager = ctx.obj['ssl_manager']
+    """Scan SSL/TLS configuration of a host"""
+    ssl_manager = ctx.obj['ssl_manager']
     
     with Progress(
         SpinnerColumn(),
@@ -420,7 +438,8 @@ def host(ctx, host, port, timeout):
 @click.argument('config_file')
 @click.pass_context
 def bulk(ctx, config_file):
-    """Scan multiple hosts from configuration file"""    ssl_manager = ctx.obj['ssl_manager']
+    """Scan multiple hosts from configuration file"""
+    ssl_manager = ctx.obj['ssl_manager']
     config_path = Path(config_file)
     
     if not config_path.exists():
@@ -576,7 +595,8 @@ def bulk(ctx, config_file):
 
 
 def cmd_validate_config(args) -> None:
-    """Validate SSL configuration"""    cert_path = Path(args.certificate)
+    """Validate SSL configuration"""
+    cert_path = Path(args.certificate)
     key_path = Path(args.private_key)
     key_password = args.key_password.encode() if args.key_password else None
     
@@ -602,7 +622,8 @@ def cmd_validate_config(args) -> None:
 
 
 def cmd_scan_host(args) -> None:
-    """Scan SSL configuration of remote host"""    scanner = SSLScanner(timeout=args.timeout)
+    """Scan SSL configuration of remote host"""
+    scanner = SSLScanner(timeout=args.timeout)
     result = scanner.scan_host(args.hostname, args.port)
     
     if args.output_format == 'json':
@@ -642,7 +663,8 @@ def cmd_scan_host(args) -> None:
 
 
 def cmd_generate_csr(args) -> None:
-    """Generate Certificate Signing Request"""    config = {
+    """Generate Certificate Signing Request"""
+    config = {
         'cert_directory': str(Path(args.output_dir) / 'certs'),
         'key_directory': str(Path(args.output_dir) / 'private'),
         'ca_directory': str(Path(args.output_dir) / 'ca')
@@ -688,7 +710,8 @@ def cmd_generate_csr(args) -> None:
 
 
 def cmd_request_letsencrypt(args) -> None:
-    """Request Let's Encrypt certificate"""    config = LetsEncryptConfig(
+    """Request Let's Encrypt certificate"""
+    config = LetsEncryptConfig(
         email=args.email,
         staging=args.staging,
         key_size=args.key_size,
@@ -719,7 +742,8 @@ def cmd_request_letsencrypt(args) -> None:
 
 
 def cmd_monitor_certificates(args) -> None:
-    """Monitor certificate endpoints"""    config_path = Path(args.config) if args.config else None
+    """Monitor certificate endpoints"""
+    config_path = Path(args.config) if args.config else None
     monitor = create_certificate_monitor(config_path)
     
     if args.add_endpoint:
@@ -775,7 +799,8 @@ def cmd_monitor_certificates(args) -> None:
 
 
 def cmd_generate_config(args) -> None:
-    """Generate TLS configuration"""    tls_config_manager = create_tls_config_manager()
+    """Generate TLS configuration"""
+    tls_config_manager = create_tls_config_manager()
     
     from .tls_config import TLSConfig, TLSVersion, CipherSuite, SecurityLevel
     
@@ -828,7 +853,8 @@ def cmd_generate_config(args) -> None:
 
 
 def main():
-    """Main CLI entry point"""    parser = argparse.ArgumentParser(
+    """Main CLI entry point"""
+    parser = argparse.ArgumentParser(
         description="IA Influencer Agent SSL/TLS Management Tools",
         formatter_class=argparse.RawDescriptionHelpFormatter
     )

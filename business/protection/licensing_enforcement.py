@@ -13,7 +13,8 @@ prosecuted to the full extent of the law.
 Advanced licensing enforcement system for digital content protection.
 Provides automated license verification, violation detection, enforcement
 actions, and comprehensive legal compliance management.
-"""from typing import Dict, List, Optional, Any, Union, Tuple, Protocol, Set, AsyncIterator
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple, Protocol, Set, AsyncIterator
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum, IntEnum
@@ -68,7 +69,8 @@ PENDING_ENFORCEMENT_GAUGE = Gauge('pending_enforcement_actions_total', 'Total pe
 # =============== ENUMS & CONFIGURATION ===============
 
 class LicensingEnforcementStatus(Enum):
-    """Licensing enforcement system operational status"""    ACTIVE = "active"
+    """Licensing enforcement system operational status"""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     MONITORING = "monitoring"
     ENFORCING = "enforcing"
@@ -77,7 +79,8 @@ class LicensingEnforcementStatus(Enum):
     MAINTENANCE = "maintenance"
 
 class LicenseType(Enum):
-    """Types of content licenses"""    EXCLUSIVE = "exclusive"
+    """Types of content licenses"""
+    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     ROYALTY_FREE = "royalty_free"
     CREATIVE_COMMONS = "creative_commons"
@@ -94,7 +97,8 @@ class LicenseType(Enum):
     CUSTOM = "custom"
 
 class ViolationType(Enum):
-    """Types of licensing violations"""    UNAUTHORIZED_USE = "unauthorized_use"
+    """Types of licensing violations"""
+    UNAUTHORIZED_USE = "unauthorized_use"
     COMMERCIAL_WITHOUT_LICENSE = "commercial_without_license"
     ATTRIBUTION_MISSING = "attribution_missing"
     TERMS_VIOLATION = "terms_violation"
@@ -110,7 +114,8 @@ class ViolationType(Enum):
     CONCURRENT_USE_VIOLATION = "concurrent_use_violation"
 
 class EnforcementAction(Enum):
-    """Enforcement actions that can be taken"""    WARNING_NOTICE = "warning_notice"
+    """Enforcement actions that can be taken"""
+    WARNING_NOTICE = "warning_notice"
     TAKEDOWN_REQUEST = "takedown_request"
     DMCA_NOTICE = "dmca_notice"
     CEASE_AND_DESIST = "cease_and_desist"
@@ -126,14 +131,16 @@ class EnforcementAction(Enum):
     SETTLEMENT_NEGOTIATION = "settlement_negotiation"
 
 class EnforcementPriority(IntEnum):
-    """Priority levels for enforcement actions"""    LOW = 1
+    """Priority levels for enforcement actions"""
+    LOW = 1
     MEDIUM = 2
     HIGH = 3
     URGENT = 4
     CRITICAL = 5
 
 class LegalJurisdiction(Enum):
-    """Legal jurisdictions for enforcement"""    UNITED_STATES = "us"
+    """Legal jurisdictions for enforcement"""
+    UNITED_STATES = "us"
     EUROPEAN_UNION = "eu"
     UNITED_KINGDOM = "uk"
     CANADA = "ca"
@@ -146,7 +153,8 @@ class LegalJurisdiction(Enum):
     INTERNATIONAL = "international"
 
 class NoticeTemplate(Enum):
-    """Legal notice templates"""    DMCA_TAKEDOWN = "dmca_takedown"
+    """Legal notice templates"""
+    DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_AND_DESIST = "cease_and_desist"
     LICENSING_INQUIRY = "licensing_inquiry"
     SETTLEMENT_OFFER = "settlement_offer"
@@ -155,14 +163,16 @@ class NoticeTemplate(Enum):
     ARBITRATION_NOTICE = "arbitration_notice"
 
 class ViolationSeverity(IntEnum):
-    """Severity levels for violations"""    MINOR = 1
+    """Severity levels for violations"""
+    MINOR = 1
     MODERATE = 2
     SERIOUS = 3
     SEVERE = 4
     CRITICAL = 5
 
 class EnforcementStrategy(Enum):
-    """Enforcement strategies"""    GRADUATED_RESPONSE = "graduated_response"
+    """Enforcement strategies"""
+    GRADUATED_RESPONSE = "graduated_response"
     IMMEDIATE_ACTION = "immediate_action"
     NEGOTIATION_FIRST = "negotiation_first"
     LEGAL_PRIORITY = "legal_priority"
@@ -171,7 +181,8 @@ class EnforcementStrategy(Enum):
 
 @dataclass
 class LicensingEnforcementConfig:
-    """Configuration for licensing enforcement system"""    
+    """Configuration for licensing enforcement system"""
+    
     # System configuration
     max_concurrent_actions: int = 50
     enforcement_timeout_hours: int = 72
@@ -220,7 +231,8 @@ class LicensingEnforcementConfig:
 
 @dataclass
 class ContentLicense:
-    """Represents a content license agreement"""    license_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Represents a content license agreement"""
+    license_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = ""
     content_hash: str = ""
     content_title: str = ""
@@ -265,7 +277,8 @@ class ContentLicense:
     digital_signature: Optional[str] = None
     
     def is_valid(self) -> bool:
-        """Check if license is currently valid"""        if not self.is_active or self.is_revoked:
+        """Check if license is currently valid"""
+        if not self.is_active or self.is_revoked:
             return False
         
         now = datetime.now(timezone.utc)
@@ -275,13 +288,15 @@ class ContentLicense:
         return True
     
     def is_expired(self) -> bool:
-        """Check if license has expired"""        if not self.expiration_date:
+        """Check if license has expired"""
+        if not self.expiration_date:
             return False
         
         return datetime.now(timezone.utc) > self.expiration_date
     
     def days_until_expiration(self) -> Optional[int]:
-        """Get days until license expiration"""        if not self.expiration_date:
+        """Get days until license expiration"""
+        if not self.expiration_date:
             return None
         
         now = datetime.now(timezone.utc)
@@ -293,7 +308,8 @@ class ContentLicense:
 
 @dataclass
 class LicenseViolation:
-    """Represents a detected license violation"""    violation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Represents a detected license violation"""
+    violation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = ""
     content_hash: str = ""
     
@@ -335,7 +351,8 @@ class LicenseViolation:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def calculate_statutory_damages(self, jurisdiction: LegalJurisdiction) -> Decimal:
-        """Calculate potential statutory damages"""        base_amounts = {
+        """Calculate potential statutory damages"""
+        base_amounts = {
             LegalJurisdiction.UNITED_STATES: Decimal('750.00'),
             LegalJurisdiction.EUROPEAN_UNION: Decimal('500.00'),
             LegalJurisdiction.UNITED_KINGDOM: Decimal('600.00'),
@@ -364,7 +381,8 @@ class LicenseViolation:
 
 @dataclass
 class EnforcementActionRecord:
-    """Record of an enforcement action taken"""    action_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Record of an enforcement action taken"""
+    action_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     violation_id: str = ""
     
     # Action details
@@ -413,13 +431,15 @@ class EnforcementActionRecord:
     communication_history: List[Dict[str, Any]] = field(default_factory=list)
     
     def is_overdue(self) -> bool:
-        """Check if response is overdue"""        if not self.response_due_date:
+        """Check if response is overdue"""
+        if not self.response_due_date:
             return False
         
         return datetime.now(timezone.utc) > self.response_due_date and not self.response_received
     
     def days_since_sent(self) -> int:
-        """Get days since action was sent"""        if not self.sent_at:
+        """Get days since action was sent"""
+        if not self.sent_at:
             return 0
         
         delta = datetime.now(timezone.utc) - self.sent_at
@@ -427,7 +447,8 @@ class EnforcementActionRecord:
 
 
 class LegalNoticeTemplateEngine:
-    """Template engine for generating legal notices and documents"""    
+    """Template engine for generating legal notices and documents"""
+    
     def __init__(self, template_directory: str):
         self.template_directory = Path(template_directory)
         self.jinja_env = jinja2.Environment(
@@ -442,7 +463,8 @@ class LegalNoticeTemplateEngine:
         action: EnforcementActionRecord,
         additional_context: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Generate legal notice from template"""        try:
+        """Generate legal notice from template"""
+        try:
             template_file = f"{template.value}.html"
             jinja_template = self.jinja_env.get_template(template_file)
             
@@ -469,7 +491,8 @@ class LegalNoticeTemplateEngine:
         output_path: str,
         add_signature: bool = True
     ) -> str:
-        """Generate PDF document from HTML content"""        try:
+        """Generate PDF document from HTML content"""
+        try:
             # In a real implementation, you'd use a library like weasyprint
             # or puppeteer to convert HTML to PDF
             
@@ -489,7 +512,8 @@ class LegalNoticeTemplateEngine:
 
 
 class EmailNotificationService:
-    """Service for sending legal notices and communications via email"""    
+    """Service for sending legal notices and communications via email"""
+    
     def __init__(self, config: LicensingEnforcementConfig):
         self.config = config
         self.template_engine = LegalNoticeTemplateEngine(config.template_directory)
@@ -502,7 +526,8 @@ class EmailNotificationService:
         action: EnforcementActionRecord,
         template: NoticeTemplate
     ) -> bool:
-        """Send legal notice via email"""        try:
+        """Send legal notice via email"""
+        try:
             # Generate notice content
             notice_content = await self.template_engine.generate_notice(
                 template, violation, action
@@ -559,7 +584,8 @@ class EmailNotificationService:
         action: EnforcementActionRecord,
         offer_amount: Decimal
     ) -> bool:
-        """Send settlement offer communication"""        try:
+        """Send settlement offer communication"""
+        try:
             action.settlement_offered = offer_amount
             
             return await self.send_legal_notice(
@@ -575,7 +601,8 @@ class EmailNotificationService:
         violation: LicenseViolation,
         action: EnforcementActionRecord
     ) -> bool:
-        """Send escalation notice for non-compliance"""        try:
+        """Send escalation notice for non-compliance"""
+        try:
             return await self.send_legal_notice(
                 violation, action, NoticeTemplate.FINAL_WARNING
             )
@@ -586,14 +613,16 @@ class EmailNotificationService:
 
 
 class LicenseViolationDetector:
-    """Advanced violation detection and analysis system"""    
+    """Advanced violation detection and analysis system"""
+    
     def __init__(self, config: LicensingEnforcementConfig):
         self.config = config
         self.violation_patterns = self._load_violation_patterns()
         self.ml_classifier = None  # Placeholder for ML-based detection
     
     def _load_violation_patterns(self) -> Dict[ViolationType, List[str]]:
-        """Load violation detection patterns"""        return {
+        """Load violation detection patterns"""
+        return {
             ViolationType.UNAUTHORIZED_USE: [
                 r"commercial use without license",
                 r"resale of licensed content",
@@ -617,7 +646,8 @@ class LicenseViolationDetector:
         usage_context: Dict[str, Any],
         license: Optional[ContentLicense] = None
     ) -> List[LicenseViolation]:
-        """Analyze content usage for potential violations"""        violations = []
+        """Analyze content usage for potential violations"""
+        violations = []
         
         try:
             # Check if valid license exists
@@ -699,7 +729,8 @@ class LicenseViolationDetector:
         content_database: Dict[str, ContentLicense],
         usage_reports: List[Dict[str, Any]]
     ) -> Dict[str, List[LicenseViolation]]:
-        """Detect violations across multiple content items"""        all_violations = {}
+        """Detect violations across multiple content items"""
+        all_violations = {}
         
         try:
             tasks = []
@@ -728,7 +759,8 @@ class LicenseViolationDetector:
 
 
 class LicensingEnforcementManager:
-    """Core manager for licensing enforcement operations"""    
+    """Core manager for licensing enforcement operations"""
+    
     def __init__(self, config: LicensingEnforcementConfig):
         self.config = config
         self.status = LicensingEnforcementStatus.INACTIVE
@@ -752,7 +784,8 @@ class LicensingEnforcementManager:
         self._escalation_task: Optional[asyncio.Task] = None
     
     async def initialize(self):
-        """Initialize the licensing enforcement manager"""        try:
+        """Initialize the licensing enforcement manager"""
+        try:
             self.status = LicensingEnforcementStatus.ACTIVE
             
             # Create necessary directories
@@ -771,7 +804,8 @@ class LicensingEnforcementManager:
             raise
     
     async def register_license(self, license: ContentLicense) -> bool:
-        """Register a new content license"""        try:
+        """Register a new content license"""
+        try:
             # Validate license
             if not license.content_id or not license.licensee_email:
                 raise ValueError("Content ID and licensee email are required")
@@ -797,7 +831,8 @@ class LicensingEnforcementManager:
         content_id: str,
         usage_context: Dict[str, Any]
     ) -> List[LicenseViolation]:
-        """Detect license violations for content usage"""        try:
+        """Detect license violations for content usage"""
+        try:
             # Find applicable license
             license = None
             licensee_email = usage_context.get('user_email', '')
@@ -835,7 +870,8 @@ class LicensingEnforcementManager:
             return []
     
     def _should_auto_enforce(self, violation: LicenseViolation) -> bool:
-        """Determine if violation should trigger automatic enforcement"""        if violation.severity >= ViolationSeverity.SERIOUS:
+        """Determine if violation should trigger automatic enforcement"""
+        if violation.severity >= ViolationSeverity.SERIOUS:
             return True
         
         if violation.commercial_use_detected and violation.estimated_damages:
@@ -849,7 +885,8 @@ class LicensingEnforcementManager:
         strategy: Optional[EnforcementStrategy] = None,
         priority: Optional[EnforcementPriority] = None
     ) -> EnforcementActionRecord:
-        """Initiate enforcement action for a violation"""        try:
+        """Initiate enforcement action for a violation"""
+        try:
             async with self.action_semaphore:
                 strategy = strategy or self.config.default_strategy
                 priority = priority or self._calculate_priority(violation)
@@ -889,7 +926,8 @@ class LicensingEnforcementManager:
             raise
     
     def _calculate_priority(self, violation: LicenseViolation) -> EnforcementPriority:
-        """Calculate enforcement priority based on violation characteristics"""        if violation.severity >= ViolationSeverity.CRITICAL:
+        """Calculate enforcement priority based on violation characteristics"""
+        if violation.severity >= ViolationSeverity.CRITICAL:
             return EnforcementPriority.CRITICAL
         elif violation.severity >= ViolationSeverity.SEVERE:
             return EnforcementPriority.URGENT
@@ -905,7 +943,8 @@ class LicensingEnforcementManager:
         violation: LicenseViolation,
         strategy: EnforcementStrategy
     ) -> EnforcementAction:
-        """Determine appropriate enforcement action type"""        if strategy == EnforcementStrategy.GRADUATED_RESPONSE:
+        """Determine appropriate enforcement action type"""
+        if strategy == EnforcementStrategy.GRADUATED_RESPONSE:
             if violation.severity <= ViolationSeverity.MODERATE:
                 return EnforcementAction.WARNING_NOTICE
             elif violation.severity <= ViolationSeverity.SERIOUS:
@@ -933,7 +972,8 @@ class LicensingEnforcementManager:
         violation: LicenseViolation,
         action: EnforcementActionRecord
     ) -> bool:
-        """Execute the specific enforcement action"""        try:
+        """Execute the specific enforcement action"""
+        try:
             with ENFORCEMENT_RESPONSE_TIME.time():
                 if action.action_type in [
                     EnforcementAction.WARNING_NOTICE,
@@ -964,7 +1004,8 @@ class LicensingEnforcementManager:
         violation: LicenseViolation,
         action: EnforcementActionRecord
     ) -> bool:
-        """Send legal notice to violator"""        try:
+        """Send legal notice to violator"""
+        try:
             template_map = {
                 EnforcementAction.WARNING_NOTICE: NoticeTemplate.CEASE_AND_DESIST,
                 EnforcementAction.CEASE_AND_DESIST: NoticeTemplate.CEASE_AND_DESIST,
@@ -986,7 +1027,8 @@ class LicensingEnforcementManager:
         violation: LicenseViolation,
         action: EnforcementActionRecord
     ) -> bool:
-        """Send DMCA takedown notice"""        try:
+        """Send DMCA takedown notice"""
+        try:
             return await self.notification_service.send_legal_notice(
                 violation, action, NoticeTemplate.DMCA_TAKEDOWN
             )
@@ -1000,7 +1042,8 @@ class LicensingEnforcementManager:
         violation: LicenseViolation,
         action: EnforcementActionRecord
     ) -> bool:
-        """Send monetary demand notice"""        try:
+        """Send monetary demand notice"""
+        try:
             # Calculate settlement offer (typically 50-75% of estimated damages)
             if violation.estimated_damages:
                 settlement_offer = (violation.estimated_damages * Decimal('0.75')).quantize(
@@ -1021,7 +1064,8 @@ class LicensingEnforcementManager:
         violation: LicenseViolation,
         action: EnforcementActionRecord
     ) -> bool:
-        """Initiate licensing negotiation process"""        try:
+        """Initiate licensing negotiation process"""
+        try:
             return await self.notification_service.send_legal_notice(
                 violation, action, NoticeTemplate.LICENSING_INQUIRY
             )
@@ -1031,7 +1075,8 @@ class LicensingEnforcementManager:
             return False
     
     async def _run_escalation_monitor(self):
-        """Background task to monitor and escalate overdue actions"""        while self.status == LicensingEnforcementStatus.ACTIVE:
+        """Background task to monitor and escalate overdue actions"""
+        while self.status == LicensingEnforcementStatus.ACTIVE:
             try:
                 await self._check_overdue_actions()
                 await asyncio.sleep(3600)  # Check every hour
@@ -1043,7 +1088,8 @@ class LicensingEnforcementManager:
                 await asyncio.sleep(300)  # Wait 5 minutes before retry
     
     async def _check_overdue_actions(self):
-        """Check for overdue enforcement actions and escalate if needed"""        try:
+        """Check for overdue enforcement actions and escalate if needed"""
+        try:
             now = datetime.now(timezone.utc)
             
             for action in self.enforcement_actions.values():
@@ -1057,7 +1103,8 @@ class LicensingEnforcementManager:
             logger.error(f"Error checking overdue actions: {str(e)}")
     
     async def _escalate_enforcement_action(self, action: EnforcementActionRecord):
-        """Escalate an enforcement action to the next level"""        try:
+        """Escalate an enforcement action to the next level"""
+        try:
             violation = self.violations.get(action.violation_id)
             if not violation:
                 logger.error(f"Cannot escalate - violation not found: {action.violation_id}")
@@ -1111,7 +1158,8 @@ class LicensingEnforcementManager:
         response_content: str,
         compliance_achieved: bool = False
     ) -> bool:
-        """Process response to an enforcement action"""        try:
+        """Process response to an enforcement action"""
+        try:
             action = self.enforcement_actions.get(action_id)
             if not action:
                 logger.error(f"Action not found: {action_id}")
@@ -1157,7 +1205,8 @@ class LicensingEnforcementManager:
             return False
     
     async def get_enforcement_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive enforcement statistics"""        try:
+        """Get comprehensive enforcement statistics"""
+        try:
             total_violations = len(self.violations)
             resolved_violations = sum(1 for v in self.violations.values() if v.is_resolved)
             total_actions = len(self.enforcement_actions)
@@ -1192,7 +1241,8 @@ class LicensingEnforcementManager:
             return {}
     
     async def cleanup(self):
-        """Cleanup enforcement manager resources"""        try:
+        """Cleanup enforcement manager resources"""
+        try:
             self.status = LicensingEnforcementStatus.INACTIVE
             
             # Cancel background tasks
@@ -1240,7 +1290,8 @@ __all__ = [
 
 @dataclass
 class LicensingEnforcementConfig:
-    """Configuration for licensing enforcement system"""    enabled: bool = True
+    """Configuration for licensing enforcement system"""
+    enabled: bool = True
     max_concurrent_enforcement: int = 20
     timeout_seconds: int = 600
     
@@ -1271,7 +1322,8 @@ class LicensingEnforcementConfig:
 
 @dataclass
 class LicenseAgreement:
-    """Comprehensive license agreement model"""    license_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive license agreement model"""
+    license_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = ""
     
     # License details
@@ -1314,7 +1366,8 @@ class LicenseAgreement:
 
 @dataclass
 class LicenseViolation:
-    """License violation record"""    violation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """License violation record"""
+    violation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = ""
     license_id: str = ""
     
@@ -1354,23 +1407,27 @@ class LicenseViolation:
     
     @abstractmethod
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traitement principal"""        pass
+        """Traitement principal"""
+        pass
     
     @abstractmethod
     async def validate(self, input_data: Any) -> bool:
-        """Validation des données"""        pass
+        """Validation des données"""
+        pass
 
 # =============== CLASSES BUSINESS PRINCIPALES ===============
 
 class LicensingEnforcementManager:
-    """Gestionnaire principal Licensing Enforcement"""    
+    """Gestionnaire principal Licensing Enforcement"""
+    
     def __init__(self, config: LicensingEnforcementConfig):
         self.config = config
         self.status = LicensingEnforcementStatus.INACTIVE
         self.logger = logging.getLogger(f"{__name__}.LicensingEnforcement")
         
     async def start(self) -> bool:
-        """Démarrage du gestionnaire"""        try:
+        """Démarrage du gestionnaire"""
+        try:
             self.status = LicensingEnforcementStatus.ACTIVE
             self.logger.info(f"🚀 Licensing Enforcement Manager démarré")
             return True
@@ -1380,18 +1437,21 @@ class LicensingEnforcementManager:
             return False
     
     async def stop(self) -> bool:
-        """Arrêt du gestionnaire"""        self.status = LicensingEnforcementStatus.INACTIVE
+        """Arrêt du gestionnaire"""
+        self.status = LicensingEnforcementStatus.INACTIVE
         self.logger.info(f"⏹️ Licensing Enforcement Manager arrêté")
         return True
 
 class LicensingEnforcementService(ILicensingEnforcementService):
-    """Service principal Licensing Enforcement"""    
+    """Service principal Licensing Enforcement"""
+    
     def __init__(self, manager: LicensingEnforcementManager):
         self.manager = manager
         self.logger = logging.getLogger(f"{__name__}.Service")
     
     async def initialize(self) -> bool:
-        """Initialisation du service"""        try:
+        """Initialisation du service"""
+        try:
             self.logger.info(f"🔧 Initialisation Licensing Enforcement Service")
             return True
         except Exception as e:
@@ -1399,7 +1459,8 @@ class LicensingEnforcementService(ILicensingEnforcementService):
             return False
     
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traitement principal des données"""        try:
+        """Traitement principal des données"""
+        try:
             self.logger.info(f"⚡ Traitement Licensing Enforcement")
             
             # Validation des données
@@ -1424,14 +1485,16 @@ class LicensingEnforcementService(ILicensingEnforcementService):
             }
     
     async def validate(self, input_data: Any) -> bool:
-        """Validation des données d'entrée"""        if not input_data:
+        """Validation des données d'entrée"""
+        if not input_data:
             return False
         
         # Validation spécifique au module
         return True
     
     async def _execute_business_logic(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Exécution de la logique métier spécifique"""        try:
+        """Exécution de la logique métier spécifique"""
+        try:
             # Process licensing enforcement business logic
             result = {
                 "processed": True, 
@@ -1472,7 +1535,8 @@ class LicensingEnforcementService(ILicensingEnforcementService):
             }
     
     async def _check_license_violations(self, content_id: str) -> Dict[str, Any]:
-        """Check for licensing violations"""        try:
+        """Check for licensing violations"""
+        try:
             # Simulate license violation checking logic
             return {
                 "violations_found": False,
@@ -1485,7 +1549,8 @@ class LicensingEnforcementService(ILicensingEnforcementService):
             return {"violations_found": False, "error": str(e)}
     
     async def _validate_license_compliance(self, license_id: str) -> Dict[str, Any]:
-        """Validate license compliance"""        try:
+        """Validate license compliance"""
+        try:
             # Simulate license compliance validation
             return {
                 "valid": True,
@@ -1499,7 +1564,8 @@ class LicensingEnforcementService(ILicensingEnforcementService):
             return {"valid": False, "score": 0.0, "error": str(e)}
     
     async def _apply_enforcement_measures(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply licensing enforcement measures"""        try:
+        """Apply licensing enforcement measures"""
+        try:
             # Simulate enforcement measures application
             actions = []
             if data.get("violation_severity", "low") == "high":
@@ -1519,7 +1585,8 @@ class LicensingEnforcementService(ILicensingEnforcementService):
 # =============== FONCTIONS UTILITAIRES ===============
 
 async def create_licensingenforcement_service(config: Optional[LicensingEnforcementConfig] = None) -> LicensingEnforcementService:
-    """Factory pour créer le service Licensing Enforcement"""    if config is None:
+    """Factory pour créer le service Licensing Enforcement"""
+    if config is None:
         config = LicensingEnforcementConfig()
     
     manager = LicensingEnforcementManager(config)
@@ -1531,7 +1598,8 @@ async def create_licensingenforcement_service(config: Optional[LicensingEnforcem
     return service
 
 def get_licensingenforcement_status() -> Dict[str, Any]:
-    """Récupération du statut du module"""    return {
+    """Récupération du statut du module"""
+    return {
         "module": "Licensing Enforcement",
         "version": "1.0.0",
         "expert": "SECURITY_SPECIALIST + BLOCKCHAIN_EXPERT",
@@ -1542,12 +1610,14 @@ def get_licensingenforcement_status() -> Dict[str, Any]:
 # =============== POINTS D'ENTRÉE API ===============
 
 class LicensingEnforcementAPI:
-    """Points d'entrée API pour Licensing Enforcement"""    
+    """Points d'entrée API pour Licensing Enforcement"""
+    
     def __init__(self, service: LicensingEnforcementService):
         self.service = service
     
     async def health_check(self) -> Dict[str, Any]:
-        """Vérification de santé du module"""        return {
+        """Vérification de santé du module"""
+        return {
             "status": "healthy",
             "module": "Licensing Enforcement",
             "timestamp": datetime.now().isoformat()

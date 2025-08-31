@@ -21,7 +21,8 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 🚨 INTELLECTUAL PROPERTY WARNING 🚨
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
-"""import logging
+"""
+import logging
 import time
 import threading
 import hashlib
@@ -44,7 +45,8 @@ import psutil
 logger = logging.getLogger(__name__)
 
 class QueryType(Enum):
-    """Query operation types"""    SELECT = "select"
+    """Query operation types"""
+    SELECT = "select"
     INSERT = "insert"
     UPDATE = "update"
     DELETE = "delete"
@@ -54,27 +56,31 @@ class QueryType(Enum):
     BATCH = "batch"
 
 class PartitionStrategy(Enum):
-    """Partition access strategies"""    SINGLE_PARTITION = "single_partition"
+    """Partition access strategies"""
+    SINGLE_PARTITION = "single_partition"
     MULTIPLE_PARTITIONS = "multiple_partitions"
     ALL_PARTITIONS = "all_partitions"
     RANGE_PARTITIONS = "range_partitions"
     SELECTIVE_PARTITIONS = "selective_partitions"
 
 class QueryComplexity(Enum):
-    """Query complexity levels"""    SIMPLE = "simple"
+    """Query complexity levels"""
+    SIMPLE = "simple"
     MODERATE = "moderate"
     COMPLEX = "complex"
     VERY_COMPLEX = "very_complex"
 
 class ExecutionMode(Enum):
-    """Query execution modes"""    SEQUENTIAL = "sequential"
+    """Query execution modes"""
+    SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     STREAMING = "streaming"
     BATCH_PROCESSING = "batch_processing"
 
 @dataclass
 class QueryContext:
-    """Query execution context"""    query_id: str
+    """Query execution context"""
+    query_id: str
     query_text: str
     query_type: QueryType
     parameters: Dict[str, Any] = field(default_factory=dict)
@@ -88,7 +94,8 @@ class QueryContext:
 
 @dataclass
 class PartitionInfo:
-    """Partition information for routing"""    partition_name: str
+    """Partition information for routing"""
+    partition_name: str
     table_name: str
     start_value: Any
     end_value: Any
@@ -101,7 +108,8 @@ class PartitionInfo:
 
 @dataclass
 class QueryPlan:
-    """Query execution plan"""    plan_id: str
+    """Query execution plan"""
+    plan_id: str
     query_context: QueryContext
     target_partitions: List[PartitionInfo]
     execution_mode: ExecutionMode
@@ -115,7 +123,8 @@ class QueryPlan:
 
 @dataclass
 class QueryResult:
-    """Query execution result"""    query_id: str
+    """Query execution result"""
+    query_id: str
     plan_id: str
     success: bool
     results: Any = None
@@ -128,7 +137,8 @@ class QueryResult:
     performance_metrics: Dict[str, Any] = field(default_factory=dict)
 
 class QueryCache:
-    """Intelligent query result caching system"""    
+    """Intelligent query result caching system"""
+    
     def __init__(self, max_size: int = 1000, ttl_seconds: int = 3600):
         self.max_size = max_size
         self.ttl_seconds = ttl_seconds
@@ -139,7 +149,8 @@ class QueryCache:
         self.eviction_count = 0
     
     def get_cache_key(self, query_text: str, parameters: Dict[str, Any]) -> str:
-        """Generate cache key for query"""        # Normalize query text
+        """Generate cache key for query"""
+        # Normalize query text
         normalized_query = re.sub(r'\s+', ' ', query_text.strip().lower())
         
         # Create deterministic parameter string
@@ -150,7 +161,8 @@ class QueryCache:
         return cache_key
     
     def get(self, query_text: str, parameters: Dict[str, Any]) -> Optional[Any]:
-        """Get cached result if available and not expired"""        cache_key = self.get_cache_key(query_text, parameters)
+        """Get cached result if available and not expired"""
+        cache_key = self.get_cache_key(query_text, parameters)
         
         with self._lock:
             if cache_key in self.cache:
@@ -170,7 +182,8 @@ class QueryCache:
             return None
     
     def put(self, query_text: str, parameters: Dict[str, Any], result: Any):
-        """Cache query result"""        cache_key = self.get_cache_key(query_text, parameters)
+        """Cache query result"""
+        cache_key = self.get_cache_key(query_text, parameters)
         
         with self._lock:
             # Check size limit
@@ -183,7 +196,8 @@ class QueryCache:
             self.cache[cache_key] = (result, datetime.utcnow())
     
     def invalidate_pattern(self, table_name: str):
-        """Invalidate cache entries for specific table"""        with self._lock:
+        """Invalidate cache entries for specific table"""
+        with self._lock:
             keys_to_remove = []
             for cache_key, (result, timestamp) in self.cache.items():
                 # Simple pattern matching - could be enhanced
@@ -194,7 +208,8 @@ class QueryCache:
                 del self.cache[key]
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get cache statistics"""        total_requests = self.hit_count + self.miss_count
+        """Get cache statistics"""
+        total_requests = self.hit_count + self.miss_count
         hit_ratio = (self.hit_count / total_requests * 100) if total_requests > 0 else 0
         
         return {
@@ -208,20 +223,23 @@ class QueryCache:
         }
 
 class PartitionPruner:
-    """Intelligent partition pruning for query optimization"""    
+    """Intelligent partition pruning for query optimization"""
+    
     def __init__(self, partition_metadata: Dict[str, List[PartitionInfo]]):
         self.partition_metadata = partition_metadata
         self.pruning_stats = defaultdict(int)
     
     def prune_partitions(self, query_context: QueryContext) -> List[PartitionInfo]:
-        """        Intelligently prune partitions based on query context
+        """
+        Intelligently prune partitions based on query context
         
         Args:
             query_context: Query execution context
             
         Returns:
             List of relevant partitions
-        """        try:
+        """
+        try:
             relevant_partitions = []
             
             for table_name in query_context.tables:
@@ -262,7 +280,8 @@ class PartitionPruner:
     
     def _apply_time_pruning(self, partitions: List[PartitionInfo], 
                            time_filters: Dict[str, Any]) -> List[PartitionInfo]:
-        """Apply time-based partition pruning"""        if not time_filters:
+        """Apply time-based partition pruning"""
+        if not time_filters:
             return partitions
         
         filtered_partitions = []
@@ -289,7 +308,8 @@ class PartitionPruner:
     
     def _apply_user_pruning(self, partitions: List[PartitionInfo],
                            user_filters: Dict[str, Any]) -> List[PartitionInfo]:
-        """Apply user-based partition pruning"""        if not user_filters:
+        """Apply user-based partition pruning"""
+        if not user_filters:
             return partitions
         
         # For user-based partitioning, we'd need to know the hash distribution
@@ -313,7 +333,8 @@ class PartitionPruner:
     
     def _apply_value_pruning(self, partitions: List[PartitionInfo],
                             parameters: Dict[str, Any]) -> List[PartitionInfo]:
-        """Apply value-based partition pruning"""        if not parameters:
+        """Apply value-based partition pruning"""
+        if not parameters:
             return partitions
         
         # This would be enhanced based on specific partition keys and strategies
@@ -321,17 +342,20 @@ class PartitionPruner:
         return partitions
     
     def get_pruning_stats(self) -> Dict[str, Any]:
-        """Get partition pruning statistics"""        return dict(self.pruning_stats)
+        """Get partition pruning statistics"""
+        return dict(self.pruning_stats)
 
 class QueryOptimizer:
-    """Advanced query optimization for partitioned tables"""    
+    """Advanced query optimization for partitioned tables"""
+    
     def __init__(self, session_factory):
         self.session_factory = session_factory
         self.optimization_cache = {}
         self.rewrite_patterns = self._initialize_rewrite_patterns()
     
     def _initialize_rewrite_patterns(self) -> List[Dict[str, Any]]:
-        """Initialize query rewrite patterns"""        return [
+        """Initialize query rewrite patterns"""
+        return [
             {
                 'name': 'partition_key_optimization',
                 'pattern': r'WHERE\s+(.+)\s*=\s*\?',
@@ -351,7 +375,8 @@ class QueryOptimizer:
     
     def optimize_query(self, query_context: QueryContext, 
                       target_partitions: List[PartitionInfo]) -> Tuple[List[str], Dict[str, Any]]:
-        """        Optimize query for partition execution
+        """
+        Optimize query for partition execution
         
         Args:
             query_context: Query execution context
@@ -359,7 +384,8 @@ class QueryOptimizer:
             
         Returns:
             Tuple of (optimized_queries, optimization_metadata)
-        """        try:
+        """
+        try:
             optimized_queries = []
             optimization_metadata = {
                 'original_query': query_context.query_text,
@@ -404,7 +430,8 @@ class QueryOptimizer:
     
     def _rewrite_query_for_partition(self, query_text: str, partition: PartitionInfo,
                                    parameters: Dict[str, Any]) -> str:
-        """Rewrite query to target specific partition"""        # Replace table name with partition name
+        """Rewrite query to target specific partition"""
+        # Replace table name with partition name
         rewritten_query = re.sub(
             rf'\b{partition.table_name}\b',
             partition.partition_name,
@@ -424,7 +451,8 @@ class QueryOptimizer:
     
     def _apply_optimization_patterns(self, query_text: str, partition: PartitionInfo,
                                    query_context: QueryContext) -> str:
-        """Apply optimization patterns to query"""        optimized_query = query_text
+        """Apply optimization patterns to query"""
+        optimized_query = query_text
         
         # Apply each optimization pattern
         for pattern in self.rewrite_patterns:
@@ -441,14 +469,16 @@ class QueryOptimizer:
         return optimized_query
     
     def _apply_aggregation_pushdown(self, query_text: str, partition: PartitionInfo) -> str:
-        """Apply aggregation pushdown optimization"""        # Add parallel aggregation hints
+        """Apply aggregation pushdown optimization"""
+        # Add parallel aggregation hints
         if 'GROUP BY' in query_text.upper():
             query_text += ' /* PARALLEL AGGREGATION */'
         
         return query_text
     
     def _apply_index_hints(self, query_text: str, partition: PartitionInfo) -> str:
-        """Apply index hint optimizations"""        # Add index hints based on partition metadata
+        """Apply index hint optimizations"""
+        # Add index hints based on partition metadata
         if partition.metadata.get('primary_index'):
             index_name = partition.metadata['primary_index']
             query_text = query_text.replace(
@@ -459,7 +489,8 @@ class QueryOptimizer:
         return query_text
     
     def _estimate_improvement(self, query_context: QueryContext, partition_count: int) -> float:
-        """Estimate performance improvement percentage"""        base_improvement = 0
+        """Estimate performance improvement percentage"""
+        base_improvement = 0
         
         # Improvement based on partition pruning
         if partition_count < 10:  # Assuming pruning from larger set
@@ -475,7 +506,8 @@ class QueryOptimizer:
         return min(base_improvement, 90)
 
 class QueryExecutor:
-    """Advanced query execution engine for partitioned tables"""    
+    """Advanced query execution engine for partitioned tables"""
+    
     def __init__(self, shard_coordinator, config: Dict[str, Any] = None):
         self.shard_coordinator = shard_coordinator
         self.config = config or {}
@@ -496,14 +528,16 @@ class QueryExecutor:
         self._executor = ThreadPoolExecutor(max_workers=self.max_parallel_queries)
     
     def execute_query_plan(self, query_plan: QueryPlan) -> QueryResult:
-        """        Execute optimized query plan across partitions
+        """
+        Execute optimized query plan across partitions
         
         Args:
             query_plan: Optimized query execution plan
             
         Returns:
             QueryResult with aggregated results
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             self.execution_stats['total_queries'] += 1
@@ -539,7 +573,8 @@ class QueryExecutor:
             )
     
     def _execute_parallel(self, query_plan: QueryPlan) -> QueryResult:
-        """Execute query plan in parallel across partitions"""        try:
+        """Execute query plan in parallel across partitions"""
+        try:
             # Submit parallel queries
             future_to_partition = {}
             
@@ -603,7 +638,8 @@ class QueryExecutor:
             )
     
     def _execute_sequential(self, query_plan: QueryPlan) -> QueryResult:
-        """Execute query plan sequentially across partitions"""        try:
+        """Execute query plan sequentially across partitions"""
+        try:
             all_results = []
             partitions_accessed = []
             total_rows = 0
@@ -661,7 +697,8 @@ class QueryExecutor:
     
     def _execute_single_query(self, query: str, partition: PartitionInfo,
                              parameters: Dict[str, Any], timeout: int) -> Any:
-        """Execute query on single partition"""        # Use shard coordinator to execute on appropriate shard
+        """Execute query on single partition"""
+        # Use shard coordinator to execute on appropriate shard
         shard_id = self._get_shard_for_partition(partition)
         
         if shard_id:
@@ -675,11 +712,13 @@ class QueryExecutor:
             raise Exception(f"No available shard for partition {partition.partition_name}")
     
     def _get_shard_for_partition(self, partition: PartitionInfo) -> Optional[str]:
-        """Get appropriate shard for partition"""        # Simple implementation - could be enhanced with partition-to-shard mapping
+        """Get appropriate shard for partition"""
+        # Simple implementation - could be enhanced with partition-to-shard mapping
         return self.shard_coordinator.get_optimal_shard("read")
     
     def _aggregate_results(self, partition_results: Dict[str, Any], query_plan: QueryPlan) -> Any:
-        """Aggregate results from multiple partitions"""        # Simplified aggregation - would need enhancement based on query type
+        """Aggregate results from multiple partitions"""
+        # Simplified aggregation - would need enhancement based on query type
         all_rows = []
         
         for partition_name, result in partition_results.items():
@@ -691,7 +730,8 @@ class QueryExecutor:
         return all_rows
     
     def get_execution_stats(self) -> Dict[str, Any]:
-        """Get query execution statistics"""        total_queries = self.execution_stats['total_queries']
+        """Get query execution statistics"""
+        total_queries = self.execution_stats['total_queries']
         success_rate = (self.execution_stats['successful_queries'] / total_queries * 100) if total_queries > 0 else 0
         avg_execution_time = (self.execution_stats['total_execution_time'] / total_queries) if total_queries > 0 else 0
         
@@ -706,7 +746,8 @@ class QueryExecutor:
         }
 
 class QueryRouter:
-    """    Ultra-industrial query router for intelligent partition-aware query execution
+    """
+    Ultra-industrial query router for intelligent partition-aware query execution
     
     Provides comprehensive query routing with:
     - Intelligent partition selection and pruning
@@ -714,14 +755,17 @@ class QueryRouter:
     - Parallel execution across partitions
     - Result caching and aggregation
     - Performance monitoring and adaptive routing
-    """    
+    """
+    
     def __init__(self, shard_coordinator, config: Dict[str, Any] = None):
-        """        Initialize query router
+        """
+        Initialize query router
         
         Args:
             shard_coordinator: Shard coordinator instance
             config: Router configuration
-        """        self.shard_coordinator = shard_coordinator
+        """
+        self.shard_coordinator = shard_coordinator
         self.config = config or {}
         
         # Initialize components
@@ -754,7 +798,8 @@ class QueryRouter:
     
     def route_query(self, query_text: str, parameters: Dict[str, Any] = None,
                    query_type: QueryType = None, **kwargs) -> QueryResult:
-        """        Route and execute query with intelligent optimization
+        """
+        Route and execute query with intelligent optimization
         
         Args:
             query_text: SQL query to execute
@@ -764,7 +809,8 @@ class QueryRouter:
             
         Returns:
             QueryResult with execution details
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         parameters = parameters or {}
         
         try:
@@ -814,7 +860,8 @@ class QueryRouter:
     
     def _create_query_context(self, query_text: str, parameters: Dict[str, Any],
                              query_type: QueryType, options: Dict[str, Any]) -> QueryContext:
-        """Create query execution context"""        # Generate unique query ID
+        """Create query execution context"""
+        # Generate unique query ID
         query_id = hashlib.md5(f"{query_text}:{time.time()}".encode()).hexdigest()[:12]
         
         # Detect query type if not provided
@@ -843,7 +890,8 @@ class QueryRouter:
         )
     
     def _detect_query_type(self, query_text: str) -> QueryType:
-        """Detect query type from SQL text"""        query_upper = query_text.upper().strip()
+        """Detect query type from SQL text"""
+        query_upper = query_text.upper().strip()
         
         if query_upper.startswith('SELECT'):
             if any(func in query_upper for func in ['COUNT(', 'SUM(', 'AVG(', 'MAX(', 'MIN(']):
@@ -862,7 +910,8 @@ class QueryRouter:
             return QueryType.SELECT  # Default
     
     def _extract_table_names(self, query_text: str) -> List[str]:
-        """Extract table names from SQL query"""        # Simplified table extraction - could be enhanced with SQL parser
+        """Extract table names from SQL query"""
+        # Simplified table extraction - could be enhanced with SQL parser
         tables = []
         
         # Look for FROM clauses
@@ -883,7 +932,8 @@ class QueryRouter:
         return list(set(tables))  # Remove duplicates
     
     def _extract_time_filters(self, query_text: str, parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract time-based filters from query"""        time_filters = {}
+        """Extract time-based filters from query"""
+        time_filters = {}
         
         # Look for common time column patterns
         time_patterns = [
@@ -907,7 +957,8 @@ class QueryRouter:
         return time_filters
     
     def _extract_user_filters(self, query_text: str, parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract user-based filters from query"""        user_filters = {}
+        """Extract user-based filters from query"""
+        user_filters = {}
         
         # Look for user_id patterns
         if 'user_id' in parameters:
@@ -921,7 +972,8 @@ class QueryRouter:
         return user_filters
     
     def _create_query_plan(self, query_context: QueryContext) -> QueryPlan:
-        """Create optimized query execution plan"""        plan_id = f"plan_{query_context.query_id}_{int(time.time())}"
+        """Create optimized query execution plan"""
+        plan_id = f"plan_{query_context.query_id}_{int(time.time())}"
         
         # Prune partitions
         target_partitions = self.partition_pruner.prune_partitions(query_context)
@@ -957,7 +1009,8 @@ class QueryRouter:
     
     def _determine_execution_mode(self, query_context: QueryContext, 
                                  target_partitions: List[PartitionInfo]) -> ExecutionMode:
-        """Determine optimal execution mode"""        # Use parallel execution for multiple partitions and suitable query types
+        """Determine optimal execution mode"""
+        # Use parallel execution for multiple partitions and suitable query types
         if (len(target_partitions) > 1 and 
             query_context.query_type in [QueryType.SELECT, QueryType.AGGREGATE, QueryType.ANALYTICAL]):
             return ExecutionMode.PARALLEL
@@ -965,7 +1018,8 @@ class QueryRouter:
             return ExecutionMode.SEQUENTIAL
     
     def _update_routing_stats(self, query_context: QueryContext, result: QueryResult, execution_time: float):
-        """Update routing performance statistics"""        self.routing_stats['total_queries_routed'] += 1
+        """Update routing performance statistics"""
+        self.routing_stats['total_queries_routed'] += 1
         self.routing_stats['query_type_distribution'][query_context.query_type.value] += 1
         
         # Update average response time
@@ -976,12 +1030,14 @@ class QueryRouter:
         )
     
     def update_partition_metadata(self, table_name: str, partitions: List[PartitionInfo]):
-        """Update partition metadata for routing decisions"""        self.partition_metadata[table_name] = partitions
+        """Update partition metadata for routing decisions"""
+        self.partition_metadata[table_name] = partitions
         self.partition_pruner.partition_metadata = self.partition_metadata
         logger.info(f"Updated partition metadata for table {table_name}: {len(partitions)} partitions")
     
     def get_routing_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive routing statistics"""        cache_stats = self.query_cache.get_stats()
+        """Get comprehensive routing statistics"""
+        cache_stats = self.query_cache.get_stats()
         pruning_stats = self.partition_pruner.get_pruning_stats()
         execution_stats = self.query_executor.get_execution_stats()
         
@@ -996,7 +1052,8 @@ class QueryRouter:
         }
     
     def invalidate_cache(self, table_name: str = None):
-        """Invalidate query cache for specific table or all"""        if table_name:
+        """Invalidate query cache for specific table or all"""
+        if table_name:
             self.query_cache.invalidate_pattern(table_name)
             logger.info(f"Invalidated cache for table: {table_name}")
         else:
@@ -1004,7 +1061,8 @@ class QueryRouter:
             logger.info("Invalidated entire query cache")
     
     def shutdown(self):
-        """Shutdown query router gracefully"""        try:
+        """Shutdown query router gracefully"""
+        try:
             logger.info("Shutting down query router...")
             
             # Shutdown executor
@@ -1017,16 +1075,19 @@ class QueryRouter:
             logger.error(f"Error during query router shutdown: {e}")
 
     def __enter__(self):
-        """Context manager entry"""        return self
+        """Context manager entry"""
+        return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit"""        self.shutdown()
+        """Context manager exit"""
+        self.shutdown()
         # Create deterministic hash of query and parameters
         content = f"{query_text}:{json.dumps(parameters, sort_keys=True)}"
         return hashlib.md5(content.encode()).hexdigest()
     
     def get(self, query_text: str, parameters: Dict[str, Any]) -> Optional[Any]:
-        """Get cached result"""        with self._lock:
+        """Get cached result"""
+        with self._lock:
             cache_key = self.get_cache_key(query_text, parameters)
             
             if cache_key in self.cache:
@@ -1044,7 +1105,8 @@ class QueryRouter:
             return None
     
     def put(self, query_text: str, parameters: Dict[str, Any], result: Any):
-        """Cache query result"""        with self._lock:
+        """Cache query result"""
+        with self._lock:
             cache_key = self.get_cache_key(query_text, parameters)
             
             # Remove oldest entries if at capacity
@@ -1054,7 +1116,8 @@ class QueryRouter:
             self.cache[cache_key] = (result, datetime.utcnow())
     
     def invalidate_pattern(self, table_name: str):
-        """Invalidate cache entries affecting table"""        with self._lock:
+        """Invalidate cache entries affecting table"""
+        with self._lock:
             # Remove entries that might be affected by table changes
             keys_to_remove = []
             for key in self.cache:
@@ -1067,13 +1130,15 @@ class QueryRouter:
                 del self.cache[key]
 
 class PartitionPruner:
-    """Intelligent partition pruning for query optimization"""    
+    """Intelligent partition pruning for query optimization"""
+    
     def __init__(self, session_factory):
         self.session_factory = session_factory
         self.partition_metadata: Dict[str, List[PartitionInfo]] = {}
         
     def analyze_query_filters(self, query_context: QueryContext) -> Dict[str, Any]:
-        """Analyze query to extract partition-relevant filters"""        filters = {
+        """Analyze query to extract partition-relevant filters"""
+        filters = {
             'time_filters': {},
             'user_filters': {},
             'value_filters': {},
@@ -1117,7 +1182,8 @@ class PartitionPruner:
         return filters
     
     def prune_partitions(self, table_name: str, filters: Dict[str, Any]) -> List[PartitionInfo]:
-        """Prune partitions based on query filters"""        all_partitions = self.partition_metadata.get(table_name, [])
+        """Prune partitions based on query filters"""
+        all_partitions = self.partition_metadata.get(table_name, [])
         
         if not all_partitions:
             return []
@@ -1137,7 +1203,8 @@ class PartitionPruner:
         return eligible_partitions
     
     def _partition_matches_filters(self, partition: PartitionInfo, filters: Dict[str, Any]) -> bool:
-        """Check if partition matches query filters"""        # Time-based filtering
+        """Check if partition matches query filters"""
+        # Time-based filtering
         time_filters = filters.get('time_filters', {})
         if time_filters and hasattr(partition, 'start_value') and hasattr(partition, 'end_value'):
             # Check if query time range overlaps with partition time range
@@ -1171,17 +1238,20 @@ class PartitionPruner:
         return True
     
     def update_partition_metadata(self, table_name: str, partitions: List[PartitionInfo]):
-        """Update partition metadata for pruning"""        self.partition_metadata[table_name] = partitions
+        """Update partition metadata for pruning"""
+        self.partition_metadata[table_name] = partitions
 
 class QueryOptimizer:
-    """Query optimization and rewriting engine"""    
+    """Query optimization and rewriting engine"""
+    
     def __init__(self, session_factory):
         self.session_factory = session_factory
         self.optimization_rules: List[Callable] = []
         self._load_optimization_rules()
     
     def _load_optimization_rules(self):
-        """Load query optimization rules"""        self.optimization_rules = [
+        """Load query optimization rules"""
+        self.optimization_rules = [
             self._optimize_time_range_queries,
             self._optimize_aggregate_queries,
             self._optimize_join_queries,
@@ -1190,7 +1260,8 @@ class QueryOptimizer:
         ]
     
     def optimize_query(self, query_context: QueryContext, target_partitions: List[PartitionInfo]) -> List[str]:
-        """Optimize query for partition execution"""        optimized_queries = []
+        """Optimize query for partition execution"""
+        optimized_queries = []
         
         if len(target_partitions) == 1:
             # Single partition optimization
@@ -1208,7 +1279,8 @@ class QueryOptimizer:
         return optimized_queries
     
     def _optimize_single_partition_query(self, query_context: QueryContext, partition: PartitionInfo) -> str:
-        """Optimize query for single partition"""        query = query_context.query_text
+        """Optimize query for single partition"""
+        query = query_context.query_text
         
         # Replace table name with partition name
         for table_name in query_context.tables:
@@ -1221,7 +1293,8 @@ class QueryOptimizer:
         return query
     
     def _optimize_multi_partition_query(self, query_context: QueryContext, partitions: List[PartitionInfo]) -> List[str]:
-        """Optimize query for multiple partitions"""        optimized_queries = []
+        """Optimize query for multiple partitions"""
+        optimized_queries = []
         
         if query_context.query_type == QueryType.AGGREGATE:
             # Create partition-specific aggregate queries
@@ -1242,7 +1315,8 @@ class QueryOptimizer:
         return optimized_queries
     
     def _create_partition_aggregate_query(self, query_context: QueryContext, partition: PartitionInfo) -> str:
-        """Create optimized aggregate query for partition"""        query = query_context.query_text
+        """Create optimized aggregate query for partition"""
+        query = query_context.query_text
         
         # Replace table name with partition name
         for table_name in query_context.tables:
@@ -1254,23 +1328,29 @@ class QueryOptimizer:
         return query
     
     def _optimize_time_range_queries(self, query: str, context: QueryContext, partitions: List[PartitionInfo]) -> str:
-        """Optimize time range queries"""        # Add partition-specific time constraints
+        """Optimize time range queries"""
+        # Add partition-specific time constraints
         return query
     
     def _optimize_aggregate_queries(self, query: str, context: QueryContext, partitions: List[PartitionInfo]) -> str:
-        """Optimize aggregate queries for parallel execution"""        return query
+        """Optimize aggregate queries for parallel execution"""
+        return query
     
     def _optimize_join_queries(self, query: str, context: QueryContext, partitions: List[PartitionInfo]) -> str:
-        """Optimize join queries"""        return query
+        """Optimize join queries"""
+        return query
     
     def _optimize_index_usage(self, query: str, context: QueryContext, partitions: List[PartitionInfo]) -> str:
-        """Optimize index usage"""        return query
+        """Optimize index usage"""
+        return query
     
     def _optimize_partition_access(self, query: str, context: QueryContext, partitions: List[PartitionInfo]) -> str:
-        """Optimize partition access patterns"""        return query
+        """Optimize partition access patterns"""
+        return query
 
 class QueryExecutor:
-    """Parallel query execution engine"""    
+    """Parallel query execution engine"""
+    
     def __init__(self, session_factory, max_workers: int = 8):
         self.session_factory = session_factory
         self.max_workers = max_workers
@@ -1278,7 +1358,8 @@ class QueryExecutor:
         self.active_queries: Dict[str, QueryResult] = {}
         
     def execute_query_plan(self, plan: QueryPlan) -> QueryResult:
-        """Execute query plan across partitions"""        start_time = time.time()
+        """Execute query plan across partitions"""
+        start_time = time.time()
         
         try:
             if plan.execution_mode == ExecutionMode.SEQUENTIAL:
@@ -1303,7 +1384,8 @@ class QueryExecutor:
             )
     
     def _execute_sequential(self, plan: QueryPlan) -> QueryResult:
-        """Execute queries sequentially"""        all_results = []
+        """Execute queries sequentially"""
+        all_results = []
         partitions_accessed = []
         total_rows = 0
         
@@ -1333,7 +1415,8 @@ class QueryExecutor:
         )
     
     def _execute_parallel(self, plan: QueryPlan) -> QueryResult:
-        """Execute queries in parallel"""        future_to_partition = {}
+        """Execute queries in parallel"""
+        future_to_partition = {}
         
         # Submit parallel queries
         for i, query in enumerate(plan.rewritten_queries):
@@ -1382,11 +1465,13 @@ class QueryExecutor:
         )
     
     def _execute_streaming(self, plan: QueryPlan) -> QueryResult:
-        """Execute queries with streaming results"""        # Simplified streaming implementation
+        """Execute queries with streaming results"""
+        # Simplified streaming implementation
         return self._execute_parallel(plan)
     
     def _execute_single_query(self, query: str, parameters: Dict[str, Any], partition_name: str) -> Dict[str, Any]:
-        """Execute single query on partition"""        try:
+        """Execute single query on partition"""
+        try:
             with self.session_factory() as session:
                 result = session.execute(text(query), parameters)
                 
@@ -1416,7 +1501,8 @@ class QueryExecutor:
             }
     
     def _aggregate_results(self, results: List[Any], plan: QueryPlan) -> List[Any]:
-        """Aggregate results from multiple partitions"""        # This is a simplified aggregation - would need more sophisticated
+        """Aggregate results from multiple partitions"""
+        # This is a simplified aggregation - would need more sophisticated
         # handling for different aggregate functions in production
         
         if plan.query_context.query_type == QueryType.AGGREGATE:
@@ -1426,11 +1512,13 @@ class QueryExecutor:
         return results
     
     def _handle_aggregate_consolidation(self, results: List[Any], plan: QueryPlan) -> List[Any]:
-        """Handle aggregate function consolidation"""        # Simplified - would need query parsing to determine aggregate functions
+        """Handle aggregate function consolidation"""
+        # Simplified - would need query parsing to determine aggregate functions
         return results
 
 class QueryRouter:
-    """    Ultra-industrial query routing system for partitioned tables
+    """
+    Ultra-industrial query routing system for partitioned tables
     
     Provides:
     - Intelligent partition pruning and selection
@@ -1438,14 +1526,17 @@ class QueryRouter:
     - Parallel query execution across partitions
     - Result aggregation and consolidation
     - Performance monitoring and adaptive routing
-    """    
+    """
+    
     def __init__(self, session_factory, config: Dict[str, Any] = None):
-        """        Initialize query router
+        """
+        Initialize query router
         
         Args:
             session_factory: SQLAlchemy session factory
             config: Configuration dictionary
-        """        self.session_factory = session_factory
+        """
+        self.session_factory = session_factory
         self.config = config or {}
         
         # Component initialization
@@ -1473,7 +1564,8 @@ class QueryRouter:
         logger.info("QueryRouter initialized")
     
     def route_query(self, query_context: QueryContext) -> QueryResult:
-        """Route and execute query with optimization"""        try:
+        """Route and execute query with optimization"""
+        try:
             # Check cache first
             cached_result = self.cache.get(query_context.query_text, query_context.parameters)
             if cached_result and self.config.get('enable_cache', True):
@@ -1527,7 +1619,8 @@ class QueryRouter:
             )
     
     def _create_query_plan(self, query_context: QueryContext) -> Optional[QueryPlan]:
-        """Create optimized query plan"""        try:
+        """Create optimized query plan"""
+        try:
             # Analyze query to extract filters
             filters = self.pruner.analyze_query_filters(query_context)
             
@@ -1578,7 +1671,8 @@ class QueryRouter:
             return None
     
     def _determine_execution_mode(self, query_context: QueryContext, partitions: List[PartitionInfo]) -> ExecutionMode:
-        """Determine optimal execution mode"""        if len(partitions) == 1:
+        """Determine optimal execution mode"""
+        if len(partitions) == 1:
             return ExecutionMode.SEQUENTIAL
         
         if query_context.query_type in [QueryType.ANALYTICAL, QueryType.AGGREGATE]:
@@ -1595,7 +1689,8 @@ class QueryRouter:
         return ExecutionMode.PARALLEL
     
     def _estimate_query_cost(self, query_context: QueryContext, partitions: List[PartitionInfo]) -> float:
-        """Estimate query execution cost"""        base_cost = 1.0
+        """Estimate query execution cost"""
+        base_cost = 1.0
         
         # Partition count factor
         partition_factor = len(partitions) * 0.5
@@ -1614,7 +1709,8 @@ class QueryRouter:
         return base_cost + partition_factor + size_factor + complexity_factor
     
     def _estimate_query_duration(self, query_context: QueryContext, partitions: List[PartitionInfo]) -> float:
-        """Estimate query execution duration"""        # Base duration
+        """Estimate query execution duration"""
+        # Base duration
         base_duration = 0.1  # seconds
         
         # Historical performance
@@ -1628,7 +1724,8 @@ class QueryRouter:
         return base_duration + avg_response_time
     
     def _update_performance_metrics(self, query_context: QueryContext, plan: QueryPlan, result: QueryResult):
-        """Update performance metrics and statistics"""        try:
+        """Update performance metrics and statistics"""
+        try:
             with self._lock:
                 # Update query type metrics
                 query_type = query_context.query_type.value
@@ -1667,16 +1764,19 @@ class QueryRouter:
             logger.warning(f"Failed to update performance metrics: {e}")
     
     def update_partition_info(self, table_name: str, partitions: List[PartitionInfo]):
-        """Update partition information for routing"""        self.pruner.update_partition_metadata(table_name, partitions)
+        """Update partition information for routing"""
+        self.pruner.update_partition_metadata(table_name, partitions)
     
     def invalidate_cache(self, table_name: str = None):
-        """Invalidate query cache"""        if table_name:
+        """Invalidate query cache"""
+        if table_name:
             self.cache.invalidate_pattern(table_name)
         else:
             self.cache.cache.clear()
     
     def get_performance_report(self) -> Dict[str, Any]:
-        """Get comprehensive performance report"""        try:
+        """Get comprehensive performance report"""
+        try:
             with self._lock:
                 # Query statistics
                 total_queries = len(self.query_history)
@@ -1731,7 +1831,8 @@ class QueryRouter:
             return {'error': str(e)}
     
     def optimize_partition_access(self, table_name: str) -> Dict[str, Any]:
-        """Optimize partition access patterns"""        try:
+        """Optimize partition access patterns"""
+        try:
             # Analyze partition usage patterns
             partition_analysis = {}
             
@@ -1798,7 +1899,8 @@ class QueryRouter:
             return {'error': str(e)}
     
     def shutdown(self):
-        """Shutdown query router gracefully"""        try:
+        """Shutdown query router gracefully"""
+        try:
             logger.info("Shutting down query router...")
             
             # Stop monitoring

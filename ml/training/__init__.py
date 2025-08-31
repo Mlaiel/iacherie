@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ==============================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 MODULE D'ENTRAÎNEMENT ML
@@ -14,7 +14,9 @@ Composants d'entraînement et d'optimisation des modèles
 - Hyperparameter tuning avancé avec Optuna
 - Cross-validation et validation robuste
 - Gestion des expériences et métriques
-"""from .automl_pipeline import (
+"""
+
+from .automl_pipeline import (
     AutoMLPipeline,
     AutoMLConfig,
     AutoMLPipelineFactory,
@@ -62,4 +64,4 @@ __version__ = "1.0.0"
 # Metadata
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel. Tous droits réservés."
+__copyright__ = "(c) 2025 Fahed Mlaiel. Tous droits réservés."

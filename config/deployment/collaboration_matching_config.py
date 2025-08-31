@@ -20,7 +20,8 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 WILL FACE IMMEDIATE LEGAL ACTION under German and international intellectual property law.
 
 📧 Contact: mlaiel@live.de for licensing and usage permissions ONLY.
-"""import os
+"""
+import os
 import json
 import yaml
 from typing import Dict, List, Optional, Any, Set, Union
@@ -32,7 +33,8 @@ import logging
 
 
 class CreatorType(Enum):
-    """Types of content creators"""    MUSICIAN = "musician"
+    """Types of content creators"""
+    MUSICIAN = "musician"
     SINGER = "singer"
     PRODUCER = "producer"
     SONGWRITER = "songwriter"
@@ -49,7 +51,8 @@ class CreatorType(Enum):
 
 
 class CollaborationType(Enum):
-    """Types of collaborations"""    FEATURE = "feature"
+    """Types of collaborations"""
+    FEATURE = "feature"
     REMIX = "remix"
     COVER = "cover"
     DUET = "duet"
@@ -64,7 +67,8 @@ class CollaborationType(Enum):
 
 
 class SkillLevel(Enum):
-    """Skill levels"""    BEGINNER = "beginner"
+    """Skill levels"""
+    BEGINNER = "beginner"
     INTERMEDIATE = "intermediate" 
     ADVANCED = "advanced"
     PROFESSIONAL = "professional"
@@ -72,7 +76,8 @@ class SkillLevel(Enum):
 
 
 class MatchingCriteria(Enum):
-    """Matching criteria types"""    GENRE_SIMILARITY = "genre_similarity"
+    """Matching criteria types"""
+    GENRE_SIMILARITY = "genre_similarity"
     SKILL_COMPATIBILITY = "skill_compatibility"
     AUDIENCE_OVERLAP = "audience_overlap"
     GEOGRAPHIC_PROXIMITY = "geographic_proximity"
@@ -86,7 +91,8 @@ class MatchingCriteria(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Creator profile configuration"""    creator_id: str
+    """Creator profile configuration"""
+    creator_id: str
     creator_type: CreatorType
     skill_level: SkillLevel
     genres: List[str] = field(default_factory=list)
@@ -102,7 +108,8 @@ class CreatorProfile:
 
 @dataclass
 class MatchingAlgorithmConfig:
-    """Matching algorithm configuration"""    enabled_criteria: List[MatchingCriteria] = field(default_factory=list)
+    """Matching algorithm configuration"""
+    enabled_criteria: List[MatchingCriteria] = field(default_factory=list)
     criteria_weights: Dict[MatchingCriteria, float] = field(default_factory=dict)
     minimum_match_score: float = 0.7
     maximum_matches: int = 10
@@ -114,7 +121,8 @@ class MatchingAlgorithmConfig:
 
 @dataclass
 class CollaborationWorkflow:
-    """Collaboration workflow configuration"""    workflow_type: CollaborationType
+    """Collaboration workflow configuration"""
+    workflow_type: CollaborationType
     steps: List[Dict[str, Any]] = field(default_factory=list)
     required_approvals: List[str] = field(default_factory=list)
     contract_templates: Dict[str, str] = field(default_factory=dict)
@@ -125,7 +133,8 @@ class CollaborationWorkflow:
 
 @dataclass
 class RecommendationEngineConfig:
-    """AI recommendation engine configuration"""    model_type: str = "collaborative_filtering"
+    """AI recommendation engine configuration"""
+    model_type: str = "collaborative_filtering"
     embedding_dimension: int = 256
     training_data_sources: List[str] = field(default_factory=list)
     update_frequency: str = "daily"
@@ -136,7 +145,8 @@ class RecommendationEngineConfig:
 
 
 class CollaborationMatchingConfig:
-    """    Professional collaboration and influencer matching configuration for IA-Influencer Agent Platform.
+    """
+    Professional collaboration and influencer matching configuration for IA-Influencer Agent Platform.
     
     Provides comprehensive collaboration infrastructure:
     - AI-powered creator matching algorithms
@@ -151,7 +161,8 @@ class CollaborationMatchingConfig:
     - Cross-platform promotion tools
     - Performance analytics and optimization
     - Legal compliance and dispute resolution
-    """    
+    """
+    
     def __init__(self, environment: str = "development"):
         self.environment = environment
         self.project_name = "ia-influencer-agent-collaboration"
@@ -163,7 +174,8 @@ class CollaborationMatchingConfig:
         self.logger = self._setup_logging()
         
     def _initialize_matching_algorithm(self) -> MatchingAlgorithmConfig:
-        """Initialize matching algorithm configuration"""        enabled_criteria = [
+        """Initialize matching algorithm configuration"""
+        enabled_criteria = [
             MatchingCriteria.GENRE_SIMILARITY,
             MatchingCriteria.SKILL_COMPATIBILITY,
             MatchingCriteria.AUDIENCE_OVERLAP,
@@ -194,7 +206,8 @@ class CollaborationMatchingConfig:
         )
     
     def _initialize_collaboration_workflows(self) -> Dict[CollaborationType, CollaborationWorkflow]:
-        """Initialize collaboration workflow configurations"""        workflows = {}
+        """Initialize collaboration workflow configurations"""
+        workflows = {}
         
         # Feature collaboration workflow
         workflows[CollaborationType.FEATURE] = CollaborationWorkflow(
@@ -278,7 +291,8 @@ class CollaborationMatchingConfig:
         return workflows
     
     def _initialize_recommendation_engine(self) -> RecommendationEngineConfig:
-        """Initialize AI recommendation engine configuration"""        training_data_sources = [
+        """Initialize AI recommendation engine configuration"""
+        training_data_sources = [
             "collaboration_history",
             "user_interactions",
             "content_preferences",
@@ -308,7 +322,8 @@ class CollaborationMatchingConfig:
         )
     
     def _initialize_creator_categories(self) -> Dict[CreatorType, Dict[str, Any]]:
-        """Initialize creator categories and their specific configurations"""        categories = {}
+        """Initialize creator categories and their specific configurations"""
+        categories = {}
         
         # Musicians
         categories[CreatorType.MUSICIAN] = {
@@ -365,7 +380,8 @@ class CollaborationMatchingConfig:
         return categories
     
     def _setup_logging(self) -> logging.Logger:
-        """Setup logging configuration"""        logger = logging.getLogger("collaboration_matching")
+        """Setup logging configuration"""
+        logger = logging.getLogger("collaboration_matching")
         logger.setLevel(logging.INFO)
         
         if not logger.handlers:
@@ -379,7 +395,8 @@ class CollaborationMatchingConfig:
         return logger
     
     def calculate_compatibility_score(self, creator1: CreatorProfile, creator2: CreatorProfile) -> Dict[str, float]:
-        """Calculate compatibility score between two creators"""        scores = {}
+        """Calculate compatibility score between two creators"""
+        scores = {}
         
         # Genre similarity
         common_genres = set(creator1.genres) & set(creator2.genres)
@@ -412,7 +429,8 @@ class CollaborationMatchingConfig:
         return scores
     
     def generate_collaboration_contract(self, collaboration_type: CollaborationType, participants: List[str]) -> Dict[str, Any]:
-        """Generate collaboration contract template"""        workflow = self.collaboration_workflows.get(collaboration_type)
+        """Generate collaboration contract template"""
+        workflow = self.collaboration_workflows.get(collaboration_type)
         if not workflow:
             return {}
         
@@ -439,7 +457,8 @@ class CollaborationMatchingConfig:
         return contract_data
     
     def generate_matching_configuration(self) -> Dict[str, Any]:
-        """Generate matching algorithm configuration"""        return {
+        """Generate matching algorithm configuration"""
+        return {
             "algorithm_type": "multi_criteria_collaborative_filtering",
             "enabled_criteria": [criteria.value for criteria in self.matching_algorithm.enabled_criteria],
             "criteria_weights": {criteria.value: weight for criteria, weight in self.matching_algorithm.criteria_weights.items()},
@@ -459,7 +478,8 @@ class CollaborationMatchingConfig:
         }
     
     def generate_creator_onboarding_config(self) -> Dict[str, Any]:
-        """Generate creator onboarding configuration"""        return {
+        """Generate creator onboarding configuration"""
+        return {
             "registration_requirements": {
                 "email_verification": True,
                 "phone_verification": True,
@@ -491,7 +511,8 @@ class CollaborationMatchingConfig:
         }
     
     def generate_collaboration_analytics_config(self) -> Dict[str, Any]:
-        """Generate collaboration analytics configuration"""        return {
+        """Generate collaboration analytics configuration"""
+        return {
             "tracking_metrics": [
                 "collaboration_initiation_rate",
                 "successful_completion_rate",
@@ -524,7 +545,8 @@ class CollaborationMatchingConfig:
         }
     
     def export_configurations(self, output_dir: str = "./collaboration-configs") -> Dict[str, str]:
-        """Export all collaboration and matching configurations to files"""        output_path = Path(output_dir)
+        """Export all collaboration and matching configurations to files"""
+        output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
         
         exported_files = {}
@@ -596,7 +618,8 @@ class CollaborationMatchingConfig:
 
 # Factory function for different environments
 def create_collaboration_matching_config(environment: str = "development") -> CollaborationMatchingConfig:
-    """Create collaboration matching configuration for specific environment"""    return CollaborationMatchingConfig(environment=environment)
+    """Create collaboration matching configuration for specific environment"""
+    return CollaborationMatchingConfig(environment=environment)
 
 
 # Export configuration instances

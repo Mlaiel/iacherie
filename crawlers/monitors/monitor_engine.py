@@ -21,7 +21,8 @@ Expertise combinée:
 - Audio/Vidéo: Traitement multimédia et analyse de contenu
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
-"""import asyncio
+"""
+import asyncio
 import logging
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Any, Callable, Union
@@ -36,21 +37,24 @@ from concurrent.futures import ThreadPoolExecutor
 logger = logging.getLogger(__name__)
 
 class MonitoringStrategy(Enum):
-    """Monitoring strategy types."""    REACTIVE = "reactive"
+    """Monitoring strategy types."""
+    REACTIVE = "reactive"
     PROACTIVE = "proactive"
     PREDICTIVE = "predictive"
     INTELLIGENT = "intelligent"
     AUTONOMOUS = "autonomous"
 
 class MonitoringMode(Enum):
-    """Monitoring operation modes."""    CONTINUOUS = "continuous"
+    """Monitoring operation modes."""
+    CONTINUOUS = "continuous"
     PERIODIC = "periodic"
     TRIGGER_BASED = "trigger_based"
     EVENT_DRIVEN = "event_driven"
     ADAPTIVE = "adaptive"
 
 class EngineStatus(Enum):
-    """Engine status enumeration."""    INITIALIZING = "initializing"
+    """Engine status enumeration."""
+    INITIALIZING = "initializing"
     RUNNING = "running"
     PAUSED = "paused"
     STOPPED = "stopped"
@@ -59,7 +63,8 @@ class EngineStatus(Enum):
 
 @dataclass
 class MonitoringMetrics:
-    """Monitoring metrics data structure."""    timestamp: datetime = field(default_factory=datetime.utcnow)
+    """Monitoring metrics data structure."""
+    timestamp: datetime = field(default_factory=datetime.utcnow)
     cpu_usage: float = 0.0
     memory_usage: float = 0.0
     disk_usage: float = 0.0
@@ -74,7 +79,8 @@ class MonitoringMetrics:
 
 @dataclass
 class MonitoringConfiguration:
-    """Monitoring configuration settings."""    strategy: MonitoringStrategy = MonitoringStrategy.PROACTIVE
+    """Monitoring configuration settings."""
+    strategy: MonitoringStrategy = MonitoringStrategy.PROACTIVE
     mode: MonitoringMode = MonitoringMode.CONTINUOUS
     interval: int = 60  # seconds
     max_retries: int = 3
@@ -87,9 +93,11 @@ class MonitoringConfiguration:
     enable_alerts: bool = True
 
 class MonitorEngine(ABC):
-    """    Abstract base class for all monitoring engines.
+    """
+    Abstract base class for all monitoring engines.
     Provides common infrastructure and interface for monitoring operations.
-    """    
+    """
+    
     def __init__(self, config: MonitoringConfiguration):
         self.config = config
         self.status = EngineStatus.INITIALIZING
@@ -104,26 +112,32 @@ class MonitorEngine(ABC):
         
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialize the monitoring engine."""        pass
+        """Initialize the monitoring engine."""
+        pass
     
     @abstractmethod
     async def start_monitoring(self, targets: List[Any]) -> bool:
-        """Start monitoring operations."""        pass
+        """Start monitoring operations."""
+        pass
     
     @abstractmethod
     async def stop_monitoring(self) -> bool:
-        """Stop monitoring operations."""        pass
+        """Stop monitoring operations."""
+        pass
     
     @abstractmethod
     async def collect_metrics(self) -> MonitoringMetrics:
-        """Collect current monitoring metrics."""        pass
+        """Collect current monitoring metrics."""
+        pass
     
     @abstractmethod
     async def process_events(self, events: List[Any]) -> None:
-        """Process monitoring events."""        pass
+        """Process monitoring events."""
+        pass
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get current engine status and metrics."""        return {
+        """Get current engine status and metrics."""
+        return {
             "engine_id": self.engine_id,
             "status": self.status.value,
             "start_time": self.start_time.isoformat() if self.start_time else None,
@@ -147,17 +161,20 @@ class MonitorEngine(ABC):
         }
     
     def _calculate_uptime(self) -> float:
-        """Calculate engine uptime in seconds."""        if self.start_time:
+        """Calculate engine uptime in seconds."""
+        if self.start_time:
             return (datetime.utcnow() - self.start_time).total_seconds()
         return 0.0
     
     async def register_event_handler(self, event_type: str, handler: Callable) -> None:
-        """Register an event handler for specific event types."""        if event_type not in self.event_handlers:
+        """Register an event handler for specific event types."""
+        if event_type not in self.event_handlers:
             self.event_handlers[event_type] = []
         self.event_handlers[event_type].append(handler)
     
     async def trigger_alert(self, alert_type: str, data: Dict[str, Any]) -> None:
-        """Trigger an alert with specified data."""        alert = {
+        """Trigger an alert with specified data."""
+        alert = {
             "id": str(uuid.uuid4()),
             "timestamp": datetime.utcnow(),
             "type": alert_type,
@@ -177,7 +194,8 @@ class MonitorEngine(ABC):
                 logger.error(f"Alert handler error: {e}")
     
     async def update_metrics(self) -> None:
-        """Update internal metrics."""        try:
+        """Update internal metrics."""
+        try:
             self.metrics = await self.collect_metrics()
             self.last_update = datetime.utcnow()
             
@@ -188,7 +206,8 @@ class MonitorEngine(ABC):
             logger.error(f"Metrics update failed: {e}")
     
     async def _check_alert_thresholds(self) -> None:
-        """Check if any metrics exceed alert thresholds."""        thresholds = self.config.alert_thresholds
+        """Check if any metrics exceed alert thresholds."""
+        thresholds = self.config.alert_thresholds
         
         if "cpu_usage" in thresholds and self.metrics.cpu_usage > thresholds["cpu_usage"]:
             await self.trigger_alert("high_cpu_usage", {
@@ -212,12 +231,14 @@ class MonitorEngine(ABC):
             })
     
     async def start_periodic_monitoring(self) -> None:
-        """Start periodic monitoring tasks."""        if self.config.mode == MonitoringMode.PERIODIC:
+        """Start periodic monitoring tasks."""
+        if self.config.mode == MonitoringMode.PERIODIC:
             task = asyncio.create_task(self._periodic_monitoring_loop())
             self.monitoring_tasks.append(task)
     
     async def _periodic_monitoring_loop(self) -> None:
-        """Periodic monitoring loop."""        while self.status == EngineStatus.RUNNING:
+        """Periodic monitoring loop."""
+        while self.status == EngineStatus.RUNNING:
             try:
                 await self.update_metrics()
                 await asyncio.sleep(self.config.interval)
@@ -226,7 +247,8 @@ class MonitorEngine(ABC):
                 await asyncio.sleep(5)
     
     async def cleanup(self) -> None:
-        """Cleanup resources and stop tasks."""        try:
+        """Cleanup resources and stop tasks."""
+        try:
             # Cancel monitoring tasks
             for task in self.monitoring_tasks:
                 task.cancel()
@@ -244,8 +266,10 @@ class MonitorEngine(ABC):
             logger.error(f"Cleanup error: {e}")
 
 class IntelligentMonitorEngine(MonitorEngine):
-    """    Intelligent monitoring engine with ML-based predictions and adaptive behavior.
-    """    
+    """
+    Intelligent monitoring engine with ML-based predictions and adaptive behavior.
+    """
+    
     def __init__(self, config: MonitoringConfiguration):
         super().__init__(config)
         self.ml_models: Dict[str, Any] = {}
@@ -253,7 +277,8 @@ class IntelligentMonitorEngine(MonitorEngine):
         self.adaptive_thresholds: Dict[str, float] = {}
         
     async def initialize(self) -> bool:
-        """Initialize intelligent monitoring engine."""        try:
+        """Initialize intelligent monitoring engine."""
+        try:
             self.status = EngineStatus.INITIALIZING
             
             # Initialize ML models
@@ -274,15 +299,18 @@ class IntelligentMonitorEngine(MonitorEngine):
             return False
     
     async def _initialize_ml_models(self) -> None:
-        """Initialize ML models for predictive monitoring."""        # Implementation for ML model initialization
+        """Initialize ML models for predictive monitoring."""
+        # Implementation for ML model initialization
         pass
     
     async def _setup_adaptive_thresholds(self) -> None:
-        """Setup adaptive thresholds based on historical data."""        # Implementation for adaptive threshold setup
+        """Setup adaptive thresholds based on historical data."""
+        # Implementation for adaptive threshold setup
         pass
     
     async def predict_anomalies(self, metrics: MonitoringMetrics) -> List[Dict[str, Any]]:
-        """Predict potential anomalies using ML models."""        predictions = []
+        """Predict potential anomalies using ML models."""
+        predictions = []
         
         try:
             # Use ML models to predict anomalies
@@ -295,7 +323,8 @@ class IntelligentMonitorEngine(MonitorEngine):
         return predictions
     
     async def adapt_monitoring_strategy(self, historical_data: List[MonitoringMetrics]) -> None:
-        """Adapt monitoring strategy based on historical patterns."""        try:
+        """Adapt monitoring strategy based on historical patterns."""
+        try:
             # Analyze historical data
             # Adjust monitoring parameters
             # Update thresholds

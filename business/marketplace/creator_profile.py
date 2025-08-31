@@ -13,7 +13,8 @@ Project Team Specialists: Lead AI Dev, Backend Senior, ML Engineer, DBA, Securit
 This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be pursued against any infringement.
-"""from typing import Dict, Any, List, Optional, Union
+"""
+from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
@@ -24,7 +25,8 @@ import logging
 logger = logging.getLogger(__name__)
 
 class CreatorType(Enum):
-    """Creator specialization types"""    MUSICIAN = "musician"
+    """Creator specialization types"""
+    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -36,7 +38,8 @@ class CreatorType(Enum):
     MULTI_FORMAT = "multi_format"
 
 class VerificationStatus(Enum):
-    """Creator verification levels"""    UNVERIFIED = "unverified"
+    """Creator verification levels"""
+    UNVERIFIED = "unverified"
     EMAIL_VERIFIED = "email_verified"
     PHONE_VERIFIED = "phone_verified"
     IDENTITY_VERIFIED = "identity_verified"
@@ -45,7 +48,8 @@ class VerificationStatus(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile data structure"""    creator_id: str
+    """Comprehensive creator profile data structure"""
+    creator_id: str
     username: str
     display_name: str
     email: str
@@ -75,9 +79,11 @@ class CreatorProfile:
     is_active: bool = True
 
 class CreatorProfileManager:
-    """    Advanced creator profile management system with reputation tracking,
+    """
+    Advanced creator profile management system with reputation tracking,
     verification, and comprehensive analytics.
-    """    
+    """
+    
     def __init__(self):
         self.verification_thresholds = {
             VerificationStatus.EMAIL_VERIFIED: {"email_confirmed": True},
@@ -98,7 +104,8 @@ class CreatorProfileManager:
         }
     
     async def create_profile(self, profile_data: Dict[str, Any]) -> CreatorProfile:
-        """Create a new creator profile with validation"""        try:
+        """Create a new creator profile with validation"""
+        try:
             # Generate unique creator ID
             creator_id = str(uuid.uuid4())
             
@@ -138,7 +145,8 @@ class CreatorProfileManager:
             raise
     
     def _default_collaboration_preferences(self) -> Dict[str, Any]:
-        """Default collaboration preferences"""        return {
+        """Default collaboration preferences"""
+        return {
             "open_to_collaborations": True,
             "preferred_collaboration_types": ["content_creation", "cross_promotion"],
             "minimum_collaborator_reputation": 0.5,
@@ -150,7 +158,8 @@ class CreatorProfileManager:
         }
     
     def _default_monetization_settings(self) -> Dict[str, Any]:
-        """Default monetization settings"""        return {
+        """Default monetization settings"""
+        return {
             "monetization_enabled": True,
             "pricing_strategy": "dynamic",
             "base_rate_per_hour": 50.0,
@@ -162,7 +171,8 @@ class CreatorProfileManager:
         }
     
     def _default_privacy_settings(self) -> Dict[str, bool]:
-        """Default privacy settings"""        return {
+        """Default privacy settings"""
+        return {
             "profile_public": True,
             "email_visible": False,
             "location_visible": True,
@@ -174,7 +184,8 @@ class CreatorProfileManager:
         }
     
     def _default_user_preferences(self) -> Dict[str, Any]:
-        """Default user preferences"""        return {
+        """Default user preferences"""
+        return {
             "theme": "dark",
             "language": "en",
             "timezone": "UTC",
@@ -186,12 +197,14 @@ class CreatorProfileManager:
         }
     
     async def get_profile(self, creator_id: str) -> Optional[CreatorProfile]:
-        """Retrieve creator profile by ID"""        # This would typically query database
+        """Retrieve creator profile by ID"""
+        # This would typically query database
         # Placeholder implementation
         return None
     
     async def update_profile(self, creator_id: str, updates: Dict[str, Any]) -> CreatorProfile:
-        """Update creator profile with validation"""        try:
+        """Update creator profile with validation"""
+        try:
             # Get existing profile
             profile = await self.get_profile(creator_id)
             if not profile:
@@ -218,7 +231,8 @@ class CreatorProfileManager:
             raise
     
     async def _check_verification_level(self, profile: CreatorProfile) -> VerificationStatus:
-        """Determine appropriate verification level"""        # Start with basic verification
+        """Determine appropriate verification level"""
+        # Start with basic verification
         current_level = VerificationStatus.UNVERIFIED
         
         # Check each verification level
@@ -229,7 +243,8 @@ class CreatorProfileManager:
         return current_level
     
     def _meets_verification_criteria(self, profile: CreatorProfile, criteria: Dict[str, Any]) -> bool:
-        """Check if profile meets verification criteria"""        for criterion, requirement in criteria.items():
+        """Check if profile meets verification criteria"""
+        for criterion, requirement in criteria.items():
             if criterion == "email_confirmed":
                 # This would check actual email confirmation status
                 continue
@@ -251,7 +266,8 @@ class CreatorProfileManager:
         return True
     
     async def _calculate_reputation(self, profile: CreatorProfile) -> float:
-        """Calculate comprehensive reputation score"""        factors = {
+        """Calculate comprehensive reputation score"""
+        factors = {
             "content_quality": 0.0,  # Would be calculated from content quality scores
             "collaboration_success": 0.0,  # Success rate of collaborations
             "earnings_stability": 0.0,  # Consistency of earnings
@@ -278,7 +294,8 @@ class CreatorProfileManager:
         return min(reputation, 1.0)
     
     def _calculate_profile_completeness(self, profile: CreatorProfile) -> float:
-        """Calculate how complete the profile is"""        required_fields = ['bio', 'location', 'specializations']
+        """Calculate how complete the profile is"""
+        required_fields = ['bio', 'location', 'specializations']
         optional_fields = ['website', 'social_links', 'portfolio_items']
         
         completed_required = sum(1 for field in required_fields 
@@ -292,7 +309,8 @@ class CreatorProfileManager:
         return (required_score * 0.8) + (optional_score * 0.2)
     
     def _verification_score(self, verification_status: VerificationStatus) -> float:
-        """Convert verification status to score"""        scores = {
+        """Convert verification status to score"""
+        scores = {
             VerificationStatus.UNVERIFIED: 0.0,
             VerificationStatus.EMAIL_VERIFIED: 0.2,
             VerificationStatus.PHONE_VERIFIED: 0.4,
@@ -303,12 +321,14 @@ class CreatorProfileManager:
         return scores.get(verification_status, 0.0)
     
     def _account_age_score(self, created_at: datetime) -> float:
-        """Calculate score based on account age"""        age_days = (datetime.utcnow() - created_at).days
+        """Calculate score based on account age"""
+        age_days = (datetime.utcnow() - created_at).days
         # Score increases with age, max at 365 days
         return min(age_days / 365.0, 1.0)
     
     def _activity_score(self, last_active: datetime) -> float:
-        """Calculate score based on recent activity"""        days_inactive = (datetime.utcnow() - last_active).days
+        """Calculate score based on recent activity"""
+        days_inactive = (datetime.utcnow() - last_active).days
         # Score decreases with inactivity
         if days_inactive == 0:
             return 1.0
@@ -322,7 +342,8 @@ class CreatorProfileManager:
             return 0.2
     
     async def _assign_badges(self, profile: CreatorProfile) -> List[str]:
-        """Assign badges based on achievements"""        badges = []
+        """Assign badges based on achievements"""
+        badges = []
         
         for badge_name, criteria in self.badge_criteria.items():
             if self._meets_badge_criteria(profile, criteria):
@@ -331,7 +352,8 @@ class CreatorProfileManager:
         return badges
     
     def _meets_badge_criteria(self, profile: CreatorProfile, criteria: Dict[str, Any]) -> bool:
-        """Check if profile meets badge criteria"""        for criterion, requirement in criteria.items():
+        """Check if profile meets badge criteria"""
+        for criterion, requirement in criteria.items():
             if criterion == "min_content" and profile.total_content < requirement:
                 return False
             elif criterion == "min_collaborations" and profile.total_collaborations < requirement:
@@ -347,12 +369,14 @@ class CreatorProfileManager:
         return True
     
     async def search_creators(self, criteria: Dict[str, Any]) -> List[CreatorProfile]:
-        """Search creators with advanced filtering"""        # This would implement complex database queries
+        """Search creators with advanced filtering"""
+        # This would implement complex database queries
         # Placeholder implementation
         return []
     
     async def get_creator_statistics(self, creator_id: str) -> Dict[str, Any]:
-        """Get comprehensive creator statistics"""        profile = await self.get_profile(creator_id)
+        """Get comprehensive creator statistics"""
+        profile = await self.get_profile(creator_id)
         if not profile:
             return {}
         
@@ -366,7 +390,8 @@ class CreatorProfileManager:
         }
     
     async def _get_reputation_breakdown(self, profile: CreatorProfile) -> Dict[str, float]:
-        """Get detailed reputation score breakdown"""        return {
+        """Get detailed reputation score breakdown"""
+        return {
             "content_quality": 0.0,
             "collaboration_success": 0.0,
             "earnings_stability": 0.0,
@@ -378,7 +403,8 @@ class CreatorProfileManager:
         }
     
     async def _calculate_growth_metrics(self, creator_id: str) -> Dict[str, Any]:
-        """Calculate growth metrics over time"""        # This would analyze historical data
+        """Calculate growth metrics over time"""
+        # This would analyze historical data
         return {
             "content_growth_rate": 0.0,
             "follower_growth_rate": 0.0,
@@ -387,7 +413,8 @@ class CreatorProfileManager:
         }
     
     async def _get_engagement_statistics(self, creator_id: str) -> Dict[str, Any]:
-        """Get engagement statistics"""        # This would calculate from actual engagement data
+        """Get engagement statistics"""
+        # This would calculate from actual engagement data
         return {
             "average_views_per_content": 0,
             "average_engagement_rate": 0.0,
@@ -396,7 +423,8 @@ class CreatorProfileManager:
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for creator profile manager"""        return {
+        """Health check for creator profile manager"""
+        return {
             "status": "healthy",
             "verification_levels": len(self.verification_thresholds),
             "available_badges": len(self.badge_criteria),
@@ -404,4 +432,5 @@ class CreatorProfileManager:
         }
     
     async def shutdown(self):
-        """Graceful shutdown"""        logger.info("CreatorProfileManager shutting down...")
+        """Graceful shutdown"""
+        logger.info("CreatorProfileManager shutting down...")

@@ -1,4 +1,6 @@
-"""Rights Models Package - Common data structures for rights management"""from .rights_models import (
+"""Rights Models Package - Common data structures for rights management"""
+
+from .rights_models import (
     ProtectionLevel,
     LicenseType,
     RightsStatus,

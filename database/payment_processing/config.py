@@ -23,7 +23,8 @@ ENTERPRISE CONFIGURATION FEATURES:
 - Auto-scaling and load balancing
 - Disaster recovery configurations
 - Multi-region deployment support
-"""from typing import Dict, Any, Optional, List, Union
+"""
+from typing import Dict, Any, Optional, List, Union
 from dataclasses import dataclass, field
 from decimal import Decimal
 import os
@@ -37,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 
 class PaymentEnvironment(Enum):
-    """Payment processing environment enumeration"""    DEVELOPMENT = "development"
+    """Payment processing environment enumeration"""
+    DEVELOPMENT = "development"
     STAGING = "staging"
     TESTING = "testing"
     PRODUCTION = "production"
@@ -45,7 +47,8 @@ class PaymentEnvironment(Enum):
 
 
 class PaymentProvider(Enum):
-    """Supported payment providers with enterprise features"""    STRIPE = "stripe"
+    """Supported payment providers with enterprise features"""
+    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     SQUARE = "square"
@@ -58,7 +61,8 @@ class PaymentProvider(Enum):
 
 
 class SecurityLevel(Enum):
-    """Security levels for different operations"""    BASIC = "basic"
+    """Security levels for different operations"""
+    BASIC = "basic"
     ENHANCED = "enhanced"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
@@ -66,7 +70,8 @@ class SecurityLevel(Enum):
 
 
 class ComplianceStandard(Enum):
-    """Supported compliance standards"""    PCI_DSS = "pci_dss"
+    """Supported compliance standards"""
+    PCI_DSS = "pci_dss"
     GDPR = "gdpr"
     SOX = "sox"
     ISO27001 = "iso27001"
@@ -76,7 +81,8 @@ class ComplianceStandard(Enum):
 
 @dataclass
 class DatabaseConfig:
-    """Advanced database configuration for payment processing"""    # Primary database settings
+    """Advanced database configuration for payment processing"""
+    # Primary database settings
     host: str = "localhost"
     port: int = 5432
     database: str = "ia_influencer_payments"
@@ -113,7 +119,8 @@ class DatabaseConfig:
     additional_params: Dict[str, Any] = field(default_factory=dict)
     
     def get_connection_string(self, use_replica: bool = False) -> str:
-        """Generate database connection string"""        if use_replica and self.read_replicas:
+        """Generate database connection string"""
+        if use_replica and self.read_replicas:
             # Use first available read replica
             replica = self.read_replicas[0]
             host = replica.get('host', self.host)
@@ -132,7 +139,8 @@ class DatabaseConfig:
 
 @dataclass
 class GatewayConfiguration:
-    """Advanced payment gateway configuration"""    provider: PaymentProvider
+    """Advanced payment gateway configuration"""
+    provider: PaymentProvider
     environment: PaymentEnvironment
     
     # API credentials
@@ -165,14 +173,17 @@ class GatewayConfiguration:
     additional_config: Dict[str, Any] = field(default_factory=dict)
     
     def is_production(self) -> bool:
-        """Check if this is a production configuration"""        return self.environment == PaymentEnvironment.PRODUCTION
+        """Check if this is a production configuration"""
+        return self.environment == PaymentEnvironment.PRODUCTION
     
     def get_api_endpoint(self, endpoint: str) -> str:
-        """Get full API endpoint URL"""        base_url = self.api_base_url or self._get_default_base_url()
+        """Get full API endpoint URL"""
+        base_url = self.api_base_url or self._get_default_base_url()
         return f"{base_url.rstrip('/')}/{endpoint.lstrip('/')}"
     
     def _get_default_base_url(self) -> str:
-        """Get default base URL for the provider"""        default_urls = {
+        """Get default base URL for the provider"""
+        default_urls = {
             PaymentProvider.STRIPE: {
                 PaymentEnvironment.PRODUCTION: "https://api.stripe.com",
                 PaymentEnvironment.STAGING: "https://api.stripe.com",
@@ -198,7 +209,8 @@ class GatewayConfiguration:
 
 @dataclass
 class SecurityConfiguration:
-    """Advanced security configuration for payments"""    # Encryption settings
+    """Advanced security configuration for payments"""
+    # Encryption settings
     encryption_algorithm: str = "AES-256-GCM"
     key_rotation_interval: timedelta = field(default_factory=lambda: timedelta(days=90))
     
@@ -233,7 +245,8 @@ class SecurityConfiguration:
     webhook_ip_whitelist: List[str] = field(default_factory=list)
     
     def is_high_security(self) -> bool:
-        """Check if high security mode is enabled"""        return (
+        """Check if high security mode is enabled"""
+        return (
             self.fraud_detection_enabled and
             self.require_2fa and
             self.audit_logging_enabled and
@@ -243,7 +256,8 @@ class SecurityConfiguration:
 
 @dataclass
 class MonitoringConfiguration:
-    """Advanced monitoring and alerting configuration"""    # Basic monitoring
+    """Advanced monitoring and alerting configuration"""
+    # Basic monitoring
     monitoring_enabled: bool = True
     metrics_collection_interval: int = 60  # seconds
     
@@ -271,12 +285,14 @@ class MonitoringConfiguration:
     health_check_timeout: int = 10  # seconds
     
     def should_alert(self, metric_name: str, value: float, threshold: float) -> bool:
-        """Determine if an alert should be sent"""        return value > threshold
+        """Determine if an alert should be sent"""
+        return value > threshold
 
 
 @dataclass
 class CacheConfiguration:
-    """Cache configuration for payment processing"""    # Redis settings
+    """Cache configuration for payment processing"""
+    # Redis settings
     redis_host: str = "localhost"
     redis_port: int = 6379
     redis_db: int = 0
@@ -302,7 +318,8 @@ class CacheConfiguration:
 
 @dataclass
 class FeatureFlags:
-    """Feature flags for payment processing"""    # Core features
+    """Feature flags for payment processing"""
+    # Core features
     multi_currency_enabled: bool = True
     crypto_payments_enabled: bool = True
     recurring_payments_enabled: bool = True
@@ -323,11 +340,13 @@ class FeatureFlags:
     voice_authorization: bool = False
     
     def is_feature_enabled(self, feature_name: str) -> bool:
-        """Check if a specific feature is enabled"""        return getattr(self, f"{feature_name}_enabled", False)
+        """Check if a specific feature is enabled"""
+        return getattr(self, f"{feature_name}_enabled", False)
 
 
 class PaymentConfig:
-    """Central payment configuration manager"""    
+    """Central payment configuration manager"""
+    
     def __init__(self, environment: PaymentEnvironment = PaymentEnvironment.DEVELOPMENT):
         self.environment = environment
         self.database = DatabaseConfig()
@@ -339,7 +358,8 @@ class PaymentConfig:
         self._load_configuration()
     
     def _load_configuration(self):
-        """Load configuration from environment variables and files"""        # Load from environment variables
+        """Load configuration from environment variables and files"""
+        # Load from environment variables
         self._load_from_environment()
         
         # Load from configuration files
@@ -349,7 +369,8 @@ class PaymentConfig:
         self._apply_environment_overrides()
     
     def _load_from_environment(self):
-        """Load configuration from environment variables"""        # Database configuration
+        """Load configuration from environment variables"""
+        # Database configuration
         self.database.host = os.getenv("DB_HOST", self.database.host)
         self.database.port = int(os.getenv("DB_PORT", str(self.database.port)))
         self.database.username = os.getenv("DB_USERNAME", self.database.username)
@@ -372,7 +393,8 @@ class PaymentConfig:
         ).lower() == "true"
     
     def _load_from_files(self):
-        """Load configuration from JSON/YAML files"""        config_dir = Path(__file__).parent / "config"
+        """Load configuration from JSON/YAML files"""
+        config_dir = Path(__file__).parent / "config"
         
         # Load gateway configurations
         gateway_config_file = config_dir / f"gateways_{self.environment.value}.json"
@@ -392,7 +414,8 @@ class PaymentConfig:
                 logger.error(f"Failed to load gateway configuration: {str(e)}")
     
     def _apply_environment_overrides(self):
-        """Apply environment-specific configuration overrides"""        if self.environment == PaymentEnvironment.PRODUCTION:
+        """Apply environment-specific configuration overrides"""
+        if self.environment == PaymentEnvironment.PRODUCTION:
             # Production-specific settings
             self.security.fraud_detection_enabled = True
             self.security.require_2fa = True
@@ -408,16 +431,20 @@ class PaymentConfig:
             self.features.experimental_features = True
     
     def add_gateway_config(self, provider: PaymentProvider, config: GatewayConfiguration):
-        """Add or update gateway configuration"""        self.gateways[provider] = config
+        """Add or update gateway configuration"""
+        self.gateways[provider] = config
     
     def get_gateway_config(self, provider: PaymentProvider) -> Optional[GatewayConfiguration]:
-        """Get gateway configuration for specific provider"""        return self.gateways.get(provider)
+        """Get gateway configuration for specific provider"""
+        return self.gateways.get(provider)
     
     def get_enabled_gateways(self) -> List[PaymentProvider]:
-        """Get list of enabled payment gateways"""        return list(self.gateways.keys())
+        """Get list of enabled payment gateways"""
+        return list(self.gateways.keys())
     
     def validate_configuration(self) -> List[str]:
-        """Validate configuration and return list of issues"""        issues = []
+        """Validate configuration and return list of issues"""
+        issues = []
         
         # Validate database configuration
         if not self.database.password and self.environment == PaymentEnvironment.PRODUCTION:
@@ -442,7 +469,8 @@ class PaymentConfig:
         return issues
     
     def export_config(self, include_secrets: bool = False) -> Dict[str, Any]:
-        """Export configuration as dictionary"""        config_dict = {
+        """Export configuration as dictionary"""
+        config_dict = {
             "environment": self.environment.value,
             "database": {
                 "host": self.database.host,
@@ -485,7 +513,8 @@ class PaymentConfig:
         return config_dict
     
     def get_compliance_settings(self) -> Dict[str, Any]:
-        """Get compliance-related settings"""        return {
+        """Get compliance-related settings"""
+        return {
             "standards": [standard.value for standard in self.security.compliance_standards],
             "data_retention_days": self.security.data_retention_days,
             "audit_logging": self.security.audit_logging_enabled,
@@ -507,7 +536,8 @@ _payment_config: Optional[PaymentConfig] = None
 
 
 def get_payment_config(environment: Optional[PaymentEnvironment] = None) -> PaymentConfig:
-    """Get global payment configuration instance"""    global _payment_config
+    """Get global payment configuration instance"""
+    global _payment_config
     
     if _payment_config is None or (environment and _payment_config.environment != environment):
         _payment_config = PaymentConfig(environment or PaymentEnvironment.DEVELOPMENT)
@@ -516,7 +546,8 @@ def get_payment_config(environment: Optional[PaymentEnvironment] = None) -> Paym
 
 
 def initialize_payment_config(environment: PaymentEnvironment) -> PaymentConfig:
-    """Initialize payment configuration for specific environment"""    global _payment_config
+    """Initialize payment configuration for specific environment"""
+    global _payment_config
     _payment_config = PaymentConfig(environment)
     
     # Validate configuration
@@ -567,7 +598,8 @@ PRODUCTION_CONFIG = {
     connection_template: str = "postgresql://{username}:{password}@{host}:{port}/{database}"
     
     def get_connection_string(self) -> str:
-        """Generate database connection string"""        return self.connection_template.format(
+        """Generate database connection string"""
+        return self.connection_template.format(
             username=self.username,
             password=self.password,
             host=self.host,
@@ -576,7 +608,8 @@ PRODUCTION_CONFIG = {
         )
     
     def get_ssl_config(self) -> Dict[str, Any]:
-        """Get SSL configuration for database connection"""        ssl_config = {"sslmode": self.ssl_mode}
+        """Get SSL configuration for database connection"""
+        ssl_config = {"sslmode": self.ssl_mode}
         
         if self.ssl_cert:
             ssl_config["sslcert"] = self.ssl_cert
@@ -590,7 +623,8 @@ PRODUCTION_CONFIG = {
 
 @dataclass
 class StripeConfig:
-    """Stripe payment processor configuration"""    publishable_key: str = ""
+    """Stripe payment processor configuration"""
+    publishable_key: str = ""
     secret_key: str = ""
     webhook_secret: str = ""
     api_version: str = "2023-10-16"
@@ -611,7 +645,8 @@ class StripeConfig:
     capture_method: str = "automatic"
     
     def get_headers(self) -> Dict[str, str]:
-        """Get API headers for Stripe requests"""        return {
+        """Get API headers for Stripe requests"""
+        return {
             "Authorization": f"Bearer {self.secret_key}",
             "Stripe-Version": self.api_version,
             "Content-Type": "application/x-www-form-urlencoded"
@@ -620,7 +655,8 @@ class StripeConfig:
 
 @dataclass
 class PayPalConfig:
-    """PayPal payment processor configuration"""    client_id: str = ""
+    """PayPal payment processor configuration"""
+    client_id: str = ""
     client_secret: str = ""
     webhook_id: str = ""
     environment: str = "sandbox"  # sandbox or live
@@ -640,12 +676,14 @@ class PayPalConfig:
     
     @property
     def base_url(self) -> str:
-        """Get PayPal API base URL"""        if self.environment == "live":
+        """Get PayPal API base URL"""
+        if self.environment == "live":
             return "https://api.paypal.com"
         return "https://api.sandbox.paypal.com"
     
     def get_auth_headers(self, access_token: str) -> Dict[str, str]:
-        """Get API headers for PayPal requests"""        return {
+        """Get API headers for PayPal requests"""
+        return {
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json",
             "Accept": "application/json"
@@ -654,7 +692,8 @@ class PayPalConfig:
 
 @dataclass
 class WiseConfig:
-    """Wise (formerly TransferWise) configuration"""    api_token: str = ""
+    """Wise (formerly TransferWise) configuration"""
+    api_token: str = ""
     profile_id: str = ""
     environment: str = "sandbox"  # sandbox or live
     
@@ -668,12 +707,14 @@ class WiseConfig:
     
     @property
     def base_url(self) -> str:
-        """Get Wise API base URL"""        if self.environment == "live":
+        """Get Wise API base URL"""
+        if self.environment == "live":
             return "https://api.transferwise.com"
         return "https://api.sandbox.transferwise.tech"
     
     def get_headers(self) -> Dict[str, str]:
-        """Get API headers for Wise requests"""        return {
+        """Get API headers for Wise requests"""
+        return {
             "Authorization": f"Bearer {self.api_token}",
             "Content-Type": "application/json",
             "Accept": "application/json"
@@ -682,7 +723,8 @@ class WiseConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration for payment processing"""    encryption_key: str = ""
+    """Security configuration for payment processing"""
+    encryption_key: str = ""
     jwt_secret: str = ""
     jwt_algorithm: str = "HS256"
     jwt_expiration_hours: int = 24
@@ -710,13 +752,15 @@ class SecurityConfig:
     max_concurrent_sessions: int = 5
     
     def is_ip_allowed(self, ip_address: str) -> bool:
-        """Check if IP address is allowed"""        # Implementation would check against allowed/blocked IP ranges
+        """Check if IP address is allowed"""
+        # Implementation would check against allowed/blocked IP ranges
         return True  # Simplified for example
 
 
 @dataclass
 class ComplianceConfig:
-    """Compliance and regulatory configuration"""    # PCI DSS compliance
+    """Compliance and regulatory configuration"""
+    # PCI DSS compliance
     pci_compliance_level: str = "Level 1"
     enable_tokenization: bool = True
     data_retention_days: int = 2555  # 7 years
@@ -750,7 +794,8 @@ class ComplianceConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring and observability configuration"""    # Logging
+    """Monitoring and observability configuration"""
+    # Logging
     log_level: str = "INFO"
     log_format: str = "json"
     enable_audit_logging: bool = True
@@ -783,7 +828,8 @@ class MonitoringConfig:
 
 @dataclass
 class FeatureFlags:
-    """Feature flags for payment processing"""    enable_cryptocurrency: bool = False
+    """Feature flags for payment processing"""
+    enable_cryptocurrency: bool = False
     enable_buy_now_pay_later: bool = False
     enable_installments: bool = False
     enable_subscriptions: bool = True
@@ -805,7 +851,8 @@ class FeatureFlags:
 
 @dataclass
 class PaymentProcessingConfig:
-    """Main configuration class for payment processing"""    environment: PaymentEnvironment = PaymentEnvironment.DEVELOPMENT
+    """Main configuration class for payment processing"""
+    environment: PaymentEnvironment = PaymentEnvironment.DEVELOPMENT
     
     # Database configuration
     database: DatabaseConfig = field(default_factory=DatabaseConfig)
@@ -848,7 +895,8 @@ class PaymentProcessingConfig:
     
     @classmethod
     def from_environment(cls) -> 'PaymentProcessingConfig':
-        """Create configuration from environment variables"""        config = cls()
+        """Create configuration from environment variables"""
+        config = cls()
         
         # Environment
         env_name = os.getenv('PAYMENT_ENVIRONMENT', 'development').lower()
@@ -883,7 +931,8 @@ class PaymentProcessingConfig:
         return config
     
     def validate(self) -> List[str]:
-        """Validate configuration and return list of errors"""        errors = []
+        """Validate configuration and return list of errors"""
+        errors = []
         
         if self.environment == PaymentEnvironment.PRODUCTION:
             # Production validations
@@ -909,7 +958,8 @@ class PaymentProcessingConfig:
         return errors
     
     def get_processor_config(self, processor: PaymentProcessor) -> Dict[str, Any]:
-        """Get configuration for specific payment processor"""        processor_configs = {
+        """Get configuration for specific payment processor"""
+        processor_configs = {
             PaymentProcessor.STRIPE: self.stripe,
             PaymentProcessor.PAYPAL: self.paypal,
             PaymentProcessor.WISE: self.wise
@@ -918,7 +968,8 @@ class PaymentProcessingConfig:
         return processor_configs.get(processor)
     
     def is_feature_enabled(self, feature_name: str) -> bool:
-        """Check if a feature is enabled"""        return getattr(self.features, feature_name, False)
+        """Check if a feature is enabled"""
+        return getattr(self.features, feature_name, False)
 
 
 # Global configuration instance
@@ -926,11 +977,13 @@ payment_config = PaymentProcessingConfig.from_environment()
 
 
 def get_config() -> PaymentProcessingConfig:
-    """Get the global payment processing configuration"""    return payment_config
+    """Get the global payment processing configuration"""
+    return payment_config
 
 
 def update_config(**kwargs) -> None:
-    """Update global configuration"""    global payment_config
+    """Update global configuration"""
+    global payment_config
     for key, value in kwargs.items():
         if hasattr(payment_config, key):
             setattr(payment_config, key, value)
@@ -939,7 +992,8 @@ def update_config(**kwargs) -> None:
 
 
 def validate_config() -> bool:
-    """Validate the current configuration"""    errors = payment_config.validate()
+    """Validate the current configuration"""
+    errors = payment_config.validate()
     if errors:
         for error in errors:
             logger.error(f"Configuration error: {error}")

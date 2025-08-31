@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -18,7 +19,8 @@ Tests all core engines, managers, and configuration systems.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 from unittest import IsolatedAsyncioTestCase
 from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional
@@ -51,8 +53,10 @@ from ai.personalization.exceptions import (
 
 
 class TestPersonalizationEngine(IsolatedAsyncioTestCase):
-    """Comprehensive tests for PersonalizationEngine"""    async def asyncSetUp(self):
-        """Set up test environment"""        # Create test configuration
+    """Comprehensive tests for PersonalizationEngine"""
+    async def asyncSetUp(self):
+        """Set up test environment"""
+        # Create test configuration
         self.config = PersonalizationConfig()
         self.engine = PersonalizationEngine(self.config)
         self.test_user_id = "test_user_12345"
@@ -73,7 +77,8 @@ class TestPersonalizationEngine(IsolatedAsyncioTestCase):
         self.test_profile.personality_traits = {'openness': 0.7, 'creativity': 0.8}
 
     async def test_engine_initialization(self):
-        """Test engine proper initialization"""        self.assertIsNotNone(self.engine)
+        """Test engine proper initialization"""
+        self.assertIsNotNone(self.engine)
         self.assertIsInstance(self.engine.config, PersonalizationConfig)
         self.assertIsNotNone(self.engine.models)
         self.assertIsNotNone(self.engine.analytics)
@@ -81,7 +86,8 @@ class TestPersonalizationEngine(IsolatedAsyncioTestCase):
         self.assertEqual(self.engine.metrics["total_recommendations"], 0)
 
     async def test_get_recommendations_basic(self):
-        """Test basic recommendation functionality"""        # Test with minimal parameters
+        """Test basic recommendation functionality"""
+        # Test with minimal parameters
         recommendations = await self.engine.get_personalized_recommendations(
             user_id=self.test_user_id,
             num_recommendations=10
@@ -100,7 +106,8 @@ class TestPersonalizationEngine(IsolatedAsyncioTestCase):
             self.assertLessEqual(rec['relevance_score'], 1.0)
 
     async def test_get_recommendations_with_content_type(self):
-        """Test recommendations with specific content type"""        from ai.personalization.core import ContentType
+        """Test recommendations with specific content type"""
+        from ai.personalization.core import ContentType
         
         for content_type in [ContentType.MUSIC, ContentType.VIDEO, ContentType.AUDIO, ContentType.TEXT]:
             recommendations = await self.engine.get_personalized_recommendations(
@@ -113,7 +120,8 @@ class TestPersonalizationEngine(IsolatedAsyncioTestCase):
             self.assertLessEqual(len(recommendations), 5)
 
     async def test_get_recommendations_with_strategy(self):
-        """Test recommendations with different strategies"""        from ai.personalization.core import PersonalizationType
+        """Test recommendations with different strategies"""
+        from ai.personalization.core import PersonalizationType
         
         strategies = [
             PersonalizationType.COLLABORATIVE_FILTERING, 
@@ -138,7 +146,8 @@ class TestPersonalizationEngine(IsolatedAsyncioTestCase):
                 self.assertIn('strategy', recommendations[0])
 
     async def test_get_recommendations_performance(self):
-        """Test recommendation generation performance"""        start_time = time.time()
+        """Test recommendation generation performance"""
+        start_time = time.time()
         
         recommendations = await self.engine.get_personalized_recommendations(
             user_id=self.test_user_id,
@@ -152,7 +161,8 @@ class TestPersonalizationEngine(IsolatedAsyncioTestCase):
         self.assertIsInstance(recommendations, list)
 
     async def test_process_feedback_explicit(self):
-        """Test processing explicit user feedback"""        # Test positive feedback
+        """Test processing explicit user feedback"""
+        # Test positive feedback
         result = await self.engine.process_feedback(
             user_id=self.test_user_id,
             content_id="content_1",
@@ -174,7 +184,8 @@ class TestPersonalizationEngine(IsolatedAsyncioTestCase):
         self.assertIsNone(result)
 
     async def test_process_feedback_implicit(self):
-        """Test processing implicit user feedback"""        # Test engagement time feedback
+        """Test processing implicit user feedback"""
+        # Test engagement time feedback
         result = await self.engine.process_feedback(
             user_id=self.test_user_id,
             content_id="content_3",
@@ -195,7 +206,8 @@ class TestPersonalizationEngine(IsolatedAsyncioTestCase):
         self.assertIsNone(result)
 
     async def test_process_feedback_multiple(self):
-        """Test multiple feedback processing"""        # Process multiple feedback items individually
+        """Test multiple feedback processing"""
+        # Process multiple feedback items individually
         for i in range(5):
             result = await self.engine.process_feedback(
                 user_id=self.test_user_id,
@@ -206,7 +218,8 @@ class TestPersonalizationEngine(IsolatedAsyncioTestCase):
             self.assertIsNone(result)
 
     async def test_update_user_profile(self):
-        """Test user profile updates"""        # Test with interaction data
+        """Test user profile updates"""
+        # Test with interaction data
         interaction_data = {
             'content_id': 'test_content_123',
             'action': 'play',
@@ -223,7 +236,8 @@ class TestPersonalizationEngine(IsolatedAsyncioTestCase):
         self.assertIsInstance(result, UserProfile)
 
     async def test_get_user_profile(self):
-        """Test user profile retrieval"""        profile = await self.engine.get_user_profile(
+        """Test user profile retrieval"""
+        profile = await self.engine.get_user_profile(
             user_id=self.test_user_id
         )
         
@@ -233,7 +247,8 @@ class TestPersonalizationEngine(IsolatedAsyncioTestCase):
         self.assertIsNotNone(profile.updated_at)
 
     async def test_concurrent_recommendations(self):
-        """Test concurrent recommendation requests"""        tasks = []
+        """Test concurrent recommendation requests"""
+        tasks = []
         for i in range(10):
             task = self.engine.get_personalized_recommendations(
                 user_id=f"concurrent_user_{i}",
@@ -248,14 +263,16 @@ class TestPersonalizationEngine(IsolatedAsyncioTestCase):
             self.assertIsInstance(recommendations, list)
 
     async def test_error_handling_invalid_user(self):
-        """Test error handling for invalid user ID"""        with self.assertRaises(PersonalizationError):
+        """Test error handling for invalid user ID"""
+        with self.assertRaises(PersonalizationError):
             await self.engine.get_recommendations(
                 user_id="",  # Empty user ID
                 max_recommendations=10
             )
 
     async def test_error_handling_invalid_feedback(self):
-        """Test error handling for invalid feedback"""        with self.assertRaises(PersonalizationError):
+        """Test error handling for invalid feedback"""
+        with self.assertRaises(PersonalizationError):
             await self.engine.process_feedback(
                 user_id=self.test_user_id,
                 content_id="content_1",
@@ -265,13 +282,16 @@ class TestPersonalizationEngine(IsolatedAsyncioTestCase):
 
 
 class TestUserProfileManager(IsolatedAsyncioTestCase):
-    """Comprehensive tests for UserProfileManager"""    async def asyncSetUp(self):
-        """Set up test environment"""        self.config = PersonalizationConfig()
+    """Comprehensive tests for UserProfileManager"""
+    async def asyncSetUp(self):
+        """Set up test environment"""
+        self.config = PersonalizationConfig()
         self.manager = UserProfileManager(self.config)
         self.test_user_id = "profile_test_user"
 
     async def test_create_user_profile(self):
-        """Test user profile creation"""        initial_data = {
+        """Test user profile creation"""
+        initial_data = {
             'demographics': {'age_group': '25-35', 'location': 'FR'},
             'preferences': {'music': {'pop': 0.8}},
             'behavior_patterns': {'activity_level': 0.6}
@@ -284,7 +304,8 @@ class TestUserProfileManager(IsolatedAsyncioTestCase):
         self.assertIsNotNone(profile.created_at)
 
     async def test_validate_profile(self):
-        """Test profile validation"""        # Create a valid profile
+        """Test profile validation"""
+        # Create a valid profile
         initial_data = {
             'demographics': {'age_group': '25-35'},
             'preferences': {'music': {'rock': 0.7}}
@@ -298,7 +319,8 @@ class TestUserProfileManager(IsolatedAsyncioTestCase):
         self.assertTrue(is_valid)
 
     async def test_optimize_profile(self):
-        """Test profile optimization"""        # Create initial profile with many interactions
+        """Test profile optimization"""
+        # Create initial profile with many interactions
         initial_data = {
             'preferences': {'music': {'pop': 0.5}}
         }
@@ -319,7 +341,8 @@ class TestUserProfileManager(IsolatedAsyncioTestCase):
         self.assertEqual(updated_profile.preferences['music']['rock'], 0.6)
 
     async def test_analyze_user_behavior(self):
-        """Test user behavior analysis"""        analysis = await self.manager.analyze_user_behavior(
+        """Test user behavior analysis"""
+        analysis = await self.manager.analyze_user_behavior(
             user_id=self.test_user_id,
             time_window=timedelta(days=30)
         )
@@ -330,7 +353,8 @@ class TestUserProfileManager(IsolatedAsyncioTestCase):
         self.assertIn('preference_evolution', analysis)
 
     async def test_get_similar_users(self):
-        """Test finding similar users"""        # Create multiple test profiles
+        """Test finding similar users"""
+        # Create multiple test profiles
         for i in range(5):
             profile_data = {
                 'user_id': f'similar_user_{i}',
@@ -357,13 +381,16 @@ class TestUserProfileManager(IsolatedAsyncioTestCase):
             self.assertIsInstance(user_data['similarity_score'], (int, float))
 
     async def test_profile_not_found_error(self):
-        """Test ProfileNotFoundError handling"""        with self.assertRaises(ProfileNotFoundError):
+        """Test ProfileNotFoundError handling"""
+        with self.assertRaises(ProfileNotFoundError):
             await self.manager.get_user_profile("nonexistent_user")
 
 
 class TestContentPersonalizer(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ContentPersonalizer"""    async def asyncSetUp(self):
-        """Set up test environment"""        self.personalizer = ContentPersonalizer()
+    """Comprehensive tests for ContentPersonalizer"""
+    async def asyncSetUp(self):
+        """Set up test environment"""
+        self.personalizer = ContentPersonalizer()
         self.test_user_profile = UserProfile(
             user_id="content_test_user",
             preferences={
@@ -373,7 +400,8 @@ class TestContentPersonalizer(IsolatedAsyncioTestCase):
         )
 
     async def test_personalize_content(self):
-        """Test content personalization"""        content_items = [
+        """Test content personalization"""
+        content_items = [
             {
                 'content_id': f'item_{i}',
                 'content_type': 'music',
@@ -403,7 +431,8 @@ class TestContentPersonalizer(IsolatedAsyncioTestCase):
             self.assertLessEqual(item['personalization_score'], 1.0)
 
     async def test_adapt_content_features(self):
-        """Test content feature adaptation"""        content_features = {
+        """Test content feature adaptation"""
+        content_features = {
             'tempo': 120,
             'key': 'C_major',
             'energy': 0.7,
@@ -420,7 +449,8 @@ class TestContentPersonalizer(IsolatedAsyncioTestCase):
         self.assertIn('adaptation_factors', adapted_features)
 
     async def test_generate_content_variants(self):
-        """Test content variant generation"""        base_content = {
+        """Test content variant generation"""
+        base_content = {
             'content_id': 'base_content',
             'content_type': 'music',
             'features': {'tempo': 130, 'energy': 0.8}
@@ -442,15 +472,18 @@ class TestContentPersonalizer(IsolatedAsyncioTestCase):
 
 
 class TestRecommendationEngine(IsolatedAsyncioTestCase):
-    """Comprehensive tests for RecommendationEngine"""    async def asyncSetUp(self):
-        """Set up test environment"""        self.engine = RecommendationEngine()
+    """Comprehensive tests for RecommendationEngine"""
+    async def asyncSetUp(self):
+        """Set up test environment"""
+        self.engine = RecommendationEngine()
         self.test_user_profile = UserProfile(
             user_id="recommendation_test_user",
             preferences={'music': {'jazz': 0.8, 'blues': 0.6}}
         )
 
     async def test_collaborative_filtering(self):
-        """Test collaborative filtering recommendations"""        recommendations = await self.engine.get_collaborative_recommendations(
+        """Test collaborative filtering recommendations"""
+        recommendations = await self.engine.get_collaborative_recommendations(
             user_profile=self.test_user_profile,
             max_recommendations=10
         )
@@ -465,7 +498,8 @@ class TestRecommendationEngine(IsolatedAsyncioTestCase):
             self.assertEqual(rec['method'], 'collaborative_filtering')
 
     async def test_content_based_filtering(self):
-        """Test content-based filtering recommendations"""        recommendations = await self.engine.get_content_based_recommendations(
+        """Test content-based filtering recommendations"""
+        recommendations = await self.engine.get_content_based_recommendations(
             user_profile=self.test_user_profile,
             max_recommendations=10
         )
@@ -480,7 +514,8 @@ class TestRecommendationEngine(IsolatedAsyncioTestCase):
             self.assertEqual(rec['method'], 'content_based')
 
     async def test_hybrid_recommendations(self):
-        """Test hybrid recommendation approach"""        recommendations = await self.engine.get_hybrid_recommendations(
+        """Test hybrid recommendation approach"""
+        recommendations = await self.engine.get_hybrid_recommendations(
             user_profile=self.test_user_profile,
             collaborative_weight=0.6,
             content_weight=0.4,
@@ -496,7 +531,8 @@ class TestRecommendationEngine(IsolatedAsyncioTestCase):
             self.assertIn('component_scores', rec)
 
     async def test_deep_learning_recommendations(self):
-        """Test deep learning recommendations"""        recommendations = await self.engine.get_deep_learning_recommendations(
+        """Test deep learning recommendations"""
+        recommendations = await self.engine.get_deep_learning_recommendations(
             user_profile=self.test_user_profile,
             max_recommendations=10
         )
@@ -505,7 +541,8 @@ class TestRecommendationEngine(IsolatedAsyncioTestCase):
         self.assertLessEqual(len(recommendations), 10)
 
     async def test_recommendation_diversity(self):
-        """Test recommendation diversity optimization"""        recommendations = await self.engine.get_diverse_recommendations(
+        """Test recommendation diversity optimization"""
+        recommendations = await self.engine.get_diverse_recommendations(
             user_profile=self.test_user_profile,
             diversity_factor=0.3,
             max_recommendations=20
@@ -521,7 +558,8 @@ class TestRecommendationEngine(IsolatedAsyncioTestCase):
             self.assertGreater(diversity_ratio, 0.0)
 
     async def test_recommendation_ranking(self):
-        """Test recommendation ranking and scoring"""        candidate_items = [
+        """Test recommendation ranking and scoring"""
+        candidate_items = [
             {'content_id': f'candidate_{i}', 'features': {'score': np.random.random()}}
             for i in range(50)
         ]
@@ -540,12 +578,15 @@ class TestRecommendationEngine(IsolatedAsyncioTestCase):
 
 
 class TestAdaptiveLearning(IsolatedAsyncioTestCase):
-    """Comprehensive tests for AdaptiveLearning"""    async def asyncSetUp(self):
-        """Set up test environment"""        self.adaptive_learning = AdaptiveLearning()
+    """Comprehensive tests for AdaptiveLearning"""
+    async def asyncSetUp(self):
+        """Set up test environment"""
+        self.adaptive_learning = AdaptiveLearning()
         self.test_user_id = "adaptive_test_user"
 
     async def test_online_learning_update(self):
-        """Test online learning model updates"""        feedback_data = {
+        """Test online learning model updates"""
+        feedback_data = {
             'user_id': self.test_user_id,
             'content_id': 'content_123',
             'feedback_type': 'rating',
@@ -557,7 +598,8 @@ class TestAdaptiveLearning(IsolatedAsyncioTestCase):
         self.assertTrue(result)
 
     async def test_model_performance_tracking(self):
-        """Test model performance tracking"""        performance_metrics = await self.adaptive_learning.get_performance_metrics(
+        """Test model performance tracking"""
+        performance_metrics = await self.adaptive_learning.get_performance_metrics(
             time_window=timedelta(days=7)
         )
         
@@ -568,7 +610,8 @@ class TestAdaptiveLearning(IsolatedAsyncioTestCase):
         self.assertIn('f1_score', performance_metrics)
 
     async def test_adaptive_parameter_tuning(self):
-        """Test adaptive parameter tuning"""        current_params = {
+        """Test adaptive parameter tuning"""
+        current_params = {
             'learning_rate': 0.01,
             'regularization': 0.001,
             'batch_size': 32
@@ -584,7 +627,8 @@ class TestAdaptiveLearning(IsolatedAsyncioTestCase):
         self.assertIn('optimization_history', optimized_params)
 
     async def test_user_behavior_adaptation(self):
-        """Test adaptation to user behavior changes"""        behavior_history = [
+        """Test adaptation to user behavior changes"""
+        behavior_history = [
             {
                 'timestamp': datetime.utcnow() - timedelta(days=i),
                 'engagement_time': np.random.uniform(60, 300),
@@ -604,17 +648,21 @@ class TestAdaptiveLearning(IsolatedAsyncioTestCase):
 
 
 class TestPersonalizationConfig(IsolatedAsyncioTestCase):
-    """Comprehensive tests for PersonalizationConfig"""    async def asyncSetUp(self):
-        """Set up test environment"""        self.config = PersonalizationConfig()
+    """Comprehensive tests for PersonalizationConfig"""
+    async def asyncSetUp(self):
+        """Set up test environment"""
+        self.config = PersonalizationConfig()
 
     async def test_default_configuration(self):
-        """Test default configuration values"""        self.assertIsInstance(self.config.model_configs, dict)
+        """Test default configuration values"""
+        self.assertIsInstance(self.config.model_configs, dict)
         self.assertIn('collaborative_filtering', self.config.model_configs)
         self.assertIn('content_based', self.config.model_configs)
         self.assertIn('hybrid', self.config.model_configs)
 
     async def test_config_validation(self):
-        """Test configuration validation"""        # Test valid config
+        """Test configuration validation"""
+        # Test valid config
         valid_config = {
             'collaborative_filtering': {
                 'n_factors': 50,
@@ -637,7 +685,8 @@ class TestPersonalizationConfig(IsolatedAsyncioTestCase):
         self.assertFalse(is_valid)
 
     async def test_config_update(self):
-        """Test configuration updates"""        new_config = {
+        """Test configuration updates"""
+        new_config = {
             'collaborative_filtering': {
                 'n_factors': 100,
                 'regularization': 0.05
@@ -652,7 +701,8 @@ class TestPersonalizationConfig(IsolatedAsyncioTestCase):
         self.assertEqual(updated_value, 100)
 
     async def test_environment_config_loading(self):
-        """Test loading configuration from environment"""        # Set test environment variable
+        """Test loading configuration from environment"""
+        # Set test environment variable
         os.environ['PERSONALIZATION_TEST_PARAM'] = '42'
         
         env_config = await self.config.load_from_environment()
@@ -664,11 +714,14 @@ class TestPersonalizationConfig(IsolatedAsyncioTestCase):
 
 
 class TestPerformanceAndStress(IsolatedAsyncioTestCase):
-    """Performance and stress tests for personalization components"""    async def asyncSetUp(self):
-        """Set up test environment"""        self.engine = PersonalizationEngine()
+    """Performance and stress tests for personalization components"""
+    async def asyncSetUp(self):
+        """Set up test environment"""
+        self.engine = PersonalizationEngine()
 
     async def test_high_volume_recommendations(self):
-        """Test recommendation generation under high volume"""        start_time = time.time()
+        """Test recommendation generation under high volume"""
+        start_time = time.time()
         
         # Generate recommendations for 100 users
         tasks = []
@@ -688,7 +741,8 @@ class TestPerformanceAndStress(IsolatedAsyncioTestCase):
         self.assertEqual(len(results), 100)
 
     async def test_memory_usage_recommendations(self):
-        """Test memory usage during recommendation generation"""        import psutil
+        """Test memory usage during recommendation generation"""
+        import psutil
         import os
         
         process = psutil.Process(os.getpid())
@@ -708,7 +762,8 @@ class TestPerformanceAndStress(IsolatedAsyncioTestCase):
         self.assertLess(memory_increase, 200)
 
     async def test_concurrent_feedback_processing(self):
-        """Test concurrent feedback processing"""        feedback_items = [
+        """Test concurrent feedback processing"""
+        feedback_items = [
             {
                 'user_id': f'concurrent_user_{i}',
                 'content_id': f'content_{i}',

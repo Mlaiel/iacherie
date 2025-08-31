@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -37,7 +38,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -64,7 +66,8 @@ from ai.neural_networks.base_networks import NetworkType
 
 @pytest.fixture
 def content_understanding_config():
-    """Configuration for content understanding networks"""    return TransformerConfig(
+    """Configuration for content understanding networks"""
+    return TransformerConfig(
         input_dim=768,
         hidden_dims=[768, 512, 256],
         output_dim=256,
@@ -81,7 +84,8 @@ def content_understanding_config():
 
 @pytest.fixture
 def sample_content_data():
-    """Generate sample content data for testing"""    torch.manual_seed(42)
+    """Generate sample content data for testing"""
+    torch.manual_seed(42)
     np.random.seed(42)
     
     return {
@@ -152,7 +156,8 @@ def sample_content_data():
 
 @pytest.fixture
 def analysis_ground_truth():
-    """Ground truth data for content analysis validation"""    return {
+    """Ground truth data for content analysis validation"""
+    return {
         "content_types": ["audio", "video", "image", "text", "social_post", "podcast"],
         "quality_scores": [0.85, 0.92, 0.78, 0.88, 0.75, 0.90],
         "sentiment_scores": [0.7, 0.8, 0.6, 0.9, 0.5, 0.85],
@@ -173,9 +178,11 @@ def analysis_ground_truth():
 
 
 class TestContentType:
-    """Test ContentType enum functionality"""    
+    """Test ContentType enum functionality"""
+    
     def test_content_type_values(self):
-        """Test ContentType enum values"""        assert ContentType.AUDIO.value == "audio"
+        """Test ContentType enum values"""
+        assert ContentType.AUDIO.value == "audio"
         assert ContentType.VIDEO.value == "video"
         assert ContentType.IMAGE.value == "image"
         assert ContentType.TEXT.value == "text"
@@ -184,22 +191,26 @@ class TestContentType:
         assert ContentType.STREAM.value == "live_stream"
     
     def test_content_type_iteration(self):
-        """Test iterating over ContentType enum"""        content_types = list(ContentType)
+        """Test iterating over ContentType enum"""
+        content_types = list(ContentType)
         assert len(content_types) == 7
         assert ContentType.AUDIO in content_types
         assert ContentType.VIDEO in content_types
 
 
 class TestAnalysisLevel:
-    """Test AnalysisLevel enum functionality"""    
+    """Test AnalysisLevel enum functionality"""
+    
     def test_analysis_level_values(self):
-        """Test AnalysisLevel enum values"""        assert AnalysisLevel.BASIC.value == "basic"
+        """Test AnalysisLevel enum values"""
+        assert AnalysisLevel.BASIC.value == "basic"
         assert AnalysisLevel.INTERMEDIATE.value == "intermediate"
         assert AnalysisLevel.ADVANCED.value == "advanced"
         assert AnalysisLevel.EXPERT.value == "expert"
     
     def test_analysis_level_hierarchy(self):
-        """Test analysis level hierarchy logic"""        levels = ["basic", "intermediate", "advanced", "expert"]
+        """Test analysis level hierarchy logic"""
+        levels = ["basic", "intermediate", "advanced", "expert"]
         
         for i, level in enumerate(levels):
             analysis_level = AnalysisLevel(level)
@@ -216,9 +227,11 @@ class TestAnalysisLevel:
 
 
 class TestContentAnalysisResult:
-    """Test ContentAnalysisResult data structure"""    
+    """Test ContentAnalysisResult data structure"""
+    
     def test_result_creation(self):
-        """Test creating ContentAnalysisResult"""        result = ContentAnalysisResult(
+        """Test creating ContentAnalysisResult"""
+        result = ContentAnalysisResult(
             content_id="test_content_001",
             content_type=ContentType.AUDIO,
             analysis_level=AnalysisLevel.INTERMEDIATE,
@@ -233,7 +246,8 @@ class TestContentAnalysisResult:
         assert result.sentiment_score == 0.7
     
     def test_result_with_all_fields(self):
-        """Test ContentAnalysisResult with all fields populated"""        emotion_scores = {"joy": 0.8, "sadness": 0.1, "anger": 0.0}
+        """Test ContentAnalysisResult with all fields populated"""
+        emotion_scores = {"joy": 0.8, "sadness": 0.1, "anger": 0.0}
         style_features = {"professional": 0.9, "casual": 0.1}
         confidence_scores = {"content_type": 0.95, "quality": 0.88}
         
@@ -264,9 +278,11 @@ class TestContentAnalysisResult:
 
 
 class TestContentUnderstandingNetwork:
-    """Test main ContentUnderstandingNetwork functionality"""    
+    """Test main ContentUnderstandingNetwork functionality"""
+    
     def test_network_initialization(self, content_understanding_config):
-        """Test ContentUnderstandingNetwork initialization"""        network = ContentUnderstandingNetwork(content_understanding_config)
+        """Test ContentUnderstandingNetwork initialization"""
+        network = ContentUnderstandingNetwork(content_understanding_config)
         
         assert network.config == content_understanding_config
         assert hasattr(network, 'backbone')
@@ -278,7 +294,8 @@ class TestContentUnderstandingNetwork:
         assert hasattr(network, 'confidence_head')
     
     def test_network_forward_pass(self, content_understanding_config, sample_content_data):
-        """Test forward pass through ContentUnderstandingNetwork"""        network = ContentUnderstandingNetwork(content_understanding_config)
+        """Test forward pass through ContentUnderstandingNetwork"""
+        network = ContentUnderstandingNetwork(content_understanding_config)
         network.eval()
         
         # Test with multimodal input
@@ -305,7 +322,8 @@ class TestContentUnderstandingNetwork:
         assert outputs["features"].shape == (batch_size, 512)
     
     def test_network_analysis_levels(self, content_understanding_config, sample_content_data):
-        """Test different analysis levels"""        network = ContentUnderstandingNetwork(content_understanding_config)
+        """Test different analysis levels"""
+        network = ContentUnderstandingNetwork(content_understanding_config)
         network.eval()
         
         input_data = {"text": sample_content_data["text"]["features"]}
@@ -327,7 +345,8 @@ class TestContentUnderstandingNetwork:
                 assert "commercial_potential" in outputs
     
     def test_content_analysis_method(self, content_understanding_config, sample_content_data):
-        """Test analyze_content method"""        network = ContentUnderstandingNetwork(content_understanding_config)
+        """Test analyze_content method"""
+        network = ContentUnderstandingNetwork(content_understanding_config)
         network.eval()
         
         input_data = {"audio": sample_content_data["audio"]["features"]}
@@ -346,7 +365,8 @@ class TestContentUnderstandingNetwork:
         assert 0.0 <= analysis_result.quality_score <= 1.0
     
     def test_batch_processing(self, content_understanding_config, sample_content_data):
-        """Test batch processing of different content types"""        network = ContentUnderstandingNetwork(content_understanding_config)
+        """Test batch processing of different content types"""
+        network = ContentUnderstandingNetwork(content_understanding_config)
         network.eval()
         
         # Process different content types in batch
@@ -371,9 +391,11 @@ class TestContentUnderstandingNetwork:
 
 
 class TestSemanticAnalysisNetwork:
-    """Test SemanticAnalysisNetwork functionality"""    
+    """Test SemanticAnalysisNetwork functionality"""
+    
     def test_semantic_network_initialization(self, content_understanding_config):
-        """Test SemanticAnalysisNetwork initialization"""        network = SemanticAnalysisNetwork(content_understanding_config)
+        """Test SemanticAnalysisNetwork initialization"""
+        network = SemanticAnalysisNetwork(content_understanding_config)
         
         assert hasattr(network, 'topic_classifier')
         assert hasattr(network, 'keyword_extractor')
@@ -381,7 +403,8 @@ class TestSemanticAnalysisNetwork:
         assert hasattr(network, 'semantic_embeddings')
     
     def test_topic_extraction(self, content_understanding_config, sample_content_data):
-        """Test topic extraction functionality"""        network = SemanticAnalysisNetwork(content_understanding_config)
+        """Test topic extraction functionality"""
+        network = SemanticAnalysisNetwork(content_understanding_config)
         network.eval()
         
         text_input = sample_content_data["text"]["features"]
@@ -395,7 +418,8 @@ class TestSemanticAnalysisNetwork:
             assert isinstance(topic, (str, dict))  # Could be string or dict with confidence
     
     def test_sentiment_analysis(self, content_understanding_config, sample_content_data):
-        """Test sentiment analysis"""        network = SemanticAnalysisNetwork(content_understanding_config)
+        """Test sentiment analysis"""
+        network = SemanticAnalysisNetwork(content_understanding_config)
         network.eval()
         
         text_input = sample_content_data["text"]["features"]
@@ -410,7 +434,8 @@ class TestSemanticAnalysisNetwork:
         assert -1.0 <= sentiment <= 1.0  # Sentiment should be normalized
     
     def test_semantic_similarity(self, content_understanding_config, sample_content_data):
-        """Test semantic similarity computation"""        network = SemanticAnalysisNetwork(content_understanding_config)
+        """Test semantic similarity computation"""
+        network = SemanticAnalysisNetwork(content_understanding_config)
         network.eval()
         
         text1 = sample_content_data["text"]["features"][:2]  # First 2 samples
@@ -424,9 +449,11 @@ class TestSemanticAnalysisNetwork:
 
 
 class TestEmotionRecognitionNetwork:
-    """Test EmotionRecognitionNetwork functionality"""    
+    """Test EmotionRecognitionNetwork functionality"""
+    
     def test_emotion_network_initialization(self, content_understanding_config):
-        """Test EmotionRecognitionNetwork initialization"""        network = EmotionRecognitionNetwork(content_understanding_config)
+        """Test EmotionRecognitionNetwork initialization"""
+        network = EmotionRecognitionNetwork(content_understanding_config)
         
         assert hasattr(network, 'emotion_classifier')
         assert hasattr(network, 'emotion_embeddings')
@@ -437,7 +464,8 @@ class TestEmotionRecognitionNetwork:
         assert network.emotion_categories == expected_emotions
     
     def test_emotion_recognition(self, content_understanding_config, sample_content_data):
-        """Test emotion recognition from different modalities"""        network = EmotionRecognitionNetwork(content_understanding_config)
+        """Test emotion recognition from different modalities"""
+        network = EmotionRecognitionNetwork(content_understanding_config)
         network.eval()
         
         # Test with audio (speech emotion)
@@ -463,7 +491,8 @@ class TestEmotionRecognitionNetwork:
         assert len(video_emotions) == len(network.emotion_categories)
     
     def test_emotion_intensity(self, content_understanding_config, sample_content_data):
-        """Test emotion intensity estimation"""        network = EmotionRecognitionNetwork(content_understanding_config)
+        """Test emotion intensity estimation"""
+        network = EmotionRecognitionNetwork(content_understanding_config)
         network.eval()
         
         input_data = sample_content_data["audio"]["features"]
@@ -477,7 +506,8 @@ class TestEmotionRecognitionNetwork:
             assert 0.0 <= intensity <= 1.0
     
     def test_emotion_temporal_dynamics(self, content_understanding_config):
-        """Test emotion tracking over time"""        network = EmotionRecognitionNetwork(content_understanding_config)
+        """Test emotion tracking over time"""
+        network = EmotionRecognitionNetwork(content_understanding_config)
         network.eval()
         
         # Create temporal sequence (time series of features)
@@ -494,9 +524,11 @@ class TestEmotionRecognitionNetwork:
 
 
 class TestStyleAnalysisNetwork:
-    """Test StyleAnalysisNetwork functionality"""    
+    """Test StyleAnalysisNetwork functionality"""
+    
     def test_style_network_initialization(self, content_understanding_config):
-        """Test StyleAnalysisNetwork initialization"""        network = StyleAnalysisNetwork(content_understanding_config)
+        """Test StyleAnalysisNetwork initialization"""
+        network = StyleAnalysisNetwork(content_understanding_config)
         
         assert hasattr(network, 'style_classifier')
         assert hasattr(network, 'artistic_analyzer')
@@ -510,7 +542,8 @@ class TestStyleAnalysisNetwork:
         assert network.style_categories == expected_styles
     
     def test_style_classification(self, content_understanding_config, sample_content_data):
-        """Test style classification across modalities"""        network = StyleAnalysisNetwork(content_understanding_config)
+        """Test style classification across modalities"""
+        network = StyleAnalysisNetwork(content_understanding_config)
         network.eval()
         
         # Test image style analysis
@@ -535,7 +568,8 @@ class TestStyleAnalysisNetwork:
         assert isinstance(video_styles, dict)
     
     def test_artistic_element_detection(self, content_understanding_config, sample_content_data):
-        """Test artistic element detection"""        network = StyleAnalysisNetwork(content_understanding_config)
+        """Test artistic element detection"""
+        network = StyleAnalysisNetwork(content_understanding_config)
         network.eval()
         
         image_input = sample_content_data["image"]["features"]
@@ -552,7 +586,8 @@ class TestStyleAnalysisNetwork:
             assert 0.0 <= element["confidence"] <= 1.0
     
     def test_technical_quality_assessment(self, content_understanding_config, sample_content_data):
-        """Test technical quality assessment"""        network = StyleAnalysisNetwork(content_understanding_config)
+        """Test technical quality assessment"""
+        network = StyleAnalysisNetwork(content_understanding_config)
         network.eval()
         
         # Test video technical quality
@@ -572,7 +607,8 @@ class TestStyleAnalysisNetwork:
                 assert 0.0 <= technical_quality[metric] <= 1.0
     
     def test_style_consistency(self, content_understanding_config):
-        """Test style consistency across content pieces"""        network = StyleAnalysisNetwork(content_understanding_config)
+        """Test style consistency across content pieces"""
+        network = StyleAnalysisNetwork(content_understanding_config)
         network.eval()
         
         # Create multiple content pieces
@@ -590,9 +626,11 @@ class TestStyleAnalysisNetwork:
 
 
 class TestQualityAssessmentNetwork:
-    """Test QualityAssessmentNetwork functionality"""    
+    """Test QualityAssessmentNetwork functionality"""
+    
     def test_quality_network_initialization(self, content_understanding_config):
-        """Test QualityAssessmentNetwork initialization"""        network = QualityAssessmentNetwork(content_understanding_config)
+        """Test QualityAssessmentNetwork initialization"""
+        network = QualityAssessmentNetwork(content_understanding_config)
         
         assert hasattr(network, 'overall_quality_head')
         assert hasattr(network, 'technical_quality_head')
@@ -607,7 +645,8 @@ class TestQualityAssessmentNetwork:
         assert network.quality_dimensions == expected_dimensions
     
     def test_overall_quality_assessment(self, content_understanding_config, sample_content_data):
-        """Test overall quality assessment"""        network = QualityAssessmentNetwork(content_understanding_config)
+        """Test overall quality assessment"""
+        network = QualityAssessmentNetwork(content_understanding_config)
         network.eval()
         
         # Test with different content types
@@ -627,7 +666,8 @@ class TestQualityAssessmentNetwork:
                 assert 0.0 <= quality_score <= 1.0
     
     def test_dimensional_quality_assessment(self, content_understanding_config, sample_content_data):
-        """Test quality assessment across different dimensions"""        network = QualityAssessmentNetwork(content_understanding_config)
+        """Test quality assessment across different dimensions"""
+        network = QualityAssessmentNetwork(content_understanding_config)
         network.eval()
         
         video_input = sample_content_data["video"]["features"]
@@ -643,7 +683,8 @@ class TestQualityAssessmentNetwork:
                 assert 0.0 <= score <= 1.0
     
     def test_engagement_prediction(self, content_understanding_config, sample_content_data):
-        """Test engagement potential prediction"""        network = QualityAssessmentNetwork(content_understanding_config)
+        """Test engagement potential prediction"""
+        network = QualityAssessmentNetwork(content_understanding_config)
         network.eval()
         
         social_post_input = sample_content_data["social_post"]["features"]
@@ -660,7 +701,8 @@ class TestQualityAssessmentNetwork:
                 assert 0.0 <= score <= 1.0
     
     def test_commercial_viability_assessment(self, content_understanding_config, sample_content_data):
-        """Test commercial viability assessment"""        network = QualityAssessmentNetwork(content_understanding_config)
+        """Test commercial viability assessment"""
+        network = QualityAssessmentNetwork(content_understanding_config)
         network.eval()
         
         podcast_input = sample_content_data["podcast"]["features"]
@@ -675,7 +717,8 @@ class TestQualityAssessmentNetwork:
         assert 0.0 <= commercial_score <= 1.0
     
     def test_quality_improvement_suggestions(self, content_understanding_config, sample_content_data):
-        """Test quality improvement suggestions"""        network = QualityAssessmentNetwork(content_understanding_config)
+        """Test quality improvement suggestions"""
+        network = QualityAssessmentNetwork(content_understanding_config)
         network.eval()
         
         audio_input = sample_content_data["audio"]["features"]
@@ -693,9 +736,11 @@ class TestQualityAssessmentNetwork:
 
 
 class TestContentUnderstandingPerformance:
-    """Performance tests for content understanding networks"""    
+    """Performance tests for content understanding networks"""
+    
     def test_inference_speed(self, content_understanding_config, sample_content_data):
-        """Test inference speed across different content types"""        network = ContentUnderstandingNetwork(content_understanding_config)
+        """Test inference speed across different content types"""
+        network = ContentUnderstandingNetwork(content_understanding_config)
         network.eval()
         
         performance_results = {}
@@ -741,7 +786,8 @@ class TestContentUnderstandingPerformance:
         assert multimodal_time < 2000  # Less than 2 seconds
     
     def test_batch_processing_efficiency(self, content_understanding_config, sample_content_data):
-        """Test batch processing efficiency"""        network = ContentUnderstandingNetwork(content_understanding_config)
+        """Test batch processing efficiency"""
+        network = ContentUnderstandingNetwork(content_understanding_config)
         network.eval()
         
         text_features = sample_content_data["text"]["features"]
@@ -777,7 +823,8 @@ class TestContentUnderstandingPerformance:
     
     @pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA not available")
     def test_gpu_acceleration(self, content_understanding_config, sample_content_data):
-        """Test GPU acceleration for content understanding"""        network = ContentUnderstandingNetwork(content_understanding_config)
+        """Test GPU acceleration for content understanding"""
+        network = ContentUnderstandingNetwork(content_understanding_config)
         input_data = {"text": sample_content_data["text"]["features"]}
         
         # CPU timing
@@ -812,9 +859,11 @@ class TestContentUnderstandingPerformance:
 
 
 class TestContentUnderstandingRobustness:
-    """Robustness tests for content understanding networks"""    
+    """Robustness tests for content understanding networks"""
+    
     def test_missing_modality_handling(self, content_understanding_config, sample_content_data):
-        """Test handling of missing modalities in multimodal input"""        network = ContentUnderstandingNetwork(content_understanding_config)
+        """Test handling of missing modalities in multimodal input"""
+        network = ContentUnderstandingNetwork(content_understanding_config)
         network.eval()
         
         # Test with single modality when multimodal expected
@@ -834,7 +883,8 @@ class TestContentUnderstandingRobustness:
             assert torch.isfinite(outputs["quality_score"]).all()
     
     def test_corrupted_input_handling(self, content_understanding_config, sample_content_data):
-        """Test handling of corrupted or noisy inputs"""        network = ContentUnderstandingNetwork(content_understanding_config)
+        """Test handling of corrupted or noisy inputs"""
+        network = ContentUnderstandingNetwork(content_understanding_config)
         network.eval()
         
         original_input = {"text": sample_content_data["text"]["features"]}
@@ -861,7 +911,8 @@ class TestContentUnderstandingRobustness:
         assert "content_type" in outputs
     
     def test_extreme_sequence_lengths(self, content_understanding_config):
-        """Test handling of extreme sequence lengths"""        network = ContentUnderstandingNetwork(content_understanding_config)
+        """Test handling of extreme sequence lengths"""
+        network = ContentUnderstandingNetwork(content_understanding_config)
         network.eval()
         
         # Very short sequence
@@ -881,7 +932,8 @@ class TestContentUnderstandingRobustness:
         assert torch.isfinite(long_outputs["content_type"]).all()
     
     def test_adversarial_input_resistance(self, content_understanding_config, sample_content_data):
-        """Test resistance to adversarial inputs"""        network = ContentUnderstandingNetwork(content_understanding_config)
+        """Test resistance to adversarial inputs"""
+        network = ContentUnderstandingNetwork(content_understanding_config)
         network.eval()
         
         original_input = {"text": sample_content_data["text"]["features"]}
@@ -912,9 +964,11 @@ class TestContentUnderstandingRobustness:
 
 
 class TestContentUnderstandingIntegration:
-    """Integration tests for content understanding components"""    
+    """Integration tests for content understanding components"""
+    
     def test_end_to_end_content_analysis_pipeline(self, content_understanding_config, sample_content_data):
-        """Test complete content analysis pipeline"""        # Initialize all networks
+        """Test complete content analysis pipeline"""
+        # Initialize all networks
         main_network = ContentUnderstandingNetwork(content_understanding_config)
         semantic_network = SemanticAnalysisNetwork(content_understanding_config)
         emotion_network = EmotionRecognitionNetwork(content_understanding_config)
@@ -984,7 +1038,8 @@ class TestContentUnderstandingIntegration:
         assert 0.0 <= overall_quality <= 1.0
     
     def test_creator_content_analysis_workflow(self, content_understanding_config, sample_content_data):
-        """Test typical creator content analysis workflow"""        network = ContentUnderstandingNetwork(content_understanding_config)
+        """Test typical creator content analysis workflow"""
+        network = ContentUnderstandingNetwork(content_understanding_config)
         quality_network = QualityAssessmentNetwork(content_understanding_config)
         
         network.eval()

@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -21,7 +22,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT LEGAL WARNING ⚠️
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -45,9 +47,11 @@ from ai.ml.inference import (
 
 
 class TestInferenceEngine:
-    """Comprehensive tests for InferenceEngine class"""    
+    """Comprehensive tests for InferenceEngine class"""
+    
     def test_init_inference_engine(self, sample_inference_config, sample_pytorch_model, temp_dir):
-        """Test basic inference engine initialization"""        # Save model for loading
+        """Test basic inference engine initialization"""
+        # Save model for loading
         model_path = temp_dir / "test_model.pt"
         torch.save(sample_pytorch_model.state_dict(), model_path)
         sample_inference_config.model_path = str(model_path)
@@ -61,7 +65,8 @@ class TestInferenceEngine:
         assert not engine.is_loaded
 
     def test_load_pytorch_model(self, sample_inference_config, sample_pytorch_model, temp_dir):
-        """Test loading PyTorch model"""        model_path = temp_dir / "test_model.pt"
+        """Test loading PyTorch model"""
+        model_path = temp_dir / "test_model.pt"
         torch.save(sample_pytorch_model.state_dict(), model_path)
         sample_inference_config.model_path = str(model_path)
         
@@ -75,7 +80,8 @@ class TestInferenceEngine:
         assert engine.model is not None
 
     def test_device_selection_auto(self, sample_inference_config):
-        """Test automatic device selection"""        sample_inference_config.device = "auto"
+        """Test automatic device selection"""
+        sample_inference_config.device = "auto"
         engine = InferenceEngine(sample_inference_config)
         
         device = engine._select_device()
@@ -85,14 +91,16 @@ class TestInferenceEngine:
         assert device == torch.device(expected_device)
 
     def test_device_selection_explicit(self, sample_inference_config):
-        """Test explicit device selection"""        sample_inference_config.device = "cpu"
+        """Test explicit device selection"""
+        sample_inference_config.device = "cpu"
         engine = InferenceEngine(sample_inference_config)
         
         device = engine._select_device()
         assert device == torch.device("cpu")
 
     def test_model_optimization_basic(self, sample_inference_config, sample_pytorch_model, temp_dir):
-        """Test basic model optimization"""        model_path = temp_dir / "test_model.pt"
+        """Test basic model optimization"""
+        model_path = temp_dir / "test_model.pt"
         torch.save(sample_pytorch_model.state_dict(), model_path)
         sample_inference_config.model_path = str(model_path)
         sample_inference_config.optimization_level = OptimizationLevel.BASIC
@@ -106,7 +114,8 @@ class TestInferenceEngine:
         assert optimized_model is not None
 
     def test_single_inference(self, sample_inference_config, sample_pytorch_model, temp_dir):
-        """Test single input inference"""        model_path = temp_dir / "test_model.pt"
+        """Test single input inference"""
+        model_path = temp_dir / "test_model.pt"
         torch.save(sample_pytorch_model.state_dict(), model_path)
         sample_inference_config.model_path = str(model_path)
         
@@ -124,7 +133,8 @@ class TestInferenceEngine:
         assert isinstance(output, (torch.Tensor, np.ndarray, dict))
 
     def test_batch_inference(self, sample_inference_config, sample_pytorch_model, temp_dir):
-        """Test batch inference"""        model_path = temp_dir / "test_model.pt"
+        """Test batch inference"""
+        model_path = temp_dir / "test_model.pt"
         torch.save(sample_pytorch_model.state_dict(), model_path)
         sample_inference_config.model_path = str(model_path)
         sample_inference_config.batch_size = 8
@@ -143,7 +153,8 @@ class TestInferenceEngine:
         assert len(output.shape) >= 2  # Should have batch dimension
 
     def test_inference_metrics_collection(self, sample_inference_config, sample_pytorch_model, temp_dir):
-        """Test inference metrics collection"""        model_path = temp_dir / "test_model.pt"
+        """Test inference metrics collection"""
+        model_path = temp_dir / "test_model.pt"
         torch.save(sample_pytorch_model.state_dict(), model_path)
         sample_inference_config.model_path = str(model_path)
         
@@ -169,7 +180,8 @@ class TestInferenceEngine:
 
     @pytest.mark.asyncio
     async def test_async_inference(self, sample_inference_config, sample_pytorch_model, temp_dir):
-        """Test asynchronous inference"""        model_path = temp_dir / "test_model.pt"
+        """Test asynchronous inference"""
+        model_path = temp_dir / "test_model.pt"
         torch.save(sample_pytorch_model.state_dict(), model_path)
         sample_inference_config.model_path = str(model_path)
         
@@ -193,7 +205,8 @@ class TestInferenceEngine:
         assert output.shape[0] == 2  # Batch size should match
 
     def test_memory_management(self, sample_inference_config, sample_pytorch_model, temp_dir):
-        """Test memory management features"""        model_path = temp_dir / "test_model.pt"
+        """Test memory management features"""
+        model_path = temp_dir / "test_model.pt"
         torch.save(sample_pytorch_model.state_dict(), model_path)
         sample_inference_config.model_path = str(model_path)
         sample_inference_config.memory_pool_size_mb = 256
@@ -213,7 +226,8 @@ class TestInferenceEngine:
         assert memory_usage["model_memory_mb"] >= 0
 
     def test_model_warmup(self, sample_inference_config, sample_pytorch_model, temp_dir):
-        """Test model warmup functionality"""        model_path = temp_dir / "test_model.pt"
+        """Test model warmup functionality"""
+        model_path = temp_dir / "test_model.pt"
         torch.save(sample_pytorch_model.state_dict(), model_path)
         sample_inference_config.model_path = str(model_path)
         
@@ -231,9 +245,11 @@ class TestInferenceEngine:
 
 
 class TestBatchInferenceEngine:
-    """Tests for batch inference capabilities"""    
+    """Tests for batch inference capabilities"""
+    
     def test_init_batch_engine(self, sample_inference_config):
-        """Test batch inference engine initialization"""        sample_inference_config.enable_dynamic_batching = True
+        """Test batch inference engine initialization"""
+        sample_inference_config.enable_dynamic_batching = True
         sample_inference_config.max_batch_size = 64
         sample_inference_config.batch_timeout_ms = 50
         
@@ -245,7 +261,8 @@ class TestBatchInferenceEngine:
         assert engine.batch_queue is not None
 
     def test_dynamic_batching(self, sample_inference_config, sample_pytorch_model, temp_dir):
-        """Test dynamic batching functionality"""        model_path = temp_dir / "test_model.pt"
+        """Test dynamic batching functionality"""
+        model_path = temp_dir / "test_model.pt"
         torch.save(sample_pytorch_model.state_dict(), model_path)
         sample_inference_config.model_path = str(model_path)
         sample_inference_config.enable_dynamic_batching = True
@@ -270,7 +287,8 @@ class TestBatchInferenceEngine:
         assert all(f"req_{i}" in batch_results for i in range(5))
 
     def test_batch_timeout_handling(self, sample_inference_config):
-        """Test batch timeout handling"""        sample_inference_config.batch_timeout_ms = 50
+        """Test batch timeout handling"""
+        sample_inference_config.batch_timeout_ms = 50
         sample_inference_config.enable_dynamic_batching = True
         
         engine = BatchInferenceEngine(sample_inference_config)
@@ -286,7 +304,8 @@ class TestBatchInferenceEngine:
         assert engine.should_process_batch()
 
     def test_batch_size_threshold(self, sample_inference_config):
-        """Test batch size threshold triggering"""        sample_inference_config.max_batch_size = 3
+        """Test batch size threshold triggering"""
+        sample_inference_config.max_batch_size = 3
         sample_inference_config.enable_dynamic_batching = True
         
         engine = BatchInferenceEngine(sample_inference_config)
@@ -301,7 +320,8 @@ class TestBatchInferenceEngine:
 
     @pytest.mark.asyncio
     async def test_concurrent_batch_processing(self, sample_inference_config, sample_pytorch_model, temp_dir):
-        """Test concurrent batch processing"""        model_path = temp_dir / "test_model.pt"
+        """Test concurrent batch processing"""
+        model_path = temp_dir / "test_model.pt"
         torch.save(sample_pytorch_model.state_dict(), model_path)
         sample_inference_config.model_path = str(model_path)
         
@@ -325,9 +345,11 @@ class TestBatchInferenceEngine:
 
 
 class TestStreamInferenceEngine:
-    """Tests for stream inference capabilities"""    
+    """Tests for stream inference capabilities"""
+    
     def test_init_stream_engine(self, sample_inference_config):
-        """Test stream inference engine initialization"""        engine = StreamInferenceEngine(sample_inference_config)
+        """Test stream inference engine initialization"""
+        engine = StreamInferenceEngine(sample_inference_config)
         
         assert engine.config == sample_inference_config
         assert hasattr(engine, 'stream_queue')
@@ -335,7 +357,8 @@ class TestStreamInferenceEngine:
 
     @pytest.mark.asyncio
     async def test_streaming_inference(self, sample_inference_config, sample_pytorch_model, temp_dir):
-        """Test streaming inference functionality"""        model_path = temp_dir / "test_model.pt"
+        """Test streaming inference functionality"""
+        model_path = temp_dir / "test_model.pt"
         torch.save(sample_pytorch_model.state_dict(), model_path)
         sample_inference_config.model_path = str(model_path)
         
@@ -358,7 +381,8 @@ class TestStreamInferenceEngine:
 
     @pytest.mark.asyncio
     async def test_real_time_streaming(self, sample_inference_config, sample_pytorch_model, temp_dir):
-        """Test real-time streaming with latency constraints"""        model_path = temp_dir / "test_model.pt"
+        """Test real-time streaming with latency constraints"""
+        model_path = temp_dir / "test_model.pt"
         torch.save(sample_pytorch_model.state_dict(), model_path)
         sample_inference_config.model_path = str(model_path)
         
@@ -383,9 +407,11 @@ class TestStreamInferenceEngine:
 
 
 class TestModelServer:
-    """Tests for model server functionality"""    
+    """Tests for model server functionality"""
+    
     def test_init_model_server(self, sample_inference_config):
-        """Test model server initialization"""        server = ModelServer(
+        """Test model server initialization"""
+        server = ModelServer(
             config=sample_inference_config,
             host="localhost",
             port=8080,
@@ -399,7 +425,8 @@ class TestModelServer:
 
     @pytest.mark.asyncio
     async def test_server_health_check(self, sample_inference_config):
-        """Test server health check endpoint"""        server = ModelServer(sample_inference_config)
+        """Test server health check endpoint"""
+        server = ModelServer(sample_inference_config)
         
         # Mock health check
         health_status = await server.health_check()
@@ -409,7 +436,8 @@ class TestModelServer:
         assert "model_loaded" in health_status
 
     def test_request_validation(self, sample_inference_config):
-        """Test request validation"""        server = ModelServer(sample_inference_config)
+        """Test request validation"""
+        server = ModelServer(sample_inference_config)
         
         # Valid request
         valid_request = {
@@ -431,7 +459,8 @@ class TestModelServer:
         assert error is not None
 
     def test_rate_limiting(self, sample_inference_config):
-        """Test request rate limiting"""        sample_inference_config.rate_limit = 10  # requests per minute
+        """Test request rate limiting"""
+        sample_inference_config.rate_limit = 10  # requests per minute
         server = ModelServer(sample_inference_config)
         
         # Simulate multiple requests
@@ -447,7 +476,8 @@ class TestModelServer:
 
     @pytest.mark.asyncio
     async def test_concurrent_request_handling(self, sample_inference_config, sample_pytorch_model, temp_dir):
-        """Test concurrent request handling"""        model_path = temp_dir / "test_model.pt"
+        """Test concurrent request handling"""
+        model_path = temp_dir / "test_model.pt"
         torch.save(sample_pytorch_model.state_dict(), model_path)
         sample_inference_config.model_path = str(model_path)
         sample_inference_config.max_concurrent_requests = 5
@@ -474,9 +504,11 @@ class TestModelServer:
 
 
 class TestModelCache:
-    """Tests for model caching functionality"""    
+    """Tests for model caching functionality"""
+    
     def test_init_cache(self):
-        """Test cache initialization"""        cache = ModelCache(
+        """Test cache initialization"""
+        cache = ModelCache(
             max_size=100,
             ttl_seconds=3600,
             enable_persistent_cache=True
@@ -488,7 +520,8 @@ class TestModelCache:
         assert len(cache.cache_dict) == 0
 
     def test_cache_put_and_get(self):
-        """Test basic cache put and get operations"""        cache = ModelCache(max_size=10)
+        """Test basic cache put and get operations"""
+        cache = ModelCache(max_size=10)
         
         key = "test_key"
         value = {"model_output": torch.randn(5, 10)}
@@ -503,7 +536,8 @@ class TestModelCache:
         assert torch.equal(retrieved_value["model_output"], value["model_output"])
 
     def test_cache_expiration(self):
-        """Test cache TTL expiration"""        cache = ModelCache(max_size=10, ttl_seconds=0.1)  # 100ms TTL
+        """Test cache TTL expiration"""
+        cache = ModelCache(max_size=10, ttl_seconds=0.1)  # 100ms TTL
         
         key = "expiring_key"
         value = {"data": "test"}
@@ -520,7 +554,8 @@ class TestModelCache:
         assert cache.get(key) is None
 
     def test_cache_size_limit(self):
-        """Test cache size limitation and LRU eviction"""        cache = ModelCache(max_size=3)
+        """Test cache size limitation and LRU eviction"""
+        cache = ModelCache(max_size=3)
         
         # Fill cache to capacity
         for i in range(3):
@@ -536,7 +571,8 @@ class TestModelCache:
         assert cache.get("key_3") is not None  # Should be present (newest)
 
     def test_cache_hit_rate_tracking(self):
-        """Test cache hit rate tracking"""        cache = ModelCache(max_size=10)
+        """Test cache hit rate tracking"""
+        cache = ModelCache(max_size=10)
         
         # Initial hit rate should be 0
         assert cache.get_hit_rate() == 0.0
@@ -550,7 +586,8 @@ class TestModelCache:
         assert 0 < hit_rate < 1  # Should be 50%
 
     def test_cache_statistics(self):
-        """Test cache statistics collection"""        cache = ModelCache(max_size=10)
+        """Test cache statistics collection"""
+        cache = ModelCache(max_size=10)
         
         # Perform various operations
         cache.put("key1", {"value": 1})
@@ -570,9 +607,11 @@ class TestModelCache:
 
 
 class TestInferenceMetrics:
-    """Tests for inference metrics collection and monitoring"""    
+    """Tests for inference metrics collection and monitoring"""
+    
     def test_init_metrics(self):
-        """Test metrics initialization"""        metrics = InferenceMetrics()
+        """Test metrics initialization"""
+        metrics = InferenceMetrics()
         
         assert metrics.total_requests == 0
         assert metrics.total_latency == 0.0
@@ -580,7 +619,8 @@ class TestInferenceMetrics:
         assert len(metrics.error_count) == 0
 
     def test_request_metrics_recording(self):
-        """Test recording request metrics"""        metrics = InferenceMetrics()
+        """Test recording request metrics"""
+        metrics = InferenceMetrics()
         
         # Record successful request
         metrics.record_request(
@@ -606,7 +646,8 @@ class TestInferenceMetrics:
         assert "timeout" in metrics.error_count
 
     def test_latency_statistics(self):
-        """Test latency statistics calculation"""        metrics = InferenceMetrics()
+        """Test latency statistics calculation"""
+        metrics = InferenceMetrics()
         
         # Record multiple requests with different latencies
         latencies = [0.01, 0.02, 0.05, 0.03, 0.04]
@@ -627,7 +668,8 @@ class TestInferenceMetrics:
         assert stats["max"] == max(latencies)
 
     def test_throughput_calculation(self):
-        """Test throughput calculation"""        metrics = InferenceMetrics()
+        """Test throughput calculation"""
+        metrics = InferenceMetrics()
         
         start_time = time.time()
         
@@ -645,7 +687,8 @@ class TestInferenceMetrics:
         assert abs(throughput - expected_throughput) < 0.1
 
     def test_resource_usage_tracking(self):
-        """Test resource usage tracking"""        metrics = InferenceMetrics()
+        """Test resource usage tracking"""
+        metrics = InferenceMetrics()
         
         # Mock resource usage data
         cpu_usage = 65.5
@@ -664,7 +707,8 @@ class TestInferenceMetrics:
         assert resource_stats["memory_usage_mb"] == memory_usage
 
     def test_metrics_export(self, temp_dir):
-        """Test metrics export functionality"""        metrics = InferenceMetrics()
+        """Test metrics export functionality"""
+        metrics = InferenceMetrics()
         
         # Record some sample data
         for i in range(5):
@@ -688,10 +732,12 @@ class TestInferenceMetrics:
 
 @pytest.mark.integration
 class TestInferenceIntegration:
-    """Integration tests for inference pipeline"""    
+    """Integration tests for inference pipeline"""
+    
     @pytest.mark.slow
     def test_end_to_end_inference_pipeline(self, sample_inference_config, sample_pytorch_model, temp_dir):
-        """Test complete inference pipeline from model loading to prediction"""        model_path = temp_dir / "test_model.pt"
+        """Test complete inference pipeline from model loading to prediction"""
+        model_path = temp_dir / "test_model.pt"
         torch.save(sample_pytorch_model.state_dict(), model_path)
         sample_inference_config.model_path = str(model_path)
         
@@ -724,7 +770,8 @@ class TestInferenceIntegration:
         assert metrics["total_requests"] >= 2
 
     def test_model_server_integration(self, sample_inference_config, sample_pytorch_model, temp_dir):
-        """Test model server integration with inference engine"""        model_path = temp_dir / "test_model.pt"
+        """Test model server integration with inference engine"""
+        model_path = temp_dir / "test_model.pt"
         torch.save(sample_pytorch_model.state_dict(), model_path)
         sample_inference_config.model_path = str(model_path)
         
@@ -742,7 +789,8 @@ class TestInferenceIntegration:
         assert health["model_loaded"] == True
 
     def test_caching_integration(self, sample_inference_config, sample_pytorch_model, temp_dir):
-        """Test caching integration with inference"""        model_path = temp_dir / "test_model.pt"
+        """Test caching integration with inference"""
+        model_path = temp_dir / "test_model.pt"
         torch.save(sample_pytorch_model.state_dict(), model_path)
         sample_inference_config.model_path = str(model_path)
         sample_inference_config.enable_cache = True

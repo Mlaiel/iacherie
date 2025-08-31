@@ -12,7 +12,8 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Professional container networking management with service discovery,
 load balancing, and advanced networking policies.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import yaml
@@ -31,7 +32,8 @@ import etcd3
 logger = logging.getLogger(__name__)
 
 class NetworkProtocol(Enum):
-    """Network protocols"""    TCP = "TCP"
+    """Network protocols"""
+    TCP = "TCP"
     UDP = "UDP"
     SCTP = "SCTP"
     HTTP = "HTTP"
@@ -39,26 +41,30 @@ class NetworkProtocol(Enum):
     GRPC = "GRPC"
 
 class LoadBalancerType(Enum):
-    """Load balancer types"""    ROUND_ROBIN = "round_robin"
+    """Load balancer types"""
+    ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_connections"
     IP_HASH = "ip_hash"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     WEIGHTED_LEAST_CONNECTIONS = "weighted_least_connections"
 
 class ServiceMeshType(Enum):
-    """Service mesh types"""    ISTIO = "istio"
+    """Service mesh types"""
+    ISTIO = "istio"
     LINKERD = "linkerd"
     CONSUL_CONNECT = "consul_connect"
     ENVOY = "envoy"
 
 class NetworkPolicyAction(Enum):
-    """Network policy actions"""    ALLOW = "allow"
+    """Network policy actions"""
+    ALLOW = "allow"
     DENY = "deny"
     LOG = "log"
 
 @dataclass
 class NetworkPort:
-    """Network port configuration"""    name: str
+    """Network port configuration"""
+    name: str
     port: int
     target_port: Union[int, str]
     protocol: NetworkProtocol = NetworkProtocol.TCP
@@ -66,7 +72,8 @@ class NetworkPort:
 
 @dataclass
 class ServiceEndpoint:
-    """Service endpoint configuration"""    name: str
+    """Service endpoint configuration"""
+    name: str
     ip: str
     port: int
     protocol: NetworkProtocol = NetworkProtocol.TCP
@@ -76,7 +83,8 @@ class ServiceEndpoint:
 
 @dataclass
 class LoadBalancerConfig:
-    """Load balancer configuration"""    name: str
+    """Load balancer configuration"""
+    name: str
     algorithm: LoadBalancerType
     sticky_sessions: bool = False
     session_affinity_timeout: int = 3600
@@ -88,7 +96,8 @@ class LoadBalancerConfig:
 
 @dataclass
 class ServiceConfig:
-    """Service configuration"""    name: str
+    """Service configuration"""
+    name: str
     namespace: str
     selector: Dict[str, str]
     ports: List[NetworkPort]
@@ -101,13 +110,15 @@ class ServiceConfig:
 
 @dataclass
 class IngressRule:
-    """Ingress rule configuration"""    host: str
+    """Ingress rule configuration"""
+    host: str
     paths: List[Dict[str, Any]]
     tls_secret: Optional[str] = None
 
 @dataclass
 class IngressConfig:
-    """Ingress configuration"""    name: str
+    """Ingress configuration"""
+    name: str
     namespace: str
     ingress_class: str = "nginx"
     rules: List[IngressRule] = field(default_factory=list)
@@ -116,7 +127,8 @@ class IngressConfig:
 
 @dataclass
 class NetworkPolicy:
-    """Network policy configuration"""    name: str
+    """Network policy configuration"""
+    name: str
     namespace: str
     pod_selector: Dict[str, str]
     policy_types: List[str]  # ["Ingress", "Egress"]
@@ -125,7 +137,8 @@ class NetworkPolicy:
 
 @dataclass
 class ServiceMeshConfig:
-    """Service mesh configuration"""    name: str
+    """Service mesh configuration"""
+    name: str
     mesh_type: ServiceMeshType
     namespace: str = "istio-system"
     gateway_config: Dict[str, Any] = field(default_factory=dict)
@@ -135,7 +148,8 @@ class ServiceMeshConfig:
     traffic_splitting: Dict[str, int] = field(default_factory=dict)
 
 class ContainerNetworkingManager:
-    """Professional container networking manager"""    
+    """Professional container networking manager"""
+    
     def __init__(self, config_path: str = "/app/config/networking"):
         self.config_path = Path(config_path)
         self.k8s_client = None
@@ -152,7 +166,8 @@ class ContainerNetworkingManager:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
     async def initialize(self) -> bool:
-        """Initialize container networking manager"""        try:
+        """Initialize container networking manager"""
+        try:
             # Initialize Kubernetes client
             try:
                 config.load_incluster_config()
@@ -186,7 +201,8 @@ class ContainerNetworkingManager:
             return False
     
     async def _initialize_service_discovery(self) -> None:
-        """Initialize service discovery clients"""        try:
+        """Initialize service discovery clients"""
+        try:
             # Initialize Consul client
             try:
                 self.consul_client = consul.Consul(
@@ -211,7 +227,8 @@ class ContainerNetworkingManager:
             self.logger.error(f"❌ Error initializing service discovery: {e}")
     
     async def _load_configurations(self) -> None:
-        """Load existing networking configurations"""        try:
+        """Load existing networking configurations"""
+        try:
             # Load services
             services_file = self.config_path / "services.yml"
             if services_file.exists():
@@ -243,7 +260,8 @@ class ContainerNetworkingManager:
             self.logger.warning(f"⚠️ Error loading configurations: {e}")
     
     async def _setup_default_networking(self) -> None:
-        """Setup default networking for IA-Influencer platform"""        try:
+        """Setup default networking for IA-Influencer platform"""
+        try:
             # Web API Service
             web_api_service = ServiceConfig(
                 name="ia-influencer-web-api",
@@ -417,7 +435,8 @@ class ContainerNetworkingManager:
             self.logger.error(f"❌ Error setting up default networking: {e}")
     
     async def _setup_network_policies(self) -> None:
-        """Setup network policies for IA-Influencer"""        try:
+        """Setup network policies for IA-Influencer"""
+        try:
             # Web API ingress policy
             web_api_policy = NetworkPolicy(
                 name="ia-influencer-web-api-policy",
@@ -547,7 +566,8 @@ class ContainerNetworkingManager:
             self.logger.error(f"❌ Error setting up network policies: {e}")
     
     async def _setup_service_mesh(self) -> None:
-        """Setup service mesh configuration"""        try:
+        """Setup service mesh configuration"""
+        try:
             # Istio service mesh for IA-Influencer
             istio_config = ServiceMeshConfig(
                 name="ia-influencer-mesh",
@@ -624,7 +644,8 @@ class ContainerNetworkingManager:
             self.logger.error(f"❌ Error setting up service mesh: {e}")
     
     async def _save_configurations(self) -> None:
-        """Save networking configurations"""        try:
+        """Save networking configurations"""
+        try:
             # Save services
             services_data = {
                 "services": [asdict(service) for service in self.services.values()]
@@ -650,7 +671,8 @@ class ContainerNetworkingManager:
             self.logger.error(f"❌ Error saving configurations: {e}")
     
     async def create_service(self, service_config: ServiceConfig) -> bool:
-        """Create Kubernetes service"""        try:
+        """Create Kubernetes service"""
+        try:
             v1 = client.CoreV1Api()
             
             # Create service manifest
@@ -715,7 +737,8 @@ class ContainerNetworkingManager:
             return False
     
     async def create_ingress(self, ingress_config: IngressConfig) -> bool:
-        """Create Kubernetes ingress"""        try:
+        """Create Kubernetes ingress"""
+        try:
             networking_v1 = client.NetworkingV1Api()
             
             # Create ingress manifest
@@ -779,7 +802,8 @@ class ContainerNetworkingManager:
             return False
     
     async def create_network_policy(self, policy: NetworkPolicy) -> bool:
-        """Create Kubernetes network policy"""        try:
+        """Create Kubernetes network policy"""
+        try:
             networking_v1 = client.NetworkingV1Api()
             
             # Create network policy manifest
@@ -830,7 +854,8 @@ class ContainerNetworkingManager:
             return False
     
     async def _register_service(self, service_config: ServiceConfig) -> None:
-        """Register service with service discovery"""        try:
+        """Register service with service discovery"""
+        try:
             # Register with Consul
             if self.consul_client:
                 for port in service_config.ports:
@@ -872,7 +897,8 @@ class ContainerNetworkingManager:
             self.logger.warning(f"⚠️ Error registering service: {e}")
     
     async def _monitor_endpoints(self) -> None:
-        """Monitor service endpoints"""        while True:
+        """Monitor service endpoints"""
+        while True:
             try:
                 v1 = client.CoreV1Api()
                 
@@ -924,7 +950,8 @@ class ContainerNetworkingManager:
                 await asyncio.sleep(60)
     
     async def _update_service_discovery(self) -> None:
-        """Update service discovery with current endpoints"""        try:
+        """Update service discovery with current endpoints"""
+        try:
             for endpoint_key, endpoint_info in self.endpoints.items():
                 service_name = endpoint_info["name"]
                 namespace = endpoint_info["namespace"]
@@ -963,7 +990,8 @@ class ContainerNetworkingManager:
             self.logger.error(f"❌ Error updating service discovery: {e}")
     
     async def _health_check_task(self) -> None:
-        """Health check task for services"""        while True:
+        """Health check task for services"""
+        while True:
             try:
                 for service_key, service_config in self.services.items():
                     await self._check_service_health(service_config)
@@ -975,7 +1003,8 @@ class ContainerNetworkingManager:
                 await asyncio.sleep(60)
     
     async def _check_service_health(self, service_config: ServiceConfig) -> None:
-        """Check health of a service"""        try:
+        """Check health of a service"""
+        try:
             endpoint_key = f"{service_config.namespace}/{service_config.name}"
             
             if endpoint_key not in self.endpoints:
@@ -1021,7 +1050,8 @@ class ContainerNetworkingManager:
             self.logger.error(f"❌ Error checking service health: {e}")
     
     async def setup_load_balancer(self, service_name: str, namespace: str, lb_config: LoadBalancerConfig) -> bool:
-        """Setup load balancer for service"""        try:
+        """Setup load balancer for service"""
+        try:
             # This would integrate with cloud provider LB or ingress controller
             # For now, we'll store the configuration
             
@@ -1068,7 +1098,8 @@ class ContainerNetworkingManager:
             return False
     
     async def discover_services(self, namespace: str = None) -> List[Dict[str, Any]]:
-        """Discover services in cluster"""        try:
+        """Discover services in cluster"""
+        try:
             v1 = client.CoreV1Api()
             
             if namespace:
@@ -1109,7 +1140,8 @@ class ContainerNetworkingManager:
             return []
     
     async def get_service_topology(self, namespace: str = None) -> Dict[str, Any]:
-        """Get service topology and dependencies"""        try:
+        """Get service topology and dependencies"""
+        try:
             services = await self.discover_services(namespace)
             
             topology = {
@@ -1174,7 +1206,8 @@ class ContainerNetworkingManager:
             return {"nodes": [], "edges": [], "clusters": {}}
     
     async def cleanup_networking(self, namespace: str) -> bool:
-        """Cleanup networking resources in namespace"""        try:
+        """Cleanup networking resources in namespace"""
+        try:
             v1 = client.CoreV1Api()
             networking_v1 = client.NetworkingV1Api()
             
@@ -1247,7 +1280,8 @@ class ContainerNetworkingManager:
             return False
 
 class ServiceDiscoveryManager:
-    """Service discovery manager for container networking"""    
+    """Service discovery manager for container networking"""
+    
     def __init__(self, networking_manager: ContainerNetworkingManager):
         self.networking_manager = networking_manager
         self.service_registry = {}
@@ -1255,7 +1289,8 @@ class ServiceDiscoveryManager:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def register_service(self, service_endpoint: ServiceEndpoint) -> bool:
-        """Register service endpoint"""        try:
+        """Register service endpoint"""
+        try:
             service_key = f"{service_endpoint.name}:{service_endpoint.port}"
             self.service_registry[service_key] = service_endpoint
             
@@ -1274,7 +1309,8 @@ class ServiceDiscoveryManager:
             return False
     
     async def discover_service(self, service_name: str) -> List[ServiceEndpoint]:
-        """Discover service endpoints"""        try:
+        """Discover service endpoints"""
+        try:
             endpoints = []
             
             for service_key, endpoint in self.service_registry.items():
@@ -1290,7 +1326,8 @@ class ServiceDiscoveryManager:
             return []
     
     async def get_service_health(self, service_name: str) -> Dict[str, Any]:
-        """Get service health status"""        try:
+        """Get service health status"""
+        try:
             health_info = {
                 "service_name": service_name,
                 "total_endpoints": 0,

@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 from datetime import datetime, timezone, timedelta
@@ -53,7 +54,8 @@ from ...utils.performance_monitor import PerformanceMonitor
 logger = logging.getLogger(__name__)
 
 class SpotifyFeature(Enum):
-    """Available Spotify features for activation"""    ANALYTICS = "analytics"
+    """Available Spotify features for activation"""
+    ANALYTICS = "analytics"
     PLAYLISTS = "playlists"
     RECOMMENDATIONS = "recommendations"
     ARTIST_TOOLS = "artist_tools"
@@ -63,7 +65,8 @@ class SpotifyFeature(Enum):
     COLLABORATIVE_FILTERING = "collaborative_filtering"
 
 class MarketRegion(Enum):
-    """Supported market regions for analytics"""    GLOBAL = "global"
+    """Supported market regions for analytics"""
+    GLOBAL = "global"
     US = "US"
     UK = "GB"
     GERMANY = "DE"
@@ -76,7 +79,8 @@ class MarketRegion(Enum):
 
 @dataclass
 class SpotifyArtistProfile:
-    """Comprehensive artist profile data structure"""    artist_id: str
+    """Comprehensive artist profile data structure"""
+    artist_id: str
     name: str
     genres: List[str] = field(default_factory=list)
     followers: int = 0
@@ -94,7 +98,8 @@ class SpotifyArtistProfile:
 
 @dataclass
 class StreamingMetrics:
-    """Advanced streaming performance metrics"""    track_id: str
+    """Advanced streaming performance metrics"""
+    track_id: str
     streams_total: int = 0
     streams_daily: int = 0
     streams_weekly: int = 0
@@ -112,12 +117,15 @@ class StreamingMetrics:
     demographic_breakdown: Dict[str, Any] = field(default_factory=dict)
 
 class SpotifyAgent(BaseAgent):
-    """    Ultra-Advanced Spotify Integration Agent
+    """
+    Ultra-Advanced Spotify Integration Agent
     
     Provides comprehensive Spotify API integration with advanced analytics,
     machine learning-powered recommendations, and automated music marketing capabilities.
-    """    def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Spotify Agent with advanced configuration"""        super().__init__(
+    """
+    def __init__(self, config: Optional[Dict[str, Any]] = None):
+        """Initialize Spotify Agent with advanced configuration"""
+        super().__init__(
             agent_type="spotify_agent",
             version="2.1.0",
             config=config or {}
@@ -160,7 +168,8 @@ class SpotifyAgent(BaseAgent):
         logger.info(f"Spotify Agent initialized with features: {self.enabled_features}")
 
     def _get_required_scopes(self) -> List[str]:
-        """Get required Spotify API scopes based on enabled features"""        base_scopes = [
+        """Get required Spotify API scopes based on enabled features"""
+        base_scopes = [
             "user-read-email",
             "user-read-private",
             "user-library-read",
@@ -194,7 +203,8 @@ class SpotifyAgent(BaseAgent):
         return list(set(base_scopes))
 
     async def authenticate_user(self, user_id: str, auth_code: Optional[str] = None) -> Dict[str, Any]:
-        """Authenticate user with Spotify and store tokens"""        try:
+        """Authenticate user with Spotify and store tokens"""
+        try:
             if auth_code:
                 # Exchange authorization code for tokens
                 tokens = await self.auth_manager.exchange_code_for_tokens(auth_code)
@@ -230,7 +240,8 @@ class SpotifyAgent(BaseAgent):
 
     async def get_artist_analytics(self, artist_id: str, time_range: str = "medium_term", 
                                  market: Optional[str] = None) -> Dict[str, Any]:
-        """Get comprehensive artist analytics and insights"""        if SpotifyFeature.ANALYTICS.value not in self.enabled_features:
+        """Get comprehensive artist analytics and insights"""
+        if SpotifyFeature.ANALYTICS.value not in self.enabled_features:
             raise ValidationError("Analytics feature not enabled")
         
         cache_key = f"artist_analytics:{artist_id}:{time_range}:{market or 'global'}"
@@ -297,7 +308,8 @@ class SpotifyAgent(BaseAgent):
 
     async def get_track_recommendations(self, seed_data: Dict[str, Any], 
                                       limit: int = 20, market: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Generate AI-powered track recommendations using advanced algorithms"""        if SpotifyFeature.RECOMMENDATIONS.value not in self.enabled_features:
+        """Generate AI-powered track recommendations using advanced algorithms"""
+        if SpotifyFeature.RECOMMENDATIONS.value not in self.enabled_features:
             raise ValidationError("Recommendations feature not enabled")
         
         try:
@@ -355,7 +367,8 @@ class SpotifyAgent(BaseAgent):
 
     async def create_optimized_playlist(self, playlist_data: Dict[str, Any], 
                                       user_access_token: str) -> Dict[str, Any]:
-        """Create an AI-optimized playlist with advanced curation"""        if SpotifyFeature.PLAYLISTS.value not in self.enabled_features:
+        """Create an AI-optimized playlist with advanced curation"""
+        if SpotifyFeature.PLAYLISTS.value not in self.enabled_features:
             raise ValidationError("Playlist feature not enabled")
         
         try:
@@ -425,7 +438,8 @@ class SpotifyAgent(BaseAgent):
 
     async def analyze_release_timing(self, track_data: Dict[str, Any], 
                                    artist_id: str) -> Dict[str, Any]:
-        """Analyze optimal release timing using advanced ML algorithms"""        if SpotifyFeature.RELEASE_OPTIMIZATION.value not in self.enabled_features:
+        """Analyze optimal release timing using advanced ML algorithms"""
+        if SpotifyFeature.RELEASE_OPTIMIZATION.value not in self.enabled_features:
             raise ValidationError("Release optimization feature not enabled")
         
         try:
@@ -483,7 +497,8 @@ class SpotifyAgent(BaseAgent):
             raise ProcessingError(f"Release timing analysis failed: {e}")
 
     async def get_audience_insights(self, artist_id: str, time_range: str = "medium_term") -> Dict[str, Any]:
-        """Generate comprehensive audience insights and demographics"""        if SpotifyFeature.AUDIENCE_INSIGHTS.value not in self.enabled_features:
+        """Generate comprehensive audience insights and demographics"""
+        if SpotifyFeature.AUDIENCE_INSIGHTS.value not in self.enabled_features:
             raise ValidationError("Audience insights feature not enabled")
         
         cache_key = f"audience_insights:{artist_id}:{time_range}"
@@ -556,7 +571,8 @@ class SpotifyAgent(BaseAgent):
                                                top_tracks: Dict[str, Any], 
                                                audio_features: List[Dict[str, Any]],
                                                streaming_metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate advanced artist performance metrics"""        try:
+        """Calculate advanced artist performance metrics"""
+        try:
             # Audio feature analysis
             feature_analysis = self._analyze_audio_features(audio_features)
             
@@ -601,7 +617,8 @@ class SpotifyAgent(BaseAgent):
             return {}
 
     def _analyze_audio_features(self, audio_features: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze audio features to create artist signature"""        if not audio_features:
+        """Analyze audio features to create artist signature"""
+        if not audio_features:
             return {}
         
         features = [f for f in audio_features if f is not None]
@@ -637,7 +654,8 @@ class SpotifyAgent(BaseAgent):
         }
 
     def _determine_primary_mood(self, features: Dict[str, float]) -> str:
-        """Determine the primary mood based on audio features"""        valence = features.get("valence", 0.5)
+        """Determine the primary mood based on audio features"""
+        valence = features.get("valence", 0.5)
         energy = features.get("energy", 0.5)
         
         if valence > 0.6 and energy > 0.6:
@@ -652,7 +670,8 @@ class SpotifyAgent(BaseAgent):
             return "neutral_balanced"
 
     async def process_request(self, request: AgentRequest) -> AgentResponse:
-        """Process Spotify agent requests with comprehensive error handling"""        try:
+        """Process Spotify agent requests with comprehensive error handling"""
+        try:
             action = request.action.lower()
             
             if action == "authenticate":
@@ -709,19 +728,22 @@ class SpotifyAgent(BaseAgent):
             )
 
 class SpotifyAgentManager:
-    """Manager for Spotify agent instances with advanced orchestration"""    
+    """Manager for Spotify agent instances with advanced orchestration"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.agents: Dict[str, SpotifyAgent] = {}
         self.performance_monitor = PerformanceMonitor("spotify_agent_manager")
         
     async def get_agent(self, tenant_id: str) -> SpotifyAgent:
-        """Get or create Spotify agent for tenant"""        if tenant_id not in self.agents:
+        """Get or create Spotify agent for tenant"""
+        if tenant_id not in self.agents:
             tenant_config = await self._get_tenant_config(tenant_id)
             self.agents[tenant_id] = SpotifyAgent(tenant_config)
         
         return self.agents[tenant_id]
     
     async def _get_tenant_config(self, tenant_id: str) -> Dict[str, Any]:
-        """Get tenant-specific configuration"""        # Implementation would fetch from database
+        """Get tenant-specific configuration"""
+        # Implementation would fetch from database
         return self.config

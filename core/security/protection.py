@@ -11,7 +11,8 @@ Features:
 - Content access control
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""import hashlib
+"""
+import hashlib
 import hmac
 import secrets
 import json
@@ -36,7 +37,8 @@ from backend.core.security.encryption import EncryptionManager
 
 
 class ContentType(Enum):
-    """Types of content for protection"""    AUDIO = "audio"
+    """Types of content for protection"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -44,14 +46,16 @@ class ContentType(Enum):
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""    BASIC = 1
+    """Content protection levels"""
+    BASIC = 1
     STANDARD = 2
     PREMIUM = 3
     ENTERPRISE = 4
 
 
 class WatermarkType(Enum):
-    """Types of watermarks"""    VISIBLE = "visible"
+    """Types of watermarks"""
+    VISIBLE = "visible"
     INVISIBLE = "invisible"
     DIGITAL = "digital"
     AUDIO = "audio"
@@ -59,7 +63,8 @@ class WatermarkType(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint with security metadata"""    content_id: str
+    """Content fingerprint with security metadata"""
+    content_id: str
     content_type: ContentType
     fingerprint_hash: str
     algorithm: str
@@ -74,7 +79,8 @@ class ContentFingerprint:
 
 @dataclass
 class ContentWatermark:
-    """Content watermark information"""    watermark_id: str
+    """Content watermark information"""
+    watermark_id: str
     content_id: str
     watermark_type: WatermarkType
     watermark_data: bytes
@@ -86,7 +92,8 @@ class ContentWatermark:
 
 @dataclass
 class ContentVerification:
-    """Content verification result"""    is_valid: bool
+    """Content verification result"""
+    is_valid: bool
     content_id: str
     verification_type: str
     verification_details: Dict[str, Any]
@@ -94,7 +101,8 @@ class ContentVerification:
 
 
 class FingerprintSecurity:
-    """Security manager for content fingerprints"""    
+    """Security manager for content fingerprints"""
+    
     def __init__(self, encryption_manager: EncryptionManager):
         self.encryption_manager = encryption_manager
         self.logger = SecurityLogger("FingerprintSecurity")
@@ -108,7 +116,8 @@ class FingerprintSecurity:
         owner_id: str,
         content_type: ContentType
     ) -> ContentFingerprint:
-        """Create secure fingerprint with signature"""        try:
+        """Create secure fingerprint with signature"""
+        try:
             # Generate fingerprint hash
             fingerprint_hash = hashlib.sha256(fingerprint_data).hexdigest()
             
@@ -159,7 +168,8 @@ class FingerprintSecurity:
         fingerprint: ContentFingerprint,
         current_data: Optional[bytes] = None
     ) -> ContentVerification:
-        """Verify fingerprint integrity and authenticity"""        try:
+        """Verify fingerprint integrity and authenticity"""
+        try:
             verification_details = {}
             is_valid = True
             
@@ -226,7 +236,8 @@ class FingerprintSecurity:
         content_id: str, 
         owner_id: str
     ) -> str:
-        """Generate cryptographic signature for fingerprint"""        try:
+        """Generate cryptographic signature for fingerprint"""
+        try:
             # Create signature data
             signature_data = f"{fingerprint_hash}:{content_id}:{owner_id}:{datetime.utcnow().isoformat()}"
             
@@ -245,7 +256,8 @@ class FingerprintSecurity:
             raise
     
     async def _verify_fingerprint_signature(self, fingerprint: ContentFingerprint) -> bool:
-        """Verify fingerprint signature"""        try:
+        """Verify fingerprint signature"""
+        try:
             if not fingerprint.signature:
                 return False
             
@@ -267,7 +279,8 @@ class FingerprintSecurity:
             return False
     
     async def _cache_fingerprint(self, fingerprint: ContentFingerprint):
-        """Cache fingerprint securely"""        cache_key = f"secure_fingerprint:{fingerprint.content_id}"
+        """Cache fingerprint securely"""
+        cache_key = f"secure_fingerprint:{fingerprint.content_id}"
         cache_data = {
             "fingerprint_hash": fingerprint.fingerprint_hash,
             "signature": fingerprint.signature,
@@ -280,7 +293,8 @@ class FingerprintSecurity:
 
 
 class AntiTamper:
-    """Anti-tamper protection for content and fingerprints"""    
+    """Anti-tamper protection for content and fingerprints"""
+    
     def __init__(self):
         self.logger = SecurityLogger("AntiTamper")
         self.cache = CacheManager()
@@ -291,7 +305,8 @@ class AntiTamper:
         content_id: str,
         protection_level: ProtectionLevel = ProtectionLevel.STANDARD
     ) -> Tuple[bytes, Dict[str, Any]]:
-        """Apply anti-tamper protection to content"""        try:
+        """Apply anti-tamper protection to content"""
+        try:
             protection_metadata = {}
             protected_data = content_data
             
@@ -338,7 +353,8 @@ class AntiTamper:
         content_data: bytes, 
         protection_metadata: Dict[str, Any]
     ) -> ContentVerification:
-        """Verify content hasn't been tampered with"""        try:
+        """Verify content hasn't been tampered with"""
+        try:
             verification_details = {}
             is_valid = True
             
@@ -386,7 +402,8 @@ class AntiTamper:
             )
     
     def _generate_checksums(self, data: bytes) -> Dict[str, str]:
-        """Generate multiple checksums for integrity verification"""        return {
+        """Generate multiple checksums for integrity verification"""
+        return {
             "md5": hashlib.md5(data).hexdigest(),
             "sha1": hashlib.sha1(data).hexdigest(),
             "sha256": hashlib.sha256(data).hexdigest(),
@@ -394,7 +411,8 @@ class AntiTamper:
         }
     
     def _verify_checksums(self, data: bytes, expected_checksums: Dict[str, str]) -> bool:
-        """Verify data against expected checksums"""        current_checksums = self._generate_checksums(data)
+        """Verify data against expected checksums"""
+        current_checksums = self._generate_checksums(data)
         
         for algorithm, expected in expected_checksums.items():
             if current_checksums.get(algorithm) != expected:
@@ -403,7 +421,8 @@ class AntiTamper:
         return True
     
     def _generate_tamper_markers(self, data: bytes, content_id: str) -> List[Dict[str, Any]]:
-        """Generate tamper detection markers"""        markers = []
+        """Generate tamper detection markers"""
+        markers = []
         
         # Marker 1: Hash of specific byte ranges
         if len(data) > 1000:
@@ -427,7 +446,8 @@ class AntiTamper:
         return markers
     
     def _verify_tamper_markers(self, data: bytes, expected_markers: List[Dict[str, Any]]) -> bool:
-        """Verify tamper detection markers"""        for marker in expected_markers:
+        """Verify tamper detection markers"""
+        for marker in expected_markers:
             if marker["type"] == "range_hash":
                 ranges = marker["ranges"]
                 combined_data = b""
@@ -450,12 +470,14 @@ class AntiTamper:
         return True
     
     def _embed_tamper_markers(self, data: bytes, markers: List[Dict[str, Any]]) -> bytes:
-        """Embed tamper markers in content (if possible)"""        # This is a simplified implementation
+        """Embed tamper markers in content (if possible)"""
+        # This is a simplified implementation
         # Real implementation would depend on content type
         return data
     
     def _add_encryption_layer(self, data: bytes, content_id: str) -> bytes:
-        """Add encryption layer for premium protection"""        # Simple XOR encryption for demonstration
+        """Add encryption layer for premium protection"""
+        # Simple XOR encryption for demonstration
         key = hashlib.sha256(content_id.encode()).digest()
         encrypted = bytearray()
         
@@ -465,7 +487,8 @@ class AntiTamper:
         return bytes(encrypted)
     
     def _add_obfuscation(self, data: bytes) -> bytes:
-        """Add obfuscation for enterprise protection"""        # Simple byte shuffling for demonstration
+        """Add obfuscation for enterprise protection"""
+        # Simple byte shuffling for demonstration
         obfuscated = bytearray(data)
         
         # Reverse every 8 bytes
@@ -476,7 +499,8 @@ class AntiTamper:
         return bytes(obfuscated)
     
     def _detect_modifications(self, data: bytes, metadata: Dict[str, Any]) -> bool:
-        """Detect unauthorized modifications"""        # Check for suspicious patterns
+        """Detect unauthorized modifications"""
+        # Check for suspicious patterns
         # This is a simplified detection
         
         # Check file size changes
@@ -500,7 +524,8 @@ class AntiTamper:
 
 
 class CopyrightProtection:
-    """Copyright protection and enforcement"""    
+    """Copyright protection and enforcement"""
+    
     def __init__(self, fingerprint_security: FingerprintSecurity):
         self.fingerprint_security = fingerprint_security
         self.logger = SecurityLogger("CopyrightProtection")
@@ -513,7 +538,8 @@ class CopyrightProtection:
         owner_id: str,
         copyright_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Register content for copyright protection"""        try:
+        """Register content for copyright protection"""
+        try:
             # Create secure fingerprint
             fingerprint = await self.fingerprint_security.secure_fingerprint(
                 content_data, content_id, owner_id, ContentType.AUDIO
@@ -546,7 +572,8 @@ class CopyrightProtection:
         content_id: str,
         claimed_owner_id: str
     ) -> ContentVerification:
-        """Verify copyright ownership"""        try:
+        """Verify copyright ownership"""
+        try:
             # Get copyright registration
             registration = await self._get_copyright_registration(content_id)
             
@@ -584,16 +611,19 @@ class CopyrightProtection:
             )
     
     async def _store_copyright_registration(self, certificate: Dict[str, Any]):
-        """Store copyright registration"""        # Implementation depends on your copyright registry model
+        """Store copyright registration"""
+        # Implementation depends on your copyright registry model
         pass
     
     async def _get_copyright_registration(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Get copyright registration"""        # Implementation depends on your copyright registry model
+        """Get copyright registration"""
+        # Implementation depends on your copyright registry model
         pass
 
 
 class WatermarkingSecurity:
-    """Security for digital watermarking systems"""    
+    """Security for digital watermarking systems"""
+    
     def __init__(self):
         self.logger = SecurityLogger("WatermarkingSecurity")
         self.cache = CacheManager()
@@ -605,7 +635,8 @@ class WatermarkingSecurity:
         watermark_data: str,
         invisible: bool = True
     ) -> Tuple[bytes, ContentWatermark]:
-        """Apply digital watermark to content"""        try:
+        """Apply digital watermark to content"""
+        try:
             watermark_id = secrets.token_hex(16)
             
             if content_type == ContentType.IMAGE:
@@ -644,7 +675,8 @@ class WatermarkingSecurity:
         content_type: ContentType,
         watermark_info: ContentWatermark
     ) -> Optional[str]:
-        """Extract watermark from content"""        try:
+        """Extract watermark from content"""
+        try:
             if content_type == ContentType.IMAGE:
                 extracted = await self._extract_image_watermark(
                     watermarked_data, watermark_info
@@ -672,7 +704,8 @@ class WatermarkingSecurity:
         watermark_text: str, 
         invisible: bool
     ) -> bytes:
-        """Apply watermark to image"""        try:
+        """Apply watermark to image"""
+        try:
             # Convert bytes to PIL Image
             import io
             image = Image.open(io.BytesIO(image_data))
@@ -694,7 +727,8 @@ class WatermarkingSecurity:
             return image_data
     
     def _apply_lsb_watermark(self, image: Image.Image, watermark_text: str) -> Image.Image:
-        """Apply LSB (Least Significant Bit) watermark"""        # Convert to RGB if not already
+        """Apply LSB (Least Significant Bit) watermark"""
+        # Convert to RGB if not already
         if image.mode != 'RGB':
             image = image.convert('RGB')
         
@@ -724,7 +758,8 @@ class WatermarkingSecurity:
         return watermarked_image
     
     def _apply_visible_watermark(self, image: Image.Image, watermark_text: str) -> Image.Image:
-        """Apply visible text watermark"""        # Create a copy of the image
+        """Apply visible text watermark"""
+        # Create a copy of the image
         watermarked = image.copy()
         draw = ImageDraw.Draw(watermarked)
         
@@ -759,12 +794,14 @@ class WatermarkingSecurity:
         return watermarked
     
     async def _watermark_audio(self, audio_data: bytes, watermark_text: str, invisible: bool) -> bytes:
-        """Apply watermark to audio"""        # Placeholder for audio watermarking
+        """Apply watermark to audio"""
+        # Placeholder for audio watermarking
         # Real implementation would use audio processing libraries
         return audio_data
     
     async def _watermark_video(self, video_data: bytes, watermark_text: str, invisible: bool) -> bytes:
-        """Apply watermark to video"""        # Placeholder for video watermarking
+        """Apply watermark to video"""
+        # Placeholder for video watermarking
         # Real implementation would use video processing libraries
         return video_data
     
@@ -773,7 +810,8 @@ class WatermarkingSecurity:
         image_data: bytes, 
         watermark_info: ContentWatermark
     ) -> Optional[str]:
-        """Extract watermark from image"""        # Placeholder for watermark extraction
+        """Extract watermark from image"""
+        # Placeholder for watermark extraction
         # Real implementation would reverse the watermarking process
         return None
     
@@ -782,18 +820,21 @@ class WatermarkingSecurity:
         audio_data: bytes, 
         watermark_info: ContentWatermark
     ) -> Optional[str]:
-        """Extract watermark from audio"""        return None
+        """Extract watermark from audio"""
+        return None
     
     async def _extract_video_watermark(
         self, 
         video_data: bytes, 
         watermark_info: ContentWatermark
     ) -> Optional[str]:
-        """Extract watermark from video"""        return None
+        """Extract watermark from video"""
+        return None
 
 
 class ContentProtection:
-    """Main content protection orchestrator"""    
+    """Main content protection orchestrator"""
+    
     def __init__(self, encryption_manager: EncryptionManager):
         self.encryption_manager = encryption_manager
         self.fingerprint_security = FingerprintSecurity(encryption_manager)
@@ -812,7 +853,8 @@ class ContentProtection:
         enable_watermark: bool = True,
         copyright_metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Apply comprehensive content protection"""        try:
+        """Apply comprehensive content protection"""
+        try:
             protection_result = {
                 "content_id": content_id,
                 "protection_applied_at": datetime.utcnow().isoformat(),
@@ -870,7 +912,8 @@ class ContentProtection:
         protected_data: bytes,
         protection_metadata: Dict[str, Any]
     ) -> ContentVerification:
-        """Verify all layers of content protection"""        try:
+        """Verify all layers of content protection"""
+        try:
             verification_details = {}
             overall_valid = True
             

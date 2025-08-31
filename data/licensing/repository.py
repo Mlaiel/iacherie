@@ -6,7 +6,8 @@ Handles CRUD operations, complex queries, and data validation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""from typing import List, Optional, Dict, Any, Tuple
+"""
+from typing import List, Optional, Dict, Any, Tuple
 from datetime import datetime, date
 from decimal import Decimal
 import logging
@@ -34,11 +35,14 @@ logger = logging.getLogger(__name__)
 
 
 class LicensingRepository:
-    """    Professional licensing data repository with advanced query capabilities,
+    """
+    Professional licensing data repository with advanced query capabilities,
     caching, security, and performance optimization.
-    """    
+    """
+    
     def __init__(self, session: Session = None, cache_manager: CacheManager = None):
-        """Initialize repository with database session and cache"""        self.session = session or get_db_session()
+        """Initialize repository with database session and cache"""
+        self.session = session or get_db_session()
         self.cache_manager = cache_manager or CacheManager()
         self.security_manager = SecurityManager()
         self._logger = logger
@@ -48,7 +52,8 @@ class LicensingRepository:
         agreement_data: Dict[str, Any],
         user_id: UUID
     ) -> LicenseAgreement:
-        """Create new license agreement with validation"""        try:
+        """Create new license agreement with validation"""
+        try:
             # Validate input data
             validated_data = await self._validate_license_agreement_data(agreement_data)
             
@@ -116,7 +121,8 @@ class LicensingRepository:
         user_id: UUID = None,
         include_relations: bool = False
     ) -> Optional[LicenseAgreement]:
-        """Get license agreement by ID with caching"""        try:
+        """Get license agreement by ID with caching"""
+        try:
             # Check cache first
             cache_key = f"license_agreement:{agreement_id}"
             cached_agreement = await self.cache_manager.get(cache_key)
@@ -157,7 +163,8 @@ class LicensingRepository:
         update_data: Dict[str, Any],
         user_id: UUID
     ) -> LicenseAgreement:
-        """Update license agreement with validation"""        try:
+        """Update license agreement with validation"""
+        try:
             # Get existing agreement
             agreement = await self.get_license_agreement(agreement_id, user_id)
             if not agreement:
@@ -207,7 +214,8 @@ class LicensingRepository:
         limit: int = 50,
         offset: int = 0
     ) -> Tuple[List[LicenseAgreement], int]:
-        """Get user's license agreements with pagination"""        try:
+        """Get user's license agreements with pagination"""
+        try:
             # Build query
             query = self.session.query(LicenseAgreement)
             
@@ -247,7 +255,8 @@ class LicensingRepository:
         calculation_data: Dict[str, Any],
         user_id: UUID
     ) -> RoyaltyCalculation:
-        """Create new royalty calculation"""        try:
+        """Create new royalty calculation"""
+        try:
             # Validate input data
             validated_data = await self._validate_royalty_calculation_data(calculation_data)
             
@@ -311,7 +320,8 @@ class LicensingRepository:
         limit: int = 50,
         offset: int = 0
     ) -> Tuple[List[RoyaltyCalculation], int]:
-        """Get royalty calculations with filtering"""        try:
+        """Get royalty calculations with filtering"""
+        try:
             # Build query
             query = self.session.query(RoyaltyCalculation)
             
@@ -356,7 +366,8 @@ class LicensingRepository:
         tracking_data: Dict[str, Any],
         user_id: UUID = None
     ) -> LicenseUsageTracking:
-        """Create usage tracking record"""        try:
+        """Create usage tracking record"""
+        try:
             # Validate input data
             validated_data = await self._validate_usage_tracking_data(tracking_data)
             
@@ -411,7 +422,8 @@ class LicensingRepository:
         start_date: date = None,
         end_date: date = None
     ) -> Dict[str, Any]:
-        """Get comprehensive usage analytics for a license"""        try:
+        """Get comprehensive usage analytics for a license"""
+        try:
             # Verify user has access to this license
             license_agreement = await self.get_license_agreement(license_agreement_id, user_id)
             if not license_agreement:
@@ -491,7 +503,8 @@ class LicensingRepository:
     # Private helper methods
     
     async def _validate_license_agreement_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate license agreement data"""        required_fields = [
+        """Validate license agreement data"""
+        required_fields = [
             "licensor_id", "licensee_id", "content_id", 
             "license_type", "title", "usage_rights", "start_date"
         ]
@@ -512,7 +525,8 @@ class LicensingRepository:
         return data
     
     async def _validate_license_update_data(self, data: Dict[str, Any], agreement: LicenseAgreement) -> Dict[str, Any]:
-        """Validate license agreement update data"""        # Prevent updating immutable fields
+        """Validate license agreement update data"""
+        # Prevent updating immutable fields
         immutable_fields = ["id", "license_number", "licensor_id", "licensee_id", "content_id", "created_at"]
         
         for field in immutable_fields:
@@ -530,7 +544,8 @@ class LicensingRepository:
         return data
     
     async def _validate_royalty_calculation_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate royalty calculation data"""        required_fields = [
+        """Validate royalty calculation data"""
+        required_fields = [
             "license_agreement_id", "reporting_period_start", "reporting_period_end",
             "gross_revenue", "net_revenue", "royalty_rate", "royalty_amount", "amount_due"
         ]
@@ -549,7 +564,8 @@ class LicensingRepository:
         return data
     
     async def _validate_usage_tracking_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate usage tracking data"""        required_fields = ["license_agreement_id", "usage_type"]
+        """Validate usage tracking data"""
+        required_fields = ["license_agreement_id", "usage_type"]
         
         for field in required_fields:
             if field not in data:
@@ -561,14 +577,16 @@ class LicensingRepository:
         return data
     
     async def _check_agreement_access(self, agreement: LicenseAgreement, user_id: UUID) -> bool:
-        """Check if user has access to license agreement"""        return (
+        """Check if user has access to license agreement"""
+        return (
             str(agreement.licensor_id) == str(user_id) or 
             str(agreement.licensee_id) == str(user_id) or
             await self.security_manager.has_permission(user_id, "licensing.view_all_agreements")
         )
     
     async def _is_valid_status_transition(self, current_status: str, new_status: str) -> bool:
-        """Check if status transition is valid"""        valid_transitions = {
+        """Check if status transition is valid"""
+        valid_transitions = {
             "draft": ["pending", "active"],
             "pending": ["active", "suspended", "terminated"],
             "active": ["suspended", "expired", "terminated"],
@@ -580,16 +598,19 @@ class LicensingRepository:
         return new_status in valid_transitions.get(current_status, [])
     
     async def _generate_license_number(self) -> str:
-        """Generate unique license number"""        timestamp = datetime.utcnow().strftime("%Y%m%d")
+        """Generate unique license number"""
+        timestamp = datetime.utcnow().strftime("%Y%m%d")
         count = await self.session.query(func.count(LicenseAgreement.id)).scalar()
         return f"LIC-{timestamp}-{count + 1:06d}"
     
     async def _generate_calculation_id(self) -> str:
-        """Generate unique calculation ID"""        timestamp = datetime.utcnow().strftime("%Y%m%d")
+        """Generate unique calculation ID"""
+        timestamp = datetime.utcnow().strftime("%Y%m%d")
         count = await self.session.query(func.count(RoyaltyCalculation.id)).scalar()
         return f"CALC-{timestamp}-{count + 1:06d}"
     
     async def _generate_tracking_id(self) -> str:
-        """Generate unique tracking ID"""        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        """Generate unique tracking ID"""
+        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         count = await self.session.query(func.count(LicenseUsageTracking.id)).scalar()
         return f"TRACK-{timestamp}-{count + 1:06d}"

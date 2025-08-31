@@ -7,7 +7,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
-"""from datetime import datetime, timedelta
+"""
+from datetime import datetime, timedelta
 from decimal import Decimal
 from typing import Optional, Dict, Any, List
 import logging
@@ -29,7 +30,8 @@ settings = get_settings()
 
 
 class PaymentProcessor:
-    """    Multi-provider payment processing engine.
+    """
+    Multi-provider payment processing engine.
     
     Supports:
     - Stripe: Credit cards, SEPA, ACH
@@ -45,9 +47,11 @@ class PaymentProcessor:
     - PCI DSS compliance helpers
     - Multi-currency support
     - Fraud detection integration
-    """    
+    """
+    
     def __init__(self):
-        """Initialize payment processor with provider configurations."""        self.logger = get_logger(__name__)
+        """Initialize payment processor with provider configurations."""
+        self.logger = get_logger(__name__)
         
         # Payment provider configurations
         self.stripe_config = {
@@ -79,7 +83,8 @@ class PaymentProcessor:
         provider: str = "stripe",
         db: Session = None
     ) -> PaymentMethod:
-        """        Add payment method for user.
+        """
+        Add payment method for user.
         
         Args:
             user_id: User ID
@@ -89,7 +94,8 @@ class PaymentProcessor:
             
         Returns:
             Created payment method record
-        """        if not db:
+        """
+        if not db:
             db = get_db_session()
         
         try:
@@ -155,7 +161,8 @@ class PaymentProcessor:
         metadata: Optional[Dict[str, Any]] = None,
         db: Session = None
     ) -> Dict[str, Any]:
-        """        Charge payment method.
+        """
+        Charge payment method.
         
         Args:
             payment_method_id: Payment method ID
@@ -166,7 +173,8 @@ class PaymentProcessor:
             
         Returns:
             Charge result
-        """        if not db:
+        """
+        if not db:
             db = get_db_session()
         
         try:
@@ -229,7 +237,8 @@ class PaymentProcessor:
         reason: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Process refund for transaction.
+        """
+        Process refund for transaction.
         
         Args:
             transaction_id: Original transaction ID
@@ -239,7 +248,8 @@ class PaymentProcessor:
             
         Returns:
             Refund result
-        """        try:
+        """
+        try:
             # Determine provider from transaction ID format
             provider = self._detect_provider_from_transaction_id(transaction_id)
             
@@ -284,7 +294,8 @@ class PaymentProcessor:
         signature: str,
         db: Session = None
     ) -> Dict[str, Any]:
-        """        Process payment webhook from provider.
+        """
+        Process payment webhook from provider.
         
         Args:
             webhook_data: Webhook payload
@@ -294,7 +305,8 @@ class PaymentProcessor:
             
         Returns:
             Webhook processing result
-        """        if not db:
+        """
+        if not db:
             db = get_db_session()
         
         try:
@@ -324,7 +336,8 @@ class PaymentProcessor:
         payment_method_id: str,
         db: Session = None
     ) -> Optional[Dict[str, Any]]:
-        """        Get payment method information.
+        """
+        Get payment method information.
         
         Args:
             payment_method_id: Payment method ID
@@ -332,7 +345,8 @@ class PaymentProcessor:
             
         Returns:
             Payment method info
-        """        if not db:
+        """
+        if not db:
             db = get_db_session()
         
         try:
@@ -366,7 +380,8 @@ class PaymentProcessor:
         user_id: int,
         db: Session = None
     ) -> bool:
-        """        Delete payment method.
+        """
+        Delete payment method.
         
         Args:
             payment_method_id: Payment method ID
@@ -375,7 +390,8 @@ class PaymentProcessor:
             
         Returns:
             Success status
-        """        if not db:
+        """
+        if not db:
             db = get_db_session()
         
         try:
@@ -413,7 +429,8 @@ class PaymentProcessor:
     # Private helper methods
     
     def _initialize_payment_clients(self):
-        """Initialize payment provider clients."""        try:
+        """Initialize payment provider clients."""
+        try:
             # Initialize Stripe
             if self.stripe_config["api_key"]:
                 import stripe
@@ -438,7 +455,8 @@ class PaymentProcessor:
         user_id: int, 
         payment_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Add Stripe payment method."""        try:
+        """Add Stripe payment method."""
+        try:
             # Create payment method in Stripe
             payment_method = self.stripe_client.PaymentMethod.create(
                 type=payment_data["type"],
@@ -470,7 +488,8 @@ class PaymentProcessor:
         user_id: int, 
         payment_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Add PayPal payment method."""        # PayPal payment method creation logic
+        """Add PayPal payment method."""
+        # PayPal payment method creation logic
         # This would integrate with PayPal's API
         return {
             "payment_method_id": f"paypal_{user_id}_{datetime.utcnow().timestamp()}",
@@ -483,7 +502,8 @@ class PaymentProcessor:
         user_id: int, 
         payment_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Add Wise payment method."""        # Wise payment method creation logic
+        """Add Wise payment method."""
+        # Wise payment method creation logic
         # This would integrate with Wise's API
         return {
             "payment_method_id": f"wise_{user_id}_{datetime.utcnow().timestamp()}",
@@ -498,7 +518,8 @@ class PaymentProcessor:
         currency: str,
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Charge Stripe payment method."""        try:
+        """Charge Stripe payment method."""
+        try:
             # Convert amount to cents for Stripe
             amount_cents = int(amount * 100)
             
@@ -538,7 +559,8 @@ class PaymentProcessor:
         currency: str,
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Charge PayPal payment method."""        # PayPal charging logic
+        """Charge PayPal payment method."""
+        # PayPal charging logic
         return {
             "success": True,
             "transaction_id": f"paypal_txn_{datetime.utcnow().timestamp()}",
@@ -552,7 +574,8 @@ class PaymentProcessor:
         currency: str,
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Charge Wise payment method."""        # Wise charging logic
+        """Charge Wise payment method."""
+        # Wise charging logic
         return {
             "success": True,
             "transaction_id": f"wise_txn_{datetime.utcnow().timestamp()}",
@@ -566,7 +589,8 @@ class PaymentProcessor:
         reason: Optional[str],
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Process Stripe refund."""        try:
+        """Process Stripe refund."""
+        try:
             # Convert amount to cents
             amount_cents = int(refund_amount * 100)
             
@@ -596,7 +620,8 @@ class PaymentProcessor:
         reason: Optional[str],
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Process PayPal refund."""        # PayPal refund logic
+        """Process PayPal refund."""
+        # PayPal refund logic
         return {
             "success": True,
             "refund_id": f"paypal_refund_{datetime.utcnow().timestamp()}",
@@ -610,7 +635,8 @@ class PaymentProcessor:
         reason: Optional[str],
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Process Wise refund."""        # Wise refund logic
+        """Process Wise refund."""
+        # Wise refund logic
         return {
             "success": True,
             "refund_id": f"wise_refund_{datetime.utcnow().timestamp()}",
@@ -623,7 +649,8 @@ class PaymentProcessor:
         provider: str,
         signature: str
     ) -> bool:
-        """Verify webhook signature."""        if provider == "stripe":
+        """Verify webhook signature."""
+        if provider == "stripe":
             return self._verify_stripe_webhook_signature(webhook_data, signature)
         elif provider == "paypal":
             return self._verify_paypal_webhook_signature(webhook_data, signature)
@@ -637,7 +664,8 @@ class PaymentProcessor:
         webhook_data: Dict[str, Any], 
         signature: str
     ) -> bool:
-        """Verify Stripe webhook signature."""        try:
+        """Verify Stripe webhook signature."""
+        try:
             self.stripe_client.Webhook.construct_event(
                 json.dumps(webhook_data),
                 signature,
@@ -652,7 +680,8 @@ class PaymentProcessor:
         webhook_data: Dict[str, Any], 
         signature: str
     ) -> bool:
-        """Verify PayPal webhook signature."""        # PayPal webhook verification logic
+        """Verify PayPal webhook signature."""
+        # PayPal webhook verification logic
         return True  # Placeholder
     
     def _verify_wise_webhook_signature(
@@ -660,7 +689,8 @@ class PaymentProcessor:
         webhook_data: Dict[str, Any], 
         signature: str
     ) -> bool:
-        """Verify Wise webhook signature."""        # Wise webhook verification logic
+        """Verify Wise webhook signature."""
+        # Wise webhook verification logic
         return True  # Placeholder
     
     async def _process_stripe_webhook(
@@ -668,7 +698,8 @@ class PaymentProcessor:
         webhook_data: Dict[str, Any], 
         db: Session
     ) -> Dict[str, Any]:
-        """Process Stripe webhook."""        event_type = webhook_data.get("type")
+        """Process Stripe webhook."""
+        event_type = webhook_data.get("type")
         
         if event_type == "payment_intent.succeeded":
             # Handle successful payment
@@ -690,7 +721,8 @@ class PaymentProcessor:
         webhook_data: Dict[str, Any], 
         db: Session
     ) -> Dict[str, Any]:
-        """Process PayPal webhook."""        # PayPal webhook processing logic
+        """Process PayPal webhook."""
+        # PayPal webhook processing logic
         return {"success": True}
     
     async def _process_wise_webhook(
@@ -698,11 +730,13 @@ class PaymentProcessor:
         webhook_data: Dict[str, Any], 
         db: Session
     ) -> Dict[str, Any]:
-        """Process Wise webhook."""        # Wise webhook processing logic
+        """Process Wise webhook."""
+        # Wise webhook processing logic
         return {"success": True}
     
     def _detect_provider_from_transaction_id(self, transaction_id: str) -> str:
-        """Detect payment provider from transaction ID format."""        if transaction_id.startswith("pi_"):
+        """Detect payment provider from transaction ID format."""
+        if transaction_id.startswith("pi_"):
             return "stripe"
         elif transaction_id.startswith("paypal_"):
             return "paypal"
@@ -712,7 +746,8 @@ class PaymentProcessor:
             raise PaymentError(f"Cannot determine provider for transaction ID: {transaction_id}")
     
     async def _get_or_create_stripe_customer(self, user_id: int) -> str:
-        """Get or create Stripe customer for user."""        # This would typically involve looking up user details
+        """Get or create Stripe customer for user."""
+        # This would typically involve looking up user details
         # and creating/retrieving a Stripe customer
         customer = self.stripe_client.Customer.create(
             metadata={"user_id": str(user_id)}
@@ -720,17 +755,20 @@ class PaymentProcessor:
         return customer.id
     
     async def _delete_stripe_payment_method(self, payment_method_id: str) -> None:
-        """Delete Stripe payment method."""        try:
+        """Delete Stripe payment method."""
+        try:
             self.stripe_client.PaymentMethod.detach(payment_method_id)
         except Exception as e:
             self.logger.warning(f"Failed to delete Stripe payment method: {str(e)}")
     
     async def _delete_paypal_payment_method(self, payment_method_id: str) -> None:
-        """Delete PayPal payment method."""        # PayPal payment method deletion logic
+        """Delete PayPal payment method."""
+        # PayPal payment method deletion logic
         pass
     
     async def _delete_wise_payment_method(self, payment_method_id: str) -> None:
-        """Delete Wise payment method."""        # Wise payment method deletion logic
+        """Delete Wise payment method."""
+        # Wise payment method deletion logic
         pass
 
 

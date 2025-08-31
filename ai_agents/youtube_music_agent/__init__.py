@@ -6,7 +6,8 @@ copyright monitoring, and content protection capabilities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
-"""from .core.youtube_music_engine import YouTubeMusicEngine, YouTubeTrack, YouTubePlaylist
+"""
+from .core.youtube_music_engine import YouTubeMusicEngine, YouTubeTrack, YouTubePlaylist
 from .core.copyright_monitor import CopyrightMonitor
 from .utils.youtube_auth import YouTubeAuthManager
 
@@ -23,10 +24,12 @@ __all__ = [
 ]
 
 def create_youtube_music_agent(config=None):
-    """Factory function to create configured YouTube Music agent"""    return YouTubeMusicEngine(config)
+    """Factory function to create configured YouTube Music agent"""
+    return YouTubeMusicEngine(config)
 
 def get_module_info():
-    """Get module information and capabilities"""    return {
+    """Get module information and capabilities"""
+    return {
         "name": "YouTube Music Agent",
         "version": __version__,
         "author": __author__,

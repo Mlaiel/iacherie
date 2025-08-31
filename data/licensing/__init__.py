@@ -5,7 +5,7 @@ Advanced licensing data management for content monetization and rights protectio
 Handles licensing agreements, royalty distribution, and compliance tracking.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
@@ -22,7 +22,9 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - Audio Processing Specialist: Advanced audio processing and music industry integration
 - DevOps Engineer: Infrastructure automation and deployment optimization
 - AI Prompt Engineer: Natural language processing and conversational AI systems
-"""from .models import (
+"""
+
+from .models import (
     LicenseAgreement,
     RoyaltyCalculation,
     LicenseUsageTracking,
@@ -34,10 +36,15 @@ Contact: mlaiel@live.de for licensing and usage rights.
 )
 
 from .repository import LicensingRepository
+
 from .calculator import RoyaltyCalculator
+
 from .compliance import ComplianceEngine
+
 from .contract_generator import ContractGenerator
+
 from .usage_tracker import UsageTracker
+
 from .payment_processor import PaymentProcessor
 
 __version__ = "1.0.0"

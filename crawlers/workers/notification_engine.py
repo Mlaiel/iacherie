@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Event trigger → Notification prioritization → Channel selection → 
 Template processing → Delivery optimization → Status tracking → Retry handling
-"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
+"""
+from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
 import logging
 import asyncio
 import aiohttp
@@ -46,7 +47,8 @@ settings = get_settings()
 
 
 class NotificationChannel(Enum):
-    """Notification delivery channels"""    EMAIL = "email"
+    """Notification delivery channels"""
+    EMAIL = "email"
     SMS = "sms"
     WEBHOOK = "webhook"
     WEBSOCKET = "websocket"
@@ -59,7 +61,8 @@ class NotificationChannel(Enum):
 
 
 class NotificationPriority(Enum):
-    """Notification priorities"""    CRITICAL = 1
+    """Notification priorities"""
+    CRITICAL = 1
     HIGH = 2
     MEDIUM = 3
     LOW = 4
@@ -67,7 +70,8 @@ class NotificationPriority(Enum):
 
 
 class NotificationStatus(Enum):
-    """Notification delivery status"""    PENDING = "pending"
+    """Notification delivery status"""
+    PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
     FAILED = "failed"
@@ -77,7 +81,8 @@ class NotificationStatus(Enum):
 
 
 class TemplateType(Enum):
-    """Notification template types"""    WORKER_ALERT = "worker_alert"
+    """Notification template types"""
+    WORKER_ALERT = "worker_alert"
     TASK_COMPLETION = "task_completion"
     SECURITY_ALERT = "security_alert"
     PERFORMANCE_ALERT = "performance_alert"
@@ -89,7 +94,8 @@ class TemplateType(Enum):
 
 @dataclass
 class NotificationTemplate:
-    """Notification template definition"""    template_id: str
+    """Notification template definition"""
+    template_id: str
     template_type: TemplateType
     channel: NotificationChannel
     subject_template: str
@@ -103,7 +109,8 @@ class NotificationTemplate:
 
 @dataclass
 class NotificationRecipient:
-    """Notification recipient configuration"""    recipient_id: str
+    """Notification recipient configuration"""
+    recipient_id: str
     user_id: Optional[str] = None
     email: Optional[str] = None
     phone: Optional[str] = None
@@ -120,7 +127,8 @@ class NotificationRecipient:
 
 @dataclass
 class NotificationRule:
-    """Notification rule configuration"""    rule_id: str
+    """Notification rule configuration"""
+    rule_id: str
     name: str
     event_types: List[EventType]
     channels: List[NotificationChannel]
@@ -136,7 +144,8 @@ class NotificationRule:
 
 @dataclass
 class Notification:
-    """Notification instance"""    notification_id: str
+    """Notification instance"""
+    notification_id: str
     rule_id: str
     event: WorkerEvent
     channel: NotificationChannel
@@ -157,7 +166,8 @@ class Notification:
 
 @dataclass
 class DeliveryResult:
-    """Notification delivery result"""    notification_id: str
+    """Notification delivery result"""
+    notification_id: str
     status: NotificationStatus
     delivered_at: Optional[datetime] = None
     error_message: Optional[str] = None
@@ -166,25 +176,30 @@ class DeliveryResult:
 
 
 class NotificationChannel_ABC(ABC):
-    """Abstract base class for notification channels"""    def __init__(self, channel_config: Dict[str, Any]):
+    """Abstract base class for notification channels"""
+    def __init__(self, channel_config: Dict[str, Any]):
         self.config = channel_config
         self.rate_limiter = RateLimiter()
 
     @abstractmethod
     async def send(self, notification: Notification) -> DeliveryResult:
-        """Send notification through this channel"""        pass
+        """Send notification through this channel"""
+        pass
 
     @abstractmethod
     async def validate_recipient(self, recipient: NotificationRecipient) -> bool:
-        """Validate recipient for this channel"""        pass
+        """Validate recipient for this channel"""
+        pass
 
     @abstractmethod
     async def health_check(self) -> bool:
-        """Check channel health"""        pass
+        """Check channel health"""
+        pass
 
 
 class EmailChannel(NotificationChannel_ABC):
-    """Email notification channel"""    def __init__(self, channel_config: Dict[str, Any]):
+    """Email notification channel"""
+    def __init__(self, channel_config: Dict[str, Any]):
         super().__init__(channel_config)
         self.smtp_server = channel_config.get("smtp_server", "localhost")
         self.smtp_port = channel_config.get("smtp_port", 587)
@@ -194,7 +209,8 @@ class EmailChannel(NotificationChannel_ABC):
         self.from_email = channel_config.get("from_email")
 
     async def send(self, notification: Notification) -> DeliveryResult:
-        """Send email notification"""        try:
+        """Send email notification"""
+        try:
             # Create message
             msg = MIMEMultipart('alternative')
             msg['Subject'] = notification.subject
@@ -234,7 +250,8 @@ class EmailChannel(NotificationChannel_ABC):
             )
 
     async def _send_smtp_message(self, msg: MIMEMultipart) -> None:
-        """Send SMTP message"""        def send_message():
+        """Send SMTP message"""
+        def send_message():
             server = smtplib.SMTP(self.smtp_server, self.smtp_port)
             if self.use_tls:
                 server.starttls()
@@ -248,7 +265,8 @@ class EmailChannel(NotificationChannel_ABC):
         await loop.run_in_executor(None, send_message)
 
     async def _add_attachment(self, msg: MIMEMultipart, attachment: Dict[str, Any]) -> None:
-        """Add attachment to email"""        try:
+        """Add attachment to email"""
+        try:
             filename = attachment.get("filename")
             content = attachment.get("content")
             content_type = attachment.get("content_type", "application/octet-stream")
@@ -266,10 +284,12 @@ class EmailChannel(NotificationChannel_ABC):
             logger.error(f"❌ Failed to add attachment: {e}")
 
     async def validate_recipient(self, recipient: NotificationRecipient) -> bool:
-        """Validate email recipient"""        return bool(recipient.email and "@" in recipient.email)
+        """Validate email recipient"""
+        return bool(recipient.email and "@" in recipient.email)
 
     async def health_check(self) -> bool:
-        """Check email channel health"""        try:
+        """Check email channel health"""
+        try:
             server = smtplib.SMTP(self.smtp_server, self.smtp_port)
             server.quit()
             return True
@@ -278,14 +298,16 @@ class EmailChannel(NotificationChannel_ABC):
 
 
 class WebhookChannel(NotificationChannel_ABC):
-    """Webhook notification channel"""    def __init__(self, channel_config: Dict[str, Any]):
+    """Webhook notification channel"""
+    def __init__(self, channel_config: Dict[str, Any]):
         super().__init__(channel_config)
         self.timeout = channel_config.get("timeout", 30)
         self.verify_ssl = channel_config.get("verify_ssl", True)
         self.headers = channel_config.get("headers", {})
 
     async def send(self, notification: Notification) -> DeliveryResult:
-        """Send webhook notification"""        try:
+        """Send webhook notification"""
+        try:
             webhook_url = notification.recipient.webhook_url
             if not webhook_url:
                 raise ValueError("No webhook URL configured for recipient")
@@ -338,19 +360,23 @@ class WebhookChannel(NotificationChannel_ABC):
             )
 
     async def validate_recipient(self, recipient: NotificationRecipient) -> bool:
-        """Validate webhook recipient"""        return bool(recipient.webhook_url and recipient.webhook_url.startswith(('http://', 'https://')))
+        """Validate webhook recipient"""
+        return bool(recipient.webhook_url and recipient.webhook_url.startswith(('http://', 'https://')))
 
     async def health_check(self) -> bool:
-        """Check webhook channel health"""        return True  # Webhook health depends on individual URLs
+        """Check webhook channel health"""
+        return True  # Webhook health depends on individual URLs
 
 
 class WebSocketChannel(NotificationChannel_ABC):
-    """WebSocket notification channel"""    def __init__(self, channel_config: Dict[str, Any]):
+    """WebSocket notification channel"""
+    def __init__(self, channel_config: Dict[str, Any]):
         super().__init__(channel_config)
         self.active_connections: Dict[str, websockets.WebSocketServerProtocol] = {}
 
     async def send(self, notification: Notification) -> DeliveryResult:
-        """Send WebSocket notification"""        try:
+        """Send WebSocket notification"""
+        try:
             websocket_id = notification.recipient.websocket_id
             if not websocket_id or websocket_id not in self.active_connections:
                 return DeliveryResult(
@@ -392,23 +418,28 @@ class WebSocketChannel(NotificationChannel_ABC):
             )
 
     async def register_connection(self, websocket_id: str, websocket: websockets.WebSocketServerProtocol) -> None:
-        """Register WebSocket connection"""        self.active_connections[websocket_id] = websocket
+        """Register WebSocket connection"""
+        self.active_connections[websocket_id] = websocket
         logger.info(f"📡 WebSocket connection registered: {websocket_id}")
 
     async def unregister_connection(self, websocket_id: str) -> None:
-        """Unregister WebSocket connection"""        if websocket_id in self.active_connections:
+        """Unregister WebSocket connection"""
+        if websocket_id in self.active_connections:
             del self.active_connections[websocket_id]
             logger.info(f"📡 WebSocket connection unregistered: {websocket_id}")
 
     async def validate_recipient(self, recipient: NotificationRecipient) -> bool:
-        """Validate WebSocket recipient"""        return bool(recipient.websocket_id)
+        """Validate WebSocket recipient"""
+        return bool(recipient.websocket_id)
 
     async def health_check(self) -> bool:
-        """Check WebSocket channel health"""        return True
+        """Check WebSocket channel health"""
+        return True
 
 
 class NotificationEngine:
-    """    Intelligent notification and alert system
+    """
+    Intelligent notification and alert system
     
     Features:
     - Multi-channel delivery (Email, SMS, Webhook, WebSocket, etc.)
@@ -418,7 +449,8 @@ class NotificationEngine:
     - Retry mechanisms with backoff
     - Real-time delivery status tracking
     - Performance analytics
-    """    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    """
+    def __init__(self, redis_url: str = "redis://localhost:6379"):
         self.redis_url = redis_url
         self.redis: Optional[redis.Redis] = None
         
@@ -459,7 +491,8 @@ class NotificationEngine:
         }
 
     async def start(self) -> bool:
-        """Start notification engine"""        try:
+        """Start notification engine"""
+        try:
             logger.info("🚀 Starting notification engine")
             
             # Initialize Redis
@@ -484,7 +517,8 @@ class NotificationEngine:
             return False
 
     async def stop(self) -> None:
-        """Stop notification engine"""        try:
+        """Stop notification engine"""
+        try:
             logger.info("🛑 Stopping notification engine")
             
             self.is_running = False
@@ -511,7 +545,8 @@ class NotificationEngine:
             logger.error(f"❌ Error stopping notification engine: {e}")
 
     async def process_event(self, event: WorkerEvent) -> List[str]:
-        """Process event and create notifications"""        try:
+        """Process event and create notifications"""
+        try:
             notification_ids = []
             
             # Find matching rules
@@ -546,7 +581,8 @@ class NotificationEngine:
     async def send_direct_notification(self, recipient_id: str, channel: NotificationChannel,
                                      template_type: TemplateType, variables: Dict[str, Any],
                                      priority: NotificationPriority = NotificationPriority.MEDIUM) -> Optional[str]:
-        """Send direct notification without event trigger"""        try:
+        """Send direct notification without event trigger"""
+        try:
             recipient = self.recipients.get(recipient_id)
             if not recipient:
                 logger.warning(f"⚠️ Recipient not found: {recipient_id}")
@@ -590,7 +626,8 @@ class NotificationEngine:
             return None
 
     async def get_delivery_status(self, notification_id: str) -> Optional[DeliveryResult]:
-        """Get notification delivery status"""        try:
+        """Get notification delivery status"""
+        try:
             # Check processing notifications
             if notification_id in self.processing_notifications:
                 return DeliveryResult(
@@ -617,7 +654,8 @@ class NotificationEngine:
             return None
 
     async def add_recipient(self, recipient: NotificationRecipient) -> bool:
-        """Add notification recipient"""        try:
+        """Add notification recipient"""
+        try:
             # Validate recipient
             if not await self._validate_recipient(recipient):
                 return False
@@ -641,7 +679,8 @@ class NotificationEngine:
             return False
 
     async def add_rule(self, rule: NotificationRule) -> bool:
-        """Add notification rule"""        try:
+        """Add notification rule"""
+        try:
             # Validate rule
             if not await self._validate_rule(rule):
                 return False
@@ -665,7 +704,8 @@ class NotificationEngine:
             return False
 
     async def add_template(self, template: NotificationTemplate) -> bool:
-        """Add notification template"""        try:
+        """Add notification template"""
+        try:
             # Validate template
             if not await self._validate_template(template):
                 return False
@@ -689,7 +729,8 @@ class NotificationEngine:
             return False
 
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get notification engine statistics"""        try:
+        """Get notification engine statistics"""
+        try:
             return {
                 "engine_status": "running" if self.is_running else "stopped",
                 "queue_size": self.pending_notifications.qsize(),
@@ -707,7 +748,8 @@ class NotificationEngine:
             return {"error": str(e)}
 
     async def _initialize_redis(self) -> None:
-        """Initialize Redis connection"""        try:
+        """Initialize Redis connection"""
+        try:
             self.redis = redis.from_url(self.redis_url)
             await self.redis.ping()
             logger.info("✅ Redis connection established for notification engine")
@@ -717,7 +759,8 @@ class NotificationEngine:
             raise
 
     async def _initialize_channels(self) -> None:
-        """Initialize notification channels"""        try:
+        """Initialize notification channels"""
+        try:
             # Email channel
             email_config = settings.get("notification.email", {})
             if email_config:
@@ -738,7 +781,8 @@ class NotificationEngine:
             raise
 
     async def _load_configuration(self) -> None:
-        """Load templates, recipients, and rules from Redis"""        try:
+        """Load templates, recipients, and rules from Redis"""
+        try:
             if not self.redis:
                 return
             
@@ -780,7 +824,8 @@ class NotificationEngine:
             logger.error(f"❌ Failed to load configuration: {e}")
 
     async def _start_background_tasks(self) -> None:
-        """Start background processing tasks"""        try:
+        """Start background processing tasks"""
+        try:
             # Notification processor
             processor_task = asyncio.create_task(self._notification_processor())
             self.background_tasks.add(processor_task)
@@ -800,7 +845,8 @@ class NotificationEngine:
             raise
 
     async def _notification_processor(self) -> None:
-        """Background notification processing loop"""        while not self.shutdown_event.is_set():
+        """Background notification processing loop"""
+        while not self.shutdown_event.is_set():
             try:
                 # Get next notification
                 try:
@@ -819,7 +865,8 @@ class NotificationEngine:
                 await asyncio.sleep(5)
 
     async def _process_notification(self, notification: Notification) -> None:
-        """Process a single notification"""        try:
+        """Process a single notification"""
+        try:
             # Add to processing
             self.processing_notifications[notification.notification_id] = notification
             
@@ -869,7 +916,8 @@ class NotificationEngine:
             self.processing_notifications.pop(notification.notification_id, None)
 
     async def _find_matching_rules(self, event: WorkerEvent) -> List[NotificationRule]:
-        """Find notification rules that match the event"""        try:
+        """Find notification rules that match the event"""
+        try:
             matching_rules = []
             
             for rule in self.rules.values():
@@ -902,7 +950,8 @@ class NotificationEngine:
 
     async def _create_notification(self, event: WorkerEvent, rule: NotificationRule,
                                  recipient: NotificationRecipient, channel: NotificationChannel) -> Optional[Notification]:
-        """Create notification from event, rule, and recipient"""        try:
+        """Create notification from event, rule, and recipient"""
+        try:
             # Get template
             template = await self._get_template(rule.template_type, channel, recipient.locale)
             if not template:
@@ -947,7 +996,8 @@ class NotificationEngine:
 
     async def _get_template(self, template_type: TemplateType, 
                           channel: NotificationChannel, locale: str) -> Optional[NotificationTemplate]:
-        """Get notification template"""        try:
+        """Get notification template"""
+        try:
             # Try specific template first
             template_id = f"{template_type.value}_{channel.value}_{locale}"
             template = self.templates.get(template_id)
@@ -974,7 +1024,8 @@ class NotificationEngine:
             return None
 
     async def _render_template(self, template_string: str, variables: Dict[str, Any]) -> str:
-        """Render template with variables"""        try:
+        """Render template with variables"""
+        try:
             template = self.jinja_env.from_string(template_string)
             return template.render(**variables)
             
@@ -984,7 +1035,8 @@ class NotificationEngine:
 
     async def _validate_recipient_channel(self, recipient: NotificationRecipient, 
                                         channel: NotificationChannel) -> bool:
-        """Validate if recipient supports the channel"""        try:
+        """Validate if recipient supports the channel"""
+        try:
             channel_handler = self.channels.get(channel)
             if not channel_handler:
                 return False
@@ -996,7 +1048,8 @@ class NotificationEngine:
             return False
 
     async def _validate_recipient(self, recipient: NotificationRecipient) -> bool:
-        """Validate recipient configuration"""        try:
+        """Validate recipient configuration"""
+        try:
             if not recipient.recipient_id:
                 return False
             
@@ -1015,7 +1068,8 @@ class NotificationEngine:
             return False
 
     async def _validate_rule(self, rule: NotificationRule) -> bool:
-        """Validate notification rule"""        try:
+        """Validate notification rule"""
+        try:
             if not rule.rule_id or not rule.event_types or not rule.channels:
                 return False
             
@@ -1031,7 +1085,8 @@ class NotificationEngine:
             return False
 
     async def _validate_template(self, template: NotificationTemplate) -> bool:
-        """Validate notification template"""        try:
+        """Validate notification template"""
+        try:
             if not template.template_id or not template.subject_template or not template.body_template:
                 return False
             
@@ -1042,7 +1097,8 @@ class NotificationEngine:
             return False
 
     async def _check_rule_conditions(self, rule: NotificationRule, event: WorkerEvent) -> bool:
-        """Check if event meets rule conditions"""        try:
+        """Check if event meets rule conditions"""
+        try:
             if not rule.conditions:
                 return True
             
@@ -1071,7 +1127,8 @@ class NotificationEngine:
             return False
 
     async def _check_rate_limit(self, rule: NotificationRule, event: WorkerEvent) -> bool:
-        """Check rate limiting for rule"""        try:
+        """Check rate limiting for rule"""
+        try:
             if not rule.rate_limit or not self.redis:
                 return True
             
@@ -1084,7 +1141,8 @@ class NotificationEngine:
             return True
 
     async def _check_quiet_hours(self, rule: NotificationRule) -> bool:
-        """Check if current time is within quiet hours"""        try:
+        """Check if current time is within quiet hours"""
+        try:
             if not rule.quiet_hours:
                 return True
             
@@ -1097,7 +1155,8 @@ class NotificationEngine:
             return True
 
     async def _process_pending_notifications(self) -> None:
-        """Process remaining pending notifications during shutdown"""        try:
+        """Process remaining pending notifications during shutdown"""
+        try:
             timeout = 60  # 1 minute timeout
             start_time = time.time()
             
@@ -1119,7 +1178,8 @@ class NotificationEngine:
             logger.error(f"❌ Failed to process pending notifications: {e}")
 
     async def _statistics_updater(self) -> None:
-        """Background statistics update task"""        while not self.shutdown_event.is_set():
+        """Background statistics update task"""
+        while not self.shutdown_event.is_set():
             try:
                 await self._update_statistics()
                 await asyncio.sleep(300)  # Update every 5 minutes
@@ -1129,7 +1189,8 @@ class NotificationEngine:
                 await asyncio.sleep(600)
 
     async def _update_statistics(self) -> None:
-        """Update delivery statistics"""        try:
+        """Update delivery statistics"""
+        try:
             total = self.stats["total_notifications"]
             delivered = self.stats["delivered_notifications"]
             
@@ -1153,7 +1214,8 @@ class NotificationEngine:
             logger.error(f"❌ Failed to update statistics: {e}")
 
     async def _cleanup_task(self) -> None:
-        """Background cleanup task"""        while not self.shutdown_event.is_set():
+        """Background cleanup task"""
+        while not self.shutdown_event.is_set():
             try:
                 await self._cleanup_old_results()
                 await asyncio.sleep(3600)  # Cleanup every hour
@@ -1163,7 +1225,8 @@ class NotificationEngine:
                 await asyncio.sleep(1800)
 
     async def _cleanup_old_results(self) -> None:
-        """Clean up old delivery results"""        try:
+        """Clean up old delivery results"""
+        try:
             # The deque already has a maxlen, but we can do additional cleanup
             cutoff_time = datetime.utcnow() - timedelta(hours=24)
             
@@ -1182,7 +1245,8 @@ _notification_engine: Optional[NotificationEngine] = None
 
 
 def get_notification_engine() -> NotificationEngine:
-    """Get or create notification engine singleton"""    global _notification_engine
+    """Get or create notification engine singleton"""
+    global _notification_engine
     
     if _notification_engine is None:
         _notification_engine = NotificationEngine()
@@ -1191,7 +1255,8 @@ def get_notification_engine() -> NotificationEngine:
 
 
 async def initialize_notification_engine() -> bool:
-    """Initialize global notification engine"""    try:
+    """Initialize global notification engine"""
+    try:
         engine = get_notification_engine()
         return await engine.start()
         
@@ -1201,7 +1266,8 @@ async def initialize_notification_engine() -> bool:
 
 
 async def shutdown_notification_engine() -> None:
-    """Shutdown global notification engine"""    global _notification_engine
+    """Shutdown global notification engine"""
+    global _notification_engine
     
     if _notification_engine:
         await _notification_engine.stop()

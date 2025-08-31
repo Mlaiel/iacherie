@@ -26,7 +26,8 @@ For licensing inquiries ONLY: mlaiel@live.de
 Business Logic Flow:
 Creator (Multi-format) → Upload → AI Protection & Rights → SEO Pro → 
 Collaboration Matching + Gamification → Multi-platform Distribution → Revenue Optimization → Analytics
-"""import logging
+"""
+import logging
 from typing import Dict, List, Optional, Any, Union
 
 # Configure logging
@@ -174,13 +175,16 @@ except ImportError as e:
 
 
 class EngagementOrchestrator:
-    """    Central orchestrator for the engagement gamification ecosystem.
+    """
+    Central orchestrator for the engagement gamification ecosystem.
     
     Coordinates between all engagement modules to provide a unified
     gamification experience for content creators.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the engagement orchestrator."""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize the engagement orchestrator."""
+        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.initialized = False
         
         # Module instances
@@ -195,7 +199,8 @@ class EngagementOrchestrator:
         self.logger.info("EngagementOrchestrator initialized")
     
     async def initialize(self) -> bool:
-        """Initialize all engagement modules."""        try:
+        """Initialize all engagement modules."""
+        try:
             # Initialize modules that are available
             if gamification_available:
                 self.gamification_manager = await get_gamification_manager()
@@ -244,7 +249,8 @@ class EngagementOrchestrator:
         action_data: Dict[str, Any],
         user_profile: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Process a user action across all engagement systems."""        if not self.initialized:
+        """Process a user action across all engagement systems."""
+        if not self.initialized:
             await self.initialize()
         
         results = {
@@ -376,7 +382,8 @@ class EngagementOrchestrator:
             return results
     
     async def get_user_engagement_dashboard(self, user_id: str) -> Dict[str, Any]:
-        """Get comprehensive engagement dashboard for a user."""        if not self.initialized:
+        """Get comprehensive engagement dashboard for a user."""
+        if not self.initialized:
             await self.initialize()
         
         dashboard = {
@@ -422,7 +429,8 @@ _engagement_orchestrator: Optional[EngagementOrchestrator] = None
 
 
 async def get_engagement_orchestrator() -> EngagementOrchestrator:
-    """Get the global engagement orchestrator instance."""    global _engagement_orchestrator
+    """Get the global engagement orchestrator instance."""
+    global _engagement_orchestrator
     
     if _engagement_orchestrator is None:
         _engagement_orchestrator = EngagementOrchestrator()

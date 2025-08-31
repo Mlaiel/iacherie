@@ -5,7 +5,8 @@ WhatsApp Business API integration for messaging and business communication.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
@@ -21,22 +22,26 @@ logger = logging.getLogger(__name__)
 
 
 class WhatsAppPlatform(PlatformBase):
-    """WhatsApp Business platform integration"""    
+    """WhatsApp Business platform integration"""
+    
     def __init__(self, config: PlatformConfig):
-        """Initialize WhatsApp Business platform"""        super().__init__(config)
+        """Initialize WhatsApp Business platform"""
+        super().__init__(config)
         self.api_base = "https://graph.facebook.com/v18.0"
         self.phone_number_id = self.config.credentials.get('phone_number_id')
         self.session: Optional[aiohttp.ClientSession] = None
         
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""        if not self.session or self.session.closed:
+        """Get or create HTTP session"""
+        if not self.session or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             )
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with WhatsApp Business API"""        try:
+        """Authenticate with WhatsApp Business API"""
+        try:
             access_token = self.config.credentials.get('access_token')
             
             if access_token and self.phone_number_id:
@@ -66,10 +71,12 @@ class WhatsAppPlatform(PlatformBase):
             return False
     
     async def refresh_token(self) -> bool:
-        """Refresh WhatsApp Business token"""        return await self.authenticate()
+        """Refresh WhatsApp Business token"""
+        return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to WhatsApp Business API"""        try:
+        """Make authenticated request to WhatsApp Business API"""
+        try:
             session = await self._get_session()
             
             # Add authentication headers
@@ -107,7 +114,8 @@ class WhatsAppPlatform(PlatformBase):
             return None
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Send WhatsApp Business message"""        try:
+        """Send WhatsApp Business message"""
+        try:
             recipient = metadata.tags[0] if metadata.tags else None
             if not recipient:
                 return UploadResult(
@@ -174,7 +182,8 @@ class WhatsAppPlatform(PlatformBase):
             )
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get WhatsApp Business analytics"""        try:
+        """Get WhatsApp Business analytics"""
+        try:
             # WhatsApp Business provides limited analytics
             return AnalyticsData(
                 platform_id=self.platform_id,
@@ -194,24 +203,29 @@ class WhatsAppPlatform(PlatformBase):
             raise
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content (not available in WhatsApp Business)"""        logger.warning("WhatsApp Business doesn't support content search")
+        """Search content (not available in WhatsApp Business)"""
+        logger.warning("WhatsApp Business doesn't support content search")
         return []
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user content (not available in WhatsApp Business)"""        logger.warning("WhatsApp Business doesn't provide access to message history")
+        """Get user content (not available in WhatsApp Business)"""
+        logger.warning("WhatsApp Business doesn't provide access to message history")
         return []
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete content (not available in WhatsApp Business)"""        logger.warning("WhatsApp Business doesn't support message deletion via API")
+        """Delete content (not available in WhatsApp Business)"""
+        logger.warning("WhatsApp Business doesn't support message deletion via API")
         return False
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
-        """Update content (not available in WhatsApp Business)"""        logger.warning("WhatsApp Business doesn't support message editing")
+        """Update content (not available in WhatsApp Business)"""
+        logger.warning("WhatsApp Business doesn't support message editing")
         return False
     
     async def send_template_message(self, recipient: str, template_name: str, 
                                   language_code: str = "en", parameters: List[str] = None) -> Optional[str]:
-        """Send WhatsApp template message"""        try:
+        """Send WhatsApp template message"""
+        try:
             message_data = {
                 "messaging_product": "whatsapp",
                 "to": recipient,
@@ -240,5 +254,6 @@ class WhatsAppPlatform(PlatformBase):
             return None
     
     async def close(self):
-        """Close HTTP session"""        if self.session and not self.session.closed:
+        """Close HTTP session"""
+        if self.session and not self.session.closed:
             await self.session.close()

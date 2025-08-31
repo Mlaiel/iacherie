@@ -16,7 +16,8 @@ Features:
 - Privacy impact assessments
 - Consent management
 - Data subject rights automation
-"""import asyncio
+"""
+import asyncio
 import hashlib
 import json
 import logging
@@ -33,7 +34,8 @@ logger = logging.getLogger(__name__)
 
 
 class PIIType(Enum):
-    """Types of Personally Identifiable Information"""    EMAIL = "email"
+    """Types of Personally Identifiable Information"""
+    EMAIL = "email"
     PHONE = "phone"
     SSN = "ssn"
     CREDIT_CARD = "credit_card"
@@ -51,7 +53,8 @@ class PIIType(Enum):
 
 
 class AnonymizationTechnique(Enum):
-    """Data anonymization techniques"""    MASKING = "masking"
+    """Data anonymization techniques"""
+    MASKING = "masking"
     PSEUDONYMIZATION = "pseudonymization"
     GENERALIZATION = "generalization"
     SUPPRESSION = "suppression"
@@ -63,7 +66,8 @@ class AnonymizationTechnique(Enum):
 
 
 class DataSubjectRight(Enum):
-    """Data subject rights under GDPR/CCPA"""    ACCESS = "access"
+    """Data subject rights under GDPR/CCPA"""
+    ACCESS = "access"
     RECTIFICATION = "rectification"
     ERASURE = "erasure"
     PORTABILITY = "portability"
@@ -75,7 +79,8 @@ class DataSubjectRight(Enum):
 
 @dataclass
 class PIIDetectionResult:
-    """Result of PII detection"""    pii_type: PIIType
+    """Result of PII detection"""
+    pii_type: PIIType
     value: str
     confidence: float
     start_position: int
@@ -88,7 +93,8 @@ class PIIDetectionResult:
 
 @dataclass
 class AnonymizationResult:
-    """Result of data anonymization"""    original_value: str
+    """Result of data anonymization"""
+    original_value: str
     anonymized_value: str
     technique: AnonymizationTechnique
     pii_type: PIIType
@@ -99,7 +105,8 @@ class AnonymizationResult:
 
 @dataclass
 class PrivacyPolicy:
-    """Privacy policy configuration"""    policy_id: str
+    """Privacy policy configuration"""
+    policy_id: str
     name: str
     data_types: List[PIIType]
     retention_days: int
@@ -113,7 +120,8 @@ class PrivacyPolicy:
 
 @dataclass
 class ConsentRecord:
-    """User consent record"""    consent_id: str
+    """User consent record"""
+    consent_id: str
     user_id: str
     data_types: List[PIIType]
     purposes: List[str]
@@ -126,13 +134,15 @@ class ConsentRecord:
 
 
 class PIIDetector:
-    """Advanced PII detection system"""    
+    """Advanced PII detection system"""
+    
     def __init__(self):
         self.patterns = self._initialize_patterns()
         self.ml_detector = None  # Placeholder for ML model
         
     def _initialize_patterns(self) -> Dict[PIIType, List[str]]:
-        """Initialize regex patterns for PII detection"""        return {
+        """Initialize regex patterns for PII detection"""
+        return {
             PIIType.EMAIL: [
                 r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
             ],
@@ -170,7 +180,8 @@ class PIIDetector:
         text: str,
         field_name: Optional[str] = None
     ) -> List[PIIDetectionResult]:
-        """Detect PII in text using multiple methods"""        results = []
+        """Detect PII in text using multiple methods"""
+        results = []
         
         # Regex-based detection
         regex_results = await self._detect_with_regex(text, field_name)
@@ -193,7 +204,8 @@ class PIIDetector:
         text: str,
         field_name: Optional[str]
     ) -> List[PIIDetectionResult]:
-        """Detect PII using regex patterns"""        results = []
+        """Detect PII using regex patterns"""
+        results = []
         
         for pii_type, patterns in self.patterns.items():
             for pattern in patterns:
@@ -225,7 +237,8 @@ class PIIDetector:
         text: str,
         field_name: Optional[str]
     ) -> List[PIIDetectionResult]:
-        """Detect PII using ML models (placeholder)"""        # This would integrate with actual ML models for PII detection
+        """Detect PII using ML models (placeholder)"""
+        # This would integrate with actual ML models for PII detection
         # For now, return empty list
         return []
     
@@ -234,7 +247,8 @@ class PIIDetector:
         text: str,
         field_name: Optional[str]
     ) -> List[PIIDetectionResult]:
-        """Detect PII using contextual analysis"""        results = []
+        """Detect PII using contextual analysis"""
+        results = []
         
         # Field name-based detection
         if field_name:
@@ -297,7 +311,8 @@ class PIIDetector:
         text: str,
         position: int
     ) -> float:
-        """Calculate confidence score for regex match"""        base_confidence = 0.8
+        """Calculate confidence score for regex match"""
+        base_confidence = 0.8
         
         # Adjust based on PII type
         if pii_type == PIIType.EMAIL:
@@ -317,7 +332,8 @@ class PIIDetector:
         return min(1.0, max(0.0, base_confidence))
     
     def _luhn_check(self, card_number: str) -> bool:
-        """Validate credit card using Luhn algorithm"""        def luhn_digit(n):
+        """Validate credit card using Luhn algorithm"""
+        def luhn_digit(n):
             return sum(divmod(int(n) * 2, 10))
         
         digits = [int(d) for d in card_number]
@@ -327,12 +343,14 @@ class PIIDetector:
         return checksum % 10 == 0
     
     def _extract_context(self, text: str, start: int, end: int, window: int = 50) -> str:
-        """Extract context around detected PII"""        context_start = max(0, start - window)
+        """Extract context around detected PII"""
+        context_start = max(0, start - window)
         context_end = min(len(text), end + window)
         return text[context_start:context_end]
     
     def _assess_risk_level(self, pii_type: PIIType, confidence: float) -> str:
-        """Assess risk level based on PII type and confidence"""        high_risk_types = {PIIType.SSN, PIIType.CREDIT_CARD, PIIType.PASSPORT, PIIType.BIOMETRIC}
+        """Assess risk level based on PII type and confidence"""
+        high_risk_types = {PIIType.SSN, PIIType.CREDIT_CARD, PIIType.PASSPORT, PIIType.BIOMETRIC}
         medium_risk_types = {PIIType.EMAIL, PIIType.PHONE, PIIType.DRIVER_LICENSE}
         
         if pii_type in high_risk_types:
@@ -346,7 +364,8 @@ class PIIDetector:
         self,
         results: List[PIIDetectionResult]
     ) -> List[PIIDetectionResult]:
-        """Merge overlapping PII detections"""        if not results:
+        """Merge overlapping PII detections"""
+        if not results:
             return results
         
         # Sort by position
@@ -368,13 +387,15 @@ class PIIDetector:
 
 
 class DataAnonymizer:
-    """Advanced data anonymization system"""    
+    """Advanced data anonymization system"""
+    
     def __init__(self):
         self.pseudonym_mapping: Dict[str, str] = {}
         self.encryption_key = self._generate_encryption_key()
     
     def _generate_encryption_key(self) -> bytes:
-        """Generate encryption key for pseudonymization"""        return secrets.token_bytes(32)
+        """Generate encryption key for pseudonymization"""
+        return secrets.token_bytes(32)
     
     async def anonymize_data(
         self,
@@ -382,7 +403,8 @@ class DataAnonymizer:
         pii_detections: List[PIIDetectionResult],
         technique: AnonymizationTechnique = AnonymizationTechnique.MASKING
     ) -> Tuple[Any, List[AnonymizationResult]]:
-        """Anonymize data based on PII detections"""        anonymization_results = []
+        """Anonymize data based on PII detections"""
+        anonymization_results = []
         
         if isinstance(data, str):
             anonymized_data, results = await self._anonymize_text(data, pii_detections, technique)
@@ -416,7 +438,8 @@ class DataAnonymizer:
         detections: List[PIIDetectionResult],
         technique: AnonymizationTechnique
     ) -> Tuple[str, List[AnonymizationResult]]:
-        """Anonymize text based on detections"""        if not detections:
+        """Anonymize text based on detections"""
+        if not detections:
             return text, []
         
         anonymized_text = text
@@ -469,7 +492,8 @@ class DataAnonymizer:
         return anonymized_text, anonymization_results
     
     def _mask_value(self, value: str, pii_type: PIIType) -> str:
-        """Mask PII value"""        if pii_type == PIIType.EMAIL:
+        """Mask PII value"""
+        if pii_type == PIIType.EMAIL:
             # Mask email: j***@example.com
             parts = value.split('@')
             if len(parts) == 2:
@@ -503,7 +527,8 @@ class DataAnonymizer:
             return value[0] + '*' * (len(value) - 2) + value[-1]
     
     async def _pseudonymize_value(self, value: str, pii_type: PIIType) -> str:
-        """Create pseudonym for PII value"""        # Generate consistent pseudonym using hash
+        """Create pseudonym for PII value"""
+        # Generate consistent pseudonym using hash
         hash_key = value + str(pii_type.value)
         pseudonym_hash = hashlib.sha256(hash_key.encode()).hexdigest()[:16]
         
@@ -521,7 +546,8 @@ class DataAnonymizer:
             return f"ANON_{pseudonym_hash}"
     
     def _generalize_value(self, value: str, pii_type: PIIType) -> str:
-        """Generalize PII value"""        if pii_type == PIIType.EMAIL:
+        """Generalize PII value"""
+        if pii_type == PIIType.EMAIL:
             # Generalize to domain only
             if '@' in value:
                 return f"*@{value.split('@')[1]}"
@@ -538,7 +564,8 @@ class DataAnonymizer:
 
 
 class PrivacyComplianceManager:
-    """Privacy compliance management system"""    
+    """Privacy compliance management system"""
+    
     def __init__(self):
         self.policies: Dict[str, PrivacyPolicy] = {}
         self.consent_records: Dict[str, ConsentRecord] = {}
@@ -552,7 +579,8 @@ class PrivacyComplianceManager:
         anonymization_technique: AnonymizationTechnique = AnonymizationTechnique.MASKING,
         **kwargs
     ) -> PrivacyPolicy:
-        """Create a new privacy policy"""        policy_id = str(uuid.uuid4())
+        """Create a new privacy policy"""
+        policy_id = str(uuid.uuid4())
         policy = PrivacyPolicy(
             policy_id=policy_id,
             name=name,
@@ -574,7 +602,8 @@ class PrivacyComplianceManager:
         legal_basis: str = "consent",
         expiry_days: Optional[int] = None
     ) -> ConsentRecord:
-        """Record user consent"""        consent_id = str(uuid.uuid4())
+        """Record user consent"""
+        consent_id = str(uuid.uuid4())
         consent_timestamp = datetime.now(timezone.utc)
         expiry_date = None
         
@@ -596,7 +625,8 @@ class PrivacyComplianceManager:
         return consent_record
     
     def check_data_retention_compliance(self) -> List[Dict[str, Any]]:
-        """Check for data that should be deleted based on retention policies"""        current_time = datetime.now(timezone.utc)
+        """Check for data that should be deleted based on retention policies"""
+        current_time = datetime.now(timezone.utc)
         compliance_issues = []
         
         for data_id, creation_time in self.data_retention_tracker.items():
@@ -627,7 +657,8 @@ class PrivacyComplianceManager:
         request_type: DataSubjectRight,
         data_types: Optional[List[PIIType]] = None
     ) -> Dict[str, Any]:
-        """Handle data subject rights requests"""        user_consents = [
+        """Handle data subject rights requests"""
+        user_consents = [
             consent for consent in self.consent_records.values()
             if consent.user_id == user_id
         ]
@@ -680,7 +711,8 @@ class PrivacyComplianceManager:
         purposes: List[str],
         recipients: List[str] = None
     ) -> Dict[str, Any]:
-        """Generate privacy impact assessment"""        risk_score = self._calculate_privacy_risk(data_types, purposes)
+        """Generate privacy impact assessment"""
+        risk_score = self._calculate_privacy_risk(data_types, purposes)
         
         return {
             "pia_id": str(uuid.uuid4()),
@@ -704,7 +736,8 @@ class PrivacyComplianceManager:
         }
     
     def _calculate_privacy_risk(self, data_types: List[PIIType], purposes: List[str]) -> float:
-        """Calculate privacy risk score (0-10)"""        base_score = 3.0
+        """Calculate privacy risk score (0-10)"""
+        base_score = 3.0
         
         # Risk based on data types
         high_risk_types = {PIIType.SSN, PIIType.BIOMETRIC, PIIType.MEDICAL_ID}
@@ -727,7 +760,8 @@ class PrivacyComplianceManager:
         return min(10.0, base_score)
     
     def _get_risk_level(self, risk_score: float) -> str:
-        """Get risk level based on score"""        if risk_score >= 8.0:
+        """Get risk level based on score"""
+        if risk_score >= 8.0:
             return "HIGH"
         elif risk_score >= 6.0:
             return "MEDIUM"
@@ -735,7 +769,8 @@ class PrivacyComplianceManager:
             return "LOW"
     
     def _identify_risk_factors(self, data_types: List[PIIType], purposes: List[str]) -> List[str]:
-        """Identify specific risk factors"""        factors = []
+        """Identify specific risk factors"""
+        factors = []
         
         sensitive_types = {PIIType.SSN, PIIType.BIOMETRIC, PIIType.MEDICAL_ID}
         if any(dt in sensitive_types for dt in data_types):
@@ -750,7 +785,8 @@ class PrivacyComplianceManager:
         return factors
     
     def _suggest_mitigations(self, data_types: List[PIIType], risk_score: float) -> List[str]:
-        """Suggest risk mitigation measures"""        mitigations = ["Implement data minimization principles"]
+        """Suggest risk mitigation measures"""
+        mitigations = ["Implement data minimization principles"]
         
         if risk_score >= 7.0:
             mitigations.extend([
@@ -771,7 +807,8 @@ class PrivacyComplianceManager:
         return mitigations
     
     def _recommend_legal_basis(self, data_types: List[PIIType], purposes: List[str]) -> str:
-        """Recommend legal basis for processing"""        sensitive_types = {PIIType.SSN, PIIType.BIOMETRIC, PIIType.MEDICAL_ID}
+        """Recommend legal basis for processing"""
+        sensitive_types = {PIIType.SSN, PIIType.BIOMETRIC, PIIType.MEDICAL_ID}
         
         if any(dt in sensitive_types for dt in data_types):
             return "explicit_consent"
@@ -783,14 +820,16 @@ class PrivacyComplianceManager:
             return "legitimate_interest"
     
     def _consent_required(self, data_types: List[PIIType], purposes: List[str]) -> bool:
-        """Determine if consent is required"""        sensitive_types = {PIIType.SSN, PIIType.BIOMETRIC, PIIType.MEDICAL_ID}
+        """Determine if consent is required"""
+        sensitive_types = {PIIType.SSN, PIIType.BIOMETRIC, PIIType.MEDICAL_ID}
         return (
             any(dt in sensitive_types for dt in data_types) or
             any("marketing" in purpose.lower() for purpose in purposes)
         )
     
     def _generate_compliance_checklist(self, data_types: List[PIIType], purposes: List[str]) -> List[Dict[str, Any]]:
-        """Generate compliance checklist"""        checklist = [
+        """Generate compliance checklist"""
+        checklist = [
             {"requirement": "Lawful basis established", "status": "pending"},
             {"requirement": "Data subjects informed", "status": "pending"},
             {"requirement": "Consent mechanism implemented", "status": "pending"},
@@ -813,7 +852,8 @@ class PrivacyComplianceManager:
 
 
 class EnterprisePrivacyManager:
-    """Main enterprise privacy management system"""    
+    """Main enterprise privacy management system"""
+    
     def __init__(self):
         self.pii_detector = PIIDetector()
         self.anonymizer = DataAnonymizer()
@@ -827,7 +867,8 @@ class EnterprisePrivacyManager:
         user_id: Optional[str] = None,
         retention_days: Optional[int] = None
     ) -> Dict[str, Any]:
-        """Process data with comprehensive privacy controls"""        processing_id = str(uuid.uuid4())
+        """Process data with comprehensive privacy controls"""
+        processing_id = str(uuid.uuid4())
         start_time = datetime.now(timezone.utc)
         
         try:
@@ -901,7 +942,8 @@ class EnterprisePrivacyManager:
         pii_detections: List[PIIDetectionResult],
         purpose: str
     ) -> bool:
-        """Check if user has valid consent for PII processing"""        user_consents = [
+        """Check if user has valid consent for PII processing"""
+        user_consents = [
             consent for consent in self.compliance_manager.consent_records.values()
             if consent.user_id == user_id and consent.consent_given
         ]
@@ -926,7 +968,8 @@ class EnterprisePrivacyManager:
         return False
     
     def _find_applicable_policy(self, pii_detections: List[PIIDetectionResult]) -> Optional[PrivacyPolicy]:
-        """Find applicable privacy policy for detected PII"""        detected_types = {d.pii_type for d in pii_detections}
+        """Find applicable privacy policy for detected PII"""
+        detected_types = {d.pii_type for d in pii_detections}
         
         for policy in self.compliance_manager.policies.values():
             if detected_types.issubset(set(policy.data_types)):
@@ -939,7 +982,8 @@ class EnterprisePrivacyManager:
         return None
     
     async def get_privacy_metrics(self) -> Dict[str, Any]:
-        """Get privacy management metrics"""        total_processing = len(self.processing_logs)
+        """Get privacy management metrics"""
+        total_processing = len(self.processing_logs)
         pii_processing = len([log for log in self.processing_logs if log.get("pii_types")])
         consent_valid_processing = len([log for log in self.processing_logs if log.get("consent_valid")])
         

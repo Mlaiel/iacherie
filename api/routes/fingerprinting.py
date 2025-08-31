@@ -3,7 +3,8 @@ Multi-format content fingerprinting and analysis endpoints.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 from typing import List, Dict, Any, Optional, Union
 from datetime import datetime
 import os
@@ -88,7 +89,8 @@ vector_engine = VectorMatchingEngine()
 
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
-    """Get current authenticated user"""    if not credentials:
+    """Get current authenticated user"""
+    if not credentials:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Authentication required"
@@ -111,7 +113,8 @@ async def upload_file_for_fingerprinting(
     content_type: str = Form(...),
     user: dict = Depends(get_current_user)
 ):
-    """Upload a file for fingerprinting analysis"""    try:
+    """Upload a file for fingerprinting analysis"""
+    try:
         # Validate file type
         allowed_types = {
             'audio': ['.mp3', '.wav', '.flac', '.m4a', '.ogg', '.aac'],
@@ -147,7 +150,8 @@ async def upload_file_for_fingerprinting(
         
         # Store file metadata in database
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                INSERT INTO uploaded_files (file_id, user_id, original_filename, file_path, 
+            await session.execute("""
+                INSERT INTO uploaded_files (file_id, user_id, original_filename, file_path, 
                                           content_type, file_size, upload_timestamp)
                 VALUES (%s, %s, %s, %s, %s, %s, %s)
             """, (
@@ -179,12 +183,14 @@ async def create_fingerprint(
     request: FingerprintRequest,
     user: dict = Depends(get_current_user)
 ):
-    """Create fingerprint for uploaded content"""    try:
+    """Create fingerprint for uploaded content"""
+    try:
         start_time = datetime.utcnow()
         
         # Get file information
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT file_path, original_filename, content_type, file_size
+            result = await session.execute("""
+                SELECT file_path, original_filename, content_type, file_size
                 FROM uploaded_files 
                 WHERE file_id = %s AND user_id = %s
             """, (request.file_id, user['user_id']))
@@ -243,7 +249,8 @@ async def create_fingerprint(
         
         # Store fingerprint in database
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                INSERT INTO content_fingerprints (fingerprint_id, file_id, user_id, content_type,
+            await session.execute("""
+                INSERT INTO content_fingerprints (fingerprint_id, file_id, user_id, content_type,
                                                 fingerprint_data, confidence_score, analysis_level,
                                                 processing_time, created_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -286,7 +293,8 @@ async def search_similar_content(
     request: SimilaritySearchRequest,
     user: dict = Depends(get_current_user)
 ):
-    """Search for similar content using fingerprint data"""    try:
+    """Search for similar content using fingerprint data"""
+    try:
         # Search in vector database
         matches = await vector_engine.find_similar(
             request.fingerprint_data,
@@ -299,7 +307,8 @@ async def search_similar_content(
         enriched_matches = []
         async with database_manager.get_postgres_session() as session:
             for match in matches:
-                result = await session.execute("""                    SELECT cf.fingerprint_id, cf.file_id, cf.confidence_score, cf.created_at,
+                result = await session.execute("""
+                    SELECT cf.fingerprint_id, cf.file_id, cf.confidence_score, cf.created_at,
                            uf.original_filename, uf.user_id
                     FROM content_fingerprints cf
                     JOIN uploaded_files uf ON cf.file_id = uf.file_id
@@ -335,13 +344,15 @@ async def batch_fingerprint(
     request: BatchFingerprintRequest,
     user: dict = Depends(get_current_user)
 ):
-    """Create fingerprints for multiple files in batch"""    try:
+    """Create fingerprints for multiple files in batch"""
+    try:
         batch_id = str(uuid.uuid4())
         
         # Validate all files exist and belong to user
         async with database_manager.get_postgres_session() as session:
             for file_id in request.file_ids:
-                result = await session.execute("""                    SELECT COUNT(*) FROM uploaded_files 
+                result = await session.execute("""
+                    SELECT COUNT(*) FROM uploaded_files 
                     WHERE file_id = %s AND user_id = %s
                 """, (file_id, user['user_id']))
                 
@@ -365,7 +376,8 @@ async def batch_fingerprint(
         
         # Store batch job in database
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                INSERT INTO batch_fingerprint_jobs (batch_id, user_id, file_count, 
+            await session.execute("""
+                INSERT INTO batch_fingerprint_jobs (batch_id, user_id, file_count, 
                                                   status, priority, created_at)
                 VALUES (%s, %s, %s, %s, %s, %s)
             """, (
@@ -400,9 +412,11 @@ async def get_fingerprint_status(
     fingerprint_id: str,
     user: dict = Depends(get_current_user)
 ):
-    """Get fingerprint processing status"""    try:
+    """Get fingerprint processing status"""
+    try:
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT cf.fingerprint_id, 'completed' as status, 1.0 as progress,
+            result = await session.execute("""
+                SELECT cf.fingerprint_id, 'completed' as status, 1.0 as progress,
                        cf.created_at, NULL as error_message
                 FROM content_fingerprints cf
                 JOIN uploaded_files uf ON cf.file_id = uf.file_id
@@ -437,10 +451,12 @@ async def delete_fingerprint(
     fingerprint_id: str,
     user: dict = Depends(get_current_user)
 ):
-    """Delete a fingerprint"""    try:
+    """Delete a fingerprint"""
+    try:
         async with database_manager.get_postgres_session() as session:
             # Verify ownership
-            result = await session.execute("""                SELECT cf.fingerprint_id
+            result = await session.execute("""
+                SELECT cf.fingerprint_id
                 FROM content_fingerprints cf
                 JOIN uploaded_files uf ON cf.file_id = uf.file_id
                 WHERE cf.fingerprint_id = %s AND uf.user_id = %s
@@ -453,7 +469,8 @@ async def delete_fingerprint(
                 )
             
             # Delete from database
-            await session.execute("""                DELETE FROM content_fingerprints WHERE fingerprint_id = %s
+            await session.execute("""
+                DELETE FROM content_fingerprints WHERE fingerprint_id = %s
             """, (fingerprint_id,))
             await session.commit()
         
@@ -473,13 +490,15 @@ async def delete_fingerprint(
 
 
 async def _process_batch_fingerprints(batch_id: str, tasks: List[FingerprintRequest], user: dict):
-    """Background task to process batch fingerprints"""    try:
+    """Background task to process batch fingerprints"""
+    try:
         completed = 0
         total = len(tasks)
         
         # Update batch status to processing
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                UPDATE batch_fingerprint_jobs 
+            await session.execute("""
+                UPDATE batch_fingerprint_jobs 
                 SET status = 'processing', started_at = %s
                 WHERE batch_id = %s
             """, (datetime.utcnow(), batch_id))
@@ -494,7 +513,8 @@ async def _process_batch_fingerprints(batch_id: str, tasks: List[FingerprintRequ
                 # Update progress
                 progress = completed / total
                 async with database_manager.get_postgres_session() as session:
-                    await session.execute("""                        UPDATE batch_fingerprint_jobs 
+                    await session.execute("""
+                        UPDATE batch_fingerprint_jobs 
                         SET progress = %s WHERE batch_id = %s
                     """, (progress, batch_id))
                     await session.commit()
@@ -504,7 +524,8 @@ async def _process_batch_fingerprints(batch_id: str, tasks: List[FingerprintRequ
         
         # Mark batch as completed
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                UPDATE batch_fingerprint_jobs 
+            await session.execute("""
+                UPDATE batch_fingerprint_jobs 
                 SET status = 'completed', completed_at = %s, progress = 1.0
                 WHERE batch_id = %s
             """, (datetime.utcnow(), batch_id))
@@ -517,7 +538,8 @@ async def _process_batch_fingerprints(batch_id: str, tasks: List[FingerprintRequ
         
         # Mark batch as failed
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                UPDATE batch_fingerprint_jobs 
+            await session.execute("""
+                UPDATE batch_fingerprint_jobs 
                 SET status = 'failed', error_message = %s
                 WHERE batch_id = %s
             """, (str(e), batch_id))

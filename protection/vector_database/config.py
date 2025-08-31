@@ -15,7 +15,8 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 des droits d'auteur passible de poursuites judiciaires.
 
 Contact: mlaiel@live.de
-"""from typing import Dict, Any
+"""
+from typing import Dict, Any
 from pathlib import Path
 
 # Default configuration for development environment
@@ -440,14 +441,16 @@ TESTING_CONFIG: Dict[str, Any] = {
 
 
 def get_config(environment: str = 'development') -> Dict[str, Any]:
-    """    Get configuration for specified environment.
+    """
+    Get configuration for specified environment.
     
     Args:
         environment: Environment name (development, production, enterprise, testing)
         
     Returns:
         Configuration dictionary for the specified environment
-    """    configs = {
+    """
+    configs = {
         'development': DEVELOPMENT_CONFIG,
         'production': PRODUCTION_CONFIG,
         'enterprise': ENTERPRISE_CONFIG,
@@ -464,7 +467,8 @@ def create_custom_config(
     base_environment: str = 'development',
     overrides: Dict[str, Any] = None
 ) -> Dict[str, Any]:
-    """    Create custom configuration by overriding base environment settings.
+    """
+    Create custom configuration by overriding base environment settings.
     
     Args:
         base_environment: Base environment to start with
@@ -472,7 +476,8 @@ def create_custom_config(
         
     Returns:
         Custom configuration dictionary
-    """    config = get_config(base_environment)
+    """
+    config = get_config(base_environment)
     
     if overrides:
         def deep_update(base_dict, update_dict):
@@ -488,7 +493,8 @@ def create_custom_config(
 
 
 def validate_config(config: Dict[str, Any]) -> bool:
-    """    Validate configuration dictionary for required settings.
+    """
+    Validate configuration dictionary for required settings.
     
     Args:
         config: Configuration dictionary to validate
@@ -498,7 +504,8 @@ def validate_config(config: Dict[str, Any]) -> bool:
         
     Raises:
         ValueError: If configuration is invalid
-    """    required_sections = ['embeddings', 'vector_store', 'search']
+    """
+    required_sections = ['embeddings', 'vector_store', 'search']
     
     for section in required_sections:
         if section not in config:

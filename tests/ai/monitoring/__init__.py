@@ -4,7 +4,7 @@ Enterprise-grade test suite for comprehensive monitoring system in IA Influencer
 Provides full coverage testing for AI performance monitoring, business metrics, and system health.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use of this code without explicit written permission
@@ -23,9 +23,13 @@ Team Specialties:
 - ✅ IA Prompt Engineer
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
-"""import asyncio
+"""
+
+import asyncio
+
 import pytest
 import logging
+
 from typing import Any, Dict, List, Optional
 
 # Test configuration
@@ -38,7 +42,7 @@ from .utils import *
 
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 __all__ = [
     "logger",

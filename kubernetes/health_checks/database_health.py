@@ -16,7 +16,8 @@ Copyright: IA Influencer Agent Platform - All Rights Reserved
 WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
-"""import asyncio
+"""
+import asyncio
 import time
 import json
 from datetime import datetime, timedelta
@@ -35,7 +36,8 @@ from .core_health import HealthStatus, HealthCheckResult
 
 @dataclass
 class DatabaseMetrics:
-    """Database performance metrics"""    active_connections: int
+    """Database performance metrics"""
+    active_connections: int
     max_connections: int
     connection_usage_percent: float
     avg_query_time_ms: float
@@ -48,7 +50,8 @@ class DatabaseMetrics:
 
 @dataclass
 class RedisMetrics:
-    """Redis performance metrics"""    connected_clients: int
+    """Redis performance metrics"""
+    connected_clients: int
     used_memory_mb: float
     used_memory_percent: float
     cache_hit_ratio: float
@@ -60,16 +63,20 @@ class RedisMetrics:
 
 
 class DatabaseHealthChecker:
-    """    Comprehensive database health monitoring service
+    """
+    Comprehensive database health monitoring service
     
     Monitors all database systems including PostgreSQL, Redis, MongoDB,
     and vector databases with performance metrics and alerting.
-    """    def __init__(self, config: Dict[str, Any]):
-        """        Initialize database health checker
+    """
+    def __init__(self, config: Dict[str, Any]):
+        """
+        Initialize database health checker
         
         Args:
             config: Database configuration dictionary
-        """        self.config = config
+        """
+        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Database configurations
@@ -89,7 +96,8 @@ class DatabaseHealthChecker:
         self._mongodb_client = None
 
     async def _get_postgres_pool(self):
-        """Get or create PostgreSQL connection pool"""        if self._postgres_pool is None:
+        """Get or create PostgreSQL connection pool"""
+        if self._postgres_pool is None:
             try:
                 self._postgres_pool = await asyncpg.create_pool(
                     host=self.postgres_config.get("host"),
@@ -106,7 +114,8 @@ class DatabaseHealthChecker:
         return self._postgres_pool
 
     async def _get_redis_client(self):
-        """Get or create Redis client"""        if self._redis_client is None:
+        """Get or create Redis client"""
+        if self._redis_client is None:
             try:
                 self._redis_client = await aioredis.from_url(
                     f"redis://{self.redis_config.get('host')}:{self.redis_config.get('port', 6379)}",
@@ -119,7 +128,8 @@ class DatabaseHealthChecker:
         return self._redis_client
 
     async def _get_mongodb_client(self):
-        """Get or create MongoDB client"""        if self._mongodb_client is None:
+        """Get or create MongoDB client"""
+        if self._mongodb_client is None:
             try:
                 connection_string = (
                     f"mongodb://{self.mongodb_config.get('username')}:"
@@ -135,11 +145,13 @@ class DatabaseHealthChecker:
         return self._mongodb_client
 
     async def check_postgresql_health(self) -> HealthCheckResult:
-        """        Check PostgreSQL database health and performance
+        """
+        Check PostgreSQL database health and performance
         
         Returns:
             HealthCheckResult: PostgreSQL health status and metrics
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             pool = await self._get_postgres_pool()
@@ -149,13 +161,15 @@ class DatabaseHealthChecker:
                 await connection.execute("SELECT 1")
                 
                 # Get database metrics
-                stats_query = """                SELECT 
+                stats_query = """
+                SELECT 
                     (SELECT setting::int FROM pg_settings WHERE name = 'max_connections') as max_connections,
                     (SELECT count(*) FROM pg_stat_activity WHERE state = 'active') as active_connections,
                     (SELECT pg_database_size(current_database())) as database_size,
                     (SELECT sum(blks_hit)::float / (sum(blks_hit) + sum(blks_read)) * 100 
                      FROM pg_stat_database WHERE datname = current_database()) as cache_hit_ratio
-                """                
+                """
+                
                 result = await connection.fetchrow(stats_query)
                 
                 # Get slow queries count
@@ -230,11 +244,13 @@ class DatabaseHealthChecker:
             )
 
     async def check_redis_health(self) -> HealthCheckResult:
-        """        Check Redis cache health and performance
+        """
+        Check Redis cache health and performance
         
         Returns:
             HealthCheckResult: Redis health status and metrics
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             redis_client = await self._get_redis_client()
@@ -320,11 +336,13 @@ class DatabaseHealthChecker:
             )
 
     async def check_mongodb_health(self) -> HealthCheckResult:
-        """        Check MongoDB document database health
+        """
+        Check MongoDB document database health
         
         Returns:
             HealthCheckResult: MongoDB health status and metrics
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             client = await self._get_mongodb_client()
@@ -416,11 +434,13 @@ class DatabaseHealthChecker:
             )
 
     async def check_elasticsearch_health(self) -> HealthCheckResult:
-        """        Check Elasticsearch vector database health
+        """
+        Check Elasticsearch vector database health
         
         Returns:
             HealthCheckResult: Elasticsearch health status and metrics
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             import aiohttp
@@ -515,11 +535,13 @@ class DatabaseHealthChecker:
             )
 
     async def perform_comprehensive_check(self) -> List[HealthCheckResult]:
-        """        Perform all database health checks concurrently
+        """
+        Perform all database health checks concurrently
         
         Returns:
             List[HealthCheckResult]: All database health check results
-        """        checks = await asyncio.gather(
+        """
+        checks = await asyncio.gather(
             self.check_postgresql_health(),
             self.check_redis_health(),
             self.check_mongodb_health(),
@@ -545,11 +567,13 @@ class DatabaseHealthChecker:
         return results
 
     async def get_database_health_summary(self) -> Dict[str, Any]:
-        """        Get comprehensive database health summary
+        """
+        Get comprehensive database health summary
         
         Returns:
             Dict[str, Any]: Database health summary with overall status
-        """        results = await self.perform_comprehensive_check()
+        """
+        results = await self.perform_comprehensive_check()
         
         # Calculate overall database health
         status_weights = {
@@ -578,7 +602,8 @@ class DatabaseHealthChecker:
         }
 
     async def cleanup_connections(self):
-        """Clean up database connections"""        try:
+        """Clean up database connections"""
+        try:
             if self._postgres_pool:
                 await self._postgres_pool.close()
                 self._postgres_pool = None

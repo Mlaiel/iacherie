@@ -16,7 +16,8 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICT
 and will result in immediate legal action under German and International copyright laws.
 
 Contact: mlaiel@live.de for licensing inquiries only.
-"""import logging
+"""
+import logging
 import json
 from datetime import datetime
 from typing import Dict, Any, Optional, List
@@ -28,7 +29,8 @@ from pythonjsonlogger import jsonlogger
 
 
 class PlatformType(str, Enum):
-    """Supported platform types for integration"""    # Music Platforms
+    """Supported platform types for integration"""
+    # Music Platforms
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE_MUSIC = "youtube_music"
@@ -76,7 +78,8 @@ class PlatformType(str, Enum):
 
 
 class IntegrationType(str, Enum):
-    """Types of platform integrations"""    API_INTEGRATION = "api_integration"
+    """Types of platform integrations"""
+    API_INTEGRATION = "api_integration"
     WEBHOOK_INTEGRATION = "webhook_integration"
     OAUTH_INTEGRATION = "oauth_integration"
     RSS_FEED = "rss_feed"
@@ -88,7 +91,8 @@ class IntegrationType(str, Enum):
 
 
 class APIOperationType(str, Enum):
-    """API operation types"""    CONTENT_UPLOAD = "content_upload"
+    """API operation types"""
+    CONTENT_UPLOAD = "content_upload"
     CONTENT_UPDATE = "content_update"
     CONTENT_DELETE = "content_delete"
     METADATA_FETCH = "metadata_fetch"
@@ -102,7 +106,8 @@ class APIOperationType(str, Enum):
 
 @dataclass
 class PlatformIntegrationLogConfig:
-    """Configuration for platform integration logging"""    enable_api_call_logging: bool = True
+    """Configuration for platform integration logging"""
+    enable_api_call_logging: bool = True
     enable_webhook_logging: bool = True
     enable_sync_logging: bool = True
     enable_error_tracking: bool = True
@@ -135,13 +140,15 @@ class PlatformIntegrationLogConfig:
 
 
 class PlatformIntegrationLogger:
-    """Specialized logger for platform integration operations"""    
+    """Specialized logger for platform integration operations"""
+    
     def __init__(self, config: PlatformIntegrationLogConfig):
         self.config = config
         self.logger = self._setup_logger()
         
     def _setup_logger(self) -> structlog.BoundLogger:
-        """Setup structured logger for platform integrations"""        processors = [
+        """Setup structured logger for platform integrations"""
+        processors = [
             structlog.threadlocal.merge_threadlocal_context,
             structlog.processors.TimeStamper(fmt="iso"),
             structlog.processors.add_log_level,
@@ -167,7 +174,8 @@ class PlatformIntegrationLogger:
         return structlog.get_logger("ia_influencer_platform_integration")
     
     def _mask_sensitive_credentials(self, logger, method_name, event_dict):
-        """Mask sensitive credentials in platform logs"""        sensitive_fields = ['api_key', 'access_token', 'refresh_token', 'client_secret', 'password']
+        """Mask sensitive credentials in platform logs"""
+        sensitive_fields = ['api_key', 'access_token', 'refresh_token', 'client_secret', 'password']
         for field in sensitive_fields:
             if field in event_dict:
                 event_dict[field] = "[MASKED]"
@@ -186,7 +194,8 @@ class PlatformIntegrationLogger:
         rate_limit_remaining: Optional[int] = None,
         error_details: Optional[str] = None
     ) -> None:
-        """Log API calls to external platforms"""        if not self.config.enable_api_call_logging:
+        """Log API calls to external platforms"""
+        if not self.config.enable_api_call_logging:
             return
             
         log_data = {
@@ -232,7 +241,8 @@ class PlatformIntegrationLogger:
         platform_content_id: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Log content uploads to platforms"""        log_data = {
+        """Log content uploads to platforms"""
+        log_data = {
             "event_type": "platform_content_upload",
             "platform": platform.value,
             "content_id": content_id,
@@ -261,7 +271,8 @@ class PlatformIntegrationLogger:
         records_synced: int,
         sync_status: str
     ) -> None:
-        """Log analytics data synchronization"""        log_data = {
+        """Log analytics data synchronization"""
+        log_data = {
             "event_type": "platform_analytics_sync",
             "platform": platform.value,
             "content_count": len(content_ids),
@@ -292,7 +303,8 @@ class PlatformIntegrationLogger:
         event_data: Dict[str, Any],
         processing_status: str
     ) -> None:
-        """Log webhook events from platforms"""        if not self.config.enable_webhook_logging:
+        """Log webhook events from platforms"""
+        if not self.config.enable_webhook_logging:
             return
             
         log_data = {
@@ -326,7 +338,8 @@ class PlatformIntegrationLogger:
         token_expiry: Optional[datetime] = None,
         scopes_granted: Optional[List[str]] = None
     ) -> None:
-        """Log authentication events with platforms"""        if not self.config.enable_authentication_logging:
+        """Log authentication events with platforms"""
+        if not self.config.enable_authentication_logging:
             return
             
         log_data = {
@@ -363,7 +376,8 @@ class PlatformIntegrationLogger:
         reset_time: datetime,
         backoff_strategy: str
     ) -> None:
-        """Log rate limiting events"""        if not self.config.enable_rate_limit_monitoring:
+        """Log rate limiting events"""
+        if not self.config.enable_rate_limit_monitoring:
             return
             
         log_data = {
@@ -399,7 +413,8 @@ class PlatformIntegrationLogger:
         conflicts_resolved: int,
         sync_status: str
     ) -> None:
-        """Log multi-platform synchronization operations"""        if not self.config.enable_sync_logging:
+        """Log multi-platform synchronization operations"""
+        if not self.config.enable_sync_logging:
             return
             
         log_data = {
@@ -430,7 +445,8 @@ class PlatformIntegrationLogger:
         projected_usage: float,
         overage_risk: bool
     ) -> None:
-        """Log quota and usage monitoring"""        if not self.config.enable_quota_monitoring:
+        """Log quota and usage monitoring"""
+        if not self.config.enable_quota_monitoring:
             return
             
         log_data = {
@@ -455,7 +471,8 @@ class PlatformIntegrationLogger:
         getattr(self.logger, level)("Platform quota monitoring", **log_data)
     
     def get_platform_integration_metrics(self) -> Dict[str, Any]:
-        """Get platform integration system metrics"""        return {
+        """Get platform integration system metrics"""
+        return {
             "api_call_logging": self.config.enable_api_call_logging,
             "webhook_logging": self.config.enable_webhook_logging,
             "sync_logging": self.config.enable_sync_logging,
@@ -471,14 +488,17 @@ class PlatformIntegrationLogger:
 
 
 class PlatformIntegrationLoggingConfig:
-    """Main configuration class for platform integration logging"""    
+    """Main configuration class for platform integration logging"""
+    
     @staticmethod
     def create_default_config() -> PlatformIntegrationLogConfig:
-        """Create default platform integration logging configuration"""        return PlatformIntegrationLogConfig()
+        """Create default platform integration logging configuration"""
+        return PlatformIntegrationLogConfig()
     
     @staticmethod
     def create_enterprise_config() -> PlatformIntegrationLogConfig:
-        """Create enterprise platform integration logging configuration"""        return PlatformIntegrationLogConfig(
+        """Create enterprise platform integration logging configuration"""
+        return PlatformIntegrationLogConfig(
             enable_api_call_logging=True,
             enable_webhook_logging=True,
             enable_sync_logging=True,

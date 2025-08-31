@@ -11,7 +11,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass
@@ -41,7 +42,8 @@ logger = logging.getLogger(__name__)
 
 
 class ScalingStrategy(Enum):
-    """Auto-scaling strategies"""    REACTIVE = "reactive"
+    """Auto-scaling strategies"""
+    REACTIVE = "reactive"
     PREDICTIVE = "predictive"
     HYBRID = "hybrid"
     AI_OPTIMIZED = "ai_optimized"
@@ -52,7 +54,8 @@ class ScalingStrategy(Enum):
 
 
 class ResourceType(Enum):
-    """Resource types for scaling"""    CPU = "cpu"
+    """Resource types for scaling"""
+    CPU = "cpu"
     MEMORY = "memory"
     GPU = "gpu"
     STORAGE = "storage"
@@ -63,7 +66,8 @@ class ResourceType(Enum):
 
 
 class WorkloadType(Enum):
-    """AI workload types"""    TRAINING = "training"
+    """AI workload types"""
+    TRAINING = "training"
     INFERENCE = "inference"
     BATCH_PROCESSING = "batch_processing"
     STREAMING = "streaming"
@@ -76,7 +80,8 @@ class WorkloadType(Enum):
 
 
 class ScalingDirection(Enum):
-    """Scaling directions"""    SCALE_UP = "scale_up"
+    """Scaling directions"""
+    SCALE_UP = "scale_up"
     SCALE_DOWN = "scale_down"
     SCALE_OUT = "scale_out"
     SCALE_IN = "scale_in"
@@ -84,7 +89,8 @@ class ScalingDirection(Enum):
 
 
 class PriorityLevel(Enum):
-    """Workload priority levels"""    CRITICAL = "critical"
+    """Workload priority levels"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -93,7 +99,8 @@ class PriorityLevel(Enum):
 
 @dataclass
 class AutoScalingConfig:
-    """Auto-scaling configuration"""    manager_name: str = "ia-auto-scaling-manager"
+    """Auto-scaling configuration"""
+    manager_name: str = "ia-auto-scaling-manager"
     scaling_strategy: ScalingStrategy = ScalingStrategy.AI_OPTIMIZED
     supported_resource_types: List[ResourceType] = None
     supported_workload_types: List[WorkloadType] = None
@@ -152,7 +159,8 @@ class AutoScalingConfig:
 
 
 class AutoScalingManager:
-    """    Enterprise intelligent auto-scaling manager for AI workloads
+    """
+    Enterprise intelligent auto-scaling manager for AI workloads
     
     Provides advanced auto-scaling capabilities with:
     - Predictive scaling using machine learning models
@@ -167,13 +175,16 @@ class AutoScalingManager:
     - Custom metrics-based scaling
     - Multi-cloud resource management
     - Cooling and energy cost optimization
-    """    
+    """
+    
     def __init__(self, namespace: str = "ia-auto-scaling"):
-        """        Initialize auto-scaling manager
+        """
+        Initialize auto-scaling manager
         
         Args:
             namespace: Kubernetes namespace for auto-scaling infrastructure
-        """        self.namespace = namespace
+        """
+        self.namespace = namespace
         self.config = AutoScalingConfig()
         self.scaling_models = {}
         self.workload_profiles = {}
@@ -191,7 +202,8 @@ class AutoScalingManager:
         self._initialize_scaling_models()
     
     def _initialize_clients(self) -> None:
-        """Initialize Kubernetes, Docker, and monitoring clients"""        try:
+        """Initialize Kubernetes, Docker, and monitoring clients"""
+        try:
             # Kubernetes clients
             config.load_incluster_config()
             self.k8s_apps_v1 = client.AppsV1Api()
@@ -231,7 +243,8 @@ class AutoScalingManager:
             raise
     
     def _initialize_scaling_models(self) -> None:
-        """Initialize ML models for predictive scaling"""        try:
+        """Initialize ML models for predictive scaling"""
+        try:
             # CPU utilization prediction model
             self.cpu_predictor = RandomForestRegressor(
                 n_estimators=100,
@@ -282,7 +295,8 @@ class AutoScalingManager:
             logger.warning(f"Some scaling models failed to initialize: {e}")
     
     def _initialize_deep_scaling_model(self) -> None:
-        """Initialize deep learning model for complex scaling patterns"""        try:
+        """Initialize deep learning model for complex scaling patterns"""
+        try:
             class DeepScalingModel(nn.Module):
                 def __init__(self, input_dim=50, hidden_dim=128):
                     super().__init__()
@@ -314,11 +328,13 @@ class AutoScalingManager:
             self.deep_scaling_model = None
     
     async def deploy_auto_scaling_infrastructure(self) -> Dict[str, Any]:
-        """        Deploy complete auto-scaling infrastructure
+        """
+        Deploy complete auto-scaling infrastructure
         
         Returns:
             Infrastructure deployment summary
-        """        try:
+        """
+        try:
             self.status = "deploying_infrastructure"
             logger.info("Deploying auto-scaling infrastructure")
             
@@ -424,14 +440,16 @@ class AutoScalingManager:
             raise
     
     async def analyze_scaling_requirements(self, analysis_request: Dict[str, Any]) -> Dict[str, Any]:
-        """        Analyze current workloads and provide scaling recommendations
+        """
+        Analyze current workloads and provide scaling recommendations
         
         Args:
             analysis_request: Scaling analysis request
             
         Returns:
             Detailed scaling analysis and recommendations
-        """        try:
+        """
+        try:
             workload_name = analysis_request.get("workload_name")
             workload_type = WorkloadType(analysis_request.get("workload_type", "inference"))
             time_horizon = analysis_request.get("time_horizon_hours", 24)
@@ -531,14 +549,16 @@ class AutoScalingManager:
             raise
     
     async def execute_auto_scaling(self, scaling_request: Dict[str, Any]) -> Dict[str, Any]:
-        """        Execute intelligent auto-scaling based on current conditions
+        """
+        Execute intelligent auto-scaling based on current conditions
         
         Args:
             scaling_request: Auto-scaling execution request
             
         Returns:
             Scaling execution results and status
-        """        try:
+        """
+        try:
             workload_name = scaling_request.get("workload_name")
             scaling_strategy = ScalingStrategy(scaling_request.get("strategy", self.config.scaling_strategy.value))
             force_scaling = scaling_request.get("force_scaling", False)
@@ -639,7 +659,8 @@ class AutoScalingManager:
             raise
     
     async def _deploy_scaling_controller(self) -> Dict[str, Any]:
-        """Deploy intelligent scaling controller"""        scaling_controller = {
+        """Deploy intelligent scaling controller"""
+        scaling_controller = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -731,7 +752,8 @@ class AutoScalingManager:
         }
     
     async def _deploy_horizontal_pod_autoscalers(self) -> Dict[str, Any]:
-        """Deploy HPA configurations for AI workloads"""        hpa_configs = []
+        """Deploy HPA configurations for AI workloads"""
+        hpa_configs = []
         
         # HPA for inference workloads
         inference_hpa = {
@@ -846,7 +868,8 @@ class AutoScalingManager:
     async def _generate_resource_predictions(self, current_metrics: Dict[str, Any], 
                                            historical_analysis: Dict[str, Any], 
                                            time_horizon: int) -> Dict[str, Any]:
-        """Generate resource utilization predictions"""        try:
+        """Generate resource utilization predictions"""
+        try:
             predictions = {}
             
             # CPU prediction
@@ -903,7 +926,8 @@ class AutoScalingManager:
             return {}
     
     async def get_auto_scaling_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive auto-scaling metrics"""        try:
+        """Get comprehensive auto-scaling metrics"""
+        try:
             total_workloads = len(self.workload_profiles)
             active_scaling_policies = len([w for w in self.workload_profiles.values() if w.get("scaling_enabled", False)])
             
@@ -947,7 +971,8 @@ class AutoScalingManager:
             return {"error": str(e)}
     
     async def _ensure_auto_scaling_namespace(self) -> None:
-        """Create auto-scaling namespace"""        try:
+        """Create auto-scaling namespace"""
+        try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
             if e.status == 404:
@@ -966,7 +991,8 @@ class AutoScalingManager:
                 logger.info(f"Created auto-scaling namespace: {self.namespace}")
     
     async def _configure_auto_scaling_networking(self) -> None:
-        """Configure networking for auto-scaling infrastructure"""        # Network policy for secure communication
+        """Configure networking for auto-scaling infrastructure"""
+        # Network policy for secure communication
         network_policy = {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "NetworkPolicy",
@@ -1003,7 +1029,8 @@ class AutoScalingManager:
         logger.info("Configured auto-scaling networking policies")
     
     async def _configure_auto_scaling_rbac(self) -> None:
-        """Configure RBAC for auto-scaling operations"""        # ClusterRole for auto-scaling controller
+        """Configure RBAC for auto-scaling operations"""
+        # ClusterRole for auto-scaling controller
         cluster_role = {
             "apiVersion": "rbac.authorization.k8s.io/v1",
             "kind": "ClusterRole",
@@ -1044,7 +1071,8 @@ class AutoScalingManager:
         logger.info("Configured auto-scaling RBAC permissions")
     
     async def _validate_auto_scaling_infrastructure(self) -> bool:
-        """Validate auto-scaling infrastructure deployment"""        try:
+        """Validate auto-scaling infrastructure deployment"""
+        try:
             # Check essential services
             essential_services = [
                 "auto-scaling-controller"
@@ -1079,7 +1107,8 @@ class AutoScalingManager:
             return False
     
     async def _cleanup_failed_infrastructure(self) -> None:
-        """Clean up failed auto-scaling infrastructure"""        try:
+        """Clean up failed auto-scaling infrastructure"""
+        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             logger.info("Cleaned up failed auto-scaling infrastructure")
@@ -1087,7 +1116,8 @@ class AutoScalingManager:
             logger.error(f"Auto-scaling infrastructure cleanup failed: {e}")
     
     async def cleanup(self) -> None:
-        """Clean up entire auto-scaling infrastructure"""        try:
+        """Clean up entire auto-scaling infrastructure"""
+        try:
             # Stop monitoring
             self._monitoring_active = False
             

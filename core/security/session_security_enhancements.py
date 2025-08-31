@@ -10,7 +10,8 @@ Features:
 - Concurrent session management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""import hashlib
+"""
+import hashlib
 import hmac
 import secrets
 import json
@@ -28,14 +29,16 @@ from backend.core.logging import SecurityLogger
 
 
 class SessionSecurityLevel(Enum):
-    """Session security levels"""    LOW = "low"
+    """Session security levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class SessionStatus(Enum):
-    """Session status values"""    ACTIVE = "active"
+    """Session status values"""
+    ACTIVE = "active"
     EXPIRED = "expired"
     REVOKED = "revoked"
     SUSPICIOUS = "suspicious"
@@ -44,7 +47,8 @@ class SessionStatus(Enum):
 
 @dataclass
 class SessionFingerprint:
-    """Session fingerprint for security validation"""    user_agent: str
+    """Session fingerprint for security validation"""
+    user_agent: str
     ip_address: str
     screen_resolution: Optional[str] = None
     timezone: Optional[str] = None
@@ -58,7 +62,8 @@ class SessionFingerprint:
         self.fingerprint_hash = self._generate_fingerprint_hash()
     
     def _generate_fingerprint_hash(self) -> str:
-        """Generate unique fingerprint hash"""        fingerprint_data = {
+        """Generate unique fingerprint hash"""
+        fingerprint_data = {
             "user_agent": self.user_agent,
             "ip_address": self.ip_address,
             "screen_resolution": self.screen_resolution,
@@ -76,7 +81,8 @@ class SessionFingerprint:
 
 @dataclass
 class SecureSession:
-    """Secure session with enhanced security features"""    session_id: str
+    """Secure session with enhanced security features"""
+    session_id: str
     user_id: str
     fingerprint: SessionFingerprint
     security_level: SessionSecurityLevel
@@ -91,7 +97,8 @@ class SecureSession:
 
 
 class SessionSecurityManager:
-    """Enhanced session security management"""    
+    """Enhanced session security management"""
+    
     def __init__(self):
         self.logger = SecurityLogger("SessionSecurityManager")
         self.cache = CacheManager()
@@ -113,7 +120,8 @@ class SessionSecurityManager:
         fingerprint: SessionFingerprint,
         security_level: SessionSecurityLevel = SessionSecurityLevel.MEDIUM
     ) -> SecureSession:
-        """Create new secure session with enhanced validation"""        try:
+        """Create new secure session with enhanced validation"""
+        try:
             # Generate secure session ID
             session_id = self._generate_secure_session_id()
             
@@ -153,7 +161,8 @@ class SessionSecurityManager:
         session_id: str,
         current_fingerprint: SessionFingerprint
     ) -> Tuple[bool, Optional[SecureSession]]:
-        """Validate session with advanced security checks"""        try:
+        """Validate session with advanced security checks"""
+        try:
             # Retrieve session
             session = await self._get_session(session_id)
             if not session:
@@ -194,7 +203,8 @@ class SessionSecurityManager:
             return False, None
     
     async def rotate_session(self, session_id: str) -> Optional[SecureSession]:
-        """Rotate session with new ID for security"""        try:
+        """Rotate session with new ID for security"""
+        try:
             # Get current session
             old_session = await self._get_session(session_id)
             if not old_session:
@@ -223,7 +233,8 @@ class SessionSecurityManager:
             return None
     
     async def revoke_session(self, session_id: str, reason: str = "manual_revocation"):
-        """Revoke session"""        try:
+        """Revoke session"""
+        try:
             session = await self._get_session(session_id)
             if session:
                 session.status = SessionStatus.REVOKED
@@ -242,7 +253,8 @@ class SessionSecurityManager:
             self.logger.error(f"Session revocation failed: {str(e)}")
     
     async def revoke_all_user_sessions(self, user_id: str, except_session: Optional[str] = None):
-        """Revoke all sessions for a user"""        try:
+        """Revoke all sessions for a user"""
+        try:
             user_sessions = await self._get_user_sessions(user_id)
             
             for session in user_sessions:
@@ -257,7 +269,8 @@ class SessionSecurityManager:
             self.logger.error(f"Failed to revoke all user sessions: {str(e)}")
     
     def _generate_secure_session_id(self) -> str:
-        """Generate cryptographically secure session ID"""        # Generate 256-bit random token
+        """Generate cryptographically secure session ID"""
+        # Generate 256-bit random token
         random_bytes = secrets.token_bytes(32)
         
         # Add timestamp for uniqueness
@@ -272,7 +285,8 @@ class SessionSecurityManager:
         return secrets.token_urlsafe(len(session_data))[:48]  # Truncate to reasonable length
     
     async def _enforce_concurrent_session_limit(self, user_id: str):
-        """Enforce maximum concurrent sessions per user"""        try:
+        """Enforce maximum concurrent sessions per user"""
+        try:
             user_sessions = await self._get_active_user_sessions(user_id)
             
             if len(user_sessions) >= self.max_concurrent_sessions:
@@ -286,7 +300,8 @@ class SessionSecurityManager:
             self.logger.error(f"Failed to enforce concurrent session limit: {str(e)}")
     
     async def _perform_initial_security_checks(self, session: SecureSession):
-        """Perform initial security checks on new session"""        try:
+        """Perform initial security checks on new session"""
+        try:
             # Check for suspicious IP
             if await self._is_suspicious_ip(session.fingerprint.ip_address):
                 session.suspicious_activity_count += 1
@@ -311,7 +326,8 @@ class SessionSecurityManager:
         session: SecureSession,
         current_fingerprint: SessionFingerprint
     ) -> bool:
-        """Validate session fingerprint for consistency"""        try:
+        """Validate session fingerprint for consistency"""
+        try:
             original_fingerprint = session.fingerprint
             
             # Calculate fingerprint similarity
@@ -347,7 +363,8 @@ class SessionSecurityManager:
         fp1: SessionFingerprint,
         fp2: SessionFingerprint
     ) -> float:
-        """Calculate similarity between two fingerprints"""        components = [
+        """Calculate similarity between two fingerprints"""
+        components = [
             "user_agent", "screen_resolution", "timezone",
             "language", "platform", "browser", "device_type"
         ]
@@ -367,7 +384,8 @@ class SessionSecurityManager:
         return matches / total if total > 0 else 0.0
     
     async def _handle_ip_change(self, session: SecureSession, new_ip: str):
-        """Handle IP address change during session"""        try:
+        """Handle IP address change during session"""
+        try:
             # Add to IP history
             if new_ip not in session.ip_history:
                 session.ip_history.append(new_ip)
@@ -391,7 +409,8 @@ class SessionSecurityManager:
         session: SecureSession,
         current_fingerprint: SessionFingerprint
     ) -> bool:
-        """Detect suspicious activity patterns"""        try:
+        """Detect suspicious activity patterns"""
+        try:
             suspicious_indicators = 0
             
             # Check rapid location changes
@@ -417,21 +436,24 @@ class SessionSecurityManager:
             return False
     
     async def _detect_automation_patterns(self, session: SecureSession) -> bool:
-        """Detect automated/bot behavior patterns"""        # Check user agent for bot indicators
+        """Detect automated/bot behavior patterns"""
+        # Check user agent for bot indicators
         user_agent = session.fingerprint.user_agent.lower()
         bot_indicators = ["bot", "crawler", "spider", "scraper", "automated"]
         
         return any(indicator in user_agent for indicator in bot_indicators)
     
     async def _detect_time_anomalies(self, session: SecureSession) -> bool:
-        """Detect time-based anomalies"""        # Check for sessions at unusual hours (basic implementation)
+        """Detect time-based anomalies"""
+        # Check for sessions at unusual hours (basic implementation)
         current_hour = datetime.utcnow().hour
         
         # Flag sessions between 2 AM and 5 AM as potentially suspicious
         return 2 <= current_hour <= 5
     
     async def _handle_suspicious_activity(self, session: SecureSession, reason: str):
-        """Handle detected suspicious activity"""        try:
+        """Handle detected suspicious activity"""
+        try:
             session.status = SessionStatus.SUSPICIOUS
             session.metadata[f"suspicious_reason"] = reason
             session.metadata[f"flagged_at"] = datetime.utcnow().isoformat()
@@ -456,7 +478,8 @@ class SessionSecurityManager:
         session: SecureSession,
         current_fingerprint: SessionFingerprint
     ):
-        """Update session activity and extend expiration"""        try:
+        """Update session activity and extend expiration"""
+        try:
             session.last_activity = datetime.utcnow()
             
             # Extend session expiration
@@ -473,7 +496,8 @@ class SessionSecurityManager:
             self.logger.error(f"Session activity update failed: {str(e)}")
     
     async def _store_session(self, session: SecureSession):
-        """Store session data"""        try:
+        """Store session data"""
+        try:
             # Cache for quick access
             cache_key = f"session:{session.session_id}"
             session_data = self._serialize_session(session)
@@ -501,7 +525,8 @@ class SessionSecurityManager:
             raise
     
     async def _get_session(self, session_id: str) -> Optional[SecureSession]:
-        """Retrieve session data"""        try:
+        """Retrieve session data"""
+        try:
             # Check cache first
             cache_key = f"session:{session_id}"
             cached_data = await self.cache.get(cache_key)
@@ -535,7 +560,8 @@ class SessionSecurityManager:
             return None
     
     async def _get_user_sessions(self, user_id: str) -> List[SecureSession]:
-        """Get all sessions for a user"""        try:
+        """Get all sessions for a user"""
+        try:
             import os
             sessions_file = "/tmp/sessions.json"
             
@@ -558,11 +584,13 @@ class SessionSecurityManager:
             return []
     
     async def _get_active_user_sessions(self, user_id: str) -> List[SecureSession]:
-        """Get active sessions for a user"""        all_sessions = await self._get_user_sessions(user_id)
+        """Get active sessions for a user"""
+        all_sessions = await self._get_user_sessions(user_id)
         return [s for s in all_sessions if s.status == SessionStatus.ACTIVE]
     
     async def _is_suspicious_ip(self, ip_address: str) -> bool:
-        """Check if IP address is suspicious"""        try:
+        """Check if IP address is suspicious"""
+        try:
             # Check if IP is private/local
             ip = ipaddress.ip_address(ip_address)
             if ip.is_private or ip.is_loopback:
@@ -576,12 +604,14 @@ class SessionSecurityManager:
             return True  # Invalid IP is suspicious
     
     async def _get_country_from_ip(self, ip_address: str) -> str:
-        """Get country code from IP address"""        # In production, use GeoIP service
+        """Get country code from IP address"""
+        # In production, use GeoIP service
         # For now, return a mock country
         return "US"
     
     async def _enrich_fingerprint_data(self, session: SecureSession):
-        """Enrich fingerprint data with parsed information"""        try:
+        """Enrich fingerprint data with parsed information"""
+        try:
             ua_string = session.fingerprint.user_agent
             if ua_string:
                 try:
@@ -597,7 +627,8 @@ class SessionSecurityManager:
             self.logger.error(f"Fingerprint enrichment failed: {str(e)}")
     
     async def _mark_session_expired(self, session_id: str):
-        """Mark session as expired"""        try:
+        """Mark session as expired"""
+        try:
             session = await self._get_session(session_id)
             if session:
                 session.status = SessionStatus.EXPIRED
@@ -607,7 +638,8 @@ class SessionSecurityManager:
             self.logger.error(f"Failed to mark session expired: {str(e)}")
     
     def _serialize_session(self, session: SecureSession) -> Dict[str, Any]:
-        """Serialize session for storage"""        return {
+        """Serialize session for storage"""
+        return {
             "session_id": session.session_id,
             "user_id": session.user_id,
             "fingerprint": {
@@ -633,7 +665,8 @@ class SessionSecurityManager:
         }
     
     def _deserialize_session(self, data: Dict[str, Any]) -> SecureSession:
-        """Deserialize session from storage"""        fp_data = data["fingerprint"]
+        """Deserialize session from storage"""
+        fp_data = data["fingerprint"]
         fingerprint = SessionFingerprint(
             user_agent=fp_data["user_agent"],
             ip_address=fp_data["ip_address"],
@@ -669,7 +702,8 @@ async def create_session_fingerprint(
     ip_address: str,
     **kwargs
 ) -> SessionFingerprint:
-    """Create session fingerprint from request data"""    return SessionFingerprint(
+    """Create session fingerprint from request data"""
+    return SessionFingerprint(
         user_agent=user_agent,
         ip_address=ip_address,
         **kwargs
@@ -680,5 +714,6 @@ async def validate_session_security(
     session_id: str,
     fingerprint: SessionFingerprint
 ) -> Tuple[bool, Optional[SecureSession]]:
-    """Validate session security"""    manager = SessionSecurityManager()
+    """Validate session security"""
+    manager = SessionSecurityManager()
     return await manager.validate_session(session_id, fingerprint)

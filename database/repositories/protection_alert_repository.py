@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""from typing import List, Optional, Dict, Any, Union
+"""
+from typing import List, Optional, Dict, Any, Union
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, func, desc, asc
 from datetime import datetime, timedelta
@@ -44,11 +45,14 @@ import logging
 logger = logging.getLogger(__name__)
 
 class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
-    """    Repository for protection alert operations with advanced threat assessment,
+    """
+    Repository for protection alert operations with advanced threat assessment,
     automated response coordination, and comprehensive evidence management.
-    """    
+    """
+    
     def __init__(self, db_session: Session):
-        """Initialize protection alert repository"""        super().__init__(db_session, ProtectionAlert)
+        """Initialize protection alert repository"""
+        super().__init__(db_session, ProtectionAlert)
         
     def create_alert(self,
                     fingerprint_id: int,
@@ -60,7 +64,8 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
                     threat_level: ThreatLevel = ThreatLevel.MEDIUM,
                     evidence_data: Optional[Dict[str, Any]] = None,
                     metadata: Optional[Dict[str, Any]] = None) -> ProtectionAlert:
-        """        Create protection alert with automatic severity assessment
+        """
+        Create protection alert with automatic severity assessment
         
         Args:
             fingerprint_id: Associated fingerprint ID
@@ -75,7 +80,8 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
             
         Returns:
             Created ProtectionAlert instance
-        """        try:
+        """
+        try:
             # Auto-assess severity based on similarity score and threat level
             severity = self._assess_alert_severity(similarity_score, threat_level, platform)
             
@@ -120,7 +126,8 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
                               similarity_score: float,
                               threat_level: ThreatLevel,
                               platform: str) -> AlertSeverity:
-        """        Automatically assess alert severity based on multiple factors
+        """
+        Automatically assess alert severity based on multiple factors
         
         Args:
             similarity_score: Content similarity score
@@ -129,7 +136,8 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
             
         Returns:
             Assessed AlertSeverity
-        """        try:
+        """
+        try:
             # High-impact platforms get higher severity
             high_impact_platforms = ['youtube', 'instagram', 'tiktok', 'spotify']
             platform_multiplier = 1.2 if platform.lower() in high_impact_platforms else 1.0
@@ -162,11 +170,13 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
             return AlertSeverity.MEDIUM
             
     def _trigger_automated_response(self, alert: ProtectionAlert) -> None:
-        """        Trigger automated response actions for high-severity alerts
+        """
+        Trigger automated response actions for high-severity alerts
         
         Args:
             alert: ProtectionAlert instance
-        """        try:
+        """
+        try:
             automated_actions = []
             
             # Critical alerts get immediate DMCA takedown
@@ -207,7 +217,8 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
                              status: Optional[AlertStatus] = None,
                              limit: Optional[int] = None,
                              offset: Optional[int] = None) -> List[ProtectionAlert]:
-        """        Get alerts by fingerprint ID with optional filtering
+        """
+        Get alerts by fingerprint ID with optional filtering
         
         Args:
             fingerprint_id: Fingerprint ID to filter by
@@ -217,7 +228,8 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
             
         Returns:
             List of ProtectionAlert instances
-        """        try:
+        """
+        try:
             query = self.db_session.query(ProtectionAlert).filter(
                 ProtectionAlert.fingerprint_id == fingerprint_id
             )
@@ -252,7 +264,8 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
                       days_back: Optional[int] = 30,
                       limit: Optional[int] = None,
                       offset: Optional[int] = None) -> List[Dict[str, Any]]:
-        """        Get alerts for user with fingerprint details
+        """
+        Get alerts for user with fingerprint details
         
         Args:
             user_id: User ID to filter by
@@ -264,7 +277,8 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
             
         Returns:
             List of alert dictionaries with fingerprint details
-        """        try:
+        """
+        try:
             # Join with ContentFingerprint to get user's alerts
             query = self.db_session.query(
                 ProtectionAlert, ContentFingerprint
@@ -324,7 +338,8 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
                           severity: Optional[AlertSeverity] = None,
                           platform: Optional[str] = None,
                           limit: Optional[int] = None) -> List[ProtectionAlert]:
-        """        Get pending alerts for processing
+        """
+        Get pending alerts for processing
         
         Args:
             severity: Optional severity filter
@@ -333,7 +348,8 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
             
         Returns:
             List of pending ProtectionAlert instances
-        """        try:
+        """
+        try:
             query = self.db_session.query(ProtectionAlert).filter(
                 ProtectionAlert.status == AlertStatus.PENDING
             )
@@ -368,7 +384,8 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
                            new_status: AlertStatus,
                            resolution_notes: Optional[str] = None,
                            automated_action: Optional[AutomatedAction] = None) -> Optional[ProtectionAlert]:
-        """        Update alert status with resolution tracking
+        """
+        Update alert status with resolution tracking
         
         Args:
             alert_id: Alert ID to update
@@ -378,7 +395,8 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
             
         Returns:
             Updated ProtectionAlert instance
-        """        try:
+        """
+        try:
             alert = self.get_by_id(alert_id)
             if not alert:
                 return None
@@ -425,7 +443,8 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
     def get_alert_statistics(self,
                            user_id: Optional[int] = None,
                            days_back: int = 30) -> Dict[str, Any]:
-        """        Get comprehensive alert statistics
+        """
+        Get comprehensive alert statistics
         
         Args:
             user_id: Optional user ID to filter statistics
@@ -433,7 +452,8 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
             
         Returns:
             Dictionary containing alert statistics
-        """        try:
+        """
+        try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_back)
             
             # Base query
@@ -506,7 +526,8 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
     def bulk_update_alerts(self,
                           alert_ids: List[int],
                           updates: Dict[str, Any]) -> int:
-        """        Bulk update multiple alerts
+        """
+        Bulk update multiple alerts
         
         Args:
             alert_ids: List of alert IDs to update
@@ -514,7 +535,8 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
             
         Returns:
             Number of updated alerts
-        """        try:
+        """
+        try:
             # Add timestamp
             updates['updated_at'] = datetime.utcnow()
             
@@ -534,7 +556,8 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
             raise RepositoryException(f"Bulk alert update failed: {str(e)}")
             
     def get_threat_assessment_report(self, user_id: int, days_back: int = 7) -> Dict[str, Any]:
-        """        Generate comprehensive threat assessment report for user
+        """
+        Generate comprehensive threat assessment report for user
         
         Args:
             user_id: User ID to generate report for
@@ -542,7 +565,8 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
             
         Returns:
             Threat assessment report
-        """        try:
+        """
+        try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_back)
             
             # Get recent alerts for user
@@ -626,7 +650,8 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
                                        threat_level: str,
                                        high_risk_platforms: List[str],
                                        threat_count: int) -> List[str]:
-        """        Generate personalized threat mitigation recommendations
+        """
+        Generate personalized threat mitigation recommendations
         
         Args:
             threat_level: Overall threat assessment level
@@ -635,7 +660,8 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
             
         Returns:
             List of recommendation strings
-        """        recommendations = []
+        """
+        recommendations = []
         
         if threat_level == 'CRITICAL':
             recommendations.extend([

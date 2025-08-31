@@ -12,7 +12,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import mimetypes
@@ -30,7 +31,8 @@ from ..exceptions import ArchivalError
 
 
 class ArchivalJobStatus(Enum):
-    """Archival job status enumeration"""    QUEUED = "queued"
+    """Archival job status enumeration"""
+    QUEUED = "queued"
     PROCESSING = "processing"
     ANALYZING = "analyzing"
     COMPRESSING = "compressing"
@@ -42,7 +44,8 @@ class ArchivalJobStatus(Enum):
 
 @dataclass
 class ArchivalMetadata:
-    """Comprehensive archival metadata for content"""    content_id: str
+    """Comprehensive archival metadata for content"""
+    content_id: str
     content_type: str
     filename: Optional[str] = None
     file_size: int = 0
@@ -76,7 +79,8 @@ class ArchivalMetadata:
 
 @dataclass
 class ContentArchiveRecord:
-    """Complete archive record for content"""    archive_id: str
+    """Complete archive record for content"""
+    archive_id: str
     content_id: str
     archival_metadata: ArchivalMetadata
     archive_entry: ArchiveEntry
@@ -99,9 +103,11 @@ class ContentArchiveRecord:
 
 
 class ContentArchiver:
-    """    Specialized content archiver with format-aware processing
+    """
+    Specialized content archiver with format-aware processing
     and intelligent archival strategies for different content types
-    """    
+    """
+    
     def __init__(self, archival_manager: ArchivalManager):
         self.archival_manager = archival_manager
         self.logger = logging.getLogger("archival.content_archiver")
@@ -165,7 +171,8 @@ class ContentArchiver:
         metadata: Optional[Dict[str, Any]] = None,
         archival_options: Optional[Dict[str, Any]] = None
     ) -> ContentArchiveRecord:
-        """Archive content with format-aware processing"""        
+        """Archive content with format-aware processing"""
+        
         job_id = str(uuid.uuid4())
         start_time = datetime.utcnow()
         
@@ -292,7 +299,8 @@ class ContentArchiver:
         content_type: str,
         user_metadata: Optional[Dict[str, Any]]
     ) -> ArchivalMetadata:
-        """Extract comprehensive metadata from content"""        
+        """Extract comprehensive metadata from content"""
+        
         # Prepare content data
         content_bytes = await self._prepare_content_data(content_data)
         
@@ -341,7 +349,8 @@ class ContentArchiver:
         return metadata
     
     def _determine_content_category(self, content_type: str, metadata: ArchivalMetadata) -> str:
-        """Determine content category for processing"""        
+        """Determine content category for processing"""
+        
         # Check user-specified category first
         if metadata.content_category:
             return metadata.content_category
@@ -363,7 +372,8 @@ class ContentArchiver:
             return "generic"
     
     async def _prepare_content_data(self, content_data: Union[bytes, str, Path]) -> bytes:
-        """Prepare content data for processing"""        
+        """Prepare content data for processing"""
+        
         if isinstance(content_data, bytes):
             return content_data
         elif isinstance(content_data, str):
@@ -383,7 +393,8 @@ class ContentArchiver:
         metadata: ArchivalMetadata,
         options: Dict[str, Any]
     ) -> tuple[bytes, ArchivalMetadata]:
-        """Handle audio content archival"""        
+        """Handle audio content archival"""
+        
         self.logger.info(f"Processing audio content: {content_type}")
         
         # Extract audio-specific metadata
@@ -409,7 +420,8 @@ class ContentArchiver:
         metadata: ArchivalMetadata,
         options: Dict[str, Any]
     ) -> tuple[bytes, ArchivalMetadata]:
-        """Handle video content archival"""        
+        """Handle video content archival"""
+        
         self.logger.info(f"Processing video content: {content_type}")
         
         # Extract video-specific metadata
@@ -435,7 +447,8 @@ class ContentArchiver:
         metadata: ArchivalMetadata,
         options: Dict[str, Any]
     ) -> tuple[bytes, ArchivalMetadata]:
-        """Handle image content archival"""        
+        """Handle image content archival"""
+        
         self.logger.info(f"Processing image content: {content_type}")
         
         # Extract image-specific metadata
@@ -461,7 +474,8 @@ class ContentArchiver:
         metadata: ArchivalMetadata,
         options: Dict[str, Any]
     ) -> tuple[bytes, ArchivalMetadata]:
-        """Handle text content archival"""        
+        """Handle text content archival"""
+        
         self.logger.info(f"Processing text content: {content_type}")
         
         # Extract text-specific metadata
@@ -487,7 +501,8 @@ class ContentArchiver:
         metadata: ArchivalMetadata,
         options: Dict[str, Any]
     ) -> tuple[bytes, ArchivalMetadata]:
-        """Handle document content archival"""        
+        """Handle document content archival"""
+        
         self.logger.info(f"Processing document content: {content_type}")
         
         # Extract document-specific metadata
@@ -513,7 +528,8 @@ class ContentArchiver:
         metadata: ArchivalMetadata,
         options: Dict[str, Any]
     ) -> tuple[bytes, ArchivalMetadata]:
-        """Handle fingerprint data archival (critical for protection)"""        
+        """Handle fingerprint data archival (critical for protection)"""
+        
         self.logger.info(f"Processing fingerprint content: {content_type}")
         
         # Fingerprint data requires special handling
@@ -542,7 +558,8 @@ class ContentArchiver:
         metadata: ArchivalMetadata,
         options: Dict[str, Any]
     ) -> tuple[bytes, ArchivalMetadata]:
-        """Handle composite/multi-modal content archival"""        
+        """Handle composite/multi-modal content archival"""
+        
         self.logger.info(f"Processing composite content: {content_type}")
         
         # Extract composite content metadata
@@ -564,7 +581,8 @@ class ContentArchiver:
     # Format-specific processors (simplified implementations)
     
     async def _process_mp3_audio(self, content_data: bytes, extract_metadata_only: bool = False) -> Dict[str, Any]:
-        """Process MP3 audio content"""        metadata = {
+        """Process MP3 audio content"""
+        metadata = {
             "format_details": {"format": "mp3", "compression": "lossy"},
             "quality_metrics": {"estimated_bitrate": "128kbps"},
             "technical_metadata": {"has_id3_tags": True}
@@ -572,7 +590,8 @@ class ContentArchiver:
         return metadata
     
     async def _process_wav_audio(self, content_data: bytes, extract_metadata_only: bool = False) -> Dict[str, Any]:
-        """Process WAV audio content"""        metadata = {
+        """Process WAV audio content"""
+        metadata = {
             "format_details": {"format": "wav", "compression": "none"},
             "quality_metrics": {"estimated_bitrate": "1411kbps"},
             "technical_metadata": {"lossless": True}
@@ -580,7 +599,8 @@ class ContentArchiver:
         return metadata
     
     async def _process_flac_audio(self, content_data: bytes, extract_metadata_only: bool = False) -> Dict[str, Any]:
-        """Process FLAC audio content"""        metadata = {
+        """Process FLAC audio content"""
+        metadata = {
             "format_details": {"format": "flac", "compression": "lossless"},
             "quality_metrics": {"compression_ratio": 0.6},
             "technical_metadata": {"lossless": True, "metadata_support": "extensive"}
@@ -588,7 +608,8 @@ class ContentArchiver:
         return metadata
     
     async def _process_aac_audio(self, content_data: bytes, extract_metadata_only: bool = False) -> Dict[str, Any]:
-        """Process AAC audio content"""        metadata = {
+        """Process AAC audio content"""
+        metadata = {
             "format_details": {"format": "aac", "compression": "lossy"},
             "quality_metrics": {"estimated_bitrate": "256kbps"},
             "technical_metadata": {"has_metadata": True}
@@ -596,7 +617,8 @@ class ContentArchiver:
         return metadata
     
     async def _process_mp4_video(self, content_data: bytes, extract_metadata_only: bool = False) -> Dict[str, Any]:
-        """Process MP4 video content"""        metadata = {
+        """Process MP4 video content"""
+        metadata = {
             "format_details": {"format": "mp4", "container": "mp4"},
             "quality_metrics": {"estimated_resolution": "1080p"},
             "technical_metadata": {"has_metadata": True, "streaming_optimized": True}
@@ -604,7 +626,8 @@ class ContentArchiver:
         return metadata
     
     async def _process_avi_video(self, content_data: bytes, extract_metadata_only: bool = False) -> Dict[str, Any]:
-        """Process AVI video content"""        metadata = {
+        """Process AVI video content"""
+        metadata = {
             "format_details": {"format": "avi", "container": "avi"},
             "quality_metrics": {"estimated_resolution": "720p"},
             "technical_metadata": {"legacy_format": True}
@@ -612,7 +635,8 @@ class ContentArchiver:
         return metadata
     
     async def _process_mov_video(self, content_data: bytes, extract_metadata_only: bool = False) -> Dict[str, Any]:
-        """Process MOV video content"""        metadata = {
+        """Process MOV video content"""
+        metadata = {
             "format_details": {"format": "mov", "container": "quicktime"},
             "quality_metrics": {"estimated_resolution": "1080p"},
             "technical_metadata": {"apple_format": True, "has_metadata": True}
@@ -620,7 +644,8 @@ class ContentArchiver:
         return metadata
     
     async def _process_webm_video(self, content_data: bytes, extract_metadata_only: bool = False) -> Dict[str, Any]:
-        """Process WebM video content"""        metadata = {
+        """Process WebM video content"""
+        metadata = {
             "format_details": {"format": "webm", "container": "webm"},
             "quality_metrics": {"estimated_resolution": "1080p"},
             "technical_metadata": {"web_optimized": True, "open_format": True}
@@ -628,7 +653,8 @@ class ContentArchiver:
         return metadata
     
     async def _process_jpeg_image(self, content_data: bytes, extract_metadata_only: bool = False) -> Dict[str, Any]:
-        """Process JPEG image content"""        metadata = {
+        """Process JPEG image content"""
+        metadata = {
             "format_details": {"format": "jpeg", "compression": "lossy"},
             "quality_metrics": {"estimated_quality": 85},
             "technical_metadata": {"has_exif": True}
@@ -636,7 +662,8 @@ class ContentArchiver:
         return metadata
     
     async def _process_png_image(self, content_data: bytes, extract_metadata_only: bool = False) -> Dict[str, Any]:
-        """Process PNG image content"""        metadata = {
+        """Process PNG image content"""
+        metadata = {
             "format_details": {"format": "png", "compression": "lossless"},
             "quality_metrics": {"transparency_support": True},
             "technical_metadata": {"lossless": True, "has_metadata": True}
@@ -644,7 +671,8 @@ class ContentArchiver:
         return metadata
     
     async def _process_gif_image(self, content_data: bytes, extract_metadata_only: bool = False) -> Dict[str, Any]:
-        """Process GIF image content"""        metadata = {
+        """Process GIF image content"""
+        metadata = {
             "format_details": {"format": "gif", "animation_support": True},
             "quality_metrics": {"color_palette": "256"},
             "technical_metadata": {"animation_frames": 1}
@@ -652,7 +680,8 @@ class ContentArchiver:
         return metadata
     
     async def _process_webp_image(self, content_data: bytes, extract_metadata_only: bool = False) -> Dict[str, Any]:
-        """Process WebP image content"""        metadata = {
+        """Process WebP image content"""
+        metadata = {
             "format_details": {"format": "webp", "compression": "lossy/lossless"},
             "quality_metrics": {"compression_efficiency": "high"},
             "technical_metadata": {"web_optimized": True, "animation_support": True}
@@ -660,7 +689,8 @@ class ContentArchiver:
         return metadata
     
     async def _process_text_content(self, content_data: bytes, extract_metadata_only: bool = False) -> Dict[str, Any]:
-        """Process plain text content"""        text = content_data.decode('utf-8', errors='ignore')
+        """Process plain text content"""
+        text = content_data.decode('utf-8', errors='ignore')
         metadata = {
             "format_details": {"format": "plain_text", "encoding": "utf-8"},
             "quality_metrics": {"character_count": len(text), "line_count": text.count('\n')},
@@ -669,7 +699,8 @@ class ContentArchiver:
         return metadata
     
     async def _process_markdown_content(self, content_data: bytes, extract_metadata_only: bool = False) -> Dict[str, Any]:
-        """Process Markdown content"""        text = content_data.decode('utf-8', errors='ignore')
+        """Process Markdown content"""
+        text = content_data.decode('utf-8', errors='ignore')
         metadata = {
             "format_details": {"format": "markdown", "markup_language": True},
             "quality_metrics": {"character_count": len(text), "heading_count": text.count('#')},
@@ -678,7 +709,8 @@ class ContentArchiver:
         return metadata
     
     async def _process_pdf_document(self, content_data: bytes, extract_metadata_only: bool = False) -> Dict[str, Any]:
-        """Process PDF document"""        metadata = {
+        """Process PDF document"""
+        metadata = {
             "format_details": {"format": "pdf", "document_type": "portable"},
             "quality_metrics": {"estimated_pages": 1, "text_extractable": True},
             "technical_metadata": {"pdf_version": "1.4", "has_metadata": True}
@@ -686,7 +718,8 @@ class ContentArchiver:
         return metadata
     
     async def _process_json_content(self, content_data: bytes, extract_metadata_only: bool = False) -> Dict[str, Any]:
-        """Process JSON content"""        try:
+        """Process JSON content"""
+        try:
             json_data = json.loads(content_data.decode('utf-8'))
             metadata = {
                 "format_details": {"format": "json", "structured_data": True},
@@ -704,7 +737,8 @@ class ContentArchiver:
     # Metadata extraction methods
     
     async def _extract_audio_metadata(self, content_data: bytes, content_type: str) -> Dict[str, Any]:
-        """Extract audio-specific metadata"""        return {
+        """Extract audio-specific metadata"""
+        return {
             "duration_seconds": 180,  # Placeholder
             "sample_rate": 44100,
             "channels": 2,
@@ -712,7 +746,8 @@ class ContentArchiver:
         }
     
     async def _extract_video_metadata(self, content_data: bytes, content_type: str) -> Dict[str, Any]:
-        """Extract video-specific metadata"""        return {
+        """Extract video-specific metadata"""
+        return {
             "duration_seconds": 300,  # Placeholder
             "resolution": "1920x1080",
             "frame_rate": 30,
@@ -721,7 +756,8 @@ class ContentArchiver:
         }
     
     async def _extract_image_metadata(self, content_data: bytes, content_type: str) -> Dict[str, Any]:
-        """Extract image-specific metadata"""        return {
+        """Extract image-specific metadata"""
+        return {
             "width": 1920,  # Placeholder
             "height": 1080,
             "color_depth": 24,
@@ -729,7 +765,8 @@ class ContentArchiver:
         }
     
     async def _extract_text_metadata(self, content_data: bytes, content_type: str) -> Dict[str, Any]:
-        """Extract text-specific metadata"""        text = content_data.decode('utf-8', errors='ignore')
+        """Extract text-specific metadata"""
+        text = content_data.decode('utf-8', errors='ignore')
         return {
             "character_count": len(text),
             "word_count": len(text.split()),
@@ -738,7 +775,8 @@ class ContentArchiver:
         }
     
     async def _extract_document_metadata(self, content_data: bytes, content_type: str) -> Dict[str, Any]:
-        """Extract document-specific metadata"""        return {
+        """Extract document-specific metadata"""
+        return {
             "page_count": 1,  # Placeholder
             "has_text": True,
             "has_images": False,
@@ -746,7 +784,8 @@ class ContentArchiver:
         }
     
     async def _extract_fingerprint_metadata(self, content_data: bytes, content_type: str) -> Dict[str, Any]:
-        """Extract fingerprint-specific metadata"""        return {
+        """Extract fingerprint-specific metadata"""
+        return {
             "fingerprint_type": "content_protection",
             "algorithm_version": "1.0",
             "data_integrity": True,
@@ -754,7 +793,8 @@ class ContentArchiver:
         }
     
     async def _extract_composite_metadata(self, content_data: bytes, content_type: str) -> Dict[str, Any]:
-        """Extract composite content metadata"""        return {
+        """Extract composite content metadata"""
+        return {
             "component_count": 1,  # Placeholder
             "content_types": ["mixed"],
             "composite_type": "multimedia",
@@ -764,31 +804,38 @@ class ContentArchiver:
     # Optimization methods (simplified implementations)
     
     async def _optimize_audio_for_archival(self, content_data: bytes, content_type: str, options: Dict[str, Any]) -> bytes:
-        """Optimize audio content for archival"""        # In a real implementation, this would apply audio compression/optimization
+        """Optimize audio content for archival"""
+        # In a real implementation, this would apply audio compression/optimization
         return content_data
     
     async def _optimize_video_for_archival(self, content_data: bytes, content_type: str, options: Dict[str, Any]) -> bytes:
-        """Optimize video content for archival"""        # In a real implementation, this would apply video compression/optimization
+        """Optimize video content for archival"""
+        # In a real implementation, this would apply video compression/optimization
         return content_data
     
     async def _optimize_image_for_archival(self, content_data: bytes, content_type: str, options: Dict[str, Any]) -> bytes:
-        """Optimize image content for archival"""        # In a real implementation, this would apply image compression/optimization
+        """Optimize image content for archival"""
+        # In a real implementation, this would apply image compression/optimization
         return content_data
     
     async def _process_text_for_archival(self, content_data: bytes, content_type: str, options: Dict[str, Any]) -> bytes:
-        """Process text content for archival"""        # In a real implementation, this would apply text processing/normalization
+        """Process text content for archival"""
+        # In a real implementation, this would apply text processing/normalization
         return content_data
     
     async def _process_document_for_archival(self, content_data: bytes, content_type: str, options: Dict[str, Any]) -> bytes:
-        """Process document content for archival"""        # In a real implementation, this would extract text and optimize document
+        """Process document content for archival"""
+        # In a real implementation, this would extract text and optimize document
         return content_data
     
     async def _process_composite_for_archival(self, content_data: bytes, content_type: str, options: Dict[str, Any]) -> bytes:
-        """Process composite content for archival"""        # In a real implementation, this would handle multi-modal content
+        """Process composite content for archival"""
+        # In a real implementation, this would handle multi-modal content
         return content_data
     
     def _update_metrics(self, content_category: str, processing_time: float, archival_result) -> None:
-        """Update processing metrics"""        self.metrics["jobs_processed"] += 1
+        """Update processing metrics"""
+        self.metrics["jobs_processed"] += 1
         self.metrics["jobs_completed"] += 1
         self.metrics["total_content_archived"] += archival_result.original_size
         
@@ -819,10 +866,12 @@ class ContentArchiver:
         )
     
     async def get_job_status(self, job_id: str) -> Optional[ContentArchiveRecord]:
-        """Get status of archival job"""        return self.active_jobs.get(job_id)
+        """Get status of archival job"""
+        return self.active_jobs.get(job_id)
     
     async def cancel_job(self, job_id: str) -> bool:
-        """Cancel an active archival job"""        if job_id in self.active_jobs:
+        """Cancel an active archival job"""
+        if job_id in self.active_jobs:
             job = self.active_jobs[job_id]
             job.job_status = ArchivalJobStatus.CANCELLED
             job.processing_log.append(f"Job cancelled at {datetime.utcnow()}")
@@ -831,7 +880,8 @@ class ContentArchiver:
         return False
     
     async def get_processing_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive processing statistics"""        return {
+        """Get comprehensive processing statistics"""
+        return {
             "metrics": self.metrics,
             "active_jobs": len(self.active_jobs),
             "supported_formats": list(self.format_processors.keys()),

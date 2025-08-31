@@ -3,7 +3,8 @@ Comprehensive compliance and operational risk assessment system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -27,7 +28,8 @@ logger = get_logger(__name__)
 
 
 class RiskCategory(str, Enum):
-    """Risk assessment categories"""    OPERATIONAL = "operational"
+    """Risk assessment categories"""
+    OPERATIONAL = "operational"
     COMPLIANCE = "compliance"
     SECURITY = "security"
     FINANCIAL = "financial"
@@ -38,7 +40,8 @@ class RiskCategory(str, Enum):
 
 
 class RiskLevel(str, Enum):
-    """Risk severity levels"""    VERY_LOW = "very_low"
+    """Risk severity levels"""
+    VERY_LOW = "very_low"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -47,7 +50,8 @@ class RiskLevel(str, Enum):
 
 
 class RiskStatus(str, Enum):
-    """Risk status states"""    IDENTIFIED = "identified"
+    """Risk status states"""
+    IDENTIFIED = "identified"
     ASSESSED = "assessed"
     MITIGATED = "mitigated"
     ACCEPTED = "accepted"
@@ -58,7 +62,8 @@ class RiskStatus(str, Enum):
 
 
 class MitigationStrategy(str, Enum):
-    """Risk mitigation strategies"""    AVOID = "avoid"
+    """Risk mitigation strategies"""
+    AVOID = "avoid"
     MITIGATE = "mitigate"
     TRANSFER = "transfer"
     ACCEPT = "accept"
@@ -67,7 +72,8 @@ class MitigationStrategy(str, Enum):
 
 @dataclass
 class RiskFactor:
-    """Individual risk factor definition"""    factor_id: str
+    """Individual risk factor definition"""
+    factor_id: str
     name: str
     description: str
     category: RiskCategory
@@ -82,7 +88,8 @@ class RiskFactor:
 
 @dataclass
 class RiskScenario:
-    """Risk scenario modeling"""    scenario_id: str
+    """Risk scenario modeling"""
+    scenario_id: str
     name: str
     description: str
     risk_factors: List[str]
@@ -96,7 +103,8 @@ class RiskScenario:
 
 @dataclass
 class ComprehensiveRiskAssessment:
-    """Complete risk assessment result"""    assessment_id: str
+    """Complete risk assessment result"""
+    assessment_id: str
     assessment_date: datetime
     scope: str
     methodology: str
@@ -116,7 +124,8 @@ class ComprehensiveRiskAssessment:
 
 @dataclass
 class RiskMitigationPlan:
-    """Risk mitigation action plan"""    plan_id: str
+    """Risk mitigation action plan"""
+    plan_id: str
     risk_id: str
     strategy: MitigationStrategy
     actions: List[Dict[str, Any]]
@@ -130,7 +139,8 @@ class RiskMitigationPlan:
 
 
 class RiskAssessmentEngine:
-    """Comprehensive risk assessment and management system"""    
+    """Comprehensive risk assessment and management system"""
+    
     def __init__(self):
         self.logger = logger
         self.audit_logger = AuditLogger()
@@ -161,7 +171,8 @@ class RiskAssessmentEngine:
         self._monitoring_active = False
     
     async def start_risk_monitoring(self) -> None:
-        """Start continuous risk monitoring"""        try:
+        """Start continuous risk monitoring"""
+        try:
             if self._monitoring_active:
                 self.logger.warning("Risk monitoring already active")
                 return
@@ -187,7 +198,8 @@ class RiskAssessmentEngine:
             raise
     
     async def stop_risk_monitoring(self) -> None:
-        """Stop risk monitoring"""        try:
+        """Stop risk monitoring"""
+        try:
             self._monitoring_active = False
             
             # Cancel all monitoring tasks
@@ -210,7 +222,8 @@ class RiskAssessmentEngine:
         assessment_type: str = "full",
         assessor: str = "system"
     ) -> ComprehensiveRiskAssessment:
-        """Conduct comprehensive enterprise risk assessment"""        try:
+        """Conduct comprehensive enterprise risk assessment"""
+        try:
             # Generate assessment ID
             assessment_id = f"RA-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
             
@@ -297,7 +310,8 @@ class RiskAssessmentEngine:
         framework: ComplianceFramework,
         jurisdiction: str = None
     ) -> Dict[str, Any]:
-        """Assess compliance-specific risks"""        try:
+        """Assess compliance-specific risks"""
+        try:
             # Get compliance status
             compliance_status = await self.compliance_monitor.evaluate_compliance_status(
                 framework, self.compliance_monitor.MonitoringScope.SYSTEM
@@ -377,7 +391,8 @@ class RiskAssessmentEngine:
         budget: float = 0,
         timeline_days: int = 90
     ) -> str:
-        """Create comprehensive risk mitigation plan"""        try:
+        """Create comprehensive risk mitigation plan"""
+        try:
             # Generate plan ID
             plan_id = f"RMP-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{risk_id[-8:]}"
             
@@ -465,7 +480,8 @@ class RiskAssessmentEngine:
         self,
         risk_category: Optional[RiskCategory] = None
     ) -> Dict[str, Any]:
-        """Monitor real-time risk indicators"""        try:
+        """Monitor real-time risk indicators"""
+        try:
             indicators = {
                 "monitoring_timestamp": datetime.utcnow().isoformat(),
                 "overall_risk_level": RiskLevel.MEDIUM,
@@ -521,7 +537,8 @@ class RiskAssessmentEngine:
             raise HTTPException(status_code=500, detail="Failed to monitor risk indicators")
     
     def _load_risk_factors(self) -> Dict[str, RiskFactor]:
-        """Load predefined risk factors library"""        return {
+        """Load predefined risk factors library"""
+        return {
             "data_breach": RiskFactor(
                 factor_id="RF-001",
                 name="Data Breach Risk",
@@ -564,7 +581,8 @@ class RiskAssessmentEngine:
         }
     
     def _define_risk_appetite(self) -> Dict[str, float]:
-        """Define organizational risk appetite thresholds"""        return {
+        """Define organizational risk appetite thresholds"""
+        return {
             "overall": 0.5,  # Maximum acceptable overall risk score
             "operational": 0.6,
             "compliance": 0.3,  # Low tolerance for compliance risks
@@ -577,7 +595,8 @@ class RiskAssessmentEngine:
         }
     
     def _get_risk_level(self, risk_score: float) -> RiskLevel:
-        """Convert risk score to risk level"""        if risk_score >= 0.9:
+        """Convert risk score to risk level"""
+        if risk_score >= 0.9:
             return RiskLevel.CRITICAL
         elif risk_score >= 0.7:
             return RiskLevel.VERY_HIGH

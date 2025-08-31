@@ -37,7 +37,8 @@ For licensing inquiries: mlaiel@live.de
 Business Logic Flow:
 Creator Upload → Content Analysis → Format Detection → Schema Migration → 
 Protection Setup → Fingerprint Generation → Metadata Extraction → Storage Optimization
-"""import asyncio
+"""
+import asyncio
 import logging
 import traceback
 from abc import ABC, abstractmethod
@@ -72,7 +73,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content type enumeration for migration handling"""    AUDIO = "audio"
+    """Content type enumeration for migration handling"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -85,7 +87,8 @@ class ContentType(Enum):
 
 
 class AudioFormat(Enum):
-    """Audio format standards for migration"""    MP3 = "mp3"
+    """Audio format standards for migration"""
+    MP3 = "mp3"
     FLAC = "flac"
     WAV = "wav"
     AAC = "aac"
@@ -96,7 +99,8 @@ class AudioFormat(Enum):
 
 
 class VideoFormat(Enum):
-    """Video format standards for migration"""    MP4 = "mp4"
+    """Video format standards for migration"""
+    MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
     MKV = "mkv"
@@ -107,7 +111,8 @@ class VideoFormat(Enum):
 
 
 class ImageFormat(Enum):
-    """Image format standards for migration"""    JPEG = "jpeg"
+    """Image format standards for migration"""
+    JPEG = "jpeg"
     PNG = "png"
     WEBP = "webp"
     TIFF = "tiff"
@@ -118,7 +123,8 @@ class ImageFormat(Enum):
 
 
 class ContentProtectionLevel(Enum):
-    """Content protection levels for migration"""    NONE = "none"
+    """Content protection levels for migration"""
+    NONE = "none"
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -127,7 +133,8 @@ class ContentProtectionLevel(Enum):
 
 @dataclass
 class ContentMetadata:
-    """Content metadata structure for migration"""    content_id: str
+    """Content metadata structure for migration"""
+    content_id: str
     content_type: ContentType
     original_format: str
     target_format: Optional[str] = None
@@ -151,7 +158,8 @@ class ContentMetadata:
 
 @dataclass
 class ContentMigrationConfig:
-    """Configuration for content migration operations"""    source_format: str
+    """Configuration for content migration operations"""
+    source_format: str
     target_format: str
     quality_settings: Dict[str, Any] = field(default_factory=dict)
     preserve_metadata: bool = True
@@ -167,7 +175,8 @@ class ContentMigrationConfig:
 
 @dataclass
 class ContentMigrationResult:
-    """Result of content migration operation"""    content_id: str
+    """Result of content migration operation"""
+    content_id: str
     success: bool
     original_metadata: ContentMetadata
     migrated_metadata: Optional[ContentMetadata] = None
@@ -179,12 +188,14 @@ class ContentMigrationResult:
 
 
 class ContentAnalyzer:
-    """Advanced content analysis and metadata extraction"""    
+    """Advanced content analysis and metadata extraction"""
+    
     def __init__(self):
         self.magic_detector = magic.Magic(mime=True)
     
     async def analyze_content(self, file_path: Path) -> ContentMetadata:
-        """Analyze content and extract comprehensive metadata"""        try:
+        """Analyze content and extract comprehensive metadata"""
+        try:
             # Basic file information
             file_stats = file_path.stat()
             mime_type = self.magic_detector.from_file(str(file_path))
@@ -219,7 +230,8 @@ class ContentAnalyzer:
             raise
     
     async def _analyze_audio(self, file_path: Path, metadata: ContentMetadata):
-        """Analyze audio content and extract metadata"""        try:
+        """Analyze audio content and extract metadata"""
+        try:
             # Use mutagen for audio metadata
             audio_file = mutagen.File(str(file_path))
             
@@ -254,7 +266,8 @@ class ContentAnalyzer:
             logger.warning(f"Audio analysis failed for {file_path}: {str(e)}")
     
     async def _analyze_video(self, file_path: Path, metadata: ContentMetadata):
-        """Analyze video content and extract metadata"""        try:
+        """Analyze video content and extract metadata"""
+        try:
             probe = ffmpeg.probe(str(file_path))
             
             # Get video stream info
@@ -284,7 +297,8 @@ class ContentAnalyzer:
             logger.warning(f"Video analysis failed for {file_path}: {str(e)}")
     
     async def _analyze_image(self, file_path: Path, metadata: ContentMetadata):
-        """Analyze image content and extract metadata"""        try:
+        """Analyze image content and extract metadata"""
+        try:
             with Image.open(file_path) as img:
                 metadata.width, metadata.height = img.size
                 metadata.tags = {
@@ -302,7 +316,8 @@ class ContentAnalyzer:
             logger.warning(f"Image analysis failed for {file_path}: {str(e)}")
     
     def _determine_content_type(self, mime_type: str, file_extension: str) -> ContentType:
-        """Determine content type based on MIME type and file extension"""        if mime_type.startswith('audio/'):
+        """Determine content type based on MIME type and file extension"""
+        if mime_type.startswith('audio/'):
             return ContentType.AUDIO
         elif mime_type.startswith('video/'):
             return ContentType.VIDEO
@@ -316,7 +331,8 @@ class ContentAnalyzer:
             return ContentType.UNKNOWN
     
     async def _calculate_checksum(self, file_path: Path) -> str:
-        """Calculate SHA-256 checksum for file integrity"""        hash_sha256 = hashlib.sha256()
+        """Calculate SHA-256 checksum for file integrity"""
+        hash_sha256 = hashlib.sha256()
         
         with open(file_path, 'rb') as f:
             for chunk in iter(lambda: f.read(4096), b""):
@@ -326,12 +342,14 @@ class ContentAnalyzer:
 
 
 class ContentTransformer:
-    """Advanced content transformation and format conversion"""    
+    """Advanced content transformation and format conversion"""
+    
     def __init__(self, config: ContentMigrationConfig):
         self.config = config
     
     async def transform_content(self, source_path: Path, target_path: Path, metadata: ContentMetadata) -> ContentMigrationResult:
-        """Transform content from source to target format"""        start_time = datetime.now()
+        """Transform content from source to target format"""
+        start_time = datetime.now()
         result = ContentMigrationResult(
             content_id=metadata.content_id,
             success=False,
@@ -374,7 +392,8 @@ class ContentTransformer:
         return result
     
     async def _transform_audio(self, source_path: Path, target_path: Path, metadata: ContentMetadata, result: ContentMigrationResult):
-        """Transform audio content with format conversion and quality optimization"""        try:
+        """Transform audio content with format conversion and quality optimization"""
+        try:
             # Build ffmpeg command based on target format
             input_stream = ffmpeg.input(str(source_path))
             
@@ -415,7 +434,8 @@ class ContentTransformer:
             raise Exception(f"Audio transformation failed: {str(e)}")
     
     async def _transform_video(self, source_path: Path, target_path: Path, metadata: ContentMetadata, result: ContentMigrationResult):
-        """Transform video content with codec optimization and quality settings"""        try:
+        """Transform video content with codec optimization and quality settings"""
+        try:
             input_stream = ffmpeg.input(str(source_path))
             
             # Default to H.264 with optimized settings
@@ -451,7 +471,8 @@ class ContentTransformer:
             raise Exception(f"Video transformation failed: {str(e)}")
     
     async def _transform_image(self, source_path: Path, target_path: Path, metadata: ContentMetadata, result: ContentMigrationResult):
-        """Transform image content with optimization and format conversion"""        try:
+        """Transform image content with optimization and format conversion"""
+        try:
             with Image.open(source_path) as img:
                 # Convert color mode if necessary
                 if self.config.target_format.lower() == 'jpeg' and img.mode in ('RGBA', 'LA'):
@@ -486,7 +507,8 @@ class ContentTransformer:
             raise Exception(f"Image transformation failed: {str(e)}")
     
     async def _preserve_audio_metadata(self, target_path: Path, tags: Dict[str, Any]):
-        """Preserve audio metadata in transformed file"""        try:
+        """Preserve audio metadata in transformed file"""
+        try:
             audio_file = mutagen.File(str(target_path), easy=True)
             
             if audio_file is not None:
@@ -508,14 +530,16 @@ class ContentTransformer:
 
 
 class ProtectionMigration(BaseMigration):
-    """Content protection system migration for enhanced security features"""    
+    """Content protection system migration for enhanced security features"""
+    
     def __init__(self, version: str, description: str):
         super().__init__(version, description)
         self.migration_id = f"protection_{version}"
         self.category = "protection"
     
     async def execute_migration(self, session: Session) -> MigrationResult:
-        """Execute content protection migration"""        try:
+        """Execute content protection migration"""
+        try:
             # Create protection tables
             await self._create_protection_tables(session)
             
@@ -542,7 +566,9 @@ class ProtectionMigration(BaseMigration):
             )
     
     async def _create_protection_tables(self, session: Session):
-        """Create content protection related tables"""        protection_table_sql = """        CREATE TABLE IF NOT EXISTS content_protection (
+        """Create content protection related tables"""
+        protection_table_sql = """
+        CREATE TABLE IF NOT EXISTS content_protection (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             content_id UUID NOT NULL REFERENCES content(id),
             protection_level VARCHAR(50) NOT NULL DEFAULT 'standard',
@@ -556,36 +582,44 @@ class ProtectionMigration(BaseMigration):
         
         CREATE INDEX IF NOT EXISTS idx_content_protection_content_id ON content_protection(content_id);
         CREATE INDEX IF NOT EXISTS idx_content_protection_level ON content_protection(protection_level);
-        """        
+        """
+        
         session.execute(text(protection_table_sql))
         session.commit()
     
     async def _migrate_content_protection(self, session: Session):
-        """Migrate existing content to protection system"""        # Add protection records for existing content
-        migration_sql = """        INSERT INTO content_protection (content_id, protection_level, access_controls)
+        """Migrate existing content to protection system"""
+        # Add protection records for existing content
+        migration_sql = """
+        INSERT INTO content_protection (content_id, protection_level, access_controls)
         SELECT 
             id as content_id,
             'standard' as protection_level,
             '{"public_access": true, "download_enabled": false}' as access_controls
         FROM content 
         WHERE id NOT IN (SELECT content_id FROM content_protection);
-        """        
+        """
+        
         session.execute(text(migration_sql))
         session.commit()
     
     async def _optimize_protection_indexes(self, session: Session):
-        """Optimize indexes for protection queries"""        index_sql = """        CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_content_protection_composite 
+        """Optimize indexes for protection queries"""
+        index_sql = """
+        CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_content_protection_composite 
         ON content_protection(content_id, protection_level);
         
         CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_content_protection_gin_access 
         ON content_protection USING GIN (access_controls);
-        """        
+        """
+        
         session.execute(text(index_sql))
         session.commit()
 
 
 class ContentMigration(BaseMigration):
-    """Main content migration class for comprehensive content evolution"""    
+    """Main content migration class for comprehensive content evolution"""
+    
     def __init__(self, version: str, description: str, config: Optional[ContentMigrationConfig] = None):
         super().__init__(version, description)
         self.migration_id = f"content_{version}"
@@ -598,7 +632,8 @@ class ContentMigration(BaseMigration):
         self.transformer = ContentTransformer(self.config)
     
     async def execute_migration(self, session: Session) -> MigrationResult:
-        """Execute comprehensive content migration"""        try:
+        """Execute comprehensive content migration"""
+        try:
             # Update content schema
             await self._update_content_schema(session)
             
@@ -628,7 +663,9 @@ class ContentMigration(BaseMigration):
             )
     
     async def _update_content_schema(self, session: Session):
-        """Update content table schema for enhanced features"""        schema_updates = """        -- Add new columns for enhanced content management
+        """Update content table schema for enhanced features"""
+        schema_updates = """
+        -- Add new columns for enhanced content management
         ALTER TABLE content 
         ADD COLUMN IF NOT EXISTS content_hash VARCHAR(64),
         ADD COLUMN IF NOT EXISTS content_size BIGINT DEFAULT 0,
@@ -642,17 +679,21 @@ class ContentMigration(BaseMigration):
         UPDATE content 
         SET technical_metadata = '{}'::jsonb 
         WHERE technical_metadata IS NULL;
-        """        
+        """
+        
         session.execute(text(schema_updates))
         session.commit()
     
     async def _migrate_content_metadata(self, session: Session):
-        """Migrate and enhance content metadata"""        # Get all content records that need metadata enhancement
-        content_query = """        SELECT id, file_path, content_type, created_at
+        """Migrate and enhance content metadata"""
+        # Get all content records that need metadata enhancement
+        content_query = """
+        SELECT id, file_path, content_type, created_at
         FROM content 
         WHERE technical_metadata = '{}'::jsonb OR technical_metadata IS NULL
         LIMIT 1000;
-        """        
+        """
+        
         result = session.execute(text(content_query))
         content_records = result.fetchall()
         
@@ -665,7 +706,8 @@ class ContentMigration(BaseMigration):
                     metadata = await self.analyzer.analyze_content(Path(file_path))
                     
                     # Update content record with enhanced metadata
-                    update_sql = """                    UPDATE content 
+                    update_sql = """
+                    UPDATE content 
                     SET 
                         content_hash = :hash,
                         content_size = :size,
@@ -673,7 +715,8 @@ class ContentMigration(BaseMigration):
                         content_dimensions = :dimensions,
                         technical_metadata = :metadata
                     WHERE id = :content_id;
-                    """                    
+                    """
+                    
                     dimensions = None
                     if metadata.width and metadata.height:
                         dimensions = json.dumps({"width": metadata.width, "height": metadata.height})
@@ -693,19 +736,24 @@ class ContentMigration(BaseMigration):
         session.commit()
     
     async def _optimize_content_storage(self, session: Session):
-        """Optimize content storage and file organization"""        # Clean up orphaned content records
-        cleanup_sql = """        UPDATE content 
+        """Optimize content storage and file organization"""
+        # Clean up orphaned content records
+        cleanup_sql = """
+        UPDATE content 
         SET processing_status = 'orphaned'
         WHERE file_path IS NOT NULL 
         AND NOT EXISTS (
             SELECT 1 FROM pg_stat_file(file_path) 
         );
-        """        
+        """
+        
         session.execute(text(cleanup_sql))
         session.commit()
     
     async def _update_content_indexes(self, session: Session):
-        """Update and optimize content-related indexes"""        index_sql = """        -- Performance indexes for content queries
+        """Update and optimize content-related indexes"""
+        index_sql = """
+        -- Performance indexes for content queries
         CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_content_hash 
         ON content(content_hash) WHERE content_hash IS NOT NULL;
         
@@ -721,14 +769,17 @@ class ContentMigration(BaseMigration):
         -- GIN index for technical metadata search
         CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_content_technical_metadata_gin 
         ON content USING GIN (technical_metadata);
-        """        
+        """
+        
         session.execute(text(index_sql))
         session.commit()
     
     async def rollback_migration(self, session: Session) -> MigrationResult:
-        """Rollback content migration changes"""        try:
+        """Rollback content migration changes"""
+        try:
             # Remove added columns
-            rollback_sql = """            ALTER TABLE content 
+            rollback_sql = """
+            ALTER TABLE content 
             DROP COLUMN IF EXISTS content_hash,
             DROP COLUMN IF EXISTS content_size,
             DROP COLUMN IF EXISTS content_duration,
@@ -736,7 +787,8 @@ class ContentMigration(BaseMigration):
             DROP COLUMN IF EXISTS technical_metadata,
             DROP COLUMN IF EXISTS protection_level,
             DROP COLUMN IF EXISTS processing_status;
-            """            
+            """
+            
             session.execute(text(rollback_sql))
             session.commit()
             

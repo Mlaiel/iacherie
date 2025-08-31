@@ -71,7 +71,7 @@ This entire context tracking system is the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 UNAUTHORIZED USE IS STRICTLY PROHIBITED AND LEGALLY PROSECUTED.
 ALL MODULES ARE PROPRIETARY AND PROTECTED BY INTERNATIONAL COPYRIGHT.
 Contact: mlaiel@live.de for enterprise licensing inquiries.
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 📋 CAHIER DES CHARGES COMPLIANCE :
 ✅ All modules implemented according to unified specifications
@@ -83,7 +83,9 @@ Contact: mlaiel@live.de for enterprise licensing inquiries.
 ✅ Professional English naming conventions
 ✅ No TODOs, placeholders, or incomplete implementations
 ✅ Production-ready, industrial-grade code quality
-"""from .ai_fingerprinting_engine import (
+"""
+
+from .ai_fingerprinting_engine import (
     AIFingerprintingEngine,
     FingerprintType,
     ContentFormat,
@@ -359,7 +361,7 @@ __version__ = "3.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __license__ = "Proprietary - All Rights Reserved"
-__copyright__ = "© 2025 Fahed Mlaiel"
+__copyright__ = "(c) 2025 Fahed Mlaiel"
 
 # Performance and capability metrics
 PERFORMANCE_METRICS = {
@@ -400,13 +402,21 @@ from .platform_context_manager import PlatformContextManager, create_platform_ma
 from .temporal_context_analyzer import TemporalContextAnalyzer, create_temporal_analyzer
 from .emotional_context_tracker import EmotionalContextTracker, create_emotional_tracker
 from .business_context_manager import BusinessContextManager
+
 from .user_context_profiler import UserContextProfiler
+
 from .conversation_context_manager import ConversationContextManager
+
 from .conversation_state_manager import ConversationStateManager
+
 from .session_manager import SessionManager
+
 from .context_analyzer import ContextAnalyzer
+
 from .context_tracker import ContextTracker
+
 from .contextual_memory import ContextualMemory
+
 from .interaction_history_tracker import InteractionHistoryTracker
 
 # Ultra-Advanced Modules (Nouveaux selon Cahier des Charges)
@@ -461,19 +471,33 @@ __all__ = [
 ]
 
 from .conversation_context_manager import ConversationContextManager
+
 from .context_tracker import ContextTracker
+
 from .contextual_memory import ContextualMemory
+
 from .session_manager import SessionManager
+
 from .user_context_profiler import UserContextProfiler
+
 from .conversation_state_manager import ConversationStateManager
+
 from .context_analyzer import ContextAnalyzer
+
 from .interaction_history_tracker import InteractionHistoryTracker
+
 from .behavioral_context_engine import BehavioralContextEngine
+
 from .content_context_analyzer import ContentContextAnalyzer
+
 from .collaboration_context_tracker import CollaborationContextTracker
+
 from .platform_context_manager import PlatformContextManager
+
 from .temporal_context_analyzer import TemporalContextAnalyzer
+
 from .emotional_context_tracker import EmotionalContextTracker
+
 from .business_context_manager import BusinessContextManager
 
 __version__ = "2.0.0"

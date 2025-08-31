@@ -23,7 +23,8 @@ and international copyright laws.
 
 Project: IA Influencer Agent Platform - Backup and Disaster Recovery
 Copyright: Fahed Mlaiel - All rights reserved
-"""import os
+"""
+import os
 import sys
 import time
 import json
@@ -65,7 +66,8 @@ logger = logging.getLogger(__name__)
 
 
 class BackupType(Enum):
-    """Types of backups"""    FULL_BACKUP = "full_backup"
+    """Types of backups"""
+    FULL_BACKUP = "full_backup"
     INCREMENTAL_BACKUP = "incremental_backup"
     DIFFERENTIAL_BACKUP = "differential_backup"
     DATABASE_BACKUP = "database_backup"
@@ -78,7 +80,8 @@ class BackupType(Enum):
 
 
 class StorageTier(Enum):
-    """Storage tiers for backup retention"""    HOT_STORAGE = "hot_storage"      # Immediate access
+    """Storage tiers for backup retention"""
+    HOT_STORAGE = "hot_storage"      # Immediate access
     WARM_STORAGE = "warm_storage"    # Quick access
     COLD_STORAGE = "cold_storage"    # Infrequent access
     GLACIER_STORAGE = "glacier_storage"  # Archive storage
@@ -86,7 +89,8 @@ class StorageTier(Enum):
 
 
 class BackupStatus(Enum):
-    """Backup operation status"""    PENDING = "pending"
+    """Backup operation status"""
+    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -96,7 +100,8 @@ class BackupStatus(Enum):
 
 
 class CompressionType(Enum):
-    """Compression algorithms"""    NONE = "none"
+    """Compression algorithms"""
+    NONE = "none"
     GZIP = "gzip"
     BZIP2 = "bzip2"
     LZMA = "lzma"
@@ -106,7 +111,8 @@ class CompressionType(Enum):
 
 
 class EncryptionType(Enum):
-    """Encryption methods"""    NONE = "none"
+    """Encryption methods"""
+    NONE = "none"
     AES_256 = "aes_256"
     RSA_2048 = "rsa_2048"
     PGP = "pgp"
@@ -115,7 +121,8 @@ class EncryptionType(Enum):
 
 @dataclass
 class BackupConfig:
-    """Configuration for backup operations"""    backup_id: str
+    """Configuration for backup operations"""
+    backup_id: str
     backup_name: str
     backup_type: BackupType
     source_path: str
@@ -155,7 +162,8 @@ class BackupConfig:
 
 @dataclass
 class RecoveryConfig:
-    """Configuration for recovery operations"""    recovery_id: str
+    """Configuration for recovery operations"""
+    recovery_id: str
     backup_id: str
     target_path: str
     point_in_time: Optional[datetime] = None
@@ -179,7 +187,8 @@ class RecoveryConfig:
 
 @dataclass
 class BackupMetadata:
-    """Metadata for backup operations"""    backup_id: str
+    """Metadata for backup operations"""
+    backup_id: str
     timestamp: datetime
     size_bytes: int
     file_count: int
@@ -207,7 +216,8 @@ class BackupMetadata:
 
 @dataclass
 class DeploymentConfig:
-    """Backup system deployment configuration"""    replicas: int = 2
+    """Backup system deployment configuration"""
+    replicas: int = 2
     resource_limits: Dict[str, str] = field(default_factory=lambda: {
         'cpu': '2000m',
         'memory': '4Gi',
@@ -234,11 +244,14 @@ class DeploymentConfig:
 
 
 class BackupRecoveryDeploymentManager:
-    """    Enterprise Backup and Recovery Deployment Manager
+    """
+    Enterprise Backup and Recovery Deployment Manager
     Handles deployment and management of comprehensive backup and disaster recovery systems
-    """    
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize the Backup and Recovery Deployment Manager"""        self.config_path = config_path or os.getenv('BACKUP_CONFIG_PATH', '/etc/backup/config.yaml')
+        """Initialize the Backup and Recovery Deployment Manager"""
+        self.config_path = config_path or os.getenv('BACKUP_CONFIG_PATH', '/etc/backup/config.yaml')
         self.backup_configs: Dict[str, BackupConfig] = {}
         self.recovery_configs: Dict[str, RecoveryConfig] = {}
         self.backup_metadata: Dict[str, BackupMetadata] = {}
@@ -260,7 +273,8 @@ class BackupRecoveryDeploymentManager:
         logger.info("Backup and Recovery Deployment Manager initialized successfully")
     
     def _init_kubernetes_client(self):
-        """Initialize Kubernetes client"""        try:
+        """Initialize Kubernetes client"""
+        try:
             config.load_incluster_config()
         except:
             try:
@@ -277,7 +291,8 @@ class BackupRecoveryDeploymentManager:
         logger.info("Kubernetes client initialized")
     
     def _init_docker_client(self):
-        """Initialize Docker client"""        try:
+        """Initialize Docker client"""
+        try:
             self.docker_client = docker.from_env()
             logger.info("Docker client initialized")
         except Exception as e:
@@ -285,7 +300,8 @@ class BackupRecoveryDeploymentManager:
             self.docker_client = None
     
     def _init_cloud_storage_clients(self):
-        """Initialize cloud storage clients"""        # AWS S3
+        """Initialize cloud storage clients"""
+        # AWS S3
         try:
             self.s3_client = boto3.client('s3')
             logger.info("AWS S3 client initialized")
@@ -311,7 +327,8 @@ class BackupRecoveryDeploymentManager:
             self.minio_client = None
     
     def _init_database_clients(self):
-        """Initialize database clients"""        # PostgreSQL
+        """Initialize database clients"""
+        # PostgreSQL
         try:
             postgres_url = os.getenv('POSTGRES_URL', 'postgresql://user:pass@localhost:5432/ia_influencer')
             self.postgres_engine = create_engine(postgres_url)
@@ -330,7 +347,8 @@ class BackupRecoveryDeploymentManager:
             self.mongo_client = None
     
     def _init_redis_client(self):
-        """Initialize Redis client"""        try:
+        """Initialize Redis client"""
+        try:
             redis_host = os.getenv('REDIS_HOST', 'localhost')
             redis_port = int(os.getenv('REDIS_PORT', '6379'))
             redis_password = os.getenv('REDIS_PASSWORD')
@@ -348,7 +366,8 @@ class BackupRecoveryDeploymentManager:
             self.redis_client = None
     
     def _load_config(self):
-        """Load backup and recovery configurations"""        if os.path.exists(self.config_path):
+        """Load backup and recovery configurations"""
+        if os.path.exists(self.config_path):
             try:
                 with open(self.config_path, 'r') as f:
                     config_data = yaml.safe_load(f)
@@ -380,7 +399,8 @@ class BackupRecoveryDeploymentManager:
                 logger.error(f"Failed to load configuration: {e}")
     
     def _init_backup_directories(self):
-        """Initialize backup directories"""        base_backup_dir = os.getenv('BACKUP_BASE_DIR', '/backup')
+        """Initialize backup directories"""
+        base_backup_dir = os.getenv('BACKUP_BASE_DIR', '/backup')
         
         directories = [
             f"{base_backup_dir}/full",
@@ -396,7 +416,8 @@ class BackupRecoveryDeploymentManager:
         logger.info(f"Initialized backup directories under {base_backup_dir}")
     
     def deploy_backup_system(self, deployment_config: DeploymentConfig) -> bool:
-        """Deploy backup and recovery system"""        if not self.k8s_client:
+        """Deploy backup and recovery system"""
+        if not self.k8s_client:
             logger.error("Kubernetes client not available")
             return False
         
@@ -436,7 +457,8 @@ class BackupRecoveryDeploymentManager:
             return False
     
     def _create_backup_configmap(self) -> Dict[str, Any]:
-        """Create ConfigMap for backup configurations"""        config_data = {}
+        """Create ConfigMap for backup configurations"""
+        config_data = {}
         
         for backup_id, backup_config in self.backup_configs.items():
             config_data[f"{backup_id}.yaml"] = yaml.dump(backup_config.to_dict())
@@ -452,7 +474,8 @@ class BackupRecoveryDeploymentManager:
         }
     
     def _create_backup_storage(self, deployment_config: DeploymentConfig):
-        """Create PersistentVolumeClaims for backup storage"""        storage_configs = [
+        """Create PersistentVolumeClaims for backup storage"""
+        storage_configs = [
             {
                 "name": "backup-hot-storage",
                 "size": deployment_config.resource_limits['storage'],
@@ -497,7 +520,8 @@ class BackupRecoveryDeploymentManager:
                     raise
     
     def _create_backup_deployment(self, deployment_config: DeploymentConfig) -> Dict[str, Any]:
-        """Create deployment manifest for backup service"""        return {
+        """Create deployment manifest for backup service"""
+        return {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -577,7 +601,8 @@ class BackupRecoveryDeploymentManager:
         }
     
     def _create_backup_cronjobs(self):
-        """Create CronJobs for scheduled backups"""        for backup_id, backup_config in self.backup_configs.items():
+        """Create CronJobs for scheduled backups"""
+        for backup_id, backup_config in self.backup_configs.items():
             if not backup_config.enabled:
                 continue
             
@@ -648,7 +673,8 @@ class BackupRecoveryDeploymentManager:
                     logger.error(f"Failed to create CronJob for backup {backup_id}: {e}")
     
     def _create_backup_service(self) -> Dict[str, Any]:
-        """Create service manifest for backup system"""        return {
+        """Create service manifest for backup system"""
+        return {
             "apiVersion": "v1",
             "kind": "Service",
             "metadata": {
@@ -669,7 +695,8 @@ class BackupRecoveryDeploymentManager:
         }
     
     def perform_backup(self, backup_id: str) -> BackupMetadata:
-        """Perform backup operation"""        if backup_id not in self.backup_configs:
+        """Perform backup operation"""
+        if backup_id not in self.backup_configs:
             raise ValueError(f"Backup configuration not found: {backup_id}")
         
         backup_config = self.backup_configs[backup_id]
@@ -751,7 +778,8 @@ class BackupRecoveryDeploymentManager:
         return metadata
     
     def _backup_database(self, backup_config: BackupConfig, backup_path: str) -> bool:
-        """Perform database backup"""        try:
+        """Perform database backup"""
+        try:
             if self.postgres_engine:
                 # PostgreSQL backup
                 pg_dump_cmd = [
@@ -803,7 +831,8 @@ class BackupRecoveryDeploymentManager:
             return False
     
     def _backup_filesystem(self, backup_config: BackupConfig, backup_path: str) -> bool:
-        """Perform filesystem backup"""        try:
+        """Perform filesystem backup"""
+        try:
             if backup_config.compression == CompressionType.TAR_GZ:
                 with tarfile.open(backup_path, 'w:gz') as tar:
                     tar.add(backup_config.source_path, arcname=os.path.basename(backup_config.source_path))
@@ -826,7 +855,8 @@ class BackupRecoveryDeploymentManager:
             return False
     
     def _backup_application(self, backup_config: BackupConfig, backup_path: str) -> bool:
-        """Perform application-specific backup"""        try:
+        """Perform application-specific backup"""
+        try:
             # This would include application state, configurations, etc.
             # Implementation depends on the specific application
             
@@ -838,7 +868,8 @@ class BackupRecoveryDeploymentManager:
             return False
     
     def _backup_generic(self, backup_config: BackupConfig, backup_path: str) -> bool:
-        """Perform generic backup"""        try:
+        """Perform generic backup"""
+        try:
             # Create tar archive with compression
             with tarfile.open(backup_path, 'w:gz') as tar:
                 for root, dirs, files in os.walk(backup_config.source_path):
@@ -862,7 +893,8 @@ class BackupRecoveryDeploymentManager:
             return False
     
     def _verify_backup(self, backup_path: str, backup_config: BackupConfig) -> bool:
-        """Verify backup integrity"""        try:
+        """Verify backup integrity"""
+        try:
             if backup_config.compression == CompressionType.TAR_GZ:
                 with tarfile.open(backup_path, 'r:gz') as tar:
                     # Check if archive is readable
@@ -882,7 +914,8 @@ class BackupRecoveryDeploymentManager:
             return False
     
     def _calculate_checksum(self, file_path: str) -> str:
-        """Calculate file checksum"""        hash_sha256 = hashlib.sha256()
+        """Calculate file checksum"""
+        hash_sha256 = hashlib.sha256()
         try:
             with open(file_path, 'rb') as f:
                 for chunk in iter(lambda: f.read(4096), b""):
@@ -893,7 +926,8 @@ class BackupRecoveryDeploymentManager:
             return ""
     
     def _upload_to_cloud_storage(self, backup_path: str, backup_config: BackupConfig):
-        """Upload backup to cloud storage"""        try:
+        """Upload backup to cloud storage"""
+        try:
             if backup_config.storage_tier in [StorageTier.COLD_STORAGE, StorageTier.GLACIER_STORAGE]:
                 # Upload to AWS S3 or similar
                 if self.s3_client:
@@ -920,7 +954,8 @@ class BackupRecoveryDeploymentManager:
             logger.warning(f"Cloud storage upload failed: {e}")
     
     def _cleanup_old_backups(self, backup_config: BackupConfig):
-        """Clean up old backups based on retention policy"""        try:
+        """Clean up old backups based on retention policy"""
+        try:
             cutoff_date = datetime.now() - timedelta(days=backup_config.retention_days)
             backup_dir = backup_config.destination_path
             
@@ -937,7 +972,8 @@ class BackupRecoveryDeploymentManager:
             logger.error(f"Backup cleanup error: {e}")
     
     def _store_backup_metadata(self, metadata: BackupMetadata):
-        """Store backup metadata"""        try:
+        """Store backup metadata"""
+        try:
             if self.redis_client:
                 self.redis_client.hset(
                     f"backup_metadata:{metadata.backup_id}",
@@ -953,7 +989,8 @@ class BackupRecoveryDeploymentManager:
             logger.error(f"Failed to store backup metadata: {e}")
     
     def perform_recovery(self, recovery_config: RecoveryConfig) -> bool:
-        """Perform recovery operation"""        logger.info(f"Starting recovery: {recovery_config.recovery_id}")
+        """Perform recovery operation"""
+        logger.info(f"Starting recovery: {recovery_config.recovery_id}")
         
         try:
             # Find backup metadata
@@ -992,7 +1029,8 @@ class BackupRecoveryDeploymentManager:
             return False
     
     def _perform_full_recovery(self, backup_path: str, recovery_config: RecoveryConfig) -> bool:
-        """Perform full recovery"""        try:
+        """Perform full recovery"""
+        try:
             # Extract backup to target path
             if backup_path.endswith('.tar.gz'):
                 with tarfile.open(backup_path, 'r:gz') as tar:
@@ -1011,7 +1049,8 @@ class BackupRecoveryDeploymentManager:
             return False
     
     def _perform_partial_recovery(self, backup_path: str, recovery_config: RecoveryConfig) -> bool:
-        """Perform partial recovery based on patterns"""        try:
+        """Perform partial recovery based on patterns"""
+        try:
             if backup_path.endswith('.tar.gz'):
                 with tarfile.open(backup_path, 'r:gz') as tar:
                     members = tar.getmembers()
@@ -1029,7 +1068,8 @@ class BackupRecoveryDeploymentManager:
             return False
     
     def _verify_recovery(self, recovery_config: RecoveryConfig) -> bool:
-        """Verify recovery operation"""        try:
+        """Verify recovery operation"""
+        try:
             # Check if target path exists and has content
             if os.path.exists(recovery_config.target_path):
                 # Count files in recovered directory
@@ -1043,7 +1083,8 @@ class BackupRecoveryDeploymentManager:
             return False
     
     def _download_from_cloud_storage(self, backup_id: str) -> Optional[str]:
-        """Download backup from cloud storage"""        try:
+        """Download backup from cloud storage"""
+        try:
             if self.s3_client:
                 bucket_name = os.getenv('BACKUP_S3_BUCKET', 'ia-influencer-backups')
                 # List objects with backup_id prefix
@@ -1070,7 +1111,8 @@ class BackupRecoveryDeploymentManager:
             return None
     
     def _create_namespace(self, namespace: str):
-        """Create Kubernetes namespace if it doesn't exist"""        try:
+        """Create Kubernetes namespace if it doesn't exist"""
+        try:
             self.core_v1.read_namespace(name=namespace)
         except ApiException as e:
             if e.status == 404:
@@ -1083,7 +1125,8 @@ class BackupRecoveryDeploymentManager:
                 logger.info(f"Created namespace: {namespace}")
     
     def _create_or_update_configmap(self, configmap_manifest: Dict[str, Any]):
-        """Create or update ConfigMap"""        try:
+        """Create or update ConfigMap"""
+        try:
             self.core_v1.read_namespaced_config_map(
                 name=configmap_manifest['metadata']['name'],
                 namespace=configmap_manifest['metadata']['namespace']
@@ -1103,7 +1146,8 @@ class BackupRecoveryDeploymentManager:
                 )
     
     def list_backups(self) -> List[Dict[str, Any]]:
-        """List all available backups"""        backups = []
+        """List all available backups"""
+        backups = []
         
         for backup_id, metadata in self.backup_metadata.items():
             backups.append({
@@ -1118,7 +1162,8 @@ class BackupRecoveryDeploymentManager:
         return sorted(backups, key=lambda x: x['timestamp'], reverse=True)
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive health check"""        health_status = {
+        """Perform comprehensive health check"""
+        health_status = {
             'timestamp': datetime.now().isoformat(),
             'overall_status': 'healthy',
             'components': {
@@ -1148,7 +1193,8 @@ class BackupRecoveryDeploymentManager:
 
 
 def main():
-    """Main function for testing the Backup and Recovery Deployment Manager"""    # Initialize manager
+    """Main function for testing the Backup and Recovery Deployment Manager"""
+    # Initialize manager
     manager = BackupRecoveryDeploymentManager()
     
     # Example configurations

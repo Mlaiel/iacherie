@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import uuid
@@ -50,7 +51,8 @@ logger = logging.getLogger(__name__)
 
 
 class EnhancementType(Enum):
-    """Types of image enhancement"""    SUPER_RESOLUTION = "super_resolution"
+    """Types of image enhancement"""
+    SUPER_RESOLUTION = "super_resolution"
     NOISE_REDUCTION = "noise_reduction"
     SHARPENING = "sharpening"
     CONTRAST_ENHANCEMENT = "contrast_enhancement"
@@ -68,7 +70,8 @@ class EnhancementType(Enum):
 
 
 class QualityLevel(Enum):
-    """Enhancement quality levels"""    FAST = "fast"
+    """Enhancement quality levels"""
+    FAST = "fast"
     BALANCED = "balanced"
     QUALITY = "quality"
     PROFESSIONAL = "professional"
@@ -76,7 +79,8 @@ class QualityLevel(Enum):
 
 
 class EnhancementModel(Enum):
-    """Available enhancement models"""    ESRGAN = "esrgan"
+    """Available enhancement models"""
+    ESRGAN = "esrgan"
     REAL_ESRGAN = "real_esrgan"
     SRCNN = "srcnn"
     EDSR = "edsr"
@@ -88,7 +92,8 @@ class EnhancementModel(Enum):
 
 @dataclass
 class EnhancementParams:
-    """Image enhancement parameters"""    enhancement_types: List[EnhancementType] = field(default_factory=list)
+    """Image enhancement parameters"""
+    enhancement_types: List[EnhancementType] = field(default_factory=list)
     quality_level: QualityLevel = QualityLevel.BALANCED
     model: EnhancementModel = EnhancementModel.REAL_ESRGAN
     upscale_factor: float = 2.0
@@ -104,7 +109,8 @@ class EnhancementParams:
 
 @dataclass
 class EnhancementResult:
-    """Enhancement operation result"""    success: bool
+    """Enhancement operation result"""
+    success: bool
     processing_time: float
     enhanced_image: Optional[Image.Image] = None
     original_size: Tuple[int, int] = (0, 0)
@@ -118,7 +124,8 @@ class EnhancementResult:
 
 
 class ImageEnhancer:
-    """    Advanced Image Enhancement Engine
+    """
+    Advanced Image Enhancement Engine
     
     Provides comprehensive image enhancement capabilities including:
     - AI-powered super-resolution and upscaling
@@ -127,7 +134,8 @@ class ImageEnhancer:
     - Color correction and restoration
     - Artifact removal and image repair
     - Professional-grade quality improvements
-    """    
+    """
+    
     def __init__(
         self,
         enable_gpu: bool = True,
@@ -135,14 +143,16 @@ class ImageEnhancer:
         default_quality: QualityLevel = QualityLevel.BALANCED,
         auto_optimize: bool = True
     ):
-        """        Initialize Image Enhancer
+        """
+        Initialize Image Enhancer
         
         Args:
             enable_gpu: Enable GPU acceleration for AI models
             model_cache_size: Number of AI models to keep cached
             default_quality: Default enhancement quality level
             auto_optimize: Enable automatic optimization selection
-        """        self.enable_gpu = enable_gpu and torch.cuda.is_available()
+        """
+        self.enable_gpu = enable_gpu and torch.cuda.is_available()
         self.model_cache_size = model_cache_size
         self.default_quality = default_quality
         self.auto_optimize = auto_optimize
@@ -177,7 +187,8 @@ class ImageEnhancer:
         params: Optional[EnhancementParams] = None,
         save_path: Optional[Union[str, Path]] = None
     ) -> EnhancementResult:
-        """        Enhance image with specified parameters
+        """
+        Enhance image with specified parameters
         
         Args:
             image_input: Input image (path or PIL Image)
@@ -186,7 +197,8 @@ class ImageEnhancer:
             
         Returns:
             EnhancementResult with enhanced image and metrics
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         enhancement_id = f"enhance_{uuid.uuid4().hex[:8]}"
         
         try:
@@ -280,7 +292,8 @@ class ImageEnhancer:
             )
 
     async def _auto_detect_enhancements(self, image: Image.Image) -> List[EnhancementType]:
-        """Automatically detect what enhancements are needed"""        try:
+        """Automatically detect what enhancements are needed"""
+        try:
             enhancements_needed = []
             
             # Convert to numpy for analysis
@@ -344,7 +357,8 @@ class ImageEnhancer:
         enhancement_type: EnhancementType,
         params: EnhancementParams
     ) -> Image.Image:
-        """Apply specific enhancement to image"""        
+        """Apply specific enhancement to image"""
+        
         enhancement_handlers = {
             EnhancementType.SUPER_RESOLUTION: self._apply_super_resolution,
             EnhancementType.NOISE_REDUCTION: self._apply_noise_reduction,
@@ -370,7 +384,8 @@ class ImageEnhancer:
         return await handler(image, params)
 
     async def _apply_super_resolution(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
-        """Apply AI-powered super-resolution"""        try:
+        """Apply AI-powered super-resolution"""
+        try:
             # Load super-resolution model
             model = await self._load_enhancement_model(params.model)
             
@@ -417,7 +432,8 @@ class ImageEnhancer:
             return await self._apply_upscaling(image, params)
 
     async def _apply_noise_reduction(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
-        """Apply advanced noise reduction"""        try:
+        """Apply advanced noise reduction"""
+        try:
             img_array = np.array(image)
             
             # Choose denoising method based on quality level
@@ -454,7 +470,8 @@ class ImageEnhancer:
             return image
 
     async def _apply_sharpening(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
-        """Apply intelligent sharpening"""        try:
+        """Apply intelligent sharpening"""
+        try:
             # Choose sharpening method based on quality level
             if params.quality_level in [QualityLevel.PROFESSIONAL, QualityLevel.ULTRA]:
                 # Advanced unsharp masking
@@ -473,7 +490,8 @@ class ImageEnhancer:
             return image
 
     async def _apply_contrast_enhancement(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
-        """Apply contrast enhancement"""        try:
+        """Apply contrast enhancement"""
+        try:
             if params.quality_level in [QualityLevel.PROFESSIONAL, QualityLevel.ULTRA]:
                 # Advanced CLAHE (Contrast Limited Adaptive Histogram Equalization)
                 img_array = np.array(image)
@@ -512,7 +530,8 @@ class ImageEnhancer:
             return image
 
     async def _apply_color_correction(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
-        """Apply automatic color correction"""        try:
+        """Apply automatic color correction"""
+        try:
             img_array = np.array(image).astype(np.float32)
             
             # Gray World algorithm for white balance
@@ -556,7 +575,8 @@ class ImageEnhancer:
             return image
 
     async def _apply_brightness_adjustment(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
-        """Apply intelligent brightness adjustment"""        try:
+        """Apply intelligent brightness adjustment"""
+        try:
             img_array = np.array(image)
             
             # Calculate current brightness
@@ -577,7 +597,8 @@ class ImageEnhancer:
             return image
 
     async def _apply_saturation_enhancement(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
-        """Apply saturation enhancement"""        try:
+        """Apply saturation enhancement"""
+        try:
             enhancement_factor = 1.0 + (params.color_enhancement if hasattr(params, 'color_enhancement') else 0.2)
             enhancer = ImageEnhance.Color(image)
             return enhancer.enhance(enhancement_factor)
@@ -587,7 +608,8 @@ class ImageEnhancer:
             return image
 
     async def _apply_gamma_correction(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
-        """Apply gamma correction"""        try:
+        """Apply gamma correction"""
+        try:
             # Auto-calculate gamma if not specified
             img_array = np.array(image)
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY) if len(img_array.shape) == 3 else img_array
@@ -615,7 +637,8 @@ class ImageEnhancer:
             return image
 
     async def _apply_histogram_equalization(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
-        """Apply histogram equalization"""        try:
+        """Apply histogram equalization"""
+        try:
             img_array = np.array(image)
             
             if len(img_array.shape) == 3:
@@ -638,7 +661,8 @@ class ImageEnhancer:
             return image
 
     async def _apply_local_contrast(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
-        """Apply local contrast enhancement"""        try:
+        """Apply local contrast enhancement"""
+        try:
             img_array = np.array(image)
             
             # Use CLAHE for local contrast enhancement
@@ -662,7 +686,8 @@ class ImageEnhancer:
             return image
 
     async def _apply_upscaling(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
-        """Apply traditional upscaling"""        try:
+        """Apply traditional upscaling"""
+        try:
             new_size = (
                 int(image.size[0] * params.upscale_factor),
                 int(image.size[1] * params.upscale_factor)
@@ -681,7 +706,8 @@ class ImageEnhancer:
             return image
 
     async def _load_enhancement_model(self, model_type: EnhancementModel) -> Optional[Any]:
-        """Load AI enhancement model"""        try:
+        """Load AI enhancement model"""
+        try:
             model_key = model_type.value
             
             # Return cached model if available
@@ -701,7 +727,8 @@ class ImageEnhancer:
         original: Image.Image, 
         enhanced: Image.Image
     ) -> float:
-        """Calculate quality improvement score"""        try:
+        """Calculate quality improvement score"""
+        try:
             # Convert to numpy arrays
             orig_array = np.array(original)
             enh_array = np.array(enhanced)
@@ -744,7 +771,8 @@ class ImageEnhancer:
         enhanced: Image.Image,
         operations: List[str]
     ) -> Dict[str, float]:
-        """Calculate comprehensive enhancement metrics"""        try:
+        """Calculate comprehensive enhancement metrics"""
+        try:
             metrics = {}
             
             # Size metrics
@@ -787,7 +815,8 @@ class ImageEnhancer:
         save_path: Union[str, Path],
         enhancement_id: str
     ) -> None:
-        """Save enhanced image with high quality settings"""        try:
+        """Save enhanced image with high quality settings"""
+        try:
             save_path = Path(save_path)
             save_path.parent.mkdir(parents=True, exist_ok=True)
             
@@ -814,7 +843,8 @@ class ImageEnhancer:
         quality_improvement: float,
         success: bool
     ) -> None:
-        """Update enhancement statistics"""        self.enhancement_stats["total_enhancements"] += 1
+        """Update enhancement statistics"""
+        self.enhancement_stats["total_enhancements"] += 1
         
         if success:
             self.enhancement_stats["successful_enhancements"] += 1
@@ -847,14 +877,17 @@ class ImageEnhancer:
 
     # Placeholder methods for advanced enhancements
     async def _apply_artifact_removal(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
-        """Remove compression artifacts and digital noise"""        return await self._apply_noise_reduction(image, params)
+        """Remove compression artifacts and digital noise"""
+        return await self._apply_noise_reduction(image, params)
 
     async def _apply_blur_removal(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
-        """Remove motion blur and defocus"""        # Advanced deblurring would require specialized algorithms
+        """Remove motion blur and defocus"""
+        # Advanced deblurring would require specialized algorithms
         return await self._apply_sharpening(image, params)
 
     async def _apply_scratch_removal(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
-        """Remove scratches and defects from old photos"""        try:
+        """Remove scratches and defects from old photos"""
+        try:
             img_array = np.array(image)
             
             # Simple inpainting for defect removal
@@ -879,7 +912,8 @@ class ImageEnhancer:
             return image
 
     async def _apply_restoration(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
-        """Comprehensive image restoration"""        try:
+        """Comprehensive image restoration"""
+        try:
             # Apply multiple restoration techniques
             restored = image.copy()
             
@@ -902,7 +936,8 @@ class ImageEnhancer:
             return image
 
     async def get_enhancement_stats(self) -> Dict[str, Any]:
-        """Get comprehensive enhancement statistics"""        try:
+        """Get comprehensive enhancement statistics"""
+        try:
             stats = self.enhancement_stats.copy()
             
             # Add success rate
@@ -927,13 +962,16 @@ class ImageEnhancer:
 
 
 class QualityUpscaler:
-    """    Specialized High-Quality Image Upscaling System
+    """
+    Specialized High-Quality Image Upscaling System
     
     Focused on producing the highest quality upscaling results using
     multiple algorithms and AI models.
-    """    
+    """
+    
     def __init__(self, enable_gpu: bool = True):
-        """Initialize Quality Upscaler"""        self.enable_gpu = enable_gpu and torch.cuda.is_available()
+        """Initialize Quality Upscaler"""
+        self.enable_gpu = enable_gpu and torch.cuda.is_available()
         self.device = torch.device("cuda" if self.enable_gpu else "cpu")
         
         logger.info(f"QualityUpscaler initialized - GPU: {self.enable_gpu}")
@@ -945,7 +983,8 @@ class QualityUpscaler:
         method: str = "lanczos",
         preserve_details: bool = True
     ) -> Image.Image:
-        """        Upscale image with highest quality
+        """
+        Upscale image with highest quality
         
         Args:
             image: Input image to upscale
@@ -955,7 +994,8 @@ class QualityUpscaler:
             
         Returns:
             Upscaled image
-        """        try:
+        """
+        try:
             if method == "ai":
                 return await self._ai_upscale(image, scale_factor)
             elif method == "lanczos":
@@ -972,11 +1012,13 @@ class QualityUpscaler:
             return image.resize(new_size, Image.Resampling.LANCZOS)
 
     async def _ai_upscale(self, image: Image.Image, scale_factor: float) -> Image.Image:
-        """AI-powered upscaling (placeholder)"""        # This would use actual AI upscaling models like Real-ESRGAN
+        """AI-powered upscaling (placeholder)"""
+        # This would use actual AI upscaling models like Real-ESRGAN
         return await self._lanczos_upscale(image, scale_factor, True)
 
     async def _lanczos_upscale(self, image: Image.Image, scale_factor: float, preserve_details: bool) -> Image.Image:
-        """High-quality Lanczos upscaling with detail preservation"""        new_size = (int(image.size[0] * scale_factor), int(image.size[1] * scale_factor))
+        """High-quality Lanczos upscaling with detail preservation"""
+        new_size = (int(image.size[0] * scale_factor), int(image.size[1] * scale_factor))
         upscaled = image.resize(new_size, Image.Resampling.LANCZOS)
         
         if preserve_details:
@@ -986,5 +1028,6 @@ class QualityUpscaler:
         return upscaled
 
     async def _bicubic_upscale(self, image: Image.Image, scale_factor: float) -> Image.Image:
-        """Bicubic upscaling"""        new_size = (int(image.size[0] * scale_factor), int(image.size[1] * scale_factor))
+        """Bicubic upscaling"""
+        new_size = (int(image.size[0] * scale_factor), int(image.size[1] * scale_factor))
         return image.resize(new_size, Image.Resampling.BICUBIC)

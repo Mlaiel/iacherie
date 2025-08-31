@@ -8,7 +8,7 @@ Responsibility: Complete database schema evolution for multi-format content prot
 ==================================================================================================
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
@@ -109,4 +109,4 @@ __version__ = "3.2.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __status__ = "Production"
-__copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."

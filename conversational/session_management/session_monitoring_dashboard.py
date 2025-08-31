@@ -23,7 +23,8 @@ Team Specialists:
 - DevOps: Infrastructure Monitoring & Scalability
 - UI/UX Engineer: Dashboard Design & User Experience
 - IA Prompt Engineer: Intelligent Monitoring Insights
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -60,7 +61,8 @@ logger = get_logger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics tracked"""    PERFORMANCE = "performance"
+    """Types of metrics tracked"""
+    PERFORMANCE = "performance"
     ENGAGEMENT = "engagement"
     REVENUE = "revenue"
     CONTENT = "content"
@@ -73,7 +75,8 @@ class MetricType(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    INFO = "info"
+    """Alert severity levels"""
+    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -81,7 +84,8 @@ class AlertSeverity(Enum):
 
 
 class DashboardViewType(Enum):
-    """Dashboard view types"""    OVERVIEW = "overview"
+    """Dashboard view types"""
+    OVERVIEW = "overview"
     PERFORMANCE = "performance"
     ENGAGEMENT = "engagement"
     REVENUE = "revenue"
@@ -93,7 +97,8 @@ class DashboardViewType(Enum):
 
 
 class TimeRange(Enum):
-    """Time range options"""    REAL_TIME = "real_time"
+    """Time range options"""
+    REAL_TIME = "real_time"
     LAST_5_MIN = "last_5_min"
     LAST_15_MIN = "last_15_min"
     LAST_30_MIN = "last_30_min"
@@ -105,7 +110,8 @@ class TimeRange(Enum):
 
 
 class SessionMetric(BaseModel):
-    """Individual session metric"""    metric_id: str = Field(default_factory=lambda: str(uuid4()))
+    """Individual session metric"""
+    metric_id: str = Field(default_factory=lambda: str(uuid4()))
     session_id: str
     user_id: str
     metric_type: MetricType
@@ -124,7 +130,8 @@ class SessionMetric(BaseModel):
 
 
 class SessionAlert(BaseModel):
-    """Session monitoring alert"""    alert_id: str = Field(default_factory=lambda: str(uuid4()))
+    """Session monitoring alert"""
+    alert_id: str = Field(default_factory=lambda: str(uuid4()))
     session_id: str
     user_id: str
     alert_type: str
@@ -150,7 +157,8 @@ class SessionAlert(BaseModel):
 
 
 class DashboardWidget(BaseModel):
-    """Dashboard widget configuration"""    widget_id: str = Field(default_factory=lambda: str(uuid4()))
+    """Dashboard widget configuration"""
+    widget_id: str = Field(default_factory=lambda: str(uuid4()))
     widget_type: str  # chart, table, metric, alert_list
     title: str
     metric_types: List[MetricType] = Field(default_factory=list)
@@ -165,7 +173,8 @@ class DashboardWidget(BaseModel):
 
 
 class DashboardView(BaseModel):
-    """Dashboard view configuration"""    view_id: str = Field(default_factory=lambda: str(uuid4()))
+    """Dashboard view configuration"""
+    view_id: str = Field(default_factory=lambda: str(uuid4()))
     view_name: str
     view_type: DashboardViewType
     user_id: str
@@ -185,7 +194,8 @@ class DashboardView(BaseModel):
 
 
 class SessionAnalytics(BaseModel):
-    """Session analytics data"""    session_id: str
+    """Session analytics data"""
+    session_id: str
     user_id: str
     session_duration: float  # minutes
     engagement_score: float
@@ -208,7 +218,8 @@ class SessionAnalytics(BaseModel):
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring dashboard configuration"""    enable_real_time_monitoring: bool = True
+    """Monitoring dashboard configuration"""
+    enable_real_time_monitoring: bool = True
     metric_collection_interval: int = 5  # seconds
     alert_evaluation_interval: int = 10  # seconds
     dashboard_refresh_interval: int = 30  # seconds
@@ -223,7 +234,8 @@ class MonitoringConfig:
 
 
 class MetricsCollectionEngine:
-    """Collects and processes session metrics"""    
+    """Collects and processes session metrics"""
+    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         self.cache_manager = CacheManager()
@@ -245,7 +257,8 @@ class MetricsCollectionEngine:
         tags: Dict[str, str] = None,
         metadata: Dict[str, Any] = None
     ) -> SessionMetric:
-        """Collect a session metric"""        
+        """Collect a session metric"""
+        
         try:
             metric = SessionMetric(
                 session_id=session_id,
@@ -288,7 +301,8 @@ class MetricsCollectionEngine:
             raise
     
     async def _cache_metric(self, metric: SessionMetric):
-        """Cache metric for fast retrieval"""        
+        """Cache metric for fast retrieval"""
+        
         try:
             # Cache individual metric
             cache_key = f"metric:{metric.metric_id}"
@@ -316,7 +330,8 @@ class MetricsCollectionEngine:
         time_range: TimeRange = TimeRange.LAST_HOUR,
         metric_names: List[str] = None
     ) -> Dict[str, List[SessionMetric]]:
-        """Get session metrics with filters"""        
+        """Get session metrics with filters"""
+        
         try:
             # Calculate time window
             end_time = datetime.utcnow()
@@ -374,7 +389,8 @@ class MetricsCollectionEngine:
         aggregation_type: str = "avg",  # avg, sum, min, max, count
         time_range: TimeRange = TimeRange.LAST_HOUR
     ) -> float:
-        """Aggregate metrics over time range"""        
+        """Aggregate metrics over time range"""
+        
         try:
             metrics_data = await self.get_session_metrics(
                 session_id,
@@ -408,7 +424,8 @@ class MetricsCollectionEngine:
             return 0.0
     
     async def persist_metrics(self, session_id: str):
-        """Persist metrics to database"""        
+        """Persist metrics to database"""
+        
         try:
             if session_id not in self.session_metrics:
                 return
@@ -438,7 +455,8 @@ class MetricsCollectionEngine:
 
 
 class AnomalyDetectionEngine:
-    """Detects anomalies in session metrics"""    
+    """Detects anomalies in session metrics"""
+    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         self.isolation_forest = IsolationForest(
@@ -457,7 +475,8 @@ class AnomalyDetectionEngine:
         session_id: str,
         metrics_data: Dict[str, List[SessionMetric]]
     ) -> List[Dict[str, Any]]:
-        """Detect anomalies in session metrics"""        
+        """Detect anomalies in session metrics"""
+        
         try:
             anomalies = []
             
@@ -494,7 +513,8 @@ class AnomalyDetectionEngine:
         values: List[float],
         timestamps: List[datetime]
     ) -> List[Dict[str, Any]]:
-        """Detect statistical anomalies using z-score"""        
+        """Detect statistical anomalies using z-score"""
+        
         try:
             anomalies = []
             
@@ -537,7 +557,8 @@ class AnomalyDetectionEngine:
         values: List[float],
         timestamps: List[datetime]
     ) -> List[Dict[str, Any]]:
-        """Detect anomalies using machine learning"""        
+        """Detect anomalies using machine learning"""
+        
         try:
             anomalies = []
             
@@ -581,7 +602,8 @@ class AnomalyDetectionEngine:
 
 
 class AlertingEngine:
-    """Manages session monitoring alerts"""    
+    """Manages session monitoring alerts"""
+    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         self.alert_manager = AlertManager()
@@ -634,7 +656,8 @@ class AlertingEngine:
         metrics_data: Dict[str, List[SessionMetric]],
         anomalies: List[Dict[str, Any]] = None
     ) -> List[SessionAlert]:
-        """Evaluate alert conditions"""        
+        """Evaluate alert conditions"""
+        
         try:
             triggered_alerts = []
             
@@ -672,7 +695,8 @@ class AlertingEngine:
         rule_config: Dict[str, Any],
         metrics_data: Dict[str, List[SessionMetric]]
     ) -> Optional[SessionAlert]:
-        """Evaluate individual metric alert rule"""        
+        """Evaluate individual metric alert rule"""
+        
         try:
             metric_name = rule_config["metric_name"]
             threshold = rule_config["threshold"]
@@ -752,7 +776,8 @@ class AlertingEngine:
         user_id: str,
         anomalies: List[Dict[str, Any]]
     ) -> List[SessionAlert]:
-        """Evaluate anomaly-based alerts"""        
+        """Evaluate anomaly-based alerts"""
+        
         try:
             alerts = []
             
@@ -789,7 +814,8 @@ class AlertingEngine:
             return []
     
     async def _process_alert(self, alert: SessionAlert):
-        """Process triggered alert"""        
+        """Process triggered alert"""
+        
         try:
             # Store alert
             self.active_alerts[alert.alert_id] = alert
@@ -833,7 +859,8 @@ class AlertingEngine:
             self.logger.error(f"Alert processing failed: {str(e)}")
     
     async def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> bool:
-        """Acknowledge an alert"""        
+        """Acknowledge an alert"""
+        
         try:
             if alert_id not in self.active_alerts:
                 return False
@@ -868,7 +895,8 @@ class AlertingEngine:
             return False
     
     async def resolve_alert(self, alert_id: str) -> bool:
-        """Resolve an alert"""        
+        """Resolve an alert"""
+        
         try:
             if alert_id not in self.active_alerts:
                 return False
@@ -905,7 +933,8 @@ class AlertingEngine:
 
 
 class DashboardDataProvider:
-    """Provides data for dashboard widgets"""    
+    """Provides data for dashboard widgets"""
+    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         self.cache_manager = CacheManager()
@@ -917,7 +946,8 @@ class DashboardDataProvider:
         session_id: Optional[str] = None,
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Get data for dashboard widget"""        
+        """Get data for dashboard widget"""
+        
         try:
             # Check cache first
             cache_key = f"widget_data:{widget.widget_id}:{session_id or 'all'}"
@@ -959,7 +989,8 @@ class DashboardDataProvider:
         session_id: Optional[str],
         user_id: Optional[str]
     ) -> Dict[str, Any]:
-        """Get data for metric widget"""        
+        """Get data for metric widget"""
+        
         try:
             # This would aggregate metrics from the metrics collection engine
             # For now, return sample data
@@ -985,7 +1016,8 @@ class DashboardDataProvider:
         session_id: Optional[str],
         user_id: Optional[str]
     ) -> Dict[str, Any]:
-        """Get data for chart widget"""        
+        """Get data for chart widget"""
+        
         try:
             # Generate time series data
             current_time = datetime.utcnow()
@@ -1024,7 +1056,8 @@ class DashboardDataProvider:
         session_id: Optional[str],
         user_id: Optional[str]
     ) -> Dict[str, Any]:
-        """Get data for table widget"""        
+        """Get data for table widget"""
+        
         try:
             # Generate sample table data
             return {
@@ -1049,7 +1082,8 @@ class DashboardDataProvider:
         session_id: Optional[str],
         user_id: Optional[str]
     ) -> Dict[str, Any]:
-        """Get data for alert list widget"""        
+        """Get data for alert list widget"""
+        
         try:
             # This would fetch active alerts
             # For now, return sample data
@@ -1086,7 +1120,8 @@ class DashboardDataProvider:
 
 
 class SessionMonitoringDashboard:
-    """Main session monitoring dashboard system"""    
+    """Main session monitoring dashboard system"""
+    
     def __init__(self, config: Optional[MonitoringConfig] = None):
         self.config = config or MonitoringConfig()
         self.metrics_engine = MetricsCollectionEngine(self.config)
@@ -1106,7 +1141,8 @@ class SessionMonitoringDashboard:
         self.monitoring_task: Optional[asyncio.Task] = None
     
     async def start_monitoring(self):
-        """Start real-time monitoring"""        
+        """Start real-time monitoring"""
+        
         try:
             if self.monitoring_active:
                 return
@@ -1120,7 +1156,8 @@ class SessionMonitoringDashboard:
             self.logger.error(f"Monitoring start failed: {str(e)}")
     
     async def stop_monitoring(self):
-        """Stop real-time monitoring"""        
+        """Stop real-time monitoring"""
+        
         try:
             self.monitoring_active = False
             
@@ -1137,7 +1174,8 @@ class SessionMonitoringDashboard:
             self.logger.error(f"Monitoring stop failed: {str(e)}")
     
     async def _monitoring_loop(self):
-        """Main monitoring loop"""        
+        """Main monitoring loop"""
+        
         try:
             while self.monitoring_active:
                 # Get all active sessions
@@ -1189,7 +1227,8 @@ class SessionMonitoringDashboard:
             self.logger.error(f"Monitoring loop failed: {str(e)}")
     
     async def _get_active_sessions(self) -> List[str]:
-        """Get list of active session IDs"""        
+        """Get list of active session IDs"""
+        
         try:
             # This would query the database for active sessions
             # For now, return sessions that have metrics
@@ -1200,7 +1239,8 @@ class SessionMonitoringDashboard:
             return []
     
     async def _get_session_user_id(self, session_id: str) -> str:
-        """Get user ID for session"""        
+        """Get user ID for session"""
+        
         try:
             # This would query the database
             # For now, return a default value
@@ -1217,7 +1257,8 @@ class SessionMonitoringDashboard:
         alerts: List[SessionAlert],
         anomalies: List[Dict[str, Any]]
     ):
-        """Broadcast real-time updates to connected clients"""        
+        """Broadcast real-time updates to connected clients"""
+        
         try:
             update_data = {
                 "type": "real_time_update",
@@ -1254,7 +1295,8 @@ class SessionMonitoringDashboard:
         view_type: DashboardViewType,
         widgets: List[DashboardWidget] = None
     ) -> DashboardView:
-        """Create new dashboard view"""        
+        """Create new dashboard view"""
+        
         try:
             dashboard_view = DashboardView(
                 view_name=view_name,
@@ -1287,7 +1329,8 @@ class SessionMonitoringDashboard:
         session_id: Optional[str] = None,
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Get complete dashboard data"""        
+        """Get complete dashboard data"""
+        
         try:
             if view_id not in self.dashboard_views:
                 return {"error": "Dashboard view not found"}
@@ -1336,7 +1379,8 @@ class SessionMonitoringDashboard:
         tags: Dict[str, str] = None,
         metadata: Dict[str, Any] = None
     ) -> bool:
-        """Record a session metric"""        
+        """Record a session metric"""
+        
         try:
             metric = await self.metrics_engine.collect_session_metric(
                 session_id,
@@ -1356,7 +1400,8 @@ class SessionMonitoringDashboard:
             return False
     
     async def get_session_analytics(self, session_id: str) -> Optional[SessionAnalytics]:
-        """Get comprehensive session analytics"""        
+        """Get comprehensive session analytics"""
+        
         try:
             # Get metrics data
             metrics_data = await self.metrics_engine.get_session_metrics(
@@ -1413,7 +1458,8 @@ class SessionMonitoringDashboard:
             return None
     
     async def get_monitoring_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive monitoring dashboard statistics"""        
+        """Get comprehensive monitoring dashboard statistics"""
+        
         try:
             active_sessions_count = len(await self._get_active_sessions())
             total_metrics_count = sum(

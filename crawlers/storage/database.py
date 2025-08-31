@@ -21,7 +21,8 @@ Expertise combinée:
 - Audio/Vidéo: Traitement multimédia et analyse de contenu
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, AsyncIterator, Tuple
 from datetime import datetime, timedelta
@@ -50,7 +51,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class CrawlerData(Base):
-    """Database model for crawler data."""    __tablename__ = 'crawler_data'
+    """Database model for crawler data."""
+    __tablename__ = 'crawler_data'
     
     record_id = Column(String(255), primary_key=True)
     data_type = Column(String(50), nullable=False)
@@ -69,7 +71,8 @@ class CrawlerData(Base):
     version = Column(Integer, default=1)
 
 class ContentRecord(Base):
-    """Database model for content records."""    __tablename__ = 'content_records'
+    """Database model for content records."""
+    __tablename__ = 'content_records'
     
     content_id = Column(String(255), primary_key=True)
     platform = Column(String(50), nullable=False)
@@ -88,7 +91,8 @@ class ContentRecord(Base):
     protected_content = Column(Boolean, default=False)
 
 class ViolationRecord(Base):
-    """Database model for violation records."""    __tablename__ = 'violation_records'
+    """Database model for violation records."""
+    __tablename__ = 'violation_records'
     
     violation_id = Column(String(255), primary_key=True)
     original_content_id = Column(String(255), nullable=False)
@@ -106,7 +110,8 @@ class ViolationRecord(Base):
     takedown_successful = Column(Boolean, default=False)
 
 class DatabaseStorageProvider(BaseStorageProvider):
-    """    Professional database storage provider.
+    """
+    Professional database storage provider.
     
     Supports PostgreSQL, MySQL, and SQLite with advanced features:
     - Connection pooling and optimization
@@ -115,13 +120,15 @@ class DatabaseStorageProvider(BaseStorageProvider):
     - Data compression and encryption
     - Transaction support
     - Connection failover
-    """    
+    """
+    
     def __init__(
         self,
         provider_id: str,
         config: Dict[str, Any]
     ):
-        """Initialize database storage provider."""        super().__init__(provider_id, StorageBackendType.DATABASE, config)
+        """Initialize database storage provider."""
+        super().__init__(provider_id, StorageBackendType.DATABASE, config)
         
         self.database_url = config['database_url']
         self.database_type = config.get('database_type', 'postgresql')
@@ -152,7 +159,8 @@ class DatabaseStorageProvider(BaseStorageProvider):
         logger.info(f"Database storage provider initialized: {provider_id}")
     
     async def connect(self) -> None:
-        """Establish database connection."""        try:
+        """Establish database connection."""
+        try:
             # Create async engine
             engine_kwargs = {
                 'pool_size': self.pool_size,
@@ -186,7 +194,8 @@ class DatabaseStorageProvider(BaseStorageProvider):
             raise
     
     async def disconnect(self) -> None:
-        """Close database connection."""        try:
+        """Close database connection."""
+        try:
             if self.engine:
                 await self.engine.dispose()
                 self.engine = None
@@ -199,7 +208,8 @@ class DatabaseStorageProvider(BaseStorageProvider):
             logger.error(f"Error disconnecting from database {self.provider_id}: {e}")
     
     async def health_check(self) -> bool:
-        """Check database health."""        try:
+        """Check database health."""
+        try:
             if not self.is_connected or not self.engine:
                 return False
             
@@ -212,7 +222,8 @@ class DatabaseStorageProvider(BaseStorageProvider):
             return False
     
     def _compress_data(self, data: Any) -> bytes:
-        """Compress data using configured compression."""        if not self.enable_compression:
+        """Compress data using configured compression."""
+        if not self.enable_compression:
             return pickle.dumps(data)
         
         pickled_data = pickle.dumps(data)
@@ -225,7 +236,8 @@ class DatabaseStorageProvider(BaseStorageProvider):
             return pickled_data
     
     def _decompress_data(self, compressed_data: bytes) -> Any:
-        """Decompress data using configured compression."""        if not self.enable_compression:
+        """Decompress data using configured compression."""
+        if not self.enable_compression:
             return pickle.loads(compressed_data)
         
         if self.compression_type == CompressionType.GZIP:
@@ -238,7 +250,8 @@ class DatabaseStorageProvider(BaseStorageProvider):
         return pickle.loads(decompressed)
     
     def _calculate_checksum(self, data: bytes) -> str:
-        """Calculate SHA-256 checksum of data."""        return hashlib.sha256(data).hexdigest()
+        """Calculate SHA-256 checksum of data."""
+        return hashlib.sha256(data).hexdigest()
     
     async def store_record(
         self,
@@ -246,7 +259,8 @@ class DatabaseStorageProvider(BaseStorageProvider):
         data: Any,
         metadata: Optional[StorageMetadata] = None
     ) -> bool:
-        """Store a record in database."""        try:
+        """Store a record in database."""
+        try:
             start_time = asyncio.get_event_loop().time()
             
             # Prepare data
@@ -322,7 +336,8 @@ class DatabaseStorageProvider(BaseStorageProvider):
         record_id: str,
         include_metadata: bool = True
     ) -> Optional[Tuple[Any, Optional[StorageMetadata]]]:
-        """Retrieve a record from database."""        try:
+        """Retrieve a record from database."""
+        try:
             start_time = asyncio.get_event_loop().time()
             
             async with self.async_session_factory() as session:
@@ -376,7 +391,8 @@ class DatabaseStorageProvider(BaseStorageProvider):
         self,
         records: List[Tuple[str, Any, Optional[StorageMetadata]]]
     ) -> Dict[str, bool]:
-        """Store multiple records in batch."""        results = {}
+        """Store multiple records in batch."""
+        results = {}
         
         try:
             async with self.async_session_factory() as session:
@@ -452,7 +468,8 @@ class DatabaseStorageProvider(BaseStorageProvider):
         record_ids: List[str],
         include_metadata: bool = True
     ) -> Dict[str, Optional[Tuple[Any, Optional[StorageMetadata]]]]:
-        """Retrieve multiple records in batch."""        results = {}
+        """Retrieve multiple records in batch."""
+        results = {}
         
         try:
             async with self.async_session_factory() as session:
@@ -520,7 +537,8 @@ class DatabaseStorageProvider(BaseStorageProvider):
         self,
         options: QueryOptions
     ) -> AsyncIterator[Tuple[str, Any, Optional[StorageMetadata]]]:
-        """Query records with filtering and pagination."""        try:
+        """Query records with filtering and pagination."""
+        try:
             async with self.async_session_factory() as session:
                 # Build base query
                 query = "SELECT * FROM crawler_data WHERE 1=1"
@@ -610,7 +628,8 @@ class DatabaseStorageProvider(BaseStorageProvider):
         self,
         filters: Optional[List[QueryFilter]] = None
     ) -> int:
-        """Count records matching filters."""        try:
+        """Count records matching filters."""
+        try:
             async with self.async_session_factory() as session:
                 query = "SELECT COUNT(*) FROM crawler_data WHERE 1=1"
                 params = {}
@@ -639,7 +658,8 @@ class DatabaseStorageProvider(BaseStorageProvider):
         data: Any,
         metadata: Optional[StorageMetadata] = None
     ) -> bool:
-        """Update an existing record."""        try:
+        """Update an existing record."""
+        try:
             async with self.async_session_factory() as session:
                 crawler_data = await session.get(CrawlerData, record_id)
                 
@@ -686,7 +706,8 @@ class DatabaseStorageProvider(BaseStorageProvider):
             return False
     
     async def delete_record(self, record_id: str) -> bool:
-        """Delete a record."""        try:
+        """Delete a record."""
+        try:
             async with self.async_session_factory() as session:
                 crawler_data = await session.get(CrawlerData, record_id)
                 
@@ -702,7 +723,8 @@ class DatabaseStorageProvider(BaseStorageProvider):
             return False
     
     async def delete_batch(self, record_ids: List[str]) -> Dict[str, bool]:
-        """Delete multiple records in batch."""        results = {}
+        """Delete multiple records in batch."""
+        results = {}
         
         try:
             async with self.async_session_factory() as session:
@@ -726,7 +748,8 @@ class DatabaseStorageProvider(BaseStorageProvider):
         return results
     
     async def exists(self, record_id: str) -> bool:
-        """Check if record exists."""        try:
+        """Check if record exists."""
+        try:
             async with self.async_session_factory() as session:
                 result = await session.execute(
                     text("SELECT 1 FROM crawler_data WHERE record_id = :id LIMIT 1"),
@@ -739,7 +762,8 @@ class DatabaseStorageProvider(BaseStorageProvider):
             return False
     
     async def get_statistics(self) -> StorageStats:
-        """Get storage statistics."""        try:
+        """Get storage statistics."""
+        try:
             async with self.async_session_factory() as session:
                 # Total records
                 total_result = await session.execute(
@@ -794,14 +818,16 @@ class DatabaseStorageProvider(BaseStorageProvider):
         older_than: datetime,
         batch_size: int = 1000
     ) -> int:
-        """Remove records older than specified date."""        total_deleted = 0
+        """Remove records older than specified date."""
+        total_deleted = 0
         
         try:
             async with self.async_session_factory() as session:
                 while True:
                     # Delete in batches to avoid long-running transactions
                     result = await session.execute(
-                        text("""                            DELETE FROM crawler_data 
+                        text("""
+                            DELETE FROM crawler_data 
                             WHERE created_at < :older_than 
                             AND record_id IN (
                                 SELECT record_id FROM crawler_data 
@@ -832,7 +858,8 @@ class DatabaseStorageProvider(BaseStorageProvider):
             return total_deleted
 
 class DatabaseContentStorageProvider(ContentStorageProvider, DatabaseStorageProvider):
-    """Content-specific database storage provider."""    
+    """Content-specific database storage provider."""
+    
     async def store_content(
         self,
         content_id: str,
@@ -841,7 +868,8 @@ class DatabaseContentStorageProvider(ContentStorageProvider, DatabaseStorageProv
         content_data: Dict[str, Any],
         media_files: Optional[List[Dict[str, Any]]] = None
     ) -> bool:
-        """Store content with associated media files."""        try:
+        """Store content with associated media files."""
+        try:
             async with self.async_session_factory() as session:
                 # Prepare media URLs
                 media_urls = []
@@ -876,7 +904,8 @@ class DatabaseContentStorageProvider(ContentStorageProvider, DatabaseStorageProv
         content_id: str,
         include_media: bool = True
     ) -> Optional[Dict[str, Any]]:
-        """Retrieve content with optional media files."""        try:
+        """Retrieve content with optional media files."""
+        try:
             async with self.async_session_factory() as session:
                 content = await session.get(ContentRecord, content_id)
                 
@@ -926,7 +955,8 @@ class DatabaseContentStorageProvider(ContentStorageProvider, DatabaseStorageProv
         end_date: Optional[datetime] = None,
         limit: Optional[int] = None
     ) -> AsyncIterator[Dict[str, Any]]:
-        """Query content by platform and date range."""        try:
+        """Query content by platform and date range."""
+        try:
             async with self.async_session_factory() as session:
                 query = "SELECT * FROM content_records WHERE platform = :platform"
                 params = {"platform": platform}
@@ -982,7 +1012,8 @@ class DatabaseContentStorageProvider(ContentStorageProvider, DatabaseStorageProv
         content_type: Optional[str] = None,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """Get content metrics and analytics."""        try:
+        """Get content metrics and analytics."""
+        try:
             async with self.async_session_factory() as session:
                 # Build base query
                 conditions = []
@@ -1009,25 +1040,31 @@ class DatabaseContentStorageProvider(ContentStorageProvider, DatabaseStorageProv
                 total_content = count_result.scalar() or 0
                 
                 # Protected content count
-                protected_query = f"""                    SELECT COUNT(*) FROM content_records 
+                protected_query = f"""
+                    SELECT COUNT(*) FROM content_records 
                     WHERE {where_clause} AND protected_content = true
-                """                protected_result = await session.execute(text(protected_query), params)
+                """
+                protected_result = await session.execute(text(protected_query), params)
                 protected_content = protected_result.scalar() or 0
                 
                 # Content by platform
-                platform_query = f"""                    SELECT platform, COUNT(*) as count 
+                platform_query = f"""
+                    SELECT platform, COUNT(*) as count 
                     FROM content_records 
                     WHERE {where_clause}
                     GROUP BY platform
-                """                platform_result = await session.execute(text(platform_query), params)
+                """
+                platform_result = await session.execute(text(platform_query), params)
                 platform_stats = {row.platform: row.count for row in platform_result}
                 
                 # Content by type
-                type_query = f"""                    SELECT content_type, COUNT(*) as count 
+                type_query = f"""
+                    SELECT content_type, COUNT(*) as count 
                     FROM content_records 
                     WHERE {where_clause}
                     GROUP BY content_type
-                """                type_result = await session.execute(text(type_query), params)
+                """
+                type_result = await session.execute(text(type_query), params)
                 type_stats = {row.content_type: row.count for row in type_result}
                 
                 return {
@@ -1044,7 +1081,8 @@ class DatabaseContentStorageProvider(ContentStorageProvider, DatabaseStorageProv
             return {}
 
 class DatabaseViolationStorageProvider(ViolationStorageProvider, DatabaseStorageProvider):
-    """Violation-specific database storage provider."""    
+    """Violation-specific database storage provider."""
+    
     async def store_violation(
         self,
         violation_id: str,
@@ -1055,7 +1093,8 @@ class DatabaseViolationStorageProvider(ViolationStorageProvider, DatabaseStorage
         violation_type: str,
         evidence: Dict[str, Any]
     ) -> bool:
-        """Store a violation record."""        try:
+        """Store a violation record."""
+        try:
             async with self.async_session_factory() as session:
                 violation_record = ViolationRecord(
                     violation_id=violation_id,
@@ -1081,7 +1120,8 @@ class DatabaseViolationStorageProvider(ViolationStorageProvider, DatabaseStorage
         status: str,
         resolution_notes: Optional[str] = None
     ) -> bool:
-        """Update violation status and resolution."""        try:
+        """Update violation status and resolution."""
+        try:
             async with self.async_session_factory() as session:
                 violation = await session.get(ViolationRecord, violation_id)
                 
@@ -1107,7 +1147,8 @@ class DatabaseViolationStorageProvider(ViolationStorageProvider, DatabaseStorage
         platform: Optional[str] = None,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """Get violation statistics."""        try:
+        """Get violation statistics."""
+        try:
             async with self.async_session_factory() as session:
                 # Build conditions
                 conditions = []
@@ -1130,26 +1171,32 @@ class DatabaseViolationStorageProvider(ViolationStorageProvider, DatabaseStorage
                 total_violations = total_result.scalar() or 0
                 
                 # Violations by status
-                status_query = f"""                    SELECT status, COUNT(*) as count 
+                status_query = f"""
+                    SELECT status, COUNT(*) as count 
                     FROM violation_records 
                     WHERE {where_clause}
                     GROUP BY status
-                """                status_result = await session.execute(text(status_query), params)
+                """
+                status_result = await session.execute(text(status_query), params)
                 status_stats = {row.status: row.count for row in status_result}
                 
                 # Violations by type
-                type_query = f"""                    SELECT violation_type, COUNT(*) as count 
+                type_query = f"""
+                    SELECT violation_type, COUNT(*) as count 
                     FROM violation_records 
                     WHERE {where_clause}
                     GROUP BY violation_type
-                """                type_result = await session.execute(text(type_query), params)
+                """
+                type_result = await session.execute(text(type_query), params)
                 type_stats = {row.violation_type: row.count for row in type_result}
                 
                 # Average similarity score
-                avg_query = f"""                    SELECT AVG(similarity_score) 
+                avg_query = f"""
+                    SELECT AVG(similarity_score) 
                     FROM violation_records 
                     WHERE {where_clause}
-                """                avg_result = await session.execute(text(avg_query), params)
+                """
+                avg_result = await session.execute(text(avg_query), params)
                 avg_similarity = avg_result.scalar() or 0.0
                 
                 return {
@@ -1168,12 +1215,15 @@ class DatabaseViolationStorageProvider(ViolationStorageProvider, DatabaseStorage
         self,
         content_id: str
     ) -> AsyncIterator[Dict[str, Any]]:
-        """Query violations for specific content."""        try:
+        """Query violations for specific content."""
+        try:
             async with self.async_session_factory() as session:
-                query = """                    SELECT * FROM violation_records 
+                query = """
+                    SELECT * FROM violation_records 
                     WHERE original_content_id = :content_id OR detected_content_id = :content_id
                     ORDER BY created_at DESC
-                """                
+                """
+                
                 result = await session.execute(text(query), {"content_id": content_id})
                 
                 for row in result:
@@ -1206,19 +1256,23 @@ class DatabaseViolationStorageProvider(ViolationStorageProvider, DatabaseStorage
             logger.error(f"Failed to query violations for content {content_id}: {e}")
 
 class DatabaseTransaction(StorageTransaction):
-    """Database transaction implementation."""    
+    """Database transaction implementation."""
+    
     def __init__(self, transaction_id: str, session_factory):
-        """Initialize database transaction."""        super().__init__(transaction_id)
+        """Initialize database transaction."""
+        super().__init__(transaction_id)
         self.session_factory = session_factory
         self.session = None
     
     async def begin(self) -> None:
-        """Begin transaction."""        self.session = self.session_factory()
+        """Begin transaction."""
+        self.session = self.session_factory()
         await self.session.begin()
         logger.debug(f"Database transaction {self.transaction_id} started")
     
     async def commit(self) -> bool:
-        """Commit transaction."""        try:
+        """Commit transaction."""
+        try:
             if self.session:
                 await self.session.commit()
                 logger.debug(f"Database transaction {self.transaction_id} committed")
@@ -1234,7 +1288,8 @@ class DatabaseTransaction(StorageTransaction):
                 self.is_active = False
     
     async def rollback(self) -> bool:
-        """Rollback transaction."""        try:
+        """Rollback transaction."""
+        try:
             if self.session:
                 await self.session.rollback()
                 logger.debug(f"Database transaction {self.transaction_id} rolled back")
@@ -1254,7 +1309,8 @@ class DatabaseTransaction(StorageTransaction):
         operation_type: str,
         operation_data: Dict[str, Any]
     ) -> None:
-        """Add operation to transaction."""        if not self.is_active:
+        """Add operation to transaction."""
+        if not self.is_active:
             raise RuntimeError("Transaction is not active")
         
         self.operations.append({

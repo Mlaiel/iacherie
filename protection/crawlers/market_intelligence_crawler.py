@@ -35,7 +35,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import hashlib
@@ -57,7 +58,8 @@ from .platform_apis import PlatformAPIManager, APIResponse, PlatformType
 logger = logging.getLogger(__name__)
 
 class TrendType(str, Enum):
-    """Trend type classification."""    VIRAL_CONTENT = "viral_content"
+    """Trend type classification."""
+    VIRAL_CONTENT = "viral_content"
     HASHTAG_TRENDING = "hashtag_trending"
     MUSIC_TRENDING = "music_trending"
     DANCE_TREND = "dance_trend"
@@ -72,7 +74,8 @@ class TrendType(str, Enum):
     UNKNOWN = "unknown"
 
 class TrendStatus(str, Enum):
-    """Trend lifecycle status."""    EMERGING = "emerging"       # Just starting to gain traction
+    """Trend lifecycle status."""
+    EMERGING = "emerging"       # Just starting to gain traction
     RISING = "rising"          # Rapidly gaining popularity
     PEAK = "peak"              # At maximum popularity
     DECLINING = "declining"    # Losing popularity
@@ -80,7 +83,8 @@ class TrendStatus(str, Enum):
     DEAD = "dead"              # No longer relevant
 
 class MarketCategory(str, Enum):
-    """Market category classification."""    MUSIC = "music"
+    """Market category classification."""
+    MUSIC = "music"
     DANCE = "dance"
     COMEDY = "comedy"
     LIFESTYLE = "lifestyle"
@@ -97,7 +101,8 @@ class MarketCategory(str, Enum):
     ART = "art"
 
 class OpportunityType(str, Enum):
-    """Market opportunity type."""    CONTENT_GAP = "content_gap"
+    """Market opportunity type."""
+    CONTENT_GAP = "content_gap"
     UNDERSERVED_AUDIENCE = "underserved_audience"
     EMERGING_PLATFORM = "emerging_platform"
     HASHTAG_OPPORTUNITY = "hashtag_opportunity"
@@ -108,7 +113,8 @@ class OpportunityType(str, Enum):
 
 @dataclass
 class TrendAnalysis:
-    """Comprehensive trend analysis structure."""    trend_id: str
+    """Comprehensive trend analysis structure."""
+    trend_id: str
     trend_type: TrendType
     title: str
     description: str
@@ -137,7 +143,8 @@ class TrendAnalysis:
 
 @dataclass
 class CompetitorAnalysis:
-    """Competitor analysis and benchmarking data."""    competitor_id: str
+    """Competitor analysis and benchmarking data."""
+    competitor_id: str
     username: str
     platform: str
     follower_count: int
@@ -157,7 +164,8 @@ class CompetitorAnalysis:
 
 @dataclass
 class MarketOpportunity:
-    """Market opportunity identification and analysis."""    opportunity_id: str
+    """Market opportunity identification and analysis."""
+    opportunity_id: str
     opportunity_type: OpportunityType
     title: str
     description: str
@@ -180,7 +188,8 @@ class MarketOpportunity:
 
 @dataclass
 class HashtagAnalysis:
-    """Hashtag performance and trend analysis."""    hashtag: str
+    """Hashtag performance and trend analysis."""
+    hashtag: str
     platforms: List[str]
     usage_count: int
     growth_rate: float
@@ -198,13 +207,16 @@ class HashtagAnalysis:
     brand_safety_score: float
 
 class MarketIntelligenceCrawler(BasePlatformCrawler):
-    """    Enterprise-grade market intelligence and trend analysis crawler.
+    """
+    Enterprise-grade market intelligence and trend analysis crawler.
     
     Provides comprehensive market monitoring, trend analysis, competitor tracking,
     and opportunity identification across multiple content platforms.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any], platform_apis: PlatformAPIManager):
-        """Initialize market intelligence crawler with advanced analytics."""        super().__init__(config)
+        """Initialize market intelligence crawler with advanced analytics."""
+        super().__init__(config)
         self.platform_apis = platform_apis
         self.supported_platforms = [
             PlatformType.YOUTUBE, PlatformType.TIKTOK, PlatformType.INSTAGRAM,
@@ -237,7 +249,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
                                    categories: Optional[List[MarketCategory]] = None,
                                    platforms: Optional[List[PlatformType]] = None,
                                    time_range: Optional[timedelta] = None) -> List[TrendAnalysis]:
-        """        Analyze current market trends across specified categories and platforms.
+        """
+        Analyze current market trends across specified categories and platforms.
         
         Args:
             categories: Market categories to analyze (all if None)
@@ -246,7 +259,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
             
         Returns:
             List of trend analyses with comprehensive insights
-        """        if categories is None:
+        """
+        if categories is None:
             categories = list(MarketCategory)
         if platforms is None:
             platforms = self.supported_platforms
@@ -287,7 +301,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
                                       platform: PlatformType, 
                                       categories: List[MarketCategory],
                                       time_range: timedelta) -> List[TrendAnalysis]:
-        """Analyze trends on specific platform."""        trends = []
+        """Analyze trends on specific platform."""
+        trends = []
         
         if platform == PlatformType.YOUTUBE:
             trends = await self._analyze_youtube_trends(categories, time_range)
@@ -307,7 +322,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
     async def _analyze_youtube_trends(self, 
                                      categories: List[MarketCategory], 
                                      time_range: timedelta) -> List[TrendAnalysis]:
-        """Analyze YouTube trending content and patterns."""        trends = []
+        """Analyze YouTube trending content and patterns."""
+        trends = []
         
         try:
             # Get YouTube trending videos
@@ -336,7 +352,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
     async def _analyze_tiktok_trends(self, 
                                     categories: List[MarketCategory], 
                                     time_range: timedelta) -> List[TrendAnalysis]:
-        """Analyze TikTok viral trends and challenges."""        trends = []
+        """Analyze TikTok viral trends and challenges."""
+        trends = []
         
         try:
             # TikTok trending content analysis
@@ -363,7 +380,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
     async def _analyze_instagram_trends(self, 
                                        categories: List[MarketCategory], 
                                        time_range: timedelta) -> List[TrendAnalysis]:
-        """Analyze Instagram trending content and hashtags."""        trends = []
+        """Analyze Instagram trending content and hashtags."""
+        trends = []
         
         try:
             # Instagram trending hashtags and content
@@ -390,7 +408,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
     async def _analyze_twitter_trends(self, 
                                      categories: List[MarketCategory], 
                                      time_range: timedelta) -> List[TrendAnalysis]:
-        """Analyze Twitter trending topics and hashtags."""        trends = []
+        """Analyze Twitter trending topics and hashtags."""
+        trends = []
         
         try:
             # Twitter trending topics
@@ -417,7 +436,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
     async def _analyze_spotify_trends(self, 
                                      categories: List[MarketCategory], 
                                      time_range: timedelta) -> List[TrendAnalysis]:
-        """Analyze Spotify music trends and viral tracks."""        trends = []
+        """Analyze Spotify music trends and viral tracks."""
+        trends = []
         
         try:
             # Spotify featured playlists and trending music
@@ -445,7 +465,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
                                               platform: PlatformType, 
                                               categories: List[MarketCategory],
                                               time_range: timedelta) -> List[TrendAnalysis]:
-        """Generic trend analysis for unsupported platforms."""        trends = []
+        """Generic trend analysis for unsupported platforms."""
+        trends = []
         
         try:
             logger.info(f"Generic trend analysis for {platform}")
@@ -457,7 +478,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
         return trends
     
     async def _build_youtube_trend_analysis(self, video: Dict, time_range: timedelta) -> Optional[TrendAnalysis]:
-        """Build trend analysis from YouTube video data."""        snippet = video.get("snippet", {})
+        """Build trend analysis from YouTube video data."""
+        snippet = video.get("snippet", {})
         statistics = video.get("statistics", {})
         
         view_count = int(statistics.get("viewCount", 0))
@@ -506,7 +528,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
         return trend
     
     async def _build_tiktok_trend_analysis(self, video: Dict, time_range: timedelta) -> Optional[TrendAnalysis]:
-        """Build trend analysis from TikTok video data."""        statistics = video.get("statistics", {})
+        """Build trend analysis from TikTok video data."""
+        statistics = video.get("statistics", {})
         
         view_count = statistics.get("view_count", 0)
         like_count = statistics.get("like_count", 0)
@@ -554,7 +577,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
         return trend
     
     async def _build_instagram_trend_analysis(self, tag: Dict, time_range: timedelta) -> Optional[TrendAnalysis]:
-        """Build trend analysis from Instagram hashtag data."""        tag_name = tag.get("name", "")
+        """Build trend analysis from Instagram hashtag data."""
+        tag_name = tag.get("name", "")
         media_count = tag.get("media_count", 0)
         
         # Estimate engagement velocity based on media count growth
@@ -593,7 +617,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
         return trend
     
     async def _build_twitter_trend_analysis(self, trend_data: Dict, time_range: timedelta) -> Optional[TrendAnalysis]:
-        """Build trend analysis from Twitter trending topic data."""        name = trend_data.get("name", "")
+        """Build trend analysis from Twitter trending topic data."""
+        name = trend_data.get("name", "")
         tweet_volume = trend_data.get("tweet_volume", 0)
         
         if not tweet_volume or tweet_volume < 1000:  # Minimum threshold
@@ -628,7 +653,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
         return trend
     
     async def _build_spotify_trend_analysis(self, playlist: Dict, time_range: timedelta) -> Optional[TrendAnalysis]:
-        """Build trend analysis from Spotify playlist data."""        name = playlist.get("name", "")
+        """Build trend analysis from Spotify playlist data."""
+        name = playlist.get("name", "")
         description = playlist.get("description", "")
         follower_count = playlist.get("followers", {}).get("total", 0)
         
@@ -666,7 +692,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
     async def track_competitors(self, 
                                competitor_usernames: List[str],
                                platforms: Optional[List[PlatformType]] = None) -> List[CompetitorAnalysis]:
-        """        Track competitor performance and analyze their strategies.
+        """
+        Track competitor performance and analyze their strategies.
         
         Args:
             competitor_usernames: List of competitor usernames to track
@@ -674,7 +701,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
             
         Returns:
             List of competitor analyses with strategic insights
-        """        if platforms is None:
+        """
+        if platforms is None:
             platforms = self.supported_platforms
             
         competitor_analyses = []
@@ -698,7 +726,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
     async def _analyze_competitor_on_platform(self, 
                                              username: str, 
                                              platform: PlatformType) -> Optional[CompetitorAnalysis]:
-        """Analyze competitor on specific platform."""        if platform == PlatformType.YOUTUBE:
+        """Analyze competitor on specific platform."""
+        if platform == PlatformType.YOUTUBE:
             return await self._analyze_youtube_competitor(username)
         elif platform == PlatformType.TIKTOK:
             return await self._analyze_tiktok_competitor(username)
@@ -714,7 +743,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
     async def identify_market_opportunities(self, 
                                           categories: Optional[List[MarketCategory]] = None,
                                           platforms: Optional[List[PlatformType]] = None) -> List[MarketOpportunity]:
-        """        Identify market opportunities based on trend analysis and competitor gaps.
+        """
+        Identify market opportunities based on trend analysis and competitor gaps.
         
         Args:
             categories: Market categories to analyze (all if None)
@@ -722,7 +752,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
             
         Returns:
             List of market opportunities with actionable insights
-        """        if categories is None:
+        """
+        if categories is None:
             categories = list(MarketCategory)
         if platforms is None:
             platforms = self.supported_platforms
@@ -757,7 +788,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
                                          hashtags: List[str],
                                          platforms: Optional[List[PlatformType]] = None,
                                          time_range: Optional[timedelta] = None) -> List[HashtagAnalysis]:
-        """        Analyze hashtag performance across platforms.
+        """
+        Analyze hashtag performance across platforms.
         
         Args:
             hashtags: List of hashtags to analyze
@@ -766,7 +798,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
             
         Returns:
             List of hashtag analyses with performance insights
-        """        if platforms is None:
+        """
+        if platforms is None:
             platforms = self.supported_platforms
         if time_range is None:
             time_range = timedelta(days=7)
@@ -791,7 +824,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
     
     # Helper methods for trend analysis
     async def _classify_trend_type(self, content: str) -> TrendType:
-        """Classify trend type based on content analysis."""        content_lower = content.lower()
+        """Classify trend type based on content analysis."""
+        content_lower = content.lower()
         
         if any(word in content_lower for word in ['challenge', 'viral', 'trend']):
             return TrendType.CHALLENGE_TREND
@@ -807,7 +841,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
             return TrendType.VIRAL_CONTENT
     
     async def _determine_trend_status(self, engagement_velocity: float, hours_since_published: float) -> TrendStatus:
-        """Determine trend status based on engagement patterns."""        if hours_since_published < 6:
+        """Determine trend status based on engagement patterns."""
+        if hours_since_published < 6:
             return TrendStatus.EMERGING
         elif hours_since_published < 24 and engagement_velocity > 1000:
             return TrendStatus.RISING
@@ -819,7 +854,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
             return TrendStatus.SATURATED
     
     async def _classify_content_category(self, content_data: Dict) -> MarketCategory:
-        """Classify content into market category."""        # Simple keyword-based classification
+        """Classify content into market category."""
+        # Simple keyword-based classification
         title = content_data.get("title", "") + " " + content_data.get("description", "")
         title_lower = title.lower()
         
@@ -849,7 +885,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
             return MarketCategory.ENTERTAINMENT
     
     async def _classify_hashtag_category(self, hashtag: str) -> MarketCategory:
-        """Classify hashtag into market category."""        hashtag_lower = hashtag.lower().replace('#', '')
+        """Classify hashtag into market category."""
+        hashtag_lower = hashtag.lower().replace('#', '')
         
         if any(word in hashtag_lower for word in ['music', 'song', 'audio']):
             return MarketCategory.MUSIC
@@ -877,7 +914,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
             return MarketCategory.ENTERTAINMENT
     
     async def _extract_keywords(self, text: str) -> List[str]:
-        """Extract keywords from text content."""        # Simple keyword extraction
+        """Extract keywords from text content."""
+        # Simple keyword extraction
         words = re.findall(r'\b\w+\b', text.lower())
         # Filter common words and return top keywords
         common_words = {'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'a', 'an', 'is', 'are', 'was', 'were'}
@@ -885,17 +923,20 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
         return list(set(keywords))[:10]  # Return top 10 unique keywords
     
     async def _extract_hashtags(self, text: str) -> List[str]:
-        """Extract hashtags from text content."""        hashtags = re.findall(r'#\w+', text)
+        """Extract hashtags from text content."""
+        hashtags = re.findall(r'#\w+', text)
         return list(set(hashtags))[:10]  # Return top 10 unique hashtags
     
     async def _calculate_growth_rate(self, current_value: int, hours_elapsed: float) -> float:
-        """Calculate growth rate based on current metrics."""        if hours_elapsed <= 0:
+        """Calculate growth rate based on current metrics."""
+        if hours_elapsed <= 0:
             return 0.0
         # Simple growth rate calculation
         return min(current_value / (hours_elapsed * 100), 10.0)  # Cap at 10x
     
     async def _estimate_geographic_distribution(self, content_data: Dict) -> Dict[str, float]:
-        """Estimate geographic distribution of content."""        # Placeholder for geographic analysis
+        """Estimate geographic distribution of content."""
+        # Placeholder for geographic analysis
         return {
             "US": 0.4,
             "UK": 0.1,
@@ -907,7 +948,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
         }
     
     async def _estimate_demographics(self, content_data: Dict) -> Dict[str, Any]:
-        """Estimate demographic breakdown of audience."""        return {
+        """Estimate demographic breakdown of audience."""
+        return {
             "age_groups": {
                 "13-17": 0.2,
                 "18-24": 0.4,
@@ -922,7 +964,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
         }
     
     async def _estimate_trend_duration(self, engagement_velocity: float) -> timedelta:
-        """Estimate how long a trend will last."""        if engagement_velocity > 5000:
+        """Estimate how long a trend will last."""
+        if engagement_velocity > 5000:
             return timedelta(days=3)  # Very viral trends are short-lived
         elif engagement_velocity > 1000:
             return timedelta(days=7)
@@ -930,7 +973,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
             return timedelta(days=14)
     
     async def _predict_trend_peak(self, start_time: datetime, engagement_velocity: float) -> datetime:
-        """Predict when trend will reach its peak."""        if engagement_velocity > 5000:
+        """Predict when trend will reach its peak."""
+        if engagement_velocity > 5000:
             return start_time + timedelta(hours=12)
         elif engagement_velocity > 1000:
             return start_time + timedelta(days=2)
@@ -938,13 +982,15 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
             return start_time + timedelta(days=5)
     
     async def _check_saturation_warning(self, content: str) -> bool:
-        """Check if market might be getting saturated."""        # Simple saturation check based on common trend keywords
+        """Check if market might be getting saturated."""
+        # Simple saturation check based on common trend keywords
         saturated_keywords = ['challenge', 'viral', 'trend', 'copy', 'version']
         content_lower = content.lower()
         return sum(1 for keyword in saturated_keywords if keyword in content_lower) >= 2
     
     async def _calculate_monetization_potential(self, statistics: Dict) -> float:
-        """Calculate monetization potential based on engagement."""        views = statistics.get("viewCount", statistics.get("view_count", 0))
+        """Calculate monetization potential based on engagement."""
+        views = statistics.get("viewCount", statistics.get("view_count", 0))
         likes = statistics.get("likeCount", statistics.get("like_count", 0))
         
         if isinstance(views, str):
@@ -959,7 +1005,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
         return min(base_score + engagement_bonus, 1.0)
     
     async def _assess_competition_level(self, content_data: Dict) -> float:
-        """Assess competition level for content type."""        # Simple competition assessment
+        """Assess competition level for content type."""
+        # Simple competition assessment
         title = content_data.get("title", "") + " " + content_data.get("description", "")
         competitive_keywords = ['tutorial', 'how to', 'review', 'unboxing', 'challenge']
         
@@ -971,7 +1018,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
         return min(competition_score, 1.0)
     
     async def _calculate_originality_score(self, content_data: Dict) -> float:
-        """Calculate content originality score."""        # Simple originality assessment
+        """Calculate content originality score."""
+        # Simple originality assessment
         title = content_data.get("title", "")
         common_phrases = ['reaction', 'copy', 'version', 'challenge', 'trend']
         
@@ -983,7 +1031,8 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
         return max(originality_score, 0.1)
     
     async def _calculate_virality_indicators(self, statistics: Dict, hours_elapsed: float) -> Dict[str, float]:
-        """Calculate various virality indicators."""        views = int(statistics.get("viewCount", statistics.get("view_count", 0)) or 0)
+        """Calculate various virality indicators."""
+        views = int(statistics.get("viewCount", statistics.get("view_count", 0)) or 0)
         likes = int(statistics.get("likeCount", statistics.get("like_count", 0)) or 0)
         shares = int(statistics.get("shareCount", statistics.get("share_count", 0)) or 0)
         comments = int(statistics.get("commentCount", statistics.get("comment_count", 0)) or 0)
@@ -1006,105 +1055,134 @@ class MarketIntelligenceCrawler(BasePlatformCrawler):
     
     # Placeholder methods for complex analysis functions
     async def _correlate_cross_platform_trends(self, trends: List[TrendAnalysis]) -> List[TrendAnalysis]:
-        """Correlate trends across platforms."""        return trends  # Placeholder
+        """Correlate trends across platforms."""
+        return trends  # Placeholder
     
     async def _enhance_trend_analysis(self, trend: TrendAnalysis) -> TrendAnalysis:
-        """Enhance trend analysis with additional insights."""        return trend  # Placeholder
+        """Enhance trend analysis with additional insights."""
+        return trend  # Placeholder
     
     async def _analyze_youtube_competitor(self, username: str) -> Optional[CompetitorAnalysis]:
-        """Analyze YouTube competitor."""        return None  # Placeholder
+        """Analyze YouTube competitor."""
+        return None  # Placeholder
     
     async def _analyze_tiktok_competitor(self, username: str) -> Optional[CompetitorAnalysis]:
-        """Analyze TikTok competitor."""        return None  # Placeholder
+        """Analyze TikTok competitor."""
+        return None  # Placeholder
     
     async def _analyze_instagram_competitor(self, username: str) -> Optional[CompetitorAnalysis]:
-        """Analyze Instagram competitor."""        return None  # Placeholder
+        """Analyze Instagram competitor."""
+        return None  # Placeholder
     
     async def _analyze_twitter_competitor(self, username: str) -> Optional[CompetitorAnalysis]:
-        """Analyze Twitter competitor."""        return None  # Placeholder
+        """Analyze Twitter competitor."""
+        return None  # Placeholder
     
     async def _analyze_spotify_competitor(self, username: str) -> Optional[CompetitorAnalysis]:
-        """Analyze Spotify competitor."""        return None  # Placeholder
+        """Analyze Spotify competitor."""
+        return None  # Placeholder
     
     async def _analyze_generic_competitor(self, username: str, platform: PlatformType) -> Optional[CompetitorAnalysis]:
-        """Analyze competitor on generic platform."""        return None  # Placeholder
+        """Analyze competitor on generic platform."""
+        return None  # Placeholder
     
     async def _identify_content_gaps(self, trends: List[TrendAnalysis], categories: List[MarketCategory]) -> List[MarketOpportunity]:
-        """Identify content gaps in the market."""        return []  # Placeholder
+        """Identify content gaps in the market."""
+        return []  # Placeholder
     
     async def _identify_audience_gaps(self, trends: List[TrendAnalysis], platforms: List[PlatformType]) -> List[MarketOpportunity]:
-        """Identify underserved audience segments."""        return []  # Placeholder
+        """Identify underserved audience segments."""
+        return []  # Placeholder
     
     async def _identify_hashtag_opportunities(self, platforms: List[PlatformType]) -> List[MarketOpportunity]:
-        """Identify hashtag opportunities."""        return []  # Placeholder
+        """Identify hashtag opportunities."""
+        return []  # Placeholder
     
     async def _identify_collaboration_opportunities(self, trends: List[TrendAnalysis]) -> List[MarketOpportunity]:
-        """Identify collaboration opportunities."""        return []  # Placeholder
+        """Identify collaboration opportunities."""
+        return []  # Placeholder
     
     async def _analyze_hashtag_on_platform(self, hashtag: str, platform: PlatformType, time_range: timedelta) -> Optional[HashtagAnalysis]:
-        """Analyze hashtag performance on specific platform."""        return None  # Placeholder
+        """Analyze hashtag performance on specific platform."""
+        return None  # Placeholder
 
 # Supporting classes for market intelligence
 class TrendAnalyzer:
-    """Advanced trend analysis and pattern recognition system."""    
+    """Advanced trend analysis and pattern recognition system."""
+    
     def __init__(self):
         self.analysis_models = {}
         
     async def analyze_trend(self, trend_data: Dict) -> TrendAnalysis:
-        """Perform comprehensive trend analysis."""        pass
+        """Perform comprehensive trend analysis."""
+        pass
 
 class CompetitorTracker:
-    """Competitor tracking and benchmarking system."""    
+    """Competitor tracking and benchmarking system."""
+    
     def __init__(self):
         self.tracking_data = {}
         
     async def track_competitor(self, competitor_id: str) -> CompetitorAnalysis:
-        """Track competitor performance."""        pass
+        """Track competitor performance."""
+        pass
 
 class OpportunityDetector:
-    """Market opportunity detection and scoring system."""    
+    """Market opportunity detection and scoring system."""
+    
     def __init__(self):
         self.detection_algorithms = {}
         
     async def detect_opportunities(self, market_data: Dict) -> List[MarketOpportunity]:
-        """Detect market opportunities."""        pass
+        """Detect market opportunities."""
+        pass
 
 class HashtagAnalyzer:
-    """Hashtag performance analysis and optimization system."""    
+    """Hashtag performance analysis and optimization system."""
+    
     def __init__(self):
         self.hashtag_data = {}
         
     async def analyze_hashtag(self, hashtag: str) -> HashtagAnalysis:
-        """Analyze hashtag performance."""        pass
+        """Analyze hashtag performance."""
+        pass
 
 class MarketPredictor:
-    """Market trend prediction and forecasting system."""    
+    """Market trend prediction and forecasting system."""
+    
     def __init__(self):
         self.prediction_models = {}
         
     async def predict_trends(self, historical_data: List[Dict]) -> List[TrendAnalysis]:
-        """Predict future trends."""        pass
+        """Predict future trends."""
+        pass
 
 class IntelligenceDatabase:
-    """Market intelligence data storage and management."""    
+    """Market intelligence data storage and management."""
+    
     def __init__(self):
         self.data_store = {}
         
     async def store_intelligence(self, data: Dict) -> bool:
-        """Store intelligence data."""        return True
+        """Store intelligence data."""
+        return True
 
 class AnalyticsEngine:
-    """Advanced analytics and insights generation."""    
+    """Advanced analytics and insights generation."""
+    
     def __init__(self):
         self.analytics_models = {}
         
     async def generate_insights(self, data: List[Dict]) -> Dict[str, Any]:
-        """Generate analytical insights."""        return {}
+        """Generate analytical insights."""
+        return {}
 
 class ReportingSystem:
-    """Intelligence reporting and visualization system."""    
+    """Intelligence reporting and visualization system."""
+    
     def __init__(self):
         self.report_templates = {}
         
     async def generate_report(self, intelligence_data: Dict) -> Dict[str, Any]:
-        """Generate intelligence report."""        return {}
+        """Generate intelligence report."""
+        return {}

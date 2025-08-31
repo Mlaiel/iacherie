@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 import uuid
 import pickle
@@ -56,7 +57,8 @@ logger = logging.getLogger(__name__)
 
 
 class JobStatus(Enum):
-    """Job status enumeration"""    PENDING = "pending"
+    """Job status enumeration"""
+    PENDING = "pending"
     QUEUED = "queued"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -66,7 +68,8 @@ class JobStatus(Enum):
 
 
 class JobPriority(Enum):
-    """Job priority levels"""    LOW = 1
+    """Job priority levels"""
+    LOW = 1
     NORMAL = 2
     HIGH = 3
     URGENT = 4
@@ -74,7 +77,8 @@ class JobPriority(Enum):
 
 
 class ProcessingStrategy(Enum):
-    """Processing strategies"""    SEQUENTIAL = "sequential"
+    """Processing strategies"""
+    SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     DISTRIBUTED = "distributed"
     ADAPTIVE = "adaptive"
@@ -82,7 +86,8 @@ class ProcessingStrategy(Enum):
 
 @dataclass
 class BatchJob:
-    """Batch processing job definition"""    job_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Batch processing job definition"""
+    job_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     job_name: str = ""
     description: str = ""
     
@@ -131,15 +136,18 @@ class BatchJob:
     tags: List[str] = field(default_factory=list)
     
     def update_progress(self):
-        """Update progress percentage"""        if self.total_items > 0:
+        """Update progress percentage"""
+        if self.total_items > 0:
             self.progress_percentage = (self.processed_items / self.total_items) * 100
     
     def add_error(self, error_message: str):
-        """Add error to log"""        timestamp = datetime.now(timezone.utc).isoformat()
+        """Add error to log"""
+        timestamp = datetime.now(timezone.utc).isoformat()
         self.error_log.append(f"[{timestamp}] {error_message}")
         
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        data = asdict(self)
+        """Convert to dictionary"""
+        data = asdict(self)
         # Convert datetime objects to ISO strings
         for field in ['created_at', 'started_at', 'completed_at', 'scheduled_at', 'deadline']:
             if data[field]:
@@ -149,7 +157,8 @@ class BatchJob:
 
 @dataclass
 class BatchConfiguration:
-    """Batch processing configuration"""    max_concurrent_jobs: int = 5
+    """Batch processing configuration"""
+    max_concurrent_jobs: int = 5
     default_workers: int = 4
     enable_distributed: bool = False
     redis_url: Optional[str] = None
@@ -164,7 +173,8 @@ class BatchConfiguration:
 
 @dataclass
 class ProcessingResult:
-    """Processing result for individual item"""    item_id: str
+    """Processing result for individual item"""
+    item_id: str
     input_file: str
     output_file: Optional[str] = None
     success: bool = True
@@ -174,7 +184,8 @@ class ProcessingResult:
 
 
 class MultimediaBatchProcessor:
-    """Enterprise multimedia batch processor"""    
+    """Enterprise multimedia batch processor"""
+    
     def __init__(self, config: BatchConfiguration):
         self.config = config
         
@@ -209,7 +220,8 @@ class MultimediaBatchProcessor:
         self.progress_handlers: List[Callable] = []
         
     async def initialize(self):
-        """Initialize the batch processor"""        try:
+        """Initialize the batch processor"""
+        try:
             # Initialize worker pool
             max_workers = min(self.config.max_concurrent_jobs, multiprocessing.cpu_count())
             self.worker_pool = concurrent.futures.ProcessPoolExecutor(max_workers=max_workers)
@@ -239,7 +251,8 @@ class MultimediaBatchProcessor:
             raise
             
     async def submit_job(self, job: BatchJob) -> str:
-        """Submit a job for processing"""        try:
+        """Submit a job for processing"""
+        try:
             # Validate job
             await self._validate_job(job)
             
@@ -273,14 +286,16 @@ class MultimediaBatchProcessor:
             raise
             
     async def get_job_status(self, job_id: str) -> Optional[BatchJob]:
-        """Get job status and details"""        if job_id in self.jobs:
+        """Get job status and details"""
+        if job_id in self.jobs:
             return self.jobs[job_id]
         elif self.database:
             return await self._load_job_from_database(job_id)
         return None
         
     async def cancel_job(self, job_id: str) -> bool:
-        """Cancel a job"""        try:
+        """Cancel a job"""
+        try:
             job = await self.get_job_status(job_id)
             if not job:
                 return False
@@ -312,7 +327,8 @@ class MultimediaBatchProcessor:
             return False
             
     async def retry_job(self, job_id: str) -> bool:
-        """Retry a failed job"""        try:
+        """Retry a failed job"""
+        try:
             job = await self.get_job_status(job_id)
             if not job or job.status != JobStatus.FAILED:
                 return False
@@ -342,7 +358,8 @@ class MultimediaBatchProcessor:
         limit: int = 100,
         offset: int = 0
     ) -> List[BatchJob]:
-        """List jobs with optional filtering"""        try:
+        """List jobs with optional filtering"""
+        try:
             jobs = list(self.jobs.values())
             
             # Filter by status
@@ -360,7 +377,8 @@ class MultimediaBatchProcessor:
             return []
             
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get processing statistics"""        try:
+        """Get processing statistics"""
+        try:
             # Update uptime
             uptime = datetime.now(timezone.utc) - self.stats["system_uptime"]
             
@@ -381,23 +399,29 @@ class MultimediaBatchProcessor:
         name: str, 
         function: Callable
     ):
-        """Register a processing function"""        self.processing_functions[name] = function
+        """Register a processing function"""
+        self.processing_functions[name] = function
         logger.info(f"Processing function registered: {name}")
         
     async def add_job_started_handler(self, handler: Callable):
-        """Add job started event handler"""        self.job_started_handlers.append(handler)
+        """Add job started event handler"""
+        self.job_started_handlers.append(handler)
         
     async def add_job_completed_handler(self, handler: Callable):
-        """Add job completed event handler"""        self.job_completed_handlers.append(handler)
+        """Add job completed event handler"""
+        self.job_completed_handlers.append(handler)
         
     async def add_job_failed_handler(self, handler: Callable):
-        """Add job failed event handler"""        self.job_failed_handlers.append(handler)
+        """Add job failed event handler"""
+        self.job_failed_handlers.append(handler)
         
     async def add_progress_handler(self, handler: Callable):
-        """Add progress update handler"""        self.progress_handlers.append(handler)
+        """Add progress update handler"""
+        self.progress_handlers.append(handler)
         
     async def health_check(self) -> Dict[str, Any]:
-        """System health check"""        try:
+        """System health check"""
+        try:
             health = {
                 "status": "healthy",
                 "timestamp": datetime.now(timezone.utc).isoformat(),
@@ -433,7 +457,8 @@ class MultimediaBatchProcessor:
     # Private methods
     
     async def _job_scheduler(self):
-        """Main job scheduling loop"""        while True:
+        """Main job scheduling loop"""
+        while True:
             try:
                 # Process scheduled jobs
                 await self._process_scheduled_jobs()
@@ -453,7 +478,8 @@ class MultimediaBatchProcessor:
                 await asyncio.sleep(5)
                 
     async def _process_scheduled_jobs(self):
-        """Process scheduled jobs that are ready"""        current_time = datetime.now(timezone.utc)
+        """Process scheduled jobs that are ready"""
+        current_time = datetime.now(timezone.utc)
         
         for job in self.jobs.values():
             if (job.status == JobStatus.PENDING and 
@@ -464,7 +490,8 @@ class MultimediaBatchProcessor:
                 await self.job_queue.put(job.job_id)
                 
     async def _start_job(self, job_id: str):
-        """Start processing a job"""        try:
+        """Start processing a job"""
+        try:
             job = self.jobs[job_id]
             job.status = JobStatus.RUNNING
             job.started_at = datetime.now(timezone.utc)
@@ -486,7 +513,8 @@ class MultimediaBatchProcessor:
             logger.error(f"Failed to start job {job_id}: {e}")
             
     async def _process_job(self, job: BatchJob):
-        """Process a batch job"""        try:
+        """Process a batch job"""
+        try:
             # Get processing function
             if job.processing_function not in self.processing_functions:
                 raise ValueError(f"Processing function not found: {job.processing_function}")
@@ -554,7 +582,8 @@ class MultimediaBatchProcessor:
                 await self._persist_job(job)
                 
     async def _process_sequential(self, job: BatchJob, processing_func: Callable):
-        """Process files sequentially"""        for i, input_file in enumerate(job.input_files):
+        """Process files sequentially"""
+        for i, input_file in enumerate(job.input_files):
             try:
                 # Process single file
                 result = await self._process_single_file(
@@ -579,7 +608,8 @@ class MultimediaBatchProcessor:
                 job.add_error(f"Error processing {input_file}: {str(e)}")
                 
     async def _process_parallel(self, job: BatchJob, processing_func: Callable):
-        """Process files in parallel"""        max_workers = job.max_workers or self.config.default_workers
+        """Process files in parallel"""
+        max_workers = job.max_workers or self.config.default_workers
         semaphore = asyncio.Semaphore(max_workers)
         
         async def process_with_semaphore(input_file):
@@ -615,7 +645,8 @@ class MultimediaBatchProcessor:
                 job.add_error(f"Error in parallel processing: {str(e)}")
                 
     async def _process_distributed(self, job: BatchJob, processing_func: Callable):
-        """Process files using distributed workers (Celery)"""        if not CELERY_AVAILABLE:
+        """Process files using distributed workers (Celery)"""
+        if not CELERY_AVAILABLE:
             logger.warning("Celery not available, falling back to parallel processing")
             await self._process_parallel(job, processing_func)
             return
@@ -625,7 +656,8 @@ class MultimediaBatchProcessor:
         await self._process_parallel(job, processing_func)
         
     async def _process_adaptive(self, job: BatchJob, processing_func: Callable):
-        """Adaptively choose processing strategy based on job characteristics"""        # Simple heuristics for choosing strategy
+        """Adaptively choose processing strategy based on job characteristics"""
+        # Simple heuristics for choosing strategy
         if len(job.input_files) < 10:
             await self._process_sequential(job, processing_func)
         elif len(job.input_files) < 100:
@@ -640,7 +672,8 @@ class MultimediaBatchProcessor:
         parameters: Dict[str, Any],
         output_directory: str
     ) -> ProcessingResult:
-        """Process a single file"""        start_time = datetime.now()
+        """Process a single file"""
+        start_time = datetime.now()
         result = ProcessingResult(
             item_id=str(uuid.uuid4()),
             input_file=input_file
@@ -678,14 +711,16 @@ class MultimediaBatchProcessor:
         return result
         
     async def _trigger_progress_handlers(self, job: BatchJob):
-        """Trigger progress update handlers"""        for handler in self.progress_handlers:
+        """Trigger progress update handlers"""
+        for handler in self.progress_handlers:
             try:
                 await self._call_handler(handler, job)
             except Exception as e:
                 logger.error(f"Progress handler error: {e}")
                 
     async def _call_handler(self, handler: Callable, data: Any):
-        """Call event handler safely"""        try:
+        """Call event handler safely"""
+        try:
             if asyncio.iscoroutinefunction(handler):
                 await handler(data)
             else:
@@ -694,7 +729,8 @@ class MultimediaBatchProcessor:
             logger.error(f"Handler execution failed: {e}")
             
     async def _validate_job(self, job: BatchJob):
-        """Validate job configuration"""        if not job.job_name:
+        """Validate job configuration"""
+        if not job.job_name:
             job.job_name = f"Job_{job.job_id[:8]}"
             
         if not job.input_files:
@@ -719,7 +755,8 @@ class MultimediaBatchProcessor:
         Path(job.output_directory).mkdir(parents=True, exist_ok=True)
         
     async def _cleanup_task(self):
-        """Cleanup completed jobs periodically"""        while True:
+        """Cleanup completed jobs periodically"""
+        while True:
             try:
                 await asyncio.sleep(3600)  # Run every hour
                 
@@ -741,45 +778,53 @@ class MultimediaBatchProcessor:
                 logger.error(f"Cleanup task error: {e}")
                 
     async def _test_redis_connection(self):
-        """Test Redis connection"""        if self.redis_client:
+        """Test Redis connection"""
+        if self.redis_client:
             await self.redis_client.ping()
             logger.info("Redis connection established")
             
     async def _initialize_database(self):
-        """Initialize database connection"""        # This would implement database initialization
+        """Initialize database connection"""
+        # This would implement database initialization
         # For now, this is a placeholder
         logger.info("Database connection would be initialized here")
         
     async def _persist_job(self, job: BatchJob):
-        """Persist job to database"""        # This would implement job persistence
+        """Persist job to database"""
+        # This would implement job persistence
         # For now, this is a placeholder
         pass
         
     async def _load_job_from_database(self, job_id: str) -> Optional[BatchJob]:
-        """Load job from database"""        # This would implement job loading from database
+        """Load job from database"""
+        # This would implement job loading from database
         # For now, return None
         return None
         
     async def _register_default_functions(self):
-        """Register default processing functions"""        # Register basic image processing
+        """Register default processing functions"""
+        # Register basic image processing
         await self.register_processing_function("resize_image", self._resize_image)
         await self.register_processing_function("convert_format", self._convert_format)
         await self.register_processing_function("extract_metadata", self._extract_metadata)
         
     async def _resize_image(self, input_file: str, output_file: str, **kwargs):
-        """Default image resize function"""        # This would implement actual image resizing
+        """Default image resize function"""
+        # This would implement actual image resizing
         # For now, just copy the file
         import shutil
         shutil.copy2(input_file, output_file)
         
     async def _convert_format(self, input_file: str, output_file: str, **kwargs):
-        """Default format conversion function"""        # This would implement actual format conversion
+        """Default format conversion function"""
+        # This would implement actual format conversion
         # For now, just copy the file
         import shutil
         shutil.copy2(input_file, output_file)
         
     async def _extract_metadata(self, input_file: str, output_file: str, **kwargs):
-        """Default metadata extraction function"""        # This would implement actual metadata extraction
+        """Default metadata extraction function"""
+        # This would implement actual metadata extraction
         # For now, create a simple metadata file
         metadata = {"file": input_file, "extracted_at": datetime.now().isoformat()}
         with open(output_file, 'w') as f:

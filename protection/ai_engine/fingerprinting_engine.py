@@ -25,7 +25,8 @@ UNAUTHORIZED USE IS STRICTLY PROHIBITED:
 
 Legal violations will result in immediate prosecution under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
-"""import logging
+"""
+import logging
 import asyncio
 import hashlib
 import numpy as np
@@ -75,8 +76,10 @@ class ContentFingerprint(Base):
     metadata = Column(Text)
 
 class ContentFingerprintEngine:
-    """    Enterprise-grade content fingerprinting engine for robust content identification
-    """    
+    """
+    Enterprise-grade content fingerprinting engine for robust content identification
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.similarity_thresholds = config.get('similarity_thresholds', {
@@ -129,7 +132,8 @@ class ContentFingerprintEngine:
         logger.info("Content Fingerprinting Engine initialized")
     
     def _init_database(self):
-        """Initialize SQLite database for fingerprint storage"""        try:
+        """Initialize SQLite database for fingerprint storage"""
+        try:
             db_path = self.config.get('database_path', 'fingerprints.db')
             self.engine = create_engine(f'sqlite:///{db_path}')
             Base.metadata.create_all(self.engine)
@@ -140,7 +144,8 @@ class ContentFingerprintEngine:
             raise
     
     def _init_redis(self):
-        """Initialize Redis cache for fast fingerprint lookup"""        try:
+        """Initialize Redis cache for fast fingerprint lookup"""
+        try:
             redis_config = self.config.get('redis', {})
             self.redis_client = redis.Redis(
                 host=redis_config.get('host', 'localhost'),
@@ -156,8 +161,10 @@ class ContentFingerprintEngine:
             self.redis_client = None
     
     async def generate_fingerprints(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """        Generate comprehensive fingerprints for content
-        """        try:
+        """
+        Generate comprehensive fingerprints for content
+        """
+        try:
             content_type = content_data.get('type', 'unknown')
             content_id = content_data.get('id')
             file_path = content_data.get('file_path')
@@ -206,8 +213,10 @@ class ContentFingerprintEngine:
         content_type: str,
         similarity_threshold: Optional[float] = None
     ) -> List[Dict[str, Any]]:
-        """        Find similar content based on fingerprints
-        """        try:
+        """
+        Find similar content based on fingerprints
+        """
+        try:
             similar_content = []
             
             for fingerprint_type, fingerprint_data in fingerprints.items():
@@ -244,7 +253,8 @@ class ContentFingerprintEngine:
     # Audio Fingerprinting Methods
     
     async def _generate_chromaprint_fingerprint(self, file_path: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate Chromaprint fingerprint for audio"""        try:
+        """Generate Chromaprint fingerprint for audio"""
+        try:
             import subprocess
             
             # Use fpcalc to generate chromaprint
@@ -278,7 +288,8 @@ class ContentFingerprintEngine:
             return None
     
     async def _generate_mfcc_fingerprint(self, file_path: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate MFCC-based fingerprint for audio"""        try:
+        """Generate MFCC-based fingerprint for audio"""
+        try:
             # Load audio
             audio, sr = librosa.load(file_path, sr=22050)
             
@@ -319,7 +330,8 @@ class ContentFingerprintEngine:
             return None
     
     async def _generate_spectral_fingerprint(self, file_path: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate spectral fingerprint for audio"""        try:
+        """Generate spectral fingerprint for audio"""
+        try:
             # Load audio
             audio, sr = librosa.load(file_path, sr=22050)
             
@@ -378,7 +390,8 @@ class ContentFingerprintEngine:
             return None
     
     async def _generate_audio_perceptual_fingerprint(self, file_path: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate perceptual fingerprint for audio"""        try:
+        """Generate perceptual fingerprint for audio"""
+        try:
             # Load audio
             audio, sr = librosa.load(file_path, sr=22050)
             
@@ -417,7 +430,8 @@ class ContentFingerprintEngine:
             return None
     
     async def _generate_wavelet_fingerprint(self, file_path: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate wavelet-based fingerprint for audio"""        try:
+        """Generate wavelet-based fingerprint for audio"""
+        try:
             # Load audio
             audio, sr = librosa.load(file_path, sr=22050)
             
@@ -461,7 +475,8 @@ class ContentFingerprintEngine:
     # Image Fingerprinting Methods
     
     async def _generate_image_perceptual_fingerprint(self, file_path: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate perceptual fingerprint for images"""        try:
+        """Generate perceptual fingerprint for images"""
+        try:
             # Load image
             image = Image.open(file_path).convert('RGB')
             
@@ -490,7 +505,8 @@ class ContentFingerprintEngine:
             return None
     
     async def _generate_image_feature_fingerprint(self, file_path: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate feature-based fingerprint for images"""        try:
+        """Generate feature-based fingerprint for images"""
+        try:
             # Load image
             image_cv = cv2.imread(file_path)
             gray = cv2.cvtColor(image_cv, cv2.COLOR_BGR2GRAY)
@@ -536,7 +552,8 @@ class ContentFingerprintEngine:
             return None
     
     async def _generate_color_fingerprint(self, file_path: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate color-based fingerprint for images"""        try:
+        """Generate color-based fingerprint for images"""
+        try:
             # Load image
             image_cv = cv2.imread(file_path)
             
@@ -588,7 +605,8 @@ class ContentFingerprintEngine:
             return None
     
     async def _generate_texture_fingerprint(self, file_path: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate texture-based fingerprint for images"""        try:
+        """Generate texture-based fingerprint for images"""
+        try:
             # Load image
             image_cv = cv2.imread(file_path)
             gray = cv2.cvtColor(image_cv, cv2.COLOR_BGR2GRAY)
@@ -636,7 +654,8 @@ class ContentFingerprintEngine:
             return None
     
     async def _generate_geometric_fingerprint(self, file_path: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate geometric fingerprint for images"""        try:
+        """Generate geometric fingerprint for images"""
+        try:
             # Load image
             image_cv = cv2.imread(file_path)
             gray = cv2.cvtColor(image_cv, cv2.COLOR_BGR2GRAY)
@@ -687,7 +706,8 @@ class ContentFingerprintEngine:
     # Video Fingerprinting Methods
     
     async def _generate_video_frame_fingerprint(self, file_path: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate frame-based fingerprint for videos"""        try:
+        """Generate frame-based fingerprint for videos"""
+        try:
             cap = cv2.VideoCapture(file_path)
             frame_hashes = []
             frame_count = 0
@@ -744,7 +764,8 @@ class ContentFingerprintEngine:
             return None
     
     async def _generate_motion_fingerprint(self, file_path: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate motion-based fingerprint for videos"""        try:
+        """Generate motion-based fingerprint for videos"""
+        try:
             cap = cv2.VideoCapture(file_path)
             
             # Motion detection setup
@@ -800,7 +821,8 @@ class ContentFingerprintEngine:
             return None
     
     async def _generate_scene_fingerprint(self, file_path: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate scene-based fingerprint for videos"""        try:
+        """Generate scene-based fingerprint for videos"""
+        try:
             cap = cv2.VideoCapture(file_path)
             prev_hist = None
             scene_changes = []
@@ -855,7 +877,8 @@ class ContentFingerprintEngine:
             return None
     
     async def _generate_temporal_fingerprint(self, file_path: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate temporal fingerprint for videos"""        try:
+        """Generate temporal fingerprint for videos"""
+        try:
             cap = cv2.VideoCapture(file_path)
             fps = cap.get(cv2.CAP_PROP_FPS)
             total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -913,7 +936,8 @@ class ContentFingerprintEngine:
     # Text Fingerprinting Methods
     
     async def _generate_semantic_fingerprint(self, text: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate semantic fingerprint for text"""        try:
+        """Generate semantic fingerprint for text"""
+        try:
             # TF-IDF vectorization
             vectorizer = TfidfVectorizer(
                 max_features=1000,
@@ -950,7 +974,8 @@ class ContentFingerprintEngine:
             return None
     
     async def _generate_structural_fingerprint(self, text: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate structural fingerprint for text"""        try:
+        """Generate structural fingerprint for text"""
+        try:
             import re
             
             # Structural features
@@ -992,7 +1017,8 @@ class ContentFingerprintEngine:
             return None
     
     async def _generate_stylistic_fingerprint(self, text: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate stylistic fingerprint for text"""        try:
+        """Generate stylistic fingerprint for text"""
+        try:
             import re
             from collections import Counter
             
@@ -1037,7 +1063,8 @@ class ContentFingerprintEngine:
             return None
     
     async def _generate_content_fingerprint(self, text: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate content-based fingerprint for text"""        try:
+        """Generate content-based fingerprint for text"""
+        try:
             # Content hashes
             content_hashes = {
                 'md5': hashlib.md5(text.encode()).hexdigest(),
@@ -1078,7 +1105,8 @@ class ContentFingerprintEngine:
     # Cross-Modal and Utility Methods
     
     async def _generate_cross_modal_fingerprints(self, content_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Generate cross-modal fingerprints for content that spans multiple modalities"""        try:
+        """Generate cross-modal fingerprints for content that spans multiple modalities"""
+        try:
             # This would be implemented for content that has multiple modalities
             # E.g., video with audio, image with text overlay, etc.
             content_type = content_data.get('type')
@@ -1096,7 +1124,8 @@ class ContentFingerprintEngine:
             return None
     
     async def _store_fingerprint(self, content_id: str, content_type: str, fingerprint_type: str, fingerprint_data: Dict[str, Any]):
-        """Store fingerprint in database"""        try:
+        """Store fingerprint in database"""
+        try:
             session = self.Session()
             
             fingerprint_record = ContentFingerprint(
@@ -1123,7 +1152,8 @@ class ContentFingerprintEngine:
             logger.error(f"Fingerprint storage failed: {str(e)}")
     
     async def _search_similar_fingerprints(self, fingerprint_type: str, fingerprint_data: Dict[str, Any], threshold: float) -> List[Dict[str, Any]]:
-        """Search for similar fingerprints in database"""        try:
+        """Search for similar fingerprints in database"""
+        try:
             # This is a simplified implementation
             # In production, you would use more sophisticated similarity search
             # possibly with vector databases like Faiss, Pinecone, or Weaviate
@@ -1162,7 +1192,8 @@ class ContentFingerprintEngine:
             return []
     
     def _calculate_similarity(self, fp1: Dict[str, Any], fp2: Dict[str, Any], fingerprint_type: str) -> float:
-        """Calculate similarity between two fingerprints"""        try:
+        """Calculate similarity between two fingerprints"""
+        try:
             if fingerprint_type in ['chromaprint']:
                 # For chromaprint, compare the fingerprint strings
                 if 'fingerprint' in fp1 and 'fingerprint' in fp2:
@@ -1194,7 +1225,8 @@ class ContentFingerprintEngine:
             return 0.0
     
     def _chromaprint_similarity(self, fp1: str, fp2: str) -> float:
-        """Calculate similarity between Chromaprint fingerprints"""        try:
+        """Calculate similarity between Chromaprint fingerprints"""
+        try:
             # Convert hex strings to integers and calculate bit similarity
             if len(fp1) != len(fp2):
                 return 0.0
@@ -1207,7 +1239,8 @@ class ContentFingerprintEngine:
             return 0.0
     
     def _hamming_similarity(self, fp1: str, fp2: str) -> float:
-        """Calculate Hamming similarity between perceptual hashes"""        try:
+        """Calculate Hamming similarity between perceptual hashes"""
+        try:
             if len(fp1) != len(fp2):
                 return 0.0
             
@@ -1222,7 +1255,8 @@ class ContentFingerprintEngine:
             return 0.0
     
     def _feature_similarity(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Calculate similarity between feature-based fingerprints"""        try:
+        """Calculate similarity between feature-based fingerprints"""
+        try:
             # Extract comparable features
             features1 = []
             features2 = []
@@ -1256,7 +1290,8 @@ class ContentFingerprintEngine:
             return 0.0
     
     def _semantic_similarity(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Calculate semantic similarity between text fingerprints"""        try:
+        """Calculate semantic similarity between text fingerprints"""
+        try:
             # Compare top terms
             if 'top_terms' in fp1 and 'top_terms' in fp2:
                 terms1 = set(term for term, score in fp1['top_terms'])
@@ -1276,25 +1311,29 @@ class ContentFingerprintEngine:
     # Utility methods
     
     def _calculate_skewness(self, data: np.ndarray) -> np.ndarray:
-        """Calculate skewness of data"""        mean_val = np.mean(data, axis=1, keepdims=True)
+        """Calculate skewness of data"""
+        mean_val = np.mean(data, axis=1, keepdims=True)
         std_val = np.std(data, axis=1, keepdims=True)
         normalized = (data - mean_val) / (std_val + 1e-8)
         return np.mean(normalized**3, axis=1)
     
     def _calculate_kurtosis(self, data: np.ndarray) -> np.ndarray:
-        """Calculate kurtosis of data"""        mean_val = np.mean(data, axis=1, keepdims=True)
+        """Calculate kurtosis of data"""
+        mean_val = np.mean(data, axis=1, keepdims=True)
         std_val = np.std(data, axis=1, keepdims=True)
         normalized = (data - mean_val) / (std_val + 1e-8)
         return np.mean(normalized**4, axis=1) - 3
     
     def _calculate_entropy(self, signal: np.ndarray) -> float:
-        """Calculate entropy of signal"""        hist, _ = np.histogram(signal, bins=50)
+        """Calculate entropy of signal"""
+        hist, _ = np.histogram(signal, bins=50)
         hist = hist / np.sum(hist)
         hist = hist[hist > 0]  # Remove zeros
         return -np.sum(hist * np.log2(hist))
     
     def _kmeans_descriptors(self, descriptors: np.ndarray, k: int = 64) -> np.ndarray:
-        """Perform k-means clustering on descriptors"""        try:
+        """Perform k-means clustering on descriptors"""
+        try:
             from sklearn.cluster import KMeans
             
             if len(descriptors) < k:

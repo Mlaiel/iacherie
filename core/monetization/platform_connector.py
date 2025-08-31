@@ -3,7 +3,8 @@ Multi-platform API integration and data synchronization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -23,7 +24,8 @@ from ...core.exceptions import PlatformConnectionError, APIRateLimitError
 
 
 class PlatformStatus(Enum):
-    """Platform connection status"""    CONNECTED = "connected"
+    """Platform connection status"""
+    CONNECTED = "connected"
     DISCONNECTED = "disconnected"
     ERROR = "error"
     RATE_LIMITED = "rate_limited"
@@ -31,7 +33,8 @@ class PlatformStatus(Enum):
 
 
 class DataSyncStatus(Enum):
-    """Data synchronization status"""    PENDING = "pending"
+    """Data synchronization status"""
+    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -40,7 +43,8 @@ class DataSyncStatus(Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform API credentials"""    platform: str
+    """Platform API credentials"""
+    platform: str
     api_key: str
     secret_key: Optional[str] = None
     access_token: Optional[str] = None
@@ -49,14 +53,16 @@ class PlatformCredentials:
     scopes: List[str] = None
     
     def is_expired(self) -> bool:
-        """Check if credentials are expired"""        if not self.expires_at:
+        """Check if credentials are expired"""
+        if not self.expires_at:
             return False
         return datetime.now() >= self.expires_at
 
 
 @dataclass
 class PlatformMetrics:
-    """Platform performance metrics"""    platform: str
+    """Platform performance metrics"""
+    platform: str
     user_id: int
     followers_count: int
     total_plays: int
@@ -70,7 +76,8 @@ class PlatformMetrics:
 
 @dataclass
 class SyncResult:
-    """Data synchronization result"""    platform: str
+    """Data synchronization result"""
+    platform: str
     status: DataSyncStatus
     records_synced: int
     errors: List[str]
@@ -79,7 +86,8 @@ class SyncResult:
 
 
 class PlatformConnector:
-    """Individual platform API connector"""    
+    """Individual platform API connector"""
+    
     def __init__(self, platform: str, credentials: PlatformCredentials):
         self.platform = platform
         self.credentials = credentials
@@ -90,7 +98,8 @@ class PlatformConnector:
         self.rate_limit_reset = None
         
     async def connect(self) -> bool:
-        """Establish connection to platform API"""        try:
+        """Establish connection to platform API"""
+        try:
             if self.credentials.is_expired():
                 await self.refresh_credentials()
             
@@ -121,13 +130,15 @@ class PlatformConnector:
             return False
     
     async def disconnect(self) -> None:
-        """Disconnect from platform API"""        if self.client:
+        """Disconnect from platform API"""
+        if self.client:
             await self.client.close()
             self.client = None
         self.status = PlatformStatus.DISCONNECTED
     
     async def refresh_credentials(self) -> bool:
-        """Refresh expired credentials"""        try:
+        """Refresh expired credentials"""
+        try:
             if not self.credentials.refresh_token:
                 raise PlatformConnectionError("No refresh token available")
             
@@ -150,7 +161,8 @@ class PlatformConnector:
             return False
     
     async def fetch_user_metrics(self, user_id: int) -> Optional[PlatformMetrics]:
-        """Fetch user metrics from platform"""        try:
+        """Fetch user metrics from platform"""
+        try:
             if self.status != PlatformStatus.CONNECTED:
                 await self.connect()
             
@@ -189,7 +201,8 @@ class PlatformConnector:
         start_date: datetime, 
         end_date: datetime
     ) -> SyncResult:
-        """Synchronize revenue data from platform"""        sync_start = datetime.now()
+        """Synchronize revenue data from platform"""
+        sync_start = datetime.now()
         records_synced = 0
         errors = []
         
@@ -234,7 +247,8 @@ class PlatformConnector:
         )
     
     async def _normalize_revenue_record(self, record: Dict[str, Any]) -> Dict[str, Any]:
-        """Normalize platform-specific revenue record format"""        # Platform-specific normalization logic
+        """Normalize platform-specific revenue record format"""
+        # Platform-specific normalization logic
         normalized = {
             "platform": self.platform,
             "external_id": record.get("id"),
@@ -248,7 +262,8 @@ class PlatformConnector:
         return normalized
     
     async def _refresh_spotify_token(self) -> Dict[str, Any]:
-        """Refresh Spotify access token"""        # Spotify token refresh implementation
+        """Refresh Spotify access token"""
+        # Spotify token refresh implementation
         refresh_url = "https://accounts.spotify.com/api/token"
         
         async with aiohttp.ClientSession() as session:
@@ -272,7 +287,8 @@ class PlatformConnector:
                     raise PlatformConnectionError("Failed to refresh Spotify token")
     
     async def _refresh_youtube_token(self) -> Dict[str, Any]:
-        """Refresh YouTube access token"""        # YouTube token refresh implementation
+        """Refresh YouTube access token"""
+        # YouTube token refresh implementation
         refresh_url = "https://oauth2.googleapis.com/token"
         
         async with aiohttp.ClientSession() as session:
@@ -295,7 +311,8 @@ class PlatformConnector:
 
 
 class PlatformManager:
-    """Manage multiple platform connections and data synchronization"""    
+    """Manage multiple platform connections and data synchronization"""
+    
     def __init__(self, api_key_manager: APIKeyManager):
         self.api_key_manager = api_key_manager
         self.logger = logging.getLogger(__name__)
@@ -308,7 +325,8 @@ class PlatformManager:
         platform: str, 
         credentials: PlatformCredentials
     ) -> bool:
-        """Add platform connection for user"""        try:
+        """Add platform connection for user"""
+        try:
             # Store credentials securely
             await self.api_key_manager.store_credentials(
                 user_id, platform, credentials
@@ -331,7 +349,8 @@ class PlatformManager:
             return False
     
     async def remove_platform(self, user_id: int, platform: str) -> bool:
-        """Remove platform connection for user"""        try:
+        """Remove platform connection for user"""
+        try:
             connector_key = f"{user_id}_{platform}"
             
             # Disconnect and remove connector
@@ -350,7 +369,8 @@ class PlatformManager:
             return False
     
     async def get_user_platforms(self, user_id: int) -> List[str]:
-        """Get list of connected platforms for user"""        platforms = []
+        """Get list of connected platforms for user"""
+        platforms = []
         
         for connector_key, connector in self.connectors.items():
             if connector_key.startswith(f"{user_id}_"):
@@ -359,7 +379,8 @@ class PlatformManager:
         return platforms
     
     async def get_platform_status(self, user_id: int, platform: str) -> PlatformStatus:
-        """Get connection status for specific platform"""        connector_key = f"{user_id}_{platform}"
+        """Get connection status for specific platform"""
+        connector_key = f"{user_id}_{platform}"
         
         if connector_key in self.connectors:
             return self.connectors[connector_key].status
@@ -371,7 +392,8 @@ class PlatformManager:
         user_id: int, 
         platforms: Optional[List[str]] = None
     ) -> Dict[str, SyncResult]:
-        """Synchronize data for user across platforms"""        results = {}
+        """Synchronize data for user across platforms"""
+        results = {}
         
         # Get platforms to sync
         if platforms is None:
@@ -413,7 +435,8 @@ class PlatformManager:
         self, 
         user_id: int
     ) -> Dict[str, PlatformMetrics]:
-        """Get aggregated metrics from all connected platforms"""        metrics = {}
+        """Get aggregated metrics from all connected platforms"""
+        metrics = {}
         
         platforms = await self.get_user_platforms(user_id)
         
@@ -441,7 +464,8 @@ class PlatformManager:
         self, 
         interval_hours: int = 6
     ) -> None:
-        """Schedule automated data synchronization"""        while True:
+        """Schedule automated data synchronization"""
+        while True:
             try:
                 # Get all users with connected platforms
                 users_to_sync = await self._get_users_for_sync()
@@ -462,7 +486,8 @@ class PlatformManager:
                 await asyncio.sleep(300)  # Wait 5 minutes before retrying
     
     async def _get_users_for_sync(self) -> List[int]:
-        """Get list of users that need data synchronization"""        users = set()
+        """Get list of users that need data synchronization"""
+        users = set()
         
         for connector_key in self.connectors.keys():
             user_id = int(connector_key.split("_")[0])
@@ -471,7 +496,8 @@ class PlatformManager:
         return list(users)
     
     async def reconnect_failed_platforms(self) -> None:
-        """Attempt to reconnect failed platform connections"""        for connector_key, connector in self.connectors.items():
+        """Attempt to reconnect failed platform connections"""
+        for connector_key, connector in self.connectors.items():
             if connector.status in [PlatformStatus.ERROR, PlatformStatus.DISCONNECTED]:
                 try:
                     await connector.connect()
@@ -481,7 +507,8 @@ class PlatformManager:
                     self.logger.error(f"Failed to reconnect {connector.platform}: {str(e)}")
     
     async def get_connection_health(self) -> Dict[str, Any]:
-        """Get overall connection health status"""        total_connections = len(self.connectors)
+        """Get overall connection health status"""
+        total_connections = len(self.connectors)
         connected_count = sum(
             1 for connector in self.connectors.values()
             if connector.status == PlatformStatus.CONNECTED
@@ -507,7 +534,8 @@ class PlatformManager:
         }
     
     async def close_all_connections(self) -> None:
-        """Close all platform connections"""        for connector in self.connectors.values():
+        """Close all platform connections"""
+        for connector in self.connectors.values():
             await connector.disconnect()
         
         self.connectors.clear()

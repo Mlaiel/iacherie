@@ -10,7 +10,8 @@ WARNING: This code and concept are the intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import logging
+"""
+import logging
 from enum import Enum
 from typing import Dict, List, Any, Optional, Tuple
 from dataclasses import dataclass, field
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 
 class LearningMode(Enum):
-    """Learning modes for agent adaptation."""    SUPERVISED = "supervised"
+    """Learning modes for agent adaptation."""
+    SUPERVISED = "supervised"
     UNSUPERVISED = "unsupervised"  
     REINFORCEMENT = "reinforcement"
     ACTIVE = "active"
@@ -32,7 +34,8 @@ class LearningMode(Enum):
 
 @dataclass
 class LearningMetrics:
-    """Metrics for tracking learning progress."""    accuracy: float = 0.0
+    """Metrics for tracking learning progress."""
+    accuracy: float = 0.0
     loss: float = float('inf')
     improvement_rate: float = 0.0
     confidence: float = 0.0
@@ -43,7 +46,8 @@ class LearningMetrics:
 
 @dataclass
 class PersonalizationProfile:
-    """User personalization profile."""    user_id: str
+    """User personalization profile."""
+    user_id: str
     preferences: Dict[str, Any] = field(default_factory=dict)
     behavior_patterns: Dict[str, List[float]] = field(default_factory=dict)
     interaction_history: List[Dict] = field(default_factory=list)
@@ -52,12 +56,14 @@ class PersonalizationProfile:
 
 
 class AgentLearningSystem:
-    """Advanced learning system for AI agents."""    
+    """Advanced learning system for AI agents."""
+    
     def __init__(self, 
                  learning_rate: float = 0.01,
                  adaptation_threshold: float = 0.1,
                  max_memory_size: int = 10000):
-        """Initialize the learning system."""        self.learning_rate = learning_rate
+        """Initialize the learning system."""
+        self.learning_rate = learning_rate
         self.adaptation_threshold = adaptation_threshold
         self.max_memory_size = max_memory_size
         
@@ -73,7 +79,8 @@ class AgentLearningSystem:
                              interaction_data: Dict[str, Any],
                              feedback: Optional[float] = None,
                              mode: LearningMode = LearningMode.SUPERVISED) -> bool:
-        """Learn from user interaction."""        try:
+        """Learn from user interaction."""
+        try:
             # Store interaction in memory
             self.memory.append({
                 'data': interaction_data,
@@ -105,7 +112,8 @@ class AgentLearningSystem:
             return False
     
     def _supervised_learning(self, data: Dict, feedback: float):
-        """Supervised learning implementation."""        # Simple gradient-like update
+        """Supervised learning implementation."""
+        # Simple gradient-like update
         error = feedback - self._predict(data)
         self.metrics.loss = abs(error)
         
@@ -120,7 +128,8 @@ class AgentLearningSystem:
             })
     
     def _reinforcement_learning(self, data: Dict, reward: float):
-        """Reinforcement learning implementation."""        # Q-learning inspired update
+        """Reinforcement learning implementation."""
+        # Q-learning inspired update
         current_value = self._get_state_value(data)
         new_value = current_value + self.learning_rate * (reward - current_value)
         self._update_state_value(data, new_value)
@@ -130,7 +139,8 @@ class AgentLearningSystem:
             self.metrics.improvement_rate += 0.1
     
     def _unsupervised_learning(self, data: Dict):
-        """Unsupervised learning implementation."""        # Pattern recognition and clustering
+        """Unsupervised learning implementation."""
+        # Pattern recognition and clustering
         patterns = self._extract_patterns(data)
         for pattern in patterns:
             if pattern not in self.knowledge_base:
@@ -139,7 +149,8 @@ class AgentLearningSystem:
             self.knowledge_base[pattern]['contexts'].append(data)
     
     def _predict(self, data: Dict) -> float:
-        """Predict outcome based on current knowledge."""        # Simple prediction based on knowledge base
+        """Predict outcome based on current knowledge."""
+        # Simple prediction based on knowledge base
         prediction = 0.5  # Default neutral prediction
         
         for key, value in data.items():
@@ -152,17 +163,20 @@ class AgentLearningSystem:
         return prediction
     
     def _get_state_value(self, data: Dict) -> float:
-        """Get current state value."""        state_key = str(sorted(data.items()))
+        """Get current state value."""
+        state_key = str(sorted(data.items()))
         return self.knowledge_base.get(state_key, {}).get('value', 0.0)
     
     def _update_state_value(self, data: Dict, value: float):
-        """Update state value."""        state_key = str(sorted(data.items()))
+        """Update state value."""
+        state_key = str(sorted(data.items()))
         if state_key not in self.knowledge_base:
             self.knowledge_base[state_key] = {}
         self.knowledge_base[state_key]['value'] = value
     
     def _extract_patterns(self, data: Dict) -> List[str]:
-        """Extract patterns from data."""        patterns = []
+        """Extract patterns from data."""
+        patterns = []
         for key, value in data.items():
             if isinstance(value, str):
                 patterns.append(f"{key}:{value}")
@@ -171,7 +185,8 @@ class AgentLearningSystem:
         return patterns
     
     def adapt_behavior(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Adapt agent behavior based on learning."""        try:
+        """Adapt agent behavior based on learning."""
+        try:
             adaptations = {}
             
             # Check if adaptation is needed
@@ -203,7 +218,8 @@ class AgentLearningSystem:
             return {}
     
     def get_learning_progress(self) -> Dict[str, Any]:
-        """Get current learning progress."""        return {
+        """Get current learning progress."""
+        return {
             'metrics': {
                 'samples_processed': self.metrics.samples_processed,
                 'learning_cycles': self.metrics.learning_cycles,
@@ -216,7 +232,8 @@ class AgentLearningSystem:
         }
     
     def reset_learning(self):
-        """Reset learning state."""        self.metrics = LearningMetrics()
+        """Reset learning state."""
+        self.metrics = LearningMetrics()
         self.memory = []
         self.knowledge_base = {}
         self.adaptation_history = []
@@ -224,27 +241,32 @@ class AgentLearningSystem:
 
 
 class PersonalizationEngine:
-    """Engine for personalizing user experience."""    
+    """Engine for personalizing user experience."""
+    
     def __init__(self):
-        """Initialize personalization engine."""        self.profiles = {}
+        """Initialize personalization engine."""
+        self.profiles = {}
         self.global_patterns = {}
         self.learning_system = AgentLearningSystem()
         
         logger.info("Personalization engine initialized")
     
     def create_profile(self, user_id: str) -> PersonalizationProfile:
-        """Create new user personalization profile."""        profile = PersonalizationProfile(user_id=user_id)
+        """Create new user personalization profile."""
+        profile = PersonalizationProfile(user_id=user_id)
         self.profiles[user_id] = profile
         logger.info(f"Created personalization profile for user {user_id}")
         return profile
     
     def get_profile(self, user_id: str) -> Optional[PersonalizationProfile]:
-        """Get user personalization profile."""        return self.profiles.get(user_id)
+        """Get user personalization profile."""
+        return self.profiles.get(user_id)
     
     def update_preferences(self, 
                           user_id: str, 
                           preferences: Dict[str, Any]) -> bool:
-        """Update user preferences."""        try:
+        """Update user preferences."""
+        try:
             if user_id not in self.profiles:
                 self.create_profile(user_id)
             
@@ -270,7 +292,8 @@ class PersonalizationEngine:
                       user_id: str, 
                       action: str, 
                       context: Dict[str, Any]) -> bool:
-        """Track user behavior for personalization."""        try:
+        """Track user behavior for personalization."""
+        try:
             if user_id not in self.profiles:
                 self.create_profile(user_id)
             
@@ -313,7 +336,8 @@ class PersonalizationEngine:
     def get_recommendations(self, 
                            user_id: str, 
                            context: Optional[Dict] = None) -> List[Dict]:
-        """Get personalized recommendations for user."""        try:
+        """Get personalized recommendations for user."""
+        try:
             profile = self.get_profile(user_id)
             if not profile:
                 return []
@@ -353,7 +377,8 @@ class PersonalizationEngine:
     def adapt_interface(self, 
                        user_id: str, 
                        interface_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Adapt interface based on user personalization."""        try:
+        """Adapt interface based on user personalization."""
+        try:
             profile = self.get_profile(user_id)
             if not profile:
                 return interface_config

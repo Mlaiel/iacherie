@@ -1,76 +1,22 @@
 #!/usr/bin/env python3
-"""Worldwide Multilingual Support Validation Script
+"""Worldwide Multilingual Support Validation Script.
+
 ===============================================
 
-Validates the enhanced multilingual support for "parler et comprendre 
+Validates the enhanced multilingual support for "parler et comprendre
 tous les langues et dialecte locale du monde entier"
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import os
+"""
+import os
 import sys
 import re
 from typing import List, Dict, Set
 
 def extract_languages_from_file(file_path: str) -> List[str]:
-    """Extract language entries from language_manager.py"""    try:
-        with open(file_path, 'r', encoding='utf-8') as f:
-            content = f.read()
-        
-        # Find all language enum entries
-        pattern = r'    ([A-Z_]+) = "([^"]+)"'
-        matches = re.findall(pattern, content)
-        
-        return [(name, code) for name, code in matches]
-    except Exception as e:
-        print(f"Error reading file: {e}")
-        return []
-
-def extract_localizations_from_file(file_path: str) -> List[str]:
-    """Extract localization entries from dialect_localization.py"""    try:
-        with open(file_path, 'r', encoding='utf-8') as f:
-            content = f.read()
-        
-        # Find all localization entries
-        pattern = r'"([^"]+)": DialectLocalization\('
-        matches = re.findall(pattern, content)
-        
-        return matches
-    except Exception as e:
-        print(f"Error reading file: {e}")
-        return []
-
-def analyze_language_coverage(languages: List[tuple]) -> Dict[str, List[str]]:
-    """Analyze language coverage by region/family"""    
-    # Regional language samples for coverage analysis
-    regional_mapping = {
-        'North America': ['en', 'en_US', 'en_CA', 'fr_CA', 'es_MX'],
-        'South America': ['es_AR', 'es_CL', 'pt_BR', 'ay', 'gn_PY'],
-        'Europe': ['de', 'fr', 'es', 'it', 'pl', 'ru', 'sv', 'no'],
-        'Africa': ['sw', 'yo', 'ig', 'am_ET', 'om', 'rw', 'mg', 'ar_EG'],
-        'Asia': ['zh_CN', 'ja', 'ko', 'hi', 'bn', 'th', 'vi', 'kk', 'uz'],
-        'Middle East': ['ar', 'fa', 'tr', 'he', 'ku', 'ckb'],
-        'Oceania': ['mi', 'fj', 'to', 'sm', 'tpi'],
-        'Sign Languages': ['ase', 'bfi', 'fsl', 'gsg', 'jsl', 'csl', 'ils'],
-        'Indigenous': ['qu', 'nah', 'ay', 'gn', 'chr', 'nv', 'iu', 'se']
-    }
+    """Extract language entries from language_manager.py."""
     
-    language_codes = [code for _, code in languages]
-    coverage_report = {}
-    
-    for region, sample_codes in regional_mapping.items():
-        present = [code for code in sample_codes if code in language_codes]
-        coverage_report[region] = {
-            'total_sample': len(sample_codes),
-            'present': len(present),
-            'coverage_percent': (len(present) / len(sample_codes)) * 100,
-            'present_languages': present
-        }
-    
-    return coverage_report
-
-def main():
-    """Main validation function"""    
     print("🌍 VALIDATION: Enhanced Worldwide Multilingual Support")
     print("=" * 60)
     

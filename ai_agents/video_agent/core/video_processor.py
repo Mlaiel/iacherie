@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 import os
 import tempfile
@@ -51,20 +52,23 @@ from ...models.video_models import VideoContent, ProcessingJob
 logger = logging.getLogger(__name__)
 
 class VideoCodec:
-    """Video codec specifications and configurations"""    H264 = {"name": "libx264", "quality": "high", "compatibility": "excellent"}
+    """Video codec specifications and configurations"""
+    H264 = {"name": "libx264", "quality": "high", "compatibility": "excellent"}
     H265 = {"name": "libx265", "quality": "highest", "compatibility": "good"}
     VP8 = {"name": "libvpx", "quality": "good", "compatibility": "good"}
     VP9 = {"name": "libvpx-vp9", "quality": "high", "compatibility": "good"}
     AV1 = {"name": "libaom-av1", "quality": "highest", "compatibility": "limited"}
 
 class AudioCodec:
-    """Audio codec specifications"""    AAC = {"name": "aac", "quality": "high", "bitrate": "128k"}
+    """Audio codec specifications"""
+    AAC = {"name": "aac", "quality": "high", "bitrate": "128k"}
     MP3 = {"name": "mp3", "quality": "good", "bitrate": "128k"}
     OPUS = {"name": "libopus", "quality": "highest", "bitrate": "96k"}
     VORBIS = {"name": "libvorbis", "quality": "good", "bitrate": "128k"}
 
 class ProcessingProfile:
-    """Pre-defined processing profiles for different use cases"""    SOCIAL_MEDIA = {
+    """Pre-defined processing profiles for different use cases"""
+    SOCIAL_MEDIA = {
         "resolution": "1080p",
         "fps": 30,
         "bitrate": "2500k",
@@ -97,17 +101,21 @@ class ProcessingProfile:
     }
 
 class VideoProcessor:
-    """    Advanced video processing engine with comprehensive format support and AI enhancement.
+    """
+    Advanced video processing engine with comprehensive format support and AI enhancement.
     
     Provides industrial-grade video processing capabilities including format conversion,
     quality enhancement, compression, and advanced analysis.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize VideoProcessor with advanced configuration.
+        """
+        Initialize VideoProcessor with advanced configuration.
         
         Args:
             config: Optional configuration dictionary
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         self.temp_dir = Path(tempfile.gettempdir()) / "video_processor" / str(uuid.uuid4())
         self.temp_dir.mkdir(parents=True, exist_ok=True)
         
@@ -130,7 +138,8 @@ class VideoProcessor:
                           output_path: Optional[str] = None,
                           profile: Optional[str] = None,
                           custom_params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """        Process video with specified operations and parameters.
+        """
+        Process video with specified operations and parameters.
         
         Args:
             input_path: Path to input video file
@@ -141,7 +150,8 @@ class VideoProcessor:
             
         Returns:
             Processing results with output information
-        """        if not os.path.exists(input_path):
+        """
+        if not os.path.exists(input_path):
             raise FileNotFoundError(f"Input video file not found: {input_path}")
         
         # Validate file size
@@ -212,14 +222,16 @@ class VideoProcessor:
             raise
     
     async def _get_video_info(self, video_path: str) -> Dict[str, Any]:
-        """        Extract comprehensive video information using ffprobe.
+        """
+        Extract comprehensive video information using ffprobe.
         
         Args:
             video_path: Path to video file
             
         Returns:
             Video information dictionary
-        """        try:
+        """
+        try:
             probe = ffmpeg.probe(video_path)
             
             # Extract video stream info
@@ -261,7 +273,8 @@ class VideoProcessor:
     
     async def _execute_operation(self, operation: str, input_path: str, 
                                params: Dict[str, Any]) -> Dict[str, Any]:
-        """        Execute a specific video processing operation.
+        """
+        Execute a specific video processing operation.
         
         Args:
             operation: Operation type to execute
@@ -270,7 +283,8 @@ class VideoProcessor:
             
         Returns:
             Operation result with output path
-        """        operation_lower = operation.lower()
+        """
+        operation_lower = operation.lower()
         output_path = str(self.temp_dir / f"temp_{uuid.uuid4()}.mp4")
         
         if operation_lower == "convert":
@@ -294,7 +308,8 @@ class VideoProcessor:
     
     async def _convert_format(self, input_path: str, output_path: str, 
                             params: Dict[str, Any]) -> Dict[str, Any]:
-        """        Convert video to different format with optimized settings.
+        """
+        Convert video to different format with optimized settings.
         
         Args:
             input_path: Input video path
@@ -303,7 +318,8 @@ class VideoProcessor:
             
         Returns:
             Conversion result
-        """        target_format = params.get("format", "mp4")
+        """
+        target_format = params.get("format", "mp4")
         video_codec = params.get("video_codec", "libx264")
         audio_codec = params.get("audio_codec", "aac")
         quality = params.get("quality", "medium")
@@ -363,7 +379,8 @@ class VideoProcessor:
     
     async def _compress_video(self, input_path: str, output_path: str, 
                             params: Dict[str, Any]) -> Dict[str, Any]:
-        """        Compress video with intelligent quality preservation.
+        """
+        Compress video with intelligent quality preservation.
         
         Args:
             input_path: Input video path
@@ -372,7 +389,8 @@ class VideoProcessor:
             
         Returns:
             Compression result
-        """        target_size = params.get("target_size_mb")
+        """
+        target_size = params.get("target_size_mb")
         quality_reduction = params.get("quality_reduction", 0.3)
         preserve_resolution = params.get("preserve_resolution", True)
         
@@ -454,7 +472,8 @@ class VideoProcessor:
     
     async def _enhance_video(self, input_path: str, output_path: str, 
                            params: Dict[str, Any]) -> Dict[str, Any]:
-        """        Enhance video quality using AI-powered algorithms.
+        """
+        Enhance video quality using AI-powered algorithms.
         
         Args:
             input_path: Input video path
@@ -463,7 +482,8 @@ class VideoProcessor:
             
         Returns:
             Enhancement result
-        """        enhancements = params.get("enhancements", ["sharpen", "denoise"])
+        """
+        enhancements = params.get("enhancements", ["sharpen", "denoise"])
         
         try:
             # Use ffmpeg filters for enhancement
@@ -522,7 +542,8 @@ class VideoProcessor:
             raise
     
     def _get_profile_params(self, profile: str) -> Dict[str, Any]:
-        """Get processing parameters for a specific profile"""        profiles = {
+        """Get processing parameters for a specific profile"""
+        profiles = {
             "social_media": ProcessingProfile.SOCIAL_MEDIA,
             "streaming": ProcessingProfile.STREAMING,
             "archive": ProcessingProfile.ARCHIVE,
@@ -532,7 +553,8 @@ class VideoProcessor:
         return profiles.get(profile.lower(), {})
     
     async def cleanup(self):
-        """Cleanup temporary files and resources"""        try:
+        """Cleanup temporary files and resources"""
+        try:
             if self.temp_dir.exists():
                 import shutil
                 shutil.rmtree(self.temp_dir)
@@ -544,14 +566,18 @@ class VideoProcessor:
 
 
 class VideoAnalyzer:
-    """    Advanced video content analyzer with AI-powered scene detection and content analysis.
-    """    
+    """
+    Advanced video content analyzer with AI-powered scene detection and content analysis.
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize VideoAnalyzer.
+        """
+        Initialize VideoAnalyzer.
         
         Args:
             config: Optional configuration dictionary
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         self.temp_dir = Path(tempfile.gettempdir()) / "video_analyzer" / str(uuid.uuid4())
         self.temp_dir.mkdir(parents=True, exist_ok=True)
         
@@ -563,7 +589,8 @@ class VideoAnalyzer:
     
     async def analyze_content(self, video_path: str, 
                             analysis_types: List[str] = None) -> Dict[str, Any]:
-        """        Perform comprehensive video content analysis.
+        """
+        Perform comprehensive video content analysis.
         
         Args:
             video_path: Path to video file
@@ -571,7 +598,8 @@ class VideoAnalyzer:
             
         Returns:
             Analysis results
-        """        if not os.path.exists(video_path):
+        """
+        if not os.path.exists(video_path):
             raise FileNotFoundError(f"Video file not found: {video_path}")
         
         analysis_types = analysis_types or [
@@ -631,7 +659,8 @@ class VideoAnalyzer:
             raise
     
     async def _analyze_scenes(self, cap: cv2.VideoCapture, fps: float) -> Dict[str, Any]:
-        """Analyze video scenes and detect scene changes"""        scenes = []
+        """Analyze video scenes and detect scene changes"""
+        scenes = []
         frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         
         # Sample frames for scene detection
@@ -687,7 +716,8 @@ class VideoAnalyzer:
         }
     
     async def _analyze_motion(self, cap: cv2.VideoCapture, fps: float) -> Dict[str, Any]:
-        """Analyze motion patterns in the video"""        frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        """Analyze motion patterns in the video"""
+        frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         sample_interval = max(1, int(fps * 0.5))  # Sample every 0.5 seconds
         
         motion_data = []
@@ -737,7 +767,8 @@ class VideoAnalyzer:
             return {"error": "No motion data could be calculated"}
     
     async def _analyze_colors(self, cap: cv2.VideoCapture, fps: float) -> Dict[str, Any]:
-        """Analyze color distribution and dominant colors"""        frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        """Analyze color distribution and dominant colors"""
+        frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         sample_interval = max(1, int(fps * 2.0))  # Sample every 2 seconds
         
         color_data = []
@@ -810,7 +841,8 @@ class VideoAnalyzer:
             return {"error": "No color data could be analyzed"}
     
     async def _analyze_quality(self, cap: cv2.VideoCapture) -> Dict[str, Any]:
-        """Analyze video quality metrics"""        frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        """Analyze video quality metrics"""
+        frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         sample_frames = min(20, frame_count)  # Analyze up to 20 frames
         
         quality_metrics = {
@@ -860,7 +892,8 @@ class VideoAnalyzer:
         }
     
     def _calculate_quality_score(self, metrics: Dict[str, List[float]]) -> float:
-        """Calculate overall quality score from individual metrics"""        if not all(metrics.values()):
+        """Calculate overall quality score from individual metrics"""
+        if not all(metrics.values()):
             return 0.0
         
         # Normalize metrics to 0-100 scale
@@ -882,7 +915,8 @@ class VideoAnalyzer:
         return float(quality_score)
     
     async def _analyze_audio(self, video_path: str) -> Dict[str, Any]:
-        """Analyze audio properties and quality"""        try:
+        """Analyze audio properties and quality"""
+        try:
             probe = ffmpeg.probe(video_path)
             audio_streams = [s for s in probe['streams'] if s['codec_type'] == 'audio']
             
@@ -905,7 +939,8 @@ class VideoAnalyzer:
             return {"error": f"Audio analysis failed: {e}"}
     
     async def cleanup(self):
-        """Cleanup temporary files"""        try:
+        """Cleanup temporary files"""
+        try:
             if self.temp_dir.exists():
                 import shutil
                 shutil.rmtree(self.temp_dir)

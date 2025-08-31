@@ -8,7 +8,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass
@@ -35,7 +36,8 @@ settings = get_settings()
 
 
 class ContentGuidanceServiceType(Enum):
-    """Types of content guidance services."""    OPTIMIZATION = "optimization"
+    """Types of content guidance services."""
+    OPTIMIZATION = "optimization"
     PLATFORM_STRATEGY = "platform_strategy"
     MONETIZATION = "monetization"
     TREND_ANALYSIS = "trend_analysis"
@@ -49,7 +51,8 @@ class ContentGuidanceServiceType(Enum):
 
 @dataclass
 class ContentGuidanceRequest:
-    """Unified request structure for content guidance services."""    creator_id: str
+    """Unified request structure for content guidance services."""
+    creator_id: str
     content_id: Optional[str] = None
     content_type: Optional[str] = None
     content_url: Optional[str] = None
@@ -65,7 +68,8 @@ class ContentGuidanceRequest:
 
 @dataclass
 class ContentGuidanceResponse:
-    """Unified response structure for content guidance services."""    request_id: str
+    """Unified response structure for content guidance services."""
+    request_id: str
     creator_id: str
     service_type: ContentGuidanceServiceType
     recommendations: List[Dict[str, Any]]
@@ -80,11 +84,14 @@ class ContentGuidanceResponse:
 
 
 class ContentGuidanceOrchestrator:
-    """    Central orchestrator for all content guidance services providing unified access
+    """
+    Central orchestrator for all content guidance services providing unified access
     to content optimization, platform strategies, monetization, analytics, and more.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the content guidance orchestrator."""        self.logger = get_logger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize the content guidance orchestrator."""
+        self.logger = get_logger(f"{__name__}.{self.__class__.__name__}")
         
         # Initialize all service engines
         self.content_optimizer = ContentOptimizer()
@@ -116,12 +123,14 @@ class ContentGuidanceOrchestrator:
         self, 
         request: ContentGuidanceRequest
     ) -> Dict[ContentGuidanceServiceType, ContentGuidanceResponse]:
-        """        Process comprehensive content guidance across all services.
+        """
+        Process comprehensive content guidance across all services.
         
         This is the main entry point for the complete content guidance workflow
         following the business logic: Content Input → AI Analysis → Multi-service 
         Processing → Unified Recommendations → Action Plan.
-        """        
+        """
+        
         start_time = datetime.now()
         self.logger.info(f"Starting comprehensive guidance for creator {request.creator_id}")
         
@@ -185,7 +194,8 @@ class ContentGuidanceOrchestrator:
         service_type: ContentGuidanceServiceType,
         request: ContentGuidanceRequest
     ) -> ContentGuidanceResponse:
-        """Process guidance for a single service type."""        
+        """Process guidance for a single service type."""
+        
         start_time = datetime.now()
         self.logger.info(f"Processing {service_type.value} guidance for {request.creator_id}")
         
@@ -222,7 +232,8 @@ class ContentGuidanceOrchestrator:
         service_type: ContentGuidanceServiceType,
         request: ContentGuidanceRequest
     ) -> ContentGuidanceResponse:
-        """Process guidance for a specific service type."""        
+        """Process guidance for a specific service type."""
+        
         service = self.services[service_type]
         request_id = f"{request.creator_id}_{service_type.value}_{datetime.now().timestamp()}"
         
@@ -284,7 +295,8 @@ class ContentGuidanceOrchestrator:
         service: ContentOptimizer, 
         request: ContentGuidanceRequest
     ) -> Dict[str, Any]:
-        """Process content optimization guidance."""        
+        """Process content optimization guidance."""
+        
         # Analyze content for optimization opportunities
         if request.content_text:
             optimization_result = await service.optimize_text_content(
@@ -326,7 +338,8 @@ class ContentGuidanceOrchestrator:
         service: PlatformRecommendationEngine, 
         request: ContentGuidanceRequest
     ) -> Dict[str, Any]:
-        """Process platform recommendation guidance."""        
+        """Process platform recommendation guidance."""
+        
         # Analyze platform strategy
         strategy = await service.generate_platform_strategy(
             request.creator_id,
@@ -366,7 +379,8 @@ class ContentGuidanceOrchestrator:
         service: MonetizationGuidanceEngine, 
         request: ContentGuidanceRequest
     ) -> Dict[str, Any]:
-        """Process monetization guidance."""        
+        """Process monetization guidance."""
+        
         # Generate monetization strategy
         monetization_strategy = await service.generate_monetization_strategy(
             request.creator_id,
@@ -405,7 +419,8 @@ class ContentGuidanceOrchestrator:
         service: TrendAnalyzer, 
         request: ContentGuidanceRequest
     ) -> Dict[str, Any]:
-        """Process trend analysis guidance."""        
+        """Process trend analysis guidance."""
+        
         # Analyze current trends
         trend_analysis = await service.analyze_trending_content(
             request.platforms or ["all"],
@@ -443,7 +458,8 @@ class ContentGuidanceOrchestrator:
         service: AudienceInsightsEngine, 
         request: ContentGuidanceRequest
     ) -> Dict[str, Any]:
-        """Process audience insights guidance."""        
+        """Process audience insights guidance."""
+        
         # Generate comprehensive audience insights
         audience_insights = await service.generate_audience_insights(
             request.creator_id,
@@ -482,7 +498,8 @@ class ContentGuidanceOrchestrator:
         service: BrandSafetyEngine, 
         request: ContentGuidanceRequest
     ) -> Dict[str, Any]:
-        """Process brand safety guidance."""        
+        """Process brand safety guidance."""
+        
         if request.content_text:
             safety_analysis = await service.analyze_text_content(
                 request.content_text,
@@ -521,7 +538,8 @@ class ContentGuidanceOrchestrator:
         service: CollaborationFinder, 
         request: ContentGuidanceRequest
     ) -> Dict[str, Any]:
-        """Process collaboration finding guidance."""        
+        """Process collaboration finding guidance."""
+        
         # Find collaboration opportunities
         collaboration_opportunities = await service.find_collaboration_opportunities(
             request.creator_id,
@@ -559,7 +577,8 @@ class ContentGuidanceOrchestrator:
         service: ContentScheduler, 
         request: ContentGuidanceRequest
     ) -> Dict[str, Any]:
-        """Process content scheduling guidance."""        
+        """Process content scheduling guidance."""
+        
         # Generate optimal posting schedule
         schedule_recommendations = await service.generate_optimal_schedule(
             request.creator_id,
@@ -598,7 +617,8 @@ class ContentGuidanceOrchestrator:
         service: CreativeAssistant, 
         request: ContentGuidanceRequest
     ) -> Dict[str, Any]:
-        """Process creative assistance guidance."""        
+        """Process creative assistance guidance."""
+        
         # Generate creative ideas
         creative_ideas = await service.generate_content_ideas(
             request.creator_id,
@@ -638,7 +658,8 @@ class ContentGuidanceOrchestrator:
         service: PerformanceTracker, 
         request: ContentGuidanceRequest
     ) -> Dict[str, Any]:
-        """Process performance tracking guidance."""        
+        """Process performance tracking guidance."""
+        
         # Generate performance report
         performance_report = await service.generate_performance_report(
             request.creator_id,
@@ -673,7 +694,8 @@ class ContentGuidanceOrchestrator:
         }
     
     async def _analyze_content_safety(self, request: ContentGuidanceRequest) -> Dict[str, Any]:
-        """Analyze content safety before processing."""        
+        """Analyze content safety before processing."""
+        
         if not (request.content_text or request.content_url):
             return {"is_safe": True, "safety_score": 1.0}
         
@@ -706,7 +728,8 @@ class ContentGuidanceOrchestrator:
         results: Dict[ContentGuidanceServiceType, ContentGuidanceResponse],
         request: ContentGuidanceRequest
     ) -> Dict[ContentGuidanceServiceType, ContentGuidanceResponse]:
-        """Optimize recommendations across services to avoid conflicts."""        
+        """Optimize recommendations across services to avoid conflicts."""
+        
         # Identify conflicting recommendations
         conflicts = self._identify_recommendation_conflicts(results)
         
@@ -721,7 +744,8 @@ class ContentGuidanceOrchestrator:
         self,
         results: Dict[ContentGuidanceServiceType, ContentGuidanceResponse]
     ) -> List[Dict[str, Any]]:
-        """Identify conflicting recommendations across services."""        
+        """Identify conflicting recommendations across services."""
+        
         conflicts = []
         
         # Example: Check for timing conflicts between scheduling and trend recommendations
@@ -749,7 +773,8 @@ class ContentGuidanceOrchestrator:
         results: Dict[ContentGuidanceServiceType, ContentGuidanceResponse],
         conflicts: List[Dict[str, Any]]
     ) -> Dict[ContentGuidanceServiceType, ContentGuidanceResponse]:
-        """Resolve identified conflicts by prioritizing higher confidence recommendations."""        
+        """Resolve identified conflicts by prioritizing higher confidence recommendations."""
+        
         resolved_results = results.copy()
         
         for conflict in conflicts:
@@ -778,7 +803,8 @@ class ContentGuidanceOrchestrator:
         results: Dict[ContentGuidanceServiceType, ContentGuidanceResponse],
         request: ContentGuidanceRequest
     ) -> List[str]:
-        """Generate a unified action plan across all services."""        
+        """Generate a unified action plan across all services."""
+        
         # Collect all next steps
         all_next_steps = []
         for response in results.values():
@@ -806,7 +832,8 @@ class ContentGuidanceOrchestrator:
         steps: List[str], 
         results: Dict[ContentGuidanceServiceType, ContentGuidanceResponse]
     ) -> List[str]:
-        """Prioritize action steps based on confidence scores and impact."""        
+        """Prioritize action steps based on confidence scores and impact."""
+        
         # Score each step based on the confidence of its source service
         step_scores = {}
         
@@ -823,7 +850,8 @@ class ContentGuidanceOrchestrator:
         return [step for step, score in prioritized]
     
     def _extract_posting_times(self, recommendations: List[Dict[str, Any]]) -> List[str]:
-        """Extract posting times from recommendations."""        times = []
+        """Extract posting times from recommendations."""
+        times = []
         for rec in recommendations:
             if rec.get("type") == "posting_schedule" and "data" in rec:
                 schedule_data = rec["data"]
@@ -832,7 +860,8 @@ class ContentGuidanceOrchestrator:
         return times
     
     def _find_time_conflicts(self, times1: List[str], times2: List[str]) -> List[Dict[str, Any]]:
-        """Find conflicts between two sets of posting times."""        conflicts = []
+        """Find conflicts between two sets of posting times."""
+        conflicts = []
         
         # Simple implementation - in practice would be more sophisticated
         common_times = set(times1) & set(times2)
@@ -852,7 +881,8 @@ class ContentGuidanceOrchestrator:
         service_type: ContentGuidanceServiceType, 
         error_message: str
     ) -> ContentGuidanceResponse:
-        """Create an error response for a failed service."""        
+        """Create an error response for a failed service."""
+        
         return ContentGuidanceResponse(
             request_id=f"{request.creator_id}_{service_type.value}_error",
             creator_id=request.creator_id,
@@ -872,7 +902,8 @@ class ContentGuidanceOrchestrator:
         safety_result: Dict[str, Any],
         service_type: ContentGuidanceServiceType = None
     ) -> Union[ContentGuidanceResponse, Dict[ContentGuidanceServiceType, ContentGuidanceResponse]]:
-        """Create a safety error response."""        
+        """Create a safety error response."""
+        
         error_response = ContentGuidanceResponse(
             request_id=f"{request.creator_id}_safety_error",
             creator_id=request.creator_id,
@@ -912,7 +943,8 @@ async def get_comprehensive_content_guidance(
     target_audience: str = None,
     objectives: List[str] = None
 ) -> Dict[ContentGuidanceServiceType, ContentGuidanceResponse]:
-    """Get comprehensive content guidance across all services."""    
+    """Get comprehensive content guidance across all services."""
+    
     request = ContentGuidanceRequest(
         creator_id=creator_id,
         content_id=content_id,
@@ -932,7 +964,8 @@ async def get_specific_content_guidance(
     creator_id: str,
     **kwargs
 ) -> ContentGuidanceResponse:
-    """Get guidance for a specific service type."""    
+    """Get guidance for a specific service type."""
+    
     request = ContentGuidanceRequest(
         creator_id=creator_id,
         **kwargs

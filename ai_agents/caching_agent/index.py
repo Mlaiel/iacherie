@@ -172,11 +172,13 @@ __all__ = (
 )
 
 def get_component_info() -> dict:
-    """    Get comprehensive information about all caching agent components.
+    """
+    Get comprehensive information about all caching agent components.
     
     Returns:
         Dictionary containing component categories and descriptions
-    """    return {
+    """
+    return {
         "version": __version__,
         "author": __author__,
         "description": __description__,
@@ -226,14 +228,16 @@ def get_component_info() -> dict:
     }
 
 def create_caching_manager(config: dict = None) -> CachingManager:
-    """    Factory function to create a configured CachingManager instance.
+    """
+    Factory function to create a configured CachingManager instance.
     
     Args:
         config: Configuration dictionary
         
     Returns:
         Configured CachingManager instance
-    """    if config is None:
+    """
+    if config is None:
         config = {}
         
     cache_config = CacheConfig(

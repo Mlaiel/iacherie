@@ -7,7 +7,8 @@ and monetization workflows according to the business logic specification.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -31,7 +32,8 @@ from .monitor import ContentMonitor
 
 
 class ContentStatus(Enum):
-    """Content processing status enumeration"""    UPLOADED = "uploaded"
+    """Content processing status enumeration"""
+    UPLOADED = "uploaded"
     VALIDATING = "validating" 
     ANALYZING = "analyzing"
     PROTECTING = "protecting"
@@ -46,7 +48,8 @@ class ContentStatus(Enum):
 
 @dataclass
 class ContentWorkflowConfig:
-    """Content workflow configuration"""    enable_protection: bool = True
+    """Content workflow configuration"""
+    enable_protection: bool = True
     enable_optimization: bool = True
     enable_monetization: bool = True
     enable_distribution: bool = True
@@ -57,14 +60,16 @@ class ContentWorkflowConfig:
 
 
 class ContentManager:
-    """    Central Content Management Controller
+    """
+    Central Content Management Controller
     
     Orchestrates the complete content lifecycle from upload to monetization,
     ensuring all business logic requirements are met.
     
     Business Flow:
     Upload → Validation → Analysis → Protection → Optimization → Distribution → Monetization
-    """    
+    """
+    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -97,7 +102,8 @@ class ContentManager:
         metadata: Dict[str, Any] = None,
         workflow_config: ContentWorkflowConfig = None
     ) -> Dict[str, Any]:
-        """        Create new content and initiate processing workflow
+        """
+        Create new content and initiate processing workflow
         
         Args:
             user_id: Owner user ID
@@ -108,7 +114,8 @@ class ContentManager:
             
         Returns:
             Content creation result with processing status
-        """        try:
+        """
+        try:
             workflow_id = str(uuid.uuid4())
             config = workflow_config or self.config
             
@@ -190,12 +197,14 @@ class ContentManager:
         content_id: str,
         config: ContentWorkflowConfig
     ) -> None:
-        """        Execute complete content processing workflow
+        """
+        Execute complete content processing workflow
         
         Args:
             content_id: Content identifier
             config: Workflow configuration
-        """        try:
+        """
+        try:
             content = await self._get_content(content_id)
             if not content:
                 return
@@ -251,7 +260,8 @@ class ContentManager:
             await self._mark_workflow_failed(content_id, str(e))
 
     async def get_content(self, content_id: str, user_id: int = None) -> Optional[Dict[str, Any]]:
-        """        Retrieve content by ID with optional user filtering
+        """
+        Retrieve content by ID with optional user filtering
         
         Args:
             content_id: Content identifier
@@ -259,7 +269,8 @@ class ContentManager:
             
         Returns:
             Content data or None if not found
-        """        try:
+        """
+        try:
             # Try cache first
             cached_content = await self.redis.get(f"content:{content_id}")
             if cached_content:
@@ -306,7 +317,8 @@ class ContentManager:
         limit: int = 50,
         offset: int = 0
     ) -> Dict[str, Any]:
-        """        List content for a specific user with filtering
+        """
+        List content for a specific user with filtering
         
         Args:
             user_id: User identifier
@@ -317,7 +329,8 @@ class ContentManager:
             
         Returns:
             Paginated content list
-        """        try:
+        """
+        try:
             query = select(Content).where(Content.user_id == user_id)
             
             if status:
@@ -375,7 +388,8 @@ class ContentManager:
         user_id: int,
         updates: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Update content metadata and properties
+        """
+        Update content metadata and properties
         
         Args:
             content_id: Content identifier
@@ -384,7 +398,8 @@ class ContentManager:
             
         Returns:
             Update operation result
-        """        try:
+        """
+        try:
             # Verify ownership
             content = await self._get_content(content_id)
             if not content or content.user_id != user_id:
@@ -424,7 +439,8 @@ class ContentManager:
             }
 
     async def delete_content(self, content_id: str, user_id: int) -> Dict[str, Any]:
-        """        Delete content and associated data
+        """
+        Delete content and associated data
         
         Args:
             content_id: Content identifier
@@ -432,7 +448,8 @@ class ContentManager:
             
         Returns:
             Deletion operation result
-        """        try:
+        """
+        try:
             # Verify ownership
             content = await self._get_content(content_id)
             if not content or content.user_id != user_id:
@@ -472,14 +489,16 @@ class ContentManager:
             }
 
     async def get_workflow_status(self, workflow_id: str) -> Dict[str, Any]:
-        """        Get current workflow processing status
+        """
+        Get current workflow processing status
         
         Args:
             workflow_id: Workflow identifier
             
         Returns:
             Workflow status information
-        """        try:
+        """
+        try:
             if workflow_id in self.active_workflows:
                 workflow = self.active_workflows[workflow_id]
                 return {
@@ -515,7 +534,8 @@ class ContentManager:
     # Private helper methods
 
     async def _get_content(self, content_id: str) -> Optional[Content]:
-        """Get content model from database"""        query = select(Content).where(Content.id == content_id)
+        """Get content model from database"""
+        query = select(Content).where(Content.id == content_id)
         result = await self.db.execute(query)
         return result.scalar_one_or_none()
 
@@ -525,7 +545,8 @@ class ContentManager:
         status: str,
         current_step: str
     ) -> None:
-        """Update workflow status and tracking"""        if workflow_id in self.active_workflows:
+        """Update workflow status and tracking"""
+        if workflow_id in self.active_workflows:
             workflow = self.active_workflows[workflow_id]
             workflow["status"] = status
             workflow["current_step"] = current_step
@@ -533,7 +554,8 @@ class ContentManager:
                 workflow["steps_completed"].append(current_step)
 
     async def _mark_workflow_failed(self, workflow_id: str, error: str) -> None:
-        """Mark workflow as failed"""        if workflow_id in self.active_workflows:
+        """Mark workflow as failed"""
+        if workflow_id in self.active_workflows:
             workflow = self.active_workflows[workflow_id]
             workflow["status"] = ContentStatus.FAILED.value
             workflow["error"] = error
@@ -548,7 +570,8 @@ class ContentManager:
             await self.db.commit()
 
     async def _finalize_workflow(self, workflow_id: str, final_status: ContentStatus) -> None:
-        """Finalize workflow processing"""        if workflow_id in self.active_workflows:
+        """Finalize workflow processing"""
+        if workflow_id in self.active_workflows:
             workflow = self.active_workflows[workflow_id]
             workflow["status"] = final_status.value
             workflow["completed_at"] = datetime.utcnow()
@@ -573,7 +596,8 @@ class ContentManager:
             del self.active_workflows[workflow_id]
 
     async def _protect_content(self, content_id: str) -> Dict[str, Any]:
-        """Initiate content protection workflow"""        # This would interface with the content protection module
+        """Initiate content protection workflow"""
+        # This would interface with the content protection module
         try:
             # Placeholder for actual protection implementation
             return {"success": True, "message": "Content protection initiated"}
@@ -581,14 +605,16 @@ class ContentManager:
             return {"success": False, "error": str(e)}
 
     async def _distribute_content(self, content_id: str) -> Dict[str, Any]:
-        """Initiate content distribution workflow"""        try:
+        """Initiate content distribution workflow"""
+        try:
             # Placeholder for actual distribution implementation
             return {"success": True, "message": "Content distribution initiated"}
         except Exception as e:
             return {"success": False, "error": str(e)}
 
     async def _setup_monetization(self, content_id: str) -> Dict[str, Any]:
-        """Setup content monetization tracking"""        try:
+        """Setup content monetization tracking"""
+        try:
             # Placeholder for actual monetization setup
             return {"success": True, "message": "Monetization setup completed"}
         except Exception as e:

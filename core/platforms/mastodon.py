@@ -5,7 +5,8 @@ Mastodon API integration for decentralized social networking.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -23,9 +24,11 @@ logger = logging.getLogger(__name__)
 
 
 class MastodonPlatform(PlatformBase):
-    """Mastodon platform integration"""    
+    """Mastodon platform integration"""
+    
     def __init__(self, config: PlatformConfig):
-        """Initialize Mastodon platform"""        super().__init__(config)
+        """Initialize Mastodon platform"""
+        super().__init__(config)
         
         # Instance URL must be provided
         self.instance_url = config.credentials.get('instance_url', 'https://mastodon.social')
@@ -36,14 +39,16 @@ class MastodonPlatform(PlatformBase):
         self.session: Optional[aiohttp.ClientSession] = None
         
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""        if not self.session or self.session.closed:
+        """Get or create HTTP session"""
+        if not self.session or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             )
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Mastodon"""        try:
+        """Authenticate with Mastodon"""
+        try:
             access_token = self.config.credentials.get('access_token')
             
             if access_token:
@@ -77,10 +82,12 @@ class MastodonPlatform(PlatformBase):
             return False
     
     async def refresh_token(self) -> bool:
-        """Refresh Mastodon token"""        return await self.authenticate()
+        """Refresh Mastodon token"""
+        return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to Mastodon API"""        try:
+        """Make authenticated request to Mastodon API"""
+        try:
             session = await self._get_session()
             
             headers = kwargs.get('headers', {})
@@ -120,7 +127,8 @@ class MastodonPlatform(PlatformBase):
             return None
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Post content on Mastodon"""        try:
+        """Post content on Mastodon"""
+        try:
             media_ids = []
             
             # Handle media upload if content_path is provided
@@ -184,7 +192,8 @@ class MastodonPlatform(PlatformBase):
             )
     
     async def _upload_media(self, file_path: str, description: str = None) -> Optional[str]:
-        """Upload media file to Mastodon"""        try:
+        """Upload media file to Mastodon"""
+        try:
             session = await self._get_session()
             
             data = aiohttp.FormData()
@@ -214,7 +223,8 @@ class MastodonPlatform(PlatformBase):
     
     async def get_analytics(self, content_id: str, start_date: datetime, 
                            end_date: datetime) -> AnalyticsData:
-        """Get Mastodon post analytics"""        try:
+        """Get Mastodon post analytics"""
+        try:
             result = await self._make_request('GET', f'/statuses/{content_id}')
             
             if result:
@@ -245,7 +255,8 @@ class MastodonPlatform(PlatformBase):
             raise
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on Mastodon"""        try:
+        """Search content on Mastodon"""
+        try:
             params = {
                 'q': query,
                 'type': 'statuses',  # accounts, hashtags, statuses
@@ -279,7 +290,8 @@ class MastodonPlatform(PlatformBase):
             return []
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's statuses from Mastodon"""        try:
+        """Get user's statuses from Mastodon"""
+        try:
             target_user_id = user_id or self.config.credentials.get('user_id')
             if not target_user_id:
                 return []
@@ -316,7 +328,8 @@ class MastodonPlatform(PlatformBase):
             return []
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete Mastodon status"""        try:
+        """Delete Mastodon status"""
+        try:
             result = await self._make_request('DELETE', f'/statuses/{content_id}')
             return result is not None
                 
@@ -325,7 +338,8 @@ class MastodonPlatform(PlatformBase):
             return False
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
-        """Update Mastodon status (edit if supported)"""        try:
+        """Update Mastodon status (edit if supported)"""
+        try:
             # Check if instance supports editing
             edit_data = {
                 'status': metadata.description or metadata.title or ""
@@ -339,7 +353,8 @@ class MastodonPlatform(PlatformBase):
             return False
     
     async def get_home_timeline(self, limit: int = 20) -> List[Dict[str, Any]]:
-        """Get home timeline"""        try:
+        """Get home timeline"""
+        try:
             params = {'limit': min(limit, 40)}
             result = await self._make_request('GET', '/timelines/home', params=params)
             
@@ -367,7 +382,8 @@ class MastodonPlatform(PlatformBase):
             return []
     
     async def get_public_timeline(self, local: bool = False, limit: int = 20) -> List[Dict[str, Any]]:
-        """Get public timeline"""        try:
+        """Get public timeline"""
+        try:
             params = {
                 'local': 'true' if local else 'false',
                 'limit': min(limit, 40)
@@ -397,7 +413,8 @@ class MastodonPlatform(PlatformBase):
             return []
     
     async def follow_user(self, user_id: str) -> bool:
-        """Follow a user"""        try:
+        """Follow a user"""
+        try:
             result = await self._make_request('POST', f'/accounts/{user_id}/follow')
             return result is not None
             
@@ -406,7 +423,8 @@ class MastodonPlatform(PlatformBase):
             return False
     
     async def unfollow_user(self, user_id: str) -> bool:
-        """Unfollow a user"""        try:
+        """Unfollow a user"""
+        try:
             result = await self._make_request('POST', f'/accounts/{user_id}/unfollow')
             return result is not None
             
@@ -415,7 +433,8 @@ class MastodonPlatform(PlatformBase):
             return False
     
     async def favourite_status(self, status_id: str) -> bool:
-        """Favourite a status"""        try:
+        """Favourite a status"""
+        try:
             result = await self._make_request('POST', f'/statuses/{status_id}/favourite')
             return result is not None
             
@@ -424,7 +443,8 @@ class MastodonPlatform(PlatformBase):
             return False
     
     async def boost_status(self, status_id: str) -> bool:
-        """Boost (reblog) a status"""        try:
+        """Boost (reblog) a status"""
+        try:
             result = await self._make_request('POST', f'/statuses/{status_id}/reblog')
             return result is not None
             
@@ -433,7 +453,8 @@ class MastodonPlatform(PlatformBase):
             return False
     
     async def get_instance_info(self) -> Optional[Dict[str, Any]]:
-        """Get Mastodon instance information"""        try:
+        """Get Mastodon instance information"""
+        try:
             result = await self._make_request('GET', '/instance')
             
             if result:
@@ -454,5 +475,6 @@ class MastodonPlatform(PlatformBase):
             return None
     
     async def close(self):
-        """Close HTTP session"""        if self.session and not self.session.closed:
+        """Close HTTP session"""
+        if self.session and not self.session.closed:
             await self.session.close()

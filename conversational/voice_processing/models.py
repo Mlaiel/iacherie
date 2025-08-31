@@ -39,7 +39,8 @@ ABSOLUTELY PROHIBITED WITHOUT EXPLICIT WRITTEN AUTHORIZATION FROM FAHED MLAIEL:
 - Unauthorized access to proprietary methods
 
 For official licensing inquiries ONLY: mlaiel@live.de
-"""import uuid
+"""
+import uuid
 import hashlib
 import numpy as np
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -66,7 +67,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class VoiceGender(Enum):
-    """Advanced voice gender classification with confidence levels."""    MALE = "male"
+    """Advanced voice gender classification with confidence levels."""
+    MALE = "male"
     FEMALE = "female"
     NON_BINARY = "non_binary"
     CHILD = "child"
@@ -75,7 +77,8 @@ class VoiceGender(Enum):
     UNKNOWN = "unknown"
 
 class EmotionCategory(Enum):
-    """Comprehensive emotion classification with cultural adaptations."""    # Basic emotions (Ekman)
+    """Comprehensive emotion classification with cultural adaptations."""
+    # Basic emotions (Ekman)
     HAPPINESS = "happiness"
     SADNESS = "sadness"
     ANGER = "anger"
@@ -105,21 +108,24 @@ class EmotionCategory(Enum):
     ENERGETIC = "energetic"
 
 class AudioQuality(IntEnum):
-    """Audio quality levels with technical specifications."""    POOR = 1          # < 8kHz, high noise
+    """Audio quality levels with technical specifications."""
+    POOR = 1          # < 8kHz, high noise
     FAIR = 2          # 8-16kHz, moderate noise
     GOOD = 3          # 16-22kHz, low noise
     EXCELLENT = 4     # 22-44kHz, minimal noise
     STUDIO = 5        # 44-96kHz, professional grade
 
 class SecurityLevel(IntEnum):
-    """Voice security and protection levels."""    BASIC = 1         # Basic fingerprinting
+    """Voice security and protection levels."""
+    BASIC = 1         # Basic fingerprinting
     STANDARD = 2      # Enhanced protection
     HIGH = 3          # Biometric verification
     MILITARY = 4      # Forensic grade
     QUANTUM = 5       # Quantum-resistant encryption
 
 class ProcessingStatus(Enum):
-    """Voice processing job status tracking."""    PENDING = "pending"
+    """Voice processing job status tracking."""
+    PENDING = "pending"
     QUEUED = "queued"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -128,7 +134,8 @@ class ProcessingStatus(Enum):
     RETRYING = "retrying"
 
 class VoiceEngine(Enum):
-    """Professional voice processing engines."""    # Recognition engines
+    """Professional voice processing engines."""
+    # Recognition engines
     WHISPER_LARGE_V3 = "whisper_large_v3"
     GOOGLE_SPEECH_V2 = "google_speech_v2"
     AZURE_SPEECH_STUDIO = "azure_speech_studio"
@@ -153,7 +160,8 @@ class VoiceEngine(Enum):
     SPEECHBRAIN_SPKREC = "speechbrain_spkrec"
 
 class LanguageCode(Enum):
-    """Comprehensive language codes with dialects."""    EN_US = "en-US"
+    """Comprehensive language codes with dialects."""
+    EN_US = "en-US"
     EN_GB = "en-GB"
     FR_FR = "fr-FR"
     FR_CA = "fr-CA"
@@ -176,7 +184,8 @@ class LanguageCode(Enum):
 
 @dataclass
 class AudioMetadata:
-    """Comprehensive audio file metadata."""    file_path: str
+    """Comprehensive audio file metadata."""
+    file_path: str
     file_size_bytes: int
     duration_seconds: float
     sample_rate: int
@@ -208,7 +217,8 @@ class AudioMetadata:
     analyzed_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization."""        result = asdict(self)
+        """Convert to dictionary for serialization."""
+        result = asdict(self)
         
         # Handle numpy arrays
         if self.mfcc_features is not None:
@@ -225,7 +235,8 @@ class AudioMetadata:
 
 @dataclass
 class VoiceFingerprint:
-    """Forensic-grade voice fingerprint for content protection."""    fingerprint_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Forensic-grade voice fingerprint for content protection."""
+    fingerprint_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     algorithm: str = "chromaprint_v2"
     hash_value: str = ""
     hash_length: int = 256
@@ -253,7 +264,8 @@ class VoiceFingerprint:
     false_negative_rate: float = 0.05
     
     def generate_hash(self, audio_data: np.ndarray, sample_rate: int) -> str:
-        """Generate cryptographic hash from audio data."""        # Extract features
+        """Generate cryptographic hash from audio data."""
+        # Extract features
         features = self._extract_fingerprint_features(audio_data, sample_rate)
         
         # Create deterministic hash
@@ -262,7 +274,8 @@ class VoiceFingerprint:
         return hash_object.hexdigest()
     
     def _extract_fingerprint_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract comprehensive features for fingerprinting."""        features = {}
+        """Extract comprehensive features for fingerprinting."""
+        features = {}
         
         # MFCC features
         mfccs = librosa.feature.mfcc(y=audio, sr=sr, n_mfcc=13)
@@ -285,7 +298,8 @@ class VoiceFingerprint:
 
 @dataclass
 class BiometricVoiceProfile:
-    """Comprehensive biometric voice profile for speaker identification."""    profile_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive biometric voice profile for speaker identification."""
+    profile_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     speaker_id: str = ""
     enrollment_status: str = "pending"  # pending, enrolled, verified, rejected
     
@@ -329,7 +343,8 @@ class BiometricVoiceProfile:
     cross_session_consistency: float = 0.0
     
     def update_embedding(self, new_embedding: np.ndarray, confidence: float) -> None:
-        """Update speaker embedding with incremental learning."""        if self.speaker_embedding is None:
+        """Update speaker embedding with incremental learning."""
+        if self.speaker_embedding is None:
             self.speaker_embedding = new_embedding
             self.enrollment_confidence = confidence
         else:
@@ -341,7 +356,8 @@ class BiometricVoiceProfile:
         self.enrollment_sessions.append(datetime.utcnow())
     
     def calculate_similarity(self, other_embedding: np.ndarray) -> float:
-        """Calculate cosine similarity with another embedding."""        if self.speaker_embedding is None:
+        """Calculate cosine similarity with another embedding."""
+        if self.speaker_embedding is None:
             return 0.0
         
         # Cosine similarity
@@ -356,7 +372,8 @@ class BiometricVoiceProfile:
 
 @dataclass
 class EmotionAnalysisResult:
-    """Comprehensive emotion analysis results."""    analysis_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive emotion analysis results."""
+    analysis_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     timestamp: datetime = field(default_factory=datetime.utcnow)
     
     # Primary emotion detection
@@ -395,7 +412,8 @@ class EmotionAnalysisResult:
     processing_time_ms: float = 0.0
     
     def get_dominant_emotions(self, top_k: int = 3) -> List[Tuple[EmotionCategory, float]]:
-        """Get top-k dominant emotions."""        sorted_emotions = sorted(
+        """Get top-k dominant emotions."""
+        sorted_emotions = sorted(
             self.emotion_probabilities.items(),
             key=lambda x: x[1],
             reverse=True
@@ -403,13 +421,15 @@ class EmotionAnalysisResult:
         return sorted_emotions[:top_k]
     
     def is_emotional_event(self, threshold: float = 0.7) -> bool:
-        """Determine if this represents a significant emotional event."""        return (self.emotion_confidence > threshold and 
+        """Determine if this represents a significant emotional event."""
+        return (self.emotion_confidence > threshold and 
                 self.emotion_intensity > threshold and
                 self.primary_emotion != EmotionCategory.NEUTRAL)
 
 @dataclass
 class VoiceSynthesisRequest:
-    """Comprehensive voice synthesis request specification."""    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive voice synthesis request specification."""
+    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = ""
     text_content: str = ""
     
@@ -464,7 +484,8 @@ class VoiceSynthesisRequest:
 
 @dataclass
 class VoiceProcessingResult:
-    """Comprehensive voice processing operation result."""    result_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive voice processing operation result."""
+    result_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     request_id: str = ""
     processing_type: str = ""  # synthesis, recognition, analysis, enhancement
     
@@ -513,7 +534,8 @@ class VoiceProcessingResult:
 # SQLAlchemy Database Models
 
 class VoiceUser(Base):
-    """User entity for voice processing services."""    __tablename__ = "voice_users"
+    """User entity for voice processing services."""
+    __tablename__ = "voice_users"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     username = Column(String(100), unique=True, nullable=False)
@@ -552,7 +574,8 @@ class VoiceUser(Base):
     processing_jobs = relationship("VoiceProcessingJob", back_populates="user")
 
 class VoiceProfile(Base):
-    """Voice profile entity for biometric identification."""    __tablename__ = "voice_profiles"
+    """Voice profile entity for biometric identification."""
+    __tablename__ = "voice_profiles"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     user_id = Column(String, ForeignKey("voice_users.id"), nullable=False)
@@ -610,7 +633,8 @@ class VoiceProfile(Base):
     )
 
 class VoiceProcessingJob(Base):
-    """Voice processing job entity for tracking operations."""    __tablename__ = "voice_processing_jobs"
+    """Voice processing job entity for tracking operations."""
+    __tablename__ = "voice_processing_jobs"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     user_id = Column(String, ForeignKey("voice_users.id"), nullable=False)
@@ -679,7 +703,8 @@ class VoiceProcessingJob(Base):
     )
 
 class VoiceFingerprints(Base):
-    """Voice fingerprint entity for content protection."""    __tablename__ = "voice_fingerprints"
+    """Voice fingerprint entity for content protection."""
+    __tablename__ = "voice_fingerprints"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     content_hash = Column(String(256), unique=True, nullable=False)
@@ -727,7 +752,8 @@ class VoiceFingerprints(Base):
 # Pydantic Models for API
 
 class VoiceSynthesisRequestModel(BaseModel):
-    """Pydantic model for voice synthesis API requests."""    text_content: str = Field(..., max_length=10000, description="Text to synthesize")
+    """Pydantic model for voice synthesis API requests."""
+    text_content: str = Field(..., max_length=10000, description="Text to synthesize")
     target_voice_id: Optional[str] = Field(None, description="Target voice profile ID")
     voice_gender: str = Field("neutral", description="Voice gender preference")
     target_emotion: str = Field("neutral", description="Target emotion")
@@ -752,7 +778,8 @@ class VoiceSynthesisRequestModel(BaseModel):
         return v
 
 class VoiceAnalysisResponseModel(BaseModel):
-    """Pydantic model for voice analysis API responses."""    analysis_id: str
+    """Pydantic model for voice analysis API responses."""
+    analysis_id: str
     transcription: Optional[str] = None
     confidence_score: float
     detected_language: str
@@ -786,7 +813,8 @@ class VoiceAnalysisResponseModel(BaseModel):
 # Utility functions for model operations
 
 def create_audio_metadata(file_path: str) -> AudioMetadata:
-    """Create AudioMetadata from audio file."""    try:
+    """Create AudioMetadata from audio file."""
+    try:
         # Load audio file
         audio_data, sample_rate = librosa.load(file_path, sr=None)
         file_size = Path(file_path).stat().st_size
@@ -820,7 +848,8 @@ def create_audio_metadata(file_path: str) -> AudioMetadata:
         raise
 
 def generate_voice_fingerprint(audio_data: np.ndarray, sample_rate: int) -> VoiceFingerprint:
-    """Generate comprehensive voice fingerprint."""    fingerprint = VoiceFingerprint()
+    """Generate comprehensive voice fingerprint."""
+    fingerprint = VoiceFingerprint()
     
     try:
         # Generate hash
@@ -841,7 +870,8 @@ def generate_voice_fingerprint(audio_data: np.ndarray, sample_rate: int) -> Voic
         raise
 
 async def process_voice_synthesis_async(request: VoiceSynthesisRequest) -> VoiceProcessingResult:
-    """Asynchronous voice synthesis processing."""    result = VoiceProcessingResult(
+    """Asynchronous voice synthesis processing."""
+    result = VoiceProcessingResult(
         request_id=request.request_id,
         processing_type="synthesis",
         started_at=datetime.utcnow()

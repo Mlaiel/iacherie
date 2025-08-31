@@ -9,7 +9,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import json
 import uuid
 from datetime import datetime, timedelta
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class EngagementStrategy(Enum):
-    """Engagement optimization strategies"""    COMMUNITY_BUILDING = "community_building"
+    """Engagement optimization strategies"""
+    COMMUNITY_BUILDING = "community_building"
     VIRAL_AMPLIFICATION = "viral_amplification"
     AUTHENTIC_CONNECTION = "authentic_connection"
     EDUCATIONAL_VALUE = "educational_value"
@@ -39,7 +41,8 @@ class EngagementStrategy(Enum):
 
 
 class InteractionType(Enum):
-    """Types of user interactions"""    LIKE = "like"
+    """Types of user interactions"""
+    LIKE = "like"
     COMMENT = "comment"
     SHARE = "share"
     SAVE = "save"
@@ -53,7 +56,8 @@ class InteractionType(Enum):
 
 @dataclass
 class EngagementOptimizationRequest:
-    """Request for engagement optimization"""    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Request for engagement optimization"""
+    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = ""
     platform: SocialPlatform = SocialPlatform.INSTAGRAM
     target_audience: Dict[str, Any] = field(default_factory=dict)
@@ -66,7 +70,8 @@ class EngagementOptimizationRequest:
 
 @dataclass
 class EngagementAction:
-    """Specific engagement action to take"""    action_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Specific engagement action to take"""
+    action_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     action_type: str = ""  # reply_to_comment, create_poll, share_story, etc.
     platform: SocialPlatform = SocialPlatform.INSTAGRAM
     target_user: Optional[str] = None
@@ -79,7 +84,8 @@ class EngagementAction:
 
 
 class EngagementSpecialistAgent(BaseAIAgent):
-    """    Advanced engagement optimization specialist
+    """
+    Advanced engagement optimization specialist
     
     Capabilities:
     - Real-time engagement monitoring
@@ -90,7 +96,8 @@ class EngagementSpecialistAgent(BaseAIAgent):
     - Sentiment-based response generation
     - Cross-platform engagement coordination
     - Influencer collaboration optimization
-    """    
+    """
+    
     def __init__(self, config: AgentConfiguration):
         # Ensure required capabilities
         required_capabilities = {
@@ -129,7 +136,8 @@ class EngagementSpecialistAgent(BaseAIAgent):
         self.crisis_detection_enabled = True
     
     async def _custom_initialize(self) -> None:
-        """Initialize engagement optimization components"""        try:
+        """Initialize engagement optimization components"""
+        try:
             # Initialize analytics and sentiment analysis
             self.metrics_analyzer = EngagementMetricsAnalyzer()
             await self.metrics_analyzer.initialize()
@@ -152,7 +160,8 @@ class EngagementSpecialistAgent(BaseAIAgent):
             raise
     
     async def _execute_task_impl(self, task: AgentTask) -> Dict[str, Any]:
-        """Execute engagement optimization task"""        task_type = task.task_type
+        """Execute engagement optimization task"""
+        task_type = task.task_type
         context = task.context
         
         if task_type == "optimize_engagement":
@@ -173,7 +182,8 @@ class EngagementSpecialistAgent(BaseAIAgent):
             raise ValueError(f"Unknown task type: {task_type}")
     
     async def _optimize_content_engagement(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize engagement for specific content"""        request = EngagementOptimizationRequest(**context.get("request", {}))
+        """Optimize engagement for specific content"""
+        request = EngagementOptimizationRequest(**context.get("request", {}))
         
         self.logger.info(f"Optimizing engagement for content {request.content_id}")
         
@@ -226,7 +236,8 @@ class EngagementSpecialistAgent(BaseAIAgent):
             }
     
     async def _analyze_current_engagement(self, request: EngagementOptimizationRequest) -> Dict[str, Any]:
-        """Analyze current engagement metrics and patterns"""        # Get real-time engagement data
+        """Analyze current engagement metrics and patterns"""
+        # Get real-time engagement data
         engagement_data = await self.platform_manager.get_content_engagement(
             request.platform, request.content_id
         )
@@ -257,7 +268,8 @@ class EngagementSpecialistAgent(BaseAIAgent):
     
     async def _identify_optimization_opportunities(self, request: EngagementOptimizationRequest, 
                                                  current_engagement: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Identify specific opportunities to improve engagement"""        opportunities = []
+        """Identify specific opportunities to improve engagement"""
+        opportunities = []
         
         # Low engagement rate opportunity
         if current_engagement["engagement_rate"] < 0.03:  # 3% threshold
@@ -311,7 +323,8 @@ class EngagementSpecialistAgent(BaseAIAgent):
     
     async def _generate_engagement_actions(self, request: EngagementOptimizationRequest, 
                                          opportunities: List[Dict[str, Any]]) -> List[EngagementAction]:
-        """Generate specific actions to improve engagement"""        actions = []
+        """Generate specific actions to improve engagement"""
+        actions = []
         
         for opportunity in opportunities:
             opportunity_type = opportunity["type"]
@@ -330,7 +343,8 @@ class EngagementSpecialistAgent(BaseAIAgent):
         return actions
     
     async def _generate_engagement_boost_actions(self, request: EngagementOptimizationRequest) -> List[EngagementAction]:
-        """Generate actions to boost overall engagement"""        actions = []
+        """Generate actions to boost overall engagement"""
+        actions = []
         
         # Create engaging follow-up content
         actions.append(EngagementAction(
@@ -365,7 +379,8 @@ class EngagementSpecialistAgent(BaseAIAgent):
         return actions
     
     async def _handle_user_interactions(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle and respond to user interactions intelligently"""        interactions = context.get("interactions", [])
+        """Handle and respond to user interactions intelligently"""
+        interactions = context.get("interactions", [])
         content_id = context.get("content_id", "")
         
         responses_generated = []
@@ -391,7 +406,8 @@ class EngagementSpecialistAgent(BaseAIAgent):
         }
     
     async def _generate_comment_response(self, comment: Dict[str, Any], content_id: str) -> Optional[Dict[str, Any]]:
-        """Generate intelligent response to comments"""        comment_text = comment.get("text", "")
+        """Generate intelligent response to comments"""
+        comment_text = comment.get("text", "")
         user_id = comment.get("user_id", "")
         
         # Analyze comment sentiment
@@ -417,7 +433,8 @@ class EngagementSpecialistAgent(BaseAIAgent):
         return None
     
     async def _real_time_engagement_monitor(self) -> None:
-        """Real-time monitoring of engagement across all active content"""        while not self.shutdown_event.is_set():
+        """Real-time monitoring of engagement across all active content"""
+        while not self.shutdown_event.is_set():
             try:
                 for content_id in list(self.active_monitoring.keys()):
                     if self.active_monitoring[content_id]:
@@ -429,7 +446,8 @@ class EngagementSpecialistAgent(BaseAIAgent):
             await asyncio.sleep(300)  # Check every 5 minutes
     
     async def can_handle_task(self, task_type: str, context: Dict[str, Any]) -> bool:
-        """Check if agent can handle specific engagement task"""        supported_tasks = [
+        """Check if agent can handle specific engagement task"""
+        supported_tasks = [
             "optimize_engagement",
             "monitor_engagement",
             "respond_to_interactions",

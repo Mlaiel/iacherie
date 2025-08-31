@@ -18,7 +18,8 @@ Development Team Specialties:
 - DevOps Engineer
 - AI Prompt Engineer
 Email: mlaiel@live.de
-"""from typing import Dict, List, Optional, Any, Union, Tuple
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
@@ -26,7 +27,8 @@ import uuid
 
 
 class Platform(Enum):
-    """Platform enumeration"""    YOUTUBE = "youtube"
+    """Platform enumeration"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -41,7 +43,8 @@ class Platform(Enum):
 
 
 class RecommendationType(Enum):
-    """Recommendation type enumeration"""    CONTENT_DISCOVERY = "content_discovery"
+    """Recommendation type enumeration"""
+    CONTENT_DISCOVERY = "content_discovery"
     CREATOR_COLLABORATION = "creator_collaboration"
     TREND_BASED = "trend_based"
     MONETIZATION = "monetization"
@@ -52,7 +55,8 @@ class RecommendationType(Enum):
 
 
 class ContentType(Enum):
-    """Content type enumeration"""    VIDEO = "video"
+    """Content type enumeration"""
+    VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
     TEXT = "text"
@@ -92,7 +96,8 @@ class ContentType(Enum):
 
 
 class TrendType(Enum):
-    """Trend type enumeration"""    RISING = "rising"
+    """Trend type enumeration"""
+    RISING = "rising"
     VIRAL = "viral"
     SEASONAL = "seasonal"
     DECLINING = "declining"
@@ -102,7 +107,8 @@ class TrendType(Enum):
 
 
 class RevenueStream(Enum):
-    """Revenue stream enumeration"""    ADVERTISING = "advertising"
+    """Revenue stream enumeration"""
+    ADVERTISING = "advertising"
     SUBSCRIPTIONS = "subscriptions"
     MERCHANDISE = "merchandise"
     SPONSORSHIPS = "sponsorships"
@@ -123,7 +129,8 @@ Development Team Specialties:
 - DevOps Engineer
 - AI Prompt Engineer
 Email: mlaiel@live.de
-"""from typing import Dict, List, Optional, Any, Union, Tuple
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
@@ -131,7 +138,8 @@ import uuid
 
 
 class ContentType(Enum):
-    """Content type enumeration"""    AUDIO = "audio"
+    """Content type enumeration"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -144,7 +152,8 @@ class ContentType(Enum):
 
 
 class Platform(Enum):
-    """Platform enumeration"""    YOUTUBE = "youtube"
+    """Platform enumeration"""
+    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
@@ -159,7 +168,8 @@ class Platform(Enum):
 
 
 class RecommendationType(Enum):
-    """Recommendation type enumeration"""    CONTENT_DISCOVERY = "content_discovery"
+    """Recommendation type enumeration"""
+    CONTENT_DISCOVERY = "content_discovery"
     CREATOR_COLLABORATION = "creator_collaboration"
     TREND_BASED = "trend_based"
     MONETIZATION = "monetization"
@@ -170,7 +180,8 @@ class RecommendationType(Enum):
 
 
 class MatchType(Enum):
-    """Collaboration match type enumeration"""    COMPLEMENTARY_SKILLS = "complementary_skills"
+    """Collaboration match type enumeration"""
+    COMPLEMENTARY_SKILLS = "complementary_skills"
     SIMILAR_AUDIENCE = "similar_audience"
     CROSS_GENRE = "cross_genre"
     SKILL_EXCHANGE = "skill_exchange"
@@ -180,7 +191,8 @@ class MatchType(Enum):
 
 
 class TrendType(Enum):
-    """Trend type enumeration"""    RISING = "rising"
+    """Trend type enumeration"""
+    RISING = "rising"
     VIRAL = "viral"
     SEASONAL = "seasonal"
     DECLINING = "declining"
@@ -190,7 +202,8 @@ class TrendType(Enum):
 
 
 class RevenueStream(Enum):
-    """Revenue stream enumeration"""    ADVERTISING = "advertising"
+    """Revenue stream enumeration"""
+    ADVERTISING = "advertising"
     SUBSCRIPTIONS = "subscriptions"
     MERCHANDISE = "merchandise"
     SPONSORSHIPS = "sponsorships"
@@ -204,7 +217,8 @@ class RevenueStream(Enum):
 
 @dataclass
 class Engagement:
-    """Engagement metrics structure"""    likes: int = 0
+    """Engagement metrics structure"""
+    likes: int = 0
     shares: int = 0
     comments: int = 0
     views: int = 0
@@ -219,7 +233,8 @@ class Engagement:
 
 @dataclass
 class ContentMetadata:
-    """Content metadata structure"""    title: str
+    """Content metadata structure"""
+    title: str
     description: Optional[str] = None
     tags: List[str] = field(default_factory=list)
     categories: List[str] = field(default_factory=list)
@@ -237,7 +252,8 @@ class ContentMetadata:
 
 @dataclass
 class CreatorProfile:
-    """Creator profile data structure"""    creator_id: str
+    """Creator profile data structure"""
+    creator_id: str
     name: str
     handle: str
     bio: Optional[str] = None
@@ -262,7 +278,8 @@ class CreatorProfile:
 
 @dataclass
 class AudienceInsight:
-    """Audience analysis insight"""    age_distribution: Dict[str, float] = field(default_factory=dict)
+    """Audience analysis insight"""
+    age_distribution: Dict[str, float] = field(default_factory=dict)
     gender_distribution: Dict[str, float] = field(default_factory=dict)
     geographic_distribution: Dict[str, float] = field(default_factory=dict)
     interest_categories: Dict[str, float] = field(default_factory=dict)
@@ -276,7 +293,8 @@ class AudienceInsight:
 
 @dataclass
 class RecommendationRequest:
-    """Request structure for recommendations"""    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Request structure for recommendations"""
+    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = ""
     creator_id: Optional[str] = None
     recommendation_type: RecommendationType = RecommendationType.CONTENT_DISCOVERY
@@ -301,7 +319,8 @@ class RecommendationRequest:
 
 @dataclass
 class ContentRecommendation:
-    """Content recommendation structure"""    recommendation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Content recommendation structure"""
+    recommendation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = ""
     title: str = ""
     content_type: ContentType = ContentType.TEXT
@@ -338,7 +357,8 @@ class ContentRecommendation:
 
 @dataclass
 class CreatorCompatibility:
-    """Creator compatibility analysis structure"""    creator1_id: str
+    """Creator compatibility analysis structure"""
+    creator1_id: str
     creator2_id: str
     compatibility_score: float
     shared_attributes: Dict[str, Any] = field(default_factory=dict)
@@ -353,7 +373,8 @@ class CreatorCompatibility:
 
 @dataclass
 class CollaborationMatch:
-    """Collaboration match structure"""    match_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Collaboration match structure"""
+    match_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     requesting_creator_id: str = ""
     matched_creator_id: str = ""
     match_type: MatchType = MatchType.COMPLEMENTARY_SKILLS
@@ -385,7 +406,8 @@ class CollaborationMatch:
 
 @dataclass
 class BrandMatch:
-    """Brand partnership match structure"""    brand_id: str
+    """Brand partnership match structure"""
+    brand_id: str
     creator_id: str
     match_score: float
     brand_name: str
@@ -405,7 +427,8 @@ class BrandMatch:
 
 @dataclass
 class TrendInsight:
-    """Trend analysis insight structure"""    trend_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Trend analysis insight structure"""
+    trend_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     trend_name: str = ""
     trend_type: TrendType = TrendType.RISING
     content_type: ContentType = ContentType.TEXT
@@ -437,7 +460,8 @@ class TrendInsight:
 
 @dataclass
 class RevenueStrategy:
-    """Revenue optimization strategy structure"""    strategy_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Revenue optimization strategy structure"""
+    strategy_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
     target_revenue: Optional[float] = None
     optimization_period: timedelta = field(default_factory=lambda: timedelta(days=30))
@@ -466,7 +490,8 @@ class RevenueStrategy:
 
 @dataclass
 class RecommendationResponse:
-    """Response structure for recommendation requests"""    response_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Response structure for recommendation requests"""
+    response_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     request_id: str = ""
     status: str = "success"
     content_recommendations: List[ContentRecommendation] = field(default_factory=list)
@@ -491,7 +516,8 @@ class RecommendationResponse:
 
 @dataclass
 class PerformanceMetrics:
-    """Performance metrics for recommendation system"""    total_requests: int = 0
+    """Performance metrics for recommendation system"""
+    total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
     average_response_time_ms: float = 0.0
@@ -512,7 +538,8 @@ class PerformanceMetrics:
 
 @dataclass
 class ContentOpportunity:
-    """Content creation opportunity structure"""    opportunity_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Content creation opportunity structure"""
+    opportunity_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     title: str
     description: str
     content_type: ContentType

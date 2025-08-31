@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -18,7 +19,8 @@ Tests for multi-format content processing, validation, and fingerprint preparati
 Author: Fahed Mlaiel (Legal Copyright)
 Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
 Propriété intellectuelle protégée sous toutes juridictions.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -45,8 +47,10 @@ from crawlers.handlers.content_handler import (
 
 
 class TestContentTypeDetector:
-    """Test suite for ContentTypeDetector class."""    def test_init(self):
-        """Test detector initialization."""        detector = ContentTypeDetector()
+    """Test suite for ContentTypeDetector class."""
+    def test_init(self):
+        """Test detector initialization."""
+        detector = ContentTypeDetector()
         assert detector.supported_types == {
             'audio': ['mp3', 'wav', 'flac', 'm4a', 'aac', 'ogg'],
             'video': ['mp4', 'avi', 'mov', 'mkv', 'wmv', 'flv'],
@@ -55,7 +59,8 @@ class TestContentTypeDetector:
         }
 
     def test_get_file_type_by_extension(self):
-        """Test file type detection by extension."""        detector = ContentTypeDetector()
+        """Test file type detection by extension."""
+        detector = ContentTypeDetector()
         
         assert detector.get_file_type('test.mp3') == 'audio'
         assert detector.get_file_type('video.mp4') == 'video'
@@ -64,21 +69,24 @@ class TestContentTypeDetector:
         assert detector.get_file_type('unknown.xyz') == 'unknown'
 
     def test_get_file_type_case_insensitive(self):
-        """Test case insensitive file type detection."""        detector = ContentTypeDetector()
+        """Test case insensitive file type detection."""
+        detector = ContentTypeDetector()
         
         assert detector.get_file_type('TEST.MP3') == 'audio'
         assert detector.get_file_type('Video.MP4') == 'video'
         assert detector.get_file_type('IMAGE.JPG') == 'image'
 
     def test_get_file_type_with_path(self):
-        """Test file type detection with full path."""        detector = ContentTypeDetector()
+        """Test file type detection with full path."""
+        detector = ContentTypeDetector()
         
         assert detector.get_file_type('/path/to/file.mp3') == 'audio'
         assert detector.get_file_type('C:\\Users\\test\\video.mp4') == 'video'
 
     @patch('magic.from_file')
     def test_detect_by_magic_bytes(self, mock_magic):
-        """Test MIME type detection using magic bytes."""        mock_magic.return_value = 'audio/mpeg'
+        """Test MIME type detection using magic bytes."""
+        mock_magic.return_value = 'audio/mpeg'
         detector = ContentTypeDetector()
         
         with tempfile.NamedTemporaryFile() as tmp:
@@ -86,7 +94,8 @@ class TestContentTypeDetector:
             assert mime_type == 'audio/mpeg'
 
     def test_is_supported(self):
-        """Test supported file type checking."""        detector = ContentTypeDetector()
+        """Test supported file type checking."""
+        detector = ContentTypeDetector()
         
         assert detector.is_supported('audio', 'mp3')
         assert detector.is_supported('video', 'mp4')
@@ -96,7 +105,8 @@ class TestContentTypeDetector:
 
     @patch('magic.from_file')
     def test_validate_file(self, mock_magic):
-        """Test comprehensive file validation."""        mock_magic.return_value = 'audio/mpeg'
+        """Test comprehensive file validation."""
+        mock_magic.return_value = 'audio/mpeg'
         detector = ContentTypeDetector()
         
         with tempfile.NamedTemporaryFile(suffix='.mp3') as tmp:
@@ -110,8 +120,10 @@ class TestContentTypeDetector:
 
 
 class TestContentProcessor:
-    """Test suite for ContentProcessor class."""    def test_init(self):
-        """Test processor initialization."""        processor = ContentProcessor()
+    """Test suite for ContentProcessor class."""
+    def test_init(self):
+        """Test processor initialization."""
+        processor = ContentProcessor()
         assert processor.detector is not None
         assert hasattr(processor, 'audio_extractor')
         assert hasattr(processor, 'video_extractor')
@@ -120,7 +132,8 @@ class TestContentProcessor:
 
     @pytest.mark.asyncio
     async def test_process_content_audio(self):
-        """Test audio content processing."""        processor = ContentProcessor()
+        """Test audio content processing."""
+        processor = ContentProcessor()
         
         with tempfile.NamedTemporaryFile(suffix='.mp3', delete=False) as tmp:
             tmp.write(b'fake mp3 content')
@@ -146,7 +159,8 @@ class TestContentProcessor:
 
     @pytest.mark.asyncio
     async def test_process_content_video(self):
-        """Test video content processing."""        processor = ContentProcessor()
+        """Test video content processing."""
+        processor = ContentProcessor()
         
         with tempfile.NamedTemporaryFile(suffix='.mp4', delete=False) as tmp:
             tmp.write(b'fake mp4 content')
@@ -172,7 +186,8 @@ class TestContentProcessor:
 
     @pytest.mark.asyncio
     async def test_process_content_image(self):
-        """Test image content processing."""        processor = ContentProcessor()
+        """Test image content processing."""
+        processor = ContentProcessor()
         
         # Create a real image file
         img = Image.new('RGB', (100, 100), color='red')
@@ -192,7 +207,8 @@ class TestContentProcessor:
 
     @pytest.mark.asyncio
     async def test_process_content_text(self):
-        """Test text content processing."""        processor = ContentProcessor()
+        """Test text content processing."""
+        processor = ContentProcessor()
         
         text_content = "This is a test document with multiple words."
         with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as tmp:
@@ -210,7 +226,8 @@ class TestContentProcessor:
             Path(file_path).unlink(missing_ok=True)
 
     def test_calculate_file_hash(self):
-        """Test file hash calculation."""        processor = ContentProcessor()
+        """Test file hash calculation."""
+        processor = ContentProcessor()
         
         content = b'test content for hashing'
         with tempfile.NamedTemporaryFile(delete=False) as tmp:
@@ -226,7 +243,8 @@ class TestContentProcessor:
 
     @patch('librosa.load')
     def test_extract_audio_metadata(self, mock_librosa):
-        """Test audio metadata extraction."""        mock_librosa.return_value = (np.random.rand(44100), 44100)
+        """Test audio metadata extraction."""
+        mock_librosa.return_value = (np.random.rand(44100), 44100)
         processor = ContentProcessor()
         
         with tempfile.NamedTemporaryFile(suffix='.mp3') as tmp:
@@ -236,7 +254,8 @@ class TestContentProcessor:
 
     @patch('cv2.VideoCapture')
     def test_extract_video_metadata(self, mock_cv2):
-        """Test video metadata extraction."""        mock_cap = MagicMock()
+        """Test video metadata extraction."""
+        mock_cap = MagicMock()
         mock_cap.get.side_effect = lambda prop: {
             3: 1920,  # WIDTH
             4: 1080,  # HEIGHT
@@ -255,7 +274,8 @@ class TestContentProcessor:
             assert metadata.fps == 30.0
 
     def test_extract_image_metadata(self):
-        """Test image metadata extraction."""        processor = ContentProcessor()
+        """Test image metadata extraction."""
+        processor = ContentProcessor()
         
         img = Image.new('RGB', (800, 600), color='blue')
         with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as tmp:
@@ -272,7 +292,8 @@ class TestContentProcessor:
             Path(file_path).unlink(missing_ok=True)
 
     def test_extract_text_metadata(self):
-        """Test text metadata extraction."""        processor = ContentProcessor()
+        """Test text metadata extraction."""
+        processor = ContentProcessor()
         
         text_content = "Hello world! This is a test document."
         with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as tmp:
@@ -289,14 +310,17 @@ class TestContentProcessor:
 
 
 class TestContentHandler:
-    """Test suite for ContentHandler class."""    def test_init(self):
-        """Test handler initialization."""        handler = ContentHandler()
+    """Test suite for ContentHandler class."""
+    def test_init(self):
+        """Test handler initialization."""
+        handler = ContentHandler()
         assert handler.processor is not None
         assert handler.detector is not None
 
     @pytest.mark.asyncio
     async def test_handle_content_upload(self):
-        """Test complete content upload handling."""        handler = ContentHandler()
+        """Test complete content upload handling."""
+        handler = ContentHandler()
         
         # Create test file
         with tempfile.NamedTemporaryFile(suffix='.txt', delete=False) as tmp:
@@ -331,7 +355,8 @@ class TestContentHandler:
 
     @pytest.mark.asyncio
     async def test_validate_content(self):
-        """Test content validation."""        handler = ContentHandler()
+        """Test content validation."""
+        handler = ContentHandler()
         
         with tempfile.NamedTemporaryFile(suffix='.txt', delete=False) as tmp:
             tmp.write(b'Valid content')
@@ -346,7 +371,8 @@ class TestContentHandler:
 
     @pytest.mark.asyncio
     async def test_validate_content_invalid_file(self):
-        """Test validation with invalid file."""        handler = ContentHandler()
+        """Test validation with invalid file."""
+        handler = ContentHandler()
         
         is_valid, errors = await handler.validate_content('/nonexistent/file.txt')
         assert not is_valid
@@ -355,7 +381,8 @@ class TestContentHandler:
 
     @pytest.mark.asyncio
     async def test_prepare_for_fingerprinting(self):
-        """Test fingerprint preparation."""        handler = ContentHandler()
+        """Test fingerprint preparation."""
+        handler = ContentHandler()
         
         result = ProcessingResult(
             file_path='/test/file.txt',
@@ -379,14 +406,17 @@ class TestContentHandler:
         assert 'content_type' in fingerprint_data
 
     def test_create_content_handler(self):
-        """Test factory function."""        handler = create_content_handler()
+        """Test factory function."""
+        handler = create_content_handler()
         assert isinstance(handler, ContentHandler)
 
 
 class TestIntegration:
-    """Integration tests for content handler components."""    @pytest.mark.asyncio
+    """Integration tests for content handler components."""
+    @pytest.mark.asyncio
     async def test_end_to_end_processing(self):
-        """Test complete end-to-end content processing."""        handler = ContentHandler()
+        """Test complete end-to-end content processing."""
+        handler = ContentHandler()
         
         # Create a real test file
         test_content = "This is a comprehensive test document for end-to-end processing."
@@ -417,7 +447,8 @@ class TestIntegration:
 
     @pytest.mark.asyncio
     async def test_multiple_file_types(self):
-        """Test processing multiple file types."""        handler = ContentHandler()
+        """Test processing multiple file types."""
+        handler = ContentHandler()
         results = []
         
         # Text file

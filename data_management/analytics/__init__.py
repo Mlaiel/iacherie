@@ -34,17 +34,25 @@ and business intelligence frameworks developed by Fahed Mlaiel.
 Unauthorized use, reproduction, or distribution is strictly prohibited.
 All concepts, data models, and analytical approaches are protected
 intellectual property.
-"""from .collectors import BusinessMetricsCollector
+"""
+
+from .collectors import BusinessMetricsCollector
+
 from .user_behavior import UserBehaviorCollector  
 from .content_analytics import ContentAnalyticsCollector
+
 from .revenue_metrics import RevenueMetricsCollector
+
 from .processors import MetricsProcessor, TrendAnalyzer, AnomalyDetector
 from .reporters import BusinessReporter, ExecutiveDashboard
 from .storage import AnalyticsStorage, MetricsWarehouse, TimeSeriesStore, CacheManager
 from .predictive_analytics import PredictiveAnalyticsEngine, PredictionScheduler
 from .realtime_dashboard import RealTimeDashboard
+
 from .business_intelligence import BusinessIntelligenceEngine
+
 from .metrics_aggregator import AdvancedMetricsAggregator
+
 from .exporters import (
     ExcelExporter, 
     PDFReporter, 

@@ -7,7 +7,8 @@ for creators' content workflows.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
-"""import asyncio
+"""
+import asyncio
 import logging
 import os
 import tempfile
@@ -39,7 +40,8 @@ logger = logging.getLogger(__name__)
 
 
 class MetadataFormat(Enum):
-    """Supported metadata formats."""    JSON = "json"
+    """Supported metadata formats."""
+    JSON = "json"
     XML = "xml"
     YAML = "yaml"
     CSV = "csv"
@@ -48,7 +50,8 @@ class MetadataFormat(Enum):
 
 
 class MetadataStandard(Enum):
-    """Metadata standards."""    DUBLIN_CORE = "dublin_core"
+    """Metadata standards."""
+    DUBLIN_CORE = "dublin_core"
     EXIF = "exif"
     ID3 = "id3"
     IPTC = "iptc"
@@ -58,7 +61,8 @@ class MetadataStandard(Enum):
 
 @dataclass
 class MetadataSchema:
-    """Metadata schema definition."""    title: Optional[str] = None
+    """Metadata schema definition."""
+    title: Optional[str] = None
     creator: Optional[str] = None
     subject: Optional[str] = None
     description: Optional[str] = None
@@ -88,7 +92,8 @@ class MetadataSchema:
 
 @dataclass
 class MetadataSettings:
-    """Metadata processing settings."""    format: MetadataFormat = MetadataFormat.JSON
+    """Metadata processing settings."""
+    format: MetadataFormat = MetadataFormat.JSON
     standard: MetadataStandard = MetadataStandard.DUBLIN_CORE
     include_technical: bool = True
     include_descriptive: bool = True
@@ -102,22 +107,26 @@ class MetadataSettings:
 
 
 class MetadataTransformer:
-    """    Professional metadata transformation engine for the IA Influencer Agent Platform.
+    """
+    Professional metadata transformation engine for the IA Influencer Agent Platform.
     
     Provides advanced metadata extraction, transformation, and standardization
     capabilities optimized for creator content workflows.
-    """    
+    """
+    
     def __init__(
         self,
         config: Optional[Dict[str, Any]] = None,
         temp_dir: Optional[str] = None
     ):
-        """        Initialize metadata transformer.
+        """
+        Initialize metadata transformer.
         
         Args:
             config: Configuration options
             temp_dir: Temporary directory for processing
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         self.temp_dir = Path(temp_dir) if temp_dir else Path(tempfile.gettempdir()) / "metadata_transform"
         
         # Create temp directory
@@ -140,14 +149,16 @@ class MetadataTransformer:
         logger.info("MetadataTransformer initialized")
     
     async def transform(self, request) -> Any:
-        """        Transform metadata based on request configuration.
+        """
+        Transform metadata based on request configuration.
         
         Args:
             request: Transformation request with metadata settings
             
         Returns:
             TransformationResult with processing metrics
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Parse request
@@ -196,7 +207,8 @@ class MetadataTransformer:
         file_path: str,
         include_embedded: bool = True
     ) -> Dict[str, Any]:
-        """        Extract comprehensive metadata from file.
+        """
+        Extract comprehensive metadata from file.
         
         Args:
             file_path: File path to extract metadata from
@@ -204,7 +216,8 @@ class MetadataTransformer:
             
         Returns:
             Dictionary containing extracted metadata
-        """        try:
+        """
+        try:
             file_path_obj = Path(file_path)
             if not file_path_obj.exists():
                 return {}
@@ -248,7 +261,8 @@ class MetadataTransformer:
         metadata: Dict[str, Any],
         standard: MetadataStandard = MetadataStandard.DUBLIN_CORE
     ) -> MetadataSchema:
-        """        Standardize metadata to a specific schema.
+        """
+        Standardize metadata to a specific schema.
         
         Args:
             metadata: Raw metadata dictionary
@@ -256,7 +270,8 @@ class MetadataTransformer:
             
         Returns:
             Standardized metadata schema
-        """        try:
+        """
+        try:
             schema = MetadataSchema()
             
             if standard == MetadataStandard.DUBLIN_CORE:
@@ -287,7 +302,8 @@ class MetadataTransformer:
         metadata: Union[Dict[str, Any], MetadataSchema],
         schema_requirements: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Validate metadata against schema requirements.
+        """
+        Validate metadata against schema requirements.
         
         Args:
             metadata: Metadata to validate
@@ -295,7 +311,8 @@ class MetadataTransformer:
             
         Returns:
             Validation results
-        """        try:
+        """
+        try:
             validation_result = {
                 'valid': True,
                 'errors': [],
@@ -356,7 +373,8 @@ class MetadataTransformer:
             return {'valid': False, 'errors': [str(e)], 'warnings': [], 'completeness_score': 0.0}
     
     async def _extract_audio_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract audio metadata using mutagen."""        try:
+        """Extract audio metadata using mutagen."""
+        try:
             audio_file = mutagen.File(str(file_path))
             if not audio_file:
                 return {}
@@ -387,7 +405,8 @@ class MetadataTransformer:
             return {}
     
     async def _extract_image_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract image metadata (EXIF)."""        try:
+        """Extract image metadata (EXIF)."""
+        try:
             metadata = {}
             
             with open(file_path, 'rb') as f:
@@ -406,7 +425,8 @@ class MetadataTransformer:
             return {}
     
     async def _map_to_dublin_core(self, metadata: Dict[str, Any]) -> MetadataSchema:
-        """Map metadata to Dublin Core schema."""        schema = MetadataSchema()
+        """Map metadata to Dublin Core schema."""
+        schema = MetadataSchema()
         
         try:
             # Map audio metadata if available
@@ -436,7 +456,8 @@ class MetadataTransformer:
             return schema
     
     async def _map_to_exif(self, metadata: Dict[str, Any]) -> MetadataSchema:
-        """Map metadata to EXIF-based schema."""        schema = MetadataSchema()
+        """Map metadata to EXIF-based schema."""
+        schema = MetadataSchema()
         
         try:
             if 'image' in metadata and 'exif' in metadata['image']:
@@ -463,7 +484,8 @@ class MetadataTransformer:
             return schema
     
     async def _map_to_id3(self, metadata: Dict[str, Any]) -> MetadataSchema:
-        """Map metadata to ID3-based schema."""        schema = MetadataSchema()
+        """Map metadata to ID3-based schema."""
+        schema = MetadataSchema()
         
         try:
             if 'audio' in metadata and 'tags' in metadata['audio']:
@@ -497,7 +519,8 @@ class MetadataTransformer:
         metadata: Dict[str, Any],
         settings: MetadataSettings
     ) -> Union[Dict[str, Any], MetadataSchema]:
-        """Transform metadata according to settings."""        try:
+        """Transform metadata according to settings."""
+        try:
             # Standardize metadata
             if settings.standard != MetadataStandard.CUSTOM:
                 standardized = await self.standardize_metadata(metadata, settings.standard)
@@ -533,7 +556,8 @@ class MetadataTransformer:
         output_path: Path,
         settings: MetadataSettings
     ):
-        """Save metadata in specified format."""        try:
+        """Save metadata in specified format."""
+        try:
             output_path.parent.mkdir(parents=True, exist_ok=True)
             
             # Convert to dict if needed
@@ -578,7 +602,8 @@ class MetadataTransformer:
             raise
     
     def _dict_to_xml(self, data: Dict[str, Any], parent: ET.Element):
-        """Convert dictionary to XML elements."""        for key, value in data.items():
+        """Convert dictionary to XML elements."""
+        for key, value in data.items():
             # Clean key name for XML
             clean_key = re.sub(r'[^a-zA-Z0-9_]', '_', str(key))
             element = ET.SubElement(parent, clean_key)
@@ -596,7 +621,8 @@ class MetadataTransformer:
                 element.text = str(value)
     
     async def _normalize_dates(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Normalize date formats in metadata."""        try:
+        """Normalize date formats in metadata."""
+        try:
             date_fields = ['date', 'creation_date', 'modification_date', 'creation_time', 'modification_time']
             
             for field in date_fields:
@@ -638,7 +664,8 @@ class MetadataTransformer:
             return metadata
     
     async def _calculate_file_hash(self, file_path: Path, algorithm: str = 'md5') -> str:
-        """Calculate file hash."""        try:
+        """Calculate file hash."""
+        try:
             if algorithm == 'md5':
                 hash_obj = hashlib.md5()
             elif algorithm == 'sha256':
@@ -657,12 +684,14 @@ class MetadataTransformer:
             return ""
     
     def _get_mime_type(self, file_path: Path) -> str:
-        """Get MIME type for file."""        import mimetypes
+        """Get MIME type for file."""
+        import mimetypes
         mime_type, _ = mimetypes.guess_type(str(file_path))
         return mime_type or 'application/octet-stream'
     
     def _parse_metadata_settings(self, request) -> MetadataSettings:
-        """Parse transformation request into metadata settings."""        settings = MetadataSettings()
+        """Parse transformation request into metadata settings."""
+        settings = MetadataSettings()
         
         if hasattr(request, 'target_format') and request.target_format:
             try:
@@ -693,7 +722,8 @@ class MetadataTransformer:
         settings: MetadataSettings,
         requested_output: Optional[str] = None
     ) -> Path:
-        """Generate output file path."""        if requested_output:
+        """Generate output file path."""
+        if requested_output:
             return Path(requested_output)
         
         # Generate based on input and settings
@@ -701,7 +731,8 @@ class MetadataTransformer:
         return input_path.parent / output_name
     
     async def cleanup(self):
-        """Cleanup temporary files and resources."""        try:
+        """Cleanup temporary files and resources."""
+        try:
             # Clean temp directory
             if self.temp_dir.exists():
                 import shutil
@@ -714,16 +745,19 @@ class MetadataTransformer:
 
 
 class MetadataExtractor:
-    """Simplified metadata extractor interface."""    
+    """Simplified metadata extractor interface."""
+    
     def __init__(self, transformer: Optional[MetadataTransformer] = None):
         self.transformer = transformer or MetadataTransformer()
     
     async def extract(self, file_path: str) -> Dict[str, Any]:
-        """Extract metadata from file."""        return await self.transformer.extract_metadata(file_path)
+        """Extract metadata from file."""
+        return await self.transformer.extract_metadata(file_path)
 
 
 class MetadataStandardizer:
-    """Simplified metadata standardizer interface."""    
+    """Simplified metadata standardizer interface."""
+    
     def __init__(self, transformer: Optional[MetadataTransformer] = None):
         self.transformer = transformer or MetadataTransformer()
     
@@ -732,7 +766,8 @@ class MetadataStandardizer:
         metadata: Dict[str, Any],
         standard: str = "dublin_core"
     ) -> MetadataSchema:
-        """Standardize metadata to schema."""        return await self.transformer.standardize_metadata(
+        """Standardize metadata to schema."""
+        return await self.transformer.standardize_metadata(
             metadata, 
             MetadataStandard(standard)
         )

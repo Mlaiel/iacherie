@@ -4,7 +4,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive privacy-preserving capabilities including
 differential privacy, federated learning, and secure multi-party computation.
-"""import logging
+"""
+import logging
 import json
 import os
 import time
@@ -21,21 +22,24 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 class PrivacyTechnique(Enum):
-    """Privacy preservation techniques"""    DIFFERENTIAL_PRIVACY = "differential_privacy"
+    """Privacy preservation techniques"""
+    DIFFERENTIAL_PRIVACY = "differential_privacy"
     FEDERATED_LEARNING = "federated_learning"
     SECURE_AGGREGATION = "secure_aggregation"
     HOMOMORPHIC_ENCRYPTION = "homomorphic_encryption"
     DATA_ANONYMIZATION = "data_anonymization"
 
 class PrivacyLevel(Enum):
-    """Privacy protection levels"""    LOW = "low"
+    """Privacy protection levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     MAXIMUM = "maximum"
 
 @dataclass
 class PrivacyConfig:
-    """Privacy configuration"""    technique: PrivacyTechnique
+    """Privacy configuration"""
+    technique: PrivacyTechnique
     privacy_level: PrivacyLevel
     epsilon: float = 1.0  # For differential privacy
     delta: float = 1e-5  # For differential privacy
@@ -45,14 +49,16 @@ class PrivacyConfig:
 
 @dataclass
 class PrivacyMetrics:
-    """Privacy preservation metrics"""    privacy_loss: float
+    """Privacy preservation metrics"""
+    privacy_loss: float
     utility_score: float
     noise_level: float
     anonymization_level: float
     security_strength: float
 
 class PrivacyPreserver:
-    """Main privacy preservation orchestrator"""    
+    """Main privacy preservation orchestrator"""
+    
     def __init__(self, config: PrivacyConfig):
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -71,7 +77,8 @@ class PrivacyPreserver:
         self.logger.info("PrivacyPreserver initialized successfully")
     
     def apply_privacy_protection(self, data: Any, technique: PrivacyTechnique = None) -> Dict[str, Any]:
-        """Apply privacy protection to data"""        try:
+        """Apply privacy protection to data"""
+        try:
             technique = technique or self.config.technique
             self.logger.info(f"Applying privacy protection: {technique.value}")
             
@@ -104,7 +111,8 @@ class PrivacyPreserver:
             return {"error": str(e)}
     
     def validate_privacy_guarantees(self, data: Any) -> Dict[str, Any]:
-        """Validate privacy guarantees"""        try:
+        """Validate privacy guarantees"""
+        try:
             self.logger.info("Validating privacy guarantees")
             
             validation_result = {
@@ -130,7 +138,8 @@ class PrivacyPreserver:
             return {"status": "validation_failed", "error": str(e)}
     
     def _calculate_privacy_cost(self, technique: PrivacyTechnique, result: Dict[str, Any]) -> float:
-        """Calculate privacy budget cost"""        base_cost = {
+        """Calculate privacy budget cost"""
+        base_cost = {
             PrivacyTechnique.DIFFERENTIAL_PRIVACY: 0.1,
             PrivacyTechnique.FEDERATED_LEARNING: 0.05,
             PrivacyTechnique.DATA_ANONYMIZATION: 0.02,
@@ -141,7 +150,8 @@ class PrivacyPreserver:
         return base_cost.get(technique, 0.05)
     
     def _assess_reidentification_risk(self, data: Any) -> float:
-        """Assess re-identification risk"""        # Simplified risk assessment
+        """Assess re-identification risk"""
+        # Simplified risk assessment
         if isinstance(data, dict):
             identifiable_fields = ["name", "email", "phone", "ssn", "address"]
             risk_score = sum(1 for field in identifiable_fields if field in data)
@@ -149,7 +159,8 @@ class PrivacyPreserver:
         return 0.3  # Default moderate risk
     
     def get_privacy_status(self) -> Dict[str, Any]:
-        """Get current privacy status"""        return {
+        """Get current privacy status"""
+        return {
             "privacy_budget": self.privacy_budget,
             "privacy_spent": self.privacy_spent,
             "privacy_remaining": max(0, self.privacy_budget - self.privacy_spent),
@@ -159,7 +170,8 @@ class PrivacyPreserver:
         }
 
 class DifferentialPrivacy:
-    """Differential privacy implementation"""    
+    """Differential privacy implementation"""
+    
     def __init__(self, config: PrivacyConfig):
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -172,7 +184,8 @@ class DifferentialPrivacy:
         self.logger.info("DifferentialPrivacy initialized successfully")
     
     def add_noise(self, data: Any, sensitivity: float = 1.0) -> Dict[str, Any]:
-        """Add differential privacy noise to data"""        try:
+        """Add differential privacy noise to data"""
+        try:
             self.logger.info("Adding differential privacy noise")
             
             if isinstance(data, (int, float)):
@@ -205,7 +218,8 @@ class DifferentialPrivacy:
             return {"error": str(e)}
     
     def gaussian_mechanism(self, data: np.ndarray, sensitivity: float, epsilon: float = None) -> np.ndarray:
-        """Apply Gaussian mechanism for differential privacy"""        try:
+        """Apply Gaussian mechanism for differential privacy"""
+        try:
             eps = epsilon or self.epsilon
             sigma = sensitivity * np.sqrt(2 * np.log(1.25 / self.delta)) / eps
             
@@ -217,7 +231,8 @@ class DifferentialPrivacy:
             return data
     
     def laplace_mechanism(self, data: Union[float, np.ndarray], sensitivity: float, epsilon: float = None) -> Union[float, np.ndarray]:
-        """Apply Laplace mechanism for differential privacy"""        try:
+        """Apply Laplace mechanism for differential privacy"""
+        try:
             eps = epsilon or self.epsilon
             scale = sensitivity / eps
             
@@ -234,7 +249,8 @@ class DifferentialPrivacy:
     
     def exponential_mechanism(self, candidates: List[Any], utility_function: Callable, 
                             sensitivity: float, epsilon: float = None) -> Any:
-        """Apply exponential mechanism for differential privacy"""        try:
+        """Apply exponential mechanism for differential privacy"""
+        try:
             eps = epsilon or self.epsilon
             
             # Calculate utilities
@@ -260,7 +276,8 @@ class DifferentialPrivacy:
             return candidates[0] if candidates else None
 
 class FederatedLearning:
-    """Federated learning implementation"""    
+    """Federated learning implementation"""
+    
     def __init__(self, config: PrivacyConfig):
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -273,7 +290,8 @@ class FederatedLearning:
         self.logger.info("FederatedLearning initialized successfully")
     
     def prepare_federated_data(self, data: Any) -> Dict[str, Any]:
-        """Prepare data for federated learning"""        try:
+        """Prepare data for federated learning"""
+        try:
             self.logger.info("Preparing data for federated learning")
             
             # Simulate data partitioning
@@ -310,7 +328,8 @@ class FederatedLearning:
             return {"error": str(e)}
     
     def simulate_federated_round(self, client_updates: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Simulate a federated learning round"""        try:
+        """Simulate a federated learning round"""
+        try:
             self.logger.info(f"Simulating federated round {self.round_number}")
             
             # Simulate client training
@@ -334,7 +353,8 @@ class FederatedLearning:
             return {"error": str(e)}
     
     def _aggregate_weights(self, client_updates: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Aggregate client model weights"""        # Simulate FedAvg aggregation
+        """Aggregate client model weights"""
+        # Simulate FedAvg aggregation
         num_clients = len(client_updates)
         total_samples = sum(update.get("sample_count", 100) for update in client_updates)
         
@@ -348,7 +368,8 @@ class FederatedLearning:
         return aggregated
 
 class DataAnonymizer:
-    """Data anonymization and de-identification"""    
+    """Data anonymization and de-identification"""
+    
     def __init__(self, config: PrivacyConfig):
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -360,7 +381,8 @@ class DataAnonymizer:
         self.logger.info("DataAnonymizer initialized successfully")
     
     def anonymize_data(self, data: Any) -> Dict[str, Any]:
-        """Anonymize sensitive data"""        try:
+        """Anonymize sensitive data"""
+        try:
             self.logger.info("Anonymizing sensitive data")
             
             if isinstance(data, dict):
@@ -386,7 +408,8 @@ class DataAnonymizer:
             return {"error": str(e)}
     
     def _anonymize_record(self, record: Dict[str, Any]) -> Dict[str, Any]:
-        """Anonymize a single data record"""        anonymized = record.copy()
+        """Anonymize a single data record"""
+        anonymized = record.copy()
         
         # Define sensitive fields
         sensitive_fields = {
@@ -405,7 +428,8 @@ class DataAnonymizer:
         return anonymized
     
     def apply_k_anonymity(self, dataset: List[Dict[str, Any]], k: int = None) -> List[Dict[str, Any]]:
-        """Apply k-anonymity to dataset"""        try:
+        """Apply k-anonymity to dataset"""
+        try:
             k = k or self.k_anonymity_k
             self.logger.info(f"Applying {k}-anonymity")
             
@@ -436,7 +460,8 @@ class DataAnonymizer:
             return dataset
     
     def measure_anonymization_quality(self, data: Any) -> float:
-        """Measure quality of anonymization"""        try:
+        """Measure quality of anonymization"""
+        try:
             # Simplified quality metric
             if isinstance(data, dict):
                 sensitive_count = sum(1 for key in data.keys() 
@@ -452,14 +477,16 @@ class DataAnonymizer:
             return 0.0
 
 class SecureAggregator:
-    """Secure aggregation for federated learning"""    
+    """Secure aggregation for federated learning"""
+    
     def __init__(self, config: PrivacyConfig):
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
         self.logger.info("SecureAggregator initialized successfully")
     
     def secure_aggregate(self, client_updates: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Perform secure aggregation of client updates"""        try:
+        """Perform secure aggregation of client updates"""
+        try:
             self.logger.info("Performing secure aggregation")
             
             # Simulate secure aggregation protocol
@@ -484,7 +511,8 @@ class SecureAggregator:
             return {"error": str(e)}
     
     def _simulate_secure_sum(self, client_updates: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Simulate secure sum computation"""        # Simplified secure sum simulation
+        """Simulate secure sum computation"""
+        # Simplified secure sum simulation
         total_samples = sum(update.get("sample_count", 100) for update in client_updates)
         
         return {

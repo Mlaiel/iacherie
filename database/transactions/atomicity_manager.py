@@ -11,7 +11,8 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
-"""import asyncio
+"""
+import asyncio
 import uuid
 import logging
 import weakref
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class OperationState(Enum):
-    """Operation state enumeration"""    PENDING = "pending"
+    """Operation state enumeration"""
+    PENDING = "pending"
     EXECUTING = "executing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -36,7 +38,8 @@ class OperationState(Enum):
 
 
 class AtomicOperationType(Enum):
-    """Types of atomic operations"""    DATABASE_WRITE = "database_write"
+    """Types of atomic operations"""
+    DATABASE_WRITE = "database_write"
     FILE_OPERATION = "file_operation"
     EXTERNAL_API = "external_api"
     CACHE_UPDATE = "cache_update"
@@ -46,7 +49,8 @@ class AtomicOperationType(Enum):
 
 @dataclass
 class AtomicOperation:
-    """Individual atomic operation within a transaction"""    operation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Individual atomic operation within a transaction"""
+    operation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     operation_type: AtomicOperationType = AtomicOperationType.CUSTOM
     state: OperationState = OperationState.PENDING
     execute_func: Optional[Callable] = None
@@ -64,22 +68,26 @@ class AtomicOperation:
     
     @property
     def duration(self) -> Optional[float]:
-        """Calculate operation duration"""        if self.executed_at and self.completed_at:
+        """Calculate operation duration"""
+        if self.executed_at and self.completed_at:
             return (self.completed_at - self.executed_at).total_seconds()
         return None
     
     def is_executable(self) -> bool:
-        """Check if operation can be executed"""        return (self.state == OperationState.PENDING and 
+        """Check if operation can be executed"""
+        return (self.state == OperationState.PENDING and 
                 self.execute_func is not None and
                 self.retry_count <= self.max_retries)
     
     def is_rollbackable(self) -> bool:
-        """Check if operation can be rolled back"""        return (self.state == OperationState.COMPLETED and 
+        """Check if operation can be rolled back"""
+        return (self.state == OperationState.COMPLETED and 
                 self.rollback_func is not None)
 
 
 class AtomicOperationGroup:
-    """Group of operations that must execute atomically"""    
+    """Group of operations that must execute atomically"""
+    
     def __init__(self, group_id: str = None):
         self.group_id = group_id or str(uuid.uuid4())
         self.operations: List[AtomicOperation] = []
@@ -88,7 +96,8 @@ class AtomicOperationGroup:
         self.lock = threading.RLock()
     
     def add_operation(self, operation: AtomicOperation, dependencies: Optional[List[str]] = None) -> None:
-        """Add operation to group with optional dependencies"""        with self.lock:
+        """Add operation to group with optional dependencies"""
+        with self.lock:
             self.operations.append(operation)
             if dependencies:
                 self.dependencies[operation.operation_id] = set(dependencies)
@@ -96,7 +105,8 @@ class AtomicOperationGroup:
                 self.dependencies[operation.operation_id] = set()
     
     def get_executable_operations(self) -> List[AtomicOperation]:
-        """Get operations that can be executed (dependencies satisfied)"""        with self.lock:
+        """Get operations that can be executed (dependencies satisfied)"""
+        with self.lock:
             completed_ops = {op.operation_id for op in self.operations 
                            if op.state == OperationState.COMPLETED}
             
@@ -109,7 +119,8 @@ class AtomicOperationGroup:
             return executable
     
     def get_rollback_operations(self) -> List[AtomicOperation]:
-        """Get operations that need to be rolled back (in reverse execution order)"""        with self.lock:
+        """Get operations that need to be rolled back (in reverse execution order)"""
+        with self.lock:
             rollbackable = [op for op in self.operations if op.is_rollbackable()]
             # Sort by completion time in reverse order
             rollbackable.sort(key=lambda x: x.completed_at or datetime.min, reverse=True)
@@ -117,19 +128,22 @@ class AtomicOperationGroup:
 
 
 class CompensationRegistry:
-    """Registry for compensation actions for atomic operations"""    
+    """Registry for compensation actions for atomic operations"""
+    
     def __init__(self):
         self.compensations: Dict[str, List[Callable]] = {}
         self.lock = threading.RLock()
     
     def register_compensation(self, operation_id: str, compensation_func: Callable) -> None:
-        """Register compensation function for operation"""        with self.lock:
+        """Register compensation function for operation"""
+        with self.lock:
             if operation_id not in self.compensations:
                 self.compensations[operation_id] = []
             self.compensations[operation_id].append(compensation_func)
     
     async def execute_compensations(self, operation_id: str) -> None:
-        """Execute all compensation functions for operation"""        with self.lock:
+        """Execute all compensation functions for operation"""
+        with self.lock:
             compensations = self.compensations.get(operation_id, [])
         
         for compensation_func in reversed(compensations):  # Execute in reverse order
@@ -144,7 +158,8 @@ class CompensationRegistry:
 
 
 class AtomicityManager:
-    """    Atomicity manager ensuring all-or-nothing semantics for transactions
+    """
+    Atomicity manager ensuring all-or-nothing semantics for transactions
     
     Features:
     - Atomic operation execution
@@ -154,7 +169,8 @@ class AtomicityManager:
     - Performance monitoring
     - Concurrent operation support
     - Resource cleanup
-    """    
+    """
+    
     def __init__(self, max_concurrent_operations: int = 100):
         self.active_groups: Dict[str, AtomicOperationGroup] = {}
         self.compensation_registry = CompensationRegistry()
@@ -173,7 +189,8 @@ class AtomicityManager:
         logger.info("AtomicityManager initialized with max_concurrent=%d", max_concurrent_operations)
     
     async def create_operation_group(self, group_id: Optional[str] = None) -> str:
-        """Create new atomic operation group"""        group = AtomicOperationGroup(group_id)
+        """Create new atomic operation group"""
+        group = AtomicOperationGroup(group_id)
         
         async with self.lock:
             self.active_groups[group.group_id] = group
@@ -193,7 +210,8 @@ class AtomicityManager:
         timeout: float = 30.0,
         max_retries: int = 3
     ) -> str:
-        """Add operation to atomic group"""        
+        """Add operation to atomic group"""
+        
         group = self.active_groups.get(group_id)
         if not group:
             raise ValueError(f"Operation group not found: {group_id}")
@@ -214,7 +232,8 @@ class AtomicityManager:
         return operation.operation_id
     
     async def execute_atomic_group(self, group_id: str) -> bool:
-        """Execute all operations in group atomically"""        
+        """Execute all operations in group atomically"""
+        
         group = self.active_groups.get(group_id)
         if not group:
             raise ValueError(f"Operation group not found: {group_id}")
@@ -279,7 +298,8 @@ class AtomicityManager:
                 self.active_groups.pop(group_id, None)
     
     async def _execute_operation(self, operation: AtomicOperation) -> bool:
-        """Execute individual atomic operation"""        
+        """Execute individual atomic operation"""
+        
         async with self.semaphore:  # Limit concurrent operations
             operation.state = OperationState.EXECUTING
             operation.executed_at = datetime.now(timezone.utc)
@@ -327,7 +347,8 @@ class AtomicityManager:
                 return False
     
     async def _rollback_group(self, group: AtomicOperationGroup) -> None:
-        """Rollback all completed operations in group"""        
+        """Rollback all completed operations in group"""
+        
         logger.info("Rolling back operation group %s", group.group_id)
         
         rollback_operations = group.get_rollback_operations()
@@ -345,7 +366,8 @@ class AtomicityManager:
         await self._update_metrics(group, success=False)
     
     async def _rollback_operation(self, operation: AtomicOperation) -> None:
-        """Rollback individual operation"""        
+        """Rollback individual operation"""
+        
         if operation.rollback_func:
             await self._call_function(operation.rollback_func, operation.timeout)
         
@@ -353,7 +375,8 @@ class AtomicityManager:
         await self.compensation_registry.execute_compensations(operation.operation_id)
     
     async def _call_function(self, func: Callable, timeout: float) -> Any:
-        """Call function with proper async/sync handling and timeout"""        
+        """Call function with proper async/sync handling and timeout"""
+        
         try:
             if asyncio.iscoroutinefunction(func):
                 return await asyncio.wait_for(func(), timeout=timeout)
@@ -367,7 +390,8 @@ class AtomicityManager:
             raise asyncio.TimeoutError(f"Function call timed out after {timeout} seconds")
     
     async def _update_metrics(self, group: AtomicOperationGroup, success: bool) -> None:
-        """Update performance metrics"""        
+        """Update performance metrics"""
+        
         total_ops = len(group.operations)
         self.performance_metrics["total_operations"] += total_ops
         
@@ -395,10 +419,12 @@ class AtomicityManager:
                 self.performance_metrics["average_duration"] = new_avg
     
     def register_compensation(self, operation_id: str, compensation_func: Callable) -> None:
-        """Register compensation function for operation"""        self.compensation_registry.register_compensation(operation_id, compensation_func)
+        """Register compensation function for operation"""
+        self.compensation_registry.register_compensation(operation_id, compensation_func)
     
     async def get_group_status(self, group_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of operation group"""        
+        """Get status of operation group"""
+        
         group = self.active_groups.get(group_id)
         if not group:
             return None
@@ -415,7 +441,8 @@ class AtomicityManager:
         }
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get atomicity manager performance metrics"""        return {
+        """Get atomicity manager performance metrics"""
+        return {
             **self.performance_metrics,
             "active_groups": len(self.active_groups),
             "max_concurrent": self.max_concurrent,
@@ -423,7 +450,8 @@ class AtomicityManager:
     
     @asynccontextmanager
     async def atomic_context(self, group_id: Optional[str] = None):
-        """Context manager for atomic operations"""        
+        """Context manager for atomic operations"""
+        
         group_id = await self.create_operation_group(group_id)
         
         try:
@@ -441,7 +469,8 @@ class AtomicityManager:
             raise e
     
     async def shutdown(self) -> None:
-        """Graceful shutdown of atomicity manager"""        logger.info("Shutting down AtomicityManager...")
+        """Graceful shutdown of atomicity manager"""
+        logger.info("Shutting down AtomicityManager...")
         
         # Rollback all active groups
         active_groups = list(self.active_groups.values())

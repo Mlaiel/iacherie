@@ -24,7 +24,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import uuid
@@ -87,7 +88,8 @@ from ...utils.cache import CacheManager
 logger = logging.getLogger(__name__)
 
 class PipelineStatus(Enum):
-    """Pipeline execution status"""    CREATED = "created"
+    """Pipeline execution status"""
+    CREATED = "created"
     QUEUED = "queued"
     RUNNING = "running"
     PAUSED = "paused"
@@ -97,7 +99,8 @@ class PipelineStatus(Enum):
     RETRYING = "retrying"
 
 class StepStatus(Enum):
-    """Individual step execution status"""    PENDING = "pending"
+    """Individual step execution status"""
+    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed" 
     FAILED = "failed"
@@ -105,14 +108,16 @@ class StepStatus(Enum):
     RETRYING = "retrying"
 
 class DependencyType(Enum):
-    """Step dependency types"""    SEQUENTIAL = "sequential"
+    """Step dependency types"""
+    SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     CONDITIONAL = "conditional"
     DATA = "data"
 
 @dataclass
 class StepMetrics:
-    """Execution metrics for a pipeline step"""    execution_time: float = 0.0
+    """Execution metrics for a pipeline step"""
+    execution_time: float = 0.0
     memory_usage: float = 0.0
     cpu_usage: float = 0.0
     input_size: int = 0
@@ -122,7 +127,8 @@ class StepMetrics:
 
 @dataclass
 class PipelineStep:
-    """Individual pipeline step definition"""    step_id: str
+    """Individual pipeline step definition"""
+    step_id: str
     name: str
     function: Callable
     inputs: List[str] = field(default_factory=list)
@@ -139,7 +145,8 @@ class PipelineStep:
 
 @dataclass
 class PipelineDefinition:
-    """Complete ML pipeline definition"""    pipeline_id: str
+    """Complete ML pipeline definition"""
+    pipeline_id: str
     name: str
     description: str
     version: str
@@ -153,7 +160,8 @@ class PipelineDefinition:
 
 @dataclass
 class PipelineExecution:
-    """Pipeline execution tracking"""    execution_id: str
+    """Pipeline execution tracking"""
+    execution_id: str
     pipeline_id: str
     status: PipelineStatus = PipelineStatus.CREATED
     start_time: Optional[datetime] = None
@@ -166,7 +174,8 @@ class PipelineExecution:
     error_message: Optional[str] = None
 
 class AbstractPipelineStep(ABC):
-    """Abstract base class for pipeline steps"""    
+    """Abstract base class for pipeline steps"""
+    
     def __init__(self, step_id: str, name: str, parameters: Dict[str, Any] = None):
         self.step_id = step_id
         self.name = name
@@ -175,18 +184,23 @@ class AbstractPipelineStep(ABC):
         
     @abstractmethod
     async def execute(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute the pipeline step"""        pass
+        """Execute the pipeline step"""
+        pass
         
     async def validate_inputs(self, context: Dict[str, Any]) -> bool:
-        """Validate step inputs"""        return True
+        """Validate step inputs"""
+        return True
         
     async def cleanup(self, context: Dict[str, Any]):
-        """Clean up step resources"""        pass
+        """Clean up step resources"""
+        pass
 
 class DataIngestionStep(AbstractPipelineStep):
-    """Data ingestion pipeline step"""    
+    """Data ingestion pipeline step"""
+    
     async def execute(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute data ingestion"""        start_time = time.time()
+        """Execute data ingestion"""
+        start_time = time.time()
         
         try:
             # Data source configuration
@@ -211,15 +225,18 @@ class DataIngestionStep(AbstractPipelineStep):
             raise PipelineError(f"Data ingestion failed: {str(e)}")
     
     async def _load_from_s3(self, s3_path: str) -> pd.DataFrame:
-        """Load data from S3"""        # Implementation would use boto3 to load from S3
+        """Load data from S3"""
+        # Implementation would use boto3 to load from S3
         pass
     
     async def _load_from_database(self, db_url: str) -> pd.DataFrame:
-        """Load data from database"""        # Implementation would use SQLAlchemy to load from database
+        """Load data from database"""
+        # Implementation would use SQLAlchemy to load from database
         pass
     
     async def _load_from_file(self, file_path: str) -> pd.DataFrame:
-        """Load data from local file"""        path = Path(file_path)
+        """Load data from local file"""
+        path = Path(file_path)
         if path.suffix == '.parquet':
             return pd.read_parquet(file_path)
         elif path.suffix == '.csv':
@@ -228,9 +245,11 @@ class DataIngestionStep(AbstractPipelineStep):
             raise ValueError(f"Unsupported file format: {path.suffix}")
 
 class FeatureEngineeringStep(AbstractPipelineStep):
-    """Feature engineering pipeline step"""    
+    """Feature engineering pipeline step"""
+    
     async def execute(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute feature engineering"""        start_time = time.time()
+        """Execute feature engineering"""
+        start_time = time.time()
         
         try:
             input_data = context.get('data')
@@ -263,7 +282,8 @@ class FeatureEngineeringStep(AbstractPipelineStep):
             raise PipelineError(f"Feature engineering failed: {str(e)}")
     
     async def _apply_transformation(self, data: pd.DataFrame, transformation: Dict[str, Any]) -> pd.DataFrame:
-        """Apply a specific feature transformation"""        transform_type = transformation.get('type')
+        """Apply a specific feature transformation"""
+        transform_type = transformation.get('type')
         
         if transform_type == 'scale':
             from sklearn.preprocessing import StandardScaler
@@ -281,7 +301,8 @@ class FeatureEngineeringStep(AbstractPipelineStep):
         return data
     
     async def _select_features(self, data: pd.DataFrame) -> pd.DataFrame:
-        """Apply feature selection"""        selection_config = self.parameters['feature_selection']
+        """Apply feature selection"""
+        selection_config = self.parameters['feature_selection']
         method = selection_config.get('method', 'variance')
         
         if method == 'variance':
@@ -294,9 +315,11 @@ class FeatureEngineeringStep(AbstractPipelineStep):
         return data
 
 class ModelTrainingStep(AbstractPipelineStep):
-    """Model training pipeline step"""    
+    """Model training pipeline step"""
+    
     async def execute(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute model training"""        start_time = time.time()
+        """Execute model training"""
+        start_time = time.time()
         
         try:
             # Get training data
@@ -346,7 +369,8 @@ class ModelTrainingStep(AbstractPipelineStep):
             raise PipelineError(f"Model training failed: {str(e)}")
     
     async def _create_model(self, model_config: Dict[str, Any]):
-        """Create model instance based on configuration"""        model_type = model_config.get('type', 'random_forest')
+        """Create model instance based on configuration"""
+        model_type = model_config.get('type', 'random_forest')
         
         if model_type == 'random_forest':
             from sklearn.ensemble import RandomForestClassifier
@@ -358,15 +382,18 @@ class ModelTrainingStep(AbstractPipelineStep):
             raise ValueError(f"Unsupported model type: {model_type}")
     
     async def _save_model(self, model) -> str:
-        """Save trained model to storage"""        model_path = f"/tmp/models/{self.step_id}_{int(time.time())}.joblib"
+        """Save trained model to storage"""
+        model_path = f"/tmp/models/{self.step_id}_{int(time.time())}.joblib"
         Path(model_path).parent.mkdir(parents=True, exist_ok=True)
         joblib.dump(model, model_path)
         return model_path
 
 class MLPipelineManager:
-    """    Ultra-advanced ML pipeline orchestration manager providing
+    """
+    Ultra-advanced ML pipeline orchestration manager providing
     comprehensive workflow management, dependency resolution, and execution monitoring
-    """    
+    """
+    
     def __init__(self):
         self.pipelines: Dict[str, PipelineDefinition] = {}
         self.executions: Dict[str, PipelineExecution] = {}
@@ -379,10 +406,12 @@ class MLPipelineManager:
         self.cache_manager = CacheManager()
         
     def register_step_type(self, step_type: str, step_class: type):
-        """Register a custom step type"""        self.step_registry[step_type] = step_class
+        """Register a custom step type"""
+        self.step_registry[step_type] = step_class
         
     async def create_pipeline(self, pipeline_def: Dict[str, Any]) -> str:
-        """Create a new ML pipeline"""        try:
+        """Create a new ML pipeline"""
+        try:
             pipeline_id = str(uuid.uuid4())
             
             # Parse pipeline definition
@@ -429,12 +458,14 @@ class MLPipelineManager:
             raise PipelineError(f"Pipeline creation failed: {str(e)}")
     
     def _get_step_function(self, step_type: str) -> Callable:
-        """Get step function by type"""        if step_type not in self.step_registry:
+        """Get step function by type"""
+        if step_type not in self.step_registry:
             raise ValueError(f"Unknown step type: {step_type}")
         return self.step_registry[step_type]
     
     async def _validate_pipeline(self, pipeline: PipelineDefinition):
-        """Validate pipeline definition"""        # Check for circular dependencies
+        """Validate pipeline definition"""
+        # Check for circular dependencies
         dependency_graph = nx.DiGraph()
         
         for step in pipeline.steps:
@@ -459,7 +490,8 @@ class MLPipelineManager:
             available_outputs.update(step_obj.outputs)
     
     async def execute_pipeline(self, pipeline_id: str, context: Dict[str, Any] = None) -> str:
-        """Execute a pipeline"""        try:
+        """Execute a pipeline"""
+        try:
             if pipeline_id not in self.pipelines:
                 raise ValueError(f"Pipeline not found: {pipeline_id}")
             
@@ -488,7 +520,8 @@ class MLPipelineManager:
             raise PipelineError(f"Pipeline execution failed: {str(e)}")
     
     async def _execute_pipeline_async(self, execution_id: str):
-        """Execute pipeline asynchronously"""        execution = self.executions[execution_id]
+        """Execute pipeline asynchronously"""
+        execution = self.executions[execution_id]
         pipeline = self.pipelines[execution.pipeline_id]
         
         try:
@@ -538,7 +571,8 @@ class MLPipelineManager:
             logger.error(f"Pipeline execution failed: {execution_id} - {str(e)}")
     
     async def _execute_step(self, step: PipelineStep, context: Dict[str, Any], execution_id: str):
-        """Execute a single pipeline step"""        step.status = StepStatus.RUNNING
+        """Execute a single pipeline step"""
+        step.status = StepStatus.RUNNING
         step.start_time = datetime.now(timezone.utc)
         
         try:
@@ -567,7 +601,8 @@ class MLPipelineManager:
             raise
     
     async def get_execution_status(self, execution_id: str) -> Dict[str, Any]:
-        """Get pipeline execution status"""        if execution_id not in self.executions:
+        """Get pipeline execution status"""
+        if execution_id not in self.executions:
             raise ValueError(f"Execution not found: {execution_id}")
         
         execution = self.executions[execution_id]
@@ -602,7 +637,8 @@ class MLPipelineManager:
         }
     
     async def cancel_execution(self, execution_id: str):
-        """Cancel a running pipeline execution"""        if execution_id not in self.executions:
+        """Cancel a running pipeline execution"""
+        if execution_id not in self.executions:
             raise ValueError(f"Execution not found: {execution_id}")
         
         execution = self.executions[execution_id]
@@ -612,7 +648,8 @@ class MLPipelineManager:
             logger.info(f"Pipeline execution cancelled: {execution_id}")
         
     async def get_pipeline_metrics(self, pipeline_id: str) -> Dict[str, Any]:
-        """Get comprehensive pipeline performance metrics"""        if pipeline_id not in self.pipelines:
+        """Get comprehensive pipeline performance metrics"""
+        if pipeline_id not in self.pipelines:
             raise ValueError(f"Pipeline not found: {pipeline_id}")
         
         # Get all executions for this pipeline

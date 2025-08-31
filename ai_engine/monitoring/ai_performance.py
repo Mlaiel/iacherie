@@ -7,7 +7,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
-"""import asyncio
+"""
+import asyncio
 import time
 import threading
 from typing import Dict, Any, List, Optional, Callable, Union, Tuple
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 
 class AIModelType(Enum):
-    """Types of AI models in the platform"""    CONTENT_GENERATOR = "content_generator"
+    """Types of AI models in the platform"""
+    CONTENT_GENERATOR = "content_generator"
     CONTENT_PROTECTOR = "content_protector"
     SEO_OPTIMIZER = "seo_optimizer"
     COLLABORATION_MATCHER = "collaboration_matcher"
@@ -47,7 +49,8 @@ class AIModelType(Enum):
 
 
 class ProcessingStage(Enum):
-    """Content processing pipeline stages"""    UPLOAD = "upload"
+    """Content processing pipeline stages"""
+    UPLOAD = "upload"
     VALIDATION = "validation"
     AI_ANALYSIS = "ai_analysis"
     PROTECTION = "protection"
@@ -59,7 +62,8 @@ class ProcessingStage(Enum):
 
 @dataclass
 class AIModelMetrics:
-    """Comprehensive AI model performance metrics"""    model_id: str
+    """Comprehensive AI model performance metrics"""
+    model_id: str
     model_type: AIModelType
     inference_time: float
     accuracy_score: float
@@ -77,7 +81,8 @@ class AIModelMetrics:
 
 @dataclass
 class PipelineMetrics:
-    """Content processing pipeline metrics"""    pipeline_id: str
+    """Content processing pipeline metrics"""
+    pipeline_id: str
     stage: ProcessingStage
     start_time: datetime
     end_time: Optional[datetime] = None
@@ -93,11 +98,13 @@ class PipelineMetrics:
 
 
 class AIPerformanceMonitor:
-    """    Advanced AI Performance Monitor
+    """
+    Advanced AI Performance Monitor
     
     Monitors AI model performance, pipeline efficiency, and resource usage
     for the IA Influencer Agent platform.
-    """    
+    """
+    
     def __init__(
         self,
         metrics_collector: Optional[MetricsCollector] = None,
@@ -146,7 +153,8 @@ class AIPerformanceMonitor:
         self.alert_callbacks: List[Callable] = []
         
     async def start_monitoring(self) -> None:
-        """Start the AI performance monitoring system"""        async with self._lock:
+        """Start the AI performance monitoring system"""
+        async with self._lock:
             if self.is_monitoring:
                 logger.warning("AI performance monitoring is already running")
                 return
@@ -157,7 +165,8 @@ class AIPerformanceMonitor:
             logger.info("AI performance monitoring started successfully")
             
     async def stop_monitoring(self) -> None:
-        """Stop the AI performance monitoring system"""        async with self._lock:
+        """Stop the AI performance monitoring system"""
+        async with self._lock:
             if not self.is_monitoring:
                 return
                 
@@ -180,7 +189,8 @@ class AIPerformanceMonitor:
         *args,
         **kwargs
     ) -> Tuple[Any, AIModelMetrics]:
-        """        Track AI model inference performance
+        """
+        Track AI model inference performance
         
         Args:
             model_id: Unique identifier for the AI model
@@ -190,7 +200,8 @@ class AIPerformanceMonitor:
             
         Returns:
             Tuple of (inference_result, metrics)
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         start_memory = psutil.Process().memory_info().rss
         
         try:
@@ -279,7 +290,8 @@ class AIPerformanceMonitor:
         *args,
         **kwargs
     ) -> Tuple[Any, PipelineMetrics]:
-        """        Track content processing pipeline stage performance
+        """
+        Track content processing pipeline stage performance
         
         Args:
             pipeline_id: Unique identifier for the processing pipeline
@@ -289,7 +301,8 @@ class AIPerformanceMonitor:
             
         Returns:
             Tuple of (stage_result, metrics)
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         start_memory = psutil.Process().memory_info().rss
         
         try:
@@ -354,7 +367,8 @@ class AIPerformanceMonitor:
         model_id: str,
         time_window: timedelta = timedelta(hours=1)
     ) -> Dict[str, Any]:
-        """Get performance summary for a specific AI model"""        cutoff_time = datetime.utcnow() - time_window
+        """Get performance summary for a specific AI model"""
+        cutoff_time = datetime.utcnow() - time_window
         
         # Get recent metrics
         recent_metrics = [
@@ -396,7 +410,8 @@ class AIPerformanceMonitor:
         pipeline_id: str,
         time_window: timedelta = timedelta(hours=1)
     ) -> Dict[str, Any]:
-        """Get performance summary for a processing pipeline"""        cutoff_time = datetime.utcnow() - time_window
+        """Get performance summary for a processing pipeline"""
+        cutoff_time = datetime.utcnow() - time_window
         
         recent_metrics = [
             metric for metric in self.pipeline_metrics[pipeline_id]
@@ -433,10 +448,12 @@ class AIPerformanceMonitor:
         return summary
         
     def add_alert_callback(self, callback: Callable[[Dict[str, Any]], None]) -> None:
-        """Add a callback function for performance alerts"""        self.alert_callbacks.append(callback)
+        """Add a callback function for performance alerts"""
+        self.alert_callbacks.append(callback)
         
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop for continuous performance tracking"""        while self.is_monitoring:
+        """Main monitoring loop for continuous performance tracking"""
+        while self.is_monitoring:
             try:
                 # Collect system metrics
                 await self._collect_system_metrics()
@@ -458,7 +475,8 @@ class AIPerformanceMonitor:
                 await asyncio.sleep(30)  # Wait longer on error
                 
     async def _store_model_metrics(self, metrics: AIModelMetrics) -> None:
-        """Store AI model metrics"""        # Store in memory
+        """Store AI model metrics"""
+        # Store in memory
         self.model_metrics[metrics.model_id].append(metrics)
         
         # Store in metrics collector
@@ -510,7 +528,8 @@ class AIPerformanceMonitor:
                 logger.warning(f"Failed to store metrics in Redis: {e}")
                 
     async def _store_pipeline_metrics(self, metrics: PipelineMetrics) -> None:
-        """Store pipeline processing metrics"""        # Store in memory
+        """Store pipeline processing metrics"""
+        # Store in memory
         self.pipeline_metrics[metrics.pipeline_id].append(metrics)
         
         # Store in metrics collector
@@ -534,7 +553,8 @@ class AIPerformanceMonitor:
         )
         
     def _extract_accuracy(self, result: Any) -> float:
-        """Extract accuracy score from inference result"""        if isinstance(result, dict):
+        """Extract accuracy score from inference result"""
+        if isinstance(result, dict):
             return result.get("accuracy", result.get("confidence", 0.0))
         elif hasattr(result, "accuracy"):
             return result.accuracy
@@ -543,7 +563,8 @@ class AIPerformanceMonitor:
         return 0.0
         
     def _extract_confidence(self, result: Any) -> float:
-        """Extract confidence score from inference result"""        if isinstance(result, dict):
+        """Extract confidence score from inference result"""
+        if isinstance(result, dict):
             return result.get("confidence", result.get("score", 0.0))
         elif hasattr(result, "confidence"):
             return result.confidence
@@ -552,11 +573,13 @@ class AIPerformanceMonitor:
         return 0.0
         
     def _get_queue_length(self, model_id: str) -> int:
-        """Get current queue length for a model"""        # This would integrate with actual queue monitoring
+        """Get current queue length for a model"""
+        # This would integrate with actual queue monitoring
         return 0
         
     def _infer_processing_stage(self, model_type: AIModelType) -> ProcessingStage:
-        """Infer processing stage from model type"""        stage_mapping = {
+        """Infer processing stage from model type"""
+        stage_mapping = {
             AIModelType.CONTENT_GENERATOR: ProcessingStage.AI_ANALYSIS,
             AIModelType.CONTENT_PROTECTOR: ProcessingStage.PROTECTION,
             AIModelType.SEO_OPTIMIZER: ProcessingStage.SEO_OPTIMIZATION,
@@ -566,14 +589,16 @@ class AIPerformanceMonitor:
         return stage_mapping.get(model_type, ProcessingStage.AI_ANALYSIS)
         
     def _calculate_output_size(self, result: Any) -> int:
-        """Calculate output size from result"""        if isinstance(result, (str, bytes)):
+        """Calculate output size from result"""
+        if isinstance(result, (str, bytes)):
             return len(result)
         elif isinstance(result, dict):
             return len(json.dumps(result))
         return 0
         
     def _update_statistics(self, metrics: AIModelMetrics, success: bool) -> None:
-        """Update global statistics"""        self.stats["total_inferences"] += 1
+        """Update global statistics"""
+        self.stats["total_inferences"] += 1
         
         if success:
             self.stats["successful_inferences"] += 1
@@ -589,7 +614,8 @@ class AIPerformanceMonitor:
             self.stats["failed_inferences"] += 1
             
     async def _check_performance_alerts(self, metrics: AIModelMetrics) -> None:
-        """Check for performance alerts and trigger callbacks"""        alerts = []
+        """Check for performance alerts and trigger callbacks"""
+        alerts = []
         
         if metrics.inference_time > self.alert_thresholds["max_inference_time"]:
             alerts.append({
@@ -624,7 +650,8 @@ class AIPerformanceMonitor:
                     logger.error(f"Alert callback failed: {e}")
                     
     async def _collect_system_metrics(self) -> None:
-        """Collect system-wide metrics"""        # Collect CPU, memory, disk usage
+        """Collect system-wide metrics"""
+        # Collect CPU, memory, disk usage
         cpu_percent = psutil.cpu_percent(interval=1)
         memory = psutil.virtual_memory()
         disk = psutil.disk_usage('/')
@@ -648,13 +675,15 @@ class AIPerformanceMonitor:
         )
         
     async def _update_performance_trends(self) -> None:
-        """Update performance trend analysis"""        for model_id, metrics_queue in self.model_metrics.items():
+        """Update performance trend analysis"""
+        for model_id, metrics_queue in self.model_metrics.items():
             if len(metrics_queue) >= 10:  # Minimum data points for trend
                 recent_times = [m.inference_time for m in list(metrics_queue)[-10:]]
                 self.performance_trends[f"{model_id}_inference_time"] = recent_times
                 
     async def _detect_performance_anomalies(self) -> None:
-        """Detect performance anomalies using statistical analysis"""        for model_id, trend_data in self.performance_trends.items():
+        """Detect performance anomalies using statistical analysis"""
+        for model_id, trend_data in self.performance_trends.items():
             if len(trend_data) >= 20:  # Need sufficient data for anomaly detection
                 mean_val = statistics.mean(trend_data)
                 std_val = statistics.stdev(trend_data)
@@ -665,7 +694,8 @@ class AIPerformanceMonitor:
                     logger.warning(f"Performance anomaly detected for {model_id}: {latest_val}")
                     
     async def _cleanup_old_metrics(self) -> None:
-        """Clean up old metrics to prevent memory buildup"""        cutoff_time = datetime.utcnow() - timedelta(hours=24)
+        """Clean up old metrics to prevent memory buildup"""
+        cutoff_time = datetime.utcnow() - timedelta(hours=24)
         
         for model_id, metrics_queue in self.model_metrics.items():
             # Remove old metrics
@@ -688,7 +718,8 @@ async def track_ai_inference(
     user_id: Optional[str] = None,
     content_type: Optional[str] = None
 ):
-    """Context manager for tracking AI inference performance"""    start_time = time.time()
+    """Context manager for tracking AI inference performance"""
+    start_time = time.time()
     
     try:
         yield
@@ -721,7 +752,8 @@ def monitor_ai_model(
     extract_accuracy: Optional[Callable] = None,
     extract_confidence: Optional[Callable] = None
 ):
-    """Decorator for automatic AI model performance monitoring"""    def decorator(func: Callable) -> Callable:
+    """Decorator for automatic AI model performance monitoring"""
+    def decorator(func: Callable) -> Callable:
         async def async_wrapper(*args, **kwargs):
             return await ai_performance_monitor.track_model_inference(
                 model_id=model_id,

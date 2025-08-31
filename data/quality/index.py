@@ -15,7 +15,8 @@ Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""from typing import Dict, Any, List, Optional, Union, Type, Tuple
+"""
+from typing import Dict, Any, List, Optional, Union, Type, Tuple
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -51,13 +52,16 @@ __email__ = "mlaiel@live.de"
 __copyright__ = "Copyright 2025 Fahed Mlaiel. All rights reserved."
 
 class QualityModuleRegistry:
-    """    Central registry for all quality module components.
+    """
+    Central registry for all quality module components.
     
     Provides dynamic component discovery, registration, and lifecycle management
     for quality management modules across the IA Influencer platform.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the quality module registry"""        self.logger = logger
+        """Initialize the quality module registry"""
+        self.logger = logger
         self.components: Dict[str, Type] = {}
         self.instances: Dict[str, Any] = {}
         self.configurations: Dict[str, Dict[str, Any]] = {}
@@ -70,7 +74,8 @@ class QualityModuleRegistry:
         self.logger.info("QualityModuleRegistry initialized")
     
     def _register_core_components(self):
-        """Register core quality management components"""        
+        """Register core quality management components"""
+        
         # Core orchestration components
         self.register_component(
             name="data_quality_manager",
@@ -161,7 +166,8 @@ class QualityModuleRegistry:
         priority: int = 5,
         config: Optional[Dict[str, Any]] = None
     ):
-        """        Register a quality component.
+        """
+        Register a quality component.
         
         Args:
             name: Component name
@@ -169,7 +175,8 @@ class QualityModuleRegistry:
             dependencies: Component dependencies
             priority: Initialization priority (lower = earlier)
             config: Component configuration
-        """        self.components[name] = component_class
+        """
+        self.components[name] = component_class
         self.dependencies[name] = dependencies or []
         self.configurations[name] = config or {}
         
@@ -179,7 +186,8 @@ class QualityModuleRegistry:
         self.logger.debug(f"Registered component '{name}' with priority {priority}")
     
     def _update_initialization_order(self):
-        """Update component initialization order based on dependencies and priorities"""        
+        """Update component initialization order based on dependencies and priorities"""
+        
         # Topological sort with priority consideration
         order = []
         resolved = set()
@@ -204,14 +212,16 @@ class QualityModuleRegistry:
         self.logger.debug(f"Updated initialization order: {order}")
     
     async def initialize_all(self, global_config: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """        Initialize all registered components in correct order.
+        """
+        Initialize all registered components in correct order.
         
         Args:
             global_config: Global configuration for all components
             
         Returns:
             Dictionary of initialized component instances
-        """        try:
+        """
+        try:
             global_config = global_config or DEFAULT_QUALITY_CONFIG
             
             for component_name in self.initialization_order:
@@ -226,7 +236,8 @@ class QualityModuleRegistry:
             raise
     
     async def _initialize_component(self, name: str, global_config: Dict[str, Any]):
-        """Initialize a specific component"""        
+        """Initialize a specific component"""
+        
         try:
             component_class = self.components[name]
             component_config = {
@@ -254,16 +265,20 @@ class QualityModuleRegistry:
             raise
     
     def get_component(self, name: str) -> Optional[Any]:
-        """Get an initialized component instance"""        return self.instances.get(name)
+        """Get an initialized component instance"""
+        return self.instances.get(name)
     
     def get_all_components(self) -> Dict[str, Any]:
-        """Get all initialized component instances"""        return self.instances.copy()
+        """Get all initialized component instances"""
+        return self.instances.copy()
     
     def list_components(self) -> List[str]:
-        """List all registered component names"""        return list(self.components.keys())
+        """List all registered component names"""
+        return list(self.components.keys())
     
     def get_component_info(self, name: str) -> Dict[str, Any]:
-        """Get detailed information about a component"""        if name not in self.components:
+        """Get detailed information about a component"""
+        if name not in self.components:
             return {}
         
         return {
@@ -277,31 +292,37 @@ class QualityModuleRegistry:
         }
 
 class QualityModuleOrchestrator:
-    """    High-level orchestrator for quality module operations.
+    """
+    High-level orchestrator for quality module operations.
     
     Provides simplified interface for common quality operations and
     coordinates between different quality components.
-    """    
+    """
+    
     def __init__(self, registry: Optional[QualityModuleRegistry] = None):
-        """        Initialize the quality module orchestrator.
+        """
+        Initialize the quality module orchestrator.
         
         Args:
             registry: Optional quality module registry
-        """        self.registry = registry or QualityModuleRegistry()
+        """
+        self.registry = registry or QualityModuleRegistry()
         self.logger = logger
         self.is_initialized = False
         
         self.logger.info("QualityModuleOrchestrator initialized")
     
     async def initialize(self, config: Optional[Dict[str, Any]] = None) -> bool:
-        """        Initialize the quality module orchestrator.
+        """
+        Initialize the quality module orchestrator.
         
         Args:
             config: Optional configuration
             
         Returns:
             True if initialization successful
-        """        try:
+        """
+        try:
             config = config or DEFAULT_QUALITY_CONFIG
             
             # Initialize all components
@@ -322,7 +343,8 @@ class QualityModuleOrchestrator:
         metadata: Optional[Dict[str, Any]] = None,
         workflow: str = "comprehensive"
     ) -> Dict[str, Any]:
-        """        Perform comprehensive content quality assessment.
+        """
+        Perform comprehensive content quality assessment.
         
         Args:
             content_data: Content to assess
@@ -332,7 +354,8 @@ class QualityModuleOrchestrator:
             
         Returns:
             Quality assessment results
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             raise RuntimeError("Orchestrator not initialized")
         
         quality_system = self.registry.get_component("quality_management_system")
@@ -352,7 +375,8 @@ class QualityModuleOrchestrator:
         metadata: Optional[Dict[str, Any]] = None,
         auto_fix: bool = True
     ) -> Dict[str, Any]:
-        """        Validate content with optional auto-fixing.
+        """
+        Validate content with optional auto-fixing.
         
         Args:
             content_data: Content to validate
@@ -362,7 +386,8 @@ class QualityModuleOrchestrator:
             
         Returns:
             Validation results
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             raise RuntimeError("Orchestrator not initialized")
         
         validation_engine = self.registry.get_component("validation_engine")
@@ -397,7 +422,8 @@ class QualityModuleOrchestrator:
         timeframe: Optional[timedelta] = None,
         content_type: Optional[str] = None
     ) -> Dict[str, Any]:
-        """        Get quality metrics for specified parameters.
+        """
+        Get quality metrics for specified parameters.
         
         Args:
             timeframe: Time period for metrics
@@ -405,7 +431,8 @@ class QualityModuleOrchestrator:
             
         Returns:
             Quality metrics
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             raise RuntimeError("Orchestrator not initialized")
         
         metrics_engine = self.registry.get_component("quality_metrics")
@@ -420,7 +447,8 @@ class QualityModuleOrchestrator:
         timeframe: Optional[timedelta] = None,
         output_format: str = "json"
     ) -> Dict[str, Any]:
-        """        Generate quality report.
+        """
+        Generate quality report.
         
         Args:
             report_type: Type of report
@@ -429,7 +457,8 @@ class QualityModuleOrchestrator:
             
         Returns:
             Generated report
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             raise RuntimeError("Orchestrator not initialized")
         
         report_generator = self.registry.get_component("report_generator")
@@ -443,7 +472,8 @@ class QualityModuleOrchestrator:
         )
     
     def get_component_status(self) -> Dict[str, Any]:
-        """Get status of all quality components"""        
+        """Get status of all quality components"""
+        
         status = {
             "orchestrator_initialized": self.is_initialized,
             "total_components": len(self.registry.components),
@@ -461,30 +491,35 @@ _quality_registry: Optional[QualityModuleRegistry] = None
 _quality_orchestrator: Optional[QualityModuleOrchestrator] = None
 
 def get_quality_registry() -> QualityModuleRegistry:
-    """Get the global quality module registry"""    global _quality_registry
+    """Get the global quality module registry"""
+    global _quality_registry
     if _quality_registry is None:
         _quality_registry = QualityModuleRegistry()
     return _quality_registry
 
 def get_quality_orchestrator() -> QualityModuleOrchestrator:
-    """Get the global quality module orchestrator"""    global _quality_orchestrator
+    """Get the global quality module orchestrator"""
+    global _quality_orchestrator
     if _quality_orchestrator is None:
         _quality_orchestrator = QualityModuleOrchestrator(get_quality_registry())
     return _quality_orchestrator
 
 async def initialize_quality_module(config: Optional[Dict[str, Any]] = None) -> bool:
-    """    Initialize the global quality module.
+    """
+    Initialize the global quality module.
     
     Args:
         config: Optional configuration
         
     Returns:
         True if initialization successful
-    """    orchestrator = get_quality_orchestrator()
+    """
+    orchestrator = get_quality_orchestrator()
     return await orchestrator.initialize(config)
 
 def get_module_info() -> Dict[str, Any]:
-    """Get comprehensive information about the quality module"""    
+    """Get comprehensive information about the quality module"""
+    
     orchestrator = get_quality_orchestrator()
     registry = get_quality_registry()
     

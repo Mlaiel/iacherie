@@ -17,10 +17,16 @@ Features:
 - Automated response recommendations
 - Historical pattern analysis
 - Risk level calculation
-"""from .manager import ViolationScoringManager
+"""
+
+from .manager import ViolationScoringManager
+
 from .core.scoring_engine import ScoringEngine
+
 from .core.pattern_analyzer import PatternAnalyzer
+
 from .core.risk_assessor import RiskAssessor
+
 from .models.scoring_models import (
     ViolationScore,
     ScoringRequest,

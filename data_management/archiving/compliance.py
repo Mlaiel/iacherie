@@ -15,7 +15,8 @@ Any unauthorized use is strictly prohibited.
 
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + 
 Microservices + Audio + DevOps + IA Prompt Engineer
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import json
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceRegion(Enum):
-    """Regulatory regions and jurisdictions"""    EU = "eu"  # European Union (GDPR)
+    """Regulatory regions and jurisdictions"""
+    EU = "eu"  # European Union (GDPR)
     US = "us"  # United States (SOX, HIPAA, etc.)
     UK = "uk"  # United Kingdom (UK GDPR)
     CANADA = "canada"  # PIPEDA
@@ -46,7 +48,8 @@ class ComplianceRegion(Enum):
 
 
 class ComplianceStandard(Enum):
-    """Compliance standards and regulations"""    GDPR = "gdpr"  # General Data Protection Regulation
+    """Compliance standards and regulations"""
+    GDPR = "gdpr"  # General Data Protection Regulation
     SOX = "sox"  # Sarbanes-Oxley Act
     HIPAA = "hipaa"  # Health Insurance Portability and Accountability Act
     PCI_DSS = "pci_dss"  # Payment Card Industry Data Security Standard
@@ -59,7 +62,8 @@ class ComplianceStandard(Enum):
 
 
 class AuditEventType(Enum):
-    """Types of audit events"""    CREATE = "create"
+    """Types of audit events"""
+    CREATE = "create"
     READ = "read"
     UPDATE = "update"
     DELETE = "delete"
@@ -76,7 +80,8 @@ class AuditEventType(Enum):
 
 
 class DataClassification(Enum):
-    """Data classification levels"""    PUBLIC = "public"
+    """Data classification levels"""
+    PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
@@ -85,7 +90,8 @@ class DataClassification(Enum):
 
 
 class RetentionStatus(Enum):
-    """Retention status of data"""    ACTIVE = "active"
+    """Retention status of data"""
+    ACTIVE = "active"
     RETAINED = "retained"
     EXPIRED = "expired"
     PENDING_DELETION = "pending_deletion"
@@ -95,7 +101,8 @@ class RetentionStatus(Enum):
 
 @dataclass
 class RegulatoryRequirement:
-    """Definition of regulatory requirement"""    requirement_id: str
+    """Definition of regulatory requirement"""
+    requirement_id: str
     name: str
     description: str
     
@@ -141,7 +148,8 @@ class RegulatoryRequirement:
 
 @dataclass
 class AuditEvent:
-    """Audit trail event record"""    event_id: str
+    """Audit trail event record"""
+    event_id: str
     event_type: AuditEventType
     timestamp: datetime
     
@@ -187,7 +195,8 @@ class AuditEvent:
 
 @dataclass
 class ComplianceReport:
-    """Compliance assessment report"""    report_id: str
+    """Compliance assessment report"""
+    report_id: str
     title: str
     description: str
     
@@ -231,7 +240,8 @@ class ComplianceReport:
 
 @dataclass
 class DataGovernancePolicy:
-    """Data governance policy definition"""    policy_id: str
+    """Data governance policy definition"""
+    policy_id: str
     name: str
     description: str
     
@@ -274,22 +284,26 @@ class DataGovernancePolicy:
 
 
 class ComplianceChecker(ABC):
-    """Abstract base for compliance checkers"""    
+    """Abstract base for compliance checkers"""
+    
     @abstractmethod
     async def check_compliance(
         self,
         archive_entry: ArchiveEntry,
         requirement: RegulatoryRequirement
     ) -> Tuple[bool, List[str]]:
-        """Check compliance for archive entry against requirement"""        pass
+        """Check compliance for archive entry against requirement"""
+        pass
     
     @abstractmethod
     def get_supported_standards(self) -> Set[ComplianceStandard]:
-        """Get supported compliance standards"""        pass
+        """Get supported compliance standards"""
+        pass
 
 
 class GDPRComplianceChecker(ComplianceChecker):
-    """GDPR compliance checker"""    
+    """GDPR compliance checker"""
+    
     def __init__(self):
         self.supported_standards = {ComplianceStandard.GDPR}
     
@@ -298,7 +312,8 @@ class GDPRComplianceChecker(ComplianceChecker):
         archive_entry: ArchiveEntry,
         requirement: RegulatoryRequirement
     ) -> Tuple[bool, List[str]]:
-        """Check GDPR compliance"""        try:
+        """Check GDPR compliance"""
+        try:
             issues = []
             
             # Check retention period
@@ -336,7 +351,8 @@ class GDPRComplianceChecker(ComplianceChecker):
 
 
 class SOXComplianceChecker(ComplianceChecker):
-    """SOX compliance checker"""    
+    """SOX compliance checker"""
+    
     def __init__(self):
         self.supported_standards = {ComplianceStandard.SOX}
     
@@ -345,7 +361,8 @@ class SOXComplianceChecker(ComplianceChecker):
         archive_entry: ArchiveEntry,
         requirement: RegulatoryRequirement
     ) -> Tuple[bool, List[str]]:
-        """Check SOX compliance"""        try:
+        """Check SOX compliance"""
+        try:
             issues = []
             
             # Check audit trail requirements
@@ -382,11 +399,13 @@ class SOXComplianceChecker(ComplianceChecker):
 
 
 class ComplianceManager:
-    """    Comprehensive compliance management system for archival operations.
+    """
+    Comprehensive compliance management system for archival operations.
     
     Manages regulatory requirements, audit trails, data governance,
     and compliance reporting for global archival standards.
-    """    
+    """
+    
     def __init__(self):
         # Core data
         self.requirements: Dict[str, RegulatoryRequirement] = {}
@@ -413,7 +432,8 @@ class ComplianceManager:
         logger.info("Compliance Manager initialized")
     
     async def add_requirement(self, requirement: RegulatoryRequirement) -> bool:
-        """Add regulatory requirement"""        try:
+        """Add regulatory requirement"""
+        try:
             if not await self._validate_requirement(requirement):
                 raise ArchivalError(f"Invalid requirement: {requirement.requirement_id}")
             
@@ -431,7 +451,8 @@ class ComplianceManager:
         archive_entry: ArchiveEntry,
         standards: Optional[Set[ComplianceStandard]] = None
     ) -> Dict[str, Tuple[bool, List[str]]]:
-        """        Check archive compliance against regulatory requirements.
+        """
+        Check archive compliance against regulatory requirements.
         
         Args:
             archive_entry: Archive to check
@@ -439,7 +460,8 @@ class ComplianceManager:
             
         Returns:
             Dictionary mapping requirement IDs to compliance results
-        """        try:
+        """
+        try:
             self.total_checks += 1
             results = {}
             
@@ -473,7 +495,8 @@ class ComplianceManager:
             return {}
     
     async def log_audit_event(self, event: AuditEvent):
-        """Log audit event for compliance tracking"""        try:
+        """Log audit event for compliance tracking"""
+        try:
             # Validate event
             if not event.event_id or not event.user_id:
                 raise ArchivalError("Invalid audit event: missing required fields")
@@ -501,7 +524,8 @@ class ComplianceManager:
         start_date: datetime,
         end_date: datetime
     ) -> ComplianceReport:
-        """Generate comprehensive compliance report"""        try:
+        """Generate comprehensive compliance report"""
+        try:
             report_id = f"report_{int(datetime.utcnow().timestamp())}"
             
             report = ComplianceReport(
@@ -593,7 +617,8 @@ class ComplianceManager:
         user_id: Optional[str] = None,
         resource_id: Optional[str] = None
     ) -> List[AuditEvent]:
-        """Get filtered audit trail"""        try:
+        """Get filtered audit trail"""
+        try:
             filtered_events = self.audit_events.copy()
             
             # Apply filters
@@ -622,7 +647,8 @@ class ComplianceManager:
             return []
     
     async def add_governance_policy(self, policy: DataGovernancePolicy) -> bool:
-        """Add data governance policy"""        try:
+        """Add data governance policy"""
+        try:
             if not await self._validate_governance_policy(policy):
                 raise ArchivalError(f"Invalid governance policy: {policy.policy_id}")
             
@@ -636,7 +662,8 @@ class ComplianceManager:
             return False
     
     async def classify_data(self, archive_entry: ArchiveEntry) -> DataClassification:
-        """Classify data according to governance policies"""        try:
+        """Classify data according to governance policies"""
+        try:
             # Apply classification rules from active policies
             for policy in self.governance_policies.values():
                 if not policy.active:
@@ -660,7 +687,8 @@ class ComplianceManager:
             return DataClassification.INTERNAL
     
     async def get_compliance_dashboard(self) -> Dict[str, Any]:
-        """Get compliance dashboard data"""        try:
+        """Get compliance dashboard data"""
+        try:
             # Overall compliance metrics
             total_requirements = len(self.requirements)
             active_requirements = len([r for r in self.requirements.values() if r.implementation_status == "active"])
@@ -714,7 +742,8 @@ class ComplianceManager:
             return {}
     
     async def _validate_requirement(self, requirement: RegulatoryRequirement) -> bool:
-        """Validate regulatory requirement"""        try:
+        """Validate regulatory requirement"""
+        try:
             return (
                 requirement.requirement_id and
                 requirement.name and
@@ -726,7 +755,8 @@ class ComplianceManager:
             return False
     
     async def _validate_governance_policy(self, policy: DataGovernancePolicy) -> bool:
-        """Validate governance policy"""        try:
+        """Validate governance policy"""
+        try:
             return (
                 policy.policy_id and
                 policy.name and
@@ -743,7 +773,8 @@ class ComplianceManager:
         is_compliant: bool,
         issues: List[str]
     ):
-        """Log compliance check as audit event"""        try:
+        """Log compliance check as audit event"""
+        try:
             event = AuditEvent(
                 event_id=str(uuid.uuid4()),
                 event_type=AuditEventType.COMPLIANCE_CHECK,
@@ -770,7 +801,8 @@ class ComplianceManager:
             logger.error(f"Failed to log compliance check: {e}")
     
     async def _generate_compliance_recommendations(self, report: ComplianceReport) -> List[str]:
-        """Generate compliance recommendations"""        try:
+        """Generate compliance recommendations"""
+        try:
             recommendations = []
             
             # Overall compliance score recommendations
@@ -802,7 +834,8 @@ class ComplianceManager:
             return ["Unable to generate recommendations due to analysis error."]
     
     async def _assess_risk_level(self, report: ComplianceReport) -> str:
-        """Assess overall risk level"""        try:
+        """Assess overall risk level"""
+        try:
             risk_score = 0
             
             # Compliance score impact
@@ -842,7 +875,8 @@ class ComplianceManager:
             return "medium"
     
     async def _initialize_default_requirements(self):
-        """Initialize default regulatory requirements"""        try:
+        """Initialize default regulatory requirements"""
+        try:
             # GDPR requirement for personal data
             gdpr_personal_data = RegulatoryRequirement(
                 requirement_id="gdpr_personal_data",
@@ -884,11 +918,13 @@ class ComplianceManager:
 
 
 class AuditTrail:
-    """    Immutable audit trail for compliance tracking.
+    """
+    Immutable audit trail for compliance tracking.
     
     Provides tamper-evident logging of all archival operations
     for regulatory compliance and forensic analysis.
-    """    
+    """
+    
     def __init__(self):
         self.events: List[AuditEvent] = []
         self.event_hash_chain: List[str] = []
@@ -897,7 +933,8 @@ class AuditTrail:
         logger.info("Audit Trail initialized")
     
     async def add_event(self, event: AuditEvent) -> str:
-        """Add event to audit trail with integrity protection"""        try:
+        """Add event to audit trail with integrity protection"""
+        try:
             # Calculate event hash
             event_data = {
                 "event_id": event.event_id,
@@ -933,7 +970,8 @@ class AuditTrail:
             raise ArchivalError(f"Audit trail corruption: {e}")
     
     async def verify_integrity(self) -> bool:
-        """Verify audit trail integrity"""        try:
+        """Verify audit trail integrity"""
+        try:
             if not self.events:
                 return True
             

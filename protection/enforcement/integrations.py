@@ -1,6 +1,7 @@
 """External Service Integrations for Copyright Enforcement
 Professional integrations with external services, APIs, and platforms
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
 from dataclasses import dataclass, field
@@ -20,7 +21,8 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceType(Enum):
-    """Types of external services"""    BLOCKCHAIN_TIMESTAMP = "blockchain_timestamp"
+    """Types of external services"""
+    BLOCKCHAIN_TIMESTAMP = "blockchain_timestamp"
     LEGAL_DATABASE = "legal_database"
     COPYRIGHT_REGISTRY = "copyright_registry"
     PAYMENT_PROCESSOR = "payment_processor"
@@ -33,7 +35,8 @@ class ServiceType(Enum):
 
 
 class IntegrationStatus(Enum):
-    """Status of service integrations"""    ACTIVE = "active"
+    """Status of service integrations"""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     ERROR = "error"
     RATE_LIMITED = "rate_limited"
@@ -42,7 +45,8 @@ class IntegrationStatus(Enum):
 
 
 class RequestMethod(Enum):
-    """HTTP request methods"""    GET = "GET"
+    """HTTP request methods"""
+    GET = "GET"
     POST = "POST"
     PUT = "PUT"
     DELETE = "DELETE"
@@ -51,7 +55,8 @@ class RequestMethod(Enum):
 
 @dataclass
 class ServiceCredentials:
-    """Credentials for external service"""    api_key: Optional[str] = None
+    """Credentials for external service"""
+    api_key: Optional[str] = None
     api_secret: Optional[str] = None
     access_token: Optional[str] = None
     refresh_token: Optional[str] = None
@@ -65,7 +70,8 @@ class ServiceCredentials:
 
 @dataclass
 class ServiceConfig:
-    """Configuration for external service"""    service_name: str
+    """Configuration for external service"""
+    service_name: str
     service_type: ServiceType
     base_url: str
     credentials: ServiceCredentials
@@ -93,7 +99,8 @@ class ServiceConfig:
 
 @dataclass
 class ServiceRequest:
-    """Request to external service"""    id: str
+    """Request to external service"""
+    id: str
     service_name: str
     method: RequestMethod
     endpoint: str
@@ -116,14 +123,16 @@ class ServiceRequest:
 
 
 class BlockchainTimestampService:
-    """Integration with blockchain timestamping services"""    
+    """Integration with blockchain timestamping services"""
+    
     def __init__(self, config: ServiceConfig):
         self.config = config
         self.service_name = "blockchain_timestamp"
         self.last_request_time = None
     
     async def create_timestamp(self, content_hash: str, metadata: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Create blockchain timestamp for content"""        try:
+        """Create blockchain timestamp for content"""
+        try:
             request_data = {
                 'hash': content_hash,
                 'algorithm': 'sha256',
@@ -154,7 +163,8 @@ class BlockchainTimestampService:
             raise
     
     async def verify_timestamp(self, timestamp_id: str) -> Dict[str, Any]:
-        """Verify blockchain timestamp"""        try:
+        """Verify blockchain timestamp"""
+        try:
             response = await self._make_request(
                 RequestMethod.GET,
                 f'/timestamp/{timestamp_id}/verify'
@@ -177,7 +187,8 @@ class BlockchainTimestampService:
         endpoint: str,
         data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Make authenticated request to blockchain service"""        try:
+        """Make authenticated request to blockchain service"""
+        try:
             # Rate limiting
             await self._apply_rate_limit()
             
@@ -207,7 +218,8 @@ class BlockchainTimestampService:
             raise
     
     async def _apply_rate_limit(self):
-        """Apply rate limiting"""        if self.last_request_time:
+        """Apply rate limiting"""
+        if self.last_request_time:
             min_interval = 60.0 / self.config.rate_limit_per_minute
             elapsed = (datetime.utcnow() - self.last_request_time).total_seconds()
             
@@ -218,13 +230,15 @@ class BlockchainTimestampService:
 
 
 class CopyrightRegistryService:
-    """Integration with copyright registration services"""    
+    """Integration with copyright registration services"""
+    
     def __init__(self, config: ServiceConfig):
         self.config = config
         self.service_name = "copyright_registry"
     
     async def search_registration(self, title: str, author: str, year: Optional[int] = None) -> List[Dict[str, Any]]:
-        """Search for copyright registrations"""        try:
+        """Search for copyright registrations"""
+        try:
             params = {
                 'title': title,
                 'author': author,
@@ -259,7 +273,8 @@ class CopyrightRegistryService:
             return []
     
     async def get_registration_details(self, registration_number: str) -> Optional[Dict[str, Any]]:
-        """Get detailed information about a copyright registration"""        try:
+        """Get detailed information about a copyright registration"""
+        try:
             response = await self._make_request(
                 RequestMethod.GET,
                 f'/registration/{registration_number}'
@@ -288,7 +303,8 @@ class CopyrightRegistryService:
             return None
     
     async def _make_request(self, method: RequestMethod, endpoint: str) -> Dict[str, Any]:
-        """Make request to copyright registry API"""        try:
+        """Make request to copyright registry API"""
+        try:
             url = f"{self.config.base_url.rstrip('/')}{endpoint}"
             headers = {
                 'X-API-Key': self.config.credentials.api_key,
@@ -306,7 +322,8 @@ class CopyrightRegistryService:
 
 
 class DMCAServiceIntegration:
-    """Integration with professional DMCA service providers"""    
+    """Integration with professional DMCA service providers"""
+    
     def __init__(self, config: ServiceConfig):
         self.config = config
         self.service_name = "dmca_service"
@@ -318,7 +335,8 @@ class DMCAServiceIntegration:
         recipient_info: Dict[str, Any],
         urgency: str = "normal"
     ) -> Dict[str, Any]:
-        """Submit DMCA takedown notice through service"""        try:
+        """Submit DMCA takedown notice through service"""
+        try:
             request_data = {
                 'case_reference': case_id,
                 'notice_content': notice_content,
@@ -349,7 +367,8 @@ class DMCAServiceIntegration:
             raise
     
     async def check_notice_status(self, notice_id: str) -> Dict[str, Any]:
-        """Check status of submitted DMCA notice"""        try:
+        """Check status of submitted DMCA notice"""
+        try:
             response = await self._make_request(
                 RequestMethod.GET,
                 f'/dmca/{notice_id}/status'
@@ -377,7 +396,8 @@ class DMCAServiceIntegration:
         endpoint: str,
         data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Make authenticated request to DMCA service"""        try:
+        """Make authenticated request to DMCA service"""
+        try:
             url = f"{self.config.base_url.rstrip('/')}{endpoint}"
             headers = {
                 'Authorization': f"Bearer {self.config.credentials.access_token}",
@@ -405,7 +425,8 @@ class DMCAServiceIntegration:
 
 
 class PaymentProcessorIntegration:
-    """Integration with payment processing services"""    
+    """Integration with payment processing services"""
+    
     def __init__(self, config: ServiceConfig):
         self.config = config
         self.service_name = "payment_processor"
@@ -418,7 +439,8 @@ class PaymentProcessorIntegration:
         description: str,
         recipient_email: str
     ) -> Dict[str, Any]:
-        """Create invoice for damages or settlement"""        try:
+        """Create invoice for damages or settlement"""
+        try:
             request_data = {
                 'reference': f"CASE-{case_id}",
                 'amount': amount,
@@ -450,7 +472,8 @@ class PaymentProcessorIntegration:
             raise
     
     async def check_payment_status(self, invoice_id: str) -> Dict[str, Any]:
-        """Check payment status of invoice"""        try:
+        """Check payment status of invoice"""
+        try:
             response = await self._make_request(
                 RequestMethod.GET,
                 f'/invoices/{invoice_id}'
@@ -473,7 +496,8 @@ class PaymentProcessorIntegration:
             return {'status': 'unknown', 'error': str(e)}
     
     async def process_refund(self, invoice_id: str, amount: Optional[float] = None) -> Dict[str, Any]:
-        """Process refund for payment"""        try:
+        """Process refund for payment"""
+        try:
             request_data = {
                 'invoice_id': invoice_id,
                 'amount': amount,  # None for full refund
@@ -504,7 +528,8 @@ class PaymentProcessorIntegration:
         endpoint: str,
         data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Make authenticated request to payment processor"""        try:
+        """Make authenticated request to payment processor"""
+        try:
             url = f"{self.config.base_url.rstrip('/')}{endpoint}"
             
             # Create basic auth header
@@ -537,7 +562,8 @@ class PaymentProcessorIntegration:
 
 
 class TranslationServiceIntegration:
-    """Integration with professional translation services"""    
+    """Integration with professional translation services"""
+    
     def __init__(self, config: ServiceConfig):
         self.config = config
         self.service_name = "translation_service"
@@ -550,7 +576,8 @@ class TranslationServiceIntegration:
         target_language: str,
         document_type: str = "legal"
     ) -> Dict[str, Any]:
-        """Translate legal document to target language"""        try:
+        """Translate legal document to target language"""
+        try:
             if target_language not in self.supported_languages:
                 raise ValueError(f"Unsupported target language: {target_language}")
             
@@ -584,7 +611,8 @@ class TranslationServiceIntegration:
             raise
     
     async def get_supported_languages(self) -> List[Dict[str, str]]:
-        """Get list of supported languages"""        try:
+        """Get list of supported languages"""
+        try:
             response = await self._make_request(
                 RequestMethod.GET,
                 '/languages'
@@ -602,7 +630,8 @@ class TranslationServiceIntegration:
         endpoint: str,
         data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Make authenticated request to translation service"""        try:
+        """Make authenticated request to translation service"""
+        try:
             url = f"{self.config.base_url.rstrip('/')}{endpoint}"
             headers = {
                 'Authorization': f"Bearer {self.config.credentials.api_key}",
@@ -630,7 +659,8 @@ class TranslationServiceIntegration:
 
 
 class ExternalIntegrationsManager:
-    """Manager for all external service integrations"""    
+    """Manager for all external service integrations"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.services: Dict[str, Any] = {}
@@ -644,7 +674,8 @@ class ExternalIntegrationsManager:
         logger.info("External integrations manager initialized")
     
     def _initialize_services(self):
-        """Initialize configured external services"""        try:
+        """Initialize configured external services"""
+        try:
             # Blockchain timestamp service
             if 'blockchain_timestamp' in self.config:
                 blockchain_config = self._create_service_config(
@@ -706,7 +737,8 @@ class ExternalIntegrationsManager:
         service_type: ServiceType,
         config_dict: Dict[str, Any]
     ) -> ServiceConfig:
-        """Create service configuration from dictionary"""        credentials = ServiceCredentials(
+        """Create service configuration from dictionary"""
+        credentials = ServiceCredentials(
             api_key=config_dict.get('api_key'),
             api_secret=config_dict.get('api_secret'),
             access_token=config_dict.get('access_token'),
@@ -729,14 +761,16 @@ class ExternalIntegrationsManager:
         )
     
     async def start_health_monitoring(self):
-        """Start health monitoring for all services"""        if self.health_check_task:
+        """Start health monitoring for all services"""
+        if self.health_check_task:
             return
         
         self.health_check_task = asyncio.create_task(self._health_check_loop())
         logger.info("Started health monitoring for external services")
     
     async def stop_health_monitoring(self):
-        """Stop health monitoring"""        if self.health_check_task:
+        """Stop health monitoring"""
+        if self.health_check_task:
             self.health_check_task.cancel()
             try:
                 await self.health_check_task
@@ -747,7 +781,8 @@ class ExternalIntegrationsManager:
         logger.info("Stopped health monitoring")
     
     async def _health_check_loop(self):
-        """Health check monitoring loop"""        while True:
+        """Health check monitoring loop"""
+        while True:
             try:
                 for service_name, config in self.service_configs.items():
                     if config.enabled and config.health_check_endpoint:
@@ -762,7 +797,8 @@ class ExternalIntegrationsManager:
                 await asyncio.sleep(60)
     
     async def _check_service_health(self, service_name: str, config: ServiceConfig):
-        """Check health of individual service"""        try:
+        """Check health of individual service"""
+        try:
             url = f"{config.base_url.rstrip('/')}{config.health_check_endpoint}"
             headers = {
                 'User-Agent': 'IA-Influencer-Agent/2.0',
@@ -790,10 +826,12 @@ class ExternalIntegrationsManager:
             logger.error(f"Health check failed for {service_name}: {e}")
     
     def get_service(self, service_name: str) -> Optional[Any]:
-        """Get service instance by name"""        return self.services.get(service_name)
+        """Get service instance by name"""
+        return self.services.get(service_name)
     
     def is_service_available(self, service_name: str) -> bool:
-        """Check if service is available and healthy"""        config = self.service_configs.get(service_name)
+        """Check if service is available and healthy"""
+        config = self.service_configs.get(service_name)
         if not config:
             return False
         
@@ -803,7 +841,8 @@ class ExternalIntegrationsManager:
         )
     
     async def create_blockchain_timestamp(self, content_hash: str, metadata: Dict[str, Any] = None) -> Optional[Dict[str, Any]]:
-        """Create blockchain timestamp using configured service"""        try:
+        """Create blockchain timestamp using configured service"""
+        try:
             if not self.is_service_available('blockchain_timestamp'):
                 logger.warning("Blockchain timestamp service not available")
                 return None
@@ -821,7 +860,8 @@ class ExternalIntegrationsManager:
         author: str,
         year: Optional[int] = None
     ) -> List[Dict[str, Any]]:
-        """Search copyright registrations using configured service"""        try:
+        """Search copyright registrations using configured service"""
+        try:
             if not self.is_service_available('copyright_registry'):
                 logger.warning("Copyright registry service not available")
                 return []
@@ -840,7 +880,8 @@ class ExternalIntegrationsManager:
         recipient_info: Dict[str, Any],
         urgency: str = "normal"
     ) -> Optional[Dict[str, Any]]:
-        """Submit DMCA notice using configured service"""        try:
+        """Submit DMCA notice using configured service"""
+        try:
             if not self.is_service_available('dmca_service'):
                 logger.warning("DMCA service not available")
                 return None
@@ -860,7 +901,8 @@ class ExternalIntegrationsManager:
         description: str,
         recipient_email: str
     ) -> Optional[Dict[str, Any]]:
-        """Create payment invoice using configured service"""        try:
+        """Create payment invoice using configured service"""
+        try:
             if not self.is_service_available('payment_processor'):
                 logger.warning("Payment processor service not available")
                 return None
@@ -879,7 +921,8 @@ class ExternalIntegrationsManager:
         target_language: str,
         document_type: str = "legal"
     ) -> Optional[Dict[str, Any]]:
-        """Translate document using configured service"""        try:
+        """Translate document using configured service"""
+        try:
             if not self.is_service_available('translation_service'):
                 logger.warning("Translation service not available")
                 return None
@@ -892,7 +935,8 @@ class ExternalIntegrationsManager:
             return None
     
     async def get_integration_status(self) -> Dict[str, Any]:
-        """Get status of all integrations"""        try:
+        """Get status of all integrations"""
+        try:
             status = {
                 'total_services': len(self.service_configs),
                 'active_services': 0,
@@ -922,14 +966,16 @@ class ExternalIntegrationsManager:
             return {}
     
     async def disable_service(self, service_name: str):
-        """Disable specific service"""        config = self.service_configs.get(service_name)
+        """Disable specific service"""
+        config = self.service_configs.get(service_name)
         if config:
             config.enabled = False
             config.status = IntegrationStatus.DISABLED
             logger.info(f"Disabled service: {service_name}")
     
     async def enable_service(self, service_name: str):
-        """Enable specific service"""        config = self.service_configs.get(service_name)
+        """Enable specific service"""
+        config = self.service_configs.get(service_name)
         if config:
             config.enabled = True
             config.status = IntegrationStatus.INACTIVE
@@ -940,7 +986,8 @@ class ExternalIntegrationsManager:
                 await self._check_service_health(service_name, config)
     
     async def shutdown(self):
-        """Shutdown all integrations"""        try:
+        """Shutdown all integrations"""
+        try:
             await self.stop_health_monitoring()
             
             # Clear service instances
@@ -958,7 +1005,8 @@ integrations_manager = ExternalIntegrationsManager()
 
 
 async def get_integrations_manager() -> ExternalIntegrationsManager:
-    """Get the global integrations manager instance"""    return integrations_manager
+    """Get the global integrations manager instance"""
+    return integrations_manager
 
 
 __all__ = [

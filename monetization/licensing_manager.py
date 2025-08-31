@@ -6,7 +6,8 @@ Handles license creation, validation, tracking, and royalty distribution.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, List, Optional, Union
 from datetime import datetime, timedelta
@@ -35,16 +36,19 @@ except ImportError:
     # Fallback for testing - create mock classes
     class LicenseRepository:
         def __init__(self):
-            """Initialize license repository with basic functionality"""            self.licenses = {}
+            """Initialize license repository with basic functionality"""
+            self.licenses = {}
             
     class ContentRepository:
         def __init__(self):
-            """Initialize content repository with basic functionality"""            self.content = {}
+            """Initialize content repository with basic functionality"""
+            self.content = {}
 
 logger = logging.getLogger(__name__)
 
 class LicenseType(Enum):
-    """License type enumeration."""    BASIC = "basic"
+    """License type enumeration."""
+    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     CUSTOM = "custom"
@@ -53,7 +57,8 @@ class LicenseType(Enum):
     EXCLUSIVE = "exclusive"
 
 class LicenseStatus(Enum):
-    """License status enumeration."""    PENDING = "pending"
+    """License status enumeration."""
+    PENDING = "pending"
     ACTIVE = "active"
     EXPIRED = "expired"
     SUSPENDED = "suspended"
@@ -61,7 +66,8 @@ class LicenseStatus(Enum):
     RENEWED = "renewed"
 
 class UsageType(Enum):
-    """Usage type enumeration."""    STREAM = "stream"
+    """Usage type enumeration."""
+    STREAM = "stream"
     DOWNLOAD = "download"
     SYNC = "sync"
     COMMERCIAL = "commercial"
@@ -70,7 +76,8 @@ class UsageType(Enum):
 
 @dataclass
 class ContentLicense:
-    """Content license data structure."""    id: int
+    """Content license data structure."""
+    id: int
     content_id: int
     licensor_id: int
     licensee_id: int
@@ -89,7 +96,8 @@ class ContentLicense:
 
 @dataclass
 class LicenseUsage:
-    """License usage record."""    id: int
+    """License usage record."""
+    id: int
     license_id: int
     usage_type: UsageType
     usage_count: int
@@ -98,7 +106,8 @@ class LicenseUsage:
     timestamp: datetime
 
 class LicensingError(Exception):
-    """Exception for licensing-related errors"""    def __init__(self, message: str, error_code: str = None, details: dict = None):
+    """Exception for licensing-related errors"""
+    def __init__(self, message: str, error_code: str = None, details: dict = None):
         self.message = message
         self.error_code = error_code or "LICENSING_ERROR"
         self.details = details or {}
@@ -106,7 +115,8 @@ class LicensingError(Exception):
 
 
 class LicensingManager:
-    """    Professional licensing management system.
+    """
+    Professional licensing management system.
     
     Features:
     - Automated license generation
@@ -117,9 +127,11 @@ class LicensingManager:
     - Compliance monitoring
     - Analytics and reporting
     - Rights validation
-    """    
+    """
+    
     def __init__(self):
-        """Initialize licensing manager."""        self.royalty_engine = RoyaltyEngine()
+        """Initialize licensing manager."""
+        self.royalty_engine = RoyaltyEngine()
         self.usage_tracker = UsageTracker()
         self.contract_generator = ContractGenerator()
         self.rights_validator = RightsValidator()
@@ -157,7 +169,8 @@ class LicensingManager:
                             licensee_id: int,
                             license_type: str,
                             terms: Dict) -> ContentLicense:
-        """        Create new content license.
+        """
+        Create new content license.
         
         Args:
             content_id: ID of content to license
@@ -167,7 +180,8 @@ class LicensingManager:
             
         Returns:
             ContentLicense object
-        """        try:
+        """
+        try:
             logger.info(f"Creating license for content {content_id}, licensee {licensee_id}")
             
             # Validate content exists and rights
@@ -250,7 +264,8 @@ class LicensingManager:
             raise LicensingError(f"Failed to create license: {str(e)}")
     
     async def approve_license(self, license_id: int) -> bool:
-        """Approve pending license."""        try:
+        """Approve pending license."""
+        try:
             # Update license status
             await self.license_repo.update_license_status(
                 license_id, LicenseStatus.ACTIVE.value
@@ -273,7 +288,8 @@ class LicensingManager:
                          license_id: int,
                          usage_type: str,
                          usage_data: Dict) -> LicenseUsage:
-        """        Track license usage.
+        """
+        Track license usage.
         
         Args:
             license_id: License ID
@@ -282,7 +298,8 @@ class LicensingManager:
             
         Returns:
             LicenseUsage object
-        """        try:
+        """
+        try:
             # Get license information
             license = await self.license_repo.get_license(license_id)
             if not license:
@@ -331,7 +348,8 @@ class LicensingManager:
                                  license_id: int,
                                  period_start: str,
                                  period_end: str) -> Dict:
-        """        Calculate royalties for license period.
+        """
+        Calculate royalties for license period.
         
         Args:
             license_id: License ID
@@ -340,7 +358,8 @@ class LicensingManager:
             
         Returns:
             Royalty calculation summary
-        """        try:
+        """
+        try:
             start_date = datetime.fromisoformat(period_start)
             end_date = datetime.fromisoformat(period_end)
             
@@ -378,7 +397,8 @@ class LicensingManager:
     async def renew_license(self, 
                            license_id: int,
                            renewal_terms: Dict = None) -> ContentLicense:
-        """Renew existing license."""        try:
+        """Renew existing license."""
+        try:
             # Get current license
             current_license = await self.license_repo.get_license(license_id)
             if not current_license:
@@ -418,7 +438,8 @@ class LicensingManager:
             raise LicensingError(f"Failed to renew license: {str(e)}")
     
     async def get_license_analytics(self, license_id: int) -> Dict:
-        """Get comprehensive license analytics."""        try:
+        """Get comprehensive license analytics."""
+        try:
             # Get license information
             license = await self.license_repo.get_license(license_id)
             if not license:
@@ -478,7 +499,8 @@ class LicensingManager:
             return {"error": str(e)}
     
     async def get_user_licensing_summary(self, user_id: int) -> Dict:
-        """Get licensing summary for user (as licensor)."""        try:
+        """Get licensing summary for user (as licensor)."""
+        try:
             # Get all licenses where user is licensor
             licenses = await self.license_repo.get_user_licenses_as_licensor(user_id)
             
@@ -529,7 +551,8 @@ class LicensingManager:
             return {"error": str(e)}
     
     def _get_license_config(self, license_type: str) -> Dict:
-        """Get configuration for license type."""        configs = {
+        """Get configuration for license type."""
+        configs = {
             "basic": {
                 "duration_days": 30,
                 "base_price": Decimal("10.00"),
@@ -563,7 +586,8 @@ class LicensingManager:
                                       content_id: int,
                                       license_type: str,
                                       terms: Dict) -> Decimal:
-        """Calculate license price based on content and terms."""        try:
+        """Calculate license price based on content and terms."""
+        try:
             config = self._get_license_config(license_type)
             base_price = config["base_price"]
             
@@ -602,7 +626,8 @@ class LicensingManager:
                                      content: Dict,
                                      license_config: Dict,
                                      custom_terms: Dict) -> Dict:
-        """Generate comprehensive license terms."""        terms = {
+        """Generate comprehensive license terms."""
+        terms = {
             "content_id": content["id"],
             "content_title": content.get("metadata", {}).get("title", "Untitled"),
             "license_type": license_config,
@@ -624,7 +649,8 @@ class LicensingManager:
                                  license: Dict,
                                  usage_type: str,
                                  usage_data: Dict):
-        """Check if usage is within license limits."""        usage_limits = license.get("usage_limits", {})
+        """Check if usage is within license limits."""
+        usage_limits = license.get("usage_limits", {})
         
         if usage_type in usage_limits:
             limit = usage_limits[usage_type]
@@ -644,19 +670,22 @@ class LicensingManager:
                                          license_id: int,
                                          usage_type: str,
                                          usage_data: Dict):
-        """Update license usage statistics."""        await self.license_repo.update_license_usage_stats(
+        """Update license usage statistics."""
+        await self.license_repo.update_license_usage_stats(
             license_id, usage_type, usage_data
         )
     
     async def _start_license_monitoring(self, license_id: int):
-        """Start monitoring for license compliance and expiration."""        if license_id not in self.monitoring_tasks:
+        """Start monitoring for license compliance and expiration."""
+        if license_id not in self.monitoring_tasks:
             task = asyncio.create_task(
                 self._license_monitoring_loop(license_id)
             )
             self.monitoring_tasks[license_id] = task
     
     async def _license_monitoring_loop(self, license_id: int):
-        """Monitor license for expiration and compliance."""        try:
+        """Monitor license for expiration and compliance."""
+        try:
             while True:
                 license = await self.license_repo.get_license(license_id)
                 if not license or license["status"] != "active":
@@ -685,7 +714,8 @@ class LicensingManager:
                 del self.monitoring_tasks[license_id]
     
     async def _check_license_compliance(self, license: Dict):
-        """Check license compliance and usage limits."""        logger.info(f"Checking compliance for license {license['id']}")
+        """Check license compliance and usage limits."""
+        logger.info(f"Checking compliance for license {license['id']}")
         
         try:
             # Check usage limits
@@ -747,11 +777,13 @@ class LicensingManager:
             raise LicensingError(f"Compliance check failed: {str(e)}")
     
     async def _send_license_notification(self, license: Dict, notification_type: str):
-        """Send license notification to relevant parties."""        # Implementation for notifications
+        """Send license notification to relevant parties."""
+        # Implementation for notifications
         logger.info(f"License notification sent: {license['id']} - {notification_type}")
     
     def get_manager_stats(self) -> Dict:
-        """Get licensing manager statistics."""        return {
+        """Get licensing manager statistics."""
+        return {
             "version": "1.0.0",
             "active_monitoring_tasks": len(self.monitoring_tasks),
             "supported_license_types": list(self._get_license_config("basic").keys()),

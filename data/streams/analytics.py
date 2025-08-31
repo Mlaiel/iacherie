@@ -6,7 +6,8 @@ trend detection, and predictive insights for content optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timezone, timedelta
@@ -31,7 +32,8 @@ settings = get_settings()
 
 
 class AnalyticsMetric(str, Enum):
-    """Analytics metric types"""    THROUGHPUT = "throughput"
+    """Analytics metric types"""
+    THROUGHPUT = "throughput"
     LATENCY = "latency"
     ERROR_RATE = "error_rate"
     SUCCESS_RATE = "success_rate"
@@ -42,14 +44,16 @@ class AnalyticsMetric(str, Enum):
 
 
 class TrendDirection(str, Enum):
-    """Trend direction indicators"""    INCREASING = "increasing"
+    """Trend direction indicators"""
+    INCREASING = "increasing"
     DECREASING = "decreasing"
     STABLE = "stable"
     VOLATILE = "volatile"
 
 
 class AlertType(str, Enum):
-    """Analytics alert types"""    ANOMALY = "anomaly"
+    """Analytics alert types"""
+    ANOMALY = "anomaly"
     THRESHOLD = "threshold"
     TREND = "trend"
     PATTERN = "pattern"
@@ -57,14 +61,16 @@ class AlertType(str, Enum):
 
 @dataclass
 class MetricValue:
-    """Metric value with timestamp"""    timestamp: datetime
+    """Metric value with timestamp"""
+    timestamp: datetime
     value: float
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis result"""    metric: AnalyticsMetric
+    """Trend analysis result"""
+    metric: AnalyticsMetric
     direction: TrendDirection
     slope: float
     confidence: float
@@ -76,7 +82,8 @@ class TrendAnalysis:
 
 @dataclass
 class AnomalyDetection:
-    """Anomaly detection result"""    timestamp: datetime
+    """Anomaly detection result"""
+    timestamp: datetime
     metric: AnalyticsMetric
     value: float
     expected_value: float
@@ -86,7 +93,8 @@ class AnomalyDetection:
 
 
 class StreamMetrics(BaseModel):
-    """Stream performance metrics"""    stream_id: str = Field(description="Stream identifier")
+    """Stream performance metrics"""
+    stream_id: str = Field(description="Stream identifier")
     total_events: int = Field(default=0, description="Total events processed")
     events_per_second: float = Field(default=0.0, description="Current throughput")
     average_latency: float = Field(default=0.0, description="Average processing latency")
@@ -98,7 +106,8 @@ class StreamMetrics(BaseModel):
 
 
 class AnalyticsInsight(BaseModel):
-    """Analytics insight result"""    insight_type: str = Field(description="Type of insight")
+    """Analytics insight result"""
+    insight_type: str = Field(description="Type of insight")
     title: str = Field(description="Insight title")
     description: str = Field(description="Detailed description")
     confidence: float = Field(description="Confidence score (0-1)")
@@ -108,9 +117,11 @@ class AnalyticsInsight(BaseModel):
 
 
 class StreamAnalytics:
-    """    Advanced analytics engine for real-time stream performance analysis,
+    """
+    Advanced analytics engine for real-time stream performance analysis,
     anomaly detection, trend analysis, and predictive insights.
-    """    
+    """
+    
     def __init__(self):
         self.metrics_history: Dict[str, List[MetricValue]] = {}
         self.stream_metrics: Dict[str, StreamMetrics] = {}
@@ -120,7 +131,8 @@ class StreamAnalytics:
         self._shutdown_event = asyncio.Event()
         
     async def initialize(self) -> None:
-        """Initialize stream analytics engine"""        try:
+        """Initialize stream analytics engine"""
+        try:
             # Start background analytics tasks
             asyncio.create_task(self._trend_analyzer())
             asyncio.create_task(self._anomaly_detector())
@@ -141,7 +153,8 @@ class StreamAnalytics:
         timestamp: Optional[datetime] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """        Record metric value for analytics
+        """
+        Record metric value for analytics
         
         Args:
             stream_id: Stream identifier
@@ -149,7 +162,8 @@ class StreamAnalytics:
             value: Metric value
             timestamp: Optional timestamp
             metadata: Optional metadata
-        """        try:
+        """
+        try:
             if timestamp is None:
                 timestamp = datetime.now(timezone.utc)
                 
@@ -177,7 +191,8 @@ class StreamAnalytics:
             logger.error(f"Failed to record metric: {e}")
             
     async def get_stream_metrics(self, stream_id: str) -> Optional[StreamMetrics]:
-        """Get current metrics for stream"""        return self.stream_metrics.get(stream_id)
+        """Get current metrics for stream"""
+        return self.stream_metrics.get(stream_id)
         
     async def get_metric_history(
         self,
@@ -187,7 +202,8 @@ class StreamAnalytics:
         end_time: Optional[datetime] = None,
         limit: int = 1000
     ) -> List[MetricValue]:
-        """        Get metric history for stream
+        """
+        Get metric history for stream
         
         Args:
             stream_id: Stream identifier
@@ -198,7 +214,8 @@ class StreamAnalytics:
             
         Returns:
             List of metric values
-        """        try:
+        """
+        try:
             metric_key = f"{stream_id}_{metric.value}"
             
             if metric_key not in self.metrics_history:
@@ -233,7 +250,8 @@ class StreamAnalytics:
         metric: AnalyticsMetric,
         period_hours: int = 24
     ) -> Optional[TrendAnalysis]:
-        """        Analyze trend for metric over specified period
+        """
+        Analyze trend for metric over specified period
         
         Args:
             stream_id: Stream identifier
@@ -242,7 +260,8 @@ class StreamAnalytics:
             
         Returns:
             Trend analysis result
-        """        try:
+        """
+        try:
             end_time = datetime.now(timezone.utc)
             start_time = end_time - timedelta(hours=period_hours)
             
@@ -302,7 +321,8 @@ class StreamAnalytics:
         metric: AnalyticsMetric,
         sensitivity: float = 2.0
     ) -> List[AnomalyDetection]:
-        """        Detect anomalies in metric using statistical methods
+        """
+        Detect anomalies in metric using statistical methods
         
         Args:
             stream_id: Stream identifier
@@ -311,7 +331,8 @@ class StreamAnalytics:
             
         Returns:
             List of detected anomalies
-        """        try:
+        """
+        try:
             # Get recent history
             end_time = datetime.now(timezone.utc)
             start_time = end_time - timedelta(hours=24)
@@ -367,14 +388,16 @@ class StreamAnalytics:
             return []
             
     async def generate_insights(self, stream_id: str) -> List[AnalyticsInsight]:
-        """        Generate actionable insights for stream
+        """
+        Generate actionable insights for stream
         
         Args:
             stream_id: Stream identifier
             
         Returns:
             List of analytics insights
-        """        try:
+        """
+        try:
             insights = []
             
             # Get current metrics
@@ -465,7 +488,8 @@ class StreamAnalytics:
             return []
             
     async def get_performance_summary(self, stream_id: str) -> Dict[str, Any]:
-        """Get comprehensive performance summary for stream"""        try:
+        """Get comprehensive performance summary for stream"""
+        try:
             metrics = await self.get_stream_metrics(stream_id)
             insights = await self.generate_insights(stream_id)
             
@@ -498,7 +522,8 @@ class StreamAnalytics:
             return {}
             
     async def compare_streams(self, stream_ids: List[str]) -> Dict[str, Any]:
-        """Compare performance across multiple streams"""        try:
+        """Compare performance across multiple streams"""
+        try:
             comparison = {
                 "streams": {},
                 "rankings": {},
@@ -557,7 +582,8 @@ class StreamAnalytics:
         metric: AnalyticsMetric,
         value: float
     ) -> None:
-        """Update real-time stream metrics"""        try:
+        """Update real-time stream metrics"""
+        try:
             if stream_id not in self.stream_metrics:
                 self.stream_metrics[stream_id] = StreamMetrics(stream_id=stream_id)
                 
@@ -581,7 +607,8 @@ class StreamAnalytics:
             logger.error(f"Failed to update stream metrics: {e}")
             
     async def _trend_analyzer(self) -> None:
-        """Background trend analysis task"""        while not self._shutdown_event.is_set():
+        """Background trend analysis task"""
+        while not self._shutdown_event.is_set():
             try:
                 await asyncio.sleep(300)  # Analyze every 5 minutes
                 
@@ -594,7 +621,8 @@ class StreamAnalytics:
                 logger.error(f"Trend analyzer error: {e}")
                 
     async def _anomaly_detector(self) -> None:
-        """Background anomaly detection task"""        while not self._shutdown_event.is_set():
+        """Background anomaly detection task"""
+        while not self._shutdown_event.is_set():
             try:
                 await asyncio.sleep(60)  # Check every minute
                 
@@ -612,7 +640,8 @@ class StreamAnalytics:
                 logger.error(f"Anomaly detector error: {e}")
                 
     async def _metrics_aggregator(self) -> None:
-        """Background metrics aggregation task"""        while not self._shutdown_event.is_set():
+        """Background metrics aggregation task"""
+        while not self._shutdown_event.is_set():
             try:
                 await asyncio.sleep(30)  # Aggregate every 30 seconds
                 
@@ -624,7 +653,8 @@ class StreamAnalytics:
                 logger.error(f"Metrics aggregator error: {e}")
                 
     async def _insight_generator(self) -> None:
-        """Background insight generation task"""        while not self._shutdown_event.is_set():
+        """Background insight generation task"""
+        while not self._shutdown_event.is_set():
             try:
                 await asyncio.sleep(900)  # Generate insights every 15 minutes
                 
@@ -641,7 +671,8 @@ class StreamAnalytics:
                 logger.error(f"Insight generator error: {e}")
                 
     async def _calculate_uptime(self, stream_id: str) -> None:
-        """Calculate uptime percentage for stream"""        try:
+        """Calculate uptime percentage for stream"""
+        try:
             # Get error events in last 24 hours
             error_history = await self.get_metric_history(
                 stream_id,
@@ -665,7 +696,8 @@ class StreamAnalytics:
             logger.error(f"Failed to calculate uptime: {e}")
             
     async def _notify_anomaly(self, anomaly: AnomalyDetection) -> None:
-        """Notify callbacks about anomaly"""        for callback in self.analytics_callbacks:
+        """Notify callbacks about anomaly"""
+        for callback in self.analytics_callbacks:
             try:
                 if asyncio.iscoroutinefunction(callback):
                     await callback("anomaly", anomaly)
@@ -675,7 +707,8 @@ class StreamAnalytics:
                 logger.error(f"Anomaly callback error: {e}")
                 
     async def _notify_insight(self, insight: AnalyticsInsight) -> None:
-        """Notify callbacks about insight"""        for callback in self.analytics_callbacks:
+        """Notify callbacks about insight"""
+        for callback in self.analytics_callbacks:
             try:
                 if asyncio.iscoroutinefunction(callback):
                     await callback("insight", insight)
@@ -685,10 +718,12 @@ class StreamAnalytics:
                 logger.error(f"Insight callback error: {e}")
                 
     async def register_callback(self, callback: Any) -> None:
-        """Register analytics callback"""        self.analytics_callbacks.append(callback)
+        """Register analytics callback"""
+        self.analytics_callbacks.append(callback)
         
     async def shutdown(self) -> None:
-        """Gracefully shutdown analytics engine"""        try:
+        """Gracefully shutdown analytics engine"""
+        try:
             self._shutdown_event.set()
             logger.info("StreamAnalytics shutdown completed")
         except Exception as e:

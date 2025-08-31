@@ -13,7 +13,8 @@ This configuration system is the EXCLUSIVE property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR REVERSE ENGINEERING is strictly prohibited
 and will result in immediate legal prosecution under international copyright laws.
 Contact: mlaiel@live.de for legal authorization inquiries only.
-"""import os
+"""
+import os
 from typing import Dict, Any, Optional
 from dataclasses import dataclass, field
 from enum import Enum
@@ -24,14 +25,16 @@ logger = logging.getLogger(__name__)
 
 
 class EnvironmentType(Enum):
-    """Environment types for configuration management"""    DEVELOPMENT = "development"
+    """Environment types for configuration management"""
+    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
 
 
 class LogLevel(Enum):
-    """Logging levels for system configuration"""    DEBUG = "DEBUG"
+    """Logging levels for system configuration"""
+    DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
     ERROR = "ERROR"
@@ -40,7 +43,8 @@ class LogLevel(Enum):
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration for intelligence algorithms"""    host: str = os.getenv("DB_HOST", "localhost")
+    """Database configuration for intelligence algorithms"""
+    host: str = os.getenv("DB_HOST", "localhost")
     port: int = int(os.getenv("DB_PORT", "5432"))
     name: str = os.getenv("DB_NAME", "ia_influencer_intelligence")
     username: str = os.getenv("DB_USERNAME", "postgres")
@@ -52,7 +56,8 @@ class DatabaseConfig:
 
 @dataclass
 class RedisConfig:
-    """Redis configuration for caching and real-time processing"""    host: str = os.getenv("REDIS_HOST", "localhost")
+    """Redis configuration for caching and real-time processing"""
+    host: str = os.getenv("REDIS_HOST", "localhost")
     port: int = int(os.getenv("REDIS_PORT", "6379"))
     db: int = int(os.getenv("REDIS_DB", "0"))
     password: str = os.getenv("REDIS_PASSWORD", "")
@@ -63,7 +68,8 @@ class RedisConfig:
 
 @dataclass
 class AIModelConfig:
-    """AI/ML model configuration for intelligence algorithms"""    # Core AI Models
+    """AI/ML model configuration for intelligence algorithms"""
+    # Core AI Models
     bert_model_name: str = os.getenv("BERT_MODEL_NAME", "bert-base-multilingual-cased")
     clip_model_name: str = os.getenv("CLIP_MODEL_NAME", "openai/clip-vit-base-patch32")
     whisper_model_name: str = os.getenv("WHISPER_MODEL_NAME", "openai/whisper-base")
@@ -84,7 +90,8 @@ class AIModelConfig:
 
 @dataclass
 class VectorDatabaseConfig:
-    """Vector database configuration for semantic search and embeddings"""    # FAISS Configuration
+    """Vector database configuration for semantic search and embeddings"""
+    # FAISS Configuration
     faiss_index_type: str = os.getenv("FAISS_INDEX_TYPE", "IVF")
     faiss_nlist: int = int(os.getenv("FAISS_NLIST", "1024"))
     faiss_nprobe: int = int(os.getenv("FAISS_NPROBE", "64"))
@@ -106,7 +113,8 @@ class VectorDatabaseConfig:
 
 @dataclass
 class BlockchainConfig:
-    """Blockchain configuration for content protection and ownership"""    # Ethereum Configuration
+    """Blockchain configuration for content protection and ownership"""
+    # Ethereum Configuration
     ethereum_rpc_url: str = os.getenv("ETHEREUM_RPC_URL", "https://mainnet.infura.io/v3/your-project-id")
     ethereum_private_key: str = os.getenv("ETHEREUM_PRIVATE_KEY", "")
     ethereum_contract_address: str = os.getenv("ETHEREUM_CONTRACT_ADDRESS", "")
@@ -122,7 +130,8 @@ class BlockchainConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance optimization configuration"""    # Response Time Targets
+    """Performance optimization configuration"""
+    # Response Time Targets
     max_response_time_ms: int = int(os.getenv("MAX_RESPONSE_TIME_MS", "50"))
     api_timeout_seconds: int = int(os.getenv("API_TIMEOUT_SECONDS", "30"))
     
@@ -142,7 +151,8 @@ class PerformanceConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration for enterprise deployment"""    # Encryption Settings
+    """Security configuration for enterprise deployment"""
+    # Encryption Settings
     encryption_key: str = os.getenv("ENCRYPTION_KEY", "")
     jwt_secret_key: str = os.getenv("JWT_SECRET_KEY", "")
     jwt_algorithm: str = os.getenv("JWT_ALGORITHM", "HS256")
@@ -163,7 +173,8 @@ class SecurityConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring and observability configuration"""    # Health Checks
+    """Monitoring and observability configuration"""
+    # Health Checks
     health_check_enabled: bool = os.getenv("HEALTH_CHECK_ENABLED", "true").lower() == "true"
     health_check_interval_seconds: int = int(os.getenv("HEALTH_CHECK_INTERVAL", "30"))
     
@@ -184,7 +195,8 @@ class MonitoringConfig:
 
 @dataclass
 class IntelligenceAlgorithmsConfig:
-    """Main configuration class for all intelligence algorithms"""    
+    """Main configuration class for all intelligence algorithms"""
+    
     # Environment Settings
     environment: EnvironmentType = EnvironmentType(os.getenv("ENVIRONMENT", "development"))
     debug_mode: bool = os.getenv("DEBUG_MODE", "false").lower() == "true"
@@ -203,11 +215,13 @@ class IntelligenceAlgorithmsConfig:
     algorithm_settings: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Post-initialization validation and setup"""        self._validate_configuration()
+        """Post-initialization validation and setup"""
+        self._validate_configuration()
         self._setup_algorithm_defaults()
     
     def _validate_configuration(self):
-        """Validate configuration settings for consistency and security"""        # Validate environment-specific requirements
+        """Validate configuration settings for consistency and security"""
+        # Validate environment-specific requirements
         if self.environment == EnvironmentType.PRODUCTION:
             if not self.security.encryption_key:
                 raise ValueError("Encryption key is required for production environment")
@@ -225,7 +239,8 @@ class IntelligenceAlgorithmsConfig:
         logger.info(f"Configuration validated for {self.environment.value} environment")
     
     def _setup_algorithm_defaults(self):
-        """Setup default configurations for specific algorithms"""        self.algorithm_settings.update({
+        """Setup default configurations for specific algorithms"""
+        self.algorithm_settings.update({
             "content_protection": {
                 "detection_threshold": 0.95,
                 "scan_interval_hours": 24,
@@ -259,16 +274,19 @@ class IntelligenceAlgorithmsConfig:
         })
     
     def get_algorithm_config(self, algorithm_name: str) -> Dict[str, Any]:
-        """Get configuration for a specific algorithm"""        return self.algorithm_settings.get(algorithm_name, {})
+        """Get configuration for a specific algorithm"""
+        return self.algorithm_settings.get(algorithm_name, {})
     
     def update_algorithm_config(self, algorithm_name: str, config: Dict[str, Any]):
-        """Update configuration for a specific algorithm"""        if algorithm_name not in self.algorithm_settings:
+        """Update configuration for a specific algorithm"""
+        if algorithm_name not in self.algorithm_settings:
             self.algorithm_settings[algorithm_name] = {}
         self.algorithm_settings[algorithm_name].update(config)
         logger.info(f"Updated configuration for algorithm: {algorithm_name}")
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary format"""        config_dict = {}
+        """Convert configuration to dictionary format"""
+        config_dict = {}
         for field_name, field_value in self.__dict__.items():
             if hasattr(field_value, '__dict__'):
                 config_dict[field_name] = field_value.__dict__
@@ -277,16 +295,19 @@ class IntelligenceAlgorithmsConfig:
         return config_dict
     
     def to_json(self) -> str:
-        """Convert configuration to JSON string"""        return json.dumps(self.to_dict(), indent=2, default=str)
+        """Convert configuration to JSON string"""
+        return json.dumps(self.to_dict(), indent=2, default=str)
     
     @classmethod
     def from_json(cls, json_str: str) -> 'IntelligenceAlgorithmsConfig':
-        """Create configuration from JSON string"""        config_data = json.loads(json_str)
+        """Create configuration from JSON string"""
+        config_data = json.loads(json_str)
         return cls(**config_data)
     
     @classmethod
     def from_file(cls, config_file_path: str) -> 'IntelligenceAlgorithmsConfig':
-        """Load configuration from file"""        with open(config_file_path, 'r') as f:
+        """Load configuration from file"""
+        with open(config_file_path, 'r') as f:
             if config_file_path.endswith('.json'):
                 config_data = json.load(f)
             else:
@@ -295,7 +316,8 @@ class IntelligenceAlgorithmsConfig:
         return cls(**config_data)
     
     def save_to_file(self, config_file_path: str):
-        """Save configuration to file"""        with open(config_file_path, 'w') as f:
+        """Save configuration to file"""
+        with open(config_file_path, 'w') as f:
             if config_file_path.endswith('.json'):
                 json.dump(self.to_dict(), f, indent=2, default=str)
             else:
@@ -308,18 +330,22 @@ config = IntelligenceAlgorithmsConfig()
 
 # Configuration factory functions
 def get_config() -> IntelligenceAlgorithmsConfig:
-    """Get the global configuration instance"""    return config
+    """Get the global configuration instance"""
+    return config
 
 def create_config(environment: str = None, **kwargs) -> IntelligenceAlgorithmsConfig:
-    """Create a new configuration instance with custom settings"""    if environment:
+    """Create a new configuration instance with custom settings"""
+    if environment:
         kwargs['environment'] = EnvironmentType(environment)
     return IntelligenceAlgorithmsConfig(**kwargs)
 
 def load_config_from_environment() -> IntelligenceAlgorithmsConfig:
-    """Load configuration from environment variables"""    return IntelligenceAlgorithmsConfig()
+    """Load configuration from environment variables"""
+    return IntelligenceAlgorithmsConfig()
 
 def load_config_from_file(file_path: str) -> IntelligenceAlgorithmsConfig:
-    """Load configuration from file"""    return IntelligenceAlgorithmsConfig.from_file(file_path)
+    """Load configuration from file"""
+    return IntelligenceAlgorithmsConfig.from_file(file_path)
 
 # Export configuration components
 __all__ = [

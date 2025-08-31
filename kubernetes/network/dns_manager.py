@@ -11,7 +11,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 import socket
 import dns.resolver
@@ -47,7 +48,8 @@ logger = logging.getLogger(__name__)
 
 
 class DNSRecordType(Enum):
-    """DNS record types"""    A = "A"
+    """DNS record types"""
+    A = "A"
     AAAA = "AAAA"
     CNAME = "CNAME"
     MX = "MX"
@@ -62,7 +64,8 @@ class DNSRecordType(Enum):
 
 
 class DNSProvider(Enum):
-    """DNS service providers"""    AWS_ROUTE53 = "aws_route53"
+    """DNS service providers"""
+    AWS_ROUTE53 = "aws_route53"
     GCP_CLOUD_DNS = "gcp_cloud_dns"
     AZURE_DNS = "azure_dns"
     CLOUDFLARE = "cloudflare"
@@ -73,7 +76,8 @@ class DNSProvider(Enum):
 
 
 class HealthCheckType(Enum):
-    """Health check types"""    HTTP = "http"
+    """Health check types"""
+    HTTP = "http"
     HTTPS = "https"
     TCP = "tcp"
     CALCULATED = "calculated"
@@ -82,7 +86,8 @@ class HealthCheckType(Enum):
 
 @dataclass
 class DNSRecord:
-    """DNS record configuration"""    name: str
+    """DNS record configuration"""
+    name: str
     record_type: DNSRecordType
     value: Union[str, List[str]]
     ttl: int = 300
@@ -101,7 +106,8 @@ class DNSRecord:
 
 @dataclass
 class HealthCheck:
-    """DNS health check configuration"""    name: str
+    """DNS health check configuration"""
+    name: str
     target: str
     check_type: HealthCheckType
     port: Optional[int] = None
@@ -120,7 +126,8 @@ class HealthCheck:
 
 @dataclass
 class DNSZone:
-    """DNS zone configuration"""    name: str
+    """DNS zone configuration"""
+    name: str
     domain: str
     provider: DNSProvider
     zone_id: Optional[str] = None
@@ -138,7 +145,8 @@ class DNSZone:
 
 @dataclass
 class DNSFailoverConfiguration:
-    """DNS failover configuration"""    name: str
+    """DNS failover configuration"""
+    name: str
     primary_endpoint: str
     secondary_endpoint: str
     health_check_grace_period: int = 60
@@ -152,7 +160,8 @@ class DNSFailoverConfiguration:
 
 @dataclass
 class GeoDNSConfiguration:
-    """Geographic DNS routing configuration"""    name: str
+    """Geographic DNS routing configuration"""
+    name: str
     default_endpoint: str
     geo_routing_rules: List[Dict[str, Any]] = field(default_factory=list)
     continent_rules: Dict[str, str] = field(default_factory=dict)
@@ -163,9 +172,11 @@ class GeoDNSConfiguration:
 
 
 class DNSManager:
-    """    Enterprise DNS manager for IA Influencer Agent Platform
+    """
+    Enterprise DNS manager for IA Influencer Agent Platform
     Provides multi-provider DNS management with advanced routing and monitoring
-    """    
+    """
+    
     def __init__(
         self,
         config_path: str = "/etc/dns/config.yaml",
@@ -195,7 +206,8 @@ class DNSManager:
         self._initialize_providers()
     
     async def initialize(self) -> None:
-        """Initialize DNS manager"""        try:
+        """Initialize DNS manager"""
+        try:
             logger.info("Initializing DNS Manager...")
             
             # Load configuration
@@ -223,7 +235,8 @@ class DNSManager:
             raise
     
     async def create_dns_zone(self, zone: DNSZone) -> bool:
-        """Create new DNS zone"""        try:
+        """Create new DNS zone"""
+        try:
             logger.info(f"Creating DNS zone: {zone.domain}")
             
             # Validate zone configuration
@@ -270,7 +283,8 @@ class DNSManager:
             return False
     
     async def delete_dns_zone(self, zone_name: str) -> bool:
-        """Delete DNS zone"""        try:
+        """Delete DNS zone"""
+        try:
             if zone_name not in self.zones:
                 logger.error(f"DNS zone not found: {zone_name}")
                 return False
@@ -306,7 +320,8 @@ class DNSManager:
             return False
     
     async def add_dns_record(self, zone_name: str, record: DNSRecord) -> bool:
-        """Add DNS record to zone"""        try:
+        """Add DNS record to zone"""
+        try:
             if zone_name not in self.zones:
                 logger.error(f"DNS zone not found: {zone_name}")
                 return False
@@ -350,7 +365,8 @@ class DNSManager:
             return False
     
     async def remove_dns_record(self, zone_name: str, record_name: str, record_type: DNSRecordType) -> bool:
-        """Remove DNS record from zone"""        try:
+        """Remove DNS record from zone"""
+        try:
             if zone_name not in self.zones:
                 logger.error(f"DNS zone not found: {zone_name}")
                 return False
@@ -401,7 +417,8 @@ class DNSManager:
             return False
     
     async def create_health_check(self, zone_name: str, health_check: HealthCheck) -> bool:
-        """Create DNS health check"""        try:
+        """Create DNS health check"""
+        try:
             if zone_name not in self.zones:
                 logger.error(f"DNS zone not found: {zone_name}")
                 return False
@@ -434,7 +451,8 @@ class DNSManager:
             return False
     
     async def setup_dns_failover(self, config: DNSFailoverConfiguration) -> bool:
-        """Setup DNS failover configuration"""        try:
+        """Setup DNS failover configuration"""
+        try:
             logger.info(f"Setting up DNS failover: {config.name}")
             
             # Store configuration
@@ -487,7 +505,8 @@ class DNSManager:
             return False
     
     async def setup_geo_dns(self, config: GeoDNSConfiguration) -> bool:
-        """Setup geographic DNS routing"""        try:
+        """Setup geographic DNS routing"""
+        try:
             logger.info(f"Setting up Geo DNS: {config.name}")
             
             # Store configuration
@@ -523,7 +542,8 @@ class DNSManager:
             return False
     
     async def query_dns_record(self, name: str, record_type: DNSRecordType) -> List[str]:
-        """Query DNS record"""        try:
+        """Query DNS record"""
+        try:
             start_time = datetime.now()
             
             # Perform DNS query
@@ -550,7 +570,8 @@ class DNSManager:
             return []
     
     async def get_dns_status(self) -> Dict[str, Any]:
-        """Get comprehensive DNS status"""        try:
+        """Get comprehensive DNS status"""
+        try:
             status = {
                 'total_zones': len(self.zones),
                 'total_records': sum(len(zone.records) for zone in self.zones.values()),
@@ -591,7 +612,8 @@ class DNSManager:
     # Private methods
     
     def _initialize_providers(self) -> None:
-        """Initialize DNS provider clients"""        try:
+        """Initialize DNS provider clients"""
+        try:
             # AWS Route 53
             if 'aws' in self.provider_credentials:
                 self.provider_clients['aws'] = boto3.Session(
@@ -622,7 +644,8 @@ class DNSManager:
             logger.error(f"Failed to initialize providers: {e}")
     
     async def _load_configuration(self) -> None:
-        """Load DNS configuration"""        try:
+        """Load DNS configuration"""
+        try:
             with open(self.config_path, 'r') as f:
                 config_data = yaml.safe_load(f)
             
@@ -650,7 +673,8 @@ class DNSManager:
             logger.error(f"Failed to load configuration: {e}")
     
     async def _validate_zone_configuration(self, zone: DNSZone) -> bool:
-        """Validate DNS zone configuration"""        # Validate domain name
+        """Validate DNS zone configuration"""
+        # Validate domain name
         domain_pattern = re.compile(
             r'^(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$'
         )
@@ -666,7 +690,8 @@ class DNSManager:
         return True
     
     async def _validate_dns_record(self, record: DNSRecord, zone: DNSZone) -> bool:
-        """Validate DNS record"""        # Validate record name
+        """Validate DNS record"""
+        # Validate record name
         if not record.name:
             logger.error("Record name is required")
             return False

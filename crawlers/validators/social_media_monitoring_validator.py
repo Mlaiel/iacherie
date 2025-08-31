@@ -21,7 +21,8 @@ Features:
 - Influencer collaboration opportunity detection
 - Brand mention monitoring and reputation management
 - Content performance prediction and optimization
-"""import re
+"""
+import re
 import json
 import hashlib
 from enum import Enum
@@ -73,13 +74,15 @@ logger = logging.getLogger(__name__)
 
 
 class MockSocialClient:
-    """Mock social media client for development and fallback scenarios"""    
+    """Mock social media client for development and fallback scenarios"""
+    
     def __init__(self, platform: 'SocialPlatform'):
         self.platform = platform
         self.platform_name = platform.value
     
     def get_user_info(self, user_id: str) -> Dict[str, Any]:
-        """Mock user info retrieval"""        return {
+        """Mock user info retrieval"""
+        return {
             "id": user_id,
             "username": f"user_{user_id}",
             "followers": 1000,
@@ -89,7 +92,8 @@ class MockSocialClient:
         }
     
     def get_recent_posts(self, user_id: str, count: int = 10) -> List[Dict[str, Any]]:
-        """Mock recent posts retrieval"""        posts = []
+        """Mock recent posts retrieval"""
+        posts = []
         for i in range(count):
             posts.append({
                 "id": f"post_{i}",
@@ -104,7 +108,8 @@ class MockSocialClient:
         return posts
     
     def search_content(self, query: str, count: int = 20) -> List[Dict[str, Any]]:
-        """Mock content search"""        return [{
+        """Mock content search"""
+        return [{
             "id": f"search_result_{i}",
             "content": f"Search result for '{query}' - {i}",
             "user_id": f"user_{i}",
@@ -115,7 +120,8 @@ class MockSocialClient:
 
 
 class SocialPlatform(Enum):
-    """Supported social media platforms"""    YOUTUBE = "youtube"
+    """Supported social media platforms"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -128,7 +134,8 @@ class SocialPlatform(Enum):
 
 
 class ContentCategory(Enum):
-    """Content categories for monitoring"""    MUSIC = "music"
+    """Content categories for monitoring"""
+    MUSIC = "music"
     LIFESTYLE = "lifestyle"
     GAMING = "gaming"
     BEAUTY = "beauty"
@@ -143,7 +150,8 @@ class ContentCategory(Enum):
 
 
 class MonitoringType(Enum):
-    """Types of monitoring activities"""    ENGAGEMENT_TRACKING = "engagement_tracking"
+    """Types of monitoring activities"""
+    ENGAGEMENT_TRACKING = "engagement_tracking"
     TREND_ANALYSIS = "trend_analysis"
     COMPETITOR_MONITORING = "competitor_monitoring"
     HASHTAG_PERFORMANCE = "hashtag_performance"
@@ -154,7 +162,8 @@ class MonitoringType(Enum):
 
 
 class EngagementMetric(Enum):
-    """Engagement metrics to track"""    LIKES = "likes"
+    """Engagement metrics to track"""
+    LIKES = "likes"
     COMMENTS = "comments"
     SHARES = "shares"
     SAVES = "saves"
@@ -167,7 +176,8 @@ class EngagementMetric(Enum):
 
 
 class TrendStrength(Enum):
-    """Trend strength levels"""    WEAK = "weak"
+    """Trend strength levels"""
+    WEAK = "weak"
     MODERATE = "moderate"
     STRONG = "strong"
     VIRAL = "viral"
@@ -176,7 +186,8 @@ class TrendStrength(Enum):
 
 @dataclass
 class SocialMediaPost:
-    """Represents a social media post for monitoring"""    post_id: str
+    """Represents a social media post for monitoring"""
+    post_id: str
     platform: SocialPlatform
     creator_id: str
     content_text: Optional[str] = None
@@ -195,7 +206,8 @@ class SocialMediaPost:
 
 @dataclass
 class TrendAnalysis:
-    """Represents trend analysis results"""    trend_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Represents trend analysis results"""
+    trend_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     platform: SocialPlatform
     trend_topic: str
     trend_strength: TrendStrength
@@ -214,7 +226,8 @@ class TrendAnalysis:
 
 @dataclass
 class CompetitorAnalysis:
-    """Competitor analysis results"""    analysis_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Competitor analysis results"""
+    analysis_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     competitor_id: str
     platform: SocialPlatform
     analysis_period: timedelta
@@ -233,7 +246,8 @@ class CompetitorAnalysis:
 
 @dataclass
 class EngagementValidationResult:
-    """Engagement validation result"""    validation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Engagement validation result"""
+    validation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str
     platform: SocialPlatform
     validation_timestamp: datetime = field(default_factory=datetime.utcnow)
@@ -250,7 +264,8 @@ class EngagementValidationResult:
 
 @dataclass
 class MonitoringValidationResult:
-    """Social media monitoring validation result"""    validation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Social media monitoring validation result"""
+    validation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str
     monitoring_types: List[MonitoringType]
     validation_timestamp: datetime = field(default_factory=datetime.utcnow)
@@ -269,11 +284,13 @@ class MonitoringValidationResult:
 
 
 class SocialMediaMonitoringValidator:
-    """    Advanced social media monitoring validator for content creators.
+    """
+    Advanced social media monitoring validator for content creators.
     
     Provides comprehensive monitoring, analysis, and validation across
     multiple social media platforms with real-time insights and optimization.
-    """    
+    """
+    
     def __init__(
         self,
         monitoring_interval_hours: int = 6,
@@ -282,7 +299,8 @@ class SocialMediaMonitoringValidator:
         cache_size: int = 5000,
         supported_platforms: Optional[List[SocialPlatform]] = None
     ):
-        """        Initialize social media monitoring validator.
+        """
+        Initialize social media monitoring validator.
         
         Args:
             monitoring_interval_hours: Hours between monitoring cycles
@@ -290,7 +308,8 @@ class SocialMediaMonitoringValidator:
             enable_analytics: Enable advanced analytics
             cache_size: Size of monitoring cache
             supported_platforms: List of supported platforms
-        """        self.monitoring_interval_hours = monitoring_interval_hours
+        """
+        self.monitoring_interval_hours = monitoring_interval_hours
         self.enable_real_time_monitoring = enable_real_time_monitoring
         self.enable_analytics = enable_analytics and HAS_ANALYTICS_DEPENDENCIES
         self.cache_size = cache_size
@@ -323,7 +342,8 @@ class SocialMediaMonitoringValidator:
         logger.info("SocialMediaMonitoringValidator initialized successfully")
     
     def _initialize_analytics_components(self) -> None:
-        """Initialize analytics and ML components"""        try:
+        """Initialize analytics and ML components"""
+        try:
             if HAS_ANALYTICS_DEPENDENCIES:
                 # Text analysis
                 self.tfidf_vectorizer = TfidfVectorizer(
@@ -345,7 +365,8 @@ class SocialMediaMonitoringValidator:
             self.enable_analytics = False
     
     def _initialize_api_clients(self) -> Dict[SocialPlatform, Any]:
-        """Initialize professional social media API clients with proper authentication"""        clients = {}
+        """Initialize professional social media API clients with proper authentication"""
+        clients = {}
         
         try:
             # Twitter/X API client
@@ -419,7 +440,8 @@ class SocialMediaMonitoringValidator:
             return {platform: MockSocialClient(platform) for platform in self.supported_platforms}
     
     def _initialize_monitoring_rules(self) -> Dict[str, Any]:
-        """Initialize monitoring rules and thresholds"""        return {
+        """Initialize monitoring rules and thresholds"""
+        return {
             "engagement_thresholds": {
                 SocialPlatform.YOUTUBE: {"min_rate": 0.02, "excellent_rate": 0.06},
                 SocialPlatform.INSTAGRAM: {"min_rate": 0.03, "excellent_rate": 0.08},
@@ -450,7 +472,8 @@ class SocialMediaMonitoringValidator:
         monitoring_types: List[MonitoringType],
         time_range_hours: int = 24
     ) -> MonitoringValidationResult:
-        """        Perform comprehensive social media monitoring across platforms.
+        """
+        Perform comprehensive social media monitoring across platforms.
         
         Args:
             creator_id: Creator identifier
@@ -460,7 +483,8 @@ class SocialMediaMonitoringValidator:
             
         Returns:
             MonitoringValidationResult with comprehensive insights
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         
         try:
             result = MonitoringValidationResult(
@@ -547,7 +571,8 @@ class SocialMediaMonitoringValidator:
         monitoring_types: List[MonitoringType],
         time_range_hours: int
     ) -> Dict[str, Any]:
-        """Monitor specific platform for creator"""        platform_data = {
+        """Monitor specific platform for creator"""
+        platform_data = {
             "platform": platform.value,
             "posts": [],
             "engagement_metrics": {},
@@ -590,7 +615,8 @@ class SocialMediaMonitoringValidator:
         platform: SocialPlatform,
         time_range_hours: int
     ) -> List[SocialMediaPost]:
-        """Fetch recent posts from platform using professional API integration"""        # Professional implementation using actual API calls
+        """Fetch recent posts from platform using professional API integration"""
+        # Professional implementation using actual API calls
         return self._fetch_posts_with_api_client(creator_id, platform, time_range_hours)
         
         # Generate sample posts for demonstration
@@ -621,7 +647,8 @@ class SocialMediaMonitoringValidator:
         posts: List[SocialMediaPost],
         platform: SocialPlatform
     ) -> Dict[str, float]:
-        """Calculate engagement metrics for platform"""        if not posts:
+        """Calculate engagement metrics for platform"""
+        if not posts:
             return {}
         
         total_engagement = 0
@@ -654,7 +681,8 @@ class SocialMediaMonitoringValidator:
         platforms: List[SocialPlatform],
         time_range_hours: int
     ) -> EngagementValidationResult:
-        """Validate engagement performance across platforms"""        result = EngagementValidationResult(
+        """Validate engagement performance across platforms"""
+        result = EngagementValidationResult(
             creator_id=creator_id,
             platform=platforms[0] if platforms else SocialPlatform.INSTAGRAM  # Primary platform
         )
@@ -716,7 +744,8 @@ class SocialMediaMonitoringValidator:
         platforms: List[SocialPlatform],
         time_range_hours: int
     ) -> List[TrendAnalysis]:
-        """Analyze trends across platforms"""        trends = []
+        """Analyze trends across platforms"""
+        trends = []
         
         try:
             for platform in platforms:
@@ -737,7 +766,8 @@ class SocialMediaMonitoringValidator:
         platform: SocialPlatform,
         time_range_hours: int
     ) -> List[TrendAnalysis]:
-        """Detect trends for specific platform"""        trends = []
+        """Detect trends for specific platform"""
+        trends = []
         
         try:
             # Sample trend detection (would use actual API data)
@@ -788,7 +818,8 @@ class SocialMediaMonitoringValidator:
         platforms: List[SocialPlatform],
         time_range_hours: int
     ) -> List[CompetitorAnalysis]:
-        """Analyze competitors across platforms"""        competitor_analyses = []
+        """Analyze competitors across platforms"""
+        competitor_analyses = []
         
         try:
             for platform in platforms:
@@ -811,7 +842,8 @@ class SocialMediaMonitoringValidator:
         creator_id: str,
         platform: SocialPlatform
     ) -> List[str]:
-        """Get list of competitors for platform"""        # Placeholder - would use actual competitor identification logic
+        """Get list of competitors for platform"""
+        # Placeholder - would use actual competitor identification logic
         return [f"competitor_{i}_{platform.value}" for i in range(5)]
     
     def _analyze_single_competitor(
@@ -821,7 +853,8 @@ class SocialMediaMonitoringValidator:
         platform: SocialPlatform,
         time_range_hours: int
     ) -> CompetitorAnalysis:
-        """Analyze single competitor"""        analysis = CompetitorAnalysis(
+        """Analyze single competitor"""
+        analysis = CompetitorAnalysis(
             competitor_id=competitor_id,
             platform=platform,
             analysis_period=timedelta(hours=time_range_hours)
@@ -867,7 +900,8 @@ class SocialMediaMonitoringValidator:
         platforms: List[SocialPlatform],
         time_range_hours: int
     ) -> Dict[str, Any]:
-        """Monitor brand mentions across platforms"""        mentions_data = {
+        """Monitor brand mentions across platforms"""
+        mentions_data = {
             "total_mentions": 0,
             "sentiment_breakdown": {"positive": 0, "neutral": 0, "negative": 0},
             "platform_breakdown": {},
@@ -899,7 +933,8 @@ class SocialMediaMonitoringValidator:
         platform: SocialPlatform,
         time_range_hours: int
     ) -> List[Dict[str, Any]]:
-        """Get brand mentions for specific platform"""        # Placeholder - would use actual API to search for mentions
+        """Get brand mentions for specific platform"""
+        # Placeholder - would use actual API to search for mentions
         mentions = []
         
         for i in range(10):  # Sample mentions
@@ -915,7 +950,8 @@ class SocialMediaMonitoringValidator:
         return mentions
     
     def _analyze_mention_sentiment(self, mention: Dict[str, Any]) -> str:
-        """Analyze sentiment of a brand mention"""        if self.enable_analytics and hasattr(self, 'sentiment_analyzer'):
+        """Analyze sentiment of a brand mention"""
+        if self.enable_analytics and hasattr(self, 'sentiment_analyzer'):
             try:
                 content = mention.get("content", "")
                 scores = self.sentiment_analyzer.polarity_scores(content)
@@ -951,7 +987,8 @@ class SocialMediaMonitoringValidator:
         platforms: List[SocialPlatform],
         time_range_hours: int
     ) -> Dict[str, float]:
-        """Analyze overall audience sentiment"""        sentiment_analysis = {
+        """Analyze overall audience sentiment"""
+        sentiment_analysis = {
             "overall_sentiment": 0.0,
             "platform_sentiments": {},
             "trend": "stable",
@@ -986,7 +1023,8 @@ class SocialMediaMonitoringValidator:
             return sentiment_analysis
     
     def _calculate_platform_sentiment(self, posts: List[SocialMediaPost]) -> float:
-        """Calculate sentiment for platform posts"""        if not posts:
+        """Calculate sentiment for platform posts"""
+        if not posts:
             return 0.0
         
         sentiments = []
@@ -1012,7 +1050,8 @@ class SocialMediaMonitoringValidator:
         creator_id: str,
         platforms: List[SocialPlatform]
     ) -> List[Dict[str, Any]]:
-        """Identify potential collaboration opportunities"""        opportunities = []
+        """Identify potential collaboration opportunities"""
+        opportunities = []
         
         try:
             for platform in platforms:
@@ -1035,7 +1074,8 @@ class SocialMediaMonitoringValidator:
         creator_id: str,
         platform: SocialPlatform
     ) -> List[Dict[str, Any]]:
-        """Get collaboration opportunities for specific platform"""        opportunities = []
+        """Get collaboration opportunities for specific platform"""
+        opportunities = []
         
         # Sample collaboration opportunities
         sample_opportunities = [
@@ -1069,7 +1109,8 @@ class SocialMediaMonitoringValidator:
         platforms: List[SocialPlatform],
         time_range_hours: int
     ) -> Dict[str, Any]:
-        """Analyze content performance insights"""        performance_insights = {
+        """Analyze content performance insights"""
+        performance_insights = {
             "top_performing_content": [],
             "content_categories_performance": {},
             "optimal_posting_times": {},
@@ -1104,7 +1145,8 @@ class SocialMediaMonitoringValidator:
             return performance_insights
     
     def _get_top_performing_content(self, posts: List[SocialMediaPost]) -> List[Dict[str, Any]]:
-        """Get top performing content"""        scored_posts = []
+        """Get top performing content"""
+        scored_posts = []
         
         for post in posts:
             engagement_score = (
@@ -1128,7 +1170,8 @@ class SocialMediaMonitoringValidator:
         return scored_posts[:5]  # Return top 5
     
     def _analyze_content_categories(self, posts: List[SocialMediaPost]) -> Dict[str, Any]:
-        """Analyze performance by content category"""        category_performance = {}
+        """Analyze performance by content category"""
+        category_performance = {}
         
         for post in posts:
             category = post.content_category.value if post.content_category else "general"
@@ -1160,7 +1203,8 @@ class SocialMediaMonitoringValidator:
         return category_performance
     
     def _analyze_posting_times(self, posts: List[SocialMediaPost]) -> Dict[str, Any]:
-        """Analyze optimal posting times"""        hour_performance = defaultdict(list)
+        """Analyze optimal posting times"""
+        hour_performance = defaultdict(list)
         
         for post in posts:
             hour = post.timestamp.hour
@@ -1186,7 +1230,8 @@ class SocialMediaMonitoringValidator:
         }
     
     def _analyze_hashtag_performance(self, posts: List[SocialMediaPost]) -> Dict[str, Any]:
-        """Analyze hashtag performance"""        hashtag_performance = defaultdict(list)
+        """Analyze hashtag performance"""
+        hashtag_performance = defaultdict(list)
         
         for post in posts:
             engagement = sum([
@@ -1220,7 +1265,8 @@ class SocialMediaMonitoringValidator:
     
     # Helper methods for validation and scoring
     def _get_benchmark_engagement_rate(self, platforms: List[SocialPlatform]) -> float:
-        """Get benchmark engagement rate for platforms"""        benchmarks = {
+        """Get benchmark engagement rate for platforms"""
+        benchmarks = {
             SocialPlatform.INSTAGRAM: 0.045,
             SocialPlatform.TIKTOK: 0.08,
             SocialPlatform.YOUTUBE: 0.03,
@@ -1239,7 +1285,8 @@ class SocialMediaMonitoringValidator:
         creator_id: str,
         platforms: List[SocialPlatform]
     ) -> str:
-        """Analyze engagement trend direction"""        # Simplified trend analysis
+        """Analyze engagement trend direction"""
+        # Simplified trend analysis
         recent_posts = []
         for platform in platforms:
             platform_posts = [p for p in self.monitoring_data[creator_id] if p.platform == platform]
@@ -1274,7 +1321,8 @@ class SocialMediaMonitoringValidator:
         creator_id: str,
         platforms: List[SocialPlatform]
     ) -> List[str]:
-        """Detect engagement anomalies"""        anomalies = []
+        """Detect engagement anomalies"""
+        anomalies = []
         
         for platform in platforms:
             posts = [p for p in self.monitoring_data[creator_id] if p.platform == platform]
@@ -1307,7 +1355,8 @@ class SocialMediaMonitoringValidator:
         self,
         result: EngagementValidationResult
     ) -> List[str]:
-        """Generate engagement optimization recommendations"""        optimizations = []
+        """Generate engagement optimization recommendations"""
+        optimizations = []
         
         if result.performance_score < 0.8:
             optimizations.append("Focus on improving content quality and relevance")
@@ -1334,7 +1383,8 @@ class SocialMediaMonitoringValidator:
         platforms: List[SocialPlatform],
         days_ahead: int
     ) -> float:
-        """Predict engagement trend for future period"""        # Simplified prediction - would use ML models in production
+        """Predict engagement trend for future period"""
+        # Simplified prediction - would use ML models in production
         current_rates = []
         
         for platform in platforms:
@@ -1367,7 +1417,8 @@ class SocialMediaMonitoringValidator:
         return 0.03  # Default prediction
     
     def _identify_engagement_risks(self, result: EngagementValidationResult) -> List[str]:
-        """Identify engagement risks"""        risks = []
+        """Identify engagement risks"""
+        risks = []
         
         if result.performance_score < 0.5:
             risks.append("Low engagement rate may affect algorithm visibility")
@@ -1384,7 +1435,8 @@ class SocialMediaMonitoringValidator:
         return risks
     
     def _identify_growth_opportunities(self, result: EngagementValidationResult) -> List[str]:
-        """Identify growth opportunities"""        opportunities = []
+        """Identify growth opportunities"""
+        opportunities = []
         
         if result.performance_score > 0.8:
             opportunities.append("High engagement rate - consider increasing posting frequency")
@@ -1402,7 +1454,8 @@ class SocialMediaMonitoringValidator:
         return opportunities[:5]
     
     def _calculate_overall_health_score(self, result: MonitoringValidationResult) -> float:
-        """Calculate overall social media health score"""        scores = []
+        """Calculate overall social media health score"""
+        scores = []
         
         # Engagement score
         if result.engagement_validation:
@@ -1427,7 +1480,8 @@ class SocialMediaMonitoringValidator:
         return sum(scores) / len(scores) if scores else 0.5
     
     def _generate_monitoring_recommendations(self, result: MonitoringValidationResult) -> List[str]:
-        """Generate comprehensive monitoring recommendations"""        recommendations = []
+        """Generate comprehensive monitoring recommendations"""
+        recommendations = []
         
         # Engagement recommendations
         if result.engagement_validation and result.engagement_validation.performance_score < 0.7:
@@ -1464,7 +1518,8 @@ class SocialMediaMonitoringValidator:
         return recommendations[:8]  # Return top 8 recommendations
     
     def _generate_alerts(self, result: MonitoringValidationResult) -> List[str]:
-        """Generate monitoring alerts"""        alerts = []
+        """Generate monitoring alerts"""
+        alerts = []
         
         # Engagement alerts
         if result.engagement_validation:
@@ -1493,7 +1548,8 @@ class SocialMediaMonitoringValidator:
         return alerts
     
     def get_monitoring_metrics(self) -> Dict[str, Any]:
-        """Get monitoring performance metrics"""        return {
+        """Get monitoring performance metrics"""
+        return {
             "total_posts_monitored": self.monitoring_metrics["total_posts_monitored"],
             "trends_detected": self.monitoring_metrics["trends_detected"],
             "alerts_generated": self.monitoring_metrics["alerts_generated"],
@@ -1507,7 +1563,8 @@ class SocialMediaMonitoringValidator:
         }
     
     def _fetch_recent_posts_via_api(self, creator_id: str, platform: SocialPlatform, time_range_hours: int) -> List[SocialMediaPost]:
-        """Fetch recent posts using professional API integration"""        try:
+        """Fetch recent posts using professional API integration"""
+        try:
             posts = []
             client = self.api_clients.get(platform)
             
@@ -1543,7 +1600,8 @@ class SocialMediaMonitoringValidator:
             return self._generate_mock_posts(creator_id, platform, 5)
     
     def _fetch_posts_with_api_client(self, creator_id: str, platform: SocialPlatform, time_range_hours: int) -> List[SocialMediaPost]:
-        """Fetch posts using API client with comprehensive error handling"""        try:
+        """Fetch posts using API client with comprehensive error handling"""
+        try:
             client = self.api_clients.get(platform)
             
             if not client:
@@ -1584,7 +1642,8 @@ class SocialMediaMonitoringValidator:
             return self._generate_mock_posts(creator_id, platform, 5)
     
     def _comprehensive_engagement_analysis(self, posts: List[SocialMediaPost], platform: SocialPlatform) -> float:
-        """Comprehensive engagement analysis using ML algorithms"""        try:
+        """Comprehensive engagement analysis using ML algorithms"""
+        try:
             if not posts:
                 return 0.0
             
@@ -1646,7 +1705,8 @@ class SocialMediaMonitoringValidator:
             return 0.05  # Default low engagement
     
     def _generate_mock_posts(self, creator_id: str, platform: SocialPlatform, count: int) -> List[SocialMediaPost]:
-        """Generate mock posts for development and fallback scenarios"""        posts = []
+        """Generate mock posts for development and fallback scenarios"""
+        posts = []
         base_time = datetime.utcnow()
         
         for i in range(count):
@@ -1671,19 +1731,22 @@ class SocialMediaMonitoringValidator:
         return posts
     
     def _extract_hashtags(self, content: str) -> List[str]:
-        """Extract hashtags from content"""        import re
+        """Extract hashtags from content"""
+        import re
         hashtag_pattern = r'#(\w+)'
         hashtags = re.findall(hashtag_pattern, content)
         return [f"#{tag}" for tag in hashtags]
     
     def _extract_mentions(self, content: str) -> List[str]:
-        """Extract mentions from content"""        import re
+        """Extract mentions from content"""
+        import re
         mention_pattern = r'@(\w+)'
         mentions = re.findall(mention_pattern, content)
         return [f"@{mention}" for mention in mentions]
     
     def _convert_twitter_posts(self, tweets, creator_id: str) -> List[SocialMediaPost]:
-        """Convert Twitter API response to SocialMediaPost objects"""        posts = []
+        """Convert Twitter API response to SocialMediaPost objects"""
+        posts = []
         try:
             for tweet in tweets:
                 post = SocialMediaPost(
@@ -1709,7 +1772,8 @@ class SocialMediaMonitoringValidator:
         return posts
     
     def _fetch_youtube_videos(self, client, creator_id: str) -> List[SocialMediaPost]:
-        """Fetch YouTube videos using API client"""        posts = []
+        """Fetch YouTube videos using API client"""
+        posts = []
         try:
             # YouTube API call would go here
             # For now, return mock data
@@ -1719,7 +1783,8 @@ class SocialMediaMonitoringValidator:
             return self._generate_mock_posts(creator_id, SocialPlatform.YOUTUBE, 3)
     
     def _fetch_instagram_posts(self, client, creator_id: str) -> List[SocialMediaPost]:
-        """Fetch Instagram posts using API client"""        posts = []
+        """Fetch Instagram posts using API client"""
+        posts = []
         try:
             # Instagram API call would go here
             # For now, return mock data
@@ -1729,7 +1794,8 @@ class SocialMediaMonitoringValidator:
             return self._generate_mock_posts(creator_id, SocialPlatform.INSTAGRAM, 3)
     
     def _fetch_tiktok_videos(self, client, creator_id: str) -> List[SocialMediaPost]:
-        """Fetch TikTok videos using API client"""        posts = []
+        """Fetch TikTok videos using API client"""
+        posts = []
         try:
             # TikTok API call would go here
             # For now, return mock data
@@ -1745,7 +1811,8 @@ def create_social_media_monitoring_validator(
     enable_analytics: bool = True,
     supported_platforms: Optional[List[SocialPlatform]] = None
 ) -> SocialMediaMonitoringValidator:
-    """Create configured social media monitoring validator"""    return SocialMediaMonitoringValidator(
+    """Create configured social media monitoring validator"""
+    return SocialMediaMonitoringValidator(
         monitoring_interval_hours=monitoring_interval_hours,
         enable_real_time_monitoring=True,
         enable_analytics=enable_analytics,
@@ -1763,7 +1830,8 @@ def monitor_creator_social_media_comprehensive(
     platforms: List[SocialPlatform],
     monitoring_duration_hours: int = 24
 ) -> MonitoringValidationResult:
-    """    Comprehensive social media monitoring for creator.
+    """
+    Comprehensive social media monitoring for creator.
     
     Args:
         creator_id: Creator identifier
@@ -1772,7 +1840,8 @@ def monitor_creator_social_media_comprehensive(
         
     Returns:
         MonitoringValidationResult with comprehensive insights
-    """    validator = create_social_media_monitoring_validator()
+    """
+    validator = create_social_media_monitoring_validator()
     
     monitoring_types = [
         MonitoringType.ENGAGEMENT_TRACKING,
@@ -1794,4 +1863,5 @@ def monitor_creator_social_media_comprehensive(
 
 # Custom exceptions
 class MonitoringException(ValidationException):
-    """Social media monitoring specific exception"""    pass
+    """Social media monitoring specific exception"""
+    pass

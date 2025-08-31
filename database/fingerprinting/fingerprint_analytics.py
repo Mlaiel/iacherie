@@ -5,7 +5,8 @@ analysis, trend detection, and business intelligence capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import numpy as np
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options"""    HOUR = "hour"
+    """Analytics timeframe options"""
+    HOUR = "hour"
     DAY = "day"
     WEEK = "week"
     MONTH = "month"
@@ -45,7 +47,8 @@ class AnalyticsTimeframe(Enum):
 
 
 class MetricType(Enum):
-    """Types of metrics to analyze"""    CREATION_RATE = "creation_rate"
+    """Types of metrics to analyze"""
+    CREATION_RATE = "creation_rate"
     MATCH_RATE = "match_rate"
     QUALITY_DISTRIBUTION = "quality_distribution"
     CONTENT_TYPE_DISTRIBUTION = "content_type_distribution"
@@ -57,7 +60,8 @@ class MetricType(Enum):
 
 @dataclass
 class AnalyticsQuery:
-    """Configuration for analytics queries"""    timeframe: AnalyticsTimeframe
+    """Configuration for analytics queries"""
+    timeframe: AnalyticsTimeframe
     start_date: Optional[datetime] = None
     end_date: Optional[datetime] = None
     
@@ -101,7 +105,8 @@ class AnalyticsQuery:
 
 @dataclass
 class TrendAnalysis:
-    """Results of trend analysis"""    metric_name: str
+    """Results of trend analysis"""
+    metric_name: str
     timeframe: AnalyticsTimeframe
     trend_direction: str  # "increasing", "decreasing", "stable"
     trend_strength: float  # 0-1 scale
@@ -115,7 +120,8 @@ class TrendAnalysis:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""    query: AnalyticsQuery
+    """Comprehensive analytics report"""
+    query: AnalyticsQuery
     generated_at: datetime
     
     # Core metrics
@@ -138,7 +144,8 @@ class AnalyticsReport:
 
 
 class StatisticalAnalyzer:
-    """Statistical analysis component for fingerprint data"""    
+    """Statistical analysis component for fingerprint data"""
+    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.StatisticalAnalyzer")
     
@@ -147,7 +154,8 @@ class StatisticalAnalyzer:
         time_series: List[Tuple[datetime, float]],
         confidence_level: float = 0.95
     ) -> TrendAnalysis:
-        """Detect trends in time series data"""        try:
+        """Detect trends in time series data"""
+        try:
             if len(time_series) < 3:
                 return TrendAnalysis(
                     metric_name="unknown",
@@ -230,7 +238,8 @@ class StatisticalAnalyzer:
         self,
         metrics_data: Dict[str, List[float]]
     ) -> Dict[str, Dict[str, float]]:
-        """Calculate correlations between different metrics"""        try:
+        """Calculate correlations between different metrics"""
+        try:
             if len(metrics_data) < 2:
                 return {}
             
@@ -259,7 +268,8 @@ class StatisticalAnalyzer:
         time_series: List[Tuple[datetime, float]],
         period: int = 24  # Default to daily seasonality (24 hours)
     ) -> Optional[Dict[str, float]]:
-        """Detect seasonal patterns in time series data"""        try:
+        """Detect seasonal patterns in time series data"""
+        try:
             if len(time_series) < period * 2:
                 return None
             
@@ -283,7 +293,8 @@ class StatisticalAnalyzer:
         feature_data: np.ndarray,
         n_clusters: int = 5
     ) -> Dict[str, Any]:
-        """Perform cluster analysis on fingerprint features"""        try:
+        """Perform cluster analysis on fingerprint features"""
+        try:
             if len(feature_data) < n_clusters:
                 return {"error": "Insufficient data for clustering"}
             
@@ -321,9 +332,11 @@ class StatisticalAnalyzer:
 
 
 class FingerprintAnalyticsEngine:
-    """    Comprehensive analytics engine for fingerprint data with statistical analysis,
+    """
+    Comprehensive analytics engine for fingerprint data with statistical analysis,
     trend detection, and business intelligence capabilities.
-    """    
+    """
+    
     def __init__(self, db_manager: DatabaseManager):
         self.db_manager = db_manager
         self.statistical_analyzer = StatisticalAnalyzer()
@@ -335,14 +348,16 @@ class FingerprintAnalyticsEngine:
         self,
         query: AnalyticsQuery
     ) -> AnalyticsReport:
-        """        Generate comprehensive analytics report
+        """
+        Generate comprehensive analytics report
         
         Args:
             query: AnalyticsQuery with analysis parameters
             
         Returns:
             AnalyticsReport with all analytics results
-        """        start_time = datetime.now(timezone.utc)
+        """
+        start_time = datetime.now(timezone.utc)
         
         try:
             self.logger.info(f"Generating analytics report for timeframe: {query.timeframe}")
@@ -405,7 +420,8 @@ class FingerprintAnalyticsEngine:
         self,
         query: AnalyticsQuery
     ) -> Dict[str, Any]:
-        """Generate summary metrics for the specified timeframe"""        try:
+        """Generate summary metrics for the specified timeframe"""
+        try:
             async with self.db_manager.get_session() as session:
                 # Build base conditions
                 conditions = self._build_query_conditions(query)
@@ -486,7 +502,8 @@ class FingerprintAnalyticsEngine:
         self,
         query: AnalyticsQuery
     ) -> Dict[str, List[Dict[str, Any]]]:
-        """Generate time series data for requested metrics"""        try:
+        """Generate time series data for requested metrics"""
+        try:
             time_series_data = {}
             
             # Generate time intervals based on timeframe
@@ -529,7 +546,8 @@ class FingerprintAnalyticsEngine:
         self,
         query: AnalyticsQuery
     ) -> Dict[str, Dict[str, Any]]:
-        """Generate distribution data for various dimensions"""        try:
+        """Generate distribution data for various dimensions"""
+        try:
             distribution_data = {}
             
             async with self.db_manager.get_session() as session:
@@ -606,7 +624,8 @@ class FingerprintAnalyticsEngine:
         query: AnalyticsQuery,
         time_series_data: Dict[str, List[Dict[str, Any]]]
     ) -> List[TrendAnalysis]:
-        """Analyze trends in time series data"""        try:
+        """Analyze trends in time series data"""
+        try:
             trend_analyses = []
             
             for metric_name, data_points in time_series_data.items():
@@ -644,7 +663,8 @@ class FingerprintAnalyticsEngine:
         self,
         time_series_data: Dict[str, List[Dict[str, Any]]]
     ) -> Dict[str, Dict[str, float]]:
-        """Calculate correlations between different metrics"""        try:
+        """Calculate correlations between different metrics"""
+        try:
             if len(time_series_data) < 2:
                 return {}
             
@@ -683,7 +703,8 @@ class FingerprintAnalyticsEngine:
         query: AnalyticsQuery,
         time_series_data: Dict[str, List[Dict[str, Any]]]
     ) -> Dict[str, Any]:
-        """Generate predictions based on historical data"""        try:
+        """Generate predictions based on historical data"""
+        try:
             predictions = {}
             
             for metric_name, data_points in time_series_data.items():
@@ -741,7 +762,8 @@ class FingerprintAnalyticsEngine:
         self,
         report: AnalyticsReport
     ) -> List[Dict[str, Any]]:
-        """Generate insights based on analytics results"""        try:
+        """Generate insights based on analytics results"""
+        try:
             insights = []
             
             # Analyze summary metrics for insights
@@ -818,7 +840,8 @@ class FingerprintAnalyticsEngine:
         self,
         report: AnalyticsReport
     ) -> List[Dict[str, Any]]:
-        """Generate actionable recommendations based on analytics"""        try:
+        """Generate actionable recommendations based on analytics"""
+        try:
             recommendations = []
             
             # Quality-based recommendations
@@ -899,7 +922,8 @@ class FingerprintAnalyticsEngine:
         self,
         query: AnalyticsQuery
     ) -> float:
-        """Calculate overall data quality score"""        try:
+        """Calculate overall data quality score"""
+        try:
             async with self.db_manager.get_session() as session:
                 conditions = self._build_query_conditions(query)
                 
@@ -991,7 +1015,8 @@ class FingerprintAnalyticsEngine:
     # Helper methods
     
     def _build_query_conditions(self, query: AnalyticsQuery) -> List:
-        """Build query conditions from AnalyticsQuery"""        conditions = []
+        """Build query conditions from AnalyticsQuery"""
+        conditions = []
         
         if query.start_date:
             conditions.append(FingerprintStorageModel.created_at >= query.start_date)
@@ -1011,7 +1036,8 @@ class FingerprintAnalyticsEngine:
         return conditions
     
     def _generate_time_intervals(self, query: AnalyticsQuery) -> List[Tuple[datetime, datetime]]:
-        """Generate time intervals for time series analysis"""        intervals = []
+        """Generate time intervals for time series analysis"""
+        intervals = []
         
         if not query.start_date or not query.end_date:
             return intervals
@@ -1041,7 +1067,8 @@ class FingerprintAnalyticsEngine:
         query: AnalyticsQuery,
         intervals: List[Tuple[datetime, datetime]]
     ) -> List[Dict[str, Any]]:
-        """Get creation rate time series data"""        series_data = []
+        """Get creation rate time series data"""
+        series_data = []
         
         for start_time, end_time in intervals:
             conditions = self._build_query_conditions(query)
@@ -1069,7 +1096,8 @@ class FingerprintAnalyticsEngine:
         query: AnalyticsQuery,
         intervals: List[Tuple[datetime, datetime]]
     ) -> List[Dict[str, Any]]:
-        """Get match rate time series data"""        series_data = []
+        """Get match rate time series data"""
+        series_data = []
         
         for start_time, end_time in intervals:
             match_query = select(func.count()).select_from(FingerprintMatchModel).where(
@@ -1097,7 +1125,8 @@ class FingerprintAnalyticsEngine:
         query: AnalyticsQuery,
         intervals: List[Tuple[datetime, datetime]]
     ) -> List[Dict[str, Any]]:
-        """Get average quality time series data"""        series_data = []
+        """Get average quality time series data"""
+        series_data = []
         
         for start_time, end_time in intervals:
             conditions = self._build_query_conditions(query)
@@ -1125,7 +1154,8 @@ class FingerprintAnalyticsEngine:
         query: AnalyticsQuery,
         intervals: List[Tuple[datetime, datetime]]
     ) -> List[Dict[str, Any]]:
-        """Get storage usage time series data"""        series_data = []
+        """Get storage usage time series data"""
+        series_data = []
         
         for start_time, end_time in intervals:
             conditions = self._build_query_conditions(query)
@@ -1153,7 +1183,8 @@ class FingerprintAnalyticsEngine:
         query: AnalyticsQuery,
         intervals: List[Tuple[datetime, datetime]]
     ) -> List[Dict[str, Any]]:
-        """Get user activity time series data"""        series_data = []
+        """Get user activity time series data"""
+        series_data = []
         
         for start_time, end_time in intervals:
             conditions = self._build_query_conditions(query)
@@ -1180,7 +1211,8 @@ class FingerprintAnalyticsEngine:
         session: AsyncSession,
         conditions: List
     ) -> Dict[str, int]:
-        """Get confidence score distribution in buckets"""        # Define confidence buckets
+        """Get confidence score distribution in buckets"""
+        # Define confidence buckets
         buckets = {
             '0.0-0.2': 0,
             '0.2-0.4': 0,
@@ -1213,7 +1245,8 @@ class FingerprintAnalyticsEngine:
         return buckets
     
     def _bucket_user_activity(self, user_activity: Dict[str, int]) -> Dict[str, int]:
-        """Bucket user activity into ranges"""        buckets = {
+        """Bucket user activity into ranges"""
+        buckets = {
             '1-5': 0,
             '6-20': 0,
             '21-50': 0,
@@ -1236,7 +1269,8 @@ class FingerprintAnalyticsEngine:
         return buckets
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on analytics engine"""        try:
+        """Perform health check on analytics engine"""
+        try:
             health = {
                 "status": "healthy",
                 "components": {},

@@ -127,11 +127,13 @@ __all__ = [
 ]
 
 def get_module_info() -> Dict[str, Any]:
-    """    Get comprehensive module information
+    """
+    Get comprehensive module information
     
     Returns:
         Dict containing module metadata and capabilities
-    """    return {
+    """
+    return {
         "name": MODULE_NAME,
         "version": __version__,
         "author": __author__,
@@ -169,11 +171,13 @@ def get_module_info() -> Dict[str, Any]:
     }
 
 def get_expert_team_info() -> Dict[str, str]:
-    """    Get expert team specialization information
+    """
+    Get expert team specialization information
     
     Returns:
         Dict mapping expert roles to responsibilities
-    """    return {
+    """
+    return {
         "Lead Developer IA": "AI Architecture & Advanced Algorithms",
         "Backend Senior Engineer": "Enterprise Backend Systems",
         "ML Engineer": "Machine Learning Pipelines & Models",
@@ -186,11 +190,13 @@ def get_expert_team_info() -> Dict[str, str]:
     }
 
 async def create_influencer_ai_ecosystem() -> Dict[str, Any]:
-    """    Create complete Influencer AI ecosystem with all services
+    """
+    Create complete Influencer AI ecosystem with all services
     
     Returns:
         Dict containing all initialized services
-    """    try:
+    """
+    try:
         logger.info("🚀 Creating Influencer AI Ecosystem...")
         
         # Create all core services
@@ -212,11 +218,13 @@ async def create_influencer_ai_ecosystem() -> Dict[str, Any]:
         raise
 
 def validate_business_logic() -> bool:
-    """    Validate business logic compliance
+    """
+    Validate business logic compliance
     
     Returns:
         True if all validations pass
-    """    try:
+    """
+    try:
         # Check module structure
         required_modules = [
             "ai_assistant.py",

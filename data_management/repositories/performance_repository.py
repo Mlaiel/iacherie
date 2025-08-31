@@ -19,7 +19,8 @@ IA protection rights → Professional SEO → Collaboration matching → Multi-p
 PERFORMANCE REPOSITORY ARCHITECTURE:
 Metrics Collection → Data Aggregation → Trend Analysis → Predictive Modeling → 
 Performance Optimization → Benchmark Comparison → Alert Generation → Report Generation
-"""from typing import Dict, List, Optional, Any, Tuple, Union
+"""
+from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
 import json
@@ -37,7 +38,8 @@ from ..models.performance_model import (
 )
 
 class MetricCategory(Enum):
-    """Performance metric categories"""    SYSTEM_PERFORMANCE = "system_performance"
+    """Performance metric categories"""
+    SYSTEM_PERFORMANCE = "system_performance"
     USER_ENGAGEMENT = "user_engagement"
     CONTENT_PERFORMANCE = "content_performance"
     PLATFORM_METRICS = "platform_metrics"
@@ -47,14 +49,16 @@ class MetricCategory(Enum):
     COMPLIANCE_METRICS = "compliance_metrics"
 
 class AlertSeverity(Enum):
-    """Performance alert severity levels"""    INFO = "info"
+    """Performance alert severity levels"""
+    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 @dataclass
 class PerformanceSnapshot:
-    """Real-time performance snapshot"""    snapshot_id: str
+    """Real-time performance snapshot"""
+    snapshot_id: str
     timestamp: datetime
     metrics: Dict[str, float]
     system_health: float
@@ -63,7 +67,8 @@ class PerformanceSnapshot:
     recommendations_count: int
 
 class PerformanceRepository(BaseRepository[PerformanceMetric]):
-    """Professional performance repository with advanced analytics and optimization"""    
+    """Professional performance repository with advanced analytics and optimization"""
+    
     def __init__(self, db_session, cache_manager=None, vector_store=None, metrics_store=None):
         super().__init__(db_session, cache_manager, vector_store)
         self.model_class = PerformanceMetric
@@ -99,7 +104,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         metrics_data: Dict[str, Any],
         category: MetricCategory = MetricCategory.SYSTEM_PERFORMANCE
     ) -> List[PerformanceMetric]:
-        """Collect and store comprehensive performance metrics"""        try:
+        """Collect and store comprehensive performance metrics"""
+        try:
             collected_metrics = []
             timestamp = datetime.now(timezone.utc)
             
@@ -167,7 +173,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         time_period: timedelta = timedelta(days=7),
         granularity: str = "hourly"
     ) -> Dict[str, PerformanceTrend]:
-        """Analyze comprehensive performance trends with AI insights"""        try:
+        """Analyze comprehensive performance trends with AI insights"""
+        try:
             end_time = datetime.now(timezone.utc)
             start_time = end_time - time_period
             
@@ -244,7 +251,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         source_id: Optional[str] = None,
         severity_threshold: AlertSeverity = AlertSeverity.WARNING
     ) -> List[PerformanceAlert]:
-        """Generate intelligent performance alerts based on thresholds and ML"""        try:
+        """Generate intelligent performance alerts based on thresholds and ML"""
+        try:
             # Define search criteria
             search_criteria = {}
             if source_id:
@@ -313,7 +321,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         metric_types: List[str],
         benchmark_criteria: Dict[str, Any]
     ) -> BenchmarkComparison:
-        """Create comprehensive performance benchmark comparison"""        try:
+        """Create comprehensive performance benchmark comparison"""
+        try:
             # Generate benchmark ID
             benchmark_id = self._generate_benchmark_id(benchmark_name)
             
@@ -377,7 +386,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         optimization_goals: Dict[str, Any],
         constraint_parameters: Optional[Dict[str, Any]] = None
     ) -> List[OptimizationRecommendation]:
-        """Generate AI-powered performance optimization recommendations"""        try:
+        """Generate AI-powered performance optimization recommendations"""
+        try:
             # Analyze current performance state
             current_state = await self._analyze_current_performance_state(source_id)
             
@@ -452,7 +462,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         report_config: Dict[str, Any],
         time_period: timedelta = timedelta(days=30)
     ) -> PerformanceReport:
-        """Generate comprehensive performance report with insights"""        try:
+        """Generate comprehensive performance report with insights"""
+        try:
             # Parse report configuration
             source_ids = report_config.get('source_ids', [])
             metric_types = report_config.get('metric_types', [])
@@ -529,24 +540,29 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
     # Private helper methods
 
     def _generate_metric_id(self, source_id: str, metric_name: str, timestamp: datetime) -> str:
-        """Generate unique metric identifier"""        timestamp_str = timestamp.strftime("%Y%m%d%H%M%S")
+        """Generate unique metric identifier"""
+        timestamp_str = timestamp.strftime("%Y%m%d%H%M%S")
         return f"MET_{source_id[:8]}_{metric_name}_{timestamp_str}"
 
     def _generate_trend_id(self, source_id: str, metric_type: str) -> str:
-        """Generate unique trend identifier"""        timestamp = int(datetime.now(timezone.utc).timestamp())
+        """Generate unique trend identifier"""
+        timestamp = int(datetime.now(timezone.utc).timestamp())
         return f"TRD_{source_id[:8]}_{metric_type}_{timestamp}"
 
     def _generate_benchmark_id(self, benchmark_name: str) -> str:
-        """Generate unique benchmark identifier"""        timestamp = int(datetime.now(timezone.utc).timestamp())
+        """Generate unique benchmark identifier"""
+        timestamp = int(datetime.now(timezone.utc).timestamp())
         name_hash = hash(benchmark_name) % 10000
         return f"BMK_{name_hash:04d}_{timestamp}"
 
     def _generate_recommendation_id(self) -> str:
-        """Generate unique recommendation identifier"""        timestamp = int(datetime.now(timezone.utc).timestamp())
+        """Generate unique recommendation identifier"""
+        timestamp = int(datetime.now(timezone.utc).timestamp())
         return f"REC_{timestamp}_{hash(str(timestamp)) % 10000:04d}"
 
     def _generate_report_id(self, report_type: str) -> str:
-        """Generate unique report identifier"""        timestamp = int(datetime.now(timezone.utc).timestamp())
+        """Generate unique report identifier"""
+        timestamp = int(datetime.now(timezone.utc).timestamp())
         return f"RPT_{report_type.upper()}_{timestamp}"
 
     async def _validate_metric_data(
@@ -555,7 +571,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         metric_value: Any,
         category: MetricCategory
     ) -> Dict[str, Any]:
-        """Validate metric data"""        try:
+        """Validate metric data"""
+        try:
             # Check if value is numeric
             numeric_value = float(metric_value)
             
@@ -579,7 +596,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
             return {'valid': False, 'error': 'Non-numeric value'}
 
     def _determine_metric_unit(self, metric_name: str) -> str:
-        """Determine metric unit based on name"""        unit_mappings = {
+        """Determine metric unit based on name"""
+        unit_mappings = {
             'response_time': 'ms',
             'cpu_usage': '%',
             'memory_usage': '%',
@@ -599,7 +617,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         metric_name: str,
         current_value: float
     ) -> Dict[str, Any]:
-        """Calculate metric trend compared to historical data"""        # Get historical values (last 24 hours)
+        """Calculate metric trend compared to historical data"""
+        # Get historical values (last 24 hours)
         historical_metrics = await self.find_by_criteria({
             'source_id': source_id,
             'metric_name': metric_name,
@@ -635,7 +654,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         return {'direction': 'stable', 'percentage': 0.0}
 
     async def _evaluate_threshold_status(self, metric_name: str, metric_value: float) -> str:
-        """Evaluate metric against performance thresholds"""        thresholds = self.performance_thresholds.get(metric_name)
+        """Evaluate metric against performance thresholds"""
+        thresholds = self.performance_thresholds.get(metric_name)
         if not thresholds:
             return 'normal'
         
@@ -647,7 +667,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
             return 'normal'
 
     async def _cache_metric_data(self, metric: PerformanceMetric):
-        """Cache metric data for real-time access"""        if self.cache_manager:
+        """Cache metric data for real-time access"""
+        if self.cache_manager:
             cache_key = f"metric:{metric.source_id}:{metric.metric_name}"
             await self.cache_manager.set(
                 cache_key,
@@ -661,7 +682,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
             )
 
     async def _check_metric_alerts(self, metric: PerformanceMetric):
-        """Check if metric triggers any alerts"""        if metric.threshold_status in ['warning', 'critical']:
+        """Check if metric triggers any alerts"""
+        if metric.threshold_status in ['warning', 'critical']:
             # This would trigger alert generation
             self.logger.warning(
                 f"Metric alert: {metric.metric_name} = {metric.metric_value} "
@@ -674,7 +696,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         source_type: str,
         metrics: List[PerformanceMetric]
     ):
-        """Update aggregated metrics"""        # This would update aggregation tables for dashboards
+        """Update aggregated metrics"""
+        # This would update aggregation tables for dashboards
         self.logger.info(f"Updated aggregated metrics for {source_id}")
 
     async def _fetch_historical_metrics(
@@ -684,7 +707,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         start_time: datetime,
         end_time: datetime
     ) -> List[PerformanceMetric]:
-        """Fetch historical metrics for trend analysis"""        return await self.find_by_criteria({
+        """Fetch historical metrics for trend analysis"""
+        return await self.find_by_criteria({
             'source_id': source_id,
             'metric_name': metric_type,
             'timestamp__gte': start_time,
@@ -692,7 +716,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         })
 
     async def _calculate_trend_statistics(self, metrics: List[PerformanceMetric]) -> Dict[str, Any]:
-        """Calculate trend statistics"""        if not metrics:
+        """Calculate trend statistics"""
+        if not metrics:
             return {}
         
         values = [m.metric_value for m in metrics]
@@ -743,7 +768,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         metrics: List[PerformanceMetric],
         granularity: str
     ) -> Dict[str, Any]:
-        """Analyze seasonal patterns in metrics"""        # This would implement seasonal decomposition
+        """Analyze seasonal patterns in metrics"""
+        # This would implement seasonal decomposition
         return {
             'has_seasonal_pattern': True,
             'seasonal_strength': 0.3,
@@ -757,7 +783,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         metrics: List[PerformanceMetric],
         metric_type: str
     ) -> Dict[str, Any]:
-        """Generate performance predictions using ML"""        # This would use time series forecasting models
+        """Generate performance predictions using ML"""
+        # This would use time series forecasting models
         return {
             'next_hour': 85.5,
             'next_day': 82.3,
@@ -768,7 +795,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         }
 
     async def _detect_performance_anomalies(self, metrics: List[PerformanceMetric]) -> List[Dict[str, Any]]:
-        """Detect performance anomalies using statistical methods"""        anomalies = []
+        """Detect performance anomalies using statistical methods"""
+        anomalies = []
         
         if len(metrics) < 10:
             return anomalies
@@ -793,7 +821,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         return anomalies
 
     async def _store_trend_analysis(self, trend: PerformanceTrend):
-        """Store trend analysis"""        # This would store in trends table
+        """Store trend analysis"""
+        # This would store in trends table
         self.logger.info(f"Trend analysis stored: {trend.trend_id}")
 
     async def _analyze_metric_correlations(
@@ -801,7 +830,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         source_id: str,
         trends: Dict[str, PerformanceTrend]
     ) -> Dict[str, float]:
-        """Analyze correlations between different metrics"""        # This would calculate correlation coefficients between metrics
+        """Analyze correlations between different metrics"""
+        # This would calculate correlation coefficients between metrics
         return {
             'cpu_memory_correlation': 0.75,
             'response_time_error_rate_correlation': 0.45,
@@ -809,7 +839,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         }
 
     async def _cache_trend_data(self, source_id: str, trends: Dict[str, PerformanceTrend]):
-        """Cache trend data"""        if self.cache_manager:
+        """Cache trend data"""
+        if self.cache_manager:
             cache_key = f"trends:{source_id}"
             trend_summary = {
                 metric_type: {
@@ -826,7 +857,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
             )
 
     async def _check_threshold_alerts(self, metric: PerformanceMetric) -> List[PerformanceAlert]:
-        """Check threshold-based alerts"""        alerts = []
+        """Check threshold-based alerts"""
+        alerts = []
         
         if metric.threshold_status in ['warning', 'critical']:
             severity = AlertSeverity.WARNING if metric.threshold_status == 'warning' else AlertSeverity.CRITICAL
@@ -847,11 +879,13 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         return alerts
 
     async def _check_anomaly_alerts(self, metric: PerformanceMetric) -> List[PerformanceAlert]:
-        """Check ML-based anomaly alerts"""        # This would use ML models to detect anomalies
+        """Check ML-based anomaly alerts"""
+        # This would use ML models to detect anomalies
         return []
 
     async def _check_trend_alerts(self, metric: PerformanceMetric) -> List[PerformanceAlert]:
-        """Check trend-based alerts"""        alerts = []
+        """Check trend-based alerts"""
+        alerts = []
         
         # Check for rapid degradation
         if metric.trend_direction == 'decreasing' and abs(metric.trend_percentage) > 20:
@@ -871,7 +905,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         return alerts
 
     def _compare_severity(self, alert_severity: AlertSeverity, threshold: AlertSeverity) -> bool:
-        """Compare alert severity levels"""        severity_levels = {
+        """Compare alert severity levels"""
+        severity_levels = {
             AlertSeverity.INFO: 0,
             AlertSeverity.WARNING: 1,
             AlertSeverity.CRITICAL: 2,
@@ -881,7 +916,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         return severity_levels[alert_severity] >= severity_levels[threshold]
 
     async def _deduplicate_alerts(self, alerts: List[PerformanceAlert]) -> List[PerformanceAlert]:
-        """Remove duplicate alerts"""        seen = set()
+        """Remove duplicate alerts"""
+        seen = set()
         deduplicated = []
         
         for alert in alerts:
@@ -893,7 +929,8 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         return deduplicated
 
     async def _enhance_alert_with_recommendations(self, alert: PerformanceAlert) -> PerformanceAlert:
-        """Enhance alert with specific recommendations"""        # Add recommendations based on alert type and metric
+        """Enhance alert with specific recommendations"""
+        # Add recommendations based on alert type and metric
         recommendations = []
         
         if alert.metric_type == 'cpu_usage' and alert.alert_type == 'threshold':
@@ -913,39 +950,48 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         return alert
 
     async def _store_performance_alert(self, alert: PerformanceAlert):
-        """Store performance alert"""        # This would store in alerts table
+        """Store performance alert"""
+        # This would store in alerts table
         self.logger.info(f"Alert stored: {alert.alert_id}")
 
     async def _send_alert_notifications(self, alerts: List[PerformanceAlert]):
-        """Send notifications for critical alerts"""        # This would send notifications via email, Slack, etc.
+        """Send notifications for critical alerts"""
+        # This would send notifications via email, Slack, etc.
         self.logger.warning(f"Sending notifications for {len(alerts)} critical alerts")
 
     # Additional helper methods would continue here...
     # For brevity, I'll include placeholders for the remaining methods
 
     async def _collect_benchmark_metrics(self, source_id: str, metric_types: List[str], criteria: Dict[str, Any]) -> Dict[str, Any]:
-        """Collect metrics for benchmarking"""        return {'cpu_usage': 75.5, 'memory_usage': 68.2, 'response_time': 120.5}
+        """Collect metrics for benchmarking"""
+        return {'cpu_usage': 75.5, 'memory_usage': 68.2, 'response_time': 120.5}
 
     async def _calculate_benchmark_statistics(self, data: Dict[str, Dict[str, Any]], metric_types: List[str]) -> Dict[str, Any]:
-        """Calculate benchmark statistics"""        return {'average_cpu': 70.2, 'median_response_time': 115.0, 'std_dev_memory': 12.3}
+        """Calculate benchmark statistics"""
+        return {'average_cpu': 70.2, 'median_response_time': 115.0, 'std_dev_memory': 12.3}
 
     async def _rank_performance(self, data: Dict[str, Dict[str, Any]], metric_types: List[str]) -> Dict[str, Any]:
-        """Rank performance across sources"""        return {'leaders': ['source1', 'source2'], 'laggards': ['source3'], 'rankings': {}}
+        """Rank performance across sources"""
+        return {'leaders': ['source1', 'source2'], 'laggards': ['source3'], 'rankings': {}}
 
     async def _generate_benchmark_recommendations(self, data: Dict[str, Dict[str, Any]], stats: Dict[str, Any]) -> List[str]:
-        """Generate benchmark improvement recommendations"""        return ["Optimize top performers' configurations", "Address performance gaps in laggards"]
+        """Generate benchmark improvement recommendations"""
+        return ["Optimize top performers' configurations", "Address performance gaps in laggards"]
 
     async def _store_benchmark_comparison(self, benchmark: BenchmarkComparison):
-        """Store benchmark comparison"""        self.logger.info(f"Benchmark stored: {benchmark.benchmark_id}")
+        """Store benchmark comparison"""
+        self.logger.info(f"Benchmark stored: {benchmark.benchmark_id}")
 
     async def _cache_benchmark_data(self, benchmark: BenchmarkComparison):
-        """Cache benchmark data"""        if self.cache_manager:
+        """Cache benchmark data"""
+        if self.cache_manager:
             cache_key = f"benchmark:{benchmark.benchmark_id}"
             await self.cache_manager.set(cache_key, json.dumps(asdict(benchmark), default=str), ttl=3600)
 
 
 class AsyncPerformanceRepository(AsyncBaseRepository[PerformanceMetric]):
-    """Async version of performance repository for high-performance operations"""    
+    """Async version of performance repository for high-performance operations"""
+    
     def __init__(self, db_session, cache_manager=None, vector_store=None, metrics_store=None):
         super().__init__(db_session, cache_manager, vector_store)
         self.sync_repo = PerformanceRepository(db_session, cache_manager, vector_store, metrics_store)
@@ -954,7 +1000,8 @@ class AsyncPerformanceRepository(AsyncBaseRepository[PerformanceMetric]):
         self,
         metrics_batch: List[Dict[str, Any]]
     ) -> List[List[PerformanceMetric]]:
-        """Collect multiple metric sets in parallel"""        try:
+        """Collect multiple metric sets in parallel"""
+        try:
             tasks = []
             for metrics_data in metrics_batch:
                 task = self.sync_repo.collect_performance_metrics(**metrics_data)
@@ -981,7 +1028,8 @@ class AsyncPerformanceRepository(AsyncBaseRepository[PerformanceMetric]):
         callback: callable,
         interval_seconds: int = 10
     ):
-        """Stream real-time performance metrics"""        try:
+        """Stream real-time performance metrics"""
+        try:
             while True:
                 # Get current performance snapshot
                 snapshot = await self._get_performance_snapshot(source_id)
@@ -997,7 +1045,8 @@ class AsyncPerformanceRepository(AsyncBaseRepository[PerformanceMetric]):
             raise
 
     async def _get_performance_snapshot(self, source_id: str) -> PerformanceSnapshot:
-        """Get current performance snapshot"""        # This would collect current metrics
+        """Get current performance snapshot"""
+        # This would collect current metrics
         return PerformanceSnapshot(
             snapshot_id=f"SNAP_{int(datetime.now(timezone.utc).timestamp())}",
             timestamp=datetime.now(timezone.utc),

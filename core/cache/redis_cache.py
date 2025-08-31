@@ -12,7 +12,8 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert +
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED ⚠️
 Copyright (C) 2024 Fahed Mlaiel. All rights reserved.
 For licensing inquiries: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import pickle
@@ -37,25 +38,29 @@ logger = logging.getLogger(__name__)
 T = TypeVar('T')
 
 class SerializerType(Enum):
-    """Supported serialization formats"""    PICKLE = "pickle"
+    """Supported serialization formats"""
+    PICKLE = "pickle"
     JSON = "json"
     MSGPACK = "msgpack"
     BINARY = "binary"
 
 class CompressionType(Enum):
-    """Supported compression algorithms"""    NONE = "none"
+    """Supported compression algorithms"""
+    NONE = "none"
     ZLIB = "zlib"
     GZIP = "gzip"
     LZ4 = "lz4"
 
 class EncryptionMode(Enum):
-    """Encryption modes for sensitive data"""    NONE = "none"
+    """Encryption modes for sensitive data"""
+    NONE = "none"
     FERNET = "fernet"
     AES = "aes"
 
 @dataclass
 class RedisConfig:
-    """Enterprise Redis configuration for IA Influencer Agent"""    # Connection settings
+    """Enterprise Redis configuration for IA Influencer Agent"""
+    # Connection settings
     host: str = "localhost"
     port: int = 6379
     password: Optional[str] = None
@@ -121,7 +126,8 @@ class RedisConfig:
 
 @dataclass 
 class RedisMetrics:
-    """Redis performance and usage metrics"""    # Operation counts
+    """Redis performance and usage metrics"""
+    # Operation counts
     hits: int = 0
     misses: int = 0
     sets: int = 0
@@ -156,23 +162,27 @@ class RedisMetrics:
     
     @property
     def hit_rate(self) -> float:
-        """Calculate cache hit rate"""        total = self.hits + self.misses
+        """Calculate cache hit rate"""
+        total = self.hits + self.misses
         return self.hits / total if total > 0 else 0.0
     
     @property
     def error_rate(self) -> float:
-        """Calculate error rate"""        total = self.operation_count
+        """Calculate error rate"""
+        total = self.operation_count
         return self.errors / total if total > 0 else 0.0
     
     def update_latency(self, latency: float):
-        """Update latency statistics"""        self.total_latency += latency
+        """Update latency statistics"""
+        self.total_latency += latency
         self.operation_count += 1
         self.avg_latency = self.total_latency / self.operation_count
         self.max_latency = max(self.max_latency, latency)
         self.min_latency = min(self.min_latency, latency)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metrics to dictionary"""        return {
+        """Convert metrics to dictionary"""
+        return {
             'performance': {
                 'hit_rate': self.hit_rate,
                 'error_rate': self.error_rate,
@@ -207,7 +217,8 @@ class RedisMetrics:
         }
 
 class RedisCache:
-    """    Enterprise Redis cache implementation for IA Influencer Agent platform
+    """
+    Enterprise Redis cache implementation for IA Influencer Agent platform
     Supports multi-format content creators with advanced features:
     - Multi-tenant isolation
     - Content-aware caching strategies  
@@ -215,7 +226,8 @@ class RedisCache:
     - Revenue tracking cache
     - Platform API caching
     - Real-time analytics
-    """    
+    """
+    
     def __init__(self, config: RedisConfig):
         self.config = config
         self._redis: Optional[redis.Redis] = None
@@ -240,7 +252,8 @@ class RedisCache:
         logger.info(f"RedisCache initialized for IA Influencer Agent - Backend: {config.host}:{config.port}")
     
     def _setup_encryption(self):
-        """Setup encryption handler"""        if self.config.encryption == EncryptionMode.FERNET:
+        """Setup encryption handler"""
+        if self.config.encryption == EncryptionMode.FERNET:
             if not self.config.encryption_key:
                 # Generate key if not provided
                 key = Fernet.generate_key()
@@ -251,7 +264,8 @@ class RedisCache:
             self._encryption_handler = Fernet(key_bytes)
     
     def _get_compression_handler(self) -> Callable:
-        """Get compression handler based on configuration"""        if self.config.compression == CompressionType.ZLIB:
+        """Get compression handler based on configuration"""
+        if self.config.compression == CompressionType.ZLIB:
             return lambda data: zlib.compress(data, self.config.compression_level)
         elif self.config.compression == CompressionType.GZIP:
             import gzip
@@ -267,7 +281,8 @@ class RedisCache:
             return lambda data: data
     
     def _get_decompression_handler(self) -> Callable:
-        """Get decompression handler"""        if self.config.compression == CompressionType.ZLIB:
+        """Get decompression handler"""
+        if self.config.compression == CompressionType.ZLIB:
             return zlib.decompress
         elif self.config.compression == CompressionType.GZIP:
             import gzip
@@ -282,7 +297,8 @@ class RedisCache:
             return lambda data: data
     
     def _get_serialization_handler(self) -> Callable:
-        """Get serialization handler"""        if self.config.serializer == SerializerType.PICKLE:
+        """Get serialization handler"""
+        if self.config.serializer == SerializerType.PICKLE:
             return lambda obj: pickle.dumps(obj, protocol=pickle.HIGHEST_PROTOCOL)
         elif self.config.serializer == SerializerType.JSON:
             return lambda obj: json.dumps(obj, default=str, ensure_ascii=False).encode('utf-8')
@@ -292,7 +308,8 @@ class RedisCache:
             return lambda obj: str(obj).encode('utf-8')
     
     def _get_deserialization_handler(self) -> Callable:
-        """Get deserialization handler"""        if self.config.serializer == SerializerType.PICKLE:
+        """Get deserialization handler"""
+        if self.config.serializer == SerializerType.PICKLE:
             return pickle.loads
         elif self.config.serializer == SerializerType.JSON:
             return lambda data: json.loads(data.decode('utf-8'))
@@ -302,7 +319,8 @@ class RedisCache:
             return lambda data: data.decode('utf-8')
     
     async def connect(self):
-        """Establish Redis connection with enterprise features"""        try:
+        """Establish Redis connection with enterprise features"""
+        try:
             # SSL context setup
             ssl_context = None
             if self.config.ssl_enabled:
@@ -346,7 +364,8 @@ class RedisCache:
             raise ConnectionError(f"Redis connection failed: {e}")
     
     async def _configure_redis_optimization(self):
-        """Configure Redis for optimal performance"""        try:
+        """Configure Redis for optimal performance"""
+        try:
             if self.config.enable_memory_optimization:
                 # Set memory policy
                 await self._redis.config_set('maxmemory-policy', self.config.max_memory_policy)
@@ -367,7 +386,8 @@ class RedisCache:
                            tenant_id: Optional[str] = None,
                            content_type: Optional[str] = None,
                            creator_id: Optional[str] = None) -> str:
-        """Generate hierarchical cache key for IA Influencer Agent"""        key_parts = [self.config.global_prefix]
+        """Generate hierarchical cache key for IA Influencer Agent"""
+        key_parts = [self.config.global_prefix]
         
         # Add tenant isolation
         if self.config.tenant_isolation and tenant_id:
@@ -385,7 +405,8 @@ class RedisCache:
         return ":".join(key_parts)
     
     def _get_ttl_for_content_type(self, content_type: str) -> int:
-        """Get appropriate TTL based on content type"""        ttl_mapping = {
+        """Get appropriate TTL based on content type"""
+        ttl_mapping = {
             'creator_profile': self.config.creator_cache_ttl,
             'audio_content': self.config.content_cache_ttl,
             'video_content': self.config.content_cache_ttl,
@@ -401,7 +422,8 @@ class RedisCache:
         return ttl_mapping.get(content_type, self.config.creator_cache_ttl)
     
     def _serialize(self, value: Any) -> bytes:
-        """Advanced serialization with compression and encryption"""        start_time = time.time()
+        """Advanced serialization with compression and encryption"""
+        start_time = time.time()
         
         try:
             # Serialize
@@ -452,7 +474,8 @@ class RedisCache:
             raise ValueError(f"Failed to serialize data: {e}")
     
     def _deserialize(self, data: bytes) -> Any:
-        """Advanced deserialization with decompression and decryption"""        start_time = time.time()
+        """Advanced deserialization with decompression and decryption"""
+        start_time = time.time()
         
         try:
             # Check encryption flag
@@ -487,7 +510,8 @@ class RedisCache:
             raise ValueError(f"Failed to deserialize data: {e}")
     
     def _track_slow_operation(self, operation: str, latency: float, metadata: Dict[str, Any]):
-        """Track slow operations for performance monitoring"""        if self.config.enable_slow_log:
+        """Track slow operations for performance monitoring"""
+        if self.config.enable_slow_log:
             slow_query = {
                 'operation': operation,
                 'latency_ms': latency * 1000,
@@ -509,7 +533,8 @@ class RedisCache:
                   content_type: Optional[str] = None,
                   creator_id: Optional[str] = None,
                   default: Optional[T] = None) -> Optional[T]:
-        """Get value from Redis cache with business logic awareness"""        if not self._redis:
+        """Get value from Redis cache with business logic awareness"""
+        if not self._redis:
             await self.connect()
         
         cache_key = self._generate_cache_key(key, tenant_id, content_type, creator_id)
@@ -563,7 +588,8 @@ class RedisCache:
                   tenant_id: Optional[str] = None,
                   content_type: Optional[str] = None,
                   creator_id: Optional[str] = None) -> bool:
-        """Set value in Redis cache with intelligent TTL and business awareness"""        if not self._redis:
+        """Set value in Redis cache with intelligent TTL and business awareness"""
+        if not self._redis:
             await self.connect()
         
         cache_key = self._generate_cache_key(key, tenant_id, content_type, creator_id)
@@ -621,7 +647,8 @@ class RedisCache:
                      tenant_id: Optional[str] = None,
                      content_type: Optional[str] = None,
                      creator_id: Optional[str] = None) -> bool:
-        """Delete key from Redis cache with business logic awareness"""        if not self._redis:
+        """Delete key from Redis cache with business logic awareness"""
+        if not self._redis:
             await self.connect()
         
         cache_key = self._generate_cache_key(key, tenant_id, content_type, creator_id)
@@ -653,7 +680,8 @@ class RedisCache:
                      tenant_id: Optional[str] = None,
                      content_type: Optional[str] = None,
                      creator_id: Optional[str] = None) -> bool:
-        """Check if key exists in Redis with business logic awareness"""        if not self._redis:
+        """Check if key exists in Redis with business logic awareness"""
+        if not self._redis:
             await self.connect()
         
         cache_key = self._generate_cache_key(key, tenant_id, content_type, creator_id)
@@ -670,7 +698,8 @@ class RedisCache:
                      tenant_id: Optional[str] = None,
                      content_type: Optional[str] = None,
                      creator_id: Optional[str] = None) -> bool:
-        """Set expiration time for key"""        if not self._redis:
+        """Set expiration time for key"""
+        if not self._redis:
             await self.connect()
         
         cache_key = self._generate_cache_key(key, tenant_id, content_type, creator_id)
@@ -686,7 +715,8 @@ class RedisCache:
                   tenant_id: Optional[str] = None,
                   content_type: Optional[str] = None,
                   creator_id: Optional[str] = None) -> int:
-        """Get TTL for key"""        if not self._redis:
+        """Get TTL for key"""
+        if not self._redis:
             await self.connect()
         
         cache_key = self._generate_cache_key(key, tenant_id, content_type, creator_id)
@@ -702,7 +732,8 @@ class RedisCache:
                    tenant_id: Optional[str] = None,
                    content_type: Optional[str] = None,
                    creator_id: Optional[str] = None) -> List[str]:
-        """Get keys matching pattern with business logic awareness"""        if not self._redis:
+        """Get keys matching pattern with business logic awareness"""
+        if not self._redis:
             await self.connect()
         
         # Build pattern with business logic
@@ -719,7 +750,8 @@ class RedisCache:
             return []
     
     async def flush(self, tenant_id: Optional[str] = None) -> bool:
-        """Flush data from Redis - tenant-aware"""        if not self._redis:
+        """Flush data from Redis - tenant-aware"""
+        if not self._redis:
             await self.connect()
         
         try:
@@ -739,7 +771,8 @@ class RedisCache:
             return False
     
     async def info(self) -> Dict[str, Any]:
-        """Get Redis server information"""        if not self._redis:
+        """Get Redis server information"""
+        if not self._redis:
             await self.connect()
         
         try:
@@ -749,7 +782,8 @@ class RedisCache:
             return {}
     
     async def pipeline(self):
-        """Create Redis pipeline for batch operations"""        if not self._redis:
+        """Create Redis pipeline for batch operations"""
+        if not self._redis:
             await self.connect()
         return self._redis.pipeline()
     
@@ -759,7 +793,8 @@ class RedisCache:
                                    creator_id: str,
                                    profile_data: Dict[str, Any],
                                    ttl: Optional[int] = None) -> bool:
-        """Cache creator profile with optimized settings"""        return await self.set(
+        """Cache creator profile with optimized settings"""
+        return await self.set(
             key=f"profile:{creator_id}",
             value=profile_data,
             ttl=ttl or self.config.creator_cache_ttl,
@@ -768,7 +803,8 @@ class RedisCache:
         )
     
     async def get_creator_profile(self, creator_id: str) -> Optional[Dict[str, Any]]:
-        """Get cached creator profile"""        return await self.get(
+        """Get cached creator profile"""
+        return await self.get(
             key=f"profile:{creator_id}",
             content_type="creator_profile",
             creator_id=creator_id
@@ -780,7 +816,8 @@ class RedisCache:
                                     content_type: str,
                                     creator_id: str,
                                     ttl: Optional[int] = None) -> bool:
-        """Cache content metadata (audio, video, image, text)"""        return await self.set(
+        """Cache content metadata (audio, video, image, text)"""
+        return await self.set(
             key=f"content:{content_id}:metadata",
             value=metadata,
             ttl=ttl or self.config.content_cache_ttl,
@@ -792,7 +829,8 @@ class RedisCache:
                                   content_id: str,
                                   content_type: str,
                                   creator_id: str) -> Optional[Dict[str, Any]]:
-        """Get cached content metadata"""        return await self.get(
+        """Get cached content metadata"""
+        return await self.get(
             key=f"content:{content_id}:metadata",
             content_type=f"{content_type}_content",
             creator_id=creator_id
@@ -803,7 +841,8 @@ class RedisCache:
                                   analytics_data: Dict[str, Any],
                                   creator_id: str,
                                   ttl: Optional[int] = None) -> bool:
-        """Cache analytics data with short TTL"""        return await self.set(
+        """Cache analytics data with short TTL"""
+        return await self.set(
             key=f"analytics:{analytics_id}",
             value=analytics_data,
             ttl=ttl or self.config.analytics_cache_ttl,
@@ -814,7 +853,8 @@ class RedisCache:
     async def get_analytics_data(self,
                                 analytics_id: str,
                                 creator_id: str) -> Optional[Dict[str, Any]]:
-        """Get cached analytics data"""        return await self.get(
+        """Get cached analytics data"""
+        return await self.get(
             key=f"analytics:{analytics_id}",
             content_type="analytics",
             creator_id=creator_id
@@ -825,7 +865,8 @@ class RedisCache:
                                 revenue_data: Dict[str, Any],
                                 creator_id: str,
                                 ttl: Optional[int] = None) -> bool:
-        """Cache revenue tracking data"""        return await self.set(
+        """Cache revenue tracking data"""
+        return await self.set(
             key=f"revenue:{revenue_id}",
             value=revenue_data,
             ttl=ttl or self.config.revenue_cache_ttl,
@@ -836,7 +877,8 @@ class RedisCache:
     async def get_revenue_data(self,
                               revenue_id: str,
                               creator_id: str) -> Optional[Dict[str, Any]]:
-        """Get cached revenue data"""        return await self.get(
+        """Get cached revenue data"""
+        return await self.get(
             key=f"revenue:{revenue_id}",
             content_type="revenue",
             creator_id=creator_id
@@ -848,7 +890,8 @@ class RedisCache:
                                          response_data: Dict[str, Any],
                                          creator_id: Optional[str] = None,
                                          ttl: Optional[int] = None) -> bool:
-        """Cache platform API responses (Spotify, YouTube, Instagram, etc.)"""        api_key = f"platform:{platform}:api:{hashlib.md5(endpoint.encode()).hexdigest()}"
+        """Cache platform API responses (Spotify, YouTube, Instagram, etc.)"""
+        api_key = f"platform:{platform}:api:{hashlib.md5(endpoint.encode()).hexdigest()}"
         return await self.set(
             key=api_key,
             value=response_data,
@@ -861,7 +904,8 @@ class RedisCache:
                                        platform: str,
                                        endpoint: str,
                                        creator_id: Optional[str] = None) -> Optional[Dict[str, Any]]:
-        """Get cached platform API response"""        api_key = f"platform:{platform}:api:{hashlib.md5(endpoint.encode()).hexdigest()}"
+        """Get cached platform API response"""
+        api_key = f"platform:{platform}:api:{hashlib.md5(endpoint.encode()).hexdigest()}"
         return await self.get(
             key=api_key,
             content_type="platform_api",
@@ -874,7 +918,8 @@ class RedisCache:
                                   content_type: str,
                                   creator_id: str,
                                   ttl: Optional[int] = None) -> bool:
-        """Cache AI fingerprint for content protection"""        return await self.set(
+        """Cache AI fingerprint for content protection"""
+        return await self.set(
             key=f"fingerprint:{content_type}:{fingerprint_id}",
             value=fingerprint_data,
             ttl=ttl or self.config.fingerprint_cache_ttl,
@@ -886,7 +931,8 @@ class RedisCache:
                                 fingerprint_id: str,
                                 content_type: str,
                                 creator_id: str) -> Optional[Dict[str, Any]]:
-        """Get cached AI fingerprint"""        return await self.get(
+        """Get cached AI fingerprint"""
+        return await self.get(
             key=f"fingerprint:{content_type}:{fingerprint_id}",
             content_type="fingerprint",
             creator_id=creator_id
@@ -899,7 +945,8 @@ class RedisCache:
                    tenant_id: Optional[str] = None,
                    content_type: Optional[str] = None,
                    creator_id: Optional[str] = None) -> Optional[Any]:
-        """Get hash field value with business logic"""        if not self._redis:
+        """Get hash field value with business logic"""
+        if not self._redis:
             await self.connect()
         
         cache_name = self._generate_cache_key(name, tenant_id, content_type, creator_id)
@@ -920,7 +967,8 @@ class RedisCache:
                    tenant_id: Optional[str] = None,
                    content_type: Optional[str] = None,
                    creator_id: Optional[str] = None) -> bool:
-        """Set hash field value with business logic"""        if not self._redis:
+        """Set hash field value with business logic"""
+        if not self._redis:
             await self.connect()
         
         cache_name = self._generate_cache_key(name, tenant_id, content_type, creator_id)
@@ -938,7 +986,8 @@ class RedisCache:
                       tenant_id: Optional[str] = None,
                       content_type: Optional[str] = None,
                       creator_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get all hash fields with business logic"""        if not self._redis:
+        """Get all hash fields with business logic"""
+        if not self._redis:
             await self.connect()
         
         cache_name = self._generate_cache_key(name, tenant_id, content_type, creator_id)
@@ -960,7 +1009,8 @@ class RedisCache:
                     tenant_id: Optional[str] = None,
                     content_type: Optional[str] = None,
                     creator_id: Optional[str] = None) -> int:
-        """Push values to left of list with business logic"""        if not self._redis:
+        """Push values to left of list with business logic"""
+        if not self._redis:
             await self.connect()
         
         cache_name = self._generate_cache_key(name, tenant_id, content_type, creator_id)
@@ -977,7 +1027,8 @@ class RedisCache:
                    tenant_id: Optional[str] = None,
                    content_type: Optional[str] = None,
                    creator_id: Optional[str] = None) -> Optional[Any]:
-        """Pop value from right of list with business logic"""        if not self._redis:
+        """Pop value from right of list with business logic"""
+        if not self._redis:
             await self.connect()
         
         cache_name = self._generate_cache_key(name, tenant_id, content_type, creator_id)
@@ -998,7 +1049,8 @@ class RedisCache:
                      tenant_id: Optional[str] = None,
                      content_type: Optional[str] = None,
                      creator_id: Optional[str] = None) -> List[Any]:
-        """Get list range with business logic"""        if not self._redis:
+        """Get list range with business logic"""
+        if not self._redis:
             await self.connect()
         
         cache_name = self._generate_cache_key(name, tenant_id, content_type, creator_id)
@@ -1017,7 +1069,8 @@ class RedisCache:
                    tenant_id: Optional[str] = None,
                    content_type: Optional[str] = None,
                    creator_id: Optional[str] = None) -> int:
-        """Add values to set with business logic"""        if not self._redis:
+        """Add values to set with business logic"""
+        if not self._redis:
             await self.connect()
         
         cache_name = self._generate_cache_key(name, tenant_id, content_type, creator_id)
@@ -1034,7 +1087,8 @@ class RedisCache:
                        tenant_id: Optional[str] = None,
                        content_type: Optional[str] = None,
                        creator_id: Optional[str] = None) -> Set[Any]:
-        """Get all set members with business logic"""        if not self._redis:
+        """Get all set members with business logic"""
+        if not self._redis:
             await self.connect()
         
         cache_name = self._generate_cache_key(name, tenant_id, content_type, creator_id)
@@ -1052,7 +1106,8 @@ class RedisCache:
                    tenant_id: Optional[str] = None,
                    content_type: Optional[str] = None,
                    creator_id: Optional[str] = None) -> List[Optional[Any]]:
-        """Get multiple values in single operation"""        if not self._redis:
+        """Get multiple values in single operation"""
+        if not self._redis:
             await self.connect()
         
         cache_keys = [
@@ -1076,7 +1131,8 @@ class RedisCache:
                    tenant_id: Optional[str] = None,
                    content_type: Optional[str] = None,
                    creator_id: Optional[str] = None) -> bool:
-        """Set multiple values in single operation"""        if not self._redis:
+        """Set multiple values in single operation"""
+        if not self._redis:
             await self.connect()
         
         try:
@@ -1105,7 +1161,8 @@ class RedisCache:
             return False
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get comprehensive cache statistics"""        server_info = await self.info()
+        """Get comprehensive cache statistics"""
+        server_info = await self.info()
         
         return {
             'redis_metrics': self._metrics.to_dict(),
@@ -1132,7 +1189,8 @@ class RedisCache:
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Comprehensive health check for monitoring"""        try:
+        """Comprehensive health check for monitoring"""
+        try:
             if not self._redis:
                 await self.connect()
             
@@ -1180,7 +1238,8 @@ class RedisCache:
             }
     
     async def close(self):
-        """Close Redis connection gracefully"""        try:
+        """Close Redis connection gracefully"""
+        try:
             if self._redis:
                 await self._redis.close()
             if self._connection_pool:
@@ -1192,9 +1251,11 @@ class RedisCache:
             logger.error(f"Error closing Redis connection: {e}")
 
 class RedisClusterCache(RedisCache):
-    """    Redis Cluster cache implementation for distributed caching
+    """
+    Redis Cluster cache implementation for distributed caching
     Specialized for IA Influencer Agent with high availability
-    """    
+    """
+    
     def __init__(self, config: RedisConfig, startup_nodes: List[Dict[str, Any]]):
         super().__init__(config)
         self.startup_nodes = startup_nodes
@@ -1203,7 +1264,8 @@ class RedisClusterCache(RedisCache):
         logger.info(f"RedisClusterCache initialized with {len(startup_nodes)} nodes")
     
     async def connect(self):
-        """Establish Redis Cluster connection with enterprise features"""        try:
+        """Establish Redis Cluster connection with enterprise features"""
+        try:
             cluster_kwargs = {
                 'startup_nodes': self.startup_nodes,
                 'password': self.config.password,
@@ -1242,7 +1304,8 @@ class RedisClusterCache(RedisCache):
             raise ConnectionError(f"Redis Cluster connection failed: {e}")
     
     async def _configure_cluster_optimization(self):
-        """Configure Redis Cluster for optimal performance"""        try:
+        """Configure Redis Cluster for optimal performance"""
+        try:
             # Apply optimization settings to all cluster nodes
             cluster_info = await self._cluster.cluster_info()
             logger.info(f"Redis Cluster optimization configured: {cluster_info.get('cluster_state', 'unknown')}")
@@ -1257,7 +1320,8 @@ class RedisClusterCache(RedisCache):
                   content_type: Optional[str] = None,
                   creator_id: Optional[str] = None,
                   default: Optional[T] = None) -> Optional[T]:
-        """Get value from Redis Cluster with business logic"""        if not self._cluster:
+        """Get value from Redis Cluster with business logic"""
+        if not self._cluster:
             await self.connect()
         
         cache_key = self._generate_cache_key(key, tenant_id, content_type, creator_id)
@@ -1311,7 +1375,8 @@ class RedisClusterCache(RedisCache):
                   tenant_id: Optional[str] = None,
                   content_type: Optional[str] = None,
                   creator_id: Optional[str] = None) -> bool:
-        """Set value in Redis Cluster with business logic"""        if not self._cluster:
+        """Set value in Redis Cluster with business logic"""
+        if not self._cluster:
             await self.connect()
         
         cache_key = self._generate_cache_key(key, tenant_id, content_type, creator_id)
@@ -1365,7 +1430,8 @@ class RedisClusterCache(RedisCache):
             return False
     
     async def close(self):
-        """Close Redis Cluster connection gracefully"""        try:
+        """Close Redis Cluster connection gracefully"""
+        try:
             if self._cluster:
                 await self._cluster.close()
             
@@ -1376,7 +1442,8 @@ class RedisClusterCache(RedisCache):
 
 # Factory functions for easy instantiation
 async def create_redis_cache(config: RedisConfig) -> RedisCache:
-    """Create and connect Redis cache instance"""    cache = RedisCache(config)
+    """Create and connect Redis cache instance"""
+    cache = RedisCache(config)
     await cache.connect()
     return cache
 
@@ -1384,7 +1451,8 @@ async def create_redis_cluster_cache(
     config: RedisConfig, 
     startup_nodes: List[Dict[str, Any]]
 ) -> RedisClusterCache:
-    """Create and connect Redis Cluster cache instance"""    cache = RedisClusterCache(config, startup_nodes)
+    """Create and connect Redis Cluster cache instance"""
+    cache = RedisClusterCache(config, startup_nodes)
     await cache.connect()
     return cache
 
@@ -1393,7 +1461,8 @@ _redis_cache_instance: Optional[RedisCache] = None
 _redis_cluster_cache_instance: Optional[RedisClusterCache] = None
 
 async def get_redis_cache() -> RedisCache:
-    """Get or create global Redis cache instance"""    global _redis_cache_instance
+    """Get or create global Redis cache instance"""
+    global _redis_cache_instance
     
     if _redis_cache_instance is None:
         config = RedisConfig()
@@ -1402,7 +1471,8 @@ async def get_redis_cache() -> RedisCache:
     return _redis_cache_instance
 
 async def get_redis_cluster_cache(startup_nodes: List[Dict[str, Any]]) -> RedisClusterCache:
-    """Get or create global Redis Cluster cache instance"""    global _redis_cluster_cache_instance
+    """Get or create global Redis Cluster cache instance"""
+    global _redis_cluster_cache_instance
     
     if _redis_cluster_cache_instance is None:
         config = RedisConfig()

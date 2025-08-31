@@ -23,7 +23,8 @@ LEGAL WARNING: This software and all associated intellectual property
 belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
-"""from typing import Dict, Any, List, Optional, Union, Set, Tuple, AsyncIterator
+"""
+from typing import Dict, Any, List, Optional, Union, Set, Tuple, AsyncIterator
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
@@ -72,7 +73,8 @@ from ..utils.rate_limiter import RateLimiter
 
 
 class ProtectionCrawlerType(Enum):
-    """Types of protection crawlers."""    PIRACY_DETECTION = "piracy_detection"
+    """Types of protection crawlers."""
+    PIRACY_DETECTION = "piracy_detection"
     COPYRIGHT_MONITORING = "copyright_monitoring"
     BRAND_PROTECTION = "brand_protection"
     TRADEMARK_MONITORING = "trademark_monitoring"
@@ -85,7 +87,8 @@ class ProtectionCrawlerType(Enum):
 
 
 class InfringementSeverity(Enum):
-    """Severity levels for copyright infringement."""    LOW = "low"
+    """Severity levels for copyright infringement."""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -93,7 +96,8 @@ class InfringementSeverity(Enum):
 
 
 class ProtectionStatus(Enum):
-    """Protection monitoring status."""    ACTIVE = "active"
+    """Protection monitoring status."""
+    ACTIVE = "active"
     PENDING = "pending"
     RESOLVED = "resolved"
     DMCA_SENT = "dmca_sent"
@@ -103,7 +107,8 @@ class ProtectionStatus(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint for similarity detection."""    fingerprint_id: str
+    """Content fingerprint for similarity detection."""
+    fingerprint_id: str
     content_type: ContentType
     original_url: str
     fingerprint_hash: str
@@ -118,7 +123,8 @@ class ContentFingerprint:
 
 @dataclass
 class InfringementDetection:
-    """Copyright infringement detection result."""    detection_id: str
+    """Copyright infringement detection result."""
+    detection_id: str
     original_content_id: str
     infringing_url: str
     similarity_score: float
@@ -134,7 +140,8 @@ class InfringementDetection:
 
 @dataclass
 class ProtectionTarget:
-    """Content protection target configuration."""    target_id: str
+    """Content protection target configuration."""
+    target_id: str
     content_owner: str
     protected_content: Dict[str, Any]
     fingerprints: List[ContentFingerprint]
@@ -145,7 +152,8 @@ class ProtectionTarget:
 
 
 class ContentProtectionCrawler(WebCrawler):
-    """    Advanced content protection crawler with AI-powered detection.
+    """
+    Advanced content protection crawler with AI-powered detection.
     
     Provides comprehensive copyright protection including:
     - Multi-modal content fingerprinting (audio, video, image, text)
@@ -153,7 +161,8 @@ class ContentProtectionCrawler(WebCrawler):
     - DMCA-compliant evidence collection
     - Automated infringement reporting
     - Brand protection and trademark monitoring
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.logger = logging.getLogger("crawler.protection")
@@ -189,7 +198,8 @@ class ContentProtectionCrawler(WebCrawler):
         self.logger.info("ContentProtectionCrawler initialized successfully")
     
     def _initialize_fingerprint_engines(self):
-        """Initialize content fingerprinting engines."""        try:
+        """Initialize content fingerprinting engines."""
+        try:
             # Audio fingerprinting
             self.fingerprint_engines['audio'] = {
                 'chromaprint': chromaprint,
@@ -222,7 +232,8 @@ class ContentProtectionCrawler(WebCrawler):
             self.logger.error(f"Failed to initialize fingerprint engines: {e}")
     
     def _initialize_ai_models(self):
-        """Initialize AI models for content analysis."""        try:
+        """Initialize AI models for content analysis."""
+        try:
             # CLIP model for image-text similarity
             if torch.cuda.is_available():
                 device = "cuda"
@@ -248,7 +259,8 @@ class ContentProtectionCrawler(WebCrawler):
             self.ai_models = {}
     
     def _load_piracy_domains(self) -> Set[str]:
-        """Load known piracy and suspicious domains."""        default_piracy_domains = {
+        """Load known piracy and suspicious domains."""
+        default_piracy_domains = {
             'thepiratebay.org', 'kickass.to', '1337x.to', 'rarbg.to',
             'torrentz2.eu', 'yts.mx', 'eztv.re', 'zooqle.com',
             'torrentdownloads.me', 'torrentgalaxy.to', 'magnetdl.com',
@@ -262,7 +274,8 @@ class ContentProtectionCrawler(WebCrawler):
         return default_piracy_domains.union(custom_domains)
     
     def _load_suspicious_keywords(self) -> Set[str]:
-        """Load keywords that indicate potential piracy or unauthorized usage."""        return {
+        """Load keywords that indicate potential piracy or unauthorized usage."""
+        return {
             'free download', 'cracked', 'keygen', 'torrent', 'pirated',
             'leaked', 'ripped', 'bootleg', 'unauthorized', 'stolen',
             'copyright infringement', 'dmca', 'takedown', 'illegal download',
@@ -275,11 +288,13 @@ class ContentProtectionCrawler(WebCrawler):
         content_owner: str,
         monitoring_settings: Dict[str, Any] = None
     ) -> str:
-        """        Register content for protection monitoring.
+        """
+        Register content for protection monitoring.
         
         Creates comprehensive fingerprints and sets up monitoring
         for unauthorized usage across the web.
-        """        try:
+        """
+        try:
             self.logger.info(f"Registering protected content for owner: {content_owner}")
             
             # Generate unique target ID
@@ -328,7 +343,8 @@ class ContentProtectionCrawler(WebCrawler):
     async def _create_content_fingerprints(
         self, content_data: Dict[str, Any]
     ) -> List[ContentFingerprint]:
-        """Create comprehensive fingerprints for content protection."""        fingerprints = []
+        """Create comprehensive fingerprints for content protection."""
+        fingerprints = []
         
         try:
             # Process each content item
@@ -372,7 +388,8 @@ class ContentProtectionCrawler(WebCrawler):
     async def _create_audio_fingerprint(
         self, fingerprint_id: str, content_url: str, content_info: Dict[str, Any]
     ) -> Optional[ContentFingerprint]:
-        """Create audio fingerprint using multiple algorithms."""        try:
+        """Create audio fingerprint using multiple algorithms."""
+        try:
             # Download audio file
             audio_data = await self._download_content(content_url)
             if not audio_data:
@@ -452,7 +469,8 @@ class ContentProtectionCrawler(WebCrawler):
     async def _create_image_fingerprint(
         self, fingerprint_id: str, content_url: str, content_info: Dict[str, Any]
     ) -> Optional[ContentFingerprint]:
-        """Create image fingerprint using multiple algorithms."""        try:
+        """Create image fingerprint using multiple algorithms."""
+        try:
             # Download image
             image_data = await self._download_content(content_url)
             if not image_data:
@@ -525,7 +543,8 @@ class ContentProtectionCrawler(WebCrawler):
     async def _create_video_fingerprint(
         self, fingerprint_id: str, content_url: str, content_info: Dict[str, Any]
     ) -> Optional[ContentFingerprint]:
-        """Create video fingerprint by analyzing key frames."""        try:
+        """Create video fingerprint by analyzing key frames."""
+        try:
             # Download video (for demo, we'll work with URL)
             # In production, would download and process video file
             
@@ -566,7 +585,8 @@ class ContentProtectionCrawler(WebCrawler):
     async def _create_text_fingerprint(
         self, fingerprint_id: str, content_url: str, content_info: Dict[str, Any]
     ) -> Optional[ContentFingerprint]:
-        """Create text fingerprint using NLP and embeddings."""        try:
+        """Create text fingerprint using NLP and embeddings."""
+        try:
             # Get text content
             text_content = content_info.get("text", "")
             if not text_content and content_url:
@@ -629,7 +649,8 @@ class ContentProtectionCrawler(WebCrawler):
             return None
     
     def _create_text_ngrams(self, text: str, n: int = 3) -> List[str]:
-        """Create n-grams from text for similarity detection."""        words = re.findall(r'\w+', text.lower())
+        """Create n-grams from text for similarity detection."""
+        words = re.findall(r'\w+', text.lower())
         ngrams = []
         
         for i in range(len(words) - n + 1):
@@ -641,7 +662,8 @@ class ContentProtectionCrawler(WebCrawler):
     async def _create_generic_fingerprint(
         self, fingerprint_id: str, content_url: str, content_info: Dict[str, Any]
     ) -> Optional[ContentFingerprint]:
-        """Create generic fingerprint for unknown content types."""        try:
+        """Create generic fingerprint for unknown content types."""
+        try:
             # Create basic hash fingerprint
             content_string = json.dumps(content_info, sort_keys=True)
             fingerprint_hash = hashlib.sha256(content_string.encode()).hexdigest()
@@ -663,11 +685,13 @@ class ContentProtectionCrawler(WebCrawler):
     async def scan_for_infringements(
         self, target_id: str, scan_scope: List[str] = None
     ) -> List[InfringementDetection]:
-        """        Scan web for potential copyright infringements.
+        """
+        Scan web for potential copyright infringements.
         
         Performs comprehensive scanning across multiple platforms
         and sources to detect unauthorized usage of protected content.
-        """        try:
+        """
+        try:
             if target_id not in self.protection_targets:
                 raise CrawlerException(f"Protection target not found: {target_id}")
             
@@ -712,7 +736,8 @@ class ContentProtectionCrawler(WebCrawler):
     async def _scan_scope_area(
         self, target: ProtectionTarget, scope: str
     ) -> List[InfringementDetection]:
-        """Scan specific scope area for infringements."""        detections = []
+        """Scan specific scope area for infringements."""
+        detections = []
         
         try:
             if scope == "search_engines":
@@ -738,7 +763,8 @@ class ContentProtectionCrawler(WebCrawler):
     async def _scan_search_engines(
         self, target: ProtectionTarget
     ) -> List[InfringementDetection]:
-        """Scan search engines for potential infringements."""        detections = []
+        """Scan search engines for potential infringements."""
+        detections = []
         
         try:
             # Create search queries from protected content
@@ -772,7 +798,8 @@ class ContentProtectionCrawler(WebCrawler):
         return detections
     
     def _generate_search_queries(self, target: ProtectionTarget) -> List[str]:
-        """Generate search queries for content detection."""        queries = []
+        """Generate search queries for content detection."""
+        queries = []
         content = target.protected_content
         
         # Extract key terms from content
@@ -802,7 +829,8 @@ class ContentProtectionCrawler(WebCrawler):
         return queries[:10]  # Limit total queries
     
     def _extract_key_phrases(self, text: str) -> List[str]:
-        """Extract key phrases from text for search queries."""        # Simple implementation - in production would use NLP
+        """Extract key phrases from text for search queries."""
+        # Simple implementation - in production would use NLP
         sentences = re.split(r'[.!?]+', text)
         phrases = []
         
@@ -814,7 +842,8 @@ class ContentProtectionCrawler(WebCrawler):
         return phrases
     
     async def _perform_search_query(self, search_engine: str, query: str) -> List[Dict[str, str]]:
-        """Perform search query and extract results."""        results = []
+        """Perform search query and extract results."""
+        results = []
         
         try:
             params = {
@@ -838,7 +867,8 @@ class ContentProtectionCrawler(WebCrawler):
         return results
     
     def _parse_search_results(self, html_content: str, search_engine: str) -> List[Dict[str, str]]:
-        """Parse search engine results from HTML."""        results = []
+        """Parse search engine results from HTML."""
+        results = []
         soup = BeautifulSoup(html_content, 'html.parser')
         
         try:
@@ -884,7 +914,8 @@ class ContentProtectionCrawler(WebCrawler):
     async def _analyze_search_results(
         self, results: List[Dict[str, str]], target: ProtectionTarget, query: str
     ) -> List[InfringementDetection]:
-        """Analyze search results for potential infringements."""        detections = []
+        """Analyze search results for potential infringements."""
+        detections = []
         
         for result in results:
             try:
@@ -943,7 +974,8 @@ class ContentProtectionCrawler(WebCrawler):
     def _determine_infringement_severity(
         self, similarity_score: float, domain: str
     ) -> InfringementSeverity:
-        """Determine infringement severity based on similarity and domain."""        if similarity_score >= 0.95:
+        """Determine infringement severity based on similarity and domain."""
+        if similarity_score >= 0.95:
             return InfringementSeverity.EXACT_MATCH
         elif similarity_score >= 0.85:
             if domain in self.piracy_domains:
@@ -958,7 +990,8 @@ class ContentProtectionCrawler(WebCrawler):
     async def _calculate_content_similarity(
         self, search_result: Dict[str, str], fingerprints: List[ContentFingerprint]
     ) -> float:
-        """Calculate similarity between search result and protected content."""        max_similarity = 0.0
+        """Calculate similarity between search result and protected content."""
+        max_similarity = 0.0
         
         try:
             result_text = f"{search_result['title']} {search_result['snippet']}"
@@ -992,7 +1025,8 @@ class ContentProtectionCrawler(WebCrawler):
         return max_similarity
     
     def _calculate_text_similarity_simple(self, text1: str, text2: str) -> float:
-        """Simple text similarity calculation."""        if not text1 or not text2:
+        """Simple text similarity calculation."""
+        if not text1 or not text2:
             return 0.0
         
         # Simple word overlap similarity
@@ -1010,7 +1044,8 @@ class ContentProtectionCrawler(WebCrawler):
     async def _scan_file_sharing_sites(
         self, target: ProtectionTarget
     ) -> List[InfringementDetection]:
-        """Scan file sharing sites for potential infringements."""        detections = []
+        """Scan file sharing sites for potential infringements."""
+        detections = []
         
         # Popular file sharing sites to monitor
         file_sharing_sites = [
@@ -1045,7 +1080,8 @@ class ContentProtectionCrawler(WebCrawler):
     async def _scan_piracy_sites(
         self, target: ProtectionTarget
     ) -> List[InfringementDetection]:
-        """Scan known piracy sites for content."""        detections = []
+        """Scan known piracy sites for content."""
+        detections = []
         
         for domain in list(self.piracy_domains)[:5]:  # Limit sites
             try:
@@ -1092,7 +1128,8 @@ class ContentProtectionCrawler(WebCrawler):
     async def _analyze_infringement_detections(
         self, detections: List[InfringementDetection], target: ProtectionTarget
     ) -> List[InfringementDetection]:
-        """Analyze and prioritize infringement detections."""        try:
+        """Analyze and prioritize infringement detections."""
+        try:
             # Sort by severity and similarity score
             detections.sort(
                 key=lambda d: (d.severity.value, d.similarity_score), 
@@ -1123,7 +1160,8 @@ class ContentProtectionCrawler(WebCrawler):
             return detections
     
     async def _download_content(self, url: str) -> Optional[bytes]:
-        """Download content from URL for fingerprinting."""        try:
+        """Download content from URL for fingerprinting."""
+        try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url, timeout=30) as response:
                     if response.status == 200:
@@ -1134,7 +1172,8 @@ class ContentProtectionCrawler(WebCrawler):
             return None
     
     async def _extract_text_from_url(self, url: str) -> str:
-        """Extract text content from URL."""        try:
+        """Extract text content from URL."""
+        try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
                     if response.status == 200:
@@ -1149,7 +1188,8 @@ class ContentProtectionCrawler(WebCrawler):
     async def generate_dmca_notice(
         self, detection: InfringementDetection
     ) -> Dict[str, Any]:
-        """Generate DMCA takedown notice for infringement."""        try:
+        """Generate DMCA takedown notice for infringement."""
+        try:
             target = self.protection_targets[detection.original_content_id]
             
             dmca_notice = {
@@ -1178,7 +1218,8 @@ class ContentProtectionCrawler(WebCrawler):
     def _generate_dmca_template(
         self, detection: InfringementDetection, target: ProtectionTarget
     ) -> str:
-        """Generate DMCA notice template."""        template = f"""DMCA TAKEDOWN NOTICE
+        """Generate DMCA notice template."""
+        template = f"""DMCA TAKEDOWN NOTICE
 
 To: Copyright Agent
 Date: {datetime.utcnow().strftime('%Y-%m-%d')}

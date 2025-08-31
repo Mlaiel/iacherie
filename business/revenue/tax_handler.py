@@ -16,7 +16,8 @@ Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Tax Management
 ========================================================================================
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 
 class TaxJurisdiction(Enum):
-    """Tax jurisdictions"""    US = "us"
+    """Tax jurisdictions"""
+    US = "us"
     EU = "eu"
     UK = "uk"
     CA = "ca"
@@ -43,7 +45,8 @@ class TaxJurisdiction(Enum):
 
 
 class TaxType(Enum):
-    """Tax types"""    INCOME_TAX = "income_tax"
+    """Tax types"""
+    INCOME_TAX = "income_tax"
     WITHHOLDING_TAX = "withholding_tax"
     VAT = "vat"
     SALES_TAX = "sales_tax"
@@ -52,7 +55,8 @@ class TaxType(Enum):
 
 @dataclass
 class TaxCalculation:
-    """Tax calculation result"""    calculation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Tax calculation result"""
+    calculation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
     gross_amount: Decimal = Decimal('0')
     tax_amount: Decimal = Decimal('0')
@@ -65,7 +69,8 @@ class TaxCalculation:
 
 
 class TaxHandler:
-    """    Ultra-advanced tax management system for international content creators
+    """
+    Ultra-advanced tax management system for international content creators
     
     Features:
     - Multi-jurisdiction tax calculations
@@ -76,7 +81,8 @@ class TaxHandler:
     - Audit trail and record keeping
     - Integration with tax authorities APIs
     - Automated tax form generation
-    """    
+    """
+    
     def __init__(self,
                  db_manager: DatabaseManager,
                  security_manager: SecurityManager,
@@ -91,7 +97,8 @@ class TaxHandler:
         self._compliance_rules = {}
         
     async def initialize(self):
-        """Initialize tax handler"""        try:
+        """Initialize tax handler"""
+        try:
             # Load tax rates and treaties
             await self._load_tax_configuration()
             
@@ -107,7 +114,8 @@ class TaxHandler:
                             revenue_type: str,
                             platform: str,
                             calculation_date: datetime) -> TaxCalculation:
-        """        Calculate taxes for a revenue transaction
+        """
+        Calculate taxes for a revenue transaction
         
         Args:
             creator_id: Creator ID
@@ -118,7 +126,8 @@ class TaxHandler:
             
         Returns:
             Tax calculation result
-        """        try:
+        """
+        try:
             # Get creator tax profile
             tax_profile = await self._get_creator_tax_profile(creator_id)
             
@@ -170,7 +179,8 @@ class TaxHandler:
             raise
 
     async def cleanup(self):
-        """Cleanup tax handler resources"""        try:
+        """Cleanup tax handler resources"""
+        try:
             logger.info("Tax handler cleanup completed")
             
         except Exception as e:

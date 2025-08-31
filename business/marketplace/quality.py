@@ -8,7 +8,8 @@ Copyright: All rights reserved - Unauthorized use strictly prohibited
 WARNING: This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Legal action will be taken against violators.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -26,7 +27,8 @@ from ...security.protection import SecurityScanner
 
 
 class QualityScore(Enum):
-    """Quality score levels."""    EXCELLENT = "excellent"
+    """Quality score levels."""
+    EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
     POOR = "poor"
@@ -34,7 +36,8 @@ class QualityScore(Enum):
 
 
 class ValidationStatus(Enum):
-    """Validation status enumeration."""    PENDING = "pending"
+    """Validation status enumeration."""
+    PENDING = "pending"
     IN_REVIEW = "in_review"
     APPROVED = "approved"
     REJECTED = "rejected"
@@ -43,7 +46,8 @@ class ValidationStatus(Enum):
 
 @dataclass
 class QualityMetrics:
-    """Quality assessment metrics."""    technical_quality: float
+    """Quality assessment metrics."""
+    technical_quality: float
     content_quality: float
     originality_score: float
     engagement_potential: float
@@ -54,7 +58,8 @@ class QualityMetrics:
 
 @dataclass
 class ValidationCriteria:
-    """Content validation criteria."""    min_technical_quality: float
+    """Content validation criteria."""
+    min_technical_quality: float
     min_content_quality: float
     min_originality: float
     brand_safety_required: bool
@@ -63,9 +68,11 @@ class ValidationCriteria:
 
 
 class ContentValidator:
-    """    Enterprise content validation system.
+    """
+    Enterprise content validation system.
     Performs comprehensive quality assessment and validation of content.
-    """    
+    """
+    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -87,7 +94,8 @@ class ContentValidator:
         validation_criteria: ValidationCriteria,
         creator_id: str
     ) -> Dict[str, Any]:
-        """        Perform comprehensive content validation and quality assessment.
+        """
+        Perform comprehensive content validation and quality assessment.
         
         Args:
             content_id: Content identifier
@@ -96,7 +104,8 @@ class ContentValidator:
             
         Returns:
             Validation results with quality scores and recommendations
-        """        try:
+        """
+        try:
             validation_id = f"val_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{content_id}"
             
             # Get content data
@@ -202,7 +211,8 @@ class ContentValidator:
         content_batch: List[Dict[str, Any]],
         validation_criteria: ValidationCriteria
     ) -> Dict[str, Any]:
-        """        Validate multiple content items in batch for efficiency.
+        """
+        Validate multiple content items in batch for efficiency.
         
         Args:
             content_batch: List of content validation requests
@@ -210,7 +220,8 @@ class ContentValidator:
             
         Returns:
             Batch validation results
-        """        try:
+        """
+        try:
             batch_id = f"batch_val_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             # Process validations in parallel with concurrency limit
@@ -274,7 +285,8 @@ class ContentValidator:
         creator_id: Optional[str] = None,
         time_period: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """        Analyze content quality trends over time.
+        """
+        Analyze content quality trends over time.
         
         Args:
             creator_id: Optional creator filter
@@ -282,7 +294,8 @@ class ContentValidator:
             
         Returns:
             Quality trend analysis
-        """        try:
+        """
+        try:
             cache_key = f"quality_trends:{creator_id or 'all'}:{int(time_period.total_seconds())}"
             
             # Check cache
@@ -324,7 +337,8 @@ class ContentValidator:
         self, 
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze technical quality of content."""        # Use AI content analyzer for technical assessment
+        """Analyze technical quality of content."""
+        # Use AI content analyzer for technical assessment
         technical_analysis = await self.analyzer.analyze_technical_quality(content_data)
         
         # Additional technical checks based on content type
@@ -343,7 +357,8 @@ class ContentValidator:
         self, 
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Assess overall content quality and value."""        content_quality = await self.analyzer.assess_content_quality(content_data)
+        """Assess overall content quality and value."""
+        content_quality = await self.analyzer.assess_content_quality(content_data)
         
         # Additional quality factors
         quality_factors = {
@@ -361,7 +376,8 @@ class ContentValidator:
         self, 
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Check content originality and detect potential plagiarism."""        originality_check = await self.analyzer.check_originality(content_data)
+        """Check content originality and detect potential plagiarism."""
+        originality_check = await self.analyzer.check_originality(content_data)
         
         # Additional originality checks
         similarity_checks = await self._perform_similarity_checks(content_data)
@@ -374,7 +390,8 @@ class ContentValidator:
         content_data: Dict[str, Any],
         moderation_result: Dict[str, Any]
     ) -> float:
-        """Assess brand safety score based on content and moderation results."""        base_score = 1.0
+        """Assess brand safety score based on content and moderation results."""
+        base_score = 1.0
         
         # Deduct points for moderation flags
         if moderation_result.get('flags'):
@@ -398,7 +415,8 @@ class ContentValidator:
         content_data: Dict[str, Any],
         security_scan: Dict[str, Any]
     ) -> float:
-        """Assess compliance with platform policies and legal requirements."""        compliance_score = 1.0
+        """Assess compliance with platform policies and legal requirements."""
+        compliance_score = 1.0
         
         # Check security scan results
         if security_scan.get('threats_detected'):
@@ -416,9 +434,11 @@ class ContentValidator:
 
 
 class CreatorValidator:
-    """    Enterprise creator validation and verification system.
+    """
+    Enterprise creator validation and verification system.
     Validates creator profiles, credentials, and maintains quality standards.
-    """    
+    """
+    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -437,7 +457,8 @@ class CreatorValidator:
         profile_data: Dict[str, Any],
         verification_documents: Optional[List[Dict[str, Any]]] = None
     ) -> Dict[str, Any]:
-        """        Validate creator profile for authenticity and quality.
+        """
+        Validate creator profile for authenticity and quality.
         
         Args:
             creator_id: Creator identifier
@@ -446,7 +467,8 @@ class CreatorValidator:
             
         Returns:
             Creator validation results
-        """        try:
+        """
+        try:
             validation_id = f"creator_val_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{creator_id}"
             
             # Basic profile validation
@@ -533,7 +555,8 @@ class CreatorValidator:
         creator_id: str,
         monitoring_period: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """        Monitor creator quality metrics over time.
+        """
+        Monitor creator quality metrics over time.
         
         Args:
             creator_id: Creator identifier
@@ -541,7 +564,8 @@ class CreatorValidator:
             
         Returns:
             Quality monitoring results
-        """        try:
+        """
+        try:
             # Collect creator activity data
             activity_data = await self._collect_creator_activity(creator_id, monitoring_period)
             
@@ -582,9 +606,11 @@ class CreatorValidator:
 
 
 class QualityAssurance:
-    """    Enterprise quality assurance orchestrator.
+    """
+    Enterprise quality assurance orchestrator.
     Coordinates all quality control processes across the marketplace.
-    """    
+    """
+    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -603,7 +629,8 @@ class QualityAssurance:
         audit_scope: Dict[str, Any],
         audit_criteria: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Run comprehensive quality audit across marketplace.
+        """
+        Run comprehensive quality audit across marketplace.
         
         Args:
             audit_scope: Scope of the audit (creators, content, timeframe)
@@ -611,7 +638,8 @@ class QualityAssurance:
             
         Returns:
             Comprehensive audit results
-        """        try:
+        """
+        try:
             audit_id = f"audit_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             # Content quality audit
@@ -667,14 +695,16 @@ class QualityAssurance:
         self,
         improvement_plan: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Implement quality improvement actions based on audit results.
+        """
+        Implement quality improvement actions based on audit results.
         
         Args:
             improvement_plan: Quality improvement action plan
             
         Returns:
             Implementation results
-        """        try:
+        """
+        try:
             implementation_id = f"impl_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             # Execute improvement actions

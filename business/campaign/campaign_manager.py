@@ -10,7 +10,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is protected by copyright law. Unauthorized use, reproduction,
 or distribution without explicit written permission from Fahed Mlaiel is strictly
 prohibited and may result in legal action.
-"""from datetime import datetime, timedelta
+"""
+from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
 from enum import Enum
 from dataclasses import dataclass
@@ -29,7 +30,8 @@ from backend.business.monetization.revenue_calculator import RevenueCalculator
 
 
 class CampaignStatus(str, Enum):
-    """Campaign status enumeration"""    DRAFT = "draft"
+    """Campaign status enumeration"""
+    DRAFT = "draft"
     ACTIVE = "active"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -38,7 +40,8 @@ class CampaignStatus(str, Enum):
 
 
 class CampaignType(str, Enum):
-    """Campaign type enumeration"""    MUSIC_PROMOTION = "music_promotion"
+    """Campaign type enumeration"""
+    MUSIC_PROMOTION = "music_promotion"
     CONTENT_DISCOVERY = "content_discovery"
     BRAND_COLLABORATION = "brand_collaboration"
     MONETIZATION_BOOST = "monetization_boost"
@@ -47,7 +50,8 @@ class CampaignType(str, Enum):
 
 
 class CampaignPriority(str, Enum):
-    """Campaign priority levels"""    LOW = "low"
+    """Campaign priority levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -55,7 +59,8 @@ class CampaignPriority(str, Enum):
 
 @dataclass
 class CampaignMetrics:
-    """Campaign performance metrics"""    reach: int
+    """Campaign performance metrics"""
+    reach: int
     impressions: int
     engagement_rate: float
     click_through_rate: float
@@ -67,7 +72,8 @@ class CampaignMetrics:
 
 @dataclass
 class CampaignTarget:
-    """Campaign targeting configuration"""    demographics: Dict[str, Any]
+    """Campaign targeting configuration"""
+    demographics: Dict[str, Any]
     interests: List[str]
     platforms: List[str]
     geographic_regions: List[str]
@@ -76,7 +82,8 @@ class CampaignTarget:
 
 
 class CampaignConfiguration(BaseModel):
-    """Campaign configuration model"""    name: str = Field(..., description="Campaign name")
+    """Campaign configuration model"""
+    name: str = Field(..., description="Campaign name")
     description: str = Field(..., description="Campaign description")
     campaign_type: CampaignType = Field(..., description="Type of campaign")
     priority: CampaignPriority = Field(default=CampaignPriority.MEDIUM)
@@ -91,11 +98,13 @@ class CampaignConfiguration(BaseModel):
 
 
 class CampaignManager:
-    """    Advanced Campaign Management System
+    """
+    Advanced Campaign Management System
     
     Handles complete campaign lifecycle with AI-powered optimization,
     content protection integration, and multi-platform distribution.
-    """    
+    """
+    
     def __init__(self):
         self.logger = get_logger(__name__)
         self.prediction_engine = PredictionEngine()
@@ -109,7 +118,8 @@ class CampaignManager:
         config: CampaignConfiguration,
         db_session: Optional[AsyncSession] = None
     ) -> Dict[str, Any]:
-        """        Create a new campaign with AI-powered optimization setup
+        """
+        Create a new campaign with AI-powered optimization setup
         
         Args:
             creator_id: Creator's unique identifier
@@ -118,7 +128,8 @@ class CampaignManager:
             
         Returns:
             Campaign creation response with ID and initial metrics
-        """        try:
+        """
+        try:
             session = db_session or await get_db_session()
             campaign_id = str(uuid.uuid4())
             
@@ -191,7 +202,8 @@ class CampaignManager:
         creator_id: str,
         db_session: Optional[AsyncSession] = None
     ) -> Dict[str, Any]:
-        """        Launch an existing campaign with real-time monitoring setup
+        """
+        Launch an existing campaign with real-time monitoring setup
         
         Args:
             campaign_id: Campaign unique identifier
@@ -200,7 +212,8 @@ class CampaignManager:
             
         Returns:
             Launch confirmation with monitoring details
-        """        try:
+        """
+        try:
             session = db_session or await get_db_session()
             
             # Validate campaign exists and belongs to creator
@@ -261,7 +274,8 @@ class CampaignManager:
         campaign_id: str, 
         creator_id: str
     ) -> Dict[str, Any]:
-        """        Get real-time campaign monitoring data with AI insights
+        """
+        Get real-time campaign monitoring data with AI insights
         
         Args:
             campaign_id: Campaign unique identifier
@@ -269,7 +283,8 @@ class CampaignManager:
             
         Returns:
             Comprehensive monitoring dashboard data
-        """        try:
+        """
+        try:
             if campaign_id not in self._active_campaigns:
                 raise ValueError(f"Campaign not active or not found: {campaign_id}")
             
@@ -323,7 +338,8 @@ class CampaignManager:
         creator_id: str,
         optimization_params: Optional[Dict] = None
     ) -> Dict[str, Any]:
-        """        Apply AI-powered campaign optimizations
+        """
+        Apply AI-powered campaign optimizations
         
         Args:
             campaign_id: Campaign unique identifier  
@@ -332,7 +348,8 @@ class CampaignManager:
             
         Returns:
             Optimization results and updated campaign metrics
-        """        try:
+        """
+        try:
             if campaign_id not in self._active_campaigns:
                 raise ValueError(f"Campaign not active: {campaign_id}")
             
@@ -401,7 +418,8 @@ class CampaignManager:
         creator_id: str,
         reason: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Pause an active campaign"""        try:
+        """Pause an active campaign"""
+        try:
             await self._update_campaign_status(campaign_id, CampaignStatus.PAUSED)
             
             # Pause all active processes
@@ -424,7 +442,8 @@ class CampaignManager:
         campaign_id: str, 
         creator_id: str
     ) -> Dict[str, Any]:
-        """Resume a paused campaign"""        try:
+        """Resume a paused campaign"""
+        try:
             await self._update_campaign_status(campaign_id, CampaignStatus.ACTIVE)
             
             # Resume all processes
@@ -446,7 +465,8 @@ class CampaignManager:
         campaign_id: str, 
         creator_id: str
     ) -> Dict[str, Any]:
-        """Complete a campaign and generate final report"""        try:
+        """Complete a campaign and generate final report"""
+        try:
             # Generate final performance report
             final_report = await self._generate_final_report(campaign_id, creator_id)
             
@@ -477,7 +497,8 @@ class CampaignManager:
         creator_id: str, 
         session: AsyncSession
     ) -> bool:
-        """Validate campaign configuration"""        # Implementation for configuration validation
+        """Validate campaign configuration"""
+        # Implementation for configuration validation
         return True
     
     async def _optimize_budget_allocation(
@@ -486,11 +507,13 @@ class CampaignManager:
         target_config: CampaignTarget,
         creator_id: str
     ) -> Dict[str, float]:
-        """AI-powered budget optimization"""        # Implementation for budget optimization
+        """AI-powered budget optimization"""
+        # Implementation for budget optimization
         return {"optimized_allocation": budget}
     
     async def _store_campaign(self, campaign_data: Dict, session: AsyncSession) -> None:
-        """Store campaign in database"""        # Implementation for database storage
+        """Store campaign in database"""
+        # Implementation for database storage
         pass
     
     async def _initialize_ai_optimization(
@@ -498,7 +521,8 @@ class CampaignManager:
         campaign_id: str, 
         config: CampaignConfiguration
     ) -> None:
-        """Initialize AI optimization models"""        # Implementation for AI optimization setup
+        """Initialize AI optimization models"""
+        # Implementation for AI optimization setup
         pass
     
     async def _setup_content_protection(
@@ -506,7 +530,8 @@ class CampaignManager:
         campaign_id: str, 
         content_ids: List[str]
     ) -> None:
-        """Setup content protection for campaign"""        # Implementation for content protection setup
+        """Setup content protection for campaign"""
+        # Implementation for content protection setup
         pass
     
     async def _get_campaign(
@@ -515,11 +540,13 @@ class CampaignManager:
         creator_id: str, 
         session: AsyncSession
     ) -> Optional[Dict]:
-        """Retrieve campaign from database"""        # Implementation for campaign retrieval
+        """Retrieve campaign from database"""
+        # Implementation for campaign retrieval
         return {"id": campaign_id, "creator_id": creator_id, "status": "draft"}
     
     async def _validate_campaign_launch(self, campaign: Dict) -> Dict[str, Any]:
-        """Validate campaign can be launched"""        return {"valid": True, "errors": []}
+        """Validate campaign can be launched"""
+        return {"valid": True, "errors": []}
     
     async def _update_campaign_status(
         self, 
@@ -527,31 +554,37 @@ class CampaignManager:
         status: CampaignStatus,
         session: Optional[AsyncSession] = None
     ) -> None:
-        """Update campaign status in database"""        # Implementation for status update
+        """Update campaign status in database"""
+        # Implementation for status update
         pass
     
     async def _setup_real_time_monitoring(self, campaign: Dict) -> Dict[str, Any]:
-        """Setup real-time monitoring configuration"""        return {"estimated_reach": 10000}
+        """Setup real-time monitoring configuration"""
+        return {"estimated_reach": 10000}
     
     async def _start_ai_optimization(self, campaign_id: str, campaign: Dict) -> None:
-        """Start AI optimization processes"""        pass
+        """Start AI optimization processes"""
+        pass
     
     async def _activate_content_protection(
         self, 
         campaign_id: str, 
         content_ids: List[str]
     ) -> None:
-        """Activate content protection"""        pass
+        """Activate content protection"""
+        pass
     
     async def _initialize_performance_tracking(
         self, 
         campaign_id: str, 
         campaign: Dict
     ) -> None:
-        """Initialize performance tracking"""        pass
+        """Initialize performance tracking"""
+        pass
     
     async def _get_real_time_metrics(self, campaign_id: str) -> CampaignMetrics:
-        """Get real-time campaign metrics"""        return CampaignMetrics(
+        """Get real-time campaign metrics"""
+        return CampaignMetrics(
             reach=5000,
             impressions=15000,
             engagement_rate=0.05,
@@ -563,54 +596,64 @@ class CampaignManager:
         )
     
     async def _get_protection_status(self, content_ids: List[str]) -> Dict[str, Any]:
-        """Get content protection status"""        return {"protected": True, "violations_detected": 0}
+        """Get content protection status"""
+        return {"protected": True, "violations_detected": 0}
     
     async def _get_campaign_alerts(self, campaign_id: str) -> List[Dict]:
-        """Get campaign alerts and notifications"""        return []
+        """Get campaign alerts and notifications"""
+        return []
     
     async def _apply_budget_optimization(
         self, 
         campaign_id: str, 
         reallocation: Dict
     ) -> None:
-        """Apply budget optimization changes"""        pass
+        """Apply budget optimization changes"""
+        pass
     
     async def _apply_targeting_optimization(
         self, 
         campaign_id: str, 
         targeting_updates: Dict
     ) -> None:
-        """Apply targeting optimization changes"""        pass
+        """Apply targeting optimization changes"""
+        pass
     
     async def _apply_content_optimization(
         self, 
         campaign_id: str, 
         content_optimization: Dict
     ) -> None:
-        """Apply content optimization changes"""        pass
+        """Apply content optimization changes"""
+        pass
     
     async def _update_campaign_config(
         self, 
         campaign_id: str, 
         updated_config: Dict
     ) -> None:
-        """Update campaign configuration"""        pass
+        """Update campaign configuration"""
+        pass
     
     async def _pause_campaign_processes(self, campaign_id: str) -> None:
-        """Pause all campaign processes"""        pass
+        """Pause all campaign processes"""
+        pass
     
     async def _resume_campaign_processes(self, campaign_id: str) -> None:
-        """Resume all campaign processes"""        pass
+        """Resume all campaign processes"""
+        pass
     
     async def _cleanup_campaign_processes(self, campaign_id: str) -> None:
-        """Cleanup campaign processes after completion"""        pass
+        """Cleanup campaign processes after completion"""
+        pass
     
     async def _generate_final_report(
         self, 
         campaign_id: str, 
         creator_id: str
     ) -> Dict[str, Any]:
-        """Generate comprehensive final campaign report"""        return {
+        """Generate comprehensive final campaign report"""
+        return {
             "total_reach": 50000,
             "total_revenue": 2500.0,
             "roi": 2.5,

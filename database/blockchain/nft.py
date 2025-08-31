@@ -5,7 +5,8 @@ for the IA Influencer Agent platform content protection ecosystem.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""from typing import Dict, List, Any, Optional, Union
+"""
+from typing import Dict, List, Any, Optional, Union
 from dataclasses import dataclass, asdict
 from enum import Enum
 import json
@@ -23,11 +24,13 @@ import magic
 logger = logging.getLogger(__name__)
 
 class NFTStandard(Enum):
-    """Supported NFT standards."""    ERC721 = "ERC-721"
+    """Supported NFT standards."""
+    ERC721 = "ERC-721"
     ERC1155 = "ERC-1155"
 
 class NFTContentType(Enum):
-    """Types of content that can be minted as NFTs."""    AUDIO = "audio"
+    """Types of content that can be minted as NFTs."""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -35,7 +38,8 @@ class NFTContentType(Enum):
     MIXED_MEDIA = "mixed_media"
 
 class NFTMarketplace(Enum):
-    """Supported NFT marketplaces."""    OPENSEA = "opensea"
+    """Supported NFT marketplaces."""
+    OPENSEA = "opensea"
     RARIBLE = "rarible"
     FOUNDATION = "foundation"
     SUPERRARE = "superrare"
@@ -44,7 +48,8 @@ class NFTMarketplace(Enum):
 
 @dataclass
 class NFTMetadata:
-    """Standard NFT metadata structure following OpenSea standards."""    name: str
+    """Standard NFT metadata structure following OpenSea standards."""
+    name: str
     description: str
     image: str
     external_url: Optional[str] = None
@@ -59,7 +64,8 @@ class NFTMetadata:
 
 @dataclass 
 class NFTCreationRequest:
-    """Request structure for NFT creation."""    content_hash: str
+    """Request structure for NFT creation."""
+    content_hash: str
     content_type: NFTContentType
     content_url: str
     title: str
@@ -74,7 +80,8 @@ class NFTCreationRequest:
 
 @dataclass
 class NFTCreationResult:
-    """Result of NFT creation process."""    token_id: str
+    """Result of NFT creation process."""
+    token_id: str
     contract_address: str
     transaction_hash: str
     metadata_uri: str
@@ -85,18 +92,22 @@ class NFTCreationResult:
     ipfs_hash: Optional[str] = None
 
 class IPFSManager:
-    """Manager for IPFS operations for NFT metadata and content storage."""    
+    """Manager for IPFS operations for NFT metadata and content storage."""
+    
     def __init__(self, ipfs_config: Dict[str, Any]):
-        """        Initialize IPFS manager.
+        """
+        Initialize IPFS manager.
         
         Args:
             ipfs_config: Configuration for IPFS node connection
-        """        self.ipfs_config = ipfs_config
+        """
+        self.ipfs_config = ipfs_config
         self.ipfs_gateway = ipfs_config.get("gateway", "https://ipfs.io/ipfs/")
         self.api_endpoint = ipfs_config.get("api", "http://localhost:5001")
         
     def upload_content(self, content_data: bytes, filename: str) -> str:
-        """        Upload content to IPFS.
+        """
+        Upload content to IPFS.
         
         Args:
             content_data: Raw content bytes
@@ -104,7 +115,8 @@ class IPFSManager:
             
         Returns:
             IPFS hash of uploaded content
-        """        try:
+        """
+        try:
             files = {"file": (filename, content_data)}
             response = requests.post(
                 f"{self.api_endpoint}/api/v0/add",
@@ -124,14 +136,16 @@ class IPFSManager:
             raise
             
     def upload_metadata(self, metadata: NFTMetadata) -> str:
-        """        Upload NFT metadata to IPFS.
+        """
+        Upload NFT metadata to IPFS.
         
         Args:
             metadata: NFT metadata object
             
         Returns:
             IPFS hash of metadata JSON
-        """        try:
+        """
+        try:
             metadata_json = json.dumps(asdict(metadata), indent=2)
             metadata_bytes = metadata_json.encode('utf-8')
             
@@ -142,33 +156,40 @@ class IPFSManager:
             raise
             
     def get_ipfs_url(self, ipfs_hash: str) -> str:
-        """Get public IPFS URL for a hash."""        return urljoin(self.ipfs_gateway, ipfs_hash)
+        """Get public IPFS URL for a hash."""
+        return urljoin(self.ipfs_gateway, ipfs_hash)
 
 class NFTCreator:
-    """    Enterprise NFT creation and management system for content protection.
+    """
+    Enterprise NFT creation and management system for content protection.
     
     Handles automated NFT minting, metadata generation, marketplace integration,
     and royalty management for the IA Influencer Agent platform.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialize NFT creator.
+        """
+        Initialize NFT creator.
         
         Args:
             config: Configuration including smart contracts, IPFS, marketplaces
-        """        self.config = config
+        """
+        self.config = config
         self.ipfs_manager = IPFSManager(config.get("ipfs", {}))
         self.marketplace_configs = config.get("marketplaces", {})
         self.contract_addresses = config.get("contracts", {})
         
     async def create_nft(self, request: NFTCreationRequest) -> NFTCreationResult:
-        """        Create an NFT for content protection.
+        """
+        Create an NFT for content protection.
         
         Args:
             request: NFT creation request with all necessary parameters
             
         Returns:
             NFT creation result with contract details and metadata
-        """        try:
+        """
+        try:
             logger.info(f"Starting NFT creation for content: {request.content_hash}")
             
             # Step 1: Validate content
@@ -212,7 +233,8 @@ class NFTCreator:
             raise
 
     async def _validate_content(self, request: NFTCreationRequest) -> None:
-        """Validate content before NFT creation."""        try:
+        """Validate content before NFT creation."""
+        try:
             # Check content accessibility
             response = requests.head(request.content_url, timeout=10)
             response.raise_for_status()
@@ -235,7 +257,8 @@ class NFTCreator:
             raise
 
     def _is_valid_content_type(self, content_type: str, expected_type: NFTContentType) -> bool:
-        """Check if content type matches expected type."""        type_mappings = {
+        """Check if content type matches expected type."""
+        type_mappings = {
             NFTContentType.AUDIO: ["audio/"],
             NFTContentType.VIDEO: ["video/"],
             NFTContentType.IMAGE: ["image/"],
@@ -247,7 +270,8 @@ class NFTCreator:
         return any(content_type.startswith(vt) for vt in valid_types)
 
     async def _generate_metadata(self, request: NFTCreationRequest) -> NFTMetadata:
-        """Generate comprehensive NFT metadata."""        try:
+        """Generate comprehensive NFT metadata."""
+        try:
             # Base metadata
             metadata = NFTMetadata(
                 name=request.title,
@@ -303,7 +327,8 @@ class NFTCreator:
             raise
 
     async def _mint_nft(self, request: NFTCreationRequest, metadata_uri: str) -> Dict[str, Any]:
-        """Mint NFT on the blockchain."""        try:
+        """Mint NFT on the blockchain."""
+        try:
             # Import here to avoid circular imports
             from .contracts import SmartContractManager, ContractType
             
@@ -350,7 +375,8 @@ class NFTCreator:
             raise
 
     def _extract_token_id_from_logs(self, logs: List[Dict[str, Any]]) -> str:
-        """Extract token ID from transaction logs."""        # Implementation would parse the Transfer event logs to extract token ID
+        """Extract token ID from transaction logs."""
+        # Implementation would parse the Transfer event logs to extract token ID
         # For now, return a placeholder
         return "1"  # This would be extracted from actual logs
 
@@ -359,7 +385,8 @@ class NFTCreator:
         request: NFTCreationRequest,
         mint_result: Dict[str, Any]
     ) -> Optional[str]:
-        """Register NFT on specified marketplace."""        try:
+        """Register NFT on specified marketplace."""
+        try:
             if not request.marketplace:
                 return None
                 
@@ -383,14 +410,16 @@ class NFTCreator:
             return None
 
     async def batch_create_nfts(self, requests: List[NFTCreationRequest]) -> List[NFTCreationResult]:
-        """        Create multiple NFTs in batch for efficiency.
+        """
+        Create multiple NFTs in batch for efficiency.
         
         Args:
             requests: List of NFT creation requests
             
         Returns:
             List of NFT creation results
-        """        results = []
+        """
+        results = []
         
         for request in requests:
             try:
@@ -404,7 +433,8 @@ class NFTCreator:
         return results
 
     def get_nft_info(self, contract_address: str, token_id: str) -> Dict[str, Any]:
-        """        Get information about an existing NFT.
+        """
+        Get information about an existing NFT.
         
         Args:
             contract_address: Contract address of the NFT
@@ -412,7 +442,8 @@ class NFTCreator:
             
         Returns:
             NFT information including metadata and ownership
-        """        try:
+        """
+        try:
             # Implementation would query the blockchain for NFT details
             # For now, return mock data
             return {
@@ -432,7 +463,8 @@ class NFTCreator:
             raise
 
     def calculate_royalties(self, sale_price: Decimal, royalty_percentage: float) -> Decimal:
-        """Calculate royalty amount for a sale."""        return sale_price * Decimal(str(royalty_percentage / 100))
+        """Calculate royalty amount for a sale."""
+        return sale_price * Decimal(str(royalty_percentage / 100))
 
 # Initialize module exports
 __all__ = [

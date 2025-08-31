@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
+"""
+from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID, JSONB
@@ -35,7 +36,8 @@ Base = declarative_base()
 
 
 class AnalysisType(Enum):
-    """AI analysis type enumeration"""    SENTIMENT_ANALYSIS = "sentiment_analysis"
+    """AI analysis type enumeration"""
+    SENTIMENT_ANALYSIS = "sentiment_analysis"
     TREND_DETECTION = "trend_detection"
     AUDIENCE_ANALYSIS = "audience_analysis"
     CONTENT_OPTIMIZATION = "content_optimization"
@@ -53,7 +55,8 @@ class AnalysisType(Enum):
 
 
 class AnalysisStatus(Enum):
-    """Analysis processing status"""    PENDING = "pending"
+    """Analysis processing status"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -66,7 +69,8 @@ class AnalysisStatus(Enum):
 
 
 class ConfidenceLevel(Enum):
-    """AI confidence level enumeration"""    VERY_LOW = "very_low"
+    """AI confidence level enumeration"""
+    VERY_LOW = "very_low"
     LOW = "low"
     MODERATE = "moderate"
     HIGH = "high"
@@ -75,7 +79,8 @@ class ConfidenceLevel(Enum):
 
 
 class AIModel(Enum):
-    """AI model enumeration"""    BERT = "bert"
+    """AI model enumeration"""
+    BERT = "bert"
     ROBERTA = "roberta"
     GPT4 = "gpt4"
     CLAUDE = "claude"
@@ -92,7 +97,8 @@ class AIModel(Enum):
 
 
 class SentimentType(Enum):
-    """Sentiment analysis types"""    POSITIVE = "positive"
+    """Sentiment analysis types"""
+    POSITIVE = "positive"
     NEGATIVE = "negative"
     NEUTRAL = "neutral"
     MIXED = "mixed"
@@ -102,7 +108,8 @@ class SentimentType(Enum):
 
 
 class TrendDirection(Enum):
-    """Trend direction enumeration"""    RISING = "rising"
+    """Trend direction enumeration"""
+    RISING = "rising"
     FALLING = "falling"
     STABLE = "stable"
     VOLATILE = "volatile"
@@ -113,11 +120,13 @@ class TrendDirection(Enum):
 
 
 class AIAnalysis(Base):
-    """    Enterprise AI Analysis Model
+    """
+    Enterprise AI Analysis Model
     
     Comprehensive AI-driven content analysis with multiple ML models,
     sentiment analysis, trend detection, and intelligent recommendations.
-    """    __tablename__ = 'ai_analyses'
+    """
+    __tablename__ = 'ai_analyses'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -279,7 +288,8 @@ class AIAnalysis(Base):
     
     @classmethod
     def create_sentiment_analysis(cls, content_id: str, user_id: str, sentiment_data: Dict[str, Any]) -> 'AIAnalysis':
-        """Create sentiment analysis record"""        return cls(
+        """Create sentiment analysis record"""
+        return cls(
             content_id=content_id,
             user_id=user_id,
             analysis_type=AnalysisType.SENTIMENT_ANALYSIS,
@@ -293,7 +303,8 @@ class AIAnalysis(Base):
     
     @classmethod
     def create_trend_analysis(cls, content_id: str, user_id: str, trend_data: Dict[str, Any]) -> 'AIAnalysis':
-        """Create trend analysis record"""        return cls(
+        """Create trend analysis record"""
+        return cls(
             content_id=content_id,
             user_id=user_id,
             analysis_type=AnalysisType.TREND_DETECTION,
@@ -306,7 +317,8 @@ class AIAnalysis(Base):
         )
     
     def update_performance_metrics(self, metrics: Dict[str, Any]) -> None:
-        """Update performance metrics"""        self.performance_metrics = {
+        """Update performance metrics"""
+        self.performance_metrics = {
             **(self.performance_metrics or {}),
             **metrics,
             'last_updated': datetime.now(timezone.utc).isoformat()
@@ -314,7 +326,8 @@ class AIAnalysis(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def add_recommendation(self, recommendation_type: str, recommendations: List[Dict[str, Any]]) -> None:
-        """Add AI recommendations"""        current_suggestions = self.optimization_suggestions or {}
+        """Add AI recommendations"""
+        current_suggestions = self.optimization_suggestions or {}
         current_suggestions[recommendation_type] = {
             'recommendations': recommendations,
             'generated_at': datetime.now(timezone.utc).isoformat(),
@@ -323,7 +336,8 @@ class AIAnalysis(Base):
         self.optimization_suggestions = current_suggestions
     
     def calculate_overall_score(self) -> float:
-        """Calculate overall AI analysis score"""        scores = []
+        """Calculate overall AI analysis score"""
+        scores = []
         
         if self.sentiment_score is not None:
             scores.append(abs(self.sentiment_score) * 100)
@@ -348,13 +362,15 @@ class AIAnalysis(Base):
         return self.overall_score
     
     def is_high_confidence(self) -> bool:
-        """Check if analysis has high confidence"""        return (
+        """Check if analysis has high confidence"""
+        return (
             self.confidence_level in [ConfidenceLevel.HIGH, ConfidenceLevel.VERY_HIGH, ConfidenceLevel.EXPERT] and
             self.confidence_score >= 0.8
         )
     
     def get_recommendations_summary(self) -> Dict[str, Any]:
-        """Get summary of all recommendations"""        return {
+        """Get summary of all recommendations"""
+        return {
             'optimization_suggestions': self.optimization_suggestions or {},
             'keyword_recommendations': self.keyword_recommendations or [],
             'hashtag_suggestions': self.hashtag_suggestions or [],

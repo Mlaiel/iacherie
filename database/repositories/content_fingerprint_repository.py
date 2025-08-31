@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""from typing import List, Optional, Dict, Any, Union
+"""
+from typing import List, Optional, Dict, Any, Union
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, func, text
 from datetime import datetime, timedelta
@@ -43,11 +44,14 @@ import logging
 logger = logging.getLogger(__name__)
 
 class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
-    """    Repository for content fingerprint operations with advanced similarity search,
+    """
+    Repository for content fingerprint operations with advanced similarity search,
     vector matching, and multi-format content protection capabilities.
-    """    
+    """
+    
     def __init__(self, db_session: Session):
-        """Initialize content fingerprint repository"""        super().__init__(db_session, ContentFingerprint)
+        """Initialize content fingerprint repository"""
+        super().__init__(db_session, ContentFingerprint)
         
     def create_fingerprint(self,
                           user_id: int,
@@ -59,7 +63,8 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
                           quality_level: QualityLevel = QualityLevel.HIGH,
                           content_category: ContentCategory = ContentCategory.ORIGINAL,
                           metadata: Optional[Dict[str, Any]] = None) -> ContentFingerprint:
-        """        Create content fingerprint with validation and deduplication
+        """
+        Create content fingerprint with validation and deduplication
         
         Args:
             user_id: Owner user ID
@@ -74,7 +79,8 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
             
         Returns:
             Created ContentFingerprint instance
-        """        try:
+        """
+        try:
             # Check for duplicate fingerprints
             existing = self.get_by_fingerprint_hash(fingerprint_hash)
             if existing:
@@ -114,14 +120,16 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
             raise RepositoryException(f"Fingerprint creation failed: {str(e)}")
             
     def get_by_fingerprint_hash(self, fingerprint_hash: str) -> Optional[ContentFingerprint]:
-        """        Get fingerprint by hash value
+        """
+        Get fingerprint by hash value
         
         Args:
             fingerprint_hash: Fingerprint hash to search for
             
         Returns:
             ContentFingerprint instance or None
-        """        try:
+        """
+        try:
             return self.db_session.query(ContentFingerprint).filter(
                 ContentFingerprint.fingerprint_hash == fingerprint_hash
             ).first()
@@ -136,7 +144,8 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
                       status: Optional[FingerprintStatus] = None,
                       limit: Optional[int] = None,
                       offset: Optional[int] = None) -> List[ContentFingerprint]:
-        """        Get fingerprints by user ID with optional filtering
+        """
+        Get fingerprints by user ID with optional filtering
         
         Args:
             user_id: User ID to filter by
@@ -147,7 +156,8 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
             
         Returns:
             List of ContentFingerprint instances
-        """        try:
+        """
+        try:
             query = self.db_session.query(ContentFingerprint).filter(
                 ContentFingerprint.user_id == user_id
             )
@@ -184,7 +194,8 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
                                  similarity_threshold: float = 0.8,
                                  exclude_user_id: Optional[int] = None,
                                  limit: int = 10) -> List[Dict[str, Any]]:
-        """        Find similar fingerprints using hash comparison and vector similarity
+        """
+        Find similar fingerprints using hash comparison and vector similarity
         
         Args:
             fingerprint_hash: Hash to compare against
@@ -195,7 +206,8 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
             
         Returns:
             List of similar fingerprints with similarity scores
-        """        try:
+        """
+        try:
             # Find exact hash matches first
             exact_matches = self.db_session.query(ContentFingerprint).filter(
                 and_(
@@ -244,7 +256,8 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
                            similarity_threshold: float,
                            exclude_user_id: Optional[int],
                            limit: int) -> List[Dict[str, Any]]:
-        """        Find fuzzy matches using advanced similarity algorithms
+        """
+        Find fuzzy matches using advanced similarity algorithms
         
         Args:
             fingerprint_hash: Hash to compare against
@@ -255,7 +268,8 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
             
         Returns:
             List of similar fingerprints with similarity scores
-        """        try:
+        """
+        try:
             # Get all fingerprints of the same content type
             query = self.db_session.query(ContentFingerprint).filter(
                 and_(
@@ -303,7 +317,8 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
                             hash1: str,
                             hash2: str,
                             content_type: ContentType) -> float:
-        """        Calculate similarity score between two fingerprint hashes
+        """
+        Calculate similarity score between two fingerprint hashes
         
         Args:
             hash1: First fingerprint hash
@@ -312,7 +327,8 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
             
         Returns:
             Similarity score between 0.0 and 1.0
-        """        try:
+        """
+        try:
             # Hamming distance for binary hashes
             if len(hash1) == len(hash2):
                 hamming_distance = sum(c1 != c2 for c1, c2 in zip(hash1, hash2))
@@ -338,14 +354,16 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
             return 0.0
             
     def get_content_statistics(self, user_id: Optional[int] = None) -> Dict[str, Any]:
-        """        Get comprehensive content fingerprint statistics
+        """
+        Get comprehensive content fingerprint statistics
         
         Args:
             user_id: Optional user ID to filter statistics
             
         Returns:
             Dictionary containing various statistics
-        """        try:
+        """
+        try:
             base_query = self.db_session.query(ContentFingerprint)
             
             if user_id:
@@ -398,7 +416,8 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
     def bulk_update_status(self,
                           fingerprint_ids: List[int],
                           new_status: FingerprintStatus) -> int:
-        """        Bulk update fingerprint status for multiple fingerprints
+        """
+        Bulk update fingerprint status for multiple fingerprints
         
         Args:
             fingerprint_ids: List of fingerprint IDs to update
@@ -406,7 +425,8 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
             
         Returns:
             Number of updated fingerprints
-        """        try:
+        """
+        try:
             updated_count = self.db_session.query(ContentFingerprint).filter(
                 ContentFingerprint.id.in_(fingerprint_ids)
             ).update(
@@ -431,14 +451,16 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
             raise RepositoryException(f"Bulk status update failed: {str(e)}")
             
     def delete_expired_fingerprints(self, retention_days: int = 365) -> int:
-        """        Delete or archive fingerprints older than retention period
+        """
+        Delete or archive fingerprints older than retention period
         
         Args:
             retention_days: Number of days to retain fingerprints
             
         Returns:
             Number of deleted fingerprints
-        """        try:
+        """
+        try:
             expiry_date = datetime.utcnow() - timedelta(days=retention_days)
             
             expired_fingerprints = self.db_session.query(ContentFingerprint).filter(
@@ -471,14 +493,16 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
             raise RepositoryException(f"Expired fingerprint cleanup failed: {str(e)}")
             
     def get_user_content_summary(self, user_id: int) -> Dict[str, Any]:
-        """        Get comprehensive content summary for a user
+        """
+        Get comprehensive content summary for a user
         
         Args:
             user_id: User ID to get summary for
             
         Returns:
             Dictionary containing user content summary
-        """        try:
+        """
+        try:
             user_fingerprints = self.get_by_user_id(user_id)
             
             if not user_fingerprints:

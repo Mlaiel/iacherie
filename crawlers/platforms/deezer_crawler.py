@@ -2,7 +2,8 @@
 Advanced industrial-grade Deezer crawler for music content protection and analytics
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 - All rights reserved
-"""import asyncio
+"""
+import asyncio
 import json
 import re
 from datetime import datetime, timedelta
@@ -25,7 +26,8 @@ settings = get_settings()
 
 
 class DeezerTrack(BaseModel):
-    """Deezer Track data model"""    track_id: str
+    """Deezer Track data model"""
+    track_id: str
     title: str
     artist_name: str
     artist_id: str
@@ -49,7 +51,8 @@ class DeezerTrack(BaseModel):
 
 
 class DeezerArtist(BaseModel):
-    """Deezer Artist data model"""    artist_id: str
+    """Deezer Artist data model"""
+    artist_id: str
     name: str
     link: str
     picture_url: Optional[str] = None
@@ -65,7 +68,8 @@ class DeezerArtist(BaseModel):
 
 
 class DeezerAlbum(BaseModel):
-    """Deezer Album data model"""    album_id: str
+    """Deezer Album data model"""
+    album_id: str
     title: str
     artist_name: str
     artist_id: str
@@ -91,7 +95,8 @@ class DeezerAlbum(BaseModel):
 
 
 class DeezerPlaylist(BaseModel):
-    """Deezer Playlist data model"""    playlist_id: str
+    """Deezer Playlist data model"""
+    playlist_id: str
     title: str
     description: Optional[str] = None
     duration: int = 0
@@ -113,7 +118,8 @@ class DeezerPlaylist(BaseModel):
 
 
 class DeezerCrawler(BaseCrawler):
-    """    Advanced Deezer crawler for comprehensive music content monitoring
+    """
+    Advanced Deezer crawler for comprehensive music content monitoring
     
     Features:
     - Music track analysis with audio fingerprinting
@@ -124,7 +130,8 @@ class DeezerCrawler(BaseCrawler):
     - Music trend analysis and recommendation
     - Chart tracking and popularity metrics
     - Advanced audio analysis integration
-    """    
+    """
+    
     def __init__(self):
         super().__init__()
         self.platform = "deezer"
@@ -141,7 +148,8 @@ class DeezerCrawler(BaseCrawler):
         }
         
     async def authenticate(self, access_token: str) -> bool:
-        """Authenticate with Deezer API (if available)"""        try:
+        """Authenticate with Deezer API (if available)"""
+        try:
             # Note: Deezer API is mostly public, OAuth for user-specific data
             if access_token:
                 self.session_headers['Authorization'] = f'Bearer {access_token}'
@@ -166,7 +174,8 @@ class DeezerCrawler(BaseCrawler):
         limit: int = 100,
         strict: bool = False
     ) -> List[Dict]:
-        """        Search Deezer tracks
+        """
+        Search Deezer tracks
         
         Args:
             query: Search query
@@ -175,7 +184,8 @@ class DeezerCrawler(BaseCrawler):
             
         Returns:
             List of matching tracks
-        """        await self.rate_limiter.wait()
+        """
+        await self.rate_limiter.wait()
         
         try:
             search_params = {
@@ -203,7 +213,8 @@ class DeezerCrawler(BaseCrawler):
             return []
     
     async def search_artists(self, query: str, limit: int = 50) -> List[Dict]:
-        """Search Deezer artists"""        await self.rate_limiter.wait()
+        """Search Deezer artists"""
+        await self.rate_limiter.wait()
         
         try:
             search_params = {
@@ -230,7 +241,8 @@ class DeezerCrawler(BaseCrawler):
             return []
     
     async def search_albums(self, query: str, limit: int = 50) -> List[Dict]:
-        """Search Deezer albums"""        await self.rate_limiter.wait()
+        """Search Deezer albums"""
+        await self.rate_limiter.wait()
         
         try:
             search_params = {
@@ -257,7 +269,8 @@ class DeezerCrawler(BaseCrawler):
             return []
     
     async def get_track_details(self, track_id: str) -> Optional[DeezerTrack]:
-        """Get detailed information about a specific track"""        await self.rate_limiter.wait()
+        """Get detailed information about a specific track"""
+        await self.rate_limiter.wait()
         
         try:
             endpoint = f"{self.api_base}/track/{track_id}"
@@ -276,7 +289,8 @@ class DeezerCrawler(BaseCrawler):
             return None
     
     async def get_artist_details(self, artist_id: str) -> Optional[DeezerArtist]:
-        """Get detailed information about a specific artist"""        await self.rate_limiter.wait()
+        """Get detailed information about a specific artist"""
+        await self.rate_limiter.wait()
         
         try:
             endpoint = f"{self.api_base}/artist/{artist_id}"
@@ -295,7 +309,8 @@ class DeezerCrawler(BaseCrawler):
             return None
     
     async def get_artist_top_tracks(self, artist_id: str, limit: int = 50) -> List[DeezerTrack]:
-        """Get top tracks from a specific artist"""        await self.rate_limiter.wait()
+        """Get top tracks from a specific artist"""
+        await self.rate_limiter.wait()
         
         try:
             endpoint = f"{self.api_base}/artist/{artist_id}/top"
@@ -323,7 +338,8 @@ class DeezerCrawler(BaseCrawler):
             return []
     
     async def get_album_tracks(self, album_id: str) -> List[DeezerTrack]:
-        """Get all tracks from a specific album"""        await self.rate_limiter.wait()
+        """Get all tracks from a specific album"""
+        await self.rate_limiter.wait()
         
         try:
             endpoint = f"{self.api_base}/album/{album_id}/tracks"
@@ -350,7 +366,8 @@ class DeezerCrawler(BaseCrawler):
             return []
     
     async def get_charts(self, chart_type: str = "tracks", limit: int = 100) -> List[Dict]:
-        """        Get Deezer charts
+        """
+        Get Deezer charts
         
         Args:
             chart_type: Type of chart (tracks, albums, artists, playlists)
@@ -358,7 +375,8 @@ class DeezerCrawler(BaseCrawler):
             
         Returns:
             List of chart items
-        """        await self.rate_limiter.wait()
+        """
+        await self.rate_limiter.wait()
         
         try:
             endpoint = f"{self.api_base}/chart/0/{chart_type}"
@@ -385,7 +403,8 @@ class DeezerCrawler(BaseCrawler):
         protected_content: Dict,
         similarity_threshold: float = 0.8
     ) -> List[ContentMatch]:
-        """        Monitor Deezer for potential copyright infringement
+        """
+        Monitor Deezer for potential copyright infringement
         
         Args:
             protected_content: Content to protect
@@ -393,7 +412,8 @@ class DeezerCrawler(BaseCrawler):
             
         Returns:
             List of potential copyright matches
-        """        matches = []
+        """
+        matches = []
         
         try:
             # Generate search queries from protected content
@@ -439,14 +459,16 @@ class DeezerCrawler(BaseCrawler):
             return []
     
     async def analyze_artist_performance(self, artist_id: str) -> Dict[str, Any]:
-        """        Analyze artist performance metrics on Deezer
+        """
+        Analyze artist performance metrics on Deezer
         
         Args:
             artist_id: Deezer artist ID
             
         Returns:
             Comprehensive artist performance analysis
-        """        try:
+        """
+        try:
             artist = await self.get_artist_details(artist_id)
             if not artist:
                 return {}
@@ -502,7 +524,8 @@ class DeezerCrawler(BaseCrawler):
         time_period: str = "current",
         limit: int = 100
     ) -> Dict[str, Any]:
-        """        Analyze music trends on Deezer
+        """
+        Analyze music trends on Deezer
         
         Args:
             genre: Specific genre to analyze
@@ -511,7 +534,8 @@ class DeezerCrawler(BaseCrawler):
             
         Returns:
             Comprehensive trend analysis
-        """        try:
+        """
+        try:
             # Get chart data
             trending_tracks = await self.get_charts("tracks", limit)
             trending_albums = await self.get_charts("albums", 50)
@@ -553,7 +577,8 @@ class DeezerCrawler(BaseCrawler):
             return {}
     
     async def bulk_track_analysis(self, track_ids: List[str]) -> List[Dict[str, Any]]:
-        """Analyze multiple tracks in bulk for efficiency"""        results = []
+        """Analyze multiple tracks in bulk for efficiency"""
+        results = []
         
         # Process tracks in batches to respect rate limits
         batch_size = 20
@@ -576,7 +601,8 @@ class DeezerCrawler(BaseCrawler):
         return results
     
     async def _parse_track_data(self, track_data: Dict) -> Optional[DeezerTrack]:
-        """Parse Deezer API track data into DeezerTrack model"""        try:
+        """Parse Deezer API track data into DeezerTrack model"""
+        try:
             # Parse artist information
             artist_info = track_data.get('artist', {})
             
@@ -628,7 +654,8 @@ class DeezerCrawler(BaseCrawler):
             return None
     
     async def _parse_artist_data(self, artist_data: Dict) -> Optional[DeezerArtist]:
-        """Parse Deezer API artist data into DeezerArtist model"""        try:
+        """Parse Deezer API artist data into DeezerArtist model"""
+        try:
             artist = DeezerArtist(
                 artist_id=str(artist_data.get('id', '')),
                 name=artist_data.get('name', ''),
@@ -652,7 +679,8 @@ class DeezerCrawler(BaseCrawler):
             return None
     
     def _generate_search_queries(self, protected_content: Dict) -> List[str]:
-        """Generate search queries for content protection"""        queries = []
+        """Generate search queries for content protection"""
+        queries = []
         
         if 'title' in protected_content:
             queries.append(protected_content['title'])
@@ -673,7 +701,8 @@ class DeezerCrawler(BaseCrawler):
         protected_content: Dict,
         track: DeezerTrack
     ) -> float:
-        """Calculate similarity between protected content and Deezer track"""        from difflib import SequenceMatcher
+        """Calculate similarity between protected content and Deezer track"""
+        from difflib import SequenceMatcher
         
         similarity_scores = []
         
@@ -710,7 +739,8 @@ class DeezerCrawler(BaseCrawler):
         return sum(similarity_scores) if similarity_scores else 0.0
     
     def _categorize_artist_popularity(self, fan_count: int) -> str:
-        """Categorize artist popularity level"""        if fan_count > 1000000:
+        """Categorize artist popularity level"""
+        if fan_count > 1000000:
             return "superstar"
         elif fan_count > 100000:
             return "popular"
@@ -722,7 +752,8 @@ class DeezerCrawler(BaseCrawler):
             return "new"
     
     def _calculate_fan_growth_potential(self, artist: DeezerArtist) -> str:
-        """Calculate artist fan growth potential"""        # Simple heuristic based on album count vs fan count ratio
+        """Calculate artist fan growth potential"""
+        # Simple heuristic based on album count vs fan count ratio
         if artist.nb_album == 0:
             return "unknown"
         
@@ -738,7 +769,8 @@ class DeezerCrawler(BaseCrawler):
             return "emerging"
     
     async def _analyze_genre_trends(self, tracks: List[Dict]) -> Dict[str, int]:
-        """Analyze genre trends from track list"""        genre_counts = {}
+        """Analyze genre trends from track list"""
+        genre_counts = {}
         
         for track in tracks:
             album = track.get('album', {})
@@ -748,7 +780,8 @@ class DeezerCrawler(BaseCrawler):
         return dict(sorted(genre_counts.items(), key=lambda x: x[1], reverse=True)[:10])
     
     async def _analyze_duration_trends(self, tracks: List[Dict]) -> Dict[str, Any]:
-        """Analyze duration trends from track list"""        durations = [track.get('duration', 0) for track in tracks if track.get('duration')]
+        """Analyze duration trends from track list"""
+        durations = [track.get('duration', 0) for track in tracks if track.get('duration')]
         
         if not durations:
             return {}
@@ -767,11 +800,13 @@ class DeezerCrawler(BaseCrawler):
         }
     
     async def _get_popular_genres(self, tracks: List[Dict]) -> List[str]:
-        """Get most popular genres from track list"""        genre_analysis = await self._analyze_genre_trends(tracks)
+        """Get most popular genres from track list"""
+        genre_analysis = await self._analyze_genre_trends(tracks)
         return list(genre_analysis.keys())[:5]
     
     async def _identify_emerging_artists(self, artists: List[Dict]) -> List[Dict]:
-        """Identify emerging artists based on metrics"""        emerging = []
+        """Identify emerging artists based on metrics"""
+        emerging = []
         
         for artist in artists:
             fan_count = artist.get('nb_fan', 0)
@@ -789,7 +824,8 @@ class DeezerCrawler(BaseCrawler):
         return emerging[:5]
     
     async def _analyze_track_performance(self, track: DeezerTrack) -> Dict[str, Any]:
-        """Analyze individual track performance metrics"""        return {
+        """Analyze individual track performance metrics"""
+        return {
             'track_id': track.track_id,
             'title': track.title,
             'artist': track.artist_name,
@@ -802,7 +838,8 @@ class DeezerCrawler(BaseCrawler):
         }
     
     def _categorize_duration(self, duration: int) -> str:
-        """Categorize track duration"""        if duration < 120:
+        """Categorize track duration"""
+        if duration < 120:
             return "very_short"
         elif duration < 180:
             return "short"
@@ -814,7 +851,8 @@ class DeezerCrawler(BaseCrawler):
             return "extended"
     
     def _assess_commercial_potential(self, track: DeezerTrack) -> str:
-        """Assess track commercial potential"""        if track.rank > 500000:
+        """Assess track commercial potential"""
+        if track.rank > 500000:
             return "high"
         elif track.rank > 100000:
             return "medium"
@@ -824,7 +862,8 @@ class DeezerCrawler(BaseCrawler):
             return "minimal"
     
     def _assess_metadata_completeness(self, track: DeezerTrack) -> float:
-        """Assess completeness of track metadata"""        fields = [
+        """Assess completeness of track metadata"""
+        fields = [
             track.title, track.artist_name, track.album_title,
             track.duration, track.genre, track.isrc
         ]

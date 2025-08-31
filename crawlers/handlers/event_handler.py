@@ -29,7 +29,8 @@ Project Team:
 WARNING: This code is protected intellectual property. Any attempt to steal, copy, or use 
 without explicit written authorization from Fahed Mlaiel (mlaiel@live.de) will result 
 in legal action under German law.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import uuid
@@ -61,7 +62,8 @@ logger = get_logger(__name__)
 
 
 class EventType(Enum):
-    """Enumeration of supported event types."""    
+    """Enumeration of supported event types."""
+    
     # Content Events
     CONTENT_UPLOADED = "content.uploaded"
     CONTENT_PROCESSED = "content.processed"
@@ -100,7 +102,8 @@ class EventType(Enum):
 
 
 class EventPriority(Enum):
-    """Event priority levels."""    LOW = 1
+    """Event priority levels."""
+    LOW = 1
     NORMAL = 2
     HIGH = 3
     CRITICAL = 4
@@ -109,7 +112,8 @@ class EventPriority(Enum):
 
 @dataclass
 class Event:
-    """Event data structure with comprehensive metadata."""    
+    """Event data structure with comprehensive metadata."""
+    
     event_id: str
     event_type: EventType
     priority: EventPriority
@@ -133,7 +137,8 @@ class Event:
             self.correlation_id = str(uuid.uuid4())
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert event to dictionary."""        return {
+        """Convert event to dictionary."""
+        return {
             'event_id': self.event_id,
             'event_type': self.event_type.value,
             'priority': self.priority.value,
@@ -151,7 +156,8 @@ class Event:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'Event':
-        """Create event from dictionary."""        return cls(
+        """Create event from dictionary."""
+        return cls(
             event_id=data['event_id'],
             event_type=EventType(data['event_type']),
             priority=EventPriority(data['priority']),
@@ -169,7 +175,8 @@ class Event:
 
 
 class EventHandler:
-    """Base class for event handlers."""    
+    """Base class for event handlers."""
+    
     def __init__(self, name: str, handler_id: Optional[str] = None):
         self.name = name
         self.handler_id = handler_id or str(uuid.uuid4())
@@ -180,14 +187,16 @@ class EventHandler:
         self.error_count = 0
     
     async def handle(self, event: Event) -> bool:
-        """        Handle an event - base implementation.
+        """
+        Handle an event - base implementation.
         
         Args:
             event: Event to handle
             
         Returns:
             True if handled successfully, False otherwise
-        """        try:
+        """
+        try:
             # Basic event handling implementation
             logger.info(f"Handling event {event.event_id} of type {event.event_type} in {self.name}")
             
@@ -233,24 +242,28 @@ class EventHandler:
             return False
     
     async def can_handle(self, event: Event) -> bool:
-        """        Check if this handler can handle the event.
+        """
+        Check if this handler can handle the event.
         
         Args:
             event: Event to check
             
         Returns:
             True if can handle, False otherwise
-        """        return self.is_active
+        """
+        return self.is_active
     
     def update_stats(self, success: bool):
-        """Update handler execution statistics."""        self.execution_count += 1
+        """Update handler execution statistics."""
+        self.execution_count += 1
         self.last_execution = datetime.utcnow()
         if not success:
             self.error_count += 1
 
 
 class AsyncEventHandler(EventHandler):
-    """Async event handler with coroutine support."""    
+    """Async event handler with coroutine support."""
+    
     def __init__(
         self, 
         name: str, 
@@ -263,7 +276,8 @@ class AsyncEventHandler(EventHandler):
         self.event_types = event_types or []
     
     async def handle(self, event: Event) -> bool:
-        """Execute the async handler function."""        try:
+        """Execute the async handler function."""
+        try:
             result = await self.handler_func(event)
             self.update_stats(True)
             return result
@@ -273,7 +287,8 @@ class AsyncEventHandler(EventHandler):
             return False
     
     async def can_handle(self, event: Event) -> bool:
-        """Check if handler can handle the event type."""        if not await super().can_handle(event):
+        """Check if handler can handle the event type."""
+        if not await super().can_handle(event):
             return False
         
         if not self.event_types:
@@ -283,7 +298,8 @@ class AsyncEventHandler(EventHandler):
 
 
 class SyncEventHandler(EventHandler):
-    """Synchronous event handler with thread pool execution."""    
+    """Synchronous event handler with thread pool execution."""
+    
     def __init__(
         self, 
         name: str, 
@@ -297,7 +313,8 @@ class SyncEventHandler(EventHandler):
         self.executor = ThreadPoolExecutor(max_workers=2)
     
     async def handle(self, event: Event) -> bool:
-        """Execute the sync handler function in thread pool."""        try:
+        """Execute the sync handler function in thread pool."""
+        try:
             loop = asyncio.get_event_loop()
             result = await loop.run_in_executor(
                 self.executor, self.handler_func, event
@@ -310,7 +327,8 @@ class SyncEventHandler(EventHandler):
             return False
     
     async def can_handle(self, event: Event) -> bool:
-        """Check if handler can handle the event type."""        if not await super().can_handle(event):
+        """Check if handler can handle the event type."""
+        if not await super().can_handle(event):
             return False
         
         if not self.event_types:
@@ -320,7 +338,8 @@ class SyncEventHandler(EventHandler):
 
 
 class EventQueue:
-    """Professional event queue with Redis backend and priority handling."""    
+    """Professional event queue with Redis backend and priority handling."""
+    
     def __init__(self, redis_client: aioredis.Redis):
         self.redis = redis_client
         self.queue_key = "crawler:event_queue"
@@ -329,14 +348,16 @@ class EventQueue:
         self.stats_key = "crawler:event_stats"
     
     async def enqueue(self, event: Event) -> bool:
-        """        Add event to queue with priority handling.
+        """
+        Add event to queue with priority handling.
         
         Args:
             event: Event to enqueue
             
         Returns:
             True if enqueued successfully
-        """        try:
+        """
+        try:
             # Serialize event
             event_data = json.dumps(event.to_dict())
             
@@ -356,14 +377,16 @@ class EventQueue:
             return False
     
     async def dequeue(self, timeout: int = 10) -> Optional[Event]:
-        """        Get next event from queue based on priority.
+        """
+        Get next event from queue based on priority.
         
         Args:
             timeout: Maximum wait time in seconds
             
         Returns:
             Next event or None if timeout
-        """        try:
+        """
+        try:
             # Get highest priority event (highest score)
             result = await self.redis.bzpopmax(self.queue_key, timeout)
             
@@ -391,7 +414,8 @@ class EventQueue:
             return None
     
     async def mark_completed(self, event_id: str) -> bool:
-        """Mark event as completed and remove from processing."""        try:
+        """Mark event as completed and remove from processing."""
+        try:
             await self.redis.hdel(self.processing_key, event_id)
             await self._update_stats('completed')
             return True
@@ -400,7 +424,8 @@ class EventQueue:
             return False
     
     async def mark_failed(self, event: Event, error: str) -> bool:
-        """Mark event as failed and handle retry logic."""        try:
+        """Mark event as failed and handle retry logic."""
+        try:
             # Remove from processing
             await self.redis.hdel(self.processing_key, event.event_id)
             
@@ -438,7 +463,8 @@ class EventQueue:
             return False
     
     async def get_queue_stats(self) -> Dict[str, Any]:
-        """Get queue statistics."""        try:
+        """Get queue statistics."""
+        try:
             pending = await self.redis.zcard(self.queue_key)
             processing = await self.redis.hlen(self.processing_key)
             failed = await self.redis.llen(self.failed_key)
@@ -461,14 +487,16 @@ class EventQueue:
             return {}
     
     async def _update_stats(self, operation: str):
-        """Update queue statistics."""        try:
+        """Update queue statistics."""
+        try:
             await self.redis.hincrby(self.stats_key, operation, 1)
         except Exception as e:
             logger.warning(f"Failed to update stats for {operation}: {e}")
 
 
 class EventRegistry:
-    """Registry for event handlers with dynamic registration and management."""    
+    """Registry for event handlers with dynamic registration and management."""
+    
     def __init__(self):
         self.handlers: Dict[str, EventHandler] = {}
         self.type_handlers: Dict[EventType, List[str]] = {}
@@ -479,7 +507,8 @@ class EventRegistry:
         handler: EventHandler,
         event_types: Optional[List[EventType]] = None
     ) -> bool:
-        """        Register an event handler.
+        """
+        Register an event handler.
         
         Args:
             handler: Handler to register
@@ -487,7 +516,8 @@ class EventRegistry:
             
         Returns:
             True if registered successfully
-        """        try:
+        """
+        try:
             async with self._lock:
                 # Check for duplicate handler IDs
                 if handler.handler_id in self.handlers:
@@ -513,7 +543,8 @@ class EventRegistry:
             return False
     
     async def unregister_handler(self, handler_id: str) -> bool:
-        """Unregister an event handler."""        try:
+        """Unregister an event handler."""
+        try:
             async with self._lock:
                 if handler_id not in self.handlers:
                     return False
@@ -533,7 +564,8 @@ class EventRegistry:
             return False
     
     async def get_handlers_for_event(self, event: Event) -> List[EventHandler]:
-        """Get all handlers that can process the given event."""        try:
+        """Get all handlers that can process the given event."""
+        try:
             eligible_handlers = []
             
             # Get handlers specifically registered for this event type
@@ -557,7 +589,8 @@ class EventRegistry:
             return []
     
     def get_handler_stats(self) -> Dict[str, Dict[str, Any]]:
-        """Get statistics for all registered handlers."""        stats = {}
+        """Get statistics for all registered handlers."""
+        stats = {}
         for handler_id, handler in self.handlers.items():
             stats[handler_id] = {
                 'name': handler.name,
@@ -571,7 +604,8 @@ class EventRegistry:
 
 
 class EventDispatcher:
-    """Main event dispatcher orchestrating event processing."""    
+    """Main event dispatcher orchestrating event processing."""
+    
     def __init__(
         self, 
         redis_client: aioredis.Redis,
@@ -588,14 +622,16 @@ class EventDispatcher:
         self._shutdown_event = asyncio.Event()
     
     async def dispatch_event(self, event: Event) -> bool:
-        """        Dispatch an event for processing.
+        """
+        Dispatch an event for processing.
         
         Args:
             event: Event to dispatch
             
         Returns:
             True if dispatched successfully
-        """        try:
+        """
+        try:
             # Validate event
             self._validate_event(event)
             
@@ -617,7 +653,8 @@ class EventDispatcher:
             return False
     
     def _validate_event(self, event: Event):
-        """Validate event data."""        if not event.event_id:
+        """Validate event data."""
+        if not event.event_id:
             raise EventValidationError("Event ID is required")
         
         if not isinstance(event.event_type, EventType):
@@ -627,7 +664,8 @@ class EventDispatcher:
             raise EventValidationError("Invalid event priority")
     
     async def _log_event(self, event: Event):
-        """Log event to database."""        try:
+        """Log event to database."""
+        try:
             async with async_session() as session:
                 event_log = EventLog(
                     event_id=event.event_id,
@@ -650,7 +688,8 @@ class EventDispatcher:
             logger.warning(f"Failed to log event {event.event_id}: {e}")
     
     async def start_workers(self):
-        """Start event processing workers."""        if self.is_running:
+        """Start event processing workers."""
+        if self.is_running:
             return
         
         self.is_running = True
@@ -667,7 +706,8 @@ class EventDispatcher:
         logger.info(f"Started {self.worker_count} event workers")
     
     async def stop_workers(self):
-        """Stop event processing workers."""        if not self.is_running:
+        """Stop event processing workers."""
+        if not self.is_running:
             return
         
         self.is_running = False
@@ -684,7 +724,8 @@ class EventDispatcher:
         logger.info("Event workers stopped")
     
     async def _worker_loop(self, worker_name: str):
-        """Main worker loop for processing events."""        logger.info(f"Event worker {worker_name} started")
+        """Main worker loop for processing events."""
+        logger.info(f"Event worker {worker_name} started")
         
         while self.is_running and not self._shutdown_event.is_set():
             try:
@@ -730,7 +771,8 @@ class EventDispatcher:
         event: Event, 
         handlers: List[EventHandler]
     ) -> bool:
-        """Process event with multiple handlers."""        success_count = 0
+        """Process event with multiple handlers."""
+        success_count = 0
         
         for handler in handlers:
             try:
@@ -748,7 +790,8 @@ class EventDispatcher:
         return success_count > 0
     
     async def get_system_stats(self) -> Dict[str, Any]:
-        """Get comprehensive system statistics."""        queue_stats = await self.queue.get_queue_stats()
+        """Get comprehensive system statistics."""
+        queue_stats = await self.queue.get_queue_stats()
         handler_stats = self.registry.get_handler_stats()
         
         return {
@@ -771,7 +814,8 @@ async def create_content_event(
     data: Dict[str, Any],
     priority: EventPriority = EventPriority.NORMAL
 ) -> Event:
-    """Create a content-related event."""    return Event(
+    """Create a content-related event."""
+    return Event(
         event_id=str(uuid.uuid4()),
         event_type=event_type,
         priority=priority,
@@ -790,7 +834,8 @@ async def create_platform_event(
     data: Dict[str, Any],
     priority: EventPriority = EventPriority.NORMAL
 ) -> Event:
-    """Create a platform-related event."""    return Event(
+    """Create a platform-related event."""
+    return Event(
         event_id=str(uuid.uuid4()),
         event_type=event_type,
         priority=priority,
@@ -806,7 +851,8 @@ async def create_platform_event(
 async def create_event_dispatcher(
     redis_client: Optional[aioredis.Redis] = None
 ) -> EventDispatcher:
-    """Create and return an EventDispatcher instance."""    if redis_client is None:
+    """Create and return an EventDispatcher instance."""
+    if redis_client is None:
         redis_client = await get_redis_client()
     
     return EventDispatcher(redis_client)

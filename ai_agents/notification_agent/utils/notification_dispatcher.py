@@ -30,7 +30,8 @@ Team Specialties & Expertise:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Callable, Set
@@ -57,7 +58,8 @@ from ...integrations.analytics_integration import AnalyticsIntegration
 
 
 class DispatchStrategy(Enum):
-    """Advanced dispatch strategies for different notification scenarios"""    IMMEDIATE = "immediate"
+    """Advanced dispatch strategies for different notification scenarios"""
+    IMMEDIATE = "immediate"
     BATCH_OPTIMIZED = "batch_optimized"
     INTELLIGENT_ROUTING = "intelligent_routing"
     FALLBACK_CASCADE = "fallback_cascade"
@@ -66,7 +68,8 @@ class DispatchStrategy(Enum):
 
 
 class FailureHandlingStrategy(Enum):
-    """Comprehensive failure handling approaches"""    RETRY_LINEAR = "retry_linear"
+    """Comprehensive failure handling approaches"""
+    RETRY_LINEAR = "retry_linear"
     RETRY_EXPONENTIAL = "retry_exponential"
     CHANNEL_FALLBACK = "channel_fallback"
     PRIORITY_ESCALATION = "priority_escalation"
@@ -76,7 +79,8 @@ class FailureHandlingStrategy(Enum):
 
 @dataclass
 class DispatchConfiguration:
-    """Advanced dispatcher configuration settings"""    max_concurrent_dispatches: int = 1000
+    """Advanced dispatcher configuration settings"""
+    max_concurrent_dispatches: int = 1000
     batch_size: int = 100
     retry_attempts: int = 3
     retry_delay_seconds: int = 300
@@ -89,7 +93,8 @@ class DispatchConfiguration:
 
 @dataclass
 class DispatchResult:
-    """Comprehensive dispatch operation result"""    notification_id: str
+    """Comprehensive dispatch operation result"""
+    notification_id: str
     user_id: str
     channels_attempted: List[ChannelType]
     channels_successful: List[ChannelType]
@@ -102,7 +107,8 @@ class DispatchResult:
 
 
 class NotificationDispatcher:
-    """    Advanced notification dispatcher with AI-powered routing and intelligent delivery optimization
+    """
+    Advanced notification dispatcher with AI-powered routing and intelligent delivery optimization
     
     Key Features:
     - Multi-channel intelligent routing with fallback mechanisms
@@ -111,7 +117,8 @@ class NotificationDispatcher:
     - Real-time failure detection and automatic recovery
     - Comprehensive performance monitoring and analytics
     - A/B testing framework for dispatch optimization
-    """    
+    """
+    
     def __init__(
         self,
         channel_manager: ChannelManager,
@@ -154,7 +161,8 @@ class NotificationDispatcher:
         target_channels: Optional[List[ChannelType]] = None,
         strategy: DispatchStrategy = DispatchStrategy.INTELLIGENT_ROUTING
     ) -> DispatchResult:
-        """        Dispatch a single notification with intelligent routing and optimization
+        """
+        Dispatch a single notification with intelligent routing and optimization
         
         Args:
             notification: The notification to dispatch
@@ -163,7 +171,8 @@ class NotificationDispatcher:
             
         Returns:
             Comprehensive dispatch result with analytics
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         
         try:
             # Load user preferences and historical data
@@ -215,7 +224,8 @@ class NotificationDispatcher:
         notifications: List[NotificationModel],
         strategy: DispatchStrategy = DispatchStrategy.BATCH_OPTIMIZED
     ) -> List[DispatchResult]:
-        """        Dispatch multiple notifications with intelligent batching and optimization
+        """
+        Dispatch multiple notifications with intelligent batching and optimization
         
         Args:
             notifications: List of notifications to dispatch
@@ -223,7 +233,8 @@ class NotificationDispatcher:
             
         Returns:
             List of dispatch results
-        """        if not notifications:
+        """
+        if not notifications:
             return []
         
         # Group notifications for optimal batch processing
@@ -266,8 +277,10 @@ class NotificationDispatcher:
         user_preferences: Dict[str, Any],
         strategy: DispatchStrategy
     ) -> List[ChannelType]:
-        """        AI-powered channel selection based on multiple factors
-        """        if not self._ai_routing_enabled:
+        """
+        AI-powered channel selection based on multiple factors
+        """
+        if not self._ai_routing_enabled:
             return [ChannelType.EMAIL, ChannelType.PUSH_NOTIFICATION]
         
         # Factors for channel selection
@@ -315,8 +328,10 @@ class NotificationDispatcher:
         strategy: DispatchStrategy,
         urgency: UrgencyLevel
     ) -> DispatchResult:
-        """        Execute the specific dispatch strategy
-        """        start_time = datetime.utcnow()
+        """
+        Execute the specific dispatch strategy
+        """
+        start_time = datetime.utcnow()
         channels_successful = []
         channels_failed = []
         retry_count = 0
@@ -410,8 +425,10 @@ class NotificationDispatcher:
         notification: NotificationModel,
         channels: List[ChannelType]
     ) -> Dict[ChannelType, str]:
-        """        Prepare optimized templates for each channel
-        """        templates = {}
+        """
+        Prepare optimized templates for each channel
+        """
+        templates = {}
         
         for channel in channels:
             try:
@@ -437,8 +454,10 @@ class NotificationDispatcher:
         notifications: List[NotificationModel],
         strategy: DispatchStrategy
     ) -> Dict[str, List[NotificationModel]]:
-        """        Intelligent grouping of notifications for optimal batch processing
-        """        groups = {}
+        """
+        Intelligent grouping of notifications for optimal batch processing
+        """
+        groups = {}
         
         for notification in notifications:
             # Create group key based on multiple factors
@@ -458,8 +477,10 @@ class NotificationDispatcher:
         notifications: List[NotificationModel],
         strategy: DispatchStrategy
     ) -> List[DispatchResult]:
-        """        Execute batch dispatch with concurrency control
-        """        semaphore = asyncio.Semaphore(self.config.max_concurrent_dispatches)
+        """
+        Execute batch dispatch with concurrency control
+        """
+        semaphore = asyncio.Semaphore(self.config.max_concurrent_dispatches)
         
         async def dispatch_with_semaphore(notification):
             async with semaphore:
@@ -499,7 +520,8 @@ class NotificationDispatcher:
     # Additional helper methods for advanced functionality
     
     async def _load_user_preferences(self, user_id: str) -> Dict[str, Any]:
-        """Load user notification preferences with caching"""        if user_id in self._user_preferences_cache:
+        """Load user notification preferences with caching"""
+        if user_id in self._user_preferences_cache:
             return self._user_preferences_cache[user_id]
         
         # Load from database or external service
@@ -510,7 +532,8 @@ class NotificationDispatcher:
     async def _calculate_channel_scores(
         self, factors: Dict[str, Any]
     ) -> Dict[ChannelType, float]:
-        """AI-powered channel scoring based on multiple factors"""        scores = {}
+        """AI-powered channel scoring based on multiple factors"""
+        scores = {}
         
         for channel in ChannelType:
             base_score = 0.5  # Base score
@@ -529,7 +552,8 @@ class NotificationDispatcher:
         return scores
     
     async def _update_performance_metrics(self, result: DispatchResult):
-        """Update internal performance metrics"""        self._dispatch_metrics['total_dispatched'] += 1
+        """Update internal performance metrics"""
+        self._dispatch_metrics['total_dispatched'] += 1
         
         if result.final_status == DeliveryStatus.DELIVERED:
             self._dispatch_metrics['successful_deliveries'] += 1
@@ -543,7 +567,8 @@ class NotificationDispatcher:
         self._dispatch_metrics['average_delivery_time'] = new_avg
     
     async def _track_dispatch_analytics(self, result: DispatchResult):
-        """Track comprehensive analytics for dispatch operations"""        analytics_data = {
+        """Track comprehensive analytics for dispatch operations"""
+        analytics_data = {
             'notification_id': result.notification_id,
             'user_id': result.user_id,
             'channels_attempted': [ch.value for ch in result.channels_attempted],
@@ -560,10 +585,12 @@ class NotificationDispatcher:
     async def _get_fallback_template(
         self, notification: NotificationModel, channel: ChannelType
     ) -> str:
-        """Get a simple fallback template"""        return f"Notification: {notification.title or 'Update from IA Influencer Platform'}"
+        """Get a simple fallback template"""
+        return f"Notification: {notification.title or 'Update from IA Influencer Platform'}"
     
     async def _fetch_user_preferences_from_db(self, user_id: str) -> Dict[str, Any]:
-        """Fetch user preferences from database"""        # Implementation would load from database
+        """Fetch user preferences from database"""
+        # Implementation would load from database
         return {
             'email': True,
             'sms': False,
@@ -573,7 +600,8 @@ class NotificationDispatcher:
         }
     
     async def _get_user_engagement_history(self, user_id: str) -> Dict[str, Any]:
-        """Get user engagement patterns for optimization"""        # Implementation would analyze user behavior
+        """Get user engagement patterns for optimization"""
+        # Implementation would analyze user behavior
         return {
             'email_open_rate': 0.7,
             'push_click_rate': 0.4,
@@ -583,18 +611,21 @@ class NotificationDispatcher:
 
 
 class DeliveryTimeOptimizer:
-    """AI-powered delivery time optimization based on user behavior patterns"""    
+    """AI-powered delivery time optimization based on user behavior patterns"""
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
     async def calculate_optimal_delay(
         self, user_id: str, channels: List[ChannelType]
     ) -> float:
-        """        Calculate optimal delay before sending notification
+        """
+        Calculate optimal delay before sending notification
         
         Returns:
             Delay in seconds (0 for immediate delivery)
-        """        # Implementation would use ML models to predict optimal timing
+        """
+        # Implementation would use ML models to predict optimal timing
         # For now, return simple time-based optimization
         current_hour = datetime.utcnow().hour
         
@@ -612,7 +643,8 @@ class DeliveryTimeOptimizer:
 
 
 class FailurePredictor:
-    """AI-powered failure prediction to proactively avoid delivery issues"""    
+    """AI-powered failure prediction to proactively avoid delivery issues"""
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
@@ -622,11 +654,13 @@ class FailurePredictor:
         user_id: str, 
         context: Dict[str, Any]
     ) -> float:
-        """        Predict probability of delivery failure
+        """
+        Predict probability of delivery failure
         
         Returns:
             Probability between 0.0 and 1.0
-        """        # Implementation would use ML models for prediction
+        """
+        # Implementation would use ML models for prediction
         # For now, return simple heuristics
         base_failure_rate = 0.05  # 5% base failure rate
         

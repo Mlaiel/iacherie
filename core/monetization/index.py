@@ -2,9 +2,12 @@
 Central access point for all monetization components and services
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""from typing import Dict, Any, Optional
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+"""
+
+from typing import Dict, Any, Optional
 import logging
+
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from . import (
@@ -22,9 +25,11 @@ from ...core.security.encryption import SecurityManager
 
 
 class MonetizationSystemIndex:
-    """    Central index for all monetization system components
+    """
+    Central index for all monetization system components
     Provides unified access and orchestration for monetization services
-    """    
+    """
+    
     def __init__(
         self,
         security_manager: SecurityManager,
@@ -43,7 +48,8 @@ class MonetizationSystemIndex:
         self.logger.info("Monetization system index initialized successfully")
     
     def _initialize_core_systems(self):
-        """Initialize core monetization systems"""        
+        """Initialize core monetization systems"""
+        
         # Payment processing
         self.payment_processor = PaymentProcessor(
             security_manager=self.security_manager,
@@ -80,7 +86,9 @@ class MonetizationSystemIndex:
         )
     
     def _initialize_advanced_systems(self):
-        """Initialize advanced monetization systems"""        
+        """
+Initialize advanced monetization systems"""
+        
         # Platform revenue aggregation
         self.platform_aggregator = PlatformRevenueAggregator(
             security_manager=self.security_manager
@@ -115,7 +123,9 @@ class MonetizationSystemIndex:
         user_id: int,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Get comprehensive monetization overview for user"""        
+        """
+Get comprehensive monetization overview for user"""
+        
         try:
             # Get current balance
             balance = await self.withdrawal_manager.get_user_balance(user_id, session)
@@ -159,7 +169,8 @@ class MonetizationSystemIndex:
         user_id: int,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Process revenue synchronization for user"""        
+        """Process revenue synchronization for user"""
+        
         try:
             from datetime import datetime, timedelta
             
@@ -196,7 +207,8 @@ class MonetizationSystemIndex:
         licensee_email: str,
         proposed_terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate and evaluate license offer"""        
+        """Generate and evaluate license offer"""
+        
         try:
             from .content_licensing_system import LicenseTerms, LicenseType, UsageRights
             from decimal import Decimal
@@ -238,7 +250,8 @@ class MonetizationSystemIndex:
         destination_config: Dict[str, Any],
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Request user payout"""        
+        """Request user payout"""
+        
         try:
             from .automated_payout_engine import PayoutDestination, PayoutMethod
             from decimal import Decimal
@@ -280,7 +293,8 @@ class MonetizationSystemIndex:
         days: int,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Generate performance analytics report"""        
+        """Generate performance analytics report"""
+        
         try:
             from datetime import datetime, timedelta
             
@@ -301,7 +315,8 @@ class MonetizationSystemIndex:
             return {"error": str(e)}
     
     def get_system_health(self) -> Dict[str, Any]:
-        """Get monetization system health status"""        
+        """Get monetization system health status"""
+        
         health_status = {
             "overall_status": "healthy",
             "components": {
@@ -319,7 +334,8 @@ class MonetizationSystemIndex:
         return health_status
     
     async def get_system_statistics(self, session: AsyncSession) -> Dict[str, Any]:
-        """Get overall system statistics"""        
+        """Get overall system statistics"""
+        
         try:
             # This would calculate system-wide statistics
             # Implementation depends on your specific metrics needs
@@ -346,7 +362,8 @@ def get_monetization_system(
     security_manager: SecurityManager,
     config: Optional[Dict[str, Any]] = None
 ) -> MonetizationSystemIndex:
-    """Get or create monetization system instance"""    
+    """Get or create monetization system instance"""
+    
     global _monetization_system
     
     if _monetization_system is None:
@@ -362,7 +379,9 @@ def initialize_monetization_system(
     security_manager: SecurityManager,
     config: Optional[Dict[str, Any]] = None
 ) -> MonetizationSystemIndex:
-    """Initialize monetization system with configuration"""    
+    """
+Initialize monetization system with configuration"""
+    
     global _monetization_system
     
     _monetization_system = MonetizationSystemIndex(

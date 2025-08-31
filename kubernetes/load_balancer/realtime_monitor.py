@@ -11,7 +11,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import time
@@ -47,7 +48,8 @@ SYSTEM_PERFORMANCE_SCORE = Gauge('system_performance_score', 'Overall system per
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels for monitoring"""    CRITICAL = "critical"
+    """Alert severity levels for monitoring"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -55,7 +57,8 @@ class AlertSeverity(Enum):
 
 
 class MonitoringMetricType(Enum):
-    """Types of monitoring metrics"""    RESPONSE_TIME = "response_time"
+    """Types of monitoring metrics"""
+    RESPONSE_TIME = "response_time"
     THROUGHPUT = "throughput"
     ERROR_RATE = "error_rate"
     CPU_USAGE = "cpu_usage"
@@ -69,7 +72,8 @@ class MonitoringMetricType(Enum):
 
 @dataclass
 class MonitoringMetric:
-    """Individual monitoring metric data point"""    service_name: str
+    """Individual monitoring metric data point"""
+    service_name: str
     metric_type: MonitoringMetricType
     value: float
     timestamp: datetime
@@ -78,7 +82,8 @@ class MonitoringMetric:
     source: str = "load_balancer"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metric to dictionary"""        return {
+        """Convert metric to dictionary"""
+        return {
             'service_name': self.service_name,
             'metric_type': self.metric_type.value,
             'value': self.value,
@@ -91,7 +96,8 @@ class MonitoringMetric:
 
 @dataclass
 class Alert:
-    """Monitoring alert definition"""    id: str
+    """Monitoring alert definition"""
+    id: str
     service_name: str
     metric_type: MonitoringMetricType
     severity: AlertSeverity
@@ -104,10 +110,12 @@ class Alert:
     actions: List[str] = field(default_factory=list)
     
     def is_resolved(self) -> bool:
-        """Check if alert is resolved"""        return self.resolved_at is not None
+        """Check if alert is resolved"""
+        return self.resolved_at is not None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert alert to dictionary"""        return {
+        """Convert alert to dictionary"""
+        return {
             'id': self.id,
             'service_name': self.service_name,
             'metric_type': self.metric_type.value,
@@ -124,7 +132,8 @@ class Alert:
 
 @dataclass
 class ThresholdRule:
-    """Threshold-based alerting rule"""    metric_type: MonitoringMetricType
+    """Threshold-based alerting rule"""
+    metric_type: MonitoringMetricType
     operator: str  # '>', '<', '>=', '<=', '=='
     threshold: float
     severity: AlertSeverity
@@ -135,7 +144,8 @@ class ThresholdRule:
 
 
 class AnomalyDetector:
-    """ML-based anomaly detection for load balancer metrics"""    
+    """ML-based anomaly detection for load balancer metrics"""
+    
     def __init__(self, window_size: int = 100, sensitivity: float = 2.0):
         self.window_size = window_size
         self.sensitivity = sensitivity
@@ -143,7 +153,8 @@ class AnomalyDetector:
         self.baselines: Dict[str, Dict[str, float]] = {}
         
     def add_metric(self, metric: MonitoringMetric) -> bool:
-        """Add metric and detect anomalies"""        metric_key = f"{metric.service_name}_{metric.metric_type.value}"
+        """Add metric and detect anomalies"""
+        metric_key = f"{metric.service_name}_{metric.metric_type.value}"
         self.metric_history[metric_key].append(metric.value)
         
         # Update baseline if we have enough data
@@ -154,7 +165,8 @@ class AnomalyDetector:
         return self._detect_anomaly(metric_key, metric.value)
     
     def _update_baseline(self, metric_key: str) -> None:
-        """Update baseline statistics for metric"""        values = list(self.metric_history[metric_key])
+        """Update baseline statistics for metric"""
+        values = list(self.metric_history[metric_key])
         if not values:
             return
         
@@ -167,7 +179,8 @@ class AnomalyDetector:
         }
     
     def _detect_anomaly(self, metric_key: str, value: float) -> bool:
-        """Detect if value is anomalous"""        if metric_key not in self.baselines:
+        """Detect if value is anomalous"""
+        if metric_key not in self.baselines:
             return False
         
         baseline = self.baselines[metric_key]
@@ -182,7 +195,8 @@ class AnomalyDetector:
         return z_score > self.sensitivity
     
     def get_anomaly_score(self, metric_key: str, value: float) -> float:
-        """Get anomaly score for a value"""        if metric_key not in self.baselines:
+        """Get anomaly score for a value"""
+        if metric_key not in self.baselines:
             return 0.0
         
         baseline = self.baselines[metric_key]
@@ -196,14 +210,16 @@ class AnomalyDetector:
 
 
 class PerformancePredictor:
-    """ML-based performance prediction for load balancer"""    
+    """ML-based performance prediction for load balancer"""
+    
     def __init__(self, prediction_window: int = 300):  # 5 minutes
         self.prediction_window = prediction_window
         self.metric_history: Dict[str, List[Tuple[datetime, float]]] = defaultdict(list)
         self.predictions: Dict[str, Dict[str, float]] = {}
         
     def add_metric(self, metric: MonitoringMetric) -> None:
-        """Add metric for prediction training"""        metric_key = f"{metric.service_name}_{metric.metric_type.value}"
+        """Add metric for prediction training"""
+        metric_key = f"{metric.service_name}_{metric.metric_type.value}"
         
         # Clean old data
         cutoff_time = datetime.now() - timedelta(hours=24)
@@ -220,7 +236,8 @@ class PerformancePredictor:
             self._update_predictions(metric_key)
     
     def _update_predictions(self, metric_key: str) -> None:
-        """Update predictions using simple time series analysis"""        data = self.metric_history[metric_key]
+        """Update predictions using simple time series analysis"""
+        data = self.metric_history[metric_key]
         if len(data) < 10:
             return
         
@@ -256,12 +273,14 @@ class PerformancePredictor:
         self.predictions[metric_key] = predictions
     
     def get_predictions(self, service_name: str, metric_type: MonitoringMetricType) -> Dict[str, float]:
-        """Get predictions for specific metric"""        metric_key = f"{service_name}_{metric_type.value}"
+        """Get predictions for specific metric"""
+        metric_key = f"{service_name}_{metric_type.value}"
         return self.predictions.get(metric_key, {})
 
 
 class RealtimeMonitor:
-    """    Enterprise Real-time Load Balancer Monitor
+    """
+    Enterprise Real-time Load Balancer Monitor
     
     Provides comprehensive real-time monitoring with:
     - Real-time metric collection and analysis
@@ -270,7 +289,8 @@ class RealtimeMonitor:
     - Intelligent alerting system
     - WebSocket real-time dashboard feeds
     - Automated performance optimization
-    """    
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path or "/etc/ia-influencer/monitoring.yaml"
         self.config = {}
@@ -301,7 +321,8 @@ class RealtimeMonitor:
         logger.info("Real-time Load Balancer Monitor initialized")
     
     async def initialize(self) -> bool:
-        """Initialize monitoring system"""        try:
+        """Initialize monitoring system"""
+        try:
             # Load configuration
             await self._load_configuration()
             
@@ -322,7 +343,8 @@ class RealtimeMonitor:
             return False
     
     async def _load_configuration(self) -> None:
-        """Load monitoring configuration"""        try:
+        """Load monitoring configuration"""
+        try:
             config_file = Path(self.config_path)
             if config_file.exists():
                 async with aiofiles.open(config_file, 'r') as f:
@@ -338,7 +360,8 @@ class RealtimeMonitor:
             self.config = self._get_default_configuration()
     
     def _get_default_configuration(self) -> Dict[str, Any]:
-        """Get default monitoring configuration"""        return {
+        """Get default monitoring configuration"""
+        return {
             'monitoring': {
                 'interval_seconds': 10,
                 'anomaly_sensitivity': 2.0,
@@ -370,7 +393,8 @@ class RealtimeMonitor:
         }
     
     async def _initialize_redis(self) -> None:
-        """Initialize Redis connection for distributed monitoring"""        try:
+        """Initialize Redis connection for distributed monitoring"""
+        try:
             self.redis_client = redis.Redis(
                 host='localhost',
                 port=6379,
@@ -386,7 +410,8 @@ class RealtimeMonitor:
             self.redis_client = None
     
     def _setup_default_thresholds(self) -> None:
-        """Setup default threshold rules for platform services"""        services_config = self.config.get('services', {})
+        """Setup default threshold rules for platform services"""
+        services_config = self.config.get('services', {})
         
         for service_name, service_config in services_config.items():
             # Response time threshold
@@ -425,11 +450,13 @@ class RealtimeMonitor:
         logger.info(f"Setup {len(self.threshold_rules)} default threshold rules")
     
     async def _initialize_websocket_server(self) -> None:
-        """Initialize WebSocket server for real-time dashboard feeds"""        try:
+        """Initialize WebSocket server for real-time dashboard feeds"""
+        try:
             websocket_port = self.config.get('monitoring', {}).get('websocket_port', 9001)
             
             async def websocket_handler(websocket, path):
-                """Handle WebSocket connections for real-time data"""                self.websocket_clients.add(websocket)
+                """Handle WebSocket connections for real-time data"""
+                self.websocket_clients.add(websocket)
                 try:
                     await websocket.wait_closed()
                 finally:
@@ -448,7 +475,8 @@ class RealtimeMonitor:
             logger.error(f"Failed to start WebSocket server: {e}")
     
     async def start_monitoring(self) -> None:
-        """Start real-time monitoring"""        if self.is_monitoring:
+        """Start real-time monitoring"""
+        if self.is_monitoring:
             logger.warning("Monitoring already started")
             return
         
@@ -461,7 +489,8 @@ class RealtimeMonitor:
         logger.info("Real-time monitoring started")
     
     def _monitoring_loop(self) -> None:
-        """Main monitoring loop"""        interval = self.config.get('monitoring', {}).get('interval_seconds', 10)
+        """Main monitoring loop"""
+        interval = self.config.get('monitoring', {}).get('interval_seconds', 10)
         
         while self.is_monitoring:
             try:
@@ -484,7 +513,8 @@ class RealtimeMonitor:
                 time.sleep(interval * 2)  # Wait longer on error
     
     async def _collect_metrics(self) -> None:
-        """Collect metrics from various sources"""        current_time = datetime.now()
+        """Collect metrics from various sources"""
+        current_time = datetime.now()
         
         # Collect system metrics
         await self._collect_system_metrics(current_time)
@@ -496,7 +526,8 @@ class RealtimeMonitor:
         await self._collect_service_metrics(current_time)
     
     async def _collect_system_metrics(self, timestamp: datetime) -> None:
-        """Collect system-level metrics"""        try:
+        """Collect system-level metrics"""
+        try:
             # CPU usage
             cpu_percent = psutil.cpu_percent(interval=1)
             self.add_metric(MonitoringMetric(
@@ -532,7 +563,8 @@ class RealtimeMonitor:
             logger.error(f"Failed to collect system metrics: {e}")
     
     async def _collect_load_balancer_metrics(self, timestamp: datetime) -> None:
-        """Collect load balancer specific metrics"""        try:
+        """Collect load balancer specific metrics"""
+        try:
             # Connection count (simulated)
             active_connections = len(self.websocket_clients)
             self.add_metric(MonitoringMetric(
@@ -547,7 +579,8 @@ class RealtimeMonitor:
             logger.error(f"Failed to collect load balancer metrics: {e}")
     
     async def _collect_service_metrics(self, timestamp: datetime) -> None:
-        """Collect service-specific metrics"""        services = ['fingerprinting', 'protection', 'monetization', 'ai_agent', 'crawlers']
+        """Collect service-specific metrics"""
+        services = ['fingerprinting', 'protection', 'monetization', 'ai_agent', 'crawlers']
         
         for service in services:
             try:
@@ -558,7 +591,8 @@ class RealtimeMonitor:
                 logger.error(f"Failed to collect metrics for {service}: {e}")
     
     async def _collect_service_health_metrics(self, service_name: str, timestamp: datetime) -> None:
-        """Collect health metrics for a specific service"""        try:
+        """Collect health metrics for a specific service"""
+        try:
             # This would typically make HTTP requests to service health endpoints
             # For demo purposes, we'll generate realistic metrics
             
@@ -603,7 +637,8 @@ class RealtimeMonitor:
             logger.error(f"Failed to collect health metrics for {service_name}: {e}")
     
     def add_metric(self, metric: MonitoringMetric) -> None:
-        """Add a metric to the monitoring system"""        # Add to buffer
+        """Add a metric to the monitoring system"""
+        # Add to buffer
         self.metrics_buffer.append(metric)
         
         # Update anomaly detector
@@ -636,7 +671,8 @@ class RealtimeMonitor:
         REALTIME_METRICS_PROCESSED.inc()
     
     def _check_threshold_rules(self, metric: MonitoringMetric) -> None:
-        """Check if metric violates any threshold rules"""        for rule in self.threshold_rules:
+        """Check if metric violates any threshold rules"""
+        for rule in self.threshold_rules:
             if not rule.enabled:
                 continue
             
@@ -695,7 +731,8 @@ class RealtimeMonitor:
                     logger.warning(f"Alert triggered: {alert.message}")
     
     async def _process_metrics(self) -> None:
-        """Process collected metrics for analysis"""        try:
+        """Process collected metrics for analysis"""
+        try:
             # Calculate performance score
             current_score = self._calculate_performance_score()
             self.performance_history.append(current_score)
@@ -708,7 +745,8 @@ class RealtimeMonitor:
             logger.error(f"Failed to process metrics: {e}")
     
     def _calculate_performance_score(self) -> float:
-        """Calculate overall system performance score (0-100)"""        if not self.metrics_buffer:
+        """Calculate overall system performance score (0-100)"""
+        if not self.metrics_buffer:
             return 0.0
         
         scores = []
@@ -754,12 +792,14 @@ class RealtimeMonitor:
             return self.last_performance_score
     
     def _update_performance_score(self) -> None:
-        """Update performance score tracking"""        current_score = self._calculate_performance_score()
+        """Update performance score tracking"""
+        current_score = self._calculate_performance_score()
         self.performance_history.append(current_score)
         self.last_performance_score = current_score
     
     async def _broadcast_updates(self) -> None:
-        """Broadcast real-time updates to WebSocket clients"""        if not self.websocket_clients:
+        """Broadcast real-time updates to WebSocket clients"""
+        if not self.websocket_clients:
             return
         
         try:
@@ -797,12 +837,14 @@ class RealtimeMonitor:
             logger.error(f"Failed to broadcast updates: {e}")
     
     def add_alert_callback(self, callback: Callable[[Alert], None]) -> None:
-        """Add callback function for alert notifications"""        self.alert_callbacks.append(callback)
+        """Add callback function for alert notifications"""
+        self.alert_callbacks.append(callback)
     
     def get_metrics(self, service_name: Optional[str] = None, 
                    metric_type: Optional[MonitoringMetricType] = None,
                    since: Optional[datetime] = None) -> List[MonitoringMetric]:
-        """Get metrics with optional filtering"""        filtered_metrics = list(self.metrics_buffer)
+        """Get metrics with optional filtering"""
+        filtered_metrics = list(self.metrics_buffer)
         
         if service_name:
             filtered_metrics = [m for m in filtered_metrics if m.service_name == service_name]
@@ -816,10 +858,12 @@ class RealtimeMonitor:
         return filtered_metrics
     
     def get_active_alerts(self) -> List[Alert]:
-        """Get all active alerts"""        return list(self.active_alerts.values())
+        """Get all active alerts"""
+        return list(self.active_alerts.values())
     
     def resolve_alert(self, alert_id: str) -> bool:
-        """Manually resolve an alert"""        if alert_id in self.active_alerts:
+        """Manually resolve an alert"""
+        if alert_id in self.active_alerts:
             self.active_alerts[alert_id].resolved_at = datetime.now()
             del self.active_alerts[alert_id]
             logger.info(f"Alert {alert_id} resolved manually")
@@ -827,7 +871,8 @@ class RealtimeMonitor:
         return False
     
     def get_performance_summary(self) -> Dict[str, Any]:
-        """Get performance summary and statistics"""        return {
+        """Get performance summary and statistics"""
+        return {
             'current_score': self.last_performance_score,
             'average_score_1h': statistics.mean(list(self.performance_history)[-360:]) if self.performance_history else 0,
             'active_alerts': len(self.active_alerts),
@@ -840,10 +885,12 @@ class RealtimeMonitor:
         }
     
     def get_predictions(self, service_name: str, metric_type: MonitoringMetricType) -> Dict[str, float]:
-        """Get performance predictions for service"""        return self.performance_predictor.get_predictions(service_name, metric_type)
+        """Get performance predictions for service"""
+        return self.performance_predictor.get_predictions(service_name, metric_type)
     
     async def stop_monitoring(self) -> None:
-        """Stop real-time monitoring"""        self.is_monitoring = False
+        """Stop real-time monitoring"""
+        self.is_monitoring = False
         
         if self.monitor_thread and self.monitor_thread.is_alive():
             self.monitor_thread.join(timeout=10)
@@ -855,7 +902,8 @@ class RealtimeMonitor:
         logger.info("Real-time monitoring stopped")
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get comprehensive status of monitoring system"""        return {
+        """Get comprehensive status of monitoring system"""
+        return {
             'is_monitoring': self.is_monitoring,
             'config_loaded': bool(self.config),
             'redis_available': self.redis_client is not None,
@@ -871,7 +919,8 @@ class RealtimeMonitor:
 
 
 async def main():
-    """Demo function for real-time monitoring"""    monitor = RealtimeMonitor()
+    """Demo function for real-time monitoring"""
+    monitor = RealtimeMonitor()
     
     try:
         # Initialize monitoring

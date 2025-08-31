@@ -6,7 +6,8 @@ creator payments, and platform transactions.
 
 © 2025 Fahed Mlaiel (mlaiel@live.de) - IA-Influencer-Agent Platform
 Propriété Intellectuelle Exclusive - Tous Droits Réservés
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 
 class CryptoCurrency(Enum):
-    """Supported cryptocurrencies"""    BITCOIN = "BTC"
+    """Supported cryptocurrencies"""
+    BITCOIN = "BTC"
     ETHEREUM = "ETH"
     POLYGON = "MATIC"
     BINANCE = "BNB"
@@ -42,7 +44,8 @@ class CryptoCurrency(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment processing status"""    PENDING = "pending"
+    """Payment processing status"""
+    PENDING = "pending"
     PROCESSING = "processing"
     CONFIRMED = "confirmed"
     FAILED = "failed"
@@ -52,7 +55,8 @@ class PaymentStatus(Enum):
 
 @dataclass
 class PaymentRequest:
-    """Cryptocurrency payment request"""    payment_id: str
+    """Cryptocurrency payment request"""
+    payment_id: str
     amount: Decimal
     currency: CryptoCurrency
     recipient_address: str
@@ -65,7 +69,8 @@ class PaymentRequest:
 
 @dataclass
 class PaymentResult:
-    """Payment processing result"""    payment_id: str
+    """Payment processing result"""
+    payment_id: str
     tx_hash: str
     network: str
     amount: Decimal
@@ -79,11 +84,13 @@ class PaymentResult:
 
 
 class BitcoinProcessor:
-    """    Bitcoin payment processor for content creator payments and licensing fees
+    """
+    Bitcoin payment processor for content creator payments and licensing fees
     
     Handles Bitcoin transactions including payment verification, 
     address generation, and transaction broadcasting.
-    """    
+    """
+    
     def __init__(self, config: BlockchainConfig, redis_client: redis.Redis):
         self.config = config
         self.redis = redis_client
@@ -92,7 +99,8 @@ class BitcoinProcessor:
         self.network = "mainnet" if not config.bitcoin_testnet else "testnet"
     
     async def initialize(self) -> None:
-        """Initialize Bitcoin RPC connection"""        try:
+        """Initialize Bitcoin RPC connection"""
+        try:
             # Initialize Bitcoin RPC connection
             self.rpc_connection = AuthServiceProxy(
                 f"http://{self.config.bitcoin_rpc_user}:{self.config.bitcoin_rpc_password}@"
@@ -108,7 +116,8 @@ class BitcoinProcessor:
             raise BlockchainError(f"Bitcoin processor initialization failed: {str(e)}")
     
     async def generate_payment_address(self, user_id: int, payment_id: str) -> str:
-        """Generate unique Bitcoin address for payment"""        try:
+        """Generate unique Bitcoin address for payment"""
+        try:
             # Generate new address
             address = self.rpc_connection.getnewaddress(f"user_{user_id}_{payment_id}")
             
@@ -139,7 +148,8 @@ class BitcoinProcessor:
         description: str,
         metadata: Dict[str, Any]
     ) -> PaymentRequest:
-        """Create Bitcoin payment request"""        try:
+        """Create Bitcoin payment request"""
+        try:
             payment_id = str(uuid.uuid4())
             expires_at = datetime.utcnow() + timedelta(hours=24)  # 24-hour expiration
             
@@ -173,7 +183,8 @@ class BitcoinProcessor:
         payment_request: PaymentRequest,
         sender_private_key: str
     ) -> PaymentResult:
-        """Process Bitcoin payment"""        try:
+        """Process Bitcoin payment"""
+        try:
             self.logger.info(f"Processing Bitcoin payment: {payment_request.payment_id}")
             
             # Get unspent transaction outputs for sender
@@ -250,7 +261,8 @@ class BitcoinProcessor:
             raise PaymentError(f"Bitcoin payment processing failed: {str(e)}")
     
     async def verify_payment(self, tx_hash: str, expected_amount: Decimal, recipient_address: str) -> bool:
-        """Verify Bitcoin payment"""        try:
+        """Verify Bitcoin payment"""
+        try:
             # Get transaction details
             tx = self.rpc_connection.gettransaction(tx_hash)
             
@@ -271,26 +283,30 @@ class BitcoinProcessor:
             return False
     
     async def _validate_bitcoin_address(self, address: str) -> bool:
-        """Validate Bitcoin address format"""        try:
+        """Validate Bitcoin address format"""
+        try:
             result = self.rpc_connection.validateaddress(address)
             return result["isvalid"]
         except Exception:
             return False
     
     async def _get_address_from_private_key(self, private_key: str) -> str:
-        """Get Bitcoin address from private key"""        # This would implement proper address derivation from private key
+        """Get Bitcoin address from private key"""
+        # This would implement proper address derivation from private key
         # For security, this should use proper cryptographic libraries
         return "example_bitcoin_address"
     
     async def _get_utxos(self, address: str) -> List[Dict[str, Any]]:
-        """Get unspent transaction outputs for address"""        try:
+        """Get unspent transaction outputs for address"""
+        try:
             return self.rpc_connection.listunspent(1, 9999999, [address])
         except Exception as e:
             self.logger.error(f"Failed to get UTXOs: {str(e)}")
             return []
     
     async def _estimate_transaction_fee(self) -> Decimal:
-        """Estimate Bitcoin transaction fee"""        try:
+        """Estimate Bitcoin transaction fee"""
+        try:
             # Get estimated fee rate (sat/vB)
             fee_rate = self.rpc_connection.estimatesmartfee(6)  # 6 blocks
             
@@ -308,7 +324,8 @@ class BitcoinProcessor:
             return Decimal("0.0001")  # Default fee
     
     async def _select_utxos(self, utxos: List[Dict], amount_needed: Decimal) -> tuple:
-        """Select UTXOs for transaction"""        selected = []
+        """Select UTXOs for transaction"""
+        selected = []
         total = Decimal("0")
         
         # Sort UTXOs by amount (largest first for efficiency)
@@ -324,11 +341,13 @@ class BitcoinProcessor:
         return selected, total
     
     async def _get_change_address(self, sender_address: str) -> str:
-        """Get change address for transaction"""        # In practice, this would generate a new change address
+        """Get change address for transaction"""
+        # In practice, this would generate a new change address
         return sender_address  # Simplified: return to sender
     
     async def _monitor_bitcoin_transaction(self, tx_hash: str, payment_id: str) -> None:
-        """Monitor Bitcoin transaction for confirmations"""        try:
+        """Monitor Bitcoin transaction for confirmations"""
+        try:
             while True:
                 try:
                     tx = self.rpc_connection.gettransaction(tx_hash)
@@ -351,7 +370,8 @@ class BitcoinProcessor:
             self.logger.error(f"Failed to monitor Bitcoin transaction: {str(e)}")
     
     async def _store_payment_request(self, payment_request: PaymentRequest) -> None:
-        """Store payment request in cache"""        key = f"payment_request:{payment_request.payment_id}"
+        """Store payment request in cache"""
+        key = f"payment_request:{payment_request.payment_id}"
         data = {
             "amount": str(payment_request.amount),
             "currency": payment_request.currency.value,
@@ -367,7 +387,8 @@ class BitcoinProcessor:
         await self.redis.expire(key, ttl)
     
     async def _store_payment_result(self, payment_result: PaymentResult) -> None:
-        """Store payment result in cache"""        key = f"payment_result:{payment_result.payment_id}"
+        """Store payment result in cache"""
+        key = f"payment_result:{payment_result.payment_id}"
         data = {
             "tx_hash": payment_result.tx_hash,
             "network": payment_result.network,
@@ -382,7 +403,8 @@ class BitcoinProcessor:
         await self.redis.expire(key, 86400 * 30)  # 30 days
     
     async def _update_payment_status(self, payment_id: str, status: PaymentStatus, confirmations: int) -> None:
-        """Update payment status"""        key = f"payment_result:{payment_id}"
+        """Update payment status"""
+        key = f"payment_result:{payment_id}"
         await self.redis.hset(key, mapping={
             "status": status.value,
             "confirmations": confirmations,
@@ -391,11 +413,13 @@ class BitcoinProcessor:
 
 
 class EthereumProcessor:
-    """    Ethereum payment processor for smart contract interactions and ETH/token payments
+    """
+    Ethereum payment processor for smart contract interactions and ETH/token payments
     
     Handles Ethereum-based transactions including ETH, ERC-20 tokens, and 
     smart contract interactions for automated licensing and royalty payments.
-    """    
+    """
+    
     def __init__(self, config: BlockchainConfig, redis_client: redis.Redis):
         self.config = config
         self.redis = redis_client
@@ -404,7 +428,8 @@ class EthereumProcessor:
         self.token_contracts: Dict[str, Dict[str, Any]] = {}
     
     async def initialize(self) -> None:
-        """Initialize Ethereum processor"""        try:
+        """Initialize Ethereum processor"""
+        try:
             # Initialize Web3 connections for Ethereum networks
             networks = ["ethereum_mainnet", "ethereum_goerli", "polygon_mainnet", "binance_smart_chain"]
             
@@ -435,7 +460,8 @@ class EthereumProcessor:
         sender_private_key: str,
         gas_price: Optional[int] = None
     ) -> PaymentResult:
-        """Process ETH payment"""        try:
+        """Process ETH payment"""
+        try:
             web3 = self.web3_instances[network]
             
             # Get sender address
@@ -498,7 +524,8 @@ class EthereumProcessor:
         recipient_address: str,
         sender_private_key: str
     ) -> PaymentResult:
-        """Process ERC-20 token payment"""        try:
+        """Process ERC-20 token payment"""
+        try:
             web3 = self.web3_instances[network]
             token_contract = self.token_contracts[network][token_symbol]
             
@@ -565,7 +592,8 @@ class EthereumProcessor:
             raise PaymentError(f"Token payment processing failed: {str(e)}")
     
     async def get_token_balance(self, network: str, token_symbol: str, address: str) -> Decimal:
-        """Get ERC-20 token balance"""        try:
+        """Get ERC-20 token balance"""
+        try:
             if network not in self.token_contracts or token_symbol not in self.token_contracts[network]:
                 return Decimal("0")
             
@@ -580,7 +608,8 @@ class EthereumProcessor:
             return Decimal("0")
     
     async def get_eth_balance(self, network: str, address: str) -> Decimal:
-        """Get ETH balance"""        try:
+        """Get ETH balance"""
+        try:
             web3 = self.web3_instances[network]
             balance_wei = web3.eth.get_balance(address)
             return web3.from_wei(balance_wei, 'ether')
@@ -589,7 +618,8 @@ class EthereumProcessor:
             return Decimal("0")
     
     async def _initialize_token_contracts(self) -> None:
-        """Initialize ERC-20 token contracts"""        # Token contract addresses for different networks
+        """Initialize ERC-20 token contracts"""
+        # Token contract addresses for different networks
         token_configs = {
             "ethereum_mainnet": {
                 "USDT": {
@@ -665,11 +695,13 @@ class EthereumProcessor:
 
 
 class MultiChainWallet:
-    """    Multi-chain cryptocurrency wallet management system
+    """
+    Multi-chain cryptocurrency wallet management system
     
     Manages wallet addresses and balances across multiple blockchain networks
     for seamless cross-chain operations and user experience.
-    """    
+    """
+    
     def __init__(self, config: BlockchainConfig, redis_client: redis.Redis):
         self.config = config
         self.redis = redis_client
@@ -678,12 +710,14 @@ class MultiChainWallet:
         self.ethereum_processor = None
     
     async def initialize(self, bitcoin_processor: BitcoinProcessor, ethereum_processor: EthereumProcessor) -> None:
-        """Initialize multi-chain wallet"""        self.bitcoin_processor = bitcoin_processor
+        """Initialize multi-chain wallet"""
+        self.bitcoin_processor = bitcoin_processor
         self.ethereum_processor = ethereum_processor
         self.logger.info("Multi-chain wallet initialized successfully")
     
     async def create_user_wallet(self, user_id: int) -> Dict[str, str]:
-        """Create wallet addresses for user across all supported chains"""        try:
+        """Create wallet addresses for user across all supported chains"""
+        try:
             wallet_addresses = {}
             
             # Generate Bitcoin address
@@ -712,7 +746,8 @@ class MultiChainWallet:
             raise PaymentError(f"Wallet creation failed: {str(e)}")
     
     async def get_user_balances(self, user_id: int) -> Dict[str, Dict[str, Decimal]]:
-        """Get user's balances across all chains and currencies"""        try:
+        """Get user's balances across all chains and currencies"""
+        try:
             wallet_info = await self._get_user_wallet(user_id)
             if not wallet_info:
                 return {}
@@ -763,7 +798,8 @@ class MultiChainWallet:
         amount: Decimal,
         recipient_address: str
     ) -> PaymentResult:
-        """Transfer funds between networks or to external address"""        try:
+        """Transfer funds between networks or to external address"""
+        try:
             wallet_info = await self._get_user_wallet(user_id)
             if not wallet_info:
                 raise PaymentError("User wallet not found")
@@ -878,7 +914,8 @@ class MultiChainWallet:
             raise PaymentError(f"Fund transfer failed: {str(e)}")
     
     async def _store_user_wallet(self, user_id: int, addresses: Dict[str, str], ethereum_private_key: str) -> None:
-        """Store user wallet information securely"""        # In production, private keys should be encrypted
+        """Store user wallet information securely"""
+        # In production, private keys should be encrypted
         wallet_data = {
             "user_id": user_id,
             "addresses": json.dumps(addresses),
@@ -891,7 +928,8 @@ class MultiChainWallet:
         # No expiration for wallet data
     
     async def _get_user_wallet(self, user_id: int) -> Optional[Dict[str, Any]]:
-        """Get user wallet information"""        key = f"user_wallet:{user_id}"
+        """Get user wallet information"""
+        key = f"user_wallet:{user_id}"
         wallet_data = await self.redis.hgetall(key)
         
         if not wallet_data:
@@ -906,11 +944,13 @@ class MultiChainWallet:
 
 
 class PaymentGateway:
-    """    Main cryptocurrency payment gateway for IA-Influencer-Agent platform
+    """
+    Main cryptocurrency payment gateway for IA-Influencer-Agent platform
     
     Orchestrates all cryptocurrency payment operations including processing,
     verification, and cross-chain transactions for content licensing and creator payments.
-    """    
+    """
+    
     def __init__(self, config: BlockchainConfig, redis_client: redis.Redis):
         self.config = config
         self.redis = redis_client
@@ -925,7 +965,8 @@ class PaymentGateway:
         self.processing_payments: Dict[str, PaymentResult] = {}
     
     async def initialize(self) -> None:
-        """Initialize payment gateway"""        try:
+        """Initialize payment gateway"""
+        try:
             await self.bitcoin_processor.initialize()
             await self.ethereum_processor.initialize()
             await self.multi_chain_wallet.initialize(self.bitcoin_processor, self.ethereum_processor)
@@ -948,7 +989,8 @@ class PaymentGateway:
         recipient_address: str,
         metadata: Dict[str, Any]
     ) -> PaymentResult:
-        """Process cryptocurrency payment"""        try:
+        """Process cryptocurrency payment"""
+        try:
             self.logger.info(f"Processing payment: {amount} {currency}")
             
             currency_enum = CryptoCurrency(currency)
@@ -1037,7 +1079,8 @@ class PaymentGateway:
             raise PaymentError(f"Payment processing failed: {str(e)}")
     
     async def get_payment_status(self, payment_id: str) -> Optional[PaymentResult]:
-        """Get payment status by ID"""        try:
+        """Get payment status by ID"""
+        try:
             # Check processing queue first
             if payment_id in self.processing_payments:
                 return self.processing_payments[payment_id]
@@ -1068,7 +1111,8 @@ class PaymentGateway:
             return None
     
     async def process_pending_transactions(self) -> None:
-        """Process pending transactions in queue"""        try:
+        """Process pending transactions in queue"""
+        try:
             while self.pending_payments:
                 payment_request = self.pending_payments.pop(0)
                 
@@ -1084,7 +1128,8 @@ class PaymentGateway:
             self.logger.error(f"Error processing pending transactions: {str(e)}")
     
     async def _process_payment_queue(self) -> None:
-        """Background task to process payment queue"""        while True:
+        """Background task to process payment queue"""
+        while True:
             try:
                 await self.process_pending_transactions()
                 await asyncio.sleep(10)  # Process every 10 seconds
@@ -1093,7 +1138,8 @@ class PaymentGateway:
                 await asyncio.sleep(30)  # Wait longer on error
     
     async def cleanup(self) -> None:
-        """Cleanup payment gateway resources"""        try:
+        """Cleanup payment gateway resources"""
+        try:
             self.logger.info("Cleaning up payment gateway...")
             self.pending_payments.clear()
             self.processing_payments.clear()
@@ -1104,11 +1150,13 @@ class PaymentGateway:
 
 
 class CryptoConverter:
-    """    Cryptocurrency conversion and price feed service
+    """
+    Cryptocurrency conversion and price feed service
     
     Provides real-time exchange rates and conversion functionality
     between different cryptocurrencies and fiat currencies.
-    """    
+    """
+    
     def __init__(self, config: BlockchainConfig, redis_client: redis.Redis):
         self.config = config
         self.redis = redis_client
@@ -1117,7 +1165,8 @@ class CryptoConverter:
         self.last_price_update = datetime.min
     
     async def initialize(self) -> None:
-        """Initialize crypto converter"""        try:
+        """Initialize crypto converter"""
+        try:
             await self._update_exchange_rates()
             
             # Start background price updates
@@ -1130,7 +1179,8 @@ class CryptoConverter:
             raise BlockchainError(f"Crypto converter initialization failed: {str(e)}")
     
     async def convert_currency(self, amount: Decimal, from_currency: str, to_currency: str) -> Decimal:
-        """Convert amount between currencies"""        try:
+        """Convert amount between currencies"""
+        try:
             if from_currency == to_currency:
                 return amount
             
@@ -1149,14 +1199,16 @@ class CryptoConverter:
             raise PaymentError(f"Currency conversion failed: {str(e)}")
     
     async def get_usd_price(self, currency: str) -> Optional[Decimal]:
-        """Get USD price for cryptocurrency"""        try:
+        """Get USD price for cryptocurrency"""
+        try:
             return await self._get_exchange_rate(currency, "USD")
         except Exception as e:
             self.logger.error(f"Failed to get USD price for {currency}: {str(e)}")
             return None
     
     async def _get_exchange_rate(self, from_currency: str, to_currency: str) -> Optional[Decimal]:
-        """Get exchange rate between two currencies"""        try:
+        """Get exchange rate between two currencies"""
+        try:
             # Check cache first
             if from_currency in self.price_cache and to_currency in self.price_cache[from_currency]:
                 return self.price_cache[from_currency][to_currency]
@@ -1174,7 +1226,8 @@ class CryptoConverter:
             return None
     
     async def _update_exchange_rates(self) -> None:
-        """Update exchange rates from external APIs"""        try:
+        """Update exchange rates from external APIs"""
+        try:
             # This would integrate with real price APIs like CoinGecko, CoinMarketCap, etc.
             # For now, using placeholder values
             
@@ -1216,7 +1269,8 @@ class CryptoConverter:
             self.logger.error(f"Failed to update exchange rates: {str(e)}")
     
     async def _price_update_loop(self) -> None:
-        """Background loop to update prices"""        while True:
+        """Background loop to update prices"""
+        while True:
             try:
                 # Update prices every 5 minutes
                 if datetime.utcnow() - self.last_price_update > timedelta(minutes=5):
@@ -1229,7 +1283,8 @@ class CryptoConverter:
                 await asyncio.sleep(60)  # Retry in 1 minute
     
     def _validate_bitcoin_address(self, address: str) -> bool:
-        """Validate Bitcoin address format"""        try:
+        """Validate Bitcoin address format"""
+        try:
             # Basic Bitcoin address validation
             # Legacy addresses start with 1, SegWit with 3, Bech32 with bc1
             if len(address) < 26 or len(address) > 62:
@@ -1249,7 +1304,8 @@ class CryptoConverter:
             return False
     
     async def _get_bitcoin_balance(self, address: str) -> float:
-        """Get Bitcoin balance for address"""        try:
+        """Get Bitcoin balance for address"""
+        try:
             # In a real implementation, this would query a Bitcoin node or API
             # For simulation, return a mock balance
             mock_balance = 0.05  # 0.05 BTC
@@ -1262,7 +1318,8 @@ class CryptoConverter:
             return 0.0
     
     def _generate_transaction_hash(self, transaction_data: Dict[str, Any]) -> str:
-        """Generate a mock transaction hash"""        try:
+        """Generate a mock transaction hash"""
+        try:
             # Create deterministic hash based on transaction data
             data_string = json.dumps(transaction_data, sort_keys=True)
             hash_input = f"{data_string}{datetime.utcnow().isoformat()}"
@@ -1288,7 +1345,8 @@ class CryptoConverter:
         network: str,
         fee: float
     ) -> None:
-        """Record cryptocurrency transaction in database"""        try:
+        """Record cryptocurrency transaction in database"""
+        try:
             transaction_record = {
                 "user_id": user_id,
                 "transaction_type": transaction_type,

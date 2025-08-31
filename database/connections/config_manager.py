@@ -10,7 +10,8 @@ Centralized configuration management for database connections:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 import os
 import json
@@ -26,14 +27,16 @@ import base64
 
 
 class Environment(Enum):
-    """Deployment environments"""    DEVELOPMENT = "development"
+    """Deployment environments"""
+    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
 
 
 class ConfigurationSource(Enum):
-    """Configuration sources"""    FILE = "file"
+    """Configuration sources"""
+    FILE = "file"
     ENVIRONMENT = "environment"
     DATABASE = "database"
     VAULT = "vault"
@@ -42,7 +45,8 @@ class ConfigurationSource(Enum):
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration"""    host: str
+    """Database configuration"""
+    host: str
     port: int
     database: str
     username: str
@@ -59,7 +63,8 @@ class DatabaseConfig:
     retry_delay: float = 1.0
     
     def to_url(self, driver: str = "postgresql+asyncpg") -> str:
-        """Convert to database URL"""        return (
+        """Convert to database URL"""
+        return (
             f"{driver}://{self.username}:{self.password}@"
             f"{self.host}:{self.port}/{self.database}"
         )
@@ -67,7 +72,8 @@ class DatabaseConfig:
 
 @dataclass
 class RedisConfig:
-    """Redis configuration"""    host: str
+    """Redis configuration"""
+    host: str
     port: int = 6379
     db: int = 0
     password: Optional[str] = None
@@ -89,7 +95,8 @@ class RedisConfig:
 
 @dataclass
 class MongoConfig:
-    """MongoDB configuration"""    host: str
+    """MongoDB configuration"""
+    host: str
     port: int = 27017
     database: str
     username: Optional[str] = None
@@ -105,7 +112,8 @@ class MongoConfig:
     server_selection_timeout_ms: int = 30000
     
     def to_url(self) -> str:
-        """Convert to MongoDB URL"""        auth = ""
+        """Convert to MongoDB URL"""
+        auth = ""
         if self.username and self.password:
             auth = f"{self.username}:{self.password}@"
         
@@ -124,7 +132,8 @@ class MongoConfig:
 
 @dataclass
 class ElasticsearchConfig:
-    """Elasticsearch configuration"""    hosts: List[str]
+    """Elasticsearch configuration"""
+    hosts: List[str]
     username: Optional[str] = None
     password: Optional[str] = None
     api_key: Optional[str] = None
@@ -141,7 +150,8 @@ class ElasticsearchConfig:
 
 @dataclass
 class VectorStoreConfig:
-    """Vector store configuration"""    provider: str  # faiss, pinecone, weaviate, etc.
+    """Vector store configuration"""
+    provider: str  # faiss, pinecone, weaviate, etc.
     
     # FAISS specific
     index_path: Optional[str] = None
@@ -163,7 +173,8 @@ class VectorStoreConfig:
 
 @dataclass
 class ObjectStorageConfig:
-    """Object storage configuration"""    provider: str  # s3, minio, gcs, azure
+    """Object storage configuration"""
+    provider: str  # s3, minio, gcs, azure
     
     # S3/MinIO
     endpoint_url: Optional[str] = None
@@ -182,7 +193,8 @@ class ObjectStorageConfig:
 
 @dataclass
 class TenantConfig:
-    """Tenant-specific configuration"""    tenant_id: str
+    """Tenant-specific configuration"""
+    tenant_id: str
     name: str
     database_config: Optional[DatabaseConfig] = None
     redis_config: Optional[RedisConfig] = None
@@ -204,7 +216,8 @@ class TenantConfig:
 
 
 class DatabaseConfigurationManager:
-    """    Centralized database configuration manager.
+    """
+    Centralized database configuration manager.
     
     Provides:
     - Environment-specific configurations
@@ -213,7 +226,8 @@ class DatabaseConfigurationManager:
     - Secure credential management
     - Multi-tenant configuration isolation
     - Configuration monitoring and auditing
-    """    
+    """
+    
     def __init__(self, environment: Environment = Environment.DEVELOPMENT):
         self.logger = logging.getLogger(__name__)
         self.environment = environment
@@ -251,7 +265,8 @@ class DatabaseConfigurationManager:
         self._setup_defaults()
     
     def _get_encryption_key(self) -> Optional[bytes]:
-        """Get encryption key for sensitive data"""        key_env = os.getenv("DATABASE_CONFIG_ENCRYPTION_KEY")
+        """Get encryption key for sensitive data"""
+        key_env = os.getenv("DATABASE_CONFIG_ENCRYPTION_KEY")
         if key_env:
             try:
                 return base64.urlsafe_b64decode(key_env.encode())
@@ -269,7 +284,8 @@ class DatabaseConfigurationManager:
         return None
     
     def _setup_defaults(self) -> None:
-        """Setup default configurations"""        
+        """Setup default configurations"""
+        
         # PostgreSQL defaults
         self.global_config["postgresql"] = {
             "host": os.getenv("POSTGRES_HOST", "localhost"),
@@ -323,7 +339,8 @@ class DatabaseConfigurationManager:
         }
     
     async def initialize(self, config_dir: Optional[str] = None) -> None:
-        """Initialize configuration manager"""        
+        """Initialize configuration manager"""
+        
         if config_dir:
             self.config_dir = Path(config_dir)
         
@@ -339,7 +356,8 @@ class DatabaseConfigurationManager:
         self.logger.info("Configuration manager initialized")
     
     async def _load_configurations(self) -> None:
-        """Load configurations from all sources"""        
+        """Load configurations from all sources"""
+        
         for source in self.config_sources:
             try:
                 if source == ConfigurationSource.FILE:
@@ -355,7 +373,8 @@ class DatabaseConfigurationManager:
                 self.logger.warning(f"Failed to load configuration from {source.value}: {e}")
     
     async def _load_from_files(self) -> None:
-        """Load configuration from files"""        
+        """Load configuration from files"""
+        
         # Load global configuration
         global_config_path = self.config_dir / self.config_files["global"]
         if global_config_path.exists():
@@ -376,26 +395,31 @@ class DatabaseConfigurationManager:
                         self.tenant_configs[tenant_config.tenant_id] = tenant_config
     
     async def _load_from_environment(self) -> None:
-        """Load configuration from environment variables"""        # Environment variables are already loaded in _setup_defaults
+        """Load configuration from environment variables"""
+        # Environment variables are already loaded in _setup_defaults
         pass
     
     async def _load_from_database(self) -> None:
-        """Load configuration from database (placeholder)"""        # This would load configuration from a configuration database
+        """Load configuration from database (placeholder)"""
+        # This would load configuration from a configuration database
         pass
     
     async def _load_from_vault(self) -> None:
-        """Load configuration from secure vault (placeholder)"""        # This would load sensitive configuration from a secure vault
+        """Load configuration from secure vault (placeholder)"""
+        # This would load sensitive configuration from a secure vault
         pass
     
     def _deep_merge(self, target: Dict[str, Any], source: Dict[str, Any]) -> None:
-        """Deep merge two dictionaries"""        for key, value in source.items():
+        """Deep merge two dictionaries"""
+        for key, value in source.items():
             if key in target and isinstance(target[key], dict) and isinstance(value, dict):
                 self._deep_merge(target[key], value)
             else:
                 target[key] = value
     
     async def _validate_configurations(self) -> None:
-        """Validate all configurations"""        
+        """Validate all configurations"""
+        
         # Validate global configuration
         for db_type, config in self.global_config.items():
             if not self._validate_config(db_type, config):
@@ -407,7 +431,8 @@ class DatabaseConfigurationManager:
                 raise ValueError(f"Invalid configuration for tenant {tenant_id}")
     
     def _validate_config(self, db_type: str, config: Dict[str, Any]) -> bool:
-        """Validate specific database configuration"""        
+        """Validate specific database configuration"""
+        
         try:
             if db_type == "postgresql":
                 DatabaseConfig(**config)
@@ -429,7 +454,8 @@ class DatabaseConfigurationManager:
             return False
     
     def _validate_tenant_config(self, tenant_config: TenantConfig) -> bool:
-        """Validate tenant configuration"""        
+        """Validate tenant configuration"""
+        
         # Basic validation
         if not tenant_config.tenant_id or not tenant_config.name:
             return False
@@ -445,13 +471,15 @@ class DatabaseConfigurationManager:
         return True
     
     async def _setup_monitoring(self) -> None:
-        """Setup configuration monitoring"""        # This would setup file watchers for configuration changes
+        """Setup configuration monitoring"""
+        # This would setup file watchers for configuration changes
         pass
     
     def get_database_config(self, 
                            db_type: str, 
                            tenant_id: Optional[str] = None) -> Optional[Union[DatabaseConfig, RedisConfig, MongoConfig]]:
-        """Get database configuration"""        
+        """Get database configuration"""
+        
         # Check tenant-specific configuration first
         if tenant_id and tenant_id in self.tenant_configs:
             tenant_config = self.tenant_configs[tenant_id]
@@ -489,13 +517,16 @@ class DatabaseConfigurationManager:
             return None
     
     def get_tenant_config(self, tenant_id: str) -> Optional[TenantConfig]:
-        """Get tenant configuration"""        return self.tenant_configs.get(tenant_id)
+        """Get tenant configuration"""
+        return self.tenant_configs.get(tenant_id)
     
     def list_tenants(self) -> List[str]:
-        """List all configured tenants"""        return list(self.tenant_configs.keys())
+        """List all configured tenants"""
+        return list(self.tenant_configs.keys())
     
     async def add_tenant(self, tenant_config: TenantConfig) -> bool:
-        """Add new tenant configuration"""        
+        """Add new tenant configuration"""
+        
         try:
             # Validate configuration
             if not self._validate_tenant_config(tenant_config):
@@ -522,7 +553,8 @@ class DatabaseConfigurationManager:
             return False
     
     async def update_tenant(self, tenant_id: str, updates: Dict[str, Any]) -> bool:
-        """Update tenant configuration"""        
+        """Update tenant configuration"""
+        
         try:
             if tenant_id not in self.tenant_configs:
                 return False
@@ -554,7 +586,8 @@ class DatabaseConfigurationManager:
             return False
     
     async def remove_tenant(self, tenant_id: str) -> bool:
-        """Remove tenant configuration"""        
+        """Remove tenant configuration"""
+        
         try:
             if tenant_id not in self.tenant_configs:
                 return False
@@ -576,7 +609,8 @@ class DatabaseConfigurationManager:
             return False
     
     def _log_config_change(self, action: str, target: str, data: Any) -> None:
-        """Log configuration change for auditing"""        
+        """Log configuration change for auditing"""
+        
         log_entry = {
             "timestamp": datetime.utcnow().isoformat(),
             "action": action,
@@ -592,7 +626,8 @@ class DatabaseConfigurationManager:
             self.audit_log = self.audit_log[-1000:]
     
     async def _notify_config_change(self, change_type: str, target: str) -> None:
-        """Notify configuration change callbacks"""        
+        """Notify configuration change callbacks"""
+        
         for callback in self.config_change_callbacks:
             try:
                 await callback(change_type, target)
@@ -600,10 +635,12 @@ class DatabaseConfigurationManager:
                 self.logger.error(f"Configuration change callback error: {e}")
     
     def register_change_callback(self, callback: callable) -> None:
-        """Register callback for configuration changes"""        self.config_change_callbacks.append(callback)
+        """Register callback for configuration changes"""
+        self.config_change_callbacks.append(callback)
     
     def encrypt_sensitive_data(self, data: str) -> Optional[str]:
-        """Encrypt sensitive configuration data"""        if not self.cipher_suite:
+        """Encrypt sensitive configuration data"""
+        if not self.cipher_suite:
             return data
         
         try:
@@ -614,7 +651,8 @@ class DatabaseConfigurationManager:
             return None
     
     def decrypt_sensitive_data(self, encrypted_data: str) -> Optional[str]:
-        """Decrypt sensitive configuration data"""        if not self.cipher_suite:
+        """Decrypt sensitive configuration data"""
+        if not self.cipher_suite:
             return encrypted_data
         
         try:
@@ -626,7 +664,8 @@ class DatabaseConfigurationManager:
             return None
     
     async def save_configuration(self) -> bool:
-        """Save current configuration to files"""        
+        """Save current configuration to files"""
+        
         try:
             # Ensure config directory exists
             self.config_dir.mkdir(parents=True, exist_ok=True)
@@ -652,7 +691,8 @@ class DatabaseConfigurationManager:
             return False
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get configuration manager metrics"""        
+        """Get configuration manager metrics"""
+        
         return {
             "environment": self.environment.value,
             "total_tenants": len(self.tenant_configs),
@@ -673,7 +713,8 @@ class DatabaseConfigurationManager:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown configuration manager"""        self.logger.info("Shutting down configuration manager...")
+        """Shutdown configuration manager"""
+        self.logger.info("Shutting down configuration manager...")
         
         # Save current configuration
         await self.save_configuration()

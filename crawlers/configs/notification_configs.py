@@ -14,7 +14,8 @@ Contact: mlaiel@live.de | www.fahed-mlaiel.de
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, modification, or distribution is strictly prohibited.
 Legal action will be taken against violators.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Union, Any
 from dataclasses import dataclass, field
 from enum import Enum
@@ -23,7 +24,8 @@ import json
 from pathlib import Path
 
 class NotificationChannel(Enum):
-    """Available notification channels."""    EMAIL = "email"
+    """Available notification channels."""
+    EMAIL = "email"
     SMS = "sms"
     SLACK = "slack"
     DISCORD = "discord"
@@ -35,28 +37,32 @@ class NotificationChannel(Enum):
     VOICE_CALL = "voice_call"
 
 class NotificationPriority(Enum):
-    """Notification priority levels."""    LOW = "low"
+    """Notification priority levels."""
+    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
     CRITICAL = "critical"
 
 class EscalationAction(Enum):
-    """Escalation actions."""    NOTIFY_MANAGER = "notify_manager"
+    """Escalation actions."""
+    NOTIFY_MANAGER = "notify_manager"
     CREATE_INCIDENT = "create_incident"
     AUTO_REMEDIATE = "auto_remediate"
     DISABLE_SERVICE = "disable_service"
     EMERGENCY_CONTACT = "emergency_contact"
 
 class MessageFormat(Enum):
-    """Message formats."""    TEXT = "text"
+    """Message formats."""
+    TEXT = "text"
     HTML = "html"
     MARKDOWN = "markdown"
     JSON = "json"
     XML = "xml"
 
 class DeliveryStatus(Enum):
-    """Delivery status."""    PENDING = "pending"
+    """Delivery status."""
+    PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
     FAILED = "failed"
@@ -64,7 +70,8 @@ class DeliveryStatus(Enum):
 
 @dataclass
 class ChannelConfig:
-    """Configuration for individual notification channel."""    channel: NotificationChannel
+    """Configuration for individual notification channel."""
+    channel: NotificationChannel
     enabled: bool = True
     priority_threshold: NotificationPriority = NotificationPriority.NORMAL
     
@@ -97,7 +104,8 @@ class ChannelConfig:
 
 @dataclass
 class RecipientConfig:
-    """Configuration for notification recipients."""    recipient_id: str
+    """Configuration for notification recipients."""
+    recipient_id: str
     name: str
     email: Optional[str] = None
     phone: Optional[str] = None
@@ -122,7 +130,8 @@ class RecipientConfig:
 
 @dataclass
 class NotificationTemplate:
-    """Template for notification messages."""    template_id: str
+    """Template for notification messages."""
+    template_id: str
     name: str
     category: str
     subject_template: str
@@ -144,7 +153,8 @@ class NotificationTemplate:
 
 @dataclass
 class EscalationPolicy:
-    """Configuration for escalation policies."""    policy_id: str
+    """Configuration for escalation policies."""
+    policy_id: str
     name: str
     description: str
     enabled: bool = True
@@ -169,7 +179,8 @@ class EscalationPolicy:
 
 @dataclass
 class AlertingConfig:
-    """Configuration for alerting system."""    enabled: bool = True
+    """Configuration for alerting system."""
+    enabled: bool = True
     
     # Alert processing
     deduplication_enabled: bool = True
@@ -194,7 +205,8 @@ class AlertingConfig:
 
 @dataclass
 class DeliveryConfig:
-    """Configuration for message delivery."""    enabled: bool = True
+    """Configuration for message delivery."""
+    enabled: bool = True
     
     # Delivery options
     parallel_delivery: bool = True
@@ -216,9 +228,11 @@ class DeliveryConfig:
     emergency_fallback: NotificationChannel = NotificationChannel.EMAIL
 
 class NotificationConfigManager:
-    """Manager for notification configurations."""    
+    """Manager for notification configurations."""
+    
     def __init__(self, config_dir: Optional[str] = None):
-        """Initialize notification configuration manager."""        self.config_dir = Path(config_dir) if config_dir else Path(__file__).parent
+        """Initialize notification configuration manager."""
+        self.config_dir = Path(config_dir) if config_dir else Path(__file__).parent
         self.channels: Dict[str, ChannelConfig] = {}
         self.recipients: Dict[str, RecipientConfig] = {}
         self.templates: Dict[str, NotificationTemplate] = {}
@@ -230,7 +244,8 @@ class NotificationConfigManager:
         self._setup_default_templates()
     
     def _load_configurations(self) -> None:
-        """Load notification configurations from files."""        try:
+        """Load notification configurations from files."""
+        try:
             config_file = self.config_dir / "notification_config.json"
             if config_file.exists():
                 with open(config_file, 'r', encoding='utf-8') as f:
@@ -245,7 +260,8 @@ class NotificationConfigManager:
             print(f"Error loading notification configurations: {e}")
     
     def _setup_default_channels(self) -> None:
-        """Setup default notification channels."""        default_channels = [
+        """Setup default notification channels."""
+        default_channels = [
             ChannelConfig(
                 channel=NotificationChannel.EMAIL,
                 enabled=True,
@@ -281,7 +297,8 @@ class NotificationConfigManager:
                 self.channels[channel_id] = channel
     
     def _setup_default_templates(self) -> None:
-        """Setup default notification templates."""        default_templates = [
+        """Setup default notification templates."""
+        default_templates = [
             NotificationTemplate(
                 template_id="security_alert",
                 name="Security Alert",
@@ -372,24 +389,29 @@ Recommended Actions:
                 self.templates[template.template_id] = template
     
     def register_channel(self, channel_config: ChannelConfig) -> None:
-        """Register a new notification channel."""        channel_id = channel_config.channel.value
+        """Register a new notification channel."""
+        channel_id = channel_config.channel.value
         self.channels[channel_id] = channel_config
         self._save_configurations()
     
     def register_recipient(self, recipient_config: RecipientConfig) -> None:
-        """Register a new notification recipient."""        self.recipients[recipient_config.recipient_id] = recipient_config
+        """Register a new notification recipient."""
+        self.recipients[recipient_config.recipient_id] = recipient_config
         self._save_configurations()
     
     def register_template(self, template: NotificationTemplate) -> None:
-        """Register a new notification template."""        self.templates[template.template_id] = template
+        """Register a new notification template."""
+        self.templates[template.template_id] = template
         self._save_configurations()
     
     def register_escalation_policy(self, policy: EscalationPolicy) -> None:
-        """Register a new escalation policy."""        self.escalation_policies[policy.policy_id] = policy
+        """Register a new escalation policy."""
+        self.escalation_policies[policy.policy_id] = policy
         self._save_configurations()
     
     def get_enabled_channels(self, priority: Optional[NotificationPriority] = None) -> List[ChannelConfig]:
-        """Get enabled channels, optionally filtered by priority."""        channels = [c for c in self.channels.values() if c.enabled]
+        """Get enabled channels, optionally filtered by priority."""
+        channels = [c for c in self.channels.values() if c.enabled]
         
         if priority:
             priority_order = {
@@ -405,7 +427,8 @@ Recommended Actions:
         return channels
     
     def get_recipients_for_category(self, category: str, priority: NotificationPriority) -> List[RecipientConfig]:
-        """Get recipients subscribed to a category with sufficient priority."""        recipients = []
+        """Get recipients subscribed to a category with sufficient priority."""
+        recipients = []
         priority_order = {
             NotificationPriority.LOW: 1,
             NotificationPriority.NORMAL: 2,
@@ -423,7 +446,8 @@ Recommended Actions:
         return recipients
     
     def format_message(self, template_id: str, variables: Dict[str, Any]) -> Dict[str, str]:
-        """Format a message using a template."""        template = self.templates.get(template_id)
+        """Format a message using a template."""
+        template = self.templates.get(template_id)
         if not template:
             raise ValueError(f"Template {template_id} not found")
         
@@ -446,7 +470,8 @@ Recommended Actions:
             raise ValueError(f"Template variable not provided: {e}")
     
     def should_escalate(self, alert_data: Dict[str, Any]) -> Optional[EscalationPolicy]:
-        """Check if an alert should be escalated and return the policy."""        for policy in self.escalation_policies.values():
+        """Check if an alert should be escalated and return the policy."""
+        for policy in self.escalation_policies.values():
             if not policy.enabled:
                 continue
             
@@ -473,7 +498,8 @@ Recommended Actions:
         return None
     
     def validate_configuration(self) -> Dict[str, List[str]]:
-        """Validate notification configuration."""        issues = {"errors": [], "warnings": []}
+        """Validate notification configuration."""
+        issues = {"errors": [], "warnings": []}
         
         # Check if at least one channel is enabled
         enabled_channels = self.get_enabled_channels()
@@ -502,7 +528,8 @@ Recommended Actions:
         return issues
     
     def _save_configurations(self) -> None:
-        """Save configurations to file."""        try:
+        """Save configurations to file."""
+        try:
             config_file = self.config_dir / "notification_config.json"
             config_data = {
                 "channels": {

@@ -6,7 +6,8 @@ Monitors system health, performance, and security indicators.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 
 class TechnicalMetric(Enum):
-    """Technical metrics for monitoring"""    CPU_USAGE = "cpu_usage"
+    """Technical metrics for monitoring"""
+    CPU_USAGE = "cpu_usage"
     MEMORY_USAGE = "memory_usage"
     DISK_USAGE = "disk_usage"
     NETWORK_LATENCY = "network_latency"
@@ -36,7 +38,8 @@ class TechnicalMetric(Enum):
 
 
 class SecurityThreatLevel(Enum):
-    """Security threat levels"""    LOW = "low"
+    """Security threat levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -45,7 +48,8 @@ class SecurityThreatLevel(Enum):
 
 @dataclass
 class TechnicalMetrics:
-    """Technical metrics data structure"""    timestamp: datetime
+    """Technical metrics data structure"""
+    timestamp: datetime
     
     # System metrics
     cpu_usage: float  # Percentage
@@ -74,7 +78,8 @@ class TechnicalMetrics:
 
 @dataclass
 class SecurityEvent:
-    """Security event data structure"""    event_id: str
+    """Security event data structure"""
+    event_id: str
     timestamp: datetime
     event_type: str
     threat_level: SecurityThreatLevel
@@ -87,7 +92,8 @@ class SecurityEvent:
 
 
 class TechnicalAlertManager:
-    """    Advanced technical alert management for infrastructure and security monitoring
+    """
+    Advanced technical alert management for infrastructure and security monitoring
     
     Features:
     - Infrastructure health monitoring
@@ -96,9 +102,11 @@ class TechnicalAlertManager:
     - Service availability monitoring
     - Resource exhaustion alerts
     - API performance monitoring
-    """    
+    """
+    
     def __init__(self, alert_manager: IntelligentAlertManager):
-        """Initialize technical alert manager"""        self.alert_manager = alert_manager
+        """Initialize technical alert manager"""
+        self.alert_manager = alert_manager
         self.technical_metrics_history: List[TechnicalMetrics] = []
         self.security_events: List[SecurityEvent] = []
         self.service_baselines: Dict[str, Dict[str, float]] = {}
@@ -135,7 +143,8 @@ class TechnicalAlertManager:
         logger.info("TechnicalAlertManager initialized")
     
     def _initialize_technical_rules(self):
-        """Initialize technical alert rules"""        
+        """Initialize technical alert rules"""
+        
         # Infrastructure Alerts
         
         # Critical CPU Usage
@@ -266,7 +275,8 @@ class TechnicalAlertManager:
         logger.info("Technical alert rules initialized")
     
     async def evaluate_technical_metrics(self, metrics: TechnicalMetrics) -> List[IntelligentAlert]:
-        """Evaluate technical metrics and trigger alerts"""        triggered_alerts = []
+        """Evaluate technical metrics and trigger alerts"""
+        triggered_alerts = []
         
         # Store metrics for trend analysis
         self.technical_metrics_history.append(metrics)
@@ -302,7 +312,8 @@ class TechnicalAlertManager:
         return triggered_alerts
     
     async def _evaluate_infrastructure_alerts(self, metrics: TechnicalMetrics) -> List[IntelligentAlert]:
-        """Evaluate infrastructure-related alerts"""        alerts = []
+        """Evaluate infrastructure-related alerts"""
+        alerts = []
         
         try:
             # CPU Usage Alert
@@ -362,7 +373,8 @@ class TechnicalAlertManager:
         return alerts
     
     async def _evaluate_performance_alerts(self, metrics: TechnicalMetrics) -> List[IntelligentAlert]:
-        """Evaluate performance-related alerts"""        alerts = []
+        """Evaluate performance-related alerts"""
+        alerts = []
         
         try:
             # API Performance Alert
@@ -393,7 +405,8 @@ class TechnicalAlertManager:
         return alerts
     
     async def _evaluate_security_alerts(self, metrics: TechnicalMetrics) -> List[IntelligentAlert]:
-        """Evaluate security-related alerts"""        alerts = []
+        """Evaluate security-related alerts"""
+        alerts = []
         
         try:
             # Security Breach Alert
@@ -449,7 +462,8 @@ class TechnicalAlertManager:
         return alerts
     
     async def process_security_event(self, event: SecurityEvent) -> List[IntelligentAlert]:
-        """Process a security event and trigger appropriate alerts"""        alerts = []
+        """Process a security event and trigger appropriate alerts"""
+        alerts = []
         
         try:
             # Store the event
@@ -485,7 +499,8 @@ class TechnicalAlertManager:
         return alerts
     
     async def _calculate_performance_degradation(self, metrics: TechnicalMetrics) -> float:
-        """Calculate performance degradation percentage"""        try:
+        """Calculate performance degradation percentage"""
+        try:
             service_name = metrics.service_name
             
             # Get baseline performance if available
@@ -509,7 +524,8 @@ class TechnicalAlertManager:
             return 0.0
     
     async def _update_service_baselines(self, metrics: TechnicalMetrics):
-        """Update service performance baselines"""        try:
+        """Update service performance baselines"""
+        try:
             service_name = metrics.service_name
             
             if service_name not in self.service_baselines:
@@ -541,7 +557,8 @@ class TechnicalAlertManager:
             logger.error(f"Error updating service baselines: {e}")
     
     async def get_technical_alert_summary(self) -> Dict[str, Any]:
-        """Get technical alert summary and system health"""        try:
+        """Get technical alert summary and system health"""
+        try:
             if not self.technical_metrics_history:
                 return {"error": "No technical metrics available"}
             
@@ -584,7 +601,8 @@ class TechnicalAlertManager:
             return {"error": str(e)}
     
     async def _calculate_system_health_score(self, metrics: TechnicalMetrics) -> float:
-        """Calculate overall system health score (0-1)"""        try:
+        """Calculate overall system health score (0-1)"""
+        try:
             # Component health scores
             cpu_health = max(0, (100 - metrics.cpu_usage) / 100)
             memory_health = max(0, (100 - metrics.memory_usage) / 100)
@@ -608,7 +626,8 @@ class TechnicalAlertManager:
             return 0.5
     
     async def _get_security_status(self) -> Dict[str, Any]:
-        """Get current security status"""        try:
+        """Get current security status"""
+        try:
             if not self.technical_metrics_history:
                 return {"status": "unknown"}
             
@@ -643,7 +662,8 @@ class TechnicalAlertManager:
             return {"status": "unknown", "error": str(e)}
     
     async def _calculate_performance_trend(self) -> str:
-        """Calculate performance trend direction"""        try:
+        """Calculate performance trend direction"""
+        try:
             if len(self.technical_metrics_history) < 3:
                 return "insufficient_data"
             

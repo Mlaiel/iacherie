@@ -30,7 +30,8 @@ Features:
 - Revenue and business intelligence
 - AI model performance monitoring
 - Infrastructure health monitoring
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime
@@ -54,11 +55,13 @@ logger = logging.getLogger(__name__)
 
 
 class MetricsDeploymentManager:
-    """    Central metrics deployment manager for the IA Influencer Agent platform
+    """
+    Central metrics deployment manager for the IA Influencer Agent platform
     
     Orchestrates all metrics collection, monitoring, and analytics services
     for enterprise-grade observability and business intelligence.
-    """    
+    """
+    
     def __init__(self, config: Optional[MetricsConfiguration] = None):
         self.config = config or get_metrics_config()
         self._services: Dict[str, Any] = {}
@@ -67,7 +70,8 @@ class MetricsDeploymentManager:
         self._is_running = False
         
     async def initialize(self) -> None:
-        """Initialize all metrics services and collectors"""        if self._is_initialized:
+        """Initialize all metrics services and collectors"""
+        if self._is_initialized:
             logger.warning("Metrics deployment manager already initialized")
             return
             
@@ -96,7 +100,8 @@ class MetricsDeploymentManager:
             raise
     
     async def _initialize_core_services(self) -> None:
-        """Initialize core metrics services"""        
+        """Initialize core metrics services"""
+        
         # Prometheus metrics manager
         if self.config.prometheus.enabled:
             self._services['prometheus'] = PrometheusManager()
@@ -142,7 +147,8 @@ class MetricsDeploymentManager:
         )
     
     async def _initialize_collectors(self) -> None:
-        """Initialize specialized metrics collectors"""        
+        """Initialize specialized metrics collectors"""
+        
         # Business events collector
         self._collectors['business_events'] = BusinessEventsCollector(
             prometheus_manager=self._services.get('prometheus')
@@ -171,7 +177,8 @@ class MetricsDeploymentManager:
         logger.info(f"Initialized {len(self._collectors)} specialized collectors")
     
     async def _setup_service_connections(self) -> None:
-        """Setup connections between services"""        
+        """Setup connections between services"""
+        
         # Connect collectors to alert manager
         if 'alerts' in self._services:
             for collector_name, collector in self._collectors.items():
@@ -187,7 +194,8 @@ class MetricsDeploymentManager:
         logger.info("Service connections established")
     
     async def start(self) -> None:
-        """Start all metrics services"""        if not self._is_initialized:
+        """Start all metrics services"""
+        if not self._is_initialized:
             await self.initialize()
         
         if self._is_running:
@@ -217,7 +225,8 @@ class MetricsDeploymentManager:
             raise
     
     async def _start_services(self) -> None:
-        """Start core services"""        
+        """Start core services"""
+        
         # Start Prometheus if enabled
         if 'prometheus' in self._services:
             await self._services['prometheus'].start()
@@ -234,7 +243,8 @@ class MetricsDeploymentManager:
             logger.info("Performance analytics started")
     
     async def _start_collectors(self) -> None:
-        """Start metrics collectors"""        
+        """Start metrics collectors"""
+        
         start_tasks = []
         for collector_name, collector in self._collectors.items():
             if hasattr(collector, 'start'):
@@ -245,7 +255,8 @@ class MetricsDeploymentManager:
             logger.info(f"Started {len(start_tasks)} collectors")
     
     async def _deploy_default_dashboards(self) -> None:
-        """Deploy default Grafana dashboards"""        
+        """Deploy default Grafana dashboards"""
+        
         if 'dashboard' in self._services:
             try:
                 await self._services['dashboard'].deploy_default_dashboards()
@@ -254,7 +265,8 @@ class MetricsDeploymentManager:
                 logger.warning(f"Failed to deploy default dashboards: {e}")
     
     async def _setup_default_alerts(self) -> None:
-        """Setup default alert rules"""        
+        """Setup default alert rules"""
+        
         if 'alerts' in self._services:
             try:
                 thresholds = self.config.get_alert_thresholds()
@@ -264,7 +276,8 @@ class MetricsDeploymentManager:
                 logger.warning(f"Failed to setup default alerts: {e}")
     
     async def stop(self) -> None:
-        """Stop all metrics services"""        if not self._is_running:
+        """Stop all metrics services"""
+        if not self._is_running:
             return
         
         try:
@@ -295,13 +308,16 @@ class MetricsDeploymentManager:
             logger.error(f"Error stopping metrics deployment manager: {e}")
     
     def get_service(self, service_name: str) -> Optional[Any]:
-        """Get a specific service by name"""        return self._services.get(service_name)
+        """Get a specific service by name"""
+        return self._services.get(service_name)
     
     def get_collector(self, collector_name: str) -> Optional[Any]:
-        """Get a specific collector by name"""        return self._collectors.get(collector_name)
+        """Get a specific collector by name"""
+        return self._collectors.get(collector_name)
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get health status of all services and collectors"""        status = {
+        """Get health status of all services and collectors"""
+        status = {
             'initialized': self._is_initialized,
             'running': self._is_running,
             'services': {},
@@ -326,13 +342,15 @@ class MetricsDeploymentManager:
         return status
     
     async def export_metrics(self, format: str = 'prometheus') -> str:
-        """Export metrics in specified format"""        if format == 'prometheus' and 'prometheus' in self._services:
+        """Export metrics in specified format"""
+        if format == 'prometheus' and 'prometheus' in self._services:
             return await self._services['prometheus'].export_metrics()
         else:
             raise ValueError(f"Unsupported export format: {format}")
     
     async def get_metrics_summary(self) -> Dict[str, Any]:
-        """Get comprehensive metrics summary"""        summary = {
+        """Get comprehensive metrics summary"""
+        summary = {
             'timestamp': datetime.utcnow().isoformat(),
             'configuration': {
                 'environment': self.config.environment.value,
@@ -365,7 +383,8 @@ class MetricsDeploymentManager:
 # Context manager for metrics deployment
 @asynccontextmanager
 async def metrics_deployment_context(config: Optional[MetricsConfiguration] = None):
-    """Context manager for metrics deployment lifecycle"""    manager = MetricsDeploymentManager(config)
+    """Context manager for metrics deployment lifecycle"""
+    manager = MetricsDeploymentManager(config)
     
     try:
         await manager.start()
@@ -379,7 +398,8 @@ _deployment_manager: Optional[MetricsDeploymentManager] = None
 
 
 def get_metrics_deployment_manager() -> MetricsDeploymentManager:
-    """Get global metrics deployment manager instance"""    global _deployment_manager
+    """Get global metrics deployment manager instance"""
+    global _deployment_manager
     
     if _deployment_manager is None:
         _deployment_manager = MetricsDeploymentManager()
@@ -388,25 +408,30 @@ def get_metrics_deployment_manager() -> MetricsDeploymentManager:
 
 
 async def initialize_metrics_deployment(config: Optional[MetricsConfiguration] = None) -> None:
-    """Initialize global metrics deployment"""    manager = get_metrics_deployment_manager()
+    """Initialize global metrics deployment"""
+    manager = get_metrics_deployment_manager()
     if config:
         manager.config = config
     await manager.initialize()
 
 
 async def start_metrics_deployment() -> None:
-    """Start global metrics deployment"""    manager = get_metrics_deployment_manager()
+    """Start global metrics deployment"""
+    manager = get_metrics_deployment_manager()
     await manager.start()
 
 
 async def stop_metrics_deployment() -> None:
-    """Stop global metrics deployment"""    manager = get_metrics_deployment_manager()
+    """Stop global metrics deployment"""
+    manager = get_metrics_deployment_manager()
     await manager.stop()
 
 
 if __name__ == "__main__":
-    """    Direct execution for testing and debugging
-    """    async def main():
+    """
+    Direct execution for testing and debugging
+    """
+    async def main():
         config = get_metrics_config()
         
         async with metrics_deployment_context(config) as manager:

@@ -4,7 +4,8 @@ Advanced AI-powered system for building comprehensive creator profiles
 with multi-format analysis, preference detection, and optimization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Any, Tuple
@@ -40,13 +41,15 @@ from ...security.data_validator import DataValidator
 logger = logging.getLogger(__name__)
 
 class ProfileCompleteness(Enum):
-    """Profile completeness levels"""    BASIC = "basic"          # 0-30%
+    """Profile completeness levels"""
+    BASIC = "basic"          # 0-30%
     INTERMEDIATE = "intermediate"  # 31-60%
     ADVANCED = "advanced"    # 61-85%
     COMPLETE = "complete"    # 86-100%
 
 class ContentGenre(Enum):
-    """Supported content genres"""    MUSIC_ELECTRONIC = "music_electronic"
+    """Supported content genres"""
+    MUSIC_ELECTRONIC = "music_electronic"
     MUSIC_ACOUSTIC = "music_acoustic"
     MUSIC_HIP_HOP = "music_hip_hop"
     MUSIC_POP = "music_pop"
@@ -69,7 +72,8 @@ class ContentGenre(Enum):
 
 @dataclass
 class ProfileData:
-    """Comprehensive creator profile data structure"""    user_id: str
+    """Comprehensive creator profile data structure"""
+    user_id: str
     creator_type: str
     
     # Basic Information
@@ -109,7 +113,8 @@ class ProfileData:
     verification_status: Dict[str, bool] = field(default_factory=dict)
 
 class ProfileBuilder:
-    """    Advanced profile building system with AI-powered analysis and optimization.
+    """
+    Advanced profile building system with AI-powered analysis and optimization.
     
     Core Capabilities:
     - Multi-source data integration and analysis
@@ -119,7 +124,8 @@ class ProfileBuilder:
     - Brand consistency validation and recommendations
     - Profile completeness scoring and improvement suggestions
     - Privacy-aware data handling and security
-    """    
+    """
+    
     def __init__(self):
         self.profile_analyzer = ProfileAnalyzer()
         self.interest_extractor = InterestExtractor()
@@ -145,8 +151,10 @@ class ProfileBuilder:
     
     async def initialize_profile(self, user_id: str, creator_type: str, 
                                initial_data: Dict[str, Any] = None) -> ProfileData:
-        """        Initialize new creator profile with intelligent defaults and analysis.
-        """        try:
+        """
+        Initialize new creator profile with intelligent defaults and analysis.
+        """
+        try:
             # Create base profile
             profile = ProfileData(
                 user_id=user_id,
@@ -175,8 +183,10 @@ class ProfileBuilder:
     
     async def enrich_profile(self, profile: ProfileData, 
                            enrichment_data: Dict[str, Any]) -> ProfileData:
-        """        Enrich existing profile with additional data and AI analysis.
-        """        try:
+        """
+        Enrich existing profile with additional data and AI analysis.
+        """
+        try:
             # Validate enrichment data
             validated_data = await self.data_validator.validate_profile_data(
                 enrichment_data
@@ -212,8 +222,10 @@ class ProfileBuilder:
             raise ProfileBuildingError(f"Failed to enrich profile: {str(e)}")
     
     async def analyze_brand_consistency(self, profile: ProfileData) -> Dict[str, Any]:
-        """        Analyze brand consistency across profile elements.
-        """        try:
+        """
+        Analyze brand consistency across profile elements.
+        """
+        try:
             consistency_analysis = {
                 'overall_score': 0.0,
                 'visual_consistency': 0.0,
@@ -260,8 +272,10 @@ class ProfileBuilder:
             return {'overall_score': 0.0, 'issues': ['Analysis failed']}
     
     async def suggest_improvements(self, profile: ProfileData) -> List[Dict[str, Any]]:
-        """        Generate intelligent profile improvement suggestions.
-        """        try:
+        """
+        Generate intelligent profile improvement suggestions.
+        """
+        try:
             suggestions = []
             
             # Completeness-based suggestions
@@ -329,8 +343,10 @@ class ProfileBuilder:
             return []
     
     async def validate_profile(self, profile: ProfileData) -> Dict[str, Any]:
-        """        Comprehensive profile validation with detailed feedback.
-        """        try:
+        """
+        Comprehensive profile validation with detailed feedback.
+        """
+        try:
             validation_results = {
                 'is_valid': True,
                 'score': 0.0,
@@ -389,7 +405,8 @@ class ProfileBuilder:
     
     async def _process_initial_data(self, profile: ProfileData, 
                                   initial_data: Dict[str, Any]) -> None:
-        """Process and integrate initial profile data."""        # Map common fields
+        """Process and integrate initial profile data."""
+        # Map common fields
         field_mapping = {
             'name': 'display_name',
             'description': 'bio',
@@ -413,7 +430,8 @@ class ProfileBuilder:
             profile.brand_guidelines.update(initial_data['brand'])
     
     async def _apply_creator_defaults(self, profile: ProfileData) -> None:
-        """Apply creator type-specific defaults and configurations."""        creator_configs = {
+        """Apply creator type-specific defaults and configurations."""
+        creator_configs = {
             'musician': {
                 'content_formats': ['audio', 'video', 'image'],
                 'primary_genres': [ContentGenre.MUSIC_POP],
@@ -441,7 +459,8 @@ class ProfileBuilder:
                 setattr(profile, key, default_value)
     
     async def _analyze_initial_profile(self, profile: ProfileData) -> None:
-        """Perform initial AI analysis of profile data."""        if profile.bio:
+        """Perform initial AI analysis of profile data."""
+        if profile.bio:
             # Extract interests and themes from bio
             interests = await self.interest_extractor.extract_interests(profile.bio)
             profile.content_themes.extend(interests)
@@ -453,7 +472,8 @@ class ProfileBuilder:
     
     async def _analyze_content_samples(self, profile: ProfileData, 
                                      content_samples: List[Dict[str, Any]]) -> None:
-        """Analyze provided content samples for profile enrichment."""        for sample in content_samples:
+        """Analyze provided content samples for profile enrichment."""
+        for sample in content_samples:
             content_type = sample.get('type', 'unknown')
             
             if content_type == 'text':
@@ -479,7 +499,8 @@ class ProfileBuilder:
     
     async def _analyze_social_presence(self, profile: ProfileData, 
                                      social_data: Dict[str, Any]) -> None:
-        """Analyze social media presence and engagement patterns."""        try:
+        """Analyze social media presence and engagement patterns."""
+        try:
             # Aggregate engagement metrics
             total_followers = 0
             total_engagement = 0
@@ -507,7 +528,8 @@ class ProfileBuilder:
             logger.error(f"Error analyzing social presence: {str(e)}")
     
     async def _extract_personality_insights(self, profile: ProfileData) -> None:
-        """Extract personality insights from all available profile data."""        text_sources = []
+        """Extract personality insights from all available profile data."""
+        text_sources = []
         
         # Collect text from various sources
         if profile.bio:
@@ -523,7 +545,8 @@ class ProfileBuilder:
             profile.personality_traits.update(personality_analysis)
     
     async def _generate_optimization_suggestions(self, profile: ProfileData) -> None:
-        """Generate AI-powered profile optimization suggestions."""        suggestions = []
+        """Generate AI-powered profile optimization suggestions."""
+        suggestions = []
         
         # Content optimization
         if profile.completeness_score < 0.8:
@@ -544,7 +567,8 @@ class ProfileBuilder:
         profile.optimization_suggestions = suggestions
     
     async def _update_completeness_score(self, profile: ProfileData) -> None:
-        """Calculate and update profile completeness score."""        completeness_factors = {
+        """Calculate and update profile completeness score."""
+        completeness_factors = {
             'display_name': 5,
             'bio': 10,
             'location': 3,
@@ -590,7 +614,8 @@ class ProfileBuilder:
             profile.completeness_level = ProfileCompleteness.COMPLETE
     
     async def _analyze_personality_from_text(self, text: str) -> Dict[str, float]:
-        """Analyze personality traits from text using NLP."""        try:
+        """Analyze personality traits from text using NLP."""
+        try:
             # Simple keyword-based personality analysis
             personality_keywords = {
                 'creativity': ['creative', 'artistic', 'innovative', 'original', 'unique'],
@@ -615,7 +640,8 @@ class ProfileBuilder:
             return {}
     
     async def _extract_content_themes(self, content: str) -> List[str]:
-        """Extract content themes and topics from text."""        try:
+        """Extract content themes and topics from text."""
+        try:
             if not content.strip():
                 return []
             
@@ -642,11 +668,13 @@ class ProfileBuilder:
             return []
     
     async def _analyze_visual_consistency(self, profile: ProfileData) -> float:
-        """Analyze visual brand consistency across profile elements."""        # Placeholder implementation
+        """Analyze visual brand consistency across profile elements."""
+        # Placeholder implementation
         return 0.8 if profile.brand_guidelines else 0.3
     
     async def _analyze_tone_consistency(self, profile: ProfileData) -> float:
-        """Analyze tone consistency across content."""        # Placeholder implementation
+        """Analyze tone consistency across content."""
+        # Placeholder implementation
         return 0.7 if profile.content_themes else 0.4
     
     async def _analyze_messaging_consistency(self, profile: ProfileData) -> float:
@@ -655,7 +683,8 @@ class ProfileBuilder:
         return 0.6 if profile.bio and len(profile.social_media_handles) > 0 else 0.2
     
     async def _generate_ai_suggestions(self, profile: ProfileData) -> List[Dict[str, Any]]:
-        """Generate AI-powered personalized suggestions."""        ai_suggestions = []
+        """Generate AI-powered personalized suggestions."""
+        ai_suggestions = []
         
         # Content strategy suggestions based on creator type
         if profile.creator_type == 'musician' and not any('music' in theme for theme in profile.content_themes):
@@ -681,9 +710,11 @@ class ProfileBuilder:
         return ai_suggestions
     
     async def _analyze_audio_sample(self, sample: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze audio sample for genre and characteristics."""        # Placeholder implementation - would use actual audio analysis
+        """Analyze audio sample for genre and characteristics."""
+        # Placeholder implementation - would use actual audio analysis
         return {'genre': 'pop', 'tempo': 'medium', 'energy': 'high'}
     
     async def _analyze_image_sample(self, sample: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze image sample for content and style."""        # Placeholder implementation - would use actual image analysis
+        """Analyze image sample for content and style."""
+        # Placeholder implementation - would use actual image analysis
         return {'themes': ['portrait', 'professional'], 'style': 'modern'}

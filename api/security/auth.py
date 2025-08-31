@@ -3,7 +3,8 @@ Enterprise-grade authentication with multi-factor support
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Security Expert + Backend Senior
-"""import jwt
+"""
+import jwt
 import bcrypt
 import secrets
 import hashlib
@@ -36,11 +37,13 @@ logger = logging.getLogger(__name__)
 
 
 class AuthenticationError(Exception):
-    """Custom authentication exception"""    pass
+    """Custom authentication exception"""
+    pass
 
 
 class AuthenticationStatus(Enum):
-    """Authentication status enumeration"""    SUCCESS = "success"
+    """Authentication status enumeration"""
+    SUCCESS = "success"
     FAILED = "failed"
     PENDING = "pending"
     EXPIRED = "expired"
@@ -49,7 +52,8 @@ class AuthenticationStatus(Enum):
 
 
 class AuthenticationMethod(Enum):
-    """Supported authentication methods"""    PASSWORD = "password"
+    """Supported authentication methods"""
+    PASSWORD = "password"
     JWT_TOKEN = "jwt_token"
     OAUTH2 = "oauth2"
     TWO_FACTOR = "two_factor"
@@ -60,7 +64,8 @@ class AuthenticationMethod(Enum):
 
 @dataclass
 class AuthenticationResult:
-    """Authentication result data structure"""    status: AuthenticationStatus
+    """Authentication result data structure"""
+    status: AuthenticationStatus
     user_id: Optional[str] = None
     session_token: Optional[str] = None
     expires_at: Optional[datetime] = None
@@ -73,7 +78,8 @@ class AuthenticationResult:
 
 @dataclass
 class UserCredentials:
-    """User credentials data structure"""    username: str
+    """User credentials data structure"""
+    username: str
     password: Optional[str] = None
     email: Optional[str] = None
     phone: Optional[str] = None
@@ -84,22 +90,27 @@ class UserCredentials:
 
 
 class BaseAuthenticator(ABC):
-    """Base authenticator interface"""    
+    """Base authenticator interface"""
+    
     @abstractmethod
     async def authenticate(self, credentials: Dict[str, Any]) -> AuthenticationResult:
-        """Authenticate user with provided credentials"""        pass
+        """Authenticate user with provided credentials"""
+        pass
     
     @abstractmethod
     async def validate_token(self, token: str) -> AuthenticationResult:
-        """Validate authentication token"""        pass
+        """Validate authentication token"""
+        pass
     
     @abstractmethod
     async def revoke_authentication(self, token: str) -> bool:
-        """Revoke authentication token"""        pass
+        """Revoke authentication token"""
+        pass
 
 
 class JWTManager:
-    """Advanced JWT token management with security features"""    
+    """Advanced JWT token management with security features"""
+    
     def __init__(self, secret_key: str, algorithm: str = "HS256"):
         self.secret_key = secret_key
         self.algorithm = algorithm
@@ -108,7 +119,8 @@ class JWTManager:
         
     def generate_token(self, user_id: str, permissions: List[str], 
                       expires_hours: int = 24, custom_claims: Dict = None) -> Tuple[str, str]:
-        """Generate access and refresh tokens"""        now = datetime.now(timezone.utc)
+        """Generate access and refresh tokens"""
+        now = datetime.now(timezone.utc)
         exp_time = now + timedelta(hours=expires_hours)
         refresh_exp = now + timedelta(days=30)  # Refresh token valid for 30 days
         
@@ -148,7 +160,8 @@ class JWTManager:
         return access_token, refresh_token
     
     def verify_token(self, token: str) -> Dict[str, Any]:
-        """Verify and decode JWT token"""        try:
+        """Verify and decode JWT token"""
+        try:
             if token in self.token_blacklist:
                 raise AuthenticationError("Token has been revoked")
             
@@ -166,7 +179,8 @@ class JWTManager:
             raise AuthenticationError(f"Invalid token: {str(e)}")
     
     def refresh_access_token(self, refresh_token: str) -> str:
-        """Generate new access token using refresh token"""        try:
+        """Generate new access token using refresh token"""
+        try:
             decoded_refresh = jwt.decode(refresh_token, self.secret_key, algorithms=[self.algorithm])
             
             if decoded_refresh.get('type') != 'refresh':
@@ -191,19 +205,23 @@ class JWTManager:
             raise AuthenticationError(f"Invalid refresh token: {str(e)}")
     
     def revoke_token(self, token: str) -> bool:
-        """Add token to blacklist"""        self.token_blacklist.add(token)
+        """Add token to blacklist"""
+        self.token_blacklist.add(token)
         return True
     
     def revoke_refresh_token(self, refresh_token: str) -> bool:
-        """Revoke refresh token"""        return self.refresh_tokens.pop(refresh_token, None) is not None
+        """Revoke refresh token"""
+        return self.refresh_tokens.pop(refresh_token, None) is not None
     
     def _get_user_permissions(self, user_id: str) -> List[str]:
-        """Get user permissions (to be implemented with database)"""        # Placeholder - should query database for user permissions
+        """Get user permissions (to be implemented with database)"""
+        # Placeholder - should query database for user permissions
         return ['read', 'write', 'content_create']
 
 
 class OAuth2Manager:
-    """OAuth2 authentication management"""    
+    """OAuth2 authentication management"""
+    
     def __init__(self):
         self.providers = {
             'google': {
@@ -231,7 +249,8 @@ class OAuth2Manager:
         self.state_tokens = {}  # For CSRF protection
     
     def generate_auth_url(self, provider: str, redirect_uri: str, state: str = None) -> str:
-        """Generate OAuth2 authorization URL"""        if provider not in self.providers:
+        """Generate OAuth2 authorization URL"""
+        if provider not in self.providers:
             raise ValueError(f"Unsupported OAuth2 provider: {provider}")
         
         config = self.providers[provider]
@@ -258,7 +277,8 @@ class OAuth2Manager:
     
     async def exchange_code_for_token(self, provider: str, code: str, 
                                     redirect_uri: str, state: str) -> Dict[str, Any]:
-        """Exchange authorization code for access token"""        if state not in self.state_tokens:
+        """Exchange authorization code for access token"""
+        if state not in self.state_tokens:
             raise AuthenticationError("Invalid or expired state token")
         
         state_info = self.state_tokens.pop(state)
@@ -280,7 +300,8 @@ class OAuth2Manager:
         return token_data
     
     async def get_user_info(self, provider: str, access_token: str) -> Dict[str, Any]:
-        """Get user information from OAuth2 provider"""        # Provider-specific user info endpoints
+        """Get user information from OAuth2 provider"""
+        # Provider-specific user info endpoints
         endpoints = {
             'google': 'https://www.googleapis.com/oauth2/v2/userinfo',
             'spotify': 'https://api.spotify.com/v1/me',
@@ -302,7 +323,8 @@ class OAuth2Manager:
 
 
 class SessionManager:
-    """Advanced session management with security features"""    
+    """Advanced session management with security features"""
+    
     def __init__(self, redis_url: str = "redis://localhost:6379"):
         self.redis_url = redis_url
         self.session_timeout = 3600  # 1 hour default
@@ -312,7 +334,8 @@ class SessionManager:
     
     async def create_session(self, user_id: str, user_agent: str = None, 
                            ip_address: str = None, metadata: Dict = None) -> str:
-        """Create new session with security metadata"""        redis_client = await aioredis.from_url(self.redis_url)
+        """Create new session with security metadata"""
+        redis_client = await aioredis.from_url(self.redis_url)
         
         session_id = secrets.token_urlsafe(32)
         session_data = {
@@ -345,7 +368,8 @@ class SessionManager:
         return session_id
     
     async def validate_session(self, session_id: str) -> Optional[Dict[str, Any]]:
-        """Validate and update session"""        redis_client = await aioredis.from_url(self.redis_url)
+        """Validate and update session"""
+        redis_client = await aioredis.from_url(self.redis_url)
         
         encrypted_data = await redis_client.get(f"session:{session_id}")
         if not encrypted_data:
@@ -377,7 +401,8 @@ class SessionManager:
             return None
     
     async def revoke_session(self, session_id: str) -> bool:
-        """Revoke specific session"""        redis_client = await aioredis.from_url(self.redis_url)
+        """Revoke specific session"""
+        redis_client = await aioredis.from_url(self.redis_url)
         
         # Get session data to find user
         session_data = await self.validate_session(session_id)
@@ -392,7 +417,8 @@ class SessionManager:
         return result > 0
     
     async def revoke_all_user_sessions(self, user_id: str) -> int:
-        """Revoke all sessions for a user"""        redis_client = await aioredis.from_url(self.redis_url)
+        """Revoke all sessions for a user"""
+        redis_client = await aioredis.from_url(self.redis_url)
         
         # Get all user sessions
         session_ids = await redis_client.smembers(f"user_sessions:{user_id}")
@@ -409,7 +435,8 @@ class SessionManager:
         return count
     
     async def _enforce_session_limit(self, redis_client, user_id: str):
-        """Enforce maximum sessions per user"""        session_ids = await redis_client.smembers(f"user_sessions:{user_id}")
+        """Enforce maximum sessions per user"""
+        session_ids = await redis_client.smembers(f"user_sessions:{user_id}")
         
         if len(session_ids) >= self.max_sessions_per_user:
             # Remove oldest session
@@ -419,14 +446,16 @@ class SessionManager:
 
 
 class TwoFactorAuthManager:
-    """Two-Factor Authentication management"""    
+    """Two-Factor Authentication management"""
+    
     def __init__(self):
         self.totp_window = 30  # 30-second window
         self.backup_codes_count = 10
         self.pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
     
     def generate_secret_key(self, user_id: str, app_name: str = "IA Influencer Agent") -> str:
-        """Generate TOTP secret key for user"""        secret = pyotp.random_base32()
+        """Generate TOTP secret key for user"""
+        secret = pyotp.random_base32()
         
         # Store secret securely (in production, encrypt and store in database)
         self._store_user_secret(user_id, secret)
@@ -435,7 +464,8 @@ class TwoFactorAuthManager:
     
     def generate_qr_code(self, user_id: str, user_email: str, secret: str, 
                         app_name: str = "IA Influencer Agent") -> bytes:
-        """Generate QR code for TOTP setup"""        totp_uri = pyotp.totp.TOTP(secret).provisioning_uri(
+        """Generate QR code for TOTP setup"""
+        totp_uri = pyotp.totp.TOTP(secret).provisioning_uri(
             name=user_email,
             issuer_name=app_name
         )
@@ -454,7 +484,8 @@ class TwoFactorAuthManager:
         return img_buffer.getvalue()
     
     def verify_totp_token(self, user_id: str, token: str) -> bool:
-        """Verify TOTP token"""        secret = self._get_user_secret(user_id)
+        """Verify TOTP token"""
+        secret = self._get_user_secret(user_id)
         if not secret:
             return False
         
@@ -462,7 +493,8 @@ class TwoFactorAuthManager:
         return totp.verify(token, valid_window=1)  # Allow 1 window before/after
     
     def generate_backup_codes(self, user_id: str) -> List[str]:
-        """Generate backup recovery codes"""        backup_codes = []
+        """Generate backup recovery codes"""
+        backup_codes = []
         
         for _ in range(self.backup_codes_count):
             code = secrets.token_hex(4).upper()  # 8-character hex codes
@@ -475,7 +507,8 @@ class TwoFactorAuthManager:
         return backup_codes
     
     def verify_backup_code(self, user_id: str, backup_code: str) -> bool:
-        """Verify backup recovery code"""        stored_codes = self._get_backup_codes(user_id)
+        """Verify backup recovery code"""
+        stored_codes = self._get_backup_codes(user_id)
         
         for i, hashed_code in enumerate(stored_codes):
             if self.pwd_context.verify(backup_code, hashed_code):
@@ -487,29 +520,35 @@ class TwoFactorAuthManager:
         return False
     
     def _store_user_secret(self, user_id: str, secret: str):
-        """Store user's TOTP secret (placeholder - implement with secure database)"""        # In production: encrypt and store in database
+        """Store user's TOTP secret (placeholder - implement with secure database)"""
+        # In production: encrypt and store in database
         pass
     
     def _get_user_secret(self, user_id: str) -> Optional[str]:
-        """Get user's TOTP secret (placeholder)"""        # In production: decrypt from database
+        """Get user's TOTP secret (placeholder)"""
+        # In production: decrypt from database
         return "JBSWY3DPEHPK3PXP"  # Mock secret for testing
     
     def _store_backup_codes(self, user_id: str, codes: List[str]):
-        """Store backup codes (placeholder)"""        pass
+        """Store backup codes (placeholder)"""
+        pass
     
     def _get_backup_codes(self, user_id: str) -> List[str]:
-        """Get backup codes (placeholder)"""        return []
+        """Get backup codes (placeholder)"""
+        return []
 
 
 class BiometricAuthManager:
-    """Biometric authentication management"""    
+    """Biometric authentication management"""
+    
     def __init__(self):
         self.face_encodings = {}  # In production: use secure database
         self.fingerprint_templates = {}
         self.voice_prints = {}
     
     def register_face(self, user_id: str, face_image: np.ndarray) -> bool:
-        """Register user's face for biometric authentication"""        try:
+        """Register user's face for biometric authentication"""
+        try:
             # Detect faces in the image
             face_locations = face_recognition.face_locations(face_image)
             
@@ -532,7 +571,8 @@ class BiometricAuthManager:
     
     def authenticate_face(self, user_id: str, face_image: np.ndarray, 
                          tolerance: float = 0.6) -> bool:
-        """Authenticate user using face recognition"""        try:
+        """Authenticate user using face recognition"""
+        try:
             if user_id not in self.face_encodings:
                 return False
             
@@ -556,7 +596,8 @@ class BiometricAuthManager:
             return False
     
     def register_fingerprint(self, user_id: str, fingerprint_template: bytes) -> bool:
-        """Register fingerprint template"""        try:
+        """Register fingerprint template"""
+        try:
             # In production: process and validate fingerprint template
             # For now, store as-is
             self.fingerprint_templates[user_id] = fingerprint_template
@@ -567,7 +608,8 @@ class BiometricAuthManager:
             return False
     
     def authenticate_fingerprint(self, user_id: str, fingerprint_template: bytes) -> bool:
-        """Authenticate using fingerprint"""        try:
+        """Authenticate using fingerprint"""
+        try:
             if user_id not in self.fingerprint_templates:
                 return False
             
@@ -582,7 +624,8 @@ class BiometricAuthManager:
             return False
     
     def register_voice_print(self, user_id: str, voice_sample: np.ndarray) -> bool:
-        """Register voice print for authentication"""        try:
+        """Register voice print for authentication"""
+        try:
             # In production: extract voice features using ML models
             # For now, store voice sample hash
             voice_hash = hashlib.sha256(voice_sample.tobytes()).hexdigest()
@@ -595,7 +638,8 @@ class BiometricAuthManager:
     
     def authenticate_voice(self, user_id: str, voice_sample: np.ndarray, 
                           threshold: float = 0.8) -> bool:
-        """Authenticate using voice recognition"""        try:
+        """Authenticate using voice recognition"""
+        try:
             if user_id not in self.voice_prints:
                 return False
             
@@ -610,7 +654,8 @@ class BiometricAuthManager:
 
 
 class AuthenticationManager:
-    """Main authentication manager coordinating all authentication methods"""    
+    """Main authentication manager coordinating all authentication methods"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.jwt_manager = JWTManager(
@@ -631,7 +676,8 @@ class AuthenticationManager:
     async def authenticate_user(self, credentials: UserCredentials, 
                               authentication_methods: List[AuthenticationMethod],
                               metadata: Dict[str, Any] = None) -> AuthenticationResult:
-        """Authenticate user with multiple methods"""        try:
+        """Authenticate user with multiple methods"""
+        try:
             # Check if user is locked out
             if await self._is_user_locked(credentials.username):
                 return AuthenticationResult(
@@ -716,7 +762,8 @@ class AuthenticationManager:
             )
     
     async def validate_token(self, token: str, token_type: str = 'access') -> AuthenticationResult:
-        """Validate JWT token"""        try:
+        """Validate JWT token"""
+        try:
             decoded_token = self.jwt_manager.verify_token(token)
             
             if decoded_token.get('type') != token_type:
@@ -736,7 +783,8 @@ class AuthenticationManager:
             )
     
     async def refresh_authentication(self, refresh_token: str) -> AuthenticationResult:
-        """Refresh access token using refresh token"""        try:
+        """Refresh access token using refresh token"""
+        try:
             new_access_token = self.jwt_manager.refresh_access_token(refresh_token)
             
             # Validate new token to get user info
@@ -755,7 +803,8 @@ class AuthenticationManager:
     
     async def logout_user(self, session_id: str = None, access_token: str = None, 
                          refresh_token: str = None) -> bool:
-        """Logout user and revoke tokens/sessions"""        success_count = 0
+        """Logout user and revoke tokens/sessions"""
+        success_count = 0
         
         if session_id:
             if await self.session_manager.revoke_session(session_id):
@@ -772,7 +821,8 @@ class AuthenticationManager:
         return success_count > 0
     
     async def _authenticate_password(self, credentials: UserCredentials) -> AuthenticationResult:
-        """Authenticate using password"""        if not credentials.password:
+        """Authenticate using password"""
+        if not credentials.password:
             return AuthenticationResult(
                 status=AuthenticationStatus.FAILED,
                 error_message="Password required"
@@ -790,20 +840,24 @@ class AuthenticationManager:
         )
     
     async def _authenticate_oauth2(self, credentials: UserCredentials) -> AuthenticationResult:
-        """Authenticate using OAuth2 tokens"""        # Implementation depends on specific OAuth2 flow
+        """Authenticate using OAuth2 tokens"""
+        # Implementation depends on specific OAuth2 flow
         # This is a simplified version
         return AuthenticationResult(status=AuthenticationStatus.SUCCESS)
     
     async def _authenticate_two_factor(self, credentials: UserCredentials) -> bool:
-        """Authenticate using two-factor authentication"""        # Implementation would check TOTP token or backup codes
+        """Authenticate using two-factor authentication"""
+        # Implementation would check TOTP token or backup codes
         return True  # Placeholder
     
     async def _authenticate_biometric(self, credentials: UserCredentials) -> bool:
-        """Authenticate using biometric data"""        # Implementation would verify biometric hash
+        """Authenticate using biometric data"""
+        # Implementation would verify biometric hash
         return True  # Placeholder
     
     async def _is_user_locked(self, username: str) -> bool:
-        """Check if user account is locked due to failed attempts"""        if username not in self.failed_attempts:
+        """Check if user account is locked due to failed attempts"""
+        if username not in self.failed_attempts:
             return False
         
         attempts_info = self.failed_attempts[username]
@@ -815,7 +869,8 @@ class AuthenticationManager:
         return False
     
     async def _record_failed_attempt(self, username: str):
-        """Record failed authentication attempt"""        current_time = time.time()
+        """Record failed authentication attempt"""
+        current_time = time.time()
         
         if username not in self.failed_attempts:
             self.failed_attempts[username] = {'count': 0, 'last_attempt': current_time}
@@ -824,11 +879,13 @@ class AuthenticationManager:
         self.failed_attempts[username]['last_attempt'] = current_time
     
     def _get_stored_password_hash(self, username: str) -> Optional[str]:
-        """Get stored password hash (placeholder - implement with database)"""        # Placeholder - in production, query database
+        """Get stored password hash (placeholder - implement with database)"""
+        # Placeholder - in production, query database
         return self.pwd_context.hash("default_password")
     
     def _get_user_permissions(self, user_id: str) -> List[str]:
-        """Get user permissions (placeholder - implement with database)"""        # Placeholder - in production, query database for user roles/permissions
+        """Get user permissions (placeholder - implement with database)"""
+        # Placeholder - in production, query database for user roles/permissions
         return ['read', 'write', 'content_create', 'content_protect']
 
 

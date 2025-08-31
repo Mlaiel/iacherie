@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -21,7 +22,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT LEGAL WARNING ⚠️
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -48,9 +50,11 @@ from ai.ml.trend_detection import (
 
 
 class TestTrendDetector:
-    """Tests for basic trend detection functionality"""    
+    """Tests for basic trend detection functionality"""
+    
     def test_init_trend_detector(self):
-        """Test trend detector initialization"""        detector = TrendDetector(
+        """Test trend detector initialization"""
+        detector = TrendDetector(
             time_window="7d",
             min_trend_strength=0.3,
             detection_algorithms=["momentum", "breakout", "seasonal"],
@@ -63,7 +67,8 @@ class TestTrendDetector:
         assert detector.enable_anomaly_detection
 
     def test_momentum_trend_detection(self, sample_trend_data):
-        """Test momentum-based trend detection"""        detector = TrendDetector(detection_algorithms=["momentum"])
+        """Test momentum-based trend detection"""
+        detector = TrendDetector(detection_algorithms=["momentum"])
         
         # Use sample trend data
         trends = detector.detect_momentum_trends(sample_trend_data)
@@ -75,7 +80,8 @@ class TestTrendDetector:
         assert trends["trend_direction"] in ["upward", "downward", "stable"]
 
     def test_breakout_trend_detection(self, sample_trend_data):
-        """Test breakout pattern detection"""        detector = TrendDetector(detection_algorithms=["breakout"])
+        """Test breakout pattern detection"""
+        detector = TrendDetector(detection_algorithms=["breakout"])
         
         # Mock breakout detection
         with patch.object(detector, 'detect_breakouts') as mock_breakout:
@@ -96,7 +102,8 @@ class TestTrendDetector:
             assert breakouts["breakout_detected"] is True
 
     def test_seasonal_trend_analysis(self):
-        """Test seasonal trend pattern detection"""        detector = TrendDetector(detection_algorithms=["seasonal"])
+        """Test seasonal trend pattern detection"""
+        detector = TrendDetector(detection_algorithms=["seasonal"])
         
         # Generate sample seasonal data
         dates = pd.date_range(start='2023-01-01', end='2024-12-31', freq='D')
@@ -120,7 +127,8 @@ class TestTrendDetector:
         assert "trough_seasons" in seasonal_trends
 
     def test_anomaly_detection_in_trends(self, sample_trend_data):
-        """Test anomaly detection in trend data"""        detector = TrendDetector(enable_anomaly_detection=True)
+        """Test anomaly detection in trend data"""
+        detector = TrendDetector(enable_anomaly_detection=True)
         
         # Add some anomalous points to sample data
         anomalous_data = sample_trend_data.copy()
@@ -135,7 +143,8 @@ class TestTrendDetector:
         assert all("anomaly_type" in anomaly for anomaly in anomalies)
 
     def test_trend_strength_calculation(self):
-        """Test trend strength calculation"""        detector = TrendDetector()
+        """Test trend strength calculation"""
+        detector = TrendDetector()
         
         # Mock time series with clear trend
         upward_trend = np.array([10, 12, 14, 16, 18, 20, 22, 24, 26, 28])
@@ -151,7 +160,8 @@ class TestTrendDetector:
         assert no_trend_strength < 0.3  # Weak or no trend
 
     def test_multi_timeframe_trend_analysis(self, sample_trend_data):
-        """Test trend analysis across multiple timeframes"""        detector = TrendDetector()
+        """Test trend analysis across multiple timeframes"""
+        detector = TrendDetector()
         
         timeframes = ["1h", "4h", "1d", "1w", "1m"]
         
@@ -174,9 +184,11 @@ class TestTrendDetector:
 
 
 class TestMarketTrendAnalyzer:
-    """Tests for market trend analysis functionality"""    
+    """Tests for market trend analysis functionality"""
+    
     def test_init_market_analyzer(self):
-        """Test market trend analyzer initialization"""        analyzer = MarketTrendAnalyzer(
+        """Test market trend analyzer initialization"""
+        analyzer = MarketTrendAnalyzer(
             market_sectors=["technology", "healthcare", "finance", "entertainment"],
             data_sources=["social_media", "news", "search_trends", "financial_data"],
             enable_cross_sector_analysis=True
@@ -187,7 +199,8 @@ class TestMarketTrendAnalyzer:
         assert analyzer.enable_cross_sector_analysis
 
     def test_sector_trend_analysis(self):
-        """Test sector-specific trend analysis"""        analyzer = MarketTrendAnalyzer(market_sectors=["technology"])
+        """Test sector-specific trend analysis"""
+        analyzer = MarketTrendAnalyzer(market_sectors=["technology"])
         
         # Mock technology sector data
         tech_data = {
@@ -223,7 +236,8 @@ class TestMarketTrendAnalyzer:
             assert "emerging_themes" in sector_trends
 
     def test_cross_sector_correlation_analysis(self):
-        """Test cross-sector correlation analysis"""        analyzer = MarketTrendAnalyzer(
+        """Test cross-sector correlation analysis"""
+        analyzer = MarketTrendAnalyzer(
             market_sectors=["technology", "healthcare", "finance"],
             enable_cross_sector_analysis=True
         )
@@ -243,7 +257,8 @@ class TestMarketTrendAnalyzer:
         assert "sector_relationships" in correlations
 
     def test_market_sentiment_aggregation(self):
-        """Test market sentiment aggregation across sources"""        analyzer = MarketTrendAnalyzer(
+        """Test market sentiment aggregation across sources"""
+        analyzer = MarketTrendAnalyzer(
             data_sources=["social_media", "news", "search_trends"]
         )
         
@@ -263,7 +278,8 @@ class TestMarketTrendAnalyzer:
         assert "source_reliability" in aggregated_sentiment
 
     def test_market_volatility_analysis(self):
-        """Test market volatility analysis"""        analyzer = MarketTrendAnalyzer()
+        """Test market volatility analysis"""
+        analyzer = MarketTrendAnalyzer()
         
         # Generate sample market data with varying volatility
         dates = pd.date_range(start='2024-01-01', periods=100, freq='D')
@@ -285,9 +301,11 @@ class TestMarketTrendAnalyzer:
 
 
 class TestContentTrendPredictor:
-    """Tests for content trend prediction"""    
+    """Tests for content trend prediction"""
+    
     def test_init_content_predictor(self):
-        """Test content trend predictor initialization"""        predictor = ContentTrendPredictor(
+        """Test content trend predictor initialization"""
+        predictor = ContentTrendPredictor(
             content_categories=["music", "technology", "lifestyle", "education"],
             prediction_horizon="30d",
             model_type="neural_network",
@@ -300,7 +318,8 @@ class TestContentTrendPredictor:
         assert predictor.enable_feature_engineering
 
     def test_content_feature_extraction(self):
-        """Test content feature extraction for trend prediction"""        predictor = ContentTrendPredictor(enable_feature_engineering=True)
+        """Test content feature extraction for trend prediction"""
+        predictor = ContentTrendPredictor(enable_feature_engineering=True)
         
         # Mock content data
         content_data = {
@@ -335,7 +354,8 @@ class TestContentTrendPredictor:
         assert "temporal_features" in features
 
     def test_viral_potential_prediction(self):
-        """Test viral potential prediction for content"""        predictor = ContentTrendPredictor()
+        """Test viral potential prediction for content"""
+        predictor = ContentTrendPredictor()
         
         with patch.object(predictor, 'predict_viral_potential') as mock_predict:
             mock_predict.return_value = {
@@ -360,7 +380,8 @@ class TestContentTrendPredictor:
             assert 0 <= viral_prediction["viral_probability"] <= 1
 
     def test_trending_topic_prediction(self):
-        """Test trending topic prediction"""        predictor = ContentTrendPredictor()
+        """Test trending topic prediction"""
+        predictor = ContentTrendPredictor()
         
         # Mock historical topic data
         topic_history = {
@@ -392,7 +413,8 @@ class TestContentTrendPredictor:
             assert "declining_topics" in trending_predictions
 
     def test_content_performance_forecasting(self):
-        """Test content performance forecasting"""        predictor = ContentTrendPredictor(prediction_horizon="7d")
+        """Test content performance forecasting"""
+        predictor = ContentTrendPredictor(prediction_horizon="7d")
         
         # Mock content performance history
         performance_history = {
@@ -414,9 +436,11 @@ class TestContentTrendPredictor:
 
 
 class TestViralityPredictor:
-    """Tests for virality prediction functionality"""    
+    """Tests for virality prediction functionality"""
+    
     def test_init_virality_predictor(self):
-        """Test virality predictor initialization"""        predictor = ViralityPredictor(
+        """Test virality predictor initialization"""
+        predictor = ViralityPredictor(
             viral_threshold=10000,  # Minimum views for viral content
             prediction_window="24h",
             feature_set="comprehensive",
@@ -429,7 +453,8 @@ class TestViralityPredictor:
         assert predictor.enable_real_time_prediction
 
     def test_viral_pattern_recognition(self):
-        """Test viral pattern recognition"""        predictor = ViralityPredictor()
+        """Test viral pattern recognition"""
+        predictor = ViralityPredictor()
         
         # Mock engagement patterns (typical viral vs non-viral)
         viral_pattern = np.array([100, 500, 2000, 8000, 25000, 60000, 100000, 120000])
@@ -443,7 +468,8 @@ class TestViralityPredictor:
         assert non_viral_score < 0.3  # Low viral probability
 
     def test_early_viral_detection(self):
-        """Test early viral detection within first few hours"""        predictor = ViralityPredictor(enable_real_time_prediction=True)
+        """Test early viral detection within first few hours"""
+        predictor = ViralityPredictor(enable_real_time_prediction=True)
         
         # Mock early engagement data (first 2 hours)
         early_metrics = {
@@ -480,7 +506,8 @@ class TestViralityPredictor:
             assert early_prediction["early_viral_probability"] > 0.5
 
     def test_network_effect_analysis(self):
-        """Test network effect analysis for viral spread"""        predictor = ViralityPredictor()
+        """Test network effect analysis for viral spread"""
+        predictor = ViralityPredictor()
         
         # Mock social network data
         network_data = {
@@ -512,7 +539,8 @@ class TestViralityPredictor:
             assert "estimated_reach" in network_analysis
 
     def test_content_virality_factors(self):
-        """Test analysis of content factors contributing to virality"""        predictor = ViralityPredictor()
+        """Test analysis of content factors contributing to virality"""
+        predictor = ViralityPredictor()
         
         # Mock content characteristics
         content_characteristics = {
@@ -537,9 +565,11 @@ class TestViralityPredictor:
 
 
 class TestTrendForecastingEngine:
-    """Tests for trend forecasting functionality"""    
+    """Tests for trend forecasting functionality"""
+    
     def test_init_forecasting_engine(self):
-        """Test trend forecasting engine initialization"""        engine = TrendForecastingEngine(
+        """Test trend forecasting engine initialization"""
+        engine = TrendForecastingEngine(
             forecasting_models=["ARIMA", "LSTM", "Prophet"],
             forecast_horizons=["1d", "1w", "1m", "3m"],
             enable_ensemble_forecasting=True,
@@ -552,7 +582,8 @@ class TestTrendForecastingEngine:
         assert engine.confidence_intervals == [0.8, 0.95]
 
     def test_time_series_forecasting(self, sample_trend_data):
-        """Test time series forecasting"""        engine = TrendForecastingEngine(forecasting_models=["ARIMA"])
+        """Test time series forecasting"""
+        engine = TrendForecastingEngine(forecasting_models=["ARIMA"])
         
         # Use sample trend data for forecasting
         with patch.object(engine, 'forecast_time_series') as mock_forecast:
@@ -583,7 +614,8 @@ class TestTrendForecastingEngine:
             assert len(forecast["forecast_values"]) == 7
 
     def test_ensemble_forecasting(self, sample_trend_data):
-        """Test ensemble forecasting combining multiple models"""        engine = TrendForecastingEngine(
+        """Test ensemble forecasting combining multiple models"""
+        engine = TrendForecastingEngine(
             forecasting_models=["ARIMA", "LSTM", "Prophet"],
             enable_ensemble_forecasting=True
         )
@@ -613,7 +645,8 @@ class TestTrendForecastingEngine:
             assert sum(ensemble_result["model_weights"].values()) == pytest.approx(1.0)
 
     def test_seasonal_decomposition_forecasting(self):
-        """Test seasonal decomposition for forecasting"""        engine = TrendForecastingEngine()
+        """Test seasonal decomposition for forecasting"""
+        engine = TrendForecastingEngine()
         
         # Generate seasonal time series
         dates = pd.date_range(start='2023-01-01', periods=365, freq='D')
@@ -645,7 +678,8 @@ class TestTrendForecastingEngine:
             assert "seasonal_strength" in seasonal_forecast
 
     def test_regime_change_detection(self, sample_trend_data):
-        """Test regime change detection in forecasting"""        engine = TrendForecastingEngine()
+        """Test regime change detection in forecasting"""
+        engine = TrendForecastingEngine()
         
         # Mock regime change detection
         with patch.object(engine, 'detect_regime_changes') as mock_regime:
@@ -673,9 +707,11 @@ class TestTrendForecastingEngine:
 
 
 class TestCompetitiveIntelligenceEngine:
-    """Tests for competitive intelligence functionality"""    
+    """Tests for competitive intelligence functionality"""
+    
     def test_init_competitive_intelligence(self):
-        """Test competitive intelligence engine initialization"""        engine = CompetitiveIntelligenceEngine(
+        """Test competitive intelligence engine initialization"""
+        engine = CompetitiveIntelligenceEngine(
             target_company="TechCorp",
             competitors=["CompetitorA", "CompetitorB", "CompetitorC"],
             analysis_domains=["social_media", "news", "patents", "hiring"],
@@ -688,7 +724,8 @@ class TestCompetitiveIntelligenceEngine:
         assert engine.enable_automated_monitoring
 
     def test_competitor_trend_analysis(self):
-        """Test competitor trend analysis"""        engine = CompetitiveIntelligenceEngine(
+        """Test competitor trend analysis"""
+        engine = CompetitiveIntelligenceEngine(
             target_company="TechCorp",
             competitors=["CompetitorA", "CompetitorB"]
         )
@@ -745,7 +782,8 @@ class TestCompetitiveIntelligenceEngine:
             assert "opportunities" in analysis
 
     def test_market_share_analysis(self):
-        """Test market share trend analysis"""        engine = CompetitiveIntelligenceEngine()
+        """Test market share trend analysis"""
+        engine = CompetitiveIntelligenceEngine()
         
         # Mock historical market share data
         market_share_history = {
@@ -764,7 +802,8 @@ class TestCompetitiveIntelligenceEngine:
         assert "market_concentration" in market_analysis
 
     def test_competitive_intelligence_alerts(self):
-        """Test competitive intelligence alert system"""        engine = CompetitiveIntelligenceEngine(enable_automated_monitoring=True)
+        """Test competitive intelligence alert system"""
+        engine = CompetitiveIntelligenceEngine(enable_automated_monitoring=True)
         
         # Mock monitoring data
         monitoring_data = {
@@ -798,9 +837,11 @@ class TestCompetitiveIntelligenceEngine:
 
 
 class TestTrendMetrics:
-    """Tests for trend analysis metrics and evaluation"""    
+    """Tests for trend analysis metrics and evaluation"""
+    
     def test_init_trend_metrics(self):
-        """Test trend metrics initialization"""        metrics = TrendMetrics()
+        """Test trend metrics initialization"""
+        metrics = TrendMetrics()
         
         assert hasattr(metrics, 'prediction_accuracy')
         assert hasattr(metrics, 'trend_detection_precision')
@@ -808,7 +849,8 @@ class TestTrendMetrics:
         assert hasattr(metrics, 'timing_accuracy')
 
     def test_trend_detection_accuracy(self):
-        """Test trend detection accuracy calculation"""        metrics = TrendMetrics()
+        """Test trend detection accuracy calculation"""
+        metrics = TrendMetrics()
         
         # Mock trend predictions vs actual trends
         predicted_trends = ["upward", "downward", "stable", "upward", "downward"]
@@ -822,7 +864,8 @@ class TestTrendMetrics:
         assert accuracy == 3/5  # 3 out of 5 correct predictions
 
     def test_forecast_error_metrics(self):
-        """Test forecast error metrics calculation"""        metrics = TrendMetrics()
+        """Test forecast error metrics calculation"""
+        metrics = TrendMetrics()
         
         # Mock forecast vs actual values
         forecasted = np.array([100, 105, 110, 115, 120])
@@ -837,7 +880,8 @@ class TestTrendMetrics:
         assert all(error >= 0 for error in error_metrics.values())
 
     def test_trend_timing_accuracy(self):
-        """Test trend timing accuracy metrics"""        metrics = TrendMetrics()
+        """Test trend timing accuracy metrics"""
+        metrics = TrendMetrics()
         
         # Mock trend timing predictions
         predicted_peaks = [
@@ -859,7 +903,8 @@ class TestTrendMetrics:
         assert "value_accuracy" in timing_accuracy
 
     def test_volatility_prediction_accuracy(self):
-        """Test volatility prediction accuracy"""        metrics = TrendMetrics()
+        """Test volatility prediction accuracy"""
+        metrics = TrendMetrics()
         
         # Mock volatility predictions
         predicted_volatility = [0.1, 0.15, 0.3, 0.2, 0.1]
@@ -875,7 +920,8 @@ class TestTrendMetrics:
         assert "directional_accuracy" in volatility_accuracy
 
     def test_trend_strength_evaluation(self):
-        """Test trend strength evaluation metrics"""        metrics = TrendMetrics()
+        """Test trend strength evaluation metrics"""
+        metrics = TrendMetrics()
         
         # Mock trend strength assessments
         predicted_strengths = [0.8, 0.3, 0.7, 0.9, 0.2]
@@ -893,10 +939,12 @@ class TestTrendMetrics:
 
 @pytest.mark.integration
 class TestTrendDetectionIntegration:
-    """Integration tests for trend detection systems"""    
+    """Integration tests for trend detection systems"""
+    
     @pytest.mark.slow
     def test_end_to_end_trend_analysis_pipeline(self, sample_trend_data, temp_dir):
-        """Test complete trend analysis pipeline"""        # Initialize components
+        """Test complete trend analysis pipeline"""
+        # Initialize components
         detector = TrendDetector(detection_algorithms=["momentum", "breakout"])
         predictor = ContentTrendPredictor(content_categories=["technology"])
         forecaster = TrendForecastingEngine(forecasting_models=["ARIMA"])
@@ -939,7 +987,8 @@ class TestTrendDetectionIntegration:
             assert len(forecast_results["forecast_values"]) == 4
 
     def test_real_time_trend_monitoring(self, sample_trend_data):
-        """Test real-time trend monitoring integration"""        detector = TrendDetector(enable_anomaly_detection=True)
+        """Test real-time trend monitoring integration"""
+        detector = TrendDetector(enable_anomaly_detection=True)
         
         # Simulate streaming trend data
         streaming_data = []
@@ -967,7 +1016,8 @@ class TestTrendDetectionIntegration:
             assert "alert_level" in stream_results
 
     def test_multi_platform_trend_aggregation(self):
-        """Test trend aggregation across multiple platforms"""        analyzer = SocialMediaTrendAnalyzer()
+        """Test trend aggregation across multiple platforms"""
+        analyzer = SocialMediaTrendAnalyzer()
         
         # Mock multi-platform trend data
         platform_data = {

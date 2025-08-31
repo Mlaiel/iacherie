@@ -12,7 +12,8 @@ Toute utilisation, reproduction ou distribution sans autorisation
 écrite explicite est strictement interdite et fera l'objet de 
 poursuites judiciaires selon la loi allemande.
 Email: mlaiel@live.de pour autorisation d'utilisation.
-"""from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, JSON, Enum, ForeignKey, Decimal
+"""
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, JSON, Enum, ForeignKey, Decimal
 from sqlalchemy.orm import relationship, Session
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
@@ -28,7 +29,8 @@ Base = declarative_base()
 
 
 class NotificationChannel(PyEnum):
-    """Canaux de notification disponibles."""    EMAIL = "email"
+    """Canaux de notification disponibles."""
+    EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
     IN_APP = "in_app"
@@ -36,7 +38,8 @@ class NotificationChannel(PyEnum):
 
 
 class NotificationFrequency(PyEnum):
-    """Fréquences de notification."""    REAL_TIME = "real_time"
+    """Fréquences de notification."""
+    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -45,14 +48,16 @@ class NotificationFrequency(PyEnum):
 
 
 class PrivacyLevel(PyEnum):
-    """Niveaux de confidentialité."""    PUBLIC = "public"
+    """Niveaux de confidentialité."""
+    PUBLIC = "public"
     FRIENDS = "friends"
     PRIVATE = "private"
     CUSTOM = "custom"
 
 
 class AIPersonality(PyEnum):
-    """Types de personnalité IA."""    PROFESSIONAL = "professional"
+    """Types de personnalité IA."""
+    PROFESSIONAL = "professional"
     FRIENDLY = "friendly"
     CREATIVE = "creative"
     ANALYTICAL = "analytical"
@@ -61,7 +66,8 @@ class AIPersonality(PyEnum):
 
 
 class ContentGenrePreference(PyEnum):
-    """Préférences de genre de contenu."""    MUSIC = "music"
+    """Préférences de genre de contenu."""
+    MUSIC = "music"
     PODCAST = "podcast"
     VIDEO = "video"
     BLOG = "blog"
@@ -71,8 +77,10 @@ class ContentGenrePreference(PyEnum):
 
 
 class UserPreferences(Base):
-    """    Préférences principales de l'utilisateur avec IA personnalisée.
-    """    __tablename__ = "user_preferences"
+    """
+    Préférences principales de l'utilisateur avec IA personnalisée.
+    """
+    __tablename__ = "user_preferences"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     user_id = Column(String, ForeignKey("users.id"), nullable=False, unique=True)
@@ -139,10 +147,12 @@ class UserPreferences(Base):
         return f"<UserPreferences({self.user_id})>"
     
     def get_preference(self, key: str, default: Any = None) -> Any:
-        """Récupère une préférence spécifique."""        return getattr(self, key, default)
+        """Récupère une préférence spécifique."""
+        return getattr(self, key, default)
     
     def update_preference(self, key: str, value: Any) -> bool:
-        """Met à jour une préférence spécifique."""        if hasattr(self, key):
+        """Met à jour une préférence spécifique."""
+        if hasattr(self, key):
             setattr(self, key, value)
             self.updated_at = datetime.utcnow()
             return True
@@ -150,8 +160,10 @@ class UserPreferences(Base):
 
 
 class NotificationSettings(Base):
-    """    Paramètres de notification détaillés par type et canal.
-    """    __tablename__ = "notification_settings"
+    """
+    Paramètres de notification détaillés par type et canal.
+    """
+    __tablename__ = "notification_settings"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     user_preferences_id = Column(String, ForeignKey("user_preferences.id"), nullable=False, unique=True)
@@ -204,8 +216,10 @@ class NotificationSettings(Base):
 
 
 class PrivacySettings(Base):
-    """    Paramètres de confidentialité et sécurité utilisateur.
-    """    __tablename__ = "privacy_settings"
+    """
+    Paramètres de confidentialité et sécurité utilisateur.
+    """
+    __tablename__ = "privacy_settings"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     user_preferences_id = Column(String, ForeignKey("user_preferences.id"), nullable=False, unique=True)
@@ -265,8 +279,10 @@ class PrivacySettings(Base):
 
 
 class AIPersonalizationProfile(Base):
-    """    Profil de personnalisation IA avancé avec apprentissage automatique.
-    """    __tablename__ = "ai_personalization_profiles"
+    """
+    Profil de personnalisation IA avancé avec apprentissage automatique.
+    """
+    __tablename__ = "ai_personalization_profiles"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     user_id = Column(String, ForeignKey("users.id"), nullable=False, unique=True)
@@ -321,22 +337,26 @@ class AIPersonalizationProfile(Base):
 
 
 class UserPreferencesRepository:
-    """    Repository pattern pour la gestion des préférences utilisateur.
+    """
+    Repository pattern pour la gestion des préférences utilisateur.
     Implémentation professionnelle avec IA personnalisée.
-    """    
+    """
+    
     def __init__(self, session: Session):
         self.session = session
         self.logger = logging.getLogger(__name__)
     
     def create_default_preferences(self, user_id: str) -> UserPreferences:
-        """        Crée les préférences par défaut pour un nouvel utilisateur.
+        """
+        Crée les préférences par défaut pour un nouvel utilisateur.
         
         Args:
             user_id: ID de l'utilisateur
             
         Returns:
             UserPreferences: Préférences créées
-        """        try:
+        """
+        try:
             # Préférences principales
             preferences = UserPreferences(user_id=user_id)
             self.session.add(preferences)
@@ -369,12 +389,14 @@ class UserPreferencesRepository:
             raise
     
     def get_user_preferences(self, user_id: str) -> Optional[UserPreferences]:
-        """Récupère les préférences complètes d'un utilisateur."""        return self.session.query(UserPreferences).filter(
+        """Récupère les préférences complètes d'un utilisateur."""
+        return self.session.query(UserPreferences).filter(
             UserPreferences.user_id == user_id
         ).first()
     
     def update_preference(self, user_id: str, preference_key: str, value: Any) -> bool:
-        """        Met à jour une préférence spécifique.
+        """
+        Met à jour une préférence spécifique.
         
         Args:
             user_id: ID de l'utilisateur
@@ -383,7 +405,8 @@ class UserPreferencesRepository:
             
         Returns:
             bool: True si mis à jour avec succès
-        """        try:
+        """
+        try:
             preferences = self.get_user_preferences(user_id)
             if not preferences:
                 preferences = self.create_default_preferences(user_id)
@@ -401,7 +424,8 @@ class UserPreferencesRepository:
             return False
     
     def update_notification_settings(self, user_id: str, settings: Dict[str, Any]) -> bool:
-        """        Met à jour les paramètres de notification.
+        """
+        Met à jour les paramètres de notification.
         
         Args:
             user_id: ID de l'utilisateur
@@ -409,7 +433,8 @@ class UserPreferencesRepository:
             
         Returns:
             bool: True si mis à jour avec succès
-        """        try:
+        """
+        try:
             preferences = self.get_user_preferences(user_id)
             if not preferences or not preferences.notification_settings:
                 return False
@@ -432,7 +457,8 @@ class UserPreferencesRepository:
             return False
     
     def update_privacy_settings(self, user_id: str, settings: Dict[str, Any]) -> bool:
-        """        Met à jour les paramètres de confidentialité.
+        """
+        Met à jour les paramètres de confidentialité.
         
         Args:
             user_id: ID de l'utilisateur
@@ -440,7 +466,8 @@ class UserPreferencesRepository:
             
         Returns:
             bool: True si mis à jour avec succès
-        """        try:
+        """
+        try:
             preferences = self.get_user_preferences(user_id)
             if not preferences or not preferences.privacy_settings:
                 return False
@@ -468,14 +495,16 @@ class UserPreferencesRepository:
             return False
     
     def get_ai_recommendations(self, user_id: str) -> Dict[str, Any]:
-        """        Récupère les recommandations IA personnalisées.
+        """
+        Récupère les recommandations IA personnalisées.
         
         Args:
             user_id: ID de l'utilisateur
             
         Returns:
             Dict[str, Any]: Recommandations personnalisées
-        """        ai_profile = self.session.query(AIPersonalizationProfile).filter(
+        """
+        ai_profile = self.session.query(AIPersonalizationProfile).filter(
             AIPersonalizationProfile.user_id == user_id
         ).first()
         
@@ -497,7 +526,8 @@ class UserPreferencesRepository:
         }
     
     def update_ai_learning(self, user_id: str, interaction_data: Dict[str, Any]) -> bool:
-        """        Met à jour l'apprentissage IA basé sur les interactions utilisateur.
+        """
+        Met à jour l'apprentissage IA basé sur les interactions utilisateur.
         
         Args:
             user_id: ID de l'utilisateur
@@ -505,7 +535,8 @@ class UserPreferencesRepository:
             
         Returns:
             bool: True si mis à jour avec succès
-        """        try:
+        """
+        try:
             ai_profile = self.session.query(AIPersonalizationProfile).filter(
                 AIPersonalizationProfile.user_id == user_id
             ).first()
@@ -539,14 +570,16 @@ class UserPreferencesRepository:
             return False
     
     def export_user_data(self, user_id: str) -> Dict[str, Any]:
-        """        Exporte toutes les données utilisateur (conformité GDPR).
+        """
+        Exporte toutes les données utilisateur (conformité GDPR).
         
         Args:
             user_id: ID de l'utilisateur
             
         Returns:
             Dict[str, Any]: Données utilisateur complètes
-        """        preferences = self.get_user_preferences(user_id)
+        """
+        preferences = self.get_user_preferences(user_id)
         
         if not preferences:
             return {}

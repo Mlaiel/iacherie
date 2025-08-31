@@ -78,11 +78,13 @@ from .rate_limiting_config import (
 
 
 class IntegrationsIndex:
-    """    Centralized integration management index.
+    """
+    Centralized integration management index.
     
     Provides easy access to all integration configurations and managers
     with initialization and health check capabilities.
-    """    
+    """
+    
     def __init__(self):
         self.initialized = False
         
@@ -107,7 +109,8 @@ class IntegrationsIndex:
         self.rate_limit_manager = rate_limit_manager
     
     async def initialize(self) -> bool:
-        """Initialize all integration services."""        try:
+        """Initialize all integration services."""
+        try:
             # Initialize API clients
             await self._initialize_api_clients()
             
@@ -128,13 +131,15 @@ class IntegrationsIndex:
             return False
     
     async def _initialize_api_clients(self):
-        """Initialize API client configurations."""        # Validate OAuth configurations
+        """Initialize API client configurations."""
+        # Validate OAuth configurations
         for provider in OAuthProvider:
             if hasattr(self.oauth, f"{provider}_client_id"):
                 self.oauth_manager.validate_provider_config(provider)
     
     async def _initialize_webhook_handlers(self):
-        """Initialize webhook handlers."""        # Register default handlers if not already registered
+        """Initialize webhook handlers."""
+        # Register default handlers if not already registered
         if not self.webhook_handler_registry.handlers:
             from .webhook_handlers_config import DefaultHandlerConfigs
             for handler_config in DefaultHandlerConfigs.get_default_configs():
@@ -142,7 +147,8 @@ class IntegrationsIndex:
                 self.webhook_handler_registry.register_handler(event_type, handler_config)
     
     async def _initialize_monitoring(self):
-        """Initialize monitoring services."""        # Update service status for all configured services
+        """Initialize monitoring services."""
+        # Update service status for all configured services
         for provider in ServiceProvider:
             if self.external_service_manager.is_service_enabled(provider):
                 # Perform initial health check
@@ -152,7 +158,8 @@ class IntegrationsIndex:
                 self.monitoring_manager.update_health_status(provider.value, status)
     
     async def _initialize_data_sync(self):
-        """Initialize data synchronization services."""        # Create default sync jobs if none exist
+        """Initialize data synchronization services."""
+        # Create default sync jobs if none exist
         if not self.data_sync_manager.sync_jobs:
             from .data_sync_config import DataSource, SyncStrategy, SyncDirection
             
@@ -177,7 +184,8 @@ class IntegrationsIndex:
                 )
     
     async def health_check(self) -> dict:
-        """Perform comprehensive health check of all integrations."""        health_status = {
+        """Perform comprehensive health check of all integrations."""
+        health_status = {
             "initialized": self.initialized,
             "oauth": {
                 "enabled_providers": len([
@@ -212,7 +220,8 @@ class IntegrationsIndex:
         return health_status
     
     async def shutdown(self):
-        """Gracefully shutdown all integration services."""        try:
+        """Gracefully shutdown all integration services."""
+        try:
             # Close API clients
             await self.api_client_manager.close_all_clients()
             
@@ -223,7 +232,8 @@ class IntegrationsIndex:
             print(f"Error during integrations shutdown: {e}")
     
     def get_config_summary(self) -> dict:
-        """Get summary of all integration configurations."""        return {
+        """Get summary of all integration configurations."""
+        return {
             "oauth_providers": list(OAuthProvider),
             "api_providers": list(APIProvider),
             "webhook_providers": list(WebhookProvider),
@@ -239,25 +249,32 @@ integrations_index = IntegrationsIndex()
 
 # Convenience functions for quick access
 def get_oauth_manager():
-    """Get OAuth manager instance."""    return integrations_index.oauth_manager
+    """Get OAuth manager instance."""
+    return integrations_index.oauth_manager
 
 def get_api_client_manager():
-    """Get API client manager instance."""    return integrations_index.api_client_manager
+    """Get API client manager instance."""
+    return integrations_index.api_client_manager
 
 def get_webhook_manager():
-    """Get webhook manager instance."""    return integrations_index.webhook_manager
+    """Get webhook manager instance."""
+    return integrations_index.webhook_manager
 
 def get_monitoring_manager():
-    """Get monitoring manager instance."""    return integrations_index.monitoring_manager
+    """Get monitoring manager instance."""
+    return integrations_index.monitoring_manager
 
 async def initialize_integrations():
-    """Initialize all integration services."""    return await integrations_index.initialize()
+    """Initialize all integration services."""
+    return await integrations_index.initialize()
 
 async def health_check_integrations():
-    """Perform health check on all integrations."""    return await integrations_index.health_check()
+    """Perform health check on all integrations."""
+    return await integrations_index.health_check()
 
 async def shutdown_integrations():
-    """Shutdown all integration services."""    await integrations_index.shutdown()
+    """Shutdown all integration services."""
+    await integrations_index.shutdown()
 
 
 # Export everything for easy imports

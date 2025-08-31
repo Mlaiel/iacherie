@@ -5,7 +5,8 @@ with real-time metrics, historical data analysis, and performance optimization i
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import logging
+"""
+import logging
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -16,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of SEO metrics"""    RANKING = "ranking"
+    """Types of SEO metrics"""
+    RANKING = "ranking"
     TRAFFIC = "traffic"
     CONVERSION = "conversion"
     TECHNICAL = "technical"
@@ -26,7 +28,8 @@ class MetricType(Enum):
 
 
 class TimeRange(Enum):
-    """Time ranges for performance analysis"""    DAY = "1d"
+    """Time ranges for performance analysis"""
+    DAY = "1d"
     WEEK = "7d"
     MONTH = "30d"
     QUARTER = "90d"
@@ -34,14 +37,16 @@ class TimeRange(Enum):
 
 
 class AlertLevel(Enum):
-    """Alert levels for performance issues"""    INFO = "info"
+    """Alert levels for performance issues"""
+    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
 
 
 @dataclass
 class SEOMetric:
-    """Individual SEO metric"""    name: str
+    """Individual SEO metric"""
+    name: str
     value: float
     previous_value: float
     change_percentage: float
@@ -53,7 +58,8 @@ class SEOMetric:
 
 @dataclass
 class KeywordPerformance:
-    """Keyword ranking performance"""    keyword: str
+    """Keyword ranking performance"""
+    keyword: str
     current_position: int
     previous_position: int
     position_change: int
@@ -67,7 +73,8 @@ class KeywordPerformance:
 
 @dataclass
 class PagePerformance:
-    """Individual page SEO performance"""    url: str
+    """Individual page SEO performance"""
+    url: str
     title: str
     traffic: int
     impressions: int
@@ -81,7 +88,8 @@ class PagePerformance:
 
 @dataclass
 class SEOAlert:
-    """SEO performance alert"""    alert_id: str
+    """SEO performance alert"""
+    alert_id: str
     level: AlertLevel
     metric: str
     message: str
@@ -93,7 +101,8 @@ class SEOAlert:
 
 @dataclass
 class PerformanceReport:
-    """Comprehensive SEO performance report"""    report_date: str
+    """Comprehensive SEO performance report"""
+    report_date: str
     domain: str
     overall_score: float
     metrics: Dict[MetricType, List[SEOMetric]]
@@ -106,15 +115,19 @@ class PerformanceReport:
 
 
 class SEOPerformanceTracker:
-    """    Advanced SEO performance tracking system that monitors, analyzes, and reports
+    """
+    Advanced SEO performance tracking system that monitors, analyzes, and reports
     on comprehensive SEO metrics with real-time alerts and optimization recommendations.
-    """    def __init__(self, domain: str, tracking_keywords: List[str] = None):
-        """        Initialize the SEO performance tracker.
+    """
+    def __init__(self, domain: str, tracking_keywords: List[str] = None):
+        """
+        Initialize the SEO performance tracker.
         
         Args:
             domain: Domain to track
             tracking_keywords: List of keywords to monitor
-        """        self.domain = domain
+        """
+        self.domain = domain
         self.tracking_keywords = tracking_keywords or []
         self.metric_thresholds = self._initialize_metric_thresholds()
         self.historical_data = self._initialize_historical_data()
@@ -126,7 +139,8 @@ class SEOPerformanceTracker:
         include_competitive: bool = True,
         include_predictions: bool = True
     ) -> PerformanceReport:
-        """        Generate comprehensive SEO performance report.
+        """
+        Generate comprehensive SEO performance report.
         
         Args:
             time_range: Time range for analysis
@@ -135,7 +149,8 @@ class SEOPerformanceTracker:
             
         Returns:
             PerformanceReport with comprehensive SEO metrics and insights
-        """        try:
+        """
+        try:
             logger.info(f"Generating SEO performance report for {self.domain}")
             
             # Calculate overall metrics
@@ -184,7 +199,8 @@ class SEOPerformanceTracker:
             raise
 
     def _calculate_seo_metrics(self, time_range: TimeRange) -> Dict[MetricType, List[SEOMetric]]:
-        """Calculate comprehensive SEO metrics"""        
+        """Calculate comprehensive SEO metrics"""
+        
         metrics = {
             MetricType.RANKING: [],
             MetricType.TRAFFIC: [],
@@ -419,7 +435,8 @@ class SEOPerformanceTracker:
         return metrics
 
     def _analyze_keyword_performance(self, time_range: TimeRange) -> List[KeywordPerformance]:
-        """Analyze keyword ranking performance"""        
+        """Analyze keyword ranking performance"""
+        
         keyword_performance = []
         
         for keyword in self.tracking_keywords[:20]:  # Top 20 keywords
@@ -448,7 +465,8 @@ class SEOPerformanceTracker:
         return keyword_performance
 
     def _analyze_page_performance(self, time_range: TimeRange) -> List[PagePerformance]:
-        """Analyze individual page SEO performance"""        
+        """Analyze individual page SEO performance"""
+        
         page_performance = []
         
         # Simulate top performing pages
@@ -491,7 +509,8 @@ class SEOPerformanceTracker:
         keyword_performance: List[KeywordPerformance],
         page_performance: List[PagePerformance]
     ) -> List[SEOAlert]:
-        """Generate performance alerts based on thresholds"""        
+        """Generate performance alerts based on thresholds"""
+        
         alerts = []
         
         # Check metric thresholds
@@ -568,7 +587,8 @@ class SEOPerformanceTracker:
         return alerts
 
     def _extract_performance_trends(self, time_range: TimeRange) -> Dict[str, List[Tuple[str, float]]]:
-        """Extract historical performance trends"""        
+        """Extract historical performance trends"""
+        
         trends = {}
         
         # Generate simulated historical data points
@@ -620,7 +640,8 @@ class SEOPerformanceTracker:
         page_performance: List[PagePerformance],
         alerts: List[SEOAlert]
     ) -> List[str]:
-        """Generate performance improvement recommendations"""        
+        """Generate performance improvement recommendations"""
+        
         recommendations = []
         
         # Critical alert recommendations
@@ -690,7 +711,8 @@ class SEOPerformanceTracker:
         return recommendations[:8]  # Top 8 recommendations
 
     def _generate_competitive_insights(self) -> Dict[str, Any]:
-        """Generate competitive insights"""        
+        """Generate competitive insights"""
+        
         insights = {
             "market_position": "challenger",
             "visibility_share": 12.5,
@@ -719,7 +741,8 @@ class SEOPerformanceTracker:
         keyword_performance: List[KeywordPerformance],
         page_performance: List[PagePerformance]
     ) -> float:
-        """Calculate overall SEO performance score"""        
+        """Calculate overall SEO performance score"""
+        
         score = 0.0
         weights = {
             MetricType.RANKING: 0.25,
@@ -756,7 +779,8 @@ class SEOPerformanceTracker:
         return round(min(100.0, score), 1)
 
     def _get_metric_recommendations(self, metric_name: str, alert_type: str) -> List[str]:
-        """Get recommendations for specific metric alerts"""        
+        """Get recommendations for specific metric alerts"""
+        
         recommendations_map = {
             "Page Speed Score": {
                 "critical_low": [
@@ -801,7 +825,8 @@ class SEOPerformanceTracker:
         ])
 
     def _initialize_metric_thresholds(self) -> Dict[str, Dict[str, float]]:
-        """Initialize performance thresholds for alerts"""        
+        """Initialize performance thresholds for alerts"""
+        
         return {
             "Page Speed Score": {
                 "critical_min": 60,
@@ -836,7 +861,8 @@ class SEOPerformanceTracker:
         }
 
     def _initialize_historical_data(self) -> Dict[str, List[Any]]:
-        """Initialize historical performance data"""        
+        """Initialize historical performance data"""
+        
         return {
             "organic_traffic": [],
             "average_position": [],
@@ -847,7 +873,8 @@ class SEOPerformanceTracker:
         }
 
     def _initialize_performance_baselines(self) -> Dict[str, float]:
-        """Initialize performance baselines for comparison"""        
+        """Initialize performance baselines for comparison"""
+        
         return {
             "organic_traffic": 15000,
             "average_position": 15.0,
@@ -858,7 +885,8 @@ class SEOPerformanceTracker:
         }
 
     def track_keyword_rankings(self, keywords: List[str]) -> Dict[str, Any]:
-        """Track keyword rankings over time"""        
+        """Track keyword rankings over time"""
+        
         ranking_data = {}
         
         for keyword in keywords:
@@ -877,7 +905,8 @@ class SEOPerformanceTracker:
         return ranking_data
 
     def monitor_technical_health(self) -> Dict[str, Any]:
-        """Monitor technical SEO health"""        
+        """Monitor technical SEO health"""
+        
         technical_health = {
             "crawl_errors": {
                 "4xx_errors": 5,
@@ -909,7 +938,8 @@ class SEOPerformanceTracker:
         return technical_health
 
     def analyze_content_performance(self) -> Dict[str, Any]:
-        """Analyze content performance metrics"""        
+        """Analyze content performance metrics"""
+        
         content_analysis = {
             "top_performing_content": [
                 {
@@ -946,7 +976,8 @@ class SEOPerformanceTracker:
         return content_analysis
 
     def export_performance_report(self, report: PerformanceReport, format: str = "json") -> str:
-        """Export performance report in specified format"""        
+        """Export performance report in specified format"""
+        
         if format == "json":
             return self._export_to_json(report)
         elif format == "csv":
@@ -957,7 +988,8 @@ class SEOPerformanceTracker:
             raise ValueError(f"Unsupported export format: {format}")
 
     def _export_to_json(self, report: PerformanceReport) -> str:
-        """Export report to JSON format"""        
+        """Export report to JSON format"""
+        
         export_data = {
             "report_date": report.report_date,
             "domain": report.domain,
@@ -1002,7 +1034,8 @@ class SEOPerformanceTracker:
         return json.dumps(export_data, indent=2)
 
     def _export_to_csv(self, report: PerformanceReport) -> str:
-        """Export report to CSV format"""        
+        """Export report to CSV format"""
+        
         csv_lines = ["Metric Type,Metric Name,Value,Change %,Trend,Unit,Target"]
         
         for metric_type, metric_list in report.metrics.items():
@@ -1015,8 +1048,10 @@ class SEOPerformanceTracker:
         return '\n'.join(csv_lines)
 
     def _export_to_html(self, report: PerformanceReport) -> str:
-        """Export report to HTML format"""        
-        html_template = f"""        <!DOCTYPE html>
+        """Export report to HTML format"""
+        
+        html_template = f"""
+        <!DOCTYPE html>
         <html>
         <head>
             <title>SEO Performance Report - {report.domain}</title>
@@ -1054,17 +1089,20 @@ class SEOPerformanceTracker:
             </ul>
         </body>
         </html>
-        """        
+        """
+        
         return html_template
 
     def _generate_html_metrics(self, metrics: Dict[MetricType, List[SEOMetric]]) -> str:
-        """Generate HTML for metrics section"""        
+        """Generate HTML for metrics section"""
+        
         html_parts = []
         
         for metric_type, metric_list in metrics.items():
             for metric in metric_list:
                 trend_color = "green" if metric.trend == "up" else "red" if metric.trend == "down" else "gray"
-                html_parts.append(f"""                <div class="metric">
+                html_parts.append(f"""
+                <div class="metric">
                     <strong>{metric.name}:</strong> {metric.value} {metric.unit}
                     <span style="color: {trend_color};">
                         ({metric.change_percentage:+.1f}% {metric.trend})
@@ -1075,12 +1113,14 @@ class SEOPerformanceTracker:
         return ''.join(html_parts)
 
     def _generate_html_alerts(self, alerts: List[SEOAlert]) -> str:
-        """Generate HTML for alerts section"""        
+        """Generate HTML for alerts section"""
+        
         html_parts = []
         
         for alert in alerts:
             alert_class = alert.level.value
-            html_parts.append(f"""            <div class="alert {alert_class}">
+            html_parts.append(f"""
+            <div class="alert {alert_class}">
                 <strong>{alert.level.value.upper()}:</strong> {alert.message}
             </div>
             """)
@@ -1088,7 +1128,8 @@ class SEOPerformanceTracker:
         return ''.join(html_parts)
 
     def _generate_html_recommendations(self, recommendations: List[str]) -> str:
-        """Generate HTML for recommendations section"""        
+        """Generate HTML for recommendations section"""
+        
         return ''.join([f"<li>{rec}</li>" for rec in recommendations])
 
 

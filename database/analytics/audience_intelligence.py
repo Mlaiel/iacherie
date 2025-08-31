@@ -11,7 +11,8 @@ Architecture: Enterprise-grade, microservices-ready, production-optimized
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Violations will be prosecuted under international copyright law.
-"""from typing import Dict, List, Optional, Any, Tuple, Union
+"""
+from typing import Dict, List, Optional, Any, Tuple, Union
 from decimal import Decimal
 from datetime import datetime, timedelta
 from dataclasses import dataclass
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class AudienceSegment(str, Enum):
-    """Audience segmentation categories"""    DEMOGRAPHICS = "demographics"
+    """Audience segmentation categories"""
+    DEMOGRAPHICS = "demographics"
     PSYCHOGRAPHICS = "psychographics"
     BEHAVIORAL = "behavioral"
     GEOGRAPHIC = "geographic"
@@ -42,7 +44,8 @@ class AudienceSegment(str, Enum):
     SOCIAL_INFLUENCE = "social_influence"
 
 class AudienceAction(str, Enum):
-    """Audience interaction types"""    VIEW = "view"
+    """Audience interaction types"""
+    VIEW = "view"
     LIKE = "like"
     SHARE = "share"
     COMMENT = "comment"
@@ -56,7 +59,8 @@ class AudienceAction(str, Enum):
     CLICK_LINK = "click_link"
 
 class EngagementLevel(str, Enum):
-    """Audience engagement levels"""    SUPER_FAN = "super_fan"        # Top 5% most engaged
+    """Audience engagement levels"""
+    SUPER_FAN = "super_fan"        # Top 5% most engaged
     HIGHLY_ENGAGED = "highly_engaged"  # Top 20% engaged
     REGULARLY_ENGAGED = "regularly_engaged"  # Regular interaction
     OCCASIONALLY_ENGAGED = "occasionally_engaged"  # Sporadic interaction
@@ -64,7 +68,8 @@ class EngagementLevel(str, Enum):
     INACTIVE = "inactive"          # No recent engagement
 
 class PredictionType(str, Enum):
-    """Audience prediction types"""    CHURN_RISK = "churn_risk"
+    """Audience prediction types"""
+    CHURN_RISK = "churn_risk"
     ENGAGEMENT_PROPENSITY = "engagement_propensity"
     CONVERSION_LIKELIHOOD = "conversion_likelihood"
     CONTENT_PREFERENCE = "content_preference"
@@ -73,7 +78,8 @@ class PredictionType(str, Enum):
 
 @dataclass
 class AudienceInsight:
-    """Audience insight data structure"""    insight_type: str
+    """Audience insight data structure"""
+    insight_type: str
     segment: str
     confidence_score: float
     audience_size: int
@@ -82,11 +88,13 @@ class AudienceInsight:
     potential_impact: str
 
 class AudienceIntelligence(Base):
-    """    Enterprise-grade audience intelligence and analytics model
+    """
+    Enterprise-grade audience intelligence and analytics model
     
     Provides comprehensive audience analysis, segmentation, and prediction
     capabilities for multi-format content creators.
-    """    __tablename__ = "audience_intelligence"
+    """
+    __tablename__ = "audience_intelligence"
     
     # Primary Keys and Identity
     id = Column(Integer, primary_key=True, index=True)
@@ -191,8 +199,10 @@ class AudienceIntelligence(Base):
     )
 
 class AudienceSegmentDetails(Base):
-    """    Detailed information about specific audience segments
-    """    __tablename__ = "audience_segment_details"
+    """
+    Detailed information about specific audience segments
+    """
+    __tablename__ = "audience_segment_details"
     
     # Primary Keys
     id = Column(Integer, primary_key=True, index=True)
@@ -244,11 +254,13 @@ class AudienceSegmentDetails(Base):
 AudienceIntelligence.segment_details = relationship("AudienceSegmentDetails", back_populates="intelligence")
 
 class AudienceIntelligenceManager:
-    """    Enterprise-grade audience intelligence manager
+    """
+    Enterprise-grade audience intelligence manager
     
     Provides comprehensive audience analysis, segmentation, and prediction
     services for multi-format content creators.
-    """    
+    """
+    
     def __init__(self, db_session):
         self.db_session = db_session
         self.logger = logging.getLogger(__name__)
@@ -260,7 +272,8 @@ class AudienceIntelligenceManager:
         include_predictions: bool = True,
         include_segmentation: bool = True
     ) -> AudienceIntelligence:
-        """        Generate comprehensive audience intelligence analysis
+        """
+        Generate comprehensive audience intelligence analysis
         
         Args:
             user_id: User identifier
@@ -270,7 +283,8 @@ class AudienceIntelligenceManager:
             
         Returns:
             AudienceIntelligence: Complete intelligence object
-        """        try:
+        """
+        try:
             self.logger.info(f"Analyzing audience intelligence for user {user_id}")
             
             # Define analysis period
@@ -335,7 +349,8 @@ class AudienceIntelligenceManager:
         start_date: datetime, 
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Collect audience data from all integrated platforms"""        
+        """Collect audience data from all integrated platforms"""
+        
         # This would integrate with actual platform APIs
         # For now, returning simulated data structure
         return {
@@ -361,7 +376,8 @@ class AudienceIntelligenceManager:
         }
     
     def _analyze_demographics(self, audience_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze audience demographic characteristics"""        
+        """Analyze audience demographic characteristics"""
+        
         demographics = audience_data.get("demographics", {})
         
         return {
@@ -373,7 +389,8 @@ class AudienceIntelligenceManager:
         }
     
     def _analyze_engagement_patterns(self, audience_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze audience engagement patterns"""        
+        """Analyze audience engagement patterns"""
+        
         engagement = audience_data.get("engagement", {})
         activity = audience_data.get("activity_patterns", {})
         
@@ -397,7 +414,8 @@ class AudienceIntelligenceManager:
         }
     
     def _analyze_behavioral_patterns(self, audience_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze audience behavioral patterns"""        
+        """Analyze audience behavioral patterns"""
+        
         engagement = audience_data.get("engagement", {})
         activity = audience_data.get("activity_patterns", {})
         
@@ -433,7 +451,8 @@ class AudienceIntelligenceManager:
         start_date: datetime, 
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Calculate audience growth metrics"""        
+        """Calculate audience growth metrics"""
+        
         # This would query historical follower data
         # For now, returning simulated calculations
         
@@ -451,7 +470,8 @@ class AudienceIntelligenceManager:
         user_id: int, 
         audience_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate AI-powered audience predictions"""        
+        """Generate AI-powered audience predictions"""
+        
         total_followers = audience_data.get("total_followers", 0)
         growth_rate = 0.125  # 12.5% monthly growth
         
@@ -488,7 +508,8 @@ class AudienceIntelligenceManager:
         user_id: int, 
         audience_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform competitive audience analysis"""        
+        """Perform competitive audience analysis"""
+        
         # This would analyze competitor data
         # For now, returning simulated competitive insights
         
@@ -508,7 +529,8 @@ class AudienceIntelligenceManager:
         intelligence: AudienceIntelligence, 
         audience_data: Dict[str, Any]
     ):
-        """Perform detailed audience segmentation"""        
+        """Perform detailed audience segmentation"""
+        
         # Define segments based on engagement levels
         engagement_segments = [
             {
@@ -565,8 +587,10 @@ class AudienceIntelligenceManager:
         user_id: int,
         days_back: int = 30
     ) -> Optional[AudienceIntelligence]:
-        """        Get latest audience insights for a user
-        """        try:
+        """
+        Get latest audience insights for a user
+        """
+        try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_back)
             
             intelligence = await self.db_session.query(AudienceIntelligence).filter(
@@ -585,8 +609,10 @@ class AudienceIntelligenceManager:
         user_id: int,
         intelligence_id: Optional[int] = None
     ) -> List[AudienceSegmentDetails]:
-        """        Get audience segments for a user
-        """        try:
+        """
+        Get audience segments for a user
+        """
+        try:
             query = self.db_session.query(AudienceSegmentDetails).filter(
                 AudienceSegmentDetails.user_id == user_id
             )

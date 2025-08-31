@@ -12,7 +12,8 @@ intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, re
 distribution, modification, or appropriation of this code, in whole or in part, without 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime
 from pathlib import Path
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 
 class VideoResolution(Enum):
-    """Standard video resolutions"""    SD_480P = "480p"
+    """Standard video resolutions"""
+    SD_480P = "480p"
     HD_720P = "720p"
     FULL_HD_1080P = "1080p"
     QHD_1440P = "1440p"
@@ -40,7 +42,8 @@ class VideoResolution(Enum):
 
 
 class FrameRate(Enum):
-    """Standard frame rates"""    CINEMA_24 = 24
+    """Standard frame rates"""
+    CINEMA_24 = 24
     PAL_25 = 25
     NTSC_30 = 30
     WEB_60 = 60
@@ -49,7 +52,8 @@ class FrameRate(Enum):
 
 
 class Bitrate(Enum):
-    """Bitrate quality levels"""    LOW = "low"          # < 1 Mbps
+    """Bitrate quality levels"""
+    LOW = "low"          # < 1 Mbps
     MEDIUM = "medium"    # 1-5 Mbps
     HIGH = "high"        # 5-15 Mbps
     VERY_HIGH = "very_high"  # 15-50 Mbps
@@ -57,7 +61,8 @@ class Bitrate(Enum):
 
 
 class CompressionArtifacts(Enum):
-    """Compression artifact levels"""    NONE = "none"
+    """Compression artifact levels"""
+    NONE = "none"
     MINIMAL = "minimal"
     MODERATE = "moderate"
     SEVERE = "severe"
@@ -66,7 +71,8 @@ class CompressionArtifacts(Enum):
 
 @dataclass
 class VideoQualityProfile:
-    """Comprehensive video quality profile"""    # Basic properties
+    """Comprehensive video quality profile"""
+    # Basic properties
     width: int = field(default=0)
     height: int = field(default=0)
     frame_rate: float = field(default=0.0)
@@ -118,7 +124,8 @@ class VideoQualityProfile:
 
 @dataclass
 class VideoQualityMetrics:
-    """Video quality metrics container"""    profile: VideoQualityProfile = field(default_factory=VideoQualityProfile)
+    """Video quality metrics container"""
+    profile: VideoQualityProfile = field(default_factory=VideoQualityProfile)
     
     # Platform compliance
     youtube_ready: bool = field(default=False)
@@ -145,7 +152,8 @@ class VideoQualityMetrics:
 
 
 class VideoQualityAnalyzer(BaseAIModel):
-    """    Professional Video Quality Analyzer
+    """
+    Professional Video Quality Analyzer
     
     Provides comprehensive video quality assessment for:
     - Content creators and influencers
@@ -153,9 +161,11 @@ class VideoQualityAnalyzer(BaseAIModel):
     - Streaming platform optimization
     - Broadcast compliance checking
     - Social media content optimization
-    """    
+    """
+    
     def __init__(self, config: Optional[ModelConfig] = None):
-        """Initialize video quality analyzer"""        super().__init__(config or ModelConfig(
+        """Initialize video quality analyzer"""
+        super().__init__(config or ModelConfig(
             name="video_quality_analyzer",
             model_type=ModelType.VIDEO_MODEL,
             provider=ModelProvider.LOCAL
@@ -207,7 +217,8 @@ class VideoQualityAnalyzer(BaseAIModel):
         video_path: Union[str, Path],
         analysis_options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Comprehensive video quality analysis
+        """
+        Comprehensive video quality analysis
         
         Args:
             video_path: Path to video file
@@ -219,7 +230,8 @@ class VideoQualityAnalyzer(BaseAIModel):
         Raises:
             QualityCheckError: If analysis fails
             ContentValidationError: If video file is invalid
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             video_path = Path(video_path)
@@ -327,13 +339,16 @@ class VideoQualityAnalyzer(BaseAIModel):
             raise QualityCheckError(f"Video quality analysis failed: {str(e)}") from e
     
     async def connect(self) -> bool:
-        """Connect to video processing services."""        return True
+        """Connect to video processing services."""
+        return True
     
     async def disconnect(self) -> bool:
-        """Disconnect from video processing services."""        return True
+        """Disconnect from video processing services."""
+        return True
     
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process video quality assessment."""        return await self.analyze_video_quality(data.get('video_data', b''), 
+        """Process video quality assessment."""
+        return await self.analyze_video_quality(data.get('video_data', b''), 
                                                data.get('profile', VideoQualityProfile()))
     
     async def _extract_basic_properties(
@@ -342,7 +357,8 @@ class VideoQualityAnalyzer(BaseAIModel):
         video_path: Path,
         profile: VideoQualityProfile
     ):
-        """Extract basic video properties"""        try:
+        """Extract basic video properties"""
+        try:
             # Get video properties
             profile.width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
             profile.height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -385,7 +401,8 @@ class VideoQualityAnalyzer(BaseAIModel):
         cap: cv2.VideoCapture,
         profile: VideoQualityProfile
     ):
-        """Analyze visual quality metrics"""        try:
+        """Analyze visual quality metrics"""
+        try:
             # Sample frames for analysis
             frame_indices = np.linspace(
                 0, 
@@ -452,7 +469,8 @@ class VideoQualityAnalyzer(BaseAIModel):
             logger.warning(f"Visual quality analysis failed: {str(e)}")
     
     def _estimate_noise_level(self, gray_frame: np.ndarray) -> float:
-        """Estimate noise level in a frame"""        try:
+        """Estimate noise level in a frame"""
+        try:
             # Use high-pass filter to detect noise
             kernel = np.array([[-1, -1, -1],
                               [-1,  8, -1],
@@ -471,7 +489,8 @@ class VideoQualityAnalyzer(BaseAIModel):
         cap: cv2.VideoCapture,
         profile: VideoQualityProfile
     ):
-        """Analyze technical quality aspects"""        try:
+        """Analyze technical quality aspects"""
+        try:
             # Compression artifacts detection
             artifacts_score = self._detect_compression_artifacts(cap, profile)
             
@@ -497,7 +516,8 @@ class VideoQualityAnalyzer(BaseAIModel):
         cap: cv2.VideoCapture,
         profile: VideoQualityProfile
     ) -> float:
-        """Detect compression artifacts in video"""        try:
+        """Detect compression artifacts in video"""
+        try:
             # Sample a few frames for artifact detection
             sample_frames = min(5, profile.total_frames)
             frame_indices = np.linspace(0, profile.total_frames - 1, sample_frames, dtype=int)
@@ -534,7 +554,8 @@ class VideoQualityAnalyzer(BaseAIModel):
         cap: cv2.VideoCapture,
         profile: VideoQualityProfile
     ):
-        """Analyze motion characteristics and camera stability"""        try:
+        """Analyze motion characteristics and camera stability"""
+        try:
             # Sample frames for motion analysis
             sample_count = min(10, profile.total_frames - 1)
             frame_indices = np.linspace(0, profile.total_frames - 2, sample_count, dtype=int)
@@ -596,7 +617,8 @@ class VideoQualityAnalyzer(BaseAIModel):
         cap: cv2.VideoCapture,
         profile: VideoQualityProfile
     ):
-        """Analyze encoding quality and efficiency"""        try:
+        """Analyze encoding quality and efficiency"""
+        try:
             # Resolution efficiency
             pixel_count = profile.width * profile.height
             
@@ -624,7 +646,8 @@ class VideoQualityAnalyzer(BaseAIModel):
             profile.encoding_score = 70.0
     
     def _calculate_quality_scores(self, profile: VideoQualityProfile):
-        """Calculate comprehensive quality scores"""        try:
+        """Calculate comprehensive quality scores"""
+        try:
             # Technical score (resolution, frame rate, bitrate)
             tech_score = 0.0
             
@@ -721,7 +744,8 @@ class VideoQualityAnalyzer(BaseAIModel):
             profile.quality_level = "basic"
     
     def _get_expected_bitrate(self, width: int, height: int) -> float:
-        """Get expected bitrate for given resolution"""        pixel_count = width * height
+        """Get expected bitrate for given resolution"""
+        pixel_count = width * height
         
         if pixel_count >= 3840 * 2160:  # 4K
             return 35.0
@@ -735,7 +759,8 @@ class VideoQualityAnalyzer(BaseAIModel):
             return 1.0
     
     def _generate_video_recommendations(self, profile: VideoQualityProfile):
-        """Generate video-specific recommendations"""        recommendations = []
+        """Generate video-specific recommendations"""
+        recommendations = []
         
         # Resolution recommendations
         if profile.width < 1280:
@@ -805,7 +830,8 @@ class VideoQualityAnalyzer(BaseAIModel):
         profile: VideoQualityProfile,
         metrics: VideoQualityMetrics
     ):
-        """Analyze compliance with various platform requirements"""        try:
+        """Analyze compliance with various platform requirements"""
+        try:
             # YouTube compliance
             youtube_req = self.platform_requirements['youtube']
             metrics.youtube_ready = (
@@ -873,7 +899,8 @@ class VideoQualityAnalyzer(BaseAIModel):
         cap: cv2.VideoCapture,
         metrics: VideoQualityMetrics
     ):
-        """Analyze content characteristics and type"""        try:
+        """Analyze content characteristics and type"""
+        try:
             # Sample a few frames for content analysis
             sample_frames = 3
             frame_indices = np.linspace(0, metrics.profile.total_frames - 1, sample_frames, dtype=int)
@@ -970,7 +997,8 @@ class VideoQualityAnalyzer(BaseAIModel):
             metrics.scene_types = ["unknown"]
     
     def _calculate_confidence(self, profile: VideoQualityProfile) -> float:
-        """Calculate analysis confidence score"""        confidence = 0.8  # Base confidence
+        """Calculate analysis confidence score"""
+        confidence = 0.8  # Base confidence
         
         # Adjust based on video duration
         if profile.duration > 10:
@@ -998,14 +1026,16 @@ class VideoQualityAnalyzer(BaseAIModel):
 
 
 async def analyze_video_quality(video_path: Union[str, Path]) -> Dict[str, Any]:
-    """    Convenient function for video quality analysis
+    """
+    Convenient function for video quality analysis
     
     Args:
         video_path: Path to video file
         
     Returns:
         Dict containing video quality analysis results
-    """    try:
+    """
+    try:
         result = await video_quality_analyzer.analyze_quality(video_path)
         return result
     except Exception as e:

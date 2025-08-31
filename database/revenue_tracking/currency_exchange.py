@@ -11,7 +11,8 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Ce code et concept sont la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Violation = Poursuites judiciaires selon le droit allemand et international.
-"""from typing import Dict, List, Optional, Any, Tuple, Union
+"""
+from typing import Dict, List, Optional, Any, Tuple, Union
 from datetime import datetime, timedelta
 from decimal import Decimal, ROUND_HALF_UP
 from enum import Enum
@@ -38,7 +39,8 @@ Base = declarative_base()
 
 
 class CurrencyCode(Enum):
-    """Codes des devises supportées"""    EUR = "EUR"  # Euro
+    """Codes des devises supportées"""
+    EUR = "EUR"  # Euro
     USD = "USD"  # Dollar américain
     GBP = "GBP"  # Livre sterling
     CAD = "CAD"  # Dollar canadien
@@ -65,14 +67,16 @@ class CurrencyCode(Enum):
 
 
 class ConversionType(Enum):
-    """Types de conversion de devises"""    SPOT = "spot"
+    """Types de conversion de devises"""
+    SPOT = "spot"
     FORWARD = "forward"
     HEDGED = "hedged"
     OPTIMIZED = "optimized"
 
 
 class HedgingStrategy(Enum):
-    """Stratégies de couverture"""    NONE = "none"
+    """Stratégies de couverture"""
+    NONE = "none"
     BASIC = "basic"
     ADVANCED = "advanced"
     AI_OPTIMIZED = "ai_optimized"
@@ -80,8 +84,10 @@ class HedgingStrategy(Enum):
 
 @dataclass
 class ExchangeRateModel(BaseModel, TimestampMixin):
-    """    Modèle des taux de change
-    """    __tablename__ = "exchange_rates"
+    """
+    Modèle des taux de change
+    """
+    __tablename__ = "exchange_rates"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     rate_id = Column(String(255), unique=True, nullable=False, index=True)
@@ -117,8 +123,10 @@ class ExchangeRateModel(BaseModel, TimestampMixin):
 
 @dataclass
 class CurrencyConversionModel(BaseModel, TimestampMixin):
-    """    Modèle des conversions de devises
-    """    __tablename__ = "currency_conversions"
+    """
+    Modèle des conversions de devises
+    """
+    __tablename__ = "currency_conversions"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     conversion_id = Column(String(255), unique=True, nullable=False, index=True)
@@ -157,8 +165,10 @@ class CurrencyConversionModel(BaseModel, TimestampMixin):
 
 @dataclass
 class CurrencyHedgeModel(BaseModel, TimestampMixin):
-    """    Modèle des opérations de couverture
-    """    __tablename__ = "currency_hedges"
+    """
+    Modèle des opérations de couverture
+    """
+    __tablename__ = "currency_hedges"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     hedge_id = Column(String(255), unique=True, nullable=False, index=True)
@@ -199,8 +209,10 @@ class CurrencyHedgeModel(BaseModel, TimestampMixin):
 
 @dataclass
 class CurrencyPortfolioModel(BaseModel, TimestampMixin):
-    """    Modèle du portefeuille multi-devises
-    """    __tablename__ = "currency_portfolios"
+    """
+    Modèle du portefeuille multi-devises
+    """
+    __tablename__ = "currency_portfolios"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     portfolio_id = Column(String(255), unique=True, nullable=False, index=True)
@@ -238,8 +250,10 @@ class CurrencyPortfolioModel(BaseModel, TimestampMixin):
 
 
 class ExchangeRateProvider:
-    """    Fournisseur de taux de change en temps réel
-    """    
+    """
+    Fournisseur de taux de change en temps réel
+    """
+    
     def __init__(self, cache_manager: CacheManager):
         self.cache_manager = cache_manager
         self.api_keys = {
@@ -255,8 +269,10 @@ class ExchangeRateProvider:
         target_currency: str,
         real_time: bool = True
     ) -> Optional[Decimal]:
-        """        Récupère le taux de change pour une paire de devises
-        """        cache_key = f"exchange_rate:{base_currency}:{target_currency}"
+        """
+        Récupère le taux de change pour une paire de devises
+        """
+        cache_key = f"exchange_rate:{base_currency}:{target_currency}"
         
         # Vérification du cache
         if not real_time:
@@ -288,8 +304,10 @@ class ExchangeRateProvider:
         base_currency: str,
         target_currency: str
     ) -> Optional[Decimal]:
-        """        Récupère le taux depuis un fournisseur spécifique
-        """        if provider == 'fixer':
+        """
+        Récupère le taux depuis un fournisseur spécifique
+        """
+        if provider == 'fixer':
             return await self._fetch_from_fixer(base_currency, target_currency)
         elif provider == 'exchangerate_api':
             return await self._fetch_from_exchangerate_api(base_currency, target_currency)
@@ -303,8 +321,10 @@ class ExchangeRateProvider:
         base_currency: str,
         target_currency: str
     ) -> Optional[Decimal]:
-        """        Récupère le taux depuis Fixer.io
-        """        url = f"http://data.fixer.io/api/latest"
+        """
+        Récupère le taux depuis Fixer.io
+        """
+        url = f"http://data.fixer.io/api/latest"
         params = {
             'access_key': self.api_keys['fixer'],
             'base': base_currency,
@@ -325,8 +345,10 @@ class ExchangeRateProvider:
         base_currency: str,
         target_currencies: List[str]
     ) -> Dict[str, Decimal]:
-        """        Récupère plusieurs taux simultanément
-        """        tasks = [
+        """
+        Récupère plusieurs taux simultanément
+        """
+        tasks = [
             self.get_exchange_rate(base_currency, target_currency)
             for target_currency in target_currencies
         ]
@@ -344,8 +366,10 @@ class ExchangeRateProvider:
 
 
 class CurrencyConversionEngine:
-    """    Moteur de conversion de devises avec optimisation
-    """    
+    """
+    Moteur de conversion de devises avec optimisation
+    """
+    
     def __init__(self, db_session: Session, cache_manager: CacheManager):
         self.db_session = db_session
         self.cache_manager = cache_manager
@@ -361,8 +385,10 @@ class CurrencyConversionEngine:
         conversion_type: ConversionType = ConversionType.SPOT,
         optimize: bool = True
     ) -> CurrencyConversionModel:
-        """        Convertit un montant d'une devise à une autre
-        """        try:
+        """
+        Convertit un montant d'une devise à une autre
+        """
+        try:
             # Récupération du taux de change
             exchange_rate = await self._get_optimal_exchange_rate(
                 from_currency, to_currency, conversion_type, optimize
@@ -434,8 +460,10 @@ class CurrencyConversionEngine:
         conversion_type: ConversionType,
         optimize: bool
     ) -> Optional[Decimal]:
-        """        Récupère le taux de change optimal
-        """        if conversion_type == ConversionType.SPOT:
+        """
+        Récupère le taux de change optimal
+        """
+        if conversion_type == ConversionType.SPOT:
             rate = await self.rate_provider.get_exchange_rate(from_currency, to_currency)
             
             if optimize:
@@ -459,8 +487,10 @@ class CurrencyConversionEngine:
         from_currency: str,
         to_currency: str
     ) -> Optional[Decimal]:
-        """        Optimise le taux spot en utilisant différentes stratégies
-        """        # 1. Agrégation de plusieurs sources
+        """
+        Optimise le taux spot en utilisant différentes stratégies
+        """
+        # 1. Agrégation de plusieurs sources
         rates = await self._get_rates_from_multiple_sources(from_currency, to_currency)
         
         if len(rates) > 1:
@@ -486,8 +516,10 @@ class CurrencyConversionEngine:
         to_currency: str,
         user_id: uuid.UUID
     ) -> Decimal:
-        """        Calcule les frais de conversion
-        """        # Récupération du profil utilisateur pour les tarifs
+        """
+        Calcule les frais de conversion
+        """
+        # Récupération du profil utilisateur pour les tarifs
         user_tier = await self._get_user_tier(user_id)
         
         # Barème des frais par niveau
@@ -509,8 +541,10 @@ class CurrencyConversionEngine:
 
 
 class CurrencyHedgingEngine:
-    """    Moteur de couverture de change automatisé
-    """    
+    """
+    Moteur de couverture de change automatisé
+    """
+    
     def __init__(self, db_session: Session):
         self.db_session = db_session
         self.event_emitter = EventEmitter()
@@ -524,8 +558,10 @@ class CurrencyHedgingEngine:
         hedging_strategy: HedgingStrategy,
         hedge_ratio: Decimal = Decimal('1.0')
     ) -> CurrencyHedgeModel:
-        """        Crée une opération de couverture
-        """        try:
+        """
+        Crée une opération de couverture
+        """
+        try:
             # Détermination de l'instrument de couverture
             hedge_instrument = await self._select_hedge_instrument(
                 hedging_strategy, base_currency, target_currency, notional_amount
@@ -568,8 +604,10 @@ class CurrencyHedgingEngine:
         self,
         hedge: CurrencyHedgeModel
     ) -> Dict[str, Any]:
-        """        Surveille la performance d'une couverture
-        """        # Récupération du taux de change actuel
+        """
+        Surveille la performance d'une couverture
+        """
+        # Récupération du taux de change actuel
         current_rate = await self.rate_provider.get_exchange_rate(
             hedge.base_currency, hedge.target_currency
         )
@@ -607,8 +645,10 @@ class CurrencyHedgingEngine:
         user_id: uuid.UUID,
         target_hedge_ratio: Decimal = Decimal('0.8')
     ) -> List[CurrencyHedgeModel]:
-        """        Couverture automatique du portefeuille
-        """        # Récupération du portefeuille
+        """
+        Couverture automatique du portefeuille
+        """
+        # Récupération du portefeuille
         portfolio = await self._get_currency_portfolio(user_id)
         
         if not portfolio:
@@ -641,8 +681,10 @@ class CurrencyHedgingEngine:
 
 
 class CurrencyManager:
-    """    Gestionnaire principal multi-devises
-    """    
+    """
+    Gestionnaire principal multi-devises
+    """
+    
     def __init__(self, db_manager: DatabaseManager):
         self.db_manager = db_manager
         self.cache_manager = CacheManager()
@@ -658,8 +700,10 @@ class CurrencyManager:
         user_id: uuid.UUID,
         target_currency: str = "EUR"
     ) -> Dict[str, Any]:
-        """        Traite automatiquement les revenus multi-devises
-        """        # Récupération de l'enregistrement de revenus
+        """
+        Traite automatiquement les revenus multi-devises
+        """
+        # Récupération de l'enregistrement de revenus
         revenue_record = await self._get_revenue_record(revenue_record_id)
         
         results = {
@@ -720,8 +764,10 @@ class CurrencyManager:
         risk_tolerance: str = "medium",
         auto_hedging: bool = False
     ) -> CurrencyPortfolioModel:
-        """        Configure le profil multi-devises d'un utilisateur
-        """        portfolio = CurrencyPortfolioModel(
+        """
+        Configure le profil multi-devises d'un utilisateur
+        """
+        portfolio = CurrencyPortfolioModel(
             portfolio_id=f"PORTFOLIO_{user_id.hex[:8]}",
             user_id=user_id,
             base_currency=base_currency,
@@ -744,8 +790,10 @@ class CurrencyManager:
         user_id: uuid.UUID,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """        Génère un rapport complet des devises
-        """        end_date = datetime.utcnow()
+        """
+        Génère un rapport complet des devises
+        """
+        end_date = datetime.utcnow()
         start_date = end_date - timedelta(days=period_days)
         
         # Récupération des données

@@ -6,7 +6,8 @@ Handles real-time revenue tracking, projections, and optimization recommendation
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -28,7 +29,8 @@ from ..analytics.content_analytics import ContentAnalytics
 
 
 class PlatformType(Enum):
-    """Supported monetization platforms"""    YOUTUBE = "youtube"
+    """Supported monetization platforms"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     SPOTIFY = "spotify"
@@ -40,7 +42,8 @@ class PlatformType(Enum):
 
 
 class RevenueType(Enum):
-    """Types of revenue streams"""    AD_REVENUE = "ad_revenue"
+    """Types of revenue streams"""
+    AD_REVENUE = "ad_revenue"
     SUBSCRIPTION = "subscription"
     DONATIONS = "donations"
     MERCHANDISE = "merchandise"
@@ -52,7 +55,8 @@ class RevenueType(Enum):
 
 
 class Currency(Enum):
-    """Supported currencies"""    USD = "USD"
+    """Supported currencies"""
+    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     CAD = "CAD"
@@ -62,7 +66,8 @@ class Currency(Enum):
 
 @dataclass
 class RevenueMetrics:
-    """Revenue performance metrics"""    content_id: str
+    """Revenue performance metrics"""
+    content_id: str
     platform: PlatformType
     revenue_type: RevenueType
     amount: Decimal
@@ -79,7 +84,8 @@ class RevenueMetrics:
 
 @dataclass
 class RevenueProjection:
-    """Revenue projection data"""    content_id: str
+    """Revenue projection data"""
+    content_id: str
     projected_revenue_7d: Decimal
     projected_revenue_30d: Decimal
     projected_revenue_90d: Decimal
@@ -92,7 +98,8 @@ class RevenueProjection:
 
 @dataclass
 class RevenueReport:
-    """Comprehensive revenue report"""    user_id: str
+    """Comprehensive revenue report"""
+    user_id: str
     period_start: datetime
     period_end: datetime
     total_revenue: Decimal
@@ -105,20 +112,24 @@ class RevenueReport:
 
 
 class RevenueCalculator:
-    """    Professional revenue calculation engine for IA Influencer Agent platform.
+    """
+    Professional revenue calculation engine for IA Influencer Agent platform.
     
     Provides comprehensive revenue tracking, analysis, and optimization
     for content creators across multiple platforms and revenue streams.
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession, redis_client: Redis,
                  content_analytics: ContentAnalytics):
-        """        Initialize RevenueCalculator.
+        """
+        Initialize RevenueCalculator.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
             content_analytics: Content analytics service
-        """        self.db_session = db_session
+        """
+        self.db_session = db_session
         self.redis = redis_client
         self.analytics = content_analytics
         self.logger = logging.getLogger(__name__)
@@ -164,7 +175,8 @@ class RevenueCalculator:
     
     async def calculate_content_revenue(self, content_id: str, platform: PlatformType,
                                       period_days: int = 30) -> RevenueMetrics:
-        """        Calculate revenue for specific content on a platform.
+        """
+        Calculate revenue for specific content on a platform.
         
         Args:
             content_id: Content identifier
@@ -173,7 +185,8 @@ class RevenueCalculator:
             
         Returns:
             Revenue metrics for the content
-        """        try:
+        """
+        try:
             # Get content performance data
             performance = await self.analytics.get_content_performance(
                 content_id, period_days
@@ -225,14 +238,16 @@ class RevenueCalculator:
             raise
     
     async def project_future_revenue(self, content_id: str) -> RevenueProjection:
-        """        Project future revenue for content based on historical data.
+        """
+        Project future revenue for content based on historical data.
         
         Args:
             content_id: Content identifier
             
         Returns:
             Revenue projection data
-        """        try:
+        """
+        try:
             # Get historical revenue data
             historical_data = await self._get_historical_revenue(content_id, days=90)
             
@@ -276,7 +291,8 @@ class RevenueCalculator:
     
     async def generate_revenue_report(self, user_id: str, period_days: int = 30,
                                     currency: Currency = Currency.EUR) -> RevenueReport:
-        """        Generate comprehensive revenue report for user.
+        """
+        Generate comprehensive revenue report for user.
         
         Args:
             user_id: User identifier
@@ -285,7 +301,8 @@ class RevenueCalculator:
             
         Returns:
             Comprehensive revenue report
-        """        try:
+        """
+        try:
             # Calculate date range
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
@@ -342,14 +359,16 @@ class RevenueCalculator:
             raise
     
     async def optimize_revenue_strategy(self, content_id: str) -> Dict[str, Any]:
-        """        Analyze and optimize revenue strategy for content.
+        """
+        Analyze and optimize revenue strategy for content.
         
         Args:
             content_id: Content identifier
             
         Returns:
             Optimization recommendations and potential impact
-        """        try:
+        """
+        try:
             # Get current revenue performance
             current_metrics = await self._get_current_revenue_metrics(content_id)
             
@@ -396,14 +415,16 @@ class RevenueCalculator:
             return {}
     
     async def track_revenue_real_time(self, content_id: str) -> Dict[str, Any]:
-        """        Track real-time revenue updates for content.
+        """
+        Track real-time revenue updates for content.
         
         Args:
             content_id: Content identifier
             
         Returns:
             Real-time revenue tracking data
-        """        try:
+        """
+        try:
             # Get real-time metrics from cache
             cache_key = f"realtime_revenue:{content_id}"
             cached_data = await self._get_from_cache(cache_key)
@@ -461,7 +482,8 @@ class RevenueCalculator:
     
     async def convert_currency(self, amount: Decimal, from_currency: Currency,
                              to_currency: Currency) -> Decimal:
-        """        Convert amount between currencies.
+        """
+        Convert amount between currencies.
         
         Args:
             amount: Amount to convert
@@ -470,7 +492,8 @@ class RevenueCalculator:
             
         Returns:
             Converted amount
-        """        try:
+        """
+        try:
             if from_currency == to_currency:
                 return amount
             
@@ -494,7 +517,8 @@ class RevenueCalculator:
     
     async def _get_platform_data(self, content_id: str, platform: PlatformType,
                                 period_days: int) -> Dict[str, Any]:
-        """Get platform-specific performance data"""        # This would integrate with platform APIs
+        """Get platform-specific performance data"""
+        # This would integrate with platform APIs
         # Placeholder implementation
         return {
             'click_through_rate': 0.025,
@@ -508,7 +532,8 @@ class RevenueCalculator:
     
     async def _calculate_platform_revenue(self, platform: PlatformType,
                                         performance: Any, platform_data: Dict) -> Decimal:
-        """Calculate revenue based on platform type"""        params = self.platform_parameters.get(platform, {})
+        """Calculate revenue based on platform type"""
+        params = self.platform_parameters.get(platform, {})
         
         if platform in [PlatformType.YOUTUBE, PlatformType.INSTAGRAM, PlatformType.TIKTOK]:
             # Ad-based revenue calculation
@@ -548,13 +573,15 @@ class RevenueCalculator:
         return max(total_revenue, self.minimum_revenue_threshold)
     
     async def _calculate_cpm(self, revenue: Decimal, views: int) -> Decimal:
-        """Calculate CPM (Cost Per Mille)"""        if views == 0:
+        """Calculate CPM (Cost Per Mille)"""
+        if views == 0:
             return Decimal('0')
         
         return (revenue / views) * 1000
     
     def _determine_revenue_type(self, platform: PlatformType) -> RevenueType:
-        """Determine primary revenue type for platform"""        platform_revenue_types = {
+        """Determine primary revenue type for platform"""
+        platform_revenue_types = {
             PlatformType.YOUTUBE: RevenueType.AD_REVENUE,
             PlatformType.INSTAGRAM: RevenueType.AD_REVENUE,
             PlatformType.TIKTOK: RevenueType.AD_REVENUE,
@@ -567,7 +594,8 @@ class RevenueCalculator:
         return platform_revenue_types.get(platform, RevenueType.AD_REVENUE)
     
     async def _store_revenue_metrics(self, metrics: RevenueMetrics):
-        """Store revenue metrics in database"""        try:
+        """Store revenue metrics in database"""
+        try:
             revenue_record = RevenueModel(
                 id=str(uuid.uuid4()),
                 content_id=metrics.content_id,
@@ -593,7 +621,8 @@ class RevenueCalculator:
             await self.db_session.rollback()
     
     async def _get_historical_revenue(self, content_id: str, days: int) -> List[Dict]:
-        """Get historical revenue data"""        # Implementation would query revenue database
+        """Get historical revenue data"""
+        # Implementation would query revenue database
         # Placeholder with sample data
         historical_data = []
         
@@ -611,7 +640,8 @@ class RevenueCalculator:
         return historical_data
     
     async def _analyze_revenue_trends(self, historical_data: List[Dict]) -> Dict[str, float]:
-        """Analyze revenue trends from historical data"""        if not historical_data:
+        """Analyze revenue trends from historical data"""
+        if not historical_data:
             return {'growth_rate': 0.0, 'seasonality': 1.0}
         
         # Convert to pandas for analysis
@@ -641,7 +671,8 @@ class RevenueCalculator:
     async def _calculate_revenue_projections(self, content_id: str,
                                            historical_data: List[Dict],
                                            trends: Dict) -> Dict[str, Decimal]:
-        """Calculate revenue projections"""        if not historical_data:
+        """Calculate revenue projections"""
+        if not historical_data:
             return {
                 '7_days': Decimal('0'),
                 '30_days': Decimal('0'),
@@ -680,7 +711,8 @@ class RevenueCalculator:
     async def _generate_revenue_recommendations(self, content_id: str,
                                               historical_data: List[Dict],
                                               trends: Dict) -> List[str]:
-        """Generate revenue optimization recommendations"""        recommendations = []
+        """Generate revenue optimization recommendations"""
+        recommendations = []
         
         # Analyze trends for recommendations
         if trends['growth_rate'] < 0:
@@ -703,7 +735,8 @@ class RevenueCalculator:
         return recommendations[:5]  # Return top 5
     
     async def _generate_baseline_projection(self, content_id: str) -> RevenueProjection:
-        """Generate baseline projection for new content"""        # Use industry averages
+        """Generate baseline projection for new content"""
+        # Use industry averages
         baseline_daily = Decimal('25.00')  # €25/day baseline
         
         return RevenueProjection(
@@ -725,25 +758,29 @@ class RevenueCalculator:
         )
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
-        """Get data from cache"""        try:
+        """Get data from cache"""
+        try:
             cached_data = await self.redis.get(key)
             return json.loads(cached_data) if cached_data else None
         except:
             return None
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
-        """Save data to cache"""        try:
+        """Save data to cache"""
+        try:
             ttl = ttl or self.cache_ttl
             await self.redis.setex(key, ttl, json.dumps(data, default=str))
         except Exception as e:
             self.logger.warning(f"Cache save failed: {str(e)}")
     
     async def _cache_projection(self, content_id: str, projection: RevenueProjection):
-        """Cache revenue projection"""        cache_key = f"revenue_projection:{content_id}"
+        """Cache revenue projection"""
+        cache_key = f"revenue_projection:{content_id}"
         await self._save_to_cache(cache_key, projection.__dict__)
     
     def _determine_trending_status(self, growth_rate: float) -> str:
-        """Determine trending status based on growth rate"""        if growth_rate > 50:
+        """Determine trending status based on growth rate"""
+        if growth_rate > 50:
             return "viral"
         elif growth_rate > 20:
             return "trending_up"
@@ -755,7 +792,8 @@ class RevenueCalculator:
             return "declining"
     
     async def _get_current_exchange_rates(self) -> Dict[Currency, Decimal]:
-        """Get current exchange rates (would integrate with external API)"""        # Placeholder - in production, this would fetch from exchange rate API
+        """Get current exchange rates (would integrate with external API)"""
+        # Placeholder - in production, this would fetch from exchange rate API
         return self.exchange_rates
     
     # Additional helper methods would be implemented here
@@ -764,12 +802,14 @@ class RevenueCalculator:
     
     async def _get_user_revenue_data(self, user_id: str, start_date: datetime,
                                    end_date: datetime) -> List[Dict]:
-        """Get all revenue data for user in period"""        # Placeholder implementation
+        """Get all revenue data for user in period"""
+        # Placeholder implementation
         return []
     
     async def _calculate_total_revenue(self, revenue_data: List[Dict],
                                      currency: Currency) -> Decimal:
-        """Calculate total revenue in specified currency"""        # Implementation for revenue calculation and currency conversion
+        """Calculate total revenue in specified currency"""
+        # Implementation for revenue calculation and currency conversion
         return Decimal('0')
     
     # ... (additional helper methods would be implemented)

@@ -148,7 +148,8 @@ __all__ = [
 
 # Module initialization
 def _initialize_module():
-    """Initialize the language processing module"""    try:
+    """Initialize the language processing module"""
+    try:
         import logging
         logger = logging.getLogger(__name__)
         logger.info(f"Language Processing Module v{__version__} initialized")

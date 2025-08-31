@@ -3,7 +3,8 @@ Integration with various platform APIs for monetization data.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import json
 import logging
@@ -17,7 +18,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class PlatformCredentials:
-    """Platform API credentials structure"""    platform: str
+    """Platform API credentials structure"""
+    platform: str
     access_token: str
     refresh_token: Optional[str] = None
     client_id: Optional[str] = None
@@ -28,7 +30,8 @@ class PlatformCredentials:
 
 @dataclass
 class PlatformAnalytics:
-    """Platform analytics data structure"""    platform: str
+    """Platform analytics data structure"""
+    platform: str
     content_id: str
     views: int = 0
     likes: int = 0
@@ -40,7 +43,8 @@ class PlatformAnalytics:
 
 
 class PlatformAPIManager:
-    """Manages integrations with platform APIs"""    
+    """Manages integrations with platform APIs"""
+    
     def __init__(self):
         self.session = None
         self.rate_limits = {}
@@ -60,7 +64,8 @@ class PlatformAPIManager:
         client_secret: str,
         authorization_code: str
     ) -> PlatformCredentials:
-        """Authenticate with YouTube API"""        try:
+        """Authenticate with YouTube API"""
+        try:
             token_url = "https://oauth2.googleapis.com/token"
             
             data = {
@@ -100,7 +105,8 @@ class PlatformAPIManager:
         start_date: datetime,
         end_date: datetime
     ) -> Optional[PlatformAnalytics]:
-        """Get YouTube analytics data"""        try:
+        """Get YouTube analytics data"""
+        try:
             if not await self._check_rate_limit("youtube"):
                 logger.warning("YouTube rate limit exceeded")
                 return None
@@ -165,7 +171,8 @@ class PlatformAPIManager:
         self,
         access_token: str
     ) -> PlatformCredentials:
-        """Authenticate with Instagram Basic Display API"""        try:
+        """Authenticate with Instagram Basic Display API"""
+        try:
             # Validate token
             validate_url = f"https://graph.instagram.com/me?fields=id,username&access_token={access_token}"
             
@@ -191,7 +198,8 @@ class PlatformAPIManager:
         credentials: PlatformCredentials,
         user_id: str
     ) -> Optional[PlatformAnalytics]:
-        """Get Instagram insights data"""        try:
+        """Get Instagram insights data"""
+        try:
             if not await self._check_rate_limit("instagram"):
                 logger.warning("Instagram rate limit exceeded")
                 return None
@@ -260,7 +268,8 @@ class PlatformAPIManager:
         client_secret: str,
         authorization_code: str
     ) -> PlatformCredentials:
-        """Authenticate with TikTok API"""        try:
+        """Authenticate with TikTok API"""
+        try:
             token_url = "https://open-api.tiktok.com/oauth/access_token/"
             
             data = {
@@ -298,7 +307,8 @@ class PlatformAPIManager:
         client_secret: str,
         authorization_code: str
     ) -> PlatformCredentials:
-        """Authenticate with Spotify Web API"""        try:
+        """Authenticate with Spotify Web API"""
+        try:
             token_url = "https://accounts.spotify.com/api/token"
             
             import base64
@@ -341,7 +351,8 @@ class PlatformAPIManager:
         credentials: PlatformCredentials,
         artist_id: str
     ) -> Optional[PlatformAnalytics]:
-        """Get Spotify analytics data"""        try:
+        """Get Spotify analytics data"""
+        try:
             if not await self._check_rate_limit("spotify"):
                 logger.warning("Spotify rate limit exceeded")
                 return None
@@ -385,7 +396,8 @@ class PlatformAPIManager:
             return None
     
     async def _check_rate_limit(self, platform: str) -> bool:
-        """Check if platform rate limit allows request"""        now = datetime.now()
+        """Check if platform rate limit allows request"""
+        now = datetime.now()
         
         if platform not in self.rate_limits:
             self.rate_limits[platform] = {
@@ -415,7 +427,8 @@ class PlatformAPIManager:
         return True
     
     async def _refresh_youtube_token(self, credentials: PlatformCredentials) -> PlatformCredentials:
-        """Refresh YouTube access token"""        try:
+        """Refresh YouTube access token"""
+        try:
             token_url = "https://oauth2.googleapis.com/token"
             
             data = {
@@ -446,7 +459,8 @@ class PlatformAPIManager:
         platform_credentials: Dict[str, PlatformCredentials],
         content_mappings: Dict[str, str]  # platform -> content_id
     ) -> Dict[str, PlatformAnalytics]:
-        """Get analytics from all connected platforms"""        try:
+        """Get analytics from all connected platforms"""
+        try:
             results = {}
             tasks = []
             
@@ -486,7 +500,8 @@ class PlatformAPIManager:
             return {}
     
     def cache_analytics_data(self, data: PlatformAnalytics, ttl_hours: int = 1):
-        """Cache analytics data"""        cache_key = f"{data.platform}_{data.content_id}_{datetime.now().strftime('%Y%m%d%H')}"
+        """Cache analytics data"""
+        cache_key = f"{data.platform}_{data.content_id}_{datetime.now().strftime('%Y%m%d%H')}"
         expiry = datetime.now() + timedelta(hours=ttl_hours)
         
         self.cache[cache_key] = {
@@ -495,7 +510,8 @@ class PlatformAPIManager:
         }
     
     def get_cached_analytics(self, platform: str, content_id: str) -> Optional[PlatformAnalytics]:
-        """Get cached analytics data"""        cache_key = f"{platform}_{content_id}_{datetime.now().strftime('%Y%m%d%H')}"
+        """Get cached analytics data"""
+        cache_key = f"{platform}_{content_id}_{datetime.now().strftime('%Y%m%d%H')}"
         
         if cache_key in self.cache:
             cached = self.cache[cache_key]

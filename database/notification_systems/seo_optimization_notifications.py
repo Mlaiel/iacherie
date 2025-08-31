@@ -19,7 +19,8 @@ Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou tentative de reverse engineering
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
-"""from typing import Dict, List, Optional, Any, Union
+"""
+from typing import Dict, List, Optional, Any, Union
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -33,7 +34,8 @@ logger = logging.getLogger(__name__)
 
 
 class SEOEventType(Enum):
-    """Types d'événements SEO et marketing"""    RANKING_IMPROVED = "ranking_improved"
+    """Types d'événements SEO et marketing"""
+    RANKING_IMPROVED = "ranking_improved"
     RANKING_DROPPED = "ranking_dropped"
     NEW_KEYWORD_OPPORTUNITY = "new_keyword_opportunity"
     CONTENT_OPTIMIZATION_SUGGESTED = "content_optimization_suggested"
@@ -48,7 +50,8 @@ class SEOEventType(Enum):
 
 
 class SearchEngine(Enum):
-    """Moteurs de recherche supportés"""    GOOGLE = "google"
+    """Moteurs de recherche supportés"""
+    GOOGLE = "google"
     BING = "bing"
     YOUTUBE = "youtube"
     DUCKDUCKGO = "duckduckgo"
@@ -57,7 +60,8 @@ class SearchEngine(Enum):
 
 
 class ContentOptimizationType(Enum):
-    """Types d'optimisation de contenu"""    TITLE_OPTIMIZATION = "title_optimization"
+    """Types d'optimisation de contenu"""
+    TITLE_OPTIMIZATION = "title_optimization"
     DESCRIPTION_OPTIMIZATION = "description_optimization"
     KEYWORD_DENSITY = "keyword_density"
     READABILITY_IMPROVEMENT = "readability_improvement"
@@ -69,7 +73,8 @@ class ContentOptimizationType(Enum):
 
 @dataclass
 class SEONotificationData:
-    """Structure des données de notification SEO"""    content_id: str
+    """Structure des données de notification SEO"""
+    content_id: str
     user_id: str
     keyword: Optional[str]
     search_engine: SearchEngine
@@ -86,19 +91,23 @@ class SEONotificationData:
 
 
 class SEOOptimizationManager:
-    """    Gestionnaire de notifications pour l'optimisation SEO.
+    """
+    Gestionnaire de notifications pour l'optimisation SEO.
     
     Ce gestionnaire orchestre les notifications liées au SEO,
     aux rankings, aux opportunités de marketing et à l'optimisation de contenu.
-    """    
+    """
+    
     def __init__(self, db_pool: asyncpg.Pool, redis_client: aioredis.Redis, config: Dict[str, Any]):
-        """        Initialise le gestionnaire d'optimisation SEO.
+        """
+        Initialise le gestionnaire d'optimisation SEO.
         
         Args:
             db_pool: Pool de connexions PostgreSQL
             redis_client: Client Redis pour cache et queues
             config: Configuration du gestionnaire
-        """        self.db_pool = db_pool
+        """
+        self.db_pool = db_pool
         self.redis = redis_client
         self.config = config
         
@@ -135,7 +144,8 @@ class SEOOptimizationManager:
         notification_data: SEONotificationData,
         notification_channels: List[str] = None
     ) -> Dict[str, Any]:
-        """        Traite une notification d'événement SEO.
+        """
+        Traite une notification d'événement SEO.
         
         Args:
             event_type: Type d'événement SEO
@@ -144,7 +154,8 @@ class SEOOptimizationManager:
             
         Returns:
             Résultat du traitement
-        """        try:
+        """
+        try:
             # Channels par défaut si non spécifiés
             if notification_channels is None:
                 notification_channels = self._get_default_channels(event_type, notification_data.priority_score)
@@ -196,7 +207,8 @@ class SEOOptimizationManager:
         event_type: SEOEventType, 
         data: SEONotificationData
     ) -> Dict[str, Any]:
-        """Prépare les données du message selon le type d'événement SEO"""        
+        """Prépare les données du message selon le type d'événement SEO"""
+        
         base_data = {
             "content_id": data.content_id,
             "keyword": data.keyword,
@@ -353,8 +365,10 @@ class SEOOptimizationManager:
         data: SEONotificationData,
         message_data: Dict[str, Any]
     ) -> str:
-        """Stocke la notification SEO en base de données"""        
-        query = """        INSERT INTO seo_optimization_notifications (
+        """Stocke la notification SEO en base de données"""
+        
+        query = """
+        INSERT INTO seo_optimization_notifications (
             user_id, content_id, event_type, keyword, search_engine,
             current_ranking, previous_ranking, search_volume, url,
             optimization_suggestions, competitor_data, seo_metadata,
@@ -362,7 +376,8 @@ class SEOOptimizationManager:
             priority, category, action_required, created_at
         ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, NOW())
         RETURNING id
-        """        
+        """
+        
         async with self.db_pool.acquire() as conn:
             notification_id = await conn.fetchval(
                 query,
@@ -394,7 +409,8 @@ class SEOOptimizationManager:
         event_type: SEOEventType,
         data: SEONotificationData
     ):
-        """Traitement spécialisé selon le type d'événement SEO"""        
+        """Traitement spécialisé selon le type d'événement SEO"""
+        
         try:
             if event_type == SEOEventType.RANKING_IMPROVED:
                 await self._track_ranking_improvement(data)
@@ -418,7 +434,8 @@ class SEOOptimizationManager:
             logger.error(f"Erreur traitement spécialisé SEO {event_type.value}: {str(e)}")
 
     async def _get_default_channels(self, event_type: SEOEventType, priority_score: float) -> List[str]:
-        """Retourne les canaux par défaut selon le type d'événement et la priorité"""        
+        """Retourne les canaux par défaut selon le type d'événement et la priorité"""
+        
         # Événements haute priorité
         if priority_score > 0.8 or event_type in [
             SEOEventType.RANKING_DROPPED, 
@@ -436,10 +453,12 @@ class SEOOptimizationManager:
             return ["dashboard", "websocket"]
 
     async def get_seo_dashboard_data(self, user_id: str) -> Dict[str, Any]:
-        """Récupère les données du tableau de bord SEO"""        
+        """Récupère les données du tableau de bord SEO"""
+        
         # Statistiques SEO récentes
         async with self.db_pool.acquire() as conn:
-            seo_stats = await conn.fetchrow("""            SELECT 
+            seo_stats = await conn.fetchrow("""
+            SELECT 
                 COUNT(*) as total_events,
                 COUNT(*) FILTER (WHERE event_type = 'ranking_improved') as ranking_improvements,
                 COUNT(*) FILTER (WHERE event_type = 'ranking_dropped') as ranking_drops,
@@ -451,7 +470,8 @@ class SEOOptimizationManager:
             """, user_id)
             
             # Rankings par mot-clé
-            keyword_rankings = await conn.fetch("""            SELECT keyword, search_engine, current_ranking, previous_ranking,
+            keyword_rankings = await conn.fetch("""
+            SELECT keyword, search_engine, current_ranking, previous_ranking,
                    (previous_ranking - current_ranking) as ranking_change
             FROM seo_optimization_notifications
             WHERE user_id = $1 AND current_ranking IS NOT NULL
@@ -471,13 +491,15 @@ class SEOOptimizationManager:
         }
 
     async def get_seo_metrics(self) -> Dict[str, Any]:
-        """Retourne les métriques système SEO"""        
+        """Retourne les métriques système SEO"""
+        
         # Métriques Redis temps réel
         redis_metrics = await self.redis.hgetall("seo:metrics")
         
         # Métriques base de données
         async with self.db_pool.acquire() as conn:
-            db_metrics = await conn.fetchrow("""            SELECT 
+            db_metrics = await conn.fetchrow("""
+            SELECT 
                 COUNT(*) as total_notifications,
                 COUNT(DISTINCT user_id) as active_users,
                 COUNT(DISTINCT keyword) as keywords_tracked,
@@ -502,7 +524,8 @@ class SEOOptimizationManager:
         message_data: Dict[str, Any],
         notification_data: SEONotificationData
     ):
-        """Met en cache les données SEO pour accès rapide"""        
+        """Met en cache les données SEO pour accès rapide"""
+        
         cache_data = {
             "notification_id": notification_id,
             "keyword": notification_data.keyword,
@@ -529,45 +552,57 @@ class SEOOptimizationManager:
             await self.redis.ltrim(f"seo:opportunities:{notification_data.user_id}", 0, 19)
 
     async def _update_seo_metrics(self, event_type: SEOEventType, data: SEONotificationData):
-        """Met à jour les métriques SEO"""        
+        """Met à jour les métriques SEO"""
+        
         # Incrémenter compteurs Redis
         await self.redis.hincrby("seo:metrics", f"event:{event_type.value}", 1)
         await self.redis.hincrby("seo:metrics", f"engine:{data.search_engine.value}", 1)
 
     # Méthodes de traitement spécialisé (stubs pour intégration future)
     async def _get_next_optimization_opportunities(self, data: SEONotificationData) -> List[str]:
-        """Retourne les prochaines opportunités d'optimisation"""        return ["Optimiser les meta descriptions", "Améliorer les liens internes", "Créer du contenu connexe"]
+        """Retourne les prochaines opportunités d'optimisation"""
+        return ["Optimiser les meta descriptions", "Améliorer les liens internes", "Créer du contenu connexe"]
 
     async def _get_recovery_suggestions(self, data: SEONotificationData) -> List[str]:
-        """Retourne des suggestions de récupération de classement"""        return ["Analyser la concurrence", "Mettre à jour le contenu", "Améliorer les backlinks"]
+        """Retourne des suggestions de récupération de classement"""
+        return ["Analyser la concurrence", "Mettre à jour le contenu", "Améliorer les backlinks"]
 
     async def _create_optimization_roadmap(self, data: SEONotificationData) -> Dict[str, Any]:
-        """Crée une feuille de route d'optimisation"""        return {"phase_1": "Research", "phase_2": "Content", "phase_3": "Promotion"}
+        """Crée une feuille de route d'optimisation"""
+        return {"phase_1": "Research", "phase_2": "Content", "phase_3": "Promotion"}
 
     async def _estimate_optimization_impact(self, data: SEONotificationData) -> Dict[str, Any]:
-        """Estime l'impact des optimisations"""        return {"expected_ranking_improvement": 5, "timeline": "2-4 weeks"}
+        """Estime l'impact des optimisations"""
+        return {"expected_ranking_improvement": 5, "timeline": "2-4 weeks"}
 
     async def _identify_engagement_opportunities(self, data: SEONotificationData) -> List[str]:
-        """Identifie les opportunités d'engagement"""        return ["Répondre aux commentaires", "Partager sur les réseaux", "Créer du contenu similaire"]
+        """Identifie les opportunités d'engagement"""
+        return ["Répondre aux commentaires", "Partager sur les réseaux", "Créer du contenu similaire"]
 
     # Méthodes de traitement spécialisé
     async def _track_ranking_improvement(self, data: SEONotificationData):
-        """Suit l'amélioration du classement"""        pass
+        """Suit l'amélioration du classement"""
+        pass
 
     async def _investigate_ranking_drop(self, data: SEONotificationData):
-        """Enquête sur la chute de classement"""        pass
+        """Enquête sur la chute de classement"""
+        pass
 
     async def _evaluate_keyword_opportunity(self, data: SEONotificationData):
-        """Évalue une opportunité de mot-clé"""        pass
+        """Évalue une opportunité de mot-clé"""
+        pass
 
     async def _prioritize_optimizations(self, data: SEONotificationData):
-        """Priorise les optimisations"""        pass
+        """Priorise les optimisations"""
+        pass
 
     async def _capitalize_on_trend(self, data: SEONotificationData):
-        """Capitalise sur une tendance"""        pass
+        """Capitalise sur une tendance"""
+        pass
 
     async def _schedule_technical_fix(self, data: SEONotificationData):
-        """Programme une correction technique"""        pass
+        """Programme une correction technique"""
+        pass
 
     # Méthodes de notification (stubs pour intégration)
     async def _send_notifications(
@@ -576,7 +611,8 @@ class SEOOptimizationManager:
         message_data: Dict[str, Any],
         channels: List[str]
     ) -> Dict[str, Any]:
-        """Envoie les notifications sur les canaux spécifiés"""        
+        """Envoie les notifications sur les canaux spécifiés"""
+        
         delivery_results = {}
         
         for channel in channels:

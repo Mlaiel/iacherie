@@ -14,7 +14,8 @@ COPYRIGHT WARNING: This code is proprietary. Unauthorized use, copying, or
 redistribution without explicit written permission from Fahed Mlaiel is 
 strictly prohibited and will result in legal action.
 ================================================================================
-"""import logging
+"""
+import logging
 import asyncio
 import json
 import re
@@ -58,7 +59,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(str, Enum):
-    """Content types for SEO optimization"""    TITLE = "title"
+    """Content types for SEO optimization"""
+    TITLE = "title"
     DESCRIPTION = "description"
     TAGS = "tags"
     HASHTAGS = "hashtags"
@@ -74,7 +76,8 @@ class ContentType(str, Enum):
 
 
 class Platform(str, Enum):
-    """Platforms for SEO optimization"""    GOOGLE = "google"
+    """Platforms for SEO optimization"""
+    GOOGLE = "google"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -90,7 +93,8 @@ class Platform(str, Enum):
 
 
 class OptimizationLevel(str, Enum):
-    """SEO optimization levels"""    BASIC = "basic"           # Basic keyword optimization
+    """SEO optimization levels"""
+    BASIC = "basic"           # Basic keyword optimization
     STANDARD = "standard"     # Standard SEO best practices
     ADVANCED = "advanced"     # Advanced AI-driven optimization
     EXPERT = "expert"         # Expert-level competitive analysis
@@ -98,7 +102,8 @@ class OptimizationLevel(str, Enum):
 
 
 class ContentCategory(str, Enum):
-    """Content categories for targeted optimization"""    MUSIC = "music"
+    """Content categories for targeted optimization"""
+    MUSIC = "music"
     GAMING = "gaming"
     LIFESTYLE = "lifestyle"
     TECH = "tech"
@@ -116,7 +121,8 @@ class ContentCategory(str, Enum):
 
 
 class Language(str, Enum):
-    """Supported languages for SEO optimization"""    EN = "en"  # English
+    """Supported languages for SEO optimization"""
+    EN = "en"  # English
     DE = "de"  # German
     FR = "fr"  # French
     ES = "es"  # Spanish
@@ -130,7 +136,8 @@ class Language(str, Enum):
 
 @dataclass
 class KeywordData:
-    """Enhanced keyword analysis data"""    keyword: str
+    """Enhanced keyword analysis data"""
+    keyword: str
     search_volume: int = 0
     competition_level: str = "medium"
     difficulty_score: float = 0.5
@@ -150,7 +157,8 @@ class KeywordData:
 
 @dataclass
 class SEOScore:
-    """Comprehensive SEO scoring breakdown"""    overall_score: float = 0.0
+    """Comprehensive SEO scoring breakdown"""
+    overall_score: float = 0.0
     keyword_optimization: float = 0.0
     readability_score: float = 0.0
     content_structure: float = 0.0
@@ -167,7 +175,8 @@ class SEOScore:
 
 @dataclass
 class SEORecommendation:
-    """AI-powered SEO recommendation"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """AI-powered SEO recommendation"""
+    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     type: str = "keyword"  # keyword, structure, content, technical
     priority: str = "medium"  # low, medium, high, critical
     title: str = ""
@@ -185,7 +194,8 @@ class SEORecommendation:
 
 @dataclass
 class CompetitorInsight:
-    """Competitor analysis insight"""    competitor_name: str = ""
+    """Competitor analysis insight"""
+    competitor_name: str = ""
     competitor_url: Optional[str] = None
     performance_metrics: Dict[str, Any] = field(default_factory=dict)
     top_keywords: List[KeywordData] = field(default_factory=list)
@@ -198,7 +208,8 @@ class CompetitorInsight:
 
 @dataclass
 class SEOAnalysisResult:
-    """Complete SEO analysis result"""    content_id: str = ""
+    """Complete SEO analysis result"""
+    content_id: str = ""
     analysis_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     platform: Platform = Platform.GOOGLE
     content_type: ContentType = ContentType.TITLE
@@ -215,7 +226,8 @@ class SEOAnalysisResult:
 
 
 class SEOOptimizationEngine:
-    """    🎯 ENTERPRISE SEO OPTIMIZATION ENGINE
+    """
+    🎯 ENTERPRISE SEO OPTIMIZATION ENGINE
     
     Advanced AI-powered SEO optimization system providing:
     - Multi-platform content optimization
@@ -225,7 +237,8 @@ class SEOOptimizationEngine:
     - Multilingual SEO support
     - Automated A/B testing suggestions
     - Social media optimization integration
-    """    
+    """
+    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -295,7 +308,8 @@ class SEOOptimizationEngine:
         content_category: Optional[ContentCategory] = None,
         language: Optional[Language] = None
     ) -> SEOAnalysisResult:
-        """        🚀 Optimize content for SEO with AI recommendations
+        """
+        🚀 Optimize content for SEO with AI recommendations
         
         Args:
             content: Content to optimize
@@ -308,7 +322,8 @@ class SEOOptimizationEngine:
             
         Returns:
             Complete SEO analysis with optimization recommendations
-        """        try:
+        """
+        try:
             start_time = datetime.utcnow()
             
             # Set defaults
@@ -412,7 +427,8 @@ class SEOOptimizationEngine:
         language: Language = Language.EN,
         time_range: str = "7d"
     ) -> Dict[str, Any]:
-        """        📈 Research trending topics and keywords
+        """
+        📈 Research trending topics and keywords
         
         Args:
             platform: Platform to research
@@ -422,7 +438,8 @@ class SEOOptimizationEngine:
             
         Returns:
             Trending topics and keywords with analysis
-        """        try:
+        """
+        try:
             # Check cache first
             cache_key = f"seo:trends:{platform.value}:{content_category.value}:{language.value}:{time_range}"
             cached_trends = await self.redis_client.get(cache_key)
@@ -489,7 +506,8 @@ class SEOOptimizationEngine:
         platform: Platform,
         metrics_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        📊 Analyze content performance against SEO predictions
+        """
+        📊 Analyze content performance against SEO predictions
         
         Args:
             content_id: Content identifier
@@ -498,7 +516,8 @@ class SEOOptimizationEngine:
             
         Returns:
             Performance analysis with insights
-        """        try:
+        """
+        try:
             # Get original SEO analysis
             original_analysis = await self._get_content_analysis(content_id)
             
@@ -569,7 +588,8 @@ class SEOOptimizationEngine:
         variant_count: int = 5,
         optimization_goals: Optional[List[str]] = None
     ) -> List[Dict[str, Any]]:
-        """        🎨 Generate optimized content variants for A/B testing
+        """
+        🎨 Generate optimized content variants for A/B testing
         
         Args:
             base_content: Original content
@@ -580,7 +600,8 @@ class SEOOptimizationEngine:
             
         Returns:
             List of optimized content variants
-        """        try:
+        """
+        try:
             optimization_goals = optimization_goals or [
                 "higher_engagement", "better_seo", "increased_reach"
             ]
@@ -633,7 +654,8 @@ class SEOOptimizationEngine:
     # Private methods for core functionality
     
     async def _extract_keywords(self, content: str, language: Language) -> List[str]:
-        """Extract keywords from content"""        try:
+        """Extract keywords from content"""
+        try:
             # Use KeyBERT for keyword extraction
             keywords = self.keyword_model.extract_keywords(
                 content, 
@@ -655,7 +677,8 @@ class SEOOptimizationEngine:
         category: ContentCategory,
         language: Language
     ) -> List[KeywordData]:
-        """Research keyword data from multiple sources"""        keyword_data = []
+        """Research keyword data from multiple sources"""
+        keyword_data = []
         
         for keyword in keywords[:10]:  # Limit API calls
             try:
@@ -696,7 +719,8 @@ class SEOOptimizationEngine:
         category: ContentCategory,
         language: Language
     ) -> List[KeywordData]:
-        """Discover relevant keywords from content"""        # Extract initial keywords
+        """Discover relevant keywords from content"""
+        # Extract initial keywords
         extracted = await self._extract_keywords(content, language)
         
         # Research the extracted keywords
@@ -708,7 +732,8 @@ class SEOOptimizationEngine:
         platform: Platform,
         category: ContentCategory
     ) -> List[CompetitorInsight]:
-        """Analyze competitor strategies"""        competitor_insights = []
+        """Analyze competitor strategies"""
+        competitor_insights = []
         
         try:
             # Get top competitors for keywords
@@ -749,7 +774,8 @@ class SEOOptimizationEngine:
         platform: Platform,
         content_type: ContentType
     ) -> SEOScore:
-        """Calculate comprehensive SEO score"""        score = SEOScore()
+        """Calculate comprehensive SEO score"""
+        score = SEOScore()
         
         try:
             # Keyword optimization score (0-100)
@@ -837,7 +863,8 @@ class SEOOptimizationEngine:
         platform: Platform,
         content_type: ContentType
     ) -> List[SEORecommendation]:
-        """Generate AI-powered SEO recommendations"""        recommendations = []
+        """Generate AI-powered SEO recommendations"""
+        recommendations = []
         
         try:
             # Keyword optimization recommendations
@@ -890,7 +917,8 @@ class SEOOptimizationEngine:
         keywords: List[KeywordData],
         platform: Platform
     ) -> str:
-        """Create optimized version of content"""        optimized = original_content
+        """Create optimized version of content"""
+        optimized = original_content
         
         # Apply recommendations in order of priority
         for rec in recommendations:
@@ -905,7 +933,8 @@ class SEOOptimizationEngine:
         keywords: List[KeywordData],
         platform: Platform
     ) -> Dict[str, float]:
-        """Predict content performance metrics"""        return {
+        """Predict content performance metrics"""
+        return {
             "estimated_reach": 1000.0,
             "estimated_engagement_rate": 0.05,
             "estimated_clicks": 50.0,
@@ -917,7 +946,8 @@ class SEOOptimizationEngine:
         content: str,
         keywords: List[KeywordData]
     ) -> Dict[Language, str]:
-        """Generate multilingual content versions"""        multilingual = {}
+        """Generate multilingual content versions"""
+        multilingual = {}
         
         target_languages = [Language.DE, Language.FR, Language.ES]
         
@@ -933,34 +963,43 @@ class SEOOptimizationEngine:
     
     # Placeholder implementations for helper methods
     def _calculate_keyword_density(self, content: str, keywords: List[KeywordData]) -> float:
-        """Calculate keyword density"""        return 0.02  # 2% default
+        """Calculate keyword density"""
+        return 0.02  # 2% default
     
     def _analyze_content_structure(self, content: str, content_type: ContentType) -> float:
-        """Analyze content structure"""        return 75.0  # Default score
+        """Analyze content structure"""
+        return 75.0  # Default score
     
     def _calculate_semantic_relevance(self, content: str, keywords: List[KeywordData]) -> float:
-        """Calculate semantic relevance"""        return 80.0  # Default score
+        """Calculate semantic relevance"""
+        return 80.0  # Default score
     
     async def _predict_engagement_potential(self, content: str, platform: Platform) -> float:
-        """Predict engagement potential"""        return 70.0  # Default score
+        """Predict engagement potential"""
+        return 70.0  # Default score
     
     def _analyze_technical_seo(self, content: str, content_type: ContentType) -> float:
-        """Analyze technical SEO factors"""        return 85.0  # Default score
+        """Analyze technical SEO factors"""
+        return 85.0  # Default score
     
     def _calculate_platform_optimization(self, content: str, platform: Platform) -> float:
-        """Calculate platform-specific optimization"""        return 75.0  # Default score
+        """Calculate platform-specific optimization"""
+        return 75.0  # Default score
     
     # Database and caching methods
     async def _save_analysis(self, analysis: SEOAnalysisResult) -> None:
-        """Save analysis to database"""        # Implementation for database save
+        """Save analysis to database"""
+        # Implementation for database save
         pass
     
     async def _cache_analysis(self, analysis: SEOAnalysisResult) -> None:
-        """Cache analysis results"""        # Implementation for caching
+        """Cache analysis results"""
+        # Implementation for caching
         pass
     
     async def _get_content_analysis(self, content_id: str) -> Optional[SEOAnalysisResult]:
-        """Get content analysis from database"""        # Implementation for database retrieval
+        """Get content analysis from database"""
+        # Implementation for database retrieval
         return None
 
 
@@ -970,7 +1009,8 @@ async def create_seo_optimization_engine(
     redis_client: aioredis.Redis,
     config: Dict[str, Any]
 ) -> SEOOptimizationEngine:
-    """Factory function to create SEOOptimizationEngine"""    metrics_collector = MetricsCollector()
+    """Factory function to create SEOOptimizationEngine"""
+    metrics_collector = MetricsCollector()
     nlp_engine = NLPProcessingEngine()
     
     engine = SEOOptimizationEngine(
@@ -1000,7 +1040,8 @@ __all__ = [
     "SEOAnalysisResult",
     "create_seo_optimization_engine"
 ]
-    """SEO improvement recommendation"""    category: str
+    """SEO improvement recommendation"""
+    category: str
     priority: str  # high, medium, low
     title: str
     description: str
@@ -1011,7 +1052,8 @@ __all__ = [
 
 @dataclass
 class ContentOptimization:
-    """Content optimization result"""    original_content: str
+    """Content optimization result"""
+    original_content: str
     optimized_content: str
     improvements: List[str]
     keywords_added: List[str]
@@ -1020,7 +1062,8 @@ class ContentOptimization:
 
 
 class SEOOptimizationEngine:
-    """    Enterprise SEO optimization engine for content creators
+    """
+    Enterprise SEO optimization engine for content creators
     
     Features:
     - AI-powered keyword research
@@ -1029,7 +1072,8 @@ class SEOOptimizationEngine:
     - Real-time ranking tracking
     - Competitor analysis
     - Trend-based optimization
-    """    
+    """
+    
     def __init__(
         self,
         redis_manager: RedisManager,
@@ -1068,7 +1112,8 @@ class SEOOptimizationEngine:
         logger.info("SEOOptimizationEngine initialized successfully")
 
     def _load_platform_seo_rules(self) -> Dict[str, Dict[str, Any]]:
-        """Load SEO rules for each platform"""        return {
+        """Load SEO rules for each platform"""
+        return {
             "youtube": {
                 "title_max_length": 100,
                 "description_max_length": 5000,
@@ -1130,7 +1175,8 @@ class SEOOptimizationEngine:
         target_keywords: List[str] = None,
         target_audience: str = None
     ) -> Tuple[SEOScore, List[SEORecommendation]]:
-        """        Comprehensive SEO analysis of content
+        """
+        Comprehensive SEO analysis of content
         
         Args:
             content: Content to analyze
@@ -1141,7 +1187,8 @@ class SEOOptimizationEngine:
             
         Returns:
             SEO score and recommendations
-        """        try:
+        """
+        try:
             # Get platform rules
             platform_rules = self.platform_rules.get(target_platform, {})
             
@@ -1180,7 +1227,8 @@ class SEOOptimizationEngine:
         platform_rules: Dict[str, Any],
         target_keywords: List[str] = None
     ) -> SEOScore:
-        """Calculate comprehensive SEO score"""        try:
+        """Calculate comprehensive SEO score"""
+        try:
             scores = {}
             
             # Keyword optimization score
@@ -1240,7 +1288,8 @@ class SEOOptimizationEngine:
         content: str,
         target_keywords: List[str]
     ) -> float:
-        """Analyze keyword optimization score"""        try:
+        """Analyze keyword optimization score"""
+        try:
             content_lower = content.lower()
             total_words = len(content.split())
             
@@ -1276,7 +1325,8 @@ class SEOOptimizationEngine:
             return 0.0
 
     def _analyze_readability(self, content: str) -> float:
-        """Analyze content readability"""        try:
+        """Analyze content readability"""
+        try:
             if len(content.strip()) < 10:
                 return 0.0
             
@@ -1299,7 +1349,8 @@ class SEOOptimizationEngine:
         content_type: ContentType,
         platform_rules: Dict[str, Any]
     ) -> float:
-        """Analyze content structure quality"""        try:
+        """Analyze content structure quality"""
+        try:
             score = 0.0
             factors = 0
             
@@ -1377,7 +1428,8 @@ class SEOOptimizationEngine:
         content: str,
         target_keywords: List[str]
     ) -> float:
-        """Analyze semantic relevance using NLP"""        try:
+        """Analyze semantic relevance using NLP"""
+        try:
             if not target_keywords or not content.strip():
                 return 0.5
             
@@ -1398,7 +1450,8 @@ class SEOOptimizationEngine:
         content: str,
         content_type: ContentType
     ) -> float:
-        """Predict content engagement potential"""        try:
+        """Predict content engagement potential"""
+        try:
             score = 0.0
             factors = 0
             
@@ -1453,7 +1506,8 @@ class SEOOptimizationEngine:
         content_type: ContentType,
         platform_rules: Dict[str, Any]
     ) -> float:
-        """Analyze technical SEO factors"""        try:
+        """Analyze technical SEO factors"""
+        try:
             score = 0.0
             factors = 0
             
@@ -1495,7 +1549,8 @@ class SEOOptimizationEngine:
         seo_score: SEOScore,
         target_keywords: List[str] = None
     ) -> List[SEORecommendation]:
-        """Generate actionable SEO recommendations"""        try:
+        """Generate actionable SEO recommendations"""
+        try:
             recommendations = []
             
             # Keyword optimization recommendations
@@ -1609,7 +1664,8 @@ class SEOOptimizationEngine:
         target_keywords: List[str],
         optimization_level: OptimizationLevel = OptimizationLevel.INTERMEDIATE
     ) -> ContentOptimization:
-        """        Automatically optimize content for SEO
+        """
+        Automatically optimize content for SEO
         
         Args:
             content: Original content
@@ -1620,7 +1676,8 @@ class SEOOptimizationEngine:
             
         Returns:
             Content optimization result
-        """        try:
+        """
+        try:
             original_content = content
             optimized_content = content
             improvements = []
@@ -1705,7 +1762,8 @@ class SEOOptimizationEngine:
         target_keywords: List[str],
         content_type: ContentType
     ) -> Tuple[str, List[str]]:
-        """Optimize keyword placement and density"""        try:
+        """Optimize keyword placement and density"""
+        try:
             optimized_content = content
             added_keywords = []
             
@@ -1750,7 +1808,8 @@ class SEOOptimizationEngine:
         content: str,
         content_type: ContentType
     ) -> str:
-        """Optimize content readability"""        try:
+        """Optimize content readability"""
+        try:
             if content_type not in [ContentType.DESCRIPTION, ContentType.CAPTION]:
                 return content
             
@@ -1794,7 +1853,8 @@ class SEOOptimizationEngine:
         content_type: ContentType,
         target_platform: str
     ) -> str:
-        """Optimize content structure for platform"""        try:
+        """Optimize content structure for platform"""
+        try:
             platform_rules = self.platform_rules.get(target_platform, {})
             
             if content_type == ContentType.TITLE:
@@ -1841,7 +1901,8 @@ class SEOOptimizationEngine:
         content: str,
         content_type: ContentType
     ) -> str:
-        """Optimize content for engagement"""        try:
+        """Optimize content for engagement"""
+        try:
             if content_type in [ContentType.DESCRIPTION, ContentType.CAPTION]:
                 # Add engagement elements if missing
                 content_lower = content.lower()
@@ -1869,7 +1930,8 @@ class SEOOptimizationEngine:
         content: str,
         target_keywords: List[str]
     ) -> str:
-        """Optimize semantic relevance"""        try:
+        """Optimize semantic relevance"""
+        try:
             # Add related terms and synonyms
             for keyword in target_keywords:
                 # Get related terms using NLP
@@ -1894,7 +1956,8 @@ class SEOOptimizationEngine:
         target_audience: str = None,
         search_volume_min: int = 100
     ) -> List[KeywordData]:
-        """        Research and analyze keywords for content optimization
+        """
+        Research and analyze keywords for content optimization
         
         Args:
             seed_keywords: Starting keywords for research
@@ -1904,7 +1967,8 @@ class SEOOptimizationEngine:
             
         Returns:
             List of keyword data with analysis
-        """        try:
+        """
+        try:
             keyword_results = []
             
             for seed_keyword in seed_keywords:
@@ -1940,7 +2004,8 @@ class SEOOptimizationEngine:
             return []
 
     async def _get_keyword_variations(self, seed_keyword: str) -> List[str]:
-        """Get keyword variations and related terms"""        try:
+        """Get keyword variations and related terms"""
+        try:
             variations = [seed_keyword]
             
             # Add basic variations
@@ -1968,7 +2033,8 @@ class SEOOptimizationEngine:
         target_platform: str,
         search_volume_min: int
     ) -> Optional[KeywordData]:
-        """Analyze individual keyword metrics"""        try:
+        """Analyze individual keyword metrics"""
+        try:
             # This would integrate with keyword research APIs
             # For now, return mock data
             
@@ -2008,7 +2074,8 @@ class SEOOptimizationEngine:
         seo_score: SEOScore,
         recommendations: List[SEORecommendation]
     ):
-        """Cache SEO analysis results"""        try:
+        """Cache SEO analysis results"""
+        try:
             data = {
                 "seo_score": asdict(seo_score),
                 "recommendations": [asdict(rec) for rec in recommendations],
@@ -2025,7 +2092,8 @@ class SEOOptimizationEngine:
         platform: str,
         time_period: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """Get SEO trends and insights for platform"""        try:
+        """Get SEO trends and insights for platform"""
+        try:
             # This would analyze trending keywords, hashtags, etc.
             # For now, return mock data structure
             

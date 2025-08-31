@@ -9,7 +9,8 @@ DevOps Engineer, AI Prompt Engineer
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
-"""from abc import ABC, abstractmethod
+"""
+from abc import ABC, abstractmethod
 from typing import Optional, List, Dict, Any, Union, Type, Tuple, Generic, TypeVar
 from datetime import datetime, timedelta
 from dataclasses import dataclass
@@ -46,13 +47,15 @@ UpdateSchemaType = TypeVar('UpdateSchemaType')
 
 
 class SortOrder(Enum):
-    """Sort order enumeration"""    ASC = "asc"
+    """Sort order enumeration"""
+    ASC = "asc"
     DESC = "desc"
 
 
 @dataclass
 class QueryFilter:
-    """Query filter definition"""    field: str
+    """Query filter definition"""
+    field: str
     operator: str  # eq, ne, gt, gte, lt, lte, in, not_in, like, ilike, is_null, is_not_null
     value: Any
     table_alias: Optional[str] = None
@@ -60,35 +63,40 @@ class QueryFilter:
 
 @dataclass
 class QuerySort:
-    """Query sort definition"""    field: str
+    """Query sort definition"""
+    field: str
     order: SortOrder = SortOrder.ASC
     table_alias: Optional[str] = None
 
 
 @dataclass
 class QueryPagination:
-    """Query pagination definition"""    page: int = 1
+    """Query pagination definition"""
+    page: int = 1
     page_size: int = 50
     max_page_size: int = 1000
 
 
 @dataclass
 class RepositoryResult:
-    """Repository operation result"""    success: bool
+    """Repository operation result"""
+    success: bool
     data: Optional[Any] = None
     error: Optional[str] = None
     metadata: Optional[Dict[str, Any]] = None
 
 
 class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
-    """    Abstract base repository with enterprise features:
+    """
+    Abstract base repository with enterprise features:
     - Async/sync operations
     - Advanced querying with filters, sorting, pagination
     - Bulk operations
     - Caching integration
     - Audit logging
     - Multi-tenant support
-    """    
+    """
+    
     def __init__(self, model: Type[T]):
         self.model = model
         self.model_name = model.__name__
@@ -99,7 +107,8 @@ class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
         self.audit_enabled = True
         
     async def initialize_integrations(self, services: Dict[str, Any]):
-        """Initialize repository with external services"""        self.db_connection = services.get('connection')
+        """Initialize repository with external services"""
+        self.db_connection = services.get('connection')
         self.cache = services.get('cache')
         await self.session_manager.initialize()
         
@@ -109,7 +118,8 @@ class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
                     data: CreateSchemaType, 
                     user_id: Optional[str] = None,
                     commit: bool = True) -> RepositoryResult:
-        """Create a new record"""        try:
+        """Create a new record"""
+        try:
             async with self.session_manager.get_async_session() as session:
                 # Convert schema to model
                 create_data = data.model_dump() if hasattr(data, 'model_dump') else data
@@ -156,7 +166,8 @@ class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
                        record_id: str,
                        include_deleted: bool = False,
                        use_cache: bool = True) -> RepositoryResult:
-        """Get record by ID with caching support"""        try:
+        """Get record by ID with caching support"""
+        try:
             # Check cache first
             cache_key = f"{self.model_name}:{record_id}"
             if use_cache and self.cache:
@@ -198,7 +209,8 @@ class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
                     data: UpdateSchemaType,
                     user_id: Optional[str] = None,
                     commit: bool = True) -> RepositoryResult:
-        """Update record with audit logging"""        try:
+        """Update record with audit logging"""
+        try:
             async with self.session_manager.get_async_session() as session:
                 # Get existing record
                 existing_result = await self.get_by_id(record_id, use_cache=False)
@@ -251,7 +263,8 @@ class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
                     user_id: Optional[str] = None,
                     soft_delete: bool = True,
                     commit: bool = True) -> RepositoryResult:
-        """Delete record (soft or hard)"""        try:
+        """Delete record (soft or hard)"""
+        try:
             async with self.session_manager.get_async_session() as session:
                 # Get existing record
                 existing_result = await self.get_by_id(record_id, use_cache=False)
@@ -301,7 +314,8 @@ class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
                        pagination: Optional[QueryPagination] = None,
                        include_deleted: bool = False,
                        include_count: bool = False) -> RepositoryResult:
-        """Advanced query with filters, sorting, and pagination"""        try:
+        """Advanced query with filters, sorting, and pagination"""
+        try:
             async with self.session_manager.get_async_session() as session:
                 # Build base query
                 query = select(self.model)
@@ -358,7 +372,8 @@ class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
     async def find_one(self,
                       filters: List[QueryFilter],
                       include_deleted: bool = False) -> RepositoryResult:
-        """Find single record by filters"""        try:
+        """Find single record by filters"""
+        try:
             async with self.session_manager.get_async_session() as session:
                 query = select(self.model)
                 
@@ -393,7 +408,8 @@ class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
                          data_list: List[CreateSchemaType],
                          user_id: Optional[str] = None,
                          batch_size: int = 1000) -> RepositoryResult:
-        """Bulk create records with batching"""        try:
+        """Bulk create records with batching"""
+        try:
             created_records = []
             total_batches = (len(data_list) + batch_size - 1) // batch_size
             
@@ -455,7 +471,8 @@ class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
                          updates: List[Dict[str, Any]],
                          user_id: Optional[str] = None,
                          batch_size: int = 1000) -> RepositoryResult:
-        """Bulk update records"""        try:
+        """Bulk update records"""
+        try:
             updated_count = 0
             total_batches = (len(updates) + batch_size - 1) // batch_size
             
@@ -512,7 +529,8 @@ class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
                          record_ids: List[str],
                          user_id: Optional[str] = None,
                          soft_delete: bool = True) -> RepositoryResult:
-        """Bulk delete records"""        try:
+        """Bulk delete records"""
+        try:
             async with self.transaction_manager.transaction() as session:
                 if soft_delete and hasattr(self.model, 'deleted_at'):
                     # Soft delete
@@ -564,7 +582,8 @@ class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
     # === Utility Methods ===
     
     def _apply_filters(self, query: Select, filters: Optional[List[QueryFilter]]) -> Select:
-        """Apply filters to query"""        if not filters:
+        """Apply filters to query"""
+        if not filters:
             return query
         
         for filter_item in filters:
@@ -598,7 +617,8 @@ class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
         return query
     
     def _apply_sorting(self, query: Select, sorting: Optional[List[QuerySort]]) -> Select:
-        """Apply sorting to query"""        if not sorting:
+        """Apply sorting to query"""
+        if not sorting:
             return query
         
         for sort_item in sorting:
@@ -616,7 +636,8 @@ class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
                               record_id: str,
                               user_id: Optional[str] = None,
                               data: Optional[Dict[str, Any]] = None):
-        """Log audit event"""        if not self.audit_enabled:
+        """Log audit event"""
+        if not self.audit_enabled:
             return
         
         try:
@@ -639,83 +660,101 @@ class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
 # === Specific Repository Implementations ===
 
 class UserRepository(BaseRepository[User, UserCreate, UserUpdate]):
-    """User repository with specific user operations"""    
+    """User repository with specific user operations"""
+    
     def __init__(self):
         super().__init__(User)
     
     async def find_by_email(self, email: str) -> RepositoryResult:
-        """Find user by email"""        filters = [QueryFilter(field='email', operator='eq', value=email)]
+        """Find user by email"""
+        filters = [QueryFilter(field='email', operator='eq', value=email)]
         return await self.find_one(filters)
     
     async def find_by_username(self, username: str) -> RepositoryResult:
-        """Find user by username"""        filters = [QueryFilter(field='username', operator='eq', value=username)]
+        """Find user by username"""
+        filters = [QueryFilter(field='username', operator='eq', value=username)]
         return await self.find_one(filters)
     
     async def find_active_users(self, pagination: Optional[QueryPagination] = None) -> RepositoryResult:
-        """Find all active users"""        filters = [QueryFilter(field='is_active', operator='eq', value=True)]
+        """Find all active users"""
+        filters = [QueryFilter(field='is_active', operator='eq', value=True)]
         return await self.find_many(filters=filters, pagination=pagination)
     
     async def update_last_login(self, user_id: str) -> RepositoryResult:
-        """Update user's last login timestamp"""        update_data = {'last_login_at': datetime.utcnow()}
+        """Update user's last login timestamp"""
+        update_data = {'last_login_at': datetime.utcnow()}
         return await self.update(user_id, update_data)
 
 
 class CreatorRepository(BaseRepository[Creator, CreatorCreate, CreatorUpdate]):
-    """Creator repository with creator-specific operations"""    
+    """Creator repository with creator-specific operations"""
+    
     def __init__(self):
         super().__init__(Creator)
     
     async def find_by_user_id(self, user_id: str) -> RepositoryResult:
-        """Find creator by user ID"""        filters = [QueryFilter(field='user_id', operator='eq', value=user_id)]
+        """Find creator by user ID"""
+        filters = [QueryFilter(field='user_id', operator='eq', value=user_id)]
         return await self.find_one(filters)
     
     async def find_verified_creators(self, pagination: Optional[QueryPagination] = None) -> RepositoryResult:
-        """Find all verified creators"""        filters = [QueryFilter(field='is_verified', operator='eq', value=True)]
+        """Find all verified creators"""
+        filters = [QueryFilter(field='is_verified', operator='eq', value=True)]
         return await self.find_many(filters=filters, pagination=pagination)
     
     async def find_by_content_type(self, content_type: str, pagination: Optional[QueryPagination] = None) -> RepositoryResult:
-        """Find creators by content type"""        filters = [QueryFilter(field='content_types', operator='like', value=f'%{content_type}%')]
+        """Find creators by content type"""
+        filters = [QueryFilter(field='content_types', operator='like', value=f'%{content_type}%')]
         return await self.find_many(filters=filters, pagination=pagination)
 
 
 class ContentRepository(BaseRepository[Content, ContentCreate, ContentUpdate]):
-    """Content repository with content-specific operations"""    
+    """Content repository with content-specific operations"""
+    
     def __init__(self):
         super().__init__(Content)
     
     async def find_by_creator_id(self, creator_id: str, pagination: Optional[QueryPagination] = None) -> RepositoryResult:
-        """Find content by creator ID"""        filters = [QueryFilter(field='creator_id', operator='eq', value=creator_id)]
+        """Find content by creator ID"""
+        filters = [QueryFilter(field='creator_id', operator='eq', value=creator_id)]
         return await self.find_many(filters=filters, pagination=pagination)
     
     async def find_by_type(self, content_type: str, pagination: Optional[QueryPagination] = None) -> RepositoryResult:
-        """Find content by type"""        filters = [QueryFilter(field='content_type', operator='eq', value=content_type)]
+        """Find content by type"""
+        filters = [QueryFilter(field='content_type', operator='eq', value=content_type)]
         return await self.find_many(filters=filters, pagination=pagination)
     
     async def find_published_content(self, pagination: Optional[QueryPagination] = None) -> RepositoryResult:
-        """Find all published content"""        filters = [QueryFilter(field='status', operator='eq', value='published')]
+        """Find all published content"""
+        filters = [QueryFilter(field='status', operator='eq', value='published')]
         return await self.find_many(filters=filters, pagination=pagination)
     
     async def find_recent_content(self, days: int = 7, pagination: Optional[QueryPagination] = None) -> RepositoryResult:
-        """Find recent content within specified days"""        since_date = datetime.utcnow() - timedelta(days=days)
+        """Find recent content within specified days"""
+        since_date = datetime.utcnow() - timedelta(days=days)
         filters = [QueryFilter(field='created_at', operator='gte', value=since_date)]
         return await self.find_many(filters=filters, pagination=pagination)
 
 
 class MediaRepository(BaseRepository[Media, MediaCreate, MediaUpdate]):
-    """Media repository with media-specific operations"""    
+    """Media repository with media-specific operations"""
+    
     def __init__(self):
         super().__init__(Media)
     
     async def find_by_content_id(self, content_id: str) -> RepositoryResult:
-        """Find media by content ID"""        filters = [QueryFilter(field='content_id', operator='eq', value=content_id)]
+        """Find media by content ID"""
+        filters = [QueryFilter(field='content_id', operator='eq', value=content_id)]
         return await self.find_many(filters=filters)
     
     async def find_by_media_type(self, media_type: str, pagination: Optional[QueryPagination] = None) -> RepositoryResult:
-        """Find media by type"""        filters = [QueryFilter(field='media_type', operator='eq', value=media_type)]
+        """Find media by type"""
+        filters = [QueryFilter(field='media_type', operator='eq', value=media_type)]
         return await self.find_many(filters=filters, pagination=pagination)
     
     async def get_total_storage_size(self) -> RepositoryResult:
-        """Get total storage size across all media"""        try:
+        """Get total storage size across all media"""
+        try:
             async with self.session_manager.get_async_session() as session:
                 query = select(func.sum(Media.file_size))
                 result = await session.execute(query)
@@ -732,16 +771,19 @@ class MediaRepository(BaseRepository[Media, MediaCreate, MediaUpdate]):
 
 
 class CopyrightRepository(BaseRepository[Copyright, CopyrightCreate, CopyrightUpdate]):
-    """Copyright repository with copyright-specific operations"""    
+    """Copyright repository with copyright-specific operations"""
+    
     def __init__(self):
         super().__init__(Copyright)
     
     async def find_by_content_id(self, content_id: str) -> RepositoryResult:
-        """Find copyright by content ID"""        filters = [QueryFilter(field='content_id', operator='eq', value=content_id)]
+        """Find copyright by content ID"""
+        filters = [QueryFilter(field='content_id', operator='eq', value=content_id)]
         return await self.find_one(filters)
     
     async def find_expiring_copyrights(self, days_ahead: int = 30) -> RepositoryResult:
-        """Find copyrights expiring within specified days"""        expiry_date = datetime.utcnow() + timedelta(days=days_ahead)
+        """Find copyrights expiring within specified days"""
+        expiry_date = datetime.utcnow() + timedelta(days=days_ahead)
         filters = [
             QueryFilter(field='expiry_date', operator='lte', value=expiry_date),
             QueryFilter(field='expiry_date', operator='gt', value=datetime.utcnow())
@@ -750,32 +792,38 @@ class CopyrightRepository(BaseRepository[Copyright, CopyrightCreate, CopyrightUp
 
 
 class LicenseRepository(BaseRepository[License, LicenseCreate, LicenseUpdate]):
-    """License repository with licensing operations"""    
+    """License repository with licensing operations"""
+    
     def __init__(self):
         super().__init__(License)
     
     async def find_by_content_id(self, content_id: str) -> RepositoryResult:
-        """Find licenses by content ID"""        filters = [QueryFilter(field='content_id', operator='eq', value=content_id)]
+        """Find licenses by content ID"""
+        filters = [QueryFilter(field='content_id', operator='eq', value=content_id)]
         return await self.find_many(filters=filters)
     
     async def find_active_licenses(self, pagination: Optional[QueryPagination] = None) -> RepositoryResult:
-        """Find all active licenses"""        filters = [QueryFilter(field='is_active', operator='eq', value=True)]
+        """Find all active licenses"""
+        filters = [QueryFilter(field='is_active', operator='eq', value=True)]
         return await self.find_many(filters=filters, pagination=pagination)
 
 
 class CollaborationRepository(BaseRepository[Collaboration, Dict[str, Any], Dict[str, Any]]):
-    """Collaboration repository"""    
+    """Collaboration repository"""
+    
     def __init__(self):
         super().__init__(Collaboration)
     
     async def find_by_creator_id(self, creator_id: str, pagination: Optional[QueryPagination] = None) -> RepositoryResult:
-        """Find collaborations by creator ID"""        filters = [
+        """Find collaborations by creator ID"""
+        filters = [
             QueryFilter(field='initiator_id', operator='eq', value=creator_id)
         ]
         return await self.find_many(filters=filters, pagination=pagination)
     
     async def find_pending_collaborations(self, creator_id: str) -> RepositoryResult:
-        """Find pending collaborations for a creator"""        filters = [
+        """Find pending collaborations for a creator"""
+        filters = [
             QueryFilter(field='collaborator_id', operator='eq', value=creator_id),
             QueryFilter(field='status', operator='eq', value='pending')
         ]
@@ -783,18 +831,21 @@ class CollaborationRepository(BaseRepository[Collaboration, Dict[str, Any], Dict
 
 
 class ProjectRepository(BaseRepository[Project, Dict[str, Any], Dict[str, Any]]):
-    """Project repository"""    
+    """Project repository"""
+    
     def __init__(self):
         super().__init__(Project)
 
 
 class RevenueRepository(BaseRepository[Revenue, Dict[str, Any], Dict[str, Any]]):
-    """Revenue repository with financial operations"""    
+    """Revenue repository with financial operations"""
+    
     def __init__(self):
         super().__init__(Revenue)
     
     async def get_total_revenue_by_creator(self, creator_id: str, start_date: Optional[datetime] = None) -> RepositoryResult:
-        """Get total revenue for a creator"""        try:
+        """Get total revenue for a creator"""
+        try:
             async with self.session_manager.get_async_session() as session:
                 query = select(func.sum(Revenue.amount)).where(Revenue.creator_id == creator_id)
                 
@@ -815,18 +866,21 @@ class RevenueRepository(BaseRepository[Revenue, Dict[str, Any], Dict[str, Any]])
 
 
 class DistributionRepository(BaseRepository[Distribution, Dict[str, Any], Dict[str, Any]]):
-    """Distribution repository"""    
+    """Distribution repository"""
+    
     def __init__(self):
         super().__init__(Distribution)
 
 
 class AnalyticsRepository(BaseRepository[Analytics, Dict[str, Any], Dict[str, Any]]):
-    """Analytics repository with analytics-specific operations"""    
+    """Analytics repository with analytics-specific operations"""
+    
     def __init__(self):
         super().__init__(Analytics)
     
     async def get_content_analytics(self, content_id: str, metric_type: Optional[str] = None) -> RepositoryResult:
-        """Get analytics for specific content"""        filters = [QueryFilter(field='content_id', operator='eq', value=content_id)]
+        """Get analytics for specific content"""
+        filters = [QueryFilter(field='content_id', operator='eq', value=content_id)]
         
         if metric_type:
             filters.append(QueryFilter(field='metric_type', operator='eq', value=metric_type))
@@ -835,17 +889,20 @@ class AnalyticsRepository(BaseRepository[Analytics, Dict[str, Any], Dict[str, An
 
 
 class NotificationRepository(BaseRepository[Notification, Dict[str, Any], Dict[str, Any]]):
-    """Notification repository"""    
+    """Notification repository"""
+    
     def __init__(self):
         super().__init__(Notification)
     
     async def find_unread_notifications(self, user_id: str) -> RepositoryResult:
-        """Find unread notifications for a user"""        filters = [
+        """Find unread notifications for a user"""
+        filters = [
             QueryFilter(field='user_id', operator='eq', value=user_id),
             QueryFilter(field='read_at', operator='is_null', value=None)
         ]
         return await self.find_many(filters=filters)
     
     async def mark_as_read(self, notification_id: str) -> RepositoryResult:
-        """Mark notification as read"""        update_data = {'read_at': datetime.utcnow()}
+        """Mark notification as read"""
+        update_data = {'read_at': datetime.utcnow()}
         return await self.update(notification_id, update_data)

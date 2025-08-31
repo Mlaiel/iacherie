@@ -16,7 +16,8 @@ Contact: mlaiel@live.de
 - Backend Senior: Fahed Mlaiel  
 - Storage Architecture: Fahed Mlaiel
 - DevOps: Fahed Mlaiel
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
@@ -35,8 +36,10 @@ from .migration_engine import MigrationEngine, MigrationConfig
 logger = logging.getLogger(__name__)
 
 class StorageSystemConfig:
-    """    Configuration for the entire storage system
-    """    def __init__(
+    """
+    Configuration for the entire storage system
+    """
+    def __init__(
         self,
         storage_root_path: str = "/workspaces/Achiri/IA-Influencer-Agent/backend/data_management/storage",
         **kwargs
@@ -60,7 +63,8 @@ class StorageSystemConfig:
         self.debug_mode = kwargs.get('debug_mode', False)
     
     def _create_distributed_config(self) -> DistributedStorageConfig:
-        """Create distributed storage configuration"""        return DistributedStorageConfig(
+        """Create distributed storage configuration"""
+        return DistributedStorageConfig(
             storage_root_path=f"{self.storage_root_path}/distributed",
             cluster_nodes_directory=f"{self.storage_root_path}/cluster/nodes",
             sharding_directory=f"{self.storage_root_path}/cluster/shards",
@@ -68,7 +72,8 @@ class StorageSystemConfig:
         )
     
     def _create_backup_config(self) -> BackupConfig:
-        """Create backup configuration"""        return BackupConfig(
+        """Create backup configuration"""
+        return BackupConfig(
             storage_root_path=f"{self.storage_root_path}/backups",
             backup_directory=f"{self.storage_root_path}/backups/data",
             schedules_directory=f"{self.storage_root_path}/backups/schedules",
@@ -76,7 +81,8 @@ class StorageSystemConfig:
         )
     
     def _create_archive_config(self) -> ArchiveConfig:
-        """Create archive configuration"""        return ArchiveConfig(
+        """Create archive configuration"""
+        return ArchiveConfig(
             storage_root_path=f"{self.storage_root_path}/archives",
             archive_directory=f"{self.storage_root_path}/archives/data",
             metadata_directory=f"{self.storage_root_path}/archives/metadata",
@@ -84,7 +90,8 @@ class StorageSystemConfig:
         )
     
     def _create_sync_config(self) -> SyncConfig:
-        """Create sync configuration"""        return SyncConfig(
+        """Create sync configuration"""
+        return SyncConfig(
             storage_root_path=f"{self.storage_root_path}/sync",
             sync_directory=f"{self.storage_root_path}/sync/data",
             endpoints_directory=f"{self.storage_root_path}/sync/endpoints",
@@ -92,7 +99,8 @@ class StorageSystemConfig:
         )
     
     def _create_integrity_config(self) -> IntegrityConfig:
-        """Create integrity configuration"""        return IntegrityConfig(
+        """Create integrity configuration"""
+        return IntegrityConfig(
             storage_root_path=f"{self.storage_root_path}/integrity",
             verification_directory=f"{self.storage_root_path}/integrity/verification",
             repair_directory=f"{self.storage_root_path}/integrity/repair",
@@ -100,7 +108,8 @@ class StorageSystemConfig:
         )
     
     def _create_access_config(self) -> AccessConfig:
-        """Create access control configuration"""        return AccessConfig(
+        """Create access control configuration"""
+        return AccessConfig(
             storage_root_path=f"{self.storage_root_path}/access",
             users_directory=f"{self.storage_root_path}/access/users",
             policies_directory=f"{self.storage_root_path}/access/policies",
@@ -108,7 +117,8 @@ class StorageSystemConfig:
         )
     
     def _create_quota_config(self) -> QuotaConfig:
-        """Create quota management configuration"""        return QuotaConfig(
+        """Create quota management configuration"""
+        return QuotaConfig(
             storage_root_path=f"{self.storage_root_path}/quotas",
             quotas_directory=f"{self.storage_root_path}/quotas/limits",
             usage_directory=f"{self.storage_root_path}/quotas/usage",
@@ -116,7 +126,8 @@ class StorageSystemConfig:
         )
     
     def _create_migration_config(self) -> MigrationConfig:
-        """Create migration configuration"""        return MigrationConfig(
+        """Create migration configuration"""
+        return MigrationConfig(
             storage_root_path=f"{self.storage_root_path}/migrations",
             migrations_directory=f"{self.storage_root_path}/migrations/data",
             plans_directory=f"{self.storage_root_path}/migrations/plans",
@@ -128,7 +139,8 @@ class StorageSystemConfig:
 
 
 class IAInfluencerStorageSystem:
-    """    🏢 IA Influencer Agent Enterprise Storage System
+    """
+    🏢 IA Influencer Agent Enterprise Storage System
     
     Unified storage orchestration system providing:
     - Distributed storage with clustering
@@ -140,9 +152,11 @@ class IAInfluencerStorageSystem:
     - Data migration capabilities
     
     This is the main entry point for all storage operations.
-    """    
+    """
+    
     def __init__(self, config: Optional[StorageSystemConfig] = None):
-        """Initialize the complete storage system"""        self.config = config or StorageSystemConfig()
+        """Initialize the complete storage system"""
+        self.config = config or StorageSystemConfig()
         
         # Initialize all storage components
         self.distributed_storage: Optional[DistributedStorageManager] = None
@@ -176,7 +190,8 @@ class IAInfluencerStorageSystem:
         logger.info("IA Influencer Storage System initialized")
     
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize all storage components"""        try:
+        """Initialize all storage components"""
+        try:
             logger.info("Initializing IA Influencer Storage System...")
             
             # Create storage directories
@@ -225,7 +240,8 @@ class IAInfluencerStorageSystem:
             }
     
     async def _create_storage_directories(self) -> None:
-        """Create all necessary storage directories"""        directories = [
+        """Create all necessary storage directories"""
+        directories = [
             self.config.storage_root_path,
             f"{self.config.storage_root_path}/distributed",
             f"{self.config.storage_root_path}/backups",
@@ -244,7 +260,8 @@ class IAInfluencerStorageSystem:
             Path(directory).mkdir(parents=True, exist_ok=True)
     
     async def _initialize_access_controller(self) -> None:
-        """Initialize access control system"""        try:
+        """Initialize access control system"""
+        try:
             # Add JWT secret to config
             if not hasattr(self.config.access_config, 'jwt_secret_key'):
                 self.config.access_config.jwt_secret_key = "ia_influencer_jwt_secret_key_2025"
@@ -256,7 +273,8 @@ class IAInfluencerStorageSystem:
             raise
     
     async def _initialize_quota_manager(self) -> None:
-        """Initialize quota management system"""        try:
+        """Initialize quota management system"""
+        try:
             self.quota_manager = QuotaManager(self.config.quota_config)
             logger.info("Quota manager initialized")
         except Exception as e:
@@ -264,7 +282,8 @@ class IAInfluencerStorageSystem:
             raise
     
     async def _initialize_distributed_storage(self) -> None:
-        """Initialize distributed storage system"""        try:
+        """Initialize distributed storage system"""
+        try:
             self.distributed_storage = DistributedStorageManager(self.config.distributed_config)
             logger.info("Distributed storage initialized")
         except Exception as e:
@@ -272,7 +291,8 @@ class IAInfluencerStorageSystem:
             raise
     
     async def _initialize_backup_storage(self) -> None:
-        """Initialize backup storage system"""        try:
+        """Initialize backup storage system"""
+        try:
             self.backup_storage = BackupStorageManager(self.config.backup_config)
             logger.info("Backup storage initialized")
         except Exception as e:
@@ -280,7 +300,8 @@ class IAInfluencerStorageSystem:
             raise
     
     async def _initialize_archive_storage(self) -> None:
-        """Initialize archive storage system"""        try:
+        """Initialize archive storage system"""
+        try:
             self.archive_storage = ArchiveStorageManager(self.config.archive_config)
             logger.info("Archive storage initialized")
         except Exception as e:
@@ -288,7 +309,8 @@ class IAInfluencerStorageSystem:
             raise
     
     async def _initialize_sync_engine(self) -> None:
-        """Initialize synchronization engine"""        try:
+        """Initialize synchronization engine"""
+        try:
             self.sync_engine = SyncEngine(self.config.sync_config)
             logger.info("Sync engine initialized")
         except Exception as e:
@@ -296,7 +318,8 @@ class IAInfluencerStorageSystem:
             raise
     
     async def _initialize_integrity_checker(self) -> None:
-        """Initialize integrity checker"""        try:
+        """Initialize integrity checker"""
+        try:
             self.integrity_checker = IntegrityChecker(self.config.integrity_config)
             logger.info("Integrity checker initialized")
         except Exception as e:
@@ -304,7 +327,8 @@ class IAInfluencerStorageSystem:
             raise
     
     async def _initialize_migration_engine(self) -> None:
-        """Initialize migration engine"""        try:
+        """Initialize migration engine"""
+        try:
             self.migration_engine = MigrationEngine(self.config.migration_config)
             logger.info("Migration engine initialized")
         except Exception as e:
@@ -322,7 +346,8 @@ class IAInfluencerStorageSystem:
         user_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Store file in the system with full processing pipeline"""        try:
+        """Store file in the system with full processing pipeline"""
+        try:
             if not self.is_initialized:
                 await self.initialize()
             
@@ -405,7 +430,8 @@ class IAInfluencerStorageSystem:
         file_path: str,
         user_id: str
     ) -> Dict[str, Any]:
-        """Retrieve file from the system"""        try:
+        """Retrieve file from the system"""
+        try:
             if not self.is_initialized:
                 await self.initialize()
             
@@ -452,7 +478,8 @@ class IAInfluencerStorageSystem:
         file_path: str,
         user_id: str
     ) -> Dict[str, Any]:
-        """Delete file from the system"""        try:
+        """Delete file from the system"""
+        try:
             if not self.is_initialized:
                 await self.initialize()
             
@@ -492,7 +519,8 @@ class IAInfluencerStorageSystem:
         backup_type: str = 'full',
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Create backup of specified path"""        try:
+        """Create backup of specified path"""
+        try:
             if not self.is_initialized:
                 await self.initialize()
             
@@ -519,7 +547,8 @@ class IAInfluencerStorageSystem:
         retention_policy: str = 'standard',
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Archive data for long-term storage"""        try:
+        """Archive data for long-term storage"""
+        try:
             if not self.is_initialized:
                 await self.initialize()
             
@@ -545,7 +574,8 @@ class IAInfluencerStorageSystem:
         endpoint_config: Dict[str, Any],
         sync_direction: str = 'bidirectional'
     ) -> Dict[str, Any]:
-        """Synchronize with external endpoint"""        try:
+        """Synchronize with external endpoint"""
+        try:
             if not self.is_initialized:
                 await self.initialize()
             
@@ -571,7 +601,8 @@ class IAInfluencerStorageSystem:
         path: str,
         verification_level: str = 'standard'
     ) -> Dict[str, Any]:
-        """Verify data integrity"""        try:
+        """Verify data integrity"""
+        try:
             if not self.is_initialized:
                 await self.initialize()
             
@@ -596,7 +627,8 @@ class IAInfluencerStorageSystem:
         self,
         user_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create new user account"""        try:
+        """Create new user account"""
+        try:
             if not self.is_initialized:
                 await self.initialize()
             
@@ -620,7 +652,8 @@ class IAInfluencerStorageSystem:
         password: str,
         context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Authenticate user credentials"""        try:
+        """Authenticate user credentials"""
+        try:
             if not self.is_initialized:
                 await self.initialize()
             
@@ -644,7 +677,8 @@ class IAInfluencerStorageSystem:
         self,
         plan_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create data migration plan"""        try:
+        """Create data migration plan"""
+        try:
             if not self.is_initialized:
                 await self.initialize()
             
@@ -662,7 +696,8 @@ class IAInfluencerStorageSystem:
         plan_id: str,
         options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Execute migration plan"""        try:
+        """Execute migration plan"""
+        try:
             if not self.is_initialized:
                 await self.initialize()
             
@@ -681,7 +716,8 @@ class IAInfluencerStorageSystem:
             }
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status"""        try:
+        """Get comprehensive system status"""
+        try:
             status = {
                 'system': {
                     'is_initialized': self.is_initialized,
@@ -736,7 +772,8 @@ class IAInfluencerStorageSystem:
             }
     
     async def shutdown(self) -> Dict[str, Any]:
-        """Gracefully shutdown the storage system"""        try:
+        """Gracefully shutdown the storage system"""
+        try:
             logger.info("Shutting down IA Influencer Storage System...")
             
             # Stop all background tasks and clean up resources
@@ -762,7 +799,8 @@ class IAInfluencerStorageSystem:
     # ===========================================
     
     async def _start_system_monitoring(self) -> None:
-        """Start system monitoring tasks"""        while self.is_running:
+        """Start system monitoring tasks"""
+        while self.is_running:
             try:
                 await asyncio.sleep(60)  # Monitor every minute
                 
@@ -777,7 +815,8 @@ class IAInfluencerStorageSystem:
                 logger.error(f"System monitoring error: {str(e)}")
     
     async def _perform_health_checks(self) -> None:
-        """Perform health checks on all components"""        try:
+        """Perform health checks on all components"""
+        try:
             # Check component health
             # This would implement actual health check logic
             
@@ -792,12 +831,16 @@ class IAInfluencerStorageSystem:
 # ===========================================
 
 def create_storage_system(config: Optional[StorageSystemConfig] = None) -> IAInfluencerStorageSystem:
-    """    Factory function to create a new storage system instance
-    """    return IAInfluencerStorageSystem(config)
+    """
+    Factory function to create a new storage system instance
+    """
+    return IAInfluencerStorageSystem(config)
 
 def create_default_config(storage_root: str = None) -> StorageSystemConfig:
-    """    Factory function to create default configuration
-    """    if storage_root is None:
+    """
+    Factory function to create default configuration
+    """
+    if storage_root is None:
         storage_root = "/workspaces/Achiri/IA-Influencer-Agent/backend/data_management/storage"
     
     return StorageSystemConfig(storage_root_path=storage_root)
@@ -808,8 +851,10 @@ def create_default_config(storage_root: str = None) -> StorageSystemConfig:
 # ===========================================
 
 async def main():
-    """    Main entry point for testing the storage system
-    """    try:
+    """
+    Main entry point for testing the storage system
+    """
+    try:
         # Create storage system with default configuration
         config = create_default_config()
         storage_system = create_storage_system(config)

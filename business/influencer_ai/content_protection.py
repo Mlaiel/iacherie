@@ -23,7 +23,8 @@ Advanced Content Protection System for multi-format creators implementing:
 - Advanced threat detection and prevention
 - Legal compliance and evidence collection
 ================================================================
-"""from typing import Dict, List, Optional, Any, Union, Tuple, AsyncIterator
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple, AsyncIterator
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum, auto
@@ -51,7 +52,8 @@ logger = logging.getLogger(__name__)
 # =============== CONFIGURATION & ENUMS ===============
 
 class ProtectionType(Enum):
-    """Types de protection de contenu"""    AUDIO_FINGERPRINT = "audio_fingerprint"
+    """Types de protection de contenu"""
+    AUDIO_FINGERPRINT = "audio_fingerprint"
     VIDEO_FINGERPRINT = "video_fingerprint"
     IMAGE_FINGERPRINT = "image_fingerprint"
     TEXT_FINGERPRINT = "text_fingerprint"
@@ -59,20 +61,23 @@ class ProtectionType(Enum):
     WATERMARK = "watermark"
 
 class ThreatLevel(Enum):
-    """Niveaux de menace détectés"""    LOW = "low"
+    """Niveaux de menace détectés"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 class ContentStatus(Enum):
-    """Statuts de protection du contenu"""    PROTECTED = "protected"
+    """Statuts de protection du contenu"""
+    PROTECTED = "protected"
     VULNERABLE = "vulnerable"
     COMPROMISED = "compromised"
     MONITORING = "monitoring"
     TAKEDOWN_ISSUED = "takedown_issued"
 
 class PlatformType(Enum):
-    """Plateformes surveillées"""    YOUTUBE = "youtube"
+    """Plateformes surveillées"""
+    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
@@ -83,7 +88,8 @@ class PlatformType(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Empreinte digitale de contenu"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Empreinte digitale de contenu"""
+    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
     content_type: ProtectionType = ProtectionType.AUDIO_FINGERPRINT
     original_filename: str = ""
@@ -96,7 +102,8 @@ class ContentFingerprint:
 
 @dataclass
 class ThreatAlert:
-    """Alerte de menace détectée"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Alerte de menace détectée"""
+    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     fingerprint_id: str = ""
     detected_url: str = ""
     platform: PlatformType = PlatformType.GENERIC_WEB
@@ -109,7 +116,8 @@ class ThreatAlert:
 
 @dataclass
 class ContentProtectionConfig:
-    """Configuration avancée de protection de contenu"""    enabled: bool = True
+    """Configuration avancée de protection de contenu"""
+    enabled: bool = True
     fingerprinting_enabled: bool = True
     real_time_monitoring: bool = True
     auto_takedown: bool = False
@@ -124,7 +132,8 @@ class ContentProtectionConfig:
 # =============== SERVICE INTERFACES ===============
 
 class IContentProtectionService(ABC):
-    """Interface pour le service de protection de contenu"""    
+    """Interface pour le service de protection de contenu"""
+    
     @abstractmethod
     async def create_fingerprint(
         self, 
@@ -133,7 +142,8 @@ class IContentProtectionService(ABC):
         creator_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ContentFingerprint:
-        """Créer une empreinte digitale pour du contenu"""        pass
+        """Créer une empreinte digitale pour du contenu"""
+        pass
     
     @abstractmethod
     async def detect_threats(
@@ -141,7 +151,8 @@ class IContentProtectionService(ABC):
         fingerprint: ContentFingerprint,
         platforms: Optional[List[PlatformType]] = None
     ) -> List[ThreatAlert]:
-        """Détecter des menaces sur les plateformes"""        pass
+        """Détecter des menaces sur les plateformes"""
+        pass
     
     @abstractmethod
     async def monitor_content(
@@ -149,7 +160,8 @@ class IContentProtectionService(ABC):
         fingerprint_ids: List[str],
         continuous: bool = True
     ) -> AsyncIterator[ThreatAlert]:
-        """Surveillance continue du contenu"""        pass
+        """Surveillance continue du contenu"""
+        pass
     
     @abstractmethod
     async def issue_takedown(
@@ -157,7 +169,8 @@ class IContentProtectionService(ABC):
         alert: ThreatAlert,
         legal_notice: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Émettre une demande de retrait DMCA"""        pass
+        """Émettre une demande de retrait DMCA"""
+        pass
     
     @abstractmethod
     async def verify_ownership(
@@ -165,12 +178,14 @@ class IContentProtectionService(ABC):
         content_data: bytes,
         creator_id: str
     ) -> Dict[str, Any]:
-        """Vérifier la propriété via blockchain"""        pass
+        """Vérifier la propriété via blockchain"""
+        pass
 
 # =============== CORE MANAGER ===============
 
 class ContentProtectionManager:
-    """Gestionnaire avancé de protection de contenu"""    
+    """Gestionnaire avancé de protection de contenu"""
+    
     def __init__(self, config: Optional[ContentProtectionConfig] = None):
         self.config = config or ContentProtectionConfig()
         self.fingerprints: Dict[str, ContentFingerprint] = {}
@@ -179,7 +194,8 @@ class ContentProtectionManager:
         self.logger = logging.getLogger(f"{__name__}.ContentProtectionManager")
         
     async def initialize(self) -> bool:
-        """Initialisation du gestionnaire"""        try:
+        """Initialisation du gestionnaire"""
+        try:
             if not self.config.enabled:
                 self.logger.warning("Content protection is disabled")
                 return False
@@ -201,11 +217,13 @@ class ContentProtectionManager:
             return False
     
     async def _initialize_fingerprinting_engines(self):
-        """Initialiser les moteurs d'empreintes digitales"""        self.logger.info("Initializing fingerprinting engines")
+        """Initialiser les moteurs d'empreintes digitales"""
+        self.logger.info("Initializing fingerprinting engines")
         # Implémentation des moteurs d'empreintes
         
     async def _start_monitoring_services(self):
-        """Démarrer les services de surveillance"""        self.logger.info("Starting monitoring services")
+        """Démarrer les services de surveillance"""
+        self.logger.info("Starting monitoring services")
         # Implémentation de la surveillance
         
     async def register_content(
@@ -215,7 +233,8 @@ class ContentProtectionManager:
         creator_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ContentFingerprint:
-        """Enregistrer du contenu pour protection"""        try:
+        """Enregistrer du contenu pour protection"""
+        try:
             # Créer l'empreinte digitale
             fingerprint = await self._create_content_fingerprint(
                 content_data, content_type, creator_id, metadata or {}
@@ -242,7 +261,8 @@ class ContentProtectionManager:
         creator_id: str,
         metadata: Dict[str, Any]
     ) -> ContentFingerprint:
-        """Créer une empreinte digitale selon le type de contenu"""        
+        """Créer une empreinte digitale selon le type de contenu"""
+        
         fingerprint_hash = ""
         vector_embedding = None
         confidence_score = 0.0
@@ -273,7 +293,8 @@ class ContentProtectionManager:
             raise
     
     async def _create_audio_fingerprint(self, audio_data: bytes) -> Tuple[str, List[float], float]:
-        """Créer une empreinte audio avec Chromaprint/Essentia"""        try:
+        """Créer une empreinte audio avec Chromaprint/Essentia"""
+        try:
             # Simulation d'empreinte audio avancée
             # En production, utiliser Chromaprint, Essentia, ou librosa
             hash_obj = hashlib.sha256(audio_data)
@@ -290,7 +311,8 @@ class ContentProtectionManager:
             raise
     
     async def _create_video_fingerprint(self, video_data: bytes) -> Tuple[str, List[float], float]:
-        """Créer une empreinte vidéo avec OpenCV/YOLO"""        try:
+        """Créer une empreinte vidéo avec OpenCV/YOLO"""
+        try:
             # Simulation d'empreinte vidéo avancée
             hash_obj = hashlib.sha256(video_data)
             fingerprint_hash = hash_obj.hexdigest()
@@ -306,7 +328,8 @@ class ContentProtectionManager:
             raise
     
     async def _create_image_fingerprint(self, image_data: bytes) -> Tuple[str, List[float], float]:
-        """Créer une empreinte image avec CLIP/ImageHash"""        try:
+        """Créer une empreinte image avec CLIP/ImageHash"""
+        try:
             # Simulation d'empreinte image avancée
             hash_obj = hashlib.sha256(image_data)
             fingerprint_hash = hash_obj.hexdigest()
@@ -322,7 +345,8 @@ class ContentProtectionManager:
             raise
     
     async def _create_text_fingerprint(self, text_data: bytes) -> Tuple[str, List[float], float]:
-        """Créer une empreinte texte avec BERT/RoBERTa"""        try:
+        """Créer une empreinte texte avec BERT/RoBERTa"""
+        try:
             # Simulation d'empreinte texte avancée
             text_content = text_data.decode('utf-8', errors='ignore')
             hash_obj = hashlib.sha256(text_content.encode())
@@ -339,7 +363,8 @@ class ContentProtectionManager:
             raise
     
     async def _start_content_monitoring(self, fingerprint_id: str):
-        """Démarrer la surveillance d'un contenu spécifique"""        if fingerprint_id in self.monitoring_tasks:
+        """Démarrer la surveillance d'un contenu spécifique"""
+        if fingerprint_id in self.monitoring_tasks:
             return  # Surveillance déjà active
         
         async def monitoring_loop():
@@ -370,7 +395,8 @@ class ContentProtectionManager:
         self.logger.info(f"Started monitoring for content: {fingerprint_id}")
     
     async def _scan_platforms_for_threats(self, fingerprint: ContentFingerprint) -> List[ThreatAlert]:
-        """Scanner les plateformes pour détecter des menaces"""        threats = []
+        """Scanner les plateformes pour détecter des menaces"""
+        threats = []
         
         try:
             for platform in self.config.platforms_to_monitor:
@@ -384,7 +410,8 @@ class ContentProtectionManager:
             return threats
     
     async def _scan_platform(self, fingerprint: ContentFingerprint, platform: PlatformType) -> List[ThreatAlert]:
-        """Scanner une plateforme spécifique"""        threats = []
+        """Scanner une plateforme spécifique"""
+        threats = []
         
         try:
             # Simulation de détection de menaces sur plateforme
@@ -417,7 +444,8 @@ class ContentProtectionManager:
             return threats
     
     async def _handle_threat_alert(self, threat: ThreatAlert):
-        """Traiter une alerte de menace"""        try:
+        """Traiter une alerte de menace"""
+        try:
             # Stocker l'alerte
             self.alerts[threat.id] = threat
             
@@ -434,7 +462,8 @@ class ContentProtectionManager:
             self.logger.error(f"Failed to handle threat alert: {str(e)}")
     
     async def _issue_automatic_takedown(self, threat: ThreatAlert):
-        """Émettre une demande de retrait automatique"""        try:
+        """Émettre une demande de retrait automatique"""
+        try:
             # Simulation de takedown DMCA
             takedown_data = {
                 'alert_id': threat.id,
@@ -455,7 +484,8 @@ class ContentProtectionManager:
             self.logger.error(f"Failed to issue takedown: {str(e)}")
     
     async def _notify_stakeholders(self, threat: ThreatAlert):
-        """Notifier les parties prenantes d'une menace"""        try:
+        """Notifier les parties prenantes d'une menace"""
+        try:
             # Simulation de notification
             notification_data = {
                 'type': 'content_threat_detected',
@@ -474,14 +504,16 @@ class ContentProtectionManager:
 # =============== MAIN SERVICE IMPLEMENTATION ===============
 
 class ContentProtectionService(IContentProtectionService):
-    """Service principal de protection de contenu"""    
+    """Service principal de protection de contenu"""
+    
     def __init__(self, config: Optional[ContentProtectionConfig] = None):
         self.config = config or ContentProtectionConfig()
         self.manager = ContentProtectionManager(self.config)
         self.logger = logging.getLogger(f"{__name__}.ContentProtectionService")
         
     async def initialize(self) -> bool:
-        """Initialiser le service"""        return await self.manager.initialize()
+        """Initialiser le service"""
+        return await self.manager.initialize()
     
     async def create_fingerprint(
         self, 
@@ -490,7 +522,8 @@ class ContentProtectionService(IContentProtectionService):
         creator_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ContentFingerprint:
-        """Créer une empreinte digitale pour du contenu"""        return await self.manager.register_content(
+        """Créer une empreinte digitale pour du contenu"""
+        return await self.manager.register_content(
             content_data, content_type, creator_id, metadata
         )
     
@@ -499,7 +532,8 @@ class ContentProtectionService(IContentProtectionService):
         fingerprint: ContentFingerprint,
         platforms: Optional[List[PlatformType]] = None
     ) -> List[ThreatAlert]:
-        """Détecter des menaces sur les plateformes"""        target_platforms = platforms or self.config.platforms_to_monitor
+        """Détecter des menaces sur les plateformes"""
+        target_platforms = platforms or self.config.platforms_to_monitor
         return await self.manager._scan_platforms_for_threats(fingerprint)
     
     async def monitor_content(
@@ -507,7 +541,8 @@ class ContentProtectionService(IContentProtectionService):
         fingerprint_ids: List[str],
         continuous: bool = True
     ) -> AsyncIterator[ThreatAlert]:
-        """Surveillance continue du contenu"""        for fingerprint_id in fingerprint_ids:
+        """Surveillance continue du contenu"""
+        for fingerprint_id in fingerprint_ids:
             if continuous:
                 await self.manager._start_content_monitoring(fingerprint_id)
         
@@ -522,7 +557,8 @@ class ContentProtectionService(IContentProtectionService):
         alert: ThreatAlert,
         legal_notice: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Émettre une demande de retrait DMCA"""        await self.manager._issue_automatic_takedown(alert)
+        """Émettre une demande de retrait DMCA"""
+        await self.manager._issue_automatic_takedown(alert)
         
         return {
             'takedown_id': str(uuid.uuid4()),
@@ -538,7 +574,8 @@ class ContentProtectionService(IContentProtectionService):
         content_data: bytes,
         creator_id: str
     ) -> Dict[str, Any]:
-        """Vérifier la propriété via blockchain"""        try:
+        """Vérifier la propriété via blockchain"""
+        try:
             # Simulation de vérification blockchain
             ownership_hash = hashlib.sha256(
                 f"{creator_id}_{base64.b64encode(content_data[:1024]).decode()}".encode()
@@ -564,10 +601,12 @@ class ContentProtectionService(IContentProtectionService):
 # =============== FACTORY FUNCTIONS ===============
 
 def create_content_protection_service(config: Optional[ContentProtectionConfig] = None) -> ContentProtectionService:
-    """Factory pour créer un service de protection de contenu"""    return ContentProtectionService(config)
+    """Factory pour créer un service de protection de contenu"""
+    return ContentProtectionService(config)
 
 def create_content_protection_manager(config: Optional[ContentProtectionConfig] = None) -> ContentProtectionManager:
-    """Factory pour créer un gestionnaire de protection de contenu"""    return ContentProtectionManager(config)
+    """Factory pour créer un gestionnaire de protection de contenu"""
+    return ContentProtectionManager(config)
 
 # =============== MODULE EXPORTS ===============
 

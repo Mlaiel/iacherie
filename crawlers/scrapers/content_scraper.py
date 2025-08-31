@@ -10,7 +10,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 ⚠️ CRITICAL LEGAL WARNING ⚠️
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
-"""import asyncio
+"""
+import asyncio
 import hashlib
 import mimetypes
 import re
@@ -34,7 +35,8 @@ import json
 
 @dataclass
 class ContentResult:
-    """Structured content extraction result."""    url: str
+    """Structured content extraction result."""
+    url: str
     title: str
     content: str
     summary: str
@@ -57,7 +59,8 @@ class ContentResult:
 
 @dataclass
 class MediaContent:
-    """Media content information."""    url: str
+    """Media content information."""
+    url: str
     type: str  # image, video, audio
     title: str
     description: str
@@ -68,7 +71,8 @@ class MediaContent:
     metadata: Dict[str, Any]
 
 class ContentScraper:
-    """    Advanced content extraction and analysis scraper.
+    """
+    Advanced content extraction and analysis scraper.
     
     Features:
     - Multi-engine content extraction
@@ -78,14 +82,16 @@ class ContentScraper:
     - Readability analysis
     - Content fingerprinting
     - Duplicate detection
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.goose = Goose()
         self.extraction_engines = ['trafilatura', 'newspaper', 'goose', 'beautifulsoup']
         
     def extract_content(self, url: str, html: str) -> ContentResult:
-        """Extract content using multiple engines with fallback."""        results = {}
+        """Extract content using multiple engines with fallback."""
+        results = {}
         
         # Try each extraction engine
         for engine in self.extraction_engines:
@@ -106,7 +112,8 @@ class ContentScraper:
         return self._combine_extraction_results(url, html, results)
         
     def _extract_with_trafilatura(self, html: str, url: str) -> Dict[str, Any]:
-        """Extract content using Trafilatura."""        content = trafilatura.extract(
+        """Extract content using Trafilatura."""
+        content = trafilatura.extract(
             html,
             include_comments=False,
             include_tables=True,
@@ -127,7 +134,8 @@ class ContentScraper:
         }
         
     def _extract_with_newspaper(self, url: str) -> Dict[str, Any]:
-        """Extract content using Newspaper3k."""        try:
+        """Extract content using Newspaper3k."""
+        try:
             article = newspaper.Article(url)
             article.download()
             article.parse()
@@ -149,7 +157,8 @@ class ContentScraper:
             return {}
             
     def _extract_with_goose(self, html: str) -> Dict[str, Any]:
-        """Extract content using Goose3."""        try:
+        """Extract content using Goose3."""
+        try:
             article = self.goose.extract(raw_html=html)
             
             return {
@@ -168,7 +177,8 @@ class ContentScraper:
             return {}
             
     def _extract_with_beautifulsoup(self, html: str, url: str) -> Dict[str, Any]:
-        """Extract content using BeautifulSoup."""        soup = BeautifulSoup(html, 'html.parser')
+        """Extract content using BeautifulSoup."""
+        soup = BeautifulSoup(html, 'html.parser')
         
         # Remove script and style elements
         for script in soup(["script", "style", "nav", "header", "footer", "aside"]):
@@ -235,7 +245,8 @@ class ContentScraper:
         }
         
     def _combine_extraction_results(self, url: str, html: str, results: Dict[str, Any]) -> ContentResult:
-        """Combine results from multiple extraction engines."""        # Choose best title
+        """Combine results from multiple extraction engines."""
+        # Choose best title
         title = (
             results.get('trafilatura', {}).get('title') or
             results.get('newspaper', {}).get('title') or
@@ -335,7 +346,8 @@ class ContentScraper:
         )
         
     def _detect_language(self, text: str) -> str:
-        """Detect content language."""        try:
+        """Detect content language."""
+        try:
             if len(text) > 50:
                 detected = langdetect.detect(text)
                 # Validate detected language
@@ -346,7 +358,8 @@ class ContentScraper:
         return 'unknown'
     
     def _analyze_sentiment(self, text: str) -> float:
-        """Analyze sentiment of content text."""        try:
+        """Analyze sentiment of content text."""
+        try:
             # Simple sentiment analysis using TextBlob
             from textblob import TextBlob
             
@@ -372,11 +385,13 @@ class ContentScraper:
         return 0.0  # Neutral sentiment
         
     def _calculate_reading_time(self, word_count: int) -> int:
-        """Calculate estimated reading time in minutes."""        words_per_minute = 200
+        """Calculate estimated reading time in minutes."""
+        words_per_minute = 200
         return max(1, word_count // words_per_minute)
         
     def _calculate_readability(self, text: str) -> float:
-        """Calculate readability score."""        try:
+        """Calculate readability score."""
+        try:
             if len(text) > 100:
                 # Use Flesch Reading Ease score (0-100, higher is easier)
                 score = textstat.flesch_reading_ease(text)
@@ -400,7 +415,8 @@ class ContentScraper:
         return 50.0  # Default medium readability
         
     def _generate_summary(self, content: str, max_sentences: int = 3) -> str:
-        """Generate simple extractive summary."""        sentences = re.split(r'[.!?]+', content)
+        """Generate simple extractive summary."""
+        sentences = re.split(r'[.!?]+', content)
         sentences = [s.strip() for s in sentences if len(s.strip()) > 20]
         
         if len(sentences) <= max_sentences:
@@ -421,7 +437,8 @@ class ContentScraper:
         return '. '.join(top_sentences) + '.'
         
     def _generate_fingerprint(self, content: str) -> str:
-        """Generate content fingerprint for similarity detection."""        # Normalize content
+        """Generate content fingerprint for similarity detection."""
+        # Normalize content
         normalized = re.sub(r'\s+', ' ', content.lower().strip())
         
         # Create hash
@@ -429,7 +446,8 @@ class ContentScraper:
         
     def _calculate_quality_score(self, content: str, title: str, 
                                 word_count: int, readability: float) -> float:
-        """Calculate content quality score (0-100)."""        score = 0
+        """Calculate content quality score (0-100)."""
+        score = 0
         
         # Content length score (30 points)
         if word_count >= 300:
@@ -465,7 +483,8 @@ class ContentScraper:
         return min(100, score)
         
     def _extract_tags(self, content: str) -> List[str]:
-        """Extract potential tags from content."""        # Simple keyword extraction
+        """Extract potential tags from content."""
+        # Simple keyword extraction
         words = re.findall(r'\b[A-Za-z]{3,}\b', content.lower())
         word_freq = {}
         
@@ -478,7 +497,8 @@ class ContentScraper:
         return [word for word, freq in sorted_words[:10] if freq >= 2]
         
     def _detect_content_type(self, html: str) -> str:
-        """Detect content type from HTML structure."""        soup = BeautifulSoup(html, 'html.parser')
+        """Detect content type from HTML structure."""
+        soup = BeautifulSoup(html, 'html.parser')
         
         # Check for common content types
         if soup.find('article'):
@@ -495,7 +515,8 @@ class ContentScraper:
             return 'webpage'
             
     def _extract_metadata(self, html: str) -> Dict[str, Any]:
-        """Extract comprehensive metadata from HTML."""        soup = BeautifulSoup(html, 'html.parser')
+        """Extract comprehensive metadata from HTML."""
+        soup = BeautifulSoup(html, 'html.parser')
         metadata = {}
         
         # Meta tags
@@ -521,7 +542,8 @@ class ContentScraper:
         return metadata
         
     def analyze_media_content(self, url: str) -> Optional[MediaContent]:
-        """Analyze media content (images, videos, audio)."""        try:
+        """Analyze media content (images, videos, audio)."""
+        try:
             response = requests.head(url, timeout=10)
             content_type = response.headers.get('content-type', '')
             content_length = response.headers.get('content-length')
@@ -560,7 +582,8 @@ class ContentScraper:
             
     def detect_duplicate_content(self, content1: str, content2: str, 
                                threshold: float = 0.8) -> bool:
-        """Detect if two content pieces are duplicates."""        # Simple similarity check using character overlap
+        """Detect if two content pieces are duplicates."""
+        # Simple similarity check using character overlap
         if not content1 or not content2:
             return False
             
@@ -584,7 +607,8 @@ class ContentScraper:
         return similarity >= threshold
         
     def extract_contact_info(self, content: str) -> Dict[str, List[str]]:
-        """Extract contact information from content."""        contact_info = {
+        """Extract contact information from content."""
+        contact_info = {
             'emails': [],
             'phones': [],
             'urls': [],

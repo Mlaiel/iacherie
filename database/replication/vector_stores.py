@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. Any unauthorized use, modification,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Set, Union
 from datetime import datetime, timedelta
@@ -25,7 +26,8 @@ from .config import ReplicationConfig
 
 
 class VectorStoreReplicationHandler:
-    """    Vector store replication handler for multiple vector database systems.
+    """
+    Vector store replication handler for multiple vector database systems.
     
     Supports replication for:
     - FAISS (Facebook AI Similarity Search)
@@ -40,14 +42,17 @@ class VectorStoreReplicationHandler:
     - Incremental vector updates
     - Conflict resolution for vector data
     - Performance monitoring
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any], replication_config: ReplicationConfig):
-        """        Initialize vector store replication handler.
+        """
+        Initialize vector store replication handler.
         
         Args:
             config: Vector store specific configuration
             replication_config: Global replication configuration
-        """        self.config = config
+        """
+        self.config = config
         self.replication_config = replication_config
         self.logger = logging.getLogger(f"{__name__}.VectorStoreReplicationHandler")
         
@@ -99,11 +104,13 @@ class VectorStoreReplicationHandler:
         self.logger.info(f"VectorStoreReplicationHandler initialized for {self.store_type}")
     
     async def initialize(self) -> bool:
-        """        Initialize vector store replication connections and configuration.
+        """
+        Initialize vector store replication connections and configuration.
         
         Returns:
             bool: True if initialization successful
-        """        try:
+        """
+        try:
             self.logger.info("Initializing vector store replication handler...")
             
             # Initialize primary store
@@ -126,7 +133,8 @@ class VectorStoreReplicationHandler:
             return False
     
     async def _initialize_primary_store(self) -> None:
-        """Initialize primary vector store connection"""        try:
+        """Initialize primary vector store connection"""
+        try:
             if self.store_type == "faiss":
                 await self._initialize_faiss()
             elif self.store_type == "pinecone":
@@ -145,7 +153,8 @@ class VectorStoreReplicationHandler:
             raise
     
     async def _initialize_faiss(self) -> None:
-        """Initialize FAISS vector store"""        try:
+        """Initialize FAISS vector store"""
+        try:
             # Create FAISS index based on configuration
             if self.index_type == "IVFFlat":
                 # Create IVF (Inverted File) index
@@ -182,7 +191,8 @@ class VectorStoreReplicationHandler:
             raise
     
     async def _initialize_pinecone(self) -> None:
-        """Initialize Pinecone vector store"""        try:
+        """Initialize Pinecone vector store"""
+        try:
             import pinecone
             
             api_key = self.config.get("api_key")
@@ -217,7 +227,8 @@ class VectorStoreReplicationHandler:
             raise
     
     async def _initialize_chroma(self) -> None:
-        """Initialize Chroma vector store"""        try:
+        """Initialize Chroma vector store"""
+        try:
             import chromadb
             
             # Create Chroma client
@@ -248,7 +259,8 @@ class VectorStoreReplicationHandler:
             raise
     
     async def _initialize_weaviate(self) -> None:
-        """Initialize Weaviate vector store"""        try:
+        """Initialize Weaviate vector store"""
+        try:
             import weaviate
             
             url = self.config.get("url", "http://localhost:8080")
@@ -276,7 +288,8 @@ class VectorStoreReplicationHandler:
             raise
     
     async def _initialize_secondary_stores(self) -> None:
-        """Initialize secondary vector store connections"""        secondary_configs = self.config.get("secondaries", [])
+        """Initialize secondary vector store connections"""
+        secondary_configs = self.config.get("secondaries", [])
         
         for idx, secondary_config in enumerate(secondary_configs):
             try:
@@ -298,7 +311,8 @@ class VectorStoreReplicationHandler:
                 self.logger.warning(f"Failed to initialize secondary store {idx}: {e}")
     
     async def _create_faiss_index(self, config: Dict[str, Any]) -> faiss.Index:
-        """Create FAISS index from configuration"""        # Similar to _initialize_faiss but for secondary stores
+        """Create FAISS index from configuration"""
+        # Similar to _initialize_faiss but for secondary stores
         dimension = config.get("dimension", self.dimension)
         index_type = config.get("index_type", "IndexFlatL2")
         
@@ -312,7 +326,8 @@ class VectorStoreReplicationHandler:
         return index
     
     async def _create_pinecone_client(self, config: Dict[str, Any]):
-        """Create Pinecone client from configuration"""        import pinecone
+        """Create Pinecone client from configuration"""
+        import pinecone
         
         api_key = config.get("api_key")
         environment = config.get("environment", "us-east1-gcp")
@@ -322,7 +337,8 @@ class VectorStoreReplicationHandler:
         return pinecone.Index(index_name)
     
     async def _load_existing_indices(self) -> None:
-        """Load existing vector indices from backup"""        try:
+        """Load existing vector indices from backup"""
+        try:
             backup_files = list(Path(self.backup_path).glob("*.faiss"))
             
             if backup_files and self.store_type == "faiss":
@@ -359,7 +375,8 @@ class VectorStoreReplicationHandler:
             self.logger.error(f"Failed to load existing indices: {e}")
     
     async def _setup_monitoring(self) -> None:
-        """Setup vector store replication monitoring"""        self.is_monitoring = True
+        """Setup vector store replication monitoring"""
+        self.is_monitoring = True
         self.sync_task = asyncio.create_task(self._periodic_sync())
         self.logger.info("Vector store replication monitoring started")
     
@@ -369,7 +386,8 @@ class VectorStoreReplicationHandler:
         target_config: Dict[str, Any], 
         mode: str = "backup_sync"
     ) -> bool:
-        """        Start vector store replication process.
+        """
+        Start vector store replication process.
         
         Args:
             source_config: Source vector store configuration
@@ -378,7 +396,8 @@ class VectorStoreReplicationHandler:
             
         Returns:
             bool: True if replication started successfully
-        """        try:
+        """
+        try:
             self.logger.info(f"Starting vector store replication in {mode} mode")
             
             if mode == "backup_sync":
@@ -400,7 +419,8 @@ class VectorStoreReplicationHandler:
         source_config: Dict[str, Any], 
         target_config: Dict[str, Any]
     ) -> bool:
-        """Start backup-based synchronization"""        try:
+        """Start backup-based synchronization"""
+        try:
             # Create initial backup
             backup_file = await self._create_backup()
             
@@ -426,7 +446,8 @@ class VectorStoreReplicationHandler:
         source_config: Dict[str, Any], 
         target_config: Dict[str, Any]
     ) -> bool:
-        """Start real-time synchronization"""        try:
+        """Start real-time synchronization"""
+        try:
             # Real-time sync not directly supported by FAISS
             # We'll use incremental sync with shorter intervals
             self.sync_frequency = 60  # 1 minute for real-time feel
@@ -445,7 +466,8 @@ class VectorStoreReplicationHandler:
         source_config: Dict[str, Any], 
         target_config: Dict[str, Any]
     ) -> bool:
-        """Start incremental synchronization"""        try:
+        """Start incremental synchronization"""
+        try:
             # Track changes for incremental sync
             self.incremental_sync = True
             
@@ -460,7 +482,8 @@ class VectorStoreReplicationHandler:
             return False
     
     async def _create_backup(self) -> Optional[str]:
-        """Create backup of current vector index"""        try:
+        """Create backup of current vector index"""
+        try:
             timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
             backup_file = os.path.join(self.backup_path, f"vector_index_{timestamp}.faiss")
             
@@ -512,7 +535,8 @@ class VectorStoreReplicationHandler:
             return None
     
     async def _export_pinecone_vectors(self) -> Dict[str, Any]:
-        """Export vectors from Pinecone for backup"""        try:
+        """Export vectors from Pinecone for backup"""
+        try:
             # Pinecone doesn't support full export, so we'll track inserted vectors
             # This is a simplified implementation
             vectors = {}
@@ -531,7 +555,8 @@ class VectorStoreReplicationHandler:
             return {}
     
     async def _periodic_sync(self) -> None:
-        """Periodic synchronization task"""        while self.is_monitoring:
+        """Periodic synchronization task"""
+        while self.is_monitoring:
             try:
                 await asyncio.sleep(self.sync_frequency)
                 
@@ -554,7 +579,8 @@ class VectorStoreReplicationHandler:
                 self.metrics["error_count"] += 1
     
     async def _sync_backup_to_store(self, backup_file: str, store_name: str, store: Any) -> None:
-        """Sync backup to specific store"""        try:
+        """Sync backup to specific store"""
+        try:
             if backup_file.endswith('.gz'):
                 # Decompress first
                 temp_file = backup_file.replace('.gz', '')
@@ -593,7 +619,8 @@ class VectorStoreReplicationHandler:
             self.logger.error(f"Failed to sync backup to {store_name}: {e}")
     
     def _get_vector_count(self) -> int:
-        """Get current vector count from primary store"""        try:
+        """Get current vector count from primary store"""
+        try:
             if self.store_type == "faiss" and self.faiss_index:
                 return self.faiss_index.ntotal
             elif self.store_type == "pinecone" and self.pinecone_client:
@@ -607,7 +634,8 @@ class VectorStoreReplicationHandler:
             return 0
     
     async def _cleanup_old_backups(self) -> None:
-        """Clean up old backup files"""        try:
+        """Clean up old backup files"""
+        try:
             backup_files = list(Path(self.backup_path).glob("vector_index_*.faiss*"))
             
             # Keep only the last N backups
@@ -636,14 +664,16 @@ class VectorStoreReplicationHandler:
             self.logger.error(f"Failed to cleanup old backups: {e}")
     
     async def stop_replication(self, graceful: bool = True) -> bool:
-        """        Stop vector store replication.
+        """
+        Stop vector store replication.
         
         Args:
             graceful: Whether to perform graceful shutdown
             
         Returns:
             bool: True if stopped successfully
-        """        try:
+        """
+        try:
             self.logger.info(f"Stopping vector store replication (graceful={graceful})")
             
             # Stop monitoring
@@ -671,11 +701,13 @@ class VectorStoreReplicationHandler:
             return False
     
     async def pause_replication(self) -> bool:
-        """        Pause vector store replication.
+        """
+        Pause vector store replication.
         
         Returns:
             bool: True if paused successfully
-        """        try:
+        """
+        try:
             self.logger.info("Pausing vector store replication")
             
             # Cancel sync task but keep monitoring
@@ -691,11 +723,13 @@ class VectorStoreReplicationHandler:
             return False
     
     async def resume_replication(self) -> bool:
-        """        Resume vector store replication.
+        """
+        Resume vector store replication.
         
         Returns:
             bool: True if resumed successfully
-        """        try:
+        """
+        try:
             self.logger.info("Resuming vector store replication")
             
             # Restart sync task
@@ -710,14 +744,16 @@ class VectorStoreReplicationHandler:
             return False
     
     async def trigger_sync(self, force: bool = False) -> bool:
-        """        Trigger manual synchronization.
+        """
+        Trigger manual synchronization.
         
         Args:
             force: Whether to force synchronization
             
         Returns:
             bool: True if sync triggered successfully
-        """        try:
+        """
+        try:
             self.logger.info(f"Triggering vector store sync (force={force})")
             
             start_time = datetime.utcnow()
@@ -743,14 +779,16 @@ class VectorStoreReplicationHandler:
             return False
     
     async def prepare_maintenance(self, duration: timedelta) -> bool:
-        """        Prepare for maintenance mode.
+        """
+        Prepare for maintenance mode.
         
         Args:
             duration: Expected maintenance duration
             
         Returns:
             bool: True if preparation successful
-        """        try:
+        """
+        try:
             self.logger.info(f"Preparing vector store for maintenance (duration: {duration})")
             
             # Create backup before maintenance
@@ -771,11 +809,13 @@ class VectorStoreReplicationHandler:
             return False
     
     async def exit_maintenance(self) -> bool:
-        """        Exit maintenance mode.
+        """
+        Exit maintenance mode.
         
         Returns:
             bool: True if exit successful
-        """        try:
+        """
+        try:
             self.logger.info("Exiting vector store maintenance mode")
             
             # Resume replication
@@ -792,11 +832,13 @@ class VectorStoreReplicationHandler:
             return False
     
     async def get_replication_metrics(self) -> Dict[str, Any]:
-        """        Get comprehensive replication metrics.
+        """
+        Get comprehensive replication metrics.
         
         Returns:
             Dict containing replication metrics
-        """        try:
+        """
+        try:
             # Update current metrics
             self.metrics["vectors_count"] = self._get_vector_count()
             
@@ -824,11 +866,13 @@ class VectorStoreReplicationHandler:
             return self.metrics
     
     async def check_health(self) -> Dict[str, Any]:
-        """        Check vector store replication health.
+        """
+        Check vector store replication health.
         
         Returns:
             Dict containing health status
-        """        health = {
+        """
+        health = {
             "healthy": False,
             "store_available": False,
             "backups_recent": False,
@@ -894,11 +938,13 @@ class VectorStoreReplicationHandler:
         return health
     
     async def get_status(self) -> Dict[str, Any]:
-        """        Get detailed vector store replication status.
+        """
+        Get detailed vector store replication status.
         
         Returns:
             Dict containing detailed status information
-        """        try:
+        """
+        try:
             status = {
                 "handler_type": "vector_store",
                 "store_type": self.store_type,
@@ -928,7 +974,8 @@ class VectorStoreReplicationHandler:
             }
     
     async def shutdown(self) -> None:
-        """Shutdown vector store replication handler"""        try:
+        """Shutdown vector store replication handler"""
+        try:
             self.logger.info("Shutting down vector store replication handler...")
             
             # Stop monitoring

@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import uuid
@@ -57,7 +58,8 @@ from ...integrations.legal_apis import LegalAPIClient
 logger = logging.getLogger(__name__)
 
 class PolicyUpdateType(Enum):
-    """Types of policy updates"""    NEW_REGULATION = "new_regulation"
+    """Types of policy updates"""
+    NEW_REGULATION = "new_regulation"
     AMENDMENT = "amendment"
     ENFORCEMENT_CHANGE = "enforcement_change"
     GUIDANCE_UPDATE = "guidance_update"
@@ -65,14 +67,16 @@ class PolicyUpdateType(Enum):
     REVOCATION = "revocation"
 
 class PolicyPriority(Enum):
-    """Priority levels for policy updates"""    LOW = "low"
+    """Priority levels for policy updates"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 class JurisdictionScope(Enum):
-    """Jurisdictional scope of regulations"""    GLOBAL = "global"
+    """Jurisdictional scope of regulations"""
+    GLOBAL = "global"
     REGIONAL = "regional"
     NATIONAL = "national"
     STATE = "state"
@@ -80,7 +84,8 @@ class JurisdictionScope(Enum):
 
 @dataclass
 class RegulatorySource:
-    """Regulatory information source configuration"""    id: str
+    """Regulatory information source configuration"""
+    id: str
     name: str
     url: str
     source_type: str  # rss, api, scraper, webhook
@@ -94,7 +99,8 @@ class RegulatorySource:
 
 @dataclass
 class PolicyUpdate:
-    """Regulatory policy update record"""    id: str
+    """Regulatory policy update record"""
+    id: str
     source_id: str
     title: str
     description: str
@@ -114,7 +120,8 @@ class PolicyUpdate:
 
 @dataclass
 class ComplianceAlert:
-    """Compliance alert for policy changes"""    id: str
+    """Compliance alert for policy changes"""
+    id: str
     policy_update_id: str
     alert_type: str
     severity: PolicyPriority
@@ -128,13 +135,16 @@ class ComplianceAlert:
     acknowledged_at: Optional[datetime] = None
 
 class RegulatoryMonitor:
-    """    Advanced regulatory monitoring system for compliance automation
+    """
+    Advanced regulatory monitoring system for compliance automation
     
     Monitors regulatory sources, tracks policy changes, analyzes impact,
     and generates compliance alerts for proactive compliance management.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize regulatory monitor with comprehensive source management"""        self.config = config or {}
+        """Initialize regulatory monitor with comprehensive source management"""
+        self.config = config or {}
         self.encryption = ContentEncryption()
         self.performance_monitor = PerformanceMonitor()
         self.legal_api_client = LegalAPIClient()
@@ -164,7 +174,8 @@ class RegulatoryMonitor:
         logger.info("RegulatoryMonitor initialized successfully")
     
     async def initialize_regulatory_sources(self):
-        """Initialize comprehensive regulatory monitoring sources"""        try:
+        """Initialize comprehensive regulatory monitoring sources"""
+        try:
             # GDPR Sources
             gdpr_sources = [
                 RegulatorySource(
@@ -292,7 +303,8 @@ class RegulatoryMonitor:
             raise ComplianceError(f"Source initialization failed: {e}")
     
     async def _monitor_source(self, source: RegulatorySource):
-        """Continuously monitor a regulatory source for updates"""        while source.is_active:
+        """Continuously monitor a regulatory source for updates"""
+        while source.is_active:
             try:
                 logger.debug(f"Checking regulatory source: {source.name}")
                 
@@ -317,7 +329,8 @@ class RegulatoryMonitor:
                 await asyncio.sleep(300)  # 5 minute retry delay
     
     async def _fetch_source_updates(self, source: RegulatorySource) -> List[PolicyUpdate]:
-        """Fetch updates from a regulatory source"""        try:
+        """Fetch updates from a regulatory source"""
+        try:
             updates = []
             
             if source.source_type == "rss":
@@ -343,7 +356,8 @@ class RegulatoryMonitor:
             return []
     
     async def _fetch_rss_updates(self, source: RegulatorySource) -> List[PolicyUpdate]:
-        """Fetch updates from RSS feeds"""        try:
+        """Fetch updates from RSS feeds"""
+        try:
             response = await self.http_client.get(source.url)
             response.raise_for_status()
             
@@ -401,7 +415,8 @@ class RegulatoryMonitor:
             return []
     
     async def _fetch_api_updates(self, source: RegulatorySource) -> List[PolicyUpdate]:
-        """Fetch updates from API endpoints"""        try:
+        """Fetch updates from API endpoints"""
+        try:
             headers = {}
             if source.credentials:
                 # Add authentication headers
@@ -461,7 +476,8 @@ class RegulatoryMonitor:
             return []
     
     async def _fetch_scraper_updates(self, source: RegulatorySource) -> List[PolicyUpdate]:
-        """Fetch updates by scraping web pages"""        try:
+        """Fetch updates by scraping web pages"""
+        try:
             response = await self.http_client.get(source.url)
             response.raise_for_status()
             
@@ -530,7 +546,8 @@ class RegulatoryMonitor:
             return []
     
     async def _analyze_update_content(self, title: str, description: str) -> Dict[str, Any]:
-        """Analyze policy update content to determine type, priority, and impact"""        content = (title + " " + description).lower()
+        """Analyze policy update content to determine type, priority, and impact"""
+        content = (title + " " + description).lower()
         
         analysis = {
             'update_type': PolicyUpdateType.GUIDANCE_UPDATE,
@@ -624,7 +641,8 @@ class RegulatoryMonitor:
         return analysis
     
     async def _process_policy_update(self, update: PolicyUpdate):
-        """Process and store a policy update"""        try:
+        """Process and store a policy update"""
+        try:
             # Store the update
             self.policy_updates[update.id] = update
             
@@ -647,7 +665,8 @@ class RegulatoryMonitor:
             logger.error(f"Error processing policy update {update.id}: {e}")
     
     async def _generate_compliance_alert(self, update: PolicyUpdate) -> ComplianceAlert:
-        """Generate compliance alert for policy update"""        alert_id = str(uuid.uuid4())
+        """Generate compliance alert for policy update"""
+        alert_id = str(uuid.uuid4())
         
         # Determine affected entities (this would be more sophisticated in production)
         affected_entities = []
@@ -705,7 +724,8 @@ class RegulatoryMonitor:
         return alert
     
     async def _is_duplicate_update(self, update: PolicyUpdate) -> bool:
-        """Check if update is a duplicate"""        # Simple duplicate detection based on title similarity
+        """Check if update is a duplicate"""
+        # Simple duplicate detection based on title similarity
         for existing_id, existing_update in self.policy_updates.items():
             if existing_update.source_id == update.source_id:
                 # Check title similarity
@@ -718,7 +738,8 @@ class RegulatoryMonitor:
         return False
     
     def _calculate_similarity(self, text1: str, text2: str) -> float:
-        """Calculate text similarity (simple implementation)"""        words1 = set(text1.split())
+        """Calculate text similarity (simple implementation)"""
+        words1 = set(text1.split())
         words2 = set(text2.split())
         
         if not words1 and not words2:
@@ -732,7 +753,8 @@ class RegulatoryMonitor:
         return intersection / union if union > 0 else 0.0
     
     async def _cache_source_status(self, source: RegulatorySource):
-        """Cache source status in Redis"""        if not self.redis_client:
+        """Cache source status in Redis"""
+        if not self.redis_client:
             return
         
         try:
@@ -752,7 +774,8 @@ class RegulatoryMonitor:
             logger.warning(f"Failed to cache source status: {e}")
     
     async def _cache_policy_update(self, update: PolicyUpdate):
-        """Cache policy update in Redis"""        if not self.redis_client:
+        """Cache policy update in Redis"""
+        if not self.redis_client:
             return
         
         try:
@@ -773,7 +796,8 @@ class RegulatoryMonitor:
             logger.warning(f"Failed to cache policy update: {e}")
     
     async def _send_policy_alert_notifications(self, alert: ComplianceAlert):
-        """Send notifications for compliance alerts"""        try:
+        """Send notifications for compliance alerts"""
+        try:
             # This would integrate with notification systems (email, Slack, Teams, etc.)
             logger.info(f"Sending policy alert notifications for: {alert.message}")
             
@@ -799,7 +823,8 @@ class RegulatoryMonitor:
     async def get_recent_updates(self, frameworks: Optional[List[str]] = None,
                                priority: Optional[PolicyPriority] = None,
                                days: int = 7) -> List[PolicyUpdate]:
-        """Get recent policy updates with optional filtering"""        try:
+        """Get recent policy updates with optional filtering"""
+        try:
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=days)
             filtered_updates = []
             
@@ -840,7 +865,8 @@ class RegulatoryMonitor:
             return []
     
     async def get_active_alerts(self, acknowledged: bool = False) -> List[ComplianceAlert]:
-        """Get active compliance alerts"""        try:
+        """Get active compliance alerts"""
+        try:
             active_alerts = []
             
             for alert in self.compliance_alerts.values():
@@ -868,7 +894,8 @@ class RegulatoryMonitor:
             return []
     
     async def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> bool:
-        """Acknowledge a compliance alert"""        try:
+        """Acknowledge a compliance alert"""
+        try:
             alert = self.compliance_alerts.get(alert_id)
             if not alert:
                 return False
@@ -897,7 +924,8 @@ class RegulatoryMonitor:
             return False
     
     async def add_custom_source(self, source: RegulatorySource) -> bool:
-        """Add a custom regulatory source"""        try:
+        """Add a custom regulatory source"""
+        try:
             self.sources[source.id] = source
             
             # Start monitoring if active
@@ -913,7 +941,8 @@ class RegulatoryMonitor:
             return False
     
     async def stop_monitoring(self):
-        """Stop all monitoring tasks"""        for task_id, task in self.monitoring_tasks.items():
+        """Stop all monitoring tasks"""
+        for task_id, task in self.monitoring_tasks.items():
             task.cancel()
             try:
                 await task
@@ -927,15 +956,18 @@ class RegulatoryMonitor:
 
 
 class PolicyTracker:
-    """    Advanced policy change tracking and analysis system
-    """    
+    """
+    Advanced policy change tracking and analysis system
+    """
+    
     def __init__(self, regulatory_monitor: RegulatoryMonitor):
         self.monitor = regulatory_monitor
         self.policy_history: Dict[str, List[PolicyUpdate]] = {}
         self.trend_analysis_cache: Dict[str, Any] = {}
     
     async def track_policy_changes(self, framework: str, lookback_days: int = 90) -> Dict[str, Any]:
-        """Track and analyze policy changes for a specific framework"""        try:
+        """Track and analyze policy changes for a specific framework"""
+        try:
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=lookback_days)
             
             # Get relevant updates

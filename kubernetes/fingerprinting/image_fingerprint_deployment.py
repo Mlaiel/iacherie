@@ -12,7 +12,8 @@ This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without written permission
 will result in legal action under German and international copyright law.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 
 class ImageHashingAlgorithm(Enum):
-    """Image hashing algorithms"""    PERCEPTUAL = "perceptual"
+    """Image hashing algorithms"""
+    PERCEPTUAL = "perceptual"
     AVERAGE = "average"
     DIFFERENCE = "difference"
     WAVELET = "wavelet"
@@ -41,7 +43,8 @@ class ImageHashingAlgorithm(Enum):
 
 
 class SimilarityMetric(Enum):
-    """Similarity calculation metrics"""    HAMMING_DISTANCE = "hamming_distance"
+    """Similarity calculation metrics"""
+    HAMMING_DISTANCE = "hamming_distance"
     COSINE_SIMILARITY = "cosine_similarity"
     EUCLIDEAN_DISTANCE = "euclidean_distance"
     STRUCTURAL_SIMILARITY = "structural_similarity"
@@ -49,7 +52,8 @@ class SimilarityMetric(Enum):
 
 
 class ProcessingPipeline(Enum):
-    """Image processing pipelines"""    REAL_TIME = "real_time"
+    """Image processing pipelines"""
+    REAL_TIME = "real_time"
     BATCH_PROCESSING = "batch_processing"
     STREAMING = "streaming"
     HIGH_ACCURACY = "high_accuracy"
@@ -58,7 +62,8 @@ class ProcessingPipeline(Enum):
 
 @dataclass
 class ImageFingerprintConfig:
-    """Image fingerprinting deployment configuration"""    deployment_name: str
+    """Image fingerprinting deployment configuration"""
+    deployment_name: str
     namespace: str = "ia-influencer-protection"
     algorithms: List[ImageHashingAlgorithm] = None
     similarity_metrics: List[SimilarityMetric] = None
@@ -98,7 +103,8 @@ class ImageFingerprintConfig:
 
 
 class ImageFingerprintDeployment:
-    """    Enterprise image fingerprinting deployment system
+    """
+    Enterprise image fingerprinting deployment system
     
     Deploys and manages image content protection infrastructure:
     - CLIP-based deep learning embeddings
@@ -107,13 +113,16 @@ class ImageFingerprintDeployment:
     - Vector database for fast matching
     - Auto-scaling and load balancing
     - Comprehensive monitoring and metrics
-    """    
+    """
+    
     def __init__(self, config: ImageFingerprintConfig):
-        """        Initialize image fingerprinting deployment
+        """
+        Initialize image fingerprinting deployment
         
         Args:
             config: Deployment configuration
-        """        self.config = config
+        """
+        self.config = config
         self.deployment_status = "initializing"
         self.services_deployed = {}
         self.vector_db_ready = False
@@ -122,7 +131,8 @@ class ImageFingerprintDeployment:
         self._initialize_clients()
     
     def _initialize_clients(self) -> None:
-        """Initialize Kubernetes, Docker, and Redis clients"""        try:
+        """Initialize Kubernetes, Docker, and Redis clients"""
+        try:
             # Kubernetes client
             config.load_incluster_config()
             self.k8s_apps_v1 = client.AppsV1Api()
@@ -149,11 +159,13 @@ class ImageFingerprintDeployment:
             raise
     
     async def deploy_image_fingerprinting_infrastructure(self) -> Dict[str, Any]:
-        """        Deploy complete image fingerprinting infrastructure
+        """
+        Deploy complete image fingerprinting infrastructure
         
         Returns:
             Infrastructure deployment summary
-        """        try:
+        """
+        try:
             self.deployment_status = "deploying_infrastructure"
             logger.info("Deploying image fingerprinting infrastructure")
             
@@ -230,7 +242,8 @@ class ImageFingerprintDeployment:
             raise
     
     async def _ensure_namespace(self) -> None:
-        """Create namespace if it doesn't exist"""        try:
+        """Create namespace if it doesn't exist"""
+        try:
             self.k8s_core_v1.read_namespace(name=self.config.namespace)
         except client.exceptions.ApiException as e:
             if e.status == 404:
@@ -249,7 +262,8 @@ class ImageFingerprintDeployment:
                 logger.info(f"Created namespace: {self.config.namespace}")
     
     async def _deploy_storage_infrastructure(self) -> Dict[str, Any]:
-        """Deploy storage infrastructure for image fingerprints"""        # Create persistent volume claim for image storage
+        """Deploy storage infrastructure for image fingerprints"""
+        # Create persistent volume claim for image storage
         pvc_spec = {
             "apiVersion": "v1",
             "kind": "PersistentVolumeClaim",
@@ -351,7 +365,8 @@ class ImageFingerprintDeployment:
         }
     
     async def _deploy_vector_database(self) -> Dict[str, Any]:
-        """Deploy FAISS vector database for similarity search"""        faiss_deployment = {
+        """Deploy FAISS vector database for similarity search"""
+        faiss_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -442,7 +457,8 @@ class ImageFingerprintDeployment:
         }
     
     async def _deploy_fingerprint_cache(self) -> Dict[str, Any]:
-        """Deploy Redis for fingerprint caching"""        redis_deployment = {
+        """Deploy Redis for fingerprint caching"""
+        redis_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -509,7 +525,8 @@ class ImageFingerprintDeployment:
         }
     
     async def _deploy_clip_service(self) -> Dict[str, Any]:
-        """Deploy CLIP-based image embedding service"""        clip_deployment = {
+        """Deploy CLIP-based image embedding service"""
+        clip_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -606,7 +623,8 @@ class ImageFingerprintDeployment:
         }
     
     async def _deploy_traditional_hash_service(self) -> Dict[str, Any]:
-        """Deploy traditional image hashing service"""        hash_deployment = {
+        """Deploy traditional image hashing service"""
+        hash_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -683,7 +701,8 @@ class ImageFingerprintDeployment:
         }
     
     async def _deploy_similarity_service(self) -> Dict[str, Any]:
-        """Deploy similarity calculation service"""        similarity_deployment = {
+        """Deploy similarity calculation service"""
+        similarity_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -761,7 +780,8 @@ class ImageFingerprintDeployment:
         }
     
     async def _deploy_processing_pipeline(self) -> Dict[str, Any]:
-        """Deploy image processing pipeline orchestrator"""        pipeline_deployment = {
+        """Deploy image processing pipeline orchestrator"""
+        pipeline_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -841,7 +861,8 @@ class ImageFingerprintDeployment:
         }
     
     async def _deploy_api_gateway(self) -> Dict[str, Any]:
-        """Deploy API gateway for image fingerprinting services"""        gateway_deployment = {
+        """Deploy API gateway for image fingerprinting services"""
+        gateway_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -920,7 +941,8 @@ class ImageFingerprintDeployment:
         }
     
     async def _deploy_monitoring_stack(self) -> Dict[str, Any]:
-        """Deploy monitoring and metrics collection"""        monitor_deployment = {
+        """Deploy monitoring and metrics collection"""
+        monitor_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -988,7 +1010,8 @@ class ImageFingerprintDeployment:
         }
     
     async def _setup_autoscaling(self, deployment_name: str) -> None:
-        """Set up horizontal pod autoscaling"""        hpa_spec = {
+        """Set up horizontal pod autoscaling"""
+        hpa_spec = {
             "apiVersion": "autoscaling/v2",
             "kind": "HorizontalPodAutoscaler",
             "metadata": {
@@ -1036,7 +1059,8 @@ class ImageFingerprintDeployment:
         logger.info(f"Set up autoscaling for {deployment_name}")
     
     async def _configure_networking(self) -> None:
-        """Configure networking and security policies"""        # Network policy for image fingerprinting
+        """Configure networking and security policies"""
+        # Network policy for image fingerprinting
         network_policy = {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "NetworkPolicy",
@@ -1072,7 +1096,8 @@ class ImageFingerprintDeployment:
         logger.info("Configured networking policies for image fingerprinting")
     
     async def _validate_deployment(self) -> bool:
-        """Validate the deployment"""        try:
+        """Validate the deployment"""
+        try:
             essential_services = [
                 "image-clip-service", "image-hash-service", "image-similarity-service",
                 "image-processing-pipeline", "image-fingerprint-api", "image-vector-db"
@@ -1107,7 +1132,8 @@ class ImageFingerprintDeployment:
             return False
     
     async def get_deployment_status(self) -> Dict[str, Any]:
-        """Get deployment status and metrics"""        try:
+        """Get deployment status and metrics"""
+        try:
             services_status = {}
             
             # Check all services
@@ -1144,7 +1170,8 @@ class ImageFingerprintDeployment:
             return {"error": str(e)}
     
     async def _cleanup_failed_deployment(self) -> None:
-        """Clean up failed deployment"""        try:
+        """Clean up failed deployment"""
+        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.config.namespace)
             logger.info("Cleaned up failed image fingerprinting deployment")
@@ -1152,7 +1179,8 @@ class ImageFingerprintDeployment:
             logger.error(f"Cleanup failed: {e}")
     
     async def cleanup(self) -> None:
-        """Clean up the entire deployment"""        try:
+        """Clean up the entire deployment"""
+        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.config.namespace)
             

@@ -6,7 +6,8 @@ quality detection, metadata enrichment, and real-time playlist monitoring.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import aiofiles
 import json
@@ -43,7 +44,8 @@ logger = logging.getLogger(__name__)
 
 
 class AudioQuality(str, Enum):
-    """Audio quality enumeration"""    FLAC = "flac"
+    """Audio quality enumeration"""
+    FLAC = "flac"
     LOSSLESS = "lossless"
     HIGH = "320"
     STANDARD = "256"
@@ -52,7 +54,8 @@ class AudioQuality(str, Enum):
 
 
 class ContentType(str, Enum):
-    """Content type enumeration"""    TRACK = "track"
+    """Content type enumeration"""
+    TRACK = "track"
     ALBUM = "album"
     PLAYLIST = "playlist"
     ARTIST = "artist"
@@ -61,14 +64,16 @@ class ContentType(str, Enum):
 
 
 class ExtractionMode(str, Enum):
-    """Extraction mode enumeration"""    FAST = "fast"
+    """Extraction mode enumeration"""
+    FAST = "fast"
     COMPLETE = "complete"
     METADATA_ONLY = "metadata_only"
     PREMIUM = "premium"
 
 
 class TrackFormat(BaseModel):
-    """Track format data model"""    format_id: str = Field(..., description="Unique format identifier")
+    """Track format data model"""
+    format_id: str = Field(..., description="Unique format identifier")
     url: str = Field(..., description="Direct audio URL")
     quality: AudioQuality = Field(..., description="Audio quality")
     bitrate: int = Field(..., description="Audio bitrate in kbps")
@@ -88,14 +93,16 @@ class TrackFormat(BaseModel):
 
 
 class AlbumArt(BaseModel):
-    """Album artwork data model"""    url: str = Field(..., description="Album art URL")
+    """Album artwork data model"""
+    url: str = Field(..., description="Album art URL")
     width: int = Field(..., description="Image width")
     height: int = Field(..., description="Image height")
     size: str = Field(..., description="Size category (small, medium, large, xl)")
 
 
 class TrackMetadata(BaseModel):
-    """Complete track metadata model"""    track_id: str = Field(..., description="Unique track identifier")
+    """Complete track metadata model"""
+    track_id: str = Field(..., description="Unique track identifier")
     title: str = Field(..., description="Track title")
     artist_name: str = Field(..., description="Primary artist name")
     artist_id: Optional[str] = Field(None, description="Artist unique ID")
@@ -124,7 +131,8 @@ class TrackMetadata(BaseModel):
 
 
 class AlbumMetadata(BaseModel):
-    """Album metadata model"""    album_id: str = Field(..., description="Unique album identifier")
+    """Album metadata model"""
+    album_id: str = Field(..., description="Unique album identifier")
     title: str = Field(..., description="Album title")
     artist_name: str = Field(..., description="Primary artist name")
     artist_id: Optional[str] = Field(None, description="Artist unique ID")
@@ -146,7 +154,8 @@ class AlbumMetadata(BaseModel):
 
 
 class PlaylistMetadata(BaseModel):
-    """Playlist metadata model"""    playlist_id: str = Field(..., description="Unique playlist identifier")
+    """Playlist metadata model"""
+    playlist_id: str = Field(..., description="Unique playlist identifier")
     title: str = Field(..., description="Playlist title")
     description: Optional[str] = Field(None, description="Playlist description")
     creator: Optional[str] = Field(None, description="Playlist creator")
@@ -168,7 +177,8 @@ class PlaylistMetadata(BaseModel):
 
 
 class ArtistMetadata(BaseModel):
-    """Artist metadata model"""    artist_id: str = Field(..., description="Unique artist identifier")
+    """Artist metadata model"""
+    artist_id: str = Field(..., description="Unique artist identifier")
     name: str = Field(..., description="Artist name")
     real_name: Optional[str] = Field(None, description="Real name")
     country: Optional[str] = Field(None, description="Artist country")
@@ -188,7 +198,8 @@ class ArtistMetadata(BaseModel):
 
 
 class PodcastMetadata(BaseModel):
-    """Podcast metadata model"""    podcast_id: str = Field(..., description="Unique podcast identifier")
+    """Podcast metadata model"""
+    podcast_id: str = Field(..., description="Unique podcast identifier")
     title: str = Field(..., description="Podcast title")
     description: Optional[str] = Field(None, description="Podcast description")
     language: Optional[str] = Field(None, description="Podcast language")
@@ -206,7 +217,8 @@ class PodcastMetadata(BaseModel):
 
 
 class RadioMetadata(BaseModel):
-    """Radio station metadata model"""    radio_id: str = Field(..., description="Unique radio identifier")
+    """Radio station metadata model"""
+    radio_id: str = Field(..., description="Unique radio identifier")
     title: str = Field(..., description="Radio station title")
     description: Optional[str] = Field(None, description="Radio description")
     country: Optional[str] = Field(None, description="Radio country")
@@ -222,7 +234,8 @@ class RadioMetadata(BaseModel):
 
 
 class ExtractionResult(BaseModel):
-    """Complete extraction result model"""    success: bool = Field(..., description="Extraction success status")
+    """Complete extraction result model"""
+    success: bool = Field(..., description="Extraction success status")
     content_type: ContentType = Field(..., description="Content type")
     extraction_time: float = Field(..., description="Extraction duration")
     track_metadata: Optional[TrackMetadata] = Field(None, description="Track metadata")
@@ -243,7 +256,8 @@ class ExtractionResult(BaseModel):
 
 @dataclass
 class ExtractionConfig:
-    """Extraction configuration"""    mode: ExtractionMode = ExtractionMode.COMPLETE
+    """Extraction configuration"""
+    mode: ExtractionMode = ExtractionMode.COMPLETE
     quality_preference: List[AudioQuality] = field(default_factory=lambda: [
         AudioQuality.FLAC, AudioQuality.HIGH, AudioQuality.STANDARD
     ])
@@ -264,7 +278,8 @@ class ExtractionConfig:
 
 
 class DeezerEngine:
-    """    Ultra-advanced Deezer music extraction engine
+    """
+    Ultra-advanced Deezer music extraction engine
     
     Features:
     - Multi-quality audio extraction with format selection
@@ -277,9 +292,11 @@ class DeezerEngine:
     - Proxy rotation and IP management
     - Audio quality assessment and filtering
     - Live radio support with stream monitoring
-    """    
+    """
+    
     def __init__(self, config: ExtractionConfig = None):
-        """Initialize Deezer extraction engine"""        self.config = config or ExtractionConfig()
+        """Initialize Deezer extraction engine"""
+        self.config = config or ExtractionConfig()
         self.session: Optional[aiohttp.ClientSession] = None
         self.selenium_driver: Optional[webdriver.Chrome] = None
         self.base_url = "https://www.deezer.com"
@@ -311,7 +328,8 @@ class DeezerEngine:
         self._setup_logging()
     
     def _setup_logging(self):
-        """Configure logging for extraction engine"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Configure logging for extraction engine"""
+        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         if not self.logger.handlers:
             handler = logging.StreamHandler()
             formatter = logging.Formatter(
@@ -322,7 +340,8 @@ class DeezerEngine:
             self.logger.setLevel(logging.INFO)
     
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session with optimized settings"""        if not self.session or self.session.closed:
+        """Get or create HTTP session with optimized settings"""
+        if not self.session or self.session.closed:
             timeout = aiohttp.ClientTimeout(total=self.config.timeout)
             connector = aiohttp.TCPConnector(
                 limit=100,
@@ -357,7 +376,8 @@ class DeezerEngine:
         return self.session
     
     def _get_selenium_driver(self) -> webdriver.Chrome:
-        """Get or create Selenium WebDriver with stealth configuration"""        if not self.selenium_driver:
+        """Get or create Selenium WebDriver with stealth configuration"""
+        if not self.selenium_driver:
             options = Options()
             if self.config.headless_browser:
                 options.add_argument('--headless')
@@ -389,10 +409,12 @@ class DeezerEngine:
         return self.selenium_driver
     
     def _is_cache_valid(self, cache_time: datetime) -> bool:
-        """Check if cached data is still valid"""        return datetime.utcnow() - cache_time < self.cache_ttl
+        """Check if cached data is still valid"""
+        return datetime.utcnow() - cache_time < self.cache_ttl
     
     def _get_cached_result(self, key: str) -> Optional[Any]:
-        """Get result from cache if valid"""        if key in self.cache:
+        """Get result from cache if valid"""
+        if key in self.cache:
             result, cache_time = self.cache[key]
             if self._is_cache_valid(cache_time):
                 self.stats['cache_hits'] += 1
@@ -402,10 +424,12 @@ class DeezerEngine:
         return None
     
     def _cache_result(self, key: str, result: Any):
-        """Cache extraction result"""        self.cache[key] = (result, datetime.utcnow())
+        """Cache extraction result"""
+        self.cache[key] = (result, datetime.utcnow())
     
     async def _rate_limit(self):
-        """Implement intelligent rate limiting"""        current_time = time.time()
+        """Implement intelligent rate limiting"""
+        current_time = time.time()
         time_since_last = current_time - self.last_request_time
         
         if time_since_last < self.config.request_delay:
@@ -415,7 +439,8 @@ class DeezerEngine:
         self.last_request_time = time.time()
     
     async def _make_request(self, url: str, **kwargs) -> aiohttp.ClientResponse:
-        """Make HTTP request with rate limiting and retry logic"""        async with self.request_semaphore:
+        """Make HTTP request with rate limiting and retry logic"""
+        async with self.request_semaphore:
             await self._rate_limit()
             
             session = await self._get_session()
@@ -445,7 +470,8 @@ class DeezerEngine:
             raise Exception(f"Failed to fetch {url} after {self.config.max_retries} attempts")
     
     def _extract_track_id(self, url: str) -> Optional[str]:
-        """Extract track ID from Deezer URL"""        patterns = [
+        """Extract track ID from Deezer URL"""
+        patterns = [
             r'deezer\.com/track/(\d+)',
             r'deezer\.com/.+/track/(\d+)',
             r'deezer\.page\.link/.*track.*?(\d+)',
@@ -459,7 +485,8 @@ class DeezerEngine:
         return None
     
     def _extract_album_id(self, url: str) -> Optional[str]:
-        """Extract album ID from Deezer URL"""        patterns = [
+        """Extract album ID from Deezer URL"""
+        patterns = [
             r'deezer\.com/album/(\d+)',
             r'deezer\.com/.+/album/(\d+)',
             r'deezer\.page\.link/.*album.*?(\d+)',
@@ -473,7 +500,8 @@ class DeezerEngine:
         return None
     
     def _extract_playlist_id(self, url: str) -> Optional[str]:
-        """Extract playlist ID from Deezer URL"""        patterns = [
+        """Extract playlist ID from Deezer URL"""
+        patterns = [
             r'deezer\.com/playlist/(\d+)',
             r'deezer\.com/.+/playlist/(\d+)',
             r'deezer\.page\.link/.*playlist.*?(\d+)',
@@ -487,7 +515,8 @@ class DeezerEngine:
         return None
     
     def _extract_artist_id(self, url: str) -> Optional[str]:
-        """Extract artist ID from Deezer URL"""        patterns = [
+        """Extract artist ID from Deezer URL"""
+        patterns = [
             r'deezer\.com/artist/(\d+)',
             r'deezer\.com/.+/artist/(\d+)',
             r'deezer\.page\.link/.*artist.*?(\d+)',
@@ -501,7 +530,8 @@ class DeezerEngine:
         return None
     
     def _extract_podcast_id(self, url: str) -> Optional[str]:
-        """Extract podcast ID from Deezer URL"""        patterns = [
+        """Extract podcast ID from Deezer URL"""
+        patterns = [
             r'deezer\.com/show/(\d+)',
             r'deezer\.com/.+/show/(\d+)',
             r'deezer\.page\.link/.*show.*?(\d+)',
@@ -515,7 +545,8 @@ class DeezerEngine:
         return None
     
     def _extract_radio_id(self, url: str) -> Optional[str]:
-        """Extract radio ID from Deezer URL"""        patterns = [
+        """Extract radio ID from Deezer URL"""
+        patterns = [
             r'deezer\.com/radio/(\d+)',
             r'deezer\.com/.+/radio/(\d+)',
             r'deezer\.page\.link/.*radio.*?(\d+)',
@@ -529,7 +560,8 @@ class DeezerEngine:
         return None
     
     def _determine_content_type(self, url: str) -> ContentType:
-        """Determine content type from URL"""        if '/track/' in url:
+        """Determine content type from URL"""
+        if '/track/' in url:
             return ContentType.TRACK
         elif '/album/' in url:
             return ContentType.ALBUM
@@ -545,7 +577,8 @@ class DeezerEngine:
             return ContentType.TRACK  # Default assumption
     
     async def _get_api_token(self) -> Optional[str]:
-        """Get API token for authenticated requests"""        if self.api_token:
+        """Get API token for authenticated requests"""
+        if self.api_token:
             return self.api_token
         
         try:
@@ -570,7 +603,8 @@ class DeezerEngine:
         return None
     
     async def _extract_track_metadata_api(self, track_id: str) -> Optional[TrackMetadata]:
-        """Extract track metadata using Deezer API"""        try:
+        """Extract track metadata using Deezer API"""
+        try:
             api_url = f"{self.api_url}/track/{track_id}"
             response = await self._make_request(api_url)
             
@@ -633,7 +667,8 @@ class DeezerEngine:
             return None
     
     def _get_cover_size(self, size: str) -> Tuple[int, int]:
-        """Get cover image dimensions for size"""        sizes = {
+        """Get cover image dimensions for size"""
+        sizes = {
             'small': (56, 56),
             'medium': (250, 250),
             'big': (500, 500),
@@ -642,7 +677,8 @@ class DeezerEngine:
         return sizes.get(size, (250, 250))
     
     async def _extract_track_formats(self, track_id: str) -> List[TrackFormat]:
-        """Extract track audio formats"""        formats = []
+        """Extract track audio formats"""
+        formats = []
         
         try:
             # Get API token
@@ -685,7 +721,8 @@ class DeezerEngine:
         return formats
     
     async def _extract_lyrics(self, track_id: str) -> Optional[str]:
-        """Extract track lyrics"""        try:
+        """Extract track lyrics"""
+        try:
             # Lyrics extraction would require additional API endpoints
             # This is a placeholder for the implementation
             lyrics_url = f"{self.api_url}/track/{track_id}/lyrics"
@@ -700,7 +737,8 @@ class DeezerEngine:
             return None
     
     async def extract_track(self, url: str) -> ExtractionResult:
-        """Extract complete track information"""        start_time = time.time()
+        """Extract complete track information"""
+        start_time = time.time()
         
         try:
             track_id = self._extract_track_id(url)
@@ -765,7 +803,8 @@ class DeezerEngine:
             )
     
     async def extract_album(self, url: str) -> ExtractionResult:
-        """Extract album information"""        start_time = time.time()
+        """Extract album information"""
+        start_time = time.time()
         
         try:
             album_id = self._extract_album_id(url)
@@ -870,7 +909,8 @@ class DeezerEngine:
             )
     
     async def extract_playlist(self, url: str) -> ExtractionResult:
-        """Extract playlist information"""        start_time = time.time()
+        """Extract playlist information"""
+        start_time = time.time()
         
         try:
             playlist_id = self._extract_playlist_id(url)
@@ -961,7 +1001,8 @@ class DeezerEngine:
             )
     
     async def extract_artist(self, url: str) -> ExtractionResult:
-        """Extract artist information"""        start_time = time.time()
+        """Extract artist information"""
+        start_time = time.time()
         
         try:
             artist_id = self._extract_artist_id(url)
@@ -1060,7 +1101,8 @@ class DeezerEngine:
             )
     
     async def extract(self, url: str) -> ExtractionResult:
-        """Universal content extraction method"""        content_type = self._determine_content_type(url)
+        """Universal content extraction method"""
+        content_type = self._determine_content_type(url)
         
         if content_type == ContentType.TRACK:
             return await self.extract_track(url)
@@ -1079,7 +1121,8 @@ class DeezerEngine:
             )
     
     async def batch_extract(self, urls: List[str]) -> List[ExtractionResult]:
-        """Extract multiple URLs concurrently"""        semaphore = asyncio.Semaphore(self.config.max_concurrent)
+        """Extract multiple URLs concurrently"""
+        semaphore = asyncio.Semaphore(self.config.max_concurrent)
         
         async def extract_with_semaphore(url: str) -> ExtractionResult:
             async with semaphore:
@@ -1089,7 +1132,8 @@ class DeezerEngine:
         return await asyncio.gather(*tasks, return_exceptions=False)
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get extraction statistics"""        uptime = (datetime.utcnow() - self.stats['start_time']).total_seconds()
+        """Get extraction statistics"""
+        uptime = (datetime.utcnow() - self.stats['start_time']).total_seconds()
         
         return {
             'uptime_seconds': uptime,
@@ -1106,11 +1150,13 @@ class DeezerEngine:
         }
     
     async def clear_cache(self):
-        """Clear extraction cache"""        self.cache.clear()
+        """Clear extraction cache"""
+        self.cache.clear()
         self.logger.info("Extraction cache cleared")
     
     async def close(self):
-        """Clean up resources"""        if self.session and not self.session.closed:
+        """Clean up resources"""
+        if self.session and not self.session.closed:
             await self.session.close()
         
         if self.selenium_driver:
@@ -1127,7 +1173,8 @@ def create_deezer_engine(
     use_selenium: bool = False,
     **kwargs
 ) -> DeezerEngine:
-    """Create and configure a DeezerEngine instance"""    
+    """Create and configure a DeezerEngine instance"""
+    
     config = ExtractionConfig(
         mode=mode,
         quality_preference=quality_preference or [AudioQuality.FLAC, AudioQuality.HIGH],
@@ -1141,7 +1188,8 @@ def create_deezer_engine(
 
 # Example usage and testing
 async def main():
-    """Example usage of DeezerEngine"""    
+    """Example usage of DeezerEngine"""
+    
     # Create engine with custom configuration
     config = ExtractionConfig(
         mode=ExtractionMode.COMPLETE,

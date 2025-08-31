@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -24,7 +25,8 @@ import json
 
 @dataclass
 class DockerImageConfig:
-    """Docker image configuration for specific services"""    name: str
+    """Docker image configuration for specific services"""
+    name: str
     tag: str
     registry: str
     dockerfile_path: str
@@ -36,7 +38,8 @@ class DockerImageConfig:
 
 @dataclass
 class DockerServiceConfig:
-    """Docker service configuration for compose"""    image: str
+    """Docker service configuration for compose"""
+    image: str
     container_name: str
     ports: List[str] = field(default_factory=list)
     volumes: List[str] = field(default_factory=list)
@@ -49,7 +52,8 @@ class DockerServiceConfig:
 
 
 class DockerConfig:
-    """    Professional Docker configuration manager for IA-Influencer Agent Platform.
+    """
+    Professional Docker configuration manager for IA-Influencer Agent Platform.
     
     Handles containerization for:
     - AI processing microservices (audio, video, image, text fingerprinting)
@@ -58,7 +62,8 @@ class DockerConfig:
     - Revenue tracking and monetization engines
     - Web crawlers and monitoring services
     - Real-time processing pipelines
-    """    
+    """
+    
     def __init__(self, environment: str = "development"):
         self.environment = environment
         self.project_name = "ia-influencer-agent"
@@ -66,7 +71,8 @@ class DockerConfig:
         self.base_images = self._get_base_images()
         
     def _get_registry_url(self) -> str:
-        """Get container registry URL based on environment"""        registry_map = {
+        """Get container registry URL based on environment"""
+        registry_map = {
             "development": "localhost:5000",
             "staging": "registry.staging.ia-influencer.com",
             "production": "registry.ia-influencer.com"
@@ -74,7 +80,8 @@ class DockerConfig:
         return registry_map.get(self.environment, "localhost:5000")
     
     def _get_base_images(self) -> Dict[str, str]:
-        """Define base images for different service types"""        return {
+        """Define base images for different service types"""
+        return {
             "python_ai": "python:3.11-slim-bullseye",
             "python_ml": "tensorflow/tensorflow:2.13.0-gpu",
             "nodejs": "node:18-alpine",
@@ -86,7 +93,8 @@ class DockerConfig:
         }
     
     def get_main_api_image_config(self) -> DockerImageConfig:
-        """Main FastAPI application image configuration"""        return DockerImageConfig(
+        """Main FastAPI application image configuration"""
+        return DockerImageConfig(
             name=f"{self.project_name}-api",
             tag=f"latest-{self.environment}",
             registry=self.registry_url,
@@ -107,7 +115,8 @@ class DockerConfig:
         )
     
     def get_ai_fingerprinting_image_config(self) -> DockerImageConfig:
-        """AI Fingerprinting service image configuration"""        return DockerImageConfig(
+        """AI Fingerprinting service image configuration"""
+        return DockerImageConfig(
             name=f"{self.project_name}-ai-fingerprinting",
             tag=f"latest-{self.environment}",
             registry=self.registry_url,
@@ -127,7 +136,8 @@ class DockerConfig:
         )
     
     def get_content_protection_image_config(self) -> DockerImageConfig:
-        """Content Protection service image configuration"""        return DockerImageConfig(
+        """Content Protection service image configuration"""
+        return DockerImageConfig(
             name=f"{self.project_name}-content-protection",
             tag=f"latest-{self.environment}",
             registry=self.registry_url,
@@ -147,7 +157,8 @@ class DockerConfig:
         )
     
     def get_monetization_engine_image_config(self) -> DockerImageConfig:
-        """Monetization Engine service image configuration"""        return DockerImageConfig(
+        """Monetization Engine service image configuration"""
+        return DockerImageConfig(
             name=f"{self.project_name}-monetization",
             tag=f"latest-{self.environment}",
             registry=self.registry_url,
@@ -166,7 +177,8 @@ class DockerConfig:
         )
     
     def get_web_crawlers_image_config(self) -> DockerImageConfig:
-        """Web Crawlers service image configuration"""        return DockerImageConfig(
+        """Web Crawlers service image configuration"""
+        return DockerImageConfig(
             name=f"{self.project_name}-web-crawlers",
             tag=f"latest-{self.environment}",
             registry=self.registry_url,
@@ -186,7 +198,8 @@ class DockerConfig:
         )
     
     def generate_compose_services(self) -> Dict[str, DockerServiceConfig]:
-        """Generate Docker Compose services configuration"""        services = {}
+        """Generate Docker Compose services configuration"""
+        services = {}
         
         # Main API Service
         services["api"] = DockerServiceConfig(
@@ -310,7 +323,8 @@ class DockerConfig:
         return services
     
     def _get_database_services(self) -> Dict[str, DockerServiceConfig]:
-        """Generate database services configuration"""        return {
+        """Generate database services configuration"""
+        return {
             "postgres": DockerServiceConfig(
                 image="postgres:15.4-alpine",
                 container_name=f"{self.project_name}-postgres-{self.environment}",
@@ -378,7 +392,8 @@ class DockerConfig:
         }
     
     def _get_infrastructure_services(self) -> Dict[str, DockerServiceConfig]:
-        """Generate infrastructure services configuration"""        return {
+        """Generate infrastructure services configuration"""
+        return {
             "nginx": DockerServiceConfig(
                 image="nginx:1.25-alpine",
                 container_name=f"{self.project_name}-nginx-{self.environment}",
@@ -427,7 +442,8 @@ class DockerConfig:
         }
     
     def generate_docker_compose_file(self, output_path: str = "./docker-compose.yml") -> None:
-        """Generate complete Docker Compose file"""        services = self.generate_compose_services()
+        """Generate complete Docker Compose file"""
+        services = self.generate_compose_services()
         
         compose_config = {
             "version": "3.8",
@@ -487,7 +503,8 @@ class DockerConfig:
             yaml.dump(compose_config, f, default_flow_style=False, sort_keys=False)
     
     def generate_dockerfile_templates(self, output_dir: str = "./docker") -> None:
-        """Generate Dockerfile templates for all services"""        dockerfiles = {
+        """Generate Dockerfile templates for all services"""
+        dockerfiles = {
             "api/Dockerfile": self._get_api_dockerfile(),
             "ai-fingerprinting/Dockerfile": self._get_ai_fingerprinting_dockerfile(),
             "content-protection/Dockerfile": self._get_content_protection_dockerfile(),
@@ -505,7 +522,8 @@ class DockerConfig:
             full_path.write_text(content)
     
     def _get_api_dockerfile(self) -> str:
-        """Generate main API Dockerfile"""        return '''# Multi-stage build for IA-Influencer Agent API
+        """Generate main API Dockerfile"""
+        return '''# Multi-stage build for IA-Influencer Agent API
 FROM python:3.11-slim-bullseye as base
 
 # Build arguments
@@ -554,7 +572,8 @@ CMD ["uvicorn", "backend.app.main:app", "--host", "0.0.0.0", "--port", "8000"]
 '''
     
     def _get_ai_fingerprinting_dockerfile(self) -> str:
-        """Generate AI Fingerprinting service Dockerfile"""        return '''# AI Fingerprinting Service with GPU support
+        """Generate AI Fingerprinting service Dockerfile"""
+        return '''# AI Fingerprinting Service with GPU support
 FROM tensorflow/tensorflow:2.13.0-gpu
 
 # Build arguments
@@ -605,7 +624,8 @@ CMD ["python", "-m", "backend.ai.fingerprinting_service"]
 '''
     
     def _get_content_protection_dockerfile(self) -> str:
-        """Generate Content Protection service Dockerfile"""        return '''# Content Protection Service
+        """Generate Content Protection service Dockerfile"""
+        return '''# Content Protection Service
 FROM python:3.11-slim-bullseye
 
 # Build arguments
@@ -650,7 +670,8 @@ CMD ["python", "-m", "backend.content_protection.protection_service"]
 '''
     
     def _get_monetization_dockerfile(self) -> str:
-        """Generate Monetization Engine service Dockerfile"""        return '''# Monetization Engine Service
+        """Generate Monetization Engine service Dockerfile"""
+        return '''# Monetization Engine Service
 FROM python:3.11-slim-bullseye
 
 # Build arguments
@@ -690,7 +711,8 @@ CMD ["python", "-m", "backend.business.monetization_service"]
 '''
     
     def _get_crawlers_dockerfile(self) -> str:
-        """Generate Web Crawlers service Dockerfile"""        return '''# Web Crawlers Service
+        """Generate Web Crawlers service Dockerfile"""
+        return '''# Web Crawlers Service
 FROM python:3.11-slim-bullseye
 
 # Build arguments
@@ -733,7 +755,8 @@ CMD ["python", "-m", "backend.integrations.crawlers.crawler_service"]
 '''
     
     def _get_nginx_config(self) -> str:
-        """Generate Nginx configuration"""        return '''# Nginx configuration for IA-Influencer Agent
+        """Generate Nginx configuration"""
+        return '''# Nginx configuration for IA-Influencer Agent
 worker_processes auto;
 error_log /var/log/nginx/error.log warn;
 pid /var/run/nginx.pid;
@@ -860,7 +883,8 @@ http {
 '''
     
     def _get_postgres_init(self) -> str:
-        """Generate PostgreSQL initialization script"""        return '''-- PostgreSQL initialization for IA-Influencer Agent
+        """Generate PostgreSQL initialization script"""
+        return '''-- PostgreSQL initialization for IA-Influencer Agent
 -- Author: Fahed Mlaiel <mlaiel@live.de>
 
 -- Create extensions
@@ -920,7 +944,8 @@ SELECT pg_reload_conf();
 '''
     
     def _get_redis_config(self) -> str:
-        """Generate Redis configuration"""        return '''# Redis configuration for IA-Influencer Agent
+        """Generate Redis configuration"""
+        return '''# Redis configuration for IA-Influencer Agent
 # Author: Fahed Mlaiel <mlaiel@live.de>
 
 # Network
@@ -968,7 +993,8 @@ notify-keyspace-events Ex
 '''
     
     def _get_mongo_config(self) -> str:
-        """Generate MongoDB configuration"""        return '''# MongoDB configuration for IA-Influencer Agent
+        """Generate MongoDB configuration"""
+        return '''# MongoDB configuration for IA-Influencer Agent
 # Author: Fahed Mlaiel <mlaiel@live.de>
 
 systemLog:
@@ -1011,7 +1037,8 @@ net:
 '''
 
     def get_build_script(self) -> str:
-        """Generate build script for all Docker images"""        return '''#!/bin/bash
+        """Generate build script for all Docker images"""
+        return '''#!/bin/bash
 # Docker build script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
 
@@ -1082,7 +1109,8 @@ echo "🎉 Docker build process completed!"
 '''
 
     def get_deployment_script(self) -> str:
-        """Generate deployment script"""        return '''#!/bin/bash
+        """Generate deployment script"""
+        return '''#!/bin/bash
 # Deployment script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
 

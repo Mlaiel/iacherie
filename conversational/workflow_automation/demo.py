@@ -15,7 +15,8 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICT
 and will result in immediate legal action under German and International copyright laws.
 
 Contact mlaiel@live.de for licensing inquiries only.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime
 from typing import Dict, Any
@@ -36,9 +37,11 @@ logger = logging.getLogger(__name__)
 
 
 async def demo_complete_music_workflow():
-    """    Demonstrate complete music content workflow:
+    """
+    Demonstrate complete music content workflow:
     Upload → AI Analysis → Protection → SEO → Collaboration → Distribution → Monetization
-    """    print("\n🎵 === MUSIC CONTENT WORKFLOW DEMO ===")
+    """
+    print("\n🎵 === MUSIC CONTENT WORKFLOW DEMO ===")
     
     # Configuration for the workflow system
     config = {
@@ -172,8 +175,10 @@ async def demo_complete_music_workflow():
 
 
 async def demo_video_content_workflow():
-    """    Demonstrate video content workflow for influencers
-    """    print("\n🎬 === VIDEO CONTENT WORKFLOW DEMO ===")
+    """
+    Demonstrate video content workflow for influencers
+    """
+    print("\n🎬 === VIDEO CONTENT WORKFLOW DEMO ===")
     
     config = {
         "automation": {"max_concurrent_workflows": 50},
@@ -238,8 +243,10 @@ async def demo_video_content_workflow():
 
 
 async def demo_batch_content_processing():
-    """    Demonstrate batch processing of multiple content pieces
-    """    print("\n📦 === BATCH CONTENT PROCESSING DEMO ===")
+    """
+    Demonstrate batch processing of multiple content pieces
+    """
+    print("\n📦 === BATCH CONTENT PROCESSING DEMO ===")
     
     # Multiple content pieces to process
     content_batch = [
@@ -310,8 +317,10 @@ async def demo_batch_content_processing():
 
 
 async def demo_system_monitoring():
-    """    Demonstrate system monitoring and health checks
-    """    print("\n🏥 === SYSTEM MONITORING DEMO ===")
+    """
+    Demonstrate system monitoring and health checks
+    """
+    print("\n🏥 === SYSTEM MONITORING DEMO ===")
     
     config = {"automation": {"monitoring_enabled": True}}
     
@@ -342,8 +351,10 @@ async def demo_system_monitoring():
 
 
 async def run_all_demos():
-    """    Run all demonstration workflows
-    """    print("🎯 === IA INFLUENCER AGENT WORKFLOW AUTOMATION DEMOS ===")
+    """
+    Run all demonstration workflows
+    """
+    print("🎯 === IA INFLUENCER AGENT WORKFLOW AUTOMATION DEMOS ===")
     print("Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer")
     print("Author: Fahed Mlaiel <mlaiel@live.de>")
     print("=" * 80)

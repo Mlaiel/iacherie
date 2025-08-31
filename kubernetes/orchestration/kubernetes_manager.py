@@ -10,7 +10,8 @@ Features:
 - Service mesh integration
 - Rolling deployments with zero downtime
 - Health monitoring and self-healing
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -30,8 +31,10 @@ from .base_manager import BaseDeploymentManager
 
 # Mock metrics collector for standalone operation
 class MetricsCollector:
-    """Mock metrics collector."""    def __init__(self):
-        """Initialize Kubernetes metrics collector with monitoring capabilities"""        self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
+    """Mock metrics collector."""
+    def __init__(self):
+        """Initialize Kubernetes metrics collector with monitoring capabilities"""
+        self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
         self.k8s_metrics = ['pod_metrics', 'node_metrics', 'service_metrics', 'ingress_metrics']
         self.collection_apis = ['metrics-server', 'prometheus', 'heapster']
         self.resource_metrics = ['cpu', 'memory', 'storage', 'network']
@@ -42,14 +45,16 @@ class MetricsCollector:
 
 
 class DeploymentStrategy(Enum):
-    """Kubernetes deployment strategies."""    ROLLING_UPDATE = "RollingUpdate"
+    """Kubernetes deployment strategies."""
+    ROLLING_UPDATE = "RollingUpdate"
     RECREATE = "Recreate"
     BLUE_GREEN = "BlueGreen"
     CANARY = "Canary"
 
 
 class ResourceType(Enum):
-    """Kubernetes resource types."""    DEPLOYMENT = "Deployment"
+    """Kubernetes resource types."""
+    DEPLOYMENT = "Deployment"
     SERVICE = "Service"
     CONFIGMAP = "ConfigMap"
     SECRET = "Secret"
@@ -61,7 +66,8 @@ class ResourceType(Enum):
 
 @dataclass
 class KubernetesResource:
-    """Kubernetes resource configuration."""    name: str
+    """Kubernetes resource configuration."""
+    name: str
     namespace: str
     resource_type: ResourceType
     spec: Dict[str, Any]
@@ -71,7 +77,8 @@ class KubernetesResource:
 
 @dataclass
 class DeploymentConfig:
-    """Deployment configuration."""    name: str
+    """Deployment configuration."""
+    name: str
     namespace: str
     image: str
     replicas: int
@@ -83,11 +90,13 @@ class DeploymentConfig:
 
 
 class KubernetesManager(BaseDeploymentManager):
-    """    Enterprise Kubernetes orchestration manager.
+    """
+    Enterprise Kubernetes orchestration manager.
     
     Manages Kubernetes clusters, deployments, and services for the
     IA Influencer Agent platform with enterprise-grade features.
-    """    def __init__(
+    """
+    def __init__(
         self,
         cluster_config: Optional[str] = None,
         namespace: str = "ia-influencer-agent",
@@ -119,7 +128,8 @@ class KubernetesManager(BaseDeploymentManager):
         )
 
     def _init_kubernetes_clients(self) -> None:
-        """Initialize Kubernetes API clients."""        try:
+        """Initialize Kubernetes API clients."""
+        try:
             if self.cluster_config:
                 config.load_kube_config(config_file=self.cluster_config)
             else:
@@ -138,7 +148,8 @@ class KubernetesManager(BaseDeploymentManager):
             raise
 
     async def create_namespace(self, namespace: str, labels: Optional[Dict[str, str]] = None) -> bool:
-        """        Create Kubernetes namespace.
+        """
+        Create Kubernetes namespace.
         
         Args:
             namespace: Namespace name
@@ -146,7 +157,8 @@ class KubernetesManager(BaseDeploymentManager):
             
         Returns:
             True if successful, False otherwise
-        """        try:
+        """
+        try:
             namespace_metadata = client.V1ObjectMeta(
                 name=namespace,
                 labels=labels or {}
@@ -169,14 +181,16 @@ class KubernetesManager(BaseDeploymentManager):
                 return False
 
     async def deploy_application(self, config: DeploymentConfig) -> bool:
-        """        Deploy application to Kubernetes cluster.
+        """
+        Deploy application to Kubernetes cluster.
         
         Args:
             config: Deployment configuration
             
         Returns:
             True if deployment successful, False otherwise
-        """        try:
+        """
+        try:
             # Ensure namespace exists
             await self.create_namespace(config.namespace)
             
@@ -226,7 +240,8 @@ class KubernetesManager(BaseDeploymentManager):
             return False
 
     async def _create_deployment(self, config: DeploymentConfig) -> bool:
-        """Create Kubernetes deployment."""        try:
+        """Create Kubernetes deployment."""
+        try:
             # Container specification
             container = client.V1Container(
                 name=config.name,
@@ -291,7 +306,8 @@ class KubernetesManager(BaseDeploymentManager):
             return False
 
     async def _create_service(self, config: DeploymentConfig) -> bool:
-        """Create Kubernetes service."""        try:
+        """Create Kubernetes service."""
+        try:
             service_spec = client.V1ServiceSpec(
                 selector={"app": config.name},
                 ports=[
@@ -328,7 +344,8 @@ class KubernetesManager(BaseDeploymentManager):
             return False
 
     async def _create_ingress(self, config: DeploymentConfig) -> bool:
-        """Create Kubernetes ingress."""        try:
+        """Create Kubernetes ingress."""
+        try:
             ingress_spec = client.V1IngressSpec(
                 rules=[
                     client.V1IngressRule(
@@ -378,7 +395,8 @@ class KubernetesManager(BaseDeploymentManager):
             return False
 
     async def scale_deployment(self, deployment_name: str, namespace: str, replicas: int) -> bool:
-        """        Scale deployment replicas.
+        """
+        Scale deployment replicas.
         
         Args:
             deployment_name: Name of the deployment
@@ -387,7 +405,8 @@ class KubernetesManager(BaseDeploymentManager):
             
         Returns:
             True if scaling successful, False otherwise
-        """        try:
+        """
+        try:
             # Patch deployment with new replica count
             body = {"spec": {"replicas": replicas}}
             
@@ -405,7 +424,8 @@ class KubernetesManager(BaseDeploymentManager):
             return False
 
     async def rolling_update(self, deployment_name: str, namespace: str, new_image: str) -> bool:
-        """        Perform rolling update of deployment.
+        """
+        Perform rolling update of deployment.
         
         Args:
             deployment_name: Name of the deployment
@@ -414,7 +434,8 @@ class KubernetesManager(BaseDeploymentManager):
             
         Returns:
             True if update successful, False otherwise
-        """        try:
+        """
+        try:
             # Get current deployment
             deployment = self.v1_apps.read_namespaced_deployment(
                 name=deployment_name,
@@ -450,7 +471,8 @@ class KubernetesManager(BaseDeploymentManager):
             return False
 
     async def get_deployment_status(self, deployment_name: str, namespace: str) -> Dict[str, Any]:
-        """        Get deployment status and metrics.
+        """
+        Get deployment status and metrics.
         
         Args:
             deployment_name: Name of the deployment
@@ -458,7 +480,8 @@ class KubernetesManager(BaseDeploymentManager):
             
         Returns:
             Deployment status information
-        """        try:
+        """
+        try:
             deployment = self.v1_apps.read_namespaced_deployment(
                 name=deployment_name,
                 namespace=namespace
@@ -516,7 +539,8 @@ class KubernetesManager(BaseDeploymentManager):
             return {}
 
     async def delete_deployment(self, deployment_name: str, namespace: str) -> bool:
-        """        Delete deployment and associated resources.
+        """
+        Delete deployment and associated resources.
         
         Args:
             deployment_name: Name of the deployment
@@ -524,7 +548,8 @@ class KubernetesManager(BaseDeploymentManager):
             
         Returns:
             True if deletion successful, False otherwise
-        """        try:
+        """
+        try:
             # Delete deployment
             self.v1_apps.delete_namespaced_deployment(
                 name=deployment_name,
@@ -568,7 +593,8 @@ class KubernetesManager(BaseDeploymentManager):
         max_replicas: int = 10,
         target_cpu_utilization: int = 70
     ) -> bool:
-        """        Create Horizontal Pod Autoscaler.
+        """
+        Create Horizontal Pod Autoscaler.
         
         Args:
             deployment_name: Name of the deployment
@@ -579,7 +605,8 @@ class KubernetesManager(BaseDeploymentManager):
             
         Returns:
             True if HPA created successfully, False otherwise
-        """        try:
+        """
+        try:
             hpa_spec = client.V1HorizontalPodAutoscalerSpec(
                 scale_target_ref=client.V1CrossVersionObjectReference(
                     api_version="apps/v1",
@@ -614,7 +641,8 @@ class KubernetesManager(BaseDeploymentManager):
             return False
 
     def _create_probe(self, probe_config: Optional[Dict[str, Any]]) -> Optional[client.V1Probe]:
-        """Create health check probe."""        if not probe_config:
+        """Create health check probe."""
+        if not probe_config:
             return None
             
         return client.V1Probe(
@@ -629,7 +657,8 @@ class KubernetesManager(BaseDeploymentManager):
         )
 
     def _create_volumes(self, volumes_config: List[Dict[str, Any]]) -> List[client.V1Volume]:
-        """Create volume specifications."""        volumes = []
+        """Create volume specifications."""
+        volumes = []
         for volume_config in volumes_config:
             if volume_config["type"] == "configMap":
                 volumes.append(client.V1Volume(
@@ -648,7 +677,8 @@ class KubernetesManager(BaseDeploymentManager):
         return volumes
 
     def _create_deployment_strategy(self, strategy: DeploymentStrategy) -> client.V1DeploymentStrategy:
-        """Create deployment strategy."""        if strategy == DeploymentStrategy.ROLLING_UPDATE:
+        """Create deployment strategy."""
+        if strategy == DeploymentStrategy.ROLLING_UPDATE:
             return client.V1DeploymentStrategy(
                 type="RollingUpdate",
                 rolling_update=client.V1RollingUpdateDeployment(
@@ -660,10 +690,12 @@ class KubernetesManager(BaseDeploymentManager):
             return client.V1DeploymentStrategy(type="Recreate")
 
     def _requires_ingress(self, config: DeploymentConfig) -> bool:
-        """Check if deployment requires ingress."""        return config.name in ["api-gateway", "frontend", "monitoring-dashboard"]
+        """Check if deployment requires ingress."""
+        return config.name in ["api-gateway", "frontend", "monitoring-dashboard"]
 
     async def _wait_for_deployment_ready(self, deployment_name: str, namespace: str, timeout: int = 600) -> bool:
-        """Wait for deployment to be ready."""        start_time = datetime.now()
+        """Wait for deployment to be ready."""
+        start_time = datetime.now()
         while (datetime.now() - start_time).total_seconds() < timeout:
             try:
                 deployment = self.v1_apps.read_namespaced_deployment(
@@ -683,7 +715,8 @@ class KubernetesManager(BaseDeploymentManager):
         return False
 
     async def _wait_for_rollout_complete(self, deployment_name: str, namespace: str, timeout: int = 600) -> bool:
-        """Wait for rollout to complete."""        start_time = datetime.now()
+        """Wait for rollout to complete."""
+        start_time = datetime.now()
         while (datetime.now() - start_time).total_seconds() < timeout:
             try:
                 deployment = self.v1_apps.read_namespaced_deployment(
@@ -705,11 +738,13 @@ class KubernetesManager(BaseDeploymentManager):
         return False
 
     async def get_cluster_resources(self) -> Dict[str, Any]:
-        """        Get cluster resource usage and capacity.
+        """
+        Get cluster resource usage and capacity.
         
         Returns:
             Cluster resource information
-        """        try:
+        """
+        try:
             nodes = self.v1_core.list_node()
             pods = self.v1_core.list_pod_for_all_namespaces()
             
@@ -742,23 +777,27 @@ class KubernetesManager(BaseDeploymentManager):
             return {}
 
     def _is_node_ready(self, node: client.V1Node) -> bool:
-        """Check if node is ready."""        for condition in (node.status.conditions or []):
+        """Check if node is ready."""
+        for condition in (node.status.conditions or []):
             if condition.type == "Ready" and condition.status == "True":
                 return True
         return False
 
     def _get_node_status(self, node: client.V1Node) -> str:
-        """Get node status."""        for condition in (node.status.conditions or []):
+        """Get node status."""
+        for condition in (node.status.conditions or []):
             if condition.type == "Ready":
                 return "Ready" if condition.status == "True" else "NotReady"
         return "Unknown"
 
     async def cleanup_resources(self) -> bool:
-        """        Cleanup orphaned resources and failed deployments.
+        """
+        Cleanup orphaned resources and failed deployments.
         
         Returns:
             True if cleanup successful, False otherwise
-        """        try:
+        """
+        try:
             # Get all namespaces managed by the platform
             namespaces = self.v1_core.list_namespace(
                 label_selector="managed-by=ia-influencer-agent"

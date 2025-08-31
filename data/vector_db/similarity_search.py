@@ -9,7 +9,8 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
 ATTENTION: Ce code est protégé par les droits d'auteur.
 Toute reproduction, distribution ou modification non autorisée est strictement interdite.
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any, Union, Set
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class SearchType(Enum):
-    """Types of similarity searches."""    EXACT_MATCH = "exact_match"
+    """Types of similarity searches."""
+    EXACT_MATCH = "exact_match"
     DUPLICATE_DETECTION = "duplicate_detection"
     SIMILAR_CONTENT = "similar_content"
     COLLABORATION_MATCH = "collaboration_match"
@@ -38,7 +40,8 @@ class SearchType(Enum):
 
 
 class RankingStrategy(Enum):
-    """Ranking strategies for search results."""    SIMILARITY_ONLY = "similarity_only"
+    """Ranking strategies for search results."""
+    SIMILARITY_ONLY = "similarity_only"
     METADATA_BOOST = "metadata_boost"
     TEMPORAL_DECAY = "temporal_decay"
     POPULARITY_BOOST = "popularity_boost"
@@ -48,7 +51,8 @@ class RankingStrategy(Enum):
 
 @dataclass
 class SearchConfig:
-    """Configuration for similarity searches."""    search_type: SearchType
+    """Configuration for similarity searches."""
+    search_type: SearchType
     ranking_strategy: RankingStrategy
     similarity_threshold: float = 0.7
     max_results: int = 50
@@ -61,7 +65,8 @@ class SearchConfig:
 
 @dataclass
 class DuplicateAnalysis:
-    """Analysis results for duplicate content detection."""    is_duplicate: bool
+    """Analysis results for duplicate content detection."""
+    is_duplicate: bool
     confidence_score: float
     similarity_breakdown: Dict[str, float]
     evidence: List[str]
@@ -71,7 +76,8 @@ class DuplicateAnalysis:
 
 @dataclass
 class CollaborationMatch:
-    """Results for collaboration matching."""    creator_id: str
+    """Results for collaboration matching."""
+    creator_id: str
     compatibility_score: float
     shared_interests: List[str]
     complementary_skills: List[str]
@@ -82,7 +88,8 @@ class CollaborationMatch:
 
 @dataclass
 class ContentRecommendation:
-    """Content recommendation result."""    content_id: str
+    """Content recommendation result."""
+    content_id: str
     recommendation_score: float
     recommendation_type: str
     reasoning: List[str]
@@ -92,11 +99,13 @@ class ContentRecommendation:
 
 
 class AdvancedSimilarityAnalyzer:
-    """    Advanced analyzer for deep similarity assessment.
+    """
+    Advanced analyzer for deep similarity assessment.
     
     Provides content-specific similarity analysis with detailed breakdowns
     and confidence scoring.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.content_weights = config.get('content_weights', {
@@ -128,7 +137,8 @@ class AdvancedSimilarityAnalyzer:
     
     def analyze_audio_similarity(self, result: VectorSearchResult, 
                                query_metadata: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze audio-specific similarity components."""        try:
+        """Analyze audio-specific similarity components."""
+        try:
             similarity_breakdown = {}
             
             # Base similarity score
@@ -165,7 +175,8 @@ class AdvancedSimilarityAnalyzer:
     
     def analyze_image_similarity(self, result: VectorSearchResult,
                                query_metadata: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze image-specific similarity components."""        try:
+        """Analyze image-specific similarity components."""
+        try:
             similarity_breakdown = {}
             
             # Base similarity score
@@ -209,7 +220,8 @@ class AdvancedSimilarityAnalyzer:
     
     def analyze_text_similarity(self, result: VectorSearchResult,
                               query_metadata: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze text-specific similarity components."""        try:
+        """Analyze text-specific similarity components."""
+        try:
             similarity_breakdown = {}
             
             # Base similarity score
@@ -244,7 +256,8 @@ class AdvancedSimilarityAnalyzer:
     
     def analyze_video_similarity(self, result: VectorSearchResult,
                                query_metadata: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze video-specific similarity components."""        try:
+        """Analyze video-specific similarity components."""
+        try:
             similarity_breakdown = {}
             
             # Base similarity score
@@ -286,11 +299,13 @@ class AdvancedSimilarityAnalyzer:
 
 
 class DuplicateDetectionEngine:
-    """    Specialized engine for detecting duplicate and near-duplicate content.
+    """
+    Specialized engine for detecting duplicate and near-duplicate content.
     
     Uses multiple similarity metrics and heuristics to determine if content
     is a duplicate with high confidence.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.analyzer = AdvancedSimilarityAnalyzer(config)
@@ -314,7 +329,8 @@ class DuplicateDetectionEngine:
     async def analyze_potential_duplicate(self, result: VectorSearchResult,
                                        content_type: str,
                                        query_metadata: Dict[str, Any]) -> DuplicateAnalysis:
-        """Analyze if a search result is a potential duplicate."""        try:
+        """Analyze if a search result is a potential duplicate."""
+        try:
             # Get content-specific similarity breakdown
             if content_type == 'audio':
                 similarity_breakdown = self.analyzer.analyze_audio_similarity(result, query_metadata)
@@ -384,7 +400,8 @@ class DuplicateDetectionEngine:
     def _calculate_confidence_score(self, similarity_breakdown: Dict[str, float],
                                   content_type: str, query_metadata: Dict[str, Any],
                                   result_metadata: Dict[str, Any]) -> float:
-        """Calculate confidence score for duplicate detection."""        try:
+        """Calculate confidence score for duplicate detection."""
+        try:
             confidence_factors = []
             
             # Base similarity confidence
@@ -434,7 +451,8 @@ class DuplicateDetectionEngine:
     
     def _calculate_metadata_consistency(self, query_meta: Dict[str, Any],
                                       result_meta: Dict[str, Any]) -> float:
-        """Calculate how consistent metadata is between query and result."""        try:
+        """Calculate how consistent metadata is between query and result."""
+        try:
             if not query_meta or not result_meta:
                 return 0.5  # Neutral when no metadata
             
@@ -475,7 +493,8 @@ class DuplicateDetectionEngine:
     def _generate_evidence(self, similarity_breakdown: Dict[str, float],
                          content_type: str, is_duplicate: bool,
                          is_near_duplicate: bool) -> List[str]:
-        """Generate human-readable evidence for duplicate detection."""        evidence = []
+        """Generate human-readable evidence for duplicate detection."""
+        evidence = []
         
         overall_sim = similarity_breakdown.get('overall', 0)
         evidence.append(f"Overall similarity: {overall_sim:.3f}")
@@ -518,7 +537,8 @@ class DuplicateDetectionEngine:
     
     def _generate_recommendation(self, is_duplicate: bool, is_near_duplicate: bool,
                                confidence_score: float, content_type: str) -> str:
-        """Generate recommendation based on duplicate analysis."""        if is_duplicate and confidence_score > 0.9:
+        """Generate recommendation based on duplicate analysis."""
+        if is_duplicate and confidence_score > 0.9:
             return f"TAKE ACTION: High confidence {content_type} duplicate detected. Consider filing DMCA takedown or contact platform."
         elif is_duplicate and confidence_score > 0.7:
             return f"REVIEW REQUIRED: Likely {content_type} duplicate detected. Manual verification recommended before action."
@@ -531,11 +551,13 @@ class DuplicateDetectionEngine:
 
 
 class CollaborationMatchingEngine:
-    """    Engine for finding compatible creators for collaboration opportunities.
+    """
+    Engine for finding compatible creators for collaboration opportunities.
     
     Analyzes content style, audience overlap, complementary skills, and
     collaboration potential between creators.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.executor = ThreadPoolExecutor(max_workers=4)
@@ -543,7 +565,8 @@ class CollaborationMatchingEngine:
     async def find_collaboration_matches(self, creator_profile: Dict[str, Any],
                                        potential_matches: List[VectorSearchResult],
                                        content_type: str) -> List[CollaborationMatch]:
-        """Find potential collaboration matches from search results."""        try:
+        """Find potential collaboration matches from search results."""
+        try:
             matches = []
             
             for result in potential_matches:
@@ -565,7 +588,8 @@ class CollaborationMatchingEngine:
     async def _analyze_collaboration_potential(self, creator_profile: Dict[str, Any],
                                              result: VectorSearchResult,
                                              content_type: str) -> Optional[CollaborationMatch]:
-        """Analyze collaboration potential between two creators."""        try:
+        """Analyze collaboration potential between two creators."""
+        try:
             creator_metadata = result.metadata
             
             # Calculate compatibility score
@@ -617,7 +641,8 @@ class CollaborationMatchingEngine:
     async def _calculate_compatibility_score(self, profile1: Dict[str, Any],
                                            profile2: Dict[str, Any],
                                            content_type: str) -> float:
-        """Calculate compatibility score between two creators."""        try:
+        """Calculate compatibility score between two creators."""
+        try:
             compatibility_factors = []
             
             # Style similarity (moderate - not too similar, not too different)
@@ -649,7 +674,8 @@ class CollaborationMatchingEngine:
     
     def _calculate_audience_overlap(self, profile1: Dict[str, Any],
                                   profile2: Dict[str, Any]) -> float:
-        """Calculate audience overlap between creators."""        try:
+        """Calculate audience overlap between creators."""
+        try:
             audience1 = set(profile1.get('target_audience', []))
             audience2 = set(profile2.get('target_audience', []))
             
@@ -676,7 +702,8 @@ class CollaborationMatchingEngine:
     
     def _calculate_skill_complementarity(self, profile1: Dict[str, Any],
                                        profile2: Dict[str, Any]) -> float:
-        """Calculate how well skills complement each other."""        try:
+        """Calculate how well skills complement each other."""
+        try:
             skills1 = set(profile1.get('skills', []))
             skills2 = set(profile2.get('skills', []))
             
@@ -701,7 +728,8 @@ class CollaborationMatchingEngine:
     
     def _calculate_experience_compatibility(self, profile1: Dict[str, Any],
                                           profile2: Dict[str, Any]) -> float:
-        """Calculate experience level compatibility."""        try:
+        """Calculate experience level compatibility."""
+        try:
             exp1 = profile1.get('experience_level', 5)  # Scale 1-10
             exp2 = profile2.get('experience_level', 5)
             
@@ -721,7 +749,8 @@ class CollaborationMatchingEngine:
     
     def _find_shared_interests(self, profile1: Dict[str, Any],
                              profile2: Dict[str, Any]) -> List[str]:
-        """Find shared interests between creators."""        try:
+        """Find shared interests between creators."""
+        try:
             interests1 = set(profile1.get('interests', []))
             interests2 = set(profile2.get('interests', []))
             
@@ -735,7 +764,8 @@ class CollaborationMatchingEngine:
     def _find_complementary_skills(self, profile1: Dict[str, Any],
                                  profile2: Dict[str, Any],
                                  content_type: str) -> List[str]:
-        """Find complementary skills between creators."""        try:
+        """Find complementary skills between creators."""
+        try:
             skills1 = set(profile1.get('skills', []))
             skills2 = set(profile2.get('skills', []))
             
@@ -752,7 +782,8 @@ class CollaborationMatchingEngine:
             return []
     
     def _filter_relevant_skills(self, skills: List[str], content_type: str) -> List[str]:
-        """Filter skills relevant for the content type."""        relevant_skill_sets = {
+        """Filter skills relevant for the content type."""
+        relevant_skill_sets = {
             'audio': ['mixing', 'mastering', 'production', 'vocals', 'instruments', 'composition'],
             'video': ['editing', 'cinematography', 'animation', 'directing', 'scripting'],
             'image': ['photography', 'digital_art', 'design', 'retouching', 'illustration'],
@@ -767,7 +798,8 @@ class CollaborationMatchingEngine:
     def _assess_collaboration_potential(self, compatibility_score: float,
                                       shared_interests: List[str],
                                       complementary_skills: List[str]) -> str:
-        """Assess overall collaboration potential."""        if compatibility_score > 0.8 and len(shared_interests) > 3 and len(complementary_skills) > 2:
+        """Assess overall collaboration potential."""
+        if compatibility_score > 0.8 and len(shared_interests) > 3 and len(complementary_skills) > 2:
             return "EXCELLENT - Highly recommended collaboration opportunity"
         elif compatibility_score > 0.7 and len(shared_interests) > 2:
             return "GOOD - Strong potential for successful collaboration"
@@ -779,7 +811,8 @@ class CollaborationMatchingEngine:
     def _suggest_collaboration_projects(self, profile1: Dict[str, Any],
                                       profile2: Dict[str, Any],
                                       content_type: str) -> List[str]:
-        """Suggest specific collaboration projects."""        try:
+        """Suggest specific collaboration projects."""
+        try:
             suggestions = []
             
             # Base suggestions by content type
@@ -825,9 +858,11 @@ class CollaborationMatchingEngine:
 
 
 class ContentRecommendationEngine:
-    """    Engine for generating content recommendations based on similarity,
+    """
+    Engine for generating content recommendations based on similarity,
     trends, and audience preferences.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.trend_weight = config.get('trend_weight', 0.3)
@@ -837,7 +872,8 @@ class ContentRecommendationEngine:
     async def generate_recommendations(self, user_profile: Dict[str, Any],
                                      similar_content: List[VectorSearchResult],
                                      content_type: str) -> List[ContentRecommendation]:
-        """Generate content recommendations."""        try:
+        """Generate content recommendations."""
+        try:
             recommendations = []
             
             for result in similar_content:
@@ -859,7 +895,8 @@ class ContentRecommendationEngine:
     async def _analyze_recommendation_potential(self, user_profile: Dict[str, Any],
                                               result: VectorSearchResult,
                                               content_type: str) -> Optional[ContentRecommendation]:
-        """Analyze recommendation potential for a content item."""        try:
+        """Analyze recommendation potential for a content item."""
+        try:
             # Calculate different scoring components
             similarity_score = result.similarity_score
             
@@ -908,7 +945,8 @@ class ContentRecommendationEngine:
     
     def _calculate_audience_match(self, user_profile: Dict[str, Any],
                                 content_metadata: Dict[str, Any]) -> float:
-        """Calculate how well content matches user's target audience."""        try:
+        """Calculate how well content matches user's target audience."""
+        try:
             user_audience = set(user_profile.get('target_audience', []))
             content_audience = set(content_metadata.get('target_audience', []))
             
@@ -926,7 +964,8 @@ class ContentRecommendationEngine:
     
     def _calculate_trend_alignment(self, content_metadata: Dict[str, Any],
                                  content_type: str) -> float:
-        """Calculate how well content aligns with current trends."""        try:
+        """Calculate how well content aligns with current trends."""
+        try:
             # Simplified trend calculation
             # In production, this would connect to trend analysis services
             
@@ -964,7 +1003,8 @@ class ContentRecommendationEngine:
     
     def _calculate_monetization_potential(self, content_metadata: Dict[str, Any],
                                         content_type: str) -> float:
-        """Calculate monetization potential of the content."""        try:
+        """Calculate monetization potential of the content."""
+        try:
             monetization_score = 0.5  # Base score
             
             # Quality indicators
@@ -993,7 +1033,8 @@ class ContentRecommendationEngine:
     def _determine_recommendation_type(self, similarity_score: float,
                                      audience_match: float,
                                      trend_alignment: float) -> str:
-        """Determine the type of recommendation."""        if similarity_score > 0.8:
+        """Determine the type of recommendation."""
+        if similarity_score > 0.8:
             return "STYLE_INSPIRATION"
         elif audience_match > 0.8:
             return "TARGET_AUDIENCE_FIT" 
@@ -1008,7 +1049,8 @@ class ContentRecommendationEngine:
                                          audience_match: float,
                                          trend_alignment: float,
                                          recommendation_type: str) -> List[str]:
-        """Generate human-readable reasoning for the recommendation."""        reasoning = []
+        """Generate human-readable reasoning for the recommendation."""
+        reasoning = []
         
         if similarity_score > 0.7:
             reasoning.append(f"High style similarity ({similarity_score:.2f}) - good reference for your content direction")
@@ -1034,11 +1076,13 @@ class ContentRecommendationEngine:
 
 
 class SimilaritySearchEngine:
-    """    Main similarity search engine that coordinates all search capabilities.
+    """
+    Main similarity search engine that coordinates all search capabilities.
     
     Provides unified interface for different types of similarity searches
     with advanced ranking and filtering.
-    """    
+    """
+    
     def __init__(self, vector_db_manager, config: Dict[str, Any]):
         self.vector_db = vector_db_manager
         self.config = config
@@ -1054,7 +1098,8 @@ class SimilaritySearchEngine:
     async def search(self, content_type: str, query_embedding: np.ndarray,
                     search_config: SearchConfig,
                     query_metadata: Dict[str, Any] = None) -> List[VectorSearchResult]:
-        """        Perform similarity search with advanced ranking and filtering.
+        """
+        Perform similarity search with advanced ranking and filtering.
         
         Args:
             content_type: Type of content to search
@@ -1064,7 +1109,8 @@ class SimilaritySearchEngine:
             
         Returns:
             Ranked and filtered search results
-        """        try:
+        """
+        try:
             query_metadata = query_metadata or {}
             
             # Perform base similarity search
@@ -1095,7 +1141,8 @@ class SimilaritySearchEngine:
     
     async def find_duplicates(self, content_type: str, query_embedding: np.ndarray,
                             query_metadata: Dict[str, Any]) -> List[Tuple[VectorSearchResult, DuplicateAnalysis]]:
-        """Find potential duplicates with detailed analysis."""        try:
+        """Find potential duplicates with detailed analysis."""
+        try:
             # Use high similarity threshold for duplicate detection
             search_config = SearchConfig(
                 search_type=SearchType.DUPLICATE_DETECTION,
@@ -1128,7 +1175,8 @@ class SimilaritySearchEngine:
     async def find_collaboration_opportunities(self, creator_profile: Dict[str, Any],
                                              content_type: str,
                                              query_embedding: np.ndarray) -> List[CollaborationMatch]:
-        """Find collaboration opportunities with other creators."""        try:
+        """Find collaboration opportunities with other creators."""
+        try:
             search_config = SearchConfig(
                 search_type=SearchType.COLLABORATION_MATCH,
                 ranking_strategy=RankingStrategy.COLLABORATIVE_FILTERING,
@@ -1153,7 +1201,8 @@ class SimilaritySearchEngine:
     async def get_content_recommendations(self, user_profile: Dict[str, Any],
                                         content_type: str,
                                         query_embedding: np.ndarray) -> List[ContentRecommendation]:
-        """Get content recommendations for inspiration and strategy."""        try:
+        """Get content recommendations for inspiration and strategy."""
+        try:
             search_config = SearchConfig(
                 search_type=SearchType.CONTENT_RECOMMENDATION,
                 ranking_strategy=RankingStrategy.HYBRID_RANKING,
@@ -1177,7 +1226,8 @@ class SimilaritySearchEngine:
     
     def _apply_filters(self, results: List[VectorSearchResult],
                       config: SearchConfig) -> List[VectorSearchResult]:
-        """Apply filters to search results."""        try:
+        """Apply filters to search results."""
+        try:
             filtered_results = []
             
             for result in results:
@@ -1200,7 +1250,8 @@ class SimilaritySearchEngine:
     
     def _matches_metadata_filters(self, metadata: Dict[str, Any],
                                 filters: Dict[str, Any]) -> bool:
-        """Check if metadata matches the specified filters."""        try:
+        """Check if metadata matches the specified filters."""
+        try:
             for key, expected_value in filters.items():
                 if key not in metadata:
                     return False
@@ -1231,7 +1282,8 @@ class SimilaritySearchEngine:
     async def _apply_ranking(self, results: List[VectorSearchResult],
                            config: SearchConfig,
                            query_metadata: Dict[str, Any]) -> List[VectorSearchResult]:
-        """Apply ranking strategy to search results."""        try:
+        """Apply ranking strategy to search results."""
+        try:
             if config.ranking_strategy == RankingStrategy.SIMILARITY_ONLY:
                 # Already sorted by similarity
                 return results
@@ -1258,7 +1310,8 @@ class SimilaritySearchEngine:
     async def _apply_metadata_boost_ranking(self, results: List[VectorSearchResult],
                                           config: SearchConfig,
                                           query_metadata: Dict[str, Any]) -> List[VectorSearchResult]:
-        """Apply metadata-based ranking boosts."""        try:
+        """Apply metadata-based ranking boosts."""
+        try:
             for result in results:
                 boost_score = 0.0
                 
@@ -1282,7 +1335,8 @@ class SimilaritySearchEngine:
     
     def _apply_temporal_decay_ranking(self, results: List[VectorSearchResult],
                                     config: SearchConfig) -> List[VectorSearchResult]:
-        """Apply temporal decay to prioritize recent content."""        try:
+        """Apply temporal decay to prioritize recent content."""
+        try:
             current_time = datetime.now()
             
             for result in results:
@@ -1310,7 +1364,8 @@ class SimilaritySearchEngine:
     
     def _apply_popularity_boost_ranking(self, results: List[VectorSearchResult],
                                       config: SearchConfig) -> List[VectorSearchResult]:
-        """Apply popularity-based ranking boost."""        try:
+        """Apply popularity-based ranking boost."""
+        try:
             for result in results:
                 popularity_score = 0.0
                 
@@ -1343,7 +1398,8 @@ class SimilaritySearchEngine:
     async def _apply_hybrid_ranking(self, results: List[VectorSearchResult],
                                   config: SearchConfig,
                                   query_metadata: Dict[str, Any]) -> List[VectorSearchResult]:
-        """Apply hybrid ranking combining multiple strategies."""        try:
+        """Apply hybrid ranking combining multiple strategies."""
+        try:
             # Apply metadata boost
             results = await self._apply_metadata_boost_ranking(results, config, query_metadata)
             

@@ -28,7 +28,8 @@ Key Features:
 - Compliance and audit trails
 - Performance optimization
 - Cloud storage integration
-"""import logging
+"""
+import logging
 from typing import Dict, List, Optional, Any
 
 # Core backup services
@@ -122,11 +123,13 @@ logger = logging.getLogger(__name__)
 
 
 def get_module_info() -> Dict[str, Any]:
-    """    Get comprehensive module information.
+    """
+    Get comprehensive module information.
     
     Returns:
         Module metadata and capabilities
-    """    return {
+    """
+    return {
         "name": "backup",
         "version": __version__,
         "author": __author__,
@@ -173,14 +176,16 @@ def get_module_info() -> Dict[str, Any]:
 
 
 def validate_backup_config(config: Dict[str, Any]) -> bool:
-    """    Validate backup configuration.
+    """
+    Validate backup configuration.
     
     Args:
         config: Backup configuration to validate
         
     Returns:
         Configuration validity
-    """    required_keys = ["storage", "encryption_key"]
+    """
+    required_keys = ["storage", "encryption_key"]
     
     for key in required_keys:
         if key not in config:
@@ -197,11 +202,13 @@ def validate_backup_config(config: Dict[str, Any]) -> bool:
 
 
 def create_default_config() -> Dict[str, Any]:
-    """    Create default backup configuration.
+    """
+    Create default backup configuration.
     
     Returns:
         Default configuration
-    """    return {
+    """
+    return {
         "storage": {
             "backend": "local_filesystem",
             "path": "/var/backups/ia_influencer",

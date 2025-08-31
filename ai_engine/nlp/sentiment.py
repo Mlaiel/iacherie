@@ -8,7 +8,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SentimentScore:
-    """Sentiment score structure"""    positive: float
+    """Sentiment score structure"""
+    positive: float
     negative: float
     neutral: float
     compound: float  # Overall sentiment score (-1 to 1)
@@ -33,7 +35,8 @@ class SentimentScore:
 
 @dataclass
 class EmotionAnalysis:
-    """Detailed emotion analysis"""    primary_emotion: str
+    """Detailed emotion analysis"""
+    primary_emotion: str
     secondary_emotions: List[str]
     emotion_intensity: float
     emotional_stability: float  # How consistent the emotion is throughout
@@ -42,7 +45,8 @@ class EmotionAnalysis:
 
 @dataclass
 class EngagementSentiment:
-    """Engagement-focused sentiment analysis"""    engagement_potential: float  # 0-1 score for likely engagement
+    """Engagement-focused sentiment analysis"""
+    engagement_potential: float  # 0-1 score for likely engagement
     virality_score: float  # Potential for viral spread
     controversy_level: float  # How controversial the content is
     call_to_action_strength: float  # Strength of CTA sentiment
@@ -51,7 +55,8 @@ class EngagementSentiment:
 
 @dataclass
 class SentimentAnalysisResult:
-    """Complete sentiment analysis result"""    request_id: str
+    """Complete sentiment analysis result"""
+    request_id: str
     original_text: str
     sentiment: SentimentScore
     emotions: EmotionAnalysis
@@ -64,7 +69,8 @@ class SentimentAnalysisResult:
     timestamp: datetime = field(default_factory=datetime.utcnow)
 
 class AdvancedSentimentAnalyzer:
-    """    Advanced sentiment analyzer for influencer content
+    """
+    Advanced sentiment analyzer for influencer content
     
     Features:
     - Multi-dimensional sentiment analysis
@@ -73,7 +79,8 @@ class AdvancedSentimentAnalyzer:
     - Engagement potential scoring
     - Brand safety assessment
     - Real-time sentiment monitoring
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or self._get_default_config()
         self.emotion_lexicon = self._load_emotion_lexicon()
@@ -83,7 +90,8 @@ class AdvancedSentimentAnalyzer:
         self.brand_safety_rules = self._load_brand_safety_rules()
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""        return {
+        """Get default configuration"""
+        return {
             'enable_emotion_analysis': True,
             'enable_engagement_prediction': True,
             'enable_brand_safety': True,
@@ -95,7 +103,8 @@ class AdvancedSentimentAnalyzer:
         }
     
     def _load_emotion_lexicon(self) -> Dict[str, Dict[str, float]]:
-        """Load comprehensive emotion lexicon"""        return {
+        """Load comprehensive emotion lexicon"""
+        return {
             # Basic emotions with intensity scores
             'joy': {
                 'happy': 0.8, 'excited': 0.9, 'thrilled': 0.95, 'elated': 0.9,
@@ -145,7 +154,8 @@ class AdvancedSentimentAnalyzer:
         }
     
     def _initialize_sentiment_models(self) -> Dict[str, Any]:
-        """Initialize sentiment analysis models"""        return {
+        """Initialize sentiment analysis models"""
+        return {
             'base_model': 'bert-sentiment',  # Would use actual BERT model
             'social_media_model': 'roberta-sentiment-social',  # Specialized for social media
             'influencer_model': 'custom-influencer-sentiment',  # Custom trained
@@ -155,7 +165,8 @@ class AdvancedSentimentAnalyzer:
         }
     
     def _load_platform_patterns(self) -> Dict[str, Dict[str, Any]]:
-        """Load platform-specific sentiment patterns"""        return {
+        """Load platform-specific sentiment patterns"""
+        return {
             'instagram': {
                 'positive_indicators': ['✨', '💫', '🌟', '💖', '🔥', 'goals', 'vibes', 'mood'],
                 'engagement_boosters': ['story time', 'swipe up', 'link in bio', 'dm me'],
@@ -194,7 +205,8 @@ class AdvancedSentimentAnalyzer:
         }
     
     def _load_audience_profiles(self) -> Dict[str, Dict[str, Any]]:
-        """Load audience sentiment preferences"""        return {
+        """Load audience sentiment preferences"""
+        return {
             'gen_z': {
                 'preferred_emotions': ['excitement', 'surprise', 'humor'],
                 'engagement_triggers': ['authentic', 'relatable', 'chaotic'],
@@ -222,7 +234,8 @@ class AdvancedSentimentAnalyzer:
         }
     
     def _load_brand_safety_rules(self) -> Dict[str, Any]:
-        """Load brand safety rules and thresholds"""        return {
+        """Load brand safety rules and thresholds"""
+        return {
             'safe_sentiment_range': (0.2, 0.8),  # Safe sentiment range
             'max_controversy_level': 0.3,  # Maximum acceptable controversy
             'min_authenticity_score': 0.6,  # Minimum authenticity requirement
@@ -238,7 +251,8 @@ class AdvancedSentimentAnalyzer:
     async def analyze_sentiment(self, text: str, platform: str = "general", 
                               target_audience: str = "general", 
                               content_type: str = "post") -> SentimentAnalysisResult:
-        """Comprehensive sentiment analysis"""        request_id = self._generate_request_id(text, platform)
+        """Comprehensive sentiment analysis"""
+        request_id = self._generate_request_id(text, platform)
         
         try:
             # Core sentiment analysis
@@ -294,7 +308,8 @@ class AdvancedSentimentAnalyzer:
             raise
     
     async def batch_analyze_sentiment(self, texts: List[str], platform: str = "general") -> List[SentimentAnalysisResult]:
-        """Batch sentiment analysis"""        tasks = [self.analyze_sentiment(text, platform) for text in texts]
+        """Batch sentiment analysis"""
+        tasks = [self.analyze_sentiment(text, platform) for text in texts]
         results = await asyncio.gather(*tasks, return_exceptions=True)
         
         valid_results = []
@@ -321,7 +336,8 @@ class AdvancedSentimentAnalyzer:
         return valid_results
     
     async def _analyze_core_sentiment(self, text: str) -> SentimentScore:
-        """Analyze core sentiment using multiple approaches"""        
+        """Analyze core sentiment using multiple approaches"""
+        
         # Lexicon-based sentiment analysis
         lexicon_sentiment = await self._lexicon_based_sentiment(text)
         
@@ -359,7 +375,8 @@ class AdvancedSentimentAnalyzer:
         )
     
     async def _lexicon_based_sentiment(self, text: str) -> Dict[str, float]:
-        """Lexicon-based sentiment analysis"""        words = text.lower().split()
+        """Lexicon-based sentiment analysis"""
+        words = text.lower().split()
         total_sentiment = 0.0
         sentiment_words = 0
         
@@ -393,7 +410,8 @@ class AdvancedSentimentAnalyzer:
         }
     
     async def _pattern_based_sentiment(self, text: str) -> Dict[str, float]:
-        """Pattern-based sentiment analysis"""        
+        """Pattern-based sentiment analysis"""
+        
         # Positive patterns
         positive_patterns = [
             r'\b(love|amazing|awesome|fantastic|incredible|perfect|excellent)\b',
@@ -432,7 +450,8 @@ class AdvancedSentimentAnalyzer:
         }
     
     async def _model_based_sentiment(self, text: str) -> Dict[str, float]:
-        """ML model-based sentiment analysis (simulated)"""        # In practice, this would use actual ML models like BERT, RoBERTa, etc.
+        """ML model-based sentiment analysis (simulated)"""
+        # In practice, this would use actual ML models like BERT, RoBERTa, etc.
         
         # Simplified model simulation based on text characteristics
         text_length = len(text)
@@ -479,7 +498,8 @@ class AdvancedSentimentAnalyzer:
     def _calculate_sentiment_confidence(self, lexicon: Dict[str, float], 
                                       pattern: Dict[str, float], 
                                       model: Dict[str, float]) -> float:
-        """Calculate confidence based on agreement between methods"""        
+        """Calculate confidence based on agreement between methods"""
+        
         # Calculate variance for each sentiment dimension
         positive_variance = np.var([lexicon['positive'], pattern['positive'], model['positive']])
         negative_variance = np.var([lexicon['negative'], pattern['negative'], model['negative']])
@@ -494,7 +514,8 @@ class AdvancedSentimentAnalyzer:
         return min(1.0, confidence)
     
     def _determine_intensity(self, compound_abs: float) -> str:
-        """Determine sentiment intensity"""        if compound_abs >= 0.8:
+        """Determine sentiment intensity"""
+        if compound_abs >= 0.8:
             return "extreme"
         elif compound_abs >= 0.6:
             return "high"
@@ -504,7 +525,8 @@ class AdvancedSentimentAnalyzer:
             return "low"
     
     async def _extract_emotion_scores(self, text: str) -> Dict[str, float]:
-        """Extract detailed emotion scores"""        emotion_scores = {}
+        """Extract detailed emotion scores"""
+        emotion_scores = {}
         words = text.lower().split()
         
         for emotion, word_scores in self.emotion_lexicon.items():
@@ -524,7 +546,8 @@ class AdvancedSentimentAnalyzer:
         return emotion_scores
     
     async def _analyze_emotions(self, text: str) -> EmotionAnalysis:
-        """Detailed emotion analysis"""        
+        """Detailed emotion analysis"""
+        
         # Get emotion scores
         emotion_scores = await self._extract_emotion_scores(text)
         
@@ -562,7 +585,8 @@ class AdvancedSentimentAnalyzer:
         )
     
     async def _analyze_emotion_progression(self, text: str) -> List[Dict[str, Any]]:
-        """Analyze how emotions change throughout the text"""        sentences = text.split('.')
+        """Analyze how emotions change throughout the text"""
+        sentences = text.split('.')
         if len(sentences) < 3:
             return []  # Not enough content for progression analysis
         
@@ -584,7 +608,8 @@ class AdvancedSentimentAnalyzer:
         return progression
     
     async def _analyze_engagement_sentiment(self, text: str, platform: str, target_audience: str) -> EngagementSentiment:
-        """Analyze engagement-focused sentiment"""        
+        """Analyze engagement-focused sentiment"""
+        
         # Calculate engagement potential
         engagement_potential = await self._calculate_engagement_potential(text, platform)
         
@@ -613,7 +638,8 @@ class AdvancedSentimentAnalyzer:
         )
     
     async def _calculate_engagement_potential(self, text: str, platform: str) -> float:
-        """Calculate potential for audience engagement"""        score = 0.0
+        """Calculate potential for audience engagement"""
+        score = 0.0
         
         # Platform-specific engagement indicators
         platform_patterns = self.platform_patterns.get(platform, {})
@@ -642,7 +668,8 @@ class AdvancedSentimentAnalyzer:
         return min(1.0, score)
     
     async def _calculate_virality_score(self, text: str, platform: str) -> float:
-        """Calculate potential for viral spread"""        score = 0.0
+        """Calculate potential for viral spread"""
+        score = 0.0
         
         # Platform-specific viral indicators
         platform_patterns = self.platform_patterns.get(platform, {})
@@ -675,7 +702,8 @@ class AdvancedSentimentAnalyzer:
         return min(1.0, score)
     
     async def _calculate_controversy_level(self, text: str) -> float:
-        """Calculate controversy level"""        controversy_score = 0.0
+        """Calculate controversy level"""
+        controversy_score = 0.0
         
         # Controversial keywords
         controversial_words = [
@@ -702,7 +730,8 @@ class AdvancedSentimentAnalyzer:
         return min(1.0, controversy_score)
     
     async def _calculate_cta_strength(self, text: str, platform: str) -> float:
-        """Calculate call-to-action strength"""        cta_score = 0.0
+        """Calculate call-to-action strength"""
+        cta_score = 0.0
         
         # Direct CTAs
         direct_ctas = [
@@ -729,7 +758,8 @@ class AdvancedSentimentAnalyzer:
         return min(1.0, cta_score)
     
     async def _calculate_authenticity_score(self, text: str, target_audience: str) -> float:
-        """Calculate authenticity score"""        authenticity_score = 0.8  # Start with high base score
+        """Calculate authenticity score"""
+        authenticity_score = 0.8  # Start with high base score
         
         # Authentic language indicators
         authentic_phrases = [
@@ -763,7 +793,8 @@ class AdvancedSentimentAnalyzer:
         return max(0.0, min(1.0, authenticity_score))
     
     async def _calculate_brand_safety_score(self, text: str) -> float:
-        """Calculate brand safety score"""        safety_score = 1.0  # Start with perfect safety
+        """Calculate brand safety score"""
+        safety_score = 1.0  # Start with perfect safety
         
         # Check for unsafe content
         unsafe_keywords = self.brand_safety_rules['warning_keywords']
@@ -790,7 +821,8 @@ class AdvancedSentimentAnalyzer:
         return max(0.0, safety_score)
     
     async def _optimize_for_platform(self, text: str, platform: str, sentiment: SentimentScore, emotions: EmotionAnalysis) -> Dict[str, Any]:
-        """Generate platform-specific optimization suggestions"""        
+        """Generate platform-specific optimization suggestions"""
+        
         platform_info = self.platform_patterns.get(platform, {})
         optimization = {
             'platform': platform,
@@ -834,7 +866,8 @@ class AdvancedSentimentAnalyzer:
     
     async def _predict_audience_reactions(self, text: str, sentiment: SentimentScore, 
                                         emotions: EmotionAnalysis, target_audience: str) -> Dict[str, float]:
-        """Predict how different audience segments will react"""        
+        """Predict how different audience segments will react"""
+        
         audience_profile = self.audience_profiles.get(target_audience, {})
         
         reactions = {
@@ -886,7 +919,8 @@ class AdvancedSentimentAnalyzer:
                                                 emotions: EmotionAnalysis, 
                                                 engagement: EngagementSentiment,
                                                 platform: str) -> List[str]:
-        """Generate recommendations to improve sentiment and engagement"""        recommendations = []
+        """Generate recommendations to improve sentiment and engagement"""
+        recommendations = []
         
         # Sentiment optimization
         if sentiment.compound < 0.2:
@@ -923,7 +957,8 @@ class AdvancedSentimentAnalyzer:
         return recommendations
     
     async def _extract_sentiment_keywords(self, text: str) -> List[str]:
-        """Extract keywords that carry sentiment"""        words = text.lower().split()
+        """Extract keywords that carry sentiment"""
+        words = text.lower().split()
         sentiment_keywords = []
         
         for word in words:
@@ -941,7 +976,8 @@ class AdvancedSentimentAnalyzer:
         return list(set(sentiment_keywords))  # Remove duplicates
     
     async def _identify_mood_indicators(self, text: str) -> List[str]:
-        """Identify indicators of overall mood"""        mood_indicators = []
+        """Identify indicators of overall mood"""
+        mood_indicators = []
         
         # Exclamation patterns (excitement/enthusiasm)
         if re.search(r'[!]{2,}', text):
@@ -977,13 +1013,15 @@ class AdvancedSentimentAnalyzer:
         return mood_indicators
     
     def _generate_request_id(self, text: str, platform: str) -> str:
-        """Generate unique request ID"""        import hashlib
+        """Generate unique request ID"""
+        import hashlib
         id_string = f"{text[:100]}{platform}{datetime.utcnow().isoformat()}"
         return hashlib.md5(id_string.encode()).hexdigest()[:12]
 
 # Utility functions for quick sentiment analysis
 async def quick_sentiment_analysis(text: str, platform: str = "general") -> Dict[str, Any]:
-    """Quick sentiment analysis function"""    analyzer = AdvancedSentimentAnalyzer()
+    """Quick sentiment analysis function"""
+    analyzer = AdvancedSentimentAnalyzer()
     result = await analyzer.analyze_sentiment(text, platform)
     
     return {
@@ -995,7 +1033,8 @@ async def quick_sentiment_analysis(text: str, platform: str = "general") -> Dict
     }
 
 async def sentiment_monitoring(texts: List[str], platform: str = "general") -> Dict[str, Any]:
-    """Monitor sentiment across multiple pieces of content"""    analyzer = AdvancedSentimentAnalyzer()
+    """Monitor sentiment across multiple pieces of content"""
+    analyzer = AdvancedSentimentAnalyzer()
     results = await analyzer.batch_analyze_sentiment(texts, platform)
     
     # Aggregate statistics

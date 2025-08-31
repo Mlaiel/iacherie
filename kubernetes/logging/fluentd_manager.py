@@ -8,7 +8,8 @@ WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit 
 written permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import yaml
@@ -27,7 +28,8 @@ from .log_aggregator import LogEntry, LogLevel
 
 
 class FluentdInputType(str, Enum):
-    """Fluentd input plugin types"""    FORWARD = "forward"
+    """Fluentd input plugin types"""
+    FORWARD = "forward"
     HTTP = "http"
     TCP = "tcp"
     UDP = "udp"
@@ -37,7 +39,8 @@ class FluentdInputType(str, Enum):
 
 
 class FluentdOutputType(str, Enum):
-    """Fluentd output plugin types"""    ELASTICSEARCH = "elasticsearch"
+    """Fluentd output plugin types"""
+    ELASTICSEARCH = "elasticsearch"
     S3 = "s3"
     KAFKA = "kafka"
     MONGODB = "mongodb"
@@ -48,7 +51,8 @@ class FluentdOutputType(str, Enum):
 
 
 class FluentdFilterType(str, Enum):
-    """Fluentd filter plugin types"""    RECORD_TRANSFORMER = "record_transformer"
+    """Fluentd filter plugin types"""
+    RECORD_TRANSFORMER = "record_transformer"
     GREP = "grep"
     PARSER = "parser"
     KUBERNETES_METADATA = "kubernetes_metadata_filter"
@@ -57,7 +61,8 @@ class FluentdFilterType(str, Enum):
 
 @dataclass
 class FluentdConfig:
-    """Fluentd configuration"""    host: str = "localhost"
+    """Fluentd configuration"""
+    host: str = "localhost"
     port: int = 24224
     buffer_chunk_limit: str = "2M"
     buffer_queue_limit: int = 32
@@ -70,43 +75,52 @@ class FluentdConfig:
 
 
 class FluentdSourceConfig:
-    """Fluentd source configuration builder"""    
+    """Fluentd source configuration builder"""
+    
     def __init__(self, input_type: FluentdInputType, tag: str):
         self.input_type = input_type
         self.tag = tag
         self.config = {"@type": input_type.value, "tag": tag}
     
     def set_port(self, port: int):
-        """Set port for network inputs"""        self.config["port"] = port
+        """Set port for network inputs"""
+        self.config["port"] = port
         return self
     
     def set_bind(self, bind: str):
-        """Set bind address"""        self.config["bind"] = bind
+        """Set bind address"""
+        self.config["bind"] = bind
         return self
     
     def set_path(self, path: str):
-        """Set path for file-based inputs"""        self.config["path"] = path
+        """Set path for file-based inputs"""
+        self.config["path"] = path
         return self
     
     def set_format(self, format_type: str, **format_options):
-        """Set input format"""        self.config["format"] = format_type
+        """Set input format"""
+        self.config["format"] = format_type
         self.config.update(format_options)
         return self
     
     def set_parser(self, parser_config: Dict[str, Any]):
-        """Set parser configuration"""        self.config["parse"] = parser_config
+        """Set parser configuration"""
+        self.config["parse"] = parser_config
         return self
     
     def add_custom_config(self, key: str, value: Any):
-        """Add custom configuration"""        self.config[key] = value
+        """Add custom configuration"""
+        self.config[key] = value
         return self
     
     def build(self) -> Dict[str, Any]:
-        """Build source configuration"""        return self.config
+        """Build source configuration"""
+        return self.config
 
 
 class FluentdMatchConfig:
-    """Fluentd match configuration builder"""    
+    """Fluentd match configuration builder"""
+    
     def __init__(self, pattern: str, output_type: FluentdOutputType):
         self.pattern = pattern
         self.output_type = output_type
@@ -114,7 +128,8 @@ class FluentdMatchConfig:
         self.buffer_config = {}
     
     def set_elasticsearch_config(self, hosts: List[str], index_name: str = "fluentd"):
-        """Configure Elasticsearch output"""        self.config.update({
+        """Configure Elasticsearch output"""
+        self.config.update({
             "hosts": ",".join(hosts),
             "index_name": index_name,
             "type_name": "_doc"
@@ -122,7 +137,8 @@ class FluentdMatchConfig:
         return self
     
     def set_s3_config(self, bucket: str, region: str, path: str = "logs/"):
-        """Configure S3 output"""        self.config.update({
+        """Configure S3 output"""
+        self.config.update({
             "s3_bucket": bucket,
             "s3_region": region,
             "path": path,
@@ -132,7 +148,8 @@ class FluentdMatchConfig:
         return self
     
     def set_kafka_config(self, brokers: List[str], topic: str):
-        """Configure Kafka output"""        self.config.update({
+        """Configure Kafka output"""
+        self.config.update({
             "brokers": ",".join(brokers),
             "default_topic": topic,
             "output_data_type": "json"
@@ -140,7 +157,8 @@ class FluentdMatchConfig:
         return self
     
     def set_file_config(self, path: str, append: bool = True):
-        """Configure file output"""        self.config.update({
+        """Configure file output"""
+        self.config.update({
             "path": path,
             "append": append,
             "format": "json"
@@ -154,7 +172,8 @@ class FluentdMatchConfig:
                          queue_limit_length: int = 32,
                          flush_interval: str = "60s",
                          retry_type: str = "exponential_backoff"):
-        """Configure buffer settings"""        self.buffer_config = {
+        """Configure buffer settings"""
+        self.buffer_config = {
             "@type": type_,
             "chunk_limit_size": chunk_limit_size,
             "queue_limit_length": queue_limit_length,
@@ -168,15 +187,18 @@ class FluentdMatchConfig:
         return self
     
     def set_format_config(self, format_type: str = "json"):
-        """Set output format"""        self.config["format"] = {"@type": format_type}
+        """Set output format"""
+        self.config["format"] = {"@type": format_type}
         return self
     
     def add_custom_config(self, key: str, value: Any):
-        """Add custom configuration"""        self.config[key] = value
+        """Add custom configuration"""
+        self.config[key] = value
         return self
     
     def build(self) -> Dict[str, Any]:
-        """Build match configuration"""        config = {"@type": self.output_type.value}
+        """Build match configuration"""
+        config = {"@type": self.output_type.value}
         config.update(self.config)
         
         if self.buffer_config:
@@ -186,7 +208,8 @@ class FluentdMatchConfig:
 
 
 class FluentdFilterConfig:
-    """Fluentd filter configuration builder"""    
+    """Fluentd filter configuration builder"""
+    
     def __init__(self, pattern: str, filter_type: FluentdFilterType):
         self.pattern = pattern
         self.filter_type = filter_type
@@ -197,7 +220,8 @@ class FluentdFilterConfig:
                               auto_typecast: bool = True,
                               record_transforms: Optional[Dict[str, str]] = None,
                               remove_keys: Optional[List[str]] = None):
-        """Configure record transformer filter"""        self.config.update({
+        """Configure record transformer filter"""
+        self.config.update({
             "enable_ruby": enable_ruby,
             "auto_typecast": auto_typecast
         })
@@ -213,7 +237,8 @@ class FluentdFilterConfig:
     def set_grep_filter(self, 
                        regexps: Optional[List[Dict[str, str]]] = None,
                        excludes: Optional[List[Dict[str, str]]] = None):
-        """Configure grep filter"""        if regexps:
+        """Configure grep filter"""
+        if regexps:
             self.config["regexp"] = regexps
         
         if excludes:
@@ -226,7 +251,8 @@ class FluentdFilterConfig:
                          parser_type: str,
                          format: str,
                          reserve_data: bool = True):
-        """Configure parser filter"""        self.config.update({
+        """Configure parser filter"""
+        self.config.update({
             "key_name": key_name,
             "reserve_data": reserve_data,
             "parse": {
@@ -237,15 +263,18 @@ class FluentdFilterConfig:
         return self
     
     def add_custom_config(self, key: str, value: Any):
-        """Add custom configuration"""        self.config[key] = value
+        """Add custom configuration"""
+        self.config[key] = value
         return self
     
     def build(self) -> Dict[str, Any]:
-        """Build filter configuration"""        return self.config
+        """Build filter configuration"""
+        return self.config
 
 
 class FluentdConfigBuilder:
-    """Complete Fluentd configuration builder"""    
+    """Complete Fluentd configuration builder"""
+    
     def __init__(self):
         self.sources = []
         self.filters = []
@@ -254,11 +283,13 @@ class FluentdConfigBuilder:
         self.system_config = {}
     
     def add_source(self, source_config: FluentdSourceConfig):
-        """Add source configuration"""        self.sources.append(source_config.build())
+        """Add source configuration"""
+        self.sources.append(source_config.build())
         return self
     
     def add_filter(self, pattern: str, filter_config: FluentdFilterConfig):
-        """Add filter configuration"""        config = filter_config.build()
+        """Add filter configuration"""
+        config = filter_config.build()
         self.filters.append({
             "pattern": pattern,
             "config": config
@@ -266,7 +297,8 @@ class FluentdConfigBuilder:
         return self
     
     def add_match(self, pattern: str, match_config: FluentdMatchConfig):
-        """Add match configuration"""        config = match_config.build()
+        """Add match configuration"""
+        config = match_config.build()
         self.matches.append({
             "pattern": pattern,
             "config": config
@@ -274,14 +306,16 @@ class FluentdConfigBuilder:
         return self
     
     def add_include(self, path: str):
-        """Add include directive"""        self.includes.append(path)
+        """Add include directive"""
+        self.includes.append(path)
         return self
     
     def set_system_config(self, 
                          workers: int = 1,
                          root_dir: str = "/var/log/fluentd",
                          log_level: str = "info"):
-        """Set system configuration"""        self.system_config = {
+        """Set system configuration"""
+        self.system_config = {
             "workers": workers,
             "root_dir": root_dir,
             "log_level": log_level
@@ -289,7 +323,8 @@ class FluentdConfigBuilder:
         return self
     
     def build_yaml(self) -> str:
-        """Build complete Fluentd configuration as YAML"""        config = {}
+        """Build complete Fluentd configuration as YAML"""
+        config = {}
         
         # System configuration
         if self.system_config:
@@ -326,7 +361,8 @@ class FluentdConfigBuilder:
 
 
 class FluentdClient:
-    """HTTP client for Fluentd forward protocol"""    
+    """HTTP client for Fluentd forward protocol"""
+    
     def __init__(self, host: str = "localhost", port: int = 24224):
         self.host = host
         self.port = port
@@ -334,14 +370,17 @@ class FluentdClient:
         self.session: Optional[aiohttp.ClientSession] = None
     
     async def connect(self):
-        """Initialize HTTP session"""        self.session = aiohttp.ClientSession()
+        """Initialize HTTP session"""
+        self.session = aiohttp.ClientSession()
     
     async def disconnect(self):
-        """Close HTTP session"""        if self.session:
+        """Close HTTP session"""
+        if self.session:
             await self.session.close()
     
     async def send_log(self, tag: str, record: Dict[str, Any], timestamp: Optional[int] = None) -> bool:
-        """Send single log record to Fluentd"""        if not self.session:
+        """Send single log record to Fluentd"""
+        if not self.session:
             await self.connect()
         
         if timestamp is None:
@@ -362,7 +401,8 @@ class FluentdClient:
             return False
     
     async def send_logs_batch(self, logs: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Send batch of logs to Fluentd"""        if not self.session:
+        """Send batch of logs to Fluentd"""
+        if not self.session:
             await self.connect()
         
         success_count = 0
@@ -389,7 +429,8 @@ class FluentdClient:
 
 
 class FluentdManager:
-    """Advanced Fluentd manager for IA Influencer Agent"""    
+    """Advanced Fluentd manager for IA Influencer Agent"""
+    
     def __init__(self, config: FluentdConfig):
         self.config = config
         self.client = FluentdClient(config.host, config.port)
@@ -398,7 +439,8 @@ class FluentdManager:
         self._setup_default_configuration()
     
     def _setup_default_configuration(self):
-        """Setup default Fluentd configuration for IA Influencer Agent"""        
+        """Setup default Fluentd configuration for IA Influencer Agent"""
+        
         # System configuration
         self.config_builder.set_system_config(
             workers=1,
@@ -517,17 +559,20 @@ class FluentdManager:
         self.config_builder.add_match("ia.error", alert_match)
     
     async def start(self):
-        """Start Fluentd manager"""        await self.client.connect()
+        """Start Fluentd manager"""
+        await self.client.connect()
         self.is_running = True
         logging.info("Fluentd manager started")
     
     async def stop(self):
-        """Stop Fluentd manager"""        await self.client.disconnect()
+        """Stop Fluentd manager"""
+        await self.client.disconnect()
         self.is_running = False
         logging.info("Fluentd manager stopped")
     
     async def send_log_entry(self, log_entry: LogEntry, tag_prefix: str = "ia") -> bool:
-        """Send log entry to Fluentd"""        if not self.is_running:
+        """Send log entry to Fluentd"""
+        if not self.is_running:
             raise FluentdError("Fluentd manager not running")
         
         # Generate appropriate tag based on log content
@@ -548,7 +593,8 @@ class FluentdManager:
         return await self.client.send_log(tag, record, timestamp)
     
     async def send_log_entries_batch(self, log_entries: List[LogEntry], tag_prefix: str = "ia") -> Dict[str, Any]:
-        """Send batch of log entries to Fluentd"""        if not self.is_running:
+        """Send batch of log entries to Fluentd"""
+        if not self.is_running:
             raise FluentdError("Fluentd manager not running")
         
         logs = []
@@ -573,10 +619,12 @@ class FluentdManager:
         return await self.client.send_logs_batch(logs)
     
     def get_configuration(self) -> str:
-        """Get complete Fluentd configuration as YAML"""        return self.config_builder.build_yaml()
+        """Get complete Fluentd configuration as YAML"""
+        return self.config_builder.build_yaml()
     
     async def save_configuration(self, file_path: str):
-        """Save Fluentd configuration to file"""        config_yaml = self.get_configuration()
+        """Save Fluentd configuration to file"""
+        config_yaml = self.get_configuration()
         
         async with aiofiles.open(file_path, 'w') as f:
             await f.write(config_yaml)
@@ -584,16 +632,20 @@ class FluentdManager:
         logging.info(f"Fluentd configuration saved to {file_path}")
     
     def add_custom_source(self, source_config: FluentdSourceConfig):
-        """Add custom source configuration"""        self.config_builder.add_source(source_config)
+        """Add custom source configuration"""
+        self.config_builder.add_source(source_config)
     
     def add_custom_filter(self, pattern: str, filter_config: FluentdFilterConfig):
-        """Add custom filter configuration"""        self.config_builder.add_filter(pattern, filter_config)
+        """Add custom filter configuration"""
+        self.config_builder.add_filter(pattern, filter_config)
     
     def add_custom_match(self, pattern: str, match_config: FluentdMatchConfig):
-        """Add custom match configuration"""        self.config_builder.add_match(pattern, match_config)
+        """Add custom match configuration"""
+        self.config_builder.add_match(pattern, match_config)
     
     async def validate_configuration(self) -> Dict[str, Any]:
-        """Validate Fluentd configuration"""        try:
+        """Validate Fluentd configuration"""
+        try:
             config_yaml = self.get_configuration()
             
             # Basic YAML validation
@@ -623,7 +675,8 @@ class FluentdManager:
             }
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get Fluentd metrics and statistics"""        # This would typically query Fluentd's metrics endpoint
+        """Get Fluentd metrics and statistics"""
+        # This would typically query Fluentd's metrics endpoint
         # For now, return basic connection status
         
         try:

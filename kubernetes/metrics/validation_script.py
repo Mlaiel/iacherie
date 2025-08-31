@@ -27,9 +27,13 @@ Features:
 - Dependency checking
 - Integration testing
 - Performance benchmarking
-"""import sys
+"""
+
+import sys
+
 import traceback
 import asyncio
+
 import logging
 from typing import Dict, List, Any, Optional
 from datetime import datetime
@@ -43,7 +47,8 @@ logger = logging.getLogger(__name__)
 
 
 class MetricsModuleValidator:
-    """    Comprehensive validator for the metrics deployment module
+    """
+    Comprehensive validator for the metrics deployment module
     
     Validates:
     - Module imports and dependencies
@@ -51,14 +56,17 @@ class MetricsModuleValidator:
     - Service initialization
     - Collector functionality
     - Integration capabilities
-    """    
+    """
+    
     def __init__(self):
         self.validation_results: Dict[str, Any] = {}
         self.errors: List[str] = []
         self.warnings: List[str] = []
         
     async def validate_complete_module(self) -> Dict[str, Any]:
-        """Run complete validation of metrics module"""        
+        """
+Run complete validation of metrics module"""
+        
         logger.info("🚀 Starting comprehensive metrics module validation...")
         
         # Validation stages
@@ -97,7 +105,8 @@ class MetricsModuleValidator:
         return self._generate_validation_report()
     
     async def _validate_core_imports(self) -> Dict[str, Any]:
-        """Validate core module imports"""        
+        """Validate core module imports"""
+        
         results = {
             'status': 'success',
             'imported_modules': [],
@@ -135,7 +144,8 @@ class MetricsModuleValidator:
         return results
     
     async def _validate_advanced_collectors(self) -> Dict[str, Any]:
-        """Validate advanced metrics collectors"""        
+        """Validate advanced metrics collectors"""
+        
         results = {
             'status': 'success',
             'collectors_validated': [],
@@ -178,7 +188,8 @@ class MetricsModuleValidator:
         return results
     
     async def _validate_configuration(self) -> Dict[str, Any]:
-        """Validate configuration system"""        
+        """Validate configuration system"""
+        
         results = {
             'status': 'success',
             'config_tests': {},
@@ -229,7 +240,8 @@ class MetricsModuleValidator:
         return results
     
     async def _validate_data_models(self) -> Dict[str, Any]:
-        """Validate data models and enums"""        
+        """Validate data models and enums"""
+        
         results = {
             'status': 'success',
             'models_validated': [],
@@ -305,7 +317,8 @@ class MetricsModuleValidator:
         return results
     
     async def _validate_integration_points(self) -> Dict[str, Any]:
-        """Validate integration capabilities"""        
+        """Validate integration capabilities"""
+        
         results = {
             'status': 'success',
             'integrations_tested': {},
@@ -349,7 +362,9 @@ class MetricsModuleValidator:
         return results
     
     async def _validate_business_logic(self) -> Dict[str, Any]:
-        """Validate business logic alignment"""        
+        """
+Validate business logic alignment"""
+        
         results = {
             'status': 'success',
             'business_flows': {},
@@ -415,7 +430,8 @@ class MetricsModuleValidator:
         return results
     
     async def _validate_performance_readiness(self) -> Dict[str, Any]:
-        """Validate performance and production readiness"""        
+        """Validate performance and production readiness"""
+        
         results = {
             'status': 'success',
             'performance_metrics': {},
@@ -465,7 +481,8 @@ class MetricsModuleValidator:
         return results
     
     def _generate_validation_report(self) -> Dict[str, Any]:
-        """Generate comprehensive validation report"""        
+        """Generate comprehensive validation report"""
+        
         total_stages = len(self.validation_results)
         successful_stages = sum(1 for result in self.validation_results.values() 
                               if result.get('status') == 'success')
@@ -495,7 +512,9 @@ class MetricsModuleValidator:
         return report
     
     def _generate_recommendations(self) -> List[str]:
-        """Generate recommendations based on validation results"""        
+        """
+Generate recommendations based on validation results"""
+        
         recommendations = []
         
         # Check if there are import failures
@@ -543,7 +562,8 @@ class MetricsModuleValidator:
 
 
 async def main():
-    """Run complete metrics module validation"""    
+    """Run complete metrics module validation"""
+    
     print("🔍 IA Influencer Agent - Metrics Module Validation")
     print("=" * 60)
     print(f"📅 Started: {datetime.utcnow().isoformat()}")

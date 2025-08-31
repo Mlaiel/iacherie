@@ -5,7 +5,8 @@ OnlyFans API integration for content creator platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
@@ -22,21 +23,25 @@ logger = logging.getLogger(__name__)
 
 
 class OnlyFansPlatform(PlatformBase):
-    """OnlyFans platform integration"""    
+    """OnlyFans platform integration"""
+    
     def __init__(self, config: PlatformConfig):
-        """Initialize OnlyFans platform"""        super().__init__(config)
+        """Initialize OnlyFans platform"""
+        super().__init__(config)
         self.api_base = "https://onlyfans.com/api2/v2"
         self.session: Optional[aiohttp.ClientSession] = None
         
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""        if not self.session or self.session.closed:
+        """Get or create HTTP session"""
+        if not self.session or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             )
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with OnlyFans"""        try:
+        """Authenticate with OnlyFans"""
+        try:
             # OnlyFans uses cookie-based authentication
             cookie = self.config.credentials.get('cookie')
             x_bc = self.config.credentials.get('x_bc')
@@ -75,10 +80,12 @@ class OnlyFansPlatform(PlatformBase):
             return False
     
     async def refresh_token(self) -> bool:
-        """Refresh OnlyFans session"""        return await self.authenticate()
+        """Refresh OnlyFans session"""
+        return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to OnlyFans API"""        try:
+        """Make authenticated request to OnlyFans API"""
+        try:
             session = await self._get_session()
             
             headers = kwargs.get('headers', {})
@@ -118,7 +125,8 @@ class OnlyFansPlatform(PlatformBase):
             return None
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Upload content to OnlyFans"""        try:
+        """Upload content to OnlyFans"""
+        try:
             media_ids = []
             
             # Upload media first if file provided
@@ -175,7 +183,8 @@ class OnlyFansPlatform(PlatformBase):
             )
     
     async def _upload_media(self, file_path: str) -> Optional[str]:
-        """Upload media file to OnlyFans"""        try:
+        """Upload media file to OnlyFans"""
+        try:
             session = await self._get_session()
             
             # Get upload policy
@@ -215,7 +224,8 @@ class OnlyFansPlatform(PlatformBase):
     
     async def get_analytics(self, content_id: str, start_date: datetime, 
                            end_date: datetime) -> AnalyticsData:
-        """Get OnlyFans post analytics"""        try:
+        """Get OnlyFans post analytics"""
+        try:
             result = await self._make_request('GET', f'/posts/{content_id}')
             
             if result:
@@ -246,7 +256,8 @@ class OnlyFansPlatform(PlatformBase):
             raise
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on OnlyFans"""        try:
+        """Search content on OnlyFans"""
+        try:
             params = {
                 'query': query,
                 'type': 'all'  # users, posts
@@ -279,7 +290,8 @@ class OnlyFansPlatform(PlatformBase):
             return []
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's OnlyFans posts"""        try:
+        """Get user's OnlyFans posts"""
+        try:
             target_user_id = user_id or self.config.credentials.get('user_id')
             if not target_user_id:
                 return []
@@ -316,7 +328,8 @@ class OnlyFansPlatform(PlatformBase):
             return []
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete OnlyFans post"""        try:
+        """Delete OnlyFans post"""
+        try:
             result = await self._make_request('DELETE', f'/posts/{content_id}')
             return result is not None
                 
@@ -325,7 +338,8 @@ class OnlyFansPlatform(PlatformBase):
             return False
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
-        """Update OnlyFans post"""        try:
+        """Update OnlyFans post"""
+        try:
             update_data = {
                 'text': metadata.description or metadata.title or '',
                 'price': metadata.price if hasattr(metadata, 'price') else None
@@ -342,7 +356,8 @@ class OnlyFansPlatform(PlatformBase):
             return False
     
     async def get_earnings(self, start_date: datetime = None, end_date: datetime = None) -> Dict[str, Any]:
-        """Get earnings data"""        try:
+        """Get earnings data"""
+        try:
             params = {}
             if start_date:
                 params['startDate'] = start_date.isoformat()
@@ -369,7 +384,8 @@ class OnlyFansPlatform(PlatformBase):
             return {}
     
     async def get_subscribers(self, limit: int = 50) -> List[Dict[str, Any]]:
-        """Get subscriber list"""        try:
+        """Get subscriber list"""
+        try:
             params = {
                 'limit': limit,
                 'offset': 0,
@@ -401,7 +417,8 @@ class OnlyFansPlatform(PlatformBase):
             return []
     
     async def send_message(self, user_id: str, text: str, media_ids: List[str] = None) -> Optional[str]:
-        """Send private message"""        try:
+        """Send private message"""
+        try:
             message_data = {
                 'text': text,
                 'lockedText': '',
@@ -423,7 +440,8 @@ class OnlyFansPlatform(PlatformBase):
             return None
     
     async def get_messages(self, user_id: str, limit: int = 20) -> List[Dict[str, Any]]:
-        """Get messages with user"""        try:
+        """Get messages with user"""
+        try:
             params = {
                 'limit': limit,
                 'offset': 0,
@@ -453,5 +471,6 @@ class OnlyFansPlatform(PlatformBase):
             return []
     
     async def close(self):
-        """Close HTTP session"""        if self.session and not self.session.closed:
+        """Close HTTP session"""
+        if self.session and not self.session.closed:
             await self.session.close()

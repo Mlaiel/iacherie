@@ -7,7 +7,8 @@ Date: 2025-07-31 06:28:26
 Couche de stockage optimisée avec pools de connexions et cache.
 Modèles détectés: 0
 ==================================================================
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from abc import ABC, abstractmethod
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class StorageConfig:
-    """Configuration du stockage"""    # PostgreSQL
+    """Configuration du stockage"""
+    # PostgreSQL
     postgres_host: str = "localhost"
     postgres_port: int = 5432
     postgres_db: str = "ia_influencer"
@@ -55,23 +57,28 @@ class StorageConfig:
 # =============== INTERFACES STORAGE ===============
 
 class IStorageAdapter(ABC):
-    """Interface adaptateur de stockage"""    
+    """Interface adaptateur de stockage"""
+    
     @abstractmethod
     async def connect(self) -> bool:
-        """Connexion au stockage"""        pass
+        """Connexion au stockage"""
+        pass
     
     @abstractmethod
     async def disconnect(self) -> bool:
-        """Déconnexion du stockage"""        pass
+        """Déconnexion du stockage"""
+        pass
     
     @abstractmethod
     async def health_check(self) -> bool:
-        """Vérification de santé"""        pass
+        """Vérification de santé"""
+        pass
 
 # =============== ADAPTATEUR POSTGRESQL ===============
 
 class PostgreSQLAdapter(IStorageAdapter):
-    """Adaptateur PostgreSQL optimisé"""    
+    """Adaptateur PostgreSQL optimisé"""
+    
     def __init__(self, config: StorageConfig):
         self.config = config
         self.pool = None
@@ -79,7 +86,8 @@ class PostgreSQLAdapter(IStorageAdapter):
         self.session_factory = None
     
     async def connect(self) -> bool:
-        """Connexion PostgreSQL avec pool"""        try:
+        """Connexion PostgreSQL avec pool"""
+        try:
             # Pool de connexions asyncpg
             self.pool = await asyncpg.create_pool(
                 host=self.config.postgres_host,
@@ -104,7 +112,8 @@ class PostgreSQLAdapter(IStorageAdapter):
             return False
     
     async def disconnect(self) -> bool:
-        """Déconnexion PostgreSQL"""        try:
+        """Déconnexion PostgreSQL"""
+        try:
             if self.pool:
                 await self.pool.close()
             if self.engine:
@@ -116,7 +125,8 @@ class PostgreSQLAdapter(IStorageAdapter):
             return False
     
     async def health_check(self) -> bool:
-        """Vérification PostgreSQL"""        try:
+        """Vérification PostgreSQL"""
+        try:
             async with self.pool.acquire() as connection:
                 result = await connection.fetchval("SELECT 1")
                 return result == 1
@@ -125,7 +135,8 @@ class PostgreSQLAdapter(IStorageAdapter):
     
     @asynccontextmanager
     async def get_session(self):
-        """Gestionnaire de session SQLAlchemy"""        async with self.session_factory() as session:
+        """Gestionnaire de session SQLAlchemy"""
+        async with self.session_factory() as session:
             try:
                 yield session
                 await session.commit()
@@ -138,13 +149,15 @@ class PostgreSQLAdapter(IStorageAdapter):
 # =============== ADAPTATEUR REDIS ===============
 
 class RedisAdapter(IStorageAdapter):
-    """Adaptateur Redis optimisé"""    
+    """Adaptateur Redis optimisé"""
+    
     def __init__(self, config: StorageConfig):
         self.config = config
         self.redis = None
     
     async def connect(self) -> bool:
-        """Connexion Redis"""        try:
+        """Connexion Redis"""
+        try:
             self.redis = aioredis.Redis(
                 host=self.config.redis_host,
                 port=self.config.redis_port,
@@ -161,7 +174,8 @@ class RedisAdapter(IStorageAdapter):
             return False
     
     async def disconnect(self) -> bool:
-        """Déconnexion Redis"""        try:
+        """Déconnexion Redis"""
+        try:
             if self.redis:
                 await self.redis.close()
             logger.info("🔌 Redis déconnecté")
@@ -171,14 +185,16 @@ class RedisAdapter(IStorageAdapter):
             return False
     
     async def health_check(self) -> bool:
-        """Vérification Redis"""        try:
+        """Vérification Redis"""
+        try:
             await self.redis.ping()
             return True
         except Exception:
             return False
     
     async def set_cache(self, key: str, value: Any, expire: int = 3600) -> bool:
-        """Cache avec expiration"""        try:
+        """Cache avec expiration"""
+        try:
             await self.redis.setex(key, expire, json.dumps(value))
             return True
         except Exception as e:
@@ -186,7 +202,8 @@ class RedisAdapter(IStorageAdapter):
             return False
     
     async def get_cache(self, key: str) -> Optional[Any]:
-        """Récupération cache"""        try:
+        """Récupération cache"""
+        try:
             value = await self.redis.get(key)
             return json.loads(value) if value else None
         except Exception as e:
@@ -196,7 +213,8 @@ class RedisAdapter(IStorageAdapter):
 # =============== GESTIONNAIRE STORAGE PRINCIPAL ===============
 
 class DatabaseAdapterManager:
-    """Gestionnaire principal du stockage"""    
+    """Gestionnaire principal du stockage"""
+    
     def __init__(self, config: StorageConfig):
         self.config = config
         self.postgres = PostgreSQLAdapter(config)
@@ -204,7 +222,8 @@ class DatabaseAdapterManager:
         self.connected = False
     
     async def initialize(self) -> bool:
-        """Initialisation complète du stockage"""        try:
+        """Initialisation complète du stockage"""
+        try:
             # Connexions parallèles
             postgres_ok, redis_ok = await asyncio.gather(
                 self.postgres.connect(),
@@ -226,7 +245,8 @@ class DatabaseAdapterManager:
             return False
     
     async def shutdown(self) -> bool:
-        """Arrêt propre du stockage"""        try:
+        """Arrêt propre du stockage"""
+        try:
             await asyncio.gather(
                 self.postgres.disconnect(),
                 self.redis.disconnect(),

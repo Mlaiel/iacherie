@@ -22,7 +22,8 @@ This software is proprietary and confidential.
 Unauthorized use, modification, or distribution by any individual or entity 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
@@ -40,7 +41,8 @@ from ..monitoring.performance_tracker import PerformanceTracker
 logger = logging.getLogger(__name__)
 
 class QueryType(Enum):
-    """Types of queries supported by composite indexes"""    EXACT_MATCH = "exact_match"
+    """Types of queries supported by composite indexes"""
+    EXACT_MATCH = "exact_match"
     FUZZY_SEARCH = "fuzzy_search"
     SEMANTIC_SEARCH = "semantic_search"
     SIMILARITY_SEARCH = "similarity_search"
@@ -49,12 +51,14 @@ class QueryType(Enum):
     HYBRID_SEARCH = "hybrid_search"
 
 class IndexPriority(Enum):
-    """Priority levels for index selection"""    PRIMARY = "primary"
+    """Priority levels for index selection"""
+    PRIMARY = "primary"
     SECONDARY = "secondary"
     FALLBACK = "fallback"
 
 class CompositeIndexManager:
-    """    Ultra-advanced composite index manager for IA-Influencer platform
+    """
+    Ultra-advanced composite index manager for IA-Influencer platform
     
     Orchestrates multiple index types for optimal query performance:
     - Content-specific indexes (B-tree, Hash, GIN, GiST)
@@ -69,9 +73,11 @@ class CompositeIndexManager:
     - Performance-based index selection
     - Automatic fallback mechanisms
     - Load balancing across indexes
-    """    
+    """
+    
     def __init__(self):
-        """Initialize composite index manager"""        self.content_manager = ContentIndexManager()
+        """Initialize composite index manager"""
+        self.content_manager = ContentIndexManager()
         self.vector_manager = VectorIndexManager()
         self.faiss_manager = FAISSIndexManager()
         self.elasticsearch_manager = ElasticsearchIndexManager()
@@ -136,7 +142,8 @@ class CompositeIndexManager:
         logger.info("CompositeIndexManager initialized")
     
     async def initialize(self) -> bool:
-        """Initialize composite index manager and all sub-managers"""        try:
+        """Initialize composite index manager and all sub-managers"""
+        try:
             # Initialize performance tracking
             await self.performance_tracker.initialize()
             
@@ -183,7 +190,8 @@ class CompositeIndexManager:
             return False
     
     async def create_index(self, index_name: str, config: Dict[str, Any]) -> bool:
-        """Create composite index across multiple backends"""        try:
+        """Create composite index across multiple backends"""
+        try:
             index_types = config.get('index_types', ['content'])
             if not isinstance(index_types, list):
                 index_types = [index_types]
@@ -234,7 +242,8 @@ class CompositeIndexManager:
             return False
     
     async def query(self, query_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute composite query across multiple indexes"""        try:
+        """Execute composite query across multiple indexes"""
+        try:
             query_type = QueryType(query_config.get('type', 'exact_match'))
             query_text = query_config.get('query', '')
             max_results = query_config.get('max_results', 50)
@@ -333,7 +342,8 @@ class CompositeIndexManager:
     
     async def _adapt_query_for_manager(self, query_config: Dict[str, Any], 
                                      manager_name: str, weight: float) -> Dict[str, Any]:
-        """Adapt query configuration for specific index manager"""        adapted_query = query_config.copy()
+        """Adapt query configuration for specific index manager"""
+        adapted_query = query_config.copy()
         
         if manager_name == 'elasticsearch':
             # Adapt for Elasticsearch
@@ -368,7 +378,8 @@ class CompositeIndexManager:
         return adapted_query
     
     async def _execute_manager_query(self, manager, query_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute query on specific index manager"""        try:
+        """Execute query on specific index manager"""
+        try:
             if hasattr(manager, 'search'):
                 # For managers with search method (Elasticsearch)
                 return await manager.search(
@@ -404,7 +415,8 @@ class CompositeIndexManager:
     
     async def _merge_query_results(self, manager_results: Dict[str, Any], 
                                  max_results: int, query_type: QueryType) -> Dict[str, Any]:
-        """Merge results from multiple index managers"""        try:
+        """Merge results from multiple index managers"""
+        try:
             all_hits = []
             total_weight = 0
             
@@ -463,7 +475,8 @@ class CompositeIndexManager:
     
     async def _select_best_results(self, manager_results: Dict[str, Any], 
                                  max_results: int) -> Dict[str, Any]:
-        """Select best results from single manager"""        best_manager = None
+        """Select best results from single manager"""
+        best_manager = None
         best_weight = 0
         best_count = 0
         
@@ -495,7 +508,8 @@ class CompositeIndexManager:
     
     async def _update_query_statistics(self, query_type: QueryType, query_time: float,
                                      manager_results: Dict[str, Any]):
-        """Update query performance statistics"""        try:
+        """Update query performance statistics"""
+        try:
             stats_key = query_type.value
             
             if stats_key not in self.query_stats:
@@ -536,7 +550,8 @@ class CompositeIndexManager:
             logger.debug(f"Failed to update query statistics: {str(e)}")
     
     async def _load_performance_baselines(self):
-        """Load performance baselines for index selection"""        try:
+        """Load performance baselines for index selection"""
+        try:
             # Initialize performance tracking for each manager
             for manager_name in self.managers:
                 self.index_performance[manager_name] = {
@@ -553,11 +568,13 @@ class CompositeIndexManager:
             logger.debug(f"Failed to load performance baselines: {str(e)}")
     
     async def _setup_optimization_scheduling(self):
-        """Setup automatic optimization scheduling"""        # This would typically start background optimization tasks
+        """Setup automatic optimization scheduling"""
+        # This would typically start background optimization tasks
         pass
     
     async def optimize_composite_indexes(self) -> Dict[str, Any]:
-        """Optimize all composite indexes"""        try:
+        """Optimize all composite indexes"""
+        try:
             start_time = datetime.now()
             optimization_results = {}
             
@@ -599,7 +616,8 @@ class CompositeIndexManager:
             return {'error': str(e)}
     
     async def get_composite_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive statistics for all composite indexes"""        try:
+        """Get comprehensive statistics for all composite indexes"""
+        try:
             stats = {
                 'query_statistics': self.query_stats,
                 'index_performance': self.index_performance,
@@ -628,7 +646,8 @@ class CompositeIndexManager:
             return {'error': str(e)}
     
     async def cleanup(self):
-        """Cleanup all managers and resources"""        try:
+        """Cleanup all managers and resources"""
+        try:
             # Cleanup all managers in parallel
             cleanup_tasks = []
             for manager_name, manager in self.managers.items():

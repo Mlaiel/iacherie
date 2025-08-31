@@ -18,7 +18,8 @@ This revolutionary backup and disaster recovery system is the EXCLUSIVE property
 Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
-"""from typing import List, Dict, Any, Optional, Union, Tuple, Set
+"""
+from typing import List, Dict, Any, Optional, Union, Tuple, Set
 import logging
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -63,7 +64,8 @@ Base = declarative_base()
 
 
 class BackupType(Enum):
-    """Comprehensive backup types for different data protection strategies."""    
+    """Comprehensive backup types for different data protection strategies."""
+    
     # Database backups
     FULL_DATABASE_BACKUP = "full_database_backup"
     INCREMENTAL_DATABASE_BACKUP = "incremental_database_backup"
@@ -96,7 +98,8 @@ class BackupType(Enum):
 
 
 class BackupStatus(Enum):
-    """Backup operation status tracking."""    
+    """Backup operation status tracking."""
+    
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -110,7 +113,8 @@ class BackupStatus(Enum):
 
 
 class StorageProvider(Enum):
-    """Supported cloud storage providers for backup storage."""    
+    """Supported cloud storage providers for backup storage."""
+    
     AWS_S3 = "aws_s3"
     AZURE_BLOB = "azure_blob"
     GOOGLE_CLOUD_STORAGE = "google_cloud_storage"
@@ -121,7 +125,8 @@ class StorageProvider(Enum):
 
 
 class RecoveryType(Enum):
-    """Disaster recovery types for different scenarios."""    
+    """Disaster recovery types for different scenarios."""
+    
     POINT_IN_TIME_RECOVERY = "point_in_time_recovery"
     FULL_SYSTEM_RECOVERY = "full_system_recovery"
     PARTIAL_RECOVERY = "partial_recovery"
@@ -133,7 +138,8 @@ class RecoveryType(Enum):
 
 @dataclass
 class BackupConfiguration:
-    """Comprehensive backup configuration for automated scheduling."""    
+    """Comprehensive backup configuration for automated scheduling."""
+    
     config_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     backup_name: str = ""
     backup_type: BackupType = BackupType.FULL_DATABASE_BACKUP
@@ -184,7 +190,8 @@ class BackupConfiguration:
 
 @dataclass
 class DisasterRecoveryPlan:
-    """Comprehensive disaster recovery plan for business continuity."""    
+    """Comprehensive disaster recovery plan for business continuity."""
+    
     plan_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     plan_name: str = ""
     plan_description: str = ""
@@ -220,7 +227,8 @@ class DisasterRecoveryPlan:
 
 
 class BackupRecoveryLog(Base):
-    """Ultra-comprehensive backup and disaster recovery operations log."""    
+    """Ultra-comprehensive backup and disaster recovery operations log."""
+    
     __tablename__ = "backup_recovery_logs"
     
     # Primary identifiers
@@ -331,9 +339,11 @@ class BackupRecoveryLog(Base):
 
 
 class BackupRecoveryManager:
-    """Ultra-advanced backup and disaster recovery management system."""    
+    """Ultra-advanced backup and disaster recovery management system."""
+    
     def __init__(self, db_session: Session):
-        """Initialize the backup and recovery manager."""        self.db_session = db_session
+        """Initialize the backup and recovery manager."""
+        self.db_session = db_session
         self.logger = logging.getLogger(__name__)
         
         # Storage clients
@@ -350,7 +360,8 @@ class BackupRecoveryManager:
         self._initialize_storage_providers()
     
     def _initialize_storage_providers(self):
-        """Initialize cloud storage provider clients."""        try:
+        """Initialize cloud storage provider clients."""
+        try:
             if HAS_AWS:
                 self.aws_client = boto3.client('s3')
                 self.logger.info("AWS S3 client initialized")
@@ -369,7 +380,8 @@ class BackupRecoveryManager:
     async def create_backup(self, 
                           backup_config: BackupConfiguration,
                           immediate: bool = False) -> str:
-        """Create a comprehensive backup operation."""        try:
+        """Create a comprehensive backup operation."""
+        try:
             operation_id = str(uuid.uuid4())
             
             # Create backup log entry
@@ -409,7 +421,8 @@ class BackupRecoveryManager:
     async def _execute_backup_operation(self, 
                                       operation_id: str,
                                       backup_config: BackupConfiguration):
-        """Execute the actual backup operation."""        try:
+        """Execute the actual backup operation."""
+        try:
             # Update status to running
             backup_log = self.db_session.query(BackupRecoveryLog).filter(
                 BackupRecoveryLog.operation_id == operation_id
@@ -459,7 +472,8 @@ class BackupRecoveryManager:
     async def _execute_database_backup(self, 
                                      operation_id: str,
                                      backup_config: BackupConfiguration):
-        """Execute database-specific backup operations."""        # This would implement PostgreSQL pg_dump or similar
+        """Execute database-specific backup operations."""
+        # This would implement PostgreSQL pg_dump or similar
         self.logger.info(f"Executing database backup for operation {operation_id}")
         
         # Mock implementation - would use actual database backup tools
@@ -484,7 +498,8 @@ class BackupRecoveryManager:
     async def _execute_file_backup(self, 
                                  operation_id: str,
                                  backup_config: BackupConfiguration):
-        """Execute file system backup operations."""        self.logger.info(f"Executing file backup for operation {operation_id}")
+        """Execute file system backup operations."""
+        self.logger.info(f"Executing file backup for operation {operation_id}")
         
         # This would implement actual file system backup
         # For now, mock implementation
@@ -511,7 +526,8 @@ class BackupRecoveryManager:
     async def _execute_content_backup(self, 
                                     operation_id: str,
                                     backup_config: BackupConfiguration):
-        """Execute content-specific backup operations for creators."""        self.logger.info(f"Executing content backup for operation {operation_id}")
+        """Execute content-specific backup operations for creators."""
+        self.logger.info(f"Executing content backup for operation {operation_id}")
         
         # This would backup creator content, metadata, protection rules, etc.
         backup_log = self.db_session.query(BackupRecoveryLog).filter(
@@ -528,7 +544,8 @@ class BackupRecoveryManager:
                                        scenario: str,
                                        recovery_type: RecoveryType,
                                        target_time: Optional[datetime] = None) -> str:
-        """Initiate comprehensive disaster recovery procedures."""        try:
+        """Initiate comprehensive disaster recovery procedures."""
+        try:
             operation_id = str(uuid.uuid4())
             
             # Create recovery log entry
@@ -565,7 +582,8 @@ class BackupRecoveryManager:
                                          operation_id: str,
                                          scenario: str,
                                          recovery_type: RecoveryType):
-        """Execute disaster recovery procedures."""        self.logger.info(f"Executing recovery procedures for scenario: {scenario}")
+        """Execute disaster recovery procedures."""
+        self.logger.info(f"Executing recovery procedures for scenario: {scenario}")
         
         recovery_log = self.db_session.query(BackupRecoveryLog).filter(
             BackupRecoveryLog.operation_id == operation_id
@@ -598,7 +616,8 @@ class BackupRecoveryManager:
             self.db_session.commit()
     
     async def _execute_full_system_recovery(self, operation_id: str):
-        """Execute full system recovery procedures."""        self.logger.info(f"Executing full system recovery for operation {operation_id}")
+        """Execute full system recovery procedures."""
+        self.logger.info(f"Executing full system recovery for operation {operation_id}")
         
         # Mock implementation of full system recovery
         recovery_steps = [
@@ -618,7 +637,8 @@ class BackupRecoveryManager:
     
     async def generate_backup_report(self, 
                                    time_period: str = "monthly") -> Dict[str, Any]:
-        """Generate comprehensive backup and recovery report."""        try:
+        """Generate comprehensive backup and recovery report."""
+        try:
             end_date = datetime.now(timezone.utc)
             if time_period == "daily":
                 start_date = end_date - timedelta(days=1)

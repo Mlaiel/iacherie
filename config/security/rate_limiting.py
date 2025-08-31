@@ -19,7 +19,8 @@ This code is proprietary and belongs to Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit 
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -27,7 +28,8 @@ from datetime import timedelta
 
 
 class RateLimitType(Enum):
-    """Types of rate limiting strategies."""    TOKEN_BUCKET = "token_bucket"
+    """Types of rate limiting strategies."""
+    TOKEN_BUCKET = "token_bucket"
     FIXED_WINDOW = "fixed_window"
     SLIDING_WINDOW = "sliding_window"
     LEAKY_BUCKET = "leaky_bucket"
@@ -35,7 +37,8 @@ class RateLimitType(Enum):
 
 
 class ThrottleAction(Enum):
-    """Actions to take when rate limit is exceeded."""    REJECT = "reject"
+    """Actions to take when rate limit is exceeded."""
+    REJECT = "reject"
     QUEUE = "queue"
     DELAY = "delay"
     DOWNGRADE = "downgrade"
@@ -43,7 +46,8 @@ class ThrottleAction(Enum):
 
 
 class ResourceType(Enum):
-    """Types of resources that can be rate limited."""    API_CALLS = "api_calls"
+    """Types of resources that can be rate limited."""
+    API_CALLS = "api_calls"
     FILE_UPLOADS = "file_uploads"
     CONTENT_PROCESSING = "content_processing"
     BANDWIDTH = "bandwidth"
@@ -55,7 +59,8 @@ class ResourceType(Enum):
 
 @dataclass
 class RateLimit:
-    """Individual rate limit configuration."""    limit: int  # Number of operations allowed
+    """Individual rate limit configuration."""
+    limit: int  # Number of operations allowed
     window_seconds: int  # Time window in seconds
     rate_type: RateLimitType = RateLimitType.SLIDING_WINDOW
     action: ThrottleAction = ThrottleAction.REJECT
@@ -79,7 +84,8 @@ class RateLimit:
 
 @dataclass
 class ApiRateLimiting:
-    """API-specific rate limiting configuration."""    
+    """API-specific rate limiting configuration."""
+    
     # Global API limits
     global_limits: Dict[str, RateLimit] = field(default_factory=lambda: {
         "requests_per_second": RateLimit(
@@ -147,7 +153,8 @@ class ApiRateLimiting:
 
 @dataclass
 class ContentProcessingLimits:
-    """Content processing rate limiting configuration."""    
+    """Content processing rate limiting configuration."""
+    
     # Upload limits by content type
     upload_limits: Dict[str, Dict[str, RateLimit]] = field(default_factory=lambda: {
         "audio": {
@@ -209,7 +216,8 @@ class ContentProcessingLimits:
 
 @dataclass
 class FingerprintingLimits:
-    """Fingerprinting operation rate limiting."""    
+    """Fingerprinting operation rate limiting."""
+    
     # Fingerprint creation limits
     creation_limits: Dict[str, RateLimit] = field(default_factory=lambda: {
         "fingerprints_per_hour": RateLimit(limit=500, window_seconds=3600),
@@ -243,7 +251,8 @@ class FingerprintingLimits:
 
 @dataclass
 class PlatformIntegrationLimits:
-    """Platform-specific integration rate limiting."""    
+    """Platform-specific integration rate limiting."""
+    
     # Platform API limits (respecting external API limits)
     platform_limits: Dict[str, Dict[str, RateLimit]] = field(default_factory=lambda: {
         "spotify": {
@@ -284,7 +293,8 @@ class PlatformIntegrationLimits:
 
 @dataclass
 class RevenueLimits:
-    """Revenue and financial operation rate limiting."""    
+    """Revenue and financial operation rate limiting."""
+    
     # Revenue tracking limits
     tracking_limits: Dict[str, RateLimit] = field(default_factory=lambda: {
         "revenue_queries_per_hour": RateLimit(limit=100, window_seconds=3600),
@@ -312,7 +322,8 @@ class RevenueLimits:
 
 @dataclass
 class SecurityRateLimiting:
-    """Security-focused rate limiting configuration."""    
+    """Security-focused rate limiting configuration."""
+    
     # Authentication limits
     auth_limits: Dict[str, RateLimit] = field(default_factory=lambda: {
         "login_attempts_per_minute": RateLimit(
@@ -352,7 +363,8 @@ class SecurityRateLimiting:
 
 @dataclass
 class AdaptiveRateLimiting:
-    """Adaptive and intelligent rate limiting configuration."""    
+    """Adaptive and intelligent rate limiting configuration."""
+    
     # Machine learning based adaptation
     ml_adaptation_enabled: bool = True
     learning_window_hours: int = 24
@@ -377,7 +389,8 @@ class AdaptiveRateLimiting:
 
 @dataclass
 class RateLimitingStorage:
-    """Rate limiting storage and persistence configuration."""    
+    """Rate limiting storage and persistence configuration."""
+    
     # Storage backend
     storage_backend: str = "redis"  # redis, memory, database
     redis_config: Dict[str, Any] = field(default_factory=lambda: {
@@ -401,7 +414,8 @@ class RateLimitingStorage:
 
 @dataclass
 class RateLimitingMonitoring:
-    """Rate limiting monitoring and alerting configuration."""    
+    """Rate limiting monitoring and alerting configuration."""
+    
     # Metrics collection
     collect_metrics: bool = True
     metrics_interval_seconds: int = 60
@@ -428,7 +442,8 @@ class RateLimitingMonitoring:
 
 @dataclass
 class RateLimitingConfig:
-    """Main rate limiting configuration container."""    
+    """Main rate limiting configuration container."""
+    
     # Core configurations
     api_limits: ApiRateLimiting = field(default_factory=ApiRateLimiting)
     content_processing: ContentProcessingLimits = field(default_factory=ContentProcessingLimits)
@@ -463,26 +478,31 @@ rate_limiting_config = RateLimitingConfig()
 
 
 def get_rate_limiting_config() -> RateLimitingConfig:
-    """Get the rate limiting configuration instance."""    return rate_limiting_config
+    """Get the rate limiting configuration instance."""
+    return rate_limiting_config
 
 
 def get_tier_rate_limits(tier: str) -> Dict[str, RateLimit]:
-    """Get rate limits for specific subscription tier."""    config = get_rate_limiting_config()
+    """Get rate limits for specific subscription tier."""
+    config = get_rate_limiting_config()
     return config.api_limits.tier_limits.get(tier, config.api_limits.tier_limits["basic"])
 
 
 def get_platform_rate_limits(platform: str) -> Dict[str, RateLimit]:
-    """Get rate limits for specific platform integration."""    config = get_rate_limiting_config()
+    """Get rate limits for specific platform integration."""
+    config = get_rate_limiting_config()
     return config.platform_integration.platform_limits.get(platform, {})
 
 
 def get_content_type_limits(content_type: str) -> Dict[str, RateLimit]:
-    """Get rate limits for specific content type processing."""    config = get_rate_limiting_config()
+    """Get rate limits for specific content type processing."""
+    config = get_rate_limiting_config()
     return config.content_processing.upload_limits.get(content_type, {})
 
 
 def validate_rate_limiting_config(config: RateLimitingConfig) -> bool:
-    """Validate rate limiting configuration settings."""    # Validate rate limit values
+    """Validate rate limiting configuration settings."""
+    # Validate rate limit values
     for tier_limits in config.api_limits.tier_limits.values():
         for limit in tier_limits.values():
             if limit.limit <= 0:

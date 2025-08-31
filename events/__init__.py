@@ -26,7 +26,8 @@ Project Team Expertise:
 - DevOps Engineer: Infrastructure automation and deployment
 - Audio Engineer: Audio processing and music technology
 - Microservices Architect: Distributed systems and scalability
-"""from typing import Dict, Any, Optional, List
+"""
+from typing import Dict, Any, Optional, List
 import logging
 from enum import Enum
 
@@ -76,7 +77,8 @@ from .analytics_events import (
 
 # Event types for IA Influencer business logic
 class EventType(Enum):
-    """Business event types for IA Influencer platform"""    
+    """Business event types for IA Influencer platform"""
+    
     # Content events
     CONTENT_UPLOADED = "content.uploaded"
     CONTENT_PROCESSED = "content.processed"
@@ -124,7 +126,8 @@ class EventType(Enum):
 
 
 class EventSeverity(Enum):
-    """Event severity levels for monitoring and alerting"""    CRITICAL = "critical"
+    """Event severity levels for monitoring and alerting"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -132,7 +135,8 @@ class EventSeverity(Enum):
 
 
 class EventStatus(Enum):
-    """Event processing status"""    PENDING = "pending"
+    """Event processing status"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -157,11 +161,13 @@ EVENT_SYSTEM_CONFIG = {
 
 # Initialize event system components
 def initialize_event_system() -> Dict[str, Any]:
-    """    Initialize the complete event-driven architecture system
+    """
+    Initialize the complete event-driven architecture system
     
     Returns:
         Dict containing initialized components
-    """    try:
+    """
+    try:
         logger.info("Initializing IA Influencer Event System...")
         
         # Initialize core components

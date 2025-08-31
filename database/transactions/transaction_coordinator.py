@@ -12,7 +12,8 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
-"""import asyncio
+"""
+import asyncio
 import uuid
 import time
 import logging
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class TransactionState(Enum):
-    """Transaction state enumeration"""    INIT = "initialized"
+    """Transaction state enumeration"""
+    INIT = "initialized"
     ACTIVE = "active"
     PREPARING = "preparing"
     PREPARED = "prepared"
@@ -41,7 +43,8 @@ class TransactionState(Enum):
 
 
 class TransactionPriority(Enum):
-    """Transaction priority levels"""    LOW = 1
+    """Transaction priority levels"""
+    LOW = 1
     NORMAL = 2
     HIGH = 3
     CRITICAL = 4
@@ -49,7 +52,8 @@ class TransactionPriority(Enum):
 
 @dataclass
 class TransactionContext:
-    """Transaction context containing all transaction metadata"""    transaction_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Transaction context containing all transaction metadata"""
+    transaction_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     state: TransactionState = TransactionState.INIT
     priority: TransactionPriority = TransactionPriority.NORMAL
     timeout: int = 30  # seconds
@@ -65,7 +69,8 @@ class TransactionContext:
     
     @property
     def duration(self) -> Optional[float]:
-        """Calculate transaction duration in seconds"""        if self.started_at and self.completed_at:
+        """Calculate transaction duration in seconds"""
+        if self.started_at and self.completed_at:
             return (self.completed_at - self.started_at).total_seconds()
         elif self.started_at:
             return (datetime.now(timezone.utc) - self.started_at).total_seconds()
@@ -73,40 +78,47 @@ class TransactionContext:
     
     @property
     def is_expired(self) -> bool:
-        """Check if transaction has expired"""        if self.started_at:
+        """Check if transaction has expired"""
+        if self.started_at:
             elapsed = (datetime.now(timezone.utc) - self.started_at).total_seconds()
             return elapsed > self.timeout
         return False
 
 
 class ResourceManager:
-    """Resource manager for transaction coordination"""    
+    """Resource manager for transaction coordination"""
+    
     def __init__(self):
         self.locks: Dict[str, threading.RLock] = {}
         self.resources: Dict[str, Any] = {}
         self.lock = threading.RLock()
     
     def acquire_resource(self, resource_id: str, timeout: float = 10.0) -> bool:
-        """Acquire exclusive access to a resource"""        with self.lock:
+        """Acquire exclusive access to a resource"""
+        with self.lock:
             if resource_id not in self.locks:
                 self.locks[resource_id] = threading.RLock()
         
         return self.locks[resource_id].acquire(timeout=timeout)
     
     def release_resource(self, resource_id: str) -> None:
-        """Release resource lock"""        if resource_id in self.locks:
+        """Release resource lock"""
+        if resource_id in self.locks:
             self.locks[resource_id].release()
     
     def register_resource(self, resource_id: str, resource: Any) -> None:
-        """Register a resource for management"""        with self.lock:
+        """Register a resource for management"""
+        with self.lock:
             self.resources[resource_id] = resource
     
     def get_resource(self, resource_id: str) -> Optional[Any]:
-        """Get registered resource"""        return self.resources.get(resource_id)
+        """Get registered resource"""
+        return self.resources.get(resource_id)
 
 
 class TransactionCoordinator:
-    """    Main transaction coordinator providing enterprise-grade transaction orchestration
+    """
+    Main transaction coordinator providing enterprise-grade transaction orchestration
     
     Features:
     - Distributed transaction coordination
@@ -116,7 +128,8 @@ class TransactionCoordinator:
     - Timeout and retry handling
     - Performance monitoring
     - Rollback and recovery
-    """    
+    """
+    
     def __init__(self, max_concurrent_transactions: int = 1000):
         self.active_transactions: Dict[str, TransactionContext] = {}
         self.resource_manager = ResourceManager()
@@ -144,7 +157,8 @@ class TransactionCoordinator:
         timeout: int = 30,
         metadata: Optional[Dict[str, Any]] = None
     ) -> TransactionContext:
-        """Begin a new transaction"""        
+        """Begin a new transaction"""
+        
         async with self.lock:
             if len(self.active_transactions) >= self.max_concurrent:
                 raise RuntimeError(f"Maximum concurrent transactions reached: {self.max_concurrent}")
@@ -166,7 +180,8 @@ class TransactionCoordinator:
             return context
     
     async def prepare_transaction(self, transaction_id: str) -> bool:
-        """Prepare transaction for commit (Phase 1 of 2PC)"""        
+        """Prepare transaction for commit (Phase 1 of 2PC)"""
+        
         context = self.active_transactions.get(transaction_id)
         if not context:
             logger.error("Transaction not found: %s", transaction_id)
@@ -209,7 +224,8 @@ class TransactionCoordinator:
             return False
     
     async def commit_transaction(self, transaction_id: str) -> bool:
-        """Commit transaction (Phase 2 of 2PC)"""        
+        """Commit transaction (Phase 2 of 2PC)"""
+        
         context = self.active_transactions.get(transaction_id)
         if not context:
             logger.error("Transaction not found: %s", transaction_id)
@@ -269,7 +285,8 @@ class TransactionCoordinator:
             return False
     
     async def rollback_transaction(self, transaction_id: str) -> bool:
-        """Rollback transaction"""        
+        """Rollback transaction"""
+        
         context = self.active_transactions.get(transaction_id)
         if not context:
             logger.warning("Transaction not found for rollback: %s", transaction_id)
@@ -278,7 +295,8 @@ class TransactionCoordinator:
         return await self._abort_transaction(context, TransactionState.ABORTED)
     
     async def add_participant(self, transaction_id: str, participant_id: str) -> bool:
-        """Add participant to transaction"""        
+        """Add participant to transaction"""
+        
         context = self.active_transactions.get(transaction_id)
         if not context:
             return False
@@ -291,7 +309,8 @@ class TransactionCoordinator:
         return True
     
     def add_rollback_handler(self, transaction_id: str, handler: Callable) -> bool:
-        """Add rollback handler to transaction"""        
+        """Add rollback handler to transaction"""
+        
         context = self.active_transactions.get(transaction_id)
         if not context:
             return False
@@ -300,7 +319,8 @@ class TransactionCoordinator:
         return True
     
     def add_commit_handler(self, transaction_id: str, handler: Callable) -> bool:
-        """Add commit handler to transaction"""        
+        """Add commit handler to transaction"""
+        
         context = self.active_transactions.get(transaction_id)
         if not context:
             return False
@@ -315,7 +335,8 @@ class TransactionCoordinator:
         timeout: int = 30,
         metadata: Optional[Dict[str, Any]] = None
     ):
-        """Context manager for automatic transaction management"""        
+        """Context manager for automatic transaction management"""
+        
         context = await self.begin_transaction(priority, timeout, metadata)
         
         try:
@@ -334,7 +355,8 @@ class TransactionCoordinator:
             raise e
     
     async def get_transaction_status(self, transaction_id: str) -> Optional[Dict[str, Any]]:
-        """Get transaction status and metrics"""        
+        """Get transaction status and metrics"""
+        
         context = self.active_transactions.get(transaction_id)
         if not context:
             return None
@@ -351,14 +373,16 @@ class TransactionCoordinator:
         }
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get coordinator performance metrics"""        return {
+        """Get coordinator performance metrics"""
+        return {
             **self.performance_metrics,
             "active_transactions": len(self.active_transactions),
             "max_concurrent": self.max_concurrent,
         }
     
     async def _prepare_participant(self, participant_id: str, context: TransactionContext) -> bool:
-        """Prepare individual participant"""        try:
+        """Prepare individual participant"""
+        try:
             # In a real implementation, this would call the participant's prepare method
             # For now, simulate preparation
             await asyncio.sleep(0.001)  # Simulate network delay
@@ -368,7 +392,8 @@ class TransactionCoordinator:
             return False
     
     async def _commit_participant(self, participant_id: str, context: TransactionContext) -> bool:
-        """Commit individual participant"""        try:
+        """Commit individual participant"""
+        try:
             # In a real implementation, this would call the participant's commit method
             await asyncio.sleep(0.001)  # Simulate network delay
             return True
@@ -377,7 +402,8 @@ class TransactionCoordinator:
             return False
     
     async def _abort_transaction(self, context: TransactionContext, state: TransactionState) -> bool:
-        """Abort transaction and execute rollback handlers"""        
+        """Abort transaction and execute rollback handlers"""
+        
         try:
             context.state = TransactionState.ABORTING
             
@@ -416,14 +442,16 @@ class TransactionCoordinator:
             return False
     
     async def _release_transaction_resources(self, context: TransactionContext) -> None:
-        """Release all resources held by transaction"""        for participant in context.participants:
+        """Release all resources held by transaction"""
+        for participant in context.participants:
             try:
                 self.resource_manager.release_resource(participant)
             except Exception as e:
                 logger.error("Failed to release resource %s: %s", participant, str(e))
     
     async def _update_metrics(self, context: TransactionContext, success: bool) -> None:
-        """Update performance metrics"""        self.performance_metrics["total_transactions"] += 1
+        """Update performance metrics"""
+        self.performance_metrics["total_transactions"] += 1
         
         if success:
             self.performance_metrics["successful_transactions"] += 1
@@ -439,7 +467,8 @@ class TransactionCoordinator:
             )
     
     async def _monitor_transactions(self) -> None:
-        """Background task to monitor transaction health"""        while not self._shutdown:
+        """Background task to monitor transaction health"""
+        while not self._shutdown:
             try:
                 # Calculate throughput
                 start_time = time.time()
@@ -462,7 +491,8 @@ class TransactionCoordinator:
                 await asyncio.sleep(5)
     
     async def _cleanup_expired_transactions(self) -> None:
-        """Background task to cleanup expired transactions"""        while not self._shutdown:
+        """Background task to cleanup expired transactions"""
+        while not self._shutdown:
             try:
                 expired_transactions = []
                 
@@ -482,7 +512,8 @@ class TransactionCoordinator:
                 await asyncio.sleep(5)
     
     async def shutdown(self) -> None:
-        """Graceful shutdown of coordinator"""        logger.info("Shutting down TransactionCoordinator...")
+        """Graceful shutdown of coordinator"""
+        logger.info("Shutting down TransactionCoordinator...")
         self._shutdown = True
         
         # Abort all active transactions

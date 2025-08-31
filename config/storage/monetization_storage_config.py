@@ -13,14 +13,16 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 from decimal import Decimal
 
 class MonetizationPlatform(Enum):
-    """Supported monetization platforms."""    YOUTUBE = "youtube"
+    """Supported monetization platforms."""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     SPOTIFY = "spotify"
@@ -32,7 +34,8 @@ class MonetizationPlatform(Enum):
     CUSTOM = "custom"
 
 class RevenueType(Enum):
-    """Types of revenue streams."""    AD_REVENUE = "ad_revenue"
+    """Types of revenue streams."""
+    AD_REVENUE = "ad_revenue"
     SUBSCRIPTION = "subscription"
     DONATION = "donation"
     MERCHANDISE = "merchandise"
@@ -43,7 +46,8 @@ class RevenueType(Enum):
     ROYALTIES = "royalties"
 
 class PaymentProvider(Enum):
-    """Supported payment providers."""    STRIPE = "stripe"
+    """Supported payment providers."""
+    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     REVOLUT = "revolut"
@@ -52,9 +56,11 @@ class PaymentProvider(Enum):
 
 @dataclass
 class MonetizationStorageConfig:
-    """    Comprehensive monetization storage configuration.
+    """
+    Comprehensive monetization storage configuration.
     Handles revenue tracking, payment processing, and financial analytics.
-    """    
+    """
+    
     # Revenue tracking storage paths
     revenue_data_path: str = "monetization/revenue"
     payment_records_path: str = "monetization/payments"
@@ -118,7 +124,8 @@ class MonetizationStorageConfig:
     })
     
     def __post_init__(self):
-        """Initialize platform-specific revenue storage configuration."""        if not self.platform_revenue_config:
+        """Initialize platform-specific revenue storage configuration."""
+        if not self.platform_revenue_config:
             self.platform_revenue_config = {
                 MonetizationPlatform.YOUTUBE: {
                     'api_data_storage': f"{self.revenue_data_path}/youtube/api",
@@ -163,20 +170,25 @@ class MonetizationStorageConfig:
             }
     
     def get_revenue_storage_path(self, platform: MonetizationPlatform) -> str:
-        """Get revenue storage path for specific platform."""        return self.platform_revenue_config[platform]['api_data_storage']
+        """Get revenue storage path for specific platform."""
+        return self.platform_revenue_config[platform]['api_data_storage']
     
     def get_supported_revenue_types(self, platform: MonetizationPlatform) -> List[RevenueType]:
-        """Get supported revenue types for specific platform."""        return self.platform_revenue_config[platform]['revenue_types']
+        """Get supported revenue types for specific platform."""
+        return self.platform_revenue_config[platform]['revenue_types']
     
     def get_supported_currencies(self, platform: MonetizationPlatform) -> List[str]:
-        """Get supported currencies for specific platform."""        return self.platform_revenue_config[platform]['currency_support']
+        """Get supported currencies for specific platform."""
+        return self.platform_revenue_config[platform]['currency_support']
     
     def is_pci_compliant(self) -> bool:
-        """Check if payment storage is PCI compliant."""        return self.payment_storage_config.get('pci_compliance', False)
+        """Check if payment storage is PCI compliant."""
+        return self.payment_storage_config.get('pci_compliance', False)
 
 @dataclass
 class PaymentProcessingConfig:
-    """Configuration for payment processing and financial transactions."""    
+    """Configuration for payment processing and financial transactions."""
+    
     # Payment provider configurations
     payment_providers_config: Dict[PaymentProvider, Dict[str, Any]] = field(default_factory=dict)
     
@@ -205,7 +217,8 @@ class PaymentProcessingConfig:
     })
     
     def __post_init__(self):
-        """Initialize payment provider configurations."""        if not self.payment_providers_config:
+        """Initialize payment provider configurations."""
+        if not self.payment_providers_config:
             self.payment_providers_config = {
                 PaymentProvider.STRIPE: {
                     'api_key_storage': 'secrets/stripe/api_key',
@@ -238,7 +251,8 @@ class PaymentProcessingConfig:
 
 @dataclass
 class LicensingStorageConfig:
-    """Configuration for content licensing and intellectual property management."""    
+    """Configuration for content licensing and intellectual property management."""
+    
     # Licensing storage paths
     license_agreements_path: str = "monetization/licensing/agreements"
     royalty_calculations_path: str = "monetization/licensing/royalties"
@@ -288,7 +302,8 @@ licensing_storage_config = LicensingStorageConfig()
 
 # Configuration validation functions
 def validate_monetization_storage_config() -> bool:
-    """Validate monetization storage configuration."""    try:
+    """Validate monetization storage configuration."""
+    try:
         # Validate required paths
         required_paths = [
             monetization_storage_config.revenue_data_path,
@@ -318,7 +333,8 @@ def validate_monetization_storage_config() -> bool:
         return False
 
 def validate_payment_processing_config() -> bool:
-    """Validate payment processing configuration."""    try:
+    """Validate payment processing configuration."""
+    try:
         # Validate payment providers
         required_providers = [PaymentProvider.STRIPE, PaymentProvider.PAYPAL]
         

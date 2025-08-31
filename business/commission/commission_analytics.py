@@ -14,7 +14,8 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + Data Scientist + DBA +
 © 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
 from datetime import datetime, timedelta
@@ -53,7 +54,8 @@ from ...database.connection import get_async_session
 logger = get_structured_logger(__name__)
 
 class AnalyticsMetric(str, Enum):
-    """Analytics metric enumeration"""    TOTAL_COMMISSION = "total_commission"
+    """Analytics metric enumeration"""
+    TOTAL_COMMISSION = "total_commission"
     AVERAGE_COMMISSION = "average_commission"
     MEDIAN_COMMISSION = "median_commission"
     COMMISSION_COUNT = "commission_count"
@@ -70,7 +72,8 @@ class AnalyticsMetric(str, Enum):
     PROCESSING_EFFICIENCY = "processing_efficiency"
 
 class AggregationPeriod(str, Enum):
-    """Aggregation period enumeration"""    HOURLY = "hourly"
+    """Aggregation period enumeration"""
+    HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -78,14 +81,16 @@ class AggregationPeriod(str, Enum):
     YEARLY = "yearly"
 
 class TrendDirection(str, Enum):
-    """Trend direction enumeration"""    INCREASING = "increasing"
+    """Trend direction enumeration"""
+    INCREASING = "increasing"
     DECREASING = "decreasing"
     STABLE = "stable"
     VOLATILE = "volatile"
 
 @dataclass
 class MetricCalculation:
-    """Metric calculation result"""    metric: AnalyticsMetric
+    """Metric calculation result"""
+    metric: AnalyticsMetric
     value: float
     timestamp: datetime
     period: AggregationPeriod
@@ -95,7 +100,8 @@ class MetricCalculation:
 
 @dataclass
 class AnalyticsInsight:
-    """Analytics insight"""    insight_id: str
+    """Analytics insight"""
+    insight_id: str
     title: str
     description: str
     category: str
@@ -105,13 +111,16 @@ class AnalyticsInsight:
     created_at: datetime
 
 class CommissionAnalyticsEngine:
-    """    Commission Analytics Engine
+    """
+    Commission Analytics Engine
     
     Advanced analytics engine providing business intelligence, predictive
     modeling, and comprehensive commission data analysis.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Commission Analytics Engine"""        self.config = config or {}
+        """Initialize Commission Analytics Engine"""
+        self.config = config or {}
         
         # Database and cache connections
         self._session_factory = get_async_session
@@ -133,7 +142,8 @@ class CommissionAnalyticsEngine:
         logger.info("CommissionAnalyticsEngine initialized")
     
     def _initialize_metric_calculators(self) -> None:
-        """Initialize metric calculators"""        self._metric_calculators = {
+        """Initialize metric calculators"""
+        self._metric_calculators = {
             AnalyticsMetric.TOTAL_COMMISSION: self._calculate_total_commission,
             AnalyticsMetric.AVERAGE_COMMISSION: self._calculate_average_commission,
             AnalyticsMetric.MEDIAN_COMMISSION: self._calculate_median_commission,
@@ -152,7 +162,8 @@ class CommissionAnalyticsEngine:
         }
     
     def _initialize_predictive_models(self) -> None:
-        """Initialize predictive models"""        self._predictive_models = {
+        """Initialize predictive models"""
+        self._predictive_models = {
             "commission_forecast": LinearRegression(),
             "churn_prediction": RandomForestRegressor(n_estimators=100, random_state=42),
             "revenue_forecast": LinearRegression(),
@@ -168,7 +179,8 @@ class CommissionAnalyticsEngine:
         end_date: Optional[datetime] = None,
         filters: Optional[Dict[str, Any]] = None
     ) -> MetricCalculation:
-        """Calculate specific metric"""        try:
+        """Calculate specific metric"""
+        try:
             logger.info(f"Calculating metric: {metric.value} for period: {period.value}")
             
             # Set default date range if not provided
@@ -219,7 +231,8 @@ class CommissionAnalyticsEngine:
         end_date: Optional[datetime] = None,
         filters: Optional[Dict[str, Any]] = None
     ) -> List[MetricCalculation]:
-        """Calculate multiple metrics"""        try:
+        """Calculate multiple metrics"""
+        try:
             logger.info(f"Calculating {len(metrics)} metrics for period: {period.value}")
             
             # Calculate metrics concurrently
@@ -251,7 +264,8 @@ class CommissionAnalyticsEngine:
         metrics: List[MetricCalculation],
         context: Optional[Dict[str, Any]] = None
     ) -> List[AnalyticsInsight]:
-        """Generate business insights from metrics"""        try:
+        """Generate business insights from metrics"""
+        try:
             logger.info(f"Generating insights from {len(metrics)} metrics")
             
             insights = []
@@ -283,7 +297,8 @@ class CommissionAnalyticsEngine:
             raise AnalyticsError(f"Insight generation error: {e}")
     
     async def _analyze_commission_performance(self, metrics: List[MetricCalculation]) -> List[AnalyticsInsight]:
-        """Analyze commission performance"""        insights = []
+        """Analyze commission performance"""
+        insights = []
         
         # Find commission-related metrics
         commission_metrics = [m for m in metrics if "commission" in m.metric.value.lower()]
@@ -330,7 +345,8 @@ class CommissionAnalyticsEngine:
         return insights
     
     async def _analyze_trends(self, metrics: List[MetricCalculation]) -> List[AnalyticsInsight]:
-        """Analyze metric trends"""        insights = []
+        """Analyze metric trends"""
+        insights = []
         
         # Volatile metrics analysis
         volatile_metrics = [m for m in metrics if m.trend == TrendDirection.VOLATILE]
@@ -354,7 +370,8 @@ class CommissionAnalyticsEngine:
         return insights
     
     async def _analyze_risks(self, metrics: List[MetricCalculation]) -> List[AnalyticsInsight]:
-        """Analyze risk-related insights"""        insights = []
+        """Analyze risk-related insights"""
+        insights = []
         
         # High fraud rate insight
         fraud_metrics = [m for m in metrics if m.metric == AnalyticsMetric.FRAUD_RATE]
@@ -379,7 +396,8 @@ class CommissionAnalyticsEngine:
         return insights
     
     async def _analyze_optimization_opportunities(self, metrics: List[MetricCalculation]) -> List[AnalyticsInsight]:
-        """Analyze optimization opportunities"""        insights = []
+        """Analyze optimization opportunities"""
+        insights = []
         
         # Low conversion rate optimization
         conversion_metrics = [m for m in metrics if m.metric == AnalyticsMetric.CONVERSION_RATE]
@@ -410,7 +428,8 @@ class CommissionAnalyticsEngine:
         prediction_horizon_days: int = 30,
         historical_days: int = 90
     ) -> Dict[str, Any]:
-        """Predict future metric values using ML models"""        try:
+        """Predict future metric values using ML models"""
+        try:
             logger.info(f"Predicting {metric.value} for {prediction_horizon_days} days")
             
             # Get historical data
@@ -491,7 +510,8 @@ class CommissionAnalyticsEngine:
         end_date: datetime, 
         filters: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate total commission"""        try:
+        """Calculate total commission"""
+        try:
             async with self._session_factory() as session:
                 query = select(func.sum(CommissionTransaction.amount))
                 query = query.where(
@@ -526,7 +546,8 @@ class CommissionAnalyticsEngine:
         end_date: datetime, 
         filters: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate average commission"""        try:
+        """Calculate average commission"""
+        try:
             async with self._session_factory() as session:
                 query = select(func.avg(CommissionTransaction.amount))
                 query = query.where(
@@ -561,7 +582,8 @@ class CommissionAnalyticsEngine:
         end_date: datetime, 
         filters: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate median commission"""        try:
+        """Calculate median commission"""
+        try:
             async with self._session_factory() as session:
                 query = select(CommissionTransaction.amount)
                 query = query.where(
@@ -599,7 +621,8 @@ class CommissionAnalyticsEngine:
         end_date: datetime, 
         filters: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate commission transaction count"""        try:
+        """Calculate commission transaction count"""
+        try:
             async with self._session_factory() as session:
                 query = select(func.count(CommissionTransaction.id))
                 query = query.where(
@@ -628,41 +651,53 @@ class CommissionAnalyticsEngine:
     
     # Placeholder implementations for other metric calculations
     async def _calculate_commission_rate(self, start_date, end_date, filters):
-        """Calculate commission rate"""        return {"value": 0.045, "metadata": {"unit": "percentage"}}
+        """Calculate commission rate"""
+        return {"value": 0.045, "metadata": {"unit": "percentage"}}
     
     async def _calculate_conversion_rate(self, start_date, end_date, filters):
-        """Calculate conversion rate"""        return {"value": 0.125, "metadata": {"unit": "percentage"}}
+        """Calculate conversion rate"""
+        return {"value": 0.125, "metadata": {"unit": "percentage"}}
     
     async def _calculate_retention_rate(self, start_date, end_date, filters):
-        """Calculate retention rate"""        return {"value": 0.85, "metadata": {"unit": "percentage"}}
+        """Calculate retention rate"""
+        return {"value": 0.85, "metadata": {"unit": "percentage"}}
     
     async def _calculate_churn_rate(self, start_date, end_date, filters):
-        """Calculate churn rate"""        return {"value": 0.15, "metadata": {"unit": "percentage"}}
+        """Calculate churn rate"""
+        return {"value": 0.15, "metadata": {"unit": "percentage"}}
     
     async def _calculate_growth_rate(self, start_date, end_date, filters):
-        """Calculate growth rate"""        return {"value": 0.152, "metadata": {"unit": "percentage"}}
+        """Calculate growth rate"""
+        return {"value": 0.152, "metadata": {"unit": "percentage"}}
     
     async def _calculate_revenue_per_user(self, start_date, end_date, filters):
-        """Calculate revenue per user"""        return {"value": 82.5, "metadata": {"currency": "USD"}}
+        """Calculate revenue per user"""
+        return {"value": 82.5, "metadata": {"currency": "USD"}}
     
     async def _calculate_lifetime_value(self, start_date, end_date, filters):
-        """Calculate customer lifetime value"""        return {"value": 1250.0, "metadata": {"currency": "USD"}}
+        """Calculate customer lifetime value"""
+        return {"value": 1250.0, "metadata": {"currency": "USD"}}
     
     async def _calculate_acquisition_cost(self, start_date, end_date, filters):
-        """Calculate customer acquisition cost"""        return {"value": 125.0, "metadata": {"currency": "USD"}}
+        """Calculate customer acquisition cost"""
+        return {"value": 125.0, "metadata": {"currency": "USD"}}
     
     async def _calculate_profit_margin(self, start_date, end_date, filters):
-        """Calculate profit margin"""        return {"value": 0.35, "metadata": {"unit": "percentage"}}
+        """Calculate profit margin"""
+        return {"value": 0.35, "metadata": {"unit": "percentage"}}
     
     async def _calculate_fraud_rate(self, start_date, end_date, filters):
-        """Calculate fraud rate"""        return {"value": 0.025, "metadata": {"unit": "percentage"}}
+        """Calculate fraud rate"""
+        return {"value": 0.025, "metadata": {"unit": "percentage"}}
     
     async def _calculate_processing_efficiency(self, start_date, end_date, filters):
-        """Calculate processing efficiency"""        return {"value": 0.92, "metadata": {"unit": "percentage"}}
+        """Calculate processing efficiency"""
+        return {"value": 0.92, "metadata": {"unit": "percentage"}}
     
     # Helper methods
     def _apply_filters(self, query, filters: Dict[str, Any]):
-        """Apply filters to query"""        if "platform" in filters:
+        """Apply filters to query"""
+        if "platform" in filters:
             query = query.where(CommissionTransaction.platform == filters["platform"])
         if "creator_id" in filters:
             query = query.where(CommissionTransaction.creator_id == filters["creator_id"])
@@ -671,7 +706,8 @@ class CommissionAnalyticsEngine:
         return query
     
     def _get_period_start(self, end_date: datetime, period: AggregationPeriod) -> datetime:
-        """Get period start date"""        if period == AggregationPeriod.HOURLY:
+        """Get period start date"""
+        if period == AggregationPeriod.HOURLY:
             return end_date - timedelta(hours=1)
         elif period == AggregationPeriod.DAILY:
             return end_date - timedelta(days=1)
@@ -692,7 +728,8 @@ class CommissionAnalyticsEngine:
         start_date: datetime, 
         end_date: datetime
     ) -> List[Dict[str, Any]]:
-        """Get historical metric data"""        # Mock historical data for ML training
+        """Get historical metric data"""
+        # Mock historical data for ML training
         days = (end_date - start_date).days
         historical_data = []
         
@@ -708,7 +745,8 @@ class CommissionAnalyticsEngine:
         return historical_data
     
     def _prepare_prediction_data(self, historical_data: List[Dict[str, Any]]) -> Tuple[np.ndarray, np.ndarray]:
-        """Prepare data for ML prediction"""        # Create features: day index, day of week, month, etc.
+        """Prepare data for ML prediction"""
+        # Create features: day index, day of week, month, etc.
         X = []
         y = []
         
@@ -726,7 +764,8 @@ class CommissionAnalyticsEngine:
         return np.array(X), np.array(y)
     
     def _generate_future_features(self, historical_length: int, horizon_days: int) -> np.ndarray:
-        """Generate features for future predictions"""        future_X = []
+        """Generate features for future predictions"""
+        future_X = []
         base_date = datetime.utcnow()
         
         for i in range(horizon_days):
@@ -742,7 +781,8 @@ class CommissionAnalyticsEngine:
         return np.array(future_X)
     
     def _select_prediction_model(self, metric: AnalyticsMetric) -> str:
-        """Select appropriate prediction model"""        if metric in [AnalyticsMetric.TOTAL_COMMISSION, AnalyticsMetric.COMMISSION_COUNT]:
+        """Select appropriate prediction model"""
+        if metric in [AnalyticsMetric.TOTAL_COMMISSION, AnalyticsMetric.COMMISSION_COUNT]:
             return "commission_forecast"
         elif metric == AnalyticsMetric.CHURN_RATE:
             return "churn_prediction"
@@ -756,7 +796,8 @@ class CommissionAnalyticsEngine:
         y_train: np.ndarray, 
         X_future: np.ndarray
     ) -> List[Tuple[float, float]]:
-        """Calculate confidence intervals for predictions"""        # Simple confidence interval calculation
+        """Calculate confidence intervals for predictions"""
+        # Simple confidence interval calculation
         predictions = model.predict(X_future)
         train_predictions = model.predict(X_train)
         residuals = y_train - train_predictions
@@ -771,7 +812,8 @@ class CommissionAnalyticsEngine:
         return confidence_intervals
     
     def _calculate_model_accuracy(self, model, X: np.ndarray, y: np.ndarray) -> float:
-        """Calculate model accuracy"""        predictions = model.predict(X)
+        """Calculate model accuracy"""
+        predictions = model.predict(X)
         mae = mean_absolute_error(y, predictions)
         mean_actual = np.mean(y)
         
@@ -782,7 +824,8 @@ class CommissionAnalyticsEngine:
         return float(accuracy)
     
     def _determine_prediction_trend(self, predictions: np.ndarray) -> TrendDirection:
-        """Determine trend direction from predictions"""        if len(predictions) < 2:
+        """Determine trend direction from predictions"""
+        if len(predictions) < 2:
             return TrendDirection.STABLE
         
         # Calculate trend using linear regression
@@ -801,7 +844,8 @@ class CommissionAnalyticsEngine:
     
     # Cache methods
     async def _get_cached_metric(self, cache_key: str) -> Optional[MetricCalculation]:
-        """Get cached metric"""        try:
+        """Get cached metric"""
+        try:
             if not self._redis_client:
                 return None
             
@@ -824,7 +868,8 @@ class CommissionAnalyticsEngine:
         return None
     
     async def _cache_metric(self, cache_key: str, calculation: MetricCalculation) -> None:
-        """Cache metric calculation"""        try:
+        """Cache metric calculation"""
+        try:
             if not self._redis_client:
                 return
             

@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. 
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action under German and international law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Tuple
 from datetime import datetime, timedelta
@@ -32,7 +33,8 @@ from ...audio.quality_analyzer import AudioQualityAnalyzer
 
 
 class RoomStatus(Enum):
-    """Clubhouse room status types"""    LIVE = "live"
+    """Clubhouse room status types"""
+    LIVE = "live"
     SCHEDULED = "scheduled"
     ENDED = "ended"
     CANCELLED = "cancelled"
@@ -40,7 +42,8 @@ class RoomStatus(Enum):
 
 
 class RoomType(Enum):
-    """Clubhouse room types"""    OPEN = "open"
+    """Clubhouse room types"""
+    OPEN = "open"
     SOCIAL = "social"  
     CLOSED = "closed"
     PRIVATE_CLUB = "private_club"
@@ -48,7 +51,8 @@ class RoomType(Enum):
 
 
 class ParticipantRole(Enum):
-    """Participant roles in Clubhouse rooms"""    MODERATOR = "moderator"
+    """Participant roles in Clubhouse rooms"""
+    MODERATOR = "moderator"
     SPEAKER = "speaker"
     LISTENER = "listener"
     INVITED_SPEAKER = "invited_speaker"
@@ -56,7 +60,8 @@ class ParticipantRole(Enum):
 
 
 class ConversationQuality(Enum):
-    """Conversation quality levels"""    EXCEPTIONAL = "exceptional"
+    """Conversation quality levels"""
+    EXCEPTIONAL = "exceptional"
     HIGH_QUALITY = "high_quality"
     GOOD = "good"
     AVERAGE = "average"
@@ -66,7 +71,8 @@ class ConversationQuality(Enum):
 
 @dataclass
 class ClubhouseParticipant:
-    """Clubhouse room participant data"""    user_id: str
+    """Clubhouse room participant data"""
+    user_id: str
     username: str
     display_name: str
     role: ParticipantRole
@@ -86,7 +92,8 @@ class ClubhouseParticipant:
 
 @dataclass
 class ClubhouseRoom:
-    """Clubhouse room data structure"""    room_id: str
+    """Clubhouse room data structure"""
+    room_id: str
     title: str
     description: str
     topic: str
@@ -125,7 +132,8 @@ class ClubhouseRoom:
 
 @dataclass
 class AudioSegment:
-    """Audio segment data for analysis"""    segment_id: str
+    """Audio segment data for analysis"""
+    segment_id: str
     room_id: str
     speaker_id: str
     start_timestamp: float
@@ -141,9 +149,11 @@ class AudioSegment:
 
 
 class ClubhouseEngine(BaseCrawlerEngine):
-    """    Professional Clubhouse crawling engine with advanced audio analytics,
+    """
+    Professional Clubhouse crawling engine with advanced audio analytics,
     conversation intelligence, and real-time influence tracking.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.platform = ClubhousePlatform(config.get('clubhouse', {}))
@@ -172,7 +182,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         min_participants: int = 10,
         room_types: List[RoomType] = None
     ) -> AsyncGenerator[ClubhouseRoom, None]:
-        """        Crawl live Clubhouse rooms with advanced filtering and analysis
+        """
+        Crawl live Clubhouse rooms with advanced filtering and analysis
         
         Args:
             topics: List of topics to filter by
@@ -182,7 +193,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
             
         Yields:
             ClubhouseRoom: Processed Clubhouse room objects
-        """        self.logger.info("Starting live Clubhouse rooms crawl")
+        """
+        self.logger.info("Starting live Clubhouse rooms crawl")
         
         try:
             async with self._create_session() as session:
@@ -210,7 +222,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         min_participants: int,
         room_types: List[RoomType]
     ) -> AsyncGenerator[Dict[str, Any], None]:
-        """Internal method to crawl live rooms data"""        
+        """Internal method to crawl live rooms data"""
+        
         page_token = None
         max_pages = 20
         page_count = 0
@@ -255,7 +268,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         room_types: List[RoomType],
         page_token: Optional[str]
     ) -> Dict[str, Any]:
-        """Fetch a single page of live rooms"""        
+        """Fetch a single page of live rooms"""
+        
         url = "https://www.clubhouseapi.com/api/get_channels"
         
         params = {
@@ -300,7 +314,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         min_participants: int,
         room_types: List[RoomType]
     ) -> bool:
-        """Check if room matches the specified filters"""        
+        """Check if room matches the specified filters"""
+        
         # Check participant count
         participant_count = room.get('num_all_speakers', 0) + room.get('num_other_speakers', 0)
         if participant_count < min_participants:
@@ -330,7 +345,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         return True
         
     async def _process_clubhouse_room(self, raw_room: Dict[str, Any]) -> Optional[ClubhouseRoom]:
-        """Process and analyze Clubhouse room with comprehensive analytics"""        
+        """Process and analyze Clubhouse room with comprehensive analytics"""
+        
         try:
             room_id = raw_room.get('channel')
             if not room_id:
@@ -471,7 +487,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
             return None
             
     async def _process_participants(self, room_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process and analyze room participants"""        
+        """Process and analyze room participants"""
+        
         all_participants = []
         speakers = []
         moderators = []
@@ -513,7 +530,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         participant_data: Dict[str, Any], 
         role: ParticipantRole
     ) -> Optional[ClubhouseParticipant]:
-        """Create participant object with analysis"""        
+        """Create participant object with analysis"""
+        
         try:
             user_id = participant_data.get('user_id', '')
             if not user_id:
@@ -572,7 +590,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         room_data: Dict[str, Any], 
         speakers: List[ClubhouseParticipant]
     ) -> ConversationQuality:
-        """Analyze overall conversation quality"""        
+        """Analyze overall conversation quality"""
+        
         quality_factors = []
         
         # 1. Speaker quality factor
@@ -614,7 +633,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
             return ConversationQuality.SPAM
             
     async def _analyze_participant_voice_quality(self, participant_data: Dict[str, Any]) -> float:
-        """Analyze participant's voice quality"""        
+        """Analyze participant's voice quality"""
+        
         if not self.enable_voice_analysis:
             return 0.8  # Default score
             
@@ -636,7 +656,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         return min(voice_quality, 1.0)
         
     async def _analyze_participant_expertise(self, participant_data: Dict[str, Any]) -> float:
-        """Analyze participant's expertise level"""        
+        """Analyze participant's expertise level"""
+        
         expertise_factors = []
         
         # 1. Bio analysis for expertise keywords
@@ -668,7 +689,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         return sum(expertise_factors)
         
     def _extract_expertise_from_bio(self, bio: str) -> float:
-        """Extract expertise indicators from bio text"""        
+        """Extract expertise indicators from bio text"""
+        
         expertise_keywords = [
             'ceo', 'founder', 'director', 'expert', 'specialist', 'consultant',
             'advisor', 'professor', 'doctor', 'phd', 'author', 'speaker',
@@ -682,7 +704,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         return min(expertise_count / 3, 1.0)  # Max score at 3 keywords
         
     def _analyze_club_expertise(self, clubs: List[Dict[str, Any]]) -> float:
-        """Analyze expertise based on club memberships"""        
+        """Analyze expertise based on club memberships"""
+        
         if not clubs:
             return 0.3
             
@@ -703,7 +726,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         return min(professional_clubs / len(clubs), 1.0)
         
     async def _analyze_participant_engagement(self, participant_data: Dict[str, Any]) -> float:
-        """Analyze participant's engagement level"""        
+        """Analyze participant's engagement level"""
+        
         engagement_factors = []
         
         # 1. Interaction frequency
@@ -730,7 +754,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         return sum(engagement_factors)
         
     def _analyze_engagement_distribution(self, speakers: List[ClubhouseParticipant]) -> float:
-        """Analyze how engagement is distributed among speakers"""        
+        """Analyze how engagement is distributed among speakers"""
+        
         if len(speakers) < 2:
             return 0.5  # Neutral score for single speaker
             
@@ -749,7 +774,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         return distribution_score
         
     async def _analyze_topic_relevance(self, room_data: Dict[str, Any]) -> float:
-        """Analyze how relevant the conversation is to the stated topic"""        
+        """Analyze how relevant the conversation is to the stated topic"""
+        
         topic = room_data.get('topic', '')
         title = room_data.get('title', '')
         
@@ -761,7 +787,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         return 0.7
         
     async def _analyze_conversation_flow(self, room_data: Dict[str, Any]) -> float:
-        """Analyze the flow and structure of the conversation"""        
+        """Analyze the flow and structure of the conversation"""
+        
         # Factors: turn-taking, interruptions, dead air, topic coherence
         flow_metrics = room_data.get('conversation_metrics', {})
         
@@ -778,7 +805,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         return max(flow_score, 0.0)
         
     async def _analyze_audio_quality(self, room_data: Dict[str, Any]) -> float:
-        """Analyze overall audio quality of the room"""        
+        """Analyze overall audio quality of the room"""
+        
         audio_metrics = room_data.get('audio_metrics', {})
         
         # Factors: bitrate, clarity, background noise, echo
@@ -801,7 +829,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         room_data: Dict[str, Any], 
         participants_data: Dict[str, Any]
     ) -> float:
-        """Calculate overall room engagement score"""        
+        """Calculate overall room engagement score"""
+        
         engagement_factors = []
         
         # 1. Participant count factor
@@ -835,7 +864,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         return sum(engagement_factors)
         
     async def _calculate_viral_potential(self, room_data: Dict[str, Any], engagement_score: float) -> float:
-        """Calculate viral potential of the room"""        
+        """Calculate viral potential of the room"""
+        
         viral_factors = []
         
         # 1. Current engagement level
@@ -870,7 +900,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         room_data: Dict[str, Any], 
         speakers: List[ClubhouseParticipant]
     ) -> float:
-        """Analyze educational value of the conversation"""        
+        """Analyze educational value of the conversation"""
+        
         educational_factors = []
         
         # 1. Speaker expertise level
@@ -897,7 +928,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         return sum(educational_factors)
         
     def _analyze_topic_educational_value(self, topic: str) -> float:
-        """Analyze educational value based on topic"""        
+        """Analyze educational value based on topic"""
+        
         educational_topics = [
             'tech', 'technology', 'science', 'education', 'learning', 'business',
             'entrepreneurship', 'finance', 'investing', 'career', 'skill', 'development',
@@ -910,7 +942,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         return min(educational_indicators / 3, 1.0)
         
     async def _analyze_entertainment_value(self, room_data: Dict[str, Any]) -> float:
-        """Analyze entertainment value of the conversation"""        
+        """Analyze entertainment value of the conversation"""
+        
         entertainment_factors = []
         
         # 1. Topic entertainment value
@@ -939,7 +972,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         return sum(entertainment_factors)
         
     def _analyze_topic_entertainment_value(self, topic: str) -> float:
-        """Analyze entertainment value based on topic"""        
+        """Analyze entertainment value based on topic"""
+        
         entertainment_topics = [
             'music', 'art', 'entertainment', 'comedy', 'humor', 'stories', 'culture',
             'movies', 'tv', 'celebrity', 'sports', 'gaming', 'lifestyle', 'travel',
@@ -956,7 +990,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         room_data: Dict[str, Any], 
         participants_data: Dict[str, Any]
     ) -> float:
-        """Analyze social impact of the conversation"""        
+        """Analyze social impact of the conversation"""
+        
         # Factors: reach, influence, topic importance, engagement quality
         participant_count = len(participants_data['all_participants'])
         speakers = participants_data['speakers']
@@ -982,7 +1017,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         return social_impact
         
     def _analyze_topic_social_importance(self, topic: str) -> float:
-        """Analyze social importance of the topic"""        
+        """Analyze social importance of the topic"""
+        
         important_topics = [
             'social', 'justice', 'equality', 'environment', 'climate', 'health',
             'pandemic', 'mental health', 'education', 'community', 'charity',
@@ -999,7 +1035,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         room_data: Dict[str, Any], 
         participants_data: Dict[str, Any]
     ) -> float:
-        """Calculate monetization potential of the room"""        
+        """Calculate monetization potential of the room"""
+        
         monetization_factors = []
         
         # 1. Audience size and engagement
@@ -1032,7 +1069,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         return sum(monetization_factors)
         
     def _analyze_topic_commercial_value(self, topic: str) -> float:
-        """Analyze commercial value of the topic"""        
+        """Analyze commercial value of the topic"""
+        
         commercial_topics = [
             'business', 'entrepreneurship', 'startup', 'investing', 'finance',
             'marketing', 'sales', 'brand', 'product', 'tech', 'innovation',
@@ -1045,13 +1083,15 @@ class ClubhouseEngine(BaseCrawlerEngine):
         return min(commercial_indicators / 3, 1.0)
         
     async def _detect_primary_language(self, room_data: Dict[str, Any]) -> str:
-        """Detect primary language of the conversation"""        
+        """Detect primary language of the conversation"""
+        
         # This would use language detection on transcribed content
         # For now, return default or configured language
         return room_data.get('language', 'en')
         
     async def _generate_transcription_summary(self, room_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate transcription summary and extract key points"""        
+        """Generate transcription summary and extract key points"""
+        
         if not self.enable_transcription:
             return {'summary': '', 'key_points': []}
             
@@ -1067,7 +1107,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         }
         
     async def _analyze_room_sentiment(self, room_data: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze sentiment of the room conversation"""        
+        """Analyze sentiment of the room conversation"""
+        
         # This would use sentiment analysis on transcribed content
         return {
             'positive': 0.6,
@@ -1077,7 +1118,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         }
         
     async def _analyze_influence_network(self, participants_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze influence network within the room"""        
+        """Analyze influence network within the room"""
+        
         speakers = participants_data['speakers']
         moderators = participants_data['moderators']
         
@@ -1105,7 +1147,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         }
         
     def _determine_room_status(self, room_data: Dict[str, Any]) -> RoomStatus:
-        """Determine room status from data"""        
+        """Determine room status from data"""
+        
         is_private = room_data.get('is_private', False)
         if is_private:
             return RoomStatus.PRIVATE
@@ -1114,7 +1157,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         return RoomStatus.LIVE
         
     def _determine_room_type(self, room_data: Dict[str, Any]) -> RoomType:
-        """Determine room type from data"""        
+        """Determine room type from data"""
+        
         channel_type = room_data.get('channel_type', 'open')
         
         if channel_type == 'private':
@@ -1127,7 +1171,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
             return RoomType.OPEN
             
     def _meets_quality_threshold(self, room: ClubhouseRoom) -> bool:
-        """Check if room meets minimum quality threshold"""        
+        """Check if room meets minimum quality threshold"""
+        
         quality_score = (
             room.engagement_score * 0.4 +
             room.audio_quality_score * 0.3 +
@@ -1137,13 +1182,15 @@ class ClubhouseEngine(BaseCrawlerEngine):
         return quality_score >= self.min_conversation_quality
         
     async def _analyze_topic_trending(self, topic: str) -> float:
-        """Analyze if topic is currently trending"""        
+        """Analyze if topic is currently trending"""
+        
         # This would check trending topics APIs
         # For now, return a baseline score
         return 0.5
         
     def _analyze_time_factor(self, room_data: Dict[str, Any]) -> float:
-        """Analyze time factor for viral potential"""        
+        """Analyze time factor for viral potential"""
+        
         current_hour = datetime.now().hour
         
         # Prime time hours (7-10 PM) have higher viral potential
@@ -1162,7 +1209,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         include_past_rooms: bool = False,
         limit: int = 50
     ) -> List[ClubhouseRoom]:
-        """Crawl rooms hosted or participated by a specific user"""        
+        """Crawl rooms hosted or participated by a specific user"""
+        
         self.logger.info(f"Crawling rooms for user: {user_id}")
         
         user_rooms = []
@@ -1188,7 +1236,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         include_past_rooms: bool,
         limit: int
     ) -> List[Dict[str, Any]]:
-        """Fetch rooms for a specific user"""        
+        """Fetch rooms for a specific user"""
+        
         url = f"https://www.clubhouseapi.com/api/get_user_rooms"
         
         params = {
@@ -1218,7 +1267,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         self, 
         monitoring_period: timedelta = timedelta(hours=24)
     ) -> Dict[str, Any]:
-        """Monitor conversation trends across the platform"""        
+        """Monitor conversation trends across the platform"""
+        
         self.logger.info("Monitoring Clubhouse conversation trends")
         
         try:
@@ -1250,7 +1300,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
             return {}
             
     def _analyze_quality_distribution(self, rooms: List[ClubhouseRoom]) -> Dict[str, float]:
-        """Analyze distribution of conversation quality levels"""        
+        """Analyze distribution of conversation quality levels"""
+        
         if not rooms:
             return {}
             
@@ -1264,7 +1315,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         return distribution
         
     def _analyze_topic_trends(self, rooms: List[ClubhouseRoom]) -> Dict[str, Any]:
-        """Analyze trending topics"""        
+        """Analyze trending topics"""
+        
         topic_counts = {}
         for room in rooms:
             topic = room.topic.lower()
@@ -1280,7 +1332,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         }
         
     def _analyze_engagement_patterns(self, rooms: List[ClubhouseRoom]) -> Dict[str, Any]:
-        """Analyze engagement patterns across rooms"""        
+        """Analyze engagement patterns across rooms"""
+        
         if not rooms:
             return {}
             
@@ -1296,7 +1349,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         }
         
     def _analyze_influence_patterns(self, rooms: List[ClubhouseRoom]) -> Dict[str, Any]:
-        """Analyze influence patterns across rooms"""        
+        """Analyze influence patterns across rooms"""
+        
         total_reach = sum(r.influence_network_data.get('total_network_reach', 0) for r in rooms)
         avg_reach = total_reach / len(rooms) if rooms else 0
         
@@ -1320,7 +1374,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         }
         
     def _analyze_monetization_opportunities(self, rooms: List[ClubhouseRoom]) -> Dict[str, Any]:
-        """Analyze monetization opportunities"""        
+        """Analyze monetization opportunities"""
+        
         if not rooms:
             return {}
             
@@ -1333,7 +1388,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         }
         
     async def _get_authenticated_headers(self) -> Dict[str, str]:
-        """Get authenticated headers for API requests"""        
+        """Get authenticated headers for API requests"""
+        
         return {
             'User-Agent': 'Clubhouse/1.0',
             'Accept': 'application/json',
@@ -1343,7 +1399,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         }
         
     async def _create_session(self) -> aiohttp.ClientSession:
-        """Create configured HTTP session"""        
+        """Create configured HTTP session"""
+        
         connector = aiohttp.TCPConnector(
             limit=self.max_concurrent_requests,
             limit_per_host=self.max_concurrent_requests
@@ -1357,7 +1414,8 @@ class ClubhouseEngine(BaseCrawlerEngine):
         )
         
     async def _apply_rate_limiting(self):
-        """Apply rate limiting to prevent API abuse"""        
+        """Apply rate limiting to prevent API abuse"""
+        
         await asyncio.sleep(60 / self.rate_limit_per_minute)
 
 import asyncio
@@ -1395,7 +1453,8 @@ settings = get_settings()
 
 @dataclass
 class ClubhouseRoom:
-    """Clubhouse room data structure"""    id: str
+    """Clubhouse room data structure"""
+    id: str
     title: str
     description: Optional[str]
     topic: str
@@ -1420,7 +1479,8 @@ class ClubhouseRoom:
 
 @dataclass
 class ClubhouseUser:
-    """Clubhouse user data structure"""    id: str
+    """Clubhouse user data structure"""
+    id: str
     username: str
     name: str
     bio: Optional[str]
@@ -1442,7 +1502,8 @@ class ClubhouseUser:
 
 @dataclass
 class ClubhouseClub:
-    """Clubhouse club data structure"""    id: str
+    """Clubhouse club data structure"""
+    id: str
     name: str
     description: Optional[str]
     photo_url: Optional[str]
@@ -1461,7 +1522,8 @@ class ClubhouseClub:
 
 @dataclass
 class ClubhouseEvent:
-    """Clubhouse scheduled event data structure"""    id: str
+    """Clubhouse scheduled event data structure"""
+    id: str
     name: str
     description: Optional[str]
     club_id: Optional[str]
@@ -1474,7 +1536,8 @@ class ClubhouseEvent:
 
 
 class ClubhouseCrawlerEngine(BaseCrawlerEngine):
-    """    Professional Clubhouse crawler engine for audio social content analysis.
+    """
+    Professional Clubhouse crawler engine for audio social content analysis.
     
     Features:
     - Live room monitoring
@@ -1483,9 +1546,11 @@ class ClubhouseCrawlerEngine(BaseCrawlerEngine):
     - Club membership tracking
     - Event discovery
     - Audio content protection
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Clubhouse crawler engine"""        super().__init__(platform="clubhouse", config=config)
+        """Initialize Clubhouse crawler engine"""
+        super().__init__(platform="clubhouse", config=config)
         
         # Rate limiting (conservative due to API restrictions)
         self.rate_limiter = RateLimiter(
@@ -1514,7 +1579,8 @@ class ClubhouseCrawlerEngine(BaseCrawlerEngine):
         logger.info("Clubhouse crawler engine initialized")
     
     async def initialize(self) -> None:
-        """Initialize the crawler engine"""        try:
+        """Initialize the crawler engine"""
+        try:
             await self._create_session()
             self._setup_selenium()
             logger.info("Clubhouse engine initialized successfully")
@@ -1523,7 +1589,8 @@ class ClubhouseCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Initialization failed: {e}")
     
     async def _create_session(self) -> None:
-        """Create HTTP session with proper headers"""        headers = {
+        """Create HTTP session with proper headers"""
+        headers = {
             'User-Agent': 'Clubhouse/1.0.0 (iPhone; iOS 15.0; Scale/3.00)',
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -1545,7 +1612,8 @@ class ClubhouseCrawlerEngine(BaseCrawlerEngine):
         )
     
     def _setup_selenium(self) -> None:
-        """Setup Selenium WebDriver for web content"""        try:
+        """Setup Selenium WebDriver for web content"""
+        try:
             options = webdriver.ChromeOptions()
             options.add_argument('--headless')
             options.add_argument('--no-sandbox')
@@ -1563,7 +1631,8 @@ class ClubhouseCrawlerEngine(BaseCrawlerEngine):
         topic: Optional[str] = None,
         language: str = "en"
     ) -> List[ClubhouseRoom]:
-        """        Get currently live rooms
+        """
+        Get currently live rooms
         
         Args:
             topic: Filter by topic
@@ -1571,7 +1640,8 @@ class ClubhouseCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of live rooms
-        """        try:
+        """
+        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -1615,14 +1685,16 @@ class ClubhouseCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Live rooms retrieval failed: {e}")
     
     async def get_room_details(self, room_id: str) -> Optional[ClubhouseRoom]:
-        """        Get detailed information about a specific room
+        """
+        Get detailed information about a specific room
         
         Args:
             room_id: Clubhouse room ID
             
         Returns:
             Room details or None if not found
-        """        try:
+        """
+        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -1659,14 +1731,16 @@ class ClubhouseCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Room details retrieval failed: {e}")
     
     async def get_user_profile(self, username: str) -> Optional[ClubhouseUser]:
-        """        Get user profile information
+        """
+        Get user profile information
         
         Args:
             username: Clubhouse username
             
         Returns:
             User profile data or None if not found
-        """        try:
+        """
+        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -1703,14 +1777,16 @@ class ClubhouseCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"User profile retrieval failed: {e}")
     
     async def get_club_info(self, club_name: str) -> Optional[ClubhouseClub]:
-        """        Get club information
+        """
+        Get club information
         
         Args:
             club_name: Club name or ID
             
         Returns:
             Club information or None if not found
-        """        try:
+        """
+        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -1751,7 +1827,8 @@ class ClubhouseCrawlerEngine(BaseCrawlerEngine):
         query: str,
         is_live_only: bool = True
     ) -> List[ClubhouseRoom]:
-        """        Search for rooms by query
+        """
+        Search for rooms by query
         
         Args:
             query: Search query
@@ -1759,7 +1836,8 @@ class ClubhouseCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of matching rooms
-        """        try:
+        """
+        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -1804,11 +1882,13 @@ class ClubhouseCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Room search failed: {e}")
     
     async def monitor_trending_topics(self) -> List[Dict[str, Any]]:
-        """        Monitor trending topics and conversations
+        """
+        Monitor trending topics and conversations
         
         Returns:
             List of trending topics with metadata
-        """        try:
+        """
+        try:
             # Get live rooms to analyze trending topics
             live_rooms = await self.get_live_rooms()
             
@@ -1852,7 +1932,8 @@ class ClubhouseCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Trending topics monitoring failed: {e}")
     
     def _parse_room_element(self, room_element) -> Optional[ClubhouseRoom]:
-        """Parse room element from page"""        try:
+        """Parse room element from page"""
+        try:
             # Extract room title
             title_elem = room_element.find_element(By.CLASS_NAME, "room-title")
             title = title_elem.text if title_elem else ""
@@ -1905,22 +1986,26 @@ class ClubhouseCrawlerEngine(BaseCrawlerEngine):
             return None
     
     def _parse_room_page(self) -> ClubhouseRoom:
-        """Parse room details from current page"""        # Implementation for parsing detailed room page
+        """Parse room details from current page"""
+        # Implementation for parsing detailed room page
         # This would extract all available room metadata
         pass
     
     def _parse_user_profile(self) -> ClubhouseUser:
-        """Parse user profile from current page"""        # Implementation for parsing user profile page
+        """Parse user profile from current page"""
+        # Implementation for parsing user profile page
         # This would extract all available user data
         pass
     
     def _parse_club_page(self) -> ClubhouseClub:
-        """Parse club page from current page"""        # Implementation for parsing club page
+        """Parse club page from current page"""
+        # Implementation for parsing club page
         # This would extract all available club data
         pass
     
     def _parse_search_room_element(self, room_element) -> Optional[ClubhouseRoom]:
-        """Parse room element from search results"""        # Similar to _parse_room_element but for search results
+        """Parse room element from search results"""
+        # Similar to _parse_room_element but for search results
         return self._parse_room_element(room_element)
     
     async def track_speaker_analytics(
@@ -1928,7 +2013,8 @@ class ClubhouseCrawlerEngine(BaseCrawlerEngine):
         user_id: str,
         days: int = 30
     ) -> Dict[str, Any]:
-        """        Track speaker analytics and engagement
+        """
+        Track speaker analytics and engagement
         
         Args:
             user_id: User ID to track
@@ -1936,7 +2022,8 @@ class ClubhouseCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             Speaker analytics data
-        """        try:
+        """
+        try:
             analytics = {
                 'user_id': user_id,
                 'analysis_period_days': days,
@@ -1967,7 +2054,8 @@ class ClubhouseCrawlerEngine(BaseCrawlerEngine):
         content_fingerprint: str,
         artist_name: str
     ) -> Dict[str, Any]:
-        """        Monitor for unauthorized use of audio content
+        """
+        Monitor for unauthorized use of audio content
         
         Args:
             content_fingerprint: Audio content fingerprint
@@ -1975,7 +2063,8 @@ class ClubhouseCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             Content protection monitoring results
-        """        try:
+        """
+        try:
             protection_results = {
                 'content_fingerprint': content_fingerprint,
                 'artist_name': artist_name,
@@ -2012,7 +2101,8 @@ class ClubhouseCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Content protection monitoring failed: {e}")
     
     async def cleanup(self) -> None:
-        """Clean up resources"""        try:
+        """Clean up resources"""
+        try:
             if self.session:
                 await self.session.close()
             if self.driver:

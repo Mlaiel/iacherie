@@ -11,7 +11,8 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -26,7 +27,8 @@ from .exceptions import ValidationError
 
 
 class CreativeWorkflowStage(Enum):
-    """Stages in creative workflow"""    INSPIRATION = "inspiration"
+    """Stages in creative workflow"""
+    INSPIRATION = "inspiration"
     PLANNING = "planning"
     CREATION = "creation"
     EDITING = "editing"
@@ -40,7 +42,8 @@ class CreativeWorkflowStage(Enum):
 
 
 class ContentType(Enum):
-    """Types of creative content"""    MUSIC_TRACK = "music_track"
+    """Types of creative content"""
+    MUSIC_TRACK = "music_track"
     MUSIC_ALBUM = "music_album"
     MUSIC_PLAYLIST = "music_playlist"
     VIDEO_SHORT = "video_short"
@@ -56,7 +59,8 @@ class ContentType(Enum):
 
 
 class CreativeRole(Enum):
-    """Roles in creative projects"""    LEAD_ARTIST = "lead_artist"
+    """Roles in creative projects"""
+    LEAD_ARTIST = "lead_artist"
     COLLABORATOR = "collaborator"
     PRODUCER = "producer"
     EDITOR = "editor"
@@ -67,7 +71,8 @@ class CreativeRole(Enum):
 
 @dataclass
 class CreativeProject:
-    """Creative project structure"""    project_id: str
+    """Creative project structure"""
+    project_id: str
     title: str
     content_type: ContentType
     current_stage: CreativeWorkflowStage
@@ -81,7 +86,8 @@ class CreativeProject:
 
 @dataclass
 class CreativeWorkflowIntent:
-    """Specialized intent for creative workflows"""    base_intent: IntentCategory
+    """Specialized intent for creative workflows"""
+    base_intent: IntentCategory
     workflow_stage: CreativeWorkflowStage
     content_type: Optional[ContentType] = None
     creative_role: Optional[CreativeRole] = None
@@ -92,14 +98,16 @@ class CreativeWorkflowIntent:
 
 
 class ContentCreationIntents:
-    """    Specialized intent patterns for content creation workflows
+    """
+    Specialized intent patterns for content creation workflows
     
     Features:
     - Content type-specific intent recognition
     - Stage-aware workflow guidance
     - Creative tool integration patterns
     - Quality enhancement suggestions
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -113,7 +121,8 @@ class ContentCreationIntents:
         self.tool_patterns = self._initialize_tool_patterns()
     
     def _initialize_creation_patterns(self) -> Dict[ContentType, Dict[str, Any]]:
-        """Initialize content type-specific patterns"""        return {
+        """Initialize content type-specific patterns"""
+        return {
             ContentType.MUSIC_TRACK: {
                 'keywords': ['song', 'track', 'music', 'audio', 'recording', 'mix', 'master'],
                 'stages': [
@@ -187,7 +196,8 @@ class ContentCreationIntents:
         }
     
     def _initialize_stage_patterns(self) -> Dict[CreativeWorkflowStage, Dict[str, Any]]:
-        """Initialize workflow stage patterns"""        return {
+        """Initialize workflow stage patterns"""
+        return {
             CreativeWorkflowStage.INSPIRATION: {
                 'keywords': ['idea', 'inspire', 'brainstorm', 'concept', 'vision'],
                 'typical_intents': [
@@ -253,7 +263,8 @@ class ContentCreationIntents:
         }
     
     def _initialize_tool_patterns(self) -> Dict[str, List[str]]:
-        """Initialize creative tool patterns"""        return {
+        """Initialize creative tool patterns"""
+        return {
             'audio_tools': [
                 'ableton', 'pro tools', 'logic', 'cubase', 'fl studio',
                 'garage band', 'audacity', 'reaper', 'studio one'
@@ -281,7 +292,8 @@ class ContentCreationIntents:
         text: str,
         context: Optional[Dict[str, Any]] = None
     ) -> CreativeWorkflowIntent:
-        """Analyze text for creative workflow intent patterns"""        
+        """Analyze text for creative workflow intent patterns"""
+        
         try:
             # Detect content type
             content_type = self._detect_content_type(text)
@@ -326,7 +338,8 @@ class ContentCreationIntents:
             )
     
     def _detect_content_type(self, text: str) -> Optional[ContentType]:
-        """Detect content type from text"""        text_lower = text.lower()
+        """Detect content type from text"""
+        text_lower = text.lower()
         
         # Score each content type
         type_scores = {}
@@ -351,7 +364,8 @@ class ContentCreationIntents:
         text: str,
         context: Optional[Dict[str, Any]] = None
     ) -> CreativeWorkflowStage:
-        """Detect current workflow stage"""        text_lower = text.lower()
+        """Detect current workflow stage"""
+        text_lower = text.lower()
         
         # Score each stage
         stage_scores = {}
@@ -382,7 +396,8 @@ class ContentCreationIntents:
         text: str,
         context: Optional[Dict[str, Any]] = None
     ) -> Optional[CreativeRole]:
-        """Detect creative role from text and context"""        text_lower = text.lower()
+        """Detect creative role from text and context"""
+        text_lower = text.lower()
         
         role_indicators = {
             CreativeRole.LEAD_ARTIST: ['my', 'create', 'make', 'compose', 'write'],
@@ -414,7 +429,8 @@ class ContentCreationIntents:
         return None
     
     def _analyze_urgency(self, text: str) -> str:
-        """Analyze urgency level from text"""        text_lower = text.lower()
+        """Analyze urgency level from text"""
+        text_lower = text.lower()
         
         urgency_indicators = {
             'urgent': ['urgent', 'asap', 'immediately', 'emergency', 'critical'],
@@ -430,7 +446,8 @@ class ContentCreationIntents:
         return 'normal'  # Default
     
     def _detect_collaboration_intent(self, text: str) -> bool:
-        """Detect if intent involves collaboration"""        collaboration_indicators = [
+        """Detect if intent involves collaboration"""
+        collaboration_indicators = [
             'collaborate', 'work with', 'team', 'together', 'share',
             'invite', 'join', 'group', 'partner', 'co-create'
         ]
@@ -444,7 +461,8 @@ class ContentCreationIntents:
         content_type: Optional[ContentType],
         text: str
     ) -> IntentCategory:
-        """Map workflow stage and content type to base intent"""        
+        """Map workflow stage and content type to base intent"""
+        
         # Get typical intents for the stage
         stage_intents = self.stage_patterns.get(stage, {}).get('typical_intents', [])
         
@@ -475,7 +493,8 @@ class ContentCreationIntents:
         return IntentCategory.UNKNOWN
     
     def _detect_tools(self, text: str) -> List[str]:
-        """Detect mentioned creative tools"""        text_lower = text.lower()
+        """Detect mentioned creative tools"""
+        text_lower = text.lower()
         detected_tools = []
         
         for category, tools in self.tool_patterns.items():
@@ -486,7 +505,8 @@ class ContentCreationIntents:
         return detected_tools
     
     def _extract_relevant_keywords(self, text: str) -> List[str]:
-        """Extract relevant creative keywords"""        text_lower = text.lower()
+        """Extract relevant creative keywords"""
+        text_lower = text.lower()
         keywords = []
         
         # Collect all keywords from patterns
@@ -509,7 +529,8 @@ class ContentCreationIntents:
         stage: CreativeWorkflowStage,
         content_type: Optional[ContentType]
     ) -> Dict[str, float]:
-        """Calculate confidence factors for the analysis"""        
+        """Calculate confidence factors for the analysis"""
+        
         factors = {
             'stage_confidence': 0.5,
             'content_type_confidence': 0.5,
@@ -544,14 +565,16 @@ class ContentCreationIntents:
 
 
 class CollaborationIntents:
-    """    Specialized intent patterns for creative collaboration
+    """
+    Specialized intent patterns for creative collaboration
     
     Features:
     - Role-based collaboration detection
     - Permission and access patterns
     - Team workflow coordination
     - Shared creation scenarios
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -562,7 +585,8 @@ class CollaborationIntents:
         self.permission_patterns = self._initialize_permission_patterns()
     
     def _initialize_collaboration_patterns(self) -> Dict[str, Any]:
-        """Initialize collaboration intent patterns"""        return {
+        """Initialize collaboration intent patterns"""
+        return {
             'invitation_patterns': {
                 'keywords': ['invite', 'add', 'include', 'join', 'collaborate'],
                 'intents': [IntentCategory.COLLABORATION_INVITE]
@@ -586,7 +610,8 @@ class CollaborationIntents:
         }
     
     def _initialize_permission_patterns(self) -> Dict[str, List[str]]:
-        """Initialize permission-related patterns"""        return {
+        """Initialize permission-related patterns"""
+        return {
             'view_only': ['view', 'see', 'look', 'preview'],
             'edit': ['edit', 'modify', 'change', 'update'],
             'full_access': ['full', 'complete', 'all', 'admin'],
@@ -598,7 +623,8 @@ class CollaborationIntents:
         text: str,
         context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Analyze collaboration-specific intent patterns"""        
+        """Analyze collaboration-specific intent patterns"""
+        
         text_lower = text.lower()
         
         # Detect collaboration type
@@ -623,7 +649,8 @@ class CollaborationIntents:
         }
     
     def _detect_collaboration_type(self, text: str) -> Optional[str]:
-        """Detect type of collaboration intent"""        for pattern_name, pattern_data in self.collaboration_patterns.items():
+        """Detect type of collaboration intent"""
+        for pattern_name, pattern_data in self.collaboration_patterns.items():
             keywords = pattern_data['keywords']
             if any(keyword in text for keyword in keywords):
                 return pattern_name.replace('_patterns', '')
@@ -631,14 +658,16 @@ class CollaborationIntents:
         return None
     
     def _detect_permission_level(self, text: str) -> Optional[str]:
-        """Detect permission level from text"""        for level, keywords in self.permission_patterns.items():
+        """Detect permission level from text"""
+        for level, keywords in self.permission_patterns.items():
             if any(keyword in text for keyword in keywords):
                 return level
         
         return None
     
     def _detect_collaboration_roles(self, text: str) -> List[str]:
-        """Detect mentioned collaboration roles"""        role_keywords = {
+        """Detect mentioned collaboration roles"""
+        role_keywords = {
             'artist': ['artist', 'musician', 'singer', 'performer'],
             'producer': ['producer', 'beat maker', 'engineer'],
             'editor': ['editor', 'post-production', 'video editor'],
@@ -654,7 +683,8 @@ class CollaborationIntents:
         return detected_roles
     
     def _detect_collaboration_timeline(self, text: str) -> str:
-        """Detect collaboration timeline"""        timeline_indicators = {
+        """Detect collaboration timeline"""
+        timeline_indicators = {
             'immediate': ['now', 'immediately', 'asap', 'urgent'],
             'soon': ['soon', 'quickly', 'this week', 'today'],
             'scheduled': ['schedule', 'plan', 'arrange', 'set up'],
@@ -668,7 +698,8 @@ class CollaborationIntents:
         return 'unspecified'
     
     def _calculate_collaboration_confidence(self, text: str, collab_type: Optional[str]) -> float:
-        """Calculate confidence for collaboration intent"""        if not collab_type:
+        """Calculate confidence for collaboration intent"""
+        if not collab_type:
             return 0.0
         
         # Base confidence
@@ -690,7 +721,8 @@ class CollaborationIntents:
 
 
 class CreativeWorkflowIntents(BaseService):
-    """    Main creative workflow intent processing service
+    """
+    Main creative workflow intent processing service
     
     Features:
     - Creative industry-specific intent recognition
@@ -698,7 +730,8 @@ class CreativeWorkflowIntents(BaseService):
     - Content type-aware processing
     - Collaboration pattern recognition
     - Creative tool integration awareness
-    """    
+    """
+    
     def __init__(self, config: IntentRecognitionConfig):
         super().__init__()
         self.config = config
@@ -721,7 +754,8 @@ class CreativeWorkflowIntents(BaseService):
         context: Optional[Dict[str, Any]] = None,
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """        Process intent through creative workflow lens
+        """
+        Process intent through creative workflow lens
         
         Args:
             text: Input text
@@ -731,7 +765,8 @@ class CreativeWorkflowIntents(BaseService):
             
         Returns:
             Enhanced intent result with creative workflow information
-        """        
+        """
+        
         try:
             # Analyze creative workflow intent
             creative_intent = self.content_creation.analyze_creative_intent(text, context)
@@ -792,7 +827,8 @@ class CreativeWorkflowIntents(BaseService):
         user_id: Optional[str],
         context: Optional[Dict[str, Any]]
     ) -> Optional[Dict[str, Any]]:
-        """Get current project context for user"""        
+        """Get current project context for user"""
+        
         if not user_id:
             return None
         
@@ -824,7 +860,8 @@ class CreativeWorkflowIntents(BaseService):
         creative_intent: CreativeWorkflowIntent,
         project_context: Optional[Dict[str, Any]]
     ) -> List[str]:
-        """Suggest next steps in creative workflow"""        
+        """Suggest next steps in creative workflow"""
+        
         suggestions = []
         current_stage = creative_intent.workflow_stage
         
@@ -891,7 +928,8 @@ class CreativeWorkflowIntents(BaseService):
         self,
         creative_intent: CreativeWorkflowIntent
     ) -> Dict[str, List[str]]:
-        """Get platform recommendations based on content type and workflow"""        
+        """Get platform recommendations based on content type and workflow"""
+        
         content_type = creative_intent.content_type
         
         platform_mapping = {
@@ -929,7 +967,8 @@ class CreativeWorkflowIntents(BaseService):
 
 
 class CreativeWorkflowOptimizer:
-    """Optimizer for creative workflow efficiency"""    
+    """Optimizer for creative workflow efficiency"""
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
@@ -939,7 +978,8 @@ class CreativeWorkflowOptimizer:
         project_context: Optional[Dict[str, Any]],
         context: Optional[Dict[str, Any]]
     ) -> List[str]:
-        """Get workflow optimization suggestions"""        
+        """Get workflow optimization suggestions"""
+        
         suggestions = []
         
         # Time-based optimizations

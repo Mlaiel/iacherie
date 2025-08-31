@@ -12,7 +12,8 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without explicit written 
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, List, Type, Any, Optional
+"""
+from typing import Dict, List, Type, Any, Optional
 from datetime import datetime
 import importlib
 import inspect
@@ -48,9 +49,11 @@ except ImportError:
 
 
 class ModelManager:
-    """    Central manager for all data models.
+    """
+    Central manager for all data models.
     Provides utilities for model operations, validation, and introspection.
-    """    
+    """
+    
     def __init__(self):
         self.models = MODEL_REGISTRY
         self.relationships = RELATIONSHIP_MAPPINGS
@@ -58,13 +61,16 @@ class ModelManager:
         self._engine = None
     
     def get_model(self, name: str) -> Optional[Type]:
-        """Get model class by name"""        return self.models.get(name)
+        """Get model class by name"""
+        return self.models.get(name)
     
     def get_all_model_names(self) -> List[str]:
-        """Get all registered model names"""        return list(self.models.keys())
+        """Get all registered model names"""
+        return list(self.models.keys())
     
     def get_model_info(self, model_name: str) -> Dict[str, Any]:
-        """Get detailed information about a model"""        model_class = self.get_model(model_name)
+        """Get detailed information about a model"""
+        model_class = self.get_model(model_name)
         if not model_class:
             return {}
         
@@ -92,7 +98,8 @@ class ModelManager:
         }
     
     def validate_model_data(self, model_name: str, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate data against model schema"""        model_class = self.get_model(model_name)
+        """Validate data against model schema"""
+        model_class = self.get_model(model_name)
         if not model_class:
             return {'valid': False, 'errors': [f'Model {model_name} not found']}
         
@@ -129,7 +136,8 @@ class ModelManager:
         }
     
     def create_model_instance(self, model_name: str, **kwargs) -> Optional[Any]:
-        """Create an instance of a model with provided data"""        model_class = self.get_model(model_name)
+        """Create an instance of a model with provided data"""
+        model_class = self.get_model(model_name)
         if not model_class:
             raise ValueError(f'Model {model_name} not found')
         
@@ -140,7 +148,8 @@ class ModelManager:
         return model_class(**kwargs)
     
     def get_model_relationships_info(self, model_name: str) -> Dict[str, Any]:
-        """Get relationship information for a specific model"""        model_class = self.get_model(model_name)
+        """Get relationship information for a specific model"""
+        model_class = self.get_model(model_name)
         if not model_class:
             return {}
         
@@ -160,7 +169,8 @@ class ModelManager:
         return relationships
     
     def get_enum_values(self, enum_class_name: str) -> List[str]:
-        """Get all possible values for an enum"""        enum_mapping = {
+        """Get all possible values for an enum"""
+        enum_mapping = {
             'ContentType': ContentType,
             'ContentStatus': ContentStatus,
             'ContentVisibility': ContentVisibility,
@@ -196,7 +206,8 @@ class ModelManager:
         return []
     
     def setup_database(self, database_url: str, **kwargs):
-        """Setup database connection and session"""        if not SQLALCHEMY_AVAILABLE:
+        """Setup database connection and session"""
+        if not SQLALCHEMY_AVAILABLE:
             raise ImportError("SQLAlchemy is required for database operations")
         
         self._engine = create_engine(database_url, **kwargs)
@@ -206,7 +217,8 @@ class ModelManager:
         return self._engine, self._session
     
     def create_all_tables(self):
-        """Create all model tables in the database"""        if not self._engine:
+        """Create all model tables in the database"""
+        if not self._engine:
             raise RuntimeError("Database engine not configured. Call setup_database first.")
         
         # Import declarative base from models
@@ -214,24 +226,29 @@ class ModelManager:
         Base.metadata.create_all(self._engine)
     
     def get_session(self) -> Optional[Session]:
-        """Get current database session"""        return self._session
+        """Get current database session"""
+        return self._session
     
     def close_session(self):
-        """Close current database session"""        if self._session:
+        """Close current database session"""
+        if self._session:
             self._session.close()
             self._session = None
 
 
 class ModelQueryBuilder:
-    """    Helper class for building queries across models.
+    """
+    Helper class for building queries across models.
     Provides common query patterns and utilities.
-    """    
+    """
+    
     def __init__(self, session: Session):
         self.session = session
         self.manager = ModelManager()
     
     def get_user_content_summary(self, user_id: str) -> Dict[str, Any]:
-        """Get summary of user's content across all types"""        if not self.session:
+        """Get summary of user's content across all types"""
+        if not self.session:
             raise RuntimeError("Database session not available")
         
         content_query = self.session.query(ContentModel).filter(
@@ -263,7 +280,8 @@ class ModelQueryBuilder:
         return summary
     
     def get_user_analytics_overview(self, user_id: str, days: int = 30) -> Dict[str, Any]:
-        """Get user analytics overview for specified period"""        from datetime import timedelta
+        """Get user analytics overview for specified period"""
+        from datetime import timedelta
         
         end_date = datetime.utcnow().date()
         start_date = end_date - timedelta(days=days)
@@ -304,7 +322,8 @@ class ModelQueryBuilder:
         return overview
     
     def get_protection_alerts(self, user_id: str, severity_levels: List[str] = None) -> List[Dict[str, Any]]:
-        """Get active protection alerts for user"""        query = self.session.query(ProtectionModel).filter(
+        """Get active protection alerts for user"""
+        query = self.session.query(ProtectionModel).filter(
             ProtectionModel.user_id == user_id,
             ProtectionModel.is_deleted == False,
             ProtectionModel.status.in_([
@@ -338,16 +357,20 @@ model_manager = ModelManager()
 
 # Convenience functions
 def get_model(name: str):
-    """Get model class by name"""    return model_manager.get_model(name)
+    """Get model class by name"""
+    return model_manager.get_model(name)
 
 def create_instance(model_name: str, **kwargs):
-    """Create model instance with validation"""    return model_manager.create_model_instance(model_name, **kwargs)
+    """Create model instance with validation"""
+    return model_manager.create_model_instance(model_name, **kwargs)
 
 def get_enum_values(enum_name: str):
-    """Get enum values"""    return model_manager.get_enum_values(enum_name)
+    """Get enum values"""
+    return model_manager.get_enum_values(enum_name)
 
 def setup_database(database_url: str, **kwargs):
-    """Setup database connection"""    return model_manager.setup_database(database_url, **kwargs)
+    """Setup database connection"""
+    return model_manager.setup_database(database_url, **kwargs)
 
 # Export all for easy access
 __all__ = [

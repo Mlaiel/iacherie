@@ -12,7 +12,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""from typing import Dict, List, Any, Optional, Union, Tuple, Set
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -24,7 +25,8 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class MediaCategory(Enum):
-    """Primary media categories"""    AUDIO = "audio"
+    """Primary media categories"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -34,13 +36,15 @@ class MediaCategory(Enum):
     INTERACTIVE = "interactive"
 
 class CompressionType(Enum):
-    """Content compression types"""    NONE = "none"
+    """Content compression types"""
+    NONE = "none"
     LOSSLESS = "lossless"
     LOSSY = "lossy"
     ADAPTIVE = "adaptive"
 
 class QualityTier(Enum):
-    """Content quality tiers"""    DRAFT = "draft"
+    """Content quality tiers"""
+    DRAFT = "draft"
     STANDARD = "standard"
     HIGH = "high"
     PROFESSIONAL = "professional"
@@ -48,7 +52,8 @@ class QualityTier(Enum):
     STUDIO = "studio"
 
 class UsageRights(Enum):
-    """Content usage rights levels"""    PUBLIC_DOMAIN = "public_domain"
+    """Content usage rights levels"""
+    PUBLIC_DOMAIN = "public_domain"
     CREATIVE_COMMONS = "creative_commons"
     ROYALTY_FREE = "royalty_free"
     RIGHTS_MANAGED = "rights_managed"
@@ -57,7 +62,8 @@ class UsageRights(Enum):
 
 @dataclass
 class FormatSpecification:
-    """Technical specifications for content formats"""    mime_type: str
+    """Technical specifications for content formats"""
+    mime_type: str
     file_extensions: List[str]
     category: MediaCategory
     compression: CompressionType
@@ -89,7 +95,8 @@ class FormatSpecification:
     id3_support: bool = False
     
     def __post_init__(self):
-        """Initialize platform support if not provided"""        if not self.platform_support:
+        """Initialize platform support if not provided"""
+        if not self.platform_support:
             self.platform_support = {
                 'web': self.web_compatible,
                 'mobile': self.mobile_optimized,
@@ -98,7 +105,8 @@ class FormatSpecification:
             }
 
 class AudioFormat:
-    """Audio format specifications and capabilities"""    
+    """Audio format specifications and capabilities"""
+    
     MP3 = FormatSpecification(
         mime_type="audio/mpeg",
         file_extensions=[".mp3"],
@@ -204,7 +212,8 @@ class AudioFormat:
     )
 
 class VideoFormat:
-    """Video format specifications and capabilities"""    
+    """Video format specifications and capabilities"""
+    
     MP4 = FormatSpecification(
         mime_type="video/mp4",
         file_extensions=[".mp4"],
@@ -285,7 +294,8 @@ class VideoFormat:
     )
 
 class ImageFormat:
-    """Image format specifications and capabilities"""    
+    """Image format specifications and capabilities"""
+    
     JPEG = FormatSpecification(
         mime_type="image/jpeg",
         file_extensions=[".jpg", ".jpeg"],
@@ -401,7 +411,8 @@ class ImageFormat:
     )
 
 class TextFormat:
-    """Text format specifications and capabilities"""    
+    """Text format specifications and capabilities"""
+    
     PLAIN = FormatSpecification(
         mime_type="text/plain",
         file_extensions=[".txt"],
@@ -477,14 +488,16 @@ class TextFormat:
     )
 
 class FormatDetector:
-    """Advanced format detection and validation"""    
+    """Advanced format detection and validation"""
+    
     def __init__(self):
         self.magic_detector = magic.Magic(mime=True)
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self._format_registry = self._build_format_registry()
     
     def _build_format_registry(self) -> Dict[str, FormatSpecification]:
-        """Build comprehensive format registry"""        registry = {}
+        """Build comprehensive format registry"""
+        registry = {}
         
         # Audio formats
         for attr_name in dir(AudioFormat):
@@ -525,7 +538,8 @@ class FormatDetector:
         return registry
     
     def detect_format(self, file_path: Path) -> Optional[FormatSpecification]:
-        """Detect content format from file"""        try:
+        """Detect content format from file"""
+        try:
             # First try magic number detection
             mime_type = self.magic_detector.from_file(str(file_path))
             if mime_type in self._format_registry:
@@ -549,10 +563,12 @@ class FormatDetector:
             return None
     
     def is_supported_format(self, file_path: Path) -> bool:
-        """Check if format is supported"""        return self.detect_format(file_path) is not None
+        """Check if format is supported"""
+        return self.detect_format(file_path) is not None
     
     def get_supported_extensions(self, category: MediaCategory = None) -> Set[str]:
-        """Get all supported file extensions"""        extensions = set()
+        """Get all supported file extensions"""
+        extensions = set()
         
         for format_spec in self._format_registry.values():
             if isinstance(format_spec, FormatSpecification):
@@ -562,7 +578,8 @@ class FormatDetector:
         return extensions
     
     def get_web_compatible_formats(self, category: MediaCategory = None) -> List[FormatSpecification]:
-        """Get web-compatible formats"""        formats = []
+        """Get web-compatible formats"""
+        formats = []
         
         for format_spec in self._format_registry.values():
             if isinstance(format_spec, FormatSpecification):
@@ -575,7 +592,8 @@ class FormatDetector:
     
     def get_platform_compatible_formats(self, platform: str, 
                                       category: MediaCategory = None) -> List[FormatSpecification]:
-        """Get formats compatible with specific platform"""        formats = []
+        """Get formats compatible with specific platform"""
+        formats = []
         
         for format_spec in self._format_registry.values():
             if isinstance(format_spec, FormatSpecification):
@@ -587,7 +605,8 @@ class FormatDetector:
         return formats
 
 class FormatConverter:
-    """Format conversion recommendations and capabilities"""    
+    """Format conversion recommendations and capabilities"""
+    
     def __init__(self):
         self.detector = FormatDetector()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -595,7 +614,8 @@ class FormatConverter:
     def get_conversion_recommendations(self, source_format: FormatSpecification,
                                      target_platform: str = None,
                                      quality_requirement: QualityTier = None) -> List[FormatSpecification]:
-        """Get recommended conversion targets"""        recommendations = []
+        """Get recommended conversion targets"""
+        recommendations = []
         
         # Filter by category
         candidate_formats = [
@@ -640,7 +660,8 @@ class FormatConverter:
     
     def get_optimal_format_for_platform(self, source_format: FormatSpecification,
                                        platform: str) -> Optional[FormatSpecification]:
-        """Get optimal format for specific platform"""        recommendations = self.get_conversion_recommendations(
+        """Get optimal format for specific platform"""
+        recommendations = self.get_conversion_recommendations(
             source_format, target_platform=platform
         )
         
@@ -653,7 +674,8 @@ class FormatConverter:
     def estimate_file_size_change(self, source_format: FormatSpecification,
                                 target_format: FormatSpecification,
                                 source_size: int) -> Tuple[int, float]:
-        """Estimate file size change after conversion"""        # Compression ratio estimates based on format characteristics
+        """Estimate file size change after conversion"""
+        # Compression ratio estimates based on format characteristics
         compression_ratios = {
             CompressionType.NONE: 1.0,
             CompressionType.LOSSLESS: 0.5,

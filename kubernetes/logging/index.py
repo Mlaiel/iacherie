@@ -19,7 +19,8 @@ Team Expertise:
 - Security Specialist: Enterprise Security & Compliance
 - Microservices Architect: Distributed Systems
 - IA Prompt Engineer: Advanced AI Integration
-"""import asyncio
+"""
+import asyncio
 import logging
 import sys
 from pathlib import Path
@@ -44,11 +45,14 @@ from .config import DEFAULT_LOGGING_CONFIG
 
 
 class IAInfluencerLoggingSystem:
-    """    Main entry point for IA Influencer Agent Logging System
+    """
+    Main entry point for IA Influencer Agent Logging System
     Enterprise-grade logging infrastructure with AI-powered analytics
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the complete logging system"""        self.config = config or DEFAULT_LOGGING_CONFIG
+        """Initialize the complete logging system"""
+        self.config = config or DEFAULT_LOGGING_CONFIG
         self.aggregator = None
         self.es_manager = None
         self.fluentd_manager = None
@@ -61,7 +65,8 @@ class IAInfluencerLoggingSystem:
         self._setup_basic_logging()
     
     def _setup_basic_logging(self):
-        """Setup basic Python logging configuration"""        logging.basicConfig(
+        """Setup basic Python logging configuration"""
+        logging.basicConfig(
             level=getattr(logging, self.config['environment']['log_level']),
             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
             datefmt='%Y-%m-%d %H:%M:%S'
@@ -72,9 +77,11 @@ class IAInfluencerLoggingSystem:
             logging.getLogger(logger_name).setLevel(logging.WARNING)
     
     async def initialize(self) -> bool:
-        """        Initialize all logging components
+        """
+        Initialize all logging components
         Returns True if successful, False otherwise
-        """        try:
+        """
+        try:
             logger = logging.getLogger(__name__)
             logger.info("Initializing IA Influencer Agent Logging System...")
             
@@ -137,7 +144,8 @@ class IAInfluencerLoggingSystem:
             return False
     
     async def _configure_notifications(self):
-        """Configure notification channels for monitoring"""        if not self.monitoring_service:
+        """Configure notification channels for monitoring"""
+        if not self.monitoring_service:
             return
         
         notifications_config = self.config['monitoring']['notifications']
@@ -171,7 +179,8 @@ class IAInfluencerLoggingSystem:
             )
     
     async def create_service_logger(self, service_name: str, module_name: str = None):
-        """Create a service-specific logger"""        if not self.aggregator:
+        """Create a service-specific logger"""
+        if not self.aggregator:
             raise RuntimeError("Logging system not initialized")
         
         return self.aggregator.create_service_logger(service_name, module_name)
@@ -181,7 +190,8 @@ class IAInfluencerLoggingSystem:
                                user_id: str = None,
                                processing_type: str = "general",
                                metadata: Dict[str, Any] = None):
-        """Log AI processing events with standardized format"""        if not self.aggregator:
+        """Log AI processing events with standardized format"""
+        if not self.aggregator:
             raise RuntimeError("Logging system not initialized")
         
         enhanced_metadata = {
@@ -205,7 +215,8 @@ class IAInfluencerLoggingSystem:
                                 content_type: str = "audio",
                                 algorithm: str = "chromaprint",
                                 metadata: Dict[str, Any] = None):
-        """Log fingerprinting events with standardized format"""        if not self.aggregator:
+        """Log fingerprinting events with standardized format"""
+        if not self.aggregator:
             raise RuntimeError("Logging system not initialized")
         
         enhanced_metadata = {
@@ -230,7 +241,8 @@ class IAInfluencerLoggingSystem:
                                    amount: float = None,
                                    currency: str = "EUR",
                                    metadata: Dict[str, Any] = None):
-        """Log revenue processing events with standardized format"""        if not self.aggregator:
+        """Log revenue processing events with standardized format"""
+        if not self.aggregator:
             raise RuntimeError("Logging system not initialized")
         
         enhanced_metadata = {
@@ -258,7 +270,8 @@ class IAInfluencerLoggingSystem:
                               user_id: str,
                               activity_type: str,
                               metadata: Dict[str, Any] = None):
-        """Log user activity events with standardized format"""        if not self.aggregator:
+        """Log user activity events with standardized format"""
+        if not self.aggregator:
             raise RuntimeError("Logging system not initialized")
         
         enhanced_metadata = {
@@ -281,7 +294,8 @@ class IAInfluencerLoggingSystem:
                                severity: str = "medium",
                                event_type: str = "general",
                                metadata: Dict[str, Any] = None):
-        """Log security events with standardized format"""        if not self.aggregator:
+        """Log security events with standardized format"""
+        if not self.aggregator:
             raise RuntimeError("Logging system not initialized")
         
         # Map severity to log level
@@ -308,7 +322,8 @@ class IAInfluencerLoggingSystem:
         )
     
     async def get_system_metrics(self) -> Dict[str, Any]:
-        """Get current system metrics and status"""        if not self.analytics_engine:
+        """Get current system metrics and status"""
+        if not self.analytics_engine:
             return {"error": "Analytics engine not available"}
         
         try:
@@ -338,7 +353,8 @@ class IAInfluencerLoggingSystem:
             return {"error": str(e)}
     
     async def run_retention_check(self) -> Dict[str, Any]:
-        """Run log retention policies manually"""        if not self.retention_manager:
+        """Run log retention policies manually"""
+        if not self.retention_manager:
             return {"error": "Retention manager not available"}
         
         try:
@@ -349,7 +365,8 @@ class IAInfluencerLoggingSystem:
             return {"error": str(e)}
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform system health check"""        health_status = {
+        """Perform system health check"""
+        health_status = {
             "overall_status": "healthy",
             "timestamp": datetime.utcnow().isoformat(),
             "components": {}
@@ -382,7 +399,8 @@ class IAInfluencerLoggingSystem:
         return health_status
     
     async def shutdown(self):
-        """Gracefully shutdown all logging components"""        logger = logging.getLogger(__name__)
+        """Gracefully shutdown all logging components"""
+        logger = logging.getLogger(__name__)
         logger.info("Shutting down IA Influencer Agent Logging System...")
         
         # Stop monitoring service
@@ -415,7 +433,8 @@ class IAInfluencerLoggingSystem:
     
     @property
     def is_running(self) -> bool:
-        """Check if the logging system is running"""        return self._is_running
+        """Check if the logging system is running"""
+        return self._is_running
 
 
 # Global logging system instance
@@ -423,7 +442,8 @@ _logging_system = None
 
 
 async def get_logging_system(config: Optional[Dict[str, Any]] = None) -> IAInfluencerLoggingSystem:
-    """Get or create global logging system instance"""    global _logging_system
+    """Get or create global logging system instance"""
+    global _logging_system
     
     if _logging_system is None:
         _logging_system = IAInfluencerLoggingSystem(config)
@@ -433,7 +453,8 @@ async def get_logging_system(config: Optional[Dict[str, Any]] = None) -> IAInflu
 
 
 async def shutdown_logging_system():
-    """Shutdown global logging system"""    global _logging_system
+    """Shutdown global logging system"""
+    global _logging_system
     
     if _logging_system:
         await _logging_system.shutdown()
@@ -442,27 +463,32 @@ async def shutdown_logging_system():
 
 # Convenience functions for common operations
 async def log_ai_event(message: str, user_id: str = None, **kwargs):
-    """Quick AI event logging"""    system = await get_logging_system()
+    """Quick AI event logging"""
+    system = await get_logging_system()
     await system.log_ai_processing(message, user_id, **kwargs)
 
 
 async def log_fingerprint_event(message: str, user_id: str = None, **kwargs):
-    """Quick fingerprinting event logging"""    system = await get_logging_system()
+    """Quick fingerprinting event logging"""
+    system = await get_logging_system()
     await system.log_fingerprinting(message, user_id, **kwargs)
 
 
 async def log_revenue_event(message: str, user_id: str = None, **kwargs):
-    """Quick revenue event logging"""    system = await get_logging_system()
+    """Quick revenue event logging"""
+    system = await get_logging_system()
     await system.log_revenue_processing(message, user_id, **kwargs)
 
 
 async def log_security_alert(message: str, severity: str = "medium", **kwargs):
-    """Quick security alert logging"""    system = await get_logging_system()
+    """Quick security alert logging"""
+    system = await get_logging_system()
     await system.log_security_event(message, severity, **kwargs)
 
 
 def main():
-    """CLI entry point for logging system management"""    import argparse
+    """CLI entry point for logging system management"""
+    import argparse
     
     parser = argparse.ArgumentParser(description="IA Influencer Agent Logging System")
     parser.add_argument("command", choices=["start", "stop", "status", "health", "metrics"],

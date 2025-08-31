@@ -9,7 +9,8 @@ Unauthorized use, reproduction, modification, or distribution without explicit
 written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueGoalType(Enum):
-    """Revenue goal types"""    TOTAL_REVENUE = "total_revenue"
+    """Revenue goal types"""
+    TOTAL_REVENUE = "total_revenue"
     MONTHLY_RECURRING = "monthly_recurring"
     QUARTERLY_TARGET = "quarterly_target"
     ANNUAL_TARGET = "annual_target"
@@ -46,7 +48,8 @@ class RevenueGoalType(Enum):
 
 
 class PortfolioStrategy(Enum):
-    """Revenue portfolio strategies"""    CONSERVATIVE = "conservative"
+    """Revenue portfolio strategies"""
+    CONSERVATIVE = "conservative"
     BALANCED = "balanced"
     AGGRESSIVE = "aggressive"
     GROWTH_FOCUSED = "growth_focused"
@@ -57,7 +60,8 @@ class PortfolioStrategy(Enum):
 
 
 class RevenueCategory(Enum):
-    """Revenue categorization"""    PRIMARY = "primary"
+    """Revenue categorization"""
+    PRIMARY = "primary"
     SECONDARY = "secondary"
     PASSIVE = "passive"
     ACTIVE = "active"
@@ -69,7 +73,8 @@ class RevenueCategory(Enum):
 
 @dataclass
 class RevenueTarget:
-    """Revenue target configuration"""    target_id: str
+    """Revenue target configuration"""
+    target_id: str
     name: str
     goal_type: RevenueGoalType
     target_amount: Decimal
@@ -84,28 +89,33 @@ class RevenueTarget:
     
     @property
     def progress_percentage(self) -> float:
-        """Calculate progress percentage"""        if self.target_amount == 0:
+        """Calculate progress percentage"""
+        if self.target_amount == 0:
             return 0.0
         return float((self.current_amount / self.target_amount) * 100)
     
     @property
     def remaining_amount(self) -> Decimal:
-        """Calculate remaining amount to reach target"""        return max(Decimal('0'), self.target_amount - self.current_amount)
+        """Calculate remaining amount to reach target"""
+        return max(Decimal('0'), self.target_amount - self.current_amount)
     
     @property
     def days_remaining(self) -> int:
-        """Calculate days remaining to reach target"""        return max(0, (self.end_date - datetime.utcnow()).days)
+        """Calculate days remaining to reach target"""
+        return max(0, (self.end_date - datetime.utcnow()).days)
     
     @property
     def daily_required_rate(self) -> Decimal:
-        """Calculate daily revenue rate required to meet target"""        if self.days_remaining == 0:
+        """Calculate daily revenue rate required to meet target"""
+        if self.days_remaining == 0:
             return Decimal('0')
         return self.remaining_amount / self.days_remaining
 
 
 @dataclass
 class RevenuePortfolio:
-    """Revenue portfolio configuration"""    portfolio_id: str
+    """Revenue portfolio configuration"""
+    portfolio_id: str
     name: str
     strategy: PortfolioStrategy
     targets: List[RevenueTarget]
@@ -118,22 +128,26 @@ class RevenuePortfolio:
     
     @property
     def overall_progress(self) -> float:
-        """Calculate overall portfolio progress"""        if self.total_target == 0:
+        """Calculate overall portfolio progress"""
+        if self.total_target == 0:
             return 0.0
         return float((self.total_current / self.total_target) * 100)
     
     @property
     def target_count(self) -> int:
-        """Get number of targets in portfolio"""        return len(self.targets)
+        """Get number of targets in portfolio"""
+        return len(self.targets)
     
     @property
     def achieved_targets(self) -> int:
-        """Get number of achieved targets"""        return len([t for t in self.targets if t.progress_percentage >= 100])
+        """Get number of achieved targets"""
+        return len([t for t in self.targets if t.progress_percentage >= 100])
 
 
 @dataclass
 class PerformanceMetrics:
-    """Revenue performance metrics"""    period_start: datetime
+    """Revenue performance metrics"""
+    period_start: datetime
     period_end: datetime
     total_revenue: Decimal
     target_revenue: Decimal
@@ -146,13 +160,15 @@ class PerformanceMetrics:
     
     @property
     def variance_percentage(self) -> float:
-        """Calculate variance as percentage"""        if self.target_revenue == 0:
+        """Calculate variance as percentage"""
+        if self.target_revenue == 0:
             return 0.0
         return float((self.variance / self.target_revenue) * 100)
 
 
 class RevenueManager:
-    """Comprehensive revenue management system"""    
+    """Comprehensive revenue management system"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.portfolios = {}
@@ -162,7 +178,8 @@ class RevenueManager:
         self.performance_history = []
         
     async def initialize(self) -> None:
-        """Initialize revenue manager"""        try:
+        """Initialize revenue manager"""
+        try:
             # Load existing portfolios and targets
             await self._load_portfolios()
             await self._load_targets()
@@ -177,7 +194,8 @@ class RevenueManager:
             raise
     
     async def _load_portfolios(self) -> None:
-        """Load existing revenue portfolios"""        # In production, load from database
+        """Load existing revenue portfolios"""
+        # In production, load from database
         # For now, create sample portfolio
         sample_portfolio = RevenuePortfolio(
             portfolio_id=str(uuid.uuid4()),
@@ -195,11 +213,13 @@ class RevenueManager:
         self.portfolios[sample_portfolio.portfolio_id] = sample_portfolio
     
     async def _load_targets(self) -> None:
-        """Load existing revenue targets"""        # In production, load from database
+        """Load existing revenue targets"""
+        # In production, load from database
         pass
     
     async def _setup_performance_tracking(self) -> None:
-        """Setup performance tracking system"""        self.performance_config = self.config.get('performance', {
+        """Setup performance tracking system"""
+        self.performance_config = self.config.get('performance', {
             'tracking_frequency': 'daily',
             'benchmark_period': 30,
             'risk_free_rate': 0.02
@@ -212,7 +232,8 @@ class RevenueManager:
         risk_tolerance: float,
         description: Optional[str] = None
     ) -> str:
-        """Create new revenue portfolio"""        try:
+        """Create new revenue portfolio"""
+        try:
             portfolio_id = str(uuid.uuid4())
             
             portfolio = RevenuePortfolio(
@@ -249,7 +270,8 @@ class RevenueManager:
         priority: int = 1,
         description: str = ""
     ) -> str:
-        """Create new revenue target"""        try:
+        """Create new revenue target"""
+        try:
             if portfolio_id not in self.portfolios:
                 raise RevenueManagementError(f"Portfolio not found: {portfolio_id}")
             
@@ -289,7 +311,8 @@ class RevenueManager:
             raise RevenueManagementError(f"Target creation failed: {e}")
     
     async def update_target_progress(self, target_id: str, amount: Decimal) -> None:
-        """Update target progress"""        try:
+        """Update target progress"""
+        try:
             if target_id not in self.targets:
                 raise RevenueManagementError(f"Target not found: {target_id}")
             
@@ -314,7 +337,8 @@ class RevenueManager:
             raise RevenueManagementError(f"Progress update failed: {e}")
     
     async def _check_milestone_achievements(self, target: RevenueTarget) -> None:
-        """Check and record milestone achievements"""        try:
+        """Check and record milestone achievements"""
+        try:
             progress = target.progress_percentage
             
             # Standard milestones: 25%, 50%, 75%, 100%
@@ -342,7 +366,8 @@ class RevenueManager:
             logger.error(f"Error checking milestones: {e}")
     
     async def _update_diversification_score(self, portfolio_id: str) -> None:
-        """Update portfolio diversification score"""        try:
+        """Update portfolio diversification score"""
+        try:
             portfolio = self.portfolios[portfolio_id]
             
             if not portfolio.targets:
@@ -380,7 +405,8 @@ class RevenueManager:
             logger.error(f"Error updating diversification score: {e}")
     
     async def analyze_portfolio_performance(self, portfolio_id: str, period_days: int = 30) -> PerformanceMetrics:
-        """Analyze portfolio performance"""        try:
+        """Analyze portfolio performance"""
+        try:
             if portfolio_id not in self.portfolios:
                 raise RevenueManagementError(f"Portfolio not found: {portfolio_id}")
             
@@ -436,7 +462,8 @@ class RevenueManager:
             raise RevenueManagementError(f"Performance analysis failed: {e}")
     
     async def get_portfolio_recommendations(self, portfolio_id: str) -> List[Dict[str, Any]]:
-        """Get portfolio optimization recommendations"""        try:
+        """Get portfolio optimization recommendations"""
+        try:
             if portfolio_id not in self.portfolios:
                 raise RevenueManagementError(f"Portfolio not found: {portfolio_id}")
             
@@ -542,7 +569,8 @@ class RevenueManager:
         portfolio_id: str,
         scenarios: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Simulate different portfolio scenarios"""        try:
+        """Simulate different portfolio scenarios"""
+        try:
             if portfolio_id not in self.portfolios:
                 raise RevenueManagementError(f"Portfolio not found: {portfolio_id}")
             
@@ -609,7 +637,8 @@ class RevenueManager:
             raise RevenueManagementError(f"Scenario simulation failed: {e}")
     
     def _assess_scenario_risk(self, portfolio: RevenuePortfolio, modifications: Dict[str, Any]) -> str:
-        """Assess risk level for scenario"""        risk_factors = 0
+        """Assess risk level for scenario"""
+        risk_factors = 0
         
         # High revenue multiplier increases risk
         if modifications.get('revenue_multiplier', 1.0) > 1.5:
@@ -631,7 +660,8 @@ class RevenueManager:
             return 'low'
     
     async def _compare_scenarios(self, scenarios: Dict[str, Any]) -> Dict[str, Any]:
-        """Compare scenario results"""        if not scenarios:
+        """Compare scenario results"""
+        if not scenarios:
             return {}
         
         # Find best and worst performing scenarios
@@ -657,7 +687,8 @@ class RevenueManager:
         }
     
     async def get_target_insights(self, target_id: str) -> Dict[str, Any]:
-        """Get detailed insights for specific target"""        try:
+        """Get detailed insights for specific target"""
+        try:
             if target_id not in self.targets:
                 raise RevenueManagementError(f"Target not found: {target_id}")
             
@@ -685,7 +716,8 @@ class RevenueManager:
             raise RevenueManagementError(f"Target insights generation failed: {e}")
     
     async def _calculate_achievement_probability(self, target: RevenueTarget) -> float:
-        """Calculate probability of target achievement"""        try:
+        """Calculate probability of target achievement"""
+        try:
             # Simple probability calculation based on current progress and time remaining
             progress = target.progress_percentage
             days_remaining = target.days_remaining
@@ -727,7 +759,8 @@ class RevenueManager:
             return 0.5  # Default probability
     
     async def _get_target_recommendations(self, target: RevenueTarget) -> List[str]:
-        """Get recommendations for specific target"""        recommendations = []
+        """Get recommendations for specific target"""
+        recommendations = []
         
         # Progress-based recommendations
         if target.progress_percentage < 25 and target.days_remaining < 30:
@@ -747,7 +780,8 @@ class RevenueManager:
         return recommendations
     
     async def _identify_target_risks(self, target: RevenueTarget) -> List[str]:
-        """Identify risks for specific target"""        risks = []
+        """Identify risks for specific target"""
+        risks = []
         
         # Time-based risks
         if target.days_remaining < 7 and target.progress_percentage < 80:
@@ -764,7 +798,8 @@ class RevenueManager:
         return risks
     
     async def _identify_optimization_opportunities(self, target: RevenueTarget) -> List[str]:
-        """Identify optimization opportunities for target"""        opportunities = []
+        """Identify optimization opportunities for target"""
+        opportunities = []
         
         # Performance-based opportunities
         if target.progress_percentage > 50 and target.days_remaining > 30:
@@ -782,7 +817,8 @@ class RevenueManager:
         return opportunities
     
     async def export_portfolio_report(self, portfolio_id: str) -> Dict[str, Any]:
-        """Export comprehensive portfolio report"""        try:
+        """Export comprehensive portfolio report"""
+        try:
             if portfolio_id not in self.portfolios:
                 raise RevenueManagementError(f"Portfolio not found: {portfolio_id}")
             

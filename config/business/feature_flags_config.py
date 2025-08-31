@@ -12,7 +12,8 @@ Any unauthorized use, copying, or distribution without explicit written permissi
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
-"""from enum import Enum
+"""
+from enum import Enum
 from typing import Dict, List, Optional, Set, Union, Any, Tuple
 from dataclasses import dataclass
 from datetime import datetime, timedelta
@@ -20,7 +21,8 @@ import uuid
 
 
 class FeatureState(str, Enum):
-    """Feature flag states."""    DISABLED = "disabled"
+    """Feature flag states."""
+    DISABLED = "disabled"
     ENABLED = "enabled"
     TESTING = "testing"
     ROLLOUT = "rollout"
@@ -29,7 +31,8 @@ class FeatureState(str, Enum):
 
 
 class RolloutStrategy(str, Enum):
-    """Rollout strategies for feature flags."""    PERCENTAGE = "percentage"
+    """Rollout strategies for feature flags."""
+    PERCENTAGE = "percentage"
     WHITELIST = "whitelist"
     TENANT_BASED = "tenant_based"
     REGION_BASED = "region_based"
@@ -39,7 +42,8 @@ class RolloutStrategy(str, Enum):
 
 
 class FeatureCategory(str, Enum):
-    """Categories for feature organization."""    CORE_FUNCTIONALITY = "core_functionality"
+    """Categories for feature organization."""
+    CORE_FUNCTIONALITY = "core_functionality"
     AI_FEATURES = "ai_features"
     CONTENT_PROTECTION = "content_protection"
     COLLABORATION = "collaboration"
@@ -53,7 +57,8 @@ class FeatureCategory(str, Enum):
 
 
 class FeatureEnvironment(str, Enum):
-    """Environment types for feature flags."""    DEVELOPMENT = "development"
+    """Environment types for feature flags."""
+    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -61,7 +66,8 @@ class FeatureEnvironment(str, Enum):
 
 @dataclass
 class FeatureFlag:
-    """Complete feature flag definition."""    key: str
+    """Complete feature flag definition."""
+    key: str
     name: str
     description: str
     category: FeatureCategory
@@ -84,7 +90,8 @@ class FeatureFlag:
 
 @dataclass
 class ABTestConfig:
-    """A/B testing configuration."""    test_id: str
+    """A/B testing configuration."""
+    test_id: str
     feature_key: str
     variants: Dict[str, Any]
     traffic_allocation: Dict[str, float]
@@ -96,7 +103,8 @@ class ABTestConfig:
 
 
 class FeatureFlagsConfig:
-    """Enterprise feature flags management configuration."""    # Core feature flags
+    """Enterprise feature flags management configuration."""
+    # Core feature flags
     CORE_FEATURES = {
         "ai_fingerprinting": FeatureFlag(
             key="ai_fingerprinting",
@@ -442,7 +450,8 @@ class FeatureFlagsConfig:
 
     @classmethod
     def get_all_features(cls) -> Dict[str, FeatureFlag]:
-        """Get all feature flags across all categories."""        all_features = {}
+        """Get all feature flags across all categories."""
+        all_features = {}
         all_features.update(cls.CORE_FEATURES)
         all_features.update(cls.EXPERIMENTAL_FEATURES)
         all_features.update(cls.PERFORMANCE_FEATURES)
@@ -452,7 +461,8 @@ class FeatureFlagsConfig:
 
     @classmethod
     def is_feature_enabled(cls, feature_key: str, user_context: Dict[str, Any]) -> bool:
-        """Check if a feature is enabled for a specific user context."""        all_features = cls.get_all_features()
+        """Check if a feature is enabled for a specific user context."""
+        all_features = cls.get_all_features()
         feature = all_features.get(feature_key)
         
         if not feature:
@@ -482,7 +492,8 @@ class FeatureFlagsConfig:
 
     @classmethod
     def _evaluate_rollout_strategy(cls, feature: FeatureFlag, user_context: Dict[str, Any]) -> bool:
-        """Evaluate if feature should be enabled based on rollout strategy."""        if feature.rollout_strategy == RolloutStrategy.PERCENTAGE:
+        """Evaluate if feature should be enabled based on rollout strategy."""
+        if feature.rollout_strategy == RolloutStrategy.PERCENTAGE:
             # Simple percentage-based rollout (would use consistent hashing in real implementation)
             user_id = user_context.get("user_id", "")
             hash_value = hash(f"{feature.key}_{user_id}") % 100
@@ -514,12 +525,14 @@ class FeatureFlagsConfig:
 
     @classmethod
     def get_features_by_category(cls, category: FeatureCategory) -> Dict[str, FeatureFlag]:
-        """Get all features in a specific category."""        all_features = cls.get_all_features()
+        """Get all features in a specific category."""
+        all_features = cls.get_all_features()
         return {k: v for k, v in all_features.items() if v.category == category}
 
     @classmethod
     def get_active_features(cls, user_context: Dict[str, Any]) -> List[str]:
-        """Get list of active feature keys for a user."""        all_features = cls.get_all_features()
+        """Get list of active feature keys for a user."""
+        all_features = cls.get_all_features()
         active_features = []
         
         for feature_key, feature in all_features.items():
@@ -530,14 +543,16 @@ class FeatureFlagsConfig:
 
     @classmethod
     def get_ab_test_config(cls, test_id: str) -> Optional[ABTestConfig]:
-        """Get A/B test configuration by test ID."""        for test_key, test_config in cls.AB_TESTS.items():
+        """Get A/B test configuration by test ID."""
+        for test_key, test_config in cls.AB_TESTS.items():
             if test_config.test_id == test_id:
                 return test_config
         return None
 
     @classmethod
     def validate_feature_rollout(cls, feature: FeatureFlag) -> Tuple[bool, List[str]]:
-        """Validate feature configuration before rollout."""        errors = []
+        """Validate feature configuration before rollout."""
+        errors = []
         
         # Validate rollout percentage
         if not (0 <= feature.rollout_percentage <= 100):
@@ -566,7 +581,8 @@ class FeatureFlagsConfig:
 
     @classmethod
     def get_rollout_metrics(cls, feature_key: str) -> Dict[str, Any]:
-        """Get rollout metrics for a feature (placeholder for analytics integration)."""        # This would integrate with actual analytics system
+        """Get rollout metrics for a feature (placeholder for analytics integration)."""
+        # This would integrate with actual analytics system
         return {
             "total_eligible_users": 0,
             "users_with_feature": 0,
@@ -578,7 +594,8 @@ class FeatureFlagsConfig:
 
     @classmethod
     def emergency_disable_feature(cls, feature_key: str, reason: str, disabled_by: str) -> bool:
-        """Emergency disable a feature flag."""        all_features = cls.get_all_features()
+        """Emergency disable a feature flag."""
+        all_features = cls.get_all_features()
         if feature_key in all_features:
             # In real implementation, this would update the database
             # and trigger notifications
@@ -594,7 +611,8 @@ class FeatureFlagsConfig:
 
     @classmethod
     def _log_emergency_action(cls, feature_key: str, reason: str, actor: str) -> None:
-        """Log emergency feature actions for audit purposes."""        # This would integrate with logging/audit system
+        """Log emergency feature actions for audit purposes."""
+        # This would integrate with logging/audit system
         log_entry = {
             "timestamp": datetime.utcnow().isoformat(),
             "action": "emergency_disable",

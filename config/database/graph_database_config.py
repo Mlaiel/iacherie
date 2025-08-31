@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -29,14 +30,16 @@ logger = logging.getLogger(__name__)
 
 
 class GraphDBType(Enum):
-    """Supported graph database types"""    NEO4J = "neo4j"
+    """Supported graph database types"""
+    NEO4J = "neo4j"
     AMAZON_NEPTUNE = "neptune"
     AZURE_COSMOS_GREMLIN = "cosmos_gremlin"
     JANUSGRAPH = "janusgraph"
 
 
 class NodeType(Enum):
-    """Node types in the IA-Influencer graph model"""    USER = "User"
+    """Node types in the IA-Influencer graph model"""
+    USER = "User"
     CONTENT = "Content"
     PLATFORM = "Platform"
     GENRE = "Genre"
@@ -47,7 +50,8 @@ class NodeType(Enum):
 
 
 class RelationshipType(Enum):
-    """Relationship types for business logic"""    CREATED = "CREATED"
+    """Relationship types for business logic"""
+    CREATED = "CREATED"
     COLLABORATED_WITH = "COLLABORATED_WITH"
     INFLUENCED_BY = "INFLUENCED_BY"
     PUBLISHED_ON = "PUBLISHED_ON"
@@ -61,7 +65,8 @@ class RelationshipType(Enum):
 
 @dataclass
 class GraphDatabaseCredentials:
-    """Graph database authentication credentials"""    username: str
+    """Graph database authentication credentials"""
+    username: str
     password: str
     uri: str = "bolt://localhost:7687"
     database: str = "neo4j"
@@ -73,7 +78,8 @@ class GraphDatabaseCredentials:
 
 @dataclass
 class NodeSchema:
-    """Schema definition for graph nodes"""    node_type: NodeType
+    """Schema definition for graph nodes"""
+    node_type: NodeType
     required_properties: List[str] = field(default_factory=list)
     optional_properties: List[str] = field(default_factory=list)
     indexes: List[str] = field(default_factory=list)
@@ -82,7 +88,8 @@ class NodeSchema:
 
 @dataclass
 class RelationshipSchema:
-    """Schema definition for graph relationships"""    relationship_type: RelationshipType
+    """Schema definition for graph relationships"""
+    relationship_type: RelationshipType
     from_node: NodeType
     to_node: NodeType
     properties: List[str] = field(default_factory=list)
@@ -91,7 +98,8 @@ class RelationshipSchema:
 
 @dataclass
 class GraphDatabaseConfig:
-    """Professional graph database configuration"""    # Database configuration
+    """Professional graph database configuration"""
+    # Database configuration
     db_type: GraphDBType = GraphDBType.NEO4J
     credentials: GraphDatabaseCredentials = field(default_factory=GraphDatabaseCredentials)
     
@@ -234,7 +242,8 @@ class GraphDatabaseConfig:
 
 
 class GraphDatabaseManager:
-    """Professional graph database management system"""    
+    """Professional graph database management system"""
+    
     def __init__(self, config: GraphDatabaseConfig):
         self.config = config
         self.driver = None
@@ -242,7 +251,8 @@ class GraphDatabaseManager:
         self.session = None
         
     async def initialize(self) -> bool:
-        """Initialize graph database connection"""        try:
+        """Initialize graph database connection"""
+        try:
             if self.config.db_type == GraphDBType.NEO4J:
                 await self._initialize_neo4j()
             else:
@@ -260,7 +270,8 @@ class GraphDatabaseManager:
             return False
             
     async def _initialize_neo4j(self):
-        """Initialize Neo4j connection"""        self.driver = GraphDatabase.driver(
+        """Initialize Neo4j connection"""
+        self.driver = GraphDatabase.driver(
             self.config.credentials.uri,
             auth=(self.config.credentials.username, self.config.credentials.password),
             max_connection_lifetime=self.config.credentials.max_connection_lifetime,
@@ -278,7 +289,8 @@ class GraphDatabaseManager:
         )
         
     async def _setup_schema(self):
-        """Set up database schema with indexes and constraints"""        try:
+        """Set up database schema with indexes and constraints"""
+        try:
             with self.driver.session(database=self.config.credentials.database) as session:
                 # Create constraints
                 for node_name, schema in self.config.node_schemas.items():
@@ -310,13 +322,16 @@ class GraphDatabaseManager:
         user_id: str,
         properties: Dict[str, Any]
     ) -> bool:
-        """Create user node with properties"""        try:
+        """Create user node with properties"""
+        try:
             properties["user_id"] = user_id
             properties["created_at"] = properties.get("created_at", "datetime()")
             
-            query = """            CREATE (u:User $properties)
+            query = """
+            CREATE (u:User $properties)
             RETURN u.user_id as user_id
-            """            
+            """
+            
             with self.driver.session(database=self.config.credentials.database) as session:
                 result = session.run(query, properties=properties)
                 record = result.single()
@@ -336,15 +351,18 @@ class GraphDatabaseManager:
         user_id: str,
         properties: Dict[str, Any]
     ) -> bool:
-        """Create content node and link to user"""        try:
+        """Create content node and link to user"""
+        try:
             properties["content_id"] = content_id
             properties["created_at"] = properties.get("created_at", "datetime()")
             
-            query = """            MATCH (u:User {user_id: $user_id})
+            query = """
+            MATCH (u:User {user_id: $user_id})
             CREATE (c:Content $content_properties)
             CREATE (u)-[:CREATED {created_at: datetime()}]->(c)
             RETURN c.content_id as content_id
-            """            
+            """
+            
             with self.driver.session(database=self.config.credentials.database) as session:
                 result = session.run(
                     query,
@@ -368,13 +386,16 @@ class GraphDatabaseManager:
         user2_id: str,
         collaboration_properties: Dict[str, Any]
     ) -> bool:
-        """Create collaboration relationship between users"""        try:
-            query = """            MATCH (u1:User {user_id: $user1_id})
+        """Create collaboration relationship between users"""
+        try:
+            query = """
+            MATCH (u1:User {user_id: $user1_id})
             MATCH (u2:User {user_id: $user2_id})
             CREATE (u1)-[:COLLABORATED_WITH $properties]->(u2)
             CREATE (u2)-[:COLLABORATED_WITH $properties]->(u1)
             RETURN u1.user_id, u2.user_id
-            """            
+            """
+            
             collaboration_properties["created_at"] = collaboration_properties.get("created_at", "datetime()")
             
             with self.driver.session(database=self.config.credentials.database) as session:
@@ -402,8 +423,10 @@ class GraphDatabaseManager:
         similarity_score: float,
         similarity_type: str = "fingerprint"
     ) -> bool:
-        """Create similarity relationship between content"""        try:
-            query = """            MATCH (c1:Content {content_id: $content1_id})
+        """Create similarity relationship between content"""
+        try:
+            query = """
+            MATCH (c1:Content {content_id: $content1_id})
             MATCH (c2:Content {content_id: $content2_id})
             CREATE (c1)-[:SIMILAR_TO {
                 similarity_score: $similarity_score,
@@ -411,7 +434,8 @@ class GraphDatabaseManager:
                 detected_at: datetime()
             }]->(c2)
             RETURN c1.content_id, c2.content_id
-            """            
+            """
+            
             with self.driver.session(database=self.config.credentials.database) as session:
                 result = session.run(
                     query,
@@ -437,8 +461,10 @@ class GraphDatabaseManager:
         min_influence_score: float = 0.5,
         max_results: int = 10
     ) -> List[Dict[str, Any]]:
-        """Find potential collaboration opportunities for user"""        try:
-            query = """            MATCH (u:User {user_id: $user_id})
+        """Find potential collaboration opportunities for user"""
+        try:
+            query = """
+            MATCH (u:User {user_id: $user_id})
             MATCH (target:User)
             WHERE u <> target
             AND NOT (u)-[:COLLABORATED_WITH]-(target)
@@ -465,7 +491,8 @@ class GraphDatabaseManager:
             
             ORDER BY compatibility_score DESC, target.reputation_score DESC
             LIMIT $max_results
-            """            
+            """
+            
             with self.driver.session(database=self.config.credentials.database) as session:
                 result = session.run(
                     query,
@@ -496,8 +523,10 @@ class GraphDatabaseManager:
         content_id: str,
         min_similarity_threshold: float = 0.8
     ) -> List[Dict[str, Any]]:
-        """Detect potential content violations"""        try:
-            query = """            MATCH (c:Content {content_id: $content_id})
+        """Detect potential content violations"""
+        try:
+            query = """
+            MATCH (c:Content {content_id: $content_id})
             MATCH (c)-[sim:SIMILAR_TO]-(other:Content)
             WHERE sim.similarity_score >= $min_similarity_threshold
             AND c <> other
@@ -515,7 +544,8 @@ class GraphDatabaseManager:
                    sim.detected_at as detected_at
             
             ORDER BY sim.similarity_score DESC
-            """            
+            """
+            
             with self.driver.session(database=self.config.credentials.database) as session:
                 result = session.run(
                     query,
@@ -546,8 +576,10 @@ class GraphDatabaseManager:
         user_id: str,
         depth: int = 2
     ) -> Dict[str, Any]:
-        """Get network analysis for user including influence metrics"""        try:
-            query = f"""            MATCH path = (u:User {{user_id: $user_id}})-[:COLLABORATED_WITH*1..{depth}]-(connected:User)
+        """Get network analysis for user including influence metrics"""
+        try:
+            query = f"""
+            MATCH path = (u:User {{user_id: $user_id}})-[:COLLABORATED_WITH*1..{depth}]-(connected:User)
             
             WITH u, connected, length(path) as distance
             
@@ -561,7 +593,8 @@ class GraphDatabaseManager:
                    min(distance) as shortest_distance
             
             ORDER BY shortest_distance ASC, reputation DESC
-            """            
+            """
+            
             with self.driver.session(database=self.config.credentials.database) as session:
                 result = session.run(query, user_id=user_id)
                 
@@ -600,7 +633,8 @@ class GraphDatabaseManager:
             return {"error": str(e)}
             
     async def close(self):
-        """Close database connections"""        try:
+        """Close database connections"""
+        try:
             if self.driver:
                 self.driver.close()
             logger.info("Graph database connections closed")
@@ -612,7 +646,8 @@ def create_graph_database_config(
     environment: str = "development",
     custom_settings: Optional[Dict[str, Any]] = None
 ) -> GraphDatabaseConfig:
-    """Factory function to create graph database configuration"""    
+    """Factory function to create graph database configuration"""
+    
     # Environment-specific defaults
     config_defaults = {
         "development": {

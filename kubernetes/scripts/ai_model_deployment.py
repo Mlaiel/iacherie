@@ -26,7 +26,8 @@ strictly prohibited and may result in severe legal action under German
 and international copyright laws.
 
 Specialization: AI/ML Systems Architecture & Enterprise Model Deployment
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import os
@@ -59,7 +60,8 @@ logger = logging.getLogger(__name__)
 
 
 class ModelType(Enum):
-    """AI model types supported by the IA Influencer Agent platform."""    # Core Content Protection Models
+    """AI model types supported by the IA Influencer Agent platform."""
+    # Core Content Protection Models
     AUDIO_FINGERPRINTING = "audio_fingerprinting"
     VIDEO_FINGERPRINTING = "video_fingerprinting"
     IMAGE_FINGERPRINTING = "image_fingerprinting"
@@ -129,7 +131,8 @@ class ModelType(Enum):
 
 
 class DeploymentStrategy(Enum):
-    """Model deployment strategies."""    BLUE_GREEN = "blue_green"
+    """Model deployment strategies."""
+    BLUE_GREEN = "blue_green"
     CANARY = "canary"
     ROLLING_UPDATE = "rolling_update"
     SHADOW = "shadow"
@@ -137,7 +140,8 @@ class DeploymentStrategy(Enum):
 
 
 class ModelFramework(Enum):
-    """Supported ML frameworks."""    PYTORCH = "pytorch"
+    """Supported ML frameworks."""
+    PYTORCH = "pytorch"
     TENSORFLOW = "tensorflow"
     HUGGINGFACE = "huggingface"
     ONNX = "onnx"
@@ -147,7 +151,8 @@ class ModelFramework(Enum):
 
 @dataclass
 class ModelConfig:
-    """Configuration for AI model deployment."""    model_name: str
+    """Configuration for AI model deployment."""
+    model_name: str
     model_type: ModelType
     framework: ModelFramework
     version: str
@@ -163,7 +168,8 @@ class ModelConfig:
 
 @dataclass
 class DeploymentConfig:
-    """Configuration for model deployment."""    deployment_name: str
+    """Configuration for model deployment."""
+    deployment_name: str
     strategy: DeploymentStrategy
     replicas: int = 3
     resource_limits: Dict[str, str] = field(default_factory=dict)
@@ -174,7 +180,8 @@ class DeploymentConfig:
 
 
 class AIModelDeploymentManager:
-    """    Enterprise-grade AI model deployment and management system.
+    """
+    Enterprise-grade AI model deployment and management system.
     
     Features:
     - Multi-framework model support (PyTorch, TensorFlow, HuggingFace)
@@ -184,8 +191,10 @@ class AIModelDeploymentManager:
     - Performance monitoring and alerting
     - Security and compliance enforcement
     - Resource optimization and cost management
-    """    def __init__(self, config_path: Optional[str] = None):
-        """Initialize the AI model deployment manager."""        self.config = self._load_config(config_path)
+    """
+    def __init__(self, config_path: Optional[str] = None):
+        """Initialize the AI model deployment manager."""
+        self.config = self._load_config(config_path)
         self.docker_client = docker.from_env()
         self.k8s_client = self._initialize_kubernetes()
         self.mlflow_client = mlflow.tracking.MlflowClient()
@@ -195,7 +204,8 @@ class AIModelDeploymentManager:
         logger.info("AI Model Deployment Manager initialized successfully")
 
     def _load_config(self, config_path: Optional[str]) -> Dict[str, Any]:
-        """Load deployment configuration."""        default_config = {
+        """Load deployment configuration."""
+        default_config = {
             "docker": {
                 "registry": "ia-influencer-registry",
                 "base_image": "python:3.11-slim",
@@ -234,7 +244,8 @@ class AIModelDeploymentManager:
         return default_config
 
     def _initialize_kubernetes(self) -> client.ApiClient:
-        """Initialize Kubernetes client."""        try:
+        """Initialize Kubernetes client."""
+        try:
             config.load_incluster_config()
         except:
             try:
@@ -250,7 +261,8 @@ class AIModelDeploymentManager:
         model_config: ModelConfig,
         deployment_config: DeploymentConfig
     ) -> str:
-        """        Deploy an AI model with enterprise-grade configuration.
+        """
+        Deploy an AI model with enterprise-grade configuration.
         
         Args:
             model_config: Model configuration
@@ -258,7 +270,8 @@ class AIModelDeploymentManager:
             
         Returns:
             Deployment ID
-        """        deployment_id = f"{deployment_config.deployment_name}-{datetime.now().strftime('%Y%m%d%H%M%S')}"
+        """
+        deployment_id = f"{deployment_config.deployment_name}-{datetime.now().strftime('%Y%m%d%H%M%S')}"
         
         try:
             logger.info(f"Starting model deployment: {deployment_id}")
@@ -292,7 +305,8 @@ class AIModelDeploymentManager:
             raise
 
     async def _validate_model_config(self, model_config: ModelConfig) -> None:
-        """Validate model configuration."""        if not os.path.exists(model_config.model_path):
+        """Validate model configuration."""
+        if not os.path.exists(model_config.model_path):
             raise ValueError(f"Model path does not exist: {model_config.model_path}")
         
         # Validate framework-specific requirements
@@ -304,28 +318,32 @@ class AIModelDeploymentManager:
             await self._validate_huggingface_model(model_config)
 
     async def _validate_pytorch_model(self, model_config: ModelConfig) -> None:
-        """Validate PyTorch model."""        try:
+        """Validate PyTorch model."""
+        try:
             model = torch.load(model_config.model_path, map_location='cpu')
             logger.info(f"PyTorch model validated: {model_config.model_name}")
         except Exception as e:
             raise ValueError(f"Invalid PyTorch model: {str(e)}")
 
     async def _validate_tensorflow_model(self, model_config: ModelConfig) -> None:
-        """Validate TensorFlow model."""        try:
+        """Validate TensorFlow model."""
+        try:
             model = tf.saved_model.load(model_config.model_path)
             logger.info(f"TensorFlow model validated: {model_config.model_name}")
         except Exception as e:
             raise ValueError(f"Invalid TensorFlow model: {str(e)}")
 
     async def _validate_huggingface_model(self, model_config: ModelConfig) -> None:
-        """Validate HuggingFace model."""        try:
+        """Validate HuggingFace model."""
+        try:
             model = AutoModel.from_pretrained(model_config.model_path)
             logger.info(f"HuggingFace model validated: {model_config.model_name}")
         except Exception as e:
             raise ValueError(f"Invalid HuggingFace model: {str(e)}")
 
     async def _build_model_image(self, model_config: ModelConfig, deployment_id: str) -> str:
-        """Build Docker image for the model."""        image_name = f"{self.config['docker']['registry']}/{model_config.model_name}:{model_config.version}"
+        """Build Docker image for the model."""
+        image_name = f"{self.config['docker']['registry']}/{model_config.model_name}:{model_config.version}"
         
         # Create temporary directory for build context
         with tempfile.TemporaryDirectory() as build_context:
@@ -359,7 +377,8 @@ class AIModelDeploymentManager:
         return image_name
 
     def _generate_dockerfile(self, model_config: ModelConfig) -> str:
-        """Generate Dockerfile for the model."""        base_image = self.config['docker']['base_image']
+        """Generate Dockerfile for the model."""
+        base_image = self.config['docker']['base_image']
         if model_config.hardware_requirements.get('gpu', False):
             base_image = "nvidia/cuda:11.8-runtime-ubuntu20.04"
         
@@ -377,7 +396,8 @@ COPY requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
 # Install framework-specific dependencies
-"""        
+"""
+        
         if model_config.framework == ModelFramework.PYTORCH:
             dockerfile += "RUN pip install torch torchvision torchaudio\n"
         elif model_config.framework == ModelFramework.TENSORFLOW:
@@ -401,11 +421,13 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \\
 
 # Run inference server
 CMD ["python", "inference.py"]
-"""        
+"""
+        
         return dockerfile
 
     def _generate_inference_script(self, model_config: ModelConfig) -> str:
-        """Generate inference script for the model."""        return f"""#!/usr/bin/env python3
+        """Generate inference script for the model."""
+        return f"""#!/usr/bin/env python3
 import os
 import json
 import logging
@@ -497,14 +519,16 @@ def postprocess_output(prediction: Any) -> Dict[str, Any]:
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
-"""    async def _deploy_to_kubernetes(
+"""
+    async def _deploy_to_kubernetes(
         self,
         model_config: ModelConfig,
         deployment_config: DeploymentConfig,
         image_name: str,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Deploy model to Kubernetes."""        if not self.k8s_client:
+        """Deploy model to Kubernetes."""
+        if not self.k8s_client:
             logger.warning("Kubernetes not available, skipping deployment")
             return {}
         
@@ -547,7 +571,8 @@ if __name__ == "__main__":
         image_name: str,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Create Kubernetes deployment manifest."""        return {
+        """Create Kubernetes deployment manifest."""
+        return {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -621,7 +646,8 @@ if __name__ == "__main__":
         deployment_config: DeploymentConfig,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Create Kubernetes service manifest."""        return {
+        """Create Kubernetes service manifest."""
+        return {
             "apiVersion": "v1",
             "kind": "Service",
             "metadata": {
@@ -646,7 +672,8 @@ if __name__ == "__main__":
         }
 
     async def _setup_model_monitoring(self, deployment_id: str, model_config: ModelConfig) -> None:
-        """Setup monitoring for deployed model."""        if not self.config['monitoring']['prometheus_enabled']:
+        """Setup monitoring for deployed model."""
+        if not self.config['monitoring']['prometheus_enabled']:
             return
         
         # Create ServiceMonitor for Prometheus
@@ -677,7 +704,8 @@ if __name__ == "__main__":
         logger.info(f"Monitoring setup completed for deployment: {deployment_id}")
 
     async def _setup_autoscaling(self, deployment_id: str, deployment_config: DeploymentConfig) -> None:
-        """Setup autoscaling for deployed model."""        if not deployment_config.autoscaling_config.get('enabled', True):
+        """Setup autoscaling for deployed model."""
+        if not deployment_config.autoscaling_config.get('enabled', True):
             return
         
         hpa_manifest = {
@@ -727,7 +755,8 @@ if __name__ == "__main__":
         model_config: ModelConfig,
         deployment_config: DeploymentConfig
     ) -> None:
-        """Record deployment information."""        deployment_record = {
+        """Record deployment information."""
+        deployment_record = {
             "deployment_id": deployment_id,
             "model_config": model_config.__dict__,
             "deployment_config": deployment_config.__dict__,
@@ -749,7 +778,8 @@ if __name__ == "__main__":
             logger.warning(f"Failed to log to MLflow: {str(e)}")
 
     async def _cleanup_failed_deployment(self, deployment_id: str) -> None:
-        """Cleanup resources from failed deployment."""        try:
+        """Cleanup resources from failed deployment."""
+        try:
             if self.k8s_client:
                 apps_v1 = client.AppsV1Api(self.k8s_client)
                 core_v1 = client.CoreV1Api(self.k8s_client)
@@ -777,7 +807,8 @@ if __name__ == "__main__":
             logger.error(f"Cleanup failed: {str(e)}")
 
     async def rollback_deployment(self, deployment_id: str) -> bool:
-        """Rollback a deployment to previous version."""        try:
+        """Rollback a deployment to previous version."""
+        try:
             if deployment_id not in self.active_deployments:
                 raise ValueError(f"Deployment not found: {deployment_id}")
             
@@ -793,7 +824,8 @@ if __name__ == "__main__":
             return False
 
     async def scale_deployment(self, deployment_id: str, replicas: int) -> bool:
-        """Scale a deployment to specified number of replicas."""        try:
+        """Scale a deployment to specified number of replicas."""
+        try:
             if not self.k8s_client:
                 raise ValueError("Kubernetes not available")
             
@@ -813,13 +845,15 @@ if __name__ == "__main__":
             return False
 
     def get_deployment_status(self, deployment_id: str) -> Dict[str, Any]:
-        """Get status of a deployment."""        if deployment_id not in self.active_deployments:
+        """Get status of a deployment."""
+        if deployment_id not in self.active_deployments:
             return {"status": "not_found"}
         
         return self.active_deployments[deployment_id]
 
     def list_active_deployments(self) -> List[Dict[str, Any]]:
-        """List all active deployments."""        return list(self.active_deployments.values())
+        """List all active deployments."""
+        return list(self.active_deployments.values())
 
     async def update_model(
         self,
@@ -827,7 +861,8 @@ if __name__ == "__main__":
         new_model_config: ModelConfig,
         strategy: DeploymentStrategy = DeploymentStrategy.ROLLING_UPDATE
     ) -> str:
-        """Update an existing model deployment."""        try:
+        """Update an existing model deployment."""
+        try:
             logger.info(f"Updating deployment: {deployment_id}")
             
             # Create new deployment with updated model
@@ -856,7 +891,8 @@ if __name__ == "__main__":
         new_deployment_id: str,
         strategy: DeploymentStrategy
     ) -> None:
-        """Perform traffic shift between deployments."""        if strategy == DeploymentStrategy.BLUE_GREEN:
+        """Perform traffic shift between deployments."""
+        if strategy == DeploymentStrategy.BLUE_GREEN:
             # Instant traffic switch
             await self._switch_traffic(old_deployment_id, new_deployment_id)
         elif strategy == DeploymentStrategy.CANARY:
@@ -867,26 +903,31 @@ if __name__ == "__main__":
             await self._rolling_update(old_deployment_id, new_deployment_id)
 
     async def _switch_traffic(self, old_deployment_id: str, new_deployment_id: str) -> None:
-        """Switch traffic from old to new deployment."""        # Implementation for traffic switching
+        """Switch traffic from old to new deployment."""
+        # Implementation for traffic switching
         logger.info(f"Switching traffic from {old_deployment_id} to {new_deployment_id}")
 
     async def _canary_traffic_shift(self, old_deployment_id: str, new_deployment_id: str) -> None:
-        """Perform canary deployment traffic shift."""        # Implementation for canary deployment
+        """Perform canary deployment traffic shift."""
+        # Implementation for canary deployment
         logger.info(f"Performing canary shift from {old_deployment_id} to {new_deployment_id}")
 
     async def _rolling_update(self, old_deployment_id: str, new_deployment_id: str) -> None:
-        """Perform rolling update."""        # Implementation for rolling update
+        """Perform rolling update."""
+        # Implementation for rolling update
         logger.info(f"Performing rolling update from {old_deployment_id} to {new_deployment_id}")
 
     async def _cleanup_old_deployment(self, deployment_id: str) -> None:
-        """Cleanup old deployment after successful update."""        await self._cleanup_failed_deployment(deployment_id)
+        """Cleanup old deployment after successful update."""
+        await self._cleanup_failed_deployment(deployment_id)
         if deployment_id in self.active_deployments:
             del self.active_deployments[deployment_id]
 
 
 # Factory functions for common model deployments
 def create_audio_fingerprinting_deployment() -> ModelConfig:
-    """Create configuration for audio fingerprinting model."""    return ModelConfig(
+    """Create configuration for audio fingerprinting model."""
+    return ModelConfig(
         model_name="audio-fingerprint-model",
         model_type=ModelType.AUDIO_FINGERPRINTING,
         framework=ModelFramework.PYTORCH,
@@ -898,7 +939,8 @@ def create_audio_fingerprinting_deployment() -> ModelConfig:
 
 
 def create_video_fingerprinting_deployment() -> ModelConfig:
-    """Create configuration for video fingerprinting model."""    return ModelConfig(
+    """Create configuration for video fingerprinting model."""
+    return ModelConfig(
         model_name="video-fingerprint-model",
         model_type=ModelType.VIDEO_FINGERPRINTING,
         framework=ModelFramework.TENSORFLOW,
@@ -910,7 +952,8 @@ def create_video_fingerprinting_deployment() -> ModelConfig:
 
 
 def create_image_fingerprinting_deployment() -> ModelConfig:
-    """Create configuration for image fingerprinting model."""    return ModelConfig(
+    """Create configuration for image fingerprinting model."""
+    return ModelConfig(
         model_name="image-fingerprint-model",
         model_type=ModelType.IMAGE_FINGERPRINTING,
         framework=ModelFramework.HUGGINGFACE,
@@ -922,7 +965,8 @@ def create_image_fingerprinting_deployment() -> ModelConfig:
 
 
 def create_text_fingerprinting_deployment() -> ModelConfig:
-    """Create configuration for text fingerprinting model."""    return ModelConfig(
+    """Create configuration for text fingerprinting model."""
+    return ModelConfig(
         model_name="text-fingerprint-model",
         model_type=ModelType.TEXT_FINGERPRINTING,
         framework=ModelFramework.HUGGINGFACE,
@@ -936,7 +980,8 @@ def create_text_fingerprinting_deployment() -> ModelConfig:
 # Main execution
 if __name__ == "__main__":
     async def main():
-        """Main execution function."""        # Initialize deployment manager
+        """Main execution function."""
+        # Initialize deployment manager
         manager = AIModelDeploymentManager()
         
         # Example: Deploy audio fingerprinting model

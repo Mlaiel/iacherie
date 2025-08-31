@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 Automated setup utility for deployment environments.
 Provides one-click environment initialization and validation.
 ===============================================
-"""import os
+"""
+import os
 import sys
 import asyncio
 import logging
@@ -45,7 +46,8 @@ logger = logging.getLogger(__name__)
 
 
 class EnvironmentSetupManager:
-    """    Manages automated setup of deployment environments.
+    """
+    Manages automated setup of deployment environments.
     
     Features:
     - Environment validation and initialization
@@ -54,13 +56,15 @@ class EnvironmentSetupManager:
     - Prerequisites verification
     - Security setup and hardening
     - Performance optimization
-    """    
+    """
+    
     def __init__(self):
         self.coordinator = EnvironmentCoordinator()
         self.setup_results: Dict[str, Any] = {}
         
     async def setup_all_environments(self, environment_types: Optional[List[str]] = None) -> Dict[str, Any]:
-        """Setup all or specified environments"""        try:
+        """Setup all or specified environments"""
+        try:
             logger.info("Starting environment setup process...")
             
             # Default to all environments if none specified
@@ -121,7 +125,8 @@ class EnvironmentSetupManager:
             return self.setup_results
     
     async def _check_prerequisites(self) -> Dict[str, Any]:
-        """Check system prerequisites"""        try:
+        """Check system prerequisites"""
+        try:
             prereq_results = {
                 'all_satisfied': True,
                 'checks': {},
@@ -211,7 +216,8 @@ class EnvironmentSetupManager:
             return {'all_satisfied': False, 'error': str(e)}
     
     async def _validate_configurations(self, environments: List[EnvironmentType]) -> Dict[str, Any]:
-        """Validate environment configurations"""        try:
+        """Validate environment configurations"""
+        try:
             validation_results = {
                 'overall_valid': True,
                 'environment_validations': {},
@@ -249,7 +255,8 @@ class EnvironmentSetupManager:
             return {'overall_valid': False, 'error': str(e)}
     
     async def _setup_security(self) -> Dict[str, Any]:
-        """Setup security configurations"""        try:
+        """Setup security configurations"""
+        try:
             security_results = {
                 'ssl_certificates': False,
                 'firewall_rules': False,
@@ -290,7 +297,8 @@ class EnvironmentSetupManager:
             return {'error': str(e)}
     
     async def _generate_setup_summary(self) -> Dict[str, Any]:
-        """Generate setup summary report"""        try:
+        """Generate setup summary report"""
+        try:
             summary = {
                 'setup_completion_time': self._get_current_timestamp(),
                 'total_environments': 0,
@@ -330,7 +338,8 @@ class EnvironmentSetupManager:
     
     # Helper methods
     def _get_available_disk_space(self) -> float:
-        """Get available disk space in GB"""        try:
+        """Get available disk space in GB"""
+        try:
             import shutil
             total, used, free = shutil.disk_usage('/')
             return free / (1024**3)  # Convert to GB
@@ -338,7 +347,8 @@ class EnvironmentSetupManager:
             return 0.0
     
     def _get_available_memory(self) -> float:
-        """Get available memory in GB"""        try:
+        """Get available memory in GB"""
+        try:
             import psutil
             memory = psutil.virtual_memory()
             return memory.available / (1024**3)  # Convert to GB
@@ -346,7 +356,8 @@ class EnvironmentSetupManager:
             return 0.0
     
     async def _check_network_connectivity(self) -> Dict[str, Any]:
-        """Check network connectivity"""        try:
+        """Check network connectivity"""
+        try:
             import aiohttp
             async with aiohttp.ClientSession() as session:
                 async with session.get('https://api.github.com', timeout=5) as response:
@@ -358,7 +369,8 @@ class EnvironmentSetupManager:
             return {'satisfied': False, 'error': 'Network connectivity failed'}
     
     def _check_docker_availability(self) -> Dict[str, Any]:
-        """Check Docker availability"""        try:
+        """Check Docker availability"""
+        try:
             import subprocess
             result = subprocess.run(['docker', '--version'], capture_output=True, text=True)
             return {
@@ -369,7 +381,8 @@ class EnvironmentSetupManager:
             return {'available': False}
     
     def _check_kubernetes_availability(self) -> Dict[str, Any]:
-        """Check Kubernetes availability"""        try:
+        """Check Kubernetes availability"""
+        try:
             import subprocess
             result = subprocess.run(['kubectl', 'version', '--client'], capture_output=True, text=True)
             return {
@@ -380,7 +393,8 @@ class EnvironmentSetupManager:
             return {'available': False}
     
     def _validate_cross_environment_configurations(self, environments: List[EnvironmentType]) -> Dict[str, Any]:
-        """Validate cross-environment configurations"""        return {
+        """Validate cross-environment configurations"""
+        return {
             'conflicts': [],
             'recommendations': [
                 'Ensure consistent security policies across environments',
@@ -389,31 +403,38 @@ class EnvironmentSetupManager:
         }
     
     async def _setup_ssl_certificates(self) -> bool:
-        """Setup SSL certificates"""        # Placeholder for SSL certificate setup
+        """Setup SSL certificates"""
+        # Placeholder for SSL certificate setup
         return True
     
     async def _setup_firewall_rules(self) -> bool:
-        """Setup firewall rules"""        # Placeholder for firewall setup
+        """Setup firewall rules"""
+        # Placeholder for firewall setup
         return True
     
     async def _setup_access_controls(self) -> bool:
-        """Setup access controls"""        # Placeholder for access control setup
+        """Setup access controls"""
+        # Placeholder for access control setup
         return True
     
     async def _setup_encryption(self) -> bool:
-        """Setup encryption"""        # Placeholder for encryption setup
+        """Setup encryption"""
+        # Placeholder for encryption setup
         return True
     
     async def _setup_audit_logging(self) -> bool:
-        """Setup audit logging"""        # Placeholder for audit logging setup
+        """Setup audit logging"""
+        # Placeholder for audit logging setup
         return True
     
     async def _setup_security_scanning(self) -> bool:
-        """Setup security scanning"""        # Placeholder for security scanning setup
+        """Setup security scanning"""
+        # Placeholder for security scanning setup
         return True
     
     def _generate_next_steps(self) -> List[str]:
-        """Generate next steps recommendations"""        return [
+        """Generate next steps recommendations"""
+        return [
             "Review environment configurations",
             "Run health checks",
             "Setup monitoring and alerting",
@@ -422,7 +443,8 @@ class EnvironmentSetupManager:
         ]
     
     def _get_documentation_links(self) -> List[str]:
-        """Get documentation links"""        return [
+        """Get documentation links"""
+        return [
             "README.md - Environment overview",
             "README.de.md - German documentation",
             "README.fr.md - French documentation",
@@ -430,12 +452,14 @@ class EnvironmentSetupManager:
         ]
     
     def _get_current_timestamp(self) -> str:
-        """Get current timestamp"""        from datetime import datetime
+        """Get current timestamp"""
+        from datetime import datetime
         return datetime.now().isoformat()
 
 
 async def main():
-    """Main setup function"""    parser = argparse.ArgumentParser(description='IA Influencer Agent Environment Setup')
+    """Main setup function"""
+    parser = argparse.ArgumentParser(description='IA Influencer Agent Environment Setup')
     parser.add_argument(
         '--environments',
         nargs='*',

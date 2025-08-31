@@ -23,7 +23,8 @@ Project Team Specializations:
 LEGAL NOTICE: Any attempt to steal, copy, reverse engineer, or use this intellectual 
 property without explicit written authorization from Fahed Mlaiel (mlaiel@live.de) 
 will result in immediate legal action under German and international copyright law.
-"""from typing import Dict, Any, Optional
+"""
+from typing import Dict, Any, Optional
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -125,13 +126,16 @@ __all__ = [
 
 
 class MonetizationService:
-    """    Unified monetization service interface.
+    """
+    Unified monetization service interface.
     
     Provides high-level access to all monetization functionality
     including revenue tracking, optimization, payments, and compliance.
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession, redis_client: Redis):
-        """Initialize monetization service with all components."""        self.db_session = db_session
+        """Initialize monetization service with all components."""
+        self.db_session = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
         
@@ -139,7 +143,8 @@ class MonetizationService:
         self._initialize_components()
     
     def _initialize_components(self):
-        """Initialize all monetization components."""        try:
+        """Initialize all monetization components."""
+        try:
             # Core manager
             self.manager = MonetizationManager(
                 self.db_session, self.redis, None  # content_analytics will be injected
@@ -163,7 +168,8 @@ class MonetizationService:
             raise
     
     async def get_user_monetization_overview(self, user_id: str) -> Dict[str, Any]:
-        """Get comprehensive monetization overview for user."""        try:
+        """Get comprehensive monetization overview for user."""
+        try:
             # Get dashboard data
             dashboard = await self.manager.get_monetization_dashboard(user_id)
             
@@ -197,7 +203,8 @@ class MonetizationService:
     
     async def optimize_user_revenue(self, user_id: str, 
                                   optimization_config: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Optimize revenue for user with comprehensive strategy."""        try:
+        """Optimize revenue for user with comprehensive strategy."""
+        try:
             # Create comprehensive strategy
             strategy = await self.manager.create_comprehensive_monetization_strategy(user_id)
             
@@ -231,7 +238,8 @@ class MonetizationService:
     async def generate_comprehensive_report(self, user_id: str, 
                                           report_type: str = "executive",
                                           period_days: int = 90) -> Dict[str, Any]:
-        """Generate comprehensive revenue report."""        try:
+        """Generate comprehensive revenue report."""
+        try:
             if report_type == "executive":
                 report = await self.manager.generate_executive_revenue_report(user_id, period_days)
             else:
@@ -254,7 +262,8 @@ class MonetizationService:
             raise
     
     async def setup_revenue_protection(self, user_id: str) -> Dict[str, Any]:
-        """Setup comprehensive revenue protection."""        try:
+        """Setup comprehensive revenue protection."""
+        try:
             # Create protection strategy
             protection_strategy = await self.manager.create_revenue_protection_strategy(user_id)
             
@@ -322,7 +331,8 @@ MONETIZATION_CONFIG = {
 
 
 def get_monetization_info() -> Dict[str, Any]:
-    """Get monetization system information."""    return {
+    """Get monetization system information."""
+    return {
         "system": "IA Influencer Agent Monetization Engine",
         "version": MONETIZATION_VERSION,
         "author": "Fahed Mlaiel <mlaiel@live.de>",

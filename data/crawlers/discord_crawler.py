@@ -21,7 +21,8 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -40,7 +41,8 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class DiscordUser:
-    """Discord user information"""    user_id: str
+    """Discord user information"""
+    user_id: str
     username: str
     discriminator: str
     display_name: Optional[str]
@@ -76,7 +78,8 @@ class DiscordUser:
 
 @dataclass
 class DiscordMessage:
-    """Discord message information"""    message_id: str
+    """Discord message information"""
+    message_id: str
     channel_id: str
     guild_id: Optional[str]
     author_id: str
@@ -113,7 +116,8 @@ class DiscordMessage:
 
 @dataclass
 class DiscordChannel:
-    """Discord channel information"""    channel_id: str
+    """Discord channel information"""
+    channel_id: str
     guild_id: Optional[str]
     name: str
     topic: Optional[str]
@@ -149,7 +153,8 @@ class DiscordChannel:
 
 @dataclass
 class DiscordGuild:
-    """Discord guild/server information"""    guild_id: str
+    """Discord guild/server information"""
+    guild_id: str
     name: str
     icon: Optional[str]
     icon_hash: Optional[str]
@@ -204,7 +209,8 @@ class DiscordGuild:
 
 @dataclass
 class DiscordRole:
-    """Discord role information"""    role_id: str
+    """Discord role information"""
+    role_id: str
     guild_id: str
     name: str
     color: int
@@ -223,7 +229,8 @@ class DiscordRole:
 
 
 class DiscordCrawler(PlatformCrawler):
-    """    Advanced Discord crawler for community content monitoring and analysis.
+    """
+    Advanced Discord crawler for community content monitoring and analysis.
     
     Features:
     - Server/guild discovery and analysis
@@ -236,7 +243,8 @@ class DiscordCrawler(PlatformCrawler):
     - Event and announcement tracking
     - Bot interaction analysis
     - Thread and forum monitoring
-    """    
+    """
+    
     def __init__(self, config: CrawlerConfig, vector_matcher=None, bot_token: str = None):
         super().__init__(config, vector_matcher)
         self.platform_name = "discord"
@@ -282,7 +290,8 @@ class DiscordCrawler(PlatformCrawler):
         self._setup_session_headers()
     
     def _setup_session_headers(self):
-        """Setup Discord-specific headers"""        self.session_headers.update({
+        """Setup Discord-specific headers"""
+        self.session_headers.update({
             'Accept': 'application/json',
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'en-US,en;q=0.9',
@@ -300,7 +309,8 @@ class DiscordCrawler(PlatformCrawler):
     
     async def search_content(self, query: str, content_type: str = "messages", 
                            max_results: int = 50, guild_id: str = None) -> List[CrawlerResult]:
-        """        Search for content on Discord.
+        """
+        Search for content on Discord.
         
         Args:
             query: Search query
@@ -310,7 +320,8 @@ class DiscordCrawler(PlatformCrawler):
             
         Returns:
             List of crawler results
-        """        try:
+        """
+        try:
             await self._check_rate_limit()
             
             if content_type not in self.content_types:
@@ -328,7 +339,8 @@ class DiscordCrawler(PlatformCrawler):
             return []
     
     async def _crawl_guilds(self, query: str, max_results: int, guild_id: str = None) -> List[CrawlerResult]:
-        """Crawl Discord guilds/servers"""        try:
+        """Crawl Discord guilds/servers"""
+        try:
             results = []
             
             if not self.bot_client:
@@ -381,7 +393,8 @@ class DiscordCrawler(PlatformCrawler):
             return []
     
     async def _crawl_channels(self, query: str, max_results: int, guild_id: str = None) -> List[CrawlerResult]:
-        """Crawl Discord channels"""        try:
+        """Crawl Discord channels"""
+        try:
             results = []
             
             if not self.bot_client:
@@ -439,7 +452,8 @@ class DiscordCrawler(PlatformCrawler):
             return []
     
     async def _crawl_messages(self, query: str, max_results: int, guild_id: str = None) -> List[CrawlerResult]:
-        """Crawl Discord messages"""        try:
+        """Crawl Discord messages"""
+        try:
             results = []
             
             if not self.bot_client:
@@ -511,7 +525,8 @@ class DiscordCrawler(PlatformCrawler):
             return []
     
     async def _crawl_users(self, query: str, max_results: int, guild_id: str = None) -> List[CrawlerResult]:
-        """Crawl Discord users"""        try:
+        """Crawl Discord users"""
+        try:
             results = []
             
             if not self.bot_client:
@@ -576,7 +591,8 @@ class DiscordCrawler(PlatformCrawler):
             return []
     
     async def _crawl_search(self, query: str, max_results: int, guild_id: str = None) -> List[CrawlerResult]:
-        """General Discord search across all content types"""        try:
+        """General Discord search across all content types"""
+        try:
             results = []
             
             # Search across different content types
@@ -595,7 +611,8 @@ class DiscordCrawler(PlatformCrawler):
             return []
     
     async def _crawl_announcements(self, query: str, max_results: int, guild_id: str = None) -> List[CrawlerResult]:
-        """Crawl Discord announcements"""        try:
+        """Crawl Discord announcements"""
+        try:
             results = []
             
             if not self.bot_client:
@@ -658,7 +675,8 @@ class DiscordCrawler(PlatformCrawler):
             return []
     
     async def _crawl_events(self, query: str, max_results: int, guild_id: str = None) -> List[CrawlerResult]:
-        """Crawl Discord scheduled events"""        try:
+        """Crawl Discord scheduled events"""
+        try:
             results = []
             
             if not self.bot_client:
@@ -720,7 +738,8 @@ class DiscordCrawler(PlatformCrawler):
             return []
     
     async def _crawl_threads(self, query: str, max_results: int, guild_id: str = None) -> List[CrawlerResult]:
-        """Crawl Discord threads"""        try:
+        """Crawl Discord threads"""
+        try:
             results = []
             
             if not self.bot_client:
@@ -787,7 +806,8 @@ class DiscordCrawler(PlatformCrawler):
     # Helper methods
     
     async def _get_detailed_guild_info(self, guild: discord.Guild) -> Optional[DiscordGuild]:
-        """Get detailed guild information"""        try:
+        """Get detailed guild information"""
+        try:
             # Get channels
             channels = []
             for channel in guild.channels:
@@ -857,7 +877,8 @@ class DiscordCrawler(PlatformCrawler):
             return None
     
     async def _get_detailed_channel_info(self, channel: discord.TextChannel) -> Optional[DiscordChannel]:
-        """Get detailed channel information"""        try:
+        """Get detailed channel information"""
+        try:
             discord_channel = DiscordChannel(
                 channel_id=str(channel.id),
                 guild_id=str(channel.guild.id),
@@ -900,7 +921,8 @@ class DiscordCrawler(PlatformCrawler):
             return None
     
     async def _parse_message_data(self, message: discord.Message) -> Optional[DiscordMessage]:
-        """Parse message data"""        try:
+        """Parse message data"""
+        try:
             discord_message = DiscordMessage(
                 message_id=str(message.id),
                 channel_id=str(message.channel.id),
@@ -962,7 +984,8 @@ class DiscordCrawler(PlatformCrawler):
             return None
     
     async def _parse_user_data(self, member: discord.Member, guild: discord.Guild) -> Optional[DiscordUser]:
-        """Parse user data"""        try:
+        """Parse user data"""
+        try:
             discord_user = DiscordUser(
                 user_id=str(member.id),
                 username=member.name,
@@ -1005,7 +1028,8 @@ class DiscordCrawler(PlatformCrawler):
             return None
     
     async def _check_rate_limit(self):
-        """Check and enforce rate limiting"""        try:
+        """Check and enforce rate limiting"""
+        try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
             
@@ -1021,7 +1045,8 @@ class DiscordCrawler(PlatformCrawler):
             self.logger.error(f"Error in rate limiting: {str(e)}")
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Extract metadata from Discord content"""        try:
+        """Extract metadata from Discord content"""
+        try:
             # Parse Discord URL
             parsed_url = urlparse(url)
             path_parts = parsed_url.path.strip('/').split('/')
@@ -1078,7 +1103,8 @@ class DiscordCrawler(PlatformCrawler):
             return {'error': str(e)}
     
     def get_platform_info(self) -> Dict[str, Any]:
-        """Get Discord platform information"""        return {
+        """Get Discord platform information"""
+        return {
             'platform_name': 'Discord',
             'base_url': self.base_url,
             'api_base_url': self.api_base_url,

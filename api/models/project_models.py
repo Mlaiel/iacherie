@@ -12,9 +12,12 @@ will result in legal action.
 
 Contact: mlaiel@live.de
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from datetime import datetime, timezone
+"""
+
+from datetime import datetime, timezone
 from typing import Optional, Dict, Any, List
 from decimal import Decimal
+
 from sqlalchemy import (
     String, Text, Boolean, DateTime, Integer, Numeric,
     ForeignKey, UniqueConstraint, Index, CheckConstraint
@@ -29,7 +32,9 @@ from .base import (
 
 
 class Project(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixin, StatusMixin, MetadataMixin):
-    """Core project management for content creation initiatives"""    
+    """
+Core project management for content creation initiatives"""
+    
     __tablename__ = 'projects'
     
     creator_id: Mapped[UUID] = mapped_column(
@@ -221,7 +226,8 @@ class Project(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixin,
 
 
 class ProjectMember(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, StatusMixin):
-    """Project team member management and roles"""    
+    """Project team member management and roles"""
+    
     __tablename__ = 'project_members'
     
     project_id: Mapped[UUID] = mapped_column(
@@ -337,7 +343,8 @@ class ProjectMember(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, StatusMixi
 
 
 class ProjectTask(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixin, StatusMixin):
-    """Individual tasks within project workflows"""    
+    """Individual tasks within project workflows"""
+    
     __tablename__ = 'project_tasks'
     
     project_id: Mapped[UUID] = mapped_column(
@@ -495,7 +502,8 @@ class ProjectTask(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMi
 
 
 class ProjectMilestone(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, StatusMixin):
-    """Project milestones and key deliverable tracking"""    
+    """Project milestones and key deliverable tracking"""
+    
     __tablename__ = 'project_milestones'
     
     project_id: Mapped[UUID] = mapped_column(

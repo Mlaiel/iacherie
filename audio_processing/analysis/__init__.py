@@ -24,7 +24,7 @@ music intelligence for the IA Influencer Agent platform.
 - Cross-platform compatibility optimization
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
-© 2025 Fahed Mlaiel. All rights reserved.
+(c) 2025 Fahed Mlaiel. All rights reserved.
 
 🛡️ TEAM SPECIALTIES:
 - Lead AI Developer & ML Engineer: Fahed Mlaiel
@@ -49,23 +49,42 @@ prosecuted to the full extent of the law in Germany and internationally.
 
 Contact: mlaiel@live.de for licensing inquiries only.
 All rights reserved worldwide.
-"""from .spectral_analyzer import SpectralAnalyzer
+"""
+
+from .spectral_analyzer import SpectralAnalyzer
+
 from .melody_extractor import MelodyExtractor
+
 from .rhythm_analyzer import RhythmAnalyzer
+
 from .quality_assessment import AudioQualityAssessment
+
 from .genre_classifier import GenreClassifier
+
 from .instrument_identifier import InstrumentIdentifier
+
 from .voice_activity_detector import VoiceActivityDetector
+
 from .metadata_extractor import AudioMetadataExtractor
+
 from .harmonic_analyzer import HarmonicAnalyzer
+
 from .tempo_detector import TempoDetector
+
 from .key_detector import KeyDetector
+
 from .mood_analyzer import MoodAnalyzer
+
 from .audio_fingerprinter import AudioFingerprinter
+
 from .content_analyzer import ContentAnalyzer
+
 from .mastering_analyzer import MasteringAnalyzer
+
 from .style_analyzer import StyleAnalyzer
+
 from .similarity_engine import SimilarityEngine
+
 from .audio_enhancer_analyzer import AudioEnhancerAnalyzer
 
 __all__ = [

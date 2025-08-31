@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import heapq
@@ -48,7 +49,8 @@ from ....workflow.state_machine import WorkflowStateMachine
 logger = logging.getLogger(__name__)
 
 class JobPriority(Enum):
-    """Advanced job priority levels with business logic"""    EMERGENCY = 0      # System-critical distributions
+    """Advanced job priority levels with business logic"""
+    EMERGENCY = 0      # System-critical distributions
     CRITICAL = 1       # Live events, trending content
     HIGH = 2          # Premium users, scheduled campaigns
     NORMAL = 3        # Regular content distribution
@@ -56,7 +58,8 @@ class JobPriority(Enum):
     BULK = 5          # Mass distribution operations
 
 class ResourceType(Enum):
-    """System resource types for monitoring"""    CPU = "cpu"
+    """System resource types for monitoring"""
+    CPU = "cpu"
     MEMORY = "memory"
     NETWORK = "network"
     STORAGE = "storage"
@@ -64,7 +67,8 @@ class ResourceType(Enum):
     PLATFORM_RATE_LIMIT = "platform_rate_limit"
 
 class OrchestrationStrategy(Enum):
-    """Distribution orchestration strategies"""    IMMEDIATE = "immediate"           # Process immediately
+    """Distribution orchestration strategies"""
+    IMMEDIATE = "immediate"           # Process immediately
     OPTIMIZED_TIMING = "optimized"    # AI-optimized timing
     BATCH_PROCESSING = "batch"        # Group similar jobs
     LOAD_BALANCED = "load_balanced"   # Balance across resources
@@ -73,7 +77,8 @@ class OrchestrationStrategy(Enum):
 
 @dataclass
 class ResourceMetrics:
-    """System resource monitoring metrics"""    cpu_usage: float = 0.0
+    """System resource monitoring metrics"""
+    cpu_usage: float = 0.0
     memory_usage: float = 0.0
     network_usage: float = 0.0
     storage_usage: float = 0.0
@@ -84,7 +89,8 @@ class ResourceMetrics:
 
 @dataclass
 class JobExecution:
-    """Job execution tracking and metrics"""    job_id: str
+    """Job execution tracking and metrics"""
+    job_id: str
     execution_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     status: DistributionStatus = DistributionStatus.PENDING
     priority: JobPriority = JobPriority.NORMAL
@@ -102,7 +108,8 @@ class JobExecution:
 
 @dataclass
 class WorkerPool:
-    """Distribution worker pool configuration"""    pool_id: str
+    """Distribution worker pool configuration"""
+    pool_id: str
     worker_count: int
     specialization: Optional[str] = None  # e.g., "video", "audio", "social"
     max_concurrent_jobs: int = 10
@@ -112,7 +119,8 @@ class WorkerPool:
     last_activity: datetime = field(default_factory=datetime.now)
 
 class DistributionOrchestrator:
-    """    Enterprise-grade distribution orchestrator with advanced features:
+    """
+    Enterprise-grade distribution orchestrator with advanced features:
     
     - Intelligent job queuing and prioritization
     - Dynamic resource allocation and load balancing
@@ -122,7 +130,8 @@ class DistributionOrchestrator:
     - Multi-tenant isolation and quota management
     - Comprehensive analytics and reporting
     - Event-driven architecture with webhooks
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         
@@ -179,7 +188,8 @@ class DistributionOrchestrator:
         logger.info(f"DistributionOrchestrator initialized with {self.worker_count} workers")
 
     def _initialize_worker_pools(self) -> None:
-        """Initialize specialized worker pools for different content types"""        pool_configs = [
+        """Initialize specialized worker pools for different content types"""
+        pool_configs = [
             {'pool_id': 'audio_pool', 'specialization': 'audio', 'worker_count': 3},
             {'pool_id': 'video_pool', 'specialization': 'video', 'worker_count': 4},
             {'pool_id': 'social_pool', 'specialization': 'social', 'worker_count': 2},
@@ -196,7 +206,8 @@ class DistributionOrchestrator:
             self.worker_pools[pool.pool_id] = pool
 
     def _initialize_distribution_engines(self) -> None:
-        """Initialize distribution engines for each worker pool"""        for pool_id, pool in self.worker_pools.items():
+        """Initialize distribution engines for each worker pool"""
+        for pool_id, pool in self.worker_pools.items():
             for i in range(pool.worker_count):
                 engine_id = f"{pool_id}_engine_{i}"
                 engine_config = {
@@ -207,7 +218,8 @@ class DistributionOrchestrator:
                 self.distribution_engines[engine_id] = DistributionEngine(engine_config)
 
     async def start(self) -> None:
-        """Start the orchestration system with all background tasks"""        if self.is_running:
+        """Start the orchestration system with all background tasks"""
+        if self.is_running:
             logger.warning("Orchestrator is already running")
             return
         
@@ -233,7 +245,8 @@ class DistributionOrchestrator:
         logger.info("DistributionOrchestrator started successfully")
 
     async def submit_job(self, distribution_job: DistributionJob, priority: JobPriority = JobPriority.NORMAL) -> str:
-        """        Submit a distribution job with advanced orchestration
+        """
+        Submit a distribution job with advanced orchestration
         
         Args:
             distribution_job: The distribution job to process
@@ -241,7 +254,8 @@ class DistributionOrchestrator:
             
         Returns:
             Execution ID for tracking
-        """        try:
+        """
+        try:
             # Validate job and user permissions
             await self._validate_job_submission(distribution_job)
             
@@ -281,7 +295,8 @@ class DistributionOrchestrator:
             raise DistributionError(f"Failed to submit job: {e}")
 
     async def _validate_job_submission(self, job: DistributionJob) -> None:
-        """Comprehensive job submission validation"""        # Check user authorization
+        """Comprehensive job submission validation"""
+        # Check user authorization
         await self.auth_manager.validate_user_permissions(
             user_id=job.user_id,
             required_permissions=['distribution_submit']
@@ -303,7 +318,8 @@ class DistributionOrchestrator:
                 raise QuotaExceededError(f"Platform quota exceeded for {platform.value}")
 
     def _calculate_optimal_schedule(self, job: DistributionJob, priority: JobPriority) -> datetime:
-        """Calculate optimal execution time based on priority and system load"""        base_time = datetime.now()
+        """Calculate optimal execution time based on priority and system load"""
+        base_time = datetime.now()
         
         if priority in [JobPriority.EMERGENCY, JobPriority.CRITICAL]:
             return base_time  # Immediate execution
@@ -317,7 +333,8 @@ class DistributionOrchestrator:
         return base_time
 
     async def _estimate_job_duration(self, job: DistributionJob) -> float:
-        """Estimate job processing duration using ML models"""        try:
+        """Estimate job processing duration using ML models"""
+        try:
             # Factors for estimation
             factors = {
                 'platform_count': len(job.target_platforms),
@@ -336,7 +353,8 @@ class DistributionOrchestrator:
             return 300.0  # Default 5 minutes
 
     async def _job_processor_loop(self) -> None:
-        """Main job processing loop with intelligent distribution"""        logger.info("Job processor loop started")
+        """Main job processing loop with intelligent distribution"""
+        logger.info("Job processor loop started")
         
         while self.is_running:
             try:
@@ -377,11 +395,13 @@ class DistributionOrchestrator:
                 await asyncio.sleep(1)
 
     async def _requeue_job_later(self, priority: int, timestamp: float, execution_id: str, job: DistributionJob, delay: float) -> None:
-        """Re-queue job for later execution"""        await asyncio.sleep(delay)
+        """Re-queue job for later execution"""
+        await asyncio.sleep(delay)
         await self.job_queue.put((priority, timestamp, execution_id, job))
 
     async def _find_optimal_worker_pool(self, job: DistributionJob) -> Optional[WorkerPool]:
-        """Find the most suitable worker pool for the job"""        # Determine job characteristics
+        """Find the most suitable worker pool for the job"""
+        # Determine job characteristics
         content_type = job.content_metadata.format.lower() if job.content_metadata.format else ""
         
         # Score each pool based on suitability
@@ -417,7 +437,8 @@ class DistributionOrchestrator:
         return None
 
     async def _process_job_with_worker(self, execution_id: str, job: DistributionJob, pool: WorkerPool) -> None:
-        """Process job using assigned worker pool"""        execution = self.execution_tracker[execution_id]
+        """Process job using assigned worker pool"""
+        execution = self.execution_tracker[execution_id]
         start_time = time.time()
         
         try:
@@ -489,7 +510,8 @@ class DistributionOrchestrator:
             await self._update_job_completion_metrics(execution)
 
     async def _select_engine_from_pool(self, pool: WorkerPool, job: DistributionJob) -> DistributionEngine:
-        """Select the best engine from the worker pool"""        pool_engines = [engine for engine_id, engine in self.distribution_engines.items() 
+        """Select the best engine from the worker pool"""
+        pool_engines = [engine for engine_id, engine in self.distribution_engines.items() 
                        if engine_id.startswith(pool.pool_id)]
         
         if not pool_engines:
@@ -499,7 +521,8 @@ class DistributionOrchestrator:
         return pool_engines[len(pool.active_jobs) % len(pool_engines)]
 
     async def _calculate_performance_score(self, execution: JobExecution, results: List[DistributionResult]) -> float:
-        """Calculate comprehensive performance score for job execution"""        score_factors = []
+        """Calculate comprehensive performance score for job execution"""
+        score_factors = []
         
         # Success rate
         successful_results = [r for r in results if r.status == DistributionStatus.PUBLISHED]
@@ -522,14 +545,16 @@ class DistributionOrchestrator:
         return sum(score_factors)
 
     async def _update_pool_performance(self, pool: WorkerPool, execution: JobExecution) -> None:
-        """Update worker pool performance rating based on job execution"""        if execution.performance_score:
+        """Update worker pool performance rating based on job execution"""
+        if execution.performance_score:
             # Exponential moving average
             alpha = 0.1
             pool.performance_rating = (alpha * execution.performance_score / 100 + 
                                      (1 - alpha) * pool.performance_rating)
 
     async def _schedule_job_retry(self, execution_id: str, job: DistributionJob) -> None:
-        """Schedule intelligent job retry with exponential backoff"""        execution = self.execution_tracker[execution_id]
+        """Schedule intelligent job retry with exponential backoff"""
+        execution = self.execution_tracker[execution_id]
         execution.retry_count += 1
         
         # Calculate retry delay with exponential backoff
@@ -550,7 +575,8 @@ class DistributionOrchestrator:
         logger.info(f"Job {execution_id} scheduled for retry {execution.retry_count} in {retry_delay}s")
 
     async def _resource_monitor_loop(self) -> None:
-        """Continuous resource monitoring and optimization"""        logger.info("Resource monitor loop started")
+        """Continuous resource monitoring and optimization"""
+        logger.info("Resource monitor loop started")
         
         while self.is_running:
             try:
@@ -574,7 +600,8 @@ class DistributionOrchestrator:
                 await asyncio.sleep(60)
 
     async def _collect_resource_metrics(self) -> ResourceMetrics:
-        """Collect comprehensive system resource metrics"""        return ResourceMetrics(
+        """Collect comprehensive system resource metrics"""
+        return ResourceMetrics(
             cpu_usage=psutil.cpu_percent(interval=1),
             memory_usage=psutil.virtual_memory().percent,
             network_usage=sum(psutil.net_io_counters()[:2]),  # bytes sent + received
@@ -585,7 +612,8 @@ class DistributionOrchestrator:
         )
 
     async def _check_resource_alerts(self, metrics: ResourceMetrics) -> None:
-        """Check for resource alerts and trigger appropriate actions"""        alerts = []
+        """Check for resource alerts and trigger appropriate actions"""
+        alerts = []
         
         if metrics.cpu_usage > 85:
             alerts.append(f"High CPU usage: {metrics.cpu_usage}%")
@@ -600,22 +628,26 @@ class DistributionOrchestrator:
             await self.alert_manager.send_resource_alerts(alerts)
 
     async def _optimize_resource_allocation(self, metrics: ResourceMetrics) -> None:
-        """Optimize resource allocation based on current metrics"""        # Adjust worker pool sizes based on load
+        """Optimize resource allocation based on current metrics"""
+        # Adjust worker pool sizes based on load
         if metrics.cpu_usage < 50 and metrics.queue_size > 10:
             await self._scale_up_workers()
         elif metrics.cpu_usage > 80:
             await self._scale_down_workers()
 
     async def _scale_up_workers(self) -> None:
-        """Scale up worker capacity"""        # Implementation would add more workers to pools
+        """Scale up worker capacity"""
+        # Implementation would add more workers to pools
         logger.info("Scaling up worker capacity")
 
     async def _scale_down_workers(self) -> None:
-        """Scale down worker capacity"""        # Implementation would reduce worker count
+        """Scale down worker capacity"""
+        # Implementation would reduce worker count
         logger.info("Scaling down worker capacity")
 
     async def _performance_optimizer_loop(self) -> None:
-        """Continuous performance optimization"""        logger.info("Performance optimizer loop started")
+        """Continuous performance optimization"""
+        logger.info("Performance optimizer loop started")
         
         while self.is_running:
             try:
@@ -635,7 +667,8 @@ class DistributionOrchestrator:
                 await asyncio.sleep(300)
 
     async def _analyze_job_performance(self) -> None:
-        """Analyze recent job performance for optimization insights"""        # Get recent executions
+        """Analyze recent job performance for optimization insights"""
+        # Get recent executions
         recent_executions = [
             exec for exec in self.execution_tracker.values()
             if exec.completed_at and exec.completed_at > datetime.now() - timedelta(hours=1)
@@ -653,7 +686,8 @@ class DistributionOrchestrator:
         # Additional performance analysis would be implemented here
 
     async def _optimize_worker_pools(self) -> None:
-        """Optimize worker pool configurations based on performance data"""        for pool in self.worker_pools.values():
+        """Optimize worker pool configurations based on performance data"""
+        for pool in self.worker_pools.values():
             # Analyze pool performance
             if pool.performance_rating > 0.9 and pool.current_load == pool.max_concurrent_jobs:
                 # High-performing pool at capacity - consider scaling
@@ -663,11 +697,13 @@ class DistributionOrchestrator:
                 logger.warning(f"Pool {pool.pool_id} performance below threshold: {pool.performance_rating}")
 
     async def _update_performance_models(self) -> None:
-        """Update ML models with recent performance data"""        # Implementation would retrain models with recent data
+        """Update ML models with recent performance data"""
+        # Implementation would retrain models with recent data
         pass
 
     async def _health_check_loop(self) -> None:
-        """Continuous health monitoring of all system components"""        logger.info("Health check loop started")
+        """Continuous health monitoring of all system components"""
+        logger.info("Health check loop started")
         
         while self.is_running:
             try:
@@ -692,7 +728,8 @@ class DistributionOrchestrator:
                 await asyncio.sleep(60)
 
     async def _check_engine_health(self, engine: DistributionEngine) -> bool:
-        """Check health of a distribution engine"""        try:
+        """Check health of a distribution engine"""
+        try:
             # Perform health check (implementation specific)
             health_status = await engine.get_performance_metrics()
             return health_status is not None
@@ -700,7 +737,8 @@ class DistributionOrchestrator:
             return False
 
     async def _handle_unhealthy_engine(self, engine_id: str) -> None:
-        """Handle unhealthy distribution engine"""        logger.warning(f"Engine {engine_id} is unhealthy, attempting recovery")
+        """Handle unhealthy distribution engine"""
+        logger.warning(f"Engine {engine_id} is unhealthy, attempting recovery")
         
         # Attempt to restart engine
         try:
@@ -717,7 +755,8 @@ class DistributionOrchestrator:
             logger.error(f"Failed to restart engine {engine_id}: {e}")
 
     async def _check_pool_health(self, pool: WorkerPool) -> None:
-        """Check health of a worker pool"""        # Check for stuck jobs
+        """Check health of a worker pool"""
+        # Check for stuck jobs
         stuck_jobs = []
         for job_id in pool.active_jobs:
             execution = self.execution_tracker.get(job_id)
@@ -732,7 +771,8 @@ class DistributionOrchestrator:
             # Implementation would handle stuck jobs
 
     async def _metrics_collector_loop(self) -> None:
-        """Collect and aggregate comprehensive system metrics"""        logger.info("Metrics collector loop started")
+        """Collect and aggregate comprehensive system metrics"""
+        logger.info("Metrics collector loop started")
         
         while self.is_running:
             try:
@@ -755,7 +795,8 @@ class DistributionOrchestrator:
                 await asyncio.sleep(60)
 
     async def _cleanup_loop(self) -> None:
-        """Clean up completed jobs and optimize memory usage"""        logger.info("Cleanup loop started")
+        """Clean up completed jobs and optimize memory usage"""
+        logger.info("Cleanup loop started")
         
         while self.is_running:
             try:
@@ -778,7 +819,8 @@ class DistributionOrchestrator:
                 await asyncio.sleep(3600)
 
     async def _predictive_scaling_loop(self) -> None:
-        """Predictive scaling based on historical patterns and current trends"""        logger.info("Predictive scaling loop started")
+        """Predictive scaling based on historical patterns and current trends"""
+        logger.info("Predictive scaling loop started")
         
         while self.is_running:
             try:
@@ -798,18 +840,22 @@ class DistributionOrchestrator:
                 await asyncio.sleep(900)
 
     async def _preemptive_scale_up(self) -> None:
-        """Preemptively scale up capacity before expected load increase"""        logger.info("Preemptively scaling up capacity")
+        """Preemptively scale up capacity before expected load increase"""
+        logger.info("Preemptively scaling up capacity")
         # Implementation would add more workers/engines
 
     async def _preemptive_scale_down(self) -> None:
-        """Preemptively scale down capacity during expected low load"""        logger.info("Preemptively scaling down capacity")
+        """Preemptively scale down capacity during expected low load"""
+        logger.info("Preemptively scaling down capacity")
         # Implementation would reduce workers/engines
 
     async def get_job_status(self, execution_id: str) -> Optional[JobExecution]:
-        """Get detailed status of a job execution"""        return self.execution_tracker.get(execution_id)
+        """Get detailed status of a job execution"""
+        return self.execution_tracker.get(execution_id)
 
     async def cancel_job(self, execution_id: str) -> bool:
-        """Cancel a pending or processing job"""        execution = self.execution_tracker.get(execution_id)
+        """Cancel a pending or processing job"""
+        execution = self.execution_tracker.get(execution_id)
         if not execution:
             return False
         
@@ -821,7 +867,8 @@ class DistributionOrchestrator:
         return False
 
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status"""        resource_metrics = await self._collect_resource_metrics()
+        """Get comprehensive system status"""
+        resource_metrics = await self._collect_resource_metrics()
         
         return {
             'is_running': self.is_running,
@@ -842,7 +889,8 @@ class DistributionOrchestrator:
         }
 
     async def get_performance_analytics(self) -> Dict[str, Any]:
-        """Get detailed performance analytics"""        # Calculate additional analytics
+        """Get detailed performance analytics"""
+        # Calculate additional analytics
         recent_executions = [
             exec for exec in self.execution_tracker.values()
             if exec.completed_at and exec.completed_at > datetime.now() - timedelta(hours=24)
@@ -859,35 +907,42 @@ class DistributionOrchestrator:
         return analytics
 
     async def _calculate_resource_efficiency(self) -> float:
-        """Calculate overall resource efficiency score"""        # Implementation would calculate efficiency based on resource usage vs. output
+        """Calculate overall resource efficiency score"""
+        # Implementation would calculate efficiency based on resource usage vs. output
         return 0.85  # Placeholder
 
     async def _get_user_quota(self, user_id: str) -> Dict[str, int]:
-        """Get user quota information"""        # Implementation would fetch from database
+        """Get user quota information"""
+        # Implementation would fetch from database
         return {'current_usage': 50, 'limit': 100}  # Placeholder
 
     async def _get_platform_quota(self, platform) -> Dict[str, int]:
-        """Get platform quota information"""        # Implementation would fetch platform-specific quotas
+        """Get platform quota information"""
+        # Implementation would fetch platform-specific quotas
         return {'current_usage': 80, 'limit': 1000}  # Placeholder
 
     def _get_current_system_load(self) -> float:
-        """Get current system load as a percentage"""        active_jobs = sum(len(pool.active_jobs) for pool in self.worker_pools.values())
+        """Get current system load as a percentage"""
+        active_jobs = sum(len(pool.active_jobs) for pool in self.worker_pools.values())
         max_capacity = sum(pool.max_concurrent_jobs for pool in self.worker_pools.values())
         return active_jobs / max_capacity if max_capacity > 0 else 0
 
     async def _get_historical_performance(self, user_id: str) -> Dict[str, float]:
-        """Get historical performance data for user"""        # Implementation would fetch from analytics database
+        """Get historical performance data for user"""
+        # Implementation would fetch from analytics database
         return {'avg_success_rate': 0.95, 'avg_duration': 120.0}  # Placeholder
 
     async def _update_queue_metrics(self) -> None:
-        """Update queue-related metrics"""        queue_size = self.job_queue.qsize()
+        """Update queue-related metrics"""
+        queue_size = self.job_queue.qsize()
         await self.metrics_collector.record_queue_metrics({
             'queue_size': queue_size,
             'timestamp': datetime.now()
         })
 
     async def _update_job_completion_metrics(self, execution: JobExecution) -> None:
-        """Update metrics when a job completes"""        self.performance_metrics['total_jobs_processed'] += 1
+        """Update metrics when a job completes"""
+        self.performance_metrics['total_jobs_processed'] += 1
         
         if execution.status == DistributionStatus.PUBLISHED:
             self.performance_metrics['successful_jobs'] += 1
@@ -902,7 +957,8 @@ class DistributionOrchestrator:
             self.performance_metrics['average_processing_time'] = total_time / self.performance_metrics['total_jobs_processed']
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the orchestration system"""        logger.info("Shutting down DistributionOrchestrator...")
+        """Graceful shutdown of the orchestration system"""
+        logger.info("Shutting down DistributionOrchestrator...")
         
         self.is_running = False
         self.shutdown_event.set()

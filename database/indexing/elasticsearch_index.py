@@ -22,7 +22,8 @@ This software is proprietary and confidential.
 Unauthorized use, modification, or distribution by any individual or entity 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Any, Union
@@ -38,7 +39,8 @@ from ..security.search_security import SearchSecurityManager
 logger = logging.getLogger(__name__)
 
 class IndexTemplate:
-    """Predefined index templates for different content types"""    
+    """Predefined index templates for different content types"""
+    
     CONTENT_FINGERPRINTS = {
         "index_patterns": ["content_fingerprints_*"],
         "template": {
@@ -226,7 +228,8 @@ class IndexTemplate:
     }
 
 class ElasticsearchIndexManager:
-    """    Ultra-advanced Elasticsearch index manager for IA-Influencer platform
+    """
+    Ultra-advanced Elasticsearch index manager for IA-Influencer platform
     
     Handles sophisticated search, analytics, and discovery features:
     - Multi-language content search with intelligent ranking
@@ -234,9 +237,11 @@ class ElasticsearchIndexManager:
     - Advanced analytics and user behavior tracking
     - Cross-modal content discovery and recommendations
     - Performance-optimized index management
-    """    
+    """
+    
     def __init__(self):
-        """Initialize Elasticsearch index manager with enterprise features"""        self.es_connection = ElasticsearchConnection()
+        """Initialize Elasticsearch index manager with enterprise features"""
+        self.es_connection = ElasticsearchConnection()
         self.client: Optional[AsyncElasticsearch] = None
         self.performance_tracker = PerformanceTracker()
         self.security_manager = SearchSecurityManager()
@@ -264,7 +269,8 @@ class ElasticsearchIndexManager:
         logger.info("ElasticsearchIndexManager initialized with enterprise configuration")
     
     async def initialize(self) -> bool:
-        """Initialize Elasticsearch connection and setup indexes"""        try:
+        """Initialize Elasticsearch connection and setup indexes"""
+        try:
             # Initialize connection
             await self.es_connection.initialize()
             self.client = await self.es_connection.get_client()
@@ -290,7 +296,8 @@ class ElasticsearchIndexManager:
             return False
     
     async def _setup_index_templates(self) -> bool:
-        """Setup predefined index templates"""        try:
+        """Setup predefined index templates"""
+        try:
             for template_name, template_config in self.index_templates.items():
                 await self.client.indices.put_index_template(
                     name=f"ia_influencer_{template_name}",
@@ -305,7 +312,8 @@ class ElasticsearchIndexManager:
             return False
     
     async def _create_initial_indexes(self) -> bool:
-        """Create initial indexes for immediate use"""        try:
+        """Create initial indexes for immediate use"""
+        try:
             current_date = datetime.utcnow().strftime("%Y-%m")
             
             initial_indexes = [
@@ -326,14 +334,16 @@ class ElasticsearchIndexManager:
             return False
     
     async def create_content_fingerprint_index(self, content_data: Dict[str, Any]) -> bool:
-        """        Index content fingerprint data for similarity detection
+        """
+        Index content fingerprint data for similarity detection
         
         Args:
             content_data: Content fingerprint data to index
             
         Returns:
             bool: Success status of indexing operation
-        """        try:
+        """
+        try:
             # Validate security permissions
             if not await self.security_manager.validate_index_operation(content_data.get('user_id')):
                 logger.warning("Fingerprint indexing denied by security manager")
@@ -368,7 +378,8 @@ class ElasticsearchIndexManager:
             return False
     
     async def _enhance_fingerprint_data(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Enhance fingerprint data with computed features and metadata"""        enhanced_data = content_data.copy()
+        """Enhance fingerprint data with computed features and metadata"""
+        enhanced_data = content_data.copy()
         
         # Add timestamp information
         enhanced_data['created_at'] = datetime.utcnow().isoformat()
@@ -399,7 +410,8 @@ class ElasticsearchIndexManager:
     async def search_similar_content(self, query_fingerprint: Dict[str, Any], 
                                    similarity_threshold: float = 0.8,
                                    max_results: int = 50) -> List[Dict[str, Any]]:
-        """        Search for similar content using fingerprint similarity
+        """
+        Search for similar content using fingerprint similarity
         
         Args:
             query_fingerprint: Fingerprint data to search for
@@ -408,7 +420,8 @@ class ElasticsearchIndexManager:
             
         Returns:
             List of similar content with similarity scores
-        """        try:
+        """
+        try:
             # Build similarity search query
             search_query = await self._build_similarity_query(query_fingerprint, similarity_threshold)
             
@@ -434,7 +447,8 @@ class ElasticsearchIndexManager:
     
     async def _build_similarity_query(self, query_fingerprint: Dict[str, Any], 
                                     threshold: float) -> Dict[str, Any]:
-        """Build Elasticsearch query for fingerprint similarity search"""        content_type = query_fingerprint.get('content_type', 'unknown')
+        """Build Elasticsearch query for fingerprint similarity search"""
+        content_type = query_fingerprint.get('content_type', 'unknown')
         
         # Base query structure
         query = {
@@ -525,7 +539,8 @@ class ElasticsearchIndexManager:
     
     async def _process_similarity_results(self, response: Dict[str, Any], 
                                         query_fingerprint: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Process and enhance similarity search results"""        results = []
+        """Process and enhance similarity search results"""
+        results = []
         
         for hit in response.get('hits', {}).get('hits', []):
             result = {
@@ -557,14 +572,16 @@ class ElasticsearchIndexManager:
         return results
     
     async def search_content(self, search_params: Dict[str, Any]) -> Dict[str, Any]:
-        """        Advanced content search with multi-criteria filtering and ranking
+        """
+        Advanced content search with multi-criteria filtering and ranking
         
         Args:
             search_params: Search parameters including query, filters, sorting, etc.
             
         Returns:
             Search results with metadata and aggregations
-        """        try:
+        """
+        try:
             # Build comprehensive search query
             search_query = await self._build_content_search_query(search_params)
             
@@ -590,7 +607,8 @@ class ElasticsearchIndexManager:
             return {'error': str(e), 'results': [], 'total_hits': 0}
     
     async def _build_content_search_query(self, search_params: Dict[str, Any]) -> Dict[str, Any]:
-        """Build comprehensive Elasticsearch query for content search"""        query_text = search_params.get('query', '')
+        """Build comprehensive Elasticsearch query for content search"""
+        query_text = search_params.get('query', '')
         filters = search_params.get('filters', {})
         sort_by = search_params.get('sort_by', 'relevance')
         
@@ -702,7 +720,8 @@ class ElasticsearchIndexManager:
     
     async def _process_content_search_results(self, response: Dict[str, Any], 
                                             search_params: Dict[str, Any]) -> Dict[str, Any]:
-        """Process and enhance content search results"""        results = {
+        """Process and enhance content search results"""
+        results = {
             'results': [],
             'total_hits': response.get('hits', {}).get('total', {}).get('value', 0),
             'max_score': response.get('hits', {}).get('max_score', 0),
@@ -744,14 +763,16 @@ class ElasticsearchIndexManager:
         return results
     
     async def index_user_analytics(self, analytics_data: Dict[str, Any]) -> bool:
-        """        Index user analytics data for behavior tracking and insights
+        """
+        Index user analytics data for behavior tracking and insights
         
         Args:
             analytics_data: User analytics event data
             
         Returns:
             bool: Success status of indexing operation
-        """        try:
+        """
+        try:
             # Prepare index name with date partitioning
             current_date = datetime.utcnow().strftime("%Y-%m-%d")
             index_name = f"user_analytics_{current_date}"
@@ -773,14 +794,16 @@ class ElasticsearchIndexManager:
             return False
     
     async def get_analytics_insights(self, query_params: Dict[str, Any]) -> Dict[str, Any]:
-        """        Get comprehensive analytics insights from user behavior data
+        """
+        Get comprehensive analytics insights from user behavior data
         
         Args:
             query_params: Analytics query parameters (time range, filters, etc.)
             
         Returns:
             Analytics insights and metrics
-        """        try:
+        """
+        try:
             # Build analytics aggregation query
             analytics_query = {
                 "size": 0,
@@ -856,7 +879,8 @@ class ElasticsearchIndexManager:
             return {'error': str(e)}
     
     async def _process_analytics_results(self, response: Dict[str, Any]) -> Dict[str, Any]:
-        """Process analytics aggregation results into insights"""        insights = {
+        """Process analytics aggregation results into insights"""
+        insights = {
             'total_events': response.get('hits', {}).get('total', {}).get('value', 0),
             'event_breakdown': {},
             'top_content': [],
@@ -928,7 +952,8 @@ class ElasticsearchIndexManager:
         return insights
     
     async def _setup_index_monitoring(self) -> bool:
-        """Setup monitoring for Elasticsearch indexes"""        try:
+        """Setup monitoring for Elasticsearch indexes"""
+        try:
             # Create index monitoring policies and watchers
             monitoring_config = {
                 "trigger": {
@@ -971,7 +996,8 @@ class ElasticsearchIndexManager:
             return False
     
     async def optimize_indexes(self) -> Dict[str, Any]:
-        """Optimize all Elasticsearch indexes for performance"""        try:
+        """Optimize all Elasticsearch indexes for performance"""
+        try:
             optimization_results = {
                 'optimized_indexes': [],
                 'total_time': 0,
@@ -1012,7 +1038,8 @@ class ElasticsearchIndexManager:
             return {'error': str(e)}
     
     async def get_index_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive statistics for all Elasticsearch indexes"""        try:
+        """Get comprehensive statistics for all Elasticsearch indexes"""
+        try:
             statistics = {
                 'total_indexes': 0,
                 'total_documents': 0,
@@ -1052,7 +1079,8 @@ class ElasticsearchIndexManager:
             return {'error': str(e)}
     
     async def cleanup(self):
-        """Cleanup Elasticsearch resources and connections"""        try:
+        """Cleanup Elasticsearch resources and connections"""
+        try:
             await self.es_connection.cleanup()
             await self.performance_tracker.cleanup()
             await self.security_manager.cleanup()
@@ -1189,7 +1217,8 @@ class ElasticsearchIndexManager:
     }
 
 class ElasticsearchIndexManager:
-    """    Advanced Elasticsearch index manager for IA-Influencer platform
+    """
+    Advanced Elasticsearch index manager for IA-Influencer platform
     
     Provides comprehensive search and analytics capabilities for:
     - Content fingerprint search
@@ -1197,9 +1226,11 @@ class ElasticsearchIndexManager:
     - User behavior analytics
     - Multi-language content discovery
     - Real-time data aggregation
-    """    
+    """
+    
     def __init__(self):
-        """Initialize Elasticsearch index manager"""        self.es_connection = ElasticsearchConnection()
+        """Initialize Elasticsearch index manager"""
+        self.es_connection = ElasticsearchConnection()
         self.performance_tracker = PerformanceTracker()
         self.security_manager = SearchSecurityManager()
         self.client: Optional[AsyncElasticsearch] = None
@@ -1223,7 +1254,8 @@ class ElasticsearchIndexManager:
         logger.info("ElasticsearchIndexManager initialized")
     
     async def initialize(self) -> bool:
-        """Initialize Elasticsearch index manager"""        try:
+        """Initialize Elasticsearch index manager"""
+        try:
             # Initialize Elasticsearch connection
             if not await self.es_connection.initialize():
                 raise Exception("Failed to initialize Elasticsearch connection")
@@ -1253,7 +1285,8 @@ class ElasticsearchIndexManager:
             return False
     
     async def _setup_index_templates(self):
-        """Setup Elasticsearch index templates"""        try:
+        """Setup Elasticsearch index templates"""
+        try:
             for template_name, template_config in self.template_registry.items():
                 try:
                     await self.client.indices.put_index_template(
@@ -1272,7 +1305,8 @@ class ElasticsearchIndexManager:
             raise
     
     async def create_index(self, index_name: str, config: Dict[str, Any]) -> bool:
-        """Create a new Elasticsearch index with specified configuration"""        try:
+        """Create a new Elasticsearch index with specified configuration"""
+        try:
             # Validate security permissions
             if not await self.security_manager.validate_index_creation(index_name):
                 raise Exception("Index creation not authorized")
@@ -1315,7 +1349,8 @@ class ElasticsearchIndexManager:
             return False
     
     async def _build_index_config(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Build optimized index configuration"""        # Default settings
+        """Build optimized index configuration"""
+        # Default settings
         index_config = {
             "settings": {
                 "number_of_shards": config.get('shards', 1),
@@ -1349,7 +1384,8 @@ class ElasticsearchIndexManager:
         return index_config
     
     async def _create_alias(self, index_name: str, alias_name: str):
-        """Create index alias for easier management"""        try:
+        """Create index alias for easier management"""
+        try:
             await self.client.indices.put_alias(
                 index=index_name,
                 name=alias_name
@@ -1363,7 +1399,8 @@ class ElasticsearchIndexManager:
     
     async def index_document(self, index_name: str, document: Dict[str, Any],
                            doc_id: Optional[str] = None) -> bool:
-        """Index a single document"""        try:
+        """Index a single document"""
+        try:
             start_time = datetime.now()
             
             response = await self.client.index(
@@ -1387,7 +1424,8 @@ class ElasticsearchIndexManager:
             return False
     
     async def bulk_index_documents(self, index_name: str, documents: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Bulk index multiple documents for better performance"""        try:
+        """Bulk index multiple documents for better performance"""
+        try:
             if not documents:
                 return {'indexed': 0, 'errors': []}
             
@@ -1446,7 +1484,8 @@ class ElasticsearchIndexManager:
     
     async def search(self, index_name: str, query: Dict[str, Any], 
                     size: int = 10, from_: int = 0) -> Dict[str, Any]:
-        """Perform advanced search with analytics"""        try:
+        """Perform advanced search with analytics"""
+        try:
             start_time = datetime.now()
             
             # Build search request
@@ -1499,7 +1538,8 @@ class ElasticsearchIndexManager:
             return {'total_hits': 0, 'hits': [], 'error': str(e)}
     
     async def multi_search(self, searches: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Perform multiple searches in a single request"""        try:
+        """Perform multiple searches in a single request"""
+        try:
             # Build multi-search request
             msearch_body = []
             for search in searches:
@@ -1540,7 +1580,8 @@ class ElasticsearchIndexManager:
             return [{'error': str(e)} for _ in searches]
     
     async def aggregate_data(self, index_name: str, aggregations: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform advanced data aggregations"""        try:
+        """Perform advanced data aggregations"""
+        try:
             start_time = datetime.now()
             
             search_body = {
@@ -1570,7 +1611,8 @@ class ElasticsearchIndexManager:
     
     async def _log_search_analytics(self, index_name: str, query: Dict[str, Any], 
                                    results: Dict[str, Any], search_time: float):
-        """Log search analytics for performance monitoring"""        try:
+        """Log search analytics for performance monitoring"""
+        try:
             analytics_doc = {
                 'index_name': index_name,
                 'query_type': self._determine_query_type(query),
@@ -1588,7 +1630,8 @@ class ElasticsearchIndexManager:
             logger.debug(f"Failed to log search analytics: {str(e)}")
     
     def _determine_query_type(self, query: Dict[str, Any]) -> str:
-        """Determine the type of search query for analytics"""        if 'match_all' in query:
+        """Determine the type of search query for analytics"""
+        if 'match_all' in query:
             return 'match_all'
         elif 'bool' in query:
             return 'bool'
@@ -1604,7 +1647,8 @@ class ElasticsearchIndexManager:
             return 'complex'
     
     async def optimize_index(self, index_name: str) -> bool:
-        """Optimize index for better performance"""        try:
+        """Optimize index for better performance"""
+        try:
             start_time = datetime.now()
             
             # Force merge segments
@@ -1630,7 +1674,8 @@ class ElasticsearchIndexManager:
             return False
     
     async def get_index_stats(self, index_name: Optional[str] = None) -> Dict[str, Any]:
-        """Get comprehensive index statistics"""        try:
+        """Get comprehensive index statistics"""
+        try:
             if index_name:
                 response = await self.client.indices.stats(index=index_name)
                 
@@ -1670,7 +1715,8 @@ class ElasticsearchIndexManager:
             return {'error': str(e)}
     
     async def _load_existing_indexes(self):
-        """Load information about existing indexes"""        try:
+        """Load information about existing indexes"""
+        try:
             response = await self.client.indices.get_alias(index="*")
             
             for index_name in response.keys():
@@ -1683,11 +1729,13 @@ class ElasticsearchIndexManager:
             logger.error(f"Failed to load existing indexes: {str(e)}")
     
     async def _setup_index_monitoring(self):
-        """Setup monitoring for index health and performance"""        # This would typically setup periodic health checks
+        """Setup monitoring for index health and performance"""
+        # This would typically setup periodic health checks
         pass
     
     async def cleanup(self):
-        """Cleanup resources and connections"""        try:
+        """Cleanup resources and connections"""
+        try:
             if self.performance_tracker:
                 await self.performance_tracker.cleanup()
             if self.security_manager:

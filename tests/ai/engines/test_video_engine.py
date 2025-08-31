@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -39,7 +40,8 @@ Violators will face legal action under international copyright law.
 THEFT OF IDEAS, CONCEPTS, OR CODE WITHOUT EXPLICIT WRITTEN AUTHORIZATION 
 FROM FAHED MLAIEL (mlaiel@live.de) IS STRICTLY FORBIDDEN AND WILL RESULT 
 IN IMMEDIATE LEGAL PROSECUTION.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -65,16 +67,19 @@ from .test_helpers import (
 )
 
 class TestVideoProcessingEngine:
-    """Comprehensive tests for VideoProcessingEngine"""    
+    """Comprehensive tests for VideoProcessingEngine"""
+    
     @pytest.fixture
     async def video_engine(self):
-        """Create and initialize video processing engine"""        engine = VideoProcessingEngine()
+        """Create and initialize video processing engine"""
+        engine = VideoProcessingEngine()
         await engine.initialize()
         return engine
     
     @pytest.fixture
     def sample_video_data(self):
-        """Provide sample video data for testing"""        return {
+        """Provide sample video data for testing"""
+        return {
             'raw_video': "sample_video_raw_data_placeholder",
             'mp4_file': "sample_video.mp4",
             'avi_file': "sample_video.avi",
@@ -90,7 +95,8 @@ class TestVideoProcessingEngine:
     
     @pytest.fixture
     def video_processing_options(self):
-        """Provide video processing options"""        return {
+        """Provide video processing options"""
+        return {
             'content_id': 'video_test_123',
             'target_format': VideoFormat.MP4,
             'target_quality': VideoQuality.HIGH,
@@ -107,7 +113,8 @@ class TestVideoProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_engine_initialization(self, video_engine):
-        """Test video engine initialization"""        validator = TestEngineValidator()
+        """Test video engine initialization"""
+        validator = TestEngineValidator()
         
         assert await validator.validate_engine_initialization(video_engine)
         assert video_engine.engine_name == "video_processing"
@@ -125,7 +132,8 @@ class TestVideoProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_video_content_processing(self, video_engine, sample_video_data, video_processing_options):
-        """Test comprehensive video content processing"""        validator = TestEngineValidator()
+        """Test comprehensive video content processing"""
+        validator = TestEngineValidator()
         performance_tracker = PerformanceTracker()
         
         # Test processing with different video formats
@@ -170,7 +178,8 @@ class TestVideoProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_video_format_conversion(self, video_engine, sample_video_data):
-        """Test video format conversion capabilities"""        # Test conversion between different formats
+        """Test video format conversion capabilities"""
+        # Test conversion between different formats
         format_conversions = [
             (VideoFormat.MP4, VideoFormat.WEBM),
             (VideoFormat.AVI, VideoFormat.MP4),
@@ -198,7 +207,8 @@ class TestVideoProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_video_resolution_scaling(self, video_engine, sample_video_data):
-        """Test video resolution scaling and optimization"""        resolution_tests = [
+        """Test video resolution scaling and optimization"""
+        resolution_tests = [
             (ResolutionStandard.HD, '1280x720'),
             (ResolutionStandard.FULL_HD, '1920x1080'),
             (ResolutionStandard.UHD_4K, '3840x2160'),
@@ -226,7 +236,8 @@ class TestVideoProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_video_enhancement_features(self, video_engine, sample_video_data):
-        """Test video enhancement and filtering features"""        enhancement_configs = [
+        """Test video enhancement and filtering features"""
+        enhancement_configs = [
             {
                 'enhancement_level': 'basic',
                 'noise_reduction': True,
@@ -284,7 +295,8 @@ class TestVideoProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_video_codec_optimization(self, video_engine, sample_video_data):
-        """Test video codec optimization and compression"""        codec_tests = [
+        """Test video codec optimization and compression"""
+        codec_tests = [
             {
                 'codec': VideoCodec.H264,
                 'profile': 'high',
@@ -332,7 +344,8 @@ class TestVideoProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_video_seo_optimization(self, video_engine, sample_video_data):
-        """Test video SEO optimization features"""        target_keywords = ['professional video', 'high quality', 'content creation', 'AI enhanced']
+        """Test video SEO optimization features"""
+        target_keywords = ['professional video', 'high quality', 'content creation', 'AI enhanced']
         
         result = await video_engine.optimize_for_seo(
             sample_video_data['raw_video'], target_keywords
@@ -349,7 +362,8 @@ class TestVideoProcessingEngine:
     
     @pytest.mark.asyncio
     async def test_video_protection(self, video_engine, sample_video_data):
-        """Test video content protection features"""        result = await video_engine.protect_content(sample_video_data['raw_video'])
+        """Test video content protection features"""
+        result = await video_engine.protect_content(sample_video_data['raw_video'])
         
         assert result['video_watermarked'] is True
         assert result['fingerprint_generated'] is True
@@ -360,16 +374,19 @@ class TestVideoProcessingEngine:
         assert result['protection_level'] == 'enterprise'
 
 class TestVideoGenerationEngine:
-    """Comprehensive tests for VideoGenerationEngine"""    
+    """Comprehensive tests for VideoGenerationEngine"""
+    
     @pytest.fixture
     async def video_generation_engine(self):
-        """Create and initialize video generation engine"""        engine = VideoGenerationEngine()
+        """Create and initialize video generation engine"""
+        engine = VideoGenerationEngine()
         await engine.initialize()
         return engine
     
     @pytest.fixture
     def video_generation_options(self):
-        """Provide video generation options"""        return {
+        """Provide video generation options"""
+        return {
             'content_id': 'video_gen_test_123',
             'style': 'realistic',
             'duration': 30,
@@ -384,7 +401,8 @@ class TestVideoGenerationEngine:
     
     @pytest.mark.asyncio
     async def test_video_generation_engine_initialization(self, video_generation_engine):
-        """Test video generation engine initialization"""        validator = TestEngineValidator()
+        """Test video generation engine initialization"""
+        validator = TestEngineValidator()
         
         assert await validator.validate_engine_initialization(video_generation_engine)
         assert video_generation_engine.engine_name == "video_generation"
@@ -393,7 +411,8 @@ class TestVideoGenerationEngine:
     
     @pytest.mark.asyncio
     async def test_ai_video_generation(self, video_generation_engine, video_generation_options):
-        """Test AI video generation from text prompts"""        validator = TestEngineValidator()
+        """Test AI video generation from text prompts"""
+        validator = TestEngineValidator()
         performance_tracker = PerformanceTracker()
         
         # Test different video styles
@@ -429,7 +448,8 @@ class TestVideoGenerationEngine:
     
     @pytest.mark.asyncio
     async def test_custom_video_parameters(self, video_generation_engine):
-        """Test video generation with custom parameters"""        custom_scenarios = [
+        """Test video generation with custom parameters"""
+        custom_scenarios = [
             {
                 'scene_type': 'product_showcase',
                 'lighting': 'studio',
@@ -476,7 +496,8 @@ class TestVideoGenerationEngine:
     
     @pytest.mark.asyncio
     async def test_video_composition_and_effects(self, video_generation_engine):
-        """Test video composition and visual effects"""        composition_tests = [
+        """Test video composition and visual effects"""
+        composition_tests = [
             {
                 'composition_style': 'rule_of_thirds',
                 'visual_effects': ['depth_of_field', 'color_grading'],
@@ -513,7 +534,8 @@ class TestVideoGenerationEngine:
     
     @pytest.mark.asyncio
     async def test_video_generation_seo_optimization(self, video_generation_engine):
-        """Test video generation SEO optimization"""        target_keywords = ['AI generated video', 'professional content', 'commercial use', 'high quality']
+        """Test video generation SEO optimization"""
+        target_keywords = ['AI generated video', 'professional content', 'commercial use', 'high quality']
         sample_prompt = "Generate a professional promotional video"
         
         result = await video_generation_engine.optimize_for_seo(sample_prompt, target_keywords)
@@ -528,7 +550,8 @@ class TestVideoGenerationEngine:
     
     @pytest.mark.asyncio
     async def test_video_generation_protection(self, video_generation_engine):
-        """Test video generation content protection"""        sample_video = "generated_video_content_data"
+        """Test video generation content protection"""
+        sample_video = "generated_video_content_data"
         
         result = await video_generation_engine.protect_content(sample_video)
         
@@ -539,16 +562,19 @@ class TestVideoGenerationEngine:
         assert 'generation_signature' in result
 
 class TestAnimationEngine:
-    """Comprehensive tests for AnimationEngine"""    
+    """Comprehensive tests for AnimationEngine"""
+    
     @pytest.fixture
     async def animation_engine(self):
-        """Create and initialize animation engine"""        engine = AnimationEngine()
+        """Create and initialize animation engine"""
+        engine = AnimationEngine()
         await engine.initialize()
         return engine
     
     @pytest.fixture
     def animation_options(self):
-        """Provide animation options"""        return {
+        """Provide animation options"""
+        return {
             'content_id': 'animation_test_123',
             'animation_type': '2D',
             'style': 'professional',
@@ -562,7 +588,8 @@ class TestAnimationEngine:
     
     @pytest.mark.asyncio
     async def test_animation_engine_initialization(self, animation_engine):
-        """Test animation engine initialization"""        validator = TestEngineValidator()
+        """Test animation engine initialization"""
+        validator = TestEngineValidator()
         
         assert await validator.validate_engine_initialization(animation_engine)
         assert animation_engine.engine_name == "animation"
@@ -571,7 +598,8 @@ class TestAnimationEngine:
     
     @pytest.mark.asyncio
     async def test_2d_animation_creation(self, animation_engine, animation_options):
-        """Test 2D animation creation"""        validator = TestEngineValidator()
+        """Test 2D animation creation"""
+        validator = TestEngineValidator()
         performance_tracker = PerformanceTracker()
         
         # Test different 2D animation styles
@@ -607,7 +635,8 @@ class TestAnimationEngine:
     
     @pytest.mark.asyncio
     async def test_3d_animation_creation(self, animation_engine):
-        """Test 3D animation creation"""        options_3d = {
+        """Test 3D animation creation"""
+        options_3d = {
             'content_id': '3d_animation_test',
             'animation_type': '3D',
             'style': 'realistic',
@@ -630,7 +659,8 @@ class TestAnimationEngine:
     
     @pytest.mark.asyncio
     async def test_character_animation(self, animation_engine):
-        """Test character animation capabilities"""        character_options = {
+        """Test character animation capabilities"""
+        character_options = {
             'content_id': 'character_animation_test',
             'animation_type': '2D',
             'character_animation': True,
@@ -653,7 +683,8 @@ class TestAnimationEngine:
     
     @pytest.mark.asyncio
     async def test_motion_graphics_animation(self, animation_engine):
-        """Test motion graphics and infographic animation"""        motion_graphics_options = {
+        """Test motion graphics and infographic animation"""
+        motion_graphics_options = {
             'content_id': 'motion_graphics_test',
             'animation_type': 'motion_graphics',
             'style': 'corporate',
@@ -676,7 +707,8 @@ class TestAnimationEngine:
     
     @pytest.mark.asyncio
     async def test_animation_seo_optimization(self, animation_engine):
-        """Test animation SEO optimization"""        target_keywords = ['animated content', 'professional animation', 'motion graphics', 'visual storytelling']
+        """Test animation SEO optimization"""
+        target_keywords = ['animated content', 'professional animation', 'motion graphics', 'visual storytelling']
         sample_prompt = "Create an engaging animated explanation"
         
         result = await animation_engine.optimize_for_seo(sample_prompt, target_keywords)
@@ -690,7 +722,8 @@ class TestAnimationEngine:
     
     @pytest.mark.asyncio
     async def test_animation_protection(self, animation_engine):
-        """Test animation content protection"""        sample_animation = "animated_content_data"
+        """Test animation content protection"""
+        sample_animation = "animated_content_data"
         
         result = await animation_engine.protect_content(sample_animation)
         
@@ -701,10 +734,12 @@ class TestAnimationEngine:
         assert 'animation_fingerprint' in result
 
 class TestVideoEngineIntegration:
-    """Integration tests for video engines"""    
+    """Integration tests for video engines"""
+    
     @pytest.mark.asyncio
     async def test_complete_video_production_pipeline(self, sample_content):
-        """Test complete video production pipeline"""        # Initialize all video engines
+        """Test complete video production pipeline"""
+        # Initialize all video engines
         video_engine = VideoProcessingEngine()
         video_generation_engine = VideoGenerationEngine()
         animation_engine = AnimationEngine()
@@ -766,7 +801,8 @@ class TestVideoEngineIntegration:
     
     @pytest.mark.asyncio
     async def test_multi_resolution_video_optimization(self):
-        """Test multi-resolution video optimization"""        video_engine = VideoProcessingEngine()
+        """Test multi-resolution video optimization"""
+        video_engine = VideoProcessingEngine()
         await video_engine.initialize()
         
         # Test optimization for different platforms
@@ -818,7 +854,8 @@ class TestVideoEngineIntegration:
     
     @pytest.mark.asyncio
     async def test_video_accessibility_features(self):
-        """Test video accessibility features"""        video_engine = VideoProcessingEngine()
+        """Test video accessibility features"""
+        video_engine = VideoProcessingEngine()
         await video_engine.initialize()
         
         # Test accessibility enhancements

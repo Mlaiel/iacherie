@@ -6,7 +6,8 @@ industrial-grade configuration and initialization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, Any, Optional
 import redis
@@ -20,9 +21,11 @@ from .billing_aggregator import BillingAggregatorEngine
 logger = logging.getLogger(__name__)
 
 class BillingSystemManager:
-    """    Central manager for the complete billing system providing
+    """
+    Central manager for the complete billing system providing
     unified initialization, configuration, and access to all components.
-    """    
+    """
+    
     def __init__(self):
         self.redis_client: Optional[redis.Redis] = None
         self.db_pool: Optional[asyncpg.Pool] = None
@@ -30,7 +33,8 @@ class BillingSystemManager:
         self.is_initialized = False
     
     async def initialize(self, redis_config: Dict[str, Any], db_config: Dict[str, Any]) -> None:
-        """Initialize the complete billing system"""        try:
+        """Initialize the complete billing system"""
+        try:
             # Initialize Redis connection
             self.redis_client = redis.Redis(
                 host=redis_config.get('host', 'localhost'),
@@ -69,7 +73,8 @@ class BillingSystemManager:
             raise
     
     async def cleanup(self) -> None:
-        """Cleanup billing system resources"""        try:
+        """Cleanup billing system resources"""
+        try:
             if self.db_pool:
                 await self.db_pool.close()
                 logger.info("Database pool closed")
@@ -82,13 +87,15 @@ class BillingSystemManager:
             logger.error(f"Error during cleanup: {e}")
     
     def get_billing_aggregator(self) -> BillingAggregatorEngine:
-        """Get the billing aggregator instance"""        if not self.is_initialized or not self.billing_aggregator:
+        """Get the billing aggregator instance"""
+        if not self.is_initialized or not self.billing_aggregator:
             raise RuntimeError("Billing system not initialized")
         
         return self.billing_aggregator
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get billing system status"""        try:
+        """Get billing system status"""
+        try:
             if not self.is_initialized:
                 return {
                     'status': 'not_initialized',
@@ -117,7 +124,8 @@ billing_system = BillingSystemManager()
 
 @asynccontextmanager
 async def billing_system_lifespan(app: FastAPI):
-    """FastAPI lifespan context manager for billing system"""    try:
+    """FastAPI lifespan context manager for billing system"""
+    try:
         # Initialize billing system on startup
         redis_config = {
             'host': 'localhost',
@@ -143,66 +151,82 @@ async def billing_system_lifespan(app: FastAPI):
 
 # Convenience functions for accessing billing components
 async def get_billing_aggregator() -> BillingAggregatorEngine:
-    """Get billing aggregator instance"""    return billing_system.get_billing_aggregator()
+    """Get billing aggregator instance"""
+    return billing_system.get_billing_aggregator()
 
 async def process_one_time_payment(payment_data: Dict[str, Any]) -> Dict[str, Any]:
-    """Process one-time payment"""    aggregator = await get_billing_aggregator()
+    """Process one-time payment"""
+    aggregator = await get_billing_aggregator()
     return await aggregator.process_one_time_payment(payment_data)
 
 async def process_subscription_billing(subscription_data: Dict[str, Any]) -> Dict[str, Any]:
-    """Process subscription billing"""    aggregator = await get_billing_aggregator()
+    """Process subscription billing"""
+    aggregator = await get_billing_aggregator()
     return await aggregator.process_subscription_billing(subscription_data)
 
 async def process_commission_payouts(payout_data: Dict[str, Any]) -> Dict[str, Any]:
-    """Process commission payouts"""    aggregator = await get_billing_aggregator()
+    """Process commission payouts"""
+    aggregator = await get_billing_aggregator()
     return await aggregator.process_commission_payouts(payout_data)
 
 async def process_royalty_distribution(distribution_data: Dict[str, Any]) -> Dict[str, Any]:
-    """Process royalty distribution"""    aggregator = await get_billing_aggregator()
+    """Process royalty distribution"""
+    aggregator = await get_billing_aggregator()
     return await aggregator.process_royalty_distribution(distribution_data)
 
 async def get_comprehensive_dashboard() -> Dict[str, Any]:
-    """Get comprehensive billing dashboard"""    aggregator = await get_billing_aggregator()
+    """Get comprehensive billing dashboard"""
+    aggregator = await get_billing_aggregator()
     return await aggregator.get_comprehensive_billing_dashboard()
 
 async def get_billing_health_status() -> Dict[str, Any]:
-    """Get billing system health status"""    return await billing_system.get_system_status()
+    """Get billing system health status"""
+    return await billing_system.get_system_status()
 
 # Direct access to individual engines (for advanced use cases)
 async def get_invoice_generator():
-    """Get invoice generator engine"""    aggregator = await get_billing_aggregator()
+    """Get invoice generator engine"""
+    aggregator = await get_billing_aggregator()
     return aggregator.invoice_generator
 
 async def get_payment_processor():
-    """Get payment processor engine"""    aggregator = await get_billing_aggregator()
+    """Get payment processor engine"""
+    aggregator = await get_billing_aggregator()
     return aggregator.payment_processor
 
 async def get_commission_calculator():
-    """Get commission calculator engine"""    aggregator = await get_billing_aggregator()
+    """Get commission calculator engine"""
+    aggregator = await get_billing_aggregator()
     return aggregator.commission_calculator
 
 async def get_subscription_billing():
-    """Get subscription billing engine"""    aggregator = await get_billing_aggregator()
+    """Get subscription billing engine"""
+    aggregator = await get_billing_aggregator()
     return aggregator.subscription_billing
 
 async def get_royalty_distributor():
-    """Get royalty distributor engine"""    aggregator = await get_billing_aggregator()
+    """Get royalty distributor engine"""
+    aggregator = await get_billing_aggregator()
     return aggregator.royalty_distributor
 
 async def get_tax_compliance():
-    """Get tax compliance engine"""    aggregator = await get_billing_aggregator()
+    """Get tax compliance engine"""
+    aggregator = await get_billing_aggregator()
     return aggregator.tax_compliance
 
 async def get_billing_analytics():
-    """Get billing analytics engine"""    aggregator = await get_billing_aggregator()
+    """Get billing analytics engine"""
+    aggregator = await get_billing_aggregator()
     return aggregator.billing_analytics
 
 async def get_payment_gateway():
-    """Get payment gateway engine"""    aggregator = await get_billing_aggregator()
+    """Get payment gateway engine"""
+    aggregator = await get_billing_aggregator()
     return aggregator.payment_gateway
 
 async def get_dispute_manager():
-    """Get dispute manager engine"""    aggregator = await get_billing_aggregator()
+    """Get dispute manager engine"""
+    aggregator = await get_billing_aggregator()
     return aggregator.dispute_manager
 
 # Export everything for external use

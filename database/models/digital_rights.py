@@ -23,7 +23,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY, LargeBinary
+"""
+from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY, LargeBinary
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID, JSONB, BYTEA
@@ -37,7 +38,8 @@ Base = declarative_base()
 
 
 class RightsType(Enum):
-    """Digital rights types"""    COPYRIGHT = "copyright"
+    """Digital rights types"""
+    COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PATENT = "patent"
     TRADE_SECRET = "trade_secret"
@@ -55,7 +57,8 @@ class RightsType(Enum):
 
 
 class BlockchainNetwork(Enum):
-    """Supported blockchain networks"""    ETHEREUM = "ethereum"
+    """Supported blockchain networks"""
+    ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BINANCE_SMART_CHAIN = "binance_smart_chain"
     SOLANA = "solana"
@@ -70,7 +73,8 @@ class BlockchainNetwork(Enum):
 
 
 class ContractType(Enum):
-    """Smart contract types"""    ERC721_NFT = "erc721_nft"
+    """Smart contract types"""
+    ERC721_NFT = "erc721_nft"
     ERC1155_MULTI_TOKEN = "erc1155_multi_token"
     LICENSING_CONTRACT = "licensing_contract"
     ROYALTY_DISTRIBUTION = "royalty_distribution"
@@ -83,7 +87,8 @@ class ContractType(Enum):
 
 
 class VerificationLevel(Enum):
-    """Rights verification levels"""    UNVERIFIED = "unverified"
+    """Rights verification levels"""
+    UNVERIFIED = "unverified"
     BASIC = "basic"
     ENHANCED = "enhanced"
     PREMIUM = "premium"
@@ -93,7 +98,8 @@ class VerificationLevel(Enum):
 
 
 class EnforcementStatus(Enum):
-    """Rights enforcement status"""    ACTIVE = "active"
+    """Rights enforcement status"""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     SUSPENDED = "suspended"
     VIOLATED = "violated"
@@ -104,7 +110,8 @@ class EnforcementStatus(Enum):
 
 
 class LegalJurisdiction(Enum):
-    """Legal jurisdictions"""    INTERNATIONAL = "international"
+    """Legal jurisdictions"""
+    INTERNATIONAL = "international"
     UNITED_STATES = "united_states"
     EUROPEAN_UNION = "european_union"
     UNITED_KINGDOM = "united_kingdom"
@@ -125,11 +132,13 @@ class LegalJurisdiction(Enum):
 
 
 class DigitalRights(Base):
-    """    Ultra-Industrial Digital Rights Management Model
+    """
+    Ultra-Industrial Digital Rights Management Model
     
     Comprehensive digital rights management with blockchain verification,
     smart contracts, legal compliance, and automated enforcement.
-    """    __tablename__ = "digital_rights"
+    """
+    __tablename__ = "digital_rights"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -285,7 +294,8 @@ class DigitalRights(Base):
         return f"<DigitalRights(id={self.id}, rights_type={self.rights_type.value}, owner_id={self.owner_id})>"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert model to dictionary for API responses"""        return {
+        """Convert model to dictionary for API responses"""
+        return {
             "id": str(self.id),
             "rights_id": self.rights_id,
             "content_fingerprint_id": str(self.content_fingerprint_id),
@@ -306,18 +316,21 @@ class DigitalRights(Base):
         }
     
     def is_expired(self) -> bool:
-        """Check if rights have expired"""        if not self.expiration_date:
+        """Check if rights have expired"""
+        if not self.expiration_date:
             return False
         return datetime.now(timezone.utc) > self.expiration_date
     
     def days_until_expiration(self) -> Optional[int]:
-        """Get days until expiration"""        if not self.expiration_date:
+        """Get days until expiration"""
+        if not self.expiration_date:
             return None
         delta = self.expiration_date - datetime.now(timezone.utc)
         return delta.days if delta.days > 0 else 0
     
     def get_ownership_percentage(self, user_id: str) -> float:
-        """Get ownership percentage for a specific user"""        if str(self.current_owner_id) == user_id:
+        """Get ownership percentage for a specific user"""
+        if str(self.current_owner_id) == user_id:
             return self.ownership_percentage
         
         if self.co_owners:
@@ -328,7 +341,8 @@ class DigitalRights(Base):
         return 0.0
     
     def can_enforce(self) -> bool:
-        """Check if rights can be enforced"""        return (
+        """Check if rights can be enforced"""
+        return (
             self.is_active and
             self.is_enforceable and
             self.enforcement_status == EnforcementStatus.ACTIVE and
@@ -336,7 +350,8 @@ class DigitalRights(Base):
         )
     
     def calculate_market_value(self) -> Decimal:
-        """Calculate estimated market value based on performance metrics"""        base_value = Decimal('1000.0')  # Base value in EUR
+        """Calculate estimated market value based on performance metrics"""
+        base_value = Decimal('1000.0')  # Base value in EUR
         
         # Revenue multiplier
         if self.revenue_generated:

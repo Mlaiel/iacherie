@@ -6,7 +6,8 @@ Provides specialized integration with major social media and content platforms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All Rights Reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, Any, List, Optional
 from datetime import datetime, timedelta
@@ -21,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Platform type enumeration."""    SOCIAL_MEDIA = "social_media"
+    """Platform type enumeration."""
+    SOCIAL_MEDIA = "social_media"
     VIDEO_PLATFORM = "video_platform"
     MUSIC_PLATFORM = "music_platform"
     IMAGE_PLATFORM = "image_platform"
@@ -29,7 +31,8 @@ class PlatformType(Enum):
 
 
 class ConnectionStatus(Enum):
-    """Connection status enumeration."""    CONNECTED = "connected"
+    """Connection status enumeration."""
+    CONNECTED = "connected"
     DISCONNECTED = "disconnected"
     AUTHENTICATING = "authenticating"
     ERROR = "error"
@@ -38,7 +41,8 @@ class ConnectionStatus(Enum):
 
 @dataclass
 class SearchResult:
-    """Search result data structure."""    platform: str
+    """Search result data structure."""
+    platform: str
     url: str
     title: str
     description: str
@@ -52,7 +56,8 @@ class SearchResult:
 
 @dataclass
 class PlatformCredentials:
-    """Platform credentials structure."""    api_key: Optional[str] = None
+    """Platform credentials structure."""
+    api_key: Optional[str] = None
     api_secret: Optional[str] = None
     access_token: Optional[str] = None
     refresh_token: Optional[str] = None
@@ -60,7 +65,8 @@ class PlatformCredentials:
 
 
 class BasePlatformConnector(ABC):
-    """Base class for platform connectors."""    
+    """Base class for platform connectors."""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.platform_name = config.get("platform_name", "unknown")
@@ -77,25 +83,30 @@ class BasePlatformConnector(ABC):
         
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialize platform connector."""        pass
+        """Initialize platform connector."""
+        pass
     
     @abstractmethod
     async def authenticate(self) -> bool:
-        """Authenticate with platform."""        pass
+        """Authenticate with platform."""
+        pass
     
     @abstractmethod
     async def search_similar_content(self, 
                                    fingerprint_hash: str,
                                    content_type: str,
                                    metadata: Dict[str, Any]) -> List[SearchResult]:
-        """Search for similar content on platform."""        pass
+        """Search for similar content on platform."""
+        pass
     
     @abstractmethod
     async def get_content_metadata(self, content_url: str) -> Dict[str, Any]:
-        """Get metadata for specific content."""        pass
+        """Get metadata for specific content."""
+        pass
     
     async def _check_rate_limits(self) -> bool:
-        """Check if request is allowed based on rate limits."""        if not self.rate_limits:
+        """Check if request is allowed based on rate limits."""
+        if not self.rate_limits:
             return True
         
         now = datetime.utcnow()
@@ -114,7 +125,8 @@ class BasePlatformConnector(ABC):
         return True
     
     async def _record_request(self) -> None:
-        """Record API request for rate limiting."""        now = datetime.utcnow()
+        """Record API request for rate limiting."""
+        now = datetime.utcnow()
         
         if self.last_request_time:
             time_since_last = (now - self.last_request_time).total_seconds()
@@ -130,7 +142,8 @@ class BasePlatformConnector(ABC):
                           headers: Optional[Dict[str, str]] = None,
                           params: Optional[Dict[str, Any]] = None,
                           data: Optional[Dict[str, Any]] = None) -> Optional[Dict[str, Any]]:
-        """Make HTTP request with rate limiting and error handling."""        if not await self._check_rate_limits():
+        """Make HTTP request with rate limiting and error handling."""
+        if not await self._check_rate_limits():
             logger.warning(f"Rate limit exceeded for {self.platform_name}")
             self.status = ConnectionStatus.RATE_LIMITED
             return None
@@ -170,7 +183,8 @@ class BasePlatformConnector(ABC):
             return None
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get connector status."""        return {
+        """Get connector status."""
+        return {
             "platform": self.platform_name,
             "platform_type": self.platform_type.value,
             "status": self.status.value,
@@ -180,25 +194,29 @@ class BasePlatformConnector(ABC):
         }
     
     async def shutdown(self) -> None:
-        """Shutdown connector."""        if self.session:
+        """Shutdown connector."""
+        if self.session:
             await self.session.close()
         self.status = ConnectionStatus.DISCONNECTED
         logger.info(f"{self.platform_name} connector shutdown")
 
 
 class YouTubeConnector(BasePlatformConnector):
-    """    YouTube platform connector.
+    """
+    YouTube platform connector.
     
     Integrates with YouTube Data API for content monitoring
     and similarity detection.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.api_base_url = "https://www.googleapis.com/youtube/v3"
         self.search_quota_cost = 100  # YouTube API quota cost for search
         
     async def initialize(self) -> bool:
-        """Initialize YouTube connector."""        try:
+        """Initialize YouTube connector."""
+        try:
             if not self.credentials.api_key:
                 logger.error("YouTube API key not provided")
                 return False
@@ -218,7 +236,8 @@ class YouTubeConnector(BasePlatformConnector):
             return False
     
     async def authenticate(self) -> bool:
-        """Authenticate with YouTube API."""        try:
+        """Authenticate with YouTube API."""
+        try:
             # Test API key with a simple request
             test_url = f"{self.api_base_url}/search"
             headers = {"Accept": "application/json"}
@@ -246,7 +265,8 @@ class YouTubeConnector(BasePlatformConnector):
                                    fingerprint_hash: str,
                                    content_type: str,
                                    metadata: Dict[str, Any]) -> List[SearchResult]:
-        """Search for similar content on YouTube."""        try:
+        """Search for similar content on YouTube."""
+        try:
             if self.status != ConnectionStatus.CONNECTED:
                 logger.warning("YouTube connector not connected")
                 return []
@@ -289,7 +309,8 @@ class YouTubeConnector(BasePlatformConnector):
             return []
     
     def _build_search_queries(self, metadata: Dict[str, Any]) -> List[str]:
-        """Build search queries from content metadata."""        queries = []
+        """Build search queries from content metadata."""
+        queries = []
         
         # Use title if available
         if metadata.get("title"):
@@ -320,7 +341,8 @@ class YouTubeConnector(BasePlatformConnector):
         return queries[:5]  # Limit to 5 queries to manage API quota
     
     async def _search_youtube(self, query: str, content_type: str) -> List[Dict[str, Any]]:
-        """Search YouTube for specific query."""        try:
+        """Search YouTube for specific query."""
+        try:
             search_url = f"{self.api_base_url}/search"
             headers = {"Accept": "application/json"}
             params = {
@@ -351,7 +373,8 @@ class YouTubeConnector(BasePlatformConnector):
                                              youtube_result: Dict[str, Any],
                                              fingerprint_hash: str,
                                              original_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate similarity indicators between YouTube result and original content."""        indicators = {
+        """Calculate similarity indicators between YouTube result and original content."""
+        indicators = {
             "title_similarity": 0.0,
             "description_similarity": 0.0,
             "author_similarity": 0.0,
@@ -408,7 +431,8 @@ class YouTubeConnector(BasePlatformConnector):
         return indicators
     
     def _calculate_text_similarity(self, text1: str, text2: str) -> float:
-        """Calculate text similarity using simple word overlap."""        if not text1 or not text2:
+        """Calculate text similarity using simple word overlap."""
+        if not text1 or not text2:
             return 0.0
         
         # Simple word-based similarity
@@ -424,7 +448,8 @@ class YouTubeConnector(BasePlatformConnector):
         return intersection / union if union > 0 else 0.0
     
     async def get_content_metadata(self, content_url: str) -> Dict[str, Any]:
-        """Get metadata for specific YouTube video."""        try:
+        """Get metadata for specific YouTube video."""
+        try:
             # Extract video ID from URL
             video_id = self._extract_video_id(content_url)
             if not video_id:
@@ -464,7 +489,8 @@ class YouTubeConnector(BasePlatformConnector):
             return {}
     
     def _extract_video_id(self, url: str) -> Optional[str]:
-        """Extract video ID from YouTube URL."""        try:
+        """Extract video ID from YouTube URL."""
+        try:
             if "youtube.com/watch?v=" in url:
                 return url.split("v=")[1].split("&")[0]
             elif "youtu.be/" in url:
@@ -475,16 +501,19 @@ class YouTubeConnector(BasePlatformConnector):
 
 
 class InstagramConnector(BasePlatformConnector):
-    """    Instagram platform connector.
+    """
+    Instagram platform connector.
     
     Integrates with Instagram Basic Display API for content monitoring.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.api_base_url = "https://graph.instagram.com"
         
     async def initialize(self) -> bool:
-        """Initialize Instagram connector."""        try:
+        """Initialize Instagram connector."""
+        try:
             if not self.credentials.access_token:
                 logger.error("Instagram access token not provided")
                 return False
@@ -503,7 +532,8 @@ class InstagramConnector(BasePlatformConnector):
             return False
     
     async def authenticate(self) -> bool:
-        """Authenticate with Instagram API."""        try:
+        """Authenticate with Instagram API."""
+        try:
             # Test access token
             test_url = f"{self.api_base_url}/me"
             headers = {"Accept": "application/json"}
@@ -528,7 +558,8 @@ class InstagramConnector(BasePlatformConnector):
                                    fingerprint_hash: str,
                                    content_type: str,
                                    metadata: Dict[str, Any]) -> List[SearchResult]:
-        """Search for similar content on Instagram."""        try:
+        """Search for similar content on Instagram."""
+        try:
             # Instagram Basic Display API has limited search capabilities
             # This would typically require Instagram Graph API with business account
             logger.info("Instagram content search requires Graph API with business permissions")
@@ -539,7 +570,8 @@ class InstagramConnector(BasePlatformConnector):
             return []
     
     async def get_content_metadata(self, content_url: str) -> Dict[str, Any]:
-        """Get metadata for specific Instagram content."""        try:
+        """Get metadata for specific Instagram content."""
+        try:
             # Extract media ID from URL and get details
             # This is a simplified implementation
             return {
@@ -555,16 +587,19 @@ class InstagramConnector(BasePlatformConnector):
 
 
 class TikTokConnector(BasePlatformConnector):
-    """    TikTok platform connector.
+    """
+    TikTok platform connector.
     
     Integrates with TikTok API for content monitoring.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.api_base_url = "https://open-api.tiktok.com"
         
     async def initialize(self) -> bool:
-        """Initialize TikTok connector."""        try:
+        """Initialize TikTok connector."""
+        try:
             if not self.credentials.api_key:
                 logger.error("TikTok API key not provided")
                 return False
@@ -583,7 +618,8 @@ class TikTokConnector(BasePlatformConnector):
             return False
     
     async def authenticate(self) -> bool:
-        """Authenticate with TikTok API."""        try:
+        """Authenticate with TikTok API."""
+        try:
             # TikTok API authentication implementation
             logger.info("TikTok authentication - implementation required")
             return True  # Placeholder
@@ -596,7 +632,8 @@ class TikTokConnector(BasePlatformConnector):
                                    fingerprint_hash: str,
                                    content_type: str,
                                    metadata: Dict[str, Any]) -> List[SearchResult]:
-        """Search for similar content on TikTok."""        try:
+        """Search for similar content on TikTok."""
+        try:
             # TikTok content search implementation
             logger.info("TikTok content search - implementation required")
             return []
@@ -606,7 +643,8 @@ class TikTokConnector(BasePlatformConnector):
             return []
     
     async def get_content_metadata(self, content_url: str) -> Dict[str, Any]:
-        """Get metadata for specific TikTok content."""        try:
+        """Get metadata for specific TikTok content."""
+        try:
             # TikTok metadata extraction implementation
             return {
                 "platform": "tiktok",
@@ -621,16 +659,19 @@ class TikTokConnector(BasePlatformConnector):
 
 
 class TwitterConnector(BasePlatformConnector):
-    """    Twitter platform connector.
+    """
+    Twitter platform connector.
     
     Integrates with Twitter API v2 for content monitoring.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.api_base_url = "https://api.twitter.com/2"
         
     async def initialize(self) -> bool:
-        """Initialize Twitter connector."""        try:
+        """Initialize Twitter connector."""
+        try:
             if not self.credentials.api_key:
                 logger.error("Twitter API key not provided")
                 return False
@@ -649,7 +690,8 @@ class TwitterConnector(BasePlatformConnector):
             return False
     
     async def authenticate(self) -> bool:
-        """Authenticate with Twitter API."""        try:
+        """Authenticate with Twitter API."""
+        try:
             # Test API credentials
             test_url = f"{self.api_base_url}/users/me"
             headers = {
@@ -673,7 +715,8 @@ class TwitterConnector(BasePlatformConnector):
                                    fingerprint_hash: str,
                                    content_type: str,
                                    metadata: Dict[str, Any]) -> List[SearchResult]:
-        """Search for similar content on Twitter."""        try:
+        """Search for similar content on Twitter."""
+        try:
             search_results = []
             
             # Build search queries
@@ -710,7 +753,8 @@ class TwitterConnector(BasePlatformConnector):
             return []
     
     def _build_twitter_search_queries(self, metadata: Dict[str, Any]) -> List[str]:
-        """Build Twitter search queries from metadata."""        queries = []
+        """Build Twitter search queries from metadata."""
+        queries = []
         
         # Use title/text content
         if metadata.get("title"):
@@ -735,7 +779,8 @@ class TwitterConnector(BasePlatformConnector):
         return queries[:5]
     
     async def _search_twitter(self, query: str) -> List[Dict[str, Any]]:
-        """Search Twitter for specific query."""        try:
+        """Search Twitter for specific query."""
+        try:
             search_url = f"{self.api_base_url}/tweets/search/recent"
             headers = {
                 "Authorization": f"Bearer {self.credentials.access_token}",
@@ -762,7 +807,8 @@ class TwitterConnector(BasePlatformConnector):
                                           twitter_result: Dict[str, Any],
                                           fingerprint_hash: str,
                                           original_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate similarity indicators for Twitter content."""        indicators = {
+        """Calculate similarity indicators for Twitter content."""
+        indicators = {
             "text_similarity": 0.0,
             "hashtag_similarity": 0.0,
             "temporal_proximity": 0.0,
@@ -816,12 +862,14 @@ class TwitterConnector(BasePlatformConnector):
         return indicators
     
     def _extract_hashtags(self, text: str) -> List[str]:
-        """Extract hashtags from text."""        import re
+        """Extract hashtags from text."""
+        import re
         hashtags = re.findall(r'#(\w+)', text)
         return [tag.lower() for tag in hashtags]
     
     def _calculate_text_similarity(self, text1: str, text2: str) -> float:
-        """Calculate text similarity using simple word overlap."""        if not text1 or not text2:
+        """Calculate text similarity using simple word overlap."""
+        if not text1 or not text2:
             return 0.0
         
         words1 = set(text1.lower().split())
@@ -836,7 +884,8 @@ class TwitterConnector(BasePlatformConnector):
         return intersection / union if union > 0 else 0.0
     
     async def get_content_metadata(self, content_url: str) -> Dict[str, Any]:
-        """Get metadata for specific Twitter content."""        try:
+        """Get metadata for specific Twitter content."""
+        try:
             # Extract tweet ID from URL
             tweet_id = self._extract_tweet_id(content_url)
             if not tweet_id:
@@ -874,7 +923,8 @@ class TwitterConnector(BasePlatformConnector):
             return {}
     
     def _extract_tweet_id(self, url: str) -> Optional[str]:
-        """Extract tweet ID from Twitter URL."""        try:
+        """Extract tweet ID from Twitter URL."""
+        try:
             if "twitter.com" in url and "/status/" in url:
                 return url.split("/status/")[1].split("?")[0]
             return None
@@ -883,18 +933,21 @@ class TwitterConnector(BasePlatformConnector):
 
 
 class GenericWebConnector(BasePlatformConnector):
-    """    Generic web connector for general web content monitoring.
+    """
+    Generic web connector for general web content monitoring.
     
     Uses web scraping and crawling techniques to monitor content
     across websites that don't have specific APIs.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.user_agent = config.get("user_agent", "IA-Influencer-Surveillance-Bot/1.0")
         self.respect_robots_txt = config.get("respect_robots_txt", True)
         
     async def initialize(self) -> bool:
-        """Initialize generic web connector."""        try:
+        """Initialize generic web connector."""
+        try:
             self.status = ConnectionStatus.CONNECTED
             logger.info("Generic web connector initialized successfully")
             return True
@@ -905,13 +958,15 @@ class GenericWebConnector(BasePlatformConnector):
             return False
     
     async def authenticate(self) -> bool:
-        """Authentication not required for generic web scraping."""        return True
+        """Authentication not required for generic web scraping."""
+        return True
     
     async def search_similar_content(self, 
                                    fingerprint_hash: str,
                                    content_type: str,
                                    metadata: Dict[str, Any]) -> List[SearchResult]:
-        """Search for similar content using web search engines."""        try:
+        """Search for similar content using web search engines."""
+        try:
             search_results = []
             
             # Build search queries
@@ -949,7 +1004,8 @@ class GenericWebConnector(BasePlatformConnector):
             return []
     
     def _build_web_search_queries(self, metadata: Dict[str, Any]) -> List[str]:
-        """Build web search queries from metadata."""        queries = []
+        """Build web search queries from metadata."""
+        queries = []
         
         # Use exact title in quotes
         if metadata.get("title"):
@@ -972,7 +1028,8 @@ class GenericWebConnector(BasePlatformConnector):
         return queries[:3]  # Limit to avoid excessive requests
     
     async def _search_web(self, query: str) -> List[Dict[str, Any]]:
-        """Search web using search engines."""        try:
+        """Search web using search engines."""
+        try:
             # This is a placeholder implementation
             # In a real implementation, you would use:
             # 1. Google Custom Search API
@@ -991,7 +1048,8 @@ class GenericWebConnector(BasePlatformConnector):
                                       web_result: Dict[str, Any],
                                       fingerprint_hash: str,
                                       original_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate similarity indicators for web content."""        return {
+        """Calculate similarity indicators for web content."""
+        return {
             "title_similarity": 0.0,
             "url_similarity": 0.0,
             "content_similarity": 0.0,
@@ -999,7 +1057,8 @@ class GenericWebConnector(BasePlatformConnector):
         }
     
     async def get_content_metadata(self, content_url: str) -> Dict[str, Any]:
-        """Get metadata for specific web content."""        try:
+        """Get metadata for specific web content."""
+        try:
             headers = {
                 "User-Agent": self.user_agent,
                 "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
@@ -1028,19 +1087,23 @@ _platform_connectors: Dict[str, BasePlatformConnector] = {}
 
 
 def register_platform_connector(platform: str, connector: BasePlatformConnector) -> None:
-    """Register platform connector."""    _platform_connectors[platform] = connector
+    """Register platform connector."""
+    _platform_connectors[platform] = connector
 
 
 def get_platform_connector(platform: str) -> Optional[BasePlatformConnector]:
-    """Get platform connector by name."""    return _platform_connectors.get(platform)
+    """Get platform connector by name."""
+    return _platform_connectors.get(platform)
 
 
 def get_all_platform_connectors() -> Dict[str, BasePlatformConnector]:
-    """Get all registered platform connectors."""    return _platform_connectors.copy()
+    """Get all registered platform connectors."""
+    return _platform_connectors.copy()
 
 
 async def initialize_platform_connectors(config: Dict[str, Any]) -> bool:
-    """Initialize all platform connectors."""    try:
+    """Initialize all platform connectors."""
+    try:
         connectors_config = config.get("platform_connectors", {})
         
         # Initialize YouTube connector
@@ -1082,7 +1145,8 @@ async def initialize_platform_connectors(config: Dict[str, Any]) -> bool:
 
 
 async def shutdown_platform_connectors() -> None:
-    """Shutdown all platform connectors."""    logger.info("Shutting down platform connectors...")
+    """Shutdown all platform connectors."""
+    logger.info("Shutting down platform connectors...")
     
     for connector in _platform_connectors.values():
         await connector.shutdown()

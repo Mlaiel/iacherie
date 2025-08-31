@@ -10,7 +10,8 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 WARNING: This code and concept are protected intellectual property.
 Any unauthorized use, copying, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 import cv2
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class VideoFingerprint:
-    """Video fingerprint data structure."""    fingerprint_id: str
+    """Video fingerprint data structure."""
+    fingerprint_id: str
     user_id: str
     title: str
     duration: float
@@ -47,7 +49,8 @@ class VideoFingerprint:
 
 @dataclass
 class VideoMatch:
-    """Video match result structure."""    original_fingerprint_id: str
+    """Video match result structure."""
+    original_fingerprint_id: str
     detected_url: str
     similarity_score: float
     confidence_level: float
@@ -60,7 +63,8 @@ class VideoMatch:
 
 
 class VideoFeatureExtractor:
-    """Advanced video feature extraction for fingerprinting."""    
+    """Advanced video feature extraction for fingerprinting."""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.keyframe_interval = config.get("keyframe_interval", 1.0)  # Extract keyframes every 1 second
@@ -73,7 +77,8 @@ class VideoFeatureExtractor:
         self.sift_detector = cv2.SIFT_create(nfeatures=100)
         
     async def extract_features(self, video_data: bytes) -> Dict[str, Any]:
-        """Extract comprehensive video features from video data."""        try:
+        """Extract comprehensive video features from video data."""
+        try:
             # Save video data to temporary file for OpenCV processing
             import tempfile
             with tempfile.NamedTemporaryFile(suffix='.mp4', delete=False) as temp_file:
@@ -135,7 +140,8 @@ class VideoFeatureExtractor:
             raise
     
     async def _extract_keyframes(self, cap, fps: float, duration: float) -> List[np.ndarray]:
-        """Extract keyframes from video at regular intervals."""        keyframes = []
+        """Extract keyframes from video at regular intervals."""
+        keyframes = []
         
         frame_interval = int(fps * self.keyframe_interval)
         frame_indices = range(0, int(fps * duration), frame_interval)
@@ -152,7 +158,8 @@ class VideoFeatureExtractor:
         return keyframes
     
     async def _extract_visual_features(self, keyframes: List[np.ndarray]) -> Dict[str, Any]:
-        """Extract visual features from keyframes."""        features = {}
+        """Extract visual features from keyframes."""
+        features = {}
         
         # ORB features (keypoint detection)
         orb_descriptors = []
@@ -205,7 +212,8 @@ class VideoFeatureExtractor:
         return features
     
     async def _extract_temporal_features(self, keyframes: List[np.ndarray]) -> Dict[str, Any]:
-        """Extract temporal features analyzing changes between frames."""        features = {}
+        """Extract temporal features analyzing changes between frames."""
+        features = {}
         
         if len(keyframes) < 2:
             return features
@@ -247,7 +255,8 @@ class VideoFeatureExtractor:
         return features
     
     async def _extract_color_features(self, keyframes: List[np.ndarray]) -> Dict[str, Any]:
-        """Extract color-based features from keyframes."""        features = {}
+        """Extract color-based features from keyframes."""
+        features = {}
         
         # Color histograms
         color_histograms = {"blue": [], "green": [], "red": []}
@@ -282,7 +291,8 @@ class VideoFeatureExtractor:
         return features
     
     async def _extract_motion_features(self, cap, fps: float) -> Dict[str, Any]:
-        """Extract motion-based features from video."""        features = {}
+        """Extract motion-based features from video."""
+        features = {}
         
         # Reset video capture
         cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
@@ -327,7 +337,8 @@ class VideoFeatureExtractor:
 
 
 class VideoSimilarityCalculator:
-    """Advanced video similarity calculation engine."""    
+    """Advanced video similarity calculation engine."""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.feature_weights = config.get("feature_weights", {
@@ -342,7 +353,8 @@ class VideoSimilarityCalculator:
         features1: Dict[str, Any], 
         features2: Dict[str, Any]
     ) -> Tuple[float, Dict[str, float]]:
-        """Calculate comprehensive similarity between two video feature sets."""        try:
+        """Calculate comprehensive similarity between two video feature sets."""
+        try:
             similarities = {}
             weighted_sum = 0.0
             total_weight = 0.0
@@ -386,7 +398,8 @@ class VideoSimilarityCalculator:
             return 0.0, {}
     
     async def _calculate_visual_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
-        """Calculate visual similarity using ORB and SIFT descriptors."""        try:
+        """Calculate visual similarity using ORB and SIFT descriptors."""
+        try:
             visual_similarities = []
             
             # ORB descriptor similarity
@@ -419,7 +432,8 @@ class VideoSimilarityCalculator:
             return None
     
     async def _calculate_temporal_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
-        """Calculate temporal similarity using frame difference patterns."""        try:
+        """Calculate temporal similarity using frame difference patterns."""
+        try:
             temporal_similarities = []
             
             # Frame difference similarity
@@ -440,7 +454,8 @@ class VideoSimilarityCalculator:
             return None
     
     async def _calculate_color_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
-        """Calculate color similarity using histograms and color statistics."""        try:
+        """Calculate color similarity using histograms and color statistics."""
+        try:
             color_similarities = []
             
             # Color histogram similarities
@@ -469,7 +484,8 @@ class VideoSimilarityCalculator:
             return None
     
     async def _calculate_motion_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
-        """Calculate motion similarity using motion intensity patterns."""        try:
+        """Calculate motion similarity using motion intensity patterns."""
+        try:
             motion_similarities = []
             
             # Motion intensity similarity
@@ -492,11 +508,13 @@ class VideoSimilarityCalculator:
 
 
 class VideoDetectionEngine:
-    """    Advanced video detection engine for content surveillance.
+    """
+    Advanced video detection engine for content surveillance.
     
     Implements sophisticated video fingerprinting, matching, and detection
     algorithms for protecting visual content across platforms.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.feature_extractor = VideoFeatureExtractor(config.get("feature_extraction", {}))
@@ -519,7 +537,8 @@ class VideoDetectionEngine:
         }
         
     async def initialize(self) -> bool:
-        """Initialize the video detection engine."""        try:
+        """Initialize the video detection engine."""
+        try:
             # Initialize ChromaDB client
             self.chroma_client = chromadb.Client()
             
@@ -546,7 +565,8 @@ class VideoDetectionEngine:
         video_data: bytes, 
         metadata: Dict[str, Any]
     ) -> VideoFingerprint:
-        """Create video fingerprint from video data."""        try:
+        """Create video fingerprint from video data."""
+        try:
             start_time = datetime.utcnow()
             
             # Extract video features
@@ -594,7 +614,8 @@ class VideoDetectionEngine:
             raise
     
     async def _store_fingerprint(self, fingerprint: VideoFingerprint) -> None:
-        """Store fingerprint in vector database."""        try:
+        """Store fingerprint in vector database."""
+        try:
             # Create embedding vector from key features
             embedding_features = []
             
@@ -642,7 +663,8 @@ class VideoDetectionEngine:
         video_data: bytes, 
         detection_metadata: Dict[str, Any]
     ) -> List[VideoMatch]:
-        """Detect video matches against stored fingerprints."""        try:
+        """Detect video matches against stored fingerprints."""
+        try:
             start_time = datetime.utcnow()
             
             # Extract features from input video
@@ -742,7 +764,8 @@ class VideoDetectionEngine:
             return []
     
     async def _load_fingerprint(self, fingerprint_id: str) -> Optional[VideoFingerprint]:
-        """Load full fingerprint data (placeholder - implement with your storage system)."""        # This would load the full fingerprint data from your database
+        """Load full fingerprint data (placeholder - implement with your storage system)."""
+        # This would load the full fingerprint data from your database
         # For now, return None to indicate not found
         return None
     
@@ -753,7 +776,8 @@ class VideoDetectionEngine:
         input_features: Dict[str, Any],
         stored_features: Dict[str, Any]
     ) -> float:
-        """Calculate confidence level for match."""        try:
+        """Calculate confidence level for match."""
+        try:
             # Base confidence from overall similarity
             confidence = similarity_score
             
@@ -783,7 +807,8 @@ class VideoDetectionEngine:
             return similarity_score
     
     async def get_detection_statistics(self) -> Dict[str, Any]:
-        """Get detection engine statistics."""        return {
+        """Get detection engine statistics."""
+        return {
             "engine_type": "video",
             "status": "active",
             "statistics": self.detection_stats,
@@ -796,7 +821,8 @@ class VideoDetectionEngine:
     
     def _calculate_audio_similarity(self, detected_features: Dict[str, np.ndarray], 
                                    reference_features: Dict[str, np.ndarray]) -> float:
-        """Calculate audio similarity score between detected and reference video."""        try:
+        """Calculate audio similarity score between detected and reference video."""
+        try:
             # Extract audio features if available
             detected_audio = detected_features.get('audio_features')
             reference_audio = reference_features.get('audio_features')
@@ -839,7 +865,8 @@ class VideoDetectionEngine:
             return 0.0
     
     async def cleanup(self) -> None:
-        """Cleanup resources."""        try:
+        """Cleanup resources."""
+        try:
             if self.chroma_client:
                 # ChromaDB cleanup if needed
                 pass

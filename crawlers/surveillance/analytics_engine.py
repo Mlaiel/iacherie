@@ -19,7 +19,8 @@ legal action. Contact mlaiel@live.de for licensing.
 
 This module provides advanced analytics and business intelligence for content
 surveillance operations across all creator types and platforms.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Set
 from dataclasses import dataclass, field
@@ -41,7 +42,8 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options."""    REAL_TIME = "real_time"
+    """Analytics timeframe options."""
+    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -51,7 +53,8 @@ class AnalyticsTimeframe(Enum):
 
 
 class TrendDirection(Enum):
-    """Trend direction indicators."""    INCREASING = "increasing"
+    """Trend direction indicators."""
+    INCREASING = "increasing"
     DECREASING = "decreasing"
     STABLE = "stable"
     VOLATILE = "volatile"
@@ -59,7 +62,8 @@ class TrendDirection(Enum):
 
 
 class InsightType(Enum):
-    """Types of analytical insights."""    VIOLATION_PATTERN = "violation_pattern"
+    """Types of analytical insights."""
+    VIOLATION_PATTERN = "violation_pattern"
     PLATFORM_TREND = "platform_trend"
     CREATOR_BEHAVIOR = "creator_behavior"
     BUSINESS_OPPORTUNITY = "business_opportunity"
@@ -73,7 +77,8 @@ class InsightType(Enum):
 
 @dataclass
 class AnalyticsMetric:
-    """Single analytics metric with context."""    metric_id: str
+    """Single analytics metric with context."""
+    metric_id: str
     name: str
     value: float
     unit: str
@@ -90,7 +95,8 @@ class AnalyticsMetric:
 
 @dataclass
 class BusinessInsight:
-    """Business intelligence insight with actionable recommendations."""    insight_id: str
+    """Business intelligence insight with actionable recommendations."""
+    insight_id: str
     type: InsightType
     title: str
     description: str
@@ -109,7 +115,8 @@ class BusinessInsight:
 
 @dataclass
 class PlatformAnalytics:
-    """Platform-specific analytics data."""    platform_name: str
+    """Platform-specific analytics data."""
+    platform_name: str
     total_violations: int = 0
     violation_rate: float = 0.0
     resolution_rate: float = 0.0
@@ -128,7 +135,8 @@ class PlatformAnalytics:
 
 @dataclass
 class CreatorAnalytics:
-    """Creator-specific analytics data."""    creator_id: str
+    """Creator-specific analytics data."""
+    creator_id: str
     creator_type: ContentCategory
     total_protected_content: int = 0
     violations_detected: int = 0
@@ -147,7 +155,8 @@ class CreatorAnalytics:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report."""    report_id: str
+    """Comprehensive analytics report."""
+    report_id: str
     report_type: str
     timeframe: AnalyticsTimeframe
     generated_for: Optional[str] = None  # Creator ID or platform name
@@ -165,7 +174,8 @@ class AnalyticsReport:
 
 
 class SurveillanceAnalyticsEngine:
-    """    Advanced analytics engine for surveillance operations.
+    """
+    Advanced analytics engine for surveillance operations.
     
     This engine provides comprehensive business intelligence and analytics
     for content protection operations across all creator types and platforms.
@@ -180,13 +190,16 @@ class SurveillanceAnalyticsEngine:
     - Threat intelligence and risk assessment
     - Predictive analytics for violation forecasting
     - Custom dashboard and reporting capabilities
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize the analytics engine.
+        """
+        Initialize the analytics engine.
         
         Args:
             config: Analytics configuration
-        """        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """
+        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
         self.config = config or {}
@@ -218,7 +231,8 @@ class SurveillanceAnalyticsEngine:
         self._background_started = False
     
     async def initialize(self) -> None:
-        """Initialize the analytics engine."""        try:
+        """Initialize the analytics engine."""
+        try:
             self._logger.info("Initializing Surveillance Analytics Engine...")
             
             # Load historical data
@@ -234,11 +248,13 @@ class SurveillanceAnalyticsEngine:
             raise
     
     async def process_violation_alert(self, alert: ViolationAlert) -> None:
-        """        Process a violation alert for analytics.
+        """
+        Process a violation alert for analytics.
         
         Args:
             alert: Violation alert to process
-        """        try:
+        """
+        try:
             # Add to violation history
             self.violation_history.append({
                 'alert': alert,
@@ -263,7 +279,8 @@ class SurveillanceAnalyticsEngine:
             self._logger.error(f"Error processing violation alert for analytics: {e}")
     
     async def _update_creator_metrics(self, alert: ViolationAlert) -> None:
-        """Update creator-specific metrics."""        creator_id = alert.creator_id
+        """Update creator-specific metrics."""
+        creator_id = alert.creator_id
         
         if creator_id not in self.creator_metrics:
             # Initialize creator analytics
@@ -300,7 +317,8 @@ class SurveillanceAnalyticsEngine:
         metrics.last_updated = datetime.now()
     
     async def _update_platform_metrics(self, alert: ViolationAlert) -> None:
-        """Update platform-specific metrics."""        platform = alert.platform
+        """Update platform-specific metrics."""
+        platform = alert.platform
         
         if platform not in self.platform_metrics:
             self.platform_metrics[platform] = PlatformAnalytics(platform_name=platform)
@@ -330,7 +348,8 @@ class SurveillanceAnalyticsEngine:
         metrics.last_updated = datetime.now()
     
     async def _generate_real_time_insights(self, alert: ViolationAlert) -> List[BusinessInsight]:
-        """Generate real-time insights from violation alert."""        insights = []
+        """Generate real-time insights from violation alert."""
+        insights = []
         
         try:
             # High confidence violation insight
@@ -391,7 +410,8 @@ class SurveillanceAnalyticsEngine:
         timeframe: AnalyticsTimeframe,
         target_id: Optional[str] = None
     ) -> AnalyticsReport:
-        """        Generate comprehensive analytics report.
+        """
+        Generate comprehensive analytics report.
         
         Args:
             report_type: Type of report (creator, platform, summary)
@@ -400,7 +420,8 @@ class SurveillanceAnalyticsEngine:
             
         Returns:
             Analytics report
-        """        try:
+        """
+        try:
             report_id = f"report_{uuid.uuid4().hex[:8]}"
             
             # Create base report
@@ -456,7 +477,8 @@ class SurveillanceAnalyticsEngine:
         timeframe: AnalyticsTimeframe, 
         target_id: Optional[str]
     ) -> List[AnalyticsMetric]:
-        """Calculate key performance metrics."""        metrics = []
+        """Calculate key performance metrics."""
+        metrics = []
         
         try:
             # Calculate violation metrics
@@ -518,7 +540,8 @@ class SurveillanceAnalyticsEngine:
         timeframe: AnalyticsTimeframe, 
         target_id: Optional[str]
     ) -> List[BusinessInsight]:
-        """Generate analytical insights."""        insights = []
+        """Generate analytical insights."""
+        insights = []
         
         try:
             # Violation pattern insights
@@ -548,7 +571,8 @@ class SurveillanceAnalyticsEngine:
         timeframe: AnalyticsTimeframe, 
         target_id: Optional[str]
     ) -> List[BusinessInsight]:
-        """Analyze violation patterns for insights."""        insights = []
+        """Analyze violation patterns for insights."""
+        insights = []
         
         try:
             # Get recent violations
@@ -627,7 +651,8 @@ class SurveillanceAnalyticsEngine:
             return insights
     
     async def _analyze_platform_trends(self, timeframe: AnalyticsTimeframe) -> List[BusinessInsight]:
-        """Analyze platform-specific trends."""        insights = []
+        """Analyze platform-specific trends."""
+        insights = []
         
         try:
             for platform_name, metrics in self.platform_metrics.items():
@@ -668,7 +693,8 @@ class SurveillanceAnalyticsEngine:
         timeframe: AnalyticsTimeframe, 
         target_id: Optional[str]
     ) -> List[BusinessInsight]:
-        """Identify business and monetization opportunities."""        insights = []
+        """Identify business and monetization opportunities."""
+        insights = []
         
         try:
             # Analyze collaboration opportunities
@@ -718,7 +744,8 @@ class SurveillanceAnalyticsEngine:
             return insights
     
     async def _generate_threat_intelligence(self, timeframe: AnalyticsTimeframe) -> List[BusinessInsight]:
-        """Generate threat intelligence insights."""        insights = []
+        """Generate threat intelligence insights."""
+        insights = []
         
         try:
             # Analyze repeat offenders
@@ -748,14 +775,16 @@ class SurveillanceAnalyticsEngine:
             return insights
     
     async def _get_platform_analytics(self, timeframe: AnalyticsTimeframe) -> Dict[str, PlatformAnalytics]:
-        """Get platform analytics for timeframe."""        return self.platform_metrics.copy()
+        """Get platform analytics for timeframe."""
+        return self.platform_metrics.copy()
     
     async def _get_creator_analytics(
         self, 
         timeframe: AnalyticsTimeframe, 
         creator_id: Optional[str]
     ) -> Dict[str, CreatorAnalytics]:
-        """Get creator analytics for timeframe."""        if creator_id and creator_id in self.creator_metrics:
+        """Get creator analytics for timeframe."""
+        if creator_id and creator_id in self.creator_metrics:
             return {creator_id: self.creator_metrics[creator_id]}
         return self.creator_metrics.copy()
     
@@ -764,7 +793,8 @@ class SurveillanceAnalyticsEngine:
         timeframe: AnalyticsTimeframe, 
         target_id: Optional[str]
     ) -> Dict[str, Any]:
-        """Analyze trends across different dimensions."""        trends = {
+        """Analyze trends across different dimensions."""
+        trends = {
             'violation_trends': {},
             'platform_trends': {},
             'creator_trends': {},
@@ -789,7 +819,8 @@ class SurveillanceAnalyticsEngine:
             return trends
     
     async def _generate_executive_summary(self, report: AnalyticsReport) -> str:
-        """Generate executive summary for report."""        try:
+        """Generate executive summary for report."""
+        try:
             # Extract key metrics
             total_violations = 0
             revenue_protected = 0.0
@@ -810,7 +841,8 @@ class SurveillanceAnalyticsEngine:
             ])
             
             # Generate summary
-            summary = f"""            Analytics Summary for {report.timeframe.value.title()} Period:
+            summary = f"""
+            Analytics Summary for {report.timeframe.value.title()} Period:
             
             • Detected {total_violations} violations across all platforms
             • Protected ${revenue_protected:,.2f} in potential revenue
@@ -821,7 +853,8 @@ class SurveillanceAnalyticsEngine:
             Key Findings: The surveillance system demonstrated strong performance with effective 
             violation detection and revenue protection. Priority should be given to addressing 
             the {critical_insights} high-priority insights identified in this report.
-            """            
+            """
+            
             return summary.strip()
             
         except Exception as e:
@@ -829,7 +862,8 @@ class SurveillanceAnalyticsEngine:
             return "Executive summary generation failed."
     
     async def _generate_recommendations(self, report: AnalyticsReport) -> List[str]:
-        """Generate recommendations based on report data."""        recommendations = []
+        """Generate recommendations based on report data."""
+        recommendations = []
         
         try:
             # Analyze insights for recommendations
@@ -854,7 +888,8 @@ class SurveillanceAnalyticsEngine:
             return []
     
     async def _generate_action_items(self, report: AnalyticsReport) -> List[Dict[str, Any]]:
-        """Generate actionable items from report."""        action_items = []
+        """Generate actionable items from report."""
+        action_items = []
         
         try:
             # Convert critical insights to action items
@@ -879,15 +914,18 @@ class SurveillanceAnalyticsEngine:
     
     # Helper methods for calculations
     async def _calculate_violation_count(self, timeframe: AnalyticsTimeframe, target_id: Optional[str]) -> int:
-        """Calculate violation count for timeframe."""        violations = self._get_violations_in_timeframe(timeframe, target_id)
+        """Calculate violation count for timeframe."""
+        violations = self._get_violations_in_timeframe(timeframe, target_id)
         return len(violations)
     
     async def _calculate_detection_accuracy(self, timeframe: AnalyticsTimeframe, target_id: Optional[str]) -> float:
-        """Calculate detection accuracy."""        # Simplified calculation - would use more sophisticated metrics in production
+        """Calculate detection accuracy."""
+        # Simplified calculation - would use more sophisticated metrics in production
         return 0.85
     
     async def _calculate_revenue_protected(self, timeframe: AnalyticsTimeframe, target_id: Optional[str]) -> float:
-        """Calculate revenue protected."""        violations = self._get_violations_in_timeframe(timeframe, target_id)
+        """Calculate revenue protected."""
+        violations = self._get_violations_in_timeframe(timeframe, target_id)
         total_revenue = 0.0
         
         for violation in violations:
@@ -898,15 +936,18 @@ class SurveillanceAnalyticsEngine:
         return total_revenue
     
     async def _calculate_resolution_rate(self, timeframe: AnalyticsTimeframe, target_id: Optional[str]) -> float:
-        """Calculate violation resolution rate."""        # Simplified calculation - would track actual resolution status
+        """Calculate violation resolution rate."""
+        # Simplified calculation - would track actual resolution status
         return 0.75
     
     async def _calculate_trend(self, metric_type: str, timeframe: AnalyticsTimeframe) -> TrendDirection:
-        """Calculate trend direction for metric."""        # Simplified trend calculation - would use statistical analysis in production
+        """Calculate trend direction for metric."""
+        # Simplified trend calculation - would use statistical analysis in production
         return TrendDirection.STABLE
     
     def _get_violations_in_timeframe(self, timeframe: AnalyticsTimeframe, target_id: Optional[str]) -> List[Dict]:
-        """Get violations within specified timeframe."""        now = datetime.now()
+        """Get violations within specified timeframe."""
+        now = datetime.now()
         window = self.analysis_intervals.get(timeframe, timedelta(days=1))
         start_time = now - window
         
@@ -919,7 +960,8 @@ class SurveillanceAnalyticsEngine:
         return filtered_violations
     
     def _determine_content_type_from_alert(self, alert: ViolationAlert) -> str:
-        """Determine content type from alert."""        if 'audio' in alert.detected_content:
+        """Determine content type from alert."""
+        if 'audio' in alert.detected_content:
             return 'audio'
         elif 'video' in alert.detected_content:
             return 'video'
@@ -930,7 +972,8 @@ class SurveillanceAnalyticsEngine:
     
     # Background analysis methods
     async def _start_background_analytics(self) -> None:
-        """Start background analytics tasks."""        if self._background_started:
+        """Start background analytics tasks."""
+        if self._background_started:
             return
         
         # Start periodic analytics
@@ -951,7 +994,8 @@ class SurveillanceAnalyticsEngine:
         self._logger.info("Background analytics tasks started")
     
     async def _run_periodic_analytics(self) -> None:
-        """Run periodic analytics updates."""        while True:
+        """Run periodic analytics updates."""
+        while True:
             try:
                 await asyncio.sleep(300)  # Run every 5 minutes
                 
@@ -969,7 +1013,8 @@ class SurveillanceAnalyticsEngine:
                 await asyncio.sleep(60)
     
     async def _cleanup_expired_insights(self) -> None:
-        """Clean up expired insights and reports."""        while True:
+        """Clean up expired insights and reports."""
+        while True:
             try:
                 await asyncio.sleep(3600)  # Run every hour
                 
@@ -1004,46 +1049,58 @@ class SurveillanceAnalyticsEngine:
                 await asyncio.sleep(300)
     
     async def _load_historical_data(self) -> None:
-        """Load historical analytics data."""        # Implementation would load from persistent storage
+        """Load historical analytics data."""
+        # Implementation would load from persistent storage
         pass
     
     async def _update_platform_analytics(self) -> None:
-        """Update platform analytics calculations."""        # Implementation would recalculate platform metrics
+        """Update platform analytics calculations."""
+        # Implementation would recalculate platform metrics
         pass
     
     async def _update_creator_analytics(self) -> None:
-        """Update creator analytics calculations."""        # Implementation would recalculate creator metrics
+        """Update creator analytics calculations."""
+        # Implementation would recalculate creator metrics
         pass
     
     async def _generate_periodic_insights(self) -> None:
-        """Generate periodic analytical insights."""        # Implementation would run scheduled insight generation
+        """Generate periodic analytical insights."""
+        # Implementation would run scheduled insight generation
         pass
     
     # Advanced calculation methods (placeholders for production implementation)
     async def _calculate_collaboration_potential(self, timeframe: AnalyticsTimeframe, target_id: Optional[str]) -> float:
-        """Calculate collaboration potential score."""        return 0.6  # Placeholder
+        """Calculate collaboration potential score."""
+        return 0.6  # Placeholder
     
     async def _calculate_monetization_potential(self, timeframe: AnalyticsTimeframe, target_id: Optional[str]) -> float:
-        """Calculate monetization potential value."""        return 500.0  # Placeholder
+        """Calculate monetization potential value."""
+        return 500.0  # Placeholder
     
     async def _identify_repeat_offenders(self, timeframe: AnalyticsTimeframe) -> List[str]:
-        """Identify repeat offender accounts."""        return []  # Placeholder
+        """Identify repeat offender accounts."""
+        return []  # Placeholder
     
     async def _calculate_platform_trend(self, platform: str, timeframe: AnalyticsTimeframe) -> TrendDirection:
-        """Calculate trend for specific platform."""        return TrendDirection.STABLE  # Placeholder
+        """Calculate trend for specific platform."""
+        return TrendDirection.STABLE  # Placeholder
     
     async def _calculate_violation_trends(self, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
-        """Calculate violation trends."""        return {}  # Placeholder
+        """Calculate violation trends."""
+        return {}  # Placeholder
     
     async def _calculate_platform_trends(self, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
-        """Calculate platform trends."""        return {}  # Placeholder
+        """Calculate platform trends."""
+        return {}  # Placeholder
     
     async def _calculate_revenue_trends(self, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
-        """Calculate revenue trends."""        return {}  # Placeholder
+        """Calculate revenue trends."""
+        return {}  # Placeholder
     
     # Public API methods
     def get_insights(self, insight_type: Optional[InsightType] = None) -> List[BusinessInsight]:
-        """Get cached insights with optional filtering."""        insights = list(self.insights_cache.values())
+        """Get cached insights with optional filtering."""
+        insights = list(self.insights_cache.values())
         
         if insight_type:
             insights = [i for i in insights if i.type == insight_type]
@@ -1051,16 +1108,20 @@ class SurveillanceAnalyticsEngine:
         return sorted(insights, key=lambda x: x.generated_at, reverse=True)
     
     def get_creator_metrics(self, creator_id: str) -> Optional[CreatorAnalytics]:
-        """Get metrics for specific creator."""        return self.creator_metrics.get(creator_id)
+        """Get metrics for specific creator."""
+        return self.creator_metrics.get(creator_id)
     
     def get_platform_metrics(self, platform: str) -> Optional[PlatformAnalytics]:
-        """Get metrics for specific platform."""        return self.platform_metrics.get(platform)
+        """Get metrics for specific platform."""
+        return self.platform_metrics.get(platform)
     
     def get_report(self, report_id: str) -> Optional[AnalyticsReport]:
-        """Get cached report by ID."""        return self.reports_cache.get(report_id)
+        """Get cached report by ID."""
+        return self.reports_cache.get(report_id)
     
     async def shutdown(self) -> None:
-        """Shutdown analytics engine gracefully."""        self._logger.info("Shutting down Analytics Engine...")
+        """Shutdown analytics engine gracefully."""
+        self._logger.info("Shutting down Analytics Engine...")
         
         # Cancel background tasks
         for task in self._analytics_tasks:

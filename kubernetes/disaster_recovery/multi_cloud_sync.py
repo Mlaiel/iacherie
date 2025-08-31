@@ -10,7 +10,8 @@ This module provides comprehensive multi-cloud synchronization:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Union, Set
@@ -35,7 +36,8 @@ from backend.utils.metrics import MetricsCollector
 
 
 class CloudProvider(Enum):
-    """Supported cloud providers"""    AWS = "aws"
+    """Supported cloud providers"""
+    AWS = "aws"
     GCP = "gcp"
     AZURE = "azure"
     DIGITAL_OCEAN = "digital_ocean"
@@ -43,7 +45,8 @@ class CloudProvider(Enum):
 
 
 class SyncStrategy(Enum):
-    """Data synchronization strategies"""    REAL_TIME = "real_time"        # Immediate sync
+    """Data synchronization strategies"""
+    REAL_TIME = "real_time"        # Immediate sync
     NEAR_REAL_TIME = "near_real_time"  # Sub-second sync
     PERIODIC = "periodic"          # Scheduled sync
     EVENT_DRIVEN = "event_driven"  # Triggered by events
@@ -51,7 +54,8 @@ class SyncStrategy(Enum):
 
 
 class ConflictResolution(Enum):
-    """Conflict resolution strategies"""    LATEST_WINS = "latest_wins"
+    """Conflict resolution strategies"""
+    LATEST_WINS = "latest_wins"
     SOURCE_WINS = "source_wins"
     MANUAL = "manual"
     MERGE = "merge"
@@ -59,7 +63,8 @@ class ConflictResolution(Enum):
 
 
 class DataType(Enum):
-    """Types of data being synchronized"""    USER_DATA = "user_data"
+    """Types of data being synchronized"""
+    USER_DATA = "user_data"
     CONTENT_FINGERPRINTS = "content_fingerprints"
     MEDIA_FILES = "media_files"
     METADATA = "metadata"
@@ -70,7 +75,8 @@ class DataType(Enum):
 
 @dataclass
 class CloudEndpoint:
-    """Cloud storage endpoint configuration"""    provider: CloudProvider
+    """Cloud storage endpoint configuration"""
+    provider: CloudProvider
     region: str
     bucket_name: str
     credentials: Dict[str, Any]
@@ -83,7 +89,8 @@ class CloudEndpoint:
 
 @dataclass
 class SyncPolicy:
-    """Synchronization policy configuration"""    policy_id: str
+    """Synchronization policy configuration"""
+    policy_id: str
     name: str
     data_types: List[DataType]
     source_endpoints: List[str]
@@ -99,7 +106,8 @@ class SyncPolicy:
 
 @dataclass
 class SyncOperation:
-    """Individual synchronization operation"""    operation_id: str
+    """Individual synchronization operation"""
+    operation_id: str
     timestamp: datetime
     policy_id: str
     data_type: DataType
@@ -116,7 +124,8 @@ class SyncOperation:
 
 @dataclass
 class ConflictRecord:
-    """Data conflict record"""    conflict_id: str
+    """Data conflict record"""
+    conflict_id: str
     timestamp: datetime
     file_path: str
     conflicting_versions: List[Dict[str, Any]]
@@ -126,47 +135,56 @@ class ConflictRecord:
 
 
 class CloudStorageAdapter:
-    """Abstract base class for cloud storage adapters"""    
+    """Abstract base class for cloud storage adapters"""
+    
     def __init__(self, endpoint: CloudEndpoint):
         self.endpoint = endpoint
         self.client = None
         
     async def initialize(self):
-        """Initialize cloud storage client"""        # Default implementation for cloud storage without initialization
+        """Initialize cloud storage client"""
+        # Default implementation for cloud storage without initialization
         logging.warning(f"Cloud storage initialization not implemented for {self.__class__.__name__}")
         pass
         
     async def upload_file(self, local_path: str, remote_path: str, 
                          metadata: Optional[Dict[str, Any]] = None) -> bool:
-        """Upload file to cloud storage"""        # Default implementation for cloud storage without upload support
+        """Upload file to cloud storage"""
+        # Default implementation for cloud storage without upload support
         logging.warning(f"File upload not implemented for {self.__class__.__name__}")
         return False
         
     async def download_file(self, remote_path: str, local_path: str) -> bool:
-        """Download file from cloud storage"""        # Default implementation for cloud storage without download support
+        """Download file from cloud storage"""
+        # Default implementation for cloud storage without download support
         logging.warning(f"File download not implemented for {self.__class__.__name__}")
         return False
         
     async def list_files(self, prefix: str = "") -> List[Dict[str, Any]]:
-        """List files in cloud storage"""        # Default implementation for cloud storage without listing support
+        """List files in cloud storage"""
+        # Default implementation for cloud storage without listing support
         logging.warning(f"File listing not implemented for {self.__class__.__name__}")
         return []
         
     async def delete_file(self, remote_path: str) -> bool:
-        """Delete file from cloud storage"""        # Default implementation for cloud storage without deletion support
+        """Delete file from cloud storage"""
+        # Default implementation for cloud storage without deletion support
         logging.warning(f"File deletion not implemented for {self.__class__.__name__}")
         return False
         
     async def get_file_metadata(self, remote_path: str) -> Optional[Dict[str, Any]]:
-        """Get file metadata"""        # Default implementation for cloud storage without metadata support
+        """Get file metadata"""
+        # Default implementation for cloud storage without metadata support
         logging.warning(f"File metadata retrieval not implemented for {self.__class__.__name__}")
         return None
 
 
 class AWSStorageAdapter(CloudStorageAdapter):
-    """AWS S3 storage adapter"""    
+    """AWS S3 storage adapter"""
+    
     async def initialize(self):
-        """Initialize AWS S3 client"""        try:
+        """Initialize AWS S3 client"""
+        try:
             session = boto3.Session(
                 aws_access_key_id=self.endpoint.credentials.get('access_key_id'),
                 aws_secret_access_key=self.endpoint.credentials.get('secret_access_key'),
@@ -182,7 +200,8 @@ class AWSStorageAdapter(CloudStorageAdapter):
     
     async def upload_file(self, local_path: str, remote_path: str, 
                          metadata: Optional[Dict[str, Any]] = None) -> bool:
-        """Upload file to S3"""        try:
+        """Upload file to S3"""
+        try:
             extra_args = {}
             if metadata:
                 extra_args['Metadata'] = metadata
@@ -206,7 +225,8 @@ class AWSStorageAdapter(CloudStorageAdapter):
             return False
     
     async def download_file(self, remote_path: str, local_path: str) -> bool:
-        """Download file from S3"""        try:
+        """Download file from S3"""
+        try:
             await asyncio.get_event_loop().run_in_executor(
                 None,
                 self.client.download_file,
@@ -222,7 +242,8 @@ class AWSStorageAdapter(CloudStorageAdapter):
             return False
     
     async def list_files(self, prefix: str = "") -> List[Dict[str, Any]]:
-        """List files in S3"""        try:
+        """List files in S3"""
+        try:
             response = await asyncio.get_event_loop().run_in_executor(
                 None,
                 self.client.list_objects_v2,
@@ -247,9 +268,11 @@ class AWSStorageAdapter(CloudStorageAdapter):
 
 
 class GCPStorageAdapter(CloudStorageAdapter):
-    """Google Cloud Storage adapter"""    
+    """Google Cloud Storage adapter"""
+    
     async def initialize(self):
-        """Initialize GCP Storage client"""        try:
+        """Initialize GCP Storage client"""
+        try:
             # Initialize with service account or default credentials
             self.client = gcp_storage.Client()
             self.bucket = self.client.bucket(self.endpoint.bucket_name)
@@ -261,7 +284,8 @@ class GCPStorageAdapter(CloudStorageAdapter):
     
     async def upload_file(self, local_path: str, remote_path: str, 
                          metadata: Optional[Dict[str, Any]] = None) -> bool:
-        """Upload file to GCS"""        try:
+        """Upload file to GCS"""
+        try:
             blob = self.bucket.blob(remote_path)
             
             if metadata:
@@ -281,9 +305,11 @@ class GCPStorageAdapter(CloudStorageAdapter):
 
 
 class AzureStorageAdapter(CloudStorageAdapter):
-    """Azure Blob Storage adapter"""    
+    """Azure Blob Storage adapter"""
+    
     async def initialize(self):
-        """Initialize Azure Blob Storage client"""        try:
+        """Initialize Azure Blob Storage client"""
+        try:
             credential = DefaultAzureCredential()
             account_url = f"https://{self.endpoint.credentials['account_name']}.blob.core.windows.net"
             
@@ -300,7 +326,8 @@ class AzureStorageAdapter(CloudStorageAdapter):
 
 
 class MultiCloudSyncManager:
-    """    Multi-cloud synchronization and consistency manager
+    """
+    Multi-cloud synchronization and consistency manager
     
     Features:
     - Real-time cross-cloud data replication with conflict resolution
@@ -309,7 +336,8 @@ class MultiCloudSyncManager:
     - Advanced conflict detection and resolution strategies
     - Cross-cloud resource orchestration and optimization
     - Comprehensive monitoring and alerting system
-    """    def __init__(self, config: Config):
+    """
+    def __init__(self, config: Config):
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.db_manager = DatabaseManager(config)
@@ -351,7 +379,8 @@ class MultiCloudSyncManager:
         self._initialize_default_policies()
 
     async def initialize(self):
-        """Initialize multi-cloud sync manager"""        try:
+        """Initialize multi-cloud sync manager"""
+        try:
             # Load cloud endpoint configurations
             await self._load_cloud_endpoints()
             
@@ -371,7 +400,8 @@ class MultiCloudSyncManager:
             raise
 
     async def _load_cloud_endpoints(self):
-        """Load cloud endpoint configurations"""        try:
+        """Load cloud endpoint configurations"""
+        try:
             # AWS endpoints
             aws_regions = ['us-east-1', 'eu-west-1', 'ap-southeast-1']
             for i, region in enumerate(aws_regions):
@@ -424,7 +454,8 @@ class MultiCloudSyncManager:
             raise
 
     async def _initialize_storage_adapters(self):
-        """Initialize storage adapters for each endpoint"""        for endpoint_id, endpoint in self.cloud_endpoints.items():
+        """Initialize storage adapters for each endpoint"""
+        for endpoint_id, endpoint in self.cloud_endpoints.items():
             try:
                 if endpoint.provider == CloudProvider.AWS:
                     adapter = AWSStorageAdapter(endpoint)
@@ -446,7 +477,8 @@ class MultiCloudSyncManager:
                 self.logger.error(f"Error initializing adapter for {endpoint_id}: {e}")
 
     def _initialize_default_policies(self):
-        """Initialize default synchronization policies"""        default_policies = [
+        """Initialize default synchronization policies"""
+        default_policies = [
             {
                 'policy_id': 'critical_data_realtime',
                 'name': 'Critical Data Real-time Sync',
@@ -505,7 +537,8 @@ class MultiCloudSyncManager:
 
     async def sync_file(self, file_path: str, data_type: DataType, 
                        policy_id: Optional[str] = None) -> str:
-        """        Synchronize file across clouds based on policy
+        """
+        Synchronize file across clouds based on policy
         
         Args:
             file_path: Path to file to sync
@@ -514,7 +547,8 @@ class MultiCloudSyncManager:
             
         Returns:
             str: Operation ID
-        """        try:
+        """
+        try:
             # Select appropriate policy
             if policy_id is None:
                 policy = self._select_sync_policy(data_type)
@@ -566,7 +600,8 @@ class MultiCloudSyncManager:
             raise
 
     def _select_sync_policy(self, data_type: DataType) -> Optional[SyncPolicy]:
-        """Select appropriate sync policy for data type"""        # Find policies that handle this data type
+        """Select appropriate sync policy for data type"""
+        # Find policies that handle this data type
         applicable_policies = [
             policy for policy in self.sync_policies.values()
             if data_type in policy.data_types and policy.enabled
@@ -588,7 +623,8 @@ class MultiCloudSyncManager:
         return applicable_policies[0]
 
     async def _calculate_file_checksum(self, file_path: str) -> str:
-        """Calculate SHA-256 checksum of file"""        try:
+        """Calculate SHA-256 checksum of file"""
+        try:
             hasher = hashlib.sha256()
             
             async with aiofiles.open(file_path, 'rb') as file:
@@ -602,7 +638,8 @@ class MultiCloudSyncManager:
             return ""
 
     async def _process_sync_queue(self):
-        """Process synchronization operation queue"""        while True:
+        """Process synchronization operation queue"""
+        while True:
             try:
                 if self.operation_queue:
                     operation = self.operation_queue.popleft()
@@ -615,7 +652,8 @@ class MultiCloudSyncManager:
                 await asyncio.sleep(5)
 
     async def _execute_sync_operation(self, operation: SyncOperation):
-        """Execute individual sync operation"""        try:
+        """Execute individual sync operation"""
+        try:
             operation.status = 'in_progress'
             start_time = datetime.utcnow()
             
@@ -704,7 +742,8 @@ class MultiCloudSyncManager:
             operation.error_message = str(e)
 
     async def _prepare_file_for_sync(self, file_path: str, policy_id: str) -> str:
-        """Prepare file for synchronization (encrypt, compress)"""        try:
+        """Prepare file for synchronization (encrypt, compress)"""
+        try:
             policy = self.sync_policies.get(policy_id)
             if not policy:
                 return file_path
@@ -742,7 +781,8 @@ class MultiCloudSyncManager:
 
     async def _check_for_conflicts(self, operation: SyncOperation, 
                                  target_endpoint: str) -> Optional[Dict[str, Any]]:
-        """Check for potential conflicts at target endpoint"""        try:
+        """Check for potential conflicts at target endpoint"""
+        try:
             target_adapter = self.storage_adapters.get(target_endpoint)
             if not target_adapter:
                 return None
@@ -779,7 +819,8 @@ class MultiCloudSyncManager:
 
     async def _handle_conflict(self, operation: SyncOperation, target_endpoint: str, 
                              conflict_info: Dict[str, Any]):
-        """Handle detected conflict"""        try:
+        """Handle detected conflict"""
+        try:
             policy = self.sync_policies.get(operation.policy_id)
             if not policy:
                 return
@@ -823,7 +864,8 @@ class MultiCloudSyncManager:
             raise
 
     def _generate_remote_path(self, operation: SyncOperation) -> str:
-        """Generate remote storage path for file"""        # Create structured path: data_type/year/month/day/filename
+        """Generate remote storage path for file"""
+        # Create structured path: data_type/year/month/day/filename
         timestamp = operation.timestamp
         data_type = operation.data_type.value
         
@@ -835,7 +877,8 @@ class MultiCloudSyncManager:
         return remote_path
 
     def _generate_file_metadata(self, operation: SyncOperation) -> Dict[str, Any]:
-        """Generate metadata for uploaded file"""        return {
+        """Generate metadata for uploaded file"""
+        return {
             'operation_id': operation.operation_id,
             'data_type': operation.data_type.value,
             'original_checksum': operation.checksum,
@@ -847,7 +890,8 @@ class MultiCloudSyncManager:
     async def _verify_upload_integrity(self, operation: SyncOperation, 
                                      adapter: CloudStorageAdapter, 
                                      remote_path: str) -> bool:
-        """Verify upload integrity by checking metadata"""        try:
+        """Verify upload integrity by checking metadata"""
+        try:
             uploaded_metadata = await adapter.get_file_metadata(remote_path)
             if not uploaded_metadata:
                 return False
@@ -866,7 +910,8 @@ class MultiCloudSyncManager:
 
     async def _update_sync_metrics(self, operation: SyncOperation, sync_time: float, 
                                  successful_targets: List[str]):
-        """Update synchronization metrics"""        try:
+        """Update synchronization metrics"""
+        try:
             self.sync_metrics['total_operations'] += 1
             
             if operation.status == 'completed':
@@ -891,7 +936,8 @@ class MultiCloudSyncManager:
             self.logger.error(f"Failed to update sync metrics: {e}")
 
     async def get_sync_status(self) -> Dict[str, Any]:
-        """Get comprehensive synchronization status"""        try:
+        """Get comprehensive synchronization status"""
+        try:
             # Calculate status for each endpoint
             endpoint_status = {}
             for endpoint_id, adapter in self.storage_adapters.items():

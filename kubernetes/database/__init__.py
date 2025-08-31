@@ -236,7 +236,8 @@ SUPPORT ET MAINTENANCE:
 - Canary deployments support
 - Feature flags pour adoption progressive
 - Automated rollback sur détection d'anomalies
-"""from typing import Dict, Any, Optional, List
+"""
+from typing import Dict, Any, Optional, List
 import asyncio
 from datetime import datetime
 
@@ -376,9 +377,11 @@ __all__ = [
 
 
 class DatabaseManager:
-    """    Enterprise Database Manager
+    """
+    Enterprise Database Manager
     Orchestrates all database operations and components
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = get_logger(f"{__name__}.DatabaseManager")
@@ -400,7 +403,8 @@ class DatabaseManager:
         self._emergency_mode = False
     
     async def initialize(self, force_reinit: bool = False) -> bool:
-        """Initialize all database components"""        try:
+        """Initialize all database components"""
+        try:
             if self._initialized and not force_reinit:
                 self.logger.info("Database system already initialized")
                 return True
@@ -433,52 +437,62 @@ class DatabaseManager:
             return False
     
     async def _initialize_postgresql_manager(self):
-        """Initialize PostgreSQL manager"""        self.logger.debug("Initializing PostgreSQL manager...")
+        """Initialize PostgreSQL manager"""
+        self.logger.debug("Initializing PostgreSQL manager...")
         self._postgresql_manager = get_postgresql_manager()
         await self._postgresql_manager.initialize()
     
     async def _initialize_migration_runner(self):
-        """Initialize migration runner"""        self.logger.debug("Initializing migration runner...")
+        """Initialize migration runner"""
+        self.logger.debug("Initializing migration runner...")
         self._migration_runner = get_migration_runner()
         await self._migration_runner.initialize()
     
     async def _initialize_backup_manager(self):
-        """Initialize backup manager"""        self.logger.debug("Initializing backup manager...")
+        """Initialize backup manager"""
+        self.logger.debug("Initializing backup manager...")
         self._backup_manager = get_backup_manager()
         await self._backup_manager.initialize()
     
     async def _initialize_replication_manager(self):
-        """Initialize replication manager"""        self.logger.debug("Initializing replication manager...")
+        """Initialize replication manager"""
+        self.logger.debug("Initializing replication manager...")
         self._replication_manager = get_replication_manager()
         await self._replication_manager.initialize()
     
     async def _initialize_performance_monitor(self):
-        """Initialize performance monitor"""        self.logger.debug("Initializing performance monitor...")
+        """Initialize performance monitor"""
+        self.logger.debug("Initializing performance monitor...")
         self._performance_monitor = get_performance_monitor()
         await self._performance_monitor.initialize()
     
     async def _initialize_pool_manager(self):
-        """Initialize connection pool manager"""        self.logger.debug("Initializing connection pool manager...")
+        """Initialize connection pool manager"""
+        self.logger.debug("Initializing connection pool manager...")
         self._pool_manager = get_pool_manager()
         await self._pool_manager.initialize()
     
     async def _initialize_content_fingerprinting_manager(self):
-        """Initialize content fingerprinting manager"""        self.logger.debug("Initializing content fingerprinting manager...")
+        """Initialize content fingerprinting manager"""
+        self.logger.debug("Initializing content fingerprinting manager...")
         self._content_fingerprinting_manager = get_content_fingerprinting_manager()
         await self._content_fingerprinting_manager.initialize()
     
     async def _initialize_revenue_tracking_manager(self):
-        """Initialize revenue tracking manager"""        self.logger.debug("Initializing revenue tracking manager...")
+        """Initialize revenue tracking manager"""
+        self.logger.debug("Initializing revenue tracking manager...")
         self._revenue_tracking_manager = get_revenue_tracking_manager()
         await self._revenue_tracking_manager.initialize()
     
     async def _initialize_web_surveillance_manager(self):
-        """Initialize web surveillance manager"""        self.logger.debug("Initializing web surveillance manager...")
+        """Initialize web surveillance manager"""
+        self.logger.debug("Initializing web surveillance manager...")
         self._web_surveillance_manager = get_web_surveillance_manager()
         await self._web_surveillance_manager.initialize()
     
     async def comprehensive_health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive health check of all components"""        try:
+        """Perform comprehensive health check of all components"""
+        try:
             self.logger.info("🔍 Running comprehensive database health check...")
             
             health_results = {
@@ -558,7 +572,8 @@ class DatabaseManager:
             }
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status"""        try:
+        """Get comprehensive system status"""
+        try:
             status = {
                 'system_info': {
                     'version': __version__,
@@ -605,7 +620,8 @@ class DatabaseManager:
             return {'error': str(e)}
     
     async def emergency_shutdown(self):
-        """Emergency shutdown of all database components"""        try:
+        """Emergency shutdown of all database components"""
+        try:
             self.logger.warning("🚨 Initiating emergency database shutdown...")
             self._emergency_mode = True
             
@@ -639,7 +655,8 @@ class DatabaseManager:
             self.logger.error(f"❌ Emergency shutdown failed: {e}")
     
     async def backup_all_databases(self, backup_type: BackupType = BackupType.FULL) -> Dict[str, Any]:
-        """Create backup of all databases"""        try:
+        """Create backup of all databases"""
+        try:
             if not self._backup_manager:
                 raise ValueError("Backup manager not initialized")
             
@@ -700,55 +717,64 @@ class DatabaseManager:
     # Property accessors for components
     @property
     def postgresql_manager(self) -> PostgreSQLManager:
-        """Get PostgreSQL manager instance"""        if not self._postgresql_manager:
+        """Get PostgreSQL manager instance"""
+        if not self._postgresql_manager:
             raise ValueError("PostgreSQL manager not initialized")
         return self._postgresql_manager
     
     @property
     def migration_runner(self) -> MigrationRunner:
-        """Get migration runner instance"""        if not self._migration_runner:
+        """Get migration runner instance"""
+        if not self._migration_runner:
             raise ValueError("Migration runner not initialized")
         return self._migration_runner
     
     @property
     def backup_manager(self) -> BackupManager:
-        """Get backup manager instance"""        if not self._backup_manager:
+        """Get backup manager instance"""
+        if not self._backup_manager:
             raise ValueError("Backup manager not initialized")
         return self._backup_manager
     
     @property
     def replication_manager(self) -> ReplicationManager:
-        """Get replication manager instance"""        if not self._replication_manager:
+        """Get replication manager instance"""
+        if not self._replication_manager:
             raise ValueError("Replication manager not initialized")
         return self._replication_manager
     
     @property
     def performance_monitor(self) -> DatabasePerformanceMonitor:
-        """Get performance monitor instance"""        if not self._performance_monitor:
+        """Get performance monitor instance"""
+        if not self._performance_monitor:
             raise ValueError("Performance monitor not initialized")
         return self._performance_monitor
     
     @property
     def pool_manager(self) -> ConnectionPoolManager:
-        """Get pool manager instance"""        if not self._pool_manager:
+        """Get pool manager instance"""
+        if not self._pool_manager:
             raise ValueError("Pool manager not initialized")
         return self._pool_manager
     
     @property
     def content_fingerprinting_manager(self) -> ContentFingerprintingManager:
-        """Get content fingerprinting manager instance"""        if not self._content_fingerprinting_manager:
+        """Get content fingerprinting manager instance"""
+        if not self._content_fingerprinting_manager:
             raise ValueError("Content fingerprinting manager not initialized")
         return self._content_fingerprinting_manager
     
     @property
     def revenue_tracking_manager(self) -> RevenueTrackingManager:
-        """Get revenue tracking manager instance"""        if not self._revenue_tracking_manager:
+        """Get revenue tracking manager instance"""
+        if not self._revenue_tracking_manager:
             raise ValueError("Revenue tracking manager not initialized")
         return self._revenue_tracking_manager
     
     @property
     def web_surveillance_manager(self) -> WebSurveillanceManager:
-        """Get web surveillance manager instance"""        if not self._web_surveillance_manager:
+        """Get web surveillance manager instance"""
+        if not self._web_surveillance_manager:
             raise ValueError("Web surveillance manager not initialized")
         return self._web_surveillance_manager
 
@@ -758,7 +784,8 @@ _database_manager: Optional[DatabaseManager] = None
 
 
 def get_database_manager(config: Optional[Dict[str, Any]] = None) -> DatabaseManager:
-    """Get or create global database manager instance"""    global _database_manager
+    """Get or create global database manager instance"""
+    global _database_manager
     
     if _database_manager is None:
         _database_manager = DatabaseManager(config)
@@ -767,7 +794,8 @@ def get_database_manager(config: Optional[Dict[str, Any]] = None) -> DatabaseMan
 
 
 async def initialize_database_system(config: Optional[Dict[str, Any]] = None, force_reinit: bool = False) -> bool:
-    """Initialize the complete database system"""    try:
+    """Initialize the complete database system"""
+    try:
         manager = get_database_manager(config)
         return await manager.initialize(force_reinit=force_reinit)
     except Exception as e:
@@ -776,7 +804,8 @@ async def initialize_database_system(config: Optional[Dict[str, Any]] = None, fo
 
 
 async def health_check_all_components() -> Dict[str, Any]:
-    """Perform health check on all database components"""    try:
+    """Perform health check on all database components"""
+    try:
         manager = get_database_manager()
         return await manager.comprehensive_health_check()
     except Exception as e:
@@ -789,7 +818,8 @@ async def health_check_all_components() -> Dict[str, Any]:
 
 
 async def get_system_status() -> Dict[str, Any]:
-    """Get comprehensive system status"""    try:
+    """Get comprehensive system status"""
+    try:
         manager = get_database_manager()
         return await manager.get_system_status()
     except Exception as e:
@@ -798,7 +828,8 @@ async def get_system_status() -> Dict[str, Any]:
 
 
 async def emergency_shutdown():
-    """Emergency shutdown of all database components"""    try:
+    """Emergency shutdown of all database components"""
+    try:
         global _database_manager
         if _database_manager:
             await _database_manager.emergency_shutdown()
@@ -808,7 +839,8 @@ async def emergency_shutdown():
 
 
 async def backup_all_databases(backup_type: BackupType = BackupType.FULL) -> Dict[str, Any]:
-    """Create backup of all databases"""    try:
+    """Create backup of all databases"""
+    try:
         manager = get_database_manager()
         return await manager.backup_all_databases(backup_type)
     except Exception as e:

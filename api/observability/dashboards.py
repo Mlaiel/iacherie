@@ -9,7 +9,8 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DevOps + Security
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, copying, or implementation without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import json
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
@@ -20,7 +21,8 @@ import logging
 
 
 class DashboardType(Enum):
-    """Dashboard types for different observability views."""    METRICS = "metrics"
+    """Dashboard types for different observability views."""
+    METRICS = "metrics"
     HEALTH = "health"
     ALERTS = "alerts"
     PERFORMANCE = "performance"
@@ -31,7 +33,8 @@ class DashboardType(Enum):
 
 
 class RefreshInterval(Enum):
-    """Dashboard refresh intervals."""    REAL_TIME = 1  # 1 second
+    """Dashboard refresh intervals."""
+    REAL_TIME = 1  # 1 second
     FAST = 5  # 5 seconds
     NORMAL = 30  # 30 seconds
     SLOW = 300  # 5 minutes
@@ -39,7 +42,8 @@ class RefreshInterval(Enum):
 
 @dataclass
 class DashboardWidget:
-    """Dashboard widget definition."""    id: str
+    """Dashboard widget definition."""
+    id: str
     title: str
     type: str  # chart, metric, table, status, etc.
     data_source: str
@@ -50,14 +54,16 @@ class DashboardWidget:
     enabled: bool = True
 
     def to_dict(self) -> Dict:
-        """Convert to dictionary."""        data = asdict(self)
+        """Convert to dictionary."""
+        data = asdict(self)
         data['refresh_interval'] = self.refresh_interval.value
         return data
 
 
 @dataclass
 class Dashboard:
-    """Dashboard configuration."""    id: str
+    """Dashboard configuration."""
+    id: str
     name: str
     description: str
     dashboard_type: DashboardType
@@ -69,7 +75,8 @@ class Dashboard:
     public: bool = False
     
     def to_dict(self) -> Dict:
-        """Convert to dictionary."""        data = asdict(self)
+        """Convert to dictionary."""
+        data = asdict(self)
         data['dashboard_type'] = self.dashboard_type.value
         data['widgets'] = [w.to_dict() for w in self.widgets]
         data['created_at'] = self.created_at.isoformat()
@@ -78,7 +85,8 @@ class Dashboard:
 
 
 class MetricsDashboard:
-    """Real-time metrics dashboard for system and business metrics."""    
+    """Real-time metrics dashboard for system and business metrics."""
+    
     def __init__(self, metrics_collector, performance_monitor):
         self.metrics_collector = metrics_collector
         self.performance_monitor = performance_monitor
@@ -88,7 +96,8 @@ class MetricsDashboard:
         self.dashboard = self._create_metrics_dashboard()
     
     def _create_metrics_dashboard(self) -> Dashboard:
-        """Create the main metrics dashboard."""        widgets = [
+        """Create the main metrics dashboard."""
+        widgets = [
             # System Metrics Row
             DashboardWidget(
                 id="cpu_usage",
@@ -220,7 +229,8 @@ class MetricsDashboard:
         )
     
     async def get_dashboard_data(self) -> Dict:
-        """Get all data for the metrics dashboard."""        data = {}
+        """Get all data for the metrics dashboard."""
+        data = {}
         
         # Get system metrics
         system_metrics = self.metrics_collector.get_system_metrics()
@@ -251,13 +261,15 @@ class MetricsDashboard:
         }
     
     def _calculate_success_rate(self) -> float:
-        """Calculate upload success rate."""        # Mock calculation - in reality would use actual metrics
+        """Calculate upload success rate."""
+        # Mock calculation - in reality would use actual metrics
         success_count = self.metrics_collector.counters.get("content.uploads.success", 0)
         total_count = self.metrics_collector.counters.get("content.uploads.total", 1)
         return (success_count / total_count) * 100 if total_count > 0 else 100.0
     
     async def _get_processing_times_trend(self) -> Dict:
-        """Get processing times trend data."""        # Mock trend data - in reality would query time series data
+        """Get processing times trend data."""
+        # Mock trend data - in reality would query time series data
         now = datetime.utcnow()
         hours = [(now - timedelta(hours=i)).isoformat() for i in range(23, -1, -1)]
         
@@ -271,7 +283,8 @@ class MetricsDashboard:
         }
     
     async def _get_recent_activity(self) -> List[Dict]:
-        """Get recent activity feed."""        # Mock activity data
+        """Get recent activity feed."""
+        # Mock activity data
         activities = [
             {
                 "timestamp": (datetime.utcnow() - timedelta(minutes=i)).isoformat(),
@@ -285,7 +298,8 @@ class MetricsDashboard:
 
 
 class HealthDashboard:
-    """System health and service status dashboard."""    
+    """System health and service status dashboard."""
+    
     def __init__(self, health_checker, system_monitor):
         self.health_checker = health_checker
         self.system_monitor = system_monitor
@@ -294,7 +308,8 @@ class HealthDashboard:
         self.dashboard = self._create_health_dashboard()
     
     def _create_health_dashboard(self) -> Dashboard:
-        """Create the health monitoring dashboard."""        widgets = [
+        """Create the health monitoring dashboard."""
+        widgets = [
             # Overall Health Status
             DashboardWidget(
                 id="overall_health",
@@ -389,7 +404,8 @@ class HealthDashboard:
         )
     
     async def get_dashboard_data(self) -> Dict:
-        """Get all data for the health dashboard."""        # Run health checks
+        """Get all data for the health dashboard."""
+        # Run health checks
         health_results = await self.health_checker.run_all_checks()
         
         # Get system metrics
@@ -410,7 +426,8 @@ class HealthDashboard:
         }
     
     def _format_service_health(self, health_checks: Dict) -> List[Dict]:
-        """Format service health data for grid display."""        services = []
+        """Format service health data for grid display."""
+        services = []
         
         for service_name, check_result in health_checks.items():
             services.append({
@@ -424,7 +441,8 @@ class HealthDashboard:
         return services
     
     def _extract_response_times(self, health_checks: Dict) -> Dict:
-        """Extract response times for chart display."""        response_times = {}
+        """Extract response times for chart display."""
+        response_times = {}
         
         for service_name, check_result in health_checks.items():
             response_times[service_name] = check_result.get("response_time_ms", 0)
@@ -432,7 +450,8 @@ class HealthDashboard:
         return response_times
     
     async def _get_health_history(self) -> List[Dict]:
-        """Get health check history for timeline."""        # Mock history data - in reality would query stored health check results
+        """Get health check history for timeline."""
+        # Mock history data - in reality would query stored health check results
         history = []
         now = datetime.utcnow()
         
@@ -449,7 +468,8 @@ class HealthDashboard:
 
 
 class AlertDashboard:
-    """Alert monitoring and management dashboard."""    
+    """Alert monitoring and management dashboard."""
+    
     def __init__(self, alert_manager):
         self.alert_manager = alert_manager
         self.dashboard_id = "alerts_main"
@@ -457,7 +477,8 @@ class AlertDashboard:
         self.dashboard = self._create_alert_dashboard()
     
     def _create_alert_dashboard(self) -> Dashboard:
-        """Create the alert monitoring dashboard."""        widgets = [
+        """Create the alert monitoring dashboard."""
+        widgets = [
             # Alert Summary
             DashboardWidget(
                 id="alert_summary",
@@ -536,7 +557,8 @@ class AlertDashboard:
         )
     
     async def get_dashboard_data(self) -> Dict:
-        """Get all data for the alert dashboard."""        # Get alert summary
+        """Get all data for the alert dashboard."""
+        # Get alert summary
         alert_summary = self.alert_manager.get_alert_summary()
         
         # Get active alerts
@@ -556,7 +578,8 @@ class AlertDashboard:
         }
     
     async def _get_alert_trends(self) -> Dict:
-        """Get alert trends over time."""        # Mock trend data
+        """Get alert trends over time."""
+        # Mock trend data
         now = datetime.utcnow()
         hours = [(now - timedelta(hours=i)).isoformat() for i in range(23, -1, -1)]
         
@@ -570,7 +593,8 @@ class AlertDashboard:
         }
     
     async def _get_top_alert_rules(self) -> List[Dict]:
-        """Get most frequently triggered alert rules."""        # Mock data - in reality would query alert history
+        """Get most frequently triggered alert rules."""
+        # Mock data - in reality would query alert history
         return [
             {"rule_name": "cpu_usage_high", "trigger_count": 15},
             {"rule_name": "memory_usage_high", "trigger_count": 12},
@@ -581,7 +605,8 @@ class AlertDashboard:
 
 
 class DashboardManager:
-    """Manages multiple dashboards and provides unified access."""    
+    """Manages multiple dashboards and provides unified access."""
+    
     def __init__(self, 
                  metrics_collector=None,
                  health_checker=None,
@@ -611,7 +636,8 @@ class DashboardManager:
             }
     
     async def get_dashboard(self, dashboard_id: str) -> Optional[Dict]:
-        """Get dashboard configuration and data."""        if dashboard_id not in self.dashboard_registry:
+        """Get dashboard configuration and data."""
+        if dashboard_id not in self.dashboard_registry:
             return None
         
         dashboard_info = self.dashboard_registry[dashboard_id]
@@ -620,7 +646,8 @@ class DashboardManager:
         return await dashboard_instance.get_dashboard_data()
     
     def list_dashboards(self) -> List[Dict]:
-        """List all available dashboards."""        return [
+        """List all available dashboards."""
+        return [
             {
                 "id": info["dashboard"].id,
                 "name": info["dashboard"].name,
@@ -633,7 +660,8 @@ class DashboardManager:
         ]
     
     async def get_dashboard_widget_data(self, dashboard_id: str, widget_id: str) -> Optional[Dict]:
-        """Get data for a specific widget."""        if dashboard_id not in self.dashboard_registry:
+        """Get data for a specific widget."""
+        if dashboard_id not in self.dashboard_registry:
             return None
         
         dashboard_data = await self.get_dashboard(dashboard_id)
@@ -661,13 +689,15 @@ class DashboardManager:
         }
     
     def get_dashboard_config(self, dashboard_id: str) -> Optional[Dict]:
-        """Get dashboard configuration only (no data)."""        if dashboard_id not in self.dashboard_registry:
+        """Get dashboard configuration only (no data)."""
+        if dashboard_id not in self.dashboard_registry:
             return None
         
         return self.dashboard_registry[dashboard_id]["dashboard"].to_dict()
     
     async def refresh_all_dashboards(self) -> Dict[str, Dict]:
-        """Refresh data for all dashboards."""        refreshed_data = {}
+        """Refresh data for all dashboards."""
+        refreshed_data = {}
         
         for dashboard_id in self.dashboard_registry:
             try:

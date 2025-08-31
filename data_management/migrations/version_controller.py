@@ -15,7 +15,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This version control system is protected intellectual property.
 Contact mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import hashlib
@@ -36,7 +37,8 @@ logger = logging.getLogger(__name__)
 
 
 class VersionStrategy(Enum):
-    """Database version control strategies"""    SEMANTIC = "semantic"        # Semantic versioning (x.y.z)
+    """Database version control strategies"""
+    SEMANTIC = "semantic"        # Semantic versioning (x.y.z)
     TIMESTAMP = "timestamp"      # Timestamp-based versioning
     SEQUENTIAL = "sequential"    # Sequential numbering
     BRANCH = "branch"           # Git-like branching
@@ -44,7 +46,8 @@ class VersionStrategy(Enum):
 
 
 class VersionType(Enum):
-    """Types of version changes"""    MAJOR = "major"              # Breaking changes
+    """Types of version changes"""
+    MAJOR = "major"              # Breaking changes
     MINOR = "minor"              # Feature additions
     PATCH = "patch"              # Bug fixes
     HOTFIX = "hotfix"           # Emergency fixes
@@ -53,7 +56,8 @@ class VersionType(Enum):
 
 
 class VersionStatus(Enum):
-    """Version status tracking"""    DRAFT = "draft"              # In development
+    """Version status tracking"""
+    DRAFT = "draft"              # In development
     PENDING = "pending"          # Ready for deployment
     ACTIVE = "active"            # Currently deployed
     DEPRECATED = "deprecated"    # No longer recommended
@@ -62,7 +66,8 @@ class VersionStatus(Enum):
 
 @dataclass
 class VersionInfo:
-    """Version information structure"""    version_id: str
+    """Version information structure"""
+    version_id: str
     version_number: str
     version_type: VersionType
     status: VersionStatus
@@ -77,7 +82,8 @@ class VersionInfo:
 
 @dataclass
 class VersionBranch:
-    """Version branch information"""    branch_id: str
+    """Version branch information"""
+    branch_id: str
     branch_name: str
     parent_version: str
     created_at: datetime
@@ -90,7 +96,8 @@ class VersionBranch:
 
 @dataclass
 class VersionConflict:
-    """Version conflict detection"""    conflict_id: str
+    """Version conflict detection"""
+    conflict_id: str
     version_a: str
     version_b: str
     conflict_type: str
@@ -101,7 +108,8 @@ class VersionConflict:
 
 @dataclass
 class VersionChangeSet:
-    """Set of changes in a version"""    changeset_id: str
+    """Set of changes in a version"""
+    changeset_id: str
     version_id: str
     change_type: str  # schema, data, index, constraint
     target_object: str
@@ -114,7 +122,8 @@ class VersionChangeSet:
 
 
 class VersionController:
-    """    Enterprise-grade database version control system
+    """
+    Enterprise-grade database version control system
     
     Provides comprehensive version management for:
     - Content protection schema evolution
@@ -122,7 +131,8 @@ class VersionController:
     - Creator monetization schema updates
     - Platform integration version synchronization
     - Multi-tenant schema versioning
-    """    
+    """
+    
     def __init__(self, 
                  database_url: str,
                  strategy: VersionStrategy = VersionStrategy.SEMANTIC,
@@ -144,7 +154,8 @@ class VersionController:
                            description: str,
                            changelog: List[str],
                            author: str = "system") -> VersionInfo:
-        """        Create new database version
+        """
+        Create new database version
         
         Args:
             version_type: Type of version change
@@ -154,7 +165,8 @@ class VersionController:
             
         Returns:
             Created version information
-        """        # Generate version number based on strategy
+        """
+        # Generate version number based on strategy
         current_version = await self._get_current_version()
         new_version_number = await self._generate_version_number(current_version, version_type)
         
@@ -178,14 +190,16 @@ class VersionController:
         return version_info
         
     async def apply_version(self, version_id: str) -> bool:
-        """        Apply database version
+        """
+        Apply database version
         
         Args:
             version_id: Version to apply
             
         Returns:
             True if successful, False otherwise
-        """        if version_id not in self.versions:
+        """
+        if version_id not in self.versions:
             version_info = await self._load_version_info(version_id)
             if not version_info:
                 raise ValueError(f"Version not found: {version_id}")
@@ -231,14 +245,16 @@ class VersionController:
             return False
             
     async def rollback_version(self, target_version: str) -> bool:
-        """        Rollback to specific version
+        """
+        Rollback to specific version
         
         Args:
             target_version: Version to rollback to
             
         Returns:
             True if successful, False otherwise
-        """        logger.info(f"Rolling back to version: {target_version}")
+        """
+        logger.info(f"Rolling back to version: {target_version}")
         
         try:
             # Get current version
@@ -276,7 +292,8 @@ class VersionController:
                           parent_version: str,
                           description: str,
                           author: str = "system") -> VersionBranch:
-        """        Create version branch for parallel development
+        """
+        Create version branch for parallel development
         
         Args:
             branch_name: Name of the branch
@@ -286,7 +303,8 @@ class VersionController:
             
         Returns:
             Created branch information
-        """        branch = VersionBranch(
+        """
+        branch = VersionBranch(
             branch_id=f"branch_{int(datetime.now(timezone.utc).timestamp())}",
             branch_name=branch_name,
             parent_version=parent_version,
@@ -304,7 +322,8 @@ class VersionController:
     async def merge_branch(self, 
                          source_branch: str,
                          target_branch: str = "main") -> bool:
-        """        Merge version branch
+        """
+        Merge version branch
         
         Args:
             source_branch: Source branch to merge
@@ -312,7 +331,8 @@ class VersionController:
             
         Returns:
             True if successful, False otherwise
-        """        logger.info(f"Merging branch {source_branch} into {target_branch}")
+        """
+        logger.info(f"Merging branch {source_branch} into {target_branch}")
         
         try:
             # Get branch information
@@ -348,12 +368,15 @@ class VersionController:
             return False
             
     async def get_version_history(self) -> List[VersionInfo]:
-        """        Get complete version history
+        """
+        Get complete version history
         
         Returns:
             List of all versions in chronological order
-        """        async with self._get_session() as session:
-            query = text("""                SELECT version_id, version_number, version_type, status, 
+        """
+        async with self._get_session() as session:
+            query = text("""
+                SELECT version_id, version_number, version_type, status, 
                        created_at, created_by, description, changelog, 
                        dependencies, rollback_version, metadata
                 FROM version_history 
@@ -382,14 +405,16 @@ class VersionController:
             return versions
             
     async def validate_version_integrity(self, version_id: str) -> bool:
-        """        Validate version integrity and consistency
+        """
+        Validate version integrity and consistency
         
         Args:
             version_id: Version to validate
             
         Returns:
             True if valid, False otherwise
-        """        try:
+        """
+        try:
             # Get version changesets
             changesets = await self._get_version_changesets(version_id)
             
@@ -426,10 +451,12 @@ class VersionController:
             return False
             
     async def _initialize_version_tables(self) -> None:
-        """Initialize version control database tables"""        async with self._get_session() as session:
+        """Initialize version control database tables"""
+        async with self._get_session() as session:
             try:
                 # Version history table
-                await session.execute(text("""                    CREATE TABLE IF NOT EXISTS version_history (
+                await session.execute(text("""
+                    CREATE TABLE IF NOT EXISTS version_history (
                         version_id VARCHAR(100) PRIMARY KEY,
                         version_number VARCHAR(50) NOT NULL,
                         version_type VARCHAR(20) NOT NULL,
@@ -445,7 +472,8 @@ class VersionController:
                 """))
                 
                 # Version branches table
-                await session.execute(text("""                    CREATE TABLE IF NOT EXISTS version_branches (
+                await session.execute(text("""
+                    CREATE TABLE IF NOT EXISTS version_branches (
                         branch_id VARCHAR(100) PRIMARY KEY,
                         branch_name VARCHAR(100) NOT NULL,
                         parent_version VARCHAR(50) NOT NULL,
@@ -459,7 +487,8 @@ class VersionController:
                 """))
                 
                 # Version changesets table
-                await session.execute(text("""                    CREATE TABLE IF NOT EXISTS version_changesets (
+                await session.execute(text("""
+                    CREATE TABLE IF NOT EXISTS version_changesets (
                         changeset_id VARCHAR(100) PRIMARY KEY,
                         version_id VARCHAR(100) NOT NULL,
                         change_type VARCHAR(50) NOT NULL,
@@ -474,7 +503,8 @@ class VersionController:
                 """))
                 
                 # Version conflicts table
-                await session.execute(text("""                    CREATE TABLE IF NOT EXISTS version_conflicts (
+                await session.execute(text("""
+                    CREATE TABLE IF NOT EXISTS version_conflicts (
                         conflict_id VARCHAR(100) PRIMARY KEY,
                         version_a VARCHAR(50) NOT NULL,
                         version_b VARCHAR(50) NOT NULL,
@@ -495,7 +525,8 @@ class VersionController:
     async def _generate_version_number(self, 
                                      current_version: Optional[VersionInfo],
                                      version_type: VersionType) -> str:
-        """Generate next version number based on strategy"""        if self.strategy == VersionStrategy.SEMANTIC:
+        """Generate next version number based on strategy"""
+        if self.strategy == VersionStrategy.SEMANTIC:
             if not current_version:
                 return "1.0.0"
                 
@@ -532,8 +563,10 @@ class VersionController:
             return datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
             
     async def _get_current_version(self) -> Optional[VersionInfo]:
-        """Get current active version"""        async with self._get_session() as session:
-            query = text("""                SELECT version_id, version_number, version_type, status, 
+        """Get current active version"""
+        async with self._get_session() as session:
+            query = text("""
+                SELECT version_id, version_number, version_type, status, 
                        created_at, created_by, description
                 FROM version_history 
                 WHERE status = 'active' 
@@ -558,9 +591,11 @@ class VersionController:
         return None
         
     async def _store_version_info(self, version: VersionInfo) -> None:
-        """Store version information in database"""        async with self._get_session() as session:
+        """Store version information in database"""
+        async with self._get_session() as session:
             try:
-                insert_query = text("""                    INSERT INTO version_history 
+                insert_query = text("""
+                    INSERT INTO version_history 
                     (version_id, version_number, version_type, status, created_at, 
                      created_by, description, changelog, dependencies, rollback_version, metadata)
                     VALUES 
@@ -589,15 +624,18 @@ class VersionController:
                 logger.error(f"Failed to store version info: {e}")
                 
     async def _load_version_info(self, version_id: str) -> Optional[VersionInfo]:
-        """Load version information from database"""        # Implementation for loading version info
+        """Load version information from database"""
+        # Implementation for loading version info
         return None
         
     def _calculate_changeset_checksum(self, changeset: VersionChangeSet) -> str:
-        """Calculate checksum for changeset"""        content = f"{changeset.sql_forward}{changeset.sql_backward}{changeset.target_object}"
+        """Calculate checksum for changeset"""
+        content = f"{changeset.sql_forward}{changeset.sql_backward}{changeset.target_object}"
         return hashlib.sha256(content.encode()).hexdigest()
         
     async def _validate_sql_syntax(self, sql: str) -> bool:
-        """Validate SQL syntax"""        try:
+        """Validate SQL syntax"""
+        try:
             async with self._get_session() as session:
                 # Use EXPLAIN to validate syntax without executing
                 await session.execute(text(f"EXPLAIN {sql}"))
@@ -606,8 +644,10 @@ class VersionController:
             return False
             
     async def _version_exists(self, version_number: str) -> bool:
-        """Check if version exists"""        async with self._get_session() as session:
-            query = text("""                SELECT EXISTS (
+        """Check if version exists"""
+        async with self._get_session() as session:
+            query = text("""
+                SELECT EXISTS (
                     SELECT 1 FROM version_history 
                     WHERE version_number = :version_number
                 )
@@ -617,47 +657,62 @@ class VersionController:
             return result.scalar()
             
     async def _get_session(self) -> Session:
-        """Get database session"""        return self.session_maker()
+        """Get database session"""
+        return self.session_maker()
         
     # Placeholder methods for additional functionality
     async def _get_version_changesets(self, version_id: str) -> List[VersionChangeSet]:
-        """Get changesets for version"""        return []
+        """Get changesets for version"""
+        return []
         
     async def _detect_conflicts(self, changesets: List[VersionChangeSet]) -> List[VersionConflict]:
-        """Detect conflicts in changesets"""        return []
+        """Detect conflicts in changesets"""
+        return []
         
     async def _apply_changeset(self, session: Session, changeset: VersionChangeSet) -> None:
-        """Apply changeset to database"""        pass
+        """Apply changeset to database"""
+        pass
         
     async def _rollback_changeset(self, session: Session, changeset: VersionChangeSet) -> None:
-        """Rollback changeset from database"""        pass
+        """Rollback changeset from database"""
+        pass
         
     async def _update_version_status(self, version: VersionInfo) -> None:
-        """Update version status"""        pass
+        """Update version status"""
+        pass
         
     async def _record_version_application(self, version: VersionInfo) -> None:
-        """Record version application"""        pass
+        """Record version application"""
+        pass
         
     async def _rollback_to_version(self, version_number: str) -> None:
-        """Rollback to specific version"""        pass
+        """Rollback to specific version"""
+        pass
         
     async def _get_versions_between(self, start: str, end: str) -> List[VersionInfo]:
-        """Get versions between two version numbers"""        return []
+        """Get versions between two version numbers"""
+        return []
         
     async def _store_branch_info(self, branch: VersionBranch) -> None:
-        """Store branch information"""        pass
+        """Store branch information"""
+        pass
         
     async def _get_branch_info(self, branch_name: str) -> Optional[VersionBranch]:
-        """Get branch information"""        return None
+        """Get branch information"""
+        return None
         
     async def _detect_branch_conflicts(self, source: str, target: str) -> List[VersionConflict]:
-        """Detect conflicts between branches"""        return []
+        """Detect conflicts between branches"""
+        return []
         
     async def _get_branch_changesets(self, branch_name: str) -> List[VersionChangeSet]:
-        """Get changesets from branch"""        return []
+        """Get changesets from branch"""
+        return []
         
     async def _apply_changeset_to_branch(self, changeset: VersionChangeSet, branch: str) -> None:
-        """Apply changeset to branch"""        pass
+        """Apply changeset to branch"""
+        pass
         
     async def _update_branch_info(self, branch: VersionBranch) -> None:
-        """Update branch information"""        pass
+        """Update branch information"""
+        pass

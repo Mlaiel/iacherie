@@ -6,7 +6,8 @@ for backup data with key management and security features.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import base64
 import hashlib
@@ -29,21 +30,24 @@ from ...core.exceptions import EncryptionError
 
 
 class EncryptionAlgorithm(Enum):
-    """Encryption algorithm enumeration."""    AES_256_GCM = "aes_256_gcm"
+    """Encryption algorithm enumeration."""
+    AES_256_GCM = "aes_256_gcm"
     AES_256_CBC = "aes_256_cbc"
     CHACHA20_POLY1305 = "chacha20_poly1305"
     FERNET = "fernet"
 
 
 class KeyDerivationMethod(Enum):
-    """Key derivation method enumeration."""    PBKDF2 = "pbkdf2"
+    """Key derivation method enumeration."""
+    PBKDF2 = "pbkdf2"
     SCRYPT = "scrypt"
     ARGON2 = "argon2"
 
 
 @dataclass
 class EncryptionConfig:
-    """Encryption configuration."""    algorithm: EncryptionAlgorithm
+    """Encryption configuration."""
+    algorithm: EncryptionAlgorithm
     key_size: int
     key_derivation: KeyDerivationMethod
     iterations: int
@@ -56,7 +60,8 @@ class EncryptionConfig:
 
 @dataclass
 class EncryptionMetadata:
-    """Encryption operation metadata."""    algorithm: str
+    """Encryption operation metadata."""
+    algorithm: str
     key_id: str
     key_derivation_method: str
     iterations: int
@@ -71,23 +76,27 @@ class EncryptionMetadata:
 
 
 class BackupEncryption:
-    """    Enterprise backup encryption service with advanced security features.
+    """
+    Enterprise backup encryption service with advanced security features.
     
     Provides symmetric and asymmetric encryption, key derivation,
     integrity verification, and secure key management.
-    """    def __init__(
+    """
+    def __init__(
         self,
         master_key: Optional[str] = None,
         key_manager: Optional[KeyManager] = None,
         config: Optional[EncryptionConfig] = None
     ):
-        """        Initialize backup encryption service.
+        """
+        Initialize backup encryption service.
         
         Args:
             master_key: Master encryption key
             key_manager: Key management service
             config: Encryption configuration
-        """        self.logger = logging.getLogger(__name__)
+        """
+        self.logger = logging.getLogger(__name__)
         self.master_key = master_key
         self.key_manager = key_manager or KeyManager()
         self.config = config or self._get_default_config()
@@ -101,7 +110,8 @@ class BackupEncryption:
         self.backend = default_backend()
 
     def is_enabled(self) -> bool:
-        """Check if encryption is enabled."""        return self.master_key is not None
+        """Check if encryption is enabled."""
+        return self.master_key is not None
 
     async def encrypt_data(
         self,
@@ -109,7 +119,8 @@ class BackupEncryption:
         key_id: Optional[str] = None,
         algorithm: Optional[EncryptionAlgorithm] = None
     ) -> bytes:
-        """        Encrypt data with specified or default configuration.
+        """
+        Encrypt data with specified or default configuration.
         
         Args:
             data: Data to encrypt
@@ -118,7 +129,8 @@ class BackupEncryption:
             
         Returns:
             Encrypted data with metadata
-        """        if not self.is_enabled():
+        """
+        if not self.is_enabled():
             raise EncryptionError("Encryption not enabled - no master key provided")
         
         # Convert string to bytes if necessary
@@ -178,7 +190,8 @@ class BackupEncryption:
         encrypted_data: bytes,
         key_id: Optional[str] = None
     ) -> bytes:
-        """        Decrypt encrypted data.
+        """
+        Decrypt encrypted data.
         
         Args:
             encrypted_data: Encrypted data with metadata
@@ -186,7 +199,8 @@ class BackupEncryption:
             
         Returns:
             Decrypted data
-        """        if not self.is_enabled():
+        """
+        if not self.is_enabled():
             raise EncryptionError("Encryption not enabled - no master key provided")
         
         self.logger.info("Decrypting data...")
@@ -220,14 +234,16 @@ class BackupEncryption:
         return decrypted_data
 
     async def generate_key_pair(self, key_size: int = 2048) -> Tuple[bytes, bytes]:
-        """        Generate RSA key pair for asymmetric encryption.
+        """
+        Generate RSA key pair for asymmetric encryption.
         
         Args:
             key_size: RSA key size in bits
             
         Returns:
             Tuple of (private_key, public_key) in PEM format
-        """        self.logger.info(f"Generating RSA key pair: {key_size} bits")
+        """
+        self.logger.info(f"Generating RSA key pair: {key_size} bits")
         
         # Generate private key
         private_key = rsa.generate_private_key(
@@ -258,7 +274,8 @@ class BackupEncryption:
         data: bytes,
         public_key_pem: bytes
     ) -> bytes:
-        """        Encrypt data using RSA public key.
+        """
+        Encrypt data using RSA public key.
         
         Args:
             data: Data to encrypt
@@ -266,7 +283,8 @@ class BackupEncryption:
             
         Returns:
             Encrypted data
-        """        # Load public key
+        """
+        # Load public key
         public_key = serialization.load_pem_public_key(
             public_key_pem,
             backend=self.backend
@@ -289,7 +307,8 @@ class BackupEncryption:
         encrypted_data: bytes,
         private_key_pem: bytes
     ) -> bytes:
-        """        Decrypt data using RSA private key.
+        """
+        Decrypt data using RSA private key.
         
         Args:
             encrypted_data: Encrypted data
@@ -297,7 +316,8 @@ class BackupEncryption:
             
         Returns:
             Decrypted data
-        """        # Load private key
+        """
+        # Load private key
         private_key = serialization.load_pem_private_key(
             private_key_pem,
             password=None,
@@ -317,7 +337,8 @@ class BackupEncryption:
         return decrypted
 
     async def rotate_encryption_key(self, old_key_id: str, new_key_id: str) -> bool:
-        """        Rotate encryption key for existing encrypted data.
+        """
+        Rotate encryption key for existing encrypted data.
         
         Args:
             old_key_id: Current key identifier
@@ -325,7 +346,8 @@ class BackupEncryption:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             self.logger.info(f"Rotating encryption key: {old_key_id} -> {new_key_id}")
             
             # Generate new key
@@ -345,11 +367,13 @@ class BackupEncryption:
             return False
 
     async def get_encryption_statistics(self) -> Dict[str, Any]:
-        """        Get encryption statistics and metrics.
+        """
+        Get encryption statistics and metrics.
         
         Returns:
             Encryption statistics
-        """        return {
+        """
+        return {
             "encryption_enabled": self.is_enabled(),
             "default_algorithm": self.config.algorithm.value,
             "key_derivation_method": self.config.key_derivation.value,
@@ -366,14 +390,16 @@ class BackupEncryption:
         }
 
     async def verify_encryption_integrity(self, encrypted_data: bytes) -> bool:
-        """        Verify integrity of encrypted data without decryption.
+        """
+        Verify integrity of encrypted data without decryption.
         
         Args:
             encrypted_data: Encrypted data to verify
             
         Returns:
             Integrity status
-        """        try:
+        """
+        try:
             # Unpackage to get metadata
             _, metadata = await self._unpackage_encrypted_data(encrypted_data)
             
@@ -398,7 +424,8 @@ class BackupEncryption:
             return False
 
     async def _derive_key(self, salt: bytes, key_id: str) -> bytes:
-        """Derive encryption key from master key and salt."""        # Check cache first
+        """Derive encryption key from master key and salt."""
+        # Check cache first
         cache_key = f"{key_id}:{base64.b64encode(salt).decode()}"
         if cache_key in self.key_cache:
             key, cached_at = self.key_cache[cache_key]
@@ -434,7 +461,8 @@ class BackupEncryption:
         iv: bytes,
         algorithm: EncryptionAlgorithm
     ) -> Tuple[bytes, Optional[bytes]]:
-        """Encrypt data with specified algorithm."""        if algorithm == EncryptionAlgorithm.AES_256_GCM:
+        """Encrypt data with specified algorithm."""
+        if algorithm == EncryptionAlgorithm.AES_256_GCM:
             return await self._encrypt_aes_gcm(data, key, iv)
         elif algorithm == EncryptionAlgorithm.AES_256_CBC:
             return await self._encrypt_aes_cbc(data, key, iv)
@@ -453,7 +481,8 @@ class BackupEncryption:
         algorithm: EncryptionAlgorithm,
         tag: Optional[bytes] = None
     ) -> bytes:
-        """Decrypt data with specified algorithm."""        if algorithm == EncryptionAlgorithm.AES_256_GCM:
+        """Decrypt data with specified algorithm."""
+        if algorithm == EncryptionAlgorithm.AES_256_GCM:
             return await self._decrypt_aes_gcm(data, key, iv, tag)
         elif algorithm == EncryptionAlgorithm.AES_256_CBC:
             return await self._decrypt_aes_cbc(data, key, iv)
@@ -465,7 +494,8 @@ class BackupEncryption:
             raise EncryptionError(f"Unsupported encryption algorithm: {algorithm}")
 
     async def _encrypt_aes_gcm(self, data: bytes, key: bytes, iv: bytes) -> Tuple[bytes, bytes]:
-        """Encrypt using AES-256-GCM."""        cipher = Cipher(
+        """Encrypt using AES-256-GCM."""
+        cipher = Cipher(
             algorithms.AES(key),
             modes.GCM(iv),
             backend=self.backend
@@ -476,7 +506,8 @@ class BackupEncryption:
         return ciphertext, encryptor.tag
 
     async def _decrypt_aes_gcm(self, data: bytes, key: bytes, iv: bytes, tag: bytes) -> bytes:
-        """Decrypt using AES-256-GCM."""        cipher = Cipher(
+        """Decrypt using AES-256-GCM."""
+        cipher = Cipher(
             algorithms.AES(key),
             modes.GCM(iv, tag),
             backend=self.backend
@@ -486,7 +517,8 @@ class BackupEncryption:
         return decryptor.update(data) + decryptor.finalize()
 
     async def _encrypt_aes_cbc(self, data: bytes, key: bytes, iv: bytes) -> Tuple[bytes, None]:
-        """Encrypt using AES-256-CBC."""        # Pad data to block size
+        """Encrypt using AES-256-CBC."""
+        # Pad data to block size
         from cryptography.hazmat.primitives import padding
         padder = padding.PKCS7(128).padder()
         padded_data = padder.update(data) + padder.finalize()
@@ -502,7 +534,8 @@ class BackupEncryption:
         return ciphertext, None
 
     async def _decrypt_aes_cbc(self, data: bytes, key: bytes, iv: bytes) -> bytes:
-        """Decrypt using AES-256-CBC."""        cipher = Cipher(
+        """Decrypt using AES-256-CBC."""
+        cipher = Cipher(
             algorithms.AES(key),
             modes.CBC(iv),
             backend=self.backend
@@ -517,7 +550,8 @@ class BackupEncryption:
         return unpadder.update(padded_data) + unpadder.finalize()
 
     async def _encrypt_chacha20(self, data: bytes, key: bytes, nonce: bytes) -> Tuple[bytes, bytes]:
-        """Encrypt using ChaCha20-Poly1305."""        from cryptography.hazmat.primitives.ciphers.aead import ChaCha20Poly1305
+        """Encrypt using ChaCha20-Poly1305."""
+        from cryptography.hazmat.primitives.ciphers.aead import ChaCha20Poly1305
         
         chacha = ChaCha20Poly1305(key)
         # ChaCha20Poly1305 returns ciphertext with tag appended
@@ -530,7 +564,8 @@ class BackupEncryption:
         return ciphertext, tag
 
     async def _decrypt_chacha20(self, data: bytes, key: bytes, nonce: bytes, tag: bytes) -> bytes:
-        """Decrypt using ChaCha20-Poly1305."""        from cryptography.hazmat.primitives.ciphers.aead import ChaCha20Poly1305
+        """Decrypt using ChaCha20-Poly1305."""
+        from cryptography.hazmat.primitives.ciphers.aead import ChaCha20Poly1305
         
         chacha = ChaCha20Poly1305(key)
         # Reconstruct encrypted data with tag
@@ -539,7 +574,8 @@ class BackupEncryption:
         return chacha.decrypt(nonce, encrypted_with_tag, None)
 
     async def _encrypt_fernet(self, data: bytes, key: bytes) -> Tuple[bytes, None]:
-        """Encrypt using Fernet."""        # Fernet requires base64-encoded key
+        """Encrypt using Fernet."""
+        # Fernet requires base64-encoded key
         fernet_key = base64.urlsafe_b64encode(key)
         f = Fernet(fernet_key)
         
@@ -547,18 +583,21 @@ class BackupEncryption:
         return encrypted, None
 
     async def _decrypt_fernet(self, data: bytes, key: bytes) -> bytes:
-        """Decrypt using Fernet."""        # Fernet requires base64-encoded key
+        """Decrypt using Fernet."""
+        # Fernet requires base64-encoded key
         fernet_key = base64.urlsafe_b64encode(key)
         f = Fernet(fernet_key)
         
         return f.decrypt(data)
 
     async def _compress_data(self, data: bytes) -> bytes:
-        """Compress data using gzip."""        import gzip
+        """Compress data using gzip."""
+        import gzip
         return gzip.compress(data, compresslevel=6)
 
     async def _decompress_data(self, data: bytes) -> bytes:
-        """Decompress gzip-compressed data."""        import gzip
+        """Decompress gzip-compressed data."""
+        import gzip
         return gzip.decompress(data)
 
     async def _package_encrypted_data(
@@ -566,7 +605,8 @@ class BackupEncryption:
         encrypted_data: bytes,
         metadata: EncryptionMetadata
     ) -> bytes:
-        """Package encrypted data with metadata."""        # Convert metadata to dict
+        """Package encrypted data with metadata."""
+        # Convert metadata to dict
         metadata_dict = {
             "algorithm": metadata.algorithm,
             "key_id": metadata.key_id,
@@ -599,7 +639,8 @@ class BackupEncryption:
         self,
         packaged_data: bytes
     ) -> Tuple[bytes, EncryptionMetadata]:
-        """Unpackage encrypted data and extract metadata."""        if len(packaged_data) < 4:
+        """Unpackage encrypted data and extract metadata."""
+        if len(packaged_data) < 4:
             raise EncryptionError("Invalid packaged data format")
         
         # Extract metadata length
@@ -634,7 +675,8 @@ class BackupEncryption:
         return encrypted_data, metadata
 
     def _get_default_config(self) -> EncryptionConfig:
-        """Get default encryption configuration."""        return EncryptionConfig(
+        """Get default encryption configuration."""
+        return EncryptionConfig(
             algorithm=EncryptionAlgorithm.AES_256_GCM,
             key_size=32,  # 256 bits
             key_derivation=KeyDerivationMethod.PBKDF2,

@@ -1,4 +1,5 @@
-"""Rights anchoring on blockchain for permanent proof of ownership."""import hashlib
+"""Rights anchoring on blockchain for permanent proof of ownership."""
+import hashlib
 import json
 from typing import Dict, List
 from datetime import datetime
@@ -11,7 +12,8 @@ class RightsAnchor:
         self.anchor_contract = None  # Would point to rights anchoring contract
 
     def create_rights_proof(self, content_info: Dict, creator_info: Dict) -> Dict:
-        """Create cryptographic proof of content rights."""        # Create rights claim document
+        """Create cryptographic proof of content rights."""
+        # Create rights claim document
         rights_claim = {
             "content_id": content_info.get("id"),
             "title": content_info.get("title"),
@@ -38,7 +40,8 @@ class RightsAnchor:
         return proof
 
     def anchor_rights_onchain(self, rights_proof: Dict) -> Dict:
-        """Anchor rights proof on blockchain (simulation)."""        # In reality, this would submit to actual blockchain
+        """Anchor rights proof on blockchain (simulation)."""
+        # In reality, this would submit to actual blockchain
         rights_hash = rights_proof["rights_hash"]
         
         # Simulate blockchain transaction
@@ -63,7 +66,8 @@ class RightsAnchor:
         return anchoring_result
 
     def verify_rights_chain(self, rights_hash: str) -> Dict:
-        """Verify rights proof exists on blockchain."""        # Mock verification - would query actual blockchain
+        """Verify rights proof exists on blockchain."""
+        # Mock verification - would query actual blockchain
         return {
             "rights_hash": rights_hash,
             "found_onchain": True,
@@ -75,7 +79,8 @@ class RightsAnchor:
         }
 
     def generate_certificate(self, rights_proof: Dict, anchor_result: Dict) -> Dict:
-        """Generate digital certificate of rights ownership."""        certificate = {
+        """Generate digital certificate of rights ownership."""
+        certificate = {
             "certificate_id": f"CERT_{rights_proof['rights_hash'][:16]}",
             "certificate_type": "Content Rights Ownership",
             "issued_at": datetime.utcnow().isoformat(),
@@ -106,7 +111,8 @@ class RightsAnchor:
         return certificate
 
     def create_license_agreement(self, rights_info: Dict, license_terms: Dict) -> Dict:
-        """Create blockchain-anchored license agreement."""        license_agreement = {
+        """Create blockchain-anchored license agreement."""
+        license_agreement = {
             "license_id": f"LIC_{hashlib.sha256(f'{rights_info}_{datetime.utcnow()}'.encode()).hexdigest()[:16]}",
             "content_rights_hash": rights_info.get("rights_hash"),
             "licensor": rights_info["rights_claim"]["creator_name"],
@@ -126,7 +132,8 @@ class RightsAnchor:
         return license_agreement
 
     def batch_anchor_rights(self, rights_proofs: List[Dict]) -> Dict:
-        """Batch anchor multiple rights proofs for efficiency."""        # Create merkle tree of rights hashes for batch anchoring
+        """Batch anchor multiple rights proofs for efficiency."""
+        # Create merkle tree of rights hashes for batch anchoring
         rights_hashes = [proof["rights_hash"] for proof in rights_proofs]
         
         # Simple merkle root calculation (in reality would use proper merkle tree)

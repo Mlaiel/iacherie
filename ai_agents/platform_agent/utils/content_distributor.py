@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 from typing import Dict, List, Optional, Any, Union, Tuple, AsyncGenerator
 from datetime import datetime, timedelta
 from enum import Enum
@@ -60,7 +61,8 @@ from ...utils.quality_analyzer import QualityAnalyzer
 
 
 class ContentType(Enum):
-    """Supported content types for distribution"""    AUDIO = "audio"
+    """Supported content types for distribution"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -74,7 +76,8 @@ class ContentType(Enum):
 
 
 class OptimizationLevel(Enum):
-    """Content optimization levels"""    BASIC = "basic"
+    """Content optimization levels"""
+    BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
     ENTERPRISE = "enterprise"
@@ -82,7 +85,8 @@ class OptimizationLevel(Enum):
 
 
 class DistributionStrategy(Enum):
-    """Distribution strategies for content"""    IMMEDIATE = "immediate"
+    """Distribution strategies for content"""
+    IMMEDIATE = "immediate"
     SCHEDULED = "scheduled"
     OPTIMIZED_TIMING = "optimized_timing"
     STAGGERED = "staggered"
@@ -92,7 +96,8 @@ class DistributionStrategy(Enum):
 
 @dataclass
 class PlatformSpecification:
-    """Platform-specific content specifications"""    platform: PlatformType
+    """Platform-specific content specifications"""
+    platform: PlatformType
     max_file_size: int  # in MB
     supported_formats: List[str]
     max_duration: Optional[int] = None  # in seconds
@@ -109,7 +114,8 @@ class PlatformSpecification:
 
 @dataclass
 class DistributionConfig:
-    """Configuration for content distribution"""    target_platforms: List[PlatformType]
+    """Configuration for content distribution"""
+    target_platforms: List[PlatformType]
     strategy: DistributionStrategy = DistributionStrategy.IMMEDIATE
     optimization_level: OptimizationLevel = OptimizationLevel.ADVANCED
     enable_ai_enhancement: bool = True
@@ -128,7 +134,8 @@ class DistributionConfig:
 
 @dataclass
 class ContentMetadata:
-    """Extended content metadata for optimization"""    title: str
+    """Extended content metadata for optimization"""
+    title: str
     description: str
     tags: List[str]
     category: str
@@ -146,11 +153,13 @@ class ContentMetadata:
 
 
 class ContentDistributor:
-    """    Advanced Content Distributor - Intelligent Multi-Platform Distribution Engine
+    """
+    Advanced Content Distributor - Intelligent Multi-Platform Distribution Engine
     
     Provides comprehensive content distribution with AI-powered optimization,
     format adaptation, and intelligent scheduling across all platforms.
-    """    
+    """
+    
     def __init__(self, platform_connector: PlatformConnector):
         self.platform_connector = platform_connector
         self.ai_optimizer = AIContentOptimizer()
@@ -183,7 +192,8 @@ class ContentDistributor:
         self.logger = logging.getLogger(f"{__name__}.ContentDistributor")
 
     async def initialize(self) -> bool:
-        """Initialize content distributor and all services"""        try:
+        """Initialize content distributor and all services"""
+        try:
             # Initialize AI services
             await self.ai_optimizer.initialize()
             await self.image_processor.initialize()
@@ -209,7 +219,8 @@ class ContentDistributor:
             return False
 
     def _initialize_platform_specifications(self) -> Dict[PlatformType, PlatformSpecification]:
-        """Initialize platform-specific content specifications"""        return {
+        """Initialize platform-specific content specifications"""
+        return {
             PlatformType.SPOTIFY: PlatformSpecification(
                 platform=PlatformType.SPOTIFY,
                 max_file_size=200,  # MB
@@ -288,7 +299,8 @@ class ContentDistributor:
         distribution_config: DistributionConfig,
         user_id: str
     ) -> Dict[str, Any]:
-        """        Main content distribution method with comprehensive optimization
+        """
+        Main content distribution method with comprehensive optimization
         
         Args:
             content_item: Content to distribute
@@ -297,7 +309,8 @@ class ContentDistributor:
             
         Returns:
             Comprehensive distribution results
-        """        distribution_id = str(uuid.uuid4())
+        """
+        distribution_id = str(uuid.uuid4())
         
         try:
             self.logger.info(f"Starting content distribution: {distribution_id}")
@@ -364,7 +377,8 @@ class ContentDistributor:
             raise
 
     async def _enhance_content_with_ai(self, content_item: ContentItem) -> ContentItem:
-        """Apply AI-powered content enhancement"""        try:
+        """Apply AI-powered content enhancement"""
+        try:
             enhanced_content = content_item.copy()
             
             # Content type specific enhancement
@@ -387,7 +401,8 @@ class ContentDistributor:
             return content_item
 
     async def _enhance_image_content(self, content: ContentItem) -> ContentItem:
-        """AI-powered image enhancement"""        enhanced_content = content.copy()
+        """AI-powered image enhancement"""
+        enhanced_content = content.copy()
         
         # Load image
         image_path = content.media_files[0].file_path
@@ -419,7 +434,8 @@ class ContentDistributor:
         return enhanced_content
 
     async def _enhance_video_content(self, content: ContentItem) -> ContentItem:
-        """AI-powered video enhancement"""        enhanced_content = content.copy()
+        """AI-powered video enhancement"""
+        enhanced_content = content.copy()
         
         video_path = content.media_files[0].file_path
         
@@ -459,7 +475,8 @@ class ContentDistributor:
         return enhanced_content
 
     async def _enhance_audio_content(self, content: ContentItem) -> ContentItem:
-        """AI-powered audio enhancement"""        enhanced_content = content.copy()
+        """AI-powered audio enhancement"""
+        enhanced_content = content.copy()
         
         audio_path = content.media_files[0].file_path
         
@@ -501,7 +518,8 @@ class ContentDistributor:
         target_platforms: List[PlatformType],
         optimization_level: OptimizationLevel
     ) -> Dict[PlatformType, OptimizedContent]:
-        """Optimize content for each target platform"""        optimized_content = {}
+        """Optimize content for each target platform"""
+        optimized_content = {}
         
         for platform in target_platforms:
             try:
@@ -528,7 +546,8 @@ class ContentDistributor:
         specs: PlatformSpecification,
         optimization_level: OptimizationLevel
     ) -> OptimizedContent:
-        """Optimize content for a specific platform"""        
+        """Optimize content for a specific platform"""
+        
         # Format conversion if needed
         if content.content_type == ContentType.VIDEO:
             optimized_media = await self._optimize_video_for_platform(content, specs)
@@ -568,7 +587,8 @@ class ContentDistributor:
         distribution_id: str,
         user_id: str
     ) -> Dict[PlatformType, DistributionResult]:
-        """Execute the chosen distribution strategy"""        
+        """Execute the chosen distribution strategy"""
+        
         match config.strategy:
             case DistributionStrategy.IMMEDIATE:
                 return await self._execute_immediate_distribution(
@@ -604,7 +624,8 @@ class ContentDistributor:
         optimized_content: Dict[PlatformType, OptimizedContent],
         user_id: str
     ) -> Dict[PlatformType, DistributionResult]:
-        """Execute immediate distribution to all platforms"""        distribution_tasks = []
+        """Execute immediate distribution to all platforms"""
+        distribution_tasks = []
         
         for platform, content in optimized_content.items():
             task = asyncio.create_task(
@@ -634,7 +655,8 @@ class ContentDistributor:
         content: OptimizedContent,
         user_id: str
     ) -> DistributionResult:
-        """Upload optimized content to specific platform"""        try:
+        """Upload optimized content to specific platform"""
+        try:
             # Get platform connector
             connector = await self.platform_connector.get_connector(platform)
             
@@ -669,7 +691,8 @@ class ContentDistributor:
             )
 
     async def get_distribution_status(self, distribution_id: str) -> Dict[str, Any]:
-        """Get real-time status of content distribution"""        try:
+        """Get real-time status of content distribution"""
+        try:
             # Get distribution from database
             distribution = await self.db_manager.get_distribution(distribution_id)
             
@@ -716,7 +739,8 @@ class ContentDistributor:
         config: DistributionConfig,
         user_id: str
     ) -> Dict[str, Any]:
-        """Schedule content for future distribution"""        try:
+        """Schedule content for future distribution"""
+        try:
             scheduling_id = str(uuid.uuid4())
             
             # Validate schedule times
@@ -755,7 +779,8 @@ class ContentDistributor:
             raise
 
     async def cancel_scheduled_distribution(self, scheduling_id: str) -> Dict[str, Any]:
-        """Cancel scheduled content distribution"""        try:
+        """Cancel scheduled content distribution"""
+        try:
             # Get scheduled distribution
             scheduled = await self.db_manager.get_scheduled_distribution(scheduling_id)
             
@@ -793,7 +818,8 @@ class ContentDistributor:
         platforms: List[PlatformType] = None,
         content_type: ContentType = None
     ) -> Dict[str, Any]:
-        """Get AI-recommended optimal posting times for platforms"""        try:
+        """Get AI-recommended optimal posting times for platforms"""
+        try:
             if platforms is None:
                 platforms = list(self.platform_specs.keys())
             
@@ -840,7 +866,8 @@ class ContentDistributor:
             raise
 
     async def shutdown(self):
-        """Graceful shutdown of content distributor"""        try:
+        """Graceful shutdown of content distributor"""
+        try:
             self.logger.info("Shutting down Content Distributor...")
             
             # Stop background tasks
@@ -877,11 +904,13 @@ class ContentDistributor:
 
 
 class MultiPlatformPublisher:
-    """    Multi-Platform Publisher - High-level publishing interface
+    """
+    Multi-Platform Publisher - High-level publishing interface
     
     Provides simplified interface for common publishing scenarios
     with intelligent defaults and automated optimization.
-    """    
+    """
+    
     def __init__(self, content_distributor: ContentDistributor):
         self.content_distributor = content_distributor
         self.logger = logging.getLogger(f"{__name__}.MultiPlatformPublisher")
@@ -893,7 +922,8 @@ class MultiPlatformPublisher:
         user_id: str,
         platforms: List[PlatformType] = None
     ) -> Dict[str, Any]:
-        """Publish music release across streaming platforms"""        if platforms is None:
+        """Publish music release across streaming platforms"""
+        if platforms is None:
             platforms = [
                 PlatformType.SPOTIFY,
                 PlatformType.APPLE_MUSIC,
@@ -928,7 +958,8 @@ class MultiPlatformPublisher:
         user_id: str,
         platforms: List[PlatformType] = None
     ) -> Dict[str, Any]:
-        """Publish video content across video platforms"""        if platforms is None:
+        """Publish video content across video platforms"""
+        if platforms is None:
             platforms = [
                 PlatformType.YOUTUBE,
                 PlatformType.TIKTOK,
@@ -959,7 +990,8 @@ class MultiPlatformPublisher:
         user_id: str,
         platforms: List[PlatformType] = None
     ) -> Dict[str, Any]:
-        """Publish social media post across platforms"""        if platforms is None:
+        """Publish social media post across platforms"""
+        if platforms is None:
             platforms = [
                 PlatformType.INSTAGRAM,
                 PlatformType.TWITTER,
@@ -998,7 +1030,8 @@ class MultiPlatformPublisher:
         user_id: str,
         platforms: List[PlatformType] = None
     ) -> Dict[str, Any]:
-        """Schedule a series of content with intelligent timing"""        scheduling_results = []
+        """Schedule a series of content with intelligent timing"""
+        scheduling_results = []
         
         # Generate optimal schedule for the series
         optimal_schedule = await self._generate_series_schedule(

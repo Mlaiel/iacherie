@@ -15,7 +15,8 @@ Professional SEO enhancement engine for content creators providing:
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
-"""import re
+"""
+import re
 import numpy as np
 from typing import Dict, List, Any, Optional, Tuple, Union
 import logging
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SEOAnalysis:
-    """SEO analysis result"""    seo_score: float
+    """SEO analysis result"""
+    seo_score: float
     keyword_density: Dict[str, float]
     meta_analysis: Dict[str, Any]
     content_structure: Dict[str, Any]
@@ -44,7 +46,8 @@ class SEOAnalysis:
 
 @dataclass
 class KeywordAnalysis:
-    """Keyword analysis result"""    keyword: str
+    """Keyword analysis result"""
+    keyword: str
     density: float
     frequency: int
     relevance_score: float
@@ -53,7 +56,8 @@ class KeywordAnalysis:
 
 @dataclass
 class ContentOptimization:
-    """Content optimization recommendations"""    optimized_title: str
+    """Content optimization recommendations"""
+    optimized_title: str
     optimized_description: str
     optimized_content: str
     meta_tags: Dict[str, str]
@@ -61,8 +65,10 @@ class ContentOptimization:
     improvements: List[str]
 
 class SEOEnhancementEngine:
-    """    Industrial-grade SEO enhancement engine for content creators
-    """    
+    """
+    Industrial-grade SEO enhancement engine for content creators
+    """
+    
     def __init__(self, language: str = 'en'):
         self.language = language
         
@@ -78,7 +84,8 @@ class SEOEnhancementEngine:
         logger.info("SEOEnhancementEngine initialized successfully")
     
     def _initialize_seo_components(self) -> None:
-        """Initialize SEO analysis components"""        try:
+        """Initialize SEO analysis components"""
+        try:
             # SEO scoring weights
             self.seo_weights = {
                 'title_optimization': 0.20,
@@ -112,7 +119,8 @@ class SEOEnhancementEngine:
             raise
     
     def _initialize_keyword_databases(self) -> None:
-        """Initialize keyword research databases"""        try:
+        """Initialize keyword research databases"""
+        try:
             # Stop words for different languages
             try:
                 nltk.download('stopwords', quiet=True)
@@ -141,7 +149,8 @@ class SEOEnhancementEngine:
             raise
     
     def _initialize_optimization_rules(self) -> None:
-        """Initialize SEO optimization rules"""        try:
+        """Initialize SEO optimization rules"""
+        try:
             # Title optimization rules
             self.title_rules = {
                 'min_length': 30,
@@ -177,7 +186,8 @@ class SEOEnhancementEngine:
     
     def enhance(self, content_data: Union[str, Dict[str, Any]], 
                 config: Dict[str, Any]) -> Dict[str, Any]:
-        """        Comprehensive SEO enhancement pipeline
+        """
+        Comprehensive SEO enhancement pipeline
         
         Args:
             content_data: Content text or structured content data
@@ -185,7 +195,8 @@ class SEOEnhancementEngine:
             
         Returns:
             SEO enhancement results and recommendations
-        """        try:
+        """
+        try:
             # Extract content information
             content_info = self._extract_content_info(content_data)
             
@@ -228,7 +239,8 @@ class SEOEnhancementEngine:
             raise
     
     def _extract_content_info(self, content_data: Union[str, Dict[str, Any]]) -> Dict[str, Any]:
-        """Extract content information for SEO analysis"""        try:
+        """Extract content information for SEO analysis"""
+        try:
             if isinstance(content_data, str):
                 # Simple text content
                 content_info = {
@@ -277,7 +289,8 @@ class SEOEnhancementEngine:
             return {}
     
     def _analyze_seo(self, content_info: Dict[str, Any], config: Dict[str, Any]) -> SEOAnalysis:
-        """Perform comprehensive SEO analysis"""        try:
+        """Perform comprehensive SEO analysis"""
+        try:
             # Title analysis
             title_score = self._analyze_title_seo(content_info['title'])
             
@@ -343,7 +356,8 @@ class SEOEnhancementEngine:
             return SEOAnalysis(0.0, {}, {}, {}, [], [])
     
     def _analyze_title_seo(self, title: str) -> float:
-        """Analyze title SEO optimization"""        try:
+        """Analyze title SEO optimization"""
+        try:
             if not title:
                 return 0.0
             
@@ -388,7 +402,8 @@ class SEOEnhancementEngine:
             return 0.0
     
     def _analyze_meta_description_seo(self, meta_description: str) -> float:
-        """Analyze meta description SEO optimization"""        try:
+        """Analyze meta description SEO optimization"""
+        try:
             if not meta_description:
                 return 0.0
             
@@ -422,7 +437,8 @@ class SEOEnhancementEngine:
             return 0.0
     
     def _analyze_content_structure_seo(self, content_info: Dict[str, Any]) -> float:
-        """Analyze content structure for SEO"""        try:
+        """Analyze content structure for SEO"""
+        try:
             score = 0.0
             
             # Check heading structure
@@ -472,7 +488,8 @@ class SEOEnhancementEngine:
             return 0.0
     
     def _analyze_keyword_density(self, content: str, config: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze keyword density"""        try:
+        """Analyze keyword density"""
+        try:
             # Tokenize content
             words = word_tokenize(content.lower())
             words = [word for word in words if word.isalpha() and word not in self.stop_words]
@@ -513,7 +530,8 @@ class SEOEnhancementEngine:
             return {}
     
     def _analyze_content_quality_seo(self, content_info: Dict[str, Any]) -> float:
-        """Analyze content quality for SEO"""        try:
+        """Analyze content quality for SEO"""
+        try:
             score = 0.0
             content = content_info['content']
             
@@ -562,7 +580,8 @@ class SEOEnhancementEngine:
             return 0.0
     
     def _analyze_readability_seo(self, content: str) -> float:
-        """Analyze content readability for SEO"""        try:
+        """Analyze content readability for SEO"""
+        try:
             if not content:
                 return 0.0
             
@@ -614,7 +633,8 @@ class SEOEnhancementEngine:
             return 0.0
     
     def _perform_keyword_analysis(self, content_info: Dict[str, Any], config: Dict[str, Any]) -> List[KeywordAnalysis]:
-        """Perform comprehensive keyword analysis"""        try:
+        """Perform comprehensive keyword analysis"""
+        try:
             keyword_analyses = []
             content = content_info['content']
             
@@ -648,7 +668,8 @@ class SEOEnhancementEngine:
             return []
     
     def _extract_keywords(self, content: str, config: Dict[str, Any]) -> List[str]:
-        """Extract potential keywords from content"""        try:
+        """Extract potential keywords from content"""
+        try:
             keywords = []
             
             # Single words
@@ -687,7 +708,8 @@ class SEOEnhancementEngine:
             return []
     
     def _calculate_keyword_density(self, keyword: str, content: str) -> float:
-        """Calculate keyword density"""        try:
+        """Calculate keyword density"""
+        try:
             content_lower = content.lower()
             keyword_lower = keyword.lower()
             
@@ -710,7 +732,8 @@ class SEOEnhancementEngine:
             return 0.0
     
     def _calculate_keyword_frequency(self, keyword: str, content: str) -> int:
-        """Calculate keyword frequency"""        try:
+        """Calculate keyword frequency"""
+        try:
             content_lower = content.lower()
             keyword_lower = keyword.lower()
             
@@ -721,7 +744,8 @@ class SEOEnhancementEngine:
             return 0
     
     def _calculate_keyword_relevance(self, keyword: str, content_info: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate keyword relevance score"""        try:
+        """Calculate keyword relevance score"""
+        try:
             relevance_score = 0.0
             
             # Check if keyword appears in title
@@ -761,7 +785,8 @@ class SEOEnhancementEngine:
             return 0.0
     
     def _estimate_keyword_competition(self, keyword: str) -> str:
-        """Estimate keyword competition level"""        try:
+        """Estimate keyword competition level"""
+        try:
             # Simple heuristics for competition estimation
             keyword_length = len(keyword.split())
             
@@ -789,7 +814,8 @@ class SEOEnhancementEngine:
     def _optimize_content(self, content_info: Dict[str, Any], 
                          keyword_analysis: List[KeywordAnalysis], 
                          config: Dict[str, Any]) -> ContentOptimization:
-        """Optimize content for SEO"""        try:
+        """Optimize content for SEO"""
+        try:
             # Get primary keywords
             primary_keywords = [kw.keyword for kw in keyword_analysis[:3] if kw.relevance_score > 0.5]
             
@@ -829,7 +855,8 @@ class SEOEnhancementEngine:
             return ContentOptimization('', '', '', {}, {}, [])
     
     def _optimize_title(self, original_title: str, primary_keywords: List[str]) -> str:
-        """Optimize title for SEO"""        try:
+        """Optimize title for SEO"""
+        try:
             if not original_title and not primary_keywords:
                 return ''
             
@@ -867,7 +894,8 @@ class SEOEnhancementEngine:
             return original_title
     
     def _optimize_meta_description(self, original_description: str, content: str, primary_keywords: List[str]) -> str:
-        """Optimize meta description for SEO"""        try:
+        """Optimize meta description for SEO"""
+        try:
             if not original_description:
                 # Generate from content
                 sentences = sent_tokenize(content)
@@ -905,7 +933,8 @@ class SEOEnhancementEngine:
             return original_description
     
     def _optimize_content_text(self, content: str, keyword_analysis: List[KeywordAnalysis]) -> str:
-        """Optimize content text for SEO"""        try:
+        """Optimize content text for SEO"""
+        try:
             optimized_content = content
             
             # Get primary keywords with low density
@@ -953,7 +982,8 @@ class SEOEnhancementEngine:
             return content
     
     def _generate_meta_tags(self, content_info: Dict[str, Any], primary_keywords: List[str]) -> Dict[str, str]:
-        """Generate SEO meta tags"""        try:
+        """Generate SEO meta tags"""
+        try:
             meta_tags = {}
             
             # Basic meta tags
@@ -995,7 +1025,8 @@ class SEOEnhancementEngine:
             return {}
     
     def _generate_schema_markup(self, content_info: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate Schema.org markup"""        try:
+        """Generate Schema.org markup"""
+        try:
             schema = {
                 "@context": "https://schema.org",
                 "@type": "Article",
@@ -1045,7 +1076,8 @@ class SEOEnhancementEngine:
             return {}
     
     def _analyze_technical_seo(self, content_info: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze technical SEO aspects"""        try:
+        """Analyze technical SEO aspects"""
+        try:
             technical_analysis = {
                 'url_optimization': {},
                 'mobile_optimization': {},
@@ -1094,7 +1126,8 @@ class SEOEnhancementEngine:
             return {}
     
     def _analyze_url_seo(self, url: str) -> Dict[str, Any]:
-        """Analyze URL for SEO optimization"""        try:
+        """Analyze URL for SEO optimization"""
+        try:
             parsed_url = urlparse(url)
             path = parsed_url.path
             
@@ -1124,7 +1157,8 @@ class SEOEnhancementEngine:
             return {}
     
     def _analyze_performance_seo(self, content_info: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze performance-related SEO factors"""        try:
+        """Analyze performance-related SEO factors"""
+        try:
             performance_analysis = {
                 'content_optimization': {},
                 'image_optimization': {},
@@ -1175,7 +1209,8 @@ class SEOEnhancementEngine:
     def _generate_seo_analysis_recommendations(self, title_score: float, meta_score: float, 
                                              structure_score: float, quality_score: float, 
                                              readability_score: float) -> List[str]:
-        """Generate SEO analysis recommendations"""        recommendations = []
+        """Generate SEO analysis recommendations"""
+        recommendations = []
         
         if title_score < 0.7:
             recommendations.append("Optimize title: Include primary keyword and power words")
@@ -1195,7 +1230,8 @@ class SEOEnhancementEngine:
         return recommendations
     
     def _identify_technical_issues(self, content_info: Dict[str, Any]) -> List[str]:
-        """Identify technical SEO issues"""        issues = []
+        """Identify technical SEO issues"""
+        issues = []
         
         # Missing meta description
         if not content_info.get('meta_description'):
@@ -1221,7 +1257,8 @@ class SEOEnhancementEngine:
         return issues
     
     def _analyze_heading_hierarchy(self, headings: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze heading hierarchy"""        try:
+        """Analyze heading hierarchy"""
+        try:
             hierarchy_analysis = {
                 'has_h1': False,
                 'h1_count': 0,
@@ -1255,7 +1292,8 @@ class SEOEnhancementEngine:
             return {}
     
     def _analyze_paragraph_structure(self, content: str) -> Dict[str, Any]:
-        """Analyze paragraph structure"""        try:
+        """Analyze paragraph structure"""
+        try:
             paragraphs = content.split('\n\n')
             paragraphs = [p.strip() for p in paragraphs if p.strip()]
             
@@ -1277,7 +1315,8 @@ class SEOEnhancementEngine:
             return {}
     
     def _analyze_link_structure(self, links: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze link structure"""        try:
+        """Analyze link structure"""
+        try:
             internal_links = [link for link in links if not self._is_external_link(link)]
             external_links = [link for link in links if self._is_external_link(link)]
             
@@ -1295,7 +1334,8 @@ class SEOEnhancementEngine:
             return {}
     
     def _is_external_link(self, link: Union[str, Dict[str, Any]]) -> bool:
-        """Check if link is external"""        try:
+        """Check if link is external"""
+        try:
             if isinstance(link, dict):
                 url = link.get('url', '')
             else:
@@ -1309,7 +1349,8 @@ class SEOEnhancementEngine:
     
     def _generate_content_improvements(self, content_info: Dict[str, Any], 
                                      keyword_analysis: List[KeywordAnalysis]) -> List[str]:
-        """Generate content improvement suggestions"""        improvements = []
+        """Generate content improvement suggestions"""
+        improvements = []
         
         # Content length improvements
         word_count = content_info['word_count']
@@ -1344,7 +1385,8 @@ class SEOEnhancementEngine:
                                     content_optimization: ContentOptimization,
                                     technical_seo: Dict[str, Any],
                                     config: Dict[str, Any]) -> List[str]:
-        """Generate comprehensive SEO recommendations"""        recommendations = []
+        """Generate comprehensive SEO recommendations"""
+        recommendations = []
         
         # Add specific recommendations based on analysis results
         recommendations.extend(seo_analysis.recommendations)

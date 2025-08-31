@@ -5,7 +5,8 @@ Simple test runner that validates core functionality without complex dependencie
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import sys
 from pathlib import Path
 from unittest.mock import Mock, patch, MagicMock
@@ -13,7 +14,8 @@ import re
 import hashlib
 
 def test_security_components():
-    """Test security components directly"""    print("Testing Security Components...")
+    """Test security components directly"""
+    print("Testing Security Components...")
     
     # Test password validation
     def validate_password_strength(password):
@@ -52,7 +54,8 @@ def test_security_components():
 
 
 async def test_business_logic():
-    """Test critical business logic"""    print("Testing Critical Business Logic...")
+    """Test critical business logic"""
+    print("Testing Critical Business Logic...")
     
     # Test monetization engine
     usage_data = {
@@ -108,7 +111,8 @@ async def test_business_logic():
 
 
 async def test_fingerprinting_simulation():
-    """Test fingerprinting simulation"""    print("Testing Fingerprinting Simulation...")
+    """Test fingerprinting simulation"""
+    print("Testing Fingerprinting Simulation...")
     
     # Simulate audio fingerprinting
     audio_features = {
@@ -139,7 +143,8 @@ async def test_fingerprinting_simulation():
 
 
 async def test_api_simulation():
-    """Test API endpoint simulation"""    print("Testing API Simulation...")
+    """Test API endpoint simulation"""
+    print("Testing API Simulation...")
     
     # Simulate user registration validation
     def validate_registration_data(data):
@@ -187,7 +192,8 @@ async def test_api_simulation():
 
 
 async def test_workflow_simulation():
-    """Test workflow integration simulation"""    print("Testing Workflow Simulation...")
+    """Test workflow integration simulation"""
+    print("Testing Workflow Simulation...")
     
     # Simulate content processing workflow
     def process_content_workflow(content_data):
@@ -238,7 +244,8 @@ async def test_workflow_simulation():
 
 
 async def main():
-    """Run all critical tests"""    print("=== Running Critical Component Tests ===\n")
+    """Run all critical tests"""
+    print("=== Running Critical Component Tests ===\n")
     
     # Run all test categories
     test_security_components()

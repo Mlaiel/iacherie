@@ -7,7 +7,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 This module contains AI agents specialized in monetization strategies,
 revenue optimization, sponsorship matching, and financial analytics for content creators.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -20,7 +21,8 @@ from .base_agent import BaseAIAgent
 
 @dataclass
 class RevenueAnalysis:
-    """Revenue analysis results"""    current_revenue: float
+    """Revenue analysis results"""
+    current_revenue: float
     projected_revenue: float
     revenue_sources: Dict[str, float]
     growth_rate: float
@@ -31,7 +33,8 @@ class RevenueAnalysis:
 
 @dataclass
 class SponsorshipOpportunity:
-    """Sponsorship opportunity structure"""    sponsor_name: str
+    """Sponsorship opportunity structure"""
+    sponsor_name: str
     brand_category: str
     estimated_value: float
     audience_match: float
@@ -42,11 +45,13 @@ class SponsorshipOpportunity:
 
 
 class MonetizationAdvisorAgent(BaseAIAgent):
-    """    AI agent specialized in monetization strategies and revenue optimization.
+    """
+    AI agent specialized in monetization strategies and revenue optimization.
     
     Provides comprehensive analysis of revenue streams, sponsorship opportunities,
     pricing strategies, and financial optimization for content creators.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(agent_id="monetization_advisor", config=config)
         
@@ -76,14 +81,16 @@ class MonetizationAdvisorAgent(BaseAIAgent):
         logging.info(f"MonetizationAdvisorAgent initialized with {len(self.revenue_streams)} revenue streams")
 
     async def analyze_revenue_potential(self, creator_profile: Dict[str, Any]) -> RevenueAnalysis:
-        """        Analyze creator's revenue potential and current monetization effectiveness.
+        """
+        Analyze creator's revenue potential and current monetization effectiveness.
         
         Args:
             creator_profile: Creator's profile, metrics, and current revenue data
             
         Returns:
             Comprehensive revenue analysis
-        """        try:
+        """
+        try:
             # Extract current metrics
             followers = creator_profile.get('total_followers', 0)
             avg_views = creator_profile.get('avg_monthly_views', 0)
@@ -170,14 +177,16 @@ class MonetizationAdvisorAgent(BaseAIAgent):
             )
 
     async def find_sponsorship_opportunities(self, creator_profile: Dict[str, Any]) -> List[SponsorshipOpportunity]:
-        """        Find and analyze potential sponsorship opportunities.
+        """
+        Find and analyze potential sponsorship opportunities.
         
         Args:
             creator_profile: Creator's profile, audience, and content data
             
         Returns:
             List of relevant sponsorship opportunities
-        """        try:
+        """
+        try:
             niche = creator_profile.get('niche', 'general')
             followers = creator_profile.get('total_followers', 0)
             engagement_rate = creator_profile.get('engagement_rate', 0.03)
@@ -284,7 +293,8 @@ class MonetizationAdvisorAgent(BaseAIAgent):
 
     async def optimize_pricing_strategy(self, creator_profile: Dict[str, Any], 
                                       service_type: str) -> Dict[str, Any]:
-        """        Optimize pricing strategy for creator services and products.
+        """
+        Optimize pricing strategy for creator services and products.
         
         Args:
             creator_profile: Creator's profile and market position
@@ -292,7 +302,8 @@ class MonetizationAdvisorAgent(BaseAIAgent):
             
         Returns:
             Optimized pricing recommendations
-        """        try:
+        """
+        try:
             followers = creator_profile.get('total_followers', 0)
             engagement_rate = creator_profile.get('engagement_rate', 0.03)
             niche = creator_profile.get('niche', 'general')
@@ -440,7 +451,8 @@ class MonetizationAdvisorAgent(BaseAIAgent):
     def _identify_revenue_opportunities(self, creator_profile: Dict[str, Any], 
                                       revenue_potential: Dict[str, float],
                                       current_revenue: float) -> List[str]:
-        """Identify specific revenue optimization opportunities"""        opportunities = []
+        """Identify specific revenue optimization opportunities"""
+        opportunities = []
         
         # Check for underutilized revenue streams
         for stream, potential in revenue_potential.items():
@@ -471,7 +483,8 @@ class MonetizationAdvisorAgent(BaseAIAgent):
     def _generate_monetization_actions(self, creator_profile: Dict[str, Any],
                                      revenue_potential: Dict[str, float],
                                      opportunities: List[str]) -> List[str]:
-        """Generate specific actionable monetization recommendations"""        actions = []
+        """Generate specific actionable monetization recommendations"""
+        actions = []
         
         # Priority actions based on potential
         sorted_streams = sorted(revenue_potential.items(), key=lambda x: x[1], reverse=True)
@@ -505,7 +518,8 @@ class MonetizationAdvisorAgent(BaseAIAgent):
 
     def _assess_monetization_risks(self, creator_profile: Dict[str, Any],
                                  revenue_potential: Dict[str, float]) -> str:
-        """Assess risks associated with monetization strategy"""        risk_factors = []
+        """Assess risks associated with monetization strategy"""
+        risk_factors = []
         
         # Platform dependency risk
         revenue_sources = creator_profile.get('active_revenue_streams', [])
@@ -539,7 +553,8 @@ class MonetizationAdvisorAgent(BaseAIAgent):
             return "minimal"
 
     def _calculate_sponsorship_value(self, followers: int, engagement_rate: float, tier: str) -> float:
-        """Calculate estimated sponsorship value"""        base_value = followers * 0.01  # $0.01 per follower base
+        """Calculate estimated sponsorship value"""
+        base_value = followers * 0.01  # $0.01 per follower base
         
         # Engagement multiplier
         engagement_multiplier = 1 + (engagement_rate - 0.03) * 10
@@ -551,7 +566,8 @@ class MonetizationAdvisorAgent(BaseAIAgent):
         return base_value * engagement_multiplier * tier_multiplier
 
     def _generate_value_propositions(self, creator_profile: Dict[str, Any], service_type: str) -> List[str]:
-        """Generate value propositions for pricing justification"""        propositions = []
+        """Generate value propositions for pricing justification"""
+        propositions = []
         
         followers = creator_profile.get('total_followers', 0)
         engagement_rate = creator_profile.get('engagement_rate', 0.03)

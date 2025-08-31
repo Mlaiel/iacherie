@@ -19,7 +19,8 @@ logger = logging.getLogger(__name__)
 
 
 class AnomalyType(Enum):
-    """Types of revenue anomalies"""    SUDDEN_DROP = "sudden_drop"
+    """Types of revenue anomalies"""
+    SUDDEN_DROP = "sudden_drop"
     SUDDEN_SPIKE = "sudden_spike"
     GRADUAL_DECLINE = "gradual_decline"
     UNUSUAL_PATTERN = "unusual_pattern"
@@ -28,7 +29,8 @@ class AnomalyType(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    INFO = "info"
+    """Alert severity levels"""
+    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
@@ -36,7 +38,8 @@ class AlertSeverity(Enum):
 
 @dataclass
 class RevenueAlert:
-    """Revenue alert data"""    alert_id: str
+    """Revenue alert data"""
+    alert_id: str
     anomaly_type: AnomalyType
     severity: AlertSeverity
     current_value: float
@@ -48,7 +51,8 @@ class RevenueAlert:
 
 
 class RevenueAnomalyDetector:
-    """    Advanced revenue anomaly detection system
+    """
+    Advanced revenue anomaly detection system
     
     Features:
     - Statistical anomaly detection
@@ -56,9 +60,11 @@ class RevenueAnomalyDetector:
     - Real-time monitoring
     - Escalation management
     - Automated response suggestions
-    """    
+    """
+    
     def __init__(self, revenue_tracker):
-        """Initialize anomaly detector"""        self.revenue_tracker = revenue_tracker
+        """Initialize anomaly detector"""
+        self.revenue_tracker = revenue_tracker
         self.historical_data = []
         self.alert_history = []
         
@@ -74,7 +80,8 @@ class RevenueAnomalyDetector:
         logger.info("RevenueAnomalyDetector initialized")
     
     async def check_anomalies(self) -> List[RevenueAlert]:
-        """Check for revenue anomalies"""        alerts = []
+        """Check for revenue anomalies"""
+        alerts = []
         
         try:
             # Get recent revenue data
@@ -99,7 +106,8 @@ class RevenueAnomalyDetector:
             return []
     
     async def _check_sudden_changes(self, analytics: Dict[str, Any]) -> List[RevenueAlert]:
-        """Check for sudden revenue changes"""        alerts = []
+        """Check for sudden revenue changes"""
+        alerts = []
         
         try:
             trends = analytics.get("trends", {})
@@ -163,7 +171,8 @@ class RevenueAnomalyDetector:
         return alerts
     
     async def _check_zero_revenue(self) -> List[RevenueAlert]:
-        """Check for periods of zero revenue"""        alerts = []
+        """Check for periods of zero revenue"""
+        alerts = []
         
         try:
             # Get recent events
@@ -199,7 +208,8 @@ class RevenueAnomalyDetector:
         return alerts
     
     async def _check_fraud_indicators(self) -> List[RevenueAlert]:
-        """Check for potential fraud indicators"""        alerts = []
+        """Check for potential fraud indicators"""
+        alerts = []
         
         try:
             # Check transaction velocity
@@ -236,7 +246,8 @@ class RevenueAnomalyDetector:
         return alerts
     
     async def _check_gradual_decline(self, analytics: Dict[str, Any]) -> List[RevenueAlert]:
-        """Check for gradual revenue decline trends"""        alerts = []
+        """Check for gradual revenue decline trends"""
+        alerts = []
         
         try:
             # Get daily revenue data

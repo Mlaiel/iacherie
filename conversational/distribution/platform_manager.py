@@ -9,7 +9,8 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is proprietary and protected. Unauthorized use, reproduction, 
 or distribution is strictly prohibited and will result in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
@@ -49,7 +50,8 @@ metrics = MetricsCollector("distribution.platform_manager")
 
 
 class PlatformType(str, Enum):
-    """Supported distribution platforms with advanced integrations"""    YOUTUBE = "youtube"
+    """Supported distribution platforms with advanced integrations"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -67,7 +69,8 @@ class PlatformType(str, Enum):
 
 
 class DistributionPriority(str, Enum):
-    """Content distribution priority levels with SLA definitions"""    CRITICAL = "critical"      # <5 seconds
+    """Content distribution priority levels with SLA definitions"""
+    CRITICAL = "critical"      # <5 seconds
     URGENT = "urgent"         # <30 seconds
     HIGH = "high"             # <2 minutes
     MEDIUM = "medium"         # <10 minutes
@@ -77,7 +80,8 @@ class DistributionPriority(str, Enum):
 
 
 class ContentOptimizationLevel(str, Enum):
-    """Content optimization levels for platform-specific adaptation"""    MINIMAL = "minimal"       # Basic format conversion only
+    """Content optimization levels for platform-specific adaptation"""
+    MINIMAL = "minimal"       # Basic format conversion only
     STANDARD = "standard"     # Format + quality optimization
     ADVANCED = "advanced"     # Full AI optimization
     MAXIMUM = "maximum"       # AI + A/B testing + performance prediction
@@ -85,7 +89,8 @@ class ContentOptimizationLevel(str, Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Secure platform authentication credentials with advanced security"""    platform: PlatformType
+    """Secure platform authentication credentials with advanced security"""
+    platform: PlatformType
     access_token: str
     refresh_token: Optional[str] = None
     api_key: Optional[str] = None
@@ -101,26 +106,30 @@ class PlatformCredentials:
     encryption_key: Optional[str] = None
     
     def is_expired(self) -> bool:
-        """Check if credentials are expired with buffer time"""        if not self.expires_at:
+        """Check if credentials are expired with buffer time"""
+        if not self.expires_at:
             return False
         # Add 5 minute buffer before expiration
         buffer_time = timedelta(minutes=5)
         return datetime.utcnow() >= (self.expires_at - buffer_time)
     
     def is_rate_limited(self) -> bool:
-        """Check if platform is currently rate limited"""        if self.rate_limit_reset and datetime.utcnow() < self.rate_limit_reset:
+        """Check if platform is currently rate limited"""
+        if self.rate_limit_reset and datetime.utcnow() < self.rate_limit_reset:
             return self.rate_limit_remaining <= 0
         return False
     
     def get_authorization_header(self) -> Dict[str, str]:
-        """Generate secure authorization header"""        return {
+        """Generate secure authorization header"""
+        return {
             "Authorization": f"{self.token_type} {self.access_token}",
             "User-Agent": f"IA-Influencer-Agent/1.0 (+{settings.BASE_URL})"
         }
 
 
 class PlatformCapabilities(BaseModel):
-    """Platform-specific capabilities and limitations"""    max_file_size: int  # bytes
+    """Platform-specific capabilities and limitations"""
+    max_file_size: int  # bytes
     supported_formats: List[str]
     max_duration: Optional[int] = None  # seconds
     supports_scheduling: bool = True
@@ -135,7 +144,8 @@ class PlatformCapabilities(BaseModel):
 
 
 class DistributionRequest(BaseModel):
-    """Advanced distribution request with comprehensive targeting"""    user_id: int
+    """Advanced distribution request with comprehensive targeting"""
+    user_id: int
     content_id: int
     platforms: List[PlatformType]
     priority: DistributionPriority = DistributionPriority.MEDIUM
@@ -167,7 +177,8 @@ class DistributionRequest(BaseModel):
 
 
 class DistributionResult(BaseModel):
-    """Comprehensive distribution operation result with metrics"""    platform: PlatformType
+    """Comprehensive distribution operation result with metrics"""
+    platform: PlatformType
     success: bool
     post_id: Optional[str] = None
     url: Optional[str] = None
@@ -185,7 +196,8 @@ class DistributionResult(BaseModel):
 
 class PlatformDistributionManager:
 class PlatformDistributionManager:
-    """    Enterprise-grade platform distribution manager with AI optimization and advanced security.
+    """
+    Enterprise-grade platform distribution manager with AI optimization and advanced security.
     
     Features:
     - Multi-platform content distribution (15+ platforms)
@@ -194,7 +206,8 @@ class PlatformDistributionManager:
     - Real-time analytics and performance tracking
     - Secure credential management with encryption
     - Automated monetization and revenue optimization
-    """    
+    """
+    
     def __init__(self, db: Session):
         self.db = db
         self.redis_client = None
@@ -212,16 +225,19 @@ class PlatformDistributionManager:
         self._initialize_rate_limiters()
         
     async def __aenter__(self):
-        """Async context manager entry"""        self.redis_client = await aioredis.from_url(settings.REDIS_URL)
+        """Async context manager entry"""
+        self.redis_client = await aioredis.from_url(settings.REDIS_URL)
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit with cleanup"""        await self._cleanup_sessions()
+        """Async context manager exit with cleanup"""
+        await self._cleanup_sessions()
         if self.redis_client:
             await self.redis_client.close()
     
     def _load_platform_configs(self) -> Dict[PlatformType, Dict[str, Any]]:
-        """Load comprehensive platform-specific configuration"""        return {
+        """Load comprehensive platform-specific configuration"""
+        return {
             PlatformType.YOUTUBE: {
                 "api_base": "https://www.googleapis.com/youtube/v3",
                 "upload_endpoint": "/videos",
@@ -368,7 +384,8 @@ class PlatformDistributionManager:
         }
     
     def _load_platform_capabilities(self) -> Dict[PlatformType, PlatformCapabilities]:
-        """Load platform capabilities and limitations"""        capabilities = {}
+        """Load platform capabilities and limitations"""
+        capabilities = {}
         for platform, config in self.platform_configs.items():
             capabilities[platform] = PlatformCapabilities(
                 max_file_size=config["max_file_size"],
@@ -386,7 +403,8 @@ class PlatformDistributionManager:
         return capabilities
     
     def _initialize_rate_limiters(self):
-        """Initialize rate limiters for each platform"""        for platform, config in self.platform_configs.items():
+        """Initialize rate limiters for each platform"""
+        for platform, config in self.platform_configs.items():
             rate_config = config["rate_limit"]
             if rate_config["period"] == "minute":
                 window_size = 60
@@ -409,7 +427,8 @@ class PlatformDistributionManager:
         self,
         request: DistributionRequest
     ) -> List[DistributionResult]:
-        """        Distribute content to multiple platforms with AI optimization and advanced features.
+        """
+        Distribute content to multiple platforms with AI optimization and advanced features.
         
         This method handles:
         - User authentication and authorization
@@ -424,7 +443,8 @@ class PlatformDistributionManager:
             
         Returns:
             List of detailed distribution results for each platform
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         results: List[DistributionResult] = []
         
         try:
@@ -567,7 +587,8 @@ class PlatformDistributionManager:
         user_id: int,
         platforms: List[PlatformType]
     ) -> List[PlatformType]:
-        """Validate and refresh platform credentials"""        valid_platforms = []
+        """Validate and refresh platform credentials"""
+        valid_platforms = []
         
         for platform in platforms:
             try:
@@ -594,7 +615,8 @@ class PlatformDistributionManager:
         user_id: int,
         platform: PlatformType
     ) -> Optional[PlatformCredentials]:
-        """Retrieve and decrypt platform credentials"""        # Check cache first
+        """Retrieve and decrypt platform credentials"""
+        # Check cache first
         if user_id in self.credentials_cache:
             if platform in self.credentials_cache[user_id]:
                 return self.credentials_cache[user_id][platform]
@@ -640,7 +662,8 @@ class PlatformDistributionManager:
         platform: PlatformType,
         credentials: PlatformCredentials
     ) -> bool:
-        """Refresh expired platform credentials"""        try:
+        """Refresh expired platform credentials"""
+        try:
             if not credentials.refresh_token:
                 return False
             
@@ -685,7 +708,8 @@ class PlatformDistributionManager:
         content: ContentModel,
         platforms: List[PlatformType]
     ) -> Dict[PlatformType, Dict[str, Any]]:
-        """Optimize content for each platform's requirements"""        optimized_content = {}
+        """Optimize content for each platform's requirements"""
+        optimized_content = {}
         
         for platform in platforms:
             config = self.platform_configs[platform]
@@ -704,7 +728,8 @@ class PlatformDistributionManager:
         return optimized_content
     
     def _optimize_title(self, title: str, config: Dict[str, Any]) -> str:
-        """Optimize title for platform constraints"""        max_length = config.get("max_title_length", 100)
+        """Optimize title for platform constraints"""
+        max_length = config.get("max_title_length", 100)
         if len(title) <= max_length:
             return title
         
@@ -712,7 +737,8 @@ class PlatformDistributionManager:
         return title[:max_length-3] + "..."
     
     def _optimize_description(self, description: str, config: Dict[str, Any]) -> str:
-        """Optimize description for platform constraints"""        max_length = config.get("max_description_length", 1000)
+        """Optimize description for platform constraints"""
+        max_length = config.get("max_description_length", 1000)
         if len(description) <= max_length:
             return description
         
@@ -727,7 +753,8 @@ class PlatformDistributionManager:
     def _optimize_hashtags(
         self, hashtags: List[str], config: Dict[str, Any]
     ) -> List[str]:
-        """Optimize hashtags for platform constraints"""        max_hashtags = config.get("max_hashtags", 30)
+        """Optimize hashtags for platform constraints"""
+        max_hashtags = config.get("max_hashtags", 30)
         return hashtags[:max_hashtags]
     
     async def _distribute_to_platform(
@@ -737,7 +764,8 @@ class PlatformDistributionManager:
         optimized_content: Dict[str, Any],
         request: DistributionRequest
     ) -> DistributionResult:
-        """Distribute content to a specific platform"""        try:
+        """Distribute content to a specific platform"""
+        try:
             credentials = await self._get_platform_credentials(
                 request.user_id, platform
             )
@@ -770,7 +798,8 @@ class PlatformDistributionManager:
             )
     
     async def _get_platform_manager(self, platform: PlatformType):
-        """Get platform-specific distribution manager"""        from .channel_managers import (
+        """Get platform-specific distribution manager"""
+        from .channel_managers import (
             YouTubeChannelManager,
             InstagramChannelManager,
             TikTokChannelManager,
@@ -799,7 +828,8 @@ class PlatformDistributionManager:
         content: ContentModel,
         results: List[DistributionResult]
     ) -> None:
-        """Update content distribution status"""        successful_platforms = [
+        """Update content distribution status"""
+        successful_platforms = [
             result.platform for result in results if result.success
         ]
         failed_platforms = [
@@ -823,7 +853,8 @@ class PlatformDistributionManager:
         request: DistributionRequest,
         results: List[DistributionResult]
     ) -> None:
-        """Log distribution analytics for reporting"""        from ....models.distribution_analytics import DistributionAnalyticsModel
+        """Log distribution analytics for reporting"""
+        from ....models.distribution_analytics import DistributionAnalyticsModel
         
         for result in results:
             analytics = DistributionAnalyticsModel(
@@ -847,7 +878,8 @@ class PlatformDistributionManager:
         user_id: int,
         credentials: PlatformCredentials
     ) -> None:
-        """Save encrypted platform credentials"""        from ....models.platform_credentials import PlatformCredentialsModel
+        """Save encrypted platform credentials"""
+        from ....models.platform_credentials import PlatformCredentialsModel
         
         # Encrypt credentials
         cred_data = {
@@ -888,7 +920,8 @@ class PlatformDistributionManager:
     async def get_distribution_status(
         self, user_id: int, content_id: int
     ) -> Dict[str, Any]:
-        """Get content distribution status across platforms"""        content = self.db.query(ContentModel).filter(
+        """Get content distribution status across platforms"""
+        content = self.db.query(ContentModel).filter(
             ContentModel.id == content_id,
             ContentModel.user_id == user_id
         ).first()
@@ -926,7 +959,8 @@ class PlatformDistributionManager:
         self,
         request: DistributionRequest
     ) -> str:
-        """Schedule content distribution for future execution"""        from ....tasks.distribution import schedule_content_distribution
+        """Schedule content distribution for future execution"""
+        from ....tasks.distribution import schedule_content_distribution
         
         # Validate schedule time
         if not request.schedule_time:
@@ -946,7 +980,8 @@ class PlatformDistributionManager:
     async def cancel_scheduled_distribution(
         self, user_id: int, task_id: str
     ) -> bool:
-        """Cancel a scheduled distribution task"""        try:
+        """Cancel a scheduled distribution task"""
+        try:
             from celery import current_app
             
             # Verify task belongs to user
@@ -963,7 +998,8 @@ class PlatformDistributionManager:
             return False
     
     async def cleanup_expired_credentials(self) -> None:
-        """Cleanup expired credentials from cache and database"""        from ....models.platform_credentials import PlatformCredentialsModel
+        """Cleanup expired credentials from cache and database"""
+        from ....models.platform_credentials import PlatformCredentialsModel
         
         # Remove expired credentials from database
         expired_credentials = self.db.query(PlatformCredentialsModel).filter(
@@ -996,7 +1032,8 @@ class PlatformDistributionManager:
         adaptations: Dict[str, Any],
         request: DistributionRequest
     ) -> Dict[str, Any]:
-        """Distribute content to YouTube with advanced features"""        config = self.platform_configs[PlatformType.YOUTUBE]
+        """Distribute content to YouTube with advanced features"""
+        config = self.platform_configs[PlatformType.YOUTUBE]
         
         # Prepare video metadata
         video_metadata = {
@@ -1073,7 +1110,8 @@ class PlatformDistributionManager:
         adaptations: Dict[str, Any],
         request: DistributionRequest
     ) -> Dict[str, Any]:
-        """Distribute content to Instagram with advanced features"""        config = self.platform_configs[PlatformType.INSTAGRAM]
+        """Distribute content to Instagram with advanced features"""
+        config = self.platform_configs[PlatformType.INSTAGRAM]
         
         # Determine content type and endpoint
         content_type = adaptations.get("content_type", "photo")
@@ -1092,7 +1130,8 @@ class PlatformDistributionManager:
         adaptations: Dict[str, Any],
         request: DistributionRequest
     ) -> Dict[str, Any]:
-        """Create Instagram feed post"""        config = self.platform_configs[PlatformType.INSTAGRAM]
+        """Create Instagram feed post"""
+        config = self.platform_configs[PlatformType.INSTAGRAM]
         
         # Step 1: Create media object
         media_data = {
@@ -1142,7 +1181,8 @@ class PlatformDistributionManager:
         adaptations: Dict[str, Any],
         request: DistributionRequest
     ) -> Dict[str, Any]:
-        """Distribute content to TikTok with viral optimization"""        config = self.platform_configs[PlatformType.TIKTOK]
+        """Distribute content to TikTok with viral optimization"""
+        config = self.platform_configs[PlatformType.TIKTOK]
         
         # Prepare video data
         video_data = {
@@ -1200,7 +1240,8 @@ class PlatformDistributionManager:
         adaptations: Dict[str, Any],
         request: DistributionRequest
     ) -> Dict[str, Any]:
-        """Distribute content to Twitter with advanced features"""        config = self.platform_configs[PlatformType.TWITTER]
+        """Distribute content to Twitter with advanced features"""
+        config = self.platform_configs[PlatformType.TWITTER]
         
         # Prepare tweet data
         tweet_text = adaptations["description"]
@@ -1259,7 +1300,8 @@ class PlatformDistributionManager:
         adaptations: Dict[str, Any],
         request: DistributionRequest
     ) -> Dict[str, Any]:
-        """Distribute audio content to Spotify"""        config = self.platform_configs[PlatformType.SPOTIFY]
+        """Distribute audio content to Spotify"""
+        config = self.platform_configs[PlatformType.SPOTIFY]
         
         # Spotify is primarily for podcasts via Anchor or direct artist uploads
         # This is a simplified implementation for podcast episodes
@@ -1299,7 +1341,8 @@ class PlatformDistributionManager:
         adaptations: Dict[str, Any],
         request: DistributionRequest
     ) -> Dict[str, Any]:
-        """Distribute content to LinkedIn with professional optimization"""        config = self.platform_configs[PlatformType.LINKEDIN]
+        """Distribute content to LinkedIn with professional optimization"""
+        config = self.platform_configs[PlatformType.LINKEDIN]
         
         # Prepare post data
         post_data = {
@@ -1371,7 +1414,8 @@ class PlatformDistributionManager:
         request: DistributionRequest,
         platform: PlatformType
     ) -> Dict[str, Any]:
-        """Generic distribution method for other platforms"""        config = self.platform_configs[platform]
+        """Generic distribution method for other platforms"""
+        config = self.platform_configs[platform]
         
         # Generic post data structure
         post_data = {
@@ -1403,7 +1447,8 @@ class PlatformDistributionManager:
     # Performance prediction methods
     
     async def _predict_youtube_performance(self, content: ContentModel, adaptations: Dict[str, Any]) -> Dict[str, float]:
-        """Predict YouTube video performance using AI"""        if not hasattr(self, 'virality_predictor'):
+        """Predict YouTube video performance using AI"""
+        if not hasattr(self, 'virality_predictor'):
             return {}
         
         features = {
@@ -1424,7 +1469,8 @@ class PlatformDistributionManager:
         return prediction
     
     async def _predict_instagram_performance(self, content: ContentModel, adaptations: Dict[str, Any]) -> Dict[str, float]:
-        """Predict Instagram post performance"""        if not hasattr(self, 'virality_predictor'):
+        """Predict Instagram post performance"""
+        if not hasattr(self, 'virality_predictor'):
             return {}
         
         features = {
@@ -1444,7 +1490,8 @@ class PlatformDistributionManager:
         return prediction
     
     async def _predict_tiktok_performance(self, content: ContentModel, adaptations: Dict[str, Any]) -> Dict[str, float]:
-        """Predict TikTok video performance"""        if not hasattr(self, 'virality_predictor'):
+        """Predict TikTok video performance"""
+        if not hasattr(self, 'virality_predictor'):
             return {}
         
         features = {
@@ -1464,7 +1511,8 @@ class PlatformDistributionManager:
         return prediction
     
     async def _predict_twitter_performance(self, content: ContentModel, adaptations: Dict[str, Any]) -> Dict[str, float]:
-        """Predict Twitter tweet performance"""        if not hasattr(self, 'virality_predictor'):
+        """Predict Twitter tweet performance"""
+        if not hasattr(self, 'virality_predictor'):
             return {}
         
         features = {
@@ -1484,7 +1532,8 @@ class PlatformDistributionManager:
         return prediction
     
     async def _predict_spotify_performance(self, content: ContentModel, adaptations: Dict[str, Any]) -> Dict[str, float]:
-        """Predict Spotify episode performance"""        if not hasattr(self, 'virality_predictor'):
+        """Predict Spotify episode performance"""
+        if not hasattr(self, 'virality_predictor'):
             return {}
         
         features = {
@@ -1504,7 +1553,8 @@ class PlatformDistributionManager:
         return prediction
     
     async def _predict_linkedin_performance(self, content: ContentModel, adaptations: Dict[str, Any]) -> Dict[str, float]:
-        """Predict LinkedIn post performance"""        if not hasattr(self, 'virality_predictor'):
+        """Predict LinkedIn post performance"""
+        if not hasattr(self, 'virality_predictor'):
             return {}
         
         features = {
@@ -1526,7 +1576,8 @@ class PlatformDistributionManager:
     # Helper methods for specific platforms
     
     async def _upload_file_to_youtube(self, session: aiohttp.ClientSession, upload_url: str, file_url: str) -> Dict[str, Any]:
-        """Upload file to YouTube (simplified implementation)"""        # In reality, this would handle resumable uploads for large files
+        """Upload file to YouTube (simplified implementation)"""
+        # In reality, this would handle resumable uploads for large files
         try:
             # This is a simplified version - actual implementation would stream the file
             upload_data = {"file_url": file_url}  # Placeholder
@@ -1546,7 +1597,8 @@ class PlatformDistributionManager:
             return {"success": False, "error": str(e)}
     
     async def _add_to_youtube_playlist(self, session: aiohttp.ClientSession, video_id: str, playlist_id: str):
-        """Add video to YouTube playlist"""        config = self.platform_configs[PlatformType.YOUTUBE]
+        """Add video to YouTube playlist"""
+        config = self.platform_configs[PlatformType.YOUTUBE]
         
         playlist_item_data = {
             "snippet": {
@@ -1571,7 +1623,8 @@ class PlatformDistributionManager:
         adaptations: Dict[str, Any],
         request: DistributionRequest
     ) -> Dict[str, Any]:
-        """Create Instagram Reel"""        config = self.platform_configs[PlatformType.INSTAGRAM]
+        """Create Instagram Reel"""
+        config = self.platform_configs[PlatformType.INSTAGRAM]
         
         reel_data = {
             "video_url": content.file_url,
@@ -1616,7 +1669,8 @@ class PlatformDistributionManager:
         adaptations: Dict[str, Any],
         request: DistributionRequest
     ) -> Dict[str, Any]:
-        """Create Instagram Story"""        config = self.platform_configs[PlatformType.INSTAGRAM]
+        """Create Instagram Story"""
+        config = self.platform_configs[PlatformType.INSTAGRAM]
         
         story_data = {
             "image_url": content.file_url if content.content_type != ContentType.VIDEO else content.thumbnail_url,
@@ -1657,7 +1711,8 @@ class PlatformDistributionManager:
         }
     
     async def _upload_twitter_media(self, session: aiohttp.ClientSession, content: ContentModel) -> Optional[str]:
-        """Upload media to Twitter"""        config = self.platform_configs[PlatformType.TWITTER]
+        """Upload media to Twitter"""
+        config = self.platform_configs[PlatformType.TWITTER]
         
         try:
             # Simplified media upload - actual implementation would handle chunked uploads
@@ -1681,10 +1736,12 @@ class PlatformDistributionManager:
             return None
     
     async def __aenter__(self):
-        """Async context manager entry"""        return self
+        """Async context manager entry"""
+        return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""        # Close all active sessions
+        """Async context manager exit"""
+        # Close all active sessions
         for session in self.active_sessions.values():
             await session.close()
         self.active_sessions.clear()

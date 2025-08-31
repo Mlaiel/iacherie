@@ -12,7 +12,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timezone, timedelta
@@ -37,7 +38,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 logger = logging.getLogger(__name__)
 
 class SupportAgentIndex:
-    """Ultra-advanced support agent system orchestrator and main entry point"""    
+    """Ultra-advanced support agent system orchestrator and main entry point"""
+    
     def __init__(self, config: SupportConfig):
         self.config = config
         self.redis_client: Optional[aioredis.Redis] = None
@@ -70,7 +72,8 @@ class SupportAgentIndex:
         db_session: AsyncSession,
         initialize_defaults: bool = True
     ):
-        """Initialize all support agent system components"""        try:
+        """Initialize all support agent system components"""
+        try:
             self.redis_client = redis_client
             self.db_session = db_session
             
@@ -150,7 +153,8 @@ class SupportAgentIndex:
         channel: str = "web_chat",
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Process comprehensive support request with full AI orchestration"""        if not self.is_initialized or not self.agent_manager:
+        """Process comprehensive support request with full AI orchestration"""
+        if not self.is_initialized or not self.agent_manager:
             raise SupportError("Support Agent system not initialized")
         
         start_time = datetime.now(timezone.utc)
@@ -254,7 +258,8 @@ class SupportAgentIndex:
         conversation_id: str,
         limit: int = 50
     ) -> Dict[str, Any]:
-        """Get comprehensive conversation history with analytics"""        try:
+        """Get comprehensive conversation history with analytics"""
+        try:
             # Get conversation analytics
             analytics = await self.conversation_flow_manager.get_conversation_analytics(conversation_id)
             
@@ -283,7 +288,8 @@ class SupportAgentIndex:
         category: Optional[str] = None,
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Search knowledge base with multi-language support"""        try:
+        """Search knowledge base with multi-language support"""
+        try:
             # Detect language if not provided
             if language:
                 search_language = SupportedLanguage(language)
@@ -361,7 +367,8 @@ class SupportAgentIndex:
         priority: Optional[str] = None,
         specialty: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Create manual escalation to human agent"""        try:
+        """Create manual escalation to human agent"""
+        try:
             escalation_request = await self.escalation_manager.create_escalation(
                 conversation_id=conversation_id,
                 user_id=user_id,
@@ -397,7 +404,8 @@ class SupportAgentIndex:
         time_period: Optional[str] = "last_24h",
         include_detailed_metrics: bool = False
     ) -> Dict[str, Any]:
-        """Get comprehensive system analytics and performance metrics"""        try:
+        """Get comprehensive system analytics and performance metrics"""
+        try:
             # Calculate time range
             if time_period == "last_24h":
                 end_time = datetime.now(timezone.utc)
@@ -456,7 +464,8 @@ class SupportAgentIndex:
             return {"error": str(e)}
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status and health metrics"""        if not self.is_initialized:
+        """Get comprehensive system status and health metrics"""
+        if not self.is_initialized:
             return {"status": "not_initialized", "components": {}}
         
         try:
@@ -501,7 +510,8 @@ class SupportAgentIndex:
             return {"status": "error", "error": str(e)}
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive health check of all components"""        health_results = {
+        """Perform comprehensive health check of all components"""
+        health_results = {
             "overall_health": "unknown",
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "components": {},
@@ -583,7 +593,8 @@ class SupportAgentIndex:
             return health_results
     
     async def shutdown(self):
-        """Gracefully shutdown all support agent system components"""        try:
+        """Gracefully shutdown all support agent system components"""
+        try:
             logger.info("🔄 Initiating graceful shutdown of Support Agent system...")
             
             shutdown_tasks = []
@@ -629,7 +640,8 @@ class SupportAgentIndex:
         user_id: str, 
         language_hint: Optional[str]
     ) -> Tuple[SupportedLanguage, float]:
-        """Detect language and setup user language profile"""        if language_hint:
+        """Detect language and setup user language profile"""
+        if language_hint:
             try:
                 return SupportedLanguage(language_hint), 1.0
             except ValueError:
@@ -655,7 +667,8 @@ class SupportAgentIndex:
         language: SupportedLanguage, 
         intent: Optional[str]
     ) -> List[Any]:
-        """Search knowledge base with context"""        try:
+        """Search knowledge base with context"""
+        try:
             # Map conversation intent to knowledge category
             category_mapping = {
                 "technical_support": KnowledgeCategory.TECHNICAL_SUPPORT,
@@ -685,7 +698,8 @@ class SupportAgentIndex:
         knowledge_results: List[Any], 
         user_id: str
     ) -> bool:
-        """Check if escalation to human agent is needed"""        try:
+        """Check if escalation to human agent is needed"""
+        try:
             # Low AI confidence
             if conversation_response.get("confidence", 1.0) < 0.6:
                 return True
@@ -719,7 +733,8 @@ class SupportAgentIndex:
         conversation_response: Dict[str, Any], 
         message: str
     ) -> Dict[str, Any]:
-        """Handle escalation to human agent"""        try:
+        """Handle escalation to human agent"""
+        try:
             # Determine escalation reason and priority
             confidence = conversation_response.get("confidence", 1.0)
             if confidence < 0.3:
@@ -770,7 +785,8 @@ class SupportAgentIndex:
         language: SupportedLanguage,
         user_id: str
     ) -> Dict[str, Any]:
-        """Generate comprehensive response combining all AI capabilities"""        try:
+        """Generate comprehensive response combining all AI capabilities"""
+        try:
             base_response = conversation_response.get("response", {})
             
             # Enhanced response with knowledge base results
@@ -835,7 +851,8 @@ I'm adding you to the queue for human assistance. Estimated wait time: {escalati
         error_message: str, 
         language: SupportedLanguage
     ) -> Dict[str, Any]:
-        """Generate user-friendly error response"""        error_response = {
+        """Generate user-friendly error response"""
+        error_response = {
             "request_id": request_id,
             "conversation_id": None,
             "response": {
@@ -869,7 +886,8 @@ I'm adding you to the queue for human assistance. Estimated wait time: {escalati
         return error_response
     
     async def _record_system_metric(self, metric_name: str, value: float):
-        """Record system performance metric"""        try:
+        """Record system performance metric"""
+        try:
             if self.analytics:
                 metric = PerformanceMetric(
                     metric_type=MetricType.RESPONSE_TIME,  # Would map metric_name to appropriate type
@@ -887,7 +905,8 @@ I'm adding you to the queue for human assistance. Estimated wait time: {escalati
         conversation_response: Dict[str, Any], 
         user_id: str
     ):
-        """Record comprehensive request metrics"""        try:
+        """Record comprehensive request metrics"""
+        try:
             self.total_response_time += processing_time
             
             if self.analytics:
@@ -911,7 +930,8 @@ I'm adding you to the queue for human assistance. Estimated wait time: {escalati
             logger.error(f"Failed to record request metrics: {str(e)}")
     
     def _format_uptime(self, seconds: float) -> str:
-        """Format uptime in human-readable format"""        if seconds < 60:
+        """Format uptime in human-readable format"""
+        if seconds < 60:
             return f"{int(seconds)}s"
         elif seconds < 3600:
             return f"{int(seconds/60)}m {int(seconds%60)}s"
@@ -933,7 +953,8 @@ async def initialize_support_agent(
     db_session: AsyncSession,
     initialize_defaults: bool = True
 ) -> SupportAgentIndex:
-    """Initialize and return global support agent index"""    global support_agent_index
+    """Initialize and return global support agent index"""
+    global support_agent_index
     
     if support_agent_index is None:
         support_agent_index = SupportAgentIndex(config)
@@ -942,7 +963,8 @@ async def initialize_support_agent(
     return support_agent_index
 
 async def get_support_agent() -> SupportAgentIndex:
-    """Get the global support agent index"""    if support_agent_index is None:
+    """Get the global support agent index"""
+    if support_agent_index is None:
         raise SupportError("Support Agent system not initialized")
     
     return support_agent_index
@@ -954,7 +976,8 @@ async def quick_support_response(
     user_id: str,
     language: Optional[str] = None
 ) -> Dict[str, Any]:
-    """Quick support response for simple integrations"""    try:
+    """Quick support response for simple integrations"""
+    try:
         agent = await get_support_agent()
         return await agent.process_support_request(
             user_id=user_id,
@@ -973,7 +996,8 @@ async def quick_support_response(
 async def batch_process_support_requests(
     requests: List[Dict[str, Any]]
 ) -> List[Dict[str, Any]]:
-    """Process multiple support requests in batch"""    try:
+    """Process multiple support requests in batch"""
+    try:
         agent = await get_support_agent()
         results = []
         
@@ -1038,7 +1062,8 @@ __all__ = [
 ]
 
 def get_support_agent(agent_id: str = None, config: dict = None) -> SupportAgent:
-    """    Factory function to create a configured SupportAgent instance
+    """
+    Factory function to create a configured SupportAgent instance
     
     Args:
         agent_id: Unique identifier for the agent instance
@@ -1046,18 +1071,21 @@ def get_support_agent(agent_id: str = None, config: dict = None) -> SupportAgent
         
     Returns:
         SupportAgent: Configured support agent instance
-    """    if agent_id is None:
+    """
+    if agent_id is None:
         import time
         agent_id = f"support_{int(time.time())}"
     
     return SupportAgent(agent_id=agent_id, config=config)
 
 def get_default_config() -> dict:
-    """    Get default configuration for SupportAgent
+    """
+    Get default configuration for SupportAgent
     
     Returns:
         dict: Default configuration dictionary
-    """    return {
+    """
+    return {
         "conversation_model_config": {
             "model_name": "microsoft/DialoGPT-medium",
             "max_length": 150,
@@ -1099,7 +1127,8 @@ async def create_support_ticket(
     priority: str = "normal",
     agent_id: str = None
 ) -> dict:
-    """    Quick function to create a support ticket
+    """
+    Quick function to create a support ticket
     
     Args:
         user_id: User identifier
@@ -1111,7 +1140,8 @@ async def create_support_ticket(
         
     Returns:
         dict: Created ticket information and initial response
-    """    agent = get_support_agent(agent_id)
+    """
+    agent = get_support_agent(agent_id)
     await agent.initialize()
     
     request = AgentRequest(
@@ -1133,7 +1163,8 @@ async def search_knowledge_base(
     threshold: float = 0.7,
     agent_id: str = None
 ) -> dict:
-    """    Quick function to search the knowledge base
+    """
+    Quick function to search the knowledge base
     
     Args:
         query: Search query
@@ -1143,7 +1174,8 @@ async def search_knowledge_base(
         
     Returns:
         dict: Search results
-    """    agent = get_support_agent(agent_id)
+    """
+    agent = get_support_agent(agent_id)
     await agent.initialize()
     
     request = AgentRequest(
@@ -1160,7 +1192,8 @@ async def search_knowledge_base(
 
 # Module initialization
 def init_module():
-    """Initialize the support agent module"""    import logging
+    """Initialize the support agent module"""
+    import logging
     logging.getLogger(__name__).info(
         f"Support Agent module initialized - Version {__version__}"
     )

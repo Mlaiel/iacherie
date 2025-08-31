@@ -24,7 +24,8 @@ LEGAL WARNING: This software and all associated intellectual property
 belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import logging
 from datetime import datetime, timedelta
@@ -45,7 +46,8 @@ from ..core.exceptions import UsageException, MonitoringException
 
 
 class UsageStatus(Enum):
-    """Content usage status."""    AUTHORIZED = "authorized"
+    """Content usage status."""
+    AUTHORIZED = "authorized"
     UNAUTHORIZED = "unauthorized"
     PENDING_VERIFICATION = "pending_verification"
     DISPUTED = "disputed"
@@ -54,7 +56,8 @@ class UsageStatus(Enum):
 
 
 class DetectionMethod(Enum):
-    """Usage detection methods."""    FINGERPRINTING = "fingerprinting"
+    """Usage detection methods."""
+    FINGERPRINTING = "fingerprinting"
     WATERMARK = "watermark"
     METADATA_ANALYSIS = "metadata_analysis"
     API_MONITORING = "api_monitoring"
@@ -64,7 +67,8 @@ class DetectionMethod(Enum):
 
 
 class UsageContext(Enum):
-    """Context of content usage."""    COMMERCIAL = "commercial"
+    """Context of content usage."""
+    COMMERCIAL = "commercial"
     NON_COMMERCIAL = "non_commercial"
     EDUCATIONAL = "educational"
     EDITORIAL = "editorial"
@@ -75,7 +79,8 @@ class UsageContext(Enum):
 
 
 class PlatformType(Enum):
-    """Types of platforms for usage monitoring."""    STREAMING_SERVICE = "streaming_service"
+    """Types of platforms for usage monitoring."""
+    STREAMING_SERVICE = "streaming_service"
     SOCIAL_MEDIA = "social_media"
     VIDEO_PLATFORM = "video_platform"
     MUSIC_PLATFORM = "music_platform"
@@ -89,7 +94,8 @@ class PlatformType(Enum):
 
 @dataclass
 class UsageDetection:
-    """Content usage detection record."""    detection_id: str
+    """Content usage detection record."""
+    detection_id: str
     content_id: str
     detected_url: str
     platform: str
@@ -111,7 +117,8 @@ class UsageDetection:
 
 @dataclass
 class UsageVerification:
-    """Usage verification record."""    verification_id: str
+    """Usage verification record."""
+    verification_id: str
     detection_id: str
     verified_by: str
     verification_method: str
@@ -125,7 +132,8 @@ class UsageVerification:
 
 @dataclass
 class PlatformMonitor:
-    """Platform monitoring configuration."""    monitor_id: str
+    """Platform monitoring configuration."""
+    monitor_id: str
     platform_name: str
     platform_type: PlatformType
     base_url: str
@@ -143,7 +151,8 @@ class PlatformMonitor:
 
 @dataclass
 class UsageMetrics:
-    """Usage tracking metrics."""    metrics_id: str
+    """Usage tracking metrics."""
+    metrics_id: str
     content_id: str
     period_start: datetime
     period_end: datetime
@@ -158,7 +167,8 @@ class UsageMetrics:
 
 
 class ContentUsageTracker:
-    """    Advanced content usage tracking and monitoring system.
+    """
+    Advanced content usage tracking and monitoring system.
     
     Provides comprehensive usage monitoring including:
     - Real-time content usage detection across platforms
@@ -166,7 +176,8 @@ class ContentUsageTracker:
     - Revenue tracking from authorized usage
     - Unauthorized usage detection and enforcement
     - Usage analytics and trend analysis
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger("protection.usage_tracking")
@@ -200,7 +211,8 @@ class ContentUsageTracker:
         self.logger.info("ContentUsageTracker initialized successfully")
     
     async def _initialize_usage_tracker(self):
-        """Initialize usage tracking system components."""        try:
+        """Initialize usage tracking system components."""
+        try:
             # Initialize HTTP session
             await self._initialize_session()
             
@@ -221,7 +233,8 @@ class ContentUsageTracker:
             raise UsageException(f"Initialization error: {e}")
     
     async def _initialize_session(self):
-        """Initialize aiohttp session for web requests."""        try:
+        """Initialize aiohttp session for web requests."""
+        try:
             connector = aiohttp.TCPConnector(
                 limit=100,
                 limit_per_host=10,
@@ -245,8 +258,10 @@ class ContentUsageTracker:
             raise UsageException(f"Session initialization error: {e}")
     
     async def _load_platform_monitors(self):
-        """Load platform monitoring configurations from database."""        try:
-            query = """            SELECT 
+        """Load platform monitoring configurations from database."""
+        try:
+            query = """
+            SELECT 
                 monitor_id, platform_name, platform_type, base_url,
                 api_endpoint, authentication, monitoring_enabled,
                 scan_frequency_minutes, detection_methods, rate_limit_per_hour,
@@ -254,7 +269,8 @@ class ContentUsageTracker:
             FROM platform_monitors
             WHERE monitoring_enabled = true
             ORDER BY platform_name
-            """            
+            """
+            
             results = await self.db.fetch(query)
             
             for row in results:
@@ -284,7 +300,8 @@ class ContentUsageTracker:
             await self._initialize_default_monitors()
     
     async def _initialize_default_monitors(self):
-        """Initialize default platform monitors."""        default_monitors = {
+        """Initialize default platform monitors."""
+        default_monitors = {
             "youtube": PlatformMonitor(
                 monitor_id="youtube_monitor",
                 platform_name="youtube",
@@ -323,7 +340,8 @@ class ContentUsageTracker:
         content_metadata: Dict[str, Any],
         tracking_enabled: bool = True
     ) -> str:
-        """        Register content for usage tracking.
+        """
+        Register content for usage tracking.
         
         Args:
             content_id: Unique content identifier
@@ -333,7 +351,8 @@ class ContentUsageTracker:
             
         Returns:
             Tracking registration ID
-        """        try:
+        """
+        try:
             tracking_id = f"track_{uuid.uuid4().hex[:12]}"
             
             self.logger.info(f"Registering content for tracking: {content_id}")
@@ -365,7 +384,8 @@ class ContentUsageTracker:
         search_platforms: List[str] = None,
         detection_methods: List[DetectionMethod] = None
     ) -> List[UsageDetection]:
-        """        Detect content usage across platforms.
+        """
+        Detect content usage across platforms.
         
         Args:
             content_id: Content to search for
@@ -374,7 +394,8 @@ class ContentUsageTracker:
             
         Returns:
             List of usage detections
-        """        try:
+        """
+        try:
             self.logger.info(f"Starting content usage detection for: {content_id}")
             
             detections = []
@@ -449,7 +470,8 @@ class ContentUsageTracker:
         monitor: PlatformMonitor,
         method: DetectionMethod
     ) -> List[UsageDetection]:
-        """Detect content usage on specific platform using given method."""        try:
+        """Detect content usage on specific platform using given method."""
+        try:
             detections = []
             
             if method == DetectionMethod.API_MONITORING:
@@ -472,7 +494,8 @@ class ContentUsageTracker:
         content_info: Dict[str, Any],
         monitor: PlatformMonitor
     ) -> List[UsageDetection]:
-        """Detect content usage via platform API."""        try:
+        """Detect content usage via platform API."""
+        try:
             detections = []
             
             if not monitor.api_endpoint:
@@ -497,7 +520,8 @@ class ContentUsageTracker:
         content_info: Dict[str, Any],
         monitor: PlatformMonitor
     ) -> List[UsageDetection]:
-        """Detect video content via YouTube API."""        try:
+        """Detect video content via YouTube API."""
+        try:
             detections = []
             
             # Search for content using title and metadata
@@ -561,7 +585,8 @@ class ContentUsageTracker:
         content_info: Dict[str, Any],
         monitor: PlatformMonitor
     ) -> List[UsageDetection]:
-        """Detect music content via Spotify API."""        try:
+        """Detect music content via Spotify API."""
+        try:
             detections = []
             
             # Search for content using title and artist
@@ -630,7 +655,8 @@ class ContentUsageTracker:
         verified_by: str,
         verification_method: str = "manual"
     ) -> UsageVerification:
-        """        Verify if detected content usage is authorized.
+        """
+        Verify if detected content usage is authorized.
         
         Args:
             detection_id: Detection to verify
@@ -639,7 +665,8 @@ class ContentUsageTracker:
             
         Returns:
             Usage verification record
-        """        try:
+        """
+        try:
             verification_id = f"verify_{uuid.uuid4().hex[:12]}"
             
             self.logger.info(f"Verifying usage authorization: {detection_id}")
@@ -703,7 +730,8 @@ class ContentUsageTracker:
         start_date: datetime,
         end_date: datetime
     ) -> UsageMetrics:
-        """        Get comprehensive usage analytics for content.
+        """
+        Get comprehensive usage analytics for content.
         
         Args:
             content_id: Content identifier
@@ -712,20 +740,23 @@ class ContentUsageTracker:
             
         Returns:
             Usage metrics and analytics
-        """        try:
+        """
+        try:
             metrics_id = f"metrics_{uuid.uuid4().hex[:12]}"
             
             self.logger.info(f"Generating usage analytics for content: {content_id}")
             
             # Get usage detections for the period
-            detections_query = """            SELECT 
+            detections_query = """
+            SELECT 
                 detection_id, platform, platform_type, usage_status,
                 confidence_score, detected_at, metadata
             FROM usage_detections
             WHERE content_id = $1 
                 AND detected_at BETWEEN $2 AND $3
             ORDER BY detected_at DESC
-            """            
+            """
+            
             detections = await self.db.fetch(detections_query, content_id, start_date, end_date)
             
             # Calculate metrics
@@ -735,12 +766,14 @@ class ContentUsageTracker:
             pending_verifications = len([d for d in detections if d["usage_status"] == UsageStatus.PENDING_VERIFICATION.value])
             
             # Get revenue data
-            revenue_query = """            SELECT COALESCE(SUM(revenue_impact), 0) as total_revenue
+            revenue_query = """
+            SELECT COALESCE(SUM(revenue_impact), 0) as total_revenue
             FROM usage_verifications uv
             JOIN usage_detections ud ON uv.detection_id = ud.detection_id
             WHERE ud.content_id = $1 
                 AND uv.verified_at BETWEEN $2 AND $3
-            """            
+            """
+            
             revenue_result = await self.db.fetchrow(revenue_query, content_id, start_date, end_date)
             revenue_generated = revenue_result["total_revenue"] or Decimal("0.00")
             
@@ -783,7 +816,8 @@ class ContentUsageTracker:
             raise UsageException(f"Analytics error: {e}")
     
     async def cleanup_resources(self):
-        """Clean up usage tracker resources."""        try:
+        """Clean up usage tracker resources."""
+        try:
             if self.session and not self.session.closed:
                 await self.session.close()
             
@@ -798,4 +832,5 @@ class ContentUsageTracker:
 
 # Factory function for easy instantiation
 def create_usage_tracker(config: Optional[Dict[str, Any]] = None) -> ContentUsageTracker:
-    """Create and return configured usage tracker instance."""    return ContentUsageTracker(config)
+    """Create and return configured usage tracker instance."""
+    return ContentUsageTracker(config)

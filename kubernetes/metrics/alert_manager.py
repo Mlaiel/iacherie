@@ -30,7 +30,8 @@ Features:
 - Advanced notification channels with encryption
 - Alert lifecycle management with audit trails
 - Predictive alerting with forecasting capabilities
-"""import logging
+"""
+import logging
 import asyncio
 import time
 from typing import Dict, List, Optional, Any, Union, Callable, Set
@@ -60,7 +61,8 @@ settings = get_settings()
 
 
 class AlertSeverity(Enum):
-    """Enhanced alert severity levels with business impact"""    INFO = "info"
+    """Enhanced alert severity levels with business impact"""
+    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
@@ -68,7 +70,8 @@ class AlertSeverity(Enum):
 
 
 class AlertStatus(Enum):
-    """Alert lifecycle status tracking"""    PENDING = "pending"
+    """Alert lifecycle status tracking"""
+    PENDING = "pending"
     FIRING = "firing"
     RESOLVED = "resolved"
     ACKNOWLEDGED = "acknowledged"
@@ -78,7 +81,8 @@ class AlertStatus(Enum):
 
 
 class AlertCategory(Enum):
-    """Alert categorization for intelligent routing"""    PERFORMANCE = "performance"
+    """Alert categorization for intelligent routing"""
+    PERFORMANCE = "performance"
     SECURITY = "security"
     BUSINESS = "business"
     INFRASTRUCTURE = "infrastructure"
@@ -89,7 +93,8 @@ class AlertCategory(Enum):
 
 
 class NotificationChannel(Enum):
-    """Enhanced notification delivery channels"""    EMAIL = "email"
+    """Enhanced notification delivery channels"""
+    EMAIL = "email"
     SLACK = "slack"
     WEBHOOK = "webhook"
     SMS = "sms"
@@ -101,7 +106,8 @@ class NotificationChannel(Enum):
 
 @dataclass
 class AlertCondition:
-    """Enhanced alert condition with ML capabilities"""    metric_name: str
+    """Enhanced alert condition with ML capabilities"""
+    metric_name: str
     operator: str  # gt, lt, eq, ne, gte, lte, anomaly, trend
     threshold: Union[float, str]
     duration: str = "5m"
@@ -114,7 +120,8 @@ class AlertCondition:
 
 @dataclass
 class AlertRuleConfig:
-    """Comprehensive alert rule configuration"""    name: str
+    """Comprehensive alert rule configuration"""
+    name: str
     description: str
     conditions: List[AlertCondition]
     severity: AlertSeverity
@@ -134,7 +141,8 @@ class AlertRuleConfig:
 
 @dataclass
 class AlertIncident:
-    """Alert incident tracking with enhanced metadata"""    id: str
+    """Alert incident tracking with enhanced metadata"""
+    id: str
     rule_id: str
     rule_name: str
     severity: AlertSeverity
@@ -157,7 +165,8 @@ class AlertIncident:
 
 @dataclass
 class AlertMetrics:
-    """Alert system performance metrics"""    total_alerts: int = 0
+    """Alert system performance metrics"""
+    total_alerts: int = 0
     alerts_by_severity: Dict[AlertSeverity, int] = field(default_factory=dict)
     alerts_by_category: Dict[AlertCategory, int] = field(default_factory=dict)
     resolution_times: List[float] = field(default_factory=list)
@@ -168,7 +177,8 @@ class AlertMetrics:
 
 
 class AlertManager:
-    """    Enterprise-grade intelligent alert manager with ML capabilities
+    """
+    Enterprise-grade intelligent alert manager with ML capabilities
     
     Advanced Features:
     - ML-powered anomaly detection with adaptive thresholds
@@ -179,7 +189,8 @@ class AlertManager:
     - Real-time threat detection and response
     - Predictive alerting with forecasting
     - Alert fatigue reduction with smart suppression
-    """    
+    """
+    
     def __init__(self, config: Optional[MetricsConfiguration] = None):
         self.config = config or get_metrics_config()
         self.logger = logger
@@ -218,7 +229,8 @@ class AlertManager:
         self._initialize_notification_channels()
     
     async def start(self) -> None:
-        """Start enhanced alert manager with ML capabilities"""        try:
+        """Start enhanced alert manager with ML capabilities"""
+        try:
             if self._running:
                 self.logger.warning("Alert manager already running")
                 return
@@ -246,7 +258,8 @@ class AlertManager:
             raise
     
     async def stop(self) -> None:
-        """Stop alert manager gracefully"""        try:
+        """Stop alert manager gracefully"""
+        try:
             self._running = False
             
             # Stop all evaluation tasks
@@ -271,7 +284,8 @@ class AlertManager:
             self.logger.error(f"Error stopping alert manager: {e}")
     
     async def register_rule(self, rule_config: AlertRuleConfig) -> str:
-        """Register enhanced alert rule with validation and optimization"""        try:
+        """Register enhanced alert rule with validation and optimization"""
+        try:
             # Validate rule configuration
             await self._validate_rule_config(rule_config)
             
@@ -309,7 +323,8 @@ class AlertManager:
             raise
     
     async def unregister_rule(self, rule_id: str) -> bool:
-        """Unregister alert rule with cleanup"""        try:
+        """Unregister alert rule with cleanup"""
+        try:
             if rule_id not in self.alert_rules:
                 self.logger.warning(f"Alert rule not found: {rule_id}")
                 return False
@@ -352,7 +367,8 @@ class AlertManager:
         annotations: Optional[Dict[str, str]] = None,
         tenant_id: Optional[str] = None
     ) -> Optional[str]:
-        """Trigger alert with enhanced processing and correlation"""        try:
+        """Trigger alert with enhanced processing and correlation"""
+        try:
             rule_config = self.alert_rules.get(rule_id)
             if not rule_config:
                 self.logger.error(f"Alert rule not found: {rule_id}")
@@ -439,7 +455,8 @@ class AlertManager:
         resolution_note: Optional[str] = None,
         resolved_by: Optional[str] = None
     ) -> bool:
-        """Resolve alert with enhanced tracking"""        try:
+        """Resolve alert with enhanced tracking"""
+        try:
             alert_incident = self.active_alerts.get(alert_id)
             if not alert_incident:
                 self.logger.warning(f"Active alert not found: {alert_id}")
@@ -495,7 +512,8 @@ class AlertManager:
         acknowledged_by: str,
         acknowledgment_note: Optional[str] = None
     ) -> bool:
-        """Acknowledge alert with enhanced tracking"""        try:
+        """Acknowledge alert with enhanced tracking"""
+        try:
             alert_incident = self.active_alerts.get(alert_id)
             if not alert_incident:
                 self.logger.warning(f"Active alert not found: {alert_id}")
@@ -543,7 +561,8 @@ class AlertManager:
         severity_filter: Optional[AlertSeverity] = None,
         category_filter: Optional[AlertCategory] = None
     ) -> List[AlertIncident]:
-        """Get active alerts with advanced filtering"""        try:
+        """Get active alerts with advanced filtering"""
+        try:
             active_alerts = list(self.active_alerts.values())
             
             # Apply tenant filter
@@ -584,7 +603,8 @@ class AlertManager:
         tenant_id: Optional[str] = None,
         time_window: timedelta = timedelta(hours=24)
     ) -> Dict[str, Any]:
-        """Get comprehensive alert statistics with business intelligence"""        try:
+        """Get comprehensive alert statistics with business intelligence"""
+        try:
             current_time = datetime.utcnow()
             start_time = current_time - time_window
             
@@ -664,7 +684,8 @@ class AlertManager:
     # Private implementation methods
     
     async def _validate_rule_config(self, rule_config: AlertRuleConfig) -> None:
-        """Validate alert rule configuration"""        if not rule_config.name:
+        """Validate alert rule configuration"""
+        if not rule_config.name:
             raise ValueError("Alert rule name cannot be empty")
         
         if not rule_config.conditions:
@@ -678,25 +699,30 @@ class AlertManager:
                 raise ValueError(f"Invalid operator: {condition.operator}")
     
     async def _apply_tenant_security(self, rule_config: AlertRuleConfig) -> None:
-        """Apply tenant-specific security policies"""        # Implementation for tenant security
+        """Apply tenant-specific security policies"""
+        # Implementation for tenant security
         pass
     
     async def _optimize_rule_conditions(self, conditions: List[AlertCondition]) -> List[AlertCondition]:
-        """Optimize alert rule conditions for performance"""        # Implementation for condition optimization
+        """Optimize alert rule conditions for performance"""
+        # Implementation for condition optimization
         return conditions
     
     async def _initialize_rule_ml_models(self, rule_id: str, rule_config: AlertRuleConfig) -> None:
-        """Initialize ML models for rule"""        # Implementation for ML model initialization
+        """Initialize ML models for rule"""
+        # Implementation for ML model initialization
         pass
     
     async def _cache_rule_config(self, rule_id: str, rule_config: AlertRuleConfig) -> None:
-        """Cache rule configuration for performance"""        # Implementation for rule caching
+        """Cache rule configuration for performance"""
+        # Implementation for rule caching
         pass
     
     # Additional private methods would be implemented here...
     
     def _initialize_default_rules(self) -> None:
-        """Initialize comprehensive default alert rules"""        # High error rate alert
+        """Initialize comprehensive default alert rules"""
+        # High error rate alert
         error_rate_rule = AlertRuleConfig(
             name="High HTTP Error Rate",
             description="Alert when HTTP 5xx error rate exceeds 5%",
@@ -758,109 +784,141 @@ class AlertManager:
         self.logger.info("Enhanced default alert rules initialized")
     
     def _initialize_ml_models(self) -> None:
-        """Initialize ML models for anomaly detection"""        # Implementation for ML model initialization
+        """Initialize ML models for anomaly detection"""
+        # Implementation for ML model initialization
         pass
     
     def _initialize_notification_channels(self) -> None:
-        """Initialize notification channels"""        # Implementation for notification channel setup
+        """Initialize notification channels"""
+        # Implementation for notification channel setup
         pass
     
     def _initialize_business_impact_calculator(self):
-        """Initialize business impact calculation engine"""        # Implementation for business impact calculator
+        """Initialize business impact calculation engine"""
+        # Implementation for business impact calculator
         return None
     
     async def _initialize_anomaly_detection(self) -> None:
-        """Initialize anomaly detection system"""        # Implementation for anomaly detection initialization
+        """Initialize anomaly detection system"""
+        # Implementation for anomaly detection initialization
         pass
     
     async def _start_evaluation_loops(self) -> None:
-        """Start alert evaluation loops"""        # Implementation for evaluation loop startup
+        """Start alert evaluation loops"""
+        # Implementation for evaluation loop startup
         pass
     
     async def _start_correlation_engine(self) -> None:
-        """Start alert correlation engine"""        # Implementation for correlation engine
+        """Start alert correlation engine"""
+        # Implementation for correlation engine
         pass
     
     async def _start_suppression_engine(self) -> None:
-        """Start alert suppression engine"""        # Implementation for suppression engine
+        """Start alert suppression engine"""
+        # Implementation for suppression engine
         pass
     
     async def _start_business_intelligence(self) -> None:
-        """Start business intelligence engine"""        # Implementation for business intelligence
+        """Start business intelligence engine"""
+        # Implementation for business intelligence
         pass
     
     # Additional helper methods would be implemented here...
     async def _evaluate_rule_loop(self, rule_id: str, rule_config: AlertRuleConfig) -> None:
-        """Main evaluation loop for alert rule"""        pass
+        """Main evaluation loop for alert rule"""
+        pass
     
     async def _generate_alert_fingerprint(self, rule_id: str, values: Dict[str, float], labels: Dict[str, str]) -> str:
-        """Generate unique alert fingerprint"""        return f"{rule_id}_{hash(str(values) + str(labels))}"
+        """Generate unique alert fingerprint"""
+        return f"{rule_id}_{hash(str(values) + str(labels))}"
     
     async def _find_existing_alert(self, fingerprint: str) -> Optional[AlertIncident]:
-        """Find existing alert by fingerprint"""        return None
+        """Find existing alert by fingerprint"""
+        return None
     
     async def _update_existing_alert(self, alert: AlertIncident, values: Dict[str, float]) -> None:
-        """Update existing alert"""        pass
+        """Update existing alert"""
+        pass
     
     async def _calculate_business_impact(self, rule_config: AlertRuleConfig, values: Dict[str, float], tenant_id: Optional[str]) -> float:
-        """Calculate business impact score"""        return 5.0
+        """Calculate business impact score"""
+        return 5.0
     
     async def _apply_alert_correlation(self, alert: AlertIncident) -> Optional[str]:
-        """Apply alert correlation"""        return None
+        """Apply alert correlation"""
+        return None
     
     async def _check_suppression_rules(self, alert: AlertIncident) -> bool:
-        """Check if alert should be suppressed"""        return False
+        """Check if alert should be suppressed"""
+        return False
     
     async def _send_intelligent_notifications(self, alert: AlertIncident, rule_config: AlertRuleConfig) -> None:
-        """Send intelligent notifications"""        pass
+        """Send intelligent notifications"""
+        pass
     
     async def _update_alert_metrics(self, alert: AlertIncident) -> None:
-        """Update alert metrics"""        pass
+        """Update alert metrics"""
+        pass
     
     async def _store_alert_history(self, alert: AlertIncident) -> None:
-        """Store alert in history"""        pass
+        """Store alert in history"""
+        pass
     
     async def _check_escalation_rules(self, alert: AlertIncident, rule_config: AlertRuleConfig) -> None:
-        """Check escalation rules"""        pass
+        """Check escalation rules"""
+        pass
     
     async def _send_resolution_notifications(self, alert: AlertIncident) -> None:
-        """Send resolution notifications"""        pass
+        """Send resolution notifications"""
+        pass
     
     async def _update_business_intelligence(self, alert: AlertIncident, action: str) -> None:
-        """Update business intelligence"""        pass
+        """Update business intelligence"""
+        pass
     
     async def _update_alert_history(self, alert: AlertIncident) -> None:
-        """Update alert history"""        pass
+        """Update alert history"""
+        pass
     
     async def _update_ml_models_with_resolution(self, alert: AlertIncident) -> None:
-        """Update ML models with resolution data"""        pass
+        """Update ML models with resolution data"""
+        pass
     
     async def _send_acknowledgment_notifications(self, alert: AlertIncident) -> None:
-        """Send acknowledgment notifications"""        pass
+        """Send acknowledgment notifications"""
+        pass
     
     async def _generate_ml_insights(self, alerts: List[AlertIncident]) -> Dict[str, Any]:
-        """Generate ML insights"""        return {}
+        """Generate ML insights"""
+        return {}
     
     async def _analyze_alert_trends(self, alerts: List[AlertIncident], time_window: timedelta) -> Dict[str, Any]:
-        """Analyze alert trends"""        return {}
+        """Analyze alert trends"""
+        return {}
     
     async def _resolve_rule_alerts(self, rule_id: str) -> None:
-        """Resolve all alerts for a rule"""        pass
+        """Resolve all alerts for a rule"""
+        pass
     
     async def _cleanup_rule_ml_models(self, rule_id: str) -> None:
-        """Cleanup ML models for rule"""        pass
+        """Cleanup ML models for rule"""
+        pass
     
     async def _remove_rule_from_cache(self, rule_id: str) -> None:
-        """Remove rule from cache"""        pass
+        """Remove rule from cache"""
+        pass
     
     async def _save_ml_models(self) -> None:
-        """Save ML models"""        pass
+        """Save ML models"""
+        pass
     
     async def _save_alert_statistics(self) -> None:
-        """Save alert statistics"""        pass
+        """Save alert statistics"""
+        pass
     
     async def _send_shutdown_notifications(self) -> None:
-        """Send shutdown notifications"""        pass
+        """Send shutdown notifications"""
+        pass
 
 import logging
 import asyncio
@@ -888,13 +946,15 @@ settings = get_settings()
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    CRITICAL = "critical"
+    """Alert severity levels"""
+    CRITICAL = "critical"
     WARNING = "warning"
     INFO = "info"
 
 
 class AlertState(Enum):
-    """Alert states"""    PENDING = "pending"
+    """Alert states"""
+    PENDING = "pending"
     FIRING = "firing"
     RESOLVED = "resolved"
     ACKNOWLEDGED = "acknowledged"
@@ -902,7 +962,8 @@ class AlertState(Enum):
 
 
 class NotificationType(Enum):
-    """Notification channel types"""    EMAIL = "email"
+    """Notification channel types"""
+    EMAIL = "email"
     SLACK = "slack"
     WEBHOOK = "webhook"
     SMS = "sms"
@@ -911,7 +972,8 @@ class NotificationType(Enum):
 
 @dataclass
 class AlertCondition:
-    """Alert condition configuration"""    metric_name: str
+    """Alert condition configuration"""
+    metric_name: str
     operator: str  # gt, lt, eq, ne, gte, lte
     threshold: float
     duration: str = "5m"  # Time condition must be true
@@ -920,7 +982,8 @@ class AlertCondition:
 
 @dataclass
 class AlertRuleConfig:
-    """Alert rule configuration"""    name: str
+    """Alert rule configuration"""
+    name: str
     description: str
     conditions: List[AlertCondition]
     severity: AlertSeverity = AlertSeverity.WARNING
@@ -933,7 +996,8 @@ class AlertRuleConfig:
 
 @dataclass
 class AlertNotification:
-    """Alert notification data"""    alert_id: str
+    """Alert notification data"""
+    alert_id: str
     rule_name: str
     severity: AlertSeverity
     state: AlertState
@@ -944,7 +1008,8 @@ class AlertNotification:
 
 
 class AlertManager:
-    """    Enterprise alert manager with multi-tenant support
+    """
+    Enterprise alert manager with multi-tenant support
     
     Handles:
     - Alert rule evaluation and monitoring
@@ -953,7 +1018,8 @@ class AlertManager:
     - Alert escalation and acknowledgment
     - Tenant-specific alert isolation
     - Alert analytics and reporting
-    """    
+    """
+    
     def __init__(self):
         self.redis_manager = RedisManager()
         self.logger = logger
@@ -978,7 +1044,8 @@ class AlertManager:
         self._initialize_notification_channels()
     
     async def start(self) -> None:
-        """Start alert manager"""        try:
+        """Start alert manager"""
+        try:
             if self._running:
                 self.logger.warning("Alert manager already running")
                 return
@@ -1000,7 +1067,8 @@ class AlertManager:
             raise
     
     async def stop(self) -> None:
-        """Stop alert manager"""        try:
+        """Stop alert manager"""
+        try:
             self._running = False
             self.logger.info("Stopping alert manager...")
             
@@ -1019,7 +1087,8 @@ class AlertManager:
             self.logger.error(f"Error stopping alert manager: {e}")
     
     def register_rule(self, rule_config: AlertRuleConfig) -> str:
-        """Register new alert rule"""        try:
+        """Register new alert rule"""
+        try:
             rule_id = f"rule_{len(self.alert_rules)}_{int(datetime.utcnow().timestamp())}"
             self.alert_rules[rule_id] = rule_config
             
@@ -1036,7 +1105,8 @@ class AlertManager:
         channel_type: NotificationType,
         config: Dict[str, Any]
     ) -> None:
-        """Register notification channel"""        try:
+        """Register notification channel"""
+        try:
             channel = NotificationChannel(
                 id=channel_id,
                 type=channel_type,
@@ -1057,7 +1127,8 @@ class AlertManager:
         context: Dict[str, Any],
         tenant_id: Optional[str] = None
     ) -> Optional[str]:
-        """Manually trigger alert"""        try:
+        """Manually trigger alert"""
+        try:
             if rule_id not in self.alert_rules:
                 self.logger.error(f"Unknown alert rule: {rule_id}")
                 return None
@@ -1095,7 +1166,8 @@ class AlertManager:
             return None
     
     async def acknowledge_alert(self, alert_id: str, user_id: str) -> bool:
-        """Acknowledge alert"""        try:
+        """Acknowledge alert"""
+        try:
             if alert_id not in self.active_alerts:
                 return False
             
@@ -1115,7 +1187,8 @@ class AlertManager:
             return False
     
     async def resolve_alert(self, alert_id: str) -> bool:
-        """Resolve alert"""        try:
+        """Resolve alert"""
+        try:
             if alert_id not in self.active_alerts:
                 return False
             
@@ -1145,7 +1218,8 @@ class AlertManager:
         state_filter: Optional[AlertState] = None,
         limit: int = 100
     ) -> List[AlertInstance]:
-        """Get alerts for specific tenant"""        try:
+        """Get alerts for specific tenant"""
+        try:
             # Get from Redis
             alerts_key = f"alerts:tenant:{tenant_id}"
             alert_data = await self.redis_manager.lrange(alerts_key, 0, limit - 1)
@@ -1173,7 +1247,8 @@ class AlertManager:
         tenant_id: Optional[str] = None,
         time_range: timedelta = timedelta(hours=24)
     ) -> Dict[str, Any]:
-        """Get alert metrics and statistics"""        try:
+        """Get alert metrics and statistics"""
+        try:
             end_time = datetime.utcnow()
             start_time = end_time - time_range
             
@@ -1229,7 +1304,8 @@ class AlertManager:
             return {}
     
     async def _evaluation_loop(self) -> None:
-        """Main alert evaluation loop"""        try:
+        """Main alert evaluation loop"""
+        try:
             self.logger.info("Starting alert evaluation loop")
             
             while self._running:
@@ -1254,7 +1330,8 @@ class AlertManager:
             self.logger.error(f"Error in alert evaluation loop: {e}")
     
     async def _notification_loop(self) -> None:
-        """Notification processing loop"""        try:
+        """Notification processing loop"""
+        try:
             self.logger.info("Starting notification loop")
             
             while self._running:
@@ -1268,7 +1345,8 @@ class AlertManager:
             self.logger.error(f"Error in notification loop: {e}")
     
     async def _cleanup_loop(self) -> None:
-        """Cleanup old alerts and data"""        try:
+        """Cleanup old alerts and data"""
+        try:
             self.logger.info("Starting cleanup loop")
             
             while self._running:
@@ -1281,7 +1359,8 @@ class AlertManager:
             self.logger.error(f"Error in cleanup loop: {e}")
     
     async def _evaluate_rule(self, rule_id: str, rule: AlertRuleConfig) -> None:
-        """Evaluate single alert rule"""        try:
+        """Evaluate single alert rule"""
+        try:
             # Check each condition
             condition_results = []
             
@@ -1327,7 +1406,8 @@ class AlertManager:
         condition: AlertCondition,
         tenant_id: Optional[str]
     ) -> bool:
-        """Evaluate single alert condition"""        try:
+        """Evaluate single alert condition"""
+        try:
             # Get metric data from Redis
             metric_key = f"metrics:tenant:{tenant_id}:{condition.metric_name}" if tenant_id else f"metrics:global:{condition.metric_name}"
             
@@ -1387,7 +1467,8 @@ class AlertManager:
             return False
     
     async def _send_alert_notifications(self, alert: AlertInstance) -> None:
-        """Send alert notifications"""        try:
+        """Send alert notifications"""
+        try:
             rule = self.alert_rules.get(alert.rule_id)
             if not rule:
                 return
@@ -1413,7 +1494,8 @@ class AlertManager:
             self.logger.error(f"Error sending alert notifications: {e}")
     
     async def _send_resolution_notification(self, alert: AlertInstance) -> None:
-        """Send alert resolution notification"""        try:
+        """Send alert resolution notification"""
+        try:
             rule = self.alert_rules.get(alert.rule_id)
             if not rule:
                 return
@@ -1443,7 +1525,8 @@ class AlertManager:
         notification: AlertNotification,
         channel: NotificationChannel
     ) -> None:
-        """Send notification to specific channel"""        try:
+        """Send notification to specific channel"""
+        try:
             if channel.type == NotificationType.EMAIL:
                 await self.email_service.send_alert_email(notification, channel.config)
             elif channel.type == NotificationType.SLACK:
@@ -1457,7 +1540,8 @@ class AlertManager:
             self.logger.error(f"Error sending notification via {channel.type.value}: {e}")
     
     async def _process_notification_queue(self) -> None:
-        """Process notification queue"""        try:
+        """Process notification queue"""
+        try:
             # Get notifications from queue
             queue_key = "notifications:queue"
             notifications = await self.redis_manager.lrange(queue_key, 0, 99)
@@ -1474,7 +1558,8 @@ class AlertManager:
             self.logger.error(f"Error processing notification queue: {e}")
     
     async def _cleanup_old_alerts(self) -> None:
-        """Cleanup old resolved alerts"""        try:
+        """Cleanup old resolved alerts"""
+        try:
             cutoff_time = datetime.utcnow() - timedelta(days=7)  # Keep alerts for 7 days
             
             # Cleanup from active alerts
@@ -1492,7 +1577,8 @@ class AlertManager:
             self.logger.error(f"Error cleaning up old alerts: {e}")
     
     async def _store_alert(self, alert: AlertInstance) -> None:
-        """Store alert in Redis"""        try:
+        """Store alert in Redis"""
+        try:
             # Store in tenant-specific list
             if alert.tenant_id:
                 alerts_key = f"alerts:tenant:{alert.tenant_id}"
@@ -1509,7 +1595,8 @@ class AlertManager:
             self.logger.error(f"Error storing alert: {e}")
     
     def _initialize_default_rules(self) -> None:
-        """Initialize default alert rules"""        # High error rate alert
+        """Initialize default alert rules"""
+        # High error rate alert
         self.register_rule(AlertRuleConfig(
             name="High Error Rate",
             description="Alert when HTTP error rate exceeds threshold",
@@ -1561,7 +1648,8 @@ class AlertManager:
         ))
     
     def _initialize_notification_channels(self) -> None:
-        """Initialize default notification channels"""        # Default email channel
+        """Initialize default notification channels"""
+        # Default email channel
         self.register_notification_channel(
             "default_email",
             NotificationType.EMAIL,

@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""from typing import Dict, List, Optional, Union, Any
+"""
+from typing import Dict, List, Optional, Union, Any
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, func, text
 from datetime import datetime, timedelta
@@ -36,11 +37,14 @@ from ..models.content_distribution import ContentDistribution
 logger = logging.getLogger(__name__)
 
 class ContentDistributionRepository(BaseRepository[ContentDistribution]):
-    """    Repository for content distribution management with enterprise-grade
+    """
+    Repository for content distribution management with enterprise-grade
     features including multi-platform scheduling, optimization, and analytics.
-    """    
+    """
+    
     def __init__(self, db_session: Session):
-        """Initialize Content Distribution Repository"""        super().__init__(db_session, ContentDistribution)
+        """Initialize Content Distribution Repository"""
+        super().__init__(db_session, ContentDistribution)
         
     def create_distribution_plan(self, 
                                user_id: int,
@@ -48,7 +52,8 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
                                platforms: List[str],
                                schedule_data: Dict[str, Any],
                                optimization_settings: Dict[str, Any]) -> ContentDistribution:
-        """        Create new content distribution plan
+        """
+        Create new content distribution plan
         
         Args:
             user_id: User creating the distribution
@@ -59,7 +64,8 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
             
         Returns:
             Created content distribution instance
-        """        try:
+        """
+        try:
             distribution_data = {
                 'user_id': user_id,
                 'content_id': content_id,
@@ -83,7 +89,8 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
                                  status: str,
                                  platform_results: Optional[Dict[str, Any]] = None,
                                  error_details: Optional[str] = None) -> Optional[ContentDistribution]:
-        """        Update content distribution status and results
+        """
+        Update content distribution status and results
         
         Args:
             distribution_id: Distribution ID
@@ -93,7 +100,8 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
             
         Returns:
             Updated distribution instance
-        """        try:
+        """
+        try:
             update_data = {
                 'status': status,
                 'updated_at': datetime.utcnow()
@@ -124,7 +132,8 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
                                   schedule_time: Optional[datetime] = None,
                                   platform: Optional[str] = None,
                                   limit: int = 100) -> List[ContentDistribution]:
-        """        Get scheduled distributions for processing
+        """
+        Get scheduled distributions for processing
         
         Args:
             schedule_time: Optional specific schedule time
@@ -133,7 +142,8 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
             
         Returns:
             List of scheduled distributions
-        """        try:
+        """
+        try:
             current_time = schedule_time or datetime.utcnow()
             
             query = self.db_session.query(ContentDistribution).filter(
@@ -162,7 +172,8 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
                              platform: Optional[str] = None,
                              limit: int = 50,
                              offset: int = 0) -> List[ContentDistribution]:
-        """        Get user's content distributions with filtering
+        """
+        Get user's content distributions with filtering
         
         Args:
             user_id: User ID
@@ -173,7 +184,8 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
             
         Returns:
             List of user's content distributions
-        """        try:
+        """
+        try:
             filters = {'user_id': user_id}
             
             if status:
@@ -203,7 +215,8 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
                                  user_id: Optional[int] = None,
                                  platform: Optional[str] = None,
                                  days: int = 30) -> Dict[str, Any]:
-        """        Get content distribution analytics and performance metrics
+        """
+        Get content distribution analytics and performance metrics
         
         Args:
             user_id: Optional user ID filter
@@ -212,7 +225,8 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
             
         Returns:
             Distribution analytics data
-        """        try:
+        """
+        try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
             base_query = self.db_session.query(ContentDistribution).filter(
@@ -292,7 +306,8 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
             raise RepositoryException(f"Failed to get distribution analytics: {str(e)}")
             
     def get_platform_performance_stats(self, platform: str, days: int = 30) -> Dict[str, Any]:
-        """        Get performance statistics for specific platform
+        """
+        Get performance statistics for specific platform
         
         Args:
             platform: Platform name
@@ -300,7 +315,8 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
             
         Returns:
             Platform performance statistics
-        """        try:
+        """
+        try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
             # Get distributions for specific platform
@@ -357,14 +373,16 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
             raise RepositoryException(f"Failed to get platform performance stats: {str(e)}")
             
     def get_optimization_recommendations(self, user_id: int) -> Dict[str, Any]:
-        """        Get AI-powered optimization recommendations for user's distributions
+        """
+        Get AI-powered optimization recommendations for user's distributions
         
         Args:
             user_id: User ID
             
         Returns:
             Optimization recommendations
-        """        try:
+        """
+        try:
             # Get user's recent distributions (last 30 days)
             recent_distributions = self.get_user_distributions(user_id, limit=100)
             
@@ -449,7 +467,8 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
             raise RepositoryException(f"Failed to get optimization recommendations: {str(e)}")
             
     def _generate_platform_recommendation(self, platform: str, success_rate: float, avg_engagement: float) -> str:
-        """Generate platform-specific recommendation"""        if success_rate > 80:
+        """Generate platform-specific recommendation"""
+        if success_rate > 80:
             return f"Excellent performance on {platform}! Continue current strategy."
         elif success_rate > 60:
             return f"Good performance on {platform}. Consider A/B testing different posting times."
@@ -462,7 +481,8 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
                                  user_id: int,
                                  content_ids: List[int],
                                  platform_schedule: Dict[str, Dict[str, Any]]) -> List[ContentDistribution]:
-        """        Schedule bulk content distribution across multiple platforms
+        """
+        Schedule bulk content distribution across multiple platforms
         
         Args:
             user_id: User ID
@@ -471,7 +491,8 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
             
         Returns:
             List of created distribution plans
-        """        try:
+        """
+        try:
             distributions = []
             
             for content_id in content_ids:
@@ -497,14 +518,16 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
             raise RepositoryException(f"Failed to schedule bulk distribution: {str(e)}")
             
     def cleanup_old_distributions(self, days_to_keep: int = 180) -> int:
-        """        Clean up old distribution records
+        """
+        Clean up old distribution records
         
         Args:
             days_to_keep: Number of days to keep records
             
         Returns:
             Number of cleaned up records
-        """        try:
+        """
+        try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_to_keep)
             
             # Only delete completed or failed distributions older than cutoff

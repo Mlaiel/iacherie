@@ -18,7 +18,8 @@ Development Team Specialties:
 - DevOps Engineer  
 - AI Prompt Engineering Specialist
 Contact: mlaiel@live.de
-"""from typing import Dict, List, Optional, Any, Set, Union
+"""
+from typing import Dict, List, Optional, Any, Set, Union
 from datetime import datetime, timedelta
 from decimal import Decimal
 from enum import Enum
@@ -28,7 +29,8 @@ import uuid
 
 
 class PartnershipType(Enum):
-    """Types of strategic partnerships"""    STRATEGIC_ALLIANCE = "strategic_alliance"
+    """Types of strategic partnerships"""
+    STRATEGIC_ALLIANCE = "strategic_alliance"
     BRAND_AMBASSADOR = "brand_ambassador"
     CONTENT_LICENSING = "content_licensing"
     DISTRIBUTION_PARTNER = "distribution_partner"
@@ -41,7 +43,8 @@ class PartnershipType(Enum):
 
 
 class PartnershipStatus(Enum):
-    """Partnership lifecycle status"""    PROSPECTING = "prospecting"
+    """Partnership lifecycle status"""
+    PROSPECTING = "prospecting"
     NEGOTIATING = "negotiating"
     UNDER_REVIEW = "under_review"
     ACTIVE = "active"
@@ -52,7 +55,8 @@ class PartnershipStatus(Enum):
 
 
 class ContractType(Enum):
-    """Contract types for partnerships"""    EXCLUSIVE = "exclusive"
+    """Contract types for partnerships"""
+    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     REVENUE_SHARE = "revenue_share"
     FLAT_FEE = "flat_fee"
@@ -61,7 +65,8 @@ class ContractType(Enum):
 
 
 class NegotiationStage(Enum):
-    """Negotiation process stages"""    INITIAL_CONTACT = "initial_contact"
+    """Negotiation process stages"""
+    INITIAL_CONTACT = "initial_contact"
     PROPOSAL_SENT = "proposal_sent"
     COUNTER_OFFER = "counter_offer"
     TERMS_DISCUSSION = "terms_discussion"
@@ -72,7 +77,8 @@ class NegotiationStage(Enum):
 
 
 class RevenueModel(Enum):
-    """Revenue sharing models"""    PERCENTAGE_SPLIT = "percentage_split"
+    """Revenue sharing models"""
+    PERCENTAGE_SPLIT = "percentage_split"
     TIERED_COMMISSION = "tiered_commission"
     FLAT_RATE = "flat_rate"
     PERFORMANCE_BONUS = "performance_bonus"
@@ -81,7 +87,8 @@ class RevenueModel(Enum):
 
 @dataclass
 class PartnershipMetrics:
-    """Partnership performance metrics"""    partnership_id: str
+    """Partnership performance metrics"""
+    partnership_id: str
     revenue_generated: Decimal
     content_views: int
     engagement_rate: float
@@ -97,7 +104,8 @@ class PartnershipMetrics:
 
 @dataclass
 class ContractTerm:
-    """Individual contract terms and conditions"""    term_id: str
+    """Individual contract terms and conditions"""
+    term_id: str
     term_name: str
     term_value: Any
     is_negotiable: bool
@@ -108,7 +116,8 @@ class ContractTerm:
 
 
 class Partnership(BaseModel):
-    """Core partnership business entity"""    partnership_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Core partnership business entity"""
+    partnership_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str
     partner_id: str
     partner_name: str
@@ -162,7 +171,8 @@ class Partnership(BaseModel):
 
 
 class Contract(BaseModel):
-    """Legal contract entity for partnerships"""    contract_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Legal contract entity for partnerships"""
+    contract_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     partnership_id: str
     contract_type: ContractType
     contract_version: str = "1.0"
@@ -199,7 +209,8 @@ class Contract(BaseModel):
 
 @dataclass
 class PartnershipRevenue:
-    """Revenue tracking for partnerships"""    revenue_id: str
+    """Revenue tracking for partnerships"""
+    revenue_id: str
     partnership_id: str
     period_start: datetime
     period_end: datetime
@@ -217,7 +228,8 @@ class PartnershipRevenue:
 
 @dataclass
 class PartnershipOpportunity:
-    """Partnership opportunity identification"""    opportunity_id: str
+    """Partnership opportunity identification"""
+    opportunity_id: str
     creator_id: str
     potential_partner_id: str
     opportunity_type: PartnershipType
@@ -233,7 +245,8 @@ class PartnershipOpportunity:
 
 
 class NegotiationRecord(BaseModel):
-    """Negotiation process tracking"""    negotiation_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Negotiation process tracking"""
+    negotiation_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     partnership_id: str
     stage: NegotiationStage = NegotiationStage.INITIAL_CONTACT
     
@@ -263,7 +276,8 @@ class NegotiationRecord(BaseModel):
 
 @dataclass
 class PartnershipBenchmark:
-    """Industry benchmarks for partnership performance"""    industry_sector: str
+    """Industry benchmarks for partnership performance"""
+    industry_sector: str
     partnership_type: str
     avg_commission_rate: float
     avg_deal_size: Decimal

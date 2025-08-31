@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -14,14 +15,16 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 #!/usr/bin/env python3
 """Quick verification test for the 5 target agents
 Tests that they can be imported and instantiated correctly
-"""import sys
+"""
+import sys
 import os
 sys.path.append(os.path.dirname(__file__))
 
 from ai_engine.ai_agents.base_agent import AgentConfiguration, AgentCapability
 
 def test_agent_imports():
-    """Test that all target agents can be imported"""    results = {}
+    """Test that all target agents can be imported"""
+    results = {}
     
     # Test ContentStrategistAgent
     try:
@@ -61,7 +64,8 @@ def test_agent_imports():
     return results
 
 def test_agent_instantiation():
-    """Test that agents can be instantiated"""    results = {}
+    """Test that agents can be instantiated"""
+    results = {}
     
     # Create a basic config
     config = AgentConfiguration(

@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -21,7 +22,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -46,10 +48,12 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class TestAdvancedContentFingerprinter:
-    """Comprehensive tests for AdvancedFingerprintEngine"""    
+    """Comprehensive tests for AdvancedFingerprintEngine"""
+    
     @pytest.mark.asyncio
     async def test_engine_initialization(self, fingerprint_engine):
-        """Test fingerprint engine initialization"""        assert fingerprint_engine is not None
+        """Test fingerprint engine initialization"""
+        assert fingerprint_engine is not None
         assert hasattr(fingerprint_engine, 'config')
         assert hasattr(fingerprint_engine, 'similarity_matcher')
         assert hasattr(fingerprint_engine, 'plagiarism_detector')
@@ -62,7 +66,8 @@ class TestAdvancedContentFingerprinter:
 
     @pytest.mark.asyncio
     async def test_content_fingerprint_generation(self, fingerprint_engine, sample_texts):
-        """Test content fingerprint generation"""        for language, texts in sample_texts.items():
+        """Test content fingerprint generation"""
+        for language, texts in sample_texts.items():
             text = texts[0]
             
             fingerprint = await fingerprint_engine.generate_fingerprint(
@@ -108,7 +113,8 @@ class TestAdvancedContentFingerprinter:
 
     @pytest.mark.asyncio
     async def test_similarity_detection(self, fingerprint_engine):
-        """Test content similarity detection"""        # Create similar contents
+        """Test content similarity detection"""
+        # Create similar contents
         original_content = "This is an amazing product that will change your life! 🌟"
         similar_content = "This is a fantastic product that will transform your life! ✨"
         different_content = "Today I went to the grocery store and bought some apples."
@@ -157,7 +163,8 @@ class TestAdvancedContentFingerprinter:
 
     @pytest.mark.asyncio
     async def test_plagiarism_detection(self, fingerprint_engine, sample_social_content):
-        """Test plagiarism detection capabilities"""        # Original content
+        """Test plagiarism detection capabilities"""
+        # Original content
         original_content = sample_social_content['instagram']['post']
         
         # Create plagiarized versions
@@ -206,10 +213,13 @@ class TestAdvancedContentFingerprinter:
 
     @pytest.mark.asyncio
     async def test_copyright_protection(self, fingerprint_engine):
-        """Test copyright protection features"""        protected_content = """        Exclusive content created by Fahed Mlaiel for IA Influencer Agent Platform.
+        """Test copyright protection features"""
+        protected_content = """
+        Exclusive content created by Fahed Mlaiel for IA Influencer Agent Platform.
         This innovative approach to content creation represents months of research and development.
         The methodology described here is proprietary and confidential.
-        """        
+        """
+        
         # Register copyright
         copyright_registration = await fingerprint_engine.register_copyright(
             content=protected_content,
@@ -252,7 +262,8 @@ class TestAdvancedContentFingerprinter:
 
     @pytest.mark.asyncio
     async def test_content_versioning(self, fingerprint_engine):
-        """Test content versioning and evolution tracking"""        # Original version
+        """Test content versioning and evolution tracking"""
+        # Original version
         v1_content = "Original content about digital marketing strategies."
         
         # Version 2 - minor updates
@@ -302,7 +313,8 @@ class TestAdvancedContentFingerprinter:
 
     @pytest.mark.asyncio
     async def test_batch_fingerprinting(self, fingerprint_engine, performance_test_data):
-        """Test batch fingerprinting capabilities"""        texts = performance_test_data['small_batch']
+        """Test batch fingerprinting capabilities"""
+        texts = performance_test_data['small_batch']
         
         start_time = time.time()
         batch_fingerprints = await fingerprint_engine.generate_batch_fingerprints(
@@ -331,7 +343,8 @@ class TestAdvancedContentFingerprinter:
 
     @pytest.mark.asyncio
     async def test_advanced_similarity_algorithms(self, fingerprint_engine):
-        """Test advanced similarity detection algorithms"""        # Test with different types of content modifications
+        """Test advanced similarity detection algorithms"""
+        # Test with different types of content modifications
         test_cases = [
             {
                 'original': "The quick brown fox jumps over the lazy dog.",
@@ -388,7 +401,8 @@ class TestAdvancedContentFingerprinter:
 
     @pytest.mark.asyncio
     async def test_multilingual_fingerprinting(self, fingerprint_engine, sample_texts):
-        """Test multilingual content fingerprinting"""        # Test same content in different languages
+        """Test multilingual content fingerprinting"""
+        # Test same content in different languages
         english_text = "I love this amazing product! It's fantastic!"
         german_text = "Ich liebe dieses erstaunliche Produkt! Es ist fantastisch!"
         french_text = "J'adore ce produit incroyable! C'est fantastique!"
@@ -429,12 +443,15 @@ class TestAdvancedContentFingerprinter:
 
     @pytest.mark.asyncio
     async def test_content_authenticity_verification(self, fingerprint_engine):
-        """Test content authenticity verification"""        # Original authentic content
-        authentic_content = """        Original research findings from our IA Influencer Agent Platform study.
+        """Test content authenticity verification"""
+        # Original authentic content
+        authentic_content = """
+        Original research findings from our IA Influencer Agent Platform study.
         Methodology: We analyzed 10,000 social media posts across multiple platforms.
         Results: 85% improvement in engagement when using AI-optimized content.
         Conclusion: AI-assisted content creation significantly enhances performance.
-        """        
+        """
+        
         # Register as authentic
         authenticity_registration = await fingerprint_engine.register_authentic_content(
             content=authentic_content,
@@ -472,7 +489,8 @@ class TestAdvancedContentFingerprinter:
 
     @pytest.mark.asyncio
     async def test_performance_benchmarks(self, fingerprint_engine, benchmark_config):
-        """Test fingerprinting performance benchmarks"""        # Test single fingerprint generation performance
+        """Test fingerprinting performance benchmarks"""
+        # Test single fingerprint generation performance
         content = "Test content for performance benchmarking of fingerprint generation."
         
         start_time = time.time()
@@ -504,7 +522,8 @@ class TestAdvancedContentFingerprinter:
 
     @pytest.mark.asyncio
     async def test_error_handling(self, fingerprint_engine):
-        """Test error handling and edge cases"""        # Test empty content
+        """Test error handling and edge cases"""
+        # Test empty content
         fingerprint = await fingerprint_engine.generate_fingerprint(
             content="",
             content_type=ContentType.POST
@@ -532,7 +551,8 @@ class TestAdvancedContentFingerprinter:
 
     @pytest.mark.asyncio
     async def test_fingerprint_database_operations(self, fingerprint_engine):
-        """Test fingerprint database operations"""        # Generate test fingerprints
+        """Test fingerprint database operations"""
+        # Generate test fingerprints
         test_contents = [
             "Content 1 for database testing",
             "Content 2 for database testing", 
@@ -568,9 +588,11 @@ class TestAdvancedContentFingerprinter:
             assert retrieved['content_hash'] == fp['content_hash']
 
 class TestContentFingerprint:
-    """Test content fingerprint data structure"""    
+    """Test content fingerprint data structure"""
+    
     def test_fingerprint_creation(self):
-        """Test fingerprint creation"""        fingerprint = ContentFingerprint(
+        """Test fingerprint creation"""
+        fingerprint = ContentFingerprint(
             content_hash="abcd1234",
             similarity_hash="efgh5678",
             metadata={'author': 'Fahed Mlaiel'},
@@ -582,25 +604,31 @@ class TestContentFingerprint:
         assert fingerprint.metadata['author'] == 'Fahed Mlaiel'
 
 class TestSimilarityMatcher:
-    """Test similarity matcher"""    
+    """Test similarity matcher"""
+    
     @pytest.mark.asyncio
     async def test_similarity_matcher_initialization(self):
-        """Test similarity matcher initialization"""        matcher = SimilarityMatcher()
+        """Test similarity matcher initialization"""
+        matcher = SimilarityMatcher()
         assert matcher is not None
         assert hasattr(matcher, 'calculate_similarity')
 
 class TestPlagiarismDetector:
-    """Test plagiarism detector"""    
+    """Test plagiarism detector"""
+    
     @pytest.mark.asyncio
     async def test_plagiarism_detector_initialization(self):
-        """Test plagiarism detector initialization"""        detector = PlagiarismDetector()
+        """Test plagiarism detector initialization"""
+        detector = PlagiarismDetector()
         assert detector is not None
         assert hasattr(detector, 'detect_plagiarism')
 
 class TestFingerprintConfig:
-    """Test fingerprint configuration"""    
+    """Test fingerprint configuration"""
+    
     def test_config_creation(self):
-        """Test fingerprint configuration creation"""        config = FingerprintConfig(
+        """Test fingerprint configuration creation"""
+        config = FingerprintConfig(
             similarity_threshold=0.8,
             hash_algorithms=['md5', 'sha256'],
             detection_methods=['exact', 'fuzzy', 'semantic']

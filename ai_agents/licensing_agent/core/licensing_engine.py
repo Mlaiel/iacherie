@@ -5,7 +5,8 @@ optimization and comprehensive functionality.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime
@@ -15,21 +16,24 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class LicensingJob:
-    """Job configuration for licensing operations"""    job_id: str
+    """Job configuration for licensing operations"""
+    job_id: str
     data: Dict[str, Any]
     priority: int = 5
     created_at: datetime = None
 
 @dataclass 
 class LicensingResult:
-    """Result of licensing operations"""    job_id: str
+    """Result of licensing operations"""
+    job_id: str
     success: bool
     data: Optional[Dict[str, Any]] = None
     error: Optional[str] = None
     completed_at: datetime = None
 
 class LicensingEngine:
-    """    Ultra-Advanced Licensing Processing Engine
+    """
+    Ultra-Advanced Licensing Processing Engine
     
     Provides enterprise-grade licensing processing with:
     - High-performance operation handling
@@ -37,7 +41,8 @@ class LicensingEngine:
     - Comprehensive error handling
     - Real-time monitoring and metrics
     - Scalable architecture design
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.is_running = False
@@ -46,7 +51,8 @@ class LicensingEngine:
         logger.info("LicensingEngine initialized")
 
     async def start(self) -> None:
-        """Start the licensing processing engine"""        try:
+        """Start the licensing processing engine"""
+        try:
             self.is_running = True
             logger.info("LicensingEngine started successfully")
         except Exception as e:
@@ -54,7 +60,8 @@ class LicensingEngine:
             raise
 
     async def process(self, data: Dict[str, Any]) -> LicensingResult:
-        """Process licensing operation"""        try:
+        """Process licensing operation"""
+        try:
             job_id = data.get('job_id', 'auto-generated')
             
             # Implementation specific processing logic here
@@ -81,5 +88,6 @@ class LicensingEngine:
             )
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the processing engine"""        self.is_running = False
+        """Graceful shutdown of the processing engine"""
+        self.is_running = False
         logger.info("LicensingEngine shutdown complete")

@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from abc import ABC, abstractmethod
 from datetime import datetime, timedelta
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class PaymentResult:
-    """Standard payment processing result structure."""    success: bool
+    """Standard payment processing result structure."""
+    success: bool
     transaction_id: Optional[str] = None
     external_id: Optional[str] = None
     amount: Optional[Decimal] = None
@@ -44,7 +46,8 @@ class PaymentResult:
 
 @dataclass
 class PayoutResult:
-    """Standard payout processing result structure."""    success: bool
+    """Standard payout processing result structure."""
+    success: bool
     payout_id: Optional[str] = None
     external_id: Optional[str] = None
     amount: Optional[Decimal] = None
@@ -63,7 +66,8 @@ class PayoutResult:
 
 @dataclass
 class BalanceResult:
-    """Account balance result structure."""    available: Decimal
+    """Account balance result structure."""
+    available: Decimal
     pending: Decimal
     currency: str
     last_updated: datetime
@@ -75,11 +79,13 @@ class BalanceResult:
 
 
 class BaseProcessor(ABC):
-    """    Abstract base class for all payment processors.
+    """
+    Abstract base class for all payment processors.
     
     Defines the standard interface and provides common functionality
     for payment processing, payouts, balance checks, and webhooks.
-    """    
+    """
+    
     def __init__(
         self,
         name: str,
@@ -89,7 +95,8 @@ class BaseProcessor(ABC):
         max_retries: int = 3,
         **kwargs
     ):
-        """        Initialize base processor with common configuration.
+        """
+        Initialize base processor with common configuration.
         
         Args:
             name: Processor name identifier
@@ -97,7 +104,8 @@ class BaseProcessor(ABC):
             environment: Environment (production, sandbox, test)
             timeout: Request timeout in seconds
             max_retries: Maximum retry attempts
-        """        self.name = name
+        """
+        self.name = name
         self.api_key = api_key
         self.environment = environment
         self.timeout = timeout
@@ -119,7 +127,8 @@ class BaseProcessor(ABC):
         self._initialize()
     
     def _initialize(self):
-        """Initialize processor-specific configuration."""        pass
+        """Initialize processor-specific configuration."""
+        pass
     
     async def process_payment(
         self,
@@ -130,7 +139,8 @@ class BaseProcessor(ABC):
         description: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> PaymentResult:
-        """        Process a payment transaction with comprehensive error handling and validation.
+        """
+        Process a payment transaction with comprehensive error handling and validation.
         
         Args:
             amount: Payment amount
@@ -142,7 +152,8 @@ class BaseProcessor(ABC):
             
         Returns:
             PaymentResult with transaction details
-        """        # Basic implementation with validation - to be overridden by specific processors
+        """
+        # Basic implementation with validation - to be overridden by specific processors
         start_time = datetime.utcnow()
         
         try:
@@ -226,7 +237,8 @@ class BaseProcessor(ABC):
         description: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> PayoutResult:
-        """        Execute a payout to recipient with validation and error handling.
+        """
+        Execute a payout to recipient with validation and error handling.
         
         Args:
             amount: Payout amount
@@ -238,7 +250,8 @@ class BaseProcessor(ABC):
             
         Returns:
             PayoutResult with payout details
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         
         try:
             # Validate inputs
@@ -323,14 +336,16 @@ class BaseProcessor(ABC):
         self,
         currency: str = "EUR"
     ) -> BalanceResult:
-        """        Get account balance for currency with basic mock implementation.
+        """
+        Get account balance for currency with basic mock implementation.
         
         Args:
             currency: Currency code
             
         Returns:
             BalanceResult with balance information
-        """        # Base implementation returns mock balance - should be overridden
+        """
+        # Base implementation returns mock balance - should be overridden
         logger.warning(f"Using mock balance for {self.name} processor")
         
         return BalanceResult(
@@ -351,7 +366,8 @@ class BaseProcessor(ABC):
         signature: str,
         secret: Optional[str] = None
     ) -> bool:
-        """        Verify webhook signature authenticity using basic validation.
+        """
+        Verify webhook signature authenticity using basic validation.
         
         Args:
             payload: Raw webhook payload
@@ -360,7 +376,8 @@ class BaseProcessor(ABC):
             
         Returns:
             True if signature is valid
-        """        try:
+        """
+        try:
             # Basic implementation - should be overridden with actual signature verification
             if not payload or not signature:
                 return False
@@ -391,14 +408,16 @@ class BaseProcessor(ABC):
         self,
         payload: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Parse webhook payload into standard format.
+        """
+        Parse webhook payload into standard format.
         
         Args:
             payload: Webhook payload
             
         Returns:
             Standardized webhook data
-        """        try:
+        """
+        try:
             # Basic webhook parsing - should be overridden for specific processor formats
             return {
                 "processor": self.name,
@@ -427,7 +446,8 @@ class BaseProcessor(ABC):
         amount: Optional[Union[Decimal, float]] = None,
         reason: Optional[str] = None
     ) -> PaymentResult:
-        """        Refund a payment transaction.
+        """
+        Refund a payment transaction.
         
         Args:
             transaction_id: Original transaction ID
@@ -436,7 +456,8 @@ class BaseProcessor(ABC):
             
         Returns:
             PaymentResult with refund details
-        """        # Default implementation - can be overridden
+        """
+        # Default implementation - can be overridden
         logger.warning(f"Refunds not implemented for {self.name}")
         return PaymentResult(
             success=False,
@@ -453,14 +474,16 @@ class BaseProcessor(ABC):
         self,
         transaction_id: str
     ) -> Optional[Dict[str, Any]]:
-        """        Get transaction details by ID.
+        """
+        Get transaction details by ID.
         
         Args:
             transaction_id: Transaction identifier
             
         Returns:
             Transaction details or None if not found
-        """        # Default implementation - can be overridden
+        """
+        # Default implementation - can be overridden
         logger.warning(f"Transaction lookup not implemented for {self.name}")
         return {
             "transaction_id": transaction_id,
@@ -473,14 +496,16 @@ class BaseProcessor(ABC):
         self,
         customer_id: str
     ) -> List[Dict[str, Any]]:
-        """        List available payment methods for customer.
+        """
+        List available payment methods for customer.
         
         Args:
             customer_id: Customer identifier
             
         Returns:
             List of payment methods
-        """        # Default implementation - can be overridden
+        """
+        # Default implementation - can be overridden
         return []
     
     async def create_payment_method(
@@ -489,7 +514,8 @@ class BaseProcessor(ABC):
         method_type: str,
         method_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Create new payment method for customer.
+        """
+        Create new payment method for customer.
         
         Args:
             customer_id: Customer identifier
@@ -498,7 +524,8 @@ class BaseProcessor(ABC):
             
         Returns:
             Created payment method details
-        """        # Default implementation - can be overridden
+        """
+        # Default implementation - can be overridden
         logger.warning(f"Payment method creation not implemented for {self.name}")
         return {
             "success": False,
@@ -509,11 +536,13 @@ class BaseProcessor(ABC):
         }
     
     async def health_check(self) -> bool:
-        """        Perform health check on payment processor.
+        """
+        Perform health check on payment processor.
         
         Returns:
             True if processor is healthy
-        """        try:
+        """
+        try:
             start_time = datetime.utcnow()
             
             # Default health check - attempt balance lookup
@@ -535,19 +564,23 @@ class BaseProcessor(ABC):
             return False
     
     async def get_supported_currencies(self) -> List[str]:
-        """        Get list of supported currencies.
+        """
+        Get list of supported currencies.
         
         Returns:
             List of supported currency codes
-        """        # Default implementation - can be overridden
+        """
+        # Default implementation - can be overridden
         return ["EUR", "USD", "GBP"]
     
     async def get_supported_countries(self) -> List[str]:
-        """        Get list of supported countries.
+        """
+        Get list of supported countries.
         
         Returns:
             List of supported country codes
-        """        # Default implementation - can be overridden
+        """
+        # Default implementation - can be overridden
         return ["DE", "US", "GB", "FR", "NL", "CH"]
     
     async def estimate_fees(
@@ -556,7 +589,8 @@ class BaseProcessor(ABC):
         currency: str,
         payment_method: str
     ) -> Dict[str, Decimal]:
-        """        Estimate fees for payment processing.
+        """
+        Estimate fees for payment processing.
         
         Args:
             amount: Payment amount
@@ -565,7 +599,8 @@ class BaseProcessor(ABC):
             
         Returns:
             Fee breakdown dictionary
-        """        # Default implementation - can be overridden
+        """
+        # Default implementation - can be overridden
         amount_decimal = Decimal(str(amount))
         
         # Basic fee calculation (2.9% + 0.30)
@@ -584,7 +619,8 @@ class BaseProcessor(ABC):
         success: bool,
         response_time: Optional[float] = None
     ):
-        """Update processor performance metrics."""        self.metrics["requests_total"] += 1
+        """Update processor performance metrics."""
+        self.metrics["requests_total"] += 1
         
         if success:
             self.metrics["requests_success"] += 1
@@ -606,7 +642,8 @@ class BaseProcessor(ABC):
                 )
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get processor performance metrics."""        success_rate = 0.0
+        """Get processor performance metrics."""
+        success_rate = 0.0
         if self.metrics["requests_total"] > 0:
             success_rate = (
                 self.metrics["requests_success"] / self.metrics["requests_total"]
@@ -624,16 +661,20 @@ class BaseProcessor(ABC):
         }
     
     async def __aenter__(self):
-        """Async context manager entry."""        return self
+        """Async context manager entry."""
+        return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""        pass
+        """Async context manager exit."""
+        pass
     
     def __str__(self) -> str:
-        """String representation of processor."""        return f"{self.name}Processor(environment={self.environment})"
+        """String representation of processor."""
+        return f"{self.name}Processor(environment={self.environment})"
     
     def __repr__(self) -> str:
-        """Detailed string representation."""        return (
+        """Detailed string representation."""
+        return (
             f"{self.__class__.__name__}("
             f"name='{self.name}', "
             f"environment='{self.environment}', "

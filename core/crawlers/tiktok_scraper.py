@@ -12,7 +12,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
-"""import asyncio
+"""
+import asyncio
 import logging
 import re
 import json
@@ -38,7 +39,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TikTokVideoData:
-    """Comprehensive TikTok video metadata structure."""    
+    """Comprehensive TikTok video metadata structure."""
+    
     video_id: str
     video_url: str
     title: str
@@ -73,7 +75,8 @@ class TikTokVideoData:
 
 @dataclass
 class TikTokUserData:
-    """TikTok user profile comprehensive information."""    
+    """TikTok user profile comprehensive information."""
+    
     user_id: str
     username: str
     display_name: str
@@ -90,9 +93,11 @@ class TikTokUserData:
     last_active: Optional[datetime]
 
 class TikTokAPIManager:
-    """Professional TikTok API management with business API integration."""    
+    """Professional TikTok API management with business API integration."""
+    
     def __init__(self, api_key: Optional[str] = None, client_secret: Optional[str] = None):
-        """Initialize TikTok API service with business API credentials."""        self.api_key = api_key
+        """Initialize TikTok API service with business API credentials."""
+        self.api_key = api_key
         self.client_secret = client_secret
         self.access_token = None
         self.rate_limiter = RateLimiter(
@@ -104,7 +109,8 @@ class TikTokAPIManager:
             asyncio.create_task(self._initialize_business_api())
     
     async def _initialize_business_api(self):
-        """Initialize TikTok Business API with OAuth 2.0."""        try:
+        """Initialize TikTok Business API with OAuth 2.0."""
+        try:
             # TikTok Business API OAuth endpoint
             token_url = "https://business-api.tiktok.com/open_api/oauth2/access_token/"
             
@@ -131,7 +137,8 @@ class TikTokAPIManager:
         keyword: str,
         max_results: int = 100
     ) -> List[Dict[str, Any]]:
-        """Search videos using TikTok Business API."""        if not self.access_token:
+        """Search videos using TikTok Business API."""
+        if not self.access_token:
             return []
         
         await self.rate_limiter.acquire()
@@ -164,15 +171,18 @@ class TikTokAPIManager:
             return []
 
 class TikTokWebScraper:
-    """Advanced TikTok web scraping with anti-detection measures."""    
+    """Advanced TikTok web scraping with anti-detection measures."""
+    
     def __init__(self, proxy_manager: Optional[ProxyManager] = None):
-        """Initialize TikTok web scraper with proxy support."""        self.proxy_manager = proxy_manager
+        """Initialize TikTok web scraper with proxy support."""
+        self.proxy_manager = proxy_manager
         self.session = None
         self.driver = None
         self._setup_selenium_driver()
     
     def _setup_selenium_driver(self):
-        """Configure Selenium WebDriver with anti-detection measures."""        chrome_options = Options()
+        """Configure Selenium WebDriver with anti-detection measures."""
+        chrome_options = Options()
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-dev-shm-usage')
@@ -200,7 +210,8 @@ class TikTokWebScraper:
         self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
     
     async def scrape_video_data(self, video_url: str) -> Optional[TikTokVideoData]:
-        """Scrape comprehensive video data from TikTok video page."""        try:
+        """Scrape comprehensive video data from TikTok video page."""
+        try:
             self.driver.get(video_url)
             
             # Wait for content to load
@@ -243,7 +254,8 @@ class TikTokWebScraper:
             return None
     
     def _extract_video_from_state(self, state_data: Dict[str, Any], video_id: str) -> Optional[TikTokVideoData]:
-        """Extract video data from TikTok initial state object."""        try:
+        """Extract video data from TikTok initial state object."""
+        try:
             # Navigate through TikTok's complex state structure
             video_detail = None
             
@@ -305,7 +317,8 @@ class TikTokWebScraper:
             return None
     
     def _extract_video_from_dom(self, video_id: str) -> Optional[TikTokVideoData]:
-        """Fallback method to extract video data from DOM elements."""        try:
+        """Fallback method to extract video data from DOM elements."""
+        try:
             # Extract basic information from DOM
             title_element = self.driver.find_element(By.CSS_SELECTOR, "[data-e2e='browse-video-desc']")
             title = title_element.text if title_element else ""
@@ -361,7 +374,8 @@ class TikTokWebScraper:
             return None
     
     def _parse_count(self, count_text: str) -> int:
-        """Parse count strings like '1.2M', '50.3K' to integers."""        try:
+        """Parse count strings like '1.2M', '50.3K' to integers."""
+        try:
             count_text = count_text.lower().strip()
             if 'm' in count_text:
                 return int(float(count_text.replace('m', '')) * 1_000_000)
@@ -373,7 +387,8 @@ class TikTokWebScraper:
             return 0
     
     async def search_hashtag(self, hashtag: str, limit: int = 100) -> List[str]:
-        """Search videos by hashtag and return video URLs."""        try:
+        """Search videos by hashtag and return video URLs."""
+        try:
             search_url = f"https://www.tiktok.com/tag/{hashtag.replace('#', '')}"
             self.driver.get(search_url)
             
@@ -412,13 +427,16 @@ class TikTokWebScraper:
             return []
     
     def close(self):
-        """Clean up Selenium driver."""        if self.driver:
+        """Clean up Selenium driver."""
+        if self.driver:
             self.driver.quit()
 
 class TikTokCrawler(BaseCrawler):
-    """Professional TikTok crawler with comprehensive monitoring capabilities."""    
+    """Professional TikTok crawler with comprehensive monitoring capabilities."""
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize TikTok crawler with configuration."""        super().__init__(config)
+        """Initialize TikTok crawler with configuration."""
+        super().__init__(config)
         self.api_manager = TikTokAPIManager(
             api_key=config.get('tiktok_api_key'),
             client_secret=config.get('tiktok_client_secret')
@@ -429,7 +447,8 @@ class TikTokCrawler(BaseCrawler):
         self.platform = 'tiktok'
     
     async def crawl_video(self, video_url: str) -> Optional[CrawlResult]:
-        """Crawl comprehensive data for a specific TikTok video."""        try:
+        """Crawl comprehensive data for a specific TikTok video."""
+        try:
             # Scrape video data
             video_data = await self.web_scraper.scrape_video_data(video_url)
             if not video_data:
@@ -477,7 +496,8 @@ class TikTokCrawler(BaseCrawler):
         limit: int = 100,
         time_range: Optional[timedelta] = None
     ) -> List[CrawlResult]:
-        """Search for potentially infringing content on TikTok."""        try:
+        """Search for potentially infringing content on TikTok."""
+        try:
             results = []
             
             # Try API search first
@@ -513,7 +533,8 @@ class TikTokCrawler(BaseCrawler):
         username: str,
         check_period: timedelta = timedelta(hours=24)
     ) -> List[CrawlResult]:
-        """Monitor a specific user for new content."""        try:
+        """Monitor a specific user for new content."""
+        try:
             user_url = f"https://www.tiktok.com/@{username}"
             self.web_scraper.driver.get(user_url)
             
@@ -550,5 +571,6 @@ class TikTokCrawler(BaseCrawler):
             return []
     
     def cleanup(self):
-        """Clean up resources."""        if self.web_scraper:
+        """Clean up resources."""
+        if self.web_scraper:
             self.web_scraper.close()

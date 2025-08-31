@@ -37,7 +37,8 @@ or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 import pickle
 import json
@@ -72,31 +73,36 @@ T = TypeVar('T')
 # =============== CACHE CONFIGURATION ===============
 
 class CacheLevel(str, Enum):
-    """Cache levels for multi-tier caching"""    L1_MEMORY = "l1_memory"
+    """Cache levels for multi-tier caching"""
+    L1_MEMORY = "l1_memory"
     L2_REDIS = "l2_redis"
     L3_DISTRIBUTED = "l3_distributed"
 
 class CacheStrategy(str, Enum):
-    """Cache strategies"""    WRITE_THROUGH = "write_through"
+    """Cache strategies"""
+    WRITE_THROUGH = "write_through"
     WRITE_BACK = "write_back"
     WRITE_AROUND = "write_around"
     CACHE_ASIDE = "cache_aside"
 
 class SerializationMethod(str, Enum):
-    """Serialization methods for cache data"""    JSON = "json"
+    """Serialization methods for cache data"""
+    JSON = "json"
     PICKLE = "pickle"
     MSGPACK = "msgpack"
     COMPRESSED_PICKLE = "compressed_pickle"
 
 class EvictionPolicy(str, Enum):
-    """Cache eviction policies"""    LRU = "lru"
+    """Cache eviction policies"""
+    LRU = "lru"
     LFU = "lfu"
     TTL = "ttl"
     RANDOM = "random"
 
 @dataclass
 class CacheConfig(PoolConfig):
-    """Advanced cache configuration"""    # Redis configuration
+    """Advanced cache configuration"""
+    # Redis configuration
     redis_host: str = "localhost"
     redis_port: int = 6379
     redis_db: int = 0
@@ -144,7 +150,8 @@ class CacheConfig(PoolConfig):
 
 @dataclass
 class CacheItem:
-    """Cache item with metadata"""    key: str
+    """Cache item with metadata"""
+    key: str
     value: Any
     ttl: int
     created_at: float
@@ -154,18 +161,21 @@ class CacheItem:
     level: CacheLevel = CacheLevel.L2_REDIS
     
     def is_expired(self) -> bool:
-        """Check if cache item is expired"""        if self.ttl <= 0:
+        """Check if cache item is expired"""
+        if self.ttl <= 0:
             return False
         return time.time() - self.created_at > self.ttl
     
     def update_access(self) -> None:
-        """Update access statistics"""        self.accessed_at = time.time()
+        """Update access statistics"""
+        self.accessed_at = time.time()
         self.access_count += 1
 
 # =============== CACHE IMPLEMENTATIONS ===============
 
 class L1MemoryCache:
-    """Level 1 memory cache implementation"""    
+    """Level 1 memory cache implementation"""
+    
     def __init__(self, config: CacheConfig):
         self.config = config
         self.max_size = config.l1_max_size
@@ -189,7 +199,8 @@ class L1MemoryCache:
         }
     
     def get(self, key: str) -> Optional[Any]:
-        """Get value from L1 cache"""        with self._lock:
+        """Get value from L1 cache"""
+        with self._lock:
             try:
                 value = self._cache.get(key)
                 if value is not None:
@@ -204,7 +215,8 @@ class L1MemoryCache:
                 return None
     
     def set(self, key: str, value: Any, ttl: Optional[int] = None) -> bool:
-        """Set value in L1 cache"""        with self._lock:
+        """Set value in L1 cache"""
+        with self._lock:
             try:
                 if isinstance(self._cache, TTLCache) and ttl:
                     # TTLCache doesn't support per-item TTL, use default
@@ -226,7 +238,8 @@ class L1MemoryCache:
                 return False
     
     def delete(self, key: str) -> bool:
-        """Delete value from L1 cache"""        with self._lock:
+        """Delete value from L1 cache"""
+        with self._lock:
             try:
                 if key in self._cache:
                     del self._cache[key]
@@ -238,11 +251,13 @@ class L1MemoryCache:
                 return False
     
     def clear(self) -> None:
-        """Clear all L1 cache"""        with self._lock:
+        """Clear all L1 cache"""
+        with self._lock:
             self._cache.clear()
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get L1 cache statistics"""        with self._lock:
+        """Get L1 cache statistics"""
+        with self._lock:
             hit_rate = self.stats["hits"] / (self.stats["hits"] + self.stats["misses"]) if (self.stats["hits"] + self.stats["misses"]) > 0 else 0
             return {
                 "size": len(self._cache),
@@ -252,7 +267,8 @@ class L1MemoryCache:
             }
 
 class L2RedisCache:
-    """Level 2 Redis cache implementation"""    
+    """Level 2 Redis cache implementation"""
+    
     def __init__(self, config: CacheConfig):
         self.config = config
         self.redis_pool: Optional[aioredis.ConnectionPool] = None
@@ -267,7 +283,8 @@ class L2RedisCache:
         }
     
     async def initialize(self) -> bool:
-        """Initialize Redis connection"""        try:
+        """Initialize Redis connection"""
+        try:
             if self.config.redis_cluster_nodes:
                 # Redis Cluster
                 self.redis_client = aioredis.RedisCluster.from_url(
@@ -304,7 +321,8 @@ class L2RedisCache:
             return False
     
     def _serialize_value(self, value: Any) -> bytes:
-        """Serialize value for Redis storage"""        try:
+        """Serialize value for Redis storage"""
+        try:
             if self.config.serialization_method == SerializationMethod.JSON:
                 data = json.dumps(value).encode('utf-8')
             elif self.config.serialization_method == SerializationMethod.PICKLE:
@@ -334,7 +352,8 @@ class L2RedisCache:
             return pickle.dumps(value)
     
     def _deserialize_value(self, data: bytes) -> Any:
-        """Deserialize value from Redis storage"""        try:
+        """Deserialize value from Redis storage"""
+        try:
             # Check for compression
             if data.startswith(b'lz4:'):
                 data = lz4.frame.decompress(data[4:])
@@ -355,10 +374,12 @@ class L2RedisCache:
             return None
     
     def _get_cache_key(self, key: str) -> str:
-        """Get full cache key with prefix"""        return f"{self.config.l2_key_prefix}:{key}"
+        """Get full cache key with prefix"""
+        return f"{self.config.l2_key_prefix}:{key}"
     
     async def get(self, key: str) -> Optional[Any]:
-        """Get value from Redis cache"""        try:
+        """Get value from Redis cache"""
+        try:
             cache_key = self._get_cache_key(key)
             data = await self.redis_client.get(cache_key)
             
@@ -377,7 +398,8 @@ class L2RedisCache:
             return None
     
     async def set(self, key: str, value: Any, ttl: Optional[int] = None) -> bool:
-        """Set value in Redis cache"""        try:
+        """Set value in Redis cache"""
+        try:
             cache_key = self._get_cache_key(key)
             serialized_value = self._serialize_value(value)
             
@@ -397,7 +419,8 @@ class L2RedisCache:
             return False
     
     async def delete(self, key: str) -> bool:
-        """Delete value from Redis cache"""        try:
+        """Delete value from Redis cache"""
+        try:
             cache_key = self._get_cache_key(key)
             result = await self.redis_client.delete(cache_key)
             
@@ -412,7 +435,8 @@ class L2RedisCache:
             return False
     
     async def exists(self, key: str) -> bool:
-        """Check if key exists in Redis cache"""        try:
+        """Check if key exists in Redis cache"""
+        try:
             cache_key = self._get_cache_key(key)
             return await self.redis_client.exists(cache_key) > 0
         except Exception as e:
@@ -420,7 +444,8 @@ class L2RedisCache:
             return False
     
     async def increment(self, key: str, amount: int = 1) -> Optional[int]:
-        """Increment integer value in Redis cache"""        try:
+        """Increment integer value in Redis cache"""
+        try:
             cache_key = self._get_cache_key(key)
             return await self.redis_client.incrby(cache_key, amount)
         except Exception as e:
@@ -428,7 +453,8 @@ class L2RedisCache:
             return None
     
     async def expire(self, key: str, ttl: int) -> bool:
-        """Set TTL for existing key"""        try:
+        """Set TTL for existing key"""
+        try:
             cache_key = self._get_cache_key(key)
             return await self.redis_client.expire(cache_key, ttl) > 0
         except Exception as e:
@@ -436,7 +462,8 @@ class L2RedisCache:
             return False
     
     async def clear_pattern(self, pattern: str) -> int:
-        """Clear keys matching pattern"""        try:
+        """Clear keys matching pattern"""
+        try:
             cache_pattern = self._get_cache_key(pattern)
             keys = []
             async for key in self.redis_client.scan_iter(match=cache_pattern):
@@ -451,7 +478,8 @@ class L2RedisCache:
             return 0
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get Redis cache statistics"""        try:
+        """Get Redis cache statistics"""
+        try:
             info = await self.redis_client.info('memory')
             hit_rate = self.stats["hits"] / (self.stats["hits"] + self.stats["misses"]) if (self.stats["hits"] + self.stats["misses"]) > 0 else 0
             
@@ -466,7 +494,8 @@ class L2RedisCache:
             return self.stats
     
     async def close(self) -> None:
-        """Close Redis connections"""        try:
+        """Close Redis connections"""
+        try:
             if self.redis_client:
                 await self.redis_client.close()
             if self.redis_pool:
@@ -477,7 +506,8 @@ class L2RedisCache:
 # =============== ADVANCED CACHE CONNECTION POOL ===============
 
 class AdvancedCacheConnectionPool(IConnectionPool):
-    """Advanced multi-level cache connection pool"""    
+    """Advanced multi-level cache connection pool"""
+    
     def __init__(self, config: CacheConfig, connection_info: DatabaseConnectionInfo):
         self.config = config
         self.connection_info = connection_info
@@ -510,7 +540,8 @@ class AdvancedCacheConnectionPool(IConnectionPool):
         self._metrics_collection_task: Optional[asyncio.Task] = None
     
     async def initialize(self) -> bool:
-        """Initialize cache layers"""        try:
+        """Initialize cache layers"""
+        try:
             # Initialize L1 memory cache
             if self.config.enable_l1_cache:
                 self.l1_cache = L1MemoryCache(self.config)
@@ -540,7 +571,8 @@ class AdvancedCacheConnectionPool(IConnectionPool):
             return False
     
     async def acquire(self, timeout: Optional[float] = None) -> Dict[str, Any]:
-        """Acquire cache instances"""        if self.state != ConnectionState.ACTIVE:
+        """Acquire cache instances"""
+        if self.state != ConnectionState.ACTIVE:
             raise Exception("Cache pool not initialized")
         
         return {
@@ -550,10 +582,12 @@ class AdvancedCacheConnectionPool(IConnectionPool):
         }
     
     async def release(self, connection: Any) -> None:
-        """Release cache instances (no-op)"""        pass
+        """Release cache instances (no-op)"""
+        pass
     
     async def get(self, key: str, pattern: Optional[str] = None) -> Optional[Any]:
-        """Get value from cache with multi-level lookup"""        start_time = time.time()
+        """Get value from cache with multi-level lookup"""
+        start_time = time.time()
         self.stats["total_requests"] += 1
         
         try:
@@ -592,7 +626,8 @@ class AdvancedCacheConnectionPool(IConnectionPool):
             return None
     
     async def set(self, key: str, value: Any, ttl: Optional[int] = None, pattern: Optional[str] = None) -> bool:
-        """Set value in cache with multi-level storage"""        start_time = time.time()
+        """Set value in cache with multi-level storage"""
+        start_time = time.time()
         self.stats["cache_sets"] += 1
         
         try:
@@ -626,7 +661,8 @@ class AdvancedCacheConnectionPool(IConnectionPool):
             return False
     
     async def delete(self, key: str) -> bool:
-        """Delete value from all cache levels"""        start_time = time.time()
+        """Delete value from all cache levels"""
+        start_time = time.time()
         self.stats["cache_deletes"] += 1
         
         try:
@@ -652,7 +688,8 @@ class AdvancedCacheConnectionPool(IConnectionPool):
             return False
     
     async def exists(self, key: str) -> bool:
-        """Check if key exists in any cache level"""        try:
+        """Check if key exists in any cache level"""
+        try:
             # Check L1 cache
             if self.l1_cache and self.config.enable_l1_cache:
                 if self.l1_cache.get(key) is not None:
@@ -669,7 +706,8 @@ class AdvancedCacheConnectionPool(IConnectionPool):
             return False
     
     async def increment(self, key: str, amount: int = 1, ttl: Optional[int] = None) -> Optional[int]:
-        """Increment counter in cache"""        try:
+        """Increment counter in cache"""
+        try:
             # Use L2 cache for atomic increments
             if self.l2_cache and self.config.enable_l2_cache:
                 result = await self.l2_cache.increment(key, amount)
@@ -691,7 +729,8 @@ class AdvancedCacheConnectionPool(IConnectionPool):
             return None
     
     async def clear_pattern(self, pattern: str) -> int:
-        """Clear keys matching pattern from all cache levels"""        try:
+        """Clear keys matching pattern from all cache levels"""
+        try:
             cleared_count = 0
             
             # Clear from L2 cache (L1 doesn't support pattern clearing)
@@ -709,12 +748,14 @@ class AdvancedCacheConnectionPool(IConnectionPool):
             return 0
     
     def _get_cache_config(self, pattern: Optional[str]) -> Dict[str, Any]:
-        """Get cache configuration for pattern"""        if pattern and pattern in self.config.cache_patterns:
+        """Get cache configuration for pattern"""
+        if pattern and pattern in self.config.cache_patterns:
             return self.config.cache_patterns[pattern]
         return {"ttl": self.config.l2_default_ttl, "level": CacheLevel.L2_REDIS}
     
     async def _trigger_cache_warming(self, pattern: str, key: str) -> None:
-        """Trigger cache warming for related keys"""        try:
+        """Trigger cache warming for related keys"""
+        try:
             # Implementation for cache warming logic
             # This can be extended based on specific business needs
             pass
@@ -722,7 +763,8 @@ class AdvancedCacheConnectionPool(IConnectionPool):
             logger.error(f"Cache warming error: {e}")
     
     async def _trigger_invalidation_listeners(self, key: str) -> None:
-        """Trigger registered invalidation listeners"""        try:
+        """Trigger registered invalidation listeners"""
+        try:
             for pattern, listeners in self._invalidation_listeners.items():
                 if pattern in key or pattern == "*":
                     for listener in listeners:
@@ -734,10 +776,12 @@ class AdvancedCacheConnectionPool(IConnectionPool):
             logger.error(f"Invalidation trigger error: {e}")
     
     def register_invalidation_listener(self, pattern: str, callback: Callable[[str], None]) -> None:
-        """Register cache invalidation listener"""        self._invalidation_listeners[pattern].append(callback)
+        """Register cache invalidation listener"""
+        self._invalidation_listeners[pattern].append(callback)
     
     async def _update_response_time(self, start_time: float) -> None:
-        """Update average response time"""        response_time = (time.time() - start_time) * 1000  # ms
+        """Update average response time"""
+        response_time = (time.time() - start_time) * 1000  # ms
         total_requests = self.stats["total_requests"]
         
         if total_requests > 0:
@@ -749,7 +793,8 @@ class AdvancedCacheConnectionPool(IConnectionPool):
     
     def cached(self, ttl: int = 3600, pattern: Optional[str] = None, 
               key_func: Optional[Callable] = None):
-        """Decorator for caching function results"""        def decorator(func: Callable) -> Callable:
+        """Decorator for caching function results"""
+        def decorator(func: Callable) -> Callable:
             @wraps(func)
             async def wrapper(*args, **kwargs):
                 # Generate cache key
@@ -773,7 +818,8 @@ class AdvancedCacheConnectionPool(IConnectionPool):
         return decorator
     
     def cache_invalidate(self, patterns: List[str]):
-        """Decorator for cache invalidation on function execution"""        def decorator(func: Callable) -> Callable:
+        """Decorator for cache invalidation on function execution"""
+        def decorator(func: Callable) -> Callable:
             @wraps(func)
             async def wrapper(*args, **kwargs):
                 result = await func(*args, **kwargs)
@@ -790,57 +836,70 @@ class AdvancedCacheConnectionPool(IConnectionPool):
     # =============== BUSINESS LOGIC CACHE METHODS ===============
     
     async def cache_user_session(self, user_id: str, session_data: Dict[str, Any], ttl: int = 1800) -> bool:
-        """Cache user session data"""        key = f"user_session:{user_id}"
+        """Cache user session data"""
+        key = f"user_session:{user_id}"
         return await self.set(key, session_data, ttl, "user_session")
     
     async def get_user_session(self, user_id: str) -> Optional[Dict[str, Any]]:
-        """Get cached user session data"""        key = f"user_session:{user_id}"
+        """Get cached user session data"""
+        key = f"user_session:{user_id}"
         return await self.get(key, "user_session")
     
     async def cache_content_metadata(self, content_id: str, metadata: Dict[str, Any], ttl: int = 3600) -> bool:
-        """Cache content metadata"""        key = f"content_metadata:{content_id}"
+        """Cache content metadata"""
+        key = f"content_metadata:{content_id}"
         return await self.set(key, metadata, ttl, "content_metadata")
     
     async def get_content_metadata(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Get cached content metadata"""        key = f"content_metadata:{content_id}"
+        """Get cached content metadata"""
+        key = f"content_metadata:{content_id}"
         return await self.get(key, "content_metadata")
     
     async def cache_fingerprint_data(self, fingerprint_id: str, data: Any, ttl: int = 86400) -> bool:
-        """Cache fingerprint data"""        key = f"fingerprint_data:{fingerprint_id}"
+        """Cache fingerprint data"""
+        key = f"fingerprint_data:{fingerprint_id}"
         return await self.set(key, data, ttl, "fingerprint_data")
     
     async def get_fingerprint_data(self, fingerprint_id: str) -> Optional[Any]:
-        """Get cached fingerprint data"""        key = f"fingerprint_data:{fingerprint_id}"
+        """Get cached fingerprint data"""
+        key = f"fingerprint_data:{fingerprint_id}"
         return await self.get(key, "fingerprint_data")
     
     async def cache_search_results(self, query_hash: str, results: List[Dict], ttl: int = 600) -> bool:
-        """Cache search results"""        key = f"search_results:{query_hash}"
+        """Cache search results"""
+        key = f"search_results:{query_hash}"
         return await self.set(key, results, ttl, "search_results")
     
     async def get_search_results(self, query_hash: str) -> Optional[List[Dict]]:
-        """Get cached search results"""        key = f"search_results:{query_hash}"
+        """Get cached search results"""
+        key = f"search_results:{query_hash}"
         return await self.get(key, "search_results")
     
     async def cache_revenue_calculation(self, calculation_id: str, result: Dict[str, Any], ttl: int = 1800) -> bool:
-        """Cache revenue calculation result"""        key = f"revenue_calculation:{calculation_id}"
+        """Cache revenue calculation result"""
+        key = f"revenue_calculation:{calculation_id}"
         return await self.set(key, result, ttl, "revenue_calculations")
     
     async def get_revenue_calculation(self, calculation_id: str) -> Optional[Dict[str, Any]]:
-        """Get cached revenue calculation"""        key = f"revenue_calculation:{calculation_id}"
+        """Get cached revenue calculation"""
+        key = f"revenue_calculation:{calculation_id}"
         return await self.get(key, "revenue_calculations")
     
     async def increment_view_count(self, content_id: str, ttl: int = 86400) -> Optional[int]:
-        """Increment content view counter"""        key = f"view_count:{content_id}"
+        """Increment content view counter"""
+        key = f"view_count:{content_id}"
         return await self.increment(key, 1, ttl)
     
     async def increment_download_count(self, content_id: str, ttl: int = 86400) -> Optional[int]:
-        """Increment content download counter"""        key = f"download_count:{content_id}"
+        """Increment content download counter"""
+        key = f"download_count:{content_id}"
         return await self.increment(key, 1, ttl)
     
     # =============== HEALTH AND MONITORING ===============
     
     async def health_check(self) -> bool:
-        """Check cache pool health"""        try:
+        """Check cache pool health"""
+        try:
             # Test L1 cache
             l1_healthy = True
             if self.l1_cache and self.config.enable_l1_cache:
@@ -873,7 +932,8 @@ class AdvancedCacheConnectionPool(IConnectionPool):
             return False
     
     async def _health_monitor(self) -> None:
-        """Background health monitoring"""        while self.state == ConnectionState.ACTIVE:
+        """Background health monitoring"""
+        while self.state == ConnectionState.ACTIVE:
             try:
                 is_healthy = await self.health_check()
                 if not is_healthy:
@@ -888,7 +948,8 @@ class AdvancedCacheConnectionPool(IConnectionPool):
                 await asyncio.sleep(5)
     
     async def _metrics_collector(self) -> None:
-        """Background metrics collection"""        while self.state == ConnectionState.ACTIVE:
+        """Background metrics collection"""
+        while self.state == ConnectionState.ACTIVE:
             try:
                 # Collect metrics from cache levels
                 await self._collect_metrics()
@@ -901,7 +962,8 @@ class AdvancedCacheConnectionPool(IConnectionPool):
                 await asyncio.sleep(5)
     
     async def _collect_metrics(self) -> None:
-        """Collect detailed metrics from all cache levels"""        try:
+        """Collect detailed metrics from all cache levels"""
+        try:
             # Update hit rates and performance metrics
             total_requests = self.stats["cache_hits"] + self.stats["cache_misses"]
             if total_requests > 0:
@@ -911,7 +973,8 @@ class AdvancedCacheConnectionPool(IConnectionPool):
             logger.error(f"Metrics collection failed: {e}")
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get comprehensive cache pool statistics"""        pool_stats = {
+        """Get comprehensive cache pool statistics"""
+        pool_stats = {
             "l1_enabled": self.config.enable_l1_cache,
             "l2_enabled": self.config.enable_l2_cache,
             "serialization_method": self.config.serialization_method.value,
@@ -935,7 +998,8 @@ class AdvancedCacheConnectionPool(IConnectionPool):
         return pool_stats
     
     async def close(self) -> None:
-        """Close cache pool"""        try:
+        """Close cache pool"""
+        try:
             self.state = ConnectionState.CLOSED
             
             # Cancel background tasks

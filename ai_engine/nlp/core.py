@@ -8,7 +8,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass
@@ -25,7 +26,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class NLPTask:
-    """Represents an NLP processing task"""    task_id: str
+    """Represents an NLP processing task"""
+    task_id: str
     content: str
     content_type: str  # 'text', 'audio_transcript', 'video_caption', 'image_description'
     language: str
@@ -41,7 +43,8 @@ class NLPTask:
 
 @dataclass
 class NLPResult:
-    """Represents NLP processing results"""    task_id: str
+    """Represents NLP processing results"""
+    task_id: str
     results: Dict[str, Any]
     confidence_scores: Dict[str, float]
     processing_time: float
@@ -53,7 +56,8 @@ class NLPResult:
             self.timestamp = datetime.utcnow()
 
 class AdvancedNLPEngine:
-    """    Enterprise-grade NLP Engine for IA Influencer Agent Platform
+    """
+    Enterprise-grade NLP Engine for IA Influencer Agent Platform
     
     Capabilities:
     - Multi-language content processing
@@ -63,7 +67,8 @@ class AdvancedNLPEngine:
     - Collaboration matching
     - SEO optimization
     - Content fingerprinting
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or self._get_default_config()
         self.models = {}
@@ -74,7 +79,8 @@ class AdvancedNLPEngine:
         self.is_initialized = False
         
     async def initialize(self) -> bool:
-        """Initialize all NLP models and processors"""        try:
+        """Initialize all NLP models and processors"""
+        try:
             logger.info("Initializing Advanced NLP Engine...")
             
             # Load SpaCy models for different languages
@@ -98,7 +104,8 @@ class AdvancedNLPEngine:
             return False
     
     async def _load_spacy_models(self):
-        """Load SpaCy models for multiple languages"""        models_to_load = {
+        """Load SpaCy models for multiple languages"""
+        models_to_load = {
             'en': 'en_core_web_lg',
             'de': 'de_core_news_lg',
             'fr': 'fr_core_news_lg',
@@ -125,7 +132,8 @@ class AdvancedNLPEngine:
                     logger.error(f"No SpaCy model available for {lang}")
     
     async def _load_transformer_models(self):
-        """Load transformer models for advanced processing"""        models_config = {
+        """Load transformer models for advanced processing"""
+        models_config = {
             'sentiment': 'cardiffnlp/twitter-roberta-base-sentiment-latest',
             'embeddings': 'sentence-transformers/all-MiniLM-L6-v2',
             'classification': 'microsoft/DialoGPT-medium',
@@ -143,7 +151,8 @@ class AdvancedNLPEngine:
                 logger.warning(f"Could not load {task} model: {str(e)}")
     
     async def _initialize_pipelines(self):
-        """Initialize HuggingFace pipelines"""        pipeline_configs = {
+        """Initialize HuggingFace pipelines"""
+        pipeline_configs = {
             'sentiment': ('sentiment-analysis', 'cardiffnlp/twitter-roberta-base-sentiment-latest'),
             'summarization': ('summarization', 'facebook/bart-large-cnn'),
             'text_generation': ('text-generation', 'gpt2'),
@@ -160,7 +169,8 @@ class AdvancedNLPEngine:
                 logger.warning(f"Could not initialize {name} pipeline: {str(e)}")
     
     async def _initialize_vectorizers(self):
-        """Initialize TF-IDF and other vectorizers"""        self.vectorizers['tfidf'] = TfidfVectorizer(
+        """Initialize TF-IDF and other vectorizers"""
+        self.vectorizers['tfidf'] = TfidfVectorizer(
             max_features=10000,
             ngram_range=(1, 3),
             stop_words='english'
@@ -173,7 +183,8 @@ class AdvancedNLPEngine:
         )
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""        return {
+        """Get default configuration"""
+        return {
             'max_content_length': 10000,
             'supported_languages': ['en', 'de', 'fr', 'es', 'it'],
             'batch_size': 32,
@@ -183,14 +194,16 @@ class AdvancedNLPEngine:
         }
     
     async def process_content(self, task: NLPTask) -> NLPResult:
-        """        Process content with comprehensive NLP analysis
+        """
+        Process content with comprehensive NLP analysis
         
         Args:
             task: NLPTask object containing content and metadata
             
         Returns:
             NLPResult with comprehensive analysis results
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             await self.initialize()
         
         start_time = datetime.utcnow()
@@ -252,7 +265,8 @@ class AdvancedNLPEngine:
             raise
     
     async def _detect_language(self, content: str) -> str:
-        """Detect content language"""        # Simple language detection - can be enhanced with dedicated models
+        """Detect content language"""
+        # Simple language detection - can be enhanced with dedicated models
         if any(word in content.lower() for word in ['the', 'and', 'is', 'are', 'was', 'were']):
             return 'en'
         elif any(word in content.lower() for word in ['der', 'die', 'das', 'und', 'ist', 'sind']):
@@ -263,7 +277,8 @@ class AdvancedNLPEngine:
             return 'en'  # Default to English
     
     async def _preprocess_content(self, content: str) -> str:
-        """Clean and preprocess content"""        # Remove extra whitespace
+        """Clean and preprocess content"""
+        # Remove extra whitespace
         content = ' '.join(content.split())
         
         # Remove special characters but keep punctuation
@@ -273,7 +288,8 @@ class AdvancedNLPEngine:
         return content.strip()
     
     async def _linguistic_analysis(self, content: str, language: str) -> Dict[str, Any]:
-        """Perform linguistic analysis using SpaCy"""        if language not in self.nlp_processors:
+        """Perform linguistic analysis using SpaCy"""
+        if language not in self.nlp_processors:
             language = 'en'  # Default to English
         
         nlp = self.nlp_processors[language]
@@ -290,7 +306,8 @@ class AdvancedNLPEngine:
         }
     
     async def _semantic_analysis(self, content: str) -> Dict[str, Any]:
-        """Perform semantic analysis"""        try:
+        """Perform semantic analysis"""
+        try:
             # Generate embeddings
             embeddings = self.pipelines['feature_extraction'](content)
             embedding_vector = np.mean(embeddings[0], axis=0)
@@ -328,7 +345,8 @@ class AdvancedNLPEngine:
             return {'error': str(e)}
     
     async def _assess_content_quality(self, content: str, language: str) -> Dict[str, Any]:
-        """Assess content quality metrics"""        words = content.split()
+        """Assess content quality metrics"""
+        words = content.split()
         sentences = content.split('.')
         
         # Basic quality metrics
@@ -361,7 +379,8 @@ class AdvancedNLPEngine:
         }
     
     async def _analyze_brand_voice(self, content: str) -> Dict[str, Any]:
-        """Analyze brand voice characteristics"""        try:
+        """Analyze brand voice characteristics"""
+        try:
             # Sentiment analysis
             sentiment_result = self.pipelines['sentiment'](content)
             
@@ -396,7 +415,8 @@ class AdvancedNLPEngine:
             return {'error': str(e)}
     
     async def _analyze_collaboration_potential(self, content: str) -> Dict[str, Any]:
-        """Analyze content for collaboration potential"""        collaboration_indicators = {
+        """Analyze content for collaboration potential"""
+        collaboration_indicators = {
             'partnership': ['partner', 'collaboration', 'together', 'team', 'joint'],
             'brand_mention': ['brand', 'sponsor', 'featured', 'review', 'recommend'],
             'community': ['community', 'followers', 'audience', 'fans', 'subscribers'],
@@ -421,7 +441,8 @@ class AdvancedNLPEngine:
         }
     
     async def _generate_content_fingerprint(self, content: str) -> Dict[str, Any]:
-        """Generate unique content fingerprint for protection"""        import hashlib
+        """Generate unique content fingerprint for protection"""
+        import hashlib
         
         # Create multiple hash types for robust fingerprinting
         content_bytes = content.encode('utf-8')
@@ -438,7 +459,8 @@ class AdvancedNLPEngine:
         return fingerprints
     
     async def _extract_topics(self, content: str) -> List[str]:
-        """Extract main topics from content"""        # Simplified topic extraction - can be enhanced with LDA or other methods
+        """Extract main topics from content"""
+        # Simplified topic extraction - can be enhanced with LDA or other methods
         words = content.lower().split()
         
         # Remove stop words (simplified)
@@ -453,7 +475,8 @@ class AdvancedNLPEngine:
         return topics
     
     def _calculate_readability(self, doc) -> float:
-        """Calculate readability score (simplified Flesch Reading Ease)"""        sentences = len(list(doc.sents))
+        """Calculate readability score (simplified Flesch Reading Ease)"""
+        sentences = len(list(doc.sents))
         words = len([token for token in doc if token.is_alpha])
         syllables = sum(self._count_syllables(token.text) for token in doc if token.is_alpha)
         
@@ -465,7 +488,8 @@ class AdvancedNLPEngine:
         return max(0.0, min(100.0, score))
     
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word (simplified)"""        vowels = 'aeiouy'
+        """Count syllables in a word (simplified)"""
+        vowels = 'aeiouy'
         count = 0
         prev_was_vowel = False
         
@@ -478,7 +502,8 @@ class AdvancedNLPEngine:
         return max(1, count)
     
     def _calculate_quality_grade(self, avg_sentence_length: float, word_variety: float, engagement_score: float) -> str:
-        """Calculate overall content quality grade"""        # Scoring system
+        """Calculate overall content quality grade"""
+        # Scoring system
         sentence_score = min(10, max(0, 10 - abs(avg_sentence_length - 15) / 2))
         variety_score = word_variety * 10
         engagement_score_scaled = engagement_score * 100
@@ -495,7 +520,8 @@ class AdvancedNLPEngine:
             return "D"
     
     def _calculate_authenticity_score(self, content: str) -> float:
-        """Calculate content authenticity score"""        # Simple authenticity indicators
+        """Calculate content authenticity score"""
+        # Simple authenticity indicators
         personal_pronouns = ['i', 'me', 'my', 'myself', 'we', 'us', 'our']
         authentic_phrases = ['in my experience', 'i believe', 'personally', 'from my perspective']
         
@@ -506,7 +532,8 @@ class AdvancedNLPEngine:
         return min(1.0, personal_score + phrase_score)
     
     def _suggest_partnerships(self, collab_scores: Dict[str, float]) -> List[str]:
-        """Suggest partnership types based on collaboration scores"""        suggestions = []
+        """Suggest partnership types based on collaboration scores"""
+        suggestions = []
         
         if collab_scores.get('brand_mention', 0) > 0.03:
             suggestions.append('Brand partnerships')
@@ -520,14 +547,16 @@ class AdvancedNLPEngine:
         return suggestions if suggestions else ['General content collaboration']
     
     def _calculate_char_frequency(self, content: str) -> Dict[str, float]:
-        """Calculate character frequency distribution"""        from collections import Counter
+        """Calculate character frequency distribution"""
+        from collections import Counter
         char_count = Counter(content.lower())
         total_chars = sum(char_count.values())
         
         return {char: count/total_chars for char, count in char_count.most_common(10)}
     
     def _calculate_structural_hash(self, content: str) -> str:
-        """Calculate structural hash based on content pattern"""        import hashlib
+        """Calculate structural hash based on content pattern"""
+        import hashlib
         
         # Create structural signature
         structure = []
@@ -545,7 +574,8 @@ class AdvancedNLPEngine:
         return hashlib.md5(structure_str.encode()).hexdigest()
     
     def _get_model_versions(self) -> Dict[str, str]:
-        """Get versions of loaded models"""        return {
+        """Get versions of loaded models"""
+        return {
             'spacy_version': spacy.__version__,
             'transformers_version': transformers.__version__,
             'torch_version': torch.__version__,
@@ -554,7 +584,8 @@ class AdvancedNLPEngine:
         }
     
     async def batch_process(self, tasks: List[NLPTask]) -> List[NLPResult]:
-        """Process multiple tasks in batch"""        results = []
+        """Process multiple tasks in batch"""
+        results = []
         
         # Process in batches to manage memory
         batch_size = self.config.get('batch_size', 32)
@@ -575,7 +606,8 @@ class AdvancedNLPEngine:
         return results
     
     async def cleanup(self):
-        """Cleanup resources"""        self.models.clear()
+        """Cleanup resources"""
+        self.models.clear()
         self.tokenizers.clear()
         self.pipelines.clear()
         self.nlp_processors.clear()
@@ -587,14 +619,16 @@ class AdvancedNLPEngine:
 _nlp_engine = None
 
 async def get_nlp_engine() -> AdvancedNLPEngine:
-    """Get global NLP engine instance"""    global _nlp_engine
+    """Get global NLP engine instance"""
+    global _nlp_engine
     if _nlp_engine is None:
         _nlp_engine = AdvancedNLPEngine()
         await _nlp_engine.initialize()
     return _nlp_engine
 
 async def process_content_quick(content: str, content_type: str = 'text', language: str = 'auto') -> Dict[str, Any]:
-    """Quick content processing function"""    engine = await get_nlp_engine()
+    """Quick content processing function"""
+    engine = await get_nlp_engine()
     task = NLPTask(
         task_id=f"quick_{datetime.utcnow().timestamp()}",
         content=content,

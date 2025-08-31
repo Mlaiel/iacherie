@@ -14,7 +14,8 @@ COPYRIGHT WARNING: This code is proprietary. Unauthorized use, copying, or
 redistribution without explicit written permission from Fahed Mlaiel is 
 strictly prohibited and will result in legal action.
 ================================================================================
-"""import logging
+"""
+import logging
 import asyncio
 import json
 import aiohttp
@@ -38,7 +39,8 @@ logger = logging.getLogger(__name__)
 
 
 class Platform(str, Enum):
-    """Supported social media platforms"""    YOUTUBE = "youtube"
+    """Supported social media platforms"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     SPOTIFY = "spotify"
@@ -52,7 +54,8 @@ class Platform(str, Enum):
 
 
 class ContentFormat(str, Enum):
-    """Content formats for distribution"""    VIDEO = "video"
+    """Content formats for distribution"""
+    VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
     TEXT = "text"
@@ -63,7 +66,8 @@ class ContentFormat(str, Enum):
 
 
 class DistributionStatus(str, Enum):
-    """Content distribution status"""    PENDING = "pending"
+    """Content distribution status"""
+    PENDING = "pending"
     UPLOADING = "uploading"
     PROCESSING = "processing"
     PUBLISHED = "published"
@@ -73,7 +77,8 @@ class DistributionStatus(str, Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform authentication credentials"""    platform: Platform
+    """Platform authentication credentials"""
+    platform: Platform
     access_token: str
     refresh_token: Optional[str] = None
     token_expires_at: Optional[datetime] = None
@@ -84,7 +89,8 @@ class PlatformCredentials:
 
 @dataclass
 class ContentMetadata:
-    """Content metadata for distribution"""    title: str
+    """Content metadata for distribution"""
+    title: str
     description: str
     tags: List[str]
     category: Optional[str] = None
@@ -95,7 +101,8 @@ class ContentMetadata:
 
 @dataclass
 class DistributionResult:
-    """Content distribution result"""    platform: Platform
+    """Content distribution result"""
+    platform: Platform
     platform_content_id: str
     content_url: str
     status: DistributionStatus
@@ -106,7 +113,8 @@ class DistributionResult:
 
 @dataclass
 class PlatformAnalytics:
-    """Platform analytics data"""    platform: Platform
+    """Platform analytics data"""
+    platform: Platform
     content_id: str
     views: int
     likes: int
@@ -120,7 +128,8 @@ class PlatformAnalytics:
 
 
 class PlatformIntegrationEngine:
-    """    Enterprise platform integration engine for multi-platform content distribution
+    """
+    Enterprise platform integration engine for multi-platform content distribution
     
     Features:
     - Multi-platform OAuth authentication
@@ -129,7 +138,8 @@ class PlatformIntegrationEngine:
     - Content format optimization
     - Scheduling and publishing
     - Cross-platform analytics
-    """    
+    """
+    
     def __init__(
         self,
         redis_manager: RedisManager,
@@ -166,7 +176,8 @@ class PlatformIntegrationEngine:
         logger.info("PlatformIntegrationEngine initialized successfully")
 
     def _load_platform_configs(self) -> Dict[Platform, Dict[str, Any]]:
-        """Load API configurations for each platform"""        return {
+        """Load API configurations for each platform"""
+        return {
             Platform.YOUTUBE: {
                 "auth_url": "https://accounts.google.com/o/oauth2/auth",
                 "token_url": "https://oauth2.googleapis.com/token",
@@ -228,7 +239,8 @@ class PlatformIntegrationEngine:
         redirect_uri: str,
         user_id: str
     ) -> PlatformCredentials:
-        """        Authenticate user with platform using OAuth flow
+        """
+        Authenticate user with platform using OAuth flow
         
         Args:
             platform: Platform to authenticate
@@ -238,7 +250,8 @@ class PlatformIntegrationEngine:
             
         Returns:
             Platform credentials
-        """        try:
+        """
+        try:
             config = self.platform_configs[platform]
             
             # Exchange authorization code for access token
@@ -282,7 +295,8 @@ class PlatformIntegrationEngine:
         auth_code: str,
         redirect_uri: str
     ) -> Dict[str, Any]:
-        """Exchange authorization code for access token"""        try:
+        """Exchange authorization code for access token"""
+        try:
             config = self.platform_configs[platform]
             
             data = {
@@ -307,7 +321,8 @@ class PlatformIntegrationEngine:
             raise
 
     def _calculate_token_expiry(self, token_data: Dict[str, Any]) -> Optional[datetime]:
-        """Calculate token expiry time"""        expires_in = token_data.get("expires_in")
+        """Calculate token expiry time"""
+        expires_in = token_data.get("expires_in")
         if expires_in:
             return datetime.now() + timedelta(seconds=int(expires_in))
         return None
@@ -321,7 +336,8 @@ class PlatformIntegrationEngine:
         user_id: str,
         schedule_time: Optional[datetime] = None
     ) -> List[DistributionResult]:
-        """        Distribute content to multiple platforms
+        """
+        Distribute content to multiple platforms
         
         Args:
             content_path: Path to content file
@@ -333,7 +349,8 @@ class PlatformIntegrationEngine:
             
         Returns:
             List of distribution results
-        """        try:
+        """
+        try:
             distribution_results = []
             
             # Validate content file
@@ -398,7 +415,8 @@ class PlatformIntegrationEngine:
         user_id: str,
         schedule_time: Optional[datetime] = None
     ) -> DistributionResult:
-        """Distribute content to specific platform"""        try:
+        """Distribute content to specific platform"""
+        try:
             # Get platform credentials
             credentials = await self._get_platform_credentials(user_id, platform)
             if not credentials:
@@ -434,7 +452,8 @@ class PlatformIntegrationEngine:
         metadata: ContentMetadata,
         credentials: PlatformCredentials
     ) -> DistributionResult:
-        """Upload video to YouTube"""        try:
+        """Upload video to YouTube"""
+        try:
             config = self.platform_configs[Platform.YOUTUBE]
             
             # Prepare video metadata
@@ -511,7 +530,8 @@ class PlatformIntegrationEngine:
         metadata: ContentMetadata,
         credentials: PlatformCredentials
     ) -> DistributionResult:
-        """Upload content to Instagram"""        try:
+        """Upload content to Instagram"""
+        try:
             config = self.platform_configs[Platform.INSTAGRAM]
             
             # Get user's Instagram account ID
@@ -587,7 +607,8 @@ class PlatformIntegrationEngine:
         metadata: ContentMetadata,
         credentials: PlatformCredentials
     ) -> DistributionResult:
-        """Upload video to TikTok"""        try:
+        """Upload video to TikTok"""
+        try:
             config = self.platform_configs[Platform.TIKTOK]
             
             headers = {
@@ -663,7 +684,8 @@ class PlatformIntegrationEngine:
         metadata: ContentMetadata,
         credentials: PlatformCredentials
     ) -> DistributionResult:
-        """Upload content to Facebook"""        try:
+        """Upload content to Facebook"""
+        try:
             config = self.platform_configs[Platform.FACEBOOK]
             
             # Get page access token (assuming user manages a page)
@@ -728,7 +750,8 @@ class PlatformIntegrationEngine:
         metadata: ContentMetadata,
         credentials: PlatformCredentials
     ) -> DistributionResult:
-        """Upload content to Twitter"""        try:
+        """Upload content to Twitter"""
+        try:
             config = self.platform_configs[Platform.TWITTER]
             
             headers = {
@@ -792,7 +815,8 @@ class PlatformIntegrationEngine:
         period_start: datetime = None,
         period_end: datetime = None
     ) -> Dict[Platform, List[PlatformAnalytics]]:
-        """        Aggregate analytics data from multiple platforms
+        """
+        Aggregate analytics data from multiple platforms
         
         Args:
             user_id: User identifier
@@ -803,7 +827,8 @@ class PlatformIntegrationEngine:
             
         Returns:
             Platform analytics data
-        """        try:
+        """
+        try:
             if not period_end:
                 period_end = datetime.now()
             if not period_start:
@@ -857,7 +882,8 @@ class PlatformIntegrationEngine:
         content_format: ContentFormat,
         platform: Platform
     ):
-        """Validate content compatibility with platform"""        config = self.platform_configs[platform]
+        """Validate content compatibility with platform"""
+        config = self.platform_configs[platform]
         
         # Check file size
         file_size = await self._get_file_size(content_path)
@@ -870,32 +896,39 @@ class PlatformIntegrationEngine:
             raise ValueError(f"Unsupported format for {platform.value}: {file_extension}")
 
     async def _get_file_size(self, file_path: str) -> int:
-        """Get file size in bytes"""        return await self.file_manager.get_file_size(file_path)
+        """Get file size in bytes"""
+        return await self.file_manager.get_file_size(file_path)
 
     async def _test_platform_connection(self, credentials: PlatformCredentials):
-        """Test platform connection"""        # Implementation for testing platform connection
+        """Test platform connection"""
+        # Implementation for testing platform connection
         pass
 
     async def _store_platform_credentials(self, user_id: str, credentials: PlatformCredentials):
-        """Store encrypted platform credentials"""        # Implementation depends on your database and encryption strategy
+        """Store encrypted platform credentials"""
+        # Implementation depends on your database and encryption strategy
         pass
 
     async def _get_platform_credentials(self, user_id: str, platform: Platform) -> Optional[PlatformCredentials]:
-        """Get platform credentials for user"""        # Implementation depends on your database layer
+        """Get platform credentials for user"""
+        # Implementation depends on your database layer
         return None
 
     async def _refresh_token_if_needed(self, credentials: PlatformCredentials) -> PlatformCredentials:
-        """Refresh access token if expired"""        if credentials.token_expires_at and datetime.now() >= credentials.token_expires_at:
+        """Refresh access token if expired"""
+        if credentials.token_expires_at and datetime.now() >= credentials.token_expires_at:
             # Implement token refresh logic
             pass
         return credentials
 
     async def _store_distribution_records(self, results: List[DistributionResult], user_id: str):
-        """Store distribution records in database"""        # Implementation depends on your database layer
+        """Store distribution records in database"""
+        # Implementation depends on your database layer
         pass
 
     async def _get_user_platforms(self, user_id: str) -> List[Platform]:
-        """Get user's connected platforms"""        # Implementation depends on your database layer
+        """Get user's connected platforms"""
+        # Implementation depends on your database layer
         return []
 
     async def _fetch_platform_analytics(
@@ -906,11 +939,13 @@ class PlatformIntegrationEngine:
         period_start: datetime,
         period_end: datetime
     ) -> List[PlatformAnalytics]:
-        """Fetch analytics from specific platform"""        # Implementation for platform-specific analytics fetching
+        """Fetch analytics from specific platform"""
+        # Implementation for platform-specific analytics fetching
         return []
 
     async def _cache_analytics_results(self, cache_key: str, results: Dict[Platform, List[PlatformAnalytics]]):
-        """Cache analytics results"""        try:
+        """Cache analytics results"""
+        try:
             # Convert to JSON-serializable format
             serializable_results = {}
             for platform, analytics_list in results.items():

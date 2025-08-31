@@ -11,7 +11,8 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing and usage rights.
-"""from typing import Dict, List, Any, Optional, Tuple, Union
+"""
+from typing import Dict, List, Any, Optional, Tuple, Union
 from datetime import datetime, date, timedelta
 from uuid import UUID, uuid4
 import logging
@@ -41,7 +42,8 @@ settings = get_settings()
 
 
 class PaymentMethod(Enum):
-    """Supported payment methods"""    STRIPE = "stripe"
+    """Supported payment methods"""
+    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     BANK_TRANSFER = "bank_transfer"
@@ -55,7 +57,8 @@ class PaymentMethod(Enum):
 
 
 class PaymentType(Enum):
-    """Payment types"""    ROYALTY_PAYMENT = "royalty_payment"
+    """Payment types"""
+    ROYALTY_PAYMENT = "royalty_payment"
     LICENSE_FEE = "license_fee"
     ADVANCE_PAYMENT = "advance_payment"
     MINIMUM_GUARANTEE = "minimum_guarantee"
@@ -68,7 +71,8 @@ class PaymentType(Enum):
 
 
 class PaymentFrequency(Enum):
-    """Payment frequency options"""    IMMEDIATE = "immediate"
+    """Payment frequency options"""
+    IMMEDIATE = "immediate"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -78,7 +82,8 @@ class PaymentFrequency(Enum):
 
 
 class PaymentPriority(Enum):
-    """Payment processing priority"""    LOW = "low"
+    """Payment processing priority"""
+    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -87,7 +92,8 @@ class PaymentPriority(Enum):
 
 @dataclass
 class PaymentInstruction:
-    """Payment instruction data structure"""    payment_id: str
+    """Payment instruction data structure"""
+    payment_id: str
     payee_id: UUID
     amount: Decimal
     currency: str
@@ -104,7 +110,8 @@ class PaymentInstruction:
 
 @dataclass
 class PaymentResult:
-    """Payment processing result"""    payment_id: str
+    """Payment processing result"""
+    payment_id: str
     status: PaymentStatus
     transaction_id: Optional[str] = None
     external_reference: Optional[str] = None
@@ -121,9 +128,11 @@ class PaymentResult:
 
 
 class PaymentProcessor:
-    """    Enterprise-grade payment processing system with multi-provider support,
+    """
+    Enterprise-grade payment processing system with multi-provider support,
     advanced fraud detection, compliance checking, and automated distribution.
-    """    
+    """
+    
     def __init__(
         self,
         repository: LicensingRepository = None,
@@ -138,7 +147,8 @@ class PaymentProcessor:
         notification_service: NotificationService = None,
         audit_logger: AuditLogger = None
     ):
-        """Initialize payment processor with comprehensive dependencies"""        self.repository = repository or LicensingRepository()
+        """Initialize payment processor with comprehensive dependencies"""
+        self.repository = repository or LicensingRepository()
         self.gateway_manager = gateway_manager or PaymentGatewayManager()
         self.fraud_service = fraud_service or FraudDetectionService()
         self.currency_converter = currency_converter or CurrencyConverter()
@@ -184,7 +194,8 @@ class PaymentProcessor:
         user_id: UUID,
         payment_schedule: str = "immediate"
     ) -> Dict[str, Any]:
-        """Process royalty payments to multiple recipients"""        try:
+        """Process royalty payments to multiple recipients"""
+        try:
             # Get royalty calculation
             royalty_calculations, _ = await self.repository.get_royalty_calculations(
                 limit=1, offset=0
@@ -261,7 +272,8 @@ class PaymentProcessor:
         license_agreement_id: UUID = None,
         user_id: UUID = None
     ) -> PaymentResult:
-        """Process individual payment with comprehensive validation"""        try:
+        """Process individual payment with comprehensive validation"""
+        try:
             # Validate payment instruction
             validated_instruction = await self._validate_single_payment_instruction(
                 payment_instruction
@@ -325,7 +337,8 @@ class PaymentProcessor:
         payment_instructions: List[PaymentInstruction],
         batch_options: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Process multiple payments in optimized batches"""        try:
+        """Process multiple payments in optimized batches"""
+        try:
             batch_options = batch_options or {}
             batch_id = await self._generate_batch_id()
             
@@ -377,7 +390,8 @@ class PaymentProcessor:
         payment_id: str,
         user_id: UUID = None
     ) -> Dict[str, Any]:
-        """Get comprehensive payment status information"""        try:
+        """Get comprehensive payment status information"""
+        try:
             # Find payment record
             payment_record = await self._find_payment_record(payment_id)
             
@@ -425,7 +439,8 @@ class PaymentProcessor:
         retry_options: Dict[str, Any] = None,
         user_id: UUID = None
     ) -> PaymentResult:
-        """Retry failed payment with enhanced error handling"""        try:
+        """Retry failed payment with enhanced error handling"""
+        try:
             # Get original payment record
             payment_record = await self._find_payment_record(payment_id)
             
@@ -473,7 +488,8 @@ class PaymentProcessor:
         payment_method: PaymentMethod,
         source_currency: str = None
     ) -> Dict[str, Any]:
-        """Calculate comprehensive payment fees"""        try:
+        """Calculate comprehensive payment fees"""
+        try:
             fee_calculation = {
                 "base_amount": amount,
                 "currency": currency,
@@ -522,7 +538,8 @@ class PaymentProcessor:
         currency: str = None,
         amount: Decimal = None
     ) -> List[Dict[str, Any]]:
-        """Get supported payment methods for specific criteria"""        try:
+        """Get supported payment methods for specific criteria"""
+        try:
             # Get base supported methods
             base_methods = self.regional_payment_methods.get(
                 country_code, self.regional_payment_methods["default"]
@@ -566,7 +583,8 @@ class PaymentProcessor:
         instructions: List[PaymentInstruction],
         calculation: RoyaltyCalculation
     ) -> List[PaymentInstruction]:
-        """Validate payment instructions against royalty calculation"""        validated_instructions = []
+        """Validate payment instructions against royalty calculation"""
+        validated_instructions = []
         total_amount = Decimal("0")
         
         for instruction in instructions:
@@ -595,7 +613,8 @@ class PaymentProcessor:
         instructions: List[PaymentInstruction],
         calculation: RoyaltyCalculation
     ) -> Dict[str, Any]:
-        """Perform comprehensive compliance checks"""        compliance_results = {}
+        """Perform comprehensive compliance checks"""
+        compliance_results = {}
         
         for instruction in instructions:
             result = {
@@ -634,7 +653,8 @@ class PaymentProcessor:
         return compliance_results
     
     async def _generate_batch_id(self) -> str:
-        """Generate unique batch ID"""        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        """Generate unique batch ID"""
+        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         return f"BATCH-{timestamp}-{hash(timestamp) % 10000:04d}"
     
     async def _execute_payment(
@@ -642,7 +662,8 @@ class PaymentProcessor:
         instruction: PaymentInstruction,
         method: PaymentMethod
     ) -> PaymentResult:
-        """Execute payment through appropriate gateway"""        try:
+        """Execute payment through appropriate gateway"""
+        try:
             if method == PaymentMethod.STRIPE:
                 return await self.gateway_manager.process_stripe_payment(instruction)
             elif method == PaymentMethod.PAYPAL:
@@ -692,7 +713,8 @@ settings = get_settings()
 
 
 class PaymentMethod(Enum):
-    """Supported payment methods"""    BANK_TRANSFER = "bank_transfer"
+    """Supported payment methods"""
+    BANK_TRANSFER = "bank_transfer"
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -704,7 +726,8 @@ class PaymentMethod(Enum):
 
 
 class PaymentType(Enum):
-    """Payment types"""    ROYALTY = "royalty"
+    """Payment types"""
+    ROYALTY = "royalty"
     LICENSE_FEE = "license_fee"
     ADVANCE = "advance"
     BONUS = "bonus"
@@ -713,16 +736,19 @@ class PaymentType(Enum):
 
 
 class PaymentPriority(Enum):
-    """Payment processing priorities"""    LOW = "low"
+    """Payment processing priorities"""
+    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
 
 
 class PaymentProcessor:
-    """    Industrial-grade payment processing system with multi-provider
+    """
+    Industrial-grade payment processing system with multi-provider
     support, fraud detection, and automated compliance.
-    """    
+    """
+    
     def __init__(
         self,
         repository: LicensingRepository = None,
@@ -730,7 +756,8 @@ class PaymentProcessor:
         payment_security: PaymentSecurity = None,
         cache_manager: CacheManager = None
     ):
-        """Initialize payment processor with dependencies"""        self.repository = repository or LicensingRepository()
+        """Initialize payment processor with dependencies"""
+        self.repository = repository or LicensingRepository()
         self.currency_converter = currency_converter or CurrencyConverter()
         self.payment_security = payment_security or PaymentSecurity()
         self.cache_manager = cache_manager or CacheManager()
@@ -773,7 +800,8 @@ class PaymentProcessor:
         recipient_info: Dict[str, Any],
         user_id: UUID = None
     ) -> PaymentRecord:
-        """Process royalty payment to rights holder"""        try:
+        """Process royalty payment to rights holder"""
+        try:
             # Get royalty calculation
             royalty_calculations, _ = await self.repository.get_royalty_calculations(
                 limit=1, offset=0  # This would need proper filtering by ID
@@ -864,7 +892,8 @@ class PaymentProcessor:
         payment_requests: List[Dict[str, Any]],
         user_id: UUID = None
     ) -> Dict[str, Any]:
-        """Process multiple payments in batch"""        try:
+        """Process multiple payments in batch"""
+        try:
             results = {
                 "total_payments": len(payment_requests),
                 "successful": 0,
@@ -912,7 +941,8 @@ class PaymentProcessor:
         revenue_distribution_id: UUID,
         user_id: UUID = None
     ) -> Dict[str, Any]:
-        """Execute automated revenue distribution"""        try:
+        """Execute automated revenue distribution"""
+        try:
             # This would get revenue distribution from repository
             # For now, we'll simulate the structure
             distribution_data = {
@@ -999,7 +1029,8 @@ class PaymentProcessor:
         payment_id: str,
         user_id: UUID = None
     ) -> Dict[str, Any]:
-        """Get current payment status"""        try:
+        """Get current payment status"""
+        try:
             # This would get payment record from repository
             # For now, we'll return a simulated status
             payment_status = {
@@ -1025,7 +1056,8 @@ class PaymentProcessor:
         payment_id: str,
         user_id: UUID = None
     ) -> Dict[str, Any]:
-        """Retry a failed payment"""        try:
+        """Retry a failed payment"""
+        try:
             # Get payment record
             # This would come from repository
             payment_record = {
@@ -1074,7 +1106,8 @@ class PaymentProcessor:
     # Private helper methods
     
     async def _validate_payment_method(self, payment_method: str) -> None:
-        """Validate payment method"""        if payment_method not in [method.value for method in PaymentMethod]:
+        """Validate payment method"""
+        if payment_method not in [method.value for method in PaymentMethod]:
             raise ValidationError(f"Unsupported payment method: {payment_method}")
         
         if payment_method not in self.processors:
@@ -1085,7 +1118,8 @@ class PaymentProcessor:
         recipient_info: Dict[str, Any],
         payment_method: str
     ) -> None:
-        """Validate recipient information for payment method"""        required_fields = {
+        """Validate recipient information for payment method"""
+        required_fields = {
             PaymentMethod.STRIPE.value: ["stripe_account_id"],
             PaymentMethod.PAYPAL.value: ["paypal_email"],
             PaymentMethod.WISE.value: ["wise_account_id"],
@@ -1101,7 +1135,8 @@ class PaymentProcessor:
                 raise ValidationError(f"Missing required field for {payment_method}: {field}")
     
     async def _validate_payment_amount(self, amount: Decimal) -> None:
-        """Validate payment amount"""        if amount < self.minimum_payment_amount:
+        """Validate payment amount"""
+        if amount < self.minimum_payment_amount:
             raise ValidationError(
                 f"Payment amount {amount} below minimum {self.minimum_payment_amount}"
             )
@@ -1116,7 +1151,8 @@ class PaymentProcessor:
         amount: Decimal,
         payment_method: str
     ) -> Decimal:
-        """Calculate processing fee for payment method"""        fee_rate = self.processing_fees.get(payment_method, Decimal("0"))
+        """Calculate processing fee for payment method"""
+        fee_rate = self.processing_fees.get(payment_method, Decimal("0"))
         
         if payment_method in [PaymentMethod.BANK_TRANSFER.value]:
             # Fixed fee
@@ -1131,7 +1167,8 @@ class PaymentProcessor:
         recipient_info: Dict[str, Any],
         payment_method: str
     ) -> Dict[str, Any]:
-        """Perform fraud detection on payment"""        # Use payment security module for fraud detection
+        """Perform fraud detection on payment"""
+        # Use payment security module for fraud detection
         return await self.payment_security.check_payment_fraud(
             amount, recipient_info, payment_method
         )
@@ -1144,7 +1181,8 @@ class PaymentProcessor:
         recipient_info: Dict[str, Any],
         payment_record: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process payment with specific provider"""        processor = self.processors.get(payment_method)
+        """Process payment with specific provider"""
+        processor = self.processors.get(payment_method)
         if not processor:
             raise PaymentError(f"No processor available for {payment_method}")
         
@@ -1165,7 +1203,8 @@ class PaymentProcessor:
         payment_record: PaymentRecord,
         payment_result: Dict[str, Any]
     ) -> None:
-        """Update payment record with processing result"""        if payment_result["success"]:
+        """Update payment record with processing result"""
+        if payment_result["success"]:
             payment_record.status = PaymentStatus.COMPLETED.value
             payment_record.processed_date = datetime.utcnow()
             payment_record.transaction_id = payment_result.get("transaction_id")
@@ -1179,7 +1218,8 @@ class PaymentProcessor:
         payment_batch: List[Dict[str, Any]],
         user_id: UUID = None
     ) -> List[Dict[str, Any]]:
-        """Process a batch of payments in parallel"""        tasks = []
+        """Process a batch of payments in parallel"""
+        tasks = []
         for payment_request in payment_batch:
             task = asyncio.create_task(
                 self._process_single_payment(payment_request, user_id)
@@ -1208,7 +1248,8 @@ class PaymentProcessor:
         payment_request: Dict[str, Any],
         user_id: UUID = None
     ) -> Dict[str, Any]:
-        """Process a single payment request"""        try:
+        """Process a single payment request"""
+        try:
             # Extract payment details
             amount = Decimal(str(payment_request["amount"]))
             currency = payment_request.get("currency", self.default_currency)
@@ -1253,11 +1294,13 @@ class PaymentProcessor:
             }
     
     async def _generate_payment_id(self) -> str:
-        """Generate unique payment ID"""        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        """Generate unique payment ID"""
+        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         return f"PAY-{timestamp}-{hash(timestamp) % 10000:04d}"
     
     async def _get_recipient_info(self, recipient_id: str) -> Dict[str, Any]:
-        """Get recipient information by ID"""        # This would fetch from user/recipient database
+        """Get recipient information by ID"""
+        # This would fetch from user/recipient database
         return {
             "recipient_id": recipient_id,
             "stripe_account_id": f"acct_{recipient_id}",
@@ -1266,7 +1309,8 @@ class PaymentProcessor:
         }
     
     async def _get_recipient_info_for_payment(self, payment_id: str) -> Dict[str, Any]:
-        """Get recipient info for existing payment"""        # This would fetch from payment record
+        """Get recipient info for existing payment"""
+        # This would fetch from payment record
         return {
             "recipient_id": "default_recipient",
             "stripe_account_id": "acct_default",

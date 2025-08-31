@@ -18,7 +18,8 @@ Development Team Specialties:
 - DevOps Engineer
 - AI Prompt Engineer
 Email: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -31,7 +32,8 @@ from .exceptions import ModelError, ValidationError
 
 
 class ModelType(Enum):
-    """Enumeration of supported AI model types"""    AUDIO_MODEL = "audio_model"
+    """Enumeration of supported AI model types"""
+    AUDIO_MODEL = "audio_model"
     AUDIO_FINGERPRINT = "audio_fingerprint"
     VIDEO_MODEL = "video_model"
     VIDEO_ANALYSIS = "video_analysis"
@@ -54,7 +56,8 @@ class ModelType(Enum):
 
 
 class ModelProvider(Enum):
-    """Enumeration of model providers"""    LOCAL = "local"
+    """Enumeration of model providers"""
+    LOCAL = "local"
     CLOUD = "cloud"
     GPU = "gpu"
     EDGE = "edge"
@@ -62,7 +65,8 @@ class ModelProvider(Enum):
 
 
 class ModelStatus(Enum):
-    """Model status enumeration"""    INITIALIZING = "initializing"
+    """Model status enumeration"""
+    INITIALIZING = "initializing"
     READY = "ready"
     LOADING = "loading"
     PROCESSING = "processing"
@@ -72,7 +76,8 @@ class ModelStatus(Enum):
 
 @dataclass
 class ModelConfig:
-    """Configuration for AI models"""    name: str
+    """Configuration for AI models"""
+    name: str
     provider: ModelProvider
     model_type: ModelType
     version: str = "1.0.0"
@@ -84,7 +89,8 @@ class ModelConfig:
     config_params: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Validate configuration after initialization"""        if not self.name:
+        """Validate configuration after initialization"""
+        if not self.name:
             raise ValidationError("Model name cannot be empty")
         if self.timeout <= 0:
             raise ValidationError("Timeout must be positive")
@@ -94,7 +100,8 @@ class ModelConfig:
 
 @dataclass
 class ModelMetrics:
-    """Model performance and usage metrics"""    model_name: str
+    """Model performance and usage metrics"""
+    model_name: str
     total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
@@ -106,14 +113,16 @@ class ModelMetrics:
     
     @property
     def success_rate(self) -> float:
-        """Calculate success rate percentage"""        if self.total_requests == 0:
+        """Calculate success rate percentage"""
+        if self.total_requests == 0:
             return 0.0
         return (self.successful_requests / self.total_requests) * 100
 
 
 @dataclass
 class ProcessingResult:
-    """Standard result structure for AI model processing"""    success: bool
+    """Standard result structure for AI model processing"""
+    success: bool
     data: Any
     confidence: float = 0.0
     processing_time: float = 0.0
@@ -124,9 +133,11 @@ class ProcessingResult:
 
 
 class BaseAIModel(ABC):
-    """Abstract base class for all AI models"""    
+    """Abstract base class for all AI models"""
+    
     def __init__(self, config: ModelConfig):
-        """Initialize base model with configuration"""        self.config = config
+        """Initialize base model with configuration"""
+        self.config = config
         self.model_type = config.model_type
         self.provider = config.provider
         self.status = ModelStatus.INITIALIZING
@@ -137,29 +148,36 @@ class BaseAIModel(ABC):
         
     @property
     def is_connected(self) -> bool:
-        """Check if model is connected and ready"""        return self._is_connected
+        """Check if model is connected and ready"""
+        return self._is_connected
     
     @property
     def model_name(self) -> str:
-        """Get model name"""        return self.config.name
+        """Get model name"""
+        return self.config.name
     
     @abstractmethod
     async def connect(self) -> bool:
-        """Connect and initialize the model"""        pass
+        """Connect and initialize the model"""
+        pass
     
     @abstractmethod
     async def disconnect(self) -> bool:
-        """Disconnect and cleanup the model"""        pass
+        """Disconnect and cleanup the model"""
+        pass
     
     async def cleanup(self) -> None:
-        """Cleanup resources and disconnect"""        await self.disconnect()
+        """Cleanup resources and disconnect"""
+        await self.disconnect()
     
     @abstractmethod
     async def process(self, input_data: Any, **kwargs) -> Any:
-        """Process input data and return results"""        pass
+        """Process input data and return results"""
+        pass
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on the model"""        try:
+        """Perform health check on the model"""
+        try:
             # Basic health check
             health_status = {
                 "model_name": self.model_name,
@@ -183,7 +201,8 @@ class BaseAIModel(ABC):
             }
     
     def update_metrics(self, success: bool, response_time: float):
-        """Update model performance metrics"""        self.metrics.total_requests += 1
+        """Update model performance metrics"""
+        self.metrics.total_requests += 1
         self.metrics.last_used = datetime.now()
         
         if success:
@@ -204,10 +223,12 @@ class BaseAIModel(ABC):
         self.metrics.error_rate = (self.metrics.failed_requests / self.metrics.total_requests) * 100
     
     async def get_metrics(self) -> ModelMetrics:
-        """Get current model metrics"""        return self.metrics
+        """Get current model metrics"""
+        return self.metrics
     
     async def reset_metrics(self) -> None:
-        """Reset model metrics"""        self.metrics = ModelMetrics(model_name=self.config.name)
+        """Reset model metrics"""
+        self.metrics = ModelMetrics(model_name=self.config.name)
     
     def __str__(self) -> str:
         return f"{self.__class__.__name__}(name={self.model_name}, type={self.model_type.value})"
@@ -217,7 +238,8 @@ class BaseAIModel(ABC):
 
 
 class AudioModel(BaseAIModel):
-    """Base class for audio processing models"""    
+    """Base class for audio processing models"""
+    
     def __init__(self, config: ModelConfig):
         super().__init__(config)
         if config.model_type != ModelType.AUDIO_MODEL:
@@ -225,7 +247,8 @@ class AudioModel(BaseAIModel):
 
 
 class VideoModel(BaseAIModel):
-    """Base class for video processing models"""    
+    """Base class for video processing models"""
+    
     def __init__(self, config: ModelConfig):
         super().__init__(config)
         if config.model_type != ModelType.VIDEO_MODEL:
@@ -233,7 +256,8 @@ class VideoModel(BaseAIModel):
 
 
 class ImageModel(BaseAIModel):
-    """Base class for image processing models"""    
+    """Base class for image processing models"""
+    
     def __init__(self, config: ModelConfig):
         super().__init__(config)
         if config.model_type != ModelType.IMAGE_MODEL:
@@ -241,7 +265,8 @@ class ImageModel(BaseAIModel):
 
 
 class TextModel(BaseAIModel):
-    """Base class for text processing models"""    
+    """Base class for text processing models"""
+    
     def __init__(self, config: ModelConfig):
         super().__init__(config)
         if config.model_type not in [ModelType.TEXT_MODEL, ModelType.TEXT_GENERATION]:
@@ -249,7 +274,8 @@ class TextModel(BaseAIModel):
 
 
 class ProtectionModel(BaseAIModel):
-    """Base class for content protection models"""    
+    """Base class for content protection models"""
+    
     def __init__(self, config: ModelConfig):
         super().__init__(config)
         if config.model_type != ModelType.PROTECTION_MODEL:
@@ -257,7 +283,8 @@ class ProtectionModel(BaseAIModel):
 
 
 class BusinessIntelligenceModel(BaseAIModel):
-    """Base class for business intelligence models"""    
+    """Base class for business intelligence models"""
+    
     def __init__(self, config: ModelConfig):
         super().__init__(config)
         if config.model_type != ModelType.BUSINESS_INTELLIGENCE:
@@ -266,27 +293,33 @@ class BusinessIntelligenceModel(BaseAIModel):
 
 # Factory functions for creating models
 def create_audio_model(config: ModelConfig) -> AudioModel:
-    """Factory function to create audio models"""    return AudioModel(config)
+    """Factory function to create audio models"""
+    return AudioModel(config)
 
 
 def create_video_model(config: ModelConfig) -> VideoModel:
-    """Factory function to create video models"""    return VideoModel(config)
+    """Factory function to create video models"""
+    return VideoModel(config)
 
 
 def create_image_model(config: ModelConfig) -> ImageModel:
-    """Factory function to create image models"""    return ImageModel(config)
+    """Factory function to create image models"""
+    return ImageModel(config)
 
 
 def create_text_model(config: ModelConfig) -> TextModel:
-    """Factory function to create text models"""    return TextModel(config)
+    """Factory function to create text models"""
+    return TextModel(config)
 
 
 def create_protection_model(config: ModelConfig) -> ProtectionModel:
-    """Factory function to create protection models"""    return ProtectionModel(config)
+    """Factory function to create protection models"""
+    return ProtectionModel(config)
 
 
 def create_business_intelligence_model(config: ModelConfig) -> BusinessIntelligenceModel:
-    """Factory function to create business intelligence models"""    return BusinessIntelligenceModel(config)
+    """Factory function to create business intelligence models"""
+    return BusinessIntelligenceModel(config)
 
 
 # Model registry for tracking available models
@@ -302,7 +335,8 @@ MODEL_REGISTRY = {
 
 
 async def create_model(config: ModelConfig) -> BaseAIModel:
-    """Create a model instance based on configuration"""    if config.model_type not in MODEL_REGISTRY:
+    """Create a model instance based on configuration"""
+    if config.model_type not in MODEL_REGISTRY:
         raise ModelError(f"Unsupported model type: {config.model_type}")
     
     factory_func = MODEL_REGISTRY[config.model_type]

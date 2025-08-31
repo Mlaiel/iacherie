@@ -12,14 +12,16 @@ Any unauthorized use, copying, or distribution without explicit written permissi
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
-"""from enum import Enum
+"""
+from enum import Enum
 from typing import Dict, List, Optional, Set, Union, Tuple
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 
 
 class ContentStatus(str, Enum):
-    """Content lifecycle status states."""    DRAFT = "draft"
+    """Content lifecycle status states."""
+    DRAFT = "draft"
     UPLOADED = "uploaded"
     PROCESSING = "processing"
     VALIDATED = "validated"
@@ -37,7 +39,8 @@ class ContentStatus(str, Enum):
 
 
 class ContentEvent(str, Enum):
-    """Content lifecycle events that trigger state changes."""    UPLOAD = "upload"
+    """Content lifecycle events that trigger state changes."""
+    UPLOAD = "upload"
     VALIDATE = "validate"
     PROCESS = "process"
     FINGERPRINT = "fingerprint"
@@ -55,7 +58,8 @@ class ContentEvent(str, Enum):
 
 
 class ContentPriority(str, Enum):
-    """Content processing priority levels."""    ULTRA_HIGH = "ultra_high"
+    """Content processing priority levels."""
+    ULTRA_HIGH = "ultra_high"
     HIGH = "high"
     NORMAL = "normal"
     LOW = "low"
@@ -63,7 +67,8 @@ class ContentPriority(str, Enum):
 
 
 class ContentCategory(str, Enum):
-    """Content categorization for business logic."""    MUSIC_ORIGINAL = "music_original"
+    """Content categorization for business logic."""
+    MUSIC_ORIGINAL = "music_original"
     MUSIC_COVER = "music_cover"
     MUSIC_REMIX = "music_remix"
     VIDEO_ORIGINAL = "video_original"
@@ -82,7 +87,8 @@ class ContentCategory(str, Enum):
 
 @dataclass
 class StateTransition:
-    """Defines a valid state transition."""    from_state: ContentStatus
+    """Defines a valid state transition."""
+    from_state: ContentStatus
     to_state: ContentStatus
     event: ContentEvent
     required_permissions: Set[str]
@@ -93,7 +99,8 @@ class StateTransition:
 
 @dataclass
 class ContentMetadata:
-    """Content metadata structure."""    title: str
+    """Content metadata structure."""
+    title: str
     description: Optional[str] = None
     tags: List[str] = None
     genre: Optional[str] = None
@@ -104,7 +111,8 @@ class ContentMetadata:
 
 
 class ContentLifecycleConfig:
-    """Enterprise content lifecycle management configuration."""    # Valid state transitions
+    """Enterprise content lifecycle management configuration."""
+    # Valid state transitions
     STATE_TRANSITIONS = [
         # Initial upload flow
         StateTransition(
@@ -527,12 +535,14 @@ class ContentLifecycleConfig:
 
     @classmethod
     def get_valid_transitions(cls, current_status: ContentStatus) -> List[StateTransition]:
-        """Get valid state transitions from current status."""        return [t for t in cls.STATE_TRANSITIONS if t.from_state == current_status]
+        """Get valid state transitions from current status."""
+        return [t for t in cls.STATE_TRANSITIONS if t.from_state == current_status]
 
     @classmethod
     def can_transition(cls, current_status: ContentStatus, target_status: ContentStatus, 
                       user_permissions: Set[str], conditions: Dict[str, bool]) -> Tuple[bool, str]:
-        """Check if a state transition is valid."""        valid_transitions = cls.get_valid_transitions(current_status)
+        """Check if a state transition is valid."""
+        valid_transitions = cls.get_valid_transitions(current_status)
         
         for transition in valid_transitions:
             if transition.to_state == target_status:
@@ -551,15 +561,18 @@ class ContentLifecycleConfig:
 
     @classmethod
     def get_status_config(cls, status: ContentStatus) -> Dict:
-        """Get configuration for a specific content status."""        return cls.STATUS_CONFIGS.get(status, {})
+        """Get configuration for a specific content status."""
+        return cls.STATUS_CONFIGS.get(status, {})
 
     @classmethod
     def get_category_rules(cls, category: ContentCategory) -> Dict:
-        """Get business rules for a specific content category."""        return cls.CATEGORY_RULES.get(category, {})
+        """Get business rules for a specific content category."""
+        return cls.CATEGORY_RULES.get(category, {})
 
     @classmethod
     def is_status_expired(cls, status: ContentStatus, created_at: datetime) -> bool:
-        """Check if content in current status has exceeded time limits."""        config = cls.get_status_config(status)
+        """Check if content in current status has exceeded time limits."""
+        config = cls.get_status_config(status)
         
         if "max_duration_days" in config and config["max_duration_days"] > 0:
             expiry_date = created_at + timedelta(days=config["max_duration_days"])
@@ -573,21 +586,25 @@ class ContentLifecycleConfig:
 
     @classmethod
     def get_auto_transitions(cls) -> List[StateTransition]:
-        """Get all automatic state transitions."""        return [t for t in cls.STATE_TRANSITIONS if t.auto_transition]
+        """Get all automatic state transitions."""
+        return [t for t in cls.STATE_TRANSITIONS if t.auto_transition]
 
     @classmethod
     def requires_review(cls, status: ContentStatus) -> bool:
-        """Check if status requires manual review."""        config = cls.get_status_config(status)
+        """Check if status requires manual review."""
+        config = cls.get_status_config(status)
         return config.get("review_required", False)
 
     @classmethod
     def is_publicly_visible(cls, status: ContentStatus) -> bool:
-        """Check if content in status is publicly visible."""        config = cls.get_status_config(status)
+        """Check if content in status is publicly visible."""
+        config = cls.get_status_config(status)
         return config.get("visible", False)
 
     @classmethod
     def get_processing_priority(cls, category: ContentCategory, user_tier: str) -> ContentPriority:
-        """Determine processing priority based on content category and user tier."""        base_priority = ContentPriority.NORMAL
+        """Determine processing priority based on content category and user tier."""
+        base_priority = ContentPriority.NORMAL
         
         if category in [ContentCategory.MUSIC_ORIGINAL, ContentCategory.VIDEO_ORIGINAL]:
             base_priority = ContentPriority.HIGH

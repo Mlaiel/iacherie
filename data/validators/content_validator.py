@@ -18,7 +18,8 @@ Features:
 - Real-time content analysis and processing
 - Security scanning and threat detection
 - Metadata extraction and enhancement
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set, Callable
 from pathlib import Path
@@ -58,7 +59,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Supported content types for validation."""    AUDIO = "audio"
+    """Supported content types for validation."""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -69,7 +71,8 @@ class ContentType(Enum):
 
 
 class ContentSubType(Enum):
-    """Content sub-types for specialized validation."""    # Audio subtypes
+    """Content sub-types for specialized validation."""
+    # Audio subtypes
     MUSIC = "music"
     PODCAST = "podcast"
     AUDIOBOOK = "audiobook"
@@ -99,7 +102,8 @@ class ContentSubType(Enum):
 
 
 class ValidationLevel(Enum):
-    """Validation strictness levels."""    BASIC = "basic"              # File format and structure only
+    """Validation strictness levels."""
+    BASIC = "basic"              # File format and structure only
     STANDARD = "standard"        # Basic + metadata + simple quality checks
     STRICT = "strict"           # Standard + security + advanced quality
     ENTERPRISE = "enterprise"    # All features + AI analysis + optimization
@@ -108,7 +112,8 @@ class ValidationLevel(Enum):
 
 
 class ValidationStatus(Enum):
-    """Validation result status."""    VALID = "valid"
+    """Validation result status."""
+    VALID = "valid"
     INVALID = "invalid"
     WARNING = "warning"
     ERROR = "error"
@@ -119,7 +124,8 @@ class ValidationStatus(Enum):
 
 
 class PlatformTarget(Enum):
-    """Target platforms for content optimization."""    SPOTIFY = "spotify"
+    """Target platforms for content optimization."""
+    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -131,7 +137,8 @@ class PlatformTarget(Enum):
 
 
 class QualityLevel(Enum):
-    """Content quality assessment levels."""    POOR = "poor"
+    """Content quality assessment levels."""
+    POOR = "poor"
     FAIR = "fair"
     GOOD = "good"
     EXCELLENT = "excellent"
@@ -140,7 +147,8 @@ class QualityLevel(Enum):
 
 @dataclass
 class ContentMetadata:
-    """Enhanced content metadata structure."""    filename: str
+    """Enhanced content metadata structure."""
+    filename: str
     file_size: int
     mime_type: str
     content_type: ContentType
@@ -208,7 +216,8 @@ class ContentMetadata:
 
 @dataclass
 class ValidationIssue:
-    """Enhanced validation issue structure."""    issue_type: str
+    """Enhanced validation issue structure."""
+    issue_type: str
     severity: str
     message: str
     field: Optional[str] = None
@@ -224,7 +233,8 @@ class ValidationIssue:
 
 @dataclass
 class ContentOptimization:
-    """Content optimization suggestions."""    target_platform: PlatformTarget
+    """Content optimization suggestions."""
+    target_platform: PlatformTarget
     optimizations: List[Dict[str, Any]]
     quality_improvements: List[Dict[str, Any]]
     metadata_enhancements: List[Dict[str, Any]]
@@ -236,7 +246,8 @@ class ContentOptimization:
 class ValidationResult:
     """Comprehensive validation result."""@dataclass
 class ValidationResult:
-    """Comprehensive validation result with enhanced features."""    is_valid: bool
+    """Comprehensive validation result with enhanced features."""
+    is_valid: bool
     status: ValidationStatus
     content_metadata: ContentMetadata
     
@@ -285,17 +296,21 @@ class ValidationResult:
     extra_data: Dict[str, Any] = field(default_factory=dict)
     
     def get_critical_issues(self) -> List[ValidationIssue]:
-        """Get only critical validation issues."""        return [issue for issue in self.issues if issue.severity == "critical"]
+        """Get only critical validation issues."""
+        return [issue for issue in self.issues if issue.severity == "critical"]
     
     def get_fixable_issues(self) -> List[ValidationIssue]:
-        """Get issues that can be automatically fixed."""        return [issue for issue in self.issues if issue.auto_fix_possible]
+        """Get issues that can be automatically fixed."""
+        return [issue for issue in self.issues if issue.auto_fix_possible]
     
     def get_platform_specific_issues(self, platform: PlatformTarget) -> List[ValidationIssue]:
-        """Get issues specific to a platform."""        return [issue for issue in self.issues 
+        """Get issues specific to a platform."""
+        return [issue for issue in self.issues 
                 if issue.platform_specific == platform]
     
     def calculate_platform_readiness(self, platform: PlatformTarget) -> float:
-        """Calculate readiness score for specific platform."""        if platform not in self.platform_compatibility:
+        """Calculate readiness score for specific platform."""
+        if platform not in self.platform_compatibility:
             return 0.0
         
         if not self.platform_compatibility[platform]:
@@ -308,7 +323,8 @@ class ValidationResult:
         return max(0.0, min(1.0, self.overall_score / 100.0 - penalty))
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert result to dictionary."""        return {
+        """Convert result to dictionary."""
+        return {
             "is_valid": self.is_valid,
             "status": self.status.value,
             "validation_level": self.validation_level.value,
@@ -333,7 +349,8 @@ class ValidationResult:
 
 
 class ContentValidator:
-    """    Industrial-grade multi-format content validator for the IA Influencer Agent Platform.
+    """
+    Industrial-grade multi-format content validator for the IA Influencer Agent Platform.
     
     Features:
     - Multi-format content validation (audio, video, image, text)
@@ -344,7 +361,8 @@ class ContentValidator:
     - Real-time content processing
     - Security scanning and threat detection
     - Metadata extraction and enhancement
-    """    
+    """
+    
     # Class constants
     VERSION = "2.0.0"
     SUPPORTED_AUDIO_FORMATS = {
@@ -407,14 +425,16 @@ class ContentValidator:
         enable_fingerprinting: bool = True,
         cache_enabled: bool = True
     ):
-        """        Initialize advanced content validator.
+        """
+        Initialize advanced content validator.
         
         Args:
             config: Validation configuration
             enable_ai_analysis: Enable AI-powered content analysis
             enable_fingerprinting: Enable content fingerprinting
             cache_enabled: Enable validation caching
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         self.enable_ai_analysis = enable_ai_analysis and ADVANCED_FEATURES
         self.enable_fingerprinting = enable_fingerprinting
         self.cache_enabled = cache_enabled
@@ -448,7 +468,8 @@ class ContentValidator:
             asyncio.create_task(self._initialize_ai_models())
     
     async def _initialize_ai_models(self) -> None:
-        """Initialize AI models for content analysis."""        try:
+        """Initialize AI models for content analysis."""
+        try:
             if not ADVANCED_FEATURES:
                 logger.warning("Advanced features not available, skipping AI model initialization")
                 return
@@ -512,7 +533,8 @@ class ContentValidator:
         target_platforms: Optional[List[PlatformTarget]] = None,
         creator_context: Optional[Dict[str, Any]] = None
     ) -> ValidationResult:
-        """        Comprehensive content validation with enhanced features.
+        """
+        Comprehensive content validation with enhanced features.
         
         Args:
             file_path: Path to content file
@@ -525,7 +547,8 @@ class ContentValidator:
             
         Returns:
             Comprehensive validation result
-        """        validation_start = time.time()
+        """
+        validation_start = time.time()
         validation_id = f"val_{int(time.time() * 1000)}"
         
         try:
@@ -643,7 +666,8 @@ class ContentValidator:
         data: Any,
         **kwargs
     ) -> ValidationResult:
-        """        Async validation interface for compatibility with validation engine.
+        """
+        Async validation interface for compatibility with validation engine.
         
         Args:
             data: Content data (can be dict with file info or direct bytes)
@@ -651,7 +675,8 @@ class ContentValidator:
             
         Returns:
             Validation result
-        """        if isinstance(data, dict):
+        """
+        if isinstance(data, dict):
             # Extract parameters from data dict
             return await self.validate(
                 file_path=data.get("file_path"),
@@ -675,7 +700,8 @@ class ContentValidator:
         file_data: bytes,
         content_type_hint: Optional[str]
     ) -> ContentType:
-        """        Detect content type from filename, data, and hints.
+        """
+        Detect content type from filename, data, and hints.
         
         Args:
             filename: Original filename
@@ -684,7 +710,8 @@ class ContentValidator:
             
         Returns:
             Detected content type
-        """        try:
+        """
+        try:
             # Check by file extension first
             if filename:
                 ext = Path(filename).suffix.lower()
@@ -757,7 +784,8 @@ class ContentValidator:
         content_type: ContentType,
         validation_level: ValidationLevel
     ) -> ContentMetadata:
-        """        Extract comprehensive metadata from content.
+        """
+        Extract comprehensive metadata from content.
         
         Args:
             file_data: File content bytes
@@ -767,7 +795,8 @@ class ContentValidator:
             
         Returns:
             Content metadata
-        """        try:
+        """
+        try:
             # Basic metadata
             metadata = ContentMetadata(
                 filename=filename,
@@ -806,7 +835,8 @@ class ContentValidator:
         file_data: bytes,
         validation_level: ValidationLevel
     ) -> None:
-        """Extract audio-specific metadata."""        try:
+        """Extract audio-specific metadata."""
+        try:
             if not ADVANCED_FEATURES:
                 return
             
@@ -888,7 +918,8 @@ class ContentValidator:
         file_data: bytes,
         validation_level: ValidationLevel
     ) -> None:
-        """Extract video-specific metadata."""        try:
+        """Extract video-specific metadata."""
+        try:
             if not ADVANCED_FEATURES:
                 return
             
@@ -968,7 +999,8 @@ class ContentValidator:
         file_data: bytes,
         validation_level: ValidationLevel
     ) -> None:
-        """Extract image-specific metadata."""        try:
+        """Extract image-specific metadata."""
+        try:
             if not ADVANCED_FEATURES:
                 return
             
@@ -1039,7 +1071,8 @@ class ContentValidator:
         file_data: bytes,
         validation_level: ValidationLevel
     ) -> None:
-        """Extract text-specific metadata."""        try:
+        """Extract text-specific metadata."""
+        try:
             # Decode text content
             text_content = file_data.decode('utf-8', errors='ignore')
             
@@ -1115,7 +1148,8 @@ class ContentValidator:
             logger.warning(f"Text metadata extraction failed: {e}")
     
     def _detect_audio_subtype(self, audio_data: np.ndarray, sample_rate: int) -> ContentSubType:
-        """Detect audio content subtype."""        try:
+        """Detect audio content subtype."""
+        try:
             # Simple heuristics for audio subtype detection
             duration = len(audio_data) / sample_rate
             
@@ -1140,7 +1174,8 @@ class ContentValidator:
             return ContentSubType.MUSIC
     
     def _detect_video_subtype(self, metadata: ContentMetadata) -> ContentSubType:
-        """Detect video content subtype."""        try:
+        """Detect video content subtype."""
+        try:
             duration = metadata.duration or 0
             width, height = metadata.resolution or (0, 0)
             aspect_ratio = width / height if height > 0 else 1.0
@@ -1167,7 +1202,8 @@ class ContentValidator:
             return ContentSubType.MUSIC_VIDEO
     
     def _detect_image_subtype(self, metadata: ContentMetadata) -> ContentSubType:
-        """Detect image content subtype."""        try:
+        """Detect image content subtype."""
+        try:
             width, height = metadata.resolution or (0, 0)
             aspect_ratio = width / height if height > 0 else 1.0
             
@@ -1193,7 +1229,8 @@ class ContentValidator:
             return ContentSubType.ARTWORK
     
     def _detect_text_subtype(self, text_content: str) -> ContentSubType:
-        """Detect text content subtype."""        try:
+        """Detect text content subtype."""
+        try:
             # Simple heuristics for text subtype detection
             lines = text_content.strip().split('\n')
             word_count = len(text_content.split())
@@ -1227,13 +1264,15 @@ class ContentValidator:
         file_data: bytes,
         validation_level: ValidationLevel
     ) -> None:
-        """        Perform core validation checks based on validation level.
+        """
+        Perform core validation checks based on validation level.
         
         Args:
             result: Validation result to populate
             file_data: File content bytes
             validation_level: Level of validation to perform
-        """        try:
+        """
+        try:
             # Basic validation (all levels)
             await self._validate_basic_requirements(result, file_data)
             
@@ -1278,7 +1317,8 @@ class ContentValidator:
         result: ValidationResult,
         file_data: bytes
     ) -> None:
-        """Validate basic file requirements."""        metadata = result.content_metadata
+        """Validate basic file requirements."""
+        metadata = result.content_metadata
         
         # File size validation
         if metadata.file_size == 0:
@@ -1341,7 +1381,8 @@ class ContentValidator:
         result: ValidationResult,
         file_data: bytes
     ) -> None:
-        """Validate format-specific compliance."""        metadata = result.content_metadata
+        """Validate format-specific compliance."""
+        metadata = result.content_metadata
         
         if metadata.content_type == ContentType.AUDIO:
             await self._validate_audio_format(result, file_data)
@@ -1357,7 +1398,8 @@ class ContentValidator:
         result: ValidationResult,
         file_data: bytes
     ) -> None:
-        """Validate audio format compliance."""        metadata = result.content_metadata
+        """Validate audio format compliance."""
+        metadata = result.content_metadata
         
         # Sample rate validation
         if metadata.sample_rate:
@@ -1412,7 +1454,8 @@ class ContentValidator:
         result: ValidationResult,
         file_data: bytes
     ) -> None:
-        """Validate video format compliance."""        metadata = result.content_metadata
+        """Validate video format compliance."""
+        metadata = result.content_metadata
         
         # Resolution validation
         if metadata.resolution:
@@ -1463,7 +1506,8 @@ class ContentValidator:
         result: ValidationResult,
         file_data: bytes
     ) -> None:
-        """Validate image format compliance."""        metadata = result.content_metadata
+        """Validate image format compliance."""
+        metadata = result.content_metadata
         
         # Resolution validation
         if metadata.resolution:
@@ -1494,7 +1538,8 @@ class ContentValidator:
         result: ValidationResult,
         file_data: bytes
     ) -> None:
-        """Validate text format compliance."""        try:
+        """Validate text format compliance."""
+        try:
             text_content = file_data.decode('utf-8', errors='ignore')
             word_count = len(text_content.split())
             
@@ -1536,7 +1581,8 @@ class ContentValidator:
             ))
     
     async def _validate_metadata_requirements(self, result: ValidationResult) -> None:
-        """Validate metadata requirements."""        metadata = result.content_metadata
+        """Validate metadata requirements."""
+        metadata = result.content_metadata
         
         # Check for embedded metadata
         if not metadata.has_metadata:
@@ -1563,7 +1609,8 @@ class ContentValidator:
         result: ValidationResult,
         file_data: bytes
     ) -> None:
-        """Validate security requirements."""        # Basic security checks
+        """Validate security requirements."""
+        # Basic security checks
         
         # File size bomb check
         if len(file_data) > 1024 * 1024 * 1024:  # 1GB
@@ -1602,7 +1649,8 @@ class ContentValidator:
             pass
     
     async def _validate_quality_requirements(self, result: ValidationResult) -> None:
-        """Validate quality requirements."""        metadata = result.content_metadata
+        """Validate quality requirements."""
+        metadata = result.content_metadata
         
         # Quality score validation
         if metadata.quality_score is not None:
@@ -1632,7 +1680,8 @@ class ContentValidator:
         result: ValidationResult,
         file_data: bytes
     ) -> None:
-        """Validate enterprise-level requirements."""        metadata = result.content_metadata
+        """Validate enterprise-level requirements."""
+        metadata = result.content_metadata
         
         # Copyright and licensing validation
         if not metadata.copyright_info:
@@ -1657,7 +1706,8 @@ class ContentValidator:
                 ))
     
     async def _validate_creator_requirements(self, result: ValidationResult) -> None:
-        """Validate creator-specific requirements."""        metadata = result.content_metadata
+        """Validate creator-specific requirements."""
+        metadata = result.content_metadata
         
         # Creator workflow checks
         if metadata.content_type == ContentType.AUDIO:
@@ -1677,7 +1727,8 @@ class ContentValidator:
         result.protection_ready = self._assess_protection_readiness(result)
     
     async def _validate_platform_requirements(self, result: ValidationResult) -> None:
-        """Validate platform-specific requirements."""        # This will be enhanced when target platforms are specified
+        """Validate platform-specific requirements."""
+        # This will be enhanced when target platforms are specified
         # For now, we provide general platform compatibility assessment
         
         metadata = result.content_metadata
@@ -1713,7 +1764,8 @@ class ContentValidator:
         result: ValidationResult,
         target_platforms: List[PlatformTarget]
     ) -> None:
-        """Validate compatibility with specific target platforms."""        metadata = result.content_metadata
+        """Validate compatibility with specific target platforms."""
+        metadata = result.content_metadata
         
         for platform in target_platforms:
             is_compatible = True
@@ -1774,7 +1826,8 @@ class ContentValidator:
         result: ValidationResult,
         file_data: bytes
     ) -> None:
-        """Perform AI-powered content analysis."""        if not self._ai_initialized or not ADVANCED_FEATURES:
+        """Perform AI-powered content analysis."""
+        if not self._ai_initialized or not ADVANCED_FEATURES:
             logger.debug("AI analysis skipped - models not available")
             return
         
@@ -1811,7 +1864,8 @@ class ContentValidator:
             result.ai_analysis["error"] = str(e)
     
     async def _analyze_image_ai(self, result: ValidationResult, file_data: bytes) -> None:
-        """AI analysis for images."""        try:
+        """AI analysis for images."""
+        try:
             # Image classification
             if "image_classifier" in self._ai_models:
                 image = Image.open(io.BytesIO(file_data))
@@ -1864,7 +1918,8 @@ class ContentValidator:
             logger.warning(f"Image AI analysis failed: {e}")
     
     async def _analyze_text_ai(self, result: ValidationResult, file_data: bytes) -> None:
-        """AI analysis for text."""        try:
+        """AI analysis for text."""
+        try:
             text_content = file_data.decode('utf-8', errors='ignore')
             
             # Sentiment analysis
@@ -1925,7 +1980,8 @@ class ContentValidator:
             logger.warning(f"Text AI analysis failed: {e}")
     
     async def _analyze_audio_ai(self, result: ValidationResult, file_data: bytes) -> None:
-        """AI analysis for audio."""        try:
+        """AI analysis for audio."""
+        try:
             # Advanced audio analysis would go here
             # For now, we'll use the existing quality metrics
             metadata = result.content_metadata
@@ -1950,7 +2006,8 @@ class ContentValidator:
             logger.warning(f"Audio AI analysis failed: {e}")
     
     async def _analyze_video_ai(self, result: ValidationResult, file_data: bytes) -> None:
-        """AI analysis for video."""        try:
+        """AI analysis for video."""
+        try:
             # Video analysis would require frame extraction and processing
             # For now, we'll use existing quality metrics
             metadata = result.content_metadata
@@ -1979,7 +2036,8 @@ class ContentValidator:
         result: ValidationResult,
         file_data: bytes
     ) -> None:
-        """Generate content fingerprints for protection workflows."""        if not self.enable_fingerprinting:
+        """Generate content fingerprints for protection workflows."""
+        if not self.enable_fingerprinting:
             return
         
         try:
@@ -2012,7 +2070,8 @@ class ContentValidator:
             result.fingerprint_data["error"] = str(e)
     
     async def _generate_image_fingerprint(self, result: ValidationResult, file_data: bytes) -> None:
-        """Generate image-specific fingerprints."""        try:
+        """Generate image-specific fingerprints."""
+        try:
             if not ADVANCED_FEATURES:
                 return
             
@@ -2038,7 +2097,8 @@ class ContentValidator:
             logger.warning(f"Image fingerprint generation failed: {e}")
     
     async def _generate_audio_fingerprint(self, result: ValidationResult, file_data: bytes) -> None:
-        """Generate audio-specific fingerprints."""        try:
+        """Generate audio-specific fingerprints."""
+        try:
             if not ADVANCED_FEATURES:
                 return
             
@@ -2080,7 +2140,8 @@ class ContentValidator:
             logger.warning(f"Audio fingerprint generation failed: {e}")
     
     async def _generate_video_fingerprint(self, result: ValidationResult, file_data: bytes) -> None:
-        """Generate video-specific fingerprints."""        try:
+        """Generate video-specific fingerprints."""
+        try:
             # Video fingerprinting is more complex and would require
             # frame extraction and analysis. For now, we'll use file hash.
             result.fingerprint_data["video_fingerprint"] = result.fingerprint_data["sha256"]
@@ -2095,7 +2156,8 @@ class ContentValidator:
             logger.warning(f"Video fingerprint generation failed: {e}")
     
     async def _generate_text_fingerprint(self, result: ValidationResult, file_data: bytes) -> None:
-        """Generate text-specific fingerprints."""        try:
+        """Generate text-specific fingerprints."""
+        try:
             text_content = file_data.decode('utf-8', errors='ignore')
             
             # N-gram based fingerprinting
@@ -2122,7 +2184,8 @@ class ContentValidator:
         result: ValidationResult,
         creator_context: Dict[str, Any]
     ) -> None:
-        """Integrate with creator workflow systems."""        try:
+        """Integrate with creator workflow systems."""
+        try:
             # Workflow status assessment
             workflow_checks = []
             
@@ -2161,7 +2224,8 @@ class ContentValidator:
         result: ValidationResult,
         creator_context: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Check musician-specific workflow requirements."""        checks = []
+        """Check musician-specific workflow requirements."""
+        checks = []
         metadata = result.content_metadata
         
         # Audio quality check
@@ -2190,7 +2254,8 @@ class ContentValidator:
         result: ValidationResult,
         creator_context: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Check podcaster-specific workflow requirements."""        checks = []
+        """Check podcaster-specific workflow requirements."""
+        checks = []
         metadata = result.content_metadata
         
         if metadata.content_type == ContentType.AUDIO:
@@ -2219,7 +2284,8 @@ class ContentValidator:
         result: ValidationResult,
         creator_context: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Check video creator-specific workflow requirements."""        checks = []
+        """Check video creator-specific workflow requirements."""
+        checks = []
         metadata = result.content_metadata
         
         if metadata.content_type == ContentType.VIDEO:
@@ -2244,7 +2310,8 @@ class ContentValidator:
         return checks
     
     def _assess_monetization_readiness(self, result: ValidationResult) -> bool:
-        """Assess if content is ready for monetization."""        try:
+        """Assess if content is ready for monetization."""
+        try:
             # Basic requirements for monetization
             requirements = [
                 result.is_valid,
@@ -2259,7 +2326,8 @@ class ContentValidator:
             return False
     
     def _assess_protection_readiness(self, result: ValidationResult) -> bool:
-        """Assess if content is ready for protection workflows."""        try:
+        """Assess if content is ready for protection workflows."""
+        try:
             # Requirements for content protection
             requirements = [
                 bool(result.content_metadata.content_fingerprint),
@@ -2278,7 +2346,8 @@ class ContentValidator:
         validation_level: ValidationLevel,
         target_platforms: Optional[List[PlatformTarget]]
     ) -> str:
-        """Generate cache key for validation result."""        try:
+        """Generate cache key for validation result."""
+        try:
             # Create deterministic key
             content_hash = hashlib.md5(file_data).hexdigest()
             level_key = validation_level.value
@@ -2290,7 +2359,8 @@ class ContentValidator:
             return f"validation_{int(time.time())}"
     
     def _update_avg_processing_time(self, processing_time: float) -> None:
-        """Update average processing time statistic."""        total_validations = self._stats["total_validations"]
+        """Update average processing time statistic."""
+        total_validations = self._stats["total_validations"]
         current_avg = self._stats["avg_processing_time"]
         
         self._stats["avg_processing_time"] = (
@@ -2298,14 +2368,17 @@ class ContentValidator:
         )
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get validator statistics."""        return self._stats.copy()
+        """Get validator statistics."""
+        return self._stats.copy()
     
     def clear_cache(self) -> None:
-        """Clear validation cache."""        self._validation_cache.clear()
+        """Clear validation cache."""
+        self._validation_cache.clear()
         logger.info("Validation cache cleared")
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on validator."""        try:
+        """Perform health check on validator."""
+        try:
             health = {
                 "status": "healthy",
                 "version": self.VERSION,
@@ -2337,7 +2410,8 @@ class ContentValidator:
             }
     
     def __del__(self):
-        """Cleanup resources."""        try:
+        """Cleanup resources."""
+        try:
             if hasattr(self, '_executor'):
                 self._executor.shutdown(wait=False)
         except Exception:
@@ -2352,7 +2426,8 @@ async def validate_content(
     validation_level: str = "standard",
     **kwargs
 ) -> ValidationResult:
-    """    Convenience function for content validation.
+    """
+    Convenience function for content validation.
     
     Args:
         file_path: Path to content file
@@ -2363,7 +2438,8 @@ async def validate_content(
         
     Returns:
         Validation result
-    """    validator = ContentValidator()
+    """
+    validator = ContentValidator()
     return await validator.validate(
         file_path=file_path,
         file_data=file_data,
@@ -2395,7 +2471,8 @@ async def validate_content(
         content_type: Optional[str] = None,
         validation_level: ValidationLevel = ValidationLevel.STANDARD
     ) -> ValidationResult:
-        """        Validate content from file or data.
+        """
+        Validate content from file or data.
         
         Args:
             file_path: Path to content file
@@ -2406,7 +2483,8 @@ async def validate_content(
             
         Returns:
             Validation result
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Determine content source
@@ -2476,7 +2554,8 @@ async def validate_content(
         validation_level: ValidationLevel = ValidationLevel.STANDARD,
         max_workers: int = 4
     ) -> List[ValidationResult]:
-        """        Validate multiple content items in batch.
+        """
+        Validate multiple content items in batch.
         
         Args:
             content_items: List of content items to validate
@@ -2485,7 +2564,8 @@ async def validate_content(
             
         Returns:
             List of validation results
-        """        try:
+        """
+        try:
             semaphore = asyncio.Semaphore(max_workers)
             
             async def validate_item(item):
@@ -2522,7 +2602,8 @@ async def validate_content(
         url: str,
         validation_level: ValidationLevel = ValidationLevel.STANDARD
     ) -> ValidationResult:
-        """        Validate content from URL.
+        """
+        Validate content from URL.
         
         Args:
             url: Content URL
@@ -2530,7 +2611,8 @@ async def validate_content(
             
         Returns:
             Validation result
-        """        try:
+        """
+        try:
             import aiohttp
             
             async with aiohttp.ClientSession() as session:
@@ -2561,7 +2643,8 @@ async def validate_content(
         metadata: ContentMetadata,
         target_platform: Optional[str] = None
     ) -> List[str]:
-        """        Get content optimization suggestions.
+        """
+        Get content optimization suggestions.
         
         Args:
             metadata: Content metadata
@@ -2569,7 +2652,8 @@ async def validate_content(
             
         Returns:
             List of suggestions
-        """        suggestions = []
+        """
+        suggestions = []
         
         try:
             # Format-specific suggestions
@@ -2603,7 +2687,8 @@ async def validate_content(
         filename: str,
         content_type_hint: Optional[str] = None
     ) -> ContentMetadata:
-        """Extract comprehensive metadata from content."""        try:
+        """Extract comprehensive metadata from content."""
+        try:
             # Basic file information
             file_size = len(file_data)
             mime_type = content_type_hint or mimetypes.guess_type(filename)[0] or "application/octet-stream"
@@ -2647,7 +2732,8 @@ async def validate_content(
         result: ValidationResult,
         level: ValidationLevel
     ):
-        """Perform validation based on specified level."""        try:
+        """Perform validation based on specified level."""
+        try:
             # Basic validation (all levels)
             await self._validate_basic(file_data, metadata, result)
             
@@ -2677,7 +2763,8 @@ async def validate_content(
         metadata: ContentMetadata,
         result: ValidationResult
     ):
-        """Basic validation checks."""        # File size validation
+        """Basic validation checks."""
+        # File size validation
         max_size = self.config.get("max_file_size", 100 * 1024 * 1024)  # 100MB default
         if metadata.file_size > max_size:
             result.issues.append(ValidationIssue(
@@ -2712,7 +2799,8 @@ async def validate_content(
         metadata: ContentMetadata,
         result: ValidationResult
     ):
-        """Standard validation checks."""        # Format validation
+        """Standard validation checks."""
+        # Format validation
         if metadata.content_type != ContentType.UNKNOWN:
             supported = self.supported_formats.get(metadata.content_type.value, [])
             file_ext = Path(metadata.filename).suffix.lower()
@@ -2740,7 +2828,8 @@ async def validate_content(
         metadata: ContentMetadata,
         result: ValidationResult
     ):
-        """Strict validation checks."""        # Quality thresholds
+        """Strict validation checks."""
+        # Quality thresholds
         if metadata.quality_score is not None:
             min_quality = self.quality_thresholds.get(metadata.content_type.value, {}).get("min_score", 60)
             if metadata.quality_score < min_quality:
@@ -2760,7 +2849,8 @@ async def validate_content(
         metadata: ContentMetadata,
         result: ValidationResult
     ):
-        """Enterprise-level validation checks."""        # Security validation
+        """Enterprise-level validation checks."""
+        # Security validation
         await self._validate_security(file_data, metadata, result)
         
         # Compliance validation
@@ -2776,7 +2866,8 @@ async def validate_content(
         metadata: ContentMetadata,
         result: ValidationResult
     ):
-        """Content-type specific validation."""        try:
+        """Content-type specific validation."""
+        try:
             if metadata.content_type == ContentType.AUDIO:
                 await self._validate_audio_specific(file_data, metadata, result)
             elif metadata.content_type == ContentType.VIDEO:
@@ -2795,7 +2886,8 @@ async def validate_content(
             ))
     
     def _determine_content_type(self, mime_type: str, filename: str) -> ContentType:
-        """Determine content type from mime type and filename."""        # Check mime type first
+        """Determine content type from mime type and filename."""
+        # Check mime type first
         if mime_type.startswith("audio/"):
             return ContentType.AUDIO
         elif mime_type.startswith("video/"):
@@ -2825,7 +2917,8 @@ async def validate_content(
         return ContentType.UNKNOWN
     
     async def _extract_audio_metadata(self, file_data: bytes, metadata: ContentMetadata):
-        """Extract audio-specific metadata."""        try:
+        """Extract audio-specific metadata."""
+        try:
             # This would integrate with audio processing libraries
             # For now, simulate metadata extraction
             metadata.duration = 180.0  # 3 minutes
@@ -2838,7 +2931,8 @@ async def validate_content(
             logger.warning(f"Audio metadata extraction failed: {str(e)}")
     
     async def _extract_video_metadata(self, file_data: bytes, metadata: ContentMetadata):
-        """Extract video-specific metadata."""        try:
+        """Extract video-specific metadata."""
+        try:
             # This would integrate with video processing libraries
             # For now, simulate metadata extraction
             metadata.duration = 300.0  # 5 minutes
@@ -2850,7 +2944,8 @@ async def validate_content(
             logger.warning(f"Video metadata extraction failed: {str(e)}")
     
     async def _extract_image_metadata(self, file_data: bytes, metadata: ContentMetadata):
-        """Extract image-specific metadata."""        try:
+        """Extract image-specific metadata."""
+        try:
             # This would integrate with image processing libraries
             # For now, simulate metadata extraction
             metadata.resolution = (1920, 1080)
@@ -2860,7 +2955,8 @@ async def validate_content(
             logger.warning(f"Image metadata extraction failed: {str(e)}")
     
     async def _extract_text_metadata(self, file_data: bytes, metadata: ContentMetadata):
-        """Extract text-specific metadata."""        try:
+        """Extract text-specific metadata."""
+        try:
             # Basic text analysis
             text_content = file_data.decode('utf-8', errors='ignore')
             metadata.extra_data = {
@@ -2873,7 +2969,8 @@ async def validate_content(
             logger.warning(f"Text metadata extraction failed: {str(e)}")
     
     def _create_error_result(self, error_message: str, validation_level: ValidationLevel) -> ValidationResult:
-        """Create error validation result."""        return ValidationResult(
+        """Create error validation result."""
+        return ValidationResult(
             is_valid=False,
             status=ValidationStatus.ERROR,
             content_metadata=ContentMetadata(
@@ -2892,7 +2989,8 @@ async def validate_content(
         )
     
     def _init_supported_formats(self) -> Dict[str, List[str]]:
-        """Initialize supported formats by content type."""        return {
+        """Initialize supported formats by content type."""
+        return {
             "audio": [".mp3", ".wav", ".flac", ".ogg", ".m4a", ".aac"],
             "video": [".mp4", ".avi", ".mov", ".mkv", ".webm", ".flv"],
             "image": [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp"],
@@ -2900,7 +2998,8 @@ async def validate_content(
         }
     
     def _init_validation_rules(self) -> Dict[str, Any]:
-        """Initialize validation rules."""        return {
+        """Initialize validation rules."""
+        return {
             "max_file_size": 100 * 1024 * 1024,  # 100MB
             "min_file_size": 1024,  # 1KB
             "quality_threshold": 60,
@@ -2908,7 +3007,8 @@ async def validate_content(
         }
     
     def _init_platform_requirements(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize platform-specific requirements."""        return {
+        """Initialize platform-specific requirements."""
+        return {
             "youtube": {
                 "max_file_size": 12 * 1024 * 1024 * 1024,  # 12GB
                 "supported_formats": [".mp4", ".mov", ".avi", ".wmv"],
@@ -2930,7 +3030,8 @@ async def validate_content(
         }
     
     def _init_quality_thresholds(self) -> Dict[str, Dict[str, float]]:
-        """Initialize quality thresholds by content type."""        return {
+        """Initialize quality thresholds by content type."""
+        return {
             "audio": {"min_score": 60, "min_bitrate": 128000},
             "video": {"min_score": 65, "min_resolution": (720, 480)},
             "image": {"min_score": 70, "min_resolution": (800, 600)},
@@ -2938,7 +3039,8 @@ async def validate_content(
         }
     
     async def _check_file_corruption(self, file_data: bytes, metadata: ContentMetadata) -> bool:
-        """Check if file is corrupted."""        try:
+        """Check if file is corrupted."""
+        try:
             # Basic corruption checks
             if len(file_data) == 0:
                 return True
@@ -2953,7 +3055,8 @@ async def validate_content(
             return True
     
     async def _validate_technical_requirements(self, metadata: ContentMetadata, result: ValidationResult):
-        """Validate technical requirements."""        # Audio requirements
+        """Validate technical requirements."""
+        # Audio requirements
         if metadata.content_type == ContentType.AUDIO and metadata.bitrate:
             if metadata.bitrate < 128000:
                 result.warnings.append(ValidationIssue(
@@ -2974,7 +3077,8 @@ async def validate_content(
                 ))
     
     async def _validate_security(self, file_data: bytes, metadata: ContentMetadata, result: ValidationResult):
-        """Security validation."""        # File signature validation
+        """Security validation."""
+        # File signature validation
         if not await self._validate_file_signature(file_data, metadata):
             result.issues.append(ValidationIssue(
                 issue_type="security",
@@ -2983,7 +3087,8 @@ async def validate_content(
             ))
     
     async def _validate_compliance(self, metadata: ContentMetadata, result: ValidationResult):
-        """Compliance validation."""        # Check for required metadata
+        """Compliance validation."""
+        # Check for required metadata
         if not metadata.has_metadata and metadata.content_type in [ContentType.AUDIO, ContentType.VIDEO]:
             result.warnings.append(ValidationIssue(
                 issue_type="compliance",
@@ -2993,11 +3098,13 @@ async def validate_content(
             ))
     
     async def _validate_brand_safety(self, file_data: bytes, metadata: ContentMetadata, result: ValidationResult):
-        """Brand safety validation using AI."""        # This would integrate with AI content moderation
+        """Brand safety validation using AI."""
+        # This would integrate with AI content moderation
         pass
     
     async def _validate_audio_specific(self, file_data: bytes, metadata: ContentMetadata, result: ValidationResult):
-        """Audio-specific validation."""        if metadata.channels and metadata.channels > 8:
+        """Audio-specific validation."""
+        if metadata.channels and metadata.channels > 8:
             result.warnings.append(ValidationIssue(
                 issue_type="audio",
                 severity="warning",
@@ -3006,7 +3113,8 @@ async def validate_content(
             ))
     
     async def _validate_video_specific(self, file_data: bytes, metadata: ContentMetadata, result: ValidationResult):
-        """Video-specific validation."""        if metadata.duration and metadata.duration > 3600:  # 1 hour
+        """Video-specific validation."""
+        if metadata.duration and metadata.duration > 3600:  # 1 hour
             result.warnings.append(ValidationIssue(
                 issue_type="video",
                 severity="warning",
@@ -3015,7 +3123,8 @@ async def validate_content(
             ))
     
     async def _validate_image_specific(self, file_data: bytes, metadata: ContentMetadata, result: ValidationResult):
-        """Image-specific validation."""        if metadata.resolution:
+        """Image-specific validation."""
+        if metadata.resolution:
             width, height = metadata.resolution
             if width < 800 or height < 600:
                 result.warnings.append(ValidationIssue(
@@ -3026,7 +3135,8 @@ async def validate_content(
                 ))
     
     async def _validate_text_specific(self, file_data: bytes, metadata: ContentMetadata, result: ValidationResult):
-        """Text-specific validation."""        if "word_count" in metadata.extra_data:
+        """Text-specific validation."""
+        if "word_count" in metadata.extra_data:
             word_count = metadata.extra_data["word_count"]
             if word_count < 10:
                 result.warnings.append(ValidationIssue(
@@ -3037,7 +3147,8 @@ async def validate_content(
                 ))
     
     async def _validate_file_signature(self, file_data: bytes, metadata: ContentMetadata) -> bool:
-        """Validate file signature matches declared type."""        # Check common file signatures
+        """Validate file signature matches declared type."""
+        # Check common file signatures
         signatures = {
             b'\xff\xfb': 'mp3',
             b'\x52\x49\x46\x46': 'wav',
@@ -3053,7 +3164,8 @@ async def validate_content(
         return True  # Default to valid for unknown signatures
     
     async def _assess_quality(self, file_data: bytes, metadata: ContentMetadata, result: ValidationResult):
-        """AI-powered quality assessment."""        try:
+        """AI-powered quality assessment."""
+        try:
             # Simulate quality assessment
             base_score = 75.0
             
@@ -3088,7 +3200,8 @@ async def validate_content(
             metadata.quality_score = 50.0
     
     async def _check_platform_compatibility(self, metadata: ContentMetadata, result: ValidationResult):
-        """Check compatibility with major platforms."""        result.platform_compatibility = {}
+        """Check compatibility with major platforms."""
+        result.platform_compatibility = {}
         
         for platform, requirements in self.platform_requirements.items():
             compatible = True
@@ -3112,7 +3225,8 @@ async def validate_content(
             result.platform_compatibility[platform] = compatible
     
     async def _generate_recommendations(self, result: ValidationResult):
-        """Generate optimization recommendations."""        recommendations = []
+        """Generate optimization recommendations."""
+        recommendations = []
         
         # Quality-based recommendations
         if result.content_metadata.quality_score and result.content_metadata.quality_score < 70:
@@ -3135,7 +3249,8 @@ async def validate_content(
         result.recommendations = recommendations
     
     async def _calculate_overall_score(self, result: ValidationResult) -> float:
-        """Calculate overall validation score."""        try:
+        """Calculate overall validation score."""
+        try:
             base_score = 100.0
             
             # Deduct for issues
@@ -3160,7 +3275,8 @@ async def validate_content(
             return 50.0
     
     async def _get_audio_suggestions(self, metadata: ContentMetadata) -> List[str]:
-        """Get audio-specific suggestions."""        suggestions = []
+        """Get audio-specific suggestions."""
+        suggestions = []
         
         if metadata.bitrate and metadata.bitrate < 256000:
             suggestions.append("Consider using higher bitrate for professional quality")
@@ -3171,7 +3287,8 @@ async def validate_content(
         return suggestions
     
     async def _get_video_suggestions(self, metadata: ContentMetadata) -> List[str]:
-        """Get video-specific suggestions."""        suggestions = []
+        """Get video-specific suggestions."""
+        suggestions = []
         
         if metadata.resolution and metadata.resolution[1] < 1080:
             suggestions.append("Consider using 1080p resolution for better quality")
@@ -3182,7 +3299,8 @@ async def validate_content(
         return suggestions
     
     async def _get_image_suggestions(self, metadata: ContentMetadata) -> List[str]:
-        """Get image-specific suggestions."""        suggestions = []
+        """Get image-specific suggestions."""
+        suggestions = []
         
         if metadata.resolution:
             width, height = metadata.resolution
@@ -3196,7 +3314,8 @@ async def validate_content(
         metadata: ContentMetadata,
         requirements: Dict[str, Any]
     ) -> List[str]:
-        """Get platform-specific suggestions."""        suggestions = []
+        """Get platform-specific suggestions."""
+        suggestions = []
         
         if metadata.file_size > requirements.get("max_file_size", float('inf')):
             suggestions.append("Reduce file size to meet platform requirements")

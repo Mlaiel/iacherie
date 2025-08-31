@@ -11,7 +11,8 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and
 will result in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import json
@@ -32,14 +33,16 @@ logger = logging.getLogger(__name__)
 
 
 class ThreatLevel(Enum):
-    """Threat severity levels"""    LOW = "low"
+    """Threat severity levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class ThreatType(Enum):
-    """Types of security threats"""    BRUTE_FORCE = "brute_force"
+    """Types of security threats"""
+    BRUTE_FORCE = "brute_force"
     DDOS = "ddos"
     INJECTION = "injection"
     XSS = "xss"
@@ -54,7 +57,8 @@ class ThreatType(Enum):
 
 
 class AttackVector(Enum):
-    """Attack vectors"""    WEB_API = "web_api"
+    """Attack vectors"""
+    WEB_API = "web_api"
     SSH = "ssh"
     DATABASE = "database"
     FILE_SYSTEM = "file_system"
@@ -66,7 +70,8 @@ class AttackVector(Enum):
 
 @dataclass
 class ThreatIndicator:
-    """Threat indicator data structure"""    id: str
+    """Threat indicator data structure"""
+    id: str
     threat_type: ThreatType
     threat_level: ThreatLevel
     attack_vector: AttackVector
@@ -83,7 +88,8 @@ class ThreatIndicator:
 
 @dataclass
 class SecurityEvent:
-    """Security event data structure"""    event_id: str
+    """Security event data structure"""
+    event_id: str
     event_type: str
     source_ip: str
     user_id: Optional[str]
@@ -100,7 +106,8 @@ class SecurityEvent:
 
 @dataclass
 class BehaviorProfile:
-    """User behavior profile for anomaly detection"""    user_id: str
+    """User behavior profile for anomaly detection"""
+    user_id: str
     normal_login_hours: Set[int]
     normal_ip_ranges: Set[str]
     normal_user_agents: Set[str]
@@ -113,15 +120,18 @@ class BehaviorProfile:
 
 
 class GeoLocationAnalyzer:
-    """    Geographic location analysis for threat detection
-    """    
+    """
+    Geographic location analysis for threat detection
+    """
+    
     def __init__(self, geoip_db_path: str = None):
         self.geoip_db_path = geoip_db_path or "GeoLite2-City.mmdb"
         self.reader = None
         self._initialize_geoip()
         
     def _initialize_geoip(self):
-        """Initialize GeoIP database reader"""        try:
+        """Initialize GeoIP database reader"""
+        try:
             if os.path.exists(self.geoip_db_path):
                 self.reader = geoip2.database.Reader(self.geoip_db_path)
                 logger.info("GeoIP database initialized")
@@ -131,14 +141,16 @@ class GeoLocationAnalyzer:
             logger.error(f"Failed to initialize GeoIP database: {e}")
     
     def get_location_info(self, ip_address: str) -> Optional[Dict[str, str]]:
-        """        Get geographic location information for IP address
+        """
+        Get geographic location information for IP address
         
         Args:
             ip_address: IP address to analyze
             
         Returns:
             Location information dictionary
-        """        try:
+        """
+        try:
             if not self.reader:
                 return None
                 
@@ -161,7 +173,8 @@ class GeoLocationAnalyzer:
             return None
     
     def calculate_distance(self, location1: Dict[str, Any], location2: Dict[str, Any]) -> float:
-        """        Calculate distance between two geographic locations
+        """
+        Calculate distance between two geographic locations
         
         Args:
             location1: First location with lat/lng
@@ -169,7 +182,8 @@ class GeoLocationAnalyzer:
             
         Returns:
             Distance in kilometers
-        """        try:
+        """
+        try:
             lat1, lng1 = location1.get("latitude", 0), location1.get("longitude", 0)
             lat2, lng2 = location2.get("latitude", 0), location2.get("longitude", 0)
             
@@ -193,8 +207,10 @@ class GeoLocationAnalyzer:
 
 
 class AnomalyDetector:
-    """    Machine learning-based anomaly detection system
-    """    
+    """
+    Machine learning-based anomaly detection system
+    """
+    
     def __init__(self, contamination: float = 0.1):
         self.contamination = contamination
         self.isolation_forest = IsolationForest(
@@ -206,14 +222,16 @@ class AnomalyDetector:
         self.feature_names = []
         
     def extract_features(self, events: List[SecurityEvent]) -> np.ndarray:
-        """        Extract features from security events for ML analysis
+        """
+        Extract features from security events for ML analysis
         
         Args:
             events: List of security events
             
         Returns:
             Feature matrix
-        """        features = []
+        """
+        features = []
         
         for event in events:
             # Time-based features
@@ -243,7 +261,8 @@ class AnomalyDetector:
         return np.array(features)
     
     def _calculate_entropy(self, text: str) -> float:
-        """Calculate Shannon entropy of text"""        if not text:
+        """Calculate Shannon entropy of text"""
+        if not text:
             return 0.0
             
         # Count character frequencies
@@ -263,11 +282,13 @@ class AnomalyDetector:
         return entropy
     
     def train(self, training_events: List[SecurityEvent]):
-        """        Train anomaly detection model
+        """
+        Train anomaly detection model
         
         Args:
             training_events: Events for training (normal behavior)
-        """        try:
+        """
+        try:
             if len(training_events) < 100:
                 logger.warning("Insufficient training data for anomaly detection")
                 return
@@ -288,14 +309,16 @@ class AnomalyDetector:
             logger.error(f"Failed to train anomaly detector: {e}")
     
     def detect_anomalies(self, events: List[SecurityEvent]) -> List[Tuple[SecurityEvent, float]]:
-        """        Detect anomalous events
+        """
+        Detect anomalous events
         
         Args:
             events: Events to analyze
             
         Returns:
             List of (event, anomaly_score) tuples
-        """        try:
+        """
+        try:
             if not self.is_trained:
                 logger.warning("Anomaly detector not trained")
                 return []
@@ -327,14 +350,17 @@ class AnomalyDetector:
 
 
 class BehaviorAnalyzer:
-    """    User behavior analysis and profiling system
-    """    
+    """
+    User behavior analysis and profiling system
+    """
+    
     def __init__(self):
         self.behavior_profiles: Dict[str, BehaviorProfile] = {}
         self.geo_analyzer = GeoLocationAnalyzer()
         
     def create_behavior_profile(self, user_id: str, historical_events: List[SecurityEvent]) -> BehaviorProfile:
-        """        Create behavior profile from historical user events
+        """
+        Create behavior profile from historical user events
         
         Args:
             user_id: User identifier
@@ -342,7 +368,8 @@ class BehaviorAnalyzer:
             
         Returns:
             User behavior profile
-        """        try:
+        """
+        try:
             # Filter events for this user
             user_events = [e for e in historical_events if e.user_id == user_id]
             
@@ -417,7 +444,8 @@ class BehaviorAnalyzer:
             raise
     
     def _extract_ip_ranges(self, ip_addresses: Set[str]) -> Set[str]:
-        """Extract IP ranges from individual IP addresses"""        ranges = set()
+        """Extract IP ranges from individual IP addresses"""
+        ranges = set()
         
         for ip in ip_addresses:
             try:
@@ -436,14 +464,16 @@ class BehaviorAnalyzer:
         return ranges
     
     def analyze_event_anomaly(self, event: SecurityEvent) -> Dict[str, Any]:
-        """        Analyze event for behavioral anomalies
+        """
+        Analyze event for behavioral anomalies
         
         Args:
             event: Security event to analyze
             
         Returns:
             Anomaly analysis results
-        """        try:
+        """
+        try:
             if not event.user_id or event.user_id not in self.behavior_profiles:
                 return {"is_anomalous": False, "reason": "No behavior profile available"}
             
@@ -507,8 +537,10 @@ class BehaviorAnalyzer:
 
 
 class ThreatDetector:
-    """    Main threat detection engine
-    """    
+    """
+    Main threat detection engine
+    """
+    
     def __init__(self, redis_url: str = "redis://localhost:6379"):
         self.redis_url = redis_url
         self.redis_pool = None
@@ -529,7 +561,8 @@ class ThreatDetector:
         logger.info("Threat detector initialized")
     
     async def initialize_redis(self):
-        """Initialize Redis connection"""        try:
+        """Initialize Redis connection"""
+        try:
             self.redis_pool = aioredis.ConnectionPool.from_url(self.redis_url)
             logger.info("Redis connection initialized for threat detection")
         except Exception as e:
@@ -537,7 +570,8 @@ class ThreatDetector:
             raise
     
     def _load_attack_patterns(self) -> Dict[str, Dict[str, Any]]:
-        """Load known attack patterns"""        return {
+        """Load known attack patterns"""
+        return {
             "sql_injection": {
                 "patterns": [
                     r"(\s*(union|select|insert|update|delete|drop|create|alter)\s+)",
@@ -573,14 +607,16 @@ class ThreatDetector:
         }
     
     async def analyze_event(self, event: SecurityEvent) -> List[ThreatIndicator]:
-        """        Analyze security event for threats
+        """
+        Analyze security event for threats
         
         Args:
             event: Security event to analyze
             
         Returns:
             List of detected threat indicators
-        """        try:
+        """
+        try:
             detected_threats = []
             
             # 1. Pattern-based detection
@@ -613,7 +649,8 @@ class ThreatDetector:
             return []
     
     async def _detect_pattern_threats(self, event: SecurityEvent) -> List[ThreatIndicator]:
-        """Detect threats based on known attack patterns"""        threats = []
+        """Detect threats based on known attack patterns"""
+        threats = []
         
         # Check for SQL injection patterns
         if self._contains_sql_injection(event):
@@ -658,7 +695,8 @@ class ThreatDetector:
         return threats
     
     async def _detect_rate_threats(self, event: SecurityEvent) -> List[ThreatIndicator]:
-        """Detect rate-based threats (brute force, DDoS)"""        threats = []
+        """Detect rate-based threats (brute force, DDoS)"""
+        threats = []
         current_time = time.time()
         
         # Track requests by IP
@@ -717,7 +755,8 @@ class ThreatDetector:
         return threats
     
     async def _detect_behavior_threats(self, event: SecurityEvent) -> List[ThreatIndicator]:
-        """Detect behavioral anomaly threats"""        threats = []
+        """Detect behavioral anomaly threats"""
+        threats = []
         
         if event.user_id:
             anomaly_result = self.behavior_analyzer.analyze_event_anomaly(event)
@@ -744,7 +783,8 @@ class ThreatDetector:
         return threats
     
     async def _detect_geographic_threats(self, event: SecurityEvent) -> List[ThreatIndicator]:
-        """Detect geographic anomaly threats"""        threats = []
+        """Detect geographic anomaly threats"""
+        threats = []
         
         # Check if IP is from suspicious location
         location = self.behavior_analyzer.geo_analyzer.get_location_info(event.source_ip)
@@ -778,7 +818,8 @@ class ThreatDetector:
         return threats
     
     def _contains_sql_injection(self, event: SecurityEvent) -> bool:
-        """Check if event contains SQL injection patterns"""        import re
+        """Check if event contains SQL injection patterns"""
+        import re
         
         # Check various fields for SQL injection patterns
         fields_to_check = [
@@ -797,7 +838,8 @@ class ThreatDetector:
         return False
     
     def _contains_xss(self, event: SecurityEvent) -> bool:
-        """Check if event contains XSS patterns"""        import re
+        """Check if event contains XSS patterns"""
+        import re
         
         # Check various fields for XSS patterns
         fields_to_check = [
@@ -816,14 +858,16 @@ class ThreatDetector:
         return False
     
     async def get_threat_summary(self, time_range_hours: int = 24) -> Dict[str, Any]:
-        """        Get threat detection summary
+        """
+        Get threat detection summary
         
         Args:
             time_range_hours: Time range for summary in hours
             
         Returns:
             Threat summary statistics
-        """        try:
+        """
+        try:
             current_time = datetime.utcnow()
             start_time = current_time - timedelta(hours=time_range_hours)
             
@@ -868,15 +912,18 @@ class ThreatDetector:
 
 
 class IncidentResponse:
-    """    Automated incident response system
-    """    
+    """
+    Automated incident response system
+    """
+    
     def __init__(self, threat_detector: ThreatDetector):
         self.threat_detector = threat_detector
         self.response_actions = self._setup_response_actions()
         logger.info("Incident response system initialized")
     
     def _setup_response_actions(self) -> Dict[ThreatType, List[str]]:
-        """Setup automated response actions for different threat types"""        return {
+        """Setup automated response actions for different threat types"""
+        return {
             ThreatType.BRUTE_FORCE: [
                 "block_ip_temporarily",
                 "increase_login_delay",
@@ -916,14 +963,16 @@ class IncidentResponse:
         }
     
     async def respond_to_threat(self, threat: ThreatIndicator) -> Dict[str, Any]:
-        """        Execute automated response to threat
+        """
+        Execute automated response to threat
         
         Args:
             threat: Threat indicator to respond to
             
         Returns:
             Response execution results
-        """        try:
+        """
+        try:
             response_actions = self.response_actions.get(threat.threat_type, [])
             executed_actions = []
             
@@ -959,7 +1008,8 @@ class IncidentResponse:
             return {"error": str(e)}
     
     async def _execute_action(self, action: str, threat: ThreatIndicator) -> str:
-        """Execute specific response action"""        try:
+        """Execute specific response action"""
+        try:
             if action == "block_ip_temporarily":
                 # Add IP to temporary block list
                 return f"IP {threat.source_ip} blocked for 1 hour"
@@ -1050,8 +1100,10 @@ class IncidentResponse:
 
 # Main threat detection system integration
 class DeploymentThreatDetection:
-    """    Main threat detection system for deployment security
-    """    
+    """
+    Main threat detection system for deployment security
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -1069,7 +1121,8 @@ class DeploymentThreatDetection:
         logger.info("Deployment threat detection system initialized")
     
     async def start_monitoring(self):
-        """Start threat monitoring background tasks"""        try:
+        """Start threat monitoring background tasks"""
+        try:
             await self.threat_detector.initialize_redis()
             
             # Start monitoring tasks
@@ -1083,7 +1136,8 @@ class DeploymentThreatDetection:
             raise
     
     async def stop_monitoring(self):
-        """Stop threat monitoring background tasks"""        try:
+        """Stop threat monitoring background tasks"""
+        try:
             if self._monitoring_task:
                 self._monitoring_task.cancel()
             
@@ -1096,7 +1150,8 @@ class DeploymentThreatDetection:
             logger.error(f"Failed to stop threat monitoring: {e}")
     
     async def _monitoring_loop(self):
-        """Background monitoring loop"""        while True:
+        """Background monitoring loop"""
+        while True:
             try:
                 # Perform periodic threat analysis
                 await asyncio.sleep(60)  # Check every minute
@@ -1111,7 +1166,8 @@ class DeploymentThreatDetection:
                 await asyncio.sleep(5)
     
     async def _cleanup_loop(self):
-        """Background cleanup loop"""        while True:
+        """Background cleanup loop"""
+        while True:
             try:
                 # Cleanup old threat indicators
                 await asyncio.sleep(3600)  # Every hour
@@ -1134,14 +1190,16 @@ class DeploymentThreatDetection:
                 await asyncio.sleep(60)
     
     async def analyze_security_event(self, event: SecurityEvent) -> List[ThreatIndicator]:
-        """        Analyze security event for threats
+        """
+        Analyze security event for threats
         
         Args:
             event: Security event to analyze
             
         Returns:
             List of detected threats
-        """        try:
+        """
+        try:
             threats = await self.threat_detector.analyze_event(event)
             
             # Automatically respond to critical threats
@@ -1157,7 +1215,8 @@ class DeploymentThreatDetection:
             return []
     
     def get_threat_dashboard_data(self) -> Dict[str, Any]:
-        """Get data for threat detection dashboard"""        try:
+        """Get data for threat detection dashboard"""
+        try:
             # Get recent threat summary
             # This would be implemented with async call in production
             threat_summary = {

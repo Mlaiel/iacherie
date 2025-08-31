@@ -6,7 +6,8 @@ revenue patterns, payment trends, and business intelligence.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
@@ -22,14 +23,16 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 class AnalyticsType(Enum):
-    """Types of analytics"""    REVENUE = "revenue"
+    """Types of analytics"""
+    REVENUE = "revenue"
     PAYMENT_TRENDS = "payment_trends"
     CUSTOMER_BEHAVIOR = "customer_behavior"
     SUBSCRIPTION_METRICS = "subscription_metrics"
     COMMISSION_ANALYSIS = "commission_analysis"
 
 class TimeFrame(Enum):
-    """Analytics time frames"""    DAILY = "daily"
+    """Analytics time frames"""
+    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -37,7 +40,8 @@ class TimeFrame(Enum):
 
 @dataclass
 class RevenueMetrics:
-    """Revenue analytics metrics"""    total_revenue: Decimal
+    """Revenue analytics metrics"""
+    total_revenue: Decimal
     recurring_revenue: Decimal
     one_time_revenue: Decimal
     growth_rate: Decimal
@@ -46,7 +50,8 @@ class RevenueMetrics:
 
 @dataclass
 class PaymentTrendMetrics:
-    """Payment trend metrics"""    success_rate: Decimal
+    """Payment trend metrics"""
+    success_rate: Decimal
     failure_rate: Decimal
     chargeback_rate: Decimal
     refund_rate: Decimal
@@ -54,15 +59,18 @@ class PaymentTrendMetrics:
     preferred_payment_methods: Dict[str, int]
 
 class BillingAnalyticsEngine:
-    """    Advanced billing analytics engine providing comprehensive insights
+    """
+    Advanced billing analytics engine providing comprehensive insights
     into revenue patterns, customer behavior, and payment trends.
-    """    
+    """
+    
     def __init__(self, redis_client: redis.Redis, db_pool: asyncpg.Pool):
         self.redis = redis_client
         self.db_pool = db_pool
         
     async def initialize(self) -> None:
-        """Initialize billing analytics engine"""        try:
+        """Initialize billing analytics engine"""
+        try:
             await self._setup_database_tables()
             await self._setup_analytics_cache()
             logger.info("Billing Analytics Engine initialized successfully")
@@ -71,8 +79,10 @@ class BillingAnalyticsEngine:
             raise
 
     async def _setup_database_tables(self) -> None:
-        """Setup database tables for analytics"""        async with self.db_pool.acquire() as conn:
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS analytics_cache (
+        """Setup database tables for analytics"""
+        async with self.db_pool.acquire() as conn:
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS analytics_cache (
                     id SERIAL PRIMARY KEY,
                     cache_key VARCHAR(255) UNIQUE NOT NULL,
                     analytics_type VARCHAR(30) NOT NULL,
@@ -85,7 +95,8 @@ class BillingAnalyticsEngine:
                 );
             """)
             
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS revenue_snapshots (
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS revenue_snapshots (
                     id SERIAL PRIMARY KEY,
                     snapshot_date DATE NOT NULL,
                     total_revenue DECIMAL(15,2) NOT NULL,
@@ -99,7 +110,8 @@ class BillingAnalyticsEngine:
                 );
             """)
             
-            await conn.execute("""                CREATE TABLE IF NOT EXISTS analytics_reports (
+            await conn.execute("""
+                CREATE TABLE IF NOT EXISTS analytics_reports (
                     id SERIAL PRIMARY KEY,
                     report_id VARCHAR(100) UNIQUE NOT NULL,
                     report_type VARCHAR(30) NOT NULL,
@@ -112,7 +124,8 @@ class BillingAnalyticsEngine:
             """)
 
     async def _setup_analytics_cache(self) -> None:
-        """Setup analytics cache settings"""        try:
+        """Setup analytics cache settings"""
+        try:
             # Cache expiry settings (in seconds)
             cache_settings = {
                 'revenue_daily': 3600,      # 1 hour
@@ -130,7 +143,8 @@ class BillingAnalyticsEngine:
 
     async def generate_revenue_analytics(self, start_date: datetime, end_date: datetime,
                                        time_frame: TimeFrame = TimeFrame.DAILY) -> Dict[str, Any]:
-        """Generate comprehensive revenue analytics"""        try:
+        """Generate comprehensive revenue analytics"""
+        try:
             # Check cache first
             cache_key = f"revenue_{time_frame.value}_{start_date.date()}_{end_date.date()}"
             cached_data = await self._get_cached_analytics(cache_key)
@@ -145,7 +159,8 @@ class BillingAnalyticsEngine:
                 time_breakdown = await self._get_revenue_breakdown(conn, start_date, end_date, time_frame)
                 
                 # Revenue by payment method
-                payment_method_revenue = await conn.fetch("""                    SELECT 
+                payment_method_revenue = await conn.fetch("""
+                    SELECT 
                         payment_method,
                         COUNT(*) as transaction_count,
                         SUM(amount) as total_revenue,
@@ -158,7 +173,8 @@ class BillingAnalyticsEngine:
                 """, start_date, end_date)
                 
                 # Revenue by customer segment
-                customer_segments = await conn.fetch("""                    SELECT 
+                customer_segments = await conn.fetch("""
+                    SELECT 
                         CASE 
                             WHEN customer_lifetime_value >= 1000 THEN 'high_value'
                             WHEN customer_lifetime_value >= 500 THEN 'medium_value'
@@ -228,7 +244,9 @@ class BillingAnalyticsEngine:
             raise HTTPException(status_code=500, detail="Revenue analytics generation failed")
 
     async def _calculate_revenue_summary(self, conn, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Calculate revenue summary metrics"""        summary = await conn.fetchrow("""            SELECT 
+        """Calculate revenue summary metrics"""
+        summary = await conn.fetchrow("""
+            SELECT 
                 COUNT(*) as total_transactions,
                 COUNT(DISTINCT customer_id) as unique_customers,
                 SUM(amount) as total_revenue,
@@ -252,7 +270,8 @@ class BillingAnalyticsEngine:
 
     async def _get_revenue_breakdown(self, conn, start_date: datetime, end_date: datetime,
                                    time_frame: TimeFrame) -> List[Dict[str, Any]]:
-        """Get revenue breakdown by time frame"""        if time_frame == TimeFrame.DAILY:
+        """Get revenue breakdown by time frame"""
+        if time_frame == TimeFrame.DAILY:
             interval = 'day'
         elif time_frame == TimeFrame.WEEKLY:
             interval = 'week'
@@ -261,7 +280,8 @@ class BillingAnalyticsEngine:
         else:
             interval = 'day'
         
-        breakdown = await conn.fetch(f"""            SELECT 
+        breakdown = await conn.fetch(f"""
+            SELECT 
                 DATE_TRUNC($3, created_at) as period,
                 COUNT(*) as transaction_count,
                 SUM(amount) as revenue,
@@ -276,8 +296,10 @@ class BillingAnalyticsEngine:
         return [dict(row) for row in breakdown]
 
     async def _calculate_growth_metrics(self, conn, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Calculate growth metrics"""        # Current period revenue
-        current_revenue = await conn.fetchval("""            SELECT COALESCE(SUM(amount), 0)
+        """Calculate growth metrics"""
+        # Current period revenue
+        current_revenue = await conn.fetchval("""
+            SELECT COALESCE(SUM(amount), 0)
             FROM payments 
             WHERE created_at BETWEEN $1 AND $2
             AND payment_status = 'completed'
@@ -288,7 +310,8 @@ class BillingAnalyticsEngine:
         prev_start = start_date - period_length
         prev_end = start_date
         
-        previous_revenue = await conn.fetchval("""            SELECT COALESCE(SUM(amount), 0)
+        previous_revenue = await conn.fetchval("""
+            SELECT COALESCE(SUM(amount), 0)
             FROM payments 
             WHERE created_at BETWEEN $1 AND $2
             AND payment_status = 'completed'
@@ -306,13 +329,15 @@ class BillingAnalyticsEngine:
         }
 
     async def generate_payment_trends_analytics(self, days: int = 30) -> Dict[str, Any]:
-        """Generate payment trends analytics"""        try:
+        """Generate payment trends analytics"""
+        try:
             end_date = datetime.now()
             start_date = end_date - timedelta(days=days)
             
             async with self.db_pool.acquire() as conn:
                 # Payment status distribution
-                status_dist = await conn.fetch("""                    SELECT 
+                status_dist = await conn.fetch("""
+                    SELECT 
                         payment_status,
                         COUNT(*) as count,
                         SUM(amount) as total_amount
@@ -323,7 +348,8 @@ class BillingAnalyticsEngine:
                 """, start_date)
                 
                 # Payment method trends
-                method_trends = await conn.fetch("""                    SELECT 
+                method_trends = await conn.fetch("""
+                    SELECT 
                         payment_method,
                         DATE_TRUNC('day', created_at) as day,
                         COUNT(*) as transaction_count,
@@ -335,7 +361,8 @@ class BillingAnalyticsEngine:
                 """, start_date)
                 
                 # Processing time analysis
-                processing_stats = await conn.fetchrow("""                    SELECT 
+                processing_stats = await conn.fetchrow("""
+                    SELECT 
                         AVG(EXTRACT(EPOCH FROM (updated_at - created_at))) as avg_processing_time,
                         MIN(EXTRACT(EPOCH FROM (updated_at - created_at))) as min_processing_time,
                         MAX(EXTRACT(EPOCH FROM (updated_at - created_at))) as max_processing_time
@@ -346,7 +373,8 @@ class BillingAnalyticsEngine:
                 """, start_date)
                 
                 # Failure analysis
-                failure_analysis = await conn.fetch("""                    SELECT 
+                failure_analysis = await conn.fetch("""
+                    SELECT 
                         failure_reason,
                         COUNT(*) as failure_count,
                         COUNT(*) * 100.0 / (SELECT COUNT(*) FROM payments WHERE created_at >= $1) as failure_percentage
@@ -405,7 +433,8 @@ class BillingAnalyticsEngine:
             raise HTTPException(status_code=500, detail="Payment trends analytics generation failed")
 
     def _group_method_trends(self, method_trends: List) -> Dict[str, List]:
-        """Group payment method trends by method"""        grouped = {}
+        """Group payment method trends by method"""
+        grouped = {}
         for row in method_trends:
             method = row['payment_method']
             if method not in grouped:
@@ -420,10 +449,12 @@ class BillingAnalyticsEngine:
         return grouped
 
     async def generate_subscription_metrics(self) -> Dict[str, Any]:
-        """Generate subscription-specific metrics"""        try:
+        """Generate subscription-specific metrics"""
+        try:
             async with self.db_pool.acquire() as conn:
                 # Active subscriptions
-                active_subs = await conn.fetchrow("""                    SELECT 
+                active_subs = await conn.fetchrow("""
+                    SELECT 
                         COUNT(*) as total_active,
                         SUM(monthly_amount) as monthly_recurring_revenue,
                         AVG(monthly_amount) as avg_subscription_value
@@ -432,7 +463,8 @@ class BillingAnalyticsEngine:
                 """)
                 
                 # Churn analysis
-                churn_data = await conn.fetch("""                    SELECT 
+                churn_data = await conn.fetch("""
+                    SELECT 
                         DATE_TRUNC('month', cancelled_at) as month,
                         COUNT(*) as churned_subscriptions,
                         COUNT(*) * 100.0 / LAG(COUNT(*)) OVER (ORDER BY DATE_TRUNC('month', cancelled_at)) as churn_rate
@@ -444,7 +476,8 @@ class BillingAnalyticsEngine:
                 """)
                 
                 # Subscription plan distribution
-                plan_dist = await conn.fetch("""                    SELECT 
+                plan_dist = await conn.fetch("""
+                    SELECT 
                         subscription_plan,
                         COUNT(*) as subscriber_count,
                         SUM(monthly_amount) as plan_revenue
@@ -484,9 +517,11 @@ class BillingAnalyticsEngine:
             raise HTTPException(status_code=500, detail="Subscription metrics generation failed")
 
     async def _get_cached_analytics(self, cache_key: str) -> Optional[Dict[str, Any]]:
-        """Get analytics data from cache"""        try:
+        """Get analytics data from cache"""
+        try:
             async with self.db_pool.acquire() as conn:
-                cached = await conn.fetchrow("""                    SELECT data FROM analytics_cache 
+                cached = await conn.fetchrow("""
+                    SELECT data FROM analytics_cache 
                     WHERE cache_key = $1 AND expires_at > NOW()
                 """, cache_key)
                 
@@ -498,11 +533,13 @@ class BillingAnalyticsEngine:
 
     async def _cache_analytics(self, cache_key: str, data: Dict[str, Any], 
                              analytics_type: AnalyticsType, expiry_hours: int = 1) -> None:
-        """Cache analytics data"""        try:
+        """Cache analytics data"""
+        try:
             expires_at = datetime.now() + timedelta(hours=expiry_hours)
             
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""                    INSERT INTO analytics_cache 
+                await conn.execute("""
+                    INSERT INTO analytics_cache 
                     (cache_key, analytics_type, time_frame, data, expires_at)
                     VALUES ($1, $2, $3, $4, $5)
                     ON CONFLICT (cache_key) DO UPDATE SET
@@ -520,7 +557,8 @@ class BillingAnalyticsEngine:
             logger.error(f"Failed to cache analytics: {e}")
 
     async def create_analytics_dashboard(self) -> Dict[str, Any]:
-        """Create comprehensive analytics dashboard"""        try:
+        """Create comprehensive analytics dashboard"""
+        try:
             # Get recent revenue analytics
             end_date = datetime.now()
             start_date = end_date - timedelta(days=30)

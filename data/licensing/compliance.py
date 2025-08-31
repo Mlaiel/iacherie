@@ -6,7 +6,8 @@ for licensing agreements and regulatory requirements.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""from typing import Dict, List, Any, Optional, Tuple
+"""
+from typing import Dict, List, Any, Optional, Tuple
 from datetime import datetime, date, timedelta
 from uuid import UUID
 import logging
@@ -27,30 +28,35 @@ settings = get_settings()
 
 
 class ComplianceLevel(Enum):
-    """Compliance severity levels"""    COMPLIANT = "compliant"
+    """Compliance severity levels"""
+    COMPLIANT = "compliant"
     WARNING = "warning"
     VIOLATION = "violation"
     CRITICAL = "critical"
 
 
 class RiskLevel(Enum):
-    """Risk assessment levels"""    LOW = "low"
+    """Risk assessment levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class ComplianceEngine:
-    """    Professional compliance monitoring engine with real-time validation,
+    """
+    Professional compliance monitoring engine with real-time validation,
     automated reporting, and risk assessment capabilities.
-    """    
+    """
+    
     def __init__(
         self,
         repository: LicensingRepository = None,
         legal_validator: LegalValidator = None,
         territory_validator: TerritoryValidator = None
     ):
-        """Initialize compliance engine with validators"""        self.repository = repository or LicensingRepository()
+        """Initialize compliance engine with validators"""
+        self.repository = repository or LicensingRepository()
         self.legal_validator = legal_validator or LegalValidator()
         self.territory_validator = territory_validator or TerritoryValidator()
         self._logger = logger
@@ -73,7 +79,8 @@ class ComplianceEngine:
         license_agreement_id: UUID,
         user_id: UUID = None
     ) -> Dict[str, Any]:
-        """Comprehensive license compliance validation"""        try:
+        """Comprehensive license compliance validation"""
+        try:
             # Get license agreement with relations
             license_agreement = await self.repository.get_license_agreement(
                 license_agreement_id, user_id, include_relations=True
@@ -126,7 +133,8 @@ class ComplianceEngine:
         license_agreement_id: UUID,
         usage_event: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Real-time compliance monitoring for usage events"""        try:
+        """Real-time compliance monitoring for usage events"""
+        try:
             # Get license agreement
             license_agreement = await self.repository.get_license_agreement(
                 license_agreement_id, include_relations=True
@@ -201,7 +209,8 @@ class ComplianceEngine:
         reporting_period: Tuple[date, date],
         user_id: UUID
     ) -> ComplianceReport:
-        """Generate comprehensive compliance report"""        try:
+        """Generate comprehensive compliance report"""
+        try:
             period_start, period_end = reporting_period
             
             # Get license agreement
@@ -275,7 +284,8 @@ class ComplianceEngine:
         license_agreement_id: UUID,
         user_id: UUID = None
     ) -> Dict[str, Any]:
-        """Assess compliance risk factors and probability"""        try:
+        """Assess compliance risk factors and probability"""
+        try:
             # Get license agreement
             license_agreement = await self.repository.get_license_agreement(
                 license_agreement_id, user_id, include_relations=True
@@ -341,7 +351,8 @@ class ComplianceEngine:
         self,
         license_agreement: LicenseAgreement
     ) -> Dict[str, Any]:
-        """Validate territorial compliance"""        validation_result = {
+        """Validate territorial compliance"""
+        validation_result = {
             "status": ComplianceLevel.COMPLIANT.value,
             "score": 100.0,
             "issues": [],
@@ -388,7 +399,8 @@ class ComplianceEngine:
         self,
         license_agreement: LicenseAgreement
     ) -> Dict[str, Any]:
-        """Validate usage rights compliance"""        validation_result = {
+        """Validate usage rights compliance"""
+        validation_result = {
             "status": ComplianceLevel.COMPLIANT.value,
             "score": 100.0,
             "issues": [],
@@ -453,7 +465,8 @@ class ComplianceEngine:
         self,
         license_agreement: LicenseAgreement
     ) -> Dict[str, Any]:
-        """Validate financial compliance"""        validation_result = {
+        """Validate financial compliance"""
+        validation_result = {
             "status": ComplianceLevel.COMPLIANT.value,
             "score": 100.0,
             "issues": [],
@@ -515,7 +528,8 @@ class ComplianceEngine:
         self,
         license_agreement: LicenseAgreement
     ) -> Dict[str, Any]:
-        """Validate temporal compliance (dates, durations)"""        validation_result = {
+        """Validate temporal compliance (dates, durations)"""
+        validation_result = {
             "status": ComplianceLevel.COMPLIANT.value,
             "score": 100.0,
             "issues": [],
@@ -574,7 +588,8 @@ class ComplianceEngine:
         self,
         license_agreement: LicenseAgreement
     ) -> Dict[str, Any]:
-        """Validate legal compliance"""        validation_result = {
+        """Validate legal compliance"""
+        validation_result = {
             "status": ComplianceLevel.COMPLIANT.value,
             "score": 100.0,
             "issues": [],
@@ -621,7 +636,8 @@ class ComplianceEngine:
         self,
         license_agreement: LicenseAgreement
     ) -> Dict[str, Any]:
-        """Validate technical compliance"""        validation_result = {
+        """Validate technical compliance"""
+        validation_result = {
             "status": ComplianceLevel.COMPLIANT.value,
             "score": 100.0,
             "issues": [],
@@ -674,7 +690,8 @@ class ComplianceEngine:
     # Additional helper methods for risk assessment and monitoring
     
     async def _calculate_overall_compliance(self, compliance_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate overall compliance score and status"""        validations = compliance_results["validations"]
+        """Calculate overall compliance score and status"""
+        validations = compliance_results["validations"]
         total_score = sum(v["score"] for v in validations.values())
         average_score = total_score / len(validations)
         
@@ -707,11 +724,13 @@ class ComplianceEngine:
         return compliance_results
     
     async def _generate_report_id(self) -> str:
-        """Generate unique compliance report ID"""        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        """Generate unique compliance report ID"""
+        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         return f"COMP-{timestamp}-{hash(timestamp) % 10000:04d}"
     
     async def _calculate_next_review_date(self, risk_level: str) -> date:
-        """Calculate next review date based on risk level"""        current_date = date.today()
+        """Calculate next review date based on risk level"""
+        current_date = date.today()
         
         if risk_level == RiskLevel.CRITICAL.value:
             return current_date + timedelta(days=7)  # Weekly

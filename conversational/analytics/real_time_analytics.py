@@ -37,7 +37,8 @@ Enterprise Features:
 - Live collaboration tracking and optimization
 - Streaming revenue analytics and alerts
 - Real-time user behavior analysis and segmentation
-"""import asyncio
+"""
+import asyncio
 import logging
 import uuid
 from datetime import datetime, timedelta
@@ -62,7 +63,8 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringType(Enum):
-    """Real-time monitoring types for comprehensive live analytics."""    PERFORMANCE_MONITORING = "performance_monitoring"
+    """Real-time monitoring types for comprehensive live analytics."""
+    PERFORMANCE_MONITORING = "performance_monitoring"
     ENGAGEMENT_MONITORING = "engagement_monitoring"
     REVENUE_MONITORING = "revenue_monitoring"
     CONTENT_MONITORING = "content_monitoring"
@@ -75,14 +77,16 @@ class MonitoringType(Enum):
 
 
 class AlertLevel(Enum):
-    """Alert severity levels for real-time monitoring."""    INFO = "info"
+    """Alert severity levels for real-time monitoring."""
+    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 
 class StreamingSource(Enum):
-    """Real-time streaming data sources."""    USER_INTERACTIONS = "user_interactions"
+    """Real-time streaming data sources."""
+    USER_INTERACTIONS = "user_interactions"
     CONTENT_VIEWS = "content_views"
     REVENUE_TRANSACTIONS = "revenue_transactions"
     PLATFORM_METRICS = "platform_metrics"
@@ -96,7 +100,8 @@ class StreamingSource(Enum):
 
 @dataclass
 class RealTimeMetric:
-    """Real-time metric data structure with streaming capabilities."""    metric_id: str
+    """Real-time metric data structure with streaming capabilities."""
+    metric_id: str
     source: StreamingSource
     monitoring_type: MonitoringType
     metric_name: str
@@ -128,7 +133,8 @@ class RealTimeMetric:
 
 @dataclass
 class StreamingInsight:
-    """Real-time insights generated from streaming analytics."""    insight_id: str
+    """Real-time insights generated from streaming analytics."""
+    insight_id: str
     insight_type: str
     title: str
     description: str
@@ -160,7 +166,8 @@ class StreamingInsight:
 
 @dataclass
 class RealTimeAlert:
-    """Real-time alert structure for instant notifications."""    alert_id: str
+    """Real-time alert structure for instant notifications."""
+    alert_id: str
     alert_type: str
     level: AlertLevel
     title: str
@@ -190,7 +197,8 @@ class RealTimeAlert:
 
 
 class EnterpriseRealTimeAnalytics:
-    """    🚀 ULTRA-ADVANCED ENTERPRISE REAL-TIME ANALYTICS ENGINE
+    """
+    🚀 ULTRA-ADVANCED ENTERPRISE REAL-TIME ANALYTICS ENGINE
     =======================================================
     
     Enterprise-grade real-time analytics engine for live monitoring, streaming
@@ -208,7 +216,8 @@ class EnterpriseRealTimeAnalytics:
     - Live collaboration tracking and performance optimization
     - Streaming revenue analytics with instant monetization alerts
     - Real-time user behavior analysis and dynamic segmentation
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession, cache_manager: Any = None,
                  websocket_manager: Any = None, config: Dict[str, Any] = None):
         self.db_session = db_session
@@ -245,7 +254,8 @@ class EnterpriseRealTimeAnalytics:
         self.background_tasks = set()
     
     async def initialize_real_time_analytics(self):
-        """Initialize enterprise real-time analytics engine."""        try:
+        """Initialize enterprise real-time analytics engine."""
+        try:
             self.logger.info("Initializing enterprise real-time analytics engine")
             
             # Initialize Redis connection for real-time operations
@@ -267,7 +277,8 @@ class EnterpriseRealTimeAnalytics:
             raise
     
     async def _initialize_redis_client(self):
-        """Initialize Redis client for real-time caching and pub/sub."""        try:
+        """Initialize Redis client for real-time caching and pub/sub."""
+        try:
             self.redis_client = await aioredis.from_url(
                 'redis://localhost:6379',
                 encoding='utf-8',
@@ -277,7 +288,8 @@ class EnterpriseRealTimeAnalytics:
             self.logger.warning(f"Redis not available, using in-memory storage: {str(e)}")
     
     async def stream_real_time_metric(self, metric: RealTimeMetric):
-        """Stream a real-time metric through the analytics pipeline."""        try:
+        """Stream a real-time metric through the analytics pipeline."""
+        try:
             start_time = time.time()
             
             # Add processing metadata
@@ -309,7 +321,8 @@ class EnterpriseRealTimeAnalytics:
             self.logger.error(f"Error streaming real-time metric: {str(e)}")
     
     async def _analyze_metric_real_time(self, metric: RealTimeMetric):
-        """Perform real-time analysis on streaming metrics."""        try:
+        """Perform real-time analysis on streaming metrics."""
+        try:
             # Anomaly detection
             anomaly_score = await self._detect_anomaly_real_time(metric)
             metric.anomaly_score = anomaly_score
@@ -339,7 +352,8 @@ class EnterpriseRealTimeAnalytics:
             self.logger.error(f"Error in real-time analysis: {str(e)}")
     
     async def _detect_anomaly_real_time(self, metric: RealTimeMetric) -> float:
-        """Detect anomalies in real-time using statistical analysis."""        try:
+        """Detect anomalies in real-time using statistical analysis."""
+        try:
             # Get recent metrics of the same type for comparison
             recent_metrics = [
                 m for m in list(self.live_metrics)[-1000:]
@@ -370,7 +384,8 @@ class EnterpriseRealTimeAnalytics:
             return 0.0
     
     async def _analyze_trend_real_time(self, metric: RealTimeMetric) -> str:
-        """Analyze trends in real-time streaming data."""        try:
+        """Analyze trends in real-time streaming data."""
+        try:
             # Get recent metrics for trend analysis
             window_minutes = self.rt_config['trend_window_minutes']
             cutoff_time = datetime.utcnow() - timedelta(minutes=window_minutes)
@@ -406,7 +421,8 @@ class EnterpriseRealTimeAnalytics:
             return "unknown"
     
     async def _evaluate_alerts_real_time(self, metric: RealTimeMetric) -> Optional[Dict[str, Any]]:
-        """Evaluate if metric should trigger real-time alerts."""        try:
+        """Evaluate if metric should trigger real-time alerts."""
+        try:
             # Define alert thresholds based on metric type
             alert_thresholds = {
                 'revenue_loss': {'critical': 1000, 'warning': 500},
@@ -452,7 +468,8 @@ class EnterpriseRealTimeAnalytics:
             return None
     
     async def _trigger_real_time_alert(self, alert_info: Dict[str, Any], metric: RealTimeMetric):
-        """Trigger a real-time alert based on metric analysis."""        try:
+        """Trigger a real-time alert based on metric analysis."""
+        try:
             alert = RealTimeAlert(
                 alert_id=str(uuid.uuid4()),
                 alert_type=alert_info['type'],
@@ -489,7 +506,8 @@ class EnterpriseRealTimeAnalytics:
             self.logger.error(f"Error triggering real-time alert: {str(e)}")
     
     async def _generate_alert_actions(self, alert_info: Dict[str, Any], metric: RealTimeMetric) -> List[str]:
-        """Generate suggested actions for real-time alerts."""        actions = []
+        """Generate suggested actions for real-time alerts."""
+        actions = []
         
         if alert_info['type'] == 'anomaly_alert':
             actions.extend([
@@ -508,7 +526,8 @@ class EnterpriseRealTimeAnalytics:
         return actions
     
     async def get_live_dashboard_data(self, user_id: str = None) -> Dict[str, Any]:
-        """Get real-time dashboard data for live monitoring."""        try:
+        """Get real-time dashboard data for live monitoring."""
+        try:
             current_time = datetime.utcnow()
             
             # Filter metrics for the user if specified
@@ -586,7 +605,8 @@ class EnterpriseRealTimeAnalytics:
             return {'error': 'Failed to generate live dashboard data'}
     
     def _calculate_data_quality_score(self, metrics: List[RealTimeMetric]) -> float:
-        """Calculate data quality score based on completeness and consistency."""        if not metrics:
+        """Calculate data quality score based on completeness and consistency."""
+        if not metrics:
             return 0.0
         
         # Check for missing data, outliers, and consistency
@@ -602,7 +622,8 @@ class EnterpriseRealTimeAnalytics:
         return round(quality_score, 3)
     
     def _aggregate_metrics_by_type(self, metrics: List[RealTimeMetric]) -> Dict[str, Any]:
-        """Aggregate metrics by monitoring type for dashboard display."""        aggregation = defaultdict(lambda: {'count': 0, 'avg_value': 0, 'total_value': 0})
+        """Aggregate metrics by monitoring type for dashboard display."""
+        aggregation = defaultdict(lambda: {'count': 0, 'avg_value': 0, 'total_value': 0})
         
         for metric in metrics:
             key = metric.monitoring_type.value
@@ -617,7 +638,8 @@ class EnterpriseRealTimeAnalytics:
         return dict(aggregation)
     
     async def _calculate_real_time_trends(self, metrics: List[RealTimeMetric]) -> Dict[str, Any]:
-        """Calculate real-time trends for dashboard visualization."""        try:
+        """Calculate real-time trends for dashboard visualization."""
+        try:
             trends = {}
             
             # Group metrics by type and calculate trends
@@ -650,7 +672,8 @@ class EnterpriseRealTimeAnalytics:
             return {}
     
     async def _cache_real_time_metric(self, metric: RealTimeMetric):
-        """Cache real-time metric for immediate retrieval."""        try:
+        """Cache real-time metric for immediate retrieval."""
+        try:
             if self.redis_client:
                 cache_key = f"rt_metric:{metric.metric_name}:{metric.user_id or 'global'}"
                 metric_data = {
@@ -668,7 +691,8 @@ class EnterpriseRealTimeAnalytics:
             self.logger.error(f"Error caching real-time metric: {str(e)}")
     
     async def _update_live_dashboard(self, metric: RealTimeMetric):
-        """Update live dashboard via WebSocket."""        try:
+        """Update live dashboard via WebSocket."""
+        try:
             if self.websocket_manager:
                 dashboard_update = {
                     'type': 'metric_update',
@@ -686,7 +710,8 @@ class EnterpriseRealTimeAnalytics:
             self.logger.error(f"Error updating live dashboard: {str(e)}")
     
     async def _generate_streaming_insight(self, metric: RealTimeMetric) -> Optional[StreamingInsight]:
-        """Generate real-time insights from streaming metrics."""        try:
+        """Generate real-time insights from streaming metrics."""
+        try:
             if metric.anomaly_score > 0.8:
                 insight = StreamingInsight(
                     insight_id=str(uuid.uuid4()),
@@ -719,7 +744,8 @@ class EnterpriseRealTimeAnalytics:
             return None
     
     async def _broadcast_insight(self, insight: StreamingInsight):
-        """Broadcast real-time insight to interested parties."""        try:
+        """Broadcast real-time insight to interested parties."""
+        try:
             if self.websocket_manager:
                 insight_message = {
                     'type': 'insight_update',
@@ -737,7 +763,8 @@ class EnterpriseRealTimeAnalytics:
             self.logger.error(f"Error broadcasting insight: {str(e)}")
     
     async def _trigger_performance_alert(self, processing_time: float, metric: RealTimeMetric):
-        """Trigger performance alert when processing times exceed thresholds."""        try:
+        """Trigger performance alert when processing times exceed thresholds."""
+        try:
             alert = RealTimeAlert(
                 alert_id=str(uuid.uuid4()),
                 alert_type="performance_degradation",
@@ -767,7 +794,8 @@ class EnterpriseRealTimeAnalytics:
             self.logger.error(f"Error triggering performance alert: {str(e)}")
     
     async def _start_background_tasks(self):
-        """Start background monitoring and cleanup tasks."""        try:
+        """Start background monitoring and cleanup tasks."""
+        try:
             # Cleanup old alerts task
             cleanup_task = asyncio.create_task(self._cleanup_old_alerts())
             self.background_tasks.add(cleanup_task)
@@ -782,7 +810,8 @@ class EnterpriseRealTimeAnalytics:
             self.logger.error(f"Error starting background tasks: {str(e)}")
     
     async def _cleanup_old_alerts(self):
-        """Cleanup old alerts and metrics periodically."""        while True:
+        """Cleanup old alerts and metrics periodically."""
+        while True:
             try:
                 cutoff_time = datetime.utcnow() - timedelta(hours=self.rt_config['retention_hours'])
                 
@@ -802,7 +831,8 @@ class EnterpriseRealTimeAnalytics:
                 await asyncio.sleep(3600)
     
     async def _monitor_system_performance(self):
-        """Monitor system performance metrics continuously."""        while True:
+        """Monitor system performance metrics continuously."""
+        while True:
             try:
                 # Check processing time trends
                 if len(self.processing_times) > 100:
@@ -823,10 +853,12 @@ class EnterpriseRealTimeAnalytics:
                 await asyncio.sleep(60)
     
     async def _initialize_alert_system(self):
-        """Initialize the real-time alert system."""        self.logger.info("Real-time alert system initialized")
+        """Initialize the real-time alert system."""
+        self.logger.info("Real-time alert system initialized")
     
     async def _setup_websocket_streaming(self):
-        """Setup WebSocket streaming for real-time updates."""        self.logger.info("WebSocket streaming configured")
+        """Setup WebSocket streaming for real-time updates."""
+        self.logger.info("WebSocket streaming configured")
 
 
 # Export the main class and data structures
@@ -848,7 +880,8 @@ __all__ = [
 
 @dataclass
 class LiveMetric:
-    """Live metric data structure for real-time dashboard."""    metric_name: str
+    """Live metric data structure for real-time dashboard."""
+    metric_name: str
     current_value: float
     previous_value: float
     change_rate: float
@@ -859,9 +892,11 @@ class LiveMetric:
 
 
 class RealTimeAnalytics:
-    """    Enterprise-grade real-time analytics engine for live monitoring,
+    """
+    Enterprise-grade real-time analytics engine for live monitoring,
     instant insights, and immediate response to platform events.
-    """    
+    """
+    
     def __init__(self, redis_client: redis.Redis, db_session: AsyncSession):
         self.redis_client = redis_client
         self.db_session = db_session
@@ -886,7 +921,8 @@ class RealTimeAnalytics:
         }
     
     async def start_real_time_processing(self):
-        """Start the real-time analytics processing engine."""        if self._is_running:
+        """Start the real-time analytics processing engine."""
+        if self._is_running:
             self.logger.warning("Real-time processing already running")
             return
         
@@ -909,12 +945,14 @@ class RealTimeAnalytics:
             raise
     
     async def stop_real_time_processing(self):
-        """Stop the real-time analytics processing engine."""        self._is_running = False
+        """Stop the real-time analytics processing engine."""
+        self._is_running = False
         self.processing_workers.shutdown(wait=True)
         self.logger.info("Real-time analytics processing stopped")
     
     async def ingest_event(self, event: RealTimeEvent) -> bool:
-        """Ingest a real-time event for immediate processing."""        try:
+        """Ingest a real-time event for immediate processing."""
+        try:
             # Add to processing buffer
             self.event_buffer.append(event)
             
@@ -946,7 +984,8 @@ class RealTimeAnalytics:
             return False
     
     async def get_live_metrics(self, metric_types: Optional[List[str]] = None) -> Dict[str, LiveMetric]:
-        """Get current live metrics for dashboard display."""        try:
+        """Get current live metrics for dashboard display."""
+        try:
             metrics = {}
             
             # Default metrics if none specified
@@ -987,7 +1026,8 @@ class RealTimeAnalytics:
             return {}
     
     async def get_real_time_dashboard_data(self) -> Dict[str, Any]:
-        """Get comprehensive real-time dashboard data."""        try:
+        """Get comprehensive real-time dashboard data."""
+        try:
             dashboard_data = {
                 'timestamp': datetime.utcnow().isoformat(),
                 'live_metrics': await self.get_live_metrics(),
@@ -1007,13 +1047,15 @@ class RealTimeAnalytics:
             return {}
     
     async def subscribe_to_metrics(self, callback: Callable, metric_types: List[str]):
-        """Subscribe to real-time metric updates."""        for metric_type in metric_types:
+        """Subscribe to real-time metric updates."""
+        for metric_type in metric_types:
             self.subscribers[metric_type].append(callback)
         
         self.logger.info(f"Subscribed to metrics: {metric_types}")
     
     async def _event_processor(self):
-        """Background task for processing real-time events."""        while self._is_running:
+        """Background task for processing real-time events."""
+        while self._is_running:
             try:
                 if self.event_buffer:
                     event = self.event_buffer.popleft()
@@ -1029,7 +1071,8 @@ class RealTimeAnalytics:
                 await asyncio.sleep(1)
     
     async def _process_event(self, event: RealTimeEvent):
-        """Process individual real-time event."""        start_time = time.time()
+        """Process individual real-time event."""
+        start_time = time.time()
         
         try:
             # Update live counters
@@ -1062,7 +1105,8 @@ class RealTimeAnalytics:
             raise
     
     async def _process_high_priority_event(self, event: RealTimeEvent):
-        """Process high-priority events immediately."""        try:
+        """Process high-priority events immediately."""
+        try:
             if event.event_type == RealTimeEventType.PROTECTION_ALERT:
                 await self._handle_urgent_protection_alert(event)
             elif event.event_type == RealTimeEventType.SYSTEM_METRIC:
@@ -1072,7 +1116,8 @@ class RealTimeAnalytics:
             self.logger.error(f"Error processing high-priority event: {str(e)}")
     
     async def _calculate_live_metric(self, metric_type: str) -> float:
-        """Calculate current value for a live metric."""        try:
+        """Calculate current value for a live metric."""
+        try:
             if metric_type == 'active_users':
                 return await self._count_active_users()
             elif metric_type == 'content_uploads_per_minute':
@@ -1093,7 +1138,8 @@ class RealTimeAnalytics:
             return 0.0
     
     async def _count_active_users(self) -> int:
-        """Count currently active users."""        try:
+        """Count currently active users."""
+        try:
             # Get active users from Redis (users with activity in last 5 minutes)
             active_users = await self.redis_client.zcount(
                 'active_users',
@@ -1107,7 +1153,8 @@ class RealTimeAnalytics:
             return 0
     
     async def _get_real_time_revenue(self) -> Dict[str, Any]:
-        """Get real-time revenue data."""        try:
+        """Get real-time revenue data."""
+        try:
             now = datetime.utcnow()
             hour_start = now.replace(minute=0, second=0, microsecond=0)
             
@@ -1125,7 +1172,8 @@ class RealTimeAnalytics:
             return {}
     
     async def _get_protection_status(self) -> Dict[str, Any]:
-        """Get real-time content protection status."""        try:
+        """Get real-time content protection status."""
+        try:
             protection_data = {
                 'alerts_last_hour': self.live_counters.get('protection_alert_count', 0),
                 'scans_in_progress': await self._get_active_scans_count(),
@@ -1141,7 +1189,8 @@ class RealTimeAnalytics:
             return {}
     
     async def _get_real_time_ai_insights(self) -> Dict[str, Any]:
-        """Get real-time AI-generated insights."""        try:
+        """Get real-time AI-generated insights."""
+        try:
             insights = {
                 'trend_predictions': await self._get_trending_predictions(),
                 'optimization_suggestions': await self._get_optimization_suggestions(),
@@ -1157,12 +1206,14 @@ class RealTimeAnalytics:
             return {}
     
     def _calculate_change_rate(self, current: float, previous: float) -> float:
-        """Calculate percentage change rate between current and previous values."""        if previous == 0:
+        """Calculate percentage change rate between current and previous values."""
+        if previous == 0:
             return 100.0 if current > 0 else 0.0
         return ((current - previous) / previous) * 100
     
     def _determine_trend(self, change_rate: float) -> str:
-        """Determine trend direction based on change rate."""        if change_rate > 5:
+        """Determine trend direction based on change rate."""
+        if change_rate > 5:
             return "increasing"
         elif change_rate < -5:
             return "decreasing"
@@ -1170,7 +1221,8 @@ class RealTimeAnalytics:
             return "stable"
     
     def _get_metric_unit(self, metric_type: str) -> str:
-        """Get the unit for a specific metric type."""        units = {
+        """Get the unit for a specific metric type."""
+        units = {
             'active_users': 'users',
             'content_uploads_per_minute': 'uploads/min',
             'revenue_per_hour': 'EUR/hour',
@@ -1181,7 +1233,8 @@ class RealTimeAnalytics:
         return units.get(metric_type, 'units')
     
     async def _notify_subscribers(self, event: RealTimeEvent):
-        """Notify all subscribers about event updates."""        try:
+        """Notify all subscribers about event updates."""
+        try:
             for callback in self.subscribers.get(event.event_type.value, []):
                 try:
                     await callback(event)

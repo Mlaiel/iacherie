@@ -8,7 +8,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import cv2
 import numpy as np
@@ -22,7 +23,8 @@ from .base_generator import BaseContentGenerator, ContentGenerationContext
 
 
 class VideoConfig:
-    """Configuration for video generation settings"""    
+    """Configuration for video generation settings"""
+    
     def __init__(self, **kwargs):
         self.width = kwargs.get('width', 1920)
         self.height = kwargs.get('height', 1080)
@@ -34,28 +36,32 @@ class VideoConfig:
 
 
 class VideoFormat:
-    """Video format enumeration"""    MP4 = "mp4"
+    """Video format enumeration"""
+    MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
     WEBM = "webm"
 
 
 class VideoQuality:
-    """Video quality enumeration"""    LOW = "low"
+    """Video quality enumeration"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     ULTRA = "ultra"
 
 
 class VideoStyle:
-    """Video style enumeration"""    CINEMATIC = "cinematic"
+    """Video style enumeration"""
+    CINEMATIC = "cinematic"
     DOCUMENTARY = "documentary"
     ANIMATED = "animated"
     VINTAGE = "vintage"
 
 
 class VideoGenerationOptions:
-    """Configuration options for video generation"""    
+    """Configuration options for video generation"""
+    
     def __init__(self, **kwargs):
         self.duration = kwargs.get('duration', 15)  # Duration in seconds
         self.resolution = kwargs.get('resolution', '1920x1080')
@@ -74,7 +80,8 @@ class VideoGenerationOptions:
 
 
 class VideoContentGenerator(BaseContentGenerator):
-    """    Advanced video content generator that creates high-quality video content
+    """
+    Advanced video content generator that creates high-quality video content
     for various purposes including:
     - Social media videos (Instagram Reels, TikTok, YouTube Shorts)
     - Promotional videos and advertisements
@@ -83,9 +90,11 @@ class VideoContentGenerator(BaseContentGenerator):
     - Educational and tutorial videos
     - Background video loops
     - Video transitions and effects
-    """    
+    """
+    
     def _setup_models(self) -> None:
-        """Setup AI models and dependencies"""        try:
+        """Setup AI models and dependencies"""
+        try:
             # Initialize video generation models
             self._initialize_video_models()
             self._initialize_video_effects()
@@ -122,7 +131,8 @@ class VideoContentGenerator(BaseContentGenerator):
             raise
     
     def _initialize_video_models(self) -> None:
-        """Initialize video generation models"""        # In a real implementation, this would load models like:
+        """Initialize video generation models"""
+        # In a real implementation, this would load models like:
         # - Runway Gen-2 for video generation
         # - Stable Video Diffusion for video synthesis
         # - AnimateDiff for animation generation
@@ -136,7 +146,8 @@ class VideoContentGenerator(BaseContentGenerator):
         self.current_video_model = 'runway-gen2'
     
     def _initialize_video_effects(self) -> None:
-        """Initialize video effects and filters"""        self.available_effects = {
+        """Initialize video effects and filters"""
+        self.available_effects = {
             'fade_in': {'duration': 1.0, 'type': 'transition'},
             'fade_out': {'duration': 1.0, 'type': 'transition'},
             'zoom_in': {'factor': 1.2, 'type': 'motion'},
@@ -150,14 +161,16 @@ class VideoContentGenerator(BaseContentGenerator):
         }
     
     def _initialize_video_processing(self) -> None:
-        """Initialize video processing capabilities"""        # OpenCV setup for video processing
+        """Initialize video processing capabilities"""
+        # OpenCV setup for video processing
         self.video_writer_fourcc = cv2.VideoWriter_fourcc(*'mp4v')
         
         # Temporary directory for video processing
         self.temp_dir = tempfile.mkdtemp(prefix='video_gen_')
     
     def _setup_resources(self) -> None:
-        """Setup computational resources"""        # Video generation requires substantial resources
+        """Setup computational resources"""
+        # Video generation requires substantial resources
         self.max_concurrent_requests = self.config.get('max_concurrent_requests', 1)
         self.request_timeout = self.config.get('request_timeout', 600)  # 10 minutes
         
@@ -170,7 +183,8 @@ class VideoContentGenerator(BaseContentGenerator):
         self.gpu_memory_limit = self.config.get('gpu_memory_mb', 4096)
     
     def _setup_validation_rules(self) -> None:
-        """Setup video validation rules"""        self.validation_rules = {
+        """Setup video validation rules"""
+        self.validation_rules = {
             'min_duration': 1.0,  # Minimum 1 second
             'max_duration': 60.0,  # Maximum 1 minute
             'min_fps': 15,
@@ -187,7 +201,8 @@ class VideoContentGenerator(BaseContentGenerator):
         prompt: str,
         options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Generate video content based on context and prompt.
+        """
+        Generate video content based on context and prompt.
         
         Args:
             context: Generation context with user and platform information
@@ -196,7 +211,8 @@ class VideoContentGenerator(BaseContentGenerator):
             
         Returns:
             Generated video content with metadata
-        """        try:
+        """
+        try:
             # Parse options
             gen_options = VideoGenerationOptions(**(options or {}))
             
@@ -257,14 +273,16 @@ class VideoContentGenerator(BaseContentGenerator):
             raise
     
     async def validate_output(self, content: Any) -> bool:
-        """        Validate generated video content.
+        """
+        Validate generated video content.
         
         Args:
             content: Generated video content to validate
             
         Returns:
             True if content meets quality standards
-        """        if not isinstance(content, dict):
+        """
+        if not isinstance(content, dict):
             return False
         
         # Check required fields
@@ -332,7 +350,8 @@ class VideoContentGenerator(BaseContentGenerator):
         prompt: str,
         options: VideoGenerationOptions
     ) -> str:
-        """Determine the type of video to generate"""        prompt_lower = prompt.lower()
+        """Determine the type of video to generate"""
+        prompt_lower = prompt.lower()
         
         # Check for explicit type in prompt
         if any(word in prompt_lower for word in ['animation', 'animated', 'cartoon']):
@@ -365,7 +384,8 @@ class VideoContentGenerator(BaseContentGenerator):
         context: ContentGenerationContext,
         options: VideoGenerationOptions
     ) -> Tuple[str, Dict[str, Any]]:
-        """Generate animated video content"""        start_time = datetime.now()
+        """Generate animated video content"""
+        start_time = datetime.now()
         
         # Parse resolution
         width, height = self._parse_resolution(options.resolution)
@@ -395,7 +415,8 @@ class VideoContentGenerator(BaseContentGenerator):
         context: ContentGenerationContext,
         options: VideoGenerationOptions
     ) -> Tuple[str, Dict[str, Any]]:
-        """Generate slideshow video"""        start_time = datetime.now()
+        """Generate slideshow video"""
+        start_time = datetime.now()
         
         # Parse slideshow content from prompt
         slides_content = self._parse_slideshow_content(prompt)
@@ -422,7 +443,8 @@ class VideoContentGenerator(BaseContentGenerator):
         context: ContentGenerationContext,
         options: VideoGenerationOptions
     ) -> Tuple[str, Dict[str, Any]]:
-        """Generate logo animation video"""        start_time = datetime.now()
+        """Generate logo animation video"""
+        start_time = datetime.now()
         
         # Extract logo information from prompt or context
         logo_info = self._extract_logo_info(prompt, context)
@@ -449,7 +471,8 @@ class VideoContentGenerator(BaseContentGenerator):
         context: ContentGenerationContext,
         options: VideoGenerationOptions
     ) -> Tuple[str, Dict[str, Any]]:
-        """Generate product showcase video"""        start_time = datetime.now()
+        """Generate product showcase video"""
+        start_time = datetime.now()
         
         # Parse product information
         product_info = self._parse_product_info(prompt)
@@ -476,7 +499,8 @@ class VideoContentGenerator(BaseContentGenerator):
         context: ContentGenerationContext,
         options: VideoGenerationOptions
     ) -> Tuple[str, Dict[str, Any]]:
-        """Generate general video content"""        start_time = datetime.now()
+        """Generate general video content"""
+        start_time = datetime.now()
         
         # Create general video frames based on prompt
         frames = await self._create_general_video_frames(prompt, options)
@@ -495,7 +519,8 @@ class VideoContentGenerator(BaseContentGenerator):
         return video_path, metadata
     
     def _parse_resolution(self, resolution_str: str) -> Tuple[int, int]:
-        """Parse resolution string to width, height tuple"""        if 'x' in resolution_str:
+        """Parse resolution string to width, height tuple"""
+        if 'x' in resolution_str:
             width, height = map(int, resolution_str.split('x'))
             return width, height
         elif resolution_str in self.supported_resolutions:
@@ -510,7 +535,8 @@ class VideoContentGenerator(BaseContentGenerator):
         width: int,
         height: int
     ) -> List[np.ndarray]:
-        """Create animation frames"""        frame_count = int(options.duration * options.fps)
+        """Create animation frames"""
+        frame_count = int(options.duration * options.fps)
         frames = []
         
         # Create a simple animation sequence
@@ -548,7 +574,8 @@ class VideoContentGenerator(BaseContentGenerator):
         slides_content: List[str],
         options: VideoGenerationOptions
     ) -> List[np.ndarray]:
-        """Create slideshow frames"""        width, height = self._parse_resolution(options.resolution)
+        """Create slideshow frames"""
+        width, height = self._parse_resolution(options.resolution)
         frames_per_slide = int(options.fps * (options.duration / len(slides_content)))
         all_frames = []
         
@@ -569,7 +596,8 @@ class VideoContentGenerator(BaseContentGenerator):
         logo_info: Dict[str, Any],
         options: VideoGenerationOptions
     ) -> List[np.ndarray]:
-        """Create logo animation frames"""        width, height = self._parse_resolution(options.resolution)
+        """Create logo animation frames"""
+        width, height = self._parse_resolution(options.resolution)
         frame_count = int(options.duration * options.fps)
         frames = []
         
@@ -601,7 +629,8 @@ class VideoContentGenerator(BaseContentGenerator):
         product_info: Dict[str, Any],
         options: VideoGenerationOptions
     ) -> List[np.ndarray]:
-        """Create product showcase frames"""        width, height = self._parse_resolution(options.resolution)
+        """Create product showcase frames"""
+        width, height = self._parse_resolution(options.resolution)
         frame_count = int(options.duration * options.fps)
         frames = []
         
@@ -634,7 +663,8 @@ class VideoContentGenerator(BaseContentGenerator):
         prompt: str,
         options: VideoGenerationOptions
     ) -> List[np.ndarray]:
-        """Create general video frames based on prompt"""        width, height = self._parse_resolution(options.resolution)
+        """Create general video frames based on prompt"""
+        width, height = self._parse_resolution(options.resolution)
         frame_count = int(options.duration * options.fps)
         frames = []
         
@@ -663,7 +693,8 @@ class VideoContentGenerator(BaseContentGenerator):
         width: int,
         height: int
     ) -> str:
-        """Convert frames to video file"""        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        """Convert frames to video file"""
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         video_filename = f"video_{timestamp}.{options.format}"
         video_path = os.path.join(self.temp_dir, video_filename)
         
@@ -685,19 +716,22 @@ class VideoContentGenerator(BaseContentGenerator):
         frames: List[np.ndarray],
         options: VideoGenerationOptions
     ) -> str:
-        """Convert slideshow frames to video with transitions"""        # For now, use the same method as frames_to_video
+        """Convert slideshow frames to video with transitions"""
+        # For now, use the same method as frames_to_video
         # In a full implementation, add transition effects between slides
         width, height = frames[0].shape[1], frames[0].shape[0]
         return await self._frames_to_video(frames, options, width, height)
     
     def _interpolate_color(self, color1: Tuple[int, int, int], color2: Tuple[int, int, int], t: float) -> Tuple[int, int, int]:
-        """Interpolate between two colors"""        r = int(color1[0] + (color2[0] - color1[0]) * t)
+        """Interpolate between two colors"""
+        r = int(color1[0] + (color2[0] - color1[0]) * t)
         g = int(color1[1] + (color2[1] - color1[1]) * t)
         b = int(color1[2] + (color2[2] - color1[2]) * t)
         return (r, g, b)
     
     def _extract_text_from_prompt(self, prompt: str) -> str:
-        """Extract text content from prompt"""        # Look for quoted text
+        """Extract text content from prompt"""
+        # Look for quoted text
         if '"' in prompt:
             parts = prompt.split('"')
             if len(parts) >= 3:
@@ -709,7 +743,8 @@ class VideoContentGenerator(BaseContentGenerator):
         return ' '.join(important_words[:3])  # First 3 important words
     
     def _add_text_to_frame(self, frame: np.ndarray, text: str, x: int, y: int) -> None:
-        """Add text to frame using OpenCV"""        font = cv2.FONT_HERSHEY_SIMPLEX
+        """Add text to frame using OpenCV"""
+        font = cv2.FONT_HERSHEY_SIMPLEX
         font_scale = 1
         color = (255, 255, 255)
         thickness = 2
@@ -717,7 +752,8 @@ class VideoContentGenerator(BaseContentGenerator):
         cv2.putText(frame, text, (x - len(text) * 10, y), font, font_scale, color, thickness)
     
     def _parse_slideshow_content(self, prompt: str) -> List[str]:
-        """Parse slideshow content from prompt"""        # Simple parsing - split by sentences or bullet points
+        """Parse slideshow content from prompt"""
+        # Simple parsing - split by sentences or bullet points
         sentences = prompt.split('.')
         slides = [s.strip() for s in sentences if len(s.strip()) > 10]
         
@@ -727,7 +763,8 @@ class VideoContentGenerator(BaseContentGenerator):
         return slides[:5]  # Max 5 slides
     
     def _extract_logo_info(self, prompt: str, context: ContentGenerationContext) -> Dict[str, Any]:
-        """Extract logo information from prompt and context"""        logo_info = {'text': 'LOGO', 'style': 'modern'}
+        """Extract logo information from prompt and context"""
+        logo_info = {'text': 'LOGO', 'style': 'modern'}
         
         # Check brand guidelines
         if context.brand_guidelines:
@@ -744,7 +781,8 @@ class VideoContentGenerator(BaseContentGenerator):
         return logo_info
     
     def _parse_product_info(self, prompt: str) -> Dict[str, Any]:
-        """Parse product information from prompt"""        product_info = {
+        """Parse product information from prompt"""
+        product_info = {
             'name': 'Product',
             'features': ['High Quality', 'Great Value', 'Easy to Use']
         }
@@ -759,7 +797,8 @@ class VideoContentGenerator(BaseContentGenerator):
         return product_info
     
     def _add_slide_text(self, frame: np.ndarray, text: str, width: int, height: int) -> None:
-        """Add formatted text to slide frame"""        font = cv2.FONT_HERSHEY_SIMPLEX
+        """Add formatted text to slide frame"""
+        font = cv2.FONT_HERSHEY_SIMPLEX
         font_scale = 2
         color = (255, 255, 255)
         thickness = 3
@@ -772,7 +811,8 @@ class VideoContentGenerator(BaseContentGenerator):
         cv2.putText(frame, text, (x, y), font, font_scale, color, thickness)
     
     def _add_logo_text(self, frame: np.ndarray, text: str, width: int, height: int, alpha: float, scale: float = 1.0) -> None:
-        """Add logo text with alpha and scale"""        font = cv2.FONT_HERSHEY_SIMPLEX
+        """Add logo text with alpha and scale"""
+        font = cv2.FONT_HERSHEY_SIMPLEX
         font_scale = 3 * scale
         color = (int(255 * alpha), int(255 * alpha), int(255 * alpha))
         thickness = 4
@@ -785,7 +825,8 @@ class VideoContentGenerator(BaseContentGenerator):
         cv2.putText(frame, text, (x, y), font, font_scale, color, thickness)
     
     def _add_gradient_background(self, frame: np.ndarray, color_palette: str) -> None:
-        """Add gradient background based on color palette"""        height, width = frame.shape[:2]
+        """Add gradient background based on color palette"""
+        height, width = frame.shape[:2]
         
         if color_palette == 'vibrant':
             start_color = (255, 100, 150)
@@ -803,7 +844,8 @@ class VideoContentGenerator(BaseContentGenerator):
             frame[y, :] = color
     
     def _add_product_text(self, frame: np.ndarray, text: str, width: int, y: int) -> None:
-        """Add product name text"""        font = cv2.FONT_HERSHEY_SIMPLEX
+        """Add product name text"""
+        font = cv2.FONT_HERSHEY_SIMPLEX
         font_scale = 2.5
         color = (255, 255, 255)
         thickness = 3
@@ -814,7 +856,8 @@ class VideoContentGenerator(BaseContentGenerator):
         cv2.putText(frame, text, (x, y), font, font_scale, color, thickness)
     
     def _add_feature_text(self, frame: np.ndarray, text: str, width: int, y: int) -> None:
-        """Add feature text"""        font = cv2.FONT_HERSHEY_SIMPLEX
+        """Add feature text"""
+        font = cv2.FONT_HERSHEY_SIMPLEX
         font_scale = 1.5
         color = (200, 200, 200)
         thickness = 2
@@ -825,7 +868,8 @@ class VideoContentGenerator(BaseContentGenerator):
         cv2.putText(frame, text, (x, y), font, font_scale, color, thickness)
     
     def _analyze_visual_elements(self, prompt: str) -> List[str]:
-        """Analyze prompt for visual elements"""        elements = []
+        """Analyze prompt for visual elements"""
+        elements = []
         prompt_lower = prompt.lower()
         
         if any(word in prompt_lower for word in ['circle', 'round']):
@@ -840,7 +884,8 @@ class VideoContentGenerator(BaseContentGenerator):
         return elements if elements else ['text']
     
     def _create_dynamic_background(self, frame: np.ndarray, mood: str, progress: float) -> None:
-        """Create dynamic background based on mood"""        height, width = frame.shape[:2]
+        """Create dynamic background based on mood"""
+        height, width = frame.shape[:2]
         
         if mood == 'energetic':
             # Bright, changing colors
@@ -861,7 +906,8 @@ class VideoContentGenerator(BaseContentGenerator):
         frame[:] = base_color
     
     def _add_visual_element(self, frame: np.ndarray, element: str, progress: float, width: int, height: int) -> None:
-        """Add visual element to frame"""        if element == 'circle':
+        """Add visual element to frame"""
+        if element == 'circle':
             center = (width // 2, height // 2)
             radius = int(50 + 20 * np.sin(progress * 2 * np.pi))
             cv2.circle(frame, center, radius, (255, 255, 255), 2)
@@ -886,7 +932,8 @@ class VideoContentGenerator(BaseContentGenerator):
         options: VideoGenerationOptions,
         video_type: str
     ) -> str:
-        """Apply post-processing effects to video"""        if not options.effects:
+        """Apply post-processing effects to video"""
+        if not options.effects:
             return video_path
         
         # For now, return the original path
@@ -899,7 +946,8 @@ class VideoContentGenerator(BaseContentGenerator):
         return video_path
     
     async def _analyze_video(self, video_path: str) -> Dict[str, Any]:
-        """Analyze video properties"""        try:
+        """Analyze video properties"""
+        try:
             cap = cv2.VideoCapture(video_path)
             
             frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -931,21 +979,24 @@ class VideoContentGenerator(BaseContentGenerator):
             return {}
     
     def get_animation_styles(self) -> List[str]:
-        """Get available animation styles"""        return [
+        """Get available animation styles"""
+        return [
             "fade_in", "fade_out", "slide_left", "slide_right",
             "zoom_in", "zoom_out", "bounce", "elastic",
             "rotate", "scale", "flip", "particle"
         ]
     
     def get_transition_effects(self) -> List[str]:
-        """Get available transition effects"""        return [
+        """Get available transition effects"""
+        return [
             "crossfade", "wipe", "dissolve", "cut",
             "push", "slide", "fade", "morph",
             "zoom", "spin", "blur", "pixelate"
         ]
     
     def get_video_templates(self) -> List[Dict[str, Any]]:
-        """Get available video templates"""        return [
+        """Get available video templates"""
+        return [
             {
                 "id": "promo_30s",
                 "name": "30-Second Promo",
@@ -973,7 +1024,8 @@ class VideoContentGenerator(BaseContentGenerator):
         ]
     
     async def generate_thumbnail(self, video_path: str, timestamp: float = 1.0) -> str:
-        """Generate thumbnail from video"""        try:
+        """Generate thumbnail from video"""
+        try:
             cap = cv2.VideoCapture(video_path)
             
             # Set timestamp position
@@ -997,7 +1049,8 @@ class VideoContentGenerator(BaseContentGenerator):
             return f"thumbnail_{timestamp}.jpg"
     
     async def add_subtitles(self, video_path: str, subtitle_text: str) -> str:
-        """Add subtitles to video"""        try:
+        """Add subtitles to video"""
+        try:
             # Simulate subtitle processing
             await asyncio.sleep(0.2)
             
@@ -1015,7 +1068,8 @@ class VideoContentGenerator(BaseContentGenerator):
             return video_path
     
     async def create_slideshow(self, images: List[str], duration_per_slide: float = 2.0) -> str:
-        """Create slideshow from images"""        try:
+        """Create slideshow from images"""
+        try:
             # Calculate total duration and frame count
             total_duration = len(images) * duration_per_slide
             fps = 30
@@ -1052,7 +1106,8 @@ class VideoContentGenerator(BaseContentGenerator):
             return f"slideshow_{len(images)}_slides.mp4"
     
     async def apply_color_correction(self, video_path: str, settings: Dict[str, Any]) -> str:
-        """Apply color correction to video"""        try:
+        """Apply color correction to video"""
+        try:
             corrected_path = os.path.join(self.temp_dir, f"color_corrected_{os.path.basename(video_path)}")
             
             # Open video capture and writer
@@ -1096,7 +1151,8 @@ class VideoContentGenerator(BaseContentGenerator):
             return video_path
     
     async def extract_frames(self, video_path: str, frame_rate: float = 1.0) -> List[str]:
-        """Extract frames from video"""        try:
+        """Extract frames from video"""
+        try:
             frames_list = []
             cap = cv2.VideoCapture(video_path)
             
@@ -1129,7 +1185,8 @@ class VideoContentGenerator(BaseContentGenerator):
             return [f"frame_{i:04d}.jpg" for i in range(num_frames)]
     
     async def merge_videos(self, video_paths: List[str]) -> str:
-        """Merge multiple videos"""        try:
+        """Merge multiple videos"""
+        try:
             if not video_paths:
                 raise ValueError("No videos to merge")
             
@@ -1172,20 +1229,24 @@ class VideoContentGenerator(BaseContentGenerator):
             return f"merged_{len(video_paths)}_videos.mp4"
     
     def _add_effects(self, video_data: bytes, effects: List[str]) -> bytes:
-        """Add visual effects to video"""        # Simulate effect processing
+        """Add visual effects to video"""
+        # Simulate effect processing
         effects_data = b"effects_applied_" + "_".join(effects).encode()
         return video_data + effects_data
     
     def _render_video(self, scenes: List[Dict], output_format: str) -> bytes:
-        """Render final video from scenes"""        # Simulate video rendering
+        """Render final video from scenes"""
+        # Simulate video rendering
         scene_info = f"rendered_video_{len(scenes)}_scenes_{output_format}"
         return scene_info.encode() + b"video_data"
     
     def _supports_content_type(self, content_type: str) -> bool:
-        """Check if generator supports the specified content type"""        return content_type == 'video'
+        """Check if generator supports the specified content type"""
+        return content_type == 'video'
     
     async def _release_model_resources(self) -> None:
-        """Release model-specific resources"""        # Clean up temporary files
+        """Release model-specific resources"""
+        # Clean up temporary files
         if os.path.exists(self.temp_dir):
             import shutil
             shutil.rmtree(self.temp_dir)

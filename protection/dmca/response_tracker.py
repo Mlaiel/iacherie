@@ -13,7 +13,8 @@ This module provides:
 - Automated response parsing
 - Performance analytics
 - Legal compliance reporting
-"""import asyncio
+"""
+import asyncio
 import logging
 import re
 import secrets
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 class ResponseType(Enum):
-    """Types of platform responses"""    ACKNOWLEDGMENT = "acknowledgment"
+    """Types of platform responses"""
+    ACKNOWLEDGMENT = "acknowledgment"
     TAKEDOWN_CONFIRMATION = "takedown_confirmation"
     REJECTION = "rejection"
     COUNTER_NOTICE = "counter_notice"
@@ -46,7 +48,8 @@ class ResponseType(Enum):
 
 
 class ComplianceStatus(Enum):
-    """Compliance status levels"""    COMPLIANT = "compliant"
+    """Compliance status levels"""
+    COMPLIANT = "compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
     NON_COMPLIANT = "non_compliant"
     UNDER_REVIEW = "under_review"
@@ -56,7 +59,8 @@ class ComplianceStatus(Enum):
 
 
 class ResponseChannel(Enum):
-    """Response communication channels"""    EMAIL = "email"
+    """Response communication channels"""
+    EMAIL = "email"
     API_WEBHOOK = "api_webhook"
     PLATFORM_PORTAL = "platform_portal"
     WEB_SCRAPING = "web_scraping"
@@ -66,7 +70,8 @@ class ResponseChannel(Enum):
 
 @dataclass
 class ResponseMetadata:
-    """Response metadata and context"""    source_ip: Optional[str] = None
+    """Response metadata and context"""
+    source_ip: Optional[str] = None
     user_agent: Optional[str] = None
     authentication_method: Optional[str] = None
     response_time_ms: Optional[int] = None
@@ -80,7 +85,8 @@ class ResponseMetadata:
 
 @dataclass
 class PlatformResponse:
-    """Platform response to DMCA notice"""    response_id: str
+    """Platform response to DMCA notice"""
+    response_id: str
     notice_id: str
     platform: str
     response_type: ResponseType
@@ -121,7 +127,8 @@ class PlatformResponse:
 
 @dataclass
 class ComplianceReport:
-    """Compliance status report"""    report_id: str
+    """Compliance status report"""
+    report_id: str
     notice_id: str
     platform: str
     generated_at: datetime
@@ -147,13 +154,15 @@ class ComplianceReport:
 
 
 class ResponseParser:
-    """Intelligent response content parser"""    
+    """Intelligent response content parser"""
+    
     def __init__(self):
         self.patterns = self._load_response_patterns()
         self.ml_classifier = None  # Placeholder for ML-based classification
     
     def _load_response_patterns(self) -> Dict[str, List[str]]:
-        """Load response parsing patterns"""        return {
+        """Load response parsing patterns"""
+        return {
             'takedown_confirmation': [
                 r'content has been removed',
                 r'video.*deleted',
@@ -198,7 +207,8 @@ class ResponseParser:
         }
     
     async def parse_response(self, content: str, subject: str = None) -> Dict[str, Any]:
-        """Parse platform response content"""        
+        """Parse platform response content"""
+        
         try:
             # Normalize content
             normalized_content = self._normalize_content(content)
@@ -249,7 +259,8 @@ class ResponseParser:
             }
     
     def _normalize_content(self, content: str) -> str:
-        """Normalize response content for analysis"""        # Remove HTML tags
+        """Normalize response content for analysis"""
+        # Remove HTML tags
         content = re.sub(r'<[^>]+>', '', content)
         
         # Normalize whitespace
@@ -259,7 +270,8 @@ class ResponseParser:
         return content.lower().strip()
     
     async def _classify_response_type(self, content: str, subject: str = None) -> ResponseType:
-        """Classify the type of response"""        
+        """Classify the type of response"""
+        
         # Check subject line first if available
         if subject:
             subject_lower = subject.lower()
@@ -284,7 +296,8 @@ class ResponseParser:
     
     async def _determine_compliance_status(self, content: str, 
                                          response_type: ResponseType) -> ComplianceStatus:
-        """Determine compliance status from response"""        
+        """Determine compliance status from response"""
+        
         if response_type == ResponseType.TAKEDOWN_CONFIRMATION:
             return ComplianceStatus.COMPLIANT
         elif response_type == ResponseType.PARTIAL_COMPLIANCE:
@@ -301,7 +314,8 @@ class ResponseParser:
             return ComplianceStatus.UNDER_REVIEW
     
     async def _extract_actions_taken(self, content: str) -> List[str]:
-        """Extract specific actions taken by platform"""        
+        """Extract specific actions taken by platform"""
+        
         actions = []
         
         # Action patterns
@@ -323,7 +337,8 @@ class ResponseParser:
         return actions
     
     def _extract_urls(self, content: str) -> List[str]:
-        """Extract URLs from response content"""        
+        """Extract URLs from response content"""
+        
         # URL pattern
         url_pattern = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
         
@@ -331,7 +346,8 @@ class ResponseParser:
         return list(set(urls))  # Remove duplicates
     
     async def _extract_legal_reasoning(self, content: str) -> Optional[str]:
-        """Extract legal reasoning from response"""        
+        """Extract legal reasoning from response"""
+        
         # Look for legal reasoning patterns
         legal_patterns = [
             r'pursuant to.*copyright.*act',
@@ -352,7 +368,8 @@ class ResponseParser:
     async def _calculate_confidence_score(self, content: str, 
                                         response_type: ResponseType,
                                         compliance_status: ComplianceStatus) -> float:
-        """Calculate confidence score for parsed response"""        
+        """Calculate confidence score for parsed response"""
+        
         score = 0.0
         
         # Base score from pattern matching
@@ -383,7 +400,8 @@ class ResponseParser:
         return min(1.0, score)
     
     def _check_content_removed(self, content: str) -> bool:
-        """Check if content was actually removed"""        removal_indicators = [
+        """Check if content was actually removed"""
+        removal_indicators = [
             'content removed', 'video deleted', 'post taken down',
             'material disabled', 'access blocked', 'no longer available'
         ]
@@ -391,7 +409,8 @@ class ResponseParser:
         return any(indicator in content for indicator in removal_indicators)
     
     def _check_counter_notice(self, content: str) -> bool:
-        """Check if response includes counter-notice"""        counter_indicators = [
+        """Check if response includes counter-notice"""
+        counter_indicators = [
             'counter notification', 'counter notice', 'dmca counter',
             'dispute claim', 'challenging takedown'
         ]
@@ -399,7 +418,8 @@ class ResponseParser:
         return any(indicator in content for indicator in counter_indicators)
     
     def _check_fair_use_claim(self, content: str) -> bool:
-        """Check if response claims fair use"""        fair_use_indicators = [
+        """Check if response claims fair use"""
+        fair_use_indicators = [
             'fair use', 'fair dealing', 'educational use',
             'criticism', 'commentary', 'parody', 'transformative'
         ]
@@ -408,7 +428,8 @@ class ResponseParser:
 
 
 class ResponseTracker:
-    """Main response tracking and monitoring system"""    
+    """Main response tracking and monitoring system"""
+    
     def __init__(self, redis_url: str = None):
         self.redis_url = redis_url or "redis://localhost:6379"
         self.redis_client: Optional[aioredis.Redis] = None
@@ -423,7 +444,8 @@ class ResponseTracker:
         self.performance_metrics = defaultdict(list)
     
     async def initialize(self) -> bool:
-        """Initialize response tracking system"""        try:
+        """Initialize response tracking system"""
+        try:
             # Initialize Redis connection
             self.redis_client = aioredis.from_url(
                 self.redis_url,
@@ -447,7 +469,8 @@ class ResponseTracker:
     async def track_response(self, notice_id: str, platform: str,
                            content: str, channel: ResponseChannel = ResponseChannel.EMAIL,
                            metadata: ResponseMetadata = None) -> PlatformResponse:
-        """Track a new platform response"""        
+        """Track a new platform response"""
+        
         try:
             # Parse response content
             parsed_data = await self.parser.parse_response(content)
@@ -491,7 +514,8 @@ class ResponseTracker:
             raise
     
     async def get_notice_responses(self, notice_id: str) -> List[PlatformResponse]:
-        """Get all responses for a specific notice"""        
+        """Get all responses for a specific notice"""
+        
         responses = [
             response for response in self.responses.values()
             if response.notice_id == notice_id
@@ -503,7 +527,8 @@ class ResponseTracker:
         return responses
     
     async def get_compliance_status(self, notice_id: str) -> Dict[str, Any]:
-        """Get overall compliance status for a notice"""        
+        """Get overall compliance status for a notice"""
+        
         responses = await self.get_notice_responses(notice_id)
         
         if not responses:
@@ -554,7 +579,8 @@ class ResponseTracker:
         }
     
     async def generate_compliance_report(self, notice_id: str) -> ComplianceReport:
-        """Generate comprehensive compliance report"""        
+        """Generate comprehensive compliance report"""
+        
         responses = await self.get_notice_responses(notice_id)
         
         if not responses:
@@ -623,7 +649,8 @@ class ResponseTracker:
     
     async def monitor_pending_responses(self, notice_id: str, 
                                       timeout_hours: int = 72) -> bool:
-        """Monitor for responses to a notice with timeout"""        
+        """Monitor for responses to a notice with timeout"""
+        
         try:
             monitor_task = asyncio.create_task(
                 self._response_monitor_task(notice_id, timeout_hours)
@@ -645,7 +672,8 @@ class ResponseTracker:
             return False
     
     async def _response_monitor_task(self, notice_id: str, timeout_hours: int) -> bool:
-        """Background task to monitor for responses"""        
+        """Background task to monitor for responses"""
+        
         start_time = datetime.utcnow()
         timeout_time = start_time + timedelta(hours=timeout_hours)
         
@@ -674,7 +702,8 @@ class ResponseTracker:
         return False
     
     async def _calculate_compliance_score(self, responses: List[PlatformResponse]) -> float:
-        """Calculate overall compliance score"""        
+        """Calculate overall compliance score"""
+        
         if not responses:
             return 0.0
         
@@ -703,7 +732,8 @@ class ResponseTracker:
         return total_score / total_weight if total_weight > 0 else 0.0
     
     async def _assess_legal_risks(self, responses: List[PlatformResponse]) -> List[str]:
-        """Assess legal risks from responses"""        
+        """Assess legal risks from responses"""
+        
         risks = []
         
         # Check for counter-notices
@@ -732,7 +762,8 @@ class ResponseTracker:
     
     async def _generate_recommendations(self, responses: List[PlatformResponse],
                                       overall_status: ComplianceStatus) -> List[str]:
-        """Generate actionable recommendations"""        
+        """Generate actionable recommendations"""
+        
         recommendations = []
         
         if overall_status == ComplianceStatus.COMPLIANT:
@@ -762,7 +793,8 @@ class ResponseTracker:
     
     async def _determine_next_actions(self, responses: List[PlatformResponse],
                                     overall_status: ComplianceStatus) -> List[str]:
-        """Determine specific next actions"""        
+        """Determine specific next actions"""
+        
         next_actions = []
         
         # Time-sensitive actions
@@ -786,7 +818,8 @@ class ResponseTracker:
         return next_actions
     
     async def _rate_platform_responses(self, responses: List[PlatformResponse]) -> float:
-        """Rate platform response quality"""        
+        """Rate platform response quality"""
+        
         if not responses:
             return 0.0
         
@@ -824,7 +857,8 @@ class ResponseTracker:
         return min(1.0, total_rating / len(responses))
     
     async def _calculate_efficiency_score(self, responses: List[PlatformResponse]) -> float:
-        """Calculate efficiency score for the process"""        
+        """Calculate efficiency score for the process"""
+        
         if not responses:
             return 0.0
         
@@ -853,7 +887,8 @@ class ResponseTracker:
         return sum(efficiency_factors) / len(efficiency_factors)
     
     async def _update_compliance_tracking(self, response: PlatformResponse):
-        """Update compliance tracking metrics"""        
+        """Update compliance tracking metrics"""
+        
         # Store in Redis for real-time access
         key = f"compliance:{response.notice_id}"
         
@@ -869,7 +904,8 @@ class ResponseTracker:
         await self.redis_client.expire(key, 86400 * 30)  # Expire after 30 days
     
     async def _check_response_alerts(self, response: PlatformResponse):
-        """Check if response triggers any alerts"""        
+        """Check if response triggers any alerts"""
+        
         alerts = []
         
         # High-priority alerts
@@ -905,7 +941,8 @@ class ResponseTracker:
             )
     
     async def _persist_response(self, response: PlatformResponse):
-        """Persist response to storage"""        
+        """Persist response to storage"""
+        
         try:
             # Store in Redis
             key = f"response:{response.response_id}"
@@ -927,7 +964,8 @@ class ResponseTracker:
             logger.error(f"Error persisting response {response.response_id}: {e}")
     
     async def _store_response_file(self, response: PlatformResponse):
-        """Store response as file backup"""        
+        """Store response as file backup"""
+        
         storage_dir = Path("storage/responses")
         storage_dir.mkdir(parents=True, exist_ok=True)
         
@@ -943,7 +981,8 @@ class ResponseTracker:
             await f.write(json.dumps(data, indent=2, default=str))
     
     async def _persist_compliance_report(self, report: ComplianceReport):
-        """Persist compliance report"""        
+        """Persist compliance report"""
+        
         try:
             key = f"report:{report.report_id}"
             data = asdict(report)
@@ -957,7 +996,8 @@ class ResponseTracker:
             logger.error(f"Error persisting report {report.report_id}: {e}")
     
     async def _load_stored_responses(self):
-        """Load responses from storage on startup"""        
+        """Load responses from storage on startup"""
+        
         try:
             # Load from Redis
             keys = await self.redis_client.keys("response:*")
@@ -990,7 +1030,8 @@ class ResponseTracker:
             logger.error(f"Error loading stored responses: {e}")
     
     async def get_analytics_summary(self, date_range: Tuple[datetime, datetime] = None) -> Dict[str, Any]:
-        """Get analytics summary for response tracking"""        
+        """Get analytics summary for response tracking"""
+        
         if date_range:
             start_date, end_date = date_range
             filtered_responses = [
@@ -1042,7 +1083,8 @@ class ResponseTracker:
         }
     
     async def cleanup(self):
-        """Clean up resources"""        
+        """Clean up resources"""
+        
         # Cancel active monitors
         for task in self.active_monitors.values():
             task.cancel()
@@ -1056,7 +1098,8 @@ class ResponseTracker:
 
 # Factory function
 def create_response_tracker(redis_url: str = None) -> ResponseTracker:
-    """Create new response tracker instance"""    return ResponseTracker(redis_url)
+    """Create new response tracker instance"""
+    return ResponseTracker(redis_url)
 
 
 __all__ = [

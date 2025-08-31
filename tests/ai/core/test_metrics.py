@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -20,7 +21,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -53,9 +55,11 @@ except ImportError as e:
 
 
 class TestMetricEntry:
-    """Test cases for MetricEntry class"""    
+    """Test cases for MetricEntry class"""
+    
     def test_metric_entry_creation(self):
-        """Test basic metric entry creation"""        timestamp = datetime.now()
+        """Test basic metric entry creation"""
+        timestamp = datetime.now()
         tags = {"user_type": "musician", "operation": "upload"}
         
         entry = MetricEntry(
@@ -77,7 +81,8 @@ class TestMetricEntry:
         assert entry.unit == "seconds"
         
     def test_metric_entry_defaults(self):
-        """Test metric entry creation with default values"""        entry = MetricEntry("test_metric", 42.0)
+        """Test metric entry creation with default values"""
+        entry = MetricEntry("test_metric", 42.0)
         
         assert entry.name == "test_metric"
         assert entry.value == 42.0
@@ -88,7 +93,8 @@ class TestMetricEntry:
         assert entry.unit is None
         
     def test_metric_entry_serialization(self):
-        """Test metric entry serialization to dictionary"""        entry = MetricEntry(
+        """Test metric entry serialization to dictionary"""
+        entry = MetricEntry(
             "cpu_usage",
             75.5,
             metric_type=MetricType.GAUGE,
@@ -108,18 +114,22 @@ class TestMetricEntry:
 
 
 class TestMetricsCollector:
-    """Test cases for MetricsCollector class"""    
+    """Test cases for MetricsCollector class"""
+    
     def setup_method(self):
-        """Setup for each test method"""        self.collector = MetricsCollector()
+        """Setup for each test method"""
+        self.collector = MetricsCollector()
         
     def test_collector_initialization(self):
-        """Test metrics collector initialization"""        assert isinstance(self.collector.metrics, list)
+        """Test metrics collector initialization"""
+        assert isinstance(self.collector.metrics, list)
         assert len(self.collector.metrics) == 0
         assert self.collector.max_entries == 10000
         assert self.collector.auto_flush_interval == 300
         
     def test_record_simple_metric(self):
-        """Test recording a simple metric"""        self.collector.record_metric("test_counter", 1)
+        """Test recording a simple metric"""
+        self.collector.record_metric("test_counter", 1)
         
         assert len(self.collector.metrics) == 1
         metric = self.collector.metrics[0]
@@ -128,7 +138,8 @@ class TestMetricsCollector:
         assert metric.metric_type == MetricType.COUNTER
         
     def test_record_metric_with_tags(self):
-        """Test recording metric with tags and metadata"""        tags = {"creator_type": "musician", "content_type": "audio"}
+        """Test recording metric with tags and metadata"""
+        tags = {"creator_type": "musician", "content_type": "audio"}
         
         self.collector.record_metric(
             "content_upload",
@@ -145,7 +156,8 @@ class TestMetricsCollector:
         assert metric.priority == MetricPriority.HIGH
         
     def test_record_performance_metric(self):
-        """Test recording performance metrics"""        self.collector.record_performance_metric("response_time", 0.125)
+        """Test recording performance metrics"""
+        self.collector.record_performance_metric("response_time", 0.125)
         
         metric = self.collector.metrics[0]
         assert metric.name == "response_time"
@@ -153,7 +165,8 @@ class TestMetricsCollector:
         assert metric.metric_type == MetricType.PERFORMANCE
         
     def test_record_business_metric(self):
-        """Test recording business metrics"""        self.collector.record_business_metric(
+        """Test recording business metrics"""
+        self.collector.record_business_metric(
             "revenue_generated",
             250.00,
             {"creator_id": "musician_123", "content_id": "track_456"}
@@ -166,7 +179,8 @@ class TestMetricsCollector:
         assert metric.tags["creator_id"] == "musician_123"
         
     def test_get_metrics(self):
-        """Test retrieving recorded metrics"""        # Record multiple metrics
+        """Test retrieving recorded metrics"""
+        # Record multiple metrics
         self.collector.record_metric("metric1", 10)
         self.collector.record_metric("metric2", 20)
         self.collector.record_metric("metric3", 30)
@@ -176,7 +190,8 @@ class TestMetricsCollector:
         assert all(isinstance(m, MetricEntry) for m in metrics)
         
     def test_get_metrics_by_name(self):
-        """Test retrieving metrics by name"""        self.collector.record_metric("cpu_usage", 50.0)
+        """Test retrieving metrics by name"""
+        self.collector.record_metric("cpu_usage", 50.0)
         self.collector.record_metric("memory_usage", 75.0)
         self.collector.record_metric("cpu_usage", 60.0)
         
@@ -185,7 +200,8 @@ class TestMetricsCollector:
         assert all(m.name == "cpu_usage" for m in cpu_metrics)
         
     def test_get_metrics_by_type(self):
-        """Test retrieving metrics by type"""        self.collector.record_metric("counter1", 1, metric_type=MetricType.COUNTER)
+        """Test retrieving metrics by type"""
+        self.collector.record_metric("counter1", 1, metric_type=MetricType.COUNTER)
         self.collector.record_metric("gauge1", 50.0, metric_type=MetricType.GAUGE)
         self.collector.record_metric("counter2", 2, metric_type=MetricType.COUNTER)
         
@@ -194,7 +210,8 @@ class TestMetricsCollector:
         assert all(m.metric_type == MetricType.COUNTER for m in counter_metrics)
         
     def test_get_metrics_by_tags(self):
-        """Test retrieving metrics by tags"""        tags1 = {"creator_type": "musician"}
+        """Test retrieving metrics by tags"""
+        tags1 = {"creator_type": "musician"}
         tags2 = {"creator_type": "photographer"}
         tags3 = {"creator_type": "musician", "content_type": "audio"}
         
@@ -206,7 +223,8 @@ class TestMetricsCollector:
         assert len(musician_metrics) == 2
         
     def test_clear_metrics(self):
-        """Test clearing recorded metrics"""        self.collector.record_metric("test1", 1)
+        """Test clearing recorded metrics"""
+        self.collector.record_metric("test1", 1)
         self.collector.record_metric("test2", 2)
         
         assert len(self.collector.metrics) == 2
@@ -215,7 +233,8 @@ class TestMetricsCollector:
         assert len(self.collector.metrics) == 0
         
     def test_max_entries_limit(self):
-        """Test that metrics collection respects max entries limit"""        # Set a small limit for testing
+        """Test that metrics collection respects max entries limit"""
+        # Set a small limit for testing
         self.collector.max_entries = 5
         
         # Add more metrics than the limit
@@ -232,12 +251,15 @@ class TestMetricsCollector:
 
 
 class TestTimerContext:
-    """Test cases for TimerContext class"""    
+    """Test cases for TimerContext class"""
+    
     def setup_method(self):
-        """Setup for each test method"""        self.collector = MetricsCollector()
+        """Setup for each test method"""
+        self.collector = MetricsCollector()
         
     def test_timer_context_basic(self):
-        """Test basic timer context functionality"""        with TimerContext(self.collector, "test_operation"):
+        """Test basic timer context functionality"""
+        with TimerContext(self.collector, "test_operation"):
             time.sleep(0.01)  # Sleep for 10ms
             
         metrics = self.collector.get_metrics()
@@ -249,7 +271,8 @@ class TestTimerContext:
         assert timer_metric.metric_type == MetricType.PERFORMANCE
         
     def test_timer_context_with_tags(self):
-        """Test timer context with tags"""        tags = {"operation_type": "content_validation", "creator": "musician"}
+        """Test timer context with tags"""
+        tags = {"operation_type": "content_validation", "creator": "musician"}
         
         with TimerContext(self.collector, "validation_time", tags=tags):
             time.sleep(0.01)
@@ -258,7 +281,8 @@ class TestTimerContext:
         assert timer_metric.tags == tags
         
     def test_timer_context_exception_handling(self):
-        """Test timer context when exception occurs"""        try:
+        """Test timer context when exception occurs"""
+        try:
             with TimerContext(self.collector, "failed_operation"):
                 time.sleep(0.01)
                 raise ValueError("Test exception")
@@ -271,7 +295,8 @@ class TestTimerContext:
         assert metrics[0].name == "failed_operation"
         
     def test_timer_decorator(self):
-        """Test timer decorator functionality"""        @track_execution_time(self.collector, "decorated_function")
+        """Test timer decorator functionality"""
+        @track_execution_time(self.collector, "decorated_function")
         def test_function():
             time.sleep(0.01)
             return "result"
@@ -285,9 +310,11 @@ class TestTimerContext:
 
 
 class TestMetricsAggregator:
-    """Test cases for MetricsAggregator class"""    
+    """Test cases for MetricsAggregator class"""
+    
     def setup_method(self):
-        """Setup for each test method"""        self.collector = MetricsCollector()
+        """Setup for each test method"""
+        self.collector = MetricsCollector()
         self.aggregator = MetricsAggregator(self.collector)
         
         # Add test data
@@ -296,35 +323,41 @@ class TestMetricsAggregator:
             self.collector.record_metric("cpu_usage", 50 + i)
             
     def test_aggregator_initialization(self):
-        """Test aggregator initialization"""        assert self.aggregator.collector == self.collector
+        """Test aggregator initialization"""
+        assert self.aggregator.collector == self.collector
         
     def test_aggregate_by_name(self):
-        """Test aggregating metrics by name"""        result = self.aggregator.aggregate_by_name("response_time", AggregationType.AVERAGE)
+        """Test aggregating metrics by name"""
+        result = self.aggregator.aggregate_by_name("response_time", AggregationType.AVERAGE)
         
         # Should be average of 0.0, 0.1, 0.2, ..., 0.9 = 0.45
         expected_avg = sum(i * 0.1 for i in range(10)) / 10
         assert abs(result - expected_avg) < 0.001
         
     def test_aggregate_sum(self):
-        """Test sum aggregation"""        result = self.aggregator.aggregate_by_name("cpu_usage", AggregationType.SUM)
+        """Test sum aggregation"""
+        result = self.aggregator.aggregate_by_name("cpu_usage", AggregationType.SUM)
         
         # Should be sum of 50, 51, 52, ..., 59
         expected_sum = sum(50 + i for i in range(10))
         assert result == expected_sum
         
     def test_aggregate_min_max(self):
-        """Test min and max aggregation"""        min_result = self.aggregator.aggregate_by_name("cpu_usage", AggregationType.MIN)
+        """Test min and max aggregation"""
+        min_result = self.aggregator.aggregate_by_name("cpu_usage", AggregationType.MIN)
         max_result = self.aggregator.aggregate_by_name("cpu_usage", AggregationType.MAX)
         
         assert min_result == 50
         assert max_result == 59
         
     def test_aggregate_count(self):
-        """Test count aggregation"""        result = self.aggregator.aggregate_by_name("response_time", AggregationType.COUNT)
+        """Test count aggregation"""
+        result = self.aggregator.aggregate_by_name("response_time", AggregationType.COUNT)
         assert result == 10
         
     def test_get_aggregated_metrics(self):
-        """Test getting aggregated metrics summary"""        summary = self.aggregator.get_aggregated_metrics()
+        """Test getting aggregated metrics summary"""
+        summary = self.aggregator.get_aggregated_metrics()
         
         assert "response_time" in summary
         assert "cpu_usage" in summary
@@ -339,7 +372,8 @@ class TestMetricsAggregator:
         assert response_stats["count"] == 10
         
     def test_aggregate_by_time_window(self):
-        """Test aggregating metrics by time window"""        # Clear existing metrics and add time-specific ones
+        """Test aggregating metrics by time window"""
+        # Clear existing metrics and add time-specific ones
         self.collector.clear_metrics()
         
         now = datetime.now()
@@ -360,12 +394,15 @@ class TestMetricsAggregator:
 
 
 class TestBusinessMetricsTracker:
-    """Test cases for BusinessMetricsTracker class"""    
+    """Test cases for BusinessMetricsTracker class"""
+    
     def setup_method(self):
-        """Setup for each test method"""        self.tracker = BusinessMetricsTracker()
+        """Setup for each test method"""
+        self.tracker = BusinessMetricsTracker()
         
     def test_track_user_upload(self):
-        """Test tracking user upload events"""        self.tracker.track_user_upload("audio", 5242880, "musician")
+        """Test tracking user upload events"""
+        self.tracker.track_user_upload("audio", 5242880, "musician")
         
         summary = self.tracker.get_business_summary()
         
@@ -375,7 +412,8 @@ class TestBusinessMetricsTracker:
         assert summary["creator_types"]["musician"]["count"] == 1
         
     def test_track_multiple_uploads(self):
-        """Test tracking multiple upload events"""        # Simulate different creator uploads
+        """Test tracking multiple upload events"""
+        # Simulate different creator uploads
         uploads = [
             ("audio", 5242880, "musician"),      # 5MB audio by musician
             ("image", 2097152, "photographer"),  # 2MB image by photographer
@@ -407,7 +445,8 @@ class TestBusinessMetricsTracker:
         assert summary["creator_types"]["influencer"]["count"] == 1
         
     def test_track_content_processing(self):
-        """Test tracking content processing stages"""        content_id = "audio_123"
+        """Test tracking content processing stages"""
+        content_id = "audio_123"
         
         # Track processing through business logic stages
         stages = [
@@ -429,7 +468,8 @@ class TestBusinessMetricsTracker:
         assert processing_stats["stages_completed"]["distribution"] == 1
         
     def test_track_revenue_events(self):
-        """Test tracking revenue-related events"""        # Track revenue for different creators
+        """Test tracking revenue-related events"""
+        # Track revenue for different creators
         revenue_events = [
             ("musician_123", "audio_456", 15.99, "premium"),
             ("photographer_456", "image_789", 5.99, "standard"),
@@ -452,7 +492,8 @@ class TestBusinessMetricsTracker:
         assert revenue_stats["revenue_by_tier"]["basic"] == 2.99
         
     def test_track_collaboration_events(self):
-        """Test tracking collaboration events"""        collaboration_data = {
+        """Test tracking collaboration events"""
+        collaboration_data = {
             "primary_creator": "musician_123",
             "collaborators": ["producer_456", "vocalist_789"],
             "content_id": "track_123",
@@ -473,7 +514,8 @@ class TestBusinessMetricsTracker:
         assert collab_stats["collaboration_types"]["music_production"] == 1
         
     def test_get_creator_analytics(self):
-        """Test getting analytics for specific creator types"""        # Add data for different creator types
+        """Test getting analytics for specific creator types"""
+        # Add data for different creator types
         self.tracker.track_user_upload("audio", 5242880, "musician")
         self.tracker.track_user_upload("audio", 7340032, "musician")
         self.tracker.track_user_upload("image", 2097152, "photographer")
@@ -495,13 +537,16 @@ class TestBusinessMetricsTracker:
 
 
 class TestMetricsIntegration:
-    """Test cases for metrics integration scenarios"""    
+    """Test cases for metrics integration scenarios"""
+    
     def setup_method(self):
-        """Setup for each test method"""        self.collector = MetricsCollector()
+        """Setup for each test method"""
+        self.collector = MetricsCollector()
         self.business_tracker = BusinessMetricsTracker()
         
     def test_end_to_end_workflow_tracking(self):
-        """Test complete workflow tracking from upload to distribution"""        # Simulate musician uploading an audio track
+        """Test complete workflow tracking from upload to distribution"""
+        # Simulate musician uploading an audio track
         creator_type = "musician"
         content_type = "audio"
         file_size = 5242880  # 5MB
@@ -557,7 +602,8 @@ class TestMetricsIntegration:
         assert processing_stats["total_stages_processed"] == 4
         
     def test_performance_monitoring_integration(self):
-        """Test integration with performance monitoring"""        # Simulate high-load scenario
+        """Test integration with performance monitoring"""
+        # Simulate high-load scenario
         operations = [
             ("content_validation", 0.05),
             ("ai_inference", 0.8),
@@ -584,7 +630,8 @@ class TestMetricsIntegration:
         assert len(completion_metrics) == 5
         
     def test_error_tracking_integration(self):
-        """Test error tracking with metrics"""        # Simulate various error scenarios
+        """Test error tracking with metrics"""
+        # Simulate various error scenarios
         error_scenarios = [
             ("validation_error", "ContentValidationError", "format_mismatch"),
             ("ai_engine_error", "ModelConnectionError", "timeout"),
@@ -614,9 +661,11 @@ class TestMetricsIntegration:
 
 
 class TestMetricsExport:
-    """Test cases for metrics export functionality"""    
+    """Test cases for metrics export functionality"""
+    
     def setup_method(self):
-        """Setup for each test method"""        self.collector = MetricsCollector()
+        """Setup for each test method"""
+        self.collector = MetricsCollector()
         
         # Add sample data
         sample_metrics = [
@@ -631,7 +680,8 @@ class TestMetricsExport:
             self.collector.record_metric(name, value, metric_type=metric_type)
             
     def test_export_to_json(self):
-        """Test exporting metrics to JSON format"""        json_data = self.collector.export_metrics("json")
+        """Test exporting metrics to JSON format"""
+        json_data = self.collector.export_metrics("json")
         
         # Should be valid JSON
         parsed_data = json.loads(json_data)
@@ -646,7 +696,8 @@ class TestMetricsExport:
         assert "metric_type" in first_metric
         
     def test_export_to_csv(self):
-        """Test exporting metrics to CSV format"""        csv_data = self.collector.export_metrics("csv")
+        """Test exporting metrics to CSV format"""
+        csv_data = self.collector.export_metrics("csv")
         
         lines = csv_data.strip().split('\n')
         assert len(lines) == 6  # Header + 5 data rows
@@ -658,7 +709,8 @@ class TestMetricsExport:
         assert "timestamp" in header
         
     def test_export_prometheus_format(self):
-        """Test exporting metrics in Prometheus format"""        prometheus_data = self.collector.export_metrics("prometheus")
+        """Test exporting metrics in Prometheus format"""
+        prometheus_data = self.collector.export_metrics("prometheus")
         
         # Should contain metric declarations
         assert "cpu_usage" in prometheus_data
@@ -672,10 +724,12 @@ class TestMetricsExport:
 
 
 class TestMetricsPerformance:
-    """Test cases for metrics performance and scalability"""    
+    """Test cases for metrics performance and scalability"""
+    
     @pytest.mark.performance
     def test_high_volume_metric_collection(self, performance_tracker):
-        """Test performance with high volume of metrics"""        collector = MetricsCollector()
+        """Test performance with high volume of metrics"""
+        collector = MetricsCollector()
         
         performance_tracker.start()
         
@@ -701,7 +755,8 @@ class TestMetricsPerformance:
             
     @pytest.mark.performance
     def test_aggregation_performance(self, performance_tracker):
-        """Test performance of metrics aggregation"""        collector = MetricsCollector()
+        """Test performance of metrics aggregation"""
+        collector = MetricsCollector()
         aggregator = MetricsAggregator(collector)
         
         # Add many metrics
@@ -723,7 +778,8 @@ class TestMetricsPerformance:
         
     @pytest.mark.performance
     def test_export_performance(self, performance_tracker):
-        """Test performance of metrics export"""        collector = MetricsCollector()
+        """Test performance of metrics export"""
+        collector = MetricsCollector()
         
         # Add substantial amount of data
         for i in range(1000):
@@ -751,10 +807,12 @@ class TestMetricsPerformance:
 
 
 class TestMetricsThreadSafety:
-    """Test cases for metrics thread safety"""    
+    """Test cases for metrics thread safety"""
+    
     @pytest.mark.slow
     def test_concurrent_metric_recording(self):
-        """Test thread safety of concurrent metric recording"""        import threading
+        """Test thread safety of concurrent metric recording"""
+        import threading
         
         collector = MetricsCollector()
         

@@ -9,7 +9,8 @@ Development Team: Lead AI Developer, Senior Backend Engineer, ML Engineer, DBA, 
 ⚠️ INTELLECTUAL PROPERTY WARNING ⚠️
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
-"""from typing import Dict, List, Optional, Tuple, Any, Union
+"""
+from typing import Dict, List, Optional, Tuple, Any, Union
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field
 from enum import Enum
@@ -32,7 +33,8 @@ Base = declarative_base()
 
 
 class CompetitorTier(Enum):
-    """Competitor classification tiers"""    DIRECT = "direct"
+    """Competitor classification tiers"""
+    DIRECT = "direct"
     INDIRECT = "indirect"
     ASPIRATIONAL = "aspirational"
     EMERGING = "emerging"
@@ -40,7 +42,8 @@ class CompetitorTier(Enum):
 
 
 class AnalysisType(Enum):
-    """Types of competitive analysis"""    CONTENT_STRATEGY = "content_strategy"
+    """Types of competitive analysis"""
+    CONTENT_STRATEGY = "content_strategy"
     ENGAGEMENT_PATTERNS = "engagement_patterns"
     AUDIENCE_OVERLAP = "audience_overlap"
     POSTING_FREQUENCY = "posting_frequency"
@@ -51,7 +54,8 @@ class AnalysisType(Enum):
 
 
 class MarketPosition(Enum):
-    """Market positioning categories"""    LEADER = "leader"
+    """Market positioning categories"""
+    LEADER = "leader"
     CHALLENGER = "challenger"
     FOLLOWER = "follower"
     NICHE_SPECIALIST = "niche_specialist"
@@ -60,7 +64,8 @@ class MarketPosition(Enum):
 
 @dataclass
 class CompetitorProfile:
-    """Comprehensive competitor profile"""    competitor_id: str
+    """Comprehensive competitor profile"""
+    competitor_id: str
     name: str
     platforms: List[str]
     tier: CompetitorTier
@@ -87,7 +92,8 @@ class CompetitorProfile:
     last_analyzed: datetime = field(default_factory=datetime.utcnow)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""        return {
+        """Convert to dictionary for serialization"""
+        return {
             "competitor_id": self.competitor_id,
             "name": self.name,
             "platforms": self.platforms,
@@ -110,7 +116,8 @@ class CompetitorProfile:
 
 
 class CompetitorAnalysis(Base):
-    """Database model for competitor analysis data"""    __tablename__ = "competitor_analysis"
+    """Database model for competitor analysis data"""
+    __tablename__ = "competitor_analysis"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid4()))
     user_id = Column(String, nullable=False, index=True)
@@ -153,7 +160,8 @@ class CompetitorAnalysis(Base):
 
 
 class CompetitorInsight(Base):
-    """Database model for competitor insights"""    __tablename__ = "competitor_insights"
+    """Database model for competitor insights"""
+    __tablename__ = "competitor_insights"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid4()))
     analysis_id = Column(String, ForeignKey("competitor_analysis.id"))
@@ -180,7 +188,8 @@ class CompetitorInsight(Base):
 
 
 class MarketIntelligence(Base):
-    """Database model for market intelligence data"""    __tablename__ = "market_intelligence"
+    """Database model for market intelligence data"""
+    __tablename__ = "market_intelligence"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid4()))
     user_id = Column(String, nullable=False, index=True)
@@ -214,9 +223,11 @@ class MarketIntelligence(Base):
 
 
 class CompetitiveIntelligenceEngine:
-    """    Advanced competitive intelligence engine for content creators.
+    """
+    Advanced competitive intelligence engine for content creators.
     Provides comprehensive competitor analysis, market insights, and strategic recommendations.
-    """    
+    """
+    
     def __init__(self, db_session: Session):
         self.db_session = db_session
         self.ml_models = {}
@@ -226,7 +237,8 @@ class CompetitiveIntelligenceEngine:
         asyncio.create_task(self._initialize_models())
     
     async def _initialize_models(self):
-        """Initialize machine learning models for competitive analysis"""        try:
+        """Initialize machine learning models for competitive analysis"""
+        try:
             # Initialize clustering model for competitor segmentation
             self.ml_models['competitor_clustering'] = KMeans(n_clusters=5, random_state=42)
             
@@ -240,7 +252,8 @@ class CompetitiveIntelligenceEngine:
             print(f"Warning: Could not initialize all ML models: {e}")
     
     async def discover_competitors(self, user_id: str, user_profile: Dict[str, Any]) -> List[CompetitorProfile]:
-        """Discover and identify relevant competitors for user"""        try:
+        """Discover and identify relevant competitors for user"""
+        try:
             competitors = []
             
             # Extract user characteristics for competitor matching
@@ -281,7 +294,8 @@ class CompetitiveIntelligenceEngine:
             return []
     
     async def _discover_by_hashtags(self, user_hashtags: List[str]) -> List[CompetitorProfile]:
-        """Discover competitors using hashtag overlap"""        competitors = []
+        """Discover competitors using hashtag overlap"""
+        competitors = []
         
         # Mock hashtag-based discovery (would use actual social media APIs)
         hashtag_data = {
@@ -322,7 +336,8 @@ class CompetitiveIntelligenceEngine:
         return competitors
     
     async def _discover_by_content_similarity(self, content_themes: List[str]) -> List[CompetitorProfile]:
-        """Discover competitors with similar content themes"""        competitors = []
+        """Discover competitors with similar content themes"""
+        competitors = []
         
         # Mock content similarity discovery
         theme_clusters = {
@@ -359,12 +374,14 @@ class CompetitiveIntelligenceEngine:
         return competitors
     
     async def _discover_by_audience_overlap(self, user_id: str) -> List[CompetitorProfile]:
-        """Discover competitors with overlapping audiences"""        # This would analyze audience overlap using social media analytics
+        """Discover competitors with overlapping audiences"""
+        # This would analyze audience overlap using social media analytics
         # For now, returning mock data
         return []
     
     async def _discover_by_platform(self, platforms: List[str], niche: str) -> List[CompetitorProfile]:
-        """Discover competitors on same platforms and niche"""        competitors = []
+        """Discover competitors on same platforms and niche"""
+        competitors = []
         
         # Mock platform-specific discovery
         platform_leaders = {
@@ -400,7 +417,8 @@ class CompetitiveIntelligenceEngine:
         return competitors
     
     def _deduplicate_competitors(self, competitors: List[CompetitorProfile]) -> List[CompetitorProfile]:
-        """Remove duplicate competitors based on similarity"""        unique_competitors = {}
+        """Remove duplicate competitors based on similarity"""
+        unique_competitors = {}
         
         for competitor in competitors:
             # Use name similarity to identify duplicates
@@ -415,7 +433,8 @@ class CompetitiveIntelligenceEngine:
         return list(unique_competitors.values())
     
     async def _rank_competitors_by_relevance(self, competitors: List[CompetitorProfile], user_profile: Dict[str, Any]) -> List[CompetitorProfile]:
-        """Rank competitors by relevance to user"""        user_followers = user_profile.get("followers", 0)
+        """Rank competitors by relevance to user"""
+        user_followers = user_profile.get("followers", 0)
         user_engagement = user_profile.get("engagement_rate", 0)
         user_themes = set(user_profile.get("content_themes", []))
         
@@ -454,7 +473,8 @@ class CompetitiveIntelligenceEngine:
         return sorted(competitors, key=lambda x: getattr(x, 'relevance_score', 0), reverse=True)
     
     async def _store_competitor_discoveries(self, user_id: str, competitors: List[CompetitorProfile]):
-        """Store discovered competitors in database"""        try:
+        """Store discovered competitors in database"""
+        try:
             for competitor in competitors:
                 # Check if competitor already exists
                 existing = self.db_session.query(CompetitorAnalysis).filter(
@@ -494,7 +514,8 @@ class CompetitiveIntelligenceEngine:
             print(f"Failed to store competitor discoveries: {e}")
     
     async def analyze_competitor_strategies(self, user_id: str, competitor_id: str) -> Dict[str, Any]:
-        """Analyze specific competitor's strategies and tactics"""        try:
+        """Analyze specific competitor's strategies and tactics"""
+        try:
             # Get competitor data
             competitor_analysis = self.db_session.query(CompetitorAnalysis).filter(
                 CompetitorAnalysis.user_id == user_id,
@@ -529,7 +550,8 @@ class CompetitiveIntelligenceEngine:
             return {"error": f"Failed to analyze competitor strategies: {str(e)}"}
     
     async def _analyze_content_strategy(self, competitor: CompetitorAnalysis) -> Dict[str, Any]:
-        """Analyze competitor's content strategy"""        return {
+        """Analyze competitor's content strategy"""
+        return {
             "primary_themes": competitor.content_themes[:5],
             "content_quality_score": competitor.content_quality_score,
             "posting_frequency": competitor.posting_frequency,
@@ -548,7 +570,8 @@ class CompetitiveIntelligenceEngine:
         }
     
     async def _analyze_engagement_strategy(self, competitor: CompetitorAnalysis) -> Dict[str, Any]:
-        """Analyze competitor's engagement strategy"""        return {
+        """Analyze competitor's engagement strategy"""
+        return {
             "avg_engagement_rate": competitor.avg_engagement_rate,
             "engagement_tactics": [
                 "Interactive stories",
@@ -564,7 +587,8 @@ class CompetitiveIntelligenceEngine:
         }
     
     async def _analyze_posting_strategy(self, competitor: CompetitorAnalysis) -> Dict[str, Any]:
-        """Analyze competitor's posting strategy"""        return {
+        """Analyze competitor's posting strategy"""
+        return {
             "posting_frequency": competitor.posting_frequency,
             "optimal_posting_times": competitor.posting_times,
             "posting_consistency": "high",
@@ -575,7 +599,8 @@ class CompetitiveIntelligenceEngine:
         }
     
     async def _analyze_hashtag_strategy(self, competitor: CompetitorAnalysis) -> Dict[str, Any]:
-        """Analyze competitor's hashtag strategy"""        return {
+        """Analyze competitor's hashtag strategy"""
+        return {
             "top_hashtags": competitor.top_hashtags,
             "hashtag_count_per_post": len(competitor.top_hashtags),
             "hashtag_variety": "high",
@@ -587,7 +612,8 @@ class CompetitiveIntelligenceEngine:
         }
     
     async def _analyze_collaboration_strategy(self, competitor: CompetitorAnalysis) -> Dict[str, Any]:
-        """Analyze competitor's collaboration strategy"""        return {
+        """Analyze competitor's collaboration strategy"""
+        return {
             "collaboration_score": competitor.collaboration_score,
             "partnership_frequency": "monthly",
             "collaboration_types": [
@@ -602,7 +628,8 @@ class CompetitiveIntelligenceEngine:
         }
     
     async def _analyze_growth_strategy(self, competitor: CompetitorAnalysis) -> Dict[str, Any]:
-        """Analyze competitor's growth strategy"""        return {
+        """Analyze competitor's growth strategy"""
+        return {
             "growth_rate_30d": competitor.growth_rate_30d,
             "growth_tactics": [
                 "Viral content creation",
@@ -617,7 +644,8 @@ class CompetitiveIntelligenceEngine:
         }
     
     async def _analyze_monetization_strategy(self, competitor: CompetitorAnalysis) -> Dict[str, Any]:
-        """Analyze competitor's monetization strategy"""        estimated_revenue = competitor.total_followers * 0.01  # Rough estimate
+        """Analyze competitor's monetization strategy"""
+        estimated_revenue = competitor.total_followers * 0.01  # Rough estimate
         
         return {
             "estimated_monthly_revenue": estimated_revenue,
@@ -633,7 +661,8 @@ class CompetitiveIntelligenceEngine:
         }
     
     async def _identify_competitive_advantages(self, competitor: CompetitorAnalysis) -> List[Dict[str, Any]]:
-        """Identify competitor's competitive advantages"""        advantages = []
+        """Identify competitor's competitive advantages"""
+        advantages = []
         
         if competitor.content_quality_score > 0.8:
             advantages.append({
@@ -670,7 +699,8 @@ class CompetitiveIntelligenceEngine:
         return advantages
     
     async def _generate_strategic_insights(self, competitor: CompetitorAnalysis) -> List[Dict[str, str]]:
-        """Generate strategic insights about competitor"""        insights = []
+        """Generate strategic insights about competitor"""
+        insights = []
         
         # Performance insights
         if competitor.performance_score > 90:
@@ -707,7 +737,8 @@ class CompetitiveIntelligenceEngine:
         return insights
     
     async def _generate_competitive_recommendations(self, user_id: str, competitor: CompetitorAnalysis) -> List[Dict[str, Any]]:
-        """Generate actionable recommendations based on competitor analysis"""        recommendations = []
+        """Generate actionable recommendations based on competitor analysis"""
+        recommendations = []
         
         # Content strategy recommendations
         if competitor.content_quality_score > 0.85:
@@ -760,7 +791,8 @@ class CompetitiveIntelligenceEngine:
         return recommendations
     
     async def _store_competitor_insights(self, analysis_id: str, strategy_analysis: Dict[str, Any]):
-        """Store competitor insights in database"""        try:
+        """Store competitor insights in database"""
+        try:
             # Store key insights as separate records
             for category, insights in strategy_analysis.items():
                 if category in ["strategic_insights", "actionable_recommendations"]:
@@ -788,7 +820,8 @@ class CompetitiveIntelligenceEngine:
             print(f"Failed to store competitor insights: {e}")
     
     async def generate_market_intelligence_report(self, user_id: str, market_segment: str) -> Dict[str, Any]:
-        """Generate comprehensive market intelligence report"""        try:
+        """Generate comprehensive market intelligence report"""
+        try:
             report = {
                 "market_segment": market_segment,
                 "report_timestamp": datetime.utcnow().isoformat(),
@@ -811,7 +844,8 @@ class CompetitiveIntelligenceEngine:
             return {"error": f"Failed to generate market intelligence report: {str(e)}"}
     
     async def _analyze_market_overview(self, market_segment: str) -> Dict[str, Any]:
-        """Analyze overall market conditions"""        # Mock market data (would use real market intelligence in production)
+        """Analyze overall market conditions"""
+        # Mock market data (would use real market intelligence in production)
         return {
             "total_market_size": 2500000,  # Total creators
             "active_creators": 1800000,
@@ -824,7 +858,8 @@ class CompetitiveIntelligenceEngine:
         }
     
     async def _analyze_competitive_landscape(self, user_id: str, market_segment: str) -> Dict[str, Any]:
-        """Analyze competitive landscape in market segment"""        # Get all competitors for user
+        """Analyze competitive landscape in market segment"""
+        # Get all competitors for user
         competitors = self.db_session.query(CompetitorAnalysis).filter(
             CompetitorAnalysis.user_id == user_id
         ).all()
@@ -854,7 +889,8 @@ class CompetitiveIntelligenceEngine:
         }
     
     async def _analyze_market_trends(self, market_segment: str) -> Dict[str, Any]:
-        """Analyze current market trends"""        return {
+        """Analyze current market trends"""
+        return {
             "emerging_trends": [
                 {
                     "trend": "Short-form video content",
@@ -890,7 +926,8 @@ class CompetitiveIntelligenceEngine:
         }
     
     async def _analyze_market_opportunities(self, user_id: str, market_segment: str) -> List[Dict[str, Any]]:
-        """Identify market opportunities"""        return [
+        """Identify market opportunities"""
+        return [
             {
                 "opportunity": "Underserved Niches",
                 "description": "Several sub-niches with low competition",
@@ -915,7 +952,8 @@ class CompetitiveIntelligenceEngine:
         ]
     
     async def _analyze_market_threats(self, user_id: str, market_segment: str) -> List[Dict[str, Any]]:
-        """Identify market threats"""        return [
+        """Identify market threats"""
+        return [
             {
                 "threat": "Algorithm Changes",
                 "description": "Platform algorithm updates affecting reach",
@@ -940,7 +978,8 @@ class CompetitiveIntelligenceEngine:
         ]
     
     async def _generate_market_recommendations(self, user_id: str, market_segment: str) -> List[Dict[str, Any]]:
-        """Generate strategic market recommendations"""        return [
+        """Generate strategic market recommendations"""
+        return [
             {
                 "category": "Market Positioning",
                 "recommendation": "Focus on niche specialization",
@@ -965,7 +1004,8 @@ class CompetitiveIntelligenceEngine:
         ]
     
     async def _identify_success_factors(self, market_segment: str) -> List[Dict[str, str]]:
-        """Identify key success factors in market"""        return [
+        """Identify key success factors in market"""
+        return [
             {
                 "factor": "Content Quality",
                 "importance": "critical",
@@ -989,7 +1029,8 @@ class CompetitiveIntelligenceEngine:
         ]
     
     async def _analyze_entry_barriers(self, market_segment: str) -> Dict[str, Any]:
-        """Analyze barriers to entry in market"""        return {
+        """Analyze barriers to entry in market"""
+        return {
             "overall_barrier_level": "medium",
             "barriers": [
                 {
@@ -1022,7 +1063,8 @@ class CompetitiveIntelligenceEngine:
         }
     
     async def _store_market_intelligence(self, user_id: str, market_segment: str, report: Dict[str, Any]):
-        """Store market intelligence report in database"""        try:
+        """Store market intelligence report in database"""
+        try:
             market_intel = MarketIntelligence(
                 user_id=user_id,
                 market_segment=market_segment,

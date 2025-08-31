@@ -30,7 +30,8 @@ IN IMMEDIATE LEGAL PROSECUTION UNDER INTERNATIONAL COPYRIGHT LAW.
 🔒 NO UNAUTHORIZED USE, COPYING, MODIFICATION, OR DISTRIBUTION ALLOWED.
 
 Business Logic: User Upload → AI Processing → Protection → SEO → Collaboration → Distribution
-"""from typing import Dict, Type, Any, Optional, List, Union
+"""
+from typing import Dict, Type, Any, Optional, List, Union
 import logging
 from enum import Enum
 
@@ -136,7 +137,8 @@ from .monetization_engine import (
 
 
 class EngineCategory(Enum):
-    """Categories of available AI engines"""    AUDIO = "audio"
+    """Categories of available AI engines"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -148,11 +150,13 @@ class EngineCategory(Enum):
 
 
 class EngineIndex:
-    """    Central index for managing and accessing AI engines.
+    """
+    Central index for managing and accessing AI engines.
     
     Provides intelligent routing, load balancing, and engine discovery
     for the complete IA-Influencer content processing pipeline.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self._engines: Dict[str, Type[BaseAIEngine]] = {}
@@ -163,7 +167,8 @@ class EngineIndex:
         self._register_engines()
         
     def _register_engines(self):
-        """Register all available engines in the index"""        
+        """Register all available engines in the index"""
+        
         # Audio engines
         audio_engines = {
             "audio_processing": AudioProcessingEngine,
@@ -276,24 +281,28 @@ class EngineIndex:
         self.logger.info(f"Registered {len(all_engines)} AI engines in index")
         
     def get_engine(self, engine_name: str) -> Optional[Type[BaseAIEngine]]:
-        """        Get engine class by name.
+        """
+        Get engine class by name.
         
         Args:
             engine_name: Name of the engine to retrieve
             
         Returns:
             Engine class or None if not found
-        """        return self._engines.get(engine_name)
+        """
+        return self._engines.get(engine_name)
         
     def get_engines_by_category(self, category: EngineCategory) -> List[str]:
-        """        Get all engine names in a specific category.
+        """
+        Get all engine names in a specific category.
         
         Args:
             category: Engine category to filter by
             
         Returns:
             List of engine names in the category
-        """        return self._engine_categories.get(category, [])
+        """
+        return self._engine_categories.get(category, [])
         
     def get_engine_instance(
         self,
@@ -301,7 +310,8 @@ class EngineIndex:
         config: Optional[Dict[str, Any]] = None,
         force_new: bool = False
     ) -> Optional[BaseAIEngine]:
-        """        Get or create engine instance.
+        """
+        Get or create engine instance.
         
         Args:
             engine_name: Name of the engine
@@ -310,7 +320,8 @@ class EngineIndex:
             
         Returns:
             Engine instance or None if engine not found
-        """        if force_new or engine_name not in self._engine_instances:
+        """
+        if force_new or engine_name not in self._engine_instances:
             engine_class = self.get_engine(engine_name)
             if engine_class:
                 try:
@@ -332,14 +343,16 @@ class EngineIndex:
         return self._engine_instances.get(engine_name)
         
     def get_engines_for_content_type(self, content_type: ContentType) -> List[str]:
-        """        Get recommended engines for a specific content type.
+        """
+        Get recommended engines for a specific content type.
         
         Args:
             content_type: Type of content to process
             
         Returns:
             List of recommended engine names
-        """        engine_mapping = {
+        """
+        engine_mapping = {
             ContentType.AUDIO: self.get_engines_by_category(EngineCategory.AUDIO),
             ContentType.VIDEO: self.get_engines_by_category(EngineCategory.VIDEO),
             ContentType.IMAGE: self.get_engines_by_category(EngineCategory.IMAGE),
@@ -362,7 +375,8 @@ class EngineIndex:
         content_type: ContentType,
         business_goals: List[str]
     ) -> List[str]:
-        """        Get recommended processing pipeline for content and business goals.
+        """
+        Get recommended processing pipeline for content and business goals.
         
         Args:
             content_type: Type of content to process
@@ -370,7 +384,8 @@ class EngineIndex:
             
         Returns:
             Ordered list of engine names for optimal pipeline
-        """        pipeline = []
+        """
+        pipeline = []
         
         # 1. Core processing engine
         content_engines = self.get_engines_for_content_type(content_type)
@@ -408,11 +423,13 @@ class EngineIndex:
         return pipeline
         
     def list_all_engines(self) -> Dict[str, Dict[str, Any]]:
-        """        Get complete list of all available engines with metadata.
+        """
+        Get complete list of all available engines with metadata.
         
         Returns:
             Dictionary with engine information
-        """        engines_info = {}
+        """
+        engines_info = {}
         
         for engine_name, engine_class in self._engines.items():
             # Find category
@@ -433,11 +450,13 @@ class EngineIndex:
         return engines_info
         
     def get_engine_metrics(self) -> Dict[str, Dict[str, Any]]:
-        """        Get performance metrics for all instantiated engines.
+        """
+        Get performance metrics for all instantiated engines.
         
         Returns:
             Dictionary with engine metrics
-        """        metrics = {}
+        """
+        metrics = {}
         
         for engine_name, engine_instance in self._engine_instances.items():
             if hasattr(engine_instance, 'get_metrics'):
@@ -454,11 +473,13 @@ class EngineIndex:
         return metrics
         
     def health_check(self) -> Dict[str, Any]:
-        """        Perform health check on all engines.
+        """
+        Perform health check on all engines.
         
         Returns:
             Health status report
-        """        health_status = {
+        """
+        health_status = {
             "total_engines": len(self._engines),
             "instantiated_engines": len(self._engine_instances),
             "healthy_engines": 0,
@@ -498,29 +519,34 @@ engine_index = EngineIndex()
 
 # Convenience functions for easy access
 def get_engine(engine_name: str) -> Optional[Type[BaseAIEngine]]:
-    """Get engine class by name"""    return engine_index.get_engine(engine_name)
+    """Get engine class by name"""
+    return engine_index.get_engine(engine_name)
 
 
 def get_engine_instance(
     engine_name: str,
     config: Optional[Dict[str, Any]] = None
 ) -> Optional[BaseAIEngine]:
-    """Get or create engine instance"""    return engine_index.get_engine_instance(engine_name, config)
+    """Get or create engine instance"""
+    return engine_index.get_engine_instance(engine_name, config)
 
 
 def get_engines_for_content(content_type: ContentType) -> List[str]:
-    """Get recommended engines for content type"""    return engine_index.get_engines_for_content_type(content_type)
+    """Get recommended engines for content type"""
+    return engine_index.get_engines_for_content_type(content_type)
 
 
 def create_processing_pipeline(
     content_type: ContentType,
     business_goals: List[str]
 ) -> List[str]:
-    """Create optimal processing pipeline"""    return engine_index.get_recommended_pipeline(content_type, business_goals)
+    """Create optimal processing pipeline"""
+    return engine_index.get_recommended_pipeline(content_type, business_goals)
 
 
 def list_engines() -> Dict[str, Dict[str, Any]]:
-    """List all available engines"""    return engine_index.list_all_engines()
+    """List all available engines"""
+    return engine_index.list_all_engines()
 
 
 # Export all engine classes and utilities

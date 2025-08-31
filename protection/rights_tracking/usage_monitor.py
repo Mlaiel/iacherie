@@ -10,7 +10,8 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 Ce code est la propriété exclusive de Fahed Mlaiel et est protégé par les lois
 sur la propriété intellectuelle. Toute reproduction, distribution, ou utilisation
 non autorisée est strictement interdite et passible de poursuites judiciaires.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
 from dataclasses import dataclass, field
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Types de plateformes surveillées"""    STREAMING = "streaming"
+    """Types de plateformes surveillées"""
+    STREAMING = "streaming"
     SOCIAL_MEDIA = "social_media"
     MARKETPLACE = "marketplace"
     BROADCAST = "broadcast"
@@ -40,7 +42,8 @@ class PlatformType(Enum):
 
 
 class UsageType(Enum):
-    """Types d'utilisation détectés"""    STREAM = "stream"
+    """Types d'utilisation détectés"""
+    STREAM = "stream"
     DOWNLOAD = "download"
     VIEW = "view"
     PLAY = "play"
@@ -53,7 +56,8 @@ class UsageType(Enum):
 
 
 class DetectionMethod(Enum):
-    """Méthodes de détection"""    API_INTEGRATION = "api_integration"
+    """Méthodes de détection"""
+    API_INTEGRATION = "api_integration"
     WEB_SCRAPING = "web_scraping"
     FINGERPRINT_MATCHING = "fingerprint_matching"
     USER_REPORT = "user_report"
@@ -62,7 +66,8 @@ class DetectionMethod(Enum):
 
 
 class UsageEvent(BaseModel):
-    """Événement d'utilisation détecté"""    event_id: str = Field(..., description="ID unique de l'événement")
+    """Événement d'utilisation détecté"""
+    event_id: str = Field(..., description="ID unique de l'événement")
     content_id: str = Field(..., description="ID du contenu surveillé")
     platform_id: str = Field(..., description="ID de la plateforme")
     
@@ -95,7 +100,8 @@ class UsageEvent(BaseModel):
 
 
 class PlatformMonitor(BaseModel):
-    """Configuration de surveillance d'une plateforme"""    platform_id: str = Field(..., description="ID unique de la plateforme")
+    """Configuration de surveillance d'une plateforme"""
+    platform_id: str = Field(..., description="ID unique de la plateforme")
     platform_name: str
     platform_type: PlatformType
     
@@ -126,7 +132,8 @@ class PlatformMonitor(BaseModel):
 
 
 class UsageAnalytics(BaseModel):
-    """Analytics d'utilisation avancées"""    analytics_id: str = Field(..., description="ID unique de l'analyse")
+    """Analytics d'utilisation avancées"""
+    analytics_id: str = Field(..., description="ID unique de l'analyse")
     content_id: str
     period_start: datetime
     period_end: datetime
@@ -160,7 +167,8 @@ class UsageAnalytics(BaseModel):
 
 
 class UsageMonitor:
-    """Système avancé de surveillance d'utilisation multi-plateformes"""    
+    """Système avancé de surveillance d'utilisation multi-plateformes"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.platform_monitors: Dict[str, PlatformMonitor] = {}
@@ -182,7 +190,8 @@ class UsageMonitor:
         asyncio.create_task(self._initialize_default_monitors())
     
     async def _initialize_default_monitors(self):
-        """Initialise les moniteurs de plateforme par défaut"""        try:
+        """Initialise les moniteurs de plateforme par défaut"""
+        try:
             # YouTube Monitor
             youtube_monitor = PlatformMonitor(
                 platform_id="youtube",
@@ -254,7 +263,8 @@ class UsageMonitor:
         content_ids: List[str],
         monitoring_config: Dict[str, Any]
     ) -> str:
-        """Configure un pipeline de surveillance automatisé"""        try:
+        """Configure un pipeline de surveillance automatisé"""
+        try:
             pipeline_id = f"PIPELINE-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
             
             pipeline_config = {
@@ -287,7 +297,8 @@ class UsageMonitor:
         detected_usage: Dict[str, Any],
         original_content_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Effectue une analyse approfondie du contenu détecté"""        try:
+        """Effectue une analyse approfondie du contenu détecté"""
+        try:
             analysis_id = f"ANALYSIS-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
             
             # Analyse multi-dimensionnelle
@@ -340,7 +351,8 @@ class UsageMonitor:
         content_ids: Optional[List[str]] = None,
         include_predictions: bool = True
     ) -> Dict[str, Any]:
-        """Génère un rapport de surveillance complet"""        try:
+        """Génère un rapport de surveillance complet"""
+        try:
             report_id = f"REPORT-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
             start_date = time_period['start']
             end_date = time_period['end']
@@ -402,7 +414,8 @@ class UsageMonitor:
         self,
         alert_config: Dict[str, Any]
     ) -> str:
-        """Configure un système d'alertes en temps réel"""        try:
+        """Configure un système d'alertes en temps réel"""
+        try:
             alert_system_id = f"ALERT-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
             
             alert_system = {
@@ -433,7 +446,8 @@ class UsageMonitor:
         content_batch: List[Dict[str, Any]],
         scan_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Effectue un scan en lot de contenu"""        try:
+        """Effectue un scan en lot de contenu"""
+        try:
             scan_id = f"BULK-SCAN-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
             
             scan_results = {
@@ -495,7 +509,8 @@ class UsageMonitor:
         content_id: str,
         protection_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Implémente des mesures de protection proactives"""        try:
+        """Implémente des mesures de protection proactives"""
+        try:
             protection_id = f"PROTECT-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
             
             protection_measures = {
@@ -547,7 +562,8 @@ class UsageMonitor:
         detected_usage: Dict[str, Any],
         original_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Effectue une analyse technique approfondie"""        return {
+        """Effectue une analyse technique approfondie"""
+        return {
             'format_analysis': {
                 'original_format': original_metadata.get('format'),
                 'detected_format': detected_usage.get('format'),
@@ -570,7 +586,8 @@ class UsageMonitor:
         detected_usage: Dict[str, Any],
         original_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Effectue une analyse de similarité avancée"""        return {
+        """Effectue une analyse de similarité avancée"""
+        return {
             'perceptual_similarity': {
                 'visual_similarity_score': 0.89,  # Simulé - utiliser des algorithmes de vision
                 'audio_similarity_score': 0.92,   # Simulé - utiliser des algorithmes audio
@@ -595,7 +612,8 @@ class UsageMonitor:
         }
     
     async def _analyze_usage_context(self, detected_usage: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyse le contexte d'utilisation"""        return {
+        """Analyse le contexte d'utilisation"""
+        return {
             'platform_context': {
                 'platform_type': detected_usage.get('platform'),
                 'platform_policies': await self._get_platform_policies(detected_usage.get('platform')),
@@ -619,7 +637,8 @@ class UsageMonitor:
         detected_usage: Dict[str, Any],
         original_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Effectue une analyse légale automatisée"""        return {
+        """Effectue une analyse légale automatisée"""
+        return {
             'fair_use_assessment': {
                 'purpose_analysis': await self._analyze_usage_purpose(detected_usage),
                 'transformative_nature': await self._assess_transformative_nature(detected_usage, original_metadata),
@@ -643,7 +662,8 @@ class UsageMonitor:
         detected_usage: Dict[str, Any],
         original_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Évalue la sévérité de la violation"""        # Calcul du score de violation
+        """Évalue la sévérité de la violation"""
+        # Calcul du score de violation
         similarity_score = 0.905  # De l'analyse de similarité
         commercial_impact = 0.7   # Impact commercial estimé
         platform_reach = 0.8     # Portée de la plateforme
@@ -680,7 +700,8 @@ class UsageMonitor:
         detected_usage: Dict[str, Any],
         original_metadata: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Génère des recommandations d'action"""        recommendations = []
+        """Génère des recommandations d'action"""
+        recommendations = []
         
         # Analyse de la violation
         violation_assessment = await self._assess_violation_severity(detected_usage, original_metadata)
@@ -734,11 +755,13 @@ class UsageMonitor:
         return recommendations
     
     async def _start_monitoring_pipeline(self, pipeline_id: str) -> None:
-        """Démarre un pipeline de surveillance"""        # Simulation du démarrage - dans un vrai système, utiliser des tâches async
+        """Démarre un pipeline de surveillance"""
+        # Simulation du démarrage - dans un vrai système, utiliser des tâches async
         logger.info(f"Pipeline {pipeline_id} démarré")
     
     async def _configure_alert_rule(self, system_id: str, rule: Dict[str, Any]) -> None:
-        """Configure une règle d'alerte"""        # Configuration des seuils et conditions d'alerte
+        """Configure une règle d'alerte"""
+        # Configuration des seuils et conditions d'alerte
         logger.info(f"Règle d'alerte configurée pour {system_id}: {rule.get('name')}")
     
     async def _scan_single_content_item(
@@ -746,7 +769,8 @@ class UsageMonitor:
         content_item: Dict[str, Any],
         scan_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Scanne un élément de contenu individuel"""        try:
+        """Scanne un élément de contenu individuel"""
+        try:
             content_id = content_item.get('content_id')
             
             # Simulation du scan
@@ -770,7 +794,8 @@ class UsageMonitor:
             }
     
     async def _compile_batch_statistics(self, individual_results: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Compile les statistiques du lot"""        total_items = len(individual_results)
+        """Compile les statistiques du lot"""
+        total_items = len(individual_results)
         successful_scans = len([r for r in individual_results if r.get('status') == 'completed'])
         total_detections = sum(r.get('detections_found', 0) for r in individual_results if r.get('status') == 'completed')
         
@@ -785,7 +810,8 @@ class UsageMonitor:
         }
     
     async def _implement_digital_watermarking(self, content_id: str) -> Dict[str, Any]:
-        """Implémente le watermarking numérique"""        return {
+        """Implémente le watermarking numérique"""
+        return {
             'watermark_id': f"WM-{content_id}-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}",
             'watermark_type': 'invisible_frequency_domain',
             'robustness_level': 'high',
@@ -794,7 +820,8 @@ class UsageMonitor:
         }
     
     async def _implement_advanced_fingerprinting(self, content_id: str) -> Dict[str, Any]:
-        """Implémente le fingerprinting avancé"""        return {
+        """Implémente le fingerprinting avancé"""
+        return {
             'fingerprint_id': f"FP-{content_id}-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}",
             'fingerprint_algorithm': 'perceptual_hashing_v3',
             'segments_processed': 1247,
@@ -803,7 +830,8 @@ class UsageMonitor:
         }
     
     async def _setup_enhanced_monitoring(self, content_id: str) -> Dict[str, Any]:
-        """Configure une surveillance renforcée"""        return {
+        """Configure une surveillance renforcée"""
+        return {
             'monitoring_id': f"MON-{content_id}-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}",
             'monitoring_frequency': 'every_hour',
             'platforms_covered': ['youtube', 'tiktok', 'instagram', 'twitter', 'facebook'],
@@ -813,7 +841,8 @@ class UsageMonitor:
         }
     
     async def _configure_automated_takedowns(self, content_id: str) -> Dict[str, Any]:
-        """Configure les retraits automatisés"""        return {
+        """Configure les retraits automatisés"""
+        return {
             'takedown_config_id': f"TD-{content_id}-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}",
             'threshold_for_automation': 0.85,  # Similarité minimum pour action auto
             'platforms_enabled': ['youtube', 'tiktok'],  # Plateformes avec API DMCA
@@ -825,7 +854,8 @@ class UsageMonitor:
         }
     
     async def _compile_summary_statistics(self, detections: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Compile les statistiques de résumé"""        total_detections = len(detections)
+        """Compile les statistiques de résumé"""
+        total_detections = len(detections)
         
         # Répartition par type de violation
         violation_types = {}
@@ -857,7 +887,8 @@ class UsageMonitor:
         }
     
     async def _analyze_platform_breakdown(self, detections: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyse la répartition par plateforme"""        platform_stats = {}
+        """Analyse la répartition par plateforme"""
+        platform_stats = {}
         
         for detection in detections:
             platform = detection.get('platform', 'unknown')
@@ -887,7 +918,8 @@ class UsageMonitor:
         return platform_stats
     
     async def _perform_temporal_analysis(self, detections: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Effectue une analyse temporelle"""        # Groupement par heure/jour/mois
+        """Effectue une analyse temporelle"""
+        # Groupement par heure/jour/mois
         hourly_distribution = {}
         daily_distribution = {}
         
@@ -920,7 +952,8 @@ class UsageMonitor:
         }
     
     async def _analyze_violation_patterns(self, detections: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyse les patterns de violation"""        # Top contenus violés
+        """Analyse les patterns de violation"""
+        # Top contenus violés
         content_violations = {}
         for detection in detections:
             content_id = detection.get('content_id', 'unknown')
@@ -947,7 +980,8 @@ class UsageMonitor:
         }
     
     async def _perform_geographic_analysis(self, detections: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Effectue une analyse géographique"""        geographic_distribution = {}
+        """Effectue une analyse géographique"""
+        geographic_distribution = {}
         
         for detection in detections:
             location = detection.get('location', 'unknown')
@@ -961,7 +995,8 @@ class UsageMonitor:
         }
     
     async def _analyze_enforcement_effectiveness(self, detections: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyse l'efficacité des mesures d'enforcement"""        total_actions = len(detections)
+        """Analyse l'efficacité des mesures d'enforcement"""
+        total_actions = len(detections)
         resolved_actions = len([d for d in detections if d.get('status') == 'resolved'])
         pending_actions = len([d for d in detections if d.get('status') == 'pending'])
         
@@ -978,7 +1013,8 @@ class UsageMonitor:
         }
     
     async def _calculate_financial_impact(self, detections: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calcule l'impact financier"""        # Estimation des pertes et récupérations
+        """Calcule l'impact financier"""
+        # Estimation des pertes et récupérations
         estimated_losses = sum(detection.get('estimated_loss', 0) for detection in detections)
         recovered_revenue = sum(detection.get('recovered_amount', 0) for detection in detections)
         
@@ -996,7 +1032,8 @@ class UsageMonitor:
         }
     
     async def _generate_strategic_recommendations(self, detections: List[Dict[str, Any]]) -> List[Dict[str, str]]:
-        """Génère des recommandations stratégiques"""        return [
+        """Génère des recommandations stratégiques"""
+        return [
             {
                 'category': 'prevention',
                 'recommendation': 'Renforcer le watermarking sur les contenus à haute valeur',
@@ -1018,7 +1055,8 @@ class UsageMonitor:
         ]
     
     async def _generate_predictive_analysis(self, detections: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Génère une analyse prédictive"""        # Simulation d'analyse prédictive basée sur les tendances
+        """Génère une analyse prédictive"""
+        # Simulation d'analyse prédictive basée sur les tendances
         return {
             'violation_trend_prediction': {
                 'next_month_estimated_violations': len(detections) * 1.15,  # +15% estimé
@@ -1038,7 +1076,8 @@ class UsageMonitor:
     
     # Méthodes utilitaires pour l'analyse temporelle
     def _is_current_week(self, timestamp_str: str) -> bool:
-        """Vérifie si le timestamp est dans la semaine actuelle"""        try:
+        """Vérifie si le timestamp est dans la semaine actuelle"""
+        try:
             dt = datetime.fromisoformat(timestamp_str.replace('Z', '+00:00'))
             now = datetime.utcnow()
             start_of_week = now - timedelta(days=now.weekday())
@@ -1047,7 +1086,8 @@ class UsageMonitor:
             return False
     
     def _is_previous_week(self, timestamp_str: str) -> bool:
-        """Vérifie si le timestamp est dans la semaine précédente"""        try:
+        """Vérifie si le timestamp est dans la semaine précédente"""
+        try:
             dt = datetime.fromisoformat(timestamp_str.replace('Z', '+00:00'))
             now = datetime.utcnow()
             start_of_current_week = now - timedelta(days=now.weekday())
@@ -1208,7 +1248,8 @@ class UsageMonitor:
         ]
     
     async def start_monitoring(self) -> bool:
-        """Démarre la surveillance en temps réel"""        try:
+        """Démarre la surveillance en temps réel"""
+        try:
             if self.running:
                 logger.warning("Surveillance déjà en cours")
                 return True
@@ -1242,7 +1283,8 @@ class UsageMonitor:
         content_metadata: Dict[str, Any],
         platforms: Optional[List[str]] = None
     ) -> bool:
-        """Ajoute un contenu à la surveillance"""        try:
+        """Ajoute un contenu à la surveillance"""
+        try:
             platforms_to_monitor = platforms or list(self.platform_monitors.keys())
             
             # Validation des plateformes
@@ -1272,7 +1314,8 @@ class UsageMonitor:
         content_id: str,
         scan_method: Optional[DetectionMethod] = None
     ) -> List[UsageEvent]:
-        """Scanne une plateforme pour un contenu spécifique"""        try:
+        """Scanne une plateforme pour un contenu spécifique"""
+        try:
             if platform_id not in self.platform_monitors:
                 raise ValueError(f"Plateforme {platform_id} non configurée")
             
@@ -1344,7 +1387,8 @@ class UsageMonitor:
         period_end: datetime,
         platforms: Optional[List[str]] = None
     ) -> UsageAnalytics:
-        """Génère des analytics d'utilisation avancées"""        try:
+        """Génère des analytics d'utilisation avancées"""
+        try:
             analytics_id = self._generate_analytics_id(content_id, period_start, period_end)
             
             # Vérification du cache
@@ -1467,7 +1511,8 @@ class UsageMonitor:
         licensed_platforms: List[str],
         grace_period_hours: int = 24
     ) -> List[Dict[str, Any]]:
-        """Détecte les violations d'utilisation (usage non autorisé)"""        try:
+        """Détecte les violations d'utilisation (usage non autorisé)"""
+        try:
             violations = []
             cutoff_time = datetime.utcnow() - timedelta(hours=grace_period_hours)
             
@@ -1512,7 +1557,8 @@ class UsageMonitor:
         period_end: datetime,
         report_format: str = "detailed"
     ) -> Dict[str, Any]:
-        """Génère un rapport d'utilisation complet"""        try:
+        """Génère un rapport d'utilisation complet"""
+        try:
             report = {
                 'report_id': str(uuid.uuid4()),
                 'generated_at': datetime.utcnow().isoformat(),
@@ -1613,7 +1659,8 @@ class UsageMonitor:
             }
     
     async def _real_time_monitoring_loop(self):
-        """Boucle de surveillance en temps réel"""        while self.running:
+        """Boucle de surveillance en temps réel"""
+        while self.running:
             try:
                 # Surveillance temps réel simplifiée
                 # Dans un environnement réel, ceci utiliserait des webhooks ou streaming APIs
@@ -1639,7 +1686,8 @@ class UsageMonitor:
                 await asyncio.sleep(60)
     
     async def _periodic_scan_loop(self):
-        """Boucle de scan périodique complet"""        while self.running:
+        """Boucle de scan périodique complet"""
+        while self.running:
             try:
                 await asyncio.sleep(self.scan_interval)
                 
@@ -1661,7 +1709,8 @@ class UsageMonitor:
                 await asyncio.sleep(self.scan_interval)
     
     async def _analytics_generation_loop(self):
-        """Boucle de génération d'analytics périodique"""        while self.running:
+        """Boucle de génération d'analytics périodique"""
+        while self.running:
             try:
                 # Nettoyage du cache d'analytics (older than 1 hour)
                 cutoff_time = datetime.utcnow() - timedelta(hours=1)
@@ -1683,7 +1732,8 @@ class UsageMonitor:
                 await asyncio.sleep(3600)
     
     async def _platform_health_monitor(self):
-        """Surveille la santé des moniteurs de plateforme"""        while self.running:
+        """Surveille la santé des moniteurs de plateforme"""
+        while self.running:
             try:
                 for platform_id, monitor in self.platform_monitors.items():
                     # Vérification de la connectivité API
@@ -1713,7 +1763,8 @@ class UsageMonitor:
         platform_monitor: PlatformMonitor,
         content_id: str
     ) -> List[UsageEvent]:
-        """Scan via API de la plateforme"""        try:
+        """Scan via API de la plateforme"""
+        try:
             events = []
             
             if not self.session or not platform_monitor.api_endpoint:
@@ -1738,7 +1789,8 @@ class UsageMonitor:
         platform_monitor: PlatformMonitor,
         content_id: str
     ) -> List[UsageEvent]:
-        """Scan via web scraping"""        try:
+        """Scan via web scraping"""
+        try:
             events = []
             
             if not platform_monitor.scraping_enabled or not platform_monitor.scraping_urls:
@@ -1777,7 +1829,8 @@ class UsageMonitor:
         platform_monitor: PlatformMonitor,
         content_id: str
     ) -> List[UsageEvent]:
-        """Scan via fingerprinting audio/vidéo"""        try:
+        """Scan via fingerprinting audio/vidéo"""
+        try:
             # Intégration avec le système de fingerprinting
             # À implémenter avec les modules de fingerprinting existants
             
@@ -1798,14 +1851,16 @@ class UsageMonitor:
         period_start: datetime,
         period_end: datetime
     ) -> str:
-        """Génère un ID unique pour les analytics"""        data = f"{content_id}:{period_start.isoformat()}:{period_end.isoformat()}"
+        """Génère un ID unique pour les analytics"""
+        data = f"{content_id}:{period_start.isoformat()}:{period_end.isoformat()}"
         return hashlib.md5(data.encode()).hexdigest()[:16]
     
     async def _calculate_engagement_metrics(
         self,
         events: List[UsageEvent]
     ) -> Dict[str, float]:
-        """Calcule les métriques d'engagement"""        try:
+        """Calcule les métriques d'engagement"""
+        try:
             if not events:
                 return {}
             
@@ -1841,7 +1896,8 @@ class UsageMonitor:
         self,
         temporal_trends: Dict[str, List[float]]
     ) -> Dict[str, float]:
-        """Génère des prédictions d'utilisation basées sur les tendances"""        try:
+        """Génère des prédictions d'utilisation basées sur les tendances"""
+        try:
             predictions = {}
             
             # Prédictions simples basées sur la tendance linéaire
@@ -1879,7 +1935,8 @@ class UsageMonitor:
             return {}
     
     async def shutdown(self):
-        """Arrêt propre du système de surveillance"""        try:
+        """Arrêt propre du système de surveillance"""
+        try:
             logger.info("Arrêt du système de surveillance...")
             self.running = False
             
@@ -1899,15 +1956,18 @@ class UsageMonitor:
 
 # Implémentations spécifiques par plateforme (placeholders)
 async def _scan_youtube_api(platform_monitor: PlatformMonitor, content_id: str) -> List[UsageEvent]:
-    """Scan YouTube via API"""    # Implémentation API YouTube
+    """Scan YouTube via API"""
+    # Implémentation API YouTube
     return []
 
 async def _scan_spotify_api(platform_monitor: PlatformMonitor, content_id: str) -> List[UsageEvent]:
-    """Scan Spotify via API"""    # Implémentation API Spotify
+    """Scan Spotify via API"""
+    # Implémentation API Spotify
     return []
 
 async def _scan_soundcloud_api(platform_monitor: PlatformMonitor, content_id: str) -> List[UsageEvent]:
-    """Scan SoundCloud via API"""    # Implémentation API SoundCloud
+    """Scan SoundCloud via API"""
+    # Implémentation API SoundCloud
     return []
 
 async def _analyze_scraped_content(
@@ -1915,11 +1975,13 @@ async def _analyze_scraped_content(
     platform_monitor: PlatformMonitor,
     content_id: str
 ) -> List[UsageEvent]:
-    """Analyse le contenu scrapé pour détecter des utilisations"""    # Implémentation analyse de contenu scrapé
+    """Analyse le contenu scrapé pour détecter des utilisations"""
+    # Implémentation analyse de contenu scrapé
     return []
 
 async def _check_platform_health(platform_monitor: PlatformMonitor) -> bool:
-    """Vérifie la santé d'une plateforme"""    # Implémentation vérification santé
+    """Vérifie la santé d'une plateforme"""
+    # Implémentation vérification santé
     return True
 
 async def _add_content_to_platform_monitor(
@@ -1927,11 +1989,13 @@ async def _add_content_to_platform_monitor(
     content_id: str,
     content_metadata: Dict[str, Any]
 ):
-    """Ajoute un contenu à la surveillance d'une plateforme"""    # Implémentation ajout contenu
+    """Ajoute un contenu à la surveillance d'une plateforme"""
+    # Implémentation ajout contenu
     pass
 
 async def _deduplicate_events(events: List[UsageEvent]) -> List[UsageEvent]:
-    """Déduplique les événements détectés"""    seen_signatures = set()
+    """Déduplique les événements détectés"""
+    seen_signatures = set()
     deduplicated = []
     
     for event in events:
@@ -1945,11 +2009,13 @@ async def _deduplicate_events(events: List[UsageEvent]) -> List[UsageEvent]:
     return deduplicated
 
 async def _quick_platform_scan(platform_id: str):
-    """Scan rapide d'une plateforme"""    # Implémentation scan rapide
+    """Scan rapide d'une plateforme"""
+    # Implémentation scan rapide
     pass
 
 async def _full_platform_scan(platform_id: str):
-    """Scan complet d'une plateforme"""    # Implémentation scan complet
+    """Scan complet d'une plateforme"""
+    # Implémentation scan complet
     pass
 
 

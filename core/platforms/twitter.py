@@ -5,7 +5,8 @@ Twitter API v2 integration for social media engagement and content sharing.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import aiofiles
 from typing import Dict, List, Optional, Any
@@ -28,23 +29,27 @@ logger = logging.getLogger(__name__)
 
 
 class TwitterPlatform(PlatformBase):
-    """Twitter/X platform integration"""    
+    """Twitter/X platform integration"""
+    
     def __init__(self, config: PlatformConfig):
-        """Initialize Twitter platform"""        super().__init__(config)
+        """Initialize Twitter platform"""
+        super().__init__(config)
         self.api_base = "https://api.twitter.com/2"
         self.upload_base = "https://upload.twitter.com/1.1"
         self.auth_base = "https://api.twitter.com"
         self.session: Optional[aiohttp.ClientSession] = None
         
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""        if not self.session or self.session.closed:
+        """Get or create HTTP session"""
+        if not self.session or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             )
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Twitter using OAuth 2.0"""        try:
+        """Authenticate with Twitter using OAuth 2.0"""
+        try:
             # If we have an access token, validate it
             if self.config.credentials.access_token:
                 if await self._validate_token():
@@ -62,7 +67,8 @@ class TwitterPlatform(PlatformBase):
             return False
     
     async def refresh_token(self) -> bool:
-        """Refresh Twitter access token"""        if not self.config.credentials.refresh_token:
+        """Refresh Twitter access token"""
+        if not self.config.credentials.refresh_token:
             logger.error("No refresh token available for Twitter")
             return False
         
@@ -112,7 +118,8 @@ class TwitterPlatform(PlatformBase):
             return False
     
     async def _validate_token(self) -> bool:
-        """Validate Twitter access token"""        try:
+        """Validate Twitter access token"""
+        try:
             result = await self._make_request('GET', '/users/me')
             return result is not None and result.get('data') is not None
             
@@ -121,7 +128,8 @@ class TwitterPlatform(PlatformBase):
             return False
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to Twitter API"""        if not self.is_authenticated:
+        """Make authenticated request to Twitter API"""
+        if not self.is_authenticated:
             if not await self.authenticate():
                 return None
         
@@ -170,7 +178,8 @@ class TwitterPlatform(PlatformBase):
             return None
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Upload content to Twitter"""        try:
+        """Upload content to Twitter"""
+        try:
             if not os.path.exists(content_path):
                 return UploadResult(
                     success=False,
@@ -251,7 +260,8 @@ class TwitterPlatform(PlatformBase):
             )
     
     async def _upload_media(self, file_path: str, mime_type: str) -> Optional[str]:
-        """Upload media to Twitter"""        try:
+        """Upload media to Twitter"""
+        try:
             session = await self._get_session()
             
             async with aiofiles.open(file_path, 'rb') as media_file:
@@ -326,7 +336,8 @@ class TwitterPlatform(PlatformBase):
             return None
     
     async def _get_username(self) -> str:
-        """Get current user's username"""        try:
+        """Get current user's username"""
+        try:
             result = await self._make_request('GET', '/users/me')
             if result and result.get('data'):
                 return result['data'].get('username', 'unknown')
@@ -335,7 +346,8 @@ class TwitterPlatform(PlatformBase):
             return 'unknown'
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get Twitter analytics for a tweet"""        try:
+        """Get Twitter analytics for a tweet"""
+        try:
             # Get tweet data
             params = {
                 'tweet.fields': 'public_metrics,created_at,author_id',
@@ -376,7 +388,8 @@ class TwitterPlatform(PlatformBase):
             raise
     
     def _calculate_engagement_rate(self, metrics: Dict[str, Any]) -> float:
-        """Calculate engagement rate"""        impressions = metrics.get('impression_count', 0)
+        """Calculate engagement rate"""
+        impressions = metrics.get('impression_count', 0)
         likes = metrics.get('like_count', 0)
         retweets = metrics.get('retweet_count', 0)
         replies = metrics.get('reply_count', 0)
@@ -389,7 +402,8 @@ class TwitterPlatform(PlatformBase):
         return (total_engagement / impressions) * 100
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on Twitter"""        try:
+        """Search content on Twitter"""
+        try:
             params = {
                 'query': query,
                 'tweet.fields': 'public_metrics,created_at,author_id',
@@ -433,7 +447,8 @@ class TwitterPlatform(PlatformBase):
             return []
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's tweets from Twitter"""        try:
+        """Get user's tweets from Twitter"""
+        try:
             if not user_id:
                 # Get current user ID
                 me_result = await self._make_request('GET', '/users/me')
@@ -476,7 +491,8 @@ class TwitterPlatform(PlatformBase):
             return []
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete tweet from Twitter"""        try:
+        """Delete tweet from Twitter"""
+        try:
             result = await self._make_request('DELETE', f'/tweets/{content_id}')
             return result is not None and result.get('data', {}).get('deleted') is True
         except Exception as e:
@@ -484,12 +500,14 @@ class TwitterPlatform(PlatformBase):
             return False
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
-        """Update tweet metadata on Twitter (not supported)"""        # Twitter doesn't support editing tweets
+        """Update tweet metadata on Twitter (not supported)"""
+        # Twitter doesn't support editing tweets
         logger.warning("Twitter doesn't support editing tweets")
         return False
     
     async def get_user_info(self, user_id: str = None, username: str = None) -> Optional[Dict[str, Any]]:
-        """Get user information"""        try:
+        """Get user information"""
+        try:
             params = {
                 'user.fields': 'public_metrics,description,location,url,verified,created_at'
             }
@@ -508,7 +526,8 @@ class TwitterPlatform(PlatformBase):
             return None
     
     async def follow_user(self, target_user_id: str) -> bool:
-        """Follow a user"""        try:
+        """Follow a user"""
+        try:
             data = {'target_user_id': target_user_id}
             result = await self._make_request('POST', '/users/{id}/following', json=data)
             return result is not None and result.get('data', {}).get('following') is True
@@ -517,7 +536,8 @@ class TwitterPlatform(PlatformBase):
             return False
     
     async def unfollow_user(self, target_user_id: str) -> bool:
-        """Unfollow a user"""        try:
+        """Unfollow a user"""
+        try:
             result = await self._make_request('DELETE', f'/users/{self.config.credentials.user_id}/following/{target_user_id}')
             return result is not None and result.get('data', {}).get('following') is False
         except Exception as e:
@@ -525,7 +545,8 @@ class TwitterPlatform(PlatformBase):
             return False
     
     async def like_tweet(self, tweet_id: str) -> bool:
-        """Like a tweet"""        try:
+        """Like a tweet"""
+        try:
             data = {'tweet_id': tweet_id}
             result = await self._make_request('POST', '/users/{id}/likes', json=data)
             return result is not None and result.get('data', {}).get('liked') is True
@@ -534,7 +555,8 @@ class TwitterPlatform(PlatformBase):
             return False
     
     async def retweet(self, tweet_id: str) -> bool:
-        """Retweet a tweet"""        try:
+        """Retweet a tweet"""
+        try:
             data = {'tweet_id': tweet_id}
             result = await self._make_request('POST', '/users/{id}/retweets', json=data)
             return result is not None and result.get('data', {}).get('retweeted') is True
@@ -543,5 +565,6 @@ class TwitterPlatform(PlatformBase):
             return False
     
     async def close(self):
-        """Close HTTP session"""        if self.session and not self.session.closed:
+        """Close HTTP session"""
+        if self.session and not self.session.closed:
             await self.session.close()

@@ -3,22 +3,30 @@ High-performance response caching middleware for FastAPI endpoints
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""import asyncio
+"""
+
+import asyncio
+
 import json
 import hashlib
+
 import time
 from typing import Callable, Optional, List, Dict, Any
 from fastapi import Request, Response
 from fastapi.responses import JSONResponse
+
 from starlette.middleware.base import BaseHTTPMiddleware
+
 from starlette.responses import StreamingResponse
+
 import logging
 
 logger = logging.getLogger(__name__)
 
 
 class APIResponseCacheMiddleware(BaseHTTPMiddleware):
-    """    FastAPI middleware for caching API responses
+    """
+    FastAPI middleware for caching API responses
     
     Features:
     - Configurable cache TTL per endpoint
@@ -26,7 +34,8 @@ class APIResponseCacheMiddleware(BaseHTTPMiddleware):
     - Support for cache bypass headers
     - Automatic cache invalidation
     - Tenant-aware caching
-    """    
+    """
+    
     def __init__(
         self,
         app,
@@ -57,7 +66,8 @@ class APIResponseCacheMiddleware(BaseHTTPMiddleware):
         logger.info("API Response Cache Middleware initialized")
     
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
-        """Process request and handle caching"""        
+        """Process request and handle caching"""
+        
         # Check if request should be cached
         if not self._should_cache_request(request):
             self.cache_bypassed += 1
@@ -91,7 +101,9 @@ class APIResponseCacheMiddleware(BaseHTTPMiddleware):
         return response
     
     def _should_cache_request(self, request: Request) -> bool:
-        """Determine if request should be cached"""        
+        """
+Determine if request should be cached"""
+        
         # Check HTTP method
         if request.method not in self.cacheable_methods:
             return False
@@ -108,7 +120,8 @@ class APIResponseCacheMiddleware(BaseHTTPMiddleware):
         return True
     
     def _should_cache_response(self, response: Response) -> bool:
-        """Determine if response should be cached"""        
+        """Determine if response should be cached"""
+        
         # Check status code
         if response.status_code not in self.cacheable_status_codes:
             return False
@@ -121,7 +134,8 @@ class APIResponseCacheMiddleware(BaseHTTPMiddleware):
         return True
     
     async def _generate_cache_key(self, request: Request) -> str:
-        """Generate cache key for request"""        
+        """Generate cache key for request"""
+        
         # Base components
         components = [
             request.method,
@@ -146,7 +160,8 @@ class APIResponseCacheMiddleware(BaseHTTPMiddleware):
         return f"{self.cache_key_prefix}{key_hash}"
     
     async def _get_cached_response(self, cache_key: str) -> Optional[Dict[str, Any]]:
-        """Get cached response from backend"""        
+        """Get cached response from backend"""
+        
         if not self.cache_backend:
             return None
         
@@ -163,7 +178,8 @@ class APIResponseCacheMiddleware(BaseHTTPMiddleware):
         return None
     
     async def _cache_response(self, cache_key: str, response: Response, request: Request):
-        """Cache response in backend"""        
+        """Cache response in backend"""
+        
         if not self.cache_backend:
             return
         
@@ -198,7 +214,8 @@ class APIResponseCacheMiddleware(BaseHTTPMiddleware):
             logger.warning(f"Failed to cache response: {e}")
     
     def _create_response_from_cache(self, cached_data: Dict[str, Any]) -> Response:
-        """Create FastAPI response from cached data"""        
+        """Create FastAPI response from cached data"""
+        
         # Add cache headers
         headers = cached_data.get("headers", {})
         headers["X-Cache"] = "HIT"
@@ -228,7 +245,8 @@ class APIResponseCacheMiddleware(BaseHTTPMiddleware):
         )
     
     def _get_ttl_for_request(self, request: Request) -> int:
-        """Get TTL for specific request"""        
+        """Get TTL for specific request"""
+        
         # Check for cache control header
         cache_control = request.headers.get(self.cache_control_header)
         if cache_control and cache_control.isdigit():
@@ -248,7 +266,8 @@ class APIResponseCacheMiddleware(BaseHTTPMiddleware):
         return self.default_ttl
     
     def get_cache_stats(self) -> Dict[str, Any]:
-        """Get cache performance statistics"""        
+        """Get cache performance statistics"""
+        
         total_requests = self.cache_hits + self.cache_misses + self.cache_bypassed
         hit_ratio = (self.cache_hits / total_requests * 100) if total_requests > 0 else 0
         
@@ -262,8 +281,10 @@ class APIResponseCacheMiddleware(BaseHTTPMiddleware):
 
 
 class CacheInvalidationMiddleware(BaseHTTPMiddleware):
-    """    Middleware to automatically invalidate cache on data mutations
-    """    
+    """
+    Middleware to automatically invalidate cache on data mutations
+    """
+    
     def __init__(
         self,
         app,
@@ -280,7 +301,8 @@ class CacheInvalidationMiddleware(BaseHTTPMiddleware):
         }
     
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
-        """Process request and handle cache invalidation"""        
+        """Process request and handle cache invalidation"""
+        
         response = await call_next(request)
         
         # Invalidate cache on successful mutations
@@ -292,7 +314,8 @@ class CacheInvalidationMiddleware(BaseHTTPMiddleware):
         return response
     
     async def _invalidate_cache_for_request(self, request: Request):
-        """Invalidate cache patterns based on request"""        
+        """Invalidate cache patterns based on request"""
+        
         if not self.cache_backend:
             return
         
@@ -304,7 +327,9 @@ class CacheInvalidationMiddleware(BaseHTTPMiddleware):
                     await self._invalidate_cache_pattern(cache_pattern)
     
     async def _invalidate_cache_pattern(self, pattern: str):
-        """Invalidate cache keys matching pattern"""        
+        """
+Invalidate cache keys matching pattern"""
+        
         try:
             if hasattr(self.cache_backend, 'clear_pattern'):
                 await self.cache_backend.clear_pattern(pattern)

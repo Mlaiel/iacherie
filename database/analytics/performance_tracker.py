@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""import uuid
+"""
+import uuid
 import json
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -40,7 +41,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentFormat(Enum):
-    """Content format types"""    MUSIC = "music"
+    """Content format types"""
+    MUSIC = "music"
     VIDEO = "video"
     PHOTO = "photo"
     BLOG_POST = "blog_post"
@@ -53,7 +55,8 @@ class ContentFormat(Enum):
 
 
 class PlatformType(Enum):
-    """Platform types for content distribution"""    YOUTUBE = "youtube"
+    """Platform types for content distribution"""
+    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
@@ -70,7 +73,8 @@ class PlatformType(Enum):
 
 
 class MetricType(Enum):
-    """Types of performance metrics"""    VIEWS = "views"
+    """Types of performance metrics"""
+    VIEWS = "views"
     LIKES = "likes"
     SHARES = "shares"
     COMMENTS = "comments"
@@ -87,7 +91,8 @@ class MetricType(Enum):
 
 @dataclass
 class MetricSnapshot:
-    """Performance metric snapshot"""    metric_type: MetricType
+    """Performance metric snapshot"""
+    metric_type: MetricType
     value: Union[int, float, Decimal]
     timestamp: datetime
     platform: PlatformType
@@ -96,8 +101,10 @@ class MetricSnapshot:
 
 
 class ContentPerformance(Base):
-    """    Database model for content performance tracking
-    """    __tablename__ = "content_performance"
+    """
+    Database model for content performance tracking
+    """
+    __tablename__ = "content_performance"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -183,8 +190,10 @@ class ContentPerformance(Base):
 
 
 class MetricsHistory(Base):
-    """    Database model for historical metrics tracking
-    """    __tablename__ = "metrics_history"
+    """
+    Database model for historical metrics tracking
+    """
+    __tablename__ = "metrics_history"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_performance_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -228,8 +237,10 @@ class MetricsHistory(Base):
 
 
 class PerformanceAlerts(Base):
-    """    Database model for performance alerts and notifications
-    """    __tablename__ = "performance_alerts"
+    """
+    Database model for performance alerts and notifications
+    """
+    __tablename__ = "performance_alerts"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -273,8 +284,10 @@ class PerformanceAlerts(Base):
 
 
 class MetricsCollector:
-    """    Enterprise metrics collection system with real-time processing
-    """    
+    """
+    Enterprise metrics collection system with real-time processing
+    """
+    
     def __init__(self, db_session: Session):
         self.db_session = db_session
         self.batch_size = 1000
@@ -291,7 +304,8 @@ class MetricsCollector:
         metrics: Dict[MetricType, Union[int, float, Decimal]],
         timestamp: Optional[datetime] = None
     ) -> bool:
-        """        Collect and store performance metrics
+        """
+        Collect and store performance metrics
         
         Args:
             content_id: Content identifier
@@ -301,7 +315,8 @@ class MetricsCollector:
             
         Returns:
             Success status
-        """        if timestamp is None:
+        """
+        if timestamp is None:
             timestamp = datetime.now(timezone.utc)
         
         try:
@@ -364,14 +379,16 @@ class MetricsCollector:
         self,
         metrics_batch: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """        Collect metrics in batch for better performance
+        """
+        Collect metrics in batch for better performance
         
         Args:
             metrics_batch: List of metric collection requests
             
         Returns:
             Batch processing results
-        """        successful = 0
+        """
+        successful = 0
         failed = 0
         errors = []
         
@@ -403,7 +420,8 @@ class MetricsCollector:
         }
     
     def _get_field_name(self, metric_type: MetricType) -> Optional[str]:
-        """Map metric type to database field name"""        mapping = {
+        """Map metric type to database field name"""
+        mapping = {
             MetricType.VIEWS: 'total_views',
             MetricType.LIKES: 'total_likes',
             MetricType.SHARES: 'total_shares',
@@ -423,7 +441,8 @@ class MetricsCollector:
         content_performance: ContentPerformance,
         metrics: Dict[MetricType, Union[int, float, Decimal]]
     ):
-        """Check if any performance alerts should be triggered"""        # Get active alerts for this user/content
+        """Check if any performance alerts should be triggered"""
+        # Get active alerts for this user/content
         alerts = self.db_session.query(PerformanceAlerts).filter(
             PerformanceAlerts.user_id == content_performance.user_id,
             PerformanceAlerts.is_active == True
@@ -467,8 +486,10 @@ class MetricsCollector:
 
 
 class PerformanceTracker:
-    """    Enterprise performance tracking with analytics and insights
-    """    
+    """
+    Enterprise performance tracking with analytics and insights
+    """
+    
     def __init__(self, db_session: Session):
         self.db_session = db_session
         self.metrics_collector = MetricsCollector(db_session)
@@ -482,7 +503,8 @@ class PerformanceTracker:
         platform: PlatformType,
         metadata: Dict[str, Any]
     ) -> str:
-        """        Create initial performance tracking record for new content
+        """
+        Create initial performance tracking record for new content
         
         Args:
             content_id: Content identifier
@@ -494,7 +516,8 @@ class PerformanceTracker:
             
         Returns:
             Performance record ID
-        """        performance_record = ContentPerformance(
+        """
+        performance_record = ContentPerformance(
             content_id=content_id,
             user_id=user_id,
             creator_type=creator_type,
@@ -518,7 +541,8 @@ class PerformanceTracker:
         platform: Optional[PlatformType] = None,
         time_range: Optional[timedelta] = None
     ) -> List[Dict[str, Any]]:
-        """        Get performance data for content
+        """
+        Get performance data for content
         
         Args:
             content_id: Content identifier
@@ -527,7 +551,8 @@ class PerformanceTracker:
             
         Returns:
             List of performance data
-        """        query = self.db_session.query(ContentPerformance).filter(
+        """
+        query = self.db_session.query(ContentPerformance).filter(
             ContentPerformance.content_id == content_id,
             ContentPerformance.is_active == True
         )
@@ -578,7 +603,8 @@ class PerformanceTracker:
         time_range: timedelta = timedelta(days=30),
         platform: Optional[PlatformType] = None
     ) -> Dict[str, Any]:
-        """        Get performance trends for user content
+        """
+        Get performance trends for user content
         
         Args:
             user_id: User identifier
@@ -588,7 +614,8 @@ class PerformanceTracker:
             
         Returns:
             Trend analysis data
-        """        cutoff_date = datetime.now(timezone.utc) - time_range
+        """
+        cutoff_date = datetime.now(timezone.utc) - time_range
         
         query = self.db_session.query(MetricsHistory).filter(
             MetricsHistory.user_id == user_id,
@@ -646,7 +673,8 @@ class PerformanceTracker:
         user_id: str,
         time_range: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """        Get comprehensive analytics summary for creator
+        """
+        Get comprehensive analytics summary for creator
         
         Args:
             user_id: Creator user ID
@@ -654,7 +682,8 @@ class PerformanceTracker:
             
         Returns:
             Analytics summary
-        """        cutoff_date = datetime.now(timezone.utc) - time_range
+        """
+        cutoff_date = datetime.now(timezone.utc) - time_range
         
         # Get content performance
         performance_records = self.db_session.query(ContentPerformance).filter(

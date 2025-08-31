@@ -14,7 +14,8 @@ Gestion unifiée des paiements via multiple providers
 - Failover automatique et load balancing
 - Chiffrement end-to-end et compliance PCI
 - Webhook handling et reconciliation automatique
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import time
@@ -35,7 +36,8 @@ from cryptography.fernet import Fernet
 logger = logging.getLogger(__name__)
 
 class PaymentStatus(Enum):
-    """États des paiements"""    PENDING = "pending"
+    """États des paiements"""
+    PENDING = "pending"
     PROCESSING = "processing"
     SUCCEEDED = "succeeded"
     FAILED = "failed"
@@ -45,7 +47,8 @@ class PaymentStatus(Enum):
     DISPUTED = "disputed"
 
 class PaymentMethod(Enum):
-    """Méthodes de paiement"""    CREDIT_CARD = "credit_card"
+    """Méthodes de paiement"""
+    CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
@@ -55,7 +58,8 @@ class PaymentMethod(Enum):
     WIRE_TRANSFER = "wire_transfer"
 
 class Currency(Enum):
-    """Devises supportées"""    USD = "usd"
+    """Devises supportées"""
+    USD = "usd"
     EUR = "eur"
     CAD = "cad"
     GBP = "gbp"
@@ -67,7 +71,8 @@ class Currency(Enum):
 
 @dataclass
 class PaymentRequest:
-    """Demande de paiement"""    payment_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Demande de paiement"""
+    payment_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     customer_id: str = ""
     amount: float = 0.0
     currency: Currency = Currency.USD
@@ -90,7 +95,8 @@ class PaymentRequest:
 
 @dataclass 
 class PaymentResponse:
-    """Réponse de paiement"""    payment_id: str
+    """Réponse de paiement"""
+    payment_id: str
     status: PaymentStatus
     provider_payment_id: Optional[str] = None
     amount_captured: float = 0.0
@@ -107,7 +113,8 @@ class PaymentResponse:
     processed_at: datetime = field(default_factory=datetime.utcnow)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit la réponse en dictionnaire"""        return {
+        """Convertit la réponse en dictionnaire"""
+        return {
             "payment_id": self.payment_id,
             "status": self.status.value,
             "provider_payment_id": self.provider_payment_id,
@@ -122,7 +129,8 @@ class PaymentResponse:
         }
 
 class PaymentProcessor:
-    """Processeur de paiements abstrait"""    
+    """Processeur de paiements abstrait"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.name = "base_processor"
@@ -130,7 +138,8 @@ class PaymentProcessor:
         self.supported_methods = [PaymentMethod.CREDIT_CARD]
         
     async def process_payment(self, request: PaymentRequest) -> PaymentResponse:
-        """Traite un paiement - implémentation de base"""        try:
+        """Traite un paiement - implémentation de base"""
+        try:
             # Validation de base
             if not self.validate_request(request):
                 return PaymentResponse(
@@ -174,7 +183,8 @@ class PaymentProcessor:
             )
         
     async def capture_payment(self, payment_id: str, amount: Optional[float] = None) -> PaymentResponse:
-        """Capture un paiement autorisé - implémentation de base"""        try:
+        """Capture un paiement autorisé - implémentation de base"""
+        try:
             logger.info(f"Capturing payment {payment_id} with amount {amount}")
             
             # Simulation de la capture
@@ -204,7 +214,8 @@ class PaymentProcessor:
             )
         
     async def refund_payment(self, payment_id: str, amount: Optional[float] = None, reason: Optional[str] = None) -> PaymentResponse:
-        """Rembourse un paiement - implémentation de base"""        try:
+        """Rembourse un paiement - implémentation de base"""
+        try:
             logger.info(f"Refunding payment {payment_id} with amount {amount}, reason: {reason}")
             
             # Simulation du remboursement
@@ -235,7 +246,8 @@ class PaymentProcessor:
             )
         
     async def get_payment_status(self, payment_id: str) -> PaymentResponse:
-        """Récupère le statut d'un paiement - implémentation de base"""        try:
+        """Récupère le statut d'un paiement - implémentation de base"""
+        try:
             logger.info(f"Getting payment status for {payment_id}")
             
             # Simulation de récupération de statut
@@ -266,7 +278,8 @@ class PaymentProcessor:
             )
         
     async def handle_webhook(self, payload: bytes, signature: str) -> Dict[str, Any]:
-        """Traite un webhook du provider - implémentation de base"""        try:
+        """Traite un webhook du provider - implémentation de base"""
+        try:
             logger.info(f"Handling webhook from {self.name} with signature: {signature[:20]}...")
             
             # Validation basique de la signature (simulée)
@@ -311,7 +324,8 @@ class PaymentProcessor:
             }
         
     def validate_request(self, request: PaymentRequest) -> bool:
-        """Valide une demande de paiement"""        if request.currency not in self.supported_currencies:
+        """Valide une demande de paiement"""
+        if request.currency not in self.supported_currencies:
             return False
         if request.payment_method not in self.supported_methods:
             return False
@@ -320,7 +334,8 @@ class PaymentProcessor:
         return True
 
 class StripeProcessor(PaymentProcessor):
-    """Processeur de paiements Stripe"""    
+    """Processeur de paiements Stripe"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.name = "stripe"
@@ -340,7 +355,8 @@ class StripeProcessor(PaymentProcessor):
         ]
         
     async def process_payment(self, request: PaymentRequest) -> PaymentResponse:
-        """Traite un paiement via Stripe"""        try:
+        """Traite un paiement via Stripe"""
+        try:
             # Créer l'intent de paiement
             intent_data = {
                 "amount": int(request.amount * 100),  # Centimes
@@ -386,7 +402,8 @@ class StripeProcessor(PaymentProcessor):
             )
             
     async def capture_payment(self, payment_id: str, amount: Optional[float] = None) -> PaymentResponse:
-        """Capture un paiement Stripe autorisé"""        try:
+        """Capture un paiement Stripe autorisé"""
+        try:
             # Récupérer l'intent de paiement
             intents = stripe.PaymentIntent.list(
                 limit=1,
@@ -416,7 +433,8 @@ class StripeProcessor(PaymentProcessor):
             )
             
     async def refund_payment(self, payment_id: str, amount: Optional[float] = None, reason: Optional[str] = None) -> PaymentResponse:
-        """Rembourse un paiement Stripe"""        try:
+        """Rembourse un paiement Stripe"""
+        try:
             # Récupérer l'intent de paiement
             intents = stripe.PaymentIntent.list(
                 limit=1,
@@ -462,7 +480,8 @@ class StripeProcessor(PaymentProcessor):
             )
             
     async def get_payment_status(self, payment_id: str) -> PaymentResponse:
-        """Récupère le statut d'un paiement Stripe"""        try:
+        """Récupère le statut d'un paiement Stripe"""
+        try:
             intents = stripe.PaymentIntent.list(
                 limit=1,
                 metadata={"payment_id": payment_id}
@@ -483,7 +502,8 @@ class StripeProcessor(PaymentProcessor):
             )
             
     async def handle_webhook(self, payload: bytes, signature: str) -> Dict[str, Any]:
-        """Traite un webhook Stripe"""        try:
+        """Traite un webhook Stripe"""
+        try:
             event = stripe.Webhook.construct_event(
                 payload, signature, self.webhook_secret
             )
@@ -525,7 +545,8 @@ class StripeProcessor(PaymentProcessor):
             raise
             
     def _convert_stripe_response(self, payment_id: str, intent: Any) -> PaymentResponse:
-        """Convertit une réponse Stripe en PaymentResponse"""        status_mapping = {
+        """Convertit une réponse Stripe en PaymentResponse"""
+        status_mapping = {
             "requires_payment_method": PaymentStatus.PENDING,
             "requires_confirmation": PaymentStatus.PENDING,
             "requires_action": PaymentStatus.PENDING,
@@ -556,7 +577,8 @@ class StripeProcessor(PaymentProcessor):
         )
 
 class PayPalProcessor(PaymentProcessor):
-    """Processeur de paiements PayPal"""    
+    """Processeur de paiements PayPal"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.name = "paypal"
@@ -575,7 +597,8 @@ class PayPalProcessor(PaymentProcessor):
         self.supported_methods = [PaymentMethod.PAYPAL]
         
     async def _get_access_token(self) -> str:
-        """Obtient un token d'accès PayPal"""        if (self.access_token and self.token_expires_at and 
+        """Obtient un token d'accès PayPal"""
+        if (self.access_token and self.token_expires_at and 
             datetime.utcnow() < self.token_expires_at):
             return self.access_token
             
@@ -605,7 +628,8 @@ class PayPalProcessor(PaymentProcessor):
                     raise Exception(f"Erreur d'authentification PayPal: {response.status}")
                     
     async def process_payment(self, request: PaymentRequest) -> PaymentResponse:
-        """Traite un paiement via PayPal"""        try:
+        """Traite un paiement via PayPal"""
+        try:
             token = await self._get_access_token()
             
             headers = {
@@ -665,7 +689,8 @@ class PayPalProcessor(PaymentProcessor):
             )
             
     async def capture_payment(self, payment_id: str, amount: Optional[float] = None) -> PaymentResponse:
-        """Capture un paiement PayPal autorisé"""        try:
+        """Capture un paiement PayPal autorisé"""
+        try:
             token = await self._get_access_token()
             
             headers = {
@@ -713,7 +738,8 @@ class PayPalProcessor(PaymentProcessor):
             )
             
     async def refund_payment(self, payment_id: str, amount: Optional[float] = None, reason: Optional[str] = None) -> PaymentResponse:
-        """Rembourse un paiement PayPal"""        # Implémentation similaire à capture_payment mais avec l'endpoint refund
+        """Rembourse un paiement PayPal"""
+        # Implémentation similaire à capture_payment mais avec l'endpoint refund
         # Pour la brièveté, on retourne une réponse basique
         return PaymentResponse(
             payment_id=payment_id,
@@ -721,7 +747,8 @@ class PayPalProcessor(PaymentProcessor):
         )
         
     async def get_payment_status(self, payment_id: str) -> PaymentResponse:
-        """Récupère le statut d'un paiement PayPal"""        try:
+        """Récupère le statut d'un paiement PayPal"""
+        try:
             token = await self._get_access_token()
             
             headers = {
@@ -764,7 +791,8 @@ class PayPalProcessor(PaymentProcessor):
             )
             
     async def handle_webhook(self, payload: bytes, signature: str) -> Dict[str, Any]:
-        """Traite un webhook PayPal"""        try:
+        """Traite un webhook PayPal"""
+        try:
             # Vérification de signature PayPal (simplifiée)
             event_data = json.loads(payload.decode())
             

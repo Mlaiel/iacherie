@@ -39,7 +39,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import csv
@@ -115,7 +116,8 @@ logger = logging.getLogger(__name__)
 
 
 class OutputFormat(Enum):
-    """Output format enumeration."""    PDF = "pdf"
+    """Output format enumeration."""
+    PDF = "pdf"
     EXCEL = "excel"
     JSON = "json"
     CSV = "csv"
@@ -124,7 +126,8 @@ class OutputFormat(Enum):
 
 
 class StylingOptions(Enum):
-    """Styling options for reports."""    CORPORATE = "corporate"
+    """Styling options for reports."""
+    CORPORATE = "corporate"
     MODERN = "modern"
     MINIMAL = "minimal"
     COLORFUL = "colorful"
@@ -133,7 +136,8 @@ class StylingOptions(Enum):
 
 @dataclass
 class FormatterConfiguration:
-    """Formatter configuration dataclass."""    output_format: OutputFormat = OutputFormat.JSON
+    """Formatter configuration dataclass."""
+    output_format: OutputFormat = OutputFormat.JSON
     styling: StylingOptions = StylingOptions.CORPORATE
     include_charts: bool = True
     include_metadata: bool = True
@@ -147,14 +151,16 @@ class FormatterConfiguration:
 
 
 class ReportFormatter(ABC):
-    """    Abstract base class for report formatters.
+    """
+    Abstract base class for report formatters.
     
     Provides common functionality for all formatters including:
     - Data validation and preprocessing
     - Common formatting utilities
     - Error handling and logging
     - Template management
-    """    
+    """
+    
     def __init__(self, config: FormatterConfiguration):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -163,10 +169,12 @@ class ReportFormatter(ABC):
     
     @abstractmethod
     async def format_report(self, report_data: Dict[str, Any]) -> Union[str, bytes, IO]:
-        """Format report data into specific output format."""        pass
+        """Format report data into specific output format."""
+        pass
     
     async def validate_data(self, data: Dict[str, Any]) -> bool:
-        """Validate report data before formatting."""        try:
+        """Validate report data before formatting."""
+        try:
             required_fields = ["config", "metrics", "data"]
             
             for field in required_fields:
@@ -181,7 +189,8 @@ class ReportFormatter(ABC):
             return False
     
     async def preprocess_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Preprocess data for formatting."""        try:
+        """Preprocess data for formatting."""
+        try:
             processed_data = data.copy()
             
             # Add formatting metadata
@@ -203,7 +212,8 @@ class ReportFormatter(ABC):
             return data
     
     async def _clean_numeric_data(self, data: Any) -> Any:
-        """Clean and standardize numeric data."""        if isinstance(data, dict):
+        """Clean and standardize numeric data."""
+        if isinstance(data, dict):
             cleaned_data = {}
             for key, value in data.items():
                 cleaned_data[key] = await self._clean_numeric_data(value)
@@ -222,7 +232,8 @@ class ReportFormatter(ABC):
             return data
     
     def _get_color_scheme(self) -> Dict[str, str]:
-        """Get color scheme based on styling option."""        schemes = {
+        """Get color scheme based on styling option."""
+        schemes = {
             StylingOptions.CORPORATE: {
                 "primary": "#1f4e79",
                 "secondary": "#2e75b6",
@@ -264,7 +275,8 @@ class ReportFormatter(ABC):
 
 
 class PDFFormatter(ReportFormatter):
-    """    PDF formatter for professional report generation.
+    """
+    PDF formatter for professional report generation.
     
     Features:
     - Professional PDF layout with headers and footers
@@ -272,14 +284,16 @@ class PDFFormatter(ReportFormatter):
     - Multi-page support with page numbering
     - Custom styling and branding
     - Table formatting with styling
-    """    
+    """
+    
     def __init__(self, config: FormatterConfiguration):
         super().__init__(config)
         if not PDF_AVAILABLE:
             raise ImportError("PDF formatting requires reportlab package")
     
     async def format_report(self, report_data: Dict[str, Any]) -> bytes:
-        """Format report data as PDF."""        try:
+        """Format report data as PDF."""
+        try:
             await self.validate_data(report_data)
             processed_data = await self.preprocess_data(report_data)
             
@@ -338,7 +352,8 @@ class PDFFormatter(ReportFormatter):
             raise
     
     async def _add_pdf_header(self, story: List, data: Dict[str, Any]):
-        """Add header section to PDF."""        styles = getSampleStyleSheet()
+        """Add header section to PDF."""
+        styles = getSampleStyleSheet()
         colors_scheme = self._get_color_scheme()
         
         # Title
@@ -373,7 +388,8 @@ class PDFFormatter(ReportFormatter):
         story.append(Spacer(1, 20))
     
     async def _add_pdf_summary(self, story: List, data: Dict[str, Any]):
-        """Add summary section to PDF."""        styles = getSampleStyleSheet()
+        """Add summary section to PDF."""
+        styles = getSampleStyleSheet()
         
         story.append(Paragraph("Executive Summary", styles['Heading2']))
         
@@ -400,7 +416,8 @@ class PDFFormatter(ReportFormatter):
         story.append(Spacer(1, 20))
     
     async def _add_pdf_metrics(self, story: List, data: Dict[str, Any]):
-        """Add metrics section to PDF."""        styles = getSampleStyleSheet()
+        """Add metrics section to PDF."""
+        styles = getSampleStyleSheet()
         
         story.append(Paragraph("Key Metrics", styles['Heading2']))
         
@@ -431,7 +448,8 @@ class PDFFormatter(ReportFormatter):
                     story.append(Spacer(1, 10))
     
     async def _add_pdf_tables(self, story: List, data: Dict[str, Any]):
-        """Add data tables to PDF."""        styles = getSampleStyleSheet()
+        """Add data tables to PDF."""
+        styles = getSampleStyleSheet()
         
         story.append(Paragraph("Detailed Data", styles['Heading2']))
         
@@ -467,14 +485,16 @@ class PDFFormatter(ReportFormatter):
                     story.append(Spacer(1, 15))
     
     async def _add_pdf_charts(self, story: List, data: Dict[str, Any]):
-        """Add charts to PDF."""        # This is a placeholder for chart generation
+        """Add charts to PDF."""
+        # This is a placeholder for chart generation
         # In a full implementation, you would generate charts using reportlab's chart capabilities
         styles = getSampleStyleSheet()
         story.append(Paragraph("Charts and Visualizations", styles['Heading2']))
         story.append(Paragraph("Chart generation would be implemented here", styles['Normal']))
     
     def _format_date_range(self, date_range: Dict[str, Any]) -> str:
-        """Format date range for display."""        if not date_range:
+        """Format date range for display."""
+        if not date_range:
             return "Unknown"
         
         start_date = date_range.get("start_date")
@@ -492,7 +512,8 @@ class PDFFormatter(ReportFormatter):
 
 
 class ExcelFormatter(ReportFormatter):
-    """    Excel formatter for advanced spreadsheet generation.
+    """
+    Excel formatter for advanced spreadsheet generation.
     
     Features:
     - Multiple worksheets for different data sections
@@ -500,14 +521,16 @@ class ExcelFormatter(ReportFormatter):
     - Charts and graphs integration
     - Data validation and formulas
     - Custom cell formatting
-    """    
+    """
+    
     def __init__(self, config: FormatterConfiguration):
         super().__init__(config)
         if not EXCEL_AVAILABLE:
             raise ImportError("Excel formatting requires openpyxl package")
     
     async def format_report(self, report_data: Dict[str, Any]) -> bytes:
-        """Format report data as Excel workbook."""        try:
+        """Format report data as Excel workbook."""
+        try:
             await self.validate_data(report_data)
             processed_data = await self.preprocess_data(report_data)
             
@@ -548,7 +571,8 @@ class ExcelFormatter(ReportFormatter):
             raise
     
     async def _add_excel_summary(self, workbook, data: Dict[str, Any]):
-        """Add summary worksheet."""        ws = workbook.create_sheet("Summary")
+        """Add summary worksheet."""
+        ws = workbook.create_sheet("Summary")
         
         # Header styling
         header_font = Font(bold=True, size=14, color="FFFFFF")
@@ -605,7 +629,8 @@ class ExcelFormatter(ReportFormatter):
             ws.column_dimensions[column_letter].width = adjusted_width
     
     async def _add_excel_metrics(self, workbook, data: Dict[str, Any]):
-        """Add metrics worksheet."""        ws = workbook.create_sheet("Metrics")
+        """Add metrics worksheet."""
+        ws = workbook.create_sheet("Metrics")
         
         # Styling
         header_font = Font(bold=True, size=12, color="FFFFFF")
@@ -658,7 +683,8 @@ class ExcelFormatter(ReportFormatter):
             ws.column_dimensions[column_letter].width = adjusted_width
     
     async def _add_excel_data(self, workbook, data: Dict[str, Any]):
-        """Add data worksheets."""        report_data = data.get("data", {})
+        """Add data worksheets."""
+        report_data = data.get("data", {})
         
         for section_name, section_data in report_data.items():
             if isinstance(section_data, list) and section_data:
@@ -697,14 +723,16 @@ class ExcelFormatter(ReportFormatter):
                         ws.column_dimensions[column_letter].width = adjusted_width
     
     async def _add_excel_charts(self, workbook, data: Dict[str, Any]):
-        """Add charts to Excel workbook."""        # This is a placeholder for chart generation
+        """Add charts to Excel workbook."""
+        # This is a placeholder for chart generation
         # In a full implementation, you would create charts using openpyxl's chart capabilities
         ws = workbook.create_sheet("Charts")
         ws['A1'] = "Charts would be generated here"
         ws['A1'].font = Font(bold=True, size=14)
     
     def _format_date_range(self, date_range: Dict[str, Any]) -> str:
-        """Format date range for display."""        if not date_range:
+        """Format date range for display."""
+        if not date_range:
             return "Unknown"
         
         start_date = date_range.get("start_date")
@@ -722,7 +750,8 @@ class ExcelFormatter(ReportFormatter):
 
 
 class JSONFormatter(ReportFormatter):
-    """    JSON formatter for structured data output.
+    """
+    JSON formatter for structured data output.
     
     Features:
     - Pretty-printed JSON with proper indentation
@@ -730,9 +759,11 @@ class JSONFormatter(ReportFormatter):
     - Custom encoding for complex data types
     - Metadata embedding
     - Compression options
-    """    
+    """
+    
     async def format_report(self, report_data: Dict[str, Any]) -> str:
-        """Format report data as JSON."""        try:
+        """Format report data as JSON."""
+        try:
             await self.validate_data(report_data)
             processed_data = await self.preprocess_data(report_data)
             
@@ -768,7 +799,8 @@ class JSONFormatter(ReportFormatter):
 
 
 class CSVFormatter(ReportFormatter):
-    """    CSV formatter for tabular data export.
+    """
+    CSV formatter for tabular data export.
     
     Features:
     - Multiple CSV files for different data sections
@@ -776,9 +808,11 @@ class CSVFormatter(ReportFormatter):
     - Custom delimiters and formats
     - Data type preservation
     - Header customization
-    """    
+    """
+    
     async def format_report(self, report_data: Dict[str, Any]) -> Union[str, Dict[str, str]]:
-        """Format report data as CSV."""        try:
+        """Format report data as CSV."""
+        try:
             await self.validate_data(report_data)
             processed_data = await self.preprocess_data(report_data)
             
@@ -816,7 +850,8 @@ class CSVFormatter(ReportFormatter):
             raise
     
     async def _create_csv_for_section(self, section_name: str, data: List[Dict[str, Any]]) -> str:
-        """Create CSV content for a data section."""        if not data:
+        """Create CSV content for a data section."""
+        if not data:
             return ""
         
         # Use StringIO to create CSV in memory
@@ -852,7 +887,8 @@ class CSVFormatter(ReportFormatter):
 
 
 class TechnicalReportFormatter(ReportFormatter):
-    """    Technical report formatter for detailed analytics and engineering insights.
+    """
+    Technical report formatter for detailed analytics and engineering insights.
     
     Implements the IA Influencer Agent business logic for technical reporting:
     Content analysis → AI protection metrics → Performance optimization → Technical insights
@@ -866,9 +902,11 @@ class TechnicalReportFormatter(ReportFormatter):
     - API response time analytics
     - Error rate and reliability metrics
     - Security incident reporting
-    """    
+    """
+    
     async def format_report(self, report_data: Dict[str, Any]) -> str:
-        """Generate comprehensive technical analysis report."""        try:
+        """Generate comprehensive technical analysis report."""
+        try:
             await self.validate_data(report_data)
             processed_data = await self.preprocess_data(report_data)
             
@@ -910,7 +948,8 @@ class TechnicalReportFormatter(ReportFormatter):
             raise
     
     async def _analyze_ai_performance(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze AI algorithm performance metrics."""        ai_data = data.get("ai_metrics", {})
+        """Analyze AI algorithm performance metrics."""
+        ai_data = data.get("ai_metrics", {})
         
         return {
             "content_analysis_accuracy": ai_data.get("content_analysis_accuracy", 0.0),
@@ -927,7 +966,8 @@ class TechnicalReportFormatter(ReportFormatter):
         }
     
     async def _analyze_protection_effectiveness(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze content protection system effectiveness."""        protection_data = data.get("protection_metrics", {})
+        """Analyze content protection system effectiveness."""
+        protection_data = data.get("protection_metrics", {})
         
         return {
             "protection_coverage_rate": protection_data.get("coverage_rate", 0.0),
@@ -944,7 +984,8 @@ class TechnicalReportFormatter(ReportFormatter):
         }
     
     async def _analyze_system_performance(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze overall system performance metrics."""        system_data = data.get("system_metrics", {})
+        """Analyze overall system performance metrics."""
+        system_data = data.get("system_metrics", {})
         
         return {
             "api_response_times": {
@@ -980,7 +1021,8 @@ class TechnicalReportFormatter(ReportFormatter):
         protection_metrics: Dict[str, Any],
         system_metrics: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate technical performance summary."""        # Calculate overall technical health score
+        """Generate technical performance summary."""
+        # Calculate overall technical health score
         ai_score = ai_metrics.get("content_analysis_accuracy", 0.0) * 0.4 + \
                   ai_metrics.get("fingerprinting_precision", 0.0) * 0.3 + \
                   ai_metrics.get("protection_algorithm_effectiveness", 0.0) * 0.3
@@ -1017,7 +1059,8 @@ class TechnicalReportFormatter(ReportFormatter):
         protection_metrics: Dict[str, Any],
         system_metrics: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate technical improvement recommendations."""        recommendations = []
+        """Generate technical improvement recommendations."""
+        recommendations = []
         
         # AI Performance Recommendations
         if ai_metrics.get("content_analysis_accuracy", 0.0) < 0.85:
@@ -1056,7 +1099,8 @@ class TechnicalReportFormatter(ReportFormatter):
 
 
 class MonetizationReportFormatter(ReportFormatter):
-    """    Monetization report formatter for revenue analysis and optimization insights.
+    """
+    Monetization report formatter for revenue analysis and optimization insights.
     
     Implements the IA Influencer Agent business logic for monetization reporting:
     Creator content → Protection → SEO optimization → Collaboration matching → Revenue generation
@@ -1070,9 +1114,11 @@ class MonetizationReportFormatter(ReportFormatter):
     - Market opportunity identification
     - Pricing strategy recommendations
     - Revenue forecasting and projections
-    """    
+    """
+    
     async def format_report(self, report_data: Dict[str, Any]) -> str:
-        """Generate comprehensive monetization analysis report."""        try:
+        """Generate comprehensive monetization analysis report."""
+        try:
             await self.validate_data(report_data)
             processed_data = await self.preprocess_data(report_data)
             
@@ -1118,7 +1164,8 @@ class MonetizationReportFormatter(ReportFormatter):
             raise
     
     async def _analyze_revenue_streams(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze different revenue streams and their performance."""        revenue_data = data.get("revenue_metrics", {})
+        """Analyze different revenue streams and their performance."""
+        revenue_data = data.get("revenue_metrics", {})
         
         return {
             "total_platform_revenue": revenue_data.get("total_revenue", 0.0),
@@ -1145,7 +1192,8 @@ class MonetizationReportFormatter(ReportFormatter):
         }
     
     async def _analyze_creator_monetization(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze creator monetization performance and patterns."""        creator_data = data.get("creator_metrics", {})
+        """Analyze creator monetization performance and patterns."""
+        creator_data = data.get("creator_metrics", {})
         
         return {
             "total_active_monetizing_creators": creator_data.get("monetizing_creators", 0),
@@ -1174,7 +1222,8 @@ class MonetizationReportFormatter(ReportFormatter):
         }
     
     async def _analyze_collaboration_revenue(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze revenue impact from creator collaborations."""        collaboration_data = data.get("collaboration_metrics", {})
+        """Analyze revenue impact from creator collaborations."""
+        collaboration_data = data.get("collaboration_metrics", {})
         
         return {
             "total_collaboration_revenue": collaboration_data.get("total_collab_revenue", 0.0),
@@ -1205,7 +1254,8 @@ class MonetizationReportFormatter(ReportFormatter):
         creator_performance: Dict[str, Any],
         collaboration_impact: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate key monetization insights and trends."""        total_revenue = revenue_analysis.get("total_platform_revenue", 0.0)
+        """Generate key monetization insights and trends."""
+        total_revenue = revenue_analysis.get("total_platform_revenue", 0.0)
         creator_count = creator_performance.get("total_active_monetizing_creators", 1)
         collaboration_revenue = collaboration_impact.get("total_collaboration_revenue", 0.0)
         
@@ -1248,7 +1298,8 @@ class MonetizationReportFormatter(ReportFormatter):
         creator_performance: Dict[str, Any],
         collaboration_impact: Dict[str, Any]
     ) -> float:
-        """Calculate overall monetization health score."""        # Revenue diversity score (0-30 points)
+        """Calculate overall monetization health score."""
+        # Revenue diversity score (0-30 points)
         revenue_streams = revenue_analysis.get("revenue_by_stream", {})
         total_revenue = revenue_analysis.get("total_platform_revenue", 0.0)
         
@@ -1276,7 +1327,8 @@ class MonetizationReportFormatter(ReportFormatter):
         revenue_analysis: Dict[str, Any],
         creator_performance: Dict[str, Any]
     ) -> float:
-        """Calculate growth sustainability score."""        # Churn rate impact (lower is better)
+        """Calculate growth sustainability score."""
+        # Churn rate impact (lower is better)
         churn_rate = creator_performance.get("creator_retention_metrics", {}).get("churn_rate", 0.0)
         churn_score = max(0, 40 - (churn_rate * 400))  # Penalize high churn
         
@@ -1307,7 +1359,8 @@ class MonetizationReportFormatter(ReportFormatter):
         creator_performance: Dict[str, Any],
         collaboration_impact: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate revenue optimization recommendations."""        recommendations = []
+        """Generate revenue optimization recommendations."""
+        recommendations = []
         
         # Revenue diversification recommendations
         total_revenue = revenue_analysis.get("total_platform_revenue", 0.0)
@@ -1358,7 +1411,8 @@ class MonetizationReportFormatter(ReportFormatter):
         revenue_analysis: Dict[str, Any],
         creator_performance: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate financial projections based on current trends."""        current_revenue = revenue_analysis.get("total_platform_revenue", 0.0)
+        """Generate financial projections based on current trends."""
+        current_revenue = revenue_analysis.get("total_platform_revenue", 0.0)
         monthly_growth = revenue_analysis.get("revenue_growth_rates", {}).get("monthly_growth_rate", 0.0)
         
         # Conservative projections with growth rate capping
@@ -1384,7 +1438,8 @@ class MonetizationReportFormatter(ReportFormatter):
 
 
 class HTMLFormatter(ReportFormatter):
-    """    HTML formatter for interactive web reports.
+    """
+    HTML formatter for interactive web reports.
     
     Features:
     - Responsive HTML layout
@@ -1392,14 +1447,16 @@ class HTMLFormatter(ReportFormatter):
     - CSS styling with themes
     - JavaScript functionality
     - Print-friendly styles
-    """    
+    """
+    
     def __init__(self, config: FormatterConfiguration):
         super().__init__(config)
         if not HTML_AVAILABLE:
             raise ImportError("HTML formatting requires jinja2 and plotly packages")
     
     async def format_report(self, report_data: Dict[str, Any]) -> str:
-        """Format report data as HTML."""        try:
+        """Format report data as HTML."""
+        try:
             await self.validate_data(report_data)
             processed_data = await self.preprocess_data(report_data)
             
@@ -1431,7 +1488,8 @@ class HTMLFormatter(ReportFormatter):
             raise
     
     async def _create_html_template(self) -> Template:
-        """Create HTML template."""        template_str = """<!DOCTYPE html>
+        """Create HTML template."""
+        template_str = """<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1613,11 +1671,13 @@ class HTMLFormatter(ReportFormatter):
     </div>
 </body>
 </html>
-        """        
+        """
+        
         return Template(template_str)
     
     async def _generate_charts_html(self, data: Dict[str, Any]) -> str:
-        """Generate charts HTML using Plotly."""        charts_html = ""
+        """Generate charts HTML using Plotly."""
+        charts_html = ""
         
         # This is a placeholder for chart generation
         # In a full implementation, you would analyze the data and create appropriate charts
@@ -1626,7 +1686,8 @@ class HTMLFormatter(ReportFormatter):
 
 
 class XMLFormatter(ReportFormatter):
-    """    XML formatter for structured data exchange.
+    """
+    XML formatter for structured data exchange.
     
     Features:
     - Standards-compliant XML output
@@ -1634,9 +1695,11 @@ class XMLFormatter(ReportFormatter):
     - Namespace management
     - Pretty-printed formatting
     - Validation capabilities
-    """    
+    """
+    
     async def format_report(self, report_data: Dict[str, Any]) -> str:
-        """Format report data as XML."""        try:
+        """Format report data as XML."""
+        try:
             await self.validate_data(report_data)
             processed_data = await self.preprocess_data(report_data)
             
@@ -1705,7 +1768,8 @@ class XMLFormatter(ReportFormatter):
             raise
     
     async def _add_dict_to_xml(self, parent: ET.Element, data: Dict[str, Any]):
-        """Add dictionary data to XML element."""        for key, value in data.items():
+        """Add dictionary data to XML element."""
+        for key, value in data.items():
             # Clean key name for XML
             clean_key = key.replace("_", "").replace(" ", "")
             
@@ -1729,7 +1793,8 @@ class XMLFormatter(ReportFormatter):
 
 # Factory function for creating formatters
 def create_formatter(output_format: OutputFormat, config: FormatterConfiguration) -> ReportFormatter:
-    """    Factory function to create appropriate formatter based on output format.
+    """
+    Factory function to create appropriate formatter based on output format.
     
     Args:
         output_format: Desired output format
@@ -1740,7 +1805,8 @@ def create_formatter(output_format: OutputFormat, config: FormatterConfiguration
         
     Raises:
         ValueError: If output format is not supported
-    """    formatters = {
+    """
+    formatters = {
         OutputFormat.PDF: PDFFormatter,
         OutputFormat.EXCEL: ExcelFormatter,
         OutputFormat.JSON: JSONFormatter,
@@ -1761,7 +1827,8 @@ async def format_report_multiple_formats(
     formats: List[OutputFormat],
     base_config: FormatterConfiguration
 ) -> Dict[OutputFormat, Union[str, bytes]]:
-    """    Format report in multiple formats concurrently.
+    """
+    Format report in multiple formats concurrently.
     
     Args:
         report_data: Report data to format
@@ -1770,7 +1837,8 @@ async def format_report_multiple_formats(
         
     Returns:
         Dict mapping output formats to formatted content
-    """    results = {}
+    """
+    results = {}
     tasks = []
     
     for output_format in formats:
@@ -1803,14 +1871,16 @@ async def format_report_multiple_formats(
 
 
 def get_default_formatter_configuration(output_format: OutputFormat) -> FormatterConfiguration:
-    """    Get default configuration for a specific output format.
+    """
+    Get default configuration for a specific output format.
     
     Args:
         output_format: Output format
         
     Returns:
         FormatterConfiguration: Default configuration
-    """    base_config = FormatterConfiguration(
+    """
+    base_config = FormatterConfiguration(
         output_format=output_format,
         styling=StylingOptions.CORPORATE,
         include_charts=True,
@@ -1845,11 +1915,13 @@ def get_default_formatter_configuration(output_format: OutputFormat) -> Formatte
 
 
 async def validate_formatter_dependencies():
-    """    Validate that required dependencies are available for different formatters.
+    """
+    Validate that required dependencies are available for different formatters.
     
     Returns:
         Dict[OutputFormat, bool]: Availability status for each format
-    """    availability = {
+    """
+    availability = {
         OutputFormat.JSON: True,  # Built-in support
         OutputFormat.CSV: True,   # Built-in support
         OutputFormat.XML: True,   # Built-in support

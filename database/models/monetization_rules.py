@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric
+"""
+from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID, ARRAY
@@ -36,7 +37,8 @@ Base = declarative_base()
 
 
 class RuleType(Enum):
-    """Monetization rule types"""    PRICING = "pricing"
+    """Monetization rule types"""
+    PRICING = "pricing"
     REVENUE_SHARE = "revenue_share"
     ROYALTY = "royalty"
     LICENSING = "licensing"
@@ -59,7 +61,8 @@ class RuleType(Enum):
 
 
 class TriggerType(Enum):
-    """Rule trigger types"""    ALWAYS = "always"
+    """Rule trigger types"""
+    ALWAYS = "always"
     CONTENT_UPLOAD = "content_upload"
     CONTENT_PUBLISH = "content_publish"
     PLAY_COUNT = "play_count"
@@ -82,7 +85,8 @@ class TriggerType(Enum):
 
 
 class ActionType(Enum):
-    """Rule action types"""    SET_PRICE = "set_price"
+    """Rule action types"""
+    SET_PRICE = "set_price"
     ADJUST_PRICE = "adjust_price"
     APPLY_DISCOUNT = "apply_discount"
     APPLY_MARKUP = "apply_markup"
@@ -105,7 +109,8 @@ class ActionType(Enum):
 
 
 class RuleStatus(Enum):
-    """Rule status enumeration"""    ACTIVE = "active"
+    """Rule status enumeration"""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     DRAFT = "draft"
     SCHEDULED = "scheduled"
@@ -116,7 +121,8 @@ class RuleStatus(Enum):
 
 
 class Priority(Enum):
-    """Rule priority levels"""    CRITICAL = "critical"      # Priority 1
+    """Rule priority levels"""
+    CRITICAL = "critical"      # Priority 1
     HIGH = "high"              # Priority 2
     MEDIUM = "medium"          # Priority 3
     LOW = "low"                # Priority 4
@@ -124,11 +130,13 @@ class Priority(Enum):
 
 
 class MonetizationRule(Base):
-    """    Enterprise Monetization Rule Model
+    """
+    Enterprise Monetization Rule Model
     
     Comprehensive rule engine for automated monetization decisions, pricing optimization,
     and revenue management with advanced AI-powered strategies.
-    """    __tablename__ = "monetization_rules"
+    """
+    __tablename__ = "monetization_rules"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -326,7 +334,8 @@ class MonetizationRule(Base):
         return f"<MonetizationRule(id={self.id}, name='{self.rule_name}', type={self.rule_type.value}, status={self.rule_status.value})>"
     
     def to_dict(self, include_sensitive: bool = False, include_analytics: bool = True) -> Dict[str, Any]:
-        """Convert model to dictionary for API responses"""        base_dict = {
+        """Convert model to dictionary for API responses"""
+        base_dict = {
             "id": str(self.id),
             "user_id": str(self.user_id),
             "rule_name": self.rule_name,
@@ -435,7 +444,8 @@ class MonetizationRule(Base):
         return base_dict
     
     def is_effective(self) -> bool:
-        """Check if rule is currently effective"""        now = datetime.now(timezone.utc)
+        """Check if rule is currently effective"""
+        now = datetime.now(timezone.utc)
         return (
             self.rule_status == RuleStatus.ACTIVE and
             self.is_active and
@@ -445,7 +455,8 @@ class MonetizationRule(Base):
         )
     
     def can_execute(self, context: Dict[str, Any] = None) -> bool:
-        """Check if rule can be executed given current context"""        if not self.is_effective():
+        """Check if rule can be executed given current context"""
+        if not self.is_effective():
             return False
         
         # Check cooldown period
@@ -467,7 +478,8 @@ class MonetizationRule(Base):
         return True
     
     def calculate_roi(self) -> float:
-        """Calculate return on investment for this rule"""        if self.total_revenue_generated <= 0:
+        """Calculate return on investment for this rule"""
+        if self.total_revenue_generated <= 0:
             return 0.0
         
         # Simple ROI calculation - can be enhanced with cost factors
@@ -480,13 +492,15 @@ class MonetizationRule(Base):
         return ((total_value - execution_cost) / execution_cost) * 100
     
     def get_success_rate(self) -> float:
-        """Calculate success rate percentage"""        total_executions = self.success_count + self.failure_count
+        """Calculate success rate percentage"""
+        total_executions = self.success_count + self.failure_count
         if total_executions == 0:
             return 0.0
         return (self.success_count / total_executions) * 100
     
     def should_optimize(self) -> bool:
-        """Determine if rule should be optimized"""        return (
+        """Determine if rule should be optimized"""
+        return (
             self.ai_enabled and
             self.learning_enabled and
             self.success_count >= 10 and  # Minimum data points
@@ -494,7 +508,8 @@ class MonetizationRule(Base):
         )
     
     def get_priority_score(self) -> int:
-        """Get numeric priority score for sorting"""        priority_scores = {
+        """Get numeric priority score for sorting"""
+        priority_scores = {
             Priority.CRITICAL: 1,
             Priority.HIGH: 2,
             Priority.MEDIUM: 3,
@@ -505,7 +520,8 @@ class MonetizationRule(Base):
     
     @classmethod
     def create_rule(cls, rule_data: Dict[str, Any], user_id: str) -> 'MonetizationRule':
-        """Create MonetizationRule from rule configuration data"""        # Generate unique rule code
+        """Create MonetizationRule from rule configuration data"""
+        # Generate unique rule code
         rule_code = f"MR-{datetime.now().strftime('%Y%m%d')}-{str(uuid.uuid4())[:8].upper()}"
         
         return cls(

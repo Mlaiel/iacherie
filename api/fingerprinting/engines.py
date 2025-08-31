@@ -11,7 +11,8 @@ Business Logic Integration:
 - Vector embedding generation and matching via FAISS
 - Real-time fingerprint generation and storage
 - Cross-platform content protection and monitoring
-"""from typing import Dict, List, Optional, Union, Any, Tuple
+"""
+from typing import Dict, List, Optional, Union, Any, Tuple
 import logging
 import asyncio
 from pathlib import Path
@@ -45,7 +46,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class FingerprintConfig:
-    """Configuration for fingerprinting operations."""    audio_sample_rate: int = 22050
+    """Configuration for fingerprinting operations."""
+    audio_sample_rate: int = 22050
     video_frame_rate: int = 30
     text_max_length: int = 512
     similarity_threshold: float = 0.85
@@ -54,33 +56,39 @@ class FingerprintConfig:
 
 
 class BaseFingerprintEngine(ABC):
-    """Abstract base class for all fingerprinting engines."""    
+    """Abstract base class for all fingerprinting engines."""
+    
     def __init__(self, config: FingerprintConfig):
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
     
     @abstractmethod
     async def generate_fingerprint(self, content: bytes, metadata: Dict[str, Any]) -> str:
-        """Generate unique fingerprint for content."""        pass
+        """Generate unique fingerprint for content."""
+        pass
     
     @abstractmethod
     async def extract_features(self, content: bytes) -> np.ndarray:
-        """Extract feature vector from content."""        pass
+        """Extract feature vector from content."""
+        pass
     
     @abstractmethod
     async def calculate_similarity(self, features1: np.ndarray, features2: np.ndarray) -> float:
-        """Calculate similarity score between two feature vectors."""        pass
+        """Calculate similarity score between two feature vectors."""
+        pass
 
 
 class AudioFingerprintEngine(BaseFingerprintEngine):
-    """Advanced audio fingerprinting using Chromaprint and Essentia."""    
+    """Advanced audio fingerprinting using Chromaprint and Essentia."""
+    
     def __init__(self, config: FingerprintConfig):
         super().__init__(config)
         self.chromaprint_analyzer = chromaprint.Chromaprint()
         self.essentia_analyzer = essentia.standard.ChromaCrossSimilarity()
     
     async def generate_fingerprint(self, audio_content: bytes, metadata: Dict[str, Any]) -> str:
-        """Generate audio fingerprint using advanced algorithms."""        try:
+        """Generate audio fingerprint using advanced algorithms."""
+        try:
             # Load audio data
             audio_data, sr = librosa.load(
                 io.BytesIO(audio_content), 
@@ -106,7 +114,8 @@ class AudioFingerprintEngine(BaseFingerprintEngine):
             raise
     
     async def extract_features(self, audio_content: bytes) -> np.ndarray:
-        """Extract comprehensive audio feature vector."""        try:
+        """Extract comprehensive audio feature vector."""
+        try:
             audio_data, sr = librosa.load(
                 io.BytesIO(audio_content), 
                 sr=self.config.audio_sample_rate
@@ -136,21 +145,24 @@ class AudioFingerprintEngine(BaseFingerprintEngine):
             raise
     
     def _extract_spectral_features(self, audio_data: np.ndarray, sr: int) -> str:
-        """Extract spectral features using Essentia."""        # Implementation for Essentia spectral analysis
+        """Extract spectral features using Essentia."""
+        # Implementation for Essentia spectral analysis
         # This is a simplified version - full implementation would use
         # advanced spectral analysis techniques
         spectral_centroid = librosa.feature.spectral_centroid(y=audio_data, sr=sr)
         return hashlib.md5(str(np.mean(spectral_centroid)).encode()).hexdigest()
     
     def _normalize_vector(self, vector: np.ndarray, target_size: int) -> np.ndarray:
-        """Normalize and resize vector to target dimensions."""        if len(vector) > target_size:
+        """Normalize and resize vector to target dimensions."""
+        if len(vector) > target_size:
             return vector[:target_size]
         elif len(vector) < target_size:
             return np.pad(vector, (0, target_size - len(vector)), 'constant')
         return vector
     
     async def calculate_similarity(self, features1: np.ndarray, features2: np.ndarray) -> float:
-        """Calculate cosine similarity between audio features."""        dot_product = np.dot(features1, features2)
+        """Calculate cosine similarity between audio features."""
+        dot_product = np.dot(features1, features2)
         norms = np.linalg.norm(features1) * np.linalg.norm(features2)
         
         if norms == 0:
@@ -160,14 +172,16 @@ class AudioFingerprintEngine(BaseFingerprintEngine):
 
 
 class VideoFingerprintEngine(BaseFingerprintEngine):
-    """Advanced video fingerprinting using OpenCV and deep learning."""    
+    """Advanced video fingerprinting using OpenCV and deep learning."""
+    
     def __init__(self, config: FingerprintConfig):
         super().__init__(config)
         # Initialize YOLO for object detection (simplified)
         self.frame_extractor = cv2.VideoCapture()
     
     async def generate_fingerprint(self, video_content: bytes, metadata: Dict[str, Any]) -> str:
-        """Generate video fingerprint using frame analysis."""        try:
+        """Generate video fingerprint using frame analysis."""
+        try:
             # Save temp video file for processing
             temp_path = f"/tmp/video_{hash(video_content)}.mp4"
             with open(temp_path, 'wb') as f:
@@ -198,7 +212,8 @@ class VideoFingerprintEngine(BaseFingerprintEngine):
             raise
     
     async def extract_features(self, video_content: bytes) -> np.ndarray:
-        """Extract video feature vector from frames."""        try:
+        """Extract video feature vector from frames."""
+        try:
             temp_path = f"/tmp/video_{hash(video_content)}.mp4"
             with open(temp_path, 'wb') as f:
                 f.write(video_content)
@@ -238,7 +253,8 @@ class VideoFingerprintEngine(BaseFingerprintEngine):
             raise
     
     async def _extract_key_frames(self, video_path: str, max_frames: int = 10) -> List[np.ndarray]:
-        """Extract key frames from video."""        cap = cv2.VideoCapture(video_path)
+        """Extract key frames from video."""
+        cap = cv2.VideoCapture(video_path)
         frames = []
         
         if not cap.isOpened():
@@ -257,7 +273,8 @@ class VideoFingerprintEngine(BaseFingerprintEngine):
         return frames
     
     def _generate_frame_hash(self, frame: np.ndarray) -> str:
-        """Generate perceptual hash for single frame."""        # Convert frame to PIL Image for hashing
+        """Generate perceptual hash for single frame."""
+        # Convert frame to PIL Image for hashing
         pil_image = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
         
         # Generate multiple hash types for robustness
@@ -270,14 +287,16 @@ class VideoFingerprintEngine(BaseFingerprintEngine):
         return hashlib.md5(combined.encode()).hexdigest()
     
     def _normalize_vector(self, vector: np.ndarray, target_size: int) -> np.ndarray:
-        """Normalize and resize vector to target dimensions."""        if len(vector) > target_size:
+        """Normalize and resize vector to target dimensions."""
+        if len(vector) > target_size:
             return vector[:target_size]
         elif len(vector) < target_size:
             return np.pad(vector, (0, target_size - len(vector)), 'constant')
         return vector
     
     async def calculate_similarity(self, features1: np.ndarray, features2: np.ndarray) -> float:
-        """Calculate cosine similarity between video features."""        dot_product = np.dot(features1, features2)
+        """Calculate cosine similarity between video features."""
+        dot_product = np.dot(features1, features2)
         norms = np.linalg.norm(features1) * np.linalg.norm(features2)
         
         if norms == 0:
@@ -287,7 +306,8 @@ class VideoFingerprintEngine(BaseFingerprintEngine):
 
 
 class ImageFingerprintEngine(BaseFingerprintEngine):
-    """Advanced image fingerprinting using CLIP and perceptual hashing."""    
+    """Advanced image fingerprinting using CLIP and perceptual hashing."""
+    
     def __init__(self, config: FingerprintConfig):
         super().__init__(config)
         # Initialize CLIP model for semantic understanding
@@ -295,7 +315,8 @@ class ImageFingerprintEngine(BaseFingerprintEngine):
         self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
     
     async def generate_fingerprint(self, image_content: bytes, metadata: Dict[str, Any]) -> str:
-        """Generate image fingerprint using multiple hash algorithms."""        try:
+        """Generate image fingerprint using multiple hash algorithms."""
+        try:
             # Load image
             image = Image.open(io.BytesIO(image_content))
             
@@ -318,7 +339,8 @@ class ImageFingerprintEngine(BaseFingerprintEngine):
             raise
     
     async def extract_features(self, image_content: bytes) -> np.ndarray:
-        """Extract semantic image features using CLIP."""        try:
+        """Extract semantic image features using CLIP."""
+        try:
             # Load and preprocess image
             image = Image.open(io.BytesIO(image_content))
             inputs = self.clip_processor(images=image, return_tensors="pt")
@@ -337,14 +359,16 @@ class ImageFingerprintEngine(BaseFingerprintEngine):
             raise
     
     def _normalize_vector(self, vector: np.ndarray, target_size: int) -> np.ndarray:
-        """Normalize and resize vector to target dimensions."""        if len(vector) > target_size:
+        """Normalize and resize vector to target dimensions."""
+        if len(vector) > target_size:
             return vector[:target_size]
         elif len(vector) < target_size:
             return np.pad(vector, (0, target_size - len(vector)), 'constant')
         return vector
     
     async def calculate_similarity(self, features1: np.ndarray, features2: np.ndarray) -> float:
-        """Calculate cosine similarity between image features."""        dot_product = np.dot(features1, features2)
+        """Calculate cosine similarity between image features."""
+        dot_product = np.dot(features1, features2)
         norms = np.linalg.norm(features1) * np.linalg.norm(features2)
         
         if norms == 0:
@@ -354,14 +378,16 @@ class ImageFingerprintEngine(BaseFingerprintEngine):
 
 
 class TextFingerprintEngine(BaseFingerprintEngine):
-    """Advanced text fingerprinting using transformer models."""    
+    """Advanced text fingerprinting using transformer models."""
+    
     def __init__(self, config: FingerprintConfig):
         super().__init__(config)
         # Initialize sentence transformer for semantic similarity
         self.sentence_model = SentenceTransformer('all-MiniLM-L6-v2')
     
     async def generate_fingerprint(self, text_content: bytes, metadata: Dict[str, Any]) -> str:
-        """Generate text fingerprint using content hashing."""        try:
+        """Generate text fingerprint using content hashing."""
+        try:
             text = text_content.decode('utf-8')
             
             # Normalize text (remove whitespace, convert to lowercase)
@@ -382,7 +408,8 @@ class TextFingerprintEngine(BaseFingerprintEngine):
             raise
     
     async def extract_features(self, text_content: bytes) -> np.ndarray:
-        """Extract semantic text features using sentence transformers."""        try:
+        """Extract semantic text features using sentence transformers."""
+        try:
             text = text_content.decode('utf-8')
             
             # Truncate text if too long
@@ -403,14 +430,16 @@ class TextFingerprintEngine(BaseFingerprintEngine):
             raise
     
     def _normalize_vector(self, vector: np.ndarray, target_size: int) -> np.ndarray:
-        """Normalize and resize vector to target dimensions."""        if len(vector) > target_size:
+        """Normalize and resize vector to target dimensions."""
+        if len(vector) > target_size:
             return vector[:target_size]
         elif len(vector) < target_size:
             return np.pad(vector, (0, target_size - len(vector)), 'constant')
         return vector
     
     async def calculate_similarity(self, features1: np.ndarray, features2: np.ndarray) -> float:
-        """Calculate cosine similarity between text features."""        dot_product = np.dot(features1, features2)
+        """Calculate cosine similarity between text features."""
+        dot_product = np.dot(features1, features2)
         norms = np.linalg.norm(features1) * np.linalg.norm(features2)
         
         if norms == 0:
@@ -420,7 +449,8 @@ class TextFingerprintEngine(BaseFingerprintEngine):
 
 
 class UniversalFingerprintEngine:
-    """Unified engine for all content types with FAISS integration."""    
+    """Unified engine for all content types with FAISS integration."""
+    
     def __init__(self, config: Optional[FingerprintConfig] = None):
         self.config = config or FingerprintConfig()
         self.logger = logging.getLogger(__name__)
@@ -441,7 +471,8 @@ class UniversalFingerprintEngine:
         content_type: str, 
         metadata: Dict[str, Any]
     ) -> ContentAnalysisResult:
-        """Process content and generate comprehensive fingerprint analysis."""        try:
+        """Process content and generate comprehensive fingerprint analysis."""
+        try:
             # Select appropriate engine based on content type
             engine = self._get_engine_for_type(content_type)
             
@@ -473,7 +504,8 @@ class UniversalFingerprintEngine:
             raise
     
     async def add_to_index(self, content_id: int, features: np.ndarray) -> None:
-        """Add content features to FAISS index for similarity search."""        try:
+        """Add content features to FAISS index for similarity search."""
+        try:
             # Normalize features for cosine similarity
             features_normalized = features / np.linalg.norm(features)
             features_array = features_normalized.reshape(1, -1).astype('float32')
@@ -497,7 +529,8 @@ class UniversalFingerprintEngine:
         content_type: str,
         top_k: int = 10
     ) -> List[SimilarityMatchResult]:
-        """Find similar content using FAISS vector similarity search."""        try:
+        """Find similar content using FAISS vector similarity search."""
+        try:
             if self.faiss_index.ntotal == 0:
                 return []
             
@@ -526,7 +559,8 @@ class UniversalFingerprintEngine:
             return []
     
     def _get_engine_for_type(self, content_type: str) -> Optional[BaseFingerprintEngine]:
-        """Get appropriate fingerprinting engine for content type."""        type_mapping = {
+        """Get appropriate fingerprinting engine for content type."""
+        type_mapping = {
             'audio': self.audio_engine,
             'video': self.video_engine,
             'image': self.image_engine,

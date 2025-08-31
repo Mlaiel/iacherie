@@ -17,7 +17,8 @@ without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Violations will be prosecuted under German and international copyright law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, List, Optional, Any, Type
+"""
+from typing import Dict, List, Optional, Any, Type
 import logging
 
 # Core Stream Components
@@ -147,8 +148,10 @@ logger = logging.getLogger(__name__)
 
 
 class StreamsModuleConfig:
-    """    Centralized configuration for the data streams module
-    """    
+    """
+    Centralized configuration for the data streams module
+    """
+    
     # Performance settings
     DEFAULT_WORKERS = 16
     MAX_QUEUE_SIZE = 10000
@@ -172,8 +175,10 @@ class StreamsModuleConfig:
 
 
 class StreamsRegistry:
-    """    Registry for managing active stream components and their lifecycle
-    """    
+    """
+    Registry for managing active stream components and their lifecycle
+    """
+    
     def __init__(self):
         self._managers: Dict[str, DataStreamManager] = {}
         self._processors: Dict[str, RealTimeProcessor] = {}
@@ -182,7 +187,8 @@ class StreamsRegistry:
         self._initialized = False
         
     async def initialize(self) -> None:
-        """Initialize the streams registry"""        if self._initialized:
+        """Initialize the streams registry"""
+        if self._initialized:
             return
             
         logger.info("Initializing Streams Registry...")
@@ -201,7 +207,8 @@ class StreamsRegistry:
             raise
             
     async def register_manager(self, name: str, manager: DataStreamManager) -> None:
-        """Register a data stream manager"""        if not isinstance(manager, DataStreamManager):
+        """Register a data stream manager"""
+        if not isinstance(manager, DataStreamManager):
             raise ValueError("Manager must be instance of DataStreamManager")
             
         self._managers[name] = manager
@@ -209,7 +216,8 @@ class StreamsRegistry:
         logger.info(f"Registered stream manager: {name}")
         
     async def register_processor(self, name: str, processor: RealTimeProcessor) -> None:
-        """Register a real-time processor"""        if not isinstance(processor, RealTimeProcessor):
+        """Register a real-time processor"""
+        if not isinstance(processor, RealTimeProcessor):
             raise ValueError("Processor must be instance of RealTimeProcessor")
             
         self._processors[name] = processor
@@ -217,7 +225,8 @@ class StreamsRegistry:
         logger.info(f"Registered processor: {name}")
         
     async def register_streamer(self, name: str, streamer: Any) -> None:
-        """Register a specialized streamer (events, revenue, platform, etc.)"""        self._streamers[name] = streamer
+        """Register a specialized streamer (events, revenue, platform, etc.)"""
+        self._streamers[name] = streamer
         
         if hasattr(streamer, 'initialize'):
             await streamer.initialize()
@@ -225,7 +234,8 @@ class StreamsRegistry:
         logger.info(f"Registered streamer: {name}")
         
     async def register_monitor(self, name: str, monitor: StreamMonitor) -> None:
-        """Register a stream monitor"""        if not isinstance(monitor, StreamMonitor):
+        """Register a stream monitor"""
+        if not isinstance(monitor, StreamMonitor):
             raise ValueError("Monitor must be instance of StreamMonitor")
             
         self._monitors[name] = monitor
@@ -233,19 +243,24 @@ class StreamsRegistry:
         logger.info(f"Registered monitor: {name}")
         
     def get_manager(self, name: str) -> Optional[DataStreamManager]:
-        """Get registered stream manager by name"""        return self._managers.get(name)
+        """Get registered stream manager by name"""
+        return self._managers.get(name)
         
     def get_processor(self, name: str) -> Optional[RealTimeProcessor]:
-        """Get registered processor by name"""        return self._processors.get(name)
+        """Get registered processor by name"""
+        return self._processors.get(name)
         
     def get_streamer(self, name: str) -> Optional[Any]:
-        """Get registered streamer by name"""        return self._streamers.get(name)
+        """Get registered streamer by name"""
+        return self._streamers.get(name)
         
     def get_monitor(self, name: str) -> Optional[StreamMonitor]:
-        """Get registered monitor by name"""        return self._monitors.get(name)
+        """Get registered monitor by name"""
+        return self._monitors.get(name)
         
     def list_components(self) -> Dict[str, List[str]]:
-        """List all registered components"""        return {
+        """List all registered components"""
+        return {
             "managers": list(self._managers.keys()),
             "processors": list(self._processors.keys()),
             "streamers": list(self._streamers.keys()),
@@ -253,7 +268,8 @@ class StreamsRegistry:
         }
         
     async def health_check(self) -> Dict[str, bool]:
-        """Perform health check on all components"""        health_status = {}
+        """Perform health check on all components"""
+        health_status = {}
         
         # Check managers
         for name, manager in self._managers.items():
@@ -298,7 +314,8 @@ class StreamsRegistry:
         return health_status
         
     async def shutdown(self) -> None:
-        """Gracefully shutdown all components"""        logger.info("Shutting down Streams Registry...")
+        """Gracefully shutdown all components"""
+        logger.info("Shutting down Streams Registry...")
         
         # Shutdown monitors first
         for name, monitor in self._monitors.items():
@@ -340,19 +357,22 @@ class StreamsRegistry:
         logger.info("Streams Registry shutdown completed")
         
     async def _initialize_managers(self) -> None:
-        """Initialize default stream managers"""        # Default stream manager
+        """Initialize default stream managers"""
+        # Default stream manager
         default_manager = DataStreamManager()
         await self.register_manager("default", default_manager)
         
     async def _initialize_processors(self) -> None:
-        """Initialize default processors"""        # Default real-time processor
+        """Initialize default processors"""
+        # Default real-time processor
         default_processor = RealTimeProcessor(
             max_workers=StreamsModuleConfig.DEFAULT_WORKERS
         )
         await self.register_processor("default", default_processor)
         
     async def _initialize_monitors(self) -> None:
-        """Initialize default monitors"""        # Default stream monitor
+        """Initialize default monitors"""
+        # Default stream monitor
         default_monitor = StreamMonitor()
         await self.register_monitor("default", default_monitor)
 
@@ -363,19 +383,22 @@ streams_registry = StreamsRegistry()
 
 # Convenience functions for easy access
 async def get_default_manager() -> DataStreamManager:
-    """Get the default stream manager"""    if not streams_registry._initialized:
+    """Get the default stream manager"""
+    if not streams_registry._initialized:
         await streams_registry.initialize()
     return streams_registry.get_manager("default")
 
 
 async def get_default_processor() -> RealTimeProcessor:
-    """Get the default processor"""    if not streams_registry._initialized:
+    """Get the default processor"""
+    if not streams_registry._initialized:
         await streams_registry.initialize()
     return streams_registry.get_processor("default")
 
 
 async def create_stream_components() -> Dict[str, Any]:
-    """Create a full set of stream components for a new application"""    components = {}
+    """Create a full set of stream components for a new application"""
+    components = {}
     
     # Create manager
     components["manager"] = DataStreamManager()
@@ -493,7 +516,8 @@ __all__ = [
 
 # Module initialization
 def get_module_info() -> Dict[str, Any]:
-    """Get module information and metadata"""    return {
+    """Get module information and metadata"""
+    return {
         "name": "Data Streams Management Module",
         "version": __version__,
         "author": __author__,

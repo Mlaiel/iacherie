@@ -14,7 +14,8 @@ Contact: mlaiel@live.de
 
 Enterprise-grade audio AI processing configuration management system.
 ================================================================
-"""from typing import Dict, Any, Optional, List, Union, Tuple
+"""
+from typing import Dict, Any, Optional, List, Union, Tuple
 from enum import Enum
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -29,7 +30,8 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class AudioFormat(Enum):
-    """Supported audio formats"""    MP3 = "mp3"
+    """Supported audio formats"""
+    MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
     AAC = "aac"
@@ -41,7 +43,8 @@ class AudioFormat(Enum):
     RA = "ra"
 
 class AudioQuality(Enum):
-    """Audio quality presets"""    MOBILE = "mobile"
+    """Audio quality presets"""
+    MOBILE = "mobile"
     STANDARD = "standard"
     HIGH = "high"
     STUDIO = "studio"
@@ -50,7 +53,8 @@ class AudioQuality(Enum):
     MASTERING = "mastering"
 
 class ProcessingEngine(Enum):
-    """Audio processing engines"""    LIBROSA = "librosa"
+    """Audio processing engines"""
+    LIBROSA = "librosa"
     PYAUDIO = "pyaudio"
     SOUNDFILE = "soundfile"
     PYDUB = "pydub"
@@ -61,7 +65,8 @@ class ProcessingEngine(Enum):
     PYTORCH_AUDIO = "pytorch_audio"
 
 class NoiseReductionAlgorithm(Enum):
-    """Noise reduction algorithms"""    SPECTRAL_SUBTRACTION = "spectral_subtraction"
+    """Noise reduction algorithms"""
+    SPECTRAL_SUBTRACTION = "spectral_subtraction"
     WIENER_FILTER = "wiener_filter"
     KALMAN_FILTER = "kalman_filter"
     DEEP_LEARNING = "deep_learning"
@@ -70,7 +75,8 @@ class NoiseReductionAlgorithm(Enum):
     NOTCH_FILTER = "notch_filter"
 
 class AudioEnhancement(Enum):
-    """Audio enhancement algorithms"""    DYNAMIC_RANGE_COMPRESSION = "dynamic_range_compression"
+    """Audio enhancement algorithms"""
+    DYNAMIC_RANGE_COMPRESSION = "dynamic_range_compression"
     MULTIBAND_COMPRESSION = "multiband_compression"
     EQ_OPTIMIZATION = "eq_optimization"
     STEREO_ENHANCEMENT = "stereo_enhancement"
@@ -81,7 +87,8 @@ class AudioEnhancement(Enum):
     AI_MASTERING = "ai_mastering"
 
 class StreamingProtocol(Enum):
-    """Streaming protocols"""    HTTP = "http"
+    """Streaming protocols"""
+    HTTP = "http"
     HTTPS = "https"
     RTMP = "rtmp"
     RTSP = "rtsp"
@@ -93,7 +100,8 @@ class StreamingProtocol(Enum):
 
 @dataclass
 class AudioProcessingConfig:
-    """Audio processing configuration"""    # Basic settings
+    """Audio processing configuration"""
+    # Basic settings
     sample_rate: int = 44100
     bit_depth: int = 16
     channels: int = 2
@@ -178,7 +186,8 @@ class AudioProcessingConfig:
 
 @dataclass
 class NoiseReductionConfig:
-    """Noise reduction configuration"""    enabled: bool = True
+    """Noise reduction configuration"""
+    enabled: bool = True
     algorithm: NoiseReductionAlgorithm = NoiseReductionAlgorithm.DEEP_LEARNING
     backup_algorithm: NoiseReductionAlgorithm = NoiseReductionAlgorithm.SPECTRAL_SUBTRACTION
     
@@ -215,7 +224,8 @@ class NoiseReductionConfig:
 
 @dataclass
 class AudioEnhancementConfig:
-    """Audio enhancement configuration"""    enabled: bool = True
+    """Audio enhancement configuration"""
+    enabled: bool = True
     enhancement_algorithms: List[AudioEnhancement] = field(default_factory=lambda: [
         AudioEnhancement.DYNAMIC_RANGE_COMPRESSION,
         AudioEnhancement.EQ_OPTIMIZATION,
@@ -264,7 +274,8 @@ class AudioEnhancementConfig:
 
 @dataclass
 class StreamingConfig:
-    """Audio streaming configuration"""    enabled: bool = True
+    """Audio streaming configuration"""
+    enabled: bool = True
     protocol: StreamingProtocol = StreamingProtocol.HTTPS
     
     # Bitrate settings
@@ -313,7 +324,8 @@ class StreamingConfig:
 
 @dataclass
 class RealTimeConfig:
-    """Real-time audio processing configuration"""    enabled: bool = True
+    """Real-time audio processing configuration"""
+    enabled: bool = True
     
     # Latency settings
     target_latency_ms: float = 10.0
@@ -345,7 +357,8 @@ class RealTimeConfig:
 
 @dataclass
 class AudioAIConfig:
-    """AI-specific audio configuration"""    enabled: bool = True
+    """AI-specific audio configuration"""
+    enabled: bool = True
     
     # AI models
     primary_model: str = "universal_audio_ai_v3"
@@ -386,7 +399,8 @@ class AudioAIConfig:
 
 @dataclass
 class AudioAIProcessingConfiguration:
-    """Master audio AI processing configuration"""    # Core configurations
+    """Master audio AI processing configuration"""
+    # Core configurations
     processing_config: AudioProcessingConfig = field(default_factory=AudioProcessingConfig)
     noise_reduction_config: NoiseReductionConfig = field(default_factory=NoiseReductionConfig)
     enhancement_config: AudioEnhancementConfig = field(default_factory=AudioEnhancementConfig)
@@ -435,13 +449,16 @@ class AudioAIProcessingConfiguration:
     contact_email: str = "mlaiel@live.de"
 
 class AudioAIConfigManager:
-    """    Enterprise-grade audio AI processing configuration manager.
+    """
+    Enterprise-grade audio AI processing configuration manager.
     
     Manages comprehensive configuration for audio processing, streaming,
     real-time processing, AI enhancement, and quality control.
-    """    
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize audio AI configuration manager"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize audio AI configuration manager"""
+        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration path
         self.config_path = config_path or os.getenv(
@@ -463,7 +480,8 @@ class AudioAIConfigManager:
         self.logger.info("Audio AI configuration manager initialized")
     
     def _load_configuration(self) -> bool:
-        """Load configuration from file"""        try:
+        """Load configuration from file"""
+        try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r', encoding='utf-8') as f:
                     if self.config_path.endswith('.yaml') or self.config_path.endswith('.yml'):
@@ -483,7 +501,8 @@ class AudioAIConfigManager:
             return False
     
     def _update_config_from_dict(self, config_data: Dict[str, Any]) -> None:
-        """Update configuration from dictionary"""        for key, value in config_data.items():
+        """Update configuration from dictionary"""
+        for key, value in config_data.items():
             if hasattr(self._config, key):
                 setattr(self._config, key, value)
         
@@ -491,7 +510,8 @@ class AudioAIConfigManager:
         self.last_updated = datetime.now()
     
     def save_configuration(self, config_path: Optional[str] = None) -> bool:
-        """Save configuration to file"""        try:
+        """Save configuration to file"""
+        try:
             save_path = config_path or self.config_path
             
             # Create directory if it doesn't exist
@@ -514,7 +534,8 @@ class AudioAIConfigManager:
             return False
     
     def _config_to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""        result = {}
+        """Convert configuration to dictionary"""
+        result = {}
         
         for field_name, field_value in self._config.__dict__.items():
             if hasattr(field_value, '__dict__'):
@@ -525,7 +546,8 @@ class AudioAIConfigManager:
         return result
     
     def validate_configuration(self) -> List[str]:
-        """Validate configuration and return list of errors"""        errors = []
+        """Validate configuration and return list of errors"""
+        errors = []
         
         try:
             # Validate processing configuration
@@ -569,28 +591,36 @@ class AudioAIConfigManager:
             return [error_msg]
     
     def get_processing_config(self) -> AudioProcessingConfig:
-        """Get audio processing configuration"""        return self._config.processing_config
+        """Get audio processing configuration"""
+        return self._config.processing_config
     
     def get_noise_reduction_config(self) -> NoiseReductionConfig:
-        """Get noise reduction configuration"""        return self._config.noise_reduction_config
+        """Get noise reduction configuration"""
+        return self._config.noise_reduction_config
     
     def get_enhancement_config(self) -> AudioEnhancementConfig:
-        """Get audio enhancement configuration"""        return self._config.enhancement_config
+        """Get audio enhancement configuration"""
+        return self._config.enhancement_config
     
     def get_streaming_config(self) -> StreamingConfig:
-        """Get streaming configuration"""        return self._config.streaming_config
+        """Get streaming configuration"""
+        return self._config.streaming_config
     
     def get_real_time_config(self) -> RealTimeConfig:
-        """Get real-time configuration"""        return self._config.real_time_config
+        """Get real-time configuration"""
+        return self._config.real_time_config
     
     def get_ai_config(self) -> AudioAIConfig:
-        """Get AI configuration"""        return self._config.ai_config
+        """Get AI configuration"""
+        return self._config.ai_config
     
     def get_complete_config(self) -> AudioAIProcessingConfiguration:
-        """Get complete configuration"""        return self._config
+        """Get complete configuration"""
+        return self._config
     
     def update_processing_config(self, **kwargs) -> bool:
-        """Update processing configuration"""        try:
+        """Update processing configuration"""
+        try:
             for key, value in kwargs.items():
                 if hasattr(self._config.processing_config, key):
                     setattr(self._config.processing_config, key, value)
@@ -604,7 +634,8 @@ class AudioAIConfigManager:
             return False
     
     def get_configuration_status(self) -> Dict[str, Any]:
-        """Get configuration status and metadata"""        return {
+        """Get configuration status and metadata"""
+        return {
             "initialized": self.initialized,
             "last_updated": self.last_updated,
             "config_path": self.config_path,

@@ -7,7 +7,8 @@ transaction batching.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited.
-"""from typing import Dict, List, Optional, Union, Tuple
+"""
+from typing import Dict, List, Optional, Union, Tuple
 import asyncio
 from dataclasses import dataclass
 from datetime import datetime, timedelta
@@ -21,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class GasEstimate:
-    """Gas estimation data structure."""    
+    """Gas estimation data structure."""
+    
     gas_limit: int
     gas_price: int
     max_fee_per_gas: Optional[int] = None
@@ -33,7 +35,8 @@ class GasEstimate:
 
 @dataclass
 class TransactionBatch:
-    """Batch transaction data structure."""    
+    """Batch transaction data structure."""
+    
     transactions: List[Dict]
     total_gas_limit: int
     estimated_total_cost: int
@@ -42,14 +45,16 @@ class TransactionBatch:
     
 
 class GasOptimizer:
-    """Professional gas optimization and fee management system."""    
+    """Professional gas optimization and fee management system."""
+    
     def __init__(self, web3: Web3, network: str):
         """Initialize gas optimizer.
         
         Args:
             web3: Web3 instance for blockchain interaction
             network: Target blockchain network
-        """        self.web3 = web3
+        """
+        self.web3 = web3
         self.network = network
         self.historical_data: List[Dict] = []
         self.optimization_cache: Dict[str, GasEstimate] = {}
@@ -80,7 +85,8 @@ class GasOptimizer:
             
         Returns:
             Optimized gas estimate
-        """        try:
+        """
+        try:
             cache_key = self._generate_cache_key(transaction, priority_level)
             
             # Check cache first
@@ -120,7 +126,8 @@ class GasOptimizer:
             return await self._fallback_gas_estimate(transaction)
     
     async def _fetch_current_gas_data(self) -> Dict:
-        """Fetch current gas market data."""        try:
+        """Fetch current gas market data."""
+        try:
             if await self._supports_eip1559():
                 # Fetch EIP-1559 data
                 fee_history = self.web3.eth.fee_history(20, "latest", [10, 25, 50, 75, 90])
@@ -159,7 +166,8 @@ class GasOptimizer:
             raise
     
     async def _estimate_gas_limit(self, transaction: Dict) -> int:
-        """Estimate gas limit for transaction with safety margin."""        try:
+        """Estimate gas limit for transaction with safety margin."""
+        try:
             # Estimate base gas usage
             estimated_gas = self.web3.eth.estimate_gas(transaction)
             
@@ -181,7 +189,8 @@ class GasOptimizer:
             return self.network_configs.get(self.network, {}).get("base_gas", 21000) * 2
     
     def _calculate_complexity_factor(self, transaction: Dict) -> float:
-        """Calculate transaction complexity factor."""        complexity = 0.0
+        """Calculate transaction complexity factor."""
+        complexity = 0.0
         
         # Check for contract interaction
         if transaction.get("to") and transaction.get("data"):
@@ -206,7 +215,8 @@ class GasOptimizer:
         priority_level: str,
         max_wait_time: int
     ) -> GasEstimate:
-        """Estimate EIP-1559 gas parameters."""        base_fee = gas_data["current_base_fee"]
+        """Estimate EIP-1559 gas parameters."""
+        base_fee = gas_data["current_base_fee"]
         base_fee_trend = gas_data["base_fee_trend"]
         
         # Priority fee based on level and network congestion
@@ -254,7 +264,8 @@ class GasOptimizer:
         priority_level: str,
         max_wait_time: int
     ) -> GasEstimate:
-        """Estimate legacy gas price."""        recommended_prices = gas_data["recommended_gas"]
+        """Estimate legacy gas price."""
+        recommended_prices = gas_data["recommended_gas"]
         
         gas_price = recommended_prices.get(priority_level, recommended_prices["standard"])
         
@@ -274,11 +285,13 @@ class GasOptimizer:
         )
     
     async def _supports_eip1559(self) -> bool:
-        """Check if network supports EIP-1559."""        eip1559_networks = ["ethereum", "polygon", "arbitrum", "optimism"]
+        """Check if network supports EIP-1559."""
+        eip1559_networks = ["ethereum", "polygon", "arbitrum", "optimism"]
         return self.network in eip1559_networks
     
     def _calculate_trend(self, values: List[int]) -> float:
-        """Calculate trend direction for a list of values."""        if len(values) < 2:
+        """Calculate trend direction for a list of values."""
+        if len(values) < 2:
             return 0.0
         
         # Simple trend calculation
@@ -291,7 +304,8 @@ class GasOptimizer:
         return (second_half - first_half) / first_half
     
     async def _calculate_usd_cost(self, cost_wei: int) -> Optional[float]:
-        """Calculate USD cost of transaction."""        try:
+        """Calculate USD cost of transaction."""
+        try:
             # This would typically fetch from a price oracle
             # For now, return None - implement price oracle integration
             return None
@@ -301,7 +315,8 @@ class GasOptimizer:
             return None
     
     def _generate_cache_key(self, transaction: Dict, priority_level: str) -> str:
-        """Generate cache key for gas estimate."""        key_parts = [
+        """Generate cache key for gas estimate."""
+        key_parts = [
             str(transaction.get("to", "")),
             str(len(transaction.get("data", ""))),
             str(transaction.get("value", 0)),
@@ -311,11 +326,13 @@ class GasOptimizer:
         return "_".join(key_parts)
     
     def _is_cache_valid(self, estimate: GasEstimate, max_age: int = 30) -> bool:
-        """Check if cached estimate is still valid."""        # Simple time-based validation - implement more sophisticated logic
+        """Check if cached estimate is still valid."""
+        # Simple time-based validation - implement more sophisticated logic
         return True
     
     async def _fallback_gas_estimate(self, transaction: Dict) -> GasEstimate:
-        """Provide fallback gas estimate when optimization fails."""        try:
+        """Provide fallback gas estimate when optimization fails."""
+        try:
             gas_limit = await self._estimate_gas_limit(transaction)
             gas_price = self.web3.eth.gas_price
             
@@ -342,7 +359,8 @@ class GasOptimizer:
         transactions: List[Dict],
         max_batch_size: int = 10
     ) -> List[TransactionBatch]:
-        """Optimize a batch of transactions for cost efficiency."""        try:
+        """Optimize a batch of transactions for cost efficiency."""
+        try:
             if len(transactions) < self.batch_threshold:
                 # Not worth batching
                 return []
@@ -385,7 +403,8 @@ class GasOptimizer:
             return []
     
     async def _sort_transactions_for_batching(self, transactions: List[Dict]) -> List[Dict]:
-        """Sort transactions optimally for batching."""        # Simple sorting by gas estimate - implement more sophisticated logic
+        """Sort transactions optimally for batching."""
+        # Simple sorting by gas estimate - implement more sophisticated logic
         transaction_estimates = []
         
         for tx in transactions:
@@ -398,7 +417,8 @@ class GasOptimizer:
         return [tx for tx, _ in transaction_estimates]
     
     async def _create_transaction_batch(self, transactions: List[Dict]) -> TransactionBatch:
-        """Create optimized transaction batch."""        total_gas = 0
+        """Create optimized transaction batch."""
+        total_gas = 0
         total_cost = 0
         
         for tx in transactions:
@@ -415,7 +435,8 @@ class GasOptimizer:
         )
     
     def get_optimization_stats(self) -> Dict:
-        """Get gas optimization performance statistics."""        return {
+        """Get gas optimization performance statistics."""
+        return {
             "cache_size": len(self.optimization_cache),
             "network": self.network,
             "supported_features": {

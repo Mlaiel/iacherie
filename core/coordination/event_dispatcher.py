@@ -13,7 +13,8 @@ Contact: mlaiel@live.de for authorization.
 
 🎯 BUSINESS LOGIC:
 Event Generation → Routing → Filtering → Processing → Distribution → Acknowledgment
-"""import asyncio
+"""
+import asyncio
 import uuid
 import threading
 from datetime import datetime, timezone, timedelta
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 
 class EventType(Enum):
-    """Types of events in the system"""    WORKFLOW_EVENT = "workflow_event"
+    """Types of events in the system"""
+    WORKFLOW_EVENT = "workflow_event"
     PROCESS_EVENT = "process_event"
     TASK_EVENT = "task_event"
     RESOURCE_EVENT = "resource_event"
@@ -45,7 +47,8 @@ class EventType(Enum):
 
 
 class EventPriority(Enum):
-    """Event processing priority levels"""    CRITICAL = 1
+    """Event processing priority levels"""
+    CRITICAL = 1
     HIGH = 2
     NORMAL = 3
     LOW = 4
@@ -53,7 +56,8 @@ class EventPriority(Enum):
 
 
 class EventStatus(Enum):
-    """Event processing status"""    CREATED = "created"
+    """Event processing status"""
+    CREATED = "created"
     QUEUED = "queued"
     PROCESSING = "processing"
     PROCESSED = "processed"
@@ -63,7 +67,8 @@ class EventStatus(Enum):
 
 
 class DeliveryMode(Enum):
-    """Event delivery modes"""    FIRE_AND_FORGET = "fire_and_forget"
+    """Event delivery modes"""
+    FIRE_AND_FORGET = "fire_and_forget"
     AT_LEAST_ONCE = "at_least_once"
     EXACTLY_ONCE = "exactly_once"
     RELIABLE = "reliable"
@@ -71,7 +76,8 @@ class DeliveryMode(Enum):
 
 @dataclass
 class EventFilter:
-    """Event filtering criteria"""    event_types: List[EventType] = field(default_factory=list)
+    """Event filtering criteria"""
+    event_types: List[EventType] = field(default_factory=list)
     source_patterns: List[str] = field(default_factory=list)
     tag_filters: Dict[str, Any] = field(default_factory=dict)
     payload_filters: Dict[str, Any] = field(default_factory=dict)
@@ -81,7 +87,8 @@ class EventFilter:
 
 @dataclass
 class EventSubscription:
-    """Event subscription configuration"""    subscription_id: str
+    """Event subscription configuration"""
+    subscription_id: str
     subscriber_id: str
     filters: EventFilter
     callback: Callable
@@ -96,7 +103,8 @@ class EventSubscription:
 
 @dataclass
 class Event:
-    """Core event structure"""    event_id: str
+    """Core event structure"""
+    event_id: str
     event_type: EventType
     source: str
     timestamp: datetime
@@ -114,7 +122,8 @@ class Event:
 
 @dataclass
 class EventDelivery:
-    """Event delivery tracking"""    delivery_id: str
+    """Event delivery tracking"""
+    delivery_id: str
     event_id: str
     subscription_id: str
     attempted_at: datetime
@@ -126,7 +135,8 @@ class EventDelivery:
 
 
 class EventDispatcher:
-    """Enterprise event processing and distribution system"""    
+    """Enterprise event processing and distribution system"""
+    
     def __init__(self, max_workers: int = 20, queue_size: int = 10000):
         self.max_workers = max_workers
         self.queue_size = queue_size
@@ -171,7 +181,8 @@ class EventDispatcher:
         logger.info("EventDispatcher initialized successfully")
     
     def _initialize_standard_subscriptions(self):
-        """Initialize standard system event subscriptions"""        # System monitoring subscription
+        """Initialize standard system event subscriptions"""
+        # System monitoring subscription
         monitoring_subscription = EventSubscription(
             subscription_id="system_monitoring",
             subscriber_id="system_monitor",
@@ -229,7 +240,8 @@ class EventDispatcher:
         self.subscribe(notification_subscription)
     
     def subscribe(self, subscription: EventSubscription) -> bool:
-        """Register a new event subscription"""        try:
+        """Register a new event subscription"""
+        try:
             # Validate subscription
             if not self._validate_subscription(subscription):
                 return False
@@ -251,7 +263,8 @@ class EventDispatcher:
             return False
     
     def _validate_subscription(self, subscription: EventSubscription) -> bool:
-        """Validate event subscription configuration"""        try:
+        """Validate event subscription configuration"""
+        try:
             # Required fields
             if not all([subscription.subscription_id, subscription.subscriber_id, subscription.callback]):
                 logger.error("Missing required subscription fields")
@@ -274,7 +287,8 @@ class EventDispatcher:
             return False
     
     def _update_routing_tables(self, subscription: EventSubscription):
-        """Update event routing tables"""        # Update event type routing
+        """Update event routing tables"""
+        # Update event type routing
         for event_type in subscription.filters.event_types:
             if subscription.subscription_id not in self.event_routing[event_type]:
                 self.event_routing[event_type].append(subscription.subscription_id)
@@ -284,7 +298,8 @@ class EventDispatcher:
             self.subscriber_routing[subscription.subscriber_id].append(subscription.subscription_id)
     
     def _compile_filters(self, subscription: EventSubscription):
-        """Compile event filters for performance optimization"""        # This would compile complex filters into optimized forms
+        """Compile event filters for performance optimization"""
+        # This would compile complex filters into optimized forms
         # For now, store the filters as-is
         self.compiled_filters[subscription.subscription_id] = subscription.filters
     
@@ -299,7 +314,8 @@ class EventDispatcher:
         trace_id: str = None,
         expires_in_seconds: int = None
     ) -> str:
-        """Publish an event to the system"""        try:
+        """Publish an event to the system"""
+        try:
             event_id = str(uuid.uuid4())
             
             # Calculate expiration
@@ -344,7 +360,8 @@ class EventDispatcher:
             raise
     
     async def _queue_event(self, event: Event):
-        """Queue event for processing"""        try:
+        """Queue event for processing"""
+        try:
             # Check if event has expired
             if event.expires_at and event.expires_at <= datetime.now(timezone.utc):
                 event.status = EventStatus.EXPIRED
@@ -366,7 +383,8 @@ class EventDispatcher:
             event.status = EventStatus.FAILED
     
     def start_processing(self):
-        """Start event processing"""        if not self.processing_active:
+        """Start event processing"""
+        if not self.processing_active:
             self.processing_active = True
             
             # Start worker tasks
@@ -381,7 +399,8 @@ class EventDispatcher:
             logger.info(f"Event processing started with {self.max_workers} workers")
     
     def stop_processing(self):
-        """Stop event processing"""        self.processing_active = False
+        """Stop event processing"""
+        self.processing_active = False
         
         # Cancel all processing tasks
         for task in self.processing_tasks:
@@ -391,7 +410,8 @@ class EventDispatcher:
         logger.info("Event processing stopped")
     
     async def _processing_worker(self, worker_id: str):
-        """Event processing worker"""        while self.processing_active:
+        """Event processing worker"""
+        while self.processing_active:
             try:
                 # Get event from queue
                 event = await asyncio.wait_for(self.event_queue.get(), timeout=1.0)
@@ -408,7 +428,8 @@ class EventDispatcher:
                 logger.error(f"Worker {worker_id} error: {e}")
     
     async def _priority_queue_processor(self):
-        """Process priority queues in order"""        while self.processing_active:
+        """Process priority queues in order"""
+        while self.processing_active:
             try:
                 # Process queues by priority
                 for priority in EventPriority:
@@ -434,7 +455,8 @@ class EventDispatcher:
                 logger.error(f"Priority queue processor error: {e}")
     
     async def _process_event(self, event: Event, worker_id: str):
-        """Process a single event"""        try:
+        """Process a single event"""
+        try:
             start_time = datetime.now(timezone.utc)
             event.status = EventStatus.PROCESSING
             
@@ -472,7 +494,8 @@ class EventDispatcher:
             logger.error(f"Event processing failed: {event.event_id} - {e}")
     
     def _find_matching_subscriptions(self, event: Event) -> List[str]:
-        """Find subscriptions that match the event"""        try:
+        """Find subscriptions that match the event"""
+        try:
             matching = []
             
             # Check cached routes first
@@ -502,7 +525,8 @@ class EventDispatcher:
             return []
     
     def _event_matches_filter(self, event: Event, filters: EventFilter) -> bool:
-        """Check if event matches subscription filters"""        try:
+        """Check if event matches subscription filters"""
+        try:
             # Event type filter
             if filters.event_types and event.event_type not in filters.event_types:
                 return False
@@ -542,7 +566,8 @@ class EventDispatcher:
             return False
     
     def _matches_pattern(self, text: str, pattern: str) -> bool:
-        """Simple pattern matching with wildcards"""        if '*' not in pattern:
+        """Simple pattern matching with wildcards"""
+        if '*' not in pattern:
             return text == pattern
         
         # Simple wildcard matching
@@ -555,7 +580,8 @@ class EventDispatcher:
             return text == pattern
     
     async def _deliver_event(self, event: Event, subscription: EventSubscription):
-        """Deliver event to a subscription"""        try:
+        """Deliver event to a subscription"""
+        try:
             delivery_id = str(uuid.uuid4())
             
             # Create delivery tracking
@@ -587,7 +613,8 @@ class EventDispatcher:
         subscription: EventSubscription,
         delivery: EventDelivery
     ) -> bool:
-        """Attempt to deliver event to subscription"""        try:
+        """Attempt to deliver event to subscription"""
+        try:
             # Prepare callback data
             callback_data = {
                 "event_id": event.event_id,
@@ -638,7 +665,8 @@ class EventDispatcher:
         subscription: EventSubscription,
         delivery: EventDelivery
     ):
-        """Handle failed event delivery"""        try:
+        """Handle failed event delivery"""
+        try:
             delivery.retry_count += 1
             
             # Check if retries are exhausted
@@ -673,7 +701,8 @@ class EventDispatcher:
         delivery: EventDelivery,
         delay_seconds: float
     ):
-        """Schedule event delivery retry"""        try:
+        """Schedule event delivery retry"""
+        try:
             await asyncio.sleep(delay_seconds)
             
             # Attempt delivery again
@@ -690,19 +719,24 @@ class EventDispatcher:
     
     # Standard event handlers
     async def _handle_system_monitoring(self, event_data: Dict[str, Any]):
-        """Handle system monitoring events"""        logger.info(f"System monitoring event: {event_data.get('event_type')}")
+        """Handle system monitoring events"""
+        logger.info(f"System monitoring event: {event_data.get('event_type')}")
     
     async def _handle_workflow_coordination(self, event_data: Dict[str, Any]):
-        """Handle workflow coordination events"""        logger.info(f"Workflow coordination event: {event_data.get('event_type')}")
+        """Handle workflow coordination events"""
+        logger.info(f"Workflow coordination event: {event_data.get('event_type')}")
     
     async def _handle_content_protection(self, event_data: Dict[str, Any]):
-        """Handle content protection events"""        logger.info(f"Content protection event: {event_data.get('event_type')}")
+        """Handle content protection events"""
+        logger.info(f"Content protection event: {event_data.get('event_type')}")
     
     async def _handle_user_notifications(self, event_data: Dict[str, Any]):
-        """Handle user notification events"""        logger.info(f"User notification event: {event_data.get('event_type')}")
+        """Handle user notification events"""
+        logger.info(f"User notification event: {event_data.get('event_type')}")
     
     def unsubscribe(self, subscription_id: str) -> bool:
-        """Remove event subscription"""        try:
+        """Remove event subscription"""
+        try:
             if subscription_id not in self.subscriptions:
                 return False
             
@@ -734,7 +768,8 @@ class EventDispatcher:
             return False
     
     def get_event_status(self, event_id: str) -> Optional[Dict[str, Any]]:
-        """Get event processing status"""        event = self.event_store.get(event_id)
+        """Get event processing status"""
+        event = self.event_store.get(event_id)
         if not event:
             return None
         
@@ -750,7 +785,8 @@ class EventDispatcher:
         }
     
     def get_subscription_status(self, subscription_id: str) -> Optional[Dict[str, Any]]:
-        """Get subscription status"""        subscription = self.subscriptions.get(subscription_id)
+        """Get subscription status"""
+        subscription = self.subscriptions.get(subscription_id)
         if not subscription:
             return None
         
@@ -773,7 +809,8 @@ class EventDispatcher:
         }
     
     def get_system_metrics(self) -> Dict[str, Any]:
-        """Get event system metrics"""        active_subscriptions = len([s for s in self.subscriptions.values() if s.enabled])
+        """Get event system metrics"""
+        active_subscriptions = len([s for s in self.subscriptions.values() if s.enabled])
         total_events = len(self.event_store)
         queued_events = sum(len(queue) for queue in self.priority_queues.values())
         
@@ -801,7 +838,8 @@ class EventDispatcher:
         }
     
     async def replay_dead_letter_events(self, max_events: int = 100) -> int:
-        """Replay events from dead letter queue"""        try:
+        """Replay events from dead letter queue"""
+        try:
             replayed = 0
             
             while self.dead_letter_queue and replayed < max_events:
@@ -825,7 +863,8 @@ class EventDispatcher:
             return 0
     
     def cleanup_expired_events(self) -> int:
-        """Cleanup expired events from storage"""        try:
+        """Cleanup expired events from storage"""
+        try:
             current_time = datetime.now(timezone.utc)
             expired_events = []
             
@@ -855,7 +894,8 @@ class EventDispatcher:
             return 0
     
     def shutdown(self):
-        """Shutdown event dispatcher and cleanup"""        try:
+        """Shutdown event dispatcher and cleanup"""
+        try:
             self.stop_processing()
             
             # Shutdown thread executor

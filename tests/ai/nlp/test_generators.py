@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -21,7 +22,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -45,10 +47,12 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class TestAdvancedContentGenerator:
-    """Comprehensive tests for AdvancedContentGenerator"""    
+    """Comprehensive tests for AdvancedContentGenerator"""
+    
     @pytest.mark.asyncio
     async def test_generator_initialization(self, content_generator):
-        """Test generator initialization and configuration"""        assert content_generator is not None
+        """Test generator initialization and configuration"""
+        assert content_generator is not None
         assert hasattr(content_generator, 'config')
         assert hasattr(content_generator, 'models')
         assert hasattr(content_generator, 'templates')
@@ -61,7 +65,8 @@ class TestAdvancedContentGenerator:
 
     @pytest.mark.asyncio
     async def test_content_generation_basic(self, content_generator):
-        """Test basic content generation"""        prompt = "Create content about sustainable fashion"
+        """Test basic content generation"""
+        prompt = "Create content about sustainable fashion"
         
         generated = await content_generator.generate_content(
             prompt=prompt,
@@ -93,7 +98,8 @@ class TestAdvancedContentGenerator:
 
     @pytest.mark.asyncio
     async def test_platform_specific_generation(self, content_generator):
-        """Test platform-specific content generation"""        platforms_to_test = [
+        """Test platform-specific content generation"""
+        platforms_to_test = [
             (Platform.INSTAGRAM, "Share your daily skincare routine"),
             (Platform.TIKTOK, "Create a viral dance challenge"),
             (Platform.TWITTER, "Tweet about climate change awareness"),
@@ -142,7 +148,8 @@ class TestAdvancedContentGenerator:
 
     @pytest.mark.asyncio
     async def test_multilingual_generation(self, content_generator):
-        """Test multilingual content generation"""        languages_to_test = ['en', 'de', 'fr', 'es']
+        """Test multilingual content generation"""
+        languages_to_test = ['en', 'de', 'fr', 'es']
         prompt = "Create content about healthy cooking"
         
         for language in languages_to_test:
@@ -177,7 +184,8 @@ class TestAdvancedContentGenerator:
 
     @pytest.mark.asyncio
     async def test_content_variation_generation(self, content_generator):
-        """Test generation of content variations"""        base_content = "Discover the latest trends in sustainable fashion"
+        """Test generation of content variations"""
+        base_content = "Discover the latest trends in sustainable fashion"
         
         variations = await content_generator.generate_variations(
             base_content=base_content,
@@ -209,7 +217,8 @@ class TestAdvancedContentGenerator:
 
     @pytest.mark.asyncio
     async def test_hashtag_generation(self, content_generator):
-        """Test hashtag generation functionality"""        content = "Just finished an amazing workout session at the gym!"
+        """Test hashtag generation functionality"""
+        content = "Just finished an amazing workout session at the gym!"
         
         hashtags = await content_generator.generate_hashtags(
             content=content,
@@ -246,7 +255,8 @@ class TestAdvancedContentGenerator:
 
     @pytest.mark.asyncio
     async def test_caption_generation(self, content_generator):
-        """Test caption generation for different content types"""        content_scenarios = [
+        """Test caption generation for different content types"""
+        content_scenarios = [
             {
                 'scenario': 'food_photo',
                 'context': 'Photo of homemade pasta with fresh tomatoes',
@@ -296,7 +306,8 @@ class TestAdvancedContentGenerator:
 
     @pytest.mark.asyncio
     async def test_story_generation(self, content_generator):
-        """Test story content generation"""        story_prompts = [
+        """Test story content generation"""
+        story_prompts = [
             "Behind the scenes of product photoshoot",
             "Daily morning routine for productivity",
             "Quick recipe tutorial"
@@ -334,7 +345,8 @@ class TestAdvancedContentGenerator:
 
     @pytest.mark.asyncio
     async def test_thread_generation(self, content_generator):
-        """Test Twitter thread generation"""        topic = "The future of artificial intelligence in creative industries"
+        """Test Twitter thread generation"""
+        topic = "The future of artificial intelligence in creative industries"
         
         thread = await content_generator.generate_twitter_thread(
             topic=topic,
@@ -369,7 +381,8 @@ class TestAdvancedContentGenerator:
 
     @pytest.mark.asyncio
     async def test_content_optimization(self, content_generator):
-        """Test content optimization for engagement"""        base_content = "Check out my new blog post about productivity tips"
+        """Test content optimization for engagement"""
+        base_content = "Check out my new blog post about productivity tips"
         
         optimized = await content_generator.optimize_content(
             content=base_content,
@@ -402,7 +415,8 @@ class TestAdvancedContentGenerator:
 
     @pytest.mark.asyncio
     async def test_batch_generation(self, content_generator, performance_test_data):
-        """Test batch content generation"""        prompts = [
+        """Test batch content generation"""
+        prompts = [
             "Create content about morning routines",
             "Share healthy recipe ideas", 
             "Discuss remote work productivity",
@@ -439,7 +453,8 @@ class TestAdvancedContentGenerator:
 
     @pytest.mark.asyncio
     async def test_template_based_generation(self, content_generator):
-        """Test template-based content generation"""        templates_to_test = [
+        """Test template-based content generation"""
+        templates_to_test = [
             {
                 'template_type': 'product_showcase',
                 'variables': {
@@ -486,7 +501,8 @@ class TestAdvancedContentGenerator:
 
     @pytest.mark.asyncio
     async def test_ai_model_integration(self, content_generator):
-        """Test AI model integration for generation"""        prompt = "Create engaging content about climate change awareness"
+        """Test AI model integration for generation"""
+        prompt = "Create engaging content about climate change awareness"
         
         # Test with different AI models
         models_to_test = ['gpt', 'claude', 'local']
@@ -518,7 +534,8 @@ class TestAdvancedContentGenerator:
 
     @pytest.mark.asyncio
     async def test_content_personalization(self, content_generator):
-        """Test content personalization features"""        user_profile = {
+        """Test content personalization features"""
+        user_profile = {
             'interests': ['fitness', 'healthy_eating', 'travel'],
             'tone_preference': 'casual',
             'platform_activity': {
@@ -561,7 +578,8 @@ class TestAdvancedContentGenerator:
 
     @pytest.mark.asyncio
     async def test_content_scheduling_optimization(self, content_generator):
-        """Test content scheduling and timing optimization"""        content = "Sharing my morning workout routine!"
+        """Test content scheduling and timing optimization"""
+        content = "Sharing my morning workout routine!"
         
         schedule_optimization = await content_generator.optimize_posting_schedule(
             content=content,
@@ -596,7 +614,8 @@ class TestAdvancedContentGenerator:
 
     @pytest.mark.asyncio
     async def test_performance_benchmarks(self, content_generator, benchmark_config):
-        """Test generator performance benchmarks"""        # Test single generation performance
+        """Test generator performance benchmarks"""
+        # Test single generation performance
         prompt = "Create content about digital marketing trends"
         
         start_time = time.time()
@@ -632,7 +651,8 @@ class TestAdvancedContentGenerator:
 
     @pytest.mark.asyncio
     async def test_error_handling(self, content_generator):
-        """Test error handling and edge cases"""        # Test empty prompt
+        """Test error handling and edge cases"""
+        # Test empty prompt
         generated = await content_generator.generate_content(
             prompt="",
             content_type=ContentType.POST,
@@ -662,32 +682,39 @@ class TestAdvancedContentGenerator:
         assert generated is not None  # Should default to English
 
 class TestContentGenerator:
-    """Test base content generator"""    
+    """Test base content generator"""
+    
     @pytest.mark.asyncio
     async def test_content_generator_initialization(self):
-        """Test content generator initialization"""        generator = ContentGenerator()
+        """Test content generator initialization"""
+        generator = ContentGenerator()
         assert generator is not None
         assert hasattr(generator, 'generate')
 
 class TestCaptionGenerator:
-    """Test specialized caption generator"""    
+    """Test specialized caption generator"""
+    
     @pytest.mark.asyncio
     async def test_caption_generator_initialization(self):
-        """Test caption generator initialization"""        generator = CaptionGenerator()
+        """Test caption generator initialization"""
+        generator = CaptionGenerator()
         assert generator is not None
         assert hasattr(generator, 'generate_caption')
 
 class TestHashtagGenerator:
-    """Test specialized hashtag generator"""    
+    """Test specialized hashtag generator"""
+    
     @pytest.mark.asyncio
     async def test_hashtag_generator_initialization(self):
-        """Test hashtag generator initialization"""        generator = HashtagGenerator()
+        """Test hashtag generator initialization"""
+        generator = HashtagGenerator()
         assert generator is not None
         assert hasattr(generator, 'generate_hashtags')
 
     @pytest.mark.asyncio
     async def test_hashtag_generation_specific(self):
-        """Test specific hashtag generation"""        generator = HashtagGenerator()
+        """Test specific hashtag generation"""
+        generator = HashtagGenerator()
         
         content = "Beautiful sunset at the beach"
         
@@ -707,9 +734,11 @@ class TestHashtagGenerator:
         assert all(tag.startswith('#') for tag in hashtags)
 
 class TestGenerationConfig:
-    """Test generation configuration"""    
+    """Test generation configuration"""
+    
     def test_config_creation(self):
-        """Test generation configuration creation"""        config = GenerationConfig(
+        """Test generation configuration creation"""
+        config = GenerationConfig(
             models=['gpt-4', 'claude'],
             platforms=[Platform.INSTAGRAM, Platform.TIKTOK],
             languages=['en', 'de'],
@@ -722,9 +751,11 @@ class TestGenerationConfig:
         assert config.creativity_level == 0.8
 
 class TestGeneratedContent:
-    """Test generated content structure"""    
+    """Test generated content structure"""
+    
     def test_generated_content_creation(self):
-        """Test generated content creation"""        content = GeneratedContent(
+        """Test generated content creation"""
+        content = GeneratedContent(
             content="Generated content text",
             platform=Platform.INSTAGRAM,
             language='en',

@@ -17,7 +17,8 @@ Copyright: Fahed Mlaiel - All Rights Reserved
     
     Contact: mlaiel@live.de for licensing inquiries ONLY.
     Violators will be prosecuted to the full extent of German and EU law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -42,7 +43,8 @@ logger = get_logger(__name__)
 
 @dataclass
 class LanguageProcessingConfig:
-    """Configuration for language processing operations"""    max_text_length: int = 50000
+    """Configuration for language processing operations"""
+    max_text_length: int = 50000
     enable_caching: bool = True
     cache_ttl: int = 3600
     batch_size: int = 100
@@ -53,20 +55,25 @@ class LanguageProcessingConfig:
 
 
 class LanguageProcessingFacade:
-    """    Unified facade for all language processing operations.
+    """
+    Unified facade for all language processing operations.
     Provides a single entry point for content creators to access
     all NLP capabilities with simplified interface.
-    """    
+    """
+    
     def __init__(self, config: Optional[LanguageProcessingConfig] = None):
-        """        Initialize the Language Processing Facade
+        """
+        Initialize the Language Processing Facade
         
         Args:
             config: Configuration for processing operations
-        """        self.config = config or LanguageProcessingConfig()
+        """
+        self.config = config or LanguageProcessingConfig()
         self._initialize_components()
         
     def _initialize_components(self):
-        """Initialize all processing components"""        try:
+        """Initialize all processing components"""
+        try:
             # Core analyzers
             self.text_analyzer = TextAnalyzer()
             self.sentiment_analyzer = SentimentAnalyzer()
@@ -101,7 +108,8 @@ class LanguageProcessingFacade:
         target_language: Optional[str] = None,
         optimization_level: str = "standard"
     ) -> Dict[str, Any]:
-        """        Complete content processing pipeline for content creators
+        """
+        Complete content processing pipeline for content creators
         
         Args:
             text: Content to process
@@ -112,7 +120,8 @@ class LanguageProcessingFacade:
             
         Returns:
             Comprehensive processing results
-        """        try:
+        """
+        try:
             start_time = datetime.now(timezone.utc)
             
             # Input validation
@@ -201,7 +210,8 @@ class LanguageProcessingFacade:
             }
     
     async def _generate_recommendations(self, results: Dict[str, Any]) -> List[str]:
-        """Generate actionable recommendations based on analysis results"""        recommendations = []
+        """Generate actionable recommendations based on analysis results"""
+        recommendations = []
         
         try:
             # Sentiment recommendations
@@ -238,7 +248,8 @@ class LanguageProcessingFacade:
             return ["Analysis completed - review detailed results for insights"]
     
     async def _calculate_overall_quality(self, results: Dict[str, Any]) -> float:
-        """Calculate overall content quality score"""        try:
+        """Calculate overall content quality score"""
+        try:
             quality_factors = []
             
             # Sentiment quality
@@ -276,7 +287,8 @@ class LanguageProcessingFacade:
 _language_processor = None
 
 def get_language_processor(config: Optional[LanguageProcessingConfig] = None) -> LanguageProcessingFacade:
-    """Get or create the language processor singleton"""    global _language_processor
+    """Get or create the language processor singleton"""
+    global _language_processor
     if _language_processor is None:
         _language_processor = LanguageProcessingFacade(config)
     return _language_processor
@@ -288,17 +300,20 @@ async def analyze_content(
     content_type: str = "general",
     platform: str = "general"
 ) -> Dict[str, Any]:
-    """Convenience function for complete content analysis"""    processor = get_language_processor()
+    """Convenience function for complete content analysis"""
+    processor = get_language_processor()
     return await processor.process_content_complete(text, content_type, platform)
 
 
 async def quick_sentiment(text: str) -> SentimentResult:
-    """Quick sentiment analysis"""    processor = get_language_processor()
+    """Quick sentiment analysis"""
+    processor = get_language_processor()
     return await processor.sentiment_analyzer.analyze_sentiment(text)
 
 
 async def quick_optimize(text: str, platform: str = "general") -> Any:
-    """Quick content optimization"""    processor = get_language_processor()
+    """Quick content optimization"""
+    processor = get_language_processor()
     return await processor.content_optimizer.optimize_content(text, platform)
 
 

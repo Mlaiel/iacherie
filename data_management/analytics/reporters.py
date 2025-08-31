@@ -14,7 +14,8 @@ Features:
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: Proprietary - All rights reserved
-"""import asyncio
+"""
+import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
@@ -33,7 +34,8 @@ from ...core.database import get_database_session
 
 
 class ReportType(Enum):
-    """Report types for different audiences."""    EXECUTIVE_SUMMARY = "executive_summary"
+    """Report types for different audiences."""
+    EXECUTIVE_SUMMARY = "executive_summary"
     BUSINESS_INTELLIGENCE = "business_intelligence"
     TECHNICAL_PERFORMANCE = "technical_performance"
     FINANCIAL_ANALYSIS = "financial_analysis"
@@ -42,7 +44,8 @@ class ReportType(Enum):
 
 
 class ReportFormat(Enum):
-    """Report output formats."""    HTML = "html"
+    """Report output formats."""
+    HTML = "html"
     PDF = "pdf"
     JSON = "json"
     EXCEL = "excel"
@@ -51,7 +54,8 @@ class ReportFormat(Enum):
 
 @dataclass
 class ReportSection:
-    """Individual report section."""    title: str
+    """Individual report section."""
+    title: str
     content: str
     charts: List[Dict[str, Any]] = field(default_factory=list)
     tables: List[Dict[str, Any]] = field(default_factory=list)
@@ -61,7 +65,8 @@ class ReportSection:
 
 @dataclass
 class GeneratedReport:
-    """Complete generated report."""    report_id: str
+    """Complete generated report."""
+    report_id: str
     report_type: ReportType
     title: str
     generated_at: datetime
@@ -71,11 +76,13 @@ class GeneratedReport:
 
 
 class BusinessReporter:
-    """    Advanced business intelligence reporting system.
+    """
+    Advanced business intelligence reporting system.
     
     Generates comprehensive business reports for strategic
     decision making and performance monitoring.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self._report_cache = {}
@@ -88,7 +95,8 @@ class BusinessReporter:
         end_date: Optional[datetime] = None,
         format_type: ReportFormat = ReportFormat.HTML
     ) -> GeneratedReport:
-        """        Generate comprehensive business intelligence report.
+        """
+        Generate comprehensive business intelligence report.
         
         Args:
             report_type: Type of report to generate
@@ -99,7 +107,8 @@ class BusinessReporter:
             
         Returns:
             Generated report object
-        """        try:
+        """
+        try:
             if not start_date:
                 start_date = datetime.now() - timedelta(days=30)
             if not end_date:
@@ -143,7 +152,8 @@ class BusinessReporter:
         start_date: datetime,
         end_date: datetime
     ) -> GeneratedReport:
-        """Generate executive summary report."""        
+        """Generate executive summary report."""
+        
         report_id = f"exec_summary_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         
         # Key Performance Indicators Section
@@ -174,7 +184,8 @@ class BusinessReporter:
         )
         
     async def _create_kpi_section(self, data_sources: List[Dict[str, Any]]) -> ReportSection:
-        """Create KPI overview section."""        
+        """Create KPI overview section."""
+        
         # Extract key metrics from data sources
         kpis = []
         
@@ -212,7 +223,8 @@ class BusinessReporter:
         # Create KPI visualization
         kpi_chart = self._create_kpi_chart(kpis)
         
-        content = """        ## Key Performance Indicators
+        content = """
+        ## Key Performance Indicators
         
         This section provides an overview of the most critical business metrics
         for the reporting period. These KPIs reflect the overall health and
@@ -223,7 +235,8 @@ class BusinessReporter:
         - **Revenue Performance**: Monitoring revenue generation and trends
         - **Content Activity**: Measuring content creation and engagement
         - **Platform Health**: Assessing system performance and reliability
-        """        
+        """
+        
         return ReportSection(
             title="Key Performance Indicators",
             content=content,
@@ -232,7 +245,8 @@ class BusinessReporter:
         )
         
     def _create_kpi_chart(self, kpis: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Create KPI visualization chart."""        
+        """Create KPI visualization chart."""
+        
         fig = make_subplots(
             rows=2, cols=2,
             subplot_titles=[kpi['name'] for kpi in kpis[:4]],
@@ -286,7 +300,8 @@ class BusinessReporter:
         start_date: datetime,
         end_date: datetime
     ) -> ReportSection:
-        """Create business growth analysis section."""        
+        """Create business growth analysis section."""
+        
         # Extract growth metrics
         growth_data = []
         
@@ -297,7 +312,8 @@ class BusinessReporter:
         # Create growth chart
         growth_chart = self._create_growth_chart(growth_data)
         
-        content = f"""        ## Business Growth Analysis
+        content = f"""
+        ## Business Growth Analysis
         
         Analysis period: {start_date.strftime('%B %d, %Y')} to {end_date.strftime('%B %d, %Y')}
         
@@ -311,7 +327,8 @@ class BusinessReporter:
         The growth analysis reveals key trends in platform adoption,
         user engagement, and revenue generation that inform strategic
         decision making for the next quarter.
-        """        
+        """
+        
         recommendations = [
             "Focus on high-growth user segments for targeted marketing",
             "Optimize content creator onboarding to improve retention",
@@ -327,7 +344,8 @@ class BusinessReporter:
         )
         
     def _create_growth_chart(self, growth_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Create growth trend visualization."""        
+        """Create growth trend visualization."""
+        
         if not growth_data:
             return {'type': 'empty', 'message': 'No growth data available'}
             
@@ -372,7 +390,8 @@ class BusinessReporter:
         }
         
     async def _create_revenue_section(self, data_sources: List[Dict[str, Any]]) -> ReportSection:
-        """Create revenue analysis section."""        
+        """Create revenue analysis section."""
+        
         # Extract revenue metrics
         revenue_metrics = []
         
@@ -384,7 +403,8 @@ class BusinessReporter:
         revenue_chart = self._create_revenue_chart(revenue_metrics)
         revenue_breakdown_chart = self._create_revenue_breakdown_chart(revenue_metrics)
         
-        content = """        ## Revenue Analysis
+        content = """
+        ## Revenue Analysis
         
         ### Revenue Performance:
         - Total revenue generation and growth trends
@@ -396,7 +416,8 @@ class BusinessReporter:
         Revenue analysis shows strong performance across multiple
         monetization channels with opportunities for optimization
         in conversion rates and user lifetime value.
-        """        
+        """
+        
         return ReportSection(
             title="Revenue Analysis",
             content=content,
@@ -404,7 +425,8 @@ class BusinessReporter:
         )
         
     def _create_revenue_chart(self, revenue_metrics: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Create revenue performance chart."""        
+        """Create revenue performance chart."""
+        
         # Sample revenue data
         months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']
         revenue = [45000, 52000, 48000, 61000, 58000, 67000, 71000, 78000]
@@ -432,7 +454,8 @@ class BusinessReporter:
         }
         
     def _create_revenue_breakdown_chart(self, revenue_metrics: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Create revenue source breakdown chart."""        
+        """Create revenue source breakdown chart."""
+        
         # Sample revenue breakdown
         sources = ['Content Licensing', 'Subscriptions', 'Commissions', 'Premium Features']
         values = [35, 28, 22, 15]
@@ -455,13 +478,16 @@ class BusinessReporter:
         }
         
     async def _create_recommendations_section(self, data_sources: List[Dict[str, Any]]) -> ReportSection:
-        """Create strategic recommendations section."""        
-        content = """        ## Strategic Recommendations
+        """Create strategic recommendations section."""
+        
+        content = """
+        ## Strategic Recommendations
         
         Based on the comprehensive analysis of platform performance,
         user behavior, and market trends, the following strategic
         recommendations are proposed for the next quarter.
-        """        
+        """
+        
         recommendations = [
             "Accelerate user acquisition through targeted digital marketing campaigns",
             "Enhance content creator monetization tools to improve retention",
@@ -484,7 +510,8 @@ class BusinessReporter:
         start_date: datetime,
         end_date: datetime
     ) -> GeneratedReport:
-        """Generate detailed business intelligence report."""        
+        """Generate detailed business intelligence report."""
+        
         report_id = f"bi_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         
         # User Analytics Section
@@ -514,8 +541,10 @@ class BusinessReporter:
         )
         
     async def _create_user_analytics_section(self, data_sources: List[Dict[str, Any]]) -> ReportSection:
-        """Create detailed user analytics section."""        
-        content = """        ## User Analytics Deep Dive
+        """Create detailed user analytics section."""
+        
+        content = """
+        ## User Analytics Deep Dive
         
         ### User Acquisition & Retention:
         - New user registration trends and conversion funnel analysis
@@ -528,7 +557,8 @@ class BusinessReporter:
         - Session duration and frequency patterns
         - Feature adoption and usage analytics
         - User journey mapping and optimization opportunities
-        """        
+        """
+        
         # Create user analytics charts
         user_growth_chart = self._create_user_growth_chart()
         retention_chart = self._create_retention_chart()
@@ -540,7 +570,8 @@ class BusinessReporter:
         )
         
     def _create_user_growth_chart(self) -> Dict[str, Any]:
-        """Create user growth analysis chart."""        
+        """Create user growth analysis chart."""
+        
         dates = pd.date_range(start='2025-01-01', end='2025-08-22', freq='W')
         cumulative_users = [1000 + i * 150 + np.random.normal(0, 50) for i in range(len(dates))]
         new_users = [150 + np.random.normal(0, 30) for _ in range(len(dates))]
@@ -570,7 +601,8 @@ class BusinessReporter:
         }
         
     def _create_retention_chart(self) -> Dict[str, Any]:
-        """Create user retention cohort chart."""        
+        """Create user retention cohort chart."""
+        
         cohorts = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']
         periods = ['Week 1', 'Week 2', 'Week 3', 'Week 4']
         
@@ -607,8 +639,10 @@ class BusinessReporter:
         }
         
     async def _create_content_performance_section(self, data_sources: List[Dict[str, Any]]) -> ReportSection:
-        """Create content performance analysis section."""        
-        content = """        ## Content Performance Analysis
+        """Create content performance analysis section."""
+        
+        content = """
+        ## Content Performance Analysis
         
         ### Content Creation Trends:
         - Upload volume and frequency patterns
@@ -621,7 +655,8 @@ class BusinessReporter:
         - Search and recommendation effectiveness
         - Social sharing and viral content identification
         - Content lifecycle and longevity analysis
-        """        
+        """
+        
         content_chart = self._create_content_performance_chart()
         engagement_chart = self._create_content_engagement_chart()
         
@@ -632,7 +667,8 @@ class BusinessReporter:
         )
         
     def _create_content_performance_chart(self) -> Dict[str, Any]:
-        """Create content performance chart."""        
+        """Create content performance chart."""
+        
         content_types = ['Audio', 'Video', 'Image', 'Text']
         uploads = [1250, 980, 1500, 750]
         views = [25000, 45000, 18000, 12000]
@@ -662,7 +698,8 @@ class BusinessReporter:
         }
         
     def _create_content_engagement_chart(self) -> Dict[str, Any]:
-        """Create content engagement metrics chart."""        
+        """Create content engagement metrics chart."""
+        
         metrics = ['Views', 'Likes', 'Shares', 'Comments', 'Downloads']
         values = [100000, 25000, 8500, 12000, 5500]
         
@@ -686,8 +723,10 @@ class BusinessReporter:
         }
         
     async def _create_protection_effectiveness_section(self, data_sources: List[Dict[str, Any]]) -> ReportSection:
-        """Create protection effectiveness analysis section."""        
-        content = """        ## Content Protection Effectiveness
+        """Create protection effectiveness analysis section."""
+        
+        content = """
+        ## Content Protection Effectiveness
         
         ### Protection Performance:
         - Fingerprint accuracy and matching effectiveness
@@ -700,7 +739,8 @@ class BusinessReporter:
         - Platform-specific violation trends
         - Response effectiveness and resolution rates
         - Revenue protection and recovery metrics
-        """        
+        """
+        
         protection_chart = self._create_protection_performance_chart()
         threat_chart = self._create_threat_analysis_chart()
         
@@ -711,7 +751,8 @@ class BusinessReporter:
         )
         
     def _create_protection_performance_chart(self) -> Dict[str, Any]:
-        """Create protection performance chart."""        
+        """Create protection performance chart."""
+        
         metrics = ['Detections', 'Resolved', 'False Positives', 'Pending']
         values = [850, 720, 45, 85]
         colors = ['blue', 'green', 'red', 'orange']
@@ -734,7 +775,8 @@ class BusinessReporter:
         }
         
     def _create_threat_analysis_chart(self) -> Dict[str, Any]:
-        """Create threat analysis chart."""        
+        """Create threat analysis chart."""
+        
         platforms = ['YouTube', 'Instagram', 'TikTok', 'Facebook', 'Twitter']
         violations = [145, 89, 67, 123, 45]
         
@@ -759,8 +801,10 @@ class BusinessReporter:
         }
         
     async def _create_market_analysis_section(self, data_sources: List[Dict[str, Any]]) -> ReportSection:
-        """Create market analysis section."""        
-        content = """        ## Market Analysis & Competitive Intelligence
+        """Create market analysis section."""
+        
+        content = """
+        ## Market Analysis & Competitive Intelligence
         
         ### Market Position:
         - Competitive landscape and positioning
@@ -773,7 +817,8 @@ class BusinessReporter:
         - Partnership opportunities and strategic alliances
         - Technology innovation and differentiation areas
         - Revenue model optimization and diversification
-        """        
+        """
+        
         market_share_chart = self._create_market_share_chart()
         opportunity_chart = self._create_opportunity_analysis_chart()
         
@@ -792,7 +837,8 @@ class BusinessReporter:
         )
         
     def _create_market_share_chart(self) -> Dict[str, Any]:
-        """Create market share analysis chart."""        
+        """Create market share analysis chart."""
+        
         competitors = ['IA Influencer', 'Competitor A', 'Competitor B', 'Competitor C', 'Others']
         market_share = [15, 25, 20, 18, 22]
         
@@ -814,7 +860,8 @@ class BusinessReporter:
         }
         
     def _create_opportunity_analysis_chart(self) -> Dict[str, Any]:
-        """Create opportunity analysis chart."""        
+        """Create opportunity analysis chart."""
+        
         opportunities = ['Mobile First', 'AI Enhancement', 'Global Expansion', 'Enterprise', 'Partnerships']
         impact = [8, 9, 7, 6, 8]
         effort = [6, 8, 9, 7, 5]
@@ -844,7 +891,8 @@ class BusinessReporter:
         }
         
     async def _export_report(self, report: GeneratedReport, format_type: ReportFormat) -> str:
-        """Export report to specified format."""        
+        """Export report to specified format."""
+        
         try:
             # Create reports directory
             reports_dir = Path("reports")
@@ -875,8 +923,10 @@ class BusinessReporter:
             raise
             
     async def _export_html_report(self, report: GeneratedReport, file_path: Path) -> None:
-        """Export report as HTML."""        
-        html_content = f"""        <!DOCTYPE html>
+        """Export report as HTML."""
+        
+        html_content = f"""
+        <!DOCTYPE html>
         <html>
         <head>
             <title>{report.title}</title>
@@ -896,22 +946,27 @@ class BusinessReporter:
             <h1>{report.title}</h1>
             <p><strong>Generated:</strong> {report.generated_at.strftime('%Y-%m-%d %H:%M:%S')}</p>
             <p><strong>Report ID:</strong> {report.report_id}</p>
-        """        
+        """
+        
         for section in report.sections:
-            html_content += f"""            <div class="section">
+            html_content += f"""
+            <div class="section">
                 <h2>{section.title}</h2>
                 <div>{section.content}</div>
-            """            
+            """
+            
             # Add KPIs
             if section.kpis:
                 html_content += "<div class='kpis'>"
                 for kpi in section.kpis:
                     trend_symbol = "↗" if kpi.get('trend', 0) >= 0 else "↘"
-                    html_content += f"""                    <div class="kpi">
+                    html_content += f"""
+                    <div class="kpi">
                         <strong>{kpi['name']}</strong><br>
                         {kpi['value']:,.2f} {trend_symbol} {kpi.get('trend', 0):.1f}%
                     </div>
-                    """                html_content += "</div>"
+                    """
+                html_content += "</div>"
                 
             # Add recommendations
             if section.recommendations:
@@ -921,22 +976,27 @@ class BusinessReporter:
                     
             html_content += "</div>"
             
-        html_content += """        </body>
+        html_content += """
+        </body>
         </html>
-        """        
+        """
+        
         with open(file_path, 'w', encoding='utf-8') as f:
             f.write(html_content)
             
     async def _export_pdf_report(self, report: GeneratedReport, file_path: Path) -> None:
-        """Export report as PDF (placeholder - would use reportlab)."""        
+        """Export report as PDF (placeholder - would use reportlab)."""
+        
         # This would typically use libraries like reportlab or weasyprint
         # For now, create a simple text version
         
-        content = f"""        {report.title}
+        content = f"""
+        {report.title}
         Generated: {report.generated_at.strftime('%Y-%m-%d %H:%M:%S')}
         Report ID: {report.report_id}
         
-        """        
+        """
+        
         for section in report.sections:
             content += f"\n{section.title}\n"
             content += "=" * len(section.title) + "\n"
@@ -951,7 +1011,8 @@ class BusinessReporter:
             f.write(content)
             
     async def _export_excel_report(self, report: GeneratedReport, file_path: Path) -> None:
-        """Export report as Excel (placeholder - would use openpyxl)."""        
+        """Export report as Excel (placeholder - would use openpyxl)."""
+        
         # This would typically use openpyxl for Excel export
         # For now, create a CSV version
         
@@ -980,16 +1041,19 @@ class BusinessReporter:
 
 
 class ExecutiveDashboard:
-    """    Real-time executive dashboard for high-level business monitoring.
+    """
+    Real-time executive dashboard for high-level business monitoring.
     
     Provides live KPI tracking and alert notifications for
     critical business metrics and performance indicators.
-    """    
+    """
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
     async def generate_dashboard_data(self) -> Dict[str, Any]:
-        """Generate real-time dashboard data."""        
+        """Generate real-time dashboard data."""
+        
         try:
             dashboard_data = {
                 "timestamp": datetime.now().isoformat(),
@@ -1006,7 +1070,8 @@ class ExecutiveDashboard:
             raise
             
     async def _get_real_time_kpis(self) -> List[Dict[str, Any]]:
-        """Get real-time KPI data."""        
+        """Get real-time KPI data."""
+        
         # This would typically query live databases
         return [
             {
@@ -1040,7 +1105,8 @@ class ExecutiveDashboard:
         ]
         
     async def _get_active_alerts(self) -> List[Dict[str, Any]]:
-        """Get active system alerts."""        
+        """Get active system alerts."""
+        
         return [
             {
                 "id": "alert_001",
@@ -1061,7 +1127,8 @@ class ExecutiveDashboard:
         ]
         
     async def _get_trend_indicators(self) -> Dict[str, Any]:
-        """Get trend indicators for key metrics."""        
+        """Get trend indicators for key metrics."""
+        
         return {
             "user_growth": {
                 "direction": "up",
@@ -1081,7 +1148,8 @@ class ExecutiveDashboard:
         }
         
     async def _get_performance_summary(self) -> Dict[str, Any]:
-        """Get overall performance summary."""        
+        """Get overall performance summary."""
+        
         return {
             "overall_score": 87.5,
             "category_scores": {

@@ -11,7 +11,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
-"""import asyncio
+"""
+import asyncio
 import logging
 import signal
 import sys
@@ -44,12 +45,14 @@ logger = logging.getLogger(__name__)
 
 
 class LoadBalancerOrchestrator:
-    """    Enterprise Load Balancer Orchestrator
+    """
+    Enterprise Load Balancer Orchestrator
     
     Centralized management and coordination of all load balancing components
     for the IA Influencer Agent platform. Handles initialization, configuration,
     monitoring, and lifecycle management of the entire load balancing infrastructure.
-    """    
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path or "/etc/ia-influencer/load-balancer.json"
         self.config = {}
@@ -85,7 +88,8 @@ class LoadBalancerOrchestrator:
         logger.info("Load Balancer Orchestrator initialized")
     
     async def initialize(self) -> bool:
-        """Initialize the complete load balancing infrastructure"""        try:
+        """Initialize the complete load balancing infrastructure"""
+        try:
             logger.info("Initializing IA Influencer Agent Load Balancer Infrastructure...")
             
             # Load configuration
@@ -162,7 +166,8 @@ class LoadBalancerOrchestrator:
             return False
     
     async def _load_configuration(self) -> None:
-        """Load configuration from file or use defaults"""        try:
+        """Load configuration from file or use defaults"""
+        try:
             config_file = Path(self.config_path)
             if config_file.exists():
                 with open(config_file, 'r') as f:
@@ -178,7 +183,8 @@ class LoadBalancerOrchestrator:
             self.config = self._get_default_configuration()
     
     async def _initialize_config_manager(self) -> None:
-        """Initialize configuration manager"""        try:
+        """Initialize configuration manager"""
+        try:
             self.config_manager = ConfigurationManager()
             await self.config_manager.initialize()
             self.components["config_manager"] = self.config_manager
@@ -190,7 +196,8 @@ class LoadBalancerOrchestrator:
             raise
     
     async def _start_additional_services(self) -> None:
-        """Start additional monitoring and optimization services"""        try:
+        """Start additional monitoring and optimization services"""
+        try:
             # Start bandwidth monitoring
             if self.bandwidth_monitor:
                 await self.bandwidth_monitor.start_monitoring()
@@ -206,7 +213,8 @@ class LoadBalancerOrchestrator:
             raise
     
     async def _initialize_performance_optimizer(self) -> None:
-        """Initialize performance optimizer"""        try:
+        """Initialize performance optimizer"""
+        try:
             from .performance_optimizer import OptimizationType
             self.performance_optimizer = PerformanceOptimizer(
                 optimization_type=OptimizationType.BALANCED
@@ -221,7 +229,8 @@ class LoadBalancerOrchestrator:
             raise
     
     async def _initialize_bandwidth_monitor(self) -> None:
-        """Initialize bandwidth monitor"""        try:
+        """Initialize bandwidth monitor"""
+        try:
             self.bandwidth_monitor = BandwidthMonitor(collection_interval=10)
             await self.bandwidth_monitor.initialize()
             self.components["bandwidth_monitor"] = self.bandwidth_monitor
@@ -233,7 +242,8 @@ class LoadBalancerOrchestrator:
             raise
     
     async def _initialize_session_manager(self) -> None:
-        """Initialize session manager"""        try:
+        """Initialize session manager"""
+        try:
             import redis
             redis_client = None
             try:
@@ -254,7 +264,8 @@ class LoadBalancerOrchestrator:
             raise
     
     def _get_default_configuration(self) -> Dict[str, Any]:
-        """Get default configuration for load balancer"""        return {
+        """Get default configuration for load balancer"""
+        return {
             "nginx": {
                 "enabled": True,
                 "config_path": "/etc/nginx",
@@ -329,7 +340,8 @@ class LoadBalancerOrchestrator:
         }
     
     async def _initialize_ssl_terminator(self) -> None:
-        """Initialize SSL terminator"""        if not self.config.get("ssl", {}).get("enabled", True):
+        """Initialize SSL terminator"""
+        if not self.config.get("ssl", {}).get("enabled", True):
             logger.info("SSL terminator disabled")
             return
         
@@ -349,7 +361,8 @@ class LoadBalancerOrchestrator:
             raise
     
     async def _initialize_circuit_breaker(self) -> None:
-        """Initialize circuit breaker"""        if not self.config.get("circuit_breaker", {}).get("enabled", True):
+        """Initialize circuit breaker"""
+        if not self.config.get("circuit_breaker", {}).get("enabled", True):
             logger.info("Circuit breaker disabled")
             return
         
@@ -365,7 +378,8 @@ class LoadBalancerOrchestrator:
             raise
     
     async def _initialize_rate_limiter(self) -> None:
-        """Initialize rate limiter"""        if not self.config.get("rate_limiting", {}).get("enabled", True):
+        """Initialize rate limiter"""
+        if not self.config.get("rate_limiting", {}).get("enabled", True):
             logger.info("Rate limiter disabled")
             return
         
@@ -386,7 +400,8 @@ class LoadBalancerOrchestrator:
             raise
     
     async def _initialize_traffic_distributor(self) -> None:
-        """Initialize traffic distributor"""        try:
+        """Initialize traffic distributor"""
+        try:
             self.traffic_distributor = TrafficDistributor()
             await self.traffic_distributor.configure_platform_services()
             self.components["traffic_distributor"] = self.traffic_distributor
@@ -398,7 +413,8 @@ class LoadBalancerOrchestrator:
             raise
     
     async def _initialize_nginx(self) -> None:
-        """Initialize Nginx manager"""        if not self.config.get("nginx", {}).get("enabled", True):
+        """Initialize Nginx manager"""
+        if not self.config.get("nginx", {}).get("enabled", True):
             logger.info("Nginx disabled")
             return
         
@@ -418,7 +434,8 @@ class LoadBalancerOrchestrator:
             raise
     
     async def _initialize_haproxy(self) -> None:
-        """Initialize HAProxy manager"""        if not self.config.get("haproxy", {}).get("enabled", True):
+        """Initialize HAProxy manager"""
+        if not self.config.get("haproxy", {}).get("enabled", True):
             logger.info("HAProxy disabled")
             return
         
@@ -438,7 +455,8 @@ class LoadBalancerOrchestrator:
             raise
     
     async def _initialize_envoy(self) -> None:
-        """Initialize Envoy manager"""        if not self.config.get("envoy", {}).get("enabled", False):
+        """Initialize Envoy manager"""
+        if not self.config.get("envoy", {}).get("enabled", False):
             logger.info("Envoy disabled")
             return
         
@@ -459,7 +477,8 @@ class LoadBalancerOrchestrator:
             logger.warning("Continuing without Envoy")
     
     async def _initialize_health_monitor(self) -> None:
-        """Initialize health monitor"""        if not self.config.get("health_check", {}).get("enabled", True):
+        """Initialize health monitor"""
+        if not self.config.get("health_check", {}).get("enabled", True):
             logger.info("Health monitor disabled")
             return
         
@@ -482,7 +501,8 @@ class LoadBalancerOrchestrator:
             raise
     
     async def _initialize_metrics_collector(self) -> None:
-        """Initialize metrics collector"""        if not self.config.get("metrics", {}).get("enabled", True):
+        """Initialize metrics collector"""
+        if not self.config.get("metrics", {}).get("enabled", True):
             logger.info("Metrics collector disabled")
             return
         
@@ -504,7 +524,8 @@ class LoadBalancerOrchestrator:
             raise
     
     async def _configure_platform_services(self) -> None:
-        """Configure all platform services"""        try:
+        """Configure all platform services"""
+        try:
             logger.info("Configuring platform services for load balancing...")
             
             # Get service configurations
@@ -536,7 +557,8 @@ class LoadBalancerOrchestrator:
             raise
     
     def _setup_signal_handlers(self) -> None:
-        """Setup signal handlers for graceful shutdown"""        try:
+        """Setup signal handlers for graceful shutdown"""
+        try:
             signal.signal(signal.SIGTERM, self._signal_handler)
             signal.signal(signal.SIGINT, self._signal_handler)
             logger.info("Signal handlers configured")
@@ -544,11 +566,13 @@ class LoadBalancerOrchestrator:
             logger.error(f"Failed to setup signal handlers: {e}")
     
     def _signal_handler(self, signum: int, frame) -> None:
-        """Handle shutdown signals"""        logger.info(f"Received signal {signum}, initiating graceful shutdown...")
+        """Handle shutdown signals"""
+        logger.info(f"Received signal {signum}, initiating graceful shutdown...")
         asyncio.create_task(self.shutdown())
     
     async def run(self) -> None:
-        """Run the load balancer orchestrator"""        try:
+        """Run the load balancer orchestrator"""
+        try:
             if not self.is_running:
                 logger.error("Load balancer not initialized, cannot run")
                 return
@@ -578,7 +602,8 @@ class LoadBalancerOrchestrator:
             await self.shutdown()
     
     async def _health_check_cycle(self) -> None:
-        """Perform periodic health checks"""        try:
+        """Perform periodic health checks"""
+        try:
             self.last_health_check = datetime.now()
             
             # Check component health
@@ -603,7 +628,8 @@ class LoadBalancerOrchestrator:
             logger.error(f"Health check cycle failed: {e}")
     
     async def _initialize_realtime_monitor(self) -> None:
-        """Initialize real-time monitoring system"""        try:
+        """Initialize real-time monitoring system"""
+        try:
             self.realtime_monitor = RealtimeMonitor()
             await self.realtime_monitor.initialize()
             await self.realtime_monitor.start_monitoring()
@@ -616,7 +642,8 @@ class LoadBalancerOrchestrator:
             raise
     
     async def _initialize_ai_optimizer(self) -> None:
-        """Initialize AI optimization engine"""        try:
+        """Initialize AI optimization engine"""
+        try:
             self.ai_optimizer = AILoadBalancerOptimizer()
             await self.ai_optimizer.initialize()
             await self.ai_optimizer.start_optimization()
@@ -629,7 +656,8 @@ class LoadBalancerOrchestrator:
             raise
     
     async def _initialize_geo_load_balancer(self) -> None:
-        """Initialize geographic load balancer"""        try:
+        """Initialize geographic load balancer"""
+        try:
             self.geo_load_balancer = GeographicLoadBalancer()
             await self.geo_load_balancer.initialize()
             self.components["geo_load_balancer"] = self.geo_load_balancer
@@ -641,7 +669,8 @@ class LoadBalancerOrchestrator:
             raise
     
     async def _initialize_traffic_shaping_engine(self) -> None:
-        """Initialize traffic shaping engine"""        try:
+        """Initialize traffic shaping engine"""
+        try:
             from .traffic_shaping_engine import TrafficShapingEngine
             self.traffic_shaping_engine = TrafficShapingEngine()
             await self.traffic_shaping_engine.initialize()
@@ -655,7 +684,8 @@ class LoadBalancerOrchestrator:
             raise
     
     async def _initialize_request_router(self) -> None:
-        """Initialize intelligent request router"""        try:
+        """Initialize intelligent request router"""
+        try:
             self.request_router = RequestRouter()
             await self.request_router.initialize()
             self.components["request_router"] = self.request_router
@@ -667,7 +697,8 @@ class LoadBalancerOrchestrator:
             raise
     
     async def _initialize_failover_manager(self) -> None:
-        """Initialize failover manager"""        try:
+        """Initialize failover manager"""
+        try:
             self.failover_manager = FailoverManager()
             await self.failover_manager.initialize()
             self.components["failover_manager"] = self.failover_manager
@@ -679,7 +710,8 @@ class LoadBalancerOrchestrator:
             raise
 
     async def get_status(self) -> Dict[str, Any]:
-        """Get comprehensive status of load balancer infrastructure"""        try:
+        """Get comprehensive status of load balancer infrastructure"""
+        try:
             component_status = {}
             
             for name, component in self.components.items():
@@ -711,7 +743,8 @@ class LoadBalancerOrchestrator:
             return {"error": str(e), "timestamp": datetime.now().isoformat()}
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown the load balancer infrastructure"""        try:
+        """Gracefully shutdown the load balancer infrastructure"""
+        try:
             logger.info("Shutting down Load Balancer Infrastructure...")
             
             self.is_running = False
@@ -769,7 +802,8 @@ class LoadBalancerOrchestrator:
 
 
 async def main():
-    """Main entry point for the load balancer"""    logging.basicConfig(
+    """Main entry point for the load balancer"""
+    logging.basicConfig(
         level=logging.INFO,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     )

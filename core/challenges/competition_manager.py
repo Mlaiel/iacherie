@@ -19,7 +19,8 @@ Live Scoring → Real-time Leaderboards → Prize Distribution → Community Eng
 COMPETITION ARCHITECTURE:
 Tournament Engine → Bracket Manager → Matchmaking System → 
 Live Score Tracker → Prize Pool Manager → Broadcasting System
-"""from typing import Dict, List, Optional, Any, Union, Tuple
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum, IntEnum
 from datetime import datetime, timedelta, timezone
@@ -31,7 +32,8 @@ import json
 from abc import ABC, abstractmethod
 
 class CompetitionType(Enum):
-    """Types of competitions supported"""    TOURNAMENT = "tournament"
+    """Types of competitions supported"""
+    TOURNAMENT = "tournament"
     LEAGUE = "league"
     BATTLE_ROYALE = "battle_royale"
     ELIMINATION = "elimination"
@@ -43,7 +45,8 @@ class CompetitionType(Enum):
     TIMED_CHALLENGE = "timed_challenge"
 
 class CompetitionStatus(Enum):
-    """Competition lifecycle status"""    DRAFT = "draft"
+    """Competition lifecycle status"""
+    DRAFT = "draft"
     REGISTRATION_OPEN = "registration_open"
     REGISTRATION_CLOSED = "registration_closed"
     STARTING = "starting"
@@ -55,7 +58,8 @@ class CompetitionStatus(Enum):
     ARCHIVED = "archived"
 
 class CompetitionPhase(Enum):
-    """Competition phases"""    PREPARATION = "preparation"
+    """Competition phases"""
+    PREPARATION = "preparation"
     REGISTRATION = "registration"
     SEEDING = "seeding"
     QUALIFIER = "qualifier"
@@ -67,7 +71,8 @@ class CompetitionPhase(Enum):
     WRAP_UP = "wrap_up"
 
 class ParticipationStatus(Enum):
-    """Participant status in competition"""    REGISTERED = "registered"
+    """Participant status in competition"""
+    REGISTERED = "registered"
     CONFIRMED = "confirmed"
     ACTIVE = "active"
     ELIMINATED = "eliminated"
@@ -77,7 +82,8 @@ class ParticipationStatus(Enum):
     RUNNER_UP = "runner_up"
 
 class MatchResult(Enum):
-    """Match result outcomes"""    WIN = "win"
+    """Match result outcomes"""
+    WIN = "win"
     LOSS = "loss"
     DRAW = "draw"
     FORFEIT = "forfeit"
@@ -86,7 +92,8 @@ class MatchResult(Enum):
 
 @dataclass
 class CompetitionRule:
-    """Individual competition rule specification"""    rule_id: str
+    """Individual competition rule specification"""
+    rule_id: str
     rule_name: str
     description: str
     rule_type: str  # "scoring", "elimination", "advancement", "conduct"
@@ -96,7 +103,8 @@ class CompetitionRule:
     
 @dataclass
 class PrizePool:
-    """Competition prize pool configuration"""    total_value: Decimal
+    """Competition prize pool configuration"""
+    total_value: Decimal
     currency_type: str  # "virtual", "real", "mixed"
     distribution_method: str  # "winner_takes_all", "top_percentage", "participation"
     prize_breakdown: Dict[str, Decimal]  # position -> amount
@@ -105,7 +113,8 @@ class PrizePool:
 
 @dataclass
 class MatchConfiguration:
-    """Match/round configuration"""    match_id: str
+    """Match/round configuration"""
+    match_id: str
     match_type: str  # "head_to_head", "group", "time_trial"
     participants: List[str]  # participant IDs
     rules: List[CompetitionRule]
@@ -117,7 +126,8 @@ class MatchConfiguration:
 
 @dataclass
 class CompetitionConfiguration:
-    """Complete competition configuration"""    competition_id: str
+    """Complete competition configuration"""
+    competition_id: str
     title: str
     description: str
     competition_type: CompetitionType
@@ -162,7 +172,8 @@ class CompetitionConfiguration:
     updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
 class CompetitionManager:
-    """Enterprise competition management system"""    
+    """Enterprise competition management system"""
+    
     def __init__(self,
                  competition_repository=None,
                  challenge_repository=None,
@@ -172,7 +183,8 @@ class CompetitionManager:
                  reward_service=None,
                  streaming_service=None,
                  matchmaking_service=None):
-        """Initialize competition manager with dependencies"""        self.competition_repository = competition_repository
+        """Initialize competition manager with dependencies"""
+        self.competition_repository = competition_repository
         self.challenge_repository = challenge_repository
         self.user_service = user_service
         self.analytics_service = analytics_service
@@ -225,7 +237,8 @@ class CompetitionManager:
         }
     
     async def create_competition(self, config: CompetitionConfiguration) -> Dict[str, Any]:
-        """Create a new competition with comprehensive setup"""        try:
+        """Create a new competition with comprehensive setup"""
+        try:
             # Validate competition configuration
             validation_result = await self._validate_competition_config(config)
             if not validation_result["is_valid"]:
@@ -310,7 +323,8 @@ class CompetitionManager:
                                  participant_id: str,
                                  team_id: Optional[str] = None,
                                  registration_data: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Register participant for competition"""        try:
+        """Register participant for competition"""
+        try:
             # Get competition configuration
             competition = await self.competition_repository.get_competition(competition_id)
             if not competition:
@@ -394,7 +408,8 @@ class CompetitionManager:
             return {"success": False, "error": str(e)}
     
     async def start_competition(self, competition_id: str) -> Dict[str, Any]:
-        """Start competition and begin first phase"""        try:
+        """Start competition and begin first phase"""
+        try:
             # Get competition configuration
             competition = await self.competition_repository.get_competition(competition_id)
             if not competition:
@@ -498,7 +513,8 @@ class CompetitionManager:
             return {"success": False, "error": str(e)}
     
     async def advance_phase(self, competition_id: str) -> Dict[str, Any]:
-        """Advance competition to next phase"""        try:
+        """Advance competition to next phase"""
+        try:
             # Get current competition state
             competition = await self.competition_repository.get_competition(competition_id)
             if not competition:
@@ -582,7 +598,8 @@ class CompetitionManager:
                                 competition_id: str,
                                 match_id: str,
                                 results: Dict[str, Any]) -> Dict[str, Any]:
-        """Record match result and update standings"""        try:
+        """Record match result and update standings"""
+        try:
             # Validate match exists and is active
             match = await self.competition_repository.get_match(competition_id, match_id)
             if not match:
@@ -658,7 +675,8 @@ class CompetitionManager:
             return {"success": False, "error": str(e)}
     
     async def get_competition_status(self, competition_id: str) -> Dict[str, Any]:
-        """Get comprehensive competition status"""        try:
+        """Get comprehensive competition status"""
+        try:
             # Get competition data
             competition = await self.competition_repository.get_competition(competition_id)
             if not competition:
@@ -719,7 +737,8 @@ class CompetitionManager:
     async def get_live_leaderboard(self, 
                                  competition_id: str,
                                  limit: int = 50) -> Dict[str, Any]:
-        """Get live competition leaderboard"""        try:
+        """Get live competition leaderboard"""
+        try:
             # Get current leaderboard
             leaderboard = await self.competition_repository.get_competition_leaderboard(
                 competition_id, limit=limit
@@ -752,7 +771,8 @@ class CompetitionManager:
     # Private helper methods
     
     async def _validate_competition_config(self, config: CompetitionConfiguration) -> Dict[str, Any]:
-        """Validate competition configuration"""        errors = []
+        """Validate competition configuration"""
+        errors = []
         
         # Basic validation
         if not config.title or len(config.title.strip()) < 3:
@@ -798,7 +818,8 @@ class CompetitionManager:
         }
     
     def _apply_competition_type_defaults(self, config: CompetitionConfiguration) -> CompetitionConfiguration:
-        """Apply default settings based on competition type"""        type_config = self._competition_type_configs.get(config.competition_type, {})
+        """Apply default settings based on competition type"""
+        type_config = self._competition_type_configs.get(config.competition_type, {})
         
         # Set recommended duration if not specified
         if not config.competition_end:
@@ -808,7 +829,8 @@ class CompetitionManager:
         return config
     
     def _generate_default_phases(self, competition_type: CompetitionType) -> List[CompetitionPhase]:
-        """Generate default phases for competition type"""        if competition_type == CompetitionType.TOURNAMENT:
+        """Generate default phases for competition type"""
+        if competition_type == CompetitionType.TOURNAMENT:
             return [
                 CompetitionPhase.PREPARATION,
                 CompetitionPhase.REGISTRATION,
@@ -845,7 +867,8 @@ class CompetitionManager:
                                             competition_id: str,
                                             participant_id: str,
                                             config: CompetitionConfiguration) -> Dict[str, Any]:
-        """Check if participant is eligible to register"""        now = datetime.now(timezone.utc)
+        """Check if participant is eligible to register"""
+        now = datetime.now(timezone.utc)
         
         # Check registration window
         if now < config.registration_start:
@@ -879,7 +902,8 @@ class CompetitionManager:
     async def _perform_seeding(self, 
                              competition_id: str,
                              config: CompetitionConfiguration) -> Dict[str, Any]:
-        """Perform participant seeding"""        try:
+        """Perform participant seeding"""
+        try:
             # Get all registered participants
             participants = await self.competition_repository.get_competition_participants(
                 competition_id
@@ -913,7 +937,8 @@ class CompetitionManager:
                               competition_id: str,
                               phase: CompetitionPhase,
                               config: CompetitionConfiguration) -> Dict[str, Any]:
-        """Initialize a competition phase"""        try:
+        """Initialize a competition phase"""
+        try:
             if phase in [CompetitionPhase.PRELIMINARY, CompetitionPhase.QUARTER_FINAL,
                         CompetitionPhase.SEMI_FINAL, CompetitionPhase.FINAL]:
                 # Generate matches for competitive phases
@@ -932,7 +957,8 @@ class CompetitionManager:
                                     competition_id: str,
                                     phase: CompetitionPhase,
                                     config: CompetitionConfiguration) -> Dict[str, Any]:
-        """Generate matches for a competitive phase"""        try:
+        """Generate matches for a competitive phase"""
+        try:
             # Get active participants for this phase
             participants = await self._get_active_participants(competition_id)
             
@@ -965,7 +991,8 @@ class CompetitionManager:
     def _get_next_phase(self, 
                        current_phase: CompetitionPhase,
                        config: CompetitionConfiguration) -> Optional[CompetitionPhase]:
-        """Get next phase in competition progression"""        current_index = config.phases.index(current_phase) if current_phase in config.phases else -1
+        """Get next phase in competition progression"""
+        current_index = config.phases.index(current_phase) if current_phase in config.phases else -1
         
         if current_index >= 0 and current_index < len(config.phases) - 1:
             return config.phases[current_index + 1]
@@ -973,7 +1000,8 @@ class CompetitionManager:
         return None
     
     def _get_first_competitive_phase(self, phases: List[CompetitionPhase]) -> CompetitionPhase:
-        """Get first competitive phase from phases list"""        competitive_phases = [
+        """Get first competitive phase from phases list"""
+        competitive_phases = [
             CompetitionPhase.QUALIFIER,
             CompetitionPhase.PRELIMINARY,
             CompetitionPhase.QUARTER_FINAL,
@@ -991,7 +1019,8 @@ class CompetitionManager:
                                         competition_id: str,
                                         current_phase: CompetitionPhase,
                                         config: CompetitionConfiguration) -> Dict[str, Any]:
-        """Validate if phase can be advanced"""        # Check if all matches in current phase are complete
+        """Validate if phase can be advanced"""
+        # Check if all matches in current phase are complete
         active_matches = await self.competition_repository.get_active_matches(competition_id)
         
         if active_matches:
@@ -1019,7 +1048,8 @@ class CompetitionManager:
     async def _complete_competition(self, 
                                   competition_id: str,
                                   config: CompetitionConfiguration) -> Dict[str, Any]:
-        """Complete competition and distribute prizes"""        try:
+        """Complete competition and distribute prizes"""
+        try:
             # Determine final rankings
             final_leaderboard = await self.competition_repository.get_competition_leaderboard(
                 competition_id
@@ -1073,13 +1103,15 @@ class CompetitionManager:
     # for match processing, leaderboard updates, notifications, etc.
     
     async def _get_participants_count(self, competition_id: str) -> int:
-        """Get current participants count"""        participants = await self.competition_repository.get_competition_participants(
+        """Get current participants count"""
+        participants = await self.competition_repository.get_competition_participants(
             competition_id
         )
         return len(participants)
     
     def _estimate_participants(self, config: CompetitionConfiguration) -> int:
-        """Estimate expected number of participants"""        base_estimate = {
+        """Estimate expected number of participants"""
+        base_estimate = {
             CompetitionType.TOURNAMENT: 64,
             CompetitionType.LEAGUE: 20,
             CompetitionType.BATTLE_ROYALE: 100,
@@ -1101,7 +1133,8 @@ class CompetitionManager:
         return base_estimate
     
     async def _simple_seeding(self, participants: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Simple random seeding for participants"""        import random
+        """Simple random seeding for participants"""
+        import random
         
         participant_ids = [p["participant_id"] for p in participants]
         random.shuffle(participant_ids)
@@ -1118,12 +1151,14 @@ class CompetitionManager:
     async def _update_competition_statistics(self, 
                                            competition_id: str,
                                            updates: Dict[str, Any]):
-        """Update competition statistics"""        await self.competition_repository.update_competition_statistics(
+        """Update competition statistics"""
+        await self.competition_repository.update_competition_statistics(
             competition_id, updates
         )
     
     async def _get_active_participants(self, competition_id: str) -> List[Dict[str, Any]]:
-        """Get list of active participants"""        all_participants = await self.competition_repository.get_competition_participants(
+        """Get list of active participants"""
+        all_participants = await self.competition_repository.get_competition_participants(
             competition_id
         )
         

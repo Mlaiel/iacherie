@@ -15,7 +15,8 @@ AVERTISSEMENT LÉGAL:
 Ce code est la propriété exclusive de Fahed Mlaiel. Toute utilisation,
 reproduction, modification ou distribution non autorisée est strictement
 interdite et fera l'objet de poursuites judiciaires.
-"""from typing import Dict, List, Optional, Any, Tuple, Union
+"""
+from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
 from datetime import datetime, timedelta
@@ -29,7 +30,8 @@ import time
 logger = logging.getLogger(__name__)
 
 class LifecycleAction(Enum):
-    """Lifecycle management actions"""    MIGRATE_TIER = "migrate_tier"
+    """Lifecycle management actions"""
+    MIGRATE_TIER = "migrate_tier"
     ARCHIVE = "archive"
     DELETE = "delete"
     COMPRESS = "compress"
@@ -38,7 +40,8 @@ class LifecycleAction(Enum):
     CLEANUP = "cleanup"
 
 class TriggerType(Enum):
-    """Lifecycle rule trigger types"""    AGE_BASED = "age_based"
+    """Lifecycle rule trigger types"""
+    AGE_BASED = "age_based"
     ACCESS_BASED = "access_based"
     SIZE_BASED = "size_based"
     COST_BASED = "cost_based"
@@ -47,7 +50,8 @@ class TriggerType(Enum):
 
 @dataclass
 class LifecycleRule:
-    """Storage lifecycle rule definition"""    rule_id: str
+    """Storage lifecycle rule definition"""
+    rule_id: str
     name: str
     description: str
     trigger_type: TriggerType
@@ -68,7 +72,8 @@ class LifecycleRule:
 
 @dataclass
 class LifecycleExecution:
-    """Lifecycle rule execution result"""    rule_id: str
+    """Lifecycle rule execution result"""
+    rule_id: str
     execution_id: str
     started_at: datetime
     completed_at: Optional[datetime]
@@ -82,7 +87,8 @@ class LifecycleExecution:
     space_freed: int = 0
 
 class LifecycleEngine:
-    """    Intelligent storage lifecycle management engine.
+    """
+    Intelligent storage lifecycle management engine.
     
     Features:
     - Content-aware lifecycle policies
@@ -91,9 +97,11 @@ class LifecycleEngine:
     - Automated archival and cleanup
     - Creator-specific rules
     - Real-time monitoring and alerts
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize lifecycle engine"""        self.config = config
+        """Initialize lifecycle engine"""
+        self.config = config
         self.rules: Dict[str, LifecycleRule] = {}
         self.executions: Dict[str, LifecycleExecution] = {}
         self.storage_manager = None  # Will be injected
@@ -118,7 +126,8 @@ class LifecycleEngine:
         logger.info("LifecycleEngine initialized")
     
     def _initialize_default_rules(self) -> None:
-        """Initialize default lifecycle rules for content creators"""        
+        """Initialize default lifecycle rules for content creators"""
+        
         # Rule 1: Migrate old content to cold storage
         self.add_rule(LifecycleRule(
             rule_id="migrate_to_cold",
@@ -206,7 +215,8 @@ class LifecycleEngine:
         ))
     
     def add_rule(self, rule: LifecycleRule) -> bool:
-        """Add or update a lifecycle rule"""        try:
+        """Add or update a lifecycle rule"""
+        try:
             self.rules[rule.rule_id] = rule
             logger.info(f"Added lifecycle rule: {rule.name}")
             return True
@@ -215,7 +225,8 @@ class LifecycleEngine:
             return False
     
     def remove_rule(self, rule_id: str) -> bool:
-        """Remove a lifecycle rule"""        try:
+        """Remove a lifecycle rule"""
+        try:
             if rule_id in self.rules:
                 del self.rules[rule_id]
                 logger.info(f"Removed lifecycle rule: {rule_id}")
@@ -226,10 +237,12 @@ class LifecycleEngine:
             return False
     
     def get_rule(self, rule_id: str) -> Optional[LifecycleRule]:
-        """Get a specific lifecycle rule"""        return self.rules.get(rule_id)
+        """Get a specific lifecycle rule"""
+        return self.rules.get(rule_id)
     
     def list_rules(self, enabled_only: bool = False) -> List[LifecycleRule]:
-        """List all lifecycle rules"""        rules = list(self.rules.values())
+        """List all lifecycle rules"""
+        rules = list(self.rules.values())
         if enabled_only:
             rules = [rule for rule in rules if rule.enabled]
         return sorted(rules, key=lambda x: x.priority)
@@ -240,7 +253,8 @@ class LifecycleEngine:
         dry_run: bool = False,
         max_files: Optional[int] = None
     ) -> LifecycleExecution:
-        """Execute a specific lifecycle rule"""        
+        """Execute a specific lifecycle rule"""
+        
         if rule_id not in self.rules:
             raise ValueError(f"Rule {rule_id} not found")
         
@@ -303,7 +317,8 @@ class LifecycleEngine:
         enabled_only: bool = True,
         dry_run: bool = False
     ) -> Dict[str, LifecycleExecution]:
-        """Execute all lifecycle rules"""        
+        """Execute all lifecycle rules"""
+        
         rules_to_execute = self.list_rules(enabled_only)
         executions = {}
         
@@ -317,7 +332,8 @@ class LifecycleEngine:
         return executions
     
     async def optimize(self) -> Dict[str, Any]:
-        """Run storage optimization based on lifecycle analysis"""        
+        """Run storage optimization based on lifecycle analysis"""
+        
         optimization_results = {
             'recommendations': [],
             'potential_savings': {},
@@ -351,14 +367,16 @@ class LifecycleEngine:
         return optimization_results
     
     async def get_execution_status(self, execution_id: str) -> Optional[LifecycleExecution]:
-        """Get status of a specific execution"""        return self.executions.get(execution_id)
+        """Get status of a specific execution"""
+        return self.executions.get(execution_id)
     
     async def list_executions(
         self,
         rule_id: Optional[str] = None,
         limit: int = 100
     ) -> List[LifecycleExecution]:
-        """List recent executions"""        executions = list(self.executions.values())
+        """List recent executions"""
+        executions = list(self.executions.values())
         
         if rule_id:
             executions = [ex for ex in executions if ex.rule_id == rule_id]
@@ -369,7 +387,8 @@ class LifecycleEngine:
         return executions[:limit]
     
     async def get_lifecycle_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive lifecycle statistics"""        
+        """Get comprehensive lifecycle statistics"""
+        
         stats = {
             'rules': {
                 'total_rules': len(self.rules),
@@ -399,7 +418,8 @@ class LifecycleEngine:
     # Private implementation methods
     
     async def _find_matching_files(self, rule: LifecycleRule) -> List[Dict[str, Any]]:
-        """Find files that match the rule conditions"""        
+        """Find files that match the rule conditions"""
+        
         if not self.storage_manager:
             logger.warning("Storage manager not available for file matching")
             return []
@@ -426,7 +446,8 @@ class LifecycleEngine:
         file_info: Dict[str, Any],
         rule: LifecycleRule
     ) -> bool:
-        """Check if a file matches the rule conditions"""        
+        """Check if a file matches the rule conditions"""
+        
         try:
             conditions = rule.conditions
             
@@ -510,7 +531,8 @@ class LifecycleEngine:
         execution: LifecycleExecution,
         dry_run: bool
     ) -> None:
-        """Execute lifecycle actions on a single file"""        
+        """Execute lifecycle actions on a single file"""
+        
         file_id = file_info.get('file_id') or file_info.get('storage_id')
         
         for action_config in actions:
@@ -557,7 +579,8 @@ class LifecycleEngine:
         action_config: Dict[str, Any],
         execution: LifecycleExecution
     ) -> None:
-        """Migrate file to different storage tier"""        
+        """Migrate file to different storage tier"""
+        
         if not self.storage_manager:
             raise Exception("Storage manager not available")
         
@@ -581,7 +604,8 @@ class LifecycleEngine:
         action_config: Dict[str, Any],
         execution: LifecycleExecution
     ) -> None:
-        """Archive file to long-term storage"""        
+        """Archive file to long-term storage"""
+        
         file_id = file_info.get('file_id') or file_info.get('storage_id')
         file_size = file_info.get('file_size', 0)
         
@@ -600,7 +624,8 @@ class LifecycleEngine:
         action_config: Dict[str, Any],
         execution: LifecycleExecution
     ) -> None:
-        """Delete file from storage"""        
+        """Delete file from storage"""
+        
         file_id = file_info.get('file_id') or file_info.get('storage_id')
         file_size = file_info.get('file_size', 0)
         
@@ -618,7 +643,8 @@ class LifecycleEngine:
         action_config: Dict[str, Any],
         execution: LifecycleExecution
     ) -> None:
-        """Compress file to save space"""        
+        """Compress file to save space"""
+        
         file_id = file_info.get('file_id') or file_info.get('storage_id')
         file_size = file_info.get('file_size', 0)
         compression_level = action_config.get('compression_level', 'medium')
@@ -639,7 +665,8 @@ class LifecycleEngine:
         action_config: Dict[str, Any],
         execution: LifecycleExecution
     ) -> None:
-        """Ensure file has adequate replication"""        
+        """Ensure file has adequate replication"""
+        
         file_id = file_info.get('file_id') or file_info.get('storage_id')
         target_replicas = action_config.get('target_replicas', 3)
         
@@ -654,7 +681,8 @@ class LifecycleEngine:
     # Analysis and optimization methods
     
     async def _analyze_storage_patterns(self) -> Dict[str, Any]:
-        """Analyze storage usage patterns"""        
+        """Analyze storage usage patterns"""
+        
         analysis = {
             'tier_usage': {},
             'content_type_distribution': {},
@@ -743,7 +771,8 @@ class LifecycleEngine:
         self,
         analysis: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate storage optimization recommendations"""        
+        """Generate storage optimization recommendations"""
+        
         recommendations = []
         
         try:
@@ -811,7 +840,8 @@ class LifecycleEngine:
         return recommendations
     
     async def _calculate_potential_savings(self, analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate potential cost and space savings"""        
+        """Calculate potential cost and space savings"""
+        
         savings = {
             'cost_savings_monthly': 0.0,
             'space_savings_gb': 0.0,
@@ -859,7 +889,8 @@ class LifecycleEngine:
         self,
         recommendations: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Execute high-priority optimizations automatically"""        
+        """Execute high-priority optimizations automatically"""
+        
         actions_taken = {
             'rules_created': 0,
             'immediate_actions': 0,
@@ -884,7 +915,8 @@ class LifecycleEngine:
         return actions_taken
     
     async def _create_cleanup_rule(self, recommendation: Dict[str, Any]) -> None:
-        """Create a cleanup rule based on recommendation"""        
+        """Create a cleanup rule based on recommendation"""
+        
         rule = LifecycleRule(
             rule_id=f"auto_cleanup_{int(time.time())}",
             name="Auto-generated Cleanup Rule",
@@ -904,7 +936,8 @@ class LifecycleEngine:
         self.add_rule(rule)
     
     async def _create_migration_rule(self, recommendation: Dict[str, Any]) -> None:
-        """Create a migration rule based on recommendation"""        
+        """Create a migration rule based on recommendation"""
+        
         rule = LifecycleRule(
             rule_id=f"auto_migrate_{int(time.time())}",
             name="Auto-generated Migration Rule",
@@ -927,7 +960,8 @@ class LifecycleEngine:
     # Helper methods for cost calculations
     
     def _calculate_tier_migration_savings(self, from_tier: str, to_tier: str, file_size: int) -> float:
-        """Calculate cost savings from tier migration"""        
+        """Calculate cost savings from tier migration"""
+        
         # Cost per GB per month (example values)
         tier_costs = {
             'hot': 0.10,
@@ -945,7 +979,8 @@ class LifecycleEngine:
         return max(0, monthly_savings)
     
     def _calculate_archival_savings(self, file_size: int) -> float:
-        """Calculate cost savings from archival"""        
+        """Calculate cost savings from archival"""
+        
         size_gb = file_size / (1024**3)
         # Assume 80% cost reduction for archival
         monthly_savings = size_gb * 0.05 * 0.8  # $0.05/GB * 80% savings
@@ -953,26 +988,31 @@ class LifecycleEngine:
         return monthly_savings
     
     def _estimate_migration_savings(self, size_bytes: int) -> float:
-        """Estimate savings from tier migration"""        size_gb = size_bytes / (1024**3)
+        """Estimate savings from tier migration"""
+        size_gb = size_bytes / (1024**3)
         return size_gb * 0.03 * 12  # $0.03/GB/month * 12 months
     
     def _estimate_cleanup_savings(self, file_count: int) -> float:
-        """Estimate savings from cleanup"""        # Assume average file size of 10MB
+        """Estimate savings from cleanup"""
+        # Assume average file size of 10MB
         size_gb = (file_count * 10) / 1024
         return size_gb * 0.05 * 12  # Storage cost savings
     
     def _estimate_archival_savings(self, file_count: int) -> float:
-        """Estimate savings from archival"""        # Assume average file size of 50MB
+        """Estimate savings from archival"""
+        # Assume average file size of 50MB
         size_gb = (file_count * 50) / 1024
         return size_gb * 0.04 * 12  # 80% cost reduction for archival
     
     def _estimate_temp_cleanup_savings(self, file_count: int) -> float:
-        """Estimate savings from temporary file cleanup"""        # Assume average temp file size of 5MB
+        """Estimate savings from temporary file cleanup"""
+        # Assume average temp file size of 5MB
         size_gb = (file_count * 5) / 1024
         return size_gb * 0.05 * 12  # Full storage cost recovery
     
     async def _get_content_analysis_summary(self) -> Dict[str, Any]:
-        """Get summary of content analysis cache"""        
+        """Get summary of content analysis cache"""
+        
         return {
             'cached_analyses': len(self.content_analysis_cache),
             'cache_hit_ratio': 0.85,  # Example value
@@ -980,7 +1020,8 @@ class LifecycleEngine:
         }
     
     def _update_execution_metrics(self, execution: LifecycleExecution) -> None:
-        """Update performance metrics from execution"""        
+        """Update performance metrics from execution"""
+        
         self.metrics['rules_executed'] += 1
         
         for action, count in execution.actions_taken.items():

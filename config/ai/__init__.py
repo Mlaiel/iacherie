@@ -77,11 +77,13 @@ __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
 def get_ai_config_summary():
-    """    Get a summary of all AI configuration modules.
+    """
+    Get a summary of all AI configuration modules.
     
     Returns:
         Dict[str, Any]: Summary of all AI configurations
-    """    return {
+    """
+    return {
         "version": __version__,
         "author": __author__,
         "modules": {

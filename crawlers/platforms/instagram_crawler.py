@@ -21,7 +21,8 @@ Project Team Specialties:
 - Audio Engineer: Advanced audio processing and analysis
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator
 from datetime import datetime, timedelta
@@ -49,7 +50,8 @@ settings = get_settings()
 
 @dataclass
 class InstagramPost:
-    """Instagram post data structure."""    post_id: str
+    """Instagram post data structure."""
+    post_id: str
     shortcode: str
     post_type: str  # photo, video, carousel
     caption: str
@@ -70,7 +72,8 @@ class InstagramPost:
 
 @dataclass
 class InstagramUser:
-    """Instagram user data structure."""    user_id: str
+    """Instagram user data structure."""
+    user_id: str
     username: str
     full_name: str
     biography: str
@@ -85,7 +88,8 @@ class InstagramUser:
 
 @dataclass
 class InstagramStory:
-    """Instagram story data structure."""    story_id: str
+    """Instagram story data structure."""
+    story_id: str
     user_id: str
     username: str
     media_type: str
@@ -97,7 +101,8 @@ class InstagramStory:
     has_audio: bool
 
 class InstagramCrawler:
-    """    Professional Instagram crawler implementation.
+    """
+    Professional Instagram crawler implementation.
     
     Features:
     - Instagram Basic Display API integration
@@ -109,9 +114,11 @@ class InstagramCrawler:
     - Content similarity detection
     - Real-time feed monitoring
     - Selenium-based scraping fallback
-    """    
+    """
+    
     def __init__(self):
-        """Initialize Instagram crawler."""        self.access_token = settings.INSTAGRAM_ACCESS_TOKEN
+        """Initialize Instagram crawler."""
+        self.access_token = settings.INSTAGRAM_ACCESS_TOKEN
         self.app_id = settings.INSTAGRAM_APP_ID
         self.app_secret = settings.INSTAGRAM_APP_SECRET
         self.rate_limiter = InstagramRateLimiter()
@@ -134,11 +141,13 @@ class InstagramCrawler:
         self.selenium_options.add_experimental_option('useAutomationExtension', False)
     
     async def __aenter__(self):
-        """Async context manager entry."""        self.session = aiohttp.ClientSession()
+        """Async context manager entry."""
+        self.session = aiohttp.ClientSession()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""        if self.session:
+        """Async context manager exit."""
+        if self.session:
             await self.session.close()
     
     async def search_hashtag(
@@ -147,7 +156,8 @@ class InstagramCrawler:
         max_results: int = 50,
         recent_only: bool = True
     ) -> List[InstagramPost]:
-        """        Search posts by hashtag.
+        """
+        Search posts by hashtag.
         
         Args:
             hashtag: Hashtag to search (without #)
@@ -156,7 +166,8 @@ class InstagramCrawler:
             
         Returns:
             List of Instagram post objects
-        """        try:
+        """
+        try:
             # Rate limiting check
             await self.rate_limiter.wait_if_needed()
             
@@ -173,7 +184,8 @@ class InstagramCrawler:
             return []
     
     async def _search_hashtag_api(self, hashtag: str, max_results: int) -> List[InstagramPost]:
-        """Search hashtag using Instagram API."""        try:
+        """Search hashtag using Instagram API."""
+        try:
             url = f"{self.api_base_url}/ig_hashtag_search"
             params = {
                 'user_id': settings.INSTAGRAM_USER_ID,
@@ -197,7 +209,8 @@ class InstagramCrawler:
             return []
     
     async def _get_hashtag_media(self, hashtag_id: str, max_results: int) -> List[InstagramPost]:
-        """Get media from hashtag ID."""        try:
+        """Get media from hashtag ID."""
+        try:
             url = f"{self.api_base_url}/{hashtag_id}/recent_media"
             params = {
                 'user_id': settings.INSTAGRAM_USER_ID,
@@ -244,7 +257,8 @@ class InstagramCrawler:
         max_results: int,
         recent_only: bool
     ) -> List[InstagramPost]:
-        """Search hashtag using web scraping."""        try:
+        """Search hashtag using web scraping."""
+        try:
             driver = webdriver.Chrome(options=self.selenium_options)
             driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
             
@@ -293,7 +307,8 @@ class InstagramCrawler:
             return []
     
     async def _scrape_post_details(self, driver, post_url: str, shortcode: str) -> Optional[InstagramPost]:
-        """Scrape detailed post information."""        try:
+        """Scrape detailed post information."""
+        try:
             # Open post in new tab
             driver.execute_script(f"window.open('{post_url}');")
             driver.switch_to.window(driver.window_handles[-1])
@@ -341,7 +356,8 @@ class InstagramCrawler:
             return None
     
     def _extract_post_from_shared_data(self, shared_data: dict, shortcode: str) -> Optional[InstagramPost]:
-        """Extract post data from Instagram's shared data."""        try:
+        """Extract post data from Instagram's shared data."""
+        try:
             # Navigate through Instagram's data structure
             entry_data = shared_data.get('entry_data', {})
             post_page = entry_data.get('PostPage', [])
@@ -417,7 +433,8 @@ class InstagramCrawler:
             return None
     
     async def _scrape_post_from_dom(self, driver, shortcode: str) -> Optional[InstagramPost]:
-        """Fallback DOM scraping for post data."""        try:
+        """Fallback DOM scraping for post data."""
+        try:
             # Extract basic elements
             username_elem = driver.find_element(By.CSS_SELECTOR, "header a")
             username = username_elem.text if username_elem else ""
@@ -474,7 +491,8 @@ class InstagramCrawler:
             return None
     
     def _parse_api_post_data(self, item: dict) -> Optional[InstagramPost]:
-        """Parse Instagram API post data."""        try:
+        """Parse Instagram API post data."""
+        try:
             post_id = item.get('id', '')
             media_type = item.get('media_type', '')
             caption = item.get('caption', '')
@@ -513,7 +531,8 @@ class InstagramCrawler:
             return None
     
     async def get_user_profile(self, username: str) -> Optional[InstagramUser]:
-        """Get user profile information."""        try:
+        """Get user profile information."""
+        try:
             await self.rate_limiter.wait_if_needed()
             
             if self.access_token:
@@ -526,7 +545,8 @@ class InstagramCrawler:
             return None
     
     async def _get_user_profile_scraping(self, username: str) -> Optional[InstagramUser]:
-        """Get user profile using web scraping."""        try:
+        """Get user profile using web scraping."""
+        try:
             driver = webdriver.Chrome(options=self.selenium_options)
             driver.get(f"{self.web_base_url}/{username}/")
             
@@ -560,7 +580,8 @@ class InstagramCrawler:
             return None
     
     def _extract_user_from_shared_data(self, shared_data: dict, username: str) -> Optional[InstagramUser]:
-        """Extract user data from Instagram's shared data."""        try:
+        """Extract user data from Instagram's shared data."""
+        try:
             entry_data = shared_data.get('entry_data', {})
             profile_page = entry_data.get('ProfilePage', [])
             
@@ -593,7 +614,8 @@ class InstagramCrawler:
             return None
     
     async def search_location(self, location_name: str, max_results: int = 20) -> List[InstagramPost]:
-        """Search posts by location."""        try:
+        """Search posts by location."""
+        try:
             # This would require location ID lookup and then location media fetch
             # Implementation depends on available APIs and scraping capabilities
             logger.info(f"Location search for '{location_name}' - feature in development")
@@ -608,7 +630,8 @@ class InstagramCrawler:
         username: str,
         check_interval: int = 300
     ) -> AsyncGenerator[List[InstagramPost], None]:
-        """Monitor user for new posts."""        last_check = datetime.now()
+        """Monitor user for new posts."""
+        last_check = datetime.now()
         seen_posts = set()
         
         while True:
@@ -635,7 +658,8 @@ class InstagramCrawler:
                 await asyncio.sleep(60)
     
     async def get_user_recent_posts(self, username: str, max_results: int = 12) -> List[InstagramPost]:
-        """Get recent posts from user profile."""        try:
+        """Get recent posts from user profile."""
+        try:
             # This would involve scraping the user's profile page
             # and extracting recent posts
             logger.info(f"Getting recent posts for {username}")
@@ -646,7 +670,8 @@ class InstagramCrawler:
             return []
     
     async def analyze_engagement(self, post: InstagramPost) -> Dict:
-        """Analyze post engagement metrics."""        try:
+        """Analyze post engagement metrics."""
+        try:
             total_engagement = post.like_count + post.comment_count
             
             # Estimate reach (this would require additional data in practice)
@@ -677,7 +702,8 @@ class InstagramCrawler:
         reference_post: InstagramPost,
         search_hashtags: List[str] = None
     ) -> List[Dict]:
-        """Detect content similar to reference post."""        try:
+        """Detect content similar to reference post."""
+        try:
             similar_posts = []
             
             # Search using post hashtags
@@ -713,7 +739,8 @@ class InstagramCrawler:
             return []
     
     def _calculate_post_similarity(self, post1: InstagramPost, post2: InstagramPost) -> float:
-        """Calculate similarity score between two posts."""        # Caption similarity
+        """Calculate similarity score between two posts."""
+        # Caption similarity
         caption1_words = set(post1.caption.lower().split())
         caption2_words = set(post2.caption.lower().split())
         caption_similarity = len(caption1_words & caption2_words) / len(caption1_words | caption2_words) if caption1_words | caption2_words else 0
@@ -746,7 +773,8 @@ class InstagramCrawler:
         return similarity
     
     def _get_match_factors(self, post1: InstagramPost, post2: InstagramPost) -> List[str]:
-        """Get factors that contribute to post similarity."""        factors = []
+        """Get factors that contribute to post similarity."""
+        factors = []
         
         if post1.username == post2.username:
             factors.append('same_user')

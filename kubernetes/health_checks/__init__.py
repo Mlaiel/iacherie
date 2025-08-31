@@ -65,7 +65,7 @@ __version__ = "2.0.0"
 __title__ = "IA Influencer Agent Health Monitoring System"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "Copyright © 2025 Fahed Mlaiel. All Rights Reserved."
+__copyright__ = "Copyright (c) 2025 Fahed Mlaiel. All Rights Reserved."
 __license__ = "Proprietary"
 
 # Public API exports
@@ -390,5 +390,5 @@ FOR LEGITIMATE BUSINESS INQUIRIES:
 Built with ❤️ by the IA Influencer Agent Team
 Leading the future of AI-powered content protection and creator monetization
 
-Copyright © 2025 Fahed Mlaiel. All Rights Reserved.
+Copyright (c) 2025 Fahed Mlaiel. All Rights Reserved.
 """

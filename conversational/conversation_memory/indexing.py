@@ -9,7 +9,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  LEGAL WARNING: Unauthorized use strictly prohibited ⚠️
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -50,30 +51,37 @@ except Exception as e:
 
 
 class IndexingInterface(ABC):
-    """Abstract interface for indexing systems"""    
+    """Abstract interface for indexing systems"""
+    
     @abstractmethod
     async def index_conversation(self, conversation: ConversationRecord) -> bool:
-        """Index a conversation"""        pass
+        """Index a conversation"""
+        pass
     
     @abstractmethod
     async def search_index(self, query: Dict[str, Any]) -> List[str]:
-        """Search the index"""        pass
+        """Search the index"""
+        pass
     
     @abstractmethod
     async def update_index(self, conversation_id: str, conversation: ConversationRecord) -> bool:
-        """Update index for a conversation"""        pass
+        """Update index for a conversation"""
+        pass
     
     @abstractmethod
     async def remove_from_index(self, conversation_id: str) -> bool:
-        """Remove conversation from index"""        pass
+        """Remove conversation from index"""
+        pass
 
 
 class ConversationIndexer:
-    """    Main conversation indexer orchestrating all indexing strategies
+    """
+    Main conversation indexer orchestrating all indexing strategies
     
     Coordinates multiple indexing approaches for comprehensive
     conversation search and retrieval capabilities.
-    """    
+    """
+    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.metrics = MetricsCollector("conversation_indexer")
@@ -90,7 +98,8 @@ class ConversationIndexer:
         logger.info("ConversationIndexer initialized")
     
     async def initialize(self):
-        """Initialize all indexing components"""        try:
+        """Initialize all indexing components"""
+        try:
             await asyncio.gather(
                 self.topic_indexer.initialize(),
                 self.semantic_indexer.initialize(),
@@ -106,14 +115,16 @@ class ConversationIndexer:
             raise
     
     async def index_conversation(self, conversation: ConversationRecord) -> bool:
-        """        Index conversation across all indexing dimensions
+        """
+        Index conversation across all indexing dimensions
         
         Args:
             conversation: ConversationRecord to index
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             # Extract and process text content
             text_content = self._extract_conversation_text(conversation)
             processed_text = await self.text_processor.process_text(text_content)
@@ -153,14 +164,16 @@ class ConversationIndexer:
         self,
         query: Dict[str, Any]
     ) -> Dict[str, List[str]]:
-        """        Search across all index dimensions
+        """
+        Search across all index dimensions
         
         Args:
             query: Search query parameters
             
         Returns:
             Results from all indexing dimensions
-        """        try:
+        """
+        try:
             # Search all indexes in parallel
             search_tasks = [
                 self.topic_indexer.search_index(query),
@@ -192,7 +205,8 @@ class ConversationIndexer:
         conversation_ids: List[str],
         batch_size: int = 50
     ) -> int:
-        """        Reindex multiple conversations in batches
+        """
+        Reindex multiple conversations in batches
         
         Args:
             conversation_ids: List of conversation IDs to reindex
@@ -200,7 +214,8 @@ class ConversationIndexer:
             
         Returns:
             Number of successfully reindexed conversations
-        """        try:
+        """
+        try:
             reindexed_count = 0
             
             # Process in batches
@@ -234,7 +249,8 @@ class ConversationIndexer:
             return 0
     
     def _extract_conversation_text(self, conversation: ConversationRecord) -> str:
-        """Extract text content from conversation for indexing"""        text_parts = []
+        """Extract text content from conversation for indexing"""
+        text_parts = []
         
         if conversation.conversation_data:
             if "messages" in conversation.conversation_data:
@@ -257,7 +273,8 @@ class ConversationIndexer:
         conversation: ConversationRecord,
         processed_text: Dict[str, Any]
     ):
-        """Update unified index cache with conversation metadata"""        try:
+        """Update unified index cache with conversation metadata"""
+        try:
             cache_key = f"unified_index:{conversation.conversation_id}"
             
             index_data = {
@@ -280,11 +297,13 @@ class ConversationIndexer:
 
 
 class TopicIndexer(IndexingInterface):
-    """    Topic-based indexing using LDA (Latent Dirichlet Allocation)
+    """
+    Topic-based indexing using LDA (Latent Dirichlet Allocation)
     
     Extracts topics from conversations and builds topic-based
     indexes for thematic conversation retrieval.
-    """    
+    """
+    
     def __init__(self, num_topics: int = 20):
         self.num_topics = num_topics
         self.metrics = MetricsCollector("topic_indexer")
@@ -317,7 +336,8 @@ class TopicIndexer(IndexingInterface):
         logger.info(f"TopicIndexer initialized with {num_topics} topics")
     
     async def initialize(self):
-        """Initialize topic indexer"""        try:
+        """Initialize topic indexer"""
+        try:
             # Load pre-trained model if available
             await self._load_pretrained_model()
             logger.info("TopicIndexer initialized")
@@ -327,14 +347,16 @@ class TopicIndexer(IndexingInterface):
             raise
     
     async def index_conversation(self, conversation: ConversationRecord) -> bool:
-        """        Index conversation by topics
+        """
+        Index conversation by topics
         
         Args:
             conversation: ConversationRecord to index
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             # Extract text content
             text_content = self._extract_text_content(conversation)
             
@@ -370,14 +392,16 @@ class TopicIndexer(IndexingInterface):
             return False
     
     async def search_index(self, query: Dict[str, Any]) -> List[str]:
-        """        Search topic index
+        """
+        Search topic index
         
         Args:
             query: Search parameters
             
         Returns:
             List of matching conversation IDs
-        """        try:
+        """
+        try:
             if not self.is_model_trained:
                 return []
             
@@ -416,14 +440,16 @@ class TopicIndexer(IndexingInterface):
             return []
     
     async def update_index(self, conversation_id: str, conversation: ConversationRecord) -> bool:
-        """Update topic index for a conversation"""        # Remove old index entries
+        """Update topic index for a conversation"""
+        # Remove old index entries
         await self.remove_from_index(conversation_id)
         
         # Re-index conversation
         return await self.index_conversation(conversation)
     
     async def remove_from_index(self, conversation_id: str) -> bool:
-        """Remove conversation from topic index"""        try:
+        """Remove conversation from topic index"""
+        try:
             # Remove from conversation topics
             if conversation_id in self.conversation_topics:
                 topics = self.conversation_topics[conversation_id]
@@ -442,7 +468,8 @@ class TopicIndexer(IndexingInterface):
             return False
     
     async def get_topic_terms(self, topic_id: int, num_terms: int = 10) -> List[str]:
-        """Get top terms for a topic"""        if topic_id in self.topic_terms:
+        """Get top terms for a topic"""
+        if topic_id in self.topic_terms:
             return self.topic_terms[topic_id][:num_terms]
         return []
     
@@ -450,7 +477,8 @@ class TopicIndexer(IndexingInterface):
         self,
         conversation_id: str
     ) -> List[Tuple[int, float, List[str]]]:
-        """Get topics for a conversation with terms"""        if conversation_id not in self.conversation_topics:
+        """Get topics for a conversation with terms"""
+        if conversation_id not in self.conversation_topics:
             return []
         
         topics_with_terms = []
@@ -461,7 +489,8 @@ class TopicIndexer(IndexingInterface):
         return topics_with_terms
     
     def _extract_text_content(self, conversation: ConversationRecord) -> str:
-        """Extract and preprocess text content"""        text_parts = []
+        """Extract and preprocess text content"""
+        text_parts = []
         
         if conversation.conversation_data:
             if "messages" in conversation.conversation_data:
@@ -475,7 +504,8 @@ class TopicIndexer(IndexingInterface):
         return " ".join(text_parts)
     
     async def _train_topic_model(self):
-        """Train LDA topic model on collected documents"""        try:
+        """Train LDA topic model on collected documents"""
+        try:
             if len(self.training_documents) < 10:
                 return
             
@@ -520,7 +550,8 @@ class TopicIndexer(IndexingInterface):
             self.metrics.increment("topic_model_training_errors")
     
     async def _extract_topics(self, text: str) -> List[Tuple[int, float]]:
-        """Extract topics from text using trained model"""        try:
+        """Extract topics from text using trained model"""
+        try:
             if not self.is_model_trained:
                 return []
             
@@ -544,16 +575,19 @@ class TopicIndexer(IndexingInterface):
             return []
     
     async def _load_pretrained_model(self):
-        """Load pre-trained topic model if available"""        # In production, would load from persistent storage
+        """Load pre-trained topic model if available"""
+        # In production, would load from persistent storage
         pass
 
 
 class SemanticIndexer(IndexingInterface):
-    """    Semantic indexing using word embeddings and clustering
+    """
+    Semantic indexing using word embeddings and clustering
     
     Groups conversations by semantic similarity for
     content-aware retrieval.
-    """    
+    """
+    
     def __init__(self, num_clusters: int = 50):
         self.num_clusters = num_clusters
         self.metrics = MetricsCollector("semantic_indexer")
@@ -581,7 +615,8 @@ class SemanticIndexer(IndexingInterface):
         logger.info(f"SemanticIndexer initialized with {num_clusters} clusters")
     
     async def initialize(self):
-        """Initialize semantic indexer"""        try:
+        """Initialize semantic indexer"""
+        try:
             logger.info("SemanticIndexer initialized")
             
         except Exception as e:
@@ -589,14 +624,16 @@ class SemanticIndexer(IndexingInterface):
             raise
     
     async def index_conversation(self, conversation: ConversationRecord) -> bool:
-        """        Index conversation by semantic similarity
+        """
+        Index conversation by semantic similarity
         
         Args:
             conversation: ConversationRecord to index
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             # Extract text content
             text_content = self._extract_text_content(conversation)
             
@@ -630,14 +667,16 @@ class SemanticIndexer(IndexingInterface):
             return False
     
     async def search_index(self, query: Dict[str, Any]) -> List[str]:
-        """        Search semantic index
+        """
+        Search semantic index
         
         Args:
             query: Search parameters
             
         Returns:
             List of matching conversation IDs
-        """        try:
+        """
+        try:
             if not self.is_model_trained:
                 return []
             
@@ -670,14 +709,16 @@ class SemanticIndexer(IndexingInterface):
             return []
     
     async def update_index(self, conversation_id: str, conversation: ConversationRecord) -> bool:
-        """Update semantic index for a conversation"""        # Remove old index entries
+        """Update semantic index for a conversation"""
+        # Remove old index entries
         await self.remove_from_index(conversation_id)
         
         # Re-index conversation
         return await self.index_conversation(conversation)
     
     async def remove_from_index(self, conversation_id: str) -> bool:
-        """Remove conversation from semantic index"""        try:
+        """Remove conversation from semantic index"""
+        try:
             if conversation_id in self.conversation_clusters:
                 cluster_id = self.conversation_clusters[conversation_id]
                 
@@ -694,7 +735,8 @@ class SemanticIndexer(IndexingInterface):
             return False
     
     def _extract_text_content(self, conversation: ConversationRecord) -> str:
-        """Extract text content for semantic analysis"""        text_parts = []
+        """Extract text content for semantic analysis"""
+        text_parts = []
         
         if conversation.conversation_data:
             if "messages" in conversation.conversation_data:
@@ -708,7 +750,8 @@ class SemanticIndexer(IndexingInterface):
         return " ".join(text_parts)
     
     async def _train_semantic_model(self):
-        """Train semantic clustering model"""        try:
+        """Train semantic clustering model"""
+        try:
             if len(self.training_documents) < 50:
                 return
             
@@ -739,7 +782,8 @@ class SemanticIndexer(IndexingInterface):
             self.metrics.increment("semantic_model_training_errors")
     
     async def _assign_cluster(self, text: str) -> Optional[int]:
-        """Assign text to semantic cluster"""        try:
+        """Assign text to semantic cluster"""
+        try:
             if not self.is_model_trained:
                 return None
             
@@ -756,7 +800,8 @@ class SemanticIndexer(IndexingInterface):
             return None
     
     async def _find_similar_clusters(self, query_text: str, top_k: int = 5) -> List[int]:
-        """Find clusters similar to query text"""        try:
+        """Find clusters similar to query text"""
+        try:
             if not self.is_model_trained:
                 return []
             
@@ -783,11 +828,13 @@ class SemanticIndexer(IndexingInterface):
 
 
 class ContentIndexer(IndexingInterface):
-    """    Content-type specific indexing
+    """
+    Content-type specific indexing
     
     Indexes conversations based on content creation specializations
     and creator-specific attributes.
-    """    
+    """
+    
     def __init__(self):
         self.metrics = MetricsCollector("content_indexer")
         
@@ -806,7 +853,8 @@ class ContentIndexer(IndexingInterface):
         logger.info("ContentIndexer initialized")
     
     async def initialize(self):
-        """Initialize content indexer"""        try:
+        """Initialize content indexer"""
+        try:
             logger.info("ContentIndexer initialized")
             
         except Exception as e:
@@ -814,14 +862,16 @@ class ContentIndexer(IndexingInterface):
             raise
     
     async def index_conversation(self, conversation: ConversationRecord) -> bool:
-        """        Index conversation by content attributes
+        """
+        Index conversation by content attributes
         
         Args:
             conversation: ConversationRecord to index
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             conv_id = conversation.conversation_id
             user_id = conversation.user_id
             content_type = conversation.content_type
@@ -851,14 +901,16 @@ class ContentIndexer(IndexingInterface):
             return False
     
     async def search_index(self, query: Dict[str, Any]) -> List[str]:
-        """        Search content index
+        """
+        Search content index
         
         Args:
             query: Search parameters
             
         Returns:
             List of matching conversation IDs
-        """        try:
+        """
+        try:
             results = set()
             
             # Content type search
@@ -916,14 +968,16 @@ class ContentIndexer(IndexingInterface):
             return []
     
     async def update_index(self, conversation_id: str, conversation: ConversationRecord) -> bool:
-        """Update content index for a conversation"""        # Remove old index entries
+        """Update content index for a conversation"""
+        # Remove old index entries
         await self.remove_from_index(conversation_id)
         
         # Re-index conversation
         return await self.index_conversation(conversation)
     
     async def remove_from_index(self, conversation_id: str) -> bool:
-        """Remove conversation from content index"""        try:
+        """Remove conversation from content index"""
+        try:
             # Remove from all indexes
             # This is a simplified approach - in production would track relationships
             
@@ -951,7 +1005,8 @@ class ContentIndexer(IndexingInterface):
             return False
     
     async def _extract_content_keywords(self, conversation: ConversationRecord) -> List[str]:
-        """Extract content-specific keywords"""        keywords = []
+        """Extract content-specific keywords"""
+        keywords = []
         
         # Content type specific keywords
         content_type_keywords = {
@@ -994,7 +1049,8 @@ class ContentIndexer(IndexingInterface):
         return list(set(keywords))  # Remove duplicates
     
     async def _extract_creation_stage(self, conversation: ConversationRecord) -> Optional[str]:
-        """Extract creation stage from conversation"""        if conversation.context and hasattr(conversation.context, 'creation_stage'):
+        """Extract creation stage from conversation"""
+        if conversation.context and hasattr(conversation.context, 'creation_stage'):
             return conversation.context.creation_stage
         
         # Try to infer from text content
@@ -1014,7 +1070,8 @@ class ContentIndexer(IndexingInterface):
         return None
     
     def _extract_text_content(self, conversation: ConversationRecord) -> str:
-        """Extract text content for analysis"""        text_parts = []
+        """Extract text content for analysis"""
+        text_parts = []
         
         if conversation.conversation_data:
             if "messages" in conversation.conversation_data:
@@ -1029,11 +1086,13 @@ class ContentIndexer(IndexingInterface):
 
 
 class TemporalIndexer(IndexingInterface):
-    """    Temporal indexing for time-based conversation retrieval
+    """
+    Temporal indexing for time-based conversation retrieval
     
     Indexes conversations by time patterns, enabling
     time-sensitive searches and trend analysis.
-    """    
+    """
+    
     def __init__(self):
         self.metrics = MetricsCollector("temporal_indexer")
         
@@ -1051,7 +1110,8 @@ class TemporalIndexer(IndexingInterface):
         logger.info("TemporalIndexer initialized")
     
     async def initialize(self):
-        """Initialize temporal indexer"""        try:
+        """Initialize temporal indexer"""
+        try:
             logger.info("TemporalIndexer initialized")
             
         except Exception as e:
@@ -1059,14 +1119,16 @@ class TemporalIndexer(IndexingInterface):
             raise
     
     async def index_conversation(self, conversation: ConversationRecord) -> bool:
-        """        Index conversation by temporal attributes
+        """
+        Index conversation by temporal attributes
         
         Args:
             conversation: ConversationRecord to index
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             conv_id = conversation.conversation_id
             user_id = conversation.user_id
             timestamp = conversation.timestamp
@@ -1096,14 +1158,16 @@ class TemporalIndexer(IndexingInterface):
             return False
     
     async def search_index(self, query: Dict[str, Any]) -> List[str]:
-        """        Search temporal index
+        """
+        Search temporal index
         
         Args:
             query: Search parameters
             
         Returns:
             List of matching conversation IDs
-        """        try:
+        """
+        try:
             results = set()
             
             # Date range search
@@ -1187,14 +1251,16 @@ class TemporalIndexer(IndexingInterface):
             return []
     
     async def update_index(self, conversation_id: str, conversation: ConversationRecord) -> bool:
-        """Update temporal index for a conversation"""        # Remove old index entries
+        """Update temporal index for a conversation"""
+        # Remove old index entries
         await self.remove_from_index(conversation_id)
         
         # Re-index conversation
         return await self.index_conversation(conversation)
     
     async def remove_from_index(self, conversation_id: str) -> bool:
-        """Remove conversation from temporal index"""        try:
+        """Remove conversation from temporal index"""
+        try:
             # Remove from all temporal indexes
             # This is a simplified approach
             
@@ -1222,7 +1288,8 @@ class TemporalIndexer(IndexingInterface):
             return False
     
     async def get_activity_patterns(self, user_id: str) -> Dict[str, Any]:
-        """Get user activity patterns"""        try:
+        """Get user activity patterns"""
+        try:
             if user_id not in self.user_activity_index:
                 return {}
             
@@ -1253,11 +1320,13 @@ class TemporalIndexer(IndexingInterface):
 
 
 class TextProcessor:
-    """    Text processing utilities for indexing
+    """
+    Text processing utilities for indexing
     
     Provides text preprocessing, cleaning, and feature extraction
     for various indexing strategies.
-    """    
+    """
+    
     def __init__(self):
         self.metrics = MetricsCollector("text_processor")
         
@@ -1272,7 +1341,8 @@ class TextProcessor:
         logger.info("TextProcessor initialized")
     
     async def initialize(self):
-        """Initialize text processor"""        try:
+        """Initialize text processor"""
+        try:
             logger.info("TextProcessor initialized")
             
         except Exception as e:
@@ -1280,14 +1350,16 @@ class TextProcessor:
             raise
     
     async def process_text(self, text: str) -> Dict[str, Any]:
-        """        Process text for indexing
+        """
+        Process text for indexing
         
         Args:
             text: Raw text content
             
         Returns:
             Processed text features
-        """        try:
+        """
+        try:
             # Basic cleaning
             cleaned_text = self._clean_text(text)
             
@@ -1321,7 +1393,8 @@ class TextProcessor:
             return {"original_text": text}
     
     def _clean_text(self, text: str) -> str:
-        """Clean and normalize text"""        # Convert to lowercase
+        """Clean and normalize text"""
+        # Convert to lowercase
         text = text.lower()
         
         # Remove special characters but keep spaces
@@ -1333,7 +1406,8 @@ class TextProcessor:
         return text
     
     def _tokenize(self, text: str) -> List[str]:
-        """Tokenize text into words"""        try:
+        """Tokenize text into words"""
+        try:
             if nltk:
                 return word_tokenize(text)
             else:
@@ -1342,13 +1416,15 @@ class TextProcessor:
             return text.split()
     
     def _remove_stop_words(self, tokens: List[str]) -> List[str]:
-        """Remove stop words from tokens"""        if self.stop_words:
+        """Remove stop words from tokens"""
+        if self.stop_words:
             return [token for token in tokens if token not in self.stop_words and len(token) > 2]
         else:
             return [token for token in tokens if len(token) > 2]
     
     def _lemmatize_tokens(self, tokens: List[str]) -> List[str]:
-        """Lemmatize tokens to their root forms"""        if self.lemmatizer:
+        """Lemmatize tokens to their root forms"""
+        if self.lemmatizer:
             try:
                 return [self.lemmatizer.lemmatize(token) for token in tokens]
             except Exception:

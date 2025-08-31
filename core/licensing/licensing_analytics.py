@@ -17,7 +17,8 @@ Business Logic Flow:
 User (musician/blogger/photographer/influencer/comedian) → Upload multi-format content
 → AI protection rights analysis → Professional SEO optimization → Collaboration matching
 → Multi-platform distribution → Automated licensing & royalty management
-"""import asyncio
+"""
+import asyncio
 import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
@@ -42,7 +43,8 @@ from ..utils.ai_optimization import AIOptimizationEngine
 
 
 class AnalyticsMetricType(Enum):
-    """Types of analytics metrics"""    REVENUE = "revenue"
+    """Types of analytics metrics"""
+    REVENUE = "revenue"
     USAGE = "usage"
     PERFORMANCE = "performance"
     ENGAGEMENT = "engagement"
@@ -55,7 +57,8 @@ class AnalyticsMetricType(Enum):
 
 
 class TimeFrameType(Enum):
-    """Analytics time frame types"""    REAL_TIME = "real_time"
+    """Analytics time frame types"""
+    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -66,7 +69,8 @@ class TimeFrameType(Enum):
 
 
 class ReportFormat(Enum):
-    """Analytics report output formats"""    JSON = "json"
+    """Analytics report output formats"""
+    JSON = "json"
     CSV = "csv"
     EXCEL = "excel"
     PDF = "pdf"
@@ -77,7 +81,8 @@ class ReportFormat(Enum):
 
 @dataclass
 class PerformanceMetrics:
-    """Comprehensive performance metrics structure"""    metric_id: str
+    """Comprehensive performance metrics structure"""
+    metric_id: str
     timestamp: datetime
     license_count: int
     active_licenses: int
@@ -99,7 +104,8 @@ class PerformanceMetrics:
 
 @dataclass
 class RevenueInsights:
-    """Advanced revenue analytics and insights"""    insight_id: str
+    """Advanced revenue analytics and insights"""
+    insight_id: str
     period_start: datetime
     period_end: datetime
     total_revenue: Decimal
@@ -120,7 +126,8 @@ class RevenueInsights:
 
 @dataclass
 class PredictiveModel:
-    """Machine learning model for predictive analytics"""    model_id: str
+    """Machine learning model for predictive analytics"""
+    model_id: str
     model_type: str
     algorithm: str
     features: List[str]
@@ -136,9 +143,11 @@ class PredictiveModel:
 
 
 class LicensingAnalytics:
-    """    Ultra-advanced licensing analytics engine providing comprehensive business intelligence,
+    """
+    Ultra-advanced licensing analytics engine providing comprehensive business intelligence,
     predictive insights, and performance optimization for licensing operations.
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -157,7 +166,8 @@ class LicensingAnalytics:
         territories: Optional[List[str]] = None,
         platforms: Optional[List[str]] = None
     ) -> PerformanceMetrics:
-        """Generate comprehensive performance analytics report"""        try:
+        """Generate comprehensive performance analytics report"""
+        try:
             # Calculate time boundaries
             if not start_date:
                 start_date = self._get_default_start_date(time_frame)
@@ -192,7 +202,8 @@ class LicensingAnalytics:
         include_predictions: bool = True,
         include_optimization: bool = True
     ) -> RevenueInsights:
-        """Generate advanced revenue analytics and insights"""        try:
+        """Generate advanced revenue analytics and insights"""
+        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=analysis_period)
             
@@ -248,7 +259,8 @@ class LicensingAnalytics:
         features: List[str],
         training_period: int = 365  # days
     ) -> PredictiveModel:
-        """Train machine learning model for predictive analytics"""        try:
+        """Train machine learning model for predictive analytics"""
+        try:
             # Collect training data
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=training_period)
@@ -325,7 +337,8 @@ class LicensingAnalytics:
         dashboard_type: str = "executive",
         real_time: bool = True
     ) -> Dict[str, Any]:
-        """Generate comprehensive dashboard data for visualization"""        try:
+        """Generate comprehensive dashboard data for visualization"""
+        try:
             dashboard_data = {
                 "timestamp": datetime.utcnow().isoformat(),
                 "dashboard_type": dashboard_type,
@@ -368,7 +381,8 @@ class LicensingAnalytics:
         format_type: ReportFormat,
         output_path: Optional[str] = None
     ) -> str:
-        """Export analytics report in specified format"""        try:
+        """Export analytics report in specified format"""
+        try:
             if format_type == ReportFormat.JSON:
                 return await self._export_json_report(report_data, output_path)
             elif format_type == ReportFormat.CSV:
@@ -395,7 +409,8 @@ class LicensingAnalytics:
         territories: Optional[List[str]],
         platforms: Optional[List[str]]
     ) -> Dict[str, Any]:
-        """Collect raw performance data from various sources"""        # Implementation would collect data from database, APIs, etc.
+        """Collect raw performance data from various sources"""
+        # Implementation would collect data from database, APIs, etc.
         return {
             "licenses": [],
             "revenue": [],
@@ -405,7 +420,8 @@ class LicensingAnalytics:
         }
     
     async def _process_performance_metrics(self, raw_data: Dict[str, Any]) -> PerformanceMetrics:
-        """Process raw data into structured performance metrics"""        return PerformanceMetrics(
+        """Process raw data into structured performance metrics"""
+        return PerformanceMetrics(
             metric_id=f"perf_{datetime.utcnow().isoformat()}",
             timestamp=datetime.utcnow(),
             license_count=len(raw_data.get('licenses', [])),
@@ -426,7 +442,8 @@ class LicensingAnalytics:
         )
     
     def _get_default_start_date(self, time_frame: TimeFrameType) -> datetime:
-        """Calculate default start date based on time frame"""        now = datetime.utcnow()
+        """Calculate default start date based on time frame"""
+        now = datetime.utcnow()
         if time_frame == TimeFrameType.DAILY:
             return now - timedelta(days=1)
         elif time_frame == TimeFrameType.WEEKLY:
@@ -441,7 +458,8 @@ class LicensingAnalytics:
             return now - timedelta(days=7)  # Default to weekly
     
     async def _cache_performance_metrics(self, metrics: PerformanceMetrics):
-        """Cache performance metrics in Redis for faster access"""        try:
+        """Cache performance metrics in Redis for faster access"""
+        try:
             cache_key = f"analytics:performance:{metrics.metric_id}"
             cache_data = json.dumps(metrics.__dict__, default=str)
             await self.redis_client.setex(cache_key, 3600, cache_data)  # 1 hour expiry
@@ -449,7 +467,8 @@ class LicensingAnalytics:
             self.logger.warning(f"Failed to cache performance metrics: {str(e)}")
     
     async def _collect_revenue_data(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Collect revenue data for analysis"""        # Implementation would query revenue tables
+        """Collect revenue data for analysis"""
+        # Implementation would query revenue tables
         return {
             "amounts": [100.0, 200.0, 150.0],
             "content_types": ["audio", "video", "image"],
@@ -458,35 +477,42 @@ class LicensingAnalytics:
         }
     
     async def _calculate_revenue_by_content_type(self, revenue_data: Dict[str, Any]) -> Dict[str, Decimal]:
-        """Calculate revenue breakdown by content type"""        return {"audio": Decimal("300.0"), "video": Decimal("200.0"), "image": Decimal("100.0")}
+        """Calculate revenue breakdown by content type"""
+        return {"audio": Decimal("300.0"), "video": Decimal("200.0"), "image": Decimal("100.0")}
     
     async def _calculate_revenue_by_platform(self, revenue_data: Dict[str, Any]) -> Dict[str, Decimal]:
-        """Calculate revenue breakdown by platform"""        return {"spotify": Decimal("250.0"), "youtube": Decimal("200.0"), "instagram": Decimal("150.0")}
+        """Calculate revenue breakdown by platform"""
+        return {"spotify": Decimal("250.0"), "youtube": Decimal("200.0"), "instagram": Decimal("150.0")}
     
     async def _calculate_revenue_by_territory(self, revenue_data: Dict[str, Any]) -> Dict[str, Decimal]:
-        """Calculate revenue breakdown by territory"""        return {"US": Decimal("300.0"), "EU": Decimal("200.0"), "APAC": Decimal("100.0")}
+        """Calculate revenue breakdown by territory"""
+        return {"US": Decimal("300.0"), "EU": Decimal("200.0"), "APAC": Decimal("100.0")}
     
     async def _identify_top_performers(self, revenue_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Identify top performing licenses"""        return [
+        """Identify top performing licenses"""
+        return [
             {"license_id": "license_1", "revenue": 500.0, "performance_score": 0.95},
             {"license_id": "license_2", "revenue": 400.0, "performance_score": 0.90}
         ]
     
     async def _analyze_revenue_trends(self, revenue_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Analyze revenue trends over time"""        return [
+        """Analyze revenue trends over time"""
+        return [
             {"period": "2025-01", "revenue": 1000.0, "growth": 0.15},
             {"period": "2025-02", "revenue": 1150.0, "growth": 0.15}
         ]
     
     async def _predict_revenue_growth(self, revenue_data: Dict[str, Any]) -> Dict[str, float]:
-        """Predict future revenue growth using ML models"""        return {
+        """Predict future revenue growth using ML models"""
+        return {
             "next_month": 0.15,
             "next_quarter": 0.25,
             "next_year": 0.40
         }
     
     async def _identify_optimization_opportunities(self, revenue_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Identify revenue optimization opportunities"""        return [
+        """Identify revenue optimization opportunities"""
+        return [
             {
                 "opportunity": "Expand to new territories",
                 "potential_impact": "25% revenue increase",
@@ -495,13 +521,16 @@ class LicensingAnalytics:
         ]
     
     async def _calculate_confidence_score(self, data: Dict[str, Any]) -> float:
-        """Calculate confidence score for analytics results"""        return 0.85  # Example confidence score
+        """Calculate confidence score for analytics results"""
+        return 0.85  # Example confidence score
     
     async def _assess_data_quality(self, data: Dict[str, Any]) -> float:
-        """Assess data quality score"""        return 0.92  # Example data quality score
+        """Assess data quality score"""
+        return 0.92  # Example data quality score
     
     async def _generate_ai_recommendations(self, insights: RevenueInsights) -> List[str]:
-        """Generate AI-powered recommendations"""        return [
+        """Generate AI-powered recommendations"""
+        return [
             "Consider expanding licensing to emerging markets",
             "Optimize pricing strategy for video content",
             "Implement dynamic pricing based on demand"
@@ -513,7 +542,8 @@ class LicensingAnalytics:
         end_date: datetime,
         features: List[str]
     ) -> pd.DataFrame:
-        """Collect training data for ML models"""        # Implementation would collect actual training data
+        """Collect training data for ML models"""
+        # Implementation would collect actual training data
         return pd.DataFrame({
             'feature1': np.random.randn(100),
             'feature2': np.random.randn(100),
@@ -521,7 +551,8 @@ class LicensingAnalytics:
         })
     
     async def _cache_ml_model(self, model_metadata: PredictiveModel, model):
-        """Cache ML model for future use"""        try:
+        """Cache ML model for future use"""
+        try:
             # In a real implementation, would serialize and store the model
             cache_key = f"analytics:model:{model_metadata.model_id}"
             model_data = json.dumps(model_metadata.__dict__, default=str)
@@ -530,7 +561,8 @@ class LicensingAnalytics:
             self.logger.warning(f"Failed to cache ML model: {str(e)}")
     
     async def _generate_kpi_metrics(self) -> Dict[str, Any]:
-        """Generate key performance indicator metrics"""        return {
+        """Generate key performance indicator metrics"""
+        return {
             "total_revenue": 1000000.0,
             "active_licenses": 2500,
             "growth_rate": 0.15,
@@ -539,7 +571,8 @@ class LicensingAnalytics:
         }
     
     async def _generate_chart_data(self, dashboard_type: str) -> Dict[str, Any]:
-        """Generate chart data for dashboard visualization"""        return {
+        """Generate chart data for dashboard visualization"""
+        return {
             "revenue_trend": {
                 "type": "line",
                 "data": {"x": ["Jan", "Feb", "Mar"], "y": [100000, 115000, 132250]}
@@ -551,7 +584,8 @@ class LicensingAnalytics:
         }
     
     async def _generate_table_data(self, dashboard_type: str) -> Dict[str, Any]:
-        """Generate table data for dashboard"""        return {
+        """Generate table data for dashboard"""
+        return {
             "top_licenses": [
                 {"license_id": "LIC001", "revenue": 50000, "growth": 0.25},
                 {"license_id": "LIC002", "revenue": 45000, "growth": 0.20}
@@ -559,7 +593,8 @@ class LicensingAnalytics:
         }
     
     async def _generate_analytics_alerts(self) -> List[Dict[str, Any]]:
-        """Generate automated analytics alerts"""        return [
+        """Generate automated analytics alerts"""
+        return [
             {
                 "type": "warning",
                 "message": "Revenue growth below target in APAC region",
@@ -569,7 +604,8 @@ class LicensingAnalytics:
         ]
     
     async def _generate_automated_insights(self) -> List[Dict[str, Any]]:
-        """Generate automated insights from data analysis"""        return [
+        """Generate automated insights from data analysis"""
+        return [
             {
                 "insight": "Audio content showing 25% higher engagement than video",
                 "confidence": 0.89,
@@ -578,40 +614,48 @@ class LicensingAnalytics:
         ]
     
     async def _generate_dashboard_recommendations(self) -> List[str]:
-        """Generate dashboard-specific recommendations"""        return [
+        """Generate dashboard-specific recommendations"""
+        return [
             "Focus marketing efforts on high-performing content types",
             "Investigate licensing opportunities in underperforming regions"
         ]
     
     async def _export_json_report(self, report_data, output_path: Optional[str]) -> str:
-        """Export report as JSON"""        # Implementation would serialize and save report
+        """Export report as JSON"""
+        # Implementation would serialize and save report
         return "report_exported.json"
     
     async def _export_csv_report(self, report_data, output_path: Optional[str]) -> str:
-        """Export report as CSV"""        # Implementation would convert to CSV format
+        """Export report as CSV"""
+        # Implementation would convert to CSV format
         return "report_exported.csv"
     
     async def _export_excel_report(self, report_data, output_path: Optional[str]) -> str:
-        """Export report as Excel"""        # Implementation would create Excel file
+        """Export report as Excel"""
+        # Implementation would create Excel file
         return "report_exported.xlsx"
     
     async def _export_pdf_report(self, report_data, output_path: Optional[str]) -> str:
-        """Export report as PDF"""        # Implementation would generate PDF
+        """Export report as PDF"""
+        # Implementation would generate PDF
         return "report_exported.pdf"
     
     async def _export_html_report(self, report_data, output_path: Optional[str]) -> str:
-        """Export report as HTML"""        # Implementation would create HTML report
+        """Export report as HTML"""
+        # Implementation would create HTML report
         return "report_exported.html"
     
     async def _calculate_trending_metrics(self, raw_data: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate trending metrics from raw data"""        return {
+        """Calculate trending metrics from raw data"""
+        return {
             "revenue_velocity": 0.15,
             "user_adoption_rate": 0.22,
             "platform_growth": 0.18
         }
     
     async def _generate_predictive_indicators(self, raw_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate predictive indicators for future performance"""        return {
+        """Generate predictive indicators for future performance"""
+        return {
             "market_expansion_potential": 0.75,
             "revenue_stability_index": 0.88,
             "risk_assessment_score": 0.12

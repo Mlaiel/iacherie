@@ -14,7 +14,8 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 License: Proprietary - Contact author for licensing terms
-"""from typing import Dict, List, Optional, Set, Union, Any, Callable
+"""
+from typing import Dict, List, Optional, Set, Union, Any, Callable
 from dataclasses import dataclass, field
 from enum import Enum
 from abc import ABC, abstractmethod
@@ -35,7 +36,8 @@ from backend.core.logging import SecurityLogger
 
 
 class PermissionLevel(Enum):
-    """Permission levels for granular access control"""    NONE = 0
+    """Permission levels for granular access control"""
+    NONE = 0
     READ = 10
     WRITE = 20
     MODIFY = 25
@@ -47,7 +49,8 @@ class PermissionLevel(Enum):
 
 
 class ResourceType(Enum):
-    """Types of resources in the system"""    USER = "user"
+    """Types of resources in the system"""
+    USER = "user"
     CONTENT = "content"
     FINGERPRINT = "fingerprint"
     PROTECTION = "protection"
@@ -63,7 +66,8 @@ class ResourceType(Enum):
 
 
 class ContentType(Enum):
-    """Content types for content-specific permissions"""    AUDIO = "audio"
+    """Content types for content-specific permissions"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -73,7 +77,8 @@ class ContentType(Enum):
 
 
 class PermissionScope(Enum):
-    """Permission scopes for different contexts"""    GLOBAL = "global"
+    """Permission scopes for different contexts"""
+    GLOBAL = "global"
     TENANT = "tenant"
     RESOURCE = "resource"
     CONTENT = "content"
@@ -82,7 +87,8 @@ class PermissionScope(Enum):
 
 @dataclass
 class Permission:
-    """Individual permission definition"""    name: str
+    """Individual permission definition"""
+    name: str
     resource_type: ResourceType
     level: PermissionLevel
     description: str
@@ -92,7 +98,8 @@ class Permission:
 
 @dataclass
 class Role:
-    """Role definition with hierarchical permissions"""    name: str
+    """Role definition with hierarchical permissions"""
+    name: str
     description: str
     permissions: Set[str] = field(default_factory=set)
     parent_roles: Set[str] = field(default_factory=set)
@@ -103,7 +110,8 @@ class Role:
 
 @dataclass
 class ResourceAccess:
-    """Resource access definition"""    resource_id: str
+    """Resource access definition"""
+    resource_id: str
     resource_type: ResourceType
     user_id: str
     permissions: Set[str]
@@ -114,7 +122,8 @@ class ResourceAccess:
 
 
 class PermissionManager:
-    """Manages system permissions and their definitions"""    
+    """Manages system permissions and their definitions"""
+    
     def __init__(self):
         self.logger = SecurityLogger("PermissionManager")
         self.cache = CacheManager()
@@ -124,7 +133,8 @@ class PermissionManager:
         self.default_permissions = self._initialize_default_permissions()
     
     def _initialize_default_permissions(self) -> Dict[str, Permission]:
-        """Initialize default system permissions"""        permissions = {}
+        """Initialize default system permissions"""
+        permissions = {}
         
         # User permissions
         permissions["user.read"] = Permission(
@@ -256,7 +266,8 @@ class PermissionManager:
         return permissions
     
     async def get_permission(self, permission_name: str) -> Optional[Permission]:
-        """Get permission by name"""        cache_key = f"permission:{permission_name}"
+        """Get permission by name"""
+        cache_key = f"permission:{permission_name}"
         cached_permission = await self.cache.get(cache_key)
         
         if cached_permission:
@@ -271,7 +282,8 @@ class PermissionManager:
         return None
     
     async def create_permission(self, permission: Permission) -> bool:
-        """Create new custom permission"""        try:
+        """Create new custom permission"""
+        try:
             # Store in database
             # Implementation depends on your permission model
             
@@ -288,7 +300,8 @@ class PermissionManager:
 
 
 class RoleBasedAccess:
-    """Role-based access control manager"""    
+    """Role-based access control manager"""
+    
     def __init__(self, permission_manager: PermissionManager):
         self.permission_manager = permission_manager
         self.logger = SecurityLogger("RoleBasedAccess")
@@ -298,7 +311,8 @@ class RoleBasedAccess:
         self.default_roles = self._initialize_default_roles()
     
     def _initialize_default_roles(self) -> Dict[str, Role]:
-        """Initialize default system roles"""        roles = {}
+        """Initialize default system roles"""
+        roles = {}
         
         # Artist role - content creator
         roles["artist"] = Role(
@@ -370,7 +384,8 @@ class RoleBasedAccess:
         return roles
     
     async def get_role(self, role_name: str, tenant_id: Optional[str] = None) -> Optional[Role]:
-        """Get role by name"""        cache_key = f"role:{role_name}:{tenant_id or 'global'}"
+        """Get role by name"""
+        cache_key = f"role:{role_name}:{tenant_id or 'global'}"
         cached_role = await self.cache.get(cache_key)
         
         if cached_role:
@@ -389,7 +404,8 @@ class RoleBasedAccess:
         role_name: str, 
         tenant_id: Optional[str] = None
     ) -> Set[str]:
-        """Get all permissions for a role including inherited ones"""        role = await self.get_role(role_name, tenant_id)
+        """Get all permissions for a role including inherited ones"""
+        role = await self.get_role(role_name, tenant_id)
         if not role:
             return set()
         
@@ -409,7 +425,8 @@ class RoleBasedAccess:
         tenant_id: str,
         assigned_by: str
     ) -> bool:
-        """Assign role to user"""        try:
+        """Assign role to user"""
+        try:
             # Validate role exists
             role = await self.get_role(role_name, tenant_id)
             if not role:
@@ -442,7 +459,8 @@ class RoleBasedAccess:
         role_name: str, 
         tenant_id: str
     ) -> bool:
-        """Revoke role from user"""        try:
+        """Revoke role from user"""
+        try:
             # Remove role assignment from database
             # Implementation depends on your user-role model
             
@@ -466,7 +484,8 @@ class RoleBasedAccess:
 
 
 class ContentAccessControl:
-    """Content-specific access control for multi-format protection"""    
+    """Content-specific access control for multi-format protection"""
+    
     def __init__(self, rbac: RoleBasedAccess):
         self.rbac = rbac
         self.logger = SecurityLogger("ContentAccessControl")
@@ -479,7 +498,8 @@ class ContentAccessControl:
         permission: str,
         tenant_id: str
     ) -> bool:
-        """Check if user can access specific content"""        try:
+        """Check if user can access specific content"""
+        try:
             # Check cache first
             cache_key = f"content_access:{user_id}:{content_id}:{permission}"
             cached_result = await self.cache.get(cache_key)
@@ -522,7 +542,8 @@ class ContentAccessControl:
         granted_by: str,
         expires_at: Optional[datetime] = None
     ) -> bool:
-        """Grant specific access to content"""        try:
+        """Grant specific access to content"""
+        try:
             # Create resource access record
             access = ResourceAccess(
                 resource_id=content_id,
@@ -555,7 +576,8 @@ class ContentAccessControl:
         content_id: str,
         permissions: Optional[List[str]] = None
     ) -> bool:
-        """Revoke content access"""        try:
+        """Revoke content access"""
+        try:
             # Remove from database
             # Implementation depends on your resource access model
             
@@ -577,7 +599,8 @@ class ContentAccessControl:
             return False
     
     async def get_content_owner(self, content_id: str) -> Optional[str]:
-        """Get content owner"""        try:
+        """Get content owner"""
+        try:
             # Check cache first
             cache_key = f"content_owner:{content_id}"
             cached_owner = await self.cache.get(cache_key)
@@ -608,7 +631,8 @@ class ContentAccessControl:
             return None
     
     async def get_user_permissions(self, user_id: str, tenant_id: str) -> Set[str]:
-        """Get all user permissions"""        cache_key = f"user_permissions:{user_id}:{tenant_id}"
+        """Get all user permissions"""
+        cache_key = f"user_permissions:{user_id}:{tenant_id}"
         cached_permissions = await self.cache.get(cache_key)
         
         if cached_permissions:
@@ -629,7 +653,8 @@ class ContentAccessControl:
         return all_permissions
     
     async def get_user_roles(self, user_id: str, tenant_id: str) -> List[str]:
-        """Get user roles"""        try:
+        """Get user roles"""
+        try:
             cache_key = f"user_roles:{user_id}:{tenant_id}"
             cached_roles = await self.cache.get(cache_key)
             
@@ -668,7 +693,8 @@ class ContentAccessControl:
         resource_id: str, 
         permission: str
     ) -> bool:
-        """Check resource-specific access"""        try:
+        """Check resource-specific access"""
+        try:
             # Check cache first
             cache_key = f"resource_access:{user_id}:{resource_id}:{permission}"
             cached_result = await self.cache.get(cache_key)
@@ -705,7 +731,8 @@ class ContentAccessControl:
 
 
 class AuthorizationManager:
-    """Main authorization manager"""    
+    """Main authorization manager"""
+    
     def __init__(self):
         self.permission_manager = PermissionManager()
         self.rbac = RoleBasedAccess(self.permission_manager)
@@ -720,7 +747,8 @@ class AuthorizationManager:
         permission: str,
         tenant_id: str
     ) -> bool:
-        """Main authorization method"""        try:
+        """Main authorization method"""
+        try:
             # Log authorization attempt
             self.logger.debug(
                 f"Authorization check: user={user_id}, resource={resource_type}:{resource_id}, "
@@ -750,7 +778,8 @@ class AuthorizationManager:
             return False
     
     async def require_permission(self, permission: str):
-        """Decorator for requiring specific permission"""        def decorator(func):
+        """Decorator for requiring specific permission"""
+        def decorator(func):
             async def wrapper(*args, **kwargs):
                 # Get current user from request context
                 # Implementation depends on your auth system
@@ -766,7 +795,8 @@ class AuthorizationManager:
         return decorator
     
     async def require_role(self, role: str):
-        """Decorator for requiring specific role"""        def decorator(func):
+        """Decorator for requiring specific role"""
+        def decorator(func):
             async def wrapper(*args, **kwargs):
                 # Implementation similar to require_permission
                 return await func(*args, **kwargs)
@@ -778,7 +808,8 @@ class AuthorizationManager:
         user_id: str, 
         tenant_id: str
     ) -> Dict[str, Any]:
-        """Get user's effective permissions summary"""        try:
+        """Get user's effective permissions summary"""
+        try:
             user_permissions = await self.content_access.get_user_permissions(user_id, tenant_id)
             user_roles = await self.content_access.get_user_roles(user_id, tenant_id)
             

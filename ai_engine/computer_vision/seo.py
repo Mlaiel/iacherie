@@ -55,7 +55,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Types of visual content"""    PHOTOGRAPHY = "photography"
+    """Types of visual content"""
+    PHOTOGRAPHY = "photography"
     ILLUSTRATION = "illustration"
     INFOGRAPHIC = "infographic"
     ARTWORK = "artwork"
@@ -67,7 +68,8 @@ class ContentType(Enum):
     LOGO = "logo"
 
 class SEOPlatform(Enum):
-    """Target SEO platforms"""    GOOGLE = "google"
+    """Target SEO platforms"""
+    GOOGLE = "google"
     INSTAGRAM = "instagram"
     PINTEREST = "pinterest"
     YOUTUBE = "youtube"
@@ -77,7 +79,8 @@ class SEOPlatform(Enum):
     TIKTOK = "tiktok"
 
 class LanguageTarget(Enum):
-    """Target languages for SEO"""    ENGLISH = "en"
+    """Target languages for SEO"""
+    ENGLISH = "en"
     GERMAN = "de"
     FRENCH = "fr"
     SPANISH = "es"
@@ -90,7 +93,8 @@ class LanguageTarget(Enum):
 
 @dataclass
 class OptimizationSettings:
-    """SEO optimization configuration"""    target_platforms: List[SEOPlatform]
+    """SEO optimization configuration"""
+    target_platforms: List[SEOPlatform]
     target_languages: List[LanguageTarget] = field(default_factory=lambda: [LanguageTarget.ENGLISH])
     content_type: Optional[ContentType] = None
     target_audience: str = "general"
@@ -107,7 +111,8 @@ class OptimizationSettings:
 
 @dataclass
 class SEOMetrics:
-    """SEO performance metrics"""    keyword_density: Dict[str, float]
+    """SEO performance metrics"""
+    keyword_density: Dict[str, float]
     readability_score: float
     accessibility_score: float
     social_sharing_potential: float
@@ -121,7 +126,8 @@ class SEOMetrics:
 
 @dataclass
 class SEOResult:
-    """Complete SEO optimization result"""    optimized_title: str
+    """Complete SEO optimization result"""
+    optimized_title: str
     optimized_description: str
     hashtags: List[str]
     keywords: List[str]
@@ -134,7 +140,8 @@ class SEOResult:
     multilingual_variants: Dict[str, Dict[str, str]] = field(default_factory=dict)
 
 class SEOOptimizer:
-    """Advanced SEO optimization engine for visual content"""    
+    """Advanced SEO optimization engine for visual content"""
+    
     def __init__(self, api_keys: Optional[Dict[str, str]] = None):
         self.api_keys = api_keys or {}
         
@@ -153,7 +160,8 @@ class SEOOptimizer:
         self.platform_configs = self._init_platform_configs()
         
     def _init_nlp_components(self):
-        """Initialize NLP processing components"""        try:
+        """Initialize NLP processing components"""
+        try:
             # Download required NLTK data
             nltk.download('punkt', quiet=True)
             nltk.download('stopwords', quiet=True)
@@ -183,7 +191,8 @@ class SEOOptimizer:
             self.translator = None
     
     def _init_ai_models(self):
-        """Initialize AI models for content analysis"""        try:
+        """Initialize AI models for content analysis"""
+        try:
             # Image captioning model
             self.caption_processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
             self.caption_model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
@@ -204,7 +213,8 @@ class SEOOptimizer:
             self.text_classifier = None
     
     def _load_seo_rules(self) -> Dict[str, Any]:
-        """Load SEO rules and best practices"""        return {
+        """Load SEO rules and best practices"""
+        return {
             'title_length': {'min': 30, 'max': 60},
             'description_length': {'min': 120, 'max': 160},
             'keyword_density': {'min': 0.01, 'max': 0.03},
@@ -223,7 +233,8 @@ class SEOOptimizer:
         }
     
     def _init_platform_configs(self) -> Dict[SEOPlatform, Dict[str, Any]]:
-        """Initialize platform-specific configurations"""        return {
+        """Initialize platform-specific configurations"""
+        return {
             SEOPlatform.INSTAGRAM: {
                 'title_length': 125,
                 'hashtag_limit': 30,
@@ -279,7 +290,8 @@ class SEOOptimizer:
     
     def optimize_content(self, image: np.ndarray, settings: OptimizationSettings, 
                         existing_metadata: Optional[Dict[str, Any]] = None) -> SEOResult:
-        """Perform comprehensive SEO optimization"""        logger.info("Starting comprehensive SEO optimization")
+        """Perform comprehensive SEO optimization"""
+        logger.info("Starting comprehensive SEO optimization")
         
         try:
             # Step 1: Analyze image content
@@ -348,7 +360,8 @@ class SEOOptimizer:
             return self._create_fallback_result(image, settings)
     
     def _analyze_image_content(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze image content using AI models"""        analysis = {
+        """Analyze image content using AI models"""
+        analysis = {
             'dominant_colors': [],
             'objects_detected': [],
             'scene_type': 'unknown',
@@ -395,7 +408,8 @@ class SEOOptimizer:
         return analysis
     
     def _analyze_colors(self, image: np.ndarray) -> List[str]:
-        """Analyze dominant colors in the image"""        try:
+        """Analyze dominant colors in the image"""
+        try:
             # Reshape image to pixels
             pixels = image.reshape(-1, 3)
             
@@ -420,7 +434,8 @@ class SEOOptimizer:
             return ['unknown']
     
     def _rgb_to_color_name(self, rgb: np.ndarray) -> str:
-        """Convert RGB values to color name"""        r, g, b = rgb
+        """Convert RGB values to color name"""
+        r, g, b = rgb
         
         # Simple color mapping
         if r > 200 and g > 200 and b > 200:
@@ -452,7 +467,8 @@ class SEOOptimizer:
             return 'gray'
     
     def _extract_objects_from_caption(self, caption: str) -> List[str]:
-        """Extract objects/entities from AI-generated caption"""        objects = []
+        """Extract objects/entities from AI-generated caption"""
+        objects = []
         
         if self.nlp:
             doc = self.nlp(caption)
@@ -475,7 +491,8 @@ class SEOOptimizer:
         return list(set(objects))  # Remove duplicates
     
     def _analyze_composition(self, image: np.ndarray) -> float:
-        """Analyze image composition quality"""        try:
+        """Analyze image composition quality"""
+        try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             h, w = gray.shape
             
@@ -498,7 +515,8 @@ class SEOOptimizer:
             return 0.7  # Default score
     
     def _analyze_rule_of_thirds(self, gray: np.ndarray) -> float:
-        """Analyze rule of thirds composition"""        h, w = gray.shape
+        """Analyze rule of thirds composition"""
+        h, w = gray.shape
         
         # Define thirds lines
         v_thirds = [w // 3, 2 * w // 3]
@@ -524,7 +542,8 @@ class SEOOptimizer:
         return score / max(total_checks, 1)
     
     def _analyze_symmetry(self, gray: np.ndarray) -> float:
-        """Analyze image symmetry"""        h, w = gray.shape
+        """Analyze image symmetry"""
+        h, w = gray.shape
         
         # Vertical symmetry
         left_half = gray[:, :w//2]
@@ -543,7 +562,8 @@ class SEOOptimizer:
         return 0.5
     
     def _analyze_leading_lines(self, gray: np.ndarray) -> float:
-        """Analyze leading lines in composition"""        # Detect lines using HoughLinesP
+        """Analyze leading lines in composition"""
+        # Detect lines using HoughLinesP
         edges = cv2.Canny(gray, 50, 150)
         lines = cv2.HoughLinesP(edges, 1, np.pi/180, threshold=100, minLineLength=50, maxLineGap=10)
         
@@ -556,7 +576,8 @@ class SEOOptimizer:
         return line_score
     
     def _analyze_quality(self, image: np.ndarray) -> float:
-        """Analyze technical image quality"""        try:
+        """Analyze technical image quality"""
+        try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             
             # Sharpness analysis
@@ -581,7 +602,8 @@ class SEOOptimizer:
             return 0.8
     
     def _detect_content_type(self, image: np.ndarray, caption: str) -> ContentType:
-        """Detect the type of visual content"""        try:
+        """Detect the type of visual content"""
+        try:
             # Analyze image characteristics
             h, w = image.shape[:2]
             aspect_ratio = w / h
@@ -614,7 +636,8 @@ class SEOOptimizer:
             return ContentType.PHOTOGRAPHY
     
     def _research_keywords(self, content_analysis: Dict[str, Any], settings: OptimizationSettings) -> List[str]:
-        """Research and generate relevant keywords"""        keywords = []
+        """Research and generate relevant keywords"""
+        keywords = []
         
         try:
             # Extract from content analysis
@@ -656,7 +679,8 @@ class SEOOptimizer:
             return ['image', 'photo', 'visual', 'content']
     
     def _get_content_type_keywords(self, content_type: ContentType) -> List[str]:
-        """Get keywords specific to content type"""        keyword_map = {
+        """Get keywords specific to content type"""
+        keyword_map = {
             ContentType.PHOTOGRAPHY: ['photo', 'photography', 'picture', 'image', 'shot', 'capture'],
             ContentType.PORTRAIT: ['portrait', 'headshot', 'person', 'face', 'people', 'human'],
             ContentType.LANDSCAPE: ['landscape', 'nature', 'scenery', 'outdoor', 'vista', 'horizon'],
@@ -672,7 +696,8 @@ class SEOOptimizer:
         return keyword_map.get(content_type, ['image', 'visual'])
     
     def _get_trending_keywords(self, platforms: List[SEOPlatform]) -> List[str]:
-        """Get trending keywords for specified platforms"""        # This would integrate with real trending APIs
+        """Get trending keywords for specified platforms"""
+        # This would integrate with real trending APIs
         # For now, return some common trending keywords
         trending_keywords = [
             'trending', 'viral', 'popular', 'new', 'latest', 'hot',
@@ -682,7 +707,8 @@ class SEOOptimizer:
         return trending_keywords
     
     def _get_platform_keywords(self, platform: SEOPlatform, content_analysis: Dict[str, Any]) -> List[str]:
-        """Get platform-specific keywords"""        platform_keywords = {
+        """Get platform-specific keywords"""
+        platform_keywords = {
             SEOPlatform.INSTAGRAM: ['insta', 'ig', 'gram', 'story', 'reel', 'post'],
             SEOPlatform.PINTEREST: ['pin', 'board', 'inspiration', 'ideas', 'diy', 'style'],
             SEOPlatform.YOUTUBE: ['video', 'watch', 'tutorial', 'how-to', 'guide', 'tips'],
@@ -696,7 +722,8 @@ class SEOOptimizer:
         return platform_keywords.get(platform, [])
     
     def _clean_keywords(self, keywords: List[str]) -> List[str]:
-        """Clean and normalize keywords"""        cleaned = []
+        """Clean and normalize keywords"""
+        cleaned = []
         
         for keyword in keywords:
             if isinstance(keyword, str):
@@ -716,7 +743,8 @@ class SEOOptimizer:
     
     def _score_keywords(self, keywords: List[str], content_analysis: Dict[str, Any], 
                        settings: OptimizationSettings) -> List[Tuple[str, float]]:
-        """Score keywords based on relevance and SEO value"""        scored_keywords = []
+        """Score keywords based on relevance and SEO value"""
+        scored_keywords = []
         
         for keyword in keywords:
             score = 0.0
@@ -754,7 +782,8 @@ class SEOOptimizer:
         return scored_keywords
     
     def _generate_base_title(self, content_analysis: Dict[str, Any], settings: OptimizationSettings) -> str:
-        """Generate base title from content analysis"""        try:
+        """Generate base title from content analysis"""
+        try:
             caption = content_analysis.get('caption', '')
             objects = content_analysis.get('objects_detected', [])
             content_type = content_analysis.get('content_type', ContentType.PHOTOGRAPHY)
@@ -791,7 +820,8 @@ class SEOOptimizer:
             return "Stunning Visual Content"
     
     def _get_title_enhancer(self, content_type: ContentType) -> str:
-        """Get appropriate title enhancer based on content type"""        enhancers = {
+        """Get appropriate title enhancer based on content type"""
+        enhancers = {
             ContentType.PHOTOGRAPHY: "Stunning",
             ContentType.PORTRAIT: "Beautiful",
             ContentType.LANDSCAPE: "Breathtaking",
@@ -807,7 +837,8 @@ class SEOOptimizer:
         return enhancers.get(content_type, "Incredible")
     
     def _generate_base_description(self, content_analysis: Dict[str, Any], settings: OptimizationSettings) -> str:
-        """Generate base description from content analysis"""        try:
+        """Generate base description from content analysis"""
+        try:
             caption = content_analysis.get('caption', '')
             objects = content_analysis.get('objects_detected', [])
             colors = content_analysis.get('dominant_colors', [])
@@ -854,7 +885,8 @@ class SEOOptimizer:
             return "High-quality visual content perfect for professional and personal use."
     
     def _get_content_type_context(self, content_type: ContentType) -> str:
-        """Get context text for content type"""        contexts = {
+        """Get context text for content type"""
+        contexts = {
             ContentType.PHOTOGRAPHY: "Professional photography with exceptional detail",
             ContentType.PORTRAIT: "Captivating portrait photography",
             ContentType.LANDSCAPE: "Scenic landscape capturing natural beauty",
@@ -870,7 +902,8 @@ class SEOOptimizer:
         return contexts.get(content_type, "High-quality visual content")
     
     def _get_call_to_action(self, platforms: List[SEOPlatform]) -> str:
-        """Get appropriate call to action"""        if SEOPlatform.INSTAGRAM in platforms:
+        """Get appropriate call to action"""
+        if SEOPlatform.INSTAGRAM in platforms:
             return "Like and share for more amazing content"
         elif SEOPlatform.PINTEREST in platforms:
             return "Save this pin for inspiration"
@@ -880,7 +913,8 @@ class SEOOptimizer:
             return "Share and discover more"
     
     def _optimize_title(self, base_title: str, keywords: List[str], settings: OptimizationSettings) -> str:
-        """Optimize title with keywords and SEO best practices"""        try:
+        """Optimize title with keywords and SEO best practices"""
+        try:
             # Start with base title
             optimized = base_title
             
@@ -908,7 +942,8 @@ class SEOOptimizer:
             return base_title
     
     def _optimize_description(self, base_description: str, keywords: List[str], settings: OptimizationSettings) -> str:
-        """Optimize description with keywords and SEO best practices"""        try:
+        """Optimize description with keywords and SEO best practices"""
+        try:
             optimized = base_description
             
             # Add keywords naturally
@@ -931,12 +966,14 @@ class SEOOptimizer:
             return base_description
 
 class MetadataGenerator:
-    """Advanced metadata generation for visual content"""    
+    """Advanced metadata generation for visual content"""
+    
     def __init__(self):
         self.metadata_templates = self._load_metadata_templates()
     
     def _load_metadata_templates(self) -> Dict[str, Any]:
-        """Load metadata templates for different platforms"""        return {
+        """Load metadata templates for different platforms"""
+        return {
             'dublin_core': {
                 'title': '',
                 'creator': '',
@@ -969,7 +1006,8 @@ class MetadataGenerator:
     
     def generate_comprehensive_metadata(self, seo_result: SEOResult, 
                                       author_info: Optional[Dict[str, str]] = None) -> Dict[str, Any]:
-        """Generate comprehensive metadata package"""        metadata = {}
+        """Generate comprehensive metadata package"""
+        metadata = {}
         
         # Dublin Core metadata
         metadata['dublin_core'] = self._generate_dublin_core(seo_result, author_info)
@@ -992,7 +1030,8 @@ class MetadataGenerator:
         return metadata
     
     def _generate_dublin_core(self, seo_result: SEOResult, author_info: Optional[Dict[str, str]]) -> Dict[str, Any]:
-        """Generate Dublin Core metadata"""        dc = self.metadata_templates['dublin_core'].copy()
+        """Generate Dublin Core metadata"""
+        dc = self.metadata_templates['dublin_core'].copy()
         
         dc['title'] = seo_result.optimized_title
         dc['description'] = seo_result.optimized_description
@@ -1006,7 +1045,8 @@ class MetadataGenerator:
         return dc
     
     def _generate_exif_metadata(self, seo_result: SEOResult, author_info: Optional[Dict[str, str]]) -> Dict[str, Any]:
-        """Generate EXIF metadata"""        exif = self.metadata_templates['exif'].copy()
+        """Generate EXIF metadata"""
+        exif = self.metadata_templates['exif'].copy()
         
         exif['ImageDescription'] = seo_result.optimized_description
         exif['Keywords'] = seo_result.hashtags
@@ -1019,7 +1059,8 @@ class MetadataGenerator:
         return exif
     
     def _generate_iptc_metadata(self, seo_result: SEOResult, author_info: Optional[Dict[str, str]]) -> Dict[str, Any]:
-        """Generate IPTC metadata"""        iptc = self.metadata_templates['iptc'].copy()
+        """Generate IPTC metadata"""
+        iptc = self.metadata_templates['iptc'].copy()
         
         iptc['Caption'] = seo_result.optimized_description
         iptc['Keywords'] = seo_result.keywords
@@ -1031,7 +1072,8 @@ class MetadataGenerator:
         return iptc
     
     def _generate_open_graph(self, seo_result: SEOResult) -> Dict[str, str]:
-        """Generate Open Graph metadata"""        return {
+        """Generate Open Graph metadata"""
+        return {
             'og:title': seo_result.optimized_title,
             'og:description': seo_result.optimized_description,
             'og:type': 'article',
@@ -1039,7 +1081,8 @@ class MetadataGenerator:
         }
     
     def _generate_twitter_card(self, seo_result: SEOResult) -> Dict[str, str]:
-        """Generate Twitter Card metadata"""        return {
+        """Generate Twitter Card metadata"""
+        return {
             'twitter:card': 'summary_large_image',
             'twitter:title': seo_result.optimized_title,
             'twitter:description': seo_result.optimized_description,
@@ -1047,12 +1090,14 @@ class MetadataGenerator:
         }
 
 class TagGenerator:
-    """Advanced tag generation system"""    
+    """Advanced tag generation system"""
+    
     def __init__(self):
         self.tag_categories = self._init_tag_categories()
     
     def _init_tag_categories(self) -> Dict[str, List[str]]:
-        """Initialize tag categories"""        return {
+        """Initialize tag categories"""
+        return {
             'emotions': ['happy', 'sad', 'excited', 'calm', 'energetic', 'peaceful', 'dramatic'],
             'styles': ['minimalist', 'vintage', 'modern', 'classic', 'artistic', 'professional', 'casual'],
             'colors': ['colorful', 'monochrome', 'bright', 'dark', 'pastel', 'vibrant', 'muted'],
@@ -1065,7 +1110,8 @@ class TagGenerator:
     
     def generate_hashtags(self, content_analysis: Dict[str, Any], keywords: List[str], 
                          settings: OptimizationSettings) -> List[str]:
-        """Generate optimized hashtags"""        hashtags = set()
+        """Generate optimized hashtags"""
+        hashtags = set()
         
         # Add keyword-based hashtags
         for keyword in keywords[:10]:
@@ -1095,7 +1141,8 @@ class TagGenerator:
         return ranked_hashtags[:max_hashtags]
     
     def _create_hashtag(self, text: str) -> Optional[str]:
-        """Create hashtag from text"""        if not text:
+        """Create hashtag from text"""
+        if not text:
             return None
         
         # Clean text
@@ -1108,7 +1155,8 @@ class TagGenerator:
         return None
     
     def _get_content_specific_hashtags(self, content_analysis: Dict[str, Any]) -> List[str]:
-        """Get hashtags specific to content"""        hashtags = []
+        """Get hashtags specific to content"""
+        hashtags = []
         
         # Content type hashtags
         content_type = content_analysis.get('content_type', ContentType.PHOTOGRAPHY)
@@ -1136,7 +1184,8 @@ class TagGenerator:
         return hashtags
     
     def _get_platform_hashtags(self, platform: SEOPlatform) -> List[str]:
-        """Get platform-specific hashtags"""        platform_hashtags = {
+        """Get platform-specific hashtags"""
+        platform_hashtags = {
             SEOPlatform.INSTAGRAM: ['#instagram', '#insta', '#ig', '#instagood', '#photooftheday'],
             SEOPlatform.PINTEREST: ['#pinterest', '#pin', '#inspiration', '#ideas'],
             SEOPlatform.YOUTUBE: ['#youtube', '#video', '#content'],
@@ -1150,7 +1199,8 @@ class TagGenerator:
         return platform_hashtags.get(platform, [])
     
     def _get_category_hashtags(self, content_analysis: Dict[str, Any]) -> List[str]:
-        """Get hashtags from predefined categories"""        hashtags = []
+        """Get hashtags from predefined categories"""
+        hashtags = []
         
         # Add emotional hashtags based on mood
         mood = content_analysis.get('mood', 'neutral')
@@ -1172,7 +1222,8 @@ class TagGenerator:
         return hashtags
     
     def _rank_hashtags(self, hashtags: List[str], settings: OptimizationSettings) -> List[str]:
-        """Rank hashtags by relevance and popularity"""        # Simple ranking based on length and common patterns
+        """Rank hashtags by relevance and popularity"""
+        # Simple ranking based on length and common patterns
         scored_hashtags = []
         
         for hashtag in hashtags:
@@ -1201,7 +1252,8 @@ class TagGenerator:
         return [hashtag for hashtag, score in scored_hashtags]
     
     def _get_max_hashtags(self, platforms: List[SEOPlatform]) -> int:
-        """Get maximum number of hashtags based on platforms"""        max_limits = {
+        """Get maximum number of hashtags based on platforms"""
+        max_limits = {
             SEOPlatform.INSTAGRAM: 30,
             SEOPlatform.PINTEREST: 20,
             SEOPlatform.YOUTUBE: 15,
@@ -1218,12 +1270,14 @@ class TagGenerator:
         return 15
 
 class DescriptionGenerator:
-    """Advanced description generation system"""    
+    """Advanced description generation system"""
+    
     def __init__(self):
         self.description_templates = self._load_description_templates()
     
     def _load_description_templates(self) -> Dict[str, List[str]]:
-        """Load description templates for different content types"""        return {
+        """Load description templates for different content types"""
+        return {
             ContentType.PHOTOGRAPHY: [
                 "Stunning {subject} captured with professional photography techniques.",
                 "High-quality {subject} photography showcasing {details}.",
@@ -1248,7 +1302,8 @@ class DescriptionGenerator:
     
     def generate_platform_specific_descriptions(self, base_description: str, 
                                               settings: OptimizationSettings) -> Dict[str, str]:
-        """Generate platform-specific descriptions"""        descriptions = {}
+        """Generate platform-specific descriptions"""
+        descriptions = {}
         
         for platform in settings.target_platforms:
             platform_desc = self._adapt_description_for_platform(base_description, platform)
@@ -1257,7 +1312,8 @@ class DescriptionGenerator:
         return descriptions
     
     def _adapt_description_for_platform(self, base_description: str, platform: SEOPlatform) -> str:
-        """Adapt description for specific platform"""        if platform == SEOPlatform.INSTAGRAM:
+        """Adapt description for specific platform"""
+        if platform == SEOPlatform.INSTAGRAM:
             # Instagram prefers shorter, more engaging descriptions
             return self._create_instagram_description(base_description)
         elif platform == SEOPlatform.PINTEREST:
@@ -1273,7 +1329,8 @@ class DescriptionGenerator:
             return base_description
     
     def _create_instagram_description(self, base_description: str) -> str:
-        """Create Instagram-optimized description"""        # Keep it short and engaging
+        """Create Instagram-optimized description"""
+        # Keep it short and engaging
         if len(base_description) > 125:
             short_desc = base_description[:120] + "..."
         else:
@@ -1283,7 +1340,8 @@ class DescriptionGenerator:
         return f"{short_desc} 📸✨ #instagood #photooftheday"
     
     def _create_pinterest_description(self, base_description: str) -> str:
-        """Create Pinterest-optimized description"""        # Pinterest allows longer descriptions
+        """Create Pinterest-optimized description"""
+        # Pinterest allows longer descriptions
         extended_desc = base_description
         
         if len(extended_desc) < 200:
@@ -1292,7 +1350,8 @@ class DescriptionGenerator:
         return extended_desc
     
     def _create_youtube_description(self, base_description: str) -> str:
-        """Create YouTube-optimized description"""        # YouTube allows very long descriptions
+        """Create YouTube-optimized description"""
+        # YouTube allows very long descriptions
         extended_desc = f"{base_description}\n\n"
         extended_desc += "🔔 Subscribe for more amazing content!\n"
         extended_desc += "👍 Like if you enjoyed this content\n"
@@ -1302,7 +1361,8 @@ class DescriptionGenerator:
         return extended_desc
     
     def _create_linkedin_description(self, base_description: str) -> str:
-        """Create LinkedIn-optimized description"""        # Professional tone for LinkedIn
+        """Create LinkedIn-optimized description"""
+        # Professional tone for LinkedIn
         professional_desc = base_description.replace("amazing", "exceptional")
         professional_desc = professional_desc.replace("stunning", "remarkable")
         
@@ -1310,7 +1370,8 @@ class DescriptionGenerator:
 
 # Additional utility functions for SEO optimization
 def calculate_keyword_density(text: str, keyword: str) -> float:
-    """Calculate keyword density in text"""    if not text or not keyword:
+    """Calculate keyword density in text"""
+    if not text or not keyword:
         return 0.0
     
     text_lower = text.lower()
@@ -1325,7 +1386,8 @@ def calculate_keyword_density(text: str, keyword: str) -> float:
     return keyword_count / word_count
 
 def calculate_readability_score(text: str) -> float:
-    """Calculate Flesch reading ease score"""    if not text:
+    """Calculate Flesch reading ease score"""
+    if not text:
         return 0.0
     
     try:
@@ -1345,7 +1407,8 @@ def calculate_readability_score(text: str) -> float:
         return 50.0  # Default moderate score
 
 def count_syllables(word: str) -> int:
-    """Count syllables in a word"""    word = word.lower()
+    """Count syllables in a word"""
+    word = word.lower()
     vowels = "aeiouy"
     syllable_count = 0
     prev_was_vowel = False

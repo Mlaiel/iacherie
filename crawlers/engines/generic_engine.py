@@ -11,7 +11,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Set, Union
 from dataclasses import dataclass, asdict
@@ -62,7 +63,8 @@ settings = get_settings()
 
 @dataclass
 class WebPageData:
-    """Web page data structure"""    url: str
+    """Web page data structure"""
+    url: str
     title: str
     content: str
     meta_description: str
@@ -90,7 +92,8 @@ class WebPageData:
 
 @dataclass
 class WebSiteData:
-    """Website data structure"""    domain: str
+    """Website data structure"""
+    domain: str
     homepage_url: str
     site_name: str
     description: str
@@ -113,7 +116,8 @@ class WebSiteData:
 
 @dataclass
 class ContentMatchData:
-    """Content match data for theft detection"""    original_url: str
+    """Content match data for theft detection"""
+    original_url: str
     matched_url: str
     similarity_score: float
     match_type: str  # exact, partial, paraphrased
@@ -126,7 +130,8 @@ class ContentMatchData:
 
 
 class GenericWebCrawlerEngine(BaseCrawlerEngine):
-    """    Advanced generic web crawler engine for comprehensive content discovery.
+    """
+    Advanced generic web crawler engine for comprehensive content discovery.
     
     Features:
     - Multi-engine crawling (Scrapy, Selenium, requests)
@@ -136,9 +141,11 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
     - Robots.txt compliance
     - Rate limiting and proxy support
     - Content fingerprinting
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize generic web crawler engine"""        super().__init__(config)
+        """Initialize generic web crawler engine"""
+        super().__init__(config)
         self.session = None
         self.crawler_runner = None
         self.rate_limiter = RateLimiter(
@@ -159,7 +166,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
         self._setup_scrapy_runner()
     
     def _setup_session(self) -> None:
-        """Setup HTTP session with comprehensive headers"""        self.session = requests.Session()
+        """Setup HTTP session with comprehensive headers"""
+        self.session = requests.Session()
         self.session.headers.update({
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
@@ -190,7 +198,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
         logger.info("Generic web crawler HTTP session initialized")
     
     def _setup_selenium_driver(self) -> None:
-        """Setup Selenium WebDriver for JavaScript-heavy sites"""        try:
+        """Setup Selenium WebDriver for JavaScript-heavy sites"""
+        try:
             chrome_options = webdriver.ChromeOptions()
             chrome_options.add_argument('--headless')
             chrome_options.add_argument('--no-sandbox')
@@ -216,7 +225,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
             self.driver = None
     
     def _setup_scrapy_runner(self) -> None:
-        """Setup Scrapy crawler runner"""        try:
+        """Setup Scrapy crawler runner"""
+        try:
             scrapy_settings = get_project_settings()
             scrapy_settings.setdict({
                 'USER_AGENT': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
@@ -243,7 +253,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
             self.crawler_runner = None
     
     async def crawl_url(self, url: str, method: str = 'auto') -> Optional[WebPageData]:
-        """        Crawl a single URL and extract comprehensive data
+        """
+        Crawl a single URL and extract comprehensive data
         
         Args:
             url: URL to crawl
@@ -251,7 +262,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             Web page data or None if failed
-        """        await self.rate_limiter.wait()
+        """
+        await self.rate_limiter.wait()
         
         # Check robots.txt
         if not await self._check_robots_txt(url):
@@ -287,7 +299,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Failed to crawl URL: {e}")
     
     async def crawl_website(self, domain: str, max_pages: int = 100) -> WebSiteData:
-        """        Comprehensive website crawling and analysis
+        """
+        Comprehensive website crawling and analysis
         
         Args:
             domain: Domain to crawl
@@ -295,7 +308,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             Website data with all discovered pages
-        """        start_url = f"https://{domain}" if not domain.startswith('http') else domain
+        """
+        start_url = f"https://{domain}" if not domain.startswith('http') else domain
         base_domain = urlparse(start_url).netloc
         
         try:
@@ -360,7 +374,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
         search_engines: List[str] = None,
         similarity_threshold: float = 0.7
     ) -> List[ContentMatchData]:
-        """        Search for potential content theft across the web
+        """
+        Search for potential content theft across the web
         
         Args:
             original_content: Original content to search for
@@ -369,7 +384,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of potential content matches
-        """        if search_engines is None:
+        """
+        if search_engines is None:
             search_engines = ['google', 'bing', 'duckduckgo']
         
         matches = []
@@ -432,7 +448,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
         urls: List[str], 
         check_interval: int = 3600
     ) -> AsyncGenerator[Dict[str, Any], None]:
-        """        Monitor URLs for changes over time
+        """
+        Monitor URLs for changes over time
         
         Args:
             urls: List of URLs to monitor
@@ -440,7 +457,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
             
         Yields:
             Change notifications
-        """        url_snapshots = {}
+        """
+        url_snapshots = {}
         
         # Initial crawl
         for url in urls:
@@ -503,7 +521,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
                     continue
     
     async def _crawl_with_requests(self, url: str) -> Optional[WebPageData]:
-        """Crawl URL using requests library"""        try:
+        """Crawl URL using requests library"""
+        try:
             response = self.session.get(url, timeout=30)
             response.raise_for_status()
             
@@ -572,7 +591,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
             return None
     
     async def _crawl_with_selenium(self, url: str) -> Optional[WebPageData]:
-        """Crawl URL using Selenium for JavaScript-heavy sites"""        if not self.driver:
+        """Crawl URL using Selenium for JavaScript-heavy sites"""
+        if not self.driver:
             return None
         
         try:
@@ -654,7 +674,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
             return None
     
     async def _check_robots_txt(self, url: str) -> bool:
-        """Check if URL is allowed by robots.txt"""        try:
+        """Check if URL is allowed by robots.txt"""
+        try:
             parsed_url = urlparse(url)
             base_url = f"{parsed_url.scheme}://{parsed_url.netloc}"
             robots_url = urljoin(base_url, '/robots.txt')
@@ -675,7 +696,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
             return True  # Allow if unable to check
     
     async def _determine_best_method(self, url: str) -> str:
-        """Determine the best crawling method for a URL"""        try:
+        """Determine the best crawling method for a URL"""
+        try:
             # Quick HEAD request to check content type
             response = self.session.head(url, timeout=10)
             content_type = response.headers.get('Content-Type', '').lower()
@@ -694,7 +716,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
             return 'requests'  # Default fallback
     
     async def _extract_key_phrases(self, content: str) -> List[str]:
-        """Extract key phrases from content for searching"""        # Simple implementation - could be enhanced with NLP
+        """Extract key phrases from content for searching"""
+        # Simple implementation - could be enhanced with NLP
         sentences = re.split(r'[.!?]+', content)
         phrases = []
         
@@ -709,7 +732,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
         return phrases[:10]  # Return top 10 phrases
     
     async def _calculate_content_similarity(self, content1: str, content2: str) -> float:
-        """Calculate similarity between two pieces of content"""        try:
+        """Calculate similarity between two pieces of content"""
+        try:
             # Simple word-based similarity
             words1 = set(content1.lower().split())
             words2 = set(content2.lower().split())
@@ -726,7 +750,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
             return 0.0
     
     async def _classify_match_type(self, similarity_score: float) -> str:
-        """Classify the type of content match"""        if similarity_score >= 0.9:
+        """Classify the type of content match"""
+        if similarity_score >= 0.9:
             return "exact"
         elif similarity_score >= 0.7:
             return "partial"
@@ -736,7 +761,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
             return "potential"
     
     async def _assess_evidence_strength(self, similarity_score: float) -> str:
-        """Assess the strength of plagiarism evidence"""        if similarity_score >= 0.9:
+        """Assess the strength of plagiarism evidence"""
+        if similarity_score >= 0.9:
             return "strong"
         elif similarity_score >= 0.7:
             return "moderate"
@@ -746,7 +772,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
             return "minimal"
     
     async def _detect_plagiarism_indicators(self, original: str, candidate: str) -> List[str]:
-        """Detect specific plagiarism indicators"""        indicators = []
+        """Detect specific plagiarism indicators"""
+        indicators = []
         
         # Check for exact phrase matches
         original_sentences = re.split(r'[.!?]+', original)
@@ -769,7 +796,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
         return list(set(indicators))  # Remove duplicates
     
     async def cleanup(self) -> None:
-        """Cleanup resources"""        try:
+        """Cleanup resources"""
+        try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()
             if hasattr(self, 'session') and self.session:
@@ -780,7 +808,8 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
             logger.error(f"Error during cleanup: {e}")
     
     def __del__(self):
-        """Destructor to ensure cleanup"""        try:
+        """Destructor to ensure cleanup"""
+        try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()
             if hasattr(self, 'session') and self.session:

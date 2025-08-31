@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -32,7 +33,8 @@ Team Expertise:
 - System Design: Multi-component orchestration, workflow automation, enterprise scalability
 - Content Security: End-to-end protection, cryptographic systems, legal compliance
 - Performance Engineering: High-throughput processing, distributed systems, fault tolerance
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -68,9 +70,11 @@ logger = logging.getLogger(__name__)
 
 
 class TestUltraIndustrialMainSystem:
-    """Ultra-industrial main system testing with complete workflow orchestration and real business logic"""    @pytest_asyncio.fixture
+    """Ultra-industrial main system testing with complete workflow orchestration and real business logic"""
+    @pytest_asyncio.fixture
     async def enterprise_protection_orchestrator(self):
-        """Create enterprise-grade content protection orchestrator"""        logger.info("Initializing enterprise protection orchestrator")
+        """Create enterprise-grade content protection orchestrator"""
+        logger.info("Initializing enterprise protection orchestrator")
         
         enterprise_config = {
             'orchestrator': {
@@ -117,7 +121,8 @@ class TestUltraIndustrialMainSystem:
 
     @pytest.fixture
     def comprehensive_content_scenarios(self):
-        """Generate comprehensive content protection test scenarios"""        scenarios = []
+        """Generate comprehensive content protection test scenarios"""
+        scenarios = []
         
         # Real-world content protection scenarios
         scenario_templates = [
@@ -198,7 +203,8 @@ class TestUltraIndustrialMainSystem:
 
     @pytest.fixture
     def enterprise_workflow_fixtures(self):
-        """Generate enterprise workflow test fixtures"""        workflow_fixtures = {
+        """Generate enterprise workflow test fixtures"""
+        workflow_fixtures = {
             'protection_workflows': [
                 'content_registration', 'rights_establishment', 'encryption_workflow',
                 'monitoring_activation', 'compliance_validation', 'platform_distribution'
@@ -222,7 +228,8 @@ class TestUltraIndustrialMainSystem:
 
     @pytest.mark.asyncio
     async def test_ultra_advanced_end_to_end_protection_workflow(self, enterprise_protection_orchestrator, comprehensive_content_scenarios):
-        """Test ultra-advanced end-to-end content protection workflow"""        logger.info("Testing ultra-advanced end-to-end protection workflow")
+        """Test ultra-advanced end-to-end content protection workflow"""
+        logger.info("Testing ultra-advanced end-to-end protection workflow")
         
         workflow_results = []
         
@@ -452,7 +459,8 @@ class TestUltraIndustrialMainSystem:
 
     @pytest.mark.asyncio
     async def test_enterprise_system_resilience_and_fault_tolerance(self, enterprise_protection_orchestrator, enterprise_workflow_fixtures):
-        """Test enterprise system resilience and fault tolerance"""        logger.info("Testing enterprise system resilience and fault tolerance")
+        """Test enterprise system resilience and fault tolerance"""
+        logger.info("Testing enterprise system resilience and fault tolerance")
         
         resilience_test_scenarios = [
             {
@@ -642,7 +650,8 @@ class TestUltraIndustrialMainSystem:
                    f"avg_continuity={avg_continuity:.1f}%")
 
     def test_ultra_industrial_main_system_suite_completion(self):
-        """Verify ultra-industrial main system test suite completion and coverage"""        logger.info("Verifying ultra-industrial main system test suite completion")
+        """Verify ultra-industrial main system test suite completion and coverage"""
+        logger.info("Verifying ultra-industrial main system test suite completion")
         
         # Test suite metrics
         test_metrics = {
@@ -733,7 +742,8 @@ class TestUltraIndustrialMainSystem:
     
     @pytest.fixture
     def mock_config(self):
-        """Mock configuration for testing"""        return {
+        """Mock configuration for testing"""
+        return {
             'fingerprinting': {
                 'similarity_threshold': 0.85,
                 'batch_size': 100
@@ -772,11 +782,13 @@ class TestUltraIndustrialMainSystem:
     
     @pytest.fixture
     def protection_system(self, mock_config):
-        """Create protection system instance for testing"""        return ContentProtectionSystem(mock_config)
+        """Create protection system instance for testing"""
+        return ContentProtectionSystem(mock_config)
     
     @pytest.fixture
     def sample_content_data(self):
-        """Sample content data for testing"""        return {
+        """Sample content data for testing"""
+        return {
             'type': 'video',
             'data': b'fake_video_data_for_testing',
             'format': 'mp4',
@@ -786,7 +798,8 @@ class TestUltraIndustrialMainSystem:
     
     @pytest.fixture
     def sample_content_metadata(self):
-        """Sample content metadata for testing"""        return {
+        """Sample content metadata for testing"""
+        return {
             'content_id': 'test_content_001',
             'title': 'Test Video Content',
             'creator_id': 'creator_123',
@@ -800,7 +813,8 @@ class TestUltraIndustrialMainSystem:
         }
     
     def test_system_initialization(self, mock_config):
-        """Test system initialization with configuration"""        system = ContentProtectionSystem(mock_config)
+        """Test system initialization with configuration"""
+        system = ContentProtectionSystem(mock_config)
         
         # Verify subsystems are initialized
         assert system.fingerprinter is not None
@@ -816,14 +830,16 @@ class TestUltraIndustrialMainSystem:
         assert system.config == mock_config
     
     def test_system_initialization_no_config(self):
-        """Test system initialization without configuration"""        system = ContentProtectionSystem()
+        """Test system initialization without configuration"""
+        system = ContentProtectionSystem()
         
         # Should initialize with empty config
         assert system.config == {}
         assert system.fingerprinter is not None
     
     def test_create_protection_system_function(self, mock_config):
-        """Test convenience function for creating protection system"""        system = create_protection_system(mock_config)
+        """Test convenience function for creating protection system"""
+        system = create_protection_system(mock_config)
         
         assert isinstance(system, ContentProtectionSystem)
         assert system.config == mock_config
@@ -835,7 +851,8 @@ class TestUltraIndustrialMainSystem:
         sample_content_data, 
         sample_content_metadata
     ):
-        """Test complete content protection workflow"""        
+        """Test complete content protection workflow"""
+        
         # Mock all subsystem methods
         with patch.object(protection_system.fingerprinter, 'generate_fingerprint') as mock_fingerprint, \
              patch.object(protection_system.rights_manager, 'register_content_rights') as mock_rights, \
@@ -907,7 +924,8 @@ class TestUltraIndustrialMainSystem:
         sample_content_data, 
         sample_content_metadata
     ):
-        """Test content protection workflow when fingerprinting fails"""        
+        """Test content protection workflow when fingerprinting fails"""
+        
         with patch.object(protection_system.fingerprinter, 'generate_fingerprint') as mock_fingerprint:
             # Setup fingerprint to raise exception
             mock_fingerprint.side_effect = Exception("Fingerprinting failed")
@@ -926,7 +944,8 @@ class TestUltraIndustrialMainSystem:
         sample_content_data, 
         sample_content_metadata
     ):
-        """Test content protection workflow when rights registration fails"""        
+        """Test content protection workflow when rights registration fails"""
+        
         with patch.object(protection_system.fingerprinter, 'generate_fingerprint') as mock_fingerprint, \
              patch.object(protection_system.rights_manager, 'register_content_rights') as mock_rights:
             
@@ -950,7 +969,8 @@ class TestUltraIndustrialMainSystem:
         sample_content_data, 
         sample_content_metadata
     ):
-        """Test content protection workflow when blockchain recording fails"""        
+        """Test content protection workflow when blockchain recording fails"""
+        
         with patch.object(protection_system.fingerprinter, 'generate_fingerprint') as mock_fingerprint, \
              patch.object(protection_system.rights_manager, 'register_content_rights') as mock_rights, \
              patch.object(protection_system.blockchain_verifier, 'create_proof_of_ownership') as mock_blockchain:
@@ -976,7 +996,8 @@ class TestUltraIndustrialMainSystem:
         sample_content_data, 
         sample_content_metadata
     ):
-        """Test content protection workflow when encryption fails"""        
+        """Test content protection workflow when encryption fails"""
+        
         with patch.object(protection_system.fingerprinter, 'generate_fingerprint') as mock_fingerprint, \
              patch.object(protection_system.rights_manager, 'register_content_rights') as mock_rights, \
              patch.object(protection_system.blockchain_verifier, 'create_proof_of_ownership') as mock_blockchain, \
@@ -1004,7 +1025,8 @@ class TestUltraIndustrialMainSystem:
         sample_content_data, 
         sample_content_metadata
     ):
-        """Test content protection workflow when monitoring setup fails"""        
+        """Test content protection workflow when monitoring setup fails"""
+        
         with patch.object(protection_system.fingerprinter, 'generate_fingerprint') as mock_fingerprint, \
              patch.object(protection_system.rights_manager, 'register_content_rights') as mock_rights, \
              patch.object(protection_system.blockchain_verifier, 'create_proof_of_ownership') as mock_blockchain, \
@@ -1034,7 +1056,8 @@ class TestUltraIndustrialMainSystem:
         sample_content_data, 
         sample_content_metadata
     ):
-        """Test content protection workflow when platform submission fails"""        
+        """Test content protection workflow when platform submission fails"""
+        
         with patch.object(protection_system.fingerprinter, 'generate_fingerprint') as mock_fingerprint, \
              patch.object(protection_system.rights_manager, 'register_content_rights') as mock_rights, \
              patch.object(protection_system.blockchain_verifier, 'create_proof_of_ownership') as mock_blockchain, \
@@ -1061,7 +1084,8 @@ class TestUltraIndustrialMainSystem:
     
     @pytest.mark.asyncio
     async def test_protect_content_minimal_metadata(self, protection_system):
-        """Test content protection with minimal metadata"""        
+        """Test content protection with minimal metadata"""
+        
         minimal_data = b'test_data'
         minimal_metadata = {
             'content_id': 'minimal_001',
@@ -1101,7 +1125,8 @@ class TestUltraIndustrialMainSystem:
             )
     
     def test_system_components_integration(self, protection_system):
-        """Test that all system components are properly integrated"""        
+        """Test that all system components are properly integrated"""
+        
         # Verify all components are initialized and accessible
         components = [
             'fingerprinter',
@@ -1119,7 +1144,8 @@ class TestUltraIndustrialMainSystem:
             assert getattr(protection_system, component) is not None
     
     def test_system_configuration_propagation(self, mock_config):
-        """Test that configuration is properly propagated to subsystems"""        
+        """Test that configuration is properly propagated to subsystems"""
+        
         system = ContentProtectionSystem(mock_config)
         
         # Each subsystem should receive its specific config section
@@ -1131,7 +1157,8 @@ class TestUltraIndustrialMainSystem:
     
     @pytest.mark.asyncio
     async def test_concurrent_protection_requests(self, protection_system):
-        """Test handling of concurrent content protection requests"""        
+        """Test handling of concurrent content protection requests"""
+        
         # Create multiple content items
         content_items = []
         for i in range(3):

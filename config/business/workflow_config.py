@@ -12,14 +12,16 @@ Any unauthorized use, copying, or distribution without explicit written permissi
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
-"""from enum import Enum
+"""
+from enum import Enum
 from typing import Dict, List, Optional, Union
 from dataclasses import dataclass
 from pydantic import BaseModel, Field
 
 
 class ContentType(str, Enum):
-    """Content type enumeration for workflow processing."""    AUDIO = "audio"
+    """Content type enumeration for workflow processing."""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -29,7 +31,8 @@ class ContentType(str, Enum):
 
 
 class WorkflowStage(str, Enum):
-    """Workflow processing stages."""    UPLOAD = "upload"
+    """Workflow processing stages."""
+    UPLOAD = "upload"
     VALIDATION = "validation"
     PREPROCESSING = "preprocessing"
     FINGERPRINTING = "fingerprinting"
@@ -44,7 +47,8 @@ class WorkflowStage(str, Enum):
 
 
 class ProcessingPriority(str, Enum):
-    """Processing priority levels."""    ULTRA_HIGH = "ultra_high"
+    """Processing priority levels."""
+    ULTRA_HIGH = "ultra_high"
     HIGH = "high"
     NORMAL = "normal"
     LOW = "low"
@@ -53,7 +57,8 @@ class ProcessingPriority(str, Enum):
 
 @dataclass
 class StageConfiguration:
-    """Configuration for workflow stage."""    name: str
+    """Configuration for workflow stage."""
+    name: str
     timeout_seconds: int
     retry_attempts: int
     parallel_processing: bool
@@ -64,7 +69,8 @@ class StageConfiguration:
 
 
 class WorkflowConfig:
-    """Enterprise workflow configuration management."""    # Content processing workflows
+    """Enterprise workflow configuration management."""
+    # Content processing workflows
     CONTENT_WORKFLOWS = {
         ContentType.AUDIO: {
             "stages": [
@@ -367,26 +373,31 @@ class WorkflowConfig:
 
     @classmethod
     def get_workflow_for_content_type(cls, content_type: ContentType) -> Dict:
-        """Get workflow configuration for specific content type."""        return cls.CONTENT_WORKFLOWS.get(content_type, cls.CONTENT_WORKFLOWS[ContentType.TEXT])
+        """Get workflow configuration for specific content type."""
+        return cls.CONTENT_WORKFLOWS.get(content_type, cls.CONTENT_WORKFLOWS[ContentType.TEXT])
 
     @classmethod
     def get_creator_workflow(cls, creator_type: str) -> Dict:
-        """Get workflow configuration for specific creator type."""        return cls.CREATOR_WORKFLOWS.get(creator_type.lower(), cls.CREATOR_WORKFLOWS["influencer"])
+        """Get workflow configuration for specific creator type."""
+        return cls.CREATOR_WORKFLOWS.get(creator_type.lower(), cls.CREATOR_WORKFLOWS["influencer"])
 
     @classmethod
     def get_stage_config(cls, stage: WorkflowStage) -> StageConfiguration:
-        """Get configuration for specific workflow stage."""        return cls.STAGE_CONFIGURATIONS.get(stage)
+        """Get configuration for specific workflow stage."""
+        return cls.STAGE_CONFIGURATIONS.get(stage)
 
     @classmethod
     def validate_business_rules(cls, content_type: ContentType, file_size: int, format_type: str) -> bool:
-        """Validate content against business rules."""        max_size = cls.BUSINESS_RULES["content_validation"]["max_file_size"].get(content_type, 0)
+        """Validate content against business rules."""
+        max_size = cls.BUSINESS_RULES["content_validation"]["max_file_size"].get(content_type, 0)
         allowed_formats = cls.BUSINESS_RULES["content_validation"]["allowed_formats"].get(content_type, [])
         
         return file_size <= max_size and format_type.lower() in allowed_formats
 
     @classmethod
     def get_processing_priority(cls, creator_type: str, content_type: ContentType) -> ProcessingPriority:
-        """Determine processing priority based on creator and content type."""        creator_config = cls.get_creator_workflow(creator_type)
+        """Determine processing priority based on creator and content type."""
+        creator_config = cls.get_creator_workflow(creator_type)
         
         if content_type in creator_config.get("primary_content", []):
             return creator_config.get("processing_priority", ProcessingPriority.NORMAL)

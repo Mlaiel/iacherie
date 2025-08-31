@@ -8,7 +8,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass, asdict
@@ -47,7 +48,8 @@ settings = get_settings()
 
 
 class ContentType(Enum):
-    """Types of content that can be created."""    TEXT_POST = "text_post"
+    """Types of content that can be created."""
+    TEXT_POST = "text_post"
     IMAGE_POST = "image_post"
     VIDEO_POST = "video_post"
     STORY = "story"
@@ -62,7 +64,8 @@ class ContentType(Enum):
 
 
 class CreativeStyle(Enum):
-    """Creative styles for content generation."""    EDUCATIONAL = "educational"
+    """Creative styles for content generation."""
+    EDUCATIONAL = "educational"
     ENTERTAINING = "entertaining"
     INSPIRATIONAL = "inspirational"
     PROMOTIONAL = "promotional"
@@ -77,7 +80,8 @@ class CreativeStyle(Enum):
 
 
 class IdeationType(Enum):
-    """Types of content ideas."""    TRENDING_TOPIC = "trending_topic"
+    """Types of content ideas."""
+    TRENDING_TOPIC = "trending_topic"
     SEASONAL_CONTENT = "seasonal_content"
     USER_GENERATED = "user_generated"
     COLLABORATION = "collaboration"
@@ -90,7 +94,8 @@ class IdeationType(Enum):
 
 
 class CreativityLevel(Enum):
-    """Levels of creativity for content generation."""    CONSERVATIVE = "conservative"
+    """Levels of creativity for content generation."""
+    CONSERVATIVE = "conservative"
     MODERATE = "moderate"
     CREATIVE = "creative"
     EXPERIMENTAL = "experimental"
@@ -99,7 +104,8 @@ class CreativityLevel(Enum):
 
 @dataclass
 class ContentIdea:
-    """Content idea with detailed information."""    idea_id: str
+    """Content idea with detailed information."""
+    idea_id: str
     title: str
     description: str
     content_type: ContentType
@@ -124,7 +130,8 @@ class ContentIdea:
 
 @dataclass
 class CreativeTemplate:
-    """Template for content creation."""    template_id: str
+    """Template for content creation."""
+    template_id: str
     name: str
     content_type: ContentType
     style: CreativeStyle
@@ -140,7 +147,8 @@ class CreativeTemplate:
 
 @dataclass
 class ContentScript:
-    """Script for video or audio content."""    script_id: str
+    """Script for video or audio content."""
+    script_id: str
     title: str
     content_type: ContentType
     duration: int  # seconds
@@ -157,7 +165,8 @@ class ContentScript:
 
 @dataclass
 class VisualConcept:
-    """Visual concept for content creation."""    concept_id: str
+    """Visual concept for content creation."""
+    concept_id: str
     title: str
     description: str
     visual_style: str
@@ -173,7 +182,8 @@ class VisualConcept:
 
 @dataclass
 class AudioConcept:
-    """Audio concept for content creation."""    concept_id: str
+    """Audio concept for content creation."""
+    concept_id: str
     title: str
     description: str
     genre: str
@@ -190,7 +200,8 @@ class AudioConcept:
 
 @dataclass
 class CreativeBrief:
-    """Comprehensive creative brief for content."""    brief_id: str
+    """Comprehensive creative brief for content."""
+    brief_id: str
     project_title: str
     objectives: List[str]
     target_audience: Dict[str, Any]
@@ -210,11 +221,14 @@ class CreativeBrief:
 
 
 class ContentIdeationEngine:
-    """    Advanced AI-powered content ideation engine that generates creative
+    """
+    Advanced AI-powered content ideation engine that generates creative
     ideas based on trends, audience preferences, and performance data.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the content ideation engine."""        self.creativity_analyzer = CreativityAnalysisEngine()
+        """Initialize the content ideation engine."""
+        self.creativity_analyzer = CreativityAnalysisEngine()
         self.platform_manager = PlatformAPIManager()
         
         # AI models for text generation
@@ -244,7 +258,8 @@ class ContentIdeationEngine:
         logger.info("Content ideation engine initialized successfully")
     
     def _load_trending_topics(self) -> Dict[str, List[str]]:
-        """Load trending topics by category."""        
+        """Load trending topics by category."""
+        
         return {
             'technology': [
                 'AI and machine learning', 'Virtual reality', 'Sustainable tech',
@@ -274,7 +289,8 @@ class ContentIdeationEngine:
         }
     
     def _load_creative_prompts(self) -> Dict[CreativeStyle, List[str]]:
-        """Load creative prompts by style."""        
+        """Load creative prompts by style."""
+        
         return {
             CreativeStyle.EDUCATIONAL: [
                 "Break down a complex topic into simple steps",
@@ -307,7 +323,8 @@ class ContentIdeationEngine:
         }
     
     def _load_content_templates(self) -> Dict[ContentType, List[CreativeTemplate]]:
-        """Load content templates by type."""        
+        """Load content templates by type."""
+        
         templates = {}
         
         # Text post templates
@@ -398,7 +415,8 @@ class ContentIdeationEngine:
         creativity_level: CreativityLevel = CreativityLevel.MODERATE,
         idea_count: int = 10
     ) -> List[ContentIdea]:
-        """        Generate creative content ideas based on creator profile and preferences.
+        """
+        Generate creative content ideas based on creator profile and preferences.
         
         Args:
             creator_profile: Creator's profile and preferences
@@ -408,7 +426,8 @@ class ContentIdeationEngine:
             
         Returns:
             List of content ideas
-        """        
+        """
+        
         try:
             ideas = []
             
@@ -453,7 +472,8 @@ class ContentIdeationEngine:
         platforms: List[str],
         count: int
     ) -> List[ContentIdea]:
-        """Generate ideas based on trending topics."""        
+        """Generate ideas based on trending topics."""
+        
         ideas = []
         trending_topics = self.trending_topics.get(niche, self.trending_topics['lifestyle'])
         
@@ -500,7 +520,8 @@ class ContentIdeationEngine:
         creativity_level: CreativityLevel,
         count: int
     ) -> List[ContentIdea]:
-        """Generate ideas based on creative prompts."""        
+        """Generate ideas based on creative prompts."""
+        
         ideas = []
         
         for i in range(count):
@@ -559,7 +580,8 @@ class ContentIdeationEngine:
         platforms: List[str],
         count: int
     ) -> List[ContentIdea]:
-        """Generate ideas based on audience preferences and data."""        
+        """Generate ideas based on audience preferences and data."""
+        
         ideas = []
         audience_data = creator_profile.get('audience_insights', {})
         
@@ -610,7 +632,8 @@ class ContentIdeationEngine:
     async def _generate_idea_description(
         self, topic: str, content_type: ContentType, style: CreativeStyle
     ) -> str:
-        """Generate detailed description for a content idea."""        
+        """Generate detailed description for a content idea."""
+        
         # Create contextual prompt for text generation
         prompt = f"Create {style.value} {content_type.value} about {topic}:"
         
@@ -638,7 +661,8 @@ class ContentIdeationEngine:
     def _enhance_description(
         self, description: str, topic: str, content_type: ContentType, style: CreativeStyle
     ) -> str:
-        """Enhance and refine the generated description."""        
+        """Enhance and refine the generated description."""
+        
         # Add specific elements based on content type
         if content_type in [ContentType.VIDEO_POST, ContentType.REEL, ContentType.TIKTOK_VIDEO]:
             description += f" This {content_type.value} will feature dynamic visuals and engaging transitions."
@@ -662,7 +686,8 @@ class ContentIdeationEngine:
     def _generate_template_description(
         self, topic: str, content_type: ContentType, style: CreativeStyle
     ) -> str:
-        """Generate description using templates as fallback."""        
+        """Generate description using templates as fallback."""
+        
         templates = {
             CreativeStyle.EDUCATIONAL: f"An informative {content_type.value} that breaks down {topic} in an easy-to-understand way.",
             CreativeStyle.ENTERTAINING: f"A fun and engaging {content_type.value} that puts an entertaining spin on {topic}.",
@@ -674,7 +699,8 @@ class ContentIdeationEngine:
         return templates.get(style, f"Creative {content_type.value} content about {topic}")
     
     def _generate_required_resources(self, content_type: ContentType) -> List[str]:
-        """Generate list of required resources for content creation."""        
+        """Generate list of required resources for content creation."""
+        
         resource_map = {
             ContentType.TEXT_POST: ['Smartphone', 'Basic editing app'],
             ContentType.IMAGE_POST: ['Camera/smartphone', 'Photo editing software', 'Props'],
@@ -689,7 +715,8 @@ class ContentIdeationEngine:
         return resource_map.get(content_type, ['Basic equipment'])
     
     def _generate_hashtags(self, topic: str, niche: str) -> List[str]:
-        """Generate relevant hashtags for the content."""        
+        """Generate relevant hashtags for the content."""
+        
         # Extract keywords from topic
         keywords = topic.lower().split()
         
@@ -716,7 +743,8 @@ class ContentIdeationEngine:
         return hashtags[:15]  # Limit to 15 hashtags
     
     def _generate_content_outline(self, content_type: ContentType, topic: str) -> List[str]:
-        """Generate content outline based on type and topic."""        
+        """Generate content outline based on type and topic."""
+        
         outlines = {
             ContentType.TEXT_POST: [
                 f"Hook: Attention-grabbing statement about {topic}",
@@ -742,7 +770,8 @@ class ContentIdeationEngine:
         return outlines.get(content_type, [f"Create engaging content about {topic}"])
     
     def _generate_visual_suggestions(self, content_type: ContentType) -> List[str]:
-        """Generate visual suggestions for content."""        
+        """Generate visual suggestions for content."""
+        
         visual_suggestions = {
             ContentType.TEXT_POST: [
                 "Colorful background with contrasting text",
@@ -771,7 +800,8 @@ class ContentIdeationEngine:
         return visual_suggestions.get(content_type, ["Focus on visual appeal and brand consistency"])
     
     def _generate_audio_suggestions(self, content_type: ContentType) -> List[str]:
-        """Generate audio suggestions for content."""        
+        """Generate audio suggestions for content."""
+        
         audio_suggestions = {
             ContentType.VIDEO_POST: [
                 "Clear, crisp voice recording",
@@ -799,7 +829,8 @@ class ContentIdeationEngine:
         return audio_suggestions.get(content_type, ["Focus on clear, quality audio"])
     
     def _generate_call_to_action(self, style: CreativeStyle) -> str:
-        """Generate appropriate call to action based on style."""        
+        """Generate appropriate call to action based on style."""
+        
         cta_templates = {
             CreativeStyle.EDUCATIONAL: "What questions do you have about this topic? Ask in the comments!",
             CreativeStyle.ENTERTAINING: "Tag someone who needs to see this! What's your take?",
@@ -811,7 +842,8 @@ class ContentIdeationEngine:
         return cta_templates.get(style, "What do you think? Let me know in the comments!")
     
     def _generate_variations(self, topic: str, content_type: ContentType) -> List[str]:
-        """Generate content variations."""        
+        """Generate content variations."""
+        
         variations = [
             f"Beginner's guide to {topic}",
             f"Advanced tips for {topic}",
@@ -836,7 +868,8 @@ class ContentIdeationEngine:
         creator_profile: Dict[str, Any],
         platforms: List[str]
     ) -> List[ContentIdea]:
-        """Score and rank content ideas based on various factors."""        
+        """Score and rank content ideas based on various factors."""
+        
         for idea in ideas:
             score = 0
             
@@ -865,7 +898,8 @@ class ContentIdeationEngine:
         return sorted(ideas, key=lambda x: x.estimated_engagement, reverse=True)
     
     def _map_preference_to_content_type(self, preference: str) -> ContentType:
-        """Map audience preference to content type."""        
+        """Map audience preference to content type."""
+        
         mapping = {
             'educational': ContentType.TEXT_POST,
             'entertaining': ContentType.REEL,
@@ -878,7 +912,8 @@ class ContentIdeationEngine:
         return mapping.get(preference, ContentType.TEXT_POST)
     
     def _map_preference_to_style(self, preference: str) -> CreativeStyle:
-        """Map audience preference to creative style."""        
+        """Map audience preference to creative style."""
+        
         mapping = {
             'educational': CreativeStyle.EDUCATIONAL,
             'entertaining': CreativeStyle.ENTERTAINING,
@@ -890,7 +925,8 @@ class ContentIdeationEngine:
         return mapping.get(preference, CreativeStyle.EDUCATIONAL)
     
     def _determine_difficulty(self, creativity_level: CreativityLevel) -> str:
-        """Determine difficulty based on creativity level."""        
+        """Determine difficulty based on creativity level."""
+        
         difficulty_map = {
             CreativityLevel.CONSERVATIVE: 'Easy',
             CreativityLevel.MODERATE: 'Medium',
@@ -903,11 +939,14 @@ class ContentIdeationEngine:
 
 
 class CreativeAssistant:
-    """    Comprehensive creative assistance system that provides content creators
+    """
+    Comprehensive creative assistance system that provides content creators
     with AI-powered ideation, templates, and creative guidance.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the creative assistant."""        self.ideation_engine = ContentIdeationEngine()
+        """Initialize the creative assistant."""
+        self.ideation_engine = ContentIdeationEngine()
         self.content_generator = ContentGenerationEngine()
         
         # Creative databases
@@ -917,7 +956,8 @@ class CreativeAssistant:
         logger.info("Creative assistant initialized successfully")
     
     def _build_template_library(self) -> Dict[str, List[CreativeTemplate]]:
-        """Build comprehensive template library."""        
+        """Build comprehensive template library."""
+        
         library = {}
         
         # Social media templates
@@ -1008,7 +1048,8 @@ class CreativeAssistant:
         return library
     
     def _load_inspiration_sources(self) -> Dict[str, List[str]]:
-        """Load inspiration sources for creative content."""        
+        """Load inspiration sources for creative content."""
+        
         return {
             'visual_inspiration': [
                 'Nature photography',
@@ -1044,7 +1085,8 @@ class CreativeAssistant:
         project_requirements: Dict[str, Any],
         creator_profile: Dict[str, Any]
     ) -> CreativeBrief:
-        """        Create comprehensive creative brief for content project.
+        """
+        Create comprehensive creative brief for content project.
         
         Args:
             project_requirements: Project specifications and goals
@@ -1052,7 +1094,8 @@ class CreativeAssistant:
             
         Returns:
             Detailed creative brief
-        """        
+        """
+        
         try:
             # Extract project details
             project_title = project_requirements.get('title', 'Content Creation Project')
@@ -1106,7 +1149,8 @@ class CreativeAssistant:
             raise
     
     def _select_templates_for_brief(self, content_ideas: List[ContentIdea]) -> List[CreativeTemplate]:
-        """Select appropriate templates based on content ideas."""        
+        """Select appropriate templates based on content ideas."""
+        
         templates = []
         
         for idea in content_ideas[:5]:  # Top 5 ideas
@@ -1121,7 +1165,8 @@ class CreativeAssistant:
         return templates
     
     async def _generate_scripts_for_brief(self, content_ideas: List[ContentIdea]) -> List[ContentScript]:
-        """Generate scripts for video content in the brief."""        
+        """Generate scripts for video content in the brief."""
+        
         scripts = []
         
         video_ideas = [
@@ -1139,7 +1184,8 @@ class CreativeAssistant:
         return scripts
     
     async def _generate_content_script(self, idea: ContentIdea) -> ContentScript:
-        """Generate detailed script for video content."""        
+        """Generate detailed script for video content."""
+        
         # Determine video duration based on content type
         duration_map = {
             ContentType.REEL: 30,
@@ -1187,7 +1233,8 @@ class CreativeAssistant:
         return script
     
     def _generate_visual_concepts(self, content_ideas: List[ContentIdea]) -> List[VisualConcept]:
-        """Generate visual concepts for the content ideas."""        
+        """Generate visual concepts for the content ideas."""
+        
         visual_concepts = []
         
         # Generate concepts for top visual content ideas
@@ -1235,7 +1282,8 @@ class CreativeAssistant:
         return visual_concepts
     
     def _generate_audio_concepts(self, content_ideas: List[ContentIdea]) -> List[AudioConcept]:
-        """Generate audio concepts for content ideas."""        
+        """Generate audio concepts for content ideas."""
+        
         audio_concepts = []
         
         # Generate concepts for audio-focused content
@@ -1276,7 +1324,8 @@ class CreativeAssistant:
         return audio_concepts
     
     def _generate_color_palette(self, style: CreativeStyle) -> List[str]:
-        """Generate color palette based on creative style."""        
+        """Generate color palette based on creative style."""
+        
         palettes = {
             CreativeStyle.MINIMALIST: ['#FFFFFF', '#F5F5F5', '#333333', '#007ACC'],
             CreativeStyle.BOLD: ['#FF4757', '#FF6B35', '#F7931E', '#FFD23F'],
@@ -1289,7 +1338,8 @@ class CreativeAssistant:
         return palettes.get(style, ['#333333', '#666666', '#999999', '#CCCCCC'])
     
     def _determine_audio_genre(self, style: CreativeStyle) -> str:
-        """Determine audio genre based on creative style."""        
+        """Determine audio genre based on creative style."""
+        
         genre_map = {
             CreativeStyle.EDUCATIONAL: 'Corporate/Ambient',
             CreativeStyle.ENTERTAINING: 'Pop/Upbeat',
@@ -1301,7 +1351,8 @@ class CreativeAssistant:
         return genre_map.get(style, 'Ambient')
     
     def _determine_audio_mood(self, style: CreativeStyle) -> str:
-        """Determine audio mood based on creative style."""        
+        """Determine audio mood based on creative style."""
+        
         mood_map = {
             CreativeStyle.EDUCATIONAL: 'Professional and clear',
             CreativeStyle.ENTERTAINING: 'Upbeat and energetic',
@@ -1313,7 +1364,8 @@ class CreativeAssistant:
         return mood_map.get(style, 'Neutral')
     
     def _determine_tempo(self, content_type: ContentType) -> int:
-        """Determine appropriate tempo for content type."""        
+        """Determine appropriate tempo for content type."""
+        
         tempo_map = {
             ContentType.REEL: 120,  # Upbeat
             ContentType.TIKTOK_VIDEO: 128,  # Dance tempo
@@ -1325,7 +1377,8 @@ class CreativeAssistant:
         return tempo_map.get(content_type, 100)
     
     def _suggest_instruments(self, content_type: ContentType) -> List[str]:
-        """Suggest instruments based on content type."""        
+        """Suggest instruments based on content type."""
+        
         instrument_map = {
             ContentType.PODCAST: ['Voice', 'Subtle piano', 'Ambient pads'],
             ContentType.MUSIC_TRACK: ['Piano', 'Guitar', 'Strings', 'Drums'],
@@ -1336,7 +1389,8 @@ class CreativeAssistant:
         return instrument_map.get(content_type, ['Voice', 'Background music'])
     
     def _suggest_sound_effects(self, content_type: ContentType) -> List[str]:
-        """Suggest sound effects based on content type."""        
+        """Suggest sound effects based on content type."""
+        
         effects_map = {
             ContentType.VIDEO_POST: ['Transition whooshes', 'Button clicks', 'Success chimes'],
             ContentType.REEL: ['Pop sounds', 'Swoosh effects', 'Beat drops'],
@@ -1351,7 +1405,8 @@ class CreativeAssistant:
         creator_profile: Dict[str, Any],
         performance_data: Dict[str, Any]
     ) -> List[CreativeTemplate]:
-        """        Generate personalized templates based on creator's style and performance.
+        """
+        Generate personalized templates based on creator's style and performance.
         
         Args:
             creator_profile: Creator's profile and preferences
@@ -1359,7 +1414,8 @@ class CreativeAssistant:
             
         Returns:
             List of personalized templates
-        """        
+        """
+        
         try:
             templates = []
             
@@ -1379,7 +1435,8 @@ class CreativeAssistant:
             return []
     
     def _analyze_successful_patterns(self, performance_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Analyze patterns from successful content."""        
+        """Analyze patterns from successful content."""
+        
         # This would analyze actual performance data
         # For now, return sample patterns
         
@@ -1401,7 +1458,8 @@ class CreativeAssistant:
     def _create_template_from_pattern(
         self, pattern: Dict[str, Any], creator_profile: Dict[str, Any]
     ) -> CreativeTemplate:
-        """Create template based on successful pattern."""        
+        """Create template based on successful pattern."""
+        
         template = CreativeTemplate(
             template_id=f"personalized_{int(datetime.now().timestamp())}",
             name=f"Your High-Performing {pattern['content_type'].value} Template",
@@ -1420,7 +1478,8 @@ class CreativeAssistant:
         return template
     
     def _generate_structure_from_pattern(self, pattern: Dict[str, Any]) -> List[str]:
-        """Generate template structure from successful pattern."""        
+        """Generate template structure from successful pattern."""
+        
         # Based on content type and style
         if pattern['content_type'] == ContentType.REEL and pattern['style'] == CreativeStyle.EDUCATIONAL:
             return [
@@ -1439,7 +1498,8 @@ class CreativeAssistant:
         ]
     
     def _generate_placeholders_from_pattern(self, pattern: Dict[str, Any]) -> Dict[str, str]:
-        """Generate template placeholders from pattern."""        
+        """Generate template placeholders from pattern."""
+        
         return {
             'hook': 'Attention-grabbing opener',
             'main_content': 'Core message or demonstration',
@@ -1447,7 +1507,8 @@ class CreativeAssistant:
         }
     
     def _generate_visual_guidelines_from_pattern(self, pattern: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate visual guidelines from pattern."""        
+        """Generate visual guidelines from pattern."""
+        
         return {
             'duration': '30-60 seconds' if 'reel' in str(pattern['content_type']).lower() else 'N/A',
             'text_style': 'Clear, readable fonts',
@@ -1455,21 +1516,24 @@ class CreativeAssistant:
         }
     
     def _generate_text_guidelines_from_pattern(self, pattern: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate text guidelines from pattern."""        
+        """Generate text guidelines from pattern."""
+        
         return {
             'tone': 'Conversational and helpful',
             'length': '100-200 words for captions'
         }
     
     def _generate_audio_guidelines_from_pattern(self, pattern: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate audio guidelines from pattern."""        
+        """Generate audio guidelines from pattern."""
+        
         return {
             'music_style': 'Upbeat and engaging',
             'voice_over': 'Clear and enthusiastic'
         }
     
     def _generate_customization_options(self, pattern: Dict[str, Any]) -> List[str]:
-        """Generate customization options for template."""        
+        """Generate customization options for template."""
+        
         return [
             'Color scheme adjustment',
             'Music selection',

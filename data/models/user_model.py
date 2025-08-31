@@ -12,7 +12,8 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without explicit written 
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""from datetime import datetime, date
+"""
+from datetime import datetime, date
 from typing import Optional, Dict, List, Any
 from decimal import Decimal
 from enum import Enum
@@ -28,7 +29,8 @@ Base = declarative_base()
 
 
 class UserType(Enum):
-    """User type enumeration"""    CREATOR = "creator"
+    """User type enumeration"""
+    CREATOR = "creator"
     ARTIST = "artist"
     INFLUENCER = "influencer" 
     MUSICIAN = "musician"
@@ -43,7 +45,8 @@ class UserType(Enum):
 
 
 class UserStatus(Enum):
-    """User status enumeration"""    PENDING = "pending"
+    """User status enumeration"""
+    PENDING = "pending"
     ACTIVE = "active"
     SUSPENDED = "suspended"
     BANNED = "banned"
@@ -53,7 +56,8 @@ class UserStatus(Enum):
 
 
 class SubscriptionTier(Enum):
-    """Subscription tier enumeration"""    FREE = "free"
+    """Subscription tier enumeration"""
+    FREE = "free"
     BASIC = "basic"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
@@ -61,11 +65,13 @@ class SubscriptionTier(Enum):
 
 
 class UserModel(Base):
-    """    Professional user data model for IA Influencer Agent platform.
+    """
+    Professional user data model for IA Influencer Agent platform.
     
     Comprehensive user management with multi-platform integration,
     analytics, subscription management, and content creator features.
-    """    
+    """
+    
     __tablename__ = "users"
     
     # Primary identification
@@ -261,7 +267,8 @@ class UserModel(Base):
         return f"<UserModel(id='{self.id}', username='{self.username}', type='{self.user_type}')>"
     
     def to_dict(self, include_sensitive: bool = False) -> Dict[str, Any]:
-        """Convert model to dictionary representation"""        base_data = {
+        """Convert model to dictionary representation"""
+        base_data = {
             'id': self.id,
             'username': self.username,
             'email': self.email if include_sensitive else None,
@@ -315,56 +322,65 @@ class UserModel(Base):
     
     @property
     def full_name(self) -> str:
-        """Get user's full name"""        if self.first_name and self.last_name:
+        """Get user's full name"""
+        if self.first_name and self.last_name:
             return f"{self.first_name} {self.last_name}"
         return self.display_name or self.username
     
     @property
     def is_active(self) -> bool:
-        """Check if user is active"""        return self.status == UserStatus.ACTIVE.value and not self.is_deleted
+        """Check if user is active"""
+        return self.status == UserStatus.ACTIVE.value and not self.is_deleted
     
     @property
     def is_premium_user(self) -> bool:
-        """Check if user has premium subscription"""        return (self.is_premium or 
+        """Check if user has premium subscription"""
+        return (self.is_premium or 
                 self.subscription_tier in [SubscriptionTier.PROFESSIONAL.value, 
                                          SubscriptionTier.ENTERPRISE.value,
                                          SubscriptionTier.UNLIMITED.value])
     
     @property
     def storage_usage_percentage(self) -> float:
-        """Calculate storage usage percentage"""        if self.storage_limit and self.storage_limit > 0:
+        """Calculate storage usage percentage"""
+        if self.storage_limit and self.storage_limit > 0:
             return (self.storage_used / self.storage_limit) * 100
         return 0.0
     
     @property
     def content_upload_percentage(self) -> float:
-        """Calculate content upload limit usage percentage"""        if self.content_upload_limit and self.content_upload_limit > 0:
+        """Calculate content upload limit usage percentage"""
+        if self.content_upload_limit and self.content_upload_limit > 0:
             return (self.content_upload_count / self.content_upload_limit) * 100
         return 0.0
     
     @property
     def age(self) -> Optional[int]:
-        """Calculate user's age"""        if self.birth_date:
+        """Calculate user's age"""
+        if self.birth_date:
             today = date.today()
             return today.year - self.birth_date.year - ((today.month, today.day) < (self.birth_date.month, self.birth_date.day))
         return None
     
     @property
     def is_subscription_active(self) -> bool:
-        """Check if subscription is active"""        if not self.subscription_ends_at:
+        """Check if subscription is active"""
+        if not self.subscription_ends_at:
             return self.subscription_tier == SubscriptionTier.FREE.value
         return datetime.utcnow() < self.subscription_ends_at
     
     @property
     def platform_count(self) -> int:
-        """Count connected platforms"""        platforms = [
+        """Count connected platforms"""
+        platforms = [
             self.spotify_id, self.youtube_id, self.instagram_id,
             self.tiktok_id, self.twitter_id, self.soundcloud_id, self.twitch_id
         ]
         return sum(1 for platform in platforms if platform)
     
     def set_password(self, password: str):
-        """Set user password with salt and hash"""        import secrets
+        """Set user password with salt and hash"""
+        import secrets
         self.salt = secrets.token_hex(32)
         self.password_hash = hashlib.pbkdf2_hmac('sha256', 
                                                password.encode('utf-8'), 
@@ -373,7 +389,8 @@ class UserModel(Base):
         self.updated_at = datetime.utcnow()
     
     def verify_password(self, password: str) -> bool:
-        """Verify user password"""        if not self.password_hash or not self.salt:
+        """Verify user password"""
+        if not self.password_hash or not self.salt:
             return False
         
         hash_to_check = hashlib.pbkdf2_hmac('sha256',
@@ -383,14 +400,16 @@ class UserModel(Base):
         return hash_to_check == self.password_hash
     
     def update_last_login(self):
-        """Update last login timestamp and count"""        self.last_login_at = datetime.utcnow()
+        """Update last login timestamp and count"""
+        self.last_login_at = datetime.utcnow()
         self.last_active_at = datetime.utcnow()
         self.login_count = (self.login_count or 0) + 1
         self.failed_login_attempts = 0
         self.updated_at = datetime.utcnow()
     
     def record_failed_login(self):
-        """Record failed login attempt"""        self.failed_login_attempts = (self.failed_login_attempts or 0) + 1
+        """Record failed login attempt"""
+        self.failed_login_attempts = (self.failed_login_attempts or 0) + 1
         
         # Lock account after 5 failed attempts for 30 minutes
         if self.failed_login_attempts >= 5:
@@ -400,17 +419,20 @@ class UserModel(Base):
         self.updated_at = datetime.utcnow()
     
     def is_account_locked(self) -> bool:
-        """Check if account is locked"""        if not self.account_locked_until:
+        """Check if account is locked"""
+        if not self.account_locked_until:
             return False
         return datetime.utcnow() < self.account_locked_until
     
     def unlock_account(self):
-        """Unlock user account"""        self.account_locked_until = None
+        """Unlock user account"""
+        self.account_locked_until = None
         self.failed_login_attempts = 0
         self.updated_at = datetime.utcnow()
     
     def update_platform_stats(self, platform_data: Dict[str, Any]):
-        """Update platform statistics"""        for platform, data in platform_data.items():
+        """Update platform statistics"""
+        for platform, data in platform_data.items():
             if platform == 'spotify' and 'followers' in data:
                 self.spotify_profile = {**(self.spotify_profile or {}), **data}
             elif platform == 'youtube' and 'subscribers' in data:
@@ -424,7 +446,8 @@ class UserModel(Base):
         self.updated_at = datetime.utcnow()
     
     def calculate_total_stats(self):
-        """Calculate total statistics across all platforms"""        total_followers = 0
+        """Calculate total statistics across all platforms"""
+        total_followers = 0
         total_content = 0
         total_views = 0
         
@@ -450,7 +473,8 @@ class UserModel(Base):
             self.engagement_rate = total_interactions / self.total_views
     
     def upgrade_subscription(self, tier: str, ends_at: datetime = None):
-        """Upgrade user subscription"""        self.subscription_tier = tier
+        """Upgrade user subscription"""
+        self.subscription_tier = tier
         self.subscription_starts_at = datetime.utcnow()
         self.subscription_ends_at = ends_at
         
@@ -474,7 +498,8 @@ class UserModel(Base):
         self.updated_at = datetime.utcnow()
     
     def add_revenue(self, amount: Decimal, currency: str = "EUR"):
-        """Add revenue to user account"""        if not self.total_revenue:
+        """Add revenue to user account"""
+        if not self.total_revenue:
             self.total_revenue = Decimal('0')
         
         # Convert currency if needed (simplified)
@@ -492,29 +517,34 @@ class UserModel(Base):
         self.updated_at = datetime.utcnow()
     
     def soft_delete(self):
-        """Soft delete user account"""        self.is_deleted = True
+        """Soft delete user account"""
+        self.is_deleted = True
         self.deleted_at = datetime.utcnow()
         self.status = UserStatus.INACTIVE.value
         self.updated_at = datetime.utcnow()
     
     def restore(self):
-        """Restore soft-deleted user account"""        self.is_deleted = False
+        """Restore soft-deleted user account"""
+        self.is_deleted = False
         self.deleted_at = None
         self.status = UserStatus.ACTIVE.value
         self.updated_at = datetime.utcnow()
     
     def verify_email(self):
-        """Mark email as verified"""        self.email_verified = True
+        """Mark email as verified"""
+        self.email_verified = True
         self.email_verified_at = datetime.utcnow()
         self.updated_at = datetime.utcnow()
     
     def verify_phone(self):
-        """Mark phone as verified"""        self.phone_verified = True
+        """Mark phone as verified"""
+        self.phone_verified = True
         self.phone_verified_at = datetime.utcnow()
         self.updated_at = datetime.utcnow()
     
     def generate_referral_code(self) -> str:
-        """Generate unique referral code"""        import secrets
+        """Generate unique referral code"""
+        import secrets
         import string
         
         if not self.referral_code:

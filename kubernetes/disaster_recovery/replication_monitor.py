@@ -10,7 +10,8 @@ This module provides comprehensive monitoring of data replication across:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -29,7 +30,8 @@ from backend.security.encryption import EncryptionManager
 
 
 class ReplicationType(Enum):
-    """Types of replication monitoring"""    DATABASE_MASTER_SLAVE = "database_master_slave"
+    """Types of replication monitoring"""
+    DATABASE_MASTER_SLAVE = "database_master_slave"
     DATABASE_MASTER_MASTER = "database_master_master"
     STORAGE_CROSS_REGION = "storage_cross_region"
     STORAGE_CROSS_CLOUD = "storage_cross_cloud"
@@ -39,7 +41,8 @@ class ReplicationType(Enum):
 
 
 class ReplicationStatus(Enum):
-    """Replication health status"""    HEALTHY = "healthy"
+    """Replication health status"""
+    HEALTHY = "healthy"
     LAGGING = "lagging"
     INCONSISTENT = "inconsistent"
     FAILED = "failed"
@@ -48,7 +51,8 @@ class ReplicationStatus(Enum):
 
 
 class ConsistencyLevel(Enum):
-    """Data consistency levels"""    EVENTUALLY_CONSISTENT = "eventually_consistent"
+    """Data consistency levels"""
+    EVENTUALLY_CONSISTENT = "eventually_consistent"
     STRONG_CONSISTENCY = "strong_consistency"
     CAUSAL_CONSISTENCY = "causal_consistency"
     MONOTONIC_CONSISTENCY = "monotonic_consistency"
@@ -56,7 +60,8 @@ class ConsistencyLevel(Enum):
 
 @dataclass
 class ReplicationEndpoint:
-    """Replication endpoint configuration"""    endpoint_id: str
+    """Replication endpoint configuration"""
+    endpoint_id: str
     endpoint_type: str  # "master", "slave", "peer"
     location: str
     connection_string: str
@@ -70,7 +75,8 @@ class ReplicationEndpoint:
 
 @dataclass
 class ReplicationStream:
-    """Replication stream configuration and state"""    stream_id: str
+    """Replication stream configuration and state"""
+    stream_id: str
     replication_type: ReplicationType
     source_endpoint: ReplicationEndpoint
     target_endpoints: List[ReplicationEndpoint]
@@ -89,7 +95,8 @@ class ReplicationStream:
 
 @dataclass
 class ConsistencyCheck:
-    """Data consistency validation record"""    check_id: str
+    """Data consistency validation record"""
+    check_id: str
     stream_id: str
     check_type: str
     source_checksum: str
@@ -101,7 +108,8 @@ class ConsistencyCheck:
 
 
 class ReplicationMonitor:
-    """    Comprehensive replication monitoring and consistency validation system
+    """
+    Comprehensive replication monitoring and consistency validation system
     
     Features:
     - Real-time replication lag monitoring
@@ -110,7 +118,8 @@ class ReplicationMonitor:
     - Performance metrics and alerting
     - Cross-cloud replication oversight
     - Content fingerprint synchronization tracking
-    """    def __init__(self, config: Config):
+    """
+    def __init__(self, config: Config):
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.db_manager = DatabaseManager(config)
@@ -149,7 +158,8 @@ class ReplicationMonitor:
         self.repair_strategies = self._initialize_repair_strategies()
 
     def _initialize_repair_strategies(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize automated repair strategies for different inconsistency types"""        return {
+        """Initialize automated repair strategies for different inconsistency types"""
+        return {
             'missing_record': {
                 'strategy': 'copy_from_source',
                 'max_attempts': 3,
@@ -183,14 +193,16 @@ class ReplicationMonitor:
         }
 
     async def register_replication_stream(self, stream_config: Dict[str, Any]) -> str:
-        """        Register a new replication stream for monitoring
+        """
+        Register a new replication stream for monitoring
         
         Args:
             stream_config: Replication stream configuration
             
         Returns:
             str: Stream ID
-        """        try:
+        """
+        try:
             # Create source endpoint
             source_config = stream_config['source_endpoint']
             source_endpoint = ReplicationEndpoint(
@@ -252,7 +264,8 @@ class ReplicationMonitor:
             raise
 
     async def _monitor_replication_stream(self, stream: ReplicationStream):
-        """Continuously monitor replication stream health and consistency"""        stream_id = stream.stream_id
+        """Continuously monitor replication stream health and consistency"""
+        stream_id = stream.stream_id
         
         while stream_id in self.replication_streams:
             try:
@@ -288,7 +301,8 @@ class ReplicationMonitor:
                 await asyncio.sleep(stream.check_interval)
 
     async def _check_replication_lag(self, stream: ReplicationStream) -> Dict[str, Any]:
-        """Check replication lag for all target endpoints"""        lag_results = {}
+        """Check replication lag for all target endpoints"""
+        lag_results = {}
         max_lag = 0.0
         total_throughput = 0.0
         
@@ -330,7 +344,8 @@ class ReplicationMonitor:
             }
 
     async def _validate_data_consistency(self, stream: ReplicationStream) -> Dict[str, Any]:
-        """Validate data consistency across all replication endpoints"""        check_id = f"consistency_{stream.stream_id}_{int(time.time())}"
+        """Validate data consistency across all replication endpoints"""
+        check_id = f"consistency_{stream.stream_id}_{int(time.time())}"
         
         try:
             # Select sample data for consistency check
@@ -406,7 +421,8 @@ class ReplicationMonitor:
             }
 
     async def _attempt_automatic_repair(self, stream: ReplicationStream, consistency_check: Dict[str, Any]):
-        """Attempt to automatically repair data inconsistencies"""        if not consistency_check.get('inconsistencies'):
+        """Attempt to automatically repair data inconsistencies"""
+        if not consistency_check.get('inconsistencies'):
             return
         
         repair_results = []
@@ -449,7 +465,8 @@ class ReplicationMonitor:
     async def _execute_repair_strategy(self, stream: ReplicationStream, 
                                      inconsistency: Dict[str, Any], 
                                      strategy: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute specific repair strategy for an inconsistency"""        strategy_name = strategy['strategy']
+        """Execute specific repair strategy for an inconsistency"""
+        strategy_name = strategy['strategy']
         max_attempts = strategy['max_attempts']
         backoff_seconds = strategy['backoff_seconds']
         
@@ -506,7 +523,8 @@ class ReplicationMonitor:
         }
 
     async def get_replication_status(self, stream_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get comprehensive replication status"""        if stream_id:
+        """Get comprehensive replication status"""
+        if stream_id:
             # Get status for specific stream
             if stream_id not in self.replication_streams:
                 return {'error': 'Stream not found'}
@@ -545,7 +563,8 @@ class ReplicationMonitor:
             }
 
     async def force_consistency_check(self, stream_id: str) -> Dict[str, Any]:
-        """Force immediate consistency check for a stream"""        if stream_id not in self.replication_streams:
+        """Force immediate consistency check for a stream"""
+        if stream_id not in self.replication_streams:
             return {'error': 'Stream not found'}
         
         stream = self.replication_streams[stream_id]
@@ -557,7 +576,8 @@ class ReplicationMonitor:
         return consistency_result
 
     async def suspend_replication(self, stream_id: str) -> bool:
-        """Suspend replication monitoring for a stream"""        try:
+        """Suspend replication monitoring for a stream"""
+        try:
             if stream_id in self.replication_streams:
                 self.replication_streams[stream_id].status = ReplicationStatus.SUSPENDED
                 
@@ -574,7 +594,8 @@ class ReplicationMonitor:
             return False
 
     async def resume_replication(self, stream_id: str) -> bool:
-        """Resume replication monitoring for a stream"""        try:
+        """Resume replication monitoring for a stream"""
+        try:
             if stream_id in self.replication_streams:
                 stream = self.replication_streams[stream_id]
                 stream.status = ReplicationStatus.HEALTHY
@@ -593,13 +614,15 @@ class ReplicationMonitor:
             return False
 
     def _generate_stream_id(self) -> str:
-        """Generate unique stream identifier"""        timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
+        """Generate unique stream identifier"""
+        timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
         return f"repl_{timestamp}_{len(self.replication_streams) + 1}"
 
     def _update_replication_metrics(self, stream: ReplicationStream, 
                                   lag_check: Dict[str, Any], 
                                   consistency_check: Dict[str, Any]):
-        """Update aggregated replication metrics"""        # Update stream counts
+        """Update aggregated replication metrics"""
+        # Update stream counts
         self.replication_metrics['total_streams'] = len(self.replication_streams)
         self.replication_metrics['healthy_streams'] = len([
             s for s in self.replication_streams.values() 

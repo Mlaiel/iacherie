@@ -17,7 +17,8 @@ Contact: mlaiel@live.de
 - ML Engineer: Fahed Mlaiel
 - DBA: Fahed Mlaiel
 - DevOps: Fahed Mlaiel
-"""from typing import Dict, List, Optional, Any, Union, Tuple, Set
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import logging
 import asyncio
 import hashlib
@@ -33,26 +34,30 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class ConsistencyLevel(Enum):
-    """Data consistency levels for distributed operations"""    EVENTUAL = "eventual"
+    """Data consistency levels for distributed operations"""
+    EVENTUAL = "eventual"
     STRONG = "strong"
     SESSION = "session"
     BOUNDED_STALENESS = "bounded_staleness"
 
 class ShardingStrategy(Enum):
-    """Sharding strategies for data distribution"""    HASH_BASED = "hash_based"
+    """Sharding strategies for data distribution"""
+    HASH_BASED = "hash_based"
     RANGE_BASED = "range_based"
     DIRECTORY_BASED = "directory_based"
     CONTENT_AWARE = "content_aware"
 
 class PartitionType(Enum):
-    """Types of data partitioning"""    HORIZONTAL = "horizontal"  # Shard by rows/documents
+    """Types of data partitioning"""
+    HORIZONTAL = "horizontal"  # Shard by rows/documents
     VERTICAL = "vertical"      # Shard by columns/fields
     FUNCTIONAL = "functional"  # Shard by feature/service
     HYBRID = "hybrid"         # Mixed partitioning
 
 @dataclass
 class ClusterNode:
-    """Represents a node in the distributed cluster"""    node_id: str
+    """Represents a node in the distributed cluster"""
+    node_id: str
     hostname: str
     port: int
     storage_capacity: int  # bytes
@@ -66,17 +71,20 @@ class ClusterNode:
     
     @property
     def utilization_percent(self) -> float:
-        """Calculate storage utilization percentage"""        if self.storage_capacity == 0:
+        """Calculate storage utilization percentage"""
+        if self.storage_capacity == 0:
             return 0.0
         return ((self.storage_capacity - self.available_capacity) / self.storage_capacity) * 100
     
     @property
     def endpoint(self) -> str:
-        """Get node endpoint URL"""        return f"http://{self.hostname}:{self.port}"
+        """Get node endpoint URL"""
+        return f"http://{self.hostname}:{self.port}"
 
 @dataclass
 class ShardInfo:
-    """Information about a data shard"""    shard_id: str
+    """Information about a data shard"""
+    shard_id: str
     shard_key: str
     primary_node: str
     replica_nodes: List[str]
@@ -87,11 +95,13 @@ class ShardInfo:
     
     @property
     def replication_factor(self) -> int:
-        """Get replication factor for this shard"""        return 1 + len(self.replica_nodes)
+        """Get replication factor for this shard"""
+        return 1 + len(self.replica_nodes)
 
 @dataclass
 class DistributedConfig:
-    """Configuration for distributed storage system"""    cluster_name: str
+    """Configuration for distributed storage system"""
+    cluster_name: str
     consistency_level: ConsistencyLevel
     sharding_strategy: ShardingStrategy
     partition_type: PartitionType
@@ -105,7 +115,8 @@ class DistributedConfig:
     encryption_enabled: bool = True
 
 class DistributedStorageManager:
-    """    Enterprise distributed storage manager with advanced clustering.
+    """
+    Enterprise distributed storage manager with advanced clustering.
     
     Features:
     - Intelligent sharding and partitioning
@@ -114,9 +125,11 @@ class DistributedStorageManager:
     - Dynamic cluster rebalancing
     - Cross-datacenter replication
     - Performance optimization and monitoring
-    """    
+    """
+    
     def __init__(self, config: DistributedConfig):
-        """Initialize distributed storage manager"""        self.config = config
+        """Initialize distributed storage manager"""
+        self.config = config
         self.cluster_nodes: Dict[str, ClusterNode] = {}
         self.shards: Dict[str, ShardInfo] = {}
         self.shard_manager = ShardingManager(config.sharding_strategy)
@@ -144,7 +157,8 @@ class DistributedStorageManager:
         logger.info(f"DistributedStorageManager initialized for cluster: {config.cluster_name}")
     
     async def initialize_cluster(self, initial_nodes: List[Dict[str, Any]]) -> bool:
-        """Initialize the distributed cluster with initial nodes"""        try:
+        """Initialize the distributed cluster with initial nodes"""
+        try:
             # Add initial nodes to cluster
             for node_config in initial_nodes:
                 node = ClusterNode(
@@ -178,7 +192,8 @@ class DistributedStorageManager:
             return False
     
     async def add_node(self, node: ClusterNode) -> bool:
-        """Add a new node to the cluster"""        try:
+        """Add a new node to the cluster"""
+        try:
             # Verify node connectivity
             if not await self._verify_node_connectivity(node):
                 raise Exception(f"Cannot connect to node: {node.endpoint}")
@@ -206,7 +221,8 @@ class DistributedStorageManager:
             return False
     
     async def remove_node(self, node_id: str, graceful: bool = True) -> bool:
-        """Remove a node from the cluster"""        try:
+        """Remove a node from the cluster"""
+        try:
             if node_id not in self.cluster_nodes:
                 return False
             
@@ -240,7 +256,8 @@ class DistributedStorageManager:
         data: bytes,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Store data in the distributed cluster"""        start_time = time.time()
+        """Store data in the distributed cluster"""
+        start_time = time.time()
         
         try:
             # Determine target shard
@@ -304,7 +321,8 @@ class DistributedStorageManager:
         key: str,
         consistency_level: Optional[ConsistencyLevel] = None
     ) -> Dict[str, Any]:
-        """Retrieve data from the distributed cluster"""        start_time = time.time()
+        """Retrieve data from the distributed cluster"""
+        start_time = time.time()
         
         try:
             # Determine source shard
@@ -356,7 +374,8 @@ class DistributedStorageManager:
             }
     
     async def delete_data(self, key: str) -> Dict[str, Any]:
-        """Delete data from the distributed cluster"""        start_time = time.time()
+        """Delete data from the distributed cluster"""
+        start_time = time.time()
         
         try:
             # Determine target shard
@@ -416,7 +435,8 @@ class DistributedStorageManager:
             }
     
     async def get_cluster_status(self) -> Dict[str, Any]:
-        """Get comprehensive cluster status and health information"""        try:
+        """Get comprehensive cluster status and health information"""
+        try:
             total_capacity = sum(node.storage_capacity for node in self.cluster_nodes.values())
             used_capacity = sum(
                 node.storage_capacity - node.available_capacity 
@@ -465,7 +485,8 @@ class DistributedStorageManager:
             return {'error': str(e)}
     
     async def rebalance_cluster(self, force: bool = False) -> Dict[str, Any]:
-        """Manually trigger cluster rebalancing"""        try:
+        """Manually trigger cluster rebalancing"""
+        try:
             if not force and not self._needs_rebalancing():
                 return {
                     'success': True,
@@ -515,7 +536,8 @@ class DistributedStorageManager:
     # Private implementation methods
     
     async def _verify_node_connectivity(self, node: ClusterNode) -> bool:
-        """Verify that we can connect to a node"""        try:
+        """Verify that we can connect to a node"""
+        try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(f"{node.endpoint}/health", timeout=aiohttp.ClientTimeout(total=5)) as response:
                     return response.status == 200
@@ -523,7 +545,8 @@ class DistributedStorageManager:
             return False
     
     async def _create_shard(self, shard_id: str, key: str) -> None:
-        """Create a new shard for data"""        # Select nodes for the shard based on load balancing
+        """Create a new shard for data"""
+        # Select nodes for the shard based on load balancing
         selected_nodes = await self._select_nodes_for_shard()
         
         if not selected_nodes:
@@ -551,7 +574,8 @@ class DistributedStorageManager:
         logger.info(f"Created shard {shard_id} with primary {primary_node}")
     
     async def _select_nodes_for_shard(self) -> List[str]:
-        """Select optimal nodes for a new shard"""        # Sort nodes by utilization and shard count
+        """Select optimal nodes for a new shard"""
+        # Sort nodes by utilization and shard count
         available_nodes = [
             (node_id, node) for node_id, node in self.cluster_nodes.items()
             if node.status == "healthy" and len(node.shard_assignments) < self.config.max_shards_per_node
@@ -571,7 +595,8 @@ class DistributedStorageManager:
         data: bytes,
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Store data on a specific node"""        try:
+        """Store data on a specific node"""
+        try:
             if node_id not in self.node_sessions:
                 return {'success': False, 'error': 'Node session not found'}
             
@@ -602,7 +627,8 @@ class DistributedStorageManager:
             return {'success': False, 'error': str(e)}
     
     async def _retrieve_from_node(self, node_id: str, key: str) -> Dict[str, Any]:
-        """Retrieve data from a specific node"""        try:
+        """Retrieve data from a specific node"""
+        try:
             if node_id not in self.node_sessions:
                 return {'success': False, 'error': 'Node session not found'}
             
@@ -626,7 +652,8 @@ class DistributedStorageManager:
             return {'success': False, 'error': str(e)}
     
     async def _delete_from_node(self, node_id: str, key: str) -> Dict[str, Any]:
-        """Delete data from a specific node"""        try:
+        """Delete data from a specific node"""
+        try:
             if node_id not in self.node_sessions:
                 return {'success': False, 'error': 'Node session not found'}
             
@@ -653,7 +680,8 @@ class DistributedStorageManager:
         data: bytes,
         metadata: Optional[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Replicate data to replica nodes"""        replication_tasks = []
+        """Replicate data to replica nodes"""
+        replication_tasks = []
         
         for replica_node in shard.replica_nodes:
             task = self._store_on_node(replica_node, key, data, metadata)
@@ -669,7 +697,8 @@ class DistributedStorageManager:
         return []
     
     async def _health_monitor_loop(self) -> None:
-        """Background task for monitoring node health"""        while True:
+        """Background task for monitoring node health"""
+        while True:
             try:
                 await asyncio.sleep(self.config.heartbeat_interval)
                 await self._check_node_health()
@@ -677,7 +706,8 @@ class DistributedStorageManager:
                 logger.error(f"Health monitor error: {str(e)}")
     
     async def _check_node_health(self) -> None:
-        """Check health of all cluster nodes"""        current_time = datetime.now()
+        """Check health of all cluster nodes"""
+        current_time = datetime.now()
         
         for node_id, node in self.cluster_nodes.items():
             try:
@@ -701,7 +731,8 @@ class DistributedStorageManager:
                     await self._handle_node_failure(node_id, "timeout")
     
     async def _handle_node_failure(self, node_id: str, failure_type: str) -> None:
-        """Handle node failure and initiate recovery"""        if node_id not in self.cluster_nodes:
+        """Handle node failure and initiate recovery"""
+        if node_id not in self.cluster_nodes:
             return
         
         node = self.cluster_nodes[node_id]
@@ -715,7 +746,8 @@ class DistributedStorageManager:
             await self._recover_node_shards(node_id)
     
     async def _recover_node_shards(self, failed_node_id: str) -> None:
-        """Recover shards from a failed node"""        affected_shards = [
+        """Recover shards from a failed node"""
+        affected_shards = [
             shard for shard in self.shards.values()
             if failed_node_id in [shard.primary_node] + shard.replica_nodes
         ]
@@ -732,7 +764,8 @@ class DistributedStorageManager:
                 logger.error(f"Failed to recover shard {shard.shard_id}: {str(e)}")
     
     def _update_metrics(self, operation: str, latency: float, success: bool) -> None:
-        """Update performance metrics"""        self.metrics['total_operations'] += 1
+        """Update performance metrics"""
+        self.metrics['total_operations'] += 1
         
         if success:
             self.metrics['successful_operations'] += 1
@@ -750,7 +783,8 @@ class DistributedStorageManager:
             self.metrics['throughput_ops_sec'] = total_ops / total_time
     
     async def cleanup(self) -> None:
-        """Cleanup distributed storage manager"""        # Cancel background tasks
+        """Cleanup distributed storage manager"""
+        # Cancel background tasks
         if self.health_monitor_task:
             self.health_monitor_task.cancel()
         
@@ -763,15 +797,18 @@ class DistributedStorageManager:
 
 
 class ShardingManager:
-    """Manages data sharding strategies"""    
+    """Manages data sharding strategies"""
+    
     def __init__(self, strategy: ShardingStrategy):
-        """Initialize sharding manager"""        self.strategy = strategy
+        """Initialize sharding manager"""
+        self.strategy = strategy
         self.shard_ring = {}  # For consistent hashing
         self.shard_ranges = {}  # For range-based sharding
         self.directory_map = {}  # For directory-based sharding
     
     async def initialize(self, node_ids: List[str]) -> None:
-        """Initialize sharding configuration"""        if self.strategy == ShardingStrategy.HASH_BASED:
+        """Initialize sharding configuration"""
+        if self.strategy == ShardingStrategy.HASH_BASED:
             await self._initialize_hash_ring(node_ids)
         elif self.strategy == ShardingStrategy.RANGE_BASED:
             await self._initialize_range_sharding(node_ids)
@@ -779,7 +816,8 @@ class ShardingManager:
             await self._initialize_directory_sharding(node_ids)
     
     async def get_shard_for_key(self, key: str) -> str:
-        """Determine which shard should handle a given key"""        if self.strategy == ShardingStrategy.HASH_BASED:
+        """Determine which shard should handle a given key"""
+        if self.strategy == ShardingStrategy.HASH_BASED:
             return self._hash_based_shard(key)
         elif self.strategy == ShardingStrategy.RANGE_BASED:
             return self._range_based_shard(key)
@@ -792,21 +830,26 @@ class ShardingManager:
             return f"shard_{abs(hash(key)) % 16:04x}"
     
     def _hash_based_shard(self, key: str) -> str:
-        """Hash-based sharding using consistent hashing"""        key_hash = hashlib.sha256(key.encode()).hexdigest()
+        """Hash-based sharding using consistent hashing"""
+        key_hash = hashlib.sha256(key.encode()).hexdigest()
         return f"shard_{key_hash[:8]}"
     
     async def remove_node(self, node_id: str) -> None:
-        """Remove node from sharding configuration"""        # Implementation would update sharding maps
+        """Remove node from sharding configuration"""
+        # Implementation would update sharding maps
         pass
 
 
 class ConsistencyManager:
-    """Manages data consistency across distributed nodes"""    
+    """Manages data consistency across distributed nodes"""
+    
     def __init__(self, consistency_level: ConsistencyLevel):
-        """Initialize consistency manager"""        self.consistency_level = consistency_level
+        """Initialize consistency manager"""
+        self.consistency_level = consistency_level
     
     async def select_read_node(self, shard: ShardInfo, consistency: ConsistencyLevel) -> str:
-        """Select optimal node for read operation based on consistency requirements"""        if consistency == ConsistencyLevel.STRONG:
+        """Select optimal node for read operation based on consistency requirements"""
+        if consistency == ConsistencyLevel.STRONG:
             # Always read from primary for strong consistency
             return shard.primary_node
         elif consistency == ConsistencyLevel.EVENTUAL:
@@ -820,9 +863,11 @@ class ConsistencyManager:
 
 
 class PartitionManager:
-    """Manages data partitioning strategies"""    
+    """Manages data partitioning strategies"""
+    
     def __init__(self, partition_type: PartitionType):
-        """Initialize partition manager"""        self.partition_type = partition_type
+        """Initialize partition manager"""
+        self.partition_type = partition_type
     
     async def partition_data(
         self,
@@ -830,7 +875,8 @@ class PartitionManager:
         data: bytes,
         metadata: Optional[Dict[str, Any]]
     ) -> bytes:
-        """Apply partitioning strategy to data"""        if self.partition_type == PartitionType.HORIZONTAL:
+        """Apply partitioning strategy to data"""
+        if self.partition_type == PartitionType.HORIZONTAL:
             return self._horizontal_partition(data, metadata)
         elif self.partition_type == PartitionType.VERTICAL:
             return self._vertical_partition(data, metadata)
@@ -846,19 +892,23 @@ class PartitionManager:
         partitioned_data: bytes,
         metadata: Optional[Dict[str, Any]]
     ) -> bytes:
-        """Reconstruct original data from partitioned format"""        # Reverse the partitioning process
+        """Reconstruct original data from partitioned format"""
+        # Reverse the partitioning process
         return partitioned_data
     
     def _horizontal_partition(self, data: bytes, metadata: Optional[Dict[str, Any]]) -> bytes:
-        """Apply horizontal partitioning"""        # Implementation would split data by records/rows
+        """Apply horizontal partitioning"""
+        # Implementation would split data by records/rows
         return data
     
     def _vertical_partition(self, data: bytes, metadata: Optional[Dict[str, Any]]) -> bytes:
-        """Apply vertical partitioning"""        # Implementation would split data by fields/columns
+        """Apply vertical partitioning"""
+        # Implementation would split data by fields/columns
         return data
     
     def _functional_partition(self, data: bytes, metadata: Optional[Dict[str, Any]]) -> bytes:
-        """Apply functional partitioning"""        # Implementation would partition by feature/service
+        """Apply functional partitioning"""
+        # Implementation would partition by feature/service
         return data
 
 

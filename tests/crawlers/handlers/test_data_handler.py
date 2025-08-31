@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -18,7 +19,8 @@ Tests for data processing, validation, transformation, and storage.
 Author: Fahed Mlaiel (Legal Copyright)
 Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
 Propriété intellectuelle protégée sous toutes juridictions.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -47,8 +49,10 @@ from crawlers.handlers.data_handler import (
 
 
 class TestContentData:
-    """Test suite for ContentData model."""    def test_content_data_creation(self):
-        """Test content data object creation."""        data = ContentData(
+    """Test suite for ContentData model."""
+    def test_content_data_creation(self):
+        """Test content data object creation."""
+        data = ContentData(
             content_id="test-123",
             platform="youtube",
             title="Test Video",
@@ -64,7 +68,8 @@ class TestContentData:
         assert data.metadata["duration"] == 300
 
     def test_content_data_validation(self):
-        """Test content data validation."""        # Valid data
+        """Test content data validation."""
+        # Valid data
         valid_data = ContentData(
             content_id="valid-123",
             platform="instagram",
@@ -83,7 +88,8 @@ class TestContentData:
             )
 
     def test_content_data_serialization(self):
-        """Test content data JSON serialization."""        data = ContentData(
+        """Test content data JSON serialization."""
+        data = ContentData(
             content_id="serial-123",
             platform="tiktok",
             title="Serialization Test",
@@ -97,7 +103,8 @@ class TestContentData:
         assert "test" in json_dict["metadata"]["hashtags"]
 
     def test_content_data_from_dict(self):
-        """Test content data creation from dictionary."""        data_dict = {
+        """Test content data creation from dictionary."""
+        data_dict = {
             "content_id": "from-dict-123",
             "platform": "twitter",
             "title": "From Dict Test",
@@ -113,8 +120,10 @@ class TestContentData:
 
 
 class TestUserData:
-    """Test suite for UserData model."""    def test_user_data_creation(self):
-        """Test user data object creation."""        data = UserData(
+    """Test suite for UserData model."""
+    def test_user_data_creation(self):
+        """Test user data object creation."""
+        data = UserData(
             user_id="user-123",
             username="testuser",
             display_name="Test User",
@@ -129,7 +138,8 @@ class TestUserData:
         assert data.profile_data["verified"] is True
 
     def test_user_data_validation(self):
-        """Test user data validation."""        # Valid data
+        """Test user data validation."""
+        # Valid data
         valid_data = UserData(
             user_id="valid-user-123",
             username="validuser",
@@ -147,8 +157,10 @@ class TestUserData:
 
 
 class TestPlatformData:
-    """Test suite for PlatformData model."""    def test_platform_data_creation(self):
-        """Test platform data object creation."""        data = PlatformData(
+    """Test suite for PlatformData model."""
+    def test_platform_data_creation(self):
+        """Test platform data object creation."""
+        data = PlatformData(
             platform="youtube",
             api_version="v3",
             rate_limits={"requests_per_hour": 10000},
@@ -163,8 +175,10 @@ class TestPlatformData:
 
 
 class TestValidationSchema:
-    """Test suite for ValidationSchema class."""    def test_schema_creation(self):
-        """Test validation schema creation."""        schema = ValidationSchema(
+    """Test suite for ValidationSchema class."""
+    def test_schema_creation(self):
+        """Test validation schema creation."""
+        schema = ValidationSchema(
             name="content_schema",
             required_fields=["content_id", "platform", "title"],
             optional_fields=["description", "metadata"],
@@ -187,7 +201,8 @@ class TestValidationSchema:
         assert "youtube" in schema.constraints["platform"]["choices"]
 
     def test_schema_validation(self):
-        """Test schema-based validation."""        schema = ValidationSchema(
+        """Test schema-based validation."""
+        schema = ValidationSchema(
             name="test_schema",
             required_fields=["id", "name"],
             field_types={"id": str, "name": str, "count": int},
@@ -212,13 +227,16 @@ class TestValidationSchema:
 
 
 class TestDataValidator:
-    """Test suite for DataValidator class."""    def test_validator_initialization(self):
-        """Test validator setup."""        validator = DataValidator()
+    """Test suite for DataValidator class."""
+    def test_validator_initialization(self):
+        """Test validator setup."""
+        validator = DataValidator()
         assert validator.schemas is not None
         assert len(validator.schemas) > 0
 
     def test_validate_content_data(self):
-        """Test content data validation."""        validator = DataValidator()
+        """Test content data validation."""
+        validator = DataValidator()
         
         # Valid content data
         valid_data = {
@@ -234,7 +252,8 @@ class TestDataValidator:
         assert len(result.errors) == 0
 
     def test_validate_invalid_content_data(self):
-        """Test validation with invalid content data."""        validator = DataValidator()
+        """Test validation with invalid content data."""
+        validator = DataValidator()
         
         # Invalid content data
         invalid_data = {
@@ -249,7 +268,8 @@ class TestDataValidator:
         assert len(result.errors) > 0
 
     def test_validate_user_data(self):
-        """Test user data validation."""        validator = DataValidator()
+        """Test user data validation."""
+        validator = DataValidator()
         
         valid_data = {
             "user_id": "user-123",
@@ -262,7 +282,8 @@ class TestDataValidator:
         assert result.is_valid
 
     def test_validate_with_custom_schema(self):
-        """Test validation with custom schema."""        validator = DataValidator()
+        """Test validation with custom schema."""
+        validator = DataValidator()
         
         custom_schema = ValidationSchema(
             name="custom_test",
@@ -282,7 +303,8 @@ class TestDataValidator:
         assert not result.is_valid
 
     def test_bulk_validation(self):
-        """Test bulk data validation."""        validator = DataValidator()
+        """Test bulk data validation."""
+        validator = DataValidator()
         
         data_list = [
             {"content_id": "1", "platform": "youtube", "title": "Video 1"},
@@ -298,8 +320,10 @@ class TestDataValidator:
 
 
 class TestTransformationRule:
-    """Test suite for TransformationRule class."""    def test_rule_creation(self):
-        """Test transformation rule creation."""        rule = TransformationRule(
+    """Test suite for TransformationRule class."""
+    def test_rule_creation(self):
+        """Test transformation rule creation."""
+        rule = TransformationRule(
             name="normalize_platform",
             source_field="platform_name",
             target_field="platform",
@@ -311,7 +335,8 @@ class TestTransformationRule:
         assert rule.target_field == "platform"
 
     def test_rule_application(self):
-        """Test rule application to data."""        rule = TransformationRule(
+        """Test rule application to data."""
+        rule = TransformationRule(
             name="normalize_title",
             source_field="title",
             target_field="normalized_title",
@@ -325,7 +350,8 @@ class TestTransformationRule:
         assert "title" in transformed  # Original field preserved
 
     def test_conditional_rule(self):
-        """Test conditional transformation rule."""        def transform_views(value):
+        """Test conditional transformation rule."""
+        def transform_views(value):
             if isinstance(value, str) and value.endswith('K'):
                 return int(float(value[:-1]) * 1000)
             return int(value) if value else 0
@@ -347,13 +373,16 @@ class TestTransformationRule:
 
 
 class TestDataTransformer:
-    """Test suite for DataTransformer class."""    def test_transformer_initialization(self):
-        """Test transformer setup."""        transformer = DataTransformer()
+    """Test suite for DataTransformer class."""
+    def test_transformer_initialization(self):
+        """Test transformer setup."""
+        transformer = DataTransformer()
         assert transformer.rules is not None
         assert len(transformer.rules) >= 0
 
     def test_add_transformation_rule(self):
-        """Test adding transformation rules."""        transformer = DataTransformer()
+        """Test adding transformation rules."""
+        transformer = DataTransformer()
         
         rule = TransformationRule(
             name="test_rule",
@@ -366,7 +395,8 @@ class TestDataTransformer:
         assert "test_rule" in transformer.rules
 
     def test_transform_content_data(self):
-        """Test content data transformation."""        transformer = DataTransformer()
+        """Test content data transformation."""
+        transformer = DataTransformer()
         
         raw_data = {
             "id": "youtube-123",
@@ -389,7 +419,8 @@ class TestDataTransformer:
         assert isinstance(transformed["view_count"], int)
 
     def test_transform_user_data(self):
-        """Test user data transformation."""        transformer = DataTransformer()
+        """Test user data transformation."""
+        transformer = DataTransformer()
         
         raw_data = {
             "id": "user123",
@@ -409,7 +440,8 @@ class TestDataTransformer:
         assert isinstance(transformed["follower_count"], int)
 
     def test_custom_transformation_pipeline(self):
-        """Test custom transformation pipeline."""        transformer = DataTransformer()
+        """Test custom transformation pipeline."""
+        transformer = DataTransformer()
         
         # Add custom rules
         rules = [
@@ -444,7 +476,8 @@ class TestDataTransformer:
         assert transformed["engagement_rate"] == 0.12  # (100+20)/1000
 
     def test_batch_transformation(self):
-        """Test batch data transformation."""        transformer = DataTransformer()
+        """Test batch data transformation."""
+        transformer = DataTransformer()
         
         raw_data_list = [
             {"id": "1", "title": "Video 1", "views": "1000"},
@@ -460,14 +493,17 @@ class TestDataTransformer:
 
 
 class TestDataStorage:
-    """Test suite for DataStorage class."""    def test_storage_initialization(self):
-        """Test storage setup."""        storage = DataStorage()
+    """Test suite for DataStorage class."""
+    def test_storage_initialization(self):
+        """Test storage setup."""
+        storage = DataStorage()
         assert storage.compression_manager is not None
         assert storage.encryption_manager is not None
 
     @pytest.mark.asyncio
     async def test_store_content_data(self):
-        """Test storing content data."""        storage = DataStorage()
+        """Test storing content data."""
+        storage = DataStorage()
         
         content = ContentData(
             content_id="store-123",
@@ -487,7 +523,8 @@ class TestDataStorage:
 
     @pytest.mark.asyncio
     async def test_store_with_compression(self):
-        """Test storing data with compression."""        storage = DataStorage()
+        """Test storing data with compression."""
+        storage = DataStorage()
         
         large_content = ContentData(
             content_id="compress-123",
@@ -514,7 +551,8 @@ class TestDataStorage:
 
     @pytest.mark.asyncio
     async def test_store_with_encryption(self):
-        """Test storing data with encryption."""        storage = DataStorage()
+        """Test storing data with encryption."""
+        storage = DataStorage()
         
         sensitive_content = ContentData(
             content_id="encrypt-123",
@@ -541,7 +579,8 @@ class TestDataStorage:
 
     @pytest.mark.asyncio
     async def test_retrieve_content_data(self):
-        """Test retrieving content data."""        storage = DataStorage()
+        """Test retrieving content data."""
+        storage = DataStorage()
         
         expected_content = ContentData(
             content_id="retrieve-123",
@@ -561,7 +600,8 @@ class TestDataStorage:
 
     @pytest.mark.asyncio
     async def test_retrieve_with_decryption(self):
-        """Test retrieving encrypted data."""        storage = DataStorage()
+        """Test retrieving encrypted data."""
+        storage = DataStorage()
         
         with patch.object(storage.encryption_manager, 'decrypt') as mock_decrypt:
             mock_decrypt.return_value = json.dumps({
@@ -585,7 +625,8 @@ class TestDataStorage:
 
     @pytest.mark.asyncio
     async def test_bulk_storage(self):
-        """Test bulk data storage."""        storage = DataStorage()
+        """Test bulk data storage."""
+        storage = DataStorage()
         
         contents = [
             ContentData(f"bulk-{i}", "youtube", f"Video {i}", f"author_{i}")
@@ -603,7 +644,8 @@ class TestDataStorage:
 
     @pytest.mark.asyncio
     async def test_search_content(self):
-        """Test content searching."""        storage = DataStorage()
+        """Test content searching."""
+        storage = DataStorage()
         
         search_results = [
             {"content_id": "search-1", "title": "Search Result 1"},
@@ -624,7 +666,8 @@ class TestDataStorage:
             mock_search.assert_called_once()
 
     def test_generate_storage_key(self):
-        """Test storage key generation."""        storage = DataStorage()
+        """Test storage key generation."""
+        storage = DataStorage()
         
         content = ContentData(
             content_id="key-123",
@@ -638,7 +681,8 @@ class TestDataStorage:
         assert "key-123" in key
 
     def test_validate_storage_constraints(self):
-        """Test storage constraint validation."""        storage = DataStorage()
+        """Test storage constraint validation."""
+        storage = DataStorage()
         
         # Valid content
         valid_content = ContentData(
@@ -662,9 +706,11 @@ class TestDataStorage:
 
 
 class TestIntegration:
-    """Integration tests for data handling system."""    @pytest.mark.asyncio
+    """Integration tests for data handling system."""
+    @pytest.mark.asyncio
     async def test_complete_data_processing_pipeline(self):
-        """Test complete data processing from raw to stored."""        validator = DataValidator()
+        """Test complete data processing from raw to stored."""
+        validator = DataValidator()
         transformer = DataTransformer()
         storage = DataStorage()
         
@@ -705,7 +751,8 @@ class TestIntegration:
 
     @pytest.mark.asyncio
     async def test_error_handling_in_pipeline(self):
-        """Test error handling throughout the data pipeline."""        validator = DataValidator()
+        """Test error handling throughout the data pipeline."""
+        validator = DataValidator()
         transformer = DataTransformer()
         storage = DataStorage()
         
@@ -732,7 +779,8 @@ class TestIntegration:
 
     @pytest.mark.asyncio
     async def test_data_consistency_across_operations(self):
-        """Test data consistency across multiple operations."""        storage = DataStorage()
+        """Test data consistency across multiple operations."""
+        storage = DataStorage()
         
         # Create test content
         original_content = ContentData(
@@ -763,7 +811,8 @@ class TestIntegration:
 
     @pytest.mark.asyncio
     async def test_performance_with_large_datasets(self):
-        """Test performance with large datasets."""        transformer = DataTransformer()
+        """Test performance with large datasets."""
+        transformer = DataTransformer()
         storage = DataStorage()
         
         # Generate large dataset

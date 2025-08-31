@@ -39,7 +39,8 @@ Project Team Specialties:
 • DevOps Engineer: Infrastructure automation & deployment
 • IA Prompt Engineer: Advanced prompt engineering & optimization
 ---
-"""from typing import Dict, List, Optional, Any, Union, Tuple
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple
 import logging
 
 from .managers import (
@@ -147,19 +148,22 @@ conversation_history_manager = None
 memory_indexer = None
 
 def get_conversation_memory_manager() -> ConversationMemoryManager:
-    """Get singleton instance of conversation memory manager"""    global conversation_memory_manager
+    """Get singleton instance of conversation memory manager"""
+    global conversation_memory_manager
     if conversation_memory_manager is None:
         conversation_memory_manager = ConversationMemoryManager()
     return conversation_memory_manager
 
 def get_conversation_history_manager() -> ConversationHistoryManager:
-    """Get singleton instance of conversation history manager"""    global conversation_history_manager
+    """Get singleton instance of conversation history manager"""
+    global conversation_history_manager
     if conversation_history_manager is None:
         conversation_history_manager = ConversationHistoryManager()
     return conversation_history_manager
 
 def get_memory_indexer() -> MemoryIndexer:
-    """Get singleton instance of memory indexer"""    global memory_indexer
+    """Get singleton instance of memory indexer"""
+    global memory_indexer
     if memory_indexer is None:
         memory_indexer = MemoryIndexer()
     return memory_indexer

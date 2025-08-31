@@ -11,7 +11,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""import os
+"""
+import os
 import sys
 import asyncio
 import logging
@@ -23,7 +24,8 @@ import inspect
 
 @dataclass
 class ModuleValidation:
-    """Module validation result."""    module_name: str
+    """Module validation result."""
+    module_name: str
     exists: bool
     has_init: bool
     has_proper_naming: bool
@@ -34,7 +36,8 @@ class ModuleValidation:
 
 @dataclass
 class ArchitectureValidation:
-    """Architecture validation result."""    depth_compliance: bool
+    """Architecture validation result."""
+    depth_compliance: bool
     naming_compliance: bool
     structure_compliance: bool
     documentation_compliance: bool
@@ -43,9 +46,11 @@ class ArchitectureValidation:
     violations: List[str]
 
 class CrawlerModuleValidator:
-    """    Comprehensive validation system for crawler modules.
+    """
+    Comprehensive validation system for crawler modules.
     Ensures compliance with project specifications and standards.
-    """    
+    """
+    
     def __init__(self, base_path: str = "/workspaces/Achiri/IA-Influencer-Agent/backend/crawlers"):
         self.base_path = Path(base_path)
         self.logger = logging.getLogger(__name__)
@@ -82,7 +87,8 @@ class CrawlerModuleValidator:
         ]
     
     async def validate_complete_architecture(self) -> ArchitectureValidation:
-        """Validate complete architecture compliance."""        violations = []
+        """Validate complete architecture compliance."""
+        violations = []
         
         # Check depth compliance (max 3 levels)
         depth_ok = self._check_depth_compliance()
@@ -125,7 +131,8 @@ class CrawlerModuleValidator:
         )
     
     async def validate_all_modules(self) -> Dict[str, ModuleValidation]:
-        """Validate all required modules."""        results = {}
+        """Validate all required modules."""
+        results = {}
         
         for module_name in self.required_modules:
             validation = await self._validate_module(module_name)
@@ -134,7 +141,8 @@ class CrawlerModuleValidator:
         return results
     
     async def _validate_module(self, module_name: str) -> ModuleValidation:
-        """Validate individual module."""        module_path = self.base_path / f"{module_name}.py"
+        """Validate individual module."""
+        module_path = self.base_path / f"{module_name}.py"
         missing_elements = []
         
         # Check if module exists
@@ -181,7 +189,8 @@ class CrawlerModuleValidator:
         )
     
     def _check_depth_compliance(self) -> bool:
-        """Check directory depth compliance (max 3 levels)."""        try:
+        """Check directory depth compliance (max 3 levels)."""
+        try:
             for root, dirs, files in os.walk(self.base_path):
                 # Calculate depth relative to base path
                 depth = len(Path(root).relative_to(self.base_path).parts)
@@ -192,7 +201,8 @@ class CrawlerModuleValidator:
             return False
     
     def _check_naming_compliance(self) -> bool:
-        """Check naming compliance (no amateur patterns)."""        try:
+        """Check naming compliance (no amateur patterns)."""
+        try:
             for root, dirs, files in os.walk(self.base_path):
                 # Check directory names
                 for dir_name in dirs:
@@ -211,7 +221,8 @@ class CrawlerModuleValidator:
             return False
     
     def _check_structure_compliance(self) -> bool:
-        """Check if all required subdirectories exist."""        try:
+        """Check if all required subdirectories exist."""
+        try:
             existing_dirs = [d.name for d in self.base_path.iterdir() if d.is_dir()]
             missing_dirs = set(self.required_subdirs) - set(existing_dirs)
             return len(missing_dirs) == 0
@@ -219,7 +230,8 @@ class CrawlerModuleValidator:
             return False
     
     def _check_documentation_compliance(self) -> bool:
-        """Check if all required documentation files exist."""        try:
+        """Check if all required documentation files exist."""
+        try:
             existing_files = [f.name for f in self.base_path.iterdir() if f.is_file()]
             missing_docs = set(self.required_docs) - set(existing_files)
             return len(missing_docs) == 0
@@ -227,7 +239,8 @@ class CrawlerModuleValidator:
             return False
     
     def _check_security_compliance(self) -> bool:
-        """Check security compliance in modules."""        try:
+        """Check security compliance in modules."""
+        try:
             # Check for proper copyright notices and warnings
             for py_file in self.base_path.glob("*.py"):
                 if py_file.name.startswith("__"):
@@ -248,7 +261,8 @@ class CrawlerModuleValidator:
             return False
     
     def _check_module_documentation(self, module_path: Path) -> bool:
-        """Check if module has proper documentation."""        try:
+        """Check if module has proper documentation."""
+        try:
             if not module_path.exists():
                 return False
             
@@ -271,7 +285,8 @@ class CrawlerModuleValidator:
             return False
     
     async def _check_required_classes(self, module_path: Path, module_name: str) -> bool:
-        """Check if module has required classes and functions."""        try:
+        """Check if module has required classes and functions."""
+        try:
             if not module_path.exists():
                 return False
             
@@ -300,7 +315,8 @@ class CrawlerModuleValidator:
             return False
     
     async def generate_compliance_report(self) -> str:
-        """Generate comprehensive compliance report."""        arch_validation = await self.validate_complete_architecture()
+        """Generate comprehensive compliance report."""
+        arch_validation = await self.validate_complete_architecture()
         module_validations = await self.validate_all_modules()
         
         report = f"""# COMPLIANCE VERIFICATION REPORT
@@ -321,7 +337,8 @@ class CrawlerModuleValidator:
 - **Security Compliance:** {'✅ PASS' if arch_validation.security_compliance else '❌ FAIL'}
 
 ### Violations:
-"""        
+"""
+        
         if arch_validation.violations:
             for violation in arch_validation.violations:
                 report += f"- ❌ {violation}\n"
@@ -363,7 +380,8 @@ class CrawlerModuleValidator:
 
 ## RECOMMENDATIONS
 
-"""        
+"""
+        
         if overall_compliance < 0.8 or arch_validation.overall_score < 0.8:
             report += "- Address all failing modules and architecture violations\n"
             report += "- Ensure professional naming conventions throughout\n"
@@ -377,11 +395,13 @@ class CrawlerModuleValidator:
         report += f"""---
 **Report generated by CrawlerModuleValidator**
 **Contact:** mlaiel@live.de for compliance questions
-"""        
+"""
+        
         return report
     
     async def run_full_validation(self) -> Tuple[bool, str]:
-        """Run complete validation and return status with report."""        try:
+        """Run complete validation and return status with report."""
+        try:
             report = await self.generate_compliance_report()
             arch_validation = await self.validate_complete_architecture()
             module_validations = await self.validate_all_modules()
@@ -404,7 +424,8 @@ class CrawlerModuleValidator:
             return False, error_report
 
 async def main():
-    """Main validation entry point."""    validator = CrawlerModuleValidator()
+    """Main validation entry point."""
+    validator = CrawlerModuleValidator()
     
     print("🔍 Starting comprehensive module validation...")
     print("=" * 60)

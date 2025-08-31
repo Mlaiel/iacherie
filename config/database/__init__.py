@@ -14,31 +14,40 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from .postgresql_config import PostgreSQLConfig
+"""
+
+from .postgresql_config import PostgreSQLConfig
+
 try:
     from .mongodb_config import MongoDBConfig  
 except ImportError:
     # MongoDB not available, create placeholder
     MongoDBConfig = None
 from .redis_config import RedisConfig
+
 try:
     from .faiss_config import FAISSConfig
+
 except ImportError:
     FAISSConfig = None
 try:
     from .elasticsearch_config import ElasticsearchConfig
+
 except ImportError:
     ElasticsearchConfig = None
 try:
     from .connection_pool import DatabaseConnectionPool
+
 except ImportError:
     DatabaseConnectionPool = None
 try:
     from .migration_config import MigrationConfig
+
 except ImportError:
     MigrationConfig = None
 try:
     from .backup_config import BackupConfig
+
 except ImportError:
     BackupConfig = None
 from .vector_database_config import VectorDatabaseConfig, VectorDatabaseManager

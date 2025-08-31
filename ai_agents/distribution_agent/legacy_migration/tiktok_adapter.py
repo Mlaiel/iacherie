@@ -13,7 +13,8 @@ without written authorization is STRICTLY PROHIBITED and will result in
 immediate legal action under German and International IP law.
 
 For licensing inquiries: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -42,40 +43,46 @@ from ...models.distribution import DistributionResult, PlatformConfig
 
 
 class TikTokContentType(Enum):
-    """TikTok content type enumeration"""    VIDEO = "video"
+    """TikTok content type enumeration"""
+    VIDEO = "video"
     PHOTO = "photo"
     LIVE = "live"
     STORY = "story"
 
 
 class TikTokVideoFormat(Enum):
-    """TikTok video format enumeration"""    MP4 = "mp4"
+    """TikTok video format enumeration"""
+    MP4 = "mp4"
     MOV = "mov"
     WEBM = "webm"
 
 
 class TikTokPrivacy(Enum):
-    """TikTok privacy settings enumeration"""    PUBLIC = "PUBLIC_TO_EVERYONE"
+    """TikTok privacy settings enumeration"""
+    PUBLIC = "PUBLIC_TO_EVERYONE"
     FRIENDS = "MUTUAL_FOLLOW_FRIENDS"
     PRIVATE = "SELF_ONLY"
     FOLLOWERS = "FOLLOWERS_ONLY"
 
 
 class TikTokDuetStatus(Enum):
-    """TikTok duet permission enumeration"""    ENABLED = "ENABLED"
+    """TikTok duet permission enumeration"""
+    ENABLED = "ENABLED"
     DISABLED = "DISABLED"
     FRIENDS_ONLY = "FRIENDS_ONLY"
 
 
 class TikTokStitchStatus(Enum):
-    """TikTok stitch permission enumeration"""    ENABLED = "ENABLED"
+    """TikTok stitch permission enumeration"""
+    ENABLED = "ENABLED"
     DISABLED = "DISABLED"
     FRIENDS_ONLY = "FRIENDS_ONLY"
 
 
 @dataclass
 class TikTokMetadata:
-    """TikTok-specific metadata structure"""    title: str
+    """TikTok-specific metadata structure"""
+    title: str
     hashtags: List[str]
     privacy: TikTokPrivacy
     duet_status: TikTokDuetStatus
@@ -102,7 +109,8 @@ class TikTokMetadata:
 
 @dataclass
 class TikTokAnalytics:
-    """TikTok analytics data structure"""    views: int = 0
+    """TikTok analytics data structure"""
+    views: int = 0
     likes: int = 0
     comments: int = 0
     shares: int = 0
@@ -129,7 +137,8 @@ class TikTokAnalytics:
 
 
 class TikTokAdapter(BaseAgent):
-    """    Professional TikTok distribution adapter with advanced features
+    """
+    Professional TikTok distribution adapter with advanced features
     
     Capabilities:
     - High-quality video upload and optimization
@@ -142,13 +151,16 @@ class TikTokAdapter(BaseAgent):
     - Brand content and monetization
     - Community engagement automation
     - Multi-language content support
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """        Initialize TikTok adapter with comprehensive configuration
+        """
+        Initialize TikTok adapter with comprehensive configuration
         
         Args:
             config: TikTok API configuration and settings
-        """        super().__init__(config)
+        """
+        super().__init__(config)
         self.client_key = config.get('client_key')
         self.client_secret = config.get('client_secret')
         self.access_token = config.get('access_token')
@@ -188,7 +200,8 @@ class TikTokAdapter(BaseAgent):
         self.logger = logging.getLogger(__name__)
     
     async def initialize(self) -> bool:
-        """Initialize TikTok adapter with authentication and validation"""        try:
+        """Initialize TikTok adapter with authentication and validation"""
+        try:
             # Initialize HTTP session
             connector = aiohttp.TCPConnector(limit=self.concurrent_uploads)
             self.session = aiohttp.ClientSession(connector=connector)
@@ -220,7 +233,8 @@ class TikTokAdapter(BaseAgent):
         metadata: TikTokMetadata,
         platform_config: Optional[PlatformConfig] = None
     ) -> DistributionResult:
-        """        Distribute content to TikTok with advanced optimization
+        """
+        Distribute content to TikTok with advanced optimization
         
         Args:
             content: Content item to distribute
@@ -229,7 +243,8 @@ class TikTokAdapter(BaseAgent):
             
         Returns:
             Comprehensive distribution result with analytics
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         
         try:
             # Validate content and metadata
@@ -294,7 +309,8 @@ class TikTokAdapter(BaseAgent):
         platform_id: str,
         updates: Dict[str, Any]
     ) -> bool:
-        """Update existing TikTok video metadata"""        try:
+        """Update existing TikTok video metadata"""
+        try:
             # TikTok has limited update capabilities
             # Only caption and privacy settings can be updated
             update_data = {}
@@ -333,7 +349,8 @@ class TikTokAdapter(BaseAgent):
             return False
     
     async def delete_content(self, platform_id: str) -> bool:
-        """Delete TikTok video"""        try:
+        """Delete TikTok video"""
+        try:
             # Execute deletion
             response = await self._make_api_request(
                 "POST",
@@ -357,7 +374,8 @@ class TikTokAdapter(BaseAgent):
         start_date: datetime,
         end_date: datetime
     ) -> TikTokAnalytics:
-        """Retrieve comprehensive TikTok analytics"""        try:
+        """Retrieve comprehensive TikTok analytics"""
+        try:
             # Get video analytics
             video_analytics = await self._fetch_video_analytics(platform_id, start_date, end_date)
             
@@ -413,7 +431,8 @@ class TikTokAdapter(BaseAgent):
             return TikTokAnalytics()
     
     async def research_trending_content(self, category: str = None) -> Dict[str, Any]:
-        """Research trending content and hashtags"""        try:
+        """Research trending content and hashtags"""
+        try:
             params = {}
             if category:
                 params["category"] = category
@@ -436,7 +455,8 @@ class TikTokAdapter(BaseAgent):
             return {}
     
     async def _validate_credentials(self) -> bool:
-        """Validate TikTok API credentials"""        try:
+        """Validate TikTok API credentials"""
+        try:
             response = await self._make_api_request(
                 "POST",
                 f"{self.base_url}/oauth/token/info/",
@@ -448,7 +468,8 @@ class TikTokAdapter(BaseAgent):
             return False
     
     async def _initialize_trending_data(self) -> None:
-        """Initialize trending hashtags and content data"""        if self.trending_analyzer:
+        """Initialize trending hashtags and content data"""
+        if self.trending_analyzer:
             try:
                 trending_data = await self.research_trending_content()
                 self.trending_hashtags = trending_data.get("trending_hashtags", [])
@@ -462,7 +483,8 @@ class TikTokAdapter(BaseAgent):
                 self.trending_music = []
     
     async def _initialize_music_library(self) -> None:
-        """Initialize TikTok music library"""        try:
+        """Initialize TikTok music library"""
+        try:
             response = await self._make_api_request(
                 "POST",
                 f"{self.base_url}/post/publish/creator_info/query/",
@@ -477,7 +499,8 @@ class TikTokAdapter(BaseAgent):
             self.music_library = []
     
     async def _initialize_effects_library(self) -> None:
-        """Initialize TikTok effects and filters library"""        self.effects_library = {
+        """Initialize TikTok effects and filters library"""
+        self.effects_library = {
             "beauty": ["smooth_skin", "bright_eyes", "slim_face"],
             "creative": ["glitch", "vintage", "neon", "kaleidoscope"],
             "trending": ["dance_moves", "face_zoom", "split_screen"],
@@ -485,7 +508,8 @@ class TikTokAdapter(BaseAgent):
         }
     
     async def _validate_content(self, content: ContentItem, metadata: TikTokMetadata) -> None:
-        """Validate content and metadata for TikTok distribution"""        # Validate video format
+        """Validate content and metadata for TikTok distribution"""
+        # Validate video format
         if not any(content.file_path.lower().endswith(fmt) for fmt in self.supported_formats):
             raise ContentError("Unsupported video format for TikTok")
         
@@ -503,7 +527,8 @@ class TikTokAdapter(BaseAgent):
             raise ContentError("Too many hashtags for TikTok (max 100)")
     
     async def _perform_security_checks(self, content: ContentItem) -> None:
-        """Perform security and compliance checks"""        # Content security validation
+        """Perform security and compliance checks"""
+        # Content security validation
         if not await self.security.validate_content(content):
             raise SecurityError("Content failed security validation")
         
@@ -512,7 +537,8 @@ class TikTokAdapter(BaseAgent):
             raise ContentError("Content violates TikTok community guidelines")
     
     async def _optimize_video(self, content: ContentItem, metadata: TikTokMetadata) -> ContentItem:
-        """Optimize video for TikTok platform"""        try:
+        """Optimize video for TikTok platform"""
+        try:
             # Load video
             cap = cv2.VideoCapture(content.file_path)
             
@@ -557,7 +583,8 @@ class TikTokAdapter(BaseAgent):
             return content
     
     async def _enhance_metadata(self, metadata: TikTokMetadata, content: ContentItem) -> TikTokMetadata:
-        """Enhance metadata with AI insights and trending data"""        # Add trending hashtags if hashtag research is enabled
+        """Enhance metadata with AI insights and trending data"""
+        # Add trending hashtags if hashtag research is enabled
         if self.hashtag_research and hasattr(self, 'trending_hashtags'):
             relevant_hashtags = await self._find_relevant_hashtags(content, metadata.title)
             metadata.trending_hashtags = relevant_hashtags[:10]  # Limit to top 10
@@ -575,7 +602,8 @@ class TikTokAdapter(BaseAgent):
         return metadata
     
     async def _initialize_upload(self, metadata: TikTokMetadata) -> Dict[str, Any]:
-        """Initialize video upload session"""        try:
+        """Initialize video upload session"""
+        try:
             post_info = {
                 "title": metadata.title,
                 "privacy_level": metadata.privacy.value,
@@ -601,7 +629,8 @@ class TikTokAdapter(BaseAgent):
             raise DistributionError(f"Failed to initialize upload session: {str(e)}")
     
     async def _upload_video_chunks(self, content: ContentItem, upload_session: Dict[str, Any]) -> None:
-        """Upload video file in chunks"""        try:
+        """Upload video file in chunks"""
+        try:
             upload_url = upload_session["upload_url"]
             
             # Upload video file
@@ -619,7 +648,8 @@ class TikTokAdapter(BaseAgent):
             raise DistributionError(f"Video chunk upload failed: {str(e)}")
     
     async def _publish_video(self, upload_session: Dict[str, Any], metadata: TikTokMetadata) -> str:
-        """Publish uploaded video"""        try:
+        """Publish uploaded video"""
+        try:
             publish_data = {
                 "publish_id": upload_session["publish_id"]
             }
@@ -639,23 +669,28 @@ class TikTokAdapter(BaseAgent):
             raise DistributionError(f"Video publication failed: {str(e)}")
     
     async def _apply_video_enhancements(self, post_id: str, metadata: TikTokMetadata) -> None:
-        """Apply effects and filters to published video"""        # Implementation would apply effects and filters
+        """Apply effects and filters to published video"""
+        # Implementation would apply effects and filters
         pass
     
     async def _configure_brand_content(self, post_id: str, metadata: TikTokMetadata) -> None:
-        """Configure brand content settings"""        # Implementation would configure brand content
+        """Configure brand content settings"""
+        # Implementation would configure brand content
         pass
     
     async def _monitor_initial_engagement(self, post_id: str) -> None:
-        """Monitor initial engagement metrics"""        # Implementation would monitor early engagement
+        """Monitor initial engagement metrics"""
+        # Implementation would monitor early engagement
         pass
     
     async def _collect_initial_analytics(self, post_id: str) -> TikTokAnalytics:
-        """Collect initial analytics for published video"""        # Return basic analytics structure
+        """Collect initial analytics for published video"""
+        # Return basic analytics structure
         return TikTokAnalytics()
     
     async def _make_api_request(self, method: str, url: str, **kwargs) -> Dict[str, Any]:
-        """Make authenticated TikTok API request"""        if not self.session:
+        """Make authenticated TikTok API request"""
+        if not self.session:
             raise PlatformError("HTTP session not initialized")
         
         # Add authentication headers
@@ -672,7 +707,8 @@ class TikTokAdapter(BaseAgent):
             return await response.json()
     
     async def _get_video_duration(self, file_path: str) -> float:
-        """Get video duration in seconds"""        cap = cv2.VideoCapture(file_path)
+        """Get video duration in seconds"""
+        cap = cv2.VideoCapture(file_path)
         fps = cap.get(cv2.CAP_PROP_FPS)
         frame_count = cap.get(cv2.CAP_PROP_FRAME_COUNT)
         duration = frame_count / fps
@@ -680,7 +716,8 @@ class TikTokAdapter(BaseAgent):
         return duration
     
     def _resize_and_crop_frame(self, frame: np.ndarray, target_width: int, target_height: int) -> np.ndarray:
-        """Resize and crop frame to target dimensions"""        height, width = frame.shape[:2]
+        """Resize and crop frame to target dimensions"""
+        height, width = frame.shape[:2]
         
         # Calculate scaling factors
         scale_w = target_width / width
@@ -704,7 +741,8 @@ class TikTokAdapter(BaseAgent):
         return frame_cropped
     
     def _enhance_video_quality(self, frame: np.ndarray) -> np.ndarray:
-        """Enhance video frame quality"""        # Apply subtle sharpening
+        """Enhance video frame quality"""
+        # Apply subtle sharpening
         kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
         frame_sharpened = cv2.filter2D(frame, -1, kernel)
         
@@ -714,44 +752,53 @@ class TikTokAdapter(BaseAgent):
         return frame_enhanced
     
     async def _find_relevant_hashtags(self, content: ContentItem, title: str) -> List[str]:
-        """Find relevant hashtags for content"""        # AI-powered hashtag suggestion implementation
+        """Find relevant hashtags for content"""
+        # AI-powered hashtag suggestion implementation
         return ["#fyp", "#viral", "#trending"]
     
     async def _suggest_music(self, content: ContentItem, title: str) -> Optional[str]:
-        """Suggest appropriate music for video"""        # Music suggestion implementation
+        """Suggest appropriate music for video"""
+        # Music suggestion implementation
         if hasattr(self, 'trending_music') and self.trending_music:
             return self.trending_music[0].get("id")
         return None
     
     async def _get_viral_suggestions(self, content: ContentItem, metadata: TikTokMetadata) -> Dict[str, List[str]]:
-        """Get viral optimization suggestions"""        # Viral prediction implementation
+        """Get viral optimization suggestions"""
+        # Viral prediction implementation
         return {
             "effects": ["beauty", "trending"],
             "filters": ["vibrant", "warm"]
         }
     
     async def _check_community_guidelines(self, content: ContentItem) -> bool:
-        """Check content against TikTok community guidelines"""        # Community guidelines check implementation
+        """Check content against TikTok community guidelines"""
+        # Community guidelines check implementation
         return True
     
     async def _fetch_video_analytics(self, video_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Fetch video-specific analytics"""        # Implementation would fetch analytics data
+        """Fetch video-specific analytics"""
+        # Implementation would fetch analytics data
         return {}
     
     async def _fetch_engagement_metrics(self, video_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Fetch engagement metrics"""        # Implementation would fetch engagement data
+        """Fetch engagement metrics"""
+        # Implementation would fetch engagement data
         return {}
     
     async def _fetch_demographics(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Fetch audience demographics"""        # Implementation would fetch demographics data
+        """Fetch audience demographics"""
+        # Implementation would fetch demographics data
         return {}
     
     async def _analyze_hashtag_performance(self, video_id: str, start_date: datetime, end_date: datetime) -> Dict[str, int]:
-        """Analyze hashtag performance"""        # Implementation would analyze hashtag performance
+        """Analyze hashtag performance"""
+        # Implementation would analyze hashtag performance
         return {}
     
     async def cleanup(self) -> None:
-        """Cleanup resources and connections"""        if self.session:
+        """Cleanup resources and connections"""
+        if self.session:
             await self.session.close()
             self.session = None
         

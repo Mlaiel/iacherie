@@ -15,7 +15,8 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 from datetime import datetime, timedelta, timezone
@@ -44,7 +45,8 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platform types"""    YOUTUBE = "youtube"
+    """Supported platform types"""
+    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
@@ -61,7 +63,8 @@ class PlatformType(Enum):
 
 
 class IntegrationType(Enum):
-    """Integration types"""    OFFICIAL_API = "official_api"
+    """Integration types"""
+    OFFICIAL_API = "official_api"
     CONTENT_ID = "content_id"
     PARTNER_PROGRAM = "partner_program"
     SCRAPING = "scraping"
@@ -70,7 +73,8 @@ class IntegrationType(Enum):
 
 
 class ActionType(Enum):
-    """Available platform actions"""    SEARCH_CONTENT = "search_content"
+    """Available platform actions"""
+    SEARCH_CONTENT = "search_content"
     SUBMIT_TAKEDOWN = "submit_takedown"
     MONITOR_CHANNELS = "monitor_channels"
     VERIFY_REMOVAL = "verify_removal"
@@ -81,7 +85,8 @@ class ActionType(Enum):
 
 
 class ScanStatus(Enum):
-    """Content scan status"""    PENDING = "pending"
+    """Content scan status"""
+    PENDING = "pending"
     SCANNING = "scanning"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -90,11 +95,13 @@ class ScanStatus(Enum):
 
 
 class PlatformIntegrationsError(Exception):
-    """Custom exception for platform integration operations"""    pass
+    """Custom exception for platform integration operations"""
+    pass
 
 
 class PlatformIntegrationsManager:
-    """    Ultra-advanced platform integrations manager with enterprise features:
+    """
+    Ultra-advanced platform integrations manager with enterprise features:
     - Multi-platform API management and optimization
     - Real-time content monitoring across all major platforms
     - Automated takedown submission and tracking
@@ -102,7 +109,8 @@ class PlatformIntegrationsManager:
     - Content fingerprinting and matching
     - Webhook-based real-time notifications
     - Cross-platform analytics and reporting
-    """    
+    """
+    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -183,7 +191,8 @@ class PlatformIntegrationsManager:
         credentials: Dict[str, Any],
         config_options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Setup new platform integration with authentication and configuration
+        """
+        Setup new platform integration with authentication and configuration
         
         Args:
             platform: Platform to integrate with
@@ -193,7 +202,8 @@ class PlatformIntegrationsManager:
             
         Returns:
             Dict containing integration details and status
-        """        try:
+        """
+        try:
             logger.info(f"Setting up {platform.value} integration with {integration_type.value}")
             
             # Validate platform support
@@ -262,7 +272,8 @@ class PlatformIntegrationsManager:
         content_fingerprints: List[Dict[str, Any]],
         scan_depth: str = "standard"
     ) -> Dict[str, Any]:
-        """        Scan platform for potential copyright violations
+        """
+        Scan platform for potential copyright violations
         
         Args:
             platform: Platform to scan
@@ -272,7 +283,8 @@ class PlatformIntegrationsManager:
             
         Returns:
             Dict containing scan results and detected violations
-        """        try:
+        """
+        try:
             logger.info(f"Starting content scan on {platform.value} with {len(content_fingerprints)} fingerprints")
             
             # Get platform integration
@@ -368,7 +380,8 @@ class PlatformIntegrationsManager:
         takedown_data: Dict[str, Any],
         priority: str = "standard"
     ) -> Dict[str, Any]:
-        """        Submit takedown request to platform
+        """
+        Submit takedown request to platform
         
         Args:
             platform: Target platform
@@ -378,7 +391,8 @@ class PlatformIntegrationsManager:
             
         Returns:
             Dict containing takedown submission results
-        """        try:
+        """
+        try:
             logger.info(f"Submitting takedown request to {platform.value} for violation: {violation_report_id}")
             
             # Get platform integration
@@ -445,7 +459,8 @@ class PlatformIntegrationsManager:
         takedown_id: str,
         check_interval_hours: int = 24
     ) -> Dict[str, Any]:
-        """        Monitor status of submitted takedown request
+        """
+        Monitor status of submitted takedown request
         
         Args:
             takedown_id: ID of the takedown request
@@ -453,7 +468,8 @@ class PlatformIntegrationsManager:
             
         Returns:
             Dict containing current status and any updates
-        """        try:
+        """
+        try:
             logger.info(f"Monitoring takedown status: {takedown_id}")
             
             # Get takedown record
@@ -513,7 +529,8 @@ class PlatformIntegrationsManager:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """        Get comprehensive analytics across platform integrations
+        """
+        Get comprehensive analytics across platform integrations
         
         Args:
             platforms: Specific platforms to analyze (None for all)
@@ -522,7 +539,8 @@ class PlatformIntegrationsManager:
             
         Returns:
             Dict containing platform analytics and insights
-        """        try:
+        """
+        try:
             logger.info(f"Generating platform analytics for {len(platforms) if platforms else 'all'} platforms")
             
             # Default to last 30 days if no dates provided
@@ -595,23 +613,27 @@ class PlatformIntegrationsManager:
     async def _scan_youtube(
         self, integration: Dict[str, Any], search_criteria: Dict[str, Any], fingerprints: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Perform YouTube-specific content scanning"""        # Implementation for YouTube API scanning
+        """Perform YouTube-specific content scanning"""
+        # Implementation for YouTube API scanning
         return {"matches": [], "total_searched": 0}
     
     async def _scan_tiktok(
         self, integration: Dict[str, Any], search_criteria: Dict[str, Any], fingerprints: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Perform TikTok-specific content scanning"""        # Implementation for TikTok API scanning
+        """Perform TikTok-specific content scanning"""
+        # Implementation for TikTok API scanning
         return {"matches": [], "total_searched": 0}
     
     async def _test_platform_authentication(
         self, platform: PlatformType, credentials: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Test platform authentication"""        # Implementation for authentication testing
+        """Test platform authentication"""
+        # Implementation for authentication testing
         return {"success": True, "error": None}
     
     async def _store_platform_integration(self, integration_data: Dict[str, Any]) -> None:
-        """Store platform integration in database"""        try:
+        """Store platform integration in database"""
+        try:
             integration = PlatformIntegration(
                 id=uuid4(),
                 integration_id=integration_data["integration_id"],

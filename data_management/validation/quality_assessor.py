@@ -14,7 +14,8 @@ Contact: mlaiel@live.de
 - Scoring multi-critères avec IA
 - Recommandations d'amélioration personnalisées
 - Standards de qualité par type de créateur
-"""from typing import Dict, List, Optional, Any, Union, Tuple
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
 from pathlib import Path
@@ -55,7 +56,8 @@ from sklearn.model_selection import cross_val_score
 logger = logging.getLogger(__name__)
 
 class QualityDimension(Enum):
-    """Dimensions de qualité évaluées"""    TECHNICAL_QUALITY = "technical_quality"
+    """Dimensions de qualité évaluées"""
+    TECHNICAL_QUALITY = "technical_quality"
     AESTHETIC_QUALITY = "aesthetic_quality"
     CONTENT_RELEVANCE = "content_relevance"
     ENGAGEMENT_POTENTIAL = "engagement_potential"
@@ -64,7 +66,8 @@ class QualityDimension(Enum):
     ACCESSIBILITY = "accessibility"
 
 class QualityLevel(Enum):
-    """Niveaux de qualité"""    POOR = "poor"           # 0.0 - 0.3
+    """Niveaux de qualité"""
+    POOR = "poor"           # 0.0 - 0.3
     FAIR = "fair"           # 0.3 - 0.5
     GOOD = "good"           # 0.5 - 0.7
     EXCELLENT = "excellent" # 0.7 - 0.9
@@ -72,7 +75,8 @@ class QualityLevel(Enum):
 
 @dataclass
 class QualityScore:
-    """Score de qualité pour une dimension"""    dimension: QualityDimension
+    """Score de qualité pour une dimension"""
+    dimension: QualityDimension
     score: float  # 0.0 - 1.0
     confidence: float  # 0.0 - 1.0
     details: Dict[str, Any]
@@ -80,7 +84,8 @@ class QualityScore:
 
 @dataclass
 class QualityAssessmentResult:
-    """Résultat complet d'évaluation qualité"""    overall_score: float  # 0.0 - 1.0
+    """Résultat complet d'évaluation qualité"""
+    overall_score: float  # 0.0 - 1.0
     overall_level: QualityLevel
     dimension_scores: Dict[QualityDimension, QualityScore]
     technical_metrics: Dict[str, Any]
@@ -91,7 +96,8 @@ class QualityAssessmentResult:
     metadata: Dict[str, Any]
 
 class AudioQualityAnalyzer:
-    """Analyseur de qualité audio avancé"""    
+    """Analyseur de qualité audio avancé"""
+    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.AudioQualityAnalyzer")
         
@@ -114,7 +120,8 @@ class AudioQualityAnalyzer:
         }
     
     def assess_audio_quality(self, file_path: str, creator_type: str = "musician") -> QualityAssessmentResult:
-        """Évalue la qualité audio complète"""        try:
+        """Évalue la qualité audio complète"""
+        try:
             # Chargement audio
             y, sr = librosa.load(file_path, sr=None)
             duration = len(y) / sr
@@ -178,7 +185,8 @@ class AudioQualityAnalyzer:
             return self._create_error_result(str(e))
     
     def _extract_technical_metrics(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extrait les métriques techniques audio"""        metrics = {}
+        """Extrait les métriques techniques audio"""
+        metrics = {}
         
         try:
             # Métriques de base
@@ -243,7 +251,8 @@ class AudioQualityAnalyzer:
         return metrics
     
     def _assess_technical_quality(self, metrics: Dict[str, Any], creator_type: str) -> QualityScore:
-        """Évalue la qualité technique"""        thresholds = self.quality_thresholds.get(creator_type, self.quality_thresholds['musician'])
+        """Évalue la qualité technique"""
+        thresholds = self.quality_thresholds.get(creator_type, self.quality_thresholds['musician'])
         
         technical_scores = []
         details = {}
@@ -293,7 +302,8 @@ class AudioQualityAnalyzer:
         )
     
     def _assess_aesthetic_quality(self, y: np.ndarray, sr: int, metrics: Dict[str, Any]) -> QualityScore:
-        """Évalue la qualité esthétique"""        aesthetic_scores = []
+        """Évalue la qualité esthétique"""
+        aesthetic_scores = []
         details = {}
         recommendations = []
         
@@ -353,7 +363,8 @@ class AudioQualityAnalyzer:
         )
     
     def _assess_engagement_potential(self, y: np.ndarray, sr: int, duration: float) -> QualityScore:
-        """Évalue le potentiel d'engagement"""        engagement_scores = []
+        """Évalue le potentiel d'engagement"""
+        engagement_scores = []
         details = {}
         recommendations = []
         
@@ -396,7 +407,8 @@ class AudioQualityAnalyzer:
         )
     
     def _assess_professional_standards(self, metrics: Dict[str, Any], creator_type: str) -> QualityScore:
-        """Évalue le respect des standards professionnels"""        standards_scores = []
+        """Évalue le respect des standards professionnels"""
+        standards_scores = []
         details = {}
         recommendations = []
         
@@ -442,7 +454,8 @@ class AudioQualityAnalyzer:
         )
     
     def _assess_accessibility(self, y: np.ndarray, sr: int, metrics: Dict[str, Any]) -> QualityScore:
-        """Évalue l'accessibilité du contenu"""        accessibility_scores = []
+        """Évalue l'accessibilité du contenu"""
+        accessibility_scores = []
         details = {}
         recommendations = []
         
@@ -480,7 +493,8 @@ class AudioQualityAnalyzer:
         )
     
     def _estimate_noise_floor(self, y: np.ndarray, sr: int) -> float:
-        """Estime le niveau de bruit de fond"""        # Segmentation en petits blocs
+        """Estime le niveau de bruit de fond"""
+        # Segmentation en petits blocs
         block_size = sr // 10  # 100ms blocks
         blocks = [y[i:i+block_size] for i in range(0, len(y) - block_size, block_size)]
         
@@ -493,7 +507,8 @@ class AudioQualityAnalyzer:
         return 0.0
     
     def _generate_improvement_suggestions(self, dimension_scores: Dict, metrics: Dict) -> List[str]:
-        """Génère des suggestions d'amélioration globales"""        suggestions = []
+        """Génère des suggestions d'amélioration globales"""
+        suggestions = []
         
         # Collecte toutes les recommandations
         for dimension_score in dimension_scores.values():
@@ -509,7 +524,8 @@ class AudioQualityAnalyzer:
         return list(set(suggestions))  # Dédoublonnage
     
     def _generate_creator_feedback(self, creator_type: str, dimension_scores: Dict, metrics: Dict) -> Dict[str, Any]:
-        """Génère un feedback spécifique au type de créateur"""        feedback = {
+        """Génère un feedback spécifique au type de créateur"""
+        feedback = {
             "creator_type": creator_type,
             "priority_improvements": [],
             "strengths": [],
@@ -539,7 +555,8 @@ class AudioQualityAnalyzer:
         return feedback
     
     def _determine_quality_level(self, score: float) -> QualityLevel:
-        """Détermine le niveau de qualité global"""        if score >= 0.9:
+        """Détermine le niveau de qualité global"""
+        if score >= 0.9:
             return QualityLevel.OUTSTANDING
         elif score >= 0.7:
             return QualityLevel.EXCELLENT
@@ -551,7 +568,8 @@ class AudioQualityAnalyzer:
             return QualityLevel.POOR
     
     def _create_error_result(self, error_msg: str) -> QualityAssessmentResult:
-        """Crée un résultat d'erreur"""        return QualityAssessmentResult(
+        """Crée un résultat d'erreur"""
+        return QualityAssessmentResult(
             overall_score=0.0,
             overall_level=QualityLevel.POOR,
             dimension_scores={},
@@ -564,7 +582,8 @@ class AudioQualityAnalyzer:
         )
 
 class VideoQualityAnalyzer:
-    """Analyseur de qualité vidéo avancé"""    
+    """Analyseur de qualité vidéo avancé"""
+    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.VideoQualityAnalyzer")
         
@@ -587,7 +606,8 @@ class VideoQualityAnalyzer:
         }
     
     def assess_video_quality(self, file_path: str, creator_type: str = "influencer") -> QualityAssessmentResult:
-        """Évalue la qualité vidéo complète"""        try:
+        """Évalue la qualité vidéo complète"""
+        try:
             # Ouverture vidéo
             cap = cv2.VideoCapture(file_path)
             
@@ -656,7 +676,8 @@ class VideoQualityAnalyzer:
     
     def _extract_video_metrics(self, cap: cv2.VideoCapture, fps: float, frame_count: int, 
                               width: int, height: int, duration: float) -> Dict[str, Any]:
-        """Extrait les métriques techniques vidéo"""        metrics = {
+        """Extrait les métriques techniques vidéo"""
+        metrics = {
             'fps': fps,
             'frame_count': frame_count,
             'width': width,
@@ -726,7 +747,8 @@ class VideoQualityAnalyzer:
         return metrics
     
     def _assess_video_technical_quality(self, metrics: Dict[str, Any], creator_type: str) -> QualityScore:
-        """Évalue la qualité technique vidéo"""        standards = self.quality_standards.get(creator_type, self.quality_standards['influencer'])
+        """Évalue la qualité technique vidéo"""
+        standards = self.quality_standards.get(creator_type, self.quality_standards['influencer'])
         
         technical_scores = []
         details = {}
@@ -779,7 +801,8 @@ class VideoQualityAnalyzer:
         )
     
     def _assess_video_aesthetic_quality(self, metrics: Dict[str, Any]) -> QualityScore:
-        """Évalue la qualité esthétique vidéo"""        aesthetic_scores = []
+        """Évalue la qualité esthétique vidéo"""
+        aesthetic_scores = []
         details = {}
         recommendations = []
         
@@ -827,7 +850,8 @@ class VideoQualityAnalyzer:
         )
     
     def _assess_video_engagement_potential(self, metrics: Dict[str, Any], creator_type: str) -> QualityScore:
-        """Évalue le potentiel d'engagement vidéo"""        standards = self.quality_standards.get(creator_type, self.quality_standards['influencer'])
+        """Évalue le potentiel d'engagement vidéo"""
+        standards = self.quality_standards.get(creator_type, self.quality_standards['influencer'])
         
         engagement_scores = []
         details = {}
@@ -873,7 +897,8 @@ class VideoQualityAnalyzer:
         )
     
     def _assess_video_professional_standards(self, metrics: Dict[str, Any], creator_type: str) -> QualityScore:
-        """Évalue le respect des standards professionnels vidéo"""        standards = self.quality_standards.get(creator_type, self.quality_standards['influencer'])
+        """Évalue le respect des standards professionnels vidéo"""
+        standards = self.quality_standards.get(creator_type, self.quality_standards['influencer'])
         
         professional_scores = []
         details = {}
@@ -912,7 +937,8 @@ class VideoQualityAnalyzer:
         )
     
     def _generate_video_improvements(self, dimension_scores: Dict, metrics: Dict) -> List[str]:
-        """Génère des suggestions d'amélioration vidéo"""        suggestions = []
+        """Génère des suggestions d'amélioration vidéo"""
+        suggestions = []
         
         # Collecte des recommandations par dimension
         for dimension_score in dimension_scores.values():
@@ -928,7 +954,8 @@ class VideoQualityAnalyzer:
         return list(set(suggestions))
     
     def _determine_quality_level(self, score: float) -> QualityLevel:
-        """Détermine le niveau de qualité global"""        if score >= 0.9:
+        """Détermine le niveau de qualité global"""
+        if score >= 0.9:
             return QualityLevel.OUTSTANDING
         elif score >= 0.7:
             return QualityLevel.EXCELLENT
@@ -940,7 +967,8 @@ class VideoQualityAnalyzer:
             return QualityLevel.POOR
     
     def _create_error_result(self, error_msg: str) -> QualityAssessmentResult:
-        """Crée un résultat d'erreur"""        return QualityAssessmentResult(
+        """Crée un résultat d'erreur"""
+        return QualityAssessmentResult(
             overall_score=0.0,
             overall_level=QualityLevel.POOR,
             dimension_scores={},
@@ -953,7 +981,8 @@ class VideoQualityAnalyzer:
         )
 
 class QualityAssessor:
-    """Évaluateur de qualité principal multi-format"""    
+    """Évaluateur de qualité principal multi-format"""
+    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.QualityAssessor")
         
@@ -967,7 +996,8 @@ class QualityAssessor:
         self._assessment_cache: Dict[str, QualityAssessmentResult] = {}
     
     def assess_content_quality(self, file_path: str, content_type: str, creator_type: str = "musician") -> QualityAssessmentResult:
-        """Évalue la qualité de contenu selon le type"""        
+        """Évalue la qualité de contenu selon le type"""
+        
         # Vérification du cache
         cache_key = f"{file_path}:{content_type}:{creator_type}"
         if cache_key in self._assessment_cache:
@@ -995,7 +1025,8 @@ class QualityAssessor:
             return self._create_error_result(str(e))
     
     def _create_placeholder_result(self, message: str) -> QualityAssessmentResult:
-        """Crée un résultat placeholder"""        return QualityAssessmentResult(
+        """Crée un résultat placeholder"""
+        return QualityAssessmentResult(
             overall_score=0.5,
             overall_level=QualityLevel.FAIR,
             dimension_scores={},
@@ -1008,7 +1039,8 @@ class QualityAssessor:
         )
     
     def _create_error_result(self, error_msg: str) -> QualityAssessmentResult:
-        """Crée un résultat d'erreur"""        return QualityAssessmentResult(
+        """Crée un résultat d'erreur"""
+        return QualityAssessmentResult(
             overall_score=0.0,
             overall_level=QualityLevel.POOR,
             dimension_scores={},
@@ -1021,7 +1053,8 @@ class QualityAssessor:
         )
     
     def _calculate_accessibility_score(self, technical_metrics: Dict[str, Any]) -> float:
-        """Calculate accessibility score based on technical metrics"""        try:
+        """Calculate accessibility score based on technical metrics"""
+        try:
             score = 0.8  # Base score
             
             # Adjust based on resolution for video content
@@ -1049,12 +1082,14 @@ class QualityAssessor:
 
 
 class ImageQualityAnalyzer:
-    """Analyzer for image quality assessment"""    
+    """Analyzer for image quality assessment"""
+    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.ImageQualityAnalyzer")
     
     def assess_image_quality(self, file_path: str, creator_type: str = "photographer") -> QualityAssessmentResult:
-        """Assess image quality"""        try:
+        """Assess image quality"""
+        try:
             # Basic image quality assessment
             img_path = Path(file_path)
             if not img_path.exists():
@@ -1103,7 +1138,8 @@ class ImageQualityAnalyzer:
             return self._create_error_result(f"Image analysis error: {str(e)}")
     
     def _score_to_level(self, score: float) -> QualityLevel:
-        """Convert score to quality level"""        if score >= 0.8:
+        """Convert score to quality level"""
+        if score >= 0.8:
             return QualityLevel.EXCELLENT
         elif score >= 0.6:
             return QualityLevel.GOOD
@@ -1113,7 +1149,8 @@ class ImageQualityAnalyzer:
             return QualityLevel.POOR
     
     def _get_image_suggestions(self, score: float, megapixels: float, format_name: str) -> List[str]:
-        """Get improvement suggestions for images"""        suggestions = []
+        """Get improvement suggestions for images"""
+        suggestions = []
         
         if megapixels < 2:
             suggestions.append("Consider using higher resolution images (2MP minimum)")
@@ -1127,7 +1164,8 @@ class ImageQualityAnalyzer:
         return suggestions
     
     def _create_error_result(self, error_msg: str) -> QualityAssessmentResult:
-        """Create error result for images"""        return QualityAssessmentResult(
+        """Create error result for images"""
+        return QualityAssessmentResult(
             overall_score=0.0,
             overall_level=QualityLevel.POOR,
             dimension_scores={},
@@ -1141,12 +1179,14 @@ class ImageQualityAnalyzer:
 
 
 class TextQualityAnalyzer:
-    """Analyzer for text quality assessment"""    
+    """Analyzer for text quality assessment"""
+    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.TextQualityAnalyzer")
     
     def assess_text_quality(self, file_path: str, creator_type: str = "writer") -> QualityAssessmentResult:
-        """Assess text quality"""        try:
+        """Assess text quality"""
+        try:
             # Read text content
             text_path = Path(file_path)
             if not text_path.exists():
@@ -1200,7 +1240,8 @@ class TextQualityAnalyzer:
             return self._create_error_result(f"Text analysis error: {str(e)}")
     
     def _score_to_level(self, score: float) -> QualityLevel:
-        """Convert score to quality level"""        if score >= 0.8:
+        """Convert score to quality level"""
+        if score >= 0.8:
             return QualityLevel.EXCELLENT
         elif score >= 0.6:
             return QualityLevel.GOOD
@@ -1210,7 +1251,8 @@ class TextQualityAnalyzer:
             return QualityLevel.POOR
     
     def _get_text_suggestions(self, score: float, word_count: int, avg_words_per_sentence: float) -> List[str]:
-        """Get improvement suggestions for text"""        suggestions = []
+        """Get improvement suggestions for text"""
+        suggestions = []
         
         if word_count < 100:
             suggestions.append("Consider adding more content (minimum 100 words recommended)")
@@ -1224,7 +1266,8 @@ class TextQualityAnalyzer:
         return suggestions
     
     def _create_error_result(self, error_msg: str) -> QualityAssessmentResult:
-        """Create error result for text"""        return QualityAssessmentResult(
+        """Create error result for text"""
+        return QualityAssessmentResult(
             overall_score=0.0,
             overall_level=QualityLevel.POOR,
             dimension_scores={},
@@ -1236,13 +1279,15 @@ class TextQualityAnalyzer:
             metadata={"error": error_msg}
         )
 
-    """Version asynchrone de l'évaluateur de qualité"""    
+    """Version asynchrone de l'évaluateur de qualité"""
+    
     def __init__(self):
         self.sync_assessor = QualityAssessor()
         self.logger = logging.getLogger(f"{__name__}.AsyncQualityAssessor")
     
     async def assess_content_quality(self, file_path: str, content_type: str, creator_type: str = "musician") -> QualityAssessmentResult:
-        """Évalue la qualité de manière asynchrone"""        loop = asyncio.get_event_loop()
+        """Évalue la qualité de manière asynchrone"""
+        loop = asyncio.get_event_loop()
         
         result = await loop.run_in_executor(
             None,
@@ -1255,7 +1300,8 @@ class TextQualityAnalyzer:
         return result
     
     async def assess_batch_quality(self, files: List[Tuple[str, str, str]]) -> Dict[str, QualityAssessmentResult]:
-        """Évalue la qualité d'un lot de fichiers"""        tasks = []
+        """Évalue la qualité d'un lot de fichiers"""
+        tasks = []
         
         for file_path, content_type, creator_type in files:
             task = self.assess_content_quality(file_path, content_type, creator_type)

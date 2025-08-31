@@ -6,7 +6,8 @@ including marketplace functionality, multi-party payments, and Connect accounts.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -21,13 +22,15 @@ logger = logging.getLogger(__name__)
 
 
 class StripeAccountType(Enum):
-    """Stripe Connect account types"""    STANDARD = "standard"
+    """Stripe Connect account types"""
+    STANDARD = "standard"
     EXPRESS = "express"
     CUSTOM = "custom"
 
 
 class StripeCapability(Enum):
-    """Stripe Connect capabilities"""    CARD_PAYMENTS = "card_payments"
+    """Stripe Connect capabilities"""
+    CARD_PAYMENTS = "card_payments"
     TRANSFERS = "transfers"
     TAX_REPORTING_US_1099_K = "tax_reporting_us_1099_k"
     TAX_REPORTING_US_1099_MISC = "tax_reporting_us_1099_misc"
@@ -35,7 +38,8 @@ class StripeCapability(Enum):
 
 @dataclass
 class StripeConnectAccount:
-    """Stripe Connect account configuration"""    account_id: str
+    """Stripe Connect account configuration"""
+    account_id: str
     account_type: StripeAccountType
     email: str
     country: str
@@ -49,7 +53,8 @@ class StripeConnectAccount:
 
 @dataclass
 class StripePaymentIntent:
-    """Stripe Payment Intent data"""    id: str
+    """Stripe Payment Intent data"""
+    id: str
     amount: int
     currency: str
     status: str
@@ -60,13 +65,16 @@ class StripePaymentIntent:
 
 
 class StripeConnectProcessor:
-    """    Enterprise Stripe Connect payment processor
+    """
+    Enterprise Stripe Connect payment processor
     
     Handles complex marketplace scenarios with multi-party payments,
     application fees, and Connect account management.
-    """    
+    """
+    
     def __init__(self, api_key: str, webhook_secret: str, connect_enabled: bool = True):
-        """Initialize Stripe Connect processor"""        self.api_key = api_key
+        """Initialize Stripe Connect processor"""
+        self.api_key = api_key
         self.webhook_secret = webhook_secret
         self.connect_enabled = connect_enabled
         self.logger = logging.getLogger(__name__)
@@ -82,7 +90,8 @@ class StripeConnectProcessor:
         country: str = "US",
         account_type: StripeAccountType = StripeAccountType.EXPRESS
     ) -> StripeConnectAccount:
-        """Create a new Stripe Connect account"""        try:
+        """Create a new Stripe Connect account"""
+        try:
             # Simulate Stripe Connect account creation
             account_id = f"acct_{uuid.uuid4().hex[:16]}"
             
@@ -114,7 +123,8 @@ class StripeConnectProcessor:
         payment_method_id: Optional[str] = None,
         application_fee_amount: Optional[Decimal] = None
     ) -> StripePaymentIntent:
-        """Create a payment intent with Connect account transfer"""        try:
+        """Create a payment intent with Connect account transfer"""
+        try:
             # Convert amount to cents
             amount_cents = int(amount * 100)
             
@@ -155,7 +165,8 @@ class StripeConnectProcessor:
         payment_method_id: str,
         return_url: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Confirm a payment intent"""        try:
+        """Confirm a payment intent"""
+        try:
             # Simulate payment confirmation
             await asyncio.sleep(0.2)  # Simulate API call
             
@@ -193,7 +204,8 @@ class StripeConnectProcessor:
         destination_account: str,
         source_transaction: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Create a transfer to a Connect account"""        try:
+        """Create a transfer to a Connect account"""
+        try:
             amount_cents = int(amount * 100)
             
             # Simulate transfer creation
@@ -219,7 +231,8 @@ class StripeConnectProcessor:
         connected_account_id: str,
         method: str = "instant"
     ) -> Dict[str, Any]:
-        """Create a payout to a Connect account's bank account"""        try:
+        """Create a payout to a Connect account's bank account"""
+        try:
             amount_cents = int(amount * 100)
             
             # Simulate payout creation
@@ -249,7 +262,8 @@ class StripeConnectProcessor:
             return {"success": False, "error": str(e)}
     
     async def handle_webhook(self, payload: str, signature: str) -> Dict[str, Any]:
-        """Handle Stripe webhook events"""        try:
+        """Handle Stripe webhook events"""
+        try:
             # Verify webhook signature
             if not self._verify_webhook_signature(payload, signature):
                 return {"success": False, "error": "Invalid signature"}
@@ -276,7 +290,8 @@ class StripeConnectProcessor:
             return {"success": False, "error": str(e)}
     
     def _verify_webhook_signature(self, payload: str, signature: str) -> bool:
-        """Verify Stripe webhook signature"""        try:
+        """Verify Stripe webhook signature"""
+        try:
             # Extract timestamp and signature
             elements = signature.split(",")
             timestamp = elements[0].split("=")[1]
@@ -297,23 +312,28 @@ class StripeConnectProcessor:
             return False
     
     async def _handle_payment_succeeded(self, payment_intent: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle successful payment event"""        self.logger.info(f"Payment succeeded: {payment_intent['id']}")
+        """Handle successful payment event"""
+        self.logger.info(f"Payment succeeded: {payment_intent['id']}")
         return {"success": True, "action": "payment_processed"}
     
     async def _handle_account_updated(self, account: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle Connect account update event"""        self.logger.info(f"Account updated: {account['id']}")
+        """Handle Connect account update event"""
+        self.logger.info(f"Account updated: {account['id']}")
         return {"success": True, "action": "account_updated"}
     
     async def _handle_transfer_created(self, transfer: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle transfer created event"""        self.logger.info(f"Transfer created: {transfer['id']}")
+        """Handle transfer created event"""
+        self.logger.info(f"Transfer created: {transfer['id']}")
         return {"success": True, "action": "transfer_created"}
     
     async def _handle_payout_paid(self, payout: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle payout paid event"""        self.logger.info(f"Payout paid: {payout['id']}")
+        """Handle payout paid event"""
+        self.logger.info(f"Payout paid: {payout['id']}")
         return {"success": True, "action": "payout_completed"}
     
     def calculate_fees(self, amount: Decimal) -> Dict[str, Decimal]:
-        """Calculate all fees for a Stripe payment"""        stripe_fee = (amount * self.stripe_fee_percent) + self.stripe_fixed_fee
+        """Calculate all fees for a Stripe payment"""
+        stripe_fee = (amount * self.stripe_fee_percent) + self.stripe_fixed_fee
         application_fee = amount * self.application_fee_percent
         net_amount = amount - stripe_fee - application_fee
         

@@ -22,7 +22,8 @@ LEGAL WARNING: This software and all associated intellectual property
 belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
-"""from typing import Dict, Any, List, Optional, Union, Set, Tuple, AsyncIterator
+"""
+from typing import Dict, Any, List, Optional, Union, Set, Tuple, AsyncIterator
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
@@ -68,7 +69,8 @@ from ..utils.rate_limiter import RateLimiter
 
 
 class SocialMediaPlatform(Enum):
-    """Social media platform identifiers."""    INSTAGRAM = "instagram"
+    """Social media platform identifiers."""
+    INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
     TWITTER = "twitter"
@@ -83,7 +85,8 @@ class SocialMediaPlatform(Enum):
 
 
 class ContentDiscoveryMode(Enum):
-    """Content discovery modes."""    HASHTAG_SEARCH = "hashtag_search"
+    """Content discovery modes."""
+    HASHTAG_SEARCH = "hashtag_search"
     USER_PROFILE = "user_profile"
     TRENDING_CONTENT = "trending_content"
     SIMILAR_ACCOUNTS = "similar_accounts"
@@ -94,7 +97,8 @@ class ContentDiscoveryMode(Enum):
 
 @dataclass
 class SocialMediaPost:
-    """Social media post data structure."""    post_id: str
+    """Social media post data structure."""
+    post_id: str
     platform: SocialMediaPlatform
     author_username: str
     author_id: str
@@ -116,7 +120,8 @@ class SocialMediaPost:
 
 @dataclass
 class SocialMediaProfile:
-    """Social media profile data structure."""    user_id: str
+    """Social media profile data structure."""
+    user_id: str
     username: str
     platform: SocialMediaPlatform
     display_name: str = ""
@@ -134,12 +139,14 @@ class SocialMediaProfile:
 
 
 class SocialMediaCrawler(WebCrawler):
-    """    Advanced social media crawler with platform-specific implementations.
+    """
+    Advanced social media crawler with platform-specific implementations.
     
     Provides comprehensive crawling across major social media platforms
     with intelligent content discovery, anti-detection measures, and
     copyright infringement detection capabilities.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.logger = logging.getLogger("crawler.social_media")
@@ -169,7 +176,8 @@ class SocialMediaCrawler(WebCrawler):
         self.logger.info("SocialMediaCrawler initialized successfully")
     
     def _initialize_rate_limiters(self):
-        """Initialize rate limiters for each platform."""        rate_limits = {
+        """Initialize rate limiters for each platform."""
+        rate_limits = {
             SocialMediaPlatform.INSTAGRAM: {"requests_per_hour": 200, "requests_per_minute": 10},
             SocialMediaPlatform.TIKTOK: {"requests_per_hour": 300, "requests_per_minute": 15},
             SocialMediaPlatform.YOUTUBE: {"requests_per_hour": 10000, "requests_per_minute": 100},
@@ -187,7 +195,8 @@ class SocialMediaCrawler(WebCrawler):
             )
     
     def _initialize_platform_clients(self):
-        """Initialize API clients for social media platforms."""        try:
+        """Initialize API clients for social media platforms."""
+        try:
             # Instagram client
             if "instagram" in self.api_credentials:
                 self.instagram_client = InstagramClient()
@@ -216,7 +225,8 @@ class SocialMediaCrawler(WebCrawler):
             self.logger.warning(f"Some platform clients failed to initialize: {e}")
     
     def _decrypt_credential(self, encrypted_credential: str) -> str:
-        """Decrypt API credentials securely."""        if not encrypted_credential:
+        """Decrypt API credentials securely."""
+        if not encrypted_credential:
             return ""
         
         try:
@@ -231,11 +241,13 @@ class SocialMediaCrawler(WebCrawler):
         platforms: List[SocialMediaPlatform],
         max_posts: int = 100
     ) -> List[SocialMediaPost]:
-        """        Discover content across platforms using hashtag search.
+        """
+        Discover content across platforms using hashtag search.
         
         Performs intelligent hashtag-based content discovery with
         similarity analysis for potential copyright infringement detection.
-        """        try:
+        """
+        try:
             self.logger.info(f"Starting hashtag discovery: #{hashtag} across {len(platforms)} platforms")
             
             discovered_posts = []
@@ -275,7 +287,8 @@ class SocialMediaCrawler(WebCrawler):
         platform: SocialMediaPlatform,
         max_posts: int
     ) -> List[SocialMediaPost]:
-        """Discover hashtag content from specific platform."""        await self.rate_limiters[platform].acquire()
+        """Discover hashtag content from specific platform."""
+        await self.rate_limiters[platform].acquire()
         
         try:
             if platform == SocialMediaPlatform.INSTAGRAM:
@@ -298,7 +311,8 @@ class SocialMediaCrawler(WebCrawler):
     async def _discover_instagram_hashtag(
         self, hashtag: str, max_posts: int
     ) -> List[SocialMediaPost]:
-        """Discover Instagram posts by hashtag using both API and web scraping."""        posts = []
+        """Discover Instagram posts by hashtag using both API and web scraping."""
+        posts = []
         
         try:
             # Method 1: API-based discovery (if authenticated)
@@ -320,7 +334,8 @@ class SocialMediaCrawler(WebCrawler):
     async def _instagram_api_hashtag_search(
         self, hashtag: str, max_posts: int
     ) -> List[SocialMediaPost]:
-        """Use Instagram API for hashtag search."""        posts = []
+        """Use Instagram API for hashtag search."""
+        posts = []
         
         try:
             # Get hashtag media using instagrapi
@@ -365,7 +380,8 @@ class SocialMediaCrawler(WebCrawler):
     async def _instagram_web_scraping_hashtag(
         self, hashtag: str, max_posts: int
     ) -> List[SocialMediaPost]:
-        """Web scraping for Instagram hashtag content."""        posts = []
+        """Web scraping for Instagram hashtag content."""
+        posts = []
         
         try:
             driver = await self._get_browser_instance()
@@ -416,7 +432,8 @@ class SocialMediaCrawler(WebCrawler):
     async def _discover_tiktok_hashtag(
         self, hashtag: str, max_posts: int
     ) -> List[SocialMediaPost]:
-        """Discover TikTok posts by hashtag using web scraping."""        posts = []
+        """Discover TikTok posts by hashtag using web scraping."""
+        posts = []
         
         try:
             driver = await self._get_browser_instance()
@@ -494,7 +511,8 @@ class SocialMediaCrawler(WebCrawler):
         return posts
     
     def _parse_tiktok_count(self, count_text: str) -> int:
-        """Parse TikTok count strings (e.g., '1.2M', '500K', '1234')."""        if not count_text:
+        """Parse TikTok count strings (e.g., '1.2M', '500K', '1234')."""
+        if not count_text:
             return 0
         
         count_text = count_text.strip().upper()
@@ -512,7 +530,8 @@ class SocialMediaCrawler(WebCrawler):
     async def _discover_youtube_hashtag(
         self, hashtag: str, max_posts: int
     ) -> List[SocialMediaPost]:
-        """Discover YouTube videos by hashtag using YouTube Data API."""        posts = []
+        """Discover YouTube videos by hashtag using YouTube Data API."""
+        posts = []
         
         if not hasattr(self, 'youtube_api_key') or not self.youtube_api_key:
             self.logger.warning("YouTube API key not configured")
@@ -576,7 +595,8 @@ class SocialMediaCrawler(WebCrawler):
         return posts
     
     async def _get_youtube_video_stats(self, video_id: str) -> Dict[str, Any]:
-        """Get detailed statistics for YouTube video."""        if not hasattr(self, 'youtube_api_key') or not self.youtube_api_key:
+        """Get detailed statistics for YouTube video."""
+        if not hasattr(self, 'youtube_api_key') or not self.youtube_api_key:
             return {}
         
         try:
@@ -612,7 +632,8 @@ class SocialMediaCrawler(WebCrawler):
     async def _discover_twitter_hashtag(
         self, hashtag: str, max_posts: int
     ) -> List[SocialMediaPost]:
-        """Discover Twitter/X posts by hashtag using Twitter API."""        posts = []
+        """Discover Twitter/X posts by hashtag using Twitter API."""
+        posts = []
         
         if not hasattr(self, 'twitter_client'):
             self.logger.warning("Twitter client not configured")
@@ -659,7 +680,8 @@ class SocialMediaCrawler(WebCrawler):
     async def _discover_reddit_hashtag(
         self, hashtag: str, max_posts: int
     ) -> List[SocialMediaPost]:
-        """Discover Reddit posts related to hashtag using web scraping."""        posts = []
+        """Discover Reddit posts related to hashtag using web scraping."""
+        posts = []
         
         try:
             # Reddit search URL
@@ -709,7 +731,8 @@ class SocialMediaCrawler(WebCrawler):
     async def _discover_generic_platform(
         self, hashtag: str, platform: SocialMediaPlatform, max_posts: int
     ) -> List[SocialMediaPost]:
-        """Generic platform discovery using web scraping."""        posts = []
+        """Generic platform discovery using web scraping."""
+        posts = []
         
         try:
             # Platform-specific search URLs and selectors
@@ -766,7 +789,8 @@ class SocialMediaCrawler(WebCrawler):
         return posts
     
     def _extract_hashtags(self, text: str) -> List[str]:
-        """Extract hashtags from text."""        if not text:
+        """Extract hashtags from text."""
+        if not text:
             return []
         
         hashtag_pattern = r'#\w+'
@@ -774,7 +798,8 @@ class SocialMediaCrawler(WebCrawler):
         return [tag.lower() for tag in hashtags]
     
     def _extract_mentions(self, text: str) -> List[str]:
-        """Extract mentions from text."""        if not text:
+        """Extract mentions from text."""
+        if not text:
             return []
         
         mention_pattern = r'@\w+'
@@ -784,7 +809,8 @@ class SocialMediaCrawler(WebCrawler):
     async def _analyze_content_similarities(
         self, posts: List[SocialMediaPost]
     ) -> List[SocialMediaPost]:
-        """Analyze content similarities for copyright infringement detection."""        try:
+        """Analyze content similarities for copyright infringement detection."""
+        try:
             self.logger.info(f"Analyzing content similarities for {len(posts)} posts")
             
             # Group posts by content type for similarity analysis
@@ -811,7 +837,8 @@ class SocialMediaCrawler(WebCrawler):
             return posts
     
     async def _analyze_text_similarities(self, posts: List[SocialMediaPost]):
-        """Analyze text content similarities using NLP techniques."""        try:
+        """Analyze text content similarities using NLP techniques."""
+        try:
             # Simple text similarity using character-level comparison
             # In production, would use BERT/RoBERTa embeddings
             
@@ -829,7 +856,8 @@ class SocialMediaCrawler(WebCrawler):
             self.logger.error(f"Text similarity analysis error: {e}")
     
     def _calculate_text_similarity(self, text1: str, text2: str) -> float:
-        """Calculate similarity between two text strings."""        if not text1 or not text2:
+        """Calculate similarity between two text strings."""
+        if not text1 or not text2:
             return 0.0
         
         # Simple character-level similarity (Jaccard similarity)
@@ -842,7 +870,8 @@ class SocialMediaCrawler(WebCrawler):
         return intersection / max(union, 1)
     
     async def _analyze_image_similarities(self, posts: List[SocialMediaPost]):
-        """Analyze image content similarities using perceptual hashing."""        try:
+        """Analyze image content similarities using perceptual hashing."""
+        try:
             # Download and analyze images
             image_hashes = {}
             
@@ -873,7 +902,8 @@ class SocialMediaCrawler(WebCrawler):
             self.logger.error(f"Image similarity analysis error: {e}")
     
     async def _calculate_image_hash(self, image_url: str) -> Optional[imagehash.ImageHash]:
-        """Calculate perceptual hash for image."""        try:
+        """Calculate perceptual hash for image."""
+        try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(image_url) as response:
                     if response.status == 200:
@@ -895,11 +925,13 @@ class SocialMediaCrawler(WebCrawler):
         platforms: List[SocialMediaPlatform],
         monitoring_duration: timedelta = timedelta(days=7)
     ) -> List[SocialMediaPost]:
-        """        Monitor competitor accounts for content analysis and inspiration.
+        """
+        Monitor competitor accounts for content analysis and inspiration.
         
         Provides comprehensive competitor content monitoring across platforms
         for strategic insights and trend analysis.
-        """        try:
+        """
+        try:
             self.logger.info(f"Starting competitor monitoring for {len(competitor_usernames)} accounts")
             
             all_competitor_posts = []
@@ -931,7 +963,8 @@ class SocialMediaCrawler(WebCrawler):
     async def _monitor_account_platform(
         self, username: str, platform: SocialMediaPlatform
     ) -> List[SocialMediaPost]:
-        """Monitor specific account on specific platform."""        await self.rate_limiters[platform].acquire()
+        """Monitor specific account on specific platform."""
+        await self.rate_limiters[platform].acquire()
         
         try:
             if platform == SocialMediaPlatform.INSTAGRAM:
@@ -950,7 +983,8 @@ class SocialMediaCrawler(WebCrawler):
             return []
     
     async def _monitor_instagram_account(self, username: str) -> List[SocialMediaPost]:
-        """Monitor Instagram account for recent posts."""        posts = []
+        """Monitor Instagram account for recent posts."""
+        posts = []
         
         try:
             if hasattr(self, 'instagram_client') and self.instagram_client.user_id:
@@ -986,7 +1020,8 @@ class SocialMediaCrawler(WebCrawler):
     async def _analyze_competitor_content(
         self, posts: List[SocialMediaPost]
     ) -> List[SocialMediaPost]:
-        """Analyze competitor content for strategic insights."""        try:
+        """Analyze competitor content for strategic insights."""
+        try:
             # Analyze posting patterns
             posting_patterns = self._analyze_posting_patterns(posts)
             
@@ -1011,7 +1046,8 @@ class SocialMediaCrawler(WebCrawler):
             return posts
     
     def _analyze_posting_patterns(self, posts: List[SocialMediaPost]) -> Dict[str, Any]:
-        """Analyze posting time patterns and frequency."""        if not posts:
+        """Analyze posting time patterns and frequency."""
+        if not posts:
             return {}
         
         # Analyze posting times
@@ -1038,7 +1074,8 @@ class SocialMediaCrawler(WebCrawler):
         }
     
     def _analyze_hashtag_strategies(self, posts: List[SocialMediaPost]) -> Dict[str, Any]:
-        """Analyze hashtag usage strategies."""        all_hashtags = []
+        """Analyze hashtag usage strategies."""
+        all_hashtags = []
         hashtag_counts = {}
         
         for post in posts:
@@ -1060,7 +1097,8 @@ class SocialMediaCrawler(WebCrawler):
         }
     
     def _analyze_engagement_patterns(self, posts: List[SocialMediaPost]) -> Dict[str, Any]:
-        """Analyze engagement patterns and performance."""        if not posts:
+        """Analyze engagement patterns and performance."""
+        if not posts:
             return {}
         
         # Calculate engagement metrics
@@ -1088,7 +1126,8 @@ class SocialMediaCrawler(WebCrawler):
         }
     
     async def _get_browser_instance(self):
-        """Get browser instance from pool or create new one."""        try:
+        """Get browser instance from pool or create new one."""
+        try:
             if self.browser_pool:
                 return self.browser_pool.pop()
             
@@ -1111,7 +1150,8 @@ class SocialMediaCrawler(WebCrawler):
             raise CrawlerException(f"Browser initialization error: {e}")
     
     async def _return_browser_instance(self, driver):
-        """Return browser instance to pool or close if pool is full."""        try:
+        """Return browser instance to pool or close if pool is full."""
+        try:
             if len(self.browser_pool) < self.max_browsers:
                 # Clear cookies and reset state
                 driver.delete_all_cookies()
@@ -1128,7 +1168,8 @@ class SocialMediaCrawler(WebCrawler):
                 pass
     
     async def cleanup_social_media_crawler(self):
-        """Clean up social media crawler resources."""        try:
+        """Clean up social media crawler resources."""
+        try:
             # Close all browser instances
             for driver in self.browser_pool:
                 try:

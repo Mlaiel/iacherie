@@ -10,7 +10,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is protected by copyright law. Unauthorized use, reproduction,
 or distribution without explicit written permission from Fahed Mlaiel is strictly
 prohibited and may result in legal action.
-"""from datetime import datetime, timedelta
+"""
+from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set, Tuple
 from enum import Enum
 from dataclasses import dataclass
@@ -28,7 +29,8 @@ from backend.utils.seo_tools import SEOToolsManager
 
 
 class SEOStrategy(str, Enum):
-    """SEO strategy types"""    CONTENT_OPTIMIZATION = "content_optimization"
+    """SEO strategy types"""
+    CONTENT_OPTIMIZATION = "content_optimization"
     KEYWORD_TARGETING = "keyword_targeting"
     TECHNICAL_SEO = "technical_seo"
     LOCAL_SEO = "local_seo"
@@ -39,7 +41,8 @@ class SEOStrategy(str, Enum):
 
 
 class ContentType(str, Enum):
-    """Content types for SEO optimization"""    ARTICLE = "article"
+    """Content types for SEO optimization"""
+    ARTICLE = "article"
     VIDEO = "video"
     IMAGE = "image"
     AUDIO = "audio"
@@ -49,7 +52,8 @@ class ContentType(str, Enum):
 
 
 class SearchEngine(str, Enum):
-    """Supported search engines"""    GOOGLE = "google"
+    """Supported search engines"""
+    GOOGLE = "google"
     BING = "bing"
     YAHOO = "yahoo"
     YANDEX = "yandex"
@@ -59,7 +63,8 @@ class SearchEngine(str, Enum):
 
 @dataclass
 class KeywordResearch:
-    """Keyword research data"""    primary_keywords: List[str]
+    """Keyword research data"""
+    primary_keywords: List[str]
     secondary_keywords: List[str]
     long_tail_keywords: List[str]
     keyword_difficulty: Dict[str, float]
@@ -71,7 +76,8 @@ class KeywordResearch:
 
 @dataclass
 class SEOMetrics:
-    """SEO performance metrics"""    search_rankings: Dict[str, int]
+    """SEO performance metrics"""
+    search_rankings: Dict[str, int]
     organic_traffic: int
     click_through_rate: float
     bounce_rate: float
@@ -85,7 +91,8 @@ class SEOMetrics:
 
 @dataclass
 class ContentOptimization:
-    """Content optimization recommendations"""    title_suggestions: List[str]
+    """Content optimization recommendations"""
+    title_suggestions: List[str]
     meta_description_suggestions: List[str]
     header_optimizations: Dict[str, List[str]]
     keyword_density_recommendations: Dict[str, float]
@@ -97,7 +104,8 @@ class ContentOptimization:
 
 @dataclass
 class SEOAudit:
-    """SEO audit results"""    audit_id: str
+    """SEO audit results"""
+    audit_id: str
     campaign_id: str
     content_id: str
     audit_score: float
@@ -110,12 +118,14 @@ class SEOAudit:
 
 
 class SEOOptimizer:
-    """    Advanced SEO and Content Optimization System
+    """
+    Advanced SEO and Content Optimization System
     
     Provides comprehensive SEO optimization including keyword research,
     content analysis, technical SEO audits, search engine performance
     tracking, and AI-powered optimization recommendations.
-    """    
+    """
+    
     def __init__(self):
         self.logger = get_logger(__name__)
         self.keyword_analyzer = KeywordAnalyzer()
@@ -142,7 +152,8 @@ class SEOOptimizer:
         seo_strategy: SEOStrategy,
         target_keywords: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """        Optimize campaign SEO with comprehensive analysis and recommendations
+        """
+        Optimize campaign SEO with comprehensive analysis and recommendations
         
         Args:
             campaign_id: Campaign unique identifier
@@ -152,7 +163,8 @@ class SEOOptimizer:
             
         Returns:
             SEO optimization results
-        """        try:
+        """
+        try:
             optimization_id = f"seo_{campaign_id}_{int(datetime.utcnow().timestamp())}"
             
             # Perform keyword research
@@ -230,7 +242,8 @@ class SEOOptimizer:
         content_type: ContentType,
         search_engines: Optional[List[SearchEngine]] = None
     ) -> KeywordResearch:
-        """        Perform comprehensive keyword research for campaign
+        """
+        Perform comprehensive keyword research for campaign
         
         Args:
             campaign_id: Campaign unique identifier
@@ -241,7 +254,8 @@ class SEOOptimizer:
             
         Returns:
             Comprehensive keyword research data
-        """        try:
+        """
+        try:
             search_engines = search_engines or [SearchEngine.GOOGLE, SearchEngine.BING]
             
             # Generate seed keywords
@@ -308,7 +322,8 @@ class SEOOptimizer:
         content_data: Dict[str, Any],
         comprehensive: bool = True
     ) -> SEOAudit:
-        """        Perform comprehensive SEO audit of content
+        """
+        Perform comprehensive SEO audit of content
         
         Args:
             campaign_id: Campaign unique identifier
@@ -318,7 +333,8 @@ class SEOOptimizer:
             
         Returns:
             Detailed SEO audit results
-        """        try:
+        """
+        try:
             audit_id = f"audit_{content_id}_{int(datetime.utcnow().timestamp())}"
             
             # Technical SEO analysis
@@ -399,7 +415,8 @@ class SEOOptimizer:
         keyword_research: KeywordResearch,
         content_type: ContentType
     ) -> ContentOptimization:
-        """        Optimize content structure for SEO
+        """
+        Optimize content structure for SEO
         
         Args:
             content_data: Content data to optimize
@@ -408,7 +425,8 @@ class SEOOptimizer:
             
         Returns:
             Content optimization recommendations
-        """        try:
+        """
+        try:
             # Analyze current content structure
             structure_analysis = await self.content_analyzer.analyze_content_structure(
                 content_data
@@ -475,7 +493,8 @@ class SEOOptimizer:
         tracking_keywords: List[str],
         search_engines: Optional[List[SearchEngine]] = None
     ) -> Dict[str, Any]:
-        """        Track SEO performance across search engines
+        """
+        Track SEO performance across search engines
         
         Args:
             campaign_id: Campaign unique identifier
@@ -484,7 +503,8 @@ class SEOOptimizer:
             
         Returns:
             SEO performance tracking data
-        """        try:
+        """
+        try:
             search_engines = search_engines or [SearchEngine.GOOGLE, SearchEngine.BING]
             
             # Track search rankings
@@ -555,7 +575,8 @@ class SEOOptimizer:
         competition_level: str,
         budget_constraints: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Generate comprehensive SEO strategy for campaign
+        """
+        Generate comprehensive SEO strategy for campaign
         
         Args:
             campaign_id: Campaign unique identifier
@@ -566,7 +587,8 @@ class SEOOptimizer:
             
         Returns:
             Comprehensive SEO strategy
-        """        try:
+        """
+        try:
             strategy_id = f"strategy_{campaign_id}_{int(datetime.utcnow().timestamp())}"
             
             # Analyze market opportunity
@@ -624,7 +646,8 @@ class SEOOptimizer:
     # Private helper methods
     
     async def _seo_monitoring_loop(self) -> None:
-        """Background SEO monitoring process"""        while True:
+        """Background SEO monitoring process"""
+        while True:
             try:
                 for campaign_id in self._optimization_cache.keys():
                     await self._monitor_campaign_seo_changes(campaign_id)
@@ -636,7 +659,8 @@ class SEOOptimizer:
                 await asyncio.sleep(1800)
     
     async def _ranking_tracking_loop(self) -> None:
-        """Background ranking tracking process"""        while True:
+        """Background ranking tracking process"""
+        while True:
             try:
                 for campaign_id in self._seo_metrics.keys():
                     await self._update_ranking_data(campaign_id)
@@ -654,7 +678,8 @@ class SEOOptimizer:
         target_keywords: Optional[List[str]],
         seo_strategy: SEOStrategy
     ) -> KeywordResearch:
-        """Perform keyword research for optimization"""        # Use existing keyword research if available
+        """Perform keyword research for optimization"""
+        # Use existing keyword research if available
         if campaign_id in self._keyword_database:
             return self._keyword_database[campaign_id]
         
@@ -672,7 +697,8 @@ class SEOOptimizer:
         content_data: Dict[str, Any],
         keyword_research: KeywordResearch
     ) -> Dict[str, Any]:
-        """Analyze content for SEO optimization"""        analysis = {}
+        """Analyze content for SEO optimization"""
+        analysis = {}
         
         # Analyze keyword usage
         analysis["keyword_usage"] = await self.content_analyzer.analyze_keyword_usage(
@@ -701,14 +727,16 @@ class SEOOptimizer:
         keyword_research: KeywordResearch,
         seo_strategy: SEOStrategy
     ) -> ContentOptimization:
-        """Generate SEO optimization recommendations"""        return await self.optimize_content_structure(
+        """Generate SEO optimization recommendations"""
+        return await self.optimize_content_structure(
             content_data,
             keyword_research,
             ContentType(content_data.get("content_type", "article"))
         )
     
     async def _calculate_content_seo_score(self, analysis: Dict[str, Any]) -> float:
-        """Calculate overall content SEO score"""        keyword_score = analysis.get("keyword_usage", {}).get("score", 0) * 0.3
+        """Calculate overall content SEO score"""
+        keyword_score = analysis.get("keyword_usage", {}).get("score", 0) * 0.3
         quality_score = analysis.get("content_quality", {}).get("score", 0) * 0.4
         readability_score = analysis.get("readability", {}).get("score", 0) * 0.3
         

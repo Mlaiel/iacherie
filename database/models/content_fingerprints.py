@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum
+"""
+from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID, BYTEA
@@ -35,7 +36,8 @@ Base = declarative_base()
 
 
 class ContentType(Enum):
-    """Content type enumeration"""    AUDIO = "audio"
+    """Content type enumeration"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -48,7 +50,8 @@ class ContentType(Enum):
 
 
 class FingerprintAlgorithm(Enum):
-    """Fingerprint algorithm types"""    CHROMAPRINT = "chromaprint"
+    """Fingerprint algorithm types"""
+    CHROMAPRINT = "chromaprint"
     OPENCV_PHASH = "opencv_phash"
     CLIP_EMBEDDING = "clip_embedding"
     BERT_SEMANTIC = "bert_semantic"
@@ -58,7 +61,8 @@ class FingerprintAlgorithm(Enum):
 
 
 class QualityLevel(Enum):
-    """Fingerprint quality levels"""    ULTRA = "ultra"
+    """Fingerprint quality levels"""
+    ULTRA = "ultra"
     HIGH = "high" 
     MEDIUM = "medium"
     LOW = "low"
@@ -66,7 +70,8 @@ class QualityLevel(Enum):
 
 
 class ProcessingStatus(Enum):
-    """Processing status enumeration"""    PENDING = "pending"
+    """Processing status enumeration"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -75,11 +80,13 @@ class ProcessingStatus(Enum):
 
 
 class ContentFingerprint(Base):
-    """    Enterprise Content Fingerprint Model
+    """
+    Enterprise Content Fingerprint Model
     
     Comprehensive fingerprinting for all content types with advanced AI processing.
     Supports multi-modal content analysis, copyright protection, and monetization tracking.
-    """    __tablename__ = "content_fingerprints"
+    """
+    __tablename__ = "content_fingerprints"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -184,7 +191,8 @@ class ContentFingerprint(Base):
         return f"<ContentFingerprint(id={self.id}, content_type={self.content_type.value}, algorithm={self.algorithm.value})>"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert model to dictionary for API responses"""        return {
+        """Convert model to dictionary for API responses"""
+        return {
             "id": str(self.id),
             "content_id": self.content_id,
             "user_id": str(self.user_id),
@@ -235,7 +243,8 @@ class ContentFingerprint(Base):
     
     @classmethod
     def create_from_fingerprint_data(cls, fingerprint_data: Dict[str, Any], user_id: str) -> 'ContentFingerprint':
-        """Create ContentFingerprint from fingerprint engine output"""        return cls(
+        """Create ContentFingerprint from fingerprint engine output"""
+        return cls(
             content_id=fingerprint_data.get('content_id'),
             user_id=user_id,
             content_type=ContentType(fingerprint_data.get('content_type', 'audio')),

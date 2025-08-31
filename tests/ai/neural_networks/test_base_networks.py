@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -36,7 +37,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -68,7 +70,8 @@ from ai.neural_networks.base_networks import (
 
 
 class TestNetworkImplementation(BaseNeuralNetwork):
-    """Test implementation of BaseNeuralNetwork for testing"""    
+    """Test implementation of BaseNeuralNetwork for testing"""
+    
     def __init__(self, config: NetworkConfig):
         super().__init__(config)
         
@@ -90,7 +93,8 @@ class TestNetworkImplementation(BaseNeuralNetwork):
         self._initialize_weights()
     
     def _initialize_weights(self):
-        """Initialize network weights"""        for module in self.modules():
+        """Initialize network weights"""
+        for module in self.modules():
             if isinstance(module, nn.Linear):
                 nn.init.xavier_uniform_(module.weight)
                 if module.bias is not None:
@@ -114,14 +118,16 @@ class TestNetworkImplementation(BaseNeuralNetwork):
 
 @pytest.fixture(scope="session")
 def temp_model_directory():
-    """Create temporary directory for model testing"""    temp_dir = tempfile.mkdtemp(prefix="neural_networks_test_")
+    """Create temporary directory for model testing"""
+    temp_dir = tempfile.mkdtemp(prefix="neural_networks_test_")
     yield Path(temp_dir)
     shutil.rmtree(temp_dir, ignore_errors=True)
 
 
 @pytest.fixture
 def basic_network_config():
-    """Basic network configuration for testing"""    return NetworkConfig(
+    """Basic network configuration for testing"""
+    return NetworkConfig(
         input_dim=100,
         hidden_dims=[64, 32],
         output_dim=10,
@@ -135,7 +141,8 @@ def basic_network_config():
 
 @pytest.fixture
 def regression_network_config():
-    """Regression network configuration"""    return NetworkConfig(
+    """Regression network configuration"""
+    return NetworkConfig(
         input_dim=50,
         hidden_dims=[32, 16],
         output_dim=1,
@@ -148,7 +155,8 @@ def regression_network_config():
 
 @pytest.fixture
 def training_config():
-    """Training configuration for tests"""    return TrainingConfig(
+    """Training configuration for tests"""
+    return TrainingConfig(
         train_split=0.7,
         validation_split=0.15,
         test_split=0.15,
@@ -162,7 +170,8 @@ def training_config():
 
 @pytest.fixture
 def sample_data():
-    """Generate sample training data"""    np.random.seed(42)
+    """Generate sample training data"""
+    np.random.seed(42)
     torch.manual_seed(42)
     
     # Classification data
@@ -181,13 +190,16 @@ def sample_data():
 
 @pytest.fixture
 def model_registry(temp_model_directory):
-    """Create model registry for testing"""    return ModelRegistry(temp_model_directory / "registry")
+    """Create model registry for testing"""
+    return ModelRegistry(temp_model_directory / "registry")
 
 
 class TestNetworkConfig:
-    """Test NetworkConfig functionality"""    
+    """Test NetworkConfig functionality"""
+    
     def test_config_creation(self):
-        """Test basic config creation"""        config = NetworkConfig(
+        """Test basic config creation"""
+        config = NetworkConfig(
             input_dim=128,
             hidden_dims=[64, 32],
             output_dim=10,
@@ -202,7 +214,8 @@ class TestNetworkConfig:
         assert config.batch_size == 32  # Default value
     
     def test_config_validation(self):
-        """Test config parameter validation"""        # Valid config
+        """Test config parameter validation"""
+        # Valid config
         valid_config = NetworkConfig(
             input_dim=100,
             hidden_dims=[50, 25],
@@ -215,21 +228,25 @@ class TestNetworkConfig:
         assert valid_config.dropout_rate == 0.2
     
     def test_device_type_enum(self):
-        """Test DeviceType enum functionality"""        assert DeviceType.CPU.value == "cpu"
+        """Test DeviceType enum functionality"""
+        assert DeviceType.CPU.value == "cpu"
         assert DeviceType.CUDA.value == "cuda"
         assert DeviceType.MPS.value == "mps"
     
     def test_network_type_enum(self):
-        """Test NetworkType enum functionality"""        assert NetworkType.TRANSFORMER.value == "transformer"
+        """Test NetworkType enum functionality"""
+        assert NetworkType.TRANSFORMER.value == "transformer"
         assert NetworkType.CNN.value == "convolutional"
         assert NetworkType.RNN.value == "recurrent"
         assert NetworkType.GAN.value == "generative_adversarial"
 
 
 class TestTrainingConfig:
-    """Test TrainingConfig functionality"""    
+    """Test TrainingConfig functionality"""
+    
     def test_training_config_creation(self):
-        """Test training config creation with defaults"""        config = TrainingConfig()
+        """Test training config creation with defaults"""
+        config = TrainingConfig()
         
         assert config.train_split == 0.8
         assert config.validation_split == 0.1
@@ -239,7 +256,8 @@ class TestTrainingConfig:
         assert config.early_stopping_patience == 10
     
     def test_training_config_custom(self):
-        """Test custom training configuration"""        config = TrainingConfig(
+        """Test custom training configuration"""
+        config = TrainingConfig(
             train_split=0.7,
             validation_split=0.2,
             test_split=0.1,
@@ -260,7 +278,8 @@ class TestTrainingConfig:
         assert config.use_amp is False
     
     def test_split_validation(self):
-        """Test that splits sum to approximately 1.0"""        config = TrainingConfig(
+        """Test that splits sum to approximately 1.0"""
+        config = TrainingConfig(
             train_split=0.6,
             validation_split=0.2,
             test_split=0.2
@@ -271,9 +290,11 @@ class TestTrainingConfig:
 
 
 class TestBaseNeuralNetwork:
-    """Test BaseNeuralNetwork functionality"""    
+    """Test BaseNeuralNetwork functionality"""
+    
     def test_network_initialization(self, basic_network_config):
-        """Test basic network initialization"""        network = TestNetworkImplementation(basic_network_config)
+        """Test basic network initialization"""
+        network = TestNetworkImplementation(basic_network_config)
         
         assert network.config == basic_network_config
         assert network.name == "BaseNetwork"
@@ -284,7 +305,8 @@ class TestBaseNeuralNetwork:
         assert isinstance(network.created_at, datetime)
     
     def test_device_selection(self, basic_network_config):
-        """Test device selection logic"""        network = TestNetworkImplementation(basic_network_config)
+        """Test device selection logic"""
+        network = TestNetworkImplementation(basic_network_config)
         
         # Should select appropriate device based on availability
         if torch.cuda.is_available():
@@ -295,7 +317,8 @@ class TestBaseNeuralNetwork:
             assert network.device.type == "cpu"
     
     def test_forward_pass(self, basic_network_config, sample_data):
-        """Test forward pass functionality"""        network = TestNetworkImplementation(basic_network_config)
+        """Test forward pass functionality"""
+        network = TestNetworkImplementation(basic_network_config)
         network.eval()
         
         X, _ = sample_data["classification"]
@@ -309,7 +332,8 @@ class TestBaseNeuralNetwork:
         assert torch.isfinite(output).all()
     
     def test_loss_computation_classification(self, basic_network_config, sample_data):
-        """Test loss computation for classification"""        network = TestNetworkImplementation(basic_network_config)
+        """Test loss computation for classification"""
+        network = TestNetworkImplementation(basic_network_config)
         network.eval()
         
         X, y = sample_data["classification"]
@@ -324,7 +348,8 @@ class TestBaseNeuralNetwork:
         assert torch.isfinite(loss)
     
     def test_loss_computation_regression(self, regression_network_config, sample_data):
-        """Test loss computation for regression"""        network = TestNetworkImplementation(regression_network_config)
+        """Test loss computation for regression"""
+        network = TestNetworkImplementation(regression_network_config)
         network.eval()
         
         X, y = sample_data["regression"]
@@ -339,7 +364,8 @@ class TestBaseNeuralNetwork:
         assert torch.isfinite(loss)
     
     def test_accuracy_computation_classification(self, basic_network_config, sample_data):
-        """Test accuracy computation for classification"""        network = TestNetworkImplementation(basic_network_config)
+        """Test accuracy computation for classification"""
+        network = TestNetworkImplementation(basic_network_config)
         
         X, y = sample_data["classification"]
         batch_X, batch_y = X[:16], y[:16]
@@ -352,7 +378,8 @@ class TestBaseNeuralNetwork:
         assert isinstance(accuracy, float)
     
     def test_accuracy_computation_regression(self, regression_network_config, sample_data):
-        """Test R² score computation for regression"""        network = TestNetworkImplementation(regression_network_config)
+        """Test R² score computation for regression"""
+        network = TestNetworkImplementation(regression_network_config)
         
         X, y = sample_data["regression"]
         batch_X, batch_y = X[:32], y[:32]
@@ -366,7 +393,8 @@ class TestBaseNeuralNetwork:
         assert torch.isfinite(torch.tensor(r_squared))
     
     def test_optimizer_configuration(self, basic_network_config):
-        """Test optimizer configuration"""        network = TestNetworkImplementation(basic_network_config)
+        """Test optimizer configuration"""
+        network = TestNetworkImplementation(basic_network_config)
         
         # Test AdamW (default)
         optimizer = network.configure_optimizer()
@@ -389,7 +417,8 @@ class TestBaseNeuralNetwork:
             network.configure_optimizer()
     
     def test_scheduler_configuration(self, basic_network_config):
-        """Test scheduler configuration"""        network = TestNetworkImplementation(basic_network_config)
+        """Test scheduler configuration"""
+        network = TestNetworkImplementation(basic_network_config)
         optimizer = network.configure_optimizer()
         
         # Test cosine annealing
@@ -412,7 +441,8 @@ class TestBaseNeuralNetwork:
         assert scheduler is None
     
     def test_training_epoch(self, basic_network_config, sample_data):
-        """Test single training epoch"""        network = TestNetworkImplementation(basic_network_config)
+        """Test single training epoch"""
+        network = TestNetworkImplementation(basic_network_config)
         optimizer = network.configure_optimizer()
         
         X, y = sample_data["classification"]
@@ -438,7 +468,8 @@ class TestBaseNeuralNetwork:
         assert metrics['learning_rate'] > 0
     
     def test_validation(self, basic_network_config, sample_data):
-        """Test model validation"""        network = TestNetworkImplementation(basic_network_config)
+        """Test model validation"""
+        network = TestNetworkImplementation(basic_network_config)
         
         X, y = sample_data["classification"]
         dataset = TensorDataset(X, y)
@@ -453,7 +484,8 @@ class TestBaseNeuralNetwork:
         assert 0 <= metrics['validation_accuracy'] <= 1
     
     def test_model_save_load(self, basic_network_config, temp_model_directory):
-        """Test model saving and loading"""        # Create and train network
+        """Test model saving and loading"""
+        # Create and train network
         network = TestNetworkImplementation(basic_network_config)
         network.training_step = 100
         network.metrics['loss'] = [1.0, 0.8, 0.6]
@@ -475,7 +507,8 @@ class TestBaseNeuralNetwork:
         assert loaded_network.config.output_dim == basic_network_config.output_dim
     
     def test_gradient_clipping(self, basic_network_config, sample_data):
-        """Test gradient clipping functionality"""        basic_network_config.gradient_clipping = 1.0
+        """Test gradient clipping functionality"""
+        basic_network_config.gradient_clipping = 1.0
         network = TestNetworkImplementation(basic_network_config)
         optimizer = network.configure_optimizer()
         
@@ -511,16 +544,19 @@ class TestBaseNeuralNetwork:
 
 
 class TestModelRegistry:
-    """Test ModelRegistry functionality"""    
+    """Test ModelRegistry functionality"""
+    
     def test_registry_creation(self, temp_model_directory):
-        """Test registry creation"""        registry_path = temp_model_directory / "test_registry"
+        """Test registry creation"""
+        registry_path = temp_model_directory / "test_registry"
         registry = ModelRegistry(registry_path)
         
         assert registry.registry_path.exists()
         assert isinstance(registry.models, dict)
     
     def test_model_registration(self, basic_network_config, temp_model_directory):
-        """Test model registration"""        registry = ModelRegistry(temp_model_directory / "registry")
+        """Test model registration"""
+        registry = ModelRegistry(temp_model_directory / "registry")
         network = TestNetworkImplementation(basic_network_config)
         
         # Register model
@@ -545,7 +581,8 @@ class TestModelRegistry:
         assert (model_path / "model.pt").exists()
     
     def test_model_listing(self, basic_network_config, temp_model_directory):
-        """Test model listing functionality"""        registry = ModelRegistry(temp_model_directory / "registry")
+        """Test model listing functionality"""
+        registry = ModelRegistry(temp_model_directory / "registry")
         
         # Register multiple models
         for i in range(3):
@@ -572,7 +609,8 @@ class TestModelRegistry:
         assert "model_1" in specific_models
     
     def test_model_removal(self, basic_network_config, temp_model_directory):
-        """Test model removal"""        registry = ModelRegistry(temp_model_directory / "registry")
+        """Test model removal"""
+        registry = ModelRegistry(temp_model_directory / "registry")
         network = TestNetworkImplementation(basic_network_config)
         
         # Register model
@@ -586,9 +624,11 @@ class TestModelRegistry:
 
 
 class TestInferenceEngine:
-    """Test InferenceEngine functionality"""    
+    """Test InferenceEngine functionality"""
+    
     def test_engine_creation(self, basic_network_config, sample_data):
-        """Test inference engine creation"""        network = TestNetworkImplementation(basic_network_config)
+        """Test inference engine creation"""
+        network = TestNetworkImplementation(basic_network_config)
         
         # Train network briefly to have meaningful weights
         X, y = sample_data["classification"]
@@ -606,7 +646,8 @@ class TestInferenceEngine:
         assert engine.device == network.device
     
     def test_single_prediction(self, basic_network_config, sample_data):
-        """Test single sample prediction"""        network = TestNetworkImplementation(basic_network_config)
+        """Test single sample prediction"""
+        network = TestNetworkImplementation(basic_network_config)
         engine = InferenceEngine(network, use_jit=False)
         
         X, _ = sample_data["classification"]
@@ -629,7 +670,8 @@ class TestInferenceEngine:
         assert prediction_tensor.shape == (1, basic_network_config.output_dim)
     
     def test_batch_prediction(self, basic_network_config, sample_data):
-        """Test batch prediction"""        network = TestNetworkImplementation(basic_network_config)
+        """Test batch prediction"""
+        network = TestNetworkImplementation(basic_network_config)
         engine = InferenceEngine(network, use_jit=False)
         
         X, _ = sample_data["classification"]
@@ -649,7 +691,8 @@ class TestInferenceEngine:
     
     @pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA not available")
     def test_gpu_inference(self, basic_network_config, sample_data):
-        """Test GPU inference if available"""        basic_network_config.device = DeviceType.CUDA
+        """Test GPU inference if available"""
+        basic_network_config.device = DeviceType.CUDA
         network = TestNetworkImplementation(basic_network_config)
         engine = InferenceEngine(network, use_jit=False)
         
@@ -662,9 +705,11 @@ class TestInferenceEngine:
 
 
 class TestPerformance:
-    """Performance and benchmark tests"""    
+    """Performance and benchmark tests"""
+    
     def test_forward_pass_performance(self, basic_network_config, sample_data):
-        """Test forward pass performance"""        network = TestNetworkImplementation(basic_network_config)
+        """Test forward pass performance"""
+        network = TestNetworkImplementation(basic_network_config)
         network.eval()
         
         X, _ = sample_data["classification"]
@@ -693,7 +738,8 @@ class TestPerformance:
         assert avg_time < 100  # Less than 100ms for this simple network
     
     def test_training_step_performance(self, basic_network_config, sample_data):
-        """Test training step performance"""        network = TestNetworkImplementation(basic_network_config)
+        """Test training step performance"""
+        network = TestNetworkImplementation(basic_network_config)
         optimizer = network.configure_optimizer()
         
         X, y = sample_data["classification"]
@@ -728,7 +774,8 @@ class TestPerformance:
         assert avg_time < 200
     
     def test_memory_usage(self, basic_network_config, sample_data):
-        """Test memory usage during training"""        import gc
+        """Test memory usage during training"""
+        import gc
         
         # Measure initial memory
         gc.collect()
@@ -766,9 +813,11 @@ class TestPerformance:
 
 
 class TestEdgeCases:
-    """Test edge cases and error handling"""    
+    """Test edge cases and error handling"""
+    
     def test_empty_input(self, basic_network_config):
-        """Test behavior with empty input"""        network = TestNetworkImplementation(basic_network_config)
+        """Test behavior with empty input"""
+        network = TestNetworkImplementation(basic_network_config)
         
         # Empty tensor should raise appropriate error
         with pytest.raises((RuntimeError, ValueError)):
@@ -776,7 +825,8 @@ class TestEdgeCases:
             network.forward(empty_input)
     
     def test_mismatched_dimensions(self, basic_network_config):
-        """Test behavior with incorrect input dimensions"""        network = TestNetworkImplementation(basic_network_config)
+        """Test behavior with incorrect input dimensions"""
+        network = TestNetworkImplementation(basic_network_config)
         
         # Wrong input dimension
         with pytest.raises(RuntimeError):
@@ -784,7 +834,8 @@ class TestEdgeCases:
             network.forward(wrong_input)
     
     def test_nan_input(self, basic_network_config):
-        """Test behavior with NaN input"""        network = TestNetworkImplementation(basic_network_config)
+        """Test behavior with NaN input"""
+        network = TestNetworkImplementation(basic_network_config)
         
         # Input with NaN values
         nan_input = torch.randn(16, basic_network_config.input_dim)
@@ -795,7 +846,8 @@ class TestEdgeCases:
         assert torch.isnan(output).any()
     
     def test_infinite_input(self, basic_network_config):
-        """Test behavior with infinite input"""        network = TestNetworkImplementation(basic_network_config)
+        """Test behavior with infinite input"""
+        network = TestNetworkImplementation(basic_network_config)
         
         # Input with infinite values
         inf_input = torch.randn(16, basic_network_config.input_dim)
@@ -806,7 +858,8 @@ class TestEdgeCases:
         assert output.shape == (16, basic_network_config.output_dim)
     
     def test_extreme_learning_rates(self, basic_network_config, sample_data):
-        """Test with extreme learning rates"""        X, y = sample_data["classification"]
+        """Test with extreme learning rates"""
+        X, y = sample_data["classification"]
         batch_X, batch_y = X[:16], y[:16]
         
         # Very high learning rate
@@ -834,7 +887,8 @@ class TestEdgeCases:
         optimizer.step()
     
     def test_zero_batch_size(self, basic_network_config):
-        """Test with zero batch size configuration"""        basic_network_config.batch_size = 0
+        """Test with zero batch size configuration"""
+        basic_network_config.batch_size = 0
         
         # Should still create network (batch size is just a config parameter)
         network = TestNetworkImplementation(basic_network_config)
@@ -842,9 +896,11 @@ class TestEdgeCases:
 
 
 class TestSecurityAndRobustness:
-    """Security and robustness tests"""    
+    """Security and robustness tests"""
+    
     def test_model_file_integrity(self, basic_network_config, temp_model_directory):
-        """Test model file integrity checks"""        network = TestNetworkImplementation(basic_network_config)
+        """Test model file integrity checks"""
+        network = TestNetworkImplementation(basic_network_config)
         save_path = temp_model_directory / "integrity_test"
         
         # Save model
@@ -861,7 +917,8 @@ class TestSecurityAndRobustness:
             TestNetworkImplementation.load_model(save_path)
     
     def test_adversarial_inputs(self, basic_network_config):
-        """Test with adversarial/malicious inputs"""        network = TestNetworkImplementation(basic_network_config)
+        """Test with adversarial/malicious inputs"""
+        network = TestNetworkImplementation(basic_network_config)
         
         # Very large values
         large_input = torch.full(
@@ -880,7 +937,8 @@ class TestSecurityAndRobustness:
         assert output.shape == (16, basic_network_config.output_dim)
     
     def test_concurrent_access(self, basic_network_config, sample_data):
-        """Test concurrent access to model"""        network = TestNetworkImplementation(basic_network_config)
+        """Test concurrent access to model"""
+        network = TestNetworkImplementation(basic_network_config)
         network.eval()
         
         X, _ = sample_data["classification"]
@@ -913,9 +971,11 @@ class TestSecurityAndRobustness:
 
 
 class TestIntegration:
-    """Integration tests combining multiple components"""    
+    """Integration tests combining multiple components"""
+    
     def test_end_to_end_training_pipeline(self, basic_network_config, sample_data, temp_model_directory):
-        """Test complete training pipeline"""        # Setup
+        """Test complete training pipeline"""
+        # Setup
         network = TestNetworkImplementation(basic_network_config)
         optimizer = network.configure_optimizer()
         scheduler = network.configure_scheduler(optimizer, 100)
@@ -965,7 +1025,8 @@ class TestIntegration:
         assert len(loaded_network.metrics['loss']) == 3
     
     def test_model_registry_integration(self, basic_network_config, sample_data, temp_model_directory):
-        """Test model registry with training and inference"""        registry = ModelRegistry(temp_model_directory / "registry")
+        """Test model registry with training and inference"""
+        registry = ModelRegistry(temp_model_directory / "registry")
         
         # Train multiple models
         for i in range(2):

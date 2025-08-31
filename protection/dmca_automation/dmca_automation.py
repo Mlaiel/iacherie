@@ -12,7 +12,8 @@ Ultra-advanced automated DMCA takedown notice generation and management:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Legal Tech Expert + Compliance Specialist + Automation Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple
 from datetime import datetime, timedelta
@@ -37,7 +38,8 @@ import hashlib
 logger = logging.getLogger(__name__)
 
 class DMCAStatus(Enum):
-    """DMCA notice status"""    DRAFT = "draft"
+    """DMCA notice status"""
+    DRAFT = "draft"
     PENDING_REVIEW = "pending_review"
     SUBMITTED = "submitted"
     ACKNOWLEDGED = "acknowledged"
@@ -48,7 +50,8 @@ class DMCAStatus(Enum):
     RESOLVED = "resolved"
 
 class PlatformType(Enum):
-    """Platform types for DMCA submissions"""    GOOGLE = "google"
+    """Platform types for DMCA submissions"""
+    GOOGLE = "google"
     YOUTUBE = "youtube"
     FACEBOOK = "facebook"
     INSTAGRAM = "instagram"
@@ -61,14 +64,16 @@ class PlatformType(Enum):
     GENERIC_WEBSITE = "generic_website"
 
 class NoticeType(Enum):
-    """Types of DMCA notices"""    TAKEDOWN = "takedown"
+    """Types of DMCA notices"""
+    TAKEDOWN = "takedown"
     COUNTER_NOTICE = "counter_notice"
     REPEAT_INFRINGER = "repeat_infringer"
     SAFE_HARBOR = "safe_harbor"
 
 @dataclass
 class DMCANotice:
-    """DMCA notice structure"""    notice_id: str
+    """DMCA notice structure"""
+    notice_id: str
     case_id: str
     notice_type: NoticeType
     platform: PlatformType
@@ -87,7 +92,8 @@ class DMCANotice:
 
 @dataclass
 class PlatformResponse:
-    """Platform response to DMCA notice"""    response_id: str
+    """Platform response to DMCA notice"""
+    response_id: str
     notice_id: str
     platform: PlatformType
     response_type: str
@@ -98,8 +104,10 @@ class PlatformResponse:
     metadata: Dict[str, Any]
 
 class DMCAAutomationSystem:
-    """    Ultra-advanced DMCA automation and management system
-    """    
+    """
+    Ultra-advanced DMCA automation and management system
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.notices = []
@@ -182,7 +190,8 @@ class DMCAAutomationSystem:
         logger.info("DMCA Automation System initialized")
     
     def _initialize_legal_templates(self):
-        """Initialize legal document templates"""        try:
+        """Initialize legal document templates"""
+        try:
             # DMCA Takedown Notice Template
             self.legal_templates['takedown_notice'] = """DMCA TAKEDOWN NOTICE
 
@@ -221,7 +230,8 @@ Date: {{ current_date }}
 Sincerely,
 {{ signatory_name }}
 {{ signatory_title }}
-            """            
+            """
+            
             # Counter-Notice Template
             self.legal_templates['counter_notice'] = """DMCA COUNTER-NOTIFICATION
 
@@ -254,7 +264,8 @@ Date: {{ current_date }}
 
 Sincerely,
 {{ user_name }}
-            """            
+            """
+            
             # Follow-up Notice Template
             self.legal_templates['follow_up_notice'] = """DMCA FOLLOW-UP NOTICE
 
@@ -280,7 +291,8 @@ Contact Information:
 Sincerely,
 {{ signatory_name }}
 {{ signatory_title }}
-            """            
+            """
+            
             logger.info("Legal templates initialized successfully")
             
         except Exception as e:
@@ -288,7 +300,8 @@ Sincerely,
             raise
     
     def _initialize_platform_handlers(self):
-        """Initialize platform-specific submission handlers"""        try:
+        """Initialize platform-specific submission handlers"""
+        try:
             # Platform submission handlers would be initialized here
             # Each handler implements platform-specific submission logic
             logger.info("Platform handlers initialized successfully")
@@ -298,7 +311,8 @@ Sincerely,
             raise
     
     async def generate_dmca_notice(self, infringement_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate automated DMCA takedown notice"""        try:
+        """Generate automated DMCA takedown notice"""
+        try:
             # Validate input data
             validation_result = self._validate_infringement_data(infringement_data)
             if not validation_result['valid']:
@@ -375,7 +389,8 @@ Sincerely,
     
     async def submit_dmca_notice(self, notice_id: str, 
                                auto_submit: bool = False) -> Dict[str, Any]:
-        """Submit DMCA notice to platform"""        try:
+        """Submit DMCA notice to platform"""
+        try:
             # Find notice
             notice = self._find_notice_by_id(notice_id)
             if not notice:
@@ -430,7 +445,8 @@ Sincerely,
             raise
     
     async def process_platform_response(self, response_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process response from platform regarding DMCA notice"""        try:
+        """Process response from platform regarding DMCA notice"""
+        try:
             # Parse response data
             notice_id = response_data['notice_id']
             platform = PlatformType(response_data['platform'])
@@ -486,7 +502,8 @@ Sincerely,
             raise
     
     async def handle_counter_notice(self, counter_notice_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle DMCA counter-notice from alleged infringer"""        try:
+        """Handle DMCA counter-notice from alleged infringer"""
+        try:
             original_notice_id = counter_notice_data['original_notice_id']
             
             # Find original notice
@@ -541,7 +558,8 @@ Sincerely,
             raise
     
     async def generate_compliance_report(self, time_period: Optional[str] = None) -> Dict[str, Any]:
-        """Generate comprehensive DMCA compliance report"""        try:
+        """Generate comprehensive DMCA compliance report"""
+        try:
             # Filter notices by time period
             if time_period:
                 start_date, end_date = self._parse_time_period(time_period)
@@ -603,7 +621,8 @@ Sincerely,
     # Platform-specific submission methods
     async def _submit_to_platform(self, notice: DMCANotice, 
                                  platform_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Submit notice to specific platform"""        try:
+        """Submit notice to specific platform"""
+        try:
             if notice.platform == PlatformType.GOOGLE:
                 return await self._submit_to_google(notice, platform_config)
             elif notice.platform == PlatformType.YOUTUBE:
@@ -623,7 +642,8 @@ Sincerely,
     
     async def _submit_to_google(self, notice: DMCANotice, 
                               config: Dict[str, Any]) -> Dict[str, Any]:
-        """Submit DMCA notice to Google"""        try:
+        """Submit DMCA notice to Google"""
+        try:
             # Prepare Google-specific submission data
             submission_data = {
                 'urls': [notice.infringing_url],
@@ -657,7 +677,8 @@ Sincerely,
     
     async def _submit_to_youtube(self, notice: DMCANotice, 
                                config: Dict[str, Any]) -> Dict[str, Any]:
-        """Submit DMCA notice to YouTube"""        try:
+        """Submit DMCA notice to YouTube"""
+        try:
             # YouTube-specific submission logic
             video_id = self._extract_youtube_video_id(notice.infringing_url)
             
@@ -693,7 +714,8 @@ Sincerely,
     
     # Document generation methods
     async def _render_notice_document(self, notice: DMCANotice) -> str:
-        """Render DMCA notice document from template"""        try:
+        """Render DMCA notice document from template"""
+        try:
             template = jinja2.Template(self.legal_templates['takedown_notice'])
             
             template_data = {
@@ -719,7 +741,8 @@ Sincerely,
     
     # Validation methods
     def _validate_infringement_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate infringement data for DMCA notice generation"""        errors = []
+        """Validate infringement data for DMCA notice generation"""
+        errors = []
         
         required_fields = [
             'infringing_url', 'original_work_url', 'copyright_owner', 'infringement_description'
@@ -749,7 +772,8 @@ Sincerely,
         }
     
     def _validate_counter_notice(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate counter-notice data"""        errors = []
+        """Validate counter-notice data"""
+        errors = []
         
         required_fields = [
             'original_notice_id', 'claimant_info', 'grounds', 'good_faith_statement'
@@ -766,7 +790,8 @@ Sincerely,
     
     # Legal compliance methods
     async def _verify_legal_compliance(self, notice: DMCANotice) -> Dict[str, Any]:
-        """Verify legal compliance of DMCA notice"""        try:
+        """Verify legal compliance of DMCA notice"""
+        try:
             compliance_issues = []
             compliance_score = 1.0
             
@@ -810,13 +835,15 @@ Sincerely,
     
     # Helper methods
     def _find_notice_by_id(self, notice_id: str) -> Optional[DMCANotice]:
-        """Find DMCA notice by ID"""        for notice in self.notices:
+        """Find DMCA notice by ID"""
+        for notice in self.notices:
             if notice.notice_id == notice_id:
                 return notice
         return None
     
     def _detect_platform_type(self, url: str) -> PlatformType:
-        """Detect platform type from URL"""        url_lower = url.lower()
+        """Detect platform type from URL"""
+        url_lower = url.lower()
         
         if 'youtube.com' in url_lower or 'youtu.be' in url_lower:
             return PlatformType.YOUTUBE
@@ -838,21 +865,25 @@ Sincerely,
             return PlatformType.GENERIC_WEBSITE
     
     def _generate_good_faith_statement(self) -> str:
-        """Generate standard good faith statement"""        return ("I have a good faith belief that use of the copyrighted material described above "
+        """Generate standard good faith statement"""
+        return ("I have a good faith belief that use of the copyrighted material described above "
                 "is not authorized by the copyright owner, its agent, or the law.")
     
     def _generate_penalty_statement(self) -> str:
-        """Generate standard penalty statement"""        return ("The information in this notification is accurate, and under penalty of perjury, "
+        """Generate standard penalty statement"""
+        return ("The information in this notification is accurate, and under penalty of perjury, "
                 "I am authorized to act on behalf of the copyright owner.")
     
     def _generate_electronic_signature(self, copyright_owner: Dict[str, Any]) -> str:
-        """Generate electronic signature"""        timestamp = datetime.utcnow().isoformat()
+        """Generate electronic signature"""
+        timestamp = datetime.utcnow().isoformat()
         signature_data = f"{copyright_owner['name']}_{timestamp}"
         signature_hash = hashlib.sha256(signature_data.encode()).hexdigest()[:16]
         return f"/s/ {copyright_owner['name']} (Electronic Signature: {signature_hash})"
     
     def _get_platform_legal_name(self, platform: PlatformType) -> str:
-        """Get legal name for platform"""        platform_names = {
+        """Get legal name for platform"""
+        platform_names = {
             PlatformType.GOOGLE: "Google LLC",
             PlatformType.YOUTUBE: "YouTube, LLC (Google)",
             PlatformType.FACEBOOK: "Meta Platforms, Inc.",
@@ -865,7 +896,8 @@ Sincerely,
         return platform_names.get(platform, "Platform Legal Department")
     
     def _is_valid_url(self, url: str) -> bool:
-        """Validate URL format"""        try:
+        """Validate URL format"""
+        try:
             from urllib.parse import urlparse
             result = urlparse(url)
             return all([result.scheme, result.netloc])
@@ -873,7 +905,8 @@ Sincerely,
             return False
     
     def _extract_youtube_video_id(self, url: str) -> str:
-        """Extract YouTube video ID from URL"""        import re
+        """Extract YouTube video ID from URL"""
+        import re
         
         patterns = [
             r'(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})',

@@ -26,7 +26,8 @@ Business Logic Integration:
 Creator content upload → Scheduler coordination → AI processing → 
 Protection layer → Multi-platform distribution → Performance optimization → 
 Revenue maximization → User satisfaction → Business growth → Market leadership
-"""from .main_scheduler import (
+"""
+from .main_scheduler import (
     MainScheduler,
     SchedulerType,
     SchedulingStrategy,
@@ -146,10 +147,12 @@ logger = logging.getLogger(__name__)
 
 
 class SchedulerFactory:
-    """    Factory class for creating and managing scheduler instances.
+    """
+    Factory class for creating and managing scheduler instances.
     
     Provides centralized scheduler creation, configuration, and lifecycle management.
-    """    
+    """
+    
     _instances: Dict[str, Any] = {}
     _configurations: Dict[str, Dict[str, Any]] = {}
     
@@ -159,7 +162,8 @@ class SchedulerFactory:
         name: str = "default",
         configuration: Optional[SchedulerConfiguration] = None
     ) -> MainScheduler:
-        """Create or get main scheduler instance."""        if name in cls._instances:
+        """Create or get main scheduler instance."""
+        if name in cls._instances:
             return cls._instances[name]
         
         scheduler = MainScheduler(configuration)
@@ -175,7 +179,8 @@ class SchedulerFactory:
         name: str = "priority_default",
         **kwargs
     ) -> PriorityScheduler:
-        """Create priority scheduler instance."""        if name in cls._instances:
+        """Create priority scheduler instance."""
+        if name in cls._instances:
             return cls._instances[name]
         
         scheduler = PriorityScheduler(**kwargs)
@@ -191,7 +196,8 @@ class SchedulerFactory:
         name: str = "intelligent_default",
         **kwargs
     ) -> IntelligentScheduler:
-        """Create intelligent scheduler instance."""        if name in cls._instances:
+        """Create intelligent scheduler instance."""
+        if name in cls._instances:
             return cls._instances[name]
         
         scheduler = IntelligentScheduler(**kwargs)
@@ -207,7 +213,8 @@ class SchedulerFactory:
         name: str = "time_default",
         **kwargs
     ) -> TimeBasedScheduler:
-        """Create time-based scheduler instance."""        if name in cls._instances:
+        """Create time-based scheduler instance."""
+        if name in cls._instances:
             return cls._instances[name]
         
         scheduler = TimeBasedScheduler(**kwargs)
@@ -223,7 +230,8 @@ class SchedulerFactory:
         name: str = "resource_default",
         **kwargs
     ) -> ResourceScheduler:
-        """Create resource scheduler instance."""        if name in cls._instances:
+        """Create resource scheduler instance."""
+        if name in cls._instances:
             return cls._instances[name]
         
         scheduler = ResourceScheduler(**kwargs)
@@ -239,7 +247,8 @@ class SchedulerFactory:
         name: str = "adaptive_default",
         **kwargs
     ) -> AdaptiveScheduler:
-        """Create adaptive scheduler instance."""        if name in cls._instances:
+        """Create adaptive scheduler instance."""
+        if name in cls._instances:
             return cls._instances[name]
         
         scheduler = AdaptiveScheduler(**kwargs)
@@ -255,7 +264,8 @@ class SchedulerFactory:
         name: str = "batch_default",
         **kwargs
     ) -> BatchScheduler:
-        """Create batch scheduler instance."""        if name in cls._instances:
+        """Create batch scheduler instance."""
+        if name in cls._instances:
             return cls._instances[name]
         
         scheduler = BatchScheduler(**kwargs)
@@ -271,7 +281,8 @@ class SchedulerFactory:
         name: str = "event_default",
         **kwargs
     ) -> EventDrivenScheduler:
-        """Create event-driven scheduler instance."""        if name in cls._instances:
+        """Create event-driven scheduler instance."""
+        if name in cls._instances:
             return cls._instances[name]
         
         scheduler = EventDrivenScheduler(**kwargs)
@@ -287,7 +298,8 @@ class SchedulerFactory:
         name: str = "campaign_default",
         **kwargs
     ) -> CampaignScheduler:
-        """Create campaign scheduler instance."""        if name in cls._instances:
+        """Create campaign scheduler instance."""
+        if name in cls._instances:
             return cls._instances[name]
         
         scheduler = CampaignScheduler(**kwargs)
@@ -299,15 +311,18 @@ class SchedulerFactory:
     
     @classmethod
     def get_instance(cls, name: str) -> Optional[Any]:
-        """Get scheduler instance by name."""        return cls._instances.get(name)
+        """Get scheduler instance by name."""
+        return cls._instances.get(name)
     
     @classmethod
     def list_instances(cls) -> List[str]:
-        """List all scheduler instance names."""        return list(cls._instances.keys())
+        """List all scheduler instance names."""
+        return list(cls._instances.keys())
     
     @classmethod
     async def initialize_all(cls) -> None:
-        """Initialize all created scheduler instances."""        for name, scheduler in cls._instances.items():
+        """Initialize all created scheduler instances."""
+        for name, scheduler in cls._instances.items():
             try:
                 if hasattr(scheduler, 'initialize'):
                     await scheduler.initialize()
@@ -317,7 +332,8 @@ class SchedulerFactory:
     
     @classmethod
     async def stop_all(cls) -> None:
-        """Stop all scheduler instances."""        for name, scheduler in cls._instances.items():
+        """Stop all scheduler instances."""
+        for name, scheduler in cls._instances.items():
             try:
                 if hasattr(scheduler, 'stop'):
                     await scheduler.stop()
@@ -330,7 +346,8 @@ class SchedulerFactory:
     
     @classmethod
     def get_status(cls) -> Dict[str, Any]:
-        """Get status of all scheduler instances."""        status = {
+        """Get status of all scheduler instances."""
+        status = {
             'total_instances': len(cls._instances),
             'instances': {},
             'configurations': cls._configurations.copy()
@@ -356,19 +373,23 @@ class SchedulerFactory:
 
 
 class SchedulerManager:
-    """    High-level scheduler management interface.
+    """
+    High-level scheduler management interface.
     
     Provides simplified API for common scheduler operations and orchestration.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize scheduler manager."""        self.main_scheduler: Optional[MainScheduler] = None
+        """Initialize scheduler manager."""
+        self.main_scheduler: Optional[MainScheduler] = None
         self.is_initialized = False
         
     async def initialize(
         self,
         configuration: Optional[SchedulerConfiguration] = None
     ) -> None:
-        """Initialize scheduler system."""        try:
+        """Initialize scheduler system."""
+        try:
             # Create main scheduler
             self.main_scheduler = SchedulerFactory.create_main_scheduler(
                 configuration=configuration
@@ -393,7 +414,8 @@ class SchedulerManager:
         business_context: Optional[Dict[str, Any]] = None,
         **kwargs
     ) -> SchedulingDecision:
-        """        Schedule a task with simplified interface.
+        """
+        Schedule a task with simplified interface.
         
         Args:
             task_type: Type of task to schedule
@@ -405,7 +427,8 @@ class SchedulerManager:
             
         Returns:
             Scheduling decision with execution details
-        """        if not self.is_initialized or not self.main_scheduler:
+        """
+        if not self.is_initialized or not self.main_scheduler:
             raise RuntimeError("Scheduler manager not initialized")
         
         # Create task request
@@ -423,7 +446,8 @@ class SchedulerManager:
         return await self.main_scheduler.schedule_task(task_request)
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status."""        if not self.is_initialized or not self.main_scheduler:
+        """Get comprehensive system status."""
+        if not self.is_initialized or not self.main_scheduler:
             return {
                 'initialized': False,
                 'error': 'Scheduler manager not initialized'
@@ -443,7 +467,8 @@ class SchedulerManager:
         }
     
     async def stop(self) -> None:
-        """Stop scheduler system."""        if self.main_scheduler:
+        """Stop scheduler system."""
+        if self.main_scheduler:
             await self.main_scheduler.stop()
         
         await SchedulerFactory.stop_all()
@@ -459,7 +484,8 @@ _scheduler_manager: Optional[SchedulerManager] = None
 
 
 async def get_scheduler_manager() -> SchedulerManager:
-    """Get global scheduler manager instance."""    global _scheduler_manager
+    """Get global scheduler manager instance."""
+    global _scheduler_manager
     
     if _scheduler_manager is None:
         _scheduler_manager = SchedulerManager()
@@ -470,14 +496,16 @@ async def get_scheduler_manager() -> SchedulerManager:
 async def initialize_schedulers(
     configuration: Optional[SchedulerConfiguration] = None
 ) -> SchedulerManager:
-    """    Initialize the global scheduler system.
+    """
+    Initialize the global scheduler system.
     
     Args:
         configuration: Optional scheduler configuration
         
     Returns:
         Initialized scheduler manager
-    """    manager = await get_scheduler_manager()
+    """
+    manager = await get_scheduler_manager()
     
     if not manager.is_initialized:
         await manager.initialize(configuration)
@@ -493,7 +521,8 @@ async def schedule_task(
     business_context: Optional[Dict[str, Any]] = None,
     **kwargs
 ) -> SchedulingDecision:
-    """    Convenient function to schedule a task.
+    """
+    Convenient function to schedule a task.
     
     Args:
         task_type: Type of task to schedule
@@ -505,7 +534,8 @@ async def schedule_task(
         
     Returns:
         Scheduling decision
-    """    manager = await get_scheduler_manager()
+    """
+    manager = await get_scheduler_manager()
     return await manager.schedule_task(
         task_type=task_type,
         data=data,
@@ -517,12 +547,14 @@ async def schedule_task(
 
 
 async def get_system_status() -> Dict[str, Any]:
-    """Get comprehensive scheduler system status."""    manager = await get_scheduler_manager()
+    """Get comprehensive scheduler system status."""
+    manager = await get_scheduler_manager()
     return await manager.get_system_status()
 
 
 async def stop_schedulers() -> None:
-    """Stop the global scheduler system."""    manager = await get_scheduler_manager()
+    """Stop the global scheduler system."""
+    manager = await get_scheduler_manager()
     await manager.stop()
 
 
@@ -680,7 +712,8 @@ DEFAULT_CONFIGURATION = SchedulerConfiguration(
 
 # Logging configuration
 def configure_logging(level: str = "INFO") -> None:
-    """Configure logging for the scheduler module."""    logging.basicConfig(
+    """Configure logging for the scheduler module."""
+    logging.basicConfig(
         level=getattr(logging, level.upper()),
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
         handlers=[

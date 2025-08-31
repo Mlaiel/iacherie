@@ -11,14 +11,16 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
-"""import os
+"""
+import os
 from typing import Dict, Any, Optional
 from dataclasses import dataclass
 from pathlib import Path
 
 @dataclass
 class EntityExtractionConfig:
-    """Comprehensive configuration for entity extraction system"""    
+    """Comprehensive configuration for entity extraction system"""
+    
     # Model Configuration
     MODEL_CACHE_DIR: str = "/tmp/entity_models"
     PRIMARY_NER_MODEL: str = "bert-base-multilingual-cased"
@@ -74,7 +76,8 @@ class EntityExtractionConfig:
     
     @classmethod
     def from_env(cls) -> 'EntityExtractionConfig':
-        """Create configuration from environment variables"""        return cls(
+        """Create configuration from environment variables"""
+        return cls(
             MODEL_CACHE_DIR=os.getenv('ENTITY_MODEL_CACHE_DIR', '/tmp/entity_models'),
             PRIMARY_NER_MODEL=os.getenv('PRIMARY_NER_MODEL', 'bert-base-multilingual-cased'),
             CREATIVE_MODEL_PATH=os.getenv('CREATIVE_MODEL_PATH'),
@@ -122,7 +125,8 @@ class EntityExtractionConfig:
         )
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""        return {
+        """Convert configuration to dictionary"""
+        return {
             'model_config': {
                 'cache_dir': self.MODEL_CACHE_DIR,
                 'primary_ner_model': self.PRIMARY_NER_MODEL,
@@ -179,7 +183,8 @@ class EntityExtractionConfig:
         }
     
     def validate(self) -> bool:
-        """Validate configuration settings"""        try:
+        """Validate configuration settings"""
+        try:
             # Validate paths
             Path(self.MODEL_CACHE_DIR).mkdir(parents=True, exist_ok=True)
             Path(self.KNOWLEDGE_BASE_DIR).mkdir(parents=True, exist_ok=True)
@@ -221,7 +226,8 @@ DEVELOPMENT_CONFIG = EntityExtractionConfig(
 
 # Configuration factory
 def get_config(environment: str = "development") -> EntityExtractionConfig:
-    """Get configuration based on environment"""    if environment.lower() == "production":
+    """Get configuration based on environment"""
+    if environment.lower() == "production":
         return PRODUCTION_CONFIG
     elif environment.lower() == "development":
         return DEVELOPMENT_CONFIG

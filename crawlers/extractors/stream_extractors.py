@@ -27,7 +27,8 @@ Technical Team Expertise:
 - IA Prompt Engineer: Prompt optimization and AI interaction
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import time
@@ -86,7 +87,8 @@ logger = logging.getLogger(__name__)
 
 
 class StreamType(Enum):
-    """Stream type enumeration"""    WEBSOCKET = "websocket"
+    """Stream type enumeration"""
+    WEBSOCKET = "websocket"
     HTTP_STREAM = "http_stream"
     TCP_STREAM = "tcp_stream"
     AUDIO_STREAM = "audio_stream"
@@ -98,7 +100,8 @@ class StreamType(Enum):
 
 @dataclass
 class StreamMetadata:
-    """Stream metadata container"""    
+    """Stream metadata container"""
+    
     stream_id: str
     stream_type: StreamType
     source_url: Optional[str] = None
@@ -116,7 +119,8 @@ class StreamMetadata:
 
 @dataclass
 class StreamChunk:
-    """Stream data chunk container"""    
+    """Stream data chunk container"""
+    
     chunk_id: str
     stream_id: str
     timestamp: datetime
@@ -128,7 +132,8 @@ class StreamChunk:
 
 
 class BaseStreamExtractor(BaseExtractor):
-    """Base class for stream extractors"""    
+    """Base class for stream extractors"""
+    
     def __init__(self, name: str, stream_type: StreamType):
         super().__init__(name)
         self.stream_type = stream_type
@@ -140,7 +145,8 @@ class BaseStreamExtractor(BaseExtractor):
         self.active_streams: Dict[str, StreamMetadata] = {}
         
     async def start_stream(self, request: ExtractionRequest) -> str:
-        """Start streaming and return stream ID"""        stream_id = self._generate_stream_id(request)
+        """Start streaming and return stream ID"""
+        stream_id = self._generate_stream_id(request)
         
         metadata = StreamMetadata(
             stream_id=stream_id,
@@ -156,24 +162,29 @@ class BaseStreamExtractor(BaseExtractor):
         return stream_id
     
     async def stop_stream(self, stream_id: str) -> bool:
-        """Stop streaming"""        if stream_id in self.active_streams:
+        """Stop streaming"""
+        if stream_id in self.active_streams:
             self.active_streams[stream_id].is_active = False
             return True
         return False
     
     async def get_stream_status(self, stream_id: str) -> Optional[StreamMetadata]:
-        """Get stream status"""        return self.active_streams.get(stream_id)
+        """Get stream status"""
+        return self.active_streams.get(stream_id)
     
     def _generate_stream_id(self, request: ExtractionRequest) -> str:
-        """Generate unique stream ID"""        content = f"{request.source_url}_{request.request_id}_{time.time()}"
+        """Generate unique stream ID"""
+        content = f"{request.source_url}_{request.request_id}_{time.time()}"
         return hashlib.md5(content.encode()).hexdigest()
     
     @abstractmethod
     async def _stream_processor(self, request: ExtractionRequest, stream_id: str):
-        """Main stream processing logic"""        pass
+        """Main stream processing logic"""
+        pass
     
     async def _process_chunk(self, chunk: StreamChunk) -> Optional[Dict[str, Any]]:
-        """Process individual stream chunk"""        processed_data = {
+        """Process individual stream chunk"""
+        processed_data = {
             'chunk_id': chunk.chunk_id,
             'stream_id': chunk.stream_id,
             'timestamp': chunk.timestamp.isoformat(),
@@ -192,16 +203,19 @@ class BaseStreamExtractor(BaseExtractor):
         return processed_data
     
     def add_chunk_processor(self, processor: Callable):
-        """Add chunk processor function"""        self.chunk_processors.append(processor)
+        """Add chunk processor function"""
+        self.chunk_processors.append(processor)
 
 
 class WebSocketExtractor(BaseStreamExtractor):
-    """Advanced WebSocket stream extractor"""    
+    """Advanced WebSocket stream extractor"""
+    
     def __init__(self):
         super().__init__("WebSocketExtractor", StreamType.WEBSOCKET)
         
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request is for WebSocket stream"""        if not HAS_WEBSOCKETS:
+        """Check if request is for WebSocket stream"""
+        if not HAS_WEBSOCKETS:
             return False
         
         if request.source_url:
@@ -210,7 +224,8 @@ class WebSocketExtractor(BaseStreamExtractor):
         return False
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Start WebSocket extraction"""        try:
+        """Start WebSocket extraction"""
+        try:
             stream_id = await self.start_stream(request)
             
             return ExtractionResult(
@@ -231,7 +246,8 @@ class WebSocketExtractor(BaseStreamExtractor):
             )
     
     async def _stream_processor(self, request: ExtractionRequest, stream_id: str):
-        """Process WebSocket stream"""        if not HAS_WEBSOCKETS:
+        """Process WebSocket stream"""
+        if not HAS_WEBSOCKETS:
             return
         
         metadata = self.active_streams[stream_id]
@@ -299,12 +315,14 @@ class WebSocketExtractor(BaseStreamExtractor):
 
 
 class HTTPStreamExtractor(BaseStreamExtractor):
-    """Advanced HTTP stream extractor for chunked content"""    
+    """Advanced HTTP stream extractor for chunked content"""
+    
     def __init__(self):
         super().__init__("HTTPStreamExtractor", StreamType.HTTP_STREAM)
         
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request is for HTTP stream"""        if not HAS_AIOHTTP:
+        """Check if request is for HTTP stream"""
+        if not HAS_AIOHTTP:
             return False
         
         if request.source_url:
@@ -313,7 +331,8 @@ class HTTPStreamExtractor(BaseStreamExtractor):
         return False
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Start HTTP stream extraction"""        try:
+        """Start HTTP stream extraction"""
+        try:
             stream_id = await self.start_stream(request)
             
             return ExtractionResult(
@@ -334,7 +353,8 @@ class HTTPStreamExtractor(BaseStreamExtractor):
             )
     
     async def _stream_processor(self, request: ExtractionRequest, stream_id: str):
-        """Process HTTP stream"""        if not HAS_AIOHTTP:
+        """Process HTTP stream"""
+        if not HAS_AIOHTTP:
             return
         
         metadata = self.active_streams[stream_id]
@@ -405,7 +425,8 @@ class HTTPStreamExtractor(BaseStreamExtractor):
 
 
 class AudioStreamExtractor(BaseStreamExtractor):
-    """Advanced audio stream extractor"""    
+    """Advanced audio stream extractor"""
+    
     def __init__(self):
         super().__init__("AudioStreamExtractor", StreamType.AUDIO_STREAM)
         self.sample_rate = 44100
@@ -413,13 +434,15 @@ class AudioStreamExtractor(BaseStreamExtractor):
         self.chunk_duration = 1.0  # seconds
         
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request is for audio stream"""        if not HAS_PYAUDIO:
+        """Check if request is for audio stream"""
+        if not HAS_PYAUDIO:
             return False
         
         return request.metadata.get('stream_type') == 'audio'
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Start audio stream extraction"""        try:
+        """Start audio stream extraction"""
+        try:
             stream_id = await self.start_stream(request)
             
             return ExtractionResult(
@@ -440,7 +463,8 @@ class AudioStreamExtractor(BaseStreamExtractor):
             )
     
     async def _stream_processor(self, request: ExtractionRequest, stream_id: str):
-        """Process audio stream"""        if not HAS_PYAUDIO:
+        """Process audio stream"""
+        if not HAS_PYAUDIO:
             return
         
         metadata = self.active_streams[stream_id]
@@ -511,7 +535,8 @@ class AudioStreamExtractor(BaseStreamExtractor):
 
 
 class VideoStreamExtractor(BaseStreamExtractor):
-    """Advanced video stream extractor"""    
+    """Advanced video stream extractor"""
+    
     def __init__(self):
         super().__init__("VideoStreamExtractor", StreamType.VIDEO_STREAM)
         self.fps = 30
@@ -519,13 +544,15 @@ class VideoStreamExtractor(BaseStreamExtractor):
         self.frame_height = 480
         
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request is for video stream"""        if not HAS_OPENCV:
+        """Check if request is for video stream"""
+        if not HAS_OPENCV:
             return False
         
         return request.metadata.get('stream_type') == 'video'
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Start video stream extraction"""        try:
+        """Start video stream extraction"""
+        try:
             stream_id = await self.start_stream(request)
             
             return ExtractionResult(
@@ -546,7 +573,8 @@ class VideoStreamExtractor(BaseStreamExtractor):
             )
     
     async def _stream_processor(self, request: ExtractionRequest, stream_id: str):
-        """Process video stream"""        if not HAS_OPENCV:
+        """Process video stream"""
+        if not HAS_OPENCV:
             return
         
         metadata = self.active_streams[stream_id]
@@ -626,19 +654,22 @@ class VideoStreamExtractor(BaseStreamExtractor):
 
 
 class RedisStreamExtractor(BaseStreamExtractor):
-    """Advanced Redis stream extractor"""    
+    """Advanced Redis stream extractor"""
+    
     def __init__(self):
         super().__init__("RedisStreamExtractor", StreamType.REDIS_STREAM)
         self.redis_client = None
         
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request is for Redis stream"""        if not HAS_REDIS:
+        """Check if request is for Redis stream"""
+        if not HAS_REDIS:
             return False
         
         return request.metadata.get('stream_type') == 'redis'
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Start Redis stream extraction"""        try:
+        """Start Redis stream extraction"""
+        try:
             # Initialize Redis client
             redis_config = request.metadata.get('redis_config', {})
             self.redis_client = redis.Redis(
@@ -668,7 +699,8 @@ class RedisStreamExtractor(BaseStreamExtractor):
             )
     
     async def _stream_processor(self, request: ExtractionRequest, stream_id: str):
-        """Process Redis stream"""        if not HAS_REDIS or not self.redis_client:
+        """Process Redis stream"""
+        if not HAS_REDIS or not self.redis_client:
             return
         
         metadata = self.active_streams[stream_id]
@@ -748,19 +780,22 @@ class RedisStreamExtractor(BaseStreamExtractor):
 
 
 class LiveAPIExtractor(BaseStreamExtractor):
-    """Advanced live API extractor for polling-based streams"""    
+    """Advanced live API extractor for polling-based streams"""
+    
     def __init__(self):
         super().__init__("LiveAPIExtractor", StreamType.LIVE_API)
         self.poll_interval = 5.0  # seconds
         
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request is for live API"""        if not HAS_AIOHTTP:
+        """Check if request is for live API"""
+        if not HAS_AIOHTTP:
             return False
         
         return request.metadata.get('stream_type') == 'live_api'
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Start live API extraction"""        try:
+        """Start live API extraction"""
+        try:
             stream_id = await self.start_stream(request)
             
             return ExtractionResult(
@@ -781,7 +816,8 @@ class LiveAPIExtractor(BaseStreamExtractor):
             )
     
     async def _stream_processor(self, request: ExtractionRequest, stream_id: str):
-        """Process live API stream via polling"""        if not HAS_AIOHTTP:
+        """Process live API stream via polling"""
+        if not HAS_AIOHTTP:
             return
         
         metadata = self.active_streams[stream_id]
@@ -860,7 +896,8 @@ class LiveAPIExtractor(BaseStreamExtractor):
 
 # Stream processing utilities
 class StreamBuffer:
-    """Thread-safe circular buffer for stream data"""    
+    """Thread-safe circular buffer for stream data"""
+    
     def __init__(self, max_size: int = 1000):
         self.max_size = max_size
         self.buffer = []
@@ -868,7 +905,8 @@ class StreamBuffer:
         self.current_index = 0
         
     def add(self, chunk: StreamChunk):
-        """Add chunk to buffer"""        with self.lock:
+        """Add chunk to buffer"""
+        with self.lock:
             if len(self.buffer) >= self.max_size:
                 # Remove oldest chunk
                 self.buffer.pop(0)
@@ -877,30 +915,35 @@ class StreamBuffer:
             self.current_index += 1
     
     def get_latest(self, count: int = 10) -> List[StreamChunk]:
-        """Get latest chunks"""        with self.lock:
+        """Get latest chunks"""
+        with self.lock:
             return self.buffer[-count:] if count <= len(self.buffer) else self.buffer.copy()
     
     def get_range(self, start_index: int, end_index: int) -> List[StreamChunk]:
-        """Get chunks in range"""        with self.lock:
+        """Get chunks in range"""
+        with self.lock:
             filtered = [chunk for chunk in self.buffer 
                        if start_index <= chunk.chunk_index <= end_index]
             return sorted(filtered, key=lambda x: x.chunk_index)
     
     def clear(self):
-        """Clear buffer"""        with self.lock:
+        """Clear buffer"""
+        with self.lock:
             self.buffer.clear()
             self.current_index = 0
 
 
 class StreamManager:
-    """Manager for multiple stream extractors"""    
+    """Manager for multiple stream extractors"""
+    
     def __init__(self):
         self.extractors: Dict[StreamType, BaseStreamExtractor] = {}
         self.buffers: Dict[str, StreamBuffer] = {}
         self.active_streams: Set[str] = set()
         
     def register_extractor(self, extractor: BaseStreamExtractor):
-        """Register stream extractor"""        self.extractors[extractor.stream_type] = extractor
+        """Register stream extractor"""
+        self.extractors[extractor.stream_type] = extractor
         
         # Add buffer processor
         async def buffer_processor(chunk: StreamChunk, processed_data: Dict) -> Dict:
@@ -913,7 +956,8 @@ class StreamManager:
         extractor.add_chunk_processor(buffer_processor)
     
     async def start_stream(self, request: ExtractionRequest) -> Optional[str]:
-        """Start stream with appropriate extractor"""        # Determine stream type
+        """Start stream with appropriate extractor"""
+        # Determine stream type
         stream_type = self._detect_stream_type(request)
         
         if stream_type not in self.extractors:
@@ -930,17 +974,20 @@ class StreamManager:
         return stream_id
     
     async def stop_stream(self, stream_id: str) -> bool:
-        """Stop stream"""        for extractor in self.extractors.values():
+        """Stop stream"""
+        for extractor in self.extractors.values():
             if await extractor.stop_stream(stream_id):
                 self.active_streams.discard(stream_id)
                 return True
         return False
     
     def get_stream_buffer(self, stream_id: str) -> Optional[StreamBuffer]:
-        """Get stream buffer"""        return self.buffers.get(stream_id)
+        """Get stream buffer"""
+        return self.buffers.get(stream_id)
     
     def _detect_stream_type(self, request: ExtractionRequest) -> Optional[StreamType]:
-        """Detect stream type from request"""        if request.metadata.get('stream_type'):
+        """Detect stream type from request"""
+        if request.metadata.get('stream_type'):
             try:
                 return StreamType(request.metadata['stream_type'])
             except ValueError:
@@ -957,7 +1004,8 @@ class StreamManager:
 
 # Register default stream extractors
 def register_default_stream_extractors():
-    """Register all default stream extractors"""    manager = StreamManager()
+    """Register all default stream extractors"""
+    manager = StreamManager()
     
     manager.register_extractor(WebSocketExtractor())
     manager.register_extractor(HTTPStreamExtractor())

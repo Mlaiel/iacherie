@@ -7,7 +7,8 @@ for live creator workflows and instant content processing.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Callable, AsyncIterator
 from pathlib import Path
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 
 class StreamType(Enum):
-    """Real-time stream types."""    AUDIO = "audio"
+    """Real-time stream types."""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -32,7 +34,8 @@ class StreamType(Enum):
 
 
 class ConversionMode(Enum):
-    """Real-time conversion modes."""    LIVE_STREAM = "live_stream"
+    """Real-time conversion modes."""
+    LIVE_STREAM = "live_stream"
     BUFFERED = "buffered"
     CHUNK_BASED = "chunk_based"
     FRAME_BY_FRAME = "frame_by_frame"
@@ -40,7 +43,8 @@ class ConversionMode(Enum):
 
 
 class QualityPreset(Enum):
-    """Quality presets for real-time conversion."""    ULTRA_LOW_LATENCY = "ultra_low_latency"  # <50ms
+    """Quality presets for real-time conversion."""
+    ULTRA_LOW_LATENCY = "ultra_low_latency"  # <50ms
     LOW_LATENCY = "low_latency"              # <200ms
     BALANCED = "balanced"                     # <500ms
     HIGH_QUALITY = "high_quality"           # <1000ms
@@ -49,7 +53,8 @@ class QualityPreset(Enum):
 
 @dataclass
 class StreamConfiguration:
-    """Configuration for real-time stream processing."""    stream_type: StreamType = StreamType.VIDEO
+    """Configuration for real-time stream processing."""
+    stream_type: StreamType = StreamType.VIDEO
     mode: ConversionMode = ConversionMode.BUFFERED
     quality_preset: QualityPreset = QualityPreset.BALANCED
     
@@ -81,7 +86,8 @@ class StreamConfiguration:
 
 @dataclass
 class StreamMetrics:
-    """Metrics for stream processing."""    stream_id: str
+    """Metrics for stream processing."""
+    stream_id: str
     start_time: float = field(default_factory=time.time)
     
     # Throughput metrics
@@ -109,7 +115,8 @@ class StreamMetrics:
     has_errors: bool = False
     
     def update_latency(self, latency_ms: float):
-        """Update latency metrics."""        self.average_latency_ms = (
+        """Update latency metrics."""
+        self.average_latency_ms = (
             (self.average_latency_ms * self.chunks_processed + latency_ms) /
             (self.chunks_processed + 1)
         )
@@ -119,7 +126,8 @@ class StreamMetrics:
 
 @dataclass
 class StreamChunk:
-    """Individual chunk of streaming data."""    id: str
+    """Individual chunk of streaming data."""
+    id: str
     stream_id: str
     timestamp: float
     data: bytes
@@ -140,22 +148,26 @@ class StreamChunk:
 
 
 class RealtimeConverter:
-    """    Real-time content converter for the IA Influencer Agent Platform.
+    """
+    Real-time content converter for the IA Influencer Agent Platform.
     
     Provides low-latency streaming transformation capabilities for live
     content creation and instant processing workflows.
-    """    
+    """
+    
     def __init__(
         self,
         config: Optional[StreamConfiguration] = None,
         transformer_registry: Optional[Dict[str, Callable]] = None
     ):
-        """        Initialize real-time converter.
+        """
+        Initialize real-time converter.
         
         Args:
             config: Stream configuration
             transformer_registry: Available transformers
-        """        self.config = config or StreamConfiguration()
+        """
+        self.config = config or StreamConfiguration()
         self.transformer_registry = transformer_registry or {}
         
         # Active streams
@@ -186,7 +198,8 @@ class RealtimeConverter:
         destination: Union[str, Callable],
         config: Optional[StreamConfiguration] = None
     ) -> bool:
-        """        Start a real-time conversion stream.
+        """
+        Start a real-time conversion stream.
         
         Args:
             stream_id: Unique stream identifier
@@ -196,7 +209,8 @@ class RealtimeConverter:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             if stream_id in self.active_streams:
                 raise ValueError(f"Stream already active: {stream_id}")
             
@@ -227,14 +241,16 @@ class RealtimeConverter:
             return False
     
     async def stop_stream(self, stream_id: str) -> bool:
-        """        Stop a real-time conversion stream.
+        """
+        Stop a real-time conversion stream.
         
         Args:
             stream_id: Stream identifier
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             if stream_id not in self.active_streams:
                 return False
             
@@ -263,7 +279,8 @@ class RealtimeConverter:
         transformation: str,
         parameters: Optional[Dict[str, Any]] = None
     ) -> StreamChunk:
-        """        Process individual chunk with transformation.
+        """
+        Process individual chunk with transformation.
         
         Args:
             stream_id: Stream identifier
@@ -273,7 +290,8 @@ class RealtimeConverter:
             
         Returns:
             Processed chunk
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         
         try:
             # Get transformer
@@ -328,7 +346,8 @@ class RealtimeConverter:
         quality_levels: List[Dict[str, Any]],
         bandwidth_callback: Callable[[], float]
     ) -> bool:
-        """        Create adaptive quality stream that adjusts based on conditions.
+        """
+        Create adaptive quality stream that adjusts based on conditions.
         
         Args:
             stream_id: Stream identifier
@@ -338,7 +357,8 @@ class RealtimeConverter:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             # Create adaptive configuration
             adaptive_config = StreamConfiguration(
                 mode=ConversionMode.CHUNK_BASED,
@@ -373,7 +393,8 @@ class RealtimeConverter:
         stream_id: str,
         effects: List[Dict[str, Any]]
     ) -> bool:
-        """        Enable real-time effects processing on stream.
+        """
+        Enable real-time effects processing on stream.
         
         Args:
             stream_id: Stream identifier
@@ -381,7 +402,8 @@ class RealtimeConverter:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             if stream_id not in self.active_streams:
                 return False
             
@@ -400,7 +422,8 @@ class RealtimeConverter:
             return False
     
     async def get_stream_status(self, stream_id: str) -> Optional[Dict[str, Any]]:
-        """Get current stream status and metrics."""        if stream_id not in self.active_streams:
+        """Get current stream status and metrics."""
+        if stream_id not in self.active_streams:
             return None
         
         stream_info = self.active_streams[stream_id]
@@ -420,7 +443,8 @@ class RealtimeConverter:
         stream_id: str,
         target_latency_ms: float
     ) -> bool:
-        """        Optimize stream configuration for target latency.
+        """
+        Optimize stream configuration for target latency.
         
         Args:
             stream_id: Stream identifier
@@ -428,7 +452,8 @@ class RealtimeConverter:
             
         Returns:
             Success status
-        """        try:
+        """
+        try:
             if stream_id not in self.active_streams:
                 return False
             
@@ -460,7 +485,8 @@ class RealtimeConverter:
             return False
     
     async def _start_processing_pipeline(self, stream_id: str):
-        """Start the processing pipeline for a stream."""        try:
+        """Start the processing pipeline for a stream."""
+        try:
             stream_info = self.active_streams[stream_id]
             config = stream_info["config"]
             
@@ -480,7 +506,8 @@ class RealtimeConverter:
             logger.error(f"Pipeline start failed: {str(e)}")
     
     async def _live_stream_processor(self, stream_id: str):
-        """Process live stream with minimal buffering."""        try:
+        """Process live stream with minimal buffering."""
+        try:
             stream_info = self.active_streams[stream_id]
             source = stream_info["source"]
             
@@ -505,7 +532,8 @@ class RealtimeConverter:
             logger.error(f"Live stream processing failed: {str(e)}")
     
     async def _buffered_processor(self, stream_id: str):
-        """Process stream with buffering for stability."""        try:
+        """Process stream with buffering for stability."""
+        try:
             stream_info = self.active_streams[stream_id]
             config = stream_info["config"]
             buffer = bytearray()
@@ -536,7 +564,8 @@ class RealtimeConverter:
             logger.error(f"Buffered processing failed: {str(e)}")
     
     async def _chunk_processor(self, stream_id: str):
-        """Process stream in fixed-size chunks."""        try:
+        """Process stream in fixed-size chunks."""
+        try:
             stream_info = self.active_streams[stream_id]
             config = stream_info["config"]
             sequence = 0
@@ -566,7 +595,8 @@ class RealtimeConverter:
             logger.error(f"Chunk processing failed: {str(e)}")
     
     async def _frame_processor(self, stream_id: str):
-        """Process stream frame by frame."""        try:
+        """Process stream frame by frame."""
+        try:
             stream_info = self.active_streams[stream_id]
             frame_count = 0
             
@@ -595,7 +625,8 @@ class RealtimeConverter:
             logger.error(f"Frame processing failed: {str(e)}")
     
     async def _low_latency_processor(self, stream_id: str):
-        """Process stream with ultra-low latency optimizations."""        try:
+        """Process stream with ultra-low latency optimizations."""
+        try:
             stream_info = self.active_streams[stream_id]
             config = stream_info["config"]
             
@@ -631,7 +662,8 @@ class RealtimeConverter:
         quality_levels: List[Dict[str, Any]],
         bandwidth_callback: Callable[[], float]
     ):
-        """Control adaptive quality based on conditions."""        try:
+        """Control adaptive quality based on conditions."""
+        try:
             current_quality_index = len(quality_levels) // 2  # Start with medium quality
             
             while stream_id in self.active_streams:
@@ -658,28 +690,33 @@ class RealtimeConverter:
             logger.error(f"Adaptive quality control failed: {str(e)}")
     
     async def _adaptive_output_handler(self, chunk: StreamChunk):
-        """Handle output for adaptive streams."""        # This would route output based on current quality level
+        """Handle output for adaptive streams."""
+        # This would route output based on current quality level
         pass
     
     async def _read_from_source(self, source: str) -> AsyncIterator[bytes]:
-        """Read data from source asynchronously."""        # This would implement actual source reading
+        """Read data from source asynchronously."""
+        # This would implement actual source reading
         # For simulation, yield dummy data
         for i in range(100):
             yield f"data_chunk_{i}".encode()
             await asyncio.sleep(0.01)
     
     async def _read_chunk_from_source(self, source: Any, size: int = 1024) -> bytes:
-        """Read specific chunk size from source."""        # Simulate reading from source
+        """Read specific chunk size from source."""
+        # Simulate reading from source
         await asyncio.sleep(0.01)
         return f"chunk_data_{int(time.time() * 1000)}".encode()[:size]
     
     async def _process_chunk_direct(self, chunk: StreamChunk):
-        """Process chunk directly without queuing."""        # Direct processing for ultra-low latency
+        """Process chunk directly without queuing."""
+        # Direct processing for ultra-low latency
         chunk.processed = True
         chunk.timestamp = time.time()
     
     async def _apply_quality_settings(self, stream_id: str, quality_config: Dict[str, Any]):
-        """Apply quality settings to stream."""        if stream_id in self.active_streams:
+        """Apply quality settings to stream."""
+        if stream_id in self.active_streams:
             config = self.active_streams[stream_id]["config"]
             
             for key, value in quality_config.items():
@@ -688,13 +725,15 @@ class RealtimeConverter:
 
 
 class EffectsPipeline:
-    """Real-time effects processing pipeline."""    
+    """Real-time effects processing pipeline."""
+    
     def __init__(self, effects: List[Dict[str, Any]]):
         self.effects = effects
         self.enabled = True
     
     async def apply_effects(self, chunk: StreamChunk) -> StreamChunk:
-        """Apply effects to chunk."""        if not self.enabled:
+        """Apply effects to chunk."""
+        if not self.enabled:
             return chunk
         
         processed_chunk = chunk
@@ -713,20 +752,23 @@ class EffectsPipeline:
         return processed_chunk
     
     async def _apply_blur(self, chunk: StreamChunk, params: Dict[str, Any]) -> StreamChunk:
-        """Apply blur effect."""        # Simulate blur processing
+        """Apply blur effect."""
+        # Simulate blur processing
         chunk.metadata["effects_applied"] = chunk.metadata.get("effects_applied", [])
         chunk.metadata["effects_applied"].append("blur")
         return chunk
     
     async def _apply_filter(self, chunk: StreamChunk, params: Dict[str, Any]) -> StreamChunk:
-        """Apply filter effect."""        # Simulate filter processing
+        """Apply filter effect."""
+        # Simulate filter processing
         chunk.metadata["effects_applied"] = chunk.metadata.get("effects_applied", [])
         chunk.metadata["effects_applied"].append("filter")
         return chunk
 
 
 class PerformanceMonitor:
-    """Performance monitoring for real-time processing."""    
+    """Performance monitoring for real-time processing."""
+    
     def __init__(self):
         self.metrics = {
             "cpu_usage": 0.0,
@@ -737,7 +779,8 @@ class PerformanceMonitor:
         }
     
     async def get_metrics(self) -> Dict[str, float]:
-        """Get current performance metrics."""        try:
+        """Get current performance metrics."""
+        try:
             import psutil
             
             self.metrics["cpu_usage"] = psutil.cpu_percent()
@@ -759,13 +802,15 @@ class PerformanceMonitor:
 
 
 class StreamingWebSocketHandler:
-    """WebSocket handler for real-time streaming."""    
+    """WebSocket handler for real-time streaming."""
+    
     def __init__(self, converter: RealtimeConverter):
         self.converter = converter
         self.active_connections: Dict[str, websockets.WebSocketServerProtocol] = {}
     
     async def handle_connection(self, websocket, path):
-        """Handle WebSocket connection."""        try:
+        """Handle WebSocket connection."""
+        try:
             connection_id = f"ws_{int(time.time() * 1000)}"
             self.active_connections[connection_id] = websocket
             
@@ -779,7 +824,8 @@ class StreamingWebSocketHandler:
                 del self.active_connections[connection_id]
     
     async def _process_websocket_message(self, connection_id: str, message: str):
-        """Process incoming WebSocket message."""        try:
+        """Process incoming WebSocket message."""
+        try:
             data = json.loads(message)
             command = data.get("command")
             
@@ -800,7 +846,8 @@ class StreamingWebSocketHandler:
             logger.error(f"WebSocket message processing failed: {str(e)}")
     
     async def _websocket_source_generator(self, connection_id: str) -> AsyncIterator[bytes]:
-        """Generate data from WebSocket connection."""        websocket = self.active_connections.get(connection_id)
+        """Generate data from WebSocket connection."""
+        websocket = self.active_connections.get(connection_id)
         if not websocket:
             return
         
@@ -814,7 +861,8 @@ class StreamingWebSocketHandler:
             pass
     
     async def _websocket_output_handler(self, connection_id: str):
-        """Handle output to WebSocket connection."""        def send_to_websocket(chunk: StreamChunk):
+        """Handle output to WebSocket connection."""
+        def send_to_websocket(chunk: StreamChunk):
             websocket = self.active_connections.get(connection_id)
             if websocket:
                 asyncio.create_task(websocket.send(chunk.data))

@@ -9,7 +9,8 @@ DevOps Engineer, AI Prompt Engineer
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
-"""import asyncio
+"""
+import asyncio
 import json
 import hashlib
 import time
@@ -41,7 +42,8 @@ settings = get_settings()
 
 
 class IndexType(Enum):
-    """Database index types"""    BTREE = "btree"
+    """Database index types"""
+    BTREE = "btree"
     HASH = "hash"
     GIN = "gin"
     GIST = "gist"
@@ -50,7 +52,8 @@ class IndexType(Enum):
 
 
 class TableAnalysisType(Enum):
-    """Table analysis types"""    SIZE_ANALYSIS = "size"
+    """Table analysis types"""
+    SIZE_ANALYSIS = "size"
     PERFORMANCE_ANALYSIS = "performance"
     CONSTRAINT_ANALYSIS = "constraints"
     INDEX_ANALYSIS = "indexes"
@@ -59,7 +62,8 @@ class TableAnalysisType(Enum):
 
 @dataclass
 class TableInfo:
-    """Table information structure"""    name: str
+    """Table information structure"""
+    name: str
     schema: str
     row_count: int
     size_bytes: int
@@ -73,7 +77,8 @@ class TableInfo:
 
 @dataclass
 class IndexInfo:
-    """Index information structure"""    name: str
+    """Index information structure"""
+    name: str
     table_name: str
     columns: List[str]
     index_type: str
@@ -85,7 +90,8 @@ class IndexInfo:
 
 @dataclass
 class PerformanceMetrics:
-    """Database performance metrics"""    slow_queries: List[Dict[str, Any]]
+    """Database performance metrics"""
+    slow_queries: List[Dict[str, Any]]
     table_stats: List[Dict[str, Any]]
     index_usage: List[Dict[str, Any]]
     lock_stats: Dict[str, Any]
@@ -95,23 +101,27 @@ class PerformanceMetrics:
 
 
 class DatabaseUtils:
-    """    Core database utilities for:
+    """
+    Core database utilities for:
     - Table information and statistics
     - Database introspection
     - General utility functions
-    """    
+    """
+    
     def __init__(self):
         self.db_connection: Optional[DatabaseConnection] = None
         self.session_manager: Optional[SessionManager] = None
         self.metadata = MetaData()
         
     async def initialize(self):
-        """Initialize database utilities"""        self.db_connection = await DatabaseConnection.get_instance()
+        """Initialize database utilities"""
+        self.db_connection = await DatabaseConnection.get_instance()
         self.session_manager = SessionManager()
         await self.session_manager.initialize()
     
     async def get_database_version(self) -> Dict[str, Any]:
-        """Get database version information"""        try:
+        """Get database version information"""
+        try:
             async with self.session_manager.get_async_session() as session:
                 version_query = text("SELECT version()")
                 result = await session.execute(version_query)
@@ -132,9 +142,11 @@ class DatabaseUtils:
             return {'error': str(e)}
     
     async def get_database_size(self) -> Dict[str, Any]:
-        """Get total database size"""        try:
+        """Get total database size"""
+        try:
             async with self.session_manager.get_async_session() as session:
-                size_query = text("""                    SELECT 
+                size_query = text("""
+                    SELECT 
                         pg_database_size(current_database()) as size_bytes,
                         pg_size_pretty(pg_database_size(current_database())) as size_pretty
                 """)
@@ -152,16 +164,19 @@ class DatabaseUtils:
             return {'error': str(e)}
     
     async def list_all_tables(self, include_system: bool = False) -> List[str]:
-        """List all tables in the database"""        try:
+        """List all tables in the database"""
+        try:
             async with self.session_manager.get_async_session() as session:
                 if include_system:
-                    query = text("""                        SELECT table_name 
+                    query = text("""
+                        SELECT table_name 
                         FROM information_schema.tables 
                         WHERE table_schema IN ('public', 'information_schema', 'pg_catalog')
                         ORDER BY table_name
                     """)
                 else:
-                    query = text("""                        SELECT table_name 
+                    query = text("""
+                        SELECT table_name 
                         FROM information_schema.tables 
                         WHERE table_schema = 'public'
                         AND table_type = 'BASE TABLE'
@@ -175,10 +190,12 @@ class DatabaseUtils:
             return []
     
     async def get_table_info(self, table_name: str) -> Optional[TableInfo]:
-        """Get comprehensive table information"""        try:
+        """Get comprehensive table information"""
+        try:
             async with self.session_manager.get_async_session() as session:
                 # Get basic table stats
-                stats_query = text("""                    SELECT 
+                stats_query = text("""
+                    SELECT 
                         schemaname,
                         relname,
                         n_tup_ins as inserts,
@@ -201,7 +218,8 @@ class DatabaseUtils:
                     return None
                 
                 # Get table size
-                size_query = text("""                    SELECT 
+                size_query = text("""
+                    SELECT 
                         pg_total_relation_size(:table_name) as size_bytes,
                         pg_size_pretty(pg_total_relation_size(:table_name)) as size_pretty
                 """)
@@ -209,7 +227,8 @@ class DatabaseUtils:
                 size_row = size_result.fetchone()
                 
                 # Get column information
-                columns_query = text("""                    SELECT 
+                columns_query = text("""
+                    SELECT 
                         column_name,
                         data_type,
                         is_nullable,
@@ -259,8 +278,10 @@ class DatabaseUtils:
             return None
     
     async def _get_table_indexes(self, session: AsyncSession, table_name: str) -> List[Dict[str, Any]]:
-        """Get index information for a table"""        try:
-            indexes_query = text("""                SELECT 
+        """Get index information for a table"""
+        try:
+            indexes_query = text("""
+                SELECT 
                     i.relname as index_name,
                     am.amname as index_type,
                     ix.indisunique as is_unique,
@@ -296,8 +317,10 @@ class DatabaseUtils:
             return []
     
     async def _get_table_constraints(self, session: AsyncSession, table_name: str) -> List[Dict[str, Any]]:
-        """Get constraint information for a table"""        try:
-            constraints_query = text("""                SELECT 
+        """Get constraint information for a table"""
+        try:
+            constraints_query = text("""
+                SELECT 
                     tc.constraint_name,
                     tc.constraint_type,
                     kcu.column_name,
@@ -328,9 +351,11 @@ class DatabaseUtils:
             return []
     
     async def check_table_exists(self, table_name: str) -> bool:
-        """Check if table exists"""        try:
+        """Check if table exists"""
+        try:
             async with self.session_manager.get_async_session() as session:
-                query = text("""                    SELECT COUNT(*) 
+                query = text("""
+                    SELECT COUNT(*) 
                     FROM information_schema.tables 
                     WHERE table_name = :table_name AND table_schema = 'public'
                 """)
@@ -341,7 +366,8 @@ class DatabaseUtils:
             return False
     
     async def vacuum_table(self, table_name: str, full: bool = False, analyze: bool = True) -> Dict[str, Any]:
-        """Run VACUUM on a specific table"""        try:
+        """Run VACUUM on a specific table"""
+        try:
             # VACUUM cannot be run in a transaction, so use autocommit
             engine = self.db_connection.get_postgresql_engine(async_mode=False)
             
@@ -371,7 +397,8 @@ class DatabaseUtils:
             return {'success': False, 'error': str(e)}
     
     async def analyze_table(self, table_name: str) -> Dict[str, Any]:
-        """Run ANALYZE on a specific table"""        try:
+        """Run ANALYZE on a specific table"""
+        try:
             engine = self.db_connection.get_postgresql_engine(async_mode=False)
             
             with engine.connect() as conn:
@@ -392,26 +419,31 @@ class DatabaseUtils:
 
 
 class TableUtils:
-    """    Table-specific utilities for:
+    """
+    Table-specific utilities for:
     - Table maintenance operations
     - Data consistency checks
     - Table optimization
-    """    
+    """
+    
     def __init__(self):
         self.db_utils = DatabaseUtils()
         
     async def initialize(self):
-        """Initialize table utilities"""        await self.db_utils.initialize()
+        """Initialize table utilities"""
+        await self.db_utils.initialize()
     
     async def find_duplicate_rows(self, table_name: str, 
                                 columns: Optional[List[str]] = None,
                                 limit: int = 100) -> Dict[str, Any]:
-        """Find duplicate rows in a table"""        try:
+        """Find duplicate rows in a table"""
+        try:
             async with self.db_utils.session_manager.get_async_session() as session:
                 if columns:
                     # Check for duplicates based on specific columns
                     column_list = ', '.join(columns)
-                    query = text(f"""                        SELECT {column_list}, COUNT(*) as duplicate_count
+                    query = text(f"""
+                        SELECT {column_list}, COUNT(*) as duplicate_count
                         FROM {table_name}
                         GROUP BY {column_list}
                         HAVING COUNT(*) > 1
@@ -421,7 +453,8 @@ class TableUtils:
                 else:
                     # Check for completely identical rows
                     # Get all columns first
-                    columns_query = text("""                        SELECT column_name 
+                    columns_query = text("""
+                        SELECT column_name 
                         FROM information_schema.columns 
                         WHERE table_name = :table_name
                         ORDER BY ordinal_position
@@ -433,7 +466,8 @@ class TableUtils:
                         return {'success': False, 'error': f'Table {table_name} not found or has no columns'}
                     
                     column_list = ', '.join(all_columns)
-                    query = text(f"""                        SELECT {column_list}, COUNT(*) as duplicate_count
+                    query = text(f"""
+                        SELECT {column_list}, COUNT(*) as duplicate_count
                         FROM {table_name}
                         GROUP BY {column_list}
                         HAVING COUNT(*) > 1
@@ -457,10 +491,12 @@ class TableUtils:
             return {'success': False, 'error': str(e)}
     
     async def check_referential_integrity(self, table_name: str) -> Dict[str, Any]:
-        """Check referential integrity for foreign keys"""        try:
+        """Check referential integrity for foreign keys"""
+        try:
             async with self.db_utils.session_manager.get_async_session() as session:
                 # Get foreign key constraints
-                fk_query = text("""                    SELECT 
+                fk_query = text("""
+                    SELECT 
                         tc.constraint_name,
                         kcu.column_name,
                         ccu.table_name AS foreign_table_name,
@@ -481,7 +517,8 @@ class TableUtils:
                 
                 for fk in foreign_keys:
                     # Check for orphaned records
-                    orphans_query = text(f"""                        SELECT COUNT(*) as orphan_count
+                    orphans_query = text(f"""
+                        SELECT COUNT(*) as orphan_count
                         FROM {table_name} t
                         WHERE t.{fk.column_name} IS NOT NULL
                         AND NOT EXISTS (
@@ -515,10 +552,12 @@ class TableUtils:
             return {'success': False, 'error': str(e)}
     
     async def get_table_statistics(self, table_name: str) -> Dict[str, Any]:
-        """Get comprehensive table statistics"""        try:
+        """Get comprehensive table statistics"""
+        try:
             async with self.db_utils.session_manager.get_async_session() as session:
                 # Basic statistics
-                stats_query = text(f"""                    SELECT 
+                stats_query = text(f"""
+                    SELECT 
                         COUNT(*) as total_rows,
                         COUNT(DISTINCT *) as unique_rows,
                         pg_total_relation_size('{table_name}') as total_size,
@@ -531,7 +570,8 @@ class TableUtils:
                 
                 # Column statistics
                 column_stats = []
-                columns_query = text("""                    SELECT column_name, data_type
+                columns_query = text("""
+                    SELECT column_name, data_type
                     FROM information_schema.columns 
                     WHERE table_name = :table_name
                     ORDER BY ordinal_position
@@ -540,7 +580,8 @@ class TableUtils:
                 
                 for col in columns_result.fetchall():
                     # Get column-specific stats
-                    col_stats_query = text(f"""                        SELECT 
+                    col_stats_query = text(f"""
+                        SELECT 
                             COUNT(*) as total_count,
                             COUNT({col.column_name}) as non_null_count,
                             COUNT(DISTINCT {col.column_name}) as distinct_count
@@ -586,14 +627,16 @@ class TableUtils:
             return {'success': False, 'error': str(e)}
     
     def _bytes_to_human(self, bytes_size: int) -> str:
-        """Convert bytes to human readable format"""        for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
+        """Convert bytes to human readable format"""
+        for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
             if bytes_size < 1024.0:
                 return f"{bytes_size:.1f} {unit}"
             bytes_size /= 1024.0
         return f"{bytes_size:.1f} PB"
     
     async def optimize_table(self, table_name: str) -> Dict[str, Any]:
-        """Optimize table performance"""        try:
+        """Optimize table performance"""
+        try:
             results = []
             
             # Run VACUUM ANALYZE
@@ -616,22 +659,27 @@ class TableUtils:
 
 
 class IndexUtils:
-    """    Index management utilities for:
+    """
+    Index management utilities for:
     - Index creation and dropping
     - Index usage analysis
     - Index recommendations
-    """    
+    """
+    
     def __init__(self):
         self.db_utils = DatabaseUtils()
         
     async def initialize(self):
-        """Initialize index utilities"""        await self.db_utils.initialize()
+        """Initialize index utilities"""
+        await self.db_utils.initialize()
     
     async def get_index_usage_stats(self, table_name: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Get index usage statistics"""        try:
+        """Get index usage statistics"""
+        try:
             async with self.db_utils.session_manager.get_async_session() as session:
                 if table_name:
-                    query = text("""                        SELECT 
+                    query = text("""
+                        SELECT 
                             schemaname,
                             tablename,
                             indexname,
@@ -645,7 +693,8 @@ class IndexUtils:
                     """)
                     result = await session.execute(query, {'table_name': table_name})
                 else:
-                    query = text("""                        SELECT 
+                    query = text("""
+                        SELECT 
                             schemaname,
                             tablename,
                             indexname,
@@ -665,9 +714,11 @@ class IndexUtils:
             return []
     
     async def find_unused_indexes(self, min_size_mb: int = 10) -> List[Dict[str, Any]]:
-        """Find unused indexes that are consuming space"""        try:
+        """Find unused indexes that are consuming space"""
+        try:
             async with self.db_utils.session_manager.get_async_session() as session:
-                query = text("""                    SELECT 
+                query = text("""
+                    SELECT 
                         schemaname,
                         tablename,
                         indexname,
@@ -691,9 +742,11 @@ class IndexUtils:
             return []
     
     async def find_duplicate_indexes(self) -> List[Dict[str, Any]]:
-        """Find duplicate or redundant indexes"""        try:
+        """Find duplicate or redundant indexes"""
+        try:
             async with self.db_utils.session_manager.get_async_session() as session:
-                query = text("""                    SELECT 
+                query = text("""
+                    SELECT 
                         t.relname as table_name,
                         array_agg(i.relname) as index_names,
                         array_agg(a.attname ORDER BY a.attnum) as columns,
@@ -718,7 +771,8 @@ class IndexUtils:
             return []
     
     async def analyze_index_recommendations(self, table_name: str) -> Dict[str, Any]:
-        """Analyze and recommend indexes for a table"""        try:
+        """Analyze and recommend indexes for a table"""
+        try:
             recommendations = []
             
             async with self.db_utils.session_manager.get_async_session() as session:
@@ -726,7 +780,8 @@ class IndexUtils:
                 # For now, we'll look at foreign key columns and frequently updated columns
                 
                 # Check for foreign keys without indexes
-                fk_query = text("""                    SELECT 
+                fk_query = text("""
+                    SELECT 
                         kcu.column_name,
                         ccu.table_name AS references_table,
                         ccu.column_name AS references_column
@@ -743,7 +798,8 @@ class IndexUtils:
                 
                 for fk in fk_result.fetchall():
                     # Check if there's already an index on this column
-                    index_check_query = text("""                        SELECT COUNT(*) 
+                    index_check_query = text("""
+                        SELECT COUNT(*) 
                         FROM pg_indexes 
                         WHERE tablename = :table_name 
                         AND indexdef LIKE :column_pattern
@@ -796,7 +852,8 @@ class IndexUtils:
                           index_type: IndexType = IndexType.BTREE,
                           unique: bool = False,
                           where_condition: Optional[str] = None) -> Dict[str, Any]:
-        """Create an index on specified columns"""        try:
+        """Create an index on specified columns"""
+        try:
             if not index_name:
                 index_name = f"idx_{table_name}_{'_'.join(columns)}"
             
@@ -842,7 +899,8 @@ class IndexUtils:
             return {'success': False, 'error': str(e)}
     
     async def drop_index(self, index_name: str, cascade: bool = False) -> Dict[str, Any]:
-        """Drop an index"""        try:
+        """Drop an index"""
+        try:
             drop_sql = f"DROP INDEX {index_name}"
             if cascade:
                 drop_sql += " CASCADE"
@@ -870,19 +928,23 @@ class IndexUtils:
 
 
 class ConstraintUtils:
-    """    Constraint management utilities for:
+    """
+    Constraint management utilities for:
     - Constraint validation
     - Constraint creation and dropping
     - Data integrity checks
-    """    
+    """
+    
     def __init__(self):
         self.db_utils = DatabaseUtils()
         
     async def initialize(self):
-        """Initialize constraint utilities"""        await self.db_utils.initialize()
+        """Initialize constraint utilities"""
+        await self.db_utils.initialize()
     
     async def validate_all_constraints(self, table_name: Optional[str] = None) -> Dict[str, Any]:
-        """Validate all constraints in database or specific table"""        try:
+        """Validate all constraints in database or specific table"""
+        try:
             async with self.db_utils.session_manager.get_async_session() as session:
                 if table_name:
                     # Validate constraints for specific table
@@ -907,11 +969,13 @@ class ConstraintUtils:
             return {'success': False, 'error': str(e)}
     
     async def _validate_table_constraints(self, session: AsyncSession, table_name: str) -> Dict[str, Any]:
-        """Validate constraints for a specific table"""        violations = []
+        """Validate constraints for a specific table"""
+        violations = []
         
         try:
             # Get all constraints for the table
-            constraints_query = text("""                SELECT 
+            constraints_query = text("""
+                SELECT 
                     tc.constraint_name,
                     tc.constraint_type,
                     kcu.column_name,
@@ -935,7 +999,8 @@ class ConstraintUtils:
             for constraint in constraints:
                 if constraint.constraint_type == 'FOREIGN KEY':
                     # Check foreign key violations
-                    fk_violations_query = text(f"""                        SELECT COUNT(*) as violation_count
+                    fk_violations_query = text(f"""
+                        SELECT COUNT(*) as violation_count
                         FROM {table_name} t
                         WHERE t.{constraint.column_name} IS NOT NULL
                         AND NOT EXISTS (
@@ -959,7 +1024,8 @@ class ConstraintUtils:
                 elif constraint.constraint_type == 'CHECK':
                     # Check constraint violations
                     if constraint.check_clause:
-                        check_violations_query = text(f"""                            SELECT COUNT(*) as violation_count
+                        check_violations_query = text(f"""
+                            SELECT COUNT(*) as violation_count
                             FROM {table_name}
                             WHERE NOT ({constraint.check_clause})
                         """)
@@ -977,7 +1043,8 @@ class ConstraintUtils:
                 
                 elif constraint.constraint_type == 'UNIQUE':
                     # Check unique constraint violations
-                    unique_violations_query = text(f"""                        SELECT {constraint.column_name}, COUNT(*) as duplicate_count
+                    unique_violations_query = text(f"""
+                        SELECT {constraint.column_name}, COUNT(*) as duplicate_count
                         FROM {table_name}
                         GROUP BY {constraint.column_name}
                         HAVING COUNT(*) > 1
@@ -1012,23 +1079,28 @@ class ConstraintUtils:
 
 
 class PerformanceAnalyzer:
-    """    Database performance analysis tools:
+    """
+    Database performance analysis tools:
     - Query performance analysis
     - System resource monitoring
     - Bottleneck identification
     - Optimization recommendations
-    """    
+    """
+    
     def __init__(self):
         self.db_utils = DatabaseUtils()
         
     async def initialize(self):
-        """Initialize performance analyzer"""        await self.db_utils.initialize()
+        """Initialize performance analyzer"""
+        await self.db_utils.initialize()
     
     async def get_slow_queries(self, limit: int = 50, min_duration_ms: int = 1000) -> List[Dict[str, Any]]:
-        """Get slow queries from pg_stat_statements"""        try:
+        """Get slow queries from pg_stat_statements"""
+        try:
             async with self.db_utils.session_manager.get_async_session() as session:
                 # Check if pg_stat_statements extension is available
-                extension_check = text("""                    SELECT COUNT(*) FROM pg_extension WHERE extname = 'pg_stat_statements'
+                extension_check = text("""
+                    SELECT COUNT(*) FROM pg_extension WHERE extname = 'pg_stat_statements'
                 """)
                 extension_result = await session.execute(extension_check)
                 
@@ -1036,7 +1108,8 @@ class PerformanceAnalyzer:
                     logger.warning("pg_stat_statements extension not available")
                     return []
                 
-                slow_queries_query = text("""                    SELECT 
+                slow_queries_query = text("""
+                    SELECT 
                         query,
                         calls,
                         total_time,
@@ -1063,10 +1136,12 @@ class PerformanceAnalyzer:
             return []
     
     async def analyze_table_performance(self, table_name: str) -> Dict[str, Any]:
-        """Analyze performance metrics for a specific table"""        try:
+        """Analyze performance metrics for a specific table"""
+        try:
             async with self.db_utils.session_manager.get_async_session() as session:
                 # Get table access patterns
-                table_stats_query = text("""                    SELECT 
+                table_stats_query = text("""
+                    SELECT 
                         schemaname,
                         relname,
                         seq_scan,
@@ -1102,7 +1177,8 @@ class PerformanceAnalyzer:
                 hot_update_ratio = (table_stats.n_tup_hot_upd / max(1, table_stats.n_tup_upd) * 100) if table_stats.n_tup_upd else 100
                 
                 # Get index usage for this table
-                index_usage_query = text("""                    SELECT 
+                index_usage_query = text("""
+                    SELECT 
                         indexname,
                         idx_scan,
                         idx_tup_read,
@@ -1158,10 +1234,12 @@ class PerformanceAnalyzer:
             return {'success': False, 'error': str(e)}
     
     async def get_database_performance_overview(self) -> Dict[str, Any]:
-        """Get overall database performance overview"""        try:
+        """Get overall database performance overview"""
+        try:
             async with self.db_utils.session_manager.get_async_session() as session:
                 # Database-wide statistics
-                db_stats_query = text("""                    SELECT 
+                db_stats_query = text("""
+                    SELECT 
                         numbackends as active_connections,
                         xact_commit as committed_transactions,
                         xact_rollback as rolled_back_transactions,
@@ -1191,7 +1269,8 @@ class PerformanceAnalyzer:
                 transaction_success_ratio = (db_stats.committed_transactions / total_transactions * 100) if total_transactions > 0 else 0
                 
                 # Get lock statistics
-                locks_query = text("""                    SELECT 
+                locks_query = text("""
+                    SELECT 
                         mode,
                         COUNT(*) as lock_count
                     FROM pg_locks
@@ -1204,7 +1283,8 @@ class PerformanceAnalyzer:
                 lock_stats = {row.mode: row.lock_count for row in locks_result.fetchall()}
                 
                 # Get connection information
-                connections_query = text("""                    SELECT 
+                connections_query = text("""
+                    SELECT 
                         state,
                         COUNT(*) as connection_count
                     FROM pg_stat_activity
@@ -1245,7 +1325,8 @@ class PerformanceAnalyzer:
             return {'success': False, 'error': str(e)}
     
     def _assess_performance(self, cache_hit_ratio: float, transaction_success_ratio: float) -> Dict[str, Any]:
-        """Assess overall database performance"""        issues = []
+        """Assess overall database performance"""
+        issues = []
         recommendations = []
         
         if cache_hit_ratio < 95:

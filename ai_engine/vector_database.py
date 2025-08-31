@@ -3,7 +3,8 @@ High-performance similarity search using FAISS with intelligent indexing.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import os
 import pickle
 import numpy as np
@@ -21,7 +22,8 @@ from ..core.cache import cache_manager
 
 
 class VectorIndex:
-    """Manages a single FAISS vector index for a specific content type"""    
+    """Manages a single FAISS vector index for a specific content type"""
+    
     def __init__(self, content_type: str, dimension: int):
         self.content_type = content_type
         self.dimension = dimension
@@ -39,7 +41,8 @@ class VectorIndex:
         self._initialize_index()
     
     def _initialize_index(self):
-        """Initialize FAISS index based on content type and size"""        if self.content_type in ["audio", "text"]:
+        """Initialize FAISS index based on content type and size"""
+        if self.content_type in ["audio", "text"]:
             # For high-dimensional data, use IVF with PQ
             quantizer = faiss.IndexFlatL2(self.dimension)
             self.index = faiss.IndexIVFPQ(quantizer, self.dimension, self.nlist, 8, 8)
@@ -55,7 +58,8 @@ class VectorIndex:
         logger.info(f"Initialized {self.index.__class__.__name__} for {self.content_type} content")
     
     async def add_vector(self, vector: np.ndarray, external_id: str, metadata: Dict[str, Any]) -> bool:
-        """Add a vector to the index"""        try:
+        """Add a vector to the index"""
+        try:
             # Normalize vector
             vector = vector.astype(np.float32)
             if vector.ndim == 1:
@@ -95,7 +99,8 @@ class VectorIndex:
     
     async def search_similar(self, query_vector: np.ndarray, k: int = 10, 
                            threshold: float = None) -> List[Dict[str, Any]]:
-        """Search for similar vectors"""        try:
+        """Search for similar vectors"""
+        try:
             # Normalize query vector
             query_vector = query_vector.astype(np.float32)
             if query_vector.ndim == 1:
@@ -141,7 +146,8 @@ class VectorIndex:
             return []
     
     async def remove_vector(self, external_id: str) -> bool:
-        """Remove a vector from the index (marks as removed)"""        try:
+        """Remove a vector from the index (marks as removed)"""
+        try:
             if external_id not in self.id_mapping:
                 return False
             
@@ -161,7 +167,8 @@ class VectorIndex:
             return False
     
     async def update_metadata(self, external_id: str, metadata: Dict[str, Any]) -> bool:
-        """Update metadata for a vector"""        try:
+        """Update metadata for a vector"""
+        try:
             if external_id in self.metadata:
                 self.metadata[external_id].update(metadata)
                 return True
@@ -172,7 +179,8 @@ class VectorIndex:
             return False
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get index statistics"""        return {
+        """Get index statistics"""
+        return {
             "content_type": self.content_type,
             "dimension": self.dimension,
             "total_vectors": self.index.ntotal,
@@ -182,7 +190,8 @@ class VectorIndex:
         }
     
     async def save_to_disk(self, path: str) -> bool:
-        """Save index and metadata to disk"""        try:
+        """Save index and metadata to disk"""
+        try:
             # Create directory if not exists
             Path(path).parent.mkdir(parents=True, exist_ok=True)
             
@@ -210,7 +219,8 @@ class VectorIndex:
             return False
     
     async def load_from_disk(self, path: str) -> bool:
-        """Load index and metadata from disk"""        try:
+        """Load index and metadata from disk"""
+        try:
             # Load FAISS index
             if not os.path.exists(f"{path}.index"):
                 return False
@@ -236,7 +246,8 @@ class VectorIndex:
 
 
 class VectorDatabase:
-    """Main vector database manager handling multiple content types"""    
+    """Main vector database manager handling multiple content types"""
+    
     def __init__(self):
         self.indexes = {}
         self.base_path = Path(settings.ai.faiss_index_path)
@@ -250,7 +261,8 @@ class VectorDatabase:
         self.content_types = ["audio", "video", "image", "text"]
     
     async def initialize(self):
-        """Initialize vector database and load existing indexes"""        try:
+        """Initialize vector database and load existing indexes"""
+        try:
             for content_type in self.content_types:
                 # Create index
                 index = VectorIndex(content_type, self.dimension)
@@ -269,7 +281,8 @@ class VectorDatabase:
     
     async def add_fingerprint(self, content_type: str, content_id: str, 
                             fingerprint_data: Dict[str, Any], metadata: Dict[str, Any]) -> bool:
-        """Add a content fingerprint to the appropriate index"""        try:
+        """Add a content fingerprint to the appropriate index"""
+        try:
             if content_type not in self.indexes:
                 logger.error(f"Unsupported content type: {content_type}")
                 return False
@@ -296,7 +309,8 @@ class VectorDatabase:
     
     async def search_similar_content(self, content_type: str, fingerprint_data: Dict[str, Any],
                                    k: int = 10, threshold: float = None) -> List[Dict[str, Any]]:
-        """Search for similar content using fingerprint"""        try:
+        """Search for similar content using fingerprint"""
+        try:
             if content_type not in self.indexes:
                 logger.error(f"Unsupported content type: {content_type}")
                 return []
@@ -322,7 +336,8 @@ class VectorDatabase:
     
     async def _extract_vector_from_fingerprint(self, content_type: str, 
                                              fingerprint_data: Dict[str, Any]) -> Optional[np.ndarray]:
-        """Extract vector representation from fingerprint data"""        try:
+        """Extract vector representation from fingerprint data"""
+        try:
             if content_type == "audio":
                 # Combine audio features into a single vector
                 vector_parts = []
@@ -390,7 +405,8 @@ class VectorDatabase:
             return None
     
     def _normalize_vector(self, vector_data: List[float]) -> np.ndarray:
-        """Normalize vector to target dimension"""        if not vector_data:
+        """Normalize vector to target dimension"""
+        if not vector_data:
             return np.zeros(self.dimension, dtype=np.float32)
         
         vector = np.array(vector_data, dtype=np.float32)
@@ -413,7 +429,8 @@ class VectorDatabase:
         return vector
     
     async def remove_content(self, content_type: str, content_id: str) -> bool:
-        """Remove content from the vector database"""        try:
+        """Remove content from the vector database"""
+        try:
             if content_type not in self.indexes:
                 return False
             
@@ -433,7 +450,8 @@ class VectorDatabase:
     
     async def update_content_metadata(self, content_type: str, content_id: str, 
                                     metadata: Dict[str, Any]) -> bool:
-        """Update metadata for existing content"""        try:
+        """Update metadata for existing content"""
+        try:
             if content_type not in self.indexes:
                 return False
             
@@ -445,7 +463,8 @@ class VectorDatabase:
             return False
     
     async def get_content_by_id(self, content_type: str, content_id: str) -> Optional[Dict[str, Any]]:
-        """Get content metadata by ID"""        try:
+        """Get content metadata by ID"""
+        try:
             if content_type not in self.indexes:
                 return None
             
@@ -457,7 +476,8 @@ class VectorDatabase:
             return None
     
     async def get_database_stats(self) -> Dict[str, Any]:
-        """Get comprehensive database statistics"""        stats = {
+        """Get comprehensive database statistics"""
+        stats = {
             "total_content": 0,
             "content_by_type": {},
             "indexes": {}
@@ -472,7 +492,8 @@ class VectorDatabase:
         return stats
     
     async def save_all_indexes(self) -> bool:
-        """Save all indexes to disk"""        try:
+        """Save all indexes to disk"""
+        try:
             success = True
             for content_type, index in self.indexes.items():
                 index_path = self.base_path / f"{content_type}_index"
@@ -487,7 +508,8 @@ class VectorDatabase:
             return False
     
     async def optimize_indexes(self) -> bool:
-        """Optimize indexes for better performance"""        try:
+        """Optimize indexes for better performance"""
+        try:
             for content_type, index in self.indexes.items():
                 # For large indexes, consider rebuilding with better parameters
                 if index.index.ntotal > 10000:
@@ -504,7 +526,8 @@ class VectorDatabase:
             return False
     
     async def backup_database(self, backup_path: str) -> bool:
-        """Create a backup of the entire vector database"""        try:
+        """Create a backup of the entire vector database"""
+        try:
             backup_dir = Path(backup_path)
             backup_dir.mkdir(parents=True, exist_ok=True)
             
@@ -523,7 +546,8 @@ class VectorDatabase:
             return False
     
     async def restore_from_backup(self, backup_path: str, timestamp: str) -> bool:
-        """Restore database from backup"""        try:
+        """Restore database from backup"""
+        try:
             backup_dir = Path(backup_path)
             
             for content_type in self.content_types:

@@ -3,7 +3,8 @@ Copyright (C) 2025 Fahed Mlaiel <mlaiel@live.de>
 
 Advanced optimization for collaboration matching, partnership algorithms,
 recommendation systems, and audience targeting.
-"""import asyncio
+"""
+import asyncio
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass
@@ -19,7 +20,8 @@ logger = logging.getLogger(__name__)
 
 
 class MatchType(Enum):
-    """Type of matching optimization"""    COLLABORATION = "collaboration"
+    """Type of matching optimization"""
+    COLLABORATION = "collaboration"
     PARTNERSHIP = "partnership"
     AUDIENCE = "audience"
     CONTENT = "content"
@@ -29,7 +31,8 @@ class MatchType(Enum):
 
 @dataclass
 class MatchScore:
-    """Matching score with breakdown"""    overall_score: float
+    """Matching score with breakdown"""
+    overall_score: float
     compatibility_score: float
     audience_overlap: float
     content_synergy: float
@@ -41,7 +44,8 @@ class MatchScore:
 
 @dataclass
 class MatchRecommendation:
-    """Match recommendation with details"""    match_id: str
+    """Match recommendation with details"""
+    match_id: str
     match_type: MatchType
     target_entity: Dict[str, Any]
     match_score: MatchScore
@@ -54,7 +58,8 @@ class MatchRecommendation:
 
 
 class CollaborationOptimizer(BaseEngine):
-    """Advanced collaboration matching and optimization"""    
+    """Advanced collaboration matching and optimization"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.collaboration_service = CollaborationService(config.get("collaboration", {}))
@@ -68,7 +73,8 @@ class CollaborationOptimizer(BaseEngine):
         content_portfolio: List[Dict[str, Any]],
         collaboration_goals: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize collaboration matching for maximum synergy"""        
+        """Optimize collaboration matching for maximum synergy"""
+        
         # Analyze user's collaboration potential
         collaboration_potential = await self._analyze_collaboration_potential(
             user_profile, content_portfolio
@@ -108,7 +114,8 @@ class CollaborationOptimizer(BaseEngine):
         user_profile: Dict[str, Any],
         content_portfolio: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze user's potential for collaborations"""        
+        """Analyze user's potential for collaborations"""
+        
         # Analyze content diversity
         content_diversity = await self._calculate_content_diversity(content_portfolio)
         
@@ -153,7 +160,8 @@ class CollaborationOptimizer(BaseEngine):
         content_portfolio: List[Dict[str, Any]],
         goals: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Find potential collaborators based on user profile and goals"""        
+        """Find potential collaborators based on user profile and goals"""
+        
         # Define search criteria
         search_criteria = await self._build_search_criteria(user_profile, content_portfolio, goals)
         
@@ -186,7 +194,8 @@ class CollaborationOptimizer(BaseEngine):
         collaborators: List[Dict[str, Any]],
         goals: Dict[str, Any]
     ) -> List[MatchRecommendation]:
-        """Score and rank potential collaborations"""        
+        """Score and rank potential collaborations"""
+        
         scored_collaborations = []
         
         for collaborator in collaborators:
@@ -239,7 +248,8 @@ class CollaborationOptimizer(BaseEngine):
         collaborator: Dict[str, Any],
         goals: Dict[str, Any]
     ) -> MatchScore:
-        """Calculate comprehensive collaboration match score"""        
+        """Calculate comprehensive collaboration match score"""
+        
         # Compatibility analysis
         compatibility_score = await self._calculate_compatibility_score(user_profile, collaborator)
         
@@ -296,7 +306,8 @@ class CollaborationOptimizer(BaseEngine):
         user_profile: Dict[str, Any],
         collaborator: Dict[str, Any]
     ) -> float:
-        """Calculate compatibility between user and potential collaborator"""        
+        """Calculate compatibility between user and potential collaborator"""
+        
         # Genre compatibility
         user_genres = set(user_profile.get("genres", []))
         collab_genres = set(collaborator.get("genres", []))
@@ -334,7 +345,8 @@ class CollaborationOptimizer(BaseEngine):
         user_profile: Dict[str, Any],
         collaborator: Dict[str, Any]
     ) -> float:
-        """Calculate audience overlap and complementarity"""        
+        """Calculate audience overlap and complementarity"""
+        
         user_audience = user_profile.get("audience", {})
         collab_audience = collaborator.get("audience", {})
         
@@ -372,7 +384,8 @@ class CollaborationOptimizer(BaseEngine):
 
 
 class PartnershipMatcher(BaseEngine):
-    """Advanced partnership matching for brands and commercial opportunities"""    
+    """Advanced partnership matching for brands and commercial opportunities"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.brand_database = {}
@@ -384,7 +397,8 @@ class PartnershipMatcher(BaseEngine):
         partnership_goals: Dict[str, Any],
         content_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize brand partnership matching"""        
+        """Optimize brand partnership matching"""
+        
         # Analyze brand partnership potential
         partnership_potential = await self._analyze_partnership_potential(
             user_profile, content_analysis
@@ -418,7 +432,8 @@ class PartnershipMatcher(BaseEngine):
         user_profile: Dict[str, Any],
         content_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze user's potential for brand partnerships"""        
+        """Analyze user's potential for brand partnerships"""
+        
         # Audience analysis for brand appeal
         audience_brand_appeal = await self._assess_audience_brand_appeal(user_profile.get("audience", {}))
         
@@ -451,7 +466,8 @@ class PartnershipMatcher(BaseEngine):
 
 
 class RecommendationOptimizer(BaseEngine):
-    """Advanced recommendation system optimization"""    
+    """Advanced recommendation system optimization"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.recommender_engine = RecommenderEngine(config.get("ml", {}))
@@ -463,7 +479,8 @@ class RecommendationOptimizer(BaseEngine):
         interaction_history: List[Dict[str, Any]],
         performance_metrics: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize recommendation algorithms and strategies"""        
+        """Optimize recommendation algorithms and strategies"""
+        
         # Analyze current recommendation performance
         performance_analysis = await self._analyze_recommendation_performance(
             performance_metrics, interaction_history
@@ -496,7 +513,8 @@ class RecommendationOptimizer(BaseEngine):
 
 
 class AudienceOptimizer(BaseEngine):
-    """Advanced audience targeting and optimization"""    
+    """Advanced audience targeting and optimization"""
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.audience_analyzer = AudienceAnalyzer(config.get("analytics", {}))
@@ -508,7 +526,8 @@ class AudienceOptimizer(BaseEngine):
         content_performance: Dict[str, Any],
         growth_goals: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize audience targeting and growth strategies"""        
+        """Optimize audience targeting and growth strategies"""
+        
         # Analyze current audience
         audience_analysis = await self._analyze_current_audience(current_audience, content_performance)
         
@@ -548,7 +567,8 @@ class AudienceOptimizer(BaseEngine):
         audience_data: Dict[str, Any],
         performance_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze current audience characteristics and behavior"""        
+        """Analyze current audience characteristics and behavior"""
+        
         # Demographic analysis
         demographics = await self._analyze_audience_demographics(audience_data)
         
@@ -580,7 +600,8 @@ class AudienceOptimizer(BaseEngine):
         audience_analysis: Dict[str, Any],
         growth_goals: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Identify opportunities for audience growth"""        
+        """Identify opportunities for audience growth"""
+        
         # Underrepresented segments
         underrepresented_segments = await self._identify_underrepresented_segments(audience_analysis)
         

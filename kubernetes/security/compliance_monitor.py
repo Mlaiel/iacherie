@@ -11,7 +11,8 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and
 will result in legal action.
-"""import os
+"""
+import os
 import json
 import logging
 import asyncio
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks"""    GDPR = "gdpr"
+    """Supported compliance frameworks"""
+    GDPR = "gdpr"
     CCPA = "ccpa"
     SOC2 = "soc2"
     ISO27001 = "iso27001"
@@ -41,7 +43,8 @@ class ComplianceFramework(Enum):
 
 
 class AuditEventType(Enum):
-    """Types of audit events"""    AUTHENTICATION = "authentication"
+    """Types of audit events"""
+    AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     DATA_ACCESS = "data_access"
     DATA_MODIFICATION = "data_modification"
@@ -53,7 +56,8 @@ class AuditEventType(Enum):
 
 
 class SeverityLevel(Enum):
-    """Severity levels for audit events"""    LOW = "low"
+    """Severity levels for audit events"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -61,7 +65,8 @@ class SeverityLevel(Enum):
 
 @dataclass
 class AuditEvent:
-    """Audit event container"""    id: str
+    """Audit event container"""
+    id: str
     timestamp: datetime
     event_type: AuditEventType
     severity: SeverityLevel
@@ -79,7 +84,8 @@ class AuditEvent:
 
 @dataclass
 class ComplianceRule:
-    """Compliance rule definition"""    rule_id: str
+    """Compliance rule definition"""
+    rule_id: str
     framework: ComplianceFramework
     category: str
     description: str
@@ -92,7 +98,8 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceReport:
-    """Compliance assessment report"""    framework: ComplianceFramework
+    """Compliance assessment report"""
+    framework: ComplianceFramework
     assessment_date: datetime
     total_rules: int
     passed_rules: int
@@ -104,8 +111,10 @@ class ComplianceReport:
 
 
 class SecurityAuditLogger:
-    """    Advanced security audit logging system with compliance support
-    """    
+    """
+    Advanced security audit logging system with compliance support
+    """
+    
     def __init__(
         self,
         log_directory: str = "/var/log/ia-influencer/audit",
@@ -130,7 +139,8 @@ class SecurityAuditLogger:
         logger.info("Security audit logger initialized")
     
     def _setup_log_handlers(self):
-        """Setup specialized log handlers for different event types"""        self.handlers = {}
+        """Setup specialized log handlers for different event types"""
+        self.handlers = {}
         
         for event_type in AuditEventType:
             log_file = self.log_directory / f"audit_{event_type.value}.log"
@@ -147,11 +157,13 @@ class SecurityAuditLogger:
             self.handlers[event_type] = handler
     
     async def log_event(self, event: AuditEvent):
-        """        Log audit event with compliance tracking
+        """
+        Log audit event with compliance tracking
         
         Args:
             event: Audit event to log
-        """        try:
+        """
+        try:
             # Add to buffer
             self._event_buffer.append(event)
             
@@ -167,7 +179,8 @@ class SecurityAuditLogger:
             logger.error(f"Failed to log audit event: {e}")
     
     async def _flush_buffer(self):
-        """Flush event buffer to persistent storage"""        try:
+        """Flush event buffer to persistent storage"""
+        try:
             if not self._event_buffer:
                 return
             
@@ -189,7 +202,8 @@ class SecurityAuditLogger:
             logger.error(f"Failed to flush audit buffer: {e}")
     
     async def _write_events_batch(self, event_type: AuditEventType, events: List[AuditEvent]):
-        """Write batch of events to log file"""        try:
+        """Write batch of events to log file"""
+        try:
             log_file = self.log_directory / f"audit_{event_type.value}.log"
             
             async with aiofiles.open(log_file, 'a') as file:
@@ -203,7 +217,8 @@ class SecurityAuditLogger:
             logger.error(f"Failed to write events batch: {e}")
     
     async def _write_event_immediate(self, event: AuditEvent):
-        """Write critical event immediately"""        try:
+        """Write critical event immediately"""
+        try:
             log_file = self.log_directory / f"audit_{event.event_type.value}.log"
             
             async with aiofiles.open(log_file, 'a') as file:
@@ -219,7 +234,8 @@ class SecurityAuditLogger:
             logger.error(f"Failed to write critical event: {e}")
     
     def _format_log_entry(self, event: AuditEvent) -> str:
-        """Format audit event for logging"""        log_data = {
+        """Format audit event for logging"""
+        log_data = {
             'id': event.id,
             'timestamp': event.timestamp.isoformat(),
             'event_type': event.event_type.value,
@@ -247,7 +263,8 @@ class SecurityAuditLogger:
         severity: Optional[SeverityLevel] = None,
         limit: int = 1000
     ) -> List[AuditEvent]:
-        """        Search audit events with filters
+        """
+        Search audit events with filters
         
         Args:
             start_date: Start date for search
@@ -259,7 +276,8 @@ class SecurityAuditLogger:
             
         Returns:
             List of matching audit events
-        """        try:
+        """
+        try:
             events = []
             search_types = event_types or list(AuditEventType)
             
@@ -326,7 +344,8 @@ class SecurityAuditLogger:
             return []
     
     async def cleanup_old_logs(self):
-        """Remove old log files based on retention policy"""        try:
+        """Remove old log files based on retention policy"""
+        try:
             cutoff_date = datetime.utcnow() - timedelta(days=self.retention_days)
             removed_count = 0
             
@@ -347,8 +366,10 @@ class SecurityAuditLogger:
 
 
 class ComplianceChecker:
-    """    Comprehensive compliance monitoring and validation system
-    """    
+    """
+    Comprehensive compliance monitoring and validation system
+    """
+    
     def __init__(self, audit_logger: SecurityAuditLogger):
         self.audit_logger = audit_logger
         self.compliance_rules: Dict[ComplianceFramework, List[ComplianceRule]] = {}
@@ -356,7 +377,8 @@ class ComplianceChecker:
         logger.info("Compliance checker initialized")
     
     def _setup_default_rules(self):
-        """Setup default compliance rules for supported frameworks"""        
+        """Setup default compliance rules for supported frameworks"""
+        
         # GDPR Rules
         gdpr_rules = [
             ComplianceRule(
@@ -460,7 +482,8 @@ class ComplianceChecker:
         }
     
     def _check_data_encryption(self, context: Dict[str, Any]) -> bool:
-        """Check if data encryption is properly implemented"""        try:
+        """Check if data encryption is properly implemented"""
+        try:
             # Check database encryption settings
             db_encrypted = context.get('database_encryption_enabled', False)
             
@@ -473,7 +496,8 @@ class ComplianceChecker:
             return False
     
     def _check_access_logging(self, context: Dict[str, Any]) -> bool:
-        """Check if access logging is properly implemented"""        try:
+        """Check if access logging is properly implemented"""
+        try:
             # Check if audit logging is enabled
             audit_enabled = context.get('audit_logging_enabled', False)
             
@@ -486,7 +510,8 @@ class ComplianceChecker:
             return False
     
     def _check_data_retention(self, context: Dict[str, Any]) -> bool:
-        """Check if data retention policies are enforced"""        try:
+        """Check if data retention policies are enforced"""
+        try:
             # Check if retention policies are defined
             policies_defined = context.get('retention_policies_defined', False)
             
@@ -499,7 +524,8 @@ class ComplianceChecker:
             return False
     
     def _check_access_controls(self, context: Dict[str, Any]) -> bool:
-        """Check if access controls are properly implemented"""        try:
+        """Check if access controls are properly implemented"""
+        try:
             # Check role-based access control
             rbac_enabled = context.get('rbac_enabled', False)
             
@@ -512,7 +538,8 @@ class ComplianceChecker:
             return False
     
     def _check_system_monitoring(self, context: Dict[str, Any]) -> bool:
-        """Check if system monitoring is properly implemented"""        try:
+        """Check if system monitoring is properly implemented"""
+        try:
             # Check monitoring system status
             monitoring_enabled = context.get('monitoring_enabled', False)
             
@@ -525,7 +552,8 @@ class ComplianceChecker:
             return False
     
     def _check_incident_management(self, context: Dict[str, Any]) -> bool:
-        """Check if incident management process is defined"""        try:
+        """Check if incident management process is defined"""
+        try:
             # Check incident response procedures
             procedures_defined = context.get('incident_procedures_defined', False)
             
@@ -542,7 +570,8 @@ class ComplianceChecker:
         framework: ComplianceFramework,
         context: Dict[str, Any]
     ) -> ComplianceReport:
-        """        Assess compliance against specific framework
+        """
+        Assess compliance against specific framework
         
         Args:
             framework: Compliance framework to assess
@@ -550,7 +579,8 @@ class ComplianceChecker:
             
         Returns:
             Compliance assessment report
-        """        try:
+        """
+        try:
             if framework not in self.compliance_rules:
                 raise ValueError(f"Unsupported compliance framework: {framework}")
             
@@ -620,7 +650,8 @@ class ComplianceChecker:
             raise
     
     async def _log_compliance_violation(self, rule: ComplianceRule, context: Dict[str, Any]):
-        """Log compliance violation as audit event"""        try:
+        """Log compliance violation as audit event"""
+        try:
             event = AuditEvent(
                 id=hashlib.sha256(f"{rule.rule_id}:{datetime.utcnow().isoformat()}".encode()).hexdigest()[:16],
                 timestamp=datetime.utcnow(),
@@ -650,11 +681,13 @@ class ComplianceChecker:
             logger.error(f"Failed to log compliance violation: {e}")
     
     def add_custom_rule(self, rule: ComplianceRule):
-        """        Add custom compliance rule
+        """
+        Add custom compliance rule
         
         Args:
             rule: Custom compliance rule
-        """        if rule.framework not in self.compliance_rules:
+        """
+        if rule.framework not in self.compliance_rules:
             self.compliance_rules[rule.framework] = []
         
         self.compliance_rules[rule.framework].append(rule)
@@ -666,7 +699,8 @@ class ComplianceChecker:
         context: Dict[str, Any],
         output_file: Optional[str] = None
     ) -> Dict[str, ComplianceReport]:
-        """        Generate comprehensive compliance report for multiple frameworks
+        """
+        Generate comprehensive compliance report for multiple frameworks
         
         Args:
             frameworks: List of compliance frameworks to assess
@@ -675,7 +709,8 @@ class ComplianceChecker:
             
         Returns:
             Dictionary of compliance reports by framework
-        """        try:
+        """
+        try:
             reports = {}
             
             for framework in frameworks:
@@ -710,8 +745,10 @@ class ComplianceChecker:
 
 
 class PolicyEnforcer:
-    """    Security policy enforcement system
-    """    
+    """
+    Security policy enforcement system
+    """
+    
     def __init__(self, audit_logger: SecurityAuditLogger):
         self.audit_logger = audit_logger
         self.policies: Dict[str, Dict[str, Any]] = {}
@@ -720,7 +757,8 @@ class PolicyEnforcer:
         logger.info("Policy enforcer initialized")
     
     def _setup_default_policies(self):
-        """Setup default security policies"""        self.policies = {
+        """Setup default security policies"""
+        self.policies = {
             'password_policy': {
                 'min_length': 12,
                 'require_uppercase': True,
@@ -757,7 +795,8 @@ class PolicyEnforcer:
         password: str,
         current_password_hash: Optional[str] = None
     ) -> Dict[str, Any]:
-        """        Enforce password policy compliance
+        """
+        Enforce password policy compliance
         
         Args:
             user_id: User identifier
@@ -766,7 +805,8 @@ class PolicyEnforcer:
             
         Returns:
             Policy enforcement result
-        """        try:
+        """
+        try:
             policy = self.policies['password_policy']
             violations = []
             
@@ -819,7 +859,8 @@ class PolicyEnforcer:
         session_id: str,
         session_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Enforce session policy compliance
+        """
+        Enforce session policy compliance
         
         Args:
             user_id: User identifier
@@ -828,7 +869,8 @@ class PolicyEnforcer:
             
         Returns:
             Policy enforcement result
-        """        try:
+        """
+        try:
             policy = self.policies['session_policy']
             violations = []
             actions_required = []
@@ -889,7 +931,8 @@ class PolicyEnforcer:
         resource: str,
         failed_attempts: int = 0
     ) -> Dict[str, Any]:
-        """        Enforce access policy compliance
+        """
+        Enforce access policy compliance
         
         Args:
             user_id: User identifier
@@ -899,7 +942,8 @@ class PolicyEnforcer:
             
         Returns:
             Policy enforcement result
-        """        try:
+        """
+        try:
             policy = self.policies['access_policy']
             violations = []
             actions_required = []
@@ -955,7 +999,8 @@ class PolicyEnforcer:
         violations: List[str],
         context: Optional[Dict[str, Any]] = None
     ):
-        """Log policy enforcement event"""        try:
+        """Log policy enforcement event"""
+        try:
             event = AuditEvent(
                 id=hashlib.sha256(f"{policy_name}:{user_id}:{datetime.utcnow().isoformat()}".encode()).hexdigest()[:16],
                 timestamp=datetime.utcnow(),
@@ -983,20 +1028,24 @@ class PolicyEnforcer:
             logger.error(f"Failed to log policy enforcement: {e}")
     
     def update_policy(self, policy_name: str, policy_config: Dict[str, Any]):
-        """        Update security policy configuration
+        """
+        Update security policy configuration
         
         Args:
             policy_name: Name of the policy to update
             policy_config: New policy configuration
-        """        self.policies[policy_name] = policy_config
+        """
+        self.policies[policy_name] = policy_config
         logger.info(f"Updated policy: {policy_name}")
     
     def get_policy_summary(self) -> Dict[str, Any]:
-        """        Get summary of all configured policies
+        """
+        Get summary of all configured policies
         
         Returns:
             Policy summary
-        """        summary = {
+        """
+        summary = {
             'total_policies': len(self.policies),
             'policies': {}
         }

@@ -4,14 +4,16 @@ Advanced security configuration for IA Influencer Agent
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 License: Proprietary - Contact author for licensing terms
-"""from typing import Dict, List, Optional, Any
+"""
+from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 from enum import Enum
 import os
 
 
 class SecurityLevel(Enum):
-    """Security levels for different environments"""    DEVELOPMENT = "development"
+    """Security levels for different environments"""
+    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -20,7 +22,8 @@ class SecurityLevel(Enum):
 
 @dataclass
 class AuthenticationConfig:
-    """Authentication configuration"""    jwt_secret_key: str = ""
+    """Authentication configuration"""
+    jwt_secret_key: str = ""
     jwt_algorithm: str = "HS256"
     jwt_expire_minutes: int = 30
     refresh_token_expire_days: int = 7
@@ -37,7 +40,8 @@ class AuthenticationConfig:
 
 @dataclass
 class EncryptionConfig:
-    """Encryption configuration"""    default_algorithm: str = "AES_256_GCM"
+    """Encryption configuration"""
+    default_algorithm: str = "AES_256_GCM"
     key_rotation_days: int = 90
     encryption_key: str = ""
     signing_key: str = ""
@@ -48,7 +52,8 @@ class EncryptionConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Security monitoring configuration"""    enabled: bool = True
+    """Security monitoring configuration"""
+    enabled: bool = True
     log_level: str = "INFO"
     alert_threshold_high: int = 10
     alert_threshold_critical: int = 5
@@ -60,7 +65,8 @@ class MonitoringConfig:
 
 @dataclass
 class FirewallConfig:
-    """API firewall configuration"""    enabled: bool = True
+    """API firewall configuration"""
+    enabled: bool = True
     rate_limit_per_minute: int = 100
     rate_limit_burst: int = 200
     ddos_protection_enabled: bool = True
@@ -74,7 +80,8 @@ class FirewallConfig:
 
 @dataclass
 class ComplianceConfig:
-    """Compliance configuration"""    gdpr_enabled: bool = True
+    """Compliance configuration"""
+    gdpr_enabled: bool = True
     ccpa_enabled: bool = True
     dmca_enabled: bool = True
     audit_logging: bool = True
@@ -86,7 +93,8 @@ class ComplianceConfig:
 
 @dataclass
 class ValidationConfig:
-    """Content validation configuration"""    malware_scanning_enabled: bool = True
+    """Content validation configuration"""
+    malware_scanning_enabled: bool = True
     virus_scanning_enabled: bool = True
     content_analysis_enabled: bool = True
     max_file_size_mb: int = 100
@@ -101,7 +109,8 @@ class ValidationConfig:
 
 @dataclass
 class SecurityConfig:
-    """Main security configuration"""    security_level: SecurityLevel = SecurityLevel.PRODUCTION
+    """Main security configuration"""
+    security_level: SecurityLevel = SecurityLevel.PRODUCTION
     authentication: AuthenticationConfig = field(default_factory=AuthenticationConfig)
     encryption: EncryptionConfig = field(default_factory=EncryptionConfig)
     monitoring: MonitoringConfig = field(default_factory=MonitoringConfig)
@@ -110,10 +119,12 @@ class SecurityConfig:
     validation: ValidationConfig = field(default_factory=ValidationConfig)
     
     def __post_init__(self):
-        """Validate configuration after initialization"""        self._validate_config()
+        """Validate configuration after initialization"""
+        self._validate_config()
     
     def _validate_config(self):
-        """Validate security configuration"""        # Validate required keys
+        """Validate security configuration"""
+        # Validate required keys
         if not self.authentication.jwt_secret_key:
             if self.security_level in [SecurityLevel.PRODUCTION, SecurityLevel.ENTERPRISE]:
                 raise ValueError("JWT secret key is required for production environments")
@@ -127,7 +138,8 @@ class SecurityConfig:
             self._validate_enterprise_requirements()
     
     def _validate_enterprise_requirements(self):
-        """Validate enterprise security requirements"""        requirements = {
+        """Validate enterprise security requirements"""
+        requirements = {
             "2FA must be enabled": self.authentication.require_2fa,
             "Quantum resistance should be enabled": self.encryption.quantum_resistant,
             "Real-time monitoring must be enabled": self.monitoring.real_time_analysis,
@@ -144,7 +156,8 @@ class SecurityConfig:
 
 
 def load_security_config() -> SecurityConfig:
-    """Load security configuration from environment variables"""    config = SecurityConfig()
+    """Load security configuration from environment variables"""
+    config = SecurityConfig()
     
     # Security Level
     security_level = os.getenv('SECURITY_LEVEL', 'production').lower()
@@ -261,7 +274,8 @@ SECURITY_CONFIGS = {
 
 
 def get_security_config(level: Optional[SecurityLevel] = None) -> SecurityConfig:
-    """Get security configuration for specified level"""    if level is None:
+    """Get security configuration for specified level"""
+    if level is None:
         # Try to load from environment
         try:
             return load_security_config()

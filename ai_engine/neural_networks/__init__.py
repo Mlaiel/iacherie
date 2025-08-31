@@ -11,7 +11,9 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Toute utilisation non autorisée est strictement interdite.
-"""from .transformer_models import (
+"""
+
+from .transformer_models import (
     ContentTransformer,
     MultiModalTransformer,
     AudioTransformer,

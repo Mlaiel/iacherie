@@ -8,7 +8,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass, asdict
@@ -40,7 +41,8 @@ settings = get_settings()
 
 
 class SafetyRiskLevel(Enum):
-    """Content safety risk levels."""    SAFE = "safe"
+    """Content safety risk levels."""
+    SAFE = "safe"
     LOW_RISK = "low_risk"
     MEDIUM_RISK = "medium_risk"
     HIGH_RISK = "high_risk"
@@ -48,7 +50,8 @@ class SafetyRiskLevel(Enum):
 
 
 class SafetyCategory(Enum):
-    """Content safety categories."""    EXPLICIT_CONTENT = "explicit_content"
+    """Content safety categories."""
+    EXPLICIT_CONTENT = "explicit_content"
     VIOLENCE = "violence"
     HATE_SPEECH = "hate_speech"
     HARASSMENT = "harassment"
@@ -63,14 +66,16 @@ class SafetyCategory(Enum):
 
 
 class BrandSafetyStandard(Enum):
-    """Brand safety standard levels."""    CONSERVATIVE = "conservative"     # Family-friendly, strict standards
+    """Brand safety standard levels."""
+    CONSERVATIVE = "conservative"     # Family-friendly, strict standards
     MODERATE = "moderate"            # Mainstream brand safe
     LIBERAL = "liberal"              # More relaxed, adult-oriented
     CUSTOM = "custom"                # Custom brand guidelines
 
 
 class ComplianceFramework(Enum):
-    """Compliance frameworks."""    COPPA = "coppa"                  # Children's Online Privacy Protection Act
+    """Compliance frameworks."""
+    COPPA = "coppa"                  # Children's Online Privacy Protection Act
     GDPR = "gdpr"                    # General Data Protection Regulation
     FTC_GUIDELINES = "ftc_guidelines" # Federal Trade Commission Guidelines
     PLATFORM_POLICIES = "platform_policies"  # Platform-specific policies
@@ -80,7 +85,8 @@ class ComplianceFramework(Enum):
 
 @dataclass
 class SafetyAnalysisResult:
-    """Result of content safety analysis."""    content_id: str
+    """Result of content safety analysis."""
+    content_id: str
     overall_risk_level: SafetyRiskLevel
     safety_score: float  # 0-1, higher is safer
     detected_issues: List[Dict[str, Any]]
@@ -96,7 +102,8 @@ class SafetyAnalysisResult:
 
 @dataclass
 class BrandCompatibilityScore:
-    """Brand compatibility analysis result."""    brand_name: str
+    """Brand compatibility analysis result."""
+    brand_name: str
     compatibility_score: float
     risk_assessment: SafetyRiskLevel
     alignment_factors: Dict[str, float]
@@ -108,7 +115,8 @@ class BrandCompatibilityScore:
 
 @dataclass
 class ComplianceCheckResult:
-    """Compliance framework check result."""    framework: ComplianceFramework
+    """Compliance framework check result."""
+    framework: ComplianceFramework
     compliance_status: str
     compliance_score: float
     violations: List[Dict[str, Any]]
@@ -119,7 +127,8 @@ class ComplianceCheckResult:
 
 @dataclass
 class ContentModerationReport:
-    """Comprehensive content moderation report."""    report_id: str
+    """Comprehensive content moderation report."""
+    report_id: str
     content_id: str
     creator_id: str
     content_type: str
@@ -134,11 +143,14 @@ class ContentModerationReport:
 
 
 class ContentComplianceEngine:
-    """    Advanced AI-powered content compliance engine that analyzes content
+    """
+    Advanced AI-powered content compliance engine that analyzes content
     for brand safety, legal compliance, and platform policy adherence.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the content compliance engine."""        self.safety_classifier = SafetyClassificationEngine()
+        """Initialize the content compliance engine."""
+        self.safety_classifier = SafetyClassificationEngine()
         self.vision_analyzer = ContentVisionAnalyzer()
         self.sentiment_analyzer = SentimentAnalysisEngine()
         
@@ -172,7 +184,8 @@ class ContentComplianceEngine:
         logger.info("Content compliance engine initialized successfully")
     
     def _load_safety_keywords(self) -> Dict[SafetyCategory, List[str]]:
-        """Load safety-related keywords for each category."""        
+        """Load safety-related keywords for each category."""
+        
         return {
             SafetyCategory.EXPLICIT_CONTENT: [
                 'nude', 'naked', 'explicit', 'sexual', 'pornographic', 'adult',
@@ -205,7 +218,8 @@ class ContentComplianceEngine:
         }
     
     def _load_brand_guidelines(self) -> Dict[str, Dict[str, Any]]:
-        """Load brand-specific safety guidelines."""        
+        """Load brand-specific safety guidelines."""
+        
         return {
             'conservative_brand': {
                 'allowed_content': ['family_friendly', 'educational', 'inspirational'],
@@ -231,7 +245,8 @@ class ContentComplianceEngine:
         }
     
     def _load_compliance_rules(self) -> Dict[ComplianceFramework, Dict[str, Any]]:
-        """Load compliance framework rules."""        
+        """Load compliance framework rules."""
+        
         return {
             ComplianceFramework.COPPA: {
                 'applies_to': ['content_targeting_children', 'under_13_audience'],
@@ -269,7 +284,8 @@ class ContentComplianceEngine:
         }
     
     def _load_and_train_models(self):
-        """Load historical data and train ML models for safety analysis."""        try:
+        """Load historical data and train ML models for safety analysis."""
+        try:
             # Generate synthetic training data for safety classification
             n_samples = 20000
             
@@ -339,7 +355,8 @@ class ContentComplianceEngine:
         content_data: Dict[str, Any],
         safety_standards: BrandSafetyStandard = BrandSafetyStandard.MODERATE
     ) -> SafetyAnalysisResult:
-        """        Analyze content for safety and brand compliance.
+        """
+        Analyze content for safety and brand compliance.
         
         Args:
             content_id: Unique content identifier
@@ -348,7 +365,8 @@ class ContentComplianceEngine:
             
         Returns:
             Comprehensive safety analysis result
-        """        
+        """
+        
         try:
             detected_issues = []
             flagged_categories = []
@@ -457,7 +475,8 @@ class ContentComplianceEngine:
     async def _analyze_text_safety(
         self, text_content: str, safety_standards: BrandSafetyStandard
     ) -> Dict[str, Any]:
-        """Analyze text content for safety issues."""        
+        """Analyze text content for safety issues."""
+        
         issues = []
         categories = []
         confidence = {}
@@ -556,7 +575,8 @@ class ContentComplianceEngine:
     async def _analyze_image_safety(
         self, image_data: Union[str, bytes, np.ndarray], safety_standards: BrandSafetyStandard
     ) -> Dict[str, Any]:
-        """Analyze image content for safety issues."""        
+        """Analyze image content for safety issues."""
+        
         issues = []
         categories = []
         confidence = {}
@@ -621,7 +641,8 @@ class ContentComplianceEngine:
     async def _analyze_video_safety(
         self, video_data: Union[str, bytes], safety_standards: BrandSafetyStandard
     ) -> Dict[str, Any]:
-        """Analyze video content for safety issues."""        
+        """Analyze video content for safety issues."""
+        
         issues = []
         categories = []
         confidence = {}
@@ -679,7 +700,8 @@ class ContentComplianceEngine:
     async def _analyze_audio_safety(
         self, audio_data: Union[str, bytes], safety_standards: BrandSafetyStandard
     ) -> Dict[str, Any]:
-        """Analyze audio content for safety issues."""        
+        """Analyze audio content for safety issues."""
+        
         issues = []
         categories = []
         confidence = {}
@@ -729,7 +751,8 @@ class ContentComplianceEngine:
     def _calculate_overall_safety_score(
         self, detected_issues: List[Dict[str, Any]], confidence_scores: Dict[SafetyCategory, float]
     ) -> float:
-        """Calculate overall safety score from detected issues."""        
+        """Calculate overall safety score from detected issues."""
+        
         if not detected_issues:
             return 1.0  # Perfect safety score
         
@@ -766,7 +789,8 @@ class ContentComplianceEngine:
         return max(0.0, safety_score)
     
     def _determine_risk_level(self, safety_score: float) -> SafetyRiskLevel:
-        """Determine risk level based on safety score."""        
+        """Determine risk level based on safety score."""
+        
         for risk_level, threshold in self.safety_thresholds.items():
             if safety_score >= threshold:
                 return risk_level
@@ -779,7 +803,8 @@ class ContentComplianceEngine:
         flagged_categories: List[SafetyCategory],
         safety_standards: BrandSafetyStandard
     ) -> List[str]:
-        """Generate safety improvement recommendations."""        
+        """Generate safety improvement recommendations."""
+        
         recommendations = []
         
         # Category-specific recommendations
@@ -830,7 +855,8 @@ class ContentComplianceEngine:
         detected_issues: List[Dict[str, Any]],
         safety_standards: BrandSafetyStandard
     ) -> bool:
-        """Determine if content requires manual review."""        
+        """Determine if content requires manual review."""
+        
         # High risk always requires review
         if risk_level in [SafetyRiskLevel.HIGH_RISK, SafetyRiskLevel.UNSAFE]:
             return True
@@ -856,7 +882,8 @@ class ContentComplianceEngine:
         flagged_categories: List[SafetyCategory],
         safety_standards: BrandSafetyStandard
     ) -> Tuple[List[str], List[str]]:
-        """Determine which brands would approve or restrict this content."""        
+        """Determine which brands would approve or restrict this content."""
+        
         approved_brands = []
         restricted_brands = []
         
@@ -899,7 +926,8 @@ class ContentComplianceEngine:
         brand_guidelines: Dict[str, Any],
         safety_analysis: SafetyAnalysisResult
     ) -> BrandCompatibilityScore:
-        """        Check content compatibility with specific brand guidelines.
+        """
+        Check content compatibility with specific brand guidelines.
         
         Args:
             content_id: Content identifier
@@ -909,7 +937,8 @@ class ContentComplianceEngine:
             
         Returns:
             Brand compatibility score and recommendations
-        """        
+        """
+        
         try:
             # Analyze alignment factors
             alignment_factors = {}
@@ -1033,7 +1062,8 @@ class ContentComplianceEngine:
         frameworks: List[ComplianceFramework],
         target_audience: Dict[str, Any] = None
     ) -> List[ComplianceCheckResult]:
-        """        Check content compliance against regulatory frameworks.
+        """
+        Check content compliance against regulatory frameworks.
         
         Args:
             content_data: Content to check for compliance
@@ -1042,7 +1072,8 @@ class ContentComplianceEngine:
             
         Returns:
             List of compliance check results
-        """        
+        """
+        
         results = []
         
         for framework in frameworks:
@@ -1079,7 +1110,8 @@ class ContentComplianceEngine:
         framework: ComplianceFramework,
         target_audience: Dict[str, Any] = None
     ) -> ComplianceCheckResult:
-        """Check compliance against a specific framework."""        
+        """Check compliance against a specific framework."""
+        
         framework_rules = self.compliance_rules.get(framework, {})
         violations = []
         requirements = framework_rules.get('requirements', [])
@@ -1141,7 +1173,8 @@ class ContentComplianceEngine:
     async def _check_coppa_compliance(
         self, content_data: Dict[str, Any], target_audience: Dict[str, Any] = None
     ) -> List[Dict[str, Any]]:
-        """Check COPPA compliance for child-directed content."""        
+        """Check COPPA compliance for child-directed content."""
+        
         violations = []
         
         # Check if content is directed at children
@@ -1184,7 +1217,8 @@ class ContentComplianceEngine:
         return violations
     
     async def _check_ftc_compliance(self, content_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Check FTC Guidelines compliance for advertising disclosure."""        
+        """Check FTC Guidelines compliance for advertising disclosure."""
+        
         violations = []
         text_content = content_data.get('text', '')
         
@@ -1222,7 +1256,8 @@ class ContentComplianceEngine:
     async def _check_gdpr_compliance(
         self, content_data: Dict[str, Any], target_audience: Dict[str, Any] = None
     ) -> List[Dict[str, Any]]:
-        """Check GDPR compliance for EU audience."""        
+        """Check GDPR compliance for EU audience."""
+        
         violations = []
         
         # Check if content targets EU audience
@@ -1268,11 +1303,14 @@ class ContentComplianceEngine:
 
 
 class BrandSafetyAnalyzer:
-    """    Master brand safety analyzer that coordinates all safety and compliance
+    """
+    Master brand safety analyzer that coordinates all safety and compliance
     analysis for content creators and brand partnerships.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the brand safety analyzer."""        self.compliance_engine = ContentComplianceEngine()
+        """Initialize the brand safety analyzer."""
+        self.compliance_engine = ContentComplianceEngine()
         
         logger.info("Brand safety analyzer initialized successfully")
     
@@ -1285,7 +1323,8 @@ class BrandSafetyAnalyzer:
         compliance_frameworks: List[ComplianceFramework] = None,
         safety_standards: BrandSafetyStandard = BrandSafetyStandard.MODERATE
     ) -> ContentModerationReport:
-        """        Perform comprehensive content analysis for brand safety and compliance.
+        """
+        Perform comprehensive content analysis for brand safety and compliance.
         
         Args:
             content_id: Content identifier
@@ -1297,7 +1336,8 @@ class BrandSafetyAnalyzer:
             
         Returns:
             Comprehensive content moderation report
-        """        
+        """
+        
         try:
             # Perform safety analysis
             safety_analysis = await self.compliance_engine.analyze_content_safety(
@@ -1368,7 +1408,8 @@ class BrandSafetyAnalyzer:
         brand_compatibility: List[BrandCompatibilityScore],
         compliance_checks: List[ComplianceCheckResult]
     ) -> List[str]:
-        """Determine required moderation actions."""        
+        """Determine required moderation actions."""
+        
         actions = []
         
         # Safety-based actions
@@ -1407,7 +1448,8 @@ class BrandSafetyAnalyzer:
         brand_compatibility: List[BrandCompatibilityScore],
         compliance_checks: List[ComplianceCheckResult]
     ) -> bool:
-        """Determine if escalation to human reviewer is required."""        
+        """Determine if escalation to human reviewer is required."""
+        
         # High risk content requires escalation
         if safety_analysis.overall_risk_level in [SafetyRiskLevel.HIGH_RISK, SafetyRiskLevel.UNSAFE]:
             return True
@@ -1440,7 +1482,8 @@ class BrandSafetyAnalyzer:
         brand_compatibility: List[BrandCompatibilityScore],
         compliance_checks: List[ComplianceCheckResult]
     ) -> str:
-        """Generate final moderation decision."""        
+        """Generate final moderation decision."""
+        
         # Unsafe content is rejected
         if safety_analysis.overall_risk_level == SafetyRiskLevel.UNSAFE:
             return "REJECTED - Unsafe content"

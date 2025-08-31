@@ -28,7 +28,8 @@ Content Creator → Upload Multi-Format Content → AI Fingerprinting →
 Web Surveillance Activation → Real-time Monitoring → Infringement Detection → 
 Automated Protection → Revenue Recovery → Analytics Reporting → 
 Performance Optimization → Legal Action Coordination
-"""import logging
+"""
+import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -93,7 +94,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SurveillanceSystemConfig:
-    """Complete surveillance system configuration"""    # Core configuration
+    """Complete surveillance system configuration"""
+    # Core configuration
     mode: OrchestrationMode = OrchestrationMode.PRODUCTION
     database_url: Optional[str] = None
     redis_url: Optional[str] = None
@@ -130,13 +132,16 @@ class SurveillanceSystemConfig:
 
 
 class ComprehensiveSurveillanceSystem:
-    """    Ultra-Advanced Comprehensive Surveillance System
+    """
+    Ultra-Advanced Comprehensive Surveillance System
     
     Provides complete content protection solution with orchestrated
     components, real-time monitoring, and automated threat response.
-    """    
+    """
+    
     def __init__(self, config: SurveillanceSystemConfig):
-        """Initialize comprehensive surveillance system"""        self.config = config
+        """Initialize comprehensive surveillance system"""
+        self.config = config
         self.orchestrator: Optional[SurveillanceOrchestrator] = None
         self.realtime_monitor: Optional[RealtimeMonitor] = None
         self.fingerprinting_engine: Optional[FingerprintingEngine] = None
@@ -148,7 +153,8 @@ class ComprehensiveSurveillanceSystem:
         logger.info("ComprehensiveSurveillanceSystem created")
     
     async def initialize(self):
-        """Initialize all surveillance components"""        try:
+        """Initialize all surveillance components"""
+        try:
             logger.info("Initializing comprehensive surveillance system...")
             
             # Initialize orchestrator
@@ -169,7 +175,8 @@ class ComprehensiveSurveillanceSystem:
             raise
     
     async def start(self):
-        """Start the surveillance system"""        try:
+        """Start the surveillance system"""
+        try:
             if not self.is_initialized:
                 await self.initialize()
             
@@ -199,7 +206,8 @@ class ComprehensiveSurveillanceSystem:
         content_metadata: Dict[str, Any],
         protection_options: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Register content for comprehensive protection"""        try:
+        """Register content for comprehensive protection"""
+        try:
             if not self.orchestrator:
                 raise RuntimeError("Surveillance system not initialized")
             
@@ -222,7 +230,8 @@ class ComprehensiveSurveillanceSystem:
         threat_detection: ThreatDetection,
         response_options: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Handle detected threat with automated response"""        try:
+        """Handle detected threat with automated response"""
+        try:
             if not self.orchestrator:
                 raise RuntimeError("Surveillance system not initialized")
             
@@ -245,7 +254,8 @@ class ComprehensiveSurveillanceSystem:
         time_period: str = "monthly",
         report_options: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Generate comprehensive surveillance report"""        try:
+        """Generate comprehensive surveillance report"""
+        try:
             if not self.orchestrator:
                 raise RuntimeError("Surveillance system not initialized")
             
@@ -264,7 +274,8 @@ class ComprehensiveSurveillanceSystem:
             raise
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status"""        try:
+        """Get comprehensive system status"""
+        try:
             status = {
                 'system_initialized': self.is_initialized,
                 'system_running': self.is_running,
@@ -282,7 +293,8 @@ class ComprehensiveSurveillanceSystem:
             return {'error': str(e)}
     
     async def get_workflow_status(self, workflow_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of specific workflow"""        try:
+        """Get status of specific workflow"""
+        try:
             if not self.orchestrator:
                 return None
             
@@ -293,7 +305,8 @@ class ComprehensiveSurveillanceSystem:
             return None
     
     async def shutdown(self):
-        """Gracefully shutdown surveillance system"""        try:
+        """Gracefully shutdown surveillance system"""
+        try:
             logger.info("Shutting down comprehensive surveillance system...")
             
             self.is_running = False
@@ -313,7 +326,8 @@ def create_surveillance_system(
     database_url: Optional[str] = None,
     custom_config: Optional[Dict[str, Any]] = None
 ) -> ComprehensiveSurveillanceSystem:
-    """Create comprehensive surveillance system with default configuration"""    
+    """Create comprehensive surveillance system with default configuration"""
+    
     config = SurveillanceSystemConfig(
         mode=mode,
         database_url=database_url
@@ -331,7 +345,8 @@ def create_surveillance_system(
 def create_development_surveillance_system(
     database_url: Optional[str] = None
 ) -> ComprehensiveSurveillanceSystem:
-    """Create surveillance system optimized for development"""    
+    """Create surveillance system optimized for development"""
+    
     config = SurveillanceSystemConfig(
         mode=OrchestrationMode.DEVELOPMENT,
         database_url=database_url,
@@ -351,7 +366,8 @@ def create_production_surveillance_system(
     redis_url: Optional[str] = None,
     storage_path: Optional[Path] = None
 ) -> ComprehensiveSurveillanceSystem:
-    """Create surveillance system optimized for production"""    
+    """Create surveillance system optimized for production"""
+    
     config = SurveillanceSystemConfig(
         mode=OrchestrationMode.PRODUCTION,
         database_url=database_url,
@@ -435,7 +451,8 @@ __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
 
 @dataclass
 class SurveillanceConfig:
-    """Configuration for surveillance system"""    enabled_platforms: List[str] = field(default_factory=lambda: [
+    """Configuration for surveillance system"""
+    enabled_platforms: List[str] = field(default_factory=lambda: [
         "youtube", "tiktok", "instagram", "facebook", "twitter", "soundcloud",
         "vimeo", "twitch", "pinterest", "linkedin", "reddit", "discord"
     ])
@@ -460,7 +477,8 @@ class SurveillanceConfig:
 
 @dataclass
 class SurveillanceRequest:
-    """Request for surveillance monitoring"""    creator_id: str
+    """Request for surveillance monitoring"""
+    creator_id: str
     content_id: str
     content_type: str
     fingerprint_data: Dict[str, Any]
@@ -472,7 +490,8 @@ class SurveillanceRequest:
 
 @dataclass
 class SurveillanceResult:
-    """Result from surveillance operation"""    surveillance_id: str
+    """Result from surveillance operation"""
+    surveillance_id: str
     creator_id: str
     content_id: str
     success: bool
@@ -487,9 +506,11 @@ class SurveillanceResult:
 
 
 class WebSurveillanceOrchestrator:
-    """    Central orchestrator for web surveillance and content monitoring
+    """
+    Central orchestrator for web surveillance and content monitoring
     providing comprehensive protection for multi-format content creators
-    """    
+    """
+    
     def __init__(self, config: SurveillanceConfig):
         self.config = config
         self.services: Dict[str, Any] = {}
@@ -498,7 +519,8 @@ class WebSurveillanceOrchestrator:
         logger.info("Web Surveillance Orchestrator initialized")
     
     async def initialize(self) -> bool:
-        """Initialize all surveillance services"""        try:
+        """Initialize all surveillance services"""
+        try:
             # Initialize core services
             self.services["web_crawler"] = WebCrawlerEngine(self.config)
             self.services["platform_monitor"] = PlatformMonitoringService(self.config)
@@ -526,7 +548,8 @@ class WebSurveillanceOrchestrator:
             return False
     
     async def start_surveillance(self, request: SurveillanceRequest) -> SurveillanceResult:
-        """Start comprehensive surveillance monitoring for content"""        if not self.initialized:
+        """Start comprehensive surveillance monitoring for content"""
+        if not self.initialized:
             raise RuntimeError("Web Surveillance Orchestrator not initialized")
         
         start_time = asyncio.get_event_loop().time()
@@ -588,7 +611,8 @@ class WebSurveillanceOrchestrator:
         return result
     
     async def _process_content_fingerprinting(self, request: SurveillanceRequest) -> Dict[str, Any]:
-        """Process content fingerprinting for surveillance"""        content_scanner = self.services["content_scanner"]
+        """Process content fingerprinting for surveillance"""
+        content_scanner = self.services["content_scanner"]
         
         scan_result = await content_scanner.scan_content(
             content_id=request.content_id,
@@ -604,7 +628,8 @@ class WebSurveillanceOrchestrator:
         }
     
     async def _execute_web_crawling(self, request: SurveillanceRequest) -> Dict[str, Any]:
-        """Execute web crawling across specified platforms"""        web_crawler = self.services["web_crawler"]
+        """Execute web crawling across specified platforms"""
+        web_crawler = self.services["web_crawler"]
         
         crawling_tasks = []
         for platform in request.platforms_to_monitor:
@@ -646,7 +671,8 @@ class WebSurveillanceOrchestrator:
         request: SurveillanceRequest, 
         crawling_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze crawling results for content infringements"""        infringement_detector = self.services["infringement_detector"]
+        """Analyze crawling results for content infringements"""
+        infringement_detector = self.services["infringement_detector"]
         
         infringement_analysis = await infringement_detector.analyze_results(
             original_fingerprints=request.fingerprint_data,
@@ -670,7 +696,8 @@ class WebSurveillanceOrchestrator:
         request: SurveillanceRequest, 
         infringement_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute protection actions against detected infringements"""        protection_enforcer = self.services["protection_enforcer"]
+        """Execute protection actions against detected infringements"""
+        protection_enforcer = self.services["protection_enforcer"]
         takedown_manager = self.services["takedown_manager"]
         
         actions_executed = []
@@ -718,7 +745,8 @@ class WebSurveillanceOrchestrator:
         request: SurveillanceRequest, 
         result: SurveillanceResult
     ) -> Dict[str, Any]:
-        """Generate comprehensive surveillance analytics"""        analytics_tracker = self.services["analytics_tracker"]
+        """Generate comprehensive surveillance analytics"""
+        analytics_tracker = self.services["analytics_tracker"]
         
         analytics_data = await analytics_tracker.track_surveillance_event(
             surveillance_id=result.surveillance_id,
@@ -749,7 +777,8 @@ class WebSurveillanceOrchestrator:
         }
     
     async def _setup_continuous_monitoring(self, request: SurveillanceRequest) -> None:
-        """Setup continuous monitoring for the content"""        monitoring_task = asyncio.create_task(
+        """Setup continuous monitoring for the content"""
+        monitoring_task = asyncio.create_task(
             self._continuous_monitoring_loop(request)
         )
         
@@ -763,7 +792,8 @@ class WebSurveillanceOrchestrator:
         logger.info(f"Continuous monitoring activated for {request.content_id}")
     
     async def _continuous_monitoring_loop(self, request: SurveillanceRequest) -> None:
-        """Continuous monitoring loop for real-time surveillance"""        platform_monitor = self.services["platform_monitor"]
+        """Continuous monitoring loop for real-time surveillance"""
+        platform_monitor = self.services["platform_monitor"]
         
         while True:
             try:
@@ -802,7 +832,8 @@ class WebSurveillanceOrchestrator:
         request: SurveillanceRequest, 
         monitoring_result: Any
     ) -> None:
-        """Execute emergency protection actions for high-risk infringements"""        protection_enforcer = self.services["protection_enforcer"]
+        """Execute emergency protection actions for high-risk infringements"""
+        protection_enforcer = self.services["protection_enforcer"]
         alert_system = self.services["alert_system"]
         
         # Trigger emergency alert
@@ -825,7 +856,8 @@ class WebSurveillanceOrchestrator:
         )
     
     async def stop_surveillance(self, creator_id: str, content_id: str) -> bool:
-        """Stop surveillance monitoring for specific content"""        task_key = f"{creator_id}_{content_id}"
+        """Stop surveillance monitoring for specific content"""
+        task_key = f"{creator_id}_{content_id}"
         
         if task_key in self.active_monitoring_tasks:
             self.active_monitoring_tasks[task_key].cancel()
@@ -836,7 +868,8 @@ class WebSurveillanceOrchestrator:
         return False
     
     async def get_surveillance_status(self, creator_id: str, content_id: str) -> Dict[str, Any]:
-        """Get current surveillance status for content"""        task_key = f"{creator_id}_{content_id}"
+        """Get current surveillance status for content"""
+        task_key = f"{creator_id}_{content_id}"
         
         status = {
             "content_id": content_id,
@@ -864,7 +897,8 @@ class WebSurveillanceOrchestrator:
         creator_id: str, 
         time_period: str = "last_30_days"
     ) -> Dict[str, Any]:
-        """Generate comprehensive surveillance report for creator"""        reporting_engine = self.services["reporting_engine"]
+        """Generate comprehensive surveillance report for creator"""
+        reporting_engine = self.services["reporting_engine"]
         
         report = await reporting_engine.generate_report(
             creator_id=creator_id,
@@ -883,7 +917,8 @@ class WebSurveillanceOrchestrator:
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on surveillance system"""        health_status = {
+        """Perform health check on surveillance system"""
+        health_status = {
             "orchestrator": "healthy" if self.initialized else "unhealthy",
             "active_monitoring_tasks": len(self.active_monitoring_tasks),
             "timestamp": datetime.now(timezone.utc).isoformat(),
@@ -903,7 +938,8 @@ class WebSurveillanceOrchestrator:
         return health_status
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown surveillance system"""        logger.info("Shutting down Web Surveillance Orchestrator")
+        """Gracefully shutdown surveillance system"""
+        logger.info("Shutting down Web Surveillance Orchestrator")
         
         # Cancel all active monitoring tasks
         for task_key, task in self.active_monitoring_tasks.items():

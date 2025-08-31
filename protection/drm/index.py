@@ -22,7 +22,8 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - Audio Engineer: Professional audio processing and analysis
 - DevOps Engineer: Advanced deployment and infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt engineering and optimization
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -45,7 +46,8 @@ from .blockchain_integration import BlockchainIntegration
 logger = logging.getLogger(__name__)
 
 class DRMSystemStatus(str, Enum):
-    """DRM system operational status."""    INITIALIZING = "initializing"
+    """DRM system operational status."""
+    INITIALIZING = "initializing"
     RUNNING = "running"
     DEGRADED = "degraded"
     MAINTENANCE = "maintenance"
@@ -53,7 +55,8 @@ class DRMSystemStatus(str, Enum):
     SHUTDOWN = "shutdown"
 
 class ContentType(str, Enum):
-    """Supported content types."""    AUDIO = "audio"
+    """Supported content types."""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -63,7 +66,8 @@ class ContentType(str, Enum):
 
 @dataclass
 class DRMSystemConfig:
-    """DRM system configuration."""    # Component configurations
+    """DRM system configuration."""
+    # Component configurations
     access_control_config: Dict[str, Any] = field(default_factory=dict)
     license_engine_config: Dict[str, Any] = field(default_factory=dict)
     encryption_config: Dict[str, Any] = field(default_factory=dict)
@@ -85,7 +89,8 @@ class DRMSystemConfig:
 
 @dataclass
 class ContentProtectionRequest:
-    """Request for content protection services."""    request_id: str
+    """Request for content protection services."""
+    request_id: str
     content_id: str
     content_type: ContentType
     user_id: str
@@ -95,7 +100,8 @@ class ContentProtectionRequest:
 
 @dataclass
 class DRMSystemResponse:
-    """DRM system operation response."""    request_id: str
+    """DRM system operation response."""
+    request_id: str
     success: bool
     result: Dict[str, Any] = field(default_factory=dict)
     errors: List[str] = field(default_factory=list)
@@ -104,9 +110,11 @@ class DRMSystemResponse:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class DRMSystemManager:
-    """Central DRM system manager for enterprise content protection."""    
+    """Central DRM system manager for enterprise content protection."""
+    
     def __init__(self, config: DRMSystemConfig):
-        """Initialize DRM system manager."""        self.config = config
+        """Initialize DRM system manager."""
+        self.config = config
         self.status = DRMSystemStatus.INITIALIZING
         self.start_time = datetime.now(timezone.utc)
         
@@ -137,7 +145,8 @@ class DRMSystemManager:
         self.active_requests: Dict[str, ContentProtectionRequest] = {}
         
     async def initialize(self) -> bool:
-        """Initialize all DRM system components."""        try:
+        """Initialize all DRM system components."""
+        try:
             logger.info("Initializing DRM system components...")
             
             # Initialize core components
@@ -191,7 +200,8 @@ class DRMSystemManager:
         blockchain_registration: bool = True,
         custom_policies: Optional[Dict[str, Any]] = None
     ) -> DRMSystemResponse:
-        """Protect content with comprehensive DRM measures."""        request_id = str(uuid.uuid4())
+        """Protect content with comprehensive DRM measures."""
+        request_id = str(uuid.uuid4())
         start_time = datetime.now(timezone.utc)
         
         try:
@@ -345,7 +355,8 @@ class DRMSystemManager:
         payment_required: bool = True,
         blockchain_recording: bool = True
     ) -> DRMSystemResponse:
-        """Issue a content license with full DRM integration."""        request_id = str(uuid.uuid4())
+        """Issue a content license with full DRM integration."""
+        request_id = str(uuid.uuid4())
         start_time = datetime.now(timezone.utc)
         
         try:
@@ -461,7 +472,8 @@ class DRMSystemManager:
         access_type: str,
         request_context: Optional[Dict[str, Any]] = None
     ) -> DRMSystemResponse:
-        """Verify user access to content with comprehensive policy checking."""        request_id = str(uuid.uuid4())
+        """Verify user access to content with comprehensive policy checking."""
+        request_id = str(uuid.uuid4())
         start_time = datetime.now(timezone.utc)
         
         try:
@@ -573,7 +585,8 @@ class DRMSystemManager:
         include_blockchain: bool = True,
         include_analytics: bool = True
     ) -> DRMSystemResponse:
-        """Generate comprehensive DRM system report."""        request_id = str(uuid.uuid4())
+        """Generate comprehensive DRM system report."""
+        request_id = str(uuid.uuid4())
         start_time = datetime.now(timezone.utc)
         
         try:
@@ -659,7 +672,8 @@ class DRMSystemManager:
             )
     
     async def get_system_health(self) -> Dict[str, Any]:
-        """Get comprehensive system health status."""        try:
+        """Get comprehensive system health status."""
+        try:
             health_data = {
                 "system_status": self.status.value,
                 "uptime_seconds": (datetime.now(timezone.utc) - self.start_time).total_seconds(),
@@ -705,7 +719,8 @@ class DRMSystemManager:
             return {"error": str(e), "system_status": "error"}
     
     async def _get_system_statistics(self) -> Dict[str, Any]:
-        """Get system-wide statistics."""        try:
+        """Get system-wide statistics."""
+        try:
             # This would aggregate statistics from all components
             stats = {
                 "total_protected_content": 0,  # Would query from database
@@ -722,12 +737,14 @@ class DRMSystemManager:
             return {}
     
     def _generate_content_hash(self, content_id: str) -> str:
-        """Generate content hash for blockchain registration."""        # This would generate actual content hash
+        """Generate content hash for blockchain registration."""
+        # This would generate actual content hash
         import hashlib
         return hashlib.sha256(f"content_{content_id}_{datetime.now().isoformat()}".encode()).hexdigest()
     
     def _get_component_count(self) -> int:
-        """Get number of initialized components."""        count = 7  # Core components
+        """Get number of initialized components."""
+        count = 7  # Core components
         if self.analytics_engine:
             count += 1
         if self.performance_monitor:
@@ -737,7 +754,8 @@ class DRMSystemManager:
         return count
     
     async def _system_health_monitor(self) -> None:
-        """Monitor system health continuously."""        while True:
+        """Monitor system health continuously."""
+        while True:
             try:
                 await asyncio.sleep(300)  # Check every 5 minutes
                 
@@ -760,7 +778,8 @@ class DRMSystemManager:
                 logger.error(f"Error in system health monitor: {e}")
     
     async def _periodic_optimization(self) -> None:
-        """Perform periodic system optimization."""        while True:
+        """Perform periodic system optimization."""
+        while True:
             try:
                 await asyncio.sleep(3600)  # Run every hour
                 
@@ -778,7 +797,8 @@ class DRMSystemManager:
                 logger.error(f"Error in periodic optimization: {e}")
     
     async def _cleanup_old_data(self) -> None:
-        """Cleanup old data according to retention policies."""        try:
+        """Cleanup old data according to retention policies."""
+        try:
             # Cleanup audit trail
             await self.audit_trail.cleanup()
             
@@ -800,7 +820,8 @@ class DRMSystemManager:
             logger.error(f"Error during system cleanup: {e}")
     
     async def shutdown(self) -> bool:
-        """Shutdown DRM system gracefully."""        try:
+        """Shutdown DRM system gracefully."""
+        try:
             logger.info("Shutting down DRM system...")
             self.status = DRMSystemStatus.SHUTDOWN
             

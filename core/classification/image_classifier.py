@@ -15,7 +15,8 @@ Contact: mlaiel@live.de for licensing and collaboration.
 Any unauthorized use, copying, or distribution without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted
 to the full extent of the law.
-"""import cv2
+"""
+import cv2
 import numpy as np
 import torch
 import torchvision.transforms as transforms
@@ -43,7 +44,8 @@ logger = logging.getLogger(__name__)
 
 
 class ImageContentClassifier:
-    """    Enterprise-grade image content classification system.
+    """
+    Enterprise-grade image content classification system.
     
     Features:
     - Visual content recognition and categorization
@@ -54,9 +56,11 @@ class ImageContentClassifier:
     - Similarity matching for copyright detection
     - Album cover and artwork classification
     - Brand and logo detection
-    """    
+    """
+    
     def __init__(self, model_path: Optional[str] = None):
-        """Initialize image classifier with ML models."""        self.settings = get_settings()
+        """Initialize image classifier with ML models."""
+        self.settings = get_settings()
         self.ml_engine = MLEngine()
         self.image_processor = ImageProcessor()
         
@@ -76,7 +80,8 @@ class ImageContentClassifier:
         }
 
     def _load_models(self, model_path: Optional[str]):
-        """Load and initialize ML models."""        try:
+        """Load and initialize ML models."""
+        try:
             # CLIP model for general image understanding
             self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
@@ -96,7 +101,8 @@ class ImageContentClassifier:
             raise ClassificationError(f"Failed to load models: {e}")
 
     def _load_custom_models(self, model_path: str):
-        """Load custom trained models."""        try:
+        """Load custom trained models."""
+        try:
             model_dir = Path(model_path)
             
             # Load style classifier
@@ -113,7 +119,8 @@ class ImageContentClassifier:
             logger.warning(f"Could not load custom models: {e}")
 
     def _init_feature_extractors(self):
-        """Initialize feature extraction components."""        # Hash functions for similarity matching
+        """Initialize feature extraction components."""
+        # Hash functions for similarity matching
         self.hash_functions = {
             'phash': imagehash.phash,
             'dhash': imagehash.dhash,
@@ -134,7 +141,8 @@ class ImageContentClassifier:
     @cache_result(ttl=3600)
     @track_performance
     def classify_image(self, image_path: str, options: Optional[Dict] = None) -> Dict[str, Any]:
-        """        Comprehensive image classification and analysis.
+        """
+        Comprehensive image classification and analysis.
         
         Args:
             image_path: Path to image file
@@ -142,7 +150,8 @@ class ImageContentClassifier:
             
         Returns:
             Classification results with confidence scores
-        """        try:
+        """
+        try:
             # Load and preprocess image
             image = self._load_image(image_path)
             if image is None:
@@ -183,7 +192,8 @@ class ImageContentClassifier:
             raise ClassificationError(f"Classification failed: {e}")
 
     def _load_image(self, image_path: str) -> Optional[np.ndarray]:
-        """Load and validate image file."""        try:
+        """Load and validate image file."""
+        try:
             # Load with PIL first
             pil_image = Image.open(image_path)
             
@@ -205,7 +215,8 @@ class ImageContentClassifier:
             return None
 
     def _get_image_info(self, image: np.ndarray) -> Dict[str, Any]:
-        """Extract basic image information."""        return {
+        """Extract basic image information."""
+        return {
             'dimensions': {
                 'width': image.shape[1],
                 'height': image.shape[0],
@@ -217,7 +228,8 @@ class ImageContentClassifier:
         }
 
     def _classify_content_type(self, image: np.ndarray) -> Dict[str, Any]:
-        """Classify the type of content in the image."""        try:
+        """Classify the type of content in the image."""
+        try:
             # Convert to PIL for CLIP processing
             pil_image = Image.fromarray(image)
             
@@ -267,7 +279,8 @@ class ImageContentClassifier:
             return {'content_type': {'primary': 'unknown', 'confidence': 0.0}}
 
     def _classify_style(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze artistic style and aesthetic properties."""        try:
+        """Analyze artistic style and aesthetic properties."""
+        try:
             # Convert to PIL for processing
             pil_image = Image.fromarray(image)
             
@@ -314,7 +327,8 @@ class ImageContentClassifier:
             return {'style_analysis': {'primary_style': 'unknown', 'confidence': 0.0}}
 
     def _detect_objects(self, image: np.ndarray) -> Dict[str, Any]:
-        """Detect and classify objects in the image."""        try:
+        """Detect and classify objects in the image."""
+        try:
             # Convert to PIL for CLIP processing
             pil_image = Image.fromarray(image)
             
@@ -367,7 +381,8 @@ class ImageContentClassifier:
             return {'object_detection': {'objects_found': 0, 'objects': []}}
 
     def _detect_faces(self, image: np.ndarray) -> Dict[str, Any]:
-        """Detect and analyze faces in the image."""        try:
+        """Detect and analyze faces in the image."""
+        try:
             # Convert BGR to RGB for face_recognition
             rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             
@@ -420,7 +435,8 @@ class ImageContentClassifier:
             return {'face_analysis': {'faces_detected': 0, 'faces': [], 'has_faces': False}}
 
     def _assess_quality(self, image: np.ndarray) -> Dict[str, Any]:
-        """Assess technical quality of the image."""        try:
+        """Assess technical quality of the image."""
+        try:
             # Convert to PIL for analysis
             pil_image = Image.fromarray(image)
             
@@ -460,7 +476,8 @@ class ImageContentClassifier:
             return {'overall_quality': 0.0, 'quality_grade': 'unknown'}
 
     def _extract_color_features(self, image: np.ndarray) -> Dict[str, Any]:
-        """Extract color-based features and palette."""        try:
+        """Extract color-based features and palette."""
+        try:
             # Convert to PIL for easier processing
             pil_image = Image.fromarray(image)
             
@@ -513,7 +530,8 @@ class ImageContentClassifier:
             return {'color_analysis': {'dominant_colors': [], 'color_count': 0}}
 
     def _extract_composition_features(self, image: np.ndarray) -> Dict[str, Any]:
-        """Extract composition and layout features."""        try:
+        """Extract composition and layout features."""
+        try:
             height, width = image.shape[:2]
             
             # Calculate rule of thirds intersection points
@@ -571,7 +589,8 @@ class ImageContentClassifier:
             return {'composition_analysis': {'aspect_ratio': 1.0, 'complexity_score': 0.5}}
 
     def _generate_hashes(self, image: np.ndarray) -> Dict[str, str]:
-        """Generate multiple hash signatures for similarity matching."""        try:
+        """Generate multiple hash signatures for similarity matching."""
+        try:
             # Convert to PIL
             pil_image = Image.fromarray(image)
             
@@ -596,7 +615,8 @@ class ImageContentClassifier:
             return {}
 
     def _advanced_analysis(self, image: np.ndarray) -> Dict[str, Any]:
-        """Perform advanced analysis including captioning and scene understanding."""        try:
+        """Perform advanced analysis including captioning and scene understanding."""
+        try:
             # Convert to PIL for model processing
             pil_image = Image.fromarray(image)
             
@@ -651,11 +671,13 @@ class ImageContentClassifier:
 
     # Helper methods
     def _is_music_related(self, content_type: str) -> bool:
-        """Check if content type is music-related."""        music_keywords = ['album', 'music', 'concert', 'musician', 'artist', 'song', 'band']
+        """Check if content type is music-related."""
+        music_keywords = ['album', 'music', 'concert', 'musician', 'artist', 'song', 'band']
         return any(keyword in content_type.lower() for keyword in music_keywords)
 
     def _calculate_aesthetic_score(self, image: np.ndarray) -> float:
-        """Calculate aesthetic appeal score based on composition rules."""        try:
+        """Calculate aesthetic appeal score based on composition rules."""
+        try:
             # Rule of thirds
             height, width = image.shape[:2]
             
@@ -679,7 +701,8 @@ class ImageContentClassifier:
             return 0.5
 
     def _calculate_resolution_score(self, image: np.ndarray) -> float:
-        """Calculate resolution quality score."""        height, width = image.shape[:2]
+        """Calculate resolution quality score."""
+        height, width = image.shape[:2]
         total_pixels = height * width
         
         # Score based on common resolution standards
@@ -695,7 +718,8 @@ class ImageContentClassifier:
             return 0.2
 
     def _calculate_sharpness(self, pil_image: Image.Image) -> float:
-        """Calculate image sharpness using variance of Laplacian."""        try:
+        """Calculate image sharpness using variance of Laplacian."""
+        try:
             # Convert to grayscale
             gray = pil_image.convert('L')
             image_array = np.array(gray)
@@ -710,7 +734,8 @@ class ImageContentClassifier:
             return 0.5
 
     def _calculate_brightness(self, pil_image: Image.Image) -> float:
-        """Calculate optimal brightness score."""        try:
+        """Calculate optimal brightness score."""
+        try:
             stat = ImageStat.Stat(pil_image)
             mean_brightness = sum(stat.mean) / len(stat.mean)
             
@@ -724,7 +749,8 @@ class ImageContentClassifier:
             return 0.5
 
     def _calculate_contrast(self, pil_image: Image.Image) -> float:
-        """Calculate image contrast score."""        try:
+        """Calculate image contrast score."""
+        try:
             stat = ImageStat.Stat(pil_image)
             contrast = sum(stat.stddev) / len(stat.stddev)
             
@@ -735,7 +761,8 @@ class ImageContentClassifier:
             return 0.5
 
     def _calculate_saturation(self, pil_image: Image.Image) -> float:
-        """Calculate color saturation score."""        try:
+        """Calculate color saturation score."""
+        try:
             # Convert to HSV to get saturation
             hsv_image = pil_image.convert('HSV')
             stat = ImageStat.Stat(hsv_image)
@@ -750,7 +777,8 @@ class ImageContentClassifier:
             return 0.5
 
     def _estimate_noise_level(self, image: np.ndarray) -> float:
-        """Estimate noise level in the image."""        try:
+        """Estimate noise level in the image."""
+        try:
             # Convert to grayscale
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             
@@ -767,7 +795,8 @@ class ImageContentClassifier:
             return 0.1
 
     def _get_quality_grade(self, score: float) -> str:
-        """Convert quality score to letter grade."""        if score >= 0.9:
+        """Convert quality score to letter grade."""
+        if score >= 0.9:
             return 'A+'
         elif score >= 0.8:
             return 'A'
@@ -783,12 +812,14 @@ class ImageContentClassifier:
             return 'D'
 
     def _rgb_to_hsl(self, r: int, g: int, b: int) -> Tuple[int, int, int]:
-        """Convert RGB to HSL color space."""        r, g, b = r/255.0, g/255.0, b/255.0
+        """Convert RGB to HSL color space."""
+        r, g, b = r/255.0, g/255.0, b/255.0
         h, l, s = colorsys.rgb_to_hls(r, g, b)
         return (int(h*360), int(s*100), int(l*100))
 
     def _calculate_color_harmony(self, colors: np.ndarray) -> float:
-        """Calculate color harmony score based on color theory."""        try:
+        """Calculate color harmony score based on color theory."""
+        try:
             if len(colors) < 2:
                 return 0.5
             
@@ -828,7 +859,8 @@ class ImageContentClassifier:
             return 0.5
 
     def _calculate_color_temperature(self, colors: np.ndarray) -> str:
-        """Determine overall color temperature."""        try:
+        """Determine overall color temperature."""
+        try:
             # Calculate average color
             avg_color = np.mean(colors, axis=0)
             r, g, b = avg_color
@@ -845,7 +877,8 @@ class ImageContentClassifier:
             return 'neutral'
 
     def _extract_semantic_features(self, caption: str) -> Dict[str, Any]:
-        """Extract semantic features from image caption."""        try:
+        """Extract semantic features from image caption."""
+        try:
             # Simple keyword extraction
             music_keywords = ['music', 'song', 'guitar', 'piano', 'drum', 'singer', 'band', 'concert']
             art_keywords = ['art', 'painting', 'drawing', 'design', 'creative', 'artistic']
@@ -865,11 +898,13 @@ class ImageContentClassifier:
             return {'contains_music_terms': False, 'word_count': 0}
 
     def _get_timestamp(self) -> str:
-        """Get current timestamp."""        from datetime import datetime
+        """Get current timestamp."""
+        from datetime import datetime
         return datetime.now().isoformat()
 
     def compare_images(self, image1_path: str, image2_path: str) -> Dict[str, Any]:
-        """        Compare two images for similarity.
+        """
+        Compare two images for similarity.
         
         Args:
             image1_path: Path to first image
@@ -877,7 +912,8 @@ class ImageContentClassifier:
             
         Returns:
             Similarity analysis results
-        """        try:
+        """
+        try:
             # Load images
             image1 = self._load_image(image1_path)
             image2 = self._load_image(image2_path)
@@ -921,7 +957,8 @@ class ImageContentClassifier:
             raise ClassificationError(f"Image comparison failed: {e}")
 
     def _compare_color_features(self, features1: Dict, features2: Dict) -> float:
-        """Compare color features between two images."""        try:
+        """Compare color features between two images."""
+        try:
             colors1 = features1.get('color_analysis', {}).get('dominant_colors', [])
             colors2 = features2.get('color_analysis', {}).get('dominant_colors', [])
             
@@ -947,7 +984,8 @@ class ImageContentClassifier:
             return 0.0
 
     def get_classification_summary(self, results: Dict[str, Any]) -> str:
-        """Generate a human-readable summary of classification results."""        try:
+        """Generate a human-readable summary of classification results."""
+        try:
             summary_parts = []
             
             # Content type

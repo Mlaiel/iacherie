@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -22,7 +23,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -54,17 +56,20 @@ AgentStatus = base_agent_module.AgentStatus
 
 # Create a mock AnalyticsAgent class for testing
 class AnalyticsAgent(BaseAIAgent):
-    """Mock AnalyticsAgent for testing purposes"""    
+    """Mock AnalyticsAgent for testing purposes"""
+    
     def __init__(self, config: AgentConfiguration):
         super().__init__(config)
         self.analytics_data = {}
         self.metrics_history = []
         
     async def _custom_initialize(self) -> None:
-        """Custom initialization for analytics agent"""        self.analytics_data = {"initialized": True}
+        """Custom initialization for analytics agent"""
+        self.analytics_data = {"initialized": True}
         
     async def _execute_task_impl(self, task) -> Any:
-        """Execute analytics-specific tasks"""        if task.task_type == "analyze_performance":
+        """Execute analytics-specific tasks"""
+        if task.task_type == "analyze_performance":
             return await self.analyze_performance(task.data)
         elif task.task_type == "generate_insights":
             return await self.generate_insights(task.data)
@@ -72,7 +77,8 @@ class AnalyticsAgent(BaseAIAgent):
             return {"status": "completed", "task_type": task.task_type}
         
     async def analyze_performance(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Mock performance analysis"""        return {
+        """Mock performance analysis"""
+        return {
             "engagement_rate": 0.85,
             "reach": 10000,
             "impressions": 15000,
@@ -80,7 +86,8 @@ class AnalyticsAgent(BaseAIAgent):
         }
         
     async def generate_insights(self, metrics: Dict[str, Any]) -> List[str]:
-        """Mock insights generation"""        return [
+        """Mock insights generation"""
+        return [
             "Engagement rate is above average",
             "Best posting time is 2-4 PM",
             "Video content performs 30% better than images"
@@ -90,10 +97,12 @@ logger = logging.getLogger(__name__)
 
 
 class TestAnalyticsAgent:
-    """Comprehensive test suite for AnalyticsAgent"""    
+    """Comprehensive test suite for AnalyticsAgent"""
+    
     @pytest.fixture
     def analytics_config(self) -> AgentConfiguration:
-        """Analytics agent configuration"""        return AgentConfiguration(
+        """Analytics agent configuration"""
+        return AgentConfiguration(
             agent_id="analytics_test",
             agent_name="Test Analytics Agent",
             capabilities={
@@ -118,7 +127,8 @@ class TestAnalyticsAgent:
     
     @pytest.fixture
     async def analytics_agent(self, analytics_config) -> AnalyticsAgent:
-        """Initialized analytics agent"""        agent = AnalyticsAgent(analytics_config)
+        """Initialized analytics agent"""
+        agent = AnalyticsAgent(analytics_config)
         await agent.initialize()
         
         yield agent
@@ -127,7 +137,8 @@ class TestAnalyticsAgent:
     
     @pytest.mark.asyncio
     async def test_agent_initialization(self, analytics_config):
-        """Test analytics agent initialization"""        agent = AnalyticsAgent(analytics_config)
+        """Test analytics agent initialization"""
+        agent = AnalyticsAgent(analytics_config)
         
         # Before initialization
         assert agent.status == AgentStatus.INITIALIZING
@@ -160,7 +171,8 @@ class TestAnalyticsAgent:
         await agent.shutdown()
     
     async def test_performance_analysis(self, analytics_agent, test_analytics_data):
-        """Test comprehensive performance analysis"""        performance_request = {
+        """Test comprehensive performance analysis"""
+        performance_request = {
             "task_type": "performance_analysis",
             "data_source": "social_media",
             "platforms": ["instagram", "tiktok", "youtube"],
@@ -231,7 +243,8 @@ class TestAnalyticsAgent:
         assert "trend_analysis" in insights
     
     async def test_audience_analysis(self, analytics_agent, test_analytics_data):
-        """Test comprehensive audience analysis"""        audience_request = {
+        """Test comprehensive audience analysis"""
+        audience_request = {
             "task_type": "audience_analysis",
             "data_sources": ["social_media", "website", "email"],
             "analysis_type": "comprehensive",
@@ -302,7 +315,8 @@ class TestAnalyticsAgent:
         assert "churn_analysis" in growth
     
     async def test_trend_analysis(self, analytics_agent):
-        """Test trend detection and analysis"""        trend_request = {
+        """Test trend detection and analysis"""
+        trend_request = {
             "task_type": "trend_analysis",
             "scope": "global",
             "categories": ["technology", "ai", "social_media", "content_creation"],
@@ -364,7 +378,8 @@ class TestAnalyticsAgent:
         assert "collaboration_opportunities" in opportunities
     
     async def test_predictive_insights(self, analytics_agent, test_analytics_data):
-        """Test predictive analytics and forecasting"""        prediction_request = {
+        """Test predictive analytics and forecasting"""
+        prediction_request = {
             "task_type": "predictive_insights",
             "prediction_type": "performance_forecast",
             "metrics_to_predict": [
@@ -424,7 +439,8 @@ class TestAnalyticsAgent:
             assert "confidence" in rec
     
     async def test_real_time_monitoring(self, analytics_agent):
-        """Test real-time analytics monitoring"""        monitoring_request = {
+        """Test real-time analytics monitoring"""
+        monitoring_request = {
             "task_type": "real_time_monitoring",
             "platforms": ["instagram", "tiktok", "twitter"],
             "metrics": [
@@ -464,7 +480,8 @@ class TestAnalyticsAgent:
         assert "notification_settings" in alerts
     
     async def test_anomaly_detection(self, analytics_agent):
-        """Test anomaly detection in analytics data"""        anomaly_request = {
+        """Test anomaly detection in analytics data"""
+        anomaly_request = {
             "task_type": "anomaly_detection",
             "data_stream": "engagement_metrics",
             "detection_sensitivity": "medium",
@@ -510,7 +527,8 @@ class TestAnalyticsAgent:
         assert "root_cause_analysis" in impact
     
     async def test_competitive_analysis(self, analytics_agent):
-        """Test competitive analytics and benchmarking"""        competitive_request = {
+        """Test competitive analytics and benchmarking"""
+        competitive_request = {
             "task_type": "competitive_analysis",
             "competitors": [
                 {"name": "Competitor A", "platforms": ["instagram", "tiktok"]},
@@ -567,7 +585,8 @@ class TestAnalyticsAgent:
         assert "content_gaps" in gaps
     
     async def test_roi_analysis(self, analytics_agent):
-        """Test return on investment analysis"""        roi_request = {
+        """Test return on investment analysis"""
+        roi_request = {
             "task_type": "roi_analysis",
             "investment_data": {
                 "content_creation": 5000,
@@ -624,7 +643,8 @@ class TestAnalyticsAgent:
         assert "efficiency_improvements" in optimization
     
     async def test_custom_dashboard_creation(self, analytics_agent):
-        """Test custom analytics dashboard creation"""        dashboard_request = {
+        """Test custom analytics dashboard creation"""
+        dashboard_request = {
             "task_type": "create_dashboard",
             "dashboard_name": "Content Performance Dashboard",
             "widgets": [
@@ -678,7 +698,8 @@ class TestAnalyticsAgent:
         assert "creation_timestamp" in config
     
     async def test_data_export(self, analytics_agent):
-        """Test analytics data export functionality"""        export_request = {
+        """Test analytics data export functionality"""
+        export_request = {
             "task_type": "data_export",
             "export_type": "comprehensive_report",
             "data_sources": ["social_media", "website", "email"],
@@ -709,7 +730,8 @@ class TestAnalyticsAgent:
         assert "time_range" in summary
     
     async def test_concurrent_analytics_tasks(self, analytics_agent):
-        """Test concurrent analytics processing"""        tasks = [
+        """Test concurrent analytics processing"""
+        tasks = [
             {
                 "task_type": "performance_analysis",
                 "platforms": ["instagram"],
@@ -741,7 +763,8 @@ class TestAnalyticsAgent:
     
     @pytest.mark.performance
     async def test_analytics_performance(self, analytics_agent, assert_performance):
-        """Test analytics processing performance"""        # Test performance analysis speed
+        """Test analytics processing performance"""
+        # Test performance analysis speed
         perf_task = {
             "task_type": "performance_analysis",
             "platforms": ["instagram", "tiktok"],
@@ -765,7 +788,8 @@ class TestAnalyticsAgent:
         assert result["success"] is True
     
     async def test_error_handling(self, analytics_agent):
-        """Test error handling in analytics processing"""        # Test invalid metric
+        """Test error handling in analytics processing"""
+        # Test invalid metric
         invalid_metric_task = {
             "task_type": "performance_analysis",
             "metrics": ["invalid_metric"],

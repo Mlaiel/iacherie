@@ -11,7 +11,8 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and
 will result in legal action.
-"""import os
+"""
+import os
 import json
 import base64
 import hashlib
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SecretMetadata:
-    """Secret metadata container"""    name: str
+    """Secret metadata container"""
+    name: str
     version: str
     created_at: str
     last_accessed: str
@@ -45,7 +47,8 @@ class SecretMetadata:
 
 @dataclass
 class ConfigTemplate:
-    """Configuration template for different environments"""    environment: str
+    """Configuration template for different environments"""
+    environment: str
     database_url: str
     redis_url: str
     secret_key: str
@@ -57,18 +60,22 @@ class ConfigTemplate:
 
 
 class ConfigEncryption:
-    """    Advanced configuration encryption using multiple algorithms
-    """    
+    """
+    Advanced configuration encryption using multiple algorithms
+    """
+    
     def __init__(self, master_key: Optional[bytes] = None):
         self.master_key = master_key or self._generate_master_key()
         self._fernet = Fernet(self.master_key)
         logger.info("Configuration encryption initialized")
     
     def _generate_master_key(self) -> bytes:
-        """Generate a secure master key"""        return Fernet.generate_key()
+        """Generate a secure master key"""
+        return Fernet.generate_key()
     
     def derive_key_from_password(self, password: str, salt: bytes = None) -> bytes:
-        """        Derive encryption key from password using PBKDF2
+        """
+        Derive encryption key from password using PBKDF2
         
         Args:
             password: Password to derive key from
@@ -76,7 +83,8 @@ class ConfigEncryption:
             
         Returns:
             Derived encryption key
-        """        if salt is None:
+        """
+        if salt is None:
             salt = os.urandom(16)
         
         kdf = PBKDF2HMAC(
@@ -90,14 +98,16 @@ class ConfigEncryption:
         return key
     
     def encrypt_data(self, data: Union[str, Dict, List]) -> str:
-        """        Encrypt configuration data
+        """
+        Encrypt configuration data
         
         Args:
             data: Data to encrypt
             
         Returns:
             Base64 encoded encrypted data
-        """        try:
+        """
+        try:
             if isinstance(data, (dict, list)):
                 data = json.dumps(data)
             
@@ -109,14 +119,16 @@ class ConfigEncryption:
             raise
     
     def decrypt_data(self, encrypted_data: str) -> Union[str, Dict, List]:
-        """        Decrypt configuration data
+        """
+        Decrypt configuration data
         
         Args:
             encrypted_data: Base64 encoded encrypted data
             
         Returns:
             Decrypted data
-        """        try:
+        """
+        try:
             encrypted_bytes = base64.b64decode(encrypted_data.encode())
             decrypted_data = self._fernet.decrypt(encrypted_bytes).decode()
             
@@ -131,7 +143,8 @@ class ConfigEncryption:
             raise
     
     def encrypt_file(self, file_path: str, output_path: Optional[str] = None) -> str:
-        """        Encrypt configuration file
+        """
+        Encrypt configuration file
         
         Args:
             file_path: Path to file to encrypt
@@ -139,7 +152,8 @@ class ConfigEncryption:
             
         Returns:
             Path to encrypted file
-        """        try:
+        """
+        try:
             with open(file_path, 'rb') as file:
                 file_data = file.read()
             
@@ -159,7 +173,8 @@ class ConfigEncryption:
             raise
     
     def decrypt_file(self, encrypted_file_path: str, output_path: Optional[str] = None) -> str:
-        """        Decrypt configuration file
+        """
+        Decrypt configuration file
         
         Args:
             encrypted_file_path: Path to encrypted file
@@ -167,7 +182,8 @@ class ConfigEncryption:
             
         Returns:
             Path to decrypted file
-        """        try:
+        """
+        try:
             with open(encrypted_file_path, 'rb') as encrypted_file:
                 encrypted_data = encrypted_file.read()
             
@@ -188,8 +204,10 @@ class ConfigEncryption:
 
 
 class SecretVaultIntegration:
-    """    Integration with multiple secret management systems
-    """    
+    """
+    Integration with multiple secret management systems
+    """
+    
     def __init__(self):
         self._aws_client = None
         self._azure_client = None
@@ -198,23 +216,27 @@ class SecretVaultIntegration:
         logger.info("Secret vault integration initialized")
     
     def _get_aws_client(self):
-        """Get AWS Secrets Manager client"""        if self._aws_client is None:
+        """Get AWS Secrets Manager client"""
+        if self._aws_client is None:
             self._aws_client = boto3.client('secretsmanager')
         return self._aws_client
     
     def _get_azure_client(self, vault_url: str):
-        """Get Azure Key Vault client"""        if self._azure_client is None:
+        """Get Azure Key Vault client"""
+        if self._azure_client is None:
             credential = DefaultAzureCredential()
             self._azure_client = SecretClient(vault_url=vault_url, credential=credential)
         return self._azure_client
     
     def _get_vault_client(self, vault_url: str, token: str):
-        """Get HashiCorp Vault client"""        if self._vault_client is None:
+        """Get HashiCorp Vault client"""
+        if self._vault_client is None:
             self._vault_client = hvac.Client(url=vault_url, token=token)
         return self._vault_client
     
     def _get_gcp_client(self):
-        """Get Google Secret Manager client"""        if self._gcp_client is None:
+        """Get Google Secret Manager client"""
+        if self._gcp_client is None:
             self._gcp_client = secretmanager.SecretManagerServiceClient()
         return self._gcp_client
     
@@ -225,7 +247,8 @@ class SecretVaultIntegration:
         description: str = "",
         tags: Dict[str, str] = None
     ) -> str:
-        """        Store secret in AWS Secrets Manager
+        """
+        Store secret in AWS Secrets Manager
         
         Args:
             secret_name: Name of the secret
@@ -235,7 +258,8 @@ class SecretVaultIntegration:
             
         Returns:
             Secret ARN
-        """        try:
+        """
+        try:
             client = self._get_aws_client()
             
             if isinstance(secret_value, dict):
@@ -259,14 +283,16 @@ class SecretVaultIntegration:
             raise
     
     def retrieve_secret_aws(self, secret_name: str) -> Union[str, Dict]:
-        """        Retrieve secret from AWS Secrets Manager
+        """
+        Retrieve secret from AWS Secrets Manager
         
         Args:
             secret_name: Name of the secret
             
         Returns:
             Secret value
-        """        try:
+        """
+        try:
             client = self._get_aws_client()
             response = client.get_secret_value(SecretId=secret_name)
             
@@ -289,7 +315,8 @@ class SecretVaultIntegration:
         secret_value: str,
         tags: Dict[str, str] = None
     ) -> str:
-        """        Store secret in Azure Key Vault
+        """
+        Store secret in Azure Key Vault
         
         Args:
             vault_url: Azure Key Vault URL
@@ -299,7 +326,8 @@ class SecretVaultIntegration:
             
         Returns:
             Secret ID
-        """        try:
+        """
+        try:
             client = self._get_azure_client(vault_url)
             
             secret = client.set_secret(
@@ -316,7 +344,8 @@ class SecretVaultIntegration:
             raise
     
     def retrieve_secret_azure(self, vault_url: str, secret_name: str) -> str:
-        """        Retrieve secret from Azure Key Vault
+        """
+        Retrieve secret from Azure Key Vault
         
         Args:
             vault_url: Azure Key Vault URL
@@ -324,7 +353,8 @@ class SecretVaultIntegration:
             
         Returns:
             Secret value
-        """        try:
+        """
+        try:
             client = self._get_azure_client(vault_url)
             secret = client.get_secret(secret_name)
             return secret.value
@@ -340,7 +370,8 @@ class SecretVaultIntegration:
         path: str,
         secret_data: Dict[str, Any]
     ) -> bool:
-        """        Store secret in HashiCorp Vault
+        """
+        Store secret in HashiCorp Vault
         
         Args:
             vault_url: Vault URL
@@ -350,7 +381,8 @@ class SecretVaultIntegration:
             
         Returns:
             True if successful
-        """        try:
+        """
+        try:
             client = self._get_vault_client(vault_url, token)
             
             client.secrets.kv.v2.create_or_update_secret(
@@ -371,7 +403,8 @@ class SecretVaultIntegration:
         token: str,
         path: str
     ) -> Dict[str, Any]:
-        """        Retrieve secret from HashiCorp Vault
+        """
+        Retrieve secret from HashiCorp Vault
         
         Args:
             vault_url: Vault URL
@@ -380,7 +413,8 @@ class SecretVaultIntegration:
             
         Returns:
             Secret data
-        """        try:
+        """
+        try:
             client = self._get_vault_client(vault_url, token)
             
             response = client.secrets.kv.v2.read_secret_version(path=path)
@@ -392,8 +426,10 @@ class SecretVaultIntegration:
 
 
 class EncryptedConfigManager:
-    """    Comprehensive encrypted configuration management system
-    """    
+    """
+    Comprehensive encrypted configuration management system
+    """
+    
     def __init__(
         self,
         config_dir: str = "/etc/ia-influencer/config",
@@ -417,7 +453,8 @@ class EncryptedConfigManager:
         environment: str,
         config_template: ConfigTemplate
     ) -> str:
-        """        Create encrypted configuration for specific environment
+        """
+        Create encrypted configuration for specific environment
         
         Args:
             environment: Environment name (dev, staging, prod)
@@ -425,7 +462,8 @@ class EncryptedConfigManager:
             
         Returns:
             Path to encrypted configuration file
-        """        try:
+        """
+        try:
             config_data = asdict(config_template)
             config_file = self.config_dir / f"{environment}.json.encrypted"
             
@@ -450,7 +488,8 @@ class EncryptedConfigManager:
         environment: str,
         use_cache: bool = True
     ) -> ConfigTemplate:
-        """        Load and decrypt environment configuration
+        """
+        Load and decrypt environment configuration
         
         Args:
             environment: Environment name
@@ -458,7 +497,8 @@ class EncryptedConfigManager:
             
         Returns:
             Configuration template
-        """        try:
+        """
+        try:
             # Check cache first
             if use_cache and environment in self._config_cache:
                 return self._config_cache[environment]
@@ -492,7 +532,8 @@ class EncryptedConfigManager:
         key_path: str,
         value: Any
     ) -> bool:
-        """        Update specific configuration value
+        """
+        Update specific configuration value
         
         Args:
             environment: Environment name
@@ -501,7 +542,8 @@ class EncryptedConfigManager:
             
         Returns:
             True if successful
-        """        try:
+        """
+        try:
             # Load current configuration
             config = self.load_environment_config(environment, use_cache=False)
             config_data = asdict(config)
@@ -538,7 +580,8 @@ class EncryptedConfigManager:
         environment: str,
         secret_keys: List[str] = None
     ) -> Dict[str, bool]:
-        """        Rotate secrets in configuration
+        """
+        Rotate secrets in configuration
         
         Args:
             environment: Environment name
@@ -546,7 +589,8 @@ class EncryptedConfigManager:
             
         Returns:
             Dictionary of rotation results
-        """        try:
+        """
+        try:
             config = self.load_environment_config(environment, use_cache=False)
             rotation_results = {}
             
@@ -581,14 +625,16 @@ class EncryptedConfigManager:
             return {}
     
     def export_config_template(self, environment: str) -> str:
-        """        Export configuration template (without sensitive values)
+        """
+        Export configuration template (without sensitive values)
         
         Args:
             environment: Environment name
             
         Returns:
             Configuration template as JSON string
-        """        try:
+        """
+        try:
             config = self.load_environment_config(environment, use_cache=False)
             config_data = asdict(config)
             
@@ -617,14 +663,16 @@ class EncryptedConfigManager:
             raise
     
     def validate_configuration(self, environment: str) -> Dict[str, Any]:
-        """        Validate configuration completeness and security
+        """
+        Validate configuration completeness and security
         
         Args:
             environment: Environment name
             
         Returns:
             Validation results
-        """        try:
+        """
+        try:
             config = self.load_environment_config(environment, use_cache=False)
             validation_results = {
                 'is_valid': True,
@@ -674,7 +722,8 @@ class EncryptedConfigManager:
             }
     
     def backup_configuration(self, environment: str, backup_dir: str = None) -> str:
-        """        Create encrypted backup of configuration
+        """
+        Create encrypted backup of configuration
         
         Args:
             environment: Environment name
@@ -682,7 +731,8 @@ class EncryptedConfigManager:
             
         Returns:
             Path to backup file
-        """        try:
+        """
+        try:
             if backup_dir is None:
                 backup_dir = self.config_dir / "backups"
             
@@ -714,6 +764,7 @@ class EncryptedConfigManager:
             raise
     
     def clear_cache(self):
-        """Clear configuration cache"""        self._config_cache.clear()
+        """Clear configuration cache"""
+        self._config_cache.clear()
         self._secret_cache.clear()
         logger.info("Configuration cache cleared")

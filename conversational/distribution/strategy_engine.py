@@ -10,7 +10,8 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is proprietary and protected. Unauthorized use, reproduction, 
 or distribution is strictly prohibited and will result in legal action.
-"""import logging
+"""
+import logging
 from typing import Dict, List, Optional, Any, Tuple, Set
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field
@@ -60,7 +61,8 @@ metrics = MetricsCollector("distribution.strategy_engine")
 
 
 class StrategyType(str, Enum):
-    """Advanced distribution strategy types with business objectives"""    MAXIMUM_REACH = "maximum_reach"
+    """Advanced distribution strategy types with business objectives"""
+    MAXIMUM_REACH = "maximum_reach"
     ENGAGEMENT_FOCUSED = "engagement_focused"
     REVENUE_OPTIMIZED = "revenue_optimized"
     BRAND_BUILDING = "brand_building"
@@ -75,7 +77,8 @@ class StrategyType(str, Enum):
 
 
 class AudienceSegment(str, Enum):
-    """Sophisticated audience segments with behavioral patterns"""    MUSIC_LOVERS = "music_lovers"
+    """Sophisticated audience segments with behavioral patterns"""
+    MUSIC_LOVERS = "music_lovers"
     CONTENT_CREATORS = "content_creators"
     BUSINESS_PROFESSIONALS = "business_professionals"
     LIFESTYLE_ENTHUSIASTS = "lifestyle_enthusiasts"
@@ -93,7 +96,8 @@ class AudienceSegment(str, Enum):
 
 
 class OptimizationObjective(str, Enum):
-    """Multi-objective optimization targets"""    REACH = "reach"
+    """Multi-objective optimization targets"""
+    REACH = "reach"
     ENGAGEMENT = "engagement"
     CONVERSIONS = "conversions"
     REVENUE = "revenue"
@@ -109,7 +113,8 @@ class OptimizationObjective(str, Enum):
 
 @dataclass
 class PlatformMetrics:
-    """Enhanced platform performance metrics with predictive analytics"""    platform: PlatformType
+    """Enhanced platform performance metrics with predictive analytics"""
+    platform: PlatformType
     reach_score: float
     engagement_rate: float
     conversion_rate: float
@@ -130,7 +135,8 @@ class PlatformMetrics:
 
 @dataclass
 class ContentAnalysis:
-    """Comprehensive content characteristics analysis with AI insights"""    content_type: ContentType
+    """Comprehensive content characteristics analysis with AI insights"""
+    content_type: ContentType
     duration: Optional[float]
     quality_score: float
     trending_topics: List[str]
@@ -151,7 +157,8 @@ class ContentAnalysis:
 
 @dataclass
 class MarketTrends:
-    """Real-time market trends and competitive intelligence"""    trending_hashtags: Dict[str, float]
+    """Real-time market trends and competitive intelligence"""
+    trending_hashtags: Dict[str, float]
     viral_content_patterns: List[Dict[str, Any]]
     competitor_strategies: Dict[str, Any]
     platform_algorithm_changes: Dict[PlatformType, Dict[str, Any]]
@@ -162,7 +169,8 @@ class MarketTrends:
 
 
 class DistributionStrategy(BaseModel):
-    """Advanced distribution strategy with detailed recommendations"""    strategy_type: StrategyType
+    """Advanced distribution strategy with detailed recommendations"""
+    strategy_type: StrategyType
     recommended_platforms: List[PlatformType]
     priority_order: List[PlatformType]
     timing_recommendations: Dict[PlatformType, List[datetime]]
@@ -191,7 +199,8 @@ class DistributionStrategy(BaseModel):
 
 
 class DistributionStrategyEngine:
-    """    Enterprise-grade AI-powered engine for optimizing content distribution strategies.
+    """
+    Enterprise-grade AI-powered engine for optimizing content distribution strategies.
     
     Features:
     - Multi-objective optimization using advanced ML algorithms
@@ -202,7 +211,8 @@ class DistributionStrategyEngine:
     - A/B testing and experimentation framework
     - Influencer collaboration recommendations
     - Risk assessment and mitigation strategies
-    """    
+    """
+    
     def __init__(self, db: Session):
         self.db = db
         self.redis_client = None
@@ -221,15 +231,18 @@ class DistributionStrategyEngine:
         self.viral_predictor = self._initialize_viral_predictor()
         
     async def __aenter__(self):
-        """Async context manager entry"""        self.redis_client = await aioredis.from_url(settings.REDIS_URL)
+        """Async context manager entry"""
+        self.redis_client = await aioredis.from_url(settings.REDIS_URL)
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""        if self.redis_client:
+        """Async context manager exit"""
+        if self.redis_client:
             await self.redis_client.close()
     
     def _load_ml_models(self) -> Dict[str, Any]:
-        """Load sophisticated pre-trained ML models for strategy optimization"""        models = {}
+        """Load sophisticated pre-trained ML models for strategy optimization"""
+        models = {}
         
         try:
             # Load ensemble models for different metrics
@@ -284,7 +297,8 @@ class DistributionStrategyEngine:
         return models
     
     def _create_fallback_models(self) -> Dict[str, Any]:
-        """Create sophisticated fallback models when trained models are not available"""        fallback_models = {}
+        """Create sophisticated fallback models when trained models are not available"""
+        fallback_models = {}
         
         # Create basic ensemble models
         fallback_models["engagement_ensemble"] = {
@@ -311,7 +325,8 @@ class DistributionStrategyEngine:
         return fallback_models
     
     def _initialize_platform_analyzers(self) -> Dict[PlatformType, Any]:
-        """Initialize platform-specific analyzers"""        analyzers = {}
+        """Initialize platform-specific analyzers"""
+        analyzers = {}
         
         for platform in PlatformType:
             analyzers[platform] = {
@@ -325,7 +340,8 @@ class DistributionStrategyEngine:
         return analyzers
     
     def _initialize_content_analyzers(self) -> Dict[str, Any]:
-        """Initialize content analysis components"""        return {
+        """Initialize content analysis components"""
+        return {
             "sentiment_analyzer": self._create_sentiment_analyzer(),
             "emotion_detector": self._create_emotion_detector(),
             "quality_assessor": self._create_quality_assessor(),
@@ -335,7 +351,8 @@ class DistributionStrategyEngine:
         }
     
     def _initialize_market_intelligence(self) -> Dict[str, Any]:
-        """Initialize market intelligence and trend analysis"""        return {
+        """Initialize market intelligence and trend analysis"""
+        return {
             "trend_aggregator": self._create_trend_aggregator(),
             "competitor_tracker": self._create_competitor_tracker(),
             "market_analyzer": self._create_market_analyzer(),
@@ -344,7 +361,8 @@ class DistributionStrategyEngine:
         }
     
     def _initialize_trend_analyzer(self):
-        """Initialize trend analysis system"""        return {
+        """Initialize trend analysis system"""
+        return {
             "hashtag_tracker": self._create_hashtag_tracker(),
             "viral_content_detector": self._create_viral_content_detector(),
             "seasonal_analyzer": self._create_seasonal_analyzer(),
@@ -352,7 +370,8 @@ class DistributionStrategyEngine:
         }
     
     def _initialize_competitor_analyzer(self):
-        """Initialize competitor analysis system"""        return {
+        """Initialize competitor analysis system"""
+        return {
             "strategy_detector": self._create_strategy_detector(),
             "performance_benchmarker": self._create_performance_benchmarker(),
             "content_gap_analyzer": self._create_content_gap_analyzer(),
@@ -360,7 +379,8 @@ class DistributionStrategyEngine:
         }
     
     def _initialize_viral_predictor(self):
-        """Initialize viral content prediction system"""        return {
+        """Initialize viral content prediction system"""
+        return {
             "pattern_matcher": self._create_pattern_matcher(),
             "timing_optimizer": self._create_timing_optimizer(),
             "network_analyzer": self._create_network_analyzer(),
@@ -379,7 +399,8 @@ class DistributionStrategyEngine:
         platform_preferences: Optional[List[PlatformType]] = None,
         optimization_objectives: List[OptimizationObjective] = None
     ) -> DistributionStrategy:
-        """        Generate sophisticated distribution strategy using advanced AI algorithms.
+        """
+        Generate sophisticated distribution strategy using advanced AI algorithms.
         
         This method performs:
         - Multi-dimensional content analysis
@@ -403,7 +424,8 @@ class DistributionStrategyEngine:
             
         Returns:
             Comprehensive distribution strategy with detailed recommendations
-        """        
+        """
+        
         with metrics.timer("strategy.generation_time"):
             try:
                 # Step 1: Comprehensive data gathering and analysis
@@ -547,7 +569,8 @@ class DistributionStrategyEngine:
                 )
     
     async def _analyze_content_comprehensive(self, content_id: int) -> ContentAnalysis:
-        """Perform comprehensive content analysis using advanced AI"""        content = self.db.query(ContentModel).filter(ContentModel.id == content_id).first()
+        """Perform comprehensive content analysis using advanced AI"""
+        content = self.db.query(ContentModel).filter(ContentModel.id == content_id).first()
         if not content:
             raise ValueError(f"Content {content_id} not found")
         
@@ -592,7 +615,8 @@ class DistributionStrategyEngine:
         return analysis
     
     async def _analyze_user_profile(self, user_id: int) -> Dict[str, Any]:
-        """Analyze user profile and historical performance"""        user = self.db.query(UserModel).filter(UserModel.id == user_id).first()
+        """Analyze user profile and historical performance"""
+        user = self.db.query(UserModel).filter(UserModel.id == user_id).first()
         if not user:
             raise ValueError(f"User {user_id} not found")
         
@@ -642,7 +666,8 @@ class DistributionStrategyEngine:
         return profile
     
     async def _analyze_market_trends(self) -> MarketTrends:
-        """Analyze current market trends and competitive landscape"""        trends = MarketTrends(
+        """Analyze current market trends and competitive landscape"""
+        trends = MarketTrends(
             trending_hashtags={},
             viral_content_patterns=[],
             competitor_strategies={},
@@ -687,7 +712,8 @@ class DistributionStrategyEngine:
         return trends
     
     async def _analyze_competitors(self, user_id: int, content_analysis: ContentAnalysis) -> Dict[str, Any]:
-        """Analyze competitor strategies and performance"""        competitor_data = self.db.query(CompetitorAnalysisModel).filter(
+        """Analyze competitor strategies and performance"""
+        competitor_data = self.db.query(CompetitorAnalysisModel).filter(
             CompetitorAnalysisModel.user_id == user_id,
             CompetitorAnalysisModel.content_category == content_analysis.content_category
         ).all()
@@ -727,7 +753,8 @@ class DistributionStrategyEngine:
         }
     
     def _initialize_platform_analyzers(self) -> Dict[PlatformType, Any]:
-        """Initialize platform-specific analyzers"""        return {
+        """Initialize platform-specific analyzers"""
+        return {
             PlatformType.YOUTUBE: self._create_youtube_analyzer(),
             PlatformType.INSTAGRAM: self._create_instagram_analyzer(),
             PlatformType.TIKTOK: self._create_tiktok_analyzer(),
@@ -737,7 +764,8 @@ class DistributionStrategyEngine:
         }
     
     def _create_youtube_analyzer(self) -> Dict[str, Any]:
-        """YouTube-specific analysis configuration"""        return {
+        """YouTube-specific analysis configuration"""
+        return {
             "optimal_length": {"min": 60, "max": 600, "sweet_spot": 300},
             "best_times": [14, 15, 16, 17, 19, 20, 21],  # 2-5 PM, 7-9 PM
             "audience_peaks": {
@@ -751,7 +779,8 @@ class DistributionStrategyEngine:
         }
     
     def _create_instagram_analyzer(self) -> Dict[str, Any]:
-        """Instagram-specific analysis configuration"""        return {
+        """Instagram-specific analysis configuration"""
+        return {
             "optimal_length": {"min": 15, "max": 60, "sweet_spot": 30},
             "best_times": [11, 12, 13, 17, 18, 19],  # Lunch and evening
             "audience_peaks": {
@@ -765,7 +794,8 @@ class DistributionStrategyEngine:
         }
     
     def _create_tiktok_analyzer(self) -> Dict[str, Any]:
-        """TikTok-specific analysis configuration"""        return {
+        """TikTok-specific analysis configuration"""
+        return {
             "optimal_length": {"min": 15, "max": 60, "sweet_spot": 30},
             "best_times": [6, 7, 8, 19, 20, 21, 22],  # Morning and evening
             "audience_peaks": {
@@ -779,7 +809,8 @@ class DistributionStrategyEngine:
         }
     
     def _create_twitter_analyzer(self) -> Dict[str, Any]:
-        """Twitter-specific analysis configuration"""        return {
+        """Twitter-specific analysis configuration"""
+        return {
             "optimal_length": {"min": 0, "max": 280, "sweet_spot": 100},
             "best_times": [8, 9, 12, 13, 17, 18],  # Work hours
             "audience_peaks": {
@@ -793,7 +824,8 @@ class DistributionStrategyEngine:
         }
     
     def _create_spotify_analyzer(self) -> Dict[str, Any]:
-        """Spotify-specific analysis configuration"""        return {
+        """Spotify-specific analysis configuration"""
+        return {
             "optimal_length": {"min": 180, "max": 3600, "sweet_spot": 1200},
             "best_times": [7, 8, 12, 13, 17, 18, 22],  # Commute and relaxation
             "audience_peaks": {
@@ -807,7 +839,8 @@ class DistributionStrategyEngine:
         }
     
     def _create_linkedin_analyzer(self) -> Dict[str, Any]:
-        """LinkedIn-specific analysis configuration"""        return {
+        """LinkedIn-specific analysis configuration"""
+        return {
             "optimal_length": {"min": 0, "max": 1300, "sweet_spot": 150},
             "best_times": [8, 9, 12, 13, 17],  # Business hours
             "audience_peaks": {
@@ -821,7 +854,8 @@ class DistributionStrategyEngine:
         }
     
     def _initialize_content_analyzers(self) -> Dict[ContentType, Any]:
-        """Initialize content type analyzers"""        return {
+        """Initialize content type analyzers"""
+        return {
             ContentType.AUDIO: self._create_audio_analyzer(),
             ContentType.VIDEO: self._create_video_analyzer(),
             ContentType.IMAGE: self._create_image_analyzer(),
@@ -829,7 +863,8 @@ class DistributionStrategyEngine:
         }
     
     def _create_audio_analyzer(self) -> Dict[str, Any]:
-        """Audio content analyzer"""        return {
+        """Audio content analyzer"""
+        return {
             "platforms_priority": [
                 PlatformType.SPOTIFY,
                 PlatformType.YOUTUBE,
@@ -842,7 +877,8 @@ class DistributionStrategyEngine:
         }
     
     def _create_video_analyzer(self) -> Dict[str, Any]:
-        """Video content analyzer"""        return {
+        """Video content analyzer"""
+        return {
             "platforms_priority": [
                 PlatformType.YOUTUBE,
                 PlatformType.TIKTOK,
@@ -855,7 +891,8 @@ class DistributionStrategyEngine:
         }
     
     def _create_image_analyzer(self) -> Dict[str, Any]:
-        """Image content analyzer"""        return {
+        """Image content analyzer"""
+        return {
             "platforms_priority": [
                 PlatformType.INSTAGRAM,
                 PlatformType.PINTEREST,
@@ -868,7 +905,8 @@ class DistributionStrategyEngine:
         }
     
     def _create_text_analyzer(self) -> Dict[str, Any]:
-        """Text content analyzer"""        return {
+        """Text content analyzer"""
+        return {
             "platforms_priority": [
                 PlatformType.TWITTER,
                 PlatformType.LINKEDIN,
@@ -887,7 +925,8 @@ class DistributionStrategyEngine:
         strategy_type: StrategyType = StrategyType.MAXIMUM_REACH,
         target_audience: Optional[List[AudienceSegment]] = None
     ) -> DistributionStrategy:
-        """        Generate optimized distribution strategy for content
+        """
+        Generate optimized distribution strategy for content
         
         Args:
             user_id: User identifier
@@ -897,7 +936,8 @@ class DistributionStrategyEngine:
             
         Returns:
             Optimized distribution strategy
-        """        try:
+        """
+        try:
             # Get user and content data
             user = self.db.query(UserModel).filter(UserModel.id == user_id).first()
             content = self.db.query(ContentModel).filter(
@@ -976,7 +1016,8 @@ class DistributionStrategyEngine:
             raise
     
     async def _analyze_content(self, content: ContentModel) -> ContentAnalysis:
-        """Analyze content characteristics for strategy optimization"""        try:
+        """Analyze content characteristics for strategy optimization"""
+        try:
             # Basic content information
             content_type = content.content_type
             duration = content.metadata.get("duration") if content.metadata else None
@@ -1023,7 +1064,8 @@ class DistributionStrategyEngine:
             raise
     
     async def _calculate_quality_score(self, content: ContentModel) -> float:
-        """Calculate content quality score based on various factors"""        score = 0.5  # Base score
+        """Calculate content quality score based on various factors"""
+        score = 0.5  # Base score
         
         if content.metadata:
             # Check technical quality indicators
@@ -1062,7 +1104,8 @@ class DistributionStrategyEngine:
     async def _extract_trending_topics(
         self, title: str, description: Optional[str]
     ) -> List[str]:
-        """Extract trending topics from content text"""        # This would integrate with a trending topics API or use NLP
+        """Extract trending topics from content text"""
+        # This would integrate with a trending topics API or use NLP
         # For now, using a simplified keyword extraction
         
         text = f"{title} {description or ''}"
@@ -1087,7 +1130,8 @@ class DistributionStrategyEngine:
     async def _analyze_hashtag_performance(
         self, hashtags: List[str]
     ) -> Dict[str, float]:
-        """Analyze hashtag performance and popularity"""        hashtag_performance = {}
+        """Analyze hashtag performance and popularity"""
+        hashtag_performance = {}
         
         # This would integrate with platform APIs to get real hashtag data
         # For now, using estimated scores based on hashtag characteristics
@@ -1116,7 +1160,8 @@ class DistributionStrategyEngine:
     async def _calculate_audience_sentiment(
         self, title: str, description: Optional[str]
     ) -> float:
-        """Calculate audience sentiment for content"""        # This would use a sentiment analysis model
+        """Calculate audience sentiment for content"""
+        # This would use a sentiment analysis model
         # For now, using keyword-based approach
         
         text = f"{title} {description or ''}"
@@ -1145,7 +1190,8 @@ class DistributionStrategyEngine:
         return max(0.0, min(1.0, sentiment_score))
     
     async def _calculate_virality_score(self, content: ContentModel) -> float:
-        """Calculate potential virality score"""        score = 0.3  # Base score
+        """Calculate potential virality score"""
+        score = 0.3  # Base score
         
         # Content type impact
         if content.content_type == ContentType.VIDEO:
@@ -1181,7 +1227,8 @@ class DistributionStrategyEngine:
         return min(1.0, score)
     
     async def _calculate_monetization_potential(self, content: ContentModel) -> float:
-        """Calculate monetization potential"""        score = 0.2  # Base score
+        """Calculate monetization potential"""
+        score = 0.2  # Base score
         
         # Content type impact
         if content.content_type in [ContentType.AUDIO, ContentType.VIDEO]:
@@ -1205,7 +1252,8 @@ class DistributionStrategyEngine:
         return min(1.0, score)
     
     async def _get_platform_metrics(self, user_id: int) -> Dict[PlatformType, PlatformMetrics]:
-        """Get historical platform performance metrics for user"""        platform_metrics = {}
+        """Get historical platform performance metrics for user"""
+        platform_metrics = {}
         
         # Query analytics data
         analytics = self.db.query(AnalyticsModel).filter(
@@ -1275,7 +1323,8 @@ class DistributionStrategyEngine:
         user_id: int,
         target_audience: Optional[List[AudienceSegment]]
     ) -> Dict[str, Any]:
-        """Get audience insights and demographics"""        # This would integrate with platform APIs and analytics
+        """Get audience insights and demographics"""
+        # This would integrate with platform APIs and analytics
         # For now, returning default insights
         
         base_insights = {
@@ -1324,7 +1373,8 @@ class DistributionStrategyEngine:
         strategy_type: StrategyType,
         audience_insights: Dict[str, Any]
     ) -> List[PlatformType]:
-        """Recommend optimal platforms based on strategy and content"""        
+        """Recommend optimal platforms based on strategy and content"""
+        
         platform_scores = {}
         
         # Get content type analyzer
@@ -1381,7 +1431,8 @@ class DistributionStrategyEngine:
         platforms: List[PlatformType],
         audience_insights: Dict[str, Any]
     ) -> Dict[PlatformType, List[datetime]]:
-        """Optimize posting timing for each platform"""        timing_recommendations = {}
+        """Optimize posting timing for each platform"""
+        timing_recommendations = {}
         
         base_time = datetime.utcnow()
         peak_hours = audience_insights["engagement_patterns"]["peak_hours"]
@@ -1416,7 +1467,8 @@ class DistributionStrategyEngine:
         content: ContentModel,
         platforms: List[PlatformType]
     ) -> Dict[PlatformType, Dict[str, Any]]:
-        """Generate platform-specific content adaptations"""        adaptations = {}
+        """Generate platform-specific content adaptations"""
+        adaptations = {}
         
         for platform in platforms:
             analyzer = self.platform_analyzers[platform]
@@ -1491,7 +1543,8 @@ class DistributionStrategyEngine:
         content: ContentModel,
         platforms: List[PlatformType]
     ) -> Dict[PlatformType, List[str]]:
-        """Generate platform-specific hashtag recommendations"""        hashtag_recommendations = {}
+        """Generate platform-specific hashtag recommendations"""
+        hashtag_recommendations = {}
         
         # Base hashtags from content
         base_hashtags = content.hashtags or []
@@ -1552,7 +1605,8 @@ class DistributionStrategyEngine:
         platforms: List[PlatformType],
         audience_insights: Dict[str, Any]
     ) -> Dict[PlatformType, Dict[str, Any]]:
-        """Generate audience targeting parameters for each platform"""        targeting = {}
+        """Generate audience targeting parameters for each platform"""
+        targeting = {}
         
         demographics = audience_insights["primary_demographics"]
         interests = audience_insights["interests"]
@@ -1591,7 +1645,8 @@ class DistributionStrategyEngine:
         platforms: List[PlatformType],
         audience_insights: Dict[str, Any]
     ) -> Dict[PlatformType, Dict[str, float]]:
-        """Predict performance metrics for each platform"""        predictions = {}
+        """Predict performance metrics for each platform"""
+        predictions = {}
         
         for platform in platforms:
             # Base predictions using simple heuristics
@@ -1632,7 +1687,8 @@ class DistributionStrategyEngine:
         platform_metrics: Dict[PlatformType, PlatformMetrics],
         expected_metrics: Dict[PlatformType, Dict[str, float]]
     ) -> float:
-        """Calculate confidence score for the strategy"""        
+        """Calculate confidence score for the strategy"""
+        
         # Factors affecting confidence
         factors = []
         
@@ -1664,7 +1720,8 @@ class DistributionStrategyEngine:
         platforms: List[PlatformType],
         expected_metrics: Dict[PlatformType, Dict[str, float]]
     ) -> str:
-        """Generate human-readable reasoning for the strategy"""        
+        """Generate human-readable reasoning for the strategy"""
+        
         total_reach = sum(
             metrics["estimated_reach"] for metrics in expected_metrics.values()
         )

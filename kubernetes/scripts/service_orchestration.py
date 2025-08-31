@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Service Orchestration Manager
 Container orchestration and microservices management for the IA Influencer Agent platform
-"""import os
+"""
+import os
 import sys
 import time
 import json
@@ -29,7 +30,8 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceStatus(Enum):
-    """Service status enumeration"""    PENDING = "pending"
+    """Service status enumeration"""
+    PENDING = "pending"
     RUNNING = "running"
     FAILED = "failed"
     STOPPED = "stopped"
@@ -38,7 +40,8 @@ class ServiceStatus(Enum):
 
 
 class OrchestrationAction(Enum):
-    """Orchestration action enumeration"""    DEPLOY = "deploy"
+    """Orchestration action enumeration"""
+    DEPLOY = "deploy"
     SCALE = "scale"
     UPDATE = "update"
     ROLLBACK = "rollback"
@@ -47,7 +50,8 @@ class OrchestrationAction(Enum):
 
 
 class HealthStatus(Enum):
-    """Health status enumeration"""    HEALTHY = "healthy"
+    """Health status enumeration"""
+    HEALTHY = "healthy"
     UNHEALTHY = "unhealthy"
     DEGRADED = "degraded"
     UNKNOWN = "unknown"
@@ -55,7 +59,8 @@ class HealthStatus(Enum):
 
 @dataclass
 class ServiceDefinition:
-    """Service definition data class"""    name: str
+    """Service definition data class"""
+    name: str
     image: str
     version: str
     replicas: int
@@ -74,7 +79,8 @@ class ServiceDefinition:
 
 @dataclass
 class ServiceInstance:
-    """Service instance data class"""    name: str
+    """Service instance data class"""
+    name: str
     definition: ServiceDefinition
     status: ServiceStatus
     health_status: HealthStatus
@@ -88,7 +94,8 @@ class ServiceInstance:
 
 @dataclass
 class OrchestrationTask:
-    """Orchestration task data class"""    id: str
+    """Orchestration task data class"""
+    id: str
     action: OrchestrationAction
     service_name: str
     parameters: Dict[str, Any]
@@ -100,11 +107,14 @@ class OrchestrationTask:
 
 
 class ServiceOrchestrator:
-    """    Enterprise-grade service orchestration manager
+    """
+    Enterprise-grade service orchestration manager
     Manages container orchestration and microservices lifecycle
-    """    
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize service orchestrator"""        self.config_path = config_path or "/etc/orchestration/config.yaml"
+        """Initialize service orchestrator"""
+        self.config_path = config_path or "/etc/orchestration/config.yaml"
         self.services = {}
         self.tasks = {}
         self.running = False
@@ -115,7 +125,8 @@ class ServiceOrchestrator:
         self._load_service_definitions()
     
     def _load_configuration(self) -> None:
-        """Load orchestration configuration"""        try:
+        """Load orchestration configuration"""
+        try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r') as f:
                     self.config = yaml.safe_load(f)
@@ -128,7 +139,8 @@ class ServiceOrchestrator:
             self.config = self._get_default_config()
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default orchestration configuration"""        return {
+        """Get default orchestration configuration"""
+        return {
             "kubernetes": {
                 "namespace": "ia-influencer",
                 "kubeconfig_path": None,
@@ -177,7 +189,8 @@ class ServiceOrchestrator:
         }
     
     def _initialize_kubernetes(self) -> None:
-        """Initialize Kubernetes client"""        try:
+        """Initialize Kubernetes client"""
+        try:
             kubeconfig_path = self.config.get("kubernetes", {}).get("kubeconfig_path")
             context = self.config.get("kubernetes", {}).get("context")
             
@@ -207,7 +220,8 @@ class ServiceOrchestrator:
             raise
     
     def _ensure_namespace_exists(self) -> None:
-        """Ensure namespace exists"""        try:
+        """Ensure namespace exists"""
+        try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except ApiException as e:
             if e.status == 404:
@@ -221,7 +235,8 @@ class ServiceOrchestrator:
                 raise
     
     def _load_service_definitions(self) -> None:
-        """Load service definitions"""        try:
+        """Load service definitions"""
+        try:
             services_dir = "/etc/orchestration/services"
             if os.path.exists(services_dir):
                 for file_path in Path(services_dir).glob("*.yaml"):
@@ -248,7 +263,8 @@ class ServiceOrchestrator:
             logger.error(f"Failed to load service definitions: {e}")
     
     def _parse_service_definition(self, config: Dict[str, Any]) -> Optional[ServiceDefinition]:
-        """Parse service definition from configuration"""        try:
+        """Parse service definition from configuration"""
+        try:
             return ServiceDefinition(
                 name=config["name"],
                 image=config["image"],
@@ -271,7 +287,8 @@ class ServiceOrchestrator:
             return None
     
     def start_orchestration(self) -> None:
-        """Start service orchestration"""        try:
+        """Start service orchestration"""
+        try:
             logger.info("Starting service orchestration")
             self.running = True
             
@@ -287,12 +304,14 @@ class ServiceOrchestrator:
             logger.error(f"Orchestration startup error: {e}")
     
     def stop_orchestration(self) -> None:
-        """Stop service orchestration"""        self.running = False
+        """Stop service orchestration"""
+        self.running = False
         self.executor.shutdown(wait=True)
         logger.info("Service orchestration stopped")
     
     def deploy_service(self, service_name: str, **kwargs) -> str:
-        """Deploy a service"""        try:
+        """Deploy a service"""
+        try:
             if service_name not in self.services:
                 raise ValueError(f"Service not found: {service_name}")
             
@@ -319,7 +338,8 @@ class ServiceOrchestrator:
             raise
     
     def scale_service(self, service_name: str, replicas: int) -> str:
-        """Scale a service"""        try:
+        """Scale a service"""
+        try:
             if service_name not in self.services:
                 raise ValueError(f"Service not found: {service_name}")
             
@@ -346,7 +366,8 @@ class ServiceOrchestrator:
             raise
     
     def update_service(self, service_name: str, **kwargs) -> str:
-        """Update a service"""        try:
+        """Update a service"""
+        try:
             if service_name not in self.services:
                 raise ValueError(f"Service not found: {service_name}")
             
@@ -373,7 +394,8 @@ class ServiceOrchestrator:
             raise
     
     def rollback_service(self, service_name: str, revision: Optional[int] = None) -> str:
-        """Rollback a service to previous version"""        try:
+        """Rollback a service to previous version"""
+        try:
             if service_name not in self.services:
                 raise ValueError(f"Service not found: {service_name}")
             
@@ -400,7 +422,8 @@ class ServiceOrchestrator:
             raise
     
     def stop_service(self, service_name: str) -> str:
-        """Stop a service"""        try:
+        """Stop a service"""
+        try:
             if service_name not in self.services:
                 raise ValueError(f"Service not found: {service_name}")
             
@@ -427,7 +450,8 @@ class ServiceOrchestrator:
             raise
     
     def _monitoring_loop(self) -> None:
-        """Main monitoring loop"""        try:
+        """Main monitoring loop"""
+        try:
             interval = self.config.get("monitoring", {}).get("metrics_collection_interval", 60)
             
             while self.running:
@@ -447,7 +471,8 @@ class ServiceOrchestrator:
             logger.error(f"Monitoring loop fatal error: {e}")
     
     def _health_check_loop(self) -> None:
-        """Health check monitoring loop"""        try:
+        """Health check monitoring loop"""
+        try:
             interval = self.config.get("monitoring", {}).get("health_check_interval", 30)
             
             while self.running:
@@ -473,7 +498,8 @@ class ServiceOrchestrator:
             logger.error(f"Health check loop fatal error: {e}")
     
     def _auto_scaling_loop(self) -> None:
-        """Auto-scaling monitoring loop"""        try:
+        """Auto-scaling monitoring loop"""
+        try:
             if not self.config.get("auto_scaling", {}).get("enabled", True):
                 return
             
@@ -493,7 +519,8 @@ class ServiceOrchestrator:
             logger.error(f"Auto-scaling loop fatal error: {e}")
     
     def _task_processor_loop(self) -> None:
-        """Task processor loop"""        try:
+        """Task processor loop"""
+        try:
             while self.running:
                 try:
                     # Process pending tasks
@@ -511,7 +538,8 @@ class ServiceOrchestrator:
             logger.error(f"Task processor loop fatal error: {e}")
     
     def _execute_task(self, task: OrchestrationTask) -> None:
-        """Execute orchestration task"""        try:
+        """Execute orchestration task"""
+        try:
             logger.info(f"Executing task: {task.id}")
             task.status = "running"
             task.started_at = datetime.now()
@@ -540,7 +568,8 @@ class ServiceOrchestrator:
             task.completed_at = datetime.now()
     
     def _execute_deploy_task(self, task: OrchestrationTask) -> None:
-        """Execute deployment task"""        try:
+        """Execute deployment task"""
+        try:
             service = self.services[task.service_name]
             service_def = service.definition
             
@@ -582,7 +611,8 @@ class ServiceOrchestrator:
             raise
     
     def _execute_scale_task(self, task: OrchestrationTask) -> None:
-        """Execute scaling task"""        try:
+        """Execute scaling task"""
+        try:
             service = self.services[task.service_name]
             replicas = task.parameters["replicas"]
             
@@ -609,7 +639,8 @@ class ServiceOrchestrator:
             raise
     
     def _execute_update_task(self, task: OrchestrationTask) -> None:
-        """Execute update task"""        try:
+        """Execute update task"""
+        try:
             service = self.services[task.service_name]
             
             # Update deployment with new parameters
@@ -647,7 +678,8 @@ class ServiceOrchestrator:
             raise
     
     def _execute_rollback_task(self, task: OrchestrationTask) -> None:
-        """Execute rollback task"""        try:
+        """Execute rollback task"""
+        try:
             service = self.services[task.service_name]
             revision = task.parameters.get("revision")
             
@@ -683,7 +715,8 @@ class ServiceOrchestrator:
             raise
     
     def _execute_stop_task(self, task: OrchestrationTask) -> None:
-        """Execute stop task"""        try:
+        """Execute stop task"""
+        try:
             service = self.services[task.service_name]
             
             # Scale deployment to 0 replicas
@@ -709,7 +742,8 @@ class ServiceOrchestrator:
             raise
     
     def _execute_restart_task(self, task: OrchestrationTask) -> None:
-        """Execute restart task"""        try:
+        """Execute restart task"""
+        try:
             service = self.services[task.service_name]
             
             # Restart by updating deployment annotation
@@ -737,7 +771,8 @@ class ServiceOrchestrator:
             raise
     
     def _create_deployment_spec(self, service_def: ServiceDefinition) -> client.V1Deployment:
-        """Create Kubernetes deployment specification"""        try:
+        """Create Kubernetes deployment specification"""
+        try:
             # Container specification
             container = client.V1Container(
                 name=service_def.name,
@@ -827,7 +862,8 @@ class ServiceOrchestrator:
             raise
     
     def _create_service_spec(self, service_def: ServiceDefinition) -> client.V1Service:
-        """Create Kubernetes service specification"""        try:
+        """Create Kubernetes service specification"""
+        try:
             service_ports = [
                 client.V1ServicePort(
                     port=port["port"],
@@ -858,7 +894,8 @@ class ServiceOrchestrator:
             raise
     
     def _create_ingress_spec(self, service_def: ServiceDefinition) -> client.V1Ingress:
-        """Create Kubernetes ingress specification"""        try:
+        """Create Kubernetes ingress specification"""
+        try:
             # This would create ingress specification for external access
             # Simplified implementation
             ingress = client.V1Ingress(
@@ -896,7 +933,8 @@ class ServiceOrchestrator:
             raise
     
     def _create_hpa_spec(self, service_def: ServiceDefinition) -> client.V1HorizontalPodAutoscaler:
-        """Create Horizontal Pod Autoscaler specification"""        try:
+        """Create Horizontal Pod Autoscaler specification"""
+        try:
             auto_scaling_config = self.config.get("auto_scaling", {})
             
             hpa = client.V1HorizontalPodAutoscaler(
@@ -922,7 +960,8 @@ class ServiceOrchestrator:
             raise
     
     def _update_service_status(self, service: ServiceInstance) -> None:
-        """Update service status from Kubernetes"""        try:
+        """Update service status from Kubernetes"""
+        try:
             try:
                 deployment = self.k8s_apps_v1.read_namespaced_deployment(
                     name=service.name,
@@ -961,7 +1000,8 @@ class ServiceOrchestrator:
             logger.error(f"Service status update error: {e}")
     
     def _collect_service_metrics(self, service: ServiceInstance) -> None:
-        """Collect service metrics"""        try:
+        """Collect service metrics"""
+        try:
             # This would collect actual metrics from monitoring system
             # Simplified implementation with mock metrics
             service.metrics = {
@@ -976,7 +1016,8 @@ class ServiceOrchestrator:
             logger.error(f"Metrics collection error: {e}")
     
     def _check_service_health(self, service: ServiceInstance) -> HealthStatus:
-        """Check service health"""        try:
+        """Check service health"""
+        try:
             # Check if all pods are ready
             if service.current_replicas == service.desired_replicas and service.current_replicas > 0:
                 # Additional health checks could be implemented here
@@ -991,7 +1032,8 @@ class ServiceOrchestrator:
             return HealthStatus.UNKNOWN
     
     def _trigger_auto_healing(self, service: ServiceInstance) -> None:
-        """Trigger auto-healing for unhealthy service"""        try:
+        """Trigger auto-healing for unhealthy service"""
+        try:
             logger.info(f"Triggering auto-healing for service: {service.name}")
             
             # Restart unhealthy service
@@ -1014,7 +1056,8 @@ class ServiceOrchestrator:
             logger.error(f"Auto-healing error: {e}")
     
     def _check_auto_scaling(self, service: ServiceInstance) -> None:
-        """Check if service needs auto-scaling"""        try:
+        """Check if service needs auto-scaling"""
+        try:
             auto_scaling_config = self.config.get("auto_scaling", {})
             
             cpu_threshold = auto_scaling_config.get("target_cpu_utilization", 70)
@@ -1043,7 +1086,8 @@ class ServiceOrchestrator:
             logger.error(f"Auto-scaling check error: {e}")
     
     def get_service_status(self, service_name: Optional[str] = None) -> Dict[str, Any]:
-        """Get service status"""        try:
+        """Get service status"""
+        try:
             if service_name:
                 if service_name not in self.services:
                     return {"error": "Service not found"}
@@ -1081,7 +1125,8 @@ class ServiceOrchestrator:
             return {"error": str(e)}
     
     def get_task_status(self, task_id: str) -> Dict[str, Any]:
-        """Get task status"""        try:
+        """Get task status"""
+        try:
             if task_id not in self.tasks:
                 return {"error": "Task not found"}
             
@@ -1103,7 +1148,8 @@ class ServiceOrchestrator:
 
 
 def main():
-    """Main function for standalone execution"""    import argparse
+    """Main function for standalone execution"""
+    import argparse
     
     parser = argparse.ArgumentParser(description="Service Orchestration Manager")
     parser.add_argument("--action", required=True, 

@@ -28,7 +28,8 @@ Features:
 - Revenue generation analytics
 - Contract lifecycle management
 - Intellectual property protection metrics
-"""import time
+"""
+import time
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -45,7 +46,8 @@ logger = get_logger(__name__)
 
 
 class LicenseType(Enum):
-    """Types of content licenses"""    COMMERCIAL = "commercial"
+    """Types of content licenses"""
+    COMMERCIAL = "commercial"
     PERSONAL = "personal"
     EDUCATIONAL = "educational"
     NON_PROFIT = "non_profit"
@@ -58,7 +60,8 @@ class LicenseType(Enum):
 
 
 class LicenseStatus(Enum):
-    """License transaction status"""    PENDING = "pending"
+    """License transaction status"""
+    PENDING = "pending"
     NEGOTIATING = "negotiating"
     APPROVED = "approved"
     REJECTED = "rejected"
@@ -69,7 +72,8 @@ class LicenseStatus(Enum):
 
 
 class NegotiationPhase(Enum):
-    """License negotiation phases"""    INITIAL_REQUEST = "initial_request"
+    """License negotiation phases"""
+    INITIAL_REQUEST = "initial_request"
     TERMS_PROPOSAL = "terms_proposal"
     COUNTER_OFFER = "counter_offer"
     LEGAL_REVIEW = "legal_review"
@@ -78,7 +82,8 @@ class NegotiationPhase(Enum):
 
 
 class ComplianceLevel(Enum):
-    """License compliance levels"""    COMPLIANT = "compliant"
+    """License compliance levels"""
+    COMPLIANT = "compliant"
     WARNING = "warning"
     VIOLATION = "violation"
     CRITICAL_VIOLATION = "critical_violation"
@@ -86,7 +91,8 @@ class ComplianceLevel(Enum):
 
 @dataclass
 class LicenseTransaction:
-    """License transaction details"""    transaction_id: str
+    """License transaction details"""
+    transaction_id: str
     license_type: LicenseType
     content_id: str
     licensee_id: str
@@ -100,7 +106,8 @@ class LicenseTransaction:
 
 @dataclass
 class RightsNegotiation:
-    """Rights negotiation session"""    negotiation_id: str
+    """Rights negotiation session"""
+    negotiation_id: str
     content_id: str
     licensee_id: str
     licensor_id: str
@@ -112,7 +119,8 @@ class RightsNegotiation:
 
 
 class LicensingAutomationMetricsCollector:
-    """    Comprehensive metrics collector for licensing automation
+    """
+    Comprehensive metrics collector for licensing automation
     
     Tracks:
     - License transaction volumes and values
@@ -121,7 +129,8 @@ class LicensingAutomationMetricsCollector:
     - Revenue generation efficiency
     - Contract lifecycle metrics
     - IP protection effectiveness
-    """    
+    """
+    
     def __init__(self, prometheus_manager=None):
         self.prometheus_manager = prometheus_manager
         self.redis_manager = RedisManager()
@@ -131,7 +140,8 @@ class LicensingAutomationMetricsCollector:
         self._initialize_metrics()
     
     def _initialize_metrics(self) -> None:
-        """Initialize Prometheus metrics for licensing automation"""        
+        """Initialize Prometheus metrics for licensing automation"""
+        
         if not self.prometheus_manager:
             self.logger.warning("No Prometheus manager provided, metrics disabled")
             return
@@ -281,7 +291,8 @@ class LicensingAutomationMetricsCollector:
         self.logger.info("Licensing automation metrics initialized")
     
     def _register_metrics(self) -> None:
-        """Register all metrics with Prometheus manager"""        
+        """Register all metrics with Prometheus manager"""
+        
         metrics_to_register = [
             self.license_transactions_total,
             self.license_transaction_value,
@@ -316,7 +327,8 @@ class LicensingAutomationMetricsCollector:
         automation_level: str = "full",
         tenant_id: str = "default"
     ) -> None:
-        """Record a new license transaction"""        
+        """Record a new license transaction"""
+        
         # Store transaction
         self._active_licenses[transaction.transaction_id] = transaction
         
@@ -381,7 +393,8 @@ class LicensingAutomationMetricsCollector:
         negotiation: RightsNegotiation,
         automation_enabled: bool = True
     ) -> None:
-        """Start a new rights negotiation session"""        
+        """Start a new rights negotiation session"""
+        
         self._active_negotiations[negotiation.negotiation_id] = negotiation
         
         # Update metrics
@@ -406,7 +419,8 @@ class LicensingAutomationMetricsCollector:
         new_phase: NegotiationPhase,
         rounds_completed: int = 0
     ) -> None:
-        """Update negotiation phase and progress"""        
+        """Update negotiation phase and progress"""
+        
         if negotiation_id not in self._active_negotiations:
             self.logger.warning(f"Negotiation {negotiation_id} not found")
             return
@@ -434,7 +448,8 @@ class LicensingAutomationMetricsCollector:
         rounds_completed: int = 1,
         automation_level: str = "full"
     ) -> None:
-        """Complete a rights negotiation"""        
+        """Complete a rights negotiation"""
+        
         if negotiation_id not in self._active_negotiations:
             self.logger.warning(f"Negotiation {negotiation_id} not found")
             return
@@ -482,7 +497,8 @@ class LicensingAutomationMetricsCollector:
         compliance_level: ComplianceLevel,
         violation_details: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Record license compliance check"""        
+        """Record license compliance check"""
+        
         self.license_compliance_checks_total.labels(
             license_type=license_type.value,
             check_type=check_type,
@@ -524,7 +540,8 @@ class LicensingAutomationMetricsCollector:
         confidence_level: str,
         license_type: Optional[LicenseType] = None
     ) -> None:
-        """Record AI-generated licensing recommendation"""        
+        """Record AI-generated licensing recommendation"""
+        
         self.ai_license_recommendations_total.labels(
             recommendation_type=recommendation_type,
             accepted=str(accepted).lower(),
@@ -542,7 +559,8 @@ class LicensingAutomationMetricsCollector:
         complexity: str,
         generation_time_seconds: float
     ) -> None:
-        """Record AI contract generation performance"""        
+        """Record AI contract generation performance"""
+        
         self.ai_contract_generation_time.labels(
             contract_type=contract_type,
             complexity=complexity
@@ -560,7 +578,8 @@ class LicensingAutomationMetricsCollector:
         status: str,
         response_time_seconds: float
     ) -> None:
-        """Record external platform licensing request"""        
+        """Record external platform licensing request"""
+        
         self.platform_licensing_requests_total.labels(
             platform=platform,
             request_type=request_type,
@@ -578,7 +597,8 @@ class LicensingAutomationMetricsCollector:
         )
     
     async def update_success_rates(self) -> None:
-        """Update calculated success rate metrics"""        
+        """Update calculated success rate metrics"""
+        
         # This would typically query historical data from metrics storage
         # For demonstration, we'll calculate from current data
         
@@ -598,14 +618,16 @@ class LicensingAutomationMetricsCollector:
         accuracy_percent: float,
         time_window: str = "24h"
     ) -> None:
-        """Update AI pricing recommendation accuracy"""        
+        """Update AI pricing recommendation accuracy"""
+        
         self.ai_pricing_accuracy.labels(
             license_type=license_type.value,
             time_window=time_window
         ).set(accuracy_percent)
     
     async def get_licensing_summary(self) -> Dict[str, Any]:
-        """Get comprehensive licensing operations summary"""        
+        """Get comprehensive licensing operations summary"""
+        
         summary = {
             "timestamp": datetime.utcnow().isoformat(),
             "active_negotiations": len(self._active_negotiations),
@@ -632,7 +654,8 @@ class LicensingAutomationMetricsCollector:
         return summary
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get health status of the licensing metrics collector"""        
+        """Get health status of the licensing metrics collector"""
+        
         return {
             "status": "healthy",
             "active_negotiations": len(self._active_negotiations),

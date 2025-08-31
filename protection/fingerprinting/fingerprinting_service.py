@@ -26,7 +26,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This code and all concepts are protected intellectual property under international
 copyright law. Unauthorized use will result in immediate legal action and maximum
 financial penalties. Contact mlaiel@live.de for authorization.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass
@@ -44,14 +45,16 @@ from .text import TextFingerprintingService
 logger = logging.getLogger(__name__)
 
 class ContentType(str, Enum):
-    """Supported content types for fingerprinting."""    AUDIO = "audio"
+    """Supported content types for fingerprinting."""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
 
 @dataclass
 class ContentMetadata:
-    """Metadata for content being fingerprinted."""    content_type: ContentType
+    """Metadata for content being fingerprinted."""
+    content_type: ContentType
     file_path: Optional[str] = None
     file_size: Optional[int] = None
     duration: Optional[float] = None  # For audio/video
@@ -62,7 +65,8 @@ class ContentMetadata:
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class UniversalFingerprint(BaseModel):
-    """Universal fingerprint supporting all content types."""    id: Optional[str] = None
+    """Universal fingerprint supporting all content types."""
+    id: Optional[str] = None
     user_id: int
     content_type: ContentType
     file_path: Optional[str] = None
@@ -83,10 +87,12 @@ class UniversalFingerprint(BaseModel):
     cross_modal_features: Optional[Dict[str, Any]] = None
 
     class Config:
-        """Pydantic config."""        arbitrary_types_allowed = True
+        """Pydantic config."""
+        arbitrary_types_allowed = True
 
 class SimilarityResult(BaseModel):
-    """Result of similarity search across content types."""    fingerprint_id: str
+    """Result of similarity search across content types."""
+    fingerprint_id: str
     content_type: ContentType
     similarity_score: float = Field(..., ge=0.0, le=1.0)
     match_types: List[str] = Field(default_factory=list)
@@ -94,7 +100,8 @@ class SimilarityResult(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
 class FingerprintingService:
-    """    Unified multi-modal content fingerprinting service.
+    """
+    Unified multi-modal content fingerprinting service.
     
     Features:
     - Audio fingerprinting (Chromaprint, Spectral, Neural)
@@ -103,14 +110,17 @@ class FingerprintingService:
     - Text fingerprinting (BERT embeddings, N-grams)
     - Cross-modal similarity detection
     - Unified storage and retrieval
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any], vector_db=None):
-        """        Initialize the unified fingerprinting service.
+        """
+        Initialize the unified fingerprinting service.
         
         Args:
             config: Configuration dictionary
             vector_db: Vector database service
-        """        self.config = config
+        """
+        self.config = config
         self.vector_db = vector_db
         self._initialized = False
         
@@ -131,11 +141,13 @@ class FingerprintingService:
         logger.info("Unified Fingerprinting Service initialized")
 
     async def initialize(self) -> bool:
-        """        Initialize all fingerprinting services.
+        """
+        Initialize all fingerprinting services.
         
         Returns:
             bool: True if successful, False otherwise
-        """        try:
+        """
+        try:
             logger.info("Initializing unified fingerprinting services...")
             
             # Initialize services in parallel
@@ -206,7 +218,8 @@ class FingerprintingService:
         content_type: Optional[ContentType] = None,
         original_filename: Optional[str] = None
     ) -> UniversalFingerprint:
-        """        Create universal fingerprint for any supported content type.
+        """
+        Create universal fingerprint for any supported content type.
         
         Args:
             file_path: Path to content file
@@ -219,7 +232,8 @@ class FingerprintingService:
             
         Raises:
             ValueError: If content type not supported or processing fails
-        """        if not self._initialized:
+        """
+        if not self._initialized:
             raise RuntimeError("Service not initialized")
         
         file_path = Path(file_path)
@@ -303,7 +317,8 @@ class FingerprintingService:
         min_similarity: float = 0.8,
         cross_modal: bool = False
     ) -> List[SimilarityResult]:
-        """        Find similar content across all supported types.
+        """
+        Find similar content across all supported types.
         
         Args:
             query_fingerprint: Fingerprint to search for
@@ -313,7 +328,8 @@ class FingerprintingService:
             
         Returns:
             List[SimilarityResult]: Ranked similarity results
-        """        if not self._initialized:
+        """
+        if not self._initialized:
             raise RuntimeError("Service not initialized")
         
         logger.info(f"Searching for similar {query_fingerprint.content_type.value} content...")
@@ -385,7 +401,8 @@ class FingerprintingService:
             return []
 
     async def _detect_content_type(self, file_path: Path) -> ContentType:
-        """Auto-detect content type from file extension."""        extension = file_path.suffix.lower()
+        """Auto-detect content type from file extension."""
+        extension = file_path.suffix.lower()
         
         for content_type, extensions in self.supported_extensions.items():
             if extension in extensions:
@@ -398,7 +415,8 @@ class FingerprintingService:
         file_path: Path,
         content_type: ContentType
     ) -> ContentMetadata:
-        """Extract metadata from content file."""        try:
+        """Extract metadata from content file."""
+        try:
             stat = file_path.stat()
             
             metadata = ContentMetadata(
@@ -428,7 +446,8 @@ class FingerprintingService:
         file_path: Path,
         metadata: ContentMetadata
     ) -> ContentMetadata:
-        """Extract audio-specific metadata."""        try:
+        """Extract audio-specific metadata."""
+        try:
             import librosa
             duration = librosa.get_duration(path=file_path)
             metadata.duration = duration
@@ -441,7 +460,8 @@ class FingerprintingService:
         file_path: Path,
         metadata: ContentMetadata
     ) -> ContentMetadata:
-        """Extract video-specific metadata."""        try:
+        """Extract video-specific metadata."""
+        try:
             import cv2
             cap = cv2.VideoCapture(str(file_path))
             if cap.isOpened():
@@ -462,7 +482,8 @@ class FingerprintingService:
         file_path: Path,
         metadata: ContentMetadata
     ) -> ContentMetadata:
-        """Extract image-specific metadata."""        try:
+        """Extract image-specific metadata."""
+        try:
             from PIL import Image
             with Image.open(file_path) as img:
                 metadata.dimensions = img.size
@@ -471,7 +492,8 @@ class FingerprintingService:
             return metadata
 
     async def _calculate_checksum(self, file_path: Path) -> str:
-        """Calculate SHA256 checksum of file."""        import hashlib
+        """Calculate SHA256 checksum of file."""
+        import hashlib
         
         hash_sha256 = hashlib.sha256()
         with open(file_path, "rb") as f:
@@ -485,7 +507,8 @@ class FingerprintingService:
         content_type: ContentType,
         fingerprint_data: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
-        """Extract cross-modal features for multi-modal similarity."""        # Placeholder for cross-modal feature extraction
+        """Extract cross-modal features for multi-modal similarity."""
+        # Placeholder for cross-modal feature extraction
         # This would implement advanced techniques like:
         # - Audio-visual synchronization features for videos
         # - Text-image alignment features
@@ -496,7 +519,8 @@ class FingerprintingService:
         self,
         fingerprint: UniversalFingerprint
     ) -> bool:
-        """Store universal fingerprint in vector database."""        try:
+        """Store universal fingerprint in vector database."""
+        try:
             if not self.vector_db:
                 return False
             
@@ -537,7 +561,8 @@ class FingerprintingService:
         limit: int,
         min_similarity: float
     ) -> List[SimilarityResult]:
-        """Search for similar audio content."""        try:
+        """Search for similar audio content."""
+        try:
             if not self.audio_service:
                 return []
             
@@ -567,7 +592,8 @@ class FingerprintingService:
         limit: int,
         min_similarity: float
     ) -> List[SimilarityResult]:
-        """Search for similar video content."""        # Placeholder for video similarity search
+        """Search for similar video content."""
+        # Placeholder for video similarity search
         return []
 
     async def _search_image_similarity(
@@ -576,7 +602,8 @@ class FingerprintingService:
         limit: int,
         min_similarity: float
     ) -> List[SimilarityResult]:
-        """Search for similar image content."""        # Placeholder for image similarity search
+        """Search for similar image content."""
+        # Placeholder for image similarity search
         return []
 
     async def _search_text_similarity(
@@ -585,7 +612,8 @@ class FingerprintingService:
         limit: int,
         min_similarity: float
     ) -> List[SimilarityResult]:
-        """Search for similar text content."""        # Placeholder for text similarity search
+        """Search for similar text content."""
+        # Placeholder for text similarity search
         return []
 
     async def _search_cross_modal_similarity(
@@ -594,14 +622,16 @@ class FingerprintingService:
         limit: int,
         min_similarity: float
     ) -> List[SimilarityResult]:
-        """Search for cross-modal similarities."""        # Placeholder for cross-modal similarity search
+        """Search for cross-modal similarities."""
+        # Placeholder for cross-modal similarity search
         return []
 
     def _deduplicate_results(
         self,
         results: List[SimilarityResult]
     ) -> List[SimilarityResult]:
-        """Remove duplicate results based on fingerprint ID."""        seen_ids = set()
+        """Remove duplicate results based on fingerprint ID."""
+        seen_ids = set()
         unique_results = []
         
         for result in results:
@@ -612,7 +642,8 @@ class FingerprintingService:
         return unique_results
 
     async def shutdown(self) -> None:
-        """Shutdown all fingerprinting services."""        logger.info("Shutting down Unified Fingerprinting Service...")
+        """Shutdown all fingerprinting services."""
+        logger.info("Shutting down Unified Fingerprinting Service...")
         
         shutdown_tasks = []
         

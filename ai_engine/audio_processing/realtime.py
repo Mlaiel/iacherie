@@ -5,7 +5,8 @@ Optimized for low-latency processing with advanced buffering and threading.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 import threading
 import time
@@ -41,7 +42,8 @@ logger = logging.getLogger(__name__)
 
 
 class AudioBackend(Enum):
-    """Available audio backends"""    SOUNDDEVICE = "sounddevice"
+    """Available audio backends"""
+    SOUNDDEVICE = "sounddevice"
     PYAUDIO = "pyaudio"
     ALSA = "alsa"
     WASAPI = "wasapi"
@@ -49,7 +51,8 @@ class AudioBackend(Enum):
 
 
 class ProcessingLatency(Enum):
-    """Processing latency targets"""    ULTRA_LOW = "ultra_low"    # < 5ms
+    """Processing latency targets"""
+    ULTRA_LOW = "ultra_low"    # < 5ms
     LOW = "low"                # < 10ms
     MEDIUM = "medium"          # < 20ms
     HIGH = "high"              # < 50ms
@@ -57,7 +60,8 @@ class ProcessingLatency(Enum):
 
 
 class BufferMode(Enum):
-    """Audio buffer management modes"""    SINGLE = "single"          # Single buffer
+    """Audio buffer management modes"""
+    SINGLE = "single"          # Single buffer
     DOUBLE = "double"          # Double buffering
     RING = "ring"              # Ring buffer
     ADAPTIVE = "adaptive"      # Adaptive buffering
@@ -65,7 +69,8 @@ class BufferMode(Enum):
 
 @dataclass
 class AudioDeviceInfo:
-    """Audio device information"""    id: int
+    """Audio device information"""
+    id: int
     name: str
     channels: int
     sample_rate: int
@@ -78,7 +83,8 @@ class AudioDeviceInfo:
 
 @dataclass
 class RealTimeConfig:
-    """Real-time processing configuration"""    sample_rate: int = 44100
+    """Real-time processing configuration"""
+    sample_rate: int = 44100
     channels: int = 2
     buffer_size: int = 512
     latency_target: ProcessingLatency = ProcessingLatency.LOW
@@ -109,7 +115,8 @@ class RealTimeConfig:
 
 @dataclass
 class PerformanceMetrics:
-    """Real-time performance metrics"""    current_latency_ms: float = 0.0
+    """Real-time performance metrics"""
+    current_latency_ms: float = 0.0
     average_latency_ms: float = 0.0
     peak_latency_ms: float = 0.0
     cpu_usage_percent: float = 0.0
@@ -123,14 +130,16 @@ class PerformanceMetrics:
 
 
 class AudioBuffer:
-    """    🔄 High-performance audio buffer
+    """
+    🔄 High-performance audio buffer
     
     Thread-safe circular buffer optimized for real-time audio:
     - Lock-free operations where possible
     - Configurable buffer modes
     - Automatic overflow/underflow handling
     - Performance monitoring
-    """    
+    """
+    
     def __init__(self, 
                  size: int, 
                  channels: int,
@@ -165,7 +174,8 @@ class AudioBuffer:
         logger.debug(f"AudioBuffer initialized: {mode.value}, size={size}, channels={channels}")
     
     def write(self, data: np.ndarray) -> bool:
-        """Write audio data to buffer"""        try:
+        """Write audio data to buffer"""
+        try:
             with self.lock:
                 if self.mode == BufferMode.RING:
                     return self._write_ring(data)
@@ -179,7 +189,8 @@ class AudioBuffer:
             return False
     
     def read(self, num_samples: int) -> Optional[np.ndarray]:
-        """Read audio data from buffer"""        try:
+        """Read audio data from buffer"""
+        try:
             with self.lock:
                 if self.mode == BufferMode.RING:
                     return self._read_ring(num_samples)
@@ -193,7 +204,8 @@ class AudioBuffer:
             return None
     
     def _write_ring(self, data: np.ndarray) -> bool:
-        """Write to ring buffer"""        samples_to_write = data.shape[1] if data.ndim > 1 else len(data)
+        """Write to ring buffer"""
+        samples_to_write = data.shape[1] if data.ndim > 1 else len(data)
         
         # Check for overflow
         if self.available_samples + samples_to_write > self.size:
@@ -212,7 +224,8 @@ class AudioBuffer:
         return True
     
     def _read_ring(self, num_samples: int) -> Optional[np.ndarray]:
-        """Read from ring buffer"""        if self.available_samples < num_samples:
+        """Read from ring buffer"""
+        if self.available_samples < num_samples:
             self.underruns += 1
             return None
         
@@ -227,7 +240,8 @@ class AudioBuffer:
         return output
     
     def _write_double(self, data: np.ndarray) -> bool:
-        """Write to double buffer"""        current_buf = self.current_buffer
+        """Write to double buffer"""
+        current_buf = self.current_buffer
         
         if self.buffer_ready[current_buf]:
             # Buffer is full, try to switch
@@ -250,7 +264,8 @@ class AudioBuffer:
         return True
     
     def _read_double(self, num_samples: int) -> Optional[np.ndarray]:
-        """Read from double buffer"""        read_buf = 1 - self.current_buffer
+        """Read from double buffer"""
+        read_buf = 1 - self.current_buffer
         
         if not self.buffer_ready[read_buf]:
             self.underruns += 1
@@ -264,7 +279,8 @@ class AudioBuffer:
         return output
     
     def _write_single(self, data: np.ndarray) -> bool:
-        """Write to single buffer"""        if data.ndim == 1:
+        """Write to single buffer"""
+        if data.ndim == 1:
             data = data.reshape(1, -1)
         
         samples_to_write = min(data.shape[1], self.size)
@@ -272,11 +288,13 @@ class AudioBuffer:
         return True
     
     def _read_single(self, num_samples: int) -> Optional[np.ndarray]:
-        """Read from single buffer"""        samples_to_read = min(num_samples, self.size)
+        """Read from single buffer"""
+        samples_to_read = min(num_samples, self.size)
         return self.buffer[:, :samples_to_read].copy()
     
     def available_space(self) -> int:
-        """Get available space in buffer"""        with self.lock:
+        """Get available space in buffer"""
+        with self.lock:
             if self.mode == BufferMode.RING:
                 return self.size - self.available_samples
             elif self.mode == BufferMode.DOUBLE:
@@ -285,7 +303,8 @@ class AudioBuffer:
                 return self.size
     
     def available_data(self) -> int:
-        """Get available data in buffer"""        with self.lock:
+        """Get available data in buffer"""
+        with self.lock:
             if self.mode == BufferMode.RING:
                 return self.available_samples
             elif self.mode == BufferMode.DOUBLE:
@@ -295,7 +314,8 @@ class AudioBuffer:
                 return self.size
     
     def clear(self):
-        """Clear buffer contents"""        with self.lock:
+        """Clear buffer contents"""
+        with self.lock:
             if self.mode == BufferMode.RING:
                 self.buffer.fill(0)
                 self.write_pos = 0
@@ -310,20 +330,24 @@ class AudioBuffer:
 
 
 class RealTimeProcessor(ABC):
-    """Abstract base class for real-time audio processors"""    
+    """Abstract base class for real-time audio processors"""
+    
     @abstractmethod
     async def process(self, 
                      input_buffer: np.ndarray, 
                      output_buffer: np.ndarray) -> bool:
-        """Process audio in real-time"""        pass
+        """Process audio in real-time"""
+        pass
     
     @abstractmethod
     def get_latency_samples(self) -> int:
-        """Get processing latency in samples"""        pass
+        """Get processing latency in samples"""
+        pass
 
 
 class EffectsRealTimeProcessor(RealTimeProcessor):
-    """Real-time effects processor"""    
+    """Real-time effects processor"""
+    
     def __init__(self, 
                  effects_processor: EffectsProcessor,
                  effect_chain: List[str] = None):
@@ -334,7 +358,8 @@ class EffectsRealTimeProcessor(RealTimeProcessor):
     async def process(self, 
                      input_buffer: np.ndarray, 
                      output_buffer: np.ndarray) -> bool:
-        """Apply effects to audio buffer"""        try:
+        """Apply effects to audio buffer"""
+        try:
             # Start with input buffer
             processed = input_buffer.copy()
             
@@ -367,11 +392,13 @@ class EffectsRealTimeProcessor(RealTimeProcessor):
             return False
     
     def get_latency_samples(self) -> int:
-        """Get processing latency"""        return self.latency_samples
+        """Get processing latency"""
+        return self.latency_samples
 
 
 class RealTimeAudioEngine:
-    """    🎵 Real-time Audio Processing Engine
+    """
+    🎵 Real-time Audio Processing Engine
     
     High-performance real-time audio processing system:
     - Ultra-low latency processing
@@ -380,7 +407,8 @@ class RealTimeAudioEngine:
     - Real-time performance monitoring
     - Thread-safe audio processing
     - Automatic device management
-    """    
+    """
+    
     def __init__(self, 
                  config: RealTimeConfig,
                  audio_config: Optional[AudioProcessingConfig] = None):
@@ -424,7 +452,8 @@ class RealTimeAudioEngine:
         logger.info(f"RealTimeAudioEngine initialized with {config.latency_target.value} latency")
     
     async def initialize(self) -> bool:
-        """Initialize the real-time audio engine"""        try:
+        """Initialize the real-time audio engine"""
+        try:
             logger.info("Initializing real-time audio engine...")
             
             # Check audio I/O availability
@@ -452,7 +481,8 @@ class RealTimeAudioEngine:
             return False
     
     async def _initialize_audio_backend(self) -> bool:
-        """Initialize the audio backend"""        try:
+        """Initialize the audio backend"""
+        try:
             if self.config.audio_backend == AudioBackend.SOUNDDEVICE:
                 return await self._initialize_sounddevice()
             elif self.config.audio_backend == AudioBackend.PYAUDIO:
@@ -466,7 +496,8 @@ class RealTimeAudioEngine:
             return False
     
     async def _initialize_sounddevice(self) -> bool:
-        """Initialize SoundDevice backend"""        try:
+        """Initialize SoundDevice backend"""
+        try:
             import sounddevice as sd
             
             # Set default parameters
@@ -499,7 +530,8 @@ class RealTimeAudioEngine:
             return False
     
     async def _initialize_pyaudio(self) -> bool:
-        """Initialize PyAudio backend"""        try:
+        """Initialize PyAudio backend"""
+        try:
             import pyaudio
             
             self.audio_backend = pyaudio.PyAudio()
@@ -518,7 +550,8 @@ class RealTimeAudioEngine:
             return False
     
     async def _setup_default_processors(self):
-        """Setup default audio processors"""        # Add effects processor
+        """Setup default audio processors"""
+        # Add effects processor
         effects_chain = []
         
         if self.config.enable_auto_gain:
@@ -535,16 +568,19 @@ class RealTimeAudioEngine:
             self.add_processor(effects_processor)
     
     def add_processor(self, processor: RealTimeProcessor):
-        """Add a real-time processor to the chain"""        self.processors.append(processor)
+        """Add a real-time processor to the chain"""
+        self.processors.append(processor)
         logger.debug(f"Added processor: {type(processor).__name__}")
     
     def remove_processor(self, processor: RealTimeProcessor):
-        """Remove a processor from the chain"""        if processor in self.processors:
+        """Remove a processor from the chain"""
+        if processor in self.processors:
             self.processors.remove(processor)
             logger.debug(f"Removed processor: {type(processor).__name__}")
     
     async def start(self) -> bool:
-        """Start real-time audio processing"""        try:
+        """Start real-time audio processing"""
+        try:
             if self.is_running:
                 logger.warning("Real-time engine already running")
                 return True
@@ -582,7 +618,8 @@ class RealTimeAudioEngine:
             return False
     
     async def _start_audio_streams(self) -> bool:
-        """Start audio input/output streams"""        try:
+        """Start audio input/output streams"""
+        try:
             if self.config.audio_backend == AudioBackend.SOUNDDEVICE:
                 return await self._start_sounddevice_streams()
             elif self.config.audio_backend == AudioBackend.PYAUDIO:
@@ -596,11 +633,13 @@ class RealTimeAudioEngine:
             return False
     
     async def _start_sounddevice_streams(self) -> bool:
-        """Start SoundDevice streams"""        try:
+        """Start SoundDevice streams"""
+        try:
             import sounddevice as sd
             
             def audio_callback(indata, outdata, frames, time, status):
-                """Audio callback for SoundDevice"""                if status:
+                """Audio callback for SoundDevice"""
+                if status:
                     logger.warning(f"Audio callback status: {status}")
                 
                 try:
@@ -645,11 +684,13 @@ class RealTimeAudioEngine:
             return False
     
     async def _start_pyaudio_streams(self) -> bool:
-        """Start PyAudio streams"""        try:
+        """Start PyAudio streams"""
+        try:
             import pyaudio
             
             def input_callback(in_data, frame_count, time_info, status):
-                """Input stream callback"""                try:
+                """Input stream callback"""
+                try:
                     # Convert bytes to numpy array
                     audio_data = np.frombuffer(in_data, dtype=np.float32)
                     audio_data = audio_data.reshape(-1, self.config.channels).T
@@ -667,7 +708,8 @@ class RealTimeAudioEngine:
                     return (None, pyaudio.paAbort)
             
             def output_callback(in_data, frame_count, time_info, status):
-                """Output stream callback"""                try:
+                """Output stream callback"""
+                try:
                     # Read from output buffer
                     output_audio = self.output_buffer.read(frame_count)
                     
@@ -719,7 +761,8 @@ class RealTimeAudioEngine:
             return False
     
     def _processing_loop(self):
-        """Main audio processing loop"""        logger.info("Audio processing loop started")
+        """Main audio processing loop"""
+        logger.info("Audio processing loop started")
         
         try:
             while self.is_running and not self.stop_event.is_set():
@@ -740,7 +783,8 @@ class RealTimeAudioEngine:
             logger.info("Audio processing loop stopped")
     
     def _process_audio_block(self):
-        """Process a block of audio"""        try:
+        """Process a block of audio"""
+        try:
             start_time = time.time()
             
             # Check if we have enough input data
@@ -782,7 +826,8 @@ class RealTimeAudioEngine:
             logger.error(f"Audio block processing failed: {e}")
     
     def _update_processing_metrics(self):
-        """Update performance metrics"""        try:
+        """Update performance metrics"""
+        try:
             current_time = time.time()
             
             # Update average latency
@@ -815,7 +860,8 @@ class RealTimeAudioEngine:
             logger.error(f"Metrics update failed: {e}")
     
     def _start_performance_monitoring(self):
-        """Start performance monitoring thread"""        def monitor_performance():
+        """Start performance monitoring thread"""
+        def monitor_performance():
             while self.is_running:
                 try:
                     # Get CPU usage
@@ -840,7 +886,8 @@ class RealTimeAudioEngine:
         self.performance_monitor.start()
     
     async def stop(self):
-        """Stop real-time audio processing"""        try:
+        """Stop real-time audio processing"""
+        try:
             logger.info("Stopping real-time audio processing...")
             
             # Signal stop
@@ -865,7 +912,8 @@ class RealTimeAudioEngine:
             logger.error(f"Failed to stop real-time processing: {e}")
     
     async def _stop_audio_streams(self):
-        """Stop audio streams"""        try:
+        """Stop audio streams"""
+        try:
             if self.input_stream:
                 if hasattr(self.input_stream, 'stop'):
                     self.input_stream.stop()
@@ -882,10 +930,12 @@ class RealTimeAudioEngine:
             logger.error(f"Failed to stop audio streams: {e}")
     
     def get_performance_metrics(self) -> PerformanceMetrics:
-        """Get current performance metrics"""        return self.metrics
+        """Get current performance metrics"""
+        return self.metrics
     
     def get_device_list(self) -> List[AudioDeviceInfo]:
-        """Get list of available audio devices"""        devices = []
+        """Get list of available audio devices"""
+        devices = []
         
         try:
             if self.config.audio_backend == AudioBackend.SOUNDDEVICE:
@@ -927,10 +977,12 @@ class RealTimeAudioEngine:
         return devices
     
     def is_running_status(self) -> bool:
-        """Check if engine is running"""        return self.is_running
+        """Check if engine is running"""
+        return self.is_running
     
     def get_buffer_status(self) -> Dict[str, Any]:
-        """Get buffer status information"""        return {
+        """Get buffer status information"""
+        return {
             'input_buffer': {
                 'available_data': self.input_buffer.available_data(),
                 'available_space': self.input_buffer.available_space(),
@@ -949,7 +1001,8 @@ class RealTimeAudioEngine:
 # Factory functions for common configurations
 def create_streaming_engine(sample_rate: int = 44100, 
                           channels: int = 2) -> RealTimeAudioEngine:
-    """Create engine optimized for live streaming"""    config = RealTimeConfig(
+    """Create engine optimized for live streaming"""
+    config = RealTimeConfig(
         sample_rate=sample_rate,
         channels=channels,
         latency_target=ProcessingLatency.LOW,
@@ -964,7 +1017,8 @@ def create_streaming_engine(sample_rate: int = 44100,
 
 def create_gaming_engine(sample_rate: int = 48000, 
                         channels: int = 2) -> RealTimeAudioEngine:
-    """Create engine optimized for gaming/interactive applications"""    config = RealTimeConfig(
+    """Create engine optimized for gaming/interactive applications"""
+    config = RealTimeConfig(
         sample_rate=sample_rate,
         channels=channels,
         latency_target=ProcessingLatency.ULTRA_LOW,
@@ -979,7 +1033,8 @@ def create_gaming_engine(sample_rate: int = 48000,
 
 def create_podcast_engine(sample_rate: int = 44100, 
                          channels: int = 1) -> RealTimeAudioEngine:
-    """Create engine optimized for podcast recording"""    config = RealTimeConfig(
+    """Create engine optimized for podcast recording"""
+    config = RealTimeConfig(
         sample_rate=sample_rate,
         channels=channels,
         latency_target=ProcessingLatency.MEDIUM,

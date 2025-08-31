@@ -29,7 +29,8 @@ Architecture:
 - Strategy pattern for platform-specific implementations
 - Configuration management with encryption
 - Auto-discovery and initialization system
-"""from .base_adapter import (
+"""
+from .base_adapter import (
     BasePlatformAdapter, 
     AdapterStatus, 
     PlatformType,
@@ -388,12 +389,14 @@ SUPPORTED_PLATFORMS = {
 }
 
 def get_supported_platforms(category: Optional[str] = None) -> Union[Dict[str, List[str]], List[str]]:
-    """Get list of supported platforms by category or all categories."""    if category:
+    """Get list of supported platforms by category or all categories."""
+    if category:
         return SUPPORTED_PLATFORMS.get(category, [])
     return SUPPORTED_PLATFORMS
 
 def get_adapter_factory(category: AdapterCategory) -> Optional[Type]:
-    """Get adapter factory class for a specific category."""    factories = {
+    """Get adapter factory class for a specific category."""
+    factories = {
         AdapterCategory.SOCIAL_MEDIA: SocialMediaAdapterFactory,
         AdapterCategory.MUSIC_STREAMING: MusicAdapterFactory,
         AdapterCategory.PAYMENT_GATEWAY: PaymentAdapterFactory,
@@ -403,11 +406,13 @@ def get_adapter_factory(category: AdapterCategory) -> Optional[Type]:
     return factories.get(category)
 
 def validate_platform_support(category: str, platform: str) -> bool:
-    """Validate if a platform is supported in a category."""    supported = SUPPORTED_PLATFORMS.get(category, [])
+    """Validate if a platform is supported in a category."""
+    supported = SUPPORTED_PLATFORMS.get(category, [])
     return platform.lower() in supported
 
 def get_adapter_classes_by_category(category: AdapterCategory) -> List[Type[BasePlatformAdapter]]:
-    """Get all adapter classes for a specific category."""    adapter_classes = {
+    """Get all adapter classes for a specific category."""
+    adapter_classes = {
         AdapterCategory.SOCIAL_MEDIA: [
             InstagramAdapter, YouTubeAdapter, TikTokAdapter,
             TwitterAdapter, FacebookAdapter, LinkedInAdapter
@@ -441,7 +446,8 @@ def create_adapter_config(
     tenant_id: Optional[str] = None,
     custom_config: Optional[Dict[str, Any]] = None
 ) -> AdapterConfig:
-    """Create adapter configuration from parameters."""    
+    """Create adapter configuration from parameters."""
+    
     # Convert string parameters to enums
     category_enum = AdapterCategory(category.lower())
     priority_enum = AdapterPriority(priority.lower())
@@ -467,7 +473,8 @@ def create_adapter_config(
     )
 
 async def initialize_adapter_system(redis_client=None) -> AdapterRegistry:
-    """Initialize the adapter system with default configuration."""    registry = get_adapter_registry(redis_client)
+    """Initialize the adapter system with default configuration."""
+    registry = get_adapter_registry(redis_client)
     
     logger.info(f"Adapter system initialized")
     logger.info(f"Supported platforms: {len(sum(SUPPORTED_PLATFORMS.values(), []))}")
@@ -476,7 +483,8 @@ async def initialize_adapter_system(redis_client=None) -> AdapterRegistry:
     return registry
 
 async def shutdown_adapter_system():
-    """Shutdown the adapter system and cleanup resources."""    global _registry_instance
+    """Shutdown the adapter system and cleanup resources."""
+    global _registry_instance
     
     if _registry_instance:
         # Unregister all adapters
@@ -493,35 +501,42 @@ async def shutdown_adapter_system():
 
 # Quick access adapters for common use cases
 class QuickAdapters:
-    """Quick access utility for common adapter operations."""    
+    """Quick access utility for common adapter operations."""
+    
     @staticmethod
     async def get_instagram_adapter(credentials: Dict[str, Any]) -> Optional[InstagramAdapter]:
-        """Get Instagram adapter with credentials."""        adapter_creds = AdapterCredentials(**credentials)
+        """Get Instagram adapter with credentials."""
+        adapter_creds = AdapterCredentials(**credentials)
         return await get_social_media_adapter("instagram", adapter_creds)
     
     @staticmethod
     async def get_youtube_adapter(credentials: Dict[str, Any]) -> Optional[YouTubeAdapter]:
-        """Get YouTube adapter with credentials."""        adapter_creds = AdapterCredentials(**credentials)
+        """Get YouTube adapter with credentials."""
+        adapter_creds = AdapterCredentials(**credentials)
         return await get_social_media_adapter("youtube", adapter_creds)
     
     @staticmethod
     async def get_spotify_adapter(credentials: Dict[str, Any]) -> Optional[SpotifyAdapter]:
-        """Get Spotify adapter with credentials."""        adapter_creds = AdapterCredentials(**credentials)
+        """Get Spotify adapter with credentials."""
+        adapter_creds = AdapterCredentials(**credentials)
         return await get_music_adapter("spotify", adapter_creds)
     
     @staticmethod
     async def get_stripe_adapter(credentials: Dict[str, Any]) -> Optional[StripeAdapter]:
-        """Get Stripe adapter with credentials."""        adapter_creds = AdapterCredentials(**credentials)
+        """Get Stripe adapter with credentials."""
+        adapter_creds = AdapterCredentials(**credentials)
         return await get_payment_adapter("stripe", adapter_creds)
     
     @staticmethod
     async def get_aws_s3_adapter(credentials: Dict[str, Any]) -> Optional[AWSS3Adapter]:
-        """Get AWS S3 adapter with credentials."""        adapter_creds = AdapterCredentials(**credentials)
+        """Get AWS S3 adapter with credentials."""
+        adapter_creds = AdapterCredentials(**credentials)
         return await get_storage_adapter("aws_s3", adapter_creds)
     
     @staticmethod
     async def get_google_analytics_adapter(credentials: Dict[str, Any]) -> Optional[GoogleAnalyticsAdapter]:
-        """Get Google Analytics adapter with credentials."""        adapter_creds = AdapterCredentials(**credentials)
+        """Get Google Analytics adapter with credentials."""
+        adapter_creds = AdapterCredentials(**credentials)
         return await get_analytics_adapter("google_analytics", adapter_creds)
 
 # Export all public classes and functions

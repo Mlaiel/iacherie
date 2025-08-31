@@ -11,7 +11,8 @@ Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime
@@ -37,19 +38,22 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowAgentFactory:
-    """Factory class for creating and configuring Workflow Agent instances."""    
+    """Factory class for creating and configuring Workflow Agent instances."""
+    
     @staticmethod
     async def create_agent(
         config: Optional[Dict[str, Any]] = None
     ) -> WorkflowAgent:
-        """        Create and initialize a fully configured Workflow Agent.
+        """
+        Create and initialize a fully configured Workflow Agent.
         
         Args:
             config: Optional configuration dictionary
             
         Returns:
             WorkflowAgent: Initialized agent instance
-        """        try:
+        """
+        try:
             # Create agent with default or custom config
             agent = WorkflowAgent()
             
@@ -76,14 +80,16 @@ class WorkflowAgentFactory:
     async def create_quick_setup(
         agent_type: str = "content_creator"
     ) -> WorkflowAgent:
-        """        Create a pre-configured agent for common use cases.
+        """
+        Create a pre-configured agent for common use cases.
         
         Args:
             agent_type: Type of agent setup ('content_creator', 'musician', 'influencer', 'photographer')
             
         Returns:
             WorkflowAgent: Configured agent instance
-        """        try:
+        """
+        try:
             configs = {
                 'content_creator': {
                     'max_workers': 50,
@@ -116,10 +122,12 @@ class WorkflowAgentFactory:
 
 
 class WorkflowTemplateLibrary:
-    """Library of pre-built workflow templates for common use cases."""    
+    """Library of pre-built workflow templates for common use cases."""
+    
     @staticmethod
     def get_template_recommendations(user_profile: Dict[str, Any]) -> List[str]:
-        """Get template recommendations based on user profile."""        try:
+        """Get template recommendations based on user profile."""
+        try:
             user_type = user_profile.get('type', 'content_creator')
             interests = user_profile.get('interests', [])
             
@@ -168,7 +176,8 @@ class WorkflowTemplateLibrary:
 
     @staticmethod
     def get_template_by_category(category: str) -> List[str]:
-        """Get templates by category."""        templates = {
+        """Get templates by category."""
+        templates = {
             'music': [
                 'music_release_workflow',
                 'audio_mastering_workflow',
@@ -205,14 +214,16 @@ class WorkflowTemplateLibrary:
 
 
 class QuickWorkflowBuilder:
-    """Builder for creating common workflows quickly."""    
+    """Builder for creating common workflows quickly."""
+    
     @staticmethod
     async def create_content_publishing_workflow(
         agent: WorkflowAgent,
         platforms: List[str],
         content_type: str = "general"
     ) -> str:
-        """Create a content publishing workflow for specified platforms."""        try:
+        """Create a content publishing workflow for specified platforms."""
+        try:
             workflow_definition = {
                 'id': f'content_publishing_{content_type}',
                 'name': f'Content Publishing - {content_type.title()}',
@@ -274,7 +285,8 @@ class QuickWorkflowBuilder:
         release_platforms: List[str],
         protection_enabled: bool = True
     ) -> str:
-        """Create a complete music release workflow."""        try:
+        """Create a complete music release workflow."""
+        try:
             nodes = [
                 {
                     'id': 'audio_processing',
@@ -360,13 +372,15 @@ class QuickWorkflowBuilder:
 
 
 class WorkflowUtilities:
-    """Utility functions for workflow management."""    
+    """Utility functions for workflow management."""
+    
     @staticmethod
     async def bulk_execute_workflows(
         agent: WorkflowAgent,
         workflow_configs: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Execute multiple workflows in parallel."""        try:
+        """Execute multiple workflows in parallel."""
+        try:
             tasks = []
             
             for config in workflow_configs:
@@ -394,7 +408,8 @@ class WorkflowUtilities:
         agent: WorkflowAgent,
         workflow_ids: List[str]
     ) -> Dict[str, Dict[str, Any]]:
-        """Monitor health status for multiple workflows."""        try:
+        """Monitor health status for multiple workflows."""
+        try:
             health_statuses = {}
             
             for workflow_id in workflow_ids:
@@ -411,7 +426,8 @@ class WorkflowUtilities:
     def get_performance_summary(
         health_statuses: Dict[str, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Generate performance summary from health statuses."""        try:
+        """Generate performance summary from health statuses."""
+        try:
             total_workflows = len(health_statuses)
             if total_workflows == 0:
                 return {'total_workflows': 0}
@@ -453,7 +469,8 @@ class WorkflowUtilities:
 
 # Quick access functions for common operations
 async def quick_setup(agent_type: str = "content_creator") -> WorkflowAgent:
-    """Quick setup function for creating a pre-configured agent."""    return await WorkflowAgentFactory.create_quick_setup(agent_type)
+    """Quick setup function for creating a pre-configured agent."""
+    return await WorkflowAgentFactory.create_quick_setup(agent_type)
 
 
 async def create_simple_workflow(
@@ -461,7 +478,8 @@ async def create_simple_workflow(
     name: str,
     tasks: List[Dict[str, Any]]
 ) -> str:
-    """Create a simple sequential workflow from a list of tasks."""    try:
+    """Create a simple sequential workflow from a list of tasks."""
+    try:
         nodes = []
         edges = []
         

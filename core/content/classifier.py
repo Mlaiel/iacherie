@@ -6,7 +6,8 @@ advanced machine learning models for improved organization and discovery.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime
@@ -28,7 +29,8 @@ from ..ml.models.quality_classifier import QualityClassifier
 
 @dataclass
 class ClassificationResult:
-    """Content classification result container"""    content_id: str
+    """Content classification result container"""
+    content_id: str
     primary_category: str
     subcategories: List[str]
     tags: List[str]
@@ -39,7 +41,8 @@ class ClassificationResult:
 
 @dataclass
 class ClassificationConfig:
-    """Content classification configuration"""    enable_auto_tagging: bool = True
+    """Content classification configuration"""
+    enable_auto_tagging: bool = True
     enable_genre_detection: bool = True
     enable_mood_analysis: bool = True
     enable_quality_assessment: bool = True
@@ -49,7 +52,8 @@ class ClassificationConfig:
 
 
 class ContentClassifier:
-    """    AI-Powered Content Classification Engine
+    """
+    AI-Powered Content Classification Engine
     
     Provides intelligent content classification including:
     - Automatic categorization into predefined taxonomies
@@ -58,7 +62,8 @@ class ContentClassifier:
     - Quality level assessment
     - Automated tagging and metadata enhancement
     - Content difficulty and audience targeting
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession, config: ClassificationConfig = None):
         self.db = db_session
         self.config = config or ClassificationConfig()
@@ -82,7 +87,8 @@ class ContentClassifier:
         content_data: Dict[str, Any] = None,
         custom_config: ClassificationConfig = None
     ) -> Dict[str, Any]:
-        """        Classify content using AI models
+        """
+        Classify content using AI models
         
         Args:
             content_id: Content identifier
@@ -91,7 +97,8 @@ class ContentClassifier:
             
         Returns:
             Classification result with categories, tags, and metadata
-        """        classification_start = datetime.utcnow()
+        """
+        classification_start = datetime.utcnow()
         config = custom_config or self.config
         
         try:
@@ -158,7 +165,8 @@ class ContentClassifier:
         content_data: Dict[str, Any],
         config: ClassificationConfig
     ) -> ClassificationResult:
-        """        Classify audio content
+        """
+        Classify audio content
         
         Args:
             content_id: Content identifier
@@ -167,7 +175,8 @@ class ContentClassifier:
             
         Returns:
             Audio classification result
-        """        try:
+        """
+        try:
             primary_category = "audio"
             subcategories = []
             tags = []
@@ -257,7 +266,8 @@ class ContentClassifier:
         content_data: Dict[str, Any],
         config: ClassificationConfig
     ) -> ClassificationResult:
-        """        Classify video content
+        """
+        Classify video content
         
         Args:
             content_id: Content identifier
@@ -266,7 +276,8 @@ class ContentClassifier:
             
         Returns:
             Video classification result
-        """        try:
+        """
+        try:
             primary_category = "video"
             subcategories = []
             tags = []
@@ -347,7 +358,8 @@ class ContentClassifier:
         content_data: Dict[str, Any],
         config: ClassificationConfig
     ) -> ClassificationResult:
-        """        Classify image content
+        """
+        Classify image content
         
         Args:
             content_id: Content identifier
@@ -356,7 +368,8 @@ class ContentClassifier:
             
         Returns:
             Image classification result
-        """        try:
+        """
+        try:
             primary_category = "image"
             subcategories = []
             tags = []
@@ -454,7 +467,8 @@ class ContentClassifier:
         content_data: Dict[str, Any],
         config: ClassificationConfig
     ) -> ClassificationResult:
-        """        Classify text content
+        """
+        Classify text content
         
         Args:
             content_id: Content identifier
@@ -463,7 +477,8 @@ class ContentClassifier:
             
         Returns:
             Text classification result
-        """        try:
+        """
+        try:
             primary_category = "text"
             subcategories = []
             tags = []
@@ -559,7 +574,8 @@ class ContentClassifier:
         content_data: Dict[str, Any],
         config: ClassificationConfig
     ) -> ClassificationResult:
-        """        Generic classification for unknown content types
+        """
+        Generic classification for unknown content types
         
         Args:
             content_id: Content identifier
@@ -568,7 +584,8 @@ class ContentClassifier:
             
         Returns:
             Generic classification result
-        """        try:
+        """
+        try:
             content_type = content_data.get("content_type", "unknown")
             primary_category = content_type
             subcategories = []
@@ -612,7 +629,8 @@ class ContentClassifier:
     # Helper methods
 
     def _load_classification_taxonomies(self) -> Dict[str, Any]:
-        """Load classification taxonomies and categories"""        return {
+        """Load classification taxonomies and categories"""
+        return {
             "audio": {
                 "genres": ["rock", "pop", "jazz", "classical", "electronic", "hip-hop", "country", "blues"],
                 "moods": ["happy", "sad", "energetic", "calm", "aggressive", "romantic", "mysterious"],
@@ -636,7 +654,8 @@ class ContentClassifier:
         }
 
     async def _get_content_data(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Get content data from database"""        # Mock implementation - replace with actual database query
+        """Get content data from database"""
+        # Mock implementation - replace with actual database query
         return {
             "id": content_id,
             "content_type": "text",
@@ -645,14 +664,16 @@ class ContentClassifier:
         }
 
     async def _save_classification_result(self, content_id: str, result: ClassificationResult) -> None:
-        """Save classification result to database"""        try:
+        """Save classification result to database"""
+        try:
             # This would save to the actual database
             pass
         except Exception as e:
             self.logger.error(f"Failed to save classification result: {str(e)}")
 
     def _serialize_classification_result(self, result: ClassificationResult) -> Dict[str, Any]:
-        """Convert classification result to serializable format"""        return {
+        """Convert classification result to serializable format"""
+        return {
             "content_id": result.content_id,
             "primary_category": result.primary_category,
             "subcategories": result.subcategories,
@@ -664,15 +685,18 @@ class ContentClassifier:
 
     # Placeholder methods for AI model calls
     async def _detect_audio_instruments(self, file_path: str) -> List[str]:
-        """Detect instruments in audio content"""        # Placeholder - implement with actual audio analysis
+        """Detect instruments in audio content"""
+        # Placeholder - implement with actual audio analysis
         return ["guitar", "drums"]
 
     async def _extract_audio_features(self, file_path: str) -> Dict[str, Any]:
-        """Extract audio features like tempo, energy, etc."""        # Placeholder - implement with librosa or similar
+        """Extract audio features like tempo, energy, etc."""
+        # Placeholder - implement with librosa or similar
         return {"tempo": 120, "energy": 0.8}
 
     def _categorize_tempo(self, tempo: float) -> str:
-        """Categorize tempo into descriptive labels"""        if tempo < 60:
+        """Categorize tempo into descriptive labels"""
+        if tempo < 60:
             return "very_slow"
         elif tempo < 90:
             return "slow"
@@ -684,7 +708,8 @@ class ContentClassifier:
             return "very_fast"
 
     def _categorize_energy(self, energy: float) -> str:
-        """Categorize energy level"""        if energy < 0.3:
+        """Categorize energy level"""
+        if energy < 0.3:
             return "low_energy"
         elif energy < 0.7:
             return "medium_energy"
@@ -692,7 +717,8 @@ class ContentClassifier:
             return "high_energy"
 
     async def _generate_auto_tags(self, content_data: Dict[str, Any], content_type: str) -> List[str]:
-        """Generate automatic tags from content metadata"""        tags = []
+        """Generate automatic tags from content metadata"""
+        tags = []
         
         # Add tags from existing metadata
         metadata = content_data.get("metadata", {})

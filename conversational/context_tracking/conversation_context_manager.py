@@ -9,7 +9,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited. Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -28,7 +29,8 @@ from ...utils.cache import CacheManager
 
 
 class ContextPriority(Enum):
-    """Context priority levels for intelligent management"""    CRITICAL = "critical"        # User identity, security context
+    """Context priority levels for intelligent management"""
+    CRITICAL = "critical"        # User identity, security context
     HIGH = "high"               # Content protection, business data
     MEDIUM = "medium"           # Collaboration preferences, platform settings
     LOW = "low"                 # UI preferences, display settings
@@ -36,7 +38,8 @@ class ContextPriority(Enum):
 
 
 class ContextScope(Enum):
-    """Context scope definitions"""    GLOBAL = "global"           # Cross-session persistent
+    """Context scope definitions"""
+    GLOBAL = "global"           # Cross-session persistent
     SESSION = "session"         # Session-specific
     CONVERSATION = "conversation"  # Conversation-specific
     INTERACTION = "interaction"    # Single interaction
@@ -45,7 +48,8 @@ class ContextScope(Enum):
 
 @dataclass
 class ContextItem:
-    """Individual context item with metadata"""    key: str
+    """Individual context item with metadata"""
+    key: str
     value: Any
     priority: ContextPriority
     scope: ContextScope
@@ -58,10 +62,12 @@ class ContextItem:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def is_expired(self) -> bool:
-        """Check if context item has expired"""        return self.expires_at and datetime.utcnow() > self.expires_at
+        """Check if context item has expired"""
+        return self.expires_at and datetime.utcnow() > self.expires_at
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation"""        return {
+        """Convert to dictionary representation"""
+        return {
             "key": self.key,
             "value": self.value,
             "priority": self.priority.value,
@@ -78,7 +84,8 @@ class ContextItem:
 
 @dataclass
 class ConversationState:
-    """Current conversation state tracking"""    conversation_id: str
+    """Current conversation state tracking"""
+    conversation_id: str
     user_id: str
     session_id: str
     current_intent: Optional[str] = None
@@ -96,12 +103,14 @@ class ConversationState:
 
 
 class ConversationContextManager:
-    """    Enterprise conversation context manager orchestrating intelligent 
+    """
+    Enterprise conversation context manager orchestrating intelligent 
     conversation flow and context awareness for content creators.
     
     Manages multi-level context hierarchy, intelligent caching,
     security-aware context handling, and business logic integration.
-    """    
+    """
+    
     def __init__(
         self,
         cache_manager: CacheManager,
@@ -135,7 +144,8 @@ class ConversationContextManager:
         self.logger.info("ConversationContextManager initialized")
     
     async def start(self):
-        """Start the context manager and background tasks"""        try:
+        """Start the context manager and background tasks"""
+        try:
             # Start background cleanup
             self.cleanup_task = asyncio.create_task(self._background_cleanup())
             
@@ -149,7 +159,8 @@ class ConversationContextManager:
             raise ContextManagerError(f"Startup failed: {e}")
     
     async def stop(self):
-        """Stop the context manager and cleanup resources"""        try:
+        """Stop the context manager and cleanup resources"""
+        try:
             # Cancel background tasks
             if self.cleanup_task:
                 self.cleanup_task.cancel()
@@ -186,7 +197,8 @@ class ConversationContextManager:
         tags: Optional[List[str]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """        Set context item with intelligent scope management
+        """
+        Set context item with intelligent scope management
         
         Args:
             key: Context key identifier
@@ -202,7 +214,8 @@ class ConversationContextManager:
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             validate_required_fields({"key": key, "value": value, "scope": scope})
             
             # Security validation
@@ -260,7 +273,8 @@ class ConversationContextManager:
         default: Any = None,
         include_metadata: bool = False
     ) -> Any:
-        """        Get context item with intelligent scope resolution
+        """
+        Get context item with intelligent scope resolution
         
         Args:
             key: Context key identifier
@@ -271,7 +285,8 @@ class ConversationContextManager:
             
         Returns:
             Context value or default
-        """        try:
+        """
+        try:
             # Search in scope hierarchy (most specific to least specific)
             context_item = await self._find_context_item(
                 key, conversation_id, session_id
@@ -316,7 +331,8 @@ class ConversationContextManager:
         conversation_id: Optional[str] = None,
         session_id: Optional[str] = None
     ) -> bool:
-        """        Remove context item from specified scope or all scopes
+        """
+        Remove context item from specified scope or all scopes
         
         Args:
             key: Context key identifier
@@ -326,7 +342,8 @@ class ConversationContextManager:
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             removed = False
             
             if scope:
@@ -361,7 +378,8 @@ class ConversationContextManager:
         platform: Optional[str] = None,
         initial_context: Optional[Dict[str, Any]] = None
     ) -> ConversationState:
-        """        Start new conversation with initial context setup
+        """
+        Start new conversation with initial context setup
         
         Args:
             conversation_id: Unique conversation identifier
@@ -372,7 +390,8 @@ class ConversationContextManager:
             
         Returns:
             ConversationState: New conversation state
-        """        try:
+        """
+        try:
             # Create conversation state
             state = ConversationState(
                 conversation_id=conversation_id,
@@ -415,7 +434,8 @@ class ConversationContextManager:
         conversation_id: str,
         save_summary: bool = True
     ) -> bool:
-        """        End conversation and cleanup context
+        """
+        End conversation and cleanup context
         
         Args:
             conversation_id: Conversation identifier
@@ -423,7 +443,8 @@ class ConversationContextManager:
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             if conversation_id not in self.conversation_states:
                 return False
             
@@ -456,14 +477,16 @@ class ConversationContextManager:
         self,
         conversation_id: str
     ) -> Optional[ConversationState]:
-        """Get current conversation state"""        return self.conversation_states.get(conversation_id)
+        """Get current conversation state"""
+        return self.conversation_states.get(conversation_id)
     
     async def update_conversation_state(
         self,
         conversation_id: str,
         **updates
     ) -> bool:
-        """        Update conversation state attributes
+        """
+        Update conversation state attributes
         
         Args:
             conversation_id: Conversation identifier
@@ -471,7 +494,8 @@ class ConversationContextManager:
             
         Returns:
             bool: Success status
-        """        try:
+        """
+        try:
             if conversation_id not in self.conversation_states:
                 return False
             
@@ -495,7 +519,8 @@ class ConversationContextManager:
         session_id: Optional[str] = None,
         include_scopes: Optional[List[ContextScope]] = None
     ) -> Dict[str, Any]:
-        """        Get comprehensive context summary for debugging and analytics
+        """
+        Get comprehensive context summary for debugging and analytics
         
         Args:
             conversation_id: Conversation identifier
@@ -504,7 +529,8 @@ class ConversationContextManager:
             
         Returns:
             Dict containing context summary
-        """        try:
+        """
+        try:
             scopes = include_scopes or list(ContextScope)
             summary = {
                 "global_context_count": len(self.global_context),
@@ -535,7 +561,8 @@ class ConversationContextManager:
         conversation_id: Optional[str],
         session_id: Optional[str]
     ) -> bool:
-        """Store context item in appropriate scope storage"""        try:
+        """Store context item in appropriate scope storage"""
+        try:
             if item.scope == ContextScope.GLOBAL:
                 self.global_context[item.key] = item
                 
@@ -574,7 +601,8 @@ class ConversationContextManager:
         conversation_id: Optional[str],
         session_id: Optional[str]
     ) -> Optional[ContextItem]:
-        """Find context item in scope hierarchy"""        
+        """Find context item in scope hierarchy"""
+        
         # Search order: interaction -> conversation -> session -> global -> temporary
         search_order = [
             (ContextScope.INTERACTION, self.interaction_contexts.get(conversation_id or "", {})),
@@ -601,7 +629,8 @@ class ConversationContextManager:
         conversation_id: Optional[str],
         session_id: Optional[str]
     ) -> bool:
-        """Remove context item from specific scope"""        try:
+        """Remove context item from specific scope"""
+        try:
             if scope == ContextScope.GLOBAL:
                 return self.global_context.pop(key, None) is not None
                 
@@ -625,7 +654,8 @@ class ConversationContextManager:
             return False
     
     async def _background_cleanup(self):
-        """Background task for context cleanup and maintenance"""        while True:
+        """Background task for context cleanup and maintenance"""
+        while True:
             try:
                 await asyncio.sleep(self.cleanup_interval)
                 
@@ -645,7 +675,8 @@ class ConversationContextManager:
                 await asyncio.sleep(60)  # Wait before retrying
     
     async def _cleanup_expired_contexts(self):
-        """Remove expired context items from all scopes"""        current_time = datetime.utcnow()
+        """Remove expired context items from all scopes"""
+        current_time = datetime.utcnow()
         cleanup_count = 0
         
         # Clean all scope dictionaries
@@ -672,7 +703,8 @@ class ConversationContextManager:
             self.logger.debug(f"Cleaned up {cleanup_count} expired context items")
     
     async def _optimize_context_storage(self):
-        """Optimize context storage and remove least recently used items"""        total_items = (
+        """Optimize context storage and remove least recently used items"""
+        total_items = (
             len(self.global_context) +
             sum(len(ctx) for ctx in self.session_contexts.values()) +
             sum(len(ctx) for ctx in self.conversation_contexts.values()) +
@@ -684,7 +716,8 @@ class ConversationContextManager:
             await self._remove_lru_contexts(total_items - self.max_context_items)
     
     async def _remove_lru_contexts(self, count_to_remove: int):
-        """Remove least recently used context items"""        # Implementation would analyze access_patterns and remove LRU items
+        """Remove least recently used context items"""
+        # Implementation would analyze access_patterns and remove LRU items
         # This is a simplified version
         removed = 0
         for pattern_key, accesses in self.access_patterns.items():
@@ -700,7 +733,8 @@ class ConversationContextManager:
             self.logger.debug(f"Removed {removed} LRU context items")
     
     async def _load_global_context(self):
-        """Load persistent global context from storage"""        try:
+        """Load persistent global context from storage"""
+        try:
             # Load from cache or database
             global_data = await self.cache_manager.get("global_context")
             if global_data:
@@ -711,7 +745,8 @@ class ConversationContextManager:
             self.logger.error(f"Error loading global context: {e}")
     
     async def _save_global_context(self):
-        """Save persistent global context to storage"""        try:
+        """Save persistent global context to storage"""
+        try:
             global_data = {
                 key: item.to_dict()
                 for key, item in self.global_context.items()
@@ -728,7 +763,8 @@ class ConversationContextManager:
             self.logger.error(f"Error saving global context: {e}")
     
     async def _load_user_context(self, user_id: str, session_id: str):
-        """Load user-specific context for new session"""        try:
+        """Load user-specific context for new session"""
+        try:
             # Load user preferences, settings, historical context
             user_data = await self.cache_manager.get(f"user_context:{user_id}")
             if user_data:
@@ -750,7 +786,8 @@ class ConversationContextManager:
         conversation_id: str,
         state: ConversationState
     ):
-        """Save conversation summary for analytics and learning"""        try:
+        """Save conversation summary for analytics and learning"""
+        try:
             summary = {
                 "conversation_id": conversation_id,
                 "user_id": state.user_id,
@@ -779,7 +816,8 @@ class ConversationContextManager:
         conversation_id: Optional[str],
         session_id: Optional[str]
     ) -> Dict[str, Any]:
-        """Get summary for specific context scope"""        if scope == ContextScope.GLOBAL:
+        """Get summary for specific context scope"""
+        if scope == ContextScope.GLOBAL:
             context_dict = self.global_context
         elif scope == ContextScope.SESSION and session_id:
             context_dict = self.session_contexts.get(session_id, {})

@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timezone
@@ -31,15 +32,19 @@ from .language_detector import LanguageDetector, TranslationEngine
 logger = logging.getLogger(__name__)
 
 class TextAgentSystem:
-    """    Unified Text Processing System providing enterprise-grade text analysis,
+    """
+    Unified Text Processing System providing enterprise-grade text analysis,
     generation, and processing capabilities for content creators.
-    """    
+    """
+    
     def __init__(self, num_agents: int = 3):
-        """        Initialize the complete text processing system
+        """
+        Initialize the complete text processing system
         
         Args:
             num_agents: Number of text agent instances for load balancing
-        """        self.agent_manager = TextAgentManager(num_agents)
+        """
+        self.agent_manager = TextAgentManager(num_agents)
         self.text_processor = TextProcessor()
         self.text_analyzer = TextAnalyzer()
         self.ai_generator = AITextGenerator()
@@ -64,7 +69,8 @@ class TextAgentSystem:
         text: str,
         analysis_options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Comprehensive text analysis using all available engines
+        """
+        Comprehensive text analysis using all available engines
         
         Args:
             text: Text to analyze
@@ -72,7 +78,8 @@ class TextAgentSystem:
             
         Returns:
             Dict containing comprehensive analysis results
-        """        try:
+        """
+        try:
             self.system_stats["total_requests"] += 1
             
             # Get available agent
@@ -134,7 +141,8 @@ class TextAgentSystem:
         prompt: str,
         generation_config: Optional[GenerationConfig] = None
     ) -> Dict[str, Any]:
-        """        Generate AI-powered content with quality assessment
+        """
+        Generate AI-powered content with quality assessment
         
         Args:
             prompt: Generation prompt
@@ -142,7 +150,8 @@ class TextAgentSystem:
             
         Returns:
             Dict containing generated content and metadata
-        """        try:
+        """
+        try:
             self.system_stats["total_requests"] += 1
             
             # Generate content
@@ -181,7 +190,8 @@ class TextAgentSystem:
         target_language: str,
         source_language: Optional[str] = None
     ) -> Dict[str, Any]:
-        """        Translate text with quality assessment and analysis
+        """
+        Translate text with quality assessment and analysis
         
         Args:
             text: Text to translate
@@ -190,7 +200,8 @@ class TextAgentSystem:
             
         Returns:
             Dict containing translation results and analysis
-        """        try:
+        """
+        try:
             self.system_stats["total_requests"] += 1
             
             # Perform translation
@@ -232,7 +243,8 @@ class TextAgentSystem:
         text: str,
         reference_texts: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """        Detect plagiarism with comprehensive analysis
+        """
+        Detect plagiarism with comprehensive analysis
         
         Args:
             text: Text to check for plagiarism
@@ -240,7 +252,8 @@ class TextAgentSystem:
             
         Returns:
             Dict containing plagiarism detection results
-        """        try:
+        """
+        try:
             self.system_stats["total_requests"] += 1
             
             # Get available agent for plagiarism detection
@@ -272,7 +285,8 @@ class TextAgentSystem:
         texts: List[str],
         operation: str = "analyze"
     ) -> List[Dict[str, Any]]:
-        """        Process multiple texts in batch with load balancing
+        """
+        Process multiple texts in batch with load balancing
         
         Args:
             texts: List of texts to process
@@ -280,7 +294,8 @@ class TextAgentSystem:
             
         Returns:
             List of processing results
-        """        try:
+        """
+        try:
             if operation == "analyze":
                 results = []
                 for text in texts:
@@ -304,7 +319,8 @@ class TextAgentSystem:
             return [{"error": str(e)}]
     
     async def get_system_health(self) -> Dict[str, Any]:
-        """Get comprehensive system health status"""        try:
+        """Get comprehensive system health status"""
+        try:
             # Get component health
             agent_stats = await self.agent_manager.get_aggregate_stats()
             nlp_stats = self.nlp_engine.get_analysis_stats()
@@ -344,7 +360,8 @@ class TextAgentSystem:
             }
     
     async def shutdown(self):
-        """Gracefully shutdown the text agent system"""        logger.info("Shutting down TextAgentSystem...")
+        """Gracefully shutdown the text agent system"""
+        logger.info("Shutting down TextAgentSystem...")
         
         # Cleanup tasks can be added here
         # For now, just log the shutdown
@@ -354,27 +371,32 @@ class TextAgentSystem:
 
 # Convenience functions for direct access
 async def analyze_text(text: str, **kwargs) -> Dict[str, Any]:
-    """Convenience function for text analysis"""    system = TextAgentSystem()
+    """Convenience function for text analysis"""
+    system = TextAgentSystem()
     return await system.analyze_text(text, kwargs)
 
 async def generate_content(prompt: str, **kwargs) -> Dict[str, Any]:
-    """Convenience function for content generation"""    system = TextAgentSystem()
+    """Convenience function for content generation"""
+    system = TextAgentSystem()
     config = GenerationConfig(**kwargs) if kwargs else None
     return await system.generate_content(prompt, config)
 
 async def translate_text(text: str, target_language: str, **kwargs) -> Dict[str, Any]:
-    """Convenience function for text translation"""    system = TextAgentSystem()
+    """Convenience function for text translation"""
+    system = TextAgentSystem()
     return await system.translate_text(text, target_language, **kwargs)
 
 async def detect_plagiarism(text: str, **kwargs) -> Dict[str, Any]:
-    """Convenience function for plagiarism detection"""    system = TextAgentSystem()
+    """Convenience function for plagiarism detection"""
+    system = TextAgentSystem()
     return await system.detect_plagiarism(text, **kwargs)
 
 # Global system instance for singleton pattern
 _global_system = None
 
 def get_text_system() -> TextAgentSystem:
-    """Get or create global text system instance"""    global _global_system
+    """Get or create global text system instance"""
+    global _global_system
     if _global_system is None:
         _global_system = TextAgentSystem()
     return _global_system

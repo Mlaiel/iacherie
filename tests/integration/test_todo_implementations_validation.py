@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -17,7 +18,8 @@ Performance and functionality validation for completed TODO implementations.
 
 Author: GitHub Copilot Assistant  
 Purpose: Validate that all critical TODO implementations are working correctly
-"""import sys
+"""
+import sys
 import os
 import asyncio
 import logging
@@ -32,13 +34,15 @@ logger = logging.getLogger(__name__)
 
 
 class TODOImplementationValidator:
-    """Validates TODO implementations for performance and functionality"""    
+    """Validates TODO implementations for performance and functionality"""
+    
     def __init__(self):
         self.project_root = Path.cwd()
         self.validation_results = {}
         
     async def validate_implementations(self) -> bool:
-        """Run comprehensive validation of TODO implementations"""        logger.info("🎯 Starting TODO Implementation Validation")
+        """Run comprehensive validation of TODO implementations"""
+        logger.info("🎯 Starting TODO Implementation Validation")
         logger.info("=" * 60)
         
         # Track all validation results
@@ -86,7 +90,8 @@ class TODOImplementationValidator:
         return overall_success
     
     async def _validate_core_engines(self) -> bool:
-        """Validate core engine implementations"""        try:
+        """Validate core engine implementations"""
+        try:
             # Check that core engines can be imported and initialized
             engine_files = [
                 "core/engines/ai_engine.py",
@@ -114,7 +119,8 @@ class TODOImplementationValidator:
             return False
     
     async def _validate_business_logic(self) -> bool:
-        """Validate business logic implementations"""        try:
+        """Validate business logic implementations"""
+        try:
             # Run existing business logic test if available
             test_files = [
                 "test_business_logic_complete.py",
@@ -164,7 +170,8 @@ class TODOImplementationValidator:
             return False
     
     async def _validate_monetization(self) -> bool:
-        """Validate monetization implementations"""        try:
+        """Validate monetization implementations"""
+        try:
             monetization_files = [
                 "monetization/revenue_calculator.py",
                 "monetization/payment_processor.py",
@@ -192,7 +199,8 @@ class TODOImplementationValidator:
             return False
     
     async def _validate_ai_agents(self) -> bool:
-        """Validate AI agents implementations"""        try:
+        """Validate AI agents implementations"""
+        try:
             # Check for AI agents directory and core files
             ai_agents_dir = self.project_root / "ai_agents"
             if not ai_agents_dir.exists():
@@ -213,7 +221,8 @@ class TODOImplementationValidator:
             return False
     
     async def _validate_api_functionality(self) -> bool:
-        """Validate API functionality"""        try:
+        """Validate API functionality"""
+        try:
             # Check for API files
             api_files = [
                 "api/__init__.py",
@@ -236,7 +245,8 @@ class TODOImplementationValidator:
 
 
 async def main():
-    """Main validation function"""    validator = TODOImplementationValidator()
+    """Main validation function"""
+    validator = TODOImplementationValidator()
     
     try:
         success = await validator.validate_implementations()

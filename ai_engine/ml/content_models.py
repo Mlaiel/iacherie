@@ -10,7 +10,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import json
 import time
 import torch
@@ -71,7 +72,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content types for analysis and generation"""    TEXT = "text"
+    """Content types for analysis and generation"""
+    TEXT = "text"
     IMAGE = "image"
     AUDIO = "audio"
     VIDEO = "video"
@@ -79,7 +81,8 @@ class ContentType(Enum):
 
 
 class ContentQuality(Enum):
-    """Content quality levels"""    LOW = "low"
+    """Content quality levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     PROFESSIONAL = "professional"
@@ -87,7 +90,8 @@ class ContentQuality(Enum):
 
 
 class ContentCategory(Enum):
-    """Content categories"""    MUSIC = "music"
+    """Content categories"""
+    MUSIC = "music"
     BLOG = "blog"
     PHOTO = "photo"
     VIDEO = "video"
@@ -101,7 +105,8 @@ class ContentCategory(Enum):
 
 @dataclass
 class ContentMetadata:
-    """Metadata for content analysis"""    content_id: str
+    """Metadata for content analysis"""
+    content_id: str
     content_type: ContentType
     category: ContentCategory
     title: str
@@ -119,7 +124,8 @@ class ContentMetadata:
 
 @dataclass
 class ContentAnalysisResult:
-    """Result from content analysis"""    content_id: str
+    """Result from content analysis"""
+    content_id: str
     quality_score: float = 0.0
     engagement_prediction: float = 0.0
     virality_potential: float = 0.0
@@ -138,7 +144,8 @@ class ContentAnalysisResult:
 
 @dataclass
 class ContentGenerationConfig:
-    """Configuration for content generation"""    content_type: ContentType
+    """Configuration for content generation"""
+    content_type: ContentType
     category: ContentCategory
     style: str = "professional"
     target_audience: str = "general"
@@ -154,7 +161,8 @@ class ContentGenerationConfig:
 
 
 class ContentModel(ABC):
-    """Abstract base class for content models"""    
+    """Abstract base class for content models"""
+    
     def __init__(self, model_name: str, device: str = "auto"):
         self.model_name = model_name
         self.device = self._get_device(device)
@@ -164,27 +172,33 @@ class ContentModel(ABC):
         self.processor = None
     
     def _get_device(self, device: str) -> torch.device:
-        """Get appropriate device for model"""        if device == "auto":
+        """Get appropriate device for model"""
+        if device == "auto":
             return torch.device("cuda" if torch.cuda.is_available() else "cpu")
         return torch.device(device)
     
     @abstractmethod
     async def load_model(self):
-        """Load the model and associated components"""        pass
+        """Load the model and associated components"""
+        pass
     
     @abstractmethod
     async def analyze_content(self, content: Any, metadata: ContentMetadata) -> ContentAnalysisResult:
-        """Analyze content and return analysis results"""        pass
+        """Analyze content and return analysis results"""
+        pass
     
     async def preprocess_content(self, content: Any) -> Any:
-        """Preprocess content for analysis"""        return content
+        """Preprocess content for analysis"""
+        return content
     
     async def postprocess_results(self, results: ContentAnalysisResult) -> ContentAnalysisResult:
-        """Postprocess analysis results"""        return results
+        """Postprocess analysis results"""
+        return results
 
 
 class TextContentModel(ContentModel):
-    """Model for text content analysis and generation"""    
+    """Model for text content analysis and generation"""
+    
     def __init__(self, model_name: str = "bert-base-uncased", device: str = "auto"):
         super().__init__(model_name, device)
         self.sentiment_pipeline = None
@@ -194,7 +208,8 @@ class TextContentModel(ContentModel):
         self.tfidf_vectorizer = TfidfVectorizer(max_features=1000)
     
     async def load_model(self):
-        """Load text analysis models"""        try:
+        """Load text analysis models"""
+        try:
             # Load BERT for embeddings and classification
             self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
             self.model = AutoModel.from_pretrained(self.model_name)
@@ -226,7 +241,8 @@ class TextContentModel(ContentModel):
             raise
     
     async def analyze_content(self, text: str, metadata: ContentMetadata) -> ContentAnalysisResult:
-        """Analyze text content comprehensively"""        start_time = time.time()
+        """Analyze text content comprehensively"""
+        start_time = time.time()
         
         try:
             # Get text embeddings
@@ -300,7 +316,8 @@ class TextContentModel(ContentModel):
             raise
     
     async def _get_text_embeddings(self, text: str) -> torch.Tensor:
-        """Get BERT embeddings for text"""        inputs = self.tokenizer(
+        """Get BERT embeddings for text"""
+        inputs = self.tokenizer(
             text,
             return_tensors='pt',
             max_length=512,
@@ -313,7 +330,8 @@ class TextContentModel(ContentModel):
             return outputs.last_hidden_state[:, 0, :]  # CLS token
     
     async def _detect_emotions(self, text: str) -> Dict[str, float]:
-        """Detect emotions in text"""        emotions = ['joy', 'sadness', 'anger', 'fear', 'surprise', 'disgust']
+        """Detect emotions in text"""
+        emotions = ['joy', 'sadness', 'anger', 'fear', 'surprise', 'disgust']
         emotion_scores = {}
         
         # Simplified emotion detection using keyword matching
@@ -336,7 +354,8 @@ class TextContentModel(ContentModel):
         return emotion_scores
     
     async def _detect_themes(self, text: str) -> List[str]:
-        """Detect themes and topics in text"""        themes = []
+        """Detect themes and topics in text"""
+        themes = []
         
         if self.nlp:
             doc = self.nlp(text)
@@ -355,7 +374,8 @@ class TextContentModel(ContentModel):
         return list(set(themes))[:15]
     
     async def _analyze_writing_style(self, text: str) -> Dict[str, Any]:
-        """Analyze writing style characteristics"""        words = text.split()
+        """Analyze writing style characteristics"""
+        words = text.split()
         sentences = text.split('.')
         
         avg_word_length = np.mean([len(word) for word in words])
@@ -374,7 +394,8 @@ class TextContentModel(ContentModel):
         }
     
     def _calculate_formality_score(self, text: str) -> float:
-        """Calculate formality score of text"""        formal_indicators = ['therefore', 'however', 'consequently', 'furthermore']
+        """Calculate formality score of text"""
+        formal_indicators = ['therefore', 'however', 'consequently', 'furthermore']
         informal_indicators = ["don't", "can't", "won't", "it's", "that's"]
         
         formal_count = sum(1 for indicator in formal_indicators if indicator in text.lower())
@@ -386,7 +407,8 @@ class TextContentModel(ContentModel):
         return formal_count / (formal_count + informal_count)
     
     def _determine_tone(self, text: str) -> str:
-        """Determine the tone of the text"""        tones = {
+        """Determine the tone of the text"""
+        tones = {
             'professional': ['business', 'company', 'organization', 'strategy'],
             'casual': ['hey', 'yeah', 'cool', 'awesome', 'stuff'],
             'academic': ['research', 'study', 'analysis', 'methodology'],
@@ -403,7 +425,8 @@ class TextContentModel(ContentModel):
         return max(tone_scores, key=tone_scores.get) if tone_scores else 'neutral'
     
     async def _assess_text_quality(self, text: str) -> float:
-        """Assess overall quality of text content"""        quality_factors = []
+        """Assess overall quality of text content"""
+        quality_factors = []
         
         # Length appropriateness
         word_count = len(text.split())
@@ -427,7 +450,8 @@ class TextContentModel(ContentModel):
         return float(np.mean(quality_factors))
     
     def _check_grammar_quality(self, text: str) -> float:
-        """Simple grammar quality check"""        # Basic grammar indicators
+        """Simple grammar quality check"""
+        # Basic grammar indicators
         sentences = text.split('.')
         complete_sentences = [s for s in sentences if len(s.strip()) > 5 and ' ' in s.strip()]
         
@@ -438,7 +462,8 @@ class TextContentModel(ContentModel):
         return min(completion_ratio * 1.2, 1.0)
     
     def _check_coherence(self, text: str) -> float:
-        """Check text coherence using simple metrics"""        sentences = [s.strip() for s in text.split('.') if s.strip()]
+        """Check text coherence using simple metrics"""
+        sentences = [s.strip() for s in text.split('.') if s.strip()]
         
         if len(sentences) < 2:
             return 0.7  # Single sentence gets medium score
@@ -457,7 +482,8 @@ class TextContentModel(ContentModel):
         return (transition_score + consistency_score)
     
     def _calculate_readability_score(self, text: str) -> float:
-        """Calculate Flesch reading ease score"""        sentences = len([s for s in text.split('.') if s.strip()])
+        """Calculate Flesch reading ease score"""
+        sentences = len([s for s in text.split('.') if s.strip()])
         words = len(text.split())
         syllables = sum(self._count_syllables(word) for word in text.split())
         
@@ -469,7 +495,8 @@ class TextContentModel(ContentModel):
         return max(0.0, min(100.0, score)) / 100.0  # Normalize to 0-1
     
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word (simplified)"""        vowels = 'aeiouy'
+        """Count syllables in a word (simplified)"""
+        vowels = 'aeiouy'
         word = word.lower().strip()
         count = sum(1 for char in word if char in vowels)
         
@@ -482,7 +509,8 @@ class TextContentModel(ContentModel):
         return count
     
     def _calculate_uniqueness_score(self, text: str) -> float:
-        """Calculate content uniqueness score"""        words = text.lower().split()
+        """Calculate content uniqueness score"""
+        words = text.lower().split()
         unique_words = set(words)
         
         if not words:
@@ -491,7 +519,8 @@ class TextContentModel(ContentModel):
         return len(unique_words) / len(words)
     
     async def _predict_engagement(self, text: str, embeddings: torch.Tensor) -> float:
-        """Predict engagement potential of text"""        # Simplified engagement prediction based on various factors
+        """Predict engagement potential of text"""
+        # Simplified engagement prediction based on various factors
         factors = []
         
         # Length factor (medium length performs better)
@@ -523,7 +552,8 @@ class TextContentModel(ContentModel):
         return float(np.mean(factors))
     
     async def _assess_virality_potential(self, text: str, themes: List[str]) -> float:
-        """Assess potential for content to go viral"""        viral_indicators = []
+        """Assess potential for content to go viral"""
+        viral_indicators = []
         
         # Trending topics factor
         trending_keywords = ['ai', 'technology', 'breaking', 'exclusive', 'viral', 'trending']
@@ -545,7 +575,8 @@ class TextContentModel(ContentModel):
         return float(np.mean(viral_indicators)) if viral_indicators else 0.0
     
     async def _calculate_seo_metrics(self, text: str, metadata: ContentMetadata) -> Dict[str, Any]:
-        """Calculate SEO-related metrics"""        words = text.lower().split()
+        """Calculate SEO-related metrics"""
+        words = text.lower().split()
         
         # Keyword density for title words
         title_words = metadata.title.lower().split() if metadata.title else []
@@ -570,7 +601,8 @@ class TextContentModel(ContentModel):
         }
     
     async def _assess_content_safety(self, text: str) -> Dict[str, float]:
-        """Assess content safety and appropriateness"""        safety_scores = {}
+        """Assess content safety and appropriateness"""
+        safety_scores = {}
         
         # Toxic language detection (simplified)
         toxic_words = ['hate', 'violence', 'harassment', 'discrimination']
@@ -595,7 +627,8 @@ class TextContentModel(ContentModel):
         style_analysis: Dict[str, Any],
         seo_metrics: Dict[str, Any]
     ) -> List[str]:
-        """Generate improvement recommendations for text"""        recommendations = []
+        """Generate improvement recommendations for text"""
+        recommendations = []
         
         # Quality improvements
         if quality_score < 0.6:
@@ -626,7 +659,8 @@ class TextContentModel(ContentModel):
         return recommendations
     
     async def generate_content(self, config: ContentGenerationConfig) -> str:
-        """Generate text content based on configuration"""        try:
+        """Generate text content based on configuration"""
+        try:
             # Prepare prompt based on configuration
             prompt = self._build_generation_prompt(config)
             
@@ -657,7 +691,8 @@ class TextContentModel(ContentModel):
             return f"Error generating content: {str(e)}"
     
     def _build_generation_prompt(self, config: ContentGenerationConfig) -> str:
-        """Build prompt for text generation"""        prompt_parts = []
+        """Build prompt for text generation"""
+        prompt_parts = []
         
         # Add style instruction
         prompt_parts.append(f"Write a {config.style} {config.category.value} content")
@@ -678,7 +713,8 @@ class TextContentModel(ContentModel):
 
 
 class ImageContentModel(ContentModel):
-    """Model for image content analysis and generation"""    
+    """Model for image content analysis and generation"""
+    
     def __init__(self, model_name: str = "openai/clip-vit-base-patch32", device: str = "auto"):
         super().__init__(model_name, device)
         self.clip_model = None
@@ -688,7 +724,8 @@ class ImageContentModel(ContentModel):
         self.caption_model = None
     
     async def load_model(self):
-        """Load image analysis and generation models"""        try:
+        """Load image analysis and generation models"""
+        try:
             # Load CLIP for image understanding
             self.clip_model, self.clip_preprocess = clip.load("ViT-B/32", device=self.device)
             
@@ -714,7 +751,8 @@ class ImageContentModel(ContentModel):
             raise
     
     async def analyze_content(self, image_path: str, metadata: ContentMetadata) -> ContentAnalysisResult:
-        """Analyze image content comprehensively"""        start_time = time.time()
+        """Analyze image content comprehensively"""
+        start_time = time.time()
         
         try:
             # Load and preprocess image
@@ -771,7 +809,8 @@ class ImageContentModel(ContentModel):
             raise
     
     async def _generate_image_caption(self, image: Image.Image) -> str:
-        """Generate caption for image"""        try:
+        """Generate caption for image"""
+        try:
             inputs = self.caption_processor(image, return_tensors="pt").to(self.device)
             out = self.caption_model.generate(**inputs, max_length=50)
             caption = self.caption_processor.decode(out[0], skip_special_tokens=True)
@@ -781,7 +820,8 @@ class ImageContentModel(ContentModel):
             return ""
     
     async def _analyze_visual_features(self, image_path: str) -> Dict[str, Any]:
-        """Analyze visual features of image"""        image = cv2.imread(image_path)
+        """Analyze visual features of image"""
+        image = cv2.imread(image_path)
         
         features = {}
         
@@ -802,7 +842,8 @@ class ImageContentModel(ContentModel):
         return features
     
     def _get_dominant_colors(self, image: np.ndarray, k: int = 5) -> List[List[int]]:
-        """Extract dominant colors from image"""        from sklearn.cluster import KMeans
+        """Extract dominant colors from image"""
+        from sklearn.cluster import KMeans
         
         # Reshape image to pixel array
         pixels = image.reshape(-1, 3)
@@ -816,7 +857,8 @@ class ImageContentModel(ContentModel):
         return colors.tolist()
     
     def _calculate_color_diversity(self, image: np.ndarray) -> float:
-        """Calculate color diversity using histogram"""        hist_b = cv2.calcHist([image], [0], None, [256], [0, 256])
+        """Calculate color diversity using histogram"""
+        hist_b = cv2.calcHist([image], [0], None, [256], [0, 256])
         hist_g = cv2.calcHist([image], [1], None, [256], [0, 256])
         hist_r = cv2.calcHist([image], [2], None, [256], [0, 256])
         
@@ -834,7 +876,8 @@ class ImageContentModel(ContentModel):
         return float((entropy_b + entropy_g + entropy_r) / 3)
     
     def _analyze_rule_of_thirds(self, image: np.ndarray) -> float:
-        """Analyze adherence to rule of thirds"""        h, w = image.shape[:2]
+        """Analyze adherence to rule of thirds"""
+        h, w = image.shape[:2]
         
         # Define thirds lines
         v_lines = [w // 3, 2 * w // 3]
@@ -858,7 +901,8 @@ class ImageContentModel(ContentModel):
         return float(interest_score / total_edges) if total_edges > 0 else 0.0
     
     def _analyze_symmetry(self, image: np.ndarray) -> float:
-        """Analyze image symmetry"""        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        """Analyze image symmetry"""
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         h, w = gray.shape
         
         # Vertical symmetry
@@ -877,7 +921,8 @@ class ImageContentModel(ContentModel):
         return float(symmetry_score)
     
     async def _assess_image_quality(self, image: Image.Image, visual_features: Dict[str, Any]) -> float:
-        """Assess overall image quality"""        quality_factors = []
+        """Assess overall image quality"""
+        quality_factors = []
         
         # Resolution factor
         width, height = image.size
@@ -911,7 +956,8 @@ class ImageContentModel(ContentModel):
         return float(np.mean(quality_factors))
     
     async def _analyze_image_style(self, image: Image.Image, image_tensor: torch.Tensor) -> Dict[str, Any]:
-        """Analyze artistic and stylistic elements"""        # Get CLIP features for style analysis
+        """Analyze artistic and stylistic elements"""
+        # Get CLIP features for style analysis
         with torch.no_grad():
             image_features = self.clip_model.encode_image(image_tensor)
         
@@ -945,7 +991,8 @@ class ImageContentModel(ContentModel):
         }
     
     async def _detect_image_emotions(self, image_tensor: torch.Tensor, caption: str) -> Dict[str, float]:
-        """Detect emotions conveyed by image"""        # Emotion descriptors
+        """Detect emotions conveyed by image"""
+        # Emotion descriptors
         emotion_descriptors = [
             "happy joyful", "sad melancholy", "angry intense", 
             "peaceful calm", "exciting energetic", "mysterious dark"
@@ -968,7 +1015,8 @@ class ImageContentModel(ContentModel):
         return emotion_scores
     
     async def _calculate_image_technical_metrics(self, image_path: str, image: Image.Image) -> Dict[str, Any]:
-        """Calculate technical metrics for image"""        from pathlib import Path
+        """Calculate technical metrics for image"""
+        from pathlib import Path
         
         file_path = Path(image_path)
         file_size = file_path.stat().st_size / (1024 * 1024)  # MB
@@ -1001,7 +1049,8 @@ class ImageContentModel(ContentModel):
         style_analysis: Dict[str, Any],
         technical_metrics: Dict[str, Any]
     ) -> float:
-        """Predict engagement potential of image"""        engagement_factors = []
+        """Predict engagement potential of image"""
+        engagement_factors = []
         
         # Quality factors
         if technical_metrics['sharpness_score'] > 100:  # Sharp image
@@ -1033,7 +1082,8 @@ class ImageContentModel(ContentModel):
         return float(np.mean(engagement_factors))
     
     async def _assess_image_safety(self, image: Image.Image, caption: str) -> Dict[str, float]:
-        """Assess image safety and appropriateness"""        safety_scores = {}
+        """Assess image safety and appropriateness"""
+        safety_scores = {}
         
         # Content analysis based on caption
         inappropriate_keywords = ['violence', 'explicit', 'inappropriate', 'offensive']
@@ -1065,7 +1115,8 @@ class ImageContentModel(ContentModel):
         style_analysis: Dict[str, Any],
         technical_metrics: Dict[str, Any]
     ) -> List[str]:
-        """Generate improvement recommendations for images"""        recommendations = []
+        """Generate improvement recommendations for images"""
+        recommendations = []
         
         # Quality improvements
         if quality_score < 0.6:

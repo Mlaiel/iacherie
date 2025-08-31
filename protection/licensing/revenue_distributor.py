@@ -11,7 +11,8 @@ Professional revenue distribution system for licensing:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + FinTech Engineer + Business Analyst + Tax Specialist
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Tuple
 from datetime import datetime, timedelta
@@ -25,14 +26,16 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class DistributionMethod(Enum):
-    """Revenue distribution methods"""    PERCENTAGE = "percentage"
+    """Revenue distribution methods"""
+    PERCENTAGE = "percentage"
     FIXED_AMOUNT = "fixed_amount"
     TIERED = "tiered"
     WATERFALL = "waterfall"
     PERFORMANCE_BASED = "performance_based"
 
 class PaymentStatus(Enum):
-    """Payment processing status"""    PENDING = "pending"
+    """Payment processing status"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -40,7 +43,8 @@ class PaymentStatus(Enum):
     DISPUTED = "disputed"
 
 class RevenueType(Enum):
-    """Types of revenue streams"""    LICENSING_FEE = "licensing_fee"
+    """Types of revenue streams"""
+    LICENSING_FEE = "licensing_fee"
     ROYALTIES = "royalties"
     STREAMING_REVENUE = "streaming_revenue"
     PERFORMANCE_REVENUE = "performance_revenue"
@@ -51,7 +55,8 @@ class RevenueType(Enum):
 
 @dataclass
 class RevenueShare:
-    """Individual revenue share definition"""    participant_id: str
+    """Individual revenue share definition"""
+    participant_id: str
     participant_name: str
     share_percentage: float
     minimum_amount: Optional[Decimal]
@@ -62,7 +67,8 @@ class RevenueShare:
 
 @dataclass
 class DistributionRecord:
-    """Revenue distribution record"""    distribution_id: str
+    """Revenue distribution record"""
+    distribution_id: str
     license_id: str
     total_revenue: Decimal
     currency: str
@@ -76,7 +82,8 @@ class DistributionRecord:
 
 @dataclass
 class PaymentTransaction:
-    """Individual payment transaction"""    transaction_id: str
+    """Individual payment transaction"""
+    transaction_id: str
     participant_id: str
     amount: Decimal
     currency: str
@@ -88,13 +95,16 @@ class PaymentTransaction:
     external_reference: Optional[str]
 
 class RevenueDistributor:
-    """    🚀 Professional revenue distribution engine
+    """
+    🚀 Professional revenue distribution engine
     
     Advanced system for automated revenue splitting and distribution
     with multi-party support and regulatory compliance.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize revenue distributor with configuration."""        self.config = config
+        """Initialize revenue distributor with configuration."""
+        self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Initialize payment processors
@@ -121,7 +131,8 @@ class RevenueDistributor:
         self._initialize_tax_calculators()
     
     def _initialize_payment_processors(self):
-        """Initialize payment processing integrations."""        try:
+        """Initialize payment processing integrations."""
+        try:
             # Stripe integration
             if self.config.get('stripe_enabled', False):
                 from .integrations.stripe_processor import StripeProcessor
@@ -159,7 +170,8 @@ class RevenueDistributor:
             raise
     
     def _initialize_tax_calculators(self):
-        """Initialize tax calculation engines."""        tax_calculators = {
+        """Initialize tax calculation engines."""
+        tax_calculators = {
             'us': {
                 'federal_tax_rate': 0.21,
                 'state_tax_rates': {
@@ -200,7 +212,8 @@ class RevenueDistributor:
         license_id: str,
         termination_date: datetime
     ) -> Dict[str, Any]:
-        """Process final revenue distribution upon license termination."""        try:
+        """Process final revenue distribution upon license termination."""
+        try:
             self.logger.info(f"Processing final distribution for license: {license_id}")
             
             # Calculate final revenue period
@@ -246,7 +259,8 @@ class RevenueDistributor:
         currency: str = 'USD',
         is_final_distribution: bool = False
     ) -> Dict[str, Any]:
-        """        💰 Distribute revenue among license participants
+        """
+        💰 Distribute revenue among license participants
         
         Args:
             license_id: License identifier
@@ -258,7 +272,8 @@ class RevenueDistributor:
             
         Returns:
             distribution_result: Distribution processing result
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             self.logger.info(f"Distributing revenue for license {license_id}: {total_revenue} {currency}")
@@ -388,7 +403,8 @@ class RevenueDistributor:
             raise
     
     async def _get_license_revenue_shares(self, license_id: str) -> List[RevenueShare]:
-        """Get revenue sharing configuration for a license."""        # This would typically fetch from a database
+        """Get revenue sharing configuration for a license."""
+        # This would typically fetch from a database
         # For now, return a default configuration
         return [
             RevenueShare(
@@ -429,7 +445,8 @@ class RevenueDistributor:
         participant_id: str,
         tax_jurisdiction: str
     ) -> Decimal:
-        """Calculate net amount after taxes and withholdings."""        tax_config = self.tax_calculators.get(tax_jurisdiction, {})
+        """Calculate net amount after taxes and withholdings."""
+        tax_config = self.tax_calculators.get(tax_jurisdiction, {})
         
         # Calculate applicable taxes
         total_tax_rate = Decimal('0.00')
@@ -467,7 +484,8 @@ class RevenueDistributor:
         amount: Decimal,
         currency: str
     ) -> PaymentTransaction:
-        """Create a payment transaction record."""        return PaymentTransaction(
+        """Create a payment transaction record."""
+        return PaymentTransaction(
             transaction_id=str(uuid.uuid4()),
             participant_id=participant.participant_id,
             amount=amount.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP),
@@ -481,7 +499,8 @@ class RevenueDistributor:
         )
     
     async def _process_payment_transaction(self, transaction: PaymentTransaction) -> Dict[str, Any]:
-        """Process individual payment transaction."""        try:
+        """Process individual payment transaction."""
+        try:
             self.logger.info(f"Processing payment transaction: {transaction.transaction_id}")
             
             # Get appropriate payment processor
@@ -519,7 +538,8 @@ class RevenueDistributor:
             raise
     
     async def _get_last_distribution_date(self, license_id: str) -> Optional[datetime]:
-        """Get the date of the last revenue distribution for a license."""        # This would typically query a database
+        """Get the date of the last revenue distribution for a license."""
+        # This would typically query a database
         # For now, return None to indicate no previous distributions
         return None
     
@@ -529,12 +549,14 @@ class RevenueDistributor:
         period_start: datetime,
         period_end: datetime
     ) -> Decimal:
-        """Calculate final revenue for a license period."""        # This would typically aggregate revenue from various sources
+        """Calculate final revenue for a license period."""
+        # This would typically aggregate revenue from various sources
         # For now, return a sample amount
         return Decimal('500.00')
     
     def get_distribution_status(self) -> Dict[str, Any]:
-        """Get revenue distribution status and metrics."""        return {
+        """Get revenue distribution status and metrics."""
+        return {
             **{k: float(v) if isinstance(v, Decimal) else v for k, v in self.metrics.items()},
             'active_distributions': len(self.active_distributions),
             'completed_distributions': len(self.distribution_history),
@@ -548,7 +570,8 @@ class RevenueDistributor:
         license_id: Optional[str] = None,
         limit: int = 100
     ) -> List[Dict[str, Any]]:
-        """Get distribution history for a license or all licenses."""        history = self.distribution_history
+        """Get distribution history for a license or all licenses."""
+        history = self.distribution_history
         
         if license_id:
             history = [d for d in history if d.license_id == license_id]

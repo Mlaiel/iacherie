@@ -14,7 +14,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 import time
 import json
 import yaml
@@ -27,7 +28,8 @@ from enum import Enum
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    CRITICAL = "critical"
+    """Alert severity levels"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -35,7 +37,8 @@ class AlertSeverity(Enum):
 
 
 class MetricType(Enum):
-    """Metric types"""    COUNTER = "counter"
+    """Metric types"""
+    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
@@ -43,7 +46,8 @@ class MetricType(Enum):
 
 @dataclass
 class MetricDefinition:
-    """Metric definition"""    name: str
+    """Metric definition"""
+    name: str
     type: MetricType
     description: str
     labels: List[str] = field(default_factory=list)
@@ -53,7 +57,8 @@ class MetricDefinition:
 
 @dataclass
 class AlertRule:
-    """Alert rule definition"""    name: str
+    """Alert rule definition"""
+    name: str
     description: str
     severity: AlertSeverity
     condition: str
@@ -64,7 +69,8 @@ class AlertRule:
 
 @dataclass
 class Dashboard:
-    """Dashboard definition"""    name: str
+    """Dashboard definition"""
+    name: str
     title: str
     description: str
     panels: List[Dict[str, Any]] = field(default_factory=list)
@@ -72,7 +78,8 @@ class Dashboard:
 
 
 class MonitoringConfig:
-    """    Professional monitoring and observability configuration for IA-Influencer Agent Platform.
+    """
+    Professional monitoring and observability configuration for IA-Influencer Agent Platform.
     
     Provides comprehensive monitoring infrastructure:
     - Prometheus metrics collection and storage
@@ -87,7 +94,8 @@ class MonitoringConfig:
     - Multi-cloud monitoring integration
     - Real-time anomaly detection
     - Capacity planning and forecasting
-    """    
+    """
+    
     def __init__(self, environment: str = "production", cloud_provider: str = "aws"):
         self.environment = environment
         self.cloud_provider = cloud_provider.lower()
@@ -106,7 +114,8 @@ class MonitoringConfig:
         self.dashboards = self._define_dashboards()
     
     def _get_prometheus_config(self) -> Dict[str, Any]:
-        """Get Prometheus configuration"""        return {
+        """Get Prometheus configuration"""
+        return {
             "global": {
                 "scrape_interval": "15s",
                 "evaluation_interval": "15s",
@@ -294,7 +303,8 @@ class MonitoringConfig:
         }
     
     def _get_grafana_config(self) -> Dict[str, Any]:
-        """Get Grafana configuration"""        return {
+        """Get Grafana configuration"""
+        return {
             "server": {
                 "domain": f"monitoring.{self.project_name}-{self.environment}.com",
                 "root_url": f"https://monitoring.{self.project_name}-{self.environment}.com",
@@ -387,7 +397,8 @@ class MonitoringConfig:
         }
     
     def _get_alertmanager_config(self) -> Dict[str, Any]:
-        """Get AlertManager configuration"""        return {
+        """Get AlertManager configuration"""
+        return {
             "global": {
                 "smtp_smarthost": "${SMTP_HOST}:587",
                 "smtp_from": f"alerts@{self.project_name}.com",
@@ -532,7 +543,8 @@ class MonitoringConfig:
         }
     
     def _get_jaeger_config(self) -> Dict[str, Any]:
-        """Get Jaeger tracing configuration"""        return {
+        """Get Jaeger tracing configuration"""
+        return {
             "service_name": f"{self.project_name}-{self.environment}",
             "sampler": {
                 "type": "probabilistic",
@@ -561,7 +573,8 @@ class MonitoringConfig:
         }
     
     def _get_elk_config(self) -> Dict[str, Any]:
-        """Get ELK Stack configuration"""        return {
+        """Get ELK Stack configuration"""
+        return {
             "elasticsearch": {
                 "cluster.name": f"{self.project_name}-{self.environment}",
                 "node.name": "es-master",
@@ -643,7 +656,8 @@ class MonitoringConfig:
         }
     
     def _get_email_template(self) -> str:
-        """Get email alert template"""        return """Alert: {{ .GroupLabels.alertname }}
+        """Get email alert template"""
+        return """Alert: {{ .GroupLabels.alertname }}
 Environment: {{ .CommonLabels.environment }}
 Severity: {{ .CommonLabels.severity }}
 
@@ -657,9 +671,11 @@ Dashboard: https://monitoring.{{ .CommonLabels.environment }}.com/d/overview
 Runbook: https://docs.{{ .CommonLabels.environment }}.com/runbooks/{{ .GroupLabels.alertname }}
 
 Generated at: {{ .Timestamp }}
-"""    
+"""
+    
     def _get_slack_template(self) -> str:
-        """Get Slack alert template"""        return """{{ range .Alerts }}
+        """Get Slack alert template"""
+        return """{{ range .Alerts }}
 *Alert:* {{ .Labels.alertname }}
 *Environment:* {{ .Labels.environment }}
 *Severity:* {{ .Labels.severity }}
@@ -670,9 +686,11 @@ Generated at: {{ .Timestamp }}
 
 <https://monitoring.{{ .Labels.environment }}.com/d/overview|Dashboard> | <https://docs.{{ .Labels.environment }}.com/runbooks/{{ .Labels.alertname }}|Runbook>
 {{ end }}
-"""    
+"""
+    
     def _define_custom_metrics(self) -> List[MetricDefinition]:
-        """Define custom application metrics"""        return [
+        """Define custom application metrics"""
+        return [
             # API Metrics
             MetricDefinition(
                 name="ia_api_requests_total",
@@ -806,7 +824,8 @@ Generated at: {{ .Timestamp }}
         ]
     
     def _define_alert_rules(self) -> List[AlertRule]:
-        """Define alert rules"""        return [
+        """Define alert rules"""
+        return [
             # Critical Alerts
             AlertRule(
                 name="HighErrorRate",
@@ -939,7 +958,8 @@ Generated at: {{ .Timestamp }}
         ]
     
     def _define_dashboards(self) -> List[Dashboard]:
-        """Define Grafana dashboards"""        return [
+        """Define Grafana dashboards"""
+        return [
             Dashboard(
                 name="ia-platform-overview",
                 title="IA-Influencer Agent Platform Overview",
@@ -1109,7 +1129,8 @@ Generated at: {{ .Timestamp }}
         ]
     
     def get_docker_compose_monitoring(self) -> str:
-        """Get Docker Compose configuration for monitoring stack"""        return f'''version: '3.8'
+        """Get Docker Compose configuration for monitoring stack"""
+        return f'''version: '3.8'
 
 services:
   prometheus:
@@ -1296,7 +1317,8 @@ networks:
 '''
     
     def get_kubernetes_monitoring_manifests(self) -> Dict[str, str]:
-        """Get Kubernetes manifests for monitoring stack"""        return {
+        """Get Kubernetes manifests for monitoring stack"""
+        return {
             "namespace.yaml": f'''
 apiVersion: v1
 kind: Namespace
@@ -1463,7 +1485,8 @@ spec:
         }
     
     def generate_monitoring_configuration(self, output_dir: str = "./monitoring") -> None:
-        """Generate all monitoring configuration files"""        Path(output_dir).mkdir(parents=True, exist_ok=True)
+        """Generate all monitoring configuration files"""
+        Path(output_dir).mkdir(parents=True, exist_ok=True)
         
         # Create subdirectories
         for subdir in ["prometheus", "grafana", "alertmanager", "jaeger", "elk", "kubernetes"]:

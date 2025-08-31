@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -21,7 +22,8 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -39,10 +41,12 @@ from ai.prompts.prompts_models import (
 
 
 class TestPromptsModels:
-    """Ultra-comprehensive test suite for Prompts Models"""    
+    """Ultra-comprehensive test suite for Prompts Models"""
+    
     @pytest.fixture
     def sample_prompt_context(self):
-        """Create sample prompt context for testing"""        return PromptContext(
+        """Create sample prompt context for testing"""
+        return PromptContext(
             user_id="user_12345",
             creator_type="musician",
             content_format="audio",
@@ -63,7 +67,8 @@ class TestPromptsModels:
     
     @pytest.fixture
     def sample_prompt_template(self):
-        """Create sample prompt template for testing"""        return PromptTemplate(
+        """Create sample prompt template for testing"""
+        return PromptTemplate(
             id="template_001",
             name="Electronic Music Promotion",
             description="Template for promoting electronic music on streaming platforms",
@@ -77,7 +82,8 @@ class TestPromptsModels:
     
     @pytest.fixture
     def sample_generated_prompt(self, sample_prompt_context):
-        """Create sample generated prompt for testing"""        return GeneratedPrompt(
+        """Create sample generated prompt for testing"""
+        return GeneratedPrompt(
             prompt_type=PromptType.CONTENT_CREATION,
             status=PromptStatus.COMPLETED,
             content="Create a progressive electronic track promotion for Spotify targeting young adults. Focus on energetic vibes and english content. Emphasize the innovative sound design and perfect workout compatibility.",
@@ -103,7 +109,8 @@ class TestPromptsModels:
     # ===== ENUM TESTS =====
     
     def test_prompt_type_enum(self):
-        """Test PromptType enum values"""        assert PromptType.CONTENT_CREATION.value == "content_creation"
+        """Test PromptType enum values"""
+        assert PromptType.CONTENT_CREATION.value == "content_creation"
         assert PromptType.PROTECTION.value == "protection"
         assert PromptType.SEO_OPTIMIZATION.value == "seo_optimization"
         assert PromptType.MONETIZATION.value == "monetization"
@@ -120,7 +127,8 @@ class TestPromptsModels:
             assert "_" in prompt_type.value or prompt_type.value.isalpha()
     
     def test_prompt_status_enum(self):
-        """Test PromptStatus enum values"""        assert PromptStatus.PENDING.value == "pending"
+        """Test PromptStatus enum values"""
+        assert PromptStatus.PENDING.value == "pending"
         assert PromptStatus.GENERATING.value == "generating"
         assert PromptStatus.COMPLETED.value == "completed"
         assert PromptStatus.FAILED.value == "failed"
@@ -137,7 +145,8 @@ class TestPromptsModels:
     # ===== PROMPT CONTEXT TESTS =====
     
     def test_prompt_context_initialization(self, sample_prompt_context):
-        """Test PromptContext initialization"""        assert sample_prompt_context.user_id == "user_12345"
+        """Test PromptContext initialization"""
+        assert sample_prompt_context.user_id == "user_12345"
         assert sample_prompt_context.creator_type == "musician"
         assert sample_prompt_context.content_format == "audio"
         assert len(sample_prompt_context.target_platforms) == 3
@@ -162,7 +171,8 @@ class TestPromptsModels:
         assert sample_prompt_context.timestamp <= datetime.utcnow()
     
     def test_prompt_context_empty_initialization(self):
-        """Test PromptContext with minimal data"""        minimal_context = PromptContext(
+        """Test PromptContext with minimal data"""
+        minimal_context = PromptContext(
             user_id="minimal_user",
             creator_type="blogger",
             content_format="text"
@@ -177,7 +187,8 @@ class TestPromptsModels:
         assert isinstance(minimal_context.timestamp, datetime)
     
     def test_prompt_context_with_complex_data(self):
-        """Test PromptContext with complex nested data"""        complex_context = PromptContext(
+        """Test PromptContext with complex nested data"""
+        complex_context = PromptContext(
             user_id="complex_user_789",
             creator_type="video_creator",
             content_format="video",
@@ -236,7 +247,8 @@ class TestPromptsModels:
     # ===== PROMPT TEMPLATE TESTS =====
     
     def test_prompt_template_initialization(self, sample_prompt_template):
-        """Test PromptTemplate initialization"""        assert sample_prompt_template.id == "template_001"
+        """Test PromptTemplate initialization"""
+        assert sample_prompt_template.id == "template_001"
         assert sample_prompt_template.name == "Electronic Music Promotion"
         assert "promoting electronic music" in sample_prompt_template.description
         assert "{style}" in sample_prompt_template.template
@@ -254,7 +266,8 @@ class TestPromptsModels:
         assert isinstance(sample_prompt_template.updated_at, datetime)
     
     def test_prompt_template_variable_extraction(self):
-        """Test template variable extraction"""        template_with_variables = PromptTemplate(
+        """Test template variable extraction"""
+        template_with_variables = PromptTemplate(
             id="var_test",
             name="Variable Test Template",
             description="Test template with multiple variables",
@@ -275,11 +288,13 @@ class TestPromptsModels:
             assert var in template_with_variables.variables
     
     def test_prompt_template_complex_structure(self):
-        """Test PromptTemplate with complex structure"""        complex_template = PromptTemplate(
+        """Test PromptTemplate with complex structure"""
+        complex_template = PromptTemplate(
             id="complex_template_001",
             name="Multi-Platform Content Strategy",
             description="Advanced template for comprehensive content strategy across multiple platforms",
-            template="""            Develop a {timeframe} content strategy for {creator_type} focusing on {niche}.
+            template="""
+            Develop a {timeframe} content strategy for {creator_type} focusing on {niche}.
             
             Platform Distribution:
             - {primary_platform}: {primary_strategy}
@@ -327,7 +342,8 @@ class TestPromptsModels:
     # ===== GENERATED PROMPT TESTS =====
     
     def test_generated_prompt_initialization(self, sample_generated_prompt):
-        """Test GeneratedPrompt initialization"""        assert isinstance(sample_generated_prompt.id, str)
+        """Test GeneratedPrompt initialization"""
+        assert isinstance(sample_generated_prompt.id, str)
         assert sample_generated_prompt.prompt_type == PromptType.CONTENT_CREATION
         assert sample_generated_prompt.status == PromptStatus.COMPLETED
         assert "progressive electronic track promotion" in sample_generated_prompt.content
@@ -347,7 +363,8 @@ class TestPromptsModels:
         assert sample_generated_prompt.version == "1.0"
     
     def test_generated_prompt_default_initialization(self):
-        """Test GeneratedPrompt with default values"""        default_prompt = GeneratedPrompt()
+        """Test GeneratedPrompt with default values"""
+        default_prompt = GeneratedPrompt()
         
         assert isinstance(default_prompt.id, str)
         assert len(default_prompt.id) == 36  # UUID4 length
@@ -369,7 +386,8 @@ class TestPromptsModels:
         assert default_prompt.version == "1.0"
     
     def test_generated_prompt_update_quality_scores(self, sample_generated_prompt):
-        """Test updating quality scores"""        original_updated_at = sample_generated_prompt.updated_at
+        """Test updating quality scores"""
+        original_updated_at = sample_generated_prompt.updated_at
         
         new_scores = {
             'overall': 93.2,
@@ -387,7 +405,8 @@ class TestPromptsModels:
         assert sample_generated_prompt.updated_at > original_updated_at
     
     def test_generated_prompt_partial_quality_update(self, sample_generated_prompt):
-        """Test updating quality scores with partial data"""        partial_scores = {
+        """Test updating quality scores with partial data"""
+        partial_scores = {
             'overall': 88.5,
             'readability': 92.3
             # Missing relevance and creativity scores
@@ -401,7 +420,8 @@ class TestPromptsModels:
         assert sample_generated_prompt.creativity_score == 0.0  # Should default to 0.0
     
     def test_generated_prompt_to_dict(self, sample_generated_prompt, sample_prompt_context):
-        """Test GeneratedPrompt to_dict conversion"""        prompt_dict = sample_generated_prompt.to_dict()
+        """Test GeneratedPrompt to_dict conversion"""
+        prompt_dict = sample_generated_prompt.to_dict()
         
         assert isinstance(prompt_dict, dict)
         assert prompt_dict["id"] == sample_generated_prompt.id
@@ -431,7 +451,8 @@ class TestPromptsModels:
         assert "T" in prompt_dict["updated_at"]  # ISO format
     
     def test_generated_prompt_to_dict_no_context(self):
-        """Test GeneratedPrompt to_dict with no context"""        prompt_no_context = GeneratedPrompt(
+        """Test GeneratedPrompt to_dict with no context"""
+        prompt_no_context = GeneratedPrompt(
             content="Test prompt without context",
             prompt_type=PromptType.SEO_OPTIMIZATION
         )
@@ -445,7 +466,8 @@ class TestPromptsModels:
     # ===== PROMPT OPTIMIZATION TESTS =====
     
     def test_prompt_optimization_initialization(self):
-        """Test PromptOptimization initialization"""        optimization = PromptOptimization(
+        """Test PromptOptimization initialization"""
+        optimization = PromptOptimization(
             original_prompt_id="prompt_123",
             optimized_content="Optimized content for better performance",
             optimization_type="quality_enhancement",
@@ -470,7 +492,8 @@ class TestPromptsModels:
         assert isinstance(optimization.timestamp, datetime)
     
     def test_prompt_optimization_empty_improvements(self):
-        """Test PromptOptimization with empty improvements"""        minimal_optimization = PromptOptimization(
+        """Test PromptOptimization with empty improvements"""
+        minimal_optimization = PromptOptimization(
             original_prompt_id="minimal_123",
             optimized_content="Basic optimization",
             optimization_type="basic"
@@ -483,7 +506,8 @@ class TestPromptsModels:
     # ===== PROMPT ANALYTICS TESTS =====
     
     def test_prompt_analytics_initialization(self):
-        """Test PromptAnalytics initialization"""        analytics = PromptAnalytics(
+        """Test PromptAnalytics initialization"""
+        analytics = PromptAnalytics(
             prompt_id="analytics_test_001",
             usage_count=247,
             success_rate=92.8,
@@ -511,7 +535,8 @@ class TestPromptsModels:
         assert isinstance(analytics.last_updated, datetime)
     
     def test_prompt_analytics_default_values(self):
-        """Test PromptAnalytics with default values"""        default_analytics = PromptAnalytics(prompt_id="default_test")
+        """Test PromptAnalytics with default values"""
+        default_analytics = PromptAnalytics(prompt_id="default_test")
         
         assert default_analytics.prompt_id == "default_test"
         assert default_analytics.usage_count == 0
@@ -522,7 +547,8 @@ class TestPromptsModels:
         assert default_analytics.trending_score == 0.0
     
     def test_prompt_analytics_comprehensive_data(self):
-        """Test PromptAnalytics with comprehensive data"""        comprehensive_analytics = PromptAnalytics(
+        """Test PromptAnalytics with comprehensive data"""
+        comprehensive_analytics = PromptAnalytics(
             prompt_id="comprehensive_001",
             usage_count=1547,
             success_rate=94.7,
@@ -566,7 +592,8 @@ class TestPromptsModels:
     # ===== PROMPT BATCH TESTS =====
     
     def test_prompt_batch_initialization(self):
-        """Test PromptBatch initialization"""        batch = PromptBatch()
+        """Test PromptBatch initialization"""
+        batch = PromptBatch()
         
         assert isinstance(batch.batch_id, str)
         assert len(batch.batch_id) == 36  # UUID4 length
@@ -581,7 +608,8 @@ class TestPromptsModels:
         assert batch.completed_at is None
     
     def test_prompt_batch_add_prompt(self, sample_generated_prompt):
-        """Test adding prompts to batch"""        batch = PromptBatch()
+        """Test adding prompts to batch"""
+        batch = PromptBatch()
         
         # Add first prompt
         batch.add_prompt(sample_generated_prompt)
@@ -605,7 +633,8 @@ class TestPromptsModels:
         assert batch.prompts[1] == second_prompt
     
     def test_prompt_batch_update_completion_stats_completed(self):
-        """Test batch completion statistics with completed prompts"""        batch = PromptBatch()
+        """Test batch completion statistics with completed prompts"""
+        batch = PromptBatch()
         
         # Add completed prompts
         completed_prompts = []
@@ -627,7 +656,8 @@ class TestPromptsModels:
         assert batch.average_quality_score == 84.0  # (80+82+84+86+88)/5
     
     def test_prompt_batch_update_completion_stats_mixed(self):
-        """Test batch completion statistics with mixed statuses"""        batch = PromptBatch()
+        """Test batch completion statistics with mixed statuses"""
+        batch = PromptBatch()
         
         # Add prompts with different statuses
         prompts_data = [
@@ -662,7 +692,8 @@ class TestPromptsModels:
         assert abs(batch.average_quality_score - expected_avg) < 0.1
     
     def test_prompt_batch_update_completion_stats_all_failed(self):
-        """Test batch completion statistics with all failed prompts"""        batch = PromptBatch()
+        """Test batch completion statistics with all failed prompts"""
+        batch = PromptBatch()
         
         # Add failed prompts
         for i in range(3):
@@ -682,7 +713,8 @@ class TestPromptsModels:
         assert batch.average_quality_score == 0.0
     
     def test_prompt_batch_comprehensive_workflow(self):
-        """Test comprehensive batch workflow"""        batch = PromptBatch()
+        """Test comprehensive batch workflow"""
+        batch = PromptBatch()
         original_created_at = batch.created_at
         
         # Phase 1: Add prompts in different stages
@@ -744,7 +776,8 @@ class TestPromptsModels:
     # ===== PERFORMANCE TESTS =====
     
     def test_models_memory_usage(self):
-        """Test memory efficiency of model instances"""        # Create large number of instances to test memory efficiency
+        """Test memory efficiency of model instances"""
+        # Create large number of instances to test memory efficiency
         prompts = []
         contexts = []
         templates = []
@@ -785,7 +818,8 @@ class TestPromptsModels:
         assert templates[750].name == "Template 750"
     
     def test_batch_processing_performance(self):
-        """Test batch processing performance"""        large_batch = PromptBatch()
+        """Test batch processing performance"""
+        large_batch = PromptBatch()
         
         start_time = datetime.now()
         

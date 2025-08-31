@@ -5,7 +5,8 @@ automated licensing, payment processing, and creator earnings optimization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -28,7 +29,8 @@ from ...services.analytics.revenue_analytics import RevenueAnalyticsService
 logger = get_logger(__name__)
 
 class RevenueType(Enum):
-    """Revenue types"""    STREAMING = "streaming"
+    """Revenue types"""
+    STREAMING = "streaming"
     DOWNLOAD = "download"
     LICENSING = "licensing"
     SUBSCRIPTION = "subscription"
@@ -39,7 +41,8 @@ class RevenueType(Enum):
     SPONSORSHIP = "sponsorship"
 
 class PaymentStatus(Enum):
-    """Payment status types"""    PENDING = "pending"
+    """Payment status types"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -48,7 +51,8 @@ class PaymentStatus(Enum):
     CANCELLED = "cancelled"
 
 class PaymentProvider(Enum):
-    """Payment provider types"""    STRIPE = "stripe"
+    """Payment provider types"""
+    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     BANK_TRANSFER = "bank_transfer"
@@ -56,7 +60,8 @@ class PaymentProvider(Enum):
 
 @dataclass
 class RevenueSource:
-    """Revenue source information"""    source_id: str
+    """Revenue source information"""
+    source_id: str
     platform: str
     revenue_type: RevenueType
     amount: Decimal
@@ -67,7 +72,8 @@ class RevenueSource:
 
 @dataclass
 class PayoutRequest:
-    """Payout request structure"""    user_id: int
+    """Payout request structure"""
+    user_id: int
     amount: Decimal
     currency: str
     provider: PaymentProvider
@@ -75,7 +81,8 @@ class PayoutRequest:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class MonetizationController:
-    """    Advanced revenue management and monetization system
+    """
+    Advanced revenue management and monetization system
     
     Features:
     - Cross-platform revenue aggregation
@@ -85,7 +92,8 @@ class MonetizationController:
     - Tax compliance handling
     - Multi-currency support
     - Fraud detection and prevention
-    """    
+    """
+    
     def __init__(self):
         # Payment service integrations
         self.stripe_service = StripePaymentService()
@@ -116,11 +124,13 @@ class MonetizationController:
         }
     
     async def initialize(self) -> bool:
-        """        Initialize monetization controller
+        """
+        Initialize monetization controller
         
         Returns:
             bool: Initialization success status
-        """        try:
+        """
+        try:
             logger.info("Initializing Monetization Controller...")
             
             # Initialize payment services
@@ -151,7 +161,8 @@ class MonetizationController:
         revenue_sources: List[RevenueSource],
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """        Track revenue from multiple sources
+        """
+        Track revenue from multiple sources
         
         Args:
             user_id: User ID
@@ -160,7 +171,8 @@ class MonetizationController:
             
         Returns:
             Dict containing revenue tracking results
-        """        try:
+        """
+        try:
             total_revenue = Decimal('0.00')
             processed_sources = []
             
@@ -224,7 +236,8 @@ class MonetizationController:
         payout_request: PayoutRequest,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """        Process payout to creator
+        """
+        Process payout to creator
         
         Args:
             user_id: User ID
@@ -233,7 +246,8 @@ class MonetizationController:
             
         Returns:
             Dict containing payout processing results
-        """        try:
+        """
+        try:
             # Validate payout request
             await self._validate_payout_request(user_id, payout_request, session)
             
@@ -299,7 +313,8 @@ class MonetizationController:
         terms: Dict[str, Any],
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """        Create licensing deal between creators
+        """
+        Create licensing deal between creators
         
         Args:
             licensor_id: Content owner ID
@@ -310,7 +325,8 @@ class MonetizationController:
             
         Returns:
             Dict containing licensing deal information
-        """        try:
+        """
+        try:
             # Validate licensing terms
             validated_terms = await self._validate_licensing_terms(terms)
             
@@ -369,7 +385,8 @@ class MonetizationController:
         breakdown_by: str = "platform",
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """        Get comprehensive revenue analytics
+        """
+        Get comprehensive revenue analytics
         
         Args:
             user_id: User ID
@@ -379,7 +396,8 @@ class MonetizationController:
             
         Returns:
             Dict containing revenue analytics
-        """        try:
+        """
+        try:
             start_date = time_range['start']
             end_date = time_range['end']
             
@@ -432,7 +450,8 @@ class MonetizationController:
         content_id: Optional[int] = None,
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """        Generate monetization optimization recommendations
+        """
+        Generate monetization optimization recommendations
         
         Args:
             user_id: User ID
@@ -441,7 +460,8 @@ class MonetizationController:
             
         Returns:
             Dict containing optimization recommendations
-        """        try:
+        """
+        try:
             # Analyze current monetization performance
             performance_analysis = await self._analyze_monetization_performance(
                 user_id, content_id, session
@@ -477,7 +497,8 @@ class MonetizationController:
         request: PayoutRequest, 
         session: AsyncSession
     ):
-        """Validate payout request"""        # Check minimum payout threshold
+        """Validate payout request"""
+        # Check minimum payout threshold
         min_threshold = self.payout_thresholds.get(request.currency, Decimal('10.00'))
         
         if request.amount < min_threshold:
@@ -491,7 +512,8 @@ class MonetizationController:
             raise HTTPException(status_code=400, detail="Payment destination required")
     
     async def _process_payment(self, request: PayoutRequest) -> Dict[str, Any]:
-        """Process payment through appropriate provider"""        if request.provider == PaymentProvider.STRIPE:
+        """Process payment through appropriate provider"""
+        if request.provider == PaymentProvider.STRIPE:
             return await self.stripe_service.process_payout(request)
         elif request.provider == PaymentProvider.PAYPAL:
             return await self.paypal_service.process_payout(request)
@@ -502,7 +524,8 @@ class MonetizationController:
             )
     
     async def _get_available_balance(self, user_id: int, session: AsyncSession) -> Decimal:
-        """Get available balance for user"""        # Calculate total earnings minus total payouts
+        """Get available balance for user"""
+        # Calculate total earnings minus total payouts
         total_earnings_result = await session.execute(
             select(func.coalesce(func.sum(Revenue.net_amount), 0)).where(
                 Revenue.user_id == user_id
@@ -523,21 +546,25 @@ class MonetizationController:
         return Decimal(str(total_earnings)) - Decimal(str(total_payouts))
     
     async def _update_user_earnings(self, user_id: int, amount: Decimal, session: AsyncSession):
-        """Update user's total earnings"""        # Implementation for updating user earnings
+        """Update user's total earnings"""
+        # Implementation for updating user earnings
         pass
     
     async def _update_user_balance(self, user_id: int, amount: Decimal, session: AsyncSession):
-        """Update user's available balance"""        # Implementation for updating user balance
+        """Update user's available balance"""
+        # Implementation for updating user balance
         pass
     
     async def _check_payout_eligibility(self, user_id: int, session: AsyncSession) -> bool:
-        """Check if user is eligible for payout"""        available_balance = await self._get_available_balance(user_id, session)
+        """Check if user is eligible for payout"""
+        available_balance = await self._get_available_balance(user_id, session)
         min_threshold = self.payout_thresholds.get('USD', Decimal('10.00'))
         
         return available_balance >= min_threshold
     
     async def _process_payout_queue(self):
-        """Process payout queue in background"""        while True:
+        """Process payout queue in background"""
+        while True:
             try:
                 # Implementation for processing payout queue
                 await asyncio.sleep(60)
@@ -547,7 +574,8 @@ class MonetizationController:
                 await asyncio.sleep(60)
     
     async def _sync_platform_revenue(self):
-        """Synchronize revenue data from platforms"""        while True:
+        """Synchronize revenue data from platforms"""
+        while True:
             try:
                 # Implementation for revenue synchronization
                 logger.info("Syncing platform revenue data")
@@ -558,7 +586,8 @@ class MonetizationController:
                 await asyncio.sleep(3600)
     
     async def _process_automated_licensing(self):
-        """Process automated licensing deals"""        while True:
+        """Process automated licensing deals"""
+        while True:
             try:
                 # Implementation for automated licensing
                 await asyncio.sleep(1800)  # Check every 30 minutes

@@ -11,7 +11,8 @@ Created by: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import json
 import logging
@@ -35,13 +36,15 @@ logger = logging.getLogger(__name__)
 
 
 class OnlyFansSubscriptionType(str, Enum):
-    """OnlyFans subscription types"""    FREE = "free"
+    """OnlyFans subscription types"""
+    FREE = "free"
     PAID = "paid"
     PROMOTIONAL = "promotional"
 
 
 class OnlyFansContentType(str, Enum):
-    """OnlyFans content types"""    POST = "post"
+    """OnlyFans content types"""
+    POST = "post"
     MESSAGE = "message"
     STORY = "story"
     LIVE_STREAM = "live_stream"
@@ -49,14 +52,16 @@ class OnlyFansContentType(str, Enum):
 
 
 class OnlyFansMediaType(str, Enum):
-    """OnlyFans media types"""    PHOTO = "photo"
+    """OnlyFans media types"""
+    PHOTO = "photo"
     VIDEO = "video"
     AUDIO = "audio"
     GIF = "gif"
 
 
 class OnlyFansMedia(BaseModel):
-    """OnlyFans media data model"""    media_id: str
+    """OnlyFans media data model"""
+    media_id: str
     media_type: OnlyFansMediaType
     url: str
     preview_url: Optional[str] = None
@@ -71,7 +76,8 @@ class OnlyFansMedia(BaseModel):
 
 
 class OnlyFansCreator(BaseModel):
-    """OnlyFans creator data model"""    creator_id: str
+    """OnlyFans creator data model"""
+    creator_id: str
     username: str
     display_name: str
     bio: Optional[str] = None
@@ -96,7 +102,8 @@ class OnlyFansCreator(BaseModel):
 
 
 class OnlyFansPost(BaseModel):
-    """OnlyFans post data model"""    post_id: str
+    """OnlyFans post data model"""
+    post_id: str
     creator: OnlyFansCreator
     text: Optional[str] = None
     price: Optional[float] = None
@@ -121,7 +128,8 @@ class OnlyFansPost(BaseModel):
 
 
 class OnlyFansMessage(BaseModel):
-    """OnlyFans private message data model"""    message_id: str
+    """OnlyFans private message data model"""
+    message_id: str
     from_user: OnlyFansCreator
     to_user: OnlyFansCreator
     text: Optional[str] = None
@@ -135,7 +143,8 @@ class OnlyFansMessage(BaseModel):
 
 
 class OnlyFansStory(BaseModel):
-    """OnlyFans story data model"""    story_id: str
+    """OnlyFans story data model"""
+    story_id: str
     creator: OnlyFansCreator
     media: OnlyFansMedia
     created_at: datetime
@@ -145,7 +154,8 @@ class OnlyFansStory(BaseModel):
 
 
 class OnlyFansSearchResults(BaseModel):
-    """OnlyFans search results data model"""    query: str
+    """OnlyFans search results data model"""
+    query: str
     total_results: int
     creators: List[OnlyFansCreator] = Field(default_factory=list)
     posts: List[OnlyFansPost] = Field(default_factory=list)
@@ -157,7 +167,8 @@ class OnlyFansSearchResults(BaseModel):
 
 
 class OnlyFansAnalytics(BaseModel):
-    """OnlyFans analytics data model"""    creator_id: str
+    """OnlyFans analytics data model"""
+    creator_id: str
     analysis_period: Tuple[datetime, datetime]
     total_posts: int
     total_earnings: float
@@ -177,11 +188,13 @@ class OnlyFansAnalytics(BaseModel):
 
 
 class OnlyFansCrawler(BaseCrawler):
-    """    Ultra-Advanced OnlyFans Platform Crawler
+    """
+    Ultra-Advanced OnlyFans Platform Crawler
     
     Provides comprehensive crawling and monitoring capabilities for OnlyFans platform,
     specializing in premium content monitoring, creator analytics, and content protection.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         
@@ -223,7 +236,8 @@ class OnlyFansCrawler(BaseCrawler):
         logger.info("OnlyFans crawler initialized with ultra-advanced premium content monitoring")
 
     async def authenticate(self, auth_token: str, user_id: str = None) -> bool:
-        """        Authenticate with OnlyFans platform
+        """
+        Authenticate with OnlyFans platform
         
         Args:
             auth_token: Authentication token
@@ -231,7 +245,8 @@ class OnlyFansCrawler(BaseCrawler):
             
         Returns:
             bool: Authentication success status
-        """        try:
+        """
+        try:
             self.auth_token = auth_token
             self.user_id = user_id
             
@@ -264,7 +279,8 @@ class OnlyFansCrawler(BaseCrawler):
         price_range: Optional[Tuple[float, float]] = None,
         limit: int = 50
     ) -> OnlyFansSearchResults:
-        """        Search OnlyFans content with advanced filtering
+        """
+        Search OnlyFans content with advanced filtering
         
         Args:
             query: Search query
@@ -274,7 +290,8 @@ class OnlyFansCrawler(BaseCrawler):
             
         Returns:
             OnlyFansSearchResults: Comprehensive search results
-        """        await self.rate_limiter.acquire()
+        """
+        await self.rate_limiter.acquire()
         
         try:
             results = OnlyFansSearchResults(
@@ -323,7 +340,8 @@ class OnlyFansCrawler(BaseCrawler):
         keywords: List[str] = None,
         check_interval: int = 600
     ) -> AsyncGenerator[OnlyFansPost, None]:
-        """        Real-time content monitoring for OnlyFans
+        """
+        Real-time content monitoring for OnlyFans
         
         Args:
             creator_usernames: Creators to monitor
@@ -332,7 +350,8 @@ class OnlyFansCrawler(BaseCrawler):
             
         Yields:
             OnlyFansPost: New posts detected
-        """        creator_usernames = creator_usernames or []
+        """
+        creator_usernames = creator_usernames or []
         keywords = keywords or []
         
         self.monitored_creators.update(creator_usernames)
@@ -374,7 +393,8 @@ class OnlyFansCrawler(BaseCrawler):
         comparison_set: List[OnlyFansPost],
         threshold: float = None
     ) -> List[Tuple[OnlyFansPost, float]]:
-        """        Detect post similarity for premium content protection
+        """
+        Detect post similarity for premium content protection
         
         Args:
             target_post: Post to compare
@@ -383,7 +403,8 @@ class OnlyFansCrawler(BaseCrawler):
             
         Returns:
             List[Tuple[OnlyFansPost, float]]: Similar posts with scores
-        """        threshold = threshold or self.similarity_threshold
+        """
+        threshold = threshold or self.similarity_threshold
         similar_posts = []
         
         try:
@@ -415,7 +436,8 @@ class OnlyFansCrawler(BaseCrawler):
         creator_id: str,
         analysis_period: Tuple[datetime, datetime]
     ) -> OnlyFansAnalytics:
-        """        Generate comprehensive analytics for OnlyFans creator
+        """
+        Generate comprehensive analytics for OnlyFans creator
         
         Args:
             creator_id: Creator ID to analyze
@@ -423,7 +445,8 @@ class OnlyFansCrawler(BaseCrawler):
             
         Returns:
             OnlyFansAnalytics: Comprehensive analytics data
-        """        try:
+        """
+        try:
             start_time, end_time = analysis_period
             
             # Get creator's posts in the period
@@ -524,7 +547,8 @@ class OnlyFansCrawler(BaseCrawler):
     # Helper methods
     
     async def _search_creators(self, query: str, limit: int) -> List[OnlyFansCreator]:
-        """Search for OnlyFans creators"""        try:
+        """Search for OnlyFans creators"""
+        try:
             params = {
                 "query": query,
                 "limit": limit
@@ -554,11 +578,13 @@ class OnlyFansCrawler(BaseCrawler):
         price_range: Optional[Tuple[float, float]],
         limit: int
     ) -> List[OnlyFansPost]:
-        """Search for OnlyFans posts"""        # Implementation would depend on available search API
+        """Search for OnlyFans posts"""
+        # Implementation would depend on available search API
         return []
 
     async def _get_creator_recent_posts(self, username: str) -> List[OnlyFansPost]:
-        """Get recent posts from creator"""        try:
+        """Get recent posts from creator"""
+        try:
             async with self.session.get(f"{self.api_base}/users/{username}/posts") as response:
                 if response.status == 200:
                     data = await response.json()
@@ -577,7 +603,8 @@ class OnlyFansCrawler(BaseCrawler):
             return []
 
     async def _parse_creator_data(self, data: Dict[str, Any]) -> OnlyFansCreator:
-        """Parse creator data from API response"""        return OnlyFansCreator(
+        """Parse creator data from API response"""
+        return OnlyFansCreator(
             creator_id=str(data.get("id", "")),
             username=data.get("username", ""),
             display_name=data.get("name", ""),
@@ -596,7 +623,8 @@ class OnlyFansCrawler(BaseCrawler):
         )
 
     async def _parse_post_data(self, data: Dict[str, Any]) -> OnlyFansPost:
-        """Parse post data from API response"""        # Parse media
+        """Parse post data from API response"""
+        # Parse media
         media = []
         for media_data in data.get("media", []):
             media_item = OnlyFansMedia(
@@ -636,7 +664,8 @@ class OnlyFansCrawler(BaseCrawler):
         )
 
     async def _extract_post_features(self, post: OnlyFansPost) -> Dict[str, Any]:
-        """Extract features for similarity comparison"""        features = {
+        """Extract features for similarity comparison"""
+        features = {
             "text": (post.text or "").lower(),
             "creator_id": post.creator.creator_id,
             "media_count": len(post.media),
@@ -654,7 +683,8 @@ class OnlyFansCrawler(BaseCrawler):
         features1: Dict[str, Any],
         features2: Dict[str, Any]
     ) -> float:
-        """Calculate similarity between post features"""        try:
+        """Calculate similarity between post features"""
+        try:
             scores = []
             
             # Text similarity
@@ -693,20 +723,24 @@ class OnlyFansCrawler(BaseCrawler):
         start_time: datetime,
         end_time: datetime
     ) -> List[OnlyFansPost]:
-        """Get creator's posts in specific time period"""        # Implementation would require pagination through posts
+        """Get creator's posts in specific time period"""
+        # Implementation would require pagination through posts
         return []
 
     async def _calculate_similarity(self, post: OnlyFansPost) -> float:
-        """Calculate similarity score against protected content"""        # Simplified similarity calculation
+        """Calculate similarity score against protected content"""
+        # Simplified similarity calculation
         return 0.0
 
     async def _check_protection_status(self, post: OnlyFansPost) -> str:
-        """Check protection status of post"""        if post.post_id in self.protected_content:
+        """Check protection status of post"""
+        if post.post_id in self.protected_content:
             return "protected"
         return "unprotected"
 
     async def _handle_rate_limit(self, response: aiohttp.ClientResponse) -> bool:
-        """Handle rate limiting responses"""        if response.status == 429:
+        """Handle rate limiting responses"""
+        if response.status == 429:
             retry_after = int(response.headers.get('Retry-After', 300))
             logger.warning(f"Rate limited. Waiting {retry_after} seconds")
             await asyncio.sleep(retry_after)
@@ -714,7 +748,8 @@ class OnlyFansCrawler(BaseCrawler):
         return False
 
     async def close(self):
-        """Close crawler and cleanup resources"""        try:
+        """Close crawler and cleanup resources"""
+        try:
             await self.cache_manager.close()
             await super().close()
             logger.info("OnlyFans crawler closed successfully")

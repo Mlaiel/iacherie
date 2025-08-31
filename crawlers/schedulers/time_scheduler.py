@@ -26,7 +26,8 @@ Business Logic Integration:
 Content scheduling → Timezone optimization → Platform timing → 
 Audience engagement peaks → Campaign coordination → SEO timing → 
 Collaboration synchronization → Multi-platform distribution → Revenue optimization
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 from datetime import datetime, timedelta, timezone
@@ -52,7 +53,8 @@ logger = logging.getLogger(__name__)
 
 
 class ScheduleType(Enum):
-    """Types of scheduling patterns."""    ONCE = "once"
+    """Types of scheduling patterns."""
+    ONCE = "once"
     INTERVAL = "interval"
     CRON = "cron"
     OPTIMAL = "optimal"
@@ -61,7 +63,8 @@ class ScheduleType(Enum):
 
 
 class TimingStrategy(Enum):
-    """Timing optimization strategies."""    IMMEDIATE = "immediate"
+    """Timing optimization strategies."""
+    IMMEDIATE = "immediate"
     PEAK_ENGAGEMENT = "peak_engagement"
     OFF_PEAK = "off_peak"
     BALANCED = "balanced"
@@ -71,7 +74,8 @@ class TimingStrategy(Enum):
 
 
 class PlatformTiming(Enum):
-    """Platform-specific timing preferences."""    YOUTUBE_PRIME = "youtube_prime"  # 2-4 PM, 8-11 PM
+    """Platform-specific timing preferences."""
+    YOUTUBE_PRIME = "youtube_prime"  # 2-4 PM, 8-11 PM
     INSTAGRAM_PEAK = "instagram_peak"  # 11 AM-1 PM, 7-9 PM
     TIKTOK_VIRAL = "tiktok_viral"  # 6-10 AM, 7-9 PM
     TWITTER_ENGAGEMENT = "twitter_engagement"  # 9 AM-3 PM
@@ -81,7 +85,8 @@ class PlatformTiming(Enum):
 
 @dataclass
 class TimezoneConfig:
-    """Timezone configuration for scheduling."""    primary_timezone: str = "UTC"
+    """Timezone configuration for scheduling."""
+    primary_timezone: str = "UTC"
     target_timezones: List[str] = field(default_factory=lambda: ["UTC"])
     audience_distribution: Dict[str, float] = field(default_factory=dict)
     peak_hours: Dict[str, List[int]] = field(default_factory=dict)
@@ -90,7 +95,8 @@ class TimezoneConfig:
 
 @dataclass
 class ScheduleWindow:
-    """Time window for scheduling."""    start_time: datetime
+    """Time window for scheduling."""
+    start_time: datetime
     end_time: datetime
     timezone: str = "UTC"
     priority: float = 1.0
@@ -101,7 +107,8 @@ class ScheduleWindow:
 
 @dataclass
 class TimedTask:
-    """Time-scheduled task definition."""    task_id: str
+    """Time-scheduled task definition."""
+    task_id: str
     schedule_type: ScheduleType
     trigger_expression: str  # Cron expression, interval, or datetime ISO
     task_definition: Dict[str, Any]
@@ -120,7 +127,8 @@ class TimedTask:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Post-initialization processing."""        if not self.task_id:
+        """Post-initialization processing."""
+        if not self.task_id:
             self.task_id = f"timed_{uuid.uuid4().hex[:8]}"
         
         # Calculate next run time
@@ -128,7 +136,8 @@ class TimedTask:
             self.next_run = self._calculate_next_run()
     
     def _calculate_next_run(self) -> Optional[datetime]:
-        """Calculate next run time based on schedule type."""        try:
+        """Calculate next run time based on schedule type."""
+        try:
             tz = pytz.timezone(self.timezone)
             base_time = datetime.now(tz)
             
@@ -157,7 +166,8 @@ class TimedTask:
             return None
     
     def _parse_interval(self, interval_str: str) -> int:
-        """Parse interval string to seconds."""        unit_multipliers = {
+        """Parse interval string to seconds."""
+        unit_multipliers = {
             's': 1, 'sec': 1, 'second': 1, 'seconds': 1,
             'm': 60, 'min': 60, 'minute': 60, 'minutes': 60,
             'h': 3600, 'hour': 3600, 'hours': 3600,
@@ -177,7 +187,8 @@ class TimedTask:
         return 3600  # Default to 1 hour
     
     def _calculate_optimal_time(self, base_time: datetime) -> datetime:
-        """Calculate optimal execution time based on strategy and platform."""        if self.platform_timing:
+        """Calculate optimal execution time based on strategy and platform."""
+        if self.platform_timing:
             return self._get_platform_optimal_time(base_time)
         
         if self.timing_strategy == TimingStrategy.PEAK_ENGAGEMENT:
@@ -213,7 +224,8 @@ class TimedTask:
             return base_time + timedelta(minutes=5)
     
     def _get_platform_optimal_time(self, base_time: datetime) -> datetime:
-        """Get platform-specific optimal timing."""        platform_schedules = {
+        """Get platform-specific optimal timing."""
+        platform_schedules = {
             PlatformTiming.YOUTUBE_PRIME: [(14, 16), (20, 23)],  # 2-4 PM, 8-11 PM
             PlatformTiming.INSTAGRAM_PEAK: [(11, 13), (19, 21)],  # 11 AM-1 PM, 7-9 PM
             PlatformTiming.TIKTOK_VIRAL: [(6, 10), (19, 21)],  # 6-10 AM, 7-9 PM
@@ -242,7 +254,8 @@ class TimedTask:
 
 @dataclass
 class SchedulerMetrics:
-    """Time-based scheduler metrics."""    total_scheduled_tasks: int = 0
+    """Time-based scheduler metrics."""
+    total_scheduled_tasks: int = 0
     active_schedules: int = 0
     completed_schedules: int = 0
     missed_schedules: int = 0
@@ -255,7 +268,8 @@ class SchedulerMetrics:
 
 
 class TimeBasedScheduler:
-    """    Advanced time-based scheduler for crawler operations.
+    """
+    Advanced time-based scheduler for crawler operations.
     
     Features:
     - Cron-like scheduling with advanced expressions
@@ -266,7 +280,8 @@ class TimeBasedScheduler:
     - Adaptive timing based on performance
     - Campaign coordination across time zones
     - SEO-optimized scheduling
-    """    
+    """
+    
     def __init__(
         self,
         default_timezone: str = "UTC",
@@ -275,7 +290,8 @@ class TimeBasedScheduler:
         enable_collaborative_sync: bool = True,
         max_concurrent_schedules: int = 1000
     ):
-        """Initialize time-based scheduler."""        self.default_timezone = default_timezone
+        """Initialize time-based scheduler."""
+        self.default_timezone = default_timezone
         self.enable_timezone_optimization = enable_timezone_optimization
         self.enable_platform_timing = enable_platform_timing
         self.enable_collaborative_sync = enable_collaborative_sync
@@ -330,7 +346,8 @@ class TimeBasedScheduler:
         logger.info(f"Time-based scheduler initialized with timezone: {default_timezone}")
     
     async def start_scheduler(self) -> None:
-        """Start the time-based scheduler."""        if self.is_running:
+        """Start the time-based scheduler."""
+        if self.is_running:
             logger.warning("Scheduler already running")
             return
         
@@ -352,7 +369,8 @@ class TimeBasedScheduler:
             raise
     
     async def stop_scheduler(self) -> None:
-        """Stop the time-based scheduler gracefully."""        self.is_running = False
+        """Stop the time-based scheduler gracefully."""
+        self.is_running = False
         
         if self.scheduler_task:
             self.scheduler_task.cancel()
@@ -369,7 +387,8 @@ class TimeBasedScheduler:
         task: TimedTask,
         replace_existing: bool = False
     ) -> str:
-        """Schedule a time-based task."""        try:
+        """Schedule a time-based task."""
+        try:
             # Check if task already exists
             if task.task_id in self.timed_tasks and not replace_existing:
                 raise ValueError(f"Task already scheduled: {task.task_id}")
@@ -410,7 +429,8 @@ class TimeBasedScheduler:
             raise
     
     async def _validate_schedule(self, task: TimedTask) -> None:
-        """Validate task schedule configuration."""        # Check schedule limits
+        """Validate task schedule configuration."""
+        # Check schedule limits
         if len(self.timed_tasks) >= self.max_concurrent_schedules:
             raise ValueError("Maximum concurrent schedules reached")
         
@@ -435,7 +455,8 @@ class TimeBasedScheduler:
                 raise ValueError(f"Invalid datetime format: {task.trigger_expression}")
     
     async def _optimize_platform_timing(self, task: TimedTask) -> None:
-        """Optimize timing based on platform preferences."""        if not task.platform_timing:
+        """Optimize timing based on platform preferences."""
+        if not task.platform_timing:
             return
         
         # Recalculate next run time with platform optimization
@@ -446,7 +467,8 @@ class TimeBasedScheduler:
             await self._apply_timezone_optimization(task)
     
     async def _apply_timezone_optimization(self, task: TimedTask) -> None:
-        """Apply timezone optimization for global audience."""        # Get audience distribution for this task's context
+        """Apply timezone optimization for global audience."""
+        # Get audience distribution for this task's context
         audience_data = self.audience_data.get(task.task_id, {})
         
         if not audience_data:
@@ -471,7 +493,8 @@ class TimeBasedScheduler:
                 task.timezone = primary_timezone
     
     async def _setup_collaborative_scheduling(self, task: TimedTask) -> None:
-        """Setup collaborative scheduling synchronization."""        if not task.collaborators:
+        """Setup collaborative scheduling synchronization."""
+        if not task.collaborators:
             return
         
         # Add to collaboration group
@@ -482,7 +505,8 @@ class TimeBasedScheduler:
         await self._synchronize_collaborative_timing(group_id, task)
     
     async def _synchronize_collaborative_timing(self, group_id: str, new_task: TimedTask) -> None:
-        """Synchronize timing across collaborative tasks."""        group_tasks = [
+        """Synchronize timing across collaborative tasks."""
+        group_tasks = [
             self.timed_tasks[task_id] 
             for task_id in self.collaboration_groups[group_id]
             if task_id in self.timed_tasks and task_id != new_task.task_id
@@ -507,7 +531,8 @@ class TimeBasedScheduler:
                 logger.info(f"Synchronized task {new_task.task_id} with collaboration group")
     
     async def _create_scheduler_job(self, task: TimedTask) -> None:
-        """Create APScheduler job for the task."""        try:
+        """Create APScheduler job for the task."""
+        try:
             # Determine trigger type
             if task.schedule_type == ScheduleType.ONCE:
                 trigger = DateTrigger(
@@ -553,7 +578,8 @@ class TimeBasedScheduler:
             raise
     
     async def _execute_scheduled_task(self, task_id: str) -> None:
-        """Execute a scheduled task."""        start_time = time.time()
+        """Execute a scheduled task."""
+        start_time = time.time()
         
         try:
             task = self.timed_tasks.get(task_id)
@@ -609,7 +635,8 @@ class TimeBasedScheduler:
             await self._call_callbacks('error', task, {'error': str(e)})
     
     async def _perform_task_execution(self, task: TimedTask) -> Dict[str, Any]:
-        """Perform the actual task execution."""        # This is a placeholder for actual task execution
+        """Perform the actual task execution."""
+        # This is a placeholder for actual task execution
         # In real implementation, this would integrate with the crawler system
         
         task_definition = task.task_definition
@@ -626,7 +653,8 @@ class TimeBasedScheduler:
         }
     
     async def _handle_task_retry(self, task_id: str, error: str) -> None:
-        """Handle retry logic for failed tasks."""        task = self.timed_tasks.get(task_id)
+        """Handle retry logic for failed tasks."""
+        task = self.timed_tasks.get(task_id)
         if not task or not self.config.get('retry_failed_schedules', True):
             return
         
@@ -658,7 +686,8 @@ class TimeBasedScheduler:
             task.is_active = False
     
     async def unschedule_task(self, task_id: str) -> bool:
-        """Unschedule a task."""        try:
+        """Unschedule a task."""
+        try:
             # Remove from APScheduler
             if self.scheduler.get_job(task_id):
                 self.scheduler.remove_job(task_id)
@@ -696,7 +725,8 @@ class TimeBasedScheduler:
         new_trigger_expression: str,
         new_timezone: Optional[str] = None
     ) -> bool:
-        """Reschedule an existing task."""        try:
+        """Reschedule an existing task."""
+        try:
             task = self.timed_tasks.get(task_id)
             if not task:
                 return False
@@ -723,7 +753,8 @@ class TimeBasedScheduler:
             return False
     
     async def get_schedule_status(self, task_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of a scheduled task."""        task = self.timed_tasks.get(task_id)
+        """Get status of a scheduled task."""
+        task = self.timed_tasks.get(task_id)
         if not task:
             return None
         
@@ -748,7 +779,8 @@ class TimeBasedScheduler:
         }
     
     async def get_scheduler_status(self) -> Dict[str, Any]:
-        """Get comprehensive scheduler status."""        # Calculate timing accuracy
+        """Get comprehensive scheduler status."""
+        # Calculate timing accuracy
         recent_executions = list(self.execution_history)[-100:]
         if recent_executions:
             delays = [abs(exec_data['delay']) for exec_data in recent_executions]
@@ -790,7 +822,8 @@ class TimeBasedScheduler:
         }
     
     async def _monitoring_loop(self) -> None:
-        """Background monitoring loop."""        while self.is_running:
+        """Background monitoring loop."""
+        while self.is_running:
             try:
                 await self._update_metrics()
                 await self._cleanup_completed_tasks()
@@ -803,7 +836,8 @@ class TimeBasedScheduler:
                 await asyncio.sleep(10)
     
     async def _update_metrics(self) -> None:
-        """Update scheduler metrics."""        # Update basic counts
+        """Update scheduler metrics."""
+        # Update basic counts
         self.metrics.active_schedules = sum(1 for t in self.timed_tasks.values() if t.is_active)
         
         # Calculate collaboration sync rate
@@ -834,7 +868,8 @@ class TimeBasedScheduler:
         self.metrics.last_updated = datetime.utcnow()
     
     async def _cleanup_completed_tasks(self) -> None:
-        """Clean up completed and inactive tasks."""        completed_tasks = [
+        """Clean up completed and inactive tasks."""
+        completed_tasks = [
             task_id for task_id, task in self.timed_tasks.items()
             if not task.is_active and (not task.max_runs or task.run_count >= task.max_runs)
         ]
@@ -846,7 +881,8 @@ class TimeBasedScheduler:
                 del self.timed_tasks[task_id]
     
     async def _check_schedule_health(self) -> None:
-        """Check scheduler health and detect issues."""        # Check for missed schedules
+        """Check scheduler health and detect issues."""
+        # Check for missed schedules
         missed_count = 0
         current_time = datetime.utcnow()
         
@@ -860,7 +896,8 @@ class TimeBasedScheduler:
         self.metrics.missed_schedules = missed_count
     
     async def _initialize_timezone_optimization(self) -> None:
-        """Initialize timezone optimization data."""        # Default timezone configurations
+        """Initialize timezone optimization data."""
+        # Default timezone configurations
         default_timezones = [
             "UTC", "US/Eastern", "US/Pacific", "Europe/London", 
             "Europe/Paris", "Asia/Tokyo", "Asia/Shanghai", "Australia/Sydney"
@@ -877,22 +914,27 @@ class TimeBasedScheduler:
         logger.info("Timezone optimization initialized")
     
     def _on_job_executed(self, event) -> None:
-        """Handle job execution event."""        asyncio.create_task(self._call_callbacks('job_executed', event))
+        """Handle job execution event."""
+        asyncio.create_task(self._call_callbacks('job_executed', event))
     
     def _on_job_error(self, event) -> None:
-        """Handle job error event."""        logger.error(f"Scheduled job error: {event.job_id}: {event.exception}")
+        """Handle job error event."""
+        logger.error(f"Scheduled job error: {event.job_id}: {event.exception}")
         asyncio.create_task(self._call_callbacks('job_error', event))
     
     def _on_job_missed(self, event) -> None:
-        """Handle missed job event."""        logger.warning(f"Scheduled job missed: {event.job_id}")
+        """Handle missed job event."""
+        logger.warning(f"Scheduled job missed: {event.job_id}")
         self.metrics.missed_schedules += 1
         asyncio.create_task(self._call_callbacks('job_missed', event))
     
     def add_callback(self, event_type: str, callback: Callable) -> None:
-        """Add event callback."""        self.event_callbacks[event_type].append(callback)
+        """Add event callback."""
+        self.event_callbacks[event_type].append(callback)
     
     async def _call_callbacks(self, event_type: str, *args) -> None:
-        """Call registered callbacks for an event."""        for callback in self.event_callbacks.get(event_type, []):
+        """Call registered callbacks for an event."""
+        for callback in self.event_callbacks.get(event_type, []):
             try:
                 if asyncio.iscoroutinefunction(callback):
                     await callback(*args)

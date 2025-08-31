@@ -15,7 +15,8 @@ Copyright: 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. Unauthorized use, reproduction, 
 or distribution without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will be prosecuted to the full extent of the law.
-"""import logging
+"""
+import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from pathlib import Path
 import numpy as np
@@ -61,18 +62,22 @@ __description__ = "Professional Audio Enhancement System"
 
 
 class AudioEnhancementSystem:
-    """    Audio Enhancement System - Main Entry Point
+    """
+    Audio Enhancement System - Main Entry Point
     
     Unified interface for professional audio enhancement providing
     simplified access to all enhancement capabilities while maintaining
     full control over advanced features.
-    """    
+    """
+    
     def __init__(self, config_dir: Optional[Union[str, Path]] = None):
-        """        Initialize the audio enhancement system
+        """
+        Initialize the audio enhancement system
         
         Args:
             config_dir: Optional configuration directory path
-        """        self.logger = logging.getLogger(__name__)
+        """
+        self.logger = logging.getLogger(__name__)
         
         # Initialize core components
         self.processor = AudioEnhancementProcessor()
@@ -97,7 +102,8 @@ class AudioEnhancementSystem:
                             sample_rate: int,
                             content_type: str = "general",
                             quality: str = "balanced") -> Dict[str, Any]:
-        """        Simple audio enhancement with minimal configuration
+        """
+        Simple audio enhancement with minimal configuration
         
         Args:
             audio: Input audio signal
@@ -107,7 +113,8 @@ class AudioEnhancementSystem:
             
         Returns:
             Dictionary with enhanced audio and basic metrics
-        """        try:
+        """
+        try:
             # Map string parameters to enums
             content_enum = self._map_content_type(content_type)
             
@@ -148,7 +155,8 @@ class AudioEnhancementSystem:
                               custom_parameters: Optional[EnhancementParameters] = None,
                               enable_quality_analysis: bool = True,
                               multi_pass: bool = False) -> Dict[str, Any]:
-        """        Advanced audio enhancement with full control and analysis
+        """
+        Advanced audio enhancement with full control and analysis
         
         Args:
             audio: Input audio signal
@@ -160,7 +168,8 @@ class AudioEnhancementSystem:
             
         Returns:
             Dictionary with comprehensive enhancement results
-        """        try:
+        """
+        try:
             # Configure pipeline
             pipeline_config = PipelineConfig(
                 mode=PipelineMode.MULTI_PASS if multi_pass else PipelineMode.SINGLE_PASS,
@@ -234,7 +243,8 @@ class AudioEnhancementSystem:
                              audio: np.ndarray,
                              sample_rate: int,
                              detailed: bool = True) -> Dict[str, Any]:
-        """        Analyze audio quality with comprehensive metrics
+        """
+        Analyze audio quality with comprehensive metrics
         
         Args:
             audio: Input audio signal
@@ -243,7 +253,8 @@ class AudioEnhancementSystem:
             
         Returns:
             Dictionary with quality metrics and analysis
-        """        try:
+        """
+        try:
             metrics = self.quality_analyzer.analyze_quality(
                 audio, sample_rate, detailed=detailed
             )
@@ -282,7 +293,8 @@ class AudioEnhancementSystem:
                              original_audio: np.ndarray,
                              enhanced_audio: np.ndarray,
                              sample_rate: int) -> Dict[str, Any]:
-        """        Compare quality between original and enhanced audio
+        """
+        Compare quality between original and enhanced audio
         
         Args:
             original_audio: Original audio signal
@@ -291,7 +303,8 @@ class AudioEnhancementSystem:
             
         Returns:
             Dictionary with comparison results
-        """        try:
+        """
+        try:
             comparison = self.quality_analyzer.compare_quality(
                 original_audio, enhanced_audio, sample_rate
             )
@@ -325,7 +338,8 @@ class AudioEnhancementSystem:
                                   sample_rate: int = 44100,
                                   channels: int = 2,
                                   mode: str = "balanced") -> bool:
-        """        Start real-time audio enhancement
+        """
+        Start real-time audio enhancement
         
         Args:
             buffer_size: Audio buffer size in samples
@@ -335,7 +349,8 @@ class AudioEnhancementSystem:
             
         Returns:
             True if real-time processing started successfully
-        """        try:
+        """
+        try:
             processing_mode = self._map_processing_mode(mode)
             
             config = RealTimeConfig(
@@ -358,39 +373,45 @@ class AudioEnhancementSystem:
             return False
     
     def stop_realtime_enhancement(self):
-        """Stop real-time audio enhancement"""        if self.realtime_processor:
+        """Stop real-time audio enhancement"""
+        if self.realtime_processor:
             self.realtime_processor.stop_processing()
             self.realtime_processor = None
             self.logger.info("Real-time enhancement stopped")
     
     def process_realtime_chunk(self, audio_chunk: np.ndarray) -> bool:
-        """        Process audio chunk in real-time
+        """
+        Process audio chunk in real-time
         
         Args:
             audio_chunk: Audio data chunk to process
             
         Returns:
             True if chunk was processed successfully
-        """        if not self.realtime_processor:
+        """
+        if not self.realtime_processor:
             return False
         
         return self.realtime_processor.process_audio_chunk(audio_chunk)
     
     def get_realtime_output(self, num_samples: int) -> Optional[np.ndarray]:
-        """        Get processed real-time audio output
+        """
+        Get processed real-time audio output
         
         Args:
             num_samples: Number of samples to retrieve
             
         Returns:
             Processed audio data or None if not available
-        """        if not self.realtime_processor:
+        """
+        if not self.realtime_processor:
             return None
         
         return self.realtime_processor.get_processed_audio(num_samples)
     
     def get_realtime_metrics(self) -> Dict[str, Any]:
-        """Get real-time processing performance metrics"""        if not self.realtime_processor:
+        """Get real-time processing performance metrics"""
+        if not self.realtime_processor:
             return {'status': 'not_running'}
         
         metrics = self.realtime_processor.get_latency_metrics()
@@ -406,14 +427,16 @@ class AudioEnhancementSystem:
         }
     
     def list_presets(self, category: Optional[str] = None) -> List[Dict[str, Any]]:
-        """        List available enhancement presets
+        """
+        List available enhancement presets
         
         Args:
             category: Optional category filter
             
         Returns:
             List of preset information dictionaries
-        """        try:
+        """
+        try:
             category_enum = None
             if category:
                 category_enum = PresetCategory(category.lower())
@@ -440,14 +463,16 @@ class AudioEnhancementSystem:
             return []
     
     def get_preset_info(self, preset_name: str) -> Optional[Dict[str, Any]]:
-        """        Get detailed information about a specific preset
+        """
+        Get detailed information about a specific preset
         
         Args:
             preset_name: Name of the preset
             
         Returns:
             Preset information dictionary or None
-        """        try:
+        """
+        try:
             preset = self.config_manager.get_preset(preset_name)
             if not preset:
                 return None
@@ -476,7 +501,8 @@ class AudioEnhancementSystem:
             return None
     
     def get_system_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive system statistics"""        pipeline_stats = self.pipeline.get_pipeline_statistics()
+        """Get comprehensive system statistics"""
+        pipeline_stats = self.pipeline.get_pipeline_statistics()
         processor_stats = self.processor.get_processing_statistics()
         preset_stats = self.config_manager.get_preset_statistics()
         
@@ -489,7 +515,8 @@ class AudioEnhancementSystem:
         }
     
     def _map_content_type(self, content_type: str) -> ContentType:
-        """Map string content type to enum"""        mapping = {
+        """Map string content type to enum"""
+        mapping = {
             'music': ContentType.MUSIC,
             'speech': ContentType.SPEECH,
             'podcast': ContentType.PODCAST,
@@ -502,7 +529,8 @@ class AudioEnhancementSystem:
         return mapping.get(content_type.lower(), ContentType.GENERAL)
     
     def _map_processing_mode(self, mode: str) -> ProcessingMode:
-        """Map string processing mode to enum"""        mapping = {
+        """Map string processing mode to enum"""
+        mapping = {
             'low_latency': ProcessingMode.LOW_LATENCY,
             'balanced': ProcessingMode.BALANCED,
             'high_quality': ProcessingMode.HIGH_QUALITY,
@@ -511,7 +539,8 @@ class AudioEnhancementSystem:
         return mapping.get(mode.lower(), ProcessingMode.BALANCED)
     
     def _get_preset_for_quality(self, quality: str, content_type: ContentType) -> EnhancementPreset:
-        """Get appropriate preset for quality level and content type"""        quality_mapping = {
+        """Get appropriate preset for quality level and content type"""
+        quality_mapping = {
             'fast': QualityLevel.FAIR,
             'balanced': QualityLevel.GOOD,
             'high_quality': QualityLevel.EXCELLENT
@@ -543,7 +572,8 @@ class AudioEnhancementSystem:
         return preset
     
     def _generate_quality_warnings(self, metrics: QualityMetrics) -> List[str]:
-        """Generate quality-based warnings"""        warnings = []
+        """Generate quality-based warnings"""
+        warnings = []
         
         if metrics.clipping_factor > 0.001:
             warnings.append(f"Audio clipping detected ({metrics.clipping_factor*100:.2f}%)")
@@ -563,7 +593,8 @@ class AudioEnhancementSystem:
         return warnings
     
     def _update_stats(self, result: EnhancementResult):
-        """Update system processing statistics"""        self.processing_stats['total_enhancements'] += 1
+        """Update system processing statistics"""
+        self.processing_stats['total_enhancements'] += 1
         self.processing_stats['total_processing_time'] += result.processing_time
         
         # Update average quality improvement if available
@@ -576,14 +607,16 @@ class AudioEnhancementSystem:
 
 # Factory functions for easy instantiation
 def create_enhancement_system(config_dir: Optional[Union[str, Path]] = None) -> AudioEnhancementSystem:
-    """Create a new audio enhancement system instance"""    return AudioEnhancementSystem(config_dir)
+    """Create a new audio enhancement system instance"""
+    return AudioEnhancementSystem(config_dir)
 
 
 def enhance_audio_quick(audio: np.ndarray, 
                        sample_rate: int,
                        content_type: str = "general",
                        quality: str = "balanced") -> Dict[str, Any]:
-    """    Quick audio enhancement with minimal setup
+    """
+    Quick audio enhancement with minimal setup
     
     Args:
         audio: Input audio signal
@@ -593,13 +626,15 @@ def enhance_audio_quick(audio: np.ndarray,
         
     Returns:
         Dictionary with enhanced audio and basic metrics
-    """    system = create_enhancement_system()
+    """
+    system = create_enhancement_system()
     return system.enhance_audio_simple(audio, sample_rate, content_type, quality)
 
 
 def analyze_audio_quick(audio: np.ndarray, 
                        sample_rate: int) -> Dict[str, Any]:
-    """    Quick audio quality analysis
+    """
+    Quick audio quality analysis
     
     Args:
         audio: Input audio signal
@@ -607,45 +642,54 @@ def analyze_audio_quick(audio: np.ndarray,
         
     Returns:
         Dictionary with quality metrics
-    """    system = create_enhancement_system()
+    """
+    system = create_enhancement_system()
     return system.analyze_audio_quality(audio, sample_rate, detailed=False)
 
 
 # Module-level convenience functions
 def get_version() -> str:
-    """Get module version"""    return __version__
+    """Get module version"""
+    return __version__
 
 
 def get_author() -> str:
-    """Get module author"""    return __author__
+    """Get module author"""
+    return __author__
 
 
 def get_supported_formats() -> List[str]:
-    """Get list of supported audio formats"""    return [
+    """Get list of supported audio formats"""
+    return [
         "WAV", "FLAC", "MP3", "AAC", "OGG", "M4A", "WMA",
         "AIFF", "AU", "CAF", "RF64", "BWF"
     ]
 
 
 def get_supported_sample_rates() -> Tuple[int, int]:
-    """Get supported sample rate range"""    return (8000, 192000)  # 8 kHz to 192 kHz
+    """Get supported sample rate range"""
+    return (8000, 192000)  # 8 kHz to 192 kHz
 
 
 def get_supported_bit_depths() -> List[int]:
-    """Get supported bit depths"""    return [16, 24, 32]
+    """Get supported bit depths"""
+    return [16, 24, 32]
 
 
 def get_processing_modes() -> List[str]:
-    """Get available processing modes"""    return ["low_latency", "balanced", "high_quality", "ultra_quality"]
+    """Get available processing modes"""
+    return ["low_latency", "balanced", "high_quality", "ultra_quality"]
 
 
 def get_content_types() -> List[str]:
-    """Get supported content types"""    return ["music", "speech", "podcast", "audiobook", "voiceover", 
+    """Get supported content types"""
+    return ["music", "speech", "podcast", "audiobook", "voiceover", 
            "instrument", "sound_effect", "general"]
 
 
 def get_quality_levels() -> List[str]:
-    """Get available quality levels"""    return ["fast", "balanced", "high_quality"]
+    """Get available quality levels"""
+    return ["fast", "balanced", "high_quality"]
 
 
 # System information
@@ -673,7 +717,8 @@ SYSTEM_INFO = {
 
 
 def get_system_info() -> Dict[str, Any]:
-    """Get comprehensive system information"""    return SYSTEM_INFO.copy()
+    """Get comprehensive system information"""
+    return SYSTEM_INFO.copy()
 
 
 # Export main classes and functions

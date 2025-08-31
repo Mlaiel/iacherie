@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -14,7 +15,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 #!/usr/bin/env python3
 """Simplified main.py to test core FastAPI startup functionality
 This bypasses complex imports to focus on basic dependency testing
-"""import asyncio
+"""
+import asyncio
 import sys
 from pathlib import Path
 
@@ -83,7 +85,8 @@ except Exception as e:
         )
 
 async def initialize_platform():
-    """Initialize the platform on first run"""    try:
+    """Initialize the platform on first run"""
+    try:
         print("📋 Initializing Ainflue platform...")
         
         # Try to create database tables (simplified)
@@ -101,7 +104,8 @@ async def initialize_platform():
         raise
 
 def main():
-    """Main entry point"""    print("🚀 Starting Ainflue AI Platform")
+    """Main entry point"""
+    print("🚀 Starting Ainflue AI Platform")
     print(f"📍 Environment: {settings.app.environment}")
     print(f"🔧 Debug mode: {settings.app.debug}")
     

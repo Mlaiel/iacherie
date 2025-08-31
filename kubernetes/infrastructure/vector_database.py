@@ -7,7 +7,8 @@ Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import yaml
@@ -27,7 +28,8 @@ from sqlalchemy import create_engine, text
 logger = logging.getLogger(__name__)
 
 class VectorDatabaseType(Enum):
-    """Vector database types"""    FAISS = "faiss"
+    """Vector database types"""
+    FAISS = "faiss"
     PINECONE = "pinecone"
     WEAVIATE = "weaviate"
     MILVUS = "milvus"
@@ -35,21 +37,24 @@ class VectorDatabaseType(Enum):
     CHROMA = "chroma"
 
 class IndexType(Enum):
-    """Vector index types"""    FLAT = "flat"
+    """Vector index types"""
+    FLAT = "flat"
     IVF_FLAT = "ivf_flat"
     IVF_PQ = "ivf_pq"
     HNSW = "hnsw"
     LSH = "lsh"
 
 class DistanceMetric(Enum):
-    """Distance metrics for similarity search"""    COSINE = "cosine"
+    """Distance metrics for similarity search"""
+    COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     DOT_PRODUCT = "dot_product"
     MANHATTAN = "manhattan"
 
 @dataclass
 class VectorIndexSpec:
-    """Vector index specification"""    name: str
+    """Vector index specification"""
+    name: str
     dimension: int
     index_type: IndexType
     distance_metric: DistanceMetric
@@ -60,7 +65,8 @@ class VectorIndexSpec:
 
 @dataclass
 class VectorDatabaseConfig:
-    """Vector database configuration"""    name: str
+    """Vector database configuration"""
+    name: str
     database_type: VectorDatabaseType
     namespace: str = "ia-influencer"
     indices: List[VectorIndexSpec] = field(default_factory=list)
@@ -71,14 +77,16 @@ class VectorDatabaseConfig:
 
 @dataclass
 class EmbeddingConfig:
-    """Embedding configuration"""    model_name: str
+    """Embedding configuration"""
+    model_name: str
     dimension: int
     max_tokens: int = 512
     batch_size: int = 32
     normalize: bool = True
 
 class VectorDatabaseManager:
-    """Main vector database manager"""    
+    """Main vector database manager"""
+    
     def __init__(self, k8s_client=None, redis_client=None, postgres_client=None):
         self.k8s_client = k8s_client
         self.redis_client = redis_client
@@ -93,7 +101,8 @@ class VectorDatabaseManager:
         self.weaviate_client = None
         
     async def deploy_vector_database(self, config: VectorDatabaseConfig) -> Dict[str, Any]:
-        """Deploy vector database infrastructure"""        try:
+        """Deploy vector database infrastructure"""
+        try:
             if config.database_type == VectorDatabaseType.FAISS:
                 return await self._deploy_faiss(config)
             elif config.database_type == VectorDatabaseType.PINECONE:
@@ -112,7 +121,8 @@ class VectorDatabaseManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_faiss(self, config: VectorDatabaseConfig) -> Dict[str, Any]:
-        """Deploy FAISS-based vector database"""        try:
+        """Deploy FAISS-based vector database"""
+        try:
             results = {}
             
             # Create FAISS service deployment
@@ -305,7 +315,8 @@ class VectorDatabaseManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_faiss_indices(self, config: VectorDatabaseConfig) -> Dict[str, Any]:
-        """Create FAISS indices"""        try:
+        """Create FAISS indices"""
+        try:
             indices_created = {}
             
             for index_spec in config.indices:
@@ -361,7 +372,8 @@ class VectorDatabaseManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_pinecone(self, config: VectorDatabaseConfig) -> Dict[str, Any]:
-        """Deploy Pinecone vector database"""        try:
+        """Deploy Pinecone vector database"""
+        try:
             # Initialize Pinecone (would need API key)
             # pinecone.init(api_key="your-api-key", environment="us-west1-gcp")
             
@@ -399,7 +411,8 @@ class VectorDatabaseManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_weaviate(self, config: VectorDatabaseConfig) -> Dict[str, Any]:
-        """Deploy Weaviate vector database"""        try:
+        """Deploy Weaviate vector database"""
+        try:
             # Create Weaviate deployment
             weaviate_deployment = client.V1Deployment(
                 metadata=client.V1ObjectMeta(
@@ -514,7 +527,8 @@ class VectorDatabaseManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_milvus(self, config: VectorDatabaseConfig) -> Dict[str, Any]:
-        """Deploy Milvus vector database"""        try:
+        """Deploy Milvus vector database"""
+        try:
             # Create Milvus deployment using Helm-like configuration
             milvus_deployment = client.V1Deployment(
                 metadata=client.V1ObjectMeta(
@@ -582,7 +596,8 @@ class VectorDatabaseManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_qdrant(self, config: VectorDatabaseConfig) -> Dict[str, Any]:
-        """Deploy Qdrant vector database"""        try:
+        """Deploy Qdrant vector database"""
+        try:
             # Create Qdrant deployment
             qdrant_deployment = client.V1Deployment(
                 metadata=client.V1ObjectMeta(
@@ -650,7 +665,8 @@ class VectorDatabaseManager:
             return {'status': 'error', 'message': str(e)}
     
     async def create_ia_influencer_vector_db(self, namespace: str = "ia-influencer") -> Dict[str, Any]:
-        """Create complete vector database setup for IA Influencer platform"""        try:
+        """Create complete vector database setup for IA Influencer platform"""
+        try:
             results = {}
             
             # Content fingerprint index for plagiarism detection
@@ -768,7 +784,8 @@ class VectorDatabaseManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_vector_db_api_service(self, namespace: str) -> Dict[str, Any]:
-        """Create vector database API service"""        try:
+        """Create vector database API service"""
+        try:
             # Create API service deployment
             api_deployment = client.V1Deployment(
                 metadata=client.V1ObjectMeta(
@@ -868,7 +885,8 @@ class VectorDatabaseManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_embeddings_service(self, namespace: str) -> Dict[str, Any]:
-        """Create embeddings processing service"""        try:
+        """Create embeddings processing service"""
+        try:
             # Embeddings service deployment
             embeddings_deployment = client.V1Deployment(
                 metadata=client.V1ObjectMeta(
@@ -943,7 +961,8 @@ class VectorDatabaseManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_vector_db_monitoring(self, namespace: str) -> Dict[str, Any]:
-        """Create vector database monitoring"""        try:
+        """Create vector database monitoring"""
+        try:
             # ServiceMonitor for vector databases
             service_monitor = {
                 'apiVersion': 'monitoring.coreos.com/v1',
@@ -1022,7 +1041,8 @@ class VectorDatabaseManager:
             return {'status': 'error', 'message': str(e)}
     
     async def get_vector_database_status(self, namespace: str = "ia-influencer") -> Dict[str, Any]:
-        """Get vector database status"""        try:
+        """Get vector database status"""
+        try:
             status = {
                 'databases': {
                     'faiss': {

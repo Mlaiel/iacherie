@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""import uuid
+"""
+import uuid
 import json
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Any, Union, Callable
@@ -41,7 +42,8 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status"""    DRAFT = "draft"
+    """Workflow execution status"""
+    DRAFT = "draft"
     ACTIVE = "active"
     RUNNING = "running"
     PAUSED = "paused"
@@ -52,7 +54,8 @@ class WorkflowStatus(Enum):
 
 
 class TaskStatus(Enum):
-    """Task execution status"""    PENDING = "pending"
+    """Task execution status"""
+    PENDING = "pending"
     SCHEDULED = "scheduled"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -64,7 +67,8 @@ class TaskStatus(Enum):
 
 
 class TriggerType(Enum):
-    """Workflow trigger types"""    MANUAL = "manual"
+    """Workflow trigger types"""
+    MANUAL = "manual"
     SCHEDULED = "scheduled"
     EVENT_BASED = "event_based"
     CONTENT_UPLOAD = "content_upload"
@@ -75,7 +79,8 @@ class TriggerType(Enum):
 
 
 class TaskType(Enum):
-    """Task execution types"""    CONTENT_PROCESSING = "content_processing"
+    """Task execution types"""
+    CONTENT_PROCESSING = "content_processing"
     AI_ANALYSIS = "ai_analysis"
     PUBLISHING = "publishing"
     NOTIFICATION = "notification"
@@ -89,7 +94,8 @@ class TaskType(Enum):
 
 @dataclass
 class WorkflowContext:
-    """Workflow execution context"""    workflow_id: str
+    """Workflow execution context"""
+    workflow_id: str
     user_id: str
     creator_type: str
     input_data: Dict[str, Any]
@@ -100,8 +106,10 @@ class WorkflowContext:
 
 
 class Workflow(Base):
-    """    Database model for workflow definitions
-    """    __tablename__ = "workflows"
+    """
+    Database model for workflow definitions
+    """
+    __tablename__ = "workflows"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     workflow_name = Column(String(200), nullable=False)
@@ -154,8 +162,10 @@ class Workflow(Base):
 
 
 class WorkflowExecution(Base):
-    """    Database model for workflow execution instances
-    """    __tablename__ = "workflow_executions"
+    """
+    Database model for workflow execution instances
+    """
+    __tablename__ = "workflow_executions"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     workflow_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -216,8 +226,10 @@ class WorkflowExecution(Base):
 
 
 class WorkflowTask(Base):
-    """    Database model for individual workflow tasks
-    """    __tablename__ = "workflow_tasks"
+    """
+    Database model for individual workflow tasks
+    """
+    __tablename__ = "workflow_tasks"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     workflow_execution_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -276,8 +288,10 @@ class WorkflowTask(Base):
 
 
 class WorkflowTemplate(Base):
-    """    Database model for reusable workflow templates
-    """    __tablename__ = "workflow_templates"
+    """
+    Database model for reusable workflow templates
+    """
+    __tablename__ = "workflow_templates"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     template_name = Column(String(200), nullable=False)
@@ -327,8 +341,10 @@ class WorkflowTemplate(Base):
 
 
 class ProcessOrchestrator:
-    """    Enterprise process orchestration with parallel execution and dependency management
-    """    
+    """
+    Enterprise process orchestration with parallel execution and dependency management
+    """
+    
     def __init__(self, db_session: Session):
         self.db_session = db_session
         self.running_executions: Dict[str, WorkflowContext] = {}
@@ -341,7 +357,8 @@ class ProcessOrchestrator:
         task_type: TaskType,
         processor: Callable
     ):
-        """Register task processor for specific task type"""        self.task_processors[task_type] = processor
+        """Register task processor for specific task type"""
+        self.task_processors[task_type] = processor
         logger.info(f"Registered task processor for {task_type.value}")
     
     async def execute_workflow(
@@ -353,7 +370,8 @@ class ProcessOrchestrator:
         trigger_data: Optional[Dict[str, Any]] = None,
         execution_name: Optional[str] = None
     ) -> str:
-        """        Execute workflow with full orchestration
+        """
+        Execute workflow with full orchestration
         
         Args:
             workflow_id: Workflow to execute
@@ -365,7 +383,8 @@ class ProcessOrchestrator:
             
         Returns:
             Execution ID
-        """        # Get workflow definition
+        """
+        # Get workflow definition
         workflow = self.db_session.query(Workflow).filter(
             Workflow.id == workflow_id,
             Workflow.is_active == True
@@ -433,7 +452,8 @@ class ProcessOrchestrator:
         execution_id: str,
         workflow: Workflow
     ):
-        """Execute all tasks in workflow with dependency management"""        try:
+        """Execute all tasks in workflow with dependency management"""
+        try:
             context = self.running_executions[execution_id]
             workflow_definition = workflow.workflow_definition
             tasks_definition = workflow_definition.get('tasks', [])
@@ -575,7 +595,8 @@ class ProcessOrchestrator:
         task_record: WorkflowTask,
         context: WorkflowContext
     ) -> bool:
-        """Execute single workflow task"""        try:
+        """Execute single workflow task"""
+        try:
             task_type = TaskType(task_record.task_type)
             
             # Check if we have a processor for this task type
@@ -617,8 +638,10 @@ class ProcessOrchestrator:
 
 
 class WorkflowEngine:
-    """    Enterprise workflow engine with template management and optimization
-    """    
+    """
+    Enterprise workflow engine with template management and optimization
+    """
+    
     def __init__(self, db_session: Session):
         self.db_session = db_session
         self.orchestrator = ProcessOrchestrator(db_session)
@@ -632,7 +655,8 @@ class WorkflowEngine:
         trigger_config: Dict[str, Any],
         metadata: Dict[str, Any] = None
     ) -> str:
-        """        Create new workflow definition
+        """
+        Create new workflow definition
         
         Args:
             workflow_name: Name of workflow
@@ -644,7 +668,8 @@ class WorkflowEngine:
             
         Returns:
             Workflow ID
-        """        workflow = Workflow(
+        """
+        workflow = Workflow(
             workflow_name=workflow_name,
             workflow_description=metadata.get('description', ''),
             user_id=user_id,
@@ -673,7 +698,8 @@ class WorkflowEngine:
         workflow_name: str,
         parameters: Dict[str, Any]
     ) -> str:
-        """        Create workflow from template with customization
+        """
+        Create workflow from template with customization
         
         Args:
             template_id: Template to use
@@ -683,7 +709,8 @@ class WorkflowEngine:
             
         Returns:
             Workflow ID
-        """        template = self.db_session.query(WorkflowTemplate).filter(
+        """
+        template = self.db_session.query(WorkflowTemplate).filter(
             WorkflowTemplate.id == template_id,
             WorkflowTemplate.is_active == True
         ).first()
@@ -723,7 +750,8 @@ class WorkflowEngine:
         category: Optional[str] = None,
         content_type: Optional[str] = None
     ) -> List[Dict[str, Any]]:
-        """        Get available workflow templates with filtering
+        """
+        Get available workflow templates with filtering
         
         Args:
             creator_type: Filter by creator type
@@ -732,7 +760,8 @@ class WorkflowEngine:
             
         Returns:
             List of template information
-        """        query = self.db_session.query(WorkflowTemplate).filter(
+        """
+        query = self.db_session.query(WorkflowTemplate).filter(
             WorkflowTemplate.is_active == True,
             WorkflowTemplate.is_public == True
         )
@@ -774,7 +803,8 @@ class WorkflowEngine:
         self,
         execution_id: str
     ) -> Dict[str, Any]:
-        """Get detailed execution status and progress"""        execution = self.db_session.query(WorkflowExecution).filter(
+        """Get detailed execution status and progress"""
+        execution = self.db_session.query(WorkflowExecution).filter(
             WorkflowExecution.id == execution_id
         ).first()
         
@@ -820,7 +850,8 @@ class WorkflowEngine:
         template_definition: Dict[str, Any],
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply parameters to template definition"""        # This would implement template parameter substitution
+        """Apply parameters to template definition"""
+        # This would implement template parameter substitution
         # For now, return basic customization
         definition = template_definition.copy()
         
@@ -833,7 +864,8 @@ class WorkflowEngine:
         return json.loads(definition_str)
     
     def _calculate_execution_progress(self, tasks: List[WorkflowTask]) -> int:
-        """Calculate overall execution progress percentage"""        if not tasks:
+        """Calculate overall execution progress percentage"""
+        if not tasks:
             return 0
         
         total_progress = sum(task.progress_percentage or 0 for task in tasks)

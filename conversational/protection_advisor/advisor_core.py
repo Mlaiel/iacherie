@@ -19,7 +19,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ INTELLECTUAL PROPERTY WARNING ⚠️
 This code is proprietary and confidential. Unauthorized copying, distribution,
 or use is strictly prohibited and may result in severe legal consequences.
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import json
@@ -53,7 +54,8 @@ logger = get_logger(__name__)
 
 
 class ContentType(str, Enum):
-    """Content types supported for protection advisory with industry standards."""    AUDIO = "audio"
+    """Content types supported for protection advisory with industry standards."""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -73,7 +75,8 @@ class ContentType(str, Enum):
 
 
 class RiskLevel(str, Enum):
-    """Risk assessment levels with detailed scoring."""    MINIMAL = "minimal"      # 0-20% risk score
+    """Risk assessment levels with detailed scoring."""
+    MINIMAL = "minimal"      # 0-20% risk score
     LOW = "low"             # 21-40% risk score
     MODERATE = "moderate"   # 41-60% risk score
     HIGH = "high"          # 61-80% risk score
@@ -81,7 +84,8 @@ class RiskLevel(str, Enum):
 
 
 class ProtectionStatus(str, Enum):
-    """Protection status with comprehensive coverage assessment."""    UNPROTECTED = "unprotected"
+    """Protection status with comprehensive coverage assessment."""
+    UNPROTECTED = "unprotected"
     PARTIALLY_PROTECTED = "partially_protected"
     WELL_PROTECTED = "well_protected"
     FULLY_PROTECTED = "fully_protected"
@@ -91,7 +95,8 @@ class ProtectionStatus(str, Enum):
 
 
 class ThreatCategory(str, Enum):
-    """Threat categories for detailed classification."""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Threat categories for detailed classification."""
+    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_USE = "unauthorized_use"
     REVENUE_THEFT = "revenue_theft"
     BRAND_IMPERSONATION = "brand_impersonation"
@@ -104,7 +109,8 @@ class ThreatCategory(str, Enum):
 
 
 class ComplianceFramework(str, Enum):
-    """Legal and regulatory compliance frameworks."""    DMCA = "dmca"
+    """Legal and regulatory compliance frameworks."""
+    DMCA = "dmca"
     GDPR = "gdpr"
     CCPA = "ccpa"
     COPPA = "coppa"
@@ -118,7 +124,8 @@ class ComplianceFramework(str, Enum):
 
 @dataclass
 class ThreatDetail:
-    """Detailed threat information with impact assessment."""    threat_id: str
+    """Detailed threat information with impact assessment."""
+    threat_id: str
     category: ThreatCategory
     severity: RiskLevel
     confidence_score: float
@@ -136,7 +143,8 @@ class ThreatDetail:
 
 @dataclass
 class ComplianceAssessment:
-    """Compliance status assessment for various frameworks."""    framework: ComplianceFramework
+    """Compliance status assessment for various frameworks."""
+    framework: ComplianceFramework
     compliance_score: float  # 0-100%
     violations: List[str]
     recommendations: List[str]
@@ -150,7 +158,8 @@ class ComplianceAssessment:
 
 @dataclass
 class ProtectionGap:
-    """Identified protection gaps with remediation details."""    gap_id: str
+    """Identified protection gaps with remediation details."""
+    gap_id: str
     gap_type: str
     severity: RiskLevel
     description: str
@@ -166,7 +175,8 @@ class ProtectionGap:
 
 @dataclass
 class ContentAnalysis:
-    """Comprehensive content analysis results with enterprise features."""    content_id: str
+    """Comprehensive content analysis results with enterprise features."""
+    content_id: str
     content_type: ContentType
     risk_level: RiskLevel
     protection_status: ProtectionStatus
@@ -190,7 +200,8 @@ class ContentAnalysis:
 
 @dataclass
 class RevenueImpactAnalysis:
-    """Revenue impact analysis for protection strategies."""    current_monthly_revenue: Decimal
+    """Revenue impact analysis for protection strategies."""
+    current_monthly_revenue: Decimal
     protected_revenue: Decimal
     revenue_at_risk: Decimal
     potential_savings: Decimal
@@ -203,7 +214,8 @@ class RevenueImpactAnalysis:
 
 @dataclass  
 class ProtectionAdvice:
-    """Enhanced protection advisory recommendation with ROI analysis."""    advice_id: str
+    """Enhanced protection advisory recommendation with ROI analysis."""
+    advice_id: str
     priority: int  # 1-10 (10 highest)
     category: str
     title: str
@@ -224,7 +236,8 @@ class ProtectionAdvice:
 
 
 class ProtectionAdvisorCore:
-    """    Enterprise-grade protection advisor providing intelligent recommendations for content protection.
+    """
+    Enterprise-grade protection advisor providing intelligent recommendations for content protection.
     
     This class serves as the central coordination hub for all content protection activities,
     integrating advanced AI models, threat detection, compliance monitoring, and revenue
@@ -239,8 +252,10 @@ class ProtectionAdvisorCore:
     - Enterprise-grade security and encryption
     - Performance monitoring and analytics
     - Machine learning-based prediction models
-    """    def __init__(self):
-        """Initialize the Protection Advisor with enterprise components."""        self.security_manager = SecurityManager()
+    """
+    def __init__(self):
+        """Initialize the Protection Advisor with enterprise components."""
+        self.security_manager = SecurityManager()
         self.ai_models = AIModelManager()
         
         # ML Models for advanced analysis
@@ -278,7 +293,8 @@ class ProtectionAdvisorCore:
         include_recommendations: bool = True,
         deep_analysis: bool = False
     ) -> ContentAnalysis:
-        """        Perform comprehensive enterprise-grade protection analysis for content.
+        """
+        Perform comprehensive enterprise-grade protection analysis for content.
         
         This method conducts a multi-dimensional analysis including:
         - AI-powered risk assessment with ML models
@@ -300,7 +316,8 @@ class ProtectionAdvisorCore:
             ValueError: If content metadata is invalid or incomplete
             SecurityError: If security validation fails
             AIModelError: If AI analysis encounters critical errors
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         
         try:
             # Input validation and security checks
@@ -370,7 +387,8 @@ class ProtectionAdvisorCore:
         content_metadata: Dict[str, Any], 
         analysis_context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute comprehensive deep analysis with advanced ML models."""        
+        """Execute comprehensive deep analysis with advanced ML models."""
+        
         # Advanced parallel analysis tasks
         tasks = [
             self._advanced_risk_assessment(content_metadata, analysis_context),
@@ -402,7 +420,8 @@ class ProtectionAdvisorCore:
         content_metadata: Dict[str, Any], 
         analysis_context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute standard analysis optimized for speed."""        
+        """Execute standard analysis optimized for speed."""
+        
         # Streamlined analysis tasks for quick results
         tasks = [
             self._fast_risk_assessment(content_metadata),
@@ -421,7 +440,8 @@ class ProtectionAdvisorCore:
         }
 
     async def _validate_input_security(self, user_id: str, content_metadata: Dict[str, Any]) -> None:
-        """Validate input parameters and perform security checks."""        if not user_id or not isinstance(user_id, str):
+        """Validate input parameters and perform security checks."""
+        if not user_id or not isinstance(user_id, str):
             raise ValueError("Valid user_id is required")
         
         if not content_metadata or not isinstance(content_metadata, dict):
@@ -437,7 +457,8 @@ class ProtectionAdvisorCore:
         content_metadata: Dict[str, Any],
         analysis_context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform advanced ML-based risk assessment."""        try:
+        """Perform advanced ML-based risk assessment."""
+        try:
             # Extract features for ML model
             features = await self._extract_risk_features(content_metadata)
             
@@ -458,7 +479,8 @@ class ProtectionAdvisorCore:
             return {'risk_level': RiskLevel.MODERATE, 'risk_score': 50.0, 'confidence': 0.5}
 
     async def _ml_based_threat_detection(self, content_metadata: Dict[str, Any]) -> List[ThreatDetail]:
-        """Perform ML-based threat detection."""        try:
+        """Perform ML-based threat detection."""
+        try:
             threats = []
             
             # Analyze for different threat categories
@@ -493,7 +515,8 @@ class ProtectionAdvisorCore:
             return []
 
     async def _comprehensive_compliance_check(self, content_metadata: Dict[str, Any]) -> List[ComplianceAssessment]:
-        """Perform comprehensive compliance assessment."""        try:
+        """Perform comprehensive compliance assessment."""
+        try:
             assessments = []
             
             for framework in ComplianceFramework:
@@ -522,7 +545,8 @@ class ProtectionAdvisorCore:
             return []
 
     async def _advanced_revenue_impact_analysis(self, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform advanced revenue impact analysis."""        try:
+        """Perform advanced revenue impact analysis."""
+        try:
             current_revenue = Decimal(str(content_metadata.get('current_revenue', '0.0')))
             estimated_value = Decimal(str(content_metadata.get('estimated_value', '1000.0')))
             
@@ -545,33 +569,42 @@ class ProtectionAdvisorCore:
 
     # Placeholder methods for remaining functionality
     async def _content_fingerprint_analysis(self, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze content fingerprint coverage."""        return {'fingerprint_coverage': {}, 'fingerprint_quality': 0.8}
+        """Analyze content fingerprint coverage."""
+        return {'fingerprint_coverage': {}, 'fingerprint_quality': 0.8}
 
     async def _advanced_vulnerability_assessment(self, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform advanced vulnerability assessment."""        return {'vulnerability_score': 45.0, 'vulnerabilities': []}
+        """Perform advanced vulnerability assessment."""
+        return {'vulnerability_score': 45.0, 'vulnerabilities': []}
 
     async def _platform_monitoring_analysis(self, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze platform monitoring status."""        return {'monitoring_status': {}, 'coverage_percentage': 75.0}
+        """Analyze platform monitoring status."""
+        return {'monitoring_status': {}, 'coverage_percentage': 75.0}
 
     async def _identify_advanced_protection_gaps(self, content_metadata: Dict[str, Any]) -> List[ProtectionGap]:
-        """Identify advanced protection gaps."""        return []
+        """Identify advanced protection gaps."""
+        return []
 
     # Fast analysis methods for standard mode
     async def _fast_risk_assessment(self, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Fast risk assessment for standard analysis."""        return {'risk_level': RiskLevel.MODERATE, 'risk_score': 50.0}
+        """Fast risk assessment for standard analysis."""
+        return {'risk_level': RiskLevel.MODERATE, 'risk_score': 50.0}
 
     async def _basic_threat_detection(self, content_metadata: Dict[str, Any]) -> List[ThreatDetail]:
-        """Basic threat detection for standard analysis."""        return []
+        """Basic threat detection for standard analysis."""
+        return []
 
     async def _basic_compliance_check(self, content_metadata: Dict[str, Any]) -> List[ComplianceAssessment]:
-        """Basic compliance check for standard analysis."""        return []
+        """Basic compliance check for standard analysis."""
+        return []
 
     async def _basic_revenue_analysis(self, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Basic revenue analysis for standard analysis."""        return {'estimated_value': Decimal('1000.0')}
+        """Basic revenue analysis for standard analysis."""
+        return {'estimated_value': Decimal('1000.0')}
 
     # Helper methods
     async def _get_cached_analysis(self, user_id: str, content_id: str) -> Optional[ContentAnalysis]:
-        """Retrieve cached analysis if available."""        try:
+        """Retrieve cached analysis if available."""
+        try:
             cache_key = f"protection_analysis:{user_id}:{content_id}"
             cached_data = await cache_manager.get(cache_key)
             
@@ -584,7 +617,8 @@ class ProtectionAdvisorCore:
             return None
 
     async def _cache_analysis_results(self, user_id: str, content_id: str, analysis: ContentAnalysis) -> None:
-        """Cache analysis results for future use."""        try:
+        """Cache analysis results for future use."""
+        try:
             cache_key = f"protection_analysis:{user_id}:{content_id}"
             await cache_manager.set(
                 cache_key, 
@@ -600,7 +634,8 @@ class ProtectionAdvisorCore:
         content_metadata: Dict[str, Any],
         analysis_context: Dict[str, Any]
     ) -> ContentAnalysis:
-        """Compile all analysis results into final ContentAnalysis object."""        
+        """Compile all analysis results into final ContentAnalysis object."""
+        
         risk_data = analysis_results.get('risk_analysis', {})
         threat_data = analysis_results.get('threat_detection', [])
         compliance_data = analysis_results.get('compliance_analysis', [])
@@ -633,7 +668,8 @@ class ProtectionAdvisorCore:
         content_metadata: Dict[str, Any],
         user_id: str
     ) -> List[str]:
-        """Generate comprehensive protection recommendations."""        recommendations = []
+        """Generate comprehensive protection recommendations."""
+        recommendations = []
         
         # Risk-based recommendations
         if analysis.risk_level in [RiskLevel.HIGH, RiskLevel.CRITICAL]:
@@ -655,7 +691,8 @@ class ProtectionAdvisorCore:
         return recommendations
 
     async def _update_performance_metrics(self, processing_time: float, success: bool) -> None:
-        """Update internal performance metrics."""        try:
+        """Update internal performance metrics."""
+        try:
             self.analysis_metrics['total_analyses'] += 1
             
             # Update average response time
@@ -677,7 +714,8 @@ class ProtectionAdvisorCore:
 
     # ML Helper methods
     async def _extract_risk_features(self, content_metadata: Dict[str, Any]) -> np.ndarray:
-        """Extract features for ML risk assessment."""        # Simplified feature extraction
+        """Extract features for ML risk assessment."""
+        # Simplified feature extraction
         features = [
             content_metadata.get('size', 0) / 1000000,  # Size in MB
             content_metadata.get('duration', 0) / 3600,  # Duration in hours
@@ -688,7 +726,8 @@ class ProtectionAdvisorCore:
         return np.array(features).reshape(1, -1)
 
     async def _predict_risk_score(self, features: np.ndarray) -> float:
-        """Predict risk score using ML model."""        try:
+        """Predict risk score using ML model."""
+        try:
             # Simplified prediction (in real implementation, use trained model)
             # For now, return a computed score based on features
             feature_sum = float(np.sum(features))
@@ -699,7 +738,8 @@ class ProtectionAdvisorCore:
             return 50.0  # Default moderate risk
 
     def _score_to_risk_level(self, score: float) -> RiskLevel:
-        """Convert numeric score to risk level enum."""        if score <= 20:
+        """Convert numeric score to risk level enum."""
+        if score <= 20:
             return RiskLevel.MINIMAL
         elif score <= 40:
             return RiskLevel.LOW
@@ -711,10 +751,12 @@ class ProtectionAdvisorCore:
             return RiskLevel.CRITICAL
 
     def _probability_to_severity(self, probability: float) -> RiskLevel:
-        """Convert threat probability to severity level."""        return self._score_to_risk_level(probability * 100)
+        """Convert threat probability to severity level."""
+        return self._score_to_risk_level(probability * 100)
 
     async def _identify_risk_factors(self, content_metadata: Dict[str, Any]) -> List[str]:
-        """Identify specific risk factors for content."""        risk_factors = []
+        """Identify specific risk factors for content."""
+        risk_factors = []
         
         if content_metadata.get('public', True):
             risk_factors.append("Public content visibility")
@@ -732,7 +774,8 @@ class ProtectionAdvisorCore:
         content_metadata: Dict[str, Any], 
         threat_category: ThreatCategory
     ) -> float:
-        """Calculate probability of specific threat category."""        # Simplified threat probability calculation
+        """Calculate probability of specific threat category."""
+        # Simplified threat probability calculation
         base_probability = 0.1  # 10% base probability
         
         # Adjust based on content characteristics
@@ -752,7 +795,8 @@ class ProtectionAdvisorCore:
         content_metadata: Dict[str, Any], 
         framework: ComplianceFramework
     ) -> float:
-        """Calculate compliance score for specific framework."""        # Simplified compliance scoring
+        """Calculate compliance score for specific framework."""
+        # Simplified compliance scoring
         base_score = 80.0
         
         if framework == ComplianceFramework.DMCA:
@@ -772,15 +816,18 @@ class ProtectionAdvisorCore:
 
 # Additional helper classes and functions
 class SecurityError(Exception):
-    """Security-related error in protection advisor."""    pass
+    """Security-related error in protection advisor."""
+    pass
 
 
 class AIModelError(Exception):
-    """AI model-related error in protection advisor."""    pass
+    """AI model-related error in protection advisor."""
+    pass
 
 
 def create_protection_advisor() -> ProtectionAdvisorCore:
-    """Factory function to create protection advisor instance."""    return ProtectionAdvisorCore()
+    """Factory function to create protection advisor instance."""
+    return ProtectionAdvisorCore()
 
 
 # Export main classes and functions

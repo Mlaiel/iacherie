@@ -22,7 +22,8 @@ This software is proprietary and confidential.
 Unauthorized use, modification, or distribution by any individual or entity 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import time
@@ -39,7 +40,8 @@ from ..security.query_security import QuerySecurityManager
 logger = logging.getLogger(__name__)
 
 class OptimizationType(Enum):
-    """Types of optimizations available"""    QUERY_REWRITE = "query_rewrite"
+    """Types of optimizations available"""
+    QUERY_REWRITE = "query_rewrite"
     INDEX_SELECTION = "index_selection"
     JOIN_OPTIMIZATION = "join_optimization"
     PREDICATE_PUSHDOWN = "predicate_pushdown"
@@ -48,14 +50,16 @@ class OptimizationType(Enum):
     PARALLEL_EXECUTION = "parallel_execution"
 
 class QueryComplexity(Enum):
-    """Query complexity levels"""    SIMPLE = "simple"
+    """Query complexity levels"""
+    SIMPLE = "simple"
     MODERATE = "moderate"
     COMPLEX = "complex"
     VERY_COMPLEX = "very_complex"
 
 @dataclass
 class QueryPlan:
-    """Query execution plan"""    query_id: str
+    """Query execution plan"""
+    query_id: str
     original_query: Dict[str, Any]
     optimized_query: Dict[str, Any]
     execution_steps: List[Dict[str, Any]]
@@ -68,7 +72,8 @@ class QueryPlan:
 
 @dataclass
 class ExecutionStatistics:
-    """Query execution statistics"""    query_id: str
+    """Query execution statistics"""
+    query_id: str
     actual_time: float
     estimated_time: float
     actual_cost: float
@@ -80,7 +85,8 @@ class ExecutionStatistics:
     sequential_scans: int
 
 class QueryOptimizer:
-    """    Ultra-advanced query optimizer for IA-Influencer platform
+    """
+    Ultra-advanced query optimizer for IA-Influencer platform
     
     Features:
     - AI-powered query analysis and optimization
@@ -92,9 +98,11 @@ class QueryOptimizer:
     - Parallel execution planning
     - Index usage optimization
     - Query result prediction
-    """    
+    """
+    
     def __init__(self):
-        """Initialize query optimizer"""        self.performance_tracker = PerformanceTracker()
+        """Initialize query optimizer"""
+        self.performance_tracker = PerformanceTracker()
         self.security_manager = QuerySecurityManager()
         
         # Query plan cache
@@ -128,7 +136,8 @@ class QueryOptimizer:
         logger.info("QueryOptimizer initialized")
     
     async def initialize(self) -> bool:
-        """Initialize query optimizer"""        try:
+        """Initialize query optimizer"""
+        try:
             # Initialize performance tracker
             await self.performance_tracker.initialize()
             
@@ -152,7 +161,8 @@ class QueryOptimizer:
             return False
     
     async def optimize_query(self, query: Dict[str, Any], context: Optional[Dict[str, Any]] = None) -> QueryPlan:
-        """Optimize a query and generate execution plan"""        try:
+        """Optimize a query and generate execution plan"""
+        try:
             start_time = time.time()
             query_id = f"query_{int(time.time() * 1000000)}"
             
@@ -218,7 +228,8 @@ class QueryOptimizer:
             )
     
     async def _analyze_query_complexity(self, query: Dict[str, Any]) -> QueryComplexity:
-        """Analyze query complexity using multiple factors"""        try:
+        """Analyze query complexity using multiple factors"""
+        try:
             complexity_score = 0
             
             # Query type factor
@@ -276,7 +287,8 @@ class QueryOptimizer:
             return QueryComplexity.MODERATE
     
     def _count_nested_levels(self, obj: Any, level: int = 0) -> int:
-        """Count nested levels in query object"""        if isinstance(obj, dict):
+        """Count nested levels in query object"""
+        if isinstance(obj, dict):
             return max([self._count_nested_levels(v, level + 1) for v in obj.values()] + [level])
         elif isinstance(obj, list):
             return max([self._count_nested_levels(item, level) for item in obj] + [level])
@@ -286,7 +298,8 @@ class QueryOptimizer:
     async def _generate_optimization_candidates(self, query: Dict[str, Any], 
                                               complexity: QueryComplexity,
                                               context: Optional[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Generate multiple optimization candidates"""        candidates = []
+        """Generate multiple optimization candidates"""
+        candidates = []
         
         try:
             # Base candidate (no optimization)
@@ -332,7 +345,8 @@ class QueryOptimizer:
             return candidates or [{'optimized_query': query, 'techniques': [], 'estimated_cost': 100.0, 'estimated_time': 1.0, 'confidence': 0.5}]
     
     async def _generate_rewrite_candidates(self, query: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate query rewrite optimization candidates"""        candidates = []
+        """Generate query rewrite optimization candidates"""
+        candidates = []
         
         try:
             # Optimize WHERE clauses
@@ -380,7 +394,8 @@ class QueryOptimizer:
     
     async def _generate_index_candidates(self, query: Dict[str, Any], 
                                        context: Optional[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Generate index selection optimization candidates"""        candidates = []
+        """Generate index selection optimization candidates"""
+        candidates = []
         
         try:
             available_indexes = await self._get_available_indexes(query, context)
@@ -404,7 +419,8 @@ class QueryOptimizer:
         return candidates
     
     async def _generate_join_candidates(self, query: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate join optimization candidates"""        candidates = []
+        """Generate join optimization candidates"""
+        candidates = []
         
         try:
             joins = query.get('joins', [])
@@ -446,7 +462,8 @@ class QueryOptimizer:
         return candidates
     
     async def _generate_pushdown_candidates(self, query: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate predicate pushdown optimization candidates"""        candidates = []
+        """Generate predicate pushdown optimization candidates"""
+        candidates = []
         
         try:
             if 'filters' in query and 'joins' in query:
@@ -470,7 +487,8 @@ class QueryOptimizer:
         return candidates
     
     async def _generate_parallel_candidates(self, query: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate parallel execution candidates"""        candidates = []
+        """Generate parallel execution candidates"""
+        candidates = []
         
         try:
             # Check if query can be parallelized
@@ -499,7 +517,8 @@ class QueryOptimizer:
     
     async def _generate_adaptive_candidates(self, query: Dict[str, Any], 
                                           context: Optional[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Generate adaptive optimization candidates based on historical performance"""        candidates = []
+        """Generate adaptive optimization candidates based on historical performance"""
+        candidates = []
         
         try:
             # Find similar historical queries
@@ -529,7 +548,8 @@ class QueryOptimizer:
         return candidates
     
     async def _select_best_optimization(self, candidates: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Select best optimization using cost-based analysis"""        try:
+        """Select best optimization using cost-based analysis"""
+        try:
             if not candidates:
                 raise ValueError("No optimization candidates available")
             
@@ -552,7 +572,8 @@ class QueryOptimizer:
             return candidates[0] if candidates else {}
     
     async def _calculate_optimization_score(self, candidate: Dict[str, Any]) -> float:
-        """Calculate optimization score for candidate"""        try:
+        """Calculate optimization score for candidate"""
+        try:
             # Base factors
             cost_factor = 1.0 / max(candidate.get('estimated_cost', 100.0), 1.0)
             time_factor = 1.0 / max(candidate.get('estimated_time', 1.0), 0.1)
@@ -585,7 +606,8 @@ class QueryOptimizer:
     
     async def _create_execution_plan(self, query_id: str, original_query: Dict[str, Any],
                                    optimization: Dict[str, Any], complexity: QueryComplexity) -> QueryPlan:
-        """Create detailed execution plan"""        try:
+        """Create detailed execution plan"""
+        try:
             execution_steps = []
             
             # Add preparation step
@@ -655,7 +677,8 @@ class QueryOptimizer:
             )
     
     async def record_execution_statistics(self, plan: QueryPlan, stats: ExecutionStatistics):
-        """Record actual execution statistics for learning"""        try:
+        """Record actual execution statistics for learning"""
+        try:
             # Store execution statistics
             self.execution_history[plan.query_id] = {
                 'plan': plan,
@@ -695,35 +718,44 @@ class QueryOptimizer:
     
     # Helper methods (simplified implementations)
     async def _estimate_base_cost(self, query: Dict[str, Any]) -> float:
-        """Estimate base cost for query"""        return 50.0 + len(str(query)) * 0.1
+        """Estimate base cost for query"""
+        return 50.0 + len(str(query)) * 0.1
     
     async def _estimate_base_time(self, query: Dict[str, Any]) -> float:
-        """Estimate base execution time for query"""        return 0.5 + len(str(query)) * 0.001
+        """Estimate base execution time for query"""
+        return 0.5 + len(str(query)) * 0.001
     
     async def _load_optimization_rules(self):
-        """Load optimization rules"""        # Implementation would load rules from configuration
+        """Load optimization rules"""
+        # Implementation would load rules from configuration
         pass
     
     async def _load_historical_statistics(self):
-        """Load historical performance statistics"""        # Implementation would load from persistent storage
+        """Load historical performance statistics"""
+        # Implementation would load from persistent storage
         pass
     
     async def _initialize_ml_components(self):
-        """Initialize machine learning components"""        # Implementation would initialize ML models for optimization
+        """Initialize machine learning components"""
+        # Implementation would initialize ML models for optimization
         pass
     
     async def _generate_cache_key(self, query: Dict[str, Any], context: Optional[Dict[str, Any]]) -> str:
-        """Generate cache key for query"""        return f"query_{hash(json.dumps(query, sort_keys=True))}"
+        """Generate cache key for query"""
+        return f"query_{hash(json.dumps(query, sort_keys=True))}"
     
     async def _get_cached_plan(self, cache_key: str) -> Optional[QueryPlan]:
-        """Get cached execution plan"""        return self.plan_cache.get(cache_key)
+        """Get cached execution plan"""
+        return self.plan_cache.get(cache_key)
     
     async def _is_plan_valid(self, plan: QueryPlan) -> bool:
-        """Check if cached plan is still valid"""        age = (datetime.now() - plan.created_at).total_seconds()
+        """Check if cached plan is still valid"""
+        age = (datetime.now() - plan.created_at).total_seconds()
         return age < self.cache_ttl
     
     async def _cache_plan(self, cache_key: str, plan: QueryPlan):
-        """Cache execution plan"""        if len(self.plan_cache) >= self.cache_size_limit:
+        """Cache execution plan"""
+        if len(self.plan_cache) >= self.cache_size_limit:
             # Remove oldest entry
             oldest_key = min(self.plan_cache.keys(), key=lambda k: self.plan_cache[k].created_at)
             del self.plan_cache[oldest_key]
@@ -731,48 +763,60 @@ class QueryOptimizer:
         self.plan_cache[cache_key] = plan
     
     async def _optimize_filters(self, filters: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize filter conditions"""        return filters  # Simplified implementation
+        """Optimize filter conditions"""
+        return filters  # Simplified implementation
     
     async def _optimize_field_selection(self, fields: List[str]) -> List[str]:
-        """Optimize field selection"""        return fields[:10]  # Simplified: limit to 10 fields
+        """Optimize field selection"""
+        return fields[:10]  # Simplified: limit to 10 fields
     
     async def _optimize_sort_fields(self, sort_fields: List[str]) -> List[str]:
-        """Optimize sort fields"""        return sort_fields[:3]  # Simplified: limit to 3 sort fields
+        """Optimize sort fields"""
+        return sort_fields[:3]  # Simplified: limit to 3 sort fields
     
     async def _get_available_indexes(self, query: Dict[str, Any], context: Optional[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Get available indexes for query"""        return [
+        """Get available indexes for query"""
+        return [
             {'indexes': ['primary'], 'cost_factor': 1.0, 'time_factor': 1.0, 'confidence': 0.8},
             {'indexes': ['content_gin'], 'cost_factor': 0.8, 'time_factor': 0.9, 'confidence': 0.7},
             {'indexes': ['vector_ivfflat'], 'cost_factor': 0.9, 'time_factor': 0.8, 'confidence': 0.75}
         ]
     
     def _has_joins(self, query: Dict[str, Any]) -> bool:
-        """Check if query has joins"""        return 'joins' in query and len(query['joins']) > 0
+        """Check if query has joins"""
+        return 'joins' in query and len(query['joins']) > 0
     
     async def _optimize_join_order(self, joins: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Optimize join order"""        return joins  # Simplified implementation
+        """Optimize join order"""
+        return joins  # Simplified implementation
     
     async def _push_down_predicates(self, filters: Dict[str, Any], joins: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Push down predicates to reduce data early"""        return filters  # Simplified implementation
+        """Push down predicates to reduce data early"""
+        return filters  # Simplified implementation
     
     async def _can_parallelize(self, query: Dict[str, Any]) -> bool:
-        """Check if query can be parallelized"""        return len(str(query)) > 200  # Simplified heuristic
+        """Check if query can be parallelized"""
+        return len(str(query)) > 200  # Simplified heuristic
     
     async def _calculate_optimal_workers(self, query: Dict[str, Any]) -> int:
-        """Calculate optimal number of workers"""        return min(4, max(1, len(str(query)) // 100))
+        """Calculate optimal number of workers"""
+        return min(4, max(1, len(str(query)) // 100))
     
     async def _find_similar_queries(self, query: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Find similar historical queries"""        return []  # Simplified implementation
+        """Find similar historical queries"""
+        return []  # Simplified implementation
     
     async def _get_technique_effectiveness(self, technique: OptimizationType) -> float:
-        """Get historical effectiveness of optimization technique"""        if technique in self.optimization_effectiveness:
+        """Get historical effectiveness of optimization technique"""
+        if technique in self.optimization_effectiveness:
             stats = self.optimization_effectiveness[technique]
             if stats['total_count'] > 0:
                 return stats['success_count'] / stats['total_count']
         return 0.5  # Default effectiveness
     
     async def _cleanup_old_history(self):
-        """Clean up old execution history"""        if len(self.execution_history) > self.learning_window:
+        """Clean up old execution history"""
+        if len(self.execution_history) > self.learning_window:
             # Keep only recent entries
             sorted_entries = sorted(
                 self.execution_history.items(),
@@ -782,7 +826,8 @@ class QueryOptimizer:
             self.execution_history = dict(sorted_entries[:self.learning_window])
     
     async def get_optimization_statistics(self) -> Dict[str, Any]:
-        """Get optimization performance statistics"""        try:
+        """Get optimization performance statistics"""
+        try:
             return {
                 'total_optimizations': len(self.execution_history),
                 'technique_effectiveness': self.optimization_effectiveness,
@@ -797,7 +842,8 @@ class QueryOptimizer:
             return {}
     
     async def cleanup(self):
-        """Cleanup optimizer resources"""        try:
+        """Cleanup optimizer resources"""
+        try:
             # Clear caches
             self.plan_cache.clear()
             self.execution_history.clear()

@@ -33,7 +33,8 @@ Fahed Mlaiel. Unauthorized use, copying, or commercial exploitation is
 strictly prohibited under international intellectual property law.
 
 Contact: mlaiel@live.de
-"""import numpy as np
+"""
+import numpy as np
 import logging
 import asyncio
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -50,7 +51,8 @@ import threading
 
 
 class MusicEra(Enum):
-    """Musical eras and decades"""    CLASSICAL = "classical"           # Pre-1900
+    """Musical eras and decades"""
+    CLASSICAL = "classical"           # Pre-1900
     EARLY_20TH = "early_20th"        # 1900-1920
     JAZZ_AGE = "jazz_age"            # 1920-1940
     SWING_BEBOP = "swing_bebop"      # 1940-1950
@@ -65,7 +67,8 @@ class MusicEra(Enum):
 
 
 class MusicalStyle(Enum):
-    """Comprehensive musical style categories"""    # Electronic styles
+    """Comprehensive musical style categories"""
+    # Electronic styles
     HOUSE = "house"
     TECHNO = "techno"
     TRANCE = "trance"
@@ -119,7 +122,8 @@ class MusicalStyle(Enum):
 
 
 class ProductionStyle(Enum):
-    """Audio production style characteristics"""    VINTAGE_ANALOG = "vintage_analog"
+    """Audio production style characteristics"""
+    VINTAGE_ANALOG = "vintage_analog"
     MODERN_DIGITAL = "modern_digital"
     LO_FI = "lo_fi"
     HI_FI = "hi_fi"
@@ -132,7 +136,8 @@ class ProductionStyle(Enum):
 
 
 class InstrumentationStyle(Enum):
-    """Instrumentation and arrangement styles"""    FULL_BAND = "full_band"
+    """Instrumentation and arrangement styles"""
+    FULL_BAND = "full_band"
     ACOUSTIC_ENSEMBLE = "acoustic_ensemble"
     ELECTRONIC_ONLY = "electronic_only"
     HYBRID_ACOUSTIC_ELECTRONIC = "hybrid"
@@ -146,7 +151,8 @@ class InstrumentationStyle(Enum):
 
 @dataclass
 class StyleConfidence:
-    """Style classification confidence metrics"""    primary_style: MusicalStyle
+    """Style classification confidence metrics"""
+    primary_style: MusicalStyle
     confidence: float
     secondary_styles: List[Tuple[MusicalStyle, float]]
     classification_certainty: float
@@ -154,7 +160,8 @@ class StyleConfidence:
 
 @dataclass
 class EraClassification:
-    """Musical era classification result"""    primary_era: MusicEra
+    """Musical era classification result"""
+    primary_era: MusicEra
     confidence: float
     era_influences: Dict[MusicEra, float]
     temporal_characteristics: Dict[str, float]
@@ -162,7 +169,8 @@ class EraClassification:
 
 @dataclass
 class ProductionAnalysis:
-    """Production style analysis"""    production_style: ProductionStyle
+    """Production style analysis"""
+    production_style: ProductionStyle
     confidence: float
     sonic_characteristics: Dict[str, float]
     recording_quality_indicators: Dict[str, float]
@@ -171,7 +179,8 @@ class ProductionAnalysis:
 
 @dataclass
 class InstrumentationAnalysis:
-    """Instrumentation and arrangement analysis"""    arrangement_style: InstrumentationStyle
+    """Instrumentation and arrangement analysis"""
+    arrangement_style: InstrumentationStyle
     detected_instruments: List[Tuple[str, float]]
     ensemble_size_estimate: int
     instrumental_balance: Dict[str, float]
@@ -180,7 +189,8 @@ class InstrumentationAnalysis:
 
 @dataclass
 class CulturalAnalysis:
-    """Cultural and regional style analysis"""    regional_influences: Dict[str, float]
+    """Cultural and regional style analysis"""
+    regional_influences: Dict[str, float]
     cultural_markers: List[str]
     cross_cultural_fusion: bool
     traditional_elements: List[str]
@@ -189,7 +199,8 @@ class CulturalAnalysis:
 
 @dataclass
 class ArtistSimilarity:
-    """Artist similarity and influence analysis"""    similar_artists: List[Tuple[str, float]]
+    """Artist similarity and influence analysis"""
+    similar_artists: List[Tuple[str, float]]
     style_influences: List[str]
     innovation_score: float
     genre_purity_score: float
@@ -198,7 +209,8 @@ class ArtistSimilarity:
 
 @dataclass
 class StyleAnalysisResult:
-    """Complete musical style analysis result"""    # Core style classification
+    """Complete musical style analysis result"""
+    # Core style classification
     style_classification: StyleConfidence
     era_classification: EraClassification
     
@@ -229,18 +241,22 @@ class StyleAnalysisResult:
 
 
 class StyleAnalyzer:
-    """    🎨 Ultra-Advanced Musical Style Classification Engine
+    """
+    🎨 Ultra-Advanced Musical Style Classification Engine
     
     Professional AI-powered musical style analysis system providing comprehensive
     understanding of musical characteristics, cultural context, and artistic
     influences for content creators and music industry professionals.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize advanced style analyzer
+        """
+        Initialize advanced style analyzer
         
         Args:
             config: Configuration parameters for style analysis
-        """        self.logger = logging.getLogger(self.__class__.__name__)
+        """
+        self.logger = logging.getLogger(self.__class__.__name__)
         self.config = config or {}
         
         # Analysis parameters
@@ -284,7 +300,8 @@ class StyleAnalyzer:
                                   sample_rate: int = 44100,
                                   artist_hint: Optional[str] = None,
                                   detailed_analysis: bool = True) -> StyleAnalysisResult:
-        """        Perform comprehensive musical style analysis
+        """
+        Perform comprehensive musical style analysis
         
         Args:
             audio_data: Input audio signal
@@ -294,7 +311,8 @@ class StyleAnalyzer:
             
         Returns:
             Complete musical style analysis result
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             self.logger.info("Starting comprehensive musical style analysis")
@@ -409,7 +427,8 @@ class StyleAnalyzer:
     async def _extract_style_features(self,
                                     audio_data: np.ndarray,
                                     sample_rate: int) -> Dict[str, np.ndarray]:
-        """Extract comprehensive features for style analysis"""        def extract():
+        """Extract comprehensive features for style analysis"""
+        def extract():
             try:
                 features = {}
                 
@@ -473,7 +492,8 @@ class StyleAnalyzer:
                                     features: Dict[str, np.ndarray],
                                     audio_data: np.ndarray,
                                     sample_rate: int) -> StyleConfidence:
-        """Classify musical style using advanced feature analysis"""        def classify():
+        """Classify musical style using advanced feature analysis"""
+        def classify():
             try:
                 # Style scoring based on characteristic patterns
                 style_scores = {}
@@ -556,7 +576,8 @@ class StyleAnalyzer:
                                   features: Dict[str, np.ndarray],
                                   audio_data: np.ndarray,
                                   sample_rate: int) -> EraClassification:
-        """Classify musical era and temporal characteristics"""        def classify():
+        """Classify musical era and temporal characteristics"""
+        def classify():
             try:
                 era_scores = {}
                 
@@ -640,7 +661,8 @@ class StyleAnalyzer:
     
     # Style characteristic detection methods
     def _score_electronic_characteristics(self, features: Dict[str, np.ndarray]) -> float:
-        """Score electronic music characteristics"""        try:
+        """Score electronic music characteristics"""
+        try:
             score = 0.0
             
             # High harmonic energy suggests electronic synthesis
@@ -669,7 +691,8 @@ class StyleAnalyzer:
             return 0.0
     
     def _score_house_characteristics(self, features: Dict[str, np.ndarray]) -> float:
-        """Score house music specific characteristics"""        try:
+        """Score house music specific characteristics"""
+        try:
             score = 0.0
             
             tempo = features.get('tempo', 120)
@@ -689,7 +712,8 @@ class StyleAnalyzer:
             return 0.0
     
     def _score_techno_characteristics(self, features: Dict[str, np.ndarray]) -> float:
-        """Score techno music specific characteristics"""        try:
+        """Score techno music specific characteristics"""
+        try:
             score = 0.0
             
             tempo = features.get('tempo', 120)
@@ -707,7 +731,8 @@ class StyleAnalyzer:
             return 0.0
     
     def _score_trance_characteristics(self, features: Dict[str, np.ndarray]) -> float:
-        """Score trance music characteristics"""        try:
+        """Score trance music characteristics"""
+        try:
             score = 0.0
             
             tempo = features.get('tempo', 120)
@@ -725,7 +750,8 @@ class StyleAnalyzer:
             return 0.0
     
     def _score_dubstep_characteristics(self, features: Dict[str, np.ndarray]) -> float:
-        """Score dubstep characteristics"""        try:
+        """Score dubstep characteristics"""
+        try:
             score = 0.0
             
             tempo = features.get('tempo', 140)
@@ -747,7 +773,8 @@ class StyleAnalyzer:
             return 0.0
     
     def _score_rock_characteristics(self, features: Dict[str, np.ndarray]) -> float:
-        """Score rock music characteristics"""        try:
+        """Score rock music characteristics"""
+        try:
             score = 0.0
             
             # Typical rock tempo range
@@ -776,7 +803,8 @@ class StyleAnalyzer:
     # For brevity, I'll include representative methods
     
     def _score_pop_characteristics(self, features: Dict[str, np.ndarray]) -> float:
-        """Score pop music characteristics"""        try:
+        """Score pop music characteristics"""
+        try:
             score = 0.0
             
             # Pop tempo range
@@ -800,7 +828,8 @@ class StyleAnalyzer:
             return 0.0
     
     def _score_jazz_characteristics(self, features: Dict[str, np.ndarray]) -> float:
-        """Score jazz music characteristics"""        try:
+        """Score jazz music characteristics"""
+        try:
             score = 0.0
             
             # Complex harmonic content
@@ -828,7 +857,8 @@ class StyleAnalyzer:
             return 0.0
     
     def _score_hiphop_characteristics(self, features: Dict[str, np.ndarray]) -> float:
-        """Score hip-hop music characteristics"""        try:
+        """Score hip-hop music characteristics"""
+        try:
             score = 0.0
             
             # Hip-hop tempo range
@@ -858,7 +888,8 @@ class StyleAnalyzer:
     
     def _assess_production_quality(self, features: Dict[str, np.ndarray], 
                                  audio_data: np.ndarray, sample_rate: int) -> float:
-        """Assess overall production quality"""        try:
+        """Assess overall production quality"""
+        try:
             quality_factors = []
             
             # Signal-to-noise ratio estimation
@@ -882,7 +913,8 @@ class StyleAnalyzer:
             return 0.5
     
     def _estimate_dynamic_range(self, features: Dict[str, np.ndarray]) -> float:
-        """Estimate dynamic range of the audio"""        try:
+        """Estimate dynamic range of the audio"""
+        try:
             rms_values = features.get('rms_energy', [0.1])
             if len(rms_values) > 1:
                 dynamic_range = np.std(rms_values) / (np.mean(rms_values) + 1e-10)
@@ -893,13 +925,16 @@ class StyleAnalyzer:
     
     # Era detection helper methods
     def _detect_jazz_characteristics(self, features: Dict[str, np.ndarray]) -> bool:
-        """Detect jazz musical characteristics"""        return self._score_jazz_characteristics(features) > 0.5
+        """Detect jazz musical characteristics"""
+        return self._score_jazz_characteristics(features) > 0.5
     
     def _detect_rock_characteristics(self, features: Dict[str, np.ndarray]) -> bool:
-        """Detect rock musical characteristics"""        return self._score_rock_characteristics(features) > 0.5
+        """Detect rock musical characteristics"""
+        return self._score_rock_characteristics(features) > 0.5
     
     def _detect_80s_characteristics(self, features: Dict[str, np.ndarray]) -> bool:
-        """Detect 1980s production characteristics"""        try:
+        """Detect 1980s production characteristics"""
+        try:
             # Gated reverb detection (simplified)
             rms_values = features.get('rms_energy', [])
             if len(rms_values) > 10:
@@ -915,7 +950,8 @@ class StyleAnalyzer:
             return False
     
     def _detect_modern_production(self, features: Dict[str, np.ndarray]) -> bool:
-        """Detect modern digital production characteristics"""        try:
+        """Detect modern digital production characteristics"""
+        try:
             # High production quality indicators
             production_quality = self._assess_production_quality(features, None, 44100)
             
@@ -927,7 +963,8 @@ class StyleAnalyzer:
             return False
     
     def _count_digital_signatures(self, features: Dict[str, np.ndarray]) -> float:
-        """Count digital processing signatures"""        try:
+        """Count digital processing signatures"""
+        try:
             signatures = 0.0
             
             # Perfect timing (quantized)
@@ -952,7 +989,8 @@ class StyleAnalyzer:
     
     async def _analyze_production_style(self, features: Dict[str, np.ndarray],
                                        audio_data: np.ndarray, sample_rate: int) -> ProductionAnalysis:
-        """Analyze production style characteristics"""        return ProductionAnalysis(
+        """Analyze production style characteristics"""
+        return ProductionAnalysis(
             production_style=ProductionStyle.MODERN_DIGITAL,
             confidence=0.8,
             sonic_characteristics={'brightness': 0.7, 'warmth': 0.6, 'depth': 0.8},
@@ -962,7 +1000,8 @@ class StyleAnalyzer:
     
     async def _analyze_instrumentation(self, features: Dict[str, np.ndarray],
                                      audio_data: np.ndarray, sample_rate: int) -> InstrumentationAnalysis:
-        """Analyze instrumentation and arrangement"""        return InstrumentationAnalysis(
+        """Analyze instrumentation and arrangement"""
+        return InstrumentationAnalysis(
             arrangement_style=InstrumentationStyle.FULL_BAND,
             detected_instruments=[('guitar', 0.8), ('bass', 0.7), ('drums', 0.9)],
             ensemble_size_estimate=4,
@@ -972,7 +1011,8 @@ class StyleAnalyzer:
     
     async def _analyze_cultural_influences(self, features: Dict[str, np.ndarray],
                                          audio_data: np.ndarray, sample_rate: int) -> CulturalAnalysis:
-        """Analyze cultural and regional influences"""        return CulturalAnalysis(
+        """Analyze cultural and regional influences"""
+        return CulturalAnalysis(
             regional_influences={'western': 0.8, 'latin': 0.2},
             cultural_markers=['major_scale', 'western_harmony'],
             cross_cultural_fusion=False,
@@ -982,7 +1022,8 @@ class StyleAnalyzer:
     
     async def _find_artist_similarities(self, features: Dict[str, np.ndarray],
                                       artist_hint: Optional[str]) -> ArtistSimilarity:
-        """Find similar artists and influences"""        return ArtistSimilarity(
+        """Find similar artists and influences"""
+        return ArtistSimilarity(
             similar_artists=[('Unknown Artist', 0.7)],
             style_influences=['rock', 'pop'],
             innovation_score=0.6,
@@ -992,7 +1033,8 @@ class StyleAnalyzer:
     
     async def _extract_rhythmic_characteristics(self, features: Dict[str, np.ndarray],
                                               audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Extract detailed rhythmic characteristics"""        return {
+        """Extract detailed rhythmic characteristics"""
+        return {
             'tempo_stability': 0.9,
             'groove_intensity': 0.7,
             'syncopation': 0.3,
@@ -1002,7 +1044,8 @@ class StyleAnalyzer:
     
     async def _extract_harmonic_characteristics(self, features: Dict[str, np.ndarray],
                                               audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Extract detailed harmonic characteristics"""        return {
+        """Extract detailed harmonic characteristics"""
+        return {
             'harmonic_complexity': 0.6,
             'chord_progression_predictability': 0.7,
             'modal_characteristics': 0.3,
@@ -1012,7 +1055,8 @@ class StyleAnalyzer:
     
     async def _extract_melodic_characteristics(self, features: Dict[str, np.ndarray],
                                              audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Extract detailed melodic characteristics"""        return {
+        """Extract detailed melodic characteristics"""
+        return {
             'melodic_complexity': 0.6,
             'pitch_range': 0.7,
             'melodic_contour_smoothness': 0.8,
@@ -1022,7 +1066,8 @@ class StyleAnalyzer:
     
     async def _extract_textural_characteristics(self, features: Dict[str, np.ndarray],
                                               audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Extract detailed textural characteristics"""        return {
+        """Extract detailed textural characteristics"""
+        return {
             'density': 0.7,
             'layering_complexity': 0.6,
             'spatial_distribution': 0.8,
@@ -1034,7 +1079,8 @@ class StyleAnalyzer:
     def _generate_style_tags(self, style_result: StyleConfidence, 
                            era_result: EraClassification,
                            production_result: ProductionAnalysis) -> List[str]:
-        """Generate style tags for content"""        tags = []
+        """Generate style tags for content"""
+        tags = []
         
         # Primary style tag
         tags.append(style_result.primary_style.value)
@@ -1054,7 +1100,8 @@ class StyleAnalyzer:
     
     def _generate_playlist_suggestions(self, style_result: StyleConfidence,
                                      era_result: EraClassification) -> List[str]:
-        """Generate playlist placement suggestions"""        suggestions = []
+        """Generate playlist placement suggestions"""
+        suggestions = []
         
         # Style-based playlists
         style_name = style_result.primary_style.value
@@ -1075,7 +1122,8 @@ class StyleAnalyzer:
     def _analyze_target_audience(self, style_result: StyleConfidence,
                                era_result: EraClassification,
                                cultural_result: CulturalAnalysis) -> Dict[str, Any]:
-        """Analyze target audience profile"""        return {
+        """Analyze target audience profile"""
+        return {
             'age_groups': ['25-34', '35-44'],
             'music_preferences': [style_result.primary_style.value],
             'cultural_background': list(cultural_result.regional_influences.keys()),
@@ -1086,7 +1134,8 @@ class StyleAnalyzer:
     def _generate_marketing_keywords(self, style_result: StyleConfidence,
                                    era_result: EraClassification,
                                    cultural_result: CulturalAnalysis) -> List[str]:
-        """Generate marketing keywords"""        keywords = []
+        """Generate marketing keywords"""
+        keywords = []
         
         # Style keywords
         style_name = style_result.primary_style.value.replace('_', ' ')
@@ -1105,11 +1154,13 @@ class StyleAnalyzer:
     
     # Initialize databases and configurations
     def _initialize_style_databases(self):
-        """Initialize style characteristic databases"""        # This would load comprehensive style databases
+        """Initialize style characteristic databases"""
+        # This would load comprehensive style databases
         self.style_database_initialized = True
     
     def _load_artist_database(self) -> Dict[str, Any]:
-        """Load artist similarity database"""        # This would load a comprehensive artist database
+        """Load artist similarity database"""
+        # This would load a comprehensive artist database
         return {
             'artists': [],
             'similarities': {},
@@ -1118,7 +1169,8 @@ class StyleAnalyzer:
     
     # Default results for error cases
     def _default_style_classification(self) -> StyleConfidence:
-        """Default style classification result"""        return StyleConfidence(
+        """Default style classification result"""
+        return StyleConfidence(
             primary_style=MusicalStyle.POP_MAINSTREAM,
             confidence=0.5,
             secondary_styles=[],
@@ -1126,7 +1178,8 @@ class StyleAnalyzer:
         )
     
     def _default_era_classification(self) -> EraClassification:
-        """Default era classification result"""        return EraClassification(
+        """Default era classification result"""
+        return EraClassification(
             primary_era=MusicEra.STREAMING_ERA,
             confidence=0.6,
             era_influences={MusicEra.STREAMING_ERA: 0.6},
@@ -1134,7 +1187,8 @@ class StyleAnalyzer:
         )
     
     def _default_production_analysis(self) -> ProductionAnalysis:
-        """Default production analysis result"""        return ProductionAnalysis(
+        """Default production analysis result"""
+        return ProductionAnalysis(
             production_style=ProductionStyle.MODERN_DIGITAL,
             confidence=0.7,
             sonic_characteristics={'brightness': 0.6, 'warmth': 0.5, 'depth': 0.7},
@@ -1143,7 +1197,8 @@ class StyleAnalyzer:
         )
     
     def _default_instrumentation_analysis(self) -> InstrumentationAnalysis:
-        """Default instrumentation analysis result"""        return InstrumentationAnalysis(
+        """Default instrumentation analysis result"""
+        return InstrumentationAnalysis(
             arrangement_style=InstrumentationStyle.FULL_BAND,
             detected_instruments=[('unknown', 0.5)],
             ensemble_size_estimate=3,
@@ -1152,7 +1207,8 @@ class StyleAnalyzer:
         )
     
     def _default_cultural_analysis(self) -> CulturalAnalysis:
-        """Default cultural analysis result"""        return CulturalAnalysis(
+        """Default cultural analysis result"""
+        return CulturalAnalysis(
             regional_influences={'western': 0.8},
             cultural_markers=['western_harmony'],
             cross_cultural_fusion=False,
@@ -1161,7 +1217,8 @@ class StyleAnalyzer:
         )
     
     def _default_artist_similarity(self) -> ArtistSimilarity:
-        """Default artist similarity result"""        return ArtistSimilarity(
+        """Default artist similarity result"""
+        return ArtistSimilarity(
             similar_artists=[],
             style_influences=[],
             innovation_score=0.5,
@@ -1172,17 +1229,20 @@ class StyleAnalyzer:
     # Additional methods for the remaining scoring functions would continue here
     
     def _generate_cache_key(self, audio_data: np.ndarray) -> str:
-        """Generate cache key for analysis result"""        import hashlib
+        """Generate cache key for analysis result"""
+        import hashlib
         audio_hash = hashlib.sha256(audio_data.tobytes()).hexdigest()[:16]
         return f"style_analysis_{audio_hash}"
     
     def clear_cache(self):
-        """Clear analysis cache"""        with self.cache_lock:
+        """Clear analysis cache"""
+        with self.cache_lock:
             self.analysis_cache.clear()
         self.logger.info("Style analysis cache cleared")
     
     def get_analyzer_stats(self) -> Dict[str, Any]:
-        """Get analyzer statistics"""        with self.cache_lock:
+        """Get analyzer statistics"""
+        with self.cache_lock:
             cache_size = len(self.analysis_cache)
         
         return {
@@ -1194,7 +1254,8 @@ class StyleAnalyzer:
         }
     
     def __del__(self):
-        """Cleanup resources"""        try:
+        """Cleanup resources"""
+        try:
             if hasattr(self, 'executor'):
                 self.executor.shutdown(wait=False)
         except:

@@ -6,7 +6,8 @@ user matching, partnership management, and collaborative content creation.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""import uuid
+"""
+import uuid
 from datetime import datetime, timedelta
 from typing import Dict, Any, List, Optional
 from sqlalchemy.orm import Session
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 settings = get_settings()
 
 class CollaborationService:
-    """    Comprehensive collaboration management service.
+    """
+    Comprehensive collaboration management service.
     
     Features:
     - Project-based collaboration creation
@@ -36,13 +38,15 @@ class CollaborationService:
     - Progress tracking and deliverables
     - Revenue sharing and contracts
     - Quality assurance and reviews
-    """    
+    """
+    
     def __init__(self):
         self.matching_service = MatchingService()
         self.notification_service = NotificationService()
     
     async def create_collaboration(self, collaboration_data: CollaborationCreate, db: Session = None) -> Collaboration:
-        """        Create new collaboration project with initial setup.
+        """
+        Create new collaboration project with initial setup.
         
         Args:
             collaboration_data: Collaboration creation data
@@ -50,7 +54,8 @@ class CollaborationService:
             
         Returns:
             Created collaboration instance
-        """        try:
+        """
+        try:
             if not db:
                 db = next(get_db())
             
@@ -123,7 +128,8 @@ class CollaborationService:
             raise
     
     async def get_collaboration_by_id(self, collaboration_id: str, db: Session = None) -> Optional[Collaboration]:
-        """Get collaboration by ID with related data"""        try:
+        """Get collaboration by ID with related data"""
+        try:
             if not db:
                 db = next(get_db())
             
@@ -136,7 +142,8 @@ class CollaborationService:
             return None
     
     async def get_collaboration_with_details(self, collaboration_id: str, db: Session = None) -> Optional[Collaboration]:
-        """Get collaboration with full details including participants and activities"""        try:
+        """Get collaboration with full details including participants and activities"""
+        try:
             if not db:
                 db = next(get_db())
             
@@ -169,7 +176,8 @@ class CollaborationService:
         limit: int = 20,
         db: Session = None
     ) -> List[Collaboration]:
-        """Get collaborations created by user"""        try:
+        """Get collaborations created by user"""
+        try:
             if not db:
                 db = next(get_db())
             
@@ -197,7 +205,8 @@ class CollaborationService:
         limit: int = 20,
         db: Session = None
     ) -> List[Collaboration]:
-        """Get collaborations where user is invited/participating"""        try:
+        """Get collaborations where user is invited/participating"""
+        try:
             if not db:
                 db = next(get_db())
             
@@ -222,7 +231,8 @@ class CollaborationService:
             return []
     
     async def is_user_invited(self, collaboration_id: str, user_id: str, db: Session = None) -> bool:
-        """Check if user is invited to collaboration"""        try:
+        """Check if user is invited to collaboration"""
+        try:
             if not db:
                 db = next(get_db())
             
@@ -241,7 +251,8 @@ class CollaborationService:
             return False
     
     async def accept_collaboration(self, collaboration_id: str, user_id: str, message: str = "", db: Session = None) -> Collaboration:
-        """Accept collaboration invitation"""        try:
+        """Accept collaboration invitation"""
+        try:
             if not db:
                 db = next(get_db())
             
@@ -301,7 +312,8 @@ class CollaborationService:
             raise
     
     async def reject_collaboration(self, collaboration_id: str, user_id: str, message: str = "", db: Session = None) -> Collaboration:
-        """Reject collaboration invitation"""        try:
+        """Reject collaboration invitation"""
+        try:
             if not db:
                 db = next(get_db())
             
@@ -352,7 +364,8 @@ class CollaborationService:
         message: str = "",
         db: Session = None
     ) -> Collaboration:
-        """Negotiate collaboration terms"""        try:
+        """Negotiate collaboration terms"""
+        try:
             if not db:
                 db = next(get_db())
             
@@ -405,7 +418,8 @@ class CollaborationService:
         collaboration_update: CollaborationUpdate, 
         db: Session = None
     ) -> Optional[Collaboration]:
-        """Update collaboration details"""        try:
+        """Update collaboration details"""
+        try:
             if not db:
                 db = next(get_db())
             
@@ -433,7 +447,8 @@ class CollaborationService:
             raise
     
     async def user_has_access(self, collaboration_id: str, user_id: str, db: Session = None) -> bool:
-        """Check if user has access to collaboration"""        try:
+        """Check if user has access to collaboration"""
+        try:
             if not db:
                 db = next(get_db())
             
@@ -460,7 +475,8 @@ class CollaborationService:
             return False
     
     async def user_can_edit(self, collaboration_id: str, user_id: str, db: Session = None) -> bool:
-        """Check if user can edit collaboration"""        try:
+        """Check if user can edit collaboration"""
+        try:
             if not db:
                 db = next(get_db())
             
@@ -488,7 +504,8 @@ class CollaborationService:
             return False
     
     async def user_can_complete(self, collaboration_id: str, user_id: str, db: Session = None) -> bool:
-        """Check if user can mark collaboration as completed"""        return await self.user_can_edit(collaboration_id, user_id, db)
+        """Check if user can mark collaboration as completed"""
+        return await self.user_can_edit(collaboration_id, user_id, db)
     
     async def complete_collaboration(
         self,
@@ -499,7 +516,8 @@ class CollaborationService:
         feedback: str = "",
         db: Session = None
     ) -> Dict[str, Any]:
-        """Mark collaboration as completed"""        try:
+        """Mark collaboration as completed"""
+        try:
             if not db:
                 db = next(get_db())
             
@@ -543,7 +561,8 @@ class CollaborationService:
             raise
     
     async def get_collaboration_activities(self, collaboration_id: str, db: Session = None) -> List[Dict[str, Any]]:
-        """Get collaboration activity timeline"""        try:
+        """Get collaboration activity timeline"""
+        try:
             # This would integrate with an activity/timeline table
             # Simplified implementation for now
             activities = [
@@ -562,7 +581,8 @@ class CollaborationService:
             return []
     
     async def get_collaboration_content(self, collaboration_id: str, db: Session = None) -> List[Dict[str, Any]]:
-        """Get content shared within collaboration"""        try:
+        """Get content shared within collaboration"""
+        try:
             # This would integrate with content sharing functionality
             # Simplified implementation for now
             shared_content = []
@@ -581,7 +601,8 @@ class CollaborationService:
         description: str,
         db: Session = None
     ) -> None:
-        """Log collaboration activity"""        try:
+        """Log collaboration activity"""
+        try:
             # This would log to an activity table
             # Simplified for now
             logger.info(f"Collaboration activity: {collaboration_id} - {activity_type} - {description}")
@@ -590,7 +611,8 @@ class CollaborationService:
             logger.error(f"Log collaboration activity error: {str(e)}")
     
     async def get_user_collaboration_settings(self, user_id: str, db: Session = None) -> Dict[str, Any]:
-        """Get user's collaboration preferences and settings"""        try:
+        """Get user's collaboration preferences and settings"""
+        try:
             if not db:
                 db = next(get_db())
             
@@ -618,7 +640,8 @@ class CollaborationService:
         role: str = "collaborator",
         db: Session = None
     ) -> CollaborationInvitation:
-        """Create collaboration invitation"""        try:
+        """Create collaboration invitation"""
+        try:
             if not db:
                 db = next(get_db())
             
@@ -642,7 +665,8 @@ class CollaborationService:
             raise
     
     async def _calculate_participant_ratings(self, collaboration_id: str, db: Session = None) -> Dict[str, Any]:
-        """Calculate participant ratings and contributions"""        try:
+        """Calculate participant ratings and contributions"""
+        try:
             # This would implement a rating system based on:
             # - Contribution quality
             # - Timeliness

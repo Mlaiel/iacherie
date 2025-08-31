@@ -7,7 +7,8 @@ transformation workflows for creators.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from pathlib import Path
@@ -20,7 +21,8 @@ logger = logging.getLogger(__name__)
 
 
 class ConversionType(Enum):
-    """Types of format conversion."""    AUDIO_TO_AUDIO = "audio_to_audio"
+    """Types of format conversion."""
+    AUDIO_TO_AUDIO = "audio_to_audio"
     VIDEO_TO_VIDEO = "video_to_video"
     IMAGE_TO_IMAGE = "image_to_image"
     TEXT_TO_TEXT = "text_to_text"
@@ -32,7 +34,8 @@ class ConversionType(Enum):
 
 @dataclass
 class ConversionRule:
-    """Format conversion rule definition."""    source_format: str
+    """Format conversion rule definition."""
+    source_format: str
     target_format: str
     conversion_type: ConversionType
     transformer_class: str
@@ -43,7 +46,8 @@ class ConversionRule:
 
 @dataclass
 class ConversionRequest:
-    """Format conversion request."""    input_path: str
+    """Format conversion request."""
+    input_path: str
     output_path: Optional[str] = None
     source_format: Optional[str] = None
     target_format: str = "mp3"
@@ -52,17 +56,21 @@ class ConversionRequest:
 
 
 class FormatConverter:
-    """    Universal format converter for the IA Influencer Agent Platform.
+    """
+    Universal format converter for the IA Influencer Agent Platform.
     
     Provides intelligent format conversion routing and optimization
     for creator content workflows.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize format converter.
+        """
+        Initialize format converter.
         
         Args:
             config: Configuration options
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         
         # Initialize conversion rules
         self.conversion_rules = self._init_conversion_rules()
@@ -76,7 +84,8 @@ class FormatConverter:
         logger.info("FormatConverter initialized")
     
     def _init_conversion_rules(self) -> Dict[str, ConversionRule]:
-        """Initialize format conversion rules."""        rules = {}
+        """Initialize format conversion rules."""
+        rules = {}
         
         # Audio conversions
         audio_formats = ['mp3', 'wav', 'flac', 'aac', 'ogg', 'm4a']
@@ -195,7 +204,8 @@ class FormatConverter:
         return rules
     
     def _build_compatibility_matrix(self) -> Dict[str, List[str]]:
-        """Build format compatibility matrix."""        return {
+        """Build format compatibility matrix."""
+        return {
             # Audio formats
             'mp3': ['wav', 'flac', 'aac', 'ogg', 'm4a'],
             'wav': ['mp3', 'flac', 'aac', 'ogg'],
@@ -230,7 +240,8 @@ class FormatConverter:
         }
     
     def _init_quality_mappings(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize quality mappings for different content types."""        return {
+        """Initialize quality mappings for different content types."""
+        return {
             'audio': {
                 'low': {'bitrate': 128, 'sample_rate': 44100},
                 'medium': {'bitrate': 192, 'sample_rate': 44100},
@@ -259,7 +270,8 @@ class FormatConverter:
         quality: str = "high",
         **options
     ) -> Dict[str, Any]:
-        """        Convert file to target format.
+        """
+        Convert file to target format.
         
         Args:
             input_path: Input file path
@@ -270,7 +282,8 @@ class FormatConverter:
             
         Returns:
             Conversion result
-        """        try:
+        """
+        try:
             # Detect source format
             source_format = self._detect_format(input_path)
             if not source_format:
@@ -318,7 +331,8 @@ class FormatConverter:
         quality: str = "high",
         **options
     ) -> List[Dict[str, Any]]:
-        """        Convert multiple files in batch.
+        """
+        Convert multiple files in batch.
         
         Args:
             file_paths: List of input file paths
@@ -329,7 +343,8 @@ class FormatConverter:
             
         Returns:
             List of conversion results
-        """        results = []
+        """
+        results = []
         
         for file_path in file_paths:
             try:
@@ -363,20 +378,23 @@ class FormatConverter:
         return results
     
     def get_supported_conversions(self, source_format: Optional[str] = None) -> Dict[str, List[str]]:
-        """        Get supported format conversions.
+        """
+        Get supported format conversions.
         
         Args:
             source_format: Source format (optional, returns all if None)
             
         Returns:
             Dictionary of supported conversions
-        """        if source_format:
+        """
+        if source_format:
             return {source_format: self.compatibility_matrix.get(source_format, [])}
         else:
             return self.compatibility_matrix.copy()
     
     def get_conversion_info(self, source_format: str, target_format: str) -> Optional[Dict[str, Any]]:
-        """        Get information about a specific conversion.
+        """
+        Get information about a specific conversion.
         
         Args:
             source_format: Source format
@@ -384,7 +402,8 @@ class FormatConverter:
             
         Returns:
             Conversion information
-        """        rule = self._get_conversion_rule(source_format, target_format)
+        """
+        rule = self._get_conversion_rule(source_format, target_format)
         if not rule:
             return None
         
@@ -404,7 +423,8 @@ class FormatConverter:
         use_case: str = "general",
         constraints: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Suggest optimal target format based on use case.
+        """
+        Suggest optimal target format based on use case.
         
         Args:
             source_format: Source format
@@ -413,7 +433,8 @@ class FormatConverter:
             
         Returns:
             Format recommendation
-        """        constraints = constraints or {}
+        """
+        constraints = constraints or {}
         
         # Use case recommendations
         recommendations = {
@@ -475,7 +496,8 @@ class FormatConverter:
         }
     
     def _detect_format(self, file_path: str) -> Optional[str]:
-        """Detect file format from path."""        try:
+        """Detect file format from path."""
+        try:
             path = Path(file_path)
             extension = path.suffix.lower().lstrip('.')
             
@@ -493,7 +515,8 @@ class FormatConverter:
             return None
     
     def _determine_content_type(self, format: str) -> str:
-        """Determine content type from format."""        audio_formats = {'mp3', 'wav', 'flac', 'aac', 'ogg', 'm4a', 'wma'}
+        """Determine content type from format."""
+        audio_formats = {'mp3', 'wav', 'flac', 'aac', 'ogg', 'm4a', 'wma'}
         video_formats = {'mp4', 'avi', 'mov', 'mkv', 'webm', 'wmv', 'flv'}
         image_formats = {'jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp', 'tiff', 'svg'}
         text_formats = {'txt', 'json', 'xml', 'html', 'md', 'csv', 'yaml'}
@@ -510,14 +533,17 @@ class FormatConverter:
             return 'unknown'
     
     def _get_conversion_rule(self, source_format: str, target_format: str) -> Optional[ConversionRule]:
-        """Get conversion rule for format pair."""        rule_key = f"{source_format}_to_{target_format}"
+        """Get conversion rule for format pair."""
+        rule_key = f"{source_format}_to_{target_format}"
         return self.conversion_rules.get(rule_key)
     
     def _is_conversion_available(self, source_format: str, target_format: str) -> bool:
-        """Check if conversion is available."""        return self._get_conversion_rule(source_format, target_format) is not None
+        """Check if conversion is available."""
+        return self._get_conversion_rule(source_format, target_format) is not None
     
     async def _validate_conversion(self, request: ConversionRequest) -> Dict[str, Any]:
-        """Validate conversion request."""        try:
+        """Validate conversion request."""
+        try:
             # Check if file exists
             if not Path(request.input_path).exists():
                 return {'valid': False, 'reason': 'Input file does not exist'}
@@ -541,7 +567,8 @@ class FormatConverter:
         request: ConversionRequest,
         rule: ConversionRule
     ) -> Dict[str, Any]:
-        """Perform the actual conversion."""        try:
+        """Perform the actual conversion."""
+        try:
             start_time = time.time()
             
             # Import appropriate transformer
@@ -614,7 +641,8 @@ class FormatConverter:
 
 
 class MultiFormatConverter:
-    """Multi-format converter with advanced routing."""    
+    """Multi-format converter with advanced routing."""
+    
     def __init__(self, converter: Optional[FormatConverter] = None):
         self.converter = converter or FormatConverter()
     
@@ -625,7 +653,8 @@ class MultiFormatConverter:
         output_dir: Optional[str] = None,
         quality: str = "high"
     ) -> List[Dict[str, Any]]:
-        """Convert single file to multiple formats."""        results = []
+        """Convert single file to multiple formats."""
+        results = []
         
         for target_format in target_formats:
             try:
@@ -658,7 +687,8 @@ class MultiFormatConverter:
 
 
 class ConversionManager:
-    """High-level conversion management interface."""    
+    """High-level conversion management interface."""
+    
     def __init__(self, converter: Optional[FormatConverter] = None):
         self.converter = converter or FormatConverter()
         self.conversion_history = []
@@ -669,7 +699,8 @@ class ConversionManager:
         use_case: str = "web",
         constraints: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Smart conversion based on use case and constraints."""        try:
+        """Smart conversion based on use case and constraints."""
+        try:
             # Detect source format
             source_format = self.converter._detect_format(input_path)
             
@@ -712,10 +743,12 @@ class ConversionManager:
             }
     
     def get_conversion_history(self) -> List[Dict[str, Any]]:
-        """Get conversion history."""        return self.conversion_history.copy()
+        """Get conversion history."""
+        return self.conversion_history.copy()
     
     def get_conversion_stats(self) -> Dict[str, Any]:
-        """Get conversion statistics."""        if not self.conversion_history:
+        """Get conversion statistics."""
+        if not self.conversion_history:
             return {'total_conversions': 0}
         
         successful = [c for c in self.conversion_history if c.get('success')]

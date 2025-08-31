@@ -8,7 +8,8 @@ Team Expertise: Lead AI Developer + Senior Backend + ML Engineer + DBA + Securit
 ⚠️ INTELLECTUAL PROPERTY WARNING:
 This watermarking system and all associated code are the exclusive intellectual property 
 of Fahed Mlaiel. Unauthorized use is strictly prohibited.
-"""from .service_manager import (
+"""
+from .service_manager import (
     WatermarkServiceManager,
     WatermarkRequest, 
     WatermarkResponse,
@@ -40,7 +41,8 @@ __version__ = "1.0.0"
 
 # Quick access functions for common operations
 async def create_watermark_service(config: dict = None) -> WatermarkServiceManager:
-    """Creates and initializes a professional watermarking service"""    manager = WatermarkServiceManager(config or {})
+    """Creates and initializes a professional watermarking service"""
+    manager = WatermarkServiceManager(config or {})
     return manager
 
 async def embed_watermark(
@@ -50,7 +52,8 @@ async def embed_watermark(
     strength: str = "medium",
     method: str = "auto"
 ) -> WatermarkResponse:
-    """Quick watermark embedding function"""    manager = await create_watermark_service()
+    """Quick watermark embedding function"""
+    manager = await create_watermark_service()
     
     request = WatermarkRequest(
         operation=WatermarkOperation.EMBED,
@@ -68,7 +71,8 @@ async def detect_watermark(
     content_type: str,
     detection_method: str = "auto"
 ) -> WatermarkResponse:
-    """Quick watermark detection function"""    manager = await create_watermark_service()
+    """Quick watermark detection function"""
+    manager = await create_watermark_service()
     
     request = WatermarkRequest(
         operation=WatermarkOperation.DETECT,
@@ -84,7 +88,8 @@ async def verify_ownership(
     content_type: str,
     claimed_owner: str
 ) -> WatermarkResponse:
-    """Quick ownership verification function"""    manager = await create_watermark_service()
+    """Quick ownership verification function"""
+    manager = await create_watermark_service()
     
     request = WatermarkRequest(
         operation=WatermarkOperation.VERIFY,
@@ -100,7 +105,8 @@ async def forensic_analysis(
     content_type: str,
     claimed_owner: str
 ) -> WatermarkResponse:
-    """Quick forensic analysis function"""    manager = await create_watermark_service()
+    """Quick forensic analysis function"""
+    manager = await create_watermark_service()
     
     request = WatermarkRequest(
         operation=WatermarkOperation.ANALYZE,

@@ -10,7 +10,8 @@ Unauthorized use, copying or distribution prohibited.
 Master coordinator for managing multiple web crawlers simultaneously.
 Handles task distribution, resource allocation, monitoring, and error recovery
 across all supported platforms for optimal content surveillance.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Set, Any, Callable
@@ -33,7 +34,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CrawlerTask:
-    """Represents a crawling task with metadata."""    
+    """Represents a crawling task with metadata."""
+    
     task_id: str
     platform: CrawlerType
     target_urls: List[str]
@@ -49,7 +51,8 @@ class CrawlerTask:
 
 @dataclass  
 class CrawlerStats:
-    """Statistics for crawler performance monitoring."""    
+    """Statistics for crawler performance monitoring."""
+    
     platform: str
     total_tasks: int = 0
     completed_tasks: int = 0
@@ -61,11 +64,13 @@ class CrawlerStats:
     error_rate: float = 0.0
 
 class CrawlerCoordinator:
-    """    Master coordinator for multi-platform web crawling operations.
+    """
+    Master coordinator for multi-platform web crawling operations.
     
     Manages crawler lifecycle, task scheduling, resource allocation,
     and violation detection across all supported platforms.
-    """    
+    """
+    
     def __init__(
         self,
         config: CrawlerConfig,
@@ -109,7 +114,8 @@ class CrawlerCoordinator:
         logger.info("CrawlerCoordinator initialized with %d platforms", len(self.crawlers))
     
     def _initialize_crawlers(self):
-        """Initialize platform-specific crawlers."""        
+        """Initialize platform-specific crawlers."""
+        
         for platform_type in CrawlerType:
             platform_config = self.config.get_platform_config(platform_type)
             
@@ -139,13 +145,15 @@ class CrawlerCoordinator:
                 logger.error("Failed to initialize crawler for %s: %s", platform_type.value, str(e))
     
     def _initialize_stats(self):
-        """Initialize performance statistics for all platforms."""        for platform_type in self.crawlers:
+        """Initialize performance statistics for all platforms."""
+        for platform_type in self.crawlers:
             self.crawler_stats[platform_type.value] = CrawlerStats(
                 platform=platform_type.value
             )
     
     async def start(self):
-        """Start the crawler coordinator and all managed crawlers."""        if self.is_running:
+        """Start the crawler coordinator and all managed crawlers."""
+        if self.is_running:
             logger.warning("Coordinator is already running")
             return
         
@@ -167,7 +175,8 @@ class CrawlerCoordinator:
             raise
     
     async def stop(self):
-        """Stop the crawler coordinator and cleanup resources."""        if not self.is_running:
+        """Stop the crawler coordinator and cleanup resources."""
+        if not self.is_running:
             return
         
         logger.info("Stopping CrawlerCoordinator...")
@@ -192,7 +201,8 @@ class CrawlerCoordinator:
         logger.info("CrawlerCoordinator stopped")
     
     async def _coordination_loop(self):
-        """Main coordination loop for task processing."""        
+        """Main coordination loop for task processing."""
+        
         while self.is_running:
             try:
                 # Process pending tasks
@@ -225,7 +235,8 @@ class CrawlerCoordinator:
         priority: int = 3,
         scheduled_at: Optional[datetime] = None
     ) -> str:
-        """        Submit a new crawling task for processing.
+        """
+        Submit a new crawling task for processing.
         
         Args:
             platform: Target platform to crawl
@@ -236,7 +247,8 @@ class CrawlerCoordinator:
             
         Returns:
             Task ID for tracking
-        """        
+        """
+        
         if platform not in self.crawlers:
             raise ValueError(f"Platform {platform.value} is not supported or enabled")
         
@@ -263,7 +275,8 @@ class CrawlerCoordinator:
         return task_id
     
     async def _process_task_queue(self):
-        """Process pending tasks from the queue."""        
+        """Process pending tasks from the queue."""
+        
         if not self.task_queue:
             return
         
@@ -285,7 +298,8 @@ class CrawlerCoordinator:
             self.task_queue.remove(task)
     
     async def _execute_task(self, task: CrawlerTask):
-        """Execute a crawling task asynchronously."""        
+        """Execute a crawling task asynchronously."""
+        
         task.status = "running"
         task.started_at = datetime.utcnow()
         self.running_tasks[task.task_id] = task
@@ -319,7 +333,8 @@ class CrawlerCoordinator:
             self.completed_tasks[task.task_id] = task
     
     def _run_crawler_task(self, crawler, task: CrawlerTask) -> Dict[str, Any]:
-        """Run crawler task in thread pool (synchronous)."""        
+        """Run crawler task in thread pool (synchronous)."""
+        
         try:
             # Execute crawling
             crawler_results = crawler.crawl_urls(
@@ -350,7 +365,8 @@ class CrawlerCoordinator:
             raise
     
     async def _monitor_running_tasks(self):
-        """Monitor running tasks and handle completion."""        
+        """Monitor running tasks and handle completion."""
+        
         completed_task_ids = []
         
         for task_id, task in self.running_tasks.items():
@@ -391,7 +407,8 @@ class CrawlerCoordinator:
             await self._store_task_state(task)
     
     async def _handle_violations(self, task: CrawlerTask, violations: List[Dict[str, Any]]):
-        """Handle detected violations with notifications and actions."""        
+        """Handle detected violations with notifications and actions."""
+        
         for violation in violations:
             try:
                 # Store violation in database
@@ -414,7 +431,8 @@ class CrawlerCoordinator:
                 logger.error("Error handling violation: %s", str(e))
     
     async def _update_statistics(self):
-        """Update performance statistics for all crawlers."""        
+        """Update performance statistics for all crawlers."""
+        
         for platform, stats in self.crawler_stats.items():
             # Count completed tasks
             completed_for_platform = [
@@ -447,7 +465,8 @@ class CrawlerCoordinator:
         await self._store_statistics()
     
     async def cancel_task(self, task_id: str) -> bool:
-        """Cancel a running or pending task."""        
+        """Cancel a running or pending task."""
+        
         # Check running tasks
         if task_id in self.running_tasks:
             task = self.running_tasks[task_id]
@@ -485,7 +504,8 @@ class CrawlerCoordinator:
         return False
     
     def get_task_status(self, task_id: str) -> Optional[Dict[str, Any]]:
-        """Get status information for a specific task."""        
+        """Get status information for a specific task."""
+        
         # Check running tasks
         if task_id in self.running_tasks:
             task = self.running_tasks[task_id]
@@ -504,10 +524,12 @@ class CrawlerCoordinator:
         return None
     
     def get_platform_statistics(self) -> Dict[str, CrawlerStats]:
-        """Get performance statistics for all platforms."""        return self.crawler_stats.copy()
+        """Get performance statistics for all platforms."""
+        return self.crawler_stats.copy()
     
     def get_coordinator_status(self) -> Dict[str, Any]:
-        """Get overall coordinator status and statistics."""        
+        """Get overall coordinator status and statistics."""
+        
         return {
             'is_running': self.is_running,
             'start_time': self.start_time.isoformat() if self.start_time else None,
@@ -523,7 +545,8 @@ class CrawlerCoordinator:
     # Private helper methods
     
     def _task_to_dict(self, task: CrawlerTask) -> Dict[str, Any]:
-        """Convert task object to dictionary."""        return {
+        """Convert task object to dictionary."""
+        return {
             'task_id': task.task_id,
             'platform': task.platform.value,
             'target_urls': task.target_urls,
@@ -540,7 +563,8 @@ class CrawlerCoordinator:
         }
     
     def _stats_to_dict(self, stats: CrawlerStats) -> Dict[str, Any]:
-        """Convert stats object to dictionary."""        return {
+        """Convert stats object to dictionary."""
+        return {
             'platform': stats.platform,
             'total_tasks': stats.total_tasks,
             'completed_tasks': stats.completed_tasks,
@@ -553,7 +577,8 @@ class CrawlerCoordinator:
         }
     
     async def _store_task_state(self, task: CrawlerTask):
-        """Store task state in Redis for persistence."""        try:
+        """Store task state in Redis for persistence."""
+        try:
             task_data = self._task_to_dict(task)
             self.redis_client.setex(
                 f"crawler_task:{task.task_id}",
@@ -564,7 +589,8 @@ class CrawlerCoordinator:
             logger.error("Failed to store task state: %s", str(e))
     
     async def _store_statistics(self):
-        """Store statistics in Redis."""        try:
+        """Store statistics in Redis."""
+        try:
             stats_data = {
                 name: self._stats_to_dict(stats)
                 for name, stats in self.crawler_stats.items()
@@ -578,16 +604,19 @@ class CrawlerCoordinator:
             logger.error("Failed to store statistics: %s", str(e))
     
     async def _store_violation(self, violation: Dict[str, Any]):
-        """Store violation in database."""        # Implementation depends on database schema
+        """Store violation in database."""
+        # Implementation depends on database schema
         # This would integrate with the protection/detection system
         pass
     
     async def _send_violation_notification(self, violation: Dict[str, Any]):
-        """Send violation notification via configured channels."""        # Implementation for webhook/email notifications
+        """Send violation notification via configured channels."""
+        # Implementation for webhook/email notifications
         pass
     
     async def _cleanup_old_tasks(self):
-        """Clean up old completed tasks to prevent memory leaks."""        cutoff_time = datetime.utcnow() - timedelta(hours=24)
+        """Clean up old completed tasks to prevent memory leaks."""
+        cutoff_time = datetime.utcnow() - timedelta(hours=24)
         
         old_task_ids = [
             task_id for task_id, task in self.completed_tasks.items()
@@ -601,7 +630,8 @@ class CrawlerCoordinator:
             logger.info("Cleaned up %d old tasks", len(old_task_ids))
     
     async def _health_check_crawlers(self):
-        """Perform health checks on all crawlers."""        for platform_type, crawler in self.crawlers.items():
+        """Perform health checks on all crawlers."""
+        for platform_type, crawler in self.crawlers.items():
             try:
                 if hasattr(crawler, 'health_check'):
                     is_healthy = await crawler.health_check()

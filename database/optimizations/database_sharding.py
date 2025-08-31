@@ -5,7 +5,8 @@ automatic rebalancing, and cross-shard query optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import hashlib
 import json
 import random
@@ -25,7 +26,8 @@ logger = get_logger(__name__)
 
 
 class ShardingStrategy(Enum):
-    """Database sharding strategies"""    HASH_BASED = "hash_based"
+    """Database sharding strategies"""
+    HASH_BASED = "hash_based"
     RANGE_BASED = "range_based"
     DIRECTORY_BASED = "directory_based"
     CONSISTENT_HASH = "consistent_hash"
@@ -34,7 +36,8 @@ class ShardingStrategy(Enum):
 
 
 class ShardStatus(Enum):
-    """Shard status states"""    ACTIVE = "active"
+    """Shard status states"""
+    ACTIVE = "active"
     MIGRATING = "migrating"
     READONLY = "readonly"
     OFFLINE = "offline"
@@ -43,7 +46,8 @@ class ShardStatus(Enum):
 
 
 class QueryType(Enum):
-    """Query operation types"""    SELECT = "select"
+    """Query operation types"""
+    SELECT = "select"
     INSERT = "insert"
     UPDATE = "update"
     DELETE = "delete"
@@ -52,7 +56,8 @@ class QueryType(Enum):
 
 @dataclass
 class ShardConfig:
-    """Shard configuration"""    shard_id: str
+    """Shard configuration"""
+    shard_id: str
     host: str
     port: int
     database: str
@@ -67,7 +72,8 @@ class ShardConfig:
 
 @dataclass
 class ShardMetrics:
-    """Shard performance metrics"""    shard_id: str
+    """Shard performance metrics"""
+    shard_id: str
     row_count: int = 0
     size_mb: float = 0.0
     cpu_usage: float = 0.0
@@ -79,10 +85,12 @@ class ShardMetrics:
     last_updated: datetime = field(default_factory=datetime.now)
     
     def utilization_score(self) -> float:
-        """Calculate shard utilization score (0-1)"""        return max(self.cpu_usage, self.memory_usage, self.disk_usage)
+        """Calculate shard utilization score (0-1)"""
+        return max(self.cpu_usage, self.memory_usage, self.disk_usage)
     
     def health_score(self) -> float:
-        """Calculate shard health score (0-100)"""        score = 100.0
+        """Calculate shard health score (0-100)"""
+        score = 100.0
         
         # Penalize high utilization
         score -= self.utilization_score() * 30
@@ -99,7 +107,8 @@ class ShardMetrics:
 
 @dataclass
 class ShardingRule:
-    """Sharding rule definition"""    table_name: str
+    """Sharding rule definition"""
+    table_name: str
     shard_key: str
     strategy: ShardingStrategy
     shard_count: int
@@ -108,7 +117,8 @@ class ShardingRule:
 
 
 class ConsistentHashRing:
-    """Consistent hash ring for sharding"""    
+    """Consistent hash ring for sharding"""
+    
     def __init__(self, shards: List[str], virtual_nodes: int = 100):
         self.shards = set(shards)
         self.virtual_nodes = virtual_nodes
@@ -117,7 +127,8 @@ class ConsistentHashRing:
         self._build_ring()
     
     def _build_ring(self):
-        """Build the hash ring"""        self.ring.clear()
+        """Build the hash ring"""
+        self.ring.clear()
         self.shard_positions.clear()
         
         for shard in self.shards:
@@ -132,7 +143,8 @@ class ConsistentHashRing:
         logger.info(f"Built consistent hash ring with {len(self.ring)} virtual nodes")
     
     def get_shard(self, key: str) -> str:
-        """Get shard for given key"""        if not self.ring:
+        """Get shard for given key"""
+        if not self.ring:
             raise ValueError("Hash ring is empty")
         
         # Hash the key
@@ -147,7 +159,8 @@ class ConsistentHashRing:
         return self.ring[min(self.ring.keys())]
     
     def add_shard(self, shard: str):
-        """Add a new shard to the ring"""        if shard in self.shards:
+        """Add a new shard to the ring"""
+        if shard in self.shards:
             return
         
         self.shards.add(shard)
@@ -162,7 +175,8 @@ class ConsistentHashRing:
         logger.info(f"Added shard {shard} to hash ring")
     
     def remove_shard(self, shard: str):
-        """Remove a shard from the ring"""        if shard not in self.shards:
+        """Remove a shard from the ring"""
+        if shard not in self.shards:
             return
         
         self.shards.remove(shard)
@@ -176,7 +190,8 @@ class ConsistentHashRing:
         logger.info(f"Removed shard {shard} from hash ring")
     
     def get_affected_keys_for_rebalance(self, removed_shard: str) -> Dict[str, str]:
-        """Get keys that need to be moved when a shard is removed"""        if removed_shard not in self.shards:
+        """Get keys that need to be moved when a shard is removed"""
+        if removed_shard not in self.shards:
             return {}
         
         # This is a simplified implementation
@@ -196,17 +211,20 @@ class ConsistentHashRing:
 
 
 class ShardRouter:
-    """Routes queries to appropriate shards"""    
+    """Routes queries to appropriate shards"""
+    
     def __init__(self, sharding_rules: Dict[str, ShardingRule]):
         self.sharding_rules = sharding_rules
         self.consistent_rings: Dict[str, ConsistentHashRing] = {}
     
     def setup_consistent_ring(self, table_name: str, shards: List[str]):
-        """Setup consistent hash ring for table"""        self.consistent_rings[table_name] = ConsistentHashRing(shards)
+        """Setup consistent hash ring for table"""
+        self.consistent_rings[table_name] = ConsistentHashRing(shards)
     
     def route_query(self, table_name: str, query_data: Dict[str, Any], 
                    query_type: QueryType) -> List[str]:
-        """Route query to appropriate shards"""        rule = self.sharding_rules.get(table_name)
+        """Route query to appropriate shards"""
+        rule = self.sharding_rules.get(table_name)
         if not rule:
             raise ValueError(f"No sharding rule found for table {table_name}")
         
@@ -229,7 +247,8 @@ class ShardRouter:
     
     def _route_hash_based(self, table_name: str, shard_key_value: Any, 
                          rule: ShardingRule) -> List[str]:
-        """Route using hash-based sharding"""        if shard_key_value is None:
+        """Route using hash-based sharding"""
+        if shard_key_value is None:
             # Cross-shard query
             return [f"shard_{i}" for i in range(rule.shard_count)]
         
@@ -241,7 +260,8 @@ class ShardRouter:
     
     def _route_consistent_hash(self, table_name: str, shard_key_value: Any, 
                               rule: ShardingRule) -> List[str]:
-        """Route using consistent hashing"""        if shard_key_value is None:
+        """Route using consistent hashing"""
+        if shard_key_value is None:
             # Cross-shard query
             ring = self.consistent_rings.get(table_name)
             return list(ring.shards) if ring else []
@@ -255,7 +275,8 @@ class ShardRouter:
     
     def _route_range_based(self, table_name: str, shard_key_value: Any, 
                           rule: ShardingRule) -> List[str]:
-        """Route using range-based sharding"""        if shard_key_value is None:
+        """Route using range-based sharding"""
+        if shard_key_value is None:
             return [f"shard_{i}" for i in range(rule.shard_count)]
         
         # Simplified range routing
@@ -267,7 +288,8 @@ class ShardRouter:
     
     def _route_tenant_based(self, table_name: str, shard_key_value: Any, 
                            rule: ShardingRule) -> List[str]:
-        """Route using tenant-based sharding"""        if shard_key_value is None:
+        """Route using tenant-based sharding"""
+        if shard_key_value is None:
             return [f"shard_{i}" for i in range(rule.shard_count)]
         
         # Hash tenant ID to determine shard
@@ -278,13 +300,15 @@ class ShardRouter:
 
 
 class CrossShardQueryExecutor:
-    """Executes queries across multiple shards"""    
+    """Executes queries across multiple shards"""
+    
     def __init__(self, shard_engines: Dict[str, AsyncEngine]):
         self.shard_engines = shard_engines
     
     async def execute_cross_shard_query(self, query: str, target_shards: List[str],
                                       aggregation_func: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Execute query across multiple shards"""        try:
+        """Execute query across multiple shards"""
+        try:
             # Execute query on all target shards concurrently
             tasks = []
             for shard_id in target_shards:
@@ -321,7 +345,8 @@ class CrossShardQueryExecutor:
             raise
     
     async def _execute_on_shard(self, shard_id: str, query: str) -> List[Dict[str, Any]]:
-        """Execute query on a specific shard"""        engine = self.shard_engines[shard_id]
+        """Execute query on a specific shard"""
+        engine = self.shard_engines[shard_id]
         
         async with engine.begin() as conn:
             result = await conn.execute(text(query))
@@ -333,7 +358,8 @@ class CrossShardQueryExecutor:
     
     def _apply_aggregation(self, results: List[Dict[str, Any]], 
                           aggregation_func: str) -> List[Dict[str, Any]]:
-        """Apply aggregation function to combined results"""        if not results:
+        """Apply aggregation function to combined results"""
+        if not results:
             return []
         
         if aggregation_func.upper() == "COUNT":
@@ -357,13 +383,15 @@ class CrossShardQueryExecutor:
 
 
 class ShardRebalancer:
-    """Handles shard rebalancing operations"""    
+    """Handles shard rebalancing operations"""
+    
     def __init__(self, shard_coordinator: 'DatabaseShardCoordinator'):
         self.coordinator = shard_coordinator
         self.rebalancing_tasks: Dict[str, asyncio.Task] = {}
     
     async def check_rebalancing_needed(self) -> Dict[str, Any]:
-        """Check if rebalancing is needed"""        try:
+        """Check if rebalancing is needed"""
+        try:
             rebalancing_plan = {
                 'needed': False,
                 'reasons': [],
@@ -411,7 +439,8 @@ class ShardRebalancer:
             return {'needed': False, 'error': str(e)}
     
     async def rebalance_shards(self, plan: Dict[str, Any]) -> bool:
-        """Execute shard rebalancing"""        try:
+        """Execute shard rebalancing"""
+        try:
             logger.info("Starting shard rebalancing")
             
             # This is a simplified implementation
@@ -433,7 +462,8 @@ class ShardRebalancer:
 
 
 class DatabaseShardCoordinator:
-    """Main coordinator for database sharding operations"""    
+    """Main coordinator for database sharding operations"""
+    
     def __init__(self, shard_configs: Dict[str, ShardConfig], 
                  sharding_rules: Dict[str, ShardingRule]):
         self.shard_configs = shard_configs
@@ -457,7 +487,8 @@ class DatabaseShardCoordinator:
         self.query_stats: Dict[str, Dict[str, int]] = defaultdict(lambda: defaultdict(int))
     
     async def initialize(self) -> bool:
-        """Initialize shard coordinator"""        try:
+        """Initialize shard coordinator"""
+        try:
             logger.info("Initializing database shard coordinator")
             
             # Initialize shard engines
@@ -500,7 +531,8 @@ class DatabaseShardCoordinator:
             return False
     
     async def _create_shard_engine(self, config: ShardConfig) -> AsyncEngine:
-        """Create async engine for shard"""        dsn = f"postgresql+asyncpg://{config.username}:{config.password}@{config.host}:{config.port}/{config.database}"
+        """Create async engine for shard"""
+        dsn = f"postgresql+asyncpg://{config.username}:{config.password}@{config.host}:{config.port}/{config.database}"
         
         return create_async_engine(
             dsn,
@@ -512,7 +544,8 @@ class DatabaseShardCoordinator:
         )
     
     async def _test_shard_connectivity(self, shard_id: str) -> bool:
-        """Test connectivity to shard"""        try:
+        """Test connectivity to shard"""
+        try:
             engine = self.shard_engines.get(shard_id)
             if not engine:
                 return False
@@ -528,7 +561,8 @@ class DatabaseShardCoordinator:
     async def execute_query(self, table_name: str, query: str, 
                            query_data: Dict[str, Any],
                            query_type: QueryType = QueryType.SELECT) -> Any:
-        """Execute query with automatic shard routing"""        try:
+        """Execute query with automatic shard routing"""
+        try:
             # Route query to appropriate shards
             target_shards = self.shard_router.route_query(table_name, query_data, query_type)
             
@@ -567,7 +601,8 @@ class DatabaseShardCoordinator:
     
     async def _execute_on_shard(self, shard_id: str, query: str, 
                                params: Dict[str, Any]) -> Any:
-        """Execute query on specific shard"""        engine = self.shard_engines.get(shard_id)
+        """Execute query on specific shard"""
+        engine = self.shard_engines.get(shard_id)
         if not engine:
             raise Exception(f"Shard {shard_id} not available")
         
@@ -580,7 +615,8 @@ class DatabaseShardCoordinator:
             return result.fetchall()
     
     async def start_monitoring(self):
-        """Start shard monitoring"""        if self.is_monitoring:
+        """Start shard monitoring"""
+        if self.is_monitoring:
             return
         
         self.is_monitoring = True
@@ -588,7 +624,8 @@ class DatabaseShardCoordinator:
         logger.info("Shard monitoring started")
     
     async def stop_monitoring(self):
-        """Stop shard monitoring"""        self.is_monitoring = False
+        """Stop shard monitoring"""
+        self.is_monitoring = False
         
         if self.monitoring_task:
             self.monitoring_task.cancel()
@@ -600,7 +637,8 @@ class DatabaseShardCoordinator:
         logger.info("Shard monitoring stopped")
     
     async def _monitoring_loop(self):
-        """Main monitoring loop"""        while self.is_monitoring:
+        """Main monitoring loop"""
+        while self.is_monitoring:
             try:
                 # Update shard metrics
                 await self._update_shard_metrics()
@@ -621,21 +659,24 @@ class DatabaseShardCoordinator:
                 await asyncio.sleep(30)
     
     async def _update_shard_metrics(self):
-        """Update metrics for all shards"""        for shard_id in self.shard_configs:
+        """Update metrics for all shards"""
+        for shard_id in self.shard_configs:
             try:
                 await self._update_single_shard_metrics(shard_id)
             except Exception as e:
                 logger.warning(f"Failed to update metrics for shard {shard_id}: {e}")
     
     async def _update_single_shard_metrics(self, shard_id: str):
-        """Update metrics for a single shard"""        try:
+        """Update metrics for a single shard"""
+        try:
             engine = self.shard_engines.get(shard_id)
             if not engine:
                 return
             
             async with engine.begin() as conn:
                 # Get table statistics
-                stats_query = text("""                    SELECT 
+                stats_query = text("""
+                    SELECT 
                         SUM(n_live_tup) as total_rows,
                         SUM(pg_relation_size(relid)) / (1024*1024) as size_mb
                     FROM pg_stat_user_tables
@@ -659,7 +700,8 @@ class DatabaseShardCoordinator:
             logger.warning(f"Failed to update metrics for shard {shard_id}: {e}")
     
     async def get_shard_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive shard statistics"""        try:
+        """Get comprehensive shard statistics"""
+        try:
             stats = {
                 'total_shards': len(self.shard_configs),
                 'active_shards': len([s for s in self.shard_status.values() if s == ShardStatus.ACTIVE]),
@@ -701,7 +743,8 @@ class DatabaseShardCoordinator:
             return {}
     
     async def shutdown(self):
-        """Shutdown shard coordinator"""        try:
+        """Shutdown shard coordinator"""
+        try:
             # Stop monitoring
             await self.stop_monitoring()
             

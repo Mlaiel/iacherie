@@ -6,7 +6,8 @@ and real-time analytics for optimal system performance and scaling decisions.
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 © 2025 All Rights Reserved
-"""import asyncio
+"""
+import asyncio
 import logging
 import psutil
 import time
@@ -36,7 +37,8 @@ from ...core.monitoring import get_metrics_client
 
 
 class MetricType(Enum):
-    """Types of metrics to monitor"""    CPU = "cpu"
+    """Types of metrics to monitor"""
+    CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
     NETWORK = "network"
@@ -47,7 +49,8 @@ class MetricType(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    LOW = "low"
+    """Alert severity levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -55,7 +58,8 @@ class AlertSeverity(Enum):
 
 @dataclass
 class MetricValue:
-    """Metric value with metadata"""    value: float
+    """Metric value with metadata"""
+    value: float
     timestamp: datetime
     metric_type: MetricType
     source: str
@@ -65,7 +69,8 @@ class MetricValue:
 
 @dataclass
 class ResourceThreshold:
-    """Resource threshold configuration"""    metric_name: str
+    """Resource threshold configuration"""
+    metric_name: str
     metric_type: MetricType
     warning_threshold: float
     critical_threshold: float
@@ -75,7 +80,8 @@ class ResourceThreshold:
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration"""    rule_id: str
+    """Alert rule configuration"""
+    rule_id: str
     name: str
     metric_name: str
     condition: str  # "gt", "lt", "eq", "ne"
@@ -87,7 +93,8 @@ class AlertRule:
 
 @dataclass
 class SystemSnapshot:
-    """System resource snapshot"""    timestamp: datetime
+    """System resource snapshot"""
+    timestamp: datetime
     cpu_percent: float
     memory_percent: float
     disk_percent: float
@@ -100,7 +107,8 @@ class SystemSnapshot:
 
 
 class ResourceMonitor(BaseAgent):
-    """    Enterprise Resource Monitor
+    """
+    Enterprise Resource Monitor
     
     Features:
     - Real-time system monitoring
@@ -111,7 +119,8 @@ class ResourceMonitor(BaseAgent):
     - Predictive analytics
     - Custom metric support
     - Integration with monitoring systems
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
@@ -154,7 +163,8 @@ class ResourceMonitor(BaseAgent):
         self.logger.info("ResourceMonitor initialized successfully")
 
     async def start_monitoring(self):
-        """Start resource monitoring"""        try:
+        """Start resource monitoring"""
+        try:
             if self.is_monitoring:
                 self.logger.warning("Resource monitoring already active")
                 return
@@ -183,7 +193,8 @@ class ResourceMonitor(BaseAgent):
             raise MonitoringException(f"Monitoring startup failed: {e}")
 
     async def stop_monitoring(self):
-        """Stop resource monitoring"""        try:
+        """Stop resource monitoring"""
+        try:
             self.is_monitoring = False
             
             # Cancel all monitoring tasks
@@ -202,7 +213,8 @@ class ResourceMonitor(BaseAgent):
             self.logger.error(f"Error stopping resource monitoring: {e}")
 
     async def _system_monitoring_loop(self):
-        """System-level resource monitoring loop"""        self.logger.info("Starting system monitoring loop")
+        """System-level resource monitoring loop"""
+        self.logger.info("Starting system monitoring loop")
         
         while self.is_monitoring:
             try:
@@ -232,7 +244,8 @@ class ResourceMonitor(BaseAgent):
                 await asyncio.sleep(self.monitoring_interval)
 
     async def _application_monitoring_loop(self):
-        """Application-level monitoring loop"""        while self.is_monitoring:
+        """Application-level monitoring loop"""
+        while self.is_monitoring:
             try:
                 # Collect application-specific metrics
                 app_metrics = await self._collect_application_metrics()
@@ -256,7 +269,8 @@ class ResourceMonitor(BaseAgent):
                 await asyncio.sleep(self.monitoring_interval)
 
     async def _alert_evaluation_loop(self):
-        """Alert evaluation loop"""        while self.is_monitoring:
+        """Alert evaluation loop"""
+        while self.is_monitoring:
             try:
                 # Evaluate all alert rules
                 for rule_id, rule in self.alert_rules.items():
@@ -274,7 +288,8 @@ class ResourceMonitor(BaseAgent):
                 await asyncio.sleep(60)
 
     async def _metrics_cleanup_loop(self):
-        """Metrics cleanup loop"""        while self.is_monitoring:
+        """Metrics cleanup loop"""
+        while self.is_monitoring:
             try:
                 # Clean up old metrics
                 await self._cleanup_old_metrics()
@@ -287,7 +302,8 @@ class ResourceMonitor(BaseAgent):
                 await asyncio.sleep(3600)
 
     async def _collect_system_snapshot(self) -> SystemSnapshot:
-        """Collect comprehensive system snapshot"""        try:
+        """Collect comprehensive system snapshot"""
+        try:
             # CPU metrics
             cpu_percent = psutil.cpu_percent(interval=1)
             
@@ -346,7 +362,8 @@ class ResourceMonitor(BaseAgent):
             raise MonitoringException(f"System snapshot collection failed: {e}")
 
     async def _store_system_metrics(self, snapshot: SystemSnapshot):
-        """Store system metrics in structured format"""        try:
+        """Store system metrics in structured format"""
+        try:
             metrics = {
                 "cpu_percent": snapshot.cpu_percent,
                 "memory_percent": snapshot.memory_percent,
@@ -381,7 +398,8 @@ class ResourceMonitor(BaseAgent):
             self.logger.error(f"Error storing system metrics: {e}")
 
     async def _collect_application_metrics(self) -> Dict[str, float]:
-        """Collect application-specific metrics"""        try:
+        """Collect application-specific metrics"""
+        try:
             metrics = {}
             
             # Database connection pool metrics (simulated)
@@ -411,7 +429,8 @@ class ResourceMonitor(BaseAgent):
             return {}
 
     def _get_metric_type(self, metric_name: str) -> MetricType:
-        """Determine metric type based on metric name"""        if "cpu" in metric_name or "load_average" in metric_name:
+        """Determine metric type based on metric name"""
+        if "cpu" in metric_name or "load_average" in metric_name:
             return MetricType.CPU
         elif "memory" in metric_name:
             return MetricType.MEMORY
@@ -427,7 +446,8 @@ class ResourceMonitor(BaseAgent):
             return MetricType.APPLICATION
 
     async def _evaluate_alert_rule(self, rule: AlertRule):
-        """Evaluate a single alert rule"""        try:
+        """Evaluate a single alert rule"""
+        try:
             # Get recent metrics for the rule
             recent_metrics = await self._get_recent_metrics(rule.metric_name, 300)  # 5 minutes
             
@@ -450,7 +470,8 @@ class ResourceMonitor(BaseAgent):
             self.logger.error(f"Error evaluating alert rule {rule.rule_id}: {e}")
 
     def _evaluate_condition(self, value: float, condition: str, threshold: float) -> bool:
-        """Evaluate alert condition"""        if condition == "gt":
+        """Evaluate alert condition"""
+        if condition == "gt":
             return value > threshold
         elif condition == "lt":
             return value < threshold
@@ -462,7 +483,8 @@ class ResourceMonitor(BaseAgent):
             return False
 
     async def _trigger_alert(self, rule: AlertRule, current_value: float):
-        """Trigger an alert"""        try:
+        """Trigger an alert"""
+        try:
             alert_key = f"{rule.rule_id}_{rule.metric_name}"
             
             # Check if alert is already active
@@ -501,7 +523,8 @@ class ResourceMonitor(BaseAgent):
             self.logger.error(f"Error triggering alert: {e}")
 
     async def _resolve_alert(self, rule_id: str):
-        """Resolve an alert"""        try:
+        """Resolve an alert"""
+        try:
             alert_keys_to_remove = []
             
             with self.alerts_lock:
@@ -517,7 +540,8 @@ class ResourceMonitor(BaseAgent):
             self.logger.error(f"Error resolving alert: {e}")
 
     async def _send_alert_notifications(self, alert: Dict[str, Any]):
-        """Send alert notifications"""        try:
+        """Send alert notifications"""
+        try:
             # In production, this would send notifications via email, Slack, etc.
             self.logger.info(f"Alert notification: {alert['rule_name']} - {alert['current_value']}")
             alert["notification_sent"] = True
@@ -526,7 +550,8 @@ class ResourceMonitor(BaseAgent):
             self.logger.error(f"Error sending alert notifications: {e}")
 
     async def _cleanup_resolved_alerts(self):
-        """Clean up resolved alerts"""        try:
+        """Clean up resolved alerts"""
+        try:
             current_time = datetime.now()
             alert_keys_to_remove = []
             
@@ -543,7 +568,8 @@ class ResourceMonitor(BaseAgent):
             self.logger.error(f"Error cleaning up alerts: {e}")
 
     async def _cleanup_old_metrics(self):
-        """Clean up old metrics data"""        try:
+        """Clean up old metrics data"""
+        try:
             cutoff_time = datetime.now() - timedelta(days=self.metric_retention_days)
             
             with self.metrics_lock:
@@ -563,14 +589,16 @@ class ResourceMonitor(BaseAgent):
             self.logger.error(f"Error cleaning up old metrics: {e}")
 
     async def _get_recent_metrics(self, metric_name: str, seconds: int) -> List[MetricValue]:
-        """Get recent metrics for a specific metric"""        cutoff_time = datetime.now() - timedelta(seconds=seconds)
+        """Get recent metrics for a specific metric"""
+        cutoff_time = datetime.now() - timedelta(seconds=seconds)
         
         with self.metrics_lock:
             metrics_deque = self.metrics_data.get(metric_name, deque())
             return [metric for metric in metrics_deque if metric.timestamp >= cutoff_time]
 
     def _get_system_info(self) -> Dict[str, Any]:
-        """Get system information"""        try:
+        """Get system information"""
+        try:
             return {
                 "platform": psutil.LINUX if hasattr(psutil, 'LINUX') else "unknown",
                 "cpu_count": psutil.cpu_count(),
@@ -584,7 +612,8 @@ class ResourceMonitor(BaseAgent):
             return {}
 
     async def _initialize_default_thresholds(self):
-        """Initialize default monitoring thresholds"""        default_thresholds = {
+        """Initialize default monitoring thresholds"""
+        default_thresholds = {
             "cpu_percent": ResourceThreshold(
                 "cpu_percent", MetricType.CPU, 
                 warning_threshold=70.0, critical_threshold=90.0
@@ -606,7 +635,8 @@ class ResourceMonitor(BaseAgent):
         self.thresholds.update(default_thresholds)
 
     async def _initialize_default_alert_rules(self):
-        """Initialize default alert rules"""        default_rules = {
+        """Initialize default alert rules"""
+        default_rules = {
             "cpu_high": AlertRule(
                 rule_id="cpu_high",
                 name="High CPU Usage",
@@ -646,7 +676,8 @@ class ResourceMonitor(BaseAgent):
     async def add_custom_metric(self, metric_name: str, value: float, 
                               metric_type: MetricType = MetricType.CUSTOM,
                               tags: Optional[Dict[str, str]] = None):
-        """Add custom metric"""        try:
+        """Add custom metric"""
+        try:
             metric = MetricValue(
                 value=value,
                 timestamp=datetime.now(),
@@ -667,7 +698,8 @@ class ResourceMonitor(BaseAgent):
 
     async def get_metric_statistics(self, metric_name: str, 
                                    hours: int = 1) -> Dict[str, float]:
-        """Get metric statistics"""        try:
+        """Get metric statistics"""
+        try:
             metrics = await self._get_recent_metrics(metric_name, hours * 3600)
             
             if not metrics:
@@ -688,7 +720,8 @@ class ResourceMonitor(BaseAgent):
             return {}
 
     async def get_monitoring_status(self) -> Dict[str, Any]:
-        """Get comprehensive monitoring status"""        try:
+        """Get comprehensive monitoring status"""
+        try:
             return {
                 "monitoring_active": self.is_monitoring,
                 "metrics_collected": len(self.metrics_data),
@@ -705,7 +738,8 @@ class ResourceMonitor(BaseAgent):
             return {"error": str(e)}
 
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for resource monitor"""        try:
+        """Health check for resource monitor"""
+        try:
             active_tasks = len([task for task in self.monitor_tasks if not task.done()])
             
             return {

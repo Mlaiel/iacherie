@@ -7,7 +7,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Stage Definition → Dependency Resolution → Execution Coordination → Progress Tracking → Result Aggregation
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 from typing import Dict, List, Any, Optional, Union, Callable, Tuple, Set
@@ -22,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 
 class StageState(Enum):
-    """Stage execution states"""    PENDING = "pending"
+    """Stage execution states"""
+    PENDING = "pending"
     READY = "ready"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -34,7 +36,8 @@ class StageState(Enum):
 
 
 class CoordinationStrategy(Enum):
-    """Coordination strategies"""    SEQUENTIAL = "sequential"
+    """Coordination strategies"""
+    SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     PIPELINE = "pipeline"
     CONDITIONAL = "conditional"
@@ -43,7 +46,8 @@ class CoordinationStrategy(Enum):
 
 
 class SynchronizationMode(Enum):
-    """Synchronization modes"""    BARRIER = "barrier"
+    """Synchronization modes"""
+    BARRIER = "barrier"
     CHECKPOINT = "checkpoint"
     MILESTONE = "milestone"
     CONTINUOUS = "continuous"
@@ -52,7 +56,8 @@ class SynchronizationMode(Enum):
 
 @dataclass
 class StageDependency:
-    """Stage dependency definition"""    dependency_id: str = ""
+    """Stage dependency definition"""
+    dependency_id: str = ""
     stage_id: str = ""
     dependency_type: str = "completion"  # completion, data, resource, condition
     required: bool = True
@@ -63,7 +68,8 @@ class StageDependency:
 
 @dataclass
 class StageResult:
-    """Stage execution result"""    stage_id: str = ""
+    """Stage execution result"""
+    stage_id: str = ""
     state: StageState = StageState.PENDING
     result_data: Dict[str, Any] = field(default_factory=dict)
     output_data: Dict[str, Any] = field(default_factory=dict)
@@ -85,7 +91,8 @@ class StageResult:
 
 @dataclass
 class StageDefinition:
-    """Stage definition"""    stage_id: str = ""
+    """Stage definition"""
+    stage_id: str = ""
     stage_name: str = ""
     stage_type: str = ""
     handler: Optional[Callable] = None
@@ -114,7 +121,8 @@ class StageDefinition:
 
 @dataclass
 class CoordinationContext:
-    """Coordination execution context"""    context_id: str = ""
+    """Coordination execution context"""
+    context_id: str = ""
     pipeline_id: str = ""
     stages: List[StageDefinition] = field(default_factory=list)
     stage_results: Dict[str, StageResult] = field(default_factory=dict)
@@ -147,7 +155,8 @@ class CoordinationContext:
 
 
 class StageHandler(ABC):
-    """Abstract stage handler"""    
+    """Abstract stage handler"""
+    
     @abstractmethod
     async def execute(
         self,
@@ -155,15 +164,18 @@ class StageHandler(ABC):
         context: CoordinationContext,
         input_data: Dict[str, Any]
     ) -> StageResult:
-        """Execute stage"""        pass
+        """Execute stage"""
+        pass
     
     @abstractmethod
     def get_stage_type(self) -> str:
-        """Get supported stage type"""        pass
+        """Get supported stage type"""
+        pass
 
 
 class ContentProcessingStageHandler(StageHandler):
-    """Content processing stage handler"""    
+    """Content processing stage handler"""
+    
     def get_stage_type(self) -> str:
         return "content_processing"
     
@@ -173,7 +185,8 @@ class ContentProcessingStageHandler(StageHandler):
         context: CoordinationContext,
         input_data: Dict[str, Any]
     ) -> StageResult:
-        """Execute content processing stage"""        result = StageResult(
+        """Execute content processing stage"""
+        result = StageResult(
             stage_id=stage.stage_id,
             started_at=datetime.now()
         )
@@ -225,7 +238,8 @@ class ContentProcessingStageHandler(StageHandler):
 
 
 class AIAnalysisStageHandler(StageHandler):
-    """AI analysis stage handler"""    
+    """AI analysis stage handler"""
+    
     def get_stage_type(self) -> str:
         return "ai_analysis"
     
@@ -235,7 +249,8 @@ class AIAnalysisStageHandler(StageHandler):
         context: CoordinationContext,
         input_data: Dict[str, Any]
     ) -> StageResult:
-        """Execute AI analysis stage"""        result = StageResult(
+        """Execute AI analysis stage"""
+        result = StageResult(
             stage_id=stage.stage_id,
             started_at=datetime.now()
         )
@@ -289,7 +304,8 @@ class AIAnalysisStageHandler(StageHandler):
 
 
 class ProtectionStageHandler(StageHandler):
-    """Protection stage handler"""    
+    """Protection stage handler"""
+    
     def get_stage_type(self) -> str:
         return "protection"
     
@@ -299,7 +315,8 @@ class ProtectionStageHandler(StageHandler):
         context: CoordinationContext,
         input_data: Dict[str, Any]
     ) -> StageResult:
-        """Execute protection stage"""        result = StageResult(
+        """Execute protection stage"""
+        result = StageResult(
             stage_id=stage.stage_id,
             started_at=datetime.now()
         )
@@ -352,7 +369,8 @@ class ProtectionStageHandler(StageHandler):
 
 
 class OptimizationStageHandler(StageHandler):
-    """Optimization stage handler"""    
+    """Optimization stage handler"""
+    
     def get_stage_type(self) -> str:
         return "optimization"
     
@@ -362,7 +380,8 @@ class OptimizationStageHandler(StageHandler):
         context: CoordinationContext,
         input_data: Dict[str, Any]
     ) -> StageResult:
-        """Execute optimization stage"""        result = StageResult(
+        """Execute optimization stage"""
+        result = StageResult(
             stage_id=stage.stage_id,
             started_at=datetime.now()
         )
@@ -414,7 +433,8 @@ class OptimizationStageHandler(StageHandler):
 
 
 class DistributionStageHandler(StageHandler):
-    """Distribution stage handler"""    
+    """Distribution stage handler"""
+    
     def get_stage_type(self) -> str:
         return "distribution"
     
@@ -424,7 +444,8 @@ class DistributionStageHandler(StageHandler):
         context: CoordinationContext,
         input_data: Dict[str, Any]
     ) -> StageResult:
-        """Execute distribution stage"""        result = StageResult(
+        """Execute distribution stage"""
+        result = StageResult(
             stage_id=stage.stage_id,
             started_at=datetime.now()
         )
@@ -481,13 +502,15 @@ class DistributionStageHandler(StageHandler):
 
 
 class DependencyResolver:
-    """Intelligent dependency resolver"""    
+    """Intelligent dependency resolver"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.DependencyResolver")
     
     def resolve_dependencies(self, stages: List[StageDefinition]) -> Dict[str, List[str]]:
-        """Resolve stage dependencies"""        dependency_graph = {}
+        """Resolve stage dependencies"""
+        dependency_graph = {}
         
         # Build dependency graph
         for stage in stages:
@@ -500,7 +523,8 @@ class DependencyResolver:
         return dependency_graph
     
     def get_execution_order(self, stages: List[StageDefinition]) -> List[List[str]]:
-        """Get optimal execution order"""        dependency_graph = self.resolve_dependencies(stages)
+        """Get optimal execution order"""
+        dependency_graph = self.resolve_dependencies(stages)
         
         # Topological sort with parallel execution groups
         execution_levels = []
@@ -528,7 +552,8 @@ class DependencyResolver:
         return execution_levels
     
     def validate_dependencies(self, stages: List[StageDefinition]) -> Dict[str, Any]:
-        """Validate stage dependencies"""        stage_ids = {stage.stage_id for stage in stages}
+        """Validate stage dependencies"""
+        stage_ids = {stage.stage_id for stage in stages}
         validation_results = {
             "valid": True,
             "errors": [],
@@ -551,7 +576,8 @@ class DependencyResolver:
         return validation_results
     
     def _has_circular_dependencies(self, stages: List[StageDefinition]) -> bool:
-        """Check for circular dependencies"""        dependency_graph = self.resolve_dependencies(stages)
+        """Check for circular dependencies"""
+        dependency_graph = self.resolve_dependencies(stages)
         visited = set()
         rec_stack = set()
         
@@ -580,14 +606,16 @@ class DependencyResolver:
 
 
 class ProgressTracker:
-    """Stage progress tracker"""    
+    """Stage progress tracker"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.ProgressTracker")
         self.progress_history: Dict[str, List[Dict[str, Any]]] = {}
     
     def update_stage_progress(self, context: CoordinationContext, stage_id: str, progress: float):
-        """Update stage progress"""        if stage_id in context.stage_results:
+        """Update stage progress"""
+        if stage_id in context.stage_results:
             context.stage_results[stage_id].progress = progress
             
             # Record progress history
@@ -604,7 +632,8 @@ class ProgressTracker:
         self._update_overall_progress(context)
     
     def _update_overall_progress(self, context: CoordinationContext):
-        """Update overall coordination progress"""        if not context.stages:
+        """Update overall coordination progress"""
+        if not context.stages:
             context.overall_progress = 0.0
             return
         
@@ -618,7 +647,8 @@ class ProgressTracker:
         context.overall_progress = total_progress / len(context.stages)
     
     def get_progress_summary(self, context: CoordinationContext) -> Dict[str, Any]:
-        """Get progress summary"""        stage_progress = {}
+        """Get progress summary"""
+        stage_progress = {}
         
         for stage in context.stages:
             stage_result = context.stage_results.get(stage.stage_id)
@@ -640,7 +670,8 @@ class ProgressTracker:
 
 
 class SynchronizationManager:
-    """Stage synchronization manager"""    
+    """Stage synchronization manager"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.SynchronizationManager")
@@ -648,7 +679,8 @@ class SynchronizationManager:
         self.barriers: Dict[str, asyncio.Barrier] = {}
     
     async def create_synchronization_point(self, sync_id: str, mode: SynchronizationMode) -> str:
-        """Create synchronization point"""        if mode == SynchronizationMode.BARRIER:
+        """Create synchronization point"""
+        if mode == SynchronizationMode.BARRIER:
             # Create barrier - will be completed when all participants arrive
             self.synchronization_points[sync_id] = asyncio.Event()
         elif mode == SynchronizationMode.CHECKPOINT:
@@ -662,7 +694,8 @@ class SynchronizationManager:
         return sync_id
     
     async def wait_for_synchronization(self, sync_id: str, timeout: Optional[float] = None) -> bool:
-        """Wait for synchronization point"""        if sync_id not in self.synchronization_points:
+        """Wait for synchronization point"""
+        if sync_id not in self.synchronization_points:
             self.logger.warning(f"Synchronization point not found: {sync_id}")
             return False
         
@@ -676,20 +709,23 @@ class SynchronizationManager:
             return False
     
     async def signal_synchronization(self, sync_id: str):
-        """Signal synchronization point"""        if sync_id in self.synchronization_points:
+        """Signal synchronization point"""
+        if sync_id in self.synchronization_points:
             event = self.synchronization_points[sync_id]
             event.set()
             self.logger.info(f"Signaled synchronization point: {sync_id}")
     
     async def create_barrier(self, barrier_id: str, participant_count: int) -> str:
-        """Create synchronization barrier"""        barrier = asyncio.Barrier(participant_count)
+        """Create synchronization barrier"""
+        barrier = asyncio.Barrier(participant_count)
         self.barriers[barrier_id] = barrier
         
         self.logger.info(f"Created barrier: {barrier_id} (participants: {participant_count})")
         return barrier_id
     
     async def wait_at_barrier(self, barrier_id: str, timeout: Optional[float] = None) -> bool:
-        """Wait at synchronization barrier"""        if barrier_id not in self.barriers:
+        """Wait at synchronization barrier"""
+        if barrier_id not in self.barriers:
             self.logger.warning(f"Barrier not found: {barrier_id}")
             return False
         
@@ -704,7 +740,8 @@ class SynchronizationManager:
 
 
 class StageCoordinator:
-    """    Ultra-advanced stage coordination system for managing complex multi-stage
+    """
+    Ultra-advanced stage coordination system for managing complex multi-stage
     pipeline executions with intelligent synchronization and optimization.
     
     Features:
@@ -714,7 +751,8 @@ class StageCoordinator:
     - Advanced synchronization mechanisms
     - Dynamic stage management and optimization
     - Comprehensive error handling and recovery
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -740,7 +778,8 @@ class StageCoordinator:
         self.logger.info("Stage Coordinator initialized successfully")
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""        return {
+        """Get default configuration"""
+        return {
             "coordination": {
                 "default_strategy": "adaptive",
                 "max_parallel_stages": 5,
@@ -771,7 +810,8 @@ class StageCoordinator:
         }
     
     def _initialize_stage_handlers(self):
-        """Initialize stage handlers"""        handlers = [
+        """Initialize stage handlers"""
+        handlers = [
             ContentProcessingStageHandler(),
             AIAnalysisStageHandler(),
             ProtectionStageHandler(),
@@ -785,7 +825,8 @@ class StageCoordinator:
         self.logger.info(f"Initialized {len(self.stage_handlers)} stage handlers")
     
     def register_stage_handler(self, handler: StageHandler):
-        """Register custom stage handler"""        stage_type = handler.get_stage_type()
+        """Register custom stage handler"""
+        stage_type = handler.get_stage_type()
         self.stage_handlers[stage_type] = handler
         self.logger.info(f"Registered stage handler for type: {stage_type}")
     
@@ -796,7 +837,8 @@ class StageCoordinator:
         global_data: Optional[Dict[str, Any]] = None,
         strategy: Optional[CoordinationStrategy] = None
     ) -> CoordinationContext:
-        """        Coordinate stage execution
+        """
+        Coordinate stage execution
         
         Args:
             pipeline_id: Pipeline identifier
@@ -806,7 +848,8 @@ class StageCoordinator:
             
         Returns:
             CoordinationContext with execution results
-        """        context_id = f"coord_{uuid.uuid4().hex[:16]}"
+        """
+        context_id = f"coord_{uuid.uuid4().hex[:16]}"
         
         # Create coordination context
         context = CoordinationContext(
@@ -867,7 +910,8 @@ class StageCoordinator:
             raise
     
     async def _execute_coordination_strategy(self, context: CoordinationContext):
-        """Execute coordination strategy"""        strategy = context.strategy
+        """Execute coordination strategy"""
+        strategy = context.strategy
         
         if strategy == CoordinationStrategy.SEQUENTIAL:
             await self._execute_sequential(context)
@@ -885,7 +929,8 @@ class StageCoordinator:
             await self._execute_sequential(context)  # Default fallback
     
     async def _execute_sequential(self, context: CoordinationContext):
-        """Execute stages sequentially"""        execution_order = self.dependency_resolver.get_execution_order(context.stages)
+        """Execute stages sequentially"""
+        execution_order = self.dependency_resolver.get_execution_order(context.stages)
         
         for level in execution_order:
             for stage_id in level:
@@ -902,7 +947,8 @@ class StageCoordinator:
                             raise Exception(f"Stage {stage_id} failed")
     
     async def _execute_parallel(self, context: CoordinationContext):
-        """Execute stages in parallel where possible"""        execution_order = self.dependency_resolver.get_execution_order(context.stages)
+        """Execute stages in parallel where possible"""
+        execution_order = self.dependency_resolver.get_execution_order(context.stages)
         
         for level in execution_order:
             # Execute all stages in this level in parallel
@@ -935,7 +981,8 @@ class StageCoordinator:
                         raise Exception(f"Critical stage {stage_id} failed: {result}")
     
     async def _execute_pipeline(self, context: CoordinationContext):
-        """Execute stages in pipeline mode (streaming)"""        execution_order = self.dependency_resolver.get_execution_order(context.stages)
+        """Execute stages in pipeline mode (streaming)"""
+        execution_order = self.dependency_resolver.get_execution_order(context.stages)
         
         # Start all stages that can run independently
         running_stages = set()
@@ -978,7 +1025,8 @@ class StageCoordinator:
                         running_stages.add(stage.stage_id)
     
     async def _execute_conditional(self, context: CoordinationContext):
-        """Execute stages with conditional logic"""        execution_order = self.dependency_resolver.get_execution_order(context.stages)
+        """Execute stages with conditional logic"""
+        execution_order = self.dependency_resolver.get_execution_order(context.stages)
         
         for level in execution_order:
             for stage_id in level:
@@ -995,7 +1043,8 @@ class StageCoordinator:
                         context.completed_stages.add(stage_id)
     
     async def _execute_dynamic(self, context: CoordinationContext):
-        """Execute stages with dynamic adaptation"""        # Start with adaptive strategy
+        """Execute stages with dynamic adaptation"""
+        # Start with adaptive strategy
         await self._execute_adaptive(context)
         
         # Add dynamic adaptation logic based on runtime conditions
@@ -1030,7 +1079,8 @@ class StageCoordinator:
                 # Could trigger stage reordering or parallel optimization
     
     async def _execute_adaptive(self, context: CoordinationContext):
-        """Execute stages with adaptive strategy"""        # Analyze stages and choose best approach for each level
+        """Execute stages with adaptive strategy"""
+        # Analyze stages and choose best approach for each level
         execution_order = self.dependency_resolver.get_execution_order(context.stages)
         
         for level in execution_order:
@@ -1058,7 +1108,8 @@ class StageCoordinator:
                             await self._execute_single_stage(stage, context)
     
     async def _execute_parallel_level(self, context: CoordinationContext, stage_ids: List[str]):
-        """Execute a level of stages in parallel"""        max_parallel = min(len(stage_ids), context.max_parallel_stages)
+        """Execute a level of stages in parallel"""
+        max_parallel = min(len(stage_ids), context.max_parallel_stages)
         semaphore = asyncio.Semaphore(max_parallel)
         
         async def execute_with_semaphore(stage_id):
@@ -1072,7 +1123,8 @@ class StageCoordinator:
         await asyncio.gather(*tasks, return_exceptions=True)
     
     async def _execute_single_stage(self, stage: StageDefinition, context: CoordinationContext) -> StageResult:
-        """Execute single stage"""        stage_result = context.stage_results.get(stage.stage_id)
+        """Execute single stage"""
+        stage_result = context.stage_results.get(stage.stage_id)
         if not stage_result:
             stage_result = StageResult(stage_id=stage.stage_id)
             context.stage_results[stage.stage_id] = stage_result
@@ -1132,7 +1184,8 @@ class StageCoordinator:
             self.progress_tracker._update_overall_progress(context)
     
     async def _can_start_stage(self, stage: StageDefinition, context: CoordinationContext) -> bool:
-        """Check if stage can start execution"""        # Check dependencies
+        """Check if stage can start execution"""
+        # Check dependencies
         for dependency in stage.dependencies:
             if dependency.required and dependency.stage_id not in context.completed_stages:
                 return False
@@ -1141,7 +1194,8 @@ class StageCoordinator:
         return await self._evaluate_stage_conditions(stage, context)
     
     async def _evaluate_stage_conditions(self, stage: StageDefinition, context: CoordinationContext) -> bool:
-        """Evaluate stage execution conditions"""        # Check dependency conditions
+        """Evaluate stage execution conditions"""
+        # Check dependency conditions
         for dependency in stage.dependencies:
             if dependency.condition:
                 # Evaluate condition - simplified implementation
@@ -1157,7 +1211,8 @@ class StageCoordinator:
         return True
     
     async def _prepare_stage_input(self, stage: StageDefinition, context: CoordinationContext) -> Dict[str, Any]:
-        """Prepare input data for stage"""        input_data = {
+        """Prepare input data for stage"""
+        input_data = {
             "global_data": context.global_data,
             "stage_config": stage.configuration,
             "previous_results": {}
@@ -1172,20 +1227,24 @@ class StageCoordinator:
         return input_data
     
     def _get_stage_by_id(self, stages: List[StageDefinition], stage_id: str) -> Optional[StageDefinition]:
-        """Get stage by ID"""        for stage in stages:
+        """Get stage by ID"""
+        for stage in stages:
             if stage.stage_id == stage_id:
                 return stage
         return None
     
     # Public API methods
     def get_coordination_status(self, context_id: str) -> Optional[CoordinationContext]:
-        """Get coordination status"""        return self.active_coordinations.get(context_id) or self.completed_coordinations.get(context_id)
+        """Get coordination status"""
+        return self.active_coordinations.get(context_id) or self.completed_coordinations.get(context_id)
     
     def get_active_coordinations(self) -> Dict[str, CoordinationContext]:
-        """Get all active coordinations"""        return self.active_coordinations.copy()
+        """Get all active coordinations"""
+        return self.active_coordinations.copy()
     
     def get_coordination_metrics(self) -> Dict[str, Any]:
-        """Get coordination metrics"""        completed_coordinations = list(self.completed_coordinations.values())
+        """Get coordination metrics"""
+        completed_coordinations = list(self.completed_coordinations.values())
         
         return {
             "active_coordinations": len(self.active_coordinations),
@@ -1197,7 +1256,8 @@ class StageCoordinator:
         }
     
     async def cancel_coordination(self, context_id: str) -> bool:
-        """Cancel coordination"""        if context_id in self.active_coordinations:
+        """Cancel coordination"""
+        if context_id in self.active_coordinations:
             context = self.active_coordinations[context_id]
             
             # Cancel all active stages

@@ -5,7 +5,8 @@ royalty distribution, governance, and staking mechanisms on multiple blockchain 
 
 © 2025 Fahed Mlaiel (mlaiel@live.de) - IA-Influencer-Agent Platform
 Propriété Intellectuelle Exclusive - Tous Droits Réservés
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContractInfo:
-    """Smart contract information"""    name: str
+    """Smart contract information"""
+    name: str
     address: str
     abi: List[Dict]
     network: str
@@ -36,7 +38,8 @@ class ContractInfo:
 
 @dataclass
 class TransactionParams:
-    """Transaction parameters for smart contract calls"""    from_address: str
+    """Transaction parameters for smart contract calls"""
+    from_address: str
     gas_limit: int
     gas_price: int
     value: int = 0
@@ -44,11 +47,13 @@ class TransactionParams:
 
 
 class ContentProtectionContract:
-    """    Smart contract for immutable content protection and rights management
+    """
+    Smart contract for immutable content protection and rights management
     
     This contract handles content registration, ownership verification,
     and provides proof of creation timestamps for copyright protection.
-    """    
+    """
+    
     def __init__(self, web3: Web3, contract_address: str, abi: List[Dict]):
         self.web3 = web3
         self.contract = web3.eth.contract(address=contract_address, abi=abi)
@@ -61,7 +66,8 @@ class ContentProtectionContract:
         owner_address: str,
         tx_params: TransactionParams
     ) -> Dict[str, Any]:
-        """Register content on blockchain for immutable protection"""        try:
+        """Register content on blockchain for immutable protection"""
+        try:
             self.logger.info(f"Registering content with hash: {content_hash[:16]}...")
             
             # Build transaction
@@ -112,7 +118,8 @@ class ContentProtectionContract:
             raise BlockchainError(f"Content registration failed: {str(e)}")
     
     async def verify_ownership(self, content_hash: str, claimed_owner: str) -> bool:
-        """Verify content ownership on blockchain"""        try:
+        """Verify content ownership on blockchain"""
+        try:
             owner = self.contract.functions.getContentOwner(content_hash).call()
             return owner.lower() == claimed_owner.lower()
         except Exception as e:
@@ -120,7 +127,8 @@ class ContentProtectionContract:
             return False
     
     async def get_content_info(self, content_hash: str) -> Optional[Dict[str, Any]]:
-        """Get content information from blockchain"""        try:
+        """Get content information from blockchain"""
+        try:
             content_info = self.contract.functions.getContentInfo(content_hash).call()
             if content_info[0]:  # exists
                 return {
@@ -136,11 +144,13 @@ class ContentProtectionContract:
 
 
 class LicensingContract:
-    """    Smart contract for automated content licensing and usage rights
+    """
+    Smart contract for automated content licensing and usage rights
     
     Handles license creation, validation, and automated enforcement
     of content usage terms and conditions.
-    """    
+    """
+    
     def __init__(self, web3: Web3, contract_address: str, abi: List[Dict]):
         self.web3 = web3
         self.contract = web3.eth.contract(address=contract_address, abi=abi)
@@ -154,7 +164,8 @@ class LicensingContract:
         duration: int,
         tx_params: TransactionParams
     ) -> Dict[str, Any]:
-        """Create automated license for content"""        try:
+        """Create automated license for content"""
+        try:
             self.logger.info(f"Creating license for content: {content_hash[:16]}...")
             
             # Encode license terms
@@ -205,7 +216,8 @@ class LicensingContract:
         buyer_address: str,
         tx_params: TransactionParams
     ) -> Dict[str, Any]:
-        """Purchase content license"""        try:
+        """Purchase content license"""
+        try:
             # Get license price
             license_info = self.contract.functions.getLicenseInfo(license_id).call()
             license_price = license_info[2]  # price in wei
@@ -236,7 +248,8 @@ class LicensingContract:
             raise BlockchainError(f"License purchase failed: {str(e)}")
     
     async def validate_license(self, license_id: int, user_address: str) -> bool:
-        """Validate if user has active license"""        try:
+        """Validate if user has active license"""
+        try:
             return self.contract.functions.hasValidLicense(license_id, user_address).call()
         except Exception as e:
             self.logger.error(f"Failed to validate license: {str(e)}")
@@ -244,11 +257,13 @@ class LicensingContract:
 
 
 class RoyaltyDistributionContract:
-    """    Smart contract for automated royalty distribution to content creators and stakeholders
+    """
+    Smart contract for automated royalty distribution to content creators and stakeholders
     
     Handles transparent and automatic distribution of revenues based on
     predefined rules and percentages.
-    """    
+    """
+    
     def __init__(self, web3: Web3, contract_address: str, abi: List[Dict]):
         self.web3 = web3
         self.contract = web3.eth.contract(address=contract_address, abi=abi)
@@ -261,7 +276,8 @@ class RoyaltyDistributionContract:
         percentages: List[int],
         tx_params: TransactionParams
     ) -> Dict[str, Any]:
-        """Set royalty distribution scheme for content"""        try:
+        """Set royalty distribution scheme for content"""
+        try:
             self.logger.info(f"Setting royalty scheme for content: {content_hash[:16]}...")
             
             # Validate percentages sum to 100%
@@ -304,7 +320,8 @@ class RoyaltyDistributionContract:
         total_amount: Decimal,
         tx_params: TransactionParams
     ) -> Dict[str, Any]:
-        """Distribute royalties to beneficiaries"""        try:
+        """Distribute royalties to beneficiaries"""
+        try:
             amount_wei = int(total_amount * 10**18)
             
             function_call = self.contract.functions.distributeRoyalties(content_hash)
@@ -342,11 +359,13 @@ class RoyaltyDistributionContract:
 
 
 class GovernanceContract:
-    """    Smart contract for decentralized platform governance and voting
+    """
+    Smart contract for decentralized platform governance and voting
     
     Enables community governance of platform parameters, upgrades,
     and policy decisions through democratic voting mechanisms.
-    """    
+    """
+    
     def __init__(self, web3: Web3, contract_address: str, abi: List[Dict]):
         self.web3 = web3
         self.contract = web3.eth.contract(address=contract_address, abi=abi)
@@ -360,7 +379,8 @@ class GovernanceContract:
         voting_period: int,
         tx_params: TransactionParams
     ) -> Dict[str, Any]:
-        """Create governance proposal"""        try:
+        """Create governance proposal"""
+        try:
             function_call = self.contract.functions.createProposal(
                 title,
                 description,
@@ -401,7 +421,8 @@ class GovernanceContract:
         voting_power: int,
         tx_params: TransactionParams
     ) -> Dict[str, Any]:
-        """Cast vote on governance proposal"""        try:
+        """Cast vote on governance proposal"""
+        try:
             function_call = self.contract.functions.castVote(
                 proposal_id,
                 support,
@@ -431,11 +452,13 @@ class GovernanceContract:
 
 
 class StakingContract:
-    """    Smart contract for staking mechanisms and yield generation
+    """
+    Smart contract for staking mechanisms and yield generation
     
     Handles token staking, reward distribution, and validator
     network participation for platform governance and security.
-    """    
+    """
+    
     def __init__(self, web3: Web3, contract_address: str, abi: List[Dict]):
         self.web3 = web3
         self.contract = web3.eth.contract(address=contract_address, abi=abi)
@@ -447,7 +470,8 @@ class StakingContract:
         lock_period: int,
         tx_params: TransactionParams
     ) -> Dict[str, Any]:
-        """Stake tokens for rewards and governance rights"""        try:
+        """Stake tokens for rewards and governance rights"""
+        try:
             amount_wei = int(amount * 10**18)
             
             function_call = self.contract.functions.stakeTokens(
@@ -477,7 +501,8 @@ class StakingContract:
             raise BlockchainError(f"Token staking failed: {str(e)}")
     
     async def claim_rewards(self, tx_params: TransactionParams) -> Dict[str, Any]:
-        """Claim staking rewards"""        try:
+        """Claim staking rewards"""
+        try:
             function_call = self.contract.functions.claimRewards()
             
             transaction = function_call.build_transaction({
@@ -503,11 +528,13 @@ class StakingContract:
 
 
 class SmartContractManager:
-    """    Central manager for all smart contracts in the IA-Influencer-Agent platform
+    """
+    Central manager for all smart contracts in the IA-Influencer-Agent platform
     
     Coordinates contract deployments, upgrades, and interactions across
     multiple blockchain networks with proper security and monitoring.
-    """    
+    """
+    
     def __init__(self, config: BlockchainConfig, redis_client: redis.Redis):
         self.config = config
         self.redis = redis_client
@@ -516,7 +543,8 @@ class SmartContractManager:
         self.logger = logging.getLogger(__name__)
     
     async def initialize(self) -> None:
-        """Initialize smart contract manager and load contract instances"""        try:
+        """Initialize smart contract manager and load contract instances"""
+        try:
             self.logger.info("Initializing smart contract manager...")
             
             # Load contract ABIs and addresses from config
@@ -541,7 +569,8 @@ class SmartContractManager:
         registration_data: Dict[str, Any],
         from_address: str
     ) -> Dict[str, Any]:
-        """Register content using ContentProtectionContract"""        if network not in self.contracts:
+        """Register content using ContentProtectionContract"""
+        if network not in self.contracts:
             raise ValidationError(f"Network {network} not supported")
         
         protection_contract = self.contracts[network]["content_protection"]
@@ -560,7 +589,8 @@ class SmartContractManager:
         )
     
     async def get_royalty_contract(self) -> RoyaltyDistributionContract:
-        """Get royalty distribution contract for primary network"""        primary_network = self.config.primary_network
+        """Get royalty distribution contract for primary network"""
+        primary_network = self.config.primary_network
         if primary_network not in self.contracts:
             raise ValidationError("Primary network not available")
         
@@ -573,7 +603,8 @@ class SmartContractManager:
         constructor_args: List[Any],
         deployer_address: str
     ) -> Dict[str, Any]:
-        """Deploy new smart contract to network"""        try:
+        """Deploy new smart contract to network"""
+        try:
             self.logger.info(f"Deploying {contract_name} to {network}")
             
             # Get contract bytecode and ABI
@@ -639,7 +670,8 @@ class SmartContractManager:
         new_implementation: str,
         upgrader_address: str
     ) -> Dict[str, Any]:
-        """Upgrade smart contract to new implementation"""        try:
+        """Upgrade smart contract to new implementation"""
+        try:
             self.logger.info(f"Upgrading {contract_name} on {network}")
             
             # Get proxy contract for upgradeable contracts
@@ -678,11 +710,13 @@ class SmartContractManager:
             raise BlockchainError(f"Contract upgrade failed: {str(e)}")
     
     async def _load_contract_configurations(self) -> None:
-        """Load contract configurations from storage"""        # This would load from database or configuration files
+        """Load contract configurations from storage"""
+        # This would load from database or configuration files
         pass
     
     async def _initialize_network_contracts(self, network: str) -> None:
-        """Initialize contract instances for a specific network"""        # Initialize Web3 connection
+        """Initialize contract instances for a specific network"""
+        # Initialize Web3 connection
         web3 = Web3(Web3.HTTPProvider(getattr(self.config, f"{network}_rpc")))
         self.web3_instances[network] = web3
         
@@ -720,11 +754,13 @@ class SmartContractManager:
             self.contracts[network]["staking"] = StakingContract(web3, address, abi)
     
     def _get_contract_abi(self, contract_name: str) -> List[Dict]:
-        """Get contract ABI from configuration"""        # This would return the actual contract ABI
+        """Get contract ABI from configuration"""
+        # This would return the actual contract ABI
         return []
     
     async def _verify_contract_deployments(self) -> None:
-        """Verify all contract deployments are valid"""        for network, contracts in self.contracts.items():
+        """Verify all contract deployments are valid"""
+        for network, contracts in self.contracts.items():
             for contract_name, contract_instance in contracts.items():
                 try:
                     # Test contract call to verify deployment
@@ -740,7 +776,8 @@ class SmartContractManager:
                     self.logger.error(f"Failed to verify contract {contract_name} on {network}: {str(e)}")
     
     async def _get_optimal_gas_price(self, network: str) -> int:
-        """Get optimal gas price for network"""        try:
+        """Get optimal gas price for network"""
+        try:
             web3 = self.web3_instances[network]
             gas_price = web3.eth.gas_price
             
@@ -760,14 +797,16 @@ class SmartContractManager:
             return self.config.default_gas_price
     
     async def _get_contract_deployment_data(self, contract_name: str) -> Dict[str, Any]:
-        """Get contract bytecode and ABI for deployment"""        # This would return the actual deployment data
+        """Get contract bytecode and ABI for deployment"""
+        # This would return the actual deployment data
         return {
             "abi": [],
             "bytecode": "0x"
         }
     
     async def _store_contract_info(self, contract_info: ContractInfo) -> None:
-        """Store contract information in Redis and database"""        key = f"contract:{contract_info.network}:{contract_info.name}"
+        """Store contract information in Redis and database"""
+        key = f"contract:{contract_info.network}:{contract_info.name}"
         data = {
             "address": contract_info.address,
             "deployed_block": contract_info.deployed_block,
@@ -779,7 +818,8 @@ class SmartContractManager:
         await self.redis.expire(key, 86400 * 30)  # 30 days
     
     async def cleanup(self) -> None:
-        """Cleanup contract manager resources"""        try:
+        """Cleanup contract manager resources"""
+        try:
             self.logger.info("Cleaning up smart contract manager...")
             self.contracts.clear()
             self.web3_instances.clear()

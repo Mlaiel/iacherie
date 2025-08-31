@@ -6,7 +6,8 @@ and revenue distribution in the IA Influencer Agent platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""from datetime import datetime, date
+"""
+from datetime import datetime, date
 from typing import Optional, Dict, List, Any, Union
 from decimal import Decimal
 from enum import Enum
@@ -25,7 +26,8 @@ Base = declarative_base()
 
 
 class LicenseType(Enum):
-    """License type enumeration"""    SYNC_LICENSING = "sync_licensing"
+    """License type enumeration"""
+    SYNC_LICENSING = "sync_licensing"
     MECHANICAL = "mechanical"
     PERFORMANCE = "performance"
     MASTER_USE = "master_use"
@@ -38,7 +40,8 @@ class LicenseType(Enum):
 
 
 class LicenseStatus(Enum):
-    """License status enumeration"""    DRAFT = "draft"
+    """License status enumeration"""
+    DRAFT = "draft"
     PENDING = "pending"
     ACTIVE = "active"
     SUSPENDED = "suspended"
@@ -48,7 +51,8 @@ class LicenseStatus(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment status enumeration"""    PENDING = "pending"
+    """Payment status enumeration"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -58,7 +62,8 @@ class PaymentStatus(Enum):
 
 
 class RevenueSource(Enum):
-    """Revenue source enumeration"""    STREAMING = "streaming"
+    """Revenue source enumeration"""
+    STREAMING = "streaming"
     DOWNLOAD = "download"
     SYNC_LICENSE = "sync_license"
     PERFORMANCE = "performance"
@@ -71,7 +76,8 @@ class RevenueSource(Enum):
 
 
 class TerritoryScope(Enum):
-    """Territory scope enumeration"""    WORLDWIDE = "worldwide"
+    """Territory scope enumeration"""
+    WORLDWIDE = "worldwide"
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
     ASIA_PACIFIC = "asia_pacific"
@@ -81,7 +87,8 @@ class TerritoryScope(Enum):
 
 
 class UsageType(Enum):
-    """Usage type enumeration"""    COMMERCIAL = "commercial"
+    """Usage type enumeration"""
+    COMMERCIAL = "commercial"
     NON_COMMERCIAL = "non_commercial"
     EDUCATIONAL = "educational"
     PROMOTIONAL = "promotional"
@@ -92,7 +99,8 @@ class UsageType(Enum):
 
 
 class LicenseAgreement(Base):
-    """License agreement data model"""    __tablename__ = "license_agreements"
+    """License agreement data model"""
+    __tablename__ = "license_agreements"
     
     # Primary identifiers
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -171,7 +179,8 @@ class LicenseAgreement(Base):
 
 
 class RoyaltyCalculation(Base):
-    """Royalty calculation data model"""    __tablename__ = "royalty_calculations"
+    """Royalty calculation data model"""
+    __tablename__ = "royalty_calculations"
     
     # Primary identifiers
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -244,7 +253,8 @@ class RoyaltyCalculation(Base):
 
 
 class LicenseUsageTracking(Base):
-    """License usage tracking data model"""    __tablename__ = "license_usage_tracking"
+    """License usage tracking data model"""
+    __tablename__ = "license_usage_tracking"
     
     # Primary identifiers
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -319,7 +329,8 @@ class LicenseUsageTracking(Base):
 
 
 class PaymentRecord(Base):
-    """Payment record data model"""    __tablename__ = "payment_records"
+    """Payment record data model"""
+    __tablename__ = "payment_records"
     
     # Primary identifiers
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -399,7 +410,8 @@ class PaymentRecord(Base):
 
 
 class ComplianceReport(Base):
-    """Compliance report data model"""    __tablename__ = "compliance_reports"
+    """Compliance report data model"""
+    __tablename__ = "compliance_reports"
     
     # Primary identifiers
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -465,7 +477,8 @@ class ComplianceReport(Base):
 
 
 class RightsOwnership(Base):
-    """Rights ownership data model"""    __tablename__ = "rights_ownership"
+    """Rights ownership data model"""
+    __tablename__ = "rights_ownership"
     
     # Primary identifiers
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -527,7 +540,8 @@ class RightsOwnership(Base):
 
 
 class ContractTerms(Base):
-    """Contract terms data model"""    __tablename__ = "contract_terms"
+    """Contract terms data model"""
+    __tablename__ = "contract_terms"
     
     # Primary identifiers
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -588,7 +602,8 @@ class ContractTerms(Base):
 
 
 class RevenueDistribution(Base):
-    """Revenue distribution data model"""    __tablename__ = "revenue_distributions"
+    """Revenue distribution data model"""
+    __tablename__ = "revenue_distributions"
     
     # Primary identifiers
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

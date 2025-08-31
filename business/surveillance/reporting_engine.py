@@ -6,7 +6,8 @@ infringement detection, and creator protection metrics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import csv
@@ -24,7 +25,8 @@ logger = logging.getLogger(__name__)
 
 
 class ReportType(Enum):
-    """Types of reports"""    INFRINGEMENT_SUMMARY = "infringement_summary"
+    """Types of reports"""
+    INFRINGEMENT_SUMMARY = "infringement_summary"
     CREATOR_PROTECTION = "creator_protection"
     PLATFORM_ANALYSIS = "platform_analysis"
     TAKEDOWN_EFFECTIVENESS = "takedown_effectiveness"
@@ -37,7 +39,8 @@ class ReportType(Enum):
 
 
 class ReportFormat(Enum):
-    """Available report formats"""    JSON = "json"
+    """Available report formats"""
+    JSON = "json"
     PDF = "pdf"
     CSV = "csv"
     EXCEL = "excel"
@@ -46,7 +49,8 @@ class ReportFormat(Enum):
 
 
 class ReportPeriod(Enum):
-    """Report time periods"""    REAL_TIME = "real_time"
+    """Report time periods"""
+    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -58,7 +62,8 @@ class ReportPeriod(Enum):
 
 @dataclass
 class ReportConfig:
-    """Report configuration"""    report_id: str
+    """Report configuration"""
+    report_id: str
     report_type: ReportType
     title: str
     description: str
@@ -88,7 +93,8 @@ class ReportConfig:
 
 @dataclass
 class ReportData:
-    """Report data container"""    report_id: str
+    """Report data container"""
+    report_id: str
     config: ReportConfig
     data: Dict[str, Any] = field(default_factory=dict)
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -100,13 +106,15 @@ class ReportData:
 
 
 class BaseReportGenerator:
-    """Base class for report generators"""    
+    """Base class for report generators"""
+    
     def __init__(self, report_type: ReportType, surveillance_system):
         self.report_type = report_type
         self.surveillance_system = surveillance_system
     
     async def generate(self, config: ReportConfig) -> ReportData:
-        """Generate report based on configuration"""        # Default implementation for report generators without specific implementation
+        """Generate report based on configuration"""
+        # Default implementation for report generators without specific implementation
         logging.warning(f"Report generation not implemented for {self.__class__.__name__}")
         from datetime import datetime
         return ReportData(
@@ -120,7 +128,8 @@ class BaseReportGenerator:
         )
     
     async def get_base_metrics(self, config: ReportConfig) -> Dict[str, Any]:
-        """Get base metrics common to all reports"""        start_time = config.date_range[0] if config.date_range else datetime.now(timezone.utc) - timedelta(days=30)
+        """Get base metrics common to all reports"""
+        start_time = config.date_range[0] if config.date_range else datetime.now(timezone.utc) - timedelta(days=30)
         end_time = config.date_range[1] if config.date_range else datetime.now(timezone.utc)
         
         # In production, these would query actual databases
@@ -139,12 +148,14 @@ class BaseReportGenerator:
 
 
 class InfringementSummaryGenerator(BaseReportGenerator):
-    """Generator for infringement summary reports"""    
+    """Generator for infringement summary reports"""
+    
     def __init__(self, surveillance_system):
         super().__init__(ReportType.INFRINGEMENT_SUMMARY, surveillance_system)
     
     async def generate(self, config: ReportConfig) -> ReportData:
-        """Generate infringement summary report"""        start_time = datetime.now()
+        """Generate infringement summary report"""
+        start_time = datetime.now()
         
         base_metrics = await self.get_base_metrics(config)
         
@@ -186,7 +197,8 @@ class InfringementSummaryGenerator(BaseReportGenerator):
         )
     
     async def _collect_infringement_data(self, config: ReportConfig) -> List[Dict[str, Any]]:
-        """Collect infringement data based on filters"""        # Simulate data collection
+        """Collect infringement data based on filters"""
+        # Simulate data collection
         sample_data = []
         
         platforms = config.platforms or ["youtube", "tiktok", "instagram", "facebook"]
@@ -221,7 +233,8 @@ class InfringementSummaryGenerator(BaseReportGenerator):
         return sample_data
     
     async def _generate_summary_statistics(self, data: List[Dict[str, Any]], config: ReportConfig) -> Dict[str, Any]:
-        """Generate summary statistics from infringement data"""        if not data:
+        """Generate summary statistics from infringement data"""
+        if not data:
             return {"total_infringements": 0}
         
         total_infringements = len(data)
@@ -258,7 +271,8 @@ class InfringementSummaryGenerator(BaseReportGenerator):
         }
     
     async def _generate_platform_breakdown(self, data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Generate platform-specific breakdown"""        platform_stats = defaultdict(lambda: {
+        """Generate platform-specific breakdown"""
+        platform_stats = defaultdict(lambda: {
             "count": 0,
             "estimated_loss": 0,
             "estimated_views": 0,
@@ -292,7 +306,8 @@ class InfringementSummaryGenerator(BaseReportGenerator):
         return result
     
     async def _generate_trend_analysis(self, data: List[Dict[str, Any]], config: ReportConfig) -> Dict[str, Any]:
-        """Generate trend analysis"""        # Group data by day
+        """Generate trend analysis"""
+        # Group data by day
         daily_counts = defaultdict(int)
         daily_losses = defaultdict(float)
         
@@ -326,7 +341,8 @@ class InfringementSummaryGenerator(BaseReportGenerator):
         return trend_data
     
     async def _identify_top_infringers(self, data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Identify top infringers by various metrics"""        infringer_stats = defaultdict(lambda: {
+        """Identify top infringers by various metrics"""
+        infringer_stats = defaultdict(lambda: {
             "count": 0,
             "total_loss": 0,
             "total_views": 0,
@@ -373,7 +389,8 @@ class InfringementSummaryGenerator(BaseReportGenerator):
         }
     
     async def _generate_recommendations(self, summary: Dict[str, Any], trends: Dict[str, Any]) -> List[Dict[str, str]]:
-        """Generate actionable recommendations"""        recommendations = []
+        """Generate actionable recommendations"""
+        recommendations = []
         
         # High-risk infringements
         if summary.get("high_risk_percentage", 0) > 30:
@@ -419,12 +436,14 @@ class InfringementSummaryGenerator(BaseReportGenerator):
 
 
 class CreatorProtectionGenerator(BaseReportGenerator):
-    """Generator for creator protection reports"""    
+    """Generator for creator protection reports"""
+    
     def __init__(self, surveillance_system):
         super().__init__(ReportType.CREATOR_PROTECTION, surveillance_system)
     
     async def generate(self, config: ReportConfig) -> ReportData:
-        """Generate creator protection report"""        start_time = datetime.now()
+        """Generate creator protection report"""
+        start_time = datetime.now()
         
         base_metrics = await self.get_base_metrics(config)
         
@@ -458,7 +477,8 @@ class CreatorProtectionGenerator(BaseReportGenerator):
         )
     
     async def _calculate_protection_metrics(self, config: ReportConfig) -> Dict[str, Any]:
-        """Calculate protection metrics for creators"""        creator_metrics = {}
+        """Calculate protection metrics for creators"""
+        creator_metrics = {}
         
         creators = config.creator_ids or [f"creator_{i}" for i in range(5)]
         
@@ -482,7 +502,8 @@ class CreatorProtectionGenerator(BaseReportGenerator):
         return creator_metrics
     
     async def _analyze_protected_content(self, config: ReportConfig) -> Dict[str, Any]:
-        """Analyze protected content across creators"""        content_stats = {
+        """Analyze protected content across creators"""
+        content_stats = {
             "total_protected_items": 0,
             "content_type_breakdown": defaultdict(int),
             "platform_coverage": defaultdict(int),
@@ -510,7 +531,8 @@ class CreatorProtectionGenerator(BaseReportGenerator):
         return content_stats
     
     async def _analyze_threat_landscape(self, config: ReportConfig) -> Dict[str, Any]:
-        """Analyze threat landscape for creators"""        threat_analysis = {
+        """Analyze threat landscape for creators"""
+        threat_analysis = {
             "active_threats": 45,
             "threat_sources": {
                 "social_media_platforms": 65,
@@ -557,7 +579,8 @@ class CreatorProtectionGenerator(BaseReportGenerator):
         return threat_analysis
     
     async def _calculate_effectiveness_metrics(self, config: ReportConfig) -> Dict[str, Any]:
-        """Calculate protection effectiveness metrics"""        effectiveness = {
+        """Calculate protection effectiveness metrics"""
+        effectiveness = {
             "detection_rate": 94.2,  # Percentage of infringements detected
             "response_time": {
                 "average_hours": 4.2,
@@ -584,9 +607,11 @@ class CreatorProtectionGenerator(BaseReportGenerator):
 
 
 class ReportingEngine:
-    """    Advanced reporting and analytics engine for surveillance activities,
+    """
+    Advanced reporting and analytics engine for surveillance activities,
     infringement detection, and creator protection metrics
-    """    
+    """
+    
     def __init__(self, surveillance_system):
         self.surveillance_system = surveillance_system
         self.generators: Dict[ReportType, BaseReportGenerator] = {}
@@ -595,7 +620,8 @@ class ReportingEngine:
         self.initialized = False
     
     async def initialize(self) -> None:
-        """Initialize reporting engine"""        try:
+        """Initialize reporting engine"""
+        try:
             # Initialize report generators
             self.generators[ReportType.INFRINGEMENT_SUMMARY] = InfringementSummaryGenerator(self.surveillance_system)
             self.generators[ReportType.CREATOR_PROTECTION] = CreatorProtectionGenerator(self.surveillance_system)
@@ -629,7 +655,8 @@ class ReportingEngine:
         date_range: Optional[Tuple[datetime, datetime]] = None,
         **kwargs
     ) -> ReportData:
-        """Generate a report"""        report_id = f"report_{int(datetime.now().timestamp())}_{uuid.uuid4().hex[:8]}"
+        """Generate a report"""
+        report_id = f"report_{int(datetime.now().timestamp())}_{uuid.uuid4().hex[:8]}"
         
         config = ReportConfig(
             report_id=report_id,
@@ -667,7 +694,8 @@ class ReportingEngine:
             raise
     
     async def _format_report(self, report_data: ReportData, format: ReportFormat) -> None:
-        """Format report in the requested format"""        if format == ReportFormat.CSV:
+        """Format report in the requested format"""
+        if format == ReportFormat.CSV:
             await self._format_as_csv(report_data)
         elif format == ReportFormat.HTML:
             await self._format_as_html(report_data)
@@ -679,7 +707,8 @@ class ReportingEngine:
             await self._format_as_xml(report_data)
     
     async def _format_as_csv(self, report_data: ReportData) -> None:
-        """Format report as CSV"""        output = io.StringIO()
+        """Format report as CSV"""
+        output = io.StringIO()
         
         # Write basic info
         output.write(f"Report ID,{report_data.report_id}\n")
@@ -700,7 +729,9 @@ class ReportingEngine:
         logger.info(f"Report formatted as CSV: {report_data.file_path}")
     
     async def _format_as_html(self, report_data: ReportData) -> None:
-        """Format report as HTML"""        html_content = f"""        <!DOCTYPE html>
+        """Format report as HTML"""
+        html_content = f"""
+        <!DOCTYPE html>
         <html>
         <head>
             <title>{report_data.config.title}</title>
@@ -728,13 +759,15 @@ class ReportingEngine:
             </div>
         </body>
         </html>
-        """        
+        """
+        
         report_data.file_path = f"/tmp/{report_data.report_id}.html"
         # In production, save to actual file
         logger.info(f"Report formatted as HTML: {report_data.file_path}")
     
     def _create_html_summary(self, data: Dict[str, Any]) -> str:
-        """Create HTML summary section"""        html = ""
+        """Create HTML summary section"""
+        html = ""
         
         if "summary" in data:
             summary = data["summary"]
@@ -745,17 +778,20 @@ class ReportingEngine:
         return html
     
     async def _format_as_pdf(self, report_data: ReportData) -> None:
-        """Format report as PDF (placeholder)"""        # In production, use libraries like reportlab or weasyprint
+        """Format report as PDF (placeholder)"""
+        # In production, use libraries like reportlab or weasyprint
         report_data.file_path = f"/tmp/{report_data.report_id}.pdf"
         logger.info(f"Report formatted as PDF: {report_data.file_path}")
     
     async def _format_as_excel(self, report_data: ReportData) -> None:
-        """Format report as Excel (placeholder)"""        # In production, use libraries like openpyxl or xlsxwriter
+        """Format report as Excel (placeholder)"""
+        # In production, use libraries like openpyxl or xlsxwriter
         report_data.file_path = f"/tmp/{report_data.report_id}.xlsx"
         logger.info(f"Report formatted as Excel: {report_data.file_path}")
     
     async def _format_as_xml(self, report_data: ReportData) -> None:
-        """Format report as XML (placeholder)"""        report_data.file_path = f"/tmp/{report_data.report_id}.xml"
+        """Format report as XML (placeholder)"""
+        report_data.file_path = f"/tmp/{report_data.report_id}.xml"
         logger.info(f"Report formatted as XML: {report_data.file_path}")
     
     async def schedule_report(
@@ -766,7 +802,8 @@ class ReportingEngine:
         recipients: List[str],
         **kwargs
     ) -> str:
-        """Schedule a recurring report"""        report_id = f"scheduled_{int(datetime.now().timestamp())}_{uuid.uuid4().hex[:8]}"
+        """Schedule a recurring report"""
+        report_id = f"scheduled_{int(datetime.now().timestamp())}_{uuid.uuid4().hex[:8]}"
         
         config = ReportConfig(
             report_id=report_id,
@@ -787,10 +824,12 @@ class ReportingEngine:
         return report_id
     
     async def get_report(self, report_id: str) -> Optional[ReportData]:
-        """Get a cached report"""        return self.report_cache.get(report_id)
+        """Get a cached report"""
+        return self.report_cache.get(report_id)
     
     async def list_reports(self, creator_id: Optional[str] = None) -> List[Dict[str, Any]]:
-        """List available reports"""        reports = []
+        """List available reports"""
+        reports = []
         
         for report_id, report_data in self.report_cache.items():
             # Filter by creator if specified
@@ -810,7 +849,8 @@ class ReportingEngine:
         return sorted(reports, key=lambda x: x["generated_at"], reverse=True)
     
     async def delete_report(self, report_id: str) -> bool:
-        """Delete a report"""        if report_id in self.report_cache:
+        """Delete a report"""
+        if report_id in self.report_cache:
             report_data = self.report_cache.pop(report_id)
             
             # Delete file if it exists
@@ -824,7 +864,8 @@ class ReportingEngine:
         return False
     
     async def get_report_statistics(self) -> Dict[str, Any]:
-        """Get reporting statistics"""        total_reports = len(self.report_cache)
+        """Get reporting statistics"""
+        total_reports = len(self.report_cache)
         scheduled_reports = len(self.scheduled_reports)
         
         # Report type distribution
@@ -852,7 +893,8 @@ class ReportingEngine:
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on reporting engine"""        return {
+        """Perform health check on reporting engine"""
+        return {
             "engine": "healthy" if self.initialized else "unhealthy",
             "generators_available": len(self.generators),
             "cached_reports": len(self.report_cache),
@@ -861,7 +903,8 @@ class ReportingEngine:
         }
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown reporting engine"""        logger.info("Shutting down Reporting Engine")
+        """Gracefully shutdown reporting engine"""
+        logger.info("Shutting down Reporting Engine")
         
         # Clear cache
         self.report_cache.clear()

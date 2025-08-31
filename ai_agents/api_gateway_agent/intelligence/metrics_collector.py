@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 from typing import Dict, List, Optional, Any, Callable
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MetricDefinition:
-    """Metric definition configuration"""    name: str
+    """Metric definition configuration"""
+    name: str
     metric_type: str  # counter, histogram, gauge, summary
     description: str
     labels: List[str] = field(default_factory=list)
@@ -37,7 +39,8 @@ class MetricDefinition:
 
 @dataclass
 class Alert:
-    """Alert configuration"""    name: str
+    """Alert configuration"""
+    name: str
     condition: str
     threshold: float
     duration: int  # seconds
@@ -47,7 +50,8 @@ class Alert:
 
 
 class MetricsCollector:
-    """    Enterprise Metrics Collector
+    """
+    Enterprise Metrics Collector
     
     Features:
     - Prometheus metrics integration
@@ -57,14 +61,16 @@ class MetricsCollector:
     - Performance monitoring
     - Resource utilization tracking
     - Service health metrics
-    """    
+    """
+    
     def __init__(
         self,
         enabled: bool = True,
         registry: Optional[CollectorRegistry] = None,
         prometheus_endpoint: str = "/metrics"
     ):
-        """Initialize metrics collector"""        self.enabled = enabled
+        """Initialize metrics collector"""
+        self.enabled = enabled
         self.registry = registry or CollectorRegistry()
         self.prometheus_endpoint = prometheus_endpoint
         
@@ -89,7 +95,8 @@ class MetricsCollector:
         logger.info(f"Metrics collector initialized (enabled: {enabled})")
     
     def _initialize_default_metrics(self):
-        """Initialize default API Gateway metrics"""        try:
+        """Initialize default API Gateway metrics"""
+        try:
             # Request metrics
             self.metrics['requests_total'] = Counter(
                 'api_gateway_requests_total',
@@ -237,7 +244,8 @@ class MetricsCollector:
         duration: float,
         response_size: int = 0
     ):
-        """Record request metrics"""        if not self.enabled:
+        """Record request metrics"""
+        if not self.enabled:
             return
         
         try:
@@ -272,7 +280,8 @@ class MetricsCollector:
         status_code: int,
         duration: float
     ):
-        """Record upstream service request metrics"""        if not self.enabled:
+        """Record upstream service request metrics"""
+        if not self.enabled:
             return
         
         try:
@@ -289,7 +298,8 @@ class MetricsCollector:
             logger.error(f"Error recording upstream metrics: {e}")
     
     def update_service_health(self, service: str, healthy: bool):
-        """Update service health metric"""        if not self.enabled:
+        """Update service health metric"""
+        if not self.enabled:
             return
         
         try:
@@ -299,7 +309,8 @@ class MetricsCollector:
             logger.error(f"Error updating service health: {e}")
     
     def record_rate_limit_hit(self, identifier_type: str, endpoint: str):
-        """Record rate limit hit"""        if not self.enabled:
+        """Record rate limit hit"""
+        if not self.enabled:
             return
         
         try:
@@ -312,7 +323,8 @@ class MetricsCollector:
             logger.error(f"Error recording rate limit hit: {e}")
     
     def update_rate_limit_remaining(self, identifier: str, endpoint: str, remaining: int):
-        """Update rate limit remaining quota"""        if not self.enabled:
+        """Update rate limit remaining quota"""
+        if not self.enabled:
             return
         
         try:
@@ -325,7 +337,8 @@ class MetricsCollector:
             logger.error(f"Error updating rate limit remaining: {e}")
     
     def update_circuit_breaker_state(self, service: str, state: str):
-        """Update circuit breaker state"""        if not self.enabled:
+        """Update circuit breaker state"""
+        if not self.enabled:
             return
         
         try:
@@ -336,7 +349,8 @@ class MetricsCollector:
             logger.error(f"Error updating circuit breaker state: {e}")
     
     def record_circuit_breaker_failure(self, service: str):
-        """Record circuit breaker failure"""        if not self.enabled:
+        """Record circuit breaker failure"""
+        if not self.enabled:
             return
         
         try:
@@ -346,7 +360,8 @@ class MetricsCollector:
             logger.error(f"Error recording circuit breaker failure: {e}")
     
     def update_system_metrics(self, memory_usage: float, cpu_usage: float):
-        """Update system resource metrics"""        if not self.enabled:
+        """Update system resource metrics"""
+        if not self.enabled:
             return
         
         try:
@@ -357,7 +372,8 @@ class MetricsCollector:
             logger.error(f"Error updating system metrics: {e}")
     
     def record_cache_hit(self, cache_type: str):
-        """Record cache hit"""        if not self.enabled:
+        """Record cache hit"""
+        if not self.enabled:
             return
         
         try:
@@ -367,7 +383,8 @@ class MetricsCollector:
             logger.error(f"Error recording cache hit: {e}")
     
     def record_cache_miss(self, cache_type: str):
-        """Record cache miss"""        if not self.enabled:
+        """Record cache miss"""
+        if not self.enabled:
             return
         
         try:
@@ -377,7 +394,8 @@ class MetricsCollector:
             logger.error(f"Error recording cache miss: {e}")
     
     def add_custom_metric(self, name: str, value: float, labels: Optional[Dict[str, str]] = None):
-        """Add custom metric value"""        if not self.enabled:
+        """Add custom metric value"""
+        if not self.enabled:
             return
         
         try:
@@ -400,7 +418,8 @@ class MetricsCollector:
         description: str,
         labels: Optional[List[str]] = None
     ) -> bool:
-        """Create custom Prometheus metric"""        if not self.enabled:
+        """Create custom Prometheus metric"""
+        if not self.enabled:
             return False
         
         try:
@@ -434,7 +453,8 @@ class MetricsCollector:
             return False
     
     def add_alert(self, alert: Alert) -> bool:
-        """Add alert configuration"""        try:
+        """Add alert configuration"""
+        try:
             self.alerts[alert.name] = alert
             logger.info(f"Added alert: {alert.name}")
             return True
@@ -444,7 +464,8 @@ class MetricsCollector:
             return False
     
     def remove_alert(self, alert_name: str) -> bool:
-        """Remove alert configuration"""        try:
+        """Remove alert configuration"""
+        try:
             if alert_name in self.alerts:
                 del self.alerts[alert_name]
                 logger.info(f"Removed alert: {alert_name}")
@@ -456,10 +477,12 @@ class MetricsCollector:
             return False
     
     def add_alert_callback(self, callback: Callable[[Alert, float], None]):
-        """Add alert callback function"""        self.alert_callbacks.append(callback)
+        """Add alert callback function"""
+        self.alert_callbacks.append(callback)
     
     async def check_alerts(self):
-        """Check all alerts and trigger notifications"""        if not self.enabled:
+        """Check all alerts and trigger notifications"""
+        if not self.enabled:
             return
         
         try:
@@ -475,7 +498,8 @@ class MetricsCollector:
             logger.error(f"Error checking alerts: {e}")
     
     async def _check_individual_alert(self, alert: Alert):
-        """Check individual alert condition"""        try:
+        """Check individual alert condition"""
+        try:
             # Placeholder implementation
             # In reality, this would evaluate the alert condition
             # against current metrics
@@ -498,7 +522,8 @@ class MetricsCollector:
             logger.error(f"Error checking alert {alert.name}: {e}")
     
     def get_metric_value(self, metric_name: str, labels: Optional[Dict[str, str]] = None) -> Optional[float]:
-        """Get current value of a metric"""        try:
+        """Get current value of a metric"""
+        try:
             if metric_name not in self.metrics:
                 return None
             
@@ -522,7 +547,8 @@ class MetricsCollector:
             return None
     
     def get_custom_metric_stats(self, name: str) -> Dict[str, Any]:
-        """Get statistics for custom metric"""        try:
+        """Get statistics for custom metric"""
+        try:
             if name not in self.custom_metrics or not self.custom_metrics[name]:
                 return {}
             
@@ -544,7 +570,8 @@ class MetricsCollector:
             return {}
     
     def generate_metrics(self) -> str:
-        """Generate Prometheus metrics output"""        if not self.enabled:
+        """Generate Prometheus metrics output"""
+        if not self.enabled:
             return ""
         
         try:
@@ -555,7 +582,8 @@ class MetricsCollector:
             return ""
     
     def get_metrics_summary(self) -> Dict[str, Any]:
-        """Get metrics summary"""        try:
+        """Get metrics summary"""
+        try:
             summary = {
                 "enabled": self.enabled,
                 "total_metrics": len(self.metrics),
@@ -573,7 +601,8 @@ class MetricsCollector:
             return {}
     
     async def start_background_collection(self):
-        """Start background metrics collection"""        if not self.enabled:
+        """Start background metrics collection"""
+        if not self.enabled:
             return
         
         try:
@@ -586,7 +615,8 @@ class MetricsCollector:
             logger.error(f"Error starting background collection: {e}")
     
     async def stop_background_collection(self):
-        """Stop background metrics collection"""        try:
+        """Stop background metrics collection"""
+        try:
             if self._metrics_task:
                 self._metrics_task.cancel()
             
@@ -599,7 +629,8 @@ class MetricsCollector:
             logger.error(f"Error stopping background collection: {e}")
     
     async def _metrics_collection_loop(self):
-        """Background metrics collection loop"""        while True:
+        """Background metrics collection loop"""
+        while True:
             try:
                 # Collect system metrics
                 await self._collect_system_metrics()
@@ -614,7 +645,8 @@ class MetricsCollector:
                 await asyncio.sleep(30)
     
     async def _alerts_check_loop(self):
-        """Background alerts checking loop"""        while True:
+        """Background alerts checking loop"""
+        while True:
             try:
                 await self.check_alerts()
                 await asyncio.sleep(60)  # Check every minute
@@ -626,7 +658,8 @@ class MetricsCollector:
                 await asyncio.sleep(60)
     
     async def _collect_system_metrics(self):
-        """Collect system resource metrics"""        try:
+        """Collect system resource metrics"""
+        try:
             import psutil
             
             # Memory usage

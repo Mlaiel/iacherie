@@ -18,7 +18,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import json
@@ -52,7 +53,8 @@ import schedule
 
 
 class PaymentStatus(Enum):
-    """Payment transaction status"""    PENDING = "pending"
+    """Payment transaction status"""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -63,7 +65,8 @@ class PaymentStatus(Enum):
 
 
 class PaymentMethod(Enum):
-    """Supported payment methods"""    CREDIT_CARD = "credit_card"
+    """Supported payment methods"""
+    CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     PAYPAL = "paypal"
     STRIPE = "stripe"
@@ -78,7 +81,8 @@ class PaymentMethod(Enum):
 
 
 class SubscriptionStatus(Enum):
-    """Subscription status"""    ACTIVE = "active"
+    """Subscription status"""
+    ACTIVE = "active"
     INACTIVE = "inactive"
     CANCELLED = "cancelled"
     PAST_DUE = "past_due"
@@ -87,7 +91,8 @@ class SubscriptionStatus(Enum):
 
 
 class TransactionType(Enum):
-    """Transaction types"""    SUBSCRIPTION = "subscription"
+    """Transaction types"""
+    SUBSCRIPTION = "subscription"
     ONE_TIME = "one_time"
     CREATOR_PAYOUT = "creator_payout"
     REVENUE_SHARE = "revenue_share"
@@ -98,7 +103,8 @@ class TransactionType(Enum):
 
 @dataclass
 class PaymentTransaction:
-    """Payment transaction record"""    transaction_id: str
+    """Payment transaction record"""
+    transaction_id: str
     user_id: str
     payment_method: PaymentMethod
     amount: Decimal
@@ -119,7 +125,8 @@ class PaymentTransaction:
 
 @dataclass
 class Subscription:
-    """User subscription record"""    subscription_id: str
+    """User subscription record"""
+    subscription_id: str
     user_id: str
     plan_id: str
     status: SubscriptionStatus
@@ -139,7 +146,8 @@ class Subscription:
 
 @dataclass
 class CreatorPayout:
-    """Creator payout record"""    payout_id: str
+    """Creator payout record"""
+    payout_id: str
     creator_id: str
     amount: Decimal
     currency: str
@@ -156,7 +164,8 @@ class CreatorPayout:
 
 
 class PaymentProcessorOrchestrator:
-    """    Enterprise payment processing orchestrator managing multiple payment
+    """
+    Enterprise payment processing orchestrator managing multiple payment
     gateways, currencies, and transaction types
     
     Features:
@@ -168,7 +177,8 @@ class PaymentProcessorOrchestrator:
     - Comprehensive financial reporting and analytics
     - PCI DSS compliance and security standards
     - Tax calculation and compliance integration
-    """    
+    """
+    
     def __init__(self,
                  redis_host: str = "localhost",
                  redis_port: int = 6379,
@@ -216,7 +226,8 @@ class PaymentProcessorOrchestrator:
         self.logger.info("PaymentProcessorOrchestrator initialized successfully")
     
     def _init_payment_gateways(self) -> Dict[str, Any]:
-        """Initialize payment gateway clients"""        gateways = {}
+        """Initialize payment gateway clients"""
+        gateways = {}
         
         try:
             # Stripe gateway
@@ -270,7 +281,8 @@ class PaymentProcessorOrchestrator:
         return gateways
     
     def _init_crypto_clients(self) -> Dict[str, Any]:
-        """Initialize cryptocurrency clients"""        crypto_clients = {}
+        """Initialize cryptocurrency clients"""
+        crypto_clients = {}
         
         try:
             # Bitcoin client
@@ -306,7 +318,8 @@ class PaymentProcessorOrchestrator:
                             payment_data: Dict[str, Any],
                             transaction_type: TransactionType = TransactionType.ONE_TIME,
                             metadata: Dict[str, Any] = None) -> str:
-        """        Process a payment transaction
+        """
+        Process a payment transaction
         
         Args:
             user_id: User making the payment
@@ -319,7 +332,8 @@ class PaymentProcessorOrchestrator:
             
         Returns:
             str: Transaction ID
-        """        start_time = time.time()
+        """
+        start_time = time.time()
         transaction_id = str(uuid.uuid4())
         
         try:
@@ -433,43 +447,56 @@ class PaymentProcessorOrchestrator:
     
     # Placeholder methods for remaining implementation
     async def _select_optimal_gateway(self, payment_method: PaymentMethod, currency: str, amount: Decimal) -> str:
-        """Select optimal payment gateway"""        return 'stripe'  # Simplified implementation
+        """Select optimal payment gateway"""
+        return 'stripe'  # Simplified implementation
     
     async def _validate_payment_data(self, payment_data: Dict[str, Any], payment_method: PaymentMethod) -> Dict[str, Any]:
-        """Validate payment data"""        return {'valid': True}  # Simplified implementation
+        """Validate payment data"""
+        return {'valid': True}  # Simplified implementation
     
     async def _check_fraud_risk(self, user_id: str, amount: Decimal, currency: str, payment_data: Dict[str, Any]) -> float:
-        """Check fraud risk"""        return 0.1  # Simplified implementation
+        """Check fraud risk"""
+        return 0.1  # Simplified implementation
     
     async def _process_with_gateway(self, transaction: PaymentTransaction, payment_data: Dict[str, Any], gateway: str) -> Dict[str, Any]:
-        """Process with gateway"""        return {'success': True, 'gateway_transaction_id': f'{gateway}_{uuid.uuid4()}'}  # Simplified
+        """Process with gateway"""
+        return {'success': True, 'gateway_transaction_id': f'{gateway}_{uuid.uuid4()}'}  # Simplified
     
     async def _get_fallback_gateway(self, primary_gateway: str, payment_method: PaymentMethod, currency: str) -> Optional[str]:
-        """Get fallback gateway"""        return None  # Simplified implementation
+        """Get fallback gateway"""
+        return None  # Simplified implementation
     
     async def _store_transaction(self, transaction: PaymentTransaction):
-        """Store transaction"""        pass  # Simplified implementation
+        """Store transaction"""
+        pass  # Simplified implementation
     
     async def _trigger_post_payment_actions(self, transaction: PaymentTransaction):
-        """Trigger post-payment actions"""        pass  # Simplified implementation
+        """Trigger post-payment actions"""
+        pass  # Simplified implementation
     
     async def _alert_fraud_team(self, transaction: PaymentTransaction, fraud_score: float):
-        """Alert fraud team"""        pass  # Simplified implementation
+        """Alert fraud team"""
+        pass  # Simplified implementation
     
     async def _generate_bitcoin_address(self, transaction_id: str) -> str:
-        """Generate Bitcoin address"""        return f"1{str(uuid.uuid4()).replace('-', '')[:25]}"
+        """Generate Bitcoin address"""
+        return f"1{str(uuid.uuid4()).replace('-', '')[:25]}"
     
     async def _generate_ethereum_address(self, transaction_id: str) -> str:
-        """Generate Ethereum address"""        return f"0x{str(uuid.uuid4()).replace('-', '')[:40]}"
+        """Generate Ethereum address"""
+        return f"0x{str(uuid.uuid4()).replace('-', '')[:40]}"
     
     async def _monitor_bitcoin_transactions(self):
-        """Monitor Bitcoin transactions"""        pass
+        """Monitor Bitcoin transactions"""
+        pass
     
     async def _monitor_ethereum_transactions(self):
-        """Monitor Ethereum transactions"""        pass
+        """Monitor Ethereum transactions"""
+        pass
     
     def _start_payment_workers(self):
-        """Start background workers"""        def worker():
+        """Start background workers"""
+        def worker():
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
             loop.run_forever()
@@ -480,14 +507,16 @@ class PaymentProcessorOrchestrator:
 
 # Factory function for creating payment processor
 def create_payment_processor(config: Dict[str, Any]) -> PaymentProcessorOrchestrator:
-    """    Create and configure payment processor orchestrator
+    """
+    Create and configure payment processor orchestrator
     
     Args:
         config: System configuration parameters
         
     Returns:
         PaymentProcessorOrchestrator: Configured payment processor
-    """    return PaymentProcessorOrchestrator(
+    """
+    return PaymentProcessorOrchestrator(
         redis_host=config.get('redis_host', 'localhost'),
         redis_port=config.get('redis_port', 6379),
         postgres_url=config.get('postgres_url', 'postgresql://localhost/ia_influencer'),

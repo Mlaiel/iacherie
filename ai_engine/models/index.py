@@ -11,7 +11,8 @@ Development Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security
 - Microservices + Audio + DevOps + IA Prompt Engineer
 Email: mlaiel@live.de
-"""import logging
+"""
+import logging
 from typing import Dict, List, Optional, Any, Type, Union
 from enum import Enum
 from dataclasses import dataclass
@@ -60,7 +61,8 @@ logger = logging.getLogger(__name__)
 
 
 class ModelCategory(Enum):
-    """High-level model categories"""    CONTENT_PROCESSING = "content_processing"
+    """High-level model categories"""
+    CONTENT_PROCESSING = "content_processing"
     CONTENT_PROTECTION = "content_protection"
     BUSINESS_INTELLIGENCE = "business_intelligence"
     NEURAL_ARCHITECTURE = "neural_architecture"
@@ -70,7 +72,8 @@ class ModelCategory(Enum):
 
 
 class ModelComplexity(Enum):
-    """Model complexity levels"""    SIMPLE = "simple"
+    """Model complexity levels"""
+    SIMPLE = "simple"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
     ENTERPRISE = "enterprise"
@@ -79,7 +82,8 @@ class ModelComplexity(Enum):
 
 @dataclass
 class ModelInfo:
-    """Comprehensive model information"""    name: str
+    """Comprehensive model information"""
+    name: str
     class_type: Type[BaseAIModel]
     category: ModelCategory
     complexity: ModelComplexity
@@ -94,15 +98,18 @@ class ModelInfo:
     
     
 class AIModelsIndex:
-    """    Central index and registry for all AI models
+    """
+    Central index and registry for all AI models
     Provides model discovery, configuration, and management
-    """    
+    """
+    
     def __init__(self):
         self.models_catalog = self._build_models_catalog()
         self.logger = logging.getLogger(__name__)
     
     def _build_models_catalog(self) -> Dict[str, ModelInfo]:
-        """Build comprehensive models catalog"""        catalog = {}
+        """Build comprehensive models catalog"""
+        catalog = {}
         
         # Content Processing Models
         catalog["audio_feature_extractor"] = ModelInfo(
@@ -324,23 +331,29 @@ class AIModelsIndex:
         return catalog
     
     def get_model_info(self, model_name: str) -> Optional[ModelInfo]:
-        """Get detailed information about a specific model"""        return self.models_catalog.get(model_name)
+        """Get detailed information about a specific model"""
+        return self.models_catalog.get(model_name)
     
     def list_models_by_category(self, category: ModelCategory) -> List[ModelInfo]:
-        """List all models in a specific category"""        return [info for info in self.models_catalog.values() if info.category == category]
+        """List all models in a specific category"""
+        return [info for info in self.models_catalog.values() if info.category == category]
     
     def list_models_by_complexity(self, complexity: ModelComplexity) -> List[ModelInfo]:
-        """List all models of specific complexity level"""        return [info for info in self.models_catalog.values() if info.complexity == complexity]
+        """List all models of specific complexity level"""
+        return [info for info in self.models_catalog.values() if info.complexity == complexity]
     
     def find_models_by_capability(self, capability: str) -> List[ModelInfo]:
-        """Find models that provide a specific capability"""        return [info for info in self.models_catalog.values() if capability in info.capabilities]
+        """Find models that provide a specific capability"""
+        return [info for info in self.models_catalog.values() if capability in info.capabilities]
     
     def find_models_by_input_type(self, input_type: str) -> List[ModelInfo]:
-        """Find models that accept a specific input type"""        return [info for info in self.models_catalog.values() 
+        """Find models that accept a specific input type"""
+        return [info for info in self.models_catalog.values() 
                 if any(input_type in itype for itype in info.input_types)]
     
     def get_recommended_models_for_task(self, task_description: str) -> List[ModelInfo]:
-        """Get recommended models for a specific task"""        # Simple keyword-based matching
+        """Get recommended models for a specific task"""
+        # Simple keyword-based matching
         # In production, use more sophisticated NLP matching
         task_lower = task_description.lower()
         
@@ -368,7 +381,8 @@ class AIModelsIndex:
         return [info for info, score in recommendations[:5]]
     
     def get_model_performance_summary(self) -> Dict[str, Any]:
-        """Get performance summary across all models"""        summary = {
+        """Get performance summary across all models"""
+        summary = {
             "total_models": len(self.models_catalog),
             "by_category": {},
             "by_complexity": {},
@@ -410,7 +424,8 @@ class AIModelsIndex:
         return summary
     
     def export_catalog_json(self) -> str:
-        """Export model catalog as JSON"""        exportable_catalog = {}
+        """Export model catalog as JSON"""
+        exportable_catalog = {}
         
         for name, info in self.models_catalog.items():
             exportable_catalog[name] = {
@@ -435,11 +450,13 @@ ai_models_index = AIModelsIndex()
 
 
 def get_model_index() -> AIModelsIndex:
-    """Get the global AI models index"""    return ai_models_index
+    """Get the global AI models index"""
+    return ai_models_index
 
 
 def discover_models(query: str = None, **filters) -> List[ModelInfo]:
-    """    Discover models based on query and filters
+    """
+    Discover models based on query and filters
     
     Args:
         query: Natural language query describing the task
@@ -447,7 +464,8 @@ def discover_models(query: str = None, **filters) -> List[ModelInfo]:
         
     Returns:
         List of matching models
-    """    index = get_model_index()
+    """
+    index = get_model_index()
     
     if query:
         models = index.get_recommended_models_for_task(query)
@@ -526,7 +544,8 @@ __email__ = "mlaiel@live.de"
 
 # Model Architecture Enums
 class ModelType(Enum):
-    """Types of AI models."""    AUDIO = auto()
+    """Types of AI models."""
+    AUDIO = auto()
     IMAGE = auto()
     TEXT = auto()
     VIDEO = auto()
@@ -538,7 +557,8 @@ class ModelType(Enum):
     CLASSIFICATION = auto()
 
 class ModelFramework(Enum):
-    """AI model frameworks."""    PYTORCH = "pytorch"
+    """AI model frameworks."""
+    PYTORCH = "pytorch"
     TENSORFLOW = "tensorflow"
     HUGGING_FACE = "hugging_face"
     SCIKIT_LEARN = "scikit_learn"
@@ -548,14 +568,16 @@ class ModelFramework(Enum):
     TENSORRT = "tensorrt"
 
 class ModelComplexity(Enum):
-    """Model complexity levels."""    LIGHTWEIGHT = "lightweight"
+    """Model complexity levels."""
+    LIGHTWEIGHT = "lightweight"
     STANDARD = "standard"
     ADVANCED = "advanced"
     ENTERPRISE = "enterprise"
     RESEARCH = "research"
 
 class DeploymentTarget(Enum):
-    """Model deployment targets."""    CPU = "cpu"
+    """Model deployment targets."""
+    CPU = "cpu"
     GPU = "gpu"
     TPU = "tpu"
     EDGE = "edge"
@@ -564,7 +586,8 @@ class DeploymentTarget(Enum):
     EMBEDDED = "embedded"
 
 class ModelStatus(Enum):
-    """Model status states."""    DEVELOPMENT = "development"
+    """Model status states."""
+    DEVELOPMENT = "development"
     TRAINING = "training"
     VALIDATION = "validation"
     TESTING = "testing"
@@ -574,7 +597,8 @@ class ModelStatus(Enum):
 
 @dataclass
 class ModelCapability:
-    """AI model capability definition."""    name: str
+    """AI model capability definition."""
+    name: str
     model_class: Type
     model_type: ModelType
     framework: ModelFramework
@@ -723,9 +747,11 @@ MODELS_ARCHITECTURE = {
 
 # Professional AI Models Framework
 class ModelsFrameworkManager:
-    """    Ultra-Professional AI Models Framework Manager
+    """
+    Ultra-Professional AI Models Framework Manager
     Comprehensive model management and deployment for enterprise applications.
-    """    
+    """
+    
     def __init__(self):
         self.architecture = MODELS_ARCHITECTURE
         self.version = __version__
@@ -736,7 +762,8 @@ class ModelsFrameworkManager:
         self.model_factory = ModelFactory()
         
     def _initialize_capabilities(self) -> Dict[str, Any]:
-        """Initialize model capabilities."""        capabilities = {}
+        """Initialize model capabilities."""
+        capabilities = {}
         
         for category, components in self.architecture.items():
             capabilities[category] = {}
@@ -766,7 +793,8 @@ class ModelsFrameworkManager:
     
     async def create_model_comprehensive(self, 
                                        model_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Create model with comprehensive configuration and validation."""        model_type = ModelType[model_config['model_type'].upper()]
+        """Create model with comprehensive configuration and validation."""
+        model_type = ModelType[model_config['model_type'].upper()]
         model_name = model_config['model_name']
         
         try:
@@ -843,7 +871,8 @@ class ModelsFrameworkManager:
     async def deploy_model_production(self, 
                                     model_name: str,
                                     deployment_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy model to production with comprehensive monitoring."""        if model_name not in self.active_models:
+        """Deploy model to production with comprehensive monitoring."""
+        if model_name not in self.active_models:
             raise ValueError(f"Model {model_name} not found in active models")
         
         model_info = self.active_models[model_name]
@@ -900,7 +929,8 @@ class ModelsFrameworkManager:
     async def optimize_model_performance(self, 
                                        model_name: str,
                                        optimization_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize model performance with advanced techniques."""        if model_name not in self.active_models:
+        """Optimize model performance with advanced techniques."""
+        if model_name not in self.active_models:
             raise ValueError(f"Model {model_name} not found in active models")
         
         model_info = self.active_models[model_name]
@@ -969,7 +999,8 @@ class ModelsFrameworkManager:
     async def _setup_model_security(self, 
                                   model: Any,
                                   config: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup comprehensive model security."""        security_features = {
+        """Setup comprehensive model security."""
+        security_features = {
             'adversarial_defense': config.get('enable_adversarial_defense', True),
             'model_encryption': config.get('enable_model_encryption', True),
             'access_control': config.get('enable_access_control', True),
@@ -987,7 +1018,8 @@ class ModelsFrameworkManager:
                                              model: Any,
                                              model_name: str,
                                              deployment_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate production performance requirements."""        performance_requirements = deployment_config.get('performance_requirements', {})
+        """Validate production performance requirements."""
+        performance_requirements = deployment_config.get('performance_requirements', {})
         
         # Simulated performance validation
         return {
@@ -999,16 +1031,20 @@ class ModelsFrameworkManager:
         }
     
     def get_supported_model_types(self) -> List[str]:
-        """Get list of all supported model types."""        return [mt.name.lower() for mt in ModelType]
+        """Get list of all supported model types."""
+        return [mt.name.lower() for mt in ModelType]
     
     def get_supported_frameworks(self) -> List[str]:
-        """Get list of all supported frameworks."""        return [mf.value for mf in ModelFramework]
+        """Get list of all supported frameworks."""
+        return [mf.value for mf in ModelFramework]
     
     def get_active_models(self) -> List[str]:
-        """Get list of active model names."""        return list(self.active_models.keys())
+        """Get list of active model names."""
+        return list(self.active_models.keys())
     
     def get_models_capabilities(self) -> Dict[str, Any]:
-        """Get comprehensive models capabilities information."""        total_capabilities = sum(len(category) for category in self.architecture.values())
+        """Get comprehensive models capabilities information."""
+        total_capabilities = sum(len(category) for category in self.architecture.values())
         enterprise_capabilities = sum(
             1 for category in self.architecture.values()
             for capability in category.values()
@@ -1068,7 +1104,8 @@ class ModelsFrameworkManager:
         }
     
     def validate_business_logic_completeness(self) -> bool:
-        """Validate complete business logic coverage."""        required_business_logic = [
+        """Validate complete business logic coverage."""
+        required_business_logic = [
             'comprehensive_audio_intelligence_system',
             'comprehensive_computer_vision_system',
             'comprehensive_natural_language_processing_system',
@@ -1090,18 +1127,22 @@ models_framework = ModelsFrameworkManager()
 
 # Models Utility Functions
 async def create_enterprise_model(model_config: Dict[str, Any]) -> Dict[str, Any]:
-    """Create enterprise-grade AI model with comprehensive setup."""    return await models_framework.create_model_comprehensive(model_config)
+    """Create enterprise-grade AI model with comprehensive setup."""
+    return await models_framework.create_model_comprehensive(model_config)
 
 async def deploy_model_to_production(model_name: str, 
                                    deployment_config: Dict[str, Any]) -> Dict[str, Any]:
-    """Deploy model to production with monitoring and validation."""    return await models_framework.deploy_model_production(model_name, deployment_config)
+    """Deploy model to production with monitoring and validation."""
+    return await models_framework.deploy_model_production(model_name, deployment_config)
 
 async def optimize_model_for_production(model_name: str,
                                       optimization_config: Dict[str, Any]) -> Dict[str, Any]:
-    """Optimize model for production deployment."""    return await models_framework.optimize_model_performance(model_name, optimization_config)
+    """Optimize model for production deployment."""
+    return await models_framework.optimize_model_performance(model_name, optimization_config)
 
 def get_model_template(model_type: str, complexity: str = 'standard') -> Dict[str, Any]:
-    """Get model configuration template for specified type and complexity."""    templates = {
+    """Get model configuration template for specified type and complexity."""
+    templates = {
         'audio': {
             'model_name': f'audio_model_{complexity}',
             'model_type': 'audio',
@@ -1137,7 +1178,8 @@ def get_model_template(model_type: str, complexity: str = 'standard') -> Dict[st
     return templates.get(model_type, {})
 
 def create_model_factory() -> ModelFactory:
-    """Create model factory instance with enterprise configuration."""    return ModelFactory()
+    """Create model factory instance with enterprise configuration."""
+    return ModelFactory()
 
 # Export all public components
 __all__ = [

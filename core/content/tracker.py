@@ -6,7 +6,8 @@ and monetization data across all platforms in real-time.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -22,7 +23,8 @@ from ..platforms.analytics_aggregator import AnalyticsAggregator
 
 @dataclass
 class TrackingMetrics:
-    """Content tracking metrics container"""    content_id: str
+    """Content tracking metrics container"""
+    content_id: str
     views: int = 0
     likes: int = 0
     shares: int = 0
@@ -40,7 +42,8 @@ class TrackingMetrics:
 
 @dataclass
 class TrackingConfig:
-    """Content tracking configuration"""    enable_real_time: bool = True
+    """Content tracking configuration"""
+    enable_real_time: bool = True
     tracking_interval: int = 300  # seconds
     metrics_to_track: List[str] = None
     alert_thresholds: Dict[str, float] = None
@@ -48,7 +51,8 @@ class TrackingConfig:
 
 
 class ContentTracker:
-    """    Real-time Content Performance Tracking Engine
+    """
+    Real-time Content Performance Tracking Engine
     
     Provides comprehensive tracking of content performance across
     multiple platforms with real-time analytics, alerts, and insights.
@@ -60,7 +64,8 @@ class ContentTracker:
     - Automated alerts and notifications
     - Revenue tracking and reporting
     - Engagement optimization insights
-    """    
+    """
+    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -86,7 +91,8 @@ class ContentTracker:
         platforms: List[str] = None,
         custom_config: TrackingConfig = None
     ) -> Dict[str, Any]:
-        """        Start tracking content performance
+        """
+        Start tracking content performance
         
         Args:
             content_id: Content identifier
@@ -95,7 +101,8 @@ class ContentTracker:
             
         Returns:
             Tracking initialization result
-        """        try:
+        """
+        try:
             config = custom_config or self.config
             tracking_id = str(uuid.uuid4())
             
@@ -150,12 +157,14 @@ class ContentTracker:
         content_id: str,
         config: TrackingConfig
     ) -> None:
-        """        Background loop for real-time tracking
+        """
+        Background loop for real-time tracking
         
         Args:
             content_id: Content identifier
             config: Tracking configuration
-        """        while content_id in self.active_tracking:
+        """
+        while content_id in self.active_tracking:
             try:
                 # Collect current metrics
                 platforms = self.active_tracking[content_id]["platforms"]
@@ -199,7 +208,8 @@ class ContentTracker:
         content_id: str,
         platforms: List[str]
     ) -> TrackingMetrics:
-        """        Collect current metrics from all platforms
+        """
+        Collect current metrics from all platforms
         
         Args:
             content_id: Content identifier
@@ -207,7 +217,8 @@ class ContentTracker:
             
         Returns:
             Aggregated metrics
-        """        try:
+        """
+        try:
             platform_metrics = {}
             
             # Collect from each platform
@@ -246,14 +257,16 @@ class ContentTracker:
             return TrackingMetrics(content_id=content_id)
 
     async def get_current_metrics(self, content_id: str) -> Dict[str, Any]:
-        """        Get current tracking metrics for content
+        """
+        Get current tracking metrics for content
         
         Args:
             content_id: Content identifier
             
         Returns:
             Current metrics and tracking status
-        """        try:
+        """
+        try:
             # Check if content is being tracked
             if content_id not in self.active_tracking:
                 return {
@@ -295,7 +308,8 @@ class ContentTracker:
         end_time: datetime = None,
         interval: str = "hour"
     ) -> Dict[str, Any]:
-        """        Get historical tracking data for content
+        """
+        Get historical tracking data for content
         
         Args:
             content_id: Content identifier
@@ -305,7 +319,8 @@ class ContentTracker:
             
         Returns:
             Historical metrics data
-        """        try:
+        """
+        try:
             if content_id not in self.active_tracking:
                 return {
                     "success": False,
@@ -352,14 +367,16 @@ class ContentTracker:
             }
 
     async def _analyze_trends(self, content_id: str) -> Dict[str, Any]:
-        """        Analyze performance trends for content
+        """
+        Analyze performance trends for content
         
         Args:
             content_id: Content identifier
             
         Returns:
             Trend analysis results
-        """        try:
+        """
+        try:
             if content_id not in self.active_tracking:
                 return {}
             
@@ -405,7 +422,8 @@ class ContentTracker:
             return {"status": "error", "error": str(e)}
 
     def _calculate_average_metric(self, data_points: List[Dict], metric: str) -> float:
-        """Calculate average value for a metric across data points"""        values = []
+        """Calculate average value for a metric across data points"""
+        values = []
         for point in data_points:
             if "metrics" in point and metric in point["metrics"]:
                 values.append(point["metrics"][metric])
@@ -418,13 +436,15 @@ class ContentTracker:
         current_metrics: TrackingMetrics,
         previous_metrics: TrackingMetrics
     ) -> None:
-        """        Check if any alert thresholds have been triggered
+        """
+        Check if any alert thresholds have been triggered
         
         Args:
             content_id: Content identifier
             current_metrics: Current performance metrics
             previous_metrics: Previous performance metrics
-        """        try:
+        """
+        try:
             config = self.active_tracking[content_id]["config"]
             
             if not config.alert_thresholds:
@@ -459,7 +479,8 @@ class ContentTracker:
             self.logger.error(f"Alert checking failed for {content_id}: {str(e)}")
 
     async def _send_alerts(self, content_id: str, alerts: List[Dict]) -> None:
-        """Send alert notifications"""        try:
+        """Send alert notifications"""
+        try:
             # Cache alerts for retrieval
             await self.redis.set(
                 f"alerts:{content_id}",
@@ -483,14 +504,16 @@ class ContentTracker:
             self.logger.error(f"Failed to send alerts for {content_id}: {str(e)}")
 
     async def stop_tracking(self, content_id: str) -> Dict[str, Any]:
-        """        Stop tracking content performance
+        """
+        Stop tracking content performance
         
         Args:
             content_id: Content identifier
             
         Returns:
             Stop tracking result
-        """        try:
+        """
+        try:
             if content_id not in self.active_tracking:
                 return {
                     "success": False,
@@ -534,7 +557,8 @@ class ContentTracker:
             }
 
     async def _cache_tracking_data(self, content_id: str, metrics: TrackingMetrics) -> None:
-        """Cache tracking data in Redis"""        try:
+        """Cache tracking data in Redis"""
+        try:
             cache_data = {
                 "content_id": content_id,
                 "metrics": self._serialize_metrics(metrics),
@@ -551,7 +575,8 @@ class ContentTracker:
             self.logger.error(f"Failed to cache tracking data for {content_id}: {str(e)}")
 
     async def _save_tracking_data(self, content_id: str, metrics: TrackingMetrics) -> None:
-        """Save tracking data to database"""        try:
+        """Save tracking data to database"""
+        try:
             # This would save to the actual database
             # Implementation would include proper database models
             pass
@@ -560,7 +585,8 @@ class ContentTracker:
             self.logger.error(f"Failed to save tracking data for {content_id}: {str(e)}")
 
     def _serialize_metrics(self, metrics: TrackingMetrics) -> Dict[str, Any]:
-        """Convert metrics to serializable format"""        return {
+        """Convert metrics to serializable format"""
+        return {
             "content_id": metrics.content_id,
             "views": metrics.views,
             "likes": metrics.likes,
@@ -578,7 +604,8 @@ class ContentTracker:
         }
 
     async def track_content_deletion(self, content_id: str, user_id: int) -> None:
-        """Track content deletion event"""        try:
+        """Track content deletion event"""
+        try:
             # Stop tracking if active
             if content_id in self.active_tracking:
                 await self.stop_tracking(content_id)
@@ -590,14 +617,16 @@ class ContentTracker:
             self.logger.error(f"Failed to track content deletion: {str(e)}")
 
     async def get_performance_summary(self, content_id: str) -> Dict[str, Any]:
-        """        Get comprehensive performance summary for content
+        """
+        Get comprehensive performance summary for content
         
         Args:
             content_id: Content identifier
             
         Returns:
             Performance summary with insights
-        """        try:
+        """
+        try:
             current_metrics_result = await self.get_current_metrics(content_id)
             
             if not current_metrics_result["success"]:
@@ -630,7 +659,8 @@ class ContentTracker:
             }
 
     async def _calculate_performance_score(self, content_id: str) -> float:
-        """Calculate overall performance score (0-100)"""        try:
+        """Calculate overall performance score (0-100)"""
+        try:
             if content_id not in self.active_tracking:
                 return 0.0
             
@@ -671,7 +701,8 @@ class ContentTracker:
             return 0.0
 
     async def _get_platform_breakdown(self, content_id: str) -> Dict[str, Any]:
-        """Get performance breakdown by platform"""        try:
+        """Get performance breakdown by platform"""
+        try:
             if content_id not in self.active_tracking:
                 return {}
             
@@ -691,7 +722,8 @@ class ContentTracker:
             return {}
 
     async def _generate_performance_insights(self, content_id: str) -> List[str]:
-        """Generate AI-powered performance insights"""        try:
+        """Generate AI-powered performance insights"""
+        try:
             insights = []
             
             if content_id not in self.active_tracking:
@@ -739,6 +771,7 @@ class ContentTracker:
             return []
 
     async def _aggregate_by_interval(self, data_points: List[Dict], interval: str) -> List[Dict]:
-        """Aggregate data points by time interval"""        # Implementation for data aggregation by hour/day/week/month
+        """Aggregate data points by time interval"""
+        # Implementation for data aggregation by hour/day/week/month
         # This is a simplified version
         return data_points  # Return as-is for now

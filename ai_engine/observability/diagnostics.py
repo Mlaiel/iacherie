@@ -12,7 +12,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 import time
@@ -39,7 +40,8 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 
 class DiagnosticSeverity(Enum):
-    """Severity levels for diagnostic issues"""    CRITICAL = "critical"
+    """Severity levels for diagnostic issues"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -47,7 +49,8 @@ class DiagnosticSeverity(Enum):
 
 
 class DiagnosticCategory(Enum):
-    """Categories of diagnostic issues"""    PERFORMANCE = "performance"
+    """Categories of diagnostic issues"""
+    PERFORMANCE = "performance"
     AVAILABILITY = "availability"
     SECURITY = "security"
     RESOURCE = "resource"
@@ -59,7 +62,8 @@ class DiagnosticCategory(Enum):
 
 
 class DiagnosticStatus(Enum):
-    """Status of diagnostic checks"""    PASS = "pass"
+    """Status of diagnostic checks"""
+    PASS = "pass"
     FAIL = "fail"
     WARNING = "warning"
     UNKNOWN = "unknown"
@@ -68,7 +72,8 @@ class DiagnosticStatus(Enum):
 
 
 class RemediationStatus(Enum):
-    """Status of remediation actions"""    PENDING = "pending"
+    """Status of remediation actions"""
+    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     SUCCESS = "success"
     FAILED = "failed"
@@ -78,7 +83,8 @@ class RemediationStatus(Enum):
 
 @dataclass
 class DiagnosticResult:
-    """Result of a diagnostic check"""    check_id: str
+    """Result of a diagnostic check"""
+    check_id: str
     name: str
     description: str
     category: DiagnosticCategory
@@ -95,7 +101,8 @@ class DiagnosticResult:
     stack_trace: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        result = asdict(self)
+        """Convert to dictionary"""
+        result = asdict(self)
         result['category'] = self.category.value
         result['severity'] = self.severity.value
         result['status'] = self.status.value
@@ -103,19 +110,23 @@ class DiagnosticResult:
         return result
     
     def is_healthy(self) -> bool:
-        """Check if result indicates healthy state"""        return self.status in [DiagnosticStatus.PASS, DiagnosticStatus.SKIPPED]
+        """Check if result indicates healthy state"""
+        return self.status in [DiagnosticStatus.PASS, DiagnosticStatus.SKIPPED]
     
     def requires_attention(self) -> bool:
-        """Check if result requires attention"""        return self.status in [DiagnosticStatus.FAIL, DiagnosticStatus.WARNING]
+        """Check if result requires attention"""
+        return self.status in [DiagnosticStatus.FAIL, DiagnosticStatus.WARNING]
     
     def is_critical(self) -> bool:
-        """Check if result is critical"""        return (self.severity == DiagnosticSeverity.CRITICAL and 
+        """Check if result is critical"""
+        return (self.severity == DiagnosticSeverity.CRITICAL and 
                 self.status == DiagnosticStatus.FAIL)
 
 
 @dataclass
 class RemediationAction:
-    """Remediation action for diagnostic issues"""    action_id: str
+    """Remediation action for diagnostic issues"""
+    action_id: str
     name: str
     description: str
     category: DiagnosticCategory
@@ -131,7 +142,8 @@ class RemediationAction:
     parameters: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary (excluding functions)"""        result = asdict(self)
+        """Convert to dictionary (excluding functions)"""
+        result = asdict(self)
         result['category'] = self.category.value
         # Remove function references for serialization
         result.pop('action_function', None)
@@ -141,7 +153,8 @@ class RemediationAction:
 
 @dataclass
 class RemediationResult:
-    """Result of a remediation action"""    action_id: str
+    """Result of a remediation action"""
+    action_id: str
     status: RemediationStatus
     timestamp: datetime = field(default_factory=datetime.utcnow)
     duration_seconds: float = 0.0
@@ -153,14 +166,16 @@ class RemediationResult:
     error_message: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        result = asdict(self)
+        """Convert to dictionary"""
+        result = asdict(self)
         result['status'] = self.status.value
         result['timestamp'] = self.timestamp.isoformat()
         return result
 
 
 class BaseDiagnosticCheck(ABC):
-    """Base class for diagnostic checks"""    
+    """Base class for diagnostic checks"""
+    
     def __init__(self, check_id: str, name: str, description: str,
                  category: DiagnosticCategory, severity: DiagnosticSeverity):
         self.check_id = check_id
@@ -176,10 +191,12 @@ class BaseDiagnosticCheck(ABC):
     
     @abstractmethod
     async def execute_check(self) -> DiagnosticResult:
-        """Execute the diagnostic check"""        pass
+        """Execute the diagnostic check"""
+        pass
     
     async def run_check(self) -> DiagnosticResult:
-        """Run the diagnostic check with error handling"""        if not self.enabled:
+        """Run the diagnostic check with error handling"""
+        if not self.enabled:
             return DiagnosticResult(
                 check_id=self.check_id,
                 name=self.name,
@@ -231,7 +248,8 @@ class BaseDiagnosticCheck(ABC):
 
 
 class SystemResourceCheck(BaseDiagnosticCheck):
-    """Check system resource utilization"""    
+    """Check system resource utilization"""
+    
     def __init__(self):
         super().__init__(
             check_id="system_resources",
@@ -245,7 +263,8 @@ class SystemResourceCheck(BaseDiagnosticCheck):
         self.disk_threshold = 90.0
     
     async def execute_check(self) -> DiagnosticResult:
-        """Execute system resource check"""        try:
+        """Execute system resource check"""
+        try:
             # Get system metrics
             cpu_percent = psutil.cpu_percent(interval=1)
             memory = psutil.virtual_memory()
@@ -301,7 +320,8 @@ class SystemResourceCheck(BaseDiagnosticCheck):
 
 
 class DatabaseHealthCheck(BaseDiagnosticCheck):
-    """Check database health and performance"""    
+    """Check database health and performance"""
+    
     def __init__(self, connection_string: str = None):
         super().__init__(
             check_id="database_health",
@@ -315,7 +335,8 @@ class DatabaseHealthCheck(BaseDiagnosticCheck):
         self.query_timeout = 10.0
     
     async def execute_check(self) -> DiagnosticResult:
-        """Execute database health check"""        try:
+        """Execute database health check"""
+        try:
             import asyncpg
             import time
             
@@ -347,7 +368,8 @@ class DatabaseHealthCheck(BaseDiagnosticCheck):
                 metrics["query_time_ms"] = (time.time() - query_start) * 1000
                 
                 # Get database stats
-                stats_result = await conn.fetch("""                    SELECT 
+                stats_result = await conn.fetch("""
+                    SELECT 
                         count(*) as active_connections,
                         pg_database_size(current_database()) as db_size_bytes
                     FROM pg_stat_activity 
@@ -360,7 +382,8 @@ class DatabaseHealthCheck(BaseDiagnosticCheck):
                     metrics["database_size_mb"] = stats["db_size_bytes"] / (1024*1024)
                 
                 # Check for slow queries
-                slow_queries = await conn.fetch("""                    SELECT count(*) as slow_query_count
+                slow_queries = await conn.fetch("""
+                    SELECT count(*) as slow_query_count
                     FROM pg_stat_activity 
                     WHERE state = 'active' 
                     AND query_start < now() - interval '30 seconds'
@@ -416,7 +439,8 @@ class DatabaseHealthCheck(BaseDiagnosticCheck):
 
 
 class AIModelPerformanceCheck(BaseDiagnosticCheck):
-    """Check AI model performance and accuracy"""    
+    """Check AI model performance and accuracy"""
+    
     def __init__(self, model_endpoints: Dict[str, str] = None):
         super().__init__(
             check_id="ai_model_performance",
@@ -430,7 +454,8 @@ class AIModelPerformanceCheck(BaseDiagnosticCheck):
         self.response_time_threshold = 2.0  # seconds
     
     async def execute_check(self) -> DiagnosticResult:
-        """Execute AI model performance check"""        try:
+        """Execute AI model performance check"""
+        try:
             metrics = {}
             issues = []
             recommendations = []
@@ -519,7 +544,8 @@ class AIModelPerformanceCheck(BaseDiagnosticCheck):
 
 
 class SecurityComplianceCheck(BaseDiagnosticCheck):
-    """Check security and compliance status"""    
+    """Check security and compliance status"""
+    
     def __init__(self):
         super().__init__(
             check_id="security_compliance",
@@ -530,7 +556,8 @@ class SecurityComplianceCheck(BaseDiagnosticCheck):
         )
     
     async def execute_check(self) -> DiagnosticResult:
-        """Execute security compliance check"""        try:
+        """Execute security compliance check"""
+        try:
             metrics = {}
             issues = []
             recommendations = []
@@ -636,7 +663,8 @@ class SecurityComplianceCheck(BaseDiagnosticCheck):
 
 
 class ContentProtectionCheck(BaseDiagnosticCheck):
-    """Check content protection systems specific to IA Influencer platform"""    
+    """Check content protection systems specific to IA Influencer platform"""
+    
     def __init__(self):
         super().__init__(
             check_id="content_protection",
@@ -647,7 +675,8 @@ class ContentProtectionCheck(BaseDiagnosticCheck):
         )
     
     async def execute_check(self) -> DiagnosticResult:
-        """Execute content protection check"""        try:
+        """Execute content protection check"""
+        try:
             metrics = {}
             issues = []
             recommendations = []
@@ -724,7 +753,8 @@ class ContentProtectionCheck(BaseDiagnosticCheck):
 
 
 class DiagnosticEngine:
-    """Main diagnostic engine for running and managing diagnostic checks"""    
+    """Main diagnostic engine for running and managing diagnostic checks"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.checks: Dict[str, BaseDiagnosticCheck] = {}
@@ -738,7 +768,8 @@ class DiagnosticEngine:
         self._initialize_remediation_actions()
     
     def _initialize_standard_checks(self):
-        """Initialize standard diagnostic checks"""        standard_checks = [
+        """Initialize standard diagnostic checks"""
+        standard_checks = [
             SystemResourceCheck(),
             DatabaseHealthCheck(self.config.get("database_url")),
             AIModelPerformanceCheck(self.config.get("model_endpoints", {})),
@@ -750,7 +781,8 @@ class DiagnosticEngine:
             self.register_check(check)
     
     def _initialize_remediation_actions(self):
-        """Initialize standard remediation actions"""        actions = [
+        """Initialize standard remediation actions"""
+        actions = [
             RemediationAction(
                 action_id="restart_high_cpu_processes",
                 name="Restart High CPU Processes",
@@ -801,15 +833,18 @@ class DiagnosticEngine:
             self.register_remediation_action(action)
     
     def register_check(self, check: BaseDiagnosticCheck):
-        """Register a diagnostic check"""        self.checks[check.check_id] = check
+        """Register a diagnostic check"""
+        self.checks[check.check_id] = check
         self.logger.info(f"Registered diagnostic check: {check.check_id}")
     
     def register_remediation_action(self, action: RemediationAction):
-        """Register a remediation action"""        self.remediation_actions[action.action_id] = action
+        """Register a remediation action"""
+        self.remediation_actions[action.action_id] = action
         self.logger.info(f"Registered remediation action: {action.action_id}")
     
     async def run_check(self, check_id: str) -> DiagnosticResult:
-        """Run a specific diagnostic check"""        if check_id not in self.checks:
+        """Run a specific diagnostic check"""
+        if check_id not in self.checks:
             raise ValueError(f"Unknown check ID: {check_id}")
         
         check = self.checks[check_id]
@@ -822,7 +857,8 @@ class DiagnosticEngine:
         return result
     
     async def run_all_checks(self, categories: List[DiagnosticCategory] = None) -> List[DiagnosticResult]:
-        """Run all diagnostic checks or checks in specific categories"""        checks_to_run = []
+        """Run all diagnostic checks or checks in specific categories"""
+        checks_to_run = []
         
         for check_id, check in self.checks.items():
             if not categories or check.category in categories:
@@ -853,7 +889,8 @@ class DiagnosticEngine:
         return valid_results
     
     async def execute_remediation(self, action_id: str, parameters: Dict[str, Any] = None) -> RemediationResult:
-        """Execute a remediation action"""        if action_id not in self.remediation_actions:
+        """Execute a remediation action"""
+        if action_id not in self.remediation_actions:
             return RemediationResult(
                 action_id=action_id,
                 status=RemediationStatus.FAILED,
@@ -924,11 +961,13 @@ class DiagnosticEngine:
             )
     
     async def _check_prerequisite(self, prerequisite: str) -> bool:
-        """Check if a prerequisite is met"""        # This would implement actual prerequisite checking
+        """Check if a prerequisite is met"""
+        # This would implement actual prerequisite checking
         return True
     
     async def _restart_high_cpu_processes(self, parameters: Dict[str, Any]) -> Tuple[bool, str, Dict]:
-        """Restart processes with high CPU usage"""        try:
+        """Restart processes with high CPU usage"""
+        try:
             high_cpu_processes = []
             threshold = parameters.get("cpu_threshold", 50.0)
             
@@ -956,7 +995,8 @@ class DiagnosticEngine:
             return False, f"Failed to restart high CPU processes: {str(e)}", {}
     
     async def _clear_memory_caches(self, parameters: Dict[str, Any]) -> Tuple[bool, str, Dict]:
-        """Clear system memory caches"""        try:
+        """Clear system memory caches"""
+        try:
             memory_before = psutil.virtual_memory().percent
             
             # In a real implementation, this would clear various caches
@@ -974,7 +1014,8 @@ class DiagnosticEngine:
             return False, f"Failed to clear memory caches: {str(e)}", {}
     
     async def _cleanup_old_files(self, parameters: Dict[str, Any]) -> Tuple[bool, str, Dict]:
-        """Clean up old files"""        try:
+        """Clean up old files"""
+        try:
             cleanup_paths = parameters.get("paths", ["/tmp", "/var/log"])
             days_old = parameters.get("days_old", 7)
             
@@ -994,7 +1035,8 @@ class DiagnosticEngine:
             return False, f"Failed to cleanup old files: {str(e)}", {}
     
     async def _scale_protection_workers(self, parameters: Dict[str, Any]) -> Tuple[bool, str, Dict]:
-        """Scale content protection workers"""        try:
+        """Scale content protection workers"""
+        try:
             current_workers = parameters.get("current_workers", 5)
             target_workers = parameters.get("target_workers", current_workers + 2)
             
@@ -1011,7 +1053,8 @@ class DiagnosticEngine:
             return False, f"Failed to scale protection workers: {str(e)}", {}
     
     def get_diagnostics_summary(self, hours: int = 24) -> Dict[str, Any]:
-        """Get summary of diagnostic results from the last N hours"""        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
+        """Get summary of diagnostic results from the last N hours"""
+        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         recent_results = [
             result for result in self.results_history
             if result.timestamp >= cutoff_time
@@ -1054,7 +1097,8 @@ class DiagnosticEngine:
         }
     
     def _calculate_health_score(self, results: List[DiagnosticResult]) -> float:
-        """Calculate overall health score (0-100)"""        if not results:
+        """Calculate overall health score (0-100)"""
+        if not results:
             return 100.0
         
         total_score = 0.0
@@ -1085,7 +1129,8 @@ class DiagnosticEngine:
         return total_score / total_weight if total_weight > 0 else 100.0
     
     def get_remediation_recommendations(self, results: List[DiagnosticResult] = None) -> List[Dict[str, Any]]:
-        """Get remediation recommendations based on diagnostic results"""        if results is None:
+        """Get remediation recommendations based on diagnostic results"""
+        if results is None:
             # Use recent results from history
             cutoff_time = datetime.utcnow() - timedelta(hours=1)
             results = [
@@ -1118,7 +1163,8 @@ class DiagnosticEngine:
         return recommendations
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get diagnostic engine statistics"""        return {
+        """Get diagnostic engine statistics"""
+        return {
             "registered_checks": len(self.checks),
             "registered_actions": len(self.remediation_actions),
             "results_in_history": len(self.results_history),
@@ -1130,7 +1176,8 @@ class DiagnosticEngine:
 
 # Factory function
 def create_diagnostic_engine(config: Dict[str, Any] = None) -> DiagnosticEngine:
-    """Factory function to create diagnostic engine"""    return DiagnosticEngine(config)
+    """Factory function to create diagnostic engine"""
+    return DiagnosticEngine(config)
 
 
 # Export diagnostic components

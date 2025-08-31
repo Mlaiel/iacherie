@@ -1,6 +1,7 @@
 """Image Watermarking Core Engine
 Advanced digital watermarking for image content with multiple embedding techniques
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple, Union, BinaryIO
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 
 class ImageWatermarkEngine:
-    """Professional image watermarking engine with multiple embedding techniques"""    
+    """Professional image watermarking engine with multiple embedding techniques"""
+    
     def __init__(self):
         self.block_size = 8  # For DCT
         self.max_payload = 1024  # Maximum bytes to embed
@@ -39,9 +41,11 @@ class ImageWatermarkEngine:
         strength: str = "medium",
         color_channels: List[str] = ["red", "green", "blue"]
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """        Embeds watermark using Least Significant Bit technique
+        """
+        Embeds watermark using Least Significant Bit technique
         High capacity but vulnerable to compression
-        """        try:
+        """
+        try:
             if not IMAGING_AVAILABLE:
                 raise ValueError("Imaging libraries not available")
             
@@ -135,9 +139,11 @@ class ImageWatermarkEngine:
         strength: str = "medium",
         frequency_band: str = "mid"
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """        Embeds watermark using Discrete Cosine Transform
+        """
+        Embeds watermark using Discrete Cosine Transform
         More robust to compression than LSB
-        """        try:
+        """
+        try:
             if not IMAGING_AVAILABLE:
                 raise ValueError("Imaging libraries not available")
             
@@ -251,9 +257,11 @@ class ImageWatermarkEngine:
         wavelet: str = "haar",
         decomposition_level: int = 2
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """        Embeds watermark using Discrete Wavelet Transform
+        """
+        Embeds watermark using Discrete Wavelet Transform
         Excellent robustness against geometric attacks
-        """        try:
+        """
+        try:
             if not IMAGING_AVAILABLE:
                 raise ValueError("Imaging libraries not available")
             
@@ -384,9 +392,11 @@ class ImageWatermarkEngine:
         method: str,
         embedding_params: Dict[str, Any]
     ) -> Tuple[bool, Dict[str, Any]]:
-        """        Detects and extracts watermark from image
+        """
+        Detects and extracts watermark from image
         Returns detection result with confidence score
-        """        try:
+        """
+        try:
             if method == "LSB":
                 return await self._detect_lsb_watermark(watermarked_image, embedding_params)
             elif method == "DCT":
@@ -401,14 +411,16 @@ class ImageWatermarkEngine:
             return False, {"error": str(e), "confidence": 0.0}
     
     def _data_to_bits(self, data: bytes) -> List[int]:
-        """Converts byte data to bit array"""        bits = []
+        """Converts byte data to bit array"""
+        bits = []
         for byte in data:
             for i in range(8):
                 bits.append((byte >> (7 - i)) & 1)
         return bits
     
     def _bits_to_data(self, bits: List[int]) -> bytes:
-        """Converts bit array back to byte data"""        data = bytearray()
+        """Converts bit array back to byte data"""
+        data = bytearray()
         for i in range(0, len(bits), 8):
             byte = 0
             for j in range(8):
@@ -422,7 +434,8 @@ class ImageWatermarkEngine:
         watermarked_image: np.ndarray,
         params: Dict[str, Any]
     ) -> Tuple[bool, Dict[str, Any]]:
-        """Detects LSB watermark"""        try:
+        """Detects LSB watermark"""
+        try:
             height, width, channels = watermarked_image.shape
             bit_depth = params.get("bit_depth", 2)
             skip_ratio = params.get("skip_ratio", 4)
@@ -485,7 +498,8 @@ class ImageWatermarkEngine:
         watermarked_image: np.ndarray,
         params: Dict[str, Any]
     ) -> Tuple[bool, Dict[str, Any]]:
-        """Detects DCT watermark"""        try:
+        """Detects DCT watermark"""
+        try:
             # Convert to YUV
             image_yuv = cv2.cvtColor(watermarked_image, cv2.COLOR_RGB2YUV)
             y_channel = image_yuv[:, :, 0].astype(np.float32)
@@ -562,7 +576,8 @@ class ImageWatermarkEngine:
         watermarked_image: np.ndarray,
         params: Dict[str, Any]
     ) -> Tuple[bool, Dict[str, Any]]:
-        """Detects DWT watermark"""        try:
+        """Detects DWT watermark"""
+        try:
             # Convert to grayscale
             if len(watermarked_image.shape) == 3:
                 gray_channel = cv2.cvtColor(watermarked_image, cv2.COLOR_RGB2GRAY)

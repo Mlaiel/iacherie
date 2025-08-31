@@ -33,7 +33,8 @@ action including but not limited to:
 
 Contact Fahed Mlaiel at mlaiel@live.de for ANY usage authorization.
 All activities are logged and monitored for legal compliance.
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, Any, List, Optional
 from datetime import datetime
@@ -80,8 +81,10 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class ContentProtectionSuite:
-    """    Master orchestrator for the complete content protection ecosystem
-    """    
+    """
+    Master orchestrator for the complete content protection ecosystem
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.services = {}
@@ -97,7 +100,8 @@ class ContentProtectionSuite:
         logger.info("Content Protection Suite initializing...")
     
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize the complete content protection suite"""        try:
+        """Initialize the complete content protection suite"""
+        try:
             initialization_start = datetime.utcnow()
             
             # Initialize available services
@@ -184,17 +188,21 @@ Unauthorized use, copying, distribution, or reverse engineering is strictly proh
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """class ContentProtectionService:
-    """    Main service class for the Content Protection System.
+    """
+    Main service class for the Content Protection System.
     
     Provides a unified interface to all content protection capabilities
     including fingerprinting, monitoring, enforcement, and monetization.
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize the Content Protection Service.
+        """
+        Initialize the Content Protection Service.
         
         Args:
             config: Optional configuration dictionary
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         self._initialized = False
         self._start_time = datetime.utcnow()
         
@@ -215,11 +223,13 @@ Contact mlaiel@live.de for licensing inquiries.
         logger.warning(__legal_notice__)
     
     async def initialize(self) -> bool:
-        """        Initialize all content protection services.
+        """
+        Initialize all content protection services.
         
         Returns:
             bool: True if initialization successful, False otherwise
-        """        try:
+        """
+        try:
             logger.info("Initializing Content Protection Services...")
             
             # Initialize vector database first (dependency for other services)
@@ -293,7 +303,8 @@ Contact mlaiel@live.de for licensing inquiries.
             return False
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown all services."""        logger.info("Shutting down Content Protection Services...")
+        """Gracefully shutdown all services."""
+        logger.info("Shutting down Content Protection Services...")
         
         # Shutdown in reverse order
         if self.crawlers:
@@ -322,11 +333,13 @@ Contact mlaiel@live.de for licensing inquiries.
         logger.info("Content Protection Services shutdown complete")
     
     def get_system_status(self) -> Dict[str, Any]:
-        """        Get comprehensive system status.
+        """
+        Get comprehensive system status.
         
         Returns:
             Dict containing system status information
-        """        uptime = (datetime.utcnow() - self._start_time).total_seconds()
+        """
+        uptime = (datetime.utcnow() - self._start_time).total_seconds()
         
         return {
             "version": __version__,

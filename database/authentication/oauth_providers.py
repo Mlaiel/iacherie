@@ -11,7 +11,8 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Business Logic: OAuth Provider Registration → Authorization Flow → Token Exchange → 
 Account Linking → Profile Sync → Platform Integration
-"""import asyncio
+"""
+import asyncio
 import secrets
 import json
 from datetime import datetime, timedelta, timezone
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class OAuthProvider(Enum):
-    """OAuth provider types"""    GOOGLE = "google"
+    """OAuth provider types"""
+    GOOGLE = "google"
     FACEBOOK = "facebook"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
@@ -49,7 +51,8 @@ class OAuthProvider(Enum):
     MICROSOFT = "microsoft"
 
 class ConnectionStatus(Enum):
-    """OAuth connection status"""    CONNECTED = "connected"
+    """OAuth connection status"""
+    CONNECTED = "connected"
     DISCONNECTED = "disconnected"
     EXPIRED = "expired"
     REVOKED = "revoked"
@@ -57,7 +60,8 @@ class ConnectionStatus(Enum):
     ERROR = "error"
 
 class PermissionScope(Enum):
-    """OAuth permission scopes"""    PROFILE_READ = "profile:read"
+    """OAuth permission scopes"""
+    PROFILE_READ = "profile:read"
     PROFILE_WRITE = "profile:write"
     EMAIL_READ = "email:read"
     CONTENT_READ = "content:read"
@@ -71,7 +75,8 @@ class PermissionScope(Enum):
 
 @dataclass
 class OAuthConfig:
-    """OAuth provider configuration"""    provider: OAuthProvider
+    """OAuth provider configuration"""
+    provider: OAuthProvider
     client_id: str
     client_secret: str
     authorization_url: str
@@ -82,7 +87,8 @@ class OAuthConfig:
 
 @dataclass
 class UserProfile:
-    """External user profile data"""    provider_user_id: str
+    """External user profile data"""
+    provider_user_id: str
     email: str = ""
     name: str = ""
     username: str = ""
@@ -93,7 +99,8 @@ class UserProfile:
     additional_data: Dict[str, Any] = field(default_factory=dict)
 
 class OAuthConnections(Base):
-    """Database model for OAuth provider connections"""    __tablename__ = 'oauth_connections'
+    """Database model for OAuth provider connections"""
+    __tablename__ = 'oauth_connections'
     
     connection_id = Column(String, primary_key=True)
     user_id = Column(String, nullable=False, index=True)
@@ -121,7 +128,8 @@ class OAuthConnections(Base):
     )
 
 class OAuthProviderConfigs(Base):
-    """Database model for OAuth provider configurations"""    __tablename__ = 'oauth_provider_configs'
+    """Database model for OAuth provider configurations"""
+    __tablename__ = 'oauth_provider_configs'
     
     config_id = Column(String, primary_key=True)
     provider = Column(String, nullable=False, unique=True)
@@ -139,7 +147,8 @@ class OAuthProviderConfigs(Base):
     configuration_metadata = Column(JSON, nullable=True)
 
 class OAuthTokens(Base):
-    """Database model for OAuth token management"""    __tablename__ = 'oauth_tokens'
+    """Database model for OAuth token management"""
+    __tablename__ = 'oauth_tokens'
     
     token_id = Column(String, primary_key=True)
     connection_id = Column(String, nullable=False, index=True)
@@ -160,7 +169,8 @@ class OAuthTokens(Base):
     )
 
 class OAuthAuditLog(Base):
-    """Database model for OAuth audit logging"""    __tablename__ = 'oauth_audit_log'
+    """Database model for OAuth audit logging"""
+    __tablename__ = 'oauth_audit_log'
     
     audit_id = Column(String, primary_key=True)
     user_id = Column(String, nullable=False, index=True)
@@ -181,7 +191,8 @@ class OAuthAuditLog(Base):
     )
 
 class OAuthProvidersRepository:
-    """    Enterprise-grade OAuth providers management repository.
+    """
+    Enterprise-grade OAuth providers management repository.
     
     Features:
     - Multi-provider OAuth integration
@@ -190,7 +201,8 @@ class OAuthProvidersRepository:
     - Connection management
     - Comprehensive audit logging
     - Rate limiting and error handling
-    """    
+    """
+    
     def __init__(
         self,
         session: AsyncSession,
@@ -243,7 +255,8 @@ class OAuthProvidersRepository:
         client_secret: str,
         custom_scopes: Optional[List[str]] = None
     ) -> str:
-        """Setup OAuth provider configuration"""        try:
+        """Setup OAuth provider configuration"""
+        try:
             config = self.provider_configs.get(provider)
             if not config:
                 raise ValueError(f"Provider {provider.value} is not supported")
@@ -284,7 +297,8 @@ class OAuthProvidersRepository:
         custom_scopes: Optional[List[str]] = None,
         state_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, str]:
-        """Generate OAuth authorization URL"""        try:
+        """Generate OAuth authorization URL"""
+        try:
             # Get provider configuration
             config = await self._get_provider_config(provider)
             if not config:
@@ -343,7 +357,8 @@ class OAuthProvidersRepository:
         authorization_code: str,
         state: str
     ) -> Dict[str, Any]:
-        """Exchange authorization code for access token"""        try:
+        """Exchange authorization code for access token"""
+        try:
             # Verify and decode state
             state_data = json.loads(self.fernet.decrypt(state.encode()).decode())
             user_id = state_data.get('user_id')
@@ -427,7 +442,8 @@ class OAuthProvidersRepository:
             raise
     
     async def refresh_access_token(self, connection_id: str) -> bool:
-        """Refresh OAuth access token"""        try:
+        """Refresh OAuth access token"""
+        try:
             # Get connection
             stmt = select(OAuthConnections).where(OAuthConnections.connection_id == connection_id)
             result = await self.session.execute(stmt)
@@ -513,7 +529,8 @@ class OAuthProvidersRepository:
             return False
     
     async def get_user_connections(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get all OAuth connections for a user"""        try:
+        """Get all OAuth connections for a user"""
+        try:
             stmt = select(OAuthConnections).where(
                 OAuthConnections.user_id == user_id
             ).order_by(OAuthConnections.connected_at.desc())
@@ -556,7 +573,8 @@ class OAuthProvidersRepository:
             raise
     
     async def disconnect_provider(self, user_id: str, connection_id: str, reason: str = "User requested") -> bool:
-        """Disconnect OAuth provider"""        try:
+        """Disconnect OAuth provider"""
+        try:
             stmt = select(OAuthConnections).where(
                 OAuthConnections.connection_id == connection_id,
                 OAuthConnections.user_id == user_id
@@ -600,7 +618,8 @@ class OAuthProvidersRepository:
             raise
     
     async def sync_user_profile(self, connection_id: str) -> Dict[str, Any]:
-        """Sync user profile from OAuth provider"""        try:
+        """Sync user profile from OAuth provider"""
+        try:
             # Get connection
             stmt = select(OAuthConnections).where(OAuthConnections.connection_id == connection_id)
             result = await self.session.execute(stmt)
@@ -671,7 +690,8 @@ class OAuthProvidersRepository:
     # Private helper methods
     
     async def _get_provider_config(self, provider: OAuthProvider) -> Optional[OAuthProviderConfigs]:
-        """Get OAuth provider configuration"""        stmt = select(OAuthProviderConfigs).where(
+        """Get OAuth provider configuration"""
+        stmt = select(OAuthProviderConfigs).where(
             OAuthProviderConfigs.provider == provider.value,
             OAuthProviderConfigs.is_enabled == True
         )
@@ -684,7 +704,8 @@ class OAuthProvidersRepository:
         access_token: str,
         user_info_url: str
     ) -> UserProfile:
-        """Fetch user profile from OAuth provider"""        headers = {'Authorization': f'Bearer {access_token}'}
+        """Fetch user profile from OAuth provider"""
+        headers = {'Authorization': f'Bearer {access_token}'}
         
         # Provider-specific API calls
         if provider == OAuthProvider.FACEBOOK:
@@ -742,7 +763,8 @@ class OAuthProvidersRepository:
         user_profile: UserProfile,
         scopes: List[str]
     ) -> str:
-        """Store OAuth connection in database"""        connection_id = str(uuid4())
+        """Store OAuth connection in database"""
+        connection_id = str(uuid4())
         
         # Encrypt tokens
         encrypted_access_token = self.fernet.encrypt(token_response['access_token'].encode()).decode()
@@ -785,7 +807,8 @@ class OAuthProvidersRepository:
         return connection_id
     
     async def _has_primary_connection(self, user_id: str, provider: OAuthProvider) -> bool:
-        """Check if user has a primary connection for provider"""        stmt = select(OAuthConnections).where(
+        """Check if user has a primary connection for provider"""
+        stmt = select(OAuthConnections).where(
             OAuthConnections.user_id == user_id,
             OAuthConnections.provider == provider.value,
             OAuthConnections.is_primary == True,
@@ -795,7 +818,8 @@ class OAuthProvidersRepository:
         return result.scalar_one_or_none() is not None
     
     async def _revoke_provider_tokens(self, connection: OAuthConnections):
-        """Revoke tokens at OAuth provider"""        try:
+        """Revoke tokens at OAuth provider"""
+        try:
             provider = OAuthProvider(connection.provider)
             config = await self._get_provider_config(provider)
             
@@ -830,7 +854,8 @@ class OAuthProvidersRepository:
         ip_address: Optional[str] = None,
         user_agent: Optional[str] = None
     ):
-        """Log OAuth action for audit purposes"""        try:
+        """Log OAuth action for audit purposes"""
+        try:
             audit_log = OAuthAuditLog(
                 audit_id=str(uuid4()),
                 user_id=user_id,

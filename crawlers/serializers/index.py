@@ -10,7 +10,8 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""import logging
+"""
+import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union, Type, Callable
 from datetime import datetime, timedelta
@@ -36,7 +37,8 @@ from .metadata_serializer import MetadataSerializer, MetadataData
 logger = logging.getLogger(__name__)
 
 class SerializerType(Enum):
-    """Available serializer types."""    CONTENT = "content"
+    """Available serializer types."""
+    CONTENT = "content"
     SURVEILLANCE = "surveillance"
     PLATFORM = "platform"
     FINGERPRINT = "fingerprint"
@@ -48,7 +50,8 @@ class SerializerType(Enum):
     METADATA = "metadata"
 
 class OperationType(Enum):
-    """Serialization operation types."""    SERIALIZE = "serialize"
+    """Serialization operation types."""
+    SERIALIZE = "serialize"
     DESERIALIZE = "deserialize"
     BATCH_SERIALIZE = "batch_serialize"
     BATCH_DESERIALIZE = "batch_deserialize"
@@ -56,7 +59,8 @@ class OperationType(Enum):
     TRANSFORM = "transform"
 
 class Priority(Enum):
-    """Operation priority levels."""    LOW = 1
+    """Operation priority levels."""
+    LOW = 1
     NORMAL = 2
     HIGH = 3
     CRITICAL = 4
@@ -64,7 +68,8 @@ class Priority(Enum):
 
 @dataclass
 class SerializationTask:
-    """Represents a serialization task in the queue."""    task_id: str
+    """Represents a serialization task in the queue."""
+    task_id: str
     operation_type: OperationType
     serializer_type: SerializerType
     data: Any
@@ -79,7 +84,8 @@ class SerializationTask:
     error: Optional[str] = None
 
 class SerializationMetrics(BaseModel):
-    """System-wide serialization metrics."""    total_operations: int = 0
+    """System-wide serialization metrics."""
+    total_operations: int = 0
     successful_operations: int = 0
     failed_operations: int = 0
     average_processing_time: float = 0.0
@@ -103,13 +109,16 @@ class SerializationMetrics(BaseModel):
     last_updated: datetime = Field(default_factory=datetime.now)
 
 class SerializerOrchestrator:
-    """    Advanced serialization orchestration system.
+    """
+    Advanced serialization orchestration system.
     
     Manages all serializers, task queues, load balancing, and system-wide coordination
     for the IA-Influencer-Agent content protection platform.
-    """    
+    """
+    
     def __init__(self, max_workers: int = 10, enable_caching: bool = True):
-        """Initialize the serializer orchestrator."""        self.max_workers = max_workers
+        """Initialize the serializer orchestrator."""
+        self.max_workers = max_workers
         self.enable_caching = enable_caching
         
         # Initialize all serializers
@@ -161,7 +170,8 @@ class SerializerOrchestrator:
         callback: Optional[Callable] = None,
         timeout: Optional[float] = None
     ) -> str:
-        """Submit a serialization task to the queue."""        try:
+        """Submit a serialization task to the queue."""
+        try:
             task_id = f"{serializer_type.value}_{operation_type.value}_{datetime.now().isoformat()}"
             
             task = SerializationTask(
@@ -201,7 +211,8 @@ class SerializerOrchestrator:
             raise
     
     async def process_tasks(self):
-        """Main task processing loop."""        logger.info("Starting task processing loop")
+        """Main task processing loop."""
+        logger.info("Starting task processing loop")
         
         while True:
             try:
@@ -222,7 +233,8 @@ class SerializerOrchestrator:
                 continue
     
     async def _process_single_task(self, task: SerializationTask):
-        """Process a single serialization task."""        try:
+        """Process a single serialization task."""
+        try:
             task.started_at = datetime.now()
             
             # Check circuit breaker
@@ -289,7 +301,8 @@ class SerializerOrchestrator:
                     self.metrics.queue_size -= 1
     
     async def _execute_operation(self, serializer: Any, task: SerializationTask) -> Any:
-        """Execute the serialization operation."""        try:
+        """Execute the serialization operation."""
+        try:
             if task.operation_type == OperationType.SERIALIZE:
                 if hasattr(serializer, 'serialize_data'):
                     return await serializer.serialize_data(task.data)
@@ -338,7 +351,8 @@ class SerializerOrchestrator:
             raise
     
     def _update_task_metrics(self, task: SerializationTask, processing_time: float, success: bool):
-        """Update system metrics based on task completion."""        with self._lock:
+        """Update system metrics based on task completion."""
+        with self._lock:
             self.metrics.total_operations += 1
             
             if success:
@@ -401,7 +415,8 @@ class SerializerOrchestrator:
             self.metrics.last_updated = datetime.now()
     
     def _update_circuit_breaker(self, serializer_type: SerializerType, success: bool):
-        """Update circuit breaker state for a serializer."""        if serializer_type not in self.circuit_breakers:
+        """Update circuit breaker state for a serializer."""
+        if serializer_type not in self.circuit_breakers:
             self.circuit_breakers[serializer_type] = {
                 'state': 'CLOSED',  # CLOSED, OPEN, HALF_OPEN
                 'failure_count': 0,
@@ -431,7 +446,8 @@ class SerializerOrchestrator:
                 logger.warning(f"Circuit breaker for {serializer_type.value} opened due to failures")
     
     def _is_circuit_breaker_open(self, serializer_type: SerializerType) -> bool:
-        """Check if circuit breaker is open for a serializer."""        if serializer_type not in self.circuit_breakers:
+        """Check if circuit breaker is open for a serializer."""
+        if serializer_type not in self.circuit_breakers:
             return False
         
         breaker = self.circuit_breakers[serializer_type]
@@ -450,14 +466,17 @@ class SerializerOrchestrator:
             return False
     
     def _generate_cache_key(self, task: SerializationTask) -> str:
-        """Generate cache key for a task."""        data_hash = hash(str(task.data))
+        """Generate cache key for a task."""
+        data_hash = hash(str(task.data))
         return f"{task.serializer_type.value}_{task.operation_type.value}_{data_hash}"
     
     def _is_cache_valid(self, timestamp: datetime) -> bool:
-        """Check if cached result is still valid."""        return (datetime.now() - timestamp) < self.cache_ttl
+        """Check if cached result is still valid."""
+        return (datetime.now() - timestamp) < self.cache_ttl
     
     def get_metrics(self) -> SerializationMetrics:
-        """Get current system metrics."""        with self._lock:
+        """Get current system metrics."""
+        with self._lock:
             # Update active workers count
             self.metrics.active_workers = len(self.active_tasks)
             
@@ -468,7 +487,8 @@ class SerializerOrchestrator:
             return self.metrics.copy()
     
     def get_task_status(self, task_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of a specific task."""        with self._lock:
+        """Get status of a specific task."""
+        with self._lock:
             if task_id in self.active_tasks:
                 task = self.active_tasks[task_id]
                 return {
@@ -503,12 +523,14 @@ class SerializerOrchestrator:
                 return None
     
     def clear_cache(self):
-        """Clear the result cache."""        with self._lock:
+        """Clear the result cache."""
+        with self._lock:
             self.result_cache.clear()
             logger.info("Result cache cleared")
     
     def shutdown(self):
-        """Shutdown the orchestrator and cleanup resources."""        logger.info("Shutting down serializer orchestrator")
+        """Shutdown the orchestrator and cleanup resources."""
+        logger.info("Shutting down serializer orchestrator")
         
         # Stop accepting new tasks
         self.executor.shutdown(wait=True)
@@ -522,12 +544,15 @@ class SerializerOrchestrator:
 
 
 class SerializerIndex:
-    """    Main index class providing unified access to all serialization capabilities.
+    """
+    Main index class providing unified access to all serialization capabilities.
     
     This is the primary entry point for the IA-Influencer-Agent serialization system.
-    """    
+    """
+    
     def __init__(self, enable_orchestrator: bool = True, max_workers: int = 10):
-        """Initialize the serializer index."""        self.enable_orchestrator = enable_orchestrator
+        """Initialize the serializer index."""
+        self.enable_orchestrator = enable_orchestrator
         
         if enable_orchestrator:
             self.orchestrator = SerializerOrchestrator(max_workers=max_workers)
@@ -554,7 +579,8 @@ class SerializerIndex:
         serializer_type: SerializerType,
         priority: Priority = Priority.NORMAL
     ) -> Any:
-        """Serialize data using the specified serializer."""        if self.enable_orchestrator:
+        """Serialize data using the specified serializer."""
+        if self.enable_orchestrator:
             task_id = await self.orchestrator.submit_task(
                 OperationType.SERIALIZE,
                 serializer_type,
@@ -575,7 +601,8 @@ class SerializerIndex:
         serializer_type: SerializerType,
         priority: Priority = Priority.NORMAL
     ) -> Any:
-        """Deserialize data using the specified serializer."""        if self.enable_orchestrator:
+        """Deserialize data using the specified serializer."""
+        if self.enable_orchestrator:
             task_id = await self.orchestrator.submit_task(
                 OperationType.DESERIALIZE,
                 serializer_type,
@@ -596,7 +623,8 @@ class SerializerIndex:
         serializer_type: SerializerType,
         priority: Priority = Priority.NORMAL
     ) -> Any:
-        """Batch serialize multiple data objects."""        if self.enable_orchestrator:
+        """Batch serialize multiple data objects."""
+        if self.enable_orchestrator:
             task_id = await self.orchestrator.submit_task(
                 OperationType.BATCH_SERIALIZE,
                 serializer_type,
@@ -612,22 +640,26 @@ class SerializerIndex:
                 return [serializer.serialize(item) for item in data_list]
     
     def get_serializer(self, serializer_type: SerializerType) -> Any:
-        """Get direct access to a specific serializer."""        if self.enable_orchestrator:
+        """Get direct access to a specific serializer."""
+        if self.enable_orchestrator:
             return self.orchestrator.serializers[serializer_type]
         else:
             return self.serializers[serializer_type]
     
     def get_metrics(self) -> Optional[SerializationMetrics]:
-        """Get system metrics (only available with orchestrator)."""        if self.enable_orchestrator:
+        """Get system metrics (only available with orchestrator)."""
+        if self.enable_orchestrator:
             return self.orchestrator.get_metrics()
         else:
             return None
     
     def get_available_serializers(self) -> List[SerializerType]:
-        """Get list of available serializer types."""        return list(SerializerType)
+        """Get list of available serializer types."""
+        return list(SerializerType)
     
     def get_supported_operations(self) -> List[OperationType]:
-        """Get list of supported operation types."""        return list(OperationType)
+        """Get list of supported operation types."""
+        return list(OperationType)
 
 
 # Global serializer index instance
@@ -637,7 +669,8 @@ def get_serializer_index(
     enable_orchestrator: bool = True,
     max_workers: int = 10
 ) -> SerializerIndex:
-    """Get or create the global serializer index instance."""    global _serializer_index
+    """Get or create the global serializer index instance."""
+    global _serializer_index
     
     if _serializer_index is None:
         _serializer_index = SerializerIndex(
@@ -648,7 +681,8 @@ def get_serializer_index(
     return _serializer_index
 
 def reset_serializer_index():
-    """Reset the global serializer index instance."""    global _serializer_index
+    """Reset the global serializer index instance."""
+    global _serializer_index
     
     if _serializer_index and _serializer_index.enable_orchestrator:
         _serializer_index.orchestrator.shutdown()

@@ -3,7 +3,8 @@
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
-"""from typing import Dict, Any, List, Optional, Set, Callable, Union
+"""
+from typing import Dict, Any, List, Optional, Set, Callable, Union
 from dataclasses import dataclass
 from enum import Enum
 import re
@@ -21,14 +22,16 @@ from .exceptions import (
 
 
 class ValidationLevel(Enum):
-    """Validation severity levels."""    INFO = "info"
+    """Validation severity levels."""
+    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 
 class ValidationType(Enum):
-    """Types of validation checks."""    STRUCTURE = "structure"
+    """Types of validation checks."""
+    STRUCTURE = "structure"
     DEPENDENCY = "dependency"
     CONFIGURATION = "configuration"
     RESOURCE = "resource"
@@ -38,7 +41,8 @@ class ValidationType(Enum):
 
 @dataclass
 class ValidationResult:
-    """Result of a validation check."""    valid: bool
+    """Result of a validation check."""
+    valid: bool
     level: ValidationLevel
     validation_type: ValidationType
     message: str
@@ -50,7 +54,8 @@ class ValidationResult:
 
 @dataclass
 class ValidationReport:
-    """Comprehensive validation report."""    valid: bool
+    """Comprehensive validation report."""
+    valid: bool
     results: List[ValidationResult]
     errors: List[ValidationResult]
     warnings: List[ValidationResult]
@@ -63,19 +68,23 @@ class ValidationReport:
         self.info = [r for r in self.results if r.level == ValidationLevel.INFO]
     
     def has_errors(self) -> bool:
-        """Check if report contains errors."""        return len(self.errors) > 0
+        """Check if report contains errors."""
+        return len(self.errors) > 0
     
     def has_critical_errors(self) -> bool:
-        """Check if report contains critical errors."""        return any(r.level == ValidationLevel.CRITICAL for r in self.errors)
+        """Check if report contains critical errors."""
+        return any(r.level == ValidationLevel.CRITICAL for r in self.errors)
     
     def get_error_summary(self) -> str:
-        """Get summary of errors."""        if not self.errors:
+        """Get summary of errors."""
+        if not self.errors:
             return "No errors found"
         
         return f"Found {len(self.errors)} error(s): " + "; ".join(r.message for r in self.errors)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert report to dictionary."""        return {
+        """Convert report to dictionary."""
+        return {
             "valid": self.valid,
             "timestamp": self.timestamp.isoformat(),
             "summary": {
@@ -101,7 +110,8 @@ class ValidationReport:
 
 
 class WorkflowValidator:
-    """Comprehensive validator for workflow components."""    
+    """Comprehensive validator for workflow components."""
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger("workflow.validator")
@@ -120,7 +130,8 @@ class WorkflowValidator:
         self._setup_default_rules()
     
     def validate_workflow_config(self, config: Dict[str, Any]) -> ValidationReport:
-        """Validate complete workflow configuration."""        results = []
+        """Validate complete workflow configuration."""
+        results = []
         results.extend(self._validate_basic_structure(config, "workflow"))
         results.extend(self._validate_workflow_settings(config))
         results.extend(self._validate_resource_limits(config))
@@ -129,7 +140,8 @@ class WorkflowValidator:
         return self._create_report(results)
     
     def validate_pipeline_definition(self, pipeline_def: Dict[str, Any]) -> ValidationReport:
-        """Validate pipeline definition."""        results = []
+        """Validate pipeline definition."""
+        results = []
         results.extend(self._validate_basic_structure(pipeline_def, "pipeline"))
         results.extend(self._validate_pipeline_steps(pipeline_def))
         results.extend(self._validate_step_dependencies(pipeline_def))
@@ -138,7 +150,8 @@ class WorkflowValidator:
         return self._create_report(results)
     
     def validate_schedule_expression(self, cron_expr: str) -> ValidationResult:
-        """Validate cron schedule expression."""        try:
+        """Validate cron schedule expression."""
+        try:
             # Basic cron validation
             parts = cron_expr.split()
             
@@ -261,7 +274,8 @@ class WorkflowValidator:
             )
     
     def validate_automation_rule(self, rule: Dict[str, Any]) -> ValidationReport:
-        """Validate automation rule definition."""        results = []
+        """Validate automation rule definition."""
+        results = []
         results.extend(self._validate_basic_structure(rule, "automation_rule"))
         results.extend(self._validate_automation_triggers(rule))
         results.extend(self._validate_automation_actions(rule))
@@ -270,7 +284,8 @@ class WorkflowValidator:
         return self._create_report(results)
     
     def validate_state_definition(self, state_def: Dict[str, Any]) -> ValidationReport:
-        """Validate workflow state definition."""        results = []
+        """Validate workflow state definition."""
+        results = []
         results.extend(self._validate_basic_structure(state_def, "state"))
         results.extend(self._validate_state_transitions(state_def))
         results.extend(self._validate_state_data(state_def))
@@ -278,7 +293,8 @@ class WorkflowValidator:
         return self._create_report(results)
     
     def validate_resource_requirements(self, requirements: Dict[str, Any]) -> ValidationReport:
-        """Validate resource requirements."""        results = []
+        """Validate resource requirements."""
+        results = []
         results.extend(self._validate_resource_values(requirements))
         results.extend(self._validate_resource_limits(requirements))
         results.extend(self._validate_resource_availability(requirements))
@@ -286,18 +302,21 @@ class WorkflowValidator:
         return self._create_report(results)
     
     def add_custom_validator(self, name: str, validator_func: Callable) -> None:
-        """Add custom validation function."""        self.custom_validators[name] = validator_func
+        """Add custom validation function."""
+        self.custom_validators[name] = validator_func
         self.logger.debug(f"Added custom validator: {name}")
     
     def add_validation_rule(self, target_type: str, rule_func: Callable) -> None:
-        """Add validation rule for specific target type."""        if target_type not in self.validation_rules:
+        """Add validation rule for specific target type."""
+        if target_type not in self.validation_rules:
             self.validation_rules[target_type] = []
         
         self.validation_rules[target_type].append(rule_func)
         self.logger.debug(f"Added validation rule for {target_type}")
     
     def _setup_default_rules(self):
-        """Setup default validation rules."""        # Pipeline validation rules
+        """Setup default validation rules."""
+        # Pipeline validation rules
         self.add_validation_rule("pipeline", self._check_pipeline_complexity)
         self.add_validation_rule("pipeline", self._check_circular_dependencies)
         self.add_validation_rule("pipeline", self._check_resource_usage)
@@ -311,7 +330,8 @@ class WorkflowValidator:
         self.add_validation_rule("automation", self._check_action_permissions)
     
     def _validate_basic_structure(self, data: Dict[str, Any], data_type: str) -> List[ValidationResult]:
-        """Validate basic structure requirements."""        results = []
+        """Validate basic structure requirements."""
+        results = []
         
         # Check required fields based on type
         required_fields = self._get_required_fields(data_type)
@@ -354,7 +374,8 @@ class WorkflowValidator:
         return results
     
     def _validate_workflow_settings(self, config: Dict[str, Any]) -> List[ValidationResult]:
-        """Validate workflow-specific settings."""        results = []
+        """Validate workflow-specific settings."""
+        results = []
         
         # Validate timeout settings
         if "timeout" in config:
@@ -407,7 +428,8 @@ class WorkflowValidator:
         return results
     
     def _validate_pipeline_steps(self, pipeline_def: Dict[str, Any]) -> List[ValidationResult]:
-        """Validate pipeline step definitions."""        results = []
+        """Validate pipeline step definitions."""
+        results = []
         
         if "steps" not in pipeline_def:
             return results
@@ -464,7 +486,8 @@ class WorkflowValidator:
         return results
     
     def _validate_single_step(self, step: Dict[str, Any], step_index: int) -> List[ValidationResult]:
-        """Validate individual pipeline step."""        results = []
+        """Validate individual pipeline step."""
+        results = []
         
         # Required step fields
         required_fields = ["name", "handler"]
@@ -509,7 +532,8 @@ class WorkflowValidator:
         return results
     
     def _validate_step_dependencies(self, pipeline_def: Dict[str, Any]) -> List[ValidationResult]:
-        """Validate step dependency relationships."""        results = []
+        """Validate step dependency relationships."""
+        results = []
         
         if "steps" not in pipeline_def:
             return results
@@ -555,7 +579,8 @@ class WorkflowValidator:
         return results
     
     def _validate_pipeline_flow(self, pipeline_def: Dict[str, Any]) -> List[ValidationResult]:
-        """Validate overall pipeline flow and logic."""        results = []
+        """Validate overall pipeline flow and logic."""
+        results = []
         
         # Check for isolated steps (no dependencies and no dependents)
         if "steps" in pipeline_def:
@@ -583,7 +608,8 @@ class WorkflowValidator:
         return results
     
     def _validate_automation_triggers(self, rule: Dict[str, Any]) -> List[ValidationResult]:
-        """Validate automation trigger configuration."""        results = []
+        """Validate automation trigger configuration."""
+        results = []
         
         if "triggers" not in rule:
             results.append(ValidationResult(
@@ -642,7 +668,8 @@ class WorkflowValidator:
         return results
     
     def _validate_automation_actions(self, rule: Dict[str, Any]) -> List[ValidationResult]:
-        """Validate automation action configuration."""        results = []
+        """Validate automation action configuration."""
+        results = []
         
         if "actions" not in rule:
             results.append(ValidationResult(
@@ -688,7 +715,8 @@ class WorkflowValidator:
         return results
     
     def _validate_automation_conditions(self, rule: Dict[str, Any]) -> List[ValidationResult]:
-        """Validate automation condition logic."""        results = []
+        """Validate automation condition logic."""
+        results = []
         
         if "conditions" in rule:
             conditions = rule["conditions"]
@@ -737,7 +765,8 @@ class WorkflowValidator:
         return results
     
     def _validate_state_transitions(self, state_def: Dict[str, Any]) -> List[ValidationResult]:
-        """Validate state transition definitions."""        results = []
+        """Validate state transition definitions."""
+        results = []
         
         if "transitions" in state_def:
             transitions = state_def["transitions"]
@@ -768,7 +797,8 @@ class WorkflowValidator:
         return results
     
     def _validate_state_data(self, state_def: Dict[str, Any]) -> List[ValidationResult]:
-        """Validate state data structure."""        results = []
+        """Validate state data structure."""
+        results = []
         
         if "initial_state" not in state_def:
             results.append(ValidationResult(
@@ -794,7 +824,8 @@ class WorkflowValidator:
         return results
     
     def _validate_resource_values(self, requirements: Dict[str, Any]) -> List[ValidationResult]:
-        """Validate resource requirement values."""        results = []
+        """Validate resource requirement values."""
+        results = []
         
         for resource_type, value in requirements.items():
             if isinstance(value, (int, float)):
@@ -820,7 +851,8 @@ class WorkflowValidator:
         return results
     
     def _validate_resource_limits(self, config: Dict[str, Any]) -> List[ValidationResult]:
-        """Validate resource limit configurations."""        results = []
+        """Validate resource limit configurations."""
+        results = []
         
         # Check memory limits
         if "memory" in config:
@@ -865,7 +897,8 @@ class WorkflowValidator:
         return results
     
     def _validate_resource_availability(self, requirements: Dict[str, Any]) -> List[ValidationResult]:
-        """Validate resource availability (placeholder for actual resource checks)."""        results = []
+        """Validate resource availability (placeholder for actual resource checks)."""
+        results = []
         
         # This would typically check against actual system resources
         # For now, just validate the structure
@@ -886,7 +919,8 @@ class WorkflowValidator:
         return results
     
     def _validate_retry_policy(self, retry_policy: Dict[str, Any], step_index: int) -> List[ValidationResult]:
-        """Validate retry policy configuration."""        results = []
+        """Validate retry policy configuration."""
+        results = []
         
         if "max_retries" in retry_policy:
             max_retries = retry_policy["max_retries"]
@@ -925,7 +959,8 @@ class WorkflowValidator:
         return results
     
     def _validate_security_settings(self, config: Dict[str, Any]) -> List[ValidationResult]:
-        """Validate security-related settings."""        results = []
+        """Validate security-related settings."""
+        results = []
         
         if "security" in config:
             security = config["security"]
@@ -957,7 +992,8 @@ class WorkflowValidator:
         return results
     
     def _create_report(self, results: List[ValidationResult]) -> ValidationReport:
-        """Create validation report from results."""        valid = not any(r.level in [ValidationLevel.ERROR, ValidationLevel.CRITICAL] for r in results)
+        """Create validation report from results."""
+        valid = not any(r.level in [ValidationLevel.ERROR, ValidationLevel.CRITICAL] for r in results)
         
         return ValidationReport(
             valid=valid,
@@ -966,7 +1002,8 @@ class WorkflowValidator:
         )
     
     def _get_required_fields(self, data_type: str) -> List[str]:
-        """Get required fields for data type."""        field_requirements = {
+        """Get required fields for data type."""
+        field_requirements = {
             "workflow": ["name", "steps"],
             "pipeline": ["steps"],
             "automation_rule": ["name", "triggers", "actions"],
@@ -976,7 +1013,8 @@ class WorkflowValidator:
         return field_requirements.get(data_type, [])
     
     def _get_field_types(self, data_type: str) -> Dict[str, type]:
-        """Get expected field types for data type."""        type_requirements = {
+        """Get expected field types for data type."""
+        type_requirements = {
             "workflow": {
                 "name": str,
                 "steps": (list, dict),
@@ -1003,7 +1041,8 @@ class WorkflowValidator:
         return type_requirements.get(data_type, {})
     
     def _validate_cron_value(self, value: str, range_tuple: tuple) -> bool:
-        """Validate individual cron value against range."""        try:
+        """Validate individual cron value against range."""
+        try:
             if value == '*':
                 return True
             
@@ -1021,7 +1060,8 @@ class WorkflowValidator:
             return False
     
     def _find_circular_dependencies(self, step_deps: Dict[str, List[str]]) -> List[List[str]]:
-        """Find circular dependencies in step definitions."""        def dfs(node, path, visited):
+        """Find circular dependencies in step definitions."""
+        def dfs(node, path, visited):
             if node in path:
                 # Found cycle
                 cycle_start = path.index(node)
@@ -1051,7 +1091,8 @@ class WorkflowValidator:
     
     # Default validation rule implementations
     def _check_pipeline_complexity(self, pipeline_def: Dict[str, Any]) -> List[ValidationResult]:
-        """Check pipeline complexity metrics."""        results = []
+        """Check pipeline complexity metrics."""
+        results = []
         
         if "steps" in pipeline_def:
             steps = pipeline_def["steps"]
@@ -1071,10 +1112,12 @@ class WorkflowValidator:
         return results
     
     def _check_circular_dependencies(self, pipeline_def: Dict[str, Any]) -> List[ValidationResult]:
-        """Check for circular dependencies in pipeline."""        return []  # Already handled in _validate_step_dependencies
+        """Check for circular dependencies in pipeline."""
+        return []  # Already handled in _validate_step_dependencies
     
     def _check_resource_usage(self, pipeline_def: Dict[str, Any]) -> List[ValidationResult]:
-        """Check resource usage patterns."""        results = []
+        """Check resource usage patterns."""
+        results = []
         
         # This would analyze resource requirements across pipeline steps
         # Placeholder for actual resource analysis
@@ -1082,13 +1125,16 @@ class WorkflowValidator:
         return results
     
     def _check_workflow_timeout(self, workflow_def: Dict[str, Any]) -> List[ValidationResult]:
-        """Check workflow timeout configuration."""        return []  # Already handled in _validate_workflow_settings
+        """Check workflow timeout configuration."""
+        return []  # Already handled in _validate_workflow_settings
     
     def _check_parallel_limits(self, workflow_def: Dict[str, Any]) -> List[ValidationResult]:
-        """Check parallel execution limits."""        return []  # Already handled in _validate_workflow_settings
+        """Check parallel execution limits."""
+        return []  # Already handled in _validate_workflow_settings
     
     def _check_trigger_conflicts(self, automation_def: Dict[str, Any]) -> List[ValidationResult]:
-        """Check for automation trigger conflicts."""        results = []
+        """Check for automation trigger conflicts."""
+        results = []
         
         # This would check for conflicting automation triggers
         # Placeholder for actual conflict detection
@@ -1096,7 +1142,8 @@ class WorkflowValidator:
         return results
     
     def _check_action_permissions(self, automation_def: Dict[str, Any]) -> List[ValidationResult]:
-        """Check automation action permissions."""        results = []
+        """Check automation action permissions."""
+        results = []
         
         # This would validate that automation actions have proper permissions
         # Placeholder for actual permission checks

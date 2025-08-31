@@ -3,7 +3,8 @@ Comprehensive audit logging system for compliance and security
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""import asyncio
+"""
+import asyncio
 import json
 import hashlib
 import logging
@@ -27,7 +28,8 @@ logger = get_logger(__name__)
 
 
 class AuditLevel(str, Enum):
-    """Audit event severity levels"""    INFO = "info"
+    """Audit event severity levels"""
+    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -35,7 +37,8 @@ class AuditLevel(str, Enum):
 
 
 class AuditCategory(str, Enum):
-    """Audit event categories"""    AUTHENTICATION = "authentication"
+    """Audit event categories"""
+    AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     DATA_ACCESS = "data_access"
     DATA_MODIFICATION = "data_modification"
@@ -50,7 +53,8 @@ class AuditCategory(str, Enum):
 
 
 class ComplianceFramework(str, Enum):
-    """Compliance frameworks for audit mapping"""    GDPR = "gdpr"
+    """Compliance frameworks for audit mapping"""
+    GDPR = "gdpr"
     CCPA = "ccpa"
     DMCA = "dmca"
     PCI_DSS = "pci_dss"
@@ -61,7 +65,8 @@ class ComplianceFramework(str, Enum):
 
 @dataclass
 class AuditContext:
-    """Audit context information"""    user_id: Optional[int] = None
+    """Audit context information"""
+    user_id: Optional[int] = None
     session_id: Optional[str] = None
     ip_address: Optional[str] = None
     user_agent: Optional[str] = None
@@ -72,7 +77,8 @@ class AuditContext:
 
 @dataclass
 class SecurityContext:
-    """Security event context"""    threat_level: str
+    """Security event context"""
+    threat_level: str
     attack_type: Optional[str] = None
     source_ip: Optional[str] = None
     target_resource: Optional[str] = None
@@ -82,7 +88,8 @@ class SecurityContext:
 
 @dataclass
 class ComplianceContext:
-    """Compliance audit context"""    framework: ComplianceFramework
+    """Compliance audit context"""
+    framework: ComplianceFramework
     regulation_section: str
     control_objective: str
     assessment_result: str
@@ -95,7 +102,8 @@ request_correlation_id: ContextVar[Optional[str]] = ContextVar('correlation_id',
 
 
 class AuditLogger:
-    """Enterprise-grade audit logging system"""    
+    """Enterprise-grade audit logging system"""
+    
     def __init__(self):
         self.logger = logger
         self.encryption_enabled = settings.AUDIT_ENCRYPTION_ENABLED
@@ -124,7 +132,8 @@ class AuditLogger:
         resource_type: Optional[str] = None,
         context: Optional[AuditContext] = None
     ) -> str:
-        """Log comprehensive audit event with full context"""        try:
+        """Log comprehensive audit event with full context"""
+        try:
             # Get or create audit context
             audit_ctx = context or audit_context.get() or AuditContext()
             correlation_id = request_correlation_id.get() or self._generate_correlation_id()
@@ -215,7 +224,8 @@ class AuditLogger:
         details: Dict[str, Any],
         user_id: Optional[int] = None
     ) -> str:
-        """Log security-specific events with enhanced context"""        try:
+        """Log security-specific events with enhanced context"""
+        try:
             event_id = await self.log_audit_event(
                 event_type=event_type,
                 category=AuditCategory.SECURITY,
@@ -271,7 +281,8 @@ class AuditLogger:
         remediation_required: bool = False,
         user_id: Optional[int] = None
     ) -> str:
-        """Log compliance-specific events for regulatory audit trails"""        try:
+        """Log compliance-specific events for regulatory audit trails"""
+        try:
             event_id = await self.log_audit_event(
                 event_type=event_type,
                 category=AuditCategory.COMPLIANCE,
@@ -324,7 +335,8 @@ class AuditLogger:
         success: bool,
         details: Dict[str, Any] = None
     ) -> str:
-        """Log data access events for privacy compliance"""        try:
+        """Log data access events for privacy compliance"""
+        try:
             return await self.log_audit_event(
                 event_type="data_access",
                 category=AuditCategory.DATA_ACCESS,
@@ -355,7 +367,8 @@ class AuditLogger:
         success: bool,
         details: Dict[str, Any] = None
     ) -> str:
-        """Log financial transactions for audit and compliance"""        try:
+        """Log financial transactions for audit and compliance"""
+        try:
             return await self.log_audit_event(
                 event_type="financial_transaction",
                 category=AuditCategory.FINANCIAL,
@@ -386,7 +399,8 @@ class AuditLogger:
         user_filter: Optional[int] = None,
         compliance_framework: Optional[ComplianceFramework] = None
     ) -> Dict[str, Any]:
-        """Generate comprehensive audit report for specified period"""        try:
+        """Generate comprehensive audit report for specified period"""
+        try:
             async with get_db_session() as session:
                 # Build query with filters
                 query = select(AuditLog).where(
@@ -506,13 +520,16 @@ class AuditLogger:
             raise HTTPException(status_code=500, detail="Failed to generate audit report")
     
     def set_audit_context(self, context: AuditContext) -> None:
-        """Set audit context for current request"""        audit_context.set(context)
+        """Set audit context for current request"""
+        audit_context.set(context)
     
     def set_correlation_id(self, correlation_id: str) -> None:
-        """Set correlation ID for request tracking"""        request_correlation_id.set(correlation_id)
+        """Set correlation ID for request tracking"""
+        request_correlation_id.set(correlation_id)
     
     async def _encrypt_audit_data(self, audit_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Encrypt sensitive audit data"""        try:
+        """Encrypt sensitive audit data"""
+        try:
             sensitive_fields = ["user_agent", "ip_address", "details"]
             encrypted_data = audit_data.copy()
             
@@ -527,7 +544,8 @@ class AuditLogger:
             return audit_data
     
     async def _generate_integrity_hash(self, audit_data: Dict[str, Any]) -> str:
-        """Generate tamper-proof integrity hash for audit data"""        try:
+        """Generate tamper-proof integrity hash for audit data"""
+        try:
             # Create consistent string representation
             hash_data = {
                 "event_id": audit_data["event_id"],
@@ -545,7 +563,8 @@ class AuditLogger:
             return ""
     
     async def _verify_integrity_hash(self, audit_log: AuditLog) -> bool:
-        """Verify integrity hash of audit log entry"""        try:
+        """Verify integrity hash of audit log entry"""
+        try:
             if not audit_log.integrity_hash:
                 return True  # No hash to verify
             
@@ -568,17 +587,20 @@ class AuditLogger:
             return False
     
     def _generate_correlation_id(self) -> str:
-        """Generate unique correlation ID for request tracking"""        timestamp = str(int(datetime.utcnow().timestamp() * 1000))
+        """Generate unique correlation ID for request tracking"""
+        timestamp = str(int(datetime.utcnow().timestamp() * 1000))
         random_part = hashlib.md5(timestamp.encode()).hexdigest()[:8]
         return f"COR-{timestamp}-{random_part}"
     
     def _generate_event_id(self, event_type: str, correlation_id: str) -> str:
-        """Generate unique event ID"""        timestamp = str(int(datetime.utcnow().timestamp() * 1000))
+        """Generate unique event ID"""
+        timestamp = str(int(datetime.utcnow().timestamp() * 1000))
         hash_part = hashlib.md5(f"{event_type}-{correlation_id}-{timestamp}".encode()).hexdigest()[:8]
         return f"AUD-{timestamp}-{hash_part}"
     
     async def _process_compliance_requirements(self, event_type: str, audit_data: Dict[str, Any]) -> None:
-        """Process compliance requirements for audit event"""        try:
+        """Process compliance requirements for audit event"""
+        try:
             # Check if event type requires compliance logging
             compliance_frameworks = self.compliance_mapping.get(event_type, [])
             
@@ -589,7 +611,8 @@ class AuditLogger:
             self.logger.error(f"Failed to process compliance requirements: {str(e)}")
     
     async def _send_real_time_alert(self, audit_data: Dict[str, Any]) -> None:
-        """Send real-time alert for critical audit events"""        try:
+        """Send real-time alert for critical audit events"""
+        try:
             # Implementation would integrate with alerting system
             # (email, Slack, PagerDuty, etc.)
             self.logger.warning(f"REAL-TIME ALERT: {audit_data['event_type']} - {audit_data['message']}")

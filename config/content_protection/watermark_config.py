@@ -13,7 +13,8 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""from typing import Dict, Any, List, Optional, Set, Tuple, Union
+"""
+from typing import Dict, Any, List, Optional, Set, Tuple, Union
 from dataclasses import dataclass, field
 from enum import Enum
 import os
@@ -21,7 +22,8 @@ from datetime import datetime
 
 
 class WatermarkType(str, Enum):
-    """Types of watermarks."""    INVISIBLE = "invisible"
+    """Types of watermarks."""
+    INVISIBLE = "invisible"
     SEMI_VISIBLE = "semi_visible"
     VISIBLE = "visible"
     ROBUST = "robust"
@@ -29,7 +31,8 @@ class WatermarkType(str, Enum):
 
 
 class WatermarkAlgorithm(str, Enum):
-    """Watermarking algorithms by content type."""    # Audio watermarking
+    """Watermarking algorithms by content type."""
+    # Audio watermarking
     ECHO_HIDING = "echo_hiding"
     PHASE_CODING = "phase_coding"
     SPREAD_SPECTRUM = "spread_spectrum"
@@ -59,7 +62,8 @@ class WatermarkAlgorithm(str, Enum):
 
 
 class EmbeddingStrength(str, Enum):
-    """Watermark embedding strength levels."""    MINIMAL = "minimal"      # Barely detectable
+    """Watermark embedding strength levels."""
+    MINIMAL = "minimal"      # Barely detectable
     LOW = "low"             # Light embedding
     MEDIUM = "medium"       # Balanced
     HIGH = "high"           # Strong embedding
@@ -68,7 +72,8 @@ class EmbeddingStrength(str, Enum):
 
 @dataclass
 class WatermarkPayload:
-    """Watermark payload configuration."""    owner_id: str
+    """Watermark payload configuration."""
+    owner_id: str
     content_id: str
     timestamp: datetime
     copyright_info: str
@@ -80,7 +85,8 @@ class WatermarkPayload:
 
 @dataclass
 class AudioWatermarkConfig:
-    """Audio watermarking configuration."""    algorithm: WatermarkAlgorithm = WatermarkAlgorithm.SPREAD_SPECTRUM
+    """Audio watermarking configuration."""
+    algorithm: WatermarkAlgorithm = WatermarkAlgorithm.SPREAD_SPECTRUM
     watermark_type: WatermarkType = WatermarkType.INVISIBLE
     embedding_strength: EmbeddingStrength = EmbeddingStrength.MEDIUM
     sample_rate: int = 44100
@@ -98,7 +104,8 @@ class AudioWatermarkConfig:
 
 @dataclass
 class VideoWatermarkConfig:
-    """Video watermarking configuration."""    algorithm: WatermarkAlgorithm = WatermarkAlgorithm.DCT_VIDEO
+    """Video watermarking configuration."""
+    algorithm: WatermarkAlgorithm = WatermarkAlgorithm.DCT_VIDEO
     watermark_type: WatermarkType = WatermarkType.INVISIBLE
     embedding_strength: EmbeddingStrength = EmbeddingStrength.MEDIUM
     frame_selection: str = "keyframes"  # all, keyframes, random, adaptive
@@ -116,7 +123,8 @@ class VideoWatermarkConfig:
 
 @dataclass
 class ImageWatermarkConfig:
-    """Image watermarking configuration."""    algorithm: WatermarkAlgorithm = WatermarkAlgorithm.DWT_IMAGE
+    """Image watermarking configuration."""
+    algorithm: WatermarkAlgorithm = WatermarkAlgorithm.DWT_IMAGE
     watermark_type: WatermarkType = WatermarkType.INVISIBLE
     embedding_strength: EmbeddingStrength = EmbeddingStrength.MEDIUM
     color_space: str = "YUV"  # RGB, YUV, HSV, LAB
@@ -134,7 +142,8 @@ class ImageWatermarkConfig:
 
 @dataclass
 class TextWatermarkConfig:
-    """Text watermarking configuration."""    algorithm: WatermarkAlgorithm = WatermarkAlgorithm.SYNONYM_SUBSTITUTION
+    """Text watermarking configuration."""
+    algorithm: WatermarkAlgorithm = WatermarkAlgorithm.SYNONYM_SUBSTITUTION
     watermark_type: WatermarkType = WatermarkType.INVISIBLE
     embedding_strength: EmbeddingStrength = EmbeddingStrength.LOW
     language: str = "en"
@@ -152,7 +161,8 @@ class TextWatermarkConfig:
 
 @dataclass
 class RobustnessConfig:
-    """Watermark robustness configuration."""    enable_attack_resistance: bool = True
+    """Watermark robustness configuration."""
+    enable_attack_resistance: bool = True
     compression_resistance: bool = True
     noise_resistance: bool = True
     geometric_resistance: bool = True
@@ -170,7 +180,8 @@ class RobustnessConfig:
 
 @dataclass
 class SecurityConfig:
-    """Watermark security configuration."""    encryption_algorithm: str = "AES-256-GCM"
+    """Watermark security configuration."""
+    encryption_algorithm: str = "AES-256-GCM"
     key_derivation_function: str = "PBKDF2"
     key_length_bits: int = 256
     salt_length_bytes: int = 32
@@ -186,7 +197,8 @@ class SecurityConfig:
 
 @dataclass
 class ExtractionConfig:
-    """Watermark extraction configuration."""    enable_blind_detection: bool = True
+    """Watermark extraction configuration."""
+    enable_blind_detection: bool = True
     enable_informed_detection: bool = True
     detection_threshold: float = 0.8
     correlation_threshold: float = 0.7
@@ -201,7 +213,8 @@ class ExtractionConfig:
 
 @dataclass
 class QualityAssessmentConfig:
-    """Quality assessment configuration."""    enable_quality_metrics: bool = True
+    """Quality assessment configuration."""
+    enable_quality_metrics: bool = True
     perceptual_quality_enabled: bool = True
     objective_quality_enabled: bool = True
     subjective_quality_enabled: bool = False
@@ -215,9 +228,11 @@ class QualityAssessmentConfig:
 
 
 class WatermarkConfig:
-    """    Professional watermark configuration manager.
+    """
+    Professional watermark configuration manager.
     Provides industrial-grade configuration for content watermarking and protection.
-    """    
+    """
+    
     def __init__(self):
         # General watermarking settings
         self.enable_watermarking: bool = True
@@ -254,7 +269,8 @@ class WatermarkConfig:
         self._load_from_environment()
     
     def _load_from_environment(self) -> None:
-        """Load configuration from environment variables."""        # General settings
+        """Load configuration from environment variables."""
+        # General settings
         self.enable_watermarking = os.getenv("WATERMARK_ENABLED", "true").lower() == "true"
         
         watermark_type = os.getenv("WATERMARK_DEFAULT_TYPE", "invisible")
@@ -289,7 +305,8 @@ class WatermarkConfig:
         self.quality_assessment.min_quality_score = float(os.getenv("WATERMARK_MIN_QUALITY", "0.9"))
     
     def create_payload(self, owner_id: str, content_id: str, **kwargs) -> WatermarkPayload:
-        """Create a watermark payload with specified parameters."""        return WatermarkPayload(
+        """Create a watermark payload with specified parameters."""
+        return WatermarkPayload(
             owner_id=owner_id,
             content_id=content_id,
             timestamp=datetime.now(),
@@ -301,7 +318,8 @@ class WatermarkConfig:
         )
     
     def get_content_config(self, content_type: str) -> Dict[str, Any]:
-        """Get watermarking configuration for specific content type."""        content_configs = {
+        """Get watermarking configuration for specific content type."""
+        content_configs = {
             "audio": self.audio,
             "video": self.video,
             "image": self.image,
@@ -322,7 +340,8 @@ class WatermarkConfig:
         }
     
     def get_algorithm_config(self, algorithm: WatermarkAlgorithm) -> Dict[str, Any]:
-        """Get configuration for specific watermarking algorithm."""        algorithm_configs = {
+        """Get configuration for specific watermarking algorithm."""
+        algorithm_configs = {
             # Audio algorithms
             WatermarkAlgorithm.ECHO_HIDING: {
                 "echo_delay_ms": 50,
@@ -379,7 +398,8 @@ class WatermarkConfig:
         return algorithm_configs.get(algorithm, {})
     
     def optimize_for_imperceptibility(self) -> None:
-        """Optimize configuration for maximum imperceptibility."""        self.default_embedding_strength = EmbeddingStrength.MINIMAL
+        """Optimize configuration for maximum imperceptibility."""
+        self.default_embedding_strength = EmbeddingStrength.MINIMAL
         
         # Audio optimization
         self.audio.embedding_strength = EmbeddingStrength.MINIMAL
@@ -405,7 +425,8 @@ class WatermarkConfig:
         self.text.word_selection_ratio = 0.05
     
     def optimize_for_robustness(self) -> None:
-        """Optimize configuration for maximum robustness."""        self.default_embedding_strength = EmbeddingStrength.HIGH
+        """Optimize configuration for maximum robustness."""
+        self.default_embedding_strength = EmbeddingStrength.HIGH
         
         # Audio optimization
         self.audio.embedding_strength = EmbeddingStrength.HIGH
@@ -432,7 +453,8 @@ class WatermarkConfig:
         self.robustness.minimum_robustness_score = 0.9
     
     def set_security_level(self, level: str) -> None:
-        """Set security configuration level."""        if level == "basic":
+        """Set security configuration level."""
+        if level == "basic":
             self.security.key_length_bits = 128
             self.security.iterations = 50000
             self.security.enable_key_rotation = False
@@ -452,7 +474,8 @@ class WatermarkConfig:
             raise ValueError(f"Unsupported security level: {level}")
     
     def validate_configuration(self) -> List[str]:
-        """Validate current configuration and return any issues."""        issues = []
+        """Validate current configuration and return any issues."""
+        issues = []
         
         # Validate performance settings
         if self.max_concurrent_operations <= 0:
@@ -499,7 +522,8 @@ class WatermarkConfig:
         return issues
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary."""        return {
+        """Convert configuration to dictionary."""
+        return {
             "enable_watermarking": self.enable_watermarking,
             "default_watermark_type": self.default_watermark_type,
             "default_embedding_strength": self.default_embedding_strength,
@@ -523,7 +547,8 @@ class WatermarkConfig:
     
     @classmethod
     def from_dict(cls, config_dict: Dict[str, Any]) -> 'WatermarkConfig':
-        """Create configuration from dictionary."""        config = cls()
+        """Create configuration from dictionary."""
+        config = cls()
         
         # Load basic settings
         if "enable_watermarking" in config_dict:

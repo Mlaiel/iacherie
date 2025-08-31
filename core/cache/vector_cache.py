@@ -12,7 +12,8 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert +
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED ⚠️
 Copyright (C) 2024 Fahed Mlaiel. All rights reserved.
 For licensing inquiries: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 from typing import Any, Dict, List, Optional, Tuple, Union, Set, Callable
@@ -43,7 +44,8 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Content types for IA Influencer Agent platform"""    AUDIO = "audio"
+    """Content types for IA Influencer Agent platform"""
+    AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
     TEXT = "text"
@@ -54,14 +56,16 @@ class ContentType(Enum):
     SOCIAL_POST = "social_post"
 
 class SimilarityMetric(Enum):
-    """Supported similarity metrics"""    COSINE = "cosine"
+    """Supported similarity metrics"""
+    COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     MANHATTAN = "manhattan"
     DOT_PRODUCT = "dot_product"
     JACCARD = "jaccard"
 
 class IndexType(Enum):
-    """FAISS index types for different use cases"""    FLAT_IP = "IndexFlatIP"  # Exact search, inner product
+    """FAISS index types for different use cases"""
+    FLAT_IP = "IndexFlatIP"  # Exact search, inner product
     FLAT_L2 = "IndexFlatL2"  # Exact search, L2 distance
     IVF_FLAT = "IndexIVFFlat"  # Approximate search, faster
     HNSW = "IndexHNSWFlat"  # Hierarchical NSW, best for query speed
@@ -69,7 +73,8 @@ class IndexType(Enum):
 
 @dataclass
 class VectorEntry:
-    """Enhanced vector cache entry with comprehensive metadata"""    vector: np.ndarray
+    """Enhanced vector cache entry with comprehensive metadata"""
+    vector: np.ndarray
     content_id: str
     creator_id: str
     content_type: ContentType
@@ -105,17 +110,20 @@ class VectorEntry:
     last_violation_detected: Optional[datetime] = None
     
     def update_access(self):
-        """Update access statistics"""        self.accessed_at = datetime.utcnow()
+        """Update access statistics"""
+        self.accessed_at = datetime.utcnow()
         self.access_count += 1
     
     def add_platform_detection(self, platform: str):
-        """Add platform where content was detected"""        self.platforms_found.add(platform)
+        """Add platform where content was detected"""
+        self.platforms_found.add(platform)
         if platform not in ['original', 'authorized']:
             self.violation_count += 1
             self.last_violation_detected = datetime.utcnow()
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""        return {
+        """Convert to dictionary for storage"""
+        return {
             'content_id': self.content_id,
             'creator_id': self.creator_id,
             'content_type': self.content_type.value,
@@ -141,7 +149,8 @@ class VectorEntry:
 
 @dataclass
 class SimilarityResult:
-    """Enhanced similarity search result"""    content_id: str
+    """Enhanced similarity search result"""
+    content_id: str
     creator_id: str
     similarity_score: float
     content_type: ContentType
@@ -161,7 +170,8 @@ class SimilarityResult:
     alert_level: str = "info"  # critical, warning, info
     
     def __post_init__(self):
-        """Set alert level based on similarity score"""        if self.similarity_score >= 0.95:
+        """Set alert level based on similarity score"""
+        if self.similarity_score >= 0.95:
             self.alert_level = "critical"
             self.confidence_level = "high"
         elif self.similarity_score >= 0.85:
@@ -172,7 +182,8 @@ class SimilarityResult:
             self.confidence_level = "low"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             'content_id': self.content_id,
             'creator_id': self.creator_id,
             'similarity_score': self.similarity_score,
@@ -190,7 +201,8 @@ class SimilarityResult:
 
 @dataclass
 class VectorCacheConfig:
-    """Comprehensive configuration for vector cache"""    # Core settings
+    """Comprehensive configuration for vector cache"""
+    # Core settings
     dimension: int = 512
     metric: SimilarityMetric = SimilarityMetric.COSINE
     max_vectors: int = 1000000  # 1M vectors for large-scale deployment
@@ -252,9 +264,11 @@ class VectorCacheConfig:
     violation_escalation_threshold: int = 5  # Alert after 5 violations
 
 class VectorCache:
-    """    Enterprise vector cache for IA Influencer Agent platform
+    """
+    Enterprise vector cache for IA Influencer Agent platform
     Specialized for content creator protection and monetization
-    """    
+    """
+    
     def __init__(self, config: VectorCacheConfig):
         self.config = config
         
@@ -307,7 +321,8 @@ class VectorCache:
             logger.warning("Scikit-learn not available. Some similarity metrics will be unavailable.")
     
     def _normalize_vector(self, vector: np.ndarray) -> np.ndarray:
-        """Advanced vector normalization based on metric"""        if self.config.metric == SimilarityMetric.COSINE:
+        """Advanced vector normalization based on metric"""
+        if self.config.metric == SimilarityMetric.COSINE:
             norm = np.linalg.norm(vector)
             if norm > 0:
                 return vector / norm
@@ -318,7 +333,8 @@ class VectorCache:
         return vector.astype(np.float32)
     
     def _compute_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Compute similarity using configured metric"""        if self.config.metric == SimilarityMetric.COSINE:
+        """Compute similarity using configured metric"""
+        if self.config.metric == SimilarityMetric.COSINE:
             if SKLEARN_AVAILABLE:
                 return float(cosine_similarity([vec1], [vec2])[0][0])
             else:
@@ -348,13 +364,16 @@ class VectorCache:
             return float(np.dot(vec1_norm, vec2_norm))
     
     def _get_similarity_threshold(self, content_type: ContentType) -> float:
-        """Get similarity threshold for content type"""        return self.config.similarity_thresholds.get(content_type, 0.85)
+        """Get similarity threshold for content type"""
+        return self.config.similarity_thresholds.get(content_type, 0.85)
     
     def _get_alert_threshold(self, content_type: ContentType) -> float:
-        """Get alert threshold for content type"""        return self.config.alert_thresholds.get(content_type, 0.95)
+        """Get alert threshold for content type"""
+        return self.config.alert_thresholds.get(content_type, 0.95)
     
     def _track_slow_query(self, operation: str, duration: float, metadata: Dict[str, Any]):
-        """Track slow queries for performance monitoring"""        if duration > self.config.slow_query_threshold:
+        """Track slow queries for performance monitoring"""
+        if duration > self.config.slow_query_threshold:
             slow_query = {
                 'operation': operation,
                 'duration_seconds': duration,
@@ -372,7 +391,8 @@ class VectorCache:
             logger.warning(f"Slow vector cache operation: {operation} took {duration:.2f}s")
     
     def _update_creator_stats(self, creator_id: str, operation: str):
-        """Update creator-specific statistics"""        if creator_id not in self._creator_stats:
+        """Update creator-specific statistics"""
+        if creator_id not in self._creator_stats:
             self._creator_stats[creator_id] = {
                 'vectors_added': 0,
                 'searches_performed': 0,
@@ -397,7 +417,8 @@ class VectorCache:
                         ai_model_version: Optional[str] = None,
                         embedding_method: Optional[str] = None,
                         confidence_score: Optional[float] = None) -> bool:
-        """Add vector to cache with comprehensive metadata"""        
+        """Add vector to cache with comprehensive metadata"""
+        
         start_time = time.time()
         
         try:
@@ -472,7 +493,8 @@ class VectorCache:
             return False
     
     async def get_vector(self, content_id: str) -> Optional[VectorEntry]:
-        """Get vector entry by content ID"""        with self._lock:
+        """Get vector entry by content ID"""
+        with self._lock:
             if content_id in self._vectors:
                 entry = self._vectors[content_id]
                 entry.update_access()
@@ -487,7 +509,8 @@ class VectorCache:
                            exclude_creator: Optional[str] = None,
                            min_similarity: Optional[float] = None,
                            platforms_to_check: Optional[List[str]] = None) -> List[SimilarityResult]:
-        """Advanced similarity search with business logic"""        
+        """Advanced similarity search with business logic"""
+        
         start_time = time.time()
         
         try:
@@ -596,7 +619,8 @@ class VectorCache:
                                         candidate_vectors: List[Tuple[str, VectorEntry]],
                                         min_similarity: float,
                                         top_k: int) -> List[SimilarityResult]:
-        """Parallel similarity search for better performance"""        
+        """Parallel similarity search for better performance"""
+        
         def compute_batch_similarities(batch):
             batch_results = []
             for content_id, entry in batch:
@@ -639,7 +663,8 @@ class VectorCache:
         return all_results
     
     def _detect_potential_violation(self, entry: VectorEntry, similarity: float, querying_creator_id: Optional[str]) -> bool:
-        """Detect potential content protection violation"""        if not self.config.enable_content_protection or not entry.protection_enabled:
+        """Detect potential content protection violation"""
+        if not self.config.enable_content_protection or not entry.protection_enabled:
             return False
         
         # If same creator, not a violation
@@ -651,7 +676,8 @@ class VectorCache:
         return similarity >= alert_threshold
     
     async def _handle_violation_detection(self, entry: VectorEntry, result: SimilarityResult):
-        """Handle detected content protection violation"""        # Update violation statistics
+        """Handle detected content protection violation"""
+        # Update violation statistics
         self._stats['violations_detected'] += 1
         self._content_type_stats[entry.content_type]['violations'] += 1
         
@@ -682,7 +708,8 @@ class VectorCache:
             await self._generate_protection_alert(entry, result)
     
     async def _generate_protection_alert(self, entry: VectorEntry, result: SimilarityResult):
-        """Generate high-priority protection alert"""        alert = {
+        """Generate high-priority protection alert"""
+        alert = {
             'alert_id': hashlib.md5(f"{entry.content_id}_{datetime.utcnow()}".encode()).hexdigest(),
             'timestamp': datetime.utcnow().isoformat(),
             'alert_type': 'content_protection_violation',
@@ -714,7 +741,8 @@ class VectorCache:
         # For now, we log it
     
     async def remove_vector(self, content_id: str) -> bool:
-        """Remove vector from cache"""        with self._lock:
+        """Remove vector from cache"""
+        with self._lock:
             if content_id in self._vectors:
                 entry = self._vectors[content_id]
                 
@@ -742,7 +770,8 @@ class VectorCache:
             return False
     
     async def _evict_oldest_vectors(self, count: int = 100):
-        """Evict oldest vectors when cache is full"""        if not self._vectors:
+        """Evict oldest vectors when cache is full"""
+        if not self._vectors:
             return
         
         # Sort by creation time and remove oldest
@@ -758,17 +787,20 @@ class VectorCache:
         logger.info(f"Evicted {count} oldest vectors due to capacity limit")
     
     async def get_creator_vectors(self, creator_id: str) -> List[VectorEntry]:
-        """Get all vectors for a specific creator"""        with self._lock:
+        """Get all vectors for a specific creator"""
+        with self._lock:
             content_ids = self._creator_vectors.get(creator_id, set())
             return [self._vectors[cid] for cid in content_ids if cid in self._vectors]
     
     async def get_content_type_vectors(self, content_type: ContentType) -> List[VectorEntry]:
-        """Get all vectors for a specific content type"""        with self._lock:
+        """Get all vectors for a specific content type"""
+        with self._lock:
             content_ids = self._content_type_vectors[content_type]
             return [self._vectors[cid] for cid in content_ids if cid in self._vectors]
     
     async def detect_content_violations(self, creator_id: str, platforms: List[str]) -> List[Dict[str, Any]]:
-        """Detect potential content violations across platforms"""        violations = []
+        """Detect potential content violations across platforms"""
+        violations = []
         
         creator_vectors = await self.get_creator_vectors(creator_id)
         
@@ -797,7 +829,8 @@ class VectorCache:
         return violations
     
     def get_comprehensive_stats(self) -> Dict[str, Any]:
-        """Get comprehensive cache statistics"""        with self._lock:
+        """Get comprehensive cache statistics"""
+        with self._lock:
             return {
                 'general_stats': self._stats.copy(),
                 'content_type_stats': {
@@ -830,12 +863,14 @@ class VectorCache:
             }
     
     def _estimate_memory_usage(self) -> int:
-        """Estimate memory usage in bytes"""        vector_size = self.config.dimension * 4  # float32 = 4 bytes
+        """Estimate memory usage in bytes"""
+        vector_size = self.config.dimension * 4  # float32 = 4 bytes
         metadata_size = 500  # Estimated metadata size per entry
         return len(self._vectors) * (vector_size + metadata_size)
     
     async def clear(self, creator_id: Optional[str] = None, content_type: Optional[ContentType] = None):
-        """Clear cache with optional filtering"""        with self._lock:
+        """Clear cache with optional filtering"""
+        with self._lock:
             if creator_id:
                 # Clear specific creator's vectors
                 content_ids = self._creator_vectors.get(creator_id, set()).copy()
@@ -859,10 +894,12 @@ class VectorCache:
                     self._content_type_stats[ct]['vectors'] = 0
 
 class FAISSCache(VectorCache):
-    """    Enterprise FAISS-powered vector cache for IA Influencer Agent
+    """
+    Enterprise FAISS-powered vector cache for IA Influencer Agent
     Optimized for large-scale content fingerprinting and similarity search
     Supports millions of vectors with sub-second query times
-    """    
+    """
+    
     def __init__(self, config: VectorCacheConfig):
         if not FAISS_AVAILABLE:
             raise ImportError("FAISS is required for FAISSCache. Install with: pip install faiss-cpu or faiss-gpu")
@@ -894,7 +931,8 @@ class FAISSCache(VectorCache):
         logger.info(f"FAISSCache initialized - Type: {self.index_type.value}, Dimension: {config.dimension}")
     
     def _create_faiss_index(self):
-        """Create FAISS index optimized for IA Influencer Agent use cases"""        if self.index_type == IndexType.FLAT_IP:
+        """Create FAISS index optimized for IA Influencer Agent use cases"""
+        if self.index_type == IndexType.FLAT_IP:
             # Best for accuracy, slower for large datasets
             return faiss.IndexFlatIP(self.config.dimension)
         
@@ -933,7 +971,8 @@ class FAISSCache(VectorCache):
                         vector: Union[np.ndarray, List[float]],
                         content_type: ContentType,
                         **kwargs) -> bool:
-        """Add vector to FAISS index with enterprise features"""        
+        """Add vector to FAISS index with enterprise features"""
+        
         # First add to parent cache for metadata management
         success = await super().add_vector(
             content_id, creator_id, vector, content_type, **kwargs
@@ -977,7 +1016,8 @@ class FAISSCache(VectorCache):
             return False
     
     async def _train_index(self):
-        """Train FAISS index for optimal performance"""        if self._index_trained or len(self._vectors) < self.nlist:
+        """Train FAISS index for optimal performance"""
+        if self._index_trained or len(self._vectors) < self.nlist:
             return
         
         start_time = time.time()
@@ -1011,7 +1051,8 @@ class FAISSCache(VectorCache):
                            exclude_creator: Optional[str] = None,
                            min_similarity: Optional[float] = None,
                            platforms_to_check: Optional[List[str]] = None) -> List[SimilarityResult]:
-        """High-performance similarity search using FAISS"""        
+        """High-performance similarity search using FAISS"""
+        
         start_time = time.time()
         
         try:
@@ -1137,7 +1178,8 @@ class FAISSCache(VectorCache):
             return []
     
     def _convert_distances_to_similarities(self, distances: np.ndarray) -> np.ndarray:
-        """Convert FAISS distances to similarity scores"""        if self.config.metric == SimilarityMetric.EUCLIDEAN:
+        """Convert FAISS distances to similarity scores"""
+        if self.config.metric == SimilarityMetric.EUCLIDEAN:
             # Convert L2 distance to similarity
             return 1.0 / (1.0 + distances)
         elif self.config.metric == SimilarityMetric.MANHATTAN:
@@ -1148,7 +1190,8 @@ class FAISSCache(VectorCache):
             return distances
     
     async def remove_vector(self, content_id: str) -> bool:
-        """Remove vector from FAISS index (marks for rebuild)"""        with self._lock:
+        """Remove vector from FAISS index (marks for rebuild)"""
+        with self._lock:
             if content_id in self._content_to_id:
                 faiss_id = self._content_to_id[content_id]
                 
@@ -1172,7 +1215,8 @@ class FAISSCache(VectorCache):
             return False
     
     async def rebuild_index(self):
-        """Rebuild FAISS index for optimal performance"""        start_time = time.time()
+        """Rebuild FAISS index for optimal performance"""
+        start_time = time.time()
         
         with self._lock:
             if not self._vectors:
@@ -1224,7 +1268,8 @@ class FAISSCache(VectorCache):
             logger.info(f"FAISS index rebuilt in {rebuild_time:.2f}ms with {len(vectors)} vectors")
     
     async def save_index(self, file_path: str):
-        """Save FAISS index and metadata to disk"""        try:
+        """Save FAISS index and metadata to disk"""
+        try:
             with self._lock:
                 # Save FAISS index
                 faiss.write_index(self._index, file_path)
@@ -1260,7 +1305,8 @@ class FAISSCache(VectorCache):
             raise
     
     async def load_index(self, file_path: str):
-        """Load FAISS index and metadata from disk"""        try:
+        """Load FAISS index and metadata from disk"""
+        try:
             with self._lock:
                 # Load FAISS index
                 self._index = faiss.read_index(file_path)
@@ -1292,7 +1338,8 @@ class FAISSCache(VectorCache):
             raise
     
     def get_comprehensive_stats(self) -> Dict[str, Any]:
-        """Get enhanced statistics including FAISS-specific metrics"""        base_stats = super().get_comprehensive_stats()
+        """Get enhanced statistics including FAISS-specific metrics"""
+        base_stats = super().get_comprehensive_stats()
         
         with self._lock:
             faiss_specific_stats = {
@@ -1320,14 +1367,16 @@ class FAISSCache(VectorCache):
 
 # Factory functions for easy instantiation
 async def create_vector_cache(config: Optional[VectorCacheConfig] = None) -> VectorCache:
-    """Create standard vector cache instance"""    if config is None:
+    """Create standard vector cache instance"""
+    if config is None:
         config = VectorCacheConfig()
     
     cache = VectorCache(config)
     return cache
 
 async def create_faiss_cache(config: Optional[VectorCacheConfig] = None) -> FAISSCache:
-    """Create FAISS-powered vector cache instance"""    if config is None:
+    """Create FAISS-powered vector cache instance"""
+    if config is None:
         config = VectorCacheConfig()
     
     if not FAISS_AVAILABLE:
@@ -1342,7 +1391,8 @@ _vector_cache_instance: Optional[VectorCache] = None
 _faiss_cache_instance: Optional[FAISSCache] = None
 
 async def get_vector_cache() -> VectorCache:
-    """Get or create global vector cache instance"""    global _vector_cache_instance
+    """Get or create global vector cache instance"""
+    global _vector_cache_instance
     
     if _vector_cache_instance is None:
         _vector_cache_instance = await create_vector_cache()
@@ -1350,7 +1400,8 @@ async def get_vector_cache() -> VectorCache:
     return _vector_cache_instance
 
 async def get_faiss_cache() -> Union[FAISSCache, VectorCache]:
-    """Get or create global FAISS cache instance"""    global _faiss_cache_instance
+    """Get or create global FAISS cache instance"""
+    global _faiss_cache_instance
     
     if _faiss_cache_instance is None:
         _faiss_cache_instance = await create_faiss_cache()
@@ -1364,7 +1415,8 @@ async def cache_audio_fingerprint(vector_cache: VectorCache,
                                  creator_id: str,
                                  fingerprint_vector: np.ndarray,
                                  metadata: Dict[str, Any]) -> bool:
-    """Helper to cache audio fingerprint"""    return await vector_cache.add_vector(
+    """Helper to cache audio fingerprint"""
+    return await vector_cache.add_vector(
         content_id=audio_id,
         creator_id=creator_id,
         vector=fingerprint_vector,
@@ -1377,7 +1429,8 @@ async def search_similar_audio(vector_cache: VectorCache,
                               query_fingerprint: np.ndarray,
                               creator_id: Optional[str] = None,
                               top_k: int = 10) -> List[SimilarityResult]:
-    """Helper to search for similar audio content"""    return await vector_cache.search_similar(
+    """Helper to search for similar audio content"""
+    return await vector_cache.search_similar(
         query_vector=query_fingerprint,
         top_k=top_k,
         content_type=ContentType.AUDIO,
@@ -1387,17 +1440,20 @@ async def search_similar_audio(vector_cache: VectorCache,
 async def detect_audio_violations(vector_cache: VectorCache,
                                  creator_id: str,
                                  platforms: List[str]) -> List[Dict[str, Any]]:
-    """Detect potential audio content violations"""    return await vector_cache.detect_content_violations(creator_id, platforms)
+    """Detect potential audio content violations"""
+    return await vector_cache.detect_content_violations(creator_id, platforms)
 
 # Advanced analytics and monitoring functions
 
 class VectorCacheAnalytics:
-    """Advanced analytics for vector cache performance and usage"""    
+    """Advanced analytics for vector cache performance and usage"""
+    
     def __init__(self, vector_cache: VectorCache):
         self.cache = vector_cache
     
     async def generate_creator_report(self, creator_id: str) -> Dict[str, Any]:
-        """Generate comprehensive report for a creator"""        creator_vectors = await self.cache.get_creator_vectors(creator_id)
+        """Generate comprehensive report for a creator"""
+        creator_vectors = await self.cache.get_creator_vectors(creator_id)
         
         if not creator_vectors:
             return {'creator_id': creator_id, 'vectors': 0, 'message': 'No vectors found'}
@@ -1439,7 +1495,8 @@ class VectorCacheAnalytics:
         }
     
     def _generate_creator_recommendations(self, vectors: List[VectorEntry]) -> List[str]:
-        """Generate recommendations for creator based on vector data"""        recommendations = []
+        """Generate recommendations for creator based on vector data"""
+        recommendations = []
         
         total_vectors = len(vectors)
         protected_vectors = sum(1 for v in vectors if v.protection_enabled)

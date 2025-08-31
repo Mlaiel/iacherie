@@ -10,7 +10,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  WARNING: Unauthorized use, reproduction, or distribution of this code is strictly prohibited.
     This system is proprietary and protected by international copyright laws.
     Violations will be prosecuted to the full extent of the law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -31,7 +32,8 @@ from ..models.audit_models import AuditLog, ComplianceAssessment, AuditReport
 
 
 class AuditType(Enum):
-    """Types of compliance audits"""    INTERNAL = "internal"
+    """Types of compliance audits"""
+    INTERNAL = "internal"
     EXTERNAL = "external"
     REGULATORY = "regulatory"
     SELF_ASSESSMENT = "self_assessment"
@@ -39,7 +41,8 @@ class AuditType(Enum):
 
 
 class AuditScope(Enum):
-    """Audit scope levels"""    SYSTEM_WIDE = "system_wide"
+    """Audit scope levels"""
+    SYSTEM_WIDE = "system_wide"
     PLATFORM_SPECIFIC = "platform_specific"
     USER_SPECIFIC = "user_specific"
     CONTENT_SPECIFIC = "content_specific"
@@ -47,7 +50,8 @@ class AuditScope(Enum):
 
 
 class ComplianceFramework(Enum):
-    """Compliance frameworks"""    GDPR = "gdpr"
+    """Compliance frameworks"""
+    GDPR = "gdpr"
     CCPA = "ccpa"
     DMCA = "dmca"
     SOX = "sox"
@@ -58,7 +62,8 @@ class ComplianceFramework(Enum):
 
 
 class AuditStatus(Enum):
-    """Audit status levels"""    SCHEDULED = "scheduled"
+    """Audit status levels"""
+    SCHEDULED = "scheduled"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -67,7 +72,8 @@ class AuditStatus(Enum):
 
 @dataclass
 class AuditCriteria:
-    """Audit criteria definition"""    framework: ComplianceFramework
+    """Audit criteria definition"""
+    framework: ComplianceFramework
     requirements: List[str]
     controls: List[str]
     evidence_types: List[str]
@@ -77,7 +83,8 @@ class AuditCriteria:
 
 @dataclass
 class AuditFinding:
-    """Audit finding structure"""    finding_id: str
+    """Audit finding structure"""
+    finding_id: str
     category: str
     severity: str
     description: str
@@ -90,7 +97,8 @@ class AuditFinding:
 
 @dataclass
 class ComplianceScore:
-    """Compliance scoring structure"""    framework: ComplianceFramework
+    """Compliance scoring structure"""
+    framework: ComplianceFramework
     overall_score: float
     category_scores: Dict[str, float]
     control_scores: Dict[str, float]
@@ -100,7 +108,8 @@ class ComplianceScore:
 
 @dataclass
 class AuditExecutionPlan:
-    """Audit execution plan"""    audit_id: str
+    """Audit execution plan"""
+    audit_id: str
     audit_type: AuditType
     scope: AuditScope
     frameworks: List[ComplianceFramework]
@@ -111,11 +120,13 @@ class AuditExecutionPlan:
 
 
 class ComplianceAuditSystem:
-    """    Comprehensive Compliance Audit System
+    """
+    Comprehensive Compliance Audit System
     
     Provides automated compliance auditing, assessment, reporting,
     and certification management capabilities.
-    """    
+    """
+    
     def __init__(self, 
                  db_manager: DatabaseManager,
                  cache_manager: CacheManager,
@@ -146,14 +157,16 @@ class ComplianceAuditSystem:
     
     async def schedule_compliance_audit(self, 
                                       audit_plan: AuditExecutionPlan) -> Dict[str, Any]:
-        """        Schedule comprehensive compliance audit
+        """
+        Schedule comprehensive compliance audit
         
         Args:
             audit_plan: Audit execution plan
             
         Returns:
             Dict: Audit scheduling result
-        """        try:
+        """
+        try:
             # Validate audit plan
             validation_result = await self._validate_audit_plan(audit_plan)
             
@@ -205,7 +218,8 @@ class ComplianceAuditSystem:
     async def execute_automated_audit(self, 
                                     frameworks: List[ComplianceFramework],
                                     scope: AuditScope = AuditScope.SYSTEM_WIDE) -> Dict[str, Any]:
-        """        Execute automated compliance audit
+        """
+        Execute automated compliance audit
         
         Args:
             frameworks: Compliance frameworks to audit
@@ -213,7 +227,8 @@ class ComplianceAuditSystem:
             
         Returns:
             Dict: Automated audit results
-        """        try:
+        """
+        try:
             audit_id = str(uuid.uuid4())
             audit_start = datetime.now()
             
@@ -288,7 +303,8 @@ class ComplianceAuditSystem:
     async def generate_compliance_report(self, 
                                        audit_id: str,
                                        report_type: str = "comprehensive") -> Dict[str, Any]:
-        """        Generate comprehensive compliance report
+        """
+        Generate comprehensive compliance report
         
         Args:
             audit_id: Audit identifier
@@ -296,7 +312,8 @@ class ComplianceAuditSystem:
             
         Returns:
             Dict: Report generation result
-        """        try:
+        """
+        try:
             # Get audit data
             audit_data = await self._get_audit_data(audit_id)
             
@@ -354,14 +371,16 @@ class ComplianceAuditSystem:
     
     async def track_compliance_metrics(self, 
                                      period_days: int = 30) -> Dict[str, Any]:
-        """        Track comprehensive compliance metrics over time
+        """
+        Track comprehensive compliance metrics over time
         
         Args:
             period_days: Tracking period in days
             
         Returns:
             Dict: Compliance metrics dashboard
-        """        try:
+        """
+        try:
             start_date = datetime.now() - timedelta(days=period_days)
             
             # Get audit data for period
@@ -445,14 +464,16 @@ class ComplianceAuditSystem:
     
     async def validate_compliance_evidence(self, 
                                          evidence_data: Dict[str, Any]) -> Dict[str, Any]:
-        """        Validate compliance evidence for audit purposes
+        """
+        Validate compliance evidence for audit purposes
         
         Args:
             evidence_data: Evidence data to validate
             
         Returns:
             Dict: Evidence validation result
-        """        try:
+        """
+        try:
             validation_results = {}
             overall_validity = True
             
@@ -517,7 +538,8 @@ class ComplianceAuditSystem:
             }
     
     async def _initialize_compliance_frameworks(self) -> Dict[ComplianceFramework, Dict[str, Any]]:
-        """Initialize compliance framework definitions"""        return {
+        """Initialize compliance framework definitions"""
+        return {
             ComplianceFramework.GDPR: {
                 "name": "General Data Protection Regulation",
                 "requirements": [
@@ -600,7 +622,8 @@ class ComplianceAuditSystem:
                                      framework: ComplianceFramework,
                                      criteria: Dict[str, Any],
                                      scope: AuditScope) -> Dict[str, Any]:
-        """Execute audit for specific compliance framework"""        try:
+        """Execute audit for specific compliance framework"""
+        try:
             audit_findings = []
             control_scores = {}
             evidence_collected = []
@@ -667,7 +690,8 @@ class ComplianceAuditSystem:
             }
     
     async def get_audit_status(self, audit_id: str) -> Dict[str, Any]:
-        """Get current status of compliance audit"""        try:
+        """Get current status of compliance audit"""
+        try:
             # Check active audits
             if audit_id in self.active_audits:
                 active_audit = self.active_audits[audit_id]

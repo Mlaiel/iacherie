@@ -22,7 +22,8 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - Audio Processing Specialist: Professional audio analysis and enhancement
 - DevOps Engineer: Infrastructure automation and deployment pipelines
 - AI Prompt Engineer: Advanced AI interaction and optimization systems
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import statistics
@@ -60,7 +61,8 @@ from ...utils.data_validator import DataValidator
 logger = logging.getLogger(__name__)
 
 class RevenueMetricType(Enum):
-    """Types of revenue metrics"""    TOTAL_EARNINGS = "total_earnings"
+    """Types of revenue metrics"""
+    TOTAL_EARNINGS = "total_earnings"
     AVERAGE_DAILY = "average_daily"
     AVERAGE_MONTHLY = "average_monthly"
     GROWTH_RATE = "growth_rate"
@@ -72,7 +74,8 @@ class RevenueMetricType(Enum):
     PEAK_PERFORMANCE_DAYS = "peak_performance_days"
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframes"""    REALTIME = "realtime"
+    """Analytics timeframes"""
+    REALTIME = "realtime"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -83,7 +86,8 @@ class AnalyticsTimeframe(Enum):
 
 @dataclass
 class RevenueDataPoint:
-    """Individual revenue data point"""    timestamp: datetime
+    """Individual revenue data point"""
+    timestamp: datetime
     platform: str
     revenue_stream: str
     amount: Decimal
@@ -94,7 +98,8 @@ class RevenueDataPoint:
 
 @dataclass
 class RevenueAnalytics:
-    """Comprehensive revenue analytics"""    user_id: str
+    """Comprehensive revenue analytics"""
+    user_id: str
     timeframe: AnalyticsTimeframe
     start_date: datetime
     end_date: datetime
@@ -111,7 +116,8 @@ class RevenueAnalytics:
 
 @dataclass
 class PlatformPerformance:
-    """Platform-specific performance metrics"""    platform_name: str
+    """Platform-specific performance metrics"""
+    platform_name: str
     total_revenue: Decimal
     revenue_share_percentage: float
     average_revenue_per_content: Decimal
@@ -122,7 +128,8 @@ class PlatformPerformance:
     recommendations: List[str]
 
 class RevenueTracker:
-    """    Ultra-advanced revenue tracking system that monitors earnings across
+    """
+    Ultra-advanced revenue tracking system that monitors earnings across
     all platforms and provides comprehensive analytics and insights.
     
     Features:
@@ -134,7 +141,8 @@ class RevenueTracker:
     - Geographic and demographic revenue analysis
     - Content performance correlation analysis
     - Automated reporting and insights generation
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -163,7 +171,8 @@ class RevenueTracker:
         self.background_tasks: Set[asyncio.Task] = set()
     
     async def initialize(self):
-        """Initialize the revenue tracking system"""        try:
+        """Initialize the revenue tracking system"""
+        try:
             # Initialize repositories and components
             await self.revenue_repository.initialize()
             await self.content_repository.initialize()
@@ -192,7 +201,8 @@ class RevenueTracker:
         start_date: datetime = None,
         end_date: datetime = None
     ) -> RevenueAnalytics:
-        """        Track comprehensive revenue for a user across platforms.
+        """
+        Track comprehensive revenue for a user across platforms.
         
         Args:
             user_id: User identifier
@@ -202,7 +212,8 @@ class RevenueTracker:
         
         Returns:
             RevenueAnalytics object with comprehensive metrics
-        """        if not self.is_initialized:
+        """
+        if not self.is_initialized:
             raise MonetizationError("Revenue tracker not initialized")
         
         # Set default date range if not provided
@@ -248,7 +259,8 @@ class RevenueTracker:
     
     @cache_result(ttl=180)  # Cache for 3 minutes
     async def get_realtime_revenue(self, user_id: str) -> Dict[str, Any]:
-        """Get real-time revenue data for a user"""        
+        """Get real-time revenue data for a user"""
+        
         current_time = datetime.utcnow()
         start_of_day = current_time.replace(hour=0, minute=0, second=0, microsecond=0)
         
@@ -296,7 +308,8 @@ class RevenueTracker:
         user_id: str,
         analysis_depth: str = "standard"
     ) -> Dict[str, Any]:
-        """        Analyze revenue patterns and provide insights.
+        """
+        Analyze revenue patterns and provide insights.
         
         Args:
             user_id: User identifier
@@ -304,7 +317,8 @@ class RevenueTracker:
         
         Returns:
             Dictionary with pattern analysis results
-        """        
+        """
+        
         # Get historical data
         historical_data = await self._get_user_historical_data(user_id)
         
@@ -352,7 +366,8 @@ class RevenueTracker:
         report_type: str = "monthly",
         custom_period: Tuple[datetime, datetime] = None
     ) -> Dict[str, Any]:
-        """Generate comprehensive revenue report"""        
+        """Generate comprehensive revenue report"""
+        
         # Determine report period
         if custom_period:
             start_date, end_date = custom_period
@@ -418,7 +433,8 @@ class RevenueTracker:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Collect revenue data from a specific platform"""        
+        """Collect revenue data from a specific platform"""
+        
         try:
             # Get platform API client
             api_client = self.platform_apis.get_client(platform)
@@ -477,7 +493,8 @@ class RevenueTracker:
         start_date: datetime,
         end_date: datetime
     ) -> RevenueAnalytics:
-        """Analyze collected revenue data"""        
+        """Analyze collected revenue data"""
+        
         if not data_points:
             return RevenueAnalytics(
                 user_id=user_id,
@@ -548,7 +565,8 @@ class RevenueTracker:
         )
     
     async def _start_background_tasks(self):
-        """Start background tracking and analysis tasks"""        
+        """Start background tracking and analysis tasks"""
+        
         # Real-time data collection
         task1 = asyncio.create_task(self._realtime_data_collection())
         self.background_tasks.add(task1)
@@ -566,7 +584,8 @@ class RevenueTracker:
         self.background_tasks.add(task4)
     
     async def cleanup(self):
-        """Cleanup resources and stop background tasks"""        
+        """Cleanup resources and stop background tasks"""
+        
         # Cancel all background tasks
         for task in self.background_tasks:
             task.cancel()
@@ -578,7 +597,8 @@ class RevenueTracker:
     
     # Helper methods
     async def _get_user_active_platforms(self, user_id: str) -> List[str]:
-        """Get list of active platforms for user"""        # Would query database for user's connected platforms
+        """Get list of active platforms for user"""
+        # Would query database for user's connected platforms
         return ['spotify', 'youtube', 'instagram', 'tiktok']
     
     async def _create_daily_breakdown(
@@ -587,7 +607,8 @@ class RevenueTracker:
         start_date: datetime,
         end_date: datetime
     ) -> List[Dict[str, Any]]:
-        """Create daily revenue breakdown"""        
+        """Create daily revenue breakdown"""
+        
         daily_data = defaultdict(Decimal)
         
         for dp in data_points:
@@ -609,17 +630,20 @@ class RevenueTracker:
 
 
 class PlatformAnalyzer:
-    """    Advanced platform-specific revenue analysis system.
+    """
+    Advanced platform-specific revenue analysis system.
     
     Analyzes performance patterns, optimization opportunities,
     and comparative metrics across different monetization platforms.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.is_initialized = False
         
     async def initialize(self):
-        """Initialize platform analyzer"""        self.is_initialized = True
+        """Initialize platform analyzer"""
+        self.is_initialized = True
         logger.info("Platform Analyzer initialized")
     
     async def analyze_platform_performance(
@@ -628,7 +652,8 @@ class PlatformAnalyzer:
         platform: str,
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.MONTHLY
     ) -> PlatformPerformance:
-        """Analyze performance for a specific platform"""        
+        """Analyze performance for a specific platform"""
+        
         # Implementation would analyze platform-specific metrics
         return PlatformPerformance(
             platform_name=platform,
@@ -644,16 +669,19 @@ class PlatformAnalyzer:
 
 
 class EarningsCalculator:
-    """    Advanced earnings calculation system with tax and fee considerations.
+    """
+    Advanced earnings calculation system with tax and fee considerations.
     
     Calculates net earnings after platform fees, taxes, and other deductions.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.is_initialized = False
         
     async def initialize(self):
-        """Initialize earnings calculator"""        self.is_initialized = True
+        """Initialize earnings calculator"""
+        self.is_initialized = True
         logger.info("Earnings Calculator initialized")
     
     async def calculate_net_earnings(
@@ -662,7 +690,8 @@ class EarningsCalculator:
         platform: str,
         user_location: str = "US"
     ) -> Dict[str, Any]:
-        """Calculate net earnings after all deductions"""        
+        """Calculate net earnings after all deductions"""
+        
         # Platform fees (example rates)
         platform_fees = {
             'spotify': 0.30,  # 30% to Spotify

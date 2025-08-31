@@ -10,7 +10,8 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, modification, 
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
-"""import os
+"""
+import os
 import json
 import logging
 import asyncio
@@ -39,7 +40,8 @@ settings = get_settings()
 
 
 class SimilarityMetric(Enum):
-    """Similarity calculation metrics"""    COSINE = "cosine"
+    """Similarity calculation metrics"""
+    COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     MANHATTAN = "manhattan"
     JACCARD = "jaccard"
@@ -48,7 +50,8 @@ class SimilarityMetric(Enum):
 
 
 class SearchMode(Enum):
-    """Search operation modes"""    EXACT_MATCH = "exact_match"
+    """Search operation modes"""
+    EXACT_MATCH = "exact_match"
     FUZZY_SEARCH = "fuzzy_search"
     SEMANTIC_SEARCH = "semantic_search"
     HYBRID_SEARCH = "hybrid_search"
@@ -56,7 +59,8 @@ class SearchMode(Enum):
 
 
 class RankingAlgorithm(Enum):
-    """Result ranking algorithms"""    SIMILARITY_SCORE = "similarity_score"
+    """Result ranking algorithms"""
+    SIMILARITY_SCORE = "similarity_score"
     WEIGHTED_FUSION = "weighted_fusion"
     RECIPROCAL_RANK = "reciprocal_rank"
     BAYESIAN_FUSION = "bayesian_fusion"
@@ -65,7 +69,8 @@ class RankingAlgorithm(Enum):
 
 @dataclass
 class SearchQuery:
-    """Search query configuration"""    content_type: str
+    """Search query configuration"""
+    content_type: str
     query_vector: np.ndarray
     text_query: Optional[str] = None
     metadata_filters: Optional[Dict[str, Any]] = None
@@ -80,7 +85,8 @@ class SearchQuery:
 
 @dataclass
 class SimilarityResult:
-    """Enhanced similarity search result"""    content_id: str
+    """Enhanced similarity search result"""
+    content_id: str
     fingerprint_id: int
     similarity_score: float
     confidence_score: float
@@ -94,7 +100,8 @@ class SimilarityResult:
 
 @dataclass
 class SearchExplanation:
-    """Detailed explanation of search results"""    query_analysis: Dict[str, Any]
+    """Detailed explanation of search results"""
+    query_analysis: Dict[str, Any]
     matching_strategy: str
     ranking_factors: Dict[str, float]
     similarity_breakdown: Dict[str, float]
@@ -104,7 +111,8 @@ class SearchExplanation:
 
 @dataclass
 class SearchSession:
-    """Search session for tracking and optimization"""    session_id: str
+    """Search session for tracking and optimization"""
+    session_id: str
     user_id: int
     query_history: List[SearchQuery]
     result_history: List[List[SimilarityResult]]
@@ -115,7 +123,8 @@ class SearchSession:
 
 
 class SimilaritySearchEngine:
-    """    Advanced similarity search engine for content fingerprint matching.
+    """
+    Advanced similarity search engine for content fingerprint matching.
     
     Features:
     - Multi-metric similarity calculations
@@ -124,7 +133,8 @@ class SimilaritySearchEngine:
     - Real-time search optimization
     - Detailed search explanations
     - Performance monitoring and caching
-    """    
+    """
+    
     def __init__(
         self,
         vector_store_manager: Any,
@@ -132,14 +142,16 @@ class SimilaritySearchEngine:
         enable_ml_ranking: bool = True,
         session_timeout: int = 3600
     ):
-        """        Initialize similarity search engine
+        """
+        Initialize similarity search engine
         
         Args:
             vector_store_manager: Vector store manager instance
             cache_manager: Cache manager for result caching
             enable_ml_ranking: Enable ML-based ranking
             session_timeout: Search session timeout in seconds
-        """        self.vector_store_manager = vector_store_manager
+        """
+        self.vector_store_manager = vector_store_manager
         self.cache_manager = cache_manager or CacheManager()
         self.enable_ml_ranking = enable_ml_ranking
         self.session_timeout = session_timeout
@@ -184,7 +196,8 @@ class SimilaritySearchEngine:
     async def search(
         self, query: SearchQuery, session_id: str = None, user_id: int = None
     ) -> Tuple[List[SimilarityResult], Optional[SearchExplanation]]:
-        """        Perform similarity search with advanced ranking
+        """
+        Perform similarity search with advanced ranking
         
         Args:
             query: Search query configuration
@@ -193,7 +206,8 @@ class SimilaritySearchEngine:
             
         Returns:
             Tuple of (search results, explanation)
-        """        try:
+        """
+        try:
             start_time = datetime.now()
             self.search_stats["total_searches"] += 1
             
@@ -274,7 +288,8 @@ class SimilaritySearchEngine:
     async def batch_search(
         self, queries: List[SearchQuery], session_id: str = None
     ) -> List[Tuple[List[SimilarityResult], Optional[SearchExplanation]]]:
-        """        Perform batch similarity searches with optimization
+        """
+        Perform batch similarity searches with optimization
         
         Args:
             queries: List of search queries
@@ -282,7 +297,8 @@ class SimilaritySearchEngine:
             
         Returns:
             List of search results for each query
-        """        try:
+        """
+        try:
             # Group queries by content type for optimization
             grouped_queries = {}
             for i, query in enumerate(queries):
@@ -323,7 +339,8 @@ class SimilaritySearchEngine:
         threshold: float = 0.95,
         batch_size: int = 1000
     ) -> List[Tuple[str, str, float]]:
-        """        Find potential duplicate content using similarity analysis
+        """
+        Find potential duplicate content using similarity analysis
         
         Args:
             content_type: Content type to analyze
@@ -332,7 +349,8 @@ class SimilaritySearchEngine:
             
         Returns:
             List of (content_id1, content_id2, similarity_score) tuples
-        """        try:
+        """
+        try:
             duplicates = []
             
             # Get all fingerprints for content type
@@ -391,14 +409,16 @@ class SimilaritySearchEngine:
         relevance_scores: List[float],
         user_rating: float
     ) -> None:
-        """        Update search quality based on user feedback
+        """
+        Update search quality based on user feedback
         
         Args:
             session_id: Search session ID
             query_index: Index of query in session
             relevance_scores: Relevance scores for each result
             user_rating: Overall user rating (0-1)
-        """        try:
+        """
+        try:
             if session_id not in self.active_sessions:
                 logger.warning(f"Session {session_id} not found for feedback")
                 return
@@ -442,7 +462,8 @@ class SimilaritySearchEngine:
     async def get_search_analytics(
         self, content_type: str = None, time_range: Tuple[datetime, datetime] = None
     ) -> Dict[str, Any]:
-        """        Get search analytics and performance metrics
+        """
+        Get search analytics and performance metrics
         
         Args:
             content_type: Filter by content type
@@ -450,7 +471,8 @@ class SimilaritySearchEngine:
             
         Returns:
             Analytics data
-        """        try:
+        """
+        try:
             analytics = {
                 "global_metrics": self.search_stats.copy(),
                 "session_metrics": {},
@@ -520,7 +542,8 @@ class SimilaritySearchEngine:
             return {}
     
     async def _preprocess_query(self, query: SearchQuery) -> SearchQuery:
-        """Preprocess and validate search query"""        # Validate vector dimension
+        """Preprocess and validate search query"""
+        # Validate vector dimension
         if query.query_vector is not None:
             expected_dim = settings.VECTOR_DIMENSION
             if len(query.query_vector) != expected_dim:
@@ -549,7 +572,8 @@ class SimilaritySearchEngine:
     async def _execute_search(
         self, query: SearchQuery, session: Optional[SearchSession]
     ) -> List[Any]:
-        """Execute search across vector stores"""        # Choose search strategy based on mode
+        """Execute search across vector stores"""
+        # Choose search strategy based on mode
         if query.search_mode == SearchMode.EXACT_MATCH:
             search_strategy = "single_store"
         elif query.search_mode == SearchMode.SEMANTIC_SEARCH:
@@ -596,7 +620,8 @@ class SimilaritySearchEngine:
     async def _calculate_similarities(
         self, results: List[Any], query: SearchQuery
     ) -> List[SimilarityResult]:
-        """Calculate similarities using multiple metrics"""        enhanced_results = []
+        """Calculate similarities using multiple metrics"""
+        enhanced_results = []
         
         for result in results:
             # Get vector for similarity calculation
@@ -635,7 +660,8 @@ class SimilaritySearchEngine:
         query: SearchQuery,
         session: Optional[SearchSession]
     ) -> List[SimilarityResult]:
-        """Apply ranking algorithm to results"""        if query.ranking_algorithm == RankingAlgorithm.SIMILARITY_SCORE:
+        """Apply ranking algorithm to results"""
+        if query.ranking_algorithm == RankingAlgorithm.SIMILARITY_SCORE:
             # Simple similarity-based ranking
             results.sort(key=lambda x: x.similarity_score, reverse=True)
         
@@ -667,7 +693,8 @@ class SimilaritySearchEngine:
     async def _post_process_results(
         self, results: List[SimilarityResult], query: SearchQuery
     ) -> List[SimilarityResult]:
-        """Apply post-processing filters and enhancements"""        # Apply boost factors
+        """Apply post-processing filters and enhancements"""
+        # Apply boost factors
         if query.boost_factors:
             for result in results:
                 for factor, boost in query.boost_factors.items():
@@ -700,7 +727,8 @@ class SimilaritySearchEngine:
         final_results: List[SimilarityResult],
         raw_results: List[Any]
     ) -> SearchExplanation:
-        """Generate detailed search explanation"""        return SearchExplanation(
+        """Generate detailed search explanation"""
+        return SearchExplanation(
             query_analysis={
                 "content_type": query.content_type,
                 "vector_dimension": len(query.query_vector) if query.query_vector is not None else 0,
@@ -736,7 +764,8 @@ class SimilaritySearchEngine:
     def _get_or_create_session(
         self, session_id: str, user_id: int
     ) -> Optional[SearchSession]:
-        """Get existing session or create new one"""        if not session_id:
+        """Get existing session or create new one"""
+        if not session_id:
             return None
         
         if session_id in self.active_sessions:
@@ -763,7 +792,8 @@ class SimilaritySearchEngine:
         return session
     
     def _generate_cache_key(self, query: SearchQuery) -> str:
-        """Generate cache key for query"""        import hashlib
+        """Generate cache key for query"""
+        import hashlib
         
         key_data = {
             "content_type": query.content_type,
@@ -780,7 +810,8 @@ class SimilaritySearchEngine:
         return hashlib.md5(key_str.encode()).hexdigest()
     
     async def _get_result_vector(self, result: Any) -> Optional[np.ndarray]:
-        """Get vector embedding for result"""        try:
+        """Get vector embedding for result"""
+        try:
             # Get from database
             async with get_db_session() as session:
                 stmt = select(ContentFingerprint).where(
@@ -799,7 +830,8 @@ class SimilaritySearchEngine:
             return None
     
     def _calculate_confidence(self, result: Any, query: SearchQuery) -> float:
-        """Calculate confidence score for result"""        confidence = 0.8  # Base confidence
+        """Calculate confidence score for result"""
+        confidence = 0.8  # Base confidence
         
         # Adjust based on metadata completeness
         if hasattr(result, 'metadata') and result.metadata:
@@ -816,7 +848,8 @@ class SimilaritySearchEngine:
         return min(confidence, 1.0)
     
     def _extract_ranking_features(self, result: Any, query: SearchQuery) -> Dict[str, float]:
-        """Extract features for ranking algorithms"""        features = {
+        """Extract features for ranking algorithms"""
+        features = {
             "similarity_score": getattr(result, 'similarity_score', 0.0),
             "confidence_score": getattr(result, 'confidence_score', 0.0),
             "metadata_completeness": len(getattr(result, 'metadata', {})) / 10.0,
@@ -837,7 +870,8 @@ class SimilaritySearchEngine:
         return features
     
     def _initialize_content_configs(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize content type specific configurations"""        return {
+        """Initialize content type specific configurations"""
+        return {
             "audio": {
                 "default_threshold": 0.85,
                 "boost_factors": {
@@ -878,18 +912,22 @@ class SimilaritySearchEngine:
     
     # Similarity calculation methods
     def _cosine_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Calculate cosine similarity"""        return float(cosine_similarity(vec1.reshape(1, -1), vec2.reshape(1, -1))[0, 0])
+        """Calculate cosine similarity"""
+        return float(cosine_similarity(vec1.reshape(1, -1), vec2.reshape(1, -1))[0, 0])
     
     def _euclidean_distance(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Calculate normalized euclidean distance (converted to similarity)"""        dist = euclidean_distances(vec1.reshape(1, -1), vec2.reshape(1, -1))[0, 0]
+        """Calculate normalized euclidean distance (converted to similarity)"""
+        dist = euclidean_distances(vec1.reshape(1, -1), vec2.reshape(1, -1))[0, 0]
         return 1.0 / (1.0 + dist)  # Convert distance to similarity
     
     def _manhattan_distance(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Calculate normalized Manhattan distance (converted to similarity)"""        dist = distance.cityblock(vec1, vec2)
+        """Calculate normalized Manhattan distance (converted to similarity)"""
+        dist = distance.cityblock(vec1, vec2)
         return 1.0 / (1.0 + dist)
     
     def _jaccard_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Calculate Jaccard similarity (for binary vectors)"""        # Convert to binary
+        """Calculate Jaccard similarity (for binary vectors)"""
+        # Convert to binary
         bin1 = (vec1 > 0.5).astype(int)
         bin2 = (vec2 > 0.5).astype(int)
         
@@ -899,7 +937,8 @@ class SimilaritySearchEngine:
         return intersection / max(union, 1)
     
     def _hamming_distance(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Calculate normalized Hamming distance (converted to similarity)"""        # Convert to binary
+        """Calculate normalized Hamming distance (converted to similarity)"""
+        # Convert to binary
         bin1 = (vec1 > 0.5).astype(int)
         bin2 = (vec2 > 0.5).astype(int)
         
@@ -907,11 +946,13 @@ class SimilaritySearchEngine:
         return 1.0 - dist  # Convert distance to similarity
     
     def _pearson_correlation(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Calculate Pearson correlation coefficient"""        correlation = np.corrcoef(vec1, vec2)[0, 1]
+        """Calculate Pearson correlation coefficient"""
+        correlation = np.corrcoef(vec1, vec2)[0, 1]
         return (correlation + 1.0) / 2.0  # Normalize to 0-1 range
     
     def _update_performance_metrics(self, response_time: float, result_count: int) -> None:
-        """Update search performance metrics"""        # Update average response time
+        """Update search performance metrics"""
+        # Update average response time
         total_searches = self.search_stats["total_searches"]
         current_avg = self.search_stats["avg_response_time"]
         new_avg = ((current_avg * (total_searches - 1)) + response_time) / total_searches
@@ -922,7 +963,8 @@ class SimilaritySearchEngine:
             self.search_stats["accuracy_scores"].append(0.8)  # Placeholder
     
     async def close(self) -> None:
-        """Close search engine and cleanup resources"""        try:
+        """Close search engine and cleanup resources"""
+        try:
             # Clear active sessions
             self.active_sessions.clear()
             

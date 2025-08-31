@@ -7,7 +7,8 @@ brand partnerships, and collaborative content creation workflows.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
-"""from typing import Dict, Any, List, Optional, Union
+"""
+from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
@@ -25,7 +26,8 @@ from .exceptions import WorkflowException, PipelineException
 
 
 class CollaborationStatus(Enum):
-    """Collaboration workflow status."""    PENDING = "pending"
+    """Collaboration workflow status."""
+    PENDING = "pending"
     PROPOSAL_SENT = "proposal_sent"
     NEGOTIATING = "negotiating"
     ACCEPTED = "accepted"
@@ -36,7 +38,8 @@ class CollaborationStatus(Enum):
 
 
 class PartnerType(Enum):
-    """Types of collaboration partners."""    INFLUENCER = "influencer"
+    """Types of collaboration partners."""
+    INFLUENCER = "influencer"
     BRAND = "brand"
     CONTENT_CREATOR = "content_creator"
     MUSIC_ARTIST = "music_artist"
@@ -47,7 +50,8 @@ class PartnerType(Enum):
 
 
 class CampaignType(Enum):
-    """Types of collaboration campaigns."""    CROSS_PROMOTION = "cross_promotion"
+    """Types of collaboration campaigns."""
+    CROSS_PROMOTION = "cross_promotion"
     BRAND_SPONSORSHIP = "brand_sponsorship"
     PRODUCT_PLACEMENT = "product_placement"
     CONTENT_EXCHANGE = "content_exchange"
@@ -58,7 +62,8 @@ class CampaignType(Enum):
 
 
 class CollaborationTier(Enum):
-    """Collaboration partnership tiers."""    BRONZE = "bronze"
+    """Collaboration partnership tiers."""
+    BRONZE = "bronze"
     SILVER = "silver"
     GOLD = "gold"
     PLATINUM = "platinum"
@@ -67,7 +72,8 @@ class CollaborationTier(Enum):
 
 @dataclass
 class CollaborationProposal:
-    """Represents a collaboration proposal."""    proposal_id: str
+    """Represents a collaboration proposal."""
+    proposal_id: str
     creator_id: str
     partner_id: str
     campaign_type: CampaignType
@@ -85,7 +91,8 @@ class CollaborationProposal:
 
 @dataclass
 class ActiveCollaboration:
-    """Represents an active collaboration."""    collaboration_id: str
+    """Represents an active collaboration."""
+    collaboration_id: str
     proposal: CollaborationProposal
     status: CollaborationStatus
     contract_data: Dict[str, Any] = field(default_factory=dict)
@@ -97,7 +104,8 @@ class ActiveCollaboration:
 
 
 class CollaborationWorkflow:
-    """Workflow system for content collaboration management."""    
+    """Workflow system for content collaboration management."""
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger("workflow.collaboration")
@@ -121,7 +129,8 @@ class CollaborationWorkflow:
         collaboration_request: Dict[str, Any],
         pipeline_config: Dict[str, Any] = None
     ) -> IntelligentContentPipeline:
-        """Create comprehensive collaboration workflow pipeline."""        pipeline_config = pipeline_config or {}
+        """Create comprehensive collaboration workflow pipeline."""
+        pipeline_config = pipeline_config or {}
         pipeline_id = f"collab_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
         pipeline = IntelligentContentPipeline(
@@ -150,7 +159,8 @@ class CollaborationWorkflow:
         pipeline: IntelligentContentPipeline,
         collaboration_request: Dict[str, Any]
     ):
-        """Add collaboration workflow steps."""        
+        """Add collaboration workflow steps."""
+        
         # Step 1: Partner discovery and matching
         partner_matching_step = PipelineStep(
             name="partner_matching",
@@ -316,7 +326,8 @@ class CollaborationWorkflow:
         pipeline.add_step(collaboration_reporting_step)
     
     async def _discover_and_match_partners(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Discover and match potential collaboration partners."""        collaboration_request = context.get("collaboration_request", {})
+        """Discover and match potential collaboration partners."""
+        collaboration_request = context.get("collaboration_request", {})
         matching_criteria = metadata.get("matching_criteria", {})
         preferred_partner_types = metadata.get("preferred_partner_types", [])
         
@@ -372,7 +383,8 @@ class CollaborationWorkflow:
             }
     
     async def _analyze_collaboration_opportunities(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze collaboration opportunities with matched partners."""        partner_matching_result = context.get("partner_matching_result")
+        """Analyze collaboration opportunities with matched partners."""
+        partner_matching_result = context.get("partner_matching_result")
         analysis_depth = metadata.get("analysis_depth", "comprehensive")
         roi_requirements = metadata.get("roi_requirements", {})
         
@@ -412,7 +424,8 @@ class CollaborationWorkflow:
         }
     
     async def _generate_smart_proposals(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate smart collaboration proposals."""        opportunity_result = context.get("opportunity_analysis_result")
+        """Generate smart collaboration proposals."""
+        opportunity_result = context.get("opportunity_analysis_result")
         proposal_templates = metadata.get("proposal_templates", [])
         customization_level = metadata.get("customization_level", "high")
         
@@ -446,7 +459,8 @@ class CollaborationWorkflow:
         }
     
     async def _develop_campaign_strategies(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Develop comprehensive campaign strategies."""        if self.enable_smart_proposals:
+        """Develop comprehensive campaign strategies."""
+        if self.enable_smart_proposals:
             proposal_result = context.get("proposal_generation_result")
             generated_proposals = proposal_result.get("generated_proposals", []) if proposal_result else []
         else:
@@ -489,7 +503,8 @@ class CollaborationWorkflow:
         }
     
     async def _manage_contracts_and_agreements(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Manage contracts and agreements for collaborations."""        strategy_result = context.get("campaign_strategy_result")
+        """Manage contracts and agreements for collaborations."""
+        strategy_result = context.get("campaign_strategy_result")
         contract_templates = metadata.get("contract_templates", [])
         legal_requirements = metadata.get("legal_requirements", {})
         
@@ -530,7 +545,8 @@ class CollaborationWorkflow:
         }
     
     async def _setup_cross_platform_promotion(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup cross-platform promotion campaigns."""        contract_result = context.get("contract_management_result")
+        """Setup cross-platform promotion campaigns."""
+        contract_result = context.get("contract_management_result")
         promotion_platforms = metadata.get("promotion_platforms", [])
         promotion_schedule = metadata.get("promotion_schedule", {})
         
@@ -575,7 +591,8 @@ class CollaborationWorkflow:
         }
     
     async def _setup_collaboration_tracking(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup collaboration tracking and analytics."""        if self.enable_cross_platform_promotion:
+        """Setup collaboration tracking and analytics."""
+        if self.enable_cross_platform_promotion:
             promotion_result = context.get("cross_platform_setup_result")
             cross_platform_setups = promotion_result.get("cross_platform_setups", []) if promotion_result else []
         else:
@@ -625,7 +642,8 @@ class CollaborationWorkflow:
         }
     
     async def _setup_milestone_management(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup automated milestone management."""        tracking_result = context.get("collaboration_tracking_result")
+        """Setup automated milestone management."""
+        tracking_result = context.get("collaboration_tracking_result")
         milestone_templates = metadata.get("milestone_templates", [])
         automated_reminders = metadata.get("automated_reminders", True)
         
@@ -668,7 +686,8 @@ class CollaborationWorkflow:
         }
     
     async def _setup_communication_automation(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup communication automation for collaborations."""        milestone_result = context.get("milestone_management_result")
+        """Setup communication automation for collaborations."""
+        milestone_result = context.get("milestone_management_result")
         communication_templates = metadata.get("communication_templates", [])
         automation_rules = metadata.get("automation_rules", {})
         
@@ -714,7 +733,8 @@ class CollaborationWorkflow:
         }
     
     async def _generate_collaboration_reports(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate collaboration reports and insights."""        communication_result = context.get("communication_automation_result")
+        """Generate collaboration reports and insights."""
+        communication_result = context.get("communication_automation_result")
         report_types = metadata.get("report_types", ["summary", "analytics"])
         stakeholder_list = metadata.get("stakeholder_list", [])
         
@@ -755,7 +775,8 @@ class CollaborationWorkflow:
         matching_criteria: Dict[str, Any],
         preferred_partner_types: List[str]
     ) -> List[Dict[str, Any]]:
-        """Discover potential collaboration partners."""        # Simplified partner discovery
+        """Discover potential collaboration partners."""
+        # Simplified partner discovery
         potential_partners = []
         
         # Generate sample partners
@@ -781,7 +802,8 @@ class CollaborationWorkflow:
         partner: Dict[str, Any],
         matching_criteria: Dict[str, Any]
     ) -> float:
-        """Calculate compatibility score with potential partner."""        # Simplified compatibility calculation
+        """Calculate compatibility score with potential partner."""
+        # Simplified compatibility calculation
         base_score = 0.5
         
         # Adjust score based on partner metrics
@@ -797,7 +819,8 @@ class CollaborationWorkflow:
         creator_id: str,
         partner: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Assess collaboration potential with partner."""        return {
+        """Assess collaboration potential with partner."""
+        return {
             "revenue_potential": Decimal("500.00") * (partner.get("rating", 4.0) / 4.0),
             "reach_potential": partner.get("audience_size", 10000),
             "engagement_potential": partner.get("engagement_rate", 0.03),
@@ -810,7 +833,8 @@ class CollaborationWorkflow:
         analysis_depth: str,
         roi_requirements: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Analyze opportunities with a specific partner."""        opportunities = []
+        """Analyze opportunities with a specific partner."""
+        opportunities = []
         partner_data = partner_match.get("partner_data", {})
         
         # Generate opportunities based on partner type
@@ -846,7 +870,8 @@ class CollaborationWorkflow:
         proposal_templates: List[str],
         customization_level: str
     ) -> CollaborationProposal:
-        """Generate proposal for collaboration opportunity."""        return CollaborationProposal(
+        """Generate proposal for collaboration opportunity."""
+        return CollaborationProposal(
             proposal_id=str(uuid.uuid4()),
             creator_id="creator_123",  # Would come from context
             partner_id=opportunity.get("partner_id"),
@@ -869,7 +894,8 @@ class CollaborationWorkflow:
         strategy_goals: List[str],
         target_platforms: List[str]
     ) -> Dict[str, Any]:
-        """Develop strategy for a single campaign."""        if isinstance(item, CollaborationProposal):
+        """Develop strategy for a single campaign."""
+        if isinstance(item, CollaborationProposal):
             item_id = item.proposal_id
             budget = item.proposed_budget
         else:
@@ -902,7 +928,8 @@ class CollaborationWorkflow:
         contract_templates: List[str],
         legal_requirements: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate contract for collaboration."""        return {
+        """Generate contract for collaboration."""
+        return {
             "contract_id": str(uuid.uuid4()),
             "strategy_id": strategy.get("strategy_id"),
             "contract_status": "generated",
@@ -928,7 +955,8 @@ class CollaborationWorkflow:
         promotion_platforms: List[str],
         promotion_schedule: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Setup cross-platform promotion for collaboration."""        return {
+        """Setup cross-platform promotion for collaboration."""
+        return {
             "promotion_id": str(uuid.uuid4()),
             "contract_id": contract.get("contract_id"),
             "promotion_status": "configured",
@@ -951,7 +979,8 @@ class CollaborationWorkflow:
         tracking_metrics: List[str],
         reporting_frequency: str
     ) -> Dict[str, Any]:
-        """Setup tracking for single collaboration."""        return {
+        """Setup tracking for single collaboration."""
+        return {
             "tracking_id": str(uuid.uuid4()),
             "collaboration_id": item.get("contract_id") or item.get("promotion_id"),
             "tracking_status": "active",
@@ -973,7 +1002,8 @@ class CollaborationWorkflow:
         milestone_templates: List[str],
         automated_reminders: bool
     ) -> Dict[str, Any]:
-        """Setup milestone management for collaboration."""        return {
+        """Setup milestone management for collaboration."""
+        return {
             "milestone_setup_id": str(uuid.uuid4()),
             "collaboration_id": tracking_setup.get("collaboration_id"),
             "milestone_status": "configured",
@@ -1010,7 +1040,8 @@ class CollaborationWorkflow:
         communication_templates: List[str],
         automation_rules: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Setup communication automation for collaboration."""        return {
+        """Setup communication automation for collaboration."""
+        return {
             "communication_setup_id": str(uuid.uuid4()),
             "collaboration_id": milestone_setup.get("collaboration_id"),
             "communication_status": "configured",
@@ -1039,7 +1070,8 @@ class CollaborationWorkflow:
         collaboration_data: Dict[str, Any],
         stakeholder_list: List[str]
     ) -> Dict[str, Any]:
-        """Generate single collaboration report."""        return {
+        """Generate single collaboration report."""
+        return {
             "report_id": str(uuid.uuid4()),
             "report_type": report_type,
             "generated_at": datetime.utcnow().isoformat(),
@@ -1050,7 +1082,8 @@ class CollaborationWorkflow:
         }
     
     def _get_top_partner_types(self, partner_matches: List[Dict[str, Any]]) -> List[str]:
-        """Get top partner types from matches."""        type_counts = {}
+        """Get top partner types from matches."""
+        type_counts = {}
         for match in partner_matches:
             partner_type = match.get("partner_data", {}).get("partner_type", "unknown")
             type_counts[partner_type] = type_counts.get(partner_type, 0) + 1
@@ -1058,14 +1091,16 @@ class CollaborationWorkflow:
         return sorted(type_counts.keys(), key=lambda x: type_counts[x], reverse=True)[:3]
     
     def _calculate_average_roi(self, opportunities: List[Dict[str, Any]]) -> float:
-        """Calculate average ROI from opportunities."""        if not opportunities:
+        """Calculate average ROI from opportunities."""
+        if not opportunities:
             return 0.0
         
         total_roi = sum([o.get("projected_roi", 0) for o in opportunities])
         return total_roi / len(opportunities)
     
     def _compile_collaboration_data(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Compile comprehensive collaboration data."""        return {
+        """Compile comprehensive collaboration data."""
+        return {
             "pipeline_id": context.get("pipeline_id"),
             "execution_time": datetime.utcnow().isoformat(),
             "summary": {
@@ -1089,7 +1124,8 @@ class CollaborationWorkflow:
         }
     
     def _calculate_collaboration_success_rate(self, context: Dict[str, Any]) -> float:
-        """Calculate collaboration pipeline success rate."""        partner_matches = context.get("partner_matching_result", {}).get("total_matches", 0)
+        """Calculate collaboration pipeline success rate."""
+        partner_matches = context.get("partner_matching_result", {}).get("total_matches", 0)
         if partner_matches == 0:
             return 0.0
         

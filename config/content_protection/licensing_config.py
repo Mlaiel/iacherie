@@ -13,7 +13,8 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""from typing import Dict, Any, List, Optional, Set, Tuple, Union
+"""
+from typing import Dict, Any, List, Optional, Set, Tuple, Union
 from dataclasses import dataclass, field
 from enum import Enum
 import os
@@ -22,7 +23,8 @@ from decimal import Decimal
 
 
 class LicenseType(str, Enum):
-    """Types of content licenses."""    EXCLUSIVE = "exclusive"
+    """Types of content licenses."""
+    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     ROYALTY_FREE = "royalty_free"
     RIGHTS_MANAGED = "rights_managed"
@@ -32,7 +34,8 @@ class LicenseType(str, Enum):
 
 
 class UsageType(str, Enum):
-    """Types of content usage."""    COMMERCIAL = "commercial"
+    """Types of content usage."""
+    COMMERCIAL = "commercial"
     EDITORIAL = "editorial"
     EDUCATIONAL = "educational"
     PERSONAL = "personal"
@@ -45,7 +48,8 @@ class UsageType(str, Enum):
 
 
 class LicenseStatus(str, Enum):
-    """Status of license agreements."""    DRAFT = "draft"
+    """Status of license agreements."""
+    DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
     SUSPENDED = "suspended"
@@ -56,7 +60,8 @@ class LicenseStatus(str, Enum):
 
 
 class PricingModel(str, Enum):
-    """Pricing models for licenses."""    FLAT_FEE = "flat_fee"
+    """Pricing models for licenses."""
+    FLAT_FEE = "flat_fee"
     ROYALTY_PERCENTAGE = "royalty_percentage"
     REVENUE_SHARE = "revenue_share"
     SUBSCRIPTION = "subscription"
@@ -66,7 +71,8 @@ class PricingModel(str, Enum):
 
 
 class Territory(str, Enum):
-    """Territorial coverage for licenses."""    WORLDWIDE = "worldwide"
+    """Territorial coverage for licenses."""
+    WORLDWIDE = "worldwide"
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
     ASIA_PACIFIC = "asia_pacific"
@@ -77,7 +83,8 @@ class Territory(str, Enum):
 
 @dataclass
 class LicenseTerms:
-    """License terms and conditions."""    license_type: LicenseType
+    """License terms and conditions."""
+    license_type: LicenseType
     usage_types: List[UsageType]
     territory: Territory
     duration_months: Optional[int] = None  # None = perpetual
@@ -96,7 +103,8 @@ class LicenseTerms:
 
 @dataclass
 class PricingStructure:
-    """Pricing structure for licenses."""    pricing_model: PricingModel
+    """Pricing structure for licenses."""
+    pricing_model: PricingModel
     base_price: Decimal = Decimal('0.00')
     currency: str = "USD"
     royalty_percentage: Optional[float] = None
@@ -113,7 +121,8 @@ class PricingStructure:
 
 @dataclass
 class AutomatedNegotiationConfig:
-    """Configuration for automated license negotiations."""    enable_auto_negotiation: bool = True
+    """Configuration for automated license negotiations."""
+    enable_auto_negotiation: bool = True
     min_acceptable_price: Decimal = Decimal('1.00')
     max_discount_percentage: float = 20.0
     negotiation_rounds_limit: int = 5
@@ -130,7 +139,8 @@ class AutomatedNegotiationConfig:
 
 @dataclass
 class RoyaltyTrackingConfig:
-    """Configuration for royalty tracking and distribution."""    enable_royalty_tracking: bool = True
+    """Configuration for royalty tracking and distribution."""
+    enable_royalty_tracking: bool = True
     tracking_granularity: str = "transaction"  # transaction, daily, monthly
     real_time_tracking: bool = True
     automated_reporting: bool = True
@@ -148,7 +158,8 @@ class RoyaltyTrackingConfig:
 
 @dataclass
 class ComplianceConfig:
-    """Legal compliance configuration for licensing."""    jurisdiction: str = "EU"
+    """Legal compliance configuration for licensing."""
+    jurisdiction: str = "EU"
     regulatory_compliance: List[str] = field(default_factory=lambda: [
         "GDPR", "DMCA", "EU_Copyright_Directive"
     ])
@@ -166,7 +177,8 @@ class ComplianceConfig:
 
 @dataclass
 class IntegrationConfig:
-    """Integration configuration with external systems."""    enable_crm_integration: bool = True
+    """Integration configuration with external systems."""
+    enable_crm_integration: bool = True
     crm_system: str = "salesforce"
     enable_accounting_integration: bool = True
     accounting_system: str = "quickbooks"
@@ -186,9 +198,11 @@ class IntegrationConfig:
 
 
 class LicensingConfig:
-    """    Professional licensing configuration manager.
+    """
+    Professional licensing configuration manager.
     Provides industrial-grade configuration for automated content licensing.
-    """    
+    """
+    
     def __init__(self):
         # General licensing settings
         self.enable_licensing_system: bool = True
@@ -225,7 +239,8 @@ class LicensingConfig:
         self._load_from_environment()
     
     def _initialize_license_templates(self) -> None:
-        """Initialize default license templates."""        # Standard non-exclusive license
+        """Initialize default license templates."""
+        # Standard non-exclusive license
         self.license_templates["standard_non_exclusive"] = {
             "license_type": LicenseType.NON_EXCLUSIVE,
             "usage_types": [UsageType.COMMERCIAL, UsageType.STREAMING],
@@ -266,7 +281,8 @@ class LicensingConfig:
         }
     
     def _initialize_pricing_templates(self) -> None:
-        """Initialize default pricing templates."""        # Standard royalty pricing
+        """Initialize default pricing templates."""
+        # Standard royalty pricing
         self.pricing_templates["standard_royalty"] = PricingStructure(
             pricing_model=PricingModel.ROYALTY_PERCENTAGE,
             base_price=Decimal('0.00'),
@@ -295,7 +311,8 @@ class LicensingConfig:
         )
     
     def _initialize_content_rules(self) -> None:
-        """Initialize content-specific licensing rules."""        # Music content rules
+        """Initialize content-specific licensing rules."""
+        # Music content rules
         self.content_category_rules["music"] = {
             "default_license_type": LicenseType.RIGHTS_MANAGED,
             "allowed_usage_types": [
@@ -335,7 +352,8 @@ class LicensingConfig:
         }
     
     def _load_from_environment(self) -> None:
-        """Load configuration from environment variables."""        # General settings
+        """Load configuration from environment variables."""
+        # General settings
         self.enable_licensing_system = os.getenv("LICENSING_ENABLED", "true").lower() == "true"
         self.auto_licensing_enabled = os.getenv("LICENSING_AUTO_ENABLED", "true").lower() == "true"
         self.manual_approval_required = os.getenv("LICENSING_MANUAL_APPROVAL", "true").lower() == "true"
@@ -371,7 +389,8 @@ class LicensingConfig:
         self.integration.accounting_system = os.getenv("LICENSING_ACCOUNTING_SYSTEM", "quickbooks")
     
     def create_license_terms(self, template_name: str, **overrides) -> LicenseTerms:
-        """Create license terms from template with optional overrides."""        if template_name not in self.license_templates:
+        """Create license terms from template with optional overrides."""
+        if template_name not in self.license_templates:
             raise ValueError(f"License template not found: {template_name}")
         
         template = self.license_templates[template_name].copy()
@@ -380,7 +399,8 @@ class LicensingConfig:
         return LicenseTerms(**template)
     
     def create_pricing_structure(self, template_name: str, **overrides) -> PricingStructure:
-        """Create pricing structure from template with optional overrides."""        if template_name not in self.pricing_templates:
+        """Create pricing structure from template with optional overrides."""
+        if template_name not in self.pricing_templates:
             raise ValueError(f"Pricing template not found: {template_name}")
         
         template = self.pricing_templates[template_name]
@@ -390,7 +410,8 @@ class LicensingConfig:
         return PricingStructure(**pricing_dict)
     
     def get_content_rules(self, content_category: str) -> Dict[str, Any]:
-        """Get licensing rules for specific content category."""        return self.content_category_rules.get(content_category, {
+        """Get licensing rules for specific content category."""
+        return self.content_category_rules.get(content_category, {
             "default_license_type": self.default_license_type,
             "allowed_usage_types": [UsageType.COMMERCIAL],
             "min_price": Decimal('10.00'),
@@ -400,7 +421,8 @@ class LicensingConfig:
         })
     
     def should_auto_approve(self, license_value: Decimal, content_category: str) -> bool:
-        """Determine if license should be automatically approved."""        if not self.auto_licensing_enabled:
+        """Determine if license should be automatically approved."""
+        if not self.auto_licensing_enabled:
             return False
         
         content_rules = self.get_content_rules(content_category)
@@ -413,7 +435,8 @@ class LicensingConfig:
     
     def calculate_license_price(self, content_category: str, usage_types: List[UsageType],
                               territory: Territory, duration_months: Optional[int] = None) -> Decimal:
-        """Calculate license price based on parameters."""        content_rules = self.get_content_rules(content_category)
+        """Calculate license price based on parameters."""
+        content_rules = self.get_content_rules(content_category)
         base_price = content_rules.get("min_price", Decimal('10.00'))
         
         # Usage type multipliers
@@ -461,7 +484,8 @@ class LicensingConfig:
     
     def generate_counter_offer(self, original_price: Decimal, 
                              current_round: int) -> Decimal:
-        """Generate counter offer in automated negotiation."""        strategy = self.automated_negotiation.counter_offer_strategy
+        """Generate counter offer in automated negotiation."""
+        strategy = self.automated_negotiation.counter_offer_strategy
         max_discount = self.automated_negotiation.max_discount_percentage / 100
         max_rounds = self.automated_negotiation.negotiation_rounds_limit
         
@@ -478,7 +502,8 @@ class LicensingConfig:
         return counter_price.quantize(Decimal('0.01'))
     
     def validate_license_terms(self, terms: LicenseTerms) -> List[str]:
-        """Validate license terms and return any issues."""        issues = []
+        """Validate license terms and return any issues."""
+        issues = []
         
         # Validate dates
         if terms.end_date and terms.end_date <= terms.start_date:
@@ -504,7 +529,8 @@ class LicensingConfig:
         return issues
     
     def validate_pricing_structure(self, pricing: PricingStructure) -> List[str]:
-        """Validate pricing structure and return any issues."""        issues = []
+        """Validate pricing structure and return any issues."""
+        issues = []
         
         # Validate base price
         if pricing.base_price < 0:
@@ -532,7 +558,8 @@ class LicensingConfig:
         return issues
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary."""        return {
+        """Convert configuration to dictionary."""
+        return {
             "enable_licensing_system": self.enable_licensing_system,
             "auto_licensing_enabled": self.auto_licensing_enabled,
             "manual_approval_required": self.manual_approval_required,
@@ -556,7 +583,8 @@ class LicensingConfig:
     
     @classmethod
     def from_dict(cls, config_dict: Dict[str, Any]) -> 'LicensingConfig':
-        """Create configuration from dictionary."""        config = cls()
+        """Create configuration from dictionary."""
+        config = cls()
         
         # Load basic settings
         basic_fields = [

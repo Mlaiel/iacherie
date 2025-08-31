@@ -6,7 +6,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Version: 3.0.0
 
 ⚠️ LEGAL WARNING: Unauthorized use prohibited. See __init__.py for full notice.
-"""from typing import Dict, Any, List, Optional, Callable, AsyncGenerator
+"""
+from typing import Dict, Any, List, Optional, Callable, AsyncGenerator
 from datetime import datetime, timezone
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 
 class StreamPosition(Enum):
-    """Stream reading positions"""    BEGINNING = "beginning"
+    """Stream reading positions"""
+    BEGINNING = "beginning"
     LATEST = "latest"
     TIMESTAMP = "timestamp"
     OFFSET = "offset"
@@ -34,7 +36,8 @@ class StreamPosition(Enum):
 
 @dataclass
 class StreamMessage:
-    """Message in an event stream"""    
+    """Message in an event stream"""
+    
     message_id: str
     stream_name: str
     event_type: str
@@ -54,7 +57,8 @@ class StreamMessage:
 
 @dataclass
 class StreamConsumerConfig:
-    """Configuration for stream consumers"""    
+    """Configuration for stream consumers"""
+    
     consumer_group: str
     consumer_name: str
     max_batch_size: int = 100
@@ -66,7 +70,8 @@ class StreamConsumerConfig:
 
 
 class StreamProducer:
-    """High-performance stream producer"""    
+    """High-performance stream producer"""
+    
     def __init__(self, redis_manager: RedisManager, 
                  metrics_collector: MetricsCollector):
         self.redis = redis_manager
@@ -78,19 +83,22 @@ class StreamProducer:
         self._shutdown_event = Event()
     
     async def start(self):
-        """Start the producer"""        if self._producer_task is None:
+        """Start the producer"""
+        if self._producer_task is None:
             self._producer_task = create_task(self._producer_loop())
             logger.info("Stream producer started")
     
     async def stop(self):
-        """Stop the producer gracefully"""        self._shutdown_event.set()
+        """Stop the producer gracefully"""
+        self._shutdown_event.set()
         if self._producer_task:
             await self._producer_task
             self._producer_task = None
         logger.info("Stream producer stopped")
     
     async def send(self, stream_name: str, message: StreamMessage) -> str:
-        """Send a message to a stream"""        try:
+        """Send a message to a stream"""
+        try:
             await self._buffer.put({"stream_name": stream_name, "message": message})
             self.metrics.increment_counter("stream_messages_sent")
             return message.message_id
@@ -101,7 +109,8 @@ class StreamProducer:
             raise EventStreamingError(f"Failed to send message: {str(e)}")
     
     async def _producer_loop(self):
-        """Main producer loop for batching and sending messages"""        batch = []
+        """Main producer loop for batching and sending messages"""
+        batch = []
         last_flush = datetime.now()
         
         while not self._shutdown_event.is_set():
@@ -136,7 +145,8 @@ class StreamProducer:
             await self._flush_batch(batch)
     
     async def _flush_batch(self, batch: List[Dict[str, Any]]):
-        """Flush a batch of messages to Redis streams"""        try:
+        """Flush a batch of messages to Redis streams"""
+        try:
             # Group messages by stream
             stream_batches = {}
             for item in batch:
@@ -158,7 +168,8 @@ class StreamProducer:
     
     async def _send_batch_to_stream(self, stream_name: str, 
                                   messages: List[StreamMessage]):
-        """Send a batch of messages to a specific stream"""        try:
+        """Send a batch of messages to a specific stream"""
+        try:
             pipeline = self.redis.pipeline()
             
             for message in messages:
@@ -185,7 +196,8 @@ class StreamProducer:
 
 
 class StreamConsumer:
-    """High-performance stream consumer with consumer groups"""    
+    """High-performance stream consumer with consumer groups"""
+    
     def __init__(self, redis_manager: RedisManager, 
                  config: StreamConsumerConfig,
                  metrics_collector: MetricsCollector):
@@ -197,10 +209,12 @@ class StreamConsumer:
         self._message_handlers: Dict[str, Callable] = {}
     
     def register_handler(self, event_type: str, handler: Callable):
-        """Register a message handler for specific event type"""        self._message_handlers[event_type] = handler
+        """Register a message handler for specific event type"""
+        self._message_handlers[event_type] = handler
     
     async def start(self, streams: List[str]):
-        """Start consuming from streams"""        if self._running:
+        """Start consuming from streams"""
+        if self._running:
             return
         
         self._running = True
@@ -220,14 +234,16 @@ class StreamConsumer:
         logger.info(f"Stream consumer started for streams: {streams}")
     
     async def stop(self):
-        """Stop the consumer gracefully"""        self._running = False
+        """Stop the consumer gracefully"""
+        self._running = False
         if self._consumer_task:
             await self._consumer_task
             self._consumer_task = None
         logger.info("Stream consumer stopped")
     
     async def _consumer_loop(self, streams: List[str]):
-        """Main consumer loop"""        stream_keys = {stream: ">" for stream in streams}
+        """Main consumer loop"""
+        stream_keys = {stream: ">" for stream in streams}
         
         while self._running:
             try:
@@ -248,7 +264,8 @@ class StreamConsumer:
                 await sleep(5)
     
     async def _process_messages(self, raw_messages: List):
-        """Process received messages"""        try:
+        """Process received messages"""
+        try:
             for stream_name, stream_messages in raw_messages:
                 for message_id, fields in stream_messages:
                     message = self._parse_message(
@@ -276,7 +293,8 @@ class StreamConsumer:
     
     def _parse_message(self, stream_name: str, message_id: str, 
                       fields: Dict) -> StreamMessage:
-        """Parse raw Redis message into StreamMessage"""        try:
+        """Parse raw Redis message into StreamMessage"""
+        try:
             # Decode fields
             decoded_fields = {
                 k.decode(): v.decode() for k, v in fields.items()
@@ -299,7 +317,8 @@ class StreamConsumer:
             raise EventStreamingError(f"Failed to parse message: {str(e)}")
     
     async def _handle_message(self, message: StreamMessage):
-        """Handle a parsed message"""        try:
+        """Handle a parsed message"""
+        try:
             handler = self._message_handlers.get(message.event_type)
             if handler:
                 await handler(message)
@@ -314,7 +333,8 @@ class StreamConsumer:
             raise
     
     async def _send_to_dead_letter_queue(self, message: StreamMessage, error: str):
-        """Send failed message to dead letter queue"""        try:
+        """Send failed message to dead letter queue"""
+        try:
             dlq_stream = f"{message.stream_name}:dlq"
             
             # Add error information to message
@@ -364,7 +384,8 @@ class StreamConsumer:
 
 
 class EventStream:
-    """High-level event stream abstraction"""    
+    """High-level event stream abstraction"""
+    
     def __init__(self, stream_name: str, redis_manager: RedisManager,
                  metrics_collector: MetricsCollector):
         self.stream_name = stream_name
@@ -374,7 +395,8 @@ class EventStream:
     async def publish(self, event_type: str, payload: Dict[str, Any],
                      headers: Dict[str, str] = None,
                      correlation_id: str = None) -> str:
-        """Publish an event to the stream"""        message = StreamMessage(
+        """Publish an event to the stream"""
+        message = StreamMessage(
             message_id=str(uuid4()),
             stream_name=self.stream_name,
             event_type=event_type,
@@ -393,7 +415,8 @@ class EventStream:
     
     async def subscribe(self, consumer_config: StreamConsumerConfig,
                        handlers: Dict[str, Callable]) -> StreamConsumer:
-        """Subscribe to the stream with handlers"""        consumer = StreamConsumer(self.redis, consumer_config, self.metrics)
+        """Subscribe to the stream with handlers"""
+        consumer = StreamConsumer(self.redis, consumer_config, self.metrics)
         
         for event_type, handler in handlers.items():
             consumer.register_handler(event_type, handler)
@@ -402,7 +425,8 @@ class EventStream:
         return consumer
     
     async def get_stream_info(self) -> Dict[str, Any]:
-        """Get stream information"""        try:
+        """Get stream information"""
+        try:
             info = await self.redis.xinfo_stream(self.stream_name)
             return {
                 "length": info[b"length"],
@@ -416,7 +440,8 @@ class EventStream:
 
 
 class StreamProcessor:
-    """Advanced stream processing capabilities"""    
+    """Advanced stream processing capabilities"""
+    
     def __init__(self, redis_manager: RedisManager,
                  metrics_collector: MetricsCollector):
         self.redis = redis_manager
@@ -424,12 +449,14 @@ class StreamProcessor:
         self._processors: Dict[str, Callable] = {}
     
     def register_processor(self, name: str, processor: Callable):
-        """Register a stream processor"""        self._processors[name] = processor
+        """Register a stream processor"""
+        self._processors[name] = processor
     
     async def process_stream(self, input_stream: str, output_stream: str,
                            processor_name: str, 
                            consumer_config: StreamConsumerConfig):
-        """Process messages from input stream to output stream"""        processor = self._processors.get(processor_name)
+        """Process messages from input stream to output stream"""
+        processor = self._processors.get(processor_name)
         if not processor:
             raise EventStreamingError(f"Unknown processor: {processor_name}")
         
@@ -472,7 +499,8 @@ class StreamProcessor:
 
 
 class StreamingEngine:
-    """Main engine for managing event streams"""    
+    """Main engine for managing event streams"""
+    
     def __init__(self, redis_manager: RedisManager,
                  security_manager: SecurityManager,
                  metrics_collector: MetricsCollector):
@@ -484,14 +512,16 @@ class StreamingEngine:
         self._producers: List[StreamProducer] = []
     
     def create_stream(self, stream_name: str) -> EventStream:
-        """Create or get an event stream"""        if stream_name not in self._streams:
+        """Create or get an event stream"""
+        if stream_name not in self._streams:
             self._streams[stream_name] = EventStream(
                 stream_name, self.redis, self.metrics
             )
         return self._streams[stream_name]
     
     async def shutdown(self):
-        """Shutdown all streams and consumers"""        # Stop all consumers
+        """Shutdown all streams and consumers"""
+        # Stop all consumers
         for consumer in self._consumers:
             await consumer.stop()
         
@@ -502,7 +532,8 @@ class StreamingEngine:
         logger.info("Streaming engine shutdown complete")
     
     async def get_system_metrics(self) -> Dict[str, Any]:
-        """Get streaming system metrics"""        metrics = {
+        """Get streaming system metrics"""
+        metrics = {
             "total_streams": len(self._streams),
             "active_consumers": len(self._consumers),
             "active_producers": len(self._producers),

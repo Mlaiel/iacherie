@@ -13,7 +13,8 @@ Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
 class ArchivalError(Exception):
-    """Base exception for archival system errors"""    
+    """Base exception for archival system errors"""
+    
     def __init__(self, message: str, error_code: str = None, details: dict = None):
         super().__init__(message)
         self.message = message
@@ -21,7 +22,8 @@ class ArchivalError(Exception):
         self.details = details or {}
     
     def to_dict(self) -> dict:
-        """Convert exception to dictionary representation"""        return {
+        """Convert exception to dictionary representation"""
+        return {
             "error_type": self.__class__.__name__,
             "error_code": self.error_code,
             "message": self.message,
@@ -30,7 +32,8 @@ class ArchivalError(Exception):
 
 
 class StorageQuotaExceededError(ArchivalError):
-    """Raised when storage quota is exceeded"""    
+    """Raised when storage quota is exceeded"""
+    
     def __init__(self, tier: str, used_bytes: int, limit_bytes: int, details: dict = None):
         message = f"Storage quota exceeded for tier '{tier}': {used_bytes} bytes used, limit is {limit_bytes} bytes"
         super().__init__(
@@ -47,7 +50,8 @@ class StorageQuotaExceededError(ArchivalError):
 
 
 class RetentionPolicyViolationError(ArchivalError):
-    """Raised when a retention policy would be violated"""    
+    """Raised when a retention policy would be violated"""
+    
     def __init__(self, content_id: str, policy_id: str, violation_type: str, details: dict = None):
         message = f"Retention policy violation for content '{content_id}': {violation_type}"
         super().__init__(
@@ -63,7 +67,8 @@ class RetentionPolicyViolationError(ArchivalError):
 
 
 class CompressionError(ArchivalError):
-    """Raised when compression/decompression operations fail"""    
+    """Raised when compression/decompression operations fail"""
+    
     def __init__(self, operation: str, content_id: str = None, details: dict = None):
         message = f"Compression operation '{operation}' failed"
         if content_id:
@@ -81,7 +86,8 @@ class CompressionError(ArchivalError):
 
 
 class RetrievalTimeoutError(ArchivalError):
-    """Raised when content retrieval times out"""    
+    """Raised when content retrieval times out"""
+    
     def __init__(self, archive_id: str, timeout_seconds: int, details: dict = None):
         message = f"Content retrieval timed out for archive '{archive_id}' after {timeout_seconds} seconds"
         super().__init__(
@@ -96,7 +102,8 @@ class RetrievalTimeoutError(ArchivalError):
 
 
 class ArchiveNotFoundError(ArchivalError):
-    """Raised when an archive cannot be found"""    
+    """Raised when an archive cannot be found"""
+    
     def __init__(self, archive_id: str, search_locations: list = None, details: dict = None):
         message = f"Archive '{archive_id}' not found"
         if search_locations:
@@ -114,7 +121,8 @@ class ArchiveNotFoundError(ArchivalError):
 
 
 class ArchiveCorruptionError(ArchivalError):
-    """Raised when archive data is corrupted"""    
+    """Raised when archive data is corrupted"""
+    
     def __init__(self, archive_id: str, corruption_type: str, details: dict = None):
         message = f"Archive '{archive_id}' is corrupted: {corruption_type}"
         super().__init__(
@@ -129,7 +137,8 @@ class ArchiveCorruptionError(ArchivalError):
 
 
 class PolicyConfigurationError(ArchivalError):
-    """Raised when archival or retention policies are misconfigured"""    
+    """Raised when archival or retention policies are misconfigured"""
+    
     def __init__(self, policy_id: str, configuration_issue: str, details: dict = None):
         message = f"Policy '{policy_id}' configuration error: {configuration_issue}"
         super().__init__(
@@ -144,7 +153,8 @@ class PolicyConfigurationError(ArchivalError):
 
 
 class StorageBackendError(ArchivalError):
-    """Raised when storage backend operations fail"""    
+    """Raised when storage backend operations fail"""
+    
     def __init__(self, backend_type: str, operation: str, details: dict = None):
         message = f"Storage backend '{backend_type}' operation '{operation}' failed"
         super().__init__(
@@ -159,7 +169,8 @@ class StorageBackendError(ArchivalError):
 
 
 class LifecycleTransitionError(ArchivalError):
-    """Raised when lifecycle transitions fail"""    
+    """Raised when lifecycle transitions fail"""
+    
     def __init__(self, archive_id: str, from_stage: str, to_stage: str, reason: str, details: dict = None):
         message = f"Lifecycle transition failed for archive '{archive_id}' from '{from_stage}' to '{to_stage}': {reason}"
         super().__init__(
@@ -176,7 +187,8 @@ class LifecycleTransitionError(ArchivalError):
 
 
 class MetadataExtractionError(ArchivalError):
-    """Raised when content metadata extraction fails"""    
+    """Raised when content metadata extraction fails"""
+    
     def __init__(self, content_id: str, content_type: str, extraction_stage: str, details: dict = None):
         message = f"Metadata extraction failed for content '{content_id}' (type: {content_type}) at stage '{extraction_stage}'"
         super().__init__(
@@ -192,7 +204,8 @@ class MetadataExtractionError(ArchivalError):
 
 
 class EncryptionError(ArchivalError):
-    """Raised when encryption/decryption operations fail"""    
+    """Raised when encryption/decryption operations fail"""
+    
     def __init__(self, operation: str, archive_id: str = None, details: dict = None):
         message = f"Encryption operation '{operation}' failed"
         if archive_id:
@@ -210,7 +223,8 @@ class EncryptionError(ArchivalError):
 
 
 class AccessDeniedError(ArchivalError):
-    """Raised when access to archive is denied"""    
+    """Raised when access to archive is denied"""
+    
     def __init__(self, archive_id: str, user_id: str = None, required_permission: str = None, details: dict = None):
         message = f"Access denied to archive '{archive_id}'"
         if user_id:
@@ -231,7 +245,8 @@ class AccessDeniedError(ArchivalError):
 
 
 class ConcurrencyLimitError(ArchivalError):
-    """Raised when concurrent operation limits are exceeded"""    
+    """Raised when concurrent operation limits are exceeded"""
+    
     def __init__(self, operation_type: str, current_count: int, max_allowed: int, details: dict = None):
         message = f"Concurrency limit exceeded for '{operation_type}': {current_count} operations running, maximum allowed is {max_allowed}"
         super().__init__(
@@ -247,7 +262,8 @@ class ConcurrencyLimitError(ArchivalError):
 
 
 class ValidationError(ArchivalError):
-    """Raised when data validation fails"""    
+    """Raised when data validation fails"""
+    
     def __init__(self, field: str, value: any, validation_rule: str, details: dict = None):
         message = f"Validation failed for field '{field}' with value '{value}': {validation_rule}"
         super().__init__(
@@ -263,7 +279,8 @@ class ValidationError(ArchivalError):
 
 
 class ConfigurationError(ArchivalError):
-    """Raised when system configuration is invalid"""    
+    """Raised when system configuration is invalid"""
+    
     def __init__(self, component: str, configuration_issue: str, details: dict = None):
         message = f"Configuration error in component '{component}': {configuration_issue}"
         super().__init__(
@@ -278,7 +295,8 @@ class ConfigurationError(ArchivalError):
 
 
 class IntegrityCheckError(ArchivalError):
-    """Raised when data integrity checks fail"""    
+    """Raised when data integrity checks fail"""
+    
     def __init__(self, archive_id: str, check_type: str, expected: str, actual: str, details: dict = None):
         message = f"Integrity check '{check_type}' failed for archive '{archive_id}': expected '{expected}', got '{actual}'"
         super().__init__(
@@ -295,7 +313,8 @@ class IntegrityCheckError(ArchivalError):
 
 
 class ResourceExhaustionError(ArchivalError):
-    """Raised when system resources are exhausted"""    
+    """Raised when system resources are exhausted"""
+    
     def __init__(self, resource_type: str, current_usage: str, limit: str, details: dict = None):
         message = f"Resource exhaustion: {resource_type} usage ({current_usage}) exceeds limit ({limit})"
         super().__init__(
@@ -311,7 +330,8 @@ class ResourceExhaustionError(ArchivalError):
 
 
 class SchedulingError(ArchivalError):
-    """Raised when task scheduling fails"""    
+    """Raised when task scheduling fails"""
+    
     def __init__(self, task_type: str, schedule_time: str, failure_reason: str, details: dict = None):
         message = f"Failed to schedule {task_type} task for {schedule_time}: {failure_reason}"
         super().__init__(

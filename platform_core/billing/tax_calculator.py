@@ -14,7 +14,8 @@ Système de calcul automatique des taxes selon les juridictions
 - Règles par pays/état/province configurables
 - Intégration APIs officielles (Avalara, TaxJar)
 - Exemptions et cas spéciaux automatiques
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -27,7 +28,8 @@ from decimal import Decimal, ROUND_HALF_UP
 logger = logging.getLogger(__name__)
 
 class TaxType(Enum):
-    """Types de taxes"""    VAT = "vat"  # TVA (Europe)
+    """Types de taxes"""
+    VAT = "vat"  # TVA (Europe)
     GST = "gst"  # TPS (Canada, Australie)
     HST = "hst"  # TVH (Canada)
     SALES_TAX = "sales_tax"  # Taxe de vente (US)
@@ -36,14 +38,16 @@ class TaxType(Enum):
     SERVICE_TAX = "service_tax"  # Taxe sur services
 
 class TaxStatus(Enum):
-    """Statuts fiscaux"""    TAXABLE = "taxable"
+    """Statuts fiscaux"""
+    TAXABLE = "taxable"
     EXEMPT = "exempt"
     ZERO_RATED = "zero_rated"
     REVERSE_CHARGE = "reverse_charge"
 
 @dataclass
 class TaxRule:
-    """Règle de taxation"""    rule_id: str
+    """Règle de taxation"""
+    rule_id: str
     name: str
     country: str
     state_province: Optional[str] = None
@@ -80,7 +84,8 @@ class TaxRule:
                      customer_type: Optional[str] = None,
                      product_category: Optional[str] = None,
                      transaction_date: Optional[datetime] = None) -> bool:
-        """Vérifie si la règle s'applique"""        
+        """Vérifie si la règle s'applique"""
+        
         # Vérifier les dates
         check_date = transaction_date or datetime.utcnow()
         if check_date < self.effective_from:
@@ -104,7 +109,8 @@ class TaxRule:
 
 @dataclass
 class TaxCalculationResult:
-    """Résultat du calcul de taxes"""    subtotal: Decimal
+    """Résultat du calcul de taxes"""
+    subtotal: Decimal
     total_tax: Decimal
     total_amount: Decimal
     tax_breakdown: List[Dict[str, Any]] = field(default_factory=list)
@@ -120,7 +126,8 @@ class TaxCalculationResult:
     jurisdiction: str = ""
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""        return {
+        """Convertit en dictionnaire"""
+        return {
             "subtotal": float(self.subtotal),
             "total_tax": float(self.total_tax),
             "total_amount": float(self.total_amount),
@@ -135,7 +142,8 @@ class TaxCalculationResult:
 
 @dataclass
 class TaxableItem:
-    """Item soumis à taxation"""    item_id: str
+    """Item soumis à taxation"""
+    item_id: str
     description: str
     amount: Decimal
     quantity: int = 1
@@ -154,7 +162,8 @@ class TaxableItem:
 
 @dataclass
 class CustomerTaxInfo:
-    """Informations fiscales client"""    customer_id: str
+    """Informations fiscales client"""
+    customer_id: str
     
     # Type de client
     customer_type: str = "individual"  # individual, business, non_profit, government
@@ -175,7 +184,8 @@ class CustomerTaxInfo:
     exemption_certificate: Optional[str] = None
 
 class TaxCalculator:
-    """Calculateur de taxes intelligent"""    
+    """Calculateur de taxes intelligent"""
+    
     def __init__(self):
         self.tax_rules: Dict[str, TaxRule] = {}
         self.tax_cache: Dict[str, TaxCalculationResult] = {}
@@ -187,7 +197,8 @@ class TaxCalculator:
         self._load_default_rules()
         
     def _load_default_rules(self):
-        """Charge les règles de taxation par défaut"""        
+        """Charge les règles de taxation par défaut"""
+        
         # Canada - TPS/TVQ
         self.add_tax_rule(TaxRule(
             rule_id="ca_gst",
@@ -253,11 +264,13 @@ class TaxCalculator:
         logger.info(f"Règles de taxation chargées: {len(self.tax_rules)}")
         
     def add_tax_rule(self, rule: TaxRule):
-        """Ajoute une règle de taxation"""        self.tax_rules[rule.rule_id] = rule
+        """Ajoute une règle de taxation"""
+        self.tax_rules[rule.rule_id] = rule
         logger.debug(f"Règle ajoutée: {rule.name} ({rule.rule_id})")
         
     def remove_tax_rule(self, rule_id: str):
-        """Supprime une règle de taxation"""        if rule_id in self.tax_rules:
+        """Supprime une règle de taxation"""
+        if rule_id in self.tax_rules:
             del self.tax_rules[rule_id]
             logger.debug(f"Règle supprimée: {rule_id}")
             
@@ -265,7 +278,8 @@ class TaxCalculator:
                            items: List[TaxableItem],
                            customer_info: CustomerTaxInfo,
                            transaction_date: Optional[datetime] = None) -> TaxCalculationResult:
-        """Calcule les taxes pour une transaction"""        
+        """Calcule les taxes pour une transaction"""
+        
         cache_key = self._generate_cache_key(items, customer_info)
         if cache_key in self.tax_cache:
             return self.tax_cache[cache_key]
@@ -355,7 +369,8 @@ class TaxCalculator:
     def _find_applicable_rules(self,
                               customer_info: CustomerTaxInfo,
                               transaction_date: Optional[datetime] = None) -> List[TaxRule]:
-        """Trouve les règles applicables pour un client"""        applicable_rules = []
+        """Trouve les règles applicables pour un client"""
+        applicable_rules = []
         
         for rule in self.tax_rules.values():
             # Vérifier le pays
@@ -395,7 +410,8 @@ class TaxCalculator:
         return applicable_rules
         
     async def validate_vat_number(self, vat_number: str, country: str) -> Dict[str, Any]:
-        """Valide un numéro de TVA"""        # Simulation de validation - dans un vrai système, on utiliserait
+        """Valide un numéro de TVA"""
+        # Simulation de validation - dans un vrai système, on utiliserait
         # l'API VIES pour l'Europe ou d'autres services officiels
         
         if not vat_number:
@@ -435,7 +451,8 @@ class TaxCalculator:
                                          customer_country: str,
                                          customer_vat_number: Optional[str],
                                          amount: Decimal) -> Dict[str, Any]:
-        """Calcule la TVA en auto-liquidation (reverse charge)"""        
+        """Calcule la TVA en auto-liquidation (reverse charge)"""
+        
         # Règles générales UE pour reverse charge
         eu_countries = {
             "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR",
@@ -470,7 +487,8 @@ class TaxCalculator:
         }
         
     def _get_standard_vat_rate(self, country: str) -> Decimal:
-        """Retourne le taux de TVA standard d'un pays"""        standard_rates = {
+        """Retourne le taux de TVA standard d'un pays"""
+        standard_rates = {
             "FR": Decimal("20.0"),
             "DE": Decimal("19.0"),
             "GB": Decimal("20.0"),
@@ -483,7 +501,8 @@ class TaxCalculator:
         return standard_rates.get(country.upper(), Decimal("20.0"))
         
     def _generate_cache_key(self, items: List[TaxableItem], customer_info: CustomerTaxInfo) -> str:
-        """Génère une clé de cache pour le calcul"""        import hashlib
+        """Génère une clé de cache pour le calcul"""
+        import hashlib
         
         items_hash = hashlib.md5(
             json.dumps([{
@@ -509,7 +528,8 @@ class TaxCalculator:
     def get_tax_report(self, 
                       start_date: datetime,
                       end_date: datetime) -> Dict[str, Any]:
-        """Génère un rapport fiscal"""        # Dans un vrai système, on interrogerait la base de données
+        """Génère un rapport fiscal"""
+        # Dans un vrai système, on interrogerait la base de données
         # pour récupérer toutes les transactions sur la période
         
         return {
@@ -528,7 +548,8 @@ class TaxCalculator:
         }
         
     def get_calculator_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques du calculateur"""        return {
+        """Retourne les statistiques du calculateur"""
+        return {
             "total_rules": len(self.tax_rules),
             "rules_by_country": {},
             "cache_size": len(self.tax_cache),

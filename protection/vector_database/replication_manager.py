@@ -15,7 +15,8 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 des droits d'auteur passible de poursuites judiciaires.
 
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 import json
@@ -33,21 +34,24 @@ logger = logging.getLogger(__name__)
 
 
 class ReplicationMode(Enum):
-    """Replication modes supported"""    MASTER_SLAVE = "master_slave"
+    """Replication modes supported"""
+    MASTER_SLAVE = "master_slave"
     MASTER_MASTER = "master_master"
     EVENTUAL_CONSISTENCY = "eventual_consistency"
     STRONG_CONSISTENCY = "strong_consistency"
 
 
 class NodeRole(Enum):
-    """Node roles in replication cluster"""    MASTER = "master"
+    """Node roles in replication cluster"""
+    MASTER = "master"
     SLAVE = "slave"
     REPLICA = "replica"
     BACKUP = "backup"
 
 
 class ReplicationStatus(Enum):
-    """Replication operation status"""    PENDING = "pending"
+    """Replication operation status"""
+    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -56,7 +60,8 @@ class ReplicationStatus(Enum):
 
 @dataclass
 class ReplicationNode:
-    """Replication cluster node configuration"""    node_id: str
+    """Replication cluster node configuration"""
+    node_id: str
     role: NodeRole
     endpoint: str
     region: str
@@ -69,7 +74,8 @@ class ReplicationNode:
 
 @dataclass
 class ReplicationOperation:
-    """Individual replication operation"""    operation_id: str
+    """Individual replication operation"""
+    operation_id: str
     operation_type: str  # insert, update, delete, bulk_insert
     source_node: str
     target_nodes: List[str]
@@ -82,7 +88,8 @@ class ReplicationOperation:
 
 @dataclass
 class ConflictResolution:
-    """Conflict resolution result"""    conflict_id: str
+    """Conflict resolution result"""
+    conflict_id: str
     resolution_strategy: str
     winning_version: Dict[str, Any]
     losing_versions: List[Dict[str, Any]]
@@ -91,10 +98,12 @@ class ConflictResolution:
 
 
 class VectorHashCalculator:
-    """Calculate consistent hashes for vector data"""    
+    """Calculate consistent hashes for vector data"""
+    
     @staticmethod
     def calculate_vector_hash(vector_id: str, embedding: np.ndarray, metadata: Dict[str, Any]) -> str:
-        """Calculate deterministic hash for vector data"""        try:
+        """Calculate deterministic hash for vector data"""
+        try:
             # Create consistent data representation
             data_components = [
                 vector_id,
@@ -111,7 +120,8 @@ class VectorHashCalculator:
     
     @staticmethod
     def calculate_index_hash(index_metadata: Dict[str, Any]) -> str:
-        """Calculate hash for entire index state"""        try:
+        """Calculate hash for entire index state"""
+        try:
             # Include key index characteristics
             index_data = {
                 'total_vectors': index_metadata.get('total_vectors', 0),
@@ -128,7 +138,8 @@ class VectorHashCalculator:
 
 
 class ConflictResolver:
-    """Resolve conflicts in multi-master replication"""    
+    """Resolve conflicts in multi-master replication"""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.ConflictResolver")
@@ -149,7 +160,8 @@ class ConflictResolver:
         conflicting_versions: List[Dict[str, Any]],
         strategy: Optional[str] = None
     ) -> ConflictResolution:
-        """Resolve conflict between multiple versions"""        try:
+        """Resolve conflict between multiple versions"""
+        try:
             strategy = strategy or self.default_strategy
             
             if strategy not in self.strategies:
@@ -183,7 +195,8 @@ class ConflictResolver:
             )
     
     async def _resolve_last_write_wins(self, versions: List[Dict[str, Any]]) -> Tuple[Dict[str, Any], List[Dict[str, Any]]]:
-        """Last write wins strategy"""        if not versions:
+        """Last write wins strategy"""
+        if not versions:
             return {}, []
         
         # Sort by timestamp
@@ -196,7 +209,8 @@ class ConflictResolver:
         return sorted_versions[0], sorted_versions[1:]
     
     async def _resolve_vector_version_priority(self, versions: List[Dict[str, Any]]) -> Tuple[Dict[str, Any], List[Dict[str, Any]]]:
-        """Prioritize by vector version number"""        if not versions:
+        """Prioritize by vector version number"""
+        if not versions:
             return {}, []
         
         # Sort by version number if available
@@ -209,7 +223,8 @@ class ConflictResolver:
         return sorted_versions[0], sorted_versions[1:]
     
     async def _resolve_metadata_merge(self, versions: List[Dict[str, Any]]) -> Tuple[Dict[str, Any], List[Dict[str, Any]]]:
-        """Merge metadata from all versions"""        if not versions:
+        """Merge metadata from all versions"""
+        if not versions:
             return {}, []
         
         # Use latest vector data but merge metadata
@@ -228,7 +243,8 @@ class ConflictResolver:
         return merged_version, versions
     
     async def _resolve_custom_priority(self, versions: List[Dict[str, Any]]) -> Tuple[Dict[str, Any], List[Dict[str, Any]]]:
-        """Custom priority based on node priority"""        if not versions:
+        """Custom priority based on node priority"""
+        if not versions:
             return {}, []
         
         # Sort by source node priority
@@ -242,7 +258,8 @@ class ConflictResolver:
 
 
 class ReplicationManager:
-    """Main replication coordination manager"""    
+    """Main replication coordination manager"""
+    
     def __init__(self, vector_store, config: Dict[str, Any]):
         self.vector_store = vector_store
         self.config = config
@@ -277,7 +294,8 @@ class ReplicationManager:
         self._initialize_cluster()
     
     def _initialize_cluster(self):
-        """Initialize replication cluster configuration"""        try:
+        """Initialize replication cluster configuration"""
+        try:
             # Load node configurations
             nodes_config = self.config.get('cluster_nodes', [])
             
@@ -297,7 +315,8 @@ class ReplicationManager:
             self.logger.error(f"Cluster initialization failed: {e}")
     
     async def start_replication(self):
-        """Start background replication tasks"""        try:
+        """Start background replication tasks"""
+        try:
             if self.sync_task is None:
                 self.sync_task = asyncio.create_task(self._sync_loop())
             
@@ -310,7 +329,8 @@ class ReplicationManager:
             self.logger.error(f"Failed to start replication: {e}")
     
     async def stop_replication(self):
-        """Stop background replication tasks"""        try:
+        """Stop background replication tasks"""
+        try:
             if self.sync_task:
                 self.sync_task.cancel()
                 try:
@@ -341,7 +361,8 @@ class ReplicationManager:
         metadata: Optional[Dict[str, Any]] = None,
         target_nodes: Optional[List[str]] = None
     ) -> str:
-        """Queue operation for replication"""        try:
+        """Queue operation for replication"""
+        try:
             operation_id = f"{self.local_node_id}_{int(time.time() * 1000000)}"
             
             # Determine target nodes
@@ -395,7 +416,8 @@ class ReplicationManager:
             raise
     
     async def sync_with_node(self, node_id: str) -> bool:
-        """Synchronize with specific node"""        try:
+        """Synchronize with specific node"""
+        try:
             if node_id not in self.nodes:
                 raise ValueError(f"Unknown node: {node_id}")
             
@@ -443,7 +465,8 @@ class ReplicationManager:
             return False
     
     async def _sync_loop(self):
-        """Background synchronization loop"""        while True:
+        """Background synchronization loop"""
+        while True:
             try:
                 # Sync with all nodes
                 sync_tasks = [
@@ -470,7 +493,8 @@ class ReplicationManager:
                 await asyncio.sleep(self.sync_interval)
     
     async def _heartbeat_loop(self):
-        """Background heartbeat monitoring loop"""        while True:
+        """Background heartbeat monitoring loop"""
+        while True:
             try:
                 # Send heartbeat to all nodes
                 for node_id, node in self.nodes.items():
@@ -488,7 +512,8 @@ class ReplicationManager:
                 await asyncio.sleep(self.heartbeat_interval)
     
     async def _check_node_health(self, node: ReplicationNode) -> bool:
-        """Check if node is healthy and responsive"""        try:
+        """Check if node is healthy and responsive"""
+        try:
             # This would typically make an HTTP request to the node's health endpoint
             # For now, we'll simulate based on last heartbeat
             
@@ -505,7 +530,8 @@ class ReplicationManager:
             return False
     
     async def _send_operation_to_node(self, operation: ReplicationOperation, node: ReplicationNode) -> bool:
-        """Send operation to specific node"""        try:
+        """Send operation to specific node"""
+        try:
             # This would typically send HTTP request to node's replication endpoint
             # For simulation, we'll just log and return success
             
@@ -525,7 +551,8 @@ class ReplicationManager:
             return False
     
     async def _cleanup_old_operations(self):
-        """Clean up old completed operations"""        try:
+        """Clean up old completed operations"""
+        try:
             current_time = time.time()
             retention_period = self.config.get('operation_retention_seconds', 3600)  # 1 hour
             
@@ -551,7 +578,8 @@ class ReplicationManager:
             self.logger.error(f"Operation cleanup failed: {e}")
     
     def get_replication_status(self) -> Dict[str, Any]:
-        """Get current replication status and statistics"""        try:
+        """Get current replication status and statistics"""
+        try:
             # Calculate statistics
             total_operations = len(self.operation_log)
             pending_operations = len(self.pending_operations)

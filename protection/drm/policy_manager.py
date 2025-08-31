@@ -22,7 +22,8 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - Audio Engineer: Professional audio processing and analysis
 - DevOps Engineer: Advanced deployment and infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt engineering and optimization
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 from datetime import datetime, timedelta, timezone
@@ -38,7 +39,8 @@ import re
 logger = logging.getLogger(__name__)
 
 class PolicyType(str, Enum):
-    """Types of DRM policies."""    GEOGRAPHICAL = "geographical"
+    """Types of DRM policies."""
+    GEOGRAPHICAL = "geographical"
     DEVICE = "device"
     TEMPORAL = "temporal"
     USAGE = "usage"
@@ -47,7 +49,8 @@ class PolicyType(str, Enum):
     QUALITY = "quality"
 
 class PolicyAction(str, Enum):
-    """Actions for policy enforcement."""    ALLOW = "allow"
+    """Actions for policy enforcement."""
+    ALLOW = "allow"
     DENY = "deny"
     RESTRICT = "restrict"
     REDIRECT = "redirect"
@@ -55,7 +58,8 @@ class PolicyAction(str, Enum):
     WATERMARK = "watermark"
 
 class DeviceCategory(str, Enum):
-    """Device categories for policies."""    MOBILE = "mobile"
+    """Device categories for policies."""
+    MOBILE = "mobile"
     TABLET = "tablet"
     DESKTOP = "desktop"
     TV = "tv"
@@ -64,7 +68,8 @@ class DeviceCategory(str, Enum):
     UNKNOWN = "unknown"
 
 class NetworkType(str, Enum):
-    """Network types for policies."""    CELLULAR = "cellular"
+    """Network types for policies."""
+    CELLULAR = "cellular"
     WIFI = "wifi"
     ETHERNET = "ethernet"
     VPN = "vpn"
@@ -73,7 +78,8 @@ class NetworkType(str, Enum):
 
 @dataclass
 class GeographicalPolicy:
-    """Geographical restriction policy."""    policy_id: str
+    """Geographical restriction policy."""
+    policy_id: str
     countries_allowed: Set[str] = field(default_factory=set)
     countries_denied: Set[str] = field(default_factory=set)
     regions_allowed: Set[str] = field(default_factory=set)
@@ -86,7 +92,8 @@ class GeographicalPolicy:
 
 @dataclass
 class DevicePolicy:
-    """Device restriction policy."""    policy_id: str
+    """Device restriction policy."""
+    policy_id: str
     allowed_categories: Set[DeviceCategory] = field(default_factory=set)
     denied_categories: Set[DeviceCategory] = field(default_factory=set)
     allowed_os: Set[str] = field(default_factory=set)
@@ -102,7 +109,8 @@ class DevicePolicy:
 
 @dataclass
 class TemporalPolicy:
-    """Time-based restriction policy."""    policy_id: str
+    """Time-based restriction policy."""
+    policy_id: str
     start_date: Optional[datetime] = None
     end_date: Optional[datetime] = None
     time_windows: List[Dict[str, Any]] = field(default_factory=list)
@@ -115,7 +123,8 @@ class TemporalPolicy:
 
 @dataclass
 class UsagePolicy:
-    """Content usage restriction policy."""    policy_id: str
+    """Content usage restriction policy."""
+    policy_id: str
     max_concurrent_sessions: int = 1
     max_daily_usage: Optional[timedelta] = None
     max_weekly_usage: Optional[timedelta] = None
@@ -128,7 +137,8 @@ class UsagePolicy:
 
 @dataclass
 class PolicyViolation:
-    """Policy violation record."""    violation_id: str
+    """Policy violation record."""
+    violation_id: str
     policy_id: str
     policy_type: PolicyType
     user_id: str
@@ -140,9 +150,11 @@ class PolicyViolation:
     resolved: bool = False
 
 class PolicyManager:
-    """Advanced DRM policy management system."""    
+    """Advanced DRM policy management system."""
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize policy manager with configuration."""        self.config = config
+        """Initialize policy manager with configuration."""
+        self.config = config
         self.policies: Dict[str, Dict[str, Any]] = {}
         self.violations: List[PolicyViolation] = []
         self.geoip_db_path = config.get("geoip_db_path", "/opt/geoip/GeoLite2-City.mmdb")
@@ -150,7 +162,8 @@ class PolicyManager:
         self.policy_cache: Dict[str, Any] = {}
         
     async def initialize(self) -> bool:
-        """Initialize policy manager."""        try:
+        """Initialize policy manager."""
+        try:
             # Load default policies
             await self._load_default_policies()
             
@@ -165,7 +178,8 @@ class PolicyManager:
             return False
     
     async def _load_default_policies(self) -> None:
-        """Load default policy configurations."""        # Geographical policy
+        """Load default policy configurations."""
+        # Geographical policy
         geo_policy = GeographicalPolicy(
             policy_id="default_geo",
             countries_allowed={"US", "CA", "GB", "DE", "FR", "AU"},
@@ -199,7 +213,8 @@ class PolicyManager:
         self.policies["usage"] = {"default_usage": usage_policy}
     
     async def _initialize_geoip(self) -> None:
-        """Initialize GeoIP database."""        try:
+        """Initialize GeoIP database."""
+        try:
             self.geoip_reader = geoip2.database.Reader(self.geoip_db_path)
         except Exception as e:
             logger.warning(f"GeoIP database not available: {e}")
@@ -211,7 +226,8 @@ class PolicyManager:
         user_id: str,
         request_context: Dict[str, Any]
     ) -> Tuple[bool, List[PolicyViolation]]:
-        """Evaluate all applicable policies for a content access request."""        violations = []
+        """Evaluate all applicable policies for a content access request."""
+        violations = []
         access_allowed = True
         
         try:
@@ -265,7 +281,8 @@ class PolicyManager:
         ip_address: Optional[str],
         timestamp: datetime
     ) -> List[PolicyViolation]:
-        """Evaluate geographical restriction policies."""        violations = []
+        """Evaluate geographical restriction policies."""
+        violations = []
         
         if not ip_address:
             return violations
@@ -345,7 +362,8 @@ class PolicyManager:
         user_agent: Optional[str],
         timestamp: datetime
     ) -> List[PolicyViolation]:
-        """Evaluate device restriction policies."""        violations = []
+        """Evaluate device restriction policies."""
+        violations = []
         
         if not user_agent:
             return violations
@@ -448,7 +466,8 @@ class PolicyManager:
         user_id: str,
         timestamp: datetime
     ) -> List[PolicyViolation]:
-        """Evaluate temporal restriction policies."""        violations = []
+        """Evaluate temporal restriction policies."""
+        violations = []
         
         try:
             # Get applicable temporal policies
@@ -543,7 +562,8 @@ class PolicyManager:
         user_id: str,
         timestamp: datetime
     ) -> List[PolicyViolation]:
-        """Evaluate usage restriction policies."""        violations = []
+        """Evaluate usage restriction policies."""
+        violations = []
         
         try:
             # Get applicable usage policies
@@ -599,7 +619,8 @@ class PolicyManager:
             return []
     
     async def _get_location_info(self, ip_address: str) -> Optional[Dict[str, Any]]:
-        """Get location information for an IP address."""        try:
+        """Get location information for an IP address."""
+        try:
             if not self.geoip_reader:
                 return None
             
@@ -623,7 +644,8 @@ class PolicyManager:
             return None
     
     async def _parse_device_info(self, user_agent: str) -> Dict[str, Any]:
-        """Parse device information from user agent."""        try:
+        """Parse device information from user agent."""
+        try:
             parsed = parse(user_agent)
             
             # Determine device category
@@ -657,7 +679,8 @@ class PolicyManager:
             }
     
     def _compare_versions(self, version1: str, version2: str) -> int:
-        """Compare two version strings. Returns -1, 0, or 1."""        try:
+        """Compare two version strings. Returns -1, 0, or 1."""
+        try:
             v1_parts = [int(x) for x in version1.split('.')]
             v2_parts = [int(x) for x in version2.split('.')]
             
@@ -678,7 +701,8 @@ class PolicyManager:
             return 0
     
     async def _check_time_windows(self, timestamp: datetime, time_windows: List[Dict[str, Any]]) -> bool:
-        """Check if timestamp falls within allowed time windows."""        for window in time_windows:
+        """Check if timestamp falls within allowed time windows."""
+        for window in time_windows:
             start_time = datetime.fromisoformat(window["start"]).time()
             end_time = datetime.fromisoformat(window["end"]).time()
             current_time = timestamp.time()
@@ -689,7 +713,8 @@ class PolicyManager:
         return False
     
     async def _check_blackout_periods(self, timestamp: datetime, blackout_periods: List[Dict[str, Any]]) -> bool:
-        """Check if timestamp falls within blackout periods."""        for period in blackout_periods:
+        """Check if timestamp falls within blackout periods."""
+        for period in blackout_periods:
             start_date = datetime.fromisoformat(period["start"])
             end_date = datetime.fromisoformat(period["end"])
             
@@ -699,32 +724,38 @@ class PolicyManager:
         return False
     
     async def _get_concurrent_sessions(self, user_id: str, content_id: str) -> int:
-        """Get current number of concurrent sessions for user and content."""        # This would integrate with session management system
+        """Get current number of concurrent sessions for user and content."""
+        # This would integrate with session management system
         # For now, return a placeholder value
         return 0
     
     async def _get_daily_usage(self, user_id: str, content_id: str, timestamp: datetime) -> timedelta:
-        """Get daily usage for user and content."""        # This would integrate with usage tracking system
+        """Get daily usage for user and content."""
+        # This would integrate with usage tracking system
         # For now, return a placeholder value
         return timedelta(0)
     
     def _detect_vpn(self, ip_address: str) -> bool:
-        """Detect if IP address is from a VPN."""        # This would integrate with VPN detection service
+        """Detect if IP address is from a VPN."""
+        # This would integrate with VPN detection service
         # For now, return a placeholder value
         return False
     
     def _detect_proxy(self, ip_address: str) -> bool:
-        """Detect if IP address is from a proxy."""        # This would integrate with proxy detection service
+        """Detect if IP address is from a proxy."""
+        # This would integrate with proxy detection service
         # For now, return a placeholder value
         return False
     
     async def _log_violations(self, violations: List[PolicyViolation]) -> None:
-        """Log policy violations."""        for violation in violations:
+        """Log policy violations."""
+        for violation in violations:
             logger.warning(f"Policy violation: {violation.violation_id} - {violation.violation_details}")
             self.violations.append(violation)
     
     async def create_policy(self, policy_type: str, policy_data: Dict[str, Any]) -> str:
-        """Create a new policy."""        try:
+        """Create a new policy."""
+        try:
             policy_id = f"{policy_type}_{datetime.now().isoformat()}"
             
             if policy_type not in self.policies:
@@ -740,7 +771,8 @@ class PolicyManager:
             raise
     
     async def update_policy(self, policy_type: str, policy_id: str, policy_data: Dict[str, Any]) -> bool:
-        """Update an existing policy."""        try:
+        """Update an existing policy."""
+        try:
             if policy_type in self.policies and policy_id in self.policies[policy_type]:
                 self.policies[policy_type][policy_id].update(policy_data)
                 logger.info(f"Policy updated: {policy_id}")
@@ -754,7 +786,8 @@ class PolicyManager:
             return False
     
     async def delete_policy(self, policy_type: str, policy_id: str) -> bool:
-        """Delete a policy."""        try:
+        """Delete a policy."""
+        try:
             if policy_type in self.policies and policy_id in self.policies[policy_type]:
                 del self.policies[policy_type][policy_id]
                 logger.info(f"Policy deleted: {policy_id}")
@@ -774,7 +807,8 @@ class PolicyManager:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> List[PolicyViolation]:
-        """Get policy violations with optional filters."""        filtered_violations = self.violations
+        """Get policy violations with optional filters."""
+        filtered_violations = self.violations
         
         if user_id:
             filtered_violations = [v for v in filtered_violations if v.user_id == user_id]
@@ -791,7 +825,8 @@ class PolicyManager:
         return filtered_violations
     
     async def get_policy_statistics(self) -> Dict[str, Any]:
-        """Get policy enforcement statistics."""        try:
+        """Get policy enforcement statistics."""
+        try:
             stats = {
                 "total_policies": sum(len(policies) for policies in self.policies.values()),
                 "active_policies": sum(
@@ -818,7 +853,8 @@ class PolicyManager:
             return {}
 
     async def cleanup(self) -> None:
-        """Cleanup resources."""        try:
+        """Cleanup resources."""
+        try:
             if hasattr(self, 'geoip_reader') and self.geoip_reader:
                 self.geoip_reader.close()
             

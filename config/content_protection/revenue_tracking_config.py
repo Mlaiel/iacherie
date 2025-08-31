@@ -16,7 +16,8 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strict
 Violators will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, Any, Optional, List, Set
+"""
+from typing import Dict, Any, Optional, List, Set
 from dataclasses import dataclass, field
 from enum import Enum
 from decimal import Decimal
@@ -24,14 +25,16 @@ import os
 
 
 class RevenueTrackingMode(str, Enum):
-    """Revenue tracking operational modes."""    REAL_TIME = "real_time"
+    """Revenue tracking operational modes."""
+    REAL_TIME = "real_time"
     BATCH = "batch"
     HYBRID = "hybrid"
     ON_DEMAND = "on_demand"
 
 
 class PlatformType(str, Enum):
-    """Supported platforms for revenue tracking."""    YOUTUBE = "youtube"
+    """Supported platforms for revenue tracking."""
+    YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -46,7 +49,8 @@ class PlatformType(str, Enum):
 
 
 class RevenueStreamType(str, Enum):
-    """Types of revenue streams to track."""    STREAMING_ROYALTIES = "streaming_royalties"
+    """Types of revenue streams to track."""
+    STREAMING_ROYALTIES = "streaming_royalties"
     LICENSING_FEES = "licensing_fees"
     BRAND_PARTNERSHIPS = "brand_partnerships"
     MERCHANDISE_SALES = "merchandise_sales"
@@ -59,7 +63,8 @@ class RevenueStreamType(str, Enum):
 
 
 class CurrencyType(str, Enum):
-    """Supported currencies for revenue tracking."""    USD = "USD"
+    """Supported currencies for revenue tracking."""
+    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     CAD = "CAD"
@@ -72,7 +77,8 @@ class CurrencyType(str, Enum):
 
 
 class PaymentProcessor(str, Enum):
-    """Supported payment processors."""    STRIPE = "stripe"
+    """Supported payment processors."""
+    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     BLOCKCHAIN = "blockchain"
@@ -82,7 +88,8 @@ class PaymentProcessor(str, Enum):
 
 @dataclass
 class PlatformCredentials:
-    """API credentials configuration for platform integration."""    platform: PlatformType
+    """API credentials configuration for platform integration."""
+    platform: PlatformType
     api_key: str
     api_secret: str
     client_id: Optional[str] = None
@@ -97,7 +104,8 @@ class PlatformCredentials:
 
 @dataclass
 class RevenueMetricsConfig:
-    """Configuration for revenue metrics calculation."""    enable_real_time_metrics: bool = True
+    """Configuration for revenue metrics calculation."""
+    enable_real_time_metrics: bool = True
     enable_historical_analysis: bool = True
     enable_forecasting: bool = True
     enable_anomaly_detection: bool = True
@@ -119,7 +127,8 @@ class RevenueMetricsConfig:
 
 @dataclass
 class PaymentProcessingConfig:
-    """Configuration for payment processing and automation."""    enable_automated_payments: bool = True
+    """Configuration for payment processing and automation."""
+    enable_automated_payments: bool = True
     payment_processors: List[PaymentProcessor] = field(
         default_factory=lambda: [PaymentProcessor.STRIPE, PaymentProcessor.PAYPAL]
     )
@@ -147,7 +156,8 @@ class PaymentProcessingConfig:
 
 @dataclass
 class LicensingAutomationConfig:
-    """Configuration for automated licensing based on content protection."""    enable_automated_licensing: bool = True
+    """Configuration for automated licensing based on content protection."""
+    enable_automated_licensing: bool = True
     enable_smart_contracts: bool = True
     enable_blockchain_verification: bool = False
     
@@ -177,7 +187,8 @@ class LicensingAutomationConfig:
 
 @dataclass
 class ComplianceConfig:
-    """Configuration for financial and legal compliance."""    enable_gdpr_compliance: bool = True
+    """Configuration for financial and legal compliance."""
+    enable_gdpr_compliance: bool = True
     enable_ccpa_compliance: bool = True
     enable_sox_compliance: bool = True
     enable_pci_dss_compliance: bool = True
@@ -202,7 +213,8 @@ class ComplianceConfig:
 
 @dataclass
 class AlertingConfig:
-    """Configuration for revenue tracking alerts and notifications."""    enable_revenue_alerts: bool = True
+    """Configuration for revenue tracking alerts and notifications."""
+    enable_revenue_alerts: bool = True
     enable_payment_alerts: bool = True
     enable_anomaly_alerts: bool = True
     enable_compliance_alerts: bool = True
@@ -226,7 +238,8 @@ class AlertingConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance configuration for revenue tracking system."""    # Processing limits
+    """Performance configuration for revenue tracking system."""
+    # Processing limits
     max_concurrent_requests: int = 100
     request_timeout_seconds: int = 30
     max_retry_attempts: int = 3
@@ -251,7 +264,8 @@ class PerformanceConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration for revenue tracking."""    # Authentication
+    """Security configuration for revenue tracking."""
+    # Authentication
     require_authentication: bool = True
     token_expiry_hours: int = 24
     enable_two_factor_auth: bool = True
@@ -283,7 +297,8 @@ class SecurityConfig:
 
 @dataclass
 class RevenueTrackingConfig:
-    """Main revenue tracking configuration for content protection."""    
+    """Main revenue tracking configuration for content protection."""
+    
     # Core settings
     tracking_mode: RevenueTrackingMode = RevenueTrackingMode.HYBRID
     supported_platforms: Set[PlatformType] = field(
@@ -319,7 +334,8 @@ class RevenueTrackingConfig:
     enable_watermark_integration: bool = True
     
     def validate_config(self) -> bool:
-        """Validate the revenue tracking configuration."""        try:
+        """Validate the revenue tracking configuration."""
+        try:
             # Validate basic settings
             if not self.supported_platforms:
                 raise ValueError("At least one platform must be supported")
@@ -354,7 +370,8 @@ class RevenueTrackingConfig:
     
     @classmethod
     def from_environment(cls) -> 'RevenueTrackingConfig':
-        """Create configuration from environment variables."""        config = cls()
+        """Create configuration from environment variables."""
+        config = cls()
         
         # Load basic settings from environment
         if os.getenv('REVENUE_TRACKING_MODE'):
@@ -380,7 +397,8 @@ class RevenueTrackingConfig:
         return config
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary format."""        return {
+        """Convert configuration to dictionary format."""
+        return {
             'tracking_mode': self.tracking_mode.value,
             'supported_platforms': [platform.value for platform in self.supported_platforms],
             'supported_revenue_streams': [stream.value for stream in self.supported_revenue_streams],
@@ -406,7 +424,8 @@ class RevenueTrackingConfig:
 # Factory functions for common configurations
 
 def create_production_config() -> RevenueTrackingConfig:
-    """Create production-ready revenue tracking configuration."""    config = RevenueTrackingConfig()
+    """Create production-ready revenue tracking configuration."""
+    config = RevenueTrackingConfig()
     
     # Production security settings
     config.security_config.require_authentication = True
@@ -432,7 +451,8 @@ def create_production_config() -> RevenueTrackingConfig:
 
 
 def create_development_config() -> RevenueTrackingConfig:
-    """Create development-friendly revenue tracking configuration."""    config = RevenueTrackingConfig()
+    """Create development-friendly revenue tracking configuration."""
+    config = RevenueTrackingConfig()
     
     # Development settings
     config.tracking_mode = RevenueTrackingMode.BATCH
@@ -445,7 +465,8 @@ def create_development_config() -> RevenueTrackingConfig:
 
 
 def create_testing_config() -> RevenueTrackingConfig:
-    """Create testing configuration for revenue tracking."""    config = RevenueTrackingConfig()
+    """Create testing configuration for revenue tracking."""
+    config = RevenueTrackingConfig()
     
     # Testing settings
     config.tracking_mode = RevenueTrackingMode.ON_DEMAND

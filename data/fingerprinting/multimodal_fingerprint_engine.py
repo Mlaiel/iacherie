@@ -17,7 +17,8 @@ Surveillance Web → Détection Violations → Protection Automatisée
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
-"""import hashlib
+"""
+import hashlib
 import numpy as np
 import cv2
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -46,14 +47,16 @@ logger = logging.getLogger(__name__)
 
 
 class ContentFormat(Enum):
-    """Formats de contenu supportés pour créateurs multi-format."""    AUDIO = "audio"      # Musiciens (Spotify, SoundCloud, etc.)
+    """Formats de contenu supportés pour créateurs multi-format."""
+    AUDIO = "audio"      # Musiciens (Spotify, SoundCloud, etc.)
     VIDEO = "video"      # Influenceurs, Comédiens (YouTube, TikTok, etc.)  
     IMAGE = "image"      # Photographes (Instagram, portfolios, etc.)
     TEXT = "text"        # Blogueurs (Medium, blogs personnels, etc.)
 
 
 class FingerprintMethod(Enum):
-    """Méthodes de fingerprinting disponibles - Niveau Enterprise."""    # Audio Enterprise
+    """Méthodes de fingerprinting disponibles - Niveau Enterprise."""
+    # Audio Enterprise
     CHROMAPRINT = "chromaprint"
     ESSENTIA_SPECTRAL = "essentia_spectral"
     MFCC = "mfcc"
@@ -80,7 +83,8 @@ class FingerprintMethod(Enum):
 
 
 class SimilarityMetric(Enum):
-    """Métriques de similarité pour matching avancé."""    COSINE = "cosine"
+    """Métriques de similarité pour matching avancé."""
+    COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     HAMMING = "hamming"
     JACCARD = "jaccard"
@@ -89,7 +93,8 @@ class SimilarityMetric(Enum):
 
 @dataclass
 class FingerprintResult:
-    """Résultat de fingerprinting enterprise."""    content_id: str
+    """Résultat de fingerprinting enterprise."""
+    content_id: str
     creator_id: str
     content_format: ContentFormat
     method: FingerprintMethod
@@ -107,7 +112,8 @@ class FingerprintResult:
 
 @dataclass
 class SimilarityMatch:
-    """Match de similarité entre contenus créateurs."""    query_content_id: str
+    """Match de similarité entre contenus créateurs."""
+    query_content_id: str
     matched_content_id: str
     query_creator_id: str
     matched_creator_id: str
@@ -123,7 +129,8 @@ class SimilarityMatch:
 
 @dataclass
 class MultiModalFingerprint:
-    """Fingerprint multi-modal complet pour créateur."""    content_id: str
+    """Fingerprint multi-modal complet pour créateur."""
+    content_id: str
     creator_id: str
     creator_type: str  # 'musician', 'influencer', 'photographer', 'blogger', 'comedian'
     content_format: ContentFormat
@@ -137,7 +144,8 @@ class MultiModalFingerprint:
 
 
 class MultiModalFingerprintEngine:
-    """    🔍 Moteur Enterprise de Fingerprinting Multi-Modal IA-Influencer-Agent
+    """
+    🔍 Moteur Enterprise de Fingerprinting Multi-Modal IA-Influencer-Agent
     ======================================================================
     
     Fingerprinting professionnel pour protection contenu créateurs multi-format :
@@ -153,7 +161,8 @@ class MultiModalFingerprintEngine:
     - Image: >92% précision (CLIP + ImageHash)
     - Texte: >88% précision (BERT + RoBERTa)
     - Détection: <10s temps réel
-    """    
+    """
+    
     def __init__(
         self,
         db_session: Any,
@@ -162,7 +171,8 @@ class MultiModalFingerprintEngine:
         storage_manager: Any,
         config: Optional[Dict[str, Any]] = None
     ):
-        """        Initialise le moteur de fingerprinting multi-modal enterprise.
+        """
+        Initialise le moteur de fingerprinting multi-modal enterprise.
         
         Args:
             db_session: Session PostgreSQL
@@ -170,7 +180,8 @@ class MultiModalFingerprintEngine:
             vector_db_manager: Gestionnaire FAISS/Pinecone
             storage_manager: Gestionnaire stockage S3/MinIO
             config: Configuration enterprise
-        """        self.db_session = db_session
+        """
+        self.db_session = db_session
         self.redis_client = redis_client
         self.vector_db_manager = vector_db_manager
         self.storage_manager = storage_manager
@@ -204,7 +215,8 @@ class MultiModalFingerprintEngine:
         self.logger.info("🔍 MultiModalFingerprintEngine enterprise initialisé")
     
     async def initialize_ai_models(self) -> None:
-        """Initialise les modèles IA pour fingerprinting enterprise."""        try:
+        """Initialise les modèles IA pour fingerprinting enterprise."""
+        try:
             self.logger.info("🧠 Chargement modèles IA enterprise...")
             
             # CLIP pour images (OpenAI)
@@ -248,7 +260,8 @@ class MultiModalFingerprintEngine:
         methods: Optional[List[FingerprintMethod]] = None,
         high_precision: bool = True
     ) -> MultiModalFingerprint:
-        """        Génère fingerprint multi-modal pour contenu créateur.
+        """
+        Génère fingerprint multi-modal pour contenu créateur.
         
         FLUX CRÉATEUR:
         Upload → Fingerprinting Multi-Modal → Protection IA → Base Vectorielle
@@ -265,7 +278,8 @@ class MultiModalFingerprintEngine:
             
         Returns:
             Fingerprint multi-modal complet
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             self.logger.info(f"🔍 Génération fingerprint {creator_type} - {content_format.value}: {content_id}")
@@ -369,7 +383,8 @@ class MultiModalFingerprintEngine:
         creator_exclusions: Optional[List[str]] = None,
         violation_detection: bool = True
     ) -> List[SimilarityMatch]:
-        """        Trouve violations de contenu et similarités suspectes.
+        """
+        Trouve violations de contenu et similarités suspectes.
         
         PROTECTION CRÉATEUR:
         Fingerprint → Recherche Similarité → Détection Violations → Alertes Automatisées
@@ -383,7 +398,8 @@ class MultiModalFingerprintEngine:
             
         Returns:
             Liste matches avec évaluation risque violation
-        """        try:
+        """
+        try:
             self.logger.info(
                 f"🔎 Recherche violations pour créateur {query_fingerprint.creator_type}: "
                 f"{query_fingerprint.content_id}"
@@ -454,7 +470,8 @@ class MultiModalFingerprintEngine:
         content_format: ContentFormat,
         protection_level: str
     ) -> List[FingerprintMethod]:
-        """Obtient méthodes optimisées selon type créateur et niveau protection."""        
+        """Obtient méthodes optimisées selon type créateur et niveau protection."""
+        
         # Méthodes par type de créateur
         creator_methods = {
             'musician': {
@@ -522,7 +539,8 @@ class MultiModalFingerprintEngine:
         return methods or self._get_default_methods(content_format)
     
     def _get_default_methods(self, content_format: ContentFormat) -> List[FingerprintMethod]:
-        """Méthodes par défaut selon format."""        defaults = {
+        """Méthodes par défaut selon format."""
+        defaults = {
             ContentFormat.AUDIO: [FingerprintMethod.CHROMAPRINT, FingerprintMethod.MFCC],
             ContentFormat.VIDEO: [FingerprintMethod.PERCEPTUAL_HASH, FingerprintMethod.FRAME_DIFFERENCE],
             ContentFormat.IMAGE: [FingerprintMethod.CLIP_EMBEDDING, FingerprintMethod.PHASH],
@@ -536,7 +554,8 @@ class MultiModalFingerprintEngine:
         creator_type: str,
         content_format: ContentFormat
     ) -> float:
-        """Calcule score qualité adapté au type de créateur."""        if not quality_scores:
+        """Calcule score qualité adapté au type de créateur."""
+        if not quality_scores:
             return 0.0
         
         base_score = np.mean(quality_scores)
@@ -558,7 +577,8 @@ class MultiModalFingerprintEngine:
         embeddings: List[np.ndarray],
         content_format: ContentFormat
     ) -> np.ndarray:
-        """Fusion intelligente d'embeddings selon format."""        if not embeddings:
+        """Fusion intelligente d'embeddings selon format."""
+        if not embeddings:
             return np.array([])
         
         # Pondération selon importance méthode par format
@@ -588,7 +608,8 @@ class MultiModalFingerprintEngine:
         return np.sum(weighted_embeddings, axis=0)
     
     def _get_used_ai_models(self, fingerprints: Dict[FingerprintMethod, FingerprintResult]) -> List[str]:
-        """Obtient liste des modèles IA utilisés."""        models = set()
+        """Obtient liste des modèles IA utilisés."""
+        models = set()
         
         for method in fingerprints.keys():
             if method in [FingerprintMethod.CLIP_EMBEDDING]:
@@ -610,7 +631,8 @@ class MultiModalFingerprintEngine:
         match_metadata: Dict[str, Any],
         violation_detection: bool
     ) -> Optional[SimilarityMatch]:
-        """Valide match et évalue risque violation."""        try:
+        """Valide match et évalue risque violation."""
+        try:
             # Détermination niveau confiance
             if similarity_score >= 0.98:
                 confidence = 'high'
@@ -670,7 +692,8 @@ class MultiModalFingerprintEngine:
         match_type: str,
         match_metadata: Dict[str, Any]
     ) -> str:
-        """Évalue le risque de violation selon critères enterprise."""        
+        """Évalue le risque de violation selon critères enterprise."""
+        
         # Règles de base selon similarité
         if similarity_score >= 0.98 and match_type == 'exact':
             base_risk = 'critical'
@@ -699,7 +722,8 @@ class MultiModalFingerprintEngine:
         return base_risk
     
     def _get_violation_priority(self, violation_risk: str) -> int:
-        """Convertit risque violation en priorité numérique."""        priorities = {
+        """Convertit risque violation en priorité numérique."""
+        priorities = {
             'critical': 5,
             'high': 4,
             'medium': 3,
@@ -709,7 +733,8 @@ class MultiModalFingerprintEngine:
         return priorities.get(violation_risk, 0)
     
     def _count_violations_by_risk(self, matches: List[SimilarityMatch]) -> Dict[str, int]:
-        """Compte violations par niveau de risque."""        counts = {'critical': 0, 'high': 0, 'medium': 0, 'low': 0, 'none': 0}
+        """Compte violations par niveau de risque."""
+        counts = {'critical': 0, 'high': 0, 'medium': 0, 'low': 0, 'none': 0}
         for match in matches:
             counts[match.violation_risk] = counts.get(match.violation_risk, 0) + 1
         return counts
@@ -719,7 +744,8 @@ class MultiModalFingerprintEngine:
     # [Implémentations détaillées identiques au fichier original mais optimisées]
     
     async def _store_in_enterprise_vector_db(self, fingerprint: MultiModalFingerprint) -> None:
-        """Stockage enterprise optimisé dans base vectorielle."""        try:
+        """Stockage enterprise optimisé dans base vectorielle."""
+        try:
             if fingerprint.primary_embedding.size > 0:
                 # Stockage avec métadonnées enterprise
                 enterprise_metadata = {
@@ -762,7 +788,8 @@ class MultiModalFingerprintEngine:
         faiss_index: int,
         metadata: Dict[str, Any]
     ) -> None:
-        """Sauvegarde mapping enterprise avec métadonnées complètes."""        mapping_key = f"faiss_enterprise:{content_format.value}:{faiss_index}"
+        """Sauvegarde mapping enterprise avec métadonnées complètes."""
+        mapping_key = f"faiss_enterprise:{content_format.value}:{faiss_index}"
         mapping_data = {
             'content_id': content_id,
             'metadata': metadata
@@ -774,7 +801,8 @@ class MultiModalFingerprintEngine:
         )
     
     async def _cache_fingerprint_enterprise(self, fingerprint: MultiModalFingerprint) -> None:
-        """Cache fingerprint avec métadonnées enterprise."""        try:
+        """Cache fingerprint avec métadonnées enterprise."""
+        try:
             cache_key = f"fingerprint_enterprise:{fingerprint.content_id}"
             
             cache_data = {

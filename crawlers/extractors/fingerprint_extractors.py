@@ -27,7 +27,8 @@ Technical Team Expertise:
 - IA Prompt Engineer: Prompt optimization and AI interaction
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import numpy as np
@@ -69,7 +70,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class FingerprintResult:
-    """Advanced fingerprint extraction result with AI features"""    
+    """Advanced fingerprint extraction result with AI features"""
+    
     fingerprint_type: str  # audio, video, image, text
     fingerprint_data: Union[str, np.ndarray, bytes]
     confidence_score: float
@@ -98,7 +100,8 @@ class FingerprintResult:
 
 @dataclass
 class AudioFingerprint:
-    """Advanced audio fingerprint with AI features"""    
+    """Advanced audio fingerprint with AI features"""
+    
     # Traditional fingerprints
     chromaprint_hash: str
     spectral_features: np.ndarray
@@ -129,7 +132,8 @@ class AudioFingerprint:
 
 @dataclass
 class VideoFingerprint:
-    """Advanced video fingerprint with AI features"""    
+    """Advanced video fingerprint with AI features"""
+    
     # Traditional fingerprints
     frame_hashes: List[str]
     optical_flow_features: np.ndarray
@@ -158,7 +162,8 @@ class VideoFingerprint:
 
 @dataclass
 class ImageFingerprint:
-    """Advanced image fingerprint with AI features"""    
+    """Advanced image fingerprint with AI features"""
+    
     # Traditional hashes
     perceptual_hash: str
     difference_hash: str
@@ -186,7 +191,8 @@ class ImageFingerprint:
 
 @dataclass
 class TextFingerprint:
-    """Advanced text fingerprint with AI features"""    
+    """Advanced text fingerprint with AI features"""
+    
     # Traditional fingerprints
     content_hash: str
     semantic_hash: str
@@ -218,7 +224,8 @@ class TextFingerprint:
 
 @dataclass
 class ImageFingerprint:
-    """Image fingerprint data structure"""    
+    """Image fingerprint data structure"""
+    
     perceptual_hash: str
     clip_embedding: np.ndarray
     color_histogram: np.ndarray
@@ -230,7 +237,8 @@ class ImageFingerprint:
 
 @dataclass
 class TextFingerprint:
-    """Text fingerprint data structure"""    
+    """Text fingerprint data structure"""
+    
     semantic_embedding: np.ndarray
     syntactic_features: Dict[str, Any]
     linguistic_patterns: List[str]
@@ -241,7 +249,8 @@ class TextFingerprint:
 
 
 class BaseFingerprintExtractor(BaseExtractor):
-    """Advanced base class for AI-powered fingerprint extractors"""    
+    """Advanced base class for AI-powered fingerprint extractors"""
+    
     def __init__(self, name: str, fingerprint_type: str):
         super().__init__(name)
         self.fingerprint_type = fingerprint_type
@@ -256,7 +265,8 @@ class BaseFingerprintExtractor(BaseExtractor):
         self._initialize_vector_database()
     
     def _initialize_ai_models(self):
-        """Initialize AI models for fingerprinting"""        try:
+        """Initialize AI models for fingerprinting"""
+        try:
             if HAS_AI_LIBS:
                 # Initialize device
                 self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -265,7 +275,8 @@ class BaseFingerprintExtractor(BaseExtractor):
             self.logger.error(f"Failed to initialize AI models: {e}")
     
     def _initialize_vector_database(self):
-        """Initialize FAISS vector database for similarity search"""        try:
+        """Initialize FAISS vector database for similarity search"""
+        try:
             if HAS_FAISS:
                 # Initialize FAISS index for similarity search
                 self.vector_dimension = 512  # Default dimension
@@ -276,14 +287,17 @@ class BaseFingerprintExtractor(BaseExtractor):
     
     @abstractmethod
     async def extract_fingerprint(self, content: Union[bytes, str, np.ndarray]) -> FingerprintResult:
-        """Extract fingerprint from content"""        pass
+        """Extract fingerprint from content"""
+        pass
     
     @abstractmethod
     async def compare_fingerprints(self, fp1: FingerprintResult, fp2: FingerprintResult) -> float:
-        """Compare two fingerprints and return similarity score"""        pass
+        """Compare two fingerprints and return similarity score"""
+        pass
     
     async def search_similar_fingerprints(self, fingerprint: FingerprintResult, top_k: int = 10) -> List[Tuple[str, float]]:
-        """Search for similar fingerprints in vector database"""        try:
+        """Search for similar fingerprints in vector database"""
+        try:
             if not HAS_FAISS or not hasattr(self, 'faiss_index'):
                 return []
             
@@ -309,7 +323,8 @@ class BaseFingerprintExtractor(BaseExtractor):
             return []
     
     async def add_fingerprint_to_index(self, fingerprint: FingerprintResult, fingerprint_id: str):
-        """Add fingerprint to vector database index"""        try:
+        """Add fingerprint to vector database index"""
+        try:
             if not HAS_FAISS or not hasattr(self, 'faiss_index'):
                 return
             
@@ -332,7 +347,8 @@ class BaseFingerprintExtractor(BaseExtractor):
 
 
 class AudioFingerprintExtractor(BaseFingerprintExtractor):
-    """Industrial-grade audio fingerprinting system with AI"""    
+    """Industrial-grade audio fingerprinting system with AI"""
+    
     def __init__(self):
         super().__init__("AudioFingerprintExtractor", "audio")
         
@@ -353,7 +369,8 @@ class AudioFingerprintExtractor(BaseFingerprintExtractor):
             self._initialize_audio_models()
     
     def _initialize_audio_models(self):
-        """Initialize specialized audio AI models"""        try:
+        """Initialize specialized audio AI models"""
+        try:
             # Audio feature extraction models
             self.audio_models = {
                 'mfcc_extractor': None,  # Custom MFCC extractor
@@ -379,7 +396,8 @@ class AudioFingerprintExtractor(BaseFingerprintExtractor):
             self.logger.error(f"Failed to initialize audio models: {e}")
     
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request contains audio content"""        if request.content_type == ContentType.AUDIO:
+        """Check if request contains audio content"""
+        if request.content_type == ContentType.AUDIO:
             return True
         
         if request.url:
@@ -388,7 +406,8 @@ class AudioFingerprintExtractor(BaseFingerprintExtractor):
         return request.content is not None
     
     async def extract_fingerprint(self, content: Union[bytes, str, np.ndarray]) -> FingerprintResult:
-        """Extract comprehensive audio fingerprint with AI features"""        start_time = datetime.now()
+        """Extract comprehensive audio fingerprint with AI features"""
+        start_time = datetime.now()
         
         try:
             # Load audio data
@@ -471,7 +490,8 @@ class AudioFingerprintExtractor(BaseFingerprintExtractor):
             raise
     
     async def _load_audio_data(self, content: Union[bytes, str, np.ndarray]) -> Tuple[Optional[np.ndarray], Optional[int]]:
-        """Load audio data from various sources"""        try:
+        """Load audio data from various sources"""
+        try:
             if isinstance(content, np.ndarray):
                 return content, self.sample_rate
             
@@ -494,7 +514,8 @@ class AudioFingerprintExtractor(BaseFingerprintExtractor):
             return None, None
     
     async def _extract_traditional_fingerprints(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract traditional audio fingerprints"""        fingerprints = {}
+        """Extract traditional audio fingerprints"""
+        fingerprints = {}
         
         try:
             # Chromaprint fingerprint
@@ -548,7 +569,8 @@ class AudioFingerprintExtractor(BaseFingerprintExtractor):
         return fingerprints
     
     async def _extract_ai_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract AI-powered audio features"""        ai_features = {}
+        """Extract AI-powered audio features"""
+        ai_features = {}
         
         try:
             # Neural embedding (simplified implementation)
@@ -614,7 +636,8 @@ class AudioFingerprintExtractor(BaseFingerprintExtractor):
         return ai_features
     
     async def _create_hash_signatures(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, str]:
-        """Create robust hash signatures for audio"""        hash_signatures = {}
+        """Create robust hash signatures for audio"""
+        hash_signatures = {}
         
         try:
             # Peak-based hash
@@ -649,7 +672,8 @@ class AudioFingerprintExtractor(BaseFingerprintExtractor):
         return hash_signatures
     
     async def _calculate_robustness_metrics(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Calculate robustness metrics for the audio fingerprint"""        metrics = {
+        """Calculate robustness metrics for the audio fingerprint"""
+        metrics = {
             'compression_resistance': 0.8,  # Estimated based on feature types
             'noise_resistance': 0.75,      # MFCC and chroma are relatively noise-resistant
             'speed_change_resistance': 0.6, # Tempo-based features are affected by speed changes
@@ -692,7 +716,8 @@ class AudioFingerprintExtractor(BaseFingerprintExtractor):
         return metrics
     
     def _get_model_versions(self) -> Dict[str, str]:
-        """Get versions of AI models used"""        return {
+        """Get versions of AI models used"""
+        return {
             'librosa': '0.9.2',  # Example version
             'chromaprint': '1.5.1',
             'neural_model': 'v1.0',
@@ -700,7 +725,8 @@ class AudioFingerprintExtractor(BaseFingerprintExtractor):
         }
     
     async def compare_fingerprints(self, fp1: FingerprintResult, fp2: FingerprintResult) -> float:
-        """Compare two audio fingerprints and return similarity score"""        try:
+        """Compare two audio fingerprints and return similarity score"""
+        try:
             if fp1.fingerprint_type != "audio" or fp2.fingerprint_type != "audio":
                 return 0.0
             
@@ -810,7 +836,8 @@ class AudioFingerprintExtractor(BaseFingerprintExtractor):
             raise
     
     def _extract_spectral_features(self, y: np.ndarray, sr: int) -> np.ndarray:
-        """Extract spectral features from audio"""        # Spectral centroid
+        """Extract spectral features from audio"""
+        # Spectral centroid
         spectral_centroids = librosa.feature.spectral_centroid(y=y, sr=sr)[0]
         
         # Spectral rolloff
@@ -837,7 +864,8 @@ class AudioFingerprintExtractor(BaseFingerprintExtractor):
         return features
     
     def _estimate_key(self, chroma: np.ndarray) -> Optional[str]:
-        """Estimate musical key from chroma features"""        try:
+        """Estimate musical key from chroma features"""
+        try:
             # Simple key estimation based on chroma profile
             chroma_mean = np.mean(chroma, axis=1)
             key_profiles = {
@@ -866,7 +894,8 @@ class AudioFingerprintExtractor(BaseFingerprintExtractor):
             return None
     
     async def compare_fingerprints(self, fp1: FingerprintResult, fp2: FingerprintResult) -> float:
-        """Compare two audio fingerprints"""        if not isinstance(fp1.fingerprint_data, AudioFingerprint) or \
+        """Compare two audio fingerprints"""
+        if not isinstance(fp1.fingerprint_data, AudioFingerprint) or \
            not isinstance(fp2.fingerprint_data, AudioFingerprint):
             return 0.0
         
@@ -899,7 +928,8 @@ class AudioFingerprintExtractor(BaseFingerprintExtractor):
         return min(1.0, max(0.0, total_similarity))
     
     def _compare_chromaprints(self, hash1: str, hash2: str) -> float:
-        """Compare chromaprint hashes"""        try:
+        """Compare chromaprint hashes"""
+        try:
             # Decode base64 hashes
             data1 = base64.b64decode(hash1)
             data2 = base64.b64decode(hash2)
@@ -917,7 +947,8 @@ class AudioFingerprintExtractor(BaseFingerprintExtractor):
             return 0.0
     
     def _cosine_similarity(self, v1: np.ndarray, v2: np.ndarray) -> float:
-        """Calculate cosine similarity between vectors"""        try:
+        """Calculate cosine similarity between vectors"""
+        try:
             dot_product = np.dot(v1, v2)
             norm_v1 = np.linalg.norm(v1)
             norm_v2 = np.linalg.norm(v2)
@@ -932,7 +963,8 @@ class AudioFingerprintExtractor(BaseFingerprintExtractor):
 
 
 class VideoFingerprintExtractor(BaseFingerprintExtractor):
-    """Advanced video fingerprinting system"""    
+    """Advanced video fingerprinting system"""
+    
     def __init__(self):
         super().__init__("VideoFingerprintExtractor", "video")
         
@@ -944,7 +976,8 @@ class VideoFingerprintExtractor(BaseFingerprintExtractor):
             self.hash_size = 8
     
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request contains video content"""        if request.content_type != ContentType.VIDEO:
+        """Check if request contains video content"""
+        if request.content_type != ContentType.VIDEO:
             return False
         
         if request.source_url:
@@ -953,7 +986,8 @@ class VideoFingerprintExtractor(BaseFingerprintExtractor):
         return request.content is not None
     
     async def extract_fingerprint(self, content: Union[bytes, str, np.ndarray]) -> FingerprintResult:
-        """Extract comprehensive video fingerprint"""        if not HAS_AI_LIBS:
+        """Extract comprehensive video fingerprint"""
+        if not HAS_AI_LIBS:
             raise RuntimeError("Video processing libraries not available")
         
         try:
@@ -1060,7 +1094,8 @@ class VideoFingerprintExtractor(BaseFingerprintExtractor):
             raise
     
     def _compute_frame_hash(self, frame: np.ndarray) -> str:
-        """Compute perceptual hash for video frame"""        # Convert to grayscale and resize
+        """Compute perceptual hash for video frame"""
+        # Convert to grayscale and resize
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         resized = cv2.resize(gray, (self.hash_size + 1, self.hash_size))
         
@@ -1076,7 +1111,8 @@ class VideoFingerprintExtractor(BaseFingerprintExtractor):
         return format(hash_value, '016x')
     
     def _extract_dominant_colors(self, frame: np.ndarray, k: int = 3) -> List[Tuple[int, int, int]]:
-        """Extract dominant colors from frame"""        # Reshape frame to list of pixels
+        """Extract dominant colors from frame"""
+        # Reshape frame to list of pixels
         pixels = frame.reshape(-1, 3)
         
         # Use K-means clustering to find dominant colors
@@ -1089,7 +1125,8 @@ class VideoFingerprintExtractor(BaseFingerprintExtractor):
         return [tuple(color) for color in colors]
     
     def _compute_optical_flow(self, prev_frame: np.ndarray, curr_frame: np.ndarray) -> np.ndarray:
-        """Compute optical flow features between frames"""        # Calculate optical flow using Lucas-Kanade method
+        """Compute optical flow features between frames"""
+        # Calculate optical flow using Lucas-Kanade method
         flow = cv2.calcOpticalFlowPyrLK(
             prev_frame, curr_frame, 
             None, None,
@@ -1113,7 +1150,8 @@ class VideoFingerprintExtractor(BaseFingerprintExtractor):
         return features
     
     def _extract_scene_descriptor(self, frame: np.ndarray) -> Dict[str, Any]:
-        """Extract scene descriptor from frame"""        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        """Extract scene descriptor from frame"""
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         
         # Edge detection
         edges = cv2.Canny(gray, 50, 150)
@@ -1136,7 +1174,8 @@ class VideoFingerprintExtractor(BaseFingerprintExtractor):
         }
     
     async def compare_fingerprints(self, fp1: FingerprintResult, fp2: FingerprintResult) -> float:
-        """Compare two video fingerprints"""        if not isinstance(fp1.fingerprint_data, VideoFingerprint) or \
+        """Compare two video fingerprints"""
+        if not isinstance(fp1.fingerprint_data, VideoFingerprint) or \
            not isinstance(fp2.fingerprint_data, VideoFingerprint):
             return 0.0
         
@@ -1169,7 +1208,8 @@ class VideoFingerprintExtractor(BaseFingerprintExtractor):
         return min(1.0, max(0.0, total_similarity))
     
     def _compare_frame_hashes(self, hashes1: List[str], hashes2: List[str]) -> float:
-        """Compare lists of frame hashes"""        if not hashes1 or not hashes2:
+        """Compare lists of frame hashes"""
+        if not hashes1 or not hashes2:
             return 0.0
         
         # Find best alignment between hash sequences
@@ -1198,7 +1238,8 @@ class VideoFingerprintExtractor(BaseFingerprintExtractor):
         return max_similarity
     
     def _cosine_similarity(self, v1: np.ndarray, v2: np.ndarray) -> float:
-        """Calculate cosine similarity between vectors"""        try:
+        """Calculate cosine similarity between vectors"""
+        try:
             dot_product = np.dot(v1, v2)
             norm_v1 = np.linalg.norm(v1)
             norm_v2 = np.linalg.norm(v2)
@@ -1213,7 +1254,8 @@ class VideoFingerprintExtractor(BaseFingerprintExtractor):
 
 
 class ImageFingerprintExtractor(BaseFingerprintExtractor):
-    """Advanced image fingerprinting system"""    
+    """Advanced image fingerprinting system"""
+    
     def __init__(self):
         super().__init__("ImageFingerprintExtractor", "image")
         
@@ -1230,7 +1272,8 @@ class ImageFingerprintExtractor(BaseFingerprintExtractor):
                 self.logger.warning("CLIP model not available")
     
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request contains image content"""        if request.content_type != ContentType.IMAGE:
+        """Check if request contains image content"""
+        if request.content_type != ContentType.IMAGE:
             return False
         
         if request.source_url:
@@ -1239,7 +1282,8 @@ class ImageFingerprintExtractor(BaseFingerprintExtractor):
         return request.content is not None
     
     async def extract_fingerprint(self, content: Union[bytes, str, np.ndarray]) -> FingerprintResult:
-        """Extract comprehensive image fingerprint"""        if not HAS_AI_LIBS:
+        """Extract comprehensive image fingerprint"""
+        if not HAS_AI_LIBS:
             raise RuntimeError("Image processing libraries not available")
         
         try:
@@ -1309,7 +1353,8 @@ class ImageFingerprintExtractor(BaseFingerprintExtractor):
             raise
     
     async def _extract_clip_embedding(self, image: Image.Image) -> Optional[np.ndarray]:
-        """Extract CLIP embedding from image"""        try:
+        """Extract CLIP embedding from image"""
+        try:
             inputs = self.clip_processor(images=image, return_tensors="pt")
             
             with torch.no_grad():
@@ -1326,7 +1371,8 @@ class ImageFingerprintExtractor(BaseFingerprintExtractor):
             return None
     
     def _extract_color_histogram(self, image: Image.Image, bins: int = 32) -> np.ndarray:
-        """Extract color histogram from image"""        # Convert to numpy array
+        """Extract color histogram from image"""
+        # Convert to numpy array
         img_array = np.array(image)
         
         # Calculate histogram for each channel
@@ -1343,7 +1389,8 @@ class ImageFingerprintExtractor(BaseFingerprintExtractor):
         return histogram
     
     def _extract_edge_features(self, image: Image.Image) -> np.ndarray:
-        """Extract edge features from image"""        # Convert to grayscale
+        """Extract edge features from image"""
+        # Convert to grayscale
         gray = image.convert('L')
         gray_array = np.array(gray)
         
@@ -1372,7 +1419,8 @@ class ImageFingerprintExtractor(BaseFingerprintExtractor):
         return features
     
     def _extract_texture_features(self, image: Image.Image) -> np.ndarray:
-        """Extract texture features from image"""        # Convert to grayscale
+        """Extract texture features from image"""
+        # Convert to grayscale
         gray = image.convert('L')
         gray_array = np.array(gray)
         
@@ -1418,7 +1466,8 @@ class ImageFingerprintExtractor(BaseFingerprintExtractor):
         return features
     
     async def compare_fingerprints(self, fp1: FingerprintResult, fp2: FingerprintResult) -> float:
-        """Compare two image fingerprints"""        if not isinstance(fp1.fingerprint_data, ImageFingerprint) or \
+        """Compare two image fingerprints"""
+        if not isinstance(fp1.fingerprint_data, ImageFingerprint) or \
            not isinstance(fp2.fingerprint_data, ImageFingerprint):
             return 0.0
         
@@ -1451,7 +1500,8 @@ class ImageFingerprintExtractor(BaseFingerprintExtractor):
         return min(1.0, max(0.0, total_similarity))
     
     def _cosine_similarity(self, v1: np.ndarray, v2: np.ndarray) -> float:
-        """Calculate cosine similarity between vectors"""        try:
+        """Calculate cosine similarity between vectors"""
+        try:
             dot_product = np.dot(v1, v2)
             norm_v1 = np.linalg.norm(v1)
             norm_v2 = np.linalg.norm(v2)
@@ -1466,7 +1516,8 @@ class ImageFingerprintExtractor(BaseFingerprintExtractor):
 
 
 class TextFingerprintExtractor(BaseFingerprintExtractor):
-    """Advanced text fingerprinting system"""    
+    """Advanced text fingerprinting system"""
+    
     def __init__(self):
         super().__init__("TextFingerprintExtractor", "text")
         
@@ -1488,10 +1539,12 @@ class TextFingerprintExtractor(BaseFingerprintExtractor):
                 pass
     
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request contains text content"""        return request.content_type == ContentType.TEXT and request.content is not None
+        """Check if request contains text content"""
+        return request.content_type == ContentType.TEXT and request.content is not None
     
     async def extract_fingerprint(self, content: Union[bytes, str, np.ndarray]) -> FingerprintResult:
-        """Extract comprehensive text fingerprint"""        if not HAS_AI_LIBS:
+        """Extract comprehensive text fingerprint"""
+        if not HAS_AI_LIBS:
             raise RuntimeError("Text processing libraries not available")
         
         try:
@@ -1570,7 +1623,8 @@ class TextFingerprintExtractor(BaseFingerprintExtractor):
             raise
     
     def _extract_syntactic_features(self, text: str) -> Dict[str, float]:
-        """Extract syntactic features from text"""        try:
+        """Extract syntactic features from text"""
+        try:
             # Tokenize
             tokens = nltk.word_tokenize(text.lower())
             
@@ -1610,7 +1664,8 @@ class TextFingerprintExtractor(BaseFingerprintExtractor):
             }
     
     def _extract_linguistic_patterns(self, text: str) -> List[str]:
-        """Extract linguistic patterns from text"""        patterns = []
+        """Extract linguistic patterns from text"""
+        patterns = []
         
         # Common patterns
         if re.search(r'\b(the|a|an)\b', text.lower()):
@@ -1640,7 +1695,8 @@ class TextFingerprintExtractor(BaseFingerprintExtractor):
         return patterns
     
     def _calculate_sentiment(self, text: str) -> float:
-        """Calculate sentiment score (simplified)"""        # Simple keyword-based sentiment
+        """Calculate sentiment score (simplified)"""
+        # Simple keyword-based sentiment
         positive_words = {'good', 'great', 'excellent', 'amazing', 'wonderful', 'fantastic', 'love', 'best'}
         negative_words = {'bad', 'terrible', 'awful', 'horrible', 'worst', 'hate', 'sad', 'angry'}
         
@@ -1657,7 +1713,8 @@ class TextFingerprintExtractor(BaseFingerprintExtractor):
         return (positive_count - negative_count) / total_sentiment_words
     
     async def compare_fingerprints(self, fp1: FingerprintResult, fp2: FingerprintResult) -> float:
-        """Compare two text fingerprints"""        if not isinstance(fp1.fingerprint_data, TextFingerprint) or \
+        """Compare two text fingerprints"""
+        if not isinstance(fp1.fingerprint_data, TextFingerprint) or \
            not isinstance(fp2.fingerprint_data, TextFingerprint):
             return 0.0
         
@@ -1696,7 +1753,8 @@ class TextFingerprintExtractor(BaseFingerprintExtractor):
         return min(1.0, max(0.0, total_similarity))
     
     def _compare_syntactic_features(self, features1: Dict[str, float], features2: Dict[str, float]) -> float:
-        """Compare syntactic features"""        common_keys = set(features1.keys()) & set(features2.keys())
+        """Compare syntactic features"""
+        common_keys = set(features1.keys()) & set(features2.keys())
         
         if not common_keys:
             return 0.0
@@ -1711,7 +1769,8 @@ class TextFingerprintExtractor(BaseFingerprintExtractor):
         return np.mean(similarities)
     
     def _compare_patterns(self, patterns1: List[str], patterns2: List[str]) -> float:
-        """Compare linguistic patterns"""        set1, set2 = set(patterns1), set(patterns2)
+        """Compare linguistic patterns"""
+        set1, set2 = set(patterns1), set(patterns2)
         
         if not set1 and not set2:
             return 1.0
@@ -1722,7 +1781,8 @@ class TextFingerprintExtractor(BaseFingerprintExtractor):
         return intersection / union if union > 0 else 0.0
     
     def _cosine_similarity(self, v1: np.ndarray, v2: np.ndarray) -> float:
-        """Calculate cosine similarity between vectors"""        try:
+        """Calculate cosine similarity between vectors"""
+        try:
             dot_product = np.dot(v1, v2)
             norm_v1 = np.linalg.norm(v1)
             norm_v2 = np.linalg.norm(v2)
@@ -1737,10 +1797,12 @@ class TextFingerprintExtractor(BaseFingerprintExtractor):
 
 
 class FingerprintExtractorFactory:
-    """Factory for creating fingerprint extractors"""    
+    """Factory for creating fingerprint extractors"""
+    
     @staticmethod
     def create_extractor(content_type: str) -> BaseFingerprintExtractor:
-        """Create appropriate fingerprint extractor"""        extractors = {
+        """Create appropriate fingerprint extractor"""
+        extractors = {
             'audio': AudioFingerprintExtractor,
             'video': VideoFingerprintExtractor,
             'image': ImageFingerprintExtractor,
@@ -1755,11 +1817,13 @@ class FingerprintExtractorFactory:
     
     @staticmethod
     def get_supported_types() -> List[str]:
-        """Get list of supported content types"""        return ['audio', 'video', 'image', 'text']
+        """Get list of supported content types"""
+        return ['audio', 'video', 'image', 'text']
 
 
 class FingerprintManager:
-    """Manager for fingerprint extraction and comparison operations"""    
+    """Manager for fingerprint extraction and comparison operations"""
+    
     def __init__(self):
         self.extractors = {}
         self.vector_index = None
@@ -1772,14 +1836,16 @@ class FingerprintManager:
     
     async def extract_fingerprint(self, content: Union[bytes, str, np.ndarray], 
                                 content_type: str) -> FingerprintResult:
-        """Extract fingerprint from content"""        if content_type not in self.extractors:
+        """Extract fingerprint from content"""
+        if content_type not in self.extractors:
             self.extractors[content_type] = FingerprintExtractorFactory.create_extractor(content_type)
         
         extractor = self.extractors[content_type]
         return await extractor.extract_fingerprint(content)
     
     async def compare_fingerprints(self, fp1: FingerprintResult, fp2: FingerprintResult) -> float:
-        """Compare two fingerprints"""        if fp1.fingerprint_type != fp2.fingerprint_type:
+        """Compare two fingerprints"""
+        if fp1.fingerprint_type != fp2.fingerprint_type:
             return 0.0
         
         content_type = fp1.fingerprint_type
@@ -1790,7 +1856,8 @@ class FingerprintManager:
         return await extractor.compare_fingerprints(fp1, fp2)
     
     def add_to_index(self, fingerprint: FingerprintResult, metadata: Dict[str, Any]):
-        """Add fingerprint to vector index for similarity search"""        if not HAS_FAISS or self.vector_index is None:
+        """Add fingerprint to vector index for similarity search"""
+        if not HAS_FAISS or self.vector_index is None:
             return
         
         if fingerprint.feature_vector is not None:
@@ -1818,7 +1885,8 @@ class FingerprintManager:
     
     def search_similar(self, fingerprint: FingerprintResult, top_k: int = 10, 
                       threshold: float = 0.8) -> List[Tuple[Dict[str, Any], float]]:
-        """Search for similar fingerprints in index"""        if not HAS_FAISS or self.vector_index is None or fingerprint.feature_vector is None:
+        """Search for similar fingerprints in index"""
+        if not HAS_FAISS or self.vector_index is None or fingerprint.feature_vector is None:
             return []
         
         # Prepare query vector

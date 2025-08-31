@@ -11,7 +11,8 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Business Logic: Role Definition → Permission Assignment → Access Control → 
 Resource Protection → Audit Logging → Dynamic Permissions
-"""import asyncio
+"""
+import asyncio
 from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional, Any, Set, Union
 from dataclasses import dataclass, field
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class ResourceType(Enum):
-    """Resource types for permission management"""    CONTENT = "content"
+    """Resource types for permission management"""
+    CONTENT = "content"
     PROFILE = "profile"
     ANALYTICS = "analytics"
     MONETIZATION = "monetization"
@@ -43,7 +45,8 @@ class ResourceType(Enum):
     PROTECTION = "protection"
 
 class ActionType(Enum):
-    """Action types for permissions"""    CREATE = "create"
+    """Action types for permissions"""
+    CREATE = "create"
     READ = "read"
     UPDATE = "update"
     DELETE = "delete"
@@ -55,7 +58,8 @@ class ActionType(Enum):
     DOWNLOAD = "download"
 
 class RoleType(Enum):
-    """Predefined role types"""    SUPER_ADMIN = "super_admin"
+    """Predefined role types"""
+    SUPER_ADMIN = "super_admin"
     ADMIN = "admin"
     CREATOR = "creator"
     PREMIUM_CREATOR = "premium_creator"
@@ -65,7 +69,8 @@ class RoleType(Enum):
     GUEST = "guest"
 
 class PermissionScope(Enum):
-    """Permission scope levels"""    GLOBAL = "global"
+    """Permission scope levels"""
+    GLOBAL = "global"
     TENANT = "tenant"
     PROJECT = "project"
     PERSONAL = "personal"
@@ -73,17 +78,20 @@ class PermissionScope(Enum):
 
 @dataclass
 class Permission:
-    """Permission structure"""    resource: ResourceType
+    """Permission structure"""
+    resource: ResourceType
     action: ActionType
     scope: PermissionScope = PermissionScope.PERSONAL
     conditions: Dict[str, Any] = field(default_factory=dict)
     
     def to_string(self) -> str:
-        """Convert permission to string format"""        return f"{self.resource.value}:{self.action.value}:{self.scope.value}"
+        """Convert permission to string format"""
+        return f"{self.resource.value}:{self.action.value}:{self.scope.value}"
 
 @dataclass
 class AccessContext:
-    """Access context for permission evaluation"""    user_id: str
+    """Access context for permission evaluation"""
+    user_id: str
     resource_id: Optional[str] = None
     resource_owner_id: Optional[str] = None
     tenant_id: Optional[str] = None
@@ -91,7 +99,8 @@ class AccessContext:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class Roles(Base):
-    """Database model for roles"""    __tablename__ = 'roles'
+    """Database model for roles"""
+    __tablename__ = 'roles'
     
     role_id = Column(String, primary_key=True)
     role_name = Column(String, nullable=False, unique=True)
@@ -111,7 +120,8 @@ class Roles(Base):
     )
 
 class Permissions(Base):
-    """Database model for permissions"""    __tablename__ = 'permissions'
+    """Database model for permissions"""
+    __tablename__ = 'permissions'
     
     permission_id = Column(String, primary_key=True)
     permission_name = Column(String, nullable=False, unique=True)
@@ -132,7 +142,8 @@ class Permissions(Base):
     )
 
 class RolePermissions(Base):
-    """Database model for role-permission assignments"""    __tablename__ = 'role_permissions'
+    """Database model for role-permission assignments"""
+    __tablename__ = 'role_permissions'
     
     assignment_id = Column(String, primary_key=True)
     role_id = Column(String, nullable=False, index=True)
@@ -149,7 +160,8 @@ class RolePermissions(Base):
     )
 
 class UserRoles(Base):
-    """Database model for user-role assignments"""    __tablename__ = 'user_roles'
+    """Database model for user-role assignments"""
+    __tablename__ = 'user_roles'
     
     assignment_id = Column(String, primary_key=True)
     user_id = Column(String, nullable=False, index=True)
@@ -169,7 +181,8 @@ class UserRoles(Base):
     )
 
 class UserPermissions(Base):
-    """Database model for direct user permissions"""    __tablename__ = 'user_permissions'
+    """Database model for direct user permissions"""
+    __tablename__ = 'user_permissions'
     
     assignment_id = Column(String, primary_key=True)
     user_id = Column(String, nullable=False, index=True)
@@ -189,7 +202,8 @@ class UserPermissions(Base):
     )
 
 class PermissionAuditLog(Base):
-    """Database model for permission audit logging"""    __tablename__ = 'permission_audit_log'
+    """Database model for permission audit logging"""
+    __tablename__ = 'permission_audit_log'
     
     audit_id = Column(String, primary_key=True)
     user_id = Column(String, nullable=False, index=True)
@@ -210,7 +224,8 @@ class PermissionAuditLog(Base):
     )
 
 class PermissionManager:
-    """    Enterprise-grade permission management system with RBAC support.
+    """
+    Enterprise-grade permission management system with RBAC support.
     
     Features:
     - Role-based access control (RBAC)
@@ -220,7 +235,8 @@ class PermissionManager:
     - Tenant and project isolation
     - Comprehensive audit logging
     - Conditional permissions
-    """    
+    """
+    
     def __init__(self, session: AsyncSession):
         self.session = session
         
@@ -340,7 +356,8 @@ class PermissionManager:
         }
     
     async def initialize_system_permissions(self):
-        """Initialize system permissions and roles"""        try:
+        """Initialize system permissions and roles"""
+        try:
             # Create system permissions
             for perm in self.system_permissions:
                 await self._create_permission_if_not_exists(perm)
@@ -363,7 +380,8 @@ class PermissionManager:
         permission: Union[Permission, str],
         context: Optional[AccessContext] = None
     ) -> bool:
-        """Check if user has specific permission"""        try:
+        """Check if user has specific permission"""
+        try:
             context = context or AccessContext(user_id=user_id)
             
             # Convert string permission to Permission object
@@ -402,7 +420,8 @@ class PermissionManager:
         project_id: Optional[str] = None,
         expires_at: Optional[datetime] = None
     ) -> str:
-        """Assign role to user"""        try:
+        """Assign role to user"""
+        try:
             # Verify role exists
             role = await self._get_role(role_id)
             if not role:
@@ -446,7 +465,8 @@ class PermissionManager:
         expires_at: Optional[datetime] = None,
         conditions: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Grant specific permission to user"""        try:
+        """Grant specific permission to user"""
+        try:
             # Convert string permission to Permission object
             if isinstance(permission, str):
                 permission = self._parse_permission_string(permission)
@@ -486,7 +506,8 @@ class PermissionManager:
         tenant_id: Optional[str] = None,
         project_id: Optional[str] = None
     ) -> bool:
-        """Revoke role from user"""        try:
+        """Revoke role from user"""
+        try:
             assignment = await self._get_user_role_assignment(user_id, role_id, tenant_id, project_id)
             if not assignment or not assignment.is_active:
                 raise ValueError("Role assignment not found")
@@ -503,7 +524,8 @@ class PermissionManager:
             raise
     
     async def get_user_permissions(self, user_id: str, tenant_id: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Get all permissions for a user"""        try:
+        """Get all permissions for a user"""
+        try:
             permissions = set()
             
             # Get direct permissions
@@ -531,7 +553,8 @@ class PermissionManager:
             raise
     
     async def get_user_roles(self, user_id: str, tenant_id: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Get all roles for a user"""        try:
+        """Get all roles for a user"""
+        try:
             query = select(UserRoles, Roles).join(
                 Roles, UserRoles.role_id == Roles.role_id
             ).where(
@@ -578,7 +601,8 @@ class PermissionManager:
         permissions: List[Union[Permission, str]],
         created_by: str
     ) -> str:
-        """Create custom role"""        try:
+        """Create custom role"""
+        try:
             role_id = str(uuid4())
             
             # Create role
@@ -628,7 +652,8 @@ class PermissionManager:
         permission: Permission,
         context: AccessContext
     ) -> bool:
-        """Check direct user permissions"""        try:
+        """Check direct user permissions"""
+        try:
             query = select(UserPermissions, Permissions).join(
                 Permissions, UserPermissions.permission_id == Permissions.permission_id
             ).where(
@@ -673,7 +698,8 @@ class PermissionManager:
         permission: Permission,
         context: AccessContext
     ) -> bool:
-        """Check role-based permissions"""        try:
+        """Check role-based permissions"""
+        try:
             # Get user roles
             user_roles_query = select(UserRoles).where(
                 UserRoles.user_id == user_id,
@@ -733,7 +759,8 @@ class PermissionManager:
         permission: Permission,
         context: AccessContext
     ) -> bool:
-        """Check if user owns the resource"""        try:
+        """Check if user owns the resource"""
+        try:
             # For personal scope, check if user is the resource owner
             if (permission.scope == PermissionScope.PERSONAL and 
                 context.resource_owner_id == user_id):
@@ -746,7 +773,8 @@ class PermissionManager:
             return False
     
     def _evaluate_conditions(self, conditions: Dict[str, Any], context: AccessContext) -> bool:
-        """Evaluate permission conditions"""        try:
+        """Evaluate permission conditions"""
+        try:
             for condition_type, condition_value in conditions.items():
                 if condition_type == 'time_range':
                     # Check if current time is within allowed range
@@ -776,7 +804,8 @@ class PermissionManager:
             return False
     
     def _parse_permission_string(self, permission_str: str) -> Permission:
-        """Parse permission string to Permission object"""        try:
+        """Parse permission string to Permission object"""
+        try:
             parts = permission_str.split(':')
             if len(parts) != 3:
                 raise ValueError(f"Invalid permission string format: {permission_str}")
@@ -806,7 +835,8 @@ class PermissionManager:
             raise ValueError(f"Invalid permission string: {permission_str}")
     
     async def _get_or_create_permission(self, permission: Permission) -> Permissions:
-        """Get or create permission record"""        try:
+        """Get or create permission record"""
+        try:
             permission_name = permission.to_string()
             
             # Try to get existing permission
@@ -839,10 +869,12 @@ class PermissionManager:
             raise
     
     async def _create_permission_if_not_exists(self, permission: Permission):
-        """Create permission if it doesn't exist"""        await self._get_or_create_permission(permission)
+        """Create permission if it doesn't exist"""
+        await self._get_or_create_permission(permission)
     
     async def _create_role_if_not_exists(self, role_type: RoleType, role_config: Dict[str, Any]):
-        """Create role if it doesn't exist"""        try:
+        """Create role if it doesn't exist"""
+        try:
             # Check if role exists
             stmt = select(Roles).where(Roles.role_name == role_type.value)
             result = await self.session.execute(stmt)
@@ -896,7 +928,8 @@ class PermissionManager:
             raise
     
     async def _get_role(self, role_id: str) -> Optional[Roles]:
-        """Get role by ID"""        stmt = select(Roles).where(Roles.role_id == role_id)
+        """Get role by ID"""
+        stmt = select(Roles).where(Roles.role_id == role_id)
         result = await self.session.execute(stmt)
         return result.scalar_one_or_none()
     
@@ -907,7 +940,8 @@ class PermissionManager:
         tenant_id: Optional[str] = None,
         project_id: Optional[str] = None
     ) -> Optional[UserRoles]:
-        """Get user role assignment"""        query = select(UserRoles).where(
+        """Get user role assignment"""
+        query = select(UserRoles).where(
             UserRoles.user_id == user_id,
             UserRoles.role_id == role_id
         )
@@ -921,7 +955,8 @@ class PermissionManager:
         return result.scalar_one_or_none()
     
     async def _get_direct_user_permissions(self, user_id: str, tenant_id: Optional[str] = None) -> Set[Permission]:
-        """Get direct user permissions"""        query = select(UserPermissions, Permissions).join(
+        """Get direct user permissions"""
+        query = select(UserPermissions, Permissions).join(
             Permissions, UserPermissions.permission_id == Permissions.permission_id
         ).where(
             UserPermissions.user_id == user_id,
@@ -948,7 +983,8 @@ class PermissionManager:
         return perm_set
     
     async def _get_role_based_permissions(self, user_id: str, tenant_id: Optional[str] = None) -> Set[Permission]:
-        """Get role-based permissions"""        # This is a simplified version - you would implement the full logic here
+        """Get role-based permissions"""
+        # This is a simplified version - you would implement the full logic here
         return set()
     
     async def _log_permission_check(
@@ -959,7 +995,8 @@ class PermissionManager:
         reason: str,
         context: AccessContext
     ):
-        """Log permission check for audit purposes"""        try:
+        """Log permission check for audit purposes"""
+        try:
             audit_log = PermissionAuditLog(
                 audit_id=str(uuid4()),
                 user_id=user_id,

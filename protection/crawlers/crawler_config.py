@@ -22,7 +22,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
-"""import os
+"""
+import os
 import json
 import yaml
 import logging
@@ -38,20 +39,23 @@ import base64
 logger = logging.getLogger(__name__)
 
 class ConfigurationEnvironment(str, Enum):
-    """Configuration environment types."""    DEVELOPMENT = "development"
+    """Configuration environment types."""
+    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
 
 class ConfigurationFormat(str, Enum):
-    """Configuration file formats."""    JSON = "json"
+    """Configuration file formats."""
+    JSON = "json"
     YAML = "yaml"
     TOML = "toml"
     ENV = "env"
 
 @dataclass
 class PlatformConfiguration:
-    """Platform-specific configuration."""    enabled: bool = True
+    """Platform-specific configuration."""
+    enabled: bool = True
     api_key: Optional[str] = None
     api_secret: Optional[str] = None
     access_token: Optional[str] = None
@@ -73,7 +77,8 @@ class PlatformConfiguration:
 
 @dataclass
 class CrawlerConfiguration:
-    """Complete crawler configuration."""    # General settings
+    """Complete crawler configuration."""
+    # General settings
     environment: ConfigurationEnvironment = ConfigurationEnvironment.DEVELOPMENT
     max_workers: int = 50
     max_concurrent_crawlers: int = 10
@@ -115,7 +120,8 @@ class CrawlerConfiguration:
     custom_platforms: Dict[str, PlatformConfiguration] = field(default_factory=dict)
 
 class ConfigurationManager:
-    """    Enterprise configuration management system.
+    """
+    Enterprise configuration management system.
     
     Provides comprehensive configuration management with:
     - Multi-environment support
@@ -124,13 +130,15 @@ class ConfigurationManager:
     - Encrypted storage for sensitive data
     - Hot-reload capabilities
     - Configuration inheritance
-    """    
+    """
+    
     def __init__(
         self,
         config_path: str = "./config",
         environment: ConfigurationEnvironment = ConfigurationEnvironment.DEVELOPMENT
     ):
-        """Initialize configuration manager."""        self.config_path = Path(config_path)
+        """Initialize configuration manager."""
+        self.config_path = Path(config_path)
         self.environment = environment
         self.config: Optional[CrawlerConfiguration] = None
         self.config_version = "1.0.0"
@@ -146,7 +154,8 @@ class ConfigurationManager:
         logger.info(f"Configuration Manager initialized for {environment.value} environment")
     
     def _initialize_encryption(self):
-        """Initialize encryption for sensitive configuration data."""        key_file = self.config_path / "encryption.key"
+        """Initialize encryption for sensitive configuration data."""
+        key_file = self.config_path / "encryption.key"
         
         if key_file.exists():
             with open(key_file, 'rb') as f:
@@ -162,14 +171,16 @@ class ConfigurationManager:
         logger.info("Encryption initialized for configuration management")
     
     def load_configuration(self, config_file: Optional[str] = None) -> CrawlerConfiguration:
-        """        Load configuration from file or environment.
+        """
+        Load configuration from file or environment.
         
         Args:
             config_file: Specific config file to load
             
         Returns:
             Loaded configuration
-        """        if config_file:
+        """
+        if config_file:
             config_path = Path(config_file)
         else:
             # Try different config file names
@@ -205,7 +216,8 @@ class ConfigurationManager:
         return self.config
     
     def _load_config_file(self, config_path: Path) -> Dict[str, Any]:
-        """Load configuration from file."""        try:
+        """Load configuration from file."""
+        try:
             with open(config_path, 'r', encoding='utf-8') as f:
                 if config_path.suffix.lower() == '.yaml' or config_path.suffix.lower() == '.yml':
                     return yaml.safe_load(f)
@@ -218,7 +230,8 @@ class ConfigurationManager:
             raise
     
     def _parse_configuration(self, config_data: Dict[str, Any]) -> CrawlerConfiguration:
-        """Parse configuration data into structured format."""        config = CrawlerConfiguration()
+        """Parse configuration data into structured format."""
+        config = CrawlerConfiguration()
         
         # Parse general settings
         if 'general' in config_data:
@@ -281,7 +294,8 @@ class ConfigurationManager:
         return config
     
     def _parse_platform_config(self, platform_data: Dict[str, Any]) -> PlatformConfiguration:
-        """Parse platform-specific configuration."""        platform_config = PlatformConfiguration()
+        """Parse platform-specific configuration."""
+        platform_config = PlatformConfiguration()
         
         # Basic settings
         platform_config.enabled = platform_data.get('enabled', platform_config.enabled)
@@ -348,7 +362,8 @@ class ConfigurationManager:
         return platform_config
     
     def _decrypt_if_encrypted(self, value: Optional[str]) -> Optional[str]:
-        """Decrypt value if it's encrypted."""        if not value or not value.startswith('ENCRYPTED:'):
+        """Decrypt value if it's encrypted."""
+        if not value or not value.startswith('ENCRYPTED:'):
             return value
         
         try:
@@ -361,7 +376,8 @@ class ConfigurationManager:
             return None
     
     def _apply_environment_overrides(self):
-        """Apply environment variable overrides."""        # Override with environment variables
+        """Apply environment variable overrides."""
+        # Override with environment variables
         env_mappings = {
             'CRAWLER_MAX_WORKERS': ('max_workers', int),
             'CRAWLER_CRAWL_INTERVAL': ('crawl_interval_minutes', int),
@@ -383,7 +399,8 @@ class ConfigurationManager:
                     logger.warning(f"Failed to apply environment override {env_var}: {e}")
     
     def _set_nested_config_value(self, path: str, value: Any):
-        """Set nested configuration value using dot notation."""        parts = path.split('.')
+        """Set nested configuration value using dot notation."""
+        parts = path.split('.')
         obj = self.config
         
         for part in parts[:-1]:
@@ -392,7 +409,8 @@ class ConfigurationManager:
         setattr(obj, parts[-1], value)
     
     def _validate_configuration(self):
-        """Validate configuration for common issues."""        validation_errors = []
+        """Validate configuration for common issues."""
+        validation_errors = []
         
         # Validate general settings
         if self.config.max_workers <= 0:
@@ -428,14 +446,16 @@ class ConfigurationManager:
         logger.info("Configuration validation passed")
     
     def save_configuration(self, config_file: Optional[str] = None) -> bool:
-        """        Save configuration to file.
+        """
+        Save configuration to file.
         
         Args:
             config_file: Specific file to save to
             
         Returns:
             True if saved successfully
-        """        if not self.config:
+        """
+        if not self.config:
             logger.error("No configuration loaded to save")
             return False
         
@@ -460,7 +480,8 @@ class ConfigurationManager:
             return False
     
     def _configuration_to_dict(self) -> Dict[str, Any]:
-        """Convert configuration object to dictionary."""        # This would implement a comprehensive serialization
+        """Convert configuration object to dictionary."""
+        # This would implement a comprehensive serialization
         # For brevity, returning a simplified version
         return {
             'general': {
@@ -488,7 +509,8 @@ class ConfigurationManager:
         }
     
     def encrypt_sensitive_value(self, value: str) -> str:
-        """Encrypt sensitive configuration value."""        if not value:
+        """Encrypt sensitive configuration value."""
+        if not value:
             return value
         
         try:
@@ -500,7 +522,8 @@ class ConfigurationManager:
             return value
     
     def create_template_configuration(self) -> str:
-        """Create template configuration file."""        template = {
+        """Create template configuration file."""
+        template = {
             'general': {
                 'environment': 'development',
                 'max_workers': 50,
@@ -591,7 +614,8 @@ class ConfigurationManager:
             return ""
     
     def get_configuration_summary(self) -> Dict[str, Any]:
-        """Get configuration summary for monitoring."""        if not self.config:
+        """Get configuration summary for monitoring."""
+        if not self.config:
             return {}
         
         return {
@@ -613,7 +637,8 @@ def create_configuration_manager(
     config_path: str = "./config",
     environment: str = "development"
 ) -> ConfigurationManager:
-    """Create and initialize configuration manager."""    env = ConfigurationEnvironment(environment)
+    """Create and initialize configuration manager."""
+    env = ConfigurationEnvironment(environment)
     manager = ConfigurationManager(config_path, env)
     return manager
 

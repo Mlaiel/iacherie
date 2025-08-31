@@ -3,7 +3,8 @@ Routes content to optimal platforms based on content analysis and business logic
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent. All rights reserved.
-"""import logging
+"""
+import logging
 from typing import Dict, List, Any, Optional, Tuple
 from datetime import datetime
 import asyncio
@@ -14,9 +15,11 @@ from .platform_registry import get_platform_registry
 logger = logging.getLogger(__name__)
 
 class PlatformRouter:
-    """    Intelligent router that determines the best platforms for content distribution
+    """
+    Intelligent router that determines the best platforms for content distribution
     based on content analysis, audience targeting, and business objectives.
-    """    
+    """
+    
     def __init__(self):
         self.platform_registry = get_platform_registry()
         
@@ -38,9 +41,11 @@ class PlatformRouter:
         budget_constraints: Dict[str, float] = None,
         target_audience: Dict[str, Any] = None
     ) -> List[Tuple[str, float, Dict[str, Any]]]:
-        """        Route content to optimal platforms with confidence scores and reasoning.
+        """
+        Route content to optimal platforms with confidence scores and reasoning.
         Returns list of (platform_name, confidence_score, routing_details)
-        """        try:
+        """
+        try:
             if not business_objectives:
                 business_objectives = {"primary": "engagement", "secondary": "reach"}
             
@@ -98,7 +103,8 @@ class PlatformRouter:
         budget_constraints: Dict[str, float],
         target_audience: Dict[str, Any]
     ) -> Tuple[float, Dict[str, Any]]:
-        """Score a platform for content suitability."""        try:
+        """Score a platform for content suitability."""
+        try:
             platform_config = self.platform_registry.get_platform_config(platform_name)
             if not platform_config:
                 return 0.0, {"error": "Platform configuration not found"}
@@ -173,7 +179,8 @@ class PlatformRouter:
         content_metadata: ContentMetadata,
         platform_config: Dict[str, Any]
     ) -> float:
-        """Calculate how well content matches platform capabilities."""        try:
+        """Calculate how well content matches platform capabilities."""
+        try:
             score = 0.0
             
             # Content type compatibility (40% of content match)
@@ -222,7 +229,8 @@ class PlatformRouter:
         target_audience: Dict[str, Any],
         platform_config: Dict[str, Any]
     ) -> float:
-        """Calculate audience alignment score."""        try:
+        """Calculate audience alignment score."""
+        try:
             if not target_audience:
                 return 0.5  # Neutral score for unspecified audience
             
@@ -286,7 +294,8 @@ class PlatformRouter:
         content_metadata: ContentMetadata,
         platform_config: Dict[str, Any]
     ) -> float:
-        """Calculate expected engagement potential."""        try:
+        """Calculate expected engagement potential."""
+        try:
             score = 0.0
             
             # Content type engagement multiplier (30% of engagement potential)
@@ -360,7 +369,8 @@ class PlatformRouter:
         platform_config: Dict[str, Any],
         business_objectives: Dict[str, Any]
     ) -> float:
-        """Calculate monetization potential score."""        try:
+        """Calculate monetization potential score."""
+        try:
             if not content_metadata.monetization_enabled:
                 return 0.0
             
@@ -410,7 +420,8 @@ class PlatformRouter:
         self,
         platform_config: Dict[str, Any]
     ) -> float:
-        """Calculate platform growth and trend score."""        try:
+        """Calculate platform growth and trend score."""
+        try:
             # This would ideally use real market data
             # For now, using predefined growth scores based on 2024 trends
             platform_growth_scores = {
@@ -448,7 +459,8 @@ class PlatformRouter:
         scores: Dict[str, float],
         content_metadata: ContentMetadata
     ) -> List[str]:
-        """Generate actionable recommendations for platform optimization."""        recommendations = []
+        """Generate actionable recommendations for platform optimization."""
+        recommendations = []
         
         try:
             # Content optimization recommendations
@@ -489,7 +501,8 @@ class PlatformRouter:
         platform_config: Dict[str, Any],
         content_metadata: ContentMetadata
     ) -> List[str]:
-        """Generate important considerations for the platform."""        considerations = []
+        """Generate important considerations for the platform."""
+        considerations = []
         
         try:
             # Content policy considerations
@@ -530,7 +543,8 @@ class PlatformRouter:
         self,
         routing_results: List[Tuple[str, float, Dict[str, Any]]]
     ) -> Dict[str, Any]:
-        """Generate analytics and insights from routing results."""        try:
+        """Generate analytics and insights from routing results."""
+        try:
             analytics = {
                 "total_platforms_evaluated": len(routing_results),
                 "qualified_platforms": len([r for r in routing_results if r[1] >= 0.3]),
@@ -580,7 +594,8 @@ class PlatformRouter:
         category: str,
         scores: List[float]
     ) -> str:
-        """Get recommendation for a scoring category."""        avg_score = sum(scores) / len(scores)
+        """Get recommendation for a scoring category."""
+        avg_score = sum(scores) / len(scores)
         
         recommendations = {
             "content_match": {

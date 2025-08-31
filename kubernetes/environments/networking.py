@@ -15,7 +15,8 @@ Enterprise networking environment management for distributed deployment.
 Handles load balancing, service mesh, CDN, traffic routing, and network security
 for multi-format content processing and AI protection services.
 ====================================================
-"""import os
+"""
+import os
 import logging
 from typing import Dict, Any, List, Optional, Set, Union
 from dataclasses import dataclass, field
@@ -28,7 +29,8 @@ logger = logging.getLogger(__name__)
 
 
 class NetworkProtocol(Enum):
-    """Network protocol enumeration"""    HTTP = "http"
+    """Network protocol enumeration"""
+    HTTP = "http"
     HTTPS = "https"
     TCP = "tcp"
     UDP = "udp"
@@ -37,7 +39,8 @@ class NetworkProtocol(Enum):
 
 
 class LoadBalancerAlgorithm(Enum):
-    """Load balancer algorithm enumeration"""    ROUND_ROBIN = "round_robin"
+    """Load balancer algorithm enumeration"""
+    ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_connections"
     IP_HASH = "ip_hash"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
@@ -45,7 +48,8 @@ class LoadBalancerAlgorithm(Enum):
 
 
 class TrafficRoutingPolicy(Enum):
-    """Traffic routing policy enumeration"""    GEOGRAPHIC = "geographic"
+    """Traffic routing policy enumeration"""
+    GEOGRAPHIC = "geographic"
     LATENCY_BASED = "latency_based"
     WEIGHTED = "weighted"
     FAILOVER = "failover"
@@ -54,7 +58,8 @@ class TrafficRoutingPolicy(Enum):
 
 @dataclass
 class NetworkSecurityConfig:
-    """Network security configuration"""    enable_firewall: bool = bool(os.getenv('NETWORK_FIREWALL_ENABLED', 'true').lower() == 'true')
+    """Network security configuration"""
+    enable_firewall: bool = bool(os.getenv('NETWORK_FIREWALL_ENABLED', 'true').lower() == 'true')
     enable_ddos_protection: bool = bool(os.getenv('DDOS_PROTECTION_ENABLED', 'true').lower() == 'true')
     enable_waf: bool = bool(os.getenv('WAF_ENABLED', 'true').lower() == 'true')
     allowed_cidr_blocks: List[str] = field(default_factory=lambda: [
@@ -76,7 +81,8 @@ class NetworkSecurityConfig:
 
 @dataclass
 class LoadBalancerConfig:
-    """Load balancer configuration"""    algorithm: LoadBalancerAlgorithm = LoadBalancerAlgorithm.LEAST_CONNECTIONS
+    """Load balancer configuration"""
+    algorithm: LoadBalancerAlgorithm = LoadBalancerAlgorithm.LEAST_CONNECTIONS
     health_check_enabled: bool = True
     health_check_interval: int = int(os.getenv('LB_HEALTH_CHECK_INTERVAL', '30'))
     health_check_timeout: int = int(os.getenv('LB_HEALTH_CHECK_TIMEOUT', '5'))
@@ -92,7 +98,8 @@ class LoadBalancerConfig:
 
 @dataclass
 class CDNConfig:
-    """Content Delivery Network configuration"""    provider: str = os.getenv('CDN_PROVIDER', 'cloudflare')
+    """Content Delivery Network configuration"""
+    provider: str = os.getenv('CDN_PROVIDER', 'cloudflare')
     edge_locations: List[str] = field(default_factory=lambda: [
         'us-east-1', 'us-west-2', 'eu-central-1', 'ap-southeast-1'
     ])
@@ -117,7 +124,8 @@ class CDNConfig:
 
 @dataclass
 class ServiceMeshConfig:
-    """Service mesh configuration"""    enabled: bool = bool(os.getenv('SERVICE_MESH_ENABLED', 'true').lower() == 'true')
+    """Service mesh configuration"""
+    enabled: bool = bool(os.getenv('SERVICE_MESH_ENABLED', 'true').lower() == 'true')
     provider: str = os.getenv('SERVICE_MESH_PROVIDER', 'istio')
     mtls_enabled: bool = True
     traffic_policy: str = "ROUND_ROBIN"
@@ -134,7 +142,8 @@ class ServiceMeshConfig:
 
 @dataclass
 class DNSConfig:
-    """DNS configuration"""    primary_dns_servers: List[str] = field(default_factory=lambda: [
+    """DNS configuration"""
+    primary_dns_servers: List[str] = field(default_factory=lambda: [
         '1.1.1.1', '1.0.0.1'  # Cloudflare DNS
     ])
     secondary_dns_servers: List[str] = field(default_factory=lambda: [
@@ -154,7 +163,8 @@ class DNSConfig:
 
 @dataclass
 class NetworkMonitoringConfig:
-    """Network monitoring configuration"""    enable_network_metrics: bool = True
+    """Network monitoring configuration"""
+    enable_network_metrics: bool = True
     enable_traffic_analysis: bool = True
     enable_latency_monitoring: bool = True
     enable_bandwidth_monitoring: bool = True
@@ -172,7 +182,8 @@ class NetworkMonitoringConfig:
 
 
 class NetworkingEnvironmentManager:
-    """    Networking environment manager for distributed deployment architecture.
+    """
+    Networking environment manager for distributed deployment architecture.
     
     Features:
     - Advanced load balancing with health checks
@@ -185,7 +196,8 @@ class NetworkingEnvironmentManager:
     - Bandwidth optimization
     - Geographic traffic distribution
     - DDoS protection and mitigation
-    """    
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path or "/config/networking.yml"
         self.environment = "networking"
@@ -206,7 +218,8 @@ class NetworkingEnvironmentManager:
         logger.info(f"Networking environment manager initialized: {self.environment}")
     
     def load_configuration(self) -> Dict[str, Any]:
-        """Load networking environment configuration"""        try:
+        """Load networking environment configuration"""
+        try:
             config = {
                 'environment': self.environment,
                 
@@ -315,7 +328,8 @@ class NetworkingEnvironmentManager:
             raise
     
     def setup_load_balancer(self) -> bool:
-        """Setup and configure load balancer"""        try:
+        """Setup and configure load balancer"""
+        try:
             # Configure load balancer algorithm
             self._configure_lb_algorithm()
             
@@ -342,7 +356,8 @@ class NetworkingEnvironmentManager:
             return False
     
     def setup_cdn(self) -> bool:
-        """Setup and configure CDN"""        try:
+        """Setup and configure CDN"""
+        try:
             # Configure edge locations
             self._configure_edge_locations()
             
@@ -372,7 +387,8 @@ class NetworkingEnvironmentManager:
             return False
     
     def setup_service_mesh(self) -> bool:
-        """Setup and configure service mesh"""        try:
+        """Setup and configure service mesh"""
+        try:
             if not self.service_mesh.enabled:
                 logger.info("Service mesh is disabled, skipping setup")
                 return True
@@ -409,7 +425,8 @@ class NetworkingEnvironmentManager:
             return False
     
     def setup_network_security(self) -> bool:
-        """Setup network security policies"""        try:
+        """Setup network security policies"""
+        try:
             # Configure firewall rules
             self._configure_firewall_rules()
             
@@ -439,7 +456,8 @@ class NetworkingEnvironmentManager:
             return False
     
     def setup_dns(self) -> bool:
-        """Setup DNS configuration"""        try:
+        """Setup DNS configuration"""
+        try:
             # Configure DNS servers
             self._configure_dns_servers()
             
@@ -466,7 +484,8 @@ class NetworkingEnvironmentManager:
             return False
     
     def setup_traffic_routing(self, policy: TrafficRoutingPolicy) -> bool:
-        """Setup traffic routing policy"""        try:
+        """Setup traffic routing policy"""
+        try:
             if policy == TrafficRoutingPolicy.GEOGRAPHIC:
                 self._setup_geographic_routing()
             elif policy == TrafficRoutingPolicy.LATENCY_BASED:
@@ -486,7 +505,8 @@ class NetworkingEnvironmentManager:
             return False
     
     def monitor_network_performance(self) -> Dict[str, Any]:
-        """Monitor network performance metrics"""        try:
+        """Monitor network performance metrics"""
+        try:
             metrics = {
                 'latency': self._measure_latency(),
                 'bandwidth_utilization': self._measure_bandwidth_utilization(),
@@ -514,7 +534,8 @@ class NetworkingEnvironmentManager:
             return {}
     
     def get_network_topology(self) -> Dict[str, Any]:
-        """Get current network topology"""        return {
+        """Get current network topology"""
+        return {
             'load_balancers': self._get_load_balancer_topology(),
             'cdn_edges': self._get_cdn_topology(),
             'service_mesh': self._get_service_mesh_topology(),
@@ -524,7 +545,8 @@ class NetworkingEnvironmentManager:
         }
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get networking environment health status"""        return {
+        """Get networking environment health status"""
+        return {
             'environment': self.environment,
             'status': 'healthy',
             'load_balancer_health': self._check_load_balancer_health(),
@@ -541,215 +563,277 @@ class NetworkingEnvironmentManager:
     
     # Private helper methods
     def _configure_lb_algorithm(self):
-        """Configure load balancer algorithm"""        logger.info(f"Configuring load balancer algorithm: {self.load_balancer.algorithm.value}")
+        """Configure load balancer algorithm"""
+        logger.info(f"Configuring load balancer algorithm: {self.load_balancer.algorithm.value}")
     
     def _setup_health_checks(self):
-        """Setup load balancer health checks"""        logger.info("Setting up load balancer health checks")
+        """Setup load balancer health checks"""
+        logger.info("Setting up load balancer health checks")
     
     def _configure_session_affinity(self):
-        """Configure session affinity"""        if self.load_balancer.session_affinity:
+        """Configure session affinity"""
+        if self.load_balancer.session_affinity:
             logger.info("Configuring session affinity")
     
     def _setup_connection_draining(self):
-        """Setup connection draining"""        logger.info(f"Setting up connection draining: {self.load_balancer.connection_draining_timeout}s")
+        """Setup connection draining"""
+        logger.info(f"Setting up connection draining: {self.load_balancer.connection_draining_timeout}s")
     
     def _enable_cross_zone_balancing(self):
-        """Enable cross-zone load balancing"""        if self.load_balancer.cross_zone_balancing:
+        """Enable cross-zone load balancing"""
+        if self.load_balancer.cross_zone_balancing:
             logger.info("Enabling cross-zone load balancing")
     
     def _setup_lb_monitoring(self):
-        """Setup load balancer monitoring"""        if self.load_balancer.enable_monitoring:
+        """Setup load balancer monitoring"""
+        if self.load_balancer.enable_monitoring:
             logger.info("Setting up load balancer monitoring")
     
     def _configure_edge_locations(self):
-        """Configure CDN edge locations"""        logger.info(f"Configuring CDN edge locations: {self.cdn.edge_locations}")
+        """Configure CDN edge locations"""
+        logger.info(f"Configuring CDN edge locations: {self.cdn.edge_locations}")
     
     def _setup_cache_behaviors(self):
-        """Setup CDN cache behaviors"""        logger.info("Setting up CDN cache behaviors")
+        """Setup CDN cache behaviors"""
+        logger.info("Setting up CDN cache behaviors")
     
     def _configure_compression(self):
-        """Configure CDN compression"""        if self.cdn.compression_enabled:
+        """Configure CDN compression"""
+        if self.cdn.compression_enabled:
             logger.info("Enabling CDN compression")
     
     def _setup_http_protocols(self):
-        """Setup HTTP/2 and HTTP/3"""        if self.cdn.http2_enabled:
+        """Setup HTTP/2 and HTTP/3"""
+        if self.cdn.http2_enabled:
             logger.info("Enabling HTTP/2")
         if self.cdn.http3_enabled:
             logger.info("Enabling HTTP/3")
     
     def _configure_origin_shield(self):
-        """Configure CDN origin shield"""        if self.cdn.origin_shield_enabled:
+        """Configure CDN origin shield"""
+        if self.cdn.origin_shield_enabled:
             logger.info("Configuring CDN origin shield")
     
     def _setup_custom_headers(self):
-        """Setup CDN custom headers"""        logger.info("Setting up CDN custom headers")
+        """Setup CDN custom headers"""
+        logger.info("Setting up CDN custom headers")
     
     def _enable_realtime_logs(self):
-        """Enable CDN real-time logs"""        if self.cdn.real_time_logs:
+        """Enable CDN real-time logs"""
+        if self.cdn.real_time_logs:
             logger.info("Enabling CDN real-time logs")
     
     def _deploy_service_mesh_control_plane(self):
-        """Deploy service mesh control plane"""        logger.info(f"Deploying {self.service_mesh.provider} control plane")
+        """Deploy service mesh control plane"""
+        logger.info(f"Deploying {self.service_mesh.provider} control plane")
     
     def _configure_mtls(self):
-        """Configure mutual TLS"""        if self.service_mesh.mtls_enabled:
+        """Configure mutual TLS"""
+        if self.service_mesh.mtls_enabled:
             logger.info("Configuring mutual TLS")
     
     def _setup_traffic_policies(self):
-        """Setup traffic policies"""        logger.info(f"Setting up traffic policy: {self.service_mesh.traffic_policy}")
+        """Setup traffic policies"""
+        logger.info(f"Setting up traffic policy: {self.service_mesh.traffic_policy}")
     
     def _configure_circuit_breaker(self):
-        """Configure circuit breaker"""        if self.service_mesh.circuit_breaker_enabled:
+        """Configure circuit breaker"""
+        if self.service_mesh.circuit_breaker_enabled:
             logger.info("Configuring circuit breaker")
     
     def _setup_retry_policies(self):
-        """Setup retry policies"""        if self.service_mesh.retry_policy_enabled:
+        """Setup retry policies"""
+        if self.service_mesh.retry_policy_enabled:
             logger.info(f"Setting up retry policy: {self.service_mesh.max_retries} retries")
     
     def _enable_outlier_detection(self):
-        """Enable outlier detection"""        if self.service_mesh.outlier_detection:
+        """Enable outlier detection"""
+        if self.service_mesh.outlier_detection:
             logger.info("Enabling outlier detection")
     
     def _configure_distributed_tracing(self):
-        """Configure distributed tracing"""        if self.service_mesh.distributed_tracing:
+        """Configure distributed tracing"""
+        if self.service_mesh.distributed_tracing:
             logger.info("Configuring distributed tracing")
     
     def _setup_mesh_gateways(self):
-        """Setup ingress and egress gateways"""        logger.info("Setting up service mesh gateways")
+        """Setup ingress and egress gateways"""
+        logger.info("Setting up service mesh gateways")
     
     def _configure_firewall_rules(self):
-        """Configure firewall rules"""        if self.security.enable_firewall:
+        """Configure firewall rules"""
+        if self.security.enable_firewall:
             logger.info("Configuring firewall rules")
     
     def _setup_ddos_protection(self):
-        """Setup DDoS protection"""        if self.security.enable_ddos_protection:
+        """Setup DDoS protection"""
+        if self.security.enable_ddos_protection:
             logger.info("Setting up DDoS protection")
     
     def _configure_waf(self):
-        """Configure Web Application Firewall"""        if self.security.enable_waf:
+        """Configure Web Application Firewall"""
+        if self.security.enable_waf:
             logger.info("Configuring Web Application Firewall")
     
     def _setup_rate_limiting(self):
-        """Setup rate limiting"""        if self.security.rate_limiting_enabled:
+        """Setup rate limiting"""
+        if self.security.rate_limiting_enabled:
             logger.info(f"Setting up rate limiting: {self.security.rate_limit_requests_per_minute} req/min")
     
     def _configure_ssl_tls(self):
-        """Configure SSL/TLS"""        logger.info(f"Configuring SSL/TLS: {self.security.ssl_tls_version}")
+        """Configure SSL/TLS"""
+        logger.info(f"Configuring SSL/TLS: {self.security.ssl_tls_version}")
     
     def _setup_ip_filtering(self):
-        """Setup IP filtering"""        logger.info("Setting up IP whitelisting/blacklisting")
+        """Setup IP filtering"""
+        logger.info("Setting up IP whitelisting/blacklisting")
     
     def _configure_geo_restrictions(self):
-        """Configure geographic restrictions"""        if self.security.blocked_countries:
+        """Configure geographic restrictions"""
+        if self.security.blocked_countries:
             logger.info(f"Configuring geo restrictions: blocked {self.security.blocked_countries}")
     
     def _configure_dns_servers(self):
-        """Configure DNS servers"""        logger.info(f"Configuring DNS servers: {self.dns.primary_dns_servers}")
+        """Configure DNS servers"""
+        logger.info(f"Configuring DNS servers: {self.dns.primary_dns_servers}")
     
     def _setup_secure_dns(self):
-        """Setup DNS over HTTPS/TLS"""        if self.dns.dns_over_https:
+        """Setup DNS over HTTPS/TLS"""
+        if self.dns.dns_over_https:
             logger.info("Setting up DNS over HTTPS")
         if self.dns.dns_over_tls:
             logger.info("Setting up DNS over TLS")
     
     def _configure_dnssec(self):
-        """Configure DNSSEC"""        if self.dns.dnssec_validation:
+        """Configure DNSSEC"""
+        if self.dns.dnssec_validation:
             logger.info("Configuring DNSSEC validation")
     
     def _setup_dns_caching(self):
-        """Setup DNS caching"""        if self.dns.dns_caching_enabled:
+        """Setup DNS caching"""
+        if self.dns.dns_caching_enabled:
             logger.info(f"Setting up DNS caching: {self.dns.dns_cache_ttl}s TTL")
     
     def _configure_custom_records(self):
-        """Configure custom DNS records"""        logger.info("Configuring custom DNS records")
+        """Configure custom DNS records"""
+        logger.info("Configuring custom DNS records")
     
     def _setup_dns_monitoring(self):
-        """Setup DNS monitoring"""        logger.info("Setting up DNS monitoring")
+        """Setup DNS monitoring"""
+        logger.info("Setting up DNS monitoring")
     
     def _setup_geographic_routing(self):
-        """Setup geographic routing"""        logger.info("Setting up geographic traffic routing")
+        """Setup geographic routing"""
+        logger.info("Setting up geographic traffic routing")
     
     def _setup_latency_routing(self):
-        """Setup latency-based routing"""        logger.info("Setting up latency-based traffic routing")
+        """Setup latency-based routing"""
+        logger.info("Setting up latency-based traffic routing")
     
     def _setup_weighted_routing(self):
-        """Setup weighted routing"""        logger.info("Setting up weighted traffic routing")
+        """Setup weighted routing"""
+        logger.info("Setting up weighted traffic routing")
     
     def _setup_failover_routing(self):
-        """Setup failover routing"""        logger.info("Setting up failover traffic routing")
+        """Setup failover routing"""
+        logger.info("Setting up failover traffic routing")
     
     def _setup_geolocation_routing(self):
-        """Setup geolocation routing"""        logger.info("Setting up geolocation traffic routing")
+        """Setup geolocation routing"""
+        logger.info("Setting up geolocation traffic routing")
     
     # Monitoring methods
     def _measure_latency(self) -> Dict[str, float]:
-        """Measure network latency"""        return {'p50': 50.2, 'p95': 120.5, 'p99': 250.8}
+        """Measure network latency"""
+        return {'p50': 50.2, 'p95': 120.5, 'p99': 250.8}
     
     def _measure_bandwidth_utilization(self) -> float:
-        """Measure bandwidth utilization"""        return 65.8
+        """Measure bandwidth utilization"""
+        return 65.8
     
     def _count_active_connections(self) -> int:
-        """Count active connections"""        return sum(self.active_connections.values())
+        """Count active connections"""
+        return sum(self.active_connections.values())
     
     def _calculate_error_rate(self) -> float:
-        """Calculate error rate"""        return 0.8
+        """Calculate error rate"""
+        return 0.8
     
     def _measure_throughput(self) -> float:
-        """Measure network throughput"""        return 1250.5  # Mbps
+        """Measure network throughput"""
+        return 1250.5  # Mbps
     
     def _measure_packet_loss(self) -> float:
-        """Measure packet loss percentage"""        return 0.1
+        """Measure packet loss percentage"""
+        return 0.1
     
     def _measure_dns_resolution(self) -> float:
-        """Measure DNS resolution time"""        return 25.3  # milliseconds
+        """Measure DNS resolution time"""
+        return 25.3  # milliseconds
     
     def _measure_ssl_handshake(self) -> float:
-        """Measure SSL handshake time"""        return 85.2  # milliseconds
+        """Measure SSL handshake time"""
+        return 85.2  # milliseconds
     
     def _calculate_cdn_hit_ratio(self) -> float:
-        """Calculate CDN cache hit ratio"""        return 94.2
+        """Calculate CDN cache hit ratio"""
+        return 94.2
     
     def _get_lb_status(self) -> str:
-        """Get load balancer status"""        return "healthy"
+        """Get load balancer status"""
+        return "healthy"
     
     def _check_alert_thresholds(self, metrics: Dict[str, Any]):
-        """Check alert thresholds"""        # Implement alerting logic
+        """Check alert thresholds"""
+        # Implement alerting logic
         pass
     
     # Topology methods
     def _get_load_balancer_topology(self) -> Dict[str, Any]:
-        """Get load balancer topology"""        return {'type': 'application', 'instances': 3, 'algorithm': self.load_balancer.algorithm.value}
+        """Get load balancer topology"""
+        return {'type': 'application', 'instances': 3, 'algorithm': self.load_balancer.algorithm.value}
     
     def _get_cdn_topology(self) -> Dict[str, Any]:
-        """Get CDN topology"""        return {'provider': self.cdn.provider, 'edge_locations': len(self.cdn.edge_locations)}
+        """Get CDN topology"""
+        return {'provider': self.cdn.provider, 'edge_locations': len(self.cdn.edge_locations)}
     
     def _get_service_mesh_topology(self) -> Dict[str, Any]:
-        """Get service mesh topology"""        return {'provider': self.service_mesh.provider, 'mtls_enabled': self.service_mesh.mtls_enabled}
+        """Get service mesh topology"""
+        return {'provider': self.service_mesh.provider, 'mtls_enabled': self.service_mesh.mtls_enabled}
     
     def _get_dns_topology(self) -> Dict[str, Any]:
-        """Get DNS topology"""        return {'primary_servers': len(self.dns.primary_dns_servers), 'secondary_servers': len(self.dns.secondary_dns_servers)}
+        """Get DNS topology"""
+        return {'primary_servers': len(self.dns.primary_dns_servers), 'secondary_servers': len(self.dns.secondary_dns_servers)}
     
     def _get_traffic_flows(self) -> List[Dict[str, Any]]:
-        """Get traffic flows"""        return [{'source': 'internet', 'destination': 'load_balancer', 'protocol': 'https'}]
+        """Get traffic flows"""
+        return [{'source': 'internet', 'destination': 'load_balancer', 'protocol': 'https'}]
     
     def _get_security_zones(self) -> List[Dict[str, Any]]:
-        """Get security zones"""        return [{'name': 'dmz', 'type': 'public'}, {'name': 'private', 'type': 'internal'}]
+        """Get security zones"""
+        return [{'name': 'dmz', 'type': 'public'}, {'name': 'private', 'type': 'internal'}]
     
     # Health check methods
     def _check_load_balancer_health(self) -> str:
-        """Check load balancer health"""        return "healthy"
+        """Check load balancer health"""
+        return "healthy"
     
     def _check_cdn_health(self) -> str:
-        """Check CDN health"""        return "healthy"
+        """Check CDN health"""
+        return "healthy"
     
     def _check_service_mesh_health(self) -> str:
-        """Check service mesh health"""        return "healthy" if self.service_mesh.enabled else "disabled"
+        """Check service mesh health"""
+        return "healthy" if self.service_mesh.enabled else "disabled"
     
     def _check_dns_health(self) -> str:
-        """Check DNS health"""        return "healthy"
+        """Check DNS health"""
+        return "healthy"
     
     def _check_security_status(self) -> str:
-        """Check security status"""        return "secure"
+        """Check security status"""
+        return "secure"
     
     def _get_current_traffic_load(self) -> float:
-        """Get current traffic load"""        return 72.3  # percentage
+        """Get current traffic load"""
+        return 72.3  # percentage

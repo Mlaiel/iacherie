@@ -35,7 +35,8 @@ FOR AUTHORIZATION: Contact Fahed Mlaiel at mlaiel@live.de with detailed usage re
 
 Comprehensive test suite for AIModelsConfig module ensuring 100% reliability,
 security, and performance for multi-format content creators.
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -62,13 +63,16 @@ except ImportError as e:
     pytest.skip("AIModelsConfig module not available", allow_module_level=True)
 
 class TestAIModelsConfig:
-    """Tests complets pour la configuration des modèles IA."""    
+    """Tests complets pour la configuration des modèles IA."""
+    
     def setup_method(self):
-        """Setup test environment and fixtures"""        self.config = AIModelsConfig()
+        """Setup test environment and fixtures"""
+        self.config = AIModelsConfig()
     
     @pytest_marks["unit"]
     def test_config_initialization(self):
-        """Test de l'initialisation de la configuration."""        # Test des attributs de base de configuration
+        """Test de l'initialisation de la configuration."""
+        # Test des attributs de base de configuration
         assert hasattr(self.config, 'default_provider')
         assert hasattr(self.config, 'models')
         assert hasattr(self.config, 'api_keys')
@@ -82,7 +86,8 @@ class TestAIModelsConfig:
     
     @pytest_marks["unit"]
     def test_provider_configuration(self):
-        """Test la configuration des fournisseurs de modèles."""        # Test OpenAI provider
+        """Test la configuration des fournisseurs de modèles."""
+        # Test OpenAI provider
         openai_config = self.config.get_provider_config("openai")
         assert openai_config is not None
         assert "api_key" in openai_config
@@ -103,7 +108,8 @@ class TestAIModelsConfig:
     
     @pytest_marks["unit"]
     def test_model_capabilities_validation(self):
-        """Test la validation des capacités des modèles."""        # Test pour les musiciens
+        """Test la validation des capacités des modèles."""
+        # Test pour les musiciens
         musician_capabilities = self.config.get_capabilities_for_creator("musician")
         assert "audio_generation" in musician_capabilities
         assert "music_analysis" in musician_capabilities
@@ -125,7 +131,8 @@ class TestAIModelsConfig:
     
     @pytest_marks["unit"]
     def test_api_key_management(self):
-        """Test la gestion sécurisée des clés API."""        # Test encryption/decryption des clés API
+        """Test la gestion sécurisée des clés API."""
+        # Test encryption/decryption des clés API
         original_key = "test_api_key_12345"
         encrypted_key = self.config.encrypt_api_key(original_key)
         decrypted_key = self.config.decrypt_api_key(encrypted_key)
@@ -142,7 +149,8 @@ class TestAIModelsConfig:
     
     @pytest_marks["performance"]
     def test_model_selection_performance(self):
-        """Test les performances de sélection de modèle."""        start_time = time.time()
+        """Test les performances de sélection de modèle."""
+        start_time = time.time()
         
         # Test sélection pour 1000 requêtes
         for i in range(1000):
@@ -161,7 +169,8 @@ class TestAIModelsConfig:
     
     @pytest_marks["unit"]
     def test_cost_calculation_accuracy(self):
-        """Test la précision du calcul des coûts."""        # Test calcul coût pour génération de texte
+        """Test la précision du calcul des coûts."""
+        # Test calcul coût pour génération de texte
         text_cost = self.config.calculate_cost(
             model="gpt-4",
             input_tokens=1000,
@@ -187,7 +196,8 @@ class TestAIModelsConfig:
     
     @pytest_marks["integration"]
     async def test_model_api_integration(self):
-        """Test l'intégration avec les APIs des modèles."""        # Mock des réponses API
+        """Test l'intégration avec les APIs des modèles."""
+        # Mock des réponses API
         with patch('aiohttp.ClientSession.post') as mock_post:
             mock_response = AsyncMock()
             mock_response.status = 200
@@ -212,7 +222,8 @@ class TestAIModelsConfig:
     
     @pytest_marks["security"]
     def test_model_security_validation(self):
-        """Test la validation de sécurité des modèles."""        # Test détection de contenu inapproprié
+        """Test la validation de sécurité des modèles."""
+        # Test détection de contenu inapproprié
         inappropriate_content = "This is test inappropriate content"
         security_result = self.config.validate_content_security(inappropriate_content)
         assert "safety_score" in security_result
@@ -234,7 +245,8 @@ class TestAIModelsConfig:
     
     @pytest_marks["unit"]
     def test_model_optimization_strategies(self):
-        """Test les stratégies d'optimisation des modèles."""        # Test optimisation pour musiciens
+        """Test les stratégies d'optimisation des modèles."""
+        # Test optimisation pour musiciens
         musician_optimization = self.config.get_optimization_strategy(
             creator_type="musician",
             content_type="audio",
@@ -256,7 +268,8 @@ class TestAIModelsConfig:
     
     @pytest_marks["business_logic"]
     def test_creator_workflow_integration(self):
-        """Test l'intégration dans les workflows de créateurs."""        # Test workflow musicien complet
+        """Test l'intégration dans les workflows de créateurs."""
+        # Test workflow musicien complet
         musician_workflow = self.config.execute_creator_workflow(
             creator_type="musician",
             workflow_steps=[
@@ -293,7 +306,8 @@ class TestAIModelsConfig:
     
     @pytest_marks["unit"]
     def test_fallback_mechanisms(self):
-        """Test les mécanismes de fallback."""        # Test fallback quand le modèle principal est indisponible
+        """Test les mécanismes de fallback."""
+        # Test fallback quand le modèle principal est indisponible
         with patch.object(self.config, '_call_primary_model', side_effect=Exception("Model unavailable")):
             fallback_result = self.config.generate_with_fallback(
                 prompt="Test prompt",
@@ -318,7 +332,8 @@ class TestAIModelsConfig:
     
     @pytest_marks["integration"]
     def test_multi_provider_coordination(self):
-        """Test la coordination entre plusieurs fournisseurs."""        # Test load balancing entre providers
+        """Test la coordination entre plusieurs fournisseurs."""
+        # Test load balancing entre providers
         load_balance_result = self.config.balance_load_across_providers(
             requests_count=100,
             providers=["openai", "anthropic", "google"]
@@ -338,7 +353,8 @@ class TestAIModelsConfig:
     
     @pytest_marks["performance"]
     def test_concurrent_model_requests(self):
-        """Test les requêtes concurrentes aux modèles."""        async def concurrent_requests_test():
+        """Test les requêtes concurrentes aux modèles."""
+        async def concurrent_requests_test():
             tasks = []
             for i in range(50):
                 task = self.config.generate_content_async(
@@ -367,7 +383,8 @@ class TestAIModelsConfig:
     
     @pytest_marks["security"]
     def test_model_access_control(self):
-        """Test le contrôle d'accès aux modèles."""        # Test permissions par rôle
+        """Test le contrôle d'accès aux modèles."""
+        # Test permissions par rôle
         admin_access = self.config.check_model_access(
             user_role="admin",
             model="gpt-4",
@@ -396,7 +413,8 @@ class TestAIModelsConfig:
     
     @pytest_marks["unit"]
     def test_model_configuration_validation(self):
-        """Test la validation de la configuration des modèles."""        # Test validation schema de configuration
+        """Test la validation de la configuration des modèles."""
+        # Test validation schema de configuration
         config_validation = self.config.validate_configuration_schema()
         assert config_validation["valid"] is True
         assert len(config_validation["errors"]) == 0
@@ -424,7 +442,8 @@ class TestAIModelsConfig:
     
     @pytest_marks["integration"]
     def test_model_monitoring_integration(self):
-        """Test l'intégration avec le monitoring des modèles."""        # Test logging des métriques
+        """Test l'intégration avec le monitoring des modèles."""
+        # Test logging des métriques
         metrics_logged = self.config.log_model_metrics(
             model="gpt-4",
             operation="text_generation",
@@ -448,32 +467,39 @@ class TestAIModelsConfig:
         logger.info("Model monitoring integration test passed")
 
 class TestModelProvider:
-    """Tests spécifiques pour la classe ModelProvider."""    
+    """Tests spécifiques pour la classe ModelProvider."""
+    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""        # Use the enum directly for provider creation
+        """Configuration avant chaque test."""
+        # Use the enum directly for provider creation
         self.provider_type = ModelProvider.OPENAI
     
     @pytest_marks["unit"]
     def test_provider_initialization(self):
-        """Test l'initialisation du provider."""        assert self.provider_type == ModelProvider.OPENAI
+        """Test l'initialisation du provider."""
+        assert self.provider_type == ModelProvider.OPENAI
         assert self.provider_type.value == "openai"
     
     @pytest_marks["unit"]
     def test_provider_health_check(self):
-        """Test la vérification de santé du provider."""        # Test que le provider existe dans les providers supportés
+        """Test la vérification de santé du provider."""
+        # Test que le provider existe dans les providers supportés
         supported_providers = [p.value for p in ModelProvider]
         assert self.provider_type.value in supported_providers
 
 class TestModelCosts:
-    """Tests pour le calcul des coûts des modèles."""    
+    """Tests pour le calcul des coûts des modèles."""
+    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""        self.config = AIModelsConfig()
+        """Configuration avant chaque test."""
+        self.config = AIModelsConfig()
     
     @pytest_marks["unit"]
     def test_cost_calculation_precision(self):
-        """Test la précision des calculs de coût."""        # Test basic cost calculation using configuration
+        """Test la précision des calculs de coût."""
+        # Test basic cost calculation using configuration
         model_config = ModelConfig(
             name="test_model",
             provider=ModelProvider.OPENAI,
@@ -493,7 +519,8 @@ class TestModelCosts:
     
     @pytest_marks["unit"]
     def test_cost_estimation_accuracy(self):
-        """Test la précision des estimations de coût."""        # Test estimation using configuration
+        """Test la précision des estimations de coût."""
+        # Test estimation using configuration
         models_in_config = len(self.config.models)
         providers_count = len(self.config.fallback_providers)
         
@@ -508,14 +535,17 @@ class TestModelCosts:
 
 # Tests de stress et de charge
 class TestStressAndLoad:
-    """Tests de stress et de charge pour la configuration AI."""    
+    """Tests de stress et de charge pour la configuration AI."""
+    
     @pytest_marks["performance"]
     @pytest.mark.slow
     def test_high_load_configuration_access(self):
-        """Test l'accès à la configuration sous charge élevée."""        config = AIModelsConfig()
+        """Test l'accès à la configuration sous charge élevée."""
+        config = AIModelsConfig()
         
         def access_config():
-            """Fonction d'accès à la configuration."""            try:
+            """Fonction d'accès à la configuration."""
+            try:
                 # Access available configuration methods
                 models = config.models
                 return {"models": len(models), "providers": len(config.fallback_providers)}
@@ -551,7 +581,8 @@ class TestStressAndLoad:
 
 # Configuration des tests pytest
 def pytest_configure(config):
-    """Configuration pytest pour les tests AI Models."""    config.addinivalue_line(
+    """Configuration pytest pour les tests AI Models."""
+    config.addinivalue_line(
         "markers", "unit: Unit tests for individual components"
     )
     config.addinivalue_line(

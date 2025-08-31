@@ -18,7 +18,8 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 WARNING: This code is proprietary and confidential. Any unauthorized use, modification,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, List, Any, Optional, Union, Tuple
+"""
+from typing import Dict, List, Any, Optional, Union, Tuple
 import json
 import logging
 import asyncio
@@ -41,7 +42,8 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class ModelStatus(str, Enum):
-    """Model lifecycle status enumeration."""    DRAFT = "draft"
+    """Model lifecycle status enumeration."""
+    DRAFT = "draft"
     TRAINING = "training"
     VALIDATION = "validation"
     PRODUCTION = "production"
@@ -49,7 +51,8 @@ class ModelStatus(str, Enum):
     ARCHIVED = "archived"
 
 class ModelType(str, Enum):
-    """Model type enumeration."""    CLASSIFICATION = "classification"
+    """Model type enumeration."""
+    CLASSIFICATION = "classification"
     REGRESSION = "regression"
     CLUSTERING = "clustering"
     GENERATION = "generation"
@@ -59,7 +62,8 @@ class ModelType(str, Enum):
     FINGERPRINTING = "fingerprinting"
 
 class MLFramework(str, Enum):
-    """ML framework enumeration."""    PYTORCH = "pytorch"
+    """ML framework enumeration."""
+    PYTORCH = "pytorch"
     TENSORFLOW = "tensorflow"
     SCIKIT_LEARN = "scikit_learn"
     HUGGINGFACE = "huggingface"
@@ -69,7 +73,8 @@ class MLFramework(str, Enum):
 
 @dataclass
 class ModelMetadata:
-    """Model metadata structure."""    model_id: str
+    """Model metadata structure."""
+    model_id: str
     name: str
     version: str
     description: str
@@ -86,7 +91,8 @@ class ModelMetadata:
     hardware_requirements: Dict[str, Any]
 
 class ModelRegistrySchema(Base):
-    """Database schema for model registry."""    __tablename__ = "ai_model_registry"
+    """Database schema for model registry."""
+    __tablename__ = "ai_model_registry"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     model_id = Column(String(255), unique=True, nullable=False, index=True)
@@ -110,7 +116,8 @@ class ModelRegistrySchema(Base):
     is_active = Column(Boolean, default=True)
 
 class ModelVersionSchema(Base):
-    """Database schema for model versions."""    __tablename__ = "ai_model_versions"
+    """Database schema for model versions."""
+    __tablename__ = "ai_model_versions"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     model_id = Column(String(255), nullable=False, index=True)
@@ -124,7 +131,8 @@ class ModelVersionSchema(Base):
     is_production = Column(Boolean, default=False)
 
 class ModelRequest(BaseModel):
-    """Model registration request schema."""    name: str = Field(..., min_length=1, max_length=255)
+    """Model registration request schema."""
+    name: str = Field(..., min_length=1, max_length=255)
     version: str = Field(..., min_length=1, max_length=50)
     description: Optional[str] = Field(None, max_length=5000)
     model_type: ModelType
@@ -143,22 +151,27 @@ class ModelRequest(BaseModel):
         return v
 
 class AIModelRegistry:
-    """    Central AI model registry for managing ML models.
+    """
+    Central AI model registry for managing ML models.
     
     This class provides comprehensive model management including registration,
     versioning, metadata storage, and lifecycle management.
-    """    
+    """
+    
     def __init__(self, db_connection: Optional[asyncpg.Connection] = None):
-        """Initialize the AI Model Registry."""        self.db_connection = db_connection
+        """Initialize the AI Model Registry."""
+        self.db_connection = db_connection
         self.models_cache = {}
         self.initialized = False
         
     async def initialize(self) -> Dict[str, Any]:
-        """        Initialize the model registry.
+        """
+        Initialize the model registry.
         
         Returns:
             Dict[str, Any]: Initialization status
-        """        try:
+        """
+        try:
             if not self.db_connection:
                 # Database connection would be injected in production
                 logger.warning("No database connection provided, using mock mode")
@@ -188,7 +201,8 @@ class AIModelRegistry:
     
     async def register_model(self, model_request: ModelRequest, 
                            artifact_path: Optional[str] = None) -> Dict[str, Any]:
-        """        Register a new ML model.
+        """
+        Register a new ML model.
         
         Args:
             model_request: Model registration request
@@ -196,7 +210,8 @@ class AIModelRegistry:
             
         Returns:
             Dict[str, Any]: Registration result
-        """        try:
+        """
+        try:
             # Generate unique model ID
             model_id = self._generate_model_id(model_request.name, model_request.version)
             
@@ -256,14 +271,16 @@ class AIModelRegistry:
             }
     
     async def get_model(self, model_id: str) -> Optional[ModelMetadata]:
-        """        Get model metadata by ID.
+        """
+        Get model metadata by ID.
         
         Args:
             model_id: Model identifier
             
         Returns:
             Optional[ModelMetadata]: Model metadata if found
-        """        try:
+        """
+        try:
             # Check cache first
             if model_id in self.models_cache:
                 return self.models_cache[model_id]
@@ -287,7 +304,8 @@ class AIModelRegistry:
                          tags: Optional[List[str]] = None,
                          limit: int = 100,
                          offset: int = 0) -> Dict[str, Any]:
-        """        List models with filtering options.
+        """
+        List models with filtering options.
         
         Args:
             model_type: Filter by model type
@@ -300,7 +318,8 @@ class AIModelRegistry:
             
         Returns:
             Dict[str, Any]: List of models with metadata
-        """        try:
+        """
+        try:
             # Apply filters
             filtered_models = []
             for model_id, metadata in self.models_cache.items():
@@ -343,7 +362,8 @@ class AIModelRegistry:
     
     async def update_model_status(self, model_id: str, 
                                 new_status: ModelStatus) -> Dict[str, Any]:
-        """        Update model status.
+        """
+        Update model status.
         
         Args:
             model_id: Model identifier
@@ -351,7 +371,8 @@ class AIModelRegistry:
             
         Returns:
             Dict[str, Any]: Update result
-        """        try:
+        """
+        try:
             # Validate model exists
             metadata = await self.get_model(model_id)
             if not metadata:
@@ -388,7 +409,8 @@ class AIModelRegistry:
     
     async def delete_model(self, model_id: str, 
                           hard_delete: bool = False) -> Dict[str, Any]:
-        """        Delete model (soft delete by default).
+        """
+        Delete model (soft delete by default).
         
         Args:
             model_id: Model identifier
@@ -396,7 +418,8 @@ class AIModelRegistry:
             
         Returns:
             Dict[str, Any]: Deletion result
-        """        try:
+        """
+        try:
             # Validate model exists
             metadata = await self.get_model(model_id)
             if not metadata:
@@ -435,15 +458,18 @@ class AIModelRegistry:
             }
     
     async def get_total_models_count(self) -> int:
-        """Get total number of registered models."""        return len([m for m in self.models_cache.values() 
+        """Get total number of registered models."""
+        return len([m for m in self.models_cache.values() 
                    if m.status != ModelStatus.ARCHIVED])
     
     async def health_check(self) -> Dict[str, Any]:
-        """        Perform health check on the model registry.
+        """
+        Perform health check on the model registry.
         
         Returns:
             Dict[str, Any]: Health status
-        """        try:
+        """
+        try:
             if not self.initialized:
                 return {
                     "status": "unhealthy",
@@ -474,17 +500,20 @@ class AIModelRegistry:
     # Private helper methods
     
     def _generate_model_id(self, name: str, version: str) -> str:
-        """Generate unique model ID."""        base_id = f"{name}_{version}".replace(" ", "_").lower()
+        """Generate unique model ID."""
+        base_id = f"{name}_{version}".replace(" ", "_").lower()
         # Add timestamp for uniqueness
         timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
         return f"{base_id}_{timestamp}"
     
     async def _model_exists(self, model_id: str) -> bool:
-        """Check if model exists."""        # In production, this would query the database
+        """Check if model exists."""
+        # In production, this would query the database
         return model_id in self.models_cache
     
     async def _calculate_artifact_info(self, artifact_path: str) -> Tuple[str, int]:
-        """Calculate checksum and file size for artifact."""        try:
+        """Calculate checksum and file size for artifact."""
+        try:
             path = Path(artifact_path)
             if not path.exists():
                 return "", 0
@@ -505,44 +534,54 @@ class AIModelRegistry:
             return "", 0
     
     async def _create_tables(self):
-        """Create database tables if they don't exist."""        # In production, this would use SQLAlchemy/Alembic migrations
+        """Create database tables if they don't exist."""
+        # In production, this would use SQLAlchemy/Alembic migrations
         logger.info("Database tables creation would be handled by migrations")
     
     async def _load_models_cache(self):
-        """Load existing models into cache."""        # In production, this would query the database
+        """Load existing models into cache."""
+        # In production, this would query the database
         logger.info("Loading models from database into cache")
     
     async def _store_model_metadata(self, metadata: ModelMetadata, 
                                   artifact_path: Optional[str],
                                   checksum: Optional[str],
                                   file_size: Optional[int]):
-        """Store model metadata in database."""        # In production, this would insert into database
+        """Store model metadata in database."""
+        # In production, this would insert into database
         logger.info(f"Storing model metadata for {metadata.model_id}")
     
     async def _load_model_metadata(self, model_id: str) -> Optional[ModelMetadata]:
-        """Load model metadata from database."""        # In production, this would query the database
+        """Load model metadata from database."""
+        # In production, this would query the database
         return None
     
     async def _update_model_metadata(self, metadata: ModelMetadata):
-        """Update model metadata in database."""        logger.info(f"Updating model metadata for {metadata.model_id}")
+        """Update model metadata in database."""
+        logger.info(f"Updating model metadata for {metadata.model_id}")
     
     async def _delete_model_hard(self, model_id: str):
-        """Hard delete model from database."""        logger.info(f"Hard deleting model {model_id}")
+        """Hard delete model from database."""
+        logger.info(f"Hard deleting model {model_id}")
 
 class ModelVersionManager:
-    """    Model version management system.
+    """
+    Model version management system.
     
     Handles version control, branching, and version comparison for ML models.
-    """    
+    """
+    
     def __init__(self, model_registry: AIModelRegistry):
-        """Initialize the version manager."""        self.model_registry = model_registry
+        """Initialize the version manager."""
+        self.model_registry = model_registry
         self.version_cache = {}
         
     async def create_version(self, model_id: str, version: str,
                            parent_version: Optional[str] = None,
                            changelog: Optional[str] = None,
                            created_by: str = "system") -> Dict[str, Any]:
-        """        Create a new model version.
+        """
+        Create a new model version.
         
         Args:
             model_id: Model identifier
@@ -553,7 +592,8 @@ class ModelVersionManager:
             
         Returns:
             Dict[str, Any]: Version creation result
-        """        try:
+        """
+        try:
             # Validate model exists
             model = await self.model_registry.get_model(model_id)
             if not model:
@@ -595,14 +635,16 @@ class ModelVersionManager:
             }
     
     async def get_version_history(self, model_id: str) -> List[Dict[str, Any]]:
-        """        Get version history for a model.
+        """
+        Get version history for a model.
         
         Args:
             model_id: Model identifier
             
         Returns:
             List[Dict[str, Any]]: Version history
-        """        try:
+        """
+        try:
             versions = []
             for key, version_record in self.version_cache.items():
                 if version_record["model_id"] == model_id:
@@ -618,7 +660,8 @@ class ModelVersionManager:
             return []
     
     async def mark_version_stable(self, model_id: str, version: str) -> Dict[str, Any]:
-        """Mark a version as stable."""        try:
+        """Mark a version as stable."""
+        try:
             version_key = f"{model_id}_{version}"
             if version_key in self.version_cache:
                 self.version_cache[version_key]["is_stable"] = True
@@ -631,17 +674,21 @@ class ModelVersionManager:
             return {"status": "error", "error": str(e)}
 
 class ModelMetadataStore:
-    """    Model metadata storage and retrieval system.
+    """
+    Model metadata storage and retrieval system.
     
     Provides advanced metadata management including search, indexing,
     and metadata analytics.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the metadata store."""        self.metadata_index = {}
+        """Initialize the metadata store."""
+        self.metadata_index = {}
         self.search_index = {}
         
     async def store_metadata(self, model_id: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """        Store model metadata with indexing.
+        """
+        Store model metadata with indexing.
         
         Args:
             model_id: Model identifier
@@ -649,7 +696,8 @@ class ModelMetadataStore:
             
         Returns:
             Dict[str, Any]: Storage result
-        """        try:
+        """
+        try:
             # Store metadata
             self.metadata_index[model_id] = {
                 **metadata,
@@ -676,7 +724,8 @@ class ModelMetadataStore:
             }
     
     async def search_models(self, query: str, filters: Optional[Dict[str, Any]] = None) -> List[str]:
-        """        Search models by metadata.
+        """
+        Search models by metadata.
         
         Args:
             query: Search query
@@ -684,7 +733,8 @@ class ModelMetadataStore:
             
         Returns:
             List[str]: List of matching model IDs
-        """        try:
+        """
+        try:
             matching_models = []
             query_lower = query.lower()
             
@@ -716,7 +766,8 @@ class ModelMetadataStore:
             return []
     
     async def _update_search_index(self, model_id: str, metadata: Dict[str, Any]):
-        """Update search index for a model."""        # Create searchable keywords
+        """Update search index for a model."""
+        # Create searchable keywords
         keywords = []
         keywords.extend(metadata.get("tags", []))
         keywords.append(metadata.get("name", ""))
@@ -726,18 +777,22 @@ class ModelMetadataStore:
         self.search_index[model_id] = [k.lower() for k in keywords if k]
 
 class ModelArtifactManager:
-    """    Model artifact management system.
+    """
+    Model artifact management system.
     
     Handles storage, retrieval, and versioning of model files and artifacts.
-    """    
+    """
+    
     def __init__(self, storage_backend: str = "filesystem"):
-        """Initialize the artifact manager."""        self.storage_backend = storage_backend
+        """Initialize the artifact manager."""
+        self.storage_backend = storage_backend
         self.artifacts_cache = {}
         
     async def store_artifact(self, model_id: str, version: str,
                            artifact_data: bytes, 
                            artifact_type: str = "model") -> Dict[str, Any]:
-        """        Store model artifact.
+        """
+        Store model artifact.
         
         Args:
             model_id: Model identifier
@@ -747,7 +802,8 @@ class ModelArtifactManager:
             
         Returns:
             Dict[str, Any]: Storage result
-        """        try:
+        """
+        try:
             # Generate artifact path
             artifact_path = self._generate_artifact_path(model_id, version, artifact_type)
             
@@ -786,7 +842,8 @@ class ModelArtifactManager:
     
     async def retrieve_artifact(self, model_id: str, version: str,
                               artifact_type: str = "model") -> Optional[bytes]:
-        """        Retrieve model artifact.
+        """
+        Retrieve model artifact.
         
         Args:
             model_id: Model identifier
@@ -795,7 +852,8 @@ class ModelArtifactManager:
             
         Returns:
             Optional[bytes]: Artifact data if found
-        """        try:
+        """
+        try:
             artifact_key = f"{model_id}_{version}_{artifact_type}"
             if artifact_key in self.artifacts_cache:
                 logger.info(f"Retrieved artifact for {model_id} v{version}")
@@ -809,4 +867,5 @@ class ModelArtifactManager:
             return None
     
     def _generate_artifact_path(self, model_id: str, version: str, artifact_type: str) -> str:
-        """Generate artifact storage path."""        return f"models/{model_id}/{version}/{artifact_type}.bin"
+        """Generate artifact storage path."""
+        return f"models/{model_id}/{version}/{artifact_type}.bin"

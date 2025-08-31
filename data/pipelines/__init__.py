@@ -16,14 +16,16 @@ Team Specialties:
 - AI Prompt Engineer: Intelligent content generation
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 ⚠️ STRICT WARNING ⚠️
 This code, concept, and intellectual property belong exclusively to Fahed Mlaiel.
 Any unauthorized use, theft, copying, or reproduction without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will
 result in immediate legal action under German and international copyright laws.
-"""from .content_ingestion import ContentIngestionPipeline, MultiFormatProcessor
+"""
+
+from .content_ingestion import ContentIngestionPipeline, MultiFormatProcessor
 from .protection_pipeline import ProtectionPipeline, FingerprintingEngine
 from .monetization_pipeline import MonetizationPipeline, RevenueCalculatorEngine
 from .analytics_pipeline import AnalyticsPipeline, MetricsAggregator
@@ -35,7 +37,7 @@ from .monitoring import PipelineMonitor, HealthChecker
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "© 2025 Fahed Mlaiel - All Rights Reserved"
+__copyright__ = "(c) 2025 Fahed Mlaiel - All Rights Reserved"
 
 __all__ = [
     # Core Pipelines

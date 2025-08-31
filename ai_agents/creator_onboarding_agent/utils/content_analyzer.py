@@ -4,7 +4,8 @@ Enterprise-grade content analysis with AI-powered quality assessment,
 optimization recommendations, and intelligent categorization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import hashlib
@@ -47,7 +48,8 @@ from ...security.content_validator import ContentValidator
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Supported content types for analysis"""    AUDIO = "audio"
+    """Supported content types for analysis"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -55,7 +57,8 @@ class ContentType(Enum):
     UNKNOWN = "unknown"
 
 class QualityLevel(Enum):
-    """Content quality assessment levels"""    POOR = "poor"           # 0.0 - 0.3
+    """Content quality assessment levels"""
+    POOR = "poor"           # 0.0 - 0.3
     FAIR = "fair"           # 0.3 - 0.5
     GOOD = "good"           # 0.5 - 0.7
     EXCELLENT = "excellent" # 0.7 - 0.9
@@ -63,7 +66,8 @@ class QualityLevel(Enum):
 
 @dataclass
 class ContentMetadata:
-    """Comprehensive content metadata structure"""    file_name: str
+    """Comprehensive content metadata structure"""
+    file_name: str
     file_size: int
     file_type: str
     mime_type: str
@@ -80,7 +84,8 @@ class ContentMetadata:
 
 @dataclass
 class ContentAnalysis:
-    """Comprehensive content analysis results"""    content_id: str
+    """Comprehensive content analysis results"""
+    content_id: str
     content_type: ContentType
     metadata: ContentMetadata
     
@@ -119,7 +124,8 @@ class ContentAnalysis:
     processing_time: float = 0.0
 
 class ContentAnalyzer:
-    """    Advanced multi-format content analysis system with AI-powered insights.
+    """
+    Advanced multi-format content analysis system with AI-powered insights.
     
     Core Capabilities:
     - Multi-format content analysis (audio, video, image, text)
@@ -130,7 +136,8 @@ class ContentAnalyzer:
     - Copyright and compliance checking
     - Platform-specific optimization suggestions
     - Real-time processing with batch support
-    """    
+    """
+    
     def __init__(self):
         self.content_classifier = ContentClassifier()
         self.quality_analyzer = QualityAnalyzer()
@@ -146,7 +153,8 @@ class ContentAnalyzer:
         logger.info("ContentAnalyzer initialized successfully")
     
     def _initialize_ai_models(self):
-        """Initialize AI models for content analysis."""        try:
+        """Initialize AI models for content analysis."""
+        try:
             # Text analysis models
             self.sentiment_analyzer = pipeline(
                 "sentiment-analysis", 
@@ -174,7 +182,8 @@ class ContentAnalyzer:
             self._initialize_fallback_models()
     
     def _initialize_fallback_models(self):
-        """Initialize fallback models if primary models fail."""        self.sentiment_analyzer = None
+        """Initialize fallback models if primary models fail."""
+        self.sentiment_analyzer = None
         self.image_classifier = None
         self.nlp = None
         logger.warning("Using fallback content analysis models")
@@ -182,8 +191,10 @@ class ContentAnalyzer:
     async def analyze_content(self, content: Union[str, bytes, Dict[str, Any]], 
                             creator_type: str = None,
                             analysis_options: Dict[str, bool] = None) -> ContentAnalysis:
-        """        Perform comprehensive content analysis with AI-powered insights.
-        """        start_time = datetime.utcnow()
+        """
+        Perform comprehensive content analysis with AI-powered insights.
+        """
+        start_time = datetime.utcnow()
         
         try:
             # Determine content type and prepare data
@@ -247,8 +258,10 @@ class ContentAnalyzer:
     async def batch_analyze(self, content_items: List[Any], 
                           creator_type: str = None,
                           concurrent_limit: int = 5) -> List[ContentAnalysis]:
-        """        Perform batch content analysis with concurrency control.
-        """        try:
+        """
+        Perform batch content analysis with concurrency control.
+        """
+        try:
             semaphore = asyncio.Semaphore(concurrent_limit)
             
             async def analyze_single(content_item):
@@ -275,7 +288,8 @@ class ContentAnalyzer:
             raise ContentAnalysisError(f"Batch analysis failed: {str(e)}")
     
     async def _prepare_content(self, content: Union[str, bytes, Dict[str, Any]]) -> Tuple[ContentType, Any]:
-        """Prepare and validate content for analysis."""        try:
+        """Prepare and validate content for analysis."""
+        try:
             # Handle different input types
             if isinstance(content, dict):
                 # Content object with metadata
@@ -324,7 +338,8 @@ class ContentAnalyzer:
             raise ValidationError(f"Content preparation failed: {str(e)}")
     
     def _detect_content_type(self, file_path: str, content_data: bytes = None) -> ContentType:
-        """Detect content type from file path and data."""        # Get MIME type
+        """Detect content type from file path and data."""
+        # Get MIME type
         mime_type, _ = mimetypes.guess_type(file_path)
         
         if mime_type:
@@ -362,7 +377,8 @@ class ContentAnalyzer:
         return ContentType.UNKNOWN
     
     def _detect_content_type_from_data(self, content_data: Any) -> ContentType:
-        """Detect content type from data analysis."""        if isinstance(content_data, str):
+        """Detect content type from data analysis."""
+        if isinstance(content_data, str):
             return ContentType.TEXT
         elif isinstance(content_data, bytes):
             # Check magic bytes for common formats
@@ -380,7 +396,8 @@ class ContentAnalyzer:
         return ContentType.UNKNOWN
     
     async def _extract_metadata(self, content_data: Any, content_type: ContentType) -> ContentMetadata:
-        """Extract comprehensive metadata from content."""        metadata = ContentMetadata(
+        """Extract comprehensive metadata from content."""
+        metadata = ContentMetadata(
             file_name="unknown",
             file_size=len(content_data) if isinstance(content_data, bytes) else len(str(content_data)),
             file_type=content_type.value,
@@ -419,7 +436,8 @@ class ContentAnalyzer:
     
     async def _analyze_audio_content(self, analysis: ContentAnalysis, 
                                    content_data: bytes, options: Dict[str, bool]) -> None:
-        """Analyze audio content with specialized metrics."""        try:
+        """Analyze audio content with specialized metrics."""
+        try:
             # Load audio data
             audio_io = io.BytesIO(content_data)
             y, sr = librosa.load(audio_io, sr=None)
@@ -461,7 +479,8 @@ class ContentAnalyzer:
     
     async def _analyze_image_content(self, analysis: ContentAnalysis, 
                                    content_data: bytes, options: Dict[str, bool]) -> None:
-        """Analyze image content with computer vision."""        try:
+        """Analyze image content with computer vision."""
+        try:
             # Load image
             image = Image.open(io.BytesIO(content_data))
             
@@ -512,7 +531,8 @@ class ContentAnalyzer:
     
     async def _analyze_video_content(self, analysis: ContentAnalysis, 
                                    content_data: bytes, options: Dict[str, bool]) -> None:
-        """Analyze video content with frame-by-frame analysis."""        try:
+        """Analyze video content with frame-by-frame analysis."""
+        try:
             # For now, treat as image analysis of first frame
             # In production, this would include temporal analysis
             
@@ -540,7 +560,8 @@ class ContentAnalyzer:
     
     async def _analyze_text_content(self, analysis: ContentAnalysis, 
                                   content_data: str, options: Dict[str, bool]) -> None:
-        """Analyze text content with NLP and readability metrics."""        try:
+        """Analyze text content with NLP and readability metrics."""
+        try:
             text = content_data.strip()
             
             # Basic text metrics
@@ -622,12 +643,14 @@ class ContentAnalyzer:
     
     async def _analyze_generic_content(self, analysis: ContentAnalysis, 
                                      content_data: Any, options: Dict[str, bool]) -> None:
-        """Analyze generic/unknown content types."""        analysis.tags.append("unknown_format")
+        """Analyze generic/unknown content types."""
+        analysis.tags.append("unknown_format")
         analysis.categories.append("generic")
         analysis.optimization_suggestions.append("Consider converting to a more standard format for better analysis")
     
     async def _calculate_overall_quality(self, analysis: ContentAnalysis) -> None:
-        """Calculate overall quality score from technical and aesthetic metrics."""        technical_scores = list(analysis.technical_quality.values())
+        """Calculate overall quality score from technical and aesthetic metrics."""
+        technical_scores = list(analysis.technical_quality.values())
         aesthetic_scores = list(analysis.aesthetic_quality.values())
         
         all_scores = technical_scores + aesthetic_scores
@@ -662,7 +685,8 @@ class ContentAnalyzer:
     
     async def _generate_optimization_recommendations(self, analysis: ContentAnalysis, 
                                                    creator_type: str = None) -> None:
-        """Generate intelligent optimization recommendations."""        recommendations = analysis.optimization_suggestions.copy()
+        """Generate intelligent optimization recommendations."""
+        recommendations = analysis.optimization_suggestions.copy()
         
         # Quality-based recommendations
         if analysis.overall_quality_score < 0.6:
@@ -697,7 +721,8 @@ class ContentAnalyzer:
         analysis.optimization_suggestions = list(set(recommendations))  # Remove duplicates
     
     async def _perform_compliance_checks(self, analysis: ContentAnalysis) -> None:
-        """Perform content compliance and safety checks."""        # Basic compliance checks
+        """Perform content compliance and safety checks."""
+        # Basic compliance checks
         content_warnings = []
         
         # Check for potential copyright issues (simplified)
@@ -713,7 +738,8 @@ class ContentAnalyzer:
     
     # Helper methods for various calculations
     def _calculate_snr(self, audio_data: np.ndarray) -> float:
-        """Calculate signal-to-noise ratio for audio."""        try:
+        """Calculate signal-to-noise ratio for audio."""
+        try:
             # Simple SNR calculation
             signal_power = np.mean(audio_data ** 2)
             noise_power = np.var(audio_data) * 0.1  # Simplified
@@ -723,7 +749,8 @@ class ContentAnalyzer:
             return 0.5
     
     def _calculate_dynamic_range(self, audio_data: np.ndarray) -> float:
-        """Calculate dynamic range of audio."""        try:
+        """Calculate dynamic range of audio."""
+        try:
             peak = np.max(np.abs(audio_data))
             rms = np.sqrt(np.mean(audio_data ** 2))
             dynamic_range = peak / (rms + 1e-10)
@@ -732,7 +759,8 @@ class ContentAnalyzer:
             return 0.5
     
     def _analyze_frequency_balance(self, audio_data: np.ndarray, sr: int) -> float:
-        """Analyze frequency balance in audio."""        try:
+        """Analyze frequency balance in audio."""
+        try:
             # Simple frequency balance analysis
             fft = np.fft.fft(audio_data)
             freqs = np.fft.fftfreq(len(fft), 1/sr)
@@ -751,7 +779,8 @@ class ContentAnalyzer:
             return 0.5
     
     def _detect_clipping(self, audio_data: np.ndarray) -> float:
-        """Detect audio clipping."""        try:
+        """Detect audio clipping."""
+        try:
             threshold = 0.99
             clipped_samples = np.sum(np.abs(audio_data) >= threshold)
             clipping_ratio = clipped_samples / len(audio_data)
@@ -760,7 +789,8 @@ class ContentAnalyzer:
             return 0.0
     
     def _calculate_silence_ratio(self, audio_data: np.ndarray) -> float:
-        """Calculate silence ratio in audio."""        try:
+        """Calculate silence ratio in audio."""
+        try:
             threshold = 0.01
             silent_samples = np.sum(np.abs(audio_data) < threshold)
             silence_ratio = silent_samples / len(audio_data)
@@ -769,7 +799,8 @@ class ContentAnalyzer:
             return 0.0
     
     def _calculate_energy_level(self, audio_data: np.ndarray) -> str:
-        """Calculate energy level category."""        try:
+        """Calculate energy level category."""
+        try:
             energy = np.mean(audio_data ** 2)
             if energy > 0.1:
                 return "high"
@@ -781,7 +812,8 @@ class ContentAnalyzer:
             return "unknown"
     
     async def _classify_audio_genre(self, audio_data: np.ndarray, sr: int) -> str:
-        """Classify audio genre (simplified)."""        try:
+        """Classify audio genre (simplified)."""
+        try:
             # Extract basic features for genre classification
             tempo, _ = librosa.beat.beat_track(y=audio_data, sr=sr)
             spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=audio_data, sr=sr))
@@ -799,7 +831,8 @@ class ContentAnalyzer:
             return "unknown"
     
     def _score_resolution(self, dimensions: Tuple[int, int]) -> float:
-        """Score image resolution quality."""        width, height = dimensions
+        """Score image resolution quality."""
+        width, height = dimensions
         total_pixels = width * height
         
         # Resolution quality thresholds
@@ -815,7 +848,8 @@ class ContentAnalyzer:
             return 0.2
     
     def _calculate_sharpness(self, img_array: np.ndarray) -> float:
-        """Calculate image sharpness using Laplacian variance."""        try:
+        """Calculate image sharpness using Laplacian variance."""
+        try:
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY) if len(img_array.shape) == 3 else img_array
             laplacian_var = cv2.Laplacian(gray, cv2.CV_64F).var()
             # Normalize to 0-1 range
@@ -824,7 +858,8 @@ class ContentAnalyzer:
             return 0.5
     
     def _analyze_brightness(self, img_array: np.ndarray) -> float:
-        """Analyze image brightness."""        try:
+        """Analyze image brightness."""
+        try:
             # Convert to grayscale and calculate mean brightness
             if len(img_array.shape) == 3:
                 gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
@@ -844,7 +879,8 @@ class ContentAnalyzer:
             return 0.5
     
     def _analyze_contrast(self, img_array: np.ndarray) -> float:
-        """Analyze image contrast."""        try:
+        """Analyze image contrast."""
+        try:
             if len(img_array.shape) == 3:
                 gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
             else:
@@ -856,7 +892,8 @@ class ContentAnalyzer:
             return 0.5
     
     def _analyze_color_balance(self, img_array: np.ndarray) -> float:
-        """Analyze color balance in image."""        try:
+        """Analyze color balance in image."""
+        try:
             if len(img_array.shape) != 3:
                 return 1.0  # Grayscale images are balanced by definition
             
@@ -874,19 +911,23 @@ class ContentAnalyzer:
             return 0.5
     
     def _analyze_composition(self, img_array: np.ndarray) -> float:
-        """Analyze image composition (simplified)."""        # Placeholder implementation - would use more sophisticated analysis
+        """Analyze image composition (simplified)."""
+        # Placeholder implementation - would use more sophisticated analysis
         return 0.7
     
     def _analyze_color_harmony(self, img_array: np.ndarray) -> float:
-        """Analyze color harmony in image."""        # Placeholder implementation - would use color theory analysis
+        """Analyze color harmony in image."""
+        # Placeholder implementation - would use color theory analysis
         return 0.6
     
     def _analyze_visual_balance(self, img_array: np.ndarray) -> float:
-        """Analyze visual balance in image."""        # Placeholder implementation - would use visual weight analysis
+        """Analyze visual balance in image."""
+        # Placeholder implementation - would use visual weight analysis
         return 0.6
     
     def _categorize_text_length(self, word_count: int) -> str:
-        """Categorize text length."""        if word_count < 50:
+        """Categorize text length."""
+        if word_count < 50:
             return "short"
         elif word_count < 300:
             return "medium"
@@ -896,7 +937,8 @@ class ContentAnalyzer:
             return "very_long"
     
     def _calculate_text_complexity(self, text: str) -> float:
-        """Calculate text complexity score."""        try:
+        """Calculate text complexity score."""
+        try:
             # Simple complexity metrics
             avg_word_length = np.mean([len(word) for word in text.split()])
             sentence_length = len(text.split()) / (text.count('.') + text.count('!') + text.count('?') + 1)

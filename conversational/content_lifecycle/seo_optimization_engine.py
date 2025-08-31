@@ -11,7 +11,8 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
-"""import asyncio
+"""
+import asyncio
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Set, Union, Any, Tuple
@@ -37,7 +38,8 @@ logger = logging.getLogger(__name__)
 
 
 class SEOStrategy(Enum):
-    """SEO optimization strategies"""    ORGANIC_GROWTH = "organic_growth"
+    """SEO optimization strategies"""
+    ORGANIC_GROWTH = "organic_growth"
     VIRAL_OPTIMIZATION = "viral_optimization"
     NICHE_TARGETING = "niche_targeting"
     MASS_APPEAL = "mass_appeal"
@@ -47,7 +49,8 @@ class SEOStrategy(Enum):
 
 
 class PlatformType(Enum):
-    """Platform types for SEO optimization"""    SEARCH_ENGINE = "search_engine"  # Google, Bing, etc.
+    """Platform types for SEO optimization"""
+    SEARCH_ENGINE = "search_engine"  # Google, Bing, etc.
     SOCIAL_MEDIA = "social_media"    # Instagram, TikTok, etc.
     VIDEO_PLATFORM = "video_platform"  # YouTube, Vimeo, etc.
     AUDIO_PLATFORM = "audio_platform"  # Spotify, Apple Music, etc.
@@ -56,7 +59,8 @@ class PlatformType(Enum):
 
 
 class OptimizationLevel(Enum):
-    """SEO optimization levels"""    BASIC = "basic"
+    """SEO optimization levels"""
+    BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
     PROFESSIONAL = "professional"
@@ -65,7 +69,8 @@ class OptimizationLevel(Enum):
 
 @dataclass
 class KeywordProfile:
-    """Keyword optimization profile"""    profile_id: str
+    """Keyword optimization profile"""
+    profile_id: str
     content_id: str
     primary_keywords: List[str]
     secondary_keywords: List[str]
@@ -80,7 +85,8 @@ class KeywordProfile:
 
 @dataclass
 class SEOMetadata:
-    """SEO metadata structure"""    metadata_id: str
+    """SEO metadata structure"""
+    metadata_id: str
     content_id: str
     optimized_title: str
     optimized_description: str
@@ -96,7 +102,8 @@ class SEOMetadata:
 
 @dataclass
 class PlatformOptimization:
-    """Platform-specific optimization"""    optimization_id: str
+    """Platform-specific optimization"""
+    optimization_id: str
     content_id: str
     platform_name: str
     platform_type: PlatformType
@@ -111,7 +118,8 @@ class PlatformOptimization:
 
 @dataclass
 class SEOPerformance:
-    """SEO performance metrics"""    performance_id: str
+    """SEO performance metrics"""
+    performance_id: str
     content_id: str
     platform: str
     discoverability_score: float
@@ -126,7 +134,8 @@ class SEOPerformance:
 
 @dataclass
 class TrendingTopics:
-    """Trending topics data"""    topic_id: str
+    """Trending topics data"""
+    topic_id: str
     platform: str
     trending_keywords: List[str]
     trending_hashtags: List[str]
@@ -140,9 +149,11 @@ class TrendingTopics:
 
 
 class SEOOptimizationEngine:
-    """    Enterprise-grade SEO optimization engine for multi-platform content optimization
+    """
+    Enterprise-grade SEO optimization engine for multi-platform content optimization
     and discoverability enhancement in the creator economy workflow.
-    """    
+    """
+    
     def __init__(self, cache_manager: CacheManager, event_emitter: EventEmitter):
         self.cache_manager = cache_manager
         self.event_emitter = event_emitter
@@ -161,7 +172,8 @@ class SEOOptimizationEngine:
             logger.warning(f"Failed to download NLTK data: {e}")
     
     def _initialize_platform_configs(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize platform-specific SEO configurations"""        return {
+        """Initialize platform-specific SEO configurations"""
+        return {
             "youtube": {
                 "platform_type": PlatformType.VIDEO_PLATFORM,
                 "title_max_length": 100,
@@ -225,7 +237,8 @@ class SEOOptimizationEngine:
         }
     
     def _initialize_seo_templates(self) -> Dict[str, Dict[str, str]]:
-        """Initialize SEO templates for different content types"""        return {
+        """Initialize SEO templates for different content types"""
+        return {
             "audio": {
                 "title_template": "{artist} - {title} | {genre} Music",
                 "description_template": "🎵 {title} by {artist}\n\n{description}\n\n🎼 Genre: {genre}\n🔥 Tags: {tags}\n\n#music #{genre} #artist",
@@ -257,11 +270,13 @@ class SEOOptimizationEngine:
         seo_strategy: SEOStrategy = SEOStrategy.ORGANIC_GROWTH,
         optimization_level: OptimizationLevel = OptimizationLevel.STANDARD
     ) -> Dict[str, Any]:
-        """        Comprehensive SEO optimization for content across multiple platforms
+        """
+        Comprehensive SEO optimization for content across multiple platforms
         
         Business Logic Integration:
         Content Upload → AI Processing → Protection → SEO OPTIMIZATION → Distribution
-        """        try:
+        """
+        try:
             # Step 1: Analyze content and extract base keywords
             keyword_analysis = await self._analyze_content_keywords(content_data, seo_strategy)
             
@@ -346,7 +361,8 @@ class SEOOptimizationEngine:
         content_data: Dict[str, Any],
         seo_strategy: SEOStrategy
     ) -> Dict[str, Any]:
-        """Analyze content to extract and optimize keywords"""        try:
+        """Analyze content to extract and optimize keywords"""
+        try:
             # Extract text content for analysis
             text_content = await self._extract_text_content(content_data)
             
@@ -388,7 +404,8 @@ class SEOOptimizationEngine:
         target_platforms: List[str],
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze trending topics across target platforms"""        try:
+        """Analyze trending topics across target platforms"""
+        try:
             trending_data = {}
             
             for platform in target_platforms:
@@ -428,7 +445,8 @@ class SEOOptimizationEngine:
         keyword_analysis: Dict[str, Any],
         trending_analysis: Dict[str, Any]
     ) -> KeywordProfile:
-        """Generate comprehensive keyword profile"""        try:
+        """Generate comprehensive keyword profile"""
+        try:
             # Combine analyzed keywords with trending keywords
             primary_keywords = keyword_analysis.get("primary_keywords", [])
             secondary_keywords = keyword_analysis.get("secondary_keywords", [])
@@ -481,7 +499,8 @@ class SEOOptimizationEngine:
         keyword_profile: KeywordProfile,
         optimization_level: OptimizationLevel
     ) -> SEOMetadata:
-        """Create comprehensive SEO metadata"""        try:
+        """Create comprehensive SEO metadata"""
+        try:
             content_format = content_data.get("content_format", "text")
             template = self.seo_templates.get(content_format, self.seo_templates["text"])
             
@@ -555,7 +574,8 @@ class SEOOptimizationEngine:
         keyword_profile: KeywordProfile,
         target_platforms: List[str]
     ) -> List[PlatformOptimization]:
-        """Create platform-specific optimizations"""        optimizations = []
+        """Create platform-specific optimizations"""
+        optimizations = []
         
         for platform in target_platforms:
             try:
@@ -621,7 +641,8 @@ class SEOOptimizationEngine:
         keyword_profile: KeywordProfile,
         platform_optimizations: List[PlatformOptimization]
     ) -> Dict[str, Any]:
-        """Predict SEO performance across platforms"""        try:
+        """Predict SEO performance across platforms"""
+        try:
             predictions = {}
             
             for optimization in platform_optimizations:
@@ -663,7 +684,8 @@ class SEOOptimizationEngine:
         keyword_profile: KeywordProfile,
         trending_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create strategies to enhance content discoverability"""        try:
+        """Create strategies to enhance content discoverability"""
+        try:
             strategies = {
                 "content_timing": await self._optimize_content_timing(trending_analysis),
                 "cross_platform_strategy": await self._create_cross_platform_strategy(
@@ -699,7 +721,8 @@ class SEOOptimizationEngine:
         seo_metadata: SEOMetadata,
         platform_optimizations: List[PlatformOptimization]
     ) -> float:
-        """Calculate overall discoverability score"""        try:
+        """Calculate overall discoverability score"""
+        try:
             scores = []
             
             # Keyword quality score (30%)
@@ -739,7 +762,8 @@ class SEOOptimizationEngine:
         content_id: str,
         platforms: List[str]
     ) -> Dict[str, SEOPerformance]:
-        """Monitor SEO performance across platforms"""        try:
+        """Monitor SEO performance across platforms"""
+        try:
             performance_data = {}
             
             for platform in platforms:
@@ -777,19 +801,23 @@ class SEOOptimizationEngine:
     
     # Helper methods (implementation details)
     async def _extract_text_content(self, content_data: Dict[str, Any]) -> str:
-        """Extract text content from various content formats"""        # Implementation for text extraction
+        """Extract text content from various content formats"""
+        # Implementation for text extraction
         return content_data.get("description", "") + " " + content_data.get("title", "")
     
     async def _analyze_keyword_competition(self, keywords: List[str]) -> Dict[str, Any]:
-        """Analyze keyword competition levels"""        # Implementation for keyword competition analysis
+        """Analyze keyword competition levels"""
+        # Implementation for keyword competition analysis
         return {"competition_level": "medium", "difficulty_scores": {}}
     
     async def _generate_semantic_keywords(self, keywords: List[str], text_content: str) -> List[str]:
-        """Generate semantic keywords using NLP"""        # Implementation for semantic keyword generation
+        """Generate semantic keywords using NLP"""
+        # Implementation for semantic keyword generation
         return []
     
     async def _consolidate_trending_topics(self, trending_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Consolidate trending topics across platforms"""        # Implementation for trending topics consolidation
+        """Consolidate trending topics across platforms"""
+        # Implementation for trending topics consolidation
         return {"keywords": [], "hashtags": []}
     
     async def _find_relevant_trends(
@@ -797,7 +825,8 @@ class SEOOptimizationEngine:
         consolidated_trends: Dict[str, Any], 
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Find trends relevant to content"""        # Implementation for relevant trend identification
+        """Find trends relevant to content"""
+        # Implementation for relevant trend identification
         return {"keywords": [], "hashtags": [], "momentum": "stable"}
     
     # Additional helper methods would be implemented here...
@@ -808,4 +837,5 @@ def create_seo_optimization_engine(
     cache_manager: CacheManager,
     event_emitter: EventEmitter
 ) -> SEOOptimizationEngine:
-    """Factory function to create SEO optimization engine instance"""    return SEOOptimizationEngine(cache_manager, event_emitter)
+    """Factory function to create SEO optimization engine instance"""
+    return SEOOptimizationEngine(cache_manager, event_emitter)

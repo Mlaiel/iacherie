@@ -22,7 +22,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
+"""
+from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID, JSONB
@@ -35,7 +36,8 @@ Base = declarative_base()
 
 
 class CreatorType(Enum):
-    """Creator type enumeration"""    MUSICIAN = "musician"
+    """Creator type enumeration"""
+    MUSICIAN = "musician"
     PODCASTER = "podcaster"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -59,7 +61,8 @@ class CreatorType(Enum):
 
 
 class CareerLevel(Enum):
-    """Career level enumeration"""    BEGINNER = "beginner"
+    """Career level enumeration"""
+    BEGINNER = "beginner"
     EMERGING = "emerging"
     INTERMEDIATE = "intermediate"
     EXPERIENCED = "experienced"
@@ -70,7 +73,8 @@ class CareerLevel(Enum):
 
 
 class VerificationStatus(Enum):
-    """Account verification status"""    UNVERIFIED = "unverified"
+    """Account verification status"""
+    UNVERIFIED = "unverified"
     PENDING = "pending"
     VERIFIED = "verified"
     REJECTED = "rejected"
@@ -81,7 +85,8 @@ class VerificationStatus(Enum):
 
 
 class CollaborationStyle(Enum):
-    """Collaboration preferences"""    OPEN_TO_ALL = "open_to_all"
+    """Collaboration preferences"""
+    OPEN_TO_ALL = "open_to_all"
     SELECTIVE = "selective"
     INVITATION_ONLY = "invitation_only"
     NO_COLLABORATIONS = "no_collaborations"
@@ -92,7 +97,8 @@ class CollaborationStyle(Enum):
 
 
 class ContentStyle(Enum):
-    """Content creation style"""    ORIGINAL = "original"
+    """Content creation style"""
+    ORIGINAL = "original"
     COVERS = "covers"
     REMIXES = "remixes"
     MASHUPS = "mashups"
@@ -107,7 +113,8 @@ class ContentStyle(Enum):
 
 
 class AudienceSize(Enum):
-    """Audience size categories"""    NANO = "nano"          # 1-1K
+    """Audience size categories"""
+    NANO = "nano"          # 1-1K
     MICRO = "micro"        # 1K-10K
     MID_TIER = "mid_tier"  # 10K-100K
     MACRO = "macro"        # 100K-1M
@@ -116,11 +123,13 @@ class AudienceSize(Enum):
 
 
 class CreatorProfile(Base):
-    """    Enterprise Creator Profile Model
+    """
+    Enterprise Creator Profile Model
     
     Comprehensive creator profile management with skills tracking,
     achievements, preferences, and professional development metrics.
-    """    __tablename__ = 'creator_profiles'
+    """
+    __tablename__ = 'creator_profiles'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -310,7 +319,8 @@ class CreatorProfile(Base):
     
     @classmethod
     def create_basic_profile(cls, user_id: str, stage_name: str, creator_type: CreatorType) -> 'CreatorProfile':
-        """Create basic creator profile"""        return cls(
+        """Create basic creator profile"""
+        return cls(
             user_id=user_id,
             stage_name=stage_name,
             creator_type=creator_type,
@@ -319,7 +329,8 @@ class CreatorProfile(Base):
         )
     
     def calculate_profile_completeness(self) -> float:
-        """Calculate profile completeness percentage"""        fields_to_check = [
+        """Calculate profile completeness percentage"""
+        fields_to_check = [
             'stage_name', 'bio', 'creator_type', 'primary_genres',
             'location_country', 'primary_language', 'platform_accounts',
             'technical_skills', 'content_style'
@@ -335,7 +346,8 @@ class CreatorProfile(Base):
         return self.profile_completeness
     
     def update_audience_metrics(self, platform_data: Dict[str, Dict[str, Any]]) -> None:
-        """Update audience metrics from platform data"""        total_followers = 0
+        """Update audience metrics from platform data"""
+        total_followers = 0
         total_subscribers = 0
         
         for platform, data in platform_data.items():
@@ -362,7 +374,8 @@ class CreatorProfile(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def add_achievement(self, achievement_type: str, title: str, description: str, date_achieved: datetime = None) -> None:
-        """Add achievement to profile"""        if self.achievements is None:
+        """Add achievement to profile"""
+        if self.achievements is None:
             self.achievements = []
         
         achievement = {
@@ -378,7 +391,8 @@ class CreatorProfile(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def update_skill_proficiency(self, skill: str, proficiency: float) -> None:
-        """Update skill proficiency level (0-100)"""        if self.technical_skills is None:
+        """Update skill proficiency level (0-100)"""
+        if self.technical_skills is None:
             self.technical_skills = {}
         
         self.technical_skills[skill] = {
@@ -388,7 +402,8 @@ class CreatorProfile(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def get_collaboration_score(self, other_creator: 'CreatorProfile') -> float:
-        """Calculate collaboration compatibility score with another creator"""        score = 0.0
+        """Calculate collaboration compatibility score with another creator"""
+        score = 0.0
         
         # Genre compatibility
         if self.primary_genres and other_creator.primary_genres:
@@ -415,7 +430,8 @@ class CreatorProfile(Base):
         return min(100, score)
     
     def get_profile_summary(self) -> Dict[str, Any]:
-        """Get comprehensive profile summary"""        return {
+        """Get comprehensive profile summary"""
+        return {
             'basic_info': {
                 'stage_name': self.stage_name,
                 'creator_type': self.creator_type.value,
@@ -449,7 +465,8 @@ class CreatorProfile(Base):
         }
     
     def is_eligible_for_verification(self) -> bool:
-        """Check if profile is eligible for verification"""        return (
+        """Check if profile is eligible for verification"""
+        return (
             self.profile_completeness >= 80 and
             self.total_followers >= 1000 and
             self.content_count >= 10 and
@@ -458,7 +475,8 @@ class CreatorProfile(Base):
         )
     
     def update_activity_score(self) -> None:
-        """Update activity score based on recent activity"""        now = datetime.now(timezone.utc)
+        """Update activity score based on recent activity"""
+        now = datetime.now(timezone.utc)
         
         # Days since last activity
         if self.last_active_at:

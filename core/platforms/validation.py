@@ -5,7 +5,8 @@ Comprehensive validation and testing utilities for the platform ecosystem.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Any, Optional
 from datetime import datetime
@@ -27,14 +28,17 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformValidator:
-    """Comprehensive platform ecosystem validator"""    
+    """Comprehensive platform ecosystem validator"""
+    
     def __init__(self):
-        """Initialize validator"""        self.validation_results: Dict[str, Any] = {}
+        """Initialize validator"""
+        self.validation_results: Dict[str, Any] = {}
         self.errors: List[str] = []
         self.warnings: List[str] = []
     
     async def validate_ecosystem(self) -> Dict[str, Any]:
-        """Validate entire platform ecosystem"""        logger.info("Starting comprehensive ecosystem validation...")
+        """Validate entire platform ecosystem"""
+        logger.info("Starting comprehensive ecosystem validation...")
         
         validation_start = datetime.utcnow()
         
@@ -110,7 +114,8 @@ class PlatformValidator:
             }
     
     def _validate_platform_registry(self) -> Dict[str, Any]:
-        """Validate platform registry completeness"""        try:
+        """Validate platform registry completeness"""
+        try:
             expected_platforms = 28  # Based on requirements
             actual_platforms = len(PLATFORM_REGISTRY)
             
@@ -161,7 +166,8 @@ class PlatformValidator:
             return {'status': 'FAIL', 'error': str(e)}
     
     def _validate_platform_factory(self) -> Dict[str, Any]:
-        """Validate platform factory functionality"""        try:
+        """Validate platform factory functionality"""
+        try:
             # Test factory methods
             available_platforms = get_available_platforms()
             
@@ -185,7 +191,8 @@ class PlatformValidator:
             return {'status': 'FAIL', 'error': str(e)}
     
     async def _validate_core_modules(self) -> Dict[str, Any]:
-        """Validate core module functionality"""        results = {}
+        """Validate core module functionality"""
+        results = {}
         
         try:
             # Validate distributor
@@ -227,7 +234,8 @@ class PlatformValidator:
             return {'status': 'FAIL', 'error': str(e)}
     
     async def _validate_advanced_features(self) -> Dict[str, Any]:
-        """Validate advanced feature modules"""        results = {}
+        """Validate advanced feature modules"""
+        results = {}
         
         try:
             # Validate metrics collector
@@ -261,7 +269,8 @@ class PlatformValidator:
             return {'status': 'FAIL', 'error': str(e)}
     
     def _validate_platform_implementations(self) -> Dict[str, Any]:
-        """Validate individual platform implementations"""        results = {}
+        """Validate individual platform implementations"""
+        results = {}
         
         try:
             for platform_type, platform_class in PLATFORM_REGISTRY.items():
@@ -308,7 +317,8 @@ class PlatformValidator:
             return {'status': 'FAIL', 'error': str(e)}
     
     async def _validate_integrations(self) -> Dict[str, Any]:
-        """Validate module integrations"""        results = {}
+        """Validate module integrations"""
+        results = {}
         
         try:
             # Test ecosystem initialization
@@ -340,7 +350,8 @@ class PlatformValidator:
             return {'status': 'FAIL', 'error': str(e)}
     
     def generate_validation_report(self, validation_results: Dict[str, Any]) -> str:
-        """Generate human-readable validation report"""        report = []
+        """Generate human-readable validation report"""
+        report = []
         report.append("=" * 80)
         report.append("🔍 PLATFORM ECOSYSTEM VALIDATION REPORT")
         report.append("=" * 80)
@@ -398,12 +409,14 @@ class PlatformValidator:
 
 
 async def validate_platform_ecosystem() -> Dict[str, Any]:
-    """Run comprehensive platform ecosystem validation"""    validator = PlatformValidator()
+    """Run comprehensive platform ecosystem validation"""
+    validator = PlatformValidator()
     return await validator.validate_ecosystem()
 
 
 def quick_validation() -> bool:
-    """Quick validation check - returns True if basic functionality works"""    try:
+    """Quick validation check - returns True if basic functionality works"""
+    try:
         # Check basic imports
         from . import base, distributor, aggregator, monitor, connector
         from . import metrics, scheduler, automation, index
@@ -425,11 +438,13 @@ def quick_validation() -> bool:
 
 
 async def async_quick_validation() -> bool:
-    """Async version of quick validation check"""    return quick_validation()
+    """Async version of quick validation check"""
+    return quick_validation()
 
 
 def get_ecosystem_health() -> Dict[str, Any]:
-    """Get current ecosystem health status"""    try:
+    """Get current ecosystem health status"""
+    try:
         return {
             'status': 'HEALTHY',
             'timestamp': datetime.utcnow().isoformat(),

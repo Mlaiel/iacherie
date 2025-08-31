@@ -3,7 +3,8 @@ Creator matching and partnership management endpoints.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""from typing import List, Dict, Any, Optional
+"""
+from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
 from enum import Enum
 import uuid
@@ -145,7 +146,8 @@ collaboration_engine = CollaborationEngine()
 
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
-    """Get current authenticated user"""    if not credentials:
+    """Get current authenticated user"""
+    if not credentials:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Authentication required"
@@ -167,7 +169,8 @@ async def create_creator_profile(
     profile: CreatorProfile,
     user: dict = Depends(get_current_user)
 ):
-    """Create or update creator profile for collaboration matching"""    try:
+    """Create or update creator profile for collaboration matching"""
+    try:
         # Validate skill levels match skills
         for skill in profile.skills:
             if skill not in profile.skill_levels:
@@ -178,7 +181,8 @@ async def create_creator_profile(
         
         # Create or update profile
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                INSERT INTO creator_profiles (creator_id, user_id, stage_name, genres, skills,
+            await session.execute("""
+                INSERT INTO creator_profiles (creator_id, user_id, stage_name, genres, skills,
                                             skill_levels, bio, location, languages, social_media,
                                             portfolio_links, collaboration_preferences, availability,
                                             price_range, created_at, updated_at)
@@ -230,10 +234,12 @@ async def create_collaboration_request(
     background_tasks: BackgroundTasks,
     user: dict = Depends(get_current_user)
 ):
-    """Create a new collaboration request"""    try:
+    """Create a new collaboration request"""
+    try:
         # Verify user has creator profile
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT creator_id FROM creator_profiles WHERE user_id = %s
+            result = await session.execute("""
+                SELECT creator_id FROM creator_profiles WHERE user_id = %s
             """, (user['user_id'],))
             
             creator_profile = result.fetchone()
@@ -247,7 +253,8 @@ async def create_collaboration_request(
         
         # Create collaboration request
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                INSERT INTO collaboration_requests (request_id, creator_id, user_id, title,
+            await session.execute("""
+                INSERT INTO collaboration_requests (request_id, creator_id, user_id, title,
                                                   description, collaboration_type, genres,
                                                   required_skills, budget_range, timeline,
                                                   location_requirement, remote_friendly,
@@ -291,15 +298,18 @@ async def get_collaboration_matches(
     min_score: float = Field(default=0.7, ge=0.0, le=1.0),
     user: dict = Depends(get_current_user)
 ):
-    """Get AI-generated collaboration matches"""    try:
-        query = """            SELECT cm.match_id, cm.requester_id, cm.matched_creator_id, cm.collaboration_request_id,
+    """Get AI-generated collaboration matches"""
+    try:
+        query = """
+            SELECT cm.match_id, cm.requester_id, cm.matched_creator_id, cm.collaboration_request_id,
                    cm.compatibility_score, cm.match_reasons, cm.shared_genres,
                    cm.complementary_skills, cm.estimated_success_rate, cm.ai_recommendation,
                    cm.created_at
             FROM collaboration_matches cm
             JOIN collaboration_requests cr ON cm.collaboration_request_id = cr.request_id
             WHERE cr.user_id = %s AND cm.compatibility_score >= %s
-        """        params = [user['user_id'], min_score]
+        """
+        params = [user['user_id'], min_score]
         
         if request_id:
             query += " AND cm.collaboration_request_id = %s"
@@ -342,10 +352,12 @@ async def submit_collaboration_proposal(
     proposal: CollaborationProposal,
     user: dict = Depends(get_current_user)
 ):
-    """Submit a proposal for a collaboration request"""    try:
+    """Submit a proposal for a collaboration request"""
+    try:
         # Verify collaboration request exists and is open
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT cr.request_id, cr.user_id, cr.status
+            result = await session.execute("""
+                SELECT cr.request_id, cr.user_id, cr.status
                 FROM collaboration_requests cr
                 WHERE cr.request_id = %s
             """, (proposal.collaboration_request_id,))
@@ -371,7 +383,8 @@ async def submit_collaboration_proposal(
                 )
             
             # Get proposer's creator profile
-            result = await session.execute("""                SELECT creator_id FROM creator_profiles WHERE user_id = %s
+            result = await session.execute("""
+                SELECT creator_id FROM creator_profiles WHERE user_id = %s
             """, (user['user_id'],))
             
             creator_profile = result.fetchone()
@@ -385,7 +398,8 @@ async def submit_collaboration_proposal(
         
         # Create proposal
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                INSERT INTO collaboration_proposals (proposal_id, collaboration_request_id,
+            await session.execute("""
+                INSERT INTO collaboration_proposals (proposal_id, collaboration_request_id,
                                                    proposer_id, proposer_creator_id, proposal_message,
                                                    proposed_terms, portfolio_samples, availability_details,
                                                    proposed_timeline, budget_proposal, status, created_at)
@@ -405,7 +419,8 @@ async def submit_collaboration_proposal(
         
         # Update proposal with AI analysis
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                UPDATE collaboration_proposals 
+            await session.execute("""
+                UPDATE collaboration_proposals 
                 SET ai_compatibility_score = %s, ai_analysis = %s
                 WHERE proposal_id = %s
             """, (
@@ -439,8 +454,10 @@ async def get_received_proposals(
     status: Optional[str] = None,
     user: dict = Depends(get_current_user)
 ):
-    """Get proposals received for user's collaboration requests"""    try:
-        query = """            SELECT cp.proposal_id, cp.collaboration_request_id, cp.proposer_id,
+    """Get proposals received for user's collaboration requests"""
+    try:
+        query = """
+            SELECT cp.proposal_id, cp.collaboration_request_id, cp.proposer_id,
                    cp.proposal_message, cp.proposed_terms, cp.portfolio_samples,
                    cp.availability_details, cp.proposed_timeline, cp.budget_proposal,
                    cp.status, cp.ai_compatibility_score, cp.ai_analysis, cp.created_at,
@@ -450,7 +467,8 @@ async def get_received_proposals(
             JOIN collaboration_requests cr ON cp.collaboration_request_id = cr.request_id
             JOIN creator_profiles cpr ON cp.proposer_creator_id = cpr.creator_id
             WHERE cr.user_id = %s
-        """        params = [user['user_id']]
+        """
+        params = [user['user_id']]
         
         if request_id:
             query += " AND cp.collaboration_request_id = %s"
@@ -507,10 +525,12 @@ async def accept_collaboration_proposal(
     background_tasks: BackgroundTasks,
     user: dict = Depends(get_current_user)
 ):
-    """Accept a collaboration proposal and create project"""    try:
+    """Accept a collaboration proposal and create project"""
+    try:
         # Verify proposal ownership and status
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT cp.proposal_id, cp.collaboration_request_id, cp.proposer_id,
+            result = await session.execute("""
+                SELECT cp.proposal_id, cp.collaboration_request_id, cp.proposer_id,
                        cp.proposed_terms, cp.proposed_timeline, cr.user_id, cr.title,
                        cr.description, cr.collaboration_type
                 FROM collaboration_proposals cp
@@ -543,25 +563,29 @@ async def accept_collaboration_proposal(
         
         async with database_manager.get_postgres_session() as session:
             # Accept proposal
-            await session.execute("""                UPDATE collaboration_proposals 
+            await session.execute("""
+                UPDATE collaboration_proposals 
                 SET status = 'accepted', accepted_at = %s
                 WHERE proposal_id = %s
             """, (datetime.utcnow(), proposal_id))
             
             # Reject other proposals for the same request
-            await session.execute("""                UPDATE collaboration_proposals 
+            await session.execute("""
+                UPDATE collaboration_proposals 
                 SET status = 'rejected', rejected_at = %s
                 WHERE collaboration_request_id = %s AND proposal_id != %s AND status = 'pending'
             """, (datetime.utcnow(), proposal_info[1], proposal_id))
             
             # Close collaboration request
-            await session.execute("""                UPDATE collaboration_requests 
+            await session.execute("""
+                UPDATE collaboration_requests 
                 SET status = 'closed', closed_at = %s
                 WHERE request_id = %s
             """, (datetime.utcnow(), proposal_info[1]))
             
             # Create project
-            await session.execute("""                INSERT INTO collaboration_projects (project_id, collaboration_request_id,
+            await session.execute("""
+                INSERT INTO collaboration_projects (project_id, collaboration_request_id,
                                                   accepted_proposal_id, title, description,
                                                   participants, collaboration_type, status,
                                                   project_details, milestones, shared_resources,
@@ -602,12 +626,15 @@ async def get_collaboration_projects(
     status: Optional[CollaborationStatus] = None,
     user: dict = Depends(get_current_user)
 ):
-    """Get user's collaboration projects"""    try:
-        query = """            SELECT project_id, title, description, participants, collaboration_type,
+    """Get user's collaboration projects"""
+    try:
+        query = """
+            SELECT project_id, title, description, participants, collaboration_type,
                    status, project_details, milestones, created_at, updated_at
             FROM collaboration_projects
             WHERE %s = ANY(participants)
-        """        params = [user['user_id']]
+        """
+        params = [user['user_id']]
         
         if status:
             query += " AND status = %s"
@@ -624,7 +651,8 @@ async def get_collaboration_projects(
             # Get participant details
             participant_details = []
             for participant_id in project[3]:
-                participant_result = await session.execute("""                    SELECT cp.stage_name, cp.genres, cp.skills
+                participant_result = await session.execute("""
+                    SELECT cp.stage_name, cp.genres, cp.skills
                     FROM creator_profiles cp
                     WHERE cp.user_id = %s
                 """, (participant_id,))
@@ -665,10 +693,12 @@ async def submit_collaboration_review(
     review: CollaborationReview,
     user: dict = Depends(get_current_user)
 ):
-    """Submit a review for a collaboration partner"""    try:
+    """Submit a review for a collaboration partner"""
+    try:
         # Verify project participation and completion
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT project_id, status, participants
+            result = await session.execute("""
+                SELECT project_id, status, participants
                 FROM collaboration_projects
                 WHERE project_id = %s AND %s = ANY(participants)
                   AND status IN ('completed', 'cancelled')
@@ -689,7 +719,8 @@ async def submit_collaboration_review(
                 )
             
             # Check if review already exists
-            result = await session.execute("""                SELECT review_id FROM collaboration_reviews
+            result = await session.execute("""
+                SELECT review_id FROM collaboration_reviews
                 WHERE project_id = %s AND reviewer_id = %s AND reviewed_user_id = %s
             """, (review.project_id, user['user_id'], review.reviewed_user_id))
             
@@ -701,7 +732,8 @@ async def submit_collaboration_review(
         
         # Create review
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                INSERT INTO collaboration_reviews (review_id, project_id, reviewer_id,
+            await session.execute("""
+                INSERT INTO collaboration_reviews (review_id, project_id, reviewer_id,
                                                  reviewed_user_id, rating, review_text,
                                                  collaboration_aspects, would_collaborate_again,
                                                  created_at)
@@ -738,10 +770,12 @@ async def get_collaboration_recommendations(
     limit: int = Field(default=10, ge=1, le=50),
     user: dict = Depends(get_current_user)
 ):
-    """Get AI-powered collaboration recommendations"""    try:
+    """Get AI-powered collaboration recommendations"""
+    try:
         # Get user's creator profile
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT creator_id, genres, skills, collaboration_preferences
+            result = await session.execute("""
+                SELECT creator_id, genres, skills, collaboration_preferences
                 FROM creator_profiles
                 WHERE user_id = %s
             """, (user['user_id'],))
@@ -762,7 +796,8 @@ async def get_collaboration_recommendations(
         enriched_recommendations = []
         async with database_manager.get_postgres_session() as session:
             for rec in recommendations:
-                result = await session.execute("""                    SELECT cp.stage_name, cp.bio, cp.genres, cp.skills, cp.portfolio_links,
+                result = await session.execute("""
+                    SELECT cp.stage_name, cp.bio, cp.genres, cp.skills, cp.portfolio_links,
                            cp.social_media, cr.avg_rating, cr.total_collaborations
                     FROM creator_profiles cp
                     LEFT JOIN collaboration_reputations cr ON cp.creator_id = cr.creator_id
@@ -802,10 +837,12 @@ async def get_collaboration_recommendations(
 
 # Background task functions
 async def _find_collaboration_matches(request_id: str, creator_id: str):
-    """Find AI-powered collaboration matches for a request"""    try:
+    """Find AI-powered collaboration matches for a request"""
+    try:
         # Get request details
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""                SELECT collaboration_type, genres, required_skills, experience_level
+            result = await session.execute("""
+                SELECT collaboration_type, genres, required_skills, experience_level
                 FROM collaboration_requests
                 WHERE request_id = %s
             """, (request_id,))
@@ -823,7 +860,8 @@ async def _find_collaboration_matches(request_id: str, creator_id: str):
         async with database_manager.get_postgres_session() as session:
             for match in matches:
                 match_id = str(uuid.uuid4())
-                await session.execute("""                    INSERT INTO collaboration_matches (match_id, requester_id, matched_creator_id,
+                await session.execute("""
+                    INSERT INTO collaboration_matches (match_id, requester_id, matched_creator_id,
                                                      collaboration_request_id, compatibility_score,
                                                      match_reasons, shared_genres, complementary_skills,
                                                      estimated_success_rate, ai_recommendation, created_at)
@@ -844,7 +882,8 @@ async def _find_collaboration_matches(request_id: str, creator_id: str):
 
 
 async def _setup_collaboration_workspace(project_id: str, project_data: Dict[str, Any]):
-    """Setup collaboration workspace and communication channels"""    try:
+    """Setup collaboration workspace and communication channels"""
+    try:
         # Create communication channels (Slack, Discord, etc.)
         workspace_setup = await collaboration_engine.setup_project_workspace(
             project_id, project_data
@@ -852,7 +891,8 @@ async def _setup_collaboration_workspace(project_id: str, project_data: Dict[str
         
         # Update project with workspace details
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""                UPDATE collaboration_projects 
+            await session.execute("""
+                UPDATE collaboration_projects 
                 SET communication_channels = %s, workspace_setup = %s
                 WHERE project_id = %s
             """, (workspace_setup['channels'], workspace_setup, project_id))
@@ -865,10 +905,12 @@ async def _setup_collaboration_workspace(project_id: str, project_data: Dict[str
 
 
 async def _update_collaboration_reputation(user_id: str):
-    """Update user's collaboration reputation based on reviews"""    try:
+    """Update user's collaboration reputation based on reviews"""
+    try:
         async with database_manager.get_postgres_session() as session:
             # Calculate reputation metrics
-            result = await session.execute("""                SELECT AVG(rating) as avg_rating, COUNT(*) as total_reviews,
+            result = await session.execute("""
+                SELECT AVG(rating) as avg_rating, COUNT(*) as total_reviews,
                        AVG(CASE WHEN would_collaborate_again THEN 1 ELSE 0 END) as collaboration_willingness
                 FROM collaboration_reviews
                 WHERE reviewed_user_id = %s
@@ -877,7 +919,8 @@ async def _update_collaboration_reputation(user_id: str):
             reputation_data = result.fetchone()
             if reputation_data and reputation_data[1] > 0:
                 # Update or create reputation record
-                await session.execute("""                    INSERT INTO collaboration_reputations (user_id, avg_rating, total_reviews,
+                await session.execute("""
+                    INSERT INTO collaboration_reputations (user_id, avg_rating, total_reviews,
                                                          collaboration_willingness, updated_at)
                     VALUES (%s, %s, %s, %s, %s)
                     ON CONFLICT (user_id) DO UPDATE SET

@@ -107,7 +107,8 @@ INTEGRATION_MODULES = {
 
 # Quick Usage Examples
 USAGE_EXAMPLES = {
-    "initialize_orchestrator": """from ai.integrations import IntegrationOrchestrator
+    "initialize_orchestrator": """
+from ai.integrations import IntegrationOrchestrator
 
 # Initialize main orchestrator
 orchestrator = IntegrationOrchestrator()

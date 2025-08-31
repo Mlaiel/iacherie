@@ -15,7 +15,8 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Platform integration → Revenue data collection → ML analysis → 
 Trend prediction → Optimization recommendations → Automated distribution → Performance tracking
-"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, AsyncGenerator
+"""
+from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, AsyncGenerator
 import logging
 import asyncio
 from datetime import datetime, timedelta, date
@@ -50,7 +51,8 @@ logger = logging.getLogger(__name__)
 
 
 class Platform(Enum):
-    """Supported platforms for revenue tracking"""    SPOTIFY = "spotify"
+    """Supported platforms for revenue tracking"""
+    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -63,7 +65,8 @@ class Platform(Enum):
 
 
 class RevenueType(Enum):
-    """Types of revenue"""    STREAMING = "streaming"
+    """Types of revenue"""
+    STREAMING = "streaming"
     ADVERTISING = "advertising"
     MERCHANDISE = "merchandise"
     SPONSORSHIP = "sponsorship"
@@ -75,7 +78,8 @@ class RevenueType(Enum):
 
 
 class RevenueStatus(Enum):
-    """Revenue collection status"""    PENDING = "pending"
+    """Revenue collection status"""
+    PENDING = "pending"
     COLLECTED = "collected"
     PROCESSING = "processing"
     PAID_OUT = "paid_out"
@@ -84,7 +88,8 @@ class RevenueStatus(Enum):
 
 
 class AnalyticsType(Enum):
-    """Analytics computation types"""    DAILY_SUMMARY = "daily_summary"
+    """Analytics computation types"""
+    DAILY_SUMMARY = "daily_summary"
     WEEKLY_REPORT = "weekly_report"
     MONTHLY_REPORT = "monthly_report"
     TREND_ANALYSIS = "trend_analysis"
@@ -94,7 +99,8 @@ class AnalyticsType(Enum):
 
 @dataclass
 class RevenueEntry:
-    """Single revenue entry data structure"""    entry_id: str
+    """Single revenue entry data structure"""
+    entry_id: str
     creator_id: str
     platform: Platform
     revenue_type: RevenueType
@@ -112,7 +118,8 @@ class RevenueEntry:
 
 @dataclass
 class PlatformMetrics:
-    """Platform-specific metrics"""    platform: Platform
+    """Platform-specific metrics"""
+    platform: Platform
     total_revenue: Decimal
     revenue_growth: float
     content_count: int
@@ -125,7 +132,8 @@ class PlatformMetrics:
 
 @dataclass
 class RevenueAnalyticsTask:
-    """Revenue analytics task definition"""    task_id: str
+    """Revenue analytics task definition"""
+    task_id: str
     creator_id: str
     analytics_type: AnalyticsType
     platforms: List[Platform]
@@ -139,7 +147,8 @@ class RevenueAnalyticsTask:
 
 @dataclass
 class RevenueReport:
-    """Complete revenue analytics report"""    report_id: str
+    """Complete revenue analytics report"""
+    report_id: str
     creator_id: str
     report_type: AnalyticsType
     period_start: date
@@ -154,7 +163,8 @@ class RevenueReport:
 
 
 class RevenueAnalyticsWorker:
-    """Advanced revenue analytics worker with ML-powered insights"""    
+    """Advanced revenue analytics worker with ML-powered insights"""
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.worker_id = str(uuid.uuid4())
@@ -195,7 +205,8 @@ class RevenueAnalyticsWorker:
         logger.info(f"💰 RevenueAnalyticsWorker {self.worker_id} initialized")
     
     def _initialize_platform_apis(self):
-        """Initialize platform API clients"""        try:
+        """Initialize platform API clients"""
+        try:
             api_configs = self.config.get("platform_apis", {})
             
             self.platform_apis = {
@@ -220,7 +231,8 @@ class RevenueAnalyticsWorker:
             self.payment_apis = {}
     
     async def start(self) -> bool:
-        """Start the revenue analytics worker"""        try:
+        """Start the revenue analytics worker"""
+        try:
             if self.is_running:
                 logger.warning("RevenueAnalyticsWorker is already running")
                 return True
@@ -243,7 +255,8 @@ class RevenueAnalyticsWorker:
             return False
     
     async def stop(self) -> bool:
-        """Stop the revenue analytics worker"""        try:
+        """Stop the revenue analytics worker"""
+        try:
             self.is_running = False
             
             # Wait for active tasks to complete
@@ -261,7 +274,8 @@ class RevenueAnalyticsWorker:
             return False
     
     async def submit_analytics_task(self, task: RevenueAnalyticsTask) -> bool:
-        """Submit a revenue analytics task"""        try:
+        """Submit a revenue analytics task"""
+        try:
             if not self.is_running:
                 logger.error("RevenueAnalyticsWorker is not running")
                 return False
@@ -283,7 +297,8 @@ class RevenueAnalyticsWorker:
             return False
     
     async def _analytics_processing_loop(self):
-        """Main processing loop for analytics tasks"""        while self.is_running:
+        """Main processing loop for analytics tasks"""
+        while self.is_running:
             try:
                 # Get task from queue (with timeout)
                 try:
@@ -305,7 +320,8 @@ class RevenueAnalyticsWorker:
                 await asyncio.sleep(1)
     
     async def _process_analytics_task(self, task: RevenueAnalyticsTask):
-        """Process a single analytics task"""        start_time = time.time()
+        """Process a single analytics task"""
+        start_time = time.time()
         
         try:
             logger.info(f"🔄 Processing analytics task: {task.task_id}")
@@ -349,7 +365,8 @@ class RevenueAnalyticsWorker:
                 del self.active_tasks[task.task_id]
     
     async def _collect_revenue_data(self, task: RevenueAnalyticsTask) -> Dict[Platform, List[RevenueEntry]]:
-        """Collect revenue data from multiple platforms"""        revenue_data = {}
+        """Collect revenue data from multiple platforms"""
+        revenue_data = {}
         
         for platform in task.platforms:
             try:
@@ -368,7 +385,8 @@ class RevenueAnalyticsWorker:
         return revenue_data
     
     async def _collect_platform_revenue(self, platform: Platform, creator_id: str, date_range: Tuple[date, date]) -> List[RevenueEntry]:
-        """Collect revenue data from a specific platform"""        try:
+        """Collect revenue data from a specific platform"""
+        try:
             if platform not in self.platform_apis:
                 logger.warning(f"Platform API not configured: {platform.value}")
                 return []
@@ -394,7 +412,8 @@ class RevenueAnalyticsWorker:
             return []
     
     async def _collect_spotify_revenue(self, api: SpotifyAPI, creator_id: str, start_date: date, end_date: date) -> List[RevenueEntry]:
-        """Collect Spotify streaming revenue"""        try:
+        """Collect Spotify streaming revenue"""
+        try:
             revenue_entries = []
             
             # Get artist analytics
@@ -435,7 +454,8 @@ class RevenueAnalyticsWorker:
             return []
     
     async def _collect_youtube_revenue(self, api: YouTubeAPI, creator_id: str, start_date: date, end_date: date) -> List[RevenueEntry]:
-        """Collect YouTube ad revenue"""        try:
+        """Collect YouTube ad revenue"""
+        try:
             revenue_entries = []
             
             # Get YouTube analytics
@@ -498,7 +518,8 @@ class RevenueAnalyticsWorker:
             return []
     
     async def _collect_instagram_revenue(self, api: InstagramAPI, creator_id: str, start_date: date, end_date: date) -> List[RevenueEntry]:
-        """Collect Instagram creator revenue"""        try:
+        """Collect Instagram creator revenue"""
+        try:
             revenue_entries = []
             
             # Get Instagram insights
@@ -563,7 +584,8 @@ class RevenueAnalyticsWorker:
             return []
     
     async def _collect_tiktok_revenue(self, api: TikTokAPI, creator_id: str, start_date: date, end_date: date) -> List[RevenueEntry]:
-        """Collect TikTok creator revenue"""        try:
+        """Collect TikTok creator revenue"""
+        try:
             revenue_entries = []
             
             # Get TikTok analytics
@@ -618,7 +640,8 @@ class RevenueAnalyticsWorker:
             return []
     
     def _estimate_instagram_sponsorship_revenue(self, followers: int, engagement_rate: float) -> Decimal:
-        """Estimate Instagram sponsorship revenue based on metrics"""        try:
+        """Estimate Instagram sponsorship revenue based on metrics"""
+        try:
             # Industry standard: $1-3 per 1000 followers for sponsored posts
             if followers < 1000:
                 return Decimal("0.00")
@@ -635,7 +658,8 @@ class RevenueAnalyticsWorker:
             return Decimal("0.00")
     
     async def _generate_analytics_report(self, task: RevenueAnalyticsTask, revenue_data: Dict[Platform, List[RevenueEntry]]) -> RevenueReport:
-        """Generate comprehensive analytics report"""        try:
+        """Generate comprehensive analytics report"""
+        try:
             # Calculate total revenue
             total_revenue = Decimal("0.00")
             platform_metrics = []
@@ -682,7 +706,8 @@ class RevenueAnalyticsWorker:
             raise
     
     async def _generate_platform_metrics(self, platform: Platform, entries: List[RevenueEntry], task: RevenueAnalyticsTask) -> PlatformMetrics:
-        """Generate detailed metrics for a specific platform"""        try:
+        """Generate detailed metrics for a specific platform"""
+        try:
             if not entries:
                 return PlatformMetrics(
                     platform=platform,
@@ -762,7 +787,8 @@ class RevenueAnalyticsWorker:
             raise
     
     async def _generate_predictions(self, task: RevenueAnalyticsTask, revenue_data: Dict[Platform, List[RevenueEntry]]) -> Dict[str, Any]:
-        """Generate revenue predictions using ML models"""        try:
+        """Generate revenue predictions using ML models"""
+        try:
             # Prepare historical data for prediction
             historical_data = await self._prepare_historical_data(task.creator_id, task.platforms)
             
@@ -795,7 +821,8 @@ class RevenueAnalyticsWorker:
             return {}
     
     async def _generate_optimization_recommendations(self, task: RevenueAnalyticsTask, revenue_data: Dict[Platform, List[RevenueEntry]], report: RevenueReport) -> List[Dict[str, Any]]:
-        """Generate optimization recommendations using ML analysis"""        try:
+        """Generate optimization recommendations using ML analysis"""
+        try:
             recommendations = []
             
             # Analyze revenue patterns
@@ -830,7 +857,8 @@ class RevenueAnalyticsWorker:
             return []
     
     async def _store_analytics_report(self, report: RevenueReport):
-        """Store the analytics report"""        try:
+        """Store the analytics report"""
+        try:
             await self.revenue_storage.store_revenue_report(report)
             logger.info(f"✅ Stored analytics report: {report.report_id}")
             
@@ -839,7 +867,8 @@ class RevenueAnalyticsWorker:
             raise
     
     async def _update_revenue_cache(self, creator_id: str, report: RevenueReport):
-        """Update revenue cache for real-time access"""        try:
+        """Update revenue cache for real-time access"""
+        try:
             cache_key = f"revenue_summary_{creator_id}"
             cache_data = {
                 "total_revenue": float(report.total_revenue),
@@ -859,7 +888,8 @@ class RevenueAnalyticsWorker:
             logger.error(f"❌ Failed to update revenue cache: {e}")
     
     async def _data_collection_loop(self):
-        """Periodic data collection loop"""        while self.is_running:
+        """Periodic data collection loop"""
+        while self.is_running:
             try:
                 # Collect revenue data for active creators every hour
                 await self._periodic_data_collection()
@@ -872,7 +902,8 @@ class RevenueAnalyticsWorker:
                 await asyncio.sleep(300)  # 5 minutes on error
     
     async def _monitoring_loop(self):
-        """Monitoring loop for worker health"""        while self.is_running:
+        """Monitoring loop for worker health"""
+        while self.is_running:
             try:
                 # Report worker status
                 await self.revenue_monitor.report_worker_status(
@@ -892,7 +923,8 @@ class RevenueAnalyticsWorker:
                 await asyncio.sleep(5)
     
     async def _cache_cleanup_loop(self):
-        """Cache cleanup loop"""        while self.is_running:
+        """Cache cleanup loop"""
+        while self.is_running:
             try:
                 current_time = datetime.utcnow()
                 expired_keys = [
@@ -911,7 +943,8 @@ class RevenueAnalyticsWorker:
                 await asyncio.sleep(60)
     
     async def _periodic_data_collection(self):
-        """Perform periodic data collection for all active creators"""        try:
+        """Perform periodic data collection for all active creators"""
+        try:
             # This would typically get active creators from database
             # For now, this is a placeholder
             logger.info("🔄 Performing periodic data collection...")
@@ -920,7 +953,8 @@ class RevenueAnalyticsWorker:
             logger.error(f"❌ Failed periodic data collection: {e}")
     
     def _validate_analytics_task(self, task: RevenueAnalyticsTask) -> bool:
-        """Validate analytics task parameters"""        try:
+        """Validate analytics task parameters"""
+        try:
             # Check required fields
             if not task.task_id or not task.creator_id:
                 return False
@@ -945,7 +979,8 @@ class RevenueAnalyticsWorker:
             return False
     
     def _update_processing_stats(self, processing_time: float, success: bool, revenue_tracked: Decimal = None):
-        """Update processing statistics"""        try:
+        """Update processing statistics"""
+        try:
             self.processing_stats["total_tasks_processed"] += 1
             
             if success:
@@ -971,7 +1006,8 @@ class RevenueAnalyticsWorker:
             logger.error(f"❌ Error updating processing stats: {e}")
     
     def _estimate_engagement_rate(self, platform: Platform, entries: List[RevenueEntry]) -> float:
-        """Estimate engagement rate based on revenue data"""        # This would be calculated from actual engagement metrics in production
+        """Estimate engagement rate based on revenue data"""
+        # This would be calculated from actual engagement metrics in production
         base_rates = {
             Platform.SPOTIFY: 0.15,
             Platform.YOUTUBE: 0.08,
@@ -981,7 +1017,8 @@ class RevenueAnalyticsWorker:
         return base_rates.get(platform, 0.10)
     
     def _estimate_audience_size(self, platform: Platform, entries: List[RevenueEntry]) -> int:
-        """Estimate audience size based on revenue data"""        # This would be retrieved from actual platform metrics in production
+        """Estimate audience size based on revenue data"""
+        # This would be retrieved from actual platform metrics in production
         if not entries:
             return 0
         
@@ -996,7 +1033,8 @@ class RevenueAnalyticsWorker:
             return int(total_revenue * 50)  # General estimate
     
     async def _get_previous_period_revenue(self, creator_id: str, platform: Platform, current_period: Tuple[date, date]) -> Decimal:
-        """Get revenue from previous comparable period"""        try:
+        """Get revenue from previous comparable period"""
+        try:
             start_date, end_date = current_period
             period_length = (end_date - start_date).days
             
@@ -1016,7 +1054,8 @@ class RevenueAnalyticsWorker:
             return Decimal("0.00")
     
     async def _prepare_historical_data(self, creator_id: str, platforms: List[Platform]) -> Dict[Platform, List[Dict[str, Any]]]:
-        """Prepare historical data for ML predictions"""        try:
+        """Prepare historical data for ML predictions"""
+        try:
             historical_data = {}
             
             for platform in platforms:
@@ -1033,7 +1072,8 @@ class RevenueAnalyticsWorker:
             return {}
     
     async def get_worker_status(self) -> Dict[str, Any]:
-        """Get current worker status"""        return {
+        """Get current worker status"""
+        return {
             "worker_id": self.worker_id,
             "is_running": self.is_running,
             "active_tasks": len(self.active_tasks),
@@ -1051,11 +1091,13 @@ _revenue_analytics_worker: Optional[RevenueAnalyticsWorker] = None
 
 
 async def get_revenue_analytics_worker() -> Optional[RevenueAnalyticsWorker]:
-    """Get the global revenue analytics worker instance"""    return _revenue_analytics_worker
+    """Get the global revenue analytics worker instance"""
+    return _revenue_analytics_worker
 
 
 async def initialize_revenue_analytics_worker(config: Dict[str, Any] = None) -> bool:
-    """Initialize the revenue analytics worker"""    global _revenue_analytics_worker
+    """Initialize the revenue analytics worker"""
+    global _revenue_analytics_worker
     
     try:
         if _revenue_analytics_worker is not None:
@@ -1080,7 +1122,8 @@ async def initialize_revenue_analytics_worker(config: Dict[str, Any] = None) -> 
 
 
 async def shutdown_revenue_analytics_worker() -> bool:
-    """Shutdown the revenue analytics worker"""    global _revenue_analytics_worker
+    """Shutdown the revenue analytics worker"""
+    global _revenue_analytics_worker
     
     try:
         if _revenue_analytics_worker is None:

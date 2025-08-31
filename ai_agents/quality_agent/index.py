@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""from .quality_agent import QualityAgent, QualityAgentManager
+"""
+from .quality_agent import QualityAgent, QualityAgentManager
 from .quality_assessor import QualityAssessor, ContentScorer
 from .quality_enhancer import QualityEnhancer, ImprovementEngine
 from .standards_checker import StandardsChecker, ComplianceValidator
@@ -69,62 +70,74 @@ QUALITY_AGENT_CONFIG = {
 }
 
 def get_quality_agent(**kwargs):
-    """    Factory function to create a QualityAgent instance.
+    """
+    Factory function to create a QualityAgent instance.
     
     Args:
         **kwargs: Configuration parameters for the agent
         
     Returns:
         QualityAgent: Configured quality agent instance
-    """    return QualityAgent(**kwargs)
+    """
+    return QualityAgent(**kwargs)
 
 def get_quality_assessor(**kwargs):
-    """    Factory function to create a QualityAssessor instance.
+    """
+    Factory function to create a QualityAssessor instance.
     
     Args:
         **kwargs: Configuration parameters for the assessor
         
     Returns:
         QualityAssessor: Configured quality assessor instance
-    """    return QualityAssessor(**kwargs)
+    """
+    return QualityAssessor(**kwargs)
 
 def get_quality_enhancer(**kwargs):
-    """    Factory function to create a QualityEnhancer instance.
+    """
+    Factory function to create a QualityEnhancer instance.
     
     Args:
         **kwargs: Configuration parameters for the enhancer
         
     Returns:
         QualityEnhancer: Configured quality enhancer instance
-    """    return QualityEnhancer(**kwargs)
+    """
+    return QualityEnhancer(**kwargs)
 
 def get_standards_checker(**kwargs):
-    """    Factory function to create a StandardsChecker instance.
+    """
+    Factory function to create a StandardsChecker instance.
     
     Args:
         **kwargs: Configuration parameters for the checker
         
     Returns:
         StandardsChecker: Configured standards checker instance
-    """    return StandardsChecker(**kwargs)
+    """
+    return StandardsChecker(**kwargs)
 
 def get_performance_analyzer(**kwargs):
-    """    Factory function to create a PerformanceAnalyzer instance.
+    """
+    Factory function to create a PerformanceAnalyzer instance.
     
     Args:
         **kwargs: Configuration parameters for the analyzer
         
     Returns:
         PerformanceAnalyzer: Configured performance analyzer instance
-    """    return PerformanceAnalyzer(**kwargs)
+    """
+    return PerformanceAnalyzer(**kwargs)
 
 # Module health check
 async def module_health_check():
-    """    Perform health check on the quality agent module.
+    """
+    Perform health check on the quality agent module.
     
     Returns:
         Dict[str, Any]: Health status information
-    """    try:
+    """
+    try:
         # Test basic functionality
         agent = QualityAgent()
         
@@ -158,11 +171,13 @@ async def module_health_check():
 
 # Quality assessment pipeline
 class QualityPipeline:
-    """    Complete quality assessment and enhancement pipeline.
+    """
+    Complete quality assessment and enhancement pipeline.
     
     This class orchestrates the entire quality assessment process from
     initial analysis through enhancement recommendations and implementation.
-    """    
+    """
+    
     def __init__(self, config=None):
         self.config = config or QUALITY_AGENT_CONFIG
         self.agent = QualityAgent(config=self.config)
@@ -172,7 +187,8 @@ class QualityPipeline:
         self.performance_analyzer = PerformanceAnalyzer(config=self.config)
         
     async def process_content(self, content_id, content_path, content_type, metadata=None):
-        """        Process content through complete quality pipeline.
+        """
+        Process content through complete quality pipeline.
         
         Args:
             content_id: Unique identifier for content
@@ -182,7 +198,8 @@ class QualityPipeline:
             
         Returns:
             Dict[str, Any]: Complete quality analysis and enhancement results
-        """        results = {}
+        """
+        results = {}
         
         # Step 1: Quality Assessment
         quality_analysis = await self.agent.analyze_content_quality(
@@ -219,11 +236,13 @@ class QualityPipeline:
 
 # Export pipeline for easy access
 def get_quality_pipeline(**kwargs):
-    """    Factory function to create a QualityPipeline instance.
+    """
+    Factory function to create a QualityPipeline instance.
     
     Args:
         **kwargs: Configuration parameters for the pipeline
         
     Returns:
         QualityPipeline: Configured quality pipeline instance
-    """    return QualityPipeline(**kwargs)
+    """
+    return QualityPipeline(**kwargs)

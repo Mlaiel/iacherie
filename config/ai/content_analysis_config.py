@@ -14,7 +14,8 @@ without explicit written permission is STRICTLY PROHIBITED and will be
 prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from typing import Dict, List, Optional, Union, Any, Tuple
+"""
+from typing import Dict, List, Optional, Union, Any, Tuple
 from pydantic import BaseSettings, validator
 from enum import Enum
 from dataclasses import dataclass
@@ -22,7 +23,8 @@ import os
 
 
 class ContentType(str, Enum):
-    """Supported content types for analysis."""    
+    """Supported content types for analysis."""
+    
     AUDIO_MUSIC = "audio_music"
     AUDIO_PODCAST = "audio_podcast"
     AUDIO_SPEECH = "audio_speech"
@@ -39,7 +41,8 @@ class ContentType(str, Enum):
 
 
 class AnalysisLevel(str, Enum):
-    """Analysis depth levels for content processing."""    
+    """Analysis depth levels for content processing."""
+    
     BASIC = "basic"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
@@ -47,7 +50,8 @@ class AnalysisLevel(str, Enum):
 
 
 class ContentQuality(str, Enum):
-    """Content quality assessment levels."""    
+    """Content quality assessment levels."""
+    
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -57,7 +61,8 @@ class ContentQuality(str, Enum):
 
 @dataclass
 class ContentAnalysisSpec:
-    """Specification for content analysis pipeline configuration."""    
+    """Specification for content analysis pipeline configuration."""
+    
     content_type: ContentType
     analysis_level: AnalysisLevel
     quality_threshold: ContentQuality
@@ -73,11 +78,13 @@ class ContentAnalysisSpec:
 
 
 class ContentAnalysisConfig(BaseSettings):
-    """    Professional Content Analysis AI Configuration.
+    """
+    Professional Content Analysis AI Configuration.
     
     Manages comprehensive analysis of multi-format content including
     audio, video, image, and text processing for the influencer platform.
-    """    
+    """
+    
     # Core Analysis Configuration
     ANALYSIS_OUTPUT_PATH: str = "/data/analysis"
     SUPPORTED_AUDIO_FORMATS: List[str] = ["mp3", "wav", "flac", "m4a", "ogg", "aac"]
@@ -196,7 +203,8 @@ class ContentAnalysisConfig(BaseSettings):
         return v
     
     def get_analysis_spec(self, content_type: ContentType) -> ContentAnalysisSpec:
-        """Get analysis specification for content type."""        
+        """Get analysis specification for content type."""
+        
         # Standard specifications by content type
         specs = {
             ContentType.AUDIO_MUSIC: ContentAnalysisSpec(
@@ -261,7 +269,8 @@ class ContentAnalysisConfig(BaseSettings):
         ))
     
     def get_supported_formats(self) -> Dict[str, List[str]]:
-        """Get all supported file formats by category."""        return {
+        """Get all supported file formats by category."""
+        return {
             "audio": self.SUPPORTED_AUDIO_FORMATS,
             "video": self.SUPPORTED_VIDEO_FORMATS,
             "image": self.SUPPORTED_IMAGE_FORMATS,
@@ -269,7 +278,8 @@ class ContentAnalysisConfig(BaseSettings):
         }
     
     def is_format_supported(self, file_extension: str) -> bool:
-        """Check if file format is supported."""        ext = file_extension.lower().lstrip('.')
+        """Check if file format is supported."""
+        ext = file_extension.lower().lstrip('.')
         all_formats = (
             self.SUPPORTED_AUDIO_FORMATS + 
             self.SUPPORTED_VIDEO_FORMATS + 

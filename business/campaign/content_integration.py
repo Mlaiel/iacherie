@@ -10,7 +10,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is protected by copyright law. Unauthorized use, reproduction,
 or distribution without explicit written permission from Fahed Mlaiel is strictly
 prohibited and may result in legal action.
-"""from datetime import datetime, timedelta
+"""
+from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, BinaryIO
 from enum import Enum
 from dataclasses import dataclass
@@ -31,7 +32,8 @@ from backend.utils.cloud_storage import CloudStorageManager
 
 
 class ContentType(str, Enum):
-    """Supported content types"""    AUDIO = "audio"
+    """Supported content types"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -40,7 +42,8 @@ class ContentType(str, Enum):
 
 
 class ContentFormat(str, Enum):
-    """Supported content formats"""    # Audio formats
+    """Supported content formats"""
+    # Audio formats
     MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
@@ -73,7 +76,8 @@ class ContentFormat(str, Enum):
 
 
 class ProcessingStatus(str, Enum):
-    """Content processing status"""    UPLOADED = "uploaded"
+    """Content processing status"""
+    UPLOADED = "uploaded"
     PROCESSING = "processing"
     ANALYZED = "analyzed"
     OPTIMIZED = "optimized"
@@ -84,7 +88,8 @@ class ProcessingStatus(str, Enum):
 
 @dataclass
 class ContentMetadata:
-    """Content metadata structure"""    content_id: str
+    """Content metadata structure"""
+    content_id: str
     original_filename: str
     content_type: ContentType
     content_format: ContentFormat
@@ -100,7 +105,8 @@ class ContentMetadata:
 
 @dataclass
 class ContentProcessingResult:
-    """Content processing result"""    content_id: str
+    """Content processing result"""
+    content_id: str
     status: ProcessingStatus
     processed_formats: List[ContentFormat]
     optimization_applied: bool
@@ -113,7 +119,8 @@ class ContentProcessingResult:
 
 @dataclass
 class ContentIntegrationConfig:
-    """Content integration configuration"""    auto_optimization: bool = True
+    """Content integration configuration"""
+    auto_optimization: bool = True
     auto_protection: bool = True
     generate_previews: bool = True
     extract_metadata: bool = True
@@ -124,12 +131,14 @@ class ContentIntegrationConfig:
 
 
 class ContentIntegration:
-    """    Advanced Multi-Format Content Integration System
+    """
+    Advanced Multi-Format Content Integration System
     
     Handles comprehensive content management including upload processing,
     format conversion, AI analysis, optimization, and protection for all
     supported content types.
-    """    
+    """
+    
     def __init__(self):
         self.logger = get_logger(__name__)
         self.content_analyzer = ContentAnalyzer()
@@ -155,7 +164,8 @@ class ContentIntegration:
         content_type: Optional[ContentType] = None,
         config: Optional[ContentIntegrationConfig] = None
     ) -> Dict[str, Any]:
-        """        Upload and process content for campaign integration
+        """
+        Upload and process content for campaign integration
         
         Args:
             campaign_id: Campaign unique identifier
@@ -167,7 +177,8 @@ class ContentIntegration:
             
         Returns:
             Upload and processing status
-        """        try:
+        """
+        try:
             config = config or ContentIntegrationConfig()
             content_id = await self._generate_content_id(filename, creator_id)
             
@@ -234,7 +245,8 @@ class ContentIntegration:
         content_id: str,
         include_details: bool = True
     ) -> Dict[str, Any]:
-        """        Get content processing status and details
+        """
+        Get content processing status and details
         
         Args:
             content_id: Content unique identifier
@@ -242,7 +254,8 @@ class ContentIntegration:
             
         Returns:
             Content status and processing details
-        """        try:
+        """
+        try:
             # Check processing queue
             if content_id in self._processing_queue:
                 task = self._processing_queue[content_id]
@@ -291,7 +304,8 @@ class ContentIntegration:
         requested_format: Optional[ContentFormat] = None,
         quality: Optional[str] = None
     ) -> Dict[str, Any]:
-        """        Retrieve processed content in requested format
+        """
+        Retrieve processed content in requested format
         
         Args:
             content_id: Content unique identifier
@@ -300,7 +314,8 @@ class ContentIntegration:
             
         Returns:
             Processed content data and URLs
-        """        try:
+        """
+        try:
             # Check if content is ready
             if content_id not in self._content_cache:
                 status = await self.get_content_status(content_id, include_details=False)
@@ -355,7 +370,8 @@ class ContentIntegration:
         target_platform: str,
         optimization_goals: List[str]
     ) -> Dict[str, Any]:
-        """        Optimize content for specific platform requirements
+        """
+        Optimize content for specific platform requirements
         
         Args:
             content_id: Content unique identifier
@@ -364,7 +380,8 @@ class ContentIntegration:
             
         Returns:
             Platform-optimized content variants
-        """        try:
+        """
+        try:
             if content_id not in self._content_cache:
                 raise ValueError(f"Content not found: {content_id}")
             
@@ -439,7 +456,8 @@ class ContentIntegration:
         file_list: List[Dict[str, Any]],
         config: Optional[ContentIntegrationConfig] = None
     ) -> Dict[str, Any]:
-        """        Process multiple content files in batch
+        """
+        Process multiple content files in batch
         
         Args:
             campaign_id: Campaign unique identifier
@@ -449,7 +467,8 @@ class ContentIntegration:
             
         Returns:
             Batch processing results
-        """        try:
+        """
+        try:
             config = config or ContentIntegrationConfig()
             batch_id = f"batch_{campaign_id}_{int(datetime.utcnow().timestamp())}"
             
@@ -501,7 +520,8 @@ class ContentIntegration:
         content_id: str,
         performance_metrics: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Analyze content performance and generate insights
+        """
+        Analyze content performance and generate insights
         
         Args:
             content_id: Content unique identifier
@@ -509,7 +529,8 @@ class ContentIntegration:
             
         Returns:
             Content performance analysis and recommendations
-        """        try:
+        """
+        try:
             if content_id not in self._content_cache:
                 raise ValueError(f"Content not found: {content_id}")
             
@@ -551,7 +572,8 @@ class ContentIntegration:
     # Private helper methods
     
     async def _content_processing_worker(self) -> None:
-        """Background worker for processing content"""        while True:
+        """Background worker for processing content"""
+        while True:
             try:
                 # Process queued content
                 content_ids = list(self._processing_queue.keys())
@@ -568,7 +590,8 @@ class ContentIntegration:
                 await asyncio.sleep(60)
     
     async def _process_content_async(self, content_id: str) -> None:
-        """Asynchronous content processing"""        try:
+        """Asynchronous content processing"""
+        try:
             if content_id not in self._processing_queue:
                 return
             
@@ -670,7 +693,8 @@ class ContentIntegration:
             self.logger.error(f"Content processing failed for {content_id}: {str(e)}")
     
     async def _generate_content_id(self, filename: str, creator_id: str) -> str:
-        """Generate unique content ID"""        timestamp = datetime.utcnow().isoformat()
+        """Generate unique content ID"""
+        timestamp = datetime.utcnow().isoformat()
         content_string = f"{filename}_{creator_id}_{timestamp}"
         return hashlib.sha256(content_string.encode()).hexdigest()[:16]
     
@@ -679,7 +703,8 @@ class ContentIntegration:
         file_data: Union[bytes, BinaryIO], 
         filename: str
     ) -> Tuple[ContentType, ContentFormat]:
-        """Detect content type and format from file"""        # Get MIME type
+        """Detect content type and format from file"""
+        # Get MIME type
         mime_type, _ = mimetypes.guess_type(filename)
         file_extension = Path(filename).suffix.lower().lstrip('.')
         
@@ -708,7 +733,8 @@ class ContentIntegration:
         content_type: ContentType, 
         content_format: ContentFormat
     ) -> Dict[str, Any]:
-        """Validate uploaded content"""        return {"valid": True, "errors": []}
+        """Validate uploaded content"""
+        return {"valid": True, "errors": []}
     
     async def _extract_content_metadata(
         self,
@@ -718,7 +744,8 @@ class ContentIntegration:
         content_type: ContentType,
         content_format: ContentFormat
     ) -> ContentMetadata:
-        """Extract basic content metadata"""        file_size = len(file_data) if isinstance(file_data, bytes) else 0
+        """Extract basic content metadata"""
+        file_size = len(file_data) if isinstance(file_data, bytes) else 0
         
         return ContentMetadata(
             content_id=content_id,

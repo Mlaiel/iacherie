@@ -12,7 +12,8 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Advanced container monitoring and observability for IA-Influencer-Agent platform.
 Includes metrics collection, alerting, health checks, and performance monitoring.
-"""from typing import Dict, List, Optional, Any, Union, Tuple, Callable
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple, Callable
 import asyncio
 import logging
 import json
@@ -31,26 +32,30 @@ from prometheus_client import Counter, Histogram, Gauge, CollectorRegistry, gene
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Metric types for monitoring"""    COUNTER = "counter"
+    """Metric types for monitoring"""
+    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    CRITICAL = "critical"
+    """Alert severity levels"""
+    CRITICAL = "critical"
     WARNING = "warning"
     INFO = "info"
     DEBUG = "debug"
 
 class HealthStatus(Enum):
-    """Health check status"""    HEALTHY = "healthy"
+    """Health check status"""
+    HEALTHY = "healthy"
     UNHEALTHY = "unhealthy"
     DEGRADED = "degraded"
     UNKNOWN = "unknown"
 
 @dataclass
 class MetricDefinition:
-    """Metric definition for monitoring"""    name: str
+    """Metric definition for monitoring"""
+    name: str
     type: MetricType
     description: str
     labels: List[str] = field(default_factory=list)
@@ -59,7 +64,8 @@ class MetricDefinition:
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration"""    name: str
+    """Alert rule configuration"""
+    name: str
     expression: str
     severity: AlertSeverity
     duration: str
@@ -69,7 +75,8 @@ class AlertRule:
 
 @dataclass
 class HealthCheck:
-    """Health check configuration"""    name: str
+    """Health check configuration"""
+    name: str
     endpoint: str
     method: str = "GET"
     timeout: int = 10
@@ -81,7 +88,8 @@ class HealthCheck:
 
 @dataclass
 class MonitoringTarget:
-    """Monitoring target configuration"""    name: str
+    """Monitoring target configuration"""
+    name: str
     type: str  # container, service, pod, node
     endpoint: str
     metrics_path: str = "/metrics"
@@ -90,7 +98,8 @@ class MonitoringTarget:
     health_checks: List[HealthCheck] = field(default_factory=list)
 
 class ContainerMonitoringManager:
-    """Professional container monitoring manager"""    
+    """Professional container monitoring manager"""
+    
     def __init__(self, config_path: str = "/app/config/monitoring"):
         self.config_path = Path(config_path)
         self.docker_client = None
@@ -129,7 +138,8 @@ class ContainerMonitoringManager:
         }
         
     async def initialize(self) -> bool:
-        """Initialize container monitoring manager"""        try:
+        """Initialize container monitoring manager"""
+        try:
             # Initialize Docker client
             self.docker_client = docker.from_env()
             
@@ -165,7 +175,8 @@ class ContainerMonitoringManager:
             return False
     
     async def _initialize_metrics(self) -> None:
-        """Initialize Prometheus metrics"""        try:
+        """Initialize Prometheus metrics"""
+        try:
             # Define core metrics for IA-Influencer services
             metric_definitions = [
                 MetricDefinition(
@@ -298,7 +309,8 @@ class ContainerMonitoringManager:
             self.logger.error(f"❌ Error initializing metrics: {e}")
     
     async def _setup_alert_rules(self) -> None:
-        """Setup alert rules for IA-Influencer services"""        try:
+        """Setup alert rules for IA-Influencer services"""
+        try:
             alert_rules = [
                 AlertRule(
                     name="IAInfluencerHighCPUUsage",
@@ -410,7 +422,8 @@ class ContainerMonitoringManager:
             self.logger.error(f"❌ Error setting up alert rules: {e}")
     
     async def _save_alert_rules(self) -> None:
-        """Save alert rules to Prometheus format"""        try:
+        """Save alert rules to Prometheus format"""
+        try:
             prometheus_rules = {
                 "groups": [{
                     "name": "ia-influencer-alerts",
@@ -437,7 +450,8 @@ class ContainerMonitoringManager:
             self.logger.error(f"❌ Error saving alert rules: {e}")
     
     async def _setup_monitoring_targets(self) -> None:
-        """Setup monitoring targets for IA-Influencer services"""        try:
+        """Setup monitoring targets for IA-Influencer services"""
+        try:
             # Define monitoring targets
             targets = [
                 MonitoringTarget(
@@ -590,7 +604,8 @@ class ContainerMonitoringManager:
             self.logger.error(f"❌ Error setting up monitoring targets: {e}")
     
     async def _generate_prometheus_config(self) -> None:
-        """Generate Prometheus configuration file"""        try:
+        """Generate Prometheus configuration file"""
+        try:
             prometheus_config = {
                 "global": {
                     "scrape_interval": "15s",
@@ -651,7 +666,8 @@ class ContainerMonitoringManager:
             self.logger.error(f"❌ Error generating Prometheus config: {e}")
     
     async def _start_monitoring_loops(self) -> None:
-        """Start monitoring loops"""        try:
+        """Start monitoring loops"""
+        try:
             # Start health check loop
             asyncio.create_task(self._health_check_loop())
             
@@ -667,7 +683,8 @@ class ContainerMonitoringManager:
             self.logger.error(f"❌ Error starting monitoring loops: {e}")
     
     async def _health_check_loop(self) -> None:
-        """Health check monitoring loop"""        while True:
+        """Health check monitoring loop"""
+        while True:
             try:
                 for target_name, target in self.monitoring_targets.items():
                     for health_check in target.health_checks:
@@ -704,7 +721,8 @@ class ContainerMonitoringManager:
                 await asyncio.sleep(30)
     
     async def _perform_health_check(self, health_check: HealthCheck) -> HealthStatus:
-        """Perform individual health check"""        try:
+        """Perform individual health check"""
+        try:
             if health_check.method == "GET":
                 async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(health_check.timeout)) as session:
                     async with session.get(
@@ -741,7 +759,8 @@ class ContainerMonitoringManager:
             return HealthStatus.UNHEALTHY
     
     async def _metrics_collection_loop(self) -> None:
-        """Metrics collection loop"""        while True:
+        """Metrics collection loop"""
+        while True:
             try:
                 # Collect Docker container metrics
                 if self.docker_client:
@@ -760,7 +779,8 @@ class ContainerMonitoringManager:
                 await asyncio.sleep(60)
     
     async def _collect_docker_metrics(self) -> None:
-        """Collect Docker container metrics"""        try:
+        """Collect Docker container metrics"""
+        try:
             containers = self.docker_client.containers.list()
             
             for container in containers:
@@ -807,7 +827,8 @@ class ContainerMonitoringManager:
             self.logger.error(f"❌ Error collecting Docker metrics: {e}")
     
     def _calculate_cpu_percentage(self, stats: Dict[str, Any]) -> float:
-        """Calculate CPU usage percentage from Docker stats"""        try:
+        """Calculate CPU usage percentage from Docker stats"""
+        try:
             cpu_stats = stats["cpu_stats"]
             precpu_stats = stats["precpu_stats"]
             
@@ -824,7 +845,8 @@ class ContainerMonitoringManager:
             return 0.0
     
     async def _collect_system_metrics(self) -> None:
-        """Collect system-level metrics"""        try:
+        """Collect system-level metrics"""
+        try:
             # CPU usage
             cpu_percent = psutil.cpu_percent(interval=1)
             
@@ -844,7 +866,8 @@ class ContainerMonitoringManager:
             self.logger.error(f"❌ Error collecting system metrics: {e}")
     
     async def _collect_application_metrics(self) -> None:
-        """Collect application-specific metrics"""        try:
+        """Collect application-specific metrics"""
+        try:
             # Collect metrics from application endpoints
             for target_name, target in self.monitoring_targets.items():
                 try:
@@ -863,7 +886,8 @@ class ContainerMonitoringManager:
             self.logger.error(f"❌ Error collecting application metrics: {e}")
     
     async def _alert_evaluation_loop(self) -> None:
-        """Alert evaluation loop"""        while True:
+        """Alert evaluation loop"""
+        while True:
             try:
                 current_time = datetime.now()
                 
@@ -901,7 +925,8 @@ class ContainerMonitoringManager:
                 await asyncio.sleep(120)
     
     async def _evaluate_alert_rule(self, rule: AlertRule) -> Dict[str, Any]:
-        """Evaluate individual alert rule"""        try:
+        """Evaluate individual alert rule"""
+        try:
             # Simplified alert evaluation
             # In real implementation, would use PromQL evaluation
             
@@ -935,7 +960,8 @@ class ContainerMonitoringManager:
             return {"active": False, "value": 0, "evaluated_at": datetime.now()}
     
     async def _send_alert(self, rule: AlertRule, status: Dict[str, Any]) -> None:
-        """Send alert notification"""        try:
+        """Send alert notification"""
+        try:
             alert_message = {
                 "alert_name": rule.name,
                 "severity": rule.severity.value,
@@ -959,7 +985,8 @@ class ContainerMonitoringManager:
             self.logger.error(f"❌ Error sending alert: {e}")
     
     async def _send_webhook_alert(self, alert_message: Dict[str, Any]) -> None:
-        """Send alert via webhook"""        try:
+        """Send alert via webhook"""
+        try:
             webhook_url = self.monitoring_config["alertmanager"]["webhook_url"]
             
             async with aiohttp.ClientSession() as session:
@@ -973,7 +1000,8 @@ class ContainerMonitoringManager:
             self.logger.error(f"❌ Error sending webhook alert: {e}")
     
     async def _resolve_alert(self, rule_name: str) -> None:
-        """Resolve active alert"""        try:
+        """Resolve active alert"""
+        try:
             alert = self.active_alerts[rule_name]
             
             self.logger.info(f"✅ RESOLVED: Alert {rule_name}")
@@ -993,7 +1021,8 @@ class ContainerMonitoringManager:
             self.logger.error(f"❌ Error resolving alert: {e}")
     
     async def get_metrics_export(self) -> str:
-        """Export metrics in Prometheus format"""        try:
+        """Export metrics in Prometheus format"""
+        try:
             return generate_latest(self.prometheus_registry).decode('utf-8')
             
         except Exception as e:
@@ -1001,7 +1030,8 @@ class ContainerMonitoringManager:
             return ""
     
     async def get_health_status(self) -> Dict[str, Any]:
-        """Get overall health status"""        try:
+        """Get overall health status"""
+        try:
             total_checks = len(self.health_status)
             healthy_checks = len([
                 status for status in self.health_status.values()
@@ -1026,7 +1056,8 @@ class ContainerMonitoringManager:
             return {"overall_status": "unknown", "error": str(e)}
     
     async def get_active_alerts(self) -> Dict[str, Any]:
-        """Get currently active alerts"""        try:
+        """Get currently active alerts"""
+        try:
             active_alerts_info = {}
             
             for rule_name, alert in self.active_alerts.items():
@@ -1050,7 +1081,8 @@ class ContainerMonitoringManager:
             return {"total_active_alerts": 0, "alerts": {}, "error": str(e)}
 
 class MetricsCollector:
-    """Specialized metrics collector for IA-Influencer services"""    
+    """Specialized metrics collector for IA-Influencer services"""
+    
     def __init__(self, monitoring_manager: ContainerMonitoringManager):
         self.monitoring_manager = monitoring_manager
         self.custom_metrics = {}
@@ -1058,7 +1090,8 @@ class MetricsCollector:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def initialize(self) -> bool:
-        """Initialize metrics collector"""        try:
+        """Initialize metrics collector"""
+        try:
             # Setup custom metric collection
             await self._setup_custom_metrics()
             
@@ -1070,7 +1103,8 @@ class MetricsCollector:
             return False
     
     async def _setup_custom_metrics(self) -> None:
-        """Setup custom metrics for IA-Influencer platform"""        try:
+        """Setup custom metrics for IA-Influencer platform"""
+        try:
             # Start custom collection tasks
             self.collection_tasks["ai_processing"] = asyncio.create_task(
                 self._collect_ai_processing_metrics()
@@ -1088,7 +1122,8 @@ class MetricsCollector:
             self.logger.error(f"❌ Error setting up custom metrics: {e}")
     
     async def _collect_ai_processing_metrics(self) -> None:
-        """Collect AI processing metrics"""        while True:
+        """Collect AI processing metrics"""
+        while True:
             try:
                 # Mock AI processing metrics
                 import random
@@ -1111,7 +1146,8 @@ class MetricsCollector:
                 await asyncio.sleep(120)
     
     async def _collect_content_protection_metrics(self) -> None:
-        """Collect content protection metrics"""        while True:
+        """Collect content protection metrics"""
+        while True:
             try:
                 import random
                 
@@ -1151,7 +1187,8 @@ class MetricsCollector:
                 await asyncio.sleep(180)
     
     async def _collect_monetization_metrics(self) -> None:
-        """Collect monetization metrics"""        while True:
+        """Collect monetization metrics"""
+        while True:
             try:
                 import random
                 
@@ -1177,7 +1214,8 @@ class MetricsCollector:
                 await asyncio.sleep(360)
 
 class AlertManager:
-    """Professional alert manager for IA-Influencer platform"""    
+    """Professional alert manager for IA-Influencer platform"""
+    
     def __init__(self, monitoring_manager: ContainerMonitoringManager):
         self.monitoring_manager = monitoring_manager
         self.notification_channels = {}
@@ -1186,7 +1224,8 @@ class AlertManager:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def initialize(self) -> bool:
-        """Initialize alert manager"""        try:
+        """Initialize alert manager"""
+        try:
             # Setup notification channels
             await self._setup_notification_channels()
             
@@ -1201,7 +1240,8 @@ class AlertManager:
             return False
     
     async def _setup_notification_channels(self) -> None:
-        """Setup notification channels"""        try:
+        """Setup notification channels"""
+        try:
             self.notification_channels = {
                 "email": {
                     "enabled": True,
@@ -1228,7 +1268,8 @@ class AlertManager:
             self.logger.error(f"❌ Error setting up notification channels: {e}")
     
     async def _setup_escalation_rules(self) -> None:
-        """Setup alert escalation rules"""        try:
+        """Setup alert escalation rules"""
+        try:
             self.escalation_rules = {
                 "critical": {
                     "immediate": ["slack", "email"],
@@ -1253,7 +1294,8 @@ class AlertManager:
         message: str, 
         severity: AlertSeverity = AlertSeverity.INFO
     ) -> bool:
-        """Send notification via specified channel"""        try:
+        """Send notification via specified channel"""
+        try:
             if channel not in self.notification_channels:
                 self.logger.error(f"❌ Unknown notification channel: {channel}")
                 return False
@@ -1279,7 +1321,8 @@ class AlertManager:
             return False
     
     async def _send_email_notification(self, message: str, config: Dict[str, Any]) -> bool:
-        """Send email notification"""        try:
+        """Send email notification"""
+        try:
             # Simplified email sending implementation
             self.logger.info(f"📧 Email notification sent: {message[:100]}...")
             return True
@@ -1289,7 +1332,8 @@ class AlertManager:
             return False
     
     async def _send_slack_notification(self, message: str, config: Dict[str, Any]) -> bool:
-        """Send Slack notification"""        try:
+        """Send Slack notification"""
+        try:
             webhook_url = config.get("webhook_url")
             if not webhook_url:
                 return False
@@ -1314,7 +1358,8 @@ class AlertManager:
             return False
     
     async def _send_webhook_notification(self, message: str, config: Dict[str, Any]) -> bool:
-        """Send webhook notification"""        try:
+        """Send webhook notification"""
+        try:
             webhook_url = config.get("url")
             if not webhook_url:
                 return False
@@ -1338,7 +1383,8 @@ class AlertManager:
             return False
     
     async def _send_sms_notification(self, message: str, config: Dict[str, Any]) -> bool:
-        """Send SMS notification"""        try:
+        """Send SMS notification"""
+        try:
             # Simplified SMS implementation
             self.logger.info(f"📱 SMS notification sent: {message[:50]}...")
             return True

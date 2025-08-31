@@ -14,7 +14,8 @@ distribution, or modification without written permission from Fahed Mlaiel
 extent of the law. All rights reserved.
 
 Contact: mlaiel@live.de for licensing and authorization inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import hashlib
@@ -57,7 +58,8 @@ settings = get_settings()
 
 
 class ViolationType(Enum):
-    """Types of content violations"""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Types of content violations"""
+    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_USE = "unauthorized_use"
     CONTENT_THEFT = "content_theft"
     TRADEMARK_VIOLATION = "trademark_violation"
@@ -68,7 +70,8 @@ class ViolationType(Enum):
 
 
 class PlatformType(Enum):
-    """Monitored platform types"""    YOUTUBE = "youtube"
+    """Monitored platform types"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -81,7 +84,8 @@ class PlatformType(Enum):
 
 
 class ActionType(Enum):
-    """Actions to take on violations"""    NOTIFY_USER = "notify_user"
+    """Actions to take on violations"""
+    NOTIFY_USER = "notify_user"
     SEND_TAKEDOWN = "send_takedown"
     ESCALATE = "escalate"
     COLLECT_EVIDENCE = "collect_evidence"
@@ -91,7 +95,8 @@ class ActionType(Enum):
 
 @dataclass
 class MonitoringConfig:
-    """Content monitoring configuration"""    platforms: List[PlatformType]
+    """Content monitoring configuration"""
+    platforms: List[PlatformType]
     search_keywords: List[str] = field(default_factory=list)
     monitoring_frequency: int = 24  # Hours between scans
     similarity_threshold: float = 0.85  # Similarity threshold for matches
@@ -110,7 +115,8 @@ class MonitoringConfig:
 
 @dataclass
 class ViolationAlert:
-    """Content violation alert"""    violation_id: str
+    """Content violation alert"""
+    violation_id: str
     user_id: str
     original_content_id: str
     violation_type: ViolationType
@@ -137,7 +143,8 @@ class ViolationAlert:
 
 @dataclass
 class SearchResult:
-    """Search result from platform crawling"""    platform: PlatformType
+    """Search result from platform crawling"""
+    platform: PlatformType
     url: str
     title: str
     content_type: str
@@ -151,7 +158,8 @@ class SearchResult:
 
 
 class BaseCrawler(ABC):
-    """Base class for platform crawlers"""    
+    """Base class for platform crawlers"""
+    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         self.session = None
@@ -165,18 +173,22 @@ class BaseCrawler(ABC):
         content_type: Optional[str] = None,
         max_results: int = 100
     ) -> List[SearchResult]:
-        """Search for content on platform"""        pass
+        """Search for content on platform"""
+        pass
     
     @abstractmethod
     async def extract_content(self, url: str) -> Optional[bytes]:
-        """Extract content from URL"""        pass
+        """Extract content from URL"""
+        pass
     
     @abstractmethod
     async def get_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Get content metadata"""        pass
+        """Get content metadata"""
+        pass
     
     async def _init_session(self):
-        """Initialize HTTP session"""        if not self.session:
+        """Initialize HTTP session"""
+        if not self.session:
             timeout = aiohttp.ClientTimeout(total=30)
             self.session = aiohttp.ClientSession(
                 timeout=timeout,
@@ -191,7 +203,8 @@ class BaseCrawler(ABC):
             )
     
     async def _init_browser(self):
-        """Initialize headless browser for JavaScript-heavy sites"""        if not self.browser_driver:
+        """Initialize headless browser for JavaScript-heavy sites"""
+        if not self.browser_driver:
             chrome_options = Options()
             chrome_options.add_argument("--headless")
             chrome_options.add_argument("--no-sandbox")
@@ -203,7 +216,8 @@ class BaseCrawler(ABC):
             self.browser_driver = webdriver.Chrome(options=chrome_options)
     
     async def _close_resources(self):
-        """Clean up resources"""        if self.session:
+        """Clean up resources"""
+        if self.session:
             await self.session.close()
             self.session = None
             
@@ -213,7 +227,8 @@ class BaseCrawler(ABC):
 
 
 class YouTubeCrawler(BaseCrawler):
-    """YouTube content crawler"""    
+    """YouTube content crawler"""
+    
     API_BASE_URL = "https://www.googleapis.com/youtube/v3"
     SEARCH_URL = "https://www.youtube.com/results"
     
@@ -223,7 +238,8 @@ class YouTubeCrawler(BaseCrawler):
         content_type: Optional[str] = None,
         max_results: int = 100
     ) -> List[SearchResult]:
-        """Search YouTube for content"""        try:
+        """Search YouTube for content"""
+        try:
             await self._init_session()
             
             # Use YouTube Data API if available
@@ -242,7 +258,8 @@ class YouTubeCrawler(BaseCrawler):
         content_type: Optional[str], 
         max_results: int
     ) -> List[SearchResult]:
-        """Search using YouTube Data API"""        try:
+        """Search using YouTube Data API"""
+        try:
             url = f"{self.API_BASE_URL}/search"
             params = {
                 "part": "snippet",
@@ -274,7 +291,8 @@ class YouTubeCrawler(BaseCrawler):
         content_type: Optional[str], 
         max_results: int
     ) -> List[SearchResult]:
-        """Search using web scraping"""        try:
+        """Search using web scraping"""
+        try:
             await self._init_browser()
             
             search_url = f"{self.SEARCH_URL}?search_query={query}"
@@ -306,7 +324,8 @@ class YouTubeCrawler(BaseCrawler):
             return []
     
     async def _parse_api_results(self, data: Dict[str, Any]) -> List[SearchResult]:
-        """Parse YouTube API results"""        results = []
+        """Parse YouTube API results"""
+        results = []
         
         for item in data.get("items", []):
             snippet = item.get("snippet", {})
@@ -327,7 +346,8 @@ class YouTubeCrawler(BaseCrawler):
         return results
     
     async def _parse_video_element(self, element) -> Optional[SearchResult]:
-        """Parse individual video element from scraping"""        try:
+        """Parse individual video element from scraping"""
+        try:
             # Extract video URL
             link_element = element.find_element(By.CSS_SELECTOR, "a#video-title")
             video_url = link_element.get_attribute("href")
@@ -355,7 +375,8 @@ class YouTubeCrawler(BaseCrawler):
             return None
     
     async def extract_content(self, url: str) -> Optional[bytes]:
-        """Extract video content from YouTube URL"""        try:
+        """Extract video content from YouTube URL"""
+        try:
             # Use youtube-dl or similar tool to extract video
             import yt_dlp
             
@@ -381,7 +402,8 @@ class YouTubeCrawler(BaseCrawler):
             return None
     
     async def get_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Get YouTube video metadata"""        try:
+        """Get YouTube video metadata"""
+        try:
             import yt_dlp
             
             ydl_opts = {
@@ -409,7 +431,8 @@ class YouTubeCrawler(BaseCrawler):
 
 
 class InstagramCrawler(BaseCrawler):
-    """Instagram content crawler"""    
+    """Instagram content crawler"""
+    
     BASE_URL = "https://www.instagram.com"
     
     async def search_content(
@@ -418,7 +441,8 @@ class InstagramCrawler(BaseCrawler):
         content_type: Optional[str] = None,
         max_results: int = 100
     ) -> List[SearchResult]:
-        """Search Instagram for content"""        try:
+        """Search Instagram for content"""
+        try:
             await self._init_browser()
             
             # Search by hashtag
@@ -460,7 +484,8 @@ class InstagramCrawler(BaseCrawler):
             return []
     
     async def _parse_instagram_post(self, element, post_url: str) -> Optional[SearchResult]:
-        """Parse Instagram post element"""        try:
+        """Parse Instagram post element"""
+        try:
             # Extract thumbnail
             img_element = element.find_element(By.CSS_SELECTOR, "img")
             thumbnail_url = img_element.get_attribute("src")
@@ -479,7 +504,8 @@ class InstagramCrawler(BaseCrawler):
             return None
     
     async def extract_content(self, url: str) -> Optional[bytes]:
-        """Extract content from Instagram post"""        try:
+        """Extract content from Instagram post"""
+        try:
             await self._init_browser()
             
             self.browser_driver.get(url)
@@ -505,7 +531,8 @@ class InstagramCrawler(BaseCrawler):
             return None
     
     async def get_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Get Instagram post metadata"""        try:
+        """Get Instagram post metadata"""
+        try:
             await self._init_browser()
             
             self.browser_driver.get(url)
@@ -538,7 +565,8 @@ class InstagramCrawler(BaseCrawler):
 
 
 class TikTokCrawler(BaseCrawler):
-    """TikTok content crawler"""    
+    """TikTok content crawler"""
+    
     BASE_URL = "https://www.tiktok.com"
     
     async def search_content(
@@ -547,7 +575,8 @@ class TikTokCrawler(BaseCrawler):
         content_type: Optional[str] = None,
         max_results: int = 100
     ) -> List[SearchResult]:
-        """Search TikTok for content"""        try:
+        """Search TikTok for content"""
+        try:
             await self._init_browser()
             
             search_url = f"{self.BASE_URL}/search?q={query}"
@@ -582,7 +611,8 @@ class TikTokCrawler(BaseCrawler):
             return []
     
     async def _parse_tiktok_video(self, element) -> Optional[SearchResult]:
-        """Parse TikTok video element"""        try:
+        """Parse TikTok video element"""
+        try:
             # Extract video URL
             link_element = element.find_element(By.CSS_SELECTOR, "a")
             video_url = link_element.get_attribute("href")
@@ -604,7 +634,8 @@ class TikTokCrawler(BaseCrawler):
             return None
     
     async def extract_content(self, url: str) -> Optional[bytes]:
-        """Extract TikTok video content"""        try:
+        """Extract TikTok video content"""
+        try:
             # TikTok content extraction requires specialized tools
             # This would integrate with TikTok downloaders
             logger.info(f"TikTok content extraction not implemented for: {url}")
@@ -615,7 +646,8 @@ class TikTokCrawler(BaseCrawler):
             return None
     
     async def get_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Get TikTok video metadata"""        try:
+        """Get TikTok video metadata"""
+        try:
             await self._init_browser()
             
             self.browser_driver.get(url)
@@ -639,7 +671,8 @@ class TikTokCrawler(BaseCrawler):
 
 
 class ContentMonitor:
-    """Main content monitoring orchestrator"""    
+    """Main content monitoring orchestrator"""
+    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         self.crawlers: Dict[PlatformType, BaseCrawler] = {}
@@ -655,7 +688,8 @@ class ContentMonitor:
         self.content_vectors = {}
         
     def _init_crawlers(self):
-        """Initialize platform crawlers"""        for platform in self.config.platforms:
+        """Initialize platform crawlers"""
+        for platform in self.config.platforms:
             if platform == PlatformType.YOUTUBE:
                 self.crawlers[platform] = YouTubeCrawler(self.config)
             elif platform == PlatformType.INSTAGRAM:
@@ -672,7 +706,8 @@ class ContentMonitor:
         content_format: ContentFormat,
         keywords: List[str] = None
     ) -> bool:
-        """Register content for monitoring"""        try:
+        """Register content for monitoring"""
+        try:
             # Generate fingerprints for the content
             fingerprints = await self.fingerprint_generator.generate_comprehensive_fingerprint(
                 content, content_format
@@ -710,7 +745,8 @@ class ContentMonitor:
             return False
     
     async def scan_for_violations(self, user_id: Optional[str] = None) -> List[ViolationAlert]:
-        """Scan all platforms for content violations"""        violations = []
+        """Scan all platforms for content violations"""
+        violations = []
         
         try:
             # Get monitored content
@@ -733,7 +769,8 @@ class ContentMonitor:
             return []
     
     async def _get_monitored_content(self, user_id: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Get content that needs to be monitored"""        try:
+        """Get content that needs to be monitored"""
+        try:
             async with get_session() as session:
                 stmt = select("content_monitoring").where("monitoring_enabled" == True)
                 
@@ -754,7 +791,8 @@ class ContentMonitor:
             return []
     
     async def _scan_content_violations(self, content_record: Dict[str, Any]) -> List[ViolationAlert]:
-        """Scan for violations of specific content"""        violations = []
+        """Scan for violations of specific content"""
+        violations = []
         
         try:
             content_id = content_record["content_id"]
@@ -797,7 +835,8 @@ class ContentMonitor:
         search_result: SearchResult,
         fingerprints: Dict[str, Any]
     ) -> Optional[ViolationAlert]:
-        """Check if search result is a potential violation"""        try:
+        """Check if search result is a potential violation"""
+        try:
             # Extract content from search result
             crawler = self.crawlers[search_result.platform]
             suspected_content = await crawler.extract_content(search_result.url)
@@ -857,7 +896,8 @@ class ContentMonitor:
         suspected_content: bytes,
         original_fingerprints: Dict[str, Any]
     ) -> float:
-        """Calculate similarity between original and suspected content"""        try:
+        """Calculate similarity between original and suspected content"""
+        try:
             # Generate fingerprints for suspected content
             suspected_format = ContentFormat.detect(suspected_content)
             suspected_fingerprints = await self.fingerprint_generator.generate_comprehensive_fingerprint(
@@ -906,7 +946,8 @@ class ContentMonitor:
         hash1: str,
         hash2: str
     ) -> float:
-        """Compare perceptual hashes and return similarity score"""        try:
+        """Compare perceptual hashes and return similarity score"""
+        try:
             import imagehash
             
             # Convert hex strings to hashes
@@ -931,7 +972,8 @@ class ContentMonitor:
         fingerprint1: Dict[str, Any],
         fingerprint2: Dict[str, Any]
     ) -> float:
-        """Compare audio fingerprints"""        try:
+        """Compare audio fingerprints"""
+        try:
             if not fingerprint1 or not fingerprint2:
                 return 0.0
             
@@ -959,7 +1001,8 @@ class ContentMonitor:
         content: bytes,
         content_format: ContentFormat
     ) -> np.ndarray:
-        """Generate vector embedding for content similarity matching"""        try:
+        """Generate vector embedding for content similarity matching"""
+        try:
             if content_format.is_image():
                 return await self._generate_image_embedding(content)
             elif content_format.is_video():
@@ -974,7 +1017,8 @@ class ContentMonitor:
             return np.array([])
     
     async def _generate_image_embedding(self, image_content: bytes) -> np.ndarray:
-        """Generate image embedding using CLIP"""        try:
+        """Generate image embedding using CLIP"""
+        try:
             # Load CLIP model if not already loaded
             if not hasattr(self, 'clip_processor'):
                 self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -993,7 +1037,8 @@ class ContentMonitor:
             return np.array([])
     
     async def _generate_video_embedding(self, video_content: bytes) -> np.ndarray:
-        """Generate video embedding from key frames"""        try:
+        """Generate video embedding from key frames"""
+        try:
             import tempfile
             import cv2
             
@@ -1039,7 +1084,8 @@ class ContentMonitor:
             return np.array([])
     
     async def _generate_audio_embedding(self, audio_content: bytes) -> np.ndarray:
-        """Generate audio embedding"""        try:
+        """Generate audio embedding"""
+        try:
             import tempfile
             
             # Save audio to temporary file
@@ -1073,7 +1119,8 @@ class ContentMonitor:
         search_result: SearchResult,
         content: bytes
     ) -> Dict[str, Any]:
-        """Collect evidence for violation"""        evidence = {
+        """Collect evidence for violation"""
+        evidence = {
             "search_result_metadata": {
                 "title": search_result.title,
                 "url": search_result.url,
@@ -1102,7 +1149,8 @@ class ContentMonitor:
             return evidence
     
     async def _take_screenshot(self, url: str) -> Optional[str]:
-        """Take screenshot of content page"""        try:
+        """Take screenshot of content page"""
+        try:
             # This would integrate with screenshot service or use Selenium
             # For now, return placeholder
             return f"screenshot_{hashlib.md5(url.encode()).hexdigest()}.png"
@@ -1117,7 +1165,8 @@ class ContentMonitor:
         search_result: SearchResult,
         similarity_score: float
     ) -> ViolationType:
-        """Determine the type of violation"""        try:
+        """Determine the type of violation"""
+        try:
             # Simple heuristics for violation type determination
             if similarity_score > 0.95:
                 return ViolationType.COPYRIGHT_INFRINGEMENT
@@ -1134,7 +1183,8 @@ class ContentMonitor:
             return ViolationType.UNAUTHORIZED_USE
     
     async def _store_violations(self, violations: List[ViolationAlert]):
-        """Store violations in database"""        try:
+        """Store violations in database"""
+        try:
             if not violations:
                 return
                 
@@ -1171,7 +1221,8 @@ class ContentMonitor:
             logger.error(f"Failed to store violations: {str(e)}")
     
     async def _notify_violations(self, violations: List[ViolationAlert]):
-        """Send notifications for violations"""        try:
+        """Send notifications for violations"""
+        try:
             for violation in violations:
                 if self.config.notification_enabled:
                     await self.notification_service.send_violation_alert(violation)
@@ -1180,7 +1231,8 @@ class ContentMonitor:
             logger.error(f"Violation notifications failed: {str(e)}")
     
     async def _update_last_scan(self, content_id: str):
-        """Update last scan timestamp"""        try:
+        """Update last scan timestamp"""
+        try:
             async with get_session() as session:
                 stmt = update("content_monitoring").where(
                     "content_id" == content_id
@@ -1192,7 +1244,8 @@ class ContentMonitor:
             logger.error(f"Failed to update last scan: {str(e)}")
     
     async def _add_to_vector_index(self, content_id: str, vector: np.ndarray):
-        """Add content vector to FAISS index for similarity search"""        try:
+        """Add content vector to FAISS index for similarity search"""
+        try:
             if self.vector_index is None and len(vector) > 0:
                 # Initialize FAISS index
                 dimension = len(vector)
@@ -1208,7 +1261,8 @@ class ContentMonitor:
             logger.error(f"Failed to add vector to index: {str(e)}")
     
     async def cleanup(self):
-        """Clean up resources"""        try:
+        """Clean up resources"""
+        try:
             for crawler in self.crawlers.values():
                 await crawler._close_resources()
                 

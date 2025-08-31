@@ -22,7 +22,8 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - Audio Engineer: Professional audio processing and analysis
 - DevOps Engineer: Advanced deployment and infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt engineering and optimization
-"""import asyncio
+"""
+import asyncio
 import logging
 import secrets
 import hashlib
@@ -48,7 +49,8 @@ import jwt
 logger = logging.getLogger(__name__)
 
 class EncryptionAlgorithm(str, Enum):
-    """Supported encryption algorithms."""    AES_256_GCM = "aes_256_gcm"
+    """Supported encryption algorithms."""
+    AES_256_GCM = "aes_256_gcm"
     AES_256_CBC = "aes_256_cbc"
     CHACHA20_POLY1305 = "chacha20_poly1305"
     RSA_4096 = "rsa_4096"
@@ -56,7 +58,8 @@ class EncryptionAlgorithm(str, Enum):
     QUANTUM_RESISTANT = "quantum_resistant"
 
 class KeyType(str, Enum):
-    """Types of encryption keys."""    SYMMETRIC = "symmetric"
+    """Types of encryption keys."""
+    SYMMETRIC = "symmetric"
     ASYMMETRIC_PUBLIC = "asymmetric_public"
     ASYMMETRIC_PRIVATE = "asymmetric_private"
     MASTER = "master"
@@ -64,7 +67,8 @@ class KeyType(str, Enum):
     SESSION = "session"
 
 class SecurityLevel(str, Enum):
-    """Security level classifications."""    STANDARD = "standard"
+    """Security level classifications."""
+    STANDARD = "standard"
     HIGH = "high"
     MAXIMUM = "maximum"
     MILITARY = "military"
@@ -72,7 +76,8 @@ class SecurityLevel(str, Enum):
 
 @dataclass
 class EncryptionKey:
-    """Encryption key metadata and data."""    key_id: str
+    """Encryption key metadata and data."""
+    key_id: str
     key_type: KeyType
     algorithm: EncryptionAlgorithm
     key_data: bytes
@@ -86,7 +91,8 @@ class EncryptionKey:
 
 @dataclass
 class EncryptionContext:
-    """Context for encryption/decryption operations."""    content_id: str
+    """Context for encryption/decryption operations."""
+    content_id: str
     user_id: int
     security_level: SecurityLevel
     algorithm: EncryptionAlgorithm
@@ -96,7 +102,8 @@ class EncryptionContext:
 
 @dataclass
 class EncryptedData:
-    """Encrypted data package."""    encrypted_content: bytes
+    """Encrypted data package."""
+    encrypted_content: bytes
     key_id: str
     algorithm: EncryptionAlgorithm
     iv_or_nonce: Optional[bytes] = None
@@ -105,7 +112,8 @@ class EncryptedData:
     encrypted_at: datetime = field(default_factory=datetime.utcnow)
 
 class EncryptionService:
-    """    Ultra-Advanced Encryption Service for DRM System
+    """
+    Ultra-Advanced Encryption Service for DRM System
     
     Features:
     - Military-grade AES-256-GCM encryption
@@ -118,9 +126,11 @@ class EncryptionService:
     - Content-specific encryption with unique keys
     - Secure key escrow and recovery
     - Compliance with FIPS 140-2 Level 3 standards
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the Encryption Service."""        self.config = config
+        """Initialize the Encryption Service."""
+        self.config = config
         self._initialized = False
         
         # Key storage
@@ -150,7 +160,8 @@ class EncryptionService:
         logger.info("Encryption Service initialized")
 
     async def initialize(self) -> bool:
-        """Initialize the Encryption Service."""        try:
+        """Initialize the Encryption Service."""
+        try:
             # Initialize master key
             await self._initialize_master_key()
             
@@ -173,7 +184,8 @@ class EncryptionService:
             return False
 
     async def _initialize_master_key(self) -> None:
-        """Initialize or load master encryption key."""        master_key_path = self.config.get('master_key_path')
+        """Initialize or load master encryption key."""
+        master_key_path = self.config.get('master_key_path')
         
         if master_key_path and os.path.exists(master_key_path):
             # Load existing master key
@@ -195,15 +207,18 @@ class EncryptionService:
             logger.debug("Generated new master key")
 
     async def _load_existing_keys(self) -> None:
-        """Load existing encryption keys from storage."""        # Placeholder for database loading
+        """Load existing encryption keys from storage."""
+        # Placeholder for database loading
         logger.debug("Loading existing encryption keys")
 
     async def _initialize_hsm(self) -> None:
-        """Initialize Hardware Security Module."""        # Placeholder for HSM initialization
+        """Initialize Hardware Security Module."""
+        # Placeholder for HSM initialization
         logger.debug("Initializing HSM integration")
 
     async def _start_key_rotation_scheduler(self) -> None:
-        """Start automatic key rotation scheduler."""        # Placeholder for scheduler
+        """Start automatic key rotation scheduler."""
+        # Placeholder for scheduler
         logger.debug("Started key rotation scheduler")
 
     async def generate_encryption_key(
@@ -214,7 +229,8 @@ class EncryptionService:
         content_id: Optional[str] = None,
         expires_in_days: Optional[int] = None
     ) -> str:
-        """        Generate a new encryption key.
+        """
+        Generate a new encryption key.
         
         Args:
             key_type: Type of key to generate
@@ -225,7 +241,8 @@ class EncryptionService:
             
         Returns:
             str: Key ID
-        """        if not self._initialized:
+        """
+        if not self._initialized:
             raise RuntimeError("Encryption Service not initialized")
         
         key_id = f"key_{uuid.uuid4().hex[:16]}"
@@ -271,7 +288,8 @@ class EncryptionService:
         algorithm: EncryptionAlgorithm,
         security_level: SecurityLevel
     ) -> bytes:
-        """Generate key data for specified algorithm."""        if algorithm == EncryptionAlgorithm.AES_256_GCM:
+        """Generate key data for specified algorithm."""
+        if algorithm == EncryptionAlgorithm.AES_256_GCM:
             return secrets.token_bytes(32)  # 256-bit key
         
         elif algorithm == EncryptionAlgorithm.AES_256_CBC:
@@ -305,7 +323,8 @@ class EncryptionService:
             raise ValueError(f"Unsupported algorithm: {algorithm}")
 
     async def _store_key_in_hsm(self, key_id: str, encryption_key: EncryptionKey) -> None:
-        """Store key in Hardware Security Module."""        # Placeholder for HSM integration
+        """Store key in Hardware Security Module."""
+        # Placeholder for HSM integration
         logger.debug(f"Storing key {key_id} in HSM")
 
     async def encrypt_content(
@@ -314,7 +333,8 @@ class EncryptionService:
         context: EncryptionContext,
         key_id: Optional[str] = None
     ) -> EncryptedData:
-        """        Encrypt content with specified algorithm and context.
+        """
+        Encrypt content with specified algorithm and context.
         
         Args:
             content: Raw content to encrypt
@@ -323,7 +343,8 @@ class EncryptionService:
             
         Returns:
             EncryptedData: Encrypted content package
-        """        if not self._initialized:
+        """
+        if not self._initialized:
             raise RuntimeError("Encryption Service not initialized")
         
         # Get or generate encryption key
@@ -383,7 +404,8 @@ class EncryptionService:
         encryption_key: EncryptionKey,
         context: EncryptionContext
     ) -> EncryptedData:
-        """Encrypt content using AES-256-GCM."""        # Generate random IV
+        """Encrypt content using AES-256-GCM."""
+        # Generate random IV
         iv = secrets.token_bytes(12)  # 96-bit IV for GCM
         
         # Create cipher
@@ -421,7 +443,8 @@ class EncryptionService:
         encryption_key: EncryptionKey,
         context: EncryptionContext
     ) -> EncryptedData:
-        """Encrypt content using AES-256-CBC."""        # Generate random IV
+        """Encrypt content using AES-256-CBC."""
+        # Generate random IV
         iv = secrets.token_bytes(16)  # 128-bit IV for CBC
         
         # Add PKCS7 padding
@@ -456,7 +479,8 @@ class EncryptionService:
         encryption_key: EncryptionKey,
         context: EncryptionContext
     ) -> EncryptedData:
-        """Encrypt content using ChaCha20-Poly1305."""        # Generate random nonce
+        """Encrypt content using ChaCha20-Poly1305."""
+        # Generate random nonce
         nonce = secrets.token_bytes(12)  # 96-bit nonce for ChaCha20
         
         # Create cipher
@@ -488,7 +512,8 @@ class EncryptionService:
         encryption_key: EncryptionKey,
         context: EncryptionContext
     ) -> EncryptedData:
-        """Encrypt content using Fernet (symmetric encryption)."""        fernet = Fernet(encryption_key.key_data)
+        """Encrypt content using Fernet (symmetric encryption)."""
+        fernet = Fernet(encryption_key.key_data)
         encrypted_content = fernet.encrypt(content)
         
         return EncryptedData(
@@ -508,7 +533,8 @@ class EncryptionService:
         encryption_key: EncryptionKey,
         context: EncryptionContext
     ) -> EncryptedData:
-        """Encrypt content using quantum-resistant algorithms."""        # Placeholder for post-quantum cryptography
+        """Encrypt content using quantum-resistant algorithms."""
+        # Placeholder for post-quantum cryptography
         # In production, this would use NIST-approved algorithms like CRYSTALS-Kyber
         
         # For now, use multiple layers of encryption
@@ -555,7 +581,8 @@ class EncryptionService:
         )
 
     async def _add_pkcs7_padding(self, data: bytes, block_size: int) -> bytes:
-        """Add PKCS7 padding to data."""        padding_length = block_size - (len(data) % block_size)
+        """Add PKCS7 padding to data."""
+        padding_length = block_size - (len(data) % block_size)
         padding = bytes([padding_length] * padding_length)
         return data + padding
 
@@ -564,7 +591,8 @@ class EncryptionService:
         encrypted_data: EncryptedData,
         context: EncryptionContext
     ) -> bytes:
-        """        Decrypt encrypted content.
+        """
+        Decrypt encrypted content.
         
         Args:
             encrypted_data: Encrypted content package
@@ -572,7 +600,8 @@ class EncryptionService:
             
         Returns:
             bytes: Decrypted content
-        """        if not self._initialized:
+        """
+        if not self._initialized:
             raise RuntimeError("Encryption Service not initialized")
         
         # Get encryption key
@@ -612,7 +641,8 @@ class EncryptionService:
         encryption_key: EncryptionKey,
         context: EncryptionContext
     ) -> bytes:
-        """Decrypt content using AES-256-GCM."""        # Create cipher
+        """Decrypt content using AES-256-GCM."""
+        # Create cipher
         cipher = Cipher(
             algorithms.AES(encryption_key.key_data),
             modes.GCM(encrypted_data.iv_or_nonce, encrypted_data.auth_tag),
@@ -635,7 +665,8 @@ class EncryptionService:
         encryption_key: EncryptionKey,
         context: EncryptionContext
     ) -> bytes:
-        """Decrypt content using AES-256-CBC."""        # Create cipher
+        """Decrypt content using AES-256-CBC."""
+        # Create cipher
         cipher = Cipher(
             algorithms.AES(encryption_key.key_data),
             modes.CBC(encrypted_data.iv_or_nonce),
@@ -657,7 +688,8 @@ class EncryptionService:
         encryption_key: EncryptionKey,
         context: EncryptionContext
     ) -> bytes:
-        """Decrypt content using ChaCha20-Poly1305."""        # Create cipher
+        """Decrypt content using ChaCha20-Poly1305."""
+        # Create cipher
         cipher = Cipher(
             algorithms.ChaCha20(encryption_key.key_data, encrypted_data.iv_or_nonce),
             mode=None,
@@ -676,7 +708,8 @@ class EncryptionService:
         encryption_key: EncryptionKey,
         context: EncryptionContext
     ) -> bytes:
-        """Decrypt content using Fernet."""        fernet = Fernet(encryption_key.key_data)
+        """Decrypt content using Fernet."""
+        fernet = Fernet(encryption_key.key_data)
         decrypted_content = fernet.decrypt(encrypted_data.encrypted_content)
         
         return decrypted_content
@@ -687,7 +720,8 @@ class EncryptionService:
         encryption_key: EncryptionKey,
         context: EncryptionContext
     ) -> bytes:
-        """Decrypt content using quantum-resistant algorithms."""        # Reverse the multi-layer encryption
+        """Decrypt content using quantum-resistant algorithms."""
+        # Reverse the multi-layer encryption
         metadata = encrypted_data.metadata
         
         # Layer 2: ChaCha20-Poly1305 decryption
@@ -718,7 +752,8 @@ class EncryptionService:
         return final_decrypted
 
     async def _remove_pkcs7_padding(self, data: bytes) -> bytes:
-        """Remove PKCS7 padding from data."""        if not data:
+        """Remove PKCS7 padding from data."""
+        if not data:
             return data
         
         padding_length = data[-1]
@@ -739,7 +774,8 @@ class EncryptionService:
         salt: Optional[bytes] = None,
         algorithm: str = "pbkdf2"
     ) -> Tuple[bytes, bytes]:
-        """        Derive encryption key from password.
+        """
+        Derive encryption key from password.
         
         Args:
             password: User password
@@ -748,7 +784,8 @@ class EncryptionService:
             
         Returns:
             Tuple[bytes, bytes]: (derived_key, salt)
-        """        if salt is None:
+        """
+        if salt is None:
             salt = secrets.token_bytes(32)
         
         password_bytes = password.encode('utf-8')
@@ -778,14 +815,16 @@ class EncryptionService:
         return derived_key, salt
 
     async def rotate_key(self, key_id: str) -> str:
-        """        Rotate an encryption key.
+        """
+        Rotate an encryption key.
         
         Args:
             key_id: ID of key to rotate
             
         Returns:
             str: New key ID
-        """        old_key = self.encryption_keys.get(key_id)
+        """
+        old_key = self.encryption_keys.get(key_id)
         if not old_key:
             raise ValueError(f"Key not found: {key_id}")
         
@@ -815,7 +854,8 @@ class EncryptionService:
         return new_key_id
 
     async def get_key_info(self, key_id: str) -> Optional[Dict[str, Any]]:
-        """Get information about an encryption key."""        key = self.encryption_keys.get(key_id)
+        """Get information about an encryption key."""
+        key = self.encryption_keys.get(key_id)
         if not key:
             return None
         
@@ -838,7 +878,8 @@ class EncryptionService:
         algorithm: Optional[EncryptionAlgorithm] = None,
         active_only: bool = True
     ) -> List[Dict[str, Any]]:
-        """List encryption keys with optional filters."""        keys = []
+        """List encryption keys with optional filters."""
+        keys = []
         
         for key in self.encryption_keys.values():
             # Apply filters
@@ -856,7 +897,8 @@ class EncryptionService:
         return keys
 
     async def cleanup_expired_keys(self) -> int:
-        """Clean up expired keys."""        current_time = datetime.utcnow()
+        """Clean up expired keys."""
+        current_time = datetime.utcnow()
         expired_count = 0
         
         for key in self.encryption_keys.values():
@@ -869,7 +911,8 @@ class EncryptionService:
         return expired_count
 
     async def backup_keys(self, backup_path: str) -> bool:
-        """Backup encryption keys to secure storage."""        try:
+        """Backup encryption keys to secure storage."""
+        try:
             # Prepare backup data
             backup_data = {
                 "timestamp": datetime.utcnow().isoformat(),
@@ -908,7 +951,8 @@ class EncryptionService:
             return False
 
     async def restore_keys(self, backup_path: str) -> bool:
-        """Restore encryption keys from backup."""        try:
+        """Restore encryption keys from backup."""
+        try:
             # Read backup file
             with open(backup_path, 'rb') as f:
                 encrypted_backup = f.read()
@@ -943,7 +987,8 @@ class EncryptionService:
             return False
 
     async def get_encryption_statistics(self) -> Dict[str, Any]:
-        """Get encryption service statistics."""        active_keys = sum(1 for key in self.encryption_keys.values() if key.is_active)
+        """Get encryption service statistics."""
+        active_keys = sum(1 for key in self.encryption_keys.values() if key.is_active)
         expired_keys = sum(1 for key in self.encryption_keys.values() 
                          if key.expires_at and datetime.utcnow() > key.expires_at)
         
@@ -973,7 +1018,8 @@ class EncryptionService:
         }
 
     async def shutdown(self) -> None:
-        """Shutdown the Encryption Service."""        logger.info("Shutting down Encryption Service...")
+        """Shutdown the Encryption Service."""
+        logger.info("Shutting down Encryption Service...")
         
         # Clean up expired keys
         await self.cleanup_expired_keys()
@@ -994,5 +1040,6 @@ class EncryptionService:
         logger.info("Encryption Service shutdown complete")
 
     async def _save_state(self) -> None:
-        """Save service state to persistent storage."""        # Placeholder for database persistence
+        """Save service state to persistent storage."""
+        # Placeholder for database persistence
         logger.debug("Saving Encryption Service state")

@@ -9,7 +9,8 @@ Security scoring → Risk analysis → Security recommendations
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""import logging
+"""
+import logging
 import re
 import hashlib
 import base64
@@ -24,14 +25,16 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityThreatLevel(Enum):
-    """Security threat severity levels"""    LOW = "low"
+    """Security threat severity levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class SecurityCategory(Enum):
-    """Security assessment categories"""    MALWARE = "malware"
+    """Security assessment categories"""
+    MALWARE = "malware"
     PHISHING = "phishing"
     SPAM = "spam"
     HARMFUL_CONTENT = "harmful_content"
@@ -44,7 +47,8 @@ class SecurityCategory(Enum):
 
 
 class ContentType(Enum):
-    """Content types for security assessment"""    TEXT = "text"
+    """Content types for security assessment"""
+    TEXT = "text"
     URL = "url"
     EMAIL = "email"
     PHONE = "phone"
@@ -56,7 +60,8 @@ class ContentType(Enum):
 
 @dataclass
 class SecurityThreat:
-    """Individual security threat detection"""    threat_id: str
+    """Individual security threat detection"""
+    threat_id: str
     category: SecurityCategory
     threat_level: SecurityThreatLevel
     confidence: float  # 0.0 to 1.0
@@ -104,7 +109,8 @@ class SecurityThreat:
 
 @dataclass
 class SecurityAssessmentResult:
-    """Comprehensive security assessment result"""    content_id: str
+    """Comprehensive security assessment result"""
+    content_id: str
     overall_security_score: float  # 0-100
     security_level: str  # secure, warning, unsafe, critical
     
@@ -131,7 +137,8 @@ class SecurityAssessmentResult:
     scanned_content_types: List[ContentType] = field(default_factory=list)
     
     def add_threat(self, threat: SecurityThreat):
-        """Add a security threat"""        self.threats.append(threat)
+        """Add a security threat"""
+        self.threats.append(threat)
         self.total_threats += 1
         
         # Update counts by threat level
@@ -150,13 +157,16 @@ class SecurityAssessmentResult:
         self.threats_by_category[threat.category] += 1
     
     def get_threats_by_level(self, level: SecurityThreatLevel) -> List[SecurityThreat]:
-        """Get threats by threat level"""        return [t for t in self.threats if t.threat_level == level]
+        """Get threats by threat level"""
+        return [t for t in self.threats if t.threat_level == level]
     
     def get_critical_threats(self) -> List[SecurityThreat]:
-        """Get critical threats"""        return self.get_threats_by_level(SecurityThreatLevel.CRITICAL)
+        """Get critical threats"""
+        return self.get_threats_by_level(SecurityThreatLevel.CRITICAL)
     
     def has_blocking_threats(self) -> bool:
-        """Check if there are blocking security threats"""        return self.critical_threats > 0 or self.high_threats > 0
+        """Check if there are blocking security threats"""
+        return self.critical_threats > 0 or self.high_threats > 0
     
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -181,13 +191,15 @@ class SecurityAssessmentResult:
 
 
 class MalwareDetector:
-    """Malware and suspicious content detection"""    
+    """Malware and suspicious content detection"""
+    
     def __init__(self):
         self.suspicious_patterns = self._initialize_malware_patterns()
         self.file_extensions = self._initialize_dangerous_extensions()
         
     def _initialize_malware_patterns(self) -> Dict[str, Tuple[str, SecurityThreatLevel]]:
-        """Initialize malware detection patterns"""        return {
+        """Initialize malware detection patterns"""
+        return {
             # Suspicious URLs
             r'bit\.ly/[a-zA-Z0-9]+': ("Suspicious short URL", SecurityThreatLevel.MEDIUM),
             r'tinyurl\.com/[a-zA-Z0-9]+': ("Suspicious short URL", SecurityThreatLevel.MEDIUM),
@@ -218,13 +230,15 @@ class MalwareDetector:
         }
     
     def _initialize_dangerous_extensions(self) -> Set[str]:
-        """Initialize dangerous file extensions"""        return {
+        """Initialize dangerous file extensions"""
+        return {
             '.exe', '.scr', '.bat', '.cmd', '.com', '.pif', '.vbs', '.js',
             '.jar', '.app', '.deb', '.pkg', '.dmg', '.msi', '.reg'
         }
     
     def detect_malware_indicators(self, content: str) -> List[SecurityThreat]:
-        """Detect malware indicators in content"""        threats = []
+        """Detect malware indicators in content"""
+        threats = []
         
         for pattern, (description, threat_level) in self.suspicious_patterns.items():
             matches = re.finditer(pattern, content, re.IGNORECASE)
@@ -258,7 +272,8 @@ class MalwareDetector:
         return threats
     
     def _calculate_malware_risk_score(self, threat_level: SecurityThreatLevel) -> float:
-        """Calculate risk score for malware threats"""        scores = {
+        """Calculate risk score for malware threats"""
+        scores = {
             SecurityThreatLevel.LOW: 25.0,
             SecurityThreatLevel.MEDIUM: 50.0,
             SecurityThreatLevel.HIGH: 75.0,
@@ -268,13 +283,15 @@ class MalwareDetector:
 
 
 class PhishingDetector:
-    """Phishing and social engineering detection"""    
+    """Phishing and social engineering detection"""
+    
     def __init__(self):
         self.phishing_patterns = self._initialize_phishing_patterns()
         self.social_engineering_keywords = self._initialize_social_engineering_keywords()
         
     def _initialize_phishing_patterns(self) -> Dict[str, Tuple[str, SecurityThreatLevel]]:
-        """Initialize phishing detection patterns"""        return {
+        """Initialize phishing detection patterns"""
+        return {
             # Urgency indicators
             r'urgent[ly]*\s+act': ("Urgency manipulation", SecurityThreatLevel.HIGH),
             r'limited\s+time\s+offer': ("Time pressure tactic", SecurityThreatLevel.MEDIUM),
@@ -301,7 +318,8 @@ class PhishingDetector:
         }
     
     def _initialize_social_engineering_keywords(self) -> Dict[str, SecurityThreatLevel]:
-        """Initialize social engineering keywords"""        return {
+        """Initialize social engineering keywords"""
+        return {
             'free money': SecurityThreatLevel.HIGH,
             'get rich quick': SecurityThreatLevel.HIGH,
             'work from home': SecurityThreatLevel.MEDIUM,
@@ -315,7 +333,8 @@ class PhishingDetector:
         }
     
     def detect_phishing_indicators(self, content: str) -> List[SecurityThreat]:
-        """Detect phishing indicators in content"""        threats = []
+        """Detect phishing indicators in content"""
+        threats = []
         
         # Pattern-based detection
         for pattern, (description, threat_level) in self.phishing_patterns.items():
@@ -378,7 +397,8 @@ class PhishingDetector:
         return threats
     
     def _calculate_phishing_risk_score(self, threat_level: SecurityThreatLevel) -> float:
-        """Calculate risk score for phishing threats"""        scores = {
+        """Calculate risk score for phishing threats"""
+        scores = {
             SecurityThreatLevel.LOW: 20.0,
             SecurityThreatLevel.MEDIUM: 45.0,
             SecurityThreatLevel.HIGH: 70.0,
@@ -388,12 +408,14 @@ class PhishingDetector:
 
 
 class DataPrivacyScanner:
-    """Data privacy and sensitive information scanner"""    
+    """Data privacy and sensitive information scanner"""
+    
     def __init__(self):
         self.privacy_patterns = self._initialize_privacy_patterns()
         
     def _initialize_privacy_patterns(self) -> Dict[str, Tuple[str, SecurityThreatLevel, ContentType]]:
-        """Initialize privacy-sensitive data patterns"""        return {
+        """Initialize privacy-sensitive data patterns"""
+        return {
             # Email addresses
             r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b': (
                 "Email address detected", SecurityThreatLevel.MEDIUM, ContentType.EMAIL
@@ -436,7 +458,8 @@ class DataPrivacyScanner:
         }
     
     def scan_privacy_violations(self, content: str) -> List[SecurityThreat]:
-        """Scan for privacy violations and sensitive data"""        threats = []
+        """Scan for privacy violations and sensitive data"""
+        threats = []
         
         for pattern, (description, threat_level, content_type) in self.privacy_patterns.items():
             matches = re.finditer(pattern, content, re.IGNORECASE)
@@ -470,7 +493,8 @@ class DataPrivacyScanner:
         return threats
     
     def _mask_sensitive_data(self, data: str, content_type: ContentType) -> str:
-        """Mask sensitive data for logging/reporting"""        if content_type == ContentType.EMAIL:
+        """Mask sensitive data for logging/reporting"""
+        if content_type == ContentType.EMAIL:
             parts = data.split('@')
             if len(parts) == 2:
                 return f"{parts[0][:2]}***@{parts[1]}"
@@ -485,7 +509,8 @@ class DataPrivacyScanner:
     
     def _calculate_privacy_risk_score(self, threat_level: SecurityThreatLevel, 
                                     content_type: ContentType) -> float:
-        """Calculate risk score for privacy violations"""        base_scores = {
+        """Calculate risk score for privacy violations"""
+        base_scores = {
             SecurityThreatLevel.LOW: 20.0,
             SecurityThreatLevel.MEDIUM: 50.0,
             SecurityThreatLevel.HIGH: 80.0,
@@ -507,7 +532,8 @@ class DataPrivacyScanner:
         return min(100.0, base_score * multiplier)
     
     def _get_privacy_recommendations(self, content_type: ContentType) -> List[str]:
-        """Get privacy-specific recommendations"""        recommendations = {
+        """Get privacy-specific recommendations"""
+        recommendations = {
             ContentType.EMAIL: [
                 "Remove or mask email addresses",
                 "Use contact forms instead of direct email exposure",
@@ -533,7 +559,8 @@ class DataPrivacyScanner:
         return recommendations.get(content_type, ["Remove sensitive information"])
     
     def _get_privacy_mitigation_steps(self, content_type: ContentType) -> List[str]:
-        """Get privacy mitigation steps"""        steps = {
+        """Get privacy mitigation steps"""
+        steps = {
             ContentType.FINANCIAL: [
                 "Immediately remove financial data",
                 "Notify affected parties if already published",
@@ -550,7 +577,8 @@ class DataPrivacyScanner:
 
 
 class SecurityQualityAssessor:
-    """Enterprise security quality assessment system"""    
+    """Enterprise security quality assessment system"""
+    
     def __init__(self):
         self.malware_detector = MalwareDetector()
         self.phishing_detector = PhishingDetector()
@@ -558,7 +586,8 @@ class SecurityQualityAssessor:
     
     def assess_security_quality(self, content_data: Dict[str, Any],
                                content_id: str = "unknown") -> SecurityAssessmentResult:
-        """Perform comprehensive security assessment"""        start_time = datetime.now(timezone.utc)
+        """Perform comprehensive security assessment"""
+        start_time = datetime.now(timezone.utc)
         
         # Initialize result
         result = SecurityAssessmentResult(
@@ -626,7 +655,8 @@ class SecurityQualityAssessor:
         return result
     
     def _extract_text_content(self, content_data: Dict[str, Any]) -> str:
-        """Extract text content for analysis"""        text_parts = []
+        """Extract text content for analysis"""
+        text_parts = []
         
         # Standard text fields
         text_fields = ['title', 'description', 'content', 'caption', 'body', 'text']
@@ -644,7 +674,8 @@ class SecurityQualityAssessor:
         return ' '.join(text_parts)
     
     def _extract_urls(self, content_data: Dict[str, Any]) -> List[str]:
-        """Extract URLs from content"""        urls = []
+        """Extract URLs from content"""
+        urls = []
         
         # Direct URL fields
         url_fields = ['url', 'link', 'website', 'homepage']
@@ -661,7 +692,8 @@ class SecurityQualityAssessor:
         return list(set(urls))  # Remove duplicates
     
     def _analyze_urls(self, urls: List[str]) -> List[SecurityThreat]:
-        """Analyze URLs for security threats"""        threats = []
+        """Analyze URLs for security threats"""
+        threats = []
         
         for url in urls:
             try:
@@ -685,7 +717,8 @@ class SecurityQualityAssessor:
         return threats
     
     def _check_suspicious_domain(self, domain: str, full_url: str) -> List[SecurityThreat]:
-        """Check for suspicious domains"""        threats = []
+        """Check for suspicious domains"""
+        threats = []
         
         # Suspicious TLDs
         suspicious_tlds = ['.tk', '.ml', '.ga', '.cf', '.info', '.biz']
@@ -718,7 +751,8 @@ class SecurityQualityAssessor:
         return threats
     
     def _check_url_manipulation(self, url: str) -> List[SecurityThreat]:
-        """Check for URL manipulation techniques"""        threats = []
+        """Check for URL manipulation techniques"""
+        threats = []
         
         # Check for excessive redirects or URL shorteners
         shortener_domains = ['bit.ly', 'tinyurl.com', 't.co', 'goo.gl', 'ow.ly']
@@ -751,7 +785,8 @@ class SecurityQualityAssessor:
         return threats
     
     def _check_ip_access(self, domain: str, full_url: str) -> List[SecurityThreat]:
-        """Check for direct IP address access"""        threats = []
+        """Check for direct IP address access"""
+        threats = []
         
         # Check if domain is an IP address
         ip_pattern = r'^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$'
@@ -783,7 +818,8 @@ class SecurityQualityAssessor:
         return threats
     
     def _calculate_security_score(self, result: SecurityAssessmentResult) -> float:
-        """Calculate overall security score"""        base_score = 100.0
+        """Calculate overall security score"""
+        base_score = 100.0
         
         # Deduct points based on threat levels
         for threat in result.threats:
@@ -804,7 +840,8 @@ class SecurityQualityAssessor:
         return max(0.0, base_score)
     
     def _assess_security_level(self, result: SecurityAssessmentResult) -> str:
-        """Assess security level based on threats and score"""        if result.critical_threats > 0:
+        """Assess security level based on threats and score"""
+        if result.critical_threats > 0:
             return "critical"
         elif result.high_threats > 0:
             return "unsafe"
@@ -814,7 +851,8 @@ class SecurityQualityAssessor:
             return "secure"
     
     def _generate_security_recommendations(self, result: SecurityAssessmentResult) -> List[str]:
-        """Generate security recommendations"""        recommendations = []
+        """Generate security recommendations"""
+        recommendations = []
         
         # General recommendations based on security level
         if result.security_level == "critical":
@@ -846,7 +884,8 @@ class SecurityQualityAssessor:
         return recommendations
     
     def _generate_immediate_actions(self, result: SecurityAssessmentResult) -> List[str]:
-        """Generate immediate actions required"""        actions = []
+        """Generate immediate actions required"""
+        actions = []
         
         # Critical and high threat actions
         critical_and_high = result.get_threats_by_level(SecurityThreatLevel.CRITICAL) + \
@@ -859,7 +898,8 @@ class SecurityQualityAssessor:
         return list(set(actions))
     
     def batch_assess_security(self, content_items: List[Dict[str, Any]]) -> List[SecurityAssessmentResult]:
-        """Assess security for multiple content items"""        results = []
+        """Assess security for multiple content items"""
+        results = []
         
         for i, content_data in enumerate(content_items):
             content_id = content_data.get('id', f'content_{i}')
@@ -869,7 +909,8 @@ class SecurityQualityAssessor:
         return results
     
     def get_security_summary(self, results: List[SecurityAssessmentResult]) -> Dict[str, Any]:
-        """Get security summary for multiple assessments"""        if not results:
+        """Get security summary for multiple assessments"""
+        if not results:
             return {}
         
         total_assessments = len(results)

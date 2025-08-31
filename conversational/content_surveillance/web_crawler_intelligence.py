@@ -34,7 +34,8 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This revolutionary web surveillance platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import json
 import logging
@@ -80,7 +81,8 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platforms for content surveillance"""    YOUTUBE = "youtube"
+    """Supported platforms for content surveillance"""
+    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     FACEBOOK = "facebook"
@@ -99,7 +101,8 @@ class PlatformType(Enum):
 
 
 class CrawlerMode(Enum):
-    """Crawler operation modes"""    REALTIME_MONITORING = "realtime_monitoring"
+    """Crawler operation modes"""
+    REALTIME_MONITORING = "realtime_monitoring"
     SCHEDULED_SWEEP = "scheduled_sweep"
     DEEP_INVESTIGATION = "deep_investigation"
     COMPETITOR_ANALYSIS = "competitor_analysis"
@@ -109,7 +112,8 @@ class CrawlerMode(Enum):
 
 
 class MatchConfidence(Enum):
-    """Content matching confidence levels"""    EXACT_MATCH = "exact_match"          # 95-100%
+    """Content matching confidence levels"""
+    EXACT_MATCH = "exact_match"          # 95-100%
     HIGH_SIMILARITY = "high_similarity"   # 85-94%
     MEDIUM_SIMILARITY = "medium_similarity" # 70-84%
     LOW_SIMILARITY = "low_similarity"     # 50-69%
@@ -118,7 +122,8 @@ class MatchConfidence(Enum):
 
 @dataclass
 class CrawlRequest:
-    """Web crawl request configuration"""    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Web crawl request configuration"""
+    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: int = None
     platform: PlatformType = PlatformType.GENERIC_WEB
     mode: CrawlerMode = CrawlerMode.REALTIME_MONITORING
@@ -139,7 +144,8 @@ class CrawlRequest:
 
 @dataclass
 class ContentMatch:
-    """Detected content match"""    match_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Detected content match"""
+    match_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     original_fingerprint: str = None
     detected_url: str = None
     platform: PlatformType = None
@@ -154,7 +160,8 @@ class ContentMatch:
 
 @dataclass
 class SurveillanceReport:
-    """Comprehensive surveillance report"""    report_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive surveillance report"""
+    report_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: int = None
     crawl_request_id: str = None
     total_pages_crawled: int = 0
@@ -170,11 +177,13 @@ class SurveillanceReport:
 
 
 class WebCrawlerIntelligence:
-    """    Ultra-Advanced Web Crawler Intelligence Engine
+    """
+    Ultra-Advanced Web Crawler Intelligence Engine
     
     Revolutionary AI-powered web surveillance system for comprehensive content protection
     and market intelligence across all major platforms and the broader internet.
-    """    
+    """
+    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.event_emitter = EventEmitter()
@@ -203,7 +212,8 @@ class WebCrawlerIntelligence:
         logger.info("WebCrawlerIntelligence initialized successfully")
     
     def _initialize_ai_models(self):
-        """Initialize AI models for content analysis"""        try:
+        """Initialize AI models for content analysis"""
+        try:
             # CLIP Model for image/video analysis
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
             self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -218,7 +228,8 @@ class WebCrawlerIntelligence:
             raise BusinessLogicError("AI model initialization failed")
     
     def _get_user_agents(self) -> List[str]:
-        """Get list of user agents for rotation"""        return [
+        """Get list of user agents for rotation"""
+        return [
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
             "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
@@ -227,14 +238,16 @@ class WebCrawlerIntelligence:
         ]
     
     async def start_surveillance(self, crawl_request: CrawlRequest) -> str:
-        """        Start comprehensive web surveillance
+        """
+        Start comprehensive web surveillance
         
         Args:
             crawl_request: Crawl configuration
             
         Returns:
             str: Surveillance session ID
-        """        try:
+        """
+        try:
             session_id = str(uuid.uuid4())
             
             # Validate request
@@ -266,7 +279,8 @@ class WebCrawlerIntelligence:
             raise BusinessLogicError(f"Surveillance initialization failed: {str(e)}")
     
     async def _validate_crawl_request(self, request: CrawlRequest):
-        """Validate crawl request parameters"""        if not request.user_id:
+        """Validate crawl request parameters"""
+        if not request.user_id:
             raise ValidationError("User ID is required")
         
         if not request.search_terms and not request.target_urls and not request.content_fingerprints:
@@ -276,7 +290,8 @@ class WebCrawlerIntelligence:
             raise ValidationError("Maximum pages limit exceeded")
     
     async def _execute_surveillance(self, session_id: str, request: CrawlRequest):
-        """Execute comprehensive surveillance process"""        try:
+        """Execute comprehensive surveillance process"""
+        try:
             report = SurveillanceReport(
                 user_id=request.user_id,
                 crawl_request_id=request.request_id
@@ -330,7 +345,8 @@ class WebCrawlerIntelligence:
             })
     
     async def _handle_youtube_crawl(self, request: CrawlRequest) -> List[ContentMatch]:
-        """Handle YouTube-specific crawling"""        matches = []
+        """Handle YouTube-specific crawling"""
+        matches = []
         
         try:
             # YouTube API integration
@@ -367,7 +383,8 @@ class WebCrawlerIntelligence:
         return matches
     
     async def _handle_instagram_crawl(self, request: CrawlRequest) -> List[ContentMatch]:
-        """Handle Instagram-specific crawling"""        matches = []
+        """Handle Instagram-specific crawling"""
+        matches = []
         
         try:
             # Instagram Basic Display API integration
@@ -390,7 +407,8 @@ class WebCrawlerIntelligence:
         return matches
     
     async def _handle_tiktok_crawl(self, request: CrawlRequest) -> List[ContentMatch]:
-        """Handle TikTok-specific crawling"""        matches = []
+        """Handle TikTok-specific crawling"""
+        matches = []
         
         try:
             # TikTok API integration (limited availability)
@@ -411,7 +429,8 @@ class WebCrawlerIntelligence:
         return matches
     
     async def _handle_spotify_crawl(self, request: CrawlRequest) -> List[ContentMatch]:
-        """Handle Spotify-specific crawling"""        matches = []
+        """Handle Spotify-specific crawling"""
+        matches = []
         
         try:
             # Spotify Web API integration
@@ -442,7 +461,8 @@ class WebCrawlerIntelligence:
         return matches
     
     async def _handle_generic_web_crawl(self, request: CrawlRequest) -> List[ContentMatch]:
-        """Handle generic web crawling"""        matches = []
+        """Handle generic web crawling"""
+        matches = []
         
         try:
             # Use Scrapy for comprehensive web crawling
@@ -459,7 +479,8 @@ class WebCrawlerIntelligence:
         return matches
     
     async def _analyze_youtube_video(self, video_url: str, video_data: Dict) -> Optional[ContentMatch]:
-        """Analyze YouTube video for content matches"""        try:
+        """Analyze YouTube video for content matches"""
+        try:
             # Extract video metadata
             title = video_data['snippet']['title']
             description = video_data['snippet']['description']
@@ -494,7 +515,8 @@ class WebCrawlerIntelligence:
         return None
     
     async def _analyze_image_similarity(self, image_url: str) -> float:
-        """Analyze image similarity using CLIP"""        try:
+        """Analyze image similarity using CLIP"""
+        try:
             # Download image
             async with aiohttp.ClientSession() as session:
                 async with session.get(image_url) as response:
@@ -523,7 +545,8 @@ class WebCrawlerIntelligence:
         return 0.0
     
     async def _analyze_text_similarity(self, text: str) -> float:
-        """Analyze text similarity using BERT"""        try:
+        """Analyze text similarity using BERT"""
+        try:
             # Tokenize and encode
             inputs = self.bert_tokenizer(text, return_tensors='pt', truncation=True, padding=True)
             
@@ -545,7 +568,8 @@ class WebCrawlerIntelligence:
         return 0.0
     
     async def _calculate_similarity(self, fingerprints: List[str], detected_url: str) -> float:
-        """Calculate overall similarity score"""        try:
+        """Calculate overall similarity score"""
+        try:
             # This would implement comprehensive similarity calculation
             # combining multiple AI models and techniques
             max_similarity = 0.0
@@ -562,7 +586,8 @@ class WebCrawlerIntelligence:
             return 0.0
     
     def _determine_confidence(self, similarity_score: float) -> MatchConfidence:
-        """Determine confidence level based on similarity score"""        if similarity_score >= 0.95:
+        """Determine confidence level based on similarity score"""
+        if similarity_score >= 0.95:
             return MatchConfidence.EXACT_MATCH
         elif similarity_score >= 0.85:
             return MatchConfidence.HIGH_SIMILARITY
@@ -574,7 +599,8 @@ class WebCrawlerIntelligence:
             return MatchConfidence.NO_MATCH
     
     async def _generate_surveillance_analytics(self, report: SurveillanceReport):
-        """Generate comprehensive analytics for surveillance report"""        try:
+        """Generate comprehensive analytics for surveillance report"""
+        try:
             # Count high confidence matches
             report.high_confidence_matches = sum(
                 1 for match in report.matches
@@ -605,7 +631,8 @@ class WebCrawlerIntelligence:
             logger.error(f"Analytics generation failed: {e}")
     
     async def _estimate_revenue_impact(self, matches: List[ContentMatch]) -> float:
-        """Estimate potential revenue impact from detected violations"""        try:
+        """Estimate potential revenue impact from detected violations"""
+        try:
             total_impact = 0.0
             
             for match in matches:
@@ -630,7 +657,8 @@ class WebCrawlerIntelligence:
             return 0.0
     
     async def _generate_recommendations(self, report: SurveillanceReport) -> List[str]:
-        """Generate actionable recommendations"""        recommendations = []
+        """Generate actionable recommendations"""
+        recommendations = []
         
         try:
             if report.high_confidence_matches > 0:
@@ -661,7 +689,8 @@ class WebCrawlerIntelligence:
         return recommendations
     
     async def _store_surveillance_report(self, session_id: str, report: SurveillanceReport):
-        """Store surveillance report in database"""        try:
+        """Store surveillance report in database"""
+        try:
             async with get_db_session() as db:
                 # Store report in database
                 # Implementation would depend on your database schema
@@ -677,7 +706,8 @@ class WebCrawlerIntelligence:
             logger.error(f"Failed to store surveillance report: {e}")
     
     async def _trigger_automated_actions(self, report: SurveillanceReport):
-        """Trigger automated actions based on surveillance results"""        try:
+        """Trigger automated actions based on surveillance results"""
+        try:
             for match in report.matches:
                 if match.confidence == MatchConfidence.EXACT_MATCH:
                     # Automatically initiate DMCA takedown
@@ -699,7 +729,8 @@ class WebCrawlerIntelligence:
             logger.error(f"Automated actions failed: {e}")
     
     async def get_surveillance_status(self, session_id: str) -> Dict[str, Any]:
-        """Get surveillance session status"""        try:
+        """Get surveillance session status"""
+        try:
             # Get from cache
             session_data = await self.cache_manager.get(f"surveillance_session:{session_id}")
             report_data = await self.cache_manager.get(f"surveillance_report:{session_id}")
@@ -721,7 +752,8 @@ class WebCrawlerIntelligence:
             raise BusinessLogicError(f"Status retrieval failed: {str(e)}")
     
     async def stop_surveillance(self, session_id: str, user_id: int) -> bool:
-        """Stop active surveillance session"""        try:
+        """Stop active surveillance session"""
+        try:
             # Validate ownership
             session_data = await self.cache_manager.get(f"surveillance_session:{session_id}")
             if not session_data or session_data.get('user_id') != user_id:

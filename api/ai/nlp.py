@@ -1,4 +1,5 @@
-"""Natural Language Processing: sentiment analysis, keyword extraction, content classification."""import re
+"""Natural Language Processing: sentiment analysis, keyword extraction, content classification."""
+import re
 from typing import Dict, List, Tuple
 from collections import Counter
 import logging
@@ -29,7 +30,8 @@ class TextAnalyzer:
             logger.info("Using fallback NLP implementation")
 
     def analyze_sentiment(self, text: str) -> Dict:
-        """Simple sentiment analysis using word scoring."""        # Basic positive/negative word lists
+        """Simple sentiment analysis using word scoring."""
+        # Basic positive/negative word lists
         positive_words = {
             'good', 'great', 'excellent', 'amazing', 'wonderful', 'fantastic',
             'love', 'like', 'enjoy', 'happy', 'pleased', 'satisfied', 'awesome',
@@ -65,7 +67,8 @@ class TextAnalyzer:
         }
 
     def extract_keywords(self, text: str, top_k: int = 10) -> List[str]:
-        """Extract important keywords from text."""        if self.nlp:
+        """Extract important keywords from text."""
+        if self.nlp:
             doc = self.nlp(text)
             # Extract named entities and important nouns
             keywords = []
@@ -94,7 +97,8 @@ class TextAnalyzer:
         return [word for word, count in keyword_counts.most_common(top_k)]
 
     def classify_content(self, text: str) -> Dict:
-        """Classify content type and topics."""        text_lower = text.lower()
+        """Classify content type and topics."""
+        text_lower = text.lower()
         
         # Topic classification
         topics = {
@@ -124,7 +128,8 @@ class TextAnalyzer:
         }
 
     def extract_hashtags_mentions(self, text: str) -> Dict:
-        """Extract hashtags and mentions from social media text."""        hashtags = re.findall(r'#\w+', text)
+        """Extract hashtags and mentions from social media text."""
+        hashtags = re.findall(r'#\w+', text)
         mentions = re.findall(r'@\w+', text)
         urls = re.findall(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', text)
         

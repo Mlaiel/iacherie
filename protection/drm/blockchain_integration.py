@@ -22,7 +22,8 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - Audio Engineer: Professional audio processing and analysis
 - DevOps Engineer: Advanced deployment and infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt engineering and optimization
-"""import asyncio
+"""
+import asyncio
 import logging
 import hashlib
 import json
@@ -41,7 +42,8 @@ from cryptography.hazmat.backends import default_backend
 logger = logging.getLogger(__name__)
 
 class BlockchainNetwork(str, Enum):
-    """Supported blockchain networks."""    ETHEREUM = "ethereum"
+    """Supported blockchain networks."""
+    ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BINANCE_SMART_CHAIN = "binance_smart_chain"
     ARBITRUM = "arbitrum"
@@ -51,7 +53,8 @@ class BlockchainNetwork(str, Enum):
     PRIVATE = "private"
 
 class TransactionType(str, Enum):
-    """Types of blockchain transactions."""    RIGHTS_REGISTRATION = "rights_registration"
+    """Types of blockchain transactions."""
+    RIGHTS_REGISTRATION = "rights_registration"
     LICENSE_ISSUANCE = "license_issuance"
     OWNERSHIP_TRANSFER = "ownership_transfer"
     ROYALTY_PAYMENT = "royalty_payment"
@@ -61,7 +64,8 @@ class TransactionType(str, Enum):
     VERIFICATION_PROOF = "verification_proof"
 
 class ContractType(str, Enum):
-    """Types of smart contracts."""    ERC721 = "erc721"  # NFT standard
+    """Types of smart contracts."""
+    ERC721 = "erc721"  # NFT standard
     ERC1155 = "erc1155"  # Multi-token standard
     ERC20 = "erc20"  # Fungible token standard
     CUSTOM_RIGHTS = "custom_rights"
@@ -69,7 +73,8 @@ class ContractType(str, Enum):
     LICENSE_AGREEMENT = "license_agreement"
 
 class TransactionStatus(str, Enum):
-    """Blockchain transaction status."""    PENDING = "pending"
+    """Blockchain transaction status."""
+    PENDING = "pending"
     CONFIRMED = "confirmed"
     FAILED = "failed"
     DROPPED = "dropped"
@@ -77,7 +82,8 @@ class TransactionStatus(str, Enum):
 
 @dataclass
 class BlockchainTransaction:
-    """Blockchain transaction record."""    transaction_id: str
+    """Blockchain transaction record."""
+    transaction_id: str
     network: BlockchainNetwork
     transaction_type: TransactionType
     content_id: str
@@ -96,7 +102,8 @@ class BlockchainTransaction:
 
 @dataclass
 class SmartContract:
-    """Smart contract definition."""    contract_id: str
+    """Smart contract definition."""
+    contract_id: str
     contract_type: ContractType
     network: BlockchainNetwork
     contract_address: Optional[str] = None
@@ -111,7 +118,8 @@ class SmartContract:
 
 @dataclass
 class DigitalRightsNFT:
-    """NFT representing digital rights."""    nft_id: str
+    """NFT representing digital rights."""
+    nft_id: str
     token_id: Optional[int] = None
     contract_address: Optional[str] = None
     content_id: str
@@ -127,7 +135,8 @@ class DigitalRightsNFT:
 
 @dataclass
 class RoyaltyPayment:
-    """Blockchain royalty payment record."""    payment_id: str
+    """Blockchain royalty payment record."""
+    payment_id: str
     nft_id: str
     recipient_address: str
     amount: Decimal
@@ -138,9 +147,11 @@ class RoyaltyPayment:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class BlockchainIntegration:
-    """Advanced blockchain integration for DRM system."""    
+    """Advanced blockchain integration for DRM system."""
+    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize blockchain integration."""        self.config = config
+        """Initialize blockchain integration."""
+        self.config = config
         self.transactions: List[BlockchainTransaction] = []
         self.smart_contracts: Dict[str, SmartContract] = {}
         self.nfts: Dict[str, DigitalRightsNFT] = {}
@@ -159,7 +170,8 @@ class BlockchainIntegration:
         self.contract_templates = {}
         
     async def initialize(self) -> bool:
-        """Initialize blockchain integration."""        try:
+        """Initialize blockchain integration."""
+        try:
             # Generate cryptographic keys if not provided
             await self._initialize_cryptography()
             
@@ -181,7 +193,8 @@ class BlockchainIntegration:
             return False
     
     async def _initialize_cryptography(self) -> None:
-        """Initialize cryptographic keys for blockchain operations."""        try:
+        """Initialize cryptographic keys for blockchain operations."""
+        try:
             # Generate RSA key pair for signing
             self.private_key = rsa.generate_private_key(
                 public_exponent=65537,
@@ -196,7 +209,8 @@ class BlockchainIntegration:
             logger.error(f"Error initializing cryptography: {e}")
     
     async def _load_contract_templates(self) -> None:
-        """Load smart contract templates."""        # ERC-721 NFT contract template
+        """Load smart contract templates."""
+        # ERC-721 NFT contract template
         self.contract_templates[ContractType.ERC721] = {
             "name": "DigitalRightsNFT",
             "symbol": "DRM",
@@ -228,7 +242,8 @@ class BlockchainIntegration:
         }
     
     async def _initialize_networks(self) -> None:
-        """Initialize connections to blockchain networks."""        for network in self.network_configs:
+        """Initialize connections to blockchain networks."""
+        for network in self.network_configs:
             try:
                 # This would initialize actual blockchain connections
                 logger.info(f"Initialized connection to {network}")
@@ -243,7 +258,8 @@ class BlockchainIntegration:
         metadata: Dict[str, Any],
         network: Optional[BlockchainNetwork] = None
     ) -> str:
-        """Register content rights on blockchain."""        try:
+        """Register content rights on blockchain."""
+        try:
             network = network or self.default_network
             transaction_id = str(uuid.uuid4())
             
@@ -287,7 +303,8 @@ class BlockchainIntegration:
         royalty_percentage: float = 10.0,
         network: Optional[BlockchainNetwork] = None
     ) -> str:
-        """Mint an NFT representing digital content rights."""        try:
+        """Mint an NFT representing digital content rights."""
+        try:
             network = network or self.default_network
             nft_id = str(uuid.uuid4())
             
@@ -346,7 +363,8 @@ class BlockchainIntegration:
         payment_amount: Optional[Decimal] = None,
         network: Optional[BlockchainNetwork] = None
     ) -> str:
-        """Issue a content license on blockchain."""        try:
+        """Issue a content license on blockchain."""
+        try:
             network = network or self.default_network
             transaction_id = str(uuid.uuid4())
             
@@ -393,7 +411,8 @@ class BlockchainIntegration:
         transfer_price: Optional[Decimal] = None,
         network: Optional[BlockchainNetwork] = None
     ) -> str:
-        """Transfer NFT ownership on blockchain."""        try:
+        """Transfer NFT ownership on blockchain."""
+        try:
             network = network or self.default_network
             
             # Verify NFT exists and ownership
@@ -455,7 +474,8 @@ class BlockchainIntegration:
         claimed_owner: str,
         network: Optional[BlockchainNetwork] = None
     ) -> Dict[str, Any]:
-        """Verify content ownership on blockchain."""        try:
+        """Verify content ownership on blockchain."""
+        try:
             network = network or self.default_network
             
             # Find rights registration transactions
@@ -542,7 +562,8 @@ class BlockchainIntegration:
         constructor_params: Dict[str, Any],
         network: Optional[BlockchainNetwork] = None
     ) -> str:
-        """Deploy a smart contract for DRM purposes."""        try:
+        """Deploy a smart contract for DRM purposes."""
+        try:
             network = network or self.default_network
             contract_id = str(uuid.uuid4())
             
@@ -583,7 +604,8 @@ class BlockchainIntegration:
         parameters: Dict[str, Any],
         caller_address: str
     ) -> str:
-        """Execute a smart contract function."""        try:
+        """Execute a smart contract function."""
+        try:
             # Verify contract exists
             if contract_id not in self.smart_contracts:
                 raise ValueError(f"Smart contract not found: {contract_id}")
@@ -633,7 +655,8 @@ class BlockchainIntegration:
         sale_amount: Decimal,
         currency: str = "ETH"
     ) -> List[str]:
-        """Calculate and distribute royalties for an NFT sale."""        try:
+        """Calculate and distribute royalties for an NFT sale."""
+        try:
             if nft_id not in self.nfts:
                 raise ValueError(f"NFT not found: {nft_id}")
             
@@ -677,7 +700,8 @@ class BlockchainIntegration:
             raise
     
     async def get_transaction_status(self, transaction_id: str) -> Dict[str, Any]:
-        """Get the status of a blockchain transaction."""        try:
+        """Get the status of a blockchain transaction."""
+        try:
             transaction = next(
                 (tx for tx in self.transactions if tx.transaction_id == transaction_id),
                 None
@@ -706,7 +730,8 @@ class BlockchainIntegration:
             return {"error": str(e)}
     
     async def get_nft_details(self, nft_id: str) -> Dict[str, Any]:
-        """Get detailed information about an NFT."""        try:
+        """Get detailed information about an NFT."""
+        try:
             if nft_id not in self.nfts:
                 return {"error": "NFT not found"}
             
@@ -749,7 +774,8 @@ class BlockchainIntegration:
             return {"error": str(e)}
     
     async def _submit_transaction(self, transaction: BlockchainTransaction) -> None:
-        """Submit transaction to blockchain network."""        try:
+        """Submit transaction to blockchain network."""
+        try:
             # Simulate blockchain submission
             transaction.transaction_hash = self._generate_transaction_hash(transaction)
             transaction.status = TransactionStatus.PENDING
@@ -766,7 +792,8 @@ class BlockchainIntegration:
             transaction.status = TransactionStatus.FAILED
     
     def _generate_transaction_hash(self, transaction: BlockchainTransaction) -> str:
-        """Generate a transaction hash."""        # Create deterministic hash from transaction data
+        """Generate a transaction hash."""
+        # Create deterministic hash from transaction data
         data_string = json.dumps({
             "transaction_id": transaction.transaction_id,
             "network": transaction.network.value,
@@ -782,7 +809,8 @@ class BlockchainIntegration:
         transaction: BlockchainTransaction,
         payment_amount: Decimal
     ) -> None:
-        """Process payment for license issuance."""        try:
+        """Process payment for license issuance."""
+        try:
             # This would integrate with payment processing
             logger.info(f"Processing license payment: {payment_amount}")
             
@@ -795,7 +823,8 @@ class BlockchainIntegration:
         sale_price: Decimal,
         transaction_id: str
     ) -> None:
-        """Process royalty payment for NFT sale."""        try:
+        """Process royalty payment for NFT sale."""
+        try:
             royalty_amount = sale_price * (nft.royalty_percentage / Decimal("100"))
             
             if royalty_amount > 0:
@@ -822,7 +851,8 @@ class BlockchainIntegration:
         verification_result: Dict[str, Any],
         network: BlockchainNetwork
     ) -> str:
-        """Create a verification proof transaction."""        try:
+        """Create a verification proof transaction."""
+        try:
             transaction_id = str(uuid.uuid4())
             
             proof_data = {
@@ -852,7 +882,8 @@ class BlockchainIntegration:
             raise
     
     def _generate_proof_hash(self, verification_result: Dict[str, Any]) -> str:
-        """Generate hash for verification proof."""        proof_string = json.dumps(verification_result, sort_keys=True)
+        """Generate hash for verification proof."""
+        proof_string = json.dumps(verification_result, sort_keys=True)
         return hashlib.sha256(proof_string.encode()).hexdigest()
     
     async def _simulate_contract_deployment(
@@ -860,7 +891,8 @@ class BlockchainIntegration:
         contract: SmartContract,
         constructor_params: Dict[str, Any]
     ) -> None:
-        """Simulate smart contract deployment."""        try:
+        """Simulate smart contract deployment."""
+        try:
             # Generate simulated contract address
             contract.contract_address = "0x" + secrets.token_hex(20)
             contract.verification_status = "verified"
@@ -878,7 +910,8 @@ class BlockchainIntegration:
         parameters: Dict[str, Any],
         caller_address: str
     ) -> Dict[str, Any]:
-        """Execute smart contract function (simulated)."""        try:
+        """Execute smart contract function (simulated)."""
+        try:
             # Simulate function execution
             execution_result = {
                 "success": True,
@@ -904,7 +937,8 @@ class BlockchainIntegration:
             return {"success": False, "error": str(e)}
     
     async def _submit_royalty_payment(self, payment: RoyaltyPayment) -> str:
-        """Submit royalty payment transaction."""        try:
+        """Submit royalty payment transaction."""
+        try:
             transaction_id = str(uuid.uuid4())
             
             # Create payment transaction
@@ -933,7 +967,8 @@ class BlockchainIntegration:
             raise
     
     async def _monitor_transactions(self) -> None:
-        """Monitor pending transactions and update their status."""        while True:
+        """Monitor pending transactions and update their status."""
+        while True:
             try:
                 await asyncio.sleep(30)  # Check every 30 seconds
                 
@@ -956,7 +991,8 @@ class BlockchainIntegration:
                 logger.error(f"Error monitoring transactions: {e}")
     
     async def _process_royalty_payments(self) -> None:
-        """Process pending royalty payments."""        while True:
+        """Process pending royalty payments."""
+        while True:
             try:
                 await asyncio.sleep(300)  # Process every 5 minutes
                 
@@ -975,7 +1011,8 @@ class BlockchainIntegration:
                 logger.error(f"Error processing royalty payments: {e}")
     
     async def get_blockchain_statistics(self) -> Dict[str, Any]:
-        """Get blockchain integration statistics."""        try:
+        """Get blockchain integration statistics."""
+        try:
             confirmed_transactions = [tx for tx in self.transactions if tx.status == TransactionStatus.CONFIRMED]
             
             stats = {
@@ -1003,7 +1040,8 @@ class BlockchainIntegration:
             return {"error": str(e)}
     
     async def cleanup(self) -> None:
-        """Cleanup blockchain integration resources."""        try:
+        """Cleanup blockchain integration resources."""
+        try:
             # Archive old transactions
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=365)
             

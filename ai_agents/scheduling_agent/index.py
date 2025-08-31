@@ -20,7 +20,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime
 from typing import Dict, List, Optional, Any
@@ -74,25 +75,30 @@ MODULE_INFO = {
 logger = logging.getLogger(__name__)
 
 class SchedulingAgentModule:
-    """    Central module manager for the Scheduling Agent system.
+    """
+    Central module manager for the Scheduling Agent system.
     
     Handles module initialization, health checks, and component coordination.
-    """    
+    """
+    
     def __init__(self):
-        """Initialize the module manager"""        self.initialized = False
+        """Initialize the module manager"""
+        self.initialized = False
         self.components = {}
         self.health_status = {}
         self.initialization_errors = []
     
     async def initialize(self, config: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """        Initialize all module components
+        """
+        Initialize all module components
         
         Args:
             config: Optional configuration for components
         
         Returns:
             Initialization status report
-        """        try:
+        """
+        try:
             config = config or {}
             initialization_report = {
                 'module': MODULE_INFO['name'],
@@ -128,7 +134,8 @@ class SchedulingAgentModule:
             }
     
     async def _initialize_components(self, config: Dict[str, Any], report: Dict[str, Any]):
-        """Initialize individual components"""        components_to_init = [
+        """Initialize individual components"""
+        components_to_init = [
             ('SchedulingAgent', 'scheduling_agent', 'SchedulingAgent'),
             ('ScheduleOptimizer', 'schedule_optimizer', 'ScheduleOptimizer'),
             ('TimezoneManager', 'timezone_manager', 'TimezoneManager'),
@@ -179,7 +186,8 @@ class SchedulingAgentModule:
                 self.initialization_errors.append(error_msg)
     
     async def _perform_health_checks(self, report: Dict[str, Any]):
-        """Perform health checks on initialized components"""        health_checks = {}
+        """Perform health checks on initialized components"""
+        health_checks = {}
         
         for component_name, component in self.components.items():
             try:
@@ -199,7 +207,8 @@ class SchedulingAgentModule:
         report['health_checks'] = health_checks
     
     async def _check_component_health(self, component_name: str, component: Any) -> Dict[str, Any]:
-        """Check health of individual component"""        try:
+        """Check health of individual component"""
+        try:
             health_info = {
                 'status': 'healthy',
                 'timestamp': datetime.now().isoformat(),
@@ -239,7 +248,8 @@ class SchedulingAgentModule:
             }
     
     def get_module_info(self) -> Dict[str, Any]:
-        """Get comprehensive module information"""        return {
+        """Get comprehensive module information"""
+        return {
             **MODULE_INFO,
             'initialized': self.initialized,
             'components_loaded': list(self.components.keys()),
@@ -250,10 +260,12 @@ class SchedulingAgentModule:
         }
     
     def get_component(self, component_name: str) -> Optional[Any]:
-        """Get initialized component by name"""        return self.components.get(component_name)
+        """Get initialized component by name"""
+        return self.components.get(component_name)
     
     async def shutdown(self) -> Dict[str, Any]:
-        """Gracefully shutdown the module and cleanup resources"""        try:
+        """Gracefully shutdown the module and cleanup resources"""
+        try:
             shutdown_report = {
                 'module': MODULE_INFO['name'],
                 'timestamp': datetime.now().isoformat(),
@@ -301,23 +313,29 @@ class SchedulingAgentModule:
 _module_instance = SchedulingAgentModule()
 
 async def initialize_module(config: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-    """Initialize the scheduling agent module"""    return await _module_instance.initialize(config)
+    """Initialize the scheduling agent module"""
+    return await _module_instance.initialize(config)
 
 def get_module_info() -> Dict[str, Any]:
-    """Get module information"""    return _module_instance.get_module_info()
+    """Get module information"""
+    return _module_instance.get_module_info()
 
 def get_component(component_name: str) -> Optional[Any]:
-    """Get initialized component"""    return _module_instance.get_component(component_name)
+    """Get initialized component"""
+    return _module_instance.get_component(component_name)
 
 async def shutdown_module() -> Dict[str, Any]:
-    """Shutdown the module"""    return await _module_instance.shutdown()
+    """Shutdown the module"""
+    return await _module_instance.shutdown()
 
 def is_initialized() -> bool:
-    """Check if module is initialized"""    return _module_instance.initialized
+    """Check if module is initialized"""
+    return _module_instance.initialized
 
 # Health check endpoint
 async def health_check() -> Dict[str, Any]:
-    """Perform module health check"""    try:
+    """Perform module health check"""
+    try:
         if not _module_instance.initialized:
             return {
                 'status': 'not_initialized',

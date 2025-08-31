@@ -22,7 +22,8 @@ Integration Points:
 
 Author: Expert Development Team
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -61,7 +62,8 @@ from backend.business.blockchain.smart_contracts import SmartContractManager
 logger = get_logger(__name__)
 
 class ChainId(Enum):
-    """Supported blockchain networks"""    ETHEREUM = 1
+    """Supported blockchain networks"""
+    ETHEREUM = 1
     POLYGON = 137
     BSC = 56
     AVALANCHE = 43114
@@ -69,7 +71,8 @@ class ChainId(Enum):
     OPTIMISM = 10
 
 class BridgeStatus(Enum):
-    """Bridge transaction status"""    PENDING = "pending"
+    """Bridge transaction status"""
+    PENDING = "pending"
     CONFIRMED = "confirmed"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -77,14 +80,16 @@ class BridgeStatus(Enum):
     REFUNDED = "refunded"
 
 class AssetType(Enum):
-    """Types of assets that can be bridged"""    TOKEN = "token"
+    """Types of assets that can be bridged"""
+    TOKEN = "token"
     NFT = "nft"
     STABLE_COIN = "stable_coin"
     GOVERNANCE_TOKEN = "governance_token"
 
 @dataclass
 class BridgeConfig:
-    """Configuration for bridge operations"""    source_chain: ChainId
+    """Configuration for bridge operations"""
+    source_chain: ChainId
     destination_chain: ChainId
     min_transfer_amount: Decimal
     max_transfer_amount: Decimal
@@ -95,7 +100,8 @@ class BridgeConfig:
 
 @dataclass
 class CrossChainAsset:
-    """Cross-chain asset information"""    asset_id: str
+    """Cross-chain asset information"""
+    asset_id: str
     asset_type: AssetType
     source_address: str
     destination_address: Optional[str]
@@ -105,7 +111,8 @@ class CrossChainAsset:
 
 @dataclass
 class BridgeRequest:
-    """Bridge transfer request"""    user_address: str
+    """Bridge transfer request"""
+    user_address: str
     source_chain: ChainId
     destination_chain: ChainId
     asset: CrossChainAsset
@@ -115,20 +122,23 @@ class BridgeRequest:
 
 @dataclass
 class ValidatorSignature:
-    """Validator signature for bridge operations"""    validator_address: str
+    """Validator signature for bridge operations"""
+    validator_address: str
     signature: str
     timestamp: datetime
     chain_id: ChainId
 
 class BridgeValidator:
-    """Manages bridge validator operations"""    
+    """Manages bridge validator operations"""
+    
     def __init__(self, contract_manager: SmartContractManager):
         self.contract_manager = contract_manager
         self.redis: Optional[aioredis.Redis] = None
         self.validator_configs = {}
         
     async def initialize(self):
-        """Initialize bridge validator"""        try:
+        """Initialize bridge validator"""
+        try:
             self.redis = await aioredis.from_url(
                 f"redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}",
                 decode_responses=True
@@ -144,7 +154,8 @@ class BridgeValidator:
             raise BlockchainError(f"Bridge validator initialization failed: {str(e)}")
     
     async def load_validator_configs(self):
-        """Load bridge validator configurations"""        self.validator_configs = {
+        """Load bridge validator configurations"""
+        self.validator_configs = {
             ChainId.ETHEREUM: BridgeConfig(
                 source_chain=ChainId.ETHEREUM,
                 destination_chain=ChainId.POLYGON,
@@ -173,7 +184,8 @@ class BridgeValidator:
         request: BridgeRequest,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Validate bridge transfer request"""        try:
+        """Validate bridge transfer request"""
+        try:
             # Get bridge configuration
             config = self.validator_configs.get(request.source_chain)
             if not config:
@@ -238,7 +250,8 @@ class BridgeValidator:
         source_chain: ChainId,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Create bridge proof for cross-chain verification"""        try:
+        """Create bridge proof for cross-chain verification"""
+        try:
             # Get transaction receipt and logs
             web3 = self._get_web3_instance(source_chain)
             receipt = await web3.eth.get_transaction_receipt(transaction_hash)
@@ -283,7 +296,8 @@ class BridgeValidator:
         proof: Dict[str, Any],
         destination_chain: ChainId
     ) -> bool:
-        """Verify bridge proof on destination chain"""        try:
+        """Verify bridge proof on destination chain"""
+        try:
             # Verify validator signatures
             valid_signatures = 0
             required_signatures = self.validator_configs[destination_chain].validator_threshold
@@ -319,7 +333,8 @@ class BridgeValidator:
             return False
     
     def _create_validation_hash(self, request: BridgeRequest) -> str:
-        """Create validation hash for bridge request"""        data = {
+        """Create validation hash for bridge request"""
+        data = {
             "user_address": request.user_address,
             "source_chain": request.source_chain.value,
             "destination_chain": request.destination_chain.value,
@@ -333,7 +348,8 @@ class BridgeValidator:
         return hashlib.sha256(hash_input).hexdigest()
     
     async def _sign_validation(self, validation_hash: str) -> str:
-        """Sign validation hash"""        # In production, this would use validator's private key
+        """Sign validation hash"""
+        # In production, this would use validator's private key
         account = Account.from_key(settings.BLOCKCHAIN_ADMIN_PRIVATE_KEY)
         message_hash = Web3.keccak(text=validation_hash)
         signature = account.sign_message_hash(message_hash)
@@ -345,7 +361,8 @@ class BridgeValidator:
         token_address: str,
         chain_id: ChainId
     ) -> Decimal:
-        """Get user token balance on specific chain"""        # Implementation would query blockchain
+        """Get user token balance on specific chain"""
+        # Implementation would query blockchain
         return Decimal("1000.0")  # Mock balance
     
     async def _get_destination_asset(
@@ -353,7 +370,8 @@ class BridgeValidator:
         source_asset: CrossChainAsset,
         destination_chain: ChainId
     ) -> Optional[CrossChainAsset]:
-        """Get corresponding asset on destination chain"""        # Implementation would query asset registry
+        """Get corresponding asset on destination chain"""
+        # Implementation would query asset registry
         return CrossChainAsset(
             asset_id=source_asset.asset_id,
             asset_type=source_asset.asset_type,
@@ -365,15 +383,18 @@ class BridgeValidator:
         )
     
     def _get_web3_instance(self, chain_id: ChainId) -> Web3:
-        """Get Web3 instance for specific chain"""        # Return appropriate Web3 instance based on chain
+        """Get Web3 instance for specific chain"""
+        # Return appropriate Web3 instance based on chain
         return self.contract_manager.web3
     
     async def _extract_bridge_logs(self, receipt, chain_id: ChainId) -> List[Dict]:
-        """Extract bridge-related logs from transaction receipt"""        # Implementation would parse bridge event logs
+        """Extract bridge-related logs from transaction receipt"""
+        # Implementation would parse bridge event logs
         return []
     
     async def _create_merkle_proof(self, logs: List[Dict]) -> Dict[str, Any]:
-        """Create Merkle proof for bridge logs"""        # Implementation would create Merkle tree and proof
+        """Create Merkle proof for bridge logs"""
+        # Implementation would create Merkle tree and proof
         return {"proof": [], "root": "0x" + "0" * 64}
     
     async def _collect_validator_signatures(
@@ -382,7 +403,8 @@ class BridgeValidator:
         source_chain: ChainId,
         merkle_proof: Dict
     ) -> List[Dict]:
-        """Collect signatures from bridge validators"""        # Implementation would collect signatures from active validators
+        """Collect signatures from bridge validators"""
+        # Implementation would collect signatures from active validators
         return []
     
     async def _verify_validator_signature(
@@ -390,11 +412,13 @@ class BridgeValidator:
         signature_data: Dict,
         proof: Dict
     ) -> bool:
-        """Verify individual validator signature"""        # Implementation would verify signature against proof
+        """Verify individual validator signature"""
+        # Implementation would verify signature against proof
         return True
     
     async def _verify_merkle_proof(self, merkle_proof: Dict) -> bool:
-        """Verify Merkle proof validity"""        # Implementation would verify Merkle proof
+        """Verify Merkle proof validity"""
+        # Implementation would verify Merkle proof
         return True
     
     async def _verify_source_transaction(
@@ -402,11 +426,13 @@ class BridgeValidator:
         transaction_hash: str,
         source_chain: ChainId
     ) -> bool:
-        """Verify transaction exists and is valid on source chain"""        # Implementation would verify transaction on source chain
+        """Verify transaction exists and is valid on source chain"""
+        # Implementation would verify transaction on source chain
         return True
 
 class CrossChainTransferManager:
-    """Manages cross-chain asset transfers"""    
+    """Manages cross-chain asset transfers"""
+    
     def __init__(
         self,
         contract_manager: SmartContractManager,
@@ -417,7 +443,8 @@ class CrossChainTransferManager:
         self.redis: Optional[aioredis.Redis] = None
         
     async def initialize(self):
-        """Initialize transfer manager"""        try:
+        """Initialize transfer manager"""
+        try:
             self.redis = await aioredis.from_url(
                 f"redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}",
                 decode_responses=True
@@ -434,7 +461,8 @@ class CrossChainTransferManager:
         request: BridgeRequest,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Initiate cross-chain bridge transfer"""        try:
+        """Initiate cross-chain bridge transfer"""
+        try:
             # Validate bridge request
             validation_result = await self.bridge_validator.validate_bridge_request(
                 request,
@@ -494,7 +522,8 @@ class CrossChainTransferManager:
         bridge_id: int,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Process pending bridge transfer"""        try:
+        """Process pending bridge transfer"""
+        try:
             # Get bridge transaction
             bridge_tx = await self._get_bridge_transaction(bridge_id, session)
             
@@ -561,7 +590,8 @@ class CrossChainTransferManager:
         request: BridgeRequest,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Lock assets on source chain"""        try:
+        """Lock assets on source chain"""
+        try:
             # Get bridge contract for source chain
             bridge_contract = await self.contract_manager.get_contract(
                 f"bridge_{request.source_chain.name.lower()}",
@@ -629,7 +659,8 @@ class CrossChainTransferManager:
         destination_chain: ChainId,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Mint assets on destination chain"""        try:
+        """Mint assets on destination chain"""
+        try:
             # Verify bridge proof
             if not await self.bridge_validator.verify_bridge_proof(
                 bridge_proof,
@@ -681,7 +712,8 @@ class CrossChainTransferManager:
             raise BlockchainError(f"Asset minting failed: {str(e)}")
     
     async def _schedule_bridge_processing(self, bridge_id: int):
-        """Schedule bridge transfer for processing"""        # Add to Redis queue for background processing
+        """Schedule bridge transfer for processing"""
+        # Add to Redis queue for background processing
         await self.redis.lpush("bridge_processing_queue", str(bridge_id))
         logger.info(f"Scheduled bridge transfer {bridge_id} for processing")
     
@@ -690,7 +722,8 @@ class CrossChainTransferManager:
         transaction_hash: str,
         chain_id: ChainId
     ):
-        """Wait for required confirmations on source chain"""        required_confirmations = self.bridge_validator.validator_configs[chain_id].confirmation_blocks
+        """Wait for required confirmations on source chain"""
+        required_confirmations = self.bridge_validator.validator_configs[chain_id].confirmation_blocks
         
         web3 = self.bridge_validator._get_web3_instance(chain_id)
         
@@ -715,7 +748,8 @@ class CrossChainTransferManager:
         bridge_id: int,
         session: AsyncSession
     ) -> BridgeTransaction:
-        """Get bridge transaction by ID"""        # Implementation would query database
+        """Get bridge transaction by ID"""
+        # Implementation would query database
         # For now, return mock transaction
         return BridgeTransaction(
             id=bridge_id,
@@ -727,7 +761,8 @@ class CrossChainTransferManager:
         )
 
 class LiquidityManager:
-    """Manages cross-chain liquidity pools"""    
+    """Manages cross-chain liquidity pools"""
+    
     def __init__(self, contract_manager: SmartContractManager):
         self.contract_manager = contract_manager
         
@@ -736,7 +771,8 @@ class LiquidityManager:
         chain_id: ChainId,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Manage liquidity pools for chain"""        try:
+        """Manage liquidity pools for chain"""
+        try:
             # Get current pool balances
             pool_balances = await self._get_pool_balances(chain_id)
             
@@ -765,7 +801,8 @@ class LiquidityManager:
             raise BlockchainError(f"Liquidity management failed: {str(e)}")
     
     async def _get_pool_balances(self, chain_id: ChainId) -> Dict[str, Decimal]:
-        """Get current liquidity pool balances"""        # Implementation would query bridge contracts
+        """Get current liquidity pool balances"""
+        # Implementation would query bridge contracts
         return {
             "ETH": Decimal("1000.0"),
             "USDC": Decimal("100000.0"),
@@ -777,7 +814,8 @@ class LiquidityManager:
         balances: Dict[str, Decimal],
         chain_id: ChainId
     ) -> List[Dict]:
-        """Analyze liquidity rebalancing needs"""        # Implementation would analyze bridge volume and predict needs
+        """Analyze liquidity rebalancing needs"""
+        # Implementation would analyze bridge volume and predict needs
         return []
     
     async def _execute_liquidity_rebalancing(
@@ -785,11 +823,13 @@ class LiquidityManager:
         rebalancing_need: Dict,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Execute liquidity pool rebalancing"""        # Implementation would execute cross-chain liquidity transfers
+        """Execute liquidity pool rebalancing"""
+        # Implementation would execute cross-chain liquidity transfers
         return {"success": True}
 
 class CrossChainBridge:
-    """Main cross-chain bridge orchestrator"""    
+    """Main cross-chain bridge orchestrator"""
+    
     def __init__(self):
         self.contract_manager: Optional[SmartContractManager] = None
         self.bridge_validator: Optional[BridgeValidator] = None
@@ -798,7 +838,8 @@ class CrossChainBridge:
         self.initialized = False
         
     async def initialize(self):
-        """Initialize cross-chain bridge"""        try:
+        """Initialize cross-chain bridge"""
+        try:
             # Initialize contract manager
             self.contract_manager = SmartContractManager()
             await self.contract_manager.initialize()
@@ -826,7 +867,8 @@ class CrossChainBridge:
     
     @asynccontextmanager
     async def get_session(self):
-        """Get database session"""        async with get_async_session() as session:
+        """Get database session"""
+        async with get_async_session() as session:
             try:
                 yield session
             except Exception:
@@ -844,7 +886,8 @@ class CrossChainBridge:
         amount: Decimal,
         destination_address: str
     ) -> Dict[str, Any]:
-        """Bridge tokens across chains"""        if not self.initialized:
+        """Bridge tokens across chains"""
+        if not self.initialized:
             await self.initialize()
         
         # Create asset info
@@ -878,7 +921,8 @@ class CrossChainBridge:
         token_id: int,
         destination_address: str
     ) -> Dict[str, Any]:
-        """Bridge NFT across chains"""        if not self.initialized:
+        """Bridge NFT across chains"""
+        if not self.initialized:
             await self.initialize()
         
         # Create NFT asset info
@@ -904,7 +948,8 @@ class CrossChainBridge:
             return await self.transfer_manager.initiate_bridge_transfer(request, session)
     
     async def get_bridge_status(self, bridge_id: int) -> Dict[str, Any]:
-        """Get bridge transfer status"""        if not self.initialized:
+        """Get bridge transfer status"""
+        if not self.initialized:
             await self.initialize()
         
         async with self.get_session() as session:
@@ -935,7 +980,8 @@ async def bridge_tokens_cross_chain(
     amount: Decimal,
     destination_address: str
 ) -> Dict[str, Any]:
-    """Bridge tokens across blockchain networks"""    return await cross_chain_bridge.bridge_tokens(
+    """Bridge tokens across blockchain networks"""
+    return await cross_chain_bridge.bridge_tokens(
         user_address,
         source_chain,
         destination_chain,
@@ -952,7 +998,8 @@ async def bridge_nft_cross_chain(
     token_id: int,
     destination_address: str
 ) -> Dict[str, Any]:
-    """Bridge NFT across blockchain networks"""    return await cross_chain_bridge.bridge_nft(
+    """Bridge NFT across blockchain networks"""
+    return await cross_chain_bridge.bridge_nft(
         user_address,
         source_chain,
         destination_chain,
@@ -962,4 +1009,5 @@ async def bridge_nft_cross_chain(
     )
 
 async def get_cross_chain_bridge_status(bridge_id: int) -> Dict[str, Any]:
-    """Get status of cross-chain bridge transfer"""    return await cross_chain_bridge.get_bridge_status(bridge_id)
+    """Get status of cross-chain bridge transfer"""
+    return await cross_chain_bridge.get_bridge_status(bridge_id)

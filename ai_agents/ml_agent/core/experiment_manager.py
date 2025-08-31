@@ -24,7 +24,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import uuid
@@ -95,7 +96,8 @@ from ...utils.cache import CacheManager
 logger = logging.getLogger(__name__)
 
 class ExperimentStatus(Enum):
-    """Experiment execution status"""    CREATED = "created"
+    """Experiment execution status"""
+    CREATED = "created"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -103,7 +105,8 @@ class ExperimentStatus(Enum):
     PAUSED = "paused"
 
 class ExperimentType(Enum):
-    """Types of ML experiments"""    HYPERPARAMETER_TUNING = "hyperparameter_tuning"
+    """Types of ML experiments"""
+    HYPERPARAMETER_TUNING = "hyperparameter_tuning"
     MODEL_COMPARISON = "model_comparison"
     FEATURE_SELECTION = "feature_selection"
     ARCHITECTURE_SEARCH = "architecture_search"
@@ -111,7 +114,8 @@ class ExperimentType(Enum):
     PERFORMANCE_BENCHMARK = "performance_benchmark"
 
 class MetricType(Enum):
-    """ML metric types"""    ACCURACY = "accuracy"
+    """ML metric types"""
+    ACCURACY = "accuracy"
     PRECISION = "precision"
     RECALL = "recall"
     F1_SCORE = "f1_score"
@@ -124,7 +128,8 @@ class MetricType(Enum):
 
 @dataclass
 class ExperimentConfig:
-    """Experiment configuration"""    experiment_id: str
+    """Experiment configuration"""
+    experiment_id: str
     name: str
     description: str
     experiment_type: ExperimentType
@@ -141,7 +146,8 @@ class ExperimentConfig:
 
 @dataclass
 class ExperimentResult:
-    """Individual experiment result"""    trial_id: str
+    """Individual experiment result"""
+    trial_id: str
     experiment_id: str
     model_config: Dict[str, Any]
     hyperparameters: Dict[str, Any]
@@ -156,7 +162,8 @@ class ExperimentResult:
 
 @dataclass
 class ExperimentSummary:
-    """Experiment summary and statistics"""    experiment_id: str
+    """Experiment summary and statistics"""
+    experiment_id: str
     total_trials: int
     completed_trials: int
     failed_trials: int
@@ -168,9 +175,11 @@ class ExperimentSummary:
     convergence_analysis: Optional[Dict[str, Any]] = None
 
 class MLExperimentTracker:
-    """    Ultra-advanced ML experiment tracker providing comprehensive
+    """
+    Ultra-advanced ML experiment tracker providing comprehensive
     experiment management, tracking, and analysis capabilities
-    """    
+    """
+    
     def __init__(self):
         self.experiments: Dict[str, ExperimentConfig] = {}
         self.results: Dict[str, List[ExperimentResult]] = {}
@@ -179,7 +188,8 @@ class MLExperimentTracker:
         self._initialize_tracking()
     
     def _initialize_tracking(self):
-        """Initialize experiment tracking backends"""        try:
+        """Initialize experiment tracking backends"""
+        try:
             # Initialize MLflow
             mlflow.set_tracking_uri(settings.MLFLOW_TRACKING_URI)
             
@@ -193,7 +203,8 @@ class MLExperimentTracker:
             logger.warning(f"Failed to initialize some tracking backends: {str(e)}")
     
     async def create_experiment(self, config: ExperimentConfig) -> str:
-        """Create a new ML experiment"""        try:
+        """Create a new ML experiment"""
+        try:
             # Validate experiment configuration
             await self._validate_experiment_config(config)
             
@@ -219,7 +230,8 @@ class MLExperimentTracker:
             raise ExperimentError(f"Experiment creation failed: {str(e)}")
     
     async def _validate_experiment_config(self, config: ExperimentConfig):
-        """Validate experiment configuration"""        if not config.name:
+        """Validate experiment configuration"""
+        if not config.name:
             raise ValidationError("Experiment name is required")
         
         if not config.model_configs:
@@ -232,7 +244,8 @@ class MLExperimentTracker:
             raise ValidationError("Cross validation folds must be at least 2")
     
     async def run_experiment(self, experiment_id: str, training_data: Any, target_data: Any) -> ExperimentSummary:
-        """Execute a complete ML experiment"""        try:
+        """Execute a complete ML experiment"""
+        try:
             if experiment_id not in self.experiments:
                 raise ValueError(f"Experiment not found: {experiment_id}")
             
@@ -275,7 +288,8 @@ class MLExperimentTracker:
         training_data: Any, 
         target_data: Any
     ) -> List[ExperimentResult]:
-        """Run hyperparameter tuning experiment"""        results = []
+        """Run hyperparameter tuning experiment"""
+        results = []
         
         if not OPTUNA_AVAILABLE:
             raise ConfigurationError("Optuna is required for hyperparameter tuning")
@@ -303,7 +317,8 @@ class MLExperimentTracker:
         target_data: Any,
         results: List[ExperimentResult]
     ) -> float:
-        """Optuna objective function"""        trial_id = str(uuid.uuid4())
+        """Optuna objective function"""
+        trial_id = str(uuid.uuid4())
         start_time = time.time()
         
         try:
@@ -382,7 +397,8 @@ class MLExperimentTracker:
         training_data: Any,
         target_data: Any
     ) -> List[ExperimentResult]:
-        """Run model comparison experiment"""        results = []
+        """Run model comparison experiment"""
+        results = []
         
         for model_config in config.model_configs:
             trial_id = str(uuid.uuid4())
@@ -446,7 +462,8 @@ class MLExperimentTracker:
         training_data: Any,
         target_data: Any
     ) -> List[ExperimentResult]:
-        """Run feature selection experiment"""        from sklearn.feature_selection import SelectKBest, RFE, SelectFromModel
+        """Run feature selection experiment"""
+        from sklearn.feature_selection import SelectKBest, RFE, SelectFromModel
         from sklearn.ensemble import RandomForestClassifier
         
         results = []
@@ -494,7 +511,8 @@ class MLExperimentTracker:
         return results
     
     async def _create_model(self, model_config: Dict[str, Any]):
-        """Create model instance from configuration"""        model_type = model_config['type']
+        """Create model instance from configuration"""
+        model_type = model_config['type']
         parameters = model_config.get('parameters', {})
         
         if model_type == 'random_forest':
@@ -513,7 +531,8 @@ class MLExperimentTracker:
             raise ValueError(f"Unsupported model type: {model_type}")
     
     async def _create_model_with_hyperparams(self, model_config: Dict[str, Any], hyperparams: Dict[str, Any]):
-        """Create model with specific hyperparameters"""        combined_params = {**model_config.get('parameters', {}), **hyperparams}
+        """Create model with specific hyperparameters"""
+        combined_params = {**model_config.get('parameters', {}), **hyperparams}
         model_config_with_params = {**model_config, 'parameters': combined_params}
         return await self._create_model(model_config_with_params)
     
@@ -523,7 +542,8 @@ class MLExperimentTracker:
         results: List[ExperimentResult],
         execution_time: float
     ) -> ExperimentSummary:
-        """Generate comprehensive experiment summary"""        if not results:
+        """Generate comprehensive experiment summary"""
+        if not results:
             raise ExperimentError("No results to summarize")
         
         completed_results = [r for r in results if r.status == "completed"]
@@ -557,7 +577,8 @@ class MLExperimentTracker:
         return summary
     
     async def _analyze_statistical_significance(self, results: List[ExperimentResult]) -> Dict[str, float]:
-        """Analyze statistical significance of results"""        if len(results) < 2:
+        """Analyze statistical significance of results"""
+        if len(results) < 2:
             return {}
         
         scores = [r.metrics.get('accuracy', 0) for r in results]
@@ -580,7 +601,8 @@ class MLExperimentTracker:
         }
     
     async def _analyze_convergence(self, results: List[ExperimentResult]) -> Dict[str, Any]:
-        """Analyze experiment convergence"""        scores = [r.metrics.get('accuracy', 0) for r in results]
+        """Analyze experiment convergence"""
+        scores = [r.metrics.get('accuracy', 0) for r in results]
         
         if len(scores) < 5:
             return {'status': 'insufficient_data'}
@@ -603,7 +625,8 @@ class MLExperimentTracker:
         }
     
     async def _log_experiment_summary(self, summary: ExperimentSummary):
-        """Log experiment summary to tracking backend"""        with mlflow.start_run():
+        """Log experiment summary to tracking backend"""
+        with mlflow.start_run():
             mlflow.log_metrics({
                 'best_score': summary.best_score,
                 'total_trials': summary.total_trials,
@@ -618,7 +641,8 @@ class MLExperimentTracker:
                 mlflow.log_metrics(summary.statistical_significance)
     
     async def compare_experiments(self, experiment_ids: List[str]) -> Dict[str, Any]:
-        """Compare multiple experiments"""        if len(experiment_ids) < 2:
+        """Compare multiple experiments"""
+        if len(experiment_ids) < 2:
             raise ValueError("At least two experiments are required for comparison")
         
         comparison_data = {}
@@ -670,7 +694,8 @@ class MLExperimentTracker:
         return comparison_data
     
     async def get_experiment_results(self, experiment_id: str) -> Dict[str, Any]:
-        """Get detailed experiment results"""        if experiment_id not in self.results:
+        """Get detailed experiment results"""
+        if experiment_id not in self.results:
             raise ValueError(f"Experiment not found: {experiment_id}")
         
         results = self.results[experiment_id]
@@ -687,7 +712,8 @@ class MLExperimentTracker:
         }
     
     async def export_experiment_report(self, experiment_id: str, format: str = 'json') -> str:
-        """Export comprehensive experiment report"""        results_data = await self.get_experiment_results(experiment_id)
+        """Export comprehensive experiment report"""
+        results_data = await self.get_experiment_results(experiment_id)
         
         if format == 'json':
             report_path = f"/tmp/experiment_report_{experiment_id}.json"
@@ -705,7 +731,9 @@ class MLExperimentTracker:
         return report_path
     
     async def _generate_html_report(self, results_data: Dict[str, Any], output_path: str):
-        """Generate HTML experiment report with visualizations"""        html_content = f"""        <!DOCTYPE html>
+        """Generate HTML experiment report with visualizations"""
+        html_content = f"""
+        <!DOCTYPE html>
         <html>
         <head>
             <title>ML Experiment Report - {results_data['experiment_name']}</title>
@@ -750,19 +778,24 @@ class MLExperimentTracker:
                     <th>Accuracy</th>
                     <th>Training Time</th>
                 </tr>
-        """        
+        """
+        
         for result in results_data['results']:
-            html_content += f"""                <tr>
+            html_content += f"""
+                <tr>
                     <td>{result['trial_id'][:8]}...</td>
                     <td>{result['status']}</td>
                     <td>{result['metrics'].get('accuracy', 'N/A'):.4f}</td>
                     <td>{result['training_time']:.2f}s</td>
                 </tr>
-            """        
-        html_content += """            </table>
+            """
+        
+        html_content += """
+            </table>
         </body>
         </html>
-        """        
+        """
+        
         with open(output_path, 'w') as f:
             f.write(html_content)
 

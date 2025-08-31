@@ -19,7 +19,8 @@ LOGIQUE MÉTIER: User (créateur) → Upload multi-format → IA protection → 
 Matching collaboration + gamifications → Distribution multi-plateformes → Remix IA professionnel
 
 ARCHITECTURE: Enterprise-grade service pour remix IA industriel avec sécurité avancée
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
@@ -34,20 +35,23 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class RemixContentType(Enum):
-    """Supported content types for remix processing."""    AUDIO = "audio"
+    """Supported content types for remix processing."""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
     MULTI_FORMAT = "multi_format"
 
 class RemixQualityLevel(Enum):
-    """Quality levels for remix processing."""    STANDARD = "standard"
+    """Quality levels for remix processing."""
+    STANDARD = "standard"
     HIGH = "high"
     PROFESSIONAL = "professional"
     STUDIO = "studio"
 
 class RemixProcessingStatus(Enum):
-    """Processing status for remix operations."""    PENDING = "pending"
+    """Processing status for remix operations."""
+    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -55,7 +59,8 @@ class RemixProcessingStatus(Enum):
 
 @dataclass
 class RemixRequest:
-    """Remix processing request specification."""    request_id: str
+    """Remix processing request specification."""
+    request_id: str
     user_id: str
     content_type: RemixContentType
     source_content_path: str
@@ -67,7 +72,8 @@ class RemixRequest:
     created_at: datetime = field(default_factory=datetime.now)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation."""        return {
+        """Convert to dictionary representation."""
+        return {
             "request_id": self.request_id,
             "user_id": self.user_id,
             "content_type": self.content_type.value,
@@ -82,7 +88,8 @@ class RemixRequest:
 
 @dataclass
 class RemixResult:
-    """Remix processing result."""    request_id: str
+    """Remix processing result."""
+    request_id: str
     result_id: str
     status: RemixProcessingStatus
     output_path: Optional[str] = None
@@ -93,7 +100,8 @@ class RemixResult:
     completed_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation."""        return {
+        """Convert to dictionary representation."""
+        return {
             "request_id": self.request_id,
             "result_id": self.result_id,
             "status": self.status.value,
@@ -106,7 +114,8 @@ class RemixResult:
         }
 
 class RemixCoreService:
-    """    Core remix service for IA-Influencer-Agent platform.
+    """
+    Core remix service for IA-Influencer-Agent platform.
     
     Provides enterprise-grade remix processing capabilities including:
     - Multi-format content processing (audio, video, image, text)
@@ -114,13 +123,16 @@ class RemixCoreService:
     - Real-time collaboration support
     - Quality control and optimization
     - Security and rights management
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """        Initialize core remix service.
+        """
+        Initialize core remix service.
         
         Args:
             config (Optional[Dict[str, Any]]): Service configuration
-        """        self.config = config or {}
+        """
+        self.config = config or {}
         self.processing_queue = asyncio.Queue()
         self.active_sessions = {}
         self.performance_metrics = {}
@@ -136,14 +148,16 @@ class RemixCoreService:
         logger.info("Core remix service initialized successfully")
     
     async def process_remix_request(self, request: RemixRequest) -> RemixResult:
-        """        Process a remix request through the complete pipeline.
+        """
+        Process a remix request through the complete pipeline.
         
         Args:
             request (RemixRequest): Remix processing request
             
         Returns:
             RemixResult: Processing result
-        """        try:
+        """
+        try:
             logger.info(f"Processing remix request {request.request_id} for user {request.user_id}")
             start_time = time.time()
             
@@ -226,7 +240,8 @@ class RemixCoreService:
             )
     
     async def start_collaboration_session(self, request: RemixRequest, collaborators: List[str]) -> Dict[str, Any]:
-        """        Start a real-time collaboration session for remix processing.
+        """
+        Start a real-time collaboration session for remix processing.
         
         Args:
             request (RemixRequest): Base remix request
@@ -234,7 +249,8 @@ class RemixCoreService:
             
         Returns:
             Dict[str, Any]: Collaboration session information
-        """        try:
+        """
+        try:
             session_id = self._generate_session_id()
             
             session_info = {
@@ -264,14 +280,16 @@ class RemixCoreService:
             }
     
     async def get_processing_status(self, request_id: str) -> Dict[str, Any]:
-        """        Get current processing status for a request.
+        """
+        Get current processing status for a request.
         
         Args:
             request_id (str): Request identifier
             
         Returns:
             Dict[str, Any]: Processing status information
-        """        try:
+        """
+        try:
             # Check if request is in processing queue
             status_info = {
                 "request_id": request_id,
@@ -297,21 +315,25 @@ class RemixCoreService:
             }
     
     def _generate_result_id(self) -> str:
-        """Generate unique result ID."""        timestamp = str(int(time.time() * 1000))
+        """Generate unique result ID."""
+        timestamp = str(int(time.time() * 1000))
         return f"remix_result_{timestamp}_{hashlib.md5(timestamp.encode()).hexdigest()[:8]}"
     
     def _generate_session_id(self) -> str:
-        """Generate unique collaboration session ID."""        timestamp = str(int(time.time() * 1000))
+        """Generate unique collaboration session ID."""
+        timestamp = str(int(time.time() * 1000))
         return f"remix_session_{timestamp}_{hashlib.md5(timestamp.encode()).hexdigest()[:8]}"
 
 class RemixProcessor:
-    """Remix content processing engine."""    
+    """Remix content processing engine."""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.supported_formats = ["mp3", "wav", "mp4", "avi", "jpg", "png", "txt", "md"]
     
     async def process_content(self, request: RemixRequest) -> Dict[str, Any]:
-        """Process content according to remix request."""        try:
+        """Process content according to remix request."""
+        try:
             # Simulate processing based on content type
             await asyncio.sleep(0.1)  # Simulate processing time
             
@@ -334,7 +356,8 @@ class RemixProcessor:
             }
     
     def _get_output_extension(self, content_type: RemixContentType) -> str:
-        """Get appropriate file extension for content type."""        extensions = {
+        """Get appropriate file extension for content type."""
+        extensions = {
             RemixContentType.AUDIO: "wav",
             RemixContentType.VIDEO: "mp4",
             RemixContentType.IMAGE: "png",
@@ -344,7 +367,8 @@ class RemixProcessor:
         return extensions.get(content_type, "dat")
 
 class RemixQualityController:
-    """Quality control and enhancement system."""    
+    """Quality control and enhancement system."""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.quality_standards = {
@@ -354,7 +378,8 @@ class RemixQualityController:
         }
     
     async def validate_input(self, request: RemixRequest) -> Dict[str, Any]:
-        """Validate input content quality."""        try:
+        """Validate input content quality."""
+        try:
             # Perform input validation logic
             return {
                 "valid": True,
@@ -368,7 +393,8 @@ class RemixQualityController:
             }
     
     async def enhance_output(self, output_path: str, quality_level: RemixQualityLevel) -> Dict[str, Any]:
-        """Enhance output quality."""        try:
+        """Enhance output quality."""
+        try:
             # Simulate quality enhancement
             await asyncio.sleep(0.05)
             
@@ -398,12 +424,14 @@ class RemixQualityController:
             }
 
 class RemixSecurityManager:
-    """Security and rights management system."""    
+    """Security and rights management system."""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
     
     async def validate_request(self, request: RemixRequest) -> Dict[str, Any]:
-        """Validate security aspects of remix request."""        try:
+        """Validate security aspects of remix request."""
+        try:
             # Security validation logic
             return {
                 "valid": True,
@@ -417,12 +445,14 @@ class RemixSecurityManager:
             }
 
 class RemixPerformanceOptimizer:
-    """Performance optimization system."""    
+    """Performance optimization system."""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
     
     async def optimize_output(self, output_path: str) -> Dict[str, Any]:
-        """Optimize output for performance."""        try:
+        """Optimize output for performance."""
+        try:
             return {
                 "output_path": output_path,
                 "optimizations": [
@@ -439,7 +469,8 @@ class RemixPerformanceOptimizer:
             }
 
 class RemixConfigurationManager:
-    """Configuration management system."""    
+    """Configuration management system."""
+    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.default_config = {
@@ -450,10 +481,12 @@ class RemixConfigurationManager:
         }
     
     def get_configuration(self, key: str) -> Any:
-        """Get configuration value."""        return self.config.get(key, self.default_config.get(key))
+        """Get configuration value."""
+        return self.config.get(key, self.default_config.get(key))
     
     def update_configuration(self, updates: Dict[str, Any]) -> bool:
-        """Update configuration."""        try:
+        """Update configuration."""
+        try:
             self.config.update(updates)
             return True
         except Exception as e:

@@ -11,7 +11,8 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Any attempt to steal the concept, idea, or code without explicit written authorization
 from Fahed Mlaiel will result in immediate legal prosecution under German and international law.
-"""import os
+"""
+import os
 import json
 from dataclasses import dataclass, field, asdict
 from typing import Dict, List, Optional, Any, Union
@@ -23,11 +24,13 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class VectorConfig:
-    """    Ultra-Advanced Vector Agent Configuration
+    """
+    Ultra-Advanced Vector Agent Configuration
     
     Comprehensive configuration management with production-ready defaults,
     environment variable support, and validation for all vector operations.
-    """    
+    """
+    
     # ===============================
     # CORE VECTOR PROCESSING SETTINGS
     # ===============================
@@ -231,7 +234,8 @@ class VectorConfig:
     # ===============================
     
     def __post_init__(self):
-        """Post-initialization validation and environment variable loading"""        try:
+        """Post-initialization validation and environment variable loading"""
+        try:
             # Load environment variables
             self._load_environment_variables()
             
@@ -251,7 +255,8 @@ class VectorConfig:
             raise ValueError(f"Configuration error: {str(e)}")
     
     def _load_environment_variables(self):
-        """Load configuration from environment variables"""        env_mappings = {
+        """Load configuration from environment variables"""
+        env_mappings = {
             "VECTOR_AGENT_BATCH_SIZE": ("batch_size", int),
             "VECTOR_AGENT_MAX_WORKERS": ("max_worker_threads", int),
             "VECTOR_AGENT_CACHE_SIZE": ("cache_size", int),
@@ -274,7 +279,8 @@ class VectorConfig:
                     logger.warning(f"Failed to convert {env_var}={env_value}: {e}")
     
     def _validate_configuration(self):
-        """Validate configuration parameters"""        # Validate ranges
+        """Validate configuration parameters"""
+        # Validate ranges
         if self.batch_size <= 0 or self.batch_size > self.max_batch_size:
             raise ValueError(f"batch_size must be between 1 and {self.max_batch_size}")
         
@@ -302,7 +308,8 @@ class VectorConfig:
             raise ValueError("persistence_dir must be a non-empty string")
     
     def _ensure_directories(self):
-        """Ensure required directories exist"""        try:
+        """Ensure required directories exist"""
+        try:
             Path(self.persistence_dir).mkdir(parents=True, exist_ok=True)
             
             # Create subdirectories
@@ -315,7 +322,8 @@ class VectorConfig:
             raise
     
     def _setup_derived_configs(self):
-        """Set up derived configuration values"""        # Adjust thread pool size based on CPU count
+        """Set up derived configuration values"""
+        # Adjust thread pool size based on CPU count
         import multiprocessing
         cpu_count = multiprocessing.cpu_count()
         if self.max_worker_threads > cpu_count * 2:
@@ -329,10 +337,12 @@ class VectorConfig:
             logger.info(f"Adjusted cache_size to {self.cache_size} based on memory limits")
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""        return asdict(self)
+        """Convert configuration to dictionary"""
+        return asdict(self)
     
     def save_to_file(self, filepath: str) -> None:
-        """Save configuration to JSON file"""        try:
+        """Save configuration to JSON file"""
+        try:
             config_dict = self.to_dict()
             with open(filepath, 'w') as f:
                 json.dump(config_dict, f, indent=2, default=str)
@@ -343,7 +353,8 @@ class VectorConfig:
     
     @classmethod
     def load_from_file(cls, filepath: str) -> 'VectorConfig':
-        """Load configuration from JSON file"""        try:
+        """Load configuration from JSON file"""
+        try:
             with open(filepath, 'r') as f:
                 config_dict = json.load(f)
             
@@ -357,26 +368,32 @@ class VectorConfig:
             raise
     
     def get_content_type_config(self, content_type: str) -> Dict[str, Any]:
-        """Get configuration for specific content type"""        return self.content_type_configs.get(content_type, self.content_type_configs.get("default", {}))
+        """Get configuration for specific content type"""
+        return self.content_type_configs.get(content_type, self.content_type_configs.get("default", {}))
     
     def get_similarity_weights(self, content_type: str) -> Dict[str, float]:
-        """Get similarity algorithm weights for content type"""        return self.similarity_algorithm_weights.get(content_type, 
+        """Get similarity algorithm weights for content type"""
+        return self.similarity_algorithm_weights.get(content_type, 
                                                    self.similarity_algorithm_weights.get("default", {}))
     
     def get_index_type_for_content(self, content_type: str) -> str:
-        """Get preferred index type for content type"""        content_config = self.get_content_type_config(content_type)
+        """Get preferred index type for content type"""
+        content_config = self.get_content_type_config(content_type)
         return content_config.get("preferred_index_type", self.default_index_type)
     
     def get_dimension_for_content(self, content_type: str) -> int:
-        """Get default dimension for content type"""        content_config = self.get_content_type_config(content_type)
+        """Get default dimension for content type"""
+        content_config = self.get_content_type_config(content_type)
         return content_config.get("default_dimension", self.default_vector_dimension)
     
     def get_similarity_threshold_for_content(self, content_type: str) -> float:
-        """Get similarity threshold for content type"""        content_config = self.get_content_type_config(content_type)
+        """Get similarity threshold for content type"""
+        content_config = self.get_content_type_config(content_type)
         return content_config.get("similarity_threshold", self.similarity_threshold)
     
     def update_from_dict(self, config_dict: Dict[str, Any]) -> None:
-        """Update configuration from dictionary"""        try:
+        """Update configuration from dictionary"""
+        try:
             for key, value in config_dict.items():
                 if hasattr(self, key):
                     setattr(self, key, value)
@@ -392,7 +409,8 @@ class VectorConfig:
             raise
     
     def get_monitoring_config(self) -> Dict[str, Any]:
-        """Get monitoring-specific configuration"""        return {
+        """Get monitoring-specific configuration"""
+        return {
             "enabled": self.enable_monitoring,
             "port": self.monitoring_port,
             "health_check_interval": self.health_check_interval,
@@ -401,7 +419,8 @@ class VectorConfig:
         }
     
     def get_security_config(self) -> Dict[str, Any]:
-        """Get security-specific configuration"""        return {
+        """Get security-specific configuration"""
+        return {
             "input_validation": self.enable_input_validation,
             "rate_limiting": self.enable_rate_limiting,
             "max_requests_per_minute": self.max_requests_per_minute,
@@ -410,7 +429,8 @@ class VectorConfig:
         }
     
     def __repr__(self) -> str:
-        """String representation of configuration"""        key_settings = {
+        """String representation of configuration"""
+        key_settings = {
             "batch_size": self.batch_size,
             "max_workers": self.max_worker_threads,
             "cache_size": self.cache_size,
@@ -425,7 +445,8 @@ class VectorConfig:
 # ===============================
 
 def create_development_config() -> VectorConfig:
-    """Create configuration optimized for development"""    return VectorConfig(
+    """Create configuration optimized for development"""
+    return VectorConfig(
         batch_size=16,
         max_worker_threads=4,
         cache_size=5000,
@@ -437,7 +458,8 @@ def create_development_config() -> VectorConfig:
 
 
 def create_production_config() -> VectorConfig:
-    """Create configuration optimized for production"""    return VectorConfig(
+    """Create configuration optimized for production"""
+    return VectorConfig(
         batch_size=64,
         max_worker_threads=16,
         cache_size=100000,
@@ -451,7 +473,8 @@ def create_production_config() -> VectorConfig:
 
 
 def create_testing_config() -> VectorConfig:
-    """Create configuration optimized for testing"""    return VectorConfig(
+    """Create configuration optimized for testing"""
+    return VectorConfig(
         batch_size=8,
         max_worker_threads=2,
         cache_size=1000,
@@ -464,7 +487,8 @@ def create_testing_config() -> VectorConfig:
 
 
 def get_config_for_environment(env: str = None) -> VectorConfig:
-    """Get configuration based on environment"""    if env is None:
+    """Get configuration based on environment"""
+    if env is None:
         env = os.getenv("VECTOR_AGENT_ENV", "development").lower()
     
     if env == "production":

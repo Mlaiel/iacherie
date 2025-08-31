@@ -24,7 +24,8 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
-"""from sqlalchemy import (
+"""
+from sqlalchemy import (
     Column, String, Text, DateTime, Float, Integer, Boolean, JSON, 
     ForeignKey, Index, Enum as SQLEnum, Numeric, UniqueConstraint,
     CheckConstraint, event
@@ -42,7 +43,8 @@ Base = declarative_base()
 
 
 class LicenseType(Enum):
-    """Types of content licenses"""    # Music licensing
+    """Types of content licenses"""
+    # Music licensing
     SYNCHRONIZATION = "synchronization"  # Sync rights for media
     MECHANICAL = "mechanical"  # Reproduction rights
     PERFORMANCE = "performance"  # Public performance rights
@@ -87,7 +89,8 @@ class LicenseType(Enum):
 
 
 class LicenseStatus(Enum):
-    """License agreement status"""    DRAFT = "draft"
+    """License agreement status"""
+    DRAFT = "draft"
     PENDING_REVIEW = "pending_review"
     UNDER_NEGOTIATION = "under_negotiation"
     APPROVED = "approved"
@@ -100,7 +103,8 @@ class LicenseStatus(Enum):
 
 
 class RoyaltyType(Enum):
-    """Types of royalty calculations"""    PERCENTAGE = "percentage"  # Percentage of revenue
+    """Types of royalty calculations"""
+    PERCENTAGE = "percentage"  # Percentage of revenue
     FLAT_FEE = "flat_fee"  # Fixed amount
     PER_UNIT = "per_unit"  # Per play/download/view
     TIERED = "tiered"  # Tiered rates based on volume
@@ -110,7 +114,8 @@ class RoyaltyType(Enum):
 
 
 class PaymentFrequency(Enum):
-    """Payment frequency for royalties"""    REAL_TIME = "real_time"
+    """Payment frequency for royalties"""
+    REAL_TIME = "real_time"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -121,7 +126,8 @@ class PaymentFrequency(Enum):
 
 
 class Territory(Enum):
-    """Geographic territories for licensing"""    WORLDWIDE = "worldwide"
+    """Geographic territories for licensing"""
+    WORLDWIDE = "worldwide"
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
     ASIA_PACIFIC = "asia_pacific"
@@ -150,7 +156,8 @@ class Territory(Enum):
 
 
 class UsageRights(Enum):
-    """Specific usage rights granted"""    REPRODUCTION = "reproduction"
+    """Specific usage rights granted"""
+    REPRODUCTION = "reproduction"
     DISTRIBUTION = "distribution"
     PUBLIC_PERFORMANCE = "public_performance"
     PUBLIC_DISPLAY = "public_display"
@@ -168,11 +175,13 @@ class UsageRights(Enum):
 
 
 class LicenseAgreement(Base):
-    """    License Agreement Model
+    """
+    License Agreement Model
     
     Comprehensive licensing agreement management with automated
     terms processing, compliance tracking, and revenue allocation.
-    """    __tablename__ = "license_agreements"
+    """
+    __tablename__ = "license_agreements"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -315,7 +324,8 @@ class LicenseAgreement(Base):
     
     @property
     def is_active(self) -> bool:
-        """Check if license is currently active"""        now = datetime.utcnow()
+        """Check if license is currently active"""
+        now = datetime.utcnow()
         return (
             self.license_status == LicenseStatus.ACTIVE and
             self.effective_date <= now and
@@ -324,22 +334,26 @@ class LicenseAgreement(Base):
     
     @property
     def days_until_expiration(self) -> Optional[int]:
-        """Calculate days until license expiration"""        if self.expiration_date:
+        """Calculate days until license expiration"""
+        if self.expiration_date:
             delta = self.expiration_date - datetime.utcnow()
             return max(0, delta.days)
         return None
     
     @property
     def is_renewable(self) -> bool:
-        """Check if license can be renewed"""        return self.auto_renewal or self.license_status == LicenseStatus.ACTIVE
+        """Check if license can be renewed"""
+        return self.auto_renewal or self.license_status == LicenseStatus.ACTIVE
 
 
 class RoyaltyPayment(Base):
-    """    Royalty Payment Model
+    """
+    Royalty Payment Model
     
     Tracks individual royalty payments generated from license agreements
     with detailed calculation breakdown and payment processing.
-    """    __tablename__ = "royalty_payments"
+    """
+    __tablename__ = "royalty_payments"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -430,11 +444,13 @@ class RoyaltyPayment(Base):
 
 
 class LicenseUsageReport(Base):
-    """    License Usage Report Model
+    """
+    License Usage Report Model
     
     Detailed usage reporting for licensed content with comprehensive
     analytics and compliance tracking.
-    """    __tablename__ = "license_usage_reports"
+    """
+    __tablename__ = "license_usage_reports"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -529,11 +545,13 @@ class LicenseUsageReport(Base):
 
 
 class LicenseTemplate(Base):
-    """    License Template Model
+    """
+    License Template Model
     
     Pre-configured license templates for rapid agreement generation
     with standardized terms and automated contract creation.
-    """    __tablename__ = "license_templates"
+    """
+    __tablename__ = "license_templates"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -595,7 +613,8 @@ class LicenseTemplate(Base):
 @event.listens_for(LicenseAgreement, 'before_insert')
 @event.listens_for(LicenseAgreement, 'before_update')
 def validate_license_agreement(mapper, connection, target):
-    """Validate license agreement data before database operations"""    # Ensure agreement number is generated if not provided
+    """Validate license agreement data before database operations"""
+    # Ensure agreement number is generated if not provided
     if not target.agreement_number:
         target.agreement_number = f"LIC-{datetime.utcnow().strftime('%Y%m%d')}-{str(uuid.uuid4())[:8].upper()}"
     
@@ -616,7 +635,8 @@ def validate_license_agreement(mapper, connection, target):
 @event.listens_for(RoyaltyPayment, 'before_insert')
 @event.listens_for(RoyaltyPayment, 'before_update')
 def calculate_final_payment(mapper, connection, target):
-    """Calculate final payment amount before database operations"""    if not target.payment_reference:
+    """Calculate final payment amount before database operations"""
+    if not target.payment_reference:
         target.payment_reference = f"ROY-{datetime.utcnow().strftime('%Y%m%d')}-{str(uuid.uuid4())[:8].upper()}"
     
     # Calculate final payment amount

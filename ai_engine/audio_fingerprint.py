@@ -6,7 +6,8 @@ Supports multiple audio formats and real-time fingerprint generation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""import numpy as np
+"""
+import numpy as np
 import hashlib
 import io
 import logging
@@ -30,7 +31,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioFingerprint:
-    """Audio fingerprint data structure."""    hash_value: str
+    """Audio fingerprint data structure."""
+    hash_value: str
     chromaprint_data: bytes
     spectral_features: Dict
     mfcc_features: np.ndarray
@@ -42,7 +44,8 @@ class AudioFingerprint:
     metadata: Dict
 
 class AudioFingerprintEngine:
-    """    Professional audio fingerprinting engine with multiple algorithms.
+    """
+    Professional audio fingerprinting engine with multiple algorithms.
     
     Features:
     - Chromaprint fingerprinting for audio identification
@@ -51,13 +54,15 @@ class AudioFingerprintEngine:
     - Tempo and key detection
     - Multi-format audio support
     - Batch processing capabilities
-    """    
+    """
+    
     def __init__(self, 
                  sample_rate: int = 22050,
                  chunk_duration: float = 10.0,
                  overlap: float = 0.5,
                  precision_threshold: float = 0.95):
-        """Initialize audio fingerprint engine."""        self.sample_rate = sample_rate
+        """Initialize audio fingerprint engine."""
+        self.sample_rate = sample_rate
         self.chunk_duration = chunk_duration
         self.overlap = overlap
         self.precision_threshold = precision_threshold
@@ -91,7 +96,8 @@ class AudioFingerprintEngine:
     def create_fingerprint(self, 
                           audio_data: Union[str, bytes, Path], 
                           metadata: Dict = None) -> AudioFingerprint:
-        """        Create comprehensive audio fingerprint.
+        """
+        Create comprehensive audio fingerprint.
         
         Args:
             audio_data: Audio file path, bytes, or Path object
@@ -99,7 +105,8 @@ class AudioFingerprintEngine:
             
         Returns:
             AudioFingerprint object with all computed features
-        """        try:
+        """
+        try:
             # Load and preprocess audio
             y, sr = self._load_audio(audio_data)
             
@@ -148,7 +155,8 @@ class AudioFingerprintEngine:
     def match_fingerprint(self, 
                          fingerprint: AudioFingerprint,
                          similarity_threshold: float = 0.85) -> List[Dict]:
-        """        Match audio fingerprint against database.
+        """
+        Match audio fingerprint against database.
         
         Args:
             fingerprint: AudioFingerprint to match
@@ -156,7 +164,8 @@ class AudioFingerprintEngine:
             
         Returns:
             List of matching fingerprints with similarity scores
-        """        try:
+        """
+        try:
             # Query database for potential matches
             candidates = self.repository.find_similar_audio_fingerprints(
                 fingerprint.hash_value,
@@ -188,7 +197,8 @@ class AudioFingerprintEngine:
             raise FingerprintError(f"Failed to match audio fingerprint: {str(e)}")
     
     def _load_audio(self, audio_data: Union[str, bytes, Path]) -> Tuple[np.ndarray, int]:
-        """Load audio from various sources."""        try:
+        """Load audio from various sources."""
+        try:
             if isinstance(audio_data, (str, Path)):
                 # Load from file
                 y, sr = librosa.load(str(audio_data), sr=self.sample_rate)
@@ -208,7 +218,8 @@ class AudioFingerprintEngine:
             raise FingerprintError(f"Failed to load audio: {str(e)}")
     
     def _generate_chromaprint(self, y: np.ndarray, sr: int) -> bytes:
-        """Generate Chromaprint fingerprint."""        try:
+        """Generate Chromaprint fingerprint."""
+        try:
             # Convert to int16 for chromaprint
             audio_int16 = (y * 32767).astype(np.int16)
             
@@ -227,7 +238,8 @@ class AudioFingerprintEngine:
             raise FingerprintError(f"Failed to generate chromaprint: {str(e)}")
     
     def _extract_spectral_features(self, y: np.ndarray, sr: int) -> Dict:
-        """Extract spectral features using Essentia."""        try:
+        """Extract spectral features using Essentia."""
+        try:
             # Convert to essentia format
             audio_essentia = es.MonoLoader(filename='', sampleRate=sr)(y.astype(np.float32))
             
@@ -252,7 +264,8 @@ class AudioFingerprintEngine:
             return self._extract_spectral_features_librosa(y, sr)
     
     def _extract_spectral_features_librosa(self, y: np.ndarray, sr: int) -> Dict:
-        """Extract spectral features using librosa fallback."""        features = {
+        """Extract spectral features using librosa fallback."""
+        features = {
             "spectral_centroid": float(np.mean(librosa.feature.spectral_centroid(y=y, sr=sr))),
             "spectral_rolloff": float(np.mean(librosa.feature.spectral_rolloff(y=y, sr=sr))),
             "zero_crossing_rate": float(np.mean(librosa.feature.zero_crossing_rate(y))),
@@ -261,7 +274,8 @@ class AudioFingerprintEngine:
         return features
     
     def _extract_mfcc_features(self, y: np.ndarray, sr: int) -> np.ndarray:
-        """Extract MFCC features."""        try:
+        """Extract MFCC features."""
+        try:
             mfccs = librosa.feature.mfcc(
                 y=y, 
                 sr=sr,
@@ -277,14 +291,16 @@ class AudioFingerprintEngine:
             raise FingerprintError(f"Failed to extract MFCC features: {str(e)}")
     
     def _detect_tempo(self, y: np.ndarray, sr: int) -> float:
-        """Detect tempo using librosa."""        try:
+        """Detect tempo using librosa."""
+        try:
             tempo, _ = librosa.beat.beat_track(y=y, sr=sr)
             return float(tempo)
         except Exception:
             return 0.0
     
     def _detect_key(self, y: np.ndarray, sr: int) -> str:
-        """Detect musical key."""        try:
+        """Detect musical key."""
+        try:
             # Simplified key detection using chroma features
             chroma = librosa.feature.chroma_stft(y=y, sr=sr)
             chroma_mean = np.mean(chroma, axis=1)
@@ -298,13 +314,15 @@ class AudioFingerprintEngine:
             return "unknown"
     
     def _calculate_energy(self, y: np.ndarray) -> float:
-        """Calculate audio energy."""        return float(np.mean(y ** 2))
+        """Calculate audio energy."""
+        return float(np.mean(y ** 2))
     
     def _generate_combined_hash(self, 
                                chromaprint_data: bytes,
                                spectral_features: Dict,
                                mfcc_features: np.ndarray) -> str:
-        """Generate combined hash from all features."""        try:
+        """Generate combined hash from all features."""
+        try:
             # Combine all features into a single byte string
             combined_data = chromaprint_data
             combined_data += str(spectral_features).encode('utf-8')
@@ -318,7 +336,8 @@ class AudioFingerprintEngine:
             raise FingerprintError(f"Failed to generate combined hash: {str(e)}")
     
     def _calculate_similarity(self, fp1: AudioFingerprint, fp2: Dict) -> float:
-        """Calculate similarity between two audio fingerprints."""        try:
+        """Calculate similarity between two audio fingerprints."""
+        try:
             # Chromaprint similarity (primary)
             chromaprint_sim = self._chromaprint_similarity(
                 fp1.chromaprint_data, fp2.get("chromaprint_data", b"")
@@ -350,7 +369,8 @@ class AudioFingerprintEngine:
             return 0.0
     
     def _chromaprint_similarity(self, data1: bytes, data2: bytes) -> float:
-        """Calculate Chromaprint similarity."""        try:
+        """Calculate Chromaprint similarity."""
+        try:
             if not data1 or not data2:
                 return 0.0
             
@@ -370,7 +390,8 @@ class AudioFingerprintEngine:
             return 0.0
     
     def _spectral_similarity(self, features1: Dict, features2: Dict) -> float:
-        """Calculate spectral features similarity."""        try:
+        """Calculate spectral features similarity."""
+        try:
             if not features1 or not features2:
                 return 0.0
             
@@ -391,7 +412,8 @@ class AudioFingerprintEngine:
             return 0.0
     
     def _mfcc_similarity(self, mfcc1: np.ndarray, mfcc2: np.ndarray) -> float:
-        """Calculate MFCC similarity using cosine similarity."""        try:
+        """Calculate MFCC similarity using cosine similarity."""
+        try:
             if mfcc1.size == 0 or mfcc2.size == 0:
                 return 0.0
             
@@ -414,7 +436,8 @@ class AudioFingerprintEngine:
             return 0.0
     
     def _get_matched_features(self, fp1: AudioFingerprint, fp2: Dict) -> List[str]:
-        """Get list of matched features."""        matched = []
+        """Get list of matched features."""
+        matched = []
         
         # Check tempo similarity
         tempo1 = fp1.tempo
@@ -435,7 +458,8 @@ class AudioFingerprintEngine:
         return matched
     
     def batch_process(self, audio_files: List[Union[str, Path]]) -> List[AudioFingerprint]:
-        """Process multiple audio files in batch."""        fingerprints = []
+        """Process multiple audio files in batch."""
+        fingerprints = []
         
         for audio_file in audio_files:
             try:
@@ -448,7 +472,8 @@ class AudioFingerprintEngine:
         return fingerprints
     
     def get_engine_stats(self) -> Dict:
-        """Get engine statistics."""        return {
+        """Get engine statistics."""
+        return {
             "version": "1.0.0",
             "sample_rate": self.sample_rate,
             "chunk_duration": self.chunk_duration,

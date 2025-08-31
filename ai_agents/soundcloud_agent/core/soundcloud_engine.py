@@ -6,7 +6,8 @@ content management, and intelligent audio operations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 import re
@@ -20,7 +21,8 @@ from urllib.parse import urlparse, parse_qs
 logger = logging.getLogger(__name__)
 
 class SoundCloudEndpoint(Enum):
-    """SoundCloud API endpoints"""    TRACKS = "tracks"
+    """SoundCloud API endpoints"""
+    TRACKS = "tracks"
     USERS = "users"
     PLAYLISTS = "playlists"
     RESOLVE = "resolve"
@@ -29,7 +31,8 @@ class SoundCloudEndpoint(Enum):
 
 @dataclass
 class SoundCloudTrack:
-    """SoundCloud track data structure"""    id: int
+    """SoundCloud track data structure"""
+    id: int
     title: str
     user: str
     user_id: int
@@ -50,7 +53,8 @@ class SoundCloudTrack:
 
 @dataclass
 class SoundCloudPlaylist:
-    """SoundCloud playlist data structure"""    id: int
+    """SoundCloud playlist data structure"""
+    id: int
     title: str
     user: str
     user_id: int
@@ -65,7 +69,8 @@ class SoundCloudPlaylist:
 
 @dataclass
 class SoundCloudUser:
-    """SoundCloud user data structure"""    id: int
+    """SoundCloud user data structure"""
+    id: int
     username: str
     full_name: str
     avatar_url: Optional[str] = None
@@ -79,7 +84,8 @@ class SoundCloudUser:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class SoundCloudEngine:
-    """    SoundCloud Engine for API Integration and Content Management
+    """
+    SoundCloud Engine for API Integration and Content Management
     
     Provides comprehensive SoundCloud capabilities including:
     - SoundCloud API v2 integration
@@ -88,7 +94,8 @@ class SoundCloudEngine:
     - Content discovery and search
     - Upload and distribution
     - Analytics and engagement tracking
-    """    
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.client_id = self.config.get('client_id')
@@ -113,7 +120,8 @@ class SoundCloudEngine:
         self.scraper = None
         
     async def initialize(self):
-        """Initialize the SoundCloud engine"""        try:
+        """Initialize the SoundCloud engine"""
+        try:
             # Create HTTP session
             self.session = aiohttp.ClientSession()
             
@@ -132,7 +140,8 @@ class SoundCloudEngine:
             raise
     
     async def shutdown(self):
-        """Shutdown the engine and cleanup resources"""        if self.session:
+        """Shutdown the engine and cleanup resources"""
+        if self.session:
             await self.session.close()
         if self.scraper:
             await self.scraper.shutdown()
@@ -144,7 +153,8 @@ class SoundCloudEngine:
         genre: Optional[str] = None,
         tags: Optional[List[str]] = None
     ) -> List[SoundCloudTrack]:
-        """        Search for tracks on SoundCloud
+        """
+        Search for tracks on SoundCloud
         
         Args:
             query: Search query string
@@ -154,7 +164,8 @@ class SoundCloudEngine:
             
         Returns:
             List of SoundCloudTrack objects
-        """        try:
+        """
+        try:
             # Check cache
             cache_key = f"search_tracks_{query}_{limit}_{genre}_{tags}"
             if cache_key in self.cache:
@@ -201,7 +212,8 @@ class SoundCloudEngine:
             raise
     
     async def get_track_details(self, track_id: Union[int, str]) -> SoundCloudTrack:
-        """Get detailed information about a specific track"""        try:
+        """Get detailed information about a specific track"""
+        try:
             # Handle both numeric IDs and URLs
             if isinstance(track_id, str) and track_id.startswith('http'):
                 track_id = await self._resolve_url(track_id)
@@ -217,7 +229,8 @@ class SoundCloudEngine:
             raise
     
     async def get_user_tracks(self, user_id: Union[int, str], limit: int = 50) -> List[SoundCloudTrack]:
-        """Get all tracks from a user"""        try:
+        """Get all tracks from a user"""
+        try:
             # Handle both numeric IDs and URLs/usernames
             if isinstance(user_id, str) and not user_id.isdigit():
                 user_id = await self._resolve_user(user_id)
@@ -247,7 +260,8 @@ class SoundCloudEngine:
             raise
     
     async def get_playlist_tracks(self, playlist_id: Union[int, str]) -> SoundCloudPlaylist:
-        """Get all tracks from a playlist"""        try:
+        """Get all tracks from a playlist"""
+        try:
             # Handle both numeric IDs and URLs
             if isinstance(playlist_id, str) and playlist_id.startswith('http'):
                 playlist_id = await self._resolve_url(playlist_id)
@@ -279,7 +293,8 @@ class SoundCloudEngine:
         region: str = 'global',
         limit: int = 50
     ) -> List[SoundCloudTrack]:
-        """Get trending tracks"""        try:
+        """Get trending tracks"""
+        try:
             # SoundCloud doesn't have a direct trending endpoint
             # We'll use charts or popular tracks instead
             
@@ -310,7 +325,8 @@ class SoundCloudEngine:
             return await self.search_tracks("popular", limit=limit)
     
     async def analyze_track_engagement(self, track_id: Union[int, str]) -> Dict[str, Any]:
-        """Analyze engagement metrics for a track"""        try:
+        """Analyze engagement metrics for a track"""
+        try:
             track = await self.get_track_details(track_id)
             
             # Get comments for engagement analysis
@@ -355,7 +371,8 @@ class SoundCloudEngine:
             raise
     
     async def get_track_comments(self, track_id: Union[int, str], limit: int = 50) -> List[Dict[str, Any]]:
-        """Get comments for a track"""        try:
+        """Get comments for a track"""
+        try:
             url = f"{self.base_url}/tracks/{track_id}/comments"
             params = {
                 'limit': limit,
@@ -385,7 +402,8 @@ class SoundCloudEngine:
         genre: Optional[str] = None,
         privacy: str = 'public'
     ) -> SoundCloudTrack:
-        """Upload a track to SoundCloud"""        try:
+        """Upload a track to SoundCloud"""
+        try:
             if not self.access_token:
                 raise ValueError("Access token required for uploading")
             
@@ -432,7 +450,8 @@ class SoundCloudEngine:
         mood: Optional[str] = None,
         limit: int = 20
     ) -> List[SoundCloudTrack]:
-        """Use intelligent scraping for advanced content discovery"""        try:
+        """Use intelligent scraping for advanced content discovery"""
+        try:
             if not self.scraper:
                 # Fallback to regular search
                 query = ' '.join(genres or ['music'])
@@ -453,7 +472,8 @@ class SoundCloudEngine:
     # Private helper methods
     
     async def _validate_credentials(self):
-        """Validate SoundCloud credentials"""        try:
+        """Validate SoundCloud credentials"""
+        try:
             if not self.client_id:
                 logger.warning("SoundCloud client ID not configured, using mock mode")
                 return
@@ -479,7 +499,8 @@ class SoundCloudEngine:
         headers: Optional[Dict] = None,
         data: Optional[Dict] = None
     ) -> Dict[str, Any]:
-        """Make authenticated request to SoundCloud API"""        try:
+        """Make authenticated request to SoundCloud API"""
+        try:
             # Check rate limit
             await self._check_rate_limit()
             
@@ -516,7 +537,8 @@ class SoundCloudEngine:
             raise
     
     async def _check_rate_limit(self):
-        """Check and enforce rate limiting"""        now = datetime.utcnow()
+        """Check and enforce rate limiting"""
+        now = datetime.utcnow()
         
         # Reset counter if hour has passed
         if now - self.rate_limit_reset > timedelta(hours=1):
@@ -534,7 +556,8 @@ class SoundCloudEngine:
         self.request_count += 1
     
     async def _resolve_url(self, url: str) -> int:
-        """Resolve SoundCloud URL to track/playlist ID"""        try:
+        """Resolve SoundCloud URL to track/playlist ID"""
+        try:
             resolve_url = f"{self.base_url}/resolve"
             params = {
                 'url': url,
@@ -549,7 +572,8 @@ class SoundCloudEngine:
             raise
     
     async def _resolve_user(self, username: str) -> int:
-        """Resolve username to user ID"""        try:
+        """Resolve username to user ID"""
+        try:
             if username.startswith('http'):
                 return await self._resolve_url(username)
             
@@ -572,7 +596,8 @@ class SoundCloudEngine:
             raise
     
     async def _get_mock_response(self, method: str, url: str, params: Optional[Dict] = None) -> Dict[str, Any]:
-        """Generate mock responses for testing"""        import random
+        """Generate mock responses for testing"""
+        import random
         
         if 'search/tracks' in url or '/tracks' in url:
             return {
@@ -636,7 +661,8 @@ class SoundCloudEngine:
         return {'collection': []}
     
     def _parse_track_data(self, track_data: Dict[str, Any]) -> SoundCloudTrack:
-        """Parse track data from SoundCloud API response"""        try:
+        """Parse track data from SoundCloud API response"""
+        try:
             user_data = track_data.get('user', {})
             
             return SoundCloudTrack(
@@ -665,7 +691,8 @@ class SoundCloudEngine:
             raise
     
     def _parse_playlist_data(self, playlist_data: Dict[str, Any]) -> SoundCloudPlaylist:
-        """Parse playlist data from SoundCloud API response"""        try:
+        """Parse playlist data from SoundCloud API response"""
+        try:
             user_data = playlist_data.get('user', {})
             
             return SoundCloudPlaylist(
@@ -687,7 +714,8 @@ class SoundCloudEngine:
             raise
     
     def _parse_date(self, date_string: Optional[str]) -> Optional[datetime]:
-        """Parse date string to datetime object"""        if not date_string:
+        """Parse date string to datetime object"""
+        if not date_string:
             return None
         
         try:
@@ -696,7 +724,8 @@ class SoundCloudEngine:
             return None
     
     def _is_positive_comment(self, comment: Dict[str, Any]) -> bool:
-        """Simple sentiment analysis for comments"""        body = comment.get('body', '').lower()
+        """Simple sentiment analysis for comments"""
+        body = comment.get('body', '').lower()
         positive_words = ['great', 'awesome', 'love', 'amazing', 'good', 'nice', 'excellent', 'fantastic']
         negative_words = ['bad', 'awful', 'hate', 'terrible', 'horrible', 'sucks']
         
@@ -706,7 +735,8 @@ class SoundCloudEngine:
         return positive_count > negative_count
     
     def _calculate_popularity_tier(self, track: SoundCloudTrack) -> str:
-        """Calculate popularity tier based on play count"""        plays = track.play_count
+        """Calculate popularity tier based on play count"""
+        plays = track.play_count
         
         if plays > 1000000:
             return 'viral'
@@ -718,7 +748,8 @@ class SoundCloudEngine:
             return 'niche'
     
     def _assess_viral_potential(self, track: SoundCloudTrack) -> float:
-        """Assess viral potential based on engagement metrics"""        if track.play_count == 0:
+        """Assess viral potential based on engagement metrics"""
+        if track.play_count == 0:
             return 0.0
         
         like_rate = track.like_count / track.play_count
@@ -729,7 +760,8 @@ class SoundCloudEngine:
         return min(1.0, viral_score)
     
     def _analyze_growth_indicators(self, track: SoundCloudTrack) -> Dict[str, Any]:
-        """Analyze growth indicators for a track"""        return {
+        """Analyze growth indicators for a track"""
+        return {
             'engagement_velocity': track.like_count + track.comment_count,
             'discovery_potential': 'high' if track.play_count > 1000 else 'medium',
             'viral_indicators': {
@@ -740,7 +772,8 @@ class SoundCloudEngine:
         }
     
     def get_engine_stats(self) -> Dict[str, Any]:
-        """Get engine statistics and status"""        return {
+        """Get engine statistics and status"""
+        return {
             'initialized': self.session is not None,
             'has_client_id': bool(self.client_id),
             'has_access_token': bool(self.access_token),

@@ -10,7 +10,8 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 ⚠️  AVERTISSEMENT STRICT ⚠️
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
-"""import asyncio
+"""
+import asyncio
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Callable, Union
@@ -31,21 +32,24 @@ from ...utils.template_engine import TemplateEngine
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    INFO = "info"
+    """Alert severity levels"""
+    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 
 class AlertStatus(Enum):
-    """Alert status types"""    ACTIVE = "active"
+    """Alert status types"""
+    ACTIVE = "active"
     ACKNOWLEDGED = "acknowledged"
     RESOLVED = "resolved"
     SUPPRESSED = "suppressed"
 
 
 class NotificationType(Enum):
-    """Notification channel types"""    EMAIL = "email"
+    """Notification channel types"""
+    EMAIL = "email"
     SLACK = "slack"
     WEBHOOK = "webhook"
     SMS = "sms"
@@ -55,14 +59,16 @@ class NotificationType(Enum):
 
 @dataclass
 class AlertCondition:
-    """Alert condition definition"""    metric_name: str
+    """Alert condition definition"""
+    metric_name: str
     operator: str  # gt, gte, lt, lte, eq, ne
     threshold: float
     duration_minutes: int
     aggregation: str = "avg"  # avg, max, min, sum, count
     
     def evaluate(self, values: List[float]) -> bool:
-        """Evaluate condition against values"""        if not values:
+        """Evaluate condition against values"""
+        if not values:
             return False
         
         # Apply aggregation
@@ -98,7 +104,8 @@ class AlertCondition:
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration"""    rule_id: str
+    """Alert rule configuration"""
+    rule_id: str
     name: str
     description: str
     conditions: List[AlertCondition]
@@ -112,7 +119,8 @@ class AlertRule:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        data = asdict(self)
+        """Convert to dictionary"""
+        data = asdict(self)
         data['severity'] = self.severity.value
         data['conditions'] = [asdict(condition) for condition in self.conditions]
         return data
@@ -120,7 +128,8 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Alert instance"""    alert_id: str
+    """Alert instance"""
+    alert_id: str
     rule_id: str
     rule_name: str
     severity: AlertSeverity
@@ -138,7 +147,8 @@ class Alert:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        data = asdict(self)
+        """Convert to dictionary"""
+        data = asdict(self)
         data['severity'] = self.severity.value
         data['status'] = self.status.value
         data['triggered_at'] = self.triggered_at.isoformat()
@@ -151,7 +161,8 @@ class Alert:
 
 @dataclass
 class NotificationChannel:
-    """Notification channel configuration"""    channel_id: str
+    """Notification channel configuration"""
+    channel_id: str
     name: str
     channel_type: NotificationType
     config: Dict[str, Any]
@@ -159,13 +170,15 @@ class NotificationChannel:
     rate_limit_per_hour: int = 60
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        data = asdict(self)
+        """Convert to dictionary"""
+        data = asdict(self)
         data['channel_type'] = self.channel_type.value
         return data
 
 
 class DatabaseAlertManager:
-    """    Advanced database alert management system.
+    """
+    Advanced database alert management system.
     
     Features:
     - Flexible alert rule engine
@@ -174,7 +187,8 @@ class DatabaseAlertManager:
     - Alert suppression and grouping
     - Automated resolution
     - Rich templating system
-    """    
+    """
+    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
@@ -200,7 +214,8 @@ class DatabaseAlertManager:
         self.logger.info("Database Alert Manager initialized")
     
     def _initialize_default_setup(self) -> None:
-        """Initialize default alert rules and notification channels"""        
+        """Initialize default alert rules and notification channels"""
+        
         # Default notification channels
         if self.settings.email_enabled:
             self.add_notification_channel(NotificationChannel(
@@ -298,29 +313,34 @@ class DatabaseAlertManager:
         ))
     
     def add_alert_rule(self, rule: AlertRule) -> None:
-        """Add alert rule"""        self.alert_rules[rule.rule_id] = rule
+        """Add alert rule"""
+        self.alert_rules[rule.rule_id] = rule
         self.logger.info(f"Added alert rule: {rule.name}")
     
     def remove_alert_rule(self, rule_id: str) -> bool:
-        """Remove alert rule"""        if rule_id in self.alert_rules:
+        """Remove alert rule"""
+        if rule_id in self.alert_rules:
             del self.alert_rules[rule_id]
             self.logger.info(f"Removed alert rule: {rule_id}")
             return True
         return False
     
     def add_notification_channel(self, channel: NotificationChannel) -> None:
-        """Add notification channel"""        self.notification_channels[channel.channel_id] = channel
+        """Add notification channel"""
+        self.notification_channels[channel.channel_id] = channel
         self.logger.info(f"Added notification channel: {channel.name}")
     
     def remove_notification_channel(self, channel_id: str) -> bool:
-        """Remove notification channel"""        if channel_id in self.notification_channels:
+        """Remove notification channel"""
+        if channel_id in self.notification_channels:
             del self.notification_channels[channel_id]
             self.logger.info(f"Removed notification channel: {channel_id}")
             return True
         return False
     
     async def start_evaluation(self, interval: int = 60) -> None:
-        """Start alert rule evaluation"""        if self.evaluating_active:
+        """Start alert rule evaluation"""
+        if self.evaluating_active:
             self.logger.warning("Alert evaluation already active")
             return
         
@@ -340,11 +360,13 @@ class DatabaseAlertManager:
             raise
     
     async def stop_evaluation(self) -> None:
-        """Stop alert rule evaluation"""        self.evaluating_active = False
+        """Stop alert rule evaluation"""
+        self.evaluating_active = False
         self.logger.info("Alert evaluation stopped")
     
     async def _evaluate_all_rules(self) -> None:
-        """Evaluate all enabled alert rules"""        for rule_id, rule in self.alert_rules.items():
+        """Evaluate all enabled alert rules"""
+        for rule_id, rule in self.alert_rules.items():
             if rule.enabled:
                 try:
                     await self._evaluate_rule(rule)
@@ -352,7 +374,8 @@ class DatabaseAlertManager:
                     self.logger.error(f"Error evaluating rule {rule_id}: {e}")
     
     async def _evaluate_rule(self, rule: AlertRule) -> None:
-        """Evaluate a single alert rule"""        try:
+        """Evaluate a single alert rule"""
+        try:
             # Check if all conditions are met
             all_conditions_met = True
             
@@ -389,7 +412,8 @@ class DatabaseAlertManager:
         metric_name: str, 
         duration_minutes: int
     ) -> List[float]:
-        """Get metric values for specified duration"""        try:
+        """Get metric values for specified duration"""
+        try:
             # Get from cache or metric buffer
             if metric_name in self.metric_buffers:
                 cutoff_time = datetime.utcnow() - timedelta(minutes=duration_minutes)
@@ -408,7 +432,8 @@ class DatabaseAlertManager:
             return []
     
     async def _create_alert(self, rule: AlertRule, alert_id: str) -> None:
-        """Create new alert"""        try:
+        """Create new alert"""
+        try:
             alert = Alert(
                 alert_id=alert_id,
                 rule_id=rule.rule_id,
@@ -441,7 +466,8 @@ class DatabaseAlertManager:
             self.logger.error(f"Error creating alert for rule {rule.rule_id}: {e}")
     
     async def _send_alert_notifications(self, alert: Alert, rule: AlertRule) -> None:
-        """Send alert notifications to configured channels"""        try:
+        """Send alert notifications to configured channels"""
+        try:
             # Check if alert is suppressed
             if alert.suppressed_until and datetime.utcnow() < alert.suppressed_until:
                 return
@@ -464,7 +490,8 @@ class DatabaseAlertManager:
             self.logger.error(f"Error sending notifications for alert {alert.alert_id}: {e}")
     
     async def _check_rate_limit(self, channel_id: str) -> bool:
-        """Check if channel rate limit allows notification"""        try:
+        """Check if channel rate limit allows notification"""
+        try:
             channel = self.notification_channels.get(channel_id)
             if not channel:
                 return False
@@ -483,7 +510,8 @@ class DatabaseAlertManager:
             return False
     
     async def _send_notification(self, alert: Alert, channel: NotificationChannel) -> None:
-        """Send notification to specific channel"""        try:
+        """Send notification to specific channel"""
+        try:
             if channel.channel_type == NotificationType.EMAIL:
                 await self._send_email_notification(alert, channel)
             elif channel.channel_type == NotificationType.SLACK:
@@ -499,7 +527,8 @@ class DatabaseAlertManager:
             self.logger.error(f"Error sending notification to {channel.name}: {e}")
     
     async def _send_email_notification(self, alert: Alert, channel: NotificationChannel) -> None:
-        """Send email notification"""        try:
+        """Send email notification"""
+        try:
             config = channel.config
             
             # Create message
@@ -531,7 +560,8 @@ class DatabaseAlertManager:
             self.logger.error(f"Error sending email notification: {e}")
     
     async def _send_slack_notification(self, alert: Alert, channel: NotificationChannel) -> None:
-        """Send Slack notification"""        try:
+        """Send Slack notification"""
+        try:
             config = channel.config
             webhook_url = config['webhook_url']
             
@@ -562,7 +592,8 @@ class DatabaseAlertManager:
             self.logger.error(f"Error sending Slack notification: {e}")
     
     async def _send_webhook_notification(self, alert: Alert, channel: NotificationChannel) -> None:
-        """Send webhook notification"""        try:
+        """Send webhook notification"""
+        try:
             config = channel.config
             url = config['url']
             
@@ -585,7 +616,8 @@ class DatabaseAlertManager:
             self.logger.error(f"Error sending webhook notification: {e}")
     
     async def _send_teams_notification(self, alert: Alert, channel: NotificationChannel) -> None:
-        """Send Microsoft Teams notification"""        try:
+        """Send Microsoft Teams notification"""
+        try:
             config = channel.config
             webhook_url = config['webhook_url']
             
@@ -617,7 +649,8 @@ class DatabaseAlertManager:
             self.logger.error(f"Error sending Teams notification: {e}")
     
     def _get_severity_color(self, severity: AlertSeverity) -> str:
-        """Get color code for severity level"""        colors = {
+        """Get color code for severity level"""
+        colors = {
             AlertSeverity.INFO: "#36a64f",
             AlertSeverity.WARNING: "#ff9500",
             AlertSeverity.CRITICAL: "#ff4444",
@@ -626,7 +659,8 @@ class DatabaseAlertManager:
         return colors.get(severity, "#808080")
     
     async def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> bool:
-        """Acknowledge an alert"""        try:
+        """Acknowledge an alert"""
+        try:
             if alert_id in self.active_alerts:
                 alert = self.active_alerts[alert_id]
                 
@@ -652,7 +686,8 @@ class DatabaseAlertManager:
             return False
     
     async def _resolve_alert(self, alert_id: str, reason: str, resolved_by: str) -> bool:
-        """Resolve an alert"""        try:
+        """Resolve an alert"""
+        try:
             if alert_id in self.active_alerts:
                 alert = self.active_alerts[alert_id]
                 
@@ -679,7 +714,8 @@ class DatabaseAlertManager:
             return False
     
     async def suppress_alert(self, alert_id: str, duration_minutes: int) -> bool:
-        """Suppress an alert for specified duration"""        try:
+        """Suppress an alert for specified duration"""
+        try:
             if alert_id in self.active_alerts:
                 alert = self.active_alerts[alert_id]
                 alert.suppressed_until = datetime.utcnow() + timedelta(minutes=duration_minutes)
@@ -701,7 +737,8 @@ class DatabaseAlertManager:
             return False
     
     async def _check_auto_resolution(self) -> None:
-        """Check for auto-resolution of alerts"""        try:
+        """Check for auto-resolution of alerts"""
+        try:
             for alert_id, alert in list(self.active_alerts.items()):
                 if alert.status == AlertStatus.ACTIVE:
                     rule = self.alert_rules.get(alert.rule_id)
@@ -727,7 +764,8 @@ class DatabaseAlertManager:
             self.logger.error(f"Error checking auto-resolution: {e}")
     
     async def _cleanup_old_alerts(self) -> None:
-        """Clean up old resolved alerts"""        try:
+        """Clean up old resolved alerts"""
+        try:
             cutoff_time = datetime.utcnow() - timedelta(days=7)
             
             alerts_to_remove = []
@@ -747,13 +785,15 @@ class DatabaseAlertManager:
             self.logger.error(f"Error cleaning up old alerts: {e}")
     
     async def add_metric_value(self, metric_name: str, metric_value: Any) -> None:
-        """Add metric value to buffers for alert evaluation"""        try:
+        """Add metric value to buffers for alert evaluation"""
+        try:
             self.metric_buffers[metric_name].append(metric_value)
         except Exception as e:
             self.logger.error(f"Error adding metric value for {metric_name}: {e}")
     
     async def get_active_alerts(self, severity: AlertSeverity = None) -> List[Dict[str, Any]]:
-        """Get active alerts"""        try:
+        """Get active alerts"""
+        try:
             alerts = []
             for alert in self.active_alerts.values():
                 if alert.status == AlertStatus.ACTIVE:
@@ -782,7 +822,8 @@ class DatabaseAlertManager:
             return []
     
     async def get_alert_summary(self) -> Dict[str, Any]:
-        """Get alert summary statistics"""        try:
+        """Get alert summary statistics"""
+        try:
             summary = {
                 "total_active": 0,
                 "by_severity": {severity.value: 0 for severity in AlertSeverity},
@@ -807,7 +848,9 @@ class DatabaseAlertManager:
             return {"error": str(e)}
     
     async def get_alert_rules(self) -> List[Dict[str, Any]]:
-        """Get all alert rules"""        return [rule.to_dict() for rule in self.alert_rules.values()]
+        """Get all alert rules"""
+        return [rule.to_dict() for rule in self.alert_rules.values()]
     
     async def get_notification_channels(self) -> List[Dict[str, Any]]:
-        """Get all notification channels"""        return [channel.to_dict() for channel in self.notification_channels.values()]
+        """Get all notification channels"""
+        return [channel.to_dict() for channel in self.notification_channels.values()]

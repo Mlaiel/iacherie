@@ -21,7 +21,8 @@ Project Team Specialties:
 - Database Administrator: PostgreSQL/Redis/Vector DB
 - Security Engineer: Enterprise Security/Compliance
 - Microservices Architect: Distributed Systems
-"""import asyncio
+"""
+import asyncio
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Set, Union, Any, Tuple
@@ -47,7 +48,8 @@ logger = logging.getLogger(__name__)
 
 
 class PartnershipType(Enum):
-    """Types of partnership arrangements"""    BRAND_SPONSORSHIP = "brand_sponsorship"
+    """Types of partnership arrangements"""
+    BRAND_SPONSORSHIP = "brand_sponsorship"
     PRODUCT_PLACEMENT = "product_placement"
     AFFILIATE_MARKETING = "affiliate_marketing"
     CONTENT_COLLABORATION = "content_collaboration"
@@ -58,7 +60,8 @@ class PartnershipType(Enum):
 
 
 class CampaignStatus(Enum):
-    """Campaign status types"""    DRAFT = "draft"
+    """Campaign status types"""
+    DRAFT = "draft"
     ACTIVE = "active"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -67,7 +70,8 @@ class CampaignStatus(Enum):
 
 
 class ContractStatus(Enum):
-    """Contract status types"""    DRAFT = "draft"
+    """Contract status types"""
+    DRAFT = "draft"
     UNDER_NEGOTIATION = "under_negotiation"
     PENDING_SIGNATURE = "pending_signature"
     ACTIVE = "active"
@@ -77,7 +81,8 @@ class ContractStatus(Enum):
 
 @dataclass
 class Partnership:
-    """Partnership data structure"""    partnership_id: str
+    """Partnership data structure"""
+    partnership_id: str
     creator_id: str
     brand_id: str
     partnership_type: PartnershipType
@@ -97,7 +102,8 @@ class Partnership:
 
 @dataclass
 class BrandProfile:
-    """Brand profile for partnership matching"""    brand_id: str
+    """Brand profile for partnership matching"""
+    brand_id: str
     name: str
     industry: str
     target_audience: Dict[str, Any]
@@ -110,7 +116,8 @@ class BrandProfile:
 
 
 class PartnershipBroker:
-    """    AI-powered partnership brokering system
+    """
+    AI-powered partnership brokering system
     
     Features:
     - Intelligent brand-creator matching
@@ -118,7 +125,8 @@ class PartnershipBroker:
     - Automated negotiation assistance
     - Performance-based recommendations
     - Market trend analysis
-    """    
+    """
+    
     def __init__(self, redis_client: redis.Redis = None):
         self.redis_client = redis_client or redis.from_url("redis://localhost:6379")
         self.cache_manager = CacheManager()
@@ -134,7 +142,8 @@ class PartnershipBroker:
         budget_range: Optional[Tuple[Decimal, Decimal]] = None,
         max_opportunities: int = 20
     ) -> Dict[str, Any]:
-        """Discover partnership opportunities for a creator"""        try:
+        """Discover partnership opportunities for a creator"""
+        try:
             # Get creator profile and analytics
             creator_profile = await self._get_creator_profile(creator_id)
             if not creator_profile:
@@ -193,7 +202,8 @@ class PartnershipBroker:
         partnership_type: PartnershipType,
         proposal_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Initiate a partnership proposal"""        try:
+        """Initiate a partnership proposal"""
+        try:
             proposal_id = f"proposal_{creator_id}_{brand_id}_{uuid.uuid4().hex[:8]}"
             
             # Validate participants
@@ -253,7 +263,8 @@ class PartnershipBroker:
         negotiation_points: Dict[str, Any],
         negotiator_id: str
     ) -> Dict[str, Any]:
-        """Facilitate partnership term negotiations"""        try:
+        """Facilitate partnership term negotiations"""
+        try:
             # Load proposal
             proposal = await self._get_proposal(proposal_id)
             if not proposal:
@@ -299,7 +310,8 @@ class PartnershipBroker:
     
     # Private helper methods
     async def _get_creator_profile(self, creator_id: str) -> Optional[Dict[str, Any]]:
-        """Get comprehensive creator profile"""        try:
+        """Get comprehensive creator profile"""
+        try:
             cache_key = f"creator_profile:{creator_id}"
             cached_profile = await self.cache_manager.get(cache_key)
             
@@ -322,7 +334,8 @@ class PartnershipBroker:
         partnership_types: Optional[List[PartnershipType]] = None,
         budget_range: Optional[Tuple[Decimal, Decimal]] = None
     ) -> List[BrandProfile]:
-        """Get available brands for partnerships"""        try:
+        """Get available brands for partnerships"""
+        try:
             # Query active brands seeking partnerships
             filters = {}
             
@@ -350,7 +363,8 @@ class PartnershipBroker:
         brand: BrandProfile,
         compatibility_score: float
     ) -> Dict[str, Any]:
-        """Create detailed opportunity proposal"""        try:
+        """Create detailed opportunity proposal"""
+        try:
             # Calculate estimated compensation
             estimated_compensation = await self._calculate_estimated_compensation(
                 creator_profile, brand
@@ -385,7 +399,8 @@ class PartnershipBroker:
 
 
 class BrandCollaborationManager:
-    """    Comprehensive brand collaboration management system
+    """
+    Comprehensive brand collaboration management system
     
     Features:
     - Brand relationship management
@@ -393,7 +408,8 @@ class BrandCollaborationManager:
     - Performance tracking
     - Brand guidelines compliance
     - Multi-campaign coordination
-    """    
+    """
+    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.notification_service = NotificationService()
@@ -406,7 +422,8 @@ class BrandCollaborationManager:
         brand_id: str,
         collaboration_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create a new brand collaboration"""        try:
+        """Create a new brand collaboration"""
+        try:
             collaboration_id = f"collab_{creator_id}_{brand_id}_{uuid.uuid4().hex[:8]}"
             
             # Load brand guidelines
@@ -459,7 +476,8 @@ class BrandCollaborationManager:
             raise BusinessLogicError(f"Failed to create collaboration: {str(e)}")
     
     async def _get_brand_guidelines(self, brand_id: str) -> Dict[str, Any]:
-        """Get brand guidelines and requirements"""        try:
+        """Get brand guidelines and requirements"""
+        try:
             cache_key = f"brand_guidelines:{brand_id}"
             cached_guidelines = await self.cache_manager.get(cache_key)
             
@@ -486,7 +504,8 @@ class BrandCollaborationManager:
 
 
 class SponsorshipCoordinator:
-    """    Advanced sponsorship coordination and management system
+    """
+    Advanced sponsorship coordination and management system
     
     Features:
     - Multi-tier sponsorship management
@@ -494,7 +513,8 @@ class SponsorshipCoordinator:
     - Sponsor relationship management
     - Event integration
     - Performance analytics
-    """    
+    """
+    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.notification_service = NotificationService()
@@ -508,7 +528,8 @@ class SponsorshipCoordinator:
         campaign_details: Dict[str, Any],
         budget_allocation: Dict[str, Decimal]
     ) -> Dict[str, Any]:
-        """Coordinate multi-creator sponsorship campaign"""        try:
+        """Coordinate multi-creator sponsorship campaign"""
+        try:
             campaign_id = f"sponsor_{sponsor_id}_{uuid.uuid4().hex[:8]}"
             
             # Validate budget allocation
@@ -571,7 +592,8 @@ class SponsorshipCoordinator:
 
 
 class CampaignManagementService:
-    """    Comprehensive campaign management and optimization service
+    """
+    Comprehensive campaign management and optimization service
     
     Features:
     - Campaign lifecycle management
@@ -579,7 +601,8 @@ class CampaignManagementService:
     - A/B testing coordination
     - Budget optimization
     - Multi-platform synchronization
-    """    
+    """
+    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.notification_service = NotificationService()
@@ -592,7 +615,8 @@ class CampaignManagementService:
         participants: List[str],
         platforms: List[str]
     ) -> Dict[str, Any]:
-        """Launch integrated multi-platform campaign"""        try:
+        """Launch integrated multi-platform campaign"""
+        try:
             campaign_id = f"campaign_{uuid.uuid4().hex[:8]}"
             
             # Validate campaign configuration
@@ -650,7 +674,8 @@ class CampaignManagementService:
 
 
 class ContractNegotiationEngine:
-    """    AI-powered contract negotiation and automation engine
+    """
+    AI-powered contract negotiation and automation engine
     
     Features:
     - Automated contract generation
@@ -658,7 +683,8 @@ class ContractNegotiationEngine:
     - Risk assessment
     - Compliance checking
     - Digital signature integration
-    """    
+    """
+    
     def __init__(self):
         self.contract_manager = ContractManager()
         self.cache_manager = CacheManager()
@@ -671,7 +697,8 @@ class ContractNegotiationEngine:
         legal_requirements: Dict[str, Any],
         customizations: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Generate optimized partnership contract"""        try:
+        """Generate optimized partnership contract"""
+        try:
             contract_id = f"contract_{uuid.uuid4().hex[:8]}"
             
             # Load contract templates
@@ -727,7 +754,8 @@ class ContractNegotiationEngine:
             raise BusinessLogicError(f"Failed to generate contract: {str(e)}")
     
     async def _get_contract_template(self, partnership_type: str) -> Dict[str, Any]:
-        """Get appropriate contract template"""        templates = {
+        """Get appropriate contract template"""
+        templates = {
             "brand_sponsorship": {
                 "sections": ["parties", "scope", "compensation", "deliverables", "timeline", "termination"],
                 "clauses": ["exclusivity", "payment_terms", "intellectual_property", "liability"],
@@ -748,7 +776,8 @@ class ContractNegotiationEngine:
         legal_requirements: Dict[str, Any],
         template: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate optimized contract terms"""        try:
+        """Generate optimized contract terms"""
+        try:
             # Use AI to generate optimal terms
             base_terms = {
                 "compensation": partnership_details.get("compensation", {}),
@@ -770,7 +799,8 @@ class ContractNegotiationEngine:
             return {}
     
     async def _assess_contract_risks(self, contract_terms: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess risks in contract terms"""        try:
+        """Assess risks in contract terms"""
+        try:
             risk_factors = []
             risk_score = 0.0
             

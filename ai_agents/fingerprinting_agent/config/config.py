@@ -9,7 +9,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""import os
+"""
+import os
 import json
 import logging
 from enum import Enum
@@ -20,14 +21,16 @@ from datetime import timedelta
 
 
 class Environment(Enum):
-    """Deployment environment types"""    DEVELOPMENT = "development"
+    """Deployment environment types"""
+    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
 
 
 class LogLevel(Enum):
-    """Logging level configuration"""    DEBUG = "DEBUG"
+    """Logging level configuration"""
+    DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
     ERROR = "ERROR"
@@ -36,7 +39,8 @@ class LogLevel(Enum):
 
 @dataclass
 class DatabaseConfig:
-    """Database connection configuration"""    host: str = "localhost"
+    """Database connection configuration"""
+    host: str = "localhost"
     port: int = 5432
     database: str = "ia_influencer_agent"
     username: str = "postgres"
@@ -51,7 +55,8 @@ class DatabaseConfig:
 
 @dataclass
 class RedisConfig:
-    """Redis cache configuration"""    host: str = "localhost"
+    """Redis cache configuration"""
+    host: str = "localhost"
     port: int = 6379
     database: int = 0
     password: Optional[str] = None
@@ -64,7 +69,8 @@ class RedisConfig:
 
 @dataclass
 class ElasticsearchConfig:
-    """Elasticsearch configuration for text search"""    hosts: List[str] = field(default_factory=lambda: ["localhost:9200"])
+    """Elasticsearch configuration for text search"""
+    hosts: List[str] = field(default_factory=lambda: ["localhost:9200"])
     username: Optional[str] = None
     password: Optional[str] = None
     use_ssl: bool = False
@@ -76,7 +82,8 @@ class ElasticsearchConfig:
 
 @dataclass
 class StorageConfig:
-    """File storage configuration"""    base_path: str = "/tmp/fingerprinting"
+    """File storage configuration"""
+    base_path: str = "/tmp/fingerprinting"
     max_file_size: int = 100 * 1024 * 1024  # 100MB
     allowed_extensions: List[str] = field(default_factory=lambda: [
         ".mp3", ".wav", ".flac", ".ogg", ".m4a",  # Audio
@@ -90,7 +97,8 @@ class StorageConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security and authentication configuration"""    jwt_secret_key: str = "ultra-secure-fingerprinting-secret"
+    """Security and authentication configuration"""
+    jwt_secret_key: str = "ultra-secure-fingerprinting-secret"
     jwt_algorithm: str = "HS256"
     jwt_expiration: int = 3600
     rate_limit_per_minute: int = 100
@@ -104,7 +112,8 @@ class SecurityConfig:
 
 @dataclass
 class ModelConfig:
-    """AI/ML model configuration"""    # Model directories
+    """AI/ML model configuration"""
+    # Model directories
     model_cache_dir: str = "/tmp/models"
     download_timeout: int = 300
     
@@ -132,7 +141,8 @@ class ModelConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance optimization configuration"""    # Threading
+    """Performance optimization configuration"""
+    # Threading
     max_workers: int = 8
     thread_pool_executor: bool = True
     
@@ -158,7 +168,8 @@ class PerformanceConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring and observability configuration"""    enable_metrics: bool = True
+    """Monitoring and observability configuration"""
+    enable_metrics: bool = True
     metrics_port: int = 8090
     metrics_path: str = "/metrics"
     
@@ -178,7 +189,8 @@ class MonitoringConfig:
 
 @dataclass
 class FingerprintingConfig:
-    """Complete fingerprinting agent configuration"""    environment: Environment = Environment.DEVELOPMENT
+    """Complete fingerprinting agent configuration"""
+    environment: Environment = Environment.DEVELOPMENT
     debug: bool = False
     
     # Component configurations
@@ -193,7 +205,8 @@ class FingerprintingConfig:
     
     @classmethod
     def from_env(cls) -> 'FingerprintingConfig':
-        """Create configuration from environment variables"""        config = cls()
+        """Create configuration from environment variables"""
+        config = cls()
         
         # Environment
         env_name = os.getenv("FINGERPRINTING_ENV", "development")
@@ -240,7 +253,8 @@ class FingerprintingConfig:
     
     @classmethod
     def from_file(cls, config_path: Union[str, Path]) -> 'FingerprintingConfig':
-        """Load configuration from JSON file"""        config_path = Path(config_path)
+        """Load configuration from JSON file"""
+        config_path = Path(config_path)
         
         if not config_path.exists():
             raise FileNotFoundError(f"Configuration file not found: {config_path}")
@@ -267,7 +281,8 @@ class FingerprintingConfig:
         return config
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""        result = {}
+        """Convert configuration to dictionary"""
+        result = {}
         
         for field_name in self.__dataclass_fields__:
             value = getattr(self, field_name)
@@ -290,14 +305,16 @@ class FingerprintingConfig:
         return result
     
     def save_to_file(self, config_path: Union[str, Path]) -> None:
-        """Save configuration to JSON file"""        config_path = Path(config_path)
+        """Save configuration to JSON file"""
+        config_path = Path(config_path)
         config_path.parent.mkdir(parents=True, exist_ok=True)
         
         with open(config_path, 'w', encoding='utf-8') as f:
             json.dump(self.to_dict(), f, indent=2, sort_keys=True)
     
     def validate(self) -> List[str]:
-        """Validate configuration and return list of errors"""        errors = []
+        """Validate configuration and return list of errors"""
+        errors = []
         
         # Database validation
         if not self.database.host:
@@ -334,20 +351,24 @@ class FingerprintingConfig:
         return errors
     
     def is_production(self) -> bool:
-        """Check if running in production environment"""        return self.environment == Environment.PRODUCTION
+        """Check if running in production environment"""
+        return self.environment == Environment.PRODUCTION
     
     def get_database_url(self) -> str:
-        """Get database connection URL"""        return (
+        """Get database connection URL"""
+        return (
             f"postgresql://{self.database.username}:{self.database.password}"
             f"@{self.database.host}:{self.database.port}/{self.database.database}"
         )
     
     def get_redis_url(self) -> str:
-        """Get Redis connection URL"""        auth = f":{self.redis.password}@" if self.redis.password else ""
+        """Get Redis connection URL"""
+        auth = f":{self.redis.password}@" if self.redis.password else ""
         return f"redis://{auth}{self.redis.host}:{self.redis.port}/{self.redis.database}"
     
     def setup_logging(self) -> None:
-        """Configure logging based on monitoring settings"""        log_level = getattr(logging, self.monitoring.log_level.value)
+        """Configure logging based on monitoring settings"""
+        log_level = getattr(logging, self.monitoring.log_level.value)
         
         if self.monitoring.log_format == "json":
             import json
@@ -400,7 +421,8 @@ _config: Optional[FingerprintingConfig] = None
 
 
 def get_config() -> FingerprintingConfig:
-    """Get global configuration instance"""    global _config
+    """Get global configuration instance"""
+    global _config
     
     if _config is None:
         # Try to load from file first
@@ -425,12 +447,14 @@ def get_config() -> FingerprintingConfig:
 
 
 def set_config(config: FingerprintingConfig) -> None:
-    """Set global configuration instance"""    global _config
+    """Set global configuration instance"""
+    global _config
     _config = config
 
 
 def reset_config() -> None:
-    """Reset global configuration instance"""    global _config
+    """Reset global configuration instance"""
+    global _config
     _config = None
 
 

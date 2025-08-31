@@ -3,7 +3,8 @@ Real-time monitoring across multiple platforms with intelligent violation detect
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import hashlib
 from typing import Dict, Any, List, Optional, Set
 from datetime import datetime, timedelta
@@ -34,7 +35,8 @@ from ..ai_engine.vector_database import vector_database
 
 @dataclass
 class MonitoringTarget:
-    """Represents a content monitoring target"""    user_id: str
+    """Represents a content monitoring target"""
+    user_id: str
     content_id: str
     content_type: str
     fingerprint_data: Dict[str, Any]
@@ -46,7 +48,8 @@ class MonitoringTarget:
 
 
 class PlatformCrawler:
-    """Base class for platform-specific crawlers"""    
+    """Base class for platform-specific crawlers"""
+    
     def __init__(self, platform_name: str):
         self.platform_name = platform_name
         self.rate_limit_delay = 1.0  # seconds between requests
@@ -57,7 +60,8 @@ class PlatformCrawler:
         self._setup_selenium()
     
     def _setup_selenium(self):
-        """Setup headless Chrome driver"""        try:
+        """Setup headless Chrome driver"""
+        try:
             chrome_options = Options()
             chrome_options.add_argument("--headless")
             chrome_options.add_argument("--no-sandbox")
@@ -73,7 +77,8 @@ class PlatformCrawler:
             self.driver = None
     
     async def initialize_session(self):
-        """Initialize HTTP session"""        if not self.session:
+        """Initialize HTTP session"""
+        if not self.session:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=30),
                 headers={
@@ -82,13 +87,15 @@ class PlatformCrawler:
             )
     
     async def close_session(self):
-        """Close HTTP session"""        if self.session:
+        """Close HTTP session"""
+        if self.session:
             await self.session.close()
         if self.driver:
             self.driver.quit()
     
     async def search_content(self, query: str, content_type: str) -> List[Dict[str, Any]]:
-        """Search for content on platform - to be implemented by subclasses"""        logger.info(f"Searching for {content_type} content with query: {query}")
+        """Search for content on platform - to be implemented by subclasses"""
+        logger.info(f"Searching for {content_type} content with query: {query}")
         
         # Base implementation with generic web scraping approach
         try:
@@ -121,11 +128,13 @@ class PlatformCrawler:
             return []
     
     async def _api_search(self, query: str, content_type: str) -> List[Dict[str, Any]]:
-        """API-based search implementation"""        # To be overridden by platform-specific implementations
+        """API-based search implementation"""
+        # To be overridden by platform-specific implementations
         return []
     
     async def _web_search(self, query: str, content_type: str) -> List[Dict[str, Any]]:
-        """Web scraping search implementation"""        try:
+        """Web scraping search implementation"""
+        try:
             if not self.driver:
                 return []
             
@@ -165,7 +174,8 @@ class PlatformCrawler:
             return []
     
     async def extract_content_data(self, url: str) -> Optional[Dict[str, Any]]:
-        """Extract content data from URL - to be implemented by subclasses"""        logger.info(f"Extracting content data from URL: {url}")
+        """Extract content data from URL - to be implemented by subclasses"""
+        logger.info(f"Extracting content data from URL: {url}")
         
         try:
             if not self.driver:
@@ -277,11 +287,13 @@ class PlatformCrawler:
             return None
     
     async def _extract_platform_specific_data(self, url: str) -> Dict[str, Any]:
-        """Extract platform-specific data - to be overridden by subclasses"""        return {}
+        """Extract platform-specific data - to be overridden by subclasses"""
+        return {}
 
 
 class YouTubeCrawler(PlatformCrawler):
-    """YouTube content crawler using API and web scraping"""    
+    """YouTube content crawler using API and web scraping"""
+    
     def __init__(self):
         super().__init__("youtube")
         self.api_key = settings.platforms.youtube_api_key
@@ -294,7 +306,8 @@ class YouTubeCrawler(PlatformCrawler):
                 logger.warning(f"YouTube API setup failed: {str(e)}")
     
     async def search_content(self, query: str, content_type: str) -> List[Dict[str, Any]]:
-        """Search YouTube for similar content"""        results = []
+        """Search YouTube for similar content"""
+        results = []
         
         if self.youtube_service:
             try:
@@ -330,7 +343,8 @@ class YouTubeCrawler(PlatformCrawler):
         return results
     
     async def _web_search(self, query: str) -> List[Dict[str, Any]]:
-        """Fallback web scraping search"""        if not self.driver:
+        """Fallback web scraping search"""
+        if not self.driver:
             return []
         
         try:
@@ -372,7 +386,8 @@ class YouTubeCrawler(PlatformCrawler):
             return []
     
     async def extract_content_data(self, url: str) -> Optional[Dict[str, Any]]:
-        """Extract detailed content data from YouTube URL"""        try:
+        """Extract detailed content data from YouTube URL"""
+        try:
             # Extract video ID from URL
             if 'watch?v=' in url:
                 video_id = url.split('watch?v=')[1].split('&')[0]
@@ -408,13 +423,15 @@ class YouTubeCrawler(PlatformCrawler):
 
 
 class InstagramCrawler(PlatformCrawler):
-    """Instagram content crawler"""    
+    """Instagram content crawler"""
+    
     def __init__(self):
         super().__init__("instagram")
         self.access_token = settings.platforms.instagram_access_token
     
     async def search_content(self, query: str, content_type: str) -> List[Dict[str, Any]]:
-        """Search Instagram for similar content"""        # Instagram Graph API has limited search capabilities
+        """Search Instagram for similar content"""
+        # Instagram Graph API has limited search capabilities
         # This would require Instagram Business API access
         results = []
         
@@ -446,13 +463,15 @@ class InstagramCrawler(PlatformCrawler):
 
 
 class TikTokCrawler(PlatformCrawler):
-    """TikTok content crawler"""    
+    """TikTok content crawler"""
+    
     def __init__(self):
         super().__init__("tiktok")
         self.api_key = settings.platforms.tiktok_api_key
     
     async def search_content(self, query: str, content_type: str) -> List[Dict[str, Any]]:
-        """Search TikTok for similar content"""        results = []
+        """Search TikTok for similar content"""
+        results = []
         
         # TikTok's API is more restrictive, use web scraping
         if self.driver:
@@ -480,7 +499,8 @@ class TikTokCrawler(PlatformCrawler):
 
 
 class TwitterCrawler(PlatformCrawler):
-    """Twitter/X content crawler"""    
+    """Twitter/X content crawler"""
+    
     def __init__(self):
         super().__init__("twitter")
         self.api_key = settings.platforms.twitter_api_key
@@ -498,7 +518,8 @@ class TwitterCrawler(PlatformCrawler):
                 logger.warning(f"Twitter API setup failed: {str(e)}")
     
     async def search_content(self, query: str, content_type: str) -> List[Dict[str, Any]]:
-        """Search Twitter for similar content"""        results = []
+        """Search Twitter for similar content"""
+        results = []
         
         if self.twitter_api:
             try:
@@ -526,7 +547,8 @@ class TwitterCrawler(PlatformCrawler):
 
 
 class ProtectionMonitor:
-    """Main content protection monitoring system"""    
+    """Main content protection monitoring system"""
+    
     def __init__(self):
         self.crawlers = {
             'youtube': YouTubeCrawler(),
@@ -540,7 +562,8 @@ class ProtectionMonitor:
         self.check_interval = 3600  # 1 hour default
     
     async def initialize(self):
-        """Initialize monitoring system"""        try:
+        """Initialize monitoring system"""
+        try:
             # Initialize all crawlers
             for crawler in self.crawlers.values():
                 await crawler.initialize_session()
@@ -558,7 +581,8 @@ class ProtectionMonitor:
                                    content_type: str, fingerprint_data: Dict[str, Any],
                                    platforms: List[str], monitoring_frequency: int = 24,
                                    alert_threshold: float = 0.85) -> bool:
-        """Add content to monitoring system"""        try:
+        """Add content to monitoring system"""
+        try:
             target = MonitoringTarget(
                 user_id=user_id,
                 content_id=content_id,
@@ -573,7 +597,8 @@ class ProtectionMonitor:
             # Store in database
             async with database_manager.get_postgres_session() as session:
                 await session.execute(
-                    """                    INSERT INTO content_monitoring 
+                    """
+                    INSERT INTO content_monitoring 
                     (user_id, content_id, content_type, fingerprint_data, platforms, 
                      monitoring_frequency, alert_threshold, created_at)
                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
@@ -594,7 +619,8 @@ class ProtectionMonitor:
             return False
     
     async def start_monitoring(self):
-        """Start the monitoring loop"""        if self.monitoring_active:
+        """Start the monitoring loop"""
+        if self.monitoring_active:
             return
         
         self.monitoring_active = True
@@ -610,7 +636,8 @@ class ProtectionMonitor:
                 await asyncio.sleep(60)  # Wait 1 minute before retry
     
     async def stop_monitoring(self):
-        """Stop the monitoring loop"""        self.monitoring_active = False
+        """Stop the monitoring loop"""
+        self.monitoring_active = False
         
         # Close all crawler sessions
         for crawler in self.crawlers.values():
@@ -619,7 +646,8 @@ class ProtectionMonitor:
         logger.info("Content protection monitoring stopped")
     
     async def _monitoring_cycle(self):
-        """Execute one monitoring cycle"""        logger.info(f"Starting monitoring cycle for {len(self.active_monitors)} targets")
+        """Execute one monitoring cycle"""
+        logger.info(f"Starting monitoring cycle for {len(self.active_monitors)} targets")
         
         for content_id, target in self.active_monitors.items():
             try:
@@ -635,14 +663,16 @@ class ProtectionMonitor:
                 logger.error(f"Error checking content {content_id}: {str(e)}")
     
     async def _should_check_content(self, target: MonitoringTarget) -> bool:
-        """Determine if content should be checked in this cycle"""        if not target.last_checked:
+        """Determine if content should be checked in this cycle"""
+        if not target.last_checked:
             return True
         
         time_since_check = datetime.utcnow() - target.last_checked
         return time_since_check.total_seconds() >= (target.monitoring_frequency * 3600)
     
     async def _check_content_violations(self, target: MonitoringTarget):
-        """Check for violations of specific content"""        logger.info(f"Checking content {target.content_id} for violations")
+        """Check for violations of specific content"""
+        logger.info(f"Checking content {target.content_id} for violations")
         
         # Generate search queries based on content
         search_queries = await self._generate_search_queries(target)
@@ -674,7 +704,8 @@ class ProtectionMonitor:
                     logger.error(f"Error searching {platform} for {query}: {str(e)}")
     
     async def _generate_search_queries(self, target: MonitoringTarget) -> List[str]:
-        """Generate search queries based on content fingerprint"""        queries = []
+        """Generate search queries based on content fingerprint"""
+        queries = []
         
         # Basic content ID search
         queries.append(target.content_id)
@@ -698,7 +729,8 @@ class ProtectionMonitor:
     async def _check_content_similarity(self, target: MonitoringTarget, 
                                       search_result: Dict[str, Any], 
                                       platform: str) -> float:
-        """Check similarity between original content and search result"""        try:
+        """Check similarity between original content and search result"""
+        try:
             # For demonstration, we'll use a simplified similarity check
             # In production, this would involve downloading/analyzing the found content
             
@@ -729,7 +761,8 @@ class ProtectionMonitor:
     async def _handle_violation_detected(self, target: MonitoringTarget, 
                                        violation_data: Dict[str, Any], 
                                        similarity_score: float):
-        """Handle detected violation"""        try:
+        """Handle detected violation"""
+        try:
             # Create violation record
             violation_record = {
                 "original_content_id": target.content_id,
@@ -745,7 +778,8 @@ class ProtectionMonitor:
             # Store in database
             async with database_manager.get_postgres_session() as session:
                 await session.execute(
-                    """                    INSERT INTO protection_violations 
+                    """
+                    INSERT INTO protection_violations 
                     (original_content_id, user_id, platform, violation_url, 
                      similarity_score, detected_at, status, evidence_data)
                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
@@ -766,15 +800,18 @@ class ProtectionMonitor:
             logger.error(f"Failed to handle violation: {str(e)}")
     
     async def _load_monitoring_targets(self):
-        """Load existing monitoring targets from database"""        try:
+        """Load existing monitoring targets from database"""
+        try:
             async with database_manager.get_postgres_session() as session:
                 result = await session.execute(
-                    """                    SELECT user_id, content_id, content_type, fingerprint_data, 
+                    """
+                    SELECT user_id, content_id, content_type, fingerprint_data, 
                            platforms, monitoring_frequency, alert_threshold, 
                            created_at, last_checked
                     FROM content_monitoring 
                     WHERE active = true
-                    """                )
+                    """
+                )
                 
                 for row in result.fetchall():
                     target = MonitoringTarget(
@@ -797,7 +834,8 @@ class ProtectionMonitor:
             logger.error(f"Failed to load monitoring targets: {str(e)}")
     
     async def _update_last_checked(self, content_id: str, last_checked: datetime):
-        """Update last checked timestamp in database"""        try:
+        """Update last checked timestamp in database"""
+        try:
             async with database_manager.get_postgres_session() as session:
                 await session.execute(
                     "UPDATE content_monitoring SET last_checked = %s WHERE content_id = %s",
@@ -807,7 +845,8 @@ class ProtectionMonitor:
             logger.error(f"Failed to update last checked: {str(e)}")
     
     async def remove_content_monitoring(self, content_id: str) -> bool:
-        """Remove content from monitoring"""        try:
+        """Remove content from monitoring"""
+        try:
             # Remove from active monitors
             if content_id in self.active_monitors:
                 del self.active_monitors[content_id]
@@ -826,7 +865,8 @@ class ProtectionMonitor:
             return False
     
     async def get_monitoring_status(self, user_id: str) -> Dict[str, Any]:
-        """Get monitoring status for user"""        try:
+        """Get monitoring status for user"""
+        try:
             user_targets = [t for t in self.active_monitors.values() if t.user_id == user_id]
             
             return {

@@ -5,7 +5,8 @@ Supports all major audio formats with quality preservation and optimization.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Union, Any
 from pathlib import Path
@@ -26,7 +27,8 @@ logger = logging.getLogger(__name__)
 
 
 class AudioFormat(Enum):
-    """Supported audio formats"""    WAV = "wav"
+    """Supported audio formats"""
+    WAV = "wav"
     MP3 = "mp3"
     FLAC = "flac"
     AAC = "aac"
@@ -37,7 +39,8 @@ class AudioFormat(Enum):
 
 
 class QualityLevel(Enum):
-    """Audio quality levels"""    LOW = "low"
+    """Audio quality levels"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     LOSSLESS = "lossless"
@@ -46,7 +49,8 @@ class QualityLevel(Enum):
 
 @dataclass
 class ConversionSettings:
-    """Audio conversion settings"""    target_format: AudioFormat
+    """Audio conversion settings"""
+    target_format: AudioFormat
     quality_level: QualityLevel = QualityLevel.HIGH
     sample_rate: Optional[int] = None
     bit_depth: Optional[int] = None
@@ -63,7 +67,8 @@ class ConversionSettings:
 
 @dataclass
 class ConversionResult:
-    """Conversion operation result"""    success: bool
+    """Conversion operation result"""
+    success: bool
     output_path: Optional[Path] = None
     original_size: Optional[int] = None
     converted_size: Optional[int] = None
@@ -74,7 +79,8 @@ class ConversionResult:
 
 
 class FormatConverter:
-    """    🔄 Professional Audio Format Converter
+    """
+    🔄 Professional Audio Format Converter
     
     Advanced multi-format conversion engine featuring:
     - Support for all major audio formats
@@ -82,7 +88,8 @@ class FormatConverter:
     - Batch processing capabilities
     - Automatic quality optimization
     - Lossless conversion when possible
-    """    
+    """
+    
     def __init__(self, 
                  config: Optional[AudioProcessingConfig] = None,
                  ffmpeg_path: Optional[str] = None):
@@ -99,7 +106,8 @@ class FormatConverter:
         logger.info("FormatConverter initialized")
     
     def _init_quality_presets(self) -> Dict[QualityLevel, Dict[AudioFormat, Dict[str, Any]]]:
-        """Initialize quality presets for different formats"""        return {
+        """Initialize quality presets for different formats"""
+        return {
             QualityLevel.LOW: {
                 AudioFormat.MP3: {"bitrate": 128, "quality": "5"},
                 AudioFormat.AAC: {"bitrate": 128, "quality": "5"},
@@ -129,7 +137,8 @@ class FormatConverter:
         }
     
     def _check_external_tools(self):
-        """Check availability of external conversion tools"""        try:
+        """Check availability of external conversion tools"""
+        try:
             # Check FFmpeg
             result = subprocess.run(
                 [self.ffmpeg_path, "-version"],
@@ -153,7 +162,8 @@ class FormatConverter:
                           input_path: Union[str, Path],
                           output_path: Union[str, Path],
                           settings: ConversionSettings) -> ConversionResult:
-        """        Convert audio file to target format
+        """
+        Convert audio file to target format
         
         Args:
             input_path: Path to input audio file
@@ -162,7 +172,8 @@ class FormatConverter:
             
         Returns:
             ConversionResult with operation details
-        """        import time
+        """
+        import time
         start_time = time.time()
         
         try:
@@ -239,7 +250,8 @@ class FormatConverter:
                                          audio_data: np.ndarray,
                                          sample_rate: int,
                                          settings: ConversionSettings) -> np.ndarray:
-        """Apply quality-based audio optimizations"""        try:
+        """Apply quality-based audio optimizations"""
+        try:
             optimized = audio_data.copy()
             
             # Apply dithering for bit depth reduction
@@ -267,7 +279,8 @@ class FormatConverter:
     async def _apply_dithering(self, 
                              audio_data: np.ndarray, 
                              target_bits: int) -> np.ndarray:
-        """Apply dithering for bit depth reduction"""        try:
+        """Apply dithering for bit depth reduction"""
+        try:
             if target_bits >= 24:
                 return audio_data  # No dithering needed
             
@@ -299,7 +312,8 @@ class FormatConverter:
                                         audio_data: np.ndarray,
                                         original_sr: int,
                                         target_sr: int) -> np.ndarray:
-        """Apply anti-aliasing filter before downsampling"""        try:
+        """Apply anti-aliasing filter before downsampling"""
+        try:
             # Design low-pass filter with cutoff at Nyquist of target sample rate
             nyquist = original_sr / 2
             cutoff = (target_sr / 2) * 0.95  # 95% of target Nyquist
@@ -318,7 +332,8 @@ class FormatConverter:
             return audio_data
     
     async def _optimize_for_lossy_compression(self, audio_data: np.ndarray) -> np.ndarray:
-        """Optimize audio for lossy compression formats"""        try:
+        """Optimize audio for lossy compression formats"""
+        try:
             # Apply subtle pre-emphasis to improve perceptual quality
             # This helps preserve high-frequency content in lossy compression
             pre_emphasis_factor = 0.97
@@ -343,7 +358,8 @@ class FormatConverter:
                                 sample_rate: int,
                                 output_path: Path,
                                 settings: ConversionSettings) -> bool:
-        """Perform the actual format conversion"""        try:
+        """Perform the actual format conversion"""
+        try:
             output_path.parent.mkdir(parents=True, exist_ok=True)
             
             target_format = settings.target_format
@@ -382,7 +398,8 @@ class FormatConverter:
             return False
     
     def _get_format_parameters(self, settings: ConversionSettings) -> Dict[str, Any]:
-        """Get format-specific parameters from settings"""        format_params = {}
+        """Get format-specific parameters from settings"""
+        format_params = {}
         
         # Get preset parameters
         if settings.quality_level in self.quality_presets:
@@ -407,7 +424,8 @@ class FormatConverter:
                                      sample_rate: int,
                                      output_path: Path,
                                      format_params: Dict[str, Any]) -> bool:
-        """Convert to uncompressed formats (WAV, AIFF)"""        try:
+        """Convert to uncompressed formats (WAV, AIFF)"""
+        try:
             bit_depth = format_params.get('bit_depth', 16)
             
             # Determine subtype
@@ -440,7 +458,8 @@ class FormatConverter:
                              sample_rate: int,
                              output_path: Path,
                              format_params: Dict[str, Any]) -> bool:
-        """Convert to FLAC format"""        try:
+        """Convert to FLAC format"""
+        try:
             # FLAC conversion using soundfile
             sf.write(
                 str(output_path),
@@ -463,7 +482,8 @@ class FormatConverter:
                                  output_path: Path,
                                  settings: ConversionSettings,
                                  format_params: Dict[str, Any]) -> bool:
-        """Convert using FFmpeg for compressed formats"""        try:
+        """Convert using FFmpeg for compressed formats"""
+        try:
             # Create temporary WAV file
             with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as temp_wav:
                 temp_wav_path = Path(temp_wav.name)
@@ -535,7 +555,8 @@ class FormatConverter:
                            sample_rate: int,
                            output_path: Path,
                            target_format: AudioFormat) -> bool:
-        """Basic conversion fallback"""        try:
+        """Basic conversion fallback"""
+        try:
             # Use soundfile for basic conversion
             format_map = {
                 AudioFormat.WAV: 'WAV',
@@ -564,7 +585,8 @@ class FormatConverter:
     async def _calculate_quality_metrics(self,
                                        input_path: Path,
                                        output_path: Path) -> Dict[str, float]:
-        """Calculate quality metrics by comparing input and output"""        try:
+        """Calculate quality metrics by comparing input and output"""
+        try:
             metrics = {}
             
             # Load both files
@@ -615,7 +637,8 @@ class FormatConverter:
                           output_directory: Path,
                           settings: ConversionSettings,
                           preserve_structure: bool = True) -> List[ConversionResult]:
-        """Convert multiple files in batch"""        try:
+        """Convert multiple files in batch"""
+        try:
             results = []
             output_directory.mkdir(parents=True, exist_ok=True)
             
@@ -656,7 +679,8 @@ class FormatConverter:
 
 
 class QualityOptimizer:
-    """    ⚡ Advanced Audio Quality Optimizer
+    """
+    ⚡ Advanced Audio Quality Optimizer
     
     Intelligent quality optimization system:
     - Automatic quality assessment
@@ -664,7 +688,8 @@ class QualityOptimizer:
     - Bitrate recommendations
     - Quality vs. size optimization
     - Perceptual quality enhancement
-    """    
+    """
+    
     def __init__(self, config: Optional[AudioProcessingConfig] = None):
         self.config = config or AudioProcessingConfig()
         self.audio_processor = AudioProcessor(config)
@@ -677,7 +702,8 @@ class QualityOptimizer:
                                       target_format: AudioFormat,
                                       target_size_mb: Optional[float] = None,
                                       min_quality_score: float = 0.8) -> ConversionSettings:
-        """        Automatically optimize conversion settings for best quality
+        """
+        Automatically optimize conversion settings for best quality
         
         Args:
             audio_data: Input audio samples
@@ -688,7 +714,8 @@ class QualityOptimizer:
             
         Returns:
             Optimized conversion settings
-        """        try:
+        """
+        try:
             # Analyze audio characteristics
             audio_analysis = await self._analyze_audio_characteristics(
                 audio_data, sample_rate
@@ -736,7 +763,8 @@ class QualityOptimizer:
     async def _analyze_audio_characteristics(self,
                                            audio_data: np.ndarray,
                                            sample_rate: int) -> Dict[str, Any]:
-        """Analyze audio characteristics for optimization"""        try:
+        """Analyze audio characteristics for optimization"""
+        try:
             analysis = {}
             
             # Spectral analysis
@@ -790,7 +818,8 @@ class QualityOptimizer:
     def _optimize_sample_rate(self,
                              original_sr: int,
                              analysis: Dict[str, Any]) -> int:
-        """Optimize sample rate based on audio characteristics"""        try:
+        """Optimize sample rate based on audio characteristics"""
+        try:
             effective_bandwidth = analysis.get('effective_bandwidth', original_sr / 2)
             
             # Rule-based sample rate optimization
@@ -811,7 +840,8 @@ class QualityOptimizer:
     def _optimize_bit_depth(self,
                           target_format: AudioFormat,
                           analysis: Dict[str, Any]) -> int:
-        """Optimize bit depth based on dynamic range and format"""        try:
+        """Optimize bit depth based on dynamic range and format"""
+        try:
             dynamic_range = analysis.get('dynamic_range', 96)  # Default to 16-bit range
             
             if target_format in [AudioFormat.WAV, AudioFormat.FLAC, AudioFormat.AIFF]:
@@ -835,7 +865,8 @@ class QualityOptimizer:
                               target_format: AudioFormat,
                               target_size_mb: Optional[float],
                               min_quality_score: float) -> int:
-        """Optimize bitrate for lossy formats"""        try:
+        """Optimize bitrate for lossy formats"""
+        try:
             duration = len(audio_data) / sample_rate
             
             # If target size is specified, calculate required bitrate
@@ -889,7 +920,8 @@ class QualityOptimizer:
     async def assess_conversion_quality(self,
                                       original_path: Path,
                                       converted_path: Path) -> Dict[str, float]:
-        """Assess quality of converted audio"""        try:
+        """Assess quality of converted audio"""
+        try:
             # Load both files
             original, sr1 = librosa.load(str(original_path), sr=None)
             converted, sr2 = librosa.load(str(converted_path), sr=None)
@@ -949,7 +981,8 @@ class QualityOptimizer:
             return {}
     
     def recommend_settings_for_use_case(self, use_case: str) -> ConversionSettings:
-        """Recommend conversion settings for specific use cases"""        
+        """Recommend conversion settings for specific use cases"""
+        
         use_case_settings = {
             "streaming": ConversionSettings(
                 target_format=AudioFormat.AAC,

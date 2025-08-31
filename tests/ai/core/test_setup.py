@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -32,7 +33,8 @@ Team Expertise:
 - Quality Assurance Lead: Installation testing, setup validation, system health checks
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -56,16 +58,19 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../.
 
 
 class TestModuleImports:
-    """Test suite for AI core module import validation"""    
+    """Test suite for AI core module import validation"""
+    
     def test_core_module_imports(self):
-        """Test core AI module imports"""        try:
+        """Test core AI module imports"""
+        try:
             import ai.core as core_module
             assert core_module is not None
         except ImportError as e:
             pytest.fail(f"Failed to import core module: {e}")
     
     def test_config_module_imports(self):
-        """Test configuration module imports"""        try:
+        """Test configuration module imports"""
+        try:
             from ai.core.config import (
                 AIEngineConfig,
                 ValidationConfig,
@@ -89,7 +94,8 @@ class TestModuleImports:
             pytest.fail(f"Failed to import configuration classes: {e}")
     
     def test_exceptions_module_imports(self):
-        """Test exceptions module imports"""        try:
+        """Test exceptions module imports"""
+        try:
             from ai.core.exceptions import (
                 AIEngineError,
                 ConfigurationError,
@@ -115,7 +121,8 @@ class TestModuleImports:
             pytest.fail(f"Failed to import exception classes: {e}")
     
     def test_metrics_module_imports(self):
-        """Test metrics module imports"""        try:
+        """Test metrics module imports"""
+        try:
             from ai.core.metrics import (
                 MetricsCollector,
                 SystemMetrics,
@@ -135,7 +142,8 @@ class TestModuleImports:
             pytest.fail(f"Failed to import metrics classes: {e}")
     
     def test_performance_module_imports(self):
-        """Test performance module imports"""        try:
+        """Test performance module imports"""
+        try:
             from ai.core.performance import (
                 PerformanceMonitor,
                 ResourceTracker,
@@ -155,7 +163,8 @@ class TestModuleImports:
             pytest.fail(f"Failed to import performance classes: {e}")
     
     def test_validation_module_imports(self):
-        """Test validation module imports"""        try:
+        """Test validation module imports"""
+        try:
             from ai.core.validation import (
                 ContentValidator,
                 SecurityValidator,
@@ -176,9 +185,11 @@ class TestModuleImports:
 
 
 class TestSystemRequirements:
-    """Test suite for system requirements validation"""    
+    """Test suite for system requirements validation"""
+    
     def test_python_version_requirements(self):
-        """Test Python version requirements"""        python_version = sys.version_info
+        """Test Python version requirements"""
+        python_version = sys.version_info
         
         # Require Python 3.8 or higher
         assert python_version.major == 3, "Python 3.x is required"
@@ -188,7 +199,8 @@ class TestSystemRequirements:
         print(f"Python version: {python_version.major}.{python_version.minor}.{python_version.micro}")
     
     def test_system_memory_requirements(self):
-        """Test system memory requirements"""        try:
+        """Test system memory requirements"""
+        try:
             memory_info = psutil.virtual_memory()
             total_memory_gb = memory_info.total / (1024 ** 3)
             
@@ -205,7 +217,8 @@ class TestSystemRequirements:
             pytest.skip(f"Could not check memory requirements: {e}")
     
     def test_disk_space_requirements(self):
-        """Test disk space requirements"""        try:
+        """Test disk space requirements"""
+        try:
             current_dir = Path(__file__).parent
             disk_usage = psutil.disk_usage(current_dir)
             free_space_gb = disk_usage.free / (1024 ** 3)
@@ -219,7 +232,8 @@ class TestSystemRequirements:
             pytest.skip(f"Could not check disk space: {e}")
     
     def test_cpu_requirements(self):
-        """Test CPU requirements"""        try:
+        """Test CPU requirements"""
+        try:
             cpu_count = psutil.cpu_count()
             
             # Require at least 2 CPU cores for parallel processing
@@ -233,7 +247,8 @@ class TestSystemRequirements:
             pytest.skip(f"Could not check CPU requirements: {e}")
     
     def test_platform_compatibility(self):
-        """Test platform compatibility"""        system_name = platform.system()
+        """Test platform compatibility"""
+        system_name = platform.system()
         
         # Support Linux, Windows, and macOS
         supported_platforms = ["Linux", "Windows", "Darwin"]
@@ -243,9 +258,11 @@ class TestSystemRequirements:
 
 
 class TestDependencyValidation:
-    """Test suite for dependency validation"""    
+    """Test suite for dependency validation"""
+    
     def test_required_python_packages(self):
-        """Test required Python packages are available"""        required_packages = [
+        """Test required Python packages are available"""
+        required_packages = [
             "pytest",
             "psutil",
             "pathlib",  # Built-in but check import
@@ -258,7 +275,8 @@ class TestDependencyValidation:
                 pytest.fail(f"Required package '{package}' is not available")
     
     def test_optional_packages_availability(self):
-        """Test optional packages availability"""        optional_packages = {
+        """Test optional packages availability"""
+        optional_packages = {
             "numpy": "NumPy for numerical computations",
             "torch": "PyTorch for AI model support",
             "tensorflow": "TensorFlow for AI model support",
@@ -284,7 +302,8 @@ class TestDependencyValidation:
             print(f"  {status} {package}: {optional_packages[package]}")
     
     def test_environment_variables(self):
-        """Test required environment variables"""        # Optional environment variables for configuration
+        """Test required environment variables"""
+        # Optional environment variables for configuration
         optional_env_vars = [
             "AI_CORE_ENVIRONMENT",
             "AI_CORE_DEBUG",
@@ -302,9 +321,11 @@ class TestDependencyValidation:
 
 
 class TestInitializationSequence:
-    """Test suite for system initialization sequence"""    
+    """Test suite for system initialization sequence"""
+    
     def test_config_system_initialization(self):
-        """Test configuration system initialization"""        try:
+        """Test configuration system initialization"""
+        try:
             from ai.core.config import CoreConfig, ConfigManager
             
             # Test default configuration creation
@@ -322,7 +343,8 @@ class TestInitializationSequence:
             pytest.fail(f"Configuration system initialization failed: {e}")
     
     def test_logging_system_initialization(self):
-        """Test logging system initialization"""        try:
+        """Test logging system initialization"""
+        try:
             # Test basic logging setup
             logger = logging.getLogger("ai_core_test")
             logger.setLevel(logging.INFO)
@@ -342,7 +364,8 @@ class TestInitializationSequence:
             pytest.fail(f"Logging system initialization failed: {e}")
     
     def test_metrics_system_initialization(self):
-        """Test metrics system initialization"""        try:
+        """Test metrics system initialization"""
+        try:
             from ai.core.metrics import MetricsCollector
             
             # Test metrics collector creation
@@ -355,7 +378,8 @@ class TestInitializationSequence:
             pytest.fail(f"Metrics system initialization failed: {e}")
     
     def test_performance_monitoring_initialization(self):
-        """Test performance monitoring initialization"""        try:
+        """Test performance monitoring initialization"""
+        try:
             from ai.core.performance import PerformanceMonitor
             
             # Test performance monitor creation
@@ -368,7 +392,8 @@ class TestInitializationSequence:
             pytest.fail(f"Performance monitoring initialization failed: {e}")
     
     def test_validation_system_initialization(self):
-        """Test validation system initialization"""        try:
+        """Test validation system initialization"""
+        try:
             from ai.core.validation import ContentValidator
             
             # Test content validator creation
@@ -382,9 +407,11 @@ class TestInitializationSequence:
 
 
 class TestBusinessLogicSetup:
-    """Test suite for business logic setup validation"""    
+    """Test suite for business logic setup validation"""
+    
     def test_creator_workflow_setup(self):
-        """Test creator workflow setup for different creator types"""        creator_types = ["musician", "photographer", "blogger", "influencer", "comedian"]
+        """Test creator workflow setup for different creator types"""
+        creator_types = ["musician", "photographer", "blogger", "influencer", "comedian"]
         
         for creator_type in creator_types:
             try:
@@ -413,7 +440,8 @@ class TestBusinessLogicSetup:
                 pytest.fail(f"Creator workflow setup failed for {creator_type}: {e}")
     
     def test_business_pipeline_setup(self):
-        """Test business pipeline setup"""        # Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
+        """Test business pipeline setup"""
+        # Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
         try:
             from ai.core.config import CoreConfig, PipelineConfig
             
@@ -449,7 +477,8 @@ class TestBusinessLogicSetup:
             pytest.fail(f"Business pipeline setup failed: {e}")
     
     def test_security_features_setup(self):
-        """Test security features setup"""        try:
+        """Test security features setup"""
+        try:
             from ai.core.config import CoreConfig
             
             # Test security-focused configuration
@@ -472,9 +501,11 @@ class TestBusinessLogicSetup:
 
 
 class TestInstallationValidation:
-    """Test suite for installation validation"""    
+    """Test suite for installation validation"""
+    
     def test_module_structure_validation(self):
-        """Test AI core module structure validation"""        expected_modules = [
+        """Test AI core module structure validation"""
+        expected_modules = [
             "backend.ai.core.config",
             "backend.ai.core.exceptions",
             "backend.ai.core.metrics",
@@ -491,7 +522,8 @@ class TestInstallationValidation:
                 pytest.fail(f"Required module {module_name} not found: {e}")
     
     def test_configuration_files_validation(self):
-        """Test configuration files validation"""        try:
+        """Test configuration files validation"""
+        try:
             from ai.core.config import CoreConfig
             
             # Test default configuration creation and validation
@@ -512,7 +544,8 @@ class TestInstallationValidation:
             pytest.fail(f"Configuration validation failed: {e}")
     
     def test_test_suite_completeness(self):
-        """Test test suite completeness"""        test_files = [
+        """Test test suite completeness"""
+        test_files = [
             "test_config.py",
             "test_exceptions.py",
             "test_metrics.py",
@@ -534,9 +567,11 @@ class TestInstallationValidation:
 
 
 class TestHealthChecks:
-    """Test suite for system health checks"""    
+    """Test suite for system health checks"""
+    
     def test_basic_functionality_health_check(self):
-        """Test basic functionality health check"""        try:
+        """Test basic functionality health check"""
+        try:
             from ai.core.config import CoreConfig
             from ai.core.metrics import MetricsCollector
             from ai.core.validation import ContentValidator
@@ -556,7 +591,8 @@ class TestHealthChecks:
             pytest.fail(f"Basic functionality health check failed: {e}")
     
     def test_resource_usage_health_check(self):
-        """Test resource usage health check"""        try:
+        """Test resource usage health check"""
+        try:
             import time
             import gc
             
@@ -588,7 +624,8 @@ class TestHealthChecks:
             pytest.fail(f"Resource usage health check failed: {e}")
     
     def test_concurrent_operations_health_check(self):
-        """Test concurrent operations health check"""        try:
+        """Test concurrent operations health check"""
+        try:
             import threading
             import time
             
@@ -621,9 +658,11 @@ class TestHealthChecks:
 
 
 class TestDocumentationValidation:
-    """Test suite for documentation validation"""    
+    """Test suite for documentation validation"""
+    
     def test_readme_files_exist(self):
-        """Test README files exist and contain required information"""        test_dir = Path(__file__).parent
+        """Test README files exist and contain required information"""
+        test_dir = Path(__file__).parent
         
         readme_files = ["README.md", "README.de.md", "README.fr.md"]
         
@@ -640,7 +679,8 @@ class TestDocumentationValidation:
             print(f"✓ README file {readme_file} validated")
     
     def test_copyright_warnings_present(self):
-        """Test copyright warnings are present in all files"""        test_dir = Path(__file__).parent
+        """Test copyright warnings are present in all files"""
+        test_dir = Path(__file__).parent
         python_files = list(test_dir.glob("*.py"))
         
         for python_file in python_files:
@@ -655,9 +695,11 @@ class TestDocumentationValidation:
 
 
 class TestCompleteSystemValidation:
-    """Complete system validation test suite"""    
+    """Complete system validation test suite"""
+    
     def test_end_to_end_system_validation(self):
-        """Test complete end-to-end system validation"""        try:
+        """Test complete end-to-end system validation"""
+        try:
             # Step 1: Import all modules
             from ai.core.config import CoreConfig, ConfigManager
             from ai.core.metrics import MetricsCollector
@@ -697,7 +739,8 @@ class TestCompleteSystemValidation:
             pytest.fail(f"End-to-end system validation failed: {e}")
     
     def test_business_logic_integration_validation(self):
-        """Test business logic integration validation"""        # Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
+        """Test business logic integration validation"""
+        # Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
         try:
             from ai.core.config import CoreConfig, PipelineConfig, ValidationConfig
             
@@ -748,7 +791,8 @@ class TestCompleteSystemValidation:
             pytest.fail(f"Business logic integration validation failed: {e}")
     
     def test_multi_creator_support_validation(self):
-        """Test multi-creator support validation"""        creator_types = ["musician", "photographer", "blogger", "influencer", "comedian"]
+        """Test multi-creator support validation"""
+        creator_types = ["musician", "photographer", "blogger", "influencer", "comedian"]
         
         for creator_type in creator_types:
             try:

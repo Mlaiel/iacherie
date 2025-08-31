@@ -1,7 +1,8 @@
 """Rights Ownership Registry - Advanced Rights Management System
 Module de registre de propriété des droits avec gestion avancée
 Système professionnel pour la gestion de la propriété intellectuelle
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
 from dataclasses import dataclass, field
@@ -19,7 +20,8 @@ logger = logging.getLogger(__name__)
 
 
 class OwnershipType(Enum):
-    """Types de propriété"""    SOLE = "sole"  # Propriété unique
+    """Types de propriété"""
+    SOLE = "sole"  # Propriété unique
     JOINT = "joint"  # Copropriété avec parts égales
     TENANTS_IN_COMMON = "tenants_in_common"  # Copropriété avec parts inégales
     WORK_FOR_HIRE = "work_for_hire"  # Travail commandé
@@ -28,7 +30,8 @@ class OwnershipType(Enum):
 
 
 class OwnershipVerificationStatus(Enum):
-    """Statut de vérification de propriété"""    UNVERIFIED = "unverified"
+    """Statut de vérification de propriété"""
+    UNVERIFIED = "unverified"
     PENDING = "pending"
     VERIFIED = "verified"
     DISPUTED = "disputed"
@@ -37,7 +40,8 @@ class OwnershipVerificationStatus(Enum):
 
 
 class CreatorshipEvidence(BaseModel):
-    """Preuves de création"""    evidence_id: str = Field(..., description="ID unique de la preuve")
+    """Preuves de création"""
+    evidence_id: str = Field(..., description="ID unique de la preuve")
     evidence_type: str  # timestamp, witness, deposit, blockchain, notarization
     evidence_data: Dict[str, Any] = Field(default_factory=dict)
     timestamp: datetime = Field(default_factory=datetime.utcnow)
@@ -47,7 +51,8 @@ class CreatorshipEvidence(BaseModel):
 
 
 class OwnershipChain(BaseModel):
-    """Chaîne de propriété"""    chain_id: str = Field(..., description="ID de la chaîne")
+    """Chaîne de propriété"""
+    chain_id: str = Field(..., description="ID de la chaîne")
     content_id: str
     genesis_holder: str  # Créateur original
     current_holder: str  # Propriétaire actuel
@@ -58,7 +63,8 @@ class OwnershipChain(BaseModel):
     last_verified: datetime = Field(default_factory=datetime.utcnow)
     
     def add_link(self, transaction_data: Dict[str, Any]) -> bool:
-        """Ajoute un maillon à la chaîne"""        try:
+        """Ajoute un maillon à la chaîne"""
+        try:
             link = {
                 'link_id': str(uuid.uuid4()),
                 'timestamp': datetime.utcnow().isoformat(),
@@ -81,7 +87,8 @@ class OwnershipChain(BaseModel):
 
 
 class OwnershipRegistry:
-    """Registre avancé de propriété des droits"""    
+    """Registre avancé de propriété des droits"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.ownership_records: Dict[str, OwnershipChain] = {}
@@ -102,7 +109,8 @@ class OwnershipRegistry:
         creation_evidence: List[CreatorshipEvidence],
         content_metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Enregistre une création originale avec preuves"""        try:
+        """Enregistre une création originale avec preuves"""
+        try:
             chain_id = self._generate_chain_id()
             
             # Création de la chaîne de propriété initiale
@@ -149,7 +157,8 @@ class OwnershipRegistry:
         transfer_data: Dict[str, Any],
         evidence: Optional[List[CreatorshipEvidence]] = None
     ) -> bool:
-        """Transfère la propriété avec vérification"""        try:
+        """Transfère la propriété avec vérification"""
+        try:
             if content_id not in self.ownership_records:
                 raise ValueError(f"Contenu {content_id} non trouvé dans le registre")
             
@@ -194,7 +203,8 @@ class OwnershipRegistry:
         claimed_holder: str,
         verification_evidence: Optional[List[CreatorshipEvidence]] = None
     ) -> Dict[str, Any]:
-        """Vérifie la propriété d'un contenu"""        try:
+        """Vérifie la propriété d'un contenu"""
+        try:
             if content_id not in self.ownership_records:
                 return {
                     'verified': False,
@@ -246,7 +256,8 @@ class OwnershipRegistry:
         content_id: str,
         include_evidence: bool = False
     ) -> Optional[Dict[str, Any]]:
-        """Récupère l'historique complet de propriété"""        try:
+        """Récupère l'historique complet de propriété"""
+        try:
             if content_id not in self.ownership_records:
                 return None
             
@@ -304,7 +315,8 @@ class OwnershipRegistry:
         self,
         content_id: str
     ) -> List[Dict[str, Any]]:
-        """Détecte les conflits de propriété potentiels"""        try:
+        """Détecte les conflits de propriété potentiels"""
+        try:
             conflicts = []
             
             if content_id not in self.ownership_records:
@@ -355,7 +367,8 @@ class OwnershipRegistry:
         content_id: str,
         certificate_type: str = "standard"
     ) -> Optional[Dict[str, Any]]:
-        """Génère un certificat de propriété officiel"""        try:
+        """Génère un certificat de propriété officiel"""
+        try:
             if content_id not in self.ownership_records:
                 return None
             
@@ -411,7 +424,8 @@ class OwnershipRegistry:
         claimed_holder: str,
         verification_evidence: Optional[List[CreatorshipEvidence]] = None
     ) -> float:
-        """Calcule le score de confiance de propriété"""        try:
+        """Calcule le score de confiance de propriété"""
+        try:
             confidence_factors = []
             
             # Facteur 1: Présence dans la chaîne officielle
@@ -449,7 +463,8 @@ class OwnershipRegistry:
             return 0.0
     
     async def _verify_chain_integrity(self, ownership_chain: OwnershipChain) -> bool:
-        """Vérifie l'intégrité de la chaîne de propriété"""        try:
+        """Vérifie l'intégrité de la chaîne de propriété"""
+        try:
             if not ownership_chain.chain_links:
                 return True
             
@@ -480,7 +495,8 @@ class OwnershipRegistry:
             return False
     
     async def _assess_fraud_risk(self, content_id: str, claimed_holder: str) -> float:
-        """Évalue le risque de fraude"""        try:
+        """Évalue le risque de fraude"""
+        try:
             risk_factors = []
             
             # Vérification des patterns suspects
@@ -512,7 +528,8 @@ class OwnershipRegistry:
             return 0.0
     
     async def _find_similar_content_claims(self, content_id: str) -> List[Dict[str, Any]]:
-        """Trouve les réclamations de contenu similaire"""        try:
+        """Trouve les réclamations de contenu similaire"""
+        try:
             # Placeholder pour recherche de similarité
             # À implémenter avec une base de données vectorielle
             similar_contents = []
@@ -526,10 +543,12 @@ class OwnershipRegistry:
             return []
     
     def _generate_chain_id(self) -> str:
-        """Génère un ID unique pour la chaîne de propriété"""        return f"OWN-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
+        """Génère un ID unique pour la chaîne de propriété"""
+        return f"OWN-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
     
     def _generate_certificate_id(self) -> str:
-        """Génère un ID unique pour le certificat"""        return f"CERT-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
+        """Génère un ID unique pour le certificat"""
+        return f"CERT-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
     
     def _generate_digital_signature(
         self,
@@ -537,7 +556,8 @@ class OwnershipRegistry:
         content_id: str,
         owner_id: str
     ) -> str:
-        """Génère une signature numérique pour le certificat"""        try:
+        """Génère une signature numérique pour le certificat"""
+        try:
             signature_data = f"{certificate_id}:{content_id}:{owner_id}:{datetime.utcnow().isoformat()}"
             return hashlib.sha256(signature_data.encode()).hexdigest()
         except Exception as e:
@@ -545,7 +565,8 @@ class OwnershipRegistry:
             return ""
     
     async def get_registry_statistics(self) -> Dict[str, Any]:
-        """Retourne les statistiques du registre"""        try:
+        """Retourne les statistiques du registre"""
+        try:
             total_contents = len(self.ownership_records)
             total_transfers = 0
             verified_chains = 0

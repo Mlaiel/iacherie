@@ -22,7 +22,8 @@ Expert Team Specialties:
 Business Logic Flow:
 User (Creator) → Upload Multi-Format → IA Protection & Rights → SEO Optimization → 
 Matching & Collaboration → Distribution Multi-Platforms → Monetization Tracking
-"""from .manager import ContentManager
+"""
+from .manager import ContentManager
 from .processor import ContentProcessor
 from .validator import ContentValidator
 from .analyzer import ContentAnalyzer

@@ -3,7 +3,8 @@ Automated data lifecycle and retention policy management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""import asyncio
+"""
+import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -28,7 +29,8 @@ logger = get_logger(__name__)
 
 
 class RetentionReason(str, Enum):
-    """Data retention reasons"""    LEGAL_REQUIREMENT = "legal_requirement"
+    """Data retention reasons"""
+    LEGAL_REQUIREMENT = "legal_requirement"
     BUSINESS_PURPOSE = "business_purpose"
     USER_CONSENT = "user_consent"
     REGULATORY_COMPLIANCE = "regulatory_compliance"
@@ -37,7 +39,8 @@ class RetentionReason(str, Enum):
 
 
 class DataCategory(str, Enum):
-    """Data category classifications"""    PERSONAL_IDENTIFIABLE = "personal_identifiable"
+    """Data category classifications"""
+    PERSONAL_IDENTIFIABLE = "personal_identifiable"
     FINANCIAL = "financial"
     CONTENT_DATA = "content_data"
     ANALYTICS = "analytics"
@@ -48,7 +51,8 @@ class DataCategory(str, Enum):
 
 
 class RetentionAction(str, Enum):
-    """Actions to take when retention period expires"""    DELETE = "delete"
+    """Actions to take when retention period expires"""
+    DELETE = "delete"
     ARCHIVE = "archive"
     ANONYMIZE = "anonymize"
     PSEUDONYMIZE = "pseudonymize"
@@ -57,7 +61,8 @@ class RetentionAction(str, Enum):
 
 
 class DeletionStatus(str, Enum):
-    """Data deletion status"""    SCHEDULED = "scheduled"
+    """Data deletion status"""
+    SCHEDULED = "scheduled"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -67,7 +72,8 @@ class DeletionStatus(str, Enum):
 
 @dataclass
 class RetentionPolicyDefinition:
-    """Data retention policy definition"""    policy_id: str
+    """Data retention policy definition"""
+    policy_id: str
     name: str
     description: str
     data_category: DataCategory
@@ -84,7 +90,8 @@ class RetentionPolicyDefinition:
 
 @dataclass
 class DataInventoryItem:
-    """Data inventory item for retention management"""    item_id: str
+    """Data inventory item for retention management"""
+    item_id: str
     data_type: str
     data_category: DataCategory
     creation_date: datetime
@@ -100,7 +107,8 @@ class DataInventoryItem:
 
 @dataclass
 class RetentionReport:
-    """Data retention compliance report"""    report_id: str
+    """Data retention compliance report"""
+    report_id: str
     generated_at: datetime
     period_start: datetime
     period_end: datetime
@@ -115,7 +123,8 @@ class RetentionReport:
 
 
 class DataRetentionManager:
-    """Enterprise data retention and lifecycle management system"""    
+    """Enterprise data retention and lifecycle management system"""
+    
     def __init__(self):
         self.logger = logger
         self.audit_logger = AuditLogger()
@@ -143,7 +152,8 @@ class DataRetentionManager:
         self._is_running = False
     
     async def start_retention_scheduler(self) -> None:
-        """Start automated data retention scheduler"""        try:
+        """Start automated data retention scheduler"""
+        try:
             if self._is_running:
                 self.logger.warning("Data retention scheduler already running")
                 return
@@ -165,7 +175,8 @@ class DataRetentionManager:
             raise
     
     async def stop_retention_scheduler(self) -> None:
-        """Stop data retention scheduler"""        try:
+        """Stop data retention scheduler"""
+        try:
             self._is_running = False
             
             # Cancel all retention tasks
@@ -187,7 +198,8 @@ class DataRetentionManager:
         user_id: Optional[int] = None,
         organization_id: Optional[int] = None
     ) -> Dict[str, Any]:
-        """Evaluate data items for retention policy compliance"""        try:
+        """Evaluate data items for retention policy compliance"""
+        try:
             # Get applicable retention policy
             policy = self._get_retention_policy(data_type)
             if not policy:
@@ -257,7 +269,8 @@ class DataRetentionManager:
         user_id: Optional[int] = None,
         dry_run: bool = False
     ) -> Dict[str, Any]:
-        """Execute retention actions on expired data"""        try:
+        """Execute retention actions on expired data"""
+        try:
             # Get retention policy
             policy = self._get_retention_policy(data_type)
             if not policy:
@@ -333,7 +346,8 @@ class DataRetentionManager:
         action: RetentionAction,
         reason: str = None
     ) -> str:
-        """Create scheduled retention task"""        try:
+        """Create scheduled retention task"""
+        try:
             schedule_id = f"RS-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{user_id:08d}"
             
             async with get_db_session() as session:
@@ -380,7 +394,8 @@ class DataRetentionManager:
         end_date: datetime,
         data_categories: List[DataCategory] = None
     ) -> RetentionReport:
-        """Generate comprehensive data retention report"""        try:
+        """Generate comprehensive data retention report"""
+        try:
             report_id = f"RR-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
             
             # Query retention activities
@@ -460,7 +475,8 @@ class DataRetentionManager:
             raise HTTPException(status_code=500, detail="Failed to generate retention report")
     
     async def _daily_retention_check(self) -> None:
-        """Daily automated retention check task"""        try:
+        """Daily automated retention check task"""
+        try:
             while self._is_running:
                 try:
                     self.logger.info("Starting daily retention check")
@@ -499,7 +515,8 @@ class DataRetentionManager:
             self.logger.error(f"Fatal error in daily retention check: {str(e)}")
     
     def _load_retention_policies(self) -> Dict[str, RetentionPolicyDefinition]:
-        """Load data retention policies"""        return {
+        """Load data retention policies"""
+        return {
             "user_profiles": RetentionPolicyDefinition(
                 policy_id="POL-USER-001",
                 name="User Profile Data Retention",

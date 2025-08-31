@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -20,7 +21,8 @@ and content identification.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Address critical testing gap - "Tests Manquants: Pas de tests unitaires centralisés"
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -66,14 +68,16 @@ except ImportError:
 
 
 class MockFingerprintingEngine:
-    """Mock implementation of fingerprinting engine for testing"""    
+    """Mock implementation of fingerprinting engine for testing"""
+    
     def __init__(self):
         self.processed_files = []
         self.fingerprint_database = {}
         self.similarity_threshold = 0.85
         
     async def generate_audio_fingerprint(self, audio_data: bytes, metadata: Dict) -> Dict[str, Any]:
-        """Generate audio fingerprint with spectral analysis simulation"""        # Simulate audio processing
+        """Generate audio fingerprint with spectral analysis simulation"""
+        # Simulate audio processing
         file_hash = hashlib.md5(audio_data).hexdigest()
         
         # Handle None metadata gracefully
@@ -102,7 +106,8 @@ class MockFingerprintingEngine:
         return fingerprint
     
     async def generate_video_fingerprint(self, video_data: bytes, metadata: Dict) -> Dict[str, Any]:
-        """Generate video fingerprint with visual analysis simulation"""        file_hash = hashlib.md5(video_data).hexdigest()
+        """Generate video fingerprint with visual analysis simulation"""
+        file_hash = hashlib.md5(video_data).hexdigest()
         
         # Simulate video processing
         fingerprint = {
@@ -132,7 +137,8 @@ class MockFingerprintingEngine:
         return fingerprint
     
     async def find_similar_content(self, fingerprint: Dict, threshold: float = None) -> List[Dict]:
-        """Find similar content based on fingerprint comparison"""        if threshold is None:
+        """Find similar content based on fingerprint comparison"""
+        if threshold is None:
             threshold = self.similarity_threshold
             
         similar_content = []
@@ -158,7 +164,8 @@ class MockFingerprintingEngine:
         return sorted(similar_content, key=lambda x: x["similarity_score"], reverse=True)
     
     async def validate_fingerprint_integrity(self, fingerprint: Dict) -> bool:
-        """Validate fingerprint data integrity"""        required_fields = ["file_hash", "timestamp", "confidence"]
+        """Validate fingerprint data integrity"""
+        required_fields = ["file_hash", "timestamp", "confidence"]
         
         for field in required_fields:
             if field not in fingerprint:
@@ -179,22 +186,27 @@ class MockFingerprintingEngine:
 
 
 class TestFingerprintingAgent:
-    """Test suite for fingerprinting agent functionality"""    
+    """Test suite for fingerprinting agent functionality"""
+    
     @pytest.fixture
     def fingerprinting_engine(self):
-        """Create fingerprinting engine fixture"""        return MockFingerprintingEngine()
+        """Create fingerprinting engine fixture"""
+        return MockFingerprintingEngine()
     
     @pytest.fixture
     def sample_audio_data(self):
-        """Sample audio data for testing"""        return b"fake_audio_data_for_testing" * 1000
+        """Sample audio data for testing"""
+        return b"fake_audio_data_for_testing" * 1000
     
     @pytest.fixture
     def sample_video_data(self):
-        """Sample video data for testing"""        return b"fake_video_data_for_testing" * 2000
+        """Sample video data for testing"""
+        return b"fake_video_data_for_testing" * 2000
     
     @pytest.fixture
     def audio_metadata(self):
-        """Sample audio metadata"""        return {
+        """Sample audio metadata"""
+        return {
             "duration": 180.5,
             "sample_rate": 44100,
             "channels": 2,
@@ -204,7 +216,8 @@ class TestFingerprintingAgent:
     
     @pytest.fixture
     def video_metadata(self):
-        """Sample video metadata"""        return {
+        """Sample video metadata"""
+        return {
             "duration": 300.0,
             "resolution": "1920x1080",
             "fps": 30,
@@ -214,7 +227,8 @@ class TestFingerprintingAgent:
     
     @pytest.mark.asyncio
     async def test_audio_fingerprint_generation(self, fingerprinting_engine, sample_audio_data, audio_metadata):
-        """Test audio fingerprint generation"""        fingerprint = await fingerprinting_engine.generate_audio_fingerprint(
+        """Test audio fingerprint generation"""
+        fingerprint = await fingerprinting_engine.generate_audio_fingerprint(
             sample_audio_data, audio_metadata
         )
         
@@ -236,7 +250,8 @@ class TestFingerprintingAgent:
     
     @pytest.mark.asyncio
     async def test_video_fingerprint_generation(self, fingerprinting_engine, sample_video_data, video_metadata):
-        """Test video fingerprint generation"""        fingerprint = await fingerprinting_engine.generate_video_fingerprint(
+        """Test video fingerprint generation"""
+        fingerprint = await fingerprinting_engine.generate_video_fingerprint(
             sample_video_data, video_metadata
         )
         
@@ -262,7 +277,8 @@ class TestFingerprintingAgent:
     
     @pytest.mark.asyncio
     async def test_similarity_matching(self, fingerprinting_engine, sample_audio_data, audio_metadata):
-        """Test similarity matching functionality"""        # Generate base fingerprint
+        """Test similarity matching functionality"""
+        # Generate base fingerprint
         fingerprint1 = await fingerprinting_engine.generate_audio_fingerprint(
             sample_audio_data, audio_metadata
         )
@@ -287,7 +303,8 @@ class TestFingerprintingAgent:
     
     @pytest.mark.asyncio
     async def test_fingerprint_validation(self, fingerprinting_engine):
-        """Test fingerprint validation"""        # Valid fingerprint
+        """Test fingerprint validation"""
+        # Valid fingerprint
         valid_fingerprint = {
             "file_hash": "test_hash_123",
             "timestamp": datetime.utcnow().isoformat(),
@@ -322,7 +339,8 @@ class TestFingerprintingAgent:
     
     @pytest.mark.asyncio
     async def test_batch_processing(self, fingerprinting_engine):
-        """Test batch processing of multiple files"""        test_files = [
+        """Test batch processing of multiple files"""
+        test_files = [
             (b"audio_file_1" * 100, {"duration": 120, "format": "mp3"}),
             (b"audio_file_2" * 100, {"duration": 180, "format": "wav"}),
             (b"audio_file_3" * 100, {"duration": 240, "format": "flac"})
@@ -345,7 +363,8 @@ class TestFingerprintingAgent:
     
     @pytest.mark.asyncio
     async def test_error_handling(self, fingerprinting_engine):
-        """Test error handling for invalid inputs"""        # Test with empty data - mock handles gracefully
+        """Test error handling for invalid inputs"""
+        # Test with empty data - mock handles gracefully
         result = await fingerprinting_engine.generate_audio_fingerprint(b"", {})
         assert result is not None
         assert "file_hash" in result
@@ -360,7 +379,8 @@ class TestFingerprintingAgent:
     
     @pytest.mark.asyncio
     async def test_performance_metrics(self, fingerprinting_engine, sample_audio_data, audio_metadata):
-        """Test performance tracking"""        start_time = datetime.utcnow()
+        """Test performance tracking"""
+        start_time = datetime.utcnow()
         
         fingerprint = await fingerprinting_engine.generate_audio_fingerprint(
             sample_audio_data, audio_metadata
@@ -377,7 +397,8 @@ class TestFingerprintingAgent:
         assert "confidence" in fingerprint
         
     def test_engine_initialization(self):
-        """Test fingerprinting engine initialization"""        engine = MockFingerprintingEngine()
+        """Test fingerprinting engine initialization"""
+        engine = MockFingerprintingEngine()
         
         assert engine.processed_files == []
         assert engine.fingerprint_database == {}
@@ -385,7 +406,8 @@ class TestFingerprintingAgent:
         
     @pytest.mark.asyncio
     async def test_concurrent_processing(self, fingerprinting_engine):
-        """Test concurrent fingerprint processing"""        test_data = [
+        """Test concurrent fingerprint processing"""
+        test_data = [
             (b"concurrent_file_1" * 50, {"duration": 60}),
             (b"concurrent_file_2" * 50, {"duration": 90}),
             (b"concurrent_file_3" * 50, {"duration": 120})

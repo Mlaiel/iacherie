@@ -13,7 +13,8 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import os
+"""
+import os
 from decimal import Decimal
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -21,7 +22,8 @@ from enum import Enum
 
 
 class PricingModel(str, Enum):
-    """Available pricing models."""    FREE = "free"
+    """Available pricing models."""
+    FREE = "free"
     FREEMIUM = "freemium"
     SUBSCRIPTION = "subscription"
     USAGE_BASED = "usage_based"
@@ -33,7 +35,8 @@ class PricingModel(str, Enum):
 
 
 class PricingTier(str, Enum):
-    """Subscription tier levels."""    FREE = "free"
+    """Subscription tier levels."""
+    FREE = "free"
     BASIC = "basic"
     PROFESSIONAL = "professional"
     PREMIUM = "premium"
@@ -42,7 +45,8 @@ class PricingTier(str, Enum):
 
 
 class BillingPeriod(str, Enum):
-    """Billing period options."""    DAILY = "daily"
+    """Billing period options."""
+    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -53,7 +57,8 @@ class BillingPeriod(str, Enum):
 
 
 class FeatureType(str, Enum):
-    """Feature types for pricing tiers."""    CONTENT_UPLOADS = "content_uploads"
+    """Feature types for pricing tiers."""
+    CONTENT_UPLOADS = "content_uploads"
     STORAGE_GB = "storage_gb"
     BANDWIDTH_GB = "bandwidth_gb"
     API_CALLS = "api_calls"
@@ -68,7 +73,8 @@ class FeatureType(str, Enum):
 
 
 class DiscountType(str, Enum):
-    """Discount types."""    PERCENTAGE = "percentage"
+    """Discount types."""
+    PERCENTAGE = "percentage"
     FIXED_AMOUNT = "fixed_amount"
     FREE_PERIOD = "free_period"
     BULK_DISCOUNT = "bulk_discount"
@@ -78,7 +84,8 @@ class DiscountType(str, Enum):
 
 @dataclass
 class Feature:
-    """Feature definition with limits."""    type: FeatureType
+    """Feature definition with limits."""
+    type: FeatureType
     name: str
     description: str
     limit: Union[int, str]  # Number or "unlimited"
@@ -88,7 +95,8 @@ class Feature:
 
 @dataclass
 class PricingTierConfig:
-    """Configuration for a specific pricing tier."""    tier: PricingTier
+    """Configuration for a specific pricing tier."""
+    tier: PricingTier
     name: str
     description: str
     price_monthly: Decimal
@@ -106,7 +114,8 @@ class PricingTierConfig:
 
 @dataclass
 class UsageBasedPricing:
-    """Usage-based pricing configuration."""    feature: FeatureType
+    """Usage-based pricing configuration."""
+    feature: FeatureType
     base_included: int
     overage_price: Decimal
     currency: str
@@ -117,7 +126,8 @@ class UsageBasedPricing:
 
 @dataclass
 class RevenueShareConfig:
-    """Revenue sharing configuration."""    platform_commission: Decimal  # Percentage we take
+    """Revenue sharing configuration."""
+    platform_commission: Decimal  # Percentage we take
     creator_share: Decimal  # Percentage creator gets
     minimum_revenue: Decimal
     maximum_commission: Optional[Decimal] = None
@@ -127,7 +137,8 @@ class RevenueShareConfig:
 
 @dataclass
 class DiscountConfig:
-    """Discount configuration."""    code: str
+    """Discount configuration."""
+    code: str
     type: DiscountType
     value: Decimal  # Percentage or fixed amount
     minimum_amount: Decimal = Decimal("0.00")
@@ -142,7 +153,8 @@ class DiscountConfig:
 
 @dataclass
 class PricingConfig:
-    """Main pricing configuration class."""    
+    """Main pricing configuration class."""
+    
     # Default Settings
     DEFAULT_CURRENCY: str = "EUR"
     DEFAULT_BILLING_PERIOD: BillingPeriod = BillingPeriod.MONTHLY
@@ -616,10 +628,12 @@ class PricingConfig:
     })
     
     def get_tier_config(self, tier: PricingTier) -> Optional[PricingTierConfig]:
-        """Get configuration for a specific pricing tier."""        return self.PRICING_TIERS.get(tier)
+        """Get configuration for a specific pricing tier."""
+        return self.PRICING_TIERS.get(tier)
     
     def get_enabled_tiers(self) -> List[PricingTier]:
-        """Get list of enabled pricing tiers."""        return [
+        """Get list of enabled pricing tiers."""
+        return [
             tier for tier, config in self.PRICING_TIERS.items() 
             if config.enabled
         ]
@@ -629,7 +643,8 @@ class PricingConfig:
         base_price: Decimal, 
         country_code: str
     ) -> Decimal:
-        """Calculate price including tax for a specific country."""        tax_rate = self.TAX_SETTINGS["tax_by_country"].get(
+        """Calculate price including tax for a specific country."""
+        tax_rate = self.TAX_SETTINGS["tax_by_country"].get(
             country_code, 
             self.TAX_SETTINGS["default_tax_rate"]
         )
@@ -646,7 +661,8 @@ class PricingConfig:
         discount_code: str, 
         tier: PricingTier
     ) -> Decimal:
-        """Apply discount to price if valid."""        discount = self.DISCOUNTS.get(discount_code)
+        """Apply discount to price if valid."""
+        discount = self.DISCOUNTS.get(discount_code)
         if not discount or not discount.enabled:
             return price
         
@@ -668,7 +684,8 @@ class PricingConfig:
         return max(final_price, Decimal("0.00")).quantize(Decimal("0.01"))
     
     def get_annual_discount_percentage(self, tier: PricingTier) -> Decimal:
-        """Calculate annual discount percentage for a tier."""        config = self.get_tier_config(tier)
+        """Calculate annual discount percentage for a tier."""
+        config = self.get_tier_config(tier)
         if not config:
             return Decimal("0.00")
         

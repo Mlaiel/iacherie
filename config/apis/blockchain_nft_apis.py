@@ -9,7 +9,8 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ⚠️ PROPRIÉTÉ EXCLUSIVE DE FAHED MLAIEL
 Toute tentative de copie, vol ou réutilisation sans autorisation écrite
 de Fahed Mlaiel (mlaiel@live.de) sera poursuivie en justice selon la loi allemande.
-"""from typing import Dict, List, Optional, Any, Union
+"""
+from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
 import os
@@ -17,7 +18,8 @@ from decimal import Decimal
 
 
 class BlockchainNetwork(Enum):
-    """Blockchain networks enumeration."""    ETHEREUM_MAINNET = "ethereum_mainnet"
+    """Blockchain networks enumeration."""
+    ETHEREUM_MAINNET = "ethereum_mainnet"
     ETHEREUM_GOERLI = "ethereum_goerli"
     ETHEREUM_SEPOLIA = "ethereum_sepolia"
     POLYGON_MAINNET = "polygon_mainnet"
@@ -31,7 +33,8 @@ class BlockchainNetwork(Enum):
 
 
 class TokenStandard(Enum):
-    """Token standards enumeration."""    ERC721 = "erc721"  # NFT standard
+    """Token standards enumeration."""
+    ERC721 = "erc721"  # NFT standard
     ERC1155 = "erc1155"  # Multi-token standard
     ERC20 = "erc20"  # Fungible token standard
     SPL_TOKEN = "spl_token"  # Solana token standard
@@ -39,7 +42,8 @@ class TokenStandard(Enum):
 
 
 class ContractType(Enum):
-    """Smart contract types."""    NFT_COLLECTION = "nft_collection"
+    """Smart contract types."""
+    NFT_COLLECTION = "nft_collection"
     MARKETPLACE = "marketplace"
     ROYALTY_SPLITTER = "royalty_splitter"
     CONTENT_PROTECTION = "content_protection"
@@ -51,7 +55,8 @@ class ContractType(Enum):
 
 @dataclass
 class BlockchainConfig:
-    """Blockchain network configuration."""    network: BlockchainNetwork
+    """Blockchain network configuration."""
+    network: BlockchainNetwork
     rpc_url: str
     ws_url: str
     chain_id: int
@@ -68,7 +73,8 @@ class BlockchainConfig:
 
 @dataclass
 class NFTMetadata:
-    """NFT metadata structure."""    name: str
+    """NFT metadata structure."""
+    name: str
     description: str
     image: str
     external_url: Optional[str]
@@ -91,7 +97,8 @@ class NFTMetadata:
 
 @dataclass
 class SmartContractConfig:
-    """Smart contract configuration."""    contract_type: ContractType
+    """Smart contract configuration."""
+    contract_type: ContractType
     contract_address: str
     abi: List[Dict[str, Any]]
     bytecode: Optional[str]
@@ -107,9 +114,11 @@ class SmartContractConfig:
 
 
 class BlockchainAPIsConfig:
-    """Professional Blockchain & NFT APIs configuration."""    
+    """Professional Blockchain & NFT APIs configuration."""
+    
     def __init__(self):
-        """Initialize blockchain configuration."""        self.networks = self._get_network_configs()
+        """Initialize blockchain configuration."""
+        self.networks = self._get_network_configs()
         self.contracts = self._get_contract_configs()
         self.nft_collections = self._get_nft_collection_configs()
         self.marketplace_configs = self._get_marketplace_configs()
@@ -118,7 +127,8 @@ class BlockchainAPIsConfig:
         self.wallet_configs = self._get_wallet_configs()
     
     def _get_network_configs(self) -> Dict[BlockchainNetwork, BlockchainConfig]:
-        """Get blockchain network configurations."""        return {
+        """Get blockchain network configurations."""
+        return {
             BlockchainNetwork.ETHEREUM_MAINNET: BlockchainConfig(
                 network=BlockchainNetwork.ETHEREUM_MAINNET,
                 rpc_url=os.getenv("ETHEREUM_MAINNET_RPC", "https://mainnet.infura.io/v3/"),
@@ -169,7 +179,8 @@ class BlockchainAPIsConfig:
         }
     
     def _get_contract_configs(self) -> Dict[str, SmartContractConfig]:
-        """Get smart contract configurations."""        return {
+        """Get smart contract configurations."""
+        return {
             'ia_content_nft': SmartContractConfig(
                 contract_type=ContractType.NFT_COLLECTION,
                 contract_address=os.getenv("IA_CONTENT_NFT_CONTRACT", ""),
@@ -285,7 +296,8 @@ class BlockchainAPIsConfig:
         }
     
     def _get_nft_collection_configs(self) -> Dict[str, Dict[str, Any]]:
-        """Get NFT collection configurations."""        return {
+        """Get NFT collection configurations."""
+        return {
             'music_nfts': {
                 'collection_name': 'IA-Influencer Music',
                 'collection_symbol': 'IAM',
@@ -342,7 +354,8 @@ class BlockchainAPIsConfig:
         }
     
     def _get_marketplace_configs(self) -> Dict[str, Dict[str, Any]]:
-        """Get marketplace configurations."""        return {
+        """Get marketplace configurations."""
+        return {
             'primary_marketplace': {
                 'platform_fee': Decimal("2.5"),
                 'payment_tokens': ['ETH', 'MATIC', 'USDC', 'USDT'],
@@ -371,7 +384,8 @@ class BlockchainAPIsConfig:
         }
     
     def _get_royalty_configs(self) -> Dict[str, Dict[str, Any]]:
-        """Get royalty configurations."""        return {
+        """Get royalty configurations."""
+        return {
             'creator_royalties': {
                 'default_percentage': Decimal("10.0"),
                 'minimum_percentage': Decimal("2.5"),
@@ -402,7 +416,8 @@ class BlockchainAPIsConfig:
         }
     
     def _get_protection_configs(self) -> Dict[str, Dict[str, Any]]:
-        """Get content protection configurations."""        return {
+        """Get content protection configurations."""
+        return {
             'on_chain_protection': {
                 'content_hashing': 'sha256',
                 'fingerprint_storage': True,
@@ -436,7 +451,8 @@ class BlockchainAPIsConfig:
         }
     
     def _get_wallet_configs(self) -> Dict[str, Dict[str, Any]]:
-        """Get wallet configurations."""        return {
+        """Get wallet configurations."""
+        return {
             'supported_wallets': {
                 'metamask': {
                     'enabled': True,
@@ -477,13 +493,16 @@ class BlockchainAPIsConfig:
         }
     
     def get_network_config(self, network: BlockchainNetwork) -> Optional[BlockchainConfig]:
-        """Get blockchain network configuration."""        return self.networks.get(network)
+        """Get blockchain network configuration."""
+        return self.networks.get(network)
     
     def get_contract_config(self, contract_name: str) -> Optional[SmartContractConfig]:
-        """Get smart contract configuration."""        return self.contracts.get(contract_name)
+        """Get smart contract configuration."""
+        return self.contracts.get(contract_name)
     
     def get_nft_collection_config(self, collection_name: str) -> Optional[Dict[str, Any]]:
-        """Get NFT collection configuration."""        return self.nft_collections.get(collection_name)
+        """Get NFT collection configuration."""
+        return self.nft_collections.get(collection_name)
 
 
 # Global configuration instance
@@ -491,15 +510,18 @@ blockchain_apis_config = BlockchainAPIsConfig()
 
 
 def get_blockchain_network(network: BlockchainNetwork) -> Optional[BlockchainConfig]:
-    """Get blockchain network configuration."""    return blockchain_apis_config.get_network_config(network)
+    """Get blockchain network configuration."""
+    return blockchain_apis_config.get_network_config(network)
 
 
 def get_smart_contract(contract_name: str) -> Optional[SmartContractConfig]:
-    """Get smart contract configuration."""    return blockchain_apis_config.get_contract_config(contract_name)
+    """Get smart contract configuration."""
+    return blockchain_apis_config.get_contract_config(contract_name)
 
 
 def get_nft_collection(collection_name: str) -> Optional[Dict[str, Any]]:
-    """Get NFT collection configuration."""    return blockchain_apis_config.get_nft_collection_config(collection_name)
+    """Get NFT collection configuration."""
+    return blockchain_apis_config.get_nft_collection_config(collection_name)
 
 
 def create_nft_metadata(
@@ -512,7 +534,8 @@ def create_nft_metadata(
     attributes: List[Dict[str, Any]],
     royalty_percentage: Decimal = Decimal("10.0")
 ) -> NFTMetadata:
-    """Create NFT metadata structure."""    from datetime import datetime
+    """Create NFT metadata structure."""
+    from datetime import datetime
     
     return NFTMetadata(
         name=name,

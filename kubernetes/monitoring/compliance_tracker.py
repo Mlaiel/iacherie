@@ -16,7 +16,8 @@ Compliance Areas:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set
 from dataclasses import dataclass, field
@@ -33,7 +34,8 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceType(Enum):
-    """Types of compliance requirements"""    GDPR = "gdpr"
+    """Types of compliance requirements"""
+    GDPR = "gdpr"
     CCPA = "ccpa"
     DMCA = "dmca"
     CONTENT_PROTECTION = "content_protection"
@@ -46,7 +48,8 @@ class ComplianceType(Enum):
 
 
 class ComplianceStatus(Enum):
-    """Compliance status levels"""    COMPLIANT = "compliant"
+    """Compliance status levels"""
+    COMPLIANT = "compliant"
     WARNING = "warning"
     VIOLATION = "violation"
     PENDING_REVIEW = "pending_review"
@@ -55,7 +58,8 @@ class ComplianceStatus(Enum):
 
 
 class ComplianceSeverity(Enum):
-    """Compliance violation severity"""    LOW = "low"
+    """Compliance violation severity"""
+    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -63,7 +67,8 @@ class ComplianceSeverity(Enum):
 
 @dataclass
 class ComplianceRule:
-    """Compliance rule definition"""    id: str
+    """Compliance rule definition"""
+    id: str
     name: str
     compliance_type: ComplianceType
     description: str
@@ -78,7 +83,8 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceViolation:
-    """Compliance violation record"""    id: str
+    """Compliance violation record"""
+    id: str
     rule_id: str
     compliance_type: ComplianceType
     severity: ComplianceSeverity
@@ -94,7 +100,8 @@ class ComplianceViolation:
 
 @dataclass
 class ComplianceReport:
-    """Compliance status report"""    compliance_type: ComplianceType
+    """Compliance status report"""
+    compliance_type: ComplianceType
     overall_status: ComplianceStatus
     total_rules: int
     compliant_rules: int
@@ -107,7 +114,8 @@ class ComplianceReport:
 
 @dataclass
 class DataProcessingRecord:
-    """GDPR Article 30 - Record of Processing Activities"""    id: str
+    """GDPR Article 30 - Record of Processing Activities"""
+    id: str
     name: str
     purpose: str
     categories_of_data_subjects: List[str]
@@ -122,9 +130,11 @@ class DataProcessingRecord:
 
 
 class ComplianceTracker:
-    """    Advanced compliance monitoring and tracking system with automated
+    """
+    Advanced compliance monitoring and tracking system with automated
     checks, violation detection, and regulatory reporting.
-    """    
+    """
+    
     def __init__(
         self,
         redis_client: Optional[aioredis.Redis] = None,
@@ -162,7 +172,8 @@ class ComplianceTracker:
         logger.info("Compliance Tracker initialized")
         
     async def start(self):
-        """Start compliance monitoring"""        if self._running:
+        """Start compliance monitoring"""
+        if self._running:
             logger.warning("Compliance tracker already running")
             return
             
@@ -183,7 +194,8 @@ class ComplianceTracker:
             raise
             
     async def stop(self):
-        """Stop compliance monitoring"""        self._running = False
+        """Stop compliance monitoring"""
+        self._running = False
         
         if self._compliance_task:
             self._compliance_task.cancel()
@@ -198,7 +210,8 @@ class ComplianceTracker:
         logger.info("Compliance tracking stopped")
         
     def _initialize_compliance_rules(self):
-        """Initialize built-in compliance rules"""        
+        """Initialize built-in compliance rules"""
+        
         # GDPR Rules
         self._compliance_rules["gdpr_consent"] = ComplianceRule(
             id="gdpr_consent",
@@ -348,7 +361,8 @@ class ComplianceTracker:
         )
         
     async def _compliance_loop(self):
-        """Main compliance checking loop"""        
+        """Main compliance checking loop"""
+        
         while self._running:
             try:
                 # Run automated compliance checks
@@ -381,7 +395,8 @@ class ComplianceTracker:
                 await asyncio.sleep(300)  # Backoff on error
                 
     async def _run_automated_checks(self):
-        """Run automated compliance checks"""        
+        """Run automated compliance checks"""
+        
         try:
             for rule_id, rule in self._compliance_rules.items():
                 if rule.automated_check:
@@ -413,7 +428,8 @@ class ComplianceTracker:
             logger.error(f"Error in automated compliance checks: {e}")
             
     async def _check_rule_compliance(self, rule: ComplianceRule) -> List[ComplianceViolation]:
-        """Check compliance for a specific rule"""        
+        """Check compliance for a specific rule"""
+        
         violations = []
         
         try:
@@ -438,7 +454,8 @@ class ComplianceTracker:
         return violations
         
     async def _check_gdpr_compliance(self, rule: ComplianceRule) -> List[ComplianceViolation]:
-        """Check GDPR compliance"""        
+        """Check GDPR compliance"""
+        
         violations = []
         
         if rule.id == "gdpr_consent":
@@ -451,7 +468,8 @@ class ComplianceTracker:
         return violations
         
     async def _check_consent_validity(self) -> List[ComplianceViolation]:
-        """Check consent validity (GDPR)"""        
+        """Check consent validity (GDPR)"""
+        
         violations = []
         
         if not self.db_engine:
@@ -460,7 +478,8 @@ class ComplianceTracker:
         try:
             async with self.db_engine.begin() as conn:
                 # Check for users without valid consent
-                result = await conn.execute(text("""                    SELECT u.id, u.email, c.consent_given, c.consent_date
+                result = await conn.execute(text("""
+                    SELECT u.id, u.email, c.consent_given, c.consent_date
                     FROM users u
                     LEFT JOIN user_consent c ON u.id = c.user_id
                     WHERE u.created_at > '2018-05-25'  -- GDPR effective date
@@ -496,7 +515,8 @@ class ComplianceTracker:
         return violations
         
     async def _check_data_portability(self) -> List[ComplianceViolation]:
-        """Check data portability compliance (GDPR)"""        
+        """Check data portability compliance (GDPR)"""
+        
         violations = []
         
         if not self.db_engine:
@@ -505,7 +525,8 @@ class ComplianceTracker:
         try:
             async with self.db_engine.begin() as conn:
                 # Check for pending data portability requests
-                result = await conn.execute(text("""                    SELECT id, user_id, request_date, status
+                result = await conn.execute(text("""
+                    SELECT id, user_id, request_date, status
                     FROM data_subject_requests
                     WHERE request_type = 'data_portability'
                         AND status = 'pending'
@@ -541,7 +562,8 @@ class ComplianceTracker:
         return violations
         
     async def _check_right_to_erasure(self) -> List[ComplianceViolation]:
-        """Check right to erasure compliance (GDPR)"""        
+        """Check right to erasure compliance (GDPR)"""
+        
         violations = []
         
         if not self.db_engine:
@@ -550,7 +572,8 @@ class ComplianceTracker:
         try:
             async with self.db_engine.begin() as conn:
                 # Check for pending erasure requests
-                result = await conn.execute(text("""                    SELECT id, user_id, request_date, status
+                result = await conn.execute(text("""
+                    SELECT id, user_id, request_date, status
                     FROM data_subject_requests
                     WHERE request_type = 'erasure'
                         AND status = 'pending'
@@ -586,7 +609,8 @@ class ComplianceTracker:
         return violations
         
     async def _check_ccpa_compliance(self, rule: ComplianceRule) -> List[ComplianceViolation]:
-        """Check CCPA compliance"""        
+        """Check CCPA compliance"""
+        
         violations = []
         
         if rule.id == "ccpa_disclosure":
@@ -597,7 +621,8 @@ class ComplianceTracker:
             try:
                 async with self.db_engine.begin() as conn:
                     # Check for California users without proper disclosure
-                    result = await conn.execute(text("""                        SELECT u.id, u.email, u.state
+                    result = await conn.execute(text("""
+                        SELECT u.id, u.email, u.state
                         FROM users u
                         LEFT JOIN privacy_disclosures pd ON u.id = pd.user_id
                         WHERE u.state = 'CA'
@@ -632,7 +657,8 @@ class ComplianceTracker:
         return violations
         
     async def _check_dmca_compliance(self, rule: ComplianceRule) -> List[ComplianceViolation]:
-        """Check DMCA compliance"""        
+        """Check DMCA compliance"""
+        
         violations = []
         
         if rule.id == "dmca_takedown":
@@ -642,7 +668,8 @@ class ComplianceTracker:
             try:
                 async with self.db_engine.begin() as conn:
                     # Check for overdue DMCA takedown requests
-                    result = await conn.execute(text("""                        SELECT id, content_id, request_date, status
+                    result = await conn.execute(text("""
+                        SELECT id, content_id, request_date, status
                         FROM dmca_requests
                         WHERE status = 'pending'
                             AND request_date < NOW() - INTERVAL '24 hours'
@@ -677,7 +704,8 @@ class ComplianceTracker:
         return violations
         
     async def _check_content_protection_compliance(self, rule: ComplianceRule) -> List[ComplianceViolation]:
-        """Check content protection compliance"""        
+        """Check content protection compliance"""
+        
         violations = []
         
         if rule.id == "content_fingerprinting_accuracy":
@@ -687,7 +715,8 @@ class ComplianceTracker:
             try:
                 async with self.db_engine.begin() as conn:
                     # Check fingerprinting accuracy
-                    result = await conn.execute(text("""                        SELECT 
+                    result = await conn.execute(text("""
+                        SELECT 
                             content_type,
                             AVG(CASE WHEN status = 'success' THEN 1.0 ELSE 0.0 END) as accuracy
                         FROM content_fingerprints
@@ -727,7 +756,8 @@ class ComplianceTracker:
         return violations
         
     async def _check_platform_compliance_rule(self, rule: ComplianceRule) -> List[ComplianceViolation]:
-        """Check platform compliance rules"""        
+        """Check platform compliance rules"""
+        
         violations = []
         
         if rule.id == "spotify_api_compliance":
@@ -765,7 +795,8 @@ class ComplianceTracker:
         return violations
         
     async def _check_ai_ethics_compliance(self, rule: ComplianceRule) -> List[ComplianceViolation]:
-        """Check AI ethics compliance"""        
+        """Check AI ethics compliance"""
+        
         violations = []
         
         if rule.id == "ai_transparency":
@@ -776,7 +807,8 @@ class ComplianceTracker:
             try:
                 async with self.db_engine.begin() as conn:
                     # Check for AI decisions without explanations
-                    result = await conn.execute(text("""                        SELECT id, decision_type, model_name, explanation_provided
+                    result = await conn.execute(text("""
+                        SELECT id, decision_type, model_name, explanation_provided
                         FROM ai_decisions
                         WHERE created_at > NOW() - INTERVAL '24 hours'
                             AND explanation_provided = false
@@ -811,7 +843,8 @@ class ComplianceTracker:
         return violations
         
     async def _check_data_retention_rule(self, rule: ComplianceRule) -> List[ComplianceViolation]:
-        """Check data retention compliance"""        
+        """Check data retention compliance"""
+        
         violations = []
         
         if rule.id == "data_retention_policy":
@@ -821,7 +854,8 @@ class ComplianceTracker:
             try:
                 async with self.db_engine.begin() as conn:
                     # Check for data past retention period
-                    result = await conn.execute(text("""                        SELECT 
+                    result = await conn.execute(text("""
+                        SELECT 
                             'user_logs' as table_name,
                             COUNT(*) as expired_records
                         FROM user_logs
@@ -864,27 +898,32 @@ class ComplianceTracker:
         return violations
         
     async def _check_consent_compliance(self):
-        """Check overall consent compliance"""        
+        """Check overall consent compliance"""
+        
         # Implementation for comprehensive consent checking
         pass
         
     async def _check_data_retention_compliance(self):
-        """Check data retention compliance"""        
+        """Check data retention compliance"""
+        
         # Implementation for data retention monitoring
         pass
         
     async def _check_platform_compliance(self):
-        """Check platform integration compliance"""        
+        """Check platform integration compliance"""
+        
         # Implementation for platform compliance monitoring
         pass
         
     async def _process_data_subject_requests(self):
-        """Process data subject requests (GDPR/CCPA)"""        
+        """Process data subject requests (GDPR/CCPA)"""
+        
         # Implementation for data subject request processing
         pass
         
     async def _generate_compliance_reports(self):
-        """Generate compliance status reports"""        
+        """Generate compliance status reports"""
+        
         try:
             for compliance_type in ComplianceType:
                 report = await self._generate_compliance_report(compliance_type)
@@ -894,7 +933,8 @@ class ComplianceTracker:
             logger.error(f"Error generating compliance reports: {e}")
             
     async def _generate_compliance_report(self, compliance_type: ComplianceType) -> ComplianceReport:
-        """Generate compliance report for specific type"""        
+        """Generate compliance report for specific type"""
+        
         # Get relevant rules
         relevant_rules = [
             rule for rule in self._compliance_rules.values()
@@ -939,7 +979,8 @@ class ComplianceTracker:
         )
         
     def _generate_recommendations(self, compliance_type: ComplianceType, violations: List[ComplianceViolation]) -> List[str]:
-        """Generate compliance recommendations"""        
+        """Generate compliance recommendations"""
+        
         recommendations = []
         
         if compliance_type == ComplianceType.GDPR:
@@ -968,7 +1009,8 @@ class ComplianceTracker:
         return recommendations
         
     async def _update_compliance_status(self):
-        """Update overall compliance status"""        
+        """Update overall compliance status"""
+        
         try:
             for compliance_type in ComplianceType:
                 # Calculate status based on recent violations
@@ -994,7 +1036,8 @@ class ComplianceTracker:
             logger.error(f"Error updating compliance status: {e}")
             
     async def _record_violation(self, violation: ComplianceViolation):
-        """Record a compliance violation"""        
+        """Record a compliance violation"""
+        
         try:
             # Add to violations queue
             self._violations.append(violation)
@@ -1002,7 +1045,8 @@ class ComplianceTracker:
             # Store in database
             if self.db_engine:
                 async with self.db_engine.begin() as conn:
-                    await conn.execute(text("""                        INSERT INTO compliance_violations (
+                    await conn.execute(text("""
+                        INSERT INTO compliance_violations (
                             id, rule_id, compliance_type, severity, description,
                             details, affected_entities, detected_at, status
                         ) VALUES (
@@ -1049,12 +1093,14 @@ class ComplianceTracker:
             logger.error(f"Error recording violation: {e}")
             
     async def _send_compliance_alert(self, violation: ComplianceViolation):
-        """Send compliance violation alert"""        
+        """Send compliance violation alert"""
+        
         # Implementation for compliance alerting
         logger.warning(f"Compliance alert: {violation.description}")
         
     async def _store_compliance_report(self, report: ComplianceReport):
-        """Store compliance report"""        
+        """Store compliance report"""
+        
         try:
             # Store in Redis
             if self.redis_client:
@@ -1077,17 +1123,20 @@ class ComplianceTracker:
             logger.error(f"Error storing compliance report: {e}")
             
     async def _load_compliance_data(self):
-        """Load compliance data from storage"""        
+        """Load compliance data from storage"""
+        
         # Implementation for loading compliance data
         pass
         
     async def _save_compliance_data(self):
-        """Save compliance data to storage"""        
+        """Save compliance data to storage"""
+        
         # Implementation for saving compliance data
         pass
         
     async def get_status(self) -> Dict[str, Any]:
-        """Get compliance monitoring status"""        
+        """Get compliance monitoring status"""
+        
         overall_status = ComplianceStatus.COMPLIANT
         total_violations = len(self._violations)
         critical_violations = len([
@@ -1121,7 +1170,8 @@ class ComplianceTracker:
         severity: Optional[ComplianceSeverity] = None,
         days: int = 30
     ) -> List[ComplianceViolation]:
-        """Get compliance violations"""        
+        """Get compliance violations"""
+        
         cutoff_date = datetime.utcnow() - timedelta(days=days)
         
         violations = [
@@ -1138,7 +1188,8 @@ class ComplianceTracker:
         return sorted(violations, key=lambda x: x.detected_at, reverse=True)
         
     async def get_compliance_report(self, compliance_type: ComplianceType) -> Optional[ComplianceReport]:
-        """Get latest compliance report"""        
+        """Get latest compliance report"""
+        
         if self.redis_client:
             try:
                 pattern = f"compliance:report:{compliance_type.value}:*"
@@ -1171,7 +1222,8 @@ class ComplianceTracker:
         return None
         
     async def resolve_violation(self, violation_id: str, resolved_by: str, resolution_notes: str = ""):
-        """Resolve a compliance violation"""        
+        """Resolve a compliance violation"""
+        
         try:
             # Find violation
             violation = None
@@ -1192,7 +1244,8 @@ class ComplianceTracker:
             # Update in database
             if self.db_engine:
                 async with self.db_engine.begin() as conn:
-                    await conn.execute(text("""                        UPDATE compliance_violations
+                    await conn.execute(text("""
+                        UPDATE compliance_violations
                         SET status = :status, resolved_at = :resolved_at, resolved_by = :resolved_by
                         WHERE id = :violation_id
                     """), {
@@ -1208,14 +1261,16 @@ class ComplianceTracker:
             logger.error(f"Error resolving violation {violation_id}: {e}")
             
     async def add_processing_record(self, record: DataProcessingRecord):
-        """Add GDPR Article 30 processing record"""        
+        """Add GDPR Article 30 processing record"""
+        
         try:
             self._processing_records[record.id] = record
             
             # Store in database
             if self.db_engine:
                 async with self.db_engine.begin() as conn:
-                    await conn.execute(text("""                        INSERT INTO data_processing_records (
+                    await conn.execute(text("""
+                        INSERT INTO data_processing_records (
                             id, name, purpose, categories_of_data_subjects,
                             categories_of_personal_data, recipients,
                             transfers_to_third_countries, retention_period,
@@ -1247,5 +1302,6 @@ class ComplianceTracker:
             logger.error(f"Error adding processing record: {e}")
             
     def get_processing_records(self) -> List[DataProcessingRecord]:
-        """Get all data processing records"""        
+        """Get all data processing records"""
+        
         return list(self._processing_records.values())

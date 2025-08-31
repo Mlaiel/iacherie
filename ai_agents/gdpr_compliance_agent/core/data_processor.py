@@ -7,7 +7,8 @@ Email: mlaiel@live.de
 Company: Ultra-Industrial AI Solutions
 
 ⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -32,7 +33,8 @@ from ...models.gdpr_models import DataProcessingRecord, ProcessingActivity, Data
 logger = get_logger(__name__)
 
 class ProcessingStatus(Enum):
-    """Data processing status types"""    PENDING = "pending"
+    """Data processing status types"""
+    PENDING = "pending"
     ACTIVE = "active"
     COMPLETED = "completed"
     SUSPENDED = "suspended"
@@ -40,7 +42,8 @@ class ProcessingStatus(Enum):
     ERROR = "error"
 
 class LawfulBasis(Enum):
-    """GDPR lawful basis for processing"""    CONSENT = "consent"
+    """GDPR lawful basis for processing"""
+    CONSENT = "consent"
     CONTRACT = "contract"
     LEGAL_OBLIGATION = "legal_obligation"
     VITAL_INTERESTS = "vital_interests"
@@ -48,7 +51,8 @@ class LawfulBasis(Enum):
     LEGITIMATE_INTERESTS = "legitimate_interests"
 
 class DataCategory(Enum):
-    """Categories of personal data"""    BASIC_IDENTITY = "basic_identity"
+    """Categories of personal data"""
+    BASIC_IDENTITY = "basic_identity"
     CONTACT_DATA = "contact_data"
     DEMOGRAPHIC_DATA = "demographic_data"
     BEHAVIORAL_DATA = "behavioral_data"
@@ -59,7 +63,8 @@ class DataCategory(Enum):
 
 @dataclass
 class ProcessingMetrics:
-    """Data processing compliance metrics"""    total_processing_activities: int
+    """Data processing compliance metrics"""
+    total_processing_activities: int
     active_processing_activities: int
     compliant_activities: int
     non_compliant_activities: int
@@ -69,9 +74,11 @@ class ProcessingMetrics:
     security_compliance_rate: float
 
 class DataProcessor:
-    """    Advanced GDPR-Compliant Data Processor
+    """
+    Advanced GDPR-Compliant Data Processor
     Ensures all data processing activities comply with GDPR requirements
-    """    
+    """
+    
     def __init__(self):
         # Processing activity registry
         self._active_processing: Dict[str, Dict[str, Any]] = {}
@@ -96,7 +103,8 @@ class DataProcessor:
         logger.info("Data Processor initialized successfully")
     
     def _initialize_minimization_rules(self) -> Dict[str, List[str]]:
-        """Initialize data minimization rules for different purposes"""        return {
+        """Initialize data minimization rules for different purposes"""
+        return {
             "content_protection": [
                 "user_id", "content_id", "fingerprint_data", "upload_timestamp",
                 "content_hash", "metadata", "protection_status"
@@ -120,7 +128,8 @@ class DataProcessor:
         }
     
     def _initialize_security_requirements(self) -> Dict[DataCategory, List[str]]:
-        """Initialize security requirements by data category"""        return {
+        """Initialize security requirements by data category"""
+        return {
             DataCategory.BASIC_IDENTITY: [
                 "encryption_at_rest", "access_control", "audit_logging"
             ],
@@ -152,7 +161,8 @@ class DataProcessor:
         lawful_basis: LawfulBasis,
         processing_details: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Start a new GDPR-compliant data processing activity"""        try:
+        """Start a new GDPR-compliant data processing activity"""
+        try:
             activity_id = str(uuid.uuid4())
             
             # Validate processing prerequisites
@@ -255,7 +265,8 @@ class DataProcessor:
             raise HTTPException(status_code=500, detail=f"Processing start failed: {str(e)}")
     
     async def monitor_processing_compliance(self, activity_id: str) -> Dict[str, Any]:
-        """Monitor ongoing processing activity for GDPR compliance"""        try:
+        """Monitor ongoing processing activity for GDPR compliance"""
+        try:
             async with get_db() as db:
                 activity_query = await db.execute(
                     select(ProcessingActivity).where(ProcessingActivity.activity_id == activity_id)
@@ -332,7 +343,8 @@ class DataProcessor:
         activity_id: str, 
         termination_reason: str = "completed"
     ) -> Dict[str, Any]:
-        """Terminate processing activity and handle data according to GDPR"""        try:
+        """Terminate processing activity and handle data according to GDPR"""
+        try:
             async with get_db() as db:
                 activity_query = await db.execute(
                     select(ProcessingActivity).where(ProcessingActivity.activity_id == activity_id)
@@ -386,14 +398,16 @@ class DataProcessor:
             raise HTTPException(status_code=500, detail=f"Processing termination failed: {str(e)}")
     
     async def minimize_data(self, data_payload: Dict[str, Any], purpose: str) -> Dict[str, Any]:
-        """Apply data minimization principles for specific processing purpose"""        try:
+        """Apply data minimization principles for specific processing purpose"""
+        try:
             return await self._apply_data_minimization(data_payload, purpose)
         except Exception as e:
             logger.error(f"Error minimizing data: {str(e)}")
             return data_payload
     
     async def get_processing_metrics(self, user_id: str) -> ProcessingMetrics:
-        """Get detailed processing metrics for compliance assessment"""        try:
+        """Get detailed processing metrics for compliance assessment"""
+        try:
             async with get_db() as db:
                 # Get all processing activities for user
                 activities_query = await db.execute(
@@ -444,7 +458,8 @@ class DataProcessor:
             return ProcessingMetrics(0, 0, 0, 0, 0, 0.0, 0.0, 0.0)
     
     async def cleanup_expired_data(self) -> Dict[str, Any]:
-        """Clean up data that has exceeded retention periods"""        try:
+        """Clean up data that has exceeded retention periods"""
+        try:
             async with get_db() as db:
                 # Find activities with expired retention periods
                 expired_query = await db.execute(
@@ -525,7 +540,8 @@ class DataProcessor:
         data_payload: Dict[str, Any], 
         lawful_basis: LawfulBasis
     ) -> Dict[str, Any]:
-        """Validate that processing prerequisites are met"""        checks = []
+        """Validate that processing prerequisites are met"""
+        checks = []
         errors = []
         
         # Check lawful basis validity
@@ -564,7 +580,8 @@ class DataProcessor:
         }
     
     async def _apply_data_minimization(self, data_payload: Dict[str, Any], purpose: str) -> Dict[str, Any]:
-        """Apply data minimization for specific purpose"""        necessary_fields = self._minimization_rules.get(purpose, list(data_payload.keys()))
+        """Apply data minimization for specific purpose"""
+        necessary_fields = self._minimization_rules.get(purpose, list(data_payload.keys()))
         
         minimized_data = {}
         for field in necessary_fields:
@@ -582,7 +599,8 @@ class DataProcessor:
         return minimized_data
     
     async def _classify_data_categories(self, data_payload: Dict[str, Any]) -> Dict[DataCategory, List[str]]:
-        """Classify data fields into GDPR data categories"""        categories = {}
+        """Classify data fields into GDPR data categories"""
+        categories = {}
         
         # Classification rules
         classification_map = {
@@ -610,7 +628,8 @@ class DataProcessor:
         data_payload: Dict[str, Any],
         data_categories: Dict[DataCategory, List[str]]
     ) -> Dict[str, Any]:
-        """Apply appropriate security measures based on data categories"""        required_measures = set()
+        """Apply appropriate security measures based on data categories"""
+        required_measures = set()
         security_level = "standard"
         
         # Determine required security measures
@@ -636,7 +655,8 @@ class DataProcessor:
         }
     
     async def _generate_data_hash(self, data_payload: Dict[str, Any]) -> str:
-        """Generate hash of processed data for integrity verification"""        import hashlib
+        """Generate hash of processed data for integrity verification"""
+        import hashlib
         import json
         
         # Create deterministic hash
@@ -650,7 +670,8 @@ class DataProcessor:
         activity: ProcessingActivity,
         termination_reason: str
     ) -> Dict[str, str]:
-        """Determine appropriate data handling action upon termination"""        if termination_reason == "consent_withdrawn":
+        """Determine appropriate data handling action upon termination"""
+        if termination_reason == "consent_withdrawn":
             return {
                 "action": "delete",
                 "compliance_basis": "Consent withdrawal requires data deletion (Article 17 GDPR)"
@@ -681,7 +702,8 @@ class DataProcessor:
         activity: ProcessingActivity,
         data_action: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Execute data handling action"""        action = data_action["action"]
+        """Execute data handling action"""
+        action = data_action["action"]
         
         if action == "delete":
             # In production, this would trigger actual data deletion
@@ -717,7 +739,8 @@ class DataProcessor:
             }
     
     async def _determine_cleanup_action(self, activity: ProcessingActivity) -> str:
-        """Determine cleanup action for expired data"""        if activity.purpose in ["legal_compliance", "security"]:
+        """Determine cleanup action for expired data"""
+        if activity.purpose in ["legal_compliance", "security"]:
             return "archive"
         elif activity.purpose == "research":
             return "anonymize"
@@ -725,7 +748,8 @@ class DataProcessor:
             return "delete"
     
     async def _execute_data_cleanup(self, activity: ProcessingActivity, cleanup_action: str) -> Dict[str, Any]:
-        """Execute data cleanup action"""        # In production, this would perform actual cleanup
+        """Execute data cleanup action"""
+        # In production, this would perform actual cleanup
         return {
             "status": "completed",
             "action": cleanup_action,
@@ -737,7 +761,8 @@ class DataProcessor:
         activity: ProcessingActivity,
         compliance_issues: List[Dict[str, Any]]
     ) -> List[Dict[str, str]]:
-        """Generate compliance recommendations for processing activity"""        recommendations = []
+        """Generate compliance recommendations for processing activity"""
+        recommendations = []
         
         if compliance_issues:
             for issue in compliance_issues:
@@ -777,7 +802,8 @@ class DataProcessor:
         retention_days: int,
         justification: str
     ) -> Dict[str, Any]:
-        """Update data retention policy for processing purpose"""        try:
+        """Update data retention policy for processing purpose"""
+        try:
             old_retention = self._retention_policies.get(purpose)
             self._retention_policies[purpose] = retention_days
             
@@ -817,7 +843,8 @@ class DataProcessor:
             raise HTTPException(status_code=500, detail=f"Retention policy update failed: {str(e)}")
 
     async def get_processing_inventory(self, user_id: str) -> Dict[str, Any]:
-        """Generate comprehensive processing inventory for user"""        try:
+        """Generate comprehensive processing inventory for user"""
+        try:
             async with get_db() as db:
                 activities_query = await db.execute(
                     select(ProcessingActivity).where(ProcessingActivity.user_id == user_id)

@@ -5,7 +5,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ========================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
 🎯 SYSTÈME DE NOTIFICATIONS MULTI-CANAL ENTERPRISE
@@ -14,7 +14,9 @@ Notifications intelligentes avec templates et targeting avancé
 - Templates dynamiques avec personnalisation IA
 - Scheduling et automation de campagnes
 - Analytics et tracking des engagements
-"""from .notification_manager import (
+"""
+
+from .notification_manager import (
     NotificationManager,
     TemplateManager,
     NotificationTemplate,

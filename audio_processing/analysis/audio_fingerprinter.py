@@ -32,7 +32,8 @@ engineering, or replication is strictly prohibited and will result in
 immediate legal action under German and international copyright law.
 
 Contact: mlaiel@live.de
-"""import numpy as np
+"""
+import numpy as np
 import logging
 import hashlib
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -52,7 +53,8 @@ from collections import deque
 
 
 class FingerprintType(Enum):
-    """Types of audio fingerprints"""    CHROMAPRINT = "chromaprint"
+    """Types of audio fingerprints"""
+    CHROMAPRINT = "chromaprint"
     PERCEPTUAL_HASH = "perceptual_hash"
     SPECTRAL_HASH = "spectral_hash"
     NEURAL_EMBEDDING = "neural_embedding"
@@ -60,7 +62,8 @@ class FingerprintType(Enum):
 
 
 class SimilarityThreshold(Enum):
-    """Similarity matching thresholds"""    IDENTICAL = 0.95      # Nearly identical audio
+    """Similarity matching thresholds"""
+    IDENTICAL = 0.95      # Nearly identical audio
     VERY_HIGH = 0.85      # Clear match with minor variations
     HIGH = 0.75           # Likely match with some modifications
     MEDIUM = 0.65         # Possible match requiring investigation
@@ -69,7 +72,8 @@ class SimilarityThreshold(Enum):
 
 @dataclass
 class AudioFingerprint:
-    """Complete audio fingerprint data structure"""    fingerprint_id: str
+    """Complete audio fingerprint data structure"""
+    fingerprint_id: str
     audio_id: Optional[str]
     fingerprint_type: FingerprintType
     raw_fingerprint: bytes
@@ -83,7 +87,8 @@ class AudioFingerprint:
 
 @dataclass
 class SimilarityMatch:
-    """Audio similarity match result"""    query_fingerprint_id: str
+    """Audio similarity match result"""
+    query_fingerprint_id: str
     matched_fingerprint_id: str
     similarity_score: float
     similarity_threshold: SimilarityThreshold
@@ -96,7 +101,8 @@ class SimilarityMatch:
 
 @dataclass
 class FingerprintExtractionResult:
-    """Fingerprint extraction result"""    fingerprint: AudioFingerprint
+    """Fingerprint extraction result"""
+    fingerprint: AudioFingerprint
     processing_time: float
     quality_score: float
     extraction_warnings: List[str]
@@ -104,19 +110,23 @@ class FingerprintExtractionResult:
 
 
 class AudioFingerprinter:
-    """    🔍 Ultra-Advanced Audio Fingerprinting Engine
+    """
+    🔍 Ultra-Advanced Audio Fingerprinting Engine
     
     Professional-grade audio fingerprinting system providing robust content
     identification, similarity matching, and copyright protection capabilities
     using state-of-the-art signal processing and machine learning techniques.
-    """    
+    """
+    
     def __init__(self, 
                  config: Optional[Dict[str, Any]] = None):
-        """        Initialize advanced audio fingerprinter
+        """
+        Initialize advanced audio fingerprinter
         
         Args:
             config: Configuration parameters for fingerprinting engine
-        """        self.logger = logging.getLogger(self.__class__.__name__)
+        """
+        self.logger = logging.getLogger(self.__class__.__name__)
         
         # Configuration
         self.config = config or {}
@@ -149,7 +159,8 @@ class AudioFingerprinter:
                                 sample_rate: int = 44100,
                                 fingerprint_type: FingerprintType = FingerprintType.HYBRID,
                                 audio_id: Optional[str] = None) -> FingerprintExtractionResult:
-        """        Extract comprehensive audio fingerprint
+        """
+        Extract comprehensive audio fingerprint
         
         Args:
             audio_data: Input audio signal
@@ -159,7 +170,8 @@ class AudioFingerprinter:
             
         Returns:
             Complete fingerprint extraction result
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             # Validate input
@@ -227,7 +239,8 @@ class AudioFingerprinter:
                           query_fingerprint: AudioFingerprint,
                           database_fingerprints: List[AudioFingerprint],
                           max_matches: int = 10) -> List[SimilarityMatch]:
-        """        Find similar audio fingerprints in database
+        """
+        Find similar audio fingerprints in database
         
         Args:
             query_fingerprint: Fingerprint to search for
@@ -236,7 +249,8 @@ class AudioFingerprinter:
             
         Returns:
             List of similarity matches sorted by confidence
-        """        try:
+        """
+        try:
             matches = []
             
             # Process fingerprints in parallel for better performance
@@ -272,7 +286,8 @@ class AudioFingerprinter:
             return []
     
     async def _normalize_audio(self, audio_data: np.ndarray) -> np.ndarray:
-        """Normalize audio for consistent fingerprinting"""        def normalize():
+        """Normalize audio for consistent fingerprinting"""
+        def normalize():
             # Remove DC offset
             audio_centered = audio_data - np.mean(audio_data)
             
@@ -289,7 +304,8 @@ class AudioFingerprinter:
             self.thread_executor, normalize)
     
     async def _extract_chromaprint(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract Chromaprint-style fingerprint"""        def extract():
+        """Extract Chromaprint-style fingerprint"""
+        def extract():
             try:
                 # Compute chroma features with high precision
                 chroma = librosa.feature.chroma_cqt(
@@ -351,7 +367,8 @@ class AudioFingerprinter:
             self.thread_executor, extract)
     
     async def _extract_perceptual_hash(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract perceptual hash fingerprint"""        def extract():
+        """Extract perceptual hash fingerprint"""
+        def extract():
             try:
                 # Compute mel-spectrogram
                 mel_spec = librosa.feature.melspectrogram(
@@ -423,7 +440,8 @@ class AudioFingerprinter:
             self.thread_executor, extract)
     
     async def _extract_spectral_hash(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract spectral-based hash fingerprint"""        def extract():
+        """Extract spectral-based hash fingerprint"""
+        def extract():
             try:
                 # Compute STFT with high resolution
                 stft = librosa.stft(
@@ -501,7 +519,8 @@ class AudioFingerprinter:
             self.thread_executor, extract)
     
     async def _extract_neural_embedding(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract neural network-based embedding fingerprint"""        def extract():
+        """Extract neural network-based embedding fingerprint"""
+        def extract():
             try:
                 # Extract comprehensive audio features for neural embedding
                 features = {}
@@ -587,7 +606,8 @@ class AudioFingerprinter:
             self.thread_executor, extract)
     
     async def _extract_hybrid_fingerprint(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract hybrid fingerprint combining multiple methods"""        try:
+        """Extract hybrid fingerprint combining multiple methods"""
+        try:
             # Extract all fingerprint types
             chromaprint_data = await self._extract_chromaprint(audio_data, sample_rate)
             perceptual_data = await self._extract_perceptual_hash(audio_data, sample_rate)
@@ -658,7 +678,8 @@ class AudioFingerprinter:
     async def _compare_fingerprints(self, 
                                   query: AudioFingerprint, 
                                   candidate: AudioFingerprint) -> Optional[SimilarityMatch]:
-        """Compare two fingerprints for similarity"""        def compare():
+        """Compare two fingerprints for similarity"""
+        def compare():
             try:
                 # Different comparison strategies based on fingerprint type
                 if query.fingerprint_type == candidate.fingerprint_type:
@@ -707,7 +728,8 @@ class AudioFingerprinter:
             self.thread_executor, compare)
     
     def _compute_same_type_similarity(self, fp1: AudioFingerprint, fp2: AudioFingerprint) -> float:
-        """Compute similarity between same-type fingerprints"""        if not fp1.hash_values or not fp2.hash_values:
+        """Compute similarity between same-type fingerprints"""
+        if not fp1.hash_values or not fp2.hash_values:
             return 0.0
         
         # Convert to numpy arrays for efficient computation
@@ -745,12 +767,14 @@ class AudioFingerprinter:
         return float(similarity)
     
     def _compute_cross_type_similarity(self, fp1: AudioFingerprint, fp2: AudioFingerprint) -> float:
-        """Compute similarity between different-type fingerprints"""        # For cross-type comparison, use a more conservative approach
+        """Compute similarity between different-type fingerprints"""
+        # For cross-type comparison, use a more conservative approach
         # This is a simplified implementation - could be enhanced with learned mappings
         return 0.0  # Conservative approach for different types
     
     def _detect_modifications(self, fp1: AudioFingerprint, fp2: AudioFingerprint, similarity: float) -> List[str]:
-        """Detect types of audio modifications based on fingerprint comparison"""        modifications = []
+        """Detect types of audio modifications based on fingerprint comparison"""
+        modifications = []
         
         # Duration change detection
         duration_ratio = fp2.duration_seconds / fp1.duration_seconds
@@ -773,7 +797,8 @@ class AudioFingerprinter:
         return modifications
     
     def _calculate_match_confidence(self, fp1: AudioFingerprint, fp2: AudioFingerprint, similarity: float) -> float:
-        """Calculate confidence in the match based on multiple factors"""        confidence_factors = []
+        """Calculate confidence in the match based on multiple factors"""
+        confidence_factors = []
         
         # Base similarity confidence
         confidence_factors.append(similarity)
@@ -800,7 +825,8 @@ class AudioFingerprinter:
         return min(1.0, max(0.0, confidence))
     
     def _calculate_fingerprint_quality(self, audio_data: np.ndarray, fingerprint_data: Dict[str, Any]) -> float:
-        """Calculate quality score for extracted fingerprint"""        quality_factors = []
+        """Calculate quality score for extracted fingerprint"""
+        quality_factors = []
         
         # Audio quality factors
         snr_estimate = self._estimate_snr(audio_data)
@@ -825,7 +851,8 @@ class AudioFingerprinter:
         return float(np.mean(quality_factors)) if quality_factors else 0.0
     
     def _estimate_snr(self, audio_data: np.ndarray) -> float:
-        """Estimate signal-to-noise ratio of audio"""        try:
+        """Estimate signal-to-noise ratio of audio"""
+        try:
             # Simple energy-based SNR estimation
             signal_power = np.mean(audio_data ** 2)
             
@@ -844,7 +871,8 @@ class AudioFingerprinter:
             return 20.0  # Default moderate SNR
     
     def _calculate_entropy(self, hash_sequence: List[int]) -> float:
-        """Calculate entropy of hash sequence"""        if not hash_sequence:
+        """Calculate entropy of hash sequence"""
+        if not hash_sequence:
             return 0.0
         
         # Convert to bytes for entropy calculation
@@ -860,7 +888,8 @@ class AudioFingerprinter:
         return float(entropy)
     
     def _generate_fingerprint_id(self, audio_data: np.ndarray, fingerprint_type: FingerprintType) -> str:
-        """Generate unique fingerprint ID"""        # Create hash from audio data and parameters
+        """Generate unique fingerprint ID"""
+        # Create hash from audio data and parameters
         audio_hash = hashlib.sha256(audio_data.tobytes()).hexdigest()[:16]
         type_hash = hashlib.md5(fingerprint_type.value.encode()).hexdigest()[:8]
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
@@ -870,7 +899,8 @@ class AudioFingerprinter:
     async def calculate_fingerprint_similarity(self,
                                             fp1: AudioFingerprint,
                                             fp2: AudioFingerprint) -> float:
-        """        Calculate similarity between two fingerprints
+        """
+        Calculate similarity between two fingerprints
         
         Args:
             fp1: First fingerprint
@@ -878,7 +908,8 @@ class AudioFingerprinter:
             
         Returns:
             Similarity score between 0.0 and 1.0
-        """        try:
+        """
+        try:
             match = await self._compare_fingerprints(fp1, fp2)
             return match.similarity_score if match else 0.0
         except Exception as e:
@@ -886,7 +917,8 @@ class AudioFingerprinter:
             return 0.0
     
     def get_fingerprint_stats(self) -> Dict[str, Any]:
-        """Get fingerprinting engine statistics"""        with self.cache_lock:
+        """Get fingerprinting engine statistics"""
+        with self.cache_lock:
             cache_size = len(self.fingerprint_cache)
         
         return {
@@ -902,12 +934,14 @@ class AudioFingerprinter:
         }
     
     def clear_cache(self):
-        """Clear fingerprint cache"""        with self.cache_lock:
+        """Clear fingerprint cache"""
+        with self.cache_lock:
             self.fingerprint_cache.clear()
         self.logger.info("Fingerprint cache cleared")
     
     def __del__(self):
-        """Cleanup resources"""        try:
+        """Cleanup resources"""
+        try:
             if hasattr(self, 'thread_executor'):
                 self.thread_executor.shutdown(wait=False)
             if hasattr(self, 'process_executor'):

@@ -21,7 +21,8 @@ Expertise combinée:
 - Audio/Vidéo: Traitement multimédia et analyse de contenu
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
-"""import asyncio
+"""
+import asyncio
 import logging
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple, Set
@@ -40,14 +41,16 @@ import pandas as pd
 logger = logging.getLogger(__name__)
 
 class CompetitorType(Enum):
-    """Types of competitors."""    DIRECT = "direct"           # Same niche, same audience
+    """Types of competitors."""
+    DIRECT = "direct"           # Same niche, same audience
     INDIRECT = "indirect"       # Same audience, different niche
     SUBSTITUTE = "substitute"   # Different approach, same goal
     POTENTIAL = "potential"     # Could become competitor
     UNKNOWN = "unknown"         # Unclear competitive relationship
 
 class CompetitiveAdvantage(Enum):
-    """Types of competitive advantages."""    CONTENT_QUALITY = "content_quality"
+    """Types of competitive advantages."""
+    CONTENT_QUALITY = "content_quality"
     ENGAGEMENT_RATE = "engagement_rate"
     POSTING_FREQUENCY = "posting_frequency"
     AUDIENCE_SIZE = "audience_size"
@@ -59,7 +62,8 @@ class CompetitiveAdvantage(Enum):
     BRAND_STRENGTH = "brand_strength"
 
 class MarketPosition(Enum):
-    """Market positioning categories."""    LEADER = "leader"           # Market leader
+    """Market positioning categories."""
+    LEADER = "leader"           # Market leader
     CHALLENGER = "challenger"   # Strong challenger
     FOLLOWER = "follower"      # Following market trends
     NICHER = "nicher"          # Specialized niche player
@@ -67,7 +71,8 @@ class MarketPosition(Enum):
 
 @dataclass
 class CompetitorProfile:
-    """Competitor profile information."""    competitor_id: str
+    """Competitor profile information."""
+    competitor_id: str
     name: str
     competitor_type: CompetitorType
     market_position: MarketPosition
@@ -96,7 +101,8 @@ class CompetitorProfile:
 
 @dataclass
 class ContentComparison:
-    """Content comparison analysis."""    user_content_id: str
+    """Content comparison analysis."""
+    user_content_id: str
     competitor_content_id: str
     similarity_score: float
     
@@ -115,7 +121,8 @@ class ContentComparison:
 
 @dataclass
 class MarketGapAnalysis:
-    """Market gap and opportunity analysis."""    gap_id: str
+    """Market gap and opportunity analysis."""
+    gap_id: str
     opportunity_type: str
     market_size_estimate: float
     difficulty_score: float  # 0-1, how difficult to exploit
@@ -133,7 +140,8 @@ class MarketGapAnalysis:
 
 @dataclass
 class CompetitiveAnalysisResult:
-    """Complete competitive analysis result."""    content_id: str
+    """Complete competitive analysis result."""
+    content_id: str
     analysis_timestamp: datetime
     
     # Competitive landscape
@@ -162,7 +170,8 @@ class CompetitiveAnalysisResult:
     confidence_score: float = 0.0
 
 class CompetitiveAnalyzer:
-    """    Advanced competitive analysis and market intelligence system.
+    """
+    Advanced competitive analysis and market intelligence system.
     
     Features:
     - Competitor identification and profiling
@@ -173,20 +182,23 @@ class CompetitiveAnalyzer:
     - Strategic recommendation engine
     - Threat assessment and monitoring
     - Performance benchmarking
-    """    
+    """
+    
     def __init__(
         self,
         enable_realtime_monitoring: bool = True,
         competitor_discovery_threshold: float = 0.7,
         analysis_depth: str = "comprehensive"
     ):
-        """        Initialize competitive analyzer.
+        """
+        Initialize competitive analyzer.
         
         Args:
             enable_realtime_monitoring: Enable real-time competitor monitoring
             competitor_discovery_threshold: Threshold for competitor identification
             analysis_depth: Analysis depth level (basic, standard, comprehensive)
-        """        self.enable_realtime_monitoring = enable_realtime_monitoring
+        """
+        self.enable_realtime_monitoring = enable_realtime_monitoring
         self.competitor_discovery_threshold = competitor_discovery_threshold
         self.analysis_depth = analysis_depth
         
@@ -211,7 +223,8 @@ class CompetitiveAnalyzer:
         logger.info(f"CompetitiveAnalyzer initialized with {analysis_depth} analysis depth")
     
     def _initialize_analysis_models(self) -> None:
-        """Initialize analysis models and vectorizers."""        try:
+        """Initialize analysis models and vectorizers."""
+        try:
             # Content similarity analysis
             self.content_vectorizer = TfidfVectorizer(
                 max_features=5000,
@@ -234,7 +247,8 @@ class CompetitiveAnalyzer:
             logger.error(f"Failed to initialize analysis models: {e}")
     
     def _load_market_intelligence(self) -> None:
-        """Load market intelligence data and competitive patterns."""        # Industry benchmarks
+        """Load market intelligence data and competitive patterns."""
+        # Industry benchmarks
         self.industry_benchmarks = {
             'engagement_rate': {
                 'excellent': 0.08,
@@ -289,7 +303,8 @@ class CompetitiveAnalyzer:
         user_profile: Dict[str, Any],
         metadata: Optional[Dict[str, Any]] = None
     ) -> CompetitiveAnalysisResult:
-        """        Perform comprehensive competitive analysis.
+        """
+        Perform comprehensive competitive analysis.
         
         Args:
             content_id: Unique content identifier
@@ -299,7 +314,8 @@ class CompetitiveAnalyzer:
             
         Returns:
             CompetitiveAnalysisResult: Complete competitive analysis
-        """        start_time = datetime.now()
+        """
+        start_time = datetime.now()
         
         try:
             metadata = metadata or {}
@@ -415,7 +431,8 @@ class CompetitiveAnalyzer:
         user_profile: Dict[str, Any],
         metadata: Dict[str, Any]
     ) -> List[CompetitorProfile]:
-        """Identify potential competitors based on content and profile."""        try:
+        """Identify potential competitors based on content and profile."""
+        try:
             competitors = []
             
             # Extract content characteristics
@@ -448,7 +465,8 @@ class CompetitiveAnalyzer:
             return []
     
     def _generate_tech_competitors(self, keywords: List[str]) -> List[CompetitorProfile]:
-        """Generate technology sector competitors."""        tech_competitors = [
+        """Generate technology sector competitors."""
+        tech_competitors = [
             {
                 'name': 'TechInfluencer1',
                 'type': CompetitorType.DIRECT,
@@ -489,7 +507,8 @@ class CompetitiveAnalyzer:
         return competitors
     
     def _generate_music_competitors(self, keywords: List[str]) -> List[CompetitorProfile]:
-        """Generate music sector competitors."""        music_competitors = [
+        """Generate music sector competitors."""
+        music_competitors = [
             {
                 'name': 'MusicInfluencer1',
                 'type': CompetitorType.DIRECT,
@@ -530,7 +549,8 @@ class CompetitiveAnalyzer:
         return competitors
     
     def _generate_fashion_competitors(self, keywords: List[str]) -> List[CompetitorProfile]:
-        """Generate fashion sector competitors."""        fashion_competitors = [
+        """Generate fashion sector competitors."""
+        fashion_competitors = [
             {
                 'name': 'FashionInfluencer1',
                 'type': CompetitorType.DIRECT,
@@ -566,7 +586,8 @@ class CompetitiveAnalyzer:
         keywords: List[str], 
         user_profile: Dict[str, Any]
     ) -> List[CompetitorProfile]:
-        """Generate general content competitors."""        # Base competitor profile on user's characteristics
+        """Generate general content competitors."""
+        # Base competitor profile on user's characteristics
         user_followers = user_profile.get('follower_count', 10000)
         user_engagement = user_profile.get('engagement_rate', 0.03)
         
@@ -614,7 +635,8 @@ class CompetitiveAnalyzer:
         competitors: List[CompetitorProfile],
         user_profile: Dict[str, Any]
     ) -> List[CompetitorProfile]:
-        """Filter and rank competitors by relevance."""        user_followers = user_profile.get('follower_count', 10000)
+        """Filter and rank competitors by relevance."""
+        user_followers = user_profile.get('follower_count', 10000)
         user_categories = user_profile.get('content_categories', [])
         
         scored_competitors = []
@@ -653,7 +675,8 @@ class CompetitiveAnalyzer:
         user_profile: Dict[str, Any],
         competitors: List[CompetitorProfile]
     ) -> MarketPosition:
-        """Analyze user's market position relative to competitors."""        if not competitors:
+        """Analyze user's market position relative to competitors."""
+        if not competitors:
             return MarketPosition.EMERGING
         
         user_followers = user_profile.get('follower_count', 0)
@@ -692,7 +715,8 @@ class CompetitiveAnalyzer:
         user_profile: Dict[str, Any],
         competitors: List[CompetitorProfile]
     ) -> float:
-        """Calculate overall competitive strength score."""        if not competitors:
+        """Calculate overall competitive strength score."""
+        if not competitors:
             return 0.5
         
         factors = []
@@ -736,7 +760,8 @@ class CompetitiveAnalyzer:
         content_text: str,
         competitors: List[CompetitorProfile]
     ) -> List[ContentComparison]:
-        """Analyze content similarities with competitors."""        comparisons = []
+        """Analyze content similarities with competitors."""
+        comparisons = []
         
         try:
             # For each competitor, simulate content comparison
@@ -768,7 +793,8 @@ class CompetitiveAnalyzer:
             return []
     
     def _simulate_competitor_content(self, competitor: CompetitorProfile) -> List[str]:
-        """Simulate competitor content for analysis."""        # Generate sample content based on competitor profile
+        """Simulate competitor content for analysis."""
+        # Generate sample content based on competitor profile
         content_samples = []
         
         categories = competitor.content_categories
@@ -804,7 +830,8 @@ class CompetitiveAnalyzer:
         return content_samples
     
     def _calculate_content_similarity(self, content1: str, content2: str) -> float:
-        """Calculate similarity between two content pieces."""        try:
+        """Calculate similarity between two content pieces."""
+        try:
             # Simple word overlap similarity
             words1 = set(content1.lower().split())
             words2 = set(content2.lower().split())
@@ -822,7 +849,8 @@ class CompetitiveAnalyzer:
             return 0.0
     
     def _compare_engagement(self, competitor: CompetitorProfile) -> float:
-        """Compare engagement rates (-1 to 1)."""        # Simulated comparison - in real implementation would use actual data
+        """Compare engagement rates (-1 to 1)."""
+        # Simulated comparison - in real implementation would use actual data
         user_engagement = 0.03  # Default user engagement
         competitor_engagement = competitor.engagement_rate
         
@@ -838,7 +866,8 @@ class CompetitiveAnalyzer:
             return max(-1.0, (ratio - 1) * 2)  # Competitor better
     
     def _compare_quality(self, user_content: str, competitor_content: str) -> float:
-        """Compare content quality (-1 to 1)."""        # Simple quality metrics
+        """Compare content quality (-1 to 1)."""
+        # Simple quality metrics
         user_length = len(user_content.split())
         comp_length = len(competitor_content.split())
         
@@ -849,7 +878,8 @@ class CompetitiveAnalyzer:
             return max(-1.0, (user_length - comp_length) / max(1, user_length))
     
     def _identify_similar_elements(self, content1: str, content2: str) -> List[str]:
-        """Identify similar elements between content pieces."""        words1 = set(content1.lower().split())
+        """Identify similar elements between content pieces."""
+        words1 = set(content1.lower().split())
         words2 = set(content2.lower().split())
         
         common_words = words1 & words2
@@ -865,7 +895,8 @@ class CompetitiveAnalyzer:
         competitor: CompetitorProfile,
         similarity_score: float
     ) -> List[str]:
-        """Generate competitive insights from comparison."""        insights = []
+        """Generate competitive insights from comparison."""
+        insights = []
         
         if similarity_score > 0.7:
             insights.append(f"High content overlap with {competitor.name} - consider differentiation")
@@ -886,7 +917,8 @@ class CompetitiveAnalyzer:
         competitor: CompetitorProfile,
         similarity_score: float
     ) -> List[str]:
-        """Generate improvement suggestions based on competitor analysis."""        suggestions = []
+        """Generate improvement suggestions based on competitor analysis."""
+        suggestions = []
         
         if competitor.engagement_rate > 0.05:
             suggestions.append("Increase audience interaction and engagement tactics")
@@ -907,7 +939,8 @@ class CompetitiveAnalyzer:
         content_text: str,
         competitors: List[CompetitorProfile]
     ) -> float:
-        """Calculate content uniqueness score."""        if not competitors:
+        """Calculate content uniqueness score."""
+        if not competitors:
             return 1.0
         
         uniqueness_scores = []
@@ -927,7 +960,8 @@ class CompetitiveAnalyzer:
         user_profile: Dict[str, Any],
         competitors: List[CompetitorProfile]
     ) -> Tuple[List[CompetitiveAdvantage], List[str]]:
-        """Analyze competitive advantages and disadvantages."""        advantages = []
+        """Analyze competitive advantages and disadvantages."""
+        advantages = []
         disadvantages = []
         
         user_engagement = user_profile.get('engagement_rate', 0.0)
@@ -967,7 +1001,8 @@ class CompetitiveAnalyzer:
         user_profile: Dict[str, Any],
         competitors: List[CompetitorProfile]
     ) -> List[MarketGapAnalysis]:
-        """Identify market gaps and opportunities."""        gaps = []
+        """Identify market gaps and opportunities."""
+        gaps = []
         
         try:
             # Content gap analysis
@@ -1032,7 +1067,8 @@ class CompetitiveAnalyzer:
             return []
     
     def _analyze_trending_strategies(self, competitors: List[CompetitorProfile]) -> List[str]:
-        """Analyze trending strategies among competitors."""        strategies = []
+        """Analyze trending strategies among competitors."""
+        strategies = []
         
         # Analyze competitor patterns
         high_engagement_competitors = [c for c in competitors if c.engagement_rate > 0.05]
@@ -1062,7 +1098,8 @@ class CompetitiveAnalyzer:
         competitors: List[CompetitorProfile],
         market_gaps: List[MarketGapAnalysis]
     ) -> float:
-        """Assess competitive threat level."""        threat_factors = []
+        """Assess competitive threat level."""
+        threat_factors = []
         
         # Strong competitors threat
         strong_competitors = [
@@ -1096,7 +1133,8 @@ class CompetitiveAnalyzer:
         disadvantages: List[str],
         market_gaps: List[MarketGapAnalysis]
     ) -> List[str]:
-        """Generate strategic recommendations."""        recommendations = []
+        """Generate strategic recommendations."""
+        recommendations = []
         
         # Position-based recommendations
         if market_position == MarketPosition.EMERGING:
@@ -1137,7 +1175,8 @@ class CompetitiveAnalyzer:
         content_comparisons: List[ContentComparison],
         competitive_score: float
     ) -> List[str]:
-        """Generate tactical recommendations."""        recommendations = []
+        """Generate tactical recommendations."""
+        recommendations = []
         
         # Content-based recommendations
         if content_comparisons:
@@ -1174,7 +1213,8 @@ class CompetitiveAnalyzer:
         competitors: List[CompetitorProfile],
         threat_level: float
     ) -> List[str]:
-        """Generate specific competitive actions."""        actions = []
+        """Generate specific competitive actions."""
+        actions = []
         
         if threat_level > 0.7:
             actions.extend([
@@ -1210,7 +1250,8 @@ class CompetitiveAnalyzer:
         competitor_count: int,
         comparison_count: int
     ) -> float:
-        """Calculate confidence score for the analysis."""        factors = []
+        """Calculate confidence score for the analysis."""
+        factors = []
         
         # Data availability factor
         if competitor_count >= 5:
@@ -1239,7 +1280,8 @@ class CompetitiveAnalyzer:
         return np.mean(factors)
     
     def _extract_keywords(self, text: str, max_keywords: int = 20) -> List[str]:
-        """Extract keywords from text."""        # Simple keyword extraction
+        """Extract keywords from text."""
+        # Simple keyword extraction
         stop_words = {
             'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for',
             'of', 'with', 'by', 'from', 'is', 'are', 'was', 'were'
@@ -1252,7 +1294,8 @@ class CompetitiveAnalyzer:
         return [word for word, count in word_counts.most_common(max_keywords)]
     
     def _extract_topics(self, text: str) -> List[str]:
-        """Extract topics from text."""        # Simple topic extraction based on keywords
+        """Extract topics from text."""
+        # Simple topic extraction based on keywords
         topic_keywords = {
             'technology': ['tech', 'technology', 'ai', 'digital', 'innovation'],
             'music': ['music', 'song', 'artist', 'album', 'concert'],
@@ -1272,7 +1315,8 @@ class CompetitiveAnalyzer:
         return detected_topics
     
     def get_analytics(self) -> Dict[str, Any]:
-        """Get competitive analysis analytics and performance metrics."""        avg_processing_time = np.mean(self.processing_times) if self.processing_times else 0
+        """Get competitive analysis analytics and performance metrics."""
+        avg_processing_time = np.mean(self.processing_times) if self.processing_times else 0
         
         return {
             "total_analyses": self.analysis_count,
@@ -1290,7 +1334,8 @@ class CompetitiveAnalyzer:
         }
     
     async def cleanup(self) -> None:
-        """Cleanup resources and clear caches."""        self.competitors.clear()
+        """Cleanup resources and clear caches."""
+        self.competitors.clear()
         self.competitor_content.clear()
         self.market_intelligence.clear()
         self.processing_times.clear()

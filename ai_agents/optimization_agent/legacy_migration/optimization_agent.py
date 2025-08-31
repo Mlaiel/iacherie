@@ -17,7 +17,8 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""import asyncio
+"""
+import asyncio
 import logging
 import time
 import threading
@@ -59,7 +60,8 @@ from ...data.optimization_repository import OptimizationRepository
 logger = logging.getLogger(__name__)
 
 class OptimizationType(Enum):
-    """Types of optimization strategies"""    PERFORMANCE = "performance"
+    """Types of optimization strategies"""
+    PERFORMANCE = "performance"
     RESOURCE = "resource"
     COST = "cost"
     SPEED = "speed"
@@ -71,14 +73,16 @@ class OptimizationType(Enum):
     QUALITY = "quality"
 
 class OptimizationStrategy(Enum):
-    """Optimization execution strategies"""    AGGRESSIVE = "aggressive"
+    """Optimization execution strategies"""
+    AGGRESSIVE = "aggressive"
     BALANCED = "balanced"
     CONSERVATIVE = "conservative"
     ADAPTIVE = "adaptive"
     REAL_TIME = "real_time"
 
 class ResourceState(Enum):
-    """Resource utilization states"""    OPTIMAL = "optimal"
+    """Resource utilization states"""
+    OPTIMAL = "optimal"
     UNDERUTILIZED = "underutilized"
     OVERUTILIZED = "overutilized"
     CRITICAL = "critical"
@@ -86,7 +90,8 @@ class ResourceState(Enum):
 
 @dataclass
 class OptimizationMetrics:
-    """Comprehensive optimization performance metrics"""    optimization_id: str
+    """Comprehensive optimization performance metrics"""
+    optimization_id: str
     start_time: datetime
     end_time: Optional[datetime] = None
     optimization_type: OptimizationType = OptimizationType.PERFORMANCE
@@ -100,7 +105,8 @@ class OptimizationMetrics:
     
 @dataclass
 class ResourceProfile:
-    """System resource utilization profile"""    cpu_usage: float = 0.0
+    """System resource utilization profile"""
+    cpu_usage: float = 0.0
     memory_usage: float = 0.0
     disk_usage: float = 0.0
     network_usage: float = 0.0
@@ -113,7 +119,8 @@ class ResourceProfile:
 
 @dataclass
 class OptimizationRule:
-    """Dynamic optimization rule configuration"""    rule_id: str
+    """Dynamic optimization rule configuration"""
+    rule_id: str
     name: str
     condition: str
     action: str
@@ -124,7 +131,8 @@ class OptimizationRule:
     max_executions_per_hour: int = 10
 
 class OptimizationAgent(BaseAgent):
-    """    Enterprise-grade optimization agent for performance and resource management.
+    """
+    Enterprise-grade optimization agent for performance and resource management.
     
     Provides intelligent optimization across multiple dimensions:
     - Performance optimization
@@ -132,7 +140,8 @@ class OptimizationAgent(BaseAgent):
     - Cost reduction
     - Quality improvement
     - Multi-format content optimization
-    """    def __init__(self, agent_id: str = None, config: Dict = None):
+    """
+    def __init__(self, agent_id: str = None, config: Dict = None):
         super().__init__(agent_id, config)
         
         self.optimization_type = OptimizationType.PERFORMANCE
@@ -166,7 +175,8 @@ class OptimizationAgent(BaseAgent):
         logger.info(f"OptimizationAgent {self.agent_id} initialized successfully")
 
     async def initialize(self) -> bool:
-        """Initialize optimization agent with baseline measurements"""        try:
+        """Initialize optimization agent with baseline measurements"""
+        try:
             self.status = AgentStatus.INITIALIZING
             
             # Establish baseline metrics
@@ -191,7 +201,8 @@ class OptimizationAgent(BaseAgent):
             return False
 
     async def process_request(self, request: AgentRequest) -> Dict[str, Any]:
-        """Process optimization requests with intelligent routing"""        try:
+        """Process optimization requests with intelligent routing"""
+        try:
             start_time = time.time()
             action = request.action.lower()
             
@@ -232,7 +243,8 @@ class OptimizationAgent(BaseAgent):
             raise
 
     async def _optimize_performance(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Comprehensive performance optimization"""        optimization_id = f"perf_{int(time.time())}"
+        """Comprehensive performance optimization"""
+        optimization_id = f"perf_{int(time.time())}"
         
         try:
             # Get current performance profile
@@ -292,7 +304,8 @@ class OptimizationAgent(BaseAgent):
             raise OptimizationError(f"Performance optimization error: {str(e)}")
 
     async def _optimize_resources(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Intelligent resource allocation optimization"""        optimization_id = f"resource_{int(time.time())}"
+        """Intelligent resource allocation optimization"""
+        optimization_id = f"resource_{int(time.time())}"
         
         try:
             # Analyze current resource utilization
@@ -351,7 +364,8 @@ class OptimizationAgent(BaseAgent):
             raise OptimizationError(f"Resource optimization error: {str(e)}")
 
     async def _optimize_content(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Multi-format content optimization for creators"""        content_type = data.get('content_type', 'all')
+        """Multi-format content optimization for creators"""
+        content_type = data.get('content_type', 'all')
         optimization_level = data.get('optimization_level', 'balanced')
         
         try:
@@ -403,7 +417,8 @@ class OptimizationAgent(BaseAgent):
             raise OptimizationError(f"Content optimization error: {str(e)}")
 
     async def _analyze_bottlenecks(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Advanced bottleneck detection and analysis"""        try:
+        """Advanced bottleneck detection and analysis"""
+        try:
             # System bottleneck analysis
             system_bottlenecks = await self._analyze_system_bottlenecks()
             
@@ -455,7 +470,8 @@ class OptimizationAgent(BaseAgent):
             raise OptimizationError(f"Bottleneck analysis error: {str(e)}")
 
     async def _auto_optimize(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Intelligent auto-optimization with ML-driven decisions"""        try:
+        """Intelligent auto-optimization with ML-driven decisions"""
+        try:
             # Analyze current system state
             system_state = await self._get_comprehensive_system_state()
             
@@ -510,7 +526,8 @@ class OptimizationAgent(BaseAgent):
             raise OptimizationError(f"Auto-optimization error: {str(e)}")
 
     async def _get_current_resource_profile(self) -> ResourceProfile:
-        """Get current system resource utilization profile"""        try:
+        """Get current system resource utilization profile"""
+        try:
             profile = ResourceProfile(
                 cpu_usage=psutil.cpu_percent(interval=1),
                 memory_usage=psutil.virtual_memory().percent,
@@ -532,7 +549,8 @@ class OptimizationAgent(BaseAgent):
             raise
 
     async def _continuous_monitoring(self):
-        """Continuous system monitoring and automatic optimization triggers"""        while self._monitoring_active:
+        """Continuous system monitoring and automatic optimization triggers"""
+        while self._monitoring_active:
             try:
                 # Get current resource profile
                 profile = await self._get_current_resource_profile()
@@ -555,7 +573,8 @@ class OptimizationAgent(BaseAgent):
                 await asyncio.sleep(60)  # Wait longer on error
 
     async def shutdown(self):
-        """Graceful shutdown of optimization agent"""        try:
+        """Graceful shutdown of optimization agent"""
+        try:
             self._monitoring_active = False
             self.status = AgentStatus.SHUTDOWN
             
@@ -578,15 +597,18 @@ class OptimizationAgent(BaseAgent):
             logger.error(f"Error during OptimizationAgent shutdown: {str(e)}")
 
 class OptimizationAgentManager:
-    """    Manager for multiple optimization agents with load balancing and coordination
-    """    
+    """
+    Manager for multiple optimization agents with load balancing and coordination
+    """
+    
     def __init__(self):
         self.agents: Dict[str, OptimizationAgent] = {}
         self.load_balancer = LoadBalancer()
         self.coordination_engine = CoordinationEngine()
         
     async def create_agent(self, agent_id: str = None, config: Dict = None) -> OptimizationAgent:
-        """Create and register new optimization agent"""        if agent_id is None:
+        """Create and register new optimization agent"""
+        if agent_id is None:
             agent_id = f"opt_agent_{len(self.agents)}"
             
         agent = OptimizationAgent(agent_id, config)
@@ -598,7 +620,9 @@ class OptimizationAgentManager:
         return agent
     
     async def get_optimal_agent(self, request: AgentRequest) -> OptimizationAgent:
-        """Get the most suitable agent for the request"""        return await self.load_balancer.get_optimal_agent(request)
+        """Get the most suitable agent for the request"""
+        return await self.load_balancer.get_optimal_agent(request)
     
     async def coordinate_optimization(self, requests: List[AgentRequest]) -> Dict[str, Any]:
-        """Coordinate multiple optimization requests across agents"""        return await self.coordination_engine.coordinate(requests, self.agents)
+        """Coordinate multiple optimization requests across agents"""
+        return await self.coordination_engine.coordinate(requests, self.agents)

@@ -9,7 +9,8 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: Unauthorized use, copying, or distribution of this code is strictly 
 prohibited and subject to legal action under German and international copyright law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -42,7 +43,8 @@ from ..models.revenue_model import RevenueModel
 
 
 class ReportType(Enum):
-    """Types of financial reports"""    EXECUTIVE_SUMMARY = "executive_summary"
+    """Types of financial reports"""
+    EXECUTIVE_SUMMARY = "executive_summary"
     DETAILED_REVENUE = "detailed_revenue"
     PLATFORM_BREAKDOWN = "platform_breakdown"
     TREND_ANALYSIS = "trend_analysis"
@@ -55,7 +57,8 @@ class ReportType(Enum):
 
 
 class ReportFormat(Enum):
-    """Report output formats"""    PDF = "pdf"
+    """Report output formats"""
+    PDF = "pdf"
     HTML = "html"
     EXCEL = "excel"
     JSON = "json"
@@ -64,7 +67,8 @@ class ReportFormat(Enum):
 
 
 class TimeInterval(Enum):
-    """Report time intervals"""    DAILY = "daily"
+    """Report time intervals"""
+    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -74,7 +78,8 @@ class TimeInterval(Enum):
 
 @dataclass
 class ReportConfiguration:
-    """Configuration for report generation"""    report_id: str
+    """Configuration for report generation"""
+    report_id: str
     report_type: ReportType
     format: ReportFormat
     time_interval: TimeInterval
@@ -92,7 +97,8 @@ class ReportConfiguration:
 
 @dataclass
 class ReportSection:
-    """Individual report section"""    section_id: str
+    """Individual report section"""
+    section_id: str
     title: str
     content: str
     charts: List[Dict[str, Any]] = field(default_factory=list)
@@ -103,7 +109,8 @@ class ReportSection:
 
 @dataclass
 class RevenueReport:
-    """Complete revenue report structure"""    report_id: str
+    """Complete revenue report structure"""
+    report_id: str
     configuration: ReportConfiguration
     title: str
     subtitle: str
@@ -118,7 +125,8 @@ class RevenueReport:
 
 @dataclass
 class ReportTemplate:
-    """Report template configuration"""    template_id: str
+    """Report template configuration"""
+    template_id: str
     name: str
     description: str
     template_html: str
@@ -128,7 +136,8 @@ class ReportTemplate:
 
 
 class ReportingEngine:
-    """    Professional revenue reporting engine for content creators.
+    """
+    Professional revenue reporting engine for content creators.
     
     This engine provides comprehensive reporting capabilities including:
     - Executive summaries and detailed financial reports
@@ -137,7 +146,8 @@ class ReportingEngine:
     - Automated report scheduling and distribution
     - Stakeholder-specific report customization
     - Performance benchmarking and trend analysis
-    """    
+    """
+    
     def __init__(self, db_session: AsyncSession, redis_client: Redis,
                  revenue_calculator: RevenueCalculator, analytics_engine: AnalyticsEngine):
         self.db_session = db_session
@@ -154,7 +164,8 @@ class ReportingEngine:
         self._setup_visualization_theme()
 
     def _initialize_templates(self):
-        """Initialize default report templates"""        # Executive Summary Template
+        """Initialize default report templates"""
+        # Executive Summary Template
         self.templates["executive"] = ReportTemplate(
             template_id="executive_summary",
             name="Executive Summary Report",
@@ -191,14 +202,16 @@ class ReportingEngine:
         )
 
     def _setup_visualization_theme(self):
-        """Setup consistent visualization theme"""        plt.style.use('seaborn-v0_8-whitegrid')
+        """Setup consistent visualization theme"""
+        plt.style.use('seaborn-v0_8-whitegrid')
         sns.set_palette("husl")
         
         # Plotly theme
         pio.templates.default = "plotly_white"
 
     async def generate_report(self, user_id: str, config: ReportConfiguration) -> RevenueReport:
-        """        Generate comprehensive revenue report based on configuration.
+        """
+        Generate comprehensive revenue report based on configuration.
         
         Args:
             user_id: User identifier
@@ -206,7 +219,8 @@ class ReportingEngine:
             
         Returns:
             Complete revenue report
-        """        try:
+        """
+        try:
             self.logger.info(f"Generating {config.report_type.value} report for user {user_id}")
             
             # Collect required data
@@ -255,7 +269,8 @@ class ReportingEngine:
             raise
 
     async def export_report(self, report: RevenueReport, format: ReportFormat = None) -> bytes:
-        """        Export report to specified format.
+        """
+        Export report to specified format.
         
         Args:
             report: Revenue report to export
@@ -263,7 +278,8 @@ class ReportingEngine:
             
         Returns:
             Exported report as bytes
-        """        export_format = format or report.configuration.format
+        """
+        export_format = format or report.configuration.format
         
         try:
             if export_format == ReportFormat.PDF:
@@ -287,7 +303,8 @@ class ReportingEngine:
 
     async def create_interactive_dashboard(self, user_id: str, 
                                          config: ReportConfiguration) -> Dict[str, Any]:
-        """        Create interactive dashboard for real-time revenue monitoring.
+        """
+        Create interactive dashboard for real-time revenue monitoring.
         
         Args:
             user_id: User identifier
@@ -295,7 +312,8 @@ class ReportingEngine:
             
         Returns:
             Interactive dashboard configuration
-        """        try:
+        """
+        try:
             # Collect real-time data
             dashboard_data = await self._collect_dashboard_data(user_id, config)
             
@@ -326,7 +344,8 @@ class ReportingEngine:
 
     async def schedule_automated_report(self, user_id: str, config: ReportConfiguration,
                                       schedule: Dict[str, Any]) -> str:
-        """        Schedule automated report generation and distribution.
+        """
+        Schedule automated report generation and distribution.
         
         Args:
             user_id: User identifier
@@ -335,7 +354,8 @@ class ReportingEngine:
             
         Returns:
             Schedule ID
-        """        try:
+        """
+        try:
             schedule_id = str(uuid.uuid4())
             
             # Create schedule configuration
@@ -370,7 +390,8 @@ class ReportingEngine:
 
     async def benchmark_performance(self, user_id: str, 
                                   config: ReportConfiguration) -> Dict[str, Any]:
-        """        Generate performance benchmarking report against industry standards.
+        """
+        Generate performance benchmarking report against industry standards.
         
         Args:
             user_id: User identifier
@@ -378,7 +399,8 @@ class ReportingEngine:
             
         Returns:
             Benchmark analysis results
-        """        try:
+        """
+        try:
             # Collect user performance data
             user_metrics = await self._collect_benchmark_data(user_id, config)
             
@@ -412,7 +434,8 @@ class ReportingEngine:
 
     async def _collect_report_data(self, user_id: str, 
                                  config: ReportConfiguration) -> Dict[str, Any]:
-        """Collect all required data for report generation"""        data = {}
+        """Collect all required data for report generation"""
+        data = {}
         
         # Revenue data
         revenue_metrics = await self.revenue_calculator.calculate_user_revenue(
@@ -438,7 +461,8 @@ class ReportingEngine:
 
     async def _generate_report_sections(self, user_id: str, config: ReportConfiguration,
                                       data: Dict[str, Any]) -> List[ReportSection]:
-        """Generate individual report sections"""        sections = []
+        """Generate individual report sections"""
+        sections = []
         
         if config.report_type == ReportType.EXECUTIVE_SUMMARY:
             sections = await self._generate_executive_sections(data)
@@ -450,7 +474,8 @@ class ReportingEngine:
         return sections
 
     async def _export_to_pdf(self, report: RevenueReport) -> bytes:
-        """Export report to PDF format"""        # Implementation for PDF export using matplotlib/reportlab
+        """Export report to PDF format"""
+        # Implementation for PDF export using matplotlib/reportlab
         buffer = io.BytesIO()
         
         with PdfPages(buffer) as pdf:
@@ -477,12 +502,14 @@ class ReportingEngine:
         return buffer.read()
 
     async def _export_to_html(self, report: RevenueReport) -> bytes:
-        """Export report to HTML format"""        template = Template(self._get_html_template())
+        """Export report to HTML format"""
+        template = Template(self._get_html_template())
         html_content = template.render(report=report)
         return html_content.encode('utf-8')
 
     async def _export_to_excel(self, report: RevenueReport) -> bytes:
-        """Export report to Excel format"""        buffer = io.BytesIO()
+        """Export report to Excel format"""
+        buffer = io.BytesIO()
         
         with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
             # Summary sheet
@@ -500,7 +527,9 @@ class ReportingEngine:
         return buffer.read()
 
     def _get_executive_template(self) -> str:
-        """Get executive summary HTML template"""        return """        <html>
+        """Get executive summary HTML template"""
+        return """
+        <html>
         <head>
             <title>{{ report.title }}</title>
             <style>
@@ -530,8 +559,11 @@ class ReportingEngine:
             </div>
         </body>
         </html>
-        """    def _get_detailed_template(self) -> str:
-        """Get detailed revenue HTML template"""        return """        <html>
+        """
+    def _get_detailed_template(self) -> str:
+        """Get detailed revenue HTML template"""
+        return """
+        <html>
         <head>
             <title>{{ report.title }}</title>
             <style>
@@ -553,21 +585,27 @@ class ReportingEngine:
             {% endfor %}
         </body>
         </html>
-        """    def _get_html_template(self) -> str:
-        """Get general HTML template"""        return self._get_detailed_template()
+        """
+    def _get_html_template(self) -> str:
+        """Get general HTML template"""
+        return self._get_detailed_template()
 
     def _generate_report_title(self, config: ReportConfiguration) -> str:
-        """Generate report title based on configuration"""        return f"Revenue {config.report_type.value.replace('_', ' ').title()} Report"
+        """Generate report title based on configuration"""
+        return f"Revenue {config.report_type.value.replace('_', ' ').title()} Report"
 
     def _generate_report_subtitle(self, config: ReportConfiguration) -> str:
-        """Generate report subtitle"""        return f"{config.start_date.strftime('%B %Y')} - {config.end_date.strftime('%B %Y')}"
+        """Generate report subtitle"""
+        return f"{config.start_date.strftime('%B %Y')} - {config.end_date.strftime('%B %Y')}"
 
     def _calculate_next_execution(self, schedule: Dict[str, Any]) -> str:
-        """Calculate next execution time for scheduled report"""        # Implementation for calculating next execution time
+        """Calculate next execution time for scheduled report"""
+        # Implementation for calculating next execution time
         return (datetime.now() + timedelta(days=30)).isoformat()
 
     async def _cache_report(self, report: RevenueReport):
-        """Cache generated report in Redis"""        await self.redis_client.setex(
+        """Cache generated report in Redis"""
+        await self.redis_client.setex(
             f"report:{report.report_id}",
             3600 * 24 * 7,  # 7 days
             json.dumps(report.__dict__, default=str)

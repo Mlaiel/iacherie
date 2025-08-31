@@ -36,20 +36,31 @@ Project Team Specialties:
 - Security Specialist: Content protection, encryption, compliance
 - DevOps Engineer: Kubernetes, CI/CD, cloud infrastructure
 - Audio Specialist: Music processing, fingerprinting, codec optimization
-"""__version__ = "1.0.0"
+"""
+__version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
 from .backup_orchestrator import BackupOrchestrator
+
 from .failover_manager import FailoverManager
+
 from .recovery_planner import RecoveryPlanner
+
 from .replication_monitor import ReplicationMonitor
+
 from .business_continuity import BusinessContinuityManager
+
 from .data_integrity import DataIntegrityValidator
+
 from .incident_response import IncidentResponseSystem
+
 from .recovery_metrics import RecoveryMetricsCollector
+
 from .failover_automation import IntelligentFailoverAutomation
+
 from .multi_cloud_sync import MultiCloudSyncManager
+
 from .content_recovery import ContentRecoverySystem
 
 __all__ = [

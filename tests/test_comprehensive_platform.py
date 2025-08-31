@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -16,7 +17,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 Integration tests, unit tests, and end-to-end testing for all platform components.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -45,10 +47,12 @@ from implementation.content_surveillance_implementation import (
 
 
 class TestAITaskProcessor:
-    """Test suite for AI Task Processor"""    
+    """Test suite for AI Task Processor"""
+    
     @pytest.fixture
     async def task_processor(self):
-        """Create AI task processor fixture"""        config = {
+        """Create AI task processor fixture"""
+        config = {
             "max_concurrent_tasks": 5,
             "default_timeout": 30
         }
@@ -60,7 +64,8 @@ class TestAITaskProcessor:
     
     @pytest.mark.asyncio
     async def test_task_submission(self, task_processor):
-        """Test task submission"""        context = TaskContext(
+        """Test task submission"""
+        context = TaskContext(
             content_id="test_content_123",
             content_type="audio",
             parameters={"test_param": "test_value"}
@@ -85,7 +90,8 @@ class TestAITaskProcessor:
     
     @pytest.mark.asyncio
     async def test_content_analysis_task(self, task_processor):
-        """Test content analysis task execution"""        context = TaskContext(
+        """Test content analysis task execution"""
+        context = TaskContext(
             content_id="audio_123",
             content_type="audio",
             content_data={"duration": 180, "bitrate": 320}
@@ -105,7 +111,8 @@ class TestAITaskProcessor:
     
     @pytest.mark.asyncio
     async def test_fingerprint_generation(self, task_processor):
-        """Test fingerprint generation task"""        context = TaskContext(
+        """Test fingerprint generation task"""
+        context = TaskContext(
             content_id="test_content",
             content_data={"audio_data": "mock_audio_data"}
         )
@@ -124,7 +131,8 @@ class TestAITaskProcessor:
     
     @pytest.mark.asyncio
     async def test_task_cancellation(self, task_processor):
-        """Test task cancellation"""        context = TaskContext(content_id="test")
+        """Test task cancellation"""
+        context = TaskContext(content_id="test")
         
         task_id = await task_processor.submit_task(
             TaskType.CONTENT_ANALYSIS,
@@ -141,7 +149,8 @@ class TestAITaskProcessor:
     
     @pytest.mark.asyncio
     async def test_health_check(self, task_processor):
-        """Test health check task"""        context = TaskContext()
+        """Test health check task"""
+        context = TaskContext()
         
         task_id = await task_processor.submit_task(
             TaskType.HEALTH_CHECK,
@@ -157,7 +166,8 @@ class TestAITaskProcessor:
     
     @pytest.mark.asyncio
     async def test_system_status(self, task_processor):
-        """Test system status retrieval"""        status = await task_processor.get_system_status()
+        """Test system status retrieval"""
+        status = await task_processor.get_system_status()
         
         assert "processor_status" in status
         assert "active_tasks" in status
@@ -167,14 +177,17 @@ class TestAITaskProcessor:
 
 
 class TestPlatformIntegrationManager:
-    """Test suite for Platform Integration Manager"""    
+    """Test suite for Platform Integration Manager"""
+    
     @pytest.fixture
     def integration_manager(self):
-        """Create platform integration manager fixture"""        return PlatformIntegrationManager()
+        """Create platform integration manager fixture"""
+        return PlatformIntegrationManager()
     
     @pytest.fixture
     def mock_credentials(self):
-        """Mock API credentials"""        return {
+        """Mock API credentials"""
+        return {
             "youtube": APICredentials(
                 platform_id="youtube",
                 api_key="test_youtube_key"
@@ -186,7 +199,8 @@ class TestPlatformIntegrationManager:
         }
     
     def test_platform_initialization(self, integration_manager):
-        """Test platform initialization"""        platforms = integration_manager.get_supported_platforms()
+        """Test platform initialization"""
+        platforms = integration_manager.get_supported_platforms()
         
         assert "youtube" in platforms
         assert "soundcloud" in platforms
@@ -201,7 +215,8 @@ class TestPlatformIntegrationManager:
         assert youtube_info["platform_type"] == PlatformType.VIDEO_STREAMING.value
     
     def test_credentials_management(self, integration_manager, mock_credentials):
-        """Test credentials management"""        # Add credentials
+        """Test credentials management"""
+        # Add credentials
         for platform_id, creds in mock_credentials.items():
             integration_manager.add_platform_credentials(platform_id, creds)
         
@@ -214,7 +229,8 @@ class TestPlatformIntegrationManager:
     
     @pytest.mark.asyncio
     async def test_session_management(self, integration_manager):
-        """Test HTTP session management"""        # Initialize session
+        """Test HTTP session management"""
+        # Initialize session
         success = await integration_manager.initialize_session("youtube")
         assert success
         assert "youtube" in integration_manager.sessions
@@ -225,7 +241,8 @@ class TestPlatformIntegrationManager:
     
     @pytest.mark.asyncio
     async def test_rate_limit_tracking(self, integration_manager):
-        """Test rate limit tracking"""        # Mock response headers
+        """Test rate limit tracking"""
+        # Mock response headers
         headers = {
             "x-ratelimit-remaining": "999",
             "x-ratelimit-reset": str(int((datetime.utcnow() + timedelta(hours=1)).timestamp()))
@@ -239,7 +256,8 @@ class TestPlatformIntegrationManager:
     
     @pytest.mark.asyncio
     async def test_mock_api_request(self, integration_manager):
-        """Test API request with mocked response"""        # Add mock credentials
+        """Test API request with mocked response"""
+        # Add mock credentials
         integration_manager.add_platform_credentials(
             "youtube",
             APICredentials(platform_id="youtube", api_key="test_key")
@@ -266,10 +284,12 @@ class TestPlatformIntegrationManager:
 
 
 class TestContentSurveillance:
-    """Test suite for Content Surveillance"""    
+    """Test suite for Content Surveillance"""
+    
     @pytest.fixture
     async def surveillance_engine(self):
-        """Create content surveillance engine fixture"""        config = {
+        """Create content surveillance engine fixture"""
+        config = {
             "youtube_api_key": "test_key",
             "soundcloud_client_id": "test_id"
         }
@@ -278,7 +298,8 @@ class TestContentSurveillance:
     
     @pytest.mark.asyncio
     async def test_platform_detection(self, surveillance_engine):
-        """Test platform detection from URLs"""        test_urls = [
+        """Test platform detection from URLs"""
+        test_urls = [
             ("https://www.youtube.com/watch?v=123", "youtube"),
             ("https://soundcloud.com/artist/track", "soundcloud"),
             ("https://www.instagram.com/p/123", "instagram"),
@@ -292,7 +313,8 @@ class TestContentSurveillance:
     
     @pytest.mark.asyncio
     async def test_mock_content_search(self, surveillance_engine):
-        """Test content search with mocked responses"""        with patch.object(surveillance_engine, '_search_platform') as mock_search:
+        """Test content search with mocked responses"""
+        with patch.object(surveillance_engine, '_search_platform') as mock_search:
             mock_search.return_value = [
                 DetectionResult(
                     content_id="test_123",
@@ -316,7 +338,8 @@ class TestContentSurveillance:
     
     @pytest.mark.asyncio
     async def test_screenshot_functionality(self, surveillance_engine):
-        """Test screenshot functionality"""        screenshot_path = await surveillance_engine.take_screenshot(
+        """Test screenshot functionality"""
+        screenshot_path = await surveillance_engine.take_screenshot(
             "https://example.com/test"
         )
         
@@ -326,7 +349,8 @@ class TestContentSurveillance:
     
     @pytest.mark.asyncio
     async def test_content_extraction(self, surveillance_engine):
-        """Test content information extraction"""        # Test generic extraction
+        """Test content information extraction"""
+        # Test generic extraction
         with patch('aiohttp.ClientSession.get') as mock_get:
             mock_response = AsyncMock()
             mock_response.status = 200
@@ -343,10 +367,12 @@ class TestContentSurveillance:
 
 
 class TestIntegrationWorkflows:
-    """Integration tests for complete workflows"""    
+    """Integration tests for complete workflows"""
+    
     @pytest.fixture
     async def full_system(self):
-        """Create full system fixture with all components"""        task_processor = AITaskProcessor()
+        """Create full system fixture with all components"""
+        task_processor = AITaskProcessor()
         integration_manager = PlatformIntegrationManager()
         
         # Add test credentials
@@ -364,7 +390,8 @@ class TestIntegrationWorkflows:
     
     @pytest.mark.asyncio
     async def test_content_upload_workflow(self, full_system):
-        """Test complete content upload and processing workflow"""        task_processor = full_system["task_processor"]
+        """Test complete content upload and processing workflow"""
+        task_processor = full_system["task_processor"]
         
         # Step 1: Submit content for analysis
         context = TaskContext(
@@ -406,7 +433,8 @@ class TestIntegrationWorkflows:
     
     @pytest.mark.asyncio
     async def test_content_protection_workflow(self, full_system):
-        """Test content protection and monitoring workflow"""        task_processor = full_system["task_processor"]
+        """Test content protection and monitoring workflow"""
+        task_processor = full_system["task_processor"]
         surveillance = full_system["surveillance"]
         
         # Step 1: Generate content fingerprint
@@ -439,7 +467,8 @@ class TestIntegrationWorkflows:
     
     @pytest.mark.asyncio
     async def test_platform_monitoring_workflow(self, full_system):
-        """Test platform monitoring workflow"""        integration_manager = full_system["integration_manager"]
+        """Test platform monitoring workflow"""
+        integration_manager = full_system["integration_manager"]
         
         # Test multiple platform connections
         platforms = ["youtube", "soundcloud"]
@@ -461,7 +490,8 @@ class TestIntegrationWorkflows:
 # Utility functions for testing
 
 def create_mock_content_data(content_type: str = "audio") -> Dict[str, Any]:
-    """Create mock content data for testing"""    base_data = {
+    """Create mock content data for testing"""
+    base_data = {
         "id": "test_content_123",
         "type": content_type,
         "created_at": datetime.utcnow().isoformat(),
@@ -494,7 +524,8 @@ def create_mock_content_data(content_type: str = "audio") -> Dict[str, Any]:
 
 
 def create_test_config() -> Dict[str, Any]:
-    """Create test configuration"""    return {
+    """Create test configuration"""
+    return {
         "max_concurrent_tasks": 3,
         "default_timeout": 10,
         "youtube_api_key": "test_youtube_key",
@@ -507,7 +538,8 @@ def create_test_config() -> Dict[str, Any]:
 
 @pytest.mark.asyncio
 async def test_concurrent_task_processing():
-    """Test concurrent task processing under load"""    processor = AITaskProcessor({"max_concurrent_tasks": 5})
+    """Test concurrent task processing under load"""
+    processor = AITaskProcessor({"max_concurrent_tasks": 5})
     
     # Submit multiple tasks concurrently
     task_ids = []

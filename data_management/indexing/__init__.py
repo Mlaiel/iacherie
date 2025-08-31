@@ -6,7 +6,7 @@ Supports audio, video, image, text fingerprinting with enterprise-grade performa
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent - Content Protection Platform
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 This code is the exclusive property of Fahed Mlaiel.
@@ -15,7 +15,9 @@ without explicit written permission is strictly prohibited
 and will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""from .engines import (
+"""
+
+from .engines import (
     VectorSearchEngine,
     ContentIndexEngine,
     FingerprintIndexEngine,

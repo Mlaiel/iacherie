@@ -10,7 +10,8 @@ Logique Métier: User (musicien/blogueur/photographe/influencer/comédien) → U
 
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Tous droits réservés - Utilisation non autorisée strictement interdite
-"""import asyncio
+"""
+import asyncio
 import logging
 import signal
 import sys
@@ -47,7 +48,8 @@ from ...monitoring.telemetry import TelemetryCollector
 
 
 class CacheSystemStatus(Enum):
-    """Status du système de cache global."""    INITIALIZING = "initializing"
+    """Status du système de cache global."""
+    INITIALIZING = "initializing"
     STARTING = "starting"
     RUNNING = "running"
     DEGRADED = "degraded"
@@ -59,7 +61,8 @@ class CacheSystemStatus(Enum):
 
 @dataclass
 class CacheIndexMetrics:
-    """Métriques globales du système de cache."""    total_nodes: int
+    """Métriques globales du système de cache."""
+    total_nodes: int
     active_nodes: int
     total_memory_mb: float
     used_memory_mb: float
@@ -71,7 +74,8 @@ class CacheIndexMetrics:
 
 
 class CacheDeploymentIndex:
-    """    Orchestrateur principal du système de cache déployé.
+    """
+    Orchestrateur principal du système de cache déployé.
     
     Responsabilités:
     - Initialisation et orchestration de tous les composants de cache
@@ -80,13 +84,16 @@ class CacheDeploymentIndex:
     - Coordination des stratégies de cache multi-format
     - Optimisation automatique des performances
     - Sécurité et compliance enterprise
-    """    
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
-        """        Initialise l'index de déploiement du cache.
+        """
+        Initialise l'index de déploiement du cache.
         
         Args:
             config_path: Chemin vers le fichier de configuration
-        """        self.logger = get_logger(__name__)
+        """
+        self.logger = get_logger(__name__)
         self.config_path = config_path or "/etc/ia-influencer/cache.yml"
         self.status = CacheSystemStatus.INITIALIZING
         self.start_time = datetime.utcnow()
@@ -117,11 +124,13 @@ class CacheDeploymentIndex:
         signal.signal(signal.SIGINT, self._signal_handler)
     
     async def initialize(self) -> bool:
-        """        Initialise tous les composants du système de cache.
+        """
+        Initialise tous les composants du système de cache.
         
         Returns:
             True si l'initialisation réussit, False sinon
-        """        try:
+        """
+        try:
             self.logger.info("🚀 Initialisation du système de cache IA Influencer Agent")
             self.status = CacheSystemStatus.STARTING
             
@@ -167,7 +176,8 @@ class CacheDeploymentIndex:
             return False
     
     async def _load_configuration(self) -> bool:
-        """Charge la configuration depuis les fichiers."""        try:
+        """Charge la configuration depuis les fichiers."""
+        try:
             # Configuration de déploiement
             self.deployment_config = await DeploymentConfig.load_from_file(
                 self.config_path
@@ -191,7 +201,8 @@ class CacheDeploymentIndex:
             return False
     
     async def _validate_configuration(self) -> bool:
-        """Valide la configuration chargée."""        try:
+        """Valide la configuration chargée."""
+        try:
             # Validation avec l'utilitaire dédié
             validation_result = await validate_deployment_config(
                 self.deployment_config
@@ -209,7 +220,8 @@ class CacheDeploymentIndex:
             return False
     
     async def _initialize_security(self) -> bool:
-        """Initialise les composants de sécurité."""        try:
+        """Initialise les composants de sécurité."""
+        try:
             self.security_manager = SecurityManager(
                 level=SecurityLevel.ENTERPRISE,
                 encryption_key=self.deployment_config.security.encryption_key,
@@ -228,7 +240,8 @@ class CacheDeploymentIndex:
             return False
     
     async def _initialize_distributed_cluster(self) -> bool:
-        """Initialise le cluster de cache distribué."""        try:
+        """Initialise le cluster de cache distribué."""
+        try:
             # Configuration des nœuds
             nodes = [
                 ClusterNode(
@@ -258,7 +271,8 @@ class CacheDeploymentIndex:
             return False
     
     async def _initialize_core_managers(self) -> bool:
-        """Initialise les gestionnaires principaux."""        try:
+        """Initialise les gestionnaires principaux."""
+        try:
             # Cache Manager
             self.cache_manager = CacheManager(
                 config=self.cache_config,
@@ -292,7 +306,8 @@ class CacheDeploymentIndex:
             return False
     
     async def _initialize_monitoring(self) -> bool:
-        """Initialise le système de monitoring."""        try:
+        """Initialise le système de monitoring."""
+        try:
             # Collecteur de métriques
             self.metrics_collector = MetricsCollector(
                 cache_manager=self.cache_manager,
@@ -331,7 +346,8 @@ class CacheDeploymentIndex:
             return False
     
     async def _initialize_optimization(self) -> bool:
-        """Initialise les stratégies d'optimisation."""        try:
+        """Initialise les stratégies d'optimisation."""
+        try:
             # Optimiseur de performances
             self.performance_optimizer = PerformanceOptimizer(
                 cache_manager=self.cache_manager,
@@ -363,7 +379,8 @@ class CacheDeploymentIndex:
             return False
     
     async def _start_background_tasks(self) -> None:
-        """Démarre les tâches de fond."""        # Tâche de collecte de métriques
+        """Démarre les tâches de fond."""
+        # Tâche de collecte de métriques
         self._background_tasks.append(
             asyncio.create_task(self._metrics_collection_loop())
         )
@@ -386,7 +403,8 @@ class CacheDeploymentIndex:
         self.logger.info("🔄 Tâches de fond démarrées")
     
     async def _metrics_collection_loop(self) -> None:
-        """Boucle de collecte de métriques."""        while not self._shutdown_event.is_set():
+        """Boucle de collecte de métriques."""
+        while not self._shutdown_event.is_set():
             try:
                 # Collecte des métriques globales
                 metrics = await self._collect_global_metrics()
@@ -402,7 +420,8 @@ class CacheDeploymentIndex:
                 await asyncio.sleep(60)
     
     async def _health_monitoring_loop(self) -> None:
-        """Boucle de monitoring de santé."""        while not self._shutdown_event.is_set():
+        """Boucle de monitoring de santé."""
+        while not self._shutdown_event.is_set():
             try:
                 # Vérification de santé de tous les composants
                 overall_health = await self.health_monitor.check_overall_health()
@@ -420,7 +439,8 @@ class CacheDeploymentIndex:
                 await asyncio.sleep(120)
     
     async def _optimization_loop(self) -> None:
-        """Boucle d'optimisation automatique."""        while not self._shutdown_event.is_set():
+        """Boucle d'optimisation automatique."""
+        while not self._shutdown_event.is_set():
             try:
                 # Optimisation basée sur les métriques courantes
                 await self.performance_optimizer.optimize_automatically()
@@ -432,7 +452,8 @@ class CacheDeploymentIndex:
                 await asyncio.sleep(600)
     
     async def _warming_loop(self) -> None:
-        """Boucle de réchauffement proactif."""        while not self._shutdown_event.is_set():
+        """Boucle de réchauffement proactif."""
+        while not self._shutdown_event.is_set():
             try:
                 # Stratégies de réchauffement basées sur les patterns
                 await self.warming_orchestrator.execute_predictive_warming()
@@ -444,7 +465,8 @@ class CacheDeploymentIndex:
                 await asyncio.sleep(1200)
     
     async def _collect_global_metrics(self) -> CacheIndexMetrics:
-        """Collecte les métriques globales du système."""        cluster_stats = await self.distributed_cluster.get_cluster_stats()
+        """Collecte les métriques globales du système."""
+        cluster_stats = await self.distributed_cluster.get_cluster_stats()
         cache_stats = await self.cache_manager.get_statistics()
         
         return CacheIndexMetrics(
@@ -460,11 +482,13 @@ class CacheDeploymentIndex:
         )
     
     def _signal_handler(self, signum: int, frame) -> None:
-        """Gestionnaire de signaux pour arrêt propre."""        self.logger.info(f"🛑 Signal {signum} reçu, arrêt en cours...")
+        """Gestionnaire de signaux pour arrêt propre."""
+        self.logger.info(f"🛑 Signal {signum} reçu, arrêt en cours...")
         asyncio.create_task(self.shutdown())
     
     async def shutdown(self) -> None:
-        """Arrêt propre du système de cache."""        try:
+        """Arrêt propre du système de cache."""
+        try:
             self.status = CacheSystemStatus.STOPPING
             self.logger.info("🛑 Arrêt du système de cache en cours...")
             
@@ -516,7 +540,8 @@ class CacheDeploymentIndex:
             self.status = CacheSystemStatus.ERROR
     
     def get_system_status(self) -> Dict[str, Any]:
-        """Retourne le statut détaillé du système."""        return {
+        """Retourne le statut détaillé du système."""
+        return {
             "status": self.status.value,
             "uptime_seconds": int((datetime.utcnow() - self.start_time).total_seconds()),
             "components_health": {
@@ -531,7 +556,8 @@ class CacheDeploymentIndex:
         }
     
     async def handle_emergency_shutdown(self, reason: str) -> None:
-        """Gestion d'arrêt d'urgence."""        self.logger.critical(f"🚨 ARRÊT D'URGENCE: {reason}")
+        """Gestion d'arrêt d'urgence."""
+        self.logger.critical(f"🚨 ARRÊT D'URGENCE: {reason}")
         self.status = CacheSystemStatus.ERROR
         await self.shutdown()
 
@@ -541,8 +567,10 @@ cache_deployment_index = CacheDeploymentIndex()
 
 
 async def main() -> None:
-    """    Point d'entrée principal de l'application cache.
-    """    try:
+    """
+    Point d'entrée principal de l'application cache.
+    """
+    try:
         # Initialisation du système
         success = await cache_deployment_index.initialize()
         
@@ -571,9 +599,11 @@ async def main() -> None:
 
 
 if __name__ == "__main__":
-    """    Démarrage direct du système de cache.
+    """
+    Démarrage direct du système de cache.
     Usage: python -m backend.deployment.cache.index
-    """    asyncio.run(main())
+    """
+    asyncio.run(main())
 
 
 # Export des composants principaux pour l'intégration

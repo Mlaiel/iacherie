@@ -12,7 +12,8 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 This module provides comprehensive analytics integration across multiple platforms
 with real-time data processing, advanced metrics computation, and AI-powered insights.
-"""import logging
+"""
+import logging
 import asyncio
 import hashlib
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable
@@ -50,7 +51,8 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class AnalyticsProvider(Enum):
-    """Analytics providers"""    GOOGLE_ANALYTICS = "google_analytics"
+    """Analytics providers"""
+    GOOGLE_ANALYTICS = "google_analytics"
     FACEBOOK_ANALYTICS = "facebook_analytics"
     SPOTIFY_ANALYTICS = "spotify_analytics"
     YOUTUBE_ANALYTICS = "youtube_analytics"
@@ -62,7 +64,8 @@ class AnalyticsProvider(Enum):
     CUSTOM = "custom"
 
 class MetricType(Enum):
-    """Types of metrics"""    ENGAGEMENT = "engagement"
+    """Types of metrics"""
+    ENGAGEMENT = "engagement"
     REACH = "reach"
     CONVERSION = "conversion"
     REVENUE = "revenue"
@@ -72,7 +75,8 @@ class MetricType(Enum):
     CONTENT = "content"
 
 class TimeGranularity(Enum):
-    """Time granularity for metrics"""    MINUTE = "minute"
+    """Time granularity for metrics"""
+    MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -81,7 +85,8 @@ class TimeGranularity(Enum):
     YEAR = "year"
 
 class AggregationType(Enum):
-    """Aggregation types"""    SUM = "sum"
+    """Aggregation types"""
+    SUM = "sum"
     AVERAGE = "average"
     MEDIAN = "median"
     MIN = "min"
@@ -93,7 +98,8 @@ class AggregationType(Enum):
 
 @dataclass
 class MetricDefinition:
-    """Metric definition"""    name: str
+    """Metric definition"""
+    name: str
     metric_type: MetricType
     provider: AnalyticsProvider
     description: str = ""
@@ -106,7 +112,8 @@ class MetricDefinition:
 
 @dataclass
 class DataPoint:
-    """Single analytics data point"""    timestamp: datetime
+    """Single analytics data point"""
+    timestamp: datetime
     metric_name: str
     value: Union[int, float]
     dimensions: Dict[str, str] = field(default_factory=dict)
@@ -115,7 +122,8 @@ class DataPoint:
 
 @dataclass
 class MetricSeries:
-    """Time series of metric data"""    metric_name: str
+    """Time series of metric data"""
+    metric_name: str
     data_points: List[DataPoint]
     time_range: Tuple[datetime, datetime]
     granularity: TimeGranularity
@@ -126,7 +134,8 @@ class MetricSeries:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""    report_id: str
+    """Comprehensive analytics report"""
+    report_id: str
     title: str
     description: str
     time_range: Tuple[datetime, datetime]
@@ -137,7 +146,8 @@ class AnalyticsReport:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class BaseAnalyticsConnector(ABC):
-    """Base analytics connector"""    
+    """Base analytics connector"""
+    
     def __init__(self, provider: AnalyticsProvider, credentials: Dict[str, Any]):
         self.provider = provider
         self.credentials = credentials
@@ -148,7 +158,8 @@ class BaseAnalyticsConnector(ABC):
         
     @abstractmethod
     async def authenticate(self) -> bool:
-        """Authenticate with analytics provider"""        pass
+        """Authenticate with analytics provider"""
+        pass
     
     @abstractmethod
     async def get_metrics(self, metric_names: List[str], 
@@ -156,37 +167,45 @@ class BaseAnalyticsConnector(ABC):
                          end_date: datetime,
                          dimensions: Optional[List[str]] = None,
                          filters: Optional[Dict[str, Any]] = None) -> List[MetricSeries]:
-        """Get metrics data"""        pass
+        """Get metrics data"""
+        pass
     
     @abstractmethod
     async def get_available_metrics(self) -> List[MetricDefinition]:
-        """Get list of available metrics"""        pass
+        """Get list of available metrics"""
+        pass
     
     def _cache_key(self, *args) -> str:
-        """Generate cache key"""        return hashlib.md5(str(args).encode()).hexdigest()
+        """Generate cache key"""
+        return hashlib.md5(str(args).encode()).hexdigest()
     
     async def _get_cached_data(self, cache_key: str) -> Optional[Any]:
-        """Get cached data"""        if cache_key in self.cache:
+        """Get cached data"""
+        if cache_key in self.cache:
             data, timestamp = self.cache[cache_key]
             if datetime.utcnow() - timestamp < timedelta(seconds=self.cache_ttl):
                 return data
         return None
     
     async def _cache_data(self, cache_key: str, data: Any):
-        """Cache data"""        self.cache[cache_key] = (data, datetime.utcnow())
+        """Cache data"""
+        self.cache[cache_key] = (data, datetime.utcnow())
     
     def clear_cache(self):
-        """Clear cache"""        self.cache.clear()
+        """Clear cache"""
+        self.cache.clear()
 
 class GoogleAnalyticsConnector(BaseAnalyticsConnector):
-    """Google Analytics 4 connector"""    
+    """Google Analytics 4 connector"""
+    
     def __init__(self, credentials: Dict[str, Any]):
         super().__init__(AnalyticsProvider.GOOGLE_ANALYTICS, credentials)
         self.property_id = credentials.get('property_id')
         self.service_account_key = credentials.get('service_account_key')
         
     async def authenticate(self) -> bool:
-        """Authenticate with Google Analytics"""        try:
+        """Authenticate with Google Analytics"""
+        try:
             # Implement Google Analytics authentication
             self.logger.info("Google Analytics authentication successful")
             return True
@@ -199,7 +218,8 @@ class GoogleAnalyticsConnector(BaseAnalyticsConnector):
                          end_date: datetime,
                          dimensions: Optional[List[str]] = None,
                          filters: Optional[Dict[str, Any]] = None) -> List[MetricSeries]:
-        """Get Google Analytics metrics"""        try:
+        """Get Google Analytics metrics"""
+        try:
             # Implement GA4 API calls
             metrics_data = []
             
@@ -238,7 +258,8 @@ class GoogleAnalyticsConnector(BaseAnalyticsConnector):
             return []
     
     async def get_available_metrics(self) -> List[MetricDefinition]:
-        """Get available Google Analytics metrics"""        return [
+        """Get available Google Analytics metrics"""
+        return [
             MetricDefinition(
                 name="sessions",
                 metric_type=MetricType.ENGAGEMENT,
@@ -272,14 +293,16 @@ class GoogleAnalyticsConnector(BaseAnalyticsConnector):
         ]
 
 class SpotifyAnalyticsConnector(BaseAnalyticsConnector):
-    """Spotify for Artists analytics connector"""    
+    """Spotify for Artists analytics connector"""
+    
     def __init__(self, credentials: Dict[str, Any]):
         super().__init__(AnalyticsProvider.SPOTIFY_ANALYTICS, credentials)
         self.access_token = credentials.get('access_token')
         self.artist_id = credentials.get('artist_id')
         
     async def authenticate(self) -> bool:
-        """Authenticate with Spotify API"""        try:
+        """Authenticate with Spotify API"""
+        try:
             self.logger.info("Spotify Analytics authentication successful")
             return True
         except Exception as e:
@@ -291,7 +314,8 @@ class SpotifyAnalyticsConnector(BaseAnalyticsConnector):
                          end_date: datetime,
                          dimensions: Optional[List[str]] = None,
                          filters: Optional[Dict[str, Any]] = None) -> List[MetricSeries]:
-        """Get Spotify analytics metrics"""        try:
+        """Get Spotify analytics metrics"""
+        try:
             metrics_data = []
             
             for metric_name in metric_names:
@@ -337,7 +361,8 @@ class SpotifyAnalyticsConnector(BaseAnalyticsConnector):
             return []
     
     async def get_available_metrics(self) -> List[MetricDefinition]:
-        """Get available Spotify metrics"""        return [
+        """Get available Spotify metrics"""
+        return [
             MetricDefinition(
                 name="streams",
                 metric_type=MetricType.ENGAGEMENT,
@@ -379,14 +404,16 @@ class SpotifyAnalyticsConnector(BaseAnalyticsConnector):
         ]
 
 class YouTubeAnalyticsConnector(BaseAnalyticsConnector):
-    """YouTube Analytics connector"""    
+    """YouTube Analytics connector"""
+    
     def __init__(self, credentials: Dict[str, Any]):
         super().__init__(AnalyticsProvider.YOUTUBE_ANALYTICS, credentials)
         self.api_key = credentials.get('api_key')
         self.channel_id = credentials.get('channel_id')
         
     async def authenticate(self) -> bool:
-        """Authenticate with YouTube API"""        try:
+        """Authenticate with YouTube API"""
+        try:
             self.logger.info("YouTube Analytics authentication successful")
             return True
         except Exception as e:
@@ -398,7 +425,8 @@ class YouTubeAnalyticsConnector(BaseAnalyticsConnector):
                          end_date: datetime,
                          dimensions: Optional[List[str]] = None,
                          filters: Optional[Dict[str, Any]] = None) -> List[MetricSeries]:
-        """Get YouTube analytics metrics"""        try:
+        """Get YouTube analytics metrics"""
+        try:
             metrics_data = []
             
             for metric_name in metric_names:
@@ -443,7 +471,8 @@ class YouTubeAnalyticsConnector(BaseAnalyticsConnector):
             return []
     
     async def get_available_metrics(self) -> List[MetricDefinition]:
-        """Get available YouTube metrics"""        return [
+        """Get available YouTube metrics"""
+        return [
             MetricDefinition(
                 name="views",
                 metric_type=MetricType.ENGAGEMENT,
@@ -490,12 +519,14 @@ class YouTubeAnalyticsConnector(BaseAnalyticsConnector):
         ]
 
 class TrendAnalyzer:
-    """Advanced trend analysis for metrics"""    
+    """Advanced trend analysis for metrics"""
+    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         
     def analyze_trend(self, metric_series: MetricSeries) -> Dict[str, Any]:
-        """Analyze trend in metric series"""        if len(metric_series.data_points) < 2:
+        """Analyze trend in metric series"""
+        if len(metric_series.data_points) < 2:
             return {"trend": "insufficient_data"}
         
         values = [dp.value for dp in metric_series.data_points]
@@ -570,7 +601,8 @@ class TrendAnalyzer:
     
     def compare_periods(self, current_series: MetricSeries, 
                        previous_series: MetricSeries) -> Dict[str, Any]:
-        """Compare two time periods"""        current_total = sum(dp.value for dp in current_series.data_points)
+        """Compare two time periods"""
+        current_total = sum(dp.value for dp in current_series.data_points)
         previous_total = sum(dp.value for dp in previous_series.data_points)
         
         if previous_total == 0:
@@ -591,13 +623,15 @@ class TrendAnalyzer:
         }
 
 class InsightGenerator:
-    """AI-powered insights generator"""    
+    """AI-powered insights generator"""
+    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.trend_analyzer = TrendAnalyzer()
         
     async def generate_insights(self, metrics: List[MetricSeries]) -> List[str]:
-        """Generate insights from metrics data"""        insights = []
+        """Generate insights from metrics data"""
+        insights = []
         
         for metric in metrics:
             trend_analysis = self.trend_analyzer.analyze_trend(metric)
@@ -641,7 +675,8 @@ class InsightGenerator:
         return insights
     
     async def generate_recommendations(self, metrics: List[MetricSeries]) -> List[str]:
-        """Generate actionable recommendations"""        recommendations = []
+        """Generate actionable recommendations"""
+        recommendations = []
         
         for metric in metrics:
             trend_analysis = self.trend_analyzer.analyze_trend(metric)
@@ -671,7 +706,8 @@ class InsightGenerator:
         return recommendations[:5]  # Return top 5 recommendations
 
 class AnalyticsHub:
-    """Central analytics hub orchestrator"""    
+    """Central analytics hub orchestrator"""
+    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.connectors: Dict[AnalyticsProvider, BaseAnalyticsConnector] = {}
@@ -684,7 +720,8 @@ class AnalyticsHub:
     
     async def add_connector(self, provider: AnalyticsProvider, 
                           credentials: Dict[str, Any]) -> bool:
-        """Add analytics connector"""        try:
+        """Add analytics connector"""
+        try:
             connector_classes = {
                 AnalyticsProvider.GOOGLE_ANALYTICS: GoogleAnalyticsConnector,
                 AnalyticsProvider.SPOTIFY_ANALYTICS: SpotifyAnalyticsConnector,
@@ -715,7 +752,8 @@ class AnalyticsHub:
                          start_date: datetime,
                          end_date: datetime,
                          dimensions: Optional[List[str]] = None) -> Dict[AnalyticsProvider, List[MetricSeries]]:
-        """Get metrics from multiple providers"""        results = {}
+        """Get metrics from multiple providers"""
+        results = {}
         
         tasks = []
         for provider in providers:
@@ -741,7 +779,8 @@ class AnalyticsHub:
                                     start_date: datetime,
                                     end_date: datetime,
                                     dimensions: Optional[List[str]]) -> List[MetricSeries]:
-        """Fetch metrics from specific provider"""        connector = self.connectors.get(provider)
+        """Fetch metrics from specific provider"""
+        connector = self.connectors.get(provider)
         if not connector:
             return []
         
@@ -754,7 +793,8 @@ class AnalyticsHub:
                                           start_date: datetime,
                                           end_date: datetime,
                                           title: str = "Analytics Report") -> AnalyticsReport:
-        """Generate comprehensive analytics report"""        # Fetch metrics from all providers
+        """Generate comprehensive analytics report"""
+        # Fetch metrics from all providers
         metrics_data = await self.get_metrics(
             providers, metric_names, start_date, end_date
         )
@@ -788,7 +828,8 @@ class AnalyticsHub:
         return report
     
     def get_available_metrics(self, provider: Optional[AnalyticsProvider] = None) -> List[MetricDefinition]:
-        """Get available metrics for provider(s)"""        if provider:
+        """Get available metrics for provider(s)"""
+        if provider:
             return self.available_metrics.get(provider, [])
         
         # Return all available metrics
@@ -801,7 +842,8 @@ class AnalyticsHub:
     async def setup_real_time_monitoring(self, metrics: List[str],
                                        alert_thresholds: Dict[str, Dict[str, float]],
                                        callback: Callable) -> bool:
-        """Setup real-time metric monitoring"""        try:
+        """Setup real-time metric monitoring"""
+        try:
             # This would setup real-time data streams
             self.logger.info("Real-time monitoring setup completed")
             return True
@@ -810,7 +852,8 @@ class AnalyticsHub:
             return False
     
     async def cleanup(self):
-        """Cleanup analytics hub"""        for connector in self.connectors.values():
+        """Cleanup analytics hub"""
+        for connector in self.connectors.values():
             connector.clear_cache()
         
         self.connectors.clear()

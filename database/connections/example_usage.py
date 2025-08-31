@@ -10,7 +10,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. Any unauthorized use, modification,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -35,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 async def example_basic_usage():
-    """Basic usage example for database connections"""    
+    """Basic usage example for database connections"""
+    
     logger.info("=== Basic Database Connections Usage ===")
     
     # 1. Get the global database index
@@ -90,7 +92,8 @@ async def example_basic_usage():
 
 
 async def example_content_protection_workflow():
-    """Example of content protection workflow"""    
+    """Example of content protection workflow"""
+    
     logger.info("=== Content Protection Workflow ===")
     
     # Initialize database connections
@@ -177,7 +180,8 @@ async def example_content_protection_workflow():
 
 
 async def example_monetization_workflow():
-    """Example of monetization workflow"""    
+    """Example of monetization workflow"""
+    
     logger.info("=== Monetization Workflow ===")
     
     # Initialize database connections
@@ -285,7 +289,8 @@ async def example_monetization_workflow():
 
 
 async def example_multi_tenant_collaboration():
-    """Example of multi-tenant collaboration"""    
+    """Example of multi-tenant collaboration"""
+    
     logger.info("=== Multi-Tenant Collaboration ===")
     
     db_index = await get_database_index()
@@ -364,7 +369,8 @@ async def example_multi_tenant_collaboration():
 
 
 async def example_performance_monitoring():
-    """Example of performance monitoring and optimization"""    
+    """Example of performance monitoring and optimization"""
+    
     logger.info("=== Performance Monitoring & Optimization ===")
     
     db_index = await get_database_index()
@@ -398,7 +404,8 @@ async def example_performance_monitoring():
 
 
 async def example_business_logic_integration():
-    """Example showing complete business logic integration"""    
+    """Example showing complete business logic integration"""
+    
     logger.info("=== Complete Business Logic Integration ===")
     
     db_index = await get_database_index()
@@ -509,7 +516,8 @@ async def example_business_logic_integration():
 
 
 async def main():
-    """Run all examples"""    try:
+    """Run all examples"""
+    try:
         # Run all example workflows
         await example_basic_usage()
         await example_content_protection_workflow()
@@ -614,7 +622,8 @@ if __name__ == "__main__":
 
 
 async def example_transaction_management():
-    """Transaction management example"""    
+    """Transaction management example"""
+    
     logger.info("=== Transaction Management Example ===")
     
     manager = DatabaseConnectionManager()
@@ -665,7 +674,8 @@ async def example_transaction_management():
 
 
 async def example_content_protection_workflow():
-    """Content protection workflow example"""    
+    """Content protection workflow example"""
+    
     logger.info("=== Content Protection Workflow ===")
     
     manager = DatabaseConnectionManager()
@@ -735,7 +745,8 @@ async def example_content_protection_workflow():
         # 5. Store upload tracking in PostgreSQL
         pg_handler = await manager.get_connection("postgresql")
         if pg_handler:
-            await pg_handler.execute_query("""                INSERT INTO content_uploads (content_id, creator_id, status, upload_time)
+            await pg_handler.execute_query("""
+                INSERT INTO content_uploads (content_id, creator_id, status, upload_time)
                 VALUES (%s, %s, %s, %s)
             """, (str(content_id), content_data["creator_id"], "completed", datetime.utcnow()))
             logger.info("Recorded upload tracking")
@@ -780,7 +791,8 @@ async def example_content_protection_workflow():
 
 
 async def example_monetization_tracking():
-    """Monetization tracking example"""    
+    """Monetization tracking example"""
+    
     logger.info("=== Monetization Tracking Example ===")
     
     manager = DatabaseConnectionManager()
@@ -813,7 +825,8 @@ async def example_monetization_tracking():
         pg_handler = await manager.get_connection("postgresql")
         if pg_handler:
             for event in revenue_events:
-                await pg_handler.execute_query("""                    INSERT INTO revenue_events (content_id, creator_id, platform, revenue_type, 
+                await pg_handler.execute_query("""
+                    INSERT INTO revenue_events (content_id, creator_id, platform, revenue_type, 
                                               amount, currency, event_timestamp)
                     VALUES (%s, %s, %s, %s, %s, %s, %s)
                 """, (
@@ -899,7 +912,8 @@ async def example_monetization_tracking():
 
 
 async def main():
-    """Run all examples"""    
+    """Run all examples"""
+    
     logger.info("Starting IA Influencer Agent Database Connections Examples")
     
     try:

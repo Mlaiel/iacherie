@@ -94,29 +94,36 @@ __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 
 # Quick access factory functions
 def create_protection_service(config=None):
-    """    Factory function to create a content protection service
+    """
+    Factory function to create a content protection service
     
     Args:
         config: Optional configuration dictionary
         
     Returns:
         ContentProtectionService instance
-    """    return ContentProtectionService(config)
+    """
+    return ContentProtectionService(config)
 
 def create_audio_processor(config=None):
-    """Create an audio fingerprint processor"""    return AudioFingerprintProcessor(config)
+    """Create an audio fingerprint processor"""
+    return AudioFingerprintProcessor(config)
 
 def create_video_processor(config=None):
-    """Create a video fingerprint processor"""    return VideoFingerprintProcessor(config)
+    """Create a video fingerprint processor"""
+    return VideoFingerprintProcessor(config)
 
 def create_image_processor(config=None):
-    """Create an image fingerprint processor"""    return ImageFingerprintProcessor(config)
+    """Create an image fingerprint processor"""
+    return ImageFingerprintProcessor(config)
 
 def create_text_processor(config=None):
-    """Create a text fingerprint processor"""    return TextFingerprintProcessor(config)
+    """Create a text fingerprint processor"""
+    return TextFingerprintProcessor(config)
 
 def create_database_manager(config=None):
-    """Create a database manager"""    return DatabaseManager(config)
+    """Create a database manager"""
+    return DatabaseManager(config)
     ContentType
 )
 
@@ -217,7 +224,8 @@ from ..core.exceptions import FingerprintException, ProcessingException
 
 
 class FingerprintType(Enum):
-    """Fingerprint algorithm types."""    CHROMAPRINT = "chromaprint"
+    """Fingerprint algorithm types."""
+    CHROMAPRINT = "chromaprint"
     SPECTRAL_HASH = "spectral_hash"
     MFCC_HASH = "mfcc_hash"
     PERCEPTUAL_HASH = "perceptual_hash"
@@ -229,7 +237,8 @@ class FingerprintType(Enum):
 
 
 class ProcessingQuality(Enum):
-    """Content processing quality levels."""    FAST = "fast"
+    """Content processing quality levels."""
+    FAST = "fast"
     STANDARD = "standard"
     HIGH = "high"
     MAXIMUM = "maximum"
@@ -237,7 +246,8 @@ class ProcessingQuality(Enum):
 
 @dataclass
 class FingerprintResult:
-    """Fingerprint generation result."""    fingerprint_id: str
+    """Fingerprint generation result."""
+    fingerprint_id: str
     content_id: str
     fingerprint_type: FingerprintType
     hash_value: str
@@ -248,14 +258,16 @@ class FingerprintResult:
 
 
 class AudioFingerprintEngine:
-    """    Advanced audio fingerprinting engine supporting multiple algorithms.
+    """
+    Advanced audio fingerprinting engine supporting multiple algorithms.
     
     Provides high-precision audio fingerprinting using:
     - Chromaprint for acoustic fingerprinting
     - Spectral hashing for frequency domain analysis
     - MFCC (Mel-frequency cepstral coefficients) for timbral analysis
     - Custom neural fingerprinting models
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger("fingerprint.audio")
@@ -272,7 +284,8 @@ class AudioFingerprintEngine:
         self.logger.info("AudioFingerprintEngine initialized successfully")
     
     def _initialize_audio_engines(self):
-        """Initialize audio processing engines."""        try:
+        """Initialize audio processing engines."""
+        try:
             # Chromaprint fingerprinter
             self.chromaprint = Chromaprint()
             
@@ -297,11 +310,13 @@ class AudioFingerprintEngine:
         audio_path: Union[str, Path, BinaryIO],
         fingerprint_types: List[FingerprintType] = None
     ) -> Dict[str, FingerprintResult]:
-        """        Generate comprehensive audio fingerprints.
+        """
+        Generate comprehensive audio fingerprints.
         
         Creates multiple types of fingerprints for robust content identification
         and matching across different audio processing scenarios.
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         
         if fingerprint_types is None:
             fingerprint_types = [
@@ -351,7 +366,8 @@ class AudioFingerprintEngine:
         self,
         audio_path: Union[str, Path, BinaryIO]
     ) -> Tuple[np.ndarray, int]:
-        """Load and preprocess audio data."""        try:
+        """Load and preprocess audio data."""
+        try:
             # Load audio using librosa with appropriate settings
             audio_data, sr = librosa.load(
                 audio_path,
@@ -376,7 +392,8 @@ class AudioFingerprintEngine:
         sr: int,
         content_id: str
     ) -> FingerprintResult:
-        """Generate Chromaprint acoustic fingerprint."""        start_time = datetime.utcnow()
+        """Generate Chromaprint acoustic fingerprint."""
+        start_time = datetime.utcnow()
         
         try:
             # Convert to format expected by Chromaprint
@@ -415,7 +432,8 @@ class AudioFingerprintEngine:
         sr: int,
         content_id: str
     ) -> FingerprintResult:
-        """Generate spectral hash using frequency domain analysis."""        start_time = datetime.utcnow()
+        """Generate spectral hash using frequency domain analysis."""
+        start_time = datetime.utcnow()
         
         try:
             # Compute short-time Fourier transform
@@ -472,7 +490,8 @@ class AudioFingerprintEngine:
         sr: int,
         content_id: str
     ) -> FingerprintResult:
-        """Generate MFCC-based fingerprint for timbral analysis."""        start_time = datetime.utcnow()
+        """Generate MFCC-based fingerprint for timbral analysis."""
+        start_time = datetime.utcnow()
         
         try:
             # Compute MFCC features
@@ -526,7 +545,8 @@ class AudioFingerprintEngine:
             raise FingerprintException(f"MFCC hash error: {e}")
     
     def _generate_content_id(self, content_path: Union[str, Path, BinaryIO]) -> str:
-        """Generate unique content identifier."""        if hasattr(content_path, 'read'):
+        """Generate unique content identifier."""
+        if hasattr(content_path, 'read'):
             # For file-like objects, generate ID from current position
             return f"audio_{uuid.uuid4().hex[:12]}"
         else:
@@ -539,7 +559,8 @@ class AudioFingerprintEngine:
         audio_path: Union[str, Path],
         watermark_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply digital watermark to audio content."""        try:
+        """Apply digital watermark to audio content."""
+        try:
             # Load audio
             audio_data, sr = await self._load_audio_data(audio_path)
             
@@ -576,7 +597,8 @@ class AudioFingerprintEngine:
         signal_length: int,
         sr: int
     ) -> np.ndarray:
-        """Generate watermark signal from data."""        # Convert watermark data to binary
+        """Generate watermark signal from data."""
+        # Convert watermark data to binary
         data_str = json.dumps(watermark_data, sort_keys=True)
         data_bytes = data_str.encode('utf-8')
         data_bits = ''.join(format(byte, '08b') for byte in data_bytes)
@@ -589,14 +611,16 @@ class AudioFingerprintEngine:
 
 
 class ImageFingerprintEngine:
-    """    Advanced image fingerprinting engine with multiple algorithms.
+    """
+    Advanced image fingerprinting engine with multiple algorithms.
     
     Provides high-precision image fingerprinting using:
     - Perceptual hashing (pHash, dHash, aHash)
     - Feature-based hashing (ORB, SIFT)
     - Deep learning embeddings (CLIP)
     - Custom neural fingerprinting
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger("fingerprint.image")
@@ -611,7 +635,8 @@ class ImageFingerprintEngine:
         self.logger.info("ImageFingerprintEngine initialized successfully")
     
     def _initialize_image_engines(self):
-        """Initialize image processing engines."""        try:
+        """Initialize image processing engines."""
+        try:
             # OpenCV feature detectors
             self.orb = cv2.ORB_create(nfeatures=500)
             self.sift = cv2.SIFT_create(nfeatures=500)
@@ -631,7 +656,8 @@ class ImageFingerprintEngine:
         image_path: Union[str, Path, BinaryIO],
         fingerprint_types: List[FingerprintType] = None
     ) -> Dict[str, FingerprintResult]:
-        """Generate comprehensive image fingerprints."""        start_time = datetime.utcnow()
+        """Generate comprehensive image fingerprints."""
+        start_time = datetime.utcnow()
         
         if fingerprint_types is None:
             fingerprint_types = [
@@ -678,7 +704,8 @@ class ImageFingerprintEngine:
             raise FingerprintException(f"Image fingerprinting error: {e}")
     
     async def _load_image_data(self, image_path: Union[str, Path, BinaryIO]) -> np.ndarray:
-        """Load and preprocess image data."""        try:
+        """Load and preprocess image data."""
+        try:
             if hasattr(image_path, 'read'):
                 # Handle file-like objects
                 image_data = np.frombuffer(image_path.read(), np.uint8)
@@ -704,7 +731,8 @@ class ImageFingerprintEngine:
         image_data: np.ndarray,
         content_id: str
     ) -> FingerprintResult:
-        """Generate perceptual hash using multiple algorithms."""        start_time = datetime.utcnow()
+        """Generate perceptual hash using multiple algorithms."""
+        start_time = datetime.utcnow()
         
         try:
             # Convert to PIL Image
@@ -748,7 +776,8 @@ class ImageFingerprintEngine:
         image_data: np.ndarray,
         content_id: str
     ) -> FingerprintResult:
-        """Generate feature-based hash using ORB/SIFT descriptors."""        start_time = datetime.utcnow()
+        """Generate feature-based hash using ORB/SIFT descriptors."""
+        start_time = datetime.utcnow()
         
         try:
             # Convert to grayscale for feature detection
@@ -817,7 +846,8 @@ class ImageFingerprintEngine:
         image_data: np.ndarray,
         content_id: str
     ) -> FingerprintResult:
-        """Generate CLIP-based semantic embedding."""        start_time = datetime.utcnow()
+        """Generate CLIP-based semantic embedding."""
+        start_time = datetime.utcnow()
         
         try:
             # Convert to PIL Image
@@ -859,7 +889,8 @@ class ImageFingerprintEngine:
             raise FingerprintException(f"CLIP embedding error: {e}")
     
     def _generate_content_id(self, image_path: Union[str, Path, BinaryIO]) -> str:
-        """Generate unique content identifier."""        if hasattr(image_path, 'read'):
+        """Generate unique content identifier."""
+        if hasattr(image_path, 'read'):
             return f"image_{uuid.uuid4().hex[:12]}"
         else:
             path_str = str(image_path)
@@ -870,7 +901,8 @@ class ImageFingerprintEngine:
         image_path: Union[str, Path],
         watermark_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply digital watermark to image content."""        try:
+        """Apply digital watermark to image content."""
+        try:
             # Load image
             image_data = await self._load_image_data(image_path)
             
@@ -904,7 +936,8 @@ class ImageFingerprintEngine:
         watermark_data: Dict[str, Any],
         image_shape: Tuple[int, int]
     ) -> np.ndarray:
-        """Generate watermark pattern for image."""        data_str = json.dumps(watermark_data, sort_keys=True)
+        """Generate watermark pattern for image."""
+        data_str = json.dumps(watermark_data, sort_keys=True)
         np.random.seed(hash(data_str) % (2**32))
         
         # Generate pseudorandom pattern
@@ -916,7 +949,8 @@ class ImageFingerprintEngine:
         image: np.ndarray,
         watermark: np.ndarray
     ) -> np.ndarray:
-        """Embed watermark in frequency domain."""        # Convert to float
+        """Embed watermark in frequency domain."""
+        # Convert to float
         image_float = image.astype(np.float32) / 255.0
         
         # Apply DCT to each channel
@@ -939,14 +973,16 @@ class ImageFingerprintEngine:
 
 
 class TextFingerprintEngine:
-    """    Advanced text fingerprinting engine with semantic analysis.
+    """
+    Advanced text fingerprinting engine with semantic analysis.
     
     Provides high-precision text fingerprinting using:
     - Semantic embeddings (BERT, RoBERTa, Sentence Transformers)
     - Structural analysis (syntax trees, n-grams)
     - Stylometric features (writing style analysis)
     - Custom neural text fingerprinting
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger("fingerprint.text")
@@ -962,7 +998,8 @@ class TextFingerprintEngine:
         self.logger.info("TextFingerprintEngine initialized successfully")
     
     def _initialize_text_engines(self):
-        """Initialize text processing engines."""        try:
+        """Initialize text processing engines."""
+        try:
             # Sentence transformer for semantic embeddings
             self.sentence_model = SentenceTransformer('all-MiniLM-L6-v2')
             
@@ -981,7 +1018,8 @@ class TextFingerprintEngine:
         text_content: Union[str, Path, BinaryIO],
         fingerprint_types: List[FingerprintType] = None
     ) -> Dict[str, FingerprintResult]:
-        """Generate comprehensive text fingerprints."""        start_time = datetime.utcnow()
+        """Generate comprehensive text fingerprints."""
+        start_time = datetime.utcnow()
         
         if fingerprint_types is None:
             fingerprint_types = [
@@ -1028,7 +1066,8 @@ class TextFingerprintEngine:
             raise FingerprintException(f"Text fingerprinting error: {e}")
     
     async def _load_text_data(self, text_content: Union[str, Path, BinaryIO]) -> str:
-        """Load and preprocess text data."""        try:
+        """Load and preprocess text data."""
+        try:
             if isinstance(text_content, str):
                 if len(text_content) < 1000:  # Likely a file path
                     try:
@@ -1061,7 +1100,8 @@ class TextFingerprintEngine:
         text_data: str,
         content_id: str
     ) -> FingerprintResult:
-        """Generate semantic hash using sentence embeddings."""        start_time = datetime.utcnow()
+        """Generate semantic hash using sentence embeddings."""
+        start_time = datetime.utcnow()
         
         try:
             # Split text into chunks for processing
@@ -1115,7 +1155,8 @@ class TextFingerprintEngine:
         text_data: str,
         content_id: str
     ) -> FingerprintResult:
-        """Generate structural hash using text analysis."""        start_time = datetime.utcnow()
+        """Generate structural hash using text analysis."""
+        start_time = datetime.utcnow()
         
         try:
             # Basic structural features
@@ -1190,7 +1231,8 @@ class TextFingerprintEngine:
         text_data: str,
         content_id: str
     ) -> FingerprintResult:
-        """Generate BERT-based contextual embedding."""        start_time = datetime.utcnow()
+        """Generate BERT-based contextual embedding."""
+        start_time = datetime.utcnow()
         
         try:
             # Truncate text to model's maximum length
@@ -1246,7 +1288,8 @@ class TextFingerprintEngine:
             raise FingerprintException(f"BERT embedding error: {e}")
     
     def _split_text_into_chunks(self, text: str) -> List[str]:
-        """Split text into overlapping chunks for processing."""        words = text.split()
+        """Split text into overlapping chunks for processing."""
+        words = text.split()
         chunks = []
         
         for i in range(0, len(words), self.chunk_size - self.overlap_size):
@@ -1257,7 +1300,8 @@ class TextFingerprintEngine:
         return chunks if chunks else [text]  # Return original if no chunks
     
     def _generate_content_id(self, text_content: Union[str, Path, BinaryIO]) -> str:
-        """Generate unique content identifier."""        if isinstance(text_content, str) and len(text_content) > 1000:
+        """Generate unique content identifier."""
+        if isinstance(text_content, str) and len(text_content) > 1000:
             # For large strings (content), use hash of first 1000 chars
             return hashlib.md5(text_content[:1000].encode()).hexdigest()[:12]
         elif hasattr(text_content, 'read'):

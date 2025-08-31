@@ -7,7 +7,8 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Configuration Loading → Validation → Environment Resolution → Dynamic Updates → Monitoring
-"""import os
+"""
+import os
 import json
 import yaml
 import logging
@@ -21,7 +22,8 @@ import configparser
 
 
 class ConfigurationSource(Enum):
-    """Configuration sources"""    FILE = "file"
+    """Configuration sources"""
+    FILE = "file"
     ENVIRONMENT = "environment"
     DATABASE = "database"
     REMOTE = "remote"
@@ -29,14 +31,16 @@ class ConfigurationSource(Enum):
 
 
 class ConfigurationFormat(Enum):
-    """Configuration file formats"""    JSON = "json"
+    """Configuration file formats"""
+    JSON = "json"
     YAML = "yaml"
     INI = "ini"
     ENV = "env"
 
 
 class EnvironmentType(Enum):
-    """Environment types"""    DEVELOPMENT = "development"
+    """Environment types"""
+    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
@@ -44,7 +48,8 @@ class EnvironmentType(Enum):
 
 @dataclass
 class ConfigurationSchema:
-    """Configuration schema definition"""    key: str = ""
+    """Configuration schema definition"""
+    key: str = ""
     data_type: Type = str
     required: bool = False
     default_value: Any = None
@@ -58,7 +63,8 @@ class ConfigurationSchema:
 
 @dataclass
 class ConfigurationEntry:
-    """Configuration entry"""    key: str = ""
+    """Configuration entry"""
+    key: str = ""
     value: Any = None
     source: ConfigurationSource = ConfigurationSource.DEFAULT
     environment: str = ""
@@ -66,7 +72,8 @@ class ConfigurationEntry:
     schema: Optional[ConfigurationSchema] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""        return {
+        """Convert to dictionary"""
+        return {
             "key": self.key,
             "value": self.value,
             "source": self.source.value,
@@ -81,12 +88,14 @@ class ConfigurationEntry:
 
 
 class ConfigurationValidator:
-    """Advanced configuration validation"""    
+    """Advanced configuration validation"""
+    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.ConfigurationValidator")
     
     def validate_entry(self, entry: ConfigurationEntry) -> List[str]:
-        """Validate configuration entry"""        errors = []
+        """Validate configuration entry"""
+        errors = []
         
         if not entry.schema:
             return errors  # No schema to validate against
@@ -148,7 +157,8 @@ class ConfigurationValidator:
         return errors
     
     def _parse_bool(self, value: Any) -> bool:
-        """Parse boolean value"""        if isinstance(value, bool):
+        """Parse boolean value"""
+        if isinstance(value, bool):
             return value
         if isinstance(value, str):
             return value.lower() in ('true', '1', 'yes', 'on', 'enabled')
@@ -157,7 +167,8 @@ class ConfigurationValidator:
         return False
     
     def validate_configuration(self, config: Dict[str, ConfigurationEntry]) -> Dict[str, List[str]]:
-        """Validate entire configuration"""        validation_errors = {}
+        """Validate entire configuration"""
+        validation_errors = {}
         
         for key, entry in config.items():
             errors = self.validate_entry(entry)
@@ -168,13 +179,15 @@ class ConfigurationValidator:
 
 
 class ConfigurationLoader:
-    """Advanced configuration loading system"""    
+    """Advanced configuration loading system"""
+    
     def __init__(self, config_dir: str = "config"):
         self.config_dir = Path(config_dir)
         self.logger = logging.getLogger(f"{__name__}.ConfigurationLoader")
     
     async def load_from_file(self, file_path: str, config_format: ConfigurationFormat) -> Dict[str, Any]:
-        """Load configuration from file"""        file_path = Path(file_path)
+        """Load configuration from file"""
+        file_path = Path(file_path)
         
         if not file_path.exists():
             self.logger.warning(f"Configuration file not found: {file_path}")
@@ -201,7 +214,8 @@ class ConfigurationLoader:
             return {}
     
     def _parse_env_file(self, content: str) -> Dict[str, str]:
-        """Parse .env file content"""        config = {}
+        """Parse .env file content"""
+        config = {}
         for line in content.split('\n'):
             line = line.strip()
             if line and not line.startswith('#') and '=' in line:
@@ -210,7 +224,8 @@ class ConfigurationLoader:
         return config
     
     async def load_from_environment(self, prefix: str = "") -> Dict[str, str]:
-        """Load configuration from environment variables"""        config = {}
+        """Load configuration from environment variables"""
+        config = {}
         
         for key, value in os.environ.items():
             if not prefix or key.startswith(prefix):
@@ -221,20 +236,23 @@ class ConfigurationLoader:
         return config
     
     async def load_from_database(self, connection_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Load configuration from database"""        # Placeholder for database configuration loading
+        """Load configuration from database"""
+        # Placeholder for database configuration loading
         # In real implementation, connect to database and fetch configuration
         self.logger.info("Loading configuration from database (placeholder)")
         return {}
     
     async def load_from_remote(self, remote_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Load configuration from remote source"""        # Placeholder for remote configuration loading
+        """Load configuration from remote source"""
+        # Placeholder for remote configuration loading
         # In real implementation, fetch from remote API/service
         self.logger.info("Loading configuration from remote source (placeholder)")
         return {}
 
 
 class PipelineConfiguration:
-    """    Ultra-advanced configuration management system for pipeline executions
+    """
+    Ultra-advanced configuration management system for pipeline executions
     with dynamic configuration, environment-specific settings, and validation.
     
     Features:
@@ -244,7 +262,8 @@ class PipelineConfiguration:
     - Dynamic configuration updates without restart
     - Configuration versioning and rollback
     - Secure configuration handling for sensitive data
-    """    
+    """
+    
     def __init__(self, environment: str = "development", config_dir: str = "config"):
         self.environment = environment
         self.config_dir = Path(config_dir)
@@ -272,7 +291,8 @@ class PipelineConfiguration:
         self.logger.info(f"Pipeline Configuration initialized for environment: {environment}")
     
     def _initialize_default_schema(self):
-        """Initialize default configuration schema"""        
+        """Initialize default configuration schema"""
+        
         # System configuration
         self.register_schema(ConfigurationSchema(
             key="system.max_workers",
@@ -481,14 +501,16 @@ class PipelineConfiguration:
         ))
     
     def register_schema(self, schema: ConfigurationSchema):
-        """Register configuration schema"""        self.schema_registry[schema.key] = schema
+        """Register configuration schema"""
+        self.schema_registry[schema.key] = schema
         
         # Set default value if provided
         if schema.default_value is not None:
             self.set_value(schema.key, schema.default_value, ConfigurationSource.DEFAULT)
     
     async def load_configuration(self):
-        """Load configuration from all sources"""        
+        """Load configuration from all sources"""
+        
         # Define configuration sources in order of precedence (lowest to highest)
         sources = [
             {
@@ -524,7 +546,8 @@ class PipelineConfiguration:
         self.logger.info(f"Configuration loaded successfully with {len(self.configuration)} entries")
     
     async def _load_from_source(self, source: Dict[str, Any]):
-        """Load configuration from a specific source"""        try:
+        """Load configuration from a specific source"""
+        try:
             if source["type"] == "file":
                 data = await self.loader.load_from_file(source["path"], source["format"])
                 source_type = ConfigurationSource.FILE
@@ -558,7 +581,8 @@ class PipelineConfiguration:
             self.logger.error(f"Failed to load configuration from {source}: {e}")
     
     def _flatten_dict(self, data: Dict[str, Any], prefix: str = "") -> Dict[str, Any]:
-        """Flatten nested dictionary"""        flattened = {}
+        """Flatten nested dictionary"""
+        flattened = {}
         
         for key, value in data.items():
             full_key = f"{prefix}.{key}" if prefix else key
@@ -571,7 +595,8 @@ class PipelineConfiguration:
         return flattened
     
     def set_value(self, key: str, value: Any, source: ConfigurationSource = ConfigurationSource.DEFAULT):
-        """Set configuration value"""        schema = self.schema_registry.get(key)
+        """Set configuration value"""
+        schema = self.schema_registry.get(key)
         
         entry = ConfigurationEntry(
             key=key,
@@ -596,7 +621,8 @@ class PipelineConfiguration:
             self._notify_change_callbacks(key, old_value.value if old_value else None, value)
     
     def get_value(self, key: str, default: Any = None) -> Any:
-        """Get configuration value"""        entry = self.configuration.get(key)
+        """Get configuration value"""
+        entry = self.configuration.get(key)
         if entry:
             return entry.value
         
@@ -608,7 +634,8 @@ class PipelineConfiguration:
         return default
     
     def get_bool(self, key: str, default: bool = False) -> bool:
-        """Get boolean configuration value"""        value = self.get_value(key, default)
+        """Get boolean configuration value"""
+        value = self.get_value(key, default)
         if isinstance(value, bool):
             return value
         if isinstance(value, str):
@@ -616,21 +643,24 @@ class PipelineConfiguration:
         return bool(value)
     
     def get_int(self, key: str, default: int = 0) -> int:
-        """Get integer configuration value"""        value = self.get_value(key, default)
+        """Get integer configuration value"""
+        value = self.get_value(key, default)
         try:
             return int(value)
         except (ValueError, TypeError):
             return default
     
     def get_float(self, key: str, default: float = 0.0) -> float:
-        """Get float configuration value"""        value = self.get_value(key, default)
+        """Get float configuration value"""
+        value = self.get_value(key, default)
         try:
             return float(value)
         except (ValueError, TypeError):
             return default
     
     def get_list(self, key: str, default: List[Any] = None) -> List[Any]:
-        """Get list configuration value"""        value = self.get_value(key, default or [])
+        """Get list configuration value"""
+        value = self.get_value(key, default or [])
         if isinstance(value, list):
             return value
         if isinstance(value, str):
@@ -642,7 +672,8 @@ class PipelineConfiguration:
         return default or []
     
     def get_dict(self, key: str, default: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Get dictionary configuration value"""        value = self.get_value(key, default or {})
+        """Get dictionary configuration value"""
+        value = self.get_value(key, default or {})
         if isinstance(value, dict):
             return value
         if isinstance(value, str):
@@ -653,7 +684,8 @@ class PipelineConfiguration:
         return default or {}
     
     def get_section(self, prefix: str) -> Dict[str, Any]:
-        """Get all configuration values with a specific prefix"""        section = {}
+        """Get all configuration values with a specific prefix"""
+        section = {}
         
         for key, entry in self.configuration.items():
             if key.startswith(prefix):
@@ -664,13 +696,16 @@ class PipelineConfiguration:
         return section
     
     def has_value(self, key: str) -> bool:
-        """Check if configuration value exists"""        return key in self.configuration
+        """Check if configuration value exists"""
+        return key in self.configuration
     
     def get_all_values(self) -> Dict[str, Any]:
-        """Get all configuration values"""        return {key: entry.value for key, entry in self.configuration.items()}
+        """Get all configuration values"""
+        return {key: entry.value for key, entry in self.configuration.items()}
     
     def get_configuration_info(self) -> Dict[str, Any]:
-        """Get configuration information"""        return {
+        """Get configuration information"""
+        return {
             "environment": self.environment,
             "total_entries": len(self.configuration),
             "schema_entries": len(self.schema_registry),
@@ -685,17 +720,20 @@ class PipelineConfiguration:
         }
     
     def add_change_callback(self, callback: Callable[[str, Any, Any], None]):
-        """Add configuration change callback"""        self.change_callbacks.append(callback)
+        """Add configuration change callback"""
+        self.change_callbacks.append(callback)
     
     def _notify_change_callbacks(self, key: str, old_value: Any, new_value: Any):
-        """Notify configuration change callbacks"""        for callback in self.change_callbacks:
+        """Notify configuration change callbacks"""
+        for callback in self.change_callbacks:
             try:
                 callback(key, old_value, new_value)
             except Exception as e:
                 self.logger.error(f"Configuration change callback error: {e}")
     
     def start_monitoring(self):
-        """Start configuration monitoring"""        if self.monitoring_active:
+        """Start configuration monitoring"""
+        if self.monitoring_active:
             return
         
         self.monitoring_active = True
@@ -703,7 +741,8 @@ class PipelineConfiguration:
         self.logger.info("Configuration monitoring started")
     
     async def _monitoring_loop(self):
-        """Configuration monitoring loop"""        while self.monitoring_active:
+        """Configuration monitoring loop"""
+        while self.monitoring_active:
             try:
                 # Monitor configuration files for changes
                 # In real implementation, use file system watchers
@@ -714,13 +753,15 @@ class PipelineConfiguration:
                 await asyncio.sleep(60)
     
     def stop_monitoring(self):
-        """Stop configuration monitoring"""        self.monitoring_active = False
+        """Stop configuration monitoring"""
+        self.monitoring_active = False
         if self.monitoring_task:
             self.monitoring_task.cancel()
         self.logger.info("Configuration monitoring stopped")
     
     async def reload_configuration(self):
-        """Reload configuration from sources"""        self.logger.info("Reloading configuration")
+        """Reload configuration from sources"""
+        self.logger.info("Reloading configuration")
         
         # Store current configuration for comparison
         old_config = {key: entry.value for key, entry in self.configuration.items()}
@@ -747,7 +788,8 @@ class PipelineConfiguration:
         self.logger.info("Configuration reloaded successfully")
     
     def export_configuration(self, include_sensitive: bool = False) -> Dict[str, Any]:
-        """Export configuration to dictionary"""        exported = {}
+        """Export configuration to dictionary"""
+        exported = {}
         
         for key, entry in self.configuration.items():
             # Skip sensitive configuration if not included
@@ -763,7 +805,8 @@ class PipelineConfiguration:
         }
     
     async def shutdown(self):
-        """Shutdown configuration system"""        self.logger.info("Shutting down configuration system")
+        """Shutdown configuration system"""
+        self.logger.info("Shutting down configuration system")
         self.stop_monitoring()
         self.change_callbacks.clear()
         self.logger.info("Configuration system shutdown complete")

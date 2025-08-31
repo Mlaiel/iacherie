@@ -11,7 +11,8 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from datetime import datetime, timezone, timedelta
@@ -40,7 +41,8 @@ import torch
 logger = logging.getLogger(__name__)
 
 class EscalationTrigger(Enum):
-    """Escalation trigger types"""    USER_REQUEST = "user_request"
+    """Escalation trigger types"""
+    USER_REQUEST = "user_request"
     AI_CONFIDENCE_LOW = "ai_confidence_low"
     COMPLEX_ISSUE = "complex_issue"
     TECHNICAL_LIMITATION = "technical_limitation"
@@ -53,7 +55,8 @@ class EscalationTrigger(Enum):
     EMERGENCY = "emergency"
 
 class EscalationPriority(Enum):
-    """Escalation priority levels"""    LOW = 1
+    """Escalation priority levels"""
+    LOW = 1
     NORMAL = 2
     HIGH = 3
     URGENT = 4
@@ -61,7 +64,8 @@ class EscalationPriority(Enum):
     EMERGENCY = 6
 
 class AgentStatus(Enum):
-    """Human agent status"""    AVAILABLE = "available"
+    """Human agent status"""
+    AVAILABLE = "available"
     BUSY = "busy"
     AWAY = "away"
     BREAK = "break"
@@ -69,7 +73,8 @@ class AgentStatus(Enum):
     IN_TRAINING = "in_training"
 
 class AgentSpecialty(Enum):
-    """Human agent specialties"""    TECHNICAL_SUPPORT = "technical_support"
+    """Human agent specialties"""
+    TECHNICAL_SUPPORT = "technical_support"
     BILLING_SPECIALIST = "billing_specialist"
     CONTENT_PROTECTION = "content_protection"
     COLLABORATION_EXPERT = "collaboration_expert"
@@ -82,7 +87,8 @@ class AgentSpecialty(Enum):
 
 @dataclass
 class HumanAgent:
-    """Human agent profile"""    agent_id: str
+    """Human agent profile"""
+    agent_id: str
     name: str
     email: str
     specialties: List[AgentSpecialty]
@@ -118,7 +124,8 @@ class HumanAgent:
 
 @dataclass
 class EscalationRequest:
-    """Escalation request structure"""    escalation_id: str
+    """Escalation request structure"""
+    escalation_id: str
     conversation_id: str
     user_id: str
     
@@ -154,7 +161,8 @@ class EscalationRequest:
     resolution_rating: Optional[float] = None
 
 class EscalationQueue:
-    """Priority-based escalation queue"""    
+    """Priority-based escalation queue"""
+    
     def __init__(self):
         self._queue: List[Tuple[int, float, EscalationRequest]] = []
         self._entry_finder = {}
@@ -162,7 +170,8 @@ class EscalationQueue:
         self._lock = Lock()
     
     async def add_request(self, request: EscalationRequest):
-        """Add escalation request to priority queue"""        async with self._lock:
+        """Add escalation request to priority queue"""
+        async with self._lock:
             # Calculate priority score (lower is higher priority)
             priority_score = await self._calculate_priority_score(request)
             
@@ -172,7 +181,8 @@ class EscalationQueue:
             self._counter += 1
     
     async def get_next_request(self) -> Optional[EscalationRequest]:
-        """Get next highest priority request"""        async with self._lock:
+        """Get next highest priority request"""
+        async with self._lock:
             while self._queue:
                 priority_score, counter, request = heapq.heappop(self._queue)
                 
@@ -185,7 +195,8 @@ class EscalationQueue:
         return None
     
     async def remove_request(self, escalation_id: str) -> bool:
-        """Remove request from queue"""        async with self._lock:
+        """Remove request from queue"""
+        async with self._lock:
             if escalation_id in self._entry_finder:
                 entry = self._entry_finder.pop(escalation_id)
                 entry[2] = None  # Mark as removed
@@ -193,7 +204,8 @@ class EscalationQueue:
         return False
     
     async def update_priority(self, escalation_id: str, new_priority: EscalationPriority):
-        """Update request priority"""        async with self._lock:
+        """Update request priority"""
+        async with self._lock:
             if escalation_id in self._entry_finder:
                 # Remove old entry
                 old_entry = self._entry_finder.pop(escalation_id)
@@ -208,7 +220,8 @@ class EscalationQueue:
         return False
     
     async def _calculate_priority_score(self, request: EscalationRequest) -> float:
-        """Calculate priority score for queue ordering"""        # Base priority from enum (inverted: lower value = higher priority)
+        """Calculate priority score for queue ordering"""
+        # Base priority from enum (inverted: lower value = higher priority)
         base_score = 7 - request.priority.value
         
         # Urgency multiplier
@@ -234,7 +247,8 @@ class EscalationQueue:
         return max(0.1, final_score)  # Ensure positive score
     
     async def get_queue_stats(self) -> Dict[str, Any]:
-        """Get queue statistics"""        async with self._lock:
+        """Get queue statistics"""
+        async with self._lock:
             active_requests = [req for _, _, req in self._queue if req is not None]
             
             return {
@@ -254,7 +268,8 @@ class EscalationQueue:
             }
 
 class EscalationManager:
-    """Ultra-advanced escalation management system"""    
+    """Ultra-advanced escalation management system"""
+    
     def __init__(self, redis_client: aioredis.Redis):
         self.redis_client = redis_client
         self.escalation_queue = EscalationQueue()
@@ -288,7 +303,8 @@ class EscalationManager:
         asyncio.create_task(self._start_notification_processor())
     
     async def _initialize_default_agents(self):
-        """Initialize default human agents"""        default_agents = [
+        """Initialize default human agents"""
+        default_agents = [
             HumanAgent(
                 agent_id="agent_tech_001",
                 name="Sarah Chen",
@@ -391,7 +407,8 @@ class EscalationManager:
         priority: Optional[EscalationPriority] = None,
         requested_specialty: Optional[AgentSpecialty] = None
     ) -> EscalationRequest:
-        """Create new escalation request"""        try:
+        """Create new escalation request"""
+        try:
             escalation_id = str(uuid.uuid4())
             
             # Analyze conversation context for priority and complexity
@@ -442,7 +459,8 @@ class EscalationManager:
             raise
     
     async def assign_to_agent(self, escalation_id: str) -> Optional[Tuple[str, HumanAgent]]:
-        """Assign escalation to best available agent"""        try:
+        """Assign escalation to best available agent"""
+        try:
             # Get escalation from cache
             escalation = await self._get_escalation(escalation_id)
             if not escalation:
@@ -485,7 +503,8 @@ class EscalationManager:
         resolution_notes: str,
         customer_rating: Optional[float] = None
     ) -> bool:
-        """Mark escalation as resolved"""        try:
+        """Mark escalation as resolved"""
+        try:
             escalation = await self._get_escalation(escalation_id)
             if not escalation:
                 return False
@@ -536,7 +555,8 @@ class EscalationManager:
             return False
     
     async def update_agent_status(self, agent_id: str, status: AgentStatus) -> bool:
-        """Update agent status"""        if agent_id not in self.human_agents:
+        """Update agent status"""
+        if agent_id not in self.human_agents:
             return False
         
         agent = self.human_agents[agent_id]
@@ -564,7 +584,8 @@ class EscalationManager:
         context: Dict[str, Any],
         reason: str
     ) -> Dict[str, Any]:
-        """Analyze escalation context using AI"""        try:
+        """Analyze escalation context using AI"""
+        try:
             analysis = {}
             
             # Sentiment analysis
@@ -625,7 +646,8 @@ class EscalationManager:
         ai_analysis: Dict[str, Any],
         context: Optional[Dict[str, Any]]
     ) -> EscalationPriority:
-        """Determine escalation priority based on multiple factors"""        # Base priority from trigger
+        """Determine escalation priority based on multiple factors"""
+        # Base priority from trigger
         trigger_priorities = {
             EscalationTrigger.EMERGENCY: EscalationPriority.EMERGENCY,
             EscalationTrigger.SECURITY_ISSUE: EscalationPriority.CRITICAL,
@@ -662,7 +684,8 @@ class EscalationManager:
         return EscalationPriority(priority_value)
     
     async def _find_best_agent(self, escalation: EscalationRequest) -> Optional[HumanAgent]:
-        """Find best available agent for escalation"""        available_agents = []
+        """Find best available agent for escalation"""
+        available_agents = []
         
         for agent in self.human_agents.values():
             # Check availability
@@ -732,7 +755,8 @@ class EscalationManager:
         return scored_agents[0][1]
     
     async def _is_agent_in_working_hours(self, agent: HumanAgent) -> bool:
-        """Check if agent is in working hours"""        # Simplified check - in real implementation would use proper timezone handling
+        """Check if agent is in working hours"""
+        # Simplified check - in real implementation would use proper timezone handling
         current_hour = datetime.now().hour
         start_hour = int(agent.work_hours_start.split(':')[0])
         end_hour = int(agent.work_hours_end.split(':')[0])
@@ -740,19 +764,22 @@ class EscalationManager:
         return start_hour <= current_hour <= end_hour
     
     async def _get_customer_tier(self, user_id: str) -> str:
-        """Get customer subscription tier"""        # In real implementation, would query user database
+        """Get customer subscription tier"""
+        # In real implementation, would query user database
         # For now, return default
         return "pro"
     
     async def _count_previous_escalations(self, user_id: str) -> int:
-        """Count previous escalations for user"""        try:
+        """Count previous escalations for user"""
+        try:
             count = await self.redis_client.get(f"user_escalations:{user_id}")
             return int(count) if count else 0
         except:
             return 0
     
     async def _estimate_wait_time(self, escalation: EscalationRequest) -> int:
-        """Estimate wait time in minutes"""        queue_stats = await self.escalation_queue.get_queue_stats()
+        """Estimate wait time in minutes"""
+        queue_stats = await self.escalation_queue.get_queue_stats()
         
         # Base estimate on queue size and priority
         queue_size = queue_stats["total_requests"]
@@ -782,7 +809,8 @@ class EscalationManager:
         return max(1, estimated_wait)  # Minimum 1 minute
     
     async def _reassign_escalation(self, escalation_id: str) -> bool:
-        """Reassign escalation to different agent"""        try:
+        """Reassign escalation to different agent"""
+        try:
             escalation = await self._get_escalation(escalation_id)
             if not escalation:
                 return False
@@ -811,7 +839,8 @@ class EscalationManager:
             return False
     
     async def _process_pending_assignments(self):
-        """Process pending escalations and assign to available agents"""        try:
+        """Process pending escalations and assign to available agents"""
+        try:
             while True:
                 escalation = await self.escalation_queue.get_next_request()
                 if not escalation:
@@ -827,7 +856,8 @@ class EscalationManager:
             logger.error(f"Error processing pending assignments: {str(e)}")
     
     async def _start_notification_processor(self):
-        """Start notification processing background task"""        while True:
+        """Start notification processing background task"""
+        while True:
             try:
                 # Process notifications from queue
                 notification = await self.notification_queue.get()
@@ -837,7 +867,8 @@ class EscalationManager:
                 await asyncio.sleep(1)
     
     async def _notify_escalation_created(self, escalation: EscalationRequest):
-        """Notify stakeholders of new escalation"""        notification = {
+        """Notify stakeholders of new escalation"""
+        notification = {
             "type": "escalation_created",
             "escalation_id": escalation.escalation_id,
             "priority": escalation.priority.value,
@@ -849,7 +880,8 @@ class EscalationManager:
         await self.notification_queue.put(notification)
     
     async def _notify_agent_assignment(self, agent: HumanAgent, escalation: EscalationRequest):
-        """Notify agent of new assignment"""        notification = {
+        """Notify agent of new assignment"""
+        notification = {
             "type": "agent_assignment",
             "agent_id": agent.agent_id,
             "agent_email": agent.email,
@@ -862,7 +894,8 @@ class EscalationManager:
         await self.notification_queue.put(notification)
     
     async def _notify_escalation_resolved(self, escalation: EscalationRequest):
-        """Notify stakeholders of escalation resolution"""        notification = {
+        """Notify stakeholders of escalation resolution"""
+        notification = {
             "type": "escalation_resolved",
             "escalation_id": escalation.escalation_id,
             "resolution_time": escalation.resolution_time,
@@ -873,14 +906,16 @@ class EscalationManager:
         await self.notification_queue.put(notification)
     
     async def _send_notification(self, notification: Dict[str, Any]):
-        """Send notification via appropriate channel"""        try:
+        """Send notification via appropriate channel"""
+        try:
             notification_type = notification["type"]
             
             if notification_type == "agent_assignment":
                 # Send email/internal message to agent
                 agent_email = notification["agent_email"]
                 subject = f"New Escalation Assignment - Priority {notification['priority']}"
-                body = f"""                New escalation assigned to you:
+                body = f"""
+                New escalation assigned to you:
                 
                 Escalation ID: {notification['escalation_id']}
                 Priority: {notification['priority']}
@@ -888,7 +923,8 @@ class EscalationManager:
                 Reason: {notification['reason']}
                 
                 Please log into the support dashboard to handle this escalation.
-                """                
+                """
+                
                 await self._send_email(agent_email, subject, body)
             
             # Log all notifications
@@ -898,14 +934,16 @@ class EscalationManager:
             logger.error(f"Failed to send notification: {str(e)}")
     
     async def _send_email(self, to_email: str, subject: str, body: str):
-        """Send email notification"""        try:
+        """Send email notification"""
+        try:
             # In real implementation, would use proper email service
             logger.info(f"Email notification sent to {to_email}: {subject}")
         except Exception as e:
             logger.error(f"Failed to send email to {to_email}: {str(e)}")
     
     async def _cache_escalation(self, escalation: EscalationRequest):
-        """Cache escalation in Redis"""        try:
+        """Cache escalation in Redis"""
+        try:
             escalation_data = {
                 "escalation_id": escalation.escalation_id,
                 "conversation_id": escalation.conversation_id,
@@ -934,7 +972,8 @@ class EscalationManager:
             logger.error(f"Failed to cache escalation {escalation.escalation_id}: {str(e)}")
     
     async def _cache_agent(self, agent: HumanAgent):
-        """Cache agent in Redis"""        try:
+        """Cache agent in Redis"""
+        try:
             agent_data = {
                 "agent_id": agent.agent_id,
                 "name": agent.name,
@@ -960,7 +999,8 @@ class EscalationManager:
             logger.error(f"Failed to cache agent {agent.agent_id}: {str(e)}")
     
     async def _get_escalation(self, escalation_id: str) -> Optional[EscalationRequest]:
-        """Get escalation from cache"""        try:
+        """Get escalation from cache"""
+        try:
             data = await self.redis_client.get(f"escalation:{escalation_id}")
             if not data:
                 return None
@@ -992,7 +1032,8 @@ class EscalationManager:
             return None
     
     async def get_escalation_analytics(self) -> Dict[str, Any]:
-        """Get escalation analytics and metrics"""        queue_stats = await self.escalation_queue.get_queue_stats()
+        """Get escalation analytics and metrics"""
+        queue_stats = await self.escalation_queue.get_queue_stats()
         
         # Agent performance metrics
         agent_metrics = {}

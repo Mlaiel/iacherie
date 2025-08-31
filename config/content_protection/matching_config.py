@@ -13,14 +13,16 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""from typing import Dict, Any, List, Optional, Set, Tuple, Union
+"""
+from typing import Dict, Any, List, Optional, Set, Tuple, Union
 from dataclasses import dataclass, field
 from enum import Enum
 import os
 
 
 class SimilarityMetric(str, Enum):
-    """Similarity measurement metrics."""    COSINE = "cosine"
+    """Similarity measurement metrics."""
+    COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     MANHATTAN = "manhattan"
     JACCARD = "jaccard"
@@ -31,7 +33,8 @@ class SimilarityMetric(str, Enum):
 
 
 class MatchingAlgorithm(str, Enum):
-    """Matching algorithms for different content types."""    # Vector-based algorithms
+    """Matching algorithms for different content types."""
+    # Vector-based algorithms
     FAISS_IVF = "faiss_ivf"
     FAISS_HNSW = "faiss_hnsw"
     ANNOY = "annoy"
@@ -54,7 +57,8 @@ class MatchingAlgorithm(str, Enum):
 
 
 class ContentSimilarityType(str, Enum):
-    """Types of content similarity."""    EXACT_MATCH = "exact_match"          # 100% identical
+    """Types of content similarity."""
+    EXACT_MATCH = "exact_match"          # 100% identical
     NEAR_DUPLICATE = "near_duplicate"    # >95% similar
     VARIANT = "variant"                  # 80-95% similar
     DERIVATIVE = "derivative"            # 60-80% similar
@@ -64,7 +68,8 @@ class ContentSimilarityType(str, Enum):
 
 @dataclass
 class VectorMatchingConfig:
-    """Vector-based similarity matching configuration."""    algorithm: MatchingAlgorithm = MatchingAlgorithm.FAISS_IVF
+    """Vector-based similarity matching configuration."""
+    algorithm: MatchingAlgorithm = MatchingAlgorithm.FAISS_IVF
     similarity_metric: SimilarityMetric = SimilarityMetric.COSINE
     vector_dimension: int = 512
     index_type: str = "IVF_FLAT"
@@ -80,7 +85,8 @@ class VectorMatchingConfig:
 
 @dataclass
 class HashMatchingConfig:
-    """Hash-based similarity matching configuration."""    algorithm: MatchingAlgorithm = MatchingAlgorithm.LOCALITY_SENSITIVE_HASHING
+    """Hash-based similarity matching configuration."""
+    algorithm: MatchingAlgorithm = MatchingAlgorithm.LOCALITY_SENSITIVE_HASHING
     hash_size: int = 64
     num_hash_tables: int = 10
     hash_family: str = "random_projection"  # random_projection, cosine
@@ -93,7 +99,8 @@ class HashMatchingConfig:
 
 @dataclass
 class AudioMatchingConfig:
-    """Audio similarity matching configuration."""    primary_algorithm: MatchingAlgorithm = MatchingAlgorithm.FAISS_IVF
+    """Audio similarity matching configuration."""
+    primary_algorithm: MatchingAlgorithm = MatchingAlgorithm.FAISS_IVF
     fallback_algorithm: MatchingAlgorithm = MatchingAlgorithm.CROSS_CORRELATION
     exact_match_threshold: float = 0.98
     near_duplicate_threshold: float = 0.95
@@ -110,7 +117,8 @@ class AudioMatchingConfig:
 
 @dataclass
 class VideoMatchingConfig:
-    """Video similarity matching configuration."""    primary_algorithm: MatchingAlgorithm = MatchingAlgorithm.FAISS_HNSW
+    """Video similarity matching configuration."""
+    primary_algorithm: MatchingAlgorithm = MatchingAlgorithm.FAISS_HNSW
     fallback_algorithm: MatchingAlgorithm = MatchingAlgorithm.CROSS_CORRELATION
     exact_match_threshold: float = 0.95
     near_duplicate_threshold: float = 0.90
@@ -127,7 +135,8 @@ class VideoMatchingConfig:
 
 @dataclass
 class ImageMatchingConfig:
-    """Image similarity matching configuration."""    primary_algorithm: MatchingAlgorithm = MatchingAlgorithm.FAISS_IVF
+    """Image similarity matching configuration."""
+    primary_algorithm: MatchingAlgorithm = MatchingAlgorithm.FAISS_IVF
     fallback_algorithm: MatchingAlgorithm = MatchingAlgorithm.LOCALITY_SENSITIVE_HASHING
     exact_match_threshold: float = 0.98
     near_duplicate_threshold: float = 0.92
@@ -145,7 +154,8 @@ class ImageMatchingConfig:
 
 @dataclass
 class TextMatchingConfig:
-    """Text similarity matching configuration."""    primary_algorithm: MatchingAlgorithm = MatchingAlgorithm.SIAMESE_NETWORK
+    """Text similarity matching configuration."""
+    primary_algorithm: MatchingAlgorithm = MatchingAlgorithm.SIAMESE_NETWORK
     fallback_algorithm: MatchingAlgorithm = MatchingAlgorithm.FUZZY_MATCHING
     exact_match_threshold: float = 0.95
     near_duplicate_threshold: float = 0.88
@@ -165,7 +175,8 @@ class TextMatchingConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance optimization configuration."""    max_concurrent_comparisons: int = 100
+    """Performance optimization configuration."""
+    max_concurrent_comparisons: int = 100
     batch_size: int = 1000
     enable_parallel_processing: bool = True
     num_workers: int = 8
@@ -180,7 +191,8 @@ class PerformanceConfig:
 
 @dataclass
 class QualityConfig:
-    """Quality assurance configuration."""    enable_confidence_scoring: bool = True
+    """Quality assurance configuration."""
+    enable_confidence_scoring: bool = True
     min_confidence_threshold: float = 0.7
     enable_multi_algorithm_validation: bool = True
     consensus_threshold: float = 0.8
@@ -193,7 +205,8 @@ class QualityConfig:
 
 @dataclass
 class AlertConfig:
-    """Alert and notification configuration."""    enable_real_time_alerts: bool = True
+    """Alert and notification configuration."""
+    enable_real_time_alerts: bool = True
     alert_threshold_exact_match: float = 0.98
     alert_threshold_near_duplicate: float = 0.95
     enable_email_notifications: bool = True
@@ -205,9 +218,11 @@ class AlertConfig:
 
 
 class SimilarityMatchingConfig:
-    """    Professional similarity matching configuration manager.
+    """
+    Professional similarity matching configuration manager.
     Provides industrial-grade configuration for content similarity analysis.
-    """    
+    """
+    
     def __init__(self):
         # General matching settings
         self.enable_fuzzy_matching: bool = True
@@ -260,7 +275,8 @@ class SimilarityMatchingConfig:
         self._load_from_environment()
     
     def _load_from_environment(self) -> None:
-        """Load configuration from environment variables."""        # General settings
+        """Load configuration from environment variables."""
+        # General settings
         self.matching_precision_mode = os.getenv("MATCHING_PRECISION_MODE", "balanced")
         self.enable_fuzzy_matching = os.getenv("MATCHING_FUZZY_ENABLED", "true").lower() == "true"
         
@@ -288,7 +304,8 @@ class SimilarityMatchingConfig:
         self.similarity_thresholds["text"]["exact_match"] = text_exact
     
     def get_content_config(self, content_type: str) -> Dict[str, Any]:
-        """Get matching configuration for specific content type."""        content_configs = {
+        """Get matching configuration for specific content type."""
+        content_configs = {
             "audio": self.audio,
             "video": self.video,
             "image": self.image,
@@ -309,7 +326,8 @@ class SimilarityMatchingConfig:
         }
     
     def get_algorithm_config(self, algorithm: MatchingAlgorithm) -> Dict[str, Any]:
-        """Get configuration for specific matching algorithm."""        algorithm_configs = {
+        """Get configuration for specific matching algorithm."""
+        algorithm_configs = {
             # Vector algorithms
             MatchingAlgorithm.FAISS_IVF: {
                 "index_type": self.vector_matching.index_type,
@@ -363,7 +381,8 @@ class SimilarityMatchingConfig:
         return algorithm_configs.get(algorithm, {})
     
     def get_similarity_type(self, similarity_score: float, content_type: str) -> ContentSimilarityType:
-        """Determine similarity type based on score and content type."""        thresholds = self.similarity_thresholds.get(content_type, {})
+        """Determine similarity type based on score and content type."""
+        thresholds = self.similarity_thresholds.get(content_type, {})
         
         if similarity_score >= thresholds.get("exact_match", 0.98):
             return ContentSimilarityType.EXACT_MATCH
@@ -379,7 +398,8 @@ class SimilarityMatchingConfig:
             return ContentSimilarityType.UNRELATED
     
     def should_trigger_alert(self, similarity_score: float, content_type: str) -> bool:
-        """Determine if similarity score should trigger an alert."""        if not self.alerts.enable_real_time_alerts:
+        """Determine if similarity score should trigger an alert."""
+        if not self.alerts.enable_real_time_alerts:
             return False
         
         if similarity_score >= self.alerts.alert_threshold_exact_match:
@@ -391,7 +411,8 @@ class SimilarityMatchingConfig:
         return False
     
     def optimize_for_performance(self) -> None:
-        """Optimize configuration for maximum performance."""        self.matching_precision_mode = "performance"
+        """Optimize configuration for maximum performance."""
+        self.matching_precision_mode = "performance"
         
         # Use faster algorithms
         self.audio.primary_algorithm = MatchingAlgorithm.LOCALITY_SENSITIVE_HASHING
@@ -408,7 +429,8 @@ class SimilarityMatchingConfig:
         self.vector_matching.search_k = 50
     
     def optimize_for_accuracy(self) -> None:
-        """Optimize configuration for maximum accuracy."""        self.matching_precision_mode = "accuracy"
+        """Optimize configuration for maximum accuracy."""
+        self.matching_precision_mode = "accuracy"
         
         # Use most accurate algorithms
         self.audio.primary_algorithm = MatchingAlgorithm.SIAMESE_NETWORK
@@ -425,7 +447,8 @@ class SimilarityMatchingConfig:
         self.vector_matching.search_k = 200
     
     def set_similarity_thresholds(self, content_type: str, thresholds: Dict[str, float]) -> None:
-        """Set custom similarity thresholds for content type."""        if content_type not in self.similarity_thresholds:
+        """Set custom similarity thresholds for content type."""
+        if content_type not in self.similarity_thresholds:
             raise ValueError(f"Unsupported content type: {content_type}")
         
         # Validate threshold values
@@ -445,7 +468,8 @@ class SimilarityMatchingConfig:
         self.similarity_thresholds[content_type] = thresholds
     
     def validate_configuration(self) -> List[str]:
-        """Validate current configuration and return any issues."""        issues = []
+        """Validate current configuration and return any issues."""
+        issues = []
         
         # Validate performance settings
         if self.performance.max_concurrent_comparisons <= 0:
@@ -484,7 +508,8 @@ class SimilarityMatchingConfig:
         return issues
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary."""        return {
+        """Convert configuration to dictionary."""
+        return {
             "enable_fuzzy_matching": self.enable_fuzzy_matching,
             "enable_approximate_matching": self.enable_approximate_matching,
             "enable_cross_modal_matching": self.enable_cross_modal_matching,
@@ -503,7 +528,8 @@ class SimilarityMatchingConfig:
     
     @classmethod
     def from_dict(cls, config_dict: Dict[str, Any]) -> 'SimilarityMatchingConfig':
-        """Create configuration from dictionary."""        config = cls()
+        """Create configuration from dictionary."""
+        config = cls()
         
         # Load basic settings
         basic_fields = [

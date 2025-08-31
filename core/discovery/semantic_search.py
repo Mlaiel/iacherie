@@ -33,7 +33,8 @@ Features:
 - Personalized search ranking based on user behavior
 - Advanced query analytics and performance optimization
 - Rights-aware search with content protection integration
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Union, Set
@@ -64,27 +65,31 @@ from sentence_transformers import SentenceTransformer
 logger = logging.getLogger(__name__)
 
 class SearchModalityType(Enum):
-    """Search modality types"""    TEXT = "text"
+    """Search modality types"""
+    TEXT = "text"
     AUDIO = "audio"
     IMAGE = "image"
     VIDEO = "video"
     MULTIMODAL = "multimodal"
 
 class EmbeddingModel(Enum):
-    """Available embedding models"""    SENTENCE_BERT = "sentence-transformers/all-MiniLM-L6-v2"
+    """Available embedding models"""
+    SENTENCE_BERT = "sentence-transformers/all-MiniLM-L6-v2"
     MULTILINGUAL_BERT = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
     CLIP = "openai/clip-vit-base-patch32"
     AUDIO_CLIP = "laion/clap-htsat-unfused"
     CUSTOM_MUSIC = "custom-music-embeddings"
 
 class SimilarityMetric(Enum):
-    """Similarity calculation methods"""    COSINE = "cosine"
+    """Similarity calculation methods"""
+    COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     DOT_PRODUCT = "dot_product"
     MANHATTAN = "manhattan"
 
 class QueryType(Enum):
-    """Query types for semantic search"""    NATURAL_LANGUAGE = "natural_language"
+    """Query types for semantic search"""
+    NATURAL_LANGUAGE = "natural_language"
     KEYWORD = "keyword"
     SEMANTIC = "semantic"
     HYBRID = "hybrid"
@@ -93,7 +98,8 @@ class QueryType(Enum):
 
 @dataclass
 class VectorEmbedding:
-    """Vector embedding representation"""    content_id: str
+    """Vector embedding representation"""
+    content_id: str
     embedding_vector: np.ndarray
     modality: SearchModalityType
     model_used: str
@@ -105,7 +111,8 @@ class VectorEmbedding:
 
 @dataclass
 class SemanticQuery:
-    """Semantic search query configuration"""    query_text: str
+    """Semantic search query configuration"""
+    query_text: str
     query_type: QueryType = QueryType.NATURAL_LANGUAGE
     target_modalities: List[SearchModalityType] = field(default_factory=lambda: [SearchModalityType.TEXT])
     similarity_metric: SimilarityMetric = SimilarityMetric.COSINE
@@ -120,7 +127,8 @@ class SemanticQuery:
 
 @dataclass
 class SimilarityScore:
-    """Similarity score with detailed information"""    content_id: str
+    """Similarity score with detailed information"""
+    content_id: str
     score: float
     metric_used: SimilarityMetric
     embedding_model: str
@@ -130,7 +138,8 @@ class SimilarityScore:
 
 @dataclass
 class SearchContext:
-    """Search context for personalization and filtering"""    user_id: Optional[str] = None
+    """Search context for personalization and filtering"""
+    user_id: Optional[str] = None
     session_id: Optional[str] = None
     search_history: List[str] = field(default_factory=list)
     user_preferences: Dict[str, Any] = field(default_factory=dict)
@@ -141,10 +150,13 @@ class SearchContext:
     content_filters: Dict[str, Any] = field(default_factory=dict)
 
 class IndexManager:
-    """    FAISS index manager for efficient vector search
-    """    
+    """
+    FAISS index manager for efficient vector search
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize index manager"""        self.config = config or {}
+        """Initialize index manager"""
+        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # FAISS indices for different modalities
@@ -161,7 +173,8 @@ class IndexManager:
         }
 
     async def initialize_indices(self, embedding_dimensions: Dict[SearchModalityType, int]):
-        """Initialize FAISS indices for each modality"""        try:
+        """Initialize FAISS indices for each modality"""
+        try:
             for modality, dimension in embedding_dimensions.items():
                 # Create FAISS index with inner product similarity
                 index = faiss.IndexFlatIP(dimension)
@@ -188,7 +201,8 @@ class IndexManager:
             return False
 
     async def add_embedding(self, embedding: VectorEmbedding) -> bool:
-        """Add embedding to appropriate index"""        try:
+        """Add embedding to appropriate index"""
+        try:
             modality = embedding.modality
             
             if modality not in self.indices:
@@ -227,7 +241,8 @@ class IndexManager:
         k: int = 10,
         similarity_threshold: float = 0.7
     ) -> List[Tuple[str, float]]:
-        """Search for similar vectors in index"""        try:
+        """Search for similar vectors in index"""
+        try:
             if modality not in self.indices:
                 self.logger.error(f"No index found for modality: {modality}")
                 return []
@@ -261,7 +276,8 @@ class IndexManager:
             return []
 
     async def get_index_stats(self) -> Dict[str, Any]:
-        """Get index statistics"""        stats = self.index_stats.copy()
+        """Get index statistics"""
+        stats = self.index_stats.copy()
         
         for modality, metadata in self.index_metadata.items():
             stats[f'{modality.value}_vectors'] = metadata['vector_count']
@@ -270,10 +286,13 @@ class IndexManager:
         return stats
 
 class SemanticSearchEngine:
-    """    Advanced semantic search engine with multi-modal capabilities
-    """    
+    """
+    Advanced semantic search engine with multi-modal capabilities
+    """
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize semantic search engine"""        self.config = config or {}
+        """Initialize semantic search engine"""
+        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # Models for different modalities
@@ -303,7 +322,8 @@ class SemanticSearchEngine:
         }
 
     async def initialize(self) -> bool:
-        """Initialize all search engine components"""        try:
+        """Initialize all search engine components"""
+        try:
             # Load embedding models
             await self._load_embedding_models()
             
@@ -328,7 +348,8 @@ class SemanticSearchEngine:
             return False
 
     async def index_content(self, content_data: Dict[str, Any]) -> bool:
-        """Index content for semantic search"""        try:
+        """Index content for semantic search"""
+        try:
             content_id = content_data['content_id']
             
             # Generate embeddings for different modalities
@@ -352,7 +373,8 @@ class SemanticSearchEngine:
         query: SemanticQuery,
         context: Optional[SearchContext] = None
     ) -> List[Dict[str, Any]]:
-        """Perform semantic search with advanced ranking"""        start_time = datetime.now()
+        """Perform semantic search with advanced ranking"""
+        start_time = datetime.now()
         
         try:
             # Process and expand query
@@ -401,7 +423,8 @@ class SemanticSearchEngine:
         similarity_threshold: float = 0.8,
         max_results: int = 10
     ) -> List[SimilarityScore]:
-        """Find content similar to given content"""        try:
+        """Find content similar to given content"""
+        try:
             # Get content embedding
             content_embedding = await self._get_content_embedding(content_id, modality)
             
@@ -446,7 +469,8 @@ class SemanticSearchEngine:
         context: Optional[SearchContext] = None,
         max_suggestions: int = 5
     ) -> List[str]:
-        """Get search suggestions based on partial query"""        try:
+        """Get search suggestions based on partial query"""
+        try:
             # Use query expansion and history for suggestions
             suggestions = await self._generate_query_suggestions(
                 partial_query, context, max_suggestions
@@ -463,7 +487,8 @@ class SemanticSearchEngine:
         query: str,
         result_content_id: str
     ) -> Dict[str, Any]:
-        """Explain why a specific result was returned for a query"""        try:
+        """Explain why a specific result was returned for a query"""
+        try:
             # Generate query embedding
             query_embedding = await self._generate_text_embedding(query)
             
@@ -508,7 +533,8 @@ class SemanticSearchEngine:
     # Private methods for internal processing
 
     async def _load_embedding_models(self):
-        """Load embedding models for different modalities"""        try:
+        """Load embedding models for different modalities"""
+        try:
             # Text embedding model
             self.text_model = SentenceTransformer('all-MiniLM-L6-v2')
             
@@ -535,7 +561,8 @@ class SemanticSearchEngine:
             raise
 
     async def _initialize_query_processing(self):
-        """Initialize query processing components"""        try:
+        """Initialize query processing components"""
+        try:
             # Query expansion using TF-IDF
             self.query_expander = TfidfVectorizer(
                 max_features=10000,
@@ -553,7 +580,8 @@ class SemanticSearchEngine:
         self,
         content_data: Dict[str, Any]
     ) -> List[VectorEmbedding]:
-        """Generate embeddings for content across modalities"""        embeddings = []
+        """Generate embeddings for content across modalities"""
+        embeddings = []
         content_id = content_data['content_id']
         
         try:
@@ -609,7 +637,8 @@ class SemanticSearchEngine:
             return []
 
     async def _generate_text_embedding(self, text: str) -> Optional[np.ndarray]:
-        """Generate text embedding using sentence transformer"""        try:
+        """Generate text embedding using sentence transformer"""
+        try:
             if not text or not text.strip():
                 return None
             
@@ -631,7 +660,8 @@ class SemanticSearchEngine:
             return None
 
     async def _generate_image_embedding(self, content_data: Dict[str, Any]) -> Optional[np.ndarray]:
-        """Generate image embedding using CLIP"""        try:
+        """Generate image embedding using CLIP"""
+        try:
             # For now, return a mock embedding
             # In production, would process actual image data
             return np.random.rand(512).astype(np.float32)
@@ -641,7 +671,8 @@ class SemanticSearchEngine:
             return None
 
     async def _generate_audio_embedding(self, content_data: Dict[str, Any]) -> Optional[np.ndarray]:
-        """Generate audio embedding for music content"""        try:
+        """Generate audio embedding for music content"""
+        try:
             # For now, return a mock embedding
             # In production, would process actual audio data using librosa/chromaprint
             return np.random.rand(512).astype(np.float32)
@@ -655,7 +686,8 @@ class SemanticSearchEngine:
         query: SemanticQuery,
         context: Optional[SearchContext]
     ) -> SemanticQuery:
-        """Process and expand query"""        try:
+        """Process and expand query"""
+        try:
             processed_query = query
             
             # Query expansion
@@ -675,7 +707,8 @@ class SemanticSearchEngine:
             return query
 
     async def _expand_query(self, query_text: str, context: Optional[SearchContext]) -> str:
-        """Expand query with related terms"""        try:
+        """Expand query with related terms"""
+        try:
             # Simple query expansion - in production would use more sophisticated methods
             expanded_terms = []
             
@@ -696,7 +729,8 @@ class SemanticSearchEngine:
             return query_text
 
     async def _detect_language(self, text: str) -> str:
-        """Detect language of query text"""        try:
+        """Detect language of query text"""
+        try:
             # Simple language detection
             result = self.language_detector(text)
             if result and len(result) > 0:
@@ -711,7 +745,8 @@ class SemanticSearchEngine:
         self,
         query: SemanticQuery
     ) -> Dict[SearchModalityType, np.ndarray]:
-        """Generate embeddings for query across modalities"""        embeddings = {}
+        """Generate embeddings for query across modalities"""
+        embeddings = {}
         
         try:
             # Text embedding
@@ -748,7 +783,8 @@ class SemanticSearchEngine:
         query: SemanticQuery,
         context: Optional[SearchContext]
     ) -> List[Dict[str, Any]]:
-        """Perform search across multiple modalities"""        all_results = {}
+        """Perform search across multiple modalities"""
+        all_results = {}
         
         try:
             for modality, embedding in query_embeddings.items():
@@ -798,7 +834,8 @@ class SemanticSearchEngine:
         query: SemanticQuery,
         context: Optional[SearchContext]
     ) -> List[Dict[str, Any]]:
-        """Apply personalized ranking to search results"""        try:
+        """Apply personalized ranking to search results"""
+        try:
             if not context or not context.user_preferences:
                 return results
             
@@ -836,7 +873,8 @@ class SemanticSearchEngine:
         query: SemanticQuery,
         context: Optional[SearchContext]
     ) -> List[Dict[str, Any]]:
-        """Apply filters and post-processing to search results"""        try:
+        """Apply filters and post-processing to search results"""
+        try:
             filtered_results = []
             
             for result in results:
@@ -853,7 +891,8 @@ class SemanticSearchEngine:
             return results
 
     def _passes_filters(self, result: Dict[str, Any], filters: Dict[str, Any]) -> bool:
-        """Check if result passes all filters"""        # For now, return True - in production would check actual filters
+        """Check if result passes all filters"""
+        # For now, return True - in production would check actual filters
         return True
 
     async def _enhance_search_result(
@@ -861,7 +900,8 @@ class SemanticSearchEngine:
         result: Dict[str, Any],
         query: SemanticQuery
     ) -> Dict[str, Any]:
-        """Enhance search result with additional metadata"""        try:
+        """Enhance search result with additional metadata"""
+        try:
             enhanced = result.copy()
             
             # Add explanation if requested
@@ -889,7 +929,8 @@ class SemanticSearchEngine:
         content_id: str,
         modality: SearchModalityType
     ) -> Optional[np.ndarray]:
-        """Get embedding for specific content and modality"""        try:
+        """Get embedding for specific content and modality"""
+        try:
             # In production, would retrieve from database/cache
             # For now, return mock embedding
             if modality == SearchModalityType.TEXT:
@@ -907,7 +948,8 @@ class SemanticSearchEngine:
         context: Optional[SearchContext],
         max_suggestions: int
     ) -> List[str]:
-        """Generate search suggestions based on partial query"""        try:
+        """Generate search suggestions based on partial query"""
+        try:
             suggestions = []
             
             # Simple suggestion generation
@@ -928,7 +970,8 @@ class SemanticSearchEngine:
             return []
 
     async def _update_search_metrics(self, processing_time: float, success: bool):
-        """Update search performance metrics"""        try:
+        """Update search performance metrics"""
+        try:
             self.search_metrics['total_searches'] += 1
             
             if success:
@@ -946,7 +989,8 @@ class SemanticSearchEngine:
             self.logger.error(f"Failed to update search metrics: {e}")
 
     async def get_search_metrics(self) -> Dict[str, Any]:
-        """Get search engine performance metrics"""        try:
+        """Get search engine performance metrics"""
+        try:
             index_stats = await self.index_manager.get_index_stats()
             
             return {
@@ -965,7 +1009,8 @@ class SemanticSearchEngine:
             return {}
 
     async def clear_cache(self):
-        """Clear all caches"""        try:
+        """Clear all caches"""
+        try:
             self.embedding_cache.clear()
             self.query_cache.clear()
             self.logger.info("Search engine caches cleared")
@@ -974,7 +1019,8 @@ class SemanticSearchEngine:
             self.logger.error(f"Failed to clear cache: {e}")
 
     async def shutdown(self):
-        """Shutdown search engine and cleanup resources"""        try:
+        """Shutdown search engine and cleanup resources"""
+        try:
             # Clear caches
             await self.clear_cache()
             

@@ -76,7 +76,8 @@ except ImportError as e:
 
 
 class EngineType(str, Enum):
-    """Types of processing engines available"""    AI_PROCESSING = "ai_processing"
+    """Types of processing engines available"""
+    AI_PROCESSING = "ai_processing"
     CONTENT_PROCESSING = "content_processing"
     PROTECTION_SECURITY = "protection_security"
     BUSINESS_LOGIC = "business_logic"
@@ -86,7 +87,8 @@ class EngineType(str, Enum):
 
 @dataclass
 class EngineConfig:
-    """Configuration for engine initialization"""    redis_url: str = "redis://localhost:6379"
+    """Configuration for engine initialization"""
+    redis_url: str = "redis://localhost:6379"
     database_url: str = "postgresql://user:pass@localhost/db"
     ai_model_path: str = "/models/"
     enable_blockchain: bool = True
@@ -102,18 +104,21 @@ class EngineConfig:
 
 
 class EngineRegistry:
-    """    🏭 ENTERPRISE ENGINE REGISTRY
+    """
+    🏭 ENTERPRISE ENGINE REGISTRY
     
     Central registry for managing all processing engines
     with dependency injection and configuration management
-    """    
+    """
+    
     def __init__(self):
         self._engines: Dict[str, Any] = {}
         self._config: Optional[EngineConfig] = None
         self._initialized: bool = False
         
     def configure(self, config: Union[EngineConfig, Dict[str, Any]]) -> None:
-        """Configure the engine registry"""        if isinstance(config, dict):
+        """Configure the engine registry"""
+        if isinstance(config, dict):
             self._config = EngineConfig(**config)
         else:
             self._config = config
@@ -126,7 +131,8 @@ class EngineRegistry:
         redis_client,
         engines_to_init: Optional[List[str]] = None
     ) -> Dict[str, bool]:
-        """        Initialize specified engines or all engines
+        """
+        Initialize specified engines or all engines
         
         Args:
             db_session: Database session
@@ -135,7 +141,8 @@ class EngineRegistry:
             
         Returns:
             Dict with initialization status for each engine
-        """        if not self._config:
+        """
+        if not self._config:
             raise ValueError("Engine registry not configured. Call configure() first.")
         
         initialization_results = {}
@@ -222,7 +229,8 @@ class EngineRegistry:
         return initialization_results
     
     def get_engine(self, engine_name: str) -> Any:
-        """Get an initialized engine"""        if not self._initialized:
+        """Get an initialized engine"""
+        if not self._initialized:
             raise ValueError("Engine registry not initialized. Call initialize_engines() first.")
         
         if engine_name not in self._engines:
@@ -231,13 +239,16 @@ class EngineRegistry:
         return self._engines[engine_name]
     
     def list_engines(self) -> List[str]:
-        """List all initialized engines"""        return list(self._engines.keys())
+        """List all initialized engines"""
+        return list(self._engines.keys())
     
     def is_initialized(self) -> bool:
-        """Check if registry is initialized"""        return self._initialized
+        """Check if registry is initialized"""
+        return self._initialized
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on all engines"""        health_status = {
+        """Perform health check on all engines"""
+        health_status = {
             "registry_initialized": self._initialized,
             "total_engines": len(self._engines),
             "engine_status": {}
@@ -276,7 +287,8 @@ async def initialize_engines(
     config: Optional[Union[EngineConfig, Dict[str, Any]]] = None,
     engines_to_init: Optional[List[str]] = None
 ) -> Dict[str, bool]:
-    """    Initialize engines with default configuration
+    """
+    Initialize engines with default configuration
     
     Args:
         db_session: Database session
@@ -286,7 +298,8 @@ async def initialize_engines(
         
     Returns:
         Initialization results
-    """    if config:
+    """
+    if config:
         engine_registry.configure(config)
     elif not engine_registry._config:
         # Use default configuration
@@ -296,15 +309,18 @@ async def initialize_engines(
 
 
 def get_engine(engine_name: str) -> Any:
-    """Get an initialized engine"""    return engine_registry.get_engine(engine_name)
+    """Get an initialized engine"""
+    return engine_registry.get_engine(engine_name)
 
 
 def list_engines() -> List[str]:
-    """List all initialized engines"""    return engine_registry.list_engines()
+    """List all initialized engines"""
+    return engine_registry.list_engines()
 
 
 async def health_check() -> Dict[str, Any]:
-    """Perform health check on all engines"""    return await engine_registry.health_check()
+    """Perform health check on all engines"""
+    return await engine_registry.health_check()
 
 
 # Export des classes et fonctions principales

@@ -24,7 +24,8 @@ Copyright: Fahed Mlaiel - All Rights Reserved
     
     Contact: mlaiel@live.de for licensing inquiries ONLY.
     Violators will be prosecuted to the full extent of German and EU law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union, Callable
 from dataclasses import dataclass, field
@@ -60,7 +61,8 @@ logger = get_logger(__name__)
 
 
 class ProcessingStage(Enum):
-    """NLP pipeline processing stages"""    PREPROCESSING = "preprocessing"
+    """NLP pipeline processing stages"""
+    PREPROCESSING = "preprocessing"
     TOKENIZATION = "tokenization"
     LINGUISTIC_ANALYSIS = "linguistic_analysis"
     SEMANTIC_ANALYSIS = "semantic_analysis"
@@ -70,7 +72,8 @@ class ProcessingStage(Enum):
 
 
 class ContentFormat(Enum):
-    """Supported content formats"""    SOCIAL_POST = "social_post"
+    """Supported content formats"""
+    SOCIAL_POST = "social_post"
     BLOG_ARTICLE = "blog_article"
     VIDEO_CAPTION = "video_caption"
     PRODUCT_DESCRIPTION = "product_description"
@@ -81,7 +84,8 @@ class ContentFormat(Enum):
 
 
 class QualityMetric(Enum):
-    """Content quality metrics"""    READABILITY = "readability"
+    """Content quality metrics"""
+    READABILITY = "readability"
     ENGAGEMENT = "engagement"
     SEO_OPTIMIZATION = "seo_optimization"
     GRAMMAR_CORRECTNESS = "grammar_correctness"
@@ -93,7 +97,8 @@ class QualityMetric(Enum):
 
 @dataclass
 class ProcessingStep:
-    """Represents a processing step in the pipeline"""    stage: ProcessingStage
+    """Represents a processing step in the pipeline"""
+    stage: ProcessingStage
     processor: str
     input_data: Any
     output_data: Any = None
@@ -105,7 +110,8 @@ class ProcessingStep:
 
 @dataclass
 class PipelineResult:
-    """Complete pipeline processing result"""    original_text: str
+    """Complete pipeline processing result"""
+    original_text: str
     processed_text: str
     processing_steps: List[ProcessingStep]
     linguistic_features: Dict[str, Any]
@@ -119,7 +125,8 @@ class PipelineResult:
 
 @dataclass
 class ContentProfile:
-    """Content optimization profile"""    content_format: ContentFormat
+    """Content optimization profile"""
+    content_format: ContentFormat
     target_audience: str
     language: str
     tone: str
@@ -129,7 +136,8 @@ class ContentProfile:
 
 
 class NLPPipeline:
-    """Advanced NLP processing pipeline"""    
+    """Advanced NLP processing pipeline"""
+    
     def __init__(self):
         self.processors = {}
         self.pipeline_stages = []
@@ -137,7 +145,8 @@ class NLPPipeline:
         self._setup_pipeline()
         
     def _initialize_processors(self):
-        """Initialize all NLP processors"""        try:
+        """Initialize all NLP processors"""
+        try:
             # Core processors
             self.processors['text_analyzer'] = TextAnalyzer()
             self.processors['sentiment_analyzer'] = SentimentAnalyzer()
@@ -172,7 +181,8 @@ class NLPPipeline:
             logger.error(f"Failed to initialize NLP processors: {e}")
             
     def _setup_pipeline(self):
-        """Setup default processing pipeline"""        self.pipeline_stages = [
+        """Setup default processing pipeline"""
+        self.pipeline_stages = [
             ProcessingStage.PREPROCESSING,
             ProcessingStage.TOKENIZATION,
             ProcessingStage.LINGUISTIC_ANALYSIS,
@@ -188,7 +198,8 @@ class NLPPipeline:
         content_profile: Optional[ContentProfile] = None,
         custom_stages: Optional[List[ProcessingStage]] = None
     ) -> PipelineResult:
-        """        Process content through the NLP pipeline
+        """
+        Process content through the NLP pipeline
         
         Args:
             text: Input text content
@@ -197,7 +208,8 @@ class NLPPipeline:
             
         Returns:
             PipelineResult with comprehensive analysis
-        """        try:
+        """
+        try:
             # Use custom stages or default
             stages = custom_stages or self.pipeline_stages
             
@@ -282,7 +294,8 @@ class NLPPipeline:
         content_profile: Optional[ContentProfile],
         current_result: PipelineResult
     ) -> Dict[str, Any]:
-        """Process a specific pipeline stage"""        
+        """Process a specific pipeline stage"""
+        
         if stage == ProcessingStage.PREPROCESSING:
             return await self._preprocessing_stage(text, content_profile)
         elif stage == ProcessingStage.TOKENIZATION:
@@ -301,7 +314,8 @@ class NLPPipeline:
             return {}
             
     async def _preprocessing_stage(self, text: str, content_profile: Optional[ContentProfile]) -> Dict[str, Any]:
-        """Preprocessing stage: cleaning and normalization"""        try:
+        """Preprocessing stage: cleaning and normalization"""
+        try:
             # Text cleaning
             cleaned_text = clean_text(text)
             normalized_text = normalize_unicode(cleaned_text)
@@ -334,7 +348,8 @@ class NLPPipeline:
             return {'processed_text': text}
             
     async def _tokenization_stage(self, text: str, content_profile: Optional[ContentProfile]) -> Dict[str, Any]:
-        """Tokenization stage: breaking text into tokens"""        try:
+        """Tokenization stage: breaking text into tokens"""
+        try:
             # Sentence tokenization
             sentences = sent_tokenize(text)
             
@@ -369,13 +384,15 @@ class NLPPipeline:
             return {}
             
     def _get_word_frequency(self, words: List[str]) -> List[Tuple[str, int]]:
-        """Get word frequency distribution"""        word_freq = {}
+        """Get word frequency distribution"""
+        word_freq = {}
         for word in words:
             word_freq[word] = word_freq.get(word, 0) + 1
         return sorted(word_freq.items(), key=lambda x: x[1], reverse=True)
         
     async def _linguistic_analysis_stage(self, text: str, content_profile: Optional[ContentProfile]) -> Dict[str, Any]:
-        """Linguistic analysis stage: detailed language analysis"""        try:
+        """Linguistic analysis stage: detailed language analysis"""
+        try:
             # POS tagging
             words = word_tokenize(text)
             pos_tags = pos_tag(words)
@@ -414,13 +431,15 @@ class NLPPipeline:
             return {}
             
     def _get_pos_distribution(self, pos_tags: List[Tuple[str, str]]) -> Dict[str, int]:
-        """Get part-of-speech distribution"""        pos_count = {}
+        """Get part-of-speech distribution"""
+        pos_count = {}
         for word, pos in pos_tags:
             pos_count[pos] = pos_count.get(pos, 0) + 1
         return pos_count
         
     async def _analyze_grammar_patterns(self, pos_tags: List[Tuple[str, str]]) -> Dict[str, Any]:
-        """Analyze grammar patterns"""        try:
+        """Analyze grammar patterns"""
+        try:
             patterns = {
                 'passive_voice_count': 0,
                 'complex_sentences': 0,
@@ -450,7 +469,8 @@ class NLPPipeline:
             return {}
             
     async def _analyze_sentence_complexity(self, text: str) -> Dict[str, float]:
-        """Analyze sentence complexity"""        try:
+        """Analyze sentence complexity"""
+        try:
             sentences = sent_tokenize(text)
             
             if not sentences:
@@ -476,7 +496,8 @@ class NLPPipeline:
             return {'average_complexity': 0.0}
             
     async def _semantic_analysis_stage(self, text: str, content_profile: Optional[ContentProfile]) -> Dict[str, Any]:
-        """Semantic analysis stage: meaning and context analysis"""        try:
+        """Semantic analysis stage: meaning and context analysis"""
+        try:
             semantic_features = {}
             
             # Sentiment analysis
@@ -514,7 +535,8 @@ class NLPPipeline:
         content_profile: Optional[ContentProfile],
         current_result: PipelineResult
     ) -> Dict[str, Any]:
-        """Quality assessment stage: comprehensive quality scoring"""        try:
+        """Quality assessment stage: comprehensive quality scoring"""
+        try:
             quality_scores = {}
             recommendations = []
             
@@ -564,7 +586,8 @@ class NLPPipeline:
             return {}
             
     async def _assess_grammar_quality(self, text: str, linguistic_features: Dict) -> float:
-        """Assess grammar quality"""        try:
+        """Assess grammar quality"""
+        try:
             # Simple grammar assessment based on patterns
             score = 1.0
             
@@ -593,7 +616,8 @@ class NLPPipeline:
             return 0.7
             
     async def _assess_coherence(self, text: str, semantic_features: Dict) -> float:
-        """Assess text coherence"""        try:
+        """Assess text coherence"""
+        try:
             # Use semantic density and concept relationships
             if 'semantic_density' in semantic_features:
                 return min(semantic_features['semantic_density'] * 2, 1.0)
@@ -614,7 +638,8 @@ class NLPPipeline:
             return 0.5
             
     async def _assess_seo_optimization(self, text: str, keywords: List[str]) -> float:
-        """Assess SEO optimization"""        try:
+        """Assess SEO optimization"""
+        try:
             if not keywords:
                 return 0.5
                 
@@ -644,7 +669,8 @@ class NLPPipeline:
             return 0.5
             
     async def _assess_completeness(self, text: str, content_profile: Optional[ContentProfile]) -> float:
-        """Assess content completeness"""        try:
+        """Assess content completeness"""
+        try:
             # Basic completeness check
             word_count = len(text.split())
             
@@ -683,7 +709,8 @@ class NLPPipeline:
         content_profile: Optional[ContentProfile],
         current_result: PipelineResult
     ) -> Dict[str, Any]:
-        """Optimization stage: generate improvement suggestions"""        try:
+        """Optimization stage: generate improvement suggestions"""
+        try:
             optimization_suggestions = []
             
             # Analyze quality scores for optimization opportunities
@@ -743,7 +770,8 @@ class NLPPipeline:
         content_profile: ContentProfile,
         current_result: PipelineResult
     ) -> List[str]:
-        """Get format-specific optimization suggestions"""        try:
+        """Get format-specific optimization suggestions"""
+        try:
             suggestions = []
             
             if content_profile.content_format == ContentFormat.SOCIAL_POST:
@@ -785,7 +813,8 @@ class NLPPipeline:
         content_profile: Optional[ContentProfile],
         current_result: PipelineResult
     ) -> Dict[str, Any]:
-        """Postprocessing stage: final cleanup and metadata"""        try:
+        """Postprocessing stage: final cleanup and metadata"""
+        try:
             # Final text cleanup
             processed_text = text.strip()
             
@@ -810,12 +839,14 @@ class NLPPipeline:
 
 
 class ContentProcessor:
-    """Specialized content processor for different content types"""    
+    """Specialized content processor for different content types"""
+    
     def __init__(self):
         self.nlp_pipeline = NLPPipeline()
         
     async def process_social_content(self, text: str, platform: str = "general") -> PipelineResult:
-        """Process social media content"""        profile = ContentProfile(
+        """Process social media content"""
+        profile = ContentProfile(
             content_format=ContentFormat.SOCIAL_POST,
             target_audience="general",
             language="en",
@@ -826,7 +857,8 @@ class ContentProcessor:
         return await self.nlp_pipeline.process_content(text, profile)
         
     async def process_blog_content(self, text: str, seo_keywords: List[str] = None) -> PipelineResult:
-        """Process blog article content"""        profile = ContentProfile(
+        """Process blog article content"""
+        profile = ContentProfile(
             content_format=ContentFormat.BLOG_ARTICLE,
             target_audience="general",
             language="en",
@@ -838,7 +870,8 @@ class ContentProcessor:
         return await self.nlp_pipeline.process_content(text, profile)
         
     async def process_marketing_content(self, text: str, keywords: List[str] = None) -> PipelineResult:
-        """Process marketing/advertising content"""        profile = ContentProfile(
+        """Process marketing/advertising content"""
+        profile = ContentProfile(
             content_format=ContentFormat.ADVERTISEMENT,
             target_audience="consumers",
             language="en",

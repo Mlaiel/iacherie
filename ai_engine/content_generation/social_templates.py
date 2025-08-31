@@ -8,14 +8,16 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
-"""import logging
+"""
+import logging
 from typing import Dict, Any, List, Optional
 from datetime import datetime
 import random
 
 
 class SocialMediaTemplates:
-    """    Professional social media template collection providing:
+    """
+    Professional social media template collection providing:
     
     - Instagram post templates (feed, stories, reels)
     - Twitter/X thread templates  
@@ -25,9 +27,11 @@ class SocialMediaTemplates:
     - Facebook post templates
     - Platform-specific optimization
     - Engagement-driven content structures
-    """    
+    """
+    
     def __init__(self):
-        """Initialize social media templates"""        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize social media templates"""
+        self.logger = logging.getLogger(self.__class__.__name__)
         
         # Instagram Templates
         self.instagram_templates = {
@@ -258,7 +262,8 @@ class SocialMediaTemplates:
         template_type: str, 
         content_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """        Get template for specific platform and type.
+        """
+        Get template for specific platform and type.
         
         Args:
             platform: Social media platform (instagram, twitter, linkedin, etc.)
@@ -267,7 +272,8 @@ class SocialMediaTemplates:
             
         Returns:
             Template structure and content
-        """        try:
+        """
+        try:
             platform_templates = getattr(self, f"{platform}_templates", {})
             template = platform_templates.get(template_type, {})
             
@@ -287,7 +293,8 @@ class SocialMediaTemplates:
         template_type: str,
         content_data: Dict[str, Any]
     ) -> str:
-        """        Fill template with content data.
+        """
+        Fill template with content data.
         
         Args:
             platform: Social media platform
@@ -296,7 +303,8 @@ class SocialMediaTemplates:
             
         Returns:
             Filled template content
-        """        try:
+        """
+        try:
             template = self.get_template(platform, template_type, content_data)
             
             if not template:
@@ -319,7 +327,8 @@ class SocialMediaTemplates:
         content_data: Dict[str, Any], 
         template: Dict[str, Any]
     ) -> str:
-        """Fill basic placeholders in template structure"""        filled = structure
+        """Fill basic placeholders in template structure"""
+        filled = structure
         
         # Fill direct data mappings
         for key, value in content_data.items():
@@ -336,7 +345,8 @@ class SocialMediaTemplates:
         return filled
     
     def _fill_hooks(self, content: str, template: Dict[str, Any]) -> str:
-        """Fill hook placeholders"""        if '{hook}' in content:
+        """Fill hook placeholders"""
+        if '{hook}' in content:
             hooks = template.get('hooks', ['Great content coming your way!'])
             selected_hook = random.choice(hooks)
             content = content.replace('{hook}', selected_hook)
@@ -349,7 +359,8 @@ class SocialMediaTemplates:
         return content
     
     def _fill_ctas(self, content: str, template: Dict[str, Any]) -> str:
-        """Fill call-to-action placeholders"""        cta_placeholders = ['{call_to_action}', '{cta}', '{engagement_question}', '{question}']
+        """Fill call-to-action placeholders"""
+        cta_placeholders = ['{call_to_action}', '{cta}', '{engagement_question}', '{question}']
         
         for placeholder in cta_placeholders:
             if placeholder in content:
@@ -360,7 +371,8 @@ class SocialMediaTemplates:
         return content
     
     def _fill_hashtags(self, content: str, template: Dict[str, Any]) -> str:
-        """Fill hashtag placeholders"""        if '{hashtags}' in content:
+        """Fill hashtag placeholders"""
+        if '{hashtags}' in content:
             hashtags = template.get('hashtags', '#content #social #media')
             content = content.replace('{hashtags}', hashtags)
         
@@ -372,7 +384,8 @@ class SocialMediaTemplates:
         template: Dict[str, Any], 
         content_data: Dict[str, Any]
     ) -> str:
-        """Fill dynamic elements based on content type"""        # Fill timestamps for YouTube
+        """Fill dynamic elements based on content type"""
+        # Fill timestamps for YouTube
         if '{timestamps}' in content:
             timestamps = template.get('timestamps_example', '0:00 Introduction')
             content = content.replace('{timestamps}', timestamps)
@@ -396,7 +409,8 @@ class SocialMediaTemplates:
         return content
     
     def _get_default_template(self, platform: str) -> Dict[str, Any]:
-        """Get default template for platform"""        default_templates = {
+        """Get default template for platform"""
+        default_templates = {
             'instagram': {
                 'structure': "{main_content}\n\n{call_to_action}\n\n#content #social #instagram",
                 'ctas': ['Share your thoughts below! 👇']
@@ -429,7 +443,8 @@ class SocialMediaTemplates:
         })
     
     def _create_basic_content(self, content_data: Dict[str, Any]) -> str:
-        """Create basic content when template fails"""        main_content = content_data.get('main_content', '')
+        """Create basic content when template fails"""
+        main_content = content_data.get('main_content', '')
         if not main_content:
             main_content = content_data.get('content', '')
         if not main_content:
@@ -438,14 +453,16 @@ class SocialMediaTemplates:
         return f"{main_content}\n\nThanks for reading! 👍"
     
     def get_available_templates(self, platform: str) -> List[str]:
-        """Get list of available templates for platform"""        try:
+        """Get list of available templates for platform"""
+        try:
             platform_templates = getattr(self, f"{platform}_templates", {})
             return list(platform_templates.keys())
         except:
             return []
     
     def get_all_platforms(self) -> List[str]:
-        """Get list of all supported platforms"""        return ['instagram', 'twitter', 'linkedin', 'tiktok', 'youtube', 'facebook']
+        """Get list of all supported platforms"""
+        return ['instagram', 'twitter', 'linkedin', 'tiktok', 'youtube', 'facebook']
     
     def customize_template(
         self,
@@ -453,7 +470,8 @@ class SocialMediaTemplates:
         template_type: str,
         customizations: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Customize existing template with user preferences.
+        """
+        Customize existing template with user preferences.
         
         Args:
             platform: Social media platform
@@ -462,7 +480,8 @@ class SocialMediaTemplates:
             
         Returns:
             Customized template
-        """        try:
+        """
+        try:
             template = self.get_template(platform, template_type).copy()
             
             # Apply customizations
@@ -490,7 +509,8 @@ class SocialMediaTemplates:
         platform: str, 
         max_hashtags: int = 10
     ) -> List[str]:
-        """Generate hashtag suggestions based on content"""        content_lower = content.lower()
+        """Generate hashtag suggestions based on content"""
+        content_lower = content.lower()
         
         # Platform-specific hashtag pools
         hashtag_pools = {
@@ -541,22 +561,26 @@ class SocialMediaTemplates:
 
 
 class TemplateEngine:
-    """Template engine for social media content"""    
+    """Template engine for social media content"""
+    
     def __init__(self):
         self.variables = {}
     
     def substitute_variables(self, template: str, variables: Dict[str, Any]) -> str:
-        """Substitute variables in template"""        result = template
+        """Substitute variables in template"""
+        result = template
         for key, value in variables.items():
             result = result.replace(f"{{{key}}}", str(value))
         return result
     
     def apply_conditional_logic(self, template: str, conditions: Dict[str, bool]) -> str:
-        """Apply conditional logic to template"""        return template  # Simplified implementation
+        """Apply conditional logic to template"""
+        return template  # Simplified implementation
 
 
 class InstagramTemplate:
-    """Instagram-specific template class"""    
+    """Instagram-specific template class"""
+    
     def __init__(self, template_type: str = "post", **kwargs):
         self.template_type = template_type
         self.content = kwargs.get('content', '')
@@ -564,32 +588,39 @@ class InstagramTemplate:
         self.character_limit = 2200
     
     def render(self, data: Dict[str, Any]) -> str:
-        """Render Instagram template with data"""        content = data.get('content', self.content)
+        """Render Instagram template with data"""
+        content = data.get('content', self.content)
         hashtags = ' '.join(data.get('hashtags', self.hashtags))
         return f"{content}\n\n{hashtags}"
     
     def validate_length(self, content: str) -> bool:
-        """Validate content length for Instagram"""        return len(content) <= self.character_limit
+        """Validate content length for Instagram"""
+        return len(content) <= self.character_limit
 
 
 class TemplateEngine:
-    """Template rendering engine for social media content"""    
+    """Template rendering engine for social media content"""
+    
     def __init__(self):
         self.templates = {}
         self.variables = {}
     
     def register_template(self, name: str, template: str) -> None:
-        """Register a new template"""        self.templates[name] = template
+        """Register a new template"""
+        self.templates[name] = template
     
     def render_template(self, template_name: str, variables: Dict[str, Any]) -> str:
-        """Render template with variables"""        template = self.templates.get(template_name, "")
+        """Render template with variables"""
+        template = self.templates.get(template_name, "")
         return template.format(**variables)
     
     def set_variable(self, key: str, value: Any) -> None:
-        """Set a template variable"""        self.variables[key] = value
+        """Set a template variable"""
+        self.variables[key] = value
     
     def process_conditionals(self, template: str, conditions: Dict[str, bool]) -> str:
-        """Process conditional logic in templates"""        # Simplified conditional processing
+        """Process conditional logic in templates"""
+        # Simplified conditional processing
         for condition, value in conditions.items():
             if value:
                 template = template.replace(f"{{if {condition}}}", "")

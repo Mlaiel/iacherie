@@ -19,7 +19,8 @@ Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou tentative de reverse engineering
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
-"""from typing import Dict, List, Optional, Any, Union, Tuple
+"""
+from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum, IntEnum
@@ -44,7 +45,8 @@ logger = logging.getLogger(__name__)
 
 
 class DistributionPlatform(Enum):
-    """Plateformes de distribution supportées"""    SPOTIFY = "spotify"
+    """Plateformes de distribution supportées"""
+    SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE_MUSIC = "youtube_music"
     AMAZON_MUSIC = "amazon_music"
@@ -63,7 +65,8 @@ class DistributionPlatform(Enum):
 
 
 class ContentType(Enum):
-    """Types de contenu distribués"""    SINGLE = "single"
+    """Types de contenu distribués"""
+    SINGLE = "single"
     ALBUM = "album"
     EP = "ep"
     PODCAST = "podcast"
@@ -76,7 +79,8 @@ class ContentType(Enum):
 
 
 class DistributionStatus(Enum):
-    """États de distribution"""    PENDING = "pending"
+    """États de distribution"""
+    PENDING = "pending"
     QUEUED = "queued"
     PROCESSING = "processing"
     UPLOADING = "uploading"
@@ -90,7 +94,8 @@ class DistributionStatus(Enum):
 
 
 class OptimizationStrategy(Enum):
-    """Stratégies d'optimisation de distribution"""    MAXIMIZE_REACH = "maximize_reach"
+    """Stratégies d'optimisation de distribution"""
+    MAXIMIZE_REACH = "maximize_reach"
     MAXIMIZE_ENGAGEMENT = "maximize_engagement"
     MAXIMIZE_REVENUE = "maximize_revenue"
     BALANCED = "balanced"
@@ -101,7 +106,8 @@ class OptimizationStrategy(Enum):
 
 @dataclass
 class DistributionConfig:
-    """Configuration de distribution pour une plateforme"""    platform: DistributionPlatform
+    """Configuration de distribution pour une plateforme"""
+    platform: DistributionPlatform
     enabled: bool = True
     auto_publish: bool = False
     optimal_timing: bool = True
@@ -115,7 +121,8 @@ class DistributionConfig:
 
 @dataclass
 class DistributionJob:
-    """Job de distribution multi-plateformes"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Job de distribution multi-plateformes"""
+    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = None
     content_id: str = None
     content_type: ContentType = ContentType.SINGLE
@@ -136,7 +143,8 @@ class DistributionJob:
 
 @dataclass
 class PlatformPublication:
-    """Publication sur une plateforme spécifique"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Publication sur une plateforme spécifique"""
+    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     distribution_job_id: str = None
     platform: DistributionPlatform = None
     platform_content_id: str = ""
@@ -155,7 +163,8 @@ class PlatformPublication:
 
 @dataclass
 class DistributionAnalytics:
-    """Analytics de performance de distribution"""    distribution_job_id: str
+    """Analytics de performance de distribution"""
+    distribution_job_id: str
     total_platforms: int = 0
     successful_publications: int = 0
     failed_publications: int = 0
@@ -170,7 +179,8 @@ class DistributionAnalytics:
 
 
 class MultiPlatformDistributionManager:
-    """    Gestionnaire avancé de distribution multi-plateformes
+    """
+    Gestionnaire avancé de distribution multi-plateformes
     
     Responsabilités:
     - Orchestration distribution automatisée
@@ -178,7 +188,8 @@ class MultiPlatformDistributionManager:
     - Monitoring et retry automatique
     - Analytics cross-platform et ROI
     - Notifications statut et performance
-    """    def __init__(self, db_pool: asyncpg.Pool, redis_client: aioredis.Redis):
+    """
+    def __init__(self, db_pool: asyncpg.Pool, redis_client: aioredis.Redis):
         self.db_pool = db_pool
         self.redis = redis_client
         self.platform_apis = self._init_platform_apis()
@@ -186,7 +197,8 @@ class MultiPlatformDistributionManager:
         self.optimization_models = self._init_optimization_models()
         
     def _init_platform_apis(self) -> Dict[str, Any]:
-        """Initialise les APIs des plateformes de distribution"""        return {
+        """Initialise les APIs des plateformes de distribution"""
+        return {
             "spotify": {
                 "api_url": "https://api.spotify.com/v1/",
                 "upload_url": "https://partners.spotify.com/api/",
@@ -220,8 +232,10 @@ class MultiPlatformDistributionManager:
         }
 
     def _load_distribution_templates(self) -> Dict[str, Template]:
-        """Charge les templates de notification de distribution"""        templates = {
-            "distribution_started": Template("""                🚀 DISTRIBUTION LANCÉE
+        """Charge les templates de notification de distribution"""
+        templates = {
+            "distribution_started": Template("""
+                🚀 DISTRIBUTION LANCÉE
                 
                 🎵 Contenu: {{ content_title }}
                 📊 Plateformes: {{ total_platforms }}
@@ -238,7 +252,8 @@ class MultiPlatformDistributionManager:
                 ⚡ Notifications automatiques activées
             """),
             
-            "platform_published": Template("""                ✅ PUBLIÉ SUR {{ platform.upper() }}!
+            "platform_published": Template("""
+                ✅ PUBLIÉ SUR {{ platform.upper() }}!
                 
                 🎵 "{{ content_title }}"
                 🔗 {{ platform_url }}
@@ -256,7 +271,8 @@ class MultiPlatformDistributionManager:
                 📈 Dashboard: {{ analytics_url }}
             """),
             
-            "distribution_completed": Template("""                🏆 DISTRIBUTION TERMINÉE
+            "distribution_completed": Template("""
+                🏆 DISTRIBUTION TERMINÉE
                 
                 🎵 "{{ content_title }}"
                 
@@ -274,7 +290,8 @@ class MultiPlatformDistributionManager:
                 📈 Voir analytics complètes: {{ full_report_url }}
             """),
             
-            "distribution_failed": Template("""                ⚠️ ÉCHEC DISTRIBUTION - {{ platform.upper() }}
+            "distribution_failed": Template("""
+                ⚠️ ÉCHEC DISTRIBUTION - {{ platform.upper() }}
                 
                 🎵 Contenu: {{ content_title }}
                 ❌ Erreur: {{ error_message }}
@@ -290,7 +307,8 @@ class MultiPlatformDistributionManager:
                 📞 Support: {{ support_contact }}
             """),
             
-            "performance_alert": Template("""                📈 ALERTE PERFORMANCE - {{ alert_type.upper() }}
+            "performance_alert": Template("""
+                📈 ALERTE PERFORMANCE - {{ alert_type.upper() }}
                 
                 🎵 Contenu: {{ content_title }}
                 📊 Plateforme: {{ platform }}
@@ -313,7 +331,8 @@ class MultiPlatformDistributionManager:
                 📊 Analytics: {{ dashboard_url }}
             """),
             
-            "optimization_suggestion": Template("""                💡 OPTIMISATION INTELLIGENTE DISPONIBLE
+            "optimization_suggestion": Template("""
+                💡 OPTIMISATION INTELLIGENTE DISPONIBLE
                 
                 🎵 Contenu: {{ content_title }}
                 🎯 Opportunité: {{ optimization_type }}
@@ -335,7 +354,8 @@ class MultiPlatformDistributionManager:
         return templates
 
     def _init_optimization_models(self) -> Dict[str, Any]:
-        """Initialise les modèles d'optimisation IA"""        return {
+        """Initialise les modèles d'optimisation IA"""
+        return {
             "timing_optimizer": None,  # Modèle ML pour timing optimal
             "audience_matcher": None,  # Modèle pour matching audience
             "content_optimizer": None,  # Modèle pour optimisation contenu
@@ -348,7 +368,8 @@ class MultiPlatformDistributionManager:
         content_data: Dict[str, Any],
         distribution_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """        Crée et lance un job de distribution multi-plateformes
+        """
+        Crée et lance un job de distribution multi-plateformes
         
         Args:
             user_id: ID de l'utilisateur
@@ -357,7 +378,8 @@ class MultiPlatformDistributionManager:
             
         Returns:
             Dict contenant les résultats de la création du job
-        """        try:
+        """
+        try:
             # Validation du contenu
             validated_content = await self._validate_content_data(content_data)
             
@@ -430,9 +452,11 @@ class MultiPlatformDistributionManager:
             raise
 
     async def monitor_distribution_job(self, job_id: str) -> Dict[str, Any]:
-        """Surveille et met à jour un job de distribution en cours"""        async with self.db_pool.acquire() as conn:
+        """Surveille et met à jour un job de distribution en cours"""
+        async with self.db_pool.acquire() as conn:
             # Récupération du job
-            job_data = await conn.fetchrow("""                SELECT * FROM distribution_jobs 
+            job_data = await conn.fetchrow("""
+                SELECT * FROM distribution_jobs 
                 WHERE id = $1
             """, job_id)
             
@@ -440,7 +464,8 @@ class MultiPlatformDistributionManager:
                 raise ValueError(f"Job {job_id} non trouvé")
             
             # Récupération des publications par plateforme
-            publications = await conn.fetch("""                SELECT * FROM platform_publications 
+            publications = await conn.fetch("""
+                SELECT * FROM platform_publications 
                 WHERE distribution_job_id = $1
                 ORDER BY created_at
             """, job_id)
@@ -474,7 +499,8 @@ class MultiPlatformDistributionManager:
                         await self._retry_failed_publication(failed_pub)
             
             # Mise à jour statut global
-            await conn.execute("""                UPDATE distribution_jobs 
+            await conn.execute("""
+                UPDATE distribution_jobs 
                 SET status = $1, last_updated = NOW()
                 WHERE id = $2
             """, overall_status.value, job_id)
@@ -493,12 +519,14 @@ class MultiPlatformDistributionManager:
         period_start: datetime = None,
         period_end: datetime = None
     ) -> Dict[str, Any]:
-        """Récupère les analytics de distribution pour un utilisateur"""        period_start = period_start or (datetime.now() - timedelta(days=30))
+        """Récupère les analytics de distribution pour un utilisateur"""
+        period_start = period_start or (datetime.now() - timedelta(days=30))
         period_end = period_end or datetime.now()
         
         async with self.db_pool.acquire() as conn:
             # Jobs de distribution dans la période
-            distribution_jobs = await conn.fetch("""                SELECT 
+            distribution_jobs = await conn.fetch("""
+                SELECT 
                     dj.*,
                     COUNT(pp.id) as total_publications,
                     COUNT(pp.id) FILTER (WHERE pp.status IN ('published', 'live')) as successful_publications,
@@ -515,7 +543,8 @@ class MultiPlatformDistributionManager:
             """, user_id, period_start, period_end)
             
             # Performance par plateforme
-            platform_performance = await conn.fetch("""                SELECT 
+            platform_performance = await conn.fetch("""
+                SELECT 
                     pp.platform,
                     COUNT(*) as total_publications,
                     COUNT(*) FILTER (WHERE pp.status IN ('published', 'live')) as successful,
@@ -531,7 +560,8 @@ class MultiPlatformDistributionManager:
             """, user_id, period_start, period_end)
             
             # Tendances temporelles
-            temporal_trends = await conn.fetch("""                SELECT 
+            temporal_trends = await conn.fetch("""
+                SELECT 
                     DATE_TRUNC('day', pp.published_at) as day,
                     COUNT(*) as publications_count,
                     SUM(pp.views) as daily_views,
@@ -586,7 +616,8 @@ class MultiPlatformDistributionManager:
         user_id: str,
         content_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimise la stratégie de distribution basée sur l'analyse IA"""        try:
+        """Optimise la stratégie de distribution basée sur l'analyse IA"""
+        try:
             # Analyse historique de performance
             historical_performance = await self._analyze_historical_performance(user_id)
             
@@ -642,7 +673,8 @@ class MultiPlatformDistributionManager:
 
     # Méthodes utilitaires privées
     async def _validate_content_data(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Valide les données de contenu pour distribution"""        required_fields = ["title", "content_type", "file_url"]
+        """Valide les données de contenu pour distribution"""
+        required_fields = ["title", "content_type", "file_url"]
         
         for field in required_fields:
             if field not in content_data:
@@ -659,7 +691,8 @@ class MultiPlatformDistributionManager:
         return content_data
 
     async def _start_distribution_job(self, job: DistributionJob) -> None:
-        """Lance l'exécution d'un job de distribution"""        job.status = DistributionStatus.PROCESSING
+        """Lance l'exécution d'un job de distribution"""
+        job.status = DistributionStatus.PROCESSING
         job.started_at = datetime.now()
         
         # Création des publications pour chaque plateforme
@@ -678,7 +711,8 @@ class MultiPlatformDistributionManager:
         job: DistributionJob,
         platform_config: DistributionConfig
     ) -> PlatformPublication:
-        """Crée et lance une publication sur une plateforme spécifique"""        publication = PlatformPublication(
+        """Crée et lance une publication sur une plateforme spécifique"""
+        publication = PlatformPublication(
             distribution_job_id=job.id,
             platform=platform_config.platform,
             status=DistributionStatus.QUEUED
@@ -717,7 +751,8 @@ class MultiPlatformDistributionManager:
         job: DistributionJob,
         platform_config: DistributionConfig
     ) -> Dict[str, Any]:
-        """Optimise le contenu pour une plateforme spécifique"""        platform_specs = self.platform_apis[platform_config.platform.value]
+        """Optimise le contenu pour une plateforme spécifique"""
+        platform_specs = self.platform_apis[platform_config.platform.value]
         
         optimized_content = {
             "title": job.title,

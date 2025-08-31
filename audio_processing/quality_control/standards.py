@@ -12,7 +12,8 @@ Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou reproduction sans 
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
 interdite et passible de poursuites judiciaires selon la loi allemande et internationale.
-"""import logging
+"""
+import logging
 from typing import Dict, List, Optional, Union, Any
 from dataclasses import dataclass, field
 from enum import Enum
@@ -23,7 +24,8 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Audio content types"""    MUSIC = "music"
+    """Audio content types"""
+    MUSIC = "music"
     SPEECH = "speech"
     PODCAST = "podcast"
     AUDIOBOOK = "audiobook"
@@ -37,7 +39,8 @@ class ContentType(Enum):
 
 
 class QualityLevel(Enum):
-    """Quality requirement levels"""    BASIC = "basic"           # Minimum acceptable quality
+    """Quality requirement levels"""
+    BASIC = "basic"           # Minimum acceptable quality
     STANDARD = "standard"     # Standard professional quality
     HIGH = "high"             # High professional quality
     PREMIUM = "premium"       # Premium broadcast quality
@@ -45,7 +48,8 @@ class QualityLevel(Enum):
 
 
 class PlatformType(Enum):
-    """Supported platform types"""    SPOTIFY = "spotify"
+    """Supported platform types"""
+    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -61,7 +65,8 @@ class PlatformType(Enum):
 
 @dataclass
 class QualityRule:
-    """Individual quality rule definition"""    name: str
+    """Individual quality rule definition"""
+    name: str
     description: str
     parameter: str
     operator: str  # ">=", "<=", "==", "!=", "in", "not_in"
@@ -75,7 +80,8 @@ class QualityRule:
 
 @dataclass
 class QualityProfile:
-    """Complete quality profile definition"""    name: str
+    """Complete quality profile definition"""
+    name: str
     description: str
     content_type: ContentType
     quality_level: QualityLevel
@@ -109,7 +115,8 @@ class QualityProfile:
 
 
 class QualityStandards:
-    """    🎯 Professional Quality Standards Manager
+    """
+    🎯 Professional Quality Standards Manager
     
     Comprehensive quality standards system:
     - Pre-defined quality profiles for different content types
@@ -117,7 +124,8 @@ class QualityStandards:
     - Customizable quality rules and thresholds
     - Industry standard compliance
     - Quality profile management
-    """    
+    """
+    
     def __init__(self):
         self.profiles: Dict[str, QualityProfile] = {}
         self.default_profile_name = "standard_music"
@@ -128,7 +136,8 @@ class QualityStandards:
         logger.info(f"QualityStandards initialized with {len(self.profiles)} profiles")
     
     def _initialize_standard_profiles(self):
-        """Initialize industry-standard quality profiles"""        
+        """Initialize industry-standard quality profiles"""
+        
         # Standard Music Profile
         self.profiles["standard_music"] = QualityProfile(
             name="standard_music",
@@ -433,34 +442,41 @@ class QualityStandards:
         )
     
     def get_profile(self, profile_name: str) -> Optional[QualityProfile]:
-        """Get quality profile by name"""        return self.profiles.get(profile_name)
+        """Get quality profile by name"""
+        return self.profiles.get(profile_name)
     
     def get_default_profile(self) -> QualityProfile:
-        """Get default quality profile"""        return self.profiles[self.default_profile_name]
+        """Get default quality profile"""
+        return self.profiles[self.default_profile_name]
     
     def list_profiles(self) -> List[str]:
-        """List all available profile names"""        return list(self.profiles.keys())
+        """List all available profile names"""
+        return list(self.profiles.keys())
     
     def get_profiles_by_content_type(self, content_type: ContentType) -> List[QualityProfile]:
-        """Get profiles filtered by content type"""        return [
+        """Get profiles filtered by content type"""
+        return [
             profile for profile in self.profiles.values()
             if profile.content_type == content_type
         ]
     
     def get_profiles_by_platform(self, platform_type: PlatformType) -> List[QualityProfile]:
-        """Get profiles filtered by platform type"""        return [
+        """Get profiles filtered by platform type"""
+        return [
             profile for profile in self.profiles.values()
             if profile.platform_type == platform_type or profile.platform_type == PlatformType.GENERAL
         ]
     
     def get_profiles_by_quality_level(self, quality_level: QualityLevel) -> List[QualityProfile]:
-        """Get profiles filtered by quality level"""        return [
+        """Get profiles filtered by quality level"""
+        return [
             profile for profile in self.profiles.values()
             if profile.quality_level == quality_level
         ]
     
     def add_profile(self, profile: QualityProfile) -> bool:
-        """Add custom quality profile"""        if profile.name in self.profiles:
+        """Add custom quality profile"""
+        if profile.name in self.profiles:
             logger.warning(f"Profile {profile.name} already exists, overwriting")
         
         self.profiles[profile.name] = profile
@@ -468,7 +484,8 @@ class QualityStandards:
         return True
     
     def remove_profile(self, profile_name: str) -> bool:
-        """Remove quality profile"""        if profile_name in self.profiles:
+        """Remove quality profile"""
+        if profile_name in self.profiles:
             if profile_name == self.default_profile_name:
                 logger.error("Cannot remove default profile")
                 return False
@@ -481,7 +498,8 @@ class QualityStandards:
         return False
     
     def update_profile(self, profile_name: str, updates: Dict[str, Any]) -> bool:
-        """Update quality profile parameters"""        if profile_name not in self.profiles:
+        """Update quality profile parameters"""
+        if profile_name not in self.profiles:
             logger.error(f"Profile not found: {profile_name}")
             return False
         
@@ -510,7 +528,8 @@ class QualityStandards:
         return True
     
     def validate_profile(self, profile: QualityProfile) -> List[str]:
-        """Validate quality profile configuration"""        issues = []
+        """Validate quality profile configuration"""
+        issues = []
         
         # Check required fields
         if not profile.name:
@@ -557,7 +576,8 @@ class QualityStandards:
         requirements: Dict[str, Any],
         quality_rules: List[QualityRule] = None
     ) -> QualityProfile:
-        """Create custom quality profile"""        
+        """Create custom quality profile"""
+        
         profile = QualityProfile(
             name=name,
             description=description,
@@ -583,7 +603,8 @@ class QualityStandards:
         platform_type: Optional[PlatformType] = None,
         quality_level: Optional[QualityLevel] = None
     ) -> QualityProfile:
-        """Get recommended profile based on criteria"""        
+        """Get recommended profile based on criteria"""
+        
         # Filter profiles by criteria
         candidates = list(self.profiles.values())
         
@@ -610,7 +631,8 @@ class QualityStandards:
         return self.get_default_profile()
     
     def export_profiles(self, file_path: str, profile_names: List[str] = None):
-        """Export quality profiles to JSON file"""        
+        """Export quality profiles to JSON file"""
+        
         if profile_names is None:
             profiles_to_export = self.profiles
         else:
@@ -660,7 +682,8 @@ class QualityStandards:
         logger.info(f"Exported {len(export_data)} profiles to {file_path}")
     
     def import_profiles(self, file_path: str, overwrite: bool = False):
-        """Import quality profiles from JSON file"""        
+        """Import quality profiles from JSON file"""
+        
         try:
             with open(file_path, 'r') as f:
                 import_data = json.load(f)
@@ -713,7 +736,8 @@ class QualityStandards:
             raise
     
     def set_default_profile(self, profile_name: str) -> bool:
-        """Set default quality profile"""        if profile_name not in self.profiles:
+        """Set default quality profile"""
+        if profile_name not in self.profiles:
             logger.error(f"Profile not found: {profile_name}")
             return False
         
@@ -722,7 +746,8 @@ class QualityStandards:
         return True
     
     def get_profile_summary(self) -> Dict[str, Any]:
-        """Get summary of all profiles"""        summary = {
+        """Get summary of all profiles"""
+        summary = {
             "total_profiles": len(self.profiles),
             "default_profile": self.default_profile_name,
             "by_content_type": {},

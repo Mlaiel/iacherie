@@ -6,7 +6,8 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
-"""from datetime import datetime
+"""
+from datetime import datetime
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Set
 from uuid import UUID
@@ -17,7 +18,8 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class DistributionRequest(BaseSchema):
-    """Content distribution request schema."""    
+    """Content distribution request schema."""
+    
     content_id: UUID = Field(description="Content to distribute")
     creator_id: UUID = Field(description="Content creator")
     distribution_name: str = Field(description="Distribution campaign name")
@@ -58,7 +60,8 @@ class DistributionRequest(BaseSchema):
     
     @validator('distribution_type')
     def validate_distribution_type(cls, v):
-        """Validate distribution type."""        allowed_types = {
+        """Validate distribution type."""
+        allowed_types = {
             "single_release", "album_release", "ep_release", "compilation",
             "live_recording", "remix_package", "deluxe_edition", "remaster",
             "video_content", "podcast_episode", "audiobook", "educational_content"
@@ -69,7 +72,8 @@ class DistributionRequest(BaseSchema):
 
 
 class DistributionOut(UUIDSchema, TimestampSchema):
-    """Distribution status and information schema."""    
+    """Distribution status and information schema."""
+    
     content_id: UUID
     creator_id: UUID
     distribution_name: str
@@ -113,14 +117,16 @@ class DistributionOut(UUIDSchema, TimestampSchema):
     
     @property
     def success_rate(self) -> float:
-        """Calculate distribution success rate."""        total_platforms = len(self.platform_statuses)
+        """Calculate distribution success rate."""
+        total_platforms = len(self.platform_statuses)
         if total_platforms == 0:
             return 0.0
         return len(self.successful_platforms) / total_platforms
 
 
 class PlatformIntegration(UUIDSchema, TimestampSchema, AuditSchema):
-    """Platform integration configuration schema."""    
+    """Platform integration configuration schema."""
+    
     creator_id: UUID = Field(description="Creator setting up integration")
     platform_name: str = Field(description="Platform name")
     integration_type: str = Field(description="Type of integration")
@@ -168,7 +174,8 @@ class PlatformIntegration(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('platform_name')
     def validate_platform_name(cls, v):
-        """Validate platform name."""        allowed_platforms = {
+        """Validate platform name."""
+        allowed_platforms = {
             "spotify", "apple_music", "youtube", "youtube_music", "amazon_music",
             "deezer", "tidal", "soundcloud", "bandcamp", "instagram", "tiktok",
             "facebook", "twitter", "linkedin", "twitch", "discord", "patreon"
@@ -179,7 +186,8 @@ class PlatformIntegration(UUIDSchema, TimestampSchema, AuditSchema):
 
 
 class ContentDelivery(UUIDSchema, TimestampSchema):
-    """Content delivery network and optimization schema."""    
+    """Content delivery network and optimization schema."""
+    
     content_id: UUID
     delivery_method: str = Field(description="Content delivery method")
     cdn_provider: str = Field(description="CDN provider")
@@ -220,7 +228,8 @@ class ContentDelivery(UUIDSchema, TimestampSchema):
     
     @validator('delivery_method')
     def validate_delivery_method(cls, v):
-        """Validate delivery method."""        allowed_methods = {
+        """Validate delivery method."""
+        allowed_methods = {
             "progressive_download", "adaptive_streaming", "live_streaming",
             "on_demand_streaming", "cached_delivery", "direct_download"
         }
@@ -230,7 +239,8 @@ class ContentDelivery(UUIDSchema, TimestampSchema):
 
 
 class DistributionMetrics(UUIDSchema, TimestampSchema):
-    """Distribution performance metrics schema."""    
+    """Distribution performance metrics schema."""
+    
     distribution_id: UUID
     metrics_period_start: datetime
     metrics_period_end: datetime
@@ -281,7 +291,8 @@ class DistributionMetrics(UUIDSchema, TimestampSchema):
 
 
 class PlatformAnalytics(UUIDSchema, TimestampSchema):
-    """Platform-specific analytics schema."""    
+    """Platform-specific analytics schema."""
+    
     creator_id: UUID
     platform_name: str
     analytics_period_start: datetime
@@ -331,7 +342,8 @@ class PlatformAnalytics(UUIDSchema, TimestampSchema):
 
 
 class MultiPlatformSync(UUIDSchema, TimestampSchema):
-    """Multi-platform synchronization schema."""    
+    """Multi-platform synchronization schema."""
+    
     creator_id: UUID
     sync_configuration_name: str = Field(description="Sync configuration name")
     
@@ -375,7 +387,8 @@ class MultiPlatformSync(UUIDSchema, TimestampSchema):
     
     @validator('sync_frequency')
     def validate_sync_frequency(cls, v):
-        """Validate sync frequency."""        allowed_frequencies = {
+        """Validate sync frequency."""
+        allowed_frequencies = {
             "real_time", "every_15_minutes", "hourly", "daily", 
             "weekly", "manual", "event_driven"
         }
@@ -385,7 +398,8 @@ class MultiPlatformSync(UUIDSchema, TimestampSchema):
 
 
 class DistributionCampaign(UUIDSchema, TimestampSchema, AuditSchema):
-    """Distribution campaign management schema."""    
+    """Distribution campaign management schema."""
+    
     creator_id: UUID
     campaign_name: str = Field(description="Distribution campaign name")
     campaign_type: str = Field(description="Type of distribution campaign")
@@ -430,7 +444,8 @@ class DistributionCampaign(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('campaign_type')
     def validate_campaign_type(cls, v):
-        """Validate campaign type."""        allowed_types = {
+        """Validate campaign type."""
+        allowed_types = {
             "album_launch", "single_release", "promotional_campaign", "brand_partnership",
             "seasonal_campaign", "cross_platform_sync", "viral_marketing", "influencer_collaboration"
         }

@@ -9,7 +9,8 @@ Unauthorized use, reproduction, modification, or distribution without explicit
 written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""import asyncio
+"""
+import asyncio
 import logging
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -34,7 +35,8 @@ logger = logging.getLogger(__name__)
 
 
 class AllocationStrategy(Enum):
-    """Revenue allocation strategies"""    EQUAL_DISTRIBUTION = "equal_distribution"
+    """Revenue allocation strategies"""
+    EQUAL_DISTRIBUTION = "equal_distribution"
     PERFORMANCE_BASED = "performance_based"
     PRIORITY_WEIGHTED = "priority_weighted"
     RISK_ADJUSTED = "risk_adjusted"
@@ -45,7 +47,8 @@ class AllocationStrategy(Enum):
 
 
 class AllocationPriority(Enum):
-    """Allocation priority levels"""    CRITICAL = "critical"
+    """Allocation priority levels"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -53,7 +56,8 @@ class AllocationPriority(Enum):
 
 
 class AllocationConstraint(Enum):
-    """Allocation constraint types"""    MINIMUM_AMOUNT = "minimum_amount"
+    """Allocation constraint types"""
+    MINIMUM_AMOUNT = "minimum_amount"
     MAXIMUM_AMOUNT = "maximum_amount"
     PERCENTAGE_LIMIT = "percentage_limit"
     DEPENDENCY = "dependency"
@@ -63,7 +67,8 @@ class AllocationConstraint(Enum):
 
 @dataclass
 class AllocationTarget:
-    """Revenue allocation target"""    target_id: str
+    """Revenue allocation target"""
+    target_id: str
     name: str
     category: str
     priority: AllocationPriority
@@ -77,17 +82,20 @@ class AllocationTarget:
     
     @property
     def allocation_percentage(self) -> float:
-        """Calculate current allocation percentage"""        # This would be calculated based on total available amount
+        """Calculate current allocation percentage"""
+        # This would be calculated based on total available amount
         return 0.0  # Placeholder
     
     @property
     def is_satisfied(self) -> bool:
-        """Check if allocation constraints are satisfied"""        return (self.minimum_allocation <= self.current_allocation <= self.maximum_allocation)
+        """Check if allocation constraints are satisfied"""
+        return (self.minimum_allocation <= self.current_allocation <= self.maximum_allocation)
 
 
 @dataclass
 class AllocationMetrics:
-    """Revenue allocation performance metrics"""    total_amount: Decimal
+    """Revenue allocation performance metrics"""
+    total_amount: Decimal
     allocated_amount: Decimal
     unallocated_amount: Decimal
     allocation_efficiency: float
@@ -100,14 +108,16 @@ class AllocationMetrics:
     
     @property
     def allocation_rate(self) -> float:
-        """Calculate allocation rate"""        if self.total_amount == 0:
+        """Calculate allocation rate"""
+        if self.total_amount == 0:
             return 0.0
         return float((self.allocated_amount / self.total_amount) * 100)
 
 
 @dataclass
 class AllocationResult:
-    """Revenue allocation result"""    allocation_id: str
+    """Revenue allocation result"""
+    allocation_id: str
     strategy_used: AllocationStrategy
     targets: List[AllocationTarget]
     metrics: AllocationMetrics
@@ -118,7 +128,8 @@ class AllocationResult:
 
 
 class BaseAllocationOptimizer(ABC):
-    """Abstract base class for allocation optimizers"""    
+    """Abstract base class for allocation optimizers"""
+    
     @abstractmethod
     async def optimize(
         self,
@@ -126,18 +137,21 @@ class BaseAllocationOptimizer(ABC):
         targets: List[AllocationTarget],
         constraints: Dict[str, Any]
     ) -> List[AllocationTarget]:
-        """Optimize allocation across targets"""        pass
+        """Optimize allocation across targets"""
+        pass
 
 
 class PerformanceBasedOptimizer(BaseAllocationOptimizer):
-    """Performance-based allocation optimizer"""    
+    """Performance-based allocation optimizer"""
+    
     async def optimize(
         self,
         total_amount: Decimal,
         targets: List[AllocationTarget],
         constraints: Dict[str, Any]
     ) -> List[AllocationTarget]:
-        """Optimize based on performance scores"""        try:
+        """Optimize based on performance scores"""
+        try:
             # Calculate total performance score
             total_performance = sum(target.performance_score for target in targets)
             
@@ -167,14 +181,16 @@ class PerformanceBasedOptimizer(BaseAllocationOptimizer):
 
 
 class RiskAdjustedOptimizer(BaseAllocationOptimizer):
-    """Risk-adjusted allocation optimizer"""    
+    """Risk-adjusted allocation optimizer"""
+    
     async def optimize(
         self,
         total_amount: Decimal,
         targets: List[AllocationTarget],
         constraints: Dict[str, Any]
     ) -> List[AllocationTarget]:
-        """Optimize based on risk-adjusted returns"""        try:
+        """Optimize based on risk-adjusted returns"""
+        try:
             # Calculate risk-adjusted scores
             risk_adjusted_scores = []
             for target in targets:
@@ -210,14 +226,16 @@ class RiskAdjustedOptimizer(BaseAllocationOptimizer):
 
 
 class DynamicOptimizer(BaseAllocationOptimizer):
-    """Dynamic optimization using mathematical optimization"""    
+    """Dynamic optimization using mathematical optimization"""
+    
     async def optimize(
         self,
         total_amount: Decimal,
         targets: List[AllocationTarget],
         constraints: Dict[str, Any]
     ) -> List[AllocationTarget]:
-        """Optimize using mathematical optimization"""        try:
+        """Optimize using mathematical optimization"""
+        try:
             n_targets = len(targets)
             
             # Define objective function (maximize utility)
@@ -295,7 +313,8 @@ class DynamicOptimizer(BaseAllocationOptimizer):
 
 
 class RevenueAllocator:
-    """Comprehensive revenue allocation system"""    
+    """Comprehensive revenue allocation system"""
+    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.optimizers = {}
@@ -304,7 +323,8 @@ class RevenueAllocator:
         self.encryption_manager = EncryptionManager()
         
     async def initialize(self) -> None:
-        """Initialize revenue allocator"""        try:
+        """Initialize revenue allocator"""
+        try:
             # Initialize optimizers
             self.optimizers = {
                 AllocationStrategy.PERFORMANCE_BASED: PerformanceBasedOptimizer(),
@@ -326,7 +346,8 @@ class RevenueAllocator:
         strategy: AllocationStrategy = AllocationStrategy.DYNAMIC_OPTIMIZATION,
         constraints: Optional[Dict[str, Any]] = None
     ) -> AllocationResult:
-        """Allocate revenue across targets using specified strategy"""        try:
+        """Allocate revenue across targets using specified strategy"""
+        try:
             validate_allocation_data({'total_amount': total_amount, 'targets': targets})
             
             start_time = datetime.utcnow()
@@ -396,7 +417,8 @@ class RevenueAllocator:
         total_amount: Decimal,
         targets: List[AllocationTarget]
     ) -> AllocationMetrics:
-        """Calculate allocation performance metrics"""        try:
+        """Calculate allocation performance metrics"""
+        try:
             allocated_amount = sum(target.current_allocation for target in targets)
             unallocated_amount = total_amount - allocated_amount
             
@@ -456,7 +478,8 @@ class RevenueAllocator:
         targets: List[AllocationTarget],
         metrics: AllocationMetrics
     ) -> List[str]:
-        """Generate allocation recommendations"""        recommendations = []
+        """Generate allocation recommendations"""
+        recommendations = []
         
         # Efficiency recommendations
         if metrics.allocation_efficiency < 95:
@@ -501,7 +524,8 @@ class RevenueAllocator:
         targets: List[AllocationTarget],
         metrics: AllocationMetrics
     ) -> List[str]:
-        """Generate allocation warnings"""        warnings = []
+        """Generate allocation warnings"""
+        warnings = []
         
         # Constraint violation warnings
         if metrics.constraint_violations > 0:
@@ -536,7 +560,8 @@ class RevenueAllocator:
         new_total_amount: Optional[Decimal] = None,
         strategy: Optional[AllocationStrategy] = None
     ) -> AllocationResult:
-        """Rebalance existing allocation"""        try:
+        """Rebalance existing allocation"""
+        try:
             # Find original allocation
             original_allocation = next(
                 (a for a in self.allocation_history if a.allocation_id == allocation_id),
@@ -570,7 +595,8 @@ class RevenueAllocator:
         targets: List[AllocationTarget],
         scenarios: List[Dict[str, Any]]
     ) -> Dict[str, AllocationResult]:
-        """Simulate different allocation scenarios"""        try:
+        """Simulate different allocation scenarios"""
+        try:
             results = {}
             
             for scenario in scenarios:
@@ -630,7 +656,8 @@ class RevenueAllocator:
         targets: List[AllocationTarget],
         total_amount: Decimal
     ) -> List[AllocationTarget]:
-        """Optimize allocation constraints for better results"""        try:
+        """Optimize allocation constraints for better results"""
+        try:
             optimized_targets = []
             
             for target in targets:
@@ -678,7 +705,8 @@ class RevenueAllocator:
             raise RevenueAllocationError(f"Constraint optimization failed: {e}")
     
     async def get_allocation_analytics(self, period_days: int = 30) -> Dict[str, Any]:
-        """Get allocation analytics for specified period"""        try:
+        """Get allocation analytics for specified period"""
+        try:
             # Filter allocations by period
             cutoff_date = datetime.utcnow() - timedelta(days=period_days)
             recent_allocations = [
@@ -750,7 +778,8 @@ class RevenueAllocator:
             raise RevenueAllocationError(f"Analytics generation failed: {e}")
     
     async def export_allocation_report(self, allocation_id: str) -> Dict[str, Any]:
-        """Export detailed allocation report"""        try:
+        """Export detailed allocation report"""
+        try:
             allocation = next(
                 (a for a in self.allocation_history if a.allocation_id == allocation_id),
                 None

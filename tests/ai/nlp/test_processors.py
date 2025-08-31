@@ -4,7 +4,8 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""import sys
+"""
+import sys
 import os
 from pathlib import Path
 
@@ -21,7 +22,8 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""import pytest
+"""
+import pytest
 import sys
 import os
 from pathlib import Path
@@ -46,10 +48,12 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class TestAdvancedContentProcessor:
-    """Comprehensive tests for AdvancedContentProcessor"""    
+    """Comprehensive tests for AdvancedContentProcessor"""
+    
     @pytest.mark.asyncio
     async def test_processor_initialization(self, content_processor):
-        """Test processor initialization and configuration"""        assert content_processor is not None
+        """Test processor initialization and configuration"""
+        assert content_processor is not None
         assert hasattr(content_processor, 'config')
         assert hasattr(content_processor, 'text_processor')
         assert hasattr(content_processor, 'social_processor')
@@ -63,7 +67,8 @@ class TestAdvancedContentProcessor:
 
     @pytest.mark.asyncio
     async def test_text_preprocessing(self, content_processor, sample_texts):
-        """Test basic text preprocessing functionality"""        for language, texts in sample_texts.items():
+        """Test basic text preprocessing functionality"""
+        for language, texts in sample_texts.items():
             for text in texts[:2]:  # Test first 2 texts per language
                 processed = await content_processor.preprocess_text(
                     text=text,
@@ -83,7 +88,8 @@ class TestAdvancedContentProcessor:
 
     @pytest.mark.asyncio
     async def test_social_media_preprocessing(self, content_processor, sample_social_content):
-        """Test social media specific preprocessing"""        for platform_name, content_dict in sample_social_content.items():
+        """Test social media specific preprocessing"""
+        for platform_name, content_dict in sample_social_content.items():
             platform = getattr(Platform, platform_name.upper(), Platform.INSTAGRAM)
             
             for content_type, text in content_dict.items():
@@ -115,7 +121,8 @@ class TestAdvancedContentProcessor:
 
     @pytest.mark.asyncio
     async def test_platform_optimization(self, content_processor, sample_platform_content):
-        """Test platform-specific content optimization"""        platforms_to_test = [Platform.INSTAGRAM, Platform.TIKTOK, Platform.TWITTER, Platform.YOUTUBE]
+        """Test platform-specific content optimization"""
+        platforms_to_test = [Platform.INSTAGRAM, Platform.TIKTOK, Platform.TWITTER, Platform.YOUTUBE]
         
         for platform in platforms_to_test:
             platform_key = platform.value
@@ -159,7 +166,8 @@ class TestAdvancedContentProcessor:
 
     @pytest.mark.asyncio
     async def test_multilingual_preprocessing(self, content_processor, sample_texts):
-        """Test multilingual content preprocessing"""        for language, texts in sample_texts.items():
+        """Test multilingual content preprocessing"""
+        for language, texts in sample_texts.items():
             text = texts[0]
             lang_code = language[:2]
             
@@ -196,7 +204,8 @@ class TestAdvancedContentProcessor:
 
     @pytest.mark.asyncio
     async def test_content_normalization(self, content_processor, sample_social_content):
-        """Test content normalization across different formats"""        # Test with various content types
+        """Test content normalization across different formats"""
+        # Test with various content types
         content_samples = [
             sample_social_content['instagram']['long_caption'],
             sample_social_content['tiktok']['trending_video'],
@@ -232,10 +241,13 @@ class TestAdvancedContentProcessor:
 
     @pytest.mark.asyncio
     async def test_format_specific_processing(self, content_processor):
-        """Test format-specific content processing"""        # Test HTML content
-        html_content = """        <p>This is a <strong>test</strong> with <a href="http://example.com">links</a></p>
+        """Test format-specific content processing"""
+        # Test HTML content
+        html_content = """
+        <p>This is a <strong>test</strong> with <a href="http://example.com">links</a></p>
         <div>And some <em>formatting</em>!</div>
-        """        
+        """
+        
         processed_html = await content_processor.process_format(
             content=html_content,
             format_type=ContentFormat.HTML,
@@ -252,14 +264,16 @@ class TestAdvancedContentProcessor:
         assert 'links' in processed_html['processed_content']
         
         # Test Markdown content
-        markdown_content = """        # Title
+        markdown_content = """
+        # Title
         This is **bold** and *italic* text.
         
         - List item 1
         - List item 2
         
         [Link](http://example.com)
-        """        
+        """
+        
         processed_md = await content_processor.process_format(
             content=markdown_content,
             format_type=ContentFormat.MARKDOWN,
@@ -277,7 +291,8 @@ class TestAdvancedContentProcessor:
 
     @pytest.mark.asyncio
     async def test_batch_preprocessing(self, content_processor, performance_test_data):
-        """Test batch preprocessing capabilities"""        texts = performance_test_data['small_batch']
+        """Test batch preprocessing capabilities"""
+        texts = performance_test_data['small_batch']
         
         start_time = time.time()
         processed_batch = await content_processor.preprocess_batch(
@@ -300,7 +315,8 @@ class TestAdvancedContentProcessor:
 
     @pytest.mark.asyncio
     async def test_emoji_handling(self, content_processor):
-        """Test emoji detection and handling"""        emoji_text = "I love this! 😍🎉 Great work! 👏✨ #amazing #love ❤️"
+        """Test emoji detection and handling"""
+        emoji_text = "I love this! 😍🎉 Great work! 👏✨ #amazing #love ❤️"
         
         processed = await content_processor.process_emojis(
             text=emoji_text,
@@ -330,7 +346,8 @@ class TestAdvancedContentProcessor:
 
     @pytest.mark.asyncio
     async def test_hashtag_processing(self, content_processor, sample_social_content):
-        """Test hashtag extraction and processing"""        text_with_hashtags = sample_social_content['instagram']['post']
+        """Test hashtag extraction and processing"""
+        text_with_hashtags = sample_social_content['instagram']['post']
         
         processed = await content_processor.process_hashtags(
             text=text_with_hashtags,
@@ -360,7 +377,8 @@ class TestAdvancedContentProcessor:
 
     @pytest.mark.asyncio
     async def test_mention_processing(self, content_processor, sample_texts):
-        """Test mention extraction and processing"""        text_with_mentions = sample_texts['english'][2]  # Has @foodlover
+        """Test mention extraction and processing"""
+        text_with_mentions = sample_texts['english'][2]  # Has @foodlover
         
         processed = await content_processor.process_mentions(
             text=text_with_mentions,
@@ -389,7 +407,8 @@ class TestAdvancedContentProcessor:
 
     @pytest.mark.asyncio
     async def test_url_processing(self, content_processor):
-        """Test URL detection and processing"""        text_with_urls = "Check out this amazing website: https://example.com and also http://test.org/page"
+        """Test URL detection and processing"""
+        text_with_urls = "Check out this amazing website: https://example.com and also http://test.org/page"
         
         processed = await content_processor.process_urls(
             text=text_with_urls,
@@ -419,11 +438,14 @@ class TestAdvancedContentProcessor:
 
     @pytest.mark.asyncio
     async def test_content_sanitization(self, content_processor):
-        """Test content sanitization for security"""        malicious_content = """        <script>alert('xss')</script>
+        """Test content sanitization for security"""
+        malicious_content = """
+        <script>alert('xss')</script>
         <img src="x" onerror="alert('xss')">
         javascript:alert('xss')
         <iframe src="http://malicious.com"></iframe>
-        """        
+        """
+        
         sanitized = await content_processor.sanitize_content(
             content=malicious_content,
             options={
@@ -443,7 +465,8 @@ class TestAdvancedContentProcessor:
 
     @pytest.mark.asyncio
     async def test_performance_optimization(self, content_processor, performance_test_data):
-        """Test preprocessing performance optimization"""        # Test with large text
+        """Test preprocessing performance optimization"""
+        # Test with large text
         large_text = performance_test_data['stress_text']
         
         start_time = time.time()
@@ -480,7 +503,8 @@ class TestAdvancedContentProcessor:
 
     @pytest.mark.asyncio
     async def test_encoding_handling(self, content_processor):
-        """Test handling of different text encodings"""        # Test various encodings and special characters
+        """Test handling of different text encodings"""
+        # Test various encodings and special characters
         test_texts = [
             "English text with unicode: café, naïve, résumé",
             "Deutsch: Ärger, Öl, Übung, ß",
@@ -510,7 +534,9 @@ class TestAdvancedContentProcessor:
 
     @pytest.mark.asyncio
     async def test_content_structure_preservation(self, content_processor):
-        """Test preservation of content structure"""        structured_content = """        Title: Important Announcement
+        """Test preservation of content structure"""
+        structured_content = """
+        Title: Important Announcement
         
         Paragraph 1: This is the first paragraph with important information.
         
@@ -520,7 +546,8 @@ class TestAdvancedContentProcessor:
         - List item 3
         
         Conclusion: Final thoughts here.
-        """        
+        """
+        
         processed = await content_processor.preprocess_text(
             text=structured_content,
             language='en',
@@ -539,16 +566,19 @@ class TestAdvancedContentProcessor:
         assert 'Conclusion:' in processed or 'Final thoughts' in processed
 
 class TestTextProcessor:
-    """Test specialized text processor"""    
+    """Test specialized text processor"""
+    
     @pytest.mark.asyncio
     async def test_text_processor_initialization(self):
-        """Test text processor initialization"""        processor = TextProcessor()
+        """Test text processor initialization"""
+        processor = TextProcessor()
         assert processor is not None
         assert hasattr(processor, 'process')
 
     @pytest.mark.asyncio
     async def test_basic_text_processing(self, sample_texts):
-        """Test basic text processing"""        processor = TextProcessor()
+        """Test basic text processing"""
+        processor = TextProcessor()
         
         text = sample_texts['english'][0]
         processed = await processor.process(
@@ -563,17 +593,20 @@ class TestTextProcessor:
         assert len(processed) > 0
 
 class TestSocialMediaProcessor:
-    """Test specialized social media processor"""    
+    """Test specialized social media processor"""
+    
     @pytest.mark.asyncio
     async def test_social_processor_initialization(self):
-        """Test social media processor initialization"""        processor = SocialMediaProcessor()
+        """Test social media processor initialization"""
+        processor = SocialMediaProcessor()
         assert processor is not None
         assert hasattr(processor, 'process_post')
         assert hasattr(processor, 'extract_social_elements')
 
     @pytest.mark.asyncio
     async def test_social_elements_extraction(self, sample_social_content):
-        """Test extraction of social media elements"""        processor = SocialMediaProcessor()
+        """Test extraction of social media elements"""
+        processor = SocialMediaProcessor()
         
         text = sample_social_content['instagram']['post']
         
@@ -587,17 +620,20 @@ class TestSocialMediaProcessor:
         assert 'emojis' in elements
 
 class TestVideoContentProcessor:
-    """Test video content processor"""    
+    """Test video content processor"""
+    
     @pytest.mark.asyncio
     async def test_video_processor_initialization(self):
-        """Test video processor initialization"""        processor = VideoContentProcessor()
+        """Test video processor initialization"""
+        processor = VideoContentProcessor()
         assert processor is not None
         assert hasattr(processor, 'process_transcript')
         assert hasattr(processor, 'extract_metadata')
 
     @pytest.mark.asyncio
     async def test_transcript_processing(self, sample_social_content):
-        """Test video transcript processing"""        processor = VideoContentProcessor()
+        """Test video transcript processing"""
+        processor = VideoContentProcessor()
         
         # Use TikTok video content as transcript
         transcript = sample_social_content['tiktok']['trending_video']
@@ -617,9 +653,11 @@ class TestVideoContentProcessor:
         assert 'metadata' in processed
 
 class TestProcessingConfig:
-    """Test processing configuration"""    
+    """Test processing configuration"""
+    
     def test_config_creation(self):
-        """Test processing configuration creation"""        config = ProcessingConfig(
+        """Test processing configuration creation"""
+        config = ProcessingConfig(
             languages=['en', 'de', 'fr'],
             formats=[ContentFormat.TEXT, ContentFormat.HTML],
             performance_mode='standard'
@@ -630,7 +668,8 @@ class TestProcessingConfig:
         assert config.performance_mode == 'standard'
 
     def test_config_validation(self):
-        """Test configuration validation"""        # Test with valid config
+        """Test configuration validation"""
+        # Test with valid config
         config = ProcessingConfig(
             languages=['en'],
             formats=[ContentFormat.TEXT],

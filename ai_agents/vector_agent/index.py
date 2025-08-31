@@ -11,7 +11,8 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Any attempt to steal the concept, idea, or code without explicit written authorization
 from Fahed Mlaiel will result in immediate legal prosecution under German and international law.
-"""import asyncio
+"""
+import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Type, Union
 from datetime import datetime, timezone
@@ -30,11 +31,13 @@ logger = logging.getLogger(__name__)
 
 
 class VectorServiceRegistry:
-    """    Ultra-Advanced Vector Service Registry
+    """
+    Ultra-Advanced Vector Service Registry
     
     Centralized registry providing factory methods, dependency injection,
     and lifecycle management for all vector agent components.
-    """    
+    """
+    
     def __init__(self):
         self._services: Dict[str, Any] = {}
         self._initialized = False
@@ -42,7 +45,8 @@ class VectorServiceRegistry:
         self._shutdown_requested = False
         
     async def initialize(self, config: Optional[VectorConfig] = None) -> None:
-        """Initialize the service registry with configuration"""        try:
+        """Initialize the service registry with configuration"""
+        try:
             if self._initialized:
                 logger.warning("Service registry already initialized")
                 return
@@ -64,7 +68,8 @@ class VectorServiceRegistry:
             raise VectorConfigurationError(f"Registry initialization failed: {str(e)}")
     
     async def _initialize_core_services(self) -> None:
-        """Initialize core vector services"""        try:
+        """Initialize core vector services"""
+        try:
             # Initialize FAISS Manager
             faiss_manager = FAISSManager(self._config)
             await faiss_manager.initialize()
@@ -92,7 +97,8 @@ class VectorServiceRegistry:
             raise
     
     async def _initialize_orchestrator(self) -> None:
-        """Initialize the main vector orchestrator"""        try:
+        """Initialize the main vector orchestrator"""
+        try:
             orchestrator = VectorOrchestrator(self._config)
             await orchestrator.initialize()
             self._services["orchestrator"] = orchestrator
@@ -104,7 +110,8 @@ class VectorServiceRegistry:
             raise
     
     def get_service(self, service_name: str) -> Any:
-        """Get service by name"""        if not self._initialized:
+        """Get service by name"""
+        if not self._initialized:
             raise VectorConfigurationError("Service registry not initialized")
         
         if service_name not in self._services:
@@ -113,27 +120,34 @@ class VectorServiceRegistry:
         return self._services[service_name]
     
     def get_orchestrator(self) -> VectorOrchestrator:
-        """Get the main vector orchestrator"""        return self.get_service("orchestrator")
+        """Get the main vector orchestrator"""
+        return self.get_service("orchestrator")
     
     def get_faiss_manager(self) -> FAISSManager:
-        """Get the FAISS manager"""        return self.get_service("faiss_manager")
+        """Get the FAISS manager"""
+        return self.get_service("faiss_manager")
     
     def get_similarity_engine(self) -> SimilarityEngine:
-        """Get the similarity engine"""        return self.get_service("similarity_engine")
+        """Get the similarity engine"""
+        return self.get_service("similarity_engine")
     
     def get_vector_indexer(self) -> VectorIndexer:
-        """Get the vector indexer"""        return self.get_service("vector_indexer")
+        """Get the vector indexer"""
+        return self.get_service("vector_indexer")
     
     def get_search_optimizer(self) -> SearchOptimizer:
-        """Get the search optimizer"""        return self.get_service("search_optimizer")
+        """Get the search optimizer"""
+        return self.get_service("search_optimizer")
     
     def get_config(self) -> VectorConfig:
-        """Get the current configuration"""        if not self._config:
+        """Get the current configuration"""
+        if not self._config:
             raise VectorConfigurationError("Configuration not available")
         return self._config
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on all services"""        if not self._initialized:
+        """Perform health check on all services"""
+        if not self._initialized:
             return {"status": "unhealthy", "reason": "Not initialized"}
         
         health_status = {
@@ -164,7 +178,8 @@ class VectorServiceRegistry:
         return health_status
     
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive statistics from all services"""        if not self._initialized:
+        """Get comprehensive statistics from all services"""
+        if not self._initialized:
             return {"error": "Service registry not initialized"}
         
         statistics = {
@@ -192,7 +207,8 @@ class VectorServiceRegistry:
         return statistics
     
     async def shutdown(self) -> None:
-        """Graceful shutdown of all services"""        if self._shutdown_requested:
+        """Graceful shutdown of all services"""
+        if self._shutdown_requested:
             return
         
         self._shutdown_requested = True
@@ -222,7 +238,8 @@ _service_registry: Optional[VectorServiceRegistry] = None
 
 
 async def get_service_registry() -> VectorServiceRegistry:
-    """Get the global service registry (singleton pattern)"""    global _service_registry
+    """Get the global service registry (singleton pattern)"""
+    global _service_registry
     
     if _service_registry is None:
         _service_registry = VectorServiceRegistry()
@@ -232,7 +249,8 @@ async def get_service_registry() -> VectorServiceRegistry:
 
 
 async def initialize_vector_services(config: Optional[VectorConfig] = None) -> VectorServiceRegistry:
-    """Initialize vector services with configuration"""    global _service_registry
+    """Initialize vector services with configuration"""
+    global _service_registry
     
     if _service_registry is not None:
         logger.warning("Vector services already initialized")
@@ -245,7 +263,8 @@ async def initialize_vector_services(config: Optional[VectorConfig] = None) -> V
 
 
 async def shutdown_vector_services() -> None:
-    """Shutdown all vector services"""    global _service_registry
+    """Shutdown all vector services"""
+    global _service_registry
     
     if _service_registry is not None:
         await _service_registry.shutdown()
@@ -254,7 +273,8 @@ async def shutdown_vector_services() -> None:
 
 @asynccontextmanager
 async def vector_service_context(config: Optional[VectorConfig] = None):
-    """Context manager for vector services lifecycle"""    registry = None
+    """Context manager for vector services lifecycle"""
+    registry = None
     try:
         registry = await initialize_vector_services(config)
         yield registry
@@ -268,7 +288,8 @@ async def vector_service_context(config: Optional[VectorConfig] = None):
 # ===============================
 
 async def create_vector_orchestrator(config: Optional[VectorConfig] = None) -> VectorOrchestrator:
-    """Factory function to create configured vector orchestrator"""    if config is None:
+    """Factory function to create configured vector orchestrator"""
+    if config is None:
         config = get_config_for_environment()
     
     orchestrator = VectorOrchestrator(config)
@@ -277,7 +298,8 @@ async def create_vector_orchestrator(config: Optional[VectorConfig] = None) -> V
 
 
 async def create_faiss_manager(config: Optional[VectorConfig] = None) -> FAISSManager:
-    """Factory function to create configured FAISS manager"""    if config is None:
+    """Factory function to create configured FAISS manager"""
+    if config is None:
         config = get_config_for_environment()
     
     manager = FAISSManager(config)
@@ -286,7 +308,8 @@ async def create_faiss_manager(config: Optional[VectorConfig] = None) -> FAISSMa
 
 
 async def create_similarity_engine(config: Optional[VectorConfig] = None) -> SimilarityEngine:
-    """Factory function to create configured similarity engine"""    if config is None:
+    """Factory function to create configured similarity engine"""
+    if config is None:
         config = get_config_for_environment()
     
     engine = SimilarityEngine(config)
@@ -295,7 +318,8 @@ async def create_similarity_engine(config: Optional[VectorConfig] = None) -> Sim
 
 
 async def create_vector_indexer(config: Optional[VectorConfig] = None) -> VectorIndexer:
-    """Factory function to create configured vector indexer"""    if config is None:
+    """Factory function to create configured vector indexer"""
+    if config is None:
         config = get_config_for_environment()
     
     indexer = VectorIndexer(config)
@@ -304,7 +328,8 @@ async def create_vector_indexer(config: Optional[VectorConfig] = None) -> Vector
 
 
 async def create_search_optimizer(config: Optional[VectorConfig] = None) -> SearchOptimizer:
-    """Factory function to create configured search optimizer"""    if config is None:
+    """Factory function to create configured search optimizer"""
+    if config is None:
         config = get_config_for_environment()
     
     optimizer = SearchOptimizer(config)
@@ -317,7 +342,8 @@ async def create_search_optimizer(config: Optional[VectorConfig] = None) -> Sear
 # ===============================
 
 async def store_vector_document(document: VectorDocument) -> Dict[str, Any]:
-    """Convenience function to store vector document"""    try:
+    """Convenience function to store vector document"""
+    try:
         registry = await get_service_registry()
         orchestrator = registry.get_orchestrator()
         
@@ -341,7 +367,8 @@ async def store_vector_document(document: VectorDocument) -> Dict[str, Any]:
 
 
 async def search_similar_vectors(request: VectorSearchRequest) -> List[VectorSearchResult]:
-    """Convenience function to search for similar vectors"""    try:
+    """Convenience function to search for similar vectors"""
+    try:
         registry = await get_service_registry()
         orchestrator = registry.get_orchestrator()
         
@@ -383,7 +410,8 @@ async def search_similar_vectors(request: VectorSearchRequest) -> List[VectorSea
 
 
 async def get_vector_statistics() -> Dict[str, Any]:
-    """Convenience function to get vector system statistics"""    try:
+    """Convenience function to get vector system statistics"""
+    try:
         registry = await get_service_registry()
         return await registry.get_statistics()
     except Exception as e:
@@ -392,7 +420,8 @@ async def get_vector_statistics() -> Dict[str, Any]:
 
 
 async def perform_health_check() -> Dict[str, Any]:
-    """Convenience function to perform system health check"""    try:
+    """Convenience function to perform system health check"""
+    try:
         registry = await get_service_registry()
         return await registry.health_check()
     except Exception as e:

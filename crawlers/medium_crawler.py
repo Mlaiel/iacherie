@@ -11,7 +11,8 @@ Created by: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""import asyncio
+"""
+import asyncio
 import aiohttp
 import json
 import logging
@@ -37,14 +38,16 @@ logger = logging.getLogger(__name__)
 
 
 class MediumMembershipType(str, Enum):
-    """Medium membership types"""    FREE = "free"
+    """Medium membership types"""
+    FREE = "free"
     MEMBER = "member"
     FRIEND_OF_MEDIUM = "friend"
     WRITER = "writer"
 
 
 class MediumContentType(str, Enum):
-    """Medium content types"""    STORY = "story"
+    """Medium content types"""
+    STORY = "story"
     SERIES = "series"
     PUBLICATION = "publication"
     LIST = "list"
@@ -52,25 +55,29 @@ class MediumContentType(str, Enum):
 
 
 class MediumReadingTime(BaseModel):
-    """Medium reading time data model"""    text: str
+    """Medium reading time data model"""
+    text: str
     minutes: int
     words: int
 
 
 class MediumVirtue(BaseModel):
-    """Medium virtue/category data model"""    slug: str
+    """Medium virtue/category data model"""
+    slug: str
     name: str
 
 
 class MediumTag(BaseModel):
-    """Medium tag data model"""    slug: str
+    """Medium tag data model"""
+    slug: str
     name: str
     post_count: Optional[int] = None
     follower_count: Optional[int] = None
 
 
 class MediumUser(BaseModel):
-    """Medium user data model"""    user_id: str
+    """Medium user data model"""
+    user_id: str
     username: str
     name: str
     bio: Optional[str] = None
@@ -96,7 +103,8 @@ class MediumUser(BaseModel):
 
 
 class MediumPublication(BaseModel):
-    """Medium publication data model"""    publication_id: str
+    """Medium publication data model"""
+    publication_id: str
     name: str
     slug: str
     description: Optional[str] = None
@@ -116,7 +124,8 @@ class MediumPublication(BaseModel):
 
 
 class MediumStory(BaseModel):
-    """Medium story data model"""    story_id: str
+    """Medium story data model"""
+    story_id: str
     title: str
     subtitle: Optional[str] = None
     content: str
@@ -159,7 +168,8 @@ class MediumStory(BaseModel):
 
 
 class MediumResponse(BaseModel):
-    """Medium response/comment data model"""    response_id: str
+    """Medium response/comment data model"""
+    response_id: str
     author: MediumUser
     story: MediumStory
     content: str
@@ -173,7 +183,8 @@ class MediumResponse(BaseModel):
 
 
 class MediumList(BaseModel):
-    """Medium list data model"""    list_id: str
+    """Medium list data model"""
+    list_id: str
     name: str
     description: Optional[str] = None
     author: MediumUser
@@ -187,7 +198,8 @@ class MediumList(BaseModel):
 
 
 class MediumSearchResults(BaseModel):
-    """Medium search results data model"""    query: str
+    """Medium search results data model"""
+    query: str
     total_results: int
     stories: List[MediumStory] = Field(default_factory=list)
     users: List[MediumUser] = Field(default_factory=list)
@@ -202,7 +214,8 @@ class MediumSearchResults(BaseModel):
 
 
 class MediumAnalytics(BaseModel):
-    """Medium analytics data model"""    user_id: str
+    """Medium analytics data model"""
+    user_id: str
     analysis_period: Tuple[datetime, datetime]
     total_stories_published: int
     total_responses_written: int
@@ -225,11 +238,13 @@ class MediumAnalytics(BaseModel):
 
 
 class MediumCrawler(BaseCrawler):
-    """    Ultra-Advanced Medium Platform Crawler
+    """
+    Ultra-Advanced Medium Platform Crawler
     
     Provides comprehensive crawling and monitoring capabilities for Medium platform,
     specializing in article content, author analytics, and publication monitoring.
-    """    
+    """
+    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         
@@ -276,7 +291,8 @@ class MediumCrawler(BaseCrawler):
         logger.info("Medium crawler initialized with ultra-advanced content monitoring")
 
     async def authenticate(self, email: str = None, password: str = None, session_cookies: Dict[str, str] = None) -> bool:
-        """        Authenticate with Medium platform
+        """
+        Authenticate with Medium platform
         
         Args:
             email: User email (for login)
@@ -285,7 +301,8 @@ class MediumCrawler(BaseCrawler):
             
         Returns:
             bool: Authentication success status
-        """        try:
+        """
+        try:
             if session_cookies:
                 # Use provided session cookies
                 for name, value in session_cookies.items():
@@ -323,7 +340,8 @@ class MediumCrawler(BaseCrawler):
             return False
 
     async def _extract_user_info_from_html(self, html_content: str):
-        """Extract user information from HTML page"""        try:
+        """Extract user information from HTML page"""
+        try:
             # Look for embedded user data in script tags
             soup = BeautifulSoup(html_content, 'html.parser')
             script_tags = soup.find_all('script')
@@ -353,7 +371,8 @@ class MediumCrawler(BaseCrawler):
         publication: Optional[str] = None,
         limit: int = 50
     ) -> MediumSearchResults:
-        """        Search Medium content with advanced filtering
+        """
+        Search Medium content with advanced filtering
         
         Args:
             query: Search query
@@ -365,7 +384,8 @@ class MediumCrawler(BaseCrawler):
             
         Returns:
             MediumSearchResults: Comprehensive search results
-        """        await self.rate_limiter.acquire()
+        """
+        await self.rate_limiter.acquire()
         
         try:
             # Check cache first
@@ -439,7 +459,8 @@ class MediumCrawler(BaseCrawler):
         publication: Optional[str],
         limit: int
     ) -> List[MediumStory]:
-        """Search for Medium stories"""        try:
+        """Search for Medium stories"""
+        try:
             # Use GraphQL search
             search_query = {
                 "operationName": "SearchQuery",
@@ -454,7 +475,8 @@ class MediumCrawler(BaseCrawler):
                     "tags": [tag] if tag else [],
                     "authorNames": [author] if author else []
                 },
-                "query": """                query SearchQuery($query: String!, $pagingOptions: PagingOptions!, $searchInCollection: ID, $domain: String, $tags: [String!], $authorNames: [String!]) {
+                "query": """
+                query SearchQuery($query: String!, $pagingOptions: PagingOptions!, $searchInCollection: ID, $domain: String, $tags: [String!], $authorNames: [String!]) {
                   search(query: $query, searchInCollection: $searchInCollection, domain: $domain, tags: $tags, authorNames: $authorNames) {
                     posts(pagingOptions: $pagingOptions) {
                       ...PostPreview
@@ -475,7 +497,8 @@ class MediumCrawler(BaseCrawler):
                   clapCount
                   voterCount
                 }
-                """            }
+                """
+            }
             
             headers = {
                 "Content-Type": "application/json",
@@ -510,7 +533,8 @@ class MediumCrawler(BaseCrawler):
             return []
 
     async def _search_users(self, query: str, limit: int) -> List[MediumUser]:
-        """Search for Medium users"""        try:
+        """Search for Medium users"""
+        try:
             # Simple search using web scraping
             search_url = f"{self.base_url}/search/users"
             params = {"q": query}
@@ -528,7 +552,8 @@ class MediumCrawler(BaseCrawler):
             return []
 
     async def _search_publications(self, query: str, limit: int) -> List[MediumPublication]:
-        """Search for Medium publications"""        try:
+        """Search for Medium publications"""
+        try:
             # Search publications using web scraping
             search_url = f"{self.base_url}/search/publications"
             params = {"q": query}
@@ -546,7 +571,8 @@ class MediumCrawler(BaseCrawler):
             return []
 
     async def _search_tags(self, query: str, limit: int) -> List[MediumTag]:
-        """Search for Medium tags"""        try:
+        """Search for Medium tags"""
+        try:
             # Search tags using API
             search_url = f"{self.base_url}/search/tags"
             params = {"q": query}
@@ -564,14 +590,16 @@ class MediumCrawler(BaseCrawler):
             return []
 
     async def get_content_details(self, story_url: str) -> Optional[MediumStory]:
-        """        Get detailed information about specific Medium story
+        """
+        Get detailed information about specific Medium story
         
         Args:
             story_url: Medium story URL
             
         Returns:
             Optional[MediumStory]: Detailed story information
-        """        await self.rate_limiter.acquire()
+        """
+        await self.rate_limiter.acquire()
         
         try:
             # Extract story ID from URL
@@ -616,7 +644,8 @@ class MediumCrawler(BaseCrawler):
         keywords: List[str] = None,
         check_interval: int = 3600
     ) -> AsyncGenerator[MediumStory, None]:
-        """        Real-time content monitoring for Medium
+        """
+        Real-time content monitoring for Medium
         
         Args:
             author_usernames: Authors to monitor
@@ -627,7 +656,8 @@ class MediumCrawler(BaseCrawler):
             
         Yields:
             MediumStory: New stories detected
-        """        author_usernames = author_usernames or []
+        """
+        author_usernames = author_usernames or []
         publications = publications or []
         tags = tags or []
         keywords = keywords or []
@@ -711,7 +741,8 @@ class MediumCrawler(BaseCrawler):
         comparison_set: List[MediumStory],
         threshold: float = None
     ) -> List[Tuple[MediumStory, float]]:
-        """        Detect story similarity
+        """
+        Detect story similarity
         
         Args:
             target_story: Story to compare
@@ -720,7 +751,8 @@ class MediumCrawler(BaseCrawler):
             
         Returns:
             List[Tuple[MediumStory, float]]: Similar stories with scores
-        """        threshold = threshold or self.similarity_threshold
+        """
+        threshold = threshold or self.similarity_threshold
         similar_stories = []
         
         try:
@@ -748,7 +780,8 @@ class MediumCrawler(BaseCrawler):
             return []
 
     async def _extract_story_features(self, story: MediumStory) -> Dict[str, Any]:
-        """Extract features for similarity comparison"""        features = {
+        """Extract features for similarity comparison"""
+        features = {
             "title": story.title.lower(),
             "subtitle": (story.subtitle or "").lower(),
             "content_preview": story.content_preview.lower(),
@@ -768,7 +801,8 @@ class MediumCrawler(BaseCrawler):
         features1: Dict[str, Any],
         features2: Dict[str, Any]
     ) -> float:
-        """Calculate similarity between story features"""        try:
+        """Calculate similarity between story features"""
+        try:
             scores = []
             
             # Title similarity
@@ -808,7 +842,8 @@ class MediumCrawler(BaseCrawler):
         user_id: str,
         analysis_period: Tuple[datetime, datetime]
     ) -> MediumAnalytics:
-        """        Generate comprehensive analytics for Medium user
+        """
+        Generate comprehensive analytics for Medium user
         
         Args:
             user_id: User ID to analyze
@@ -816,7 +851,8 @@ class MediumCrawler(BaseCrawler):
             
         Returns:
             MediumAnalytics: Comprehensive analytics data
-        """        try:
+        """
+        try:
             start_time, end_time = analysis_period
             
             # Get user's stories in the period
@@ -931,7 +967,8 @@ class MediumCrawler(BaseCrawler):
     # Helper methods for parsing and data extraction
     
     async def _parse_story_summary(self, data: Dict[str, Any]) -> MediumStory:
-        """Parse story summary from GraphQL response"""        # Simplified parsing - actual implementation would be more comprehensive
+        """Parse story summary from GraphQL response"""
+        # Simplified parsing - actual implementation would be more comprehensive
         author_data = data.get("author", {})
         author = MediumUser(
             user_id=author_data.get("id", ""),
@@ -967,14 +1004,16 @@ class MediumCrawler(BaseCrawler):
         )
 
     def _extract_story_id_from_url(self, url: str) -> str:
-        """Extract story ID from Medium URL"""        # Medium URLs have format: https://medium.com/@author/title-story_id
+        """Extract story ID from Medium URL"""
+        # Medium URLs have format: https://medium.com/@author/title-story_id
         parts = url.split('-')
         if parts:
             return parts[-1]
         return hashlib.md5(url.encode()).hexdigest()[:12]
 
     async def _parse_story_from_html(self, html_content: str, url: str) -> Optional[MediumStory]:
-        """Parse story from HTML page"""        try:
+        """Parse story from HTML page"""
+        try:
             soup = BeautifulSoup(html_content, 'html.parser')
             
             # Extract title
@@ -1020,27 +1059,33 @@ class MediumCrawler(BaseCrawler):
             return None
 
     async def _parse_users_from_html(self, html_content: str, limit: int) -> List[MediumUser]:
-        """Parse users from search results HTML"""        # Simplified implementation
+        """Parse users from search results HTML"""
+        # Simplified implementation
         return []
 
     async def _parse_publications_from_html(self, html_content: str, limit: int) -> List[MediumPublication]:
-        """Parse publications from search results HTML"""        # Simplified implementation
+        """Parse publications from search results HTML"""
+        # Simplified implementation
         return []
 
     async def _parse_tags_from_html(self, html_content: str, limit: int) -> List[MediumTag]:
-        """Parse tags from search results HTML"""        # Simplified implementation
+        """Parse tags from search results HTML"""
+        # Simplified implementation
         return []
 
     async def _get_author_recent_stories(self, username: str, since: datetime) -> List[MediumStory]:
-        """Get recent stories from author"""        # Simplified implementation
+        """Get recent stories from author"""
+        # Simplified implementation
         return []
 
     async def _get_publication_recent_stories(self, publication: str, since: datetime) -> List[MediumStory]:
-        """Get recent stories from publication"""        # Simplified implementation
+        """Get recent stories from publication"""
+        # Simplified implementation
         return []
 
     async def _get_tag_recent_stories(self, tag: str, since: datetime) -> List[MediumStory]:
-        """Get recent stories for tag"""        # Simplified implementation
+        """Get recent stories for tag"""
+        # Simplified implementation
         return []
 
     async def _get_user_stories_in_period(
@@ -1049,20 +1094,24 @@ class MediumCrawler(BaseCrawler):
         start_time: datetime,
         end_time: datetime
     ) -> List[MediumStory]:
-        """Get user's stories in specific time period"""        # Simplified implementation
+        """Get user's stories in specific time period"""
+        # Simplified implementation
         return []
 
     async def _calculate_similarity(self, story: MediumStory) -> float:
-        """Calculate similarity score against protected content"""        # Simplified similarity calculation
+        """Calculate similarity score against protected content"""
+        # Simplified similarity calculation
         return 0.0
 
     async def _check_protection_status(self, story: MediumStory) -> str:
-        """Check protection status of story"""        if story.story_id in self.protected_content:
+        """Check protection status of story"""
+        if story.story_id in self.protected_content:
             return "protected"
         return "unprotected"
 
     async def _handle_rate_limit(self, response: aiohttp.ClientResponse) -> bool:
-        """Handle rate limiting responses"""        if response.status == 429:
+        """Handle rate limiting responses"""
+        if response.status == 429:
             retry_after = int(response.headers.get('Retry-After', 60))
             logger.warning(f"Rate limited. Waiting {retry_after} seconds")
             await asyncio.sleep(retry_after)
@@ -1070,7 +1119,8 @@ class MediumCrawler(BaseCrawler):
         return False
 
     async def close(self):
-        """Close crawler and cleanup resources"""        try:
+        """Close crawler and cleanup resources"""
+        try:
             await self.cache_manager.close()
             await super().close()
             logger.info("Medium crawler closed successfully")

@@ -7,7 +7,8 @@ and feature extraction according to business requirements.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""import asyncio
+"""
+import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -35,7 +36,8 @@ from ..ml.feature_extractor import FeatureExtractor
 
 @dataclass
 class AnalysisResult:
-    """Content analysis result container"""    content_id: str
+    """Content analysis result container"""
+    content_id: str
     content_type: str
     classification: Dict[str, Any]
     features: Dict[str, Any]
@@ -48,7 +50,8 @@ class AnalysisResult:
 
 @dataclass
 class AnalysisConfig:
-    """Content analysis configuration"""    enable_classification: bool = True
+    """Content analysis configuration"""
+    enable_classification: bool = True
     enable_feature_extraction: bool = True
     enable_quality_assessment: bool = True
     enable_sentiment_analysis: bool = True
@@ -59,7 +62,8 @@ class AnalysisConfig:
 
 
 class ContentAnalyzer:
-    """    AI-Powered Content Analysis Engine
+    """
+    AI-Powered Content Analysis Engine
     
     Provides comprehensive content analysis including:
     - Automated classification and tagging
@@ -68,7 +72,8 @@ class ContentAnalyzer:
     - Sentiment analysis for text content
     - Content recommendations and optimization suggestions
     - Trend analysis and market insights
-    """    
+    """
+    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -94,7 +99,8 @@ class ContentAnalyzer:
         content_id: str,
         custom_config: AnalysisConfig = None
     ) -> Dict[str, Any]:
-        """        Perform comprehensive content analysis
+        """
+        Perform comprehensive content analysis
         
         Args:
             content_id: Content identifier
@@ -102,7 +108,8 @@ class ContentAnalyzer:
             
         Returns:
             Analysis result with AI insights and recommendations
-        """        analysis_start = datetime.utcnow()
+        """
+        analysis_start = datetime.utcnow()
         config = custom_config or self.config
         
         try:
@@ -169,7 +176,8 @@ class ContentAnalyzer:
         content: Content,
         config: AnalysisConfig
     ) -> AnalysisResult:
-        """        Analyze audio content with AI models
+        """
+        Analyze audio content with AI models
         
         Args:
             content: Content database object
@@ -177,7 +185,8 @@ class ContentAnalyzer:
             
         Returns:
             Audio analysis result
-        """        try:
+        """
+        try:
             # Load audio data
             audio_data, sample_rate = librosa.load(content.file_path, sr=None)
             
@@ -267,7 +276,8 @@ class ContentAnalyzer:
         content: Content,
         config: AnalysisConfig
     ) -> AnalysisResult:
-        """        Analyze video content with AI models
+        """
+        Analyze video content with AI models
         
         Args:
             content: Content database object
@@ -275,7 +285,8 @@ class ContentAnalyzer:
             
         Returns:
             Video analysis result
-        """        try:
+        """
+        try:
             classification = {}
             features = {}
             quality_metrics = {}
@@ -380,7 +391,8 @@ class ContentAnalyzer:
         content: Content,
         config: AnalysisConfig
     ) -> AnalysisResult:
-        """        Analyze image content with AI models
+        """
+        Analyze image content with AI models
         
         Args:
             content: Content database object
@@ -388,7 +400,8 @@ class ContentAnalyzer:
             
         Returns:
             Image analysis result
-        """        try:
+        """
+        try:
             classification = {}
             features = {}
             quality_metrics = {}
@@ -484,7 +497,8 @@ class ContentAnalyzer:
         content: Content,
         config: AnalysisConfig
     ) -> AnalysisResult:
-        """        Analyze text content with NLP models
+        """
+        Analyze text content with NLP models
         
         Args:
             content: Content database object
@@ -492,7 +506,8 @@ class ContentAnalyzer:
             
         Returns:
             Text analysis result
-        """        try:
+        """
+        try:
             classification = {}
             features = {}
             quality_metrics = {}
@@ -598,12 +613,14 @@ class ContentAnalyzer:
     # Helper methods for analysis operations
 
     async def _get_content(self, content_id: str) -> Optional[Content]:
-        """Get content from database"""        query = select(Content).where(Content.id == content_id)
+        """Get content from database"""
+        query = select(Content).where(Content.id == content_id)
         result = await self.db.execute(query)
         return result.scalar_one_or_none()
 
     async def _save_analysis_result(self, content_id: str, analysis: AnalysisResult) -> None:
-        """Save analysis result to database"""        try:
+        """Save analysis result to database"""
+        try:
             analysis_record = ContentAnalysis(
                 id=str(uuid.uuid4()),
                 content_id=content_id,
@@ -625,7 +642,8 @@ class ContentAnalyzer:
             self.logger.error(f"Failed to save analysis result: {str(e)}")
 
     def _serialize_analysis_result(self, analysis: AnalysisResult) -> Dict[str, Any]:
-        """Convert analysis result to serializable format"""        return {
+        """Convert analysis result to serializable format"""
+        return {
             "content_id": analysis.content_id,
             "content_type": analysis.content_type,
             "classification": analysis.classification,
@@ -639,12 +657,14 @@ class ContentAnalyzer:
 
     # Quality assessment helper methods
     def _calculate_snr(self, audio_data: np.ndarray) -> float:
-        """Calculate signal-to-noise ratio for audio"""        signal_power = np.mean(audio_data**2)
+        """Calculate signal-to-noise ratio for audio"""
+        signal_power = np.mean(audio_data**2)
         noise_estimate = np.var(audio_data) * 0.1  # Simplified noise estimation
         return 10 * np.log10(signal_power / max(noise_estimate, 1e-10))
 
     def _calculate_silence_ratio(self, audio_data: np.ndarray) -> float:
-        """Calculate ratio of silence in audio"""        threshold = 0.01 * np.max(np.abs(audio_data))
+        """Calculate ratio of silence in audio"""
+        threshold = 0.01 * np.max(np.abs(audio_data))
         silent_samples = np.sum(np.abs(audio_data) < threshold)
         return silent_samples / len(audio_data)
 
@@ -654,7 +674,8 @@ class ContentAnalyzer:
         snr: float,
         audio_data: np.ndarray
     ) -> float:
-        """Calculate overall audio quality score"""        # Normalize metrics and combine
+        """Calculate overall audio quality score"""
+        # Normalize metrics and combine
         dr_score = min(1.0, dynamic_range / 2.0)
         snr_score = min(1.0, max(0.0, (snr + 10) / 50))
         clipping_penalty = 0.3 if np.any(np.abs(audio_data) >= 0.99) else 0.0
@@ -662,7 +683,8 @@ class ContentAnalyzer:
         return max(0.0, (dr_score + snr_score) / 2 - clipping_penalty)
 
     def _calculate_sharpness(self, img_array: np.ndarray) -> float:
-        """Calculate image sharpness using Laplacian variance"""        if len(img_array.shape) == 3:
+        """Calculate image sharpness using Laplacian variance"""
+        if len(img_array.shape) == 3:
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
         else:
             gray = img_array
@@ -670,7 +692,8 @@ class ContentAnalyzer:
         return cv2.Laplacian(gray, cv2.CV_64F).var()
 
     def _estimate_noise_level(self, img_array: np.ndarray) -> float:
-        """Estimate noise level in image"""        if len(img_array.shape) == 3:
+        """Estimate noise level in image"""
+        if len(img_array.shape) == 3:
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
         else:
             gray = img_array
@@ -685,7 +708,8 @@ class ContentAnalyzer:
         quality_metrics: Dict,
         features: Dict
     ) -> List[str]:
-        """Generate audio improvement recommendations"""        recommendations = []
+        """Generate audio improvement recommendations"""
+        recommendations = []
         
         if quality_metrics.get("overall_quality", 0) < 0.6:
             recommendations.append("Consider audio enhancement to improve quality")
@@ -707,7 +731,8 @@ class ContentAnalyzer:
         quality_metrics: Dict,
         features: Dict
     ) -> float:
-        """Calculate overall confidence score for analysis"""        scores = []
+        """Calculate overall confidence score for analysis"""
+        scores = []
         
         if classification.get("confidence"):
             scores.append(classification["confidence"])

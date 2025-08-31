@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Content Protection
 Team: Lead Dev IA + Backend Senior + ML Engineer + DevOps + DBA + Security + Microservices + Audio + IA Prompt Engineer
 
-Copyright © 2025 Fahed Mlaiel. All rights reserved.
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, modification, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing and collaboration.
 
@@ -16,26 +16,35 @@ WARNING: This code and concept are protected by copyright law. Any unauthorized
 copying, modification, distribution, or use of this code without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will
 result in legal action under German and international copyright law.
-"""from typing import Dict, List, Optional, Union, Any
+"""
+
+from typing import Dict, List, Optional, Union, Any
 
 # Core classification modules
 from .audio_classifier import AudioContentClassifier
+
 from .video_classifier import VideoContentClassifier  
 from .image_classifier import ImageContentClassifier
+
 from .text_classifier import TextContentClassifier
+
 from .multimodal_classifier import MultimodalContentClassifier
 
 # Factory and orchestration
 from .classifier_factory import ClassifierFactory
+
 from .content_categorizer import ContentCategorizer
 
 # Specialized analyzers
 from .genre_detector import GenreDetector
+
 from .mood_analyzer import MoodAnalyzer
+
 from .quality_assessor import QualityAssessor
 
 # Protection and monitoring
 from .similarity_matcher import SimilarityMatcher
+
 from .violation_detector import ViolationDetector
 
 __all__ = [

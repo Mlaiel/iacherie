@@ -9,20 +9,23 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""import os
+"""
+import os
 from typing import Dict, Any, List, Optional
 from dataclasses import dataclass, field
 from enum import Enum
 
 class Environment(Enum):
-    """Deployment environment types"""    DEVELOPMENT = "development"
+    """Deployment environment types"""
+    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 @dataclass
 class AIModelConfig:
-    """Configuration for AI models"""    conversation_model: str = "microsoft/DialoGPT-medium"
+    """Configuration for AI models"""
+    conversation_model: str = "microsoft/DialoGPT-medium"
     intent_model: str = "facebook/bart-large-mnli"
     sentiment_model: str = "cardiffnlp/twitter-roberta-base-sentiment-latest"
     embedding_model: str = "all-MiniLM-L6-v2"
@@ -41,7 +44,8 @@ class AIModelConfig:
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration"""    host: str = field(default_factory=lambda: os.getenv("SUPPORT_DB_HOST", "localhost"))
+    """Database configuration"""
+    host: str = field(default_factory=lambda: os.getenv("SUPPORT_DB_HOST", "localhost"))
     port: int = field(default_factory=lambda: int(os.getenv("SUPPORT_DB_PORT", "5432")))
     database: str = field(default_factory=lambda: os.getenv("SUPPORT_DB_NAME", "ia_influencer_support"))
     username: str = field(default_factory=lambda: os.getenv("SUPPORT_DB_USER", "support_user"))
@@ -60,7 +64,8 @@ class DatabaseConfig:
 
 @dataclass
 class RedisConfig:
-    """Redis configuration for caching"""    url: str = field(default_factory=lambda: os.getenv("SUPPORT_REDIS_URL", "redis://localhost:6379/2"))
+    """Redis configuration for caching"""
+    url: str = field(default_factory=lambda: os.getenv("SUPPORT_REDIS_URL", "redis://localhost:6379/2"))
     max_connections: int = 100
     socket_timeout: int = 5
     socket_connect_timeout: int = 5
@@ -73,7 +78,8 @@ class RedisConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security and encryption configuration"""    encryption_key: str = field(default_factory=lambda: os.getenv("SUPPORT_ENCRYPTION_KEY", ""))
+    """Security and encryption configuration"""
+    encryption_key: str = field(default_factory=lambda: os.getenv("SUPPORT_ENCRYPTION_KEY", ""))
     jwt_secret: str = field(default_factory=lambda: os.getenv("SUPPORT_JWT_SECRET", ""))
     
     # Rate limiting
@@ -91,7 +97,8 @@ class SecurityConfig:
 
 @dataclass
 class KnowledgeBaseConfig:
-    """Knowledge base configuration"""    max_articles: int = 10000
+    """Knowledge base configuration"""
+    max_articles: int = 10000
     similarity_threshold: float = 0.7
     max_search_results: int = 5
     reindex_interval_hours: int = 24
@@ -106,7 +113,8 @@ class KnowledgeBaseConfig:
 
 @dataclass
 class EscalationConfig:
-    """Escalation rules and settings"""    sentiment_threshold: float = -0.7
+    """Escalation rules and settings"""
+    sentiment_threshold: float = -0.7
     max_conversation_turns: int = 10
     escalation_timeout_minutes: int = 30
     
@@ -129,7 +137,8 @@ class EscalationConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance and scaling configuration"""    max_concurrent_conversations: int = field(
+    """Performance and scaling configuration"""
+    max_concurrent_conversations: int = field(
         default_factory=lambda: int(os.getenv("SUPPORT_MAX_CONCURRENT_CONVERSATIONS", "1000"))
     )
     response_timeout: int = 30
@@ -152,7 +161,8 @@ class PerformanceConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring and analytics configuration"""    enable_metrics: bool = True
+    """Monitoring and analytics configuration"""
+    enable_metrics: bool = True
     metrics_port: int = 8090
     
     # Prometheus settings
@@ -176,7 +186,8 @@ class MonitoringConfig:
 
 @dataclass 
 class SupportAgentConfig:
-    """Master configuration for Support Agent"""    environment: Environment = Environment.PRODUCTION
+    """Master configuration for Support Agent"""
+    environment: Environment = Environment.PRODUCTION
     
     # Component configurations
     ai_models: AIModelConfig = field(default_factory=AIModelConfig)
@@ -206,7 +217,8 @@ class SupportAgentConfig:
     enable_video_support: bool = False  # Future feature
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""        return {
+        """Convert configuration to dictionary"""
+        return {
             "environment": self.environment.value,
             "ai_models": {
                 "conversation_model": self.ai_models.conversation_model,
@@ -241,7 +253,8 @@ class SupportAgentConfig:
     
     @classmethod
     def from_environment(cls, env: Environment = None) -> 'SupportAgentConfig':
-        """Create configuration from environment variables"""        if env is None:
+        """Create configuration from environment variables"""
+        if env is None:
             env_str = os.getenv("SUPPORT_ENVIRONMENT", "production")
             env = Environment(env_str.lower())
         
@@ -267,7 +280,8 @@ class SupportAgentConfig:
         return config
     
     def validate(self) -> List[str]:
-        """Validate configuration and return list of errors"""        errors = []
+        """Validate configuration and return list of errors"""
+        errors = []
         
         # Database validation
         if not self.database.password:
@@ -297,17 +311,20 @@ class SupportAgentConfig:
 _config: Optional[SupportAgentConfig] = None
 
 def get_config() -> SupportAgentConfig:
-    """Get global configuration instance"""    global _config
+    """Get global configuration instance"""
+    global _config
     if _config is None:
         _config = SupportAgentConfig.from_environment()
     return _config
 
 def set_config(config: SupportAgentConfig):
-    """Set global configuration instance"""    global _config
+    """Set global configuration instance"""
+    global _config
     _config = config
 
 def load_config_from_file(config_path: str) -> SupportAgentConfig:
-    """Load configuration from JSON or YAML file"""    import json
+    """Load configuration from JSON or YAML file"""
+    import json
     
     with open(config_path, 'r') as f:
         if config_path.endswith('.json'):

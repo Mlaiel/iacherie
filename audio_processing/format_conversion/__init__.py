@@ -17,7 +17,9 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""from .converter import (
+"""
+
+from .converter import (
     AudioFormatConverter,
     ConversionEngine,
     BatchConverter

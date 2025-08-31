@@ -1,4 +1,5 @@
-"""Enterprise in-app notification service with real-time delivery and user experience optimization."""import os
+"""Enterprise in-app notification service with real-time delivery and user experience optimization."""
+import os
 import json
 import asyncio
 from typing import Dict, List, Optional, Any, Union, Set
@@ -15,7 +16,8 @@ from app.utils.metrics import MetricsCollector
 
 
 class InAppNotificationType(str, Enum):
-    """In-app notification types for IA Influencer business logic."""    # Content Management
+    """In-app notification types for IA Influencer business logic."""
+    # Content Management
     CONTENT_UPLOAD_SUCCESS = "content_upload_success"
     CONTENT_UPLOAD_FAILED = "content_upload_failed"
     CONTENT_PROCESSING_COMPLETE = "content_processing_complete"
@@ -68,7 +70,8 @@ class InAppNotificationType(str, Enum):
 
 
 class NotificationPriority(str, Enum):
-    """In-app notification priority levels."""    LOW = "low"
+    """In-app notification priority levels."""
+    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -76,7 +79,8 @@ class NotificationPriority(str, Enum):
 
 
 class NotificationCategory(str, Enum):
-    """Notification categories for filtering and organization."""    CONTENT = "content"
+    """Notification categories for filtering and organization."""
+    CONTENT = "content"
     PROTECTION = "protection"
     COLLABORATION = "collaboration"
     MONETIZATION = "monetization"
@@ -88,7 +92,8 @@ class NotificationCategory(str, Enum):
 
 @dataclass
 class InAppNotificationAction:
-    """Interactive action for in-app notifications."""    id: str
+    """Interactive action for in-app notifications."""
+    id: str
     label: str
     action_type: str  # navigate, api_call, dismiss, custom
     action_data: Optional[Dict[str, Any]] = None
@@ -98,7 +103,8 @@ class InAppNotificationAction:
 
 @dataclass
 class InAppNotification:
-    """Rich in-app notification with business context and interactivity."""    id: str
+    """Rich in-app notification with business context and interactivity."""
+    id: str
     user_id: str
     type: InAppNotificationType
     category: NotificationCategory
@@ -147,7 +153,8 @@ class InAppNotification:
 
 @dataclass
 class NotificationPreferences:
-    """User preferences for in-app notifications."""    user_id: str
+    """User preferences for in-app notifications."""
+    user_id: str
     enabled_types: Set[InAppNotificationType]
     priority_threshold: NotificationPriority = NotificationPriority.NORMAL
     show_popups: bool = True
@@ -166,7 +173,8 @@ class NotificationPreferences:
 
 
 class InAppNotifier:
-    """Enterprise in-app notification service with real-time delivery and comprehensive user experience."""    def __init__(self):
+    """Enterprise in-app notification service with real-time delivery and comprehensive user experience."""
+    def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.metrics = MetricsCollector()
         
@@ -303,7 +311,8 @@ class InAppNotifier:
         }
 
     async def create_notification(self, notification: InAppNotification) -> str:
-        """Create and deliver in-app notification."""        # Apply user preferences
+        """Create and deliver in-app notification."""
+        # Apply user preferences
         if not await self._should_deliver_notification(notification):
             self.logger.debug(f"Notification filtered by user preferences: {notification.id}")
             return notification.id
@@ -325,7 +334,8 @@ class InAppNotifier:
         return notification.id
 
     async def create_bulk_notifications(self, notifications: List[InAppNotification]) -> List[str]:
-        """Create multiple notifications efficiently."""        notification_ids = []
+        """Create multiple notifications efficiently."""
+        notification_ids = []
         
         # Process in batches
         for i in range(0, len(notifications), self.batch_size):
@@ -347,7 +357,8 @@ class InAppNotifier:
         category: Optional[NotificationCategory] = None,
         priority: Optional[NotificationPriority] = None
     ) -> List[InAppNotification]:
-        """Get notifications for a specific user with filtering."""        user_notifications = self.notifications.get(user_id, [])
+        """Get notifications for a specific user with filtering."""
+        user_notifications = self.notifications.get(user_id, [])
         
         # Apply filters
         filtered_notifications = []
@@ -370,7 +381,8 @@ class InAppNotifier:
         return filtered_notifications[offset:offset + limit]
 
     async def mark_notification_read(self, user_id: str, notification_id: str) -> bool:
-        """Mark a notification as read."""        user_notifications = self.notifications.get(user_id, [])
+        """Mark a notification as read."""
+        user_notifications = self.notifications.get(user_id, [])
         
         for notification in user_notifications:
             if notification.id == notification_id:
@@ -386,7 +398,8 @@ class InAppNotifier:
         return False
 
     async def mark_all_notifications_read(self, user_id: str, category: Optional[NotificationCategory] = None) -> int:
-        """Mark all notifications as read for a user."""        user_notifications = self.notifications.get(user_id, [])
+        """Mark all notifications as read for a user."""
+        user_notifications = self.notifications.get(user_id, [])
         marked_count = 0
         
         for notification in user_notifications:
@@ -400,7 +413,8 @@ class InAppNotifier:
         return marked_count
 
     async def dismiss_notification(self, user_id: str, notification_id: str) -> bool:
-        """Dismiss a notification."""        user_notifications = self.notifications.get(user_id, [])
+        """Dismiss a notification."""
+        user_notifications = self.notifications.get(user_id, [])
         
         for notification in user_notifications:
             if notification.id == notification_id:
@@ -415,7 +429,8 @@ class InAppNotifier:
         return False
 
     async def handle_notification_action(self, user_id: str, notification_id: str, action_id: str) -> Dict[str, Any]:
-        """Handle notification action execution."""        user_notifications = self.notifications.get(user_id, [])
+        """Handle notification action execution."""
+        user_notifications = self.notifications.get(user_id, [])
         
         for notification in user_notifications:
             if notification.id == notification_id:
@@ -444,7 +459,8 @@ class InAppNotifier:
         return {"success": False, "error": "Notification not found"}
 
     async def get_notification_counts(self, user_id: str) -> Dict[str, int]:
-        """Get notification counts by category and status."""        user_notifications = self.notifications.get(user_id, [])
+        """Get notification counts by category and status."""
+        user_notifications = self.notifications.get(user_id, [])
         
         counts = {
             "total": 0,
@@ -478,20 +494,23 @@ class InAppNotifier:
         return counts
 
     async def set_user_preferences(self, user_id: str, preferences: NotificationPreferences) -> bool:
-        """Set notification preferences for a user."""        preferences.user_id = user_id
+        """Set notification preferences for a user."""
+        preferences.user_id = user_id
         self.user_preferences[user_id] = preferences
         
         self.logger.info(f"Notification preferences updated for user {user_id}")
         return True
 
     async def get_user_preferences(self, user_id: str) -> NotificationPreferences:
-        """Get notification preferences for a user."""        return self.user_preferences.get(user_id, NotificationPreferences(
+        """Get notification preferences for a user."""
+        return self.user_preferences.get(user_id, NotificationPreferences(
             user_id=user_id,
             enabled_types=set(InAppNotificationType)
         ))
 
     async def cleanup_expired_notifications(self) -> int:
-        """Clean up expired notifications."""        cleaned_count = 0
+        """Clean up expired notifications."""
+        cleaned_count = 0
         current_time = datetime.utcnow()
         
         for user_id, user_notifications in self.notifications.items():
@@ -516,7 +535,8 @@ class InAppNotifier:
         return cleaned_count
 
     async def get_analytics(self, start_date: datetime, end_date: datetime, user_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get comprehensive in-app notification analytics."""        return {
+        """Get comprehensive in-app notification analytics."""
+        return {
             "total_sent": await self._get_total_sent(start_date, end_date, user_id),
             "engagement_rate": await self._get_engagement_rate(start_date, end_date, user_id),
             "click_through_rate": await self._get_click_through_rate(start_date, end_date, user_id),
@@ -528,7 +548,8 @@ class InAppNotifier:
         }
 
     async def _should_deliver_notification(self, notification: InAppNotification) -> bool:
-        """Check if notification should be delivered based on user preferences."""        preferences = await self.get_user_preferences(notification.user_id)
+        """Check if notification should be delivered based on user preferences."""
+        preferences = await self.get_user_preferences(notification.user_id)
         
         # Check if notification type is enabled
         if notification.type not in preferences.enabled_types:
@@ -558,7 +579,8 @@ class InAppNotifier:
         return True
 
     async def _apply_template(self, notification: InAppNotification):
-        """Apply notification template if available."""        template = self.notification_templates.get(notification.type)
+        """Apply notification template if available."""
+        template = self.notification_templates.get(notification.type)
         if not template:
             return
         
@@ -593,17 +615,20 @@ class InAppNotifier:
                 pass  # Keep original message if formatting fails
 
     async def _store_notification(self, notification: InAppNotification):
-        """Store notification for user."""        if notification.user_id not in self.notifications:
+        """Store notification for user."""
+        if notification.user_id not in self.notifications:
             self.notifications[notification.user_id] = []
         
         self.notifications[notification.user_id].append(notification)
 
     async def _deliver_real_time(self, notification: InAppNotification):
-        """Deliver notification in real-time via WebSocket."""        # This would integrate with WebSocket connections in production
+        """Deliver notification in real-time via WebSocket."""
+        # This would integrate with WebSocket connections in production
         self.logger.debug(f"Real-time delivery simulated for notification: {notification.id}")
 
     async def _execute_action(self, action: InAppNotificationAction, notification: InAppNotification) -> Dict[str, Any]:
-        """Execute notification action."""        if action.action_type == "navigate":
+        """Execute notification action."""
+        if action.action_type == "navigate":
             return {
                 "success": True,
                 "action_type": "navigate",
@@ -631,7 +656,8 @@ class InAppNotifier:
             }
 
     async def _track_notification_metrics(self, notification: InAppNotification):
-        """Track notification creation metrics."""        await self.metrics.increment(
+        """Track notification creation metrics."""
+        await self.metrics.increment(
             "inapp_notifications_created_total",
             tags={
                 "type": notification.type.value,
@@ -641,7 +667,8 @@ class InAppNotifier:
         )
 
     async def _track_engagement_metrics(self, notification: InAppNotification, action: str, action_id: Optional[str] = None):
-        """Track notification engagement metrics."""        tags = {
+        """Track notification engagement metrics."""
+        tags = {
             "type": notification.type.value,
             "category": notification.category.value,
             "action": action

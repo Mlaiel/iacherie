@@ -21,7 +21,8 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""import hashlib
+"""
+import hashlib
 import mimetypes
 from datetime import datetime, timezone
 from pathlib import Path
@@ -57,7 +58,8 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Content type enumeration"""    AUDIO = "audio"
+    """Content type enumeration"""
+    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -65,7 +67,8 @@ class ContentType(Enum):
     UNKNOWN = "unknown"
 
 class QualityLevel(Enum):
-    """Content quality assessment levels"""    ULTRA_LOW = "ultra_low"
+    """Content quality assessment levels"""
+    ULTRA_LOW = "ultra_low"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -74,7 +77,8 @@ class QualityLevel(Enum):
 
 @dataclass
 class GeolocationData:
-    """Geolocation information"""    latitude: Optional[float] = None
+    """Geolocation information"""
+    latitude: Optional[float] = None
     longitude: Optional[float] = None
     altitude: Optional[float] = None
     accuracy: Optional[float] = None
@@ -83,7 +87,8 @@ class GeolocationData:
 
 @dataclass
 class TechnicalMetadata:
-    """Technical metadata for content"""    # File information
+    """Technical metadata for content"""
+    # File information
     file_size: int = 0
     file_format: Optional[str] = None
     mime_type: Optional[str] = None
@@ -106,7 +111,8 @@ class TechnicalMetadata:
 
 @dataclass
 class AudioMetadata:
-    """Audio-specific metadata"""    # Basic properties
+    """Audio-specific metadata"""
+    # Basic properties
     duration: Optional[float] = None
     sample_rate: Optional[int] = None
     channels: Optional[int] = None
@@ -142,7 +148,8 @@ class AudioMetadata:
 
 @dataclass
 class VideoMetadata:
-    """Video-specific metadata"""    # Basic properties
+    """Video-specific metadata"""
+    # Basic properties
     duration: Optional[float] = None
     width: Optional[int] = None
     height: Optional[int] = None
@@ -175,7 +182,8 @@ class VideoMetadata:
 
 @dataclass
 class ImageMetadata:
-    """Image-specific metadata"""    # Basic properties
+    """Image-specific metadata"""
+    # Basic properties
     width: Optional[int] = None
     height: Optional[int] = None
     aspect_ratio: Optional[str] = None
@@ -213,7 +221,8 @@ class ImageMetadata:
 
 @dataclass
 class TextMetadata:
-    """Text-specific metadata"""    # Basic properties
+    """Text-specific metadata"""
+    # Basic properties
     character_count: int = 0
     word_count: int = 0
     sentence_count: int = 0
@@ -246,7 +255,8 @@ class TextMetadata:
 
 @dataclass
 class ContentMetadata:
-    """Comprehensive content metadata container"""    # Identification
+    """Comprehensive content metadata container"""
+    # Identification
     content_id: str = ""
     source_url: Optional[str] = None
     original_filename: Optional[str] = None
@@ -281,13 +291,15 @@ class ContentMetadata:
     schema_version: str = "1.0.0"
 
 class MetadataExtractor:
-    """Advanced metadata extraction engine"""    
+    """Advanced metadata extraction engine"""
+    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self._validate_dependencies()
     
     def _validate_dependencies(self):
-        """Validate optional dependencies"""        missing_deps = []
+        """Validate optional dependencies"""
+        missing_deps = []
         
         if not PIL_AVAILABLE:
             missing_deps.append("Pillow (for image metadata)")
@@ -302,7 +314,8 @@ class MetadataExtractor:
     def extract_metadata(self, 
                         file_path: Union[str, Path], 
                         content_data: Optional[bytes] = None) -> ContentMetadata:
-        """Extract comprehensive metadata from content"""        try:
+        """Extract comprehensive metadata from content"""
+        try:
             file_path = Path(file_path)
             
             # Initialize metadata container
@@ -333,7 +346,8 @@ class MetadataExtractor:
             return ContentMetadata()
     
     def _generate_content_id(self, file_path: Path, content_data: Optional[bytes] = None) -> str:
-        """Generate unique content identifier"""        try:
+        """Generate unique content identifier"""
+        try:
             if content_data:
                 content_hash = hashlib.sha256(content_data).hexdigest()
             else:
@@ -348,7 +362,8 @@ class MetadataExtractor:
             return f"{file_path.stem}_{hash(timestamp) % 1000000}"
     
     def _detect_content_type(self, file_path: Path) -> ContentType:
-        """Detect content type from file extension and MIME type"""        try:
+        """Detect content type from file extension and MIME type"""
+        try:
             mime_type, _ = mimetypes.guess_type(str(file_path))
             
             if mime_type:
@@ -386,7 +401,8 @@ class MetadataExtractor:
     def _extract_technical_metadata(self, 
                                    file_path: Path, 
                                    content_data: Optional[bytes] = None) -> TechnicalMetadata:
-        """Extract technical file metadata"""        try:
+        """Extract technical file metadata"""
+        try:
             metadata = TechnicalMetadata()
             
             # File size and timestamps
@@ -424,7 +440,8 @@ class MetadataExtractor:
             return TechnicalMetadata()
     
     def _extract_audio_metadata(self, file_path: Path) -> Optional[AudioMetadata]:
-        """Extract audio-specific metadata"""        if not MUTAGEN_AVAILABLE:
+        """Extract audio-specific metadata"""
+        if not MUTAGEN_AVAILABLE:
             return None
         
         try:
@@ -476,7 +493,8 @@ class MetadataExtractor:
             return AudioMetadata()
     
     def _extract_tag_value(self, tags, tag_keys: List[str]) -> Optional[str]:
-        """Extract tag value with fallback keys"""        for key in tag_keys:
+        """Extract tag value with fallback keys"""
+        for key in tag_keys:
             if key in tags:
                 value = tags[key]
                 if isinstance(value, list) and value:
@@ -486,7 +504,8 @@ class MetadataExtractor:
         return None
     
     def _extract_video_metadata(self, file_path: Path) -> Optional[VideoMetadata]:
-        """Extract video-specific metadata"""        if not CV2_AVAILABLE:
+        """Extract video-specific metadata"""
+        if not CV2_AVAILABLE:
             return None
         
         try:
@@ -534,7 +553,8 @@ class MetadataExtractor:
             return VideoMetadata()
     
     def _extract_image_metadata(self, file_path: Path) -> Optional[ImageMetadata]:
-        """Extract image-specific metadata"""        if not PIL_AVAILABLE:
+        """Extract image-specific metadata"""
+        if not PIL_AVAILABLE:
             return None
         
         try:
@@ -599,7 +619,8 @@ class MetadataExtractor:
     def _extract_text_metadata(self, 
                               file_path: Path, 
                               content_data: Optional[bytes] = None) -> Optional[TextMetadata]:
-        """Extract text-specific metadata"""        try:
+        """Extract text-specific metadata"""
+        try:
             metadata = TextMetadata()
             
             # Read text content
@@ -652,7 +673,8 @@ class MetadataExtractor:
             return TextMetadata()
 
 class MetadataManager:
-    """Advanced metadata management and storage system"""    
+    """Advanced metadata management and storage system"""
+    
     def __init__(self, storage_path: Optional[str] = None):
         self.storage_path = Path(storage_path) if storage_path else Path("/tmp/metadata")
         self.storage_path.mkdir(parents=True, exist_ok=True)
@@ -663,7 +685,8 @@ class MetadataManager:
                        file_path: Union[str, Path], 
                        content_data: Optional[bytes] = None,
                        save_metadata: bool = True) -> ContentMetadata:
-        """Process content and extract comprehensive metadata"""        try:
+        """Process content and extract comprehensive metadata"""
+        try:
             file_path = Path(file_path)
             
             # Extract metadata
@@ -681,7 +704,8 @@ class MetadataManager:
             return ContentMetadata()
     
     def save_metadata(self, metadata: ContentMetadata) -> bool:
-        """Save metadata to storage"""        try:
+        """Save metadata to storage"""
+        try:
             metadata_file = self.storage_path / f"{metadata.content_id}_metadata.json"
             
             # Convert to serializable format
@@ -698,7 +722,8 @@ class MetadataManager:
             return False
     
     def load_metadata(self, content_id: str) -> Optional[ContentMetadata]:
-        """Load metadata from storage"""        try:
+        """Load metadata from storage"""
+        try:
             metadata_file = self.storage_path / f"{content_id}_metadata.json"
             
             if not metadata_file.exists():
@@ -717,7 +742,8 @@ class MetadataManager:
                        content_type: Optional[ContentType] = None,
                        date_range: Optional[Tuple[datetime, datetime]] = None,
                        quality_level: Optional[QualityLevel] = None) -> List[ContentMetadata]:
-        """Search metadata with filters"""        try:
+        """Search metadata with filters"""
+        try:
             results = []
             
             for metadata_file in self.storage_path.glob("*_metadata.json"):
@@ -752,11 +778,13 @@ class MetadataManager:
             return []
     
     def _metadata_to_dict(self, metadata: ContentMetadata) -> Dict[str, Any]:
-        """Convert metadata object to dictionary"""        from dataclasses import asdict
+        """Convert metadata object to dictionary"""
+        from dataclasses import asdict
         return asdict(metadata)
     
     def _dict_to_metadata(self, metadata_dict: Dict[str, Any]) -> ContentMetadata:
-        """Convert dictionary to metadata object"""        # This is a simplified conversion - in production, you'd want more robust deserialization
+        """Convert dictionary to metadata object"""
+        # This is a simplified conversion - in production, you'd want more robust deserialization
         metadata = ContentMetadata()
         
         # Basic fields
@@ -777,4 +805,5 @@ metadata_manager = MetadataManager()
 
 def extract_content_metadata(file_path: Union[str, Path], 
                            content_data: Optional[bytes] = None) -> ContentMetadata:
-    """Extract metadata from content (convenience function)"""    return metadata_manager.process_content(file_path, content_data)
+    """Extract metadata from content (convenience function)"""
+    return metadata_manager.process_content(file_path, content_data)

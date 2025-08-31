@@ -14,7 +14,8 @@ Contact: mlaiel@live.de
 Testing environment configuration for automated testing and CI/CD pipelines.
 Optimized for unit tests, integration tests, and automated quality assurance.
 =================================================
-"""import os
+"""
+import os
 import tempfile
 import logging
 from typing import Dict, Any, List, Optional, Set
@@ -27,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TestingDatabaseConfig:
-    """Testing database configuration with in-memory and isolation"""    host: str = os.getenv('TEST_DB_HOST', 'localhost')
+    """Testing database configuration with in-memory and isolation"""
+    host: str = os.getenv('TEST_DB_HOST', 'localhost')
     port: int = int(os.getenv('TEST_DB_PORT', '5433'))
     database: str = os.getenv('TEST_DB_NAME', 'ia_influencer_test')
     username: str = os.getenv('TEST_DB_USER', 'test_user')
@@ -47,7 +49,8 @@ class TestingDatabaseConfig:
 
 @dataclass
 class TestingRedisConfig:
-    """Testing Redis configuration with fakeredis support"""    host: str = os.getenv('TEST_REDIS_HOST', 'localhost')
+    """Testing Redis configuration with fakeredis support"""
+    host: str = os.getenv('TEST_REDIS_HOST', 'localhost')
     port: int = int(os.getenv('TEST_REDIS_PORT', '6380'))
     database: int = 1
     password: Optional[str] = None
@@ -62,7 +65,8 @@ class TestingRedisConfig:
 
 @dataclass
 class TestingAIConfig:
-    """Testing AI configuration with mocks and test models"""    openai_api_key: Optional[str] = None
+    """Testing AI configuration with mocks and test models"""
+    openai_api_key: Optional[str] = None
     huggingface_token: Optional[str] = None
     tensorflow_gpu_enabled: bool = False
     model_cache_dir: str = tempfile.mkdtemp(prefix='test_models_')
@@ -79,7 +83,8 @@ class TestingAIConfig:
 
 @dataclass
 class TestingStorageConfig:
-    """Testing storage configuration with temporary directories"""    storage_backend: str = "local"
+    """Testing storage configuration with temporary directories"""
+    storage_backend: str = "local"
     local_storage_path: str = tempfile.mkdtemp(prefix='test_storage_')
     max_file_size_mb: int = 10
     allowed_file_types: Set[str] = field(default_factory=lambda: {
@@ -94,7 +99,8 @@ class TestingStorageConfig:
 
 @dataclass
 class TestingSecurityConfig:
-    """Testing security configuration with test keys"""    jwt_secret_key: str = "test_jwt_secret_key_for_testing_only"
+    """Testing security configuration with test keys"""
+    jwt_secret_key: str = "test_jwt_secret_key_for_testing_only"
     jwt_algorithm: str = "HS256"
     jwt_expiry_hours: int = 1
     oauth2_secret_key: str = "test_oauth2_secret_key"
@@ -111,7 +117,8 @@ class TestingSecurityConfig:
 
 @dataclass
 class TestingMonitoringConfig:
-    """Testing monitoring configuration with test logging"""    log_level: str = os.getenv('TEST_LOG_LEVEL', 'WARNING')
+    """Testing monitoring configuration with test logging"""
+    log_level: str = os.getenv('TEST_LOG_LEVEL', 'WARNING')
     log_format: str = "simple"
     log_to_file: bool = False
     log_file_path: str = tempfile.mktemp(prefix='test_log_', suffix='.log')
@@ -129,7 +136,8 @@ class TestingMonitoringConfig:
 
 @dataclass
 class TestingIntegrationConfig:
-    """Testing integration configuration with mocks"""    spotify_client_id: str = "test_spotify_client_id"
+    """Testing integration configuration with mocks"""
+    spotify_client_id: str = "test_spotify_client_id"
     spotify_client_secret: str = "test_spotify_client_secret"
     youtube_api_key: str = "test_youtube_api_key"
     instagram_app_id: str = "test_instagram_app_id"
@@ -148,7 +156,8 @@ class TestingIntegrationConfig:
 
 
 class TestingEnvironmentManager:
-    """    Testing environment manager for automated testing and CI/CD.
+    """
+    Testing environment manager for automated testing and CI/CD.
     
     Features:
     - Isolated test environment with cleanup
@@ -159,7 +168,8 @@ class TestingEnvironmentManager:
     - Test fixtures and factories
     - Performance and load testing
     - Integration test orchestration
-    """    
+    """
+    
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path or "/tmp/test_config.yml"
         self.environment = "testing"
@@ -188,7 +198,8 @@ class TestingEnvironmentManager:
         logger.info(f"Testing environment manager initialized: {self.environment}")
     
     def load_configuration(self) -> Dict[str, Any]:
-        """Load testing environment configuration"""        try:
+        """Load testing environment configuration"""
+        try:
             config = {
                 'environment': self.environment,
                 'debug': self.debug_mode,
@@ -292,7 +303,8 @@ class TestingEnvironmentManager:
             raise
     
     def setup_test_environment(self) -> bool:
-        """Setup isolated test environment"""        try:
+        """Setup isolated test environment"""
+        try:
             # Create test session
             self._test_session_id = self._create_test_session()
             
@@ -320,7 +332,8 @@ class TestingEnvironmentManager:
             return False
     
     def setup_test_isolation(self) -> bool:
-        """Setup test isolation and parallel execution"""        try:
+        """Setup test isolation and parallel execution"""
+        try:
             # Configure database transactions
             self._configure_database_transactions()
             
@@ -341,7 +354,8 @@ class TestingEnvironmentManager:
             return False
     
     def setup_mock_services(self) -> bool:
-        """Setup comprehensive mock services"""        try:
+        """Setup comprehensive mock services"""
+        try:
             # Mock external APIs
             self._setup_api_mocks()
             
@@ -365,7 +379,8 @@ class TestingEnvironmentManager:
             return False
     
     def setup_test_fixtures(self) -> bool:
-        """Setup test fixtures and data factories"""        try:
+        """Setup test fixtures and data factories"""
+        try:
             # Create user fixtures
             self._create_user_fixtures()
             
@@ -386,7 +401,8 @@ class TestingEnvironmentManager:
             return False
     
     def setup_code_coverage(self) -> bool:
-        """Setup code coverage reporting"""        try:
+        """Setup code coverage reporting"""
+        try:
             # Configure coverage.py
             self._configure_coverage_reporting()
             
@@ -407,7 +423,8 @@ class TestingEnvironmentManager:
             return False
     
     def run_test_suite(self, test_type: str = "all") -> Dict[str, Any]:
-        """Run comprehensive test suite"""        test_results = {
+        """Run comprehensive test suite"""
+        test_results = {
             'unit_tests': {'passed': 0, 'failed': 0, 'skipped': 0},
             'integration_tests': {'passed': 0, 'failed': 0, 'skipped': 0},
             'api_tests': {'passed': 0, 'failed': 0, 'skipped': 0},
@@ -455,7 +472,8 @@ class TestingEnvironmentManager:
             return test_results
     
     def cleanup_test_environment(self) -> bool:
-        """Cleanup test environment and resources"""        try:
+        """Cleanup test environment and resources"""
+        try:
             # Execute cleanup callbacks
             for cleanup_callback in self._cleanup_callbacks:
                 try:
@@ -483,7 +501,8 @@ class TestingEnvironmentManager:
             return False
     
     def validate_test_environment(self) -> Dict[str, bool]:
-        """Validate test environment configuration"""        validation_results = {
+        """Validate test environment configuration"""
+        validation_results = {
             'database_isolation': False,
             'redis_isolation': False,
             'mock_services': False,
@@ -511,7 +530,8 @@ class TestingEnvironmentManager:
             return validation_results
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get testing environment health status"""        return {
+        """Get testing environment health status"""
+        return {
             'environment': self.environment,
             'status': 'healthy',
             'test_session_id': self._test_session_id,
@@ -526,68 +546,89 @@ class TestingEnvironmentManager:
     
     # Private helper methods
     def _create_test_session(self) -> str:
-        """Create unique test session identifier"""        import uuid
+        """Create unique test session identifier"""
+        import uuid
         return str(uuid.uuid4())
     
     def _setup_test_database(self):
-        """Setup isolated test database"""        pass
+        """Setup isolated test database"""
+        pass
     
     def _setup_test_storage(self):
-        """Setup isolated test storage"""        pass
+        """Setup isolated test storage"""
+        pass
     
     def _setup_api_mocks(self):
-        """Setup API mocks"""        pass
+        """Setup API mocks"""
+        pass
     
     def _setup_ai_model_mocks(self):
-        """Setup AI model mocks"""        pass
+        """Setup AI model mocks"""
+        pass
     
     def _setup_payment_service_mocks(self):
-        """Setup payment service mocks"""        pass
+        """Setup payment service mocks"""
+        pass
     
     def _setup_storage_mocks(self):
-        """Setup storage mocks"""        pass
+        """Setup storage mocks"""
+        pass
     
     def _setup_notification_mocks(self):
-        """Setup notification mocks"""        pass
+        """Setup notification mocks"""
+        pass
     
     def _create_user_fixtures(self):
-        """Create user test fixtures"""        pass
+        """Create user test fixtures"""
+        pass
     
     def _create_content_fixtures(self):
-        """Create content test fixtures"""        pass
+        """Create content test fixtures"""
+        pass
     
     def _create_ai_model_fixtures(self):
-        """Create AI model test fixtures"""        pass
+        """Create AI model test fixtures"""
+        pass
     
     def _create_integration_fixtures(self):
-        """Create integration test fixtures"""        pass
+        """Create integration test fixtures"""
+        pass
     
     def _configure_coverage_reporting(self):
-        """Configure coverage reporting"""        pass
+        """Configure coverage reporting"""
+        pass
     
     def _setup_coverage_exclusions(self):
-        """Setup coverage exclusions"""        pass
+        """Setup coverage exclusions"""
+        pass
     
     def _configure_branch_coverage(self):
-        """Configure branch coverage"""        pass
+        """Configure branch coverage"""
+        pass
     
     def _setup_coverage_reports(self):
-        """Setup coverage reports"""        pass
+        """Setup coverage reports"""
+        pass
     
     def _configure_database_transactions(self):
-        """Configure database transactions for isolation"""        pass
+        """Configure database transactions for isolation"""
+        pass
     
     def _configure_redis_namespacing(self):
-        """Configure Redis namespacing"""        pass
+        """Configure Redis namespacing"""
+        pass
     
     def _configure_filesystem_isolation(self):
-        """Configure filesystem isolation"""        pass
+        """Configure filesystem isolation"""
+        pass
     
     def _configure_parallel_execution(self):
-        """Configure parallel test execution"""        pass
+        """Configure parallel test execution"""
+        pass
     
     def _register_cleanup_callbacks(self):
-        """Register cleanup callbacks"""        pass
+        """Register cleanup callbacks"""
+        pass
     
     # Test execution methods
     def _run_unit_tests(self) -> Dict[str, int]:
@@ -614,16 +655,20 @@ class TestingEnvironmentManager:
     
     # Cleanup methods
     def _cleanup_test_database(self):
-        """Cleanup test database"""        pass
+        """Cleanup test database"""
+        pass
     
     def _cleanup_test_storage(self):
-        """Cleanup test storage"""        pass
+        """Cleanup test storage"""
+        pass
     
     def _cleanup_temporary_files(self):
-        """Cleanup temporary files"""        pass
+        """Cleanup temporary files"""
+        pass
     
     def _reset_mock_services(self):
-        """Reset mock services"""        pass
+        """Reset mock services"""
+        pass
     
     # Validation methods
     def _validate_database_isolation(self) -> bool:

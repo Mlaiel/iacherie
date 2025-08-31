@@ -4,21 +4,24 @@ Comprehensive monitoring and observability configuration
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""import os
+"""
+import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
 
 
 class MetricType(Enum):
-    """Types of metrics to collect"""    COUNTER = "counter"
+    """Types of metrics to collect"""
+    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""    CRITICAL = "critical"
+    """Alert severity levels"""
+    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -27,7 +30,8 @@ class AlertSeverity(Enum):
 
 @dataclass
 class PrometheusConfig:
-    """Prometheus monitoring configuration"""    
+    """Prometheus monitoring configuration"""
+    
     enabled: bool = field(default_factory=lambda: 
         os.getenv("PROMETHEUS_ENABLED", "true").lower() == "true")
     host: str = field(default_factory=lambda: os.getenv("PROMETHEUS_HOST", "localhost"))
@@ -55,12 +59,14 @@ class PrometheusConfig:
     
     @property
     def url(self) -> str:
-        """Get Prometheus URL"""        return f"http://{self.host}:{self.port}"
+        """Get Prometheus URL"""
+        return f"http://{self.host}:{self.port}"
 
 
 @dataclass
 class GrafanaConfig:
-    """Grafana dashboard configuration"""    
+    """Grafana dashboard configuration"""
+    
     enabled: bool = field(default_factory=lambda: 
         os.getenv("GRAFANA_ENABLED", "true").lower() == "true")
     host: str = field(default_factory=lambda: os.getenv("GRAFANA_HOST", "localhost"))
@@ -88,12 +94,14 @@ class GrafanaConfig:
     
     @property
     def url(self) -> str:
-        """Get Grafana URL"""        return f"http://{self.host}:{self.port}"
+        """Get Grafana URL"""
+        return f"http://{self.host}:{self.port}"
 
 
 @dataclass
 class JaegerConfig:
-    """Jaeger tracing configuration"""    
+    """Jaeger tracing configuration"""
+    
     enabled: bool = field(default_factory=lambda: 
         os.getenv("JAEGER_ENABLED", "true").lower() == "true")
     agent_host: str = field(default_factory=lambda: os.getenv("JAEGER_AGENT_HOST", "localhost"))
@@ -117,12 +125,14 @@ class JaegerConfig:
     
     @property
     def agent_endpoint(self) -> str:
-        """Get Jaeger agent endpoint"""        return f"{self.agent_host}:{self.agent_port}"
+        """Get Jaeger agent endpoint"""
+        return f"{self.agent_host}:{self.agent_port}"
 
 
 @dataclass
 class ElasticSearchConfig:
-    """Elasticsearch configuration for log storage"""    
+    """Elasticsearch configuration for log storage"""
+    
     enabled: bool = field(default_factory=lambda: 
         os.getenv("ELASTICSEARCH_LOGGING_ENABLED", "false").lower() == "true")
     hosts: List[str] = field(default_factory=lambda: 
@@ -144,7 +154,8 @@ class ElasticSearchConfig:
 
 @dataclass
 class AlertConfig:
-    """Alert configuration"""    
+    """Alert configuration"""
+    
     enabled: bool = field(default_factory=lambda: 
         os.getenv("ALERTS_ENABLED", "true").lower() == "true")
     
@@ -192,7 +203,8 @@ class AlertConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Comprehensive monitoring configuration"""    
+    """Comprehensive monitoring configuration"""
+    
     # Enable/disable monitoring
     enabled: bool = field(default_factory=lambda: 
         os.getenv("MONITORING_ENABLED", "true").lower() == "true")
@@ -281,11 +293,13 @@ class MonitoringConfig:
     custom_metrics: Dict[str, Dict[str, Any]] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Initialize monitoring configuration"""        self._initialize_custom_metrics()
+        """Initialize monitoring configuration"""
+        self._initialize_custom_metrics()
         self._validate_configuration()
     
     def _initialize_custom_metrics(self):
-        """Initialize custom business metrics"""        self.custom_metrics = {
+        """Initialize custom business metrics"""
+        self.custom_metrics = {
             "content_uploads_total": {
                 "type": MetricType.COUNTER,
                 "description": "Total number of content uploads",
@@ -340,7 +354,8 @@ class MonitoringConfig:
         }
     
     def _validate_configuration(self):
-        """Validate monitoring configuration"""        if self.enabled and not (self.prometheus.enabled or self.grafana.enabled):
+        """Validate monitoring configuration"""
+        if self.enabled and not (self.prometheus.enabled or self.grafana.enabled):
             raise ValueError("At least one monitoring component must be enabled")
         
         if self.alerts.enabled and not any([
@@ -355,7 +370,8 @@ class MonitoringConfig:
             raise ValueError("System metrics interval must be at least 5 seconds")
     
     def get_prometheus_config(self) -> Dict[str, Any]:
-        """Get Prometheus configuration dictionary"""        return {
+        """Get Prometheus configuration dictionary"""
+        return {
             "global": {
                 "scrape_interval": self.prometheus.scrape_interval,
                 "evaluation_interval": self.prometheus.evaluation_interval
@@ -376,7 +392,8 @@ class MonitoringConfig:
         }
     
     def get_grafana_datasources(self) -> List[Dict[str, Any]]:
-        """Get Grafana datasource configurations"""        datasources = []
+        """Get Grafana datasource configurations"""
+        datasources = []
         
         if self.prometheus.enabled:
             datasources.append({
@@ -400,7 +417,8 @@ class MonitoringConfig:
         return datasources
     
     def get_jaeger_config(self) -> Dict[str, Any]:
-        """Get Jaeger tracer configuration"""        return {
+        """Get Jaeger tracer configuration"""
+        return {
             "service_name": self.jaeger.service_name,
             "config": {
                 "sampler": {
@@ -416,7 +434,8 @@ class MonitoringConfig:
         }
     
     def get_alert_rules(self) -> List[Dict[str, Any]]:
-        """Get Prometheus alert rules"""        return [
+        """Get Prometheus alert rules"""
+        return [
             {
                 "alert": "HighCPUUsage",
                 "expr": f"cpu_usage_percent > {self.alerts.cpu_threshold}",
@@ -470,4 +489,5 @@ class MonitoringConfig:
         ]
     
     def is_metric_enabled(self, metric_name: str) -> bool:
-        """Check if a specific metric is enabled"""        return metric_name in self.custom_metrics and self.enabled
+        """Check if a specific metric is enabled"""
+        return metric_name in self.custom_metrics and self.enabled
